@@ -5,7 +5,7 @@ year: 2026
 title: Actual mixed-sixth coefficient and conditional complete-bin interface
 doi: null
 url: https://arxiv.org/abs/2610.12234v2
-claim: Repo-derived conditional paper applications isolate a paid large-prime collision term in the complete annular mu/plain/plain coefficient, rule out a coefficient-norm power saving and two specified coefficient simplifications, and quantify the implication of an unproved neighborhood mixed-sixth moment for the original-W0 bare nonunit C93-C97 consumer. Full mixed moment, C68/J40, signed Robin and RH remain open; no source-proof, Lean or priority certification is supplied.
+claim: Repo-derived conditional paper applications pay the exact joint-Euler short-cofactor Type-I component and the modified large-prime collision term, identify the complete remaining coefficient, rule out a coefficient-norm power saving and two specified coefficient simplifications, and quantify the implication of an unproved neighborhood mixed-sixth moment for the original-W0 bare nonunit C93-C97 consumer. Full mixed moment, C68/J40, signed Robin and RH remain open; no source-proof, Lean or priority certification is supplied.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -32,8 +32,9 @@ calculus used below. Its `lem:fixed-gauss-phase`, `eq:signal`,
 `eq:sextic-sieve-pair-gauss`, `eq:sextic-sieve-pair-poisson` and
 `lem:ray-prime-normalizer` supply the local identities and fixed-field
 prime counts. The main theorem and `lem:logarithmic-control` are retained
-only as premises of the existing C77–C97 consumer, including both $L$ and
-$1/L$ control. This pin is not identified with the earlier
+only as premises of the existing C25–C31 and C77–C97 applications and the
+short-cofactor payment below, including both $L$ and $1/L$ control. This pin
+is not identified with the earlier
 `fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb` used in parts of the
 [fixed-order owner](../Analytic/faveri2026fixedorder.md).
 
@@ -46,9 +47,11 @@ $1/L$ control. This pin is not identified with the earlier
 | [Gao–Zhao v2, Lemma 4.1](https://arxiv.org/html/2201.01885v2#S4.SS1); [existing annular, finite-primary and puncture transport](../Analytic/openai2026quasirh.md#文献估计与实际根数运输) | A fixed integral numerator in an unweighted plain slot. The effective numerator, not a new estimate, is calculated below. Actual fixed bad-prime numerator factors remain. |
 | [DDDS v3, §6](https://arxiv.org/html/2410.03048v3#S6) and the fixed-order owner's angular/growing-ray applications | The cubic Gauss-series mean square is for its stated series and weights. A moving quadratic conductor cannot be set to one. Earlier references to DDDS v2 in the owner remain references to v2, not an asserted identification with v3. |
 | Reduced-frequency owner, [C93–C97](liu2026quasirhreduced.md#a-source-conditional-all-annulus-endpoint-for-original-w0) | Actual coefficients, common buffered bins, finite contours, all repetitions, weighted tail and restoration. Only its complete bin-count input is conditionally improved. |
+| Liu source card, [C21–C26](../Analytic/liu2026quasirh.md#removing-a-short-type-i-part-from-the-remaining-coefficient) and [C29–C31](../Analytic/liu2026quasirh.md#combining-two-bounds-on-the-same-buffered-type-i-bin); pinned primary, `lem:hecke-strip-growth`, `lem:logarithmic-control` and `lem:deleted-euler-factors` | The exact smooth inverse split, C26's joint local identity and existing global $7/8$ Hecke strip, including the squared character and principal reciprocal. The consumer below is the squared Type-I/plain-fourth moment at $D\asymp Q^{r_*}$, exposing the squarefree denominator and retaining the short-slot Möbius coupling; the inverse-fourth payments are reused. |
 
-The uncovered application consequences retained here are the quantitative
-collision payment and complete-remainder equivalence, the exact four-prime
+The application consequences retained here are the quantitative
+collision and joint-Euler short-cofactor mixed-moment payments, complete modified-remainder
+equivalence, the exact four-prime
 coefficient test, two restricted diagnostic failures, and the quantified
 neighborhood-moment interface to that existing complete consumer. Old
 degree-two applications and the generic quadratic/cubic obstruction are
@@ -932,12 +935,321 @@ Taking $\varepsilon<\Gamma$ displays a strict reserve under all named
 premises. There is no extra area, inverse Gauss, division by six or
 second $U^2$ factor and no unweighted infinite-energy assertion.
 
+## A paid short-cofactor Type-I application
+
+Under the named source premises, reuse C25's exact smooth split on M1's rows and
+presentation. Fix $\operatorname{supp}V_M\subset[a_V,b_V]$ with
+$0<a_V<b_V$, and the same smooth $0\le W\le1$, equal to one up to
+one and zero from two onward. Set $A=Q^{1/24}$ and
+$z=(b_VD)^{1/2}$. Eventually $2A<z<a_VD$, uniformly on M4.
+Writing the reused coefficient explicitly at these scales gives
+
+$$
+\begin{aligned}
+ \lambda_{\mathrm{II}}(d)
+ &=-\mu^2(d)\sum_{\substack{r_0s_0c=d\\q_{r_0},q_{s_0}\le z}}
+       \mu(r_0)\mu(s_0)\bigl(1-W(q_{r_0s_0}/A)\bigr),\\
+ M_{\mathrm I}(u)
+ &=-D^{-1/2}\sum_{q\ {\rm sf}}\mu(q)\tau(q)\psi_u(q)W(q_q/A)
+       \sum_{\substack{c\ {\rm sf}\\(c,q)=1}}
+                    \psi_u(c)V_M(q_qq_c/D),\\
+ M_{\mathrm{II}}(u)
+ &=D^{-1/2}\sum_d\lambda_{\mathrm{II}}(d)\psi_u(d)V_M(q_d/D),
+ \qquad M_u=M_{\mathrm I}(u)+M_{\mathrm{II}}(u).
+\end{aligned}
+\tag{M31}
+$$
+
+Here $\tau$ counts ideal divisors. This is C25 at different lengths.
+The squarefree $c$ condition and $(c,q)=1$ are internal to the Möbius
+slot; they impose no new condition between the three M1 slots.
+
+**The joint squarefree-Hecke quotient retains the Möbius coupling.**
+Take $\beta=7/8$ throughout this application. For each retained M1 row,
+the joint series on $\Re s,\Re t>1$ has C25–C26's local factor:
+
+$$
+\begin{aligned}
+ \mathcal F_u(s,t)
+ &:=\sum_{\substack{q,c\ {\rm sf}\\(q,c)=1}}
+       {\mu(q)\tau(q)\psi_u(qc)\over q_q^s q_c^t}
+   =\prod_p(1-2x_p+y_p)\\
+ &= {L(t,\psi_u)\over L(s,\psi_u)^2L(2t,\psi_u^2)}
+                      \widetilde{\mathcal H}_u(s,t),\\
+ \widetilde{\mathcal H}_u(s,t)
+ &=\prod_p\widetilde{\mathcal H}_{u,p}(s,t),\\
+ \widetilde{\mathcal H}_{u,p}(s,t)
+ &= {1-2x_p+y_p\over(1-x_p)^2(1+y_p)}
+  =1-{x_p^2\over(1-x_p)^2}
+       +{2x_py_p\over(1-x_p)^2(1+y_p)},\\
+ x_p&=\psi_u(p)q_p^{-s},\qquad y_p=\psi_u(p)q_p^{-t}.
+\end{aligned}
+\tag{M32}
+$$
+
+At each prime this is C26's correction divided by $1-y_p^2$;
+the squarefree denominator $L(2t,\psi_u^2)^{-1}$ is exposed exactly.
+There are no pure $y_p$ monomials in the correction. The geometric
+denominators give a row-independent coefficient absolute-mass majorant on
+every compact subdomain of
+
+$$
+ \Re s>1/2,\qquad \Re t>0,\qquad \Re(s+t)>1,
+$$
+
+since, writing $\sigma=\Re s,\theta=\Re t$,
+
+$$
+ |\widetilde{\mathcal H}_{u,p}(s,t)-1|
+ \ll_{\sigma,\theta}q_p^{-2\sigma}+q_p^{-(\sigma+\theta)}.
+$$
+
+The same bound holds for the coefficient absolute mass of the local
+deviation after geometric expansion. The Euler product is holomorphic
+in this tube and bounded uniformly in the row and imaginary parts when
+the real parts range over a compact subset of the displayed region.
+Its reciprocal is never used, so its zeros require no exclusion.
+At an original zero prime $\psi_u(p)=0$, every local factor is one,
+also for $\psi_u^2$; squaring does not restore a value on a nonunit.
+A norm twist of height $t_u$ squares to a twist of height $2t_u$.
+
+The pinned primary's detector conductor bounds give primitive conductor
+$\ll_{\mathcal A}Q$ and deletion radical $\ll_{\mathcal A}Q$ for
+the original presentation. The primitive conductor of its squared
+finite-order character divides that of the character before squaring;
+the original deletion primes remain. Thus the same global Hecke strip
+and `lem:logarithmic-control` apply to the numerator and the reciprocal
+denominator, with their actual heights and the full finite-order Hecke premise.
+
+There is no principal numerator among retained rows: a good prime of $u$
+with valuation $1,\ldots,5$ gives local order
+$6/\gcd(6,v_p(u))>1$, which a fixed $S$-supported twist cannot cancel.
+Rows supported only on $S$ form the original bounded exceptional set;
+M1 already leaves their treatment separate. They are not newly deleted
+here. All nonprincipal lower inducing orders remain; a principal square,
+including on quadratic rows, is allowed.
+
+For small fixed $v>0$, put $b_\beta=\beta+v<1$. On the right line
+$b_\beta$, logarithmic control gives a subpower upper bound for the
+primitive nonprincipal numerator. Its functional equation gives conductor
+power $b_\beta-1/2$ on the reflected line $1-b_\beta$. Strip
+interpolation, using `lem:hecke-strip-growth` for the growth condition,
+therefore yields, after restoring the original deleted factors,
+
+$$
+ |L(\sigma+iy,\psi_u)|
+ \ll_{v,\varepsilon}Q^{(b_\beta-\sigma)/2+\varepsilon}
+                        (1+|y|+H)^{C_0},
+ \qquad 1-b_\beta\le\sigma\le b_\beta.
+\tag{M33}
+$$
+
+The conductor bound does not replace the physical row scale. Use the
+full imprimitive quotients throughout. By `lem:deleted-euler-factors`,
+all original deletion factors and their reciprocals cost $Q^\varepsilon$
+on the fixed positive real lines used here, uniformly in height.
+
+Write $\widehat W(w)=\int_0^\infty W(x)x^{w-1}\,dx$ for
+$\Re w>0$. It is holomorphic and rapidly decreasing vertically on
+each fixed positive line: integration by parts puts its derivative on
+the compact transition interval $[1,2]$. The annular Mellin transform
+$\widehat V_M(t)$ is entire and rapidly decreasing. Exact double
+Mellin inversion of M31 on absolute lines gives
+
+$$
+ M_{\mathrm I}(u)
+ =-{D^{-1/2}\over(2\pi i)^2}
+   \int_{(1)}\int_{(2)}\widehat W(w)\widehat V_M(t)
+       A^wD^t\mathcal F_u(w+t,t)\,dt\,dw.
+\tag{M34}
+$$
+
+Here $s=w+t$, so both variables retain their original joint weight.
+First move $\Re t$ from $2$ to $\beta/2+v$ with $\Re w=1$.
+Then move $\Re w$ from $1$ to $\beta/2$ with $\Re t=\beta/2+v$.
+Both moves stay in
+
+$$
+ \Re s>\beta,\quad \Re t>\beta/2,\quad
+ \Re(s+t)>1,\quad \Re(s-t)>0.
+$$
+
+In the first move $\Re(s+t)\ge1+\beta+2v$; in the second it
+is at least $3\beta/2+2v>1$. Thus M32's correction stays in its
+absolute-mass domain. The existing global strip makes both
+$L(s,\psi_u)^{-2}$ and $L(2t,\psi_u^2)^{-1}$ holomorphic and
+subpower throughout. A principal squared character's pole at $2t=1$
+is a zero of its reciprocal; the norm-twisted pole has the same property.
+The retained numerator is nonprincipal and entire. The pole of
+$\widehat W$ at zero is not crossed. Rapid Mellin decay and the existing
+global polynomial growth pay the finite joins and passage to infinite
+contours, including the coupled heights $\Im(w+t),2\Im t$ and the
+original norm twists.
+
+On the final plane $\Re s=\beta+v$ and $\Re t=\beta/2+v$.
+The latter lies between M33's two lines, and its numerator conductor
+exponent is exactly $((\beta+v)-(\beta/2+v))/2=\beta/4$.
+Absorb $D^v$ into the prescribed $Q^\varepsilon$ on the compact length
+ranges by choosing $v$ sufficiently small. The joint integral therefore
+gives
+
+$$
+\begin{aligned}
+ |M_{\mathrm I}(u)|
+       &\ll_\varepsilon Q^{\beta/4+\varepsilon}
+           D^{(\beta-1)/2}A^{\beta/2}p_{M,J}(1+H)^{C_1},\\
+ \sum_u|M_{\mathrm I}(u)|^2|S_u|^4
+       &\ll_\varepsilon Q^{1+\beta/2+\varepsilon}
+           D^{\beta-1}A^\beta\mathcal P_J^2(1+H)^C.
+\end{aligned}
+\tag{M35}
+$$
+
+Here $p_{M,J}$ denotes this original profile's required finite seminorms.
+The last line uses the original complete physical-row zero-slot plain
+fourth moment $\sum_u|S_u|^4\ll Q^{1+\varepsilon}$ with its original
+profile and height costs. In `lem:plain` these are
+two plain lengths $m,m$, no live prime slots and physical allowance one;
+bounded nonnegative lengths have no further restriction. No extra
+puncture is passed to that supplier. The positive dyadic norm may be
+bounded by its original complete positive row norm, preserving every
+lower inducing order. M35 explicitly pays the displayed power of $A$.
+
+At $A=Q^{1/24}$, M35's exponent and its reserve on M4 are
+
+$$
+\begin{aligned}
+ E_{\mathrm I}(r)&={283\over192}-{r\over8},\\
+ T_*-{1\over400}-\sup_{\mathrm{M4}}E_{\mathrm I}(r)
+ &= {7\sqrt6\over8}-{137\over64}-{1\over8000}-{1\over400}
+  ={7\sqrt6\over8}-{8573\over4000}>0,\\
+ 294\cdot500^2-8573^2&=3671>0.
+\end{aligned}
+\tag{M36}
+$$
+
+Squaring positive quantities proves the strict comparison. The whole
+Type-I mixed vector has a fixed $1/400$ reserve throughout M4 before losses.
+
+All estimates hold for the finite profile and parameter derivatives
+required by the original smooth calculus. Derivatives of the weighted
+Type-II polynomial may use $M_{\mathrm{II}}=M-M_{\mathrm I}$; no
+derivative of the sharp auxiliary cutoff $z$ is needed. Profile derivatives
+and norm-height derivatives change smooth profiles or insert controlled
+logarithms, not arbitrary arithmetic coefficients depending on the row.
+Combine $p_{M,J}^2$ and the plain-fourth profile costs inside the one
+original coupled $\mathcal P_J^2$. The fixed finite label restoration
+and parameter Sobolev argument enlarge its order once and give one
+polynomial height factor. Fix those finite orders before choosing the
+small original height exponent and then external tail orders, as in M30.
+Availability of that single original envelope remains a premise;
+no component, slot, contour or dyad receives an independent reserve.
+
+## The complete modified remainder after both payments
+
+M31 leaves the actual three-slot convolution
+
+$$
+ c_{\mathrm{II}}(h)=\sum_{dn_1n_2=h}\lambda_{\mathrm{II}}(d)
+             V_M(q_d/D)V_S(q_{n_1}/N)V_S(q_{n_2}/N),\qquad
+ A_{\mathrm{II},u}=M_{\mathrm{II}}(u)S_u^2
+             =L^{-1/2}\sum_hc_{\mathrm{II}}(h)\psi_u(h).
+\tag{M37}
+$$
+
+Only $d$ is squarefree. Slots may overlap, $h$ need not be squarefree,
+and the original small-prime gcds, zero extensions and sixth-power tails
+remain. Since $|\lambda_{\mathrm{II}}(d)|\le\tau_3(d)$,
+$c_{\mathrm{II}}$ has the same annular support and a $\tau_5$ envelope.
+The coefficient identity underlying M31 expresses it as the original
+coefficient minus the Type-I convolution, so its profile derivatives obey
+the same contract before any collision cut, without differentiating $z$.
+
+Apply M5's collision proof to this coefficient itself. Define
+
+$$
+\begin{aligned}
+ c_{\mathrm{II,hi}}(h)
+   &=c_{\mathrm{II}}(h)\mathbf1_{\exists p\notin S:
+                            q_p\ge Q^{1/3},\ p^2\mid h},\\
+ c_R(h)&=c_{\mathrm{II}}(h)-c_{\mathrm{II,hi}}(h)
+       =c_{\mathrm{II}}(h)\mathbf1_{\nexists p\notin S:
+                            q_p\ge Q^{1/3},\ p^2\mid h},\\
+ A_{b,u}&=L^{-1/2}\sum_hc_b(h)\psi_u(h)
+                         \quad(b=R,\mathrm{II,hi}),\\
+ \|A_{\mathrm{II,hi}}\|_2^2
+   &\ll_\varepsilon Q^{-1/3+\varepsilon}F_6(Q,L)
+                          \mathcal P_J^2(1+H)^C
+    \ll_\varepsilon Q^{T_*-1/100+\varepsilon}
+                          \mathcal P_J^2(1+H)^C.
+\end{aligned}
+\tag{M38}
+$$
+
+M5 needs only annular support, a divisor bound and the stated parameter
+stability; $\tau_5$ replaces $\tau_3$ at a subpower cost. Its exact
+$h=ab^6$ compression, every $(b,u)=1$ mask and the physical-row transport
+remain unchanged. This applies the collision cut to the modified
+coefficient; it does not assert that a column mask contracts a previously
+paid Type-I vector.
+
+On the identical complete physical row space, set
+$A_{\mathrm I,u}=M_{\mathrm I}(u)S_u^2$ and
+$E=A_{\mathrm I}+A_{\mathrm{II,hi}}$. Then
+
+$$
+ A=A_R+E,\qquad
+ \|E\|_2^2\le2\|A_{\mathrm I}\|_2^2+2\|A_{\mathrm{II,hi}}\|_2^2
+ \ll_\varepsilon Q^{T_*-1/400+\varepsilon}
+                                      \mathcal P_J^2(1+H)^C.
+\tag{M39}
+$$
+
+Both triangle inequalities and the exact interference identity give
+
+$$
+\begin{aligned}
+ \|A\|_2&\le\|A_R\|_2+\|E\|_2,\qquad
+ \|A_R\|_2\le\|A\|_2+\|E\|_2,\\
+ \|A\|_2^2&=\|A_R\|_2^2+\|E\|_2^2
+                                      +2\Re\langle A_R,E\rangle.
+\end{aligned}
+\tag{M40}
+$$
+
+A saving $\eta_R>0$ for $\|A_R\|_2^2$ bounds the cross term by the
+same costs times $Q^{T_*-(\eta_R+1/400)/2+\varepsilon}$. Thus existence
+of a fixed open-neighborhood saving for the original full moment is
+equivalent to existence of one for this **complete** new remainder.
+For proposed parameters $\eta_R,\rho_R>0$, one may use
+$\eta=\min\{\eta_R,1/800\}$ and
+$\rho=\min\{\rho_R,1/2000\}$, intersecting M4 and keeping the full
+derivative/height contract in both directions. No saving for $A_R$ is
+proved here; H, H0 and M19–M30 retain their original conditional meaning.
+
+For squarefree $d$, put $d_{\le z}=\prod_{p\mid d,\ q_p\le z}p$.
+If $q_{d_{\le z}}\le A$, every allowed $r_0s_0$ divides $d_{\le z}$,
+so $W=1$ and $\lambda_{\mathrm{II}}(d)=0$. On the inverse annulus
+this includes prime $d$ and $d=pc$ with $q_p>z,q_c\le A$.
+Balanced two-prime inverse factors
+remain: if $d=p_1p_2$ is in the inverse annulus with
+$2A<q_{p_1},q_{p_2}\le z$, the allowed assignments in M31 give
+$\lambda_{\mathrm{II}}(d)=2$. Their correlations with the plain slots
+remain, and coefficients on other $d$ also change. In M9's four-prime
+test, $q_{p_1}>z>q_{p_2}>2A$ eventually,
+so M31 gives $\lambda_{\mathrm{II}}(p_1p_2)=2$ and $c_R(h)=4V$,
+with $V$ the product of profiles in M12. This squarefree test survives.
+No coefficient-norm power saving, new sieve, source-proof verification,
+Lean certification or literature-priority conclusion is supplied.
+
 ## What remains missing
 
 The next missing analytic input is H for the complete actual coefficient,
-or equivalently a uniformly saving estimate for $A_0$ on the smaller
-intersection H0, preserving the full smooth/height contract. The paid
-collision split and lower-order blocks do not prove it. M8 prevents
+or equivalently a uniformly saving estimate for the complete $A_R$ in
+M37–M40 with $A=Q^{1/24}$ on the stated smaller open intersection with
+M4, preserving the full smooth/height contract. The earlier $A_0$ route through H0 also
+remains valid. The paid Type-I and collision terms and lower-order blocks
+do not prove either estimate. M8 and the surviving four-prime test prevent
 coefficient-norm power savings from supplying it; M13–M17 prevent the
 specified cubic-only replacement or direct plain-slot invocation from
 supplying it. Joint row-correlated cancellation or a stronger compatible

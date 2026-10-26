@@ -1,0 +1,25 @@
+**Proposition 57.3 (attained exact arithmetic, precision and search work).** The same realization admits acquisition with Proposition 41.3's $O(N^4)$ rational operations and its $N-1$ promised-square root extractions, fixed matrix construction with a conservative additional $O(N^3)$ rational operations, and $O(N(L+N))$ rational operations for retained pulse updates and diagnostic synchronization. Definition 54.1's subsequent local decoding uses at most
+
+$$
+O\bigl(N(L+1)S_L+N^2+NL\bigr)
+\tag{57.2}
+$$
+
+rational operations and coordinate comparisons. Its rational data and transient arithmetic products have width $O(W_L)$. The scalar/input numerical traffic is $O((N+L)W_L)$ bits, with literal command framing and all acknowledgements added. These are sufficient upper bounds for the specified algorithm, with no total-cost or decoder-optimality claim.
+
+Proof. Reuse the acquisition and fixed-data calculations of §§41 and 49. In the local search every candidate has length $l\le L$, because a match is reached in the actual stratum. There are at most $S_L$ examined candidates. A fresh copy of $x_*$, $l$ sparse updates and one native-vector comparison cost $O(N(l+1))$ field operations and comparisons. Summing gives the first term in (57.2); observation inversion, propagation to the current cut and its predictive conversion fit the remaining terms. None is a source query.
+
+For widths, all actual coordinates through the diagnostic suffix have denominators dividing $D^t$ at total Tick count $t\le L+3N-1$. Integer Adds introduce no new denominator. The same holds for every simulated candidate through its at most $l+2N\le L+2N$ ticks from unit preparation. Entrywise nonnegativity, $Ts=s-b\le s$, and $0\le u_i\le H$ give $0\le x_i\le(H+1)s$ for every actual intermediate field and every such candidate, exactly as in §§48–49. Thus their reduced numerator and denominator widths are $O(W_L)$. For the fixed-matrix observation inverse and synchronization use common denominators of the fixed entries, whose total encoding is bounded by $F$, together with the actual $D^t$; summing $N$ terms adds $O(\log(N+1))$. Multiplication before reduction and cross-products for equality change widths by only a constant factor. This also bounds each actual scalar reply, each locally predicted scalar and the recovered historical vector. The input symbols have $O(\log_2(H+2))$ bits each. Proposition 57.2 now gives the numerical traffic bound. The acquisition calculations retain their distinct width $O(U)$, included in $O(V_L)$ for a whole-run allowance.
+
+Candidate creation, lexicographic increments, indexing and output copying are charged in addition to field operations. They admit the conservative bound $O((L+1)(d_H+\log_2(L+2)+1)S_L)$ bit steps by scanning each finite candidate and its binary counters. Exact arithmetic has a finite bit realization: school multiplication/division takes $O(V_L^2)$ per pair of $O(V_L)$-bit integers; Euclid needs $O(V_L)$ such divisions, giving the safe $O(V_L^3)$ allowance for reduction or a rational field operation. Binary-search integer square roots also fit $O(V_L^3)$. Consequently one sufficient local arithmetic/control bound is
+
+$$
+O\!\left(
+ [N^4+N^3+N(L+N)+N(L+1)S_L]V_L^3
+ +(L+1)(d_H+\log_2(L+2)+1)S_L
+\right),
+\tag{57.3}
+$$
+
+with actual installation, input/output handling and delivery work added. The source arithmetic of Proposition 57.2 adds at most $O(((3N+L-1)(5N-4)+L)V_L^3)$ bit steps using the same conservative rational-arithmetic implementation. All these estimates allow growing words; exact rationals have not been replaced by constant-width real registers. $\square$
+

@@ -9,6 +9,131 @@ namespace StrataLint.Tests;
 public sealed partial class CleanLanesCommandTests
 {
     [Theory]
+    [InlineData(false, "revalidate", "idle_identity_changed")]
+    [InlineData(true, "remove", "locked_recent")]
+    public void IdlePoolSelectedRefusalPreservesCauseAndFailsPublicExit(bool force, string stage, string reason)
+    {
+        using var fixture = new CleanLanesFixture();
+        const string branch = "lane/governance/idle-selected";
+        const string orphan = "harness/retained-after-selected-refusal";
+        var path = fixture.AddMergedLane(branch);
+        fixture.AddOrphan(orphan, merged: true);
+        var payload = JsonSerializer.Serialize(new
+        {
+            @event = "worktree_pool", status = "failed", capacity = 4,
+            items = new[] { new { path, branch = "refs/heads/" + branch, head = fixture.Head(path),
+                outcome = "retained", reason, stage, error = reason, error_type = "Refused" } },
+        });
+        var runner = fixture.CreateRunner((file, args, _) => file == "python3" && IsProtocol(args, "pool")
+            ? new ProcessOutput(74, Encoding.UTF8.GetBytes(payload), []) : null);
+
+        var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
+
+        Assert.False(result.Success);
+        AssertQualificationPublicExit(result, force, 2);
+        var item = Assert.Single(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path);
+        Assert.Equal("skipped", item.GetProperty("action").GetString());
+        Assert.Equal(reason, item.GetProperty("reason").GetString());
+        Assert.Contains(stage, item.GetProperty("diagnostic").GetString());
+        Assert.Contains(reason, item.GetProperty("diagnostic").GetString());
+        Assert.DoesNotContain(ReadItems(result.Output), row => row.GetProperty("reason").GetString() == "idle_pool_failed:");
+        Assert.Equal(1, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
+        Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        Assert.True(Directory.Exists(path));
+        Assert.True(fixture.BranchExists(orphan));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void IdlePoolRetainsFailedTaskReturnedBeforeFreshInventory(bool inject)
+    {
+        using var fixture = new CleanLanesFixture();
+        fixture.AddMergedLane("lane/governance/idle-trigger");
+        var path = fixture.AddMergedLane("lane/governance/task-returning");
+        var calls = 0;
+        var poolObserved = false;
+        var runner = fixture.CreateRunner((file, args, directory) =>
+        {
+            if (inject && IsLaneGit(file, args, directory, path, "rev-parse", "--absolute-git-dir") && ++calls == 1)
+                return GitFailure("initial task identity cause");
+            if (file != "python3" || !IsProtocol(args, "pool")) return null;
+            poolObserved = true;
+            var token = new string('b', 32);
+            var branch = "lane/governance/idle-" + token;
+            CleanLanesFixture.Git(path, "switch", "-c", branch);
+            var log = Path.Combine(fixture.RepositoryRoot, ".git/logs/refs/heads", branch);
+            var rows = File.ReadAllLines(log);
+            rows[0] = rows[0].Split('\t')[0] + "\tworktree-idle:" + token;
+            File.WriteAllLines(log, rows);
+            var pressured = args.ToArray();
+            pressured[2] = pressured[2].Replace("sys.exit(sys.modules['worktree_protocol'].main())",
+                "sys.modules['worktree_pool'].available_fraction = lambda source: 0.04\n"
+                + "sys.exit(sys.modules['worktree_protocol'].main())", StringComparison.Ordinal);
+            return TestProcessRunner.Run("python3", pressured,
+                directory, TestBudgets.LongWorkflowProcessHangGuard, 1024 * 1024);
+        });
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        Assert.True(poolObserved);
+        Assert.True(result.Success == !inject, result.Output + result.Error);
+        AssertQualificationPublicExit(result, force: true, inject ? 2 : 0);
+        Assert.Equal(inject, Directory.Exists(path));
+        if (inject)
+        {
+            Assert.Contains(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path
+                && row.GetProperty("action").GetString() == "failed"
+                && row.GetProperty("reason").GetString()!.Contains("initial task identity cause", StringComparison.Ordinal));
+            Assert.DoesNotContain(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path
+                && row.GetProperty("action").GetString() == "removed");
+            Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        }
+    }
+
+    [Theory]
+    [InlineData(false, false, false)]
+    [InlineData(true, false, false)]
+    [InlineData(true, true, false)]
+    [InlineData(true, true, true)]
+    public void IdleInitialIdentityFailureMustRemainFailed(bool inject, bool force, bool poolTimeout)
+    {
+        using var fixture = new CleanLanesFixture();
+        var token = new string('a', 32);
+        var branch = "lane/governance/idle-" + token;
+        var path = fixture.AddMergedLane(branch);
+        var log = Path.Combine(fixture.RepositoryRoot, ".git/logs/refs/heads", branch);
+        var rows = File.ReadAllLines(log);
+        rows[0] = rows[0].Split('\t')[0] + "\tworktree-idle:" + token;
+        File.WriteAllLines(log, rows);
+        var calls = 0;
+        var poolObserved = false;
+        var runner = fixture.CreateRunner((file, args, directory) =>
+        {
+            if (inject && IsLaneGit(file, args, directory, path, "rev-parse", "--absolute-git-dir") && ++calls == 1)
+                return GitFailure("initial idle native identity cause");
+            if (file == "python3" && IsProtocol(args, "pool"))
+            {
+                poolObserved = true;
+                if (inject) Assert.DoesNotContain("--force", args);
+                if (poolTimeout) throw new TimeoutException("later pool observation deadline");
+            }
+            return null;
+        });
+        var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
+        Assert.True(poolObserved);
+        Assert.Equal(!inject, result.Success);
+        AssertQualificationPublicExit(result, force, inject ? 2 : 0);
+        Assert.Equal(inject ? poolTimeout ? 2 : 1 : 0, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
+        Assert.Equal(inject ? "deferred" : "completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        if (inject) Assert.Contains(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path
+            && row.GetProperty("action").GetString() == "failed"
+            && row.GetProperty("reason").GetString()!.Contains("initial idle native identity cause", StringComparison.Ordinal));
+        else Assert.Contains(ReadItems(result.Output), row => ItemMatches(row, path, "skipped", "idle_pool"));
+        Assert.True(Directory.Exists(path));
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void BusyPoolBeforeEntryReportsOnlyPoolFailure(bool force)
@@ -113,6 +238,7 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Theory]
+    [InlineData("qualification_failed", "failed")]
     [InlineData("checkpoint_failed", "failed")]
     [InlineData("partial_or_indeterminate", "partially_removed")]
     public void IdlePoolFailurePreservesRecoveryAndDefersExtraSweeps(string outcome, string action)
@@ -127,7 +253,7 @@ public sealed partial class CleanLanesCommandTests
         {
             @event = "worktree_pool", status = "failed", capacity = 4,
             items = new[] { new { path, branch = "refs/heads/" + branch, head = fixture.Head(path),
-                outcome, reason = "idle_disk_pressure", error = "native failure detail",
+                outcome, reason = outcome == "qualification_failed" ? "qualification_failed:native failure detail" : "idle_disk_pressure", error = "native failure detail",
                 recovery_branch = recovery, recovery_branch_candidate = candidate } },
         });
         var runner = fixture.CreateRunner((file, args, _) => file == "python3" && args.Contains("pool")

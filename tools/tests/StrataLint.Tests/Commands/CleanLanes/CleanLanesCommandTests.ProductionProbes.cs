@@ -8,6 +8,50 @@ namespace StrataLint.Tests;
 
 public sealed partial class CleanLanesCommandTests
 {
+    [Theory]
+    [InlineData("head", false)]
+    [InlineData("head", true)]
+    [InlineData("branch", false)]
+    [InlineData("branch", true)]
+    [InlineData("inventory", false)]
+    [InlineData("inventory", true)]
+    [InlineData("git_directory", false)]
+    [InlineData("git_directory", true)]
+    [InlineData("initial_probe", false)]
+    [InlineData("initial_probe", true)]
+    public void ProductionProbesOperationalFailureRetainsCauseAndFailsPublicExit(string stage, bool timeout)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddLandedLane("harness/preflight-failure");
+        var inventories = 0;
+        var directories = 0;
+        var runner = fixture.CreateRunner((file, args, directory) =>
+        {
+            if (file != "git") return null;
+            var hit = stage switch
+            {
+                "head" => IsLaneGit(file, args, directory, lane, "rev-parse", "--verify", "HEAD^{commit}"),
+                "branch" => IsLaneGit(file, args, directory, lane, "branch", "--show-current"),
+                "inventory" => args.Take(2).SequenceEqual(["worktree", "list"]) && ++inventories == 2,
+                _ => IsLaneGit(file, args, directory, lane, "rev-parse", "--absolute-git-dir")
+                    && ++directories == (stage == "initial_probe" ? 1 : 2),
+            };
+            if (!hit) return null;
+            if (timeout) throw new TimeoutException("native identity deadline");
+            return GitFailure("native identity command failed");
+        });
+        var result = fixture.RunWithRaw(runner, "--force");
+        Assert.False(result.Success);
+        AssertQualificationPublicExit(result, true, 2);
+        var reason = ReasonFor(result.Output, lane);
+        Assert.StartsWith("qualification_failed:", reason);
+        Assert.Contains(timeout ? "native identity deadline" : "native identity command failed", reason);
+        Assert.Contains(ReadItems(result.Output), item => ItemMatches(item, lane, "failed", reason));
+        Assert.Equal(1, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
+        Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        Assert.True(Directory.Exists(lane));
+    }
+
     [Fact]
     public void ForceRetainsLaneAndContinuesWhenHeadRereadFails()
     {
@@ -28,7 +72,8 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWithRaw(runner, "--force");
 
-        AssertRetainedAndControlReclaimed(result, retained, removed, "unreadable");
+        AssertRetainedAndControlReclaimed(result, retained, removed,
+            "qualification_failed:identity:InvalidOperationException:head reread failed", failed: true);
     }
 
     [Fact]
@@ -50,7 +95,8 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWithRaw(runner, "--force");
 
-        AssertRetainedAndControlReclaimed(result, retained, removed, "unreadable");
+        AssertRetainedAndControlReclaimed(result, retained, removed,
+            "qualification_failed:identity:InvalidOperationException:branch reread failed", failed: true);
     }
 
     [Fact]
@@ -336,6 +382,12 @@ public sealed partial class CleanLanesCommandTests
                 "worktree_remove_failed_state_indeterminate");
         }
 
+        foreach (var partial in partials)
+        {
+            var row = Assert.Single(items, item => item.GetProperty("path").GetString() == partial);
+            Assert.Contains("synthetic failure after destructive removal", row.GetProperty("diagnostic").GetString());
+        }
+
         AssertMergedWorktreeItem(
             items,
             removed,
@@ -397,13 +449,9 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWithRaw(runner, "--force");
 
-        Assert.True(result.Success, result.Error);
         Assert.Equal(3, inventoryCalls);
-        Assert.True(Directory.Exists(retained));
-        Assert.False(Directory.Exists(removed));
-        Assert.Equal("unreadable", ReasonFor(result.Output, retained));
-        Assert.Equal("merged_to_dev", ReasonFor(result.Output, removed));
-        Assert.Equal(1, ReadSummary(result.Output).GetProperty("removable_count").GetInt32());
+        AssertRetainedAndControlReclaimed(result, retained, removed,
+            "qualification_failed:identity:InvalidOperationException:refresh failed", failed: true);
     }
 
     private static bool IsLaneGit(
@@ -423,20 +471,24 @@ public sealed partial class CleanLanesCommandTests
         CommandResult result,
         string retained,
         string removed,
-        string retainedReason)
+        string retainedReason,
+        bool failed = false)
     {
-        Assert.True(result.Success, result.Error);
-        Assert.Empty(result.Error);
+        Assert.Equal(!failed, result.Success);
+        AssertQualificationPublicExit(result, true, failed ? 2 : 0);
+        if (!failed) Assert.Empty(result.Error);
         Assert.True(Directory.Exists(retained));
         Assert.False(Directory.Exists(removed));
         var items = ReadItems(result.Output);
         Assert.Contains(items, item =>
-            ItemMatches(item, retained, "skipped", retainedReason));
+            ItemMatches(item, retained, failed ? "failed" : "skipped", retainedReason));
         Assert.Contains(items, item =>
             ItemMatches(item, removed, "removed", "merged_to_dev"));
         var summary = ReadSummary(result.Output);
         Assert.Equal(1, summary.GetProperty("removable_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("removed_count").GetInt32());
+        Assert.Equal(failed ? 1 : 0, summary.GetProperty("failed_count").GetInt32());
+        if (failed) Assert.Equal("deferred", summary.GetProperty("extra_sweeps").GetString());
     }
 
     private static void AssertPartialItem(

@@ -1,0 +1,25 @@
+**Proposition 49.4 (simultaneous stores and later use).** There is one layout realizing Propositions 49.2–49.3 in which the following resources coexist at the decoding cut:
+
+| Coexisting resource | Size or mathematical charge |
+| --- | --- |
+| Actual source | $N$ cells, $N-1$ links, coefficient store $B$ and two state buffers of $O(NW_L)$ bits. |
+| Acquired data and fixed observer law | The retained $2N+1$-value acquisition record, of $O(N^2B+N)$ bits by §41, and the fixed $F$-bit data of Definition 49.1. |
+| Current observer and observation record | Native/predictive vectors, the $N$ paid observation replies, and $O(NW_L)$ bits of current numeric data. |
+| Inverse-matrix scratch | At most $O(N^2W_L)$ bits, retained here as a conservative allowance even if some fixed calculations have finished. |
+| Candidate, counters and recovered word | $O(Ld_H+L+\log(N+2)+1)$ bits, with distinct retained input/output copies added when present. |
+| Optional pulse-reply archive | Its actual $A_{\rm past}$ bits, including both scalar replies if both are retained. |
+| Serialization and extra delivery copies | Their actual simultaneous $A_{\rm io}$ bits. |
+| Installation and access | Actual origin/class assurance, finite controller description, source reference, Read/Tick/Hold/Add rights and their backing. |
+
+Consequently the stated numerical stores have the simultaneous sufficient bound
+
+$$
+O\bigl(F+N^2B+N^2W_L+Ld_H+L+A_{\rm past}+A_{\rm io}+1\bigr),
+$$
+
+with the actual installation, description, reference/rights and backing charges added. A store shared in fact need be counted only once; a second retained copy is added. Acquisition peak scratch retains its separate bound from §41, and may be allocated together with these stores if a single larger layout is wanted.
+
+Proof. Add the listed stores, rather than selecting different components from incompatible runs. Theorem 46.2's replies are acquired by this same source, while the source buffers, earned law, optional archives and retained installation remain present. Proposition 49.3 gives the common width envelope and the finite candidate scratch. A bit-cost realization can apply any terminating exact integer arithmetic to these finite words: for example, grade-school multiplication/division and Euclidean reduction give a polynomial bit charge per listed rational operation. Comparisons and copying pay their actual word lengths. No bounded bit cost independent of $W_L$ is inferred from the operation count.
+
+After decoding, use Proposition 46.3's actual current predictive record. Each subsequent call pays its source work, literal traffic, predictive update and any redundant native update, as specified in Proposition 41.5. A later rational Add has its own input numerator/denominator widths, so the integer-menu envelope $W_L$ is not asserted for an unrestricted rational continuation. A long additional finite integer-menu run obtains an envelope with its actual larger tick/pulse counts. These bounds allow growing precision and storage; Theorem 48.1 forbids concluding uniformly bounded information memory from fixed $N$. $\square$
+
