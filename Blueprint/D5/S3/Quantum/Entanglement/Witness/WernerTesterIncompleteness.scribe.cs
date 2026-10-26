@@ -63,7 +63,10 @@ internal sealed class WernerTesterIncompletenessDocument : IScribeDocumentDefini
                 StatementSource.FromAuthor(Disp(new Formula.Not(Local("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 ResultProof(),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("jivulescu-lancien-nechita-2022-werner-tester-incompleteness"),
+                    ResolutionKind.Refuted))
         ), []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
