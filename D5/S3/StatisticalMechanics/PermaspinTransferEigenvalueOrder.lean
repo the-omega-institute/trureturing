@@ -78,7 +78,10 @@ private theorem root_above_comparison (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
 private theorem comparison_gaps (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
     c * (1 - d) ^ 2 < c * (1 + d) ^ 2 ∧
     c * (1 - d ^ 2) < c * (1 + d) ^ 2 := by
-  sorry
+  constructor
+  · nlinarith only [mul_pos hc hd]
+  · have hgap : 0 < c * d * (d + 1) := by positivity
+    nlinarith only [hgap]
 
 /-- The largest root is the largest of the three candidate transfer-matrix eigenvalues. -/
 theorem result : claim := by
