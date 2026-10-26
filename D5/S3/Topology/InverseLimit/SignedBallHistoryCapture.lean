@@ -237,7 +237,7 @@ private theorem projection_factor (F : CountableStageᵒᵖ ⥤ Profinite.{1})
   funext x
   exact ConcreteCategory.congr_hom (C.w (homOfLE h).op) x
 
-private theorem exists_original_birth (F : CountableStageᵒᵖ ⥤ Profinite.{1})
+theorem exists_original_birth (F : CountableStageᵒᵖ ⥤ Profinite.{1})
     (C : Cone F) (H : RawHistory F)
     (s : ℕ → SignedMeasure C.pt)
     (hsreg : ∀ n, (s n).totalVariation.Regular)
@@ -292,7 +292,7 @@ private theorem exists_original_birth (F : CountableStageᵒᵖ ⥤ Profinite.{1
     rw [hpre n]
     exact hcarry n
 
-private theorem projected_lift (F : CountableStageᵒᵖ ⥤ Profinite.{1})
+theorem projected_lift (F : CountableStageᵒᵖ ⥤ Profinite.{1})
     (C : Cone F) (H : RawHistory F) (s : ℕ → SignedMeasure C.pt)
     (hsreg : ∀ n, (s n).totalVariation.Regular)
     (hsnorm : ∀ n, (s n).totalVariation univ = 1)
@@ -401,7 +401,7 @@ private theorem capture_reflected_sequence (F : CountableStageᵒᵖ ⥤ Profini
   exact collision_of_original_birth F C hC hs H s hsreg hsnorm θ d hbirth hsup
 
 
-private theorem signed_clopen_collision (F : CountableStageᵒᵖ ⥤ Profinite.{1})
+theorem signed_clopen_collision (F : CountableStageᵒᵖ ⥤ Profinite.{1})
     [∀ j, Nonempty (F.obj j)] (C : Cone F) (hC : IsLimit C)
     (hs : ∀ {i j} (a : i ⟶ j), Surjective (F.map a)) (H : RawHistory F) :
     SignedBallReduction.SignedClopenCollision (K := C.pt) := by

@@ -1,0 +1,47 @@
+**Definition 11.1 (the unchanged source and a restricted observation).**
+Retain all data of Definition 7.1: every $0<Z<1$, $r=1-Z$,
+$H_{\rm n}=r/2$, every preparation height $k_0\in(0,H_{\rm n})$,
+all its fixed preparation rotations and coordinates
+$(\alpha_0,\beta_0)$, and the original $a,\eta>0$. The endpoint is
+exactly (7.1)--(7.2), with raw Haar measure, the unit-source
+$\Gamma$, $g_c=16\sqrt{a\eta}$, the full complex selector (112.5),
+and the coefficient-positive normalized $h$. Write
+$(\mathscr E,\mathscr V)$ for its entire transformed form
+[S, (115.15)] on $L^2(G,m;\mathbb C)$, $m=h^2\mu$, and
+$\mathbf Z_t$ for the conservative diffusion of [S, §116].
+Probability statements use the real form of this same complex form.
+
+Let $\mathcal R:J\times\mathbb T^2\to\mathbb R^{10}$ be exactly the
+five ordered pairs in (7.8), with their signed components, factors two
+and original rotations. Put
+
+$$
+q_0=(k_0,[\alpha_0],[\beta_0]),\qquad
+v_0=\mathcal R(q_0),\qquad
+\Phi=\mathcal R\circ\Psi\quad\hbox{on }\mathcal S.
+\tag{11.1}
+$$
+
+Choose any closed height interval $I=[l,u]\Subset J$ with
+$l<k_0<u$, and define
+
+$$
+\begin{gathered}
+D_I=\{p\in G:l<k_0+x(p)<u\},\qquad
+\theta_I=\inf\{t\ge0:\mathbf Z_t\notin D_I\},\\
+E_I=\mathcal R(I\times\mathbb T^2),\qquad
+O_t^I=\Phi(\mathbf Z_{t\wedge\theta_I}).
+\end{gathered}
+\tag{11.2}
+$$
+
+The last expression at a finite exit uses the continuous extension of
+$\Phi$ to $\overline D_I$, which is still inside the native slab.
+It is held at that exit value. If $\theta_I=\infty$, there is no
+holding. This stops only an observation: $\mathbf Z$ remains the
+original conservative full process after $\theta_I$.
+All original commands still have precisely their entire domains (1.5)
+and (7.6), with their prefix guards and actual periods. The interval
+$I$ is an additional observation restriction, not a new source
+condition or a replacement for those command domains.
+
