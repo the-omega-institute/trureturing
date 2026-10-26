@@ -126,7 +126,12 @@ private lemma overlap_attained {ι : Type*} [Fintype ι] (lam : ι → ℂ) :
     have h := hc
     change (∑ t, Complex.normSq (c t)) = 1 at h
     rw [Fin.sum_univ_two] at h
-    fin_cases b <;>
+    fin_cases b
+    · change ‖c 0‖ ≤ 1
+      nlinarith [Complex.normSq_eq_norm_sq (c 0), Complex.normSq_eq_norm_sq (c 1),
+        Complex.normSq_nonneg (c 0), Complex.normSq_nonneg (c 1), norm_nonneg (c 0),
+        norm_nonneg (c 1)]
+    · change ‖c 1‖ ≤ 1
       nlinarith [Complex.normSq_eq_norm_sq (c 0), Complex.normSq_eq_norm_sq (c 1),
         Complex.normSq_nonneg (c 0), Complex.normSq_nonneg (c 1), norm_nonneg (c 0),
         norm_nonneg (c 1)]
@@ -601,12 +606,12 @@ private lemma walk_reflection (p n : ℕ) :
       · intro x
         have hn : -x - 1 = -(x + 1) := by ring
         constructor
-        · simp only [walk_succ, hadamardStep, if_pos (rfl : (0 : Fin 2) = 0),
-            if_neg (by decide : (1 : Fin 2) ≠ 0)]
+        · simp only [walk_succ, hadamardStep, ite_true,
+            ite_eq_right (by decide : (1 : Fin 2) ≠ 0)]
           rw [hn, (hback (x + 1)).1, (ih.2 (x + 1)).1, pow_succ]
           ring
-        · simp only [walk_succ, hadamardStep, if_pos (rfl : (0 : Fin 2) = 0),
-            if_neg (by decide : (1 : Fin 2) ≠ 0)]
+        · simp only [walk_succ, hadamardStep, ite_true,
+            ite_eq_right (by decide : (1 : Fin 2) ≠ 0)]
           rw [hn, (hback (x + 1)).2, (ih.2 (x + 1)).2, pow_succ]
           ring
 
@@ -684,7 +689,7 @@ private lemma pair_average_le (p : ℕ) [NeZero p] (lam μ : Fin 2 × ZMod p →
     if (if k.1 = 0 then k.2 else -k.2) ∈ s then μ k else lam k
   have hind (s : Finset (ZMod p)) : gMax (f s) ≤ gMax lam := by
     induction s using Finset.induction_on with
-    | empty => exact le_of_eq (congrArg gMax (by funext k; simp only [f, Finset.not_mem_empty, if_false]))
+    | empty => exact le_of_eq (congrArg gMax (by funext k; simp only [f, Finset.notMem_empty, ite_false]))
     | @insert x s hxs ih =>
         have hs0 : f s (0, x) = lam (0, x) := by simp [f, hxs]
         have hs1 : f s (1, -x) = lam (1, -x) := by simp [f, hxs]
