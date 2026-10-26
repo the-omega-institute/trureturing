@@ -39,13 +39,16 @@ internal sealed class OverpartitionThresholdDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Earlier)),
             Node("result", "The uniform finite identity", ResultFormula(),
                 "For every positive k and every nonnegative n the equality is in Int. The alternating sum is empty for k greater than n. Ordinary Ferrers conjugation preserves the number of distinct sizes, so its reindexing preserves the number of marking subsets and exchanges the largest-part total with the total number of parts. Removing k copies of one positive size gives the threshold recurrence. Toggling the optional mark and removing a nonoverlined occurrence give the frequency recurrence; finite alternating cancellation and the pointwise complementary count yield the displayed equality. The overpartition decomposition, nonoverlined frequency formula and threshold-one and threshold-three ingredients have earlier literature precedents. The cited Question 3 asks for a concise analogue, and the later Conclusion retains that question; neither source asserts this particular formula.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source, Later, Earlier)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source, Later, Earlier),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bhoria-eyyunni-santra-2026-overpartition-threshold-identity"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("overpartition-threshold-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula C(string name, params Formula[] args) =>
