@@ -6,6 +6,7 @@
    utility: none
    digest: Connected gate patterns have a polynomial spectral gap at fixed Hamming weight. -/
 
+import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 import Mathlib.Combinatorics.SimpleGraph.Paths
@@ -176,10 +177,108 @@ private lemma projection_energy {ι : Type*} [Fintype ι] (s : Equiv.Perm ι)
   norm_num
   nlinarith
 
+private lemma residual_eq {ι : Type*} [Fintype ι] (s : Equiv.Perm ι)
+    (v : EuclideanSpace ℂ ι) :
+    v - average s v = (1 / 2 : ℂ) • (v - shuffle s v) := by
+  ext x
+  change v x - (1 / 2 : ℂ) * (v x + v (s x)) =
+    (1 / 2 : ℂ) * (v x - v (s x))
+  ring
+
+private lemma residual_contract {ι : Type*} [Fintype ι] (s : Equiv.Perm ι)
+    (v : EuclideanSpace ℂ ι) : ‖v - average s v‖ ≤ ‖v‖ := by
+  rw [residual_eq, norm_smul, norm_div, norm_one]
+  norm_num
+  calc
+    1 / 2 * ‖v - shuffle s v‖ ≤ 1 / 2 * (‖v‖ + ‖shuffle s v‖) := by
+      gcongr
+      exact norm_sub_le _ _
+    _ = ‖v‖ := by rw [shuffle_norm]; ring
+
+private lemma residual_lipschitz {ι : Type*} [Fintype ι] (s : Equiv.Perm ι)
+    (v w : EuclideanSpace ℂ ι) :
+    ‖v - average s v‖ ≤ ‖v - w‖ + ‖w - average s w‖ := by
+  have h : v - average s v =
+      (v - w - average s (v - w)) + (w - average s w) := by
+    ext x
+    change v x - (1 / 2 : ℂ) * (v x + v (s x)) =
+      (v x - w x - (1 / 2 : ℂ) * (v x - w x + (v (s x) - w (s x)))) +
+      (w x - (1 / 2 : ℂ) * (w x + w (s x)))
+    ring
+  rw [h]
+  exact (norm_add_le _ _).trans (add_le_add (residual_contract s (v - w)) le_rfl)
+
+private noncomputable def increments {n k : ℕ} : List (Fin n × Fin n) →
+    EuclideanSpace ℂ (config n k) → List ℝ
+  | [], _ => []
+  | e :: pat, v => ‖v - average (swapEquiv e.1 e.2) v‖ ::
+      increments pat (average (swapEquiv e.1 e.2) v)
+
+private lemma increments_length {n k : ℕ} (pat : List (Fin n × Fin n))
+    (v : EuclideanSpace ℂ (config n k)) : (increments pat v).length = pat.length := by
+  induction pat generalizing v with
+  | nil => rfl
+  | cons e pat ih => exact congrArg Nat.succ (ih _)
+
+private lemma increments_nonneg {n k : ℕ} (pat : List (Fin n × Fin n))
+    (v : EuclideanSpace ℂ (config n k)) : ∀ t ∈ increments pat v, 0 ≤ t := by
+  induction pat generalizing v with
+  | nil => intro t ht; exact False.elim (List.not_mem_nil ht)
+  | cons e pat ih =>
+    intro t ht
+    rcases List.mem_cons.mp ht with rfl | ht
+    · exact norm_nonneg _
+    · exact ih _ t ht
+
+private lemma increments_energy {n k : ℕ} (pat : List (Fin n × Fin n))
+    (v : EuclideanSpace ℂ (config n k)) :
+    ((increments pat v).map (fun t => t ^ 2)).sum = ‖v‖ ^ 2 - ‖run pat v‖ ^ 2 := by
+  induction pat generalizing v with
+  | nil => simp only [increments, List.map_nil, List.sum_nil, run, List.foldl_nil, sub_self]
+  | cons e pat ih =>
+    change ‖v - average (swapEquiv e.1 e.2) v‖ ^ 2 +
+      ((increments pat (average (swapEquiv e.1 e.2) v)).map (fun t => t ^ 2)).sum =
+      ‖v‖ ^ 2 - ‖run pat (average (swapEquiv e.1 e.2) v)‖ ^ 2
+    rw [ih]
+    have h := projection_energy (swapEquiv e.1 e.2)
+      (swapConfig_involutive e.1 e.2) v
+    linarith
+
+private lemma defect_le_increments {n k : ℕ} (pat : List (Fin n × Fin n))
+    (v : EuclideanSpace ℂ (config n k)) (e : Fin n × Fin n) (he : e ∈ pat) :
+    ‖v - average (swapEquiv e.1 e.2) v‖ ≤ (increments pat v).sum := by
+  induction pat generalizing v with
+  | nil => exact False.elim (List.not_mem_nil he)
+  | cons d pat ih =>
+    rcases List.mem_cons.mp he with rfl | he
+    · change _ ≤ _ + (increments pat (average (swapEquiv e.1 e.2) v)).sum
+      exact le_add_of_nonneg_right (List.sum_nonneg (increments_nonneg _ _))
+    · change _ ≤ _ + (increments pat (average (swapEquiv d.1 d.2) v)).sum
+      exact (residual_lipschitz (swapEquiv e.1 e.2) v
+        (average (swapEquiv d.1 d.2) v)).trans (add_le_add le_rfl (ih (average (swapEquiv d.1 d.2) v) he))
+
 private lemma energy_control {n k : ℕ} (pat : List (Fin n × Fin n))
     (v : EuclideanSpace ℂ (config n k)) :
     staticEnergy pat v ≤ (pat.length : ℝ) ^ 2 * (‖v‖ ^ 2 - ‖run pat v‖ ^ 2) := by
-  sorry
+  have hs : staticEnergy pat v ≤ (pat.length : ℝ) * (increments pat v).sum ^ 2 := by
+    unfold staticEnergy
+    have h := List.sum_le_length_nsmul
+      (pat.map fun e => ‖v - average (swapEquiv e.1 e.2) v‖ ^ 2)
+      ((increments pat v).sum ^ 2) (by
+        intro t ht
+        obtain ⟨e, he, rfl⟩ := List.mem_map.mp ht
+        exact pow_le_pow_left₀ (norm_nonneg _) (defect_le_increments pat v e he) 2)
+    simpa only [List.length_map, nsmul_eq_mul] using h
+  have hcs : (increments pat v).sum ^ 2 ≤ (pat.length : ℝ) *
+      ((increments pat v).map (fun t => t ^ 2)).sum := by
+    simpa only [Multiset.sum_coe, Multiset.coe_card, Multiset.map_coe, increments_length]
+      using Multiset.sq_sum_le_card_mul_sum_sq (↑(increments pat v) : Multiset ℝ)
+  calc
+    staticEnergy pat v ≤ (pat.length : ℝ) * (increments pat v).sum ^ 2 := hs
+    _ ≤ (pat.length : ℝ) * ((pat.length : ℝ) *
+        ((increments pat v).map (fun t => t ^ 2)).sum) :=
+      mul_le_mul_of_nonneg_left hcs (Nat.cast_nonneg _)
+    _ = _ := by rw [increments_energy]; ring
 
 private lemma edge_energy {n k : ℕ} (a b : Fin n)
     (v : EuclideanSpace ℂ (config n k)) :
