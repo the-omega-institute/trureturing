@@ -16,8 +16,6 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryEvent.execute`
 
 Under CH the actual exists_prepared_step chooses one Prepared Q. The original reservation sum is read before target projection. A locally valid delayed reservation selects a DelayedTask on that same Q and retains its Result and certificate; all other reservations select an ordinary Result. The event stores exactly the selected Q and Result, together with branch and execution equations. Local delayed tests read only already born rows and labels and the clopen enumeration of their original whole birth.
 
-The four-slot escape registration remains unfinished under issue 21750; the Reg mirror checks exact source reconstruction and does not claim declared_validated.
-
 **Theorem 1.2 (Incoming regular bounded convergence).**
 
 Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryEvent.next_regular`
@@ -29,8 +27,6 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryEvent.next_regu
 *Commentary.*
 
 The same selected Result supplies the next predecessor and its regular bounded every-choice F. Literal carrier equality transports the original signed pushforwards and weak-dual convergence. The output retains both Jordan regularity proofs and total variation at most one; this information is not inferred from the weaker Predecessor.F.
-
-The four-slot escape registration remains unfinished under issue 21750; the Reg mirror checks exact source reconstruction and does not claim declared_validated.
 
 ## References
 

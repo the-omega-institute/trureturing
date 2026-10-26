@@ -22,8 +22,7 @@ internal sealed class SignedOrdinalLimitDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("limit-whole-archive-readback"),
                 DeclarationHandle.Create(Owner + "predecessor_whole_readback"), H("Unchanged whole archive labels"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("For every old row of the actual limit predecessor, its entire U, V and nu are heterogeneously equal to the same archive row's U, V and nu on the unchanged literal carrier. All labels are retained, including labels not yet eligible for J.")),
-                    Paragraph(Text("The four-slot escape registration remains unfinished under issue 21750; the Reg mirror checks exact source reconstruction and does not claim declared_validated."))), DescribeRole.Theorem),
+                    Paragraph(Text("For every old row of the actual limit predecessor, its entire U, V and nu are heterogeneously equal to the same archive row's U, V and nu on the unchanged literal carrier. All labels are retained, including labels not yet eligible for J."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("construct-limit-event"),
                 DeclarationHandle.Create(Owner + "construct"), H("Retain the actual limit event"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(

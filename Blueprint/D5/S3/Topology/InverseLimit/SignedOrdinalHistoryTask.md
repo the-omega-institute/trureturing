@@ -28,8 +28,6 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryTask.local_sema
 
 The natural code uses the fixed mathlib equivalence from naturals to pairs of naturals, indexing the original birth clopen table B. Intrinsic validity means distinct whole measure labels, disjoint source and target clopens, original target Dirac points in V and the target clopen, and original source variation supported on the source clopen. On the old eligible row and label domain this is equivalent to the actual executable DelayedTask predicate on Q. No I, J, F, future carrier or final continuous map is part of intrinsic validity.
 
-The four-slot escape registration remains unfinished under issue 21750; the Reg mirror checks exact source reconstruction and does not claim declared_validated.
-
 **Theorem 1.3 (Stability from canonical whole birth coherence).**
 
 Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryTask.stable_local`
@@ -41,8 +39,6 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryTask.stable_loc
 *Commentary.*
 
 For two actual coherent proper states, an older row and eligible source and target labels, the local delayed predicate at the later Q is equivalent to Intrinsic on the earlier canonical whole birth. Preparation first reads the older predecessor pack, coherence identifies it with the original Q, and literal carrier equality transports that same pack. The global semantic condition is a consequence of these equalities, not an input to the local executor.
-
-The four-slot escape registration remains unfinished under issue 21750; no declared_validated registration is claimed.
 
 ## References
 

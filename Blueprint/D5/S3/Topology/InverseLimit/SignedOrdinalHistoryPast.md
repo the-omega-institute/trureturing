@@ -16,8 +16,6 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryPast.carrier_re
 
 For cutoffs at most omega-one, every carrier of an actual earlier state equals the strict prefix carrier at that same coordinate. Coordinates at most omega use the actual initial invariant; later coordinates use pairwise same-run coherence.
 
-The four-slot escape audit is unfinished under issue 21750; only exact source reconstruction is claimed.
-
 **Theorem 1.2 (Canonical whole old birth).**
 
 Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryPast.bornPack_read`
@@ -90,8 +88,6 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryPast.I_read`
 
 On every actual earlier state and strictly older row, the strict Data.I equals that state's actual incoming predecessor I.
 
-The four-slot escape audit is unfinished under issue 21750.
-
 **Theorem 1.8 (Incoming J readback).**
 
 Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryPast.J_read`
@@ -104,8 +100,6 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryPast.J_read`
 
 For a strictly older row and eligible old label, strict Data.J equals the actual incoming predecessor J at that earlier carrier stage.
 
-The four-slot escape audit is unfinished under issue 21750.
-
 **Theorem 1.9 (Original eligible A through F on one strict past).**
 
 Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryPast.strictLaws`
@@ -117,8 +111,6 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryPast.strictLaws
 *Commentary.*
 
 A pairwise coherent family of already constructed states below a proper successor-limit ordinal defines a literal Prefix. Each carrier and restriction is read from a later state of that same past. Each whole birth is its original Q; permanent N is read from the original outgoing maximum event, whose successor arrival lies strictly below the limit. Incoming I and J are read at the carrier stage. Canonical birth and arrival equalities identify A, B, C, E and regular bounded F with actual predecessor evidence, while pairwise coherence gives DI and DJ. No completed-history or future-stage semantic predicate enters these proper-limit input laws.
-
-The four-slot escape registration remains unfinished under issue 21750; the Reg mirror checks exact source reconstruction and does not claim declared_validated.
 
 ## References
 
