@@ -77,7 +77,7 @@ def family : Registration arena.{u,v}
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@zero_decomposition_pairwise_disjoint.{u,v}) (Realization signature.{u})
-    (type_of% (@Finset.{u})) Unit where
+    Unit Unit where
   unitName := `D5.S3.Combinatorics.Sequenceability.DisjointMinimalZeroOrdering.zero_decomposition_pairwise_disjoint.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Sequenceability.DisjointMinimalZeroOrdering.family
   realizationSource := none
@@ -93,7 +93,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (@Finset.{u})
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Sequenceability.DisjointMinimalZeroOrdering
     definition := none
