@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Lattices.Golay;
 internal sealed class GolayEncoderDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Lattices/Golay/GolayEncoder.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Arith/leech1967packing");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QuadraticForms/leech1967packing");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Explicit extended Golay code",

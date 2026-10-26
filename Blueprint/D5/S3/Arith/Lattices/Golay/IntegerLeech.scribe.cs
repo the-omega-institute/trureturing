@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Lattices.Golay;
 internal sealed class IntegerLeechDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Lattices/Golay/IntegerLeech.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Arith/leech1967packing");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QuadraticForms/leech1967packing");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The integral Golay construction and its exact minimum",
