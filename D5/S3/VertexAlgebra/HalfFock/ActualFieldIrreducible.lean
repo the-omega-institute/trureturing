@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: All raw coefficients of the production corrected field act irreducibly on the entire actual tensor module. -/
+   digest: Production corrected-field coefficients act irreducibly on the actual tensor. -/
 
 /- proof_shape: correctedField_irreducible: content
 admission_basis: escape-witness
@@ -13,9 +13,12 @@ including every quotient representative through its central sign; irreducible gr
 stability and actual negative-current polynomial induction then fill the tensor module.
 Literature status: classical twisted lattice module irreducibility; no novelty claim.
 -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.VertexAlgebra.ActualTensorGroundIntersection
 import D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds
 import D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
+
+/-! Extraction of ground stability and oscillator generation from raw field coefficients. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -61,6 +64,7 @@ private theorem groundAction_mem (D : LatticeData) (hu : IsUnit D.G.det)
   rw [charged_vacuum_coefficient, neg_add_cancel, creation_zero] at member
   have hn : chargeScalar D charge ≠ 0 := zpow_ne_zero _ (by norm_num)
   have scaled := S.smul_mem (chargeScalar D charge)⁻¹ member
+  change ((1 : Oscillator D) ⊗ₜ[ℂ] groundAction D hu charge g) ∈ S
   simpa only [smul_smul, inv_mul_cancel₀ hn, one_smul] using scaled
 
 private def groundSubrepresentation (D : LatticeData) (hu : IsUnit D.G.det)
@@ -76,14 +80,21 @@ private def groundSubrepresentation (D : LatticeData) (hu : IsUnit D.G.det)
       have decompose : (⟨sign, charge⟩ : Extension D) =
           (⟨sign, 0⟩ : Extension D) * ⟨0, charge⟩ := by
         apply SignExtension.ext <;> simp [HMul.hMul, Mul.mul]
+      change groundRepresentation D hu
+        ((QuotientGroup.mk' (K D)) (⟨sign, charge⟩ : Extension D)) g ∈
+          groundIntersection D hu S
       rw [decompose, map_mul, map_mul, Module.End.mul_apply]
       have hc := groundAction_mem D hu S stable charge g hg
       change groundRepresentation D hu (QuotientGroup.mk (⟨sign, 0⟩ : Extension D))
         (groundAction D hu charge g) ∈ groundIntersection D hu S
-      fin_cases sign
-      · simpa only [show (QuotientGroup.mk (⟨(0 : F₂), 0⟩ : Extension D)) = 1 from rfl,
-          map_one, Module.End.one_apply] using hc
-      · have central : groundRepresentation D hu
+      have signs : sign = 0 ∨ sign = 1 := by fin_cases sign <;> simp
+      rcases signs with hzero | hone
+      · rw [hzero]
+        change groundRepresentation D hu (QuotientGroup.mk' (K D) 1)
+          (groundAction D hu charge g) ∈ groundIntersection D hu S
+        simpa only [map_one, Module.End.one_apply] using hc
+      · rw [hone]
+        have central : groundRepresentation D hu
             (QuotientGroup.mk (⟨1, 0⟩ : Extension D)) =
               -(1 : Module.End ℂ (ActualGround D hu)) :=
           (Classical.choose_spec
@@ -137,9 +148,9 @@ theorem correctedField_irreducible (D : LatticeData) (hu : IsUnit D.G.det)
         TensorProduct.map_tmul, LinearMap.id_apply, LatticeHalfFock.current_negative,
         LinearMap.mulLeft_apply, mul_comm] using hm
   apply top_unique
-  intro x _
-  induction x using TensorProduct.induction_on with
-  | zero => exact S.zero_mem
+  intro x hx
+  clear hx
+  induction x using TensorProduct.inductionOn with
   | tmul p g => exact polynomial p g
   | add x y hx hy => exact S.add_mem hx hy
 
