@@ -37,4 +37,3 @@ For every d>=1 and natural n with n+1<=2(d+1), let C be any Readout d (replicate
 - Truth anchor: `D5/S3/Observer/Linear/GainRayEndpoint.endpoint_jet_obstruction`
 - Truth anchor: `D5/S3/Observer/Linear/GainRayEndpoint.pureM_universal_obstruction`
 - Dependency: [D5/S3/Observer/Linear/GainRayJets](GainRayJets.md)
-- Dependency: [D5/S3/Observer/Linear/GainRaySpectral](GainRaySpectral.md)
