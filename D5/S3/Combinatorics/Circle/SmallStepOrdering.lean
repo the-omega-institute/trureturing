@@ -7,6 +7,7 @@
    digest: Pairwise compatible opposite steps can be permuted between any two legal endpoints. -/
 module
 public import D5.S3.Combinatorics.Circle.SourceWidth
+public import Mathlib.Data.List.Perm.Basic
 
 /-! # Ordering compatible integer steps between arbitrary legal endpoints
 
