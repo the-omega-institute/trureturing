@@ -8,6 +8,8 @@
 
 import D5.S3.Topology.Measures.SignedBallReduction
 import Mathlib.Topology.Category.Profinite.Basic
+import Mathlib.Topology.Metrizable.Basic
+import Mathlib.Topology.Sequences
 
 /-!
 # Point-space consequences of signed dual-ball exclusion
@@ -64,5 +66,29 @@ private theorem point_space_no_beta_of_signed_ball (K : Profinite.{u})
   intro f hf hfi
   exact Hball (evaluation K ∘ f) ((continuous_evaluation K).comp hf)
     (fun p => norm_evaluation_le_one K (f p)) ((evaluation_injective K).comp hfi)
+
+open Filter _root_.Topology _root_.TopologicalSpace
+
+universe v
+
+private theorem point_space_size_of_surjection_no_sequences (K : Profinite.{u})
+    {X : Type v} [Infinite X] (f : K → X) (hf : Surjective f)
+    (hseq : ∀ (x : ℕ → K) (p : K), Tendsto x atTop (𝓝 p) →
+      ∀ᶠ n in atTop, x n = p) :
+    Infinite K ∧ ¬ FirstCountableTopology K ∧ ¬ MetrizableSpace K := by
+  letI : Infinite K := Infinite.of_surjective f hf
+  have hnot : ¬ FirstCountableTopology K := by
+    intro hfc
+    letI : FirstCountableTopology K := hfc
+    let e : ℕ ↪ K := Infinite.natEmbedding K
+    obtain ⟨p, phi, hphi, hconv⟩ := CompactSpace.tendsto_subseq e
+    obtain ⟨N, hN⟩ := eventually_atTop.1 (hseq (e ∘ phi) p hconv)
+    have heq : phi N = phi (N + 1) :=
+      e.injective ((hN N le_rfl).trans (hN (N + 1) (Nat.le_succ N)).symm)
+    exact (Nat.ne_of_lt (Nat.lt_succ_self N)) (hphi.injective heq)
+  refine ⟨inferInstance, hnot, ?_⟩
+  intro hm
+  letI : MetrizableSpace K := hm
+  exact hnot inferInstance
 
 end D5.S3.Topology.InverseLimit.TalagrandTopologicalConsequences
