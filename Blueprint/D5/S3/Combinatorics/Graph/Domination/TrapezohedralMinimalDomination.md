@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/TrapezohedralMinimalDomina
 
 *Commentary.*
 
-Egolf and Furst, arXiv:2502.05031v1, Definition 3.6, defines this labelled graph. Its four edge families use the canonical cyclic permutation of Fin n for successor. The source graph range is n>=3; the Lean definition also permits auxiliary smaller orders.
+Egolf and Furst, arXiv:2502.05031v1, Definition 3.6, defines this labelled graph. Its four edge families use the canonical cyclic permutation of Fin n for successor. The A381190 counting range is n>=3; the Lean definition also permits auxiliary smaller orders.
 
 **Definition 1.2 (Inclusion minimality).**
 
@@ -52,7 +52,7 @@ $$\forall (V : Type*), \forall (G : \operatorname{SimpleGraph}\left(V\right)), \
 
 *Commentary.*
 
-Mynhardt and Roux, section 1.1 and Observation 1.1(ii), states the classical characterization: a dominating set is minimal dominating exactly when it is irredundant, meaning that every selected vertex has a private neighbour. The source uses finite graphs. This independently proved Lean formulation applies to arbitrary vertex types and compares against all subsets; that scope extension is supplied by the repository proof.
+Mynhardt and Roux, section 1.1 and Observation 1.1(ii), states the classical characterization: a dominating set is minimal dominating exactly when it is irredundant, meaning that every selected vertex has a private neighbour. The independently proved Lean formulation applies to arbitrary vertex types and compares against all subsets; no novelty is claimed for this general formulation.
 
 **Theorem 1.5 (All proper subsets).**
 
