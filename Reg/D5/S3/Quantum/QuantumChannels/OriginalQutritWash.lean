@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.QuantumChannels.OriginalQutritWash
 import Reg.Support.DependentFamily
 
+/-! The three norm observations retain the full complex matrix and natural-iterate law. -/
+
 open _root_.D5.S3.Quantum.QuantumChannels.OriginalQutritGap
 open _root_.D5.S3.Quantum.QuantumChannels.OriginalQutritWash
 open _root_.D5.S3.Quantum.Matrix.CartesianVariance
@@ -45,9 +47,11 @@ private theorem bad_law (i : Fin 3) : ¬ arena.Law (bad i) := by
   intro h
   fin_cases i
   · have hh := (h.1 0 (by simp)).1
-    norm_num [bad, realize] at hh
+    change (10 : ℝ) ≤ (5/12 : ℝ) * ‖vectorize 3 (0 : Mat)‖ ^ 2 at hh
+    norm_num at hh
   · have hh := (h.1 0 (by simp)).2 0
-    norm_num [bad, realize] at hh
+    change (10 : ℝ) ≤ (2/3 : ℝ)^0 * ‖vectorize 3 (0 : Mat)‖ at hh
+    norm_num at hh
   · let u : Fin 3 → ℂ := Pi.single 0 1
     let σ : Mat := Matrix.vecMulVec u (star u)
     have hp : σ.PosSemidef := Matrix.posSemidef_vecMulVec_self_star u
@@ -55,7 +59,7 @@ private theorem bad_law (i : Fin 3) : ¬ arena.Law (bad i) := by
       norm_num [σ, u, Matrix.trace, Matrix.vecMulVec_apply, Fin.sum_univ_succ]
     have hh := h.2 σ hp ht 0
     change (10 : ℝ) ≤ Real.sqrt (2/3) * (2/3 : ℝ)^0 at hh
-    norm_num at hh
+    simp only [pow_zero, mul_one] at hh
     nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2/3)]
 
 def family : Registration arena (type_of% @explicit_wash_bound) where
@@ -69,7 +73,7 @@ def family : Registration arena (type_of% @explicit_wash_bound) where
       intro j hj
       funext p X
       change actual.readout j p X = if j = i then 10 else actual.readout j p X
-      rw [if_neg hj]
+      rw [ite_eq_right hj]
     · intro e
       exact nomatch e
   dependence := by
@@ -80,7 +84,14 @@ def family : Registration arena (type_of% @explicit_wash_bound) where
       have hv : vectorize 3 (1 : Mat) = 0 := norm_eq_zero.mp h
       have hm : (1 : Mat) = 0 := (vectorize 3).injective (by simpa using hv)
       exact one_ne_zero hm
-    fin_cases i <;> simp [actual, realize, hn, pow_ne_zero 2 hn]
+    fin_cases i
+    · change ‖vectorize 3 (0 : Mat)‖ ^ 2 ≠ ‖vectorize 3 (1 : Mat)‖ ^ 2
+      simpa only [map_zero, norm_zero, zero_pow (by decide : 2 ≠ 0)] using
+        (pow_ne_zero 2 hn).symm
+    · change ‖vectorize 3 (0 : Mat)‖ ≠ ‖vectorize 3 (1 : Mat)‖
+      simpa only [map_zero, norm_zero] using hn.symm
+    · change ‖vectorize 3 (0 : Mat)‖ ≠ ‖vectorize 3 (1 : Mat)‖
+      simpa only [map_zero, norm_zero] using hn.symm
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@explicit_wash_bound) (Realization signature) (Type) Unit := {
