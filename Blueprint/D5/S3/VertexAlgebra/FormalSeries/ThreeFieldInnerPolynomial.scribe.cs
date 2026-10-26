@@ -8,7 +8,7 @@ internal sealed class ThreeFieldInnerPolynomialDocument : IScribeDocumentDefinit
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Inner clearing and supported cancellation", H("Inner clearing and supported cancellation"), Blocks(
-            Describe.Lean(DescribeId.Create("innerPolynomial"),
+            Describe.Lean(DescribeId.Create("inner-polynomial"),
                 DeclarationHandle.Create(Prefix + "innerPolynomial"),
                 H("The literal original multiplier"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The multiplier is x^a0 (x-b-z)^k (x-z)^k b^k (b+z)^a1 z^a2 in the original x,b,z coordinates. Its action is the existing finite Laurent-polynomial convolution."))), DescribeRole.Definition),

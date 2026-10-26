@@ -8,11 +8,11 @@ internal sealed class ThreeFieldInnerNativeInverseDocument : IScribeDocumentDefi
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The inner native unit", H("The inner native unit"), Blocks(
-            Describe.Lean(DescribeId.Create("innerUnitSeries"),
+            Describe.Lean(DescribeId.Create("inner-unit-series"),
                 DeclarationHandle.Create(Prefix + "innerUnitSeries"),
                 H("A native series with constant coefficient one"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("In cumulative coefficient coordinates for b,z,x, the exact unit is (1-T-ST)^k (1-T)^k (1+S)^H. It has constant coefficient one over every commutative complex algebra, including the zero algebra."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("rawInnerCoefficient"),
+            Describe.Lean(DescribeId.Create("raw-inner-coefficient"),
                 DeclarationHandle.Create(Prefix + "rawInnerCoefficient"),
                 H("Signed native inverse coefficients"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The generally infinite native numerator is reordered and placed in the cumulative coefficient chart. The coefficient of the inverse unit times this chart is read at the signed index (b+k,b+z+k+a1+a2,x+b+z+a0+3k+a1+a2), with zero extension outside the nonnegative chart."))), DescribeRole.Definition),
