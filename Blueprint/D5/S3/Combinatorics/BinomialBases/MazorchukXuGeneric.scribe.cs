@@ -80,7 +80,11 @@ internal sealed class MazorchukXuGenericDocument : IScribeDocumentDefinition
             Node("Generic","edges_determined_by_data","Reconstruction from the finite data",ReconstructionFormula(),
                 "Suppose the ordinary and exceptional lists together cover every positive vertex up to N. Two bounded graphs satisfying the rules agree if their anchor edges, their incidence cutoffs and all exceptional-edge bits agree. Ordinary-to-ordinary edges are forced by the anchor edges. The mixed pairs are determined by the cutoffs. The remaining pairs are exactly the exceptional bits. This is an equality of labelled relations, without an isomorphism quotient.",DescribeRole.Theorem),
             Node("Generic","exists_unique_generic_completion","Unique generic completion",UniqueFormula(),
-                "Assume both vertex lists increase, the positive positions strictly increase, and no cutoff equals any position. Every fully specified coordinate datum then has exactly one bounded graph satisfying the rules and the prescribed anchor edges and cutoffs. Existence uses the integer threshold construction; the forced-edge criterion and reconstruction give uniqueness. This does not count the coordinate data or prove the binomial counting identity.",DescribeRole.Theorem)), []));
+                "Assume both vertex lists increase, the positive positions strictly increase, and no cutoff equals any position. Every fully specified coordinate datum then has exactly one bounded graph satisfying the rules and the prescribed anchor edges and cutoffs. Existence uses the integer threshold construction; the forced-edge criterion and reconstruction give uniqueness. This does not count the coordinate data or prove the binomial counting identity.",DescribeRole.Theorem),
+            Node("Generic","exceptional_label_eq_position_add_index","Positions reconstruct the labels",LabelFormula(),
+                "Let the injective ordinary list and increasing exceptional list cover all positive vertices up to N, and let p record ordinary positions. The vertices below the j-th exception split into zero, p(j) ordinary vertices and j preceding exceptions. Taking finite cardinalities gives s(j)=p(j)+j+1. The two prefix images are disjoint by the position conditions. The formula includes p(j)=0, adjacent exceptions and an empty ordinary list.",DescribeRole.Theorem),
+            Node("Generic","exists_coordinate_encoding","Extraction of positions and cutoffs",EncodingFormula(),
+                "Given an increasing list of anchor neighbors and an increasing list of missing anchor neighbors covering the positive vertices, every graph satisfying the rules yields a monotone position list and one cutoff for each exception. Prefix cardinality supplies each position; monotonicity follows because an ordinary vertex cannot lie before an earlier exception and after a later one. The cutoff theorem supplies the incidence data, and prefix partitioning reconstructs the original natural labels. This extracts the coordinates but does not yet identify their compression classes or enumerate them.",DescribeRole.Theorem)), []));
 
     private static Formula PositionFormula()
     {
@@ -165,6 +169,31 @@ internal sealed class MazorchukXuGenericDocument : IScribeDocumentDefinition
             All("j",Fn("Fin",i),Lt(D(0),Fn("p",j))),
             All("j",Fn("Fin",i),All("k",Fn("Fin",i),Not(Eq(Fn("c",j),Fn("p",k))))),Cover());
         return Lists(Imp(hypothesis,Ex("E",Rel(N),And(data(E),All("F",Rel(N),Imp(data(F),Eq(F,E)))))));
+    }
+
+    private static Formula Labels() => All("j",Fn("Fin",V("i")),
+        Eq(Fn("s",V("j")),Plus(Plus(Fn("p",V("j")),Fn("val",V("j"))),D(1))));
+    private static Formula LabelFormula()
+    {
+        var M=V("M");var i=V("i");var j=V("j");
+        var hypothesis=And(Fn("Injective",V("g")),Fn("StrictMono",V("s")),
+            All("r",Fn("Fin",M),Lt(D(0),Fn("g",V("r")))),
+            All("j",Fn("Fin",i),And(Lt(D(0),Fn("s",j)),Le(Fn("s",j),V("N")),
+                Fn("Position",V("g"),Fn("s",j),Fn("p",j)))),Cover());
+        return Many("N M i",N,All("g",Map(Fn("Fin",M),N),All("s",Map(Fn("Fin",i),N),
+            All("p",Map(Fn("Fin",i),N),Imp(hypothesis,Labels())))));
+    }
+    private static Formula EncodingFormula()
+    {
+        var E=V("E");var M=V("M");var i=V("i");var j=V("j");
+        var hypothesis=And(Fn("Rules",E),Fn("StrictMono",V("g")),Fn("StrictMono",V("s")),
+            All("r",Fn("Fin",M),Fn("E",D(0),Fn("g",V("r")))),
+            All("j",Fn("Fin",i),And(Not(Fn("E",D(0),Fn("s",j))),Lt(D(0),Fn("s",j)),Le(Fn("s",j),V("N")))),Cover());
+        var conclusion=Ex("p",Map(Fn("Fin",i),N),Ex("c",Map(Fn("Fin",i),N),
+            And(Fn("Monotone",V("p")),All("j",Fn("Fin",i),
+                Fn("Position",V("g"),Fn("s",j),Fn("p",j))),Cutoffs(E),Labels())));
+        return Many("N M i",N,All("E",Rel(N),All("g",Map(Fn("Fin",M),N),
+            All("s",Map(Fn("Fin",i),N),Imp(hypothesis,conclusion)))));
     }
 
 }

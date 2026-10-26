@@ -290,4 +290,127 @@ theorem exists_unique_generic_completion {N M i : ℕ}
   exact (edges_determined_by_data hE hF (fun he => hEb _ _ he) (fun he => hFb _ _ he) g s c hcover hEo
     (fun a => (hEa' a).trans (hFa a).symm) hEc hFc hbits).symm
 
+/-- The position and exceptional index reconstruct the original natural label.
+This includes adjacent exceptional vertices and positions equal to zero. -/
+theorem exceptional_label_eq_position_add_index {N M i : ℕ}
+    (g : Fin M → ℕ) (s : Fin i → ℕ) (p : Fin i → ℕ)
+    (hg : Function.Injective g) (hs : StrictMono s)
+    (hgp : ∀ r, 0 < g r) (hsp : ∀ j, 0 < s j) (hsb : ∀ j, s j ≤ N)
+    (hp : ∀ j, Position g (s j) (p j))
+    (hcover : ∀ a, 0 < a → a ≤ N → (∃ r, g r = a) ∨ (∃ j, s j = a))
+    (j : Fin i) : s j = p j + j.val + 1 := by
+  classical
+  let G := (Finset.univ.filter (fun r : Fin M => r.val < p j)).image g
+  let S := (Finset.univ.filter (fun k : Fin i => k < j)).image s
+  have hgs : ∀ r k, g r ≠ s k := by
+    intro r k heq
+    have h := (hp k).2 r
+    rcases lt_or_ge r.val (p k) with hr | hr
+    · have := h.1.mpr hr; omega
+    · have := h.2.mpr hr; omega
+  have hzero : 0 ∉ G ∪ S := by
+    intro hz
+    rcases Finset.mem_union.mp hz with hG | hS
+    · obtain ⟨r, _, hr⟩ := Finset.mem_image.mp hG
+      have := hgp r; omega
+    · obtain ⟨k, _, hk⟩ := Finset.mem_image.mp hS
+      have := hsp k; omega
+  have hdisj : Disjoint G S := by
+    apply Finset.disjoint_left.mpr
+    intro a hG hS
+    obtain ⟨r, _, hr⟩ := Finset.mem_image.mp hG
+    obtain ⟨k, _, hk⟩ := Finset.mem_image.mp hS
+    exact hgs r k (hr.trans hk.symm)
+  have hpartition : Finset.range (s j) = insert 0 (G ∪ S) := by
+    ext a
+    constructor
+    · intro ha
+      have haj : a < s j := Finset.mem_range.mp ha
+      by_cases ha0 : a = 0
+      · simp [ha0]
+      apply Finset.mem_insert_of_mem
+      have hap : 0 < a := Nat.pos_of_ne_zero ha0
+      rcases hcover a hap (haj.le.trans (hsb j)) with ⟨r, rfl⟩ | ⟨k, rfl⟩
+      · apply Finset.mem_union_left
+        exact Finset.mem_image.mpr ⟨r,
+          Finset.mem_filter.mpr ⟨Finset.mem_univ r, ((hp j).2 r).1.mp haj⟩, rfl⟩
+      · apply Finset.mem_union_right
+        exact Finset.mem_image.mpr ⟨k,
+          Finset.mem_filter.mpr ⟨Finset.mem_univ k, hs.lt_iff_lt.mp haj⟩, rfl⟩
+    · intro ha
+      rcases Finset.mem_insert.mp ha with rfl | ha
+      · exact Finset.mem_range.mpr (hsp j)
+      · rcases Finset.mem_union.mp ha with hG | hS
+        · obtain ⟨r, hr, rfl⟩ := Finset.mem_image.mp hG
+          exact Finset.mem_range.mpr (((hp j).2 r).1.mpr (Finset.mem_filter.mp hr).2)
+        · obtain ⟨k, hk, rfl⟩ := Finset.mem_image.mp hS
+          exact Finset.mem_range.mpr (hs (Finset.mem_filter.mp hk).2)
+  have hGcard : G.card = p j := by
+    dsimp [G]
+    rw [Finset.card_image_of_injective _ hg, Fin.card_filter_val_lt]
+    exact min_eq_right (hp j).1
+  have hScard : S.card = j.val := by
+    dsimp [S]
+    rw [Finset.card_image_of_injective _ hs.injective]
+    change (Finset.univ.filter (fun k : Fin i => k.val < j.val)).card = j.val
+    rw [Fin.card_filter_val_lt, min_eq_right j.isLt.le]
+  have heq := congrArg Finset.card hpartition
+  simpa only [Finset.card_range, Finset.card_insert_of_notMem hzero,
+    Finset.card_union_of_disjoint hdisj, hGcard, hScard] using heq
+
+private theorem exists_position {M : ℕ} (g : Fin M → ℕ) (hg : StrictMono g)
+    (s : ℕ) (hnot : ∀ r, g r ≠ s) : ∃ p, Position g s p := by
+  classical
+  let p := (Finset.univ.filter (fun r : Fin M => g r < s)).card
+  have hpM : p ≤ M := by
+    simpa only [Finset.card_univ, Fintype.card_fin] using
+      (Finset.card_filter_le (Finset.univ : Finset (Fin M)) (fun r => g r < s))
+  have hdown : ∀ i j : Fin M, j ≤ i → g i < s → g j < s := by
+    intro i j hji hi
+    exact (hg.monotone hji).trans_lt hi
+  refine ⟨p, hpM, ?_⟩
+  intro r
+  have hr : r.val < p ↔ g r < s :=
+    Fin.lt_card_filter_univ_iff_apply_of_imp (fun r => g r < s) hdown
+  refine ⟨hr.symm, ?_⟩
+  have hne := hnot r
+  omega
+
+/-- Every ordered anchor/exception partition has a monotone position list, one cutoff
+per exception, and exact reconstruction of each exceptional natural label. -/
+theorem exists_coordinate_encoding {N M i : ℕ} {E : ℕ → ℕ → Prop}
+    (hE : Rules E) (g : Fin M → ℕ) (s : Fin i → ℕ)
+    (hg : StrictMono g) (hs : StrictMono s)
+    (ho : ∀ r, E 0 (g r)) (hmissing : ∀ j, ¬ E 0 (s j))
+    (hsp : ∀ j, 0 < s j) (hsb : ∀ j, s j ≤ N)
+    (hcover : ∀ a, 0 < a → a ≤ N → (∃ r, g r = a) ∨ (∃ j, s j = a)) :
+    ∃ p c : Fin i → ℕ, Monotone p ∧ (∀ j, Position g (s j) (p j)) ∧
+      (∀ j, Cutoff E g (s j) (c j)) ∧ (∀ j, s j = p j + j.val + 1) := by
+  classical
+  have hgs : ∀ r j, g r ≠ s j := by
+    intro r j heq
+    exact hmissing j (heq ▸ ho r)
+  have hp : ∀ j : Fin i, ∃ p, Position g (s j) p :=
+    fun j => exists_position g hg (s j) (fun r => hgs r j)
+  choose p hp using hp
+  have hc : ∀ j : Fin i, ∃ c, Cutoff E g (s j) c := by
+    intro j
+    obtain ⟨c, hc, _⟩ := exists_unique_ordinary_cutoff hE (hmissing j) g hg ho
+    exact ⟨c, hc⟩
+  choose c hc using hc
+  have hpm : Monotone p := by
+    intro j k hjk
+    by_cases heq : j = k
+    · simp [heq]
+    have hsjk : s j < s k := hs (lt_of_le_of_ne hjk heq)
+    by_contra hpjk
+    have hpk : p k < p j := lt_of_not_ge hpjk
+    have hpkM : p k < M := hpk.trans_le (hp j).1
+    let r : Fin M := ⟨p k, hpkM⟩
+    have hgj := ((hp j).2 r).1.mpr hpk
+    have hkg := ((hp k).2 r).2.mpr le_rfl
+    omega
+  exact ⟨p, c, hpm, hp, hc, exceptional_label_eq_position_add_index g s p
+    hg.injective hs (fun r => hE.ordered (ho r)) hsp hsb hp hcover⟩
+
 end D5.S3.Combinatorics.MazorchukXu

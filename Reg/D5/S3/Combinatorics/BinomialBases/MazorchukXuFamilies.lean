@@ -42,7 +42,11 @@ noncomputable def family_registration : Registration arena (type_of% (@count_eq_
     intro role
     refine ⟨0, 0, 2, ?_⟩
     change count 0 0 ≠ count 0 2
-    norm_num [count, family, triangle, D5.S3.Combinatorics.MazorchukXu.Star,
+    have htriangle : triangle 0 = {(0, 0)} := by
+      ext ⟨a, b⟩
+      simp only [mem_triangle, Finset.mem_singleton, Prod.mk.injEq]
+      omega
+    norm_num [count, family, htriangle, D5.S3.Combinatorics.MazorchukXu.Star,
       firstColumnCard, Finset.powerset_insert]
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
