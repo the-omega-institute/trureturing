@@ -31,7 +31,19 @@ private theorem fg_of_constant {k : Type*} [Field k] (a : Subalgebra k (Polynomi
 private theorem integral_X {k : Type*} [Field k] (a : Subalgebra k (Polynomial k))
     (f : Polynomial k) (hf : f ∈ a) (hd : 0 < f.natDegree) :
     IsIntegral a (X : Polynomial k) := by
-  sorry
+  have hc : f.leadingCoeff ≠ 0 := leadingCoeff_ne_zero.mpr (ne_zero_of_natDegree_gt hd)
+  let q : Polynomial k := C f.leadingCoeff⁻¹ * f
+  have hq : q.Monic := monic_C_mul_of_mul_leadingCoeff_eq_one (inv_mul_cancel₀ hc)
+  have hqd : q.natDegree ≠ 0 := by
+    rw [natDegree_C_mul (inv_ne_zero hc)]
+    exact Nat.ne_of_gt hd
+  have hqa : (q.map (algebraMap k a)).Monic := hq.map _
+  have hqad : (q.map (algebraMap k a)).natDegree ≠ 0 := by
+    rw [hq.natDegree_map _]
+    exact hqd
+  apply IsIntegral.of_aeval_monic hqa hqad
+  rw [aeval_map_algebraMap, aeval_X_left_apply]
+  exact isIntegral_algebraMap (R := a) (x := ⟨q, a.mul_mem (a.algebraMap_mem _) hf⟩)
 
 private theorem finite_of_integral_X {k : Type*} [Field k]
     (a : Subalgebra k (Polynomial k)) (h : IsIntegral a (X : Polynomial k)) :
