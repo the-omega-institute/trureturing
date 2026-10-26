@@ -8,6 +8,8 @@
 
 import D5.S3.Combinatorics.BinomialBases.MazorchukXuClosure
 
+/-! Clique-fiber expansion and its converse along an increasing section. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -107,5 +109,52 @@ theorem rules_cliqueLift_iff {E : α → α → Prop}
       (hs.monotone hbd) (hs.monotone hbg)
     rw [← hs.monotone.map_max, ← hs.monotone.map_max] at hj
     exact unlift hj
+
+/-- An edge between two vertices without choosing their order. -/
+def Incident (E : α → α → Prop) (a b : α) : Prop := E a b ∨ E b a
+
+private theorem ordinary_clique {E : ℕ → ℕ → Prop} (h : Rules E)
+    {g k : ℕ} (hg : E 0 g) (hk : E 0 k) (hgk : g < k) : E g k :=
+  h.propagate hg hk le_rfl (h.ordered hg) hgk
+
+/-- Exceptional incidence is an upper set in the ordered list of ordinary vertices. -/
+theorem incident_ordinary_mono {E : ℕ → ℕ → Prop} (h : Rules E)
+    {s g k : ℕ} (hs : ¬ E 0 s) (hg : E 0 g) (hk : E 0 k)
+    (hgk : g < k) (hsg : Incident E s g) : Incident E s k := by
+  rcases hsg with hsg | hgs
+  · left
+    have hj := h.join hg hsg hk (Nat.zero_le s) (h.ordered hsg)
+      le_rfl (h.ordered hg) le_rfl hgk.le
+    simpa only [max_eq_left (Nat.zero_le s), max_eq_right hgk.le] using hj
+  · have hsk : s ≠ k := by intro heq; subst s; exact hs hk
+    rcases lt_or_gt_of_ne hsk with hsk | hks
+    · left
+      exact h.propagate hgs (ordinary_clique h hg hk hgk) le_rfl (h.ordered hgs) hsk
+    · right
+      exact h.propagate hk hgs (Nat.zero_le g) hgk hks
+
+/-- Symmetric threshold edges on an ordered set. -/
+def thresholdEdges (x y : α → ℚ) (a b : α) : Prop :=
+  a < b ∧ y a < x b ∧ y b < x a
+
+/-- Monotone horizontal coordinates and arbitrary vertical thresholds satisfy P and J. -/
+theorem rules_thresholdEdges (x y : α → ℚ) (hx : Monotone x) :
+    Rules (thresholdEdges x y) := by
+  refine ⟨fun h => h.1, ?_, ?_⟩
+  · intro a b c d hab hcd hac hcb hbd
+    exact ⟨hbd, hab.2.2.trans_le (hx (hac.trans (hcb.le.trans hbd.le))),
+      hcd.2.2.trans_le (hx hcb.le)⟩
+  · intro a b c d e g hab hcd heg hac hcb hae heb hbd hbg
+    refine ⟨lt_of_lt_of_le (max_lt hcb heb) (hbd.trans (le_max_left d g)), ?_, ?_⟩
+    · rcases le_total c e with hce | hec
+      · rw [max_eq_right hce]
+        exact heg.2.1.trans_le (hx (le_max_right d g))
+      · rw [max_eq_left hec]
+        exact hcd.2.1.trans_le (hx (le_max_left d g))
+    · rcases le_total d g with hdg | hgd
+      · rw [max_eq_right hdg]
+        exact heg.2.2.trans_le (hx (le_max_right c e))
+      · rw [max_eq_left hgd]
+        exact hcd.2.2.trans_le (hx (le_max_left c e))
 
 end D5.S3.Combinatorics.MazorchukXu

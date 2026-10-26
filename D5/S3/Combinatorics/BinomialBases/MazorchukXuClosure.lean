@@ -11,6 +11,8 @@ import Mathlib.Data.Finset.Prod
 import Mathlib.RingTheory.Polynomial.Pochhammer
 import Mathlib.Tactic
 
+/-! The finite triangular family and the universal ordered-edge presentation. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -59,7 +61,7 @@ structure Rules {α : Type*} [LinearOrder α] (E : α → α → Prop) : Prop wh
       E (max c e) (max d f)
 
 theorem mem_triangle {n a b : ℕ} : (a, b) ∈ triangle n ↔ a ≤ b ∧ b ≤ n := by
-  simp only [triangle, Finset.mem_filter, Finset.mem_product, Finset.mem_range]
+  simp [triangle]
   omega
 
 /-- A literal source equivalence, with all repeated points and both conclusions retained. -/
@@ -74,7 +76,7 @@ theorem star_iff_rules {Y : Finset (ℕ × ℕ)}
         hab.2 hcd.2 hcd.2 hac (by omega) hac (by omega)
         (by omega) (by omega)).2 (by omega)
       have hb : b - 1 + 1 = b := by omega
-      simpa only [min_self, hb] using And.intro hbd hsource
+      simpa only [pointEdges, min_self, hb] using And.intro hbd hsource
     · intro a b c d e f hab hcd hef hac hcb hae heb hbd hbf
       have hsource := (h a (b - 1) c (d - 1) e (f - 1)
         hab.2 hcd.2 hef.2 hac (by omega) hae (by omega)
