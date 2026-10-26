@@ -1,4 +1,4 @@
-import D5.S3.Combinatorics.Sequenceability.PositiveChargeGeometry
+import D5.S3.Combinatorics.Sequenceability.PositiveChargeIncidence
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
@@ -83,7 +83,7 @@ def quotient_audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Sequenceability.PositiveChargeGeometry
+    owner := `D5.S3.Combinatorics.Sequenceability.PositiveChargeIncidence
     definition := none
     coordinates := #[0,1]
     readouts := #[{

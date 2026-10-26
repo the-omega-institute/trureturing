@@ -36,5 +36,4 @@ These are repository-derived symbolic incidence and integer-potential arguments 
 
 - Truth anchor: `D5/S3/Combinatorics/Sequenceability/PositiveChargeGeometry.original_positive_charge_target`
 - Dependency: [D5/S3/Combinatorics/Graph/EdgeColouring/TwoColours](../Graph/EdgeColouring/TwoColours.md)
-- Dependency: [D5/S3/Combinatorics/Sequenceability/DisjointMinimalZeroOrdering](DisjointMinimalZeroOrdering.md)
-- Dependency: [D5/S3/Combinatorics/Sequenceability/PositiveChargePorts](PositiveChargePorts.md)
+- Dependency: [D5/S3/Combinatorics/Sequenceability/PositiveChargeIncidence](PositiveChargeIncidence.md)

@@ -60,4 +60,4 @@ The port constructions are conditional. PositiveChargeGeometry derives their ori
 - Truth anchor: `D5/S3/Combinatorics/Sequenceability/PositiveChargePorts.native_avoiding_word`
 - Truth anchor: `D5/S3/Combinatorics/Sequenceability/PositiveChargePorts.universal_avoiding_word`
 - Dependency: [D5/S3/Combinatorics/Graph/Walks/SemicompleteHamilton](../Graph/Walks/SemicompleteHamilton.md)
-- Dependency: [D5/S3/Combinatorics/Sequenceability/PrivatePairBooleanDescent](PrivatePairBooleanDescent.md)
+- Dependency: [D5/S3/Combinatorics/Sequenceability/PositiveChargePortGeometry](PositiveChargePortGeometry.md)
