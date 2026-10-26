@@ -65,10 +65,6 @@ internal sealed class UnsignedStarInvariantSupportDocument : IScribeDocumentDefi
             Describe.Lean(DescribeId.Create("core-subset"), DeclarationHandle.Create(Prefix + "invariantCore_subset"),
                 H("The Core Lies in D"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Consumed set helper: invariantCore sigma D is contained in D, by the identity group element."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("core-invariance"), DeclarationHandle.Create(Prefix + "invariantCore_invariant"),
-                H("The Core Is Invariant"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Group/set core property: sigma gamma i belongs to invariantCore sigma D if and only if i does. "
-                    + "Composition and the inverse group element prove both directions."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("core-universal-property"), DeclarationHandle.Create(Prefix + "subset_invariantCore_iff"),
                 H("Largest Invariant Subset"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Consumed set transport: if membership in S is invariant under sigma, then S is contained in invariantCore sigma D "

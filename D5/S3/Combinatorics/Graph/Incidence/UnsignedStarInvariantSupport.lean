@@ -261,22 +261,6 @@ theorem invariantCore_subset {I : Type*} (σ : Γ →* Equiv.Perm I) (D : Set I)
   intro i hi
   simpa using hi 1
 
-theorem invariantCore_invariant {I : Type*} (σ : Γ →* Equiv.Perm I)
-    (D : Set I) (γ : Γ) (i : I) :
-    σ γ i ∈ invariantCore σ D ↔ i ∈ invariantCore σ D := by
-  change (∀ δ, σ δ (σ γ i) ∈ D) ↔ ∀ δ, σ δ i ∈ D
-  have action_mul (a b : Γ) (j : I) : σ a (σ b j) = σ (a * b) j := by
-    change (σ a * σ b) j = σ (a * b) j
-    rw [map_mul]
-  constructor
-  · intro h δ
-    have he := h (δ * γ⁻¹)
-    rw [action_mul, inv_mul_cancel_right] at he
-    exact he
-  · intro h δ
-    rw [action_mul]
-    exact h (δ * γ)
-
 /-- Universal property of the largest invariant subset of D. -/
 theorem subset_invariantCore_iff {I : Type*} (σ : Γ →* Equiv.Perm I)
     (S D : Set I) (hS : ∀ γ i, σ γ i ∈ S ↔ i ∈ S) :

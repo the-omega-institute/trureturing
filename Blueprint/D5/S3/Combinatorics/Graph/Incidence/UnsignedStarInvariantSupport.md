@@ -126,19 +126,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarInvariantSuppor
 
 Consumed set helper: invariantCore sigma D is contained in D, by the identity group element.
 
-**Theorem 1.11 (The Core Is Invariant).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarInvariantSupport.invariantCore_invariant`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarInvariantSupport.invariantCore_invariant` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Group/set core property: sigma gamma i belongs to invariantCore sigma D if and only if i does. Composition and the inverse group element prove both directions.
-
-**Theorem 1.12 (Largest Invariant Subset).**
+**Theorem 1.11 (Largest Invariant Subset).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarInvariantSupport.subset_invariantCore_iff`
 
@@ -150,7 +138,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarInvariantSuppor
 
 Consumed set transport: if membership in S is invariant under sigma, then S is contained in invariantCore sigma D if and only if S is contained in D. Every translate of an element of S remains in S.
 
-**Theorem 1.13 (Arbitrary Deletions Reduce to Their Invariant Core).**
+**Theorem 1.12 (Arbitrary Deletions Reduce to Their Invariant Core).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarInvariantSupport.fixed_support_core_criterion`
 
@@ -178,7 +166,6 @@ Attribution: the supplied native proof, Sections 1-5, SHA256 a92cff8d9829617a663
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarInvariantSupport.fixed_support_core_criterion`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarInvariantSupport.fixed_support_criterion`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarInvariantSupport.invariantCore`
-- Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarInvariantSupport.invariantCore_invariant`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarInvariantSupport.invariantCore_subset`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarInvariantSupport.invariant_iff_mem_invariants`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarInvariantSupport.invariant_representative_iff`
