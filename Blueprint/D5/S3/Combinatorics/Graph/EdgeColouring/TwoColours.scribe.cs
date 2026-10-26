@@ -47,12 +47,12 @@ internal sealed class TwoColoursDocument : IScribeDocumentDefinition
                 + "No novelty in the graph theorem is claimed. The endpoint representation and "
                 + "defect-minimization derivation are repository mathematics; the motivating native "
                 + "incidence-two proof uses an elementary Euler-trail construction for the same lemma. "
-                + "The pinned Mathlib Graph and Quiver interfaces do not supply this existence "
-                + "statement, and SimpleGraph.Trails leaves its Euler-existence converse as a TODO.")),
+                + "A search of the pinned Mathlib Graph and Quiver interfaces found no supplier for this existence "
+                + "statement; SimpleGraph.Trails leaves its Euler-existence converse as a TODO.")),
             Paragraph(Text(
                 "In the incidence-two integer blocker argument, the dual graph has one edge for "
                 + "each used original coordinate and one star for each complete minimal Boolean row. "
-                + "After choosing a triangle UVW with named original edges e=UV, l=UW and r=VW, "
+                + "With no adjacent original degree-two vertices, choose a triangle UVW and name its original edges e=UV, l=UW and r=VW, with U and V of degree at least three. "
                 + "the W-port split deletes only e, joins l and r to one new constrained degree-two "
                 + "vertex, and sends each other W-port to its own free leaf. The theorem then supplies "
                 + "both colours on every retained constrained star unless the exact exceptional odd "

@@ -4,13 +4,15 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Data.Finset.Card, mathlib/module/Mathlib.Logic.Relation]
    utility: none
-   digest: Original-edge two-colourings of finite loopless multigraphs and their exact odd-component obstruction. -/
+   digest: Exact original-edge two-colouring and odd-component obstruction. -/
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Finset.Max
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Algebra.Ring.Parity
 import Mathlib.Logic.Relation
-import Mathlib.Tactic
+import Mathlib.Tactic.ByContra
+import Mathlib.Tactic.SimpRw
 
 /-! An edge is an element of `E`, not an unordered pair of vertices. In particular,
 parallel original edges remain distinct. The only graph data are two endpoint maps.
@@ -99,7 +101,7 @@ private theorem mono_flip_mixed {l r : E → V} {c : E → Bool} {x : V} {e : E}
   obtain ⟨f, hf, hfe⟩ := another hd he
   refine ⟨e, he, f, hf, ?_⟩
   have hc := mono hm he hf
-  simp only [flip, if_pos rfl, if_neg hfe]
+  simp only [flip, ite_eq_left rfl, ite_eq_right hfe]
   cases hce : c e <;> simp_all
 
 private theorem other_end {l r : E → V} (hloop : ∀ e, l e ≠ r e)
@@ -211,7 +213,9 @@ private theorem defect_path_extend {l r : E → V} {C : Finset V}
   · intro g hg z hgz
     rcases mem_insert.mp hg with rfl | hg
     · rcases hend z hgz with rfl | rfl <;> simp
-    · rcases hcover g hg z hgz with hz | rfl <;> simp [hz]
+    · rcases hcover g hg z hgz with hz | hz
+      · exact Or.inl (mem_insert_of_mem hz)
+      · exact Or.inl (mem_insert.mpr (Or.inl hz))
   · have heq : star l r y ∩ insert e U = {e} := by
       ext g
       simp only [mem_inter, mem_insert, mem_singleton]
@@ -232,7 +236,7 @@ private theorem defect_path_extend {l r : E → V} {C : Finset V}
       have hfg : f ≠ g := fun h => hgU (h ▸ (mem_inter.mp hfmem).2)
       have hce := mono (mem_defects.mp hx).2 he (mem_inter.mp hfmem).1
       refine ⟨e, he, f, (mem_inter.mp hfmem).1, ?_⟩
-      simp only [flip, if_neg hge.symm, if_pos rfl, if_neg hfg, if_neg hfe]
+      simp only [flip, ite_eq_right hge.symm, ite_eq_left rfl, ite_eq_right hfg, ite_eq_right hfe]
       cases hce' : c e <;> simp_all
     · have h := hrobust z hz g hgU
       apply (mixed_congr (c := flip (flip c e) g) (d := flip c g) ?_).mpr h
@@ -279,7 +283,7 @@ private theorem defect_degree_two {l r : E → V} {C : Finset V}
       obtain ⟨g, hg, hge, hgf⟩ := outside_pair hd3 e f
       have hcg := mono (mem_defects.mp hx).2 he hg
       refine ⟨e, he, g, hg, ?_⟩
-      simp only [flip, if_neg hfe.symm, if_pos rfl, if_neg hgf, if_neg hge]
+      simp only [flip, ite_eq_right hfe.symm, ite_eq_left rfl, ite_eq_right hgf, ite_eq_right hge]
       cases hce : c e <;> simp_all
   let states : Finset (Finset V) := univ.filter fun S =>
     ∃ d U z, DefectPath l r C d U S z
@@ -367,7 +371,7 @@ private noncomputable def componentVertices (l r : E → V) (x : V) : Finset V :
   exact univ.filter (Reach l r x)
 
 private theorem incidence_sum (l r : E → V) (hloop : ∀ e, l e ≠ r e)
-    (x : V) (P : E → Prop) :
+    (x : V) (P : E → Prop) [DecidablePred P] :
     ∑ y ∈ componentVertices l r x, ((star l r y).filter P).card =
       2 * ((componentEdges l r x).filter P).card := by
   classical
@@ -395,7 +399,7 @@ private theorem incidence_sum (l r : E → V) (hloop : ∀ e, l e ≠ r e)
     rw [sum_add_distrib]
     by_cases hp : P e
     · simp only [hp, and_true]
-      simp [componentVertices, hr]
+      by_cases hR : Reach l r x (r e) <;> simp [componentVertices, hr, hR]
     · simp [hp]
   simp_rw [hterm]
   rw [show (∑ e : E, if Reach l r x (l e) ∧ P e then 2 else 0) =
@@ -410,10 +414,16 @@ private theorem mixed_two_color_count {l r : E → V} {c : E → Bool} {y : V}
   classical
   obtain ⟨e, he, f, hf, hef⟩ := hm
   have hne : e ≠ f := fun h => hef (congrArg c h)
-  have hstar : star l r y = {e, f} :=
-    (eq_of_subset_of_card_le (by simp [he, hf]) (by simp [hd, hne])).symm
+  have hsub : ({e, f} : Finset E) ⊆ star l r y := by
+    intro g hg
+    rcases mem_insert.mp hg with h | h
+    · exact h ▸ he
+    · exact (mem_singleton.mp h) ▸ hf
+  have hcard : (star l r y).card ≤ ({e, f} : Finset E).card := by
+    simp [hd, hne]
+  have hstar : star l r y = {e, f} := (eq_of_subset_of_card_le hsub hcard).symm
   rw [hstar]
-  cases hce : c e <;> cases hcf : c f <;> simp_all
+  cases hce : c e <;> cases hcf : c f <;> simp_all [filter_insert, filter_singleton]
 
 private theorem component_edge_card {l r : E → V} (hloop : ∀ e, l e ≠ r e)
     {x : V} (hd : ∀ y, Reach l r x y → (star l r y).card = 2) :
@@ -462,7 +472,9 @@ private theorem colouring_excludes_odd {l r : E → V} {C : Finset V}
           exact mixed_two_color_count hy'.2 (hc y hy'.1)
       _ = _ := by simp
   rw [hsum', ← heq] at hsum
-  exact (Nat.not_odd_iff_even.mpr ⟨_, by omega⟩) hodd
+  exact (Nat.not_odd_iff_even.mpr
+    ((even_iff_exists_two_mul).mpr ⟨((componentEdges l r x).filter fun e => c e = true).card,
+      hsum⟩)) hodd
 
 private theorem defect_forces_odd {l r : E → V} {C : Finset V}
     (hloop : ∀ e, l e ≠ r e) (hdeg : ∀ x ∈ C, 2 ≤ (star l r x).card)
