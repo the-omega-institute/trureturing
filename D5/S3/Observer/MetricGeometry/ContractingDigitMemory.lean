@@ -276,23 +276,17 @@ lemma prefixPoint_separated {lam : ℝ} (hlam : 0 ≤ lam) (hlamhalf : lam < 1 /
           rw [abs_of_nonneg hnonpos]
           simpa [Nat.add_sub_cancel] using hdiff
 
-theorem contracting_digit_memory_exact
-    {lam eps : ℝ} (hlampos : 0 < lam) (hlamhalf : lam < 1 / 2)
-    (L : ℕ) (hL : 1 ≤ L)
-    (heps_lower : lam ^ L / 2 ≤ eps)
-    (heps_upper : eps < (1 - lam) * lam ^ (L - 1) / 2) :
-    IsLeast
-      {s : ℕ |
-        HasFinitePredictor
-          (digitStep lam hlampos.le (by linarith))
-          (fun x : DigitState lam => x.1) eps s}
-      (2 ^ L) := by
-  have digit_summable {lam : ℝ} (hlam : 0 ≤ lam) (hlam1 : lam < 1)
-      (b : ℕ → Bool) : Summable (fun j => bitVal (b j) * lam ^ j) := by
-    refine Summable.of_nonneg_of_le (f := fun j => lam ^ j) (g := fun j => bitVal (b j) * lam ^ j)
-        (fun j => by cases hb : b j <;> simp [bitVal, hb] <;> positivity)
-        (fun j => by cases hb : b j <;> simp [bitVal, hb] <;> positivity)
-        (summable_geometric_of_lt_one hlam hlam1)
+private theorem digit_summable {lam : ℝ} (hlam : 0 ≤ lam) (hlam1 : lam < 1)
+    (b : ℕ → Bool) : Summable (fun j => bitVal (b j) * lam ^ j) := by
+  refine Summable.of_nonneg_of_le (f := fun j => lam ^ j) (g := fun j => bitVal (b j) * lam ^ j)
+      (fun j => by cases hb : b j <;> simp [bitVal, hb] <;> positivity)
+      (fun j => by cases hb : b j <;> simp [bitVal, hb] <;> positivity)
+      (summable_geometric_of_lt_one hlam hlam1)
+
+/-- Every actual digit value lies in the unit interval. The series bounds are
+extracted from the exact-state-count proof and used by its prefix construction. -/
+theorem digitK_subset_Icc {lam : ℝ} (hlam : 0 ≤ lam) (hlam1 : lam < 1) :
+    digitK lam ⊆ Set.Icc 0 1 := by
   have digitValue_nonneg {lam : ℝ} (hlam : 0 ≤ lam) (hlam1 : lam < 1)
       (b : ℕ → Bool) : 0 ≤ digitValue lam b := by
     unfold digitValue
@@ -312,6 +306,23 @@ theorem contracting_digit_memory_exact
           (1 - lam) * ∑' j, lam ^ j :=
         mul_le_mul_of_nonneg_left hle (by linarith)
       _ = 1 := by rw [tsum_geometric_of_lt_one hlam hlam1]; exact (div_self (by linarith))
+  rintro x ⟨b, rfl⟩
+  exact ⟨digitValue_nonneg hlam hlam1 b, digitValue_le_one hlam hlam1 b⟩
+
+/-- The actual prefix machine, with its initializing prefix, prepend/drop update,
+midpoint readout and uniform error for every initial state and every word.
+This exposes the construction used by `contracting_digit_memory_exact`. -/
+theorem contracting_digit_prefix_machine
+    {lam : ℝ} (hlampos : 0 < lam) (hlamhalf : lam < 1 / 2) (L : ℕ) :
+    Fintype.card (Fin L → Bool) = 2 ^ L ∧
+      ∃ e : DigitState lam → (Fin L → Bool),
+        (∀ x, x ∈ prefixClass lam L (e x)) ∧
+        ∀ (x : DigitState lam) (w : List Bool),
+          dist ((fun u : Fin L → Bool => prefixPoint lam L u + lam ^ L / 2)
+            (runWord (fun (a : Bool) (u : Fin L → Bool) (i : Fin L) =>
+              if i.val = 0 then a else u ⟨i.val - 1, by omega⟩) w (e x)))
+            ((runWord (digitStep lam hlampos.le (by linarith)) w x).val) ≤ lam ^ L / 2 := by
+  classical
   have digitValue_prefix {lam : ℝ} (hlam : 0 ≤ lam) (hlam1 : lam < 1)
       (b : ℕ → Bool) (L : ℕ) :
       digitValue lam b =
@@ -359,8 +370,10 @@ theorem contracting_digit_memory_exact
       simp only [Finset.mem_range] at hj
       rw [hbc j hj]
     rw [hsum]
-    have hb0 := digitValue_nonneg hlam hlam1 (fun i => b (i + L))
-    have hb1 := digitValue_le_one hlam hlam1 (fun i => b (i + L))
+    have hb := digitK_subset_Icc hlam hlam1
+      (show digitValue lam (fun i => b (i + L)) ∈ digitK lam from ⟨_, rfl⟩)
+    have hb0 := hb.1
+    have hb1 := hb.2
     have hc : digitValue lam (fun i => c (i + L)) = 0 := by
       unfold digitValue
       simp [hczero, bitVal]
@@ -408,53 +421,76 @@ theorem contracting_digit_memory_exact
   let hstep : Bool → DigitState lam → DigitState lam :=
     digitStep lam hlampos.le (by linarith)
   let hreadout : DigitState lam → ℝ := fun x => x.1
-  have heps : 0 ≤ eps := le_trans (by positivity) heps_lower
+  have heps : 0 ≤ lam ^ L / 2 := by positivity
   have hcard : Fintype.card (Fin L → Bool) = 2 ^ L := by
     simp [Fintype.card_fun]
-  have hupper : HasFiniteInvariantCover
-      (hstep) hreadout eps (2 ^ L) := by
-    let δ : Bool → (Fin L → Bool) → (Fin L → Bool) := fun a u i =>
-      if i.1 = 0 then a else u ⟨i.1 - 1, by omega⟩
-    let y : (Fin L → Bool) → ℝ := fun u =>
-      prefixPoint lam L u + lam ^ L / 2
-    refine ⟨Fin L → Bool, inferInstance, ?_, ?_, prefixClass lam L, δ, y, ?_⟩
-    · exact ⟨fun _ => false⟩
-    · simpa [hcard]
-    · refine {
-        nonempty := fun u => ⟨_, prefixPoint_mem lam hlampos.le (by linarith) L u⟩
-        covers := fun x => prefix_class_covers lam hlampos.le (by linarith) L x
-        successor := ?_
-        radius := ?_ }
-      · intro a u
-        simpa [δ] using prefix_class_step lam hlampos.le (by linarith) L a u
-      · intro u
-        apply iSup_le
-        rintro ⟨x, hx⟩
-        apply (edist_le_ofReal heps).2
-        rcases hx with ⟨b, hb, hprefix⟩
-        have hinter := digitValue_interval_of_prefix hlampos.le (by linarith)
-          b (prefixStream L u) L (by
-            intro j hj
-            rw [hprefix j hj]
-            simp [prefixStream, hj]) (by
-              intro i
-              simp [prefixStream])
-        have hdist : dist x.1 (y u) ≤ lam ^ L / 2 := by
-          rw [Real.dist_eq]
-          rw [hb]
-          simp only [y, prefixPoint]
-          have hmid : 0 ≤ lam ^ L := by positivity
-          rw [abs_le]
-          constructor <;> linarith
-        exact hdist.trans heps_lower
-  letI : Nonempty (DigitState lam) :=
-    ⟨⟨prefixPoint lam L (fun _ => false),
-      ⟨prefixStream L (fun _ => false), rfl⟩⟩⟩
-  have hiff := (finite_predictor_iff_forward_invariant_cover
-      hstep hreadout eps heps (2 ^ L)
-      (Nat.one_le_pow L 2 (by omega))).1
+  let δ : Bool → (Fin L → Bool) → (Fin L → Bool) := fun a u i =>
+    if i.1 = 0 then a else u ⟨i.1 - 1, by omega⟩
+  let y : (Fin L → Bool) → ℝ := fun u =>
+    prefixPoint lam L u + lam ^ L / 2
+  have hcover : IsInvariantCover hstep hreadout (lam ^ L / 2)
+      (prefixClass lam L) δ y := by
+    refine {
+      nonempty := fun u => ⟨_, prefixPoint_mem lam hlampos.le (by linarith) L u⟩
+      covers := fun x => prefix_class_covers lam hlampos.le (by linarith) L x
+      successor := ?_
+      radius := ?_ }
+    · intro a u
+      simpa [δ] using prefix_class_step lam hlampos.le (by linarith) L a u
+    · intro u
+      apply iSup_le
+      rintro ⟨x, hx⟩
+      apply (edist_le_ofReal heps).2
+      rcases hx with ⟨b, hb, hprefix⟩
+      have hinter := digitValue_interval_of_prefix hlampos.le (by linarith)
+        b (prefixStream L u) L (by
+          intro j hj
+          rw [hprefix j hj]
+          simp [prefixStream, hj]) (by
+            intro i
+            simp [prefixStream])
+      have hdist : dist x.1 (y u) ≤ lam ^ L / 2 := by
+        rw [Real.dist_eq]
+        rw [hb]
+        simp only [y, prefixPoint]
+        have hmid : 0 ≤ lam ^ L := by positivity
+        rw [abs_le]
+        constructor <;> linarith
+      exact hdist
+  let e : DigitState lam → (Fin L → Bool) :=
+    fun x => Classical.choose (hcover.covers x)
+  have hencode (x : DigitState lam) : x ∈ prefixClass lam L (e x) :=
+    Classical.choose_spec (hcover.covers x)
+  refine ⟨hcard, e, hencode, ?_⟩
+  intro x w
+  rw [dist_comm]
+  apply (edist_le_ofReal heps).1
+  exact IsInvariantCover.word_radius hstep hreadout (lam ^ L / 2)
+    (Fin L → Bool) (prefixClass lam L) δ y hcover w (e x) x (hencode x)
+
+theorem contracting_digit_memory_exact
+    {lam eps : ℝ} (hlampos : 0 < lam) (hlamhalf : lam < 1 / 2)
+    (L : ℕ) (hL : 1 ≤ L)
+    (heps_lower : lam ^ L / 2 ≤ eps)
+    (heps_upper : eps < (1 - lam) * lam ^ (L - 1) / 2) :
+    IsLeast
+      {s : ℕ |
+        HasFinitePredictor
+          (digitStep lam hlampos.le (by linarith))
+          (fun x : DigitState lam => x.1) eps s}
+      (2 ^ L) := by
+  obtain ⟨hcard, e, _hencode, herr⟩ :=
+    contracting_digit_prefix_machine hlampos hlamhalf L
+  let hstep : Bool → DigitState lam → DigitState lam :=
+    digitStep lam hlampos.le (by linarith)
+  let hreadout : DigitState lam → ℝ := fun x => x.1
   constructor
-  · exact hiff.mpr hupper
+  · refine ⟨Fin L → Bool, inferInstance, ⟨fun _ => false⟩, ?_, e,
+      (fun (a : Bool) (u : Fin L → Bool) (i : Fin L) =>
+        if i.val = 0 then a else u ⟨i.val - 1, by omega⟩),
+      (fun u : Fin L → Bool => prefixPoint lam L u + lam ^ L / 2), ?_⟩
+    · exact hcard.le
+    · exact fun x w => (herr x w).trans heps_lower
   · intro s hs
     rcases hs with ⟨S, finiteS, hne, hScard, e, G, h, herr⟩
     letI : Fintype S := finiteS
