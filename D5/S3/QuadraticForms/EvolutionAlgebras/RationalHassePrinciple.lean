@@ -351,4 +351,259 @@ theorem isomorphic_over_iff_monomial_equations (F : Type) [Field F] [Algebra ℚ
     (perfect_baseChange F _ hp)]
   simp only [structureCoefficient_baseChange]
 
+
+section Components
+
+attribute [local instance] Classical.propDecidable
+
+variable {K V W : Type*} [Field K] [AddCommGroup V] [Module K V]
+  [AddCommGroup W] [Module K W]
+
+/-- Weak components of the directed relation of nonzero square coefficients. -/
+abbrev WeakComponent {n : ℕ} (μ : Product K V) (b : Basis (Fin n) K V) :=
+  Quotient (Relation.EqvGen.setoid (fun i j => structureCoefficient μ b i j ≠ 0))
+
+/-- The weak component containing a basis index. -/
+def componentIndex {n : ℕ} (μ : Product K V) (b : Basis (Fin n) K V)
+    (i : Fin n) : WeakComponent μ b := Quotient.mk _ i
+
+private theorem componentIndex_of_coefficient {n : ℕ} (μ : Product K V)
+    (b : Basis (Fin n) K V) {i j : Fin n} (h : structureCoefficient μ b i j ≠ 0) :
+    componentIndex μ b i = componentIndex μ b j :=
+  Quotient.sound (Relation.EqvGen.rel _ _ h)
+
+/-- A coordinate submodule for a fibre of an arbitrary partition of a finite basis. -/
+def coordinateSpace {n : ℕ} {Q : Type*} (b : Basis (Fin n) K V)
+    (π : Fin n → Q) (q : Q) : Submodule K V where
+  carrier := {x | ∀ i, π i ≠ q → b.equivFun x i = 0}
+  zero_mem' := by simp
+  add_mem' := by
+    intro x y hx hy i hi
+    simp only [map_add, Pi.add_apply, hx i hi, hy i hi, add_zero]
+  smul_mem' := by
+    intro a x hx i hi
+    simp only [map_smul, Pi.smul_apply, hx i hi, smul_zero]
+
+private theorem coordinateSpace_eq_span {n : ℕ} {Q : Type*}
+    (b : Basis (Fin n) K V) (π : Fin n → Q) (q : Q) :
+    coordinateSpace b π q = Submodule.span K (b '' {i | π i = q}) := by
+  ext x
+  rw [b.mem_span_image, Finsupp.support_subset_iff]
+  rfl
+
+private noncomputable def coordinateProjection {n : ℕ} {Q : Type*}
+    (b : Basis (Fin n) K V) (π : Fin n → Q) (q : Q) : V →ₗ[K] V := by
+  classical
+  exact b.equivFun.symm.toLinearMap.comp
+    (LinearMap.pi (fun i => if π i = q then (LinearMap.proj i).comp b.equivFun.toLinearMap else 0))
+
+private theorem coordinateProjection_repr {n : ℕ} {Q : Type*}
+    (b : Basis (Fin n) K V) (π : Fin n → Q) (q : Q) (x : V) (i : Fin n) :
+    b.equivFun (coordinateProjection b π q x) i =
+      if π i = q then b.equivFun x i else 0 := by
+  classical
+  change b.equivFun (b.equivFun.symm _) i = _
+  rw [LinearEquiv.apply_symm_apply]
+  change (if π i = q then (LinearMap.proj i).comp b.equivFun.toLinearMap else 0) x = _
+  split_ifs <;> rfl
+
+private theorem coordinateProjection_mem {n : ℕ} {Q : Type*}
+    (b : Basis (Fin n) K V) (π : Fin n → Q) (q : Q) (x : V) :
+    coordinateProjection b π q x ∈ coordinateSpace b π q := by
+  intro i hi
+  rw [coordinateProjection_repr, ite_eq_right hi]
+
+private theorem coordinateProjection_fixed {n : ℕ} {Q : Type*}
+    (b : Basis (Fin n) K V) (π : Fin n → Q) (q : Q)
+    (x : coordinateSpace b π q) : coordinateProjection b π q x = x := by
+  classical
+  apply b.equivFun.injective
+  ext i
+  rw [coordinateProjection_repr]
+  split_ifs with h
+  · rfl
+  · exact (x.property i h).symm
+
+private theorem coordinateProjection_basis {n : ℕ} {Q : Type*}
+    (b : Basis (Fin n) K V) (π : Fin n → Q) (q : Q) (i : Fin n) :
+    coordinateProjection b π q (b i) = if π i = q then b i else 0 := by
+  classical
+  apply b.equivFun.injective
+  ext j
+  simp only [coordinateProjection_repr, Basis.equivFun_self, apply_ite, map_zero,
+    ite_apply, Pi.zero_apply]
+  by_cases h : i = j
+  · subst j; simp
+  · simp [h]
+
+private theorem coordinateProjection_mul {n : ℕ} {Q : Type*}
+    (μ : Product K V) (b : Basis (Fin n) K V) (hb : Natural μ b)
+    (π : Fin n → Q)
+    (hπ : ∀ i j, structureCoefficient μ b i j ≠ 0 → π i = π j)
+    (q : Q) (x y : V) :
+    coordinateProjection b π q (μ x y) =
+      μ (coordinateProjection b π q x) (coordinateProjection b π q y) := by
+  classical
+  have hsquare (i : Fin n) : coordinateProjection b π q (μ (b i) (b i)) =
+      if π i = q then μ (b i) (b i) else 0 := by
+    apply b.equivFun.injective
+    ext j
+    rw [coordinateProjection_repr]
+    by_cases hij : structureCoefficient μ b i j = 0
+    · have hz : b.equivFun (μ (b i) (b i)) j = 0 := hij
+      split_ifs <;> simp_all
+    · have hh := hπ i j hij
+      rw [hh]
+      split_ifs <;> simp
+  have hm : μ.compr₂ (coordinateProjection b π q) =
+      μ.compl₁₂ (coordinateProjection b π q) (coordinateProjection b π q) := by
+    apply LinearMap.ext_basis b b
+    intro i j
+    change coordinateProjection b π q (μ (b i) (b j)) =
+      μ (coordinateProjection b π q (b i)) (coordinateProjection b π q (b j))
+    rw [coordinateProjection_basis, coordinateProjection_basis]
+    by_cases hij : i = j
+    · subst j
+      rw [hsquare]
+      split_ifs <;> simp
+    · rw [hb i j hij]
+      split_ifs <;> simp [hb i j hij]
+  exact congrArg (fun M : Product K V => M x y) hm
+
+
+private theorem coordinateProjection_balance {n : ℕ} {Q : Type*}
+    (μ : Product K V) (b : Basis (Fin n) K V) (hb : Natural μ b)
+    (π : Fin n → Q) (q : Q) (x y : V) :
+    μ (coordinateProjection b π q x) y = μ x (coordinateProjection b π q y) := by
+  classical
+  rw [natural_expansion μ b hb, natural_expansion μ b hb]
+  apply Finset.sum_congr rfl
+  intro i hi
+  simp only [coordinateProjection_repr]
+  split_ifs <;> simp
+
+private theorem coordinateProjection_left {n : ℕ} {Q : Type*}
+    (μ : Product K V) (b : Basis (Fin n) K V) (hb : Natural μ b)
+    (π : Fin n → Q)
+    (hπ : ∀ i j, structureCoefficient μ b i j ≠ 0 → π i = π j)
+    (q : Q) (x y : V) :
+    coordinateProjection b π q (μ x y) = μ (coordinateProjection b π q x) y := by
+  rw [coordinateProjection_mul μ b hb π hπ,
+    ← coordinateProjection_balance μ b hb π q,
+    coordinateProjection_fixed b π q ⟨_, coordinateProjection_mem b π q x⟩]
+
+private theorem coordinateSpace_left {n : ℕ} {Q : Type*}
+    (μ : Product K V) (b : Basis (Fin n) K V) (hb : Natural μ b)
+    (π : Fin n → Q)
+    (hπ : ∀ i j, structureCoefficient μ b i j ≠ 0 → π i = π j)
+    (q : Q) (x : coordinateSpace b π q) (y : V) :
+    μ x y ∈ coordinateSpace b π q := by
+  have h := coordinateProjection_mem b π q (μ x y)
+  rwa [coordinateProjection_left μ b hb π hπ,
+    coordinateProjection_fixed b π q x] at h
+
+private theorem coordinateSpace_right {n : ℕ} {Q : Type*}
+    (μ : Product K V) (b : Basis (Fin n) K V) (hb : Natural μ b)
+    (π : Fin n → Q)
+    (hπ : ∀ i j, structureCoefficient μ b i j ≠ 0 → π i = π j)
+    (q : Q) (x : V) (y : coordinateSpace b π q) :
+    μ x y ∈ coordinateSpace b π q := by
+  have h := coordinateSpace_left μ b hb π hπ q y x
+  have hc : μ (y : V) x = μ x y := by
+    rw [natural_expansion μ b hb, natural_expansion μ b hb]
+    simp only [mul_comm]
+  rwa [hc] at h
+
+private theorem coordinateProjection_other {n : ℕ} {Q : Type*}
+    (b : Basis (Fin n) K V) (π : Fin n → Q) {q r : Q} (hqr : q ≠ r)
+    (x : coordinateSpace b π r) : coordinateProjection b π q x = 0 := by
+  apply b.equivFun.injective
+  ext i
+  rw [coordinateProjection_repr]
+  by_cases hi : π i = q
+  · have hir : π i ≠ r := by rw [hi]; exact hqr
+    simp only [hi, ↓reduceIte, x.property i hir, map_zero, Pi.zero_apply]
+  · simp [hi]
+
+private theorem coordinateSpace_cross {n : ℕ} {Q : Type*}
+    (μ : Product K V) (b : Basis (Fin n) K V) (hb : Natural μ b)
+    (π : Fin n → Q)
+    (hπ : ∀ i j, structureCoefficient μ b i j ≠ 0 → π i = π j)
+    {q r : Q} (hqr : q ≠ r) (x : coordinateSpace b π q)
+    (y : coordinateSpace b π r) : μ x y = 0 := by
+  calc
+    μ (x : V) (y : V) = μ (coordinateProjection b π q x) y := by
+      rw [coordinateProjection_fixed b π q x]
+    _ = μ x (coordinateProjection b π q y) := coordinateProjection_balance μ b hb π q x y
+    _ = 0 := by rw [coordinateProjection_other b π hqr y]; simp
+
+/-- Restriction of a bilinear multiplication to an actual left ideal submodule. -/
+def restrictedProduct (μ : Product K V) (S : Submodule K V)
+    (hS : ∀ (x : S) (y : V), μ x y ∈ S) : Product K S where
+  toFun x :=
+    { toFun := fun y => ⟨μ x y, hS x y⟩
+      map_add' := by intro y z; apply Subtype.ext; exact map_add (μ (x : V)) (y : V) (z : V)
+      map_smul' := by intro a y; apply Subtype.ext; exact map_smul (μ (x : V)) a (y : V) }
+  map_add' := by intro x y; ext z; exact congrArg (fun f : V →ₗ[K] V => f (z : V)) (map_add μ (x : V) (y : V))
+  map_smul' := by intro a x; ext z; exact congrArg (fun f : V →ₗ[K] V => f (z : V)) (map_smul μ a (x : V))
+
+private theorem coordinateSpace_perfect {n : ℕ} {Q : Type*}
+    (μ : Product K V) (b : Basis (Fin n) K V) (hb : Natural μ b) (hp : Perfect μ)
+    (π : Fin n → Q)
+    (hπ : ∀ i j, structureCoefficient μ b i j ≠ 0 → π i = π j) (q : Q) :
+    Perfect (restrictedProduct μ (coordinateSpace b π q)
+      (coordinateSpace_left μ b hb π hπ q)) := by
+  let P : V →ₗ[K] coordinateSpace b π q :=
+    (coordinateProjection b π q).codRestrict _ (coordinateProjection_mem b π q)
+  have hsurj : Function.Surjective P := by
+    intro x
+    exact ⟨x, Subtype.ext (coordinateProjection_fixed b π q x)⟩
+  unfold Perfect
+  apply top_unique
+  calc
+    ⊤ = (Submodule.span K {z | ∃ x y, μ x y = z}).map P := by
+      rw [hp, Submodule.map_top, LinearMap.range_eq_top.mpr hsurj]
+    _ = Submodule.span K (P '' {z | ∃ x y, μ x y = z}) := Submodule.map_span _ _
+    _ ≤ _ := by
+      apply Submodule.span_le.mpr
+      rintro z ⟨v, ⟨x, y, rfl⟩, rfl⟩
+      apply Submodule.subset_span
+      refine ⟨P x, P y, ?_⟩
+      apply Subtype.ext
+      exact (coordinateProjection_mul μ b hb π hπ q x y).symm
+
+/-- The actual submodule belonging to a weak support component. -/
+abbrev componentSpace {n : ℕ} (μ : Product K V) (b : Basis (Fin n) K V)
+    (q : WeakComponent μ b) := coordinateSpace b (componentIndex μ b) q
+
+/-- Multiplication on a weak support component, inherited from the original product. -/
+def componentProduct {n : ℕ} (μ : Product K V) (b : Basis (Fin n) K V)
+    (hb : Natural μ b) (q : WeakComponent μ b) : Product K (componentSpace μ b q) :=
+  restrictedProduct μ _ (by
+    exact coordinateSpace_left μ b hb _
+      (fun _ _ h => componentIndex_of_coefficient μ b h) q)
+
+/-- Weak component spans are two-sided ideals, are mutually orthogonal, and are perfect
+whenever the original natural-basis product is perfect. -/
+theorem component_ideals_perfect {n : ℕ} (μ : Product K V) (b : Basis (Fin n) K V)
+    (hb : Natural μ b) (hp : Perfect μ) :
+    (∀ q : WeakComponent μ b,
+      componentSpace μ b q = Submodule.span K (b '' {i | componentIndex μ b i = q}) ∧
+      (∀ (x : componentSpace μ b q) (y : V), μ x y ∈ componentSpace μ b q) ∧
+      (∀ (x : V) (y : componentSpace μ b q), μ x y ∈ componentSpace μ b q) ∧
+      Perfect (componentProduct μ b hb q)) ∧
+    (∀ (q r : WeakComponent μ b), q ≠ r →
+      ∀ (x : componentSpace μ b q) (y : componentSpace μ b r), μ x y = 0) := by
+  constructor
+  · intro q
+    exact ⟨coordinateSpace_eq_span b _ q,
+      coordinateSpace_left μ b hb _ (fun _ _ h => componentIndex_of_coefficient μ b h) q,
+      coordinateSpace_right μ b hb _ (fun _ _ h => componentIndex_of_coefficient μ b h) q,
+      coordinateSpace_perfect μ b hb hp _ (fun _ _ h => componentIndex_of_coefficient μ b h) q⟩
+  · intro q r hqr x y
+    exact coordinateSpace_cross μ b hb _
+      (fun _ _ h => componentIndex_of_coefficient μ b h) hqr x y
+
+end Components
+
 end D5.S3.QuadraticForms.EvolutionAlgebras.RationalHassePrinciple
