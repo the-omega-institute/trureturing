@@ -6,7 +6,7 @@ internal sealed class BarkerMinimalGridSeriesDocument : IScribeDocumentDefinitio
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The complete literal numerator and rational quotient series", H("The complete literal numerator and rational quotient series"), Blocks(
+        "The complete Barker series for actual minimal dominating subsets", H("The complete Barker series for actual minimal dominating subsets"), Blocks(
             N("lift", "lift", "A quotient integer vector is lifted to every full state by its literal class.", DescribeRole.Definition),
             N("intertwines", "intertwines", "For every quotient vector v, fullStep(lift v)=lift(step v). The proof applies the complete full-state successor permutation certificate and preserves every integer row multiplicity.", DescribeRole.Theorem),
             N("lift_orbit", "lift orbit", "For every natural k, fullOrbit k equals lift(orbit k). The initial terminal certificate and the linear intertwining supply induction on every k.", DescribeRole.Theorem),

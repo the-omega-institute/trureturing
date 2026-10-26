@@ -14,7 +14,7 @@ internal sealed class BarkerMinimalGridPartitionDocument : IScribeDocumentDefini
             N("initialClasses", "Every initial class", "The class list enumerates the first 64 full states in order.", DescribeRole.Definition),
             N("alphaClasses", "Expanded initial row", "The alpha entry at each quotient class is expanded into its stated multiplicity.", DescribeRole.Definition),
             N("initial_certificate", "All initial multiplicities", "The 64 initial classes are a permutation of alphaClasses, retaining every initial labelled pair exactly once.", DescribeRole.Theorem),
-            Paragraph(Text("All finite certificates are proof obligations over the actual transfer predicate. Programs and the authenticated source certificate are inputs, not Lean proofs."))), []));
+            Paragraph(Text("The row, terminal and initial multiset identities are checked against the actual transfer predicate for every full state. These finite identities connect the literal data to the all-length actual-subset counting argument."))), []));
     private static DocumentBlock N(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("bpt-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
