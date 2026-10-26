@@ -126,10 +126,11 @@ internal sealed class RationalHassePrincipleDocument : IScribeDocumentDefinition
                         Negate(Call("Isomorphic", Call("multiplication", V("A")),
                             Call("multiplication", V("B"))))))))));
     private static DocumentBlock.Describe Desc(string name, string title, Formula formula,
-        string text, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        string text, DescribeRole role = DescribeRole.Definition, bool literature = false) => Describe.Lean(
             DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Disp(formula)), literature ? AssessedProvenance.FromLiterature(
+                LibraryNoteRef.Create("D5/L/QuadraticForms/kaygorodov2026evolution")) : AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
 
     private static DocumentBlock.Describe RefDesc(string name, string title, string text,
@@ -197,8 +198,13 @@ internal sealed class RationalHassePrincipleDocument : IScribeDocumentDefinition
                     + "scalars result. Source perfection is unnecessary. The two products and bases "
                     + "may be different. The proof uses all pair products to show injectivity of the "
                     + "target structure map, then constructs the permutation from the unique nonzero "
-                    + "entry in each row. It covers the zero-dimensional case without an extra hypothesis.",
-                DescribeRole.Theorem),
+                    + "entry in each row. It covers the zero-dimensional case without an extra hypothesis. "
+                    + "This monomiality is Theorem 4 of Kaygorodov, Martín González and Viruel, "
+                    + "arXiv:2610.22248v1, credited there to Elduque–Labra. Apply that result to the "
+                    + "target product nu with natural bases c and b.map f: multiplication preservation "
+                    + "makes b.map f natural, and the permutation and nonzero scalars give the stated "
+                    + "row formula up to inverse indexing.",
+                DescribeRole.Theorem, literature: true),
             Desc("structureCoefficient", "Square structure coefficients", OneSpace(All("n", Nat,
                 All("mu", Prod(K, X), All("b", Basis(X), All("i", Fin, All("j", Fin,
                     Eq(Coefficient(Mu, V("b"), V("i"), V("j")),
