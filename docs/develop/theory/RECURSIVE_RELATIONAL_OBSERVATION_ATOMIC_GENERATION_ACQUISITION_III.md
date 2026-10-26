@@ -2751,3 +2751,435 @@ simultaneous-resource correspondence of Open problem 16.3.
 These conditional four-expression results do not settle that problem.
 
 ## 追加锚（本行以下为增补区）
+
+## 25. Support distance detects an unticked extension
+
+**Definition 25.1 (raw digital law and two compared placements).** Use the
+raw digital installation AD of Definition 17.1, not the post-growth-clock
+adapter C. A native $P/S$ birth retains all old cells, values and edges
+and includes the field by fresh zeros, without an attached Tick. On a
+current material tree $t$ the actual rational transition is
+
+$$
+T_t=(4I+A_t)/8.
+\tag{25.1}
+$$
+
+Material degree is at most three. Thus $T_t$ has nonnegative entries,
+positive diagonal and $\|T_t\|_\infty\le7/8$. Digital Read$(j,p)$
+at a valid current terminal returns exactly one of
+
+$$
+\mathcal D_p(x_j)=\{\lfloor2^p x_j\rfloor,
+                         \lfloor2^p x_j\rfloor+1\}.
+\tag{25.2}
+$$
+
+Both choices remain legal after every enabled prefix, with no additional
+persistent provider constraint or provider side channel. Precision is a
+nonnegative integer. There is no exact Read bypass. Reset, Add, Hold,
+growth guards, raw-label inheritance, complete refusals, pending frames,
+rights and Return retain §§7–8 and Definition 18.2's meanings. Exact
+rational local computation is a paid observer operation, not an exact
+source Read. Authentic context, serialization, held computation and adequate
+finite backing are explicit installation premises, not authenticated by
+(25.2).
+
+Let a finite sequence of unticked births extend earned $s$ to $u$, with
+old-cell zero-inclusion $E$. Let $R\subset V(s)$ be the old vertices
+incident to an edge joining an old to a fresh vertex. For a nonnegative
+rational old field $x$, put
+
+$$
+D_x=\operatorname{dist}_s(\operatorname{supp}_+(x),R),\qquad
+\Delta_r=T_u^rEx-ET_s^rx\quad(r\in\mathbb N).
+\tag{25.3}
+$$
+
+Distance is the minimum graph distance; it is $\infty$ if either set is
+empty. Inequalities of fields are coordinatewise.
+
+**Theorem 25.2 (exact support-distance visibility criterion).** For every
+finite unticked extension, every $x\in\mathbb Q_{\ge0}^{V(s)}$ and
+every integer $r\ge0$,
+
+$$
+\Delta_r\ge0,\qquad
+\Delta_r=0\ \Longleftrightarrow\ r\le D_x.
+\tag{25.4}
+$$
+
+In particular an empty extension or zero field remains indistinguishable
+by these two placements for all finite $r$. For finite $D_x$, the first
+nonzero difference occurs at $D_x+1$. The theorem concerns the whole
+field, before imposing a particular terminal or digital precision.
+
+**Proof.** Let $D=T_uE-ET_s$. Old rows of $D$ are zero: old edges,
+diagonal coefficient and old coordinates are unchanged. At a fresh vertex
+$f$,
+
+$$
+(Dz)_f=\frac18\sum_{a\in V(s):\ a\sim_u f}z_a.
+\tag{25.5}
+$$
+
+Thus $D$ is nonnegative and detects precisely positive values on old
+crossing vertices. Telescoping the two powers gives
+
+$$
+\Delta_r=\sum_{k=0}^{r-1}T_u^{r-1-k}DT_s^kx.
+\tag{25.6}
+$$
+
+Every summand is nonnegative. Positive diagonal and positive edge entries
+imply that the support of $T_s^kx$ is exactly the closed radius-$k$
+neighbourhood of $\operatorname{supp}_+(x)$: a positive summand is a
+length-$k$ walk with optional stays, and a shortest path can be padded
+by stays. Hence $DT_s^kx$ is zero exactly when $k<D_x$.
+For $r\le D_x$, every term of (25.6) is zero. At $r=D_x+1$ the
+term $DT_s^{D_x}x$ is nonzero. At every later $r$ its image under
+$T_u^{r-1-D_x}$ remains nonzero because the diagonal is positive; other
+nonnegative terms cannot cancel it. This proves (25.4), including
+$r=0$ and the infinite-distance cases. Signed fields would permit
+cancellation and are outside this theorem. $\square$
+
+**Definition 25.3 (one actual birth-placement family).** Actually prepare
+known unit alpha by Reset; Add$(1,1)$; Read$(1,1)$; Hold, as in
+Definition 17.1. Its initial digital reply is $2$ or $3$; the seed is
+known from the performed Reset/Add, not from an unknown-field inference.
+Execute one fixed public legal canonical unticked constructor word $\sigma$
+of $n$ births, earning $s$ and its authentic complete raw/canonical
+map. No Tick has occurred, so the current field is $e_\varepsilon$.
+Choose one enabled birth $g=P_p$ or $S_p$ at a logical leaf $p$ of
+material depth $d$, and let $u=g(s)$ and $E$ be its inclusion. Fix a
+public integer $r\ge1$. In particular an internal geometry-only selector
+may count the earned address depth and choose $r=d+1$ before the window;
+that finite address/counter computation and its storage are paid. An owned
+bit $\tau$ controls exactly one of
+the following two actual histories:
+
+$$
+\begin{array}{c|c|c}
+\tau&\text{executed window}&\text{current at its end}\\ \hline
+1&g;\operatorname{Tick}^r&x_1=T_u^rEe_\varepsilon\\
+0&\operatorname{Tick}^r;g&x_0=ET_s^re_\varepsilon.
+\end{array}
+\tag{25.7}
+$$
+
+They have the same law, known seed, constructor, earned final graph, raw
+map, genuine references and final current/fresh rights. Before late
+acquisition actually erase or isolate $\tau$ and all dependent scheduler
+state, replies, predictors, event/operation counters and resource archives.
+Retain only the common earned map, grants and public recipe
+$(\sigma,s,p,g,r)$. No timing, allocation name, capacity or dependent
+archive leaks placement. Such isolation and physical conformance remain
+explicit premises; isolated cells still cost storage. This is a two-history
+experiment, not arbitrary historical recovery or an unknown-source entrance.
+
+Let $f=pL$ for $P_p$ and $f=pR$ for $S_p$, using their actual
+inherited or fresh raw binding. It is a terminal of $u$. Define
+$q_\tau=(x_\tau)_f$.
+
+**Corollary 25.4 (contact and the exact first-contact field).** For every
+family (25.7), $x_0=x_1$ exactly when $r\le d$. For $r>d$,
+$q_0=0<q_1$. At first contact $r=d+1$ the entire difference is
+
+$$
+x_1-x_0=8^{-r}e_f.
+\tag{25.8}
+$$
+
+**Proof.** Definition 2.1 and the incidences in Theorem 21.2 give the
+actual crossing sets. A promotion adds only the edge $p$--$pL$, so
+$R=\{p\}$. A split retains old $p,pL$ and their edge, and adds
+the edges $p$--$pR$ and $pL$--$pLL$, so $R=\{p,pL\}$.
+The old root distances are $d$ for $p$ and, in the split case, $d+1$
+for $pL$. Since the seed has positive support $\{\varepsilon\}$,
+the minimum distance $D_{e_\varepsilon}$ in (25.3) is $d$ for both
+births. Theorem 25.2 therefore gives the whole-field criterion.
+Fresh coordinates of $x_0$ are zero. In $u$ the unique root-to-$f$
+path has length $d+1$; positive diagonal pads that path for every
+later $r$. Thus $q_0=0<q_1$ for $r>d$.
+
+At $r=d+1$, every term of (25.6) with $k<d$ vanishes, leaving
+$x_1-x_0=DT_s^de_\varepsilon$. Put $z=T_s^de_\varepsilon$.
+Its coordinate $z_p$ is exactly $8^{-d}$: the unique root-to-$p$
+path has length $d$, leaving no time for a stay or detour. In the
+split case $z_{pL}=0$, since that old vertex is at distance $d+1$.
+By (25.5), $Dz$ has zero old coordinates. For a promotion its only
+fresh coordinate is $(Dz)_{pL}=z_p/8$; for a split the fresh
+coordinates are $(Dz)_{pR}=z_p/8$ and $(Dz)_{pLL}=z_{pL}/8=0$.
+In either case this is exactly $8^{-(d+1)}e_f$, proving (25.8),
+including the root case $d=0$. $\square$
+
+The depth range is unbounded within the same native class. For example
+execute $P_\varepsilon;S_\varepsilon$, then
+$S_L,S_{L^2},\ldots,S_{L^{d-1}}$ for $d\ge1$ (the latter list is
+empty for $d=1$). The alpha at $p=L^{d-1}R$ has depth $d$ and
+admits the final promotion. The beta at $L^d$ admits the split version.
+These are legal inductive families at all depths, not numerical evidence
+for a class claim.
+
+## 26. Paid placement acquisition and a sharp robust precision threshold
+
+**Construction 26.1 (actual terminal acquisition for every $r>d$).**
+At the completed cut (25.7), actually Hold and Read the terminal $f$ at
+precision
+
+$$
+p_*=3r+1.
+\tag{26.1}
+$$
+
+Each coordinate of $x_\tau$ is an integer divided by $8^r$. Write
+$q_\tau=a/8^r$, $a\in\mathbb N$. The actual response is therefore
+
+$$
+k=2a+\zeta,\qquad \zeta\in\{0,1\},\qquad
+ a=\lfloor k/2\rfloor,\qquad \tau=\mathbf1_{a>0}.
+\tag{26.2}
+$$
+
+Compute the true whole field $x_\tau$ from the known finite recurrence
+in (25.7) and initialize its full current set-valued predictor. This
+predictor returns exactly the **complete allowed response set** (25.2)
+for every subsequent valid digital Read, and the complete deterministic
+reply/refusal and successor rule for each other enabled completed call.
+It does not predict a future provider's choice of $\zeta$.
+
+**Proof.** Powers of $T$ and zero extensions give denominator $8^r$.
+Equation (26.2) follows directly from the actual digital law at precision
+$3r+1$. Corollary 25.4 identifies placement from $a$. Known recipe and
+bit now determine all rational coordinates, including internal cells. Keep
+the genuine actual graph, raw roster, law, reference/right and parser phase
+alongside that vector. Induction on each later common completed call gives
+identical actual current: a growth zero-includes and updates the real
+bindings, Tick applies (25.1), Add and Reset apply their literal source
+rules, and Hold preserves the held field. Digital replies belong to the
+computed exact two-element set; the observed choice is consumed before
+Return but does not change the source field. Complete refusal, malformed
+frame, pending and missing-right cases retain the original contracts. This
+is the full-current supplier of §§7–8 applied at this actually acquired
+endpoint, not a new physical installation theorem. $\square$
+
+**Theorem 26.2 (exact first-contact worst-case peak precision).** Fix any
+family (25.7) at $r=d+1$. For reporting placement, or jointly reporting
+placement and whole actual current, the minimum worst-case peak requested
+digital precision is $3r+1$. The minimum is over deterministic causal
+protocols which are pointwise finite for every allowed provider sequence,
+may adaptively use all original raw growth, rational Add, Tick, Hold,
+Reset and digital Read calls, and have no additional source-dependent
+channel. Costs other than peak precision are not minimized by this result.
+
+**Proof.** Construction 26.1 attains $3r+1$ for every provider choice.
+For necessity suppose all requested precisions were at most $3r$.
+By (25.8) the initial sup-norm difference is $2^{-3r}$. Along a common
+adaptive path, identical rational Adds leave the difference unchanged,
+raw growth includes it by zeros, Hold preserves it, Reset makes it zero,
+and each actual Tick contracts it by at most $7/8$. Thus every paired
+current coordinate differs by at most $2^{-3r}$.
+
+For any requested $p\le3r$, their scaled coordinate difference has
+absolute value at most one. The two floors therefore differ by at most
+one, so the adjacent integer sets in (25.2) intersect. Choose a common
+allowed complete integer reply from that intersection. Every other reply
+is common because the graph/control/rights context is common and the same
+command is issued. The provider law permits each of these choices after
+every prefix; no latent constraint prevents the recursive construction.
+All operands, addresses, precision choices, guards, framing and stopping
+choices remain identical.
+
+If the protocol stops on this common path, its placement output cannot be
+correct for both original histories. If it never stops, the constructed
+provider sequence is allowed for each actual history, contradicting robust
+pointwise termination. Hence a successful protocol must exceed $3r$ on
+some allowed run. No uniform horizon, nonadaptivity or fixed number of
+Reads was assumed. Reset does not evade this placement obstruction:
+it erases the current difference but cannot change which original window
+occurred. For a **current-only** task Reset can deliberately produce known
+zero; no such precision lower bound is asserted. For later contact
+$r>d+1$, (26.1) remains sufficient, but the sharpness proof is not
+claimed there. $\square$
+
+**Definition 26.3 (independently meaningful restricted expressions).**
+Fix the public recipe and genuine context of Definition 25.3, with $r>d$.
+At the acquired cut, use exactly this two-history image:
+
+| Expression | Exposed meaning |
+| --- | --- |
+| Space | Actual rooted ordered material graph $u$ with its whole current rational field $x_\tau$ |
+| Time | Actual constructor causal order and the restricted order placing the enabled birth before or after the declared $r$-Tick window |
+| Boundary | Earned terminal geometry and nominal terminal value $q_\tau$, extracted from the performed digital Read by (26.2) |
+| Memory | Installed whole-current set-valued predictor and genuine callable context |
+
+Boundary's nominal value is not an unperformed exact source Read: it is
+the proved extraction from an actual paid digital reply. Time does not
+expose every private computation or nuisance bit. Raw seed/acquisition
+integer replies, including their actual $\zeta$, are paid records but
+are not recovered by this table. If they are retained as part of an
+extended view, they must also be fixed in the comparison or independently
+supplied; the nominal expressions do not determine them.
+
+**Theorem 26.4 (mutual recovery, route agreement and task meaning).**
+On the image of Definition 26.3 each expression recovers the other three,
+with both image identities and agreement of all recovery routes. Their
+equality kernels equal the placement/joint-task kernel and the complete
+current-service kernel on this fixed-context image. At $r\le d$ this
+four-expression assertion fails: Time distinguishes the two placements
+while the current Space, Boundary and Memory coincide.
+
+**Proof.** Time reads its actual restricted order and obtains $\tau$.
+Space tests its actual coordinate at $f$, zero exactly for $\tau=0$;
+Boundary does the same to its extracted $q_\tau$. Memory contains the
+whole current and does the same test. Given $\tau$ and the public
+recipe, (25.7) evaluates the whole state, the prescribed actual restricted
+chronology, the nominal terminal value and the complete service law.
+Thus decoding after encoding is the identity on $\{0,1\}$, and encoding
+after decoding is the identity on every listed image. All routes factor
+through that same bit. No view was defined as an arbitrary encoding of
+all history: each exposes a different present, temporal, boundary or
+callable object with its stated independent meaning.
+
+For $r>d$, the nominal difference at $f$ is a nonzero integer multiple
+of $8^{-r}$. At precision $3r+1$ the allowed sets for $\tau=0$ and
+$\tau=1$ are disjoint, since their floors are $0$ and $2a\ge2$.
+Thus their full current services are different. Equal bits have equal
+whole state and service under the common context. At $r\le d$,
+Corollary 25.4 instead gives identical states and nominal boundary values,
+while the actual order still differs. It would be false to erase that
+Time distinction by changing the declared placement task. $\square$
+
+**Proposition 26.5 (actual acquired-bit use and successor agreement).**
+Select from the acquired bit and actually execute Add$(f,\tau)$;
+Hold; Read$(f,3r+1)$. The actual successor and nominal terminal value
+are
+
+$$
+x_\tau^+=x_\tau+\tau e_f,\qquad q_\tau^+=q_\tau+\tau.
+\tag{26.3}
+$$
+
+The new digital reply still has form $2a^++\zeta^+$, where
+$a^+=8^r q_\tau^+$ is a nonnegative integer, so the same extraction
+recovers the nominal value. Extend Time by these actually executed calls,
+Boundary by that performed nominal extraction, and Memory by its real
+successor update. The two successor images remain distinct. Evaluating
+(26.3) from the common bit proves the commutative recovery/dynamics square
+for every pair of expressions. This step is a legal use of an acquired
+selector, not merely an exported symbolic inverse. It adds one Add, Hold
+and digital Read, two field ACKs and one provider bit. Its raw nuisance
+reply is again separate from the nominal view. Other controls may leave
+this two-history image; the full current predictor continues, but no
+arbitrary-history inverse follows.
+
+## 27. Same-run resource correspondence and source boundaries
+
+**Proposition 27.1 (one paid preparation, acquisition and use).** Let
+$\sigma$ have $n$ successful births and let $N_s,N_u$ be the actual
+material sizes before and after the selected final birth. Through the seed,
+$\sigma$, one chosen window (25.7) and Construction 26.1, the exact
+semantic counts are
+
+$$
+\begin{array}{c|rrrrrr}
+ &\operatorname{Reset}&\operatorname{Add}&\operatorname{Read}&
+ \operatorname{Hold}&\operatorname{Tick}&\text{births}\\ \hline
+\text{through acquisition}&1&1&2&2&r&n+1\\
+\text{through selected use}&1&2&3&3&r&n+1.
+\end{array}
+\tag{27.1}
+$$
+
+There are $r+4$ field ACKs through acquisition and $r+6$ through use,
+two and three actual provider bits respectively, and $N_u-1$ fresh
+material cells beyond the original alpha. The seed Read is precision one;
+the later Reads have precision $3r+1$. The two histories have the same
+semantic call counts but different actual Tick sizes: the early-birth
+history pays all $r$ Ticks at $N_u$, and the late-birth history all
+$r$ Ticks at $N_s$. They are not financed at the other history's size.
+
+In Definition 13.3's direct two-buffer implementation a Tick at size $M$
+uses $3M-2$ rational products and $2M-2$ sums. Thus the window pays
+$r(3N_u-2)$ products and $r(2N_u-2)$ sums if $\tau=1$, versus
+$r(3N_s-2)$ and $r(2N_s-2)$ if $\tau=0$. Reset writes, seed Add,
+fresh zero initialization, structural/roster/reference work and predictor
+computation remain additional. Reconstructing the known field by (25.7)
+has an $O(rN_u)$ rational-operation implementation and $O(N_u)$ field
+slots, besides retained graph/records. In this normalized nonnegative
+family the common denominator is $8^r$, with numerators at most $7^r$,
+so source widths are $O(r+1)$. No dimension-independent scalar width is
+assumed. The acquired-bit Add adds at most one to a coordinate and keeps
+the same asymptotic width, without making it constant.
+
+Literal traffic uses **Definition 13.2's convention $\ell(0)=0$**.
+In particular a valid digital Read$(j,p)$ has request payload
+$7+2\ell(|j|)+2\ell(p)$ bits, and a signed integer reply $k$ has
+$5+2\ell(|k|)$ bits. Use the actual $j_f$, actual response integer and
+$p=3r+1$ for each performed acquisition/use Read; include the seed's
+actual ordinal and reply separately. Sum the actual growth-address
+payloads (13.2), field requests/ACKs, all End/local acknowledgements,
+Return/navigation, input/bit-provider work, dispatch, copies, clears,
+reference/right/map handoffs and any outputs or record exports. This codec
+is different from the native literal-rational codec using
+$\operatorname{bitlen}(0)=1$. The value zero is not silently assigned the
+other codec's length.
+
+Both full source buffers, observer/predictor copies, instruction and map
+storage, actual provider/parser state, request/reply buffers, retained
+records, outputs and isolated placement/scheduler/resource archives count
+where simultaneously backed. Owned-bit ingress and its isolation are paid,
+not late advice. Finite exact programs and finite per-input backing supply
+neither a uniform lifetime bound nor a total-resource optimum. A measured
+Time claim uses the Reads in (27.1); it cannot be obtained by renaming
+unperformed calculations as observations.
+
+**Supplier correspondence 27.2 (scope of the additional result).**
+Definition 17.1 already supplies this raw digital installation and its
+unknown raw-clock acquisition under a different historical promise.
+Sections 7–8 supply full digital service; Definition 13.2 supplies the
+literal codec and Proposition 13.3 the actual source-arithmetic count.
+Sections 18 and 21 preserve the raw-clock, positive-gap, zero-gap and
+placement distinctions already proved there. The new result here is the
+exact support-distance criterion for any finite unticked extension with
+nonnegative field, its actual one-birth/two-history application, and the
+sharp first-contact robust precision obstruction with acquired-bit use.
+It is not a new proof of the existing general tomography, clock inverse
+or full-current-service suppliers.
+
+The ordinary adjacency/walk positivity ingredient matches pinned mathlib's
+`SimpleGraph/AdjMatrix.lean` walk interpretation; telescoping (25.6),
+positive stays and the sup-norm comparison are proved here directly.
+No upstream theorem is asserted to authenticate the unknown physical law,
+install the digital channel or recover the provider's hidden choices.
+The source-specific combination is repository-derived, without a claim of
+literature priority or new Lean certification.
+
+NCR, PVC and PR57 retain their different actual constructor/Clifford
+readouts, acquired entrances, fixed-$H$ or installed-controller conditions,
+Ready/authorization and paid tape/record obligations. Process Geometry
+§37's exponent recovery starts from its declared acquired data and image;
+Structural/Callable Atlas conversion starts from its earned storage and
+callable/authorization context. Neither a generic inverse nor a response
+oracle from these sources is imported into (25.7). The concrete advance
+is the support-sensitive timing distinction, a paid terminal procedure
+that acquires it under the raw digital law, and its exact first-contact
+robust precision cost on that same actual process. It does not provide the
+common realization bridge of Open problem 16.3.
+
+**Boundary 27.3.** The nonnegative assumption is essential to the proof's
+absence of cancellation; no signed-field criterion is asserted. The
+sharpness concerns the first-contact placement or joint placement/current
+task, not later-contact optimal precision or current-only recovery after
+Reset. Only the restricted two histories and their specified successor
+images are inverted. Unknown seed/law/port authentication, arbitrary
+histories, general timing journals, nuisance provenance, dependent
+archives, physical installation and uniform lifetime resources remain
+outside the results. All original fixed-$G_{gc}$, original-$Q$,
+parked-consumer, unchanged-initialization, original terminal/final-no-Ready
+and other model-specific statements and settlements keep their exact
+scopes. These ordinary conditional proofs do not complete the full
+sustained search for a common space/time/boundary/memory relation structure
+or establish universal alpha/beta minimality.
+
+## 追加锚（本行以下为增补区）
