@@ -118,6 +118,10 @@ $$\forall (n : \mathbb{N}), \forall (k : \mathbb{N}), (1 \le k) \Rightarrow ((2 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/KyFanGap/MandalMehatariDasSeidelMinimum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mmd2205-seidelchain` (proved) by `D5/S3/Combinatorics/Graph/KyFanGap/MandalMehatariDasSeidelMinimum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mmd2205-seidelchain","declaration_gid":"D5/S3/Combinatorics/Graph/KyFanGap/MandalMehatariDasSeidelMinimum.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Santanu Mandal, Ranjit Mehatari, and Kinkar Chandra Das (2022). *On the spectrum and energy of Seidel matrix for chain graphs*. DOI: [10.48550/arXiv.2205.00310](https://doi.org/10.48550/arXiv.2205.00310). URL: <https://arxiv.org/abs/2205.00310v1>.

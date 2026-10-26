@@ -24,15 +24,15 @@ internal sealed class MandalMehatariDasSeidelMinimumDocument : IScribeDocumentDe
             Node("gamma", "The comparison family", "Gamma", GammaDefinition(), DescribeRole.Definition, GammaProse, true),
             Node("claim", "Conjecture 4.14", "claim", Eqn(Call("claim"), Parenthesized(ClaimBody())), DescribeRole.Definition, ClaimProse, true),
             Node("result", "Minimum energy and every equality case", "result", ClaimBody(), DescribeRole.Theorem,
-                "Sign switching merges the first 0-run with the final 1-run. Compression gives a real symmetric odd core with weights at least one and first weight greater than one. Its trace-norm minimum and the constant inertia correction give the energy comparison. Equality forces every intermediate run to have length one, exactly the family Gamma. When k=1, switching a bipartition gives the all-ones matrix minus the identity for every graph in the comparison."))));
+                "Sign switching merges the first 0-run with the final 1-run. Compression gives a real symmetric odd core with weights at least one and first weight greater than one. Its trace-norm minimum and the constant inertia correction give the energy comparison. Equality forces every intermediate run to have length one, exactly the family Gamma. When k=1, switching a bipartition gives the all-ones matrix minus the identity for every graph in the comparison.", resolution: new OpenProblemResolutionClaim(ProblemSlugRef.Create("mmd2205-seidelchain"), ResolutionKind.Proved)))));
     private const string BinaryProse = "The indices are Fin k; false is 0 and true is 1. List.ofFn orders the runs and List.flatten concatenates them.";
     private const string GraphProse = "Page 2, verbatim: \"adding an isolated vertex.\" \"adding a vertex dominating to all previously added isolated vertices only.\" An earlier false position and a later true position are adjacent. The formula gives the entire adjacency relation, including its symmetric case and the absence of loops.";
     private const string GammaProse = "The middle word is k-1 copies of [true,false], representing the 2k-2 singleton runs under the source's underbrace. Natural subtraction is truncated; every parameter is a natural number.";
     private const string ClaimProse = "The functions s,t have domain Fin k and positive natural values; n is their total. Every comparison binary string h in Gamma n k is quantified separately. The energy is the shared characteristic-root energy of the real Seidel matrix.";
-    private static DocumentBlock Node(string id, string title, string name, Formula formula, DescribeRole role, string prose, bool literature = false) =>
+    private static DocumentBlock Node(string id, string title, string name, Formula formula, DescribeRole role, string prose, bool literature = false, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("mmd-minimum-" + id), DeclarationHandle.Create(Prefix + name[(name.LastIndexOf('.') + 1)..]), H(title),
             StatementSource.FromAuthor(Disp(formula)), literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            SourceProse(id, prose), role);
+            SourceProse(id, prose), role, resolution);
     private static Formula SourceSub(string s, Formula i) => new Formula.Subscript(Id(s), i);
     private static Formula SourceRuns() => Seq(
         new Formula.Power(D(0), SourceSub("s", D(1))), Sp,
