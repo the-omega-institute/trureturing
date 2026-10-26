@@ -143,17 +143,148 @@ private lemma convex_extension (a₁ a₂ b₁ b₂ : Matrix (Fin 2) (Fin 2) ℂ
         (mul_le_mul_of_nonneg_left hσ hb)
       _ = v := by rw [← add_mul, hab, one_mul]
 
+private def xz (x z : ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
+  x • qubitX + z • qubitZ
+
+private lemma xz_hermitian (x z : ℝ) : (xz x z).IsHermitian := by
+  apply Matrix.IsHermitian.ext
+  intro i j
+  fin_cases i <;> fin_cases j <;> simp [xz, qubitX, qubitZ]
+
+private lemma xz_binary (x z : ℝ) (h : x ^ 2 + z ^ 2 = 1) :
+    IsBinaryObservable (xz x z) := by
+  have hs : xz x z ^ 2 = 1 := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [xz, qubitX, qubitZ, pow_two, Matrix.mul_apply, Fin.sum_univ_two]
+    · exact_mod_cast (show z * z + x * x = 1 by nlinarith only [h])
+    · ring
+    · ring
+    · exact_mod_cast (show x * x + z * z = 1 by nlinarith only [h])
+  exact ⟨xz_hermitian x z,
+    D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Upper.involution_binary _
+      (xz_hermitian x z) hs⟩
+
+private lemma xz_calibration (x z : ℝ) :
+    (trace (xz x z * qubitX)).re = 2 * x ∧
+      (trace (xz x z * qubitZ)).re = 2 * z := by
+  constructor <;> simp [xz, qubitX, qubitZ, trace, Matrix.mul_apply, Fin.sum_univ_two] <;> ring
+
+private lemma xz_state (x z : ℝ) (h : x ^ 2 + z ^ 2 = 1) :
+    ((1 / 2 : ℝ) • (1 + xz x z)).PosSemidef ∧
+      trace ((1 / 2 : ℝ) • (1 + xz x z)) = 1 := by
+  constructor
+  · exact (xz_binary x z h).2.2.smul (by norm_num : (0 : ℝ) ≤ 1 / 2)
+  · simp [xz, qubitX, qubitZ, trace, Fin.sum_univ_two]
+    ring
+
+private lemma xz_expectation (x z a b : ℝ) :
+    (trace (((1 / 2 : ℝ) • (1 + xz x z)) * xz a b)).re = x * a + z * b := by
+  simp [xz, qubitX, qubitZ, trace, Matrix.mul_apply, Fin.sum_univ_two]
+  ring
+
+private lemma product_separable (σ τ : Matrix (Fin 2) (Fin 2) ℂ)
+    (hσ : σ.PosSemidef) (htσ : trace σ = 1)
+    (hτ : τ.PosSemidef) (htτ : trace τ = 1) : Separable (σ ⊗ₖ τ) :=
+  subset_convexHull ℝ _ ⟨σ, τ, hσ, htσ, hτ, htτ, rfl⟩
+
+private lemma xz_attainment (c s : ℝ) (hcs : c ^ 2 + s ^ 2 = 1) :
+    ∃ σ : Matrix (Fin 2) (Fin 2) ℂ, σ.PosSemidef ∧ trace σ = 1 ∧
+      witness (σ ⊗ₖ σ) (xz c s) (xz s c) (xz c s) (xz s c) =
+        2 * c * s + Real.sqrt (1 + (c ^ 2 - s ^ 2) ^ 2) := by
+  let d := c ^ 2 - s ^ 2
+  let k := Real.sqrt (1 + d ^ 2)
+  let u := Real.sqrt ((k + d) ^ 2 + 1)
+  have hk : k ^ 2 = 1 + d ^ 2 := Real.sq_sqrt (by positivity)
+  have hu : u ^ 2 = (k + d) ^ 2 + 1 := Real.sq_sqrt (by positivity)
+  have hu0 : 0 < u := Real.sqrt_pos.mpr (by positivity)
+  let x := (k + d) / u
+  let z := 1 / u
+  have hxz : x ^ 2 + z ^ 2 = 1 := by
+    dsimp [x, z]
+    field_simp
+    nlinarith only [hu]
+  have hid : d * (k + d) ^ 2 + 2 * (k + d) - d = k * ((k + d) ^ 2 + 1) := by
+    linear_combination -(d + k) * hk
+  have hev : d * x ^ 2 + 2 * x * z - d * z ^ 2 = k := by
+    calc
+      _ = (d * (k + d) ^ 2 + 2 * (k + d) - d) / u ^ 2 := by
+        dsimp [x, z]; ring
+      _ = k := by rw [hid, ← hu]; field_simp
+  let σ := (1 / 2 : ℝ) • (1 + xz x z)
+  have hσ := xz_state x z hxz
+  refine ⟨σ, hσ.1, hσ.2, ?_⟩
+  rw [product_witness σ σ _ _ _ _ hσ.1.isHermitian hσ.1.isHermitian
+    (xz_hermitian c s) (xz_hermitian s c) (xz_hermitian c s) (xz_hermitian s c)]
+  dsimp only [σ]
+  simp only [xz_expectation]
+  calc
+    _ = (2 * c * s) * (x ^ 2 + z ^ 2) +
+        (c ^ 2 - s ^ 2) * (x ^ 2 - z ^ 2) + 2 * x * z * (c ^ 2 + s ^ 2) := by ring
+    _ = 2 * c * s + k := by rw [hxz, hcs]; dsimp [d] at hev; nlinarith only [hev]
+    _ = _ := rfl
+
 private lemma attainment_small (ε : ℝ) (hε : ε ∈ Set.Icc (0 : ℝ) 1)
     (hsmall : ε ≤ 1 / 2 - 1 / (2 * Real.sqrt 2)) :
     ∃ ρ a₁ a₂ b₁ b₂, Separable ρ ∧ Admissible ε a₁ a₂ b₁ b₂ ∧
       separableValue ε = witness ρ a₁ a₂ b₁ b₂ := by
-  sorry
+  let c := 1 - 2 * ε
+  let s := 2 * Real.sqrt (ε * (1 - ε))
+  have hroot := Real.sq_sqrt (mul_nonneg hε.1 (sub_nonneg.mpr hε.2))
+  have hcs : c ^ 2 + s ^ 2 = 1 := by dsimp [c, s]; nlinarith only [hroot]
+  obtain ⟨σ, hσ, htσ, hw⟩ := xz_attainment c s hcs
+  have hc : 2 - 4 * ε = 2 * c := by dsimp [c]; ring
+  have hrad : 2 - 16 * ε * (1 - ε) * (1 - 2 * ε) ^ 2 =
+      1 + (c ^ 2 - s ^ 2) ^ 2 := by
+    have he : s ^ 2 = 4 * ε * (1 - ε) := by dsimp [s]; nlinarith only [hroot]
+    calc
+      _ = 2 - 4 * c ^ 2 * s ^ 2 := by rw [he]; dsimp [c]; ring
+      _ = _ := by linear_combination -(c ^ 2 + s ^ 2 + 1) * hcs
+  have hca := xz_calibration c s
+  have hcb := xz_calibration s c
+  refine ⟨σ ⊗ₖ σ, xz c s, xz s c, xz c s, xz s c,
+    product_separable σ σ hσ htσ hσ htσ,
+    ⟨xz_binary c s hcs, xz_binary s c (by linarith only [hcs]),
+      xz_binary c s hcs, xz_binary s c (by linarith only [hcs]), ?_, ?_, ?_, ?_⟩, ?_⟩
+  · rw [hca.1, hc]
+  · rw [hcb.2, hc]
+  · rw [hca.1, hc]
+  · rw [hcb.2, hc]
+  · rw [hw, separableValue, if_pos hsmall, hrad]
+    dsimp [c, s]
+    ring
 
 private lemma attainment_large (ε : ℝ)
     (hlarge : 1 / 2 - 1 / (2 * Real.sqrt 2) < ε) :
     ∃ ρ a₁ a₂ b₁ b₂, Separable ρ ∧ Admissible ε a₁ a₂ b₁ b₂ ∧
       separableValue ε = witness ρ a₁ a₂ b₁ b₂ := by
-  sorry
+  let k : ℝ := 1 / Real.sqrt 2
+  have hk : k ^ 2 + k ^ 2 = 1 := by
+    dsimp [k]
+    rw [div_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+    norm_num
+  have hc : 2 - 4 * ε ≤ 2 * k := by
+    have he : 1 / (2 * Real.sqrt 2) = k / 2 := by dsimp [k]; ring
+    rw [he] at hlarge
+    linarith
+  let σ := (1 / 2 : ℝ) • (1 + xz k k)
+  have hσ := xz_state k k hk
+  have ha := xz_binary k k hk
+  have hcal := xz_calibration k k
+  refine ⟨σ ⊗ₖ σ, xz k k, xz k k, xz k k, xz k k,
+    product_separable σ σ hσ.1 hσ.2 hσ.1 hσ.2,
+    ⟨ha, ha, ha, ha, ?_, ?_, ?_, ?_⟩, ?_⟩
+  · simpa only [hcal.1] using hc
+  · simpa only [hcal.2] using hc
+  · simpa only [hcal.1] using hc
+  · simpa only [hcal.2] using hc
+  · rw [separableValue, if_neg (not_le.mpr hlarge),
+      product_witness σ σ _ _ _ _ hσ.1.isHermitian hσ.1.isHermitian ha.1 ha.1 ha.1 ha.1]
+    have hm : (trace (σ * xz k k)).re = 1 := by
+      rw [xz_expectation]
+      nlinarith only [hk]
+    rw [hm]
+    norm_num
 
 theorem result : claim := by
   intro ε hε
