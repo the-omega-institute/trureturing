@@ -1719,3 +1719,726 @@ correspondence, and a determination of physical spatial dimension,
 remain unresolved.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. The actual preparation fiber and its false-source polarity
+
+**Definition 11.1 (the unchanged source and a restricted observation).**
+Retain all data of Definition 7.1: every $0<Z<1$, $r=1-Z$,
+$H_{\rm n}=r/2$, every preparation height $k_0\in(0,H_{\rm n})$,
+all its fixed preparation rotations and coordinates
+$(\alpha_0,\beta_0)$, and the original $a,\eta>0$. The endpoint is
+exactly (7.1)--(7.2), with raw Haar measure, the unit-source
+$\Gamma$, $g_c=16\sqrt{a\eta}$, the full complex selector (112.5),
+and the coefficient-positive normalized $h$. Write
+$(\mathscr E,\mathscr V)$ for its entire transformed form
+[S, (115.15)] on $L^2(G,m;\mathbb C)$, $m=h^2\mu$, and
+$\mathbf Z_t$ for the conservative diffusion of [S, §116].
+Probability statements use the real form of this same complex form.
+
+Let $\mathcal R:J\times\mathbb T^2\to\mathbb R^{10}$ be exactly the
+five ordered pairs in (7.8), with their signed components, factors two
+and original rotations. Put
+
+$$
+q_0=(k_0,[\alpha_0],[\beta_0]),\qquad
+v_0=\mathcal R(q_0),\qquad
+\Phi=\mathcal R\circ\Psi\quad\hbox{on }\mathcal S.
+\tag{11.1}
+$$
+
+Choose any closed height interval $I=[l,u]\Subset J$ with
+$l<k_0<u$, and define
+
+$$
+\begin{gathered}
+D_I=\{p\in G:l<k_0+x(p)<u\},\qquad
+\theta_I=\inf\{t\ge0:\mathbf Z_t\notin D_I\},\\
+E_I=\mathcal R(I\times\mathbb T^2),\qquad
+O_t^I=\Phi(\mathbf Z_{t\wedge\theta_I}).
+\end{gathered}
+\tag{11.2}
+$$
+
+The last expression at a finite exit uses the continuous extension of
+$\Phi$ to $\overline D_I$, which is still inside the native slab.
+It is held at that exit value. If $\theta_I=\infty$, there is no
+holding. This stops only an observation: $\mathbf Z$ remains the
+original conservative full process after $\theta_I$.
+All original commands still have precisely their entire domains (1.5)
+and (7.6), with their prefix guards and actual periods. The interval
+$I$ is an additional observation restriction, not a new source
+condition or a replacement for those command domains.
+
+**Theorem 11.2 (the exact fiber and polarity for the full endpoint form).**
+For every parameter and preparation of Definition 11.1, the complete
+preparation-output fiber on $\mathcal S$ is
+
+$$
+\begin{gathered}
+\mathfrak F=\Phi^{-1}\{v_0\}
+ =\bigcup_{j,n\in\mathbb Z}
+   \{(0,4\pi j,z,4\pi r c_0j-2\pi rn):z\in\mathbb R\},\\
+c_0=\tfrac12-k_0/r,\qquad
+\mathfrak F_{\rm false}=\mathfrak F\setminus\{e\},\qquad
+\operatorname{Cap}_1(\mathfrak F_{\rm false})=0
+ <\operatorname{Cap}_1(\{e\}).
+\end{gathered}
+\tag{11.3}
+$$
+
+Capacity is for the entire form $(\mathscr E,\mathscr V)$, not for
+an off-source replacement process. There is one properly exceptional
+set $N$ for the full diffusion, containing $\mathfrak F_{\rm false}$,
+with $e\notin N$, such that for every $p\in G\setminus N$,
+
+$$
+\mathbb P_p\{\mathbf Z_t\in G\setminus N
+                  \hbox{ for every }t\ge0\}=1.
+\tag{11.4}
+$$
+
+The full lifetime, source regularity, contact and zero-residence
+statements of [S, Theorems 116.3--116.4] hold with this same $N$.
+In particular, for any $I$ as above and $p\in D_I\setminus N$,
+
+$$
+\mathbb P_p\{\,O_t^I=v_0
+       \ \Longleftrightarrow\ (t<\theta_I\hbox{ and }\mathbf Z_t=e)
+                       \hbox{ for every }t\ge0\,\}=1.
+\tag{11.5}
+$$
+
+**Proof.** From the actual second pair of (7.8),
+
+$$
+k=\frac{|Y_{02}|^2}{4Z}.
+\tag{11.6}
+$$
+
+Thus equality of the ten outputs first forces $k=k_0$; the symmetry
+$k\leftrightarrow H_{\rm n}-k$ of the bottom amplitude creates no
+second height in this fiber. At this height the positive amplitudes
+$2\sqrt{k_0(H_{\rm n}-k_0)}$ and $2\sqrt{Zk_0}$ make equality
+of $Y_{01}$ and $Y_{02}$ equivalent to
+$[\alpha]=[\alpha_0]$ and $[\beta]=[\beta_0]$ respectively.
+The fixed rotations cancel in each comparison, without being set
+equal to one another. The other three pairs then agree as well.
+Substitute (7.3). Its first two conditions are $x=0$ and $y=4\pi j$.
+Its last is $c_0y-w/r=2\pi n$, giving exactly (11.3).
+The coordinate $z$ is unrestricted. This includes the entire line
+$\{(0,0,z,0):z\in\mathbb R\}$ through $e$, not just the discrete
+central orbit used in §§7--9.
+
+Here is a local capacity estimate for all of this false fiber.
+Exhaust each line in (11.3), with $e$ omitted, by countably many
+compact segments having positive distance from $e$. For the line
+through $e$, use separate positive and negative $z$ segments bounded
+away from zero. Fix one segment $C$ on the line with constants
+$y_j=4\pi j$ and $w_{jn}=4\pi r c_0j-2\pi rn$. Choose a smooth
+compact $z$ cutoff $\chi$ equal to one near its $z$ interval and a
+smooth compact cutoff $\xi$ on $\mathbb R^3$ equal to one near zero.
+For sufficiently small $\epsilon>0$ put
+
+$$
+u_\epsilon(x,y,z,w)
+ =\chi(z)\xi\bigl((x,y-y_j,w-w_{jn})/\epsilon\bigr).
+\tag{11.7}
+$$
+
+Choose these cutoffs with support in one fixed compact subset of
+$G\setminus\{e\}$. In the line-through-$e$ case this is possible
+because the $z$ support avoids zero. In all other cases the fixed
+normal displacement from that line to $e$ is nonzero. Then
+$u_\epsilon\in C_c^\infty(G\setminus\{e\};\mathbb R)
+\subset\mathscr V_0\subset\mathscr V$ and is one near $C$.
+Smooth positivity of $h$ on this compact set and boundedness of the
+principal matrix (10.1) give a constant $C_1$, independent of small
+$\epsilon$, for which
+
+$$
+\|u_\epsilon\|_{L^2(m)}^2\le C_1\epsilon^3,\qquad
+\mathscr E[u_\epsilon]\le C_1(\epsilon+\epsilon^3).
+\tag{11.8}
+$$
+
+Indeed there are three normal coordinates of volume order
+$\epsilon^3$; each normal derivative has size at most
+$C/\epsilon$, and the $z$ derivative is bounded. The local energy
+is bounded above by a constant times the ordinary Euclidean gradient
+integral. This uses the full integral form [S, (115.15)] on these
+punctured tests. It does not split any singular kinetic or potential
+energy at $e$. The variational definition of outer capacity gives
+$\operatorname{Cap}_1(C)=0$. Countable subadditivity over the stated
+segments proves the zero capacity of $\mathfrak F_{\rm false}$.
+The last strict inequality in (11.3) is exactly
+[S, (116.4)], with discount one; it is reused here.
+
+For a regular symmetric Dirichlet form, a Borel set of zero shifted
+capacity is contained in a properly exceptional set. Its complement
+is invariant for the associated process, so avoidance holds for all
+times from every start in that complement. These are the standard
+capacity/exceptional-set facts of Fukushima--Oshima--Takeda,
+*Dirichlet Forms and Symmetric Markov Processes*, second edition,
+[Chapters 2 and 4](https://doi.org/10.1515/9783110218091).
+The capacity and exceptional-set conventions are also stated in
+Chen--Fukushima--Ying,
+[*Traces of symmetric Markov processes and their characterizations*,
+arXiv:math/0606784v1, §2 and Appendix](https://arxiv.org/pdf/math/0606784v1).
+Apply them to the full regular form supplied in [S, Theorem 115.3].
+Take such an envelope together with the properly exceptional set in
+[S, Theorems 116.3--116.4]. A countable union of properly exceptional
+sets is properly exceptional. None can contain the nonpolar $e$.
+Conservation gives (11.4) with all $t\ge0$, including the source start.
+In particular this is one pathwise avoidance statement, rather than
+separate almost-everywhere assertions for each deterministic time.
+
+Before $\theta_I$, equality of the outputs is equivalent to membership
+in $\mathfrak F$, whose only attainable point on these paths is $e$.
+If $\theta_I<\infty$, path continuity makes its height either $l$ or
+$u$. Formula (11.6) distinguishes either from $k_0$, also for the
+subsequent held path. This proves (11.5). The set $N$ does not depend
+on $I$; the same avoidance event proves the assertion for each such
+observation restriction. $\square$
+
+## 12. Observed source reset and the original-clock exit correction
+
+**Definition 12.1 (the observed filtration and source potentials).**
+For a legitimate start $p\in D_I\setminus N$, use the completed,
+right-continuous natural filtration $\mathcal F_t^O$ of $O^I$ under
+$\mathbb P_p$, contained in the corresponding usual full-process
+filtration. A stopping time below is an $\mathcal F^O$ stopping time.
+The observation determines its own exit time: by (11.6),
+
+$$
+\theta_I=\inf\left\{t\ge0:
+       \frac{|(O_t^I)_{02}|^2}{4Z}\notin(l,u)\right\}.
+\tag{12.1}
+$$
+
+Here $(O_t^I)_{02}$ denotes the two components of its original
+$02$ pair. Keep the original clock $t$ and write $\lambda>0$ for
+a discount, distinct from the fixed native parameter $r=1-Z$.
+Use exactly (8.3) and [S, (116.13)--(116.14)]:
+
+$$
+\begin{gathered}
+b_\lambda=1-\lambda h^{-1}(F+\lambda)^{-1}h,
+\quad d_\lambda=\int b_\lambda\,dm>0,
+\quad R_\lambda=(K+\lambda)^{-1},\\
+R_\lambda f(e)=\frac1{\lambda d_\lambda}
+                    \int_G b_\lambda f\,dm.
+\end{gathered}
+\tag{12.2}
+$$
+
+The last value is the supplied source trace, equivalently the process
+potential, for bounded complex Borel $f$. At legitimate other points
+use process-potential versions, and for $b_\lambda$ use the
+hitting-potential version of [S, (116.9)]. No ordinary value $h(e)$
+is introduced.
+
+**Theorem 12.2 (reset at an observed preparation stopping time).**
+Let $S$ be any observed stopping time, possibly infinite, and put
+
+$$
+A_S=\{S<\infty,\ S<\theta_I,\ O_S^I=v_0\}.
+\tag{12.3}
+$$
+
+For every bounded Borel functional $F_0$ of a continuous held output
+path on $[0,\infty)$, with the topology of uniform convergence on
+compact time intervals,
+
+$$
+\mathbb E_p\left[
+ \mathbf1_{A_S} F_0\bigl((O_{S+t}^I)_{t\ge0}\bigr)
+                         \mid\mathcal F_S^O\right]
+ =\mathbf1_{A_S}\,
+       \mathbb E_e F_0\bigl((O_t^I)_{t\ge0}\bigr).
+\tag{12.4}
+$$
+
+The product on the left is set to zero off $A_S$, so no value at
+$S=\infty$ is needed. In particular the delayed observed hitting times
+
+$$
+S_s=\inf\{t\ge s:O_t^I=v_0\},\qquad s\ge0,
+\tag{12.5}
+$$
+
+are stopping times and obey (12.4) on $\{S_s<\theta_I\}$.
+For the source start, almost surely,
+
+$$
+\begin{gathered}
+\theta_I>0,\qquad
+\inf\{t>0:O_t^I=v_0\}=0,\\
+\int_0^T\mathbf1_{\{v_0\}}(O_t^I)\,dt=0
+                         \quad\hbox{for every finite }T\ge0.
+\end{gathered}
+\tag{12.6}
+$$
+
+The same zero-residence assertion holds from every
+$p\in D_I\setminus N$. Thus observed returns near zero are genuine
+source contacts, without a positive interval of holding there.
+
+**Proof.** The exit reconstruction (12.1) and continuity show that
+$A_S\in\mathcal F_S^O$. Containment of the observed usual filtration
+in the full usual filtration makes $S$ a full-process stopping time.
+On $A_S$, (11.5) gives $\mathbf Z_S=e$. Apply the strong Markov
+property of the supplied diffusion at $S$, on $\{S<\infty\}$,
+localizing to $\{S\le n\}$ if necessary. Conditional on its entire
+full-process past, the future path on $A_S$ has law $\mathbb P_e$.
+Since $S<\theta_I$, the residual observation exit is the first exit
+of this future path from the very same $D_I$, and the future readout
+uses the same preparation rotations and map $\Phi$. Apply this
+measurable stopped-and-held readout to the future path and condition
+once more on $\mathcal F_S^O$. This proves (12.4), first for cylinder
+functions and then for bounded Borel path functionals by the monotone
+class theorem. This argument also establishes the measurability of
+the stopped-path functional used there.
+
+The first hitting time after a deterministic $s$ of a closed set by
+a continuous adapted process is a stopping time in its usual
+filtration. Apply this to $\{v_0\}$. Equality of the observed and
+actual contact sets in (11.5) identifies every such contact before
+exit. For a source start, continuity at the interior point $e$ gives
+$\theta_I>0$. The supplied self-regularity
+$\mathbb P_e\{\inf\{t>0:\mathbf Z_t=e\}=0\}=1$
+then gives arbitrarily small positive observed contacts before exit.
+Finally use (11.5) and the all-time zero-residence assertion
+[S, (116.15)]. Holding after exit contributes no preparation-output
+residence because its height differs from $k_0$. $\square$
+
+The strong Markov and source-regularity inputs here are those of the
+full symmetric diffusion in [S, Theorem 116.3]. The finely closed-set
+regularity convention used there is the one in
+[Chen--Fukushima--Ying, §4 before (4.1)](https://arxiv.org/pdf/math/0606784v1).
+Equation (12.4) is an observational conditional-law identity. It does
+not add a native reset command, erase retained native history or
+assert the same detector under arbitrary interventions.
+
+**Theorem 12.3 (contact and occupation with the observation exit retained).**
+Let
+
+$$
+\tau_e=\inf\{t\ge0:\mathbf Z_t=e\},\qquad
+\tau_O^I=\inf\{t\ge0:O_t^I=v_0\}.
+$$
+
+For $p\in D_I\setminus N$, the first observed contact is $\tau_e$
+on $\{\tau_e<\theta_I\}$ and is infinite otherwise. For every
+$\lambda>0$ its exact transform is
+
+$$
+\mathbb E_p[e^{-\lambda\tau_O^I};\tau_O^I<\infty]
+ =b_\lambda(p)
+  -\mathbb E_p[e^{-\lambda\theta_I}b_\lambda(\mathbf Z_{\theta_I});
+                                      \theta_I<\tau_e].
+\tag{12.7}
+$$
+
+For bounded complex Borel $g$ on $E_I$, define the bounded extension
+on the original full carrier by
+
+$$
+\widehat g(p)=
+ \begin{cases}g(\Phi(p)),&p\in D_I,\\0,&p\notin D_I.\end{cases}
+\tag{12.8}
+$$
+
+The original source-start occupation before observation exit is
+
+$$
+\begin{aligned}
+\mathbb E_e\int_0^{\theta_I}e^{-\lambda t}g(O_t^I)\,dt
+ &=\frac1{\lambda d_\lambda}
+                 \int_G b_\lambda\widehat g\,dm\\
+ &\quad-\mathbb E_e[e^{-\lambda\theta_I}
+                  R_\lambda\widehat g(\mathbf Z_{\theta_I});
+                                      \theta_I<\infty].
+\end{aligned}
+\tag{12.9}
+$$
+
+For the complete held observation there is also exactly the holding
+term:
+
+$$
+\mathbb E_e\int_0^\infty e^{-\lambda t}g(O_t^I)\,dt
+ =\mathbb E_e\int_0^{\theta_I}e^{-\lambda t}g(O_t^I)\,dt
+   +\frac1\lambda\mathbb E_e[e^{-\lambda\theta_I}
+                         g(O_{\theta_I}^I);\theta_I<\infty].
+\tag{12.10}
+$$
+
+All discounts multiply the original $t$. In particular the pre-exit
+occupation for $g=1$ is
+$\lambda^{-1}\mathbb E_e[1-e^{-\lambda\theta_I}]$, with
+$e^{-\lambda\infty}=0$, while the complete held occupation is
+$1/\lambda$.
+
+**Proof.** Equation (11.5) and the boundary height prove the first
+assertion. Split the full hitting transform
+$b_\lambda(p)=\mathbb E_p[e^{-\lambda\tau_e}]$ at the earlier of
+contact and exit. There is no finite tie, since $e$ is interior to
+$D_I$. On $\{\theta_I<\tau_e\}$ the strong Markov property at
+$\theta_I$ gives the discounted future hitting transform
+$e^{-\lambda\theta_I}b_\lambda(\mathbf Z_{\theta_I})$.
+This proves (12.7), also at $p=e$, where $\tau_e=0$ and the
+correction event is empty. Omitting that event would give an
+incorrect source-start formula.
+
+For a bounded Borel $f$ on $G$, the ordinary strong Markov splitting
+of its full process potential gives
+
+$$
+R_\lambda f(e)
+ =\mathbb E_e\int_0^{\theta_I}e^{-\lambda t}f(\mathbf Z_t)\,dt
+  +\mathbb E_e[e^{-\lambda\theta_I}R_\lambda f(\mathbf Z_{\theta_I});
+                                               \theta_I<\infty].
+\tag{12.11}
+$$
+
+Absolute integrability follows from $\|f\|_\infty/\lambda$;
+real and imaginary parts justify the complex identity. Apply it to
+(12.8) and use exactly the supplied full-source normalization (12.2).
+This yields (12.9). After finite observation exit the held output is
+constant, so direct integration gives (12.10). The assertions for
+$g=1$ follow by integrating a constant in the original time.
+The exit term in (12.9) includes all subsequent full-process visits
+seen by $R_\lambda\widehat g$, even though the observation has
+stopped. It is not a new killing or a change of the source law.
+At an observed return stopping time, (12.4) applies these same formulas
+to the future held observation. $\square$
+
+## 13. A history-retaining Brownian reference has a different return law
+
+**Definition 13.1 (finite held topology and the free first-level premise).**
+Fix $T>0$, the same $I$, preparation and readout as above. Give
+
+$$
+\mathcal X_{I,T}=C([0,T],E_I),\qquad
+ d_\infty(\omega,\omega')
+       =\sup_{0\le t\le T}|\omega(t)-\omega'(t)|
+\tag{13.1}
+$$
+
+the uniform topology. It is a Polish space since $E_I$ is a compact
+subset of $\mathbb R^{10}$. In fact $\mathcal R$ restricted to
+$I\times\mathbb T^2$ is a homeomorphism onto $E_I$: (11.6) recovers
+the height, and the nonzero $01$ and $02$ pairs recover both phases.
+This topology retains the full signed ten-output path, not only its
+terminal output, a phase-unwrapped surrogate or a cemetery jump.
+
+A free first-level reference in this section means any joint law
+carrying a planar Brownian pair $(A_t,B_t)$ started at $(0,0)$ with
+
+$$
+\mathbb E\!\left[
+ \begin{pmatrix}A_t\\B_t\end{pmatrix}
+ \begin{pmatrix}A_s&B_s\end{pmatrix}\right]
+       =2\min(t,s)\,\mathsf D,\qquad
+\mathsf D=\mathsf D^{\mathsf T}>0,
+\tag{13.2}
+$$
+
+and any continuous real retained central history $J_t$ with $J_0=0$,
+possibly with arbitrary extra randomness. No independence of $J$
+from the Brownian pair is assumed; even dependence on its complete
+future is allowed for this comparison. Only the marginal law of the
+pair in (13.2) is required. Put
+
+$$
+\begin{gathered}
+\vartheta_I=\inf\{t\in[0,T]:k_0+A_t\notin(l,u)\},
+\qquad \inf\varnothing=\infty,\\
+q_t^{\rm ref}
+ =(k_0+A_t,[\alpha_0+B_t/2],
+                 [\beta_0+c_0B_t-J_t/r]),\qquad t\le\vartheta_I,\\
+O_t^{\rm ref}=\mathcal R(q_{t\wedge\vartheta_I}^{\rm ref}),
+                    \qquad 0\le t\le T.
+\end{gathered}
+\tag{13.3}
+$$
+
+Let $\mu_{I,T}$ be the law of this held output in (13.1), and let
+$\nu_{I,T}$ be the law of $(O_t^I)_{0\le t\le T}$ under the
+legitimate original source start $\mathbb P_e$.
+The reference covariance-$2$ convention of
+[Guarded lift limits, Theorem 6.1](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md#6-direct-joint-convergence-including-the-chronological-coordinate)
+is $\mathsf D=I_2$. A scalar free horizontal coefficient $a$ in the
+same clock corresponds to $\mathsf D=aI_2$, not to changing $t$.
+This is an additional stochastic premise, not a consequence of
+finite-variation native syntax. The arbitrary $J$ includes the
+canonical area, area drift and continuous independent central noise
+of the separately declared native references.
+
+**Theorem 13.2 (source-return singularity for every such retained history).**
+For every nondegenerate $\mathsf D$ in (13.2), every allowed joint
+central history and every $T>0$,
+
+$$
+\mu_{I,T}\perp\nu_{I,T}.
+\tag{13.4}
+$$
+
+More precisely, there is a Borel event $\mathcal A_{I,T}$ on the
+actual held ten-output path space such that
+
+$$
+\begin{gathered}
+\mathcal A_{I,T}
+ =\{\omega:\hbox{for every }\delta>0
+       \hbox{ there is }t\in(0,\min(\delta,T))
+                                     \hbox{ with }\omega(t)=v_0\},\\
+\nu_{I,T}(\mathcal A_{I,T})=1,\qquad
+\mu_{I,T}\{\omega:\omega(t)=v_0
+                         \hbox{ for some }t\in(0,T]\}=0.
+\end{gathered}
+\tag{13.5}
+$$
+
+Consequently, on any complete-history sampling space carrying the
+reference (13.3), no probability law absolutely continuous with
+respect to that sampling law can have held output law $\nu_{I,T}$.
+This includes every normalized nonnegative integrable weight depending
+on all retained histories and all auxiliary randomness.
+
+**Proof.** Theorem 12.2 gives arbitrarily small positive contacts from
+$e$ before its strictly positive observation exit, hence the first
+probability in (13.5). The event is Borel in the uniform topology.
+For example set $\delta_n=T/(n+1)$ and express it as
+
+$$
+\mathcal A_{I,T}
+ =\bigcap_{n\ge1}\ \bigcup_{m:\,1/m<\delta_n}
+   \left\{\omega:
+    \min_{t\in[1/m,\delta_n]}|\omega(t)-v_0|=0\right\}.
+\tag{13.6}
+$$
+
+Each minimum is a continuous function of $\omega$ in (13.1).
+Positive-time returns are used; all these paths already have the
+same initial output $v_0$.
+
+For a reference path before exit, the two pairs used in (11.6)
+and the fiber proof imply
+
+$$
+O_t^{\rm ref}=v_0
+ \quad\Longrightarrow\quad A_t=0,\qquad B_t\in4\pi\mathbb Z.
+\tag{13.7}
+$$
+
+This implication does not involve $J$. A nondegenerate planar
+Brownian motion avoids each fixed point at all strictly positive
+times, including a return to its starting point. The exact standard
+statement is Mörters--Peres, *Brownian Motion*,
+[public draft, Corollary 2.23, p.52](https://www.stat.berkeley.edu/~aldous/205B/bmbook.pdf):
+for $d\ge2$, $\mathbb P_x\{y\in B(0,1]\}=0$ for every $x,y$.
+For (13.2), choose an invertible matrix $C$ with
+$CC^{\mathsf T}=2\mathsf D$. Then $(A,B)$ has the law of $CW$
+for a standard planar Brownian motion $W$ of covariance $tI_2$.
+Apply the cited statement to each point
+$C^{-1}(0,4\pi j)$, using Brownian scaling for the fixed finite
+horizon, and take the countable union over $j$. This is a comparison
+of laws with their declared covariance; the observations in (13.3)
+remain in the original time. It proves that (13.7) never occurs at
+positive time almost surely, independently of the joint choice of
+$J$. At and after a finite exit, the held height is $l$ or $u$ and
+cannot be $k_0$. This proves the second probability in (13.5) and
+therefore (13.4).
+
+Finally let $\mathbb P$ be any complete-history reference law with
+output map $O$ and let $\mathbb Q\ll\mathbb P$. The preimage
+$O^{-1}(\mathcal A_{I,T})$ is $\mathbb P$-null by (13.5), so is
+$\mathbb Q$-null. Its image law cannot be $\nu_{I,T}$, which assigns
+it mass one. In particular $d\mathbb Q=W\,d\mathbb P$ with
+$W\ge0$, $\mathbb E_{\mathbb P}W=1$ cannot change this conclusion.
+No filtration, conditional-kernel regularity or Markov property of
+the retained history is needed for this absolute-continuity argument.
+$\square$
+
+## 14. Escape of sampling mass in lawful finite approximations
+
+**Definition 14.1 (same-stage laws of actual native executions).**
+For each $n$, let $(\Omega_n,\mathbb P_n)$ carry actually executed
+finite lawful native histories from the same preparation, with their
+original clock, original prefix guards, ordinary chronological area
+and exact ten-output map. Let $V_n:\Omega_n\to\mathcal X_{I,T}$
+be their output path, held at their own observation exit from
+$(l,u)$, or at a lawful execution stop if the output is thereafter
+held. Any extra retained history and sampling randomness may be part
+of $\Omega_n$. No common sampling space or coupling across $n$ is
+required. Set
+
+$$
+\begin{gathered}
+w_n\ge0,\qquad\mathbb E_{\mathbb P_n}w_n=1,\qquad
+ d\mathbb Q_n=w_n\,d\mathbb P_n,\\
+\mu_n=(V_n)_*\mathbb P_n,\qquad
+\nu_n=(V_n)_*\mathbb Q_n.
+\end{gathered}
+\tag{14.1}
+$$
+
+The weights act on the same actual histories and readout at stage
+$n$. Weak convergence below is on the held uniform topology (13.1).
+The definition imposes no stochastic law on an individual original
+finite-variation history; the two limit laws are separate hypotheses.
+
+**Theorem 14.2 (complete bounded-weight escape and divergence).**
+Suppose the unweighted output laws and the normalized weighted output
+laws of Definition 14.1 satisfy, for a reference of Definition 13.1,
+
+$$
+\mu_n\Rightarrow\mu_{I,T},\qquad
+\nu_n\Rightarrow\nu_{I,T}.
+\tag{14.2}
+$$
+
+Then every bounded-weight portion loses all its weighted mass:
+
+$$
+\begin{gathered}
+\lim_{n\to\infty}\mathbb E_{\mathbb P_n}
+                   [w_n\mathbf1_{\{w_n\le M\}}]=0
+                                \quad\hbox{for every }0<M<\infty,\\
+\lim_{n\to\infty}\mathbb E_{\mathbb P_n}
+                   [w_n\mathbf1_{\{w_n>M\}}]=1.
+\end{gathered}
+\tag{14.3}
+$$
+
+In particular the weights are not uniformly integrable. For every
+$p>1$,
+
+$$
+\mathbb E_{\mathbb P_n}w_n^p\longrightarrow\infty,\qquad
+D(\mathbb Q_n\Vert\mathbb P_n)
+ =\mathbb E_{\mathbb P_n}[w_n\log w_n]\longrightarrow\infty.
+\tag{14.4}
+$$
+
+Here $0\log0=0$ and infinite values are allowed. These are moments
+and entropy of the two sampling laws at the same finite stage.
+No entropy comparison between an absolutely continuous control path
+and a diffusion path is asserted, and (14.2) supplies no divergence
+rate or existence of such a weighting family.
+
+**Proof.** Write $\mu=\mu_{I,T}$ and $\nu=\nu_{I,T}$.
+Theorem 13.2 gives a Borel set of $\mu$-measure zero and
+$\nu$-measure one. On a Polish space, regularity of probability
+measures gives, for any $\epsilon>0$, a compact subset $K$ of that
+set with $\nu(K)>1-\epsilon$, and an open neighbourhood $U$ of
+$K$ with $\mu(U)<\epsilon$. Choose a continuous function
+$0\le f\le1$ that is one on $K$ and zero outside $U$. Such a
+function exists by the elementary distance construction for disjoint
+closed sets in a metric space. Thus
+
+$$
+\mu f<\epsilon,\qquad \nu(1-f)<\epsilon.
+\tag{14.5}
+$$
+
+For a fixed finite $M>0$, positivity and (14.1) give
+
+$$
+\begin{aligned}
+\mathbb E_{\mathbb P_n}[w_n\mathbf1_{\{w_n\le M\}}]
+ &\le M\mathbb E_{\mathbb P_n}f(V_n)
+           +\mathbb E_{\mathbb P_n}[w_n(1-f(V_n))]\\
+ &=M\mu_nf+\nu_n(1-f).
+\end{aligned}
+\tag{14.6}
+$$
+
+Both test functions are bounded and continuous. Apply the two weak
+limits (14.2), obtaining a limsup at most $(M+1)\epsilon$.
+Let $\epsilon\downarrow0$. This proves the first line of (14.3);
+normalization proves the second. This argument uses continuous
+separators of the singular limit laws. It never passes an exact-return
+event through weak convergence, nor requires a joint limit of
+$(V_n,w_n)$.
+
+For any fixed $M>1$,
+
+$$
+\begin{aligned}
+\mathbb E_{\mathbb P_n}w_n^p
+ &\ge M^{p-1}\mathbb E_{\mathbb P_n}
+                          [w_n\mathbf1_{\{w_n>M\}}],\\
+\mathbb E_{\mathbb P_n}[w_n\log w_n]
+ &\ge(\log M)\mathbb E_{\mathbb P_n}
+                          [w_n\mathbf1_{\{w_n>M\}}]-e^{-1}.
+\end{aligned}
+\tag{14.7}
+$$
+
+The last bound uses $x\log x\ge-e^{-1}$ on $[0,\infty)$, so
+its negative part is always integrable. First take the liminf in
+$n$ and use (14.3), then let $M\to\infty$. This proves (14.4).
+The tail mass limit one for every $M$ also contradicts uniform
+integrability directly. $\square$
+
+**Definition 14.3 (standard-tool correspondence and the native boundary).**
+The capacity/exceptional-set correspondence and the strong Markov
+property are established symmetric Dirichlet-form tools, used here
+with the full form [S, (115.15)], its source trace and its legitimate
+source start. The local tube estimate (11.7)--(11.8) checks their
+set-specific hypothesis for the exact native preparation-output
+fiber, including its punctured line through the nonpolar source.
+It is distinct from proving the source capacity or a general
+potential-theoretic theorem. The standard Brownian input in Theorem
+13.2 is precisely Mörters--Peres Corollary 2.23 with the invertible
+covariance correspondence specified there. Measure regularity,
+continuous separation and the elementary inequalities (14.6)--(14.7)
+are standard probability tools, not a new general entropy theorem.
+Their application here consumes the source-specific singularity
+(13.5), which depends on both the exact output fiber and the retained
+original source.
+
+The supplied native guarded lift and its held-path continuity in
+[Guarded lift limits, §§2--4](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md#2-the-original-source-its-guard-and-its-entire-chronological-path)
+retain their original finite histories, prefix guards and real areas.
+Its [Proposition 9.3](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md#9-sufficient-law-and-weighting-data-for-selecting-the-reference)
+already supplies weighting transfer when a joint weight limit and
+uniform integrability are given. Theorem 14.2 instead concerns the
+two stated output-law limits on varying sampling spaces; it shows
+complete loss of every bounded-weight portion for the singular
+original-source target. It makes no new claim about the existence,
+optimality or cost of those guarded approximations. The free
+hidden-circle rigidity of §§1--6, the fixed Borel central-fiber
+exclusion of §§7--10 and the affine/CPTP obstruction of [B, §12]
+are separate supplied results, not new conclusions of this append.
+The difference here is the actual source-return event in the full
+ten-output history, which is tested without imposing a fixed
+fiber kernel or a source-independent affine map.
+
+The [central-noise Green model](FIB_NATIVE_CENTRAL_NOISE_GREEN_STABILITY.md#1-fixed-source-conditional-law-and-the-matched-operator),
+[variable-coefficient Green model](FIB_NATIVE_VARIABLE_COEFFICIENT_GREEN_STABILITY.md#1-fixed-model-and-the-exact-question),
+[spatial-cap source form](FIB_NATIVE_SPATIAL_CAP_RETAINED_AND_RESONANT_LIMITS.md#5-the-natural-logarithmic-source-form-and-positive-point-capacity)
+and its [all-real cap limit](FIB_NATIVE_SPATIAL_CAP_RETAINED_AND_RESONANT_LIMITS.md#12-the-all-real-parameter-operator-limit)
+keep their own carriers, walls, measures, coefficients and source
+domains. Their processes and capacities are not substituted for
+(7.2). Only a model with the first-level premise (13.2) and the
+actual output formula (13.3) is subject to Theorem 13.2. An arbitrary
+retained central history under that same premise cannot change
+(13.7); a source law changing the first-level premise is outside that
+assertion. In particular nonlinear native source-law actions of
+[B, §12.3] retain their original contracts. These theorems neither
+exclude all history-dependent correspondences nor construct one.
+
+Equations (11.5), (12.4) and (12.9) are necessary tests on the
+source/readout restriction of any proposed same-source, same-clock
+realization of the full endpoint. They provide no map beyond the
+native slab, no stochastic generation from bare finite commands,
+no identification of the full source domain with a native command
+domain, and no derivation of physical spatial dimension. The genuine
+native source/evolution/representation/readout bridge remains
+unresolved. The deductions here are ordinary source-specific
+mathematics, without a worldwide-priority or Lean-certification claim.
+
+## 追加锚（本行以下为增补区）
