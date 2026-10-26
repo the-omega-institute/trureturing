@@ -26,7 +26,7 @@ internal sealed class UnsignedStarInvariantSupportDocument : IScribeDocumentDefi
                     + "(coordinateRep sigma).invariants. Substitute gamma's inverse in the pointwise equality. No graph or finiteness hypothesis enters."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("fixed-potential"), DeclarationHandle.Create(Prefix + "invariant_representative_iff"),
                 H("Every Actual Potential of a Fixed Representative Is Fixed"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Inference in the proposal: under connected nonbipartite original hypotheses, R(b) is edge-fixed if and only if b is vertex-fixed. "
+                Blocks(Paragraph(Text("Fixed-potential inference: under connected nonbipartite original hypotheses, R(b) is edge-fixed if and only if b is vertex-fixed. "
                     + "Cancel the fixed all-ones term, transport by F equivariance, and apply the supplied integer injectivity of F. "
                     + "The converse uses equivariance alone. This proves invariance of the actual b, without a correction or averaging."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-class-fiber"), DeclarationHandle.Create(Prefix + "class_eq_iff_representative"),
@@ -67,7 +67,7 @@ internal sealed class UnsignedStarInvariantSupportDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("Consumed set helper: invariantCore sigma D is contained in D, by the identity group element."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("core-invariance"), DeclarationHandle.Create(Prefix + "invariantCore_invariant"),
                 H("The Core Is Invariant"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Consumed group/set helper: sigma gamma i belongs to invariantCore sigma D if and only if i does. "
+                Blocks(Paragraph(Text("Group/set core property: sigma gamma i belongs to invariantCore sigma D if and only if i does. "
                     + "Composition and the inverse group element prove both directions."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("core-universal-property"), DeclarationHandle.Create(Prefix + "subset_invariantCore_iff"),
                 H("Largest Invariant Subset"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
