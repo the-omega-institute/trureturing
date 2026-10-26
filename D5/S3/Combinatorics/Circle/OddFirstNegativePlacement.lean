@@ -34,6 +34,8 @@ private theorem positive_parent {k : ℕ} (hk : 3 ≤ k) (t : ℕ) (i : Fin k)
   dsimp only
   let b := (finRotate k).symm i
   obtain ⟨_, _, _, hN, ho⟩ := source_geometry hk
+  change 0 < N k at hN
+  change N k % 2 = 1 at ho
   have hb : -(N k / 2) ≤ s k t b ∧ s k t b ≤ N k / 2 :=
     centered_bounds hN ho _
   have hi : -(N k / 2) ≤ s k t i ∧ s k t i ≤ N k / 2 :=
@@ -47,8 +49,7 @@ private theorem positive_parent {k : ℕ} (hk : 3 ≤ k) (t : ℕ) (i : Fin k)
     have he : 2 * s k t b = s k t i + N k *
         (if N k < 4 * s k t b then 1 else if 4 * s k t b < -N k then -1 else 0) := by
       omega
-    rw [he]
-    simp [Int.add_emod, Int.mul_emod]
+    rw [he, Int.add_mul_emod_self_left]
   have hc : centered (N k) (2 * s k t b) = s k t i :=
     centered_unique hN ho (centered_bounds hN ho _) hi
       ((centered_mod _ _).trans hmod)
@@ -93,7 +94,7 @@ private theorem two_energy_threshold (D L Z1 Z2 : ℕ) (hDL : D < L)
     rcases h with h | ⟨rfl, h⟩
     · have hh := pow_le_pow_right₀ (by decide : 1 ≤ (3 : ℕ))
         (show L + 1 ≤ Z2 by omega)
-      omega
+      exact lt_of_lt_of_le hnext (le_trans hh (Nat.le_add_left _ _))
     · have hh := pow_lt_pow_right₀ (by decide : 1 < (3 : ℕ)) h
       omega
   · have h21 : Z2 ≤ Z1 := by omega
@@ -101,7 +102,7 @@ private theorem two_energy_threshold (D L Z1 Z2 : ℕ) (hDL : D < L)
     rcases h with h | ⟨rfl, h⟩
     · have hh := pow_le_pow_right₀ (by decide : 1 ≤ (3 : ℕ))
         (show L + 1 ≤ Z1 by omega)
-      omega
+      exact lt_of_lt_of_le hnext (le_trans hh (Nat.le_add_right _ _))
     · have hh := pow_lt_pow_right₀ (by decide : 1 < (3 : ℕ)) h
       omega
 
@@ -172,9 +173,10 @@ private theorem small_append {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
     exact Or.inr ⟨hg, Prod.Lex.toLex_lt_toLex.mpr (Or.inr ⟨hh, by omega⟩)⟩
   exact ⟨legal_of_strip hn hs, hs,
     fun j => by simpa only [mass, zero_add] using inStrip_prefix hs j,
-    hu, hd, hc, hsm, hg, hh, hcount, hm, by omega, hj⟩
+    hu, hd, hc, hsm, hg, hh, hcount, hm,
+    by change remainingMass (s k t) V = -mass (s k t) V; omega, hj⟩
 
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 8000000 in
 /-- For the original three-negative word with odd first magnitude Y>P,
 either the actual parent is already in A, a concrete strict-J competitor
 exists, or the unused parent and used grandparent occupy the stated narrow
@@ -283,6 +285,11 @@ private theorem two_generation_placement
   have hZ2val : f z = -Z2 := by dsimp only [Z2]; omega
   have geo := native_geometry hk t p hnlarge hexpand
   obtain ⟨hQ, hN, hC, hNpos, hNodd⟩ := source_geometry hk
+  change 2 ≤ Q k at hQ
+  change N k = 4 * Q k - 1 at hN
+  change C k = 2 * Q k - 1 at hC
+  change 0 < N k at hNpos
+  change N k % 2 = 1 at hNodd
   have hP : 0 < P := hpositive
   have hnval : f n = -D := by
     simpa [f, n, D, orient, show ¬ s k t p < 0 by omega] using geo.nValue
@@ -324,7 +331,7 @@ private theorem two_generation_placement
     · omega
     · change _ ∧ 2 * f beta = N k - Y ∧ _ at ho
       omega
-  have hgformula := positive_parent hk t beta (by omega)
+  have hgformula := positive_parent hk t beta (by change 0 < f beta; omega)
   change f gamma = if f beta % 2 = 0 then f beta / 2
     else (f beta - N k) / 2 at hgformula
   rw [hbval] at hgformula
@@ -416,10 +423,10 @@ private theorem two_generation_placement
       apply two_energy_threshold _ _ _ _ (by omega)
       have hm1 : ((max (f zpen).natAbs (f z).natAbs : ℕ) : ℤ) = max Z1 Z2 := by
         push_cast
-        rw [hz1n, hz2n]
+        simpa only [Int.natCast_natAbs] using congrArg₂ max hz1n hz2n
       have hm2 : ((min (f zpen).natAbs (f z).natAbs : ℕ) : ℤ) = min Z1 Z2 := by
         push_cast
-        rw [hz1n, hz2n]
+        simpa only [Int.natCast_natAbs] using congrArg₂ min hz1n hz2n
       omega
     have hh : H k t (F ++ [p,n]) < H k t W := by
       have hb := inv.energyBalance
@@ -430,8 +437,10 @@ private theorem two_generation_placement
     exact Or.inr (Or.inl ⟨F ++ [p,n], [p,n], R,
       hv, inv.nodup, hs, hpref, hp, hj,
       Or.inl ⟨inv, Or.inl ⟨rfl,rfl,rfl,hg,hh⟩⟩⟩)
-  have hpreMax : max Z1 Z2 ≤ P := by omega
-  have hpreTie : max Z1 Z2 = P → min Z1 Z2 ≤ D := by omega
+  have hpreMax : max Z1 Z2 ≤ P :=
+    le_of_not_gt (fun h => hpreEnergy (Or.inl h))
+  have hpreTie : max Z1 Z2 = P → min Z1 Z2 ≤ D :=
+    fun hm => le_of_not_gt (fun h => hpreEnergy (Or.inr ⟨hm, h⟩))
   by_cases hbetaA : beta ∈ A
   · exact Or.inl ⟨hbetaA, hpreMax, hpreTie⟩
   have hbunused : beta ∉ W := by
@@ -491,10 +500,16 @@ private theorem two_generation_placement
       (by
         intro i hi
         rw [← hWshape]
-        apply hfresh3 i
-        simp only [List.mem_cons, List.not_mem_nil, or_false] at hi ⊢
-        tauto)
-      (by intro i hi; apply hlarge3 i; simp only [List.mem_cons, List.not_mem_nil, or_false] at hi ⊢; tauto) hsI
+        simp only [List.mem_cons, List.not_mem_nil, or_false] at hi
+        rcases hi with rfl | rfl
+        · exact hbunused
+        · exact hnunused)
+      (by
+        intro i hi
+        simp only [List.mem_cons, List.not_mem_nil, or_false] at hi
+        rcases hi with rfl | rfl
+        · exact hbL
+        · exact geo.nLarge) hsI
     rw [← hWshape] at inv hp
     have hi : largeUsed k t [beta,n] = 2 := by
       simp [largeUsed, mass, largeWeight, hbL, show Large k t n from geo.nLarge]
@@ -509,10 +524,10 @@ private theorem two_generation_placement
       apply two_energy_threshold _ _ _ _ (by omega)
       have hm1 : ((max (f zpen).natAbs (f z).natAbs : ℕ) : ℤ) = max Z1 Z2 := by
         push_cast
-        rw [hz1n, hz2n]
+        simpa only [Int.natCast_natAbs] using congrArg₂ max hz1n hz2n
       have hm2 : ((min (f zpen).natAbs (f z).natAbs : ℕ) : ℤ) = min Z1 Z2 := by
         push_cast
-        rw [hz1n, hz2n]
+        simpa only [Int.natCast_natAbs] using congrArg₂ min hz1n hz2n
       omega
     have hh : H k t (F ++ [beta,n]) < H k t W := by
       have hb := inv.energyBalance
@@ -523,12 +538,14 @@ private theorem two_generation_placement
     exact Or.inr (Or.inl ⟨F ++ [beta,n], [beta,n], R,
       hv, inv.nodup, hs, hpref, hp, hj,
       Or.inl ⟨inv, Or.inr (Or.inr (Or.inl ⟨rfl,rfl,rfl,hg,hh⟩))⟩⟩)
-  have hZmax : max Z1 Z2 ≤ L := by omega
-  have hZtie : max Z1 Z2 = L → min Z1 Z2 ≤ D := by omega
+  have hZmax : max Z1 Z2 ≤ L :=
+    le_of_not_gt (fun h => henergy (Or.inl h))
+  have hZtie : max Z1 Z2 = L → min Z1 Z2 ≤ D :=
+    fun hm => le_of_not_gt (fun h => henergy (Or.inr ⟨hm, h⟩))
   have hZ1L : Z1 ≤ L := le_trans (le_max_left _ _) hZmax
   have hZ2L : Z2 ≤ L := le_trans (le_max_right _ _) hZmax
   have hgeven (he : L % 2 = 0) : f gamma = L / 2 ∧ 0 < f gamma ∧ |f gamma| < Q k := by
-    have hv : f gamma = L / 2 := by simpa only [he, if_true] using hgformula
+    have hv : f gamma = L / 2 := by simpa only [he, ite_true] using hgformula
     have ha : 0 < L / 2 ∧ L / 2 < Q k := by omega
     exact ⟨hv, by omega, by rw [hv, abs_of_pos ha.1]; exact ha.2⟩
   have hgodd (ho : L % 2 = 1) : f gamma = -((N k - L) / 2) ∧
@@ -618,9 +635,19 @@ private theorem two_generation_placement
       · have hh := congrArg f hzp; dsimp only [Z1] at hZ1L; omega
       · have hh := congrArg f hz; dsimp only [Z2] at hZ2L; omega
       · have hh := abs_lt.mp (hsmall gamma hs); omega
-    have hgb : gamma ≠ beta := by intro he; have hh := congrArg f he; omega
-    have hgp : gamma ≠ p := by intro he; have hh := congrArg f he; change f gamma = P at hh; omega
-    have hgn : gamma ≠ n := by intro he; have hh := congrArg f he; omega
+    have hMpos : 0 < M := lt_trans hLpos hLM
+    have hgb : gamma ≠ beta := by
+      intro he
+      have hh : -M = L := by simpa only [hgval, hbval] using congrArg f he
+      exact (ne_of_lt (lt_trans (neg_neg_of_pos hMpos) hLpos)) hh
+    have hgp : gamma ≠ p := by
+      intro he
+      have hh : -M = P := by simpa only [hgval, hPval] using congrArg f he
+      exact (ne_of_lt (lt_trans (neg_neg_of_pos hMpos) hP)) hh
+    have hgn : gamma ≠ n := by
+      intro he
+      have hh : -M = -D := by simpa only [hgval, hnval] using congrArg f he
+      exact (ne_of_lt (neg_lt_neg (lt_trans hDL hLM))) hh
     have hI : [beta,gamma,p,n].Nodup := by
       simp [hgb.symm, hpb.symm, hnb.symm, hgp, hgn, hpn]
     have hfresh (i : Fin k) (hi : i ∈ [beta,gamma,p,n]) : i ∉ F ++ R := by
@@ -677,6 +704,8 @@ private theorem normalize_small_prefix {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
       Legal k t ([x] ++ Aprime ++ tail) ∧
       ([x] ++ Aprime ++ tail).Perm (A ++ [x] ++ tail) := by
   obtain ⟨hQ, _, hC, hNpos, hNodd⟩ := source_geometry hk
+  change 2 ≤ Q k at hQ
+  change C k = 2 * Q k - 1 at hC
   have hxC : s k t x ≤ C k := (centered_bounds hNpos hNodd _).2
   have hsplit := strip_split A ([x] ++ tail)
     (by simpa only [List.append_assoc] using strip_of_legal hW)
@@ -896,6 +925,7 @@ theorem actualSource_threeNegative_oddFirstNegative_placement
     A' T0' T1 T2 E hpositive hnlarge hexpand hWprime hpprime hnprime hsmallprime
     hylarge hzpenlarge hzlarge hblockloprime hblockhiprime hyP hyodd
   dsimp only at hclassification
+  dsimp only [W', f, x] at hmem hused hmass hg hh hu hj hsm hprefixMass
   rcases hclassification with hbetaA | hcompetitor | hresidual
   · apply Or.inr
     rcases hchoice with ⟨rfl, rfl, hlargeA⟩ | ⟨hAempty, _⟩
@@ -907,8 +937,8 @@ theorem actualSource_threeNegative_oddFirstNegative_placement
     change J k t V < J k t W' at hstrict
     have hphysOriginal : (V ++ Ret).Perm (W ++ I) :=
       hphys.trans (hperm.append_right I)
-    have hstrictOriginal : J k t V < J k t W := by
-      simpa only [hj] using hstrict
+    have hstrictOriginal : J k t V < J k t W :=
+      lt_of_lt_of_eq hstrict hj
     apply Or.inl
     refine ⟨A', T0', V, I, Ret, ?_, hperm, hWprime, hused,
       hmass, hg, hh, hu, hj, hsmallprime, hV, hnod, hs, hpref,
@@ -941,42 +971,6 @@ theorem actualSource_threeNegative_oddFirstNegative_placement
     · have hgammaA : gamma ∈ A' := hresidual.2.1
       rw [hAempty] at hgammaA
       exact False.elim (by simpa only [List.not_mem_nil] using hgammaA)
-
-#print axioms actualSource_threeNegative_oddFirstNegative_placement
-
--- BEGIN TRANSIENT EXACT APPLICATION
--- Transient exact application of the full arbitrary-A classifier.
-example
-    (k t : ℕ) (hk : 3 ≤ k) (p y zpen z : Fin k)
-    (A T0 T1 T2 E : List (Fin k))
-    (hpositive : 0 < s k t p)
-    (hnlarge : Q k ≤ |s k t (hit k 1 p)|)
-    (hexpand : N k < 3 * |s k t p|)
-    (hW : Legal k t (oldWord p y zpen z A T0 T1 T2 E))
-    (hpunused : p ∉ oldWord p y zpen z A T0 T1 T2 E)
-    (hnunused : hit k 1 p ∉ oldWord p y zpen z A T0 T1 T2 E)
-    (hsmall : ∀ i ∈ smallWord T0 T1 T2 E, |s k t i| < Q k)
-    (hylarge : Q k ≤ -s k t y)
-    (hzpenlarge : Q k ≤ -s k t zpen)
-    (hzlarge : Q k ≤ -s k t z)
-    (hblocklo : C k - s k t p < mass (s k t) (oldWord p y zpen z A T0 T1 T2 E))
-    (hblockhi : mass (s k t) (oldWord p y zpen z A T0 T1 T2 E) < |s k t (hit k 1 p)|)
-    (hyP : s k t p < -s k t y) (hyodd : (-s k t y) % 2 = 1)
-    (hsmallA : ∀ i ∈ A, |s k t i| < Q k)
-    (hminimum : ∀ V : List (Fin k), Legal k t V →
-      J k t (oldWord p y zpen z A T0 T1 T2 E) ≤ J k t V) : False := by
-  have hc := actualSource_threeNegative_oddFirstNegative_placement k t hk p y zpen z
-    A T0 T1 T2 E hpositive hnlarge hexpand hW hpunused hnunused hsmall
-    hylarge hzpenlarge hzlarge hblocklo hblockhi hyP hyodd
-  dsimp only at hc
-  rcases hc with hcompetitor | ⟨hlargeA, _⟩
-  · obtain ⟨A', T0', V, I, Ret, hchoice, hperm, hWprime, hused,
-      hmass, hg, hh, hu, hj, hsm, hV, hnod, hs, hpref, hphys, hstrict, hbranches⟩ := hcompetitor
-    exact (not_lt_of_ge (hminimum V hV)) hstrict
-  · obtain ⟨i, hi, hL⟩ := hlargeA
-    exact (not_le_of_gt (hsmallA i hi)) hL
-
--- END TRANSIENT EXACT APPLICATION
 
 end D5.S3.Combinatorics.Circle.OddFirstNegativePlacement
 
