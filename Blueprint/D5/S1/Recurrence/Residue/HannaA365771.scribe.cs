@@ -40,15 +40,17 @@ internal sealed class HannaA365771Document : IScribeDocumentDefinition
                 + "The resulting classification is used by all three congruences.", true, false),
             Node("result", "Hanna's first congruence", ClaimBody(),
                 "Multiplication by five appends a zero base-five digit. The classification "
-                + "therefore gives residue four for every positive m with digits zero or one.", true, false))));
+                + "therefore gives residue four for every positive m with digits zero or one.", true, false,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna365771-mod5"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        bool theorem, bool literature) => Describe.Lean(
+        bool theorem, bool literature, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("hanna365771-" + (name == "InA033042" ? "in-a033042" : name == "digits_step" ? "digits-step" : name == "residue_classification" ? "residue-classification" : name)),
         DeclarationHandle.Create("D5/S1/Recurrence/Residue/HannaA365771." + name), H(title),
         StatementSource.FromAuthor(Disp(formula)),
         literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-        Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+        Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition, resolution);
 
     private static Formula SequenceBody(Formula n) => Multiply(
         Q("Nat", "div", Q("Nat", "choose", Add(Multiply(D(2), n), D(1)), n),
