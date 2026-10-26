@@ -14,15 +14,13 @@ Classical finite-word locality is supplied by common_cleared_fields. The native
 series below is constructed from that common lower-bounded array, and all
 signed coefficients are recovered after a statewise monomial shift.
 The Matsuo--Nagatomo and Carnahan attributions are retained in the imports.
-proof_shape: ungraded_local_word_common_series: content
+proof_shape: ungraded_local_word_common_series: bind-only
 proof_shape: polynomialAction_map: bind-only
 proof_shape: signedExtend_map: bind-only
-admission_basis: escape-witness
-escape_witness: choose one common locality order before the input and construct
-a native module-valued MvPowerSeries from the common signed distribution, with
-exact recovery including the region outside the shifted nonnegative orthant.
-The convolution and extension readout helpers are consumed by
-actual_three_field_common_series.
+These are common-series and linear-readout helpers for the actual inner
+iterate transport. Their permutation and support facts come from the frozen
+common_cleared_fields supplier; index conversion adds no separate mathematical
+content. The inner transport supplies the signed collision inference.
 -/
 
 set_option autoImplicit false

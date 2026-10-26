@@ -72,7 +72,7 @@ private theorem transform_coeff {R : Type*} [CommRing R] [Algebra ℂ R]
 
 /-- Composition of the finite transforms, including negative upper indices.
 It is the coefficientwise binomial-series group law. -/
-private theorem binomialTransform_add {R : Type*} [CommRing R] [Algebra ℂ R]
+theorem binomialTransform_add {R : Type*} [CommRing R] [Algebra ℂ R]
     (r s : ℤ) (f : ℕ → R) (n : ℕ) :
     binomialTransform r (binomialTransform s f) n =
       binomialTransform (r + s) f n := by
@@ -87,7 +87,7 @@ private theorem transform_zero {R : Type*} [CommRing R] [Algebra ℂ R]
   rw [transform_coeff]
   simp [kernel]
 
-private theorem transform_clear {R : Type*} [CommRing R] [Algebra ℂ R]
+theorem transform_clear {R : Type*} [CommRing R] [Algebra ℂ R]
     (F : ℤ → ℤ → R) (N B n : ℕ) (s : ℤ)
     (lower : ∀ a b : ℤ, b < -(B : ℤ) → F a b = 0) :
     binomialTransform (N : ℤ)
@@ -181,7 +181,7 @@ private theorem powerIndex_ext (d : Fin 2 →₀ ℕ) :
   ext i
   fin_cases i <;> simp [powerIndex]
 
-private theorem collision_monomial_coeff {R : Type*} [CommRing R]
+theorem collision_monomial_coeff {R : Type*} [CommRing R]
     (d : Fin 2 →₀ ℕ) (a b : ℕ) :
     MvPowerSeries.coeff (powerIndex a b)
       (d.prod (fun i n => (collisionArguments R i) ^ n)) =

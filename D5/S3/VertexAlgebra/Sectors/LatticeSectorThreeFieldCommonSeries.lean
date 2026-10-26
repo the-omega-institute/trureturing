@@ -13,14 +13,12 @@ import D5.S3.VertexAlgebra.Sectors.LatticeSectorBorcherds
 The fields and intertwiners below are the original canonical lattice fields.
 The imported suppliers retain their Bakalov--Kac, Matsuo--Nagatomo and Carnahan
 attributions. This is finite-word common support, not a sewing/coherence law.
-proof_shape: content
-admission_basis: escape-witness
-escape_witness: operator locality is independent of the fourth input charge
-and state. The new ungraded word theorem supplies a common rectangle on the
-actual Carrier; inclusion_canonical, whose proof is charge_homogeneity,
-identifies every coefficient of the six real nested canonical products.
-Linearity then transports polynomial clearing and the common infinite series
-to their common total-charge sector. No Gram inverse is used.
+proof_shape: actual_three_field_common_series: bind-only
+This common-series helper is consumed by the actual inner iterate transport.
+Its mathematical suppliers are stateField_locality, common_cleared_fields,
+inclusion_canonical and charge_homogeneity. Projection and finite convolution
+transport the supplied common array to the total-charge sector. The signed
+inner collision inference belongs to the consuming transport theorem.
 -/
 
 set_option autoImplicit false

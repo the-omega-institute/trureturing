@@ -82,6 +82,18 @@ internal sealed class SupportedChannelSeriesDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/FormalSeries/SupportedChannelSeries.supported_positive_reconstruction"),
                 H("supported_positive_reconstruction"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The exact assumptions, coefficient conventions and quantifiers are given by the Lean telescope."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("supportedchannelseries-binomialTransform-add"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/FormalSeries/SupportedChannelSeries.binomialTransform_add"),
+                H("binomialTransform_add"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Finite signed-binomial transforms compose by addition of their integer upper indices. The negative signed collision region uses this binomial-series group law."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("supportedchannelseries-transform-clear"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/FormalSeries/SupportedChannelSeries.transform_clear"),
+                H("transform_clear"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The coefficient of the finite binomial transform equals polynomial clearing on a lower-supported diagonal."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("supportedchannelseries-collision-monomial-coeff"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/FormalSeries/SupportedChannelSeries.collision_monomial_coeff"),
+                H("collision_monomial_coeff"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A native collision monomial contributes precisely on its finite antidiagonal fiber."))), DescribeRole.Theorem)
         )));
 }

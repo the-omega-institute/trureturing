@@ -46,6 +46,10 @@ internal sealed class LatticeSectorChannelTransportDocument : IScribeDocumentDef
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Sectors/LatticeSectorChannelTransport.fullIO_supported_channel_transport"),
                 H("fullIO_supported_channel_transport"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The exact assumptions, coefficient conventions and quantifiers are given by the Lean telescope."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("latticesectorchanneltransport-iterate-borcherds"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Sectors/LatticeSectorChannelTransport.iterate_borcherds"),
+                H("iterate_borcherds"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original canonical Borcherds law gives a finite residue reconstruction of the cleared iterate, assuming only the stated cutoff of the first field on the input state."))), DescribeRole.Theorem)
         )));
 }
