@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual Lieb overlap equality is equivalent to entropy equality and fixed Petz recovery. -/
+   digest: Actual power-overlap equality characterizes fixed Petz recovery. -/
 
 import D5.S3.Quantum.Divergence.LiebOverlapResolventIntegralBudget
 import D5.S3.Quantum.Recovery.CanonicalPetzEquality
@@ -114,7 +114,7 @@ private theorem overlap_equality_forces_entropy_equality
       fun_prop
     simpa only [E, w, l2_norm_sq] using hc.continuousWithinAt
   have hEpoint : EqOn E 0 (Ioi (0 : ℝ)) :=
-    MeasureTheory.eqOn_open_of_ae_eq hEae isOpen_Ioi hEcont continuousOn_const
+    MeasureTheory.Measure.eqOn_open_of_ae_eq hEae isOpen_Ioi hEcont continuousOn_const
   have hwzero (t : ℝ) (ht : 0 < t) :
       (M.data.A + t • 1)⁻¹ *ᵥ M.data.ξ =
         M.data.V *ᵥ ((M.data.B + t • 1)⁻¹ *ᵥ M.data.η) := by
@@ -174,7 +174,7 @@ theorem actual_lieb_overlap_equality_iff_fixed_petz_recovery
           (∑ c, S * (K c)ᴴ * W * X * W * K c * S) +
             Matrix.trace ((1 - P) * X) • CStarMatrix.ofMatrix.symm sigma.1) ∧
       recovery.mapState (Phi.mapState sigma) = sigma ∧
-      ∀ (rho : DensityState a) (support : SupportContained rho sigma)
+      ∀ (rho : DensityState a) (_support : SupportContained rho sigma)
         (q : ℝ), 0 < q → q < 1 →
         let inputOverlap := (cfc (fun x : ℝ => x ^ (1 - q))
             (CStarMatrix.ofMatrix.symm rho.1) *
