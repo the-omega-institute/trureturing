@@ -39,7 +39,8 @@ internal sealed class AndrasfaiActualDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("Substitution into AndrasfaiTransfer.corrected_trace_series gives the entire numerator and denominator, including the original n = 1 coefficient. The denominator has constant coefficient one, and the displayed quotient denotes multiplication by its formal power-series inverse. The identity holds coefficientwise in Q[[X]], without analytic convergence assumptions. It counts all actual labelled existential shortest-path mutual-visibility subsets; it imposes no maximality, independence, or quotient condition."))), DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args) =>
-        new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
+        args.Length == 0 ? Seq(Operatorname, Grp(F.Id(name))) :
+            new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
     private static Formula Paren(Formula f) => Seq(Open, f, Close);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
