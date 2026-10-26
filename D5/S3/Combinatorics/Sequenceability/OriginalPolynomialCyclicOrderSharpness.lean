@@ -104,7 +104,7 @@ private lemma avalue_bounds (m : ℕ) (hm : 2 ≤ m) (j : Index m) :
     0 < avalue m j ∧ 2 * rank m ≤ avalue m j ∧
       avalue m j ≤ 4 * rank m - 2 := by
   have hr := rank_pos m hm
-  have hj := j.isLt
+  have hj : j.val < rank m := j.isLt
   dsimp [avalue]
   omega
 
@@ -309,7 +309,7 @@ private lemma zero_rest_sum (m : ℕ) (hm : 2 ≤ m) (C : Finset (Coordinate m))
     lt_of_le_of_lt hbound (nonq_sum_lt_modulus m hm)
   have hq : q m ∈ C := by
     by_contra hnq
-    have hD : D = C := Finset.erase_eq_of_not_mem hnq
+    have hD : D = C := Finset.erase_eq_of_notMem hnq
     have hcast : ((∑ x ∈ D, weight m x : ℕ) : WitnessGroup m) = 0 := by
       rw [hD]
       exact (sum_label m C).symm.trans hz
@@ -381,6 +381,7 @@ private lemma zero_support_iff (m : ℕ) (hm : 2 ≤ m) (C : Finset (Coordinate 
       ∃ j : Index m, C = triple m j := by
   constructor
   · rintro ⟨hCn, hz⟩
+    have hr := rank_pos m hm
     obtain ⟨hq, hsum⟩ := zero_rest_sum m hm C hCn hz
     let D := C.erase (q m)
     have hDsum : (∑ x ∈ D, weight m x) = block m := hsum
@@ -554,8 +555,11 @@ theorem sharpness (m : ℕ) (hm : 2 ≤ m) :
   have hupper :
       (((Finset.univ : Finset (supports m)).filter
           (fun B : supports m => q m ∈ B.val)).image
-        (supportIntersectionGraph (supports m) (q m)).connectedComponentMk).card < m :=
-    hcanonical
+        (supportIntersectionGraph (supports m) (q m)).connectedComponentMk).card < m := by
+    refine lt_of_eq_of_lt ?_ hcanonical
+    congr 1
+    ext c
+    simp
   have hcount := Nat.le_antisymm (Nat.le_sub_one_of_lt hupper) hlower
   exact ⟨hfinite, hcyclic, carrier_card m hm, label_injective m hm,
     label_nonzero m hm, Finset.mem_univ _, label_order m hm,
