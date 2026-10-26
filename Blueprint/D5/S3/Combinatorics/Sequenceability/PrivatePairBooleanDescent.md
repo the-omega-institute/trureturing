@@ -4,7 +4,19 @@
 
 Exact Boolean coverage descent at a private pair
 
-**Theorem 1.1 (A private pair preserves every reduced permutation).**
+**Theorem 1.1 (An interval avoiding a separator lies on one side).**
+
+$$\forall X \in \operatorname{Type}\left(\right),\; \forall a \in X,\; \forall t \in \operatorname{List}\left(X\right),\; \forall l \in \operatorname{List}\left(X\right),\; \forall r \in \operatorname{List}\left(X\right),\; \left(\operatorname{IsInfix}\left(t, \operatorname{append}\left(l, \operatorname{cons}\left(a, r\right)\right)\right) \land \left(\neg a \in t\right)\right) \Rightarrow \left(\operatorname{IsInfix}\left(t, l\right) \lor \operatorname{IsInfix}\left(t, r\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Sequenceability/PrivatePairBooleanDescent.infix_avoid_separator` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary lists l,r,t and a coordinate a, if t is an interval of l ++ a::r and does not contain a, then t is an interval of l or r. This includes the empty interval. No decidable equality or duplicate-free premise is required.
+
+**Theorem 1.2 (A private pair preserves every reduced permutation).**
 
 $$\forall X \in \operatorname{Type}\left(\right),\; \forall inst \in \operatorname{DecidableEq}\left(X\right),\; \forall M \in \operatorname{Submodule}\left(\mathbb{Z}, \operatorname{Function}\left(X, \mathbb{Z}\right)\right),\; \forall E \in \operatorname{Finset}\left(X\right),\; \forall S \in \operatorname{Finset}\left(X\right),\; \forall u \in X,\; \forall v \in X,\; \left(\operatorname{Covers}\left(M, E\right) \land \left(\operatorname{Minimal}\left(M, E, S\right) \land \left(3 \le \operatorname{card}\left(S\right) \land \left(u \in S \land \left(v \in S \land \left(u \ne v \land \left(\forall B \in \operatorname{Finset}\left(X\right),\; \left(\operatorname{Minimal}\left(M, E, B\right) \land \left(u \in B \lor v \in B\right)\right) \Rightarrow B = S\right)\right)\right)\right)\right)\right)\right) \Rightarrow \left(\operatorname{Covers}\left(M, \operatorname{erase}\left(\operatorname{erase}\left(E, u\right), v\right)\right) \land \left(\operatorname{card}\left(\operatorname{erase}\left(\operatorname{erase}\left(E, u\right), v\right)\right) + 2 = \operatorname{card}\left(E\right) \land \left(\left(\forall z \in \operatorname{Function}\left(\operatorname{erase}\left(\operatorname{erase}\left(E, u\right), v\right), \mathbb{Z}\right),\; z \in \operatorname{reducedSpan}\left(M, \operatorname{erase}\left(\operatorname{erase}\left(E, u\right), v\right)\right) \Rightarrow \operatorname{embed}\left(\operatorname{erase}\left(\operatorname{erase}\left(E, u\right), v\right), z\right) \in M\right) \land \left(\left(\forall B \in \operatorname{Finset}\left(\operatorname{erase}\left(\operatorname{erase}\left(E, u\right), v\right)\right),\; \left(\operatorname{Nonempty}\left(B\right) \land B \ne \operatorname{univ}\left(\right)\right) \Rightarrow \left(\operatorname{row}\left(B\right) \in \operatorname{reducedSpan}\left(M, \operatorname{erase}\left(\operatorname{erase}\left(E, u\right), v\right)\right) \Leftrightarrow \operatorname{row}\left(\operatorname{image}\left(\operatorname{val}\left(\right), B\right)\right) \in M\right)\right) \land \left(\left(\forall i \in \operatorname{erase}\left(\operatorname{erase}\left(E, u\right), v\right),\; \operatorname{embed}\left(\operatorname{erase}\left(\operatorname{erase}\left(E, u\right), v\right), \operatorname{single}\left(i, 1\right)\right) = \operatorname{single}\left(\operatorname{val}\left(i\right), 1\right)\right) \land \left(\forall i \in \operatorname{erase}\left(\operatorname{erase}\left(E, u\right), v\right),\; \forall j \in \operatorname{erase}\left(\operatorname{erase}\left(E, u\right), v\right),\; \operatorname{embed}\left(\operatorname{erase}\left(\operatorname{erase}\left(E, u\right), v\right), \operatorname{single}\left(i, 1\right) - \operatorname{single}\left(j, 1\right)\right) = \operatorname{single}\left(\operatorname{val}\left(i\right), 1\right) - \operatorname{single}\left(\operatorname{val}\left(j\right), 1\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -30,5 +42,6 @@ This is a repository-derived descent lemma. The unrestricted original connector,
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Sequenceability/PrivatePairBooleanDescent.infix_avoid_separator`
 - Truth anchor: `D5/S3/Combinatorics/Sequenceability/PrivatePairBooleanDescent.private_pair_exact_boolean_descent`
 - Dependency: [D5/S3/Combinatorics/Sequenceability/ZeroTotalCircleGood](ZeroTotalCircleGood.md)

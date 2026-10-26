@@ -3346,3 +3346,769 @@ physical spatial dimension, remain unpaid. No finite result here
 settles the continuing why-three programme.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 20. Finite source samples with explicitly normalized joint laws
+
+**Definition 20.1 (unchanged endpoint and the finite sampling premise).**
+Retain every datum of Definitions 7.1, 11.1 and 15.1, in particular
+$F,h,m$, the original entrance law $q_t m$, killed transition kernel
+$P_t^0$, spectral probability $\nu$, and lifetime tail $\kappa$.
+The full operator is still $H$, with the entire complex selector
+(112.5); $F$ is used only in its already established source-killed
+role (15.1). Fix a finite original elapsed horizon $T>0$, a local-time
+budget $\Lambda>0$, and deterministic $0<\epsilon,\delta\le1$.
+The local-time budget is not an elapsed-time horizon. Put
+
+$$
+\begin{gathered}
+ \mathfrak d(v)=\int_{(0,\infty)}s^2e^{-vs}\nu(ds),\qquad v>0,\\
+ \beta_\epsilon=\int_0^\epsilon v\mathfrak d(v)\,dv,
+ \qquad
+ \chi_\epsilon(\lambda)=\int_0^\epsilon
+           (1-e^{-\lambda v})\mathfrak d(v)\,dv,\\
+ \mathcal D_{\delta,T}=
+       \{j\delta: j\ge1,\ j\delta<T\}\cup\{T\},
+ \qquad M_\delta=\lceil T/\delta\rceil.
+\end{gathered}
+\tag{20.1}
+$$
+
+Thus $\mathfrak d$ is the original excursion-duration density, not
+an additional spectral measure or a new source condition. The grid
+contains at most $M_\delta$ positive times and has gaps at most
+$\delta$ when zero is included.
+
+The added interface supplies exact samples of the following finite
+list, with the joint laws specified in Lemma 20.2 and Definition 20.3:
+a Poisson count, ordered real labels, one duration and finitely many
+four-coordinate evaluations for each retained excursion, and one
+nonnegative scalar duration total in each intervening label interval.
+These are exact-real sampling primitives. No continuous excursion
+mark, entire source trajectory, target observation-exit flag, or
+target modulus is supplied. In particular the intervening scalar is
+literally a sum of durations; it does not specify the small excursions'
+positions, shapes or individual lifetimes. All four sampled coordinates,
+including hidden $z$, belong to the added source information. Sampling
+$z$ is neither an original observation nor a native actuator.
+
+**Lemma 20.2 (joint duration and finite entrance/killed samples).**
+For any deterministic $0<t_1<\cdots<t_j<v$, define a finite measure
+on $M^j$ by
+
+$$
+\begin{aligned}
+ \mathcal C_v^{t_1,\ldots,t_j}(dp_1\cdots dp_j)
+  ={}&q_{t_1}(p_1)m(dp_1)
+       P^0_{t_2-t_1}(p_1,dp_2)\cdots\\
+    &\hspace{12mm}P^0_{t_j-t_{j-1}}(p_{j-1},dp_j)
+                          q_{v-t_j}(p_j).
+\end{aligned}
+\tag{20.2}
+$$
+
+For $j=1$ there is no transition factor. For $j=0$, the measure on
+the singleton empty tuple has mass $\mathfrak d(v)$. In every case
+the total mass in (20.2) is $\mathfrak d(v)$, a finite strictly
+positive number. Integrating out any evaluation gives the same
+formula with that evaluation deleted. Jointly measurable versions
+can be used, and versions on null sets do not affect these measures.
+
+Consequently the following is a probability law on finite tuples:
+
+$$
+ \mathbb P\bigl(V\in dv,\ (P_t)_{t\in\mathcal D_{\delta,T},\,t<v}
+                              \in d\mathbf p\bigr)
+  =\frac{\mathbf1_{\{v>\epsilon\}}}{\kappa(\epsilon)}
+       \mathcal C_v^{\mathcal D_{\delta,T}\cap(0,v)}
+                              (d\mathbf p)\,dv.
+\tag{20.3}
+$$
+
+The tuple includes precisely the listed evaluations at times strictly
+less than $V$. The values at zero and at a finite completed duration
+are $e$, deterministically. If $V>T$, the tuple includes the evaluation
+at $T$. This is exactly the finite evaluation-and-duration marginal
+of $\mathbf n(\,\cdot\mid\zeta>\epsilon)$, with no full mark required
+as an input.
+
+**Proof.** Spectral calculus and (15.4) give
+$0<\mathfrak d(v)<\infty$ and
+$\int_\epsilon^\infty\mathfrak d(v)dv=\kappa(\epsilon)$.
+The nonnegative jointly measurable densities $q_t$ may be chosen as
+in Theorem 15.2. The transition kernel is the original part-process
+kernel. At every node its distributions are absolutely continuous
+with respect to $m$: symmetry of $P_t^0$ preserves this property
+under transition, and multiplication by a bounded cylinder test
+preserves it as well. Properly exceptional sets and changes of
+$d m$-versions therefore do not affect the expressions.
+
+The identities $P_s^0q_t=q_{s+t}$ and symmetry show that the integral
+of (20.2), for $j\ge1$, is
+
+$$
+ \langle q_{t_1},q_{v-t_1}\rangle_{L^2(m)}
+   =\langle Fe^{-t_1F}h,Fe^{-(v-t_1)F}h\rangle_{L^2(\mu)}
+   =\mathfrak d(v).
+\tag{20.4}
+$$
+
+Integrating an interior node uses Chapman--Kolmogorov. Integrating
+the first uses the entrance identity; integrating the last uses
+$P_s^0q_t=q_{s+t}$. These prove finite consistency, including the
+empty tuple. Products of Borel kernels give joint measurability
+on each region $v>t_j$.
+
+To check that the terminal factor specifies the original duration,
+not just a normalized candidate, use (15.4):
+$-\partial_s P_s^0 1=q_s$ in $L^2(m)$ for $s>0$.
+Its integrated nonnegative version says that the remaining killed
+lifetime at $p$ has density $q_s(p)ds$, for $m$-almost every $p$.
+Indeed integrate the $L^2$ identity over any positive compact time
+interval, then use monotonicity of survival and Fubini. Insert this
+density after the last node of (15.3). It gives (20.2) times $dv$
+as the joint measure of the evaluations and $\zeta\in dv$.
+There is no infinite-lifetime atom by (15.4). Partitioning the
+$v$-axis at the finitely many times of $\mathcal D_{\delta,T}$
+then gives (20.3). Its normalization is the preceding integral of
+$\mathfrak d$. This proof uses only the established excursion
+cylinders and killed survival, not a bridge conditioned to hit an
+exceptional point at a fixed time. $\square$
+
+**Definition 20.3 (the finite list and its independence).**
+Draw $\mathsf N\sim\operatorname{Poisson}(\Lambda\kappa(\epsilon))$.
+Given $\mathsf N=n$, take $n$ independent uniform labels on
+$(0,\Lambda)$ and order them as
+$0<\ell_1<\cdots<\ell_n<\Lambda$. Set $\ell_0=0$ and
+$\ell_{n+1}=\Lambda$. Independently of these labels, take $n$
+independent tuples $(V_i,\mathbf P_i)$ with law (20.3).
+Conditional on the ordered labels, independently of those tuples
+and independently for $i=0,\ldots,n$, draw $U_i\ge0$ with law
+
+$$
+ \mathbb E[e^{-\lambda U_i}\mid\ell_1,\ldots,\ell_n]
+   =\exp[-(\ell_{i+1}-\ell_i)\chi_\epsilon(\lambda)],
+       \qquad \lambda\ge0.
+\tag{20.5}
+$$
+
+This declares conditional independence. The $U_i$ need not be
+unconditionally independent of the ordered labels or of each other.
+There is no additional independent resampling of the terminal state
+of an excursion. Its completed terminal state remains $e$.
+
+**Proposition 20.4 (existence, source coupling and finite primitive counts).**
+Equations (20.3)--(20.5) define a normalized Borel probability law
+on a countable disjoint union of finite-dimensional spaces.
+Under a proof coupling with the original Poisson source of §16,
+the $V_i,\mathbf P_i$ are exactly its evaluations on the atoms
+with $\ell\le\Lambda$, $\zeta>\epsilon$, and
+
+$$
+ U_i=\sum_{\ell_i<\ell<\ell_{i+1},\,\zeta\le\epsilon}\zeta,
+ \qquad
+ C_\Lambda:=\sum_{i=0}^{\mathsf N}U_i+
+                     \sum_{i=1}^{\mathsf N}V_i=\tau_\Lambda.
+\tag{20.6}
+$$
+
+Endpoints at the listed labels cause no ambiguity: the small-atom
+process has no atom at any of these independent labels. Almost surely
+every listed random variable is finite, and
+
+$$
+\begin{gathered}
+ \mathbb E C_\Lambda=\Lambda,\qquad
+ \mathbb E\sum_{i=0}^{\mathsf N}U_i=\Lambda\beta_\epsilon,
+ \qquad \beta_\epsilon\downarrow0\quad(\epsilon\downarrow0),\\
+ \mathbb P(C_\Lambda<T)
+       \le\min(1,e^{\lambda T-\Lambda\varphi(\lambda)})
+                  \quad(\lambda>0).
+\end{gathered}
+\tag{20.7}
+$$
+
+Counting one call for the count, one per uniform label, one per tuple
+(20.3), and one per scalar (20.5), the number of calls is
+$3\mathsf N+2$, with expectation $3\Lambda\kappa(\epsilon)+2$.
+Counting instead all supplied real coordinate entries and the one
+integer count gives the upper bound
+
+$$
+ 2+(3+4M_\delta)\mathsf N,
+ \qquad
+ \mathbb E[\text{entries}]
+       \le2+(3+4M_\delta)\Lambda\kappa(\epsilon).
+\tag{20.8}
+$$
+
+These count exact samples and entries, not bits, shots, computational
+operations or native physical resources. The count is finite almost
+surely, not bounded deterministically. For example
+$\mathbb P(\mathsf N>B)\le\Lambda\kappa(\epsilon)/B$ for $B>0$.
+
+**Proof.** Since $\mathbf n[\zeta]=1$, the measure
+$\mathbf1_{(0,\epsilon]}(v)\mathfrak d(v)dv$ has finite first
+moment $\beta_\epsilon\le1$. Its drift-zero subordinator increment
+of parameter $d\ge0$ exists, with Laplace transform
+$e^{-d\chi_\epsilon(\lambda)}$. One elementary construction of
+this scalar law is the monotone limit of compound Poisson sums
+restricted to $b<v\le\epsilon$ as $b\downarrow0$; their means
+are bounded by $d\beta_\epsilon$, so the limit is finite almost
+surely. The Laplace transforms pass by bounded convergence.
+Uniqueness of Laplace transforms identifies (20.5). Dependence of
+the law on $d$ is Borel; for instance the associated increments are
+continuous in probability since their expected difference over
+an increment of length $c$ is $c\beta_\epsilon$.
+This construction proves existence of a scalar distribution. It
+places no infinite list in the sampling interface.
+
+The Poisson restriction to $\zeta>\epsilon$ has finite rate
+$\kappa(\epsilon)$. The marking and restriction properties of a
+Poisson measure give exactly the count, ordered labels and tuple
+law above; its restriction to $\zeta\le\epsilon$ is independent.
+Its duration sums on disjoint label intervals have (20.5).
+This proves the asserted joint law and the coupling. These are
+standard Poisson properties, here with the intensity (15.3), not
+an additional construction of a complete-mark source.
+
+Compensation gives both expectations in (20.7), and dominated
+convergence of $\int_0^\epsilon v\mathfrak d(v)dv$ gives its limit.
+The Laplace transform of (20.6) is
+
+$$
+ \mathbb E e^{-\lambda C_\Lambda}
+ =\exp\left[-\Lambda\left(\chi_\epsilon(\lambda)
+       +\int_\epsilon^\infty(1-e^{-\lambda v})
+                                       \mathfrak d(v)dv\right)\right]
+ =e^{-\Lambda\varphi(\lambda)}.
+\tag{20.9}
+$$
+
+Markov's inequality applied to $e^{-\lambda C_\Lambda}$ gives
+the coverage bound. Counting the one integer, $\mathsf N$ labels,
+$\mathsf N$ durations, $\mathsf N+1$ scalar totals and at most
+$4M_\delta\mathsf N$ coordinate entries proves (20.8).
+The preceding normalization and Borel kernels prove the remaining
+measurability assertions. $\square$
+
+## 21. Same-time finite source interpolation and observation exits
+
+**Definition 21.1 (the finite interpolated source).**
+For each tuple in (20.3), interpolate its four ordinary real
+coordinates linearly between zero at age zero, its sampled nodes,
+and zero at age $V_i$ if $V_i\le T$. If $V_i>T$, interpolate only
+up to its sampled value at age $T$. Denote this finite polygon by
+$Q_i$ on $[0,\min(V_i,T)]$. The zero vector denotes $e$ in the
+fixed coordinates of $G$; interpolation is coordinate interpolation,
+not group multiplication and not a native command.
+
+Put
+
+$$
+ b_i=\sum_{j=0}^{i-1}U_j+\sum_{j=1}^{i-1}V_j,
+       \qquad 1\le i\le\mathsf N.
+\tag{21.1}
+$$
+
+On $[0,T]$ set $\widehat{\mathsf Z}_t=Q_i(t-b_i)$ when
+$b_i\le t\le b_i+V_i$ for a retained excursion whose interval
+meets $[0,T]$. Set it equal to $e$ at all remaining times,
+including after $C_\Lambda$ if $C_\Lambda<T$.
+Zero-length intervals are omitted. The definitions agree at all
+joins and give a continuous finite polygon on $[0,T]$.
+Every retained interval has its entire original duration $V_i$;
+only the portion intersecting the horizon needs evaluation.
+Every $U_i$ is represented by an interval of that exact length.
+No duration is deleted or redistributed among retained intervals.
+
+**Theorem 21.2 (original-time source approximation and coverage error).**
+The finite-list map in Definition 21.1 is Borel. Under the source
+coupling in Proposition 20.4, all retained interval starts and ends
+are exactly their original elapsed times in (16.2).
+For the maximum norm on the four coordinates write
+
+$$
+ \Omega_R(q;v)=\sup_{s,t\in[0,R],\,|s-t|\le v}|q_t-q_s|_\infty.
+\tag{21.2}
+$$
+
+On $\{C_\Lambda\ge T\}$ one has the same-time bound
+
+$$
+ \|\widehat{\mathsf Z}-\mathsf Z\|_{[0,T],\infty}
+      \le\Omega_{T+1}(\mathsf Z;\epsilon\vee\delta).
+\tag{21.3}
+$$
+
+In particular for $a_*>0$, $\lambda>0$,
+
+$$
+\begin{aligned}
+ \mathbb P(\|\widehat{\mathsf Z}-\mathsf Z\|_{[0,T],\infty}>a_*)
+ \le{}&\min(1,e^{\lambda T-\Lambda\varphi(\lambda)})\\
+ &+\mathbb P(\Omega_{T+1}(\mathsf Z;
+                         \epsilon\vee\delta)>a_*).
+\end{aligned}
+\tag{21.4}
+$$
+
+For every deterministic $\Lambda_n\uparrow\infty$ and
+$\epsilon_n,\delta_n\downarrow0$, the finite-list laws admit a
+common proof coupling on which their paths converge uniformly on
+$[0,T]$ almost surely to the original full source-start process.
+Their laws consequently converge weakly to its original law.
+This includes hidden $z$ in the source approximation. The modulus
+in (21.3)--(21.4) is a proof quantity; the finite-list map never
+queries it.
+
+**Proof.** In the coupling, $U_i$ sums exactly all small durations
+between the two successive retained labels. There is no inverse-clock
+drift by (16.1). Thus (21.1) is exactly $\tau_{\ell_i-}$, and
+$b_i+V_i=\tau_{\ell_i}$, proving elapsed-time correctness.
+On one discarded excursion of duration at most $\epsilon$,
+$\mathsf Z$ is within $\Omega_{T+1}(\mathsf Z;\epsilon)$ of its
+initial value $e$ at every relevant time. Although its individual
+location inside a represented $U_i$ was not sampled, the approximation
+is $e$ throughout that whole interval, so the same bound applies.
+At a source time both paths have value $e$.
+On a retained excursion, each polygon value is a convex combination
+of two true coordinate values at times at most $\delta$ apart.
+For a time at most $T$, both endpoints used are at most $T+\delta$.
+Each is within $\Omega_{T+1}(\mathsf Z;\delta)$ of the true value
+at that time. This proves (21.3), hence (21.4).
+
+By §16, $\tau_\Lambda\uparrow\infty$ almost surely as
+$\Lambda\uparrow\infty$. Thus coverage holds eventually under
+the common Poisson coupling. The continuous path $\mathsf Z$ is
+uniformly continuous on $[0,T+1]$, so (21.3) tends to zero almost
+surely. The construction has the stipulated finite marginal law
+at each stage; this coupling is not an extra path input. Independent
+stage draws retain the weak-convergence conclusion, without a claim
+that they converge almost surely to one another. Finite lists of
+sums, comparisons and coordinate interpolations prove the Borel
+assertion. $\square$
+
+**Lemma 21.3 (the original source strictly crosses each observation wall).**
+Fix exactly $I=[l,u]\Subset(0,H_{\rm n})$ with $l<k_0<u$.
+Let $\theta$ be the original observation exit in (17.1).
+On $\{\theta<\infty\}$ the height
+$k_0+x(\mathsf Z_t)$ strictly crosses its attained boundary
+arbitrarily soon after $\theta$, almost surely. Consequently, if
+continuous paths $q_n$ starting at $e$ converge uniformly to
+$\mathsf Z$ on $[0,T]$, their censored first observation exits
+$S_n=T\wedge\inf\{t:k_0+x(q_n(t))\notin(l,u)\}$ satisfy
+$S_n\to S=T\wedge\theta$ almost surely, and
+
+$$
+ \|q_n(\,\cdot\wedge S_n)
+           -\mathsf Z(\,\cdot\wedge S)\|_{[0,T],\infty}\to0.
+\tag{21.5}
+$$
+
+**Proof.** Both observation walls have $x=l-k_0\ne0$ or
+$x=u-k_0\ne0$, so every wall point is in $M$ and has a relatively
+compact neighbourhood disjoint from the singular source. On such
+a neighbourhood $h$ is smooth and positive. The local generator
+of the actual transformed form [S, (115.15)] is
+
+$$
+ \mathscr A=a\sum_{j=1}^3X_j^2+\eta\partial_w^2
+       +2a\sum_{j=1}^3(X_j\log h)X_j
+       +2\eta(\partial_w\log h)\partial_w.
+\tag{21.6}
+$$
+
+The potential cancels by $S_{\min}^*h=0$. Its principal matrix is
+locally uniformly positive by [S, (115.10)]. Smooth local SDE
+uniqueness identifies the associated diffusion up to neighbourhood
+exit, on the legitimate process versions; the path avoids the
+properly exceptional set. In particular its height increment from
+a wall, up to that local exit, is
+
+$$
+ dx_t=\sqrt{2a}\,dB_t+2a\,\partial_x\log h(\mathsf Z_t)dt.
+\tag{21.7}
+$$
+
+The drift is bounded on a smaller compact neighbourhood. Brownian
+motion has positive and negative oscillations arbitrarily close to
+zero which dominate every bounded multiple of elapsed time, for
+example by its small-time law of the iterated logarithm. Thus
+(21.7) crosses both sides of its initial height immediately.
+Continuity makes the neighbourhood exit time positive. Apply the
+strong Markov property at $\theta$, localized to a countable cover
+of the two walls, to obtain the asserted strict outward crossings.
+This argument uses neither regularity at the singular source nor
+a Brownian first-level law for the whole process.
+
+For the exit conclusion, every compact time interval strictly before
+$S$ has a positive distance of the target height from the two walls.
+Uniform convergence gives $\liminf S_n\ge S$. If $S<T$, an outward
+crossing in every interval $(S,S+b)$, $0<b<T-S$, gives
+$\limsup S_n\le S+b$. If $S=T$, the upper bound $S_n\le T$
+already suffices. This includes the case $\theta=T$ without needing
+any sampled information beyond $T$. Hence $S_n\to S$.
+The stopped-path difference is bounded by
+$\|q_n-\mathsf Z\|_{[0,T],\infty}
+ +\Omega_T(\mathsf Z;|S_n-S|)$, which proves (21.5).
+Uniform convergence has therefore been supplemented by the needed
+crossing theorem, not used as a hitting-time theorem by itself.
+$\square$
+
+**Proposition 21.4 (finite-horizon held error statement).**
+For $b>0$, put $H_t=k_0+x(\mathsf Z_t)$ and, with $S=T\wedge\theta$,
+
+$$
+\begin{aligned}
+ D_-(b)&=\min_{0\le t\le(S-b)_+}\min(H_t-l,u-H_t),\\
+ D_+(b)&=\begin{cases}
+ \displaystyle\max_{S\le t\le S+b}\max(l-H_t,H_t-u),
+                      &S\le T-b,\\
+ +\infty,             &S>T-b,
+ \end{cases}
+ \qquad D(b)=\min(D_-(b),D_+(b)).
+\end{aligned}
+\tag{21.8}
+$$
+
+Then $D(b)>0$ almost surely. For the finite interpolation put
+$\widehat S=T\wedge\inf\{t:k_0+x(\widehat{\mathsf Z}_t)
+\notin(l,u)\}$. If its unstopped coordinate error is at most
+$a_*<D(b)$, then
+
+$$
+ |\widehat S-S|\le b,\qquad
+ \|\widehat{\mathsf Z}(\,\cdot\wedge\widehat S)
+       -\mathsf Z(\,\cdot\wedge S)\|_{[0,T],\infty}
+       \le a_*+\Omega_T(\mathsf Z;b).
+\tag{21.9}
+$$
+
+For $S<b$, the lower exit bound is automatic and $D_-(b)$ may
+still be taken at time zero as written.
+
+**Proof.** The interval ending at $(S-b)_+$ precedes the first exit,
+or consists of the interior initial point, giving $D_-(b)>0$.
+When $S\le T-b$, it is a finite exit and Lemma 21.3 gives a strict
+outward overshoot before $S+b$, so $D_+(b)>0$. Otherwise the upper
+exit bound follows from $\widehat S\le T<S+b$. Uniform height
+error smaller than $D_-(b)$ prevents an earlier exit before $S-b$,
+and error smaller than $D_+(b)$ forces an exit by $S+b$ whenever
+that condition is needed. The stopped-coordinate inequality follows
+as in (21.5). These margins are used to express a probability bound;
+they are not queried by the finite construction. $\square$
+
+## 22. A finite-input law on actual native histories and all ten outputs
+
+**Definition 22.1 (finite-data stopping and connector partition).**
+Compute $\widehat S$ from the finite polygon of Definition 21.1,
+using its linear height segments, and hold its coordinate triple
+
+$$
+ (A_t,B_t,W_t)=(x,y,w)(\widehat{\mathsf Z}_{t\wedge\widehat S})
+                  \quad(0\le t\le T).
+\tag{22.1}
+$$
+
+This is the approximating polygon's own exit, computed from the
+acquired data. It is not the original target's $S$.
+Let $K_I=\max(|l-k_0|,|u-k_0|)$ and
+$0<\rho\le(u-l)/4$. Partition $[0,\widehat S]$ at every polygon
+vertex. For each of its positive-length linear cells with total
+increments $(\Delta A,\Delta B,\Delta W)$ subdivide into $m$ equal
+time cells, where
+
+$$
+ m=\max\left(1,
+ \left\lceil\frac{|\Delta A|}{\rho}\right\rceil,
+ \left\lceil\frac{|\Delta B|}{\rho}\right\rceil,
+ \left\lceil\frac{|\Delta W|+K_I|\Delta B|}{\rho^2}
+                                                \right\rceil\right).
+\tag{22.2}
+$$
+
+At every resulting cell $[s,t]$, set
+$X=A_t-A_s$, $Y=B_t-B_s$, $C=W_t-W_s-A_sY$.
+Execute the already supplied original six-leg inward connector
+(17.4), with start height $k_0+A_s$, relative endpoint $(X,Y,C)$,
+and exactly $(t-s)/6$ original time for each leg. Translate its
+two controls by $(A_s,B_s)$, concatenate, and hold from
+$\widehat S$ to $T$. Denote these actual controls by
+$(a_{\epsilon,\delta,\Lambda,\rho},
+  b_{\epsilon,\delta,\Lambda,\rho})$, and their actual integral
+by $J=\int a\,db$. These definitions use only the finite list and
+deterministic parameters. Hidden $z$ is discarded at this stage;
+neither $w$ nor $z$ is commanded directly.
+
+**Theorem 22.2 (complete finite-source-information correspondence).**
+For every fixed $I,T$ and parameters above, Definition 22.1 is a
+Borel map from the normalized finite source list to a finite lawful
+original native history. At every prefix it satisfies
+
+$$
+ l\le k_0+a(t)\le u,\qquad
+ 0<k_0+\min a\le k_0+\max a<H_{\rm n}.
+\tag{22.3}
+$$
+
+Its entire original command domain is still
+$(-\min a,H_{\rm n}-\max a)$, with the original concatenation
+and refusal guards. If the polygon has an observation exit by $T$,
+the command's own first observation exit is exactly that same time;
+otherwise it has no observation exit on the horizon. Its real
+chronological triple agrees with (22.1) at every connector endpoint,
+and satisfies
+
+$$
+ \|a-A\|_\infty\le3\rho,\qquad
+ \|b-B\|_\infty\le4\rho,\qquad
+ \|J-W\|_\infty\le4K_I\rho+4\rho^2.
+\tag{22.4}
+$$
+
+If $R_0$ is the number of linear cells before $\widehat S$, then
+$R_0\le\mathsf N(M_\delta+2)+1$. Writing $V_A,V_B,V_W$ for
+the three finite variations on $[0,\widehat S]$, the number of
+linear native legs, including a possible final hold, is bounded by
+
+$$
+ 6\left(R_0+\frac{V_A+V_B}{\rho}
+                  +\frac{V_W+K_IV_B}{\rho^2}\right)+1.
+\tag{22.5}
+$$
+
+All executed velocities are finite pathwise. No uniform speed or
+energy bound is asserted.
+
+Let $\mathcal O^{\epsilon,\delta,\Lambda,\rho}$ be the complete ten
+held outputs of this actual command. For every deterministic
+$\Lambda_n\uparrow\infty$ and
+$\epsilon_n,\delta_n,\rho_n\downarrow0$ in the stated ranges,
+there is a proof coupling such that
+
+$$
+ \|\mathcal O^{\epsilon_n,\delta_n,\Lambda_n,\rho_n}
+                              -O^I\|_{[0,T]}\longrightarrow0,
+ \qquad
+ \widehat S_n\longrightarrow T\wedge\theta_I
+                      \quad\hbox{almost surely}.
+\tag{22.6}
+$$
+
+Thus their probability laws converge to the original
+$\nu_{I,T}$ in the uniform ten-output held-path topology (13.1).
+The probabilities, phases of period $2\pi$, signed pairs, factors
+two and every fixed preparation rotation are precisely (7.3),
+(7.5) and (7.8). This is a conditional correspondence for the added
+finite source interface; it is not bare-native acquisition.
+
+**Proof.** The finite source polygon starts at $e$, so
+$\widehat S>0$. All its heights before $\widehat S$ are interior,
+and its height at $\widehat S$ is in $I$. Its finitely many vertices
+and its own first height exit are Borel functions of the list;
+a linear segment's first boundary intersection is found by a
+comparison and a linear ratio, with the constant-segment case
+handled separately.
+
+On every subdivision in (22.2), linearity gives
+$|X|,|Y|\le\rho$, and, since $|A_s|\le K_I$,
+$|C|\le\rho^2$. At an intermediate time $v$ in the same cell,
+$W_v-W_s-A_s(B_v-B_s)$ is linear in $v$ and has absolute value
+at most $\rho^2$. Thus the finite-data partition satisfies exactly
+the oscillation inequalities used in Theorem 17.2, now for this
+known polygon, without asking the original source for a modulus.
+Apply the already proved connector geometry [GL, Lemma 17.1] and
+the deterministic prefix/integral argument of Theorem 17.2.
+They give (22.3)--(22.4), the endpoint identities, and equality
+of the command's observation exit with the polygon's own exit.
+The observation walls are strictly inside the original slab, so
+arrival and holding there obey the strict original guard.
+The relative rectangle executes $dq=C$, with its real sign;
+translation retains the cross term $A_sY$. Hence at a join its
+new global integral is $W_s+A_sY+C=W_t$. No central reset or
+new primitive is used.
+
+There are at most $M_\delta+1$ polygon cells per retained mark
+and $\mathsf N+1$ intervening holds. Clipping at $T$ and then at
+the first observation exit does not increase this count, giving
+the bound for $R_0$. For each original cell the maximum of the
+three ceilings and one in (22.2) is at most one plus the sum of
+their nonnegative arguments. Summing gives (22.5). Every resulting
+cell has positive length and finite vertices, so all six assigned
+durations are positive and all slopes finite. Ceilings, orientations,
+finite sums and the connector formulas are Borel on the countable
+disjoint union of finite-list spaces. This establishes an actual
+finite-input pushforward law on the command space of Definition
+17.1, with no unspecified control-selection kernel.
+
+Under the common proof coupling, Theorem 21.2 gives uniform source
+convergence and Lemma 21.3 gives the censored exits and stopped
+triples' convergence. Equation (22.4) then gives convergence of
+the actual chronological triples to
+$(x,y,w)(\mathsf Z_{\,\cdot\wedge S})$. Apply the supplied native
+lift continuity [GL, Theorem 3.1]. In particular the real phases
+are exactly
+
+$$
+ \alpha(t)=\alpha_0+b(t)/2,\qquad
+ \beta(t)=\beta_0+c_0b(t)-J(t)/r.
+\tag{22.7}
+$$
+
+Only then reduce modulo $2\pi$ and apply (7.8). That map is
+uniformly continuous on $I\times\mathbb T^2$, and retains all
+five ordered signed pairs and their fixed rotations. Its limiting
+held path is exactly (17.1), whose law is $\nu_{I,T}$ by §16.
+This proves (22.6) and weak convergence. The six legs consume the
+same original time cell; the scalar totals in (20.6) preserve all
+hidden durations. Neither step changes the original clock.
+$\square$
+
+**Corollary 22.3 (finite-stage accuracy under the declared interface).**
+There is a finite constant $C_I$ such that the map from real triples
+to the ten outputs in (7.3), (7.8), restricted to heights in $I$,
+is $C_I$-Lipschitz for the maximum norm. Set
+$d_\rho=\max(4\rho,4K_I\rho+4\rho^2)$.
+For every $a_*,b,c>0$ and $\lambda>0$, under the proof coupling,
+
+$$
+\begin{aligned}
+ &\mathbb P\left(
+ \|\mathcal O^{\epsilon,\delta,\Lambda,\rho}-O^I\|_{[0,T]}
+                      >C_I(d_\rho+a_*+c)\right)\\
+ &\quad\le\min(1,e^{\lambda T-\Lambda\varphi(\lambda)})
+       +\mathbb P(\Omega_{T+1}(\mathsf Z;
+                                 \epsilon\vee\delta)>a_*)\\
+ &\qquad\quad+\mathbb P(D(b)\le a_*)
+       +\mathbb P(\Omega_T(\mathsf Z;b)>c).
+\end{aligned}
+\tag{22.8}
+$$
+
+The same right side without the last term bounds
+$\mathbb P(|\widehat S-S|>b)$.
+For every desired output error $e_*>0$ and failure probability
+$p_*>0$, deterministic finite choices of
+$\Lambda,\epsilon,\delta,\rho$ make the left probability at
+threshold $e_*$ smaller than $p_*$. They use finitely many exact
+sampling entries in expectation by (20.8), and finitely many actual
+native legs pathwise by (22.5). No target-path queries are added by
+this assertion. A numerical effective rate for choosing the
+parameters from $(e_*,p_*)$ is not asserted.
+
+**Proof.** The square-root amplitudes in (7.8) have bounded derivatives
+on $I$; the phase derivatives in (22.7) are constant and sine and
+cosine are globally Lipschitz. This gives the claimed $C_I$, including
+the Euclidean norm on the ten outputs after enlarging the constant.
+Outside the four exceptional events in (22.8), (21.3) and (21.9)
+bound the stopped triple error by $a_*+c$ and its censored exit
+error by $b$. Add (22.4) and apply that Lipschitz map. The union
+bound proves (22.8) and the lifetime version.
+
+For the existence assertion, first make $d_\rho$ and $c$ small
+enough for the required output threshold, then choose $b>0$ with
+the last probability small, using continuity. For this fixed $b$,
+$D(b)>0$ almost surely, so choose $a_*>0$ small enough for both
+the threshold and the third probability. Choose $\epsilon,\delta$
+small enough for the second probability by continuity, and finally
+choose finite $\Lambda$ large enough for the first by
+$\varphi(\lambda)>0$. These are deterministic law-dependent choices;
+none is a measurement of a sampled target path. The finite primitive
+and command bounds are already established. $\square$
+
+## 23. Mature methods and the precise finite-information boundary
+
+**Definition 23.1 (supplier correspondence and scope).**
+The entrance and returning-excursion law is exactly §15, with the
+recurrent framework of Fukushima--Tanaka,
+[*Poisson point processes attached to symmetric diffusions*,
+§3.1, Theorem 3.1 and (3.12)](https://www.numdam.org/item/AIHPB_2005__41_3_419_0.pdf).
+Their distinguished point is $e$, absorbed semigroup is $P_t^0$,
+entrance measure is $q_t m$, and speed measure is the unchanged
+$h^2\mu$. All its required recurrent-point and original-domain
+hypotheses were checked in Theorem 15.2; no compactification or
+Poincare hypothesis from that paper's different construction is used.
+Equation (20.2) adds the original duration density as a terminal
+factor by differentiation of killed survival. It is a finite
+joint law, not a new general bridge theorem.
+
+Replacing small excursions by the source at their original times is
+the mature truncation map in Lambert--Simatos,
+[*The weak convergence of regenerative processes using some excursion
+path decompositions*, §3.2, (3) and Lemma 3.1](https://www.numdam.org/item/10.1214/12-AIHP531.pdf),
+with their size functional equal to original duration $\zeta$.
+Poisson restriction, marking, scalar subordinator sums and coordinate
+interpolation are likewise mature tools. The direct bound (21.3)
+specializes these tools to this continuous source and keeps every
+duration. No general regenerative-convergence theorem is claimed.
+Yano, [*Functional limit theorems for processes pieced together from
+excursions*, arXiv:1309.2652v3, Definition 2.3, Remark 2.4 and
+Theorem 2.5](https://arxiv.org/html/1309.2652v3), explicitly separates
+path convergence from lifetime convergence. Its full theorem and its
+general convergence hypotheses are not invoked here: retained
+excursion durations and starts agree exactly by (20.6), and the
+observation-exit passage is separately proved in Lemma 21.3.
+
+Chaumont--Uribe Bravo,
+[*Markovian bridges: weak continuity and pathwise constructions*,
+arXiv:0905.2155v3, Theorem 1 and (H1)--(H3)](https://arxiv.org/html/0905.2155v3),
+requires Feller and transition-density continuity hypotheses for its
+bridge construction. No such bridge from the singular source is
+assumed or invoked here. The finite measures (20.2) follow directly
+from the original entrance/killed suppliers; no unverified bridge
+hypothesis or endpoint heat-kernel value is imported.
+
+The repo-derived source-specific composite conclusion is (20.3)--(22.8): a finite
+explicitly normalized source interface, exact scalar accounting for
+all omitted shapes' elapsed durations, same-time approximation of
+the unchanged full source, justified observation exits, and a Borel
+consumer in actual finite lawful native commands preserving all ten
+held outputs in the limit. Its deterministic connectors, prefix
+guards, real chronological integral and phase map are the already
+paid results of §7, Theorem 17.2 and [GL, Lemma 17.1 and Theorem
+3.1]. Its full limiting source, complex selector, measure and source
+response are §16 and [S, §§115--116]. No new claim about the source
+clock of §18 is drawn from these approximate laws.
+
+The free diffusion rigidity of §§1--6, central-fiber exclusion of
+§§7--10, source-contact and Brownian-reference exclusions of
+§§11--14, and the affine/CPTP obstruction of [B, §12.2] are unchanged.
+The nonlinear/source-law action in [B, §12.3] retains its original
+contract. Variable-coefficient Green, independent central-noise Green,
+and spatial-cap/all-real limit suppliers retain the different carriers,
+walls, sources and clocks specified in Definition 19.1. None replaces
+$F,h,m$, the raw unit-source degree-$-3$ $\Gamma$, fixed
+$a,\eta>0$, $g_c=16\sqrt{a\eta}$ or the entire original complex
+domain. Coordinate polygons and their observation holds are finite
+approximations, not replacement source boundary conditions.
+
+**Definition 23.2 (remaining acquisition and realization obligations).**
+The new premise is the ability to draw the finite lists with exactly
+(20.3)--(20.5). Their shapes are given by finitely many genuine
+source evaluations and their hidden durations by scalar original
+inverse-clock increments. Complete continuous marks and queries
+for the original trajectory's exact observation exit or modulus
+are unnecessary construction inputs under this premise.
+The proof coupling may contain complete paths, but the consumer
+receives only the displayed finite entries and uses only their
+specified evaluations and duration sums. Hidden $z$ remains part
+of the joint source law and never becomes native control or output.
+
+Acquisition of these exact-real samplers from bare native operations
+remains unresolved. Labels, durations, finite skeletons and aggregate
+small-duration totals are available offline in the declared interface;
+causal delivery is not proved. Finite bits, finite shots, numerical
+sampler evaluation, effective accuracy rates, uniform native resources
+and physical implementation remain separate obligations. The finite
+primitive expectations are not uniform physical resource bounds.
+The full source continues conservatively after an observation exit,
+whereas the command output is held. There is no extension of $\Psi$
+after its original slab, arbitrary-intervention equivalence,
+source-independent affine/CPTP realization, or complete native
+legal-source/evolution/representation/readout correspondence here.
+The physical spatial dimension and the full why-three objective
+remain unresolved. These are ordinary conditional mathematical
+results, with no Lean-certification or worldwide-priority claim.
+
+## 追加锚（本行以下为增补区）

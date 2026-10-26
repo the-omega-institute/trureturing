@@ -11,6 +11,8 @@ proof_shape: result: bind-only
 escape_witness: none
 admission_basis: open-problem-resolution (#15417; Refuted)
 The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9).
+adjMatrix_complex_map: proof_shape: bind-only; escape_witness: none; direct frozen dependencies: none; consumers: lambdaMin40, AchterbergVanMieghemSubmodularityRefutation.spectral_sup_eq_edgeMax.
+Escape audit unfinished for adjMatrix_complex_map: https://github.com/the-omega-institute/trureturing/issues/22239.
 The source conventions are the unit-weight specialization preregistered in #15417.
 The block map is Fin.divNat with divisor 40; G40 is SimpleGraph.comap of SimpleGraph.cycleGraph 5.
 The counting identity is bind-only and is consumed within this settling module.
@@ -948,7 +950,7 @@ private lemma phi40_ne_zero : phi40 ≠ 0 := by
     exact_mod_cast (Nat.ne_of_gt (Nat.choose_pos (by decide : 100 ≤ 200)))
   exact hp hn.symm
 
-private lemma adjMatrix_complex_map {n : Type*} [Fintype n] [DecidableEq n]
+lemma adjMatrix_complex_map {n : Type*} [Fintype n] [DecidableEq n]
     (G : SimpleGraph n) [DecidableRel G.Adj] :
     (G.adjMatrix ℝ).map Complex.ofReal = G.adjMatrix ℂ := by
   classical
