@@ -91,7 +91,7 @@ theorem denominatorFormula (k : ℕ) (hk : 0 < k) :
         (z : ℚ) - ∑ p ∈ denominatorPrimes (2 * k), (1 : ℚ) / p := by
       change (z : ℚ) = bernoulli (2 * k) +
         ∑ p ∈ denominatorPrimes (2 * k), (1 : ℚ) / p at hz
-      linarith
+      exact eq_sub_of_add_eq hz.symm
     rw [bernDen, hb, Rat.intCast_sub_den]
     apply (Rat.den_sum_dvd_prod_den _ _).trans
     apply Finset.prod_dvd_prod_of_dvd

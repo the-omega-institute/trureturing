@@ -38,7 +38,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 "A positive divisor of k is at most k. This gives the stated membership condition without a range restriction."),
             Node("denominatorFormula", "The exact denominator product", All("k", N,
                 Imp(Pos(k), Eq(B(Mul(D(2), k)), ProductPrimes(Mul(D(2), k))))),
-                "Bernoulli.vonStaudt_clausen expresses B(2k) as an integer minus the prime reciprocal sum. Rat.den_sum_dvd_prod_den bounds its denominator by the prime product. Each prime in the product divides the denominator by Bernoulli.dvd_den_bernoulli. Distinct primes are relatively prime, so their product divides the denominator. Antisymmetry gives equality."),
+                "Bernoulli.vonStaudt_clausen expresses B(2k) as an integer minus the prime reciprocal sum. Rat.den_sum_dvd_prod_den bounds its denominator by the prime product. Each prime in the product divides the denominator by Bernoulli.dvd_den_bernoulli. Distinct primes are relatively prime, so their product divides the denominator. Antisymmetry gives equality. This is the denominator identity in Notation 5.5, §5.1, printed p. 8.", false, true),
             Node("todaReduction", "Coprimality removes the prime factors of n", All("n", N, Imp(Pos(n),
                 Eq(T(n), Filter("p", And(Odd(p), Not(Dvd(p, n))), P(Four(n)))))),
                 "For an odd prime p, p divides neither 4 nor p−1. The identity (p−1)(4n/(p−1))=4n therefore makes coprimality with the quotient equivalent to p not dividing n."),
