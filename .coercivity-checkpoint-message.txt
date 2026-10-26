@@ -1,0 +1,1 @@
+WIP general cap coercivity forces positive tail and strict quotient
