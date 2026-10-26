@@ -316,13 +316,6 @@ private theorem flip_facts (d : ℕ) :
   exact ⟨D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.swapHermitian,
     D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.swapSquare⟩
 
-private theorem flip_trace (d : ℕ) :
-    (Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d))).trace = (d : ℂ) := by
-  classical
-  simp only [Matrix.trace, Matrix.diag_apply, Fintype.sum_prod_type, replicaSwap_apply,
-    Prod.swap_prod_mk, Prod.mk.injEq]
-  simp [eq_comm]
-
 private theorem werner_density {d : ℕ} {μ : ℝ} (hd : 1 < d)
     (hμ₀ : 0 ≤ μ) (hμ₁ : μ ≤ 1) :
     (werner d μ).PosSemidef ∧ (werner d μ).trace = 1 := by
@@ -356,7 +349,8 @@ private theorem werner_density {d : ℕ} {μ : ℝ} (hd : 1 < d)
     have ha : (d : ℂ) + 1 ≠ 0 := by exact_mod_cast (Nat.succ_ne_zero d)
     have hb : (d : ℂ) - 1 ≠ 0 := sub_ne_zero.mpr (by exact_mod_cast (ne_of_gt hd))
     simp only [werner.eq_1, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_sub,
-      flip_trace, Matrix.trace_one, Fintype.card_prod, Fintype.card_fin, Nat.cast_mul,
+      D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.traceSwap,
+      Matrix.trace_one, Fintype.card_prod, Fintype.card_fin, Nat.cast_mul,
       Complex.real_smul]
     push_cast
     field_simp
@@ -371,7 +365,8 @@ private theorem werner_readout {d : ℕ} (hd : 1 < d) (μ : ℝ) :
       werner d μ).trace = ((2 * μ - 1 : ℝ) : ℂ) := by
     simp only [werner.eq_1, Matrix.mul_add, Matrix.mul_smul, Matrix.mul_sub, Matrix.mul_one,
       (flip_facts d).2, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_sub,
-      flip_trace, Matrix.trace_one, Fintype.card_prod, Fintype.card_fin, Nat.cast_mul,
+      D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.traceSwap,
+      Matrix.trace_one, Fintype.card_prod, Fintype.card_fin, Nat.cast_mul,
       Complex.real_smul]
     push_cast
     field_simp
