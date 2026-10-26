@@ -103,27 +103,34 @@ internal sealed class MarkovMonogamyPermutationInequalityDocument : IScribeDocum
                         + "composition and transport identities identify all four pair laws, so "
                         + "the same rectangle inequality holds at these positions.")),
                     Paragraph(Text(
-                        "Next consider a real matrix m on Fin n whose ordered rectangles satisfy "
-                        + "m(i,a) + m(j,b) ≥ m(i,b) + m(j,a) whenever i < j and a < b. Induct on n "
-                        + "to compare an arbitrary permutation sum with the diagonal sum. The "
-                        + "zero case is empty. At size n + 1, let k be f.symm(0), and let g be f "
-                        + "after swapping the inputs 0 and k. Then g fixes 0, sends k to f(0), "
-                        + "and agrees with f elsewhere. If k = 0 the two permutations agree. "
-                        + "Otherwise k and f(0) are positive, and the rectangle on rows 0,k and "
-                        + "columns 0,f(0) says that changing f to g cannot decrease the sum: "
-                        + "the difference is m(0,0) + m(k,f(0)) − m(0,f(0)) − m(k,0). "
-                        + "Decompose g into its fixed zero and a permutation r of Fin n. The "
-                        + "matrix on successor rows and columns inherits the rectangle condition. "
-                        + "Apply the induction hypothesis to r and add back m(0,0).")),
-                    Paragraph(Text(
-                        "Finally let m(i,a) be the mutual information between positions "
-                        + "n − 1 − i.val and n + a.val. For i < j and a < b, the four positions "
+                        "Let X_i and Y_a denote positions n − 1 − i.val and n + a.val, and set "
+                        + "m(i,a) = I(X_i:Y_a). For i < j and a < b, the four positions "
                         + "n − 1 − j.val, n − 1 − i.val, n + a.val and n + b.val are ordered. "
-                        + "Their rectangle is exactly the required matrix rectangle. Every "
-                        + "transition used precedes the last of these positions, which is less "
-                        + "than 2n, so the stated stochasticity hypothesis suffices. The "
-                        + "permutation comparison proves the displayed statement, which is claim, "
-                        + "for every n and every f."))),
+                        + "They form the chain A = X_j to B = X_i to C = Y_a to D = Y_b. "
+                        + "The entropy calculation above identifies the rectangle defect as "
+                        + "I(X_i:Y_a) + I(X_j:Y_b) − I(X_i:Y_b) − I(X_j:Y_a) "
+                        + "= I(B:C | A,D) ≥ 0. Every transition used precedes the last of "
+                        + "these positions, which is less than 2n, so the stated stochasticity "
+                        + "hypothesis suffices.")),
+                    Paragraph(Text(
+                        "To compare the permutation and diagonal sums for any real matrix m "
+                        + "with these ordered rectangles, handle n = 0 by empty sums. For "
+                        + "n = N + 1, put c = 1/(N + 1) and give each point "
+                        + "e(i) = (i,f(i),i,f(i)) mass c, with zero mass elsewhere. The first "
+                        + "coordinate makes e injective, so the masses sum to one. Since f "
+                        + "is a permutation, all four coordinate marginals are the same uniform "
+                        + "law, with mass c at every element of Fin (N + 1).")),
+                    Paragraph(Text(
+                        "The test Φ(x) = m(x(0),x(1)) is supermodular for coordinatewise "
+                        + "minimum and maximum. Comparing the orders of the first two "
+                        + "coordinates gives equality when their orders agree and the rectangle "
+                        + "inequality when they are opposed; equal indices also give equality. "
+                        + "Apply common_marginal_supermodular_le_diagonal to this test and "
+                        + "the uniform law on the points e(i). Its expectation comparison is "
+                        + "c Σ_i m(i,f(i)) ≤ c Σ_i m(i,i). Cancel the positive factor c. "
+                        + "For the mutual-information matrix above, this proves that the "
+                        + "identity pairing is maximal for every n and every f, as asserted "
+                        + "by claim."))),
                 DescribeRole.Theorem))));
 
     private static Formula TransitionDefinition()
