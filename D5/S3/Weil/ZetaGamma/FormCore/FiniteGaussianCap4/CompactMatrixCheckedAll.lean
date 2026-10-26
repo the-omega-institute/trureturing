@@ -56,33 +56,33 @@ private theorem upper_triangle_bound (i j : Fin 16) (hij : i ≤ j) :
       (1 / 1000000000 : ℝ) := by
   fin_cases i
   · by_cases hj : j.val < 8
-    · exact row_zero_lower_bounds j (by simpa using hij) hj
+    · exact row_zero_lower_bounds j (by simpa [Fin.le_def] using hij) hj
     · exact row_zero_upper_bounds j (le_of_not_gt hj) j.isLt
   · by_cases hj : j.val < 8
-    · exact row_one_lower_bounds j (by simpa using hij) hj
+    · exact row_one_lower_bounds j (by simpa [Fin.le_def] using hij) hj
     · exact row_one_upper_bounds j (le_of_not_gt hj) j.isLt
   · by_cases hj : j.val < 9
-    · exact row_two_lower_bounds j (by simpa using hij) hj
+    · exact row_two_lower_bounds j (by simpa [Fin.le_def] using hij) hj
     · exact row_two_upper_bounds j (le_of_not_gt hj) j.isLt
   · by_cases hj : j.val < 9
-    · exact row_three_lower_bounds j (by simpa using hij) hj
+    · exact row_three_lower_bounds j (by simpa [Fin.le_def] using hij) hj
     · exact row_three_upper_bounds j (le_of_not_gt hj) j.isLt
   · by_cases hj : j.val < 10
-    · exact row_four_lower_bounds j (by simpa using hij) hj
+    · exact row_four_lower_bounds j (by simpa [Fin.le_def] using hij) hj
     · exact row_four_upper_bounds j (le_of_not_gt hj) j.isLt
   · by_cases hj : j.val < 10
-    · exact row_five_lower_bounds j (by simpa using hij) hj
+    · exact row_five_lower_bounds j (by simpa [Fin.le_def] using hij) hj
     · exact row_five_upper_bounds j (le_of_not_gt hj) j.isLt
-  · exact row_six_bounds j (by simpa using hij) j.isLt
-  · exact row_seven_bounds j (by simpa using hij) j.isLt
-  · exact row_eight_bounds j (by simpa using hij) j.isLt
-  · exact row_nine_bounds j (by simpa using hij) j.isLt
-  · exact row_ten_bounds j (by simpa using hij) j.isLt
-  · exact row_eleven_bounds j (by simpa using hij) j.isLt
-  · exact row_twelve_bounds j (by simpa using hij) j.isLt
-  · exact row_thirteen_bounds j (by simpa using hij) j.isLt
-  · exact row_fourteen_bounds j (by simpa using hij) j.isLt
-  · exact row_fifteen_bounds j (by simpa using hij) j.isLt
+  · exact row_six_bounds j (by simpa [Fin.le_def] using hij) j.isLt
+  · exact row_seven_bounds j (by simpa [Fin.le_def] using hij) j.isLt
+  · exact row_eight_bounds j (by simpa [Fin.le_def] using hij) j.isLt
+  · exact row_nine_bounds j (by simpa [Fin.le_def] using hij) j.isLt
+  · exact row_ten_bounds j (by simpa [Fin.le_def] using hij) j.isLt
+  · exact row_eleven_bounds j (by simpa [Fin.le_def] using hij) j.isLt
+  · exact row_twelve_bounds j (by simpa [Fin.le_def] using hij) j.isLt
+  · exact row_thirteen_bounds j (by simpa [Fin.le_def] using hij) j.isLt
+  · exact row_fourteen_bounds j (by simpa [Fin.le_def] using hij) j.isLt
+  · exact row_fifteen_bounds j (by simpa [Fin.le_def] using hij) j.isLt
 
 /-- Every actual signed compact matrix entry, including both triangles,
 obeys the original entrywise error bound without any input hypothesis. -/
