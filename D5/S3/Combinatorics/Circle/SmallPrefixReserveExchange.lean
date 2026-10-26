@@ -1,5 +1,7 @@
 /- GID: D5/S3/Combinatorics/Circle/SmallPrefixReserveExchange
    generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/SmallPrefixReserveExchange
+   mirror-E: none(waiver:audit-open-22063)
    anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic]
    utility: none
    digest: Pull an actual negative SMALL prefix reserve through a compatible suffix, retaining its LARGE labels, and construct a full strict-energy physical exchange. -/
