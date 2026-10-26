@@ -96,16 +96,18 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout :=
-    some (realize signature (fun _ p σ => probability σ p.2.2.2.1 p.2.2.2.2 0 0) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ p σ => probability σ p.2.2.2.1 p.2.2.2.2 0 0) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.QuantumBounds.EnergyConstrainedDeterministicViolation
-    definition :=
-    some { owner := `D5.S3.QuantumBounds.EnergyConstrainedDeterministicViolation, name := `D5.S3.QuantumBounds.EnergyConstrainedDeterministicViolation.claim, path := #[] }
+    definition := some {
+      owner := `D5.S3.QuantumBounds.EnergyConstrainedDeterministicViolation
+      name := `D5.S3.QuantumBounds.EnergyConstrainedDeterministicViolation.claim
+      path := #[] }
     coordinates := #[3, 4, 5, 7, 10]
     readouts := #[{
       path := #[

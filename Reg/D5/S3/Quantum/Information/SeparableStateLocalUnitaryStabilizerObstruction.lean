@@ -71,7 +71,8 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ i => (![1, 0] : Fin 2 → ℂ) i) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ _ i => (![1, 0] : Fin 2 → ℂ) i) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
