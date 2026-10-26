@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
-import D5.S3.VertexAlgebra.LatticeRootlessLowGrades
+import D5.S3.VertexAlgebra.Lattice.RootlessLowGrades
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -10,8 +10,8 @@ open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.VertexAlgebra
 open LatticeGeneratingFieldLocality LatticePositiveEnergy LatticeSugawaraCurrents
-open LatticeRootlessLowGrades
-namespace Reg.D5.S3.VertexAlgebra.LatticeRootlessLowGrades
+open Lattice.RootlessLowGrades
+namespace Reg.D5.S3.VertexAlgebra.Lattice.RootlessLowGrades
 
 private def zeroLattice : LatticeData where
   rank := 0
@@ -60,8 +60,8 @@ def family : Registration arena (type_of% (@oscillator_two_classification)) wher
   dependence := dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@oscillator_two_classification) (Realization signature) (LatticeData → Type) Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.LatticeRootlessLowGrades.Classification.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.LatticeRootlessLowGrades.Classification.family
+  unitName := `Reg.D5.S3.VertexAlgebra.Lattice.RootlessLowGrades.Classification.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.Lattice.RootlessLowGrades.Classification.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -77,7 +77,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.LatticeRootlessLowGrades
+    owner := `D5.S3.VertexAlgebra.Lattice.RootlessLowGrades
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -145,8 +145,8 @@ def family : Registration arena (type_of% (@actual_rootless_low_spectrum)) where
   dependence := dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@actual_rootless_low_spectrum) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.LatticeRootlessLowGrades.Spectrum.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.LatticeRootlessLowGrades.Spectrum.family
+  unitName := `Reg.D5.S3.VertexAlgebra.Lattice.RootlessLowGrades.Spectrum.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.Lattice.RootlessLowGrades.Spectrum.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -162,7 +162,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.LatticeRootlessLowGrades
+    owner := `D5.S3.VertexAlgebra.Lattice.RootlessLowGrades
     definition := none
     coordinates := #[]
     readouts := #[
@@ -178,4 +178,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 end Spectrum
 #print axioms Classification.family
 #print axioms Spectrum.family
-end Reg.D5.S3.VertexAlgebra.LatticeRootlessLowGrades
+end Reg.D5.S3.VertexAlgebra.Lattice.RootlessLowGrades

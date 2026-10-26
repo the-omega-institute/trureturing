@@ -1,9 +1,9 @@
 // Apache-2.0.
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice;
 
-internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefinition
+internal sealed class RootlessLowGradesDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice");
@@ -30,7 +30,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 + "No Leech count or Monster/moonshine identification follows from this slice.")),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-oscillatorfiber"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.OscillatorFiber"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.OscillatorFiber"),
                 H("Exact oscillator energy fibre"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -38,7 +38,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-normfour"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.NormFour"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.NormFour"),
                 H("Actual integral norm-four shell"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -46,7 +46,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-oscillator-one-iff"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.oscillator_one_iff"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.oscillator_one_iff"),
                 H("Exhaustive energy-one oscillator classification"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -54,7 +54,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-oscillatoroneequiv"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.oscillatorOneEquiv"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.oscillatorOneEquiv"),
                 H("Energy-one oscillator bijection"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -62,7 +62,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-oscillator-two-classification"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.oscillator_two_classification"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.oscillator_two_classification"),
                 H("Exhaustive energy-two oscillator classification"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -70,7 +70,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-pairoccupation"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.pairOccupation"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.pairOccupation"),
                 H("Unordered pair occupation vector"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -78,7 +78,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-oscillatortwodecode"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.oscillatorTwoDecode"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.oscillatorTwoDecode"),
                 H("Constructed energy-two oscillator labels"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -86,7 +86,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-oscillatortwoequiv"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.oscillatorTwoEquiv"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.oscillatorTwoEquiv"),
                 H("Constructive oscillator energy-two equivalence"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -94,7 +94,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-neutral-energy-two-card"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.neutral_energy_two_card"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.neutral_energy_two_card"),
                 H("General neutral oscillator cardinality"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -102,7 +102,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-chargeenergy-gap"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.chargeEnergy_gap"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.chargeEnergy_gap"),
                 H("Rootless nonzero charge energy gap"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -110,7 +110,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-normfour-finite"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.normFour_finite"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.normFour_finite"),
                 H("Derived finiteness of the actual norm-four shell"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -118,7 +118,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-energy-one-iff"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.energy_one_iff"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.energy_one_iff"),
                 H("All-charge energy-one exclusion"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -126,7 +126,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-energy-two-iff"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.energy_two_iff"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.energy_two_iff"),
                 H("All-charge energy-two classification"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -134,7 +134,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-energyzeroequiv"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.energyZeroEquiv"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.energyZeroEquiv"),
                 H("Vacuum energy label"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -142,7 +142,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-energyoneequiv"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.energyOneEquiv"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.energyOneEquiv"),
                 H("Actual energy-one label bijection"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -150,7 +150,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-energytwodecode"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.energyTwoDecode"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.energyTwoDecode"),
                 H("All-charge energy-two label construction"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -158,7 +158,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-energytwoequiv"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.energyTwoEquiv"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.energyTwoEquiv"),
                 H("All-charge energy-two sum decomposition"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -166,7 +166,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-energytwoconfigurations"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.energyTwoConfigurations"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.energyTwoConfigurations"),
                 H("Complete energy-two configurations"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -174,7 +174,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-gradetwobasis"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.gradeTwoBasis"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.gradeTwoBasis"),
                 H("Reindexed existing actual-carrier basis"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -182,7 +182,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-grade-two-finrank"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.grade_two_finrank"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.grade_two_finrank"),
                 H("Actual-carrier grade-two dimension"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -190,7 +190,7 @@ internal sealed class LatticeRootlessLowGradesDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticerootlesslowgrades-actual-rootless-low-spectrum"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeRootlessLowGrades.actual_rootless_low_spectrum"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/RootlessLowGrades.actual_rootless_low_spectrum"),
                 H("Canonical inverse-Gram Sugawara low spectrum"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),

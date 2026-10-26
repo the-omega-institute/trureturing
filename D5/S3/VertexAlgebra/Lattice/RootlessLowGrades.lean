@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/LatticeRootlessLowGrades
+/- GID: D5/S3/VertexAlgebra/Lattice/RootlessLowGrades
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeRootlessLowGrades
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/RootlessLowGrades
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -29,7 +29,7 @@ set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
 
-namespace D5.S3.VertexAlgebra.LatticeRootlessLowGrades
+namespace D5.S3.VertexAlgebra.Lattice.RootlessLowGrades
 
 open LatticeGeneratingFieldLocality LatticePositiveEnergy
 open LatticeSugawaraCurrents
@@ -447,4 +447,4 @@ theorem actual_rootless_low_spectrum (D : LatticeData)
 #print axioms grade_two_finrank
 #print axioms actual_rootless_low_spectrum
 
-end D5.S3.VertexAlgebra.LatticeRootlessLowGrades
+end D5.S3.VertexAlgebra.Lattice.RootlessLowGrades
