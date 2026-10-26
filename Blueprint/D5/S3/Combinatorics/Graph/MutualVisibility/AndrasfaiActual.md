@@ -60,7 +60,11 @@ $$\operatorname{generatingSeries} = \frac{X \cdot (4 - 19 \cdot X + 33 \cdot X^{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/MutualVisibility/AndrasfaiActual.result` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Resolves.* `Problems/oeis-a391632-andrasfai-mutual-visibility` (proved) by `D5/S3/Combinatorics/Graph/MutualVisibility/AndrasfaiActual.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a391632-andrasfai-mutual-visibility","declaration_gid":"D5/S3/Combinatorics/Graph/MutualVisibility/AndrasfaiActual.result","resolution_kind":"proved"} -->
+
+*Citation.* Andrew Howroyd; Eric W. Weisstein (2026). *OEIS A391632: mutual-visibility subsets of Andrasfai graphs*. URL: <https://oeis.org/A391632/internal>.
 
 *Commentary.*
 
