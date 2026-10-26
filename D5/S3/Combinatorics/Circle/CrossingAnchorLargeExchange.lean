@@ -194,8 +194,11 @@ theorem actualSource_threeNegative_crossingAnchor_exchange_full
   let e0 := h - f j - P
   have hMQ : Q k ≤ M := le_trans hv1.1 (le_max_left _ _)
   have hMC : M ≤ C k := max_le hv1.2 hv2.2
-  have hanchor : 0 < aa ∧ aa ≤ c ∧ M ≤ aa + c ∧ M ≤ 2 * c := by
-    dsimp only [c, M] at *
+  have htau : 4 * aa - 2 * Q k ≤ c := by
+    dsimp only [c, M]
+    omega
+  have hanchor : 0 < aa ∧ aa < c ∧ M < aa + c ∧ M < 2 * c := by
+    change M ≤ ZZ at hM
     omega
   have hjQ : Q k ≤ -f j := by
     simp only [List.mem_cons, List.not_mem_nil, or_false] at hj
@@ -242,8 +245,8 @@ theorem actualSource_threeNegative_crossingAnchor_exchange_full
     dsimp only [b, e0]
     omega
   obtain ⟨L, hL, hsL, hLend, _⟩ := exists_order_two_negative f S v1 v2 a (Q k) (C k) b e0
-    hQ hC hSnd hsmall hv1 hv2 ha hapositive hanchor.2.1
-    hanchor.2.2.2 hanchor.2.2.1 hb ⟨by omega, by omega⟩ heq
+    hQ hC hSnd hsmall hv1 hv2 ha hanchor.1 (le_of_lt hanchor.2.1)
+    (le_of_lt hanchor.2.2.2) (le_of_lt hanchor.2.2.1) hb ⟨by omega, by omega⟩ heq
   have hLj : (L ++ [j]).Perm Btail := (hL.append_right _).trans htailj
   have hSretained (i : Fin k) (hi : i ∈ S) : i ∈ L :=
     hL.mem_iff.mpr (List.mem_append_left _ hi)
