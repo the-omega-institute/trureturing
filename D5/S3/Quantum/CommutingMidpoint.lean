@@ -1010,8 +1010,7 @@ private theorem bloch_commutator_gram (a b : EuclideanSpace ℝ (Fin 3)) :
   let y := a 2*b 0-a 0*b 2
   let z := a 0*b 1-a 1*b 0
   let C : Matrix (Fin 2) (Fin 2) ℂ :=
-    !![(z : ℂ)*Complex.I/2, ((y : ℂ)+(x : ℂ)*Complex.I)/2;
-      (-(y : ℂ)+(x : ℂ)*Complex.I)/2, -(z : ℂ)*Complex.I/2]
+    !![⟨0, z/2⟩, ⟨y/2, x/2⟩; ⟨-y/2, x/2⟩, ⟨0, -z/2⟩]
   have hC : blochMatrix 1 a*blochMatrix 1 b-blochMatrix 1 b*blochMatrix 1 a=C := by
     ext i j
     fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
@@ -1019,12 +1018,16 @@ private theorem bloch_commutator_gram (a b : EuclideanSpace ℝ (Fin 3)) :
         Complex.mul_re,Complex.mul_im] <;> ring
   rw [hC]
   have hnorm : (trace (Cᴴ*C)).re=(x^2+y^2+z^2)/2 := by
-    norm_num [Matrix.trace,Matrix.mul_apply,Matrix.conjTranspose_apply,
-      Fin.sum_univ_two,C,Complex.mul_re,Complex.mul_im,
-      starRingEnd_apply,RCLike.star_def] <;> ring
+    simp only [Matrix.trace,Matrix.diag_apply,Matrix.mul_apply,
+      Matrix.conjTranspose_apply,Fin.sum_univ_two]
+    change ((0*0 - (-(z/2))*(z/2) +
+      ((-y/2)*(-y/2) - (-(x/2))*(x/2))) +
+      ((y/2)*(y/2) - (-(x/2))*(x/2) +
+      (0*0 - (-(-z/2))*(-z/2)))) = (x^2+y^2+z^2)/2
+    ring
   rw [hnorm]
   simp only [EuclideanSpace.real_norm_sq_eq,PiLp.inner_apply,RCLike.inner_apply,
-    Fin.sum_univ_three]
+    Fin.sum_univ_three,starRingEnd_apply,star_trivial]
   dsimp [x,y,z]
   ring
 
