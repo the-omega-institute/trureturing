@@ -16,13 +16,15 @@ Retire these transplants when equivalent suppliers exist in pinned mathlib. -/
 
 module
 
-public import D5.S3.Combinatorics.Geometry.MiuraHeightEnvelope
+public import Mathlib.Data.Int.Basic
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Set
+
+/-! Finite signed contraction and its exact full-grid invariants. -/
 
 @[expose] public section
 
 namespace D5.S3.Combinatorics.Geometry.MiuraCoreFrozenWalk
-
-open MiuraHeightEnvelope
 
 noncomputable section
 

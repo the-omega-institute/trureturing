@@ -23,6 +23,8 @@ public import D5.S3.Combinatorics.Geometry.MiuraHeightEnvelope
 public import Mathlib.Data.Finset.Card
 public import Mathlib.Data.Fintype.Prod
 
+/-! Finite signed contraction and its exact full-grid invariants. -/
+
 @[expose] public section
 
 namespace D5.S3.Combinatorics.Geometry.MiuraCoreColumns

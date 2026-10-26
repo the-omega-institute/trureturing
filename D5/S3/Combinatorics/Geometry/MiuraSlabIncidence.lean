@@ -176,7 +176,7 @@ private theorem transpose_adj (v u : Cell m n) :
 theorem transpose_isHeight {h : Cell m n → ℤ} (hh : IsHeight h) :
     IsHeight (transposeHeight h) := by
   intro v u hu
-  exact hh _ _ ((transpose_adj v u).mp hu)
+  exact hh _ _ ((transpose_adj v u).mpr hu)
 
 noncomputable def neutralColSlabs (h : Cell m n → ℤ) : Finset (Interval n) :=
   neutralRowSlabs (transposeHeight h)
@@ -194,12 +194,12 @@ noncomputable def colIncidences (h : Cell m n → ℤ) (J : Interval n) : Finset
 private theorem transpose_min {h : Cell m n → ℤ} {v : Cell n m}
     (hv : IsStrictLocalMin (transposeHeight h) v) : IsStrictLocalMin h (v.2, v.1) := by
   intro u hu
-  exact hv (u.2, u.1) ((transpose_adj v (u.2, u.1)).mpr hu)
+  exact hv (u.2, u.1) ((transpose_adj v (u.2, u.1)).mp hu)
 
 private theorem transpose_max {h : Cell m n → ℤ} {v : Cell n m}
     (hv : IsStrictLocalMax (transposeHeight h) v) : IsStrictLocalMax h (v.2, v.1) := by
   intro u hu
-  exact hv (u.2, u.1) ((transpose_adj v (u.2, u.1)).mpr hu)
+  exact hv (u.2, u.1) ((transpose_adj v (u.2, u.1)).mp hu)
 
 /-- The transposed forcing argument counts distinct actual column incidences. -/
 theorem neutral_col_degree {h : Cell m n → ℤ} (hh : IsHeight h) (hm : 2 ≤ m)

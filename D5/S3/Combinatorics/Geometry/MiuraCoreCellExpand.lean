@@ -18,6 +18,8 @@ module
 
 public import D5.S3.Combinatorics.Geometry.MiuraCoreContract
 
+/-! Finite signed contraction and its exact full-grid invariants. -/
+
 @[expose] public section
 
 namespace D5.S3.Combinatorics.Geometry.MiuraCoreCellExpand

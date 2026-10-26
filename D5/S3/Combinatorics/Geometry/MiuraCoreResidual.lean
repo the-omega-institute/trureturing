@@ -12,11 +12,13 @@ public import D5.S3.Combinatorics.Geometry.MiuraCoreExtremum
 public import D5.S3.Combinatorics.Geometry.MiuraCoreBoundary
 public import D5.S3.Combinatorics.Geometry.MiuraResidualCount
 
+/-! Finite signed contraction and its exact full-grid invariants. -/
+
 @[expose] public section
 
 namespace D5.S3.Combinatorics.Geometry.MiuraCoreResidual
 
-open MiuraHeightEnvelope MiuraResidualCount MiuraCoreColumns MiuraCoreBoundary MiuraCoreContract MiuraCoreCellExpand MiuraCoreExtremum
+open MiuraHeightEnvelope MiuraResidualCount MiuraCoreFrozenSlope MiuraCoreColumns MiuraCoreBoundary MiuraCoreContract MiuraCoreCellExpand MiuraCoreExtremum
 
 variable {m n : ℕ}
 
@@ -133,5 +135,86 @@ theorem contractAt_residual (a b : ℕ) (h : Cell m n → ℤ) (hm : 0 < m)
   · exact (contractAt_maxima_card h hr.1.1 hm j hfrz).trans hr.2.2.1
   · rintro ⟨sd, hsd⟩
     exact hr.2.2.2 ⟨sd, (contractAt_all_minima_side_iff h hr.1.1 hm j hfrz sd).mp hsd⟩
+
+
+/-- Inactivity excludes both occupied physical boundary columns. -/
+theorem inactive_internal (h : Cell m n → ℤ) (hn : 0 < n)
+    (hends : activeColumn h ⟨0, hn⟩ ∧ activeColumn h ⟨n - 1, by omega⟩)
+    (j : Fin n) (hj : ¬ activeColumn h j) :
+    0 < j.val ∧ j.val + 1 < n := by
+  have hjlt := j.isLt
+  constructor
+  · by_contra h
+    have he : j = ⟨0, hn⟩ := Fin.ext (by omega)
+    exact hj (he ▸ hends.1)
+  · by_contra h
+    have he : j = ⟨n - 1, by omega⟩ := Fin.ext (by omega)
+    exact hj (he ▸ hends.2)
+
+/-- Beyond the core width bound, two consecutive columns are genuinely frozen. -/
+theorem exists_adjacent_frozen_of_width (h : Cell m n → ℤ) (hh : IsHeight h)
+    (hm : 0 < m) (hn : 2 ≤ n) (d : ℕ) (hd : numExtrema h ≤ d)
+    (hwide : 2 * d - 1 < n) :
+    ∃ j k : Fin n, j.val + 1 = k.val ∧ frozenColumn h j ∧ frozenColumn h k := by
+  classical
+  have hends := boundary_columns_active h hh hm hn
+  have hactive : numActiveColumns h ≤ d :=
+    (numActiveColumns_le_numExtrema h).trans hd
+  have hruns : numFrozenRuns h + 1 ≤ d :=
+    (numFrozenRuns_lt_numExtrema h (by omega) hends.1 hends.2).trans hd
+  have hpairs : ∃ j k : Fin n, j.val + 1 = k.val ∧
+      ¬ activeColumn h j ∧ ¬ activeColumn h k := by
+    by_contra hnone
+    have heq : numFrozenRuns h =
+        (Finset.univ.filter (fun j : Fin n => ¬ activeColumn h j)).card := by
+      unfold numFrozenRuns
+      congr 1
+      apply Finset.filter_congr
+      intro j _
+      constructor
+      · exact fun hj => hj.1
+      · intro hj
+        have hjpos := (inactive_internal h (by omega) hends j hj).1
+        refine ⟨hj, Or.inr ⟨hjpos, ?_⟩⟩
+        by_contra hprev
+        apply hnone
+        refine ⟨⟨j.val - 1, by omega⟩, j, by simp only [Fin.val_mk]; omega,
+          hprev, hj⟩
+    have hpartition :
+        numActiveColumns h +
+          (Finset.univ.filter (fun j : Fin n => ¬ activeColumn h j)).card = n := by
+      simpa [numActiveColumns] using
+        (Finset.card_filter_add_card_filter_not (s := (Finset.univ : Finset (Fin n)))
+          (p := activeColumn h))
+    omega
+  obtain ⟨j, k, hjk, hj, hk⟩ := hpairs
+  have hij := inactive_internal h (by omega) hends j hj
+  have hik := inactive_internal h (by omega) hends k hk
+  exact ⟨j, k, hjk,
+    inactive_imp_frozenColumn h hh j hij.1 hij.2 hm hj,
+    inactive_imp_frozenColumn h hh k hik.1 hik.2 hm hk⟩
+
+/-- The union of both actual extremum sets bounds their combined count. -/
+theorem numExtrema_le_split (h : Cell m n → ℤ) :
+    numExtrema h ≤ (minima h).card + (maxima h).card := by
+  classical
+  have heq : Finset.univ.filter (IsStrictLocalExtremum h) = maxima h ∪ minima h := by
+    ext v
+    simp [maxima, minima, IsStrictLocalExtremum]
+  rw [numExtrema, heq]
+  exact (Finset.card_union_le _ _).trans_eq (Nat.add_comm _ _)
+
+/-- An oversized residual rectangle admits a signed deletion inside a frozen run. -/
+theorem residual_width_reduction (a b : ℕ) (h : Cell m n → ℤ)
+    (hm : 0 < m) (hn : 2 ≤ n) (hr : Residual a b h)
+    (hwide : 2 * (a + b) - 1 < n) :
+    ∃ (j k : Fin n) (hfrz : frozenColumn h j),
+      j.val + 1 = k.val ∧ frozenColumn h k ∧
+      Residual a b (contractAt h hm j hfrz) := by
+  have hd : numExtrema h ≤ a + b := by
+    simpa only [hr.2.1, hr.2.2.1] using numExtrema_le_split h
+  obtain ⟨j, k, hjk, hj, hk⟩ :=
+    exists_adjacent_frozen_of_width h hr.1.1 hm hn (a + b) hd hwide
+  exact ⟨j, k, hj, hjk, hk, contractAt_residual a b h hm j hj hr⟩
 
 end D5.S3.Combinatorics.Geometry.MiuraCoreResidual
