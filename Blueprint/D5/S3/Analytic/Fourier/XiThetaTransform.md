@@ -4,6 +4,14 @@
 
 The theta transform and completed zeta.
 
+The same actual kernel admits a shifted-ray application that detects a nonzero coordinate on the genuine zeta spectrum. Write Phi=romikPhi=sourceThetaKernel, delta=log(2)/2, and J_r(z)=integral_(t>0) Phi^(r)(delta+t)*cos(z*t). There exists an actual index n in zetaZeroData with J_0(zetaZeroData.gamma(n)) nonzero. The spectral parameter is the original complex gamma(n); neither RH nor reality of gamma(n) is assumed.
+
+All derivative and convergence premises are paid for the complete kernel. For every derivative order r and every a>=0, exp(t/2)*abs(Phi^(r)(a+t)) is integrable on t>0 and tends to zero at infinity. The literal mode has the form exp(x/2)*P_r(y)*exp(-y), y=pi*m^2*exp(2x), with P_0=4y^2-6y and P_(r+1)=(1/2-2y)*P_r+2y*P_r'. Split the full series into m=1 and the existing originalTail(1). The existing arbitrary-order tailJet endpoint bounds pay the latter. The first mode uses the quadratic exponential estimate to obtain exp(x/2)*abs(primalJet(r,1,x))<=C_r*exp(-x) for x>=0. Genuine local termwise differentiation and equality on the open positive ray identify these jets with the actual derivatives; no finite-mode substitute or assumed derivative convergence is used.
+
+In the strip abs(Im(z))<=1/2, the elementary exponential formulas bound both abs(cos(z*t)) and abs(sin(z*t)) by exp(t/2). Apply the half-line fundamental theorem to H_r(t)=Phi^(r+1)(delta+t)*cos(z*t)+z*Phi^(r)(delta+t)*sin(z*t), for r=0 and r=2. The paid derivative, integrability and endpoint conditions give J_2+z^2*J_0=-Phi'(delta) and J_4+z^2*J_2=-Phi'''(delta). Thus z^2*(z^2*J_0+Phi'(delta))=Phi'''(delta)+J_4, including z=0. The right side has the uniform norm bound C=abs(Phi'''(delta))+integral_(t>0) exp(t/2)*abs(Phi''''(delta+t)).
+
+At delta every positive mode has y=2*pi*m^2>6, and P_1(y)=-y*(8y^2-30y+15)<0. True summability transfers this sign to Phi'(delta)<0. Put d=-Phi'(delta)>0. The canonical zeta presentation already has finite spectral-radius balls, so one can choose an actual gamma with norm greater than 1+C/d; its nontrivial-zero certificate also places it in the same strip. If J_0(gamma)=0, the exact identity would imply norm(gamma)^2*d<=C, a contradiction. This is a checked application of the existing theta jets, half-line calculus and canonical zero-data interfaces, with no new mathematical declaration or literature-priority claim. The Gaussian interpretation in Suzuki W360 uses the ordinary transform v_delta=2*cPhi*J_0, cPhi=pi^(1/4)/4. A nonzero spectral coordinate alone does not establish nondegeneracy or positivity of the full signed Weil pairing, the original Gamma form-domain, density, or RH.
+
 **Theorem 1.1 (Gaussian integrability under exponential tilts).**
 
 Lean statement: `D5/S3/Analytic/Fourier/XiThetaTransform.integrable_tilted_gaussian`
