@@ -124,7 +124,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.
 
 For every natural k, the vector sum over j in Fin 49 of denominator(j) scalar-multiplying orbit(k+48-j) is zero. Induction applies the linear map to the previous zero residual; the conclusion is not extrapolated from finite agreement.
 
-The supplied numerical certificate has SHA-256 ab0c5370648ec80cad7798774a9ce6ad7cf62b7d34f296441e3a897715f0701c. The transfer partition identities TR=RB, f=Rg and betaR=alpha are separate unproved interfaces here. This module does not identify orbit values with actual minimal dominating subset counts, check the initial numerator convolution or prove the whole original generating function.
+The supplied numerical certificate has SHA-256 ab0c5370648ec80cad7798774a9ce6ad7cf62b7d34f296441e3a897715f0701c. The total transfer partition identifies the full and quotient orbits through TR=RB, f=Rg and betaR=alpha. Evaluation against alpha then transports this vector annihilator to the actual subset counts; the complete initial numerator convolutions fix every remaining coefficient.
 
 ## References
 
