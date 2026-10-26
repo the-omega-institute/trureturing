@@ -7,12 +7,6 @@
    digest: Order nine obstructs the conjectured odd-order minimum of Hadamardness. -/
 
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.FinCases
 
 /-! The sign-matrix Hadamardness conjecture of Singh and Nechita,
 arXiv:2112.11123v1, equation `eq:Hada_measure` and the conjecture following its table.
@@ -45,10 +39,7 @@ def claim : Prop :=
 
 private lemma gram_symm {d : ℕ} (c : Matrix (Fin d) (Fin d) ℤ) (i j : Fin d) :
     (c * cᵀ) j i = (c * cᵀ) i j := by
-  simp only [mul_apply, transpose_apply]
-  apply Finset.sum_congr rfl
-  intro k _
-  exact mul_comm _ _
+  exact congrFun (congrFun (Matrix.transpose_mul c cᵀ) i) j
 
 private lemma hadamardness_sum {d : ℕ} (c : Matrix (Fin d) (Fin d) ℤ) :
     hadamardness c = ∑ i, ∑ j, (c * cᵀ) i j ^ 2 := by
