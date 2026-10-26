@@ -50,6 +50,8 @@ and $N$-integrality literature listed in the preregistration does not settle the
 exact fractional-index assertions in the passages read. Literature completeness
 is `ASSUMED-UNVERIFIED`.
 
+**Prior settlement.** Roberto Blanco Gómez, *Supercongruences modulo p^(3k) and integrality for factorial ratios with fractional arguments, with proofs of conjectures of P. Bala*, Zenodo, [DOI 10.5281/zenodo.23426707](https://doi.org/10.5281/zenodo.23426707), record dated 2026-10-16, Corollary 1.5, proves this integrality. The record precedes the preregistration in #18696, which therefore did not concern an open problem. The Lean result in this repository is an independent kernel-checked proof of that published theorem, not a first resolution.
+
 ## Route
 
 Legendre's formula converts factorial divisibility to inequalities between sums
