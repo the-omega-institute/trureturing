@@ -15,7 +15,8 @@ open scoped TensorProduct
 
 /- These dependent realizations preserve the original telescopes and actual outputs.
 Whole-family variation, role sensitivity, observational dependence and typed source
-selection remain unproved; these bridges are not Contract.Registration values. -/
+selection remain unproved; these bridges are not Contract.Registration values.
+Open audit: https://github.com/the-omega-institute/trureturing/issues/22171 -/
 
 namespace Ground
 structure Params where

@@ -1,18 +1,16 @@
+/- GID: D5/S3/VertexAlgebra/HalfFock/NormFourLowestGrades
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/HalfFock/NormFourLowestGrades
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Actual norm-four twisted zero modes and complete first half-oscillator grade. -/
+
 /-
-UNCOMPILED SOURCE PROPOSAL. No Lean or Lake invocation is authorized here.
-Immutable suppliers: trureturing 4cc14e5b3a3aebeebcaee4efb5e2cfbbe2eaa3fc.
-Planned module: D5.S3.VertexAlgebra.HalfFock.NormFourLowestGrades.
-
-The NormFourVirasoroVector import below is a PROPOSED dependency, not an
-accepted module at that commit. Its vector/quadraticState/chargedState
-definitions are those in the supplied closed ordinary proposal, SHA256
-e28bc251966a12534714fc3e4fa365d816a360d61cdaadc3d2467a34261e1923.
-Only these definitions, not its uncompiled Virasoro theorems, are used.
-
-Classical mathematics: twisted lattice construction (FLM; Dong--Nagatomo,
-math/9808088, section 3.2; Bakalov--Kac, math/0402315, section 4).
+Classical twisted lattice construction: Frenkel--Lepowsky--Meurman;
+Dong--Nagatomo, math/9808088, section 3.2;
+Bakalov--Kac, math/0402315, section 4.
 The existing suppliers retain their respective copyright and attribution.
-No novelty, Ising simplicity, fusion, multiplicity, or Monster claim.
 -/
 
 import D5.S3.VertexAlgebra.LatticeHalfFockCorrectedConformal
@@ -22,10 +20,11 @@ import D5.S3.VertexAlgebra.LatticeHalfFockGradedTrace
 import D5.S3.VertexAlgebra.Lattice.NormFourVirasoroVector
 import Batteries.Tactic.OpenPrivate
 
+/-! Actual norm-four zero modes on the twisted ground and complete first half-oscillator grade. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 4096
-set_option maxHeartbeats 4000000
 
 open private quadratic_field normal_pair_coeff shift_identity_coeff
   current_ground_zero_charge
@@ -34,6 +33,7 @@ open private charge_pairing from D5.S3.VertexAlgebra.LatticeSugawaraConformal
 
 namespace D5.S3.VertexAlgebra.HalfFock.NormFourLowestGrades
 
+open _root_.D5.S3.VertexAlgebra.Lattice
 open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration
 open LatticeSugawaraConformal LatticeActualAnnihilation
 open LatticeHalfFock LatticeHalfFockChargedCoefficients
@@ -64,16 +64,6 @@ private theorem half_creation_one (D : LatticeData) (a : Charge D) :
     LatticeHalfFockChargedCoefficients.exponential_constant,
     series_derivative_coeff, halfCreationCoeff, chargePolynomial] using h
 
-private theorem oscillator_vacuum (D : LatticeData) (a : Charge D) (e : ℤ) :
-    oscillatorCoefficient D a e 1 = halfCreationCoeff D a (e + chargeNorm D a) := by
-  have translated : halfTranslatedPolynomial D a (1 : Oscillator D) = 1 :=
-    map_one (MvPolynomial.eval₂AlgHom ℂ (halfTranslationVariable D a))
-  change (∑ᶠ n : ℕ, oscillatorTerm D a e 1 n) = _
-  rw [finsum_eq_single _ 0]
-  · simp [oscillatorTerm, translated]
-  · intro n hn
-    simp [oscillatorTerm, translated, Polynomial.coeff_one, hn]
-
 /- The degree-one translated polynomial has its entire support in {0,1}.
    This is a support proof, not a postulated coefficient readout. -/
 private theorem translated_X_support (D : LatticeData) (a : Charge D)
@@ -86,7 +76,8 @@ private theorem translated_X_support (D : LatticeData) (a : Charge D)
   have hn1 : n ≠ 1 := by intro h; exact outside (by simp [h])
   have hz : (halfTranslatedPolynomial D a (X (i, 0))).coeff n = 0 := by
     simp [halfTranslatedPolynomial, halfTranslationVariable, omega,
-      Polynomial.coeff_sub, Polynomial.coeff_C_mul, Polynomial.coeff_X, hn0, hn1]
+      Polynomial.coeff_sub, Polynomial.coeff_C_mul, Polynomial.coeff_C, Polynomial.coeff_X,
+      hn0, Ne.symm hn1]
   exact (Polynomial.mem_support_iff.mp hn) hz
 
 private theorem charged_X_tail (D : LatticeData) (a : Charge D)
@@ -100,21 +91,12 @@ private theorem charged_X_coefficient (D : LatticeData) (a : Charge D)
     oscillatorCoefficient D a (-4) (X (i, 0)) =
       X (i, 0) - (2 * (bilinear D a (unitCharge D i) : ℂ)) • chargePolynomial D a := by
   classical
-  -- Use the public recurrence after proving the actual finite tail. The
-  -- finite expansion is an equality of the production coefficient, not a
-  -- replacement coefficient definition.
-  have finiteExpansion : oscillatorCoefficient D a (-4) (X (i, 0)) =
-      ∑ n ∈ ({0, 1} : Finset ℕ), oscillatorTerm D a (-4) (X (i, 0)) n :=
-    finsum_eq_sum_of_support_subset _ (charged_X_tail D a i (-4))
-  calc
-    oscillatorCoefficient D a (-4) (X (i, 0)) =
-        ∑ n ∈ ({0, 1} : Finset ℕ), oscillatorTerm D a (-4) (X (i, 0)) n :=
-      finiteExpansion
-    _ = _ := by
-      rw [← finiteExpansion]
-      have h := oscillator_coefficient_X_mul D a (-4) (i, 0) (1 : Oscillator D)
-      simpa [oscillator_vacuum, chargeNorm, ha, omega, half_creation_zero,
-        half_creation_one, smul_smul, mul_comm] using h
+  change (∑ᶠ n : ℕ, oscillatorTerm D a (-4) (X (i, 0)) n) = _
+  rw [finsum_eq_sum_of_support_subset _ (charged_X_tail D a i (-4))]
+  simp [oscillatorTerm, halfTranslatedPolynomial, halfTranslationVariable,
+    chargeNorm, ha, omega, Polynomial.coeff_C_mul,
+    half_creation_zero, half_creation_one, smul_mul_assoc, mul_smul_comm, smul_smul]
+  module
 
 private theorem current_ground_nonneg (D : LatticeData) (i : Fin D.rank)
     (m : ℤ) (hm : 0 ≤ m) : current D i m 1 = 0 := by
@@ -145,13 +127,13 @@ private theorem normal_pair_X (D : LatticeData) (i j k : Fin D.rank) (m : ℤ) :
       if m = -1 then ((D.G j k : ℂ) / 2) • X (i, 0)
       else if m = 0 then ((D.G i k : ℂ) / 2) • X (j, 0) else 0 := by
   by_cases hneg : m < 0
-  · rw [normalPair, if_pos hneg, Module.End.mul_apply,
+  · rw [normalPair, ite_eq_left hneg, Module.End.mul_apply,
       current_X_nonneg D j k (-m-1) (by omega)]
     by_cases hm : m = -1
     · subst m
       simp [current, map_smul, LinearMap.mulLeft_apply]
     · simp [hm, show -m-1 ≠ 0 by omega, show m ≠ 0 by omega]
-  · rw [normalPair, if_neg hneg, Module.End.mul_apply,
+  · rw [normalPair, ite_eq_right hneg, Module.End.mul_apply,
       current_X_nonneg D i k m (by omega)]
     by_cases hm : m = 0
     · subst m
@@ -170,7 +152,7 @@ private theorem tensor_pair_X (D : LatticeData) (hu : IsUnit D.G.det)
       else if m = 0 then ((D.G i k : ℂ) / 2) • (X (j, 0) ⊗ₜ[ℂ] u) else 0 := by
   simp only [tensorPair, tensorEnd, TensorProduct.map_tmul, LinearMap.id_apply,
     normal_pair_X]
-  split_ifs <;> simp [TensorProduct.smul_tmul']
+  split_ifs <;> simp [← TensorProduct.smul_tmul']
 
 private theorem tensor_pair_X_tail (D : LatticeData) (hu : IsUnit D.G.det)
     (i j k : Fin D.rank) (u : ActualGround D hu) :
@@ -187,7 +169,7 @@ private theorem normal_ground_zero (D : LatticeData) (hu : IsUnit D.G.det)
     (singletonLinear D hu (i, 0) (tensorCurrentField D (ActualGround D hu) j)).coeff
       (-4) (1 ⊗ₜ[ℂ] u) = 0 := by
   rw [normal_pair_coeff]
-  rw [if_pos (by norm_num : (-4 : ℤ) % 2 = 0),
+  rw [ite_eq_left (by norm_num : (-4 : ℤ) % 2 = 0),
     show (-(-4 : ℤ)-4)/2 = 0 by norm_num]
   simp only [zero_sub]
   simp only [tensor_pair_ground, finsum_zero]
@@ -200,7 +182,7 @@ private theorem normal_X_zero (D : LatticeData) (hu : IsUnit D.G.det)
       ((D.G i k : ℂ) / 2) • (X (j, 0) ⊗ₜ[ℂ] u) := by
   classical
   rw [normal_pair_coeff]
-  rw [if_pos (by norm_num : (-4 : ℤ) % 2 = 0),
+  rw [ite_eq_left (by norm_num : (-4 : ℤ) % 2 = 0),
     show (-(-4 : ℤ)-4)/2 = 0 by norm_num]
   simp only [zero_sub]
   rw [finsum_eq_sum_of_support_subset _ (tensor_pair_X_tail D hu i j k u)]
@@ -212,7 +194,9 @@ private theorem quadratic_ground_zero (D : LatticeData) (hu : IsUnit D.G.det)
       (-4) (1 ⊗ₜ[ℂ] u) =
       ((D.G i j : ℂ) / 8) • (1 ⊗ₜ[ℂ] u) := by
   rw [quadratic_field]
-  simp [normal_ground_zero, shift_identity_coeff, div_eq_mul_inv, mul_comm]
+  simp only [map_add, map_smul, Pi.add_apply, Pi.smul_apply,
+    LinearMap.add_apply, LinearMap.smul_apply, normal_ground_zero, shift_identity_coeff]
+  simp [div_eq_mul_inv, mul_comm]
 
 private theorem quadratic_X_zero (D : LatticeData) (hu : IsUnit D.G.det)
     (i j k : Fin D.rank) (u : ActualGround D hu) :
@@ -222,13 +206,20 @@ private theorem quadratic_X_zero (D : LatticeData) (hu : IsUnit D.G.det)
       ((D.G i k : ℂ) / 2) • (X (j, 0) ⊗ₜ[ℂ] u) +
       ((D.G i j : ℂ) / 8) • (X (k, 0) ⊗ₜ[ℂ] u) := by
   rw [quadratic_field]
-  simp [normal_X_zero, shift_identity_coeff, div_eq_mul_inv, mul_comm]
+  simp only [map_add, map_smul, Pi.add_apply, Pi.smul_apply,
+    LinearMap.add_apply, LinearMap.smul_apply, normal_X_zero, shift_identity_coeff]
+  simp [div_eq_mul_inv, mul_comm]
 
 private theorem charge_square_expansion (D : LatticeData) (a : Charge D) :
     (chargePolynomial D a)^2 = ∑ i : Fin D.rank, ∑ j : Fin D.rank,
       ((a i : ℂ) * (a j : ℂ)) • (X (i, 0) * X (j, 0) : Oscillator D) := by
   simp only [pow_two, chargePolynomial, Finset.sum_mul, Finset.mul_sum,
-    smul_mul_assoc, mul_smul_comm, smul_smul]
+    smul_mul_assoc, mul_smul_comm, Finset.smul_sum, smul_smul]
+  apply Finset.sum_congr rfl
+  intro i hi
+  apply Finset.sum_congr rfl
+  intro j hj
+  rw [mul_comm (X (j, 0) : Oscillator D) (X (i, 0))]
 
 private theorem gram_contraction (D : LatticeData) (a : Charge D) :
     (∑ i : Fin D.rank, ∑ j : Fin D.rank,
@@ -257,7 +248,7 @@ private theorem gram_contraction_div (D : LatticeData) (a : Charge D) (c : ℂ) 
 private theorem coordinate_pairing (D : LatticeData) (a : Charge D) (k : Fin D.rank) :
     (∑ i : Fin D.rank, (a i : ℂ) * (D.G i k : ℂ)) =
       (bilinear D a (unitCharge D k) : ℂ) := by
-  simp [bilinear, unitCharge, Finset.mul_sum]
+  simp [bilinear, unitCharge]
 
 private theorem quadratic_state_expansion (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (v : ActualTensor D hu) :
@@ -282,6 +273,8 @@ private theorem quadratic_along_ground (D : LatticeData) (hu : IsUnit D.G.det)
     norm_num
   rw [scalar]
 
+set_option maxHeartbeats 4000000 in
+-- The finite double Gram contraction is normalized over all lattice coordinates.
 private theorem quadratic_along_X (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (ha : bilinear D a a = 4) (k : Fin D.rank)
     (u : ActualGround D hu) :
@@ -308,7 +301,7 @@ private theorem quadratic_along_X (D : LatticeData) (hu : IsUnit D.G.det)
           ring
         _ = _ := by rw [coordinate_pairing]; ring
     simp_rw [inner]
-    simp only [chargePolynomial, TensorProduct.sum_tmul, TensorProduct.smul_tmul',
+    simp only [chargePolynomial, TensorProduct.sum_tmul, ← TensorProduct.smul_tmul',
       Finset.smul_sum, smul_smul]
     apply Finset.sum_congr rfl
     intro i hi
@@ -331,8 +324,8 @@ private theorem quadratic_along_X (D : LatticeData) (hu : IsUnit D.G.det)
         ring
       _ = _ := first
   have third : (∑ i : Fin D.rank, ∑ j : Fin D.rank,
-      ((a i : ℂ) * (a j : ℂ) * ((D.G i j : ℂ) / 8)) • (X (k, 0) ⊗ₜ[ℂ] u)) =
-      (1 / 2 : ℂ) • (X (k, 0) ⊗ₜ[ℂ] u) := by
+      ((a i : ℂ) * (a j : ℂ) * ((D.G i j : ℂ) / 8)) • ((X (k, 0) : Oscillator D) ⊗ₜ[ℂ] u)) =
+      (1 / 2 : ℂ) • ((X (k, 0) : Oscillator D) ⊗ₜ[ℂ] u) := by
     simp only [← Finset.sum_smul]
     have scalar : (∑ i : Fin D.rank, ∑ j : Fin D.rank,
         (a i : ℂ) * (a j : ℂ) * ((D.G i j : ℂ) / 8)) = (1 / 2 : ℂ) := by
@@ -340,7 +333,7 @@ private theorem quadratic_along_X (D : LatticeData) (hu : IsUnit D.G.det)
       norm_num
     rw [scalar]
   rw [first, second, third]
-  simp only [TensorProduct.add_tmul, TensorProduct.smul_tmul']
+  simp only [TensorProduct.add_tmul, ← TensorProduct.smul_tmul']
   module
 
 private theorem charged_ground_zero (D : LatticeData) (hu : IsUnit D.G.det)
@@ -412,7 +405,7 @@ theorem zeroMode_X (D : LatticeData) (hu : IsUnit D.G.det)
           groundAction D hu a u) := by
   rw [zeroMode_expansion, quadratic_along_X D hu a ha,
     charged_X_zero D hu a ha]
-  simp only [TensorProduct.add_tmul, TensorProduct.smul_tmul', smul_add, smul_smul]
+  simp only [TensorProduct.add_tmul, ← TensorProduct.smul_tmul', smul_add, smul_smul]
   module
 
 /- Complete actual-grade identification. The only weight-one monomials are
@@ -424,7 +417,7 @@ private theorem oddWeight_one_iff (D : LatticeData) (d : OddMonomial D) :
   · intro hd
     have hexists : ∃ x : Index D, d x ≠ 0 := by
       by_contra h
-      push_neg at h
+      push Not at h
       have hz : d = 0 := Finsupp.ext h
       simp [hz, oddWeight] at hd
     obtain ⟨x, hx⟩ := hexists
@@ -432,9 +425,10 @@ private theorem oddWeight_one_iff (D : LatticeData) (d : OddMonomial D) :
     have hb := oddFiber_support_bounds D 1 ⟨d, hd⟩ x hxmem
     have hxmode : x.2 = 0 := by dsimp [omega] at hb; omega
     have he := oddFiber_exponent_bound D 1 ⟨d, hd⟩ x
+    change d x ≤ 1 at he
     have hxexp : d x = 1 := by omega
     have total : (∑ y ∈ d.support, d y * omega D y) = 1 := by
-      simpa only [oddWeight, Finsupp.weight_apply, Finsupp.sum, nsmul_eq_mul] using hd
+      simpa only [oddWeight, Finsupp.weight_apply, Finsupp.sum, smul_eq_mul] using hd
     have distinguished : d x * omega D x = 1 := by simp [hxexp, omega, hxmode]
     have erased : (∑ y ∈ d.support.erase x, d y * omega D y) = 0 := by
       have h := Finset.sum_erase_add d.support (fun y => d y * omega D y) hxmem
@@ -444,20 +438,21 @@ private theorem oddWeight_one_iff (D : LatticeData) (d : OddMonomial D) :
       by_cases hys : y ∈ d.support
       · have hye : y ∈ d.support.erase x := Finset.mem_erase.mpr ⟨hy, hys⟩
         have hle : d y * omega D y ≤ ∑ z ∈ d.support.erase x, d z * omega D z :=
-          Finset.single_le_sum (fun z hz => Nat.zero_le _) hye
+          Finset.single_le_sum (f := fun z : Index D => d z * omega D z)
+            (fun z hz => Nat.zero_le _) hye
         rw [erased] at hle
         have hm : d y * omega D y = 0 := Nat.eq_zero_of_le_zero hle
         exact (Nat.mul_eq_zero.mp hm).resolve_right (by simp [omega])
       · exact Finsupp.notMem_support_iff.mp hys
-    refine ⟨x.1, ?_⟩
     have hxprod : x = (x.1, 0) := Prod.ext rfl hxmode
-    apply Finsupp.ext
-    intro y
-    by_cases hy : y = x
-    · subst y
-      simp [hxexp, hxprod]
-    · rw [other y hy, Finsupp.single_apply]
-      simp [show (x.1, 0) ≠ y by simpa [hxprod] using Ne.symm hy]
+    have hsingle : d = Finsupp.single x 1 := by
+      apply Finsupp.ext
+      intro y
+      by_cases hy : y = x
+      · subst y
+        simp only [Finsupp.single_eq_same, hxexp]
+      · rw [other y hy, Finsupp.single_eq_of_ne hy]
+    exact ⟨x.1, hsingle.trans (congrArg (fun z : Index D => Finsupp.single z (1 : ℕ)) hxprod)⟩
   · rintro ⟨i, rfl⟩
     simp [oddWeight, Finsupp.weight_apply, Finsupp.sum, omega]
 
@@ -473,7 +468,7 @@ private theorem X_tmul_mem_actualGrade_one (D : LatticeData) (hu : IsUnit D.G.de
   simp only [actualGrade, LinearMap.mem_ker, LinearMap.sub_apply,
     LinearMap.smul_apply, LinearMap.id_apply]
   simp [actualTensorL0, tensorL, tensorEnd, TensorProduct.map_tmul,
-    oscillator, TensorProduct.smul_tmul']
+    oscillator, ← TensorProduct.smul_tmul']
 
 /-- Equality with the COMPLETE actual eigengrade, not a selected subspace.
     The reverse inclusion uses the original tensor L0; the forward inclusion
@@ -498,7 +493,7 @@ private theorem P_tmul_mem_actualGrade_one (D : LatticeData) (hu : IsUnit D.G.de
     (a : Charge D) (u : ActualGround D hu) :
     chargePolynomial D a ⊗ₜ[ℂ] u ∈ actualGrade D hu 1 := by
   classical
-  simp only [chargePolynomial, TensorProduct.sum_tmul, TensorProduct.smul_tmul']
+  simp only [chargePolynomial, TensorProduct.sum_tmul, ← TensorProduct.smul_tmul']
   apply Submodule.sum_mem
   intro i hi
   exact (actualGrade D hu 1).smul_mem _ (X_tmul_mem_actualGrade_one D hu i u)
@@ -542,10 +537,12 @@ private theorem zeroMode_X_expanded (D : LatticeData) (hu : IsUnit D.G.det)
       ((s * (bilinear D a (unitCharge D i) : ℂ)) / 16) •
         (chargePolynomial D a ⊗ₜ[ℂ] groundAction D hu a u) := by
   rw [zeroMode_X D hu a ha]
-  simp only [TensorProduct.add_tmul, TensorProduct.sub_tmul, TensorProduct.smul_tmul',
+  simp only [TensorProduct.add_tmul, TensorProduct.sub_tmul, ← TensorProduct.smul_tmul',
     smul_sub, smul_smul]
   module
 
+set_option maxHeartbeats 4000000 in
+-- The four coordinate sums are normalized before applying the norm-four identity.
 /-- The norm-four contraction on the actual charge direction, used for the
     iterated zero-mode computation. This is where P^2 = 4P enters. -/
 private theorem zeroMode_P (D : LatticeData) (hu : IsUnit D.G.det)
@@ -558,7 +555,7 @@ private theorem zeroMode_P (D : LatticeData) (hu : IsUnit D.G.det)
   have hp (v : ActualGround D hu) :
       (∑ i : Fin D.rank, (a i : ℂ) • (X (i, 0) ⊗ₜ[ℂ] v)) =
         chargePolynomial D a ⊗ₜ[ℂ] v := by
-    simp only [chargePolynomial, TensorProduct.sum_tmul, TensorProduct.smul_tmul']
+    simp only [chargePolynomial, TensorProduct.sum_tmul, ← TensorProduct.smul_tmul']
   have hb : (∑ i : Fin D.rank,
       (a i : ℂ) * (bilinear D a (unitCharge D i) : ℂ)) = (4 : ℂ) := by
     rw [charge_pairing_complex, ha]
@@ -615,8 +612,10 @@ private theorem zeroMode_P (D : LatticeData) (hu : IsUnit D.G.det)
    X_i⊗Uu, P_a⊗Uu. This does not introduce a four-dimensional model:
    these tensors may be dependent or zero. The polynomial identity below
    is proved by repeated application of the actual coefficient formulas.
-   Its RHS keeps the exact s^2-1 factor, so `module` needs no spectral
+   Its RHS keeps the exact s ^ 2-1 factor, so `module` needs no spectral
    assumptions or hidden use of an eigenbasis. -/
+set_option maxHeartbeats 4000000 in
+-- Repeated action expands the cubic on the four actual tensor expressions.
 private theorem polynomial_X_identity (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ)
     (i : Fin D.rank) (u : ActualGround D hu) :
@@ -624,7 +623,7 @@ private theorem polynomial_X_identity (D : LatticeData) (hu : IsUnit D.G.det)
       (zeroMode D hu a s - (1 / 16 : ℂ) • (1 : Module.End ℂ (ActualTensor D hu))) *
       (zeroMode D hu a s - (1 / 2 : ℂ) • (1 : Module.End ℂ (ActualTensor D hu))))
         (X (i, 0) ⊗ₜ[ℂ] u) =
-      ((s^2 - 1) / 32768) •
+      ((s ^ 2 - 1) / 32768) •
         ((-15 : ℂ) • (X (i, 0) ⊗ₜ[ℂ] u) +
           (114 * (bilinear D a (unitCharge D i) : ℂ)) •
             (chargePolynomial D a ⊗ₜ[ℂ] u) +
@@ -638,7 +637,7 @@ private theorem polynomial_X_identity (D : LatticeData) (hu : IsUnit D.G.det)
   module
 
 private theorem polynomial_X (D : LatticeData) (hu : IsUnit D.G.det)
-    (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ) (hs : s^2 = 1)
+    (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1)
     (i : Fin D.rank) (u : ActualGround D hu) :
     (zeroMode D hu a s *
       (zeroMode D hu a s - (1 / 16 : ℂ) • (1 : Module.End ℂ (ActualTensor D hu))) *
@@ -649,8 +648,8 @@ private theorem polynomial_X (D : LatticeData) (hu : IsUnit D.G.det)
 /-- The actual norm-four polynomial vanishes on EVERY vector of the COMPLETE
     actual odd grade one. The complete-grade equality above is essential to
     this proof; the kernel argument includes all finite linear combinations. -/
-theorem zeroMode_polynomial_actualGrade_one (D : LatticeData) (hu : IsUnit D.G.det)
-    (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ) (hs : s^2 = 1)
+private theorem zeroMode_polynomial_actualGrade_one (D : LatticeData) (hu : IsUnit D.G.det)
+    (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1)
     (v : ActualTensor D hu) (hv : v ∈ actualGrade D hu 1) :
     (zeroMode D hu a s *
       (zeroMode D hu a s - (1 / 16 : ℂ) • (1 : Module.End ℂ (ActualTensor D hu))) *
@@ -666,7 +665,7 @@ theorem zeroMode_polynomial_actualGrade_one (D : LatticeData) (hu : IsUnit D.G.d
   exact span_le hv
 
 /-- Preservation is proved in the genuine original L0 eigengrade. -/
-theorem zeroMode_preserves_actualGrade_one (D : LatticeData) (hu : IsUnit D.G.det)
+private theorem zeroMode_preserves_actualGrade_one (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ)
     (v : ActualTensor D hu) (hv : v ∈ actualGrade D hu 1) :
     zeroMode D hu a s v ∈ actualGrade D hu 1 := by
@@ -695,7 +694,7 @@ def actualGradeOneZeroMode (D : LatticeData) (hu : IsUnit D.G.det)
 
 /-- Endomorphism form of L(L-1/16)(L-1/2)=0 on the actual grade. -/
 theorem actualGradeOneZeroMode_polynomial (D : LatticeData) (hu : IsUnit D.G.det)
-    (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ) (hs : s^2 = 1) :
+    (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) :
     actualGradeOneZeroMode D hu a ha s *
       (actualGradeOneZeroMode D hu a ha s -
         (1 / 16 : ℂ) • (1 : Module.End ℂ (actualGrade D hu 1))) *
