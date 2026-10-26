@@ -7,6 +7,7 @@
    digest: Exact Boolean coverage descends after deleting two private original indices. -/
 
 import D5.S3.Combinatorics.Sequenceability.ZeroTotalCircleGood
+import Mathlib.LinearAlgebra.Span.Defs
 import Mathlib.LinearAlgebra.Span.Basic
 
 /-! Exact proper Boolean coverage descends under deletion of two private indices. -/
