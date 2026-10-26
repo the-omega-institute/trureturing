@@ -1,12 +1,10 @@
 /- GID: D5/S3/Combinatorics/Circle/SignedShortLargeExchange
    generality: I
-   mirror-B: none
+   mirror-B: D5/B/S3/Combinatorics/Circle/SignedShortLargeExchange
    mirror-E: none(waiver:audit-open-22063)
-   anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic,
-     D5/S3/Combinatorics/Circle/PositiveSmallReturnExchange]
+   anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic, D5/S3/Combinatorics/Circle/PositiveSmallReturnExchange, D5/S3/Combinatorics/Circle/ThreeLargePacketExchange]
    utility: none
-   digest: Constructive signed short-reserve selection and the shared physical
-     three-LARGE exchange consumer, conditional on actual signed reserves. -/
+   digest: Constructive signed short-reserve selection supplies the shared full physical three-LARGE exchange under actual signed reserve bounds. -/
 module
 public import D5.S3.Combinatorics.Circle.ThreeLargePacketExchange
 public import Mathlib.Data.List.Perm.Basic
@@ -294,7 +292,7 @@ theorem actualSource_threeLarge_signed_short_exchange_full
         (List.Sublist.refl T0)).append (List.nil_sublist [y])).append
         (List.Sublist.refl T1)).append (List.nil_sublist [zpen])).append
         (List.Sublist.refl T2)).append (List.nil_sublist [z])).append
-        (List.Sublist.refl E))
+        (List.Sublist.refl E)
   have hS : (smallWord T0 T1 T2 E).Nodup := hW.1.sublist hSW
   let tag : List (Fin k) → Prop := fun _ => True
   have hB : 0 ≤ C k - s k t q := by
