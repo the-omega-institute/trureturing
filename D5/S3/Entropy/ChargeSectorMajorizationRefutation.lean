@@ -70,7 +70,11 @@ private lemma full_spectra :
 
 private lemma global_majorizes : Majorizes (desc r) (desc s) := by
   rw [full_spectra.1, full_spectra.2]
-  sorry
+  constructor
+  · intro k hk hk4
+    norm_num at hk4
+    interval_cases k <;> norm_num
+  · norm_num
 
 private lemma sector_weights :
     sectorWeight r chargeData 0 = 3/5 ∧ sectorWeight s chargeData 0 = 3/5 := by
