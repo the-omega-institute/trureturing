@@ -22,7 +22,22 @@ Remove P0 from the actual positive list and first-cross the remainder at low-Sp.
 
 The selector uses only the existing PositiveSmallReturnExchange.first_crossing three times. Equal numerical values remain distinct occurrences; no subset-sum oracle or assumed return list is an input.
 
+**Theorem 1.2 (Signed selector consumed by the complete physical exchange).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/SignedShortLargeExchange.actualSource_threeLarge_signed_short_exchange_full`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/SignedShortLargeExchange.actualSource_threeLarge_signed_short_exchange_full` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the original actual-source gates, a Nodup SMALL word, positive and negative short reserve subpermutations P0 and N0, a positive bound M for every actual positive SMALL entry, and M-(C-s(q))-1 <= mass(P0)+mass(-s,N0), the signed selector supplies a physical R with mass in [low,low+C-s(q)] for every demanded positive low covered by the positive mass.
+
+The shared physical engine is consumed once with tag True. It returns the literal V=A++[p,n]++L++[z,q] and [x,y,zpen]++R, preserving the complete Inventory, every natural take bound, exact G/U/H balances, strict H and J descent, and endpoint in [s(q),C]. Negative labels in R are permitted. The theorem is conditional on these actual reserves and makes no universal availability, transport, deeper-tail, minimizer, or full C3.1 claim.
+
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Circle/SignedShortLargeExchange.actualSource_threeLarge_signed_short_exchange_full`
 - Truth anchor: `D5/S3/Combinatorics/Circle/SignedShortLargeExchange.signed_short_reserve_select`
 - Dependency: [D5/S3/Combinatorics/Circle/ThreeLargePacketExchange](ThreeLargePacketExchange.md)

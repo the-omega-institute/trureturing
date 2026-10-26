@@ -604,5 +604,97 @@ private theorem signed_three_large_exchange_engine
   · intro j
     simpa [mass,f,V,n] using inStrip_prefix hsV j
 
+set_option maxHeartbeats 1200000 in
+/-- The constructive signed selector consumed by the shared physical exchange.
+The reserve hypotheses are local to the actual SMALL word; no availability
+claim is made beyond them. -/
+theorem actualSource_threeLarge_signed_short_exchange_full
+    (k t : ℕ) (hk : 3 ≤ k) (p q y zpen z : Fin k)
+    (A T0 T1 T2 E : List (Fin k))
+    (P0 N0 : List (Fin k)) (M : ℤ)
+    (hpositive : 0 < s k t p)
+    (hnlarge : Q k ≤ |s k t (hit k 1 p)|)
+    (hexpand : N k < 3 * |s k t p|)
+    (hW : Legal k t (ThreeLargePacketExchange.oldWord p y zpen z A T0 T1 T2 E))
+    (hpunused : p ∉ ThreeLargePacketExchange.oldWord p y zpen z A T0 T1 T2 E)
+    (hnunused : hit k 1 p ∉ ThreeLargePacketExchange.oldWord p y zpen z A T0 T1 T2 E)
+    (hqunused : q ∉ ThreeLargePacketExchange.oldWord p y zpen z A T0 T1 T2 E)
+    (hsmall : ∀ i ∈ ThreeLargePacketExchange.smallWord T0 T1 T2 E,
+      |s k t i| < Q k)
+    (hylarge : Q k ≤ -s k t y)
+    (hzpenlarge : Q k ≤ -s k t zpen)
+    (hzlarge : Q k ≤ -s k t z)
+    (hzupper : -s k t z ≤ s k t q)
+    (hqlarge : Q k ≤ s k t q)
+    (hqsmaller : s k t q < s k t p)
+    (hS : (ThreeLargePacketExchange.smallWord T0 T1 T2 E).Nodup)
+    (hP0 : P0.Subperm
+      ((ThreeLargePacketExchange.smallWord T0 T1 T2 E).filter
+        (fun i => decide (0 < s k t i ∧ s k t i ≤ C k - s k t q + 1))))
+    (hN0 : N0.Subperm
+      ((ThreeLargePacketExchange.smallWord T0 T1 T2 E).filter
+        (fun i => decide (0 < -s k t i ∧ -s k t i ≤ C k - s k t q + 1))))
+    (hentry : ∀ i ∈ ThreeLargePacketExchange.smallWord T0 T1 T2 E,
+      0 < s k t i → s k t i ≤ M)
+    (hM : 0 < M)
+    (hresource : M - (C k - s k t q) - 1 ≤
+      mass (s k t) P0 + mass (fun i => -s k t i) N0) :
+    let n := hit k 1 p
+    let x := hit k 2 p
+    let W := ThreeLargePacketExchange.oldWord p y zpen z A T0 T1 T2 E
+    let S := ThreeLargePacketExchange.smallWord T0 T1 T2 E
+    let e0 := ThreeLargePacketExchange.prospective k t p q y zpen W
+    ∃ R L : List (Fin k), R.Subperm S ∧ (L ++ R).Perm S ∧
+      (∀ i ∈ R, |s k t i| < Q k) ∧
+      (let V := A ++ [p, n] ++ L ++ [z, q]
+       let returned := [x, y, zpen] ++ R
+       let e := e0 - mass (s k t) R
+       Legal k t V ∧ InStrip (s k t) (C k) 0 V ∧
+       (∀ j : ℕ, 0 ≤ mass (s k t) (V.take j) ∧
+         mass (s k t) (V.take j) ≤ C k) ∧
+       Inventory k t W V [p, n, q] returned ∧
+       G k t V = G k t W ∧ U V = U W + R.length ∧
+       H k t V + 3 ^ (s k t x).natAbs + 3 ^ (s k t y).natAbs +
+           3 ^ (s k t zpen).natAbs =
+         H k t W + 3 ^ (s k t p).natAbs + 3 ^ (s k t n).natAbs +
+           3 ^ (s k t q).natAbs ∧
+       H k t V < H k t W ∧ J k t V < J k t W ∧
+       mass (s k t) V = e ∧ s k t q ≤ e ∧ e ≤ C k) := by
+  classical
+  let tag : List (Fin k) → Prop := fun _ => True
+  have hB : 0 ≤ C k - s k t q := by
+    obtain ⟨hQ, hN, hC, hNpos, hNodd⟩ := source_geometry hk
+    change 2 ≤ Q k at hQ
+    change C k = 2 * Q k - 1 at hC
+    have hqcap : |s k t q| ≤ C k :=
+      abs_le.mpr (centered_bounds hNpos hNodd _)
+    have hqpos : 0 < s k t q := by
+      omega
+    rw [abs_of_pos hqpos] at hqcap
+    omega
+  have hselect : ∀ low : ℤ, 0 < low →
+      low ≤ mass (s k t)
+        (ThreeLargePacketExchange.positive t
+          (ThreeLargePacketExchange.smallWord T0 T1 T2 E)) →
+      ∃ R : List (Fin k),
+        R.Subperm (ThreeLargePacketExchange.smallWord T0 T1 T2 E) ∧
+        tag R ∧ low ≤ mass (s k t) R ∧
+          mass (s k t) R ≤ low + (C k - s k t q) := by
+    intro low hlow hsupply
+    obtain ⟨R, K, hperm, hRlo, hRhi⟩ :=
+      signed_short_reserve_select (s k t)
+        (ThreeLargePacketExchange.smallWord T0 T1 T2 E) P0 N0
+        (C k - s k t q) M low hS hB hM hP0 hN0 hentry hlow hsupply hresource
+    have hRK : R.Subperm (R ++ K) := by
+      simpa using (List.Subperm.append (List.Subperm.refl R)
+        (List.nil_subperm : ([] : List (Fin k)).Subperm K))
+    have hRsub : R.Subperm (ThreeLargePacketExchange.smallWord T0 T1 T2 E) :=
+      hRK.trans hperm.subperm
+    exact ⟨R, hRsub, trivial, hRlo, hRhi⟩
+  simpa [tag] using
+    (signed_three_large_exchange_engine k t tag hk p q y zpen z A T0 T1 T2 E
+      hpositive hnlarge hexpand hW hpunused hnunused hqunused hsmall hylarge
+      hzpenlarge hzlarge hzupper hqlarge hqsmaller trivial hselect)
+
 
 end D5.S3.Combinatorics.Circle.SignedShortLargeExchange
