@@ -13,12 +13,12 @@ open Matrix
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-universe u
+universe u_1
 
 namespace KetbraStar
 
 abbrev signature : Signature where
-  Params := Σ n : Type u, n → ℂ
+  Params := Σ n : Type u_1, n → ℂ
   State p := p.1 → ℂ
   Role := Unit
   finiteRole := inferInstance
@@ -27,32 +27,32 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
+def actual : Realization signature.{u_1} :=
   realize signature (fun _ p w => (ketbra p.2 w)ᴴ) (fun e => nomatch e)
 
-def rejected : Realization signature.{u} :=
+def rejected : Realization signature.{u_1} :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law r := ∀ {n : Type u} [Fintype n] [DecidableEq n] (v w : n → ℂ),
+  signature := signature.{u_1}
+  Law r := ∀ {n : Type u_1} [Fintype n] [DecidableEq n] (v w : n → ℂ),
     r.readout () ⟨n, v⟩ w = ketbra w v
 
-private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+private theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
   intro h
-  have hh := @h (ULift.{u} Unit) inferInstance inferInstance
+  have hh := @h (ULift.{u_1} Unit) inferInstance inferInstance
     (fun _ => 1) (fun _ => 1)
   have he := congrArg (fun M => M (ULift.up ()) (ULift.up ())) hh
   simp [rejected, realize, ketbra, Matrix.vecMulVec_apply] at he
 
-private theorem dependence : ObservationalDependence signature.{u} actual := by
+private theorem dependence : ObservationalDependence signature.{u_1} actual := by
   intro i
-  refine ⟨⟨ULift.{u} Unit, fun _ => 1⟩, (fun _ => 0), (fun _ => 1), ?_⟩
+  refine ⟨⟨ULift.{u_1} Unit, fun _ => 1⟩, (fun _ => 0), (fun _ => 1), ?_⟩
   intro h
   have he := congrArg (fun M => M (ULift.up ()) (ULift.up ())) h
   simp [actual, realize, ketbra, Matrix.vecMulVec_apply] at he
 
-def source_registration : Registration arena.{u} (type_of% (@ketbra_star.{u})) where
+def source_registration : Registration arena.{u_1} (type_of% (@ketbra_star.{u_1})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@ketbra_star, rejected, rejected_law⟩
@@ -66,7 +66,7 @@ def source_registration : Registration arena.{u} (type_of% (@ketbra_star.{u})) w
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@ketbra_star.{u}) (Realization signature.{u}) Unit Unit := {
+      (@ketbra_star.{u_1}) (Realization signature.{u_1}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility.KetbraStar.unit
   realizationName :=
     `Reg.D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility.KetbraStar.source_registration
@@ -100,14 +100,6 @@ def registration :
 
 #print axioms source_registration
 #print axioms registration
-
-run_cmd do
-  let env ← Lean.getEnv
-  for name in [`D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility.ketbra_star,
-      `D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality.trace_pairing_ext,
-      `Reg.D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility.KetbraStar.registration] do
-    if let some info := env.find? name then
-      Lean.logInfo m!"UNIVERSE_PARAMETERS {name}: {info.levelParams}"
 
 end KetbraStar
 end

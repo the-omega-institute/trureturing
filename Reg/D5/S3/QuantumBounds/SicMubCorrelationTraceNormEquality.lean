@@ -219,10 +219,10 @@ def registration :
 
 namespace TracePairingExt
 
-universe u
+universe u_1
 
 abbrev signature : Signature where
-  Params := Σ d : ℕ, Σ ι : Type u,
+  Params := Σ d : ℕ, Σ ι : Type u_1,
     Σ _ : ι → Matrix (Fin d) (Fin d) ℂ, Matrix (Fin d) (Fin d) ℂ
   State p := p.2.1
   Role := Unit
@@ -232,21 +232,21 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
+def actual : Realization signature.{u_1} :=
   realize signature (fun _ p i => (p.2.2.2 * p.2.2.1 i).trace) (fun e => nomatch e)
 
-def rejected : Realization signature.{u} :=
+def rejected : Realization signature.{u_1} :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law r := ∀ {d : ℕ} {ι : Type u} (P : ι → Matrix (Fin d) (Fin d) ℂ)
+  signature := signature.{u_1}
+  Law r := ∀ {d : ℕ} {ι : Type u_1} (P : ι → Matrix (Fin d) (Fin d) ℂ)
     (_hP : Submodule.span ℂ (Set.range P) = ⊤) {X Y : Matrix (Fin d) (Fin d) ℂ},
     (∀ i, r.readout () ⟨d, ι, P, X⟩ i = (Y * P i).trace) → X = Y
 
-private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+private theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
   intro h
-  let P : ULift.{u} (Matrix (Fin 1) (Fin 1) ℂ) → Matrix (Fin 1) (Fin 1) ℂ :=
+  let P : ULift.{u_1} (Matrix (Fin 1) (Fin 1) ℂ) → Matrix (Fin 1) (Fin 1) ℂ :=
     fun i => i.down
   have hP : Submodule.span ℂ (Set.range P) = ⊤ := by
     have hr : Set.range P = Set.univ := Set.range_eq_univ.mpr (fun X => ⟨ULift.up X, rfl⟩)
@@ -255,13 +255,13 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have he := congrArg (fun M => M 0 0) hh
   simp at he
 
-private theorem dependence : ObservationalDependence signature.{u} actual := by
+private theorem dependence : ObservationalDependence signature.{u_1} actual := by
   intro i
-  refine ⟨⟨1, ULift.{u} Bool, (fun i => if i.down then 1 else 0), 1⟩,
+  refine ⟨⟨1, ULift.{u_1} Bool, (fun i => if i.down then 1 else 0), 1⟩,
     ULift.up false, ULift.up true, ?_⟩
   norm_num [actual, realize]
 
-def source_registration : Registration arena.{u} (type_of% (@trace_pairing_ext.{u})) where
+def source_registration : Registration arena.{u_1} (type_of% (@trace_pairing_ext.{u_1})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@trace_pairing_ext, rejected, rejected_law⟩
@@ -275,7 +275,7 @@ def source_registration : Registration arena.{u} (type_of% (@trace_pairing_ext.{
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@trace_pairing_ext.{u}) (Realization signature.{u}) Unit Unit := {
+      (@trace_pairing_ext.{u_1}) (Realization signature.{u_1}) Unit Unit := {
   unitName := `Reg.D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality.TracePairingExt.unit
   realizationName :=
     `Reg.D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality.TracePairingExt.source_registration
