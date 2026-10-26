@@ -85,7 +85,19 @@ private lemma sector_weights :
 private lemma sector_spectra :
     sectorSpectrum r chargeData 0 = [1/2, 1/2] ∧
     sectorSpectrum s chargeData 0 = [7/12, 5/12] := by
-  sorry
+  constructor
+  · unfold sectorSpectrum
+    rw [sector_weights.1]
+    change ([(6/20 : ℝ) / (3/5), (6/20) / (3/5)].mergeSort
+      (fun a b => decide (b ≤ a))) = _
+    norm_num [List.mergeSort, List.merge, List.MergeSort.Internal.splitInTwo,
+      List.splitAt_eq]
+  · unfold sectorSpectrum
+    rw [sector_weights.2]
+    change ([(7/20 : ℝ) / (3/5), (5/20) / (3/5)].mergeSort
+      (fun a b => decide (b ≤ a))) = _
+    norm_num [List.mergeSort, List.merge, List.MergeSort.Internal.splitInTwo,
+      List.splitAt_eq]
 
 private lemma sector_failure :
     ¬ Majorizes (sectorSpectrum r chargeData 0) (sectorSpectrum s chargeData 0) := by
