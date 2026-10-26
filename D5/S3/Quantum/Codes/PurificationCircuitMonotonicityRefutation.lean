@@ -8,8 +8,11 @@
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.Fin.Basic
+import Mathlib.Data.Fintype.Basic
+import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Range
+import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
@@ -22,7 +25,7 @@ open scoped BigOperators
 namespace D5.S3.Quantum.Codes.PurificationCircuitMonotonicityRefutation
 
 /-- Computational-basis bitstrings on `n` qubits. -/
-def State (n : ℕ) := Fin n → Bool
+abbrev State (n : ℕ) := Fin n → Bool
 
 /-- A CNOT or Toffoli gate with the required distinct qubits. -/
 inductive Gate (n : ℕ) where
@@ -40,33 +43,36 @@ def gateSet {n : ℕ} : Gate n → Finset (Fin n)
 private def idealAction {n : ℕ} : Gate n → State n → State n
   | .cnot control target _, state =>
       Function.update state target (if state control then !state target else state target)
-  | .toffoli control₁ control₂ target _, state =>
+  | .toffoli control₁ control₂ target _ _ _, state =>
       Function.update state target
         (if state control₁ && state control₂ then !state target else state target)
 
-private def stateWeight {n : ℕ} (state : State n) : ℕ :=
-  (Finset.univ.filter (fun i => state i)).card
+private def stateWeight {n : ℕ} (state : State n) : ℕ := by
+  classical
+  exact (Finset.univ.filter (fun i => state i = true)).card
 
 private def idealRun {n : ℕ} : List (Gate n) → State n → State n
   | [], state => state
-  | gate :: circuit, state => idealRun circuit (idealAction gate state)
+  | gate :: circuit, state => idealAction gate (idealRun circuit state)
 
 /-- The ideal circuit clears all nominated output bits on all inputs of weight at most `e`. -/
 def IsPurification {n : ℕ} (circuit : List (Gate n)) (outputs : Finset (Fin n)) (e : ℕ) : Prop :=
   ∀ state, stateWeight state ≤ e → ∀ i ∈ outputs, idealRun circuit state i = false
 
-private def ProbabilityVector (n : ℕ) := State n → ℝ
+private abbrev ProbabilityVector (n : ℕ) := State n → ℝ
 
-private def initialDistribution {n : ℕ} (p0 : ℝ) : ProbabilityVector n :=
-  fun state => ∏ i : Fin n, if state i then p0 else 1 - p0
+private def initialDistribution {n : ℕ} (p0 : ℝ) : ProbabilityVector n := by
+  classical
+  exact fun state => Finset.prod Finset.univ (fun i => if state i then p0 else 1 - p0)
 
 private def depolarize {n : ℕ} (qubits : Finset (Fin n)) (p : ℝ)
-    (distribution : ProbabilityVector n) : ProbabilityVector n :=
-  fun state =>
+    (distribution : ProbabilityVector n) : ProbabilityVector n := by
+  classical
+  exact fun state =>
     (1 - p) * distribution state +
       p / (2 ^ qubits.card : ℝ) *
-        ∑ other in Finset.univ.filter (fun candidate =>
-          ∀ i, i ∉ qubits → candidate i = state i), distribution other
+        Finset.sum (Finset.univ.filter (fun candidate =>
+          ∀ i, i ∉ qubits → candidate i = state i)) (fun other => distribution other)
 
 private def idleNoise {n : ℕ} : List (Fin n) → ℝ → ProbabilityVector n → ProbabilityVector n
   | [], _, distribution => distribution
@@ -78,22 +84,28 @@ private def permute {n : ℕ} (gate : Gate n)
   fun state => distribution (idealAction gate state)
 
 private def noisyStep {n : ℕ} (pI pC pT : ℝ) (gate : Gate n)
-    (distribution : ProbabilityVector n) : ProbabilityVector n :=
-  let gateProbability := match gate with
-    | .cnot _ _ _ => pC
-    | .toffoli _ _ _ _ _ _ => pT
-  let afterGate := depolarize (gateSet gate) gateProbability (permute gate distribution)
-  idleNoise (Finset.univ \ gateSet gate).toList pI afterGate
+    (distribution : ProbabilityVector n) : ProbabilityVector n := by
+  classical
+  exact
+    let gateProbability := match gate with
+      | .cnot _ _ _ => pC
+      | .toffoli _ _ _ _ _ _ => pT
+    let afterGate := depolarize (gateSet gate) gateProbability (permute gate distribution)
+    idleNoise (Finset.univ \ gateSet gate).toList pI afterGate
 
-private def noisyRun {n : ℕ} (p0 pI pC pT : ℝ) : List (Gate n) → ProbabilityVector n
-  | [] => initialDistribution p0
-  | gate :: circuit => noisyStep pI pC pT gate (noisyRun p0 pI pC pT circuit)
+private def noisyRun {n : ℕ} (p0 pI pC pT : ℝ) (circuit : List (Gate n)) : ProbabilityVector n :=
+  circuit.foldl (fun distribution gate => noisyStep pI pC pT gate distribution)
+    (initialDistribution p0)
 
 /-- Expected fraction of nominated output bits that are true. -/
 def pOut {n : ℕ} (p0 pI pC pT : ℝ) (circuit : List (Gate n))
-    (outputs : Finset (Fin n)) : ℝ :=
-  (∑ i in outputs, ∑ state, if state i then noisyRun p0 pI pC pT circuit state else 0) /
-    (outputs.card : ℝ)
+    (outputs : Finset (Fin n)) : ℝ := by
+  classical
+  exact
+    Finset.sum outputs (fun i =>
+      Finset.sum Finset.univ (fun state =>
+        if state i then noisyRun p0 pI pC pT circuit state else 0)) /
+      (outputs.card : ℝ)
 
 private def admissible (p0 pI pC pT : ℝ) : Prop :=
   0 ≤ p0 ∧ p0 < 1 / 2 ∧ 0 ≤ pI ∧ pI ≤ 1 ∧ 0 ≤ pC ∧ pC ≤ 1 ∧ 0 ≤ pT ∧ pT ≤ 1
@@ -102,7 +114,7 @@ private def admissible (p0 pI pC pT : ℝ) : Prop :=
 def claim : Prop :=
   ∀ (n k e : ℕ) (circuit : List (Gate n)) (outputs : Finset (Fin n)),
     1 ≤ k → k ≤ n → outputs.card = k → IsPurification circuit outputs e →
-      (∑ j in Finset.range (e + 1), n.choose j) = 2 ^ (n - k) →
+      Finset.sum (Finset.range (e + 1)) (fun j => n.choose j) = 2 ^ (n - k) →
       (∀ p0 pI pC pT q0 qI qC qT : ℝ,
         admissible p0 pI pC pT → admissible q0 qI qC qT →
         p0 ≤ q0 → pI = qI → pC = qC → pT = qT →
@@ -129,8 +141,8 @@ private lemma witness_purification :
   sorry
 
 private lemma witness_space :
-    (∑ j in Finset.range (1 + 1), 3.choose j) = 2 ^ (3 - 1) := by
-  norm_num [Nat.choose]
+    Finset.sum (Finset.range (1 + 1)) (fun j => Nat.choose 3 j) = 2 ^ (3 - 1) := by
+  norm_num [Finset.sum_range_succ, Nat.choose]
 
 private lemma witness_evaluation_zero :
     pOut 0 0 (1 / 4) 0
