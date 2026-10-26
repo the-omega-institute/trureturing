@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SubcubicEndpointCompatibility
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/SpectralGraph/TreeEndpointMomentCertificates]
+   anchors: []
    utility: none
    digest: Finite moments classify rational endpoint compatibility of subcubic trees. -/
 import D5.S3.Combinatorics.SpectralGraph.TreeEndpointMomentCertificates
