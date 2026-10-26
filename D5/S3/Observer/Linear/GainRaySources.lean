@@ -18,6 +18,25 @@ def chartWorld (d : ℕ) (x r : ℝ) (hx : 0 < x) (hr : 0 < r)
     (β : Coeff d) (hβ : β ≠ 0) (δ : ℝ) : World d :=
   ⟨sourceChart x r, source_chart_legal x r hx hr, β, hβ, δ⟩
 
+/-- The full chart's pure-J factors at the original consecutive clocks. -/
+theorem source_chart_pureJ (x r : ℝ) (hx : 0 < x) (hr : 0 < r) (n : ℕ) :
+    Matrix.trace (acquisition (List.replicate n true) * sourceChart x r) =
+      if n % 2 = 0 then 1 else (x + r) / (1 + x * r) := by
+  have hj : action true ^ 2 = 1 := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [action, D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
+        pow_two, Matrix.mul_apply, Fin.sum_univ_two]
+  rw [acquisition_pure, pow_eq_pow_mod n hj]
+  rcases Nat.mod_two_eq_zero_or_one n with h | h
+  · simp only [h, pow_zero, one_mul, ite_true]
+    exact (source_chart_legal x r hx hr).2.2
+  · have hn : ¬n % 2 = 0 := by omega
+    simp only [h, pow_one, if_neg (by omega : ¬(1 : ℕ) = 0)]
+    simp [action, D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
+      sourceChart, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two, div_eq_mul_inv]
+    <;> ring
+
 structure UnnormalizedWorld (d : ℕ) where
   source : Mat
   positive : ∀ i j, 0 < source i j

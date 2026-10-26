@@ -30,6 +30,14 @@ theorem acquisition_append (w : List Bool) (a : Bool) :
   congr 1
   simp [Raw, D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word, action]
 
+/-- Repetition is the literal native trajectory of matrix powers. -/
+theorem acquisition_pure (a : Bool) (n : ℕ) :
+    acquisition (List.replicate n a) = action a ^ n := by
+  induction n with
+  | zero => simp [acquisition, Raw,
+      D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word]
+  | succ n ih => rw [List.replicate_succ', acquisition_append, ih, pow_succ']
+
 /-- A read at its original natural clock; the initial read uses the identity. -/
 def readAt {d : ℕ} (W : World d) (w : List Bool) (i : ℕ) : ℝ :=
   (gain d W.coeff).eval (i : ℝ) * Matrix.trace (acquisition (w.take i) * W.source) + W.drift
