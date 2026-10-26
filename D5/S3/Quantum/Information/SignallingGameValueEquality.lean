@@ -188,16 +188,41 @@ private lemma deterministic_quantum {m n : ℕ} (fa : Fin m → Fin n) (fb : Fin
       (fun v _ => by split_ifs <;> norm_num) (fun _ => by simp)
   · funext u v x y
     by_cases hu : u = fa x <;> by_cases hv : v = fb y <;>
-      simp only [quantumBox, deterministicBox, a, b, hu, hv, if_true, if_false,
+      simp only [quantumBox, deterministicBox, a, b, hu, hv, ite_true, ite_false,
         Complex.ofReal_one, Complex.ofReal_zero, diagonal_one, diagonal_zero,
-        one_kronecker_one, zero_kronecker, kronecker_zero, Matrix.mul_one, Matrix.mul_zero,
+        one_kronecker_one, zero_kronecker, kronecker_zero,
         trace_one, trace_zero, Fintype.card_prod, Fintype.card_fin, Nat.cast_one,
-        one_mul, mul_one, mul_zero, zero_mul, Complex.one_re, Complex.zero_re]
+        mul_one, mul_zero, Complex.one_re, Complex.zero_re]
 
 private lemma optimal_deterministic {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n) :
     ∃ (fa : Fin m → Fin n) (fb : Fin n → Fin m),
       winProb (deterministicBox fa fb) = 1 / (max m n : ℝ) := by
-  sorry
+  let fa : Fin m → Fin n := fun x => ⟨x.val % n, Nat.mod_lt _ (by omega)⟩
+  let fb : Fin n → Fin m := fun y => ⟨y.val % m, Nat.mod_lt _ (by omega)⟩
+  refine ⟨fa, fb, ?_⟩
+  have hmpos : (0 : ℝ) < m := by exact_mod_cast (show 0 < m by omega)
+  have hnpos : (0 : ℝ) < n := by exact_mod_cast (show 0 < n by omega)
+  unfold winProb
+  rcases le_total m n with hmn | hnm
+  · have hi (x : Fin m) : fb (fa x) = x := by
+      apply Fin.ext
+      dsimp only [fa, fb]
+      rw [Nat.mod_eq_of_lt (lt_of_lt_of_le x.isLt hmn), Nat.mod_eq_of_lt x.isLt]
+    have hs : (∑ x, ∑ y, deterministicBox fa fb y x x y) = (m : ℝ) := by
+      simp only [deterministicBox, ite_mul, one_mul, zero_mul]
+      simp [hi]
+    rw [hs, max_eq_right (show (m : ℝ) ≤ n by exact_mod_cast hmn)]
+    field_simp
+  · have hi (y : Fin n) : fa (fb y) = y := by
+      apply Fin.ext
+      dsimp only [fa, fb]
+      rw [Nat.mod_eq_of_lt (lt_of_lt_of_le y.isLt hnm), Nat.mod_eq_of_lt y.isLt]
+    have hs : (∑ x, ∑ y, deterministicBox fa fb y x x y) = (n : ℝ) := by
+      rw [sum_comm]
+      simp only [deterministicBox, mul_ite, mul_one, mul_zero]
+      simp [hi]
+    rw [hs, max_eq_left (show (n : ℝ) ≤ m by exact_mod_cast hnm)]
+    field_simp
 
 /-- The uniform signalling game has the same sharp value in all three strategy classes. -/
 theorem result : claim := by
