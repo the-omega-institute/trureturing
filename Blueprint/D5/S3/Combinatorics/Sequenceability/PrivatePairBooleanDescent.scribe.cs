@@ -5,6 +5,11 @@ internal sealed class PrivatePairBooleanDescentDocument : IScribeDocumentDefinit
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact Boolean coverage descent at a private pair",
         H("Exact Boolean coverage descent at a private pair"), Blocks(
+        Describe.Lean(DescribeId.Create("infix-separator"),
+            DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/PrivatePairBooleanDescent.infix_avoid_separator"),
+            H("An interval avoiding a separator lies on one side"),
+            StatementSource.FromAuthor(SeparatorStatement()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For arbitrary lists l,r,t and a coordinate a, if t is an interval of l ++ a::r and does not contain a, then t is an interval of l or r. This includes the empty interval. No decidable equality or duplicate-free premise is required."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("main-result"),
             DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/PrivatePairBooleanDescent.private_pair_exact_boolean_descent"),
             H("A private pair preserves every reduced permutation"),
@@ -38,6 +43,16 @@ internal sealed class PrivatePairBooleanDescentDocument : IScribeDocumentDefinit
             + "This exact application is compiled transiently rather than retained as a named binding theorem.")),
         Paragraph(Text("This is a repository-derived descent lemma. The unrestricted original connector, Good and adaptive merge statements remain open. "
             + "No forest constructor or literature-priority claim is part of this delivery.")) )));
+
+    private static Formula SeparatorStatement()
+    {
+        var x=Id("X");var a=Id("a");var t=Id("t");var l=Id("l");var r=Id("r");
+        return FormulaDsl.Disp(All("X",Call("Type"),All("a",x,All("t",Call("List",x),
+            All("l",Call("List",x),All("r",Call("List",x),Implies(
+                Both(Call("IsInfix",t,Call("append",l,Call("cons",a,r))),
+                    new Formula.Not(new Formula.Relation(a,FormulaRelationOperator.MemberOf,t))),
+                Either(Call("IsInfix",t,l),Call("IsInfix",t,r)))))))));
+    }
 
     private static Formula Statement()
     {
