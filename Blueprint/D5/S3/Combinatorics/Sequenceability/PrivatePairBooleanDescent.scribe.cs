@@ -8,7 +8,7 @@ internal sealed class PrivatePairBooleanDescentDocument : IScribeDocumentDefinit
         Describe.Lean(DescribeId.Create("main-result"),
             DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/PrivatePairBooleanDescent.private_pair_exact_boolean_descent"),
             H("A private pair preserves every reduced permutation"),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Statement()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("M is an integer submodule of functions on the unchanged original indices. "
                 + "Complete M E consists of all nonempty proper subsets of the finite original ground set E whose coefficient-one Boolean rows lie in M. "
                 + "Covers quantifies over every duplicate-free literal list enumerating E, with an actual nonempty proper contiguous interval. "
@@ -38,4 +38,45 @@ internal sealed class PrivatePairBooleanDescentDocument : IScribeDocumentDefinit
             + "This exact application is compiled transiently rather than retained as a named binding theorem.")),
         Paragraph(Text("This is a repository-derived descent lemma. The unrestricted original connector, Good and adaptive merge statements remain open. "
             + "No forest constructor or literature-priority claim is part of this delivery.")) )));
+
+    private static Formula Statement()
+    {
+        var x = Id("X"); var m = Id("M"); var e = Id("E"); var s = Id("S");
+        var u = Id("u"); var v = Id("v"); var b = Id("B");
+        var i = Id("i"); var j = Id("j"); var z = Id("z");
+        var y = Call("erase", Call("erase", e, u), v);
+        var l = Call("reducedSpan", m, y);
+        Formula Member(Formula a, Formula c) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, c);
+        Formula Single(Formula a) => Call("single", a, Num(1));
+        var privacy = All("B", Call("Finset", x), Implies(
+            Both(Call("Minimal", m, e, b), Either(Member(u, b), Member(v, b))), Equal(b, s)));
+        var premises = Conjunction(Call("Covers", m, e), Call("Minimal", m, e, s),
+            new Formula.Relation(Num(3), FormulaRelationOperator.LessThanOrEqual, Call("card", s)),
+            Member(u, s), Member(v, s), NotEqual(u, v), privacy);
+        var result = Conjunction(Call("Covers", m, y), Equal(Add(Call("card", y), Num(2)), Call("card", e)),
+            All("z", Call("Function", y, new Formula.Integers()),
+                Implies(Member(z, l), Member(Call("embed", y, z), m))),
+            All("B", Call("Finset", y), Implies(Both(Call("Nonempty", b), NotEqual(b, Call("univ"))),
+                Iff(Member(Call("row", b), l), Member(Call("row", Call("image", Call("val"), b)), m)))),
+            All("i", y, Equal(Call("embed", y, Single(i)), Single(Call("val", i)))),
+            All("i", y, All("j", y,
+                Equal(Call("embed", y, Subtract(Single(i), Single(j))),
+                    Subtract(Single(Call("val", i)), Single(Call("val", j)))))));
+        return FormulaDsl.Disp(All("X", Call("Type"), All("inst", Call("DecidableEq", x),
+            All("M", Call("Submodule", new Formula.Integers(), Call("Function", x, new Formula.Integers())),
+            All("E", Call("Finset", x), All("S", Call("Finset", x),
+            All("u", x, All("v", x, Implies(premises, result)))))))));
+    }
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Both(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula Either(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Or, b);
+    private static Formula Implies(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
+    private static Formula Conjunction(params Formula[] terms)
+    {
+        var result = terms[^1];
+        for (var i = terms.Length - 2; i >= 0; i--) result = Both(terms[i], result);
+        return result;
+    }
 }

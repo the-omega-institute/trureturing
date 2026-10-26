@@ -141,7 +141,7 @@ def source_registration : Registration arena.{u}
       exact nomatch e
   dependence := actual_dependence.{u}
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{u + 1, 0, 1, 0, 0, 0, u + 1, u, 0, 0, 0, 0}
     (@_root_.D5.S3.Combinatorics.Sequenceability.PrivatePairBooleanDescent.private_pair_exact_boolean_descent.{u})
     (Realization signature.{u}) Unit Unit where
   unitName := `D5.S3.Combinatorics.Sequenceability.PrivatePairBooleanDescent.private_pair_exact_boolean_descent.__information_unit
