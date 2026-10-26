@@ -320,7 +320,6 @@ theorem finiteGaussian_even_prefix_difference_norm {ι : Type*} [Fintype ι]
           physicalPolynomial (P (N + M) - P N) x := by
       apply setIntegral_congr_fun measurableSet_Ioi
       intro x hx
-      dsimp only
       simp only [physicalPolynomial_sub, hreal]
       ring
     _ = polynomialPair (P (N + M) - P N) (P (N + M) - P N) :=
@@ -351,7 +350,7 @@ theorem finiteGaussian_actual_remainder_norm {ι : Type*} [Fintype ι]
     (by norm_num)
   refine ⟨h.2.1, ?_⟩
   have hindex : Tendsto (fun M : ℕ => 2 * (N + M)) atTop atTop :=
-    tendsto_atTop_mono (fun M => by dsimp only; omega) tendsto_id
+    tendsto_atTop_mono (fun M => by change M ≤ 2 * (N + M); omega) tendsto_id
   have hl : Tendsto (fun M : ℕ => ∫ x in Ioi (0 : ℝ), x ^ (7 / 2 : ℝ) *
       (finiteGaussianPartialSum c site (2 * (N + M)) x -
         finiteGaussianPartialSum c site (2 * N) x) ^ 2) atTop
