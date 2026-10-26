@@ -274,7 +274,55 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/Nati
 
 The known horizon determines each row width. Decoding successively addresses every original row, without a supplied count certificate.
 
-**Theorem 1.23 (Physical acquisition of every original suffix row).**
+**Definition 1.23 (regs).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.regs`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.regs` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The table frame stores the current row, input stream, retained table, scratch and restriction history in seven explicit Boolean registers.
+
+**Theorem 1.24 (row_value).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.row_value`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.row_value` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Decoding the original recursively computed binary row gives the exact original pair of suffix counts.
+
+**Theorem 1.25 (pack_length).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.pack_length`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.pack_length` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A packed row with n bits has one header and two physical bits for each data bit.
+
+**Theorem 1.26 (exec_table).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.exec_table`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.exec_table` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The complete fixed table program starts with the explicit input, physically produces all packed rows in register zero, and uses at most 256 times the square of the horizon plus one stack instructions.
+
+**Theorem 1.27 (Physical acquisition of every original suffix row).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.native_binary_table`
 
@@ -296,17 +344,21 @@ The decoded output equals the original natural suffix table at every position. E
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.bodyEncoding`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.decodeTable`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.encoding`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.exec_table`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.initProgram`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.input`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.loadMask`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.mask`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.native_binary_table`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.pack`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.pack_length`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.program`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.read`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.records`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.regs`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.row`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.rowRegister`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.row_value`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.rows`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.save`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryTable.saveEncoding`
