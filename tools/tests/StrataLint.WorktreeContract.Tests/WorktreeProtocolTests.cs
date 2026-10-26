@@ -226,6 +226,29 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     }
 
     [Theory]
+    [InlineData("git_scope_rejects_operational_symbolic_ref_errors")]
+    [InlineData("git_scope_symbolic_ref_failure_retains_removal")]
+    [InlineData("git_scope_symbolic_ref_failure_fails_pool_inspection")]
+    [InlineData("git_scope_symbolic_ref_failure_stops_pool_claim")]
+    [InlineData("git_scope_symbolic_ref_failure_stops_pool_return")]
+    [InlineData("git_scope_symbolic_ref_failure_stops_commands")]
+    [InlineData("test_clean_detached_recovery")]
+    [InlineData("test_dirty_detached_recovery")]
+    public void GitScopeClassifiesSymbolicRefFailures(string probe)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
+                root, "ProtocolTests." + probe], root, TestBudgets.ProtocolProbeHangGuard, 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Theory]
     [InlineData("qualification_intentional_lock_metadata_races")]
     [InlineData("pool_revalidation_keeps_refusal_and_prior_eviction")]
     [InlineData("pool_removal_qualification_preserves_refusal_and_operational_failure")]
