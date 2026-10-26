@@ -92,7 +92,11 @@ theorem quantitative_g (a : Stage)
     have hμ : ((actualBirth hCH (eventRow hCH a)).measure (eta hCH a) n).map Erow =
         X.event.Q.measure r X.event.selected.treatment.label n := by
       apply map_setCongr_heq
-      simpa only [hr] using selected_measure hCH a n
+      have hh := selected_measure hCH a n
+      change HEq ((actualBirth hCH (eventRow hCH a)).measure (eta hCH a) n)
+        (X.event.Q.measure X.event.selected.treatment.row X.event.selected.treatment.label n) at hh
+      rw [hr] at hh
+      exact hh
     rw [← hμ, ← hmap n]
     apply VectorMeasure.ext
     intro A hA
@@ -103,8 +107,8 @@ theorem quantitative_g (a : Stage)
       VectorMeasure.map_apply _ p.continuous.measurable (Erow.continuous.measurable hA)]
     congr 1
     ext x
-    exact congrArg (fun y => y ∈ A) (local_projection hCH a r x)
-  have hn (n : ℕ) : ((s n).map E).totalVariation univ = 1 := by
+    exact eq_iff_iff.mp (congrArg (fun y => y ∈ A) (local_projection hCH a r x))
+  have hn (n : ℕ) : SignedMeasure.totalVariation ((s n).map E) univ = 1 := by
     have hv : ((s n).map E).variation = (s n).variation.map E :=
       E.toMeasurableEquiv.measurableEmbedding.variation_map
     rw [SignedMeasure.totalVariation_eq_variation, hv,
@@ -115,7 +119,8 @@ theorem quantitative_g (a : Stage)
       X.event.result.quantitativeClopen.isClopen.isClosed.measurableSet
   have hg := X.event.result.quantitative_g q ((s (column hCH a q)).map E)
     (hm (column hCH a q)) (hn (column hCH a q))
-  simpa only [he] using hg
+  rw [he (column hCH a q)] at hg
+  exact hg
 
 /-- Both value sets are infinite for every such signed sequence. In particular,
 this applies to every regular signed lift sequence, without any positivity. -/
