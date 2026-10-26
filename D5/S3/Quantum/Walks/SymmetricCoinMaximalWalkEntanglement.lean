@@ -14,7 +14,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open scoped BigOperators ComplexConjugate Classical
+open scoped BigOperators ComplexConjugate
 
 namespace D5.S3.Quantum.Walks.SymmetricCoinMaximalWalkEntanglement
 
@@ -64,6 +64,7 @@ def claim : Prop :=
     letI : NeZero p := ⟨by omega⟩
     geometricEntanglement (walkState p n c) ≤ geometricEntanglement (walkState p n cStar)
 
+open Classical in
 private lemma overlap_expansion {ι : Type*} [Fintype ι] (lam : ι → ℂ)
     (z : ι → Fin 2 → ℂ) : overlap lam z =
       ∑ k, lam k * conj (z k 1 * ∏ l ∈ Finset.univ.erase k, z l 0) := by
@@ -73,13 +74,13 @@ private lemma overlap_expansion {ι : Type*} [Fintype ι] (lam : ι → ℂ)
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro k hk
-  simp only [mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  simp only [mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   rw [mul_comm]
   congr 2
   unfold productState
   rw [← Finset.mul_prod_erase Finset.univ _ (Finset.mem_univ k)]
   apply congrArg₂ (· * ·)
-  · simp only [Function.update_self, if_true]
+  · simp only [Function.update_self, ite_true]
   · apply Finset.prod_congr rfl
     intro l hl
     rw [Function.update_of_ne (Finset.ne_of_mem_erase hl)]
@@ -103,7 +104,7 @@ private lemma overlap_bounded {ι : Type*} [Fintype ι] (lam : ι → ℂ) :
         unfold unitCoin at h
         rw [Fin.sum_univ_two] at h
         simpa only [Fintype.sum_bool, Bool.cond_false, Bool.cond_true,
-          Bool.false_eq_true, if_false, if_true,
+          Bool.false_eq_true, ite_false, ite_true,
           Complex.normSq_eq_norm_sq, add_comm] using h
       _ = 1 := Finset.prod_const_one
   have h := D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.cs_sq
@@ -374,13 +375,14 @@ private lemma two_factor_max (a b r s : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b)
     have hcs := D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.cs_sq
       ![(u 0 : ℂ), (u 1 : ℂ)]
       ![((a * w 0 + b * s * w 1 : ℝ) : ℂ), ((b * r * w 0 : ℝ) : ℂ)]
-    simp only [dotProduct, Fin.sum_univ_two, Pi.star_apply, Complex.star_def,
+    unfold dotProduct at hcs
+    simp only [Fin.sum_univ_two, Pi.star_apply, Complex.star_def,
       Matrix.cons_val_zero, Matrix.cons_val_one, Complex.conj_ofReal,
       ← Complex.ofReal_mul, ← Complex.ofReal_add, Complex.norm_real, Real.norm_eq_abs,
       sq_abs, hu, one_mul] at hcs
     calc
       _ ≤ (a * w 0 + b * s * w 1) ^ 2 + (b * r * w 0) ^ 2 := by
-        convert hcs using 1 <;> ring
+        convert hcs using 1; ring
       _ = (a ^ 2 + b ^ 2 * r ^ 2) * w 0 ^ 2 +
           2 * (a * b * s) * w 0 * w 1 + b ^ 2 * s ^ 2 * w 1 ^ 2 := by ring
       _ ≤ t := hbound w hw
@@ -396,7 +398,6 @@ private lemma two_factor_max (a b r s : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b)
     refine ⟨![1, 0], ?_, by norm_num, ?_⟩
     · intro k; fin_cases k <;> norm_num
     · simp only [Matrix.cons_val_zero, Matrix.cons_val_one]
-      change (a * 1 * y 0 + b * s * 1 * y 1 + b * r * 0 * y 0) ^ 2 = t
       have : a * y 0 + b * s * y 1 = 0 := hvz
       nlinarith
   · have hk : 0 < Real.sqrt t := Real.sqrt_pos.2 (lt_of_le_of_ne ht (Ne.symm hz))
@@ -413,6 +414,7 @@ private lemma two_factor_max (a b r s : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b)
         dsimp [v]; ring
       rw [he, hvs, div_pow, hks, pow_two, mul_div_cancel_right₀ _ hz]
 
+open Classical in
 private lemma pair_slice {ι : Type*} [Fintype ι]
     (a : ι → ℝ) (z : ι → Fin 2 → ℝ) (i j : ι) (hij : i ≠ j) :
     let s := (Finset.univ.erase i).erase j
@@ -557,7 +559,7 @@ private lemma pair_balancing {ι : Type*} [Fintype ι] (lam μ : ι → ℂ) (i 
 
 private lemma walk_succ (p n : ℕ) (c : Fin 2 → ℂ) :
     walkState p (n + 1) c = hadamardStep p (walkState p n c) := by
-  unfold walkState
+  delta walkState
   rw [Function.iterate_succ_apply']
 
 private lemma walk_linearity (p n : ℕ) (c : Fin 2 → ℂ) (j : Fin 2 × ZMod p) :
@@ -566,10 +568,10 @@ private lemma walk_linearity (p n : ℕ) (c : Fin 2 → ℂ) (j : Fin 2 × ZMod 
   induction n generalizing j with
   | zero =>
       rcases j with ⟨b, x⟩
-      fin_cases b <;> by_cases hx : x = 0 <;> simp [walkState, hx]
+      fin_cases b <;> by_cases hx : x = 0 <;> delta walkState <;> simp [hx]
   | succ n ih =>
       rw [walk_succ, walk_succ, walk_succ]
-      unfold hadamardStep
+      delta hadamardStep
       split_ifs <;> rw [ih, ih] <;> ring
 
 private lemma walk_reflection (p n : ℕ) :
@@ -583,9 +585,10 @@ private lemma walk_reflection (p n : ℕ) :
   | zero =>
       constructor
       · rintro ⟨b, x⟩
-        fin_cases b <;> by_cases hx : x = 0 <;> simp [walkState, hx]
+        fin_cases b <;> by_cases hx : x = 0 <;> delta walkState <;> simp [hx]
       · intro x
-        simp [walkState, neg_eq_zero]
+        delta walkState
+        simp [neg_eq_zero]
   | succ n ih =>
       have hu (j : Fin 2 × ZMod p) : (walkState p n ![1, 0] j).im = 0 := (ih.1 j).1
       have hw (j : Fin 2 × ZMod p) : (walkState p n ![0, 1] j).im = 0 := (ih.1 j).2
@@ -600,18 +603,20 @@ private lemma walk_reflection (p n : ℕ) :
         · linear_combination (-1 : ℂ) ^ n * h1 - walkState p n ![0, 1] (0, -x) * he
       constructor
       · intro j
-        constructor <;> simp only [walk_succ, hadamardStep] <;> split_ifs <;>
+        constructor <;> rw [walk_succ] <;> delta hadamardStep <;> split_ifs <;>
           simp only [Complex.div_ofReal_im, Complex.add_im, Complex.sub_im, hu, hw,
             add_zero, sub_self, zero_div]
       · intro x
         have hn : -x - 1 = -(x + 1) := by ring
         constructor
-        · simp only [walk_succ, hadamardStep, ite_true,
-            ite_eq_right (by decide : (1 : Fin 2) ≠ 0)]
+        · simp only [walk_succ]
+          delta hadamardStep
+          rw [if_neg (show (1 : Fin 2) ≠ 0 from Ne.symm Fin.zero_ne_one), if_pos rfl]
           rw [hn, (hback (x + 1)).1, (ih.2 (x + 1)).1, pow_succ]
           ring
-        · simp only [walk_succ, hadamardStep, ite_true,
-            ite_eq_right (by decide : (1 : Fin 2) ≠ 0)]
+        · simp only [walk_succ]
+          delta hadamardStep
+          rw [if_neg (show (1 : Fin 2) ≠ 0 from Ne.symm Fin.zero_ne_one), if_pos rfl]
           rw [hn, (hback (x + 1)).2, (ih.2 (x + 1)).2, pow_succ]
           ring
 
@@ -689,7 +694,10 @@ private lemma pair_average_le (p : ℕ) [NeZero p] (lam μ : Fin 2 × ZMod p →
     if (if k.1 = 0 then k.2 else -k.2) ∈ s then μ k else lam k
   have hind (s : Finset (ZMod p)) : gMax (f s) ≤ gMax lam := by
     induction s using Finset.induction_on with
-    | empty => exact le_of_eq (congrArg gMax (by funext k; simp only [f, Finset.notMem_empty, ite_false]))
+    | empty =>
+        exact le_of_eq (congrArg gMax (by
+          funext k
+          simp only [f, Finset.notMem_empty, ite_false]))
     | @insert x s hxs ih =>
         have hs0 : f s (0, x) = lam (0, x) := by simp [f, hxs]
         have hs1 : f s (1, -x) = lam (1, -x) := by simp [f, hxs]
@@ -722,7 +730,7 @@ private lemma pair_average_le (p : ℕ) [NeZero p] (lam μ : Fin 2 × ZMod p →
               sq_nonneg (Complex.normSq (lam (0, x)) - Complex.normSq (lam (1, -x)))]
         exact hp.trans ih
   have hall := hind Finset.univ
-  simpa only [f, Finset.mem_univ, if_true] using hall
+  simpa only [f, Finset.mem_univ, ite_true] using hall
 
 theorem result : claim := by
   intro p hp n c hc
@@ -732,3 +740,39 @@ theorem result : claim := by
   exact sub_le_sub_left h 1
 
 end D5.S3.Quantum.Walks.SymmetricCoinMaximalWalkEntanglement
+
+open Lean in
+run_cmd do
+  let env ← getEnv
+  let ns := `D5.S3.Quantum.Walks.SymmetricCoinMaximalWalkEntanglement
+  let owned : List (Name × ConstantInfo) := env.constants.toList.filter fun entry => ns.isPrefixOf (privateToUserName entry.1)
+  let mut pending := #[Name.str ns "result", Name.str ns "claim"]
+  let mut seen : NameSet := {}
+  while !pending.isEmpty do
+    let n := pending.back!
+    pending := pending.pop
+    if !seen.contains n then
+      seen := seen.insert n
+      if let some ci := env.find? n then
+        for d in (ConstantInfo.getUsedConstantsAsSet ci).toArray do
+          if ns.isPrefixOf (privateToUserName d) then pending := pending.push d
+  let rows := owned.toArray.map fun (entry : Name × ConstantInfo) =>
+    let n := entry.1
+    let deps := ConstantInfo.getUsedConstantsAsSet entry.2
+    let consumers := owned.filterMap fun (item : Name × ConstantInfo) =>
+      if (ConstantInfo.getUsedConstantsAsSet item.2).contains n then
+        some (privateToUserName item.1).toString else none
+    Json.mkObj [
+      ("name", toJson (privateToUserName n).toString),
+      ("kernel_name", toJson n.toString),
+      ("public", toJson (!isPrivateName n)),
+      ("in_closure", toJson (seen.contains n)),
+      ("dependencies", toJson (owned.filterMap fun (item : Name × ConstantInfo) =>
+        if deps.contains item.1 then some (privateToUserName item.1).toString else none)),
+      ("consumers", toJson consumers)]
+  let ar ← collectAxioms (Name.str ns "result")
+  let ac ← collectAxioms (Name.str ns "claim")
+  logInfo m!"WALK_AUDIT {(Json.mkObj [
+    ("declarations", toJson rows),
+    ("axioms_result", toJson (ar.map Name.toString)),
+    ("axioms_claim", toJson (ac.map Name.toString))]).compress}"
