@@ -21,7 +21,6 @@ ab0c5370648ec80cad7798774a9ce6ad7cf62b7d34f296441e3a897715f0701c.
 
 set_option autoImplicit false
 set_option maxRecDepth 100000
-set_option maxHeartbeats 20000000
 
 namespace D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridQuotient
 
@@ -171,6 +170,7 @@ def step : Vector →ₗ[ℤ] Vector where
   map_smul' a v := funext fun i => rowEval_smul (rows i) a v
 
 /-- The complete finite recurrence certificate; every coordinate is checked. -/
+set_option maxHeartbeats 20000000 in
 theorem power_steps : ∀ k : Fin 48, ∀ i : Fin 59,
     step (values k.castSucc) i = values k.succ i := by
   decide
@@ -179,6 +179,7 @@ theorem power_steps : ∀ k : Fin 48, ∀ i : Fin 59,
 theorem initial_vector : values 0 = terminal := by rfl
 
 /-- The exact integer denominator annihilates all 59 terminal-vector coordinates. -/
+set_option maxHeartbeats 20000000 in
 theorem finite_annihilator : ∀ i : Fin 59,
     (∑ j : Fin 49, denominator j * values ⟨48 - j.val, by omega⟩ i) = 0 := by
   decide
@@ -193,6 +194,7 @@ private theorem orbit_values (k : Fin 49) : orbit k.val = values k := by
   | zero => exact initial_vector.symm
   | succ k ih =>
     change step (orbit k.val) = values k.succ
+    change orbit k.val = values k.castSucc at ih
     rw [ih]
     exact funext (power_steps k)
 
