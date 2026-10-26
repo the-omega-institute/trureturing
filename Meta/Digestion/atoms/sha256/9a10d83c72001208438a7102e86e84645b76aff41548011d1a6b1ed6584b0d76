@@ -1,0 +1,67 @@
+**Lemma 7.1 (P6).** For $m\ge5$, the case $b=m-1$ is impossible.
+
+**Proof.** Lemma 6.1 gives $a\ge m-1=b$. Thus exponents $0,\ldots,b-1$ are at the unchanged original clocks $0,\ldots,b-1$. Their $b-1=m-2$ sign changes force $m-2$ distinct real roots of $R$, all strictly before clock $b-1$.
+
+At most one additional degree remains, because $\deg R\le m-1$. Nonreal roots of a real polynomial occur in conjugate pairs, so there is no degree available for a nonreal root. All roots of $R$ are real.
+
+There is no root anywhere in $[b-1,2m]$. All retained values on that interval are nonzero and of sign $\epsilon$. A root in an interval between consecutive retained clocks would require a positive even total root multiplicity to preserve the endpoint signs, costing at least two degrees in addition to the $m-2$ roots already forced before $b-1$. Only one degree is available. This also covers the omitted-clock interval between $a$ and $a+2$. The endpoints $b-1,2m$ are themselves retained and nonzero.
+
+Consequently $L(t)=\log|R(t)|$ is well defined on this entire interval. Factoring the nonconstant real-rooted polynomial, with distinct roots $z$ and multiplicities $n_z$, gives
+
+$$
+L''(t)=-\sum_z\frac{n_z}{(t-z)^2}<0.
+\tag{7.1}
+$$
+
+Thus $L$ is strictly concave. The argument permits any additional real root outside this interval.
+
+First suppose $a\ge b+1$. The original clocks $a-1,a,a+2$ carry exponents $a-1,a,a$. The recurrence has common sign $\epsilon$ from exponent $b-1$ onward, so $|u_a|>|u_{a-1}|$. Hence
+
+$$
+L(a)<L(a-1),\qquad L(a+2)=L(a).
+\tag{7.2}
+$$
+
+The consecutive secant slopes on $[a-1,a]$ and $[a,a+2]$ are respectively negative and zero. This is impossible for a concave function, whose consecutive secant slopes are nonincreasing.
+
+It remains to consider $a=b$. The three retained original clocks
+
+$$
+b+2,\quad b+4,\quad b+6
+\tag{7.3}
+$$
+
+carry exponents $b,b+2,b+4$. They are acquired because $b+6=m+5\le2m$ when $m\ge5$. Let $H=|A|\phi^b$, $c=B\phi^{-b}/H\in(0,1)$, and $q=\phi^{-4}\in(0,1)$. By (5.3), the three denominator magnitudes are
+
+$$
+H(1-c),\qquad H\phi^2(1-cq),\qquad
+H\phi^4(1-cq^2).
+\tag{7.4}
+$$
+
+Their exact difference is
+
+$$
+\begin{aligned}
+|u_{b+2}|^2-|u_bu_{b+4}|
+&=H^2\phi^4\left((1-cq)^2-(1-c)(1-cq^2)\right)\\
+&=H^2\phi^4c(1-q)^2>0.
+\end{aligned}
+\tag{7.5}
+$$
+
+Taking reciprocals and using (1.9) gives
+
+$$
+|R(b+4)|^2<|R(b+2)R(b+6)|,
+$$
+
+and therefore
+
+$$
+L(b+4)<\frac{L(b+2)+L(b+6)}2.
+\tag{7.6}
+$$
+
+This contradicts concavity at the equally spaced original clocks (7.3). Both cases for $a$ are impossible. Together with Lemma 4.2, this proves $2\le b\le m-2$. $\square$
+
