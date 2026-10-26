@@ -39,7 +39,7 @@ open LatticeActualVertexAlgebra LatticePositiveEnergy
 open RootlessLowGrades MvPolynomial
 open NormFourVirasoroVector InvolutionRootlessLowGrades LatticeInvolution
 open LatticeActualProductKernel LatticeActualGeneratorLocality
-open scoped BigOperators VertexOperator
+open scoped BigOperators VertexOperator Classical
 noncomputable section
 
 open private bilinear_unit norm_sub from D5.S3.VertexAlgebra.LatticeFiniteNegativeGeneration
