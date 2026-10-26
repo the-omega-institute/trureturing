@@ -32,5 +32,23 @@ internal sealed class SignedBallHistoryCaptureDocument : IScribeDocumentDefiniti
             Paragraph(Text(
                 "The resulting implication is exactly SignedBallReduction.SignedClopenCollision for the actual cone point. Simultaneous signed-measure reflection is a proved supplier, with the same reflected supports. "
                 + "An arbitrary signed pushforward need not preserve its variation mass. RawHistory does not assume such an isometry or final-test convergence. "
-                + "The historical calculation is an application of the cited suppliers. It does not construct a CH history, establish AH, or settle Problem 8.2.")))));
+                + "The historical calculation is an application of the cited suppliers. It does not construct a CH history, establish AH, or settle Problem 8.2.")),
+            Describe.Lean(DescribeId.Create("exists-original-birth"),
+                DeclarationHandle.Create("D5/S3/Topology/InverseLimit/SignedBallHistoryCapture.exists_original_birth"),
+                H("Capture the entire original signed birth"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every proper-stage profinite diagram F, cone C, and RawHistory H, take a regular signed sequence s on C.pt of variation mass one and positive Jordan mass at least one half. Fix a birth b and support family W at b, whose final pullbacks carry s, and assume the b pushforwards still have mass one. There are one original birth theta greater than b and one whole label d such that for every natural n the original H.nu(theta,d,n) is exactly s(n) pushed to theta, and the original H.V(theta,n) pullback carries s(n). The proof body is unchanged; the helper is public for the actual endpoint consumer."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("projected-lift"),
+                DeclarationHandle.Create("D5/S3/Topology/InverseLimit/SignedBallHistoryCapture.projected_lift"),
+                H("Every eligible projection is the original norm-one lift"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For any such F, C and H, regular norm-one signed sequence s, original birth theta and label d, suppose every theta pushforward is H.nu(theta,d,n), with variation carried by the original theta support pullbacks. At every eligible proper c greater than max(theta,d), the c pushforwards have regular variation and mass exactly one, push along the literal bond back to those original birth measures at every n, and are variation-null off the pulled-back original theta supports. The proof body is unchanged."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("signed-clopen-collision"),
+                DeclarationHandle.Create("D5/S3/Topology/InverseLimit/SignedBallHistoryCapture.signed_clopen_collision"),
+                H("Historical F gives the signed collision criterion"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every F with nonempty profinite objects, actual limit cone C, all diagram maps surjective, and RawHistory H, SignedClopenCollision holds on C.pt. Thus every admissible normalized regular signed sequence on disjoint nonempty clopen supports and every continuous ultrafilter extension of its signed functionals admit two distinct free ultrafilters with the same extension value. The ultrafilters are chosen before the final continuous scalar test, and each test factors through its own eligible proper stage. The publicization retains the unchanged proof and permits the actual CH endpoint theorem to consume it."))),
+                DescribeRole.Theorem))));
 }

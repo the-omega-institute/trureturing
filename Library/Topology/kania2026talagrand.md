@@ -5,7 +5,7 @@ year: 2026
 title: Talagrand compacta, 2DCP, and pointwise quotients
 doi: null
 url: https://arxiv.org/abs/2607.06808v2
-claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers give common-stage clopen reflection, regular signed-measure lifting, eventual point-pair equality, uniform strong-dual norm separation and the full signed-ball analytic reduction to normalized signed clopen collision, with an actual coherent CH-only ordinal history now constructed; the literal final omega-one Prefix, every proper Data/Laws, concrete RawHistory, uniform same-eta whole-birth reindexing and proper-stage A-G composition are now constructed; the joint signed endpoints and full Problem 8.2 conclusion remain open.
+claim: Problem 8.2 asks whether Theorem A can be obtained from CH in place of diamond(S); actual_CH_Talagrand_scheme_and_endpoints now has a successful targeted Lean 4.35 build proving the full literal scheme, A-G, finite disjoint images and closed copies, no 2DCP, full signed dual-ball exclusion, Grothendieck convergence and point-space consequences on exactly one actual finalPrefix; independent review, scoped axiom inspection and required CI are delivery obligations, and no official acceptance is claimed.
 strata_touched:
   - D5/S3/Topology/InverseLimit
   - D5/S3/Topology/Measures
@@ -892,13 +892,47 @@ one sixth and the infinite exact zero evaluations for every complete signed
 norm-one lift sequence. No positivity restriction is added. The private
 `actual_scheme` composition in `TalagrandTopologicalConsequences` combines
 these statements on the same finalPrefix, retaining the initial cube and
-literal onto restrictions. Its targeted Lean build has passed. The joint
-Banach-space endpoints and public total theorem remain separate obligations.
-Problem 8.2 is not declared solved; FullCHLeanSolved and officialSolved remain
-zero.
+literal onto restrictions. Its targeted Lean build has passed. The subsequent public total theorem below
+consumes this composition together with the geometric and analytic endpoints.
 
 The information audit remains unfinished under
 https://github.com/the-omega-institute/trureturing/issues/21750. The delivered
 Reg modules check exact source reconstruction, including the public transport
 and proper-slice statements; this does not constitute a declared_validated
 four-slot registration.
+
+## Combined CH theorem
+
+`TalagrandTopologicalConsequences.actual_CH_Talagrand_scheme_and_endpoints`
+has passed a targeted Lean 4.35 build. Its only input is continuum = aleph-one.
+Every conclusion concerns exactly `(SignedOrdinalRealization.finalPrefix
+hCH).LimitSpace`, with its actual inherited topology. The proof consumes the
+complete original scheme, closed-cover Boolean insertion at successors,
+proper-limit and final-thread equations, and the G coordinate-cylinder
+identity. Every proper stage is compact Hausdorff, zero-dimensional and
+metrizable. No diamond, completed-history, capture, Hball or no-sequence
+hypothesis remains.
+
+The same space has finite continuous disjoint images of closed domains;
+therefore every two disjoint homeomorphic closed subspaces are finite,
+stronger than Theorem A's nonmetrizable closed-copy prohibition. It has no
+nonempty compact binary-copy tower, with no nesting or infinitude restriction.
+The actual signed endpoint theorem gives full regular signed oscillation,
+excludes all continuous StoneCech injections into the entire real signed dual
+unit ball, and proves convergence under arbitrary continuous bidual tests for
+every weak-star convergent dual sequence, without an input norm bound.
+Every convergent point sequence is eventually its actual limit. Evaluation
+and the omega-cube quotient yield point-space no-beta, infinitude, failure of
+first countability and nonmetrizability.
+
+This is the combined formal target of the original Problem 8.2, preregistered
+in https://github.com/the-omega-institute/trureturing/issues/22300 before its
+first combined compilation. The Problems dossier
+`kania-kakol-2026-problem-8-2-ch-talagrand` records the exact statement bridge
+and bounded literature search. The scoped report and canonical Scribe emission have passed: 66 modules and
+2,138 declarations, with only propext, Classical.choice and Quot.sound.
+Independent review and required CI remain delivery obligations at this checkpoint.
+Official acceptance and worldwide uniqueness are not claimed; officialSolved
+remains zero. Problem 8.1 and the full Cp metrizable quotient problem remain
+outside this theorem. The information registration remains unfinished under
+issue 21750; exact-source Reg reconstruction is not declared_validated.

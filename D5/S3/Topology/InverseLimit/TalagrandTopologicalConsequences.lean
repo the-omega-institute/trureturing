@@ -4,12 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Evaluation transfers whole signed dual-ball exclusion to the same point space. -/
+   digest: CH gives the literal Talagrand scheme and all signed and topological endpoints on one space. -/
 
 import D5.S3.Topology.Measures.SignedBallReduction
 import D5.S3.Topology.InverseLimit.SignedOrdinalRealization
 import D5.S3.Topology.InverseLimit.SignedOrdinalReindexedLaws
 import D5.S3.Topology.InverseLimit.SignedOrdinalActualG
+import D5.S3.Topology.InverseLimit.SignedBallHistoryEndpoints
+import D5.S3.Topology.InverseLimit.ContinuousFiniteImageTail
 import Mathlib.Topology.Category.Profinite.Basic
 import Mathlib.Topology.Metrizable.Basic
 import Mathlib.Topology.Sequences
@@ -20,7 +22,8 @@ import Mathlib.Topology.Sequences
 Evaluation embeds a profinite space continuously into the weak-star closed
 unit ball of its real continuous dual. Thus exclusion of continuous injections
 of beta-N from that whole ball implies the same exclusion for the point space.
-The dual-ball exclusion remains a hypothesis; no CH construction is asserted.
+The final theorem constructs the literal Talagrand scheme under CH alone and
+proves the signed dual-ball, Grothendieck and closed-copy endpoints on that same space.
 -/
 
 set_option autoImplicit false
@@ -326,5 +329,144 @@ private theorem actual_successor_split
       refine ⟨z', ?_⟩
       funext i
       exact R.coordinates.insert z' i
+
+/-- Under CH, the literal constructed Talagrand scheme has the full original
+signed and topological endpoints on one space, with no extra prediction axiom. -/
+theorem actual_CH_Talagrand_scheme_and_endpoints
+    (hCH : Cardinal.continuum.{0} = ℵ₁) :
+    let H := SignedOrdinalRealization.finalPrefix hCH
+    let K := H.LimitSpace
+    let W := SignedOrdinalActualReindex.actualBirth hCH
+    let ρ := SignedOrdinalActualReindex.eventRow hCH
+    let η := SignedOrdinalActualReindex.eta hCH
+    let Z := SignedOrdinalActualG.clopen hCH
+    let k := SignedOrdinalActualG.column hCH
+    (
+    -- The old stages and both kinds of maps are literal coordinate restrictions.
+    ((∀ c : Label, IsClosed (H.carrier c) ∧ (H.carrier c).Nonempty) ∧
+      (∀ (a b : Label) (hab : a ≤ b) (x : H.Space b),
+        (H.map a b hab x).1 = restrict hab x.1) ∧
+      (∀ (a b : Label) (hab : a ≤ b), Surjective (H.map a b hab)) ∧
+      (∀ (a : Label) (x : K),
+        (H.projection a x).1 = restrict (le_of_lt a.2) x.1)) ∧
+    -- Every initial carrier, including omega, is the original complete cube.
+    ((∀ (c : Label), c.1 ≤ ω → H.carrier c = univ) ∧
+      Surjective (fun x : K => restrict
+        (show (ω : Ordinal.{0}) ≤ ω₁ from Ordinal.omega0_lt_omega_one.le) x.1)) ∧
+    -- The one actual final set, its topology, cone, and all onto projections.
+    (IsClosed H.limitCarrier ∧ Nonempty K ∧ CompactSpace K ∧ T2Space K ∧
+      ZeroDimensionalSpace K ∧
+      Nonempty (CategoryTheory.Limits.IsLimit H.cone) ∧
+      ∀ a : Label, Surjective (H.projection a)) ∧
+    -- Complete whole enumerations; B and V stay those of the original run.
+    (∀ θ : Stage, Surjective (W θ).U ∧ Surjective (W θ).B ∧
+      Surjective (W θ).nu ∧
+      (W θ).B = (SignedOrdinalRealization.wholeBirth hCH θ).B ∧
+      (W θ).V = (SignedOrdinalRealization.wholeBirth hCH θ).V ∧
+      ∀ (δ : Label) (n : ℕ),
+        Measure.Regular ((W θ).measure δ n).toJordanDecomposition.posPart ∧
+        Measure.Regular ((W θ).measure δ n).toJordanDecomposition.negPart ∧
+        ((W θ).measure δ n).totalVariation univ = 1 ∧
+        ((W θ).measure δ n).totalVariation ((W θ).V.clopen n : Set _)ᶜ = 0 ∧
+        (1 / 2 : ℝ≥0∞) ≤ ((W θ).measure δ n).toJordanDecomposition.posPart univ) ∧
+    -- Every proper cutoff retains the full original Laws, including every-choice
+    -- signed F and its regular reference of totalVariation.real univ <= 1.
+    -- Its nu reads THIS W, at every Label and every natural index.
+    (∀ (l : Ordinal.{0}) (hl : l < ω₁),
+      let P := SignedOrdinalRealization.properSlice hCH hl
+      let D := SignedOrdinalReindexedLaws.properData hCH hl
+      (∀ c : Coord l, P.carrier c = H.carrier ⟨c.1, c.2.trans hl⟩) ∧
+      P.Laws D ∧
+      ∀ (c : Coord l) (hc : ω ≤ c.1) (δ : Label) (n : ℕ),
+        (D.nu c δ n).1 = (W ⟨⟨c.1, c.2.trans hl⟩, hc⟩).measure δ n) ∧
+    -- The SAME eta is used for launch and all-signed-lift G on literal succ(a).
+    -- Z and k are fixed before the arbitrary complete lift sequence is supplied.
+    (∀ a : Stage, ∃ hra : ρ a ≤ a, η a ≤ a.1 ∧
+      (∀ n : ℕ,
+        ((W a).V.clopen n : Set (H.Space a.1)) =
+          H.map (ρ a).1 a.1 hra ⁻¹'
+            (((W (ρ a)).U (η a)).clopen n : Set _)) ∧
+      StrictMono (k a) ∧
+      ∀ (s : ℕ → SignedMeasure (H.Space (nextStage a).1))
+        (hmap : ∀ n, (s n).map
+          (H.map (ρ a).1 (nextStage a).1
+            (hra.trans (Order.le_succ (ord a)))) =
+          (W (ρ a)).measure (η a) n)
+        (hmass : ∀ n, (s n).totalVariation univ = 1),
+        (∀ q : ℕ,
+          (q % 2 = 0 → (1 : ℝ) / 6 < s (k a q) (Z a)) ∧
+          (q % 2 ≠ 0 → s (k a q) (Z a) = 0)) ∧
+        ({n | (1 : ℝ) / 6 ≤ s n (Z a)}.Infinite ∧
+          {n | s n (Z a) = 0}.Infinite)) ∧
+    -- Every row and every NEW whole label is actually treated cofinally.
+    (∀ (θ : Stage) (δ base : Label),
+      ∃ a : Stage, base < a.1 ∧ θ < a ∧ ρ a = θ ∧ η a = δ)
+    ) ∧
+    (∀ a : Label, CompactSpace (H.Space a) ∧ T2Space (H.Space a) ∧
+      ZeroDimensionalSpace (H.Space a) ∧ MetrizableSpace (H.Space a)) ∧
+    -- Literal geometric equations, including the successor closed-cover split.
+    (∀ a : Stage, ∃ Y Z : Set (H.Space a.1),
+      IsClosed Y ∧ IsClosed Z ∧ Y ∪ Z = univ ∧
+      H.carrier (nextStage a).1 =
+        Set.range (fun z : splitCarrier Y Z =>
+          fun i : Coord (Order.succ (ord a)) =>
+            if hi : i.1 < ord a then z.1.1.1 ⟨i.1, hi⟩ else z.1.2)) ∧
+    (∀ a : Stage, (Z a : Set (H.Space (nextStage a).1)) =
+      {x | x.1 (SignedSuccessorCoordinates.last (ord a)) = true}) ∧
+    (∀ l : Label, ω < l.1 → Order.IsSuccLimit l.1 →
+      H.carrier l = (SignedOrdinalRealization.properSlice hCH l.2).limitCarrier) ∧
+    H.limitCarrier = {x | ∀ a : Label,
+      restrict (le_of_lt a.2) x ∈ H.carrier a} ∧
+    -- Full normalized regular signed oscillation on the very same final K.
+    (∀ (t : ℕ → SignedMeasure K) (V : ℕ → Set K),
+      (∀ n, (t n).totalVariation.Regular) →
+      (∀ n, IsClopen (V n) ∧ (V n).Nonempty) →
+      Pairwise (fun i n => Disjoint (V i) (V n)) →
+      (∀ n, (t n).totalVariation.real univ = 1) →
+      (∀ n, (1 / 2 : ℝ) ≤ (t n).toJordanDecomposition.posPart.real univ) →
+      (∀ n, (t n).totalVariation (V n)ᶜ = 0) →
+      ∃ B : Set K, IsClopen B ∧
+        {n | (1 / 6 : ℝ) ≤ t n B}.Infinite ∧ {n | t n B = 0}.Infinite) ∧
+    -- Theorem A, with the stronger finite-image and finite-copy conclusions.
+    (∀ (A : Set K), IsClosed A → ∀ (f : A → K), Continuous f →
+      Disjoint A (range f) → (range f).Finite) ∧
+    (∀ (A B : Set K), IsClosed A → (A ≃ₜ B) → Disjoint A B →
+      A.Finite ∧ B.Finite) ∧
+    (∀ (T : ℕ → Set K), (∀ n, IsCompact (T n)) →
+      (∀ n, (T n).Nonempty) →
+      (∀ n, ∃ A B : Set K, A ⊆ T n ∧ B ⊆ T n ∧ Disjoint A B ∧
+        Nonempty (T (n + 1) ≃ₜ A) ∧ Nonempty (T (n + 1) ≃ₜ B)) → False) ∧
+    -- The whole real signed dual unit ball, arbitrary Grothendieck tests,
+    -- and convergence to the actual point limit; no supplier hypotheses.
+    (∀ h : StoneCech ℕ → WeakDual ℝ C(K, ℝ), Continuous h →
+      (∀ p, ‖WeakDual.toStrongDual (h p)‖ ≤ 1) → ¬ Injective h) ∧
+    (∀ (F : ℕ → StrongDual ℝ C(K, ℝ)) (FInf : StrongDual ℝ C(K, ℝ)),
+      (∀ g, Tendsto (fun n => F n g) atTop (𝓝 (FInf g))) →
+      ∀ Φ : StrongDual ℝ (StrongDual ℝ C(K, ℝ)),
+        Tendsto (fun n => Φ (F n)) atTop (𝓝 (Φ FInf))) ∧
+    (∀ (x : ℕ → K) (p : K), Tendsto x atTop (𝓝 p) →
+      ∀ᶠ n in atTop, x n = p) ∧
+    (∀ f : StoneCech ℕ → K, Continuous f → ¬ Injective f) ∧
+    Infinite K ∧ ¬ FirstCountableTopology K ∧ ¬ MetrizableSpace K := by
+  have hscheme := actual_scheme hCH
+  have hstages : ∀ a : Label,
+      CompactSpace ((SignedOrdinalRealization.finalPrefix hCH).Space a) ∧
+      T2Space ((SignedOrdinalRealization.finalPrefix hCH).Space a) ∧
+      ZeroDimensionalSpace ((SignedOrdinalRealization.finalPrefix hCH).Space a) ∧
+      MetrizableSpace ((SignedOrdinalRealization.finalPrefix hCH).Space a) := by
+    intro a
+    letI : Countable (Coord a.1) :=
+      (Cardinal.countable_Iio_of_lt_omega_one a.2).to_subtype
+    exact ⟨inferInstance, inferInstance, inferInstance, inferInstance⟩
+  have hsplit := actual_successor_split hCH
+  rcases actual_geometric_limits hCH with ⟨hcylinder, hlimit, hthreads⟩
+  rcases SignedBallHistoryEndpoints.actual_signed_ball_history_endpoints hCH with
+    ⟨hO, hball, hgroth, hseq⟩
+  rcases ContinuousFiniteImageTail.actual_CH_finite_image_and_copy_obstructions hCH with
+    ⟨hFI, hAH, hno2DCP⟩
+  rcases actual_point_space_consequences hCH hball hseq with
+    ⟨hpoint, hinfinite, hfirst, hmetric⟩
+  exact ⟨hscheme, hstages, hsplit, hcylinder, hlimit, hthreads, hO, hFI, hAH, hno2DCP,
+    hball, hgroth, hseq, hpoint, hinfinite, hfirst, hmetric⟩
 
 end D5.S3.Topology.InverseLimit.TalagrandTopologicalConsequences
