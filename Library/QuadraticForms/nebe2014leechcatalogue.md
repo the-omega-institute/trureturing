@@ -41,3 +41,11 @@ attribution supplies no real-lattice identification, real self-duality,
 Gram basis, VOA states or Monster representations. Those bridges require
 separate proofs. The coordinate convention is described in
 [Leech's Notes on Sphere Packings](leech1967packing.md).
+
+## Verified locator
+
+https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/Leech.html
+
+The catalogue entry records MINIMAL_NORM 4 and KISSING_NUMBER 196560.
+The extended Golay code entry at https://errorcorrectionzoo.org/c/extended_golay
+identifies the weight-eight Steiner blocks used for the classical octad attribution.
