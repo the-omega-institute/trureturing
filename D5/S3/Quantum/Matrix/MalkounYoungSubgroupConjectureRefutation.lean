@@ -9,7 +9,6 @@
 import D5.S3.Quantum.Matrix.MalkounSubgroupLowerBoundRefutation
 import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
 import D5.S3.Quantum.Recovery.PurifiedLocalPath
-import Mathlib.GroupTheory.Perm.DomMulAct
 
 /-! # Conjecture D fails for class-preserving permutation groups -/
 
