@@ -78,7 +78,10 @@ internal sealed class ZhangThreeOperatorClarksonRefutationDocument : IScribeDocu
                             + "would give 4≤((3^(9/4−1)+1)/2^(9/4))(2+2^(7/8)). "
                             + "The strict bound just established makes that right side smaller than four, "
                             + "a contradiction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhang-2024-three-operator-clarkson-mccarthy"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ClaimFormula()
     {
