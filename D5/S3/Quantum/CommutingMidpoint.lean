@@ -170,6 +170,8 @@ private theorem rootFidelity_sq_ge_of_order {n : Type*} [Fintype n] [DecidableEq
   rw [CFC.sqrt_mul_self (t • S) (hS.smul ht).nonneg] at hroot
   have htrace := (Complex.le_def.mp
     ((Matrix.tracePositiveLinearMap n ℝ ℂ).monotone hroot)).1
+  change (trace (t • S)).re ≤
+    (trace (CFC.sqrt (CFC.sqrt S * T * CFC.sqrt S))).re at htrace
   have hval : (trace (t • S)).re = t := by
     simp [Matrix.trace_smul, htr, Complex.smul_re]
   rw [hval] at htrace
@@ -411,7 +413,7 @@ private theorem fidelity_scaled_trace (S V T : Matrix (Fin 2) (Fin 2) ℂ)
   have hcre := congrArg Complex.re hc
   simp only [Complex.ofReal_mul, ← Complex.ofReal_inv, Complex.mul_re, Complex.mul_im,
     Complex.ofReal_re, Complex.ofReal_im, Complex.add_re, zero_mul,
-    mul_zero, sub_zero] at hcre
+    mul_zero, sub_zero, zero_add, add_zero] at hcre
   have hds : Real.sqrt (T.det.re*S.det.re) = d*e := Real.sqrt_mul htd _
   have hdv : Real.sqrt (T.det.re*V.det.re) = d*g := Real.sqrt_mul htd _
   have hsv : Real.sqrt (S.det.re*V.det.re) = e*g := Real.sqrt_mul hsd _
@@ -580,7 +582,8 @@ private theorem chord_posDef (d e : EuclideanSpace ℝ (Fin 3))
   change (blochMatrix 1 (chordVector d e r)).det ≠ 0
   rw [D5.S3.Quantum.Information.ActualQubitChordObstruction.det_bloch,
     chord_norm_sq d e hde he hd]
-  have hprod : 0 < (1-‖d‖^2)*r*(1-r) := by positivity
+  have hprod : 0 < (1-‖d‖^2)*r*(1-r) :=
+    mul_pos (mul_pos (sub_pos.mpr hd) hr.1) (sub_pos.mpr hr.2)
   have heq : (1-(‖d‖^2+(1-‖d‖^2)*(2*r-1)^2))/4 =
       (1-‖d‖^2)*r*(1-r) := by ring
   rw [heq]
@@ -1003,10 +1006,27 @@ private theorem bloch_commutator_gram (a b : EuclideanSpace ℝ (Fin 3)) :
     (trace ((P*Q-Q*P)ᴴ*(P*Q-Q*P))).re =
       (‖a‖^2*‖b‖^2-⟪a,b⟫_ℝ^2)/2 := by
   dsimp
-  norm_num [Matrix.trace,Matrix.mul_apply,Matrix.conjTranspose_apply,blochMatrix,
-    Fin.sum_univ_two,EuclideanSpace.real_norm_sq_eq,PiLp.inner_apply,
-    RCLike.inner_apply,Fin.sum_univ_three,Complex.mul_re,Complex.mul_im,
-    starRingEnd_apply, RCLike.star_def] <;> ring
+  let x := a 1*b 2-a 2*b 1
+  let y := a 2*b 0-a 0*b 2
+  let z := a 0*b 1-a 1*b 0
+  let C : Matrix (Fin 2) (Fin 2) ℂ :=
+    !![(z : ℂ)*Complex.I/2, ((y : ℂ)+(x : ℂ)*Complex.I)/2;
+      (-(y : ℂ)+(x : ℂ)*Complex.I)/2, -(z : ℂ)*Complex.I/2]
+  have hC : blochMatrix 1 a*blochMatrix 1 b-blochMatrix 1 b*blochMatrix 1 a=C := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+      norm_num [Matrix.mul_apply,blochMatrix,Fin.sum_univ_two,C,x,y,z,
+        Complex.mul_re,Complex.mul_im] <;> ring
+  rw [hC]
+  have hnorm : (trace (Cᴴ*C)).re=(x^2+y^2+z^2)/2 := by
+    norm_num [Matrix.trace,Matrix.mul_apply,Matrix.conjTranspose_apply,
+      Fin.sum_univ_two,C,Complex.mul_re,Complex.mul_im,
+      starRingEnd_apply,RCLike.star_def] <;> ring
+  rw [hnorm]
+  simp only [EuclideanSpace.real_norm_sq_eq,PiLp.inner_apply,RCLike.inner_apply,
+    Fin.sum_univ_three]
+  dsimp [x,y,z]
+  ring
 
 private theorem commuting_chord_zero_foot (d e : EuclideanSpace ℝ (Fin 3))
     (hde : ⟪d,e⟫_ℝ=0) (he : ‖e‖=1) (hd : ‖d‖^2<1)
