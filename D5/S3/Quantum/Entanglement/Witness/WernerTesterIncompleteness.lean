@@ -11,7 +11,6 @@ import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
 import D5.S3.Weil.ZetaLinear.RankTrace
-import Mathlib.Analysis.Convex.Hull
 
 open scoped BigOperators ComplexOrder
 open Matrix
