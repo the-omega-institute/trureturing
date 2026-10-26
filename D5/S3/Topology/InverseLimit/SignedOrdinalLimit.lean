@@ -221,7 +221,7 @@ private theorem limit_f (r : BornRows l) (d : Coord l)
     exact Subtype.ext (hp x)
   subst p
   intro s hm hn
-  letI : MetricSpace H.LimitSpace := H.properMetric A.proper
+  let : MetricSpace H.LimitSpace := H.properMetric A.proper
   let t : ℕ → RegularSigned H.LimitSpace := fun n => ⟨s n, inferInstance, inferInstance⟩
   have ht : ∀ n, H.NewClass A.data r.1 d n (t n) := by
     intro n
@@ -272,6 +272,8 @@ noncomputable def predecessor : Predecessor (literalPrefix H E) hw.le := by
           (projection (literalPrefix H E) r) (fun _ => rfl)
           (A.oldPack E r hr) (A.oldPack_heq E r hr)
     · intro r hr d
+      letI : CompactSpace ((literalPrefix H E).carrier (top l)) :=
+        (literalPrefix H E).spaceCompact (top l)
       exact A.limit_f E (bornRow hw r hr) d
         (carrier_top H _) (carrier_old H r.1 (bornRow hw r hr).1.2 _)
         (projection (literalPrefix H E) r) (fun _ => rfl)
