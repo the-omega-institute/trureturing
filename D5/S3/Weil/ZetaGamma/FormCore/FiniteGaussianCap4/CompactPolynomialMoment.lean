@@ -35,6 +35,7 @@ theorem compact_polynomial_integral (q : ℚ[X]) :
   have heval (x : ℝ) : (q.map (Rat.castHom ℝ)).eval x =
       ∑ m ∈ q.support, (q.coeff m : ℝ) * x ^ m := by
     simp only [Polynomial.eval_map, Polynomial.eval₂_eq_sum, Polynomial.sum_def]
+    rfl
   have heq : (fun x : ℝ => w x * (q.map (Rat.castHom ℝ)).eval x) =
       (fun x : ℝ =>
         ∑ m ∈ q.support, (q.coeff m : ℝ) * (w x * x ^ m)) := by
@@ -50,8 +51,9 @@ theorem compact_polynomial_integral (q : ℚ[X]) :
   · change IntervalIntegrable
       (fun x : ℝ => w x * (q.map (Rat.castHom ℝ)).eval x) volume 0 6
     rw [heq]
-    simpa only [Finset.sum_apply] using
-      (IntervalIntegrable.sum q.support (fun m _ => hi m))
+    convert (IntervalIntegrable.sum q.support (fun m _ => hi m)) using 1
+    ext x
+    simp only [Finset.sum_apply]
   · change (∫ x : ℝ in 0..6, w x * (q.map (Rat.castHom ℝ)).eval x) = _
     rw [heq, intervalIntegral.integral_finsetSum (fun m _ => hi m)]
     simp only [intervalIntegral.integral_const_mul, debitMoment, w]
