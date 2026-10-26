@@ -5,7 +5,7 @@ year: 2026
 title: Actual mixed-sixth coefficient and conditional complete-bin interface
 doi: null
 url: https://arxiv.org/abs/2610.12234v2
-claim: Repo-derived conditional paper applications pay the exact joint-Euler short-cofactor Type-I component and the modified large-prime collision term, identify the complete remaining coefficient, conditionally pay its original-row-conductor sector up to a fixed cap above every M4 plain length with explicit common costs, rule out a coefficient-norm power saving and two specified coefficient simplifications, and quantify the implication of an unproved neighborhood mixed-sixth moment for the original-W0 bare nonunit C93-C97 consumer. Full mixed moment, C68/J40, signed Robin and RH remain open; no source-proof, Lean or priority certification is supplied.
+claim: Repo-derived conditional paper applications pay the exact joint-Euler short-cofactor Type-I component and the modified large-prime collision term, identify the complete remaining coefficient, conditionally pay its original-row-conductor sector through Q^(1/2), above every M4 plain length, with one explicit common-cost budget, rule out a coefficient-norm power saving and two specified coefficient simplifications, and quantify the implication of an unproved neighborhood mixed-sixth moment for the original-W0 bare nonunit C93-C97 consumer. Full mixed moment, C68/J40, signed Robin and RH remain open; no source-proof, Lean or priority certification is supplied.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -27,8 +27,9 @@ The [small original-row-conductor application M47–M56](#small-original-row-con
 pays only its stated original-row sector when the common height and envelope
 costs fit the explicit gap; the complementary complete remainder stays open.
 The [bounded-valuation cap application M57–M62](#a-bounded-conductor-cap-above-the-plain-length)
-uses the physical-row count to include $C_u\le Q^{43/100}$ under its stated
-common-cost condition, retaining the same coefficient and full complement.
+uses the physical-row count, full original inverse and fixed plain reflection
+to include $C_u\le Q^{1/2}$ under one stated common-cost condition, retaining
+the same coefficient and full complement.
 
 ## Source correspondence and exact reuse
 
@@ -1840,193 +1841,232 @@ supplier, source-proof certification, Lean verification or priority claim.
 
 ## A bounded-conductor cap above the plain length
 
-Keep M1, M4, M46 and all M47–M56 analytic and restoration premises.
-The additional consumer is a positive cumulative conductor count in the
-**three-slot original moment**, followed by M55 on the same original
-rows. It uses only $B=1$ in M49, including when $C_u>N$.
+Retain M1's three original slots, M4 and exactly M46's coefficient and
+cutoff. The single application here takes the fixed parameters
+$\theta=11/20$, $b=9/10$ and $c=1/2$. It combines existing reciprocal
+control, primitive plain reflection and a count of **physical** rows,
+then applies M55's projection on those identical rows. All printed
+analytic inputs below, conductor identification, paid errors and the
+actual final coupled envelope remain **ASSUMED-UNVERIFIED** premises;
+this is conditional paper mathematics.
 
-| Reused input | Exact role and limit |
+| Reused input | Correspondence and boundary |
 | --- | --- |
-| Pinned primary, [ideal count, lines 619–624](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex#L619), [fixed divisor bound, lines 742–763](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex#L742), and [physical split, lines 5238–5294](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex#L5238) | Ordinary ideal counting, divisor-bounded multiplicities and the finite physical $S$/unit decomposition are suppliers, not new counting results. |
-| [M47–M56](#small-original-row-conductors-in-the-complete-remainder) | Original conductor identification, primitive reflection/entireness, fixed deleted Euler factors, smooth calculus, proper-cube payment and same-row projection are reused without a new general theorem. |
-| Liu source card, [low conductors](../Analytic/liu2026quasirh.md#low-primitive-conductors-in-the-small-gcd-head), [retained caps](../Analytic/liu2026quasirh.md#retaining-the-conductor-cap-with-hecke-subconvexity) and their continuation; [fixed-order lower blocks](../Analytic/faveri2026fixedorder.md#separating-the-lower-order-character-blocks) | Their conductor/order belongs to a ratio of two columns in an inverse-fourth Gram expansion, not the primitive character on an original M1 row. |
-| [Physical-row applications, §§467–473](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#467-导子敏感的-plain-因子与六阶物理行的重复幂切面), including [unequal lengths and F4](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#472-实际逆plain-长度比与原一估值行预算); [reduced-energy C105–C113](liu2026quasirhreduced.md#a-source-conditional-strict-sector-with-a-small-valuation-one-product) | The former estimate two-factor Möbius/plain products and their actual F4 packages; the latter pays a powerful/valuation-one sector of C80 reduced-frequency energy. Their row/count/reflection mechanisms are reused; those paid blocks are not claimed as new M1/M46 payments. |
+| Pinned primary, [main theorem](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex#L106), [logarithmic control](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex#L1531), deleted Euler factors and [full inverse Mellin identity](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex#L4425) | The original-character reciprocal on a fixed strip above $7/8$, including the principal reciprocal, and the complete inverse polynomial. Its finite-bin detector-dyads estimate already gives a stronger bin-dependent inverse exponent on its own retained-height contract. |
+| Primary, [primitive functional equation and entireness](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex#L1425), [fixed-mask reflection](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex#L12602) and smooth calculus; M47–M48 | The original nonprincipal primitive character, fixed $S$-only deletions, norm-height translations and finite derivatives. The fixed real reflection line below is not M49's stated integer-$B$ specialization. |
+| Primary, [ideal count](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex#L619), [divisor bound](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex#L742) and [finite physical labels](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex#L5238) | Ordinary counting with every good valuation $1,\ldots,5$ and original $S$/unit/ray/presentation multiplicity. No new generic counting result. |
+| Liu card, [low conductors](../Analytic/liu2026quasirh.md#low-primitive-conductors-in-the-small-gcd-head), [retained caps](../Analytic/liu2026quasirh.md#retaining-the-conductor-cap-with-hecke-subconvexity) and [global strip](../Analytic/liu2026quasirh.md#using-the-global-strip-in-the-complete-row-kernel); [fixed-order lower blocks](../Analytic/faveri2026fixedorder.md#separating-the-lower-order-character-blocks) | Those conductors and inducing orders belong to two-column ratios. The global reciprocal supply is already imported; its use for full inverse polynomials also appears in the [fixed-character application](../Analytic/openai2026quasirh.md#主诱导行与完整补偿求和), with its narrower family scope. |
+| [Physical-row applications, §§467–473](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#467-导子敏感的-plain-因子与六阶物理行的重复幂切面), including unequal lengths and F4; [reduced-energy C105–C113](liu2026quasirhreduced.md#a-source-conditional-strict-sector-with-a-small-valuation-one-product) | Two-factor original Möbius/plain products and their F4 packages, respectively a powerful/valuation-one sector of C80 reduced energy. Their mechanisms and paid blocks are reused. The theory's primary pin differs from the present pin and is not identified with it. |
 
-Within these owners and a bounded `Library/` plus
-`docs/develop/theory/` keyword/formula comparison, no exact three-slot
-M1/M46 above-$N$ conductor-cap consumer was found. This is a bounded
-reuse finding, not a literature-priority or analytic-proof certificate.
+A bounded comparison of these owners and related Library/theory
+keyword and formula matches found no exact dominating three-slot
+M1/M46 half-cap consumer. This is not an exhaustive literature or
+priority claim. The retained content is this consumer and its costs,
+not a new inverse-shift, reflection, count or projection theorem.
 
-**Count physical rows with all valuations.** For each original
-presentation let $\mathcal U(Y)$ be its retained nonprincipal M1 rows
-with $q_u\asymp Q$ and $C_u\le Y$. Use M47's
-$R=\operatorname{rad}(u_{\rm good})$ and $C_u=c_{u,S}q_R$, with
-$1\le c_{u,S}\ll_{\mathcal A}1$. Every good prime in $R$ has an
-original valuation in $\{1,\ldots,5\}$, so at a fixed $R$ there are
-at most $5^{\omega(R)}$ assignments, all of which must be counted.
-The physical annulus only restricts this list. Each fixed $S$ valuation
-lies in $\{0,\ldots,5\}$; all six units and every original finite
-ray/presentation label retain their actual finite multiplicity. The
-supplied divisor bound gives $5^{\omega(R)}\ll_\varepsilon Q^\varepsilon$
-since $q_R\ll Q$. Applying the supplied $O(Y)$ ideal count to
-$q_R\le Y$, for $Q\ge2$, $Y\ge1$ and every $\varepsilon>0$, gives
+**The full original inverse and the fixed plain line.** To display
+the original twist explicitly, let $\psi_u$ denote the finite original
+presentation and let $\sigma,\omega$ be its original bounded real weight
+and pure norm height. With $\Re(s+\sigma)>1$, reuse the complete identity
 
 $$
- \#\mathcal U(Y)\ll_{\mathcal A,\varepsilon}YQ^\varepsilon,
- \qquad
- \sum_{u\in\mathcal U(Y)}C_u^4
- \le Y^4\#\mathcal U(Y)
- \ll_{\mathcal A,\varepsilon}Y^5Q^\varepsilon.
+\begin{aligned}
+ M_u[\sigma,\omega]
+ &=D^{-1/2}\sum_d\mu(d)V_M(q_d/D)
+                   (q_d/D)^{-\sigma+i\omega}\psi_u(d)\\
+ &=\frac1{2\pi i}\int
+   \mathcal M V_M(s)\,
+   D^{s+\sigma-i\omega-1/2}
+   L_{\rm orig}(s+\sigma-i\omega,\psi_u)^{-1}\,ds,\\
+ |M_u|&\ll_{\mathcal A,J,\varepsilon}
+ D^{2/5}Q^\varepsilon p_{M,J}(1+h)^{C_M},
+ \qquad b=9/10>7/8.
+\end{aligned}
 \tag{M57}
 $$
 
-The same count includes all original finite labels if they are enumerated
-as labelled coordinates. It counts physical rows with their multiplicities,
-not distinct primitive characters; no identification of rows sharing an
-inducer is made. Coherent restoration of presentations still uses the
-original coupled envelope, not an orthogonality assertion. The bounded
-$S$-supported principal exceptions keep their separate original treatment.
+The untwisted case is M1; the translated profiles retain their original
+parameters. This is $1/L$ of the **original** character, not a squared
+character ratio, Type-I piece or punctured replacement. The already
+imported global Hecke reciprocal contract on $\Re z\ge b$ has fixed
+margin $b-7/8=1/40$. An upper bound on $L$ alone would not give M57.
+The primitive conductor and complete original deletion radical are
+$O_{\mathcal A}(Q)$, and the supplied positive-strip deleted-factor
+bounds charge $Q^\varepsilon$ while retaining the exact zero extensions.
+The reciprocal is holomorphic along the shift to $\Re(s+\sigma)=b$;
+a principal $L$-pole, including its norm translate, is a removable
+reciprocal zero and gives no residue. The power is $b-1/2=2/5$.
+The global reciprocal and finite smooth calculus pay vertical tails,
+pointwise horizontal joins and required derivatives at a finite final
+$J$, with fixed internal height degree $C_M$; squaring gives
+$D^{4/5}(1+h)^{2C_M}$. Small powers and derivative logarithms share
+the final prescribed $\varepsilon$.
 
-**The actual moment and a uniform cap.** Fix $c\ge0$ independently of
-$Q$, and put $\mathcal U_c=\mathcal U(Q^c)$. For every final
-$\varepsilon>0$, uniformly throughout M4 and for sufficiently large $Q$,
-M49 with $B=1$ and M57 give
+The primary detector-dyads supplier already treats this same complete
+inverse with a stronger exponent on its original finite-bin contract;
+M57 merely uses the imported global contract on the fixed line $9/10$.
+Global reciprocal control does not enlarge the permitted physical
+heights, plain-reflection family, detector windows or restoration scope.
+
+For the original nonprincipal plain row use M47–M48's primitive
+character and fixed $S$-only redundant radical. The existing functional
+equation/Rademacher supplier at the fixed real value $\theta=11/20$
+corresponds to $\Re s=1/2-\theta=-1/20$ and the absolutely convergent
+dual line $1/2+\theta=21/20$. It gives
 
 $$
-\begin{aligned}
- |M_uS_u^2|^2
- &\ll D N^{-4}C_u^4\mathcal P_J^2(1+h)^8,\\
- \sum_{u\in\mathcal U_c}|M_uS_u^2|^2
- &\ll_{\mathcal A,c,\varepsilon}
- Q^{r+5c-4m+\varepsilon}\mathcal P_J^2(1+h)^8.
-\end{aligned}
+ |S_u|\ll_{\mathcal A,\theta,J}
+ (C_u/N)^{11/20}p_{S,J}(1+h)^{11/10},
+ \qquad
+ |S_u|^4\ll_{\mathcal A,\theta,J}
+ (C_u/N)^{11/5}p_{S,J}^4(1+h)^{22/5}.
 \tag{M58}
 $$
 
-Here the finite original label/profile data and orders are fixed, and
-$h$ bounds the actual total common norm heights as in M49–M51. The
-single final $\mathcal P_J^2$ controls $p_{M,0}^2p_{S,J}^4$ and all
-required mixed derivative products $M_{u,j}S_{u,k}S_{u,l}$ under the
-original integrations and restoration. Internal small powers and
-logarithms share the final $\varepsilon$. This pointwise estimate is
-valid on either side of $c=m$; the cumulative weight is positive.
-No upper conductor cap is substituted into a negative power.
+Here $C_u=c_{u,S}q_{\operatorname{rad}(u_{\rm good})}$ is precisely
+M47's original primitive conductor. The gamma quotient has height degree
+$2\theta=11/10$; the M48 divisor mass is
+$\sum_{d\mid\mathfrak R_u}q_d^{\theta-1/2}
+=\sum_{d\mid\mathfrak R_u}q_d^{1/20}=O_{\mathcal A}(1)$.
+Entireness and the supplied smooth calculus pay this fixed shift and
+its joins. This uses the existing reflection supplier at a fixed real
+line, not M49 verbatim, which states integer $B$. It uses neither the
+$\theta=1/2$ endpoint nor a $Q$-dependent displacement. A moving
+$O(Q)$ deletion radical on this negative line would incur an additional
+cost; M47's fixed $S$ mask is essential.
 
-Put $r_+=\sqrt6/3+1/1000$ and
-$m_\pm=\sqrt6/6\pm1/1000$. The uniform raw gap in M58 is
+**Count every physical row and consume it in M1.** For $Q\ge2$, $Y\ge1$
+let $\mathcal U(Y)$ be the retained nonprincipal physical rows
+$q_u\asymp Q$, $C_u\le Y$, in each original presentation. At a fixed
+good radical $R$ there are at most $5^{\omega(R)}$ valuation assignments,
+all included. The physical annulus only restricts this list. The
+supplied divisor bound is $5^{\omega(R)}\ll_\varepsilon Q^\varepsilon$
+because $q_R\ll Q$. Ordinary ideal counting at $q_R\le Y$, with all
+finite $S$ valuations $0,\ldots,5$, six units and original ray and
+presentation labels, therefore gives the first two lines below.
+For every fixed $c\ge0$, put $\mathcal U_c=\mathcal U(Q^c)$. For every
+final $\varepsilon>0$, sufficiently large $Q$ and every $(r,m)$ in M4,
+M57–M58 give, uniformly on the stated original profile family,
 
 $$
 \begin{aligned}
- g_0(c)&=T_*-r_+-5c+4m_-
-       ={7\sqrt6-4\over6}-5c-{1\over200},\\
- m_+<c<{7\sqrt6-4\over30}-{1\over1000}
- &\quad\Longrightarrow\quad c>m\text{ on all M4},\qquad g_0(c)>0.
+ N_Q(Y):=\#\mathcal U(Y)&\ll_{\mathcal A,\varepsilon}YQ^\varepsilon,\\
+ \sum_{u\in\mathcal U(Y)}C_u^{11/5}
+ &\le Y^{11/5}N_Q(Y)
+       \ll_{\mathcal A,\varepsilon}Y^{16/5}Q^\varepsilon,\\
+ \sum_{u\in\mathcal U_c}|M_uS_u^2|^2
+ &\ll_{\mathcal A,c,\varepsilon}
+ Q^{(4/5)r+(16/5)c-(11/5)m+\varepsilon}
+       \mathcal P_J^2(1+h)^{2C_M+22/5}.
 \end{aligned}
 \tag{M59}
 $$
 
-The $1/200$ subtracts the full $1/1000+4/1000$ M4 variation;
-the central threshold alone is not the uniform cap. The interval in
-M59 is nonempty, as witnessed below. Fixed annular/conductor constants
-change implied constants and lower thresholds, not these exponents.
+This counts physical sixth-power-free rows, not distinct primitive
+inducers. Rows sharing an inducer retain every valuation and finite-label
+multiplicity. The positive conductor mass is used in its upper-bound
+direction, including when $C_u>N$. The one final finite-order coupled
+envelope $\mathcal P_J^2$ must control $p_{M,J}^2p_{S,J}^4$, every
+required mixed derivative product and all integration and restoration
+products, together with the paid errors below. Here $h$ bounds the
+**actual total** common heights after original separations and
+translations. Coherent presentation reconstruction uses this actual
+coupled envelope, not orthogonality of presentations or an independent
+allowance for each supplier.
 
-**Transfer to the unchanged complete remainder.** Let $P_c$ multiply
-by $\mathbf1_{\mathcal U_c}$ on the identical original row coordinates,
-for each original presentation and orientation, and hold the cut fixed
-under all profile derivatives. Keep exactly M46's $A=Q^{3/20}$ and
-$c_{R,A}$, with $A=A_{R,A}+E_A$ as in M55. Here the first $A$ in
-this vector identity denotes M1's vector, not the scalar cutoff.
-Applying the existing M55 projection inequality, with its combined
-squared-error reserve $1/400$, yields
+Only the following cap is retained. With $r_+=r_*+1/1000$ and
+$m_\pm=m_*\pm1/1000$, the worst-corner raw gap is exactly
 
 $$
 \begin{aligned}
- \|P_cA_{R,A}\|_2^2
- &\le2\|P_cA\|_2^2+2\|E_A\|_2^2,\\
- C_*&=\max\{8,C_{\rm paid}\},\qquad
- h\le Q^\tau,\quad\mathcal P_J^2\le Q^\kappa,\\
- g_R(c)&=\min\{g_0(c),1/400\}-C_*\tau-\kappa-\varepsilon,\\
- g_R(c)>0\quad&\Longrightarrow\quad
- \|P_cA_{R,A}\|_2^2\ll Q^{T_*-g_R(c)},\\
- \|A_{R,A}\|_2^2
- &=\|P_cA_{R,A}\|_2^2+\|(I-P_c)A_{R,A}\|_2^2.
+ c&=\frac12>m_+,\\
+ g_0&=T_*-\frac45r_+-\frac{16}5\frac12+\frac{11}5m_-
+       =\frac{14\sqrt6-34}{15}-\frac3{1000}
+       >\frac{23}{3000}>\frac1{400}.
 \end{aligned}
 \tag{M60}
 $$
 
-All original coefficients, signs, collision zeros, Möbius coupling and
-within-row interference remain inside these vectors. No factorization
-of $A_{R,A}$ or masking of a paid column vector is used. The norm
-identity is on each original component's row space; coherent finite
-reconstruction uses its actual coupled cost. Choose one compatible finite
-final $J$, independent of $Q$, covering $B=1$, every required derivative
-product and all paid errors. Fix its internal derivative and height
-degrees before the one small source height exponent, subject to
-M41–M45's detector and height-allocation constraints; their external-tail
-orders must also fit that final $J$. As in M45, increasing decay order
-differentiates untwisted profiles without renewing the height allowance.
-Availability and actual aggregate cost are required at this final $J$.
-Naming $\mathcal P_J$ establishes neither premise. All final
-label, bin/dyad, derivative, integration and restoration losses are
-charged once in $C_*\tau+\kappa+\varepsilon$, with no renewed allowance.
-The stronger Type-I-only reserve in M45 does not replace $1/400$.
+The full M4 variation is $(4/5+11/5)/1000=3/1000$.
+The strict lower bound $\sqrt6>61/25$ gives $23/3000$, not an
+alternative exact value for $g_0$. The upper bound $\sqrt6<5/2$ gives
+$m_+<5/12+1/1000<1/2$. Fixed annular/conductor constants alter only
+implied constants and the sufficiently-large-$Q$ threshold. Thus the
+cap is above every M4 plain-length exponent.
 
-For a concrete sufficient case,
+**The unchanged M46 remainder and one final cost.** Let $P_c$ multiply
+by $\mathbf1_{\mathcal U_c}$ on the identical original row coordinates,
+for each original presentation and orientation, with the cut fixed
+under every profile derivative. Keep exactly M46's
+$A=Q^{3/20}$ and $c_{R,A}$. In the following vector identities
+$\boldsymbol A=(M_uS_u^2)_u$ denotes the full M1 vector, whereas $A$
+in a subscript denotes that scalar cutoff. Reuse M55 with the same
+complete vector and its combined squared-error reserve:
 
 $$
 \begin{aligned}
- c&={43\over100}>m_+,\\
- g_0(43/100)&={7\sqrt6-4\over6}-{431\over200}
-                >{1\over40}>{1\over400},\\
- C_*\tau+\kappa+\varepsilon\le{1\over800}
- &\quad\Longrightarrow\quad g_R(43/100)\ge{1\over800}>0.
+ \boldsymbol A&=\boldsymbol A_{R,A}+\boldsymbol E_A,\qquad
+ \boldsymbol E_A=\boldsymbol A_{\mathrm I,A}
+                     +\boldsymbol A_{\mathrm{II,hi},A},\\
+ \|\boldsymbol E_A\|_2^2
+ &\ll_\varepsilon Q^{T_*-1/400+\varepsilon}
+                    \mathcal P_J^2(1+h)^{C_{\rm paid}},\\
+ \|P_c\boldsymbol A_{R,A}\|_2^2
+ &\le2\|P_c\boldsymbol A\|_2^2+2\|\boldsymbol E_A\|_2^2,\\
+ \|\boldsymbol A_{R,A}\|_2^2
+ &=\|P_c\boldsymbol A_{R,A}\|_2^2
+                    +\|(I-P_c)\boldsymbol A_{R,A}\|_2^2 .
 \end{aligned}
 \tag{M61}
 $$
 
-Indeed $\sqrt6>61/25$ by squaring positive quantities, and replacing
-$\sqrt6$ by $61/25$ in the middle line gives exactly $1/40$.
-The upper bound $\sqrt6<5/2$ gives $m_+<5/12+1/1000<43/100$.
-Thus this fixed cap is above every M4 plain length and has a positive
-final common-cost gap **if** the stated actual total cost and all source
-premises hold. No height/envelope cost bound is proved by this choice.
+No paid column is masked and $\boldsymbol A_{R,A}$ is not factorized.
+Every original coefficient, sign, Möbius coupling, collision zero and
+within-row interference term stays in the same vector. Only the
+orthogonal original-row projection is used; finite coherent
+reconstruction still pays its common cost. The reserve is $1/400$,
+unchanged from M46/M55, never the Type-I-only $1/200$ in M45.
 
-**Domain comparison and the unpaid complement.** For $c>m_+$ the cap
-contains the former $C_u\le NQ^{-\delta}$ sector for every fixed
-$\delta>0$, eventually uniformly on M4. It includes the already paid
-proper-cube block M52–M54; their $Q^{1/3}$ count and
-$r+5/3-4m$ moment exponent are recovered at that scale, not new payments.
-For an explicit domain beyond the old small-$C/N$ condition, use the
-existing fixed-ray prime supply to choose distinct good prime ideals
-$p,\ell$ with $q_p\asymp P$, $q_\ell\asymp P^2$, $P\to\infty$,
-and the allowed fixed physical/unit/$S$ labels. The ideal pattern is
+With the same final envelope and actual heights, the sufficient budget
+and resulting projected estimate are
 
 $$
- (u_{\rm good})=\ell p^5,\qquad
- q_u\asymp Q\asymp P^7,\quad C_u\asymp_{\mathcal A}P^3,
- \quad q_{\mathfrak s_1(u_{\rm good})}\asymp P^2,\qquad
- m_+<{3\over7}<{43\over100},\quad
- {2\over7}>\eta_\star={13-5\sqrt6\over3}.
+\begin{aligned}
+ C_*&=\max\{2C_M+22/5,\ C_{\rm paid}\},\qquad
+ h\le Q^\tau,\quad\mathcal P_J^2\le Q^\kappa,\\
+ g_R&=\min\{g_0,1/400\}-C_*\tau-\kappa-\varepsilon,\\
+ C_*\tau+\kappa+\varepsilon\le1/800
+ &\quad\Longrightarrow\quad g_R\ge1/800>0,\qquad
+ \|P_{1/2}\boldsymbol A_{R,A}\|_2^2
+          \ll Q^{T_*-g_R}.
+\end{aligned}
 \tag{M62}
 $$
 
-The strict exponent margins absorb the fixed annular and conductor
-constants. These allowed physical patterns have $C_u>N$ throughout
-M4 and $C_u\le Q^{43/100}$ eventually. Their valuation-one product
-exponent $2/7$ lies outside every C105 sector $\eta<\eta_\star$ if
-the same ideal is used as that reduced part. This compares domain
-conditions only: it identifies neither an occupied critical detector
-bin nor a nonzero coherent response or an energy lower bound, and does
-not improve C105–C113's already paid C80 energy estimate. Fixed-ray
-prime supply and the original family transport remain source premises.
+Fix the internal derivative orders and polynomial height degrees before
+choosing the one source height exponent, compatible with M41–M45's
+detector and original finite-height constraints. Then choose the
+external tail orders as in M45 and a single finite final $J$,
+independent of $Q$, covering both slot bounds, all required derivatives,
+paid errors and restoration. Increasing external decay order
+differentiates untwisted profiles and does not renew a height allowance.
+All preliminary powers, bins/dyads, labels, joins, tails, parameter
+choices and frequency integrations share the displayed total budget.
+Existence of the final envelope, its actual aggregate cost at that $J$,
+and a compatible original finite-height/tail contract remain unproved
+premises. Choosing $\tau$ or naming $\mathcal P_J$ establishes none of
+them.
 
-M60 leaves the entire same-vector complement $C_u>Q^c$ unestimated by
-this application, along with all separate original exceptions and heights
-outside the paid allowance. The complete M46 estimate and full H remain
-unproved. Even full H with its named premises would address only
-M19–M30's original-$W_0$ bare nonunit branch: the other original-$W_0$
-components, full C68/J40, common-beta signed Möbius/$\rho$ aggregation,
-physical-row restoration, signed Robin and RH retain all their original
-unpaid obligations. This is one conditional paper application, with no
-new generic count, reflection or projection theorem, analytic source-proof
-certification, Lean verification or priority claim.
+For sufficiently large $Q$, this conditional cap contains the former
+$C_u\le NQ^{-\delta}$ sector for every fixed $\delta>0$ throughout M4,
+including the already paid proper-cube block M52–M54; those payments
+are not claimed anew. The entire same-vector complement
+$C_u>Q^{1/2}$ remains unestimated by this application. All principal
+exceptions, other separate original exceptions and unpaid heights
+retain their original obligations. Full H and the complete M46
+estimate remain unproved. Even full H with its named premises would
+serve only M19–M30's original-$W_0$ bare nonunit branch: the other
+original-$W_0$ components, full C68/J40, common-beta signed
+Möbius/$\rho$ aggregation, physical-row restoration, signed Robin and
+RH remain unpaid. There is no source-proof, Lean or priority
+certification.
