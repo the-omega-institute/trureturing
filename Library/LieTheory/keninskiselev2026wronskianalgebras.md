@@ -39,7 +39,7 @@ The open problem:
 Source: https://arxiv.org/abs/2605.27305v2
 - URL: https://arxiv.org/abs/2605.27305v2 (the e-print is a tar archive; member `FinDim220526v2.tex`, 2221 lines, md5 `777135f176c9db701f21e5554216fb33`):
   - perfectness, Definition `def:perfect-lie-algebra`, l. 517–521;
-  - notation, l. 538–541 and Notation `not:multi-index`, l. 613–623;
+  - notation, l. 538–542 and Notation `not:multi-index`, l. 613–623;
   - the Wronskian, Definition `def:wronskian`, l. 625–627;
   - the example for $d=2$, Example `ex:dimension-two-closed-old`, l. 467–478;
   - monomial imperfection, Proposition `prop:imperfection`, l. 1198;

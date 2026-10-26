@@ -16,7 +16,7 @@ Markuss G. Ķēniņš and Arthemy V. Kiselev, *Explicit class of finite-dimensio
 
 > Let the base dimension $d\geqslant 2$ and differential order $k\geqslant 1$ be arbitrary. Put the complete generalised Wronskian $W_d^k=\Bone\wedge \partial_\bx\wedges \partial^k_{\bx...\bx}$ as the $N$\nobreakdash-ary bracket, $N={d+k\choose d}$, on the $N$\nobreakdash-ary SH-Lie polynomial algebra $\Bbbk[x^1,...,x^d]$. Does there exist an homogeneous polynomial $p(\bx)\in \Bbbk[\bx]$ of degree $k+1$ such that the $N$\nobreakdash-ary SH-Lie polynomial subalgebra $\EuA=\Bbbk_k[\bx]\oplus\langle p(\bx)\rangle$ is \emph{perfect} w.r.t\ the Wronskian, i.e.\ $\Span_\Bbbk W_d^k(\EuA,...,\EuA)=\EuA$?
 
-The source macros are retained in the quotation: `\Bone` is the identity operator, `\bx` denotes $\boldsymbol x$, `\wedges` denotes $\wedge\cdots\wedge$, `\EuA` denotes $\mathcal A$, and `\Span` denotes linear span. The source takes $\Bbbk=\mathbb R$ or $\mathbb C$ and writes $\Bbbk_k[\boldsymbol x]$ for polynomials of degree at most $k$ (TeX lines 538–541 and 613–623).
+The source macros are retained in the quotation: `\Bone` is the identity operator, `\bx` denotes $\boldsymbol x$, `\wedges` denotes $\wedge\cdots\wedge$, `\EuA` denotes $\mathcal A$, and `\Span` denotes linear span. The source takes $\Bbbk=\mathbb R$ or $\mathbb C$ and writes $\Bbbk_k[\boldsymbol x]$ for polynomials of degree at most $k$ (TeX lines 538–542 and 613–623).
 
 Issue [#22115](https://github.com/the-omega-institute/trureturing/issues/22115) fixes the statement over a characteristic-zero field $K$. Put
 
@@ -92,25 +92,6 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 
 **Proved by `result`:** for every characteristic-zero field $K$, every $d\ge2$ and every $k\ge1$, a nonzero homogeneous polynomial $p$ of degree $k+1$ whose complete-Wronskian bracket values on $K_{\le k}[\boldsymbol x]+Kp$ span exactly that subspace exists if and only if $k=1$.
 
-**Computed, not formalized** (exact rational polynomial arithmetic, SymPy 1.14.0): all $N+1$ omission determinants and their coefficient-matrix ranks were calculated for the following six explicit inputs. Write $x,y,z$ for the coordinate variables and put
-
-$p_{2,2}=7x^3+5x^2y+3xy^2+2y^3,$
-
-$p_{2,3}=11x^4+7x^3y+5x^2y^2+3xy^3+2y^4,$
-
-$p_{3,2}=29x^3+23x^2y+19x^2z+17xy^2+13xyz+11xz^2+7y^3+5y^2z+3yz^2+2z^3.$
-
-| $d$ | $k$ | Tested $p$ | Omission-bracket rank | $\dim A_p$ | Degree-$k$ projected rank |
-| --- | --- | --- | --- | --- | --- |
-| $2$ | $1$ | $x^2+y^2$ | $4$ | $4$ | $2$ |
-| $3$ | $1$ | $x^2+y^2+z^2$ | $5$ | $5$ | $3$ |
-| $2$ | $2$ | $p_{2,2}$ | $6$ | $7$ | $2$ |
-| $2$ | $3$ | $p_{2,3}$ | $9$ | $11$ | $2$ |
-| $3$ | $2$ | $p_{3,2}$ | $8$ | $11$ | $3$ |
-| $3$ | $1$ | $x^2$ | $3$ | $5$ | $1$ |
-
-For these tested inputs, no omission bracket outside $A_p$ was observed. These calculations make no claim about untested inputs.
-
 **Argued, not formalized.**
 
 - *Size of the higher-order deficit.* For a characteristic-zero field, $d\ge2$, $k\ge2$ and homogeneous $p$ of degree $k+1$, `projected_bracket_bound`, applied to arguments in $A_p$, bounds each projected bracket by the span of $d$ omission brackets. Linearity of the homogeneous projection extends this bound to the entire projected bracket span. The degree-$k$ homogeneous space has the monomial basis of size $\binom{d+k-1}{k}$. Subtracting dimensions therefore gives a deficit of at least $\binom{d+k-1}{k}-d$ in that component. This quantitative codimension statement is not an additional conclusion of `result`.
@@ -123,4 +104,4 @@ For these tested inputs, no omission bracket outside $A_p$ was observed. These c
 
 The bounded literature check in #22115 does not establish exhaustive worldwide novelty or priority. Its web-search results, follow-up abstract reading, OpenAlex citation count, negative readings of arXiv:2510.02145v1 and arXiv:2610.08636v1, formal-conjectures search and earlier-repository-record search were not independently reproduced. MathDB's HTTP 403 supplies no negative literature result. The v2 source question, its notation, the adjacent Comment, the closure theorem statement and the later inconsistent-algebra question were checked directly in the TeX identified above.
 
-The random-polynomial rank readings attributed to the orchestrator (Claude Code, Opus) in #22115 remain unreproduced because the issue supplies neither the sampled coefficients nor a random seed. The six explicit symbolic tests above are independent finite computations, not Lean proofs. The codimension estimate, Hessian criterion, relaxed field hypothesis for the construction and discussion of consequences for the paper are argued rather than additional formalized statements. A complete dependency audit of the source's proofs was not performed. The SH-Lie identities, the source's general classification of finite-dimensional subalgebras, the dimension-one cases, order zero and positive-characteristic classification are not established by `result`.
+The random-polynomial rank readings attributed to the orchestrator (Claude Code, Opus) in #22115 remain unreproduced because the issue supplies neither the sampled coefficients nor a random seed. The codimension estimate, Hessian criterion, relaxed field hypothesis for the construction and discussion of consequences for the paper are argued rather than additional formalized statements. A complete dependency audit of the source's proofs was not performed. The SH-Lie identities, the source's general classification of finite-dimensional subalgebras, the dimension-one cases, order zero and positive-characteristic classification are not established by `result`.
