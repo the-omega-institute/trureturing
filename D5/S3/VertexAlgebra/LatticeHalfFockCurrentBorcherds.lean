@@ -386,7 +386,7 @@ private theorem current_coeff (D : LatticeData) (hu : IsUnit D.G.det)
     have different : -2*k-3+2*m+2*(0:ℕ)+3 ≠ 0 := by omega
     simp only [flatTerm, flatCoefficient]
     split_ifs <;> simp only [Module.End.mul_apply, vacuum_coeff, ite_eq_right different, map_zero]
-private theorem source_current (D : LatticeData) (i : Fin D.rank) (n : ℤ) (b : Carrier D) :
+theorem source_current (D : LatticeData) (i : Fin D.rank) (n : ℤ) (b : Carrier D) :
     LatticeAllStateReconstruction.mu D (neutralMode D i (-1) (vacuum D)) n b =
       neutralMode D i n b := by
   unfold LatticeAllStateReconstruction.mu
