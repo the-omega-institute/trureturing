@@ -26,7 +26,8 @@ internal sealed class NormFourVacuumNullDocument : IScribeDocumentDefinition
                     + "No positivity, rootlessness, unimodularity, nondegeneracy, rank restriction "
                     + "or determinant premise is used."))),
                 DescribeRole.Theorem),
-            Paragraph(Text("The calculation uses the actual current modes, charged-field transport and creation series. "
+            Paragraph(Text("The calculation uses the private production calculus in NormFourVacuumNullCalculus "
+                + "for the actual current modes, charged-field transport and creation series. "
                 + "The creation recurrence determines coefficients through degree six after multiplication by 720. "
                 + "Current annihilation bounds give finite support for both unbounded normal-ordering sums. "
                 + "Transport of the eight required oscillator monomials gives finite charged coefficients, "
