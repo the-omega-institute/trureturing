@@ -43,7 +43,7 @@ abbrev arena : Arena where
         (finiteTraceLogRelativeEntropy ρ σ -
           finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ)) ^ (1 / 4 : ℝ))
 
-private theorem positive_floor {n : Type*} [Fintype n] [DecidableEq n]
+theorem positive_floor {n : Type*} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℂ) (hA : A.PosDef) :
     ∃ r : ℝ, 0 < r ∧ r • (1 : Matrix n n ℂ) ≤ A := by
   classical
