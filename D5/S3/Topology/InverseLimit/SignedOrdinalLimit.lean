@@ -59,7 +59,7 @@ noncomputable def data : H.Data where
     ⟨0, by simp only [SignedMeasure.toJordanDecomposition_zero]; change Measure.Regular (0 : Measure (H.Space r)) ∧ Measure.Regular (0 : Measure (H.Space r)); exact ⟨inferInstance, inferInstance⟩⟩
   mass r d n hr := by
     classical
-    simpa only [dite_eq_left hr] using ((A.nu ⟨r, hr⟩ d).2 n).1
+    simpa [hr] using ((A.nu ⟨r, hr⟩ d).2 n).1
 
 end Archive
 
@@ -152,89 +152,81 @@ namespace Archive
 variable {l : Ordinal.{0}} {H : Prefix l} {hw : ω < l} (A : Archive H hw)
   (E : H.Extension A.data)
 
-private noncomputable def oldV (r : Rows l) (hr : r ≠ newRow l hw.le) :
-    SupportFamily (Base (literalPrefix H E) r) := by
+/-- One whole born row is cast once, so its dependent V/nu pair stays together. -/
+private structure SavedRow {b : Ordinal.{0}} (C : Set (Cube b)) where
+  U : Label → SupportFamily C
+  Uonto : Surjective U
+  V : SupportFamily C
+  nu : Label → @BornData C _ (borel C) V
+  nuonto : Surjective nu
+
+private noncomputable def oldPack (r : Rows l) (hr : r ≠ newRow l hw.le) :
+    SavedRow ((literalPrefix H E).carrier (rowIndex r)) := by
   have hrl : r.1 < l := (bornRow hw r hr).1.2
-  change SupportFamily (enlargedCarrier H (rowIndex r))
+  change SavedRow (enlargedCarrier H (rowIndex r))
   rw [carrier_old H r.1 hrl _]
-  exact A.V (bornRow hw r hr)
+  exact ⟨A.U (bornRow hw r hr), A.Uonto (bornRow hw r hr),
+    A.V (bornRow hw r hr), A.nu (bornRow hw r hr), A.nuonto (bornRow hw r hr)⟩
 
-private noncomputable def oldU (r : Rows l) (hr : r ≠ newRow l hw.le) :
-    Label → SupportFamily (Base (literalPrefix H E) r) := by
-  have hrl : r.1 < l := (bornRow hw r hr).1.2
-  change Label → SupportFamily (enlargedCarrier H (rowIndex r))
-  rw [carrier_old H r.1 hrl _]
-  exact A.U (bornRow hw r hr)
-
-private noncomputable def oldNu (r : Rows l) (hr : r ≠ newRow l hw.le) :
-    Label → BornData (A.oldV E r hr) := by
-  have hrl : r.1 < l := (bornRow hw r hr).1.2
-  simpa [oldV, Base, Prefix.Space, literalPrefix, rowIndex, index, enlargedCarrier, bornRow, hrl]
-    using A.nu (bornRow hw r hr)
-
-/-- The actual limit predecessor: every old whole enumeration and birth is retained. -/
 set_option backward.isDefEq.respectTransparency false in
+/-- The actual limit predecessor: every old whole enumeration and birth is retained. -/
 noncomputable def predecessor : Predecessor (literalPrefix H E) hw.le := by
-  classical
-  refine {
-    proper := A.proper
-    base_onto := ?_
-    births := A.pastBirths
-    U := A.oldU E
-    Uonto := ?_
-    V := A.oldV E
-    nu := A.oldNu E
-    nuonto := ?_
-    I := fun r hr => E.I (bornRow hw r hr).1
-    J := fun r hr d => E.J (bornRow hw r hr).1 d
-    A := fun r hr d => E.A (bornRow hw r hr).1 d r.2.1
-    B := ?_
-    C := ?_
-    E := ?_
-    F := ?_ }
-  · change Surjective (fun x : enlargedCarrier H (top l) => restrict hw.le x.1)
-    rw [carrier_top H (Order.lt_succ l)]
-    intro y
-    obtain ⟨z, hz⟩ := A.base_onto y
-    obtain ⟨x, hx⟩ := E.onto ⟨ω, hw⟩ z
-    exact ⟨x, (congrArg Subtype.val hx).trans hz⟩
-  · intro r hr
-    have hrl : r.1 < l := (bornRow hw r hr).1.2
-    simpa [oldU, Base, Prefix.Space, literalPrefix, rowIndex, index, enlargedCarrier, bornRow, hrl]
-      using A.Uonto (bornRow hw r hr)
-  · intro r hr
-    have hrl : r.1 < l := (bornRow hw r hr).1.2
-    simpa [oldNu, oldV, Base, Prefix.Space, literalPrefix, rowIndex, index,
-      enlargedCarrier, bornRow, hrl] using A.nuonto (bornRow hw r hr)
-  · intro r hr d
-    simpa [data, bornRow, r.2.1] using E.B (bornRow hw r hr).1 d r.2.1
-  · intro r hr d e
-    have h := E.C (bornRow hw r hr).1 d (e == 1) r.2.1
-    have he : (if (e == 1) then (1 : Fin 2) else 0) = e := by fin_cases e <;> rfl
-    simpa [data, bornRow, r.2.1, he] using h
-  · intro r hr c
-    have hrl : r.1 < l := (bornRow hw r hr).1.2
-    by_cases hc : c.1 < r.1
-    · apply Eventually.of_forall
-      intro n x y _ _ hxy
-      exact congrArg (fun z => z.1 ⟨c.1, hc⟩) hxy
-    · have h := E.E (bornRow hw r hr).1 c r.2.1 (le_of_not_gt hc)
-      simpa [oldV, Base, K, projection, Prefix.map, Prefix.Space, literalPrefix,
-        rowIndex, index, top, enlargedCarrier, bornRow, hrl, data, r.2.1] using h
-  · intro r hr d
-    have hrl : r.1 < l := (bornRow hw r hr).1.2
-    dsimp only [K, Prefix.Space, literalPrefix]
-    rw [carrier_top H (Order.lt_succ l)]
-    simp [oldNu, oldV, Base, K, projection, Prefix.map, Prefix.Space, literalPrefix,
-      rowIndex, index, top, enlargedCarrier, bornRow, hrl]
-    intro s hm hn
-    letI : MetricSpace H.LimitSpace := H.properMetric A.proper
-    let t : ℕ → RegularSigned H.LimitSpace := fun n => ⟨s n, inferInstance, inferInstance⟩
-    have ht : ∀ n, H.NewClass A.data (bornRow hw r hr).1 d n (t n) := by
-      intro n
-      exact ⟨hn n, by simpa [data, bornRow, r.2.1] using hm n⟩
-    obtain ⟨mu, _, hconv⟩ := E.F (bornRow hw r hr).1 d r.2.1 t ht
-    exact ⟨mu.1, hconv⟩
+  with_unfolding_all
+    classical
+    refine {
+      proper := A.proper
+      base_onto := ?_
+      births := A.pastBirths
+      U := fun r hr => (A.oldPack E r hr).U
+      Uonto := fun r hr => (A.oldPack E r hr).Uonto
+      V := fun r hr => (A.oldPack E r hr).V
+      nu := fun r hr => (A.oldPack E r hr).nu
+      nuonto := fun r hr => (A.oldPack E r hr).nuonto
+      I := fun r hr => E.I (bornRow hw r hr).1
+      J := fun r hr d => E.J (bornRow hw r hr).1 d
+      A := fun r hr d => E.A (bornRow hw r hr).1 d r.2.1
+      B := ?_
+      C := ?_
+      E := ?_
+      F := ?_ }
+    · change Surjective (fun x : enlargedCarrier H (top l) => restrict hw.le x.1)
+      rw [carrier_top H (Order.lt_succ l)]
+      intro y
+      obtain ⟨z, hz⟩ := A.base_onto y
+      obtain ⟨x, hx⟩ := E.onto ⟨ω, hw⟩ z
+      exact ⟨x, (congrArg Subtype.val hx).trans hz⟩
+    · intro r hr d
+      simpa [data, bornRow, r.2.1] using E.B (bornRow hw r hr).1 d r.2.1
+    · intro r hr d e
+      have h := E.C (bornRow hw r hr).1 d (e == 1) r.2.1
+      have he : (if (e == 1) then (1 : Fin 2) else 0) = e := by fin_cases e <;> rfl
+      simpa [data, bornRow, r.2.1, he] using h
+    · intro r hr c
+      have hrl : r.1 < l := (bornRow hw r hr).1.2
+      by_cases hc : c.1 < r.1
+      · apply Eventually.of_forall
+        intro n x y _ _ hxy
+        exact congrArg (fun z => z.1 ⟨c.1, hc⟩) hxy
+      · have h := E.E (bornRow hw r hr).1 c r.2.1 (le_of_not_gt hc)
+        simpa [oldPack, Base, K, projection, Prefix.map, Prefix.Space, literalPrefix,
+          kMeasurable, baseMeasurable, Prefix.spaceMeasurable,
+          rowIndex, index, top, enlargedCarrier, bornRow, hrl, data, r.2.1] using h
+    · intro r hr d
+      have hrl : r.1 < l := (bornRow hw r hr).1.2
+      dsimp only [K, Prefix.Space, literalPrefix, kMeasurable, baseMeasurable,
+        Prefix.spaceMeasurable, projection, Prefix.map]
+      rw [carrier_top H (Order.lt_succ l)]
+      simp [oldPack, Base, K, projection, Prefix.map, Prefix.Space, literalPrefix,
+          kMeasurable, baseMeasurable, Prefix.spaceMeasurable,
+        rowIndex, index, top, enlargedCarrier, bornRow, hrl]
+      intro s hm hn
+      letI : MetricSpace H.LimitSpace := H.properMetric A.proper
+      let t : ℕ → RegularSigned H.LimitSpace := fun n => ⟨s n, inferInstance, inferInstance⟩
+      have ht : ∀ n, H.NewClass A.data (bornRow hw r hr).1 d n (t n) := by
+        intro n
+        exact ⟨hn n, by simpa [data, bornRow, r.2.1] using hm n⟩
+      obtain ⟨mu, _, hconv⟩ := E.F (bornRow hw r hr).1 d r.2.1 t ht
+      exact ⟨mu.1, hconv⟩
 
 end Archive
 
