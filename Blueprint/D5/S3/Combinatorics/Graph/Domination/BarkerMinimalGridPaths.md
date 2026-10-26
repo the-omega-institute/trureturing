@@ -100,7 +100,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridPaths.act
 
 For every natural k, the actual inclusion-minimal dominating subset count of the ordinary open grid of width k+2, cast to the integers, equals the sum of fullOrbit k over all 64 starts. This includes width two with no transitions.
 
-The mask-word sum differs from a sum over arbitrary intermediate states with fixed endpoints. Taking the state type Fin 4672 and the unit-edge matrix in the generic pathWeight formula would require a separate correspondence from accepted mask words to nonzero state paths and a terminal-weighted sum over endpoints. Here the deterministic append operation and the two open-end tests establish that correspondence directly for every suffix length, including zero.
+The generic CycleItalianDominationRecurrence.sum_pathWeight sums arbitrary intermediate states between fixed endpoints u and v for n+1 edges. At a positive suffix length k its parameters would be the state type Fin 4672, the unit admitted-edge matrix M, and n=k−1, followed by a terminal-weighted endpoint sum and a mask-word correspondence. The argument here defines each continuation by append and identifies its weight with the actual local tests for every k, including zero.
 
 ## References
 
