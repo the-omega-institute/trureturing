@@ -1,0 +1,22 @@
+**Definition 3.6 (the installed gate).** Define the following integers and rational threshold from the actual input (3.4):
+
+$$
+\begin{gathered}
+t=s+2,\qquad B_0=128t,\qquad
+\kappa=\frac{\varepsilon^2}{8h^2},\qquad
+m=1+16t h^2 4^p=1+\frac{2t}{\kappa},\\
+L=9,\qquad L_0=2p+5.
+\end{gathered}
+\tag{3.11}
+$$
+
+First repeat $B_0$ times: execute $L$ wash blocks, then one $\mathsf J$ with an immediate $F$ read. Append every bit $x_i\in\{+1,-1\}$ to its chronological tape slot, and increment an integer $K_+$ on the actual plus replies. Next execute $m$ cycles consisting of one $\mathsf J$ with an immediate $F$ read followed by one $\mathsf N$. Append every reply $y_i$ in order, and maintain the first reply and a mismatch bit. Position means its slot ordinal in this ordered tape, not an additional timestamp field or free clock read. Both stages finish their fixed lengths, also after an early mismatch. The acquired flag is
+
+$$
+\mathsf{PASS}\quad\Longleftrightarrow\quad
+12K_+\ge7B_0\quad\hbox{and}\quad y_1=y_2=\cdots=y_m.
+\tag{3.12}
+$$
+
+Otherwise return $\mathsf{INCONCLUSIVE}$. This report is not an assertion that $\gamma\ne1$. On PASS the program actually executes $L_0$ further wash blocks and enables one finite use of the stored task word $v$. It never substitutes an unexecuted reset for this refresh.
+
