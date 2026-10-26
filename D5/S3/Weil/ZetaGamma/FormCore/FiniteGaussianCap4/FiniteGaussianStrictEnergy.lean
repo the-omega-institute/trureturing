@@ -50,10 +50,10 @@ private theorem atom_product_integrable (a b s : ℝ) (hs : -1 < s) :
   have hr : 0 < r := add_pos (Real.exp_pos _) (Real.exp_pos _)
   have hi : IntegrableOn (fun x : ℝ => x ^ s * Real.exp (-r * x)) (Ioi 0) := by
     simpa only [Real.rpow_one] using
-      (Real.integrableOn_rpow_mul_exp_neg_mul_rpow
+      (integrableOn_rpow_mul_exp_neg_mul_rpow
         (s := s) (p := 1) (b := r) hs (by norm_num) hr)
-  apply (hi.const_mul (Real.exp ((9 / 2 : ℝ) * (a + b)))).congr_fun
-    (fun x _ => ?_) measurableSet_Ioi
+  apply (hi.const_mul (Real.exp ((9 / 2 : ℝ) * (a + b)))).congr
+  filter_upwards with x
   have he : gaussianAtom a x * gaussianAtom b x =
       Real.exp ((9 / 2 : ℝ) * (a + b)) * Real.exp (-r * x) := by
     unfold gaussianAtom
