@@ -1,0 +1,11 @@
+## 44. Exact drift elimination with a fixed number of joint error coordinates
+
+Throughout §§44–48 the contract is exactly Definitions 25.1, 26.1 and 30.1. Fix arbitrary $k,d\ge0$, the $L=3k+d+5$ paid clocks and matrices of (26.2), $y\in\mathbb R^L$ and $\delta\ge0$. Use both source charts $P_\nu=X_\nu/(\alpha+\beta)$ of (37.1), with $\alpha,\beta>0$, and their exact trace numerators $B_{\nu,i}$ in (37.2). Write
+
+$$
+ p=k+1,\qquad r=L-d-1=3k+4.
+ \tag{44.1}
+$$
+
+Here $p$ is the number of gain coefficients and $r$ is the codimension of the sampled drift space. In particular $r$ does not increase with $d$. The source is a real entrywise-positive rank-one matrix; no symmetry or Hermitian positivity is assumed. These sections replace the exponentially many raw coefficient bases in (38.6) by an explicitly counted family polynomial in $d$ for each fixed $k$. They do not change the compatibility set or the exact-radius escape question.
+

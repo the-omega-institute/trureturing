@@ -1,0 +1,31 @@
+**Proposition 24.2 (the original seven-read example needs eight reads for uniform stability).** Keep precisely Example 17.3: $k=1,d=0,N=5,T=4,b=8/5,H(t)=t-5,D=0$, with the whole $\mathcal F_{8/5}$. Its exact total optimum for the prescribed prefix is $7$, while both stable totals in (24.1) are $8$. One actual eight-read trajectory has the following explicit robust decoder. Execute $J$ at clock $5$ and $M$ at each of clocks $6,7$. The clock-$5$ action and its zero-gain read are paid. Write the two received effective nonroot scalars as $y_6,y_7$ and set
+
+$$
+ \widehat v=\frac{131}{5}-y_6-y_7,\qquad
+ \widehat t=\frac{212}{5}-y_6-2y_7,\qquad
+ \widehat u=-67+2y_6+3y_7,\qquad
+ \widehat P=\begin{pmatrix}1-\widehat t&\widehat u\\\widehat v&\widehat t\end{pmatrix}.
+ \tag{24.2}
+$$
+
+For every source and every finite effective error bound $\varepsilon\ge0$ it has $\|\widehat P-P\|_{\max}\le5\varepsilon$. If the original errors at clocks $6,7$ have magnitude at most $\delta$, its error is at most $7\delta/2$. For every $\varepsilon>0$, every deterministic family constrained to the same exact prefix and at most seven total reads has worst error at least $543/1090$.
+
+**Proof.** Here $r_1=2,r_2=3,S=5$, $F_4/F_5=3/5$, and $b=1+3/5=b_c$. The exact seven-read assertion is the existing example and Theorem 18.1. Theorem 23.1 gives the all-source stable lower bound at $r_2=3$, allowing arbitrary intervening words and ambient outputs. An explicit positive lower constant is also available. The four possible terminal matrices after two more actions are $M^6,JM^5,MJM^4,M^4$. For $JM^5$, Theorem 21.1 gives risk $4/5$ at every positive error. For each other matrix the two strictly positive sources
+
+$$
+ P'=\frac1{545}\begin{pmatrix}470&750\\47&75\end{pmatrix},\qquad
+ P''=\frac1{545}\begin{pmatrix}108&207\\228&437\end{pmatrix}
+ \tag{24.3}
+$$
+
+are in $\mathcal F_{8/5}$ and have equal terminal traces. For $M^6,M^4$ this follows from the pure-$M$ identity (8.6); for $MJM^4$ direct multiplication gives zero trace pairing with their difference. Their distance is $543/545$. They have the same entire prefix and same whole $H,D$, and clock $5$ is a root. Thus their actual two-read histories coincide and the midpoint lower bound gives $543/1090$. The first action and the action at clock $6$ are fixed on the common history before that first nonroot response; early stopping cannot improve this lower bound. This proves the asserted constant for every permitted strategy.
+
+For the attained eight-read path, direct multiplication gives
+
+$$
+ A_6=MJM^4=\begin{pmatrix}2&3\\5&8\end{pmatrix},\qquad
+ A_7=M^2JM^4=\begin{pmatrix}5&8\\7&11\end{pmatrix}.
+$$
+
+For $P=\left(\begin{smallmatrix}1-t&u\\v&t\end{smallmatrix}\right)$, $u+v+t=8/5$, their exact traces are $10+t-2v$ and $81/5-t+v$. Solving these two linear equations is exactly (24.2) without error. If their effective errors are $a,e$, the errors of $v,t,u$ are $-a-e,-a-2e,2a+3e$. Their maximum absolute value is at most $5\varepsilon$ when $|a|,|e|\le\varepsilon$. Since $H(6)=1,H(7)=2$, original error at most $\delta$ instead gives $|a|\le\delta$, $|e|\le\delta/2$ and the bound $7\delta/2$. These estimates are uniform over the entire fiber and impose no output constraints. This trajectory uses the already paid five reads and precisely three further reads; it does not change the separate exact trajectory $M$ at clock $5$, $J$ at clock $6$ in Example 17.3. $\square$
+
