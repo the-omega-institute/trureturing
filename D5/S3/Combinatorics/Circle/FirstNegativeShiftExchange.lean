@@ -4,15 +4,16 @@
    mirror-E: none(waiver:audit-open-22063)
    anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic]
    utility: none
-   digest: Actual last-two arrival bounds permit omission of the first negative LARGE. -/
+   digest: Arrival-free descent by native prefix truncation or first-negative shift. -/
 module
 public import D5.S3.Combinatorics.Circle.ThreeLargePacketExchange
 
-/-! # Omitting the first negative LARGE using actual old arrivals
+/-! # Arrival-free descent and conditional all-SMALL first-negative omission
 
-The two old arrival measurements below are premises, not consequences of Legal.
-Complete SMALL batches are reordered across the omitted first negative occurrence.
-The original-quantifier C3.1 availability problem remains open. -/
+The conditional shift retains all SMALL occurrences by reordering complete batches.
+Low actual arrivals instead permit literal prefix truncation with strict G descent;
+the full consumer therefore needs no arrival assumptions. The first-Y>P region
+and original-quantifier C3.1 remain open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -418,5 +419,198 @@ theorem actualSource_threeNegative_firstNegative_shift_exchange_full
   · rw [inv.complementSum, hEnd]
     simp only [e0, h, Y, P, f, W, sub_eq_add_neg]
 
+/-- A low old prefix can receive the fresh native pair. The discarded suffix may
+contain SMALL occurrences: its full physical inventory, rather than uniform
+SMALL retention, controls the exact balances. Consumed by the arrival-free exchange. -/
+theorem actualSource_prefix_pair_truncation
+    (k t : ℕ) (hk : 3 ≤ k) (p : Fin k) (F R : List (Fin k))
+    (hpositive : 0 < s k t p)
+    (hnlarge : Q k ≤ |s k t (hit k 1 p)|)
+    (hexpand : N k < 3 * |s k t p|)
+    (hW : Legal k t (F ++ R))
+    (hpunused : p ∉ F ++ R) (hnunused : hit k 1 p ∉ F ++ R)
+    (hcut : mass (s k t) F ≤ C k - s k t p)
+    (hreturn : largeUsed k t R ≤ 1) :
+    let n := hit k 1 p
+    let W := F ++ R
+    let V := F ++ [p, n]
+    Legal k t V ∧ Inventory k t W V [p, n] R ∧
+    (V ++ R).Perm (W ++ [p, n]) ∧
+    G k t V + 2 = G k t W + largeUsed k t R ∧
+    G k t V < G k t W ∧ J k t V < J k t W := by
+  classical
+  dsimp only
+  let f := s k t
+  let n := hit k 1 p
+  let D := |f n|
+  have geo := native_geometry hk t p hnlarge hexpand
+  have hnval : f n = -D := by
+    simpa [f, n, D, orient, show ¬ s k t p < 0 by omega] using geo.nValue
+  have hDP : D < f p := by
+    simpa only [abs_of_pos hpositive] using geo.strictOrder.1
+  have hp0 : 0 < f p := hpositive
+  have hD : 0 ≤ D := abs_nonneg _
+  have hsF := (strip_split F R (strip_of_legal hW)).1
+  have hv : 0 ≤ mass f F ∧ mass f F ≤ C k := by
+    simpa [f, mass] using inStrip_prefix hsF F.length
+  have hsPN : InStrip f (C k) (mass f F) [p, n] := by
+    change 0 ≤ mass f F ∧ mass f F ≤ C k ∧
+      0 ≤ mass f F + f p ∧ mass f F + f p ≤ C k ∧
+      0 ≤ mass f F + f p + f n ∧ mass f F + f p + f n ≤ C k
+    rw [hnval]
+    change mass f F ≤ C k - f p at hcut
+    omega
+  have hsV : InStrip f (C k) 0 (F ++ [p, n]) :=
+    inStrip_append hsF (by simpa [mass] using hsPN)
+  have hI : [p, n].Nodup := by
+    have hpn : p ≠ n := by intro he; have hv := congrArg f he; omega
+    simp [hpn]
+  have hIW (i : Fin k) (hi : i ∈ [p, n]) : i ∉ F ++ R := by
+    simp only [List.mem_cons, List.not_mem_nil, or_false] at hi
+    rcases hi with rfl | rfl
+    · exact hpunused
+    · exact hnunused
+  have hIL (i : Fin k) (hi : i ∈ [p, n]) : Large k t i := by
+    simp only [List.mem_cons, List.not_mem_nil, or_false] at hi
+    rcases hi with rfl | rfl
+    · exact geo.pLarge
+    · exact geo.nLarge
+  have hperm : ((F ++ [p, n]) ++ R).Perm ((F ++ R) ++ [p, n]) := by
+    simpa only [List.append_assoc] using
+      (List.perm_append_comm : ([p, n] ++ R).Perm (R ++ [p, n])).append_left F
+  have inv := inventory_of_perm hk t (F ++ R) (F ++ [p, n]) [p, n] R
+    hW.1 hI hIW (fun i hi => List.mem_append_right F hi) hIL hperm
+  have hIlarge : largeUsed k t [p, n] = 2 := by
+    simp [largeUsed, mass, largeWeight, geo.pLarge, show Large k t n from geo.nLarge]
+  have hbal : G k t (F ++ [p, n]) + 2 = G k t (F ++ R) + largeUsed k t R := by
+    simpa only [hIlarge] using inv.largeBalance
+  have hG : G k t (F ++ [p, n]) < G k t (F ++ R) := by omega
+  have hJ : J k t (F ++ [p, n]) < J k t (F ++ R) :=
+    Prod.Lex.toLex_lt_toLex.mpr (Or.inl hG)
+  exact ⟨legal_of_strip inv.nodup hsV, inv, hperm, hbal, hG, hJ⟩
+
+/-- With the original native source hypotheses and Y≤P, an actual strict-J
+competitor always exists. Low arrivals give literal prefix cuts; only the
+remaining shift branch asserts retention of every SMALL and strict H descent. -/
+theorem actualSource_threeNegative_firstNegative_arrival_free_exchange_full
+    (k t : ℕ) (hk : 3 ≤ k) (p y zpen z : Fin k)
+    (A T0 T1 T2 E : List (Fin k))
+    (hpositive : 0 < s k t p)
+    (hnlarge : Q k ≤ |s k t (hit k 1 p)|)
+    (hexpand : N k < 3 * |s k t p|)
+    (hW : Legal k t (oldWord p y zpen z A T0 T1 T2 E))
+    (hpunused : p ∉ oldWord p y zpen z A T0 T1 T2 E)
+    (hnunused : hit k 1 p ∉ oldWord p y zpen z A T0 T1 T2 E)
+    (hsmall : ∀ i ∈ smallWord T0 T1 T2 E, |s k t i| < Q k)
+    (hylarge : Q k ≤ -s k t y)
+    (hzpenlarge : Q k ≤ -s k t zpen)
+    (hzlarge : Q k ≤ -s k t z)
+    (hyupper : -s k t y ≤ s k t p)
+    (hblocklo : C k - s k t p <
+      mass (s k t) (oldWord p y zpen z A T0 T1 T2 E))
+    (hblockhi : mass (s k t) (oldWord p y zpen z A T0 T1 T2 E) <
+      |s k t (hit k 1 p)|) :
+    let n := hit k 1 p
+    let x := hit k 2 p
+    let W := oldWord p y zpen z A T0 T1 T2 E
+    let S := smallWord T0 T1 T2 E
+    let Btail := T0 ++ [y] ++ T1 ++ [zpen] ++ T2 ++ [z] ++ E
+    let Fpen := A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen]
+    let Rpen := T2 ++ [z] ++ E
+    let Fz := Fpen ++ T2 ++ [z]
+    ∃ V R : List (Fin k),
+      Legal k t V ∧ V.Nodup ∧ InStrip (s k t) (C k) 0 V ∧
+      (∀ d : ℕ, 0 ≤ mass (s k t) (V.take d) ∧
+        mass (s k t) (V.take d) ≤ C k) ∧
+      Inventory k t W V [p, n] R ∧
+      (V ++ R).Perm (W ++ [p, n]) ∧ J k t V < J k t W ∧
+      ((mass (s k t) Fpen ≤ C k - s k t p ∧
+        V = Fpen ++ [p, n] ∧ R = Rpen ∧ largeUsed k t R = 1 ∧
+        G k t V + 1 = G k t W ∧ G k t V < G k t W) ∨
+       (C k - s k t p < mass (s k t) Fpen ∧
+        mass (s k t) Fz ≤ C k - s k t p ∧
+        V = Fz ++ [p, n] ∧ R = E ∧ largeUsed k t R = 0 ∧
+        G k t V + 2 = G k t W ∧ G k t V < G k t W) ∨
+       (C k - s k t p < mass (s k t) Fpen ∧
+        C k - s k t p < mass (s k t) Fz ∧ R = [x, y] ∧
+        ∃ L01 L2 LE : List (Fin k),
+          L01.Perm (T0 ++ T1) ∧ L2.Perm T2 ∧ LE.Perm E ∧
+          (let L := L01 ++ [zpen] ++ L2 ++ [z] ++ LE
+           let e0 := mass (s k t) W - s k t y - s k t p
+           V = A ++ [p, n] ++ L ∧ (L ++ [y]).Perm Btail ∧
+           (∀ i ∈ S, i ∈ L) ∧ (∀ i ∈ R, i ∉ V) ∧ zpen ∈ V ∧ z ∈ V ∧
+           (∀ i ∈ W, |s k t i| < Q k → i ∈ V) ∧
+           G k t V = G k t W ∧ U V = U W ∧
+           remainingSmall t V = remainingSmall t W ∧
+           H k t V + 3 ^ (s k t x).natAbs + 3 ^ (s k t y).natAbs =
+             H k t W + 3 ^ (s k t p).natAbs + 3 ^ (s k t n).natAbs ∧
+           H k t V < H k t W ∧
+           mass (s k t) V = e0 ∧ 0 < e0 ∧ e0 < C k ∧
+           remainingMass (s k t) V = -e0))) := by
+  classical
+  dsimp only
+  let n := hit k 1 p
+  let x := hit k 2 p
+  let W := oldWord p y zpen z A T0 T1 T2 E
+  let Fpen := A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen]
+  let Rpen := T2 ++ [z] ++ E
+  let Fz := Fpen ++ T2 ++ [z]
+  have hWpen : W = Fpen ++ Rpen := by
+    simp only [W, oldWord, Fpen, Rpen, x, List.append_assoc]
+  have hWz : W = Fz ++ E := by
+    simp only [W, oldWord, Fz, Fpen, x, List.append_assoc]
+  have hE : largeUsed k t E = 0 := (small_weights t E (by
+    intro i hi
+    exact hsmall i (by simp [smallWord, hi]))).1
+  have hT2 : largeUsed k t T2 = 0 := (small_weights t T2 (by
+    intro i hi
+    exact hsmall i (by simp [smallWord, hi]))).1
+  have hzL : Large k t z := by
+    have hz := neg_le_abs (s k t z)
+    unfold Large
+    change Q k ≤ |s k t z|
+    omega
+  have hRpen : largeUsed k t Rpen = 1 := by
+    simp [Rpen, largeUsed_append, largeUsed_cons, largeWeight, hzL, hT2, hE]
+  by_cases hpen : mass (s k t) Fpen ≤ C k - s k t p
+  · obtain ⟨hv, inv, hp, hb, hg, hj⟩ := actualSource_prefix_pair_truncation
+      k t hk p Fpen Rpen hpositive hnlarge hexpand
+      (hWpen ▸ hW) (hWpen ▸ hpunused) (hWpen ▸ hnunused) hpen (by omega)
+    rw [← hWpen] at inv hp hb hg hj
+    refine ⟨Fpen ++ [p, n], Rpen, hv, hv.1, strip_of_legal hv, hv.2,
+      inv, hp, hj, Or.inl ⟨hpen, rfl, rfl, hRpen, ?_, hg⟩⟩
+    rw [hRpen] at hb
+    change G k t (Fpen ++ [p, n]) + 2 = G k t W + 1 at hb
+    change G k t (Fpen ++ [p, n]) + 1 = G k t W
+    omega
+  · by_cases hzcut : mass (s k t) Fz ≤ C k - s k t p
+    · obtain ⟨hv, inv, hp, hb, hg, hj⟩ := actualSource_prefix_pair_truncation
+        k t hk p Fz E hpositive hnlarge hexpand
+        (hWz ▸ hW) (hWz ▸ hpunused) (hWz ▸ hnunused) hzcut (by omega)
+      rw [← hWz] at inv hp hb hg hj
+      refine ⟨Fz ++ [p, n], E, hv, hv.1, strip_of_legal hv, hv.2,
+        inv, hp, hj, Or.inr (Or.inl ⟨lt_of_not_ge hpen, hzcut, rfl, rfl, hE, ?_, hg⟩)⟩
+      simpa only [hE, Nat.add_zero] using hb
+    · have hpa : C k - s k t p ≤ mass (s k t)
+          (A ++ [hit k 2 p] ++ T0 ++ [y] ++ T1 ++ [zpen]) := by
+        change C k - s k t p ≤ mass (s k t) Fpen
+        omega
+      have hza : C k - s k t p ≤ mass (s k t)
+          (A ++ [hit k 2 p] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2 ++ [z]) := by
+        change C k - s k t p ≤ mass (s k t) Fz
+        omega
+      obtain ⟨L01, L2, LE, h01, h2, he, htail, hS, hv, hn, hs, hpref,
+        inv, hp, hr, hzp, hz, hretain, hg, hu, hsmallEq, henergy, hstrict, hj,
+        hend, he0, heC, hcomp⟩ :=
+        actualSource_threeNegative_firstNegative_shift_exchange_full
+          k t hk p y zpen z A T0 T1 T2 E hpositive hnlarge hexpand hW
+          hpunused hnunused hsmall hylarge hzpenlarge hzlarge hyupper hpa hza hblocklo hblockhi
+      refine ⟨A ++ [p, n] ++ (L01 ++ [zpen] ++ L2 ++ [z] ++ LE), [x, y],
+        hv, hn, hs, hpref, inv, hp, hj, Or.inr (Or.inr ⟨lt_of_not_ge hpen, lt_of_not_ge hzcut, rfl,
+          L01, L2, LE, h01, h2, he, rfl, htail, hS, hr, hzp, hz, hretain,
+          hg, hu, hsmallEq, henergy, hstrict, hend, he0, heC, hcomp⟩)⟩
+
 #print axioms actualSource_threeNegative_firstNegative_shift_exchange_full
+#print axioms actualSource_prefix_pair_truncation
+#print axioms actualSource_threeNegative_firstNegative_arrival_free_exchange_full
 end D5.S3.Combinatorics.Circle.FirstNegativeShiftExchange
