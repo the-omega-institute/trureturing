@@ -46,6 +46,10 @@ $$\forall (n: \mathbb{N}), \operatorname{a}\left(n\right) = \operatorname{nonSup
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Compositions/WisemanA387118.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wiseman-a387118` (proved) by `D5/S1/Words/Compositions/WisemanA387118.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wiseman-a387118","declaration_gid":"D5/S1/Words/Compositions/WisemanA387118.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gus Wiseman (2025). *OEIS A388712, A387118 and A388713*. URL: <https://oeis.org/A388712>.

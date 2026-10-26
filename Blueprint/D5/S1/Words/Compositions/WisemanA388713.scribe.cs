@@ -24,7 +24,9 @@ internal sealed class WisemanA388713Document : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Equality of the partition counts by maximum", Disp(ClaimBody()),
                 "WisemanA388712.sorted_choosable_iff_superdiagonal identifies the two predicates. Its reverse direction and the common maximum-part condition give identical filters, whose cardinalities agree.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wiseman-a388713"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,

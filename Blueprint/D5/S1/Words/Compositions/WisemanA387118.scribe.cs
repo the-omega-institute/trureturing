@@ -24,7 +24,9 @@ internal sealed class WisemanA387118Document : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Equality of the total partition counts", Disp(ClaimBody()),
                 "WisemanA388712.sorted_choosable_iff_superdiagonal identifies choosability of descending parts with superdiagonality of ascending parts. Negation gives equal filters on the same finite set of partitions and hence equal cardinalities.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wiseman-a387118"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
