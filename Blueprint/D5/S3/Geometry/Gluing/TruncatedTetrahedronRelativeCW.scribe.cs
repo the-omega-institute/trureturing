@@ -36,16 +36,17 @@ internal sealed class TruncatedTetrahedronRelativeCWDocument : IScribeDocumentDe
     {
         var t = F.Id("T");
         return All("T", F.Id("Types"),
-            All("finiteT", Call("Fintype", t),
-            All("topologyT", Call("TopologicalSpace", t),
-            All("discreteT", Call("DiscreteTopology", t),
-            All("P", Call("RawFacePairing", t), Conclusions())))));
+            F.Seq(F.OpenBracket, Call("Fintype", t), F.CloseBracket, F.Sp,
+                F.OpenBracket, Call("TopologicalSpace", t), F.CloseBracket, F.Sp,
+                F.OpenBracket, Call("DiscreteTopology", t), F.CloseBracket, F.Sp,
+                All("P", Call("RawFacePairing", t), Conclusions())));
     }
 
     private static Formula Conclusions()
     {
         var p = F.Id("P"); var t = F.Id("T");
-        var x = F.Id("X"); var q = F.Id("q"); var d = F.Id("D");
+        var x = Call("TruncatedPoint", t); var q = Call("q", p);
+        var d = Call("faceSkeleton", p);
         var a = F.Id("a"); var b = F.Id("b"); var f = F.Id("f");
         var tag = F.Id("t"); var other = F.Id("s"); var c = F.Id("c"); var e = F.Id("e");
         var top = Call("topCell", p, tag); var topOther = Call("topCell", p, other);
@@ -73,7 +74,7 @@ internal sealed class TruncatedTetrahedronRelativeCWDocument : IScribeDocumentDe
                 Call("Disjoint",Image(top,Ball(3)),Image(topOther,Ball(3)))))),
             All("c",Call("SurfaceCell",p),All("e",Call("SurfaceCell",p),Implies(Ne(c,e),
                 Call("Disjoint",Image(surface,Ball(2)),Image(surfaceOther,Ball(2)))))),
-            Eq(Call("topUnion",p),F.Id("Q")),
+            Eq(Call("topUnion",p),Call("univ",Call("TruncatedQuotient",p))),
             Eq(d,Image(q,Call("retainedBoundary",t))),
             Call("IsClosed",d),
             All("t",t,Call("Disjoint",Image(top,Ball(3)),d)),

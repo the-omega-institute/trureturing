@@ -62,18 +62,21 @@ private def testPairing : RawFacePairing (ULift.{u} Unit) where
   facePair := Equiv.prodCongr (Equiv.refl _) flipFace
   faceMap _ := Equiv.refl _
   pairInvolutive := by
-    ext x
+    apply Equiv.ext
+    rintro ⟨t,f⟩
     apply Prod.ext
     · rfl
-    · rcases x with ⟨t,f⟩
+    · change flipFace (flipFace f) = f
       fin_cases f <;> decide
   pairFixedFree := by
     rintro ⟨t,f⟩ he
-    have hf := congrArg Prod.snd he
-    fin_cases f <;> norm_num [flipFace, Equiv.prodCongr] at hf
+    have hf : flipFace f = f := congrArg Prod.snd he
+    have hnf : flipFace f ≠ f := by
+      fin_cases f <;> decide
+    exact hnf hf
   mapInverse _ _ := rfl
 
-private def test : PairingData.{u} :=
+private abbrev test : PairingData.{u} :=
   ⟨ULift.{u} Unit,testPairing⟩
 
 private def a : TruncatedPoint test.T :=
@@ -165,5 +168,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     { name := `maxSynthPendingDepth, value := .nat 3 },
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
+
+end
 
 end Reg.D5.S3.Geometry.Gluing.TruncatedTetrahedronRelativeCW
