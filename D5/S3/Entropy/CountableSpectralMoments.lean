@@ -30,6 +30,56 @@ def tripleLayer (p : ℕ → ℝ) (k : ℕ) : ℝ :=
 /-- The increasing-triple convention, with no exterior factorial. -/
 def third (p : ℕ → ℝ) : ℝ := ∑' k, tripleLayer p k
 
+/-- Outer index k, then j, then i; the indicator retains exactly i < j < k. -/
+def tripleTerm (p : ℕ → ℝ) (t : ℕ × (ℕ × ℕ)) : ℝ :=
+  if t.2.2 < t.2.1 ∧ t.2.1 < t.1 then p t.2.2 * p t.2.1 * p t.1 else 0
+
+/-- The increasing-triple definition is an absolutely convergent, unordered
+countable sum. Its value agrees with the finite-layer convention above. -/
+theorem absolute_triple_sum {p : ℕ → ℝ} (hp : Summable p)
+    (hn : ∀ i, 0 ≤ p i) :
+    Summable (fun t => ‖tripleTerm p t‖) ∧ (∑' t, tripleTerm p t) = third p := by
+  have hpair := hp.mul_of_nonneg hp hn hn
+  have hprod := hp.mul_of_nonneg hpair hn (fun t => mul_nonneg (hn t.1) (hn t.2))
+  have hnonneg (t : ℕ × (ℕ × ℕ)) : 0 ≤ tripleTerm p t := by
+    unfold tripleTerm
+    split_ifs <;> positivity
+  have hsum : Summable (tripleTerm p) := by
+    apply Summable.of_nonneg_of_le hnonneg _ hprod
+    intro t
+    unfold tripleTerm
+    split_ifs
+    · apply le_of_eq
+      ring
+    · exact mul_nonneg (hn t.1) (mul_nonneg (hn t.2.1) (hn t.2.2))
+  refine ⟨hsum.norm, ?_⟩
+  rw [hsum.tsum_prod]
+  unfold third
+  apply tsum_congr
+  intro k
+  have hslice : Summable (fun t : ℕ × ℕ => tripleTerm p (k, t)) := by
+    apply Summable.of_nonneg_of_le (fun t => hnonneg (k, t)) _ (hpair.mul_left (p k))
+    intro t
+    unfold tripleTerm
+    split_ifs
+    · apply le_of_eq
+      ring
+    · exact mul_nonneg (hn k) (mul_nonneg (hn t.1) (hn t.2))
+  rw [hslice.tsum_prod]
+  rw [tsum_eq_sum (s := Finset.range k) (fun j hj => by
+    have hjk : ¬ j < k := by simpa using hj
+    simp [tripleTerm, hjk])]
+  unfold tripleLayer
+  apply Finset.sum_congr rfl
+  intro j hj
+  rw [tsum_eq_sum (s := Finset.range j) (fun i hi => by
+    have hij : ¬ i < j := by simpa using hi
+    simp [tripleTerm, hij])]
+  apply Finset.sum_congr rfl
+  intro i hi
+  simp only [tripleTerm, Finset.mem_range.mp hi, Finset.mem_range.mp hj,
+    and_self, ite_true]
+
 private theorem pair_partial_newton (p : ℕ → ℝ) (n : ℕ) :
     2 * pairPartial p n =
       (∑ i ∈ Finset.range n, p i) ^ 2 - ∑ i ∈ Finset.range n, p i ^ 2 := by
@@ -116,9 +166,14 @@ theorem countable_newton {p : ℕ → ℝ} (hp : Summable p)
   have hq := (summable_square hp hn hm).hasSum.tendsto_sum_nat
   have hr := (summable_cube hp hn hm).hasSum.tendsto_sum_nat
   have he := (summable_triple_layer hp hn hm).hasSum.tendsto_sum_nat
-  have ha := (tendsto_const_nhds.mul he)
-  have hb := ((hs.pow 3).sub ((tendsto_const_nhds.mul hs).mul hq)).add
-    (tendsto_const_nhds.mul hr)
+  have ha : Tendsto (fun n => 6 * ∑ k ∈ Finset.range n, tripleLayer p k)
+      atTop (𝓝 (6 * third p)) := tendsto_const_nhds.mul he
+  have hb : Tendsto (fun n => (∑ i ∈ Finset.range n, p i) ^ 3 -
+      3 * (∑ i ∈ Finset.range n, p i) * (∑ i ∈ Finset.range n, p i ^ 2) +
+      2 * ∑ i ∈ Finset.range n, p i ^ 3)
+      atTop (𝓝 (mass p ^ 3 - 3 * mass p * purity p + 2 * cubicMoment p)) :=
+    ((hs.pow 3).sub ((tendsto_const_nhds.mul hs).mul hq)).add
+      (tendsto_const_nhds.mul hr)
   have heq : (fun n => 6 * ∑ k ∈ Finset.range n, tripleLayer p k) =
       (fun n => (∑ i ∈ Finset.range n, p i) ^ 3 -
         3 * (∑ i ∈ Finset.range n, p i) * (∑ i ∈ Finset.range n, p i ^ 2) +
@@ -135,7 +190,8 @@ private theorem cubic_moment_lower {p : ℕ → ℝ} (hp : Summable p)
     (hn : ∀ i, 0 ≤ p i) (hm : mass p = 1) : purity p ^ 2 ≤ cubicMoment p := by
   have hq := summable_square hp hn hm.le
   have hr := summable_cube hp hn hm.le
-  have hnonneg := tsum_nonneg (fun i => mul_nonneg (hn i) (sq_nonneg (p i - purity p)))
+  have hnonneg : 0 ≤ ∑' i, p i * (p i - purity p) ^ 2 :=
+    tsum_nonneg (fun i => mul_nonneg (hn i) (sq_nonneg (p i - purity p)))
   have heq : (∑' i, p i * (p i - purity p) ^ 2) =
       cubicMoment p - 2 * purity p * purity p + purity p ^ 2 * mass p := by
     calc
@@ -170,7 +226,9 @@ def erase (p : ℕ → ℝ) (i : ℕ) : ℕ → ℝ := fun j => if j = i then 0 
 private theorem erase_nonneg {p : ℕ → ℝ} (hn : ∀ j, 0 ≤ p j) (i j : ℕ) :
     0 ≤ erase p i j := by
   simp only [erase]
-  split_ifs <;> positivity
+  split_ifs
+  · exact le_rfl
+  · exact hn j
 
 private theorem erase_summable {p : ℕ → ℝ} (hp : Summable p)
     (hn : ∀ j, 0 ≤ p j) (i : ℕ) : Summable (erase p i) := by
@@ -237,6 +295,7 @@ theorem third_lower_of_distinguished_ge_half {p : ℕ → ℝ} (hp : Summable p)
   linarith
 
 #print axioms countable_newton
+#print axioms absolute_triple_sum
 #print axioms third_lower_of_purity_le_third
 #print axioms distinguished_identity
 #print axioms third_lower_of_distinguished_ge_half

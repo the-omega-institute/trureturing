@@ -75,7 +75,7 @@ private theorem finite_approximation_bound {p : ℕ → ℝ} (hp : Summable p)
   obtain ⟨L, hL, hLR⟩ := equal_tail_length hp hn hm n
   change T ^ 2 / (L : ℝ) ≤ R at hLR
   have hLr : (0 : ℝ) < L := by exact_mod_cast hL
-  have hL1 : (1 : ℝ) ≤ L := by exact_mod_cast hL
+  have hL1 : (1 : ℝ) ≤ L := by exact_mod_cast (show 1 ≤ L by omega)
   have hLne : (L : ℝ) ≠ 0 := hLr.ne'
   let v : Fin n ⊕ Fin L → ℝ := Sum.elim (fun i => p i) (fun _ => T / L)
   have hv0 : ∀ i, 0 ≤ v i := by
@@ -86,7 +86,9 @@ private theorem finite_approximation_bound {p : ℕ → ℝ} (hp : Summable p)
   have hsum : (∑ i, v i) = 1 := by
     simp only [v, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr,
       Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
-    rw [Fin.sum_univ_eq_sum_range, mul_div_cancel₀ T hLne]
+    rw [Fin.sum_univ_eq_sum_range]
+    have hcancel : (L : ℝ) * (T / L) = T := by field_simp [hLne]
+    rw [hcancel]
     dsimp [T]
     ring
   have hq : finitePurity v = (∑ i ∈ Finset.range n, p i ^ 2) + T ^ 2 / L := by
@@ -94,13 +96,13 @@ private theorem finite_approximation_bound {p : ℕ → ℝ} (hp : Summable p)
     simp only [v, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr,
       Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
     rw [Fin.sum_univ_eq_sum_range]
-    field_simp
+    field_simp [hLne]
     <;> ring
   have hr : (∑ i, v i ^ 3) = (∑ i ∈ Finset.range n, p i ^ 3) + T ^ 3 / (L : ℝ) ^ 2 := by
     simp only [v, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr,
       Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
     rw [Fin.sum_univ_eq_sum_range]
-    field_simp
+    field_simp [hLne]
     <;> ring
   have hvq : finitePurity v ≤ purity p := by rw [hq]; dsimp [R] at hLR; linarith
   have hvql : purity p - R ≤ finitePurity v := by rw [hq]; dsimp [R]; positivity
@@ -131,9 +133,13 @@ theorem countable_budget_envelope {p : ℕ → ℝ} (hp : Summable p)
   have hlim : Tendsto (fun n => third p +
       (purity p - ∑ i ∈ Finset.range n, p i ^ 2) / 2 +
       (1 - ∑ i ∈ Finset.range n, p i) ^ 3 / 3) atTop (𝓝 (third p)) := by
-    have h := (tendsto_const_nhds.add ((tendsto_const_nhds.sub hq).div_const 2)).add
-      (((tendsto_const_nhds.sub hs).pow 3).div_const 3)
-    simpa [mass, purity, hm] using h
+    have h : Tendsto (fun n => third p +
+        (purity p - ∑ i ∈ Finset.range n, p i ^ 2) / 2 +
+        (1 - ∑ i ∈ Finset.range n, p i) ^ 3 / 3) atTop
+        (𝓝 (third p + (purity p - purity p) / 2 + (1 - mass p) ^ 3 / 3)) :=
+      (tendsto_const_nhds.add ((tendsto_const_nhds.sub hq).div_const 2)).add
+        (((tendsto_const_nhds.sub hs).pow 3).div_const 3)
+    simpa only [hm, sub_self, zero_div, zero_pow (by omega : 3 ≠ 0), add_zero] using h
   exact ge_of_tendsto hlim (Filter.Eventually.of_forall (finite_approximation_bound hp hn hm hq0 hq1))
 
 /-- Abstract sharpness does not assert that these spectra are Fock outputs. -/
