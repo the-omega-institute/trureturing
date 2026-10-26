@@ -22,10 +22,13 @@ def Partition (d : ℕ) :=
   {p : (Σ k : ℕ, Fin k → ℕ) //
     2 ≤ p.1 ∧ (∀ i, 2 ≤ p.2 i) ∧ ∏ i, p.2 i = d}
 
+private lemma partition_product {d : ℕ} (p : Partition d) : ∏ i, p.val.2 i = d :=
+  p.property.2.2
+
 /-- The fixed mixed-radix identification for an ordered factorization. -/
 def partitionEquiv {d : ℕ} (p : Partition d) :
     ((i : Fin p.val.1) → Fin (p.val.2 i)) ≃ Fin d :=
-  finPiFinEquiv.trans (finCongr p.property.2.2)
+  finPiFinEquiv.trans (finCongr (partition_product p))
 
 /-- Tensor products of local matrices in the fixed coordinate identification. -/
 def productState {d : ℕ} (p : Partition d)
@@ -71,8 +74,9 @@ private noncomputable def minorPolynomial {d : ℕ} (u : Matrix (Fin d) (Fin d) 
 private lemma minorPolynomial_eval {d : ℕ} (u : Matrix (Fin d) (Fin d) ℂ)
     (c : Fin 2 × Fin 2 ↪ Fin d) (v : Fin d → ℂ) :
     MvPolynomial.eval v (minorPolynomial u c) = minor c (u *ᵥ v) := by
-  simp only [minorPolynomial, map_sub, map_mul, map_sum, MvPolynomial.eval_C,
-    MvPolynomial.eval_X, minor, Matrix.mulVec, dotProduct]
+  dsimp only [minorPolynomial, minor]
+  simp only [map_sub, map_mul, map_sum, MvPolynomial.eval_C,
+    MvPolynomial.eval_X, Matrix.mulVec, dotProduct]
 
 private lemma minorPolynomial_nonzero {d : ℕ} (u : Matrix (Fin d) (Fin d) ℂ)
     (hu : u ∈ Matrix.specialUnitaryGroup (Fin d) ℂ) (c : Fin 2 × Fin 2 ↪ Fin d) :
@@ -84,7 +88,8 @@ private lemma minorPolynomial_nonzero {d : ℕ} (u : Matrix (Fin d) (Fin d) ℂ)
   intro hz
   have h := congrArg (MvPolynomial.eval (star u *ᵥ z)) hz
   rw [minorPolynomial_eval, Matrix.mulVec_mulVec, hu', Matrix.one_mulVec] at h
-  simp [minor, z, c.injective.eq_iff] at h
+  dsimp only [minor] at h
+  simp [z, c.injective.eq_iff] at h
 
 private lemma minorPolynomial_degree {d : ℕ} (u : Matrix (Fin d) (Fin d) ℂ)
     (c : Fin 2 × Fin 2 ↪ Fin d) : (minorPolynomial u c).totalDegree ≤ 2 := by
@@ -151,14 +156,16 @@ private lemma framePolynomial_degree {d : ℕ} (u : Matrix (Fin d) (Fin d) ℂ) 
   calc
     _ ≤ ∑ _c : Fin 2 × Fin 2 ↪ Fin d, 2 :=
       Finset.sum_le_sum fun c _ => minorPolynomial_degree u c
-    _ = gridBound d := by simp only [gridBound, Finset.sum_const, Finset.card_univ,
-      smul_eq_mul, mul_comm]
+    _ = gridBound d := by
+      dsimp only [gridBound]
+      simp only [Finset.sum_const, Finset.card_univ, smul_eq_mul, mul_comm]
 
 private lemma framePolynomial_eval {d : ℕ} (u : Matrix (Fin d) (Fin d) ℂ)
     (v : Fin d → ℂ) : MvPolynomial.eval v (framePolynomial u) =
       ∏ c : Fin 2 × Fin 2 ↪ Fin d, minor c (u *ᵥ v) := by
   classical
-  simp only [framePolynomial, map_prod, minorPolynomial_eval]
+  dsimp only [framePolynomial]
+  simp only [map_prod, minorPolynomial_eval]
 
 private lemma minors_force_nonzero {d : ℕ} (hd : 4 ≤ d)
     (u : Matrix (Fin d) (Fin d) ℂ) (v : Fin d → ℂ)
@@ -167,7 +174,8 @@ private lemma minors_force_nonzero {d : ℕ} (hd : 4 ≤ d)
   let c : Fin 2 × Fin 2 ↪ Fin d :=
     (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).toEmbedding.trans (Fin.castLEEmb hd)
   have hz := hc c
-  simp only [h, Matrix.mulVec_zero, minor, Pi.zero_apply, mul_zero, sub_zero] at hz
+  dsimp only [minor] at hz
+  simp only [h, Matrix.mulVec_zero, Pi.zero_apply, mul_zero, sub_zero] at hz
   exact hz rfl
 
 private lemma common_grid {d : ℕ} (hd : 4 ≤ d) (u : Matrix (Fin d) (Fin d) ℂ)
@@ -200,8 +208,9 @@ private lemma pure_density {d : ℕ} (v : Fin d → ℂ) (hv : v ≠ 0) :
   refine ⟨(Matrix.posSemidef_vecMulVec_self_star v).smul (inv_nonneg.mpr
     (mass_pos v hv).le), ?_⟩
   have htr : (rankOneDensity v).trace = (mass v : ℂ) := by
+    dsimp only [mass]
     simp only [rankOneDensity, Matrix.trace, Matrix.diag, Matrix.vecMulVec_apply,
-      Pi.star_apply, Complex.star_def, Complex.mul_conj, mass, Complex.ofReal_sum]
+      Pi.star_apply, Complex.star_def, Complex.mul_conj, Complex.ofReal_sum]
   rw [pure, Matrix.trace_smul, htr, Complex.real_smul, ← Complex.ofReal_mul,
     inv_mul_cancel₀ (mass_pos v hv).ne', Complex.ofReal_one]
 
@@ -256,7 +265,8 @@ private lemma productState_column_minor {d : ℕ} (p : Partition d)
     (τ : (i : Fin p.val.1) → Matrix (Fin (p.val.2 i)) (Fin (p.val.2 i)) ℂ)
     (j : Fin d) : minor (corner p) (fun i => productState p τ i j) = 0 := by
   classical
-  simp only [minor, productState, corner, Equiv.symm_apply_apply]
+  dsimp only [minor, productState, corner]
+  simp only [Equiv.symm_apply_apply]
   apply sub_eq_zero.mpr
   rw [← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib]
   apply Finset.prod_congr rfl
@@ -316,7 +326,8 @@ private lemma separable_pure_minor {d : ℕ} (p : Partition d) (v : Fin d → �
     minor (corner p) v = 0 := by
   classical
   by_cases hv : v = 0
-  · simp only [hv, minor, Pi.zero_apply, mul_zero, sub_zero]
+  · dsimp only [minor]
+    simp only [hv, Pi.zero_apply, mul_zero, sub_zero]
   obtain ⟨ι, inst, w, a, hw, h1, ha, hsum⟩ := mem_convexHull_iff_exists_fintype.mp hs
   let := inst
   choose τ hτ hτa using ha
@@ -345,7 +356,8 @@ private lemma separable_pure_minor {d : ℕ} (p : Partition d) (v : Fin d → �
     exact productState_column_minor p (τ j) k
   rw [hz] at hm
   have he : minor (corner p) (z • v) = z ^ 2 * minor (corner p) v := by
-    simp only [minor, Pi.smul_apply, smul_eq_mul]
+    dsimp only [minor]
+    simp only [Pi.smul_apply, smul_eq_mul]
     ring
   rw [he] at hm
   exact (mul_eq_zero.mp hm).resolve_left (pow_ne_zero 2 hz0)
