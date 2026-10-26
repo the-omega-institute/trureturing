@@ -119,7 +119,7 @@ private theorem sum_largest (n : ℕ) :
   classical
   rw [show T n = ∑ p : Nat.Partition n, weight p * (p.parts.card : ℤ) from by simpa only [T] using sum_marks (fun p => (p.parts.card : ℤ))]
   change (∑ o : Overpartition n, ((o.1.parts.toFinset.sup id : ℕ) : ℤ)) = _
-  rw [sum_marks]
+  rw [sum_marks (fun p : Nat.Partition n => ((p.parts.toFinset.sup id : ℕ) : ℤ))]
   let e : Nat.Partition n ≃ Nat.Partition n :=
     ⟨Nat.Partition.conjugate, Nat.Partition.conjugate,
       Nat.Partition.conjugate_conjugate, Nat.Partition.conjugate_conjugate⟩
@@ -145,7 +145,7 @@ private def shiftEquiv (n k r : ℕ) (hr : 0 < r) (hn : k * r ≤ n) :
     parts_sum := by
       have hle := Multiset.le_count_iff_replicate_le.mp p.2
       have he := congrArg Multiset.sum (tsub_add_cancel_of_le hle)
-      simp only [Multiset.sum_add, Multiset.sum_replicate, p.1.parts_sum] at he
+      simp only [Multiset.sum_add, Multiset.sum_replicate, nsmul_eq_mul, p.1.parts_sum] at he
       omega }
   invFun q := ⟨{
     parts := q.parts + Multiset.replicate k r
@@ -185,8 +185,9 @@ private theorem threshold_shift (k n r : ℕ) (hk : 0 < k) (hr : 0 < r)
   have hsub : (∑ p : {p : Nat.Partition n // k ≤ p.parts.count r},
       (weight p.1 + if k + 1 ≤ p.1.parts.count r then weight p.1 else 0)) =
       threshold k n r + threshold (k + 1) n r := by
-    rw [← Finset.sum_subtype (Finset.univ.filter (fun p : Nat.Partition n =>
-      k ≤ p.parts.count r)) (by simp)]
+    rw [← Finset.sum_subtype (p := fun p : Nat.Partition n => k ≤ p.parts.count r)
+      (Finset.univ.filter (fun p : Nat.Partition n => k ≤ p.parts.count r))
+      (by simp) (fun p => weight p + if k + 1 ≤ p.parts.count r then weight p else 0)]
     simp only [Finset.sum_filter]
     unfold threshold
     rw [← Finset.sum_add_distrib]
@@ -215,9 +216,10 @@ private theorem threshold_zero (k n r : ℕ) (hn : n < k * r) :
   apply Finset.sum_eq_zero
   intro p _
   have hb : p.parts.count r * r ≤ n := by
-    have h := Multiset.sum_le_sum
-      (Multiset.le_count_iff_replicate_le.mp (le_refl (p.parts.count r)))
-    simpa [Multiset.sum_replicate, p.parts_sum] using h
+    have hle := Multiset.le_count_iff_replicate_le.mp (le_refl (p.parts.count r))
+    have he := congrArg Multiset.sum (tsub_add_cancel_of_le hle)
+    simp only [Multiset.sum_add, Multiset.sum_replicate, nsmul_eq_mul, p.parts_sum] at he
+    omega
   have : ¬ k ≤ p.parts.count r := by nlinarith
   simp [this]
 
@@ -263,7 +265,8 @@ private theorem twice_markTotal (s : Finset ℕ) (j : ℕ) (hj : j ∈ s) :
     by_cases h : j ∈ t.1 <;> simp [toggle, Finset.mem_symmDiff, h]
   rw [hi] at he
   simp only [Finset.sum_sub_distrib, Finset.sum_const, nsmul_eq_mul,
-    Fintype.card_coe, Finset.card_powerset, Nat.cast_pow, Nat.cast_ofNat] at he
+    Finset.card_univ, Fintype.card_coe, Finset.card_powerset,
+    Nat.cast_pow, Nat.cast_ofNat] at he
   change (2 : ℤ) ^ s.card * 1 - markTotal s j = markTotal s j at he
   linarith
 
@@ -281,7 +284,7 @@ private theorem N_frequency (j n : ℕ) : N j n = ∑ p : Nat.Partition n, frequ
 
 private theorem frequency_absent {n : ℕ} (j : ℕ) (p : Nat.Partition n)
     (hj : j ∉ p.parts) : frequency j p = 0 := by
-  simp [frequency, Multiset.count_eq_zero.mpr hj, markTotal_absent _ j (by simpa using hj)]
+  simp [frequency, Multiset.count_eq_zero.mpr hj, markTotal_absent p.parts.toFinset j (by simpa using hj)]
 
 private theorem frequency_insert (j n : ℕ) (hj : 0 < j) (hn : j ≤ n)
     (q : Nat.Partition (n - j)) :
@@ -307,11 +310,11 @@ private theorem frequency_insert (j n : ℕ) (hj : 0 < j) (hn : j ≤ n)
   by_cases h : j ∈ q.parts
   · have hq := twice_markTotal q.parts.toFinset j (by simpa using h)
     change 2 * markTotal q.parts.toFinset j = weight q at hq
-    simp only [if_pos h] at hmark ⊢
+    simp only [ite_eq_left h] at hmark ⊢
     nlinarith
   · have hq := markTotal_absent q.parts.toFinset j (by simpa using h)
     have hcq := Multiset.count_eq_zero.mpr h
-    simp only [if_neg h] at hmark ⊢
+    simp only [ite_eq_right h] at hmark ⊢
     rw [hcq, Nat.cast_zero, hq]
     nlinarith
 
@@ -323,8 +326,9 @@ private theorem N_step (j n : ℕ) (hj : 0 < j) (hn : j ≤ n) :
   rw [← Finset.sum_add_distrib]
   have hs : (∑ p : {p : Nat.Partition n // j ∈ p.parts}, frequency j p.1) =
       ∑ p : Nat.Partition n, frequency j p := by
-    rw [← Finset.sum_subtype (Finset.univ.filter (fun p : Nat.Partition n =>
-      j ∈ p.parts)) (by simp), Finset.sum_filter]
+    rw [← Finset.sum_subtype (p := fun p : Nat.Partition n => j ∈ p.parts)
+      (Finset.univ.filter (fun p : Nat.Partition n => j ∈ p.parts))
+      (by simp) (frequency j), Finset.sum_filter]
     apply Finset.sum_congr rfl
     intro p _
     by_cases h : j ∈ p.parts
@@ -352,6 +356,7 @@ private theorem B_step (j n : ℕ) (hj : 0 < j) (hn : j ≤ n) :
     exact Nat.add_div_right (n - j) hj
   unfold B
   rw [hd, Finset.sum_range_succ']
+  simp only [zero_add, one_mul]
   congr 1
   apply Finset.sum_congr rfl
   intro r _
@@ -371,13 +376,11 @@ private def A (k n : ℕ) : ℤ := ∑ r ∈ Finset.Icc 1 n, threshold k n r
 private theorem B_interval (j n : ℕ) :
     B j n = ∑ r ∈ Finset.Icc 1 (n / j), count (n - j * r) := by
   unfold B
-  rw [show Finset.Icc 1 (n / j) = Finset.Ico 1 (n / j + 1) by ext; simp; omega,
-    Finset.sum_Ico_eq_sum_range]
-  simp only [Nat.add_sub_cancel]
-  apply Finset.sum_congr rfl
-  intro r _
-  congr 1
-  ring
+  rw [show Finset.Icc 1 (n / j) = Finset.Ico 1 (n / j + 1) by
+    ext r
+    simp only [Finset.mem_Icc, Finset.mem_Ico]
+    omega, Finset.sum_Ico_eq_sum_range]
+  simp [Nat.mul_comm, Nat.add_comm]
 
 private theorem A_step (k n : ℕ) (hk : 0 < k) :
     A k n + A (k + 1) n = 2 * N k n := by
@@ -386,20 +389,20 @@ private theorem A_step (k n : ℕ) (hk : 0 < k) :
   unfold A
   rw [← Finset.sum_add_distrib, Finset.mul_sum]
   have hb : n / k ≤ n := Nat.div_le_self n k
-  have he : (∑ r ∈ Finset.Icc 1 n, threshold k n r + threshold (k + 1) n r) =
+  have he : (∑ r ∈ Finset.Icc 1 n, (threshold k n r + threshold (k + 1) n r)) =
       ∑ r ∈ Finset.Icc 1 n, if r ≤ n / k then 2 * count (n - k * r) else 0 := by
     apply Finset.sum_congr rfl
     intro r hr
     have rp : 0 < r := (Finset.mem_Icc.mp hr).1
     by_cases h : r ≤ n / k
-    · rw [if_pos h]
+    · rw [ite_eq_left h]
       exact threshold_shift k n r hk rp (by
         have := (Nat.le_div_iff_mul_le hk).mp h
         nlinarith)
     · have hnr : n < k * r := by
         have := (Nat.le_div_iff_mul_le hk).not.mp h
         nlinarith
-      rw [if_neg h, threshold_zero k n r hnr,
+      rw [ite_eq_right h, threshold_zero k n r hnr,
         threshold_zero (k + 1) n r (by nlinarith)]
       simp
   rw [he, ← Finset.sum_filter]
@@ -413,7 +416,8 @@ private theorem sum_threshold_marks (k n r : ℕ) :
       threshold k n r := by
   classical
   change (∑ o : Overpartition n, if k ≤ o.1.parts.count r then (1 : ℤ) else 0) = _
-  rw [sum_marks]
+  rw [sum_marks (fun p : Nat.Partition n =>
+    if k ≤ p.parts.count r then (1 : ℤ) else 0)]
   simp [threshold, mul_ite]
 
 private theorem complement (k n : ℕ) (hk : 0 < k) : U k n + A k n = T n := by
