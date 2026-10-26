@@ -173,8 +173,11 @@ private theorem tensor_decomposition (D : LatticeData) (a : Charge D)
       let g := Finsupp.mapRange.linearMap L f
       refine ⟨g, ?_, ?_⟩
       · change g.sum (fun _ t => t) = _
+        change (Finsupp.mapRange L L.map_zero f).sum (fun _ t => t) = _
+        rw [Finsupp.sum_mapRange_index (by intro i; rfl)]
         have eq := congrArg L hf
-        simpa [g, L, Finsupp.sum_mapRange_index, Finsupp.sum] using eq
+        change (∑ n ∈ f.support, L (f n)) = L u
+        simpa only [map_sum, Finsupp.sum] using eq
       · intro n
         change restrictedMode D a ha s hs 0 (f n) ⊗ₜ[ℂ] c =
           (n : ℂ) • ((f n) ⊗ₜ[ℂ] c)
@@ -205,15 +208,20 @@ private theorem kernel_has_grade (D : LatticeData) (a : Charge D)
     intro n
     change mode D a s 0 (tensorMap D a s (f n)) =
       (n : ℂ) • tensorMap D a s (f n)
-    rw [← axis_intertwining, he, map_smul]
+    rw [← axis_intertwining D a ha s hs 0 (f n), he, map_smul]
   have gz : assemble D g = 0 := by
     have eq := congrArg (tensorMap D a s) hf
     rw [hz] at eq
     change g.sum (fun _ v => v) = 0
-    simpa [g, Finsupp.sum_mapRange_index, Finsupp.sum] using eq
+    change (Finsupp.mapRange (tensorMap D a s) (map_zero _) f).sum (fun _ v => v) = 0
+    rw [Finsupp.sum_mapRange_index (by intro i; rfl)]
+    simpa only [map_sum, Finsupp.sum] using eq
   have projected := components_mem D a s g ge (⊥ : Submodule ℂ (Carrier D))
-    (by intro v hv; simpa only [Submodule.mem_bot.mp hv, map_zero] using
-      (Submodule.zero_mem (⊥ : Submodule ℂ (Carrier D))))
+    (by
+      intro v hv
+      have zero : v = 0 := by simpa using hv
+      rw [zero, map_zero]
+      exact Submodule.zero_mem _)
     (by rw [gz]; exact Submodule.zero_mem _)
   have some : ∃ n, f n ≠ 0 := by
     by_contra! zero
@@ -221,7 +229,7 @@ private theorem kernel_has_grade (D : LatticeData) (a : Charge D)
     rw [← hf, show f = 0 from Finsupp.ext zero]
     simp
   obtain ⟨n, hn⟩ := some
-  exact ⟨n, f n, Submodule.mem_bot.mp (projected n), he n, hn⟩
+  exact ⟨n, f n, by simpa [g] using projected n, he n, hn⟩
 
 private theorem tensor_grade_zero (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1)
@@ -279,6 +287,7 @@ private theorem tensor_injective (D : LatticeData) (a : Charge D)
   have some : ∃ n, P n := kernel_has_grade D a ha s hs z hz hnz
   let n := Nat.find some
   obtain ⟨w, hw, he, hne⟩ := Nat.find_spec some
+  change axisTensor D a ha s hs 0 w = (n : ℂ) • w at he
   have minimal : ∀ j, P j → n ≤ j := fun j hj => Nat.find_min' some hj
   have positive : ∀ m : ℤ, 0 < m → axisTensor D a ha s hs m w = 0 := by
     intro m hm
@@ -316,7 +325,8 @@ private theorem tensor_injective (D : LatticeData) (a : Charge D)
     · have re := congrArg Complex.re half
       norm_num at re
       rcases natural_gap with hz | hp <;> linarith
-  obtain ⟨c, hc⟩ := tensor_grade_zero D a ha s hs w (by simpa only [nzero] using he)
+  obtain ⟨c, hc⟩ := tensor_grade_zero D a ha s hs w
+    (by simpa only [nzero, Nat.cast_zero] using he)
   have czero : c = 0 := Subtype.ext (by
     rw [hc, vacuum_image] at hw
     exact hw)
