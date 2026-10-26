@@ -102,7 +102,21 @@ $$\forall i \in \operatorname{Nat}\left(\right),\; \forall p \in \operatorname{F
 
 Retain coordinate edges whose upper endpoint belongs to the finite segment. When positions are bounded by M the lower endpoint belongs to the segment as well.
 
-**Theorem 1.8 (Deleting every universal ordinary tail).**
+**Theorem 1.8 (Coordinate segments are initial segments).**
+
+$$\forall i \in \operatorname{Nat}\left(\right),\; \forall M \in \operatorname{Nat}\left(\right),\; \forall p \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; (\forall j \in \operatorname{Fin}\left(i\right),\; p(j) \le M) \Rightarrow (\forall u \in \operatorname{CoordinateVertex}\left(p\right),\; \forall v \in \operatorname{CoordinateVertex}\left(p\right),\; ((u \le v) \land (\operatorname{coordinateInside}\left(M, v\right))) \Rightarrow (\operatorname{coordinateInside}\left(M, u\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.coordinateInside_downward` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Volodymyr Mazorchuk, Shuoyang Xu (2026). *On the number of cokernel-closed additive subcategories for uniformly oriented A_n quivers*. DOI: [10.48550/arXiv.2610.07999](https://doi.org/10.48550/arXiv.2610.07999). URL: <https://arxiv.org/html/2610.07999v2>.
+
+*Commentary.*
+
+If every exceptional position is at most M, every vertex preceding a vertex in the segment is also in the segment. An ordinary vertex before exception j has rank at most p(j); all exceptions belong to the segment.
+
+**Theorem 1.9 (Deleting every universal ordinary tail).**
 
 $$\forall i \in \operatorname{Nat}\left(\right),\; \forall p \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; \forall c \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; \forall B \in \operatorname{Fin}\left(i\right) \to \left(\operatorname{Fin}\left(i\right) \to \operatorname{Prop}\left(\right)\right),\; \forall M \in \operatorname{Nat}\left(\right),\; ((\forall j \in \operatorname{Fin}\left(i\right),\; p(j) \le M) \land (\forall j \in \operatorname{Fin}\left(i\right),\; c(j) \le M)) \Rightarrow ((\operatorname{Rules}\left(\operatorname{boundedCoordinateEdges}\left(M, p, c, B\right)\right)) \Leftrightarrow (\operatorname{Rules}\left(\operatorname{coordinateEdges}\left(p, c, B\right)\right)))$$
 
@@ -116,7 +130,7 @@ $$\forall i \in \operatorname{Nat}\left(\right),\; \forall p \in \operatorname{F
 
 When positions and cutoffs are at most M, each ordinary vertex of rank greater than M follows every exception and is adjacent to every earlier vertex. The infinite graph is exactly the universal-tail extension of the bounded graph. The universal-tail argument gives equivalence, including M=0 and tied or zero entries.
 
-**Definition 1.9 (The finite vertex subtype).**
+**Definition 1.10 (The finite vertex subtype).**
 
 $$\forall i \in \operatorname{Nat}\left(\right),\; \forall M \in \operatorname{Nat}\left(\right),\; \forall p \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; \operatorname{BoundedCoordinateVertex}\left(M, p\right) = \{u \in \operatorname{CoordinateVertex}\left(p\right)| \operatorname{coordinateInside}\left(M, u\right)\}$$
 
@@ -130,9 +144,65 @@ $$\forall i \in \operatorname{Nat}\left(\right),\; \forall M \in \operatorname{N
 
 This subtype inherits the coordinate order. It includes the anchor even when there are no positive ordinary vertices.
 
-**Theorem 1.10 (An exact increasing realization of every source graph).**
+**Definition 1.11 (Canonical natural labels).**
 
-$$\forall n \in \operatorname{Nat}\left(\right),\; \forall i \in \operatorname{Nat}\left(\right),\; (i \le n + \operatorname{one}\left(\right)) \Rightarrow (\forall A \in \operatorname{Finset}\left(\operatorname{Prod}\left(\operatorname{Nat}\left(\right), \operatorname{Nat}\left(\right)\right)\right),\; (A \in \operatorname{edgeFamily}\left(n, n + \operatorname{one}\left(\right) - i\right)) \Rightarrow (\exists p \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; \exists c \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; \exists B \in \operatorname{Fin}\left(i\right) \to \left(\operatorname{Fin}\left(i\right) \to \operatorname{Prop}\left(\right)\right),\; \exists f \in \operatorname{BoundedCoordinateVertex}\left(n + \operatorname{one}\left(\right) - i, p\right) \to \operatorname{Nat}\left(\right),\; ((((((\operatorname{Monotone}\left(p\right)) \land (\forall j \in \operatorname{Fin}\left(i\right),\; p(j) \le n + \operatorname{one}\left(\right) - i)) \land (\forall j \in \operatorname{Fin}\left(i\right),\; c(j) \le n + \operatorname{one}\left(\right) - i)) \land (\operatorname{StrictMono}\left(f\right))) \land (\forall u \in \operatorname{BoundedCoordinateVertex}\left(n + \operatorname{one}\left(\right) - i, p\right),\; f(u) \le n + \operatorname{one}\left(\right))) \land (\forall a \in \operatorname{Nat}\left(\right),\; (a \le n + \operatorname{one}\left(\right)) \Rightarrow (\exists u \in \operatorname{BoundedCoordinateVertex}\left(n + \operatorname{one}\left(\right) - i, p\right),\; f(u) = a))) \land (\forall u \in \operatorname{BoundedCoordinateVertex}\left(n + \operatorname{one}\left(\right) - i, p\right),\; \forall v \in \operatorname{BoundedCoordinateVertex}\left(n + \operatorname{one}\left(\right) - i, p\right),\; ((f(u), f(v)) \in A) \Leftrightarrow (\operatorname{coordinateEdges}\left(p, c, B\right)(\operatorname{val}\left(u\right), \operatorname{val}\left(v\right))))))$$
+$$\forall i \in \operatorname{Nat}\left(\right),\; \forall p \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; (\forall r \in \operatorname{Nat}\left(\right),\; \operatorname{coordinateLabel}\left(p, \operatorname{ordinary}\left(r\right)\right) = r + \operatorname{card}\left(\{j \in \operatorname{Fin}\left(i\right)| p(j) < r\}\right)) \land (\forall j \in \operatorname{Fin}\left(i\right),\; \operatorname{coordinateLabel}\left(p, \operatorname{exceptional}\left(j\right)\right) = p(j) + \operatorname{val}\left(j\right) + \operatorname{one}\left(\right))$$
+
+*Formalization.* `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.coordinateLabel` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Volodymyr Mazorchuk, Shuoyang Xu (2026). *On the number of cokernel-closed additive subcategories for uniformly oriented A_n quivers*. DOI: [10.48550/arXiv.2610.07999](https://doi.org/10.48550/arXiv.2610.07999). URL: <https://arxiv.org/html/2610.07999v2>.
+
+*Commentary.*
+
+An ordinary vertex of rank r has r earlier ordinary vertices and one earlier exceptional vertex for each p(j)<r. Exception j has p(j) earlier positive ordinary vertices, the anchor, and j earlier exceptions. These formulas include every zero and tied position.
+
+**Theorem 1.12 (Labels preserve the coordinate order).**
+
+$$\forall i \in \operatorname{Nat}\left(\right),\; \forall p \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; (\operatorname{Monotone}\left(p\right)) \Rightarrow (\operatorname{StrictMono}\left(\operatorname{coordinateLabel}\left(p\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.coordinateLabel_strictMono` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Volodymyr Mazorchuk, Shuoyang Xu (2026). *On the number of cokernel-closed additive subcategories for uniformly oriented A_n quivers*. DOI: [10.48550/arXiv.2610.07999](https://doi.org/10.48550/arXiv.2610.07999). URL: <https://arxiv.org/html/2610.07999v2>.
+
+*Commentary.*
+
+For an increasing position list, the number of positions below r is a nondecreasing function of r. Its value is at most j when r<=p(j), and exceeds j when p(j)<r. These inequalities prove the two mixed vertex comparisons; ordinary and exceptional comparisons follow from the rank and index increments.
+
+**Theorem 1.13 (Labels stay in the full finite interval).**
+
+$$\forall i \in \operatorname{Nat}\left(\right),\; \forall M \in \operatorname{Nat}\left(\right),\; \forall p \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; (\forall j \in \operatorname{Fin}\left(i\right),\; p(j) \le M) \Rightarrow (\forall u \in \operatorname{BoundedCoordinateVertex}\left(M, p\right),\; \operatorname{coordinateLabel}\left(p, \operatorname{val}\left(u\right)\right) \le M + i)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.coordinateLabel_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Volodymyr Mazorchuk, Shuoyang Xu (2026). *On the number of cokernel-closed additive subcategories for uniformly oriented A_n quivers*. DOI: [10.48550/arXiv.2610.07999](https://doi.org/10.48550/arXiv.2610.07999). URL: <https://arxiv.org/html/2610.07999v2>.
+
+*Commentary.*
+
+There are i exceptional positions in total. Ordinary rank r<=M therefore has label at most M+i. The j-th exception has p(j)<=M and j<i, giving the same bound. Monotonicity is not needed for this bound.
+
+**Theorem 1.14 (Every finite label occurs exactly once).**
+
+$$\forall i \in \operatorname{Nat}\left(\right),\; \forall M \in \operatorname{Nat}\left(\right),\; \forall p \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; ((\operatorname{Monotone}\left(p\right)) \land (\forall j \in \operatorname{Fin}\left(i\right),\; p(j) \le M)) \Rightarrow ((\forall u \in \operatorname{BoundedCoordinateVertex}\left(M, p\right),\; \forall v \in \operatorname{BoundedCoordinateVertex}\left(M, p\right),\; (\operatorname{coordinateLabel}\left(p, \operatorname{val}\left(u\right)\right) = \operatorname{coordinateLabel}\left(p, \operatorname{val}\left(v\right)\right)) \Rightarrow (u = v)) \land (\forall a \in \operatorname{Nat}\left(\right),\; (a \le M + i) \Rightarrow (\exists u \in \operatorname{BoundedCoordinateVertex}\left(M, p\right),\; \operatorname{coordinateLabel}\left(p, \operatorname{val}\left(u\right)\right) = a)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.coordinateLabel_bijective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Volodymyr Mazorchuk, Shuoyang Xu (2026). *On the number of cokernel-closed additive subcategories for uniformly oriented A_n quivers*. DOI: [10.48550/arXiv.2610.07999](https://doi.org/10.48550/arXiv.2610.07999). URL: <https://arxiv.org/html/2610.07999v2>.
+
+*Commentary.*
+
+The finite vertex set has M+1 ordinary vertices and i exceptions. The strict label map injects it into the M+i+1 labels zero through M+i, so equal finite cardinalities give bijectivity. This includes the single anchor when M=i=0. The theorem states bijectivity of the map into Fin(M+i+1); the display gives its equivalent uniqueness and full natural-interval surjectivity clauses.
+
+**Theorem 1.15 (An exact increasing realization of every source graph).**
+
+$$\forall n \in \operatorname{Nat}\left(\right),\; \forall i \in \operatorname{Nat}\left(\right),\; (i \le n + \operatorname{one}\left(\right)) \Rightarrow (\forall A \in \operatorname{Finset}\left(\operatorname{Prod}\left(\operatorname{Nat}\left(\right), \operatorname{Nat}\left(\right)\right)\right),\; (A \in \operatorname{edgeFamily}\left(n, n + \operatorname{one}\left(\right) - i\right)) \Rightarrow (\exists p \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; \exists c \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; \exists B \in \operatorname{Fin}\left(i\right) \to \left(\operatorname{Fin}\left(i\right) \to \operatorname{Prop}\left(\right)\right),\; \exists f \in \operatorname{BoundedCoordinateVertex}\left(n + \operatorname{one}\left(\right) - i, p\right) \to \operatorname{Nat}\left(\right),\; (((((((\operatorname{Monotone}\left(p\right)) \land (\forall j \in \operatorname{Fin}\left(i\right),\; p(j) \le n + \operatorname{one}\left(\right) - i)) \land (\forall j \in \operatorname{Fin}\left(i\right),\; c(j) \le n + \operatorname{one}\left(\right) - i)) \land (\forall j \in \operatorname{Fin}\left(i\right),\; \forall k \in \operatorname{Fin}\left(i\right),\; (\operatorname{B}\left(j, k\right)) \Rightarrow (j < k))) \land (\operatorname{StrictMono}\left(f\right))) \land (\forall u \in \operatorname{BoundedCoordinateVertex}\left(n + \operatorname{one}\left(\right) - i, p\right),\; f(u) \le n + \operatorname{one}\left(\right))) \land (\forall a \in \operatorname{Nat}\left(\right),\; (a \le n + \operatorname{one}\left(\right)) \Rightarrow (\exists u \in \operatorname{BoundedCoordinateVertex}\left(n + \operatorname{one}\left(\right) - i, p\right),\; f(u) = a))) \land (\forall u \in \operatorname{BoundedCoordinateVertex}\left(n + \operatorname{one}\left(\right) - i, p\right),\; \forall v \in \operatorname{BoundedCoordinateVertex}\left(n + \operatorname{one}\left(\right) - i, p\right),\; ((f(u), f(v)) \in A) \Leftrightarrow (\operatorname{coordinateEdges}\left(p, c, B\right)(\operatorname{val}\left(u\right), \operatorname{val}\left(v\right))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.edgeFamily_coordinate_realization` (`✓ std3`). ∎
 
@@ -151,7 +221,12 @@ Extract the ordinary and exceptional lists from the literal edge family. Ordinar
 - Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.boundedCoordinateEdges`
 - Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.coordinateEdges`
 - Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.coordinateInside`
+- Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.coordinateInside_downward`
 - Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.coordinateKey`
+- Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.coordinateLabel`
+- Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.coordinateLabel_bijective`
+- Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.coordinateLabel_bound`
+- Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.coordinateLabel_strictMono`
 - Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.coordinate_rules_bounded_iff`
 - Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.coordinate_rules_refinement_iff`
 - Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns.edgeFamily_coordinate_realization`

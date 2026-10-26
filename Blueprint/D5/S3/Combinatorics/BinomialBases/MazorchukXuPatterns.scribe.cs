@@ -113,12 +113,23 @@ internal sealed class MazorchukXuPatternsDocument : IScribeDocumentDefinition
                 Params(All("M", N, Many("u v", Vert, Iff(Fn("boundedCoordinateEdges", V("M"), P, C, B, V("u"), V("v")),
                     And(Apply(Edges, V("u"), V("v")), Fn("coordinateInside", V("M"), V("v"))))))),
                 "Retain coordinate edges whose upper endpoint belongs to the finite segment. When positions are bounded by M the lower endpoint belongs to the segment as well.", DescribeRole.Definition),
+            Node("Patterns", "coordinateInside_downward", "Coordinate segments are initial segments", Downward(),
+                "If every exceptional position is at most M, every vertex preceding a vertex in the segment is also in the segment. An ordinary vertex before exception j has rank at most p(j); all exceptions belong to the segment.", DescribeRole.Theorem),
             Node("Patterns", "coordinate_rules_bounded_iff", "Deleting every universal ordinary tail", BoundedRules(),
                 "When positions and cutoffs are at most M, each ordinary vertex of rank greater than M follows every exception and is adjacent to every earlier vertex. The infinite graph is exactly the universal-tail extension of the bounded graph. The universal-tail argument gives equivalence, including M=0 and tied or zero entries.", DescribeRole.Theorem),
             Node("Patterns", "BoundedCoordinateVertex", "The finite vertex subtype",
                 All("i", N, All("M", N, All("p", List,
                     Eq(FVert, Set("u", Vert, Fn("coordinateInside", V("M"), V("u"))))))),
                 "This subtype inherits the coordinate order. It includes the anchor even when there are no positive ordinary vertices.", DescribeRole.Definition),
+            Node("Patterns", "coordinateLabel", "Canonical natural labels", LabelFormula(),
+                "An ordinary vertex of rank r has r earlier ordinary vertices and one earlier exceptional vertex for each p(j)<r. Exception j has p(j) earlier positive ordinary vertices, the anchor, and j earlier exceptions. These formulas include every zero and tied position.", DescribeRole.Definition),
+            Node("Patterns", "coordinateLabel_strictMono", "Labels preserve the coordinate order",
+                All("i",N,All("p",List,Imp(Fn("Monotone",P),Fn("StrictMono",Fn("coordinateLabel",P))))),
+                "For an increasing position list, the number of positions below r is a nondecreasing function of r. Its value is at most j when r<=p(j), and exceeds j when p(j)<r. These inequalities prove the two mixed vertex comparisons; ordinary and exceptional comparisons follow from the rank and index increments.", DescribeRole.Theorem),
+            Node("Patterns", "coordinateLabel_bound", "Labels stay in the full finite interval", LabelBound(),
+                "There are i exceptional positions in total. Ordinary rank r<=M therefore has label at most M+i. The j-th exception has p(j)<=M and j<i, giving the same bound. Monotonicity is not needed for this bound.", DescribeRole.Theorem),
+            Node("Patterns", "coordinateLabel_bijective", "Every finite label occurs exactly once", LabelBijection(),
+                "The finite vertex set has M+1 ordinary vertices and i exceptions. The strict label map injects it into the M+i+1 labels zero through M+i, so equal finite cardinalities give bijectivity. This includes the single anchor when M=i=0. The theorem states bijectivity of the map into Fin(M+i+1); the display gives its equivalent uniqueness and full natural-interval surjectivity clauses.", DescribeRole.Theorem),
             Node("Patterns", "edgeFamily_coordinate_realization", "An exact increasing realization of every source graph", Realization(),
                 "Extract the ordinary and exceptional lists from the literal edge family. Ordinary rank zero maps to the anchor; positive ordinary rank r maps to entry r-1 of the ordered ordinary list; exceptional j maps to the j-th missing anchor neighbor. Position and cutoff laws give the mixed edges, the ordinary vertices form a clique, and B retains each actual exceptional edge. The map is increasing and bijects onto every natural vertex from zero through n+1. Thus this is an exact edge correspondence, including zero positions, coinciding coordinates and an empty positive ordinary list. It does not count coordinate patterns or assert polynomiality.", DescribeRole.Theorem)), []));
 
@@ -142,7 +153,7 @@ internal sealed class MazorchukXuPatternsDocument : IScribeDocumentDefinition
         var n=V("n");var m=Sub(Plus(n,Fn("one")),I);var a=V("A");
         var fv=Fn("BoundedCoordinateVertex",m,P);var f=V("f");
         var conclusion=And(Fn("Monotone",P),All("j",FinI,Le(At(P,"j"),m)),
-            All("j",FinI,Le(At(C,"j"),m)),Fn("StrictMono",f),
+            All("j",FinI,Le(At(C,"j"),m)),Many("j k",FinI,Imp(Fn("B",V("j"),V("k")),Lt(V("j"),V("k")))),Fn("StrictMono",f),
             All("u",fv,Le(At(f,"u"),Plus(n,Fn("one")))),
             All("a",N,Imp(Le(V("a"),Plus(n,Fn("one"))),Ex("u",fv,Eq(At(f,"u"),V("a"))))),
             Many("u v",fv,Iff(Mem(Pair(At(f,"u"),At(f,"v")),a),
@@ -150,4 +161,22 @@ internal sealed class MazorchukXuPatternsDocument : IScribeDocumentDefinition
         return Many("n i",N,Imp(Le(I,Plus(n,Fn("one"))),All("A",Points,
             Imp(Mem(a,Fn("edgeFamily",n,m)),Ex("p",List,Ex("c",List,Ex("B",Rel(FinI),Ex("f",Map(fv,N),conclusion))))))));
     }
+    private static Formula Downward() => All("i",N,All("M",N,All("p",List,
+        Imp(Bound(P),Many("u v",Vert,Imp(And(Le(V("u"),V("v")),Fn("coordinateInside",V("M"),V("v"))),
+            Fn("coordinateInside",V("M"),V("u"))))))));
+    private static Formula LabelFormula() => All("i",N,All("p",List,And(
+        All("r",N,Eq(Fn("coordinateLabel",P,Fn("ordinary",V("r"))),
+            Plus(V("r"),Fn("card",Set("j",FinI,Lt(At(P,"j"),V("r"))))))),
+        All("j",FinI,Eq(Fn("coordinateLabel",P,Fn("exceptional",V("j"))),
+            Plus(Plus(At(P,"j"),Fn("val",V("j"))),Fn("one")))))));
+    private static Formula LabelBound() => All("i",N,All("M",N,All("p",List,
+        Imp(Bound(P),All("u",FVert,Le(Fn("coordinateLabel",P,Fn("val",V("u"))),Plus(V("M"),I)))))));
+    private static Formula LabelBijection()
+    {
+        Formula Label(string u) => Fn("coordinateLabel",P,Fn("val",V(u)));
+        return All("i",N,All("M",N,All("p",List,Imp(And(Fn("Monotone",P),Bound(P)),And(
+            Many("u v",FVert,Imp(Eq(Label("u"),Label("v")),Eq(V("u"),V("v")))),
+            All("a",N,Imp(Le(V("a"),Plus(V("M"),I)),Ex("u",FVert,Eq(Label("u"),V("a"))))))))));
+    }
+
 }

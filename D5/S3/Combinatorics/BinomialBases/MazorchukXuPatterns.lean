@@ -293,28 +293,31 @@ def boundedCoordinateEdges {i : ℕ} (M : ℕ) (p c : Fin i → ℕ)
     (B : Fin i → Fin i → Prop) (u v : CoordinateVertex p) : Prop :=
   coordinateEdges p c B u v ∧ coordinateInside M v
 
+theorem coordinateInside_downward {i : ℕ} (M : ℕ) (p : Fin i → ℕ)
+  (hp : ∀ j, p j ≤ M) : ∀ {u v : CoordinateVertex p}, u ≤ v →
+    coordinateInside M v → coordinateInside M u := by
+  intro u v huv hv
+  cases u with
+  | exceptional j => trivial
+  | ordinary r =>
+    cases v with
+    | ordinary s =>
+      have hrs : r ≤ s := by
+        by_contra h
+        exact (not_lt_of_ge huv) ((ordinary_lt_ordinary _ _).mpr (by omega))
+      exact hrs.trans hv
+    | exceptional j =>
+      have hrp : r ≤ p j := by
+        by_contra h
+        exact (not_lt_of_ge huv) ((exceptional_lt_ordinary _ _).mpr (by omega))
+      exact hrp.trans (hp j)
+
 /-- Finite coordinate admissibility is independent of the universal ordinary tail.
 All zero and tied coordinates and the case M=0 are included. -/
 theorem coordinate_rules_bounded_iff {i : ℕ} (M : ℕ) (p c : Fin i → ℕ)
     (B : Fin i → Fin i → Prop) (hp : ∀ j, p j ≤ M) (hc : ∀ j, c j ≤ M) :
     Rules (boundedCoordinateEdges M p c B) ↔ Rules (coordinateEdges p c B) := by
-  have hdown : ∀ {u v : CoordinateVertex p}, u ≤ v →
-      coordinateInside M v → coordinateInside M u := by
-    intro u v huv hv
-    cases u with
-    | exceptional j => trivial
-    | ordinary r =>
-      cases v with
-      | ordinary s =>
-        have hrs : r ≤ s := by
-          by_contra h
-          exact (not_lt_of_ge huv) ((ordinary_lt_ordinary _ _).mpr (by omega))
-        exact hrs.trans hv
-      | exceptional j =>
-        have hrp : r ≤ p j := by
-          by_contra h
-          exact (not_lt_of_ge huv) ((exceptional_lt_ordinary _ _).mpr (by omega))
-        exact hrp.trans (hp j)
+  have hdown := @coordinateInside_downward i M p hp
   have heq : coordinateEdges p c B =
       universalTail (boundedCoordinateEdges M p c B) (coordinateInside M) := by
     funext u v
@@ -477,7 +480,7 @@ theorem edgeFamily_coordinate_realization {n i : ℕ} (hi : i ≤ n + 1)
     ∃ (p c : Fin i → ℕ) (B : Fin i → Fin i → Prop)
       (f : BoundedCoordinateVertex (n + 1 - i) p → ℕ),
       Monotone p ∧ (∀ j, p j ≤ n + 1 - i) ∧ (∀ j, c j ≤ n + 1 - i) ∧
-      StrictMono f ∧ (∀ u, f u ≤ n + 1) ∧
+      (∀ j k, B j k → j < k) ∧ StrictMono f ∧ (∀ u, f u ≤ n + 1) ∧
       (∀ a, a ≤ n + 1 → ∃ u, f u = a) ∧
       (∀ u v, (f u, f v) ∈ A ↔ coordinateEdges p c B u.val v.val) := by
   classical
@@ -495,7 +498,8 @@ theorem edgeFamily_coordinate_realization {n i : ℕ} (hi : i ≤ n + 1)
   have hf : StrictMono f := sourceCoordinateMap_strictMono g s hg hs hgp
     (fun j => (hsm j).2.1) hpm hp
   refine ⟨p, c, (fun j k => (s j, s k) ∈ A), f, hpm,
-    (fun j => (hp j).1), (fun j => (hc j).1), hf, ?_, ?_, ?_⟩
+    (fun j => (hp j).1), (fun j => (hc j).1),
+    (fun j k he => hs.lt_iff_lt.mp (hE.ordered he)), hf, ?_, ?_, ?_⟩
   · rintro ⟨u, hu⟩
     cases u with
     | ordinary r =>
@@ -514,5 +518,114 @@ theorem edgeFamily_coordinate_realization {n i : ℕ} (hi : i ≤ n + 1)
     · exact ⟨⟨.exceptional j, trivial⟩, rfl⟩
   · exact sourceCoordinateMap_edges hE g s hf (fun r => (ha _).mpr ⟨r, rfl⟩)
       (fun j => (hsm j).1) hc
+
+private def positionCount {i : ℕ} (p : Fin i → ℕ) (r : ℕ) : ℕ :=
+  (Finset.univ.filter (fun j => p j < r)).card
+
+private theorem positionCount_le {i : ℕ} (p : Fin i → ℕ) (r : ℕ) :
+    positionCount p r ≤ i := by
+  simpa only [positionCount, Finset.card_univ, Fintype.card_fin] using
+    Finset.card_filter_le (Finset.univ : Finset (Fin i)) (fun j => p j < r)
+
+private theorem positionCount_mono {i : ℕ} (p : Fin i → ℕ) : Monotone (positionCount p) := by
+  intro r s hrs
+  apply Finset.card_le_card
+  intro j hj
+  exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, (Finset.mem_filter.mp hj).2.trans_le hrs⟩
+
+private theorem index_lt_positionCount {i : ℕ} (p : Fin i → ℕ) (hpm : Monotone p)
+    (r : ℕ) (j : Fin i) : j.val < positionCount p r ↔ p j < r :=
+  Fin.lt_card_filter_univ_iff_apply_of_imp (fun j => p j < r)
+    (fun j k hkj hj => (hpm hkj).trans_lt hj)
+
+/-- The natural label of a coordinate vertex. The exceptional formula counts earlier
+ordinary vertices and earlier exceptions; the ordinary formula counts earlier exceptions. -/
+def coordinateLabel {i : ℕ} (p : Fin i → ℕ) : CoordinateVertex p → ℕ
+  | .ordinary r => r + positionCount p r
+  | .exceptional j => p j + j.val + 1
+
+theorem coordinateLabel_strictMono {i : ℕ} (p : Fin i → ℕ) (hpm : Monotone p) :
+    StrictMono (coordinateLabel p) := by
+  intro u v huv
+  cases u with
+  | ordinary r =>
+    cases v with
+    | ordinary s =>
+      have hrs := (ordinary_lt_ordinary r s).mp huv
+      have := positionCount_mono p hrs.le
+      change r + positionCount p r < s + positionCount p s
+      omega
+    | exceptional j =>
+      have hrp := (ordinary_lt_exceptional r j).mp huv
+      have hcount : positionCount p r ≤ j.val := by
+        have := index_lt_positionCount p hpm r j
+        omega
+      change r + positionCount p r < p j + j.val + 1
+      omega
+  | exceptional j =>
+    cases v with
+    | ordinary r =>
+      have hpr := (exceptional_lt_ordinary j r).mp huv
+      have hcount := (index_lt_positionCount p hpm r j).mpr hpr
+      change p j + j.val + 1 < r + positionCount p r
+      omega
+    | exceptional k =>
+      have hjk := (exceptional_lt_exceptional j k).mp huv
+      have hjk' : j < k := by
+        rcases hjk with h | ⟨_, h⟩
+        · by_contra hh
+          have := hpm (le_of_not_gt hh)
+          omega
+        · exact h
+      have := hpm hjk'.le
+      have := hjk'
+      change p j + j.val + 1 < p k + k.val + 1
+      omega
+
+private def boundedVertexEquiv {i : ℕ} (M : ℕ) (p : Fin i → ℕ) :
+    BoundedCoordinateVertex M p ≃ (Fin (M + 1) ⊕ Fin i) where
+  toFun u := match u with
+    | ⟨.ordinary r, hr⟩ => .inl ⟨r, by change r ≤ M at hr; omega⟩
+    | ⟨.exceptional j, _⟩ => .inr j
+  invFun u := match u with
+    | .inl r => ⟨.ordinary r.val, by change r.val ≤ M; omega⟩
+    | .inr j => ⟨.exceptional j, trivial⟩
+  left_inv := by rintro ⟨u, hu⟩; cases u <;> rfl
+  right_inv := by intro u; cases u <;> rfl
+
+noncomputable instance boundedCoordinateFintype {i : ℕ} (M : ℕ) (p : Fin i → ℕ) :
+    Fintype (BoundedCoordinateVertex M p) :=
+  Fintype.ofEquiv (Fin (M + 1) ⊕ Fin i) (boundedVertexEquiv M p).symm
+
+theorem coordinateLabel_bound {i M : ℕ} (p : Fin i → ℕ)
+    (hp : ∀ j, p j ≤ M) (u : BoundedCoordinateVertex M p) : coordinateLabel p u.val ≤ M + i := by
+  rcases u with ⟨u, hu⟩
+  cases u with
+  | ordinary r =>
+    change r ≤ M at hu
+    have := positionCount_le p r
+    change r + positionCount p r ≤ M + i
+    omega
+  | exceptional j =>
+    have := hp j
+    have := j.isLt
+    change p j + j.val + 1 ≤ M + i
+    omega
+
+/-- Every bounded weak position list labels its coordinate vertices increasingly and
+bijectively by 0 through M+i, including M=i=0. -/
+theorem coordinateLabel_bijective {i M : ℕ} (p : Fin i → ℕ) (hpm : Monotone p)
+    (hp : ∀ j, p j ≤ M) :
+    Function.Bijective (fun u : BoundedCoordinateVertex M p =>
+      (⟨coordinateLabel p u.val, by have := coordinateLabel_bound p hp u; omega⟩ : Fin (M + i + 1))) := by
+  classical
+  apply (Fintype.bijective_iff_injective_and_card _).mpr
+  refine ⟨?_, ?_⟩
+  · intro u v h
+    apply Subtype.ext
+    exact (coordinateLabel_strictMono p hpm).injective (congrArg Fin.val h)
+  · rw [Fintype.card_congr (boundedVertexEquiv M p)]
+    simp only [Fintype.card_sum, Fintype.card_fin]
+    omega
 
 end D5.S3.Combinatorics.MazorchukXu
