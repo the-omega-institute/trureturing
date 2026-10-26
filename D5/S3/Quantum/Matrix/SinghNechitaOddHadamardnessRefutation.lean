@@ -6,7 +6,9 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Matrix/SinghNechitaOddHadamardnessRefutation.claim; result=D5/S3/Quantum/Matrix/SinghNechitaOddHadamardnessRefutation.result; claim=D5/S3/Quantum/Matrix/SinghNechitaOddHadamardnessRefutation.claim
    digest: Order nine obstructs the conjectured odd-order minimum of Hadamardness. -/
 
+import D5.S3.Factorization.CubeGapFiveNoSquare
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
+import Mathlib.LinearAlgebra.Matrix.Vec
 
 /-! The sign-matrix Hadamardness conjecture of Singh and Nechita,
 arXiv:2112.11123v1, equation `eq:Hada_measure` and the conjecture following its table.
@@ -37,19 +39,16 @@ def claim : Prop :=
       ∀ b : Matrix (Fin d) (Fin d) ℤ, IsSignMatrix b →
         ((d ^ 3 + d * (d - 1) : ℕ) : ℤ) ≤ hadamardness b
 
-private lemma gram_symm {d : ℕ} (c : Matrix (Fin d) (Fin d) ℤ) (i j : Fin d) :
-    (c * cᵀ) j i = (c * cᵀ) i j := by
-  exact congrFun (congrFun (Matrix.transpose_mul c cᵀ) i) j
-
 private lemma hadamardness_sum {d : ℕ} (c : Matrix (Fin d) (Fin d) ℤ) :
     hadamardness c = ∑ i, ∑ j, (c * cᵀ) i j ^ 2 := by
-  unfold hadamardness Matrix.trace
-  apply Finset.sum_congr rfl
-  intro i _
-  change (∑ j, (c * cᵀ) i j * (c * cᵀ) j i) = _
-  apply Finset.sum_congr rfl
-  intro j _
-  rw [gram_symm c i j, pow_two]
+  calc
+    hadamardness c = (c * cᵀ).vec ⬝ᵥ (c * cᵀ).vec := by
+      change Matrix.trace ((c * cᵀ) * (c * cᵀ)) = _
+      simpa only [(Matrix.isSymm_mul_transpose_self c).eq]
+        using (Matrix.vec_dotProduct_vec (c * cᵀ) (c * cᵀ)).symm
+    _ = _ := by
+      simp only [dotProduct, Matrix.vec, Fintype.sum_prod_type, pow_two]
+      exact Finset.sum_comm
 
 private lemma gram_diag (c : Matrix (Fin 9) (Fin 9) ℤ) (hc : IsSignMatrix c)
     (i : Fin 9) : (c * cᵀ) i i = 9 := by
@@ -58,7 +57,7 @@ private lemma gram_diag (c : Matrix (Fin 9) (Fin 9) ℤ) (hc : IsSignMatrix c)
     _ = ∑ _ : Fin 9, (1 : ℤ) := by
       apply Finset.sum_congr rfl
       intro k _
-      rcases hc i k with h | h <;> rw [h] <;> norm_num
+      simpa only [pow_two] using (sq_eq_one_iff.mpr (hc i k))
     _ = 9 := by norm_num
 
 private lemma gram_odd (c : Matrix (Fin 9) (Fin 9) ℤ) (hc : IsSignMatrix c)
@@ -86,8 +85,7 @@ private lemma equality_forces_unit (c : Matrix (Fin 9) (Fin 9) ℤ)
         have hm := gram_odd c hc i j
         rw [hz] at hm
         norm_num at hm
-      have hs : (c * cᵀ) i j ≤ -1 ∨ 1 ≤ (c * cᵀ) i j := by omega
-      rcases hs with hs | hs <;> nlinarith
+      exact Int.add_one_le_iff.mpr (sq_pos_of_ne_zero hn)
   have hsum : (∑ i : Fin 9, ∑ j : Fin 9, (if i = j then 81 else 1 : ℤ)) = 801 := by
     norm_num [Fin.sum_univ_succ]
   have ht : (∑ i : Fin 9, ∑ j : Fin 9, (if i = j then 81 else 1 : ℤ)) =
@@ -132,26 +130,21 @@ private lemma normalize_gram (c : Matrix (Fin 9) (Fin 9) ℤ)
   have hb : IsSignMatrix b := by
     intro i k
     simp only [b, diagonal_mul]
-    rcases hs i with hi | hi <;> rcases hc i k with hk | hk <;>
-      rw [hi, hk] <;> norm_num
+    exact Int.isUnit_iff.mp ((Int.isUnit_iff.mpr (hs i)).mul (Int.isUnit_iff.mpr (hc i k)))
   have hg (i j : Fin 9) : (b * bᵀ) i j = s i * s j * (c * cᵀ) i j := by
-    change (∑ k, b i k * b j k) = _
-    simp only [b, diagonal_mul]
-    rw [mul_apply]
-    simp only [transpose_apply]
-    rw [Finset.mul_sum]
-    apply Finset.sum_congr rfl
-    intro k _
+    dsimp only [b]
+    rw [transpose_mul, diagonal_transpose, mul_assoc, ← mul_assoc c]
+    simp only [diagonal_mul, mul_diagonal]
     ring
   have hunit (i j : Fin 9) (hij : i ≠ j) :
       (b * bᵀ) i j = 1 ∨ (b * bᵀ) i j = -1 := by
     rw [hg]
-    rcases hs i with hi | hi <;> rcases hs j with hj | hj <;>
-      rcases hu i j hij with hcij | hcij <;> rw [hi, hj, hcij] <;> norm_num
+    exact Int.isUnit_iff.mp (((Int.isUnit_iff.mpr (hs i)).mul
+      (Int.isUnit_iff.mpr (hs j))).mul (Int.isUnit_iff.mpr (hu i j hij)))
   have hfirst (i : Fin 9) (hi : i ≠ 0) : (b * bᵀ) i 0 = 1 := by
     rw [hg]
     simp only [s, ite_eq_left rfl, ite_eq_right hi, mul_one]
-    rcases hu i 0 hi with h | h <;> rw [h] <;> norm_num
+    simpa only [pow_two] using (sq_eq_one_iff.mpr (hu i 0 hi))
   refine ⟨b, ?_⟩
   ext i j
   by_cases hij : i = j
@@ -162,13 +155,13 @@ private lemma normalize_gram (c : Matrix (Fin 9) (Fin 9) ℤ)
   · have he : (b * bᵀ) i j = 1 := by
       by_cases hi : i = 0
       · subst i
-        rw [gram_symm b j 0]
+        rw [(Matrix.isSymm_mul_transpose_self b).apply j 0]
         exact hfirst j (Ne.symm hij)
       by_cases hj : j = 0
       · subst j
         exact hfirst i hi
       have hm := gram_triangle b hb i j 0
-      rw [hfirst i hi, gram_symm b j 0, hfirst j hj] at hm
+      rw [hfirst i hi, (Matrix.isSymm_mul_transpose_self b).apply j 0, hfirst j hj] at hm
       rcases hunit i j hij with he | he
       · exact he
       · rw [he] at hm
@@ -202,7 +195,10 @@ private lemma gram_impossible (b : Matrix (Fin 9) (Fin 9) ℤ)
       det_one_add_replicateCol_mul_replicateRow] at hh
     rw [pow_two]
     exact hh.trans (by decide)
-  have hn : ∀ z : ZMod 3, z ^ 2 ≠ 2 := by decide
+  have hn (z : ZMod 3) : z ^ 2 ≠ 2 := by
+    intro hz
+    apply D5.S3.Factorization.CubeGapFiveNoSquare.sq_mod_three_ne_two z.val
+    simpa only [pow_two, ZMod.val_mul, ZMod.val_two_eq_two_mod] using congrArg ZMod.val hz
   exact hn a.det hd
 
 theorem result : ¬ claim := by
