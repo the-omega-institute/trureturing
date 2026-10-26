@@ -21,7 +21,6 @@ population problem; no continuation or existence assertion is made here.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxHeartbeats 800000
 
 @[expose] public section
 
@@ -103,6 +102,7 @@ private theorem actual_seed_minimum {k t L : ℕ} {a b : ℤ} {p : Fin k}
     rw [abs_of_pos hp]
     exact core.a_le_b.trans (core.positive_minimum y hp)
 
+set_option maxHeartbeats 800000 in
 /-- Remote initial-row data force two actual factors and exclude low
 successors of every actual negative-4/positive-1 pair. All displayed bounds
 are cross-multiplied integer inequalities. The quantified pair includes the
@@ -193,13 +193,15 @@ theorem restricted_source_rigidity {k t : ℕ} {a b : ℤ} {p d x : Fin k}
   norm_num [len4] at e4
   norm_num [len6] at e6
   norm_num [len7] at e7
-  have hz : 9 * T 0 = N - delta := by omega
-  have hbN : 9 * b = N + 8 * delta := by omega
-  have hn : 9 * T 2 = N - 64 * delta := by omega
+  have hz : 9 * T 0 = N - delta := by linarith only [hdelta, e0, seed1]
+  have hbN : 9 * b = N + 8 * delta := by linarith only [hdelta, e0, seed1]
+  have hn : 9 * T 2 = N - 64 * delta := by linarith only [e1, seed1, hbN]
   have hnmin : a ≤ T 2 := actual_seed_minimum core x 2
-  have hu_lower : 3 * N + 2 * b + 1 ≤ 16 * T 6 := by omega
-  have hu_fifth : N < 5 * T 6 := by omega
-  have hw_fifth : 5 * T 4 + 15 < N := by omega
+  have hu_lower : 3 * N + 2 * b + 1 ≤ 16 * T 6 := by
+    linarith only [e6, e7, original_seed8_guard]
+  have hu_fifth : N < 5 * T 6 := by
+    linarith only [hu_lower, hbN, delta_positive, hN]
+  have hw_fifth : 5 * T 4 + 15 < N := by linarith only [hard, w_upper]
   have len5_le : sourceLength t x 5 ≤ 2 :=
     (computed_row_bounds core x hx 5 (by omega)).1
   have len5_zero : sourceLength t x 5 = 0 := by
@@ -209,14 +211,16 @@ theorem restricted_source_rigidity {k t : ℕ} {a b : ℤ} {p d x : Fin k}
     · exact h0
     · have e5 := hrec 5 (by omega)
       norm_num [h1] at e5
-      omega
+      linarith only [e4, e5, hu_fifth, hw_fifth, hN]
     · have e5 := hrec 5 (by omega)
       norm_num [h2] at e5
-      omega
+      linarith only [e4, e5, hu_fifth, hw_fifth, hN]
   have e5 := hrec 5 (by omega)
   norm_num [len5_zero] at e5
-  have hw_lower : 19 * N + 2 * b + 1 ≤ 128 * T 4 := by omega
-  have ha_strong : 19 * N + 2 * b + 385 ≤ 256 * a := by omega
+  have hw_lower : 19 * N + 2 * b + 1 ≤ 128 * T 4 := by
+    linarith only [e4, e5, hu_lower]
+  have ha_strong : 19 * N + 2 * b + 385 ≤ 256 * a := by
+    linarith only [hw_lower, w_upper]
   have len3_le : sourceLength t x 3 ≤ 2 :=
     (computed_row_bounds core x hx 3 (by omega)).1
   have len3_one : sourceLength t x 3 = 1 := by
@@ -225,23 +229,24 @@ theorem restricted_source_rigidity {k t : ℕ} {a b : ℤ} {p d x : Fin k}
     rcases hc with h0 | h1 | h2
     · have e3 := hrec 3 (by omega)
       norm_num [h0] at e3
-      have h14 : 14 * a ≤ N - 3 := by omega
-      omega
+      have h14 : 14 * a ≤ N - 3 := by linarith only [e2, e3, hnmin, w_upper]
+      linarith only [ha_strong, h14, hb, hN]
     · exact h1
     · have e3 := hrec 3 (by omega)
       norm_num [h2] at e3
-      have hw_small : 9 * T 4 < N := by omega
-      omega
+      have hw_small : 9 * T 4 < N := by linarith only [e2, e3, hn, delta_positive]
+      linarith only [hw_small, hw_lower, hb, hN]
   have e3 := hrec 3 (by omega)
   norm_num [len3_one] at e3
-  have hw_eq : 9 * T 4 = 5 * N - 2048 * delta := by omega
-  have hu_eq : 9 * T 6 = 31 * N - 16384 * delta := by omega
-  have ha0_eq : 9 * T 8 = 469 * N - 262144 * delta := by omega
-  have hdl : 16 * N + 135 < 10240 * delta := by omega
-  have hdu : 262160 * delta ≤ 467 * N - 9 := by omega
-  have hzl : 29077 * N + 1 ≤ 262160 * T 0 := by omega
-  have hzu : 640 * T 0 < 71 * N := by omega
-  refine ⟨len5_zero, len3_one, by omega, hdl, hdu, hzl, hzu, ?_⟩
+  have hw_eq : 9 * T 4 = 5 * N - 2048 * delta := by linarith only [e2, e3, hn]
+  have hu_eq : 9 * T 6 = 31 * N - 16384 * delta := by linarith only [e4, e5, hw_eq]
+  have ha0_eq : 9 * T 8 = 469 * N - 262144 * delta := by linarith only [e6, e7, hu_eq]
+  have hdl : 16 * N + 135 < 10240 * delta := by linarith only [hw_eq, hw_fifth]
+  have hdu : 262160 * delta ≤ 467 * N - 9 := by
+    linarith only [ha0_eq, hbN, original_seed8_guard]
+  have hzl : 29077 * N + 1 ≤ 262160 * T 0 := by linarith only [hz, hdu]
+  have hzu : 640 * T 0 < 71 * N := by linarith only [hz, hdl]
+  refine ⟨len5_zero, len3_one, by linarith only [ha_strong], hdl, hdu, hzl, hzu, ?_⟩
   intro i hi hpositive hnegative4 hpositive1
   have hi0 : i < (largeOffsets t x).card := by omega
   have hr : OwnRow k t (sourceParent t x i) (sourceLength t x i) :=
@@ -256,10 +261,12 @@ theorem restricted_source_rigidity {k t : ℕ} {a b : ℤ} {p d x : Fin k}
   have ej := hrec (i + 1) hi
   norm_num [hnegative4] at ei
   norm_num [hpositive1, Nat.add_assoc] at ej
-  have hR : T (i + 2) = 16 * T i - N := by omega
-  have hRlower : 3 * N + 2 * b + 384 ≤ 16 * T (i + 2) := by omega
-  have hRfifth : N < 5 * T (i + 2) := by omega
+  have hR : T (i + 2) = 16 * T i - N := by linarith only [ei, ej]
+  have hRlower : 3 * N + 2 * b + 384 ≤ 16 * T (i + 2) := by
+    linarith only [hR, hS, ha_strong]
+  have hRfifth : N < 5 * T (i + 2) := by
+    linarith only [hRlower, hbN, delta_positive, hN]
   refine ⟨hRlower, hRfifth, ?_⟩
-  omega
+  linarith only [hRfifth, hz, delta_positive, hN]
 
 end D5.S3.Combinatorics.Circle.HalfpowerSourceRigidity
