@@ -64,8 +64,9 @@ theorem gaussianPartialSum_tendsto (a x : ℝ) :
 theorem gaussian_error_tendsto (a x : ℝ) :
     Tendsto (fun N => gaussianPartialSum a N x - gaussianAtom a x)
       atTop (𝓝 (0 : ℝ)) := by
-  simpa only [sub_self] using
-    (gaussianPartialSum_tendsto a x).sub tendsto_const_nhds
+  have hc : Tendsto (fun _ : ℕ => gaussianAtom a x) atTop
+      (𝓝 (gaussianAtom a x)) := tendsto_const_nhds
+  simpa only [sub_self] using (gaussianPartialSum_tendsto a x).sub hc
 
 private theorem geometric_prefix_le {t : ℝ} (ht0 : 0 ≤ t) (ht1 : t < 1)
     (N : ℕ) : (∑ n ∈ Finset.range N, t ^ n) ≤ 1 / (1 - t) := by
