@@ -44,14 +44,14 @@ private theorem value_zero : separableValue 0 = Real.sqrt 2 := by
       apply (div_le_div_iff₀ (by positivity) (by norm_num : (0 : ℝ) < 2)).2
       nlinarith [Real.one_lt_sqrt_two]
     linarith
-  rw [separableValue, if_pos hthreshold]
+  rw [separableValue, ite_eq_left hthreshold]
   norm_num
 
 private theorem value_one : separableValue 1 = 2 := by
   have hthreshold : ¬ (1 : ℝ) ≤ 1 / 2 - 1 / (2 * Real.sqrt 2) := by
     have h : (0 : ℝ) < 1 / (2 * Real.sqrt 2) := by positivity
     linarith
-  rw [separableValue, if_neg hthreshold]
+  rw [separableValue, ite_eq_right hthreshold]
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
