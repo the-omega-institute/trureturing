@@ -29,12 +29,13 @@ internal sealed class DeCastroIntegersConjecture1Document : IScribeDocumentDefin
             Node("logarithm_iff", "The logarithmic equation as a natural identity", Logarithm(),
                 "For q>1 and positive n and l, the real logarithmic equation is equivalent to q^e*l=n in the naturals.", DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
             Node("result", "De Castro Conjecture 1", ClaimBody(),
-                "The prime-power fractions in Smin provide every prime-power divisor of n away from p. The gcd bound excludes p and any larger denominator, so the lcm is n.divMaxPow p. The factorization of n then gives the logarithmic equation.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "The prime-power fractions in Smin provide every prime-power divisor of n away from p. The gcd bound excludes p and any larger denominator, so the lcm is n.divMaxPow p. The factorization of n then gives the logarithmic equation.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("decastro-binomialforms"), ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("decastrointegersconjecture1-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula X(string name) => F.Id(name);
     private static Formula Q(string owner, string name) => Seq(Operatorname, Grp(X(owner)), Dot, Operatorname, Grp(X(name)));
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);

@@ -114,6 +114,10 @@ $$\forall p \in \mathbb{N},\; \forall n \in \mathbb{N},\; \operatorname{Nat}.\op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/DeCastroIntegersConjecture1.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/decastro-binomialforms` (proved) by `D5/S3/Arith/Congruence/DeCastroIntegersConjecture1.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"decastro-binomialforms","declaration_gid":"D5/S3/Arith/Congruence/DeCastroIntegersConjecture1.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Dario T. de Castro (2022). *p-Adic order of positive integers via binomial coefficients*. URL: <https://math.colgate.edu/~integers/w61/w61.pdf>.
