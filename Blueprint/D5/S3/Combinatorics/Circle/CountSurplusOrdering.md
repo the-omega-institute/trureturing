@@ -1,10 +1,10 @@
-# SUBOne extra actual negative LARGE occurrence permits paired completion of exceptional positive steps.
+# Paired completion from actual occurrence counts
 
 ## Abstract
 
 One extra actual negative LARGE occurrence permits paired completion of exceptional positive steps.
 
-**Theorem 1.1 (SUBOne extra actual negative LARGE occurrence permits paired completion of exceptional positive steps.).**
+**Theorem 1.1 (Paired completion from actual occurrence counts).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/CountSurplusOrdering.exists_order_between`
 

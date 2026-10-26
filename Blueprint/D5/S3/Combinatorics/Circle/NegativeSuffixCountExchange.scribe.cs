@@ -6,11 +6,11 @@ internal sealed class NegativeSuffixCountExchangeDocument : IScribeDocumentDefin
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A computed Bad count below the actual negative LARGE count constructs the complete physical source exchange without returning any SMALL.",
-        H("SUBA computed Bad count below the actual negative LARGE count constructs the complete physical source exchange without returning any SMALL."),
+        H("A full exchange retaining every old SMALL"),
         Blocks(
             Describe.Lean(DescribeId.Create("negative-suffix-count-exchange-full"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Circle/NegativeSuffixCountExchange.actualSource_negativeSuffix_count_exchange_full"),
-                H("SUBA computed Bad count below the actual negative LARGE count constructs the complete physical source exchange without returning any SMALL."),
+                H("A full exchange retaining every old SMALL"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("The labels are Fin k for k>=3, with arbitrary natural t and the actual centered doubling source. Its cyclic permutation rho fixes n=hit(1,p) and x=hit(2,p), including the seam. Assume s(p)>0, Q<=abs(s(n)), N<3abs(s(p)), and whole-word Legal W=A++[x]++Btail. Both p and n are unused in ALL W. Every LARGE in Btail is negative. The old endpoint h satisfies C-s(p)<h<abs(s(n)). Choose an actual j in the negative LARGE filter Neg of Btail. This makes Neg nonempty; there is no lower bound such as three on its size.")),

@@ -6,11 +6,11 @@ internal sealed class CountSurplusOrderingDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "One extra actual negative LARGE occurrence permits paired completion of exceptional positive steps.",
-        H("SUBOne extra actual negative LARGE occurrence permits paired completion of exceptional positive steps."),
+        H("Paired completion from actual occurrence counts"),
         Blocks(
             Describe.Lean(DescribeId.Create("count-surplus-ordering-between-endpoints"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Circle/CountSurplusOrdering.exists_order_between"),
-                H("SUBOne extra actual negative LARGE occurrence permits paired completion of exceptional positive steps."),
+                H("Paired completion from actual occurrence counts"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For any label type, integer weights f, Bool predicate E and finite list labels, let Q>=2 and C=2Q-1. The start b and endpoint e lie in [0,C], with b+sum(labels.map(f))=e. Every marked occurrence has 0<f<=Q-1. Every unmarked positive is compatible with every negative: f(p)-f(n)<=C. If a marked occurrence remains, require countP(E)+1<=countP(f<=-Q). No distinctness, magnitude bound on the negative steps, or bound on unmarked positives is assumed. The conclusion constructs a permutation of ALL labels lying in the strip from b to e. Repetitions are counted with multiplicity.")),

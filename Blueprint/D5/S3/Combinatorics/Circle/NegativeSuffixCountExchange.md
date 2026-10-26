@@ -1,10 +1,10 @@
-# SUBA computed Bad count below the actual negative LARGE count constructs the complete physical source exchange without returning any SMALL.
+# A full exchange retaining every old SMALL
 
 ## Abstract
 
 A computed Bad count below the actual negative LARGE count constructs the complete physical source exchange without returning any SMALL.
 
-**Theorem 1.1 (SUBA computed Bad count below the actual negative LARGE count constructs the complete physical source exchange without returning any SMALL.).**
+**Theorem 1.1 (A full exchange retaining every old SMALL).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/NegativeSuffixCountExchange.actualSource_negativeSuffix_count_exchange_full`
 
