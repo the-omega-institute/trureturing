@@ -76,15 +76,17 @@ private theorem probe_one_nonzero : probe 1 ≠ 0 := by
   simp only [coordinate_probe, MvPolynomial.coeff_one, ite_true, map_zero] at he
   exact one_ne_zero he
 
+private def probeIndex : Index hyperbolic := (⟨0, by decide⟩, 0)
+
 private theorem proper_kernel :
     LinearMap.ker (coordinate 0) ≠ ⊥ ∧ LinearMap.ker (coordinate 0) ≠ ⊤ := by
   constructor
   · intro h
-    have member : probe (MvPolynomial.X (0, 0)) ∈ LinearMap.ker (coordinate 0) := by
+    have member : probe (MvPolynomial.X probeIndex) ∈ LinearMap.ker (coordinate 0) := by
       rw [LinearMap.mem_ker, coordinate_probe]
       simp
     rw [h, Submodule.mem_bot] at member
-    have he := congrArg (coordinate (Finsupp.single (0, 0) 1)) member
+    have he := congrArg (coordinate (Finsupp.single probeIndex 1)) member
     simp [coordinate_probe] at he
   · intro h
     have member : probe 1 ∈ LinearMap.ker (coordinate 0) := by rw [h]; trivial
