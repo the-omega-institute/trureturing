@@ -6,6 +6,7 @@
    utility: none
    digest: Every finite Markov chain satisfies the permutation monogamy inequality. -/
 
+import D5.S3.Combinatorics.Probability.FiniteCommonMarginalSupermodular
 import D5.S3.Entropy.Mixing.MixtureEntropyBracket
 import D5.S3.Entropy.Submodularity.ConditionalMutualInformation
 
@@ -16,6 +17,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Entropy.MarkovMonogamyPermutationInequality
 
+open D5.S3.Combinatorics.Probability.FiniteCommonMarginalSupermodular
 open D5.S3.Divergence.ChainRule
 open D5.S3.Entropy.MutualInformation
 open D5.S3.Entropy.MutualInformationEntropy
@@ -427,71 +429,75 @@ private theorem monge_permutation (n : ℕ) (m : Fin n → Fin n → ℝ)
     (hm : ∀ i j a b, i < j → a < b → m i a + m j b ≥ m i b + m j a)
     (f : Equiv.Perm (Fin n)) : (∑ i, m i (f i)) ≤ ∑ i, m i i := by
   classical
-  induction n with
+  cases n with
   | zero => simp
-  | succ n ih =>
-    let k : Fin (n + 1) := f.symm 0
-    let g : Equiv.Perm (Fin (n + 1)) := (Equiv.swap 0 k).trans f
-    have hfk : f k = 0 := f.apply_symm_apply 0
-    have hg0 : g 0 = 0 := by
-      change f (Equiv.swap 0 k 0) = 0
-      rw [Equiv.swap_apply_left, hfk]
-    have hgk : g k = f 0 := by
-      change f (Equiv.swap 0 k k) = f 0
-      rw [Equiv.swap_apply_right]
-    have hgi (i : Fin (n + 1)) (hi : i ≠ 0) (hik : i ≠ k) : g i = f i := by
-      change f (Equiv.swap 0 k i) = f i
-      rw [Equiv.swap_apply_of_ne_of_ne hi hik]
-    have hgain : (∑ i, m i (f i)) ≤ ∑ i, m i (g i) := by
-      by_cases hk : k = 0
-      · have hgf : g = f := by simp only [g, hk, Equiv.swap_self, Equiv.refl_trans]
-        rw [hgf]
-      · have hf : f 0 ≠ 0 := by
-          intro hf
-          exact hk (f.injective (hfk.trans hf.symm))
-        have hrectangle := hm 0 k 0 (f 0)
-          (Fin.pos_iff_ne_zero.mpr hk) (Fin.pos_iff_ne_zero.mpr hf)
-        have hdifference : (∑ i, (m i (g i) - m i (f i))) =
-            (m 0 0 - m 0 (f 0)) + (m k (f 0) - m k 0) := by
-          calc
-            (∑ i, (m i (g i) - m i (f i))) =
-                (∑ i : Fin (n + 1), if i = 0 then m 0 0 - m 0 (f 0) else 0) +
-                (∑ i : Fin (n + 1), if i = k then m k (f 0) - m k 0 else 0) := by
-              rw [← Finset.sum_add_distrib]
-              apply Finset.sum_congr rfl
-              intro i _
-              by_cases hi : i = 0
-              · subst i
-                simp only [hg0, ite_true, Ne.symm hk, ite_false, add_zero]
-              · by_cases hik : i = k
-                · subst i
-                  simp only [hk, ite_false, hgk, hfk, ite_true, zero_add]
-                · rw [hgi i hi hik]
-                  simp only [hi, hik, ite_false, sub_self, add_zero]
-            _ = _ := by simp
-        rw [Finset.sum_sub_distrib] at hdifference
-        linarith
-    obtain ⟨j, r, hr⟩ : ∃ j r, Equiv.Perm.decomposeFin.symm (j, r) = g := by
-      exact ⟨(Equiv.Perm.decomposeFin g).1, (Equiv.Perm.decomposeFin g).2,
-        Equiv.Perm.decomposeFin.symm_apply_apply g⟩
-    have hj : j = 0 := by
-      have h := congrArg (fun e : Equiv.Perm (Fin (n + 1)) => e 0) hr
-      simpa only [Equiv.Perm.decomposeFin_symm_apply_zero, hg0] using h
-    subst j
-    have hsucc (i : Fin n) : g i.succ = (r i).succ := by
-      rw [← hr]
-      simp only [Equiv.Perm.decomposeFin_symm_apply_succ, Equiv.swap_self,
-        Equiv.refl_apply]
-    calc
-      (∑ i, m i (f i)) ≤ ∑ i, m i (g i) := hgain
-      _ = m 0 0 + ∑ i : Fin n, m i.succ (r i).succ := by
-        rw [Fin.sum_univ_succ, hg0]
-        simp_rw [hsucc]
-      _ ≤ m 0 0 + ∑ i : Fin n, m i.succ i.succ :=
-        add_le_add le_rfl (ih (fun i a => m i.succ a.succ)
-          (fun i j a b hij hab => hm i.succ j.succ a.succ b.succ
-            (Fin.succ_lt_succ_iff.mpr hij) (Fin.succ_lt_succ_iff.mpr hab)) r)
-      _ = ∑ i, m i i := (Fin.sum_univ_succ (fun i : Fin (n + 1) => m i i)).symm
+  | succ n =>
+    let e : Fin (n + 1) → (Fin 4 → Fin (n + 1)) := fun i => ![i, f i, i, f i]
+    let c : ℝ := ((n + 1 : ℕ) : ℝ)⁻¹
+    let p : (Fin 4 → Fin (n + 1)) → ℝ :=
+      fun x => if x ∈ Finset.univ.image e then c else 0
+    have hc : 0 < c := by positivity
+    have he : Function.Injective e := by
+      intro i j hij
+      exact congrArg (fun x => x 0) hij
+    have hsum (g : (Fin 4 → Fin (n + 1)) → ℝ) :
+        (∑ x, p x * g x) = c * ∑ i, g (e i) := by
+      simp only [p, ite_mul, zero_mul]
+      rw [← Finset.sum_filter]
+      have hs : Finset.univ.filter (fun x => x ∈ Finset.univ.image e) =
+          Finset.univ.image e := by ext x; simp
+      rw [hs, Finset.sum_image (fun i _ j _ hij => he hij), ← Finset.mul_sum]
+    have hp (x) : 0 ≤ p x := by
+      dsimp [p]
+      split <;> positivity
+    have hcn : c * ((n + 1 : ℕ) : ℝ) = 1 := inv_mul_cancel₀ (by positivity)
+    have hn : ∑ x, p x = 1 := by
+      simpa only [mul_one, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+        nsmul_eq_mul, hcn] using hsum (fun _ => 1)
+    have hmarg (j : Fin 4) (t : Fin (n + 1)) :
+        (∑ x, if x j = t then p x else 0) = c := by
+      calc
+        (∑ x, if x j = t then p x else 0) =
+            ∑ x, p x * (if x j = t then 1 else 0) := by
+          apply Finset.sum_congr rfl
+          intro x _
+          split <;> simp_all
+        _ = c * ∑ i, if e i j = t then 1 else 0 := hsum _
+        _ = c := by
+          fin_cases j <;> dsimp +instances [e]
+          · simp
+          · rw [Equiv.sum_comp f (fun i => if i = t then (1 : ℝ) else 0)]
+            simp
+          · simp
+          · rw [Equiv.sum_comp f (fun i => if i = t then (1 : ℝ) else 0)]
+            simp
+    have hrectangle (i j a b : Fin (n + 1)) (hij : i ≤ j) (hab : a ≤ b) :
+        m i b + m j a ≤ m i a + m j b := by
+      rcases hij.eq_or_lt with rfl | hij
+      · simp [add_comm]
+      rcases hab.eq_or_lt with rfl | hab
+      · exact le_rfl
+      exact hm i j a b hij hab
+    have hsuper (x y : Fin 4 → Fin (n + 1)) :
+        m (x 0) (x 1) + m (y 0) (y 1) ≤
+          m ((x ⊓ y) 0) ((x ⊓ y) 1) + m ((x ⊔ y) 0) ((x ⊔ y) 1) := by
+      change m (x 0) (x 1) + m (y 0) (y 1) ≤
+        m (min (x 0) (y 0)) (min (x 1) (y 1)) +
+          m (max (x 0) (y 0)) (max (x 1) (y 1))
+      rcases le_total (x 0) (y 0) with h0 | h0 <;>
+        rcases le_total (x 1) (y 1) with h1 | h1
+      · simp only [min_eq_left h0, min_eq_left h1, max_eq_right h0, max_eq_right h1]
+        exact le_rfl
+      · simpa only [min_eq_left h0, min_eq_right h1, max_eq_right h0,
+          max_eq_left h1] using hrectangle (x 0) (y 0) (y 1) (x 1) h0 h1
+      · simpa only [min_eq_right h0, min_eq_left h1, max_eq_left h0,
+          max_eq_right h1, add_comm] using hrectangle (y 0) (x 0) (x 1) (y 1) h0 h1
+      · simp only [min_eq_right h0, min_eq_right h1, max_eq_left h0, max_eq_left h1]
+        exact le_of_eq (add_comm _ _)
+    have h := common_marginal_supermodular_le_diagonal p (fun _ => c) hp hn hmarg
+        (fun x => m (x 0) (x 1)) hsuper
+    rw [hsum, ← Finset.mul_sum] at h
+    exact (mul_le_mul_iff_right₀ hc).mp h
 
 /-- The classical Markov monogamy inequalities hold for every size and every permutation. -/
 theorem result : claim := by
