@@ -4,7 +4,7 @@
    mirror-E: none(waiver:audit-open-22063)
    anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic]
    utility: none
-   digest: Arrival-free descent by native prefix truncation or first-negative shift. -/
+   digest: Physical first-negative descent through prefixes and inverse parents. -/
 module
 public import D5.S3.Combinatorics.Circle.ThreeLargePacketExchange
 
@@ -59,10 +59,9 @@ private theorem negative_parent (k t : ℕ) (hk : 3 ≤ k) (y : Fin k)
 
 set_option maxHeartbeats 1400000 in
 -- Three complete-batch reorderings and the physical inventory share one proof budget.
-/-- Omit the FIRST physical negative y when -s(y)≤s(p).
-Actual old arrivals after zpen AND z are measured at their full original
-prefixes. All SMALL occurrences remain, in three complete reordered batches.
-There is no crossing anchor, extra source edge, Bad count or bound Z≤D. -/
+/-- One physical three-batch engine. The added SMALL batch and final SMALL
+batch partition the old terminal batch plus a Nodup SMALL extension. Only
+translated retained gates and a closed final endpoint are needed. -/
 private theorem complete_small_shift
     (k t : ℕ) (hk : 3 ≤ k) (p y zpen z : Fin k)
     (A T0 T1 T2 E F Efinal Extra : List (Fin k))
@@ -74,8 +73,6 @@ private theorem complete_small_shift
     (hnunused : hit k 1 p ∉ oldWord p y zpen z A T0 T1 T2 E)
     (hsmall : ∀ i ∈ smallWord T0 T1 T2 E, |s k t i| < Q k)
     (hylarge : Q k ≤ -s k t y)
-    (hzpenlarge : Q k ≤ -s k t zpen)
-    (hzlarge : Q k ≤ -s k t z)
     (hF : ∀ i ∈ F, |s k t i| < Q k)
     (hEfinal : ∀ i ∈ Efinal, |s k t i| < Q k)
     (hExtra : ∀ i ∈ Extra, |s k t i| < Q k)
@@ -405,10 +402,12 @@ private theorem complete_small_shift
   have hexWeights := small_weights t Extra hExtra
   have hgbase : G k t (W ++ Extra) = G k t W := by
     have hh := invExtra.largeBalance
-    simpa [hexWeights.1, largeUsed, mass] using hh.symm
+    rw [hexWeights.1] at hh
+    simpa only [largeUsed, mass, List.map_nil, List.sum_nil, Nat.add_zero] using hh.symm
   have hhbase : H k t (W ++ Extra) = H k t W := by
     have hh := invExtra.energyBalance
-    simpa [hexWeights.2, H, mass] using hh.symm
+    rw [hexWeights.2] at hh
+    simpa only [H, mass, List.map_nil, List.sum_nil, Nat.add_zero] using hh.symm
   have hG : G k t V = G k t W := by
     have hh := inv.largeBalance
     rw [hRlarge, hIlarge, hgbase] at hh
@@ -455,11 +454,11 @@ private theorem complete_small_shift
     apply List.mem_toFinset.mp
     rw [inv.used]
     exact Finset.mem_union_left _ (Finset.mem_sdiff.mpr
-      ⟨List.mem_toFinset.mpr hi, by simpa using hiR⟩)
+      ⟨List.mem_toFinset.mpr (List.mem_append_left Extra hi), by simpa using hiR⟩)
   have hEnd : mass f V = e0 := by
     have hh := inv.sourceBalance
     simp only [mass, List.map_append, List.sum_append] at hh
-    simp only [mass, List.map_cons, List.map_nil, List.sum_cons,
+    simp only [List.map_cons, List.map_nil, List.sum_cons,
       List.sum_nil, add_zero] at hh
     change mass f V + (f x + f y) = h + mass f Extra + (f p + f n) at hh
     rw [hxval, hnval] at hh
@@ -640,24 +639,21 @@ theorem actualSource_threeNegative_firstNegative_shift_exchange_full
       hv, hn, hs, hpref, inv, hp, habs, hzp, hz, hretain,
       hg, hu, hsm, hH, hHs, hj, hend, _, _, hcomp⟩ :=
     complete_small_shift k t hk p y zpen z A T0 T1 T2 E [] E []
-      hpositive hnlarge hexpand hW hpunused hnunused hsmall hylarge hzpenlarge hzlarge
+      hpositive hnlarge hexpand hW hpunused hnunused hsmall hylarge
       (by simp) (by intro i hi; exact hsmall i (by simp [smallWord, hi]))
       (by simp) (by simp) (by simpa using hW.1)
       (by simpa [d1, B1, δ, Y, P, a1, f, x, mass] using hshift1)
       (by simpa [d2, B2, B1, δ, Y, P, a2, f, x, mass, add_assoc] using hshift2)
       (by simpa [e0, h, Y, P, mass, sub_eq_add_neg] using
         (show 0 ≤ e0 ∧ e0 ≤ C k from ⟨he0.1.le, he0.2.le⟩))
-  refine ⟨L01, L2, LE, ?_⟩
-  simpa only [List.append_nil, mass, List.map_nil, List.sum_nil, add_zero,
-    sub_eq_add_neg] using
-    (show L01.Perm (T0 ++ T1 ++ []) ∧ L2.Perm T2 ∧ LE.Perm E ∧ _ from
-      ⟨h01, h2, hE, htail, hSretained, hv, hn, hs, hpref, inv, hp, habs, hzp, hz,
-        hretain, hg, hu, hsm, hH, hHs, hj, hend,
-        show 0 < mass (s k t) W - s k t y + mass (s k t) [] - s k t p by
-          simpa [mass, e0, h, Y, P, sub_eq_add_neg] using he0.1,
-        show mass (s k t) W - s k t y + mass (s k t) [] - s k t p < C k by
-          simpa [mass, e0, h, Y, P, sub_eq_add_neg] using he0.2,
-        hcomp⟩)
+  simp only [List.append_nil] at h01 htail inv hp hu hsm
+  simp only [mass, List.map_nil, List.sum_nil, add_zero] at hend hcomp
+  refine ⟨L01, L2, LE, h01, h2, hE, htail, hSretained, hv, hn, hs, hpref,
+    inv, hp, habs, hzp, hz, hretain, hg, hu, hsm, hH, hHs, hj, ?_, ?_, ?_, ?_⟩
+  · simpa only [mass] using hend
+  · simpa [e0, h, Y, P, sub_eq_add_neg] using he0.1
+  · simpa [e0, h, Y, P, sub_eq_add_neg] using he0.2
+  · simpa only [mass] using hcomp
 
 /-- A low old prefix can receive the fresh native pair. The discarded suffix may
 contain SMALL occurrences: its full physical inventory, rather than uniform
@@ -922,14 +918,13 @@ theorem actualSource_threeNegative_even_half_arrival_free_exchange_full
            (b ∈ E → 0 < e) ∧ remainingMass (s k t) V = -e))) := by
   classical
   dsimp only
-  let f := s k t
   let n := hit k 1 p
   let x := hit k 2 p
   let b := (finRotate k).symm y
   let W := oldWord p y zpen z A T0 T1 T2 E
-  let P := f p
-  let D := |f n|
-  let Y := -f y
+  let P := (s k t) p
+  let D := |(s k t) n|
+  let Y := -(s k t) y
   let μ := Y / 2
   let Extra : List (Fin k) := if b ∈ E then [] else [b]
   let Efinal := if b ∈ E then E.erase b else E
@@ -942,34 +937,38 @@ theorem actualSource_threeNegative_even_half_arrival_free_exchange_full
   change N k = 4 * Q k - 1 at hN
   change C k = 2 * Q k - 1 at hC
   have hp : 0 < P := hpositive
-  have hy : f y < 0 := by dsimp only [Y] at *; omega
-  have hbval : f b = -μ ∧ f b < 0 ∧ |f b| < Q k := by
+  have hy : (s k t) y < 0 := by have hh : P < -(s k t) y := hyhigh; omega
+  have hbval : (s k t) b = -μ ∧ (s k t) b < 0 ∧ |(s k t) b| < Q k := by
     rcases negative_parent k t hk y hy with he | ho
-    · change Y % 2 = 0 ∧ 2 * f b = -Y ∧ |f b| < Q k ∧ f b < 0 at he
+    · change Y % 2 = 0 ∧ 2 * (s k t) b = -Y ∧ |(s k t) b| < Q k ∧ (s k t) b < 0 at he
       exact ⟨by dsimp only [μ]; omega, he.2.2.2, he.2.2.1⟩
     · omega
   have hYeq : Y = 2 * μ := by change Y % 2 = 0 at hyeven; dsimp only [μ]; omega
-  have hμ : 0 < μ ∧ μ < Q k := by rw [hbval.1, abs_neg, abs_of_pos] at hbval <;> omega
+  have hμpos : 0 < μ := by have hh := hbval.2.1; rw [hbval.1] at hh; omega
+  have hμ : 0 < μ ∧ μ < Q k := by
+    refine ⟨hμpos, ?_⟩
+    have hh := hbval.2.2
+    simpa only [hbval.1, abs_neg, abs_of_pos hμpos] using hh
   have hYP : P < Y := hyhigh
-  have hnval : f n = -D := by
-    simpa [f, n, D, orient, show ¬ s k t p < 0 by omega] using geo.nValue
-  have hDP : D < P := by simpa [D, f, n, abs_of_pos hpositive] using geo.strictOrder.1
-  have hreq : f x = 2 * P - D := by
+  have hnval : (s k t) n = -D := by
+    simpa [n, D, orient, show ¬ s k t p < 0 by omega] using geo.nValue
+  have hDP : D < P := by simpa [D, n, abs_of_pos hpositive] using geo.strictOrder.1
+  have hreq : (s k t) x = 2 * P - D := by
     have he1 := geo.firstEquation
     have he2 := geo.secondEquation
-    change D = N k - 2 * |f p| at he1
-    change |f x| = 4 * |f p| - N k at he2
-    have hx : f x = |f x| := by
-      simpa [f, x, orient, show ¬ s k t p < 0 by omega] using geo.xValue
+    change D = N k - 2 * |(s k t) p| at he1
+    change |(s k t) x| = 4 * |(s k t) p| - N k at he2
+    have hx : (s k t) x = |(s k t) x| := by
+      simpa [x, orient, show ¬ s k t p < 0 by omega] using geo.xValue
     rw [abs_of_pos hpositive] at he1 he2
     omega
-  have hDN : D = N k - 2 * P := by simpa [D, f, n, P, abs_of_pos hpositive] using geo.firstEquation
+  have hDN : D = N k - 2 * P := by simpa [D, n, P, abs_of_pos hpositive] using geo.firstEquation
   have hboundary : 0 ≤ C k + 1 + μ - 2 * P := by
-    change f x ≤ Y + 1 at hyboundary
+    change (s k t) x ≤ Y + 1 at hyboundary
     omega
   have hdelta : μ - P < 0 := by
     have hb := centered_bounds hNp hNo ((2 : ℤ) ^ y.val * t)
-    change -C k ≤ f y ∧ f y ≤ C k at hb
+    change -C k ≤ (s k t) y ∧ (s k t) y ≤ C k at hb
     have hd := geo.nLarge
     change Q k ≤ D at hd
     omega
@@ -980,24 +979,27 @@ theorem actualSource_threeNegative_even_half_arrival_free_exchange_full
     intro i hi; exact hsmall i (by simp [smallWord, hi]))).1
   have hT2 : largeUsed k t T2 = 0 := (small_weights t T2 (by
     intro i hi; exact hsmall i (by simp [smallWord, hi]))).1
-  have hzL : Large k t z := by have hh := neg_le_abs (f z); change Q k ≤ |f z|; omega
+  have hzL : Large k t z := by have hh := neg_le_abs ((s k t) z); change Q k ≤ |(s k t) z|; omega
   have hRpen : largeUsed k t Rpen = 1 := by
     simp [Rpen, largeUsed_append, largeUsed_cons, largeWeight, hzL, hT2, hE]
-  by_cases hpen : mass f Fpen ≤ C k - P
+  by_cases hpen : mass (s k t) Fpen ≤ C k - P
   · obtain ⟨hv, inv, hperm, hg, hs, hj⟩ := actualSource_prefix_pair_truncation
       k t hk p Fpen Rpen hpositive hnlarge hexpand
       (hWpen ▸ hW) (hWpen ▸ hpunused) (hWpen ▸ hnunused) hpen (by omega)
     rw [← hWpen] at inv hperm hg hs hj
     refine ⟨Fpen ++ [p, n], Rpen, hv, hv.1, strip_of_legal hv, hv.2, hj,
       Or.inl ⟨inv, hperm, hs, Or.inl ⟨hpen, rfl, rfl, ?_⟩⟩⟩
-    rw [hRpen] at hg; change G k t (Fpen ++ [p, n]) + 1 = G k t W; omega
-  · by_cases hzcut : mass f Fz ≤ C k - P
+    rw [hRpen] at hg
+    change G k t (Fpen ++ [p, n]) + 2 = G k t W + 1 at hg
+    change G k t (Fpen ++ [p, n]) + 1 = G k t W
+    omega
+  · by_cases hzcut : mass (s k t) Fz ≤ C k - P
     · obtain ⟨hv, inv, hperm, hg, hs, hj⟩ := actualSource_prefix_pair_truncation
         k t hk p Fz E hpositive hnlarge hexpand
         (hWz ▸ hW) (hWz ▸ hpunused) (hWz ▸ hnunused) hzcut (by omega)
       rw [← hWz] at inv hperm hg hs hj
       refine ⟨Fz ++ [p, n], E, hv, hv.1, strip_of_legal hv, hv.2, hj,
-        Or.inl ⟨inv, hperm, hs, Or.inr ⟨by omega, hzcut, rfl, rfl, ?_⟩⟩⟩
+        Or.inl ⟨inv, hperm, hs, Or.inr ⟨lt_of_not_ge hpen, hzcut, rfl, rfl, ?_⟩⟩⟩
       simpa only [hE, Nat.add_zero] using hg
     · have hFresh (i : Fin k) (hi : i ∈ Extra) : i ∉ W := by
         dsimp only [Extra] at hi
@@ -1009,11 +1011,12 @@ theorem actualSource_threeNegative_even_half_arrival_free_exchange_full
       have hbase : (W ++ Extra).Nodup := by
         have hn : Extra.Nodup := by dsimp only [Extra]; split_ifs <;> simp
         exact hW.1.append hn (List.disjoint_left.mpr (by intro i hi he; exact hFresh i he hi))
-      have hExtra (i : Fin k) (hi : i ∈ Extra) : |f i| < Q k := by
-        dsimp only [Extra] at hi
-        split_ifs at hi <;> simp_all only [List.mem_cons, List.not_mem_nil, or_false]
-        subst i; exact hbval.2.2
-      have hEF (i : Fin k) (hi : i ∈ Efinal) : |f i| < Q k := by
+      have hExtra (i : Fin k) (hi : i ∈ Extra) : |s k t i| < Q k := by
+        by_cases he : b ∈ E
+        · simp only [Extra, ite_eq_left he, List.not_mem_nil] at hi
+        · have hi' : i = b := by simpa only [Extra, ite_eq_right he, List.mem_singleton] using hi
+          rw [hi']; exact hbval.2.2
+      have hEF (i : Fin k) (hi : i ∈ Efinal) : |(s k t) i| < Q k := by
         have he : i ∈ E := by
           dsimp only [Efinal] at hi
           split_ifs at hi
@@ -1025,68 +1028,63 @@ theorem actualSource_threeNegative_even_half_arrival_free_exchange_full
         split_ifs with he
         · simpa using (List.perm_cons_erase he).symm
         · exact List.perm_append_comm
-      let δ := Y + mass f [b] - P
-      let d1 := mass f (A ++ [x] ++ T0 ++ [y] ++ T1)
-      let d2 := mass f (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2)
+      let δ := Y + mass (s k t) [b] - P
+      let d1 := mass (s k t) (A ++ [x] ++ T0 ++ [y] ++ T1)
+      let d2 := mass (s k t) (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2)
       have hδ : δ = μ - P := by simp [δ, mass, hbval.1]; omega
       have hgate1 : (0 ≤ d1 + δ ∧ d1 + δ ≤ C k) ∧
-          (0 ≤ d1 + f zpen + δ ∧ d1 + f zpen + δ ≤ C k) := by
+          (0 ≤ d1 + (s k t) zpen + δ ∧ d1 + (s k t) zpen + δ ≤ C k) := by
         have hs := (strip_split (A ++ [x] ++ T0 ++ [y] ++ T1)
           ([zpen] ++ T2 ++ [z] ++ E)
           (by simpa [W, oldWord, x, List.append_assoc] using strip_of_legal hW)).2
-        have hd := inStrip_prefix hs 0
-        have ha := inStrip_prefix hs 1
-        have hm : mass f Fpen = d1 + f zpen := by simp [Fpen, d1, mass]; ring
-        change Q k ≤ -f zpen at hzpenlarge
-        simp only [List.take_zero, List.take_succ_cons, List.map_nil, List.map_cons,
-          List.sum_nil, List.sum_cons, add_zero, zero_add] at hd ha
-        change 0 ≤ d1 ∧ d1 ≤ C k at hd
-        change 0 ≤ d1 + f zpen ∧ d1 + f zpen ≤ C k at ha
+        have hd : 0 ≤ d1 ∧ d1 ≤ C k := by
+          simpa [d1, mass] using inStrip_prefix hs 0
+        have ha : 0 ≤ d1 + s k t zpen ∧ d1 + s k t zpen ≤ C k := by
+          simpa [d1, mass] using inStrip_prefix hs 1
+        have hm : mass (s k t) Fpen = d1 + (s k t) zpen := by simp [Fpen, d1, mass]; ring
+        change Q k ≤ -(s k t) zpen at hzpenlarge
         rw [hδ]; constructor <;> constructor <;> omega
       have hgate2 : (0 ≤ d2 + δ ∧ d2 + δ ≤ C k) ∧
-          (0 ≤ d2 + f z + δ ∧ d2 + f z + δ ≤ C k) := by
+          (0 ≤ d2 + (s k t) z + δ ∧ d2 + (s k t) z + δ ≤ C k) := by
         have hs := (strip_split (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2)
           ([z] ++ E)
           (by simpa [W, oldWord, x, List.append_assoc] using strip_of_legal hW)).2
-        have hd := inStrip_prefix hs 0
-        have ha := inStrip_prefix hs 1
-        have hm : mass f Fz = d2 + f z := by simp [Fz, Fpen, d2, mass]; ring
-        change Q k ≤ -f z at hzlarge
-        simp only [List.take_zero, List.take_succ_cons, List.map_nil, List.map_cons,
-          List.sum_nil, List.sum_cons, add_zero, zero_add] at hd ha
-        change 0 ≤ d2 ∧ d2 ≤ C k at hd
-        change 0 ≤ d2 + f z ∧ d2 + f z ≤ C k at ha
+        have hd : 0 ≤ d2 ∧ d2 ≤ C k := by
+          simpa [d2, mass] using inStrip_prefix hs 0
+        have ha : 0 ≤ d2 + s k t z ∧ d2 + s k t z ≤ C k := by
+          simpa [d2, mass] using inStrip_prefix hs 1
+        have hm : mass (s k t) Fz = d2 + (s k t) z := by simp [Fz, Fpen, d2, mass]; ring
+        change Q k ≤ -(s k t) z at hzlarge
         rw [hδ]; constructor <;> constructor <;> omega
-      let e := mass f W + Y + mass f Extra - P
+      let e := mass (s k t) W + Y + mass (s k t) Extra - P
       have he : 0 ≤ e ∧ e < C k ∧ (b ∈ E → 0 < e) := by
-        change C k - P < mass f W at hblocklo
-        change mass f W < D at hblockhi
+        change C k - P < mass (s k t) W at hblocklo
+        change mass (s k t) W < D at hblockhi
         have hYcap := centered_bounds hNp hNo ((2 : ℤ) ^ y.val * t)
-        change -C k ≤ f y ∧ f y ≤ C k at hYcap
-        dsimp only [e, Extra]
+        change -C k ≤ (s k t) y ∧ (s k t) y ≤ C k at hYcap
+        have hmExtra : mass (s k t) Extra = if b ∈ E then 0 else -μ := by
+          dsimp only [Extra]
+          split_ifs <;> simp only [mass, List.map_nil, List.map_cons,
+            List.sum_nil, List.sum_cons, add_zero, hbval.1]
+        dsimp only [e]
+        rw [hmExtra]
         split_ifs with hbE
-        · simp only [mass, List.map_nil, List.sum_nil, add_zero]
-          dsimp only [Y] at *; constructor <;> [omega; skip]
-          exact ⟨by omega, by intro _; omega⟩
-        · simp only [mass, List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, add_zero, hbval.1]
-          constructor <;> [omega; skip]
-          exact ⟨by omega, by intro he; exact (hbE he).elim⟩
+        · exact ⟨by omega, by omega, by intro _; omega⟩
+        · exact ⟨by omega, by omega, by intro he; exact (hbE he).elim⟩
       obtain ⟨L01, L2, LE, h01, h2, hLE, htail, hS, hv, hvn, hstrip, hpref,
           inv, hperm0, habs, hzp, hz, hretain, hg, hu, hsm, hH, hHs, hj,
           hend, he0, _, hcomp⟩ :=
         complete_small_shift k t hk p y zpen z A T0 T1 T2 E [b] Efinal Extra
-          hpositive hnlarge hexpand hW hpunused hnunused hsmall hylarge hzpenlarge hzlarge
-          (by intro i hi; have hi' : i = b := by simpa using hi; subst i; exact hbval.2.2)
+          hpositive hnlarge hexpand hW hpunused hnunused hsmall hylarge
+          (by intro i hi; have hi' : i = b := List.mem_singleton.mp hi; rw [hi']; exact hbval.2.2)
           hEF hExtra hFE hbase hgate1 hgate2 ⟨he.1, he.2.1.le⟩
       let L := L01 ++ [zpen] ++ L2 ++ [z] ++ LE
       let V := A ++ [p, n] ++ L
       let I := [p, n] ++ Extra
       have hperm : (V ++ [x, y]).Perm (W ++ I) := by
-        apply List.perm_iff_count.mpr
-        intro i
-        have hh := hperm0.count_eq i
-        simp only [List.count_append] at hh ⊢
-        exact hh.trans (by omega)
+        apply hperm0.trans
+        simpa only [List.append_assoc, I] using
+          (List.perm_append_comm : (Extra ++ [p, n]).Perm ([p, n] ++ Extra)).append_left W
       have hIunused (i : Fin k) (hi : i ∈ I) : i ∉ W := by
         rcases List.mem_append.mp hi with hi | hi
         · simp only [List.mem_cons, List.not_mem_nil, or_false] at hi
@@ -1094,24 +1092,24 @@ theorem actualSource_threeNegative_even_half_arrival_free_exchange_full
           · exact hpunused
           · exact hnunused
         · exact hFresh i hi
+      have hExtraR : Disjoint Extra.toFinset ({x, y} : Finset (Fin k)) := by
+        apply Finset.disjoint_left.mpr
+        intro i hi hiR
+        have hs := hExtra i (List.mem_toFinset.mp hi)
+        simp only [Finset.mem_insert, Finset.mem_singleton] at hiR
+        rcases hiR with rfl | rfl
+        · exact (not_lt_of_ge (show Q k ≤ |s k t x| from geo.xLarge)) hs
+        · exact (not_lt_of_ge (le_trans hylarge (neg_le_abs _))) hs
+      have hxys : ([x, y] : List (Fin k)).toFinset = {x, y} := by simp
       have hused : V.toFinset = (W.toFinset \ {x, y}) ∪ I.toFinset := by
-        rw [inv.used]
-        ext i
-        simp only [List.toFinset_append, List.toFinset_cons, List.toFinset_nil,
-          Finset.mem_union, Finset.mem_sdiff, Finset.mem_insert, Finset.mem_singleton,
-          Finset.notMem_empty, or_false, I]
-        have hExR : i ∈ Extra → i ≠ x ∧ i ≠ y := by
-          intro hi
-          have hs := hExtra i hi
-          have hxL : Q k ≤ |f x| := geo.xLarge
-          have hyL : Q k ≤ |f y| := le_trans hylarge (neg_le_abs _)
-          constructor <;> intro hh <;> subst i <;> omega
-        simp only [List.toFinset_append, List.mem_toFinset] at hExR ⊢
-        tauto
+        rw [inv.used, List.toFinset_append, hxys, Finset.union_sdiff_distrib,
+          Finset.sdiff_eq_self_of_disjoint hExtraR]
+        simp only [I, List.toFinset_append]
+        ac_rfl
       have hunused : V.toFinsetᶜ = (W.toFinsetᶜ \ I.toFinset) ∪ {x, y} := by
         rw [inv.unused]
         ext i
-        simp [I, Finset.mem_compl, and_assoc, and_left_comm, and_comm]
+        simp [I, W, n, x, Finset.mem_compl, and_assoc, and_left_comm, and_comm]
       have husedDis : Disjoint (W.toFinset \ {x, y}) I.toFinset := by
         apply Finset.disjoint_left.mpr
         intro i hiW hiI
@@ -1127,15 +1125,14 @@ theorem actualSource_threeNegative_even_half_arrival_free_exchange_full
         inventory_of_perm hk t (W ++ Extra) W [] Extra hbase (by simp)
           (by simp) (by intro i hi; simp [hi]) (by simp) (by simp)
       have hcount : U V + Extra.length = U W := by
-        have hh := invExtra.countBalance
-        simp only [List.length_nil, Nat.add_zero] at hh
-        rw [hu]; omega
+        rw [hu]
+        simpa only [List.length_nil, Nat.add_zero] using invExtra.countBalance.symm
       have hsmallEq : remainingSmall t V = remainingSmall t W \ Extra.toFinset := by
         rw [hsm]
         ext i
-        simp [remainingSmall, and_assoc, and_left_comm, and_comm]
+        simp [remainingSmall, W, and_assoc, and_comm]
       refine ⟨V, [x, y], hv, hvn, hstrip, hpref, hj, Or.inr
-        ⟨by omega, by omega, rfl, L01, L2, LE, h01, h2, hLE,
+        ⟨lt_of_not_ge hpen, lt_of_not_ge hzcut, rfl, L01, L2, LE, h01, h2, hLE,
           rfl, htail, hS, inv, hperm, hused, husedDis, hunused, hunusedDis,
           habs, hzp, hz, hretain, hg, hcount, hsmallEq, hH, hHs, hend,
           he.1, he.2.1, he.2.2, hcomp⟩⟩
