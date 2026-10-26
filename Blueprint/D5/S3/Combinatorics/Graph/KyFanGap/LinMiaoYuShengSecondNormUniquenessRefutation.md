@@ -46,6 +46,10 @@ $$\neg (\forall n \in \mathrm{Nat},\; \forall m \in \mathrm{Nat},\; (n \le m) \R
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/KyFanGap/LinMiaoYuShengSecondNormUniquenessRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lmys511-kyfan` (refuted) by `D5/S3/Combinatorics/Graph/KyFanGap/LinMiaoYuShengSecondNormUniquenessRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lmys511-kyfan","declaration_gid":"D5/S3/Combinatorics/Graph/KyFanGap/LinMiaoYuShengSecondNormUniquenessRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zhen Lin, Lianying Miao, Guanglong Yu and Han Sheng (2022). *On the Ky Fan k-norm of the LI-matrix of graphs*. DOI: [10.13001/ela.2022.5943](https://doi.org/10.13001/ela.2022.5943). URL: <https://arxiv.org/abs/2012.11162v2>.

@@ -26,12 +26,14 @@ internal sealed class LinMiaoYuShengSecondNormUniquenessRefutationDocument : ISc
             Node("result", "A second-norm tie without isomorphism", "result",
                 new Formula.Not(Parenthesized(ClaimBody())),
                 "On Fin 6, take all edges {0,i} for 1 ≤ i ≤ 5 and the additional edges {1,2}, {3,4}. This graph is connected and has seven edges. Its degrees are 5,2,2,2,2,1, whereas Gmn 6 7 has degrees 5,3,2,2,1,1, so the graphs are nonisomorphic. Their Laplacian spectra are respectively {6,3,3,1,1,0} and {6,4,2,1,1,0}. Exact rational change-of-basis matrices identify the singular values of the centered Laplacians; the largest two are 11/3 and 7/3 in both cases. Both second Ky Fan norms therefore equal 6, contradicting the equality characterization. This also contradicts the uniqueness assertion of the source's Theorem 5.9 at order six. The third norm, the global upper bound and an equality classification for general orders are not asserted here.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("lmys511-kyfan"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("lmys-" + id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => StrataLint.Scribe.FormulaDsl.Id(name);
     private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
