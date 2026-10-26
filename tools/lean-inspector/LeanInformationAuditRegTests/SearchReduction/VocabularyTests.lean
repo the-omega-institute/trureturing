@@ -37,3 +37,27 @@ run_cmd do
 
 #guard privateNameResult.paired = Run.found
 #print axioms privateNameResult.pairedProof
+
+run_cmd do
+  let source ← getEnv
+  enableInitializersExecution
+  let base ← importModules #[{module := `Mathlib.Tactic}]
+    LeanInformationAudit.SearchReduction.options 0 (leakEnv := false) (loadExts := true)
+  let constructor := ``VocabularyCandidates.PureMode.ab
+  let request : Request := {
+    target := ``VocabularyCandidates.modeReflexive, «baseline» := #[],
+    additions := #[constructor], baselineCommit := "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"}
+  if base.contains constructor then throwError "constructor fixture is already baseline"
+  let .ok (clean, _, _) ← prepare source base request false
+    | throwError "constructor fixture baseline preparation failed"
+  unless clean.contains constructor do throwError "constructor was not rebuilt as vocabulary"
+  let paired ← prepare source clean request true (originalBaseline? := some base)
+  let .ok _ := paired
+    | let .error (_, reason) := paired | throwError "missing constructor result"
+      throwError "rebuilt constructor misclassified as baseline: {reason}"
+  let protectedResult ← prepare source clean request true (originalBaseline? := some clean)
+  let .error (_, reason) := protectedResult
+    | throwError "actual baseline constructor was accepted as added structure"
+  unless reason.startsWith "search.structure_already_in_baseline:" do
+    throwError "actual baseline constructor rejected for the wrong reason: {reason}"
+  logInfo "constructor origin: rebuilt common vocabulary accepted; original baseline rejected"

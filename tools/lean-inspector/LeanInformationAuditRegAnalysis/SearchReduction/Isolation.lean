@@ -41,6 +41,9 @@ partial def copyStructure (source : Environment) (target : Name) (targetType : E
   if n == target then throwError "search.target_leak: {n}"
   if visiting.contains n then return
   let info ← checkedSource source n
+  -- A kernel-rebuilt constructor is common vocabulary, never an added fact.
+  if let .ctorInfo _ := info then
+    if (← getEnv).contains n then return
   -- Recover only vocabulary needed by the statement. Certificate elaboration
   -- stays in B's environment, including its registered tactic implementations.
   -- The detached source environment supplies no extension state or proofs.
@@ -151,6 +154,10 @@ private def prepareAdditions (source base : Environment) (index : FactIndex) :
       return ← prepareAdditions source base index rest types
     if base.contains n then throwError "search.structure_already_in_baseline: {n}"
     let info ← checkedSource source n
+    if let .ctorInfo _ := info then
+      if (← getEnv).contains n then
+        IO.eprintln s!"structure member: source={n}, disposition=common-vocabulary-constructor"
+        return ← prepareAdditions source base index rest types
     let type ← copyStatement source n info.type
     let started ← IO.getNumHeartbeats
     let (present, evidence?, detail) ← baselinePresentation (← getEnv) info.levelParams type (some index)
@@ -167,7 +174,7 @@ private def prepareAdditions (source base : Environment) (index : FactIndex) :
 
 /-- Reconstruct one arm without running or pricing any graph query. -/
 def prepare (source base : Environment) (request : Request)
-    (paired : Bool) : IO (Except (Failure × String) (Environment × ConstantInfo × Option Attempt)) := do
+    (paired : Bool) (originalBaseline? : Option Environment := none) : IO (Except (Failure × String) (Environment × ConstantInfo × Option Attempt)) := do
   let phase ← IO.mkRef "source-check"
   let work : CoreM (Environment × ConstantInfo × Option Attempt) := MetaM.run' do
     let target ← checkedSource source request.target
@@ -209,7 +216,7 @@ def prepare (source base : Environment) (request : Request)
       if paired then
         let index ← factIndex
         phase.set "structure-presentation"
-        let (types, used) ← prepareAdditions source base index request.additions.toList #[]
+        let (types, used) ← prepareAdditions source (originalBaseline?.getD base) index request.additions.toList #[]
         -- Continue with the same allocation consumed by nonpresentation work.
         -- prepareAdditions adjusts only its recursive continuation's reader.
         withTheReader Core.Context (fun ctx => {ctx with initHeartbeats := ctx.initHeartbeats + used}) do
@@ -462,7 +469,7 @@ private unsafe def runCore (source base : Environment) (request : Request)
     let mut structureReason := ""
     let mut structureFailure : Option Failure := none
     if !request.additions.isEmpty then
-      match ← prepare source clean request true with
+      match ← prepare source clean request true (originalBaseline? := some base) with
       | .ok (env, _, _) => pairedEnv := env; structureChecked := true
       | .error (failure, reason) =>
         structureReason := reason

@@ -11,7 +11,7 @@ import LeanInformationAuditRegAnalysis.SearchReduction.PinnedDeriving
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
-abbrev transportVersion : String := "prefix-reconstruction-source-reducibility-v5"
+abbrev transportVersion : String := "prefix-reconstruction-source-reducibility-baseline-v6"
 abbrev reconstructionBudget : Nat := 200000
 
 private initialize referenceEnvironmentCache : IO.Ref (Option Environment) ← IO.mkRef none
