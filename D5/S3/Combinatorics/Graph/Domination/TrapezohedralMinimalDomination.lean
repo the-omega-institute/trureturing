@@ -10,12 +10,12 @@ import D5.S3.Combinatorics.Graph.DominatingSetAverage
 import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.Combinatorics.SimpleGraph.VertexCover
 
+/-! Closed domination uses the existing `SimpleGraph.IsDominating`. Minimality
+ranges over all subsets, without a connectivity restriction. -/
+
 set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.Domination.TrapezohedralMinimalDomination
-
-/-! Closed domination uses the existing `SimpleGraph.IsDominating`. Minimality
-ranges over all subsets, without a connectivity restriction. -/
 
 section Minimality
 
@@ -39,7 +39,7 @@ theorem minimalDominating_iff_private (S : Set V) :
     refine ⟨hd, fun s hs => ?_⟩
     have hn : ¬ G.IsDominating (S \ {s}) := by
       intro ht
-      have hmem := hm (S \ {s}) Set.diff_subset ht hs
+      have hmem := hm (S \ {s}) Set.sdiff_subset ht hs
       exact hmem.2 (by simp)
     change ¬ (∀ w, w ∈ S \ {s} ∨ ∃ t ∈ S \ {s}, G.Adj w t) at hn
     obtain ⟨w, hw⟩ := not_forall.mp hn
@@ -108,15 +108,13 @@ def graph (n : ℕ) : SimpleGraph (Vertex n) where
 
 /-- Connected induced subgraph as well as minimality among all dominating subsets. -/
 def Admissible {n : ℕ} (S : Set (Vertex n)) : Prop :=
-  MinimalDominating (graph n) S ∧ ((graph n).induce S).Connected
+  ((graph n).IsDominating S ∧
+    ∀ T : Set (Vertex n), T ⊂ S → ¬ (graph n).IsDominating T) ∧
+      ((graph n).induce S).Connected
 
 /-- Count actual labelled finite subsets, with the source's zero coefficients below order three. -/
-noncomputable def actualCount (n : ℕ) : ℕ := by
-  classical
-  exact if 3 ≤ n then
-    ((Finset.univ : Finset (Vertex n)).powerset.filter
-      (fun S => Admissible (S : Set (Vertex n)))).card
-    else 0
+noncomputable def actualCount (n : ℕ) : ℕ :=
+  if 3 ≤ n then Nat.card {S : Set (Vertex n) // Admissible S} else 0
 
 /-- A one-apex set with opposite label `j` and selected same-type labels `C`. -/
 def alphaSet {n : ℕ} (j : Fin n) (C : Set (Fin n)) : Set (Vertex n)
@@ -186,10 +184,10 @@ private theorem minimalCutCover_iff_private {n : ℕ} (hn : 2 ≤ n)
     refine ⟨hc, fun i hi => ?_⟩
     have hncover : ¬ CutCover j (C \ {i}) := by
       intro hd
-      have hmem := hm (C \ {i}) Set.diff_subset hd hi
+      have hmem := hm (C \ {i}) Set.sdiff_subset hd hi
       exact hmem.2 (by simp)
     unfold CutCover at hncover
-    push_neg at hncover
+    push Not at hncover
     obtain ⟨k, hkj, hk, hr⟩ := hncover
     rcases hc k hkj with hkC | hrC
     · have hki : k = i := by
@@ -207,9 +205,12 @@ private theorem minimalCutCover_iff_private {n : ℕ} (hn : 2 ≤ n)
   · rintro ⟨hc, hp⟩
     refine ⟨hc, ?_⟩
     intro D hDC hd i hi
-    obtain ⟨k, hkj, (⟨rfl, hr⟩ | ⟨rfl, hk⟩)⟩ := hp i hi
-    · exact (hd k hkj).resolve_right (fun h => hr (hDC h))
-    · exact (hd k hkj).resolve_left (fun h => hk (hDC h))
+    obtain ⟨k, hkj, hk⟩ := hp i hi
+    rcases hk with ⟨hik, hr⟩ | ⟨hir, hk⟩
+    · rw [hik]
+      exact (hd k hkj).resolve_right (fun h => hr (hDC h))
+    · rw [hir]
+      exact (hd k hkj).resolve_left (fun h => hk (hDC h))
 
 private theorem cover_nonempty {n : ℕ} (hn : 2 ≤ n) {j : Fin n}
     {C : Set (Fin n)} (hc : CutCover j C) : C.Nonempty := by
@@ -242,12 +243,14 @@ private theorem private_sameType_iff {n : ℕ} (hn : 2 ≤ n)
       have hki : i = k ∨ i = finRotate n k := by
         simpa [graph, adjacent] using hw
       refine ⟨k, hkj, ?_⟩
-      rcases hki with rfl | rfl
-      · refine Or.inl ⟨rfl, ?_⟩
+      rcases hki with hik | hir
+      · subst i
+        refine Or.inl ⟨rfl, ?_⟩
         intro hr
         have heq := hu (a (finRotate n k)) hr (Or.inr (Or.inr rfl))
         exact rotate_ne hn k (Vertex.a.inj heq)
-      · refine Or.inr ⟨rfl, ?_⟩
+      · subst i
+        refine Or.inr ⟨rfl, ?_⟩
         intro hk
         have heq := hu (a k) hk (Or.inr (Or.inl rfl))
         exact rotate_ne hn k (Vertex.a.inj heq).symm
@@ -338,7 +341,7 @@ private theorem connected_alphaSet_iff {n : ℕ} (j : Fin n) (C : Set (Fin n)) :
       · exact Or.inl hv
       · exact Or.inr hv
   · intro he
-    apply SimpleGraph.connected_iff_exists_forall_reachable.mpr
+    apply (((graph n).induce (alphaSet j C)).connected_iff_exists_forall_reachable).mpr
     let root : alphaSet j C := ⟨alpha, trivial⟩
     have reachA (i : Fin n) (hi : i ∈ C) :
         ((graph n).induce (alphaSet j C)).Reachable root ⟨a i, hi⟩ :=
@@ -361,14 +364,15 @@ private theorem connected_alphaSet_iff {n : ℕ} (j : Fin n) (C : Set (Fin n)) :
 
 /-- Exact forward and reverse conditions for a fixed labelled one-apex set.
 The omitted interior label supplies the apex's closed-private witness. -/
-theorem alphaSet_admissible_iff {n : ℕ} (hn : 3 ≤ n) (j : Fin n) (C : Set (Fin n)) :
+private theorem alphaSet_admissible_with_interior_iff {n : ℕ} (hn : 3 ≤ n) (j : Fin n) (C : Set (Fin n)) :
     Admissible (alphaSet j C) ↔
       MinimalCutCover j C ∧ (j ∈ C ∨ finRotate n j ∈ C) ∧
         ∃ i : Fin n, i ∉ C ∧ i ≠ j ∧ i ≠ finRotate n j := by
   have hn2 : 2 ≤ n := by omega
   constructor
   · rintro ⟨hm, hconn⟩
-    obtain ⟨hd, hp⟩ := (minimalDominating_iff_private (graph n) _).mp hm
+    obtain ⟨hd, hp⟩ := (minimalDominating_iff_private (graph n) _).mp
+      ((minimalDominating_iff_proper (graph n) _).mpr hm)
     have hc := (dominates_alphaSet_iff j C).mp hd
     refine ⟨(minimalCutCover_iff_private hn2 j C).mpr ⟨hc, ?_⟩,
       (connected_alphaSet_iff j C).mp hconn, ?_⟩
@@ -376,20 +380,83 @@ theorem alphaSet_admissible_iff {n : ℕ} (hn : 3 ≤ n) (j : Fin n) (C : Set (F
       exact (private_sameType_iff hn2 j i C hi).mp (hp (a i) hi)
     · exact (private_apex_iff j C (cover_nonempty hn2 hc)).mp (hp alpha trivial)
   · rintro ⟨hc, hend, hinterior⟩
-    refine ⟨(minimalDominating_iff_private (graph n) _).mpr ⟨?_, ?_⟩,
+    refine ⟨(minimalDominating_iff_proper (graph n) _).mp
+      ((minimalDominating_iff_private (graph n) _).mpr ⟨?_, ?_⟩),
       (connected_alphaSet_iff j C).mpr hend⟩
     · exact (dominates_alphaSet_iff j C).mpr hc.1
     · intro s hs
       cases s with
       | alpha => exact (private_apex_iff j C (cover_nonempty hn2 hc.1)).mpr hinterior
       | beta => exact False.elim hs
-      | a i => exact (private_sameType_iff hn2 j i C hs).mpr
+      | a i =>
+        exact (private_sameType_iff hn2 j i C hs).mpr
           (((minimalCutCover_iff_private hn2 j C).mp hc).2 i hs)
       | b i =>
         change i = j at hs
         subst i
         refine ⟨beta, Or.inr trivial, ?_⟩
         intro t ht hwt
-        cases t <;> simp_all [graph, adjacent, alphaSet]
+        cases t with
+        | alpha => simp [graph, adjacent] at hwt
+        | beta => exact False.elim ht
+        | a k => simp [graph, adjacent] at hwt
+        | b k => exact congrArg b ht
+
+private theorem rotate_twice_ne {n : ℕ} (hn : 3 ≤ n) (i : Fin n) :
+    finRotate n (finRotate n i) ≠ i := by
+  letI : NeZero n := ⟨by omega⟩
+  intro h
+  have htwo : (1 : Fin n) + 1 = 2 := by
+    apply Fin.ext
+    simp [Fin.val_add, Nat.mod_eq_of_lt (show 1 < n by omega),
+      Nat.mod_eq_of_lt (show 2 < n by omega)]
+  have he : i + (2 : Fin n) = i + 0 := by
+    simpa only [finRotate_apply, add_assoc, htwo, add_zero] using h
+  have hz : (2 : Fin n) = 0 := add_left_cancel he
+  have hv := congrArg Fin.val hz
+  norm_num [Fin.val_natCast, Nat.mod_eq_of_lt (show 2 < n by omega)] at hv
+
+private theorem cover_omits_interior {n : ℕ} (hn : 3 ≤ n) (j : Fin n)
+    (C : Set (Fin n)) (hc : MinimalCutCover j C)
+    (he : j ∈ C ∨ finRotate n j ∈ C) :
+    ∃ i : Fin n, i ∉ C ∧ i ≠ j ∧ i ≠ finRotate n j := by
+  classical
+  by_contra! hnone
+  have hall : ∀ i : Fin n, i ≠ j → i ≠ finRotate n j → i ∈ C := by
+    intro i hij hir
+    by_contra hi
+    exact hir (hnone i hi hij)
+  have hp := ((minimalCutCover_iff_private (by omega) j C).mp hc).2
+  rcases he with hj | hr
+  · obtain ⟨k, hkj, hk⟩ := hp j hj
+    rcases hk with ⟨hjk, _⟩ | ⟨hjr, hkC⟩
+    · exact hkj hjk.symm
+    · have hkr : k ≠ finRotate n j := by
+        intro heq
+        have hbad : finRotate n (finRotate n j) = j := by rw [← heq, ← hjr]
+        exact rotate_twice_ne hn j hbad
+      exact hkC (hall k hkj hkr)
+  · obtain ⟨k, hkj, hk⟩ := hp (finRotate n j) hr
+    rcases hk with ⟨hrk, hrC⟩ | ⟨hrr, _⟩
+    · have hrj : finRotate n k ≠ j := by
+        intro heq
+        exact rotate_twice_ne hn j (by rw [hrk, heq])
+      have hrr : finRotate n k ≠ finRotate n j := by
+        intro heq
+        exact hkj ((finRotate n).injective heq)
+      exact hrC (hall (finRotate n k) hrj hrr)
+    · exact hkj ((finRotate n).injective hrr).symm
+
+/-- Complete fixed-tag inverse: no additional privacy condition is assumed. -/
+theorem alphaSet_admissible_iff {n : ℕ} (hn : 3 ≤ n) (j : Fin n) (C : Set (Fin n)) :
+    Admissible (alphaSet j C) ↔
+      MinimalCutCover j C ∧ (j ∈ C ∨ finRotate n j ∈ C) := by
+  constructor
+  · intro h
+    have he := (alphaSet_admissible_with_interior_iff hn j C).mp h
+    exact ⟨he.1, he.2.1⟩
+  · rintro ⟨hc, he⟩
+    exact (alphaSet_admissible_with_interior_iff hn j C).mpr
+      ⟨hc, he, cover_omits_interior hn j C hc he⟩
 
 end D5.S3.Combinatorics.Graph.Domination.TrapezohedralMinimalDomination
