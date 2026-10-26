@@ -247,4 +247,84 @@ private theorem actual_scheme
   · exact SignedOrdinalActualReindex.actual_cofinal hCH
 
 
+open SignedOrdinalSuccessor
+open D5.S3.Topology.Measures.SignedSplitSuccessor (splitCarrier)
+
+/-- Literal geometry required by the original scheme, on the same fixed run. -/
+private theorem actual_geometric_limits
+    (hCH : Cardinal.continuum.{0} = ℵ₁) :
+    let H := SignedOrdinalRealization.finalPrefix hCH
+    (∀ a : Stage,
+      (SignedOrdinalActualG.clopen hCH a : Set (H.Space (nextStage a).1)) =
+        {x | x.1 (SignedSuccessorCoordinates.last (ord a)) = true}) ∧
+    (∀ (l : Label), ω < l.1 → Order.IsSuccLimit l.1 →
+      H.carrier l = (SignedOrdinalRealization.properSlice hCH l.2).limitCarrier) ∧
+    H.limitCarrier = {x | ∀ a : Label,
+      restrict (le_of_lt a.2) x ∈ H.carrier a} := by
+  let H := SignedOrdinalRealization.finalPrefix hCH
+  refine ⟨?_, ?_, rfl⟩
+  · intro a
+    ext x
+    rfl
+  · intro l hw hl
+    let a : Stage := ⟨l, hw.le⟩
+    let R := SignedOrdinalHistoryLimit.result a
+      (fun b _ => SignedOrdinalHistory.run hCH b)
+      (fun b c _ _ hbc => SignedOrdinalHistory.coherent hCH b c hbc) hw hl
+    calc
+      H.carrier l = (SignedOrdinalHistory.run hCH a).H.carrier (top (ord a)) :=
+        SignedOrdinalRealization.top_read hCH a
+      _ = R.extended.carrier (top (ord a)) := by
+        exact congrArg (fun S : SignedOrdinalHistoryState.State a =>
+          S.H.carrier (top (ord a))) (SignedOrdinalHistory.limit_execution hCH a hw hl)
+      _ = (SignedOrdinalHistoryPast.strictPrefix a.1.2.le
+          (fun b _ => SignedOrdinalHistory.run hCH b)
+          (fun b c _ _ hbc => SignedOrdinalHistory.coherent hCH b c hbc)).limitCarrier :=
+        R.top_carrier
+      _ = (SignedOrdinalRealization.properSlice hCH l.2).limitCarrier := rfl
+
+/-- Every original successor is the literal Boolean insertion of its closed cover. -/
+private theorem actual_successor_split
+    (hCH : Cardinal.continuum.{0} = ℵ₁) :
+    let H := SignedOrdinalRealization.finalPrefix hCH
+    ∀ a : Stage, ∃ Y Z : Set (H.Space a.1),
+      IsClosed Y ∧ IsClosed Z ∧ Y ∪ Z = univ ∧
+      H.carrier (nextStage a).1 =
+        Set.range (fun z : splitCarrier Y Z =>
+          fun i : Coord (Order.succ (ord a)) =>
+            if hi : i.1 < ord a then z.1.1.1 ⟨i.1, hi⟩ else z.1.2) := by
+  classical
+  dsimp only
+  intro a
+  let R := (SignedOrdinalHistory.run hCH a).event.result
+  let E := Homeomorph.setCongr (SignedOrdinalRealization.top_read hCH a)
+  let Y := E ⁻¹' R.Y
+  let Z := E ⁻¹' R.Z
+  refine ⟨Y, Z, R.closedY.preimage E.continuous,
+    R.closedZ.preimage E.continuous, ?_, ?_⟩
+  · change E ⁻¹' R.Y ∪ E ⁻¹' R.Z = univ
+    rw [← Set.preimage_union, R.cover, Set.preimage_univ]
+  · rw [SignedOrdinalRealization.successor_carrier hCH a]
+    change R.coordinates.carrier = _
+    rw [R.coordinates.range_eq]
+    ext v
+    constructor
+    · rintro ⟨z, rfl⟩
+      let z' : splitCarrier Y Z := ⟨(E.symm z.1.1, z.1.2), by
+        change ((E (E.symm z.1.1) ∈ R.Y ∧ z.1.2 = false) ∨
+          (E (E.symm z.1.1) ∈ R.Z ∧ z.1.2 = true))
+        have hz := z.2
+        change ((z.1.1 ∈ R.Y ∧ z.1.2 = false) ∨
+          (z.1.1 ∈ R.Z ∧ z.1.2 = true)) at hz
+        have he : E (E.symm z.1.1) = z.1.1 := E.apply_symm_apply _
+        exact he.symm ▸ hz⟩
+      refine ⟨z', ?_⟩
+      funext i
+      exact (R.coordinates.insert z i).symm
+    · rintro ⟨z, rfl⟩
+      let z' : splitCarrier R.Y R.Z := ⟨(E z.1.1, z.1.2), by exact z.2⟩
+      refine ⟨z', ?_⟩
+      funext i
+      exact R.coordinates.insert z' i
+
 end D5.S3.Topology.InverseLimit.TalagrandTopologicalConsequences
