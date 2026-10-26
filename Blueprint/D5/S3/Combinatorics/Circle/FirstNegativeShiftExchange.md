@@ -1,8 +1,8 @@
-# Arrival-free descent and conditional first negative omission
+# First negative omission and actual inverse-parent exchanges
 
 ## Abstract
 
-Native prefix truncation or complete SMALL-batch reordering gives arrival-free strict J descent when the first negative magnitude is at most P; the dedicated shift theorem retains every SMALL under two actual arrival bounds.
+Native prefix truncation, actual even-half insertion or relocation, and odd-parent prefix insertion construct full physical strict J competitors in complementary first-negative regions.
 
 **Theorem 1.1 (Full physical exchange retaining every SMALL occurrence).**
 
@@ -30,7 +30,7 @@ Complete-batch permutations give (L++[y]).Perm(T0++[y]++T1++[zpen]++T2++[z]++E) 
 
 Both inserted p,n and returned x,y are LARGE. Thus G(V)=G(W), U(V)=U(W), and remainingSmall(V)=remainingSmall(W). The exact natural-number identity is H(V)+3^abs(s(x))+3^abs(s(y))=H(W)+3^abs(s(p))+3^abs(s(n)). Native expanding-path energy gives 3^P+3^D<3^r; the returned y term further increases the removed energy. It follows that H(V)<H(W) and J(V)<J(W), with no truncated subtraction or change to the frozen definitions of G,H,U,J.
 
-This remains the dedicated all-SMALL-retaining branch result. The arrival-free theorem below handles low old arrivals by literal prefix truncations with strict G descent, and invokes this theorem only when both actual arrivals exceed C-P. It does not assert uniform SMALL retention for those truncations. Numerical ties remain distinct physical labels. The first-Y>P region and full original-quantifier Circle C3.1 remain open. Four-slot escape registration is unfinished under https://github.com/the-omega-institute/trureturing/issues/22063: faithful complete-telescope source reconstruction, lawful enrolled readout and whole-family variation, sensitivity and observational-dependence evidence have not been established.
+This remains the dedicated all-SMALL-retaining branch result. The arrival-free theorem below handles low old arrivals by literal prefix truncations with strict G descent, and invokes this theorem only when both actual arrivals exceed C-P. It does not assert uniform SMALL retention for those truncations. Numerical ties remain distinct physical labels. The even-half and odd-parent results below cover further first-Y>P regions; the remaining placements and full original-quantifier Circle C3.1 remain open. Four-slot escape registration is unfinished under https://github.com/the-omega-institute/trureturing/issues/22063: faithful complete-telescope source reconstruction, lawful enrolled readout and whole-family variation, sensitivity and observational-dependence evidence have not been established.
 
 **Theorem 1.2 (Consumed native low-prefix pair construction).**
 
@@ -70,9 +70,57 @@ At a genuine GLOBAL J minimum W over all Legal physical words for these same k,t
 
 The faithful audit target is this entire original dependent telescope and its existential branch-sensitive output, not a fixed finite scalar profile. A DependentFamily realization would need exact source reconstruction and an equivalence to its Law, an actual-positive law, whole-family interventions changing each enrolled readout with other roles and anchors fixed, and actual observational dependence. No such complete proofs are supplied. Registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/22063; no finite-template, uncompiled Reg or bind-only audit wrapper is retained.
 
+**Theorem 1.4 (Actual even half, fresh or in the terminal SMALL batch).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_even_half_arrival_free_exchange_full`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_even_half_arrival_free_exchange_full` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Keep the same native physical source and original Legal W=A++[x]++T0++[y]++T1++[zpen]++T2++[z]++E, with p,n unused in all W, all T0,T1,T2,E SMALL, and y,zpen,z negative LARGE. Put P=s(p)>0, D=abs(s(n)), r=s(x)=2P-D, B=C-P, Y=-s(y) and h=sum(W). Assume B<h<D, Y>P, Y even and r<=Y+1, equivalently Y>=r-1. The actual inverse physical label is b=rho inverse(y), with the cyclic seam included. Its required status is b unused in all W OR b in terminal E. No replacement Legal, favorable reordered prefixes, additional arrival, endpoint or capacity premise is present.
+
+The exact source-cycle equation at b is 2s(b)-s(y)=N times its wrap indicator. The negative wrapped branch contradicts s(y)<0; the positive wrapped branch gives odd Y since N is odd. Even Y therefore forces 2s(b)=-Y and s(b)=-mu where mu=Y/2, 0<mu<Q. This is an actual negative SMALL occurrence, with no numerical-source injectivity assumption. For odd Y the positive wrapped branch instead gives 2s(b)=N-Y and b positive LARGE. The parity premise cannot be removed.
+
+Use the same actual Fpen,Fz,Rpen as the arrival-free first-negative theorem. If sum(Fpen)<=B, literal V=Fpen++[p,n], R=Rpen drops G by one. Otherwise if sum(Fz)<=B, literal V=Fz++[p,n], R=E drops G by two. Both calls reuse actualSource_prefix_pair_truncation and provide ordinary Inventory W V [p,n] R. SMALL retention and consuming b are not promised in these truncation branches. Every branch gives Legal(V), physical Nodup, InStrip from zero, all natural take bounds and strict J descent.
+
+In the remaining branch both actual old arrivals exceed B. Let Extra=[] and Efinal=E.erase(b) when b is in E; otherwise Extra=[b] and Efinal=E. The physical erase permutation proves ([b]++Efinal).Perm(E++Extra). Nodup of W++Extra follows from original Nodup and fresh b when Extra is nonempty. This appended baseline need not be Legal. Set delta=Y+s(b)-P=mu-P<0. Since r=4P-N and N=2C+1, even Y>=r-1 gives C+1+mu-2P>=0. Integer old arrivals>B imply their translated arrivals are nonnegative; each old departure is at least its negative-step arrival. All four translated upper bounds follow from delta<0 and original legality. The literal p,n gates are unchanged: original a0+r<=C and D<P<r imply a0+P and a0+P-D lie in the strip.
+
+The first complete SMALL batch is T0++T1++[b], from a0+P-D to d1+delta. T2 goes from a1+delta to d2+delta; Efinal goes from a2+delta to e=h+Y+sum(Extra)-P. These are exact full-word identities. Every opposite SMALL pair has difference <=2Q-2<C, so exists_order_between orders all three complete batches. The same private physical engine also proves the original rich Y<=P theorem with F=[], Efinal=E and Extra=[]; its public strict-interior conclusion is unchanged. The literal rich competitor is V=A++[p,n]++L01++[zpen]++L2++[z]++LE, with L01.Perm(T0++T1++[b]), L2.Perm(T2) and LE.Perm(Efinal). It retains all old SMALL, zpen,z and A; x,y are absent. Equal-valued physical labels remain distinct.
+
+For fresh b, Extra=[b], e=h+mu-P lies in [0,C). The lower endpoint may be zero at Y=r-1 and is allowed by Legal. The exact physical permutation is (V++[x,y]).Perm(W++[p,n,b]); G(V)=G(W), U(V)+1=U(W), and remainingSmall(V)=remainingSmall(W) minus {b}. Existing Inventory is specialized to LARGE insertions, so the theorem gives Inventory (W++[b]) V [p,n] [x,y], together with ORIGINAL-W used and unused disjoint partitions for the true inserted list [p,n,b]. It does not assert the false Inventory W V [p,n,b] [x,y], nor Legal(W++[b]). For terminal b, Extra=[], Efinal=E.erase(b), e=h+Y-P is strictly inside (0,C), ordinary Inventory W V [p,n] [x,y] applies, U(V)=U(W) and remainingSmall is equal. Exactly one physical b is moved, with no loss or duplication.
+
+In both rich cases H(V)+3^abs(s(x))+3^abs(s(y))=H(W)+3^abs(s(p))+3^abs(s(n)). Extra has zero LARGE weight and energy; native geometry gives 3^P+3^D<3^r, hence strict H and J descent. The complement identity is remainingMass(V)=-e for the full physical source. At a genuine global J minimum over all zero-start Legal words, the theorem contradicts either available status. Under its even Y>P and Y>=r-1 source hypotheses, b must therefore already be used and lie outside terminal E. It may lie in A,T0,T1 or T2; no stronger placement is asserted. This minimum consequence adds no named specialization.
+
+Four-slot registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/22063. The audit target is the whole dependent source telescope, the two physical half statuses, the truncated branches and the branch-sensitive physical outputs. DependentFamily.realize and its enrollment do not supply exact source reconstruction and equivalence to an enrolled Law, whole-family variation, sensitivity with the other roles and anchors fixed, or actual observational dependence. These evidence obligations remain absent; no finite catalog or declared_validated registration is claimed.
+
+**Theorem 1.5 (An odd first negative supplies a uniform three-LARGE prefix competitor).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_odd_parent_uniform_prefix_exchange`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_odd_parent_uniform_prefix_exchange` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This result uses a GENERAL actual Legal word W=F++[y]++R; it does not require three SMALL batches, a blocking endpoint or any last-negative arrival. Assume native expanding positive p, n=rho(p) LARGE, p,n unused in all W, odd Y=-s(y)>P, actual b=rho inverse(y) unused in all W, largeUsed(R)<=2 and 3Y>=6P-N. The inverse source-cycle proof gives L=s(b)=(N-Y)/2, Q<=L<P, so p,n,b are three distinct LARGE physical labels. The literal competitor is V=(F++[y])++[p,n,b], returning the ENTIRE actual R including its SMALL occurrences.
+
+Let v=sum(F++[y]) and d=P-D>0. The original literal y gate gives 0<=v and v+Y<=C, hence v<=C-Y<C-P automatically. Thus v+P and v+P-D=v+d lie in the strip. Since N=2C+1, the uniform threshold gives 2v+2d<=2C-2Y+2d<=Y-1. Together with 2L=N-Y this proves v+d+L<=C. All lower gates follow from v>=0, d>0 and L>0. The old prefix is preserved literally; inStrip_append verifies every new prefix from original zero, including zero and overlength takes. No separate measured low-valley premise or replacement Legal premise is assumed.
+
+The output includes Legal, physical Nodup, InStrip, all natural take bounds, Inventory W V [p,n,b] R and the physical whole-word permutation. Its exact large balance is G(V)+3=G(W)+largeUsed(R). The return bound <=2 therefore gives strict G and J descent, with all source, energy, count, complement and remaining-SMALL balances supplied by ordinary Inventory. The uniform threshold covers Y>=r and can also hold below r; it is a sufficient condition, not a claimed necessary boundary.
+
+For the actual three-negative word above, set F=A++[x]++T0 and R=T1++[zpen]++T2++[z]++E. The SMALL weight identity gives exactly two returned LARGE. The odd inverse parent is positive LARGE and L<P<r, so it differs from x and from all three negative occurrences, and cannot belong to the SMALL batches. Consequently b lies in W if and only if it lies in A. At a genuine global J minimum, odd Y>P and 3Y>=6P-N force b in A by this prefix competitor. This necessary placement leaves relocation from A and the remaining odd threshold region open, and does not prove full C3.1. No separate named minimum wrapper is retained.
+
+Registration for this full arbitrary-F,R dependent telescope remains unfinished under https://github.com/the-omega-institute/trureturing/issues/22063. A faithful DependentFamily audit needs the original-source reconstruction/equivalence bridge, actual-positive law, whole-family variation and fixed-other-role sensitivity, and actual observational-dependence evidence. Neither a finite scalar checker nor the existence of the enrollment API supplies those proofs.
+
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_odd_parent_uniform_prefix_exchange`
 - Truth anchor: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_prefix_pair_truncation`
+- Truth anchor: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_even_half_arrival_free_exchange_full`
 - Truth anchor: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_firstNegative_arrival_free_exchange_full`
 - Truth anchor: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_firstNegative_shift_exchange_full`
 - Dependency: [D5/S3/Combinatorics/Circle/ThreeLargePacketExchange](ThreeLargePacketExchange.md)
