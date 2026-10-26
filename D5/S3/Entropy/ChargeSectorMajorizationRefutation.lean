@@ -60,7 +60,13 @@ private lemma s_state : (∀ i, 0 ≤ s i) ∧ (∑ i, s i = 1) := by
 private lemma full_spectra :
     desc r = [7/20, 6/20, 6/20, 1/20] ∧
     desc s = [7/20, 5/20, 4/20, 4/20] := by
-  sorry
+  constructor
+  · change ([6/20, 6/20, 7/20, 1/20] : List ℝ).mergeSort
+      (fun a b => decide (b ≤ a)) = _
+    norm_num [List.mergeSort, List.merge, List.MergeSort.Internal.splitInTwo, List.splitAt_eq]
+  · change ([7/20, 5/20, 4/20, 4/20] : List ℝ).mergeSort
+      (fun a b => decide (b ≤ a)) = _
+    exact List.mergeSort_of_pairwise (by norm_num)
 
 private lemma global_majorizes : Majorizes (desc r) (desc s) := by
   rw [full_spectra.1, full_spectra.2]
