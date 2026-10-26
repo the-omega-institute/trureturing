@@ -481,4 +481,243 @@ theorem count_eq_coordinateDataFamily_card {n i : ℕ} (hi : i ≤ n + 1) :
       · simpa only [hBB] using hR
     · simpa only [hBB] using heq
 
+/-- In positive, strictly separated positions, the admissibility rules force every
+ordered exceptional bit by the generic cutoff criterion. -/
+theorem coordinate_generic_bits {i M : ℕ} (p c : Fin i → ℕ)
+    (B : Fin i → Fin i → Prop) (hpm : StrictMono p)
+    (hp : ∀ j, p j ≤ M) (hc : ∀ j, c j ≤ M) (hpp : ∀ j, 0 < p j)
+    (hdisjoint : ∀ j k, c j ≠ p k)
+    (hB : ∀ j k, B j k → j < k)
+    (hR : Rules (boundedCoordinateEdges M p c B)) :
+    ∀ j k, B j k ↔ j < k ∧ c j < p k ∧ c k < p j := by
+  let L := coordinateLabel p
+  have hL : StrictMono L := coordinateLabel_strictMono p hpm.monotone
+  let E := imageEdges (coordinateEdges p c B) L
+  have hE : Rules E := rules_imageEdges
+    ((coordinate_rules_bounded_iff M p c B hp hc).mp hR) hL
+  have hEiff (u v : CoordinateVertex p) : E (L u) (L v) ↔ coordinateEdges p c B u v := by
+    constructor
+    · rintro ⟨x, y, hxy, hxu, hyv⟩
+      simpa only [hL.injective hxu, hL.injective hyv] using hxy
+    · exact fun h => ⟨u, v, h, rfl, rfl⟩
+  let g : Fin (M + 1) → ℕ := fun r => L (.ordinary (r.val + 1))
+  let s : Fin i → ℕ := fun j => L (.exceptional j)
+  have hL0 : L (.ordinary 0) = 0 := by
+    change 0 + (Finset.univ.filter (fun j => p j < 0)).card = 0
+    simp
+  have ho : ∀ r, E 0 (g r) := by
+    intro r
+    rw [← hL0]
+    apply (hEiff _ _).mpr
+    refine ⟨?_, trivial⟩
+    change toLex (0, 0) < toLex (r.val + 1, 0)
+    simp [Prod.Lex.toLex_lt_toLex]
+  have hpos : ∀ j, Position g (s j) (p j) := by
+    intro j
+    refine ⟨by have := hp j; omega, ?_⟩
+    intro r
+    change (L (.ordinary (r.val + 1)) < L (.exceptional j) ↔ r.val < p j) ∧
+      (L (.exceptional j) < L (.ordinary (r.val + 1)) ↔ p j ≤ r.val)
+    rw [hL.lt_iff_lt, hL.lt_iff_lt]
+    change (toLex (r.val + 1, 0) < toLex (p j, j.val + 1) ↔ _) ∧
+      (toLex (p j, j.val + 1) < toLex (r.val + 1, 0) ↔ _)
+    simp only [Prod.Lex.toLex_lt_toLex]
+    omega
+  have hcut : ∀ j, Cutoff E g (s j) (c j) := by
+    intro j
+    refine ⟨by have := hc j; omega, ?_⟩
+    intro r
+    change (E (L (.exceptional j)) (L (.ordinary (r.val + 1))) ∨
+      E (L (.ordinary (r.val + 1))) (L (.exceptional j))) ↔ c j ≤ r.val
+    rw [hEiff, hEiff]
+    simp only [coordinateEdges]
+    have hne : (CoordinateVertex.exceptional j : CoordinateVertex p) ≠ .ordinary (r.val + 1) := by
+      intro h; cases h
+    rcases lt_or_gt_of_ne hne with hlt | hlt
+    · simp only [hlt, not_lt_of_ge hlt.le, true_and, false_and, or_false]
+      omega
+    · simp only [hlt, not_lt_of_ge hlt.le, true_and, false_and, false_or]
+      omega
+  intro j k
+  by_cases hjk : j < k
+  · have hsorder : (CoordinateVertex.exceptional j : CoordinateVertex p) < .exceptional k := by
+      change toLex (p j, j.val + 1) < toLex (p k, k.val + 1)
+      exact Prod.Lex.left _ _ (hpm hjk)
+    have he := generic_exceptional_edge hE g ho (hpp j) (hpm hjk)
+      (hpos j) (hpos k) (hcut j) (hcut k) (hdisjoint j k) (hdisjoint k j)
+    change E (L (.exceptional j)) (L (.exceptional k)) ↔ _ at he
+    rw [hEiff] at he
+    simpa only [coordinateEdges, hsorder, true_and, hjk] using he
+  · exact iff_of_false (fun h => hjk (hB j k h)) (fun h => hjk h.1)
+
+private theorem coordinate_cutoff_rules {i M : ℕ} (p c : Fin i → ℕ)
+    (hpm : Monotone p) (hp : ∀ j, p j ≤ M) (hc : ∀ j, c j ≤ M) :
+    Rules (boundedCoordinateEdges M p c
+      (fun j k => j < k ∧ c j < p k ∧ c k < p j)) := by
+  classical
+  let L := coordinateLabel p
+  have hL : StrictMono L := coordinateLabel_strictMono p hpm
+  let g : Fin (M + 1) → ℕ := fun r => L (.ordinary (r.val + 1))
+  let s : Fin i → ℕ := fun j => L (.exceptional j)
+  have hL0 : L (.ordinary 0) = 0 := by
+    change 0 + (Finset.univ.filter (fun j => p j < 0)).card = 0
+    simp
+  have hg : StrictMono g := by
+    intro r t hrt
+    apply hL
+    change toLex (r.val + 1, 0) < toLex (t.val + 1, 0)
+    exact Prod.Lex.left _ _ (by omega)
+  have hs : StrictMono s := by
+    intro j k hjk
+    change p j + j.val + 1 < p k + k.val + 1
+    have := hpm hjk.le
+    omega
+  have hgp : ∀ r, 0 < g r := by
+    intro r
+    rw [← hL0]
+    apply hL
+    change toLex (0, 0) < toLex (r.val + 1, 0)
+    exact Prod.Lex.left _ _ (by omega)
+  have hgb : ∀ r, g r ≤ M + 1 + i := by
+    intro r
+    exact coordinateLabel_bound p (fun j => (hp j).trans (by omega))
+      ⟨.ordinary (r.val + 1), by change r.val + 1 ≤ M + 1; omega⟩
+  have hsp : ∀ j, 0 < s j := by intro j; change 0 < p j + j.val + 1; omega
+  have hsb : ∀ j, s j ≤ M + 1 + i := by
+    intro j
+    have := hp j
+    have := j.isLt
+    change p j + j.val + 1 ≤ M + 1 + i
+    omega
+  have hpos : ∀ j, Position g (s j) (p j) := by
+    intro j
+    refine ⟨by have := hp j; omega, ?_⟩
+    intro r
+    change (L (.ordinary (r.val + 1)) < L (.exceptional j) ↔ r.val < p j) ∧
+      (L (.exceptional j) < L (.ordinary (r.val + 1)) ↔ p j ≤ r.val)
+    rw [hL.lt_iff_lt, hL.lt_iff_lt]
+    change (toLex (r.val + 1, 0) < toLex (p j, j.val + 1) ↔ _) ∧
+      (toLex (p j, j.val + 1) < toLex (r.val + 1, 0) ↔ _)
+    simp only [Prod.Lex.toLex_lt_toLex]
+    omega
+  obtain ⟨E, hE, hEb, hEa, hEc, hbits⟩ := exists_cutoff_completion g s p c hg hs.injective
+    hgp hgb hsp hsb hpos (fun j => (hc j).trans (by omega))
+  have ho (r : ℕ) (hr : 0 < r) (hrb : r ≤ M + 1) : E 0 (L (.ordinary r)) := by
+    apply (hEa _).mpr
+    refine ⟨?_, ?_, ?_⟩
+    · rw [← hL0]
+      apply hL
+      change toLex (0, 0) < toLex (r, 0)
+      exact Prod.Lex.left _ _ hr
+    · exact coordinateLabel_bound p (fun j => (hp j).trans (by omega))
+        ⟨.ordinary r, hrb⟩
+    · intro j heq
+      have h := hL.injective heq
+      cases h
+  have hemix (r : ℕ) (hrb : r ≤ M) (j : Fin i) :
+      Incident E (s j) (L (.ordinary r)) ↔ c j < r := by
+    by_cases hr : r = 0
+    · subst r
+      rw [hL0]
+      have hnot : ¬ E 0 (s j) := by
+        intro h
+        exact ((hEa _).mp h).2.2 j rfl
+      have hnot' : ¬ E (s j) 0 := by intro h; have := hE.ordered h; omega
+      simp [Incident, hnot, hnot']
+    · let q : Fin (M + 1) := ⟨r - 1, by omega⟩
+      have h := (hEc j).2 q
+      have hq : g q = L (.ordinary r) := by
+        dsimp [g, q]
+        rw [Nat.sub_add_cancel (by omega : 1 ≤ r)]
+      rw [hq] at h
+      have hh : c j ≤ q.val ↔ c j < r := by dsimp [q]; omega
+      exact h.trans hh
+  let B := fun j k => j < k ∧ c j < p k ∧ c k < p j
+  have hrel (u v : BoundedCoordinateVertex M p) :
+      E (L u.val) (L v.val) ↔ coordinateEdges p c B u.val v.val := by
+    have hord : L u.val < L v.val ↔ u.val < v.val := hL.lt_iff_lt
+    rcases u with ⟨u, hu⟩
+    rcases v with ⟨v, hv⟩
+    cases u with
+    | ordinary r =>
+      cases v with
+      | ordinary t =>
+        change E (L (.ordinary r)) (L (.ordinary t)) ↔
+          (.ordinary r : CoordinateVertex p) < .ordinary t ∧ True
+        constructor
+        · intro h; exact ⟨hL.lt_iff_lt.mp (hE.ordered h), trivial⟩
+        · rintro ⟨hrt, _⟩
+          have hrt' : r < t := by
+            change toLex (r, 0) < toLex (t, 0) at hrt
+            simpa [Prod.Lex.toLex_lt_toLex] using hrt
+          have ht : 0 < t := by omega
+          have hto := ho t ht (by change t ≤ M at hv; omega)
+          by_cases hr : r = 0
+          · simpa only [hr, hL0] using hto
+          · have hro := ho r (by omega) (by change r ≤ M at hu; omega)
+            exact hE.propagate hro hto le_rfl (hE.ordered hro) (hL hrt)
+      | exceptional j =>
+        change E (L (.ordinary r)) (s j) ↔
+          (.ordinary r : CoordinateVertex p) < .exceptional j ∧ c j < r
+        constructor
+        · intro h
+          exact ⟨hL.lt_iff_lt.mp (hE.ordered h), (hemix r hu j).mp (Or.inr h)⟩
+        · rintro ⟨hlt, hcj⟩
+          exact ((hemix r hu j).mpr hcj).resolve_left
+            (fun h => (not_lt_of_ge (hL hlt).le) (hE.ordered h))
+    | exceptional j =>
+      cases v with
+      | ordinary r =>
+        change E (s j) (L (.ordinary r)) ↔
+          (.exceptional j : CoordinateVertex p) < .ordinary r ∧ c j < r
+        constructor
+        · intro h
+          exact ⟨hL.lt_iff_lt.mp (hE.ordered h), (hemix r hv j).mp (Or.inl h)⟩
+        · rintro ⟨hlt, hcj⟩
+          exact ((hemix r hv j).mpr hcj).resolve_right
+            (fun h => (not_lt_of_ge (hL hlt).le) (hE.ordered h))
+      | exceptional k =>
+        change E (s j) (s k) ↔
+          (.exceptional j : CoordinateVertex p) < .exceptional k ∧ B j k
+        have hsiff : s j < s k ↔ j < k := hs.lt_iff_lt
+        constructor
+        · intro h
+          have hlt := hE.ordered h
+          exact ⟨hL.lt_iff_lt.mp hlt, hsiff.mp hlt, (hbits j k hlt).mp h⟩
+        · rintro ⟨_, hjk, hcuts⟩
+          exact (hbits j k (hs hjk)).mpr hcuts
+  have hsub := rules_pullback hE
+    (hL.comp (show StrictMono (fun u : BoundedCoordinateVertex M p => u.val) from fun _ _ h => h))
+  have heq : (fun u v : BoundedCoordinateVertex M p => E (L u.val) (L v.val)) =
+      (fun u v : BoundedCoordinateVertex M p => coordinateEdges p c B u.val v.val) := by
+    funext u v
+    exact propext (hrel u v)
+  change Rules (fun u v : BoundedCoordinateVertex M p => E (L u.val) (L v.val)) at hsub
+  rw [heq] at hsub
+  apply rules_of_subtype (fun h => h.1.1)
+    (fun h => ⟨coordinateInside_downward M p hp h.1.1.le h.2, h.2⟩)
+  have hbrel : (fun u v : BoundedCoordinateVertex M p =>
+      boundedCoordinateEdges M p c B u.val v.val) =
+      (fun u v : BoundedCoordinateVertex M p => coordinateEdges p c B u.val v.val) := by
+    funext u v
+    exact propext (and_iff_left v.property)
+  exact hbrel.symm ▸ hsub
+
+/-- Under the generic separation assumptions, bounded coordinate admissibility is
+exactly the forced exceptional-bit criterion, with no existential graph premise. -/
+theorem coordinate_generic_rules_iff {i M : ℕ} (p c : Fin i → ℕ)
+    (B : Fin i → Fin i → Prop) (hpm : StrictMono p)
+    (hp : ∀ j, p j ≤ M) (hc : ∀ j, c j ≤ M) (hpp : ∀ j, 0 < p j)
+    (hdisjoint : ∀ j k, c j ≠ p k) (hB : ∀ j k, B j k → j < k) :
+    Rules (boundedCoordinateEdges M p c B) ↔
+      ∀ j k, B j k ↔ j < k ∧ c j < p k ∧ c k < p j := by
+  constructor
+  · exact coordinate_generic_bits p c B hpm hp hc hpp hdisjoint hB
+  · intro hb
+    have heq : B = (fun j k => j < k ∧ c j < p k ∧ c k < p j) := by
+      funext j k
+      exact propext (hb j k)
+    rw [heq]
+    exact coordinate_cutoff_rules p c hpm.monotone hp hc
+
 end D5.S3.Combinatorics.MazorchukXu

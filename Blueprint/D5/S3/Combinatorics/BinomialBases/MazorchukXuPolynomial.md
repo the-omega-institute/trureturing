@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The literal weak-coordinate binomial identity constructs one rational polynomial valid on all original ranks. Its exact conjectured degree and leading coefficient require the still separate top-pattern factorial identity.
+The literal weak-coordinate binomial identity constructs one rational polynomial valid on all original ranks. Its exact conjectured degree and leading coefficient require the top-pattern factorial identity proved in MazorchukXuTopPatterns.
 
 **Definition 1.1 (The actual rational counting polynomial).**
 
@@ -58,7 +58,7 @@ $$\forall i \in \operatorname{Nat}\left(\right),\; \operatorname{coeff}\left(\op
 
 *Commentary.*
 
-All terms below 2i have zero coefficient at 2i. The shifted top falling-factorial polynomial is monic of degree 2i, by the pinned Mathlib APIs. Hence the displayed coefficient is its actual pattern count divided by (2i)!. The identity i!*a(i,2i)=(2i)! remains unproved here, so neither exact degree nor leading coefficient 1/i! is claimed.
+All terms below 2i have zero coefficient at 2i. The shifted top falling-factorial polynomial is monic of degree 2i, by the pinned Mathlib APIs. Hence the displayed coefficient is its actual pattern count divided by (2i)!. The identity i!*a(i,2i)=(2i)! is proved in MazorchukXuTopPatterns and supplies the exact degree and leading coefficient in the full theorem there.
 
 ## References
 

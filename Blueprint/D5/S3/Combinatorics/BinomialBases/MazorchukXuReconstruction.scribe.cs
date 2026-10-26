@@ -104,7 +104,22 @@ internal sealed class MazorchukXuReconstructionDocument : IScribeDocumentDefinit
             Node("Reconstruction","coordinateDataFamily","The finite admissible data family",DataFamily(),
                 "Filter the finite carrier by a weakly increasing position array, exceptional bits supported on j<k, and the exact bounded closure rules. The notation values(f) in the display denotes the pointwise natural values of a Fin-valued array. Bounds are built into the carrier, and the empty exceptional index set is allowed.",DescribeRole.Definition),
             Node("Reconstruction","count_eq_coordinateDataFamily_card","Exact coordinate enumeration on every original rank",Count(),
-                "Reconstruction maps the finite admissible data family into edgeFamily. For injectivity, the increasing missing anchor-neighbor labels p(j)+j+1 recover p; ordinary incidence at rank c(j)+1 distinguishes any two bounded cutoffs; the remaining increasing exceptional edges recover B. The source reconstruction supplies surjectivity. The finite bijection and the literal point-edge count bridge give the displayed equality for every valid n and i, including M=0, i=0 and n=0. The separate binomial-basis coefficient identity and its top coefficient are not asserted here.",DescribeRole.Theorem)), []));
+                "Reconstruction maps the finite admissible data family into edgeFamily. For injectivity, the increasing missing anchor-neighbor labels p(j)+j+1 recover p; ordinary incidence at rank c(j)+1 distinguishes any two bounded cutoffs; the remaining increasing exceptional edges recover B. The source reconstruction supplies surjectivity. The finite bijection and the literal point-edge count bridge give the displayed equality for every valid n and i, including M=0, i=0 and n=0. The separate binomial-basis coefficient identity and its top coefficient are not asserted by this cardinality theorem.",DescribeRole.Theorem),
+            Node("Reconstruction","coordinate_generic_bits","Generic admissibility forces the exceptional bits",Generic(false),
+                "Assume positive strictly increasing positions, bounded cutoffs, no cutoff equal to any position, and exceptional bits supported on j<k. Transport the actual coordinate graph to the natural canonical labels. The existing generic_exceptional_edge theorem applies with the ordinary rank list and its exact Position and Cutoff statements. It forces every exceptional bit by the displayed criterion. This theorem assumes admissibility and does not count arrays.",DescribeRole.Theorem),
+            Node("Reconstruction","coordinate_generic_rules_iff","The generic exceptional criterion is sufficient as well",Generic(true),
+                "The forward direction uses coordinate_generic_bits. For the converse, apply the existing exists_cutoff_completion to the canonical ordinary and exceptional labels. Verify every bounded coordinate edge against that graph: ordinary clique edges, mixed cutoff incidence including rank zero, and the supplied exceptional criterion. Pullback and restriction transport both closure rules. This gives actual admissibility of the specified bits, rather than a presumed generic graph. Zero cutoffs and empty index sets remain allowed under the stated positive-position and separation hypotheses.",DescribeRole.Theorem)), []));
+
+    private static Formula Generic(bool equivalence)
+    {
+        var conclusion=Many("j k",FinI,Iff(Fn("B",V("j"),V("k")),And(
+            Lt(V("j"),V("k")),Lt(At(C,"j"),At(P,"k")),Lt(At(C,"k"),At(P,"j")))));
+        var rules=Fn("Rules",Fn("boundedCoordinateEdges",M,P,C,B));
+        var hyp=And(Fn("StrictMono",P),All("j",FinI,Le(At(P,"j"),M)),
+            All("j",FinI,Le(At(C,"j"),M)),All("j",FinI,Lt(Fn("zero"),At(P,"j"))),
+            Many("j k",FinI,Not(Eq(At(C,"j"),At(P,"k")))),Canonical);
+        return Params(Imp(hyp,equivalence?Iff(rules,conclusion):Imp(rules,conclusion)));
+    }
 
     private static Formula EdgeSet() => Params(Many("a b",N,Iff(Mem(Pair(V("a"),V("b")),A),
         Ex("u",T,Ex("v",T,And(Apply(Edge,Fn("val",V("u")),Fn("val",V("v"))),

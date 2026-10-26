@@ -73,7 +73,7 @@ internal sealed class MazorchukXuPolynomialDocument : IScribeDocumentDefinition
     private static Formula Rational(Formula x) => Fn("ratCast",x);
     private static Formula Divide(Formula a,Formula b) => Fn("div",a,b);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The literal weak-coordinate binomial identity constructs one rational polynomial valid on all original ranks. Its exact conjectured degree and leading coefficient require the still separate top-pattern factorial identity.",
+        "The literal weak-coordinate binomial identity constructs one rational polynomial valid on all original ranks. Its exact conjectured degree and leading coefficient require the top-pattern factorial identity proved in MazorchukXuTopPatterns.",
         H("The rational counting polynomial on every original rank"),Blocks(
         Node("Polynomial","countingPolynomial","The actual rational counting polynomial",
             All("i",N,Eq(P,Fn("sum",Fn("range",Plus(D,Fn("one"))),Fn("lambda",V("k"),Mul(Fn("C",Divide(Rational(Coeff(V("k"))),Rational(Fn("factorial",V("k"))))),Fn("comp",Fn("descPochhammer",Q,V("k")),Fn("add",V("X"),Fn("C",Sub(Fn("one"),Rational(I)))))))))),
@@ -86,5 +86,5 @@ internal sealed class MazorchukXuPolynomialDocument : IScribeDocumentDefinition
             "The shifted k-th falling-factorial polynomial has degree k. Multiplication by its possibly zero scalar cannot increase degree. The finite sum therefore has degree at most 2i. This is an upper bound, not the conjectured exact degree.",DescribeRole.Theorem),
         Node("Polynomial","countingPolynomial_top_coeff","The coefficient at degree 2i",
             All("i",N,Eq(Fn("coeff",P,D),Divide(Rational(Coeff(D)),Rational(Fn("factorial",D))))),
-            "All terms below 2i have zero coefficient at 2i. The shifted top falling-factorial polynomial is monic of degree 2i, by the pinned Mathlib APIs. Hence the displayed coefficient is its actual pattern count divided by (2i)!. The identity i!*a(i,2i)=(2i)! remains unproved here, so neither exact degree nor leading coefficient 1/i! is claimed.",DescribeRole.Theorem)),[]));
+            "All terms below 2i have zero coefficient at 2i. The shifted top falling-factorial polynomial is monic of degree 2i, by the pinned Mathlib APIs. Hence the displayed coefficient is its actual pattern count divided by (2i)!. The identity i!*a(i,2i)=(2i)! is proved in MazorchukXuTopPatterns and supplies the exact degree and leading coefficient in the full theorem there.",DescribeRole.Theorem)),[]));
 }

@@ -86,7 +86,35 @@ $$\forall n \in \operatorname{Nat}\left(\right),\; \forall i \in \operatorname{N
 
 *Commentary.*
 
-Reconstruction maps the finite admissible data family into edgeFamily. For injectivity, the increasing missing anchor-neighbor labels p(j)+j+1 recover p; ordinary incidence at rank c(j)+1 distinguishes any two bounded cutoffs; the remaining increasing exceptional edges recover B. The source reconstruction supplies surjectivity. The finite bijection and the literal point-edge count bridge give the displayed equality for every valid n and i, including M=0, i=0 and n=0. The separate binomial-basis coefficient identity and its top coefficient are not asserted here.
+Reconstruction maps the finite admissible data family into edgeFamily. For injectivity, the increasing missing anchor-neighbor labels p(j)+j+1 recover p; ordinary incidence at rank c(j)+1 distinguishes any two bounded cutoffs; the remaining increasing exceptional edges recover B. The source reconstruction supplies surjectivity. The finite bijection and the literal point-edge count bridge give the displayed equality for every valid n and i, including M=0, i=0 and n=0. The separate binomial-basis coefficient identity and its top coefficient are not asserted by this cardinality theorem.
+
+**Theorem 1.7 (Generic admissibility forces the exceptional bits).**
+
+$$\forall M \in \operatorname{Nat}\left(\right),\; \forall i \in \operatorname{Nat}\left(\right),\; \forall p \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; \forall c \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; \forall B \in \operatorname{Fin}\left(i\right) \to \left(\operatorname{Fin}\left(i\right) \to \operatorname{Prop}\left(\right)\right),\; ((((((\operatorname{StrictMono}\left(p\right)) \land (\forall j \in \operatorname{Fin}\left(i\right),\; p(j) \le M)) \land (\forall j \in \operatorname{Fin}\left(i\right),\; c(j) \le M)) \land (\forall j \in \operatorname{Fin}\left(i\right),\; \operatorname{zero}\left(\right) < p(j))) \land (\forall j \in \operatorname{Fin}\left(i\right),\; \forall k \in \operatorname{Fin}\left(i\right),\; \neg (c(j) = p(k)))) \land (\forall j \in \operatorname{Fin}\left(i\right),\; \forall k \in \operatorname{Fin}\left(i\right),\; (\operatorname{B}\left(j, k\right)) \Rightarrow (j < k))) \Rightarrow ((\operatorname{Rules}\left(\operatorname{boundedCoordinateEdges}\left(M, p, c, B\right)\right)) \Rightarrow (\forall j \in \operatorname{Fin}\left(i\right),\; \forall k \in \operatorname{Fin}\left(i\right),\; (\operatorname{B}\left(j, k\right)) \Leftrightarrow (((j < k) \land (c(j) < p(k))) \land (c(k) < p(j)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinomialBases/MazorchukXuReconstruction.coordinate_generic_bits` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Volodymyr Mazorchuk, Shuoyang Xu (2026). *On the number of cokernel-closed additive subcategories for uniformly oriented A_n quivers*. DOI: [10.48550/arXiv.2610.07999](https://doi.org/10.48550/arXiv.2610.07999). URL: <https://arxiv.org/html/2610.07999v2>.
+
+*Commentary.*
+
+Assume positive strictly increasing positions, bounded cutoffs, no cutoff equal to any position, and exceptional bits supported on j<k. Transport the actual coordinate graph to the natural canonical labels. The existing generic_exceptional_edge theorem applies with the ordinary rank list and its exact Position and Cutoff statements. It forces every exceptional bit by the displayed criterion. This theorem assumes admissibility and does not count arrays.
+
+**Theorem 1.8 (The generic exceptional criterion is sufficient as well).**
+
+$$\forall M \in \operatorname{Nat}\left(\right),\; \forall i \in \operatorname{Nat}\left(\right),\; \forall p \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; \forall c \in \operatorname{Fin}\left(i\right) \to \operatorname{Nat}\left(\right),\; \forall B \in \operatorname{Fin}\left(i\right) \to \left(\operatorname{Fin}\left(i\right) \to \operatorname{Prop}\left(\right)\right),\; ((((((\operatorname{StrictMono}\left(p\right)) \land (\forall j \in \operatorname{Fin}\left(i\right),\; p(j) \le M)) \land (\forall j \in \operatorname{Fin}\left(i\right),\; c(j) \le M)) \land (\forall j \in \operatorname{Fin}\left(i\right),\; \operatorname{zero}\left(\right) < p(j))) \land (\forall j \in \operatorname{Fin}\left(i\right),\; \forall k \in \operatorname{Fin}\left(i\right),\; \neg (c(j) = p(k)))) \land (\forall j \in \operatorname{Fin}\left(i\right),\; \forall k \in \operatorname{Fin}\left(i\right),\; (\operatorname{B}\left(j, k\right)) \Rightarrow (j < k))) \Rightarrow ((\operatorname{Rules}\left(\operatorname{boundedCoordinateEdges}\left(M, p, c, B\right)\right)) \Leftrightarrow (\forall j \in \operatorname{Fin}\left(i\right),\; \forall k \in \operatorname{Fin}\left(i\right),\; (\operatorname{B}\left(j, k\right)) \Leftrightarrow (((j < k) \land (c(j) < p(k))) \land (c(k) < p(j)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinomialBases/MazorchukXuReconstruction.coordinate_generic_rules_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Volodymyr Mazorchuk, Shuoyang Xu (2026). *On the number of cokernel-closed additive subcategories for uniformly oriented A_n quivers*. DOI: [10.48550/arXiv.2610.07999](https://doi.org/10.48550/arXiv.2610.07999). URL: <https://arxiv.org/html/2610.07999v2>.
+
+*Commentary.*
+
+The forward direction uses coordinate_generic_bits. For the converse, apply the existing exists_cutoff_completion to the canonical ordinary and exceptional labels. Verify every bounded coordinate edge against that graph: ordinary clique edges, mixed cutoff incidence including rank zero, and the supplied exceptional criterion. Pullback and restriction transport both closure rules. This gives actual admissibility of the specified bits, rather than a presumed generic graph. Zero cutoffs and empty index sets remain allowed under the stated positive-position and separation hypotheses.
 
 ## References
 
@@ -94,6 +122,8 @@ Reconstruction maps the finite admissible data family into edgeFamily. For injec
 - Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuReconstruction.coordinateDataFamily`
 - Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuReconstruction.coordinateEdgeSet`
 - Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuReconstruction.coordinateEdgeSet_mem_edgeFamily`
+- Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuReconstruction.coordinate_generic_bits`
+- Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuReconstruction.coordinate_generic_rules_iff`
 - Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuReconstruction.count_eq_coordinateDataFamily_card`
 - Truth anchor: `D5/S3/Combinatorics/BinomialBases/MazorchukXuReconstruction.edgeFamily_eq_coordinateEdgeSet`
 - Dependency: [D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns](MazorchukXuPatterns.md)

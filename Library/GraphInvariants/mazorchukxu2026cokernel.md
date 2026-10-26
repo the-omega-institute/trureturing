@@ -11,6 +11,11 @@ strata_touched:
   - D5/S3/Combinatorics/BinomialBases/MazorchukXuFamilies
   - D5/S3/Combinatorics/BinomialBases/MazorchukXuOrder
   - D5/S3/Combinatorics/BinomialBases/MazorchukXuGeneric
+  - D5/S3/Combinatorics/BinomialBases/MazorchukXuPatterns
+  - D5/S3/Combinatorics/BinomialBases/MazorchukXuReconstruction
+  - D5/S3/Combinatorics/BinomialBases/MazorchukXuNormalization
+  - D5/S3/Combinatorics/BinomialBases/MazorchukXuPolynomial
+  - D5/S3/Combinatorics/BinomialBases/MazorchukXuTopPatterns
 license: citation-only
 triage: anchor
 ---
@@ -65,9 +70,24 @@ cutoff data from every valid member of the literal finite family, with precisely
 i exceptions and s(j)=p(j)+j+1. Agreement of the anchor edges,
 cutoffs and exceptional-edge bits determines the entire labelled graph.
 
-These structural results do not establish the conjecture. The finite
-pattern/reconstruction bijection, the exact binomial counting identity and the
-factorial count of generic patterns remain separate mathematical obligations.
+The finite weak-coordinate reconstruction gives an exact bijection with the literal
+source family. Grouping positions and cutoffs by their positive support gives
+
+$$
+r(n,n+1-i)=\sum_{k=0}^{2i}a_{i,k}\binom{n+1-i}{k}.
+$$
+
+The coefficients count admissible data at ordinary size $k$ using every positive
+coordinate; zero, ties, and exceptional-edge bits are retained. At support size
+$2i$, all entries are positive and distinct, and the exceptional bits have a unique
+admissible completion. Choosing the ordered position values and permuting the
+complementary cutoff values gives $i!a_{i,2i}=(2i)!$, including $i=0$.
+The corresponding rational falling-factorial sum is one polynomial on every
+original valid rank. Its nonzero coefficient at degree $2i$ is $1/i!$.
+The Lean declaration `MazorchukXu.mazorchukXu_conjecture` in
+`D5/S3/Combinatorics/BinomialBases/MazorchukXuTopPatterns.lean` proves the
+original `Conjecture` against the literal `count`, with no additional hypotheses.
+
 No originality or priority claim is made. Bounded searches authenticated no
 exact existing Lean supplier; differently expressed equivalents and the full
 later literature are not excluded.
