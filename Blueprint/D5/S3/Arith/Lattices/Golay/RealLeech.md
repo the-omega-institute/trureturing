@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Arith/Lattices/Golay/RealLeech.lattice`
 
 *Commentary.*
 
-The lattice is the image under coordinate inclusion of IntegerLeech.integerLattice for the explicit GolayEncoder.code. The form is the real coordinate dot product divided by eight. This is the same normalization as the already proved Euclidean scaling by the square root of eight.
+The lattice is the image under coordinate inclusion of IntegerLeech.integerLattice for the explicit GolayEncoder.code. The form is the real coordinate dot product divided by eight. The dot-over-eight form has the same normalization as the real coordinate dot product after coordinate division by the square root of eight.
 
 **Theorem 1.2 (Membership preserves the actual construction).**
 

@@ -86,25 +86,12 @@ Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.minimum_norm`
 
 *Commentary.*
 
-This theorem consumes the constructed Golay linear image and its proved double evenness and minimum weight. Twice the zero-one lift of its encoded octad is an admissible nonzero vector with square sum 32. Every nonzero admissible vector has square sum at least 32, so dividing by eight gives exact squared minimum four.
-
-**Theorem 1.8 (The specified Euclidean scaling).**
-
-Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.euclidean_scaling`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Lattices/Golay/IntegerLeech.euclidean_scaling` (`✓ std3`). ∎
-
-*Citation.* John Leech (1967). *Notes on Sphere Packings*. DOI: [10.4153/CJM-1967-017-0](https://doi.org/10.4153/CJM-1967-017-0). URL: <https://doi.org/10.4153/CJM-1967-017-0>.
-
-*Commentary.*
-
-Coordinate division by the real square root of eight gives the same real squared norm as the rational square sum divided by eight. Rank, unimodularity, uniqueness and all VOA, CFT or Monster realization claims remain outside this result.
+This theorem consumes the constructed Golay linear image and its proved double evenness and minimum weight. Twice the zero-one lift of its encoded octad is an admissible nonzero vector with square sum 32. Every nonzero admissible vector has square sum at least 32, so dividing by eight gives exact squared minimum four. Coordinate division by the real square root of eight gives the same real squared norm as the rational square sum divided by eight. Rank, unimodularity, uniqueness and all VOA, CFT or Monster realization claims remain outside this result.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/Lattices/Golay/IntegerLeech.Admissible`
 - Truth anchor: `D5/S3/Arith/Lattices/Golay/IntegerLeech.construction_lower_bound`
-- Truth anchor: `D5/S3/Arith/Lattices/Golay/IntegerLeech.euclidean_scaling`
 - Truth anchor: `D5/S3/Arith/Lattices/Golay/IntegerLeech.integerLattice`
 - Truth anchor: `D5/S3/Arith/Lattices/Golay/IntegerLeech.minimum_norm`
 - Truth anchor: `D5/S3/Arith/Lattices/Golay/IntegerLeech.pairing_integral`
