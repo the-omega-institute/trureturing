@@ -2909,3 +2909,116 @@ The source-specific correspondence is (75.7)–(75.10): the two actual terminal 
 
 ## 追加锚（本行以下为增补区）
 
+## 76. 同一原生历史任务的四 Tick 获取
+
+**定义 76.1（原有编码之后的固定被动获取）。** 完整沿用定义 71.1–71.2、75.1 的全部假设及 [AA 定义 17.1、17.3 和定理 17.2](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md#17-birth-typed-local-growth-and-its-causal-reconstruction) 的原 birth-typed 局部源。固定同一个实际项 $u=\langle\beta,\langle\beta,\alpha\rangle\rangle$、(71.1) 的对称零对角单位邻接矩阵 $A$、坐标序 $(LL,L,\varepsilon,R,RL,RLL,RR)$ 及首个 canonical terminal 种子 $e=e_{LL}$。完整 earned terminal 表为 $(LL,RLL,RR)$，保留其穷尽 raw 对应及 canonical 逆表；下述命名终端调用均经真实绑定转成原 raw 调用，不增加地址端口。原出生类型、合法 $P/S$ 守卫和 material marker 非逻辑生长目标的约束均保留。
+
+在同一源上实际建立 whole zero，再实际执行 Add$(e,1)$ 和 Hold。对每个有限字 $w=d_0\cdots d_{m-1}\in\{0,1,2,3\}^*$，执行 (71.2) 的每个完整原 Next，即 Tick、Add$(e,d_i)$、Hold、Read$(e)$，包括三个原确认、整个 literal scalar、全部 framing 和完成返回。于是获取开始时
+
+$$
+x_w=F_w(A)e,\qquad
+F_w(z)=z^m+\sum_{i=0}^{m-1}d_i z^{m-1-i},
+\qquad F_\emptyset=1,\quad F_{0^m}=z^m.
+$$
+
+接收者只有 earned 图、完整映射、真实可调用上下文及此历史像承诺，没有字、长度、旧编码回复、journal、依赖于场的 advice 或可访问的相关 producer 状态。保留 genuine original-root reference/binding、方向、current/fresh authority、排他的完成调用串行化、无自主运动、按 literal 值决定宽度的完整精确 framing 及每个有限承诺运行所需的充足有限精确 backing；没有额外依赖于场的 timing、allocation 或 capacity 通道。解码期间源保持 held，且无其他写入者、撤权或崩溃；这些权利与资源是前提，不由解码产生。
+
+在完整编码结束之后，选取唯一如下的固定获取 schedule；它只依赖已知图，不依赖 $w$ 或 $m$：
+
+$$
+\operatorname{Tick};\operatorname{Tick};\operatorname{Tick};
+\operatorname{Hold};\operatorname{Read}(LL);\operatorname{Read}(RR);
+\operatorname{Tick};\operatorname{Hold};
+\operatorname{Read}(LL);\operatorname{Read}(RR);\operatorname{Hold}.
+\tag{76.1}
+$$
+
+每次调用先消费原有完整回复及完成返回，才进行下一次。此 schedule 属于定义 71.2 原有的 Tick、Hold、identity Add$(0)$、earned-terminal literal Read 被动菜单，实际用了四 Tick、三 Hold、四个额外 scalar Read，零 Add、零 growth、零 Reset，亦无其他干预。按定义 71.2，$K$ 计入获取 schedule 中所有实际 Tick，包括最后一次 Read 之后的 Tick；(76.1) 的 $K=4$，最后一次 Read 之后有零 Tick。原长度 $m$ 编码的 $m$ 个 Tick 及全部 Next 调用仍须实际执行并支付：从已建立的单位种子到此端点共有 $m+4$ 个 Tick，$K=4$ 不是整段编码与获取的总成本。
+
+按返回顺序记四个 literal scalars 为
+
+$$
+Y_4(w)=\bigl(
+e_{LL}^{\mathsf T}A^3F_w(A)e,\,
+e_{RR}^{\mathsf T}A^3F_w(A)e,\,
+e_{LL}^{\mathsf T}A^4F_w(A)e,\,
+e_{RR}^{\mathsf T}A^4F_w(A)e
+\bigr).
+\tag{76.2}
+$$
+
+**推论 76.2（四 Read、四获取 Tick 的完整同任务入口）。** 在定义 76.1 的全部原有假设下，一个固定 schedule (76.1) 和一个精确 decoder 适用于所有有限 quaternary words，包括空字、所有全零字及任意不等长比较。decoder 仅用既定上下文及四个 literal scalars，在整个承诺像上终止，恢复确切字与长度，并在同一源的真实 advanced endpoint
+
+$$
+x_{\mathrm{end}}=A^4F_w(A)e
+\tag{76.3}
+$$
+
+初始化完整原六操作预测。从该完成且 held 的交接 cut 起，对每个充足有限 backing 的有限共同 adaptive continuation，预测和维护每个完整回复及实际 successor，包括之后的合法生长与任意 rational Add。
+
+**证明。** 对任意有限 $w,v$，置
+
+$$
+D(z)=F_w(z)-F_v(z)=E(z^2)+zO(z^2),
+\qquad E,O\in\mathbb Z[y],\qquad B=A^2.
+$$
+
+$D,E,O$ 的系数都在 $[-3,3]$。等长时 monic 最高项抵消；不等长时较高最高项为 $\pm1$，在较低 monic 次数处为 digit 减一或其负数，其余处为两 digit 之差或 digit 与零之差。因此该界不限制长度，也不舍去零 digit。
+
+直接使用 (75.7)–(75.10) 的同一个全次数结果：对这个 $A,e,B$，令
+
+$$
+L_2(P)=
+\begin{pmatrix}
+(B^2P(B)e)_{LL}\\
+(B^2P(B)e)_{RR}
+\end{pmatrix}.
+$$
+
+则每个有限整数系数多项式 $P$ 只要全部系数在 $[-3,3]$，便有 $L_2(P)=0\Longrightarrow P=0$。这里参数正是 §75 的 $h=2$、$q(y)=y^3-6y^2+9y-3$，其全次数排除来自定理 72.1 证明中的 bounded-coefficient 结论；不另作代数证明，也不使用 $q(B)=0$ 或 $h=1$ 的结论。
+
+由 §§74–75 的实际二分
+$\{LL,\varepsilon,RL,RR\}\sqcup\{L,R,RLL\}$，$e,LL,RR$ 同在第一类，故对应的奇数 walk entries 为零。因此 (76.2) 的时间三差读数及时间四差读数分别为
+
+$$
+\begin{aligned}
+\begin{pmatrix}
+(A^3D(A)e)_{LL}\\
+(A^3D(A)e)_{RR}
+\end{pmatrix}
+&=
+\begin{pmatrix}
+(A^4O(B)e)_{LL}\\
+(A^4O(B)e)_{RR}
+\end{pmatrix}
+=L_2(O),\\
+\begin{pmatrix}
+(A^4D(A)e)_{LL}\\
+(A^4D(A)e)_{RR}
+\end{pmatrix}
+&=
+\begin{pmatrix}
+(B^2E(B)e)_{LL}\\
+(B^2E(B)e)_{RR}
+\end{pmatrix}
+=L_2(E).
+\end{aligned}
+\tag{76.4}
+$$
+
+这两次均是既有 $L_2$ 的应用。若 $Y_4(w)=Y_4(v)$，则 $O=E=0$，从而 $F_w=F_v$；monic degree 恢复确切长度，按降幂读取较低系数恢复 chronological word。这包括 $F_\emptyset=1$ 与每个 $F_{0^m}=z^m$，不对 leading zeros 作商。
+
+取 §75 的精确枚举 decoder，将其候选样本公式 (75.3) 换为 (76.2)：依次枚举 $m=0,1,2,\ldots$，每个长度内按固定字典序枚举全部 quaternary words，在已知有限图上精确计算候选的 $Y_4$ 并比较四个完整标量。每层和每个候选计算均有限，每个承诺输入的字都在有限步骤后出现，单射性保证唯一匹配。因此一个 decoder 在整个承诺像上终止，无需长度、旧回复或额外 advice；不推断 off-image 终止。
+
+(76.1) 中只有四个实际 Tick 改变场，故完整返回后的实际场是 (76.3)。源保持 held 时，用恢复的字在本地作 Horner 计算得到 $F_w(A)e$，再作四次本地矩阵应用，得到 (76.3) 的全部七个坐标，包括 internal cells。这些本地计算不给实际源增加 Tick，也不逆转 Tick、恢复旧场或执行 Reset。
+
+现在直接初始化定理 64.1 证明中的完整实际态等于保留态的不变量。其本端点参数对应为：逻辑项取上述实际 $u$，全图取 $C(u)$，当前邻接取 (71.1) 的 $A$，全向量取 (76.3)，raw 表及 canonical 逆表取原来完整 earned 表，parser/control、original-root reference/binding 及 current/fresh grants 均取实际当前数据。该对应逐项给出完成且 held 的 cut 上全状态相等；§64.1 原列举的其他入口向量不代替这里的 $A^4F_w(A)e$。
+
+从此 cut 起，复用定理 64.1 的完整逐调用对应及归纳，连同 §75 的真实 advanced-endpoint 入口用法：$P/S$ 的旧值保留、fresh 零值及 raw-label/grant 更新，absent、branch、wrong-type 三种不同守卫拒绝，完整 rational Add、全场 Tick、整个 rational Read 和 Hold，RangeRefusal、BadFrame、incomplete-frame pending state 及 missing-right disabled calls，全部保留原有语义。每个有限输入先取得真实 backing；完整输出、End、local acknowledgement、完成返回和匹配的保留态更新全部先于下一个 settled call。完整 decoded-word 或当前态导出同样使用其实际 backed 输出帧与完整确认/返回，不增加隐含通信端口；pending 请求、回复、地址、图场副本及工作缓冲按需同时有有限 backing。故所述有限共同 adaptive continuation 上，整个回复和实际 successor 逐步相同；以固定共同 random tape 选择后继请求亦然。后续生长和任意 rational Add 可以离开七顶点历史像，此后依靠维护中的完整当前态与当前图，不在 off-image 场上重用历史 inverse。
+
+所得结论是定理 75.2 的同一原生 joint history/真实端点服务任务，将获取 Tick 从五减至四；额外 scalar Read 仍为四，其最小性已由定理 74.1 及推论 75.3 给出，不新增 Read 下界，也不主张 Tick 最小性。此应用直接复用 (75.10) 的全次数 $L_2$ 结果及定理 64.1 的完整服务不变量，不建立新的通用代数定理，也不主张文献优先权。§72 中 Akiyama–Thuswaldner–Zaïmi 的数学归属仍按该节引用；此处所需的有限系数排除已由该节的完整初等论证给出，不另依赖外部定理。
+
+每个有限承诺运行的充足精确 backing 不给出统一时间、存储、precision 或整段总成本界。结论限于上述固定源、指定种子、完整 monic quaternary 历史像及原权利、framing、串行化和 held 前提，不推出任意场或任意图恢复、adaptive 获取 schedule 定理、已擦除一般 journal 的恢复、busy cut 的 inverse、backing 耗尽或崩溃恢复行为，亦不提供物理实现。$\square$
+
+## 追加锚（本行以下为增补区）
+
