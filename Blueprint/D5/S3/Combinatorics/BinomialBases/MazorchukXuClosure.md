@@ -14,7 +14,7 @@ $$\forall n \in \operatorname{Nat}\left(\right),\; \operatorname{triangle}\left(
 
 *Commentary.*
 
-Natural coordinates represent the nonnegative integer coordinates in Section 3.1. No nonempty-row condition is imposed.
+Natural coordinates represent the nonnegative integer coordinates in Section 3, before Section 3.1. No nonempty-row condition is imposed.
 
 **Definition 1.2 (Repeated-point closure).**
 

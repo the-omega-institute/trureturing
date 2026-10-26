@@ -23,7 +23,7 @@ DOI: 10.48550/arXiv.2610.07999
 
 URL: https://arxiv.org/html/2610.07999v2
 
-The source is version 2. Section 3.1 defines the triangular subsets and Condition
+The source is version 2. Section 3, before Section 3.1, defines the triangular subsets and Condition
 (star), Section 5.1 defines the first-column statistic, and Section 5.7 states:
 
 > It seems reasonable to conjecture that $r(n,n+1-i)$ is a polynomial in $n$ of

@@ -70,7 +70,7 @@ internal sealed class MazorchukXuClosureDocument : IScribeDocumentDefinition
         H("Triangular subsets and ordered closure"),
         Blocks(
             Node("Closure", "triangle", "The source triangle", Triangle(),
-                "Natural coordinates represent the nonnegative integer coordinates in Section 3.1. No nonempty-row condition is imposed.", DescribeRole.Definition, true),
+                "Natural coordinates represent the nonnegative integer coordinates in Section 3, before Section 3.1. No nonempty-row condition is imposed.", DescribeRole.Definition, true),
             Node("Closure", "Star", "Repeated-point closure", StarFormula(),
                 "The three selected points may coincide. Both forced points, including the conditional successor/minimum point, are retained.", DescribeRole.Definition, true),
             Node("Closure", "firstColumnCard", "First-column count", FirstColumn(),
