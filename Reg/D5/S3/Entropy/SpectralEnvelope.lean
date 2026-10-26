@@ -1,4 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Entropy.SpectralEnvelope
 import Reg.D5.S3.Entropy.CountableSpectralMoments
 

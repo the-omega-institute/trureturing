@@ -1,4 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Entropy.CountableSpectralMoments
 import D5.S3.Entropy.SpectralEnvelopeParameters
 import Reg.Support.DependentFamily
@@ -155,11 +156,15 @@ def absoluteRegistration : Contract.Registration
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some
-    { owner := `D5.S3.Entropy.CountableSpectralMoments, definition := none,
-    coordinates := #[], readouts := #[{
+  sourceSelection := some {
+    owner := `D5.S3.Entropy.CountableSpectralMoments
+    definition := none
+    coordinates := #[]
+    readouts := #[{
       path := #["body", "body", "body", "arg", "arg", "fn"]
-      stateBinder := 0, functionOperand := true, stateOperand := none,
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -204,11 +209,15 @@ def nonnegativeRegistration : Contract.Registration
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some
-    { owner := `D5.S3.Entropy.CountableSpectralMoments, definition := none,
-    coordinates := #[], readouts := #[{
+  sourceSelection := some {
+    owner := `D5.S3.Entropy.CountableSpectralMoments
+    definition := none
+    coordinates := #[]
+    readouts := #[{
       path := #["body", "body", "arg", "fn"]
-      stateBinder := 0, functionOperand := true, stateOperand := none,
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -258,11 +267,15 @@ def lowPurityRegistration : Contract.Registration
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some
-    { owner := `D5.S3.Entropy.CountableSpectralMoments, definition := none,
-    coordinates := #[], readouts := #[{
+  sourceSelection := some {
+    owner := `D5.S3.Entropy.CountableSpectralMoments
+    definition := none
+    coordinates := #[]
+    readouts := #[{
       path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "fn"]
-      stateBinder := 0, functionOperand := true, stateOperand := none,
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -318,11 +331,15 @@ def distinguishedRegistration : Contract.Registration
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some
-    { owner := `D5.S3.Entropy.CountableSpectralMoments, definition := none,
-    coordinates := #[], readouts := #[{
+  sourceSelection := some {
+    owner := `D5.S3.Entropy.CountableSpectralMoments
+    definition := none
+    coordinates := #[]
+    readouts := #[{
       path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn"]
-      stateBinder := 0, functionOperand := true, stateOperand := none,
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -370,11 +387,15 @@ def halfRegistration : Contract.Registration
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some
-    { owner := `D5.S3.Entropy.CountableSpectralMoments, definition := none,
-    coordinates := #[], readouts := #[{
+  sourceSelection := some {
+    owner := `D5.S3.Entropy.CountableSpectralMoments
+    definition := none
+    coordinates := #[]
+    readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "arg", "fn"]
-      stateBinder := 0, functionOperand := true, stateOperand := none,
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
