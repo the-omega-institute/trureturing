@@ -6,12 +6,9 @@
    utility: none
    digest: Signed derivative regions of polynomial log-functions form a descending chain. -/
 
-import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
 import Mathlib.Analysis.Calculus.Deriv.Polynomial
-import Mathlib.Analysis.Calculus.LocalExtr.Basic
 import Mathlib.Analysis.Polynomial.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Topology.Order.Compact
 
 /-! Derivative-sign nesting for polynomial log-functions on the positive half-line. -/
 
