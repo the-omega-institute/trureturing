@@ -76,8 +76,9 @@ private theorem real_scaled_rankOne (c : ℝ) (v : H) :
       ((c ^ 2 : ℝ) : ℂ) • InnerProductSpace.rankOne ℂ v v := by
   apply ContinuousLinearMap.ext
   intro x
+  have hconj : (starRingEnd ℂ) (c : ℂ) = (c : ℂ) := Complex.conj_ofReal c
   simp only [InnerProductSpace.rankOne_apply, inner_smul_left,
-    RCLike.conj_ofReal, ContinuousLinearMap.smul_apply, smul_smul,
+    hconj, ContinuousLinearMap.smul_apply, smul_smul,
     Complex.ofReal_pow]
   congr 1
   ring
@@ -95,9 +96,10 @@ theorem environment_marginal :
     have h2 : n ≠ 2 := fun h => hn (by simp [h])
     have h4 : n ≠ 4 := fun h => hn (by simp [h])
     simp [environment_slice, h0, h2, h4])]
-  simp only [Finset.sum_insert, Finset.mem_insert, Finset.mem_singleton,
-    Finset.sum_singleton, environment_slice]
-  norm_num only
+  rw [Finset.sum_insert (by decide : (0 : ℕ) ∉ ({2, 4} : Finset ℕ)),
+    Finset.sum_insert (by decide : (2 : ℕ) ∉ ({4} : Finset ℕ)),
+    Finset.sum_singleton]
+  norm_num only [environment_slice]
   rw [show -(1 / 2 : ℂ) = ((-1 / 2 : ℝ) : ℂ) by norm_num]
   simp only [real_scaled_rankOne]
   have hs : (Real.sqrt (6 : ℝ) : ℂ) ^ 2 = 6 := by
@@ -142,7 +144,9 @@ theorem environment_marginal_le :
   norm_num [ENNReal.toReal_ofNat, Real.rpow_two] at hb
   constructor
   · rfl
-  · nlinarith [sq_nonneg ‖x 2‖]
+  · change 0 ≤ (3 / 8 * ‖x‖ ^ 2 - 3 / 8 * ‖x 0‖ ^ 2 -
+      1 / 4 * ‖x 2‖ ^ 2 - 3 / 8 * ‖x 4‖ ^ 2 : ℝ)
+    nlinarith [sq_nonneg ‖x 2‖]
 
 #print axioms rotated_environment_expansion
 #print axioms environment_marginal

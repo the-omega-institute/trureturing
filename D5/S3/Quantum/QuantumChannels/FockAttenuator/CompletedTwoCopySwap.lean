@@ -414,6 +414,12 @@ private def halfRoot : ℝ := Real.sqrt (1 / 2)
 private theorem half_root_sq : halfRoot ^ 2 = 1 / 2 :=
   Real.sq_sqrt (by norm_num)
 
+private theorem half_root_complex_sq : (halfRoot : ℂ) ^ 2 = 1 / 2 := by
+  calc
+    _ = ((halfRoot ^ 2 : ℝ) : ℂ) := (Complex.ofReal_pow _ _).symm
+    _ = ((1 / 2 : ℝ) : ℂ) := congrArg Complex.ofReal half_root_sq
+    _ = _ := by norm_num
+
 private def balancedUnitary : H2 ≃ₗᵢ[ℂ] H2 :=
   beamUnitary halfRoot halfRoot (by nlinarith [half_root_sq])
 
@@ -452,7 +458,7 @@ private theorem relative_balanced (x : H2) : relativeUnitary (balancedUnitary x)
     simp only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.id_apply,
       balancedUnitary, relativeUnitary, beam_coherent]
     apply congrArg exponentialPair
-    have hs : (halfRoot : ℂ) ^ 2 = 1 / 2 := by exact_mod_cast half_root_sq
+    have hs := half_root_complex_sq
     apply Prod.ext <;> simp only [rotate, Complex.ofReal_neg]
     all_goals ring_nf
     all_goals simp only [hs]
@@ -470,7 +476,7 @@ private theorem relative_environment :
   unfold relativeUnitary
   rw [beamUnitary_fock]
   norm_num [fockExpansion, Fin.sum_univ_succ, Nat.choose]
-  have h2 : (halfRoot : ℂ) ^ 2 = 1 / 2 := by exact_mod_cast half_root_sq
+  have h2 := half_root_complex_sq
   have h24 : Real.sqrt (24 : ℝ) = 2 * Real.sqrt 6 := by
     rw [show (24 : ℝ) = 4 * 6 by norm_num, Real.sqrt_mul (by norm_num)]
     norm_num
@@ -523,7 +529,7 @@ theorem balanced_swap_conjugation :
     balancedUnitary, relativeUnitary, beam_coherent, retained_swap_coherent]
   simp only [centerDifference, ContinuousLinearMap.comp_apply, regroup_coherent,
     pair_map_product, relativeUnitary, beam_coherent, difference_swap_coherent]
-  have hs : (halfRoot : ℂ) ^ 2 = 1 / 2 := by exact_mod_cast half_root_sq
+  have hs := half_root_complex_sq
   have hs3 : (halfRoot : ℂ) ^ 3 = (halfRoot : ℂ) / 2 := by
     linear_combination (halfRoot : ℂ) * hs
   congr 2 <;> apply congrArg exponentialPair <;> apply Prod.ext

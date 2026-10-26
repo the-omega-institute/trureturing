@@ -51,6 +51,7 @@ private theorem equal_tail_length {p : ℕ → ℝ} (hp : Summable p)
       dsimp [T]
       linarith
     refine ⟨1, by omega, ?_⟩
+    norm_num only [Nat.cast_one]
     change T ^ 2 / (1 : ℝ) ≤ R
     simp [hT0, hR0]
   · have hRp : 0 < R := lt_of_le_of_ne hR (Ne.symm hR0)
@@ -86,7 +87,7 @@ private theorem finite_approximation_bound {p : ℕ → ℝ} (hp : Summable p)
   have hsum : (∑ i, v i) = 1 := by
     simp only [v, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr,
       Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
-    rw [Fin.sum_univ_eq_sum_range]
+    rw [Fin.sum_univ_eq_sum_range p n]
     have hcancel : (L : ℝ) * (T / L) = T := by field_simp [hLne]
     rw [hcancel]
     dsimp [T]
@@ -95,17 +96,20 @@ private theorem finite_approximation_bound {p : ℕ → ℝ} (hp : Summable p)
     unfold finitePurity
     simp only [v, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr,
       Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
-    rw [Fin.sum_univ_eq_sum_range]
+    rw [Fin.sum_univ_eq_sum_range (fun i : ℕ => p i ^ 2) n]
     field_simp [hLne]
     <;> ring
   have hr : (∑ i, v i ^ 3) = (∑ i ∈ Finset.range n, p i ^ 3) + T ^ 3 / (L : ℝ) ^ 2 := by
     simp only [v, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr,
       Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
-    rw [Fin.sum_univ_eq_sum_range]
+    rw [Fin.sum_univ_eq_sum_range (fun i : ℕ => p i ^ 3) n]
     field_simp [hLne]
     <;> ring
   have hvq : finitePurity v ≤ purity p := by rw [hq]; dsimp [R] at hLR; linarith
-  have hvql : purity p - R ≤ finitePurity v := by rw [hq]; dsimp [R]; positivity
+  have hvql : purity p - R ≤ finitePurity v := by
+    rw [hq]
+    dsimp [R]
+    nlinarith [div_nonneg (sq_nonneg T) hLr.le]
   have hvc : (∑ i, v i ^ 3) ≤ cubicMoment p + T ^ 3 := by
     have hpartial := (summable_cube hp hn hm.le).sum_le_tsum
       (Finset.range n) (fun i _ => pow_nonneg (hn i) 3)
