@@ -157,7 +157,7 @@ private lemma shuffle_norm {ι : Type*} [Fintype ι] (s : Equiv.Perm ι)
   exact Equiv.sum_comp s (fun x => ‖v x‖ ^ 2)
 
 private lemma projection_energy {ι : Type*} [Fintype ι] (s : Equiv.Perm ι)
-    (_hs : Function.Involutive s) (v : EuclideanSpace ℂ ι) :
+    (v : EuclideanSpace ℂ ι) :
     ‖average s v‖ ^ 2 + ‖v - average s v‖ ^ 2 = ‖v‖ ^ 2 := by
   have hdiff : v - average s v = (1 / 2 : ℂ) • (v - shuffle s v) := by
     ext x
@@ -203,11 +203,10 @@ private lemma residual_lipschitz {ι : Type*} [Fintype ι] (s : Equiv.Perm ι)
   rw [h]
   exact (norm_add_le _ _).trans (add_le_add (residual_contract s (v - w)) le_rfl)
 
-private noncomputable def increments {n k : ℕ} : List (Fin n × Fin n) →
-    EuclideanSpace ℂ (config n k) → List ℝ
-  | [], _ => []
-  | e :: pat, v => ‖v - average (swapEquiv e.1 e.2) v‖ ::
-      increments pat (average (swapEquiv e.1 e.2) v)
+private noncomputable def increments {n k : ℕ} (pat : List (Fin n × Fin n)) :
+    EuclideanSpace ℂ (config n k) → List ℝ :=
+  pat.rec (fun _ => []) (fun e _ next v =>
+    ‖v - average (swapEquiv e.1 e.2) v‖ :: next (average (swapEquiv e.1 e.2) v))
 
 private lemma increments_length {n k : ℕ} (pat : List (Fin n × Fin n))
     (v : EuclideanSpace ℂ (config n k)) : (increments pat v).length = pat.length := by
@@ -229,14 +228,13 @@ private lemma increments_energy {n k : ℕ} (pat : List (Fin n × Fin n))
     (v : EuclideanSpace ℂ (config n k)) :
     ((increments pat v).map (fun t => t ^ 2)).sum = ‖v‖ ^ 2 - ‖run pat v‖ ^ 2 := by
   induction pat generalizing v with
-  | nil => simp only [increments, List.map_nil, List.sum_nil, run, List.foldl_nil, sub_self]
+  | nil => exact (sub_self _).symm
   | cons e pat ih =>
     change ‖v - average (swapEquiv e.1 e.2) v‖ ^ 2 +
       ((increments pat (average (swapEquiv e.1 e.2) v)).map (fun t => t ^ 2)).sum =
       ‖v‖ ^ 2 - ‖run pat (average (swapEquiv e.1 e.2) v)‖ ^ 2
     rw [ih]
-    have h := projection_energy (swapEquiv e.1 e.2)
-      (swapConfig_involutive e.1 e.2) v
+    have h := projection_energy (swapEquiv e.1 e.2) v
     linarith
 
 private lemma defect_le_increments {n k : ℕ} (pat : List (Fin n × Fin n))
@@ -376,8 +374,7 @@ private lemma path_variation {ι : Type*} [Fintype ι] (g : SimpleGraph ι)
     · intro d hd e he h
       exact SimpleGraph.Dart.ext d e h
     · intro d hd
-      change _ ≤ if g.Adj d.fst d.snd then _ else _
-      rw [if_pos d.adj]
+      rw [ite_eq_left d.adj]
     · intro q hq hnot
       split_ifs <;> positivity
   calc
@@ -436,7 +433,12 @@ private lemma adjacency_energy {n k : ℕ} (pat : List (Fin n × Fin n))
       (∑ t, if (configGraph pat).Adj s t then (f s - f t) ^ 2 else 0) ≤
         (pat.map fun e => (f s - f (swapConfig e.1 e.2 s)) ^ 2).sum := by
     induction pat with
-    | nil => simp [configGraph]
+    | nil =>
+      have hnone (t : config n k) : ¬ (configGraph ([] : List (Fin n × Fin n))).Adj s t := by
+        rintro ⟨_, e, he, _⟩
+        exact List.not_mem_nil he
+      simp only [hnone, ite_false, Finset.sum_const_zero, List.map_nil, List.sum_nil,
+        le_refl]
     | cons e pat ih =>
       calc
         _ ≤ ∑ t, ((if t = swapConfig e.1 e.2 s then (f s - f t) ^ 2 else 0) +
@@ -446,13 +448,13 @@ private lemma adjacency_energy {n k : ℕ} (pat : List (Fin n × Fin n))
           by_cases ht : (configGraph (e :: pat)).Adj s t
           · rcases ht with ⟨hne, d, hd, hd'⟩
             have ht : (configGraph (e :: pat)).Adj s t := ⟨hne, d, hd, hd'⟩
-            rw [if_pos ht]
+            rw [ite_eq_left ht]
             rcases List.mem_cons.mp hd with rfl | hd
-            · rw [if_pos hd'.symm]
+            · rw [ite_eq_left hd'.symm]
               split_ifs <;> nlinarith [sq_nonneg (f s - f t)]
-            · rw [if_pos (show (configGraph pat).Adj s t from ⟨hne, d, hd, hd'⟩)]
+            · rw [ite_eq_left (show (configGraph pat).Adj s t from ⟨hne, d, hd, hd'⟩)]
               split_ifs <;> nlinarith [sq_nonneg (f s - f t)]
-          · rw [if_neg ht]
+          · rw [ite_eq_right ht]
             positivity
         _ = (f s - f (swapConfig e.1 e.2 s)) ^ 2 +
             ∑ t, if (configGraph pat).Adj s t then (f s - f t) ^ 2 else 0 := by
