@@ -36,9 +36,6 @@ private abbrev FixedGrade (D : LatticeData) (n : ℤ) : Submodule ℂ (Carrier D
 private def normFourNeg (D : LatticeData) (a : NormFour D) : NormFour D :=
   ⟨-a.1, by simpa only [bilinear_neg_neg] using a.2⟩
 
-@[simp] private theorem normFourNeg_val (D : LatticeData) (a : NormFour D) :
-    (normFourNeg D a).1 = -a.1 := rfl
-
 @[simp] private theorem normFourNeg_involutive (D : LatticeData) (a : NormFour D) :
     normFourNeg D (normFourNeg D a) = a := by
   apply Subtype.ext
@@ -261,7 +258,10 @@ private def fixedCoordinatesEquiv (D : LatticeData) :
       · rw [h]
       · have ha := congrFun hf
           (Sum.inr (normFourOrbitRep D (normFourOrbitMk D a)))
-        simpa only [coordinateTheta, configSign, configFlip, one_mul, h] using ha.symm
+        change (1 : ℂ) *
+          f.1 (Sum.inr (normFourNeg D (normFourOrbitRep D (normFourOrbitMk D a)))) =
+            f.1 (Sum.inr (normFourOrbitRep D (normFourOrbitMk D a))) at ha
+        simpa only [one_mul, h] using ha.symm
   right_inv f := by
     funext j
     rcases j with s | q
@@ -552,10 +552,12 @@ private theorem fixedGradeTwoEquiv_chargeOrbitFixedVector (D : LatticeData)
     rw [map_add, gradeTwoCoordinateEquiv_basis, gradeTwoCoordinateEquiv_basis]
   funext j
   rcases j with s | p
-  · change e ⟨_, _⟩ (Sum.inl (Sum.inr s)) = _
+  · change e ⟨(chargeOrbitFixedVector D hD hroot q : Carrier D),
+      (chargeOrbitFixedVector D hD hroot q).2.2⟩ (Sum.inl (Sum.inr s)) = _
     rw [hc]
     simp [Pi.single_apply]
-  · change e ⟨_, _⟩ (Sum.inr (normFourOrbitRep D p)) = _
+  · change e ⟨(chargeOrbitFixedVector D hD hroot q : Carrier D),
+      (chargeOrbitFixedVector D hD hroot q).2.2⟩ (Sum.inr (normFourOrbitRep D p)) = _
     rw [hc]
     by_cases hp : q = p
     · subst p
@@ -769,13 +771,13 @@ theorem actual_theta_fixed_rootless_low_spectrum (D : LatticeData)
         Nat.choose (D.rank + 1) 2 +
           Nat.card {a : Charge D // bilinear D a a = 4} / 2 := by
   refine ⟨?_, ?_, ?_⟩
-  · change Module.finrank ℂ
-      ↥(fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace ((0 : ℤ) : ℂ)) = 1
-    rw [canonicalFixedEnergy_eq_fixedGrade D hD 0]
+  · have he := canonicalFixedEnergy_eq_fixedGrade D hD 0
+    rw [Int.cast_zero] at he
+    rw [he]
     exact fixedGrade_zero_finrank D hD
-  · change Module.finrank ℂ
-      ↥(fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace ((1 : ℤ) : ℂ)) = 0
-    rw [canonicalFixedEnergy_eq_fixedGrade D hD 1]
+  · have he := canonicalFixedEnergy_eq_fixedGrade D hD 1
+    rw [Int.cast_one] at he
+    rw [he]
     exact fixedGrade_one_finrank D hD hroot
   · change Module.finrank ℂ
       ↥(fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace ((2 : ℤ) : ℂ)) = _
