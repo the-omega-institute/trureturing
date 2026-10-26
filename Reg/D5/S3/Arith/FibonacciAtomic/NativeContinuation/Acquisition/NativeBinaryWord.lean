@@ -102,7 +102,7 @@ noncomputable def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 
     definition := none
     coordinates := #[0,1,2,3,6]
     readouts := #[{ path := #["body","body","body","body","body","body",
-                      "arg","arg","body","body","arg","fn","arg","fn","arg"]
+                      "arg","arg","fn","arg","body","body","arg","fn","arg","fn","arg"]
                     stateBinder := 7
                     functionOperand := false
                     stateOperand := none
