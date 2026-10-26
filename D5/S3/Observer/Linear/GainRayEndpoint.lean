@@ -6,7 +6,6 @@
    utility: none
    digest: The first and last coefficient rows impose incompatible endpoint signs below the exact readout threshold. -/
 
-import D5.S3.Observer.Linear.GainRaySpectral
 import D5.S3.Observer.Linear.GainRayJets
 import Mathlib.Analysis.Calculus.Deriv.Polynomial
 import Mathlib.Analysis.Calculus.Deriv.MeanValue

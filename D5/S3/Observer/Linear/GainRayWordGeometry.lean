@@ -7,7 +7,6 @@
    digest: Both chronological switch orientations force three independent cumulative source directions. -/
 
 import D5.S3.Observer.Linear.GainRayHistory
-import D5.S0.Observation.MatrixTracePowerSum
 
 set_option autoImplicit false
 noncomputable section
@@ -24,21 +23,25 @@ private theorem action_j_shape : action true = !![0,1;1,0] := by
   fin_cases i <;> fin_cases j <;> norm_num [action,
     D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic]
 
-private theorem m_square : action false ^ 2 = action false + 1 := by
-  have h := D5.S0.Observation.MatrixTracePowerSum.pow_add_two (action false) 0
-  simpa [action_m_shape, Matrix.trace, Matrix.det_fin_two, Fin.sum_univ_two] using h
-
 private theorem m_power_coordinates (k : ℕ) :
     ∃ a b : ℝ, 0 ≤ a ∧ 0 < b ∧
       action false ^ (k+1) = a • (1 : Mat) + b • action false := by
-  induction k with
-  | zero => exact ⟨0,1,le_rfl,zero_lt_one,by simp⟩
-  | succ k ih =>
-    obtain ⟨a,b,ha,hb,hp⟩ := ih
-    refine ⟨b,a+b,le_of_lt hb,add_pos_of_nonneg_of_pos ha hb,?_⟩
-    rw [pow_succ, hp, Matrix.add_mul, Matrix.smul_mul, Matrix.smul_mul,
-      one_mul, ← pow_two, m_square, smul_add]
-    module
+  have packet := (D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.result.2
+    1 (by omega) (D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.atomicBlock (k+1))).2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2
+    (k+1) rfl
+  have hv := packet.2.2.2.2.1 (by omega)
+  have hp := packet.2.2.2.2.2.1
+  refine ⟨(Nat.fib k : ℝ), (Nat.fib (k+1) : ℝ), Nat.cast_nonneg _,
+    Nat.cast_pos.mpr (Nat.fib_pos.mpr (by omega)), ?_⟩
+  have hm := congrArg (fun A : Matrix (Fin 2) (Fin 2) ℤ =>
+    A.map (Int.castRingHom ℝ)) hp.symm
+  rw [Matrix.map_pow] at hm
+  change action false ^ (k+1) = _ at hm
+  rw [hm]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.blockMatrix,
+      D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.step, hv, action_m_shape]
 
 private theorem independent_IM (B : Mat) (hB : B 0 1 ≠ B 1 0) :
     LinearIndependent ℝ ![(1 : Mat), action false, B] := by
@@ -103,27 +106,12 @@ private theorem first_switch_independent (a : Bool) (k : ℕ) (hk : 0 < k) :
 private theorem switch_decomposition (w : List Bool) (hM : false ∈ w) (hJ : true ∈ w) :
     ∃ a : Bool, ∃ k : ℕ, ∃ r : List Bool,
       0 < k ∧ w = List.replicate k a ++ ((!a) :: r) := by
-  have aux : ∀ (a : Bool) (v : List Bool), (!a) ∈ v →
-      ∃ k r, 0 < k ∧ a :: v = List.replicate k a ++ ((!a) :: r) := by
-    intro a v
-    induction v with
-    | nil => simp
-    | cons b v ih =>
-      intro h
-      by_cases hab : b = a
-      · subst b
-        have hv : (!a) ∈ v := by simpa using h
-        obtain ⟨k,r,hk,he⟩ := ih hv
-        exact ⟨k+1,r,by omega,by simpa [List.replicate_succ] using congrArg (List.cons a) he⟩
-      · have hb : b = !a := by cases a <;> cases b <;> simp_all
-        subst b
-        exact ⟨1,v,by omega,by simp⟩
-  cases w with
-  | nil => simp at hM
-  | cons a v =>
-    have hv : (!a) ∈ v := by cases a <;> simp_all
-    obtain ⟨k,r,hk,he⟩ := aux a v hv
-    exact ⟨a,k,r,hk,he⟩
+  rcases List.eq_replicate_or_eq_replicate_append_cons w with
+    h | ⟨k,a,h,hk⟩ | ⟨k,a,b,r,h,hk,hab⟩
+  · simp [h] at hM
+  · cases a <;> simp_all
+  · have hb : b = !a := by cases a <;> cases b <;> simp_all
+    exact ⟨a,k,r,hk,by simpa [hb] using h⟩
 
 /-- A mixed literal trajectory has at least three source-observation directions. -/
 theorem mixed_cumulative_span (w : List Bool) (hM : false ∈ w) (hJ : true ∈ w) :
