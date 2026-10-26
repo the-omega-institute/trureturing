@@ -63,6 +63,8 @@ def claim : Prop :=
       (patternMatrix (pat n)).map (fun x : ℝ => (x : ℂ)) *ᵥ v = μ • v →
       ‖μ‖ ≤ 1 - d / (n : ℝ) ^ b
 
+open Classical
+
 private lemma swapConfig_involutive {n k : ℕ} (a b : Fin n) :
     Function.Involutive (swapConfig (k := k) a b) := by
   intro s
@@ -351,11 +353,156 @@ private lemma configuration_connected {n k : ℕ} (pat : List (Fin n × Fin n))
   have heq : f σ s = t := Subtype.ext hσ
   exact heq ▸ hm s
 
+private lemma path_variation {ι : Type*} [Fintype ι] (g : SimpleGraph ι)
+    [DecidableRel g.Adj] (f : ι → ℝ) {x y : ι} (p : g.Walk x y) (hp : p.IsPath) :
+    (f x - f y) ^ 2 ≤ (Fintype.card ι : ℝ) *
+      ∑ i, ∑ j, if g.Adj i j then (f i - f j) ^ 2 else 0 := by
+  classical
+  have htel : (p.darts.map (fun d => f d.fst - f d.snd)).sum = f x - f y := by
+    clear hp
+    induction p with
+    | nil => simp
+    | cons h p ih =>
+      simp only [SimpleGraph.Walk.darts_cons, List.map_cons, List.sum_cons, ih]
+      ring
+  have hcs : (f x - f y) ^ 2 ≤ (p.length : ℝ) *
+      (p.darts.map (fun d => (f d.fst - f d.snd) ^ 2)).sum := by
+    have h := Multiset.sq_sum_le_card_mul_sum_sq
+      (↑(p.darts.map (fun d => f d.fst - f d.snd)) : Multiset ℝ)
+    simpa only [Multiset.sum_coe, Multiset.coe_card, Multiset.map_coe, List.map_map,
+      List.length_map, SimpleGraph.Walk.length_darts, htel, Function.comp_def] using h
+  have hs : (p.darts.map (fun d => (f d.fst - f d.snd) ^ 2)).sum ≤
+      ∑ i, ∑ j, if g.Adj i j then (f i - f j) ^ 2 else 0 := by
+    rw [← List.sum_toFinset _ (SimpleGraph.Walk.darts_nodup_of_support_nodup
+      hp.support_nodup)]
+    rw [← Finset.sum_product Finset.univ Finset.univ
+      (fun q : ι × ι => if g.Adj q.1 q.2 then (f q.1 - f q.2) ^ 2 else 0)]
+    refine Finset.sum_le_sum_of_injOn (fun d : g.Dart => d.toProd) ?_
+      (by intro d hd; simp) ?_ ?_
+    · intro d hd e he h
+      exact SimpleGraph.Dart.ext d e h
+    · intro d hd
+      change _ ≤ if g.Adj d.fst d.snd then _ else _
+      rw [if_pos d.adj]
+    · intro q hq hnot
+      split_ifs <;> positivity
+  calc
+    (f x - f y) ^ 2 ≤ (p.length : ℝ) *
+        (p.darts.map (fun d => (f d.fst - f d.snd) ^ 2)).sum := hcs
+    _ ≤ (Fintype.card ι : ℝ) *
+        ∑ i, ∑ j, if g.Adj i j then (f i - f j) ^ 2 else 0 := by
+      apply mul_le_mul (by exact_mod_cast hp.length_lt.le) hs
+      · exact List.sum_nonneg (by
+          intro t ht
+          obtain ⟨d, _, rfl⟩ := List.mem_map.mp ht
+          exact sq_nonneg _)
+      · exact Nat.cast_nonneg _
+
+private lemma real_poincare {ι : Type*} [Fintype ι] (g : SimpleGraph ι)
+    [DecidableRel g.Adj] (hc : g.Preconnected) (f : ι → ℝ) (hz : ∑ i, f i = 0) :
+    4 * ∑ i, (f i) ^ 2 ≤ (Fintype.card ι : ℝ) ^ 2 *
+      ∑ i, ∑ j, if g.Adj i j then (f i - f j) ^ 2 else 0 := by
+  classical
+  cases isEmpty_or_nonempty ι with
+  | inl h => simp
+  | inr h =>
+    obtain ⟨x, _, hx⟩ := Finset.exists_min_image Finset.univ f Finset.univ_nonempty
+    obtain ⟨y, _, hy⟩ := Finset.exists_max_image Finset.univ f Finset.univ_nonempty
+    have hsum : (∑ i, (f i) ^ 2) ≤ -(Fintype.card ι : ℝ) * (f x * f y) := by
+      calc
+        (∑ i, (f i) ^ 2) ≤ ∑ i, ((f x + f y) * f i - f x * f y) := by
+          apply Finset.sum_le_sum
+          intro i _
+          have h := mul_nonneg (sub_nonneg.mpr (hx i (Finset.mem_univ _)))
+            (sub_nonneg.mpr (hy i (Finset.mem_univ _)))
+          nlinarith
+        _ = _ := by
+          rw [Finset.sum_sub_distrib, ← Finset.mul_sum, hz]
+          simp
+    have hpop : 4 * ∑ i, (f i) ^ 2 ≤
+        (Fintype.card ι : ℝ) * (f x - f y) ^ 2 := by
+      have h := mul_nonneg (Nat.cast_nonneg (Fintype.card ι) :
+        (0 : ℝ) ≤ Fintype.card ι) (sq_nonneg (f x + f y))
+      nlinarith
+    obtain ⟨p, hp⟩ := (hc x y).exists_isPath
+    calc
+      4 * ∑ i, (f i) ^ 2 ≤ (Fintype.card ι : ℝ) * (f x - f y) ^ 2 := hpop
+      _ ≤ (Fintype.card ι : ℝ) * ((Fintype.card ι : ℝ) *
+          ∑ i, ∑ j, if g.Adj i j then (f i - f j) ^ 2 else 0) :=
+        mul_le_mul_of_nonneg_left (path_variation g f p hp) (Nat.cast_nonneg _)
+      _ = _ := by ring
+
+private lemma adjacency_energy {n k : ℕ} (pat : List (Fin n × Fin n))
+    (f : config n k → ℝ) :
+    (∑ s, ∑ t, if (configGraph pat).Adj s t then (f s - f t) ^ 2 else 0) ≤
+      (pat.map fun e => ∑ s, (f s - f (swapConfig e.1 e.2 s)) ^ 2).sum := by
+  classical
+  have hrow (s : config n k) :
+      (∑ t, if (configGraph pat).Adj s t then (f s - f t) ^ 2 else 0) ≤
+        (pat.map fun e => (f s - f (swapConfig e.1 e.2 s)) ^ 2).sum := by
+    induction pat with
+    | nil => simp [configGraph]
+    | cons e pat ih =>
+      calc
+        _ ≤ ∑ t, ((if t = swapConfig e.1 e.2 s then (f s - f t) ^ 2 else 0) +
+            if (configGraph pat).Adj s t then (f s - f t) ^ 2 else 0) := by
+          apply Finset.sum_le_sum
+          intro t _
+          by_cases ht : (configGraph (e :: pat)).Adj s t
+          · rcases ht with ⟨hne, d, hd, hd'⟩
+            have ht : (configGraph (e :: pat)).Adj s t := ⟨hne, d, hd, hd'⟩
+            rw [if_pos ht]
+            rcases List.mem_cons.mp hd with rfl | hd
+            · rw [if_pos hd'.symm]
+              split_ifs <;> nlinarith [sq_nonneg (f s - f t)]
+            · rw [if_pos (show (configGraph pat).Adj s t from ⟨hne, d, hd, hd'⟩)]
+              split_ifs <;> nlinarith [sq_nonneg (f s - f t)]
+          · rw [if_neg ht]
+            positivity
+        _ = (f s - f (swapConfig e.1 e.2 s)) ^ 2 +
+            ∑ t, if (configGraph pat).Adj s t then (f s - f t) ^ 2 else 0 := by
+          rw [Finset.sum_add_distrib]
+          simp
+        _ ≤ _ := add_le_add le_rfl ih
+  calc
+    _ ≤ ∑ s, (pat.map fun e => (f s - f (swapConfig e.1 e.2 s)) ^ 2).sum :=
+      Finset.sum_le_sum (fun s _ => hrow s)
+    _ = (pat.map fun e => ∑ s, (f s - f (swapConfig e.1 e.2 s)) ^ 2).sum := by
+      clear hrow
+      induction pat with
+      | nil => simp
+      | cons e pat ih => simp only [List.map_cons, List.sum_cons, Finset.sum_add_distrib, ih]
+
 private lemma poincare_bound {n k : ℕ} (pat : List (Fin n × Fin n))
     (hc : connectedPattern pat) (v : EuclideanSpace ℂ (config n k))
     (hv : ∑ s, v s = 0) :
     ‖v‖ ^ 2 ≤ (Fintype.card (config n k) : ℝ) ^ 2 * staticEnergy pat v := by
-  sorry
+  classical
+  have hrz : ∑ s, (v s).re = 0 := by simpa using congrArg Complex.re hv
+  have hiz : ∑ s, (v s).im = 0 := by simpa using congrArg Complex.im hv
+  have hr := (real_poincare (configGraph pat) (configuration_connected pat hc)
+    (fun s => (v s).re) hrz).trans (mul_le_mul_of_nonneg_left
+      (adjacency_energy pat (fun s => (v s).re)) (sq_nonneg _))
+  have hi := (real_poincare (configGraph pat) (configuration_connected pat hc)
+    (fun s => (v s).im) hiz).trans (mul_le_mul_of_nonneg_left
+      (adjacency_energy pat (fun s => (v s).im)) (sq_nonneg _))
+  have hparts (z : ℂ) : ‖z‖ ^ 2 = z.re ^ 2 + z.im ^ 2 := by
+    simpa only [sq, RCLike.re_to_complex, RCLike.im_to_complex] using
+      RCLike.norm_sq_eq_def (z := z)
+  have hn : ‖v‖ ^ 2 = (∑ s, (v s).re ^ 2) + ∑ s, (v s).im ^ 2 := by
+    rw [EuclideanSpace.norm_sq_eq]
+    simp only [hparts, Finset.sum_add_distrib]
+  have hsplit : (pat.map fun e => ∑ s, ‖v s - v (swapConfig e.1 e.2 s)‖ ^ 2).sum =
+      (pat.map fun e => ∑ s, ((v s).re - (v (swapConfig e.1 e.2 s)).re) ^ 2).sum +
+      (pat.map fun e => ∑ s, ((v s).im - (v (swapConfig e.1 e.2 s)).im) ^ 2).sum := by
+    simp only [hparts, Complex.sub_re, Complex.sub_im, Finset.sum_add_distrib,
+      List.sum_map_add]
+  have he : staticEnergy pat v = (1 / 4 : ℝ) *
+      (pat.map fun e => ∑ s, ‖v s - v (swapConfig e.1 e.2 s)‖ ^ 2).sum := by
+    unfold staticEnergy
+    simp only [edge_energy, List.sum_map_mul_left]
+  rw [hn, he, hsplit]
+  nlinarith
 
 private lemma pattern_length_pos {n : ℕ} (hn : 2 ≤ n)
     (pat : List (Fin n × Fin n)) (hc : connectedPattern pat) : 0 < pat.length := by
@@ -376,7 +523,30 @@ private lemma spectral_core {n k : ℕ} (hn : 2 ≤ n) (pat : List (Fin n × Fin
     (hz : ∑ s, v s = 0)
     (he : (patternMatrix pat).map (fun x : ℝ => (x : ℂ)) *ᵥ v = μ • v) :
     ‖μ‖ ≤ 1 - 1 / (2 * (pat.length : ℝ) ^ 2 * (Fintype.card (config n k) : ℝ) ^ 2) := by
-  sorry
+  let w : EuclideanSpace ℂ (config n k) := WithLp.toLp 2 v
+  have hwne : w ≠ 0 := by
+    intro h
+    apply hv
+    exact (WithLp.ofLp_eq_zero 2).mpr h
+  have hw : 0 < ‖w‖ ^ 2 := sq_pos_of_pos (norm_pos_iff.mpr hwne)
+  have hrun : run pat w = μ • w := by
+    apply (WithLp.ext_iff 2).mpr
+    exact (pattern_apply pat w).symm.trans he
+  have h := (poincare_bound pat hc w hz).trans
+    (mul_le_mul_of_nonneg_left (energy_control pat w) (sq_nonneg _))
+  rw [hrun, norm_smul, mul_pow] at h
+  have hj : (0 : ℝ) < pat.length := by exact_mod_cast pattern_length_pos hn pat hc
+  obtain ⟨s, hs⟩ := Function.ne_iff.mp hv
+  have hn' : (0 : ℝ) < Fintype.card (config n k) := by
+    exact_mod_cast Fintype.card_pos_iff.mpr ⟨s⟩
+  let d : ℝ := (pat.length : ℝ) ^ 2 * (Fintype.card (config n k) : ℝ) ^ 2
+  have hd : 0 < d := mul_pos (sq_pos_of_pos hj) (sq_pos_of_pos hn')
+  have hb : ‖w‖ ^ 2 * 1 ≤ ‖w‖ ^ 2 * (d * (1 - ‖μ‖ ^ 2)) := by
+    convert h using 1 <;> (try dsimp only [d]) <;> ring
+  have hc' : 1 ≤ d * (1 - ‖μ‖ ^ 2) := le_of_mul_le_mul_left hb hw
+  have hdiv : 1 / d ≤ 1 - ‖μ‖ ^ 2 := (div_le_iff₀ hd).mpr (by nlinarith [hc'])
+  have hlast : ‖μ‖ ≤ 1 - (1 / d) / 2 := by nlinarith [sq_nonneg (‖μ‖ - 1)]
+  simpa only [div_div, d, mul_comm, mul_left_comm, mul_assoc] using hlast
 
 private lemma polynomial_gap (k c a : ℕ) (pat : (n : ℕ) → List (Fin n × Fin n))
     (hp : ∀ n, 2 ≤ n → connectedPattern (pat n) ∧ (pat n).length ≤ c * n ^ a) :
@@ -385,7 +555,33 @@ private lemma polynomial_gap (k c a : ℕ) (pat : (n : ℕ) → List (Fin n × F
     (patternMatrix (pat n)).map (fun x : ℝ => (x : ℂ)) *ᵥ v = μ • v →
     ‖μ‖ ≤ 1 - (1 / (2 * (max c 1 : ℕ) ^ 2 : ℝ)) /
       (n : ℝ) ^ (2 * a + 2 * k) := by
-  sorry
+  intro n hkn hn μ v hv hz he
+  have hj : (pat n).length ≤ max c 1 * n ^ a :=
+    (hp n hn).2.trans (Nat.mul_le_mul_right _ (le_max_left _ _))
+  have hj' : ((pat n).length : ℝ) ≤ (max c 1 : ℕ) * (n : ℝ) ^ a := by
+    exact_mod_cast hj
+  have hcard : (Fintype.card (config n k) : ℝ) ≤ (n : ℝ) ^ k := by
+    exact_mod_cast config_card_le n k
+  have hden : 2 * ((pat n).length : ℝ) ^ 2 * (Fintype.card (config n k) : ℝ) ^ 2 ≤
+      (2 * (max c 1 : ℕ) ^ 2 : ℝ) * (n : ℝ) ^ (2 * a + 2 * k) := by
+    calc
+      _ ≤ 2 * ((max c 1 : ℕ) * (n : ℝ) ^ a) ^ 2 * ((n : ℝ) ^ k) ^ 2 := by
+        gcongr
+      _ = _ := by
+        rw [show 2 * a + 2 * k = (a + a) + (k + k) by omega,
+          pow_add, pow_add, pow_add]
+        ring
+  have hjpos : (0 : ℝ) < (pat n).length := by
+    exact_mod_cast pattern_length_pos hn (pat n) (hp n hn).1
+  obtain ⟨s, hs⟩ := Function.ne_iff.mp hv
+  have hnpos : (0 : ℝ) < Fintype.card (config n k) := by
+    exact_mod_cast Fintype.card_pos_iff.mpr ⟨s⟩
+  have hpos : 0 < 2 * ((pat n).length : ℝ) ^ 2 *
+      (Fintype.card (config n k) : ℝ) ^ 2 := by positivity
+  have hrat := one_div_le_one_div_of_le hpos hden
+  have hgap := (spectral_core hn (pat n) (hp n hn).1 μ v hv hz he).trans
+    (sub_le_sub_left hrat 1)
+  simpa only [div_div] using hgap
 
 /-- Connected patterns with polynomially many gates have an inverse-polynomial gap. -/
 theorem result : claim := by
