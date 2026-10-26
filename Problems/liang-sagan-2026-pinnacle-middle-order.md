@@ -117,8 +117,11 @@ that scope. This does not establish exhaustive coverage or priority.
   non-lattice classes are σ∈{(3,6),(4,6),(6,3),(6,4)}. The enumeration
   tests lattice existence, not distributivity of the remaining classes.
 - **COMPUTED.** At n=7, 14 of 50 nonempty classes are non-lattices.
-  These finite readings are from the experiment above, not a general
-  classification theorem.
+  The n=7 reading is independently checked by exact principal-upset and
+  principal-downset enumeration: `python3 ls-bitset-check.py`, exit 0,
+  SHA-256 `fef64ef55895b6bef89f2692f51f192758dda8340ee373d607c9825a9ddc5c73`.
+  This supplementary program is not included in the pinned experiment
+  directory. These are finite readings, not a general classification theorem.
 - **OPEN.** Question 8.6(b), log-concavity of the class-size sequence,
   is untouched. A classification of all lattice fibres is also open here.
 
