@@ -30,13 +30,16 @@ internal sealed class WuAdjacentFibonacciResiduesDocument : IScribeDocumentDefin
                 + "and four, forces 3 and 4 to divide k, hence 12 divides k. If k has remainder one or four modulo "
                 + "five, one neighbour is divisible by five. The same equivalence at index five then forces five "
                 + "to divide k, a contradiction. Evenness and these two exclusions leave final digits zero, two and eight.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("wu221018-fibdiv"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("wu221018-" + name), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula ClaimBody()
     {

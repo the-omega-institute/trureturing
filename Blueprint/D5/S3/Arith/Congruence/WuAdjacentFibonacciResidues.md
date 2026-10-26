@@ -22,6 +22,10 @@ $$\forall k \in \mathbb{N},\; (2 \le k) \Rightarrow ((k - 1 \mid \operatorname{N
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/WuAdjacentFibonacciResidues.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wu221018-fibdiv` (proved) by `D5/S3/Arith/Congruence/WuAdjacentFibonacciResidues.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wu221018-fibdiv","declaration_gid":"D5/S3/Arith/Congruence/WuAdjacentFibonacciResidues.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Chai Wah Wu; Alex Ratushnyak (2026). *OEIS A221018, first FORMULA conjecture on adjacent-index Fibonacci divisibility*. URL: <https://oeis.org/A221018/internal>.
