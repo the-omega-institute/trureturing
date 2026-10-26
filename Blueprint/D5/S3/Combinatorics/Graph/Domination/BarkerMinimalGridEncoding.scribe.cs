@@ -29,7 +29,7 @@ internal sealed class BarkerMinimalGridEncodingDocument : IScribeDocumentDefinit
             N("minimalWordEquiv", "Restrict the bijection", "Restrict subsetWordEquiv to the actual minimal dominating subsets and accepted words."),
             N("ColumnTest", "Five-column criterion", "Every centre vertex is closed-dominated. Every selected centre vertex has an actual closed-neighbour witness; uniqueness is tested among selected vertices at column distance at most two. Actual finite-grid vertex types exclude absent witnesses."),
             T("minimal_iff_column_tests", "Every real centre at every width", ColumnFormula(), "A witness is at column distance at most one, and every selected neighbour of it is at distance at most two by the natural-distance triangle inequality. This proves that the five-column restriction retains the complete proper-subset condition, including widths one and two."),
-            Paragraph(Text("The complete Barker OEIS A286848 generating function still requires the mask-window/path correspondence, both absent terminal checks, the 4672-state to 59-class certificate, its vector annihilator and the all-coefficient proof. These encoding interfaces alone do not prove that endpoint."))),
+            Paragraph(Text("The complete Barker OEIS A286848 generating function still requires the mask-window/path correspondence, both absent terminal checks, the 4672-state to 59-class certificate, the connection to the proved vector annihilator and the all-coefficient proof. These encoding interfaces alone do not prove that endpoint."))),
         []));
 
     private static DocumentBlock N(string name, string title, string prose,
@@ -50,7 +50,6 @@ internal sealed class BarkerMinimalGridEncodingDocument : IScribeDocumentDefinit
     private static Formula Ex(string v, Formula ty, Formula body) =>
         Seq(Exists, Sp, Par(Seq(X(v), Sp, Colon, Sp, ty)), Comma, Sp, body);
     private static Formula Rel(Formula l, FormulaRelationOperator op, Formula r) => new Formula.Relation(l, op, r);
-    private static Formula Eq(Formula l, Formula r) => Rel(l, FormulaRelationOperator.Equal, r);
     private static Formula Logic(Formula l, FormulaLogicOperator op, Formula r) => new Formula.Logic(Par(l), op, Par(r));
     private static Formula Iff(Formula l, Formula r) => Logic(l, FormulaLogicOperator.Iff, r);
     private static Formula And(Formula l, Formula r) => Logic(l, FormulaLogicOperator.And, r);
@@ -62,9 +61,12 @@ internal sealed class BarkerMinimalGridEncodingDocument : IScribeDocumentDefinit
     private static Formula PrivateFormula()
     {
         Formula v = X("V"), g = X("G"), s = X("S"), x = X("v"), z = X("z");
-        return All("V", X("Type"), Imp(Call("Finite", v), All("G", Call("SimpleGraph", v),
-            All("S", FS(v), Iff(Call("MinimalDominating", g, s), And(Call("IsDominating", g, s),
-                All("v", v, Imp(In(x, s), Ex("z", v, Call("ClosedPrivate", g, s, x, z)))))))));
+        Formula witnesses = All("v", v,
+            Imp(In(x, s), Ex("z", v, Call("ClosedPrivate", g, s, x, z))));
+        Formula characterization = Iff(Call("MinimalDominating", g, s),
+            And(Call("IsDominating", g, s), witnesses));
+        return All("V", X("Type"), Imp(Call("Finite", v),
+            All("G", Call("SimpleGraph", v), All("S", FS(v), characterization))));
     }
     private static Formula ValidFormula()
     {

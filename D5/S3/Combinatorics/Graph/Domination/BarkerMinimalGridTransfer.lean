@@ -122,11 +122,4 @@ def terminal : State → ℤ := fun s =>
   if accepts (window s 8) && accepts ![columns s 1, columns s 2, columns s 3, 8, 8]
     then 1 else 0
 
-/-- The full successor has one appended-mask witness, rather than one witness
-for each private neighbour of a selected vertex. -/
-theorem edge_unique_mask (s t : State) (h : Edge s t) :
-    ∃! m : Fin 8, append s m = t ∧ accepts (window s ⟨m.val, by omega⟩) = true := by
-  obtain ⟨m, hm⟩ := h
-  exact ⟨m, hm, fun m' hm' => append_injective s (hm'.1.trans hm.1.symm)⟩
-
 end D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer

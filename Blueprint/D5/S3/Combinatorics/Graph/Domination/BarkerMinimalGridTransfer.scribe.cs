@@ -23,7 +23,6 @@ internal sealed class BarkerMinimalGridTransferDocument : IScribeDocumentDefinit
             N("transition", "Unit edge weights", "The integer matrix entry is 1 for an admitted edge and 0 otherwise."),
             N("initial", "All two-column starts", "The initial weight is 1 at all 64 states in the first block and 0 elsewhere. This includes every labelled pair of real masks, without symmetry reduction."),
             N("terminal", "Both open-end checks", "A terminal state must accept its four columns followed by 8, and must also accept its last three columns followed by 8,8. These check the final two real columns."),
-            T("edge_unique_mask", "One mask for an edge", "Every admitted edge has exactly one appended-real-mask witness. This uniqueness concerns the appended mask and does not choose any private-neighbour witness."),
             Paragraph(Text("The all-length bijection between actual accepted mask words and successful full-state paths remains unproved here. The identification of the Boolean Local predicate with the actual-grid ColumnTest, the separate width-one count, the full-state quotient certificate and the original generating-series endpoint also remain open formal interfaces. No actual-count or quotient equality is assumed."))),
         []));
 
