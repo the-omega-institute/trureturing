@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/StatisticalMechanics/ErgmGhsMarginalConjectureRefutation.claim; result=D5/S3/StatisticalMechanics/ErgmGhsMarginalConjectureRefutation.result; claim=D5/S3/StatisticalMechanics/ErgmGhsMarginalConjectureRefutation.claim
    digest: An edge-triangle Gibbs law has marginals above one half and positive third cumulant. -/
 
+import D5.S3.Combinatorics.ExtremalDensity.ThreeClassHomomorphismLimit
 import Mathlib.Combinatorics.SimpleGraph.Maps
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Data.Sym.Card
@@ -24,15 +25,16 @@ noncomputable section
 namespace D5.S3.StatisticalMechanics.ErgmGhsMarginalConjectureRefutation
 
 open scoped BigOperators
+open D5.S3.Combinatorics.ExtremalDensity.ThreeClassHomomorphismLimit (homCount)
 
 /-- The fraction of vertex maps that preserve adjacency. -/
 def homDensity {m n : ℕ} (h : SimpleGraph (Fin m)) (g : SimpleGraph (Fin n)) : ℝ :=
-  (Nat.card (h →g g) : ℝ) / (n : ℝ) ^ m
+  (homCount h g : ℝ) / (n : ℝ) ^ m
 
 /-- The homomorphism-density Hamiltonian for an arbitrary finite graph family. -/
 def hamiltonian {n k : ℕ} (h : Fin k → Σ m, SimpleGraph (Fin m))
     (β : Fin k → ℝ) (g : SimpleGraph (Fin n)) : ℝ :=
-  (n : ℝ) ^ 2 * ∑ j, β j * homDensity (h j).2 g
+  (n : ℝ) ^ 2 * dotProduct β (fun j => homDensity (h j).2 g)
 
 /-- The Gibbs probability of a labeled graph, normalized over all simple graphs. -/
 def gibbsWeight {n k : ℕ} (h : Fin k → Σ m, SimpleGraph (Fin m))
@@ -42,13 +44,12 @@ def gibbsWeight {n k : ℕ} (h : Fin k → Σ m, SimpleGraph (Fin m))
 /-- Expectation under the graph Gibbs law. -/
 def expectation {n k : ℕ} (h : Fin k → Σ m, SimpleGraph (Fin m))
     (β : Fin k → ℝ) (f : SimpleGraph (Fin n) → ℝ) : ℝ :=
-  ∑ g, gibbsWeight h β g * f g
+  dotProduct (gibbsWeight h β) f
 
 /-- The indicator of an edge of the complete labeled graph. -/
 def edgeIndicator {n : ℕ} (e : (⊤ : SimpleGraph (Fin n)).edgeSet)
-    (g : SimpleGraph (Fin n)) : ℝ := by
-  classical
-  exact if e.val ∈ g.edgeSet then 1 else 0
+    (g : SimpleGraph (Fin n)) : ℝ :=
+  g.edgeSet.indicator (fun _ => 1) e.val
 
 /-- The third Ursell function, including triples with repeated edges. -/
 def u3 {n k : ℕ} (h : Fin k → Σ m, SimpleGraph (Fin m)) (β : Fin k → ℝ)
@@ -84,26 +85,30 @@ private def edge12 : (⊤ : SimpleGraph (Fin 3)).edgeSet := ⟨s(1, 2), by decid
 
 open Classical in
 private lemma triangle_count (g : SimpleGraph (Fin 3)) :
-    Nat.card ((⊤ : SimpleGraph (Fin 3)) →g g) = if g = ⊤ then 6 else 0 := by
+    homCount (⊤ : SimpleGraph (Fin 3)) g = if g = ⊤ then 6 else 0 := by
   classical
+  unfold homCount
   split_ifs with hg
   · subst g
     rw [Nat.card_eq_fintype_card]
     decide
-  · have he : IsEmpty ((⊤ : SimpleGraph (Fin 3)) →g g) := by
+  · have he : IsEmpty {f : Fin 3 → Fin 3 // ∀ i j,
+        (⊤ : SimpleGraph (Fin 3)).Adj i j → g.Adj (f i) (f j)} := by
       refine ⟨fun φ => hg ?_⟩
-      have hs := Finite.surjective_of_injective φ.injective_of_top_hom
+      let ψ : (⊤ : SimpleGraph (Fin 3)) →g g :=
+        ⟨φ.val, fun {i j} hij => φ.property i j hij⟩
+      have hs := Finite.surjective_of_injective ψ.injective_of_top_hom
       apply top_unique
       intro v w hvw
       obtain ⟨a, rfl⟩ := hs v
       obtain ⟨b, rfl⟩ := hs w
-      exact φ.map_rel (show a ≠ b from fun hab => hvw (congrArg φ hab))
+      exact ψ.map_rel (show a ≠ b from fun hab => hvw (congrArg ψ hab))
     exact Nat.card_eq_zero.mpr (Or.inl he)
 
 open Classical in
 private lemma hamiltonian_value (g : SimpleGraph (Fin 3)) :
     hamiltonian models parameters g = if g = ⊤ then Real.log 2 else 0 := by
-  unfold hamiltonian
+  unfold hamiltonian dotProduct
   delta models parameters homDensity
   simp only [Fin.sum_univ_two, Matrix.cons_val_zero,
     Matrix.cons_val_one, zero_mul, zero_add]
@@ -166,11 +171,11 @@ private lemma weight_value (g : SimpleGraph (Fin 3)) :
 private lemma marginal_value (e : (⊤ : SimpleGraph (Fin 3)).edgeSet) :
     expectation models parameters (edgeIndicator e) = 5 / 9 := by
   classical
-  unfold expectation
+  unfold expectation dotProduct
   simp_rw [weight_value]
   rw [sum_graphs]
   simp only [Fintype.sum_prod_type, Fintype.sum_bool, graph_top]
-  delta edgeIndicator graphOfBits
+  delta edgeIndicator graphOfBits Set.indicator
   fin_cases e <;> norm_num
 
 private lemma joint_values :
@@ -183,10 +188,10 @@ private lemma joint_values :
     expectation models parameters (fun a =>
       edgeIndicator edge01 a * edgeIndicator edge02 a * edgeIndicator edge12 a) = 2 / 9 := by
   classical
-  unfold expectation
+  unfold expectation dotProduct
   simp_rw [weight_value]
   simp only [sum_graphs, Fintype.sum_prod_type, Fintype.sum_bool, graph_top]
-  delta edgeIndicator edge01 edge02 edge12 graphOfBits
+  delta edgeIndicator edge01 edge02 edge12 graphOfBits Set.indicator
   norm_num
 
 private lemma ursell_value : u3 models parameters edge01 edge02 edge12 = 7 / 729 := by
