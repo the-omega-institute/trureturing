@@ -7,6 +7,7 @@
    digest: The least unidirectional unicyclic current skewness is attained by one slow rate. -/
 
 import D5.S3.Combinatorics.Graph.PerronFrobenius.MCMCSupplier.LinearAlgebra.Matrix.PerronFrobenius.CollatzWielandt
+import D5.S3.Quantum.Transport.StrongAbsorption.Foundations
 
 /-!
 The normalized inverse rates lie in the standard simplex. Write `a` for its largest
@@ -19,17 +20,16 @@ The rates `(1/(n-1), 1, …, 1)` attain the bound.
 noncomputable section
 
 open scoped BigOperators
+open D5.S3.Quantum.Transport.StrongAbsorption.Foundations (powerSum)
 
 namespace D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum
 
-/-- The inverse-rate power sums; the first three waiting-time cumulants are R₁, R₂, 2R₃. -/
-def waitingPowerSum {n : ℕ} (k : Fin n → ℝ) (j : ℕ) : ℝ :=
-  ∑ i, (k i)⁻¹ ^ j
-
 /-- The third scaled current cumulant divided by the first scaled current cumulant. -/
 def skewness {n : ℕ} (k : Fin n → ℝ) : ℝ :=
-  3 * waitingPowerSum k 2 ^ 2 / waitingPowerSum k 1 ^ 4 -
-    2 * waitingPowerSum k 3 / waitingPowerSum k 1 ^ 3
+  3 * powerSum n 2 (fun i => (k i)⁻¹) ^ 2 /
+      powerSum n 1 (fun i => (k i)⁻¹) ^ 4 -
+    2 * powerSum n 3 (fun i => (k i)⁻¹) /
+      powerSum n 1 (fun i => (k i)⁻¹) ^ 3
 
 /-- The conjectured finite-state minimum. -/
 def minimumValue (n : ℕ) : ℝ :=
@@ -42,27 +42,26 @@ def claim : Prop :=
       (minimumValue n)
 
 private def simplexFunctional {n : ℕ} (x : Fin n → ℝ) : ℝ :=
-  3 * (∑ i, x i ^ 2) ^ 2 - 2 * ∑ i, x i ^ 3
+  3 * powerSum n 2 x ^ 2 - 2 * powerSum n 3 x
 
 private lemma normalized_simplex {n : ℕ} (hn : 0 < n) (k : Fin n → ℝ)
     (hk : ∀ i, 0 < k i) :
-    (fun i => (k i)⁻¹ / waitingPowerSum k 1) ∈ stdSimplex ℝ (Fin n) := by
-  have hz : (fun i => (k i)⁻¹) ≠ (0 : Fin n → ℝ) := by
-    intro h
-    have hi := congrFun h (⟨0, by omega⟩ : Fin n)
-    exact (ne_of_gt (inv_pos.mpr (hk _))) hi
-  have he : (fun i => (k i)⁻¹ / waitingPowerSum k 1) =
+    (fun i => (k i)⁻¹ / powerSum n 1 (fun j => (k j)⁻¹)) ∈ stdSimplex ℝ (Fin n) := by
+  have : Nonempty (Fin n) := Fin.pos_iff_nonempty.mp hn
+  have he : (fun i => (k i)⁻¹ / powerSum n 1 (fun j => (k j)⁻¹)) =
       (∑ i, (k i)⁻¹)⁻¹ • (fun i => (k i)⁻¹) := by
     funext i
-    delta waitingPowerSum
+    delta powerSum
     simp [div_eq_mul_inv, mul_comm]
   rw [he]
   exact Matrix.CollatzWielandt.inv_sum_smul_mem_stdSimplex_of_nonneg_ne_zero
-    (fun i => le_of_lt (inv_pos.mpr (hk i))) hz
+    (fun i => le_of_lt (inv_pos.mpr (hk i)))
+    (Pi.ne_zero_of_pos fun i => inv_pos.mpr (hk i))
 
 private lemma skewness_normalized {n : ℕ} (k : Fin n → ℝ) :
-    skewness k = simplexFunctional (fun i => (k i)⁻¹ / waitingPowerSum k 1) := by
-  delta skewness simplexFunctional waitingPowerSum
+    skewness k = simplexFunctional
+      (fun i => (k i)⁻¹ / powerSum n 1 (fun j => (k j)⁻¹)) := by
+  delta skewness simplexFunctional powerSum
   simp only [div_pow, ← Finset.sum_div]
   ring
 
@@ -214,9 +213,10 @@ private lemma attaining_rates (n : ℕ) (hn : 2 ≤ n) :
     dsimp only
     split_ifs <;> positivity
   · have hs (j : ℕ) :
-        waitingPowerSum (fun i : Fin (m + 1) => if i = 0 then (m : ℝ)⁻¹ else 1) j =
+        powerSum (m + 1) j (fun i : Fin (m + 1) =>
+          (if i = 0 then (m : ℝ)⁻¹ else 1)⁻¹) =
           (m : ℝ) ^ j + m := by
-      delta waitingPowerSum
+      delta powerSum
       simp [Fin.sum_univ_succ]
     delta skewness minimumValue
     simp only [hs, Nat.cast_succ, add_sub_cancel_right]
