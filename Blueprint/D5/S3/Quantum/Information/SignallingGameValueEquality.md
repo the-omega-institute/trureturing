@@ -130,7 +130,7 @@ $$\forall (m: \mathbb{N}), (\forall (n: \mathbb{N}), ((1 \le m) \Rightarrow ((1 
 
 *Commentary.*
 
-Choose response functions fa and fb that reduce indices modulo the larger target dimension. If m is at most n, fb composed with fa is the identity on Fin m; if n is at most m, fa composed with fb is the identity on Fin n. In either case the deterministic box wins on exactly the smaller question set, so its uniform winning probability is 1/max(m,n).
+Choose response functions fa and fb that reduce indices modulo their respective target dimensions: fa sends x to x mod n and fb sends y to y mod m. If m is at most n, fb composed with fa is the identity on Fin m; if n is at most m, fa composed with fb is the identity on Fin n. In either case the deterministic box wins on exactly the smaller question set, so its uniform winning probability is 1/max(m,n).
 
 Realize this deterministic box as a one-dimensional quantum strategy. Take the one-by-one density matrix and diagonal one-by-one POVM effects whose entries are the local indicator kernels. The POVMs sum to the identity, and direct evaluation of Born's rule gives quantumBox equal to deterministicBox.
 
