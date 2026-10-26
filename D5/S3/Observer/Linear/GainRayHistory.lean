@@ -109,5 +109,57 @@ theorem identical_prefix_firstM {d : ℕ} (P : Protocol d) (W W' : World d)
   obtain ⟨hr', hdecision⟩ := identical_prefix_transfer P W W' _ hr he
   exact .step hr' (hdecision.symm.trans hd)
 
+private theorem reaches_take {d : ℕ} (P : Protocol d) (W : World d)
+    {w : List Bool} (hr : Reaches P W w) (k : ℕ) (hk : k ≤ w.length) :
+    Reaches P W (w.take k) := by
+  induction hr with
+  | initial => simpa using (Reaches.initial (P := P) (W := W))
+  | @step w a hw hd ih =>
+      by_cases h : k ≤ w.length
+      · rw [List.take_append_of_le_length h]
+        exact ih h
+      · have he : k = (w ++ [a]).length := by simp at hk ⊢; omega
+        rw [he, List.take_length]
+        exact .step hw hd
+
+private theorem reached_unique_length {d : ℕ} (P : Protocol d) (W : World d)
+    {w v : List Bool} (hw : Reaches P W w) (hv : Reaches P W v)
+    (hlen : w.length = v.length) : w = v := by
+  induction hw generalizing v with
+  | initial =>
+      have he : v.length = 0 := hlen.symm
+      exact (List.length_eq_zero_iff.mp he).symm
+  | @step w a hw hd ih =>
+      cases hv with
+      | initial => simp at hlen
+      | @step v b hv he =>
+          have hp : w = v := ih hv (by simpa using hlen)
+          subst v
+          have hab : a = b := Sum.inl.inj (hd.symm.trans he)
+          rw [hab]
+
+/-- Every reached prefix belongs to the very same actual terminal word. -/
+theorem terminal_extends_reached {d : ℕ} (P : Protocol d) (W : World d)
+    (p w : List Bool) (C : {C : Readout d w // C ∈ P.palette w})
+    (hp : Reaches P W p) (ht : Terminates P W w C) : p <+: w := by
+  by_cases hlen : p.length ≤ w.length
+  · have he : p = w.take p.length := reached_unique_length P W hp
+      (reaches_take P W ht.1 p.length hlen) (by simp [hlen])
+    rw [he]
+    exact List.take_prefix _ _
+  · have hlt : w.length < p.length := by omega
+    have hq := reaches_take P W hp (w.length + 1) hlt
+    have hqlen : (p.take (w.length + 1)).length = w.length + 1 := by simp; omega
+    generalize hqeq : p.take (w.length + 1) = q at hq hqlen
+    cases hq with
+    | initial => simp at hqlen
+    | @step v a hv hd =>
+        have hvlen : v.length = w.length := by simp at hqlen; omega
+        have he : v = w := reached_unique_length P W hv ht.1 hvlen
+        subst v
+        rw [ht.2] at hd
+        contradiction
+
+#print axioms terminal_extends_reached
 #print axioms identical_prefix_firstM
 end D5.S3.Observer.Linear.GainRay

@@ -62,24 +62,11 @@ Lean statement: `D5/S3/Observer/Linear/GainRayHistory.identical_prefix_firstM`
 
 For every d,P,W,Wprime and natural n, suppose P actually reaches the word of n copies of J on W, the two worlds have identical readings on that word, and its next decision on W is M. Then P actually reaches J repeated n followed by M on Wprime. The transferred M is at original clock n+1. This includes n=0 and imposes no equality of subsequent histories or terminal words.
 
-**Theorem 1.5 (A selected terminal matrix transfers with the history).**
-
-Lean statement: `D5/S3/Observer/Linear/GainRayHistory.identical_terminal_transfer`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Observer/Linear/GainRayHistory.identical_terminal_transfer` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every d,P,W,Wprime,w and fixed palette member C, Terminates P W w C and identical readings on w imply Terminates P Wprime w C. The actual terminal decision selects exactly the same fixed matrix.
-
 ## References
 
 - Truth anchor: `D5/S3/Observer/Linear/GainRayHistory.acquisition_append`
 - Truth anchor: `D5/S3/Observer/Linear/GainRayHistory.acquisition_pure`
 - Truth anchor: `D5/S3/Observer/Linear/GainRayHistory.identical_prefix_firstM`
 - Truth anchor: `D5/S3/Observer/Linear/GainRayHistory.identical_prefix_transfer`
-- Truth anchor: `D5/S3/Observer/Linear/GainRayHistory.identical_terminal_transfer`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/SelfCalibratingRawWords](../../Arith/FibonacciAtomic/SelfCalibratingRawWords.md)
 - Dependency: [D5/S3/Observer/Linear/GainRayEvaluation](GainRayEvaluation.md)
