@@ -164,7 +164,8 @@ private def prepareAdditions (source base : Environment) (index : FactIndex) :
       let (types, remainingUsed) ← prepareAdditions source base index rest types
       return (types, used + remainingUsed)
 
-private def prepare (source base : Environment) (request : Request)
+/-- Reconstruct one arm without running or pricing any graph query. -/
+def prepare (source base : Environment) (request : Request)
     (paired : Bool) : IO (Except (Failure × String) (Environment × ConstantInfo × Option Attempt)) := do
   let phase ← IO.mkRef "source-check"
   let work : CoreM (Environment × ConstantInfo × Option Attempt) := MetaM.run' do
