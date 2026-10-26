@@ -1,0 +1,20 @@
+**Definition 49.1 (finite input and common algebraic output).** Fix $k,d\ge0$, $p=k+1$, $r=3k+4$, and exactly the history (26.2), with $L=3k+d+5$. A world and its errors have exactly the real domains in Definitions 25.1 and 30.1. Only the received $y_0,\ldots,y_{L-1}$ and the radius $\delta\ge0$ are now required to be rational. For a reduced rational $a/b$, $b>0$, charge
+
+$$
+ \ell(a/b)=1+\lceil\log_2(1+|a|)\rceil
+                 +\lceil\log_2(1+b)\rceil.
+ \tag{49.1}
+$$
+
+The integer degrees are binary encoded, the record is the ordered list at all $L$ original clocks, and put
+
+$$
+ \tau=2+\ell(k)+\ell(d)+\ell(\delta)
+                         +\sum_{i=0}^{L-1}\ell(y_i).
+ \tag{49.2}
+$$
+
+Here an integer in $\ell$ has denominator one. Parsing and checking the declared length and the sign of $\delta$ are charged. No real source coefficient is part of the input. A positive rational threshold $B$ has additional length $b=\ell(B)$; put $b=0$ when no threshold is requested.
+
+A common real-algebraic representation of a whole world means a squarefree $F\in\mathbb Z[T]$, a rational open interval isolating one real root $\theta$ of $F$ (a specified rational root may instead be given as a rational point), a positive integer $a$, and integer polynomials $G_j$ of degree less than $\deg F$. Every output scalar is $G_j(\theta)/a$, using this same $\theta,a$. The scalar list consists of the four entries of $P$, all $p$ coefficients of the one whole $H$, all $d+1$ coefficients of the one whole $D$, and the $L$ original errors. Leading zero coefficients are retained. The algebraic degree of this representation is $\deg F$, not the number of output coordinates. It is not required that $F$ be irreducible. Purely rational worlds may be encoded using a degree-one $F$. Output length charges every integer coefficient, interval endpoint and list entry. All costs below are deterministic Turing bit operations; integer multiplication may be schoolbook multiplication.
+

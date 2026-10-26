@@ -1096,3 +1096,626 @@ Green-energy or amplitude-memory behavior, are not established by this
 free-descent classification.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. The native central period and the unchanged full endpoint
+
+**Definition 7.1 (two carriers and their source data).** Retain the native
+source of Definitions 1.1--1.2, writing $H_{\rm n}=r/2$ for its upper
+height wall, so that $L$ can denote the endpoint differential operator.
+Fix one preparation height $k_0\in(0,H_{\rm n})$, preparation coordinates
+$(\alpha_0,\beta_0)$ and all the original preparation rotations. No
+preparation parameter varies with an unknown input. The mathematical
+suppliers in this section and §§8--10 are taken at revision
+`69eee5580efb61cf70564cc46a0fa24fc18351dd`.
+
+Write [E] for [the original endpoint appendix, §112](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md#112-the-original-maximal-domain-selector-and-the-full-endpoint-propagation-limit)
+and [S] for [its positivity and source-contact continuation, §§115--116](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#115-positivity-and-the-full-ground-state-form-of-the-actual-endpoint).
+Their endpoint data are exactly
+
+$$
+\begin{gathered}
+G=H^1\times\mathbb R,\qquad
+(x,y,z,w)(x',y',z',w')
+ =(x+x',y+y',z+z',w+w'+xy'),\\
+d\mu=dx\,dy\,dz\,dw,\qquad
+X_1=\partial_x,\quad X_2=\partial_y+x\partial_w,\quad
+X_3=\partial_z,\qquad L=-\sum_{i=1}^3X_i^2,\\
+L\Gamma=\delta_e,\qquad \deg\Gamma=-3,\qquad
+a,\eta>0,\qquad g_c=16\sqrt{a\eta},\\
+S_{\min}=(aL-\eta\partial_w^2-g_c\Gamma)
+                 |_{C_c^\infty(G\setminus\{e\};\mathbb C)}.
+\end{gathered}
+\tag{7.1}
+$$
+
+The notation $S_{\min}$ distinguishes this operator from reference [S].
+Let $h$ be the supplied coefficient-positive, $L^2(\mu)$-normalized zero
+state, $c_h=C(h)>0$ and $\rho_*=A(h)/C(h)$. The full endpoint, its
+transform and their entire complex domains remain
+
+$$
+\begin{gathered}
+D(H)=\{u\in D(S_{\min}^*):A(u)=\rho_*C(u)\},\qquad
+Hu=S_{\min}^*u,\\
+m=h^2\mu,\qquad J_hv=hv,\qquad
+K=J_h^{-1}HJ_h,\qquad T_t=e^{-tK},\\
+\mathscr V=\mathscr V_0\dotplus\mathbb C1,\qquad
+D(K)=\{v\in\mathscr V:hv\in D(S_{\min}^*),
+                            A(hv)=\rho_*C(hv)\}.
+\end{gathered}
+\tag{7.2}
+$$
+
+Here $\mathscr V_0$ and the integral energy are precisely [S, (115.14)--(115.15)].
+In particular $m(G)=1$, $T_t$ is conservative and selfadjoint in $L^2(m)$,
+and $h$ is smooth and positive on $G\setminus\{e\}$. A source start
+always means the legitimate version of [S, Theorem 116.4]. There is no
+ordinary value $h(e)$ in these definitions. All Hilbert pairings below
+are antilinear in their first slot.
+
+Set $c_0=1/2-k_0/r$ and $\ell=2\pi r$. The slab and the intermediate
+quotient are
+
+$$
+\begin{gathered}
+\mathcal S=\{-k_0<x<H_{\rm n}-k_0\}\subset G,\qquad
+d_n=(0,0,0,n\ell),\\
+\mathcal B_\ell=G/\{d_n:n\in\mathbb Z\},\qquad
+\pi_\ell:G\longrightarrow\mathcal B_\ell,\qquad b_0=\pi_\ell(e),\\
+\Psi(x,y,z,w)
+ =\bigl(k_0+x,[\alpha_0+y/2],
+                    [\beta_0+c_0y-w/r]\bigr),\qquad p\in\mathcal S.
+\end{gathered}
+\tag{7.3}
+$$
+
+Both brackets reduce modulo $2\pi$. The quotient retains real $y,z$;
+only $w$ is reduced modulo $\ell$.
+
+**Proposition 7.2 (the supplied chronology gives this actual slab map).**
+The map (7.3) preserves every original command and its entire prefix
+guard wherever the command is lawful. It preserves all ten original
+signed doubled coherence outputs there. Central translation by $d_n$
+is an actual kernel of these native partial-action formulas. These
+assertions identify neither $\mathcal B_\ell$ with the native ray
+manifold nor the full endpoint dynamics with native command dynamics.
+
+Proof. For a relative command $\gamma=(a_c,b_c)$ put
+$A=a_c(T)$, $B=b_c(T)$ and $J=\int a_c\,db_c$. Regard its chronological
+triple as $c_\gamma=(A,B,0,J)\in G$. Right multiplication gives
+
+$$
+p c_\gamma=(x+A,y+B,z,w+J+xB).
+\tag{7.4}
+$$
+
+Substitution into (7.3), at native height $k=k_0+x$, gives exactly
+
+$$
+\Psi(p c_\gamma)
+ =\bigl(k+A,[\alpha+B/2],
+               [\beta+(1/2-k/r)B-J/r]\bigr).
+\tag{7.5}
+$$
+
+This is [N, Theorem 9.3], equivalently (1.6), with the same sign and
+the same real area $J$. For every prefix replace $(A,B,J)$ by
+$(a_c(t),b_c(t),\int_0^t a_c\,db_c)$. The whole lifted path remains
+in $\mathcal S$ exactly when
+
+$$
+k+\min_{[0,T]}a_c>0,\qquad
+k+\max_{[0,T]}a_c<H_{\rm n}.
+\tag{7.6}
+$$
+
+For two commands, the chronological product is
+$(A+A',B+B',0,J+J'+AB')$, just as in [N, (9.12)]. Its allowed
+domain is the first guard intersected with the inverse image of the
+second guard under the first action. Thus (7.5) respects concatenation
+with actual refusal domains, rather than just endpoint membership.
+Differentiating (7.3) gives
+
+$$
+D\Psi X_1=P,\qquad D\Psi X_2=Q,\qquad
+D\Psi X_3=0,\qquad D\Psi\partial_w=-r^{-1}\partial_\beta.
+\tag{7.7}
+$$
+
+In particular $z$ is an extra endpoint coordinate, not a third original
+control supplied by this map.
+
+For completeness, the exact output formula can be written without
+changing the fixed rotations. In edge order
+$((0,1),(0,2),(0,3),(1,13),(3,13))$, let
+$\delta_e=\theta_i^{\rm ref}-\theta_j^{\rm ref}$ denote those rotations.
+With $u(t)=(\cos t,\sin t)$, the five pairs are
+
+$$
+\begin{aligned}
+Y_{01}&=2\sqrt{k(H_{\rm n}-k)}\,u(\delta_{01}+\alpha),\\
+Y_{02}&=2\sqrt{Zk}\,u(\delta_{02}+\beta),\\
+Y_{03}&=2\sqrt{k(H_{\rm n}-k)}\,u(\delta_{03}+\alpha),\\
+Y_{1,13}&=2\sqrt{k(H_{\rm n}-k)}\,u(\delta_{1,13}-\alpha),\\
+Y_{3,13}&=2\sqrt{k(H_{\rm n}-k)}\,u(\delta_{3,13}-\alpha).
+\end{aligned}
+\tag{7.8}
+$$
+
+The probabilities are still $(k,H_{\rm n}-k,Z,H_{\rm n}-k,k)$.
+These are the signed outputs of [N, §8.3] and [Native continuation,
+Definition 2.1 and Lemma 2.2](FIB_NATIVE_CONTINUATION_AFFINE_OBSTRUCTION_AND_APPROXIMATION.md#2-the-original-outputs-and-the-reused-static-result).
+Fixed coordinate offsets $(\alpha_0,\beta_0)$ are included in (7.3);
+they impose no equality of preparation phases. Equations (7.5) and
+(7.8) prove preservation of the complete menu, with no whitening.
+
+Replacing $w$ by $w+n\ell$ changes $\beta$ by $-2\pi n$ and leaves
+everything in (7.5)--(7.8) unchanged. This period is native: at any
+interior starting height choose a nonzero height displacement $d$
+whose segment stays interior, and execute the four legs
+$(0,0)\to(d,0)\to(d,t)\to(0,t)\to(0,0)$ in command coordinates.
+Their $A=B=0$ and $J=dt$; choosing $t=n\ell/d$ realizes this central
+increment by a finite original history. The choice of $d$ can also
+serve a compact interior promise of starting heights. It does not
+make that one history lawful at every height in the full open source.
+Equality of central endpoint formulas does not erase excursion guards.
+
+The distinct points $\pi_\ell(x,y,z,w)$ and
+$\pi_\ell(x,y,z',w)$ already have the same image under $\Psi$ when
+$z\ne z'$. Additional identifications involving the $y$ period also
+remain. Finally $\Psi$ has no native positive-height meaning outside
+$\mathcal S$. Thus $\mathcal B_\ell$ is only the stated intermediate
+test carrier. $\square$
+
+**Definition 7.3 (arbitrary fiber mixing and its operator types).** A
+candidate is a Borel probability kernel $\Lambda$ from $\mathcal B_\ell$
+to $G$ satisfying
+
+$$
+\Lambda_b(\pi_\ell^{-1}\{b\})=1,\qquad
+\Lambda_{b_0}=\delta_e,
+\tag{7.9}
+$$
+
+and a conservative Markov semigroup $Q_t$ on $\mathcal B_\ell$ with
+
+$$
+\Lambda T_t=Q_t\Lambda
+\quad(t\ge0)
+\tag{7.10}
+$$
+
+on all bounded complex Borel functions on $G$. At this stage the
+operators have types
+$U:\mathscr B_b(\mathcal B_\ell)\to\mathscr B_b(G)$,
+$Uf=f\circ\pi_\ell$, and
+$\Lambda:\mathscr B_b(G)\to\mathscr B_b(\mathcal B_\ell)$.
+Fiber support gives $\Lambda U=I$. No Hilbert adjoint or density of
+$\Lambda$ is assumed. Transition versions at the source are those
+of (7.2); properly exceptional sets away from the source are understood
+as in [S, Theorems 116.3--116.4].
+
+## 8. One original source forces the fiber probabilities
+
+**Proposition 8.1 (source occupation forces the reversible conditional law).**
+For the fixed endpoint and source of Definition 7.1, a candidate in
+Definition 7.3 necessarily satisfies
+
+$$
+m=\nu\Lambda,\qquad \nu=(\pi_\ell)_*m.
+\tag{8.1}
+$$
+
+Consequently $\Lambda$ is the conditional law of $m$ on the fibers,
+$\nu$-almost everywhere, although this was not a hypothesis. More
+explicitly choose the Borel section
+$s(b)=(x,y,z,\bar w)$ with $0\le\bar w<\ell$, and put
+$q_n(b)=s(b)d_n$. Relative to raw quotient measure
+$d\bar\mu=dx\,dy\,dz\,d\bar w$, define
+
+$$
+\begin{gathered}
+S(b)=\sum_{n\in\mathbb Z}h(q_n(b))^2,\qquad
+d\nu=S\,d\bar\mu,\\
+p_n(b)=\frac{h(q_n(b))^2}{S(b)}.
+\end{gathered}
+\tag{8.2}
+$$
+
+These are defined on the common full-measure set where $0<S<\infty$
+and $b\ne b_0$. On that set
+$\Lambda_b=\sum_n p_n(b)\delta_{q_n(b)}$.
+For every discount $\lambda>0$, use precisely [S, (115.4), (116.1)]
+with that discount:
+
+$$
+\begin{gathered}
+n_\lambda=h-\lambda(F+\lambda)^{-1}h,\qquad
+b_\lambda=n_\lambda/h,\qquad d_\lambda=\int_G b_\lambda\,dm,\\
+S_\lambda(b)=\sum_n b_\lambda(q_n(b))h(q_n(b))^2.
+\end{gathered}
+\tag{8.3}
+$$
+
+Here $F$ is the supplied Friedrichs operator used in the exact full
+resolvent formula, not a replacement for $H$ or $K$. For each fixed
+$\lambda$, a candidate must also satisfy, for $\nu$-almost every $b$,
+
+$$
+\Lambda_b(\{q_n(b)\})
+ =\frac{b_\lambda(q_n(b))h(q_n(b))^2}{S_\lambda(b)}
+ =p_n(b)\quad(n\in\mathbb Z).
+\tag{8.4}
+$$
+
+In particular the same fixed fiber probabilities must disintegrate every
+discounted original source response. Null sets in (8.4) may depend on
+$\lambda$; no uncountable intersection is asserted.
+
+Proof. The source response [S, (116.14)] gives the probability measure
+
+$$
+\zeta_\lambda(dq)
+ :=\lambda\int_0^\infty e^{-\lambda t}T_t(e,dq)\,dt
+ =\frac{b_\lambda(q)}{d_\lambda}\,m(dq).
+\tag{8.5}
+$$
+
+This is a trace-defined source response, not evaluation of a formula
+containing $h(e)$. The supplied $0\le b_\lambda\le1$ and
+$d_\lambda>0$ give its positivity and normalization. The spectral
+limit already established in [S, (116.12)] says
+
+$$
+\|b_\lambda-1\|_{L^2(m)}
+ =\|\lambda(F+\lambda)^{-1}h\|_{L^2(\mu)}\longrightarrow0,
+\qquad d_\lambda\longrightarrow1
+\quad(\lambda\downarrow0).
+\tag{8.6}
+$$
+
+It uses $\ker F=\{0\}$, not a positive spectral gap. Since $m$ is a
+probability measure, (8.6) implies convergence of (8.5) to $m$ in total
+variation. For the norm $\|\sigma\|_{\rm TV}=\sup_{|f|\le1}|\sigma f|$,
+one explicit bound is
+
+$$
+\|\zeta_\lambda-m\|_{\rm TV}
+ \le\frac{\|b_\lambda-1\|_{L^1(m)}+|1-d_\lambda|}{d_\lambda}
+ \longrightarrow0.
+\tag{8.7}
+$$
+
+Now (7.9)--(7.10), applied at $b_0$, give equality of transition
+measures
+
+$$
+T_t(e,\cdot)=Q_t(b_0,\cdot)\Lambda,\qquad
+Q_t(b_0,\cdot)=(\pi_\ell)_*T_t(e,\cdot).
+\tag{8.8}
+$$
+
+The second identity uses fiber support. It also ensures the time
+measurability needed to integrate this base law, directly from the
+legitimate source transition function. Put
+$\nu_\lambda=(\pi_\ell)_*\zeta_\lambda$. Integrating (8.8) yields
+$\zeta_\lambda=\nu_\lambda\Lambda$. Pushforward and application of a
+probability kernel contract total variation, so
+
+$$
+\|\nu_\lambda-\nu\|_{\rm TV}
+ \le\|\zeta_\lambda-m\|_{\rm TV},\qquad
+\|\nu_\lambda\Lambda-\nu\Lambda\|_{\rm TV}
+ \le\|\nu_\lambda-\nu\|_{\rm TV}.
+\tag{8.9}
+$$
+
+Taking limits proves (8.1). Thus one fixed original source, through its
+entire time-homogeneous response, has forced the conditional law of
+the invariant measure. No density, continuity or reversibility of
+$\Lambda$ was used.
+
+Tonelli applied to the countable cells of raw Haar measure gives
+$\int S\,d\bar\mu=\|h\|_2^2=1$. Smooth positivity of $h$ off $e$
+makes $S>0$ almost everywhere. Therefore $S$ is finite and positive
+almost everywhere and $\nu$ is equivalent to $\bar\mu$. A kernel
+supported on the fiber is a countable sum with Borel weights
+$\lambda_n(b)=\Lambda_b(\{q_n(b)\})$; the graphs of the Borel sections
+$q_n$ are Borel, which verifies measurability of these weights. Apply
+(8.1) to the Borel sets $\{q_n(b):b\in E\}$ for arbitrary Borel $E$.
+Their two measures have densities $h(q_n(b))^2$ and
+$S(b)\lambda_n(b)$ relative to $\bar\mu$. Equality gives (8.2),
+simultaneously for the countably many $n$.
+
+The same argument applied to
+$\zeta_\lambda=\nu_\lambda\Lambda$ gives the first expression in
+(8.4) wherever $S_\lambda>0$. To check that this is a full
+$\nu$-measure set, note that $n_\lambda$ is nonnegative, nonzero,
+smooth on $G\setminus\{e\}$ and solves
+$(S_{\min}^*+\lambda)n_\lambda=0$ there. The first two assertions
+are [S, Theorem 115.2]; smoothness follows by interior elliptic
+regularity from (8.3). The local principal matrix is the supplied
+positive matrix (115.10), and the local potential is smooth and
+bounded. The elliptic Harnack principle on connected
+$G\setminus\{e\}$ therefore makes $n_\lambda$ strictly positive
+there, just as for $h$ in [S, Theorem 115.2]. Consequently
+$b_\lambda>0$ off $e$, and $\zeta_\lambda$ is equivalent to $m$.
+Their pushforwards $\nu_\lambda$ and $\nu$ are equivalent. Also
+$\int S_\lambda\,d\bar\mu=d_\lambda<\infty$. This proves all
+claims in (8.4). It additionally forces
+$b_\lambda(q_n(b))=S_\lambda(b)/S(b)$ for all $n$, almost everywhere.
+
+The fiber above $b_0$ is countable and has $m$-measure zero, so
+$\nu(\{b_0\})=0$. The proof assigns no ordinary value to $h(e)$ and
+does not contradict $\Lambda_{b_0}=\delta_e$ by changing an
+almost-everywhere conditional version at that null base point. Its
+consequence is instead the global identity (8.1). $\square$
+
+## 9. Full-domain exclusion of the arbitrary Borel route
+
+**Theorem 9.1 (no source-anchored fiber-kernel intertwining).** For every
+actual original $0<Z<1$, every fixed preparation in Definition 7.1 and
+every fixed original $a,\eta>0$, there is no candidate in Definition
+7.3. This excludes arbitrary Borel probability kernels supported on
+these central fibers, with no smoothness, finite-support, affine or
+canonical-kernel hypothesis. It concerns the original conservative
+full endpoint and its original clock.
+
+Proof. Assume a candidate exists. Proposition 8.1 first supplies the
+Hilbert-space structures that were not assumed for that candidate.
+The pullback is an isometry
+$U:L^2(\mathcal B_\ell,\nu;\mathbb C)\to L^2(G,m;\mathbb C)$;
+its closed range $\mathcal H_\ell$ consists of basic functions. Jensen's
+inequality and $\nu\Lambda=m$ make
+$\Lambda:L^2(m)\to L^2(\nu)$ a contraction. For bounded inputs,
+fiber support and (8.1) give
+
+$$
+\langle Uf,F_1\rangle_m=\langle f,\Lambda F_1\rangle_\nu,
+\qquad U^*=\Lambda,\qquad \Pi=UU^*.
+\tag{9.1}
+$$
+
+Density extends these statements to the displayed Hilbert spaces;
+$\Lambda$ in (9.1) means its almost-everywhere operator class. For
+any properly exceptional set $N$ of [S], $m(N)=0$ and $e\notin N$.
+Equation (8.1) gives $\Lambda_b(N)=0$ for $\nu$-almost every $b$.
+Thus the Hilbert argument uses only legitimate transition versions,
+while (8.8) uses the legitimate source start. For each bounded base $f$,
+
+$$
+\nu Q_t f=\nu\Lambda T_tUf=mT_tUf=mUf=\nu f.
+\tag{9.2}
+$$
+
+Hence $Q_t$ is an $L^2(\nu)$ contraction by Jensen, and the bounded-Borel
+intertwining extends to these $L^2$ spaces. Multiplying it by $U$ gives
+
+$$
+Q_t=U^*T_tU=Q_t^*,\qquad
+U^*T_t=Q_tU^*,\qquad T_tU=UQ_t.
+\tag{9.3}
+$$
+
+The last equality is the Hilbert adjoint of the middle one, using the
+first and the supplied selfadjointness of $T_t$. Strong continuity of
+$Q_t$ also follows from its compression formula. Thus $\mathcal H_\ell$
+and $\mathcal H_\ell^\perp$ reduce the actual $T_t$ and its generator
+$K$. This is the adjoint argument of Proposition 5.4; its canonical
+premise has now been proved from the source, rather than presumed.
+The cylinder coefficient classification of Theorem 3.1 is not being
+transferred to this different carrier or domain.
+
+We next test this reduction by vectors genuinely in the full domain
+(7.2). Write $Dq=qd_1$ and take any
+$q\in G\setminus\{e,d_{-1}\}$. Choose a relatively compact open
+coordinate box $O$ about $q$, small enough that $\pi_\ell$ is injective
+on $O$, $O$ and $DO$ are disjoint, and both closures avoid $e$.
+For any real $\varphi\in C_c^\infty(O)$ define a function on $G$ by
+
+$$
+W(p)=\frac{\varphi(p)}{h(p)^2}\quad(p\in O),\qquad
+W(Dp)=-\frac{\varphi(p)}{h(Dp)^2}\quad(p\in O),
+\qquad W=0\text{ elsewhere}.
+\tag{9.4}
+$$
+
+Compact support of $\varphi$ makes these prescriptions smooth across
+the boundaries of the two boxes. Positivity of $h$ there gives
+$W\in C_c^\infty(G\setminus\{e\})$. More specifically,
+$hW\in C_c^\infty(G\setminus\{e\})\subset D(H)$ with
+$A(hW)=C(hW)=0$. Thus $W\in D(K)$ for the actual selector (7.2).
+This is a test in the full operator, not a claim that its domain is
+the Friedrichs domain or the punctured core alone.
+
+For every bounded basic $Uf$, the contributions of the two boxes to
+$\langle Uf,W\rangle_m$ cancel exactly: raw Haar measure is unchanged
+by $D$ and $Uf(Dp)=Uf(p)$. Density gives $W\in\mathcal H_\ell^\perp$.
+Reduction and $W\in D(K)$ give $KW\in\mathcal H_\ell^\perp$.
+For example, this follows by taking the $L^2$ limit of
+$(I-T_t)W/t$ inside that closed orthogonal complement. Therefore
+
+$$
+\langle Uf,KW\rangle_m=0
+\tag{9.5}
+$$
+
+for every bounded base $f$, without a generator-domain assumption on
+its periodic pullback.
+
+On either compact box the actual generator applied to $W$ is
+$K W=-\mathcal D_h W$, where the supplied ground-transform formula is
+
+$$
+\mathcal D_h v
+ =a\sum_{i=1}^3 X_i^2v+\eta\partial_w^2v
+   +2a\sum_{i=1}^3(X_i\log h)X_iv
+   +2\eta(\partial_w\log h)\partial_wv.
+\tag{9.6}
+$$
+
+Choose now $f\in C_c^\infty(\mathcal B_\ell;\mathbb R)$, smooth on
+the quotient manifold. Its pullback is smooth and bounded, although
+it need not be in $D(K)$ or have compact support on $G$. All uses of
+integration by parts below are on the compact support of $W$ away
+from $e$. Local weighted divergence symmetry of (9.6), or its direct
+product-rule expansion, gives from (9.5)
+
+$$
+0=\int_G (Uf)KW\,dm
+ =-\int_O\varphi(p)
+       \{\mathcal D_h(Uf)(p)-\mathcal D_h(Uf)(Dp)\}\,d\mu(p).
+\tag{9.7}
+$$
+
+There is no source or infinity boundary term. In particular (9.7) is
+deduced from full-domain semigroup reduction and a valid $D(K)$ test;
+it is not differentiation of an unverified global periodic test in
+the generator domain. Since $\varphi$ is arbitrary and the difference
+is smooth, (9.7) proves equality of the two generator expressions
+pointwise on $O$ for every such $f$.
+
+All second-order coefficients in (9.6) are already invariant under
+$D$. There is no symbol-rank comparison here. Put
+
+$$
+\Delta_i(p)=(X_i\log h)(p)-(X_i\log h)(Dp),\qquad
+\Delta_w(p)=(\partial_w\log h)(p)-(\partial_w\log h)(Dp).
+$$
+
+On the common quotient chart choose cutoff base tests with any
+prescribed first derivatives at $\pi_\ell(p)$. Subtracting (9.6) in
+(9.7) makes their coefficients
+
+$$
+2a\Delta_1,\quad 2a\Delta_2,\quad 2a\Delta_3,
+       \quad 2ax\Delta_2+2\eta\Delta_w
+\tag{9.8}
+$$
+
+in coordinate order $(x,y,z,w)$. Their vanishing, with $a,\eta>0$,
+forces every $\Delta_i$ and $\Delta_w$ to be zero. Since
+$\partial_y=X_2-x\partial_w$, this says
+
+$$
+\nabla\{\log h(Dp)-\log h(p)\}=0
+\qquad(p\in G\setminus\{e,d_{-1}\}).
+\tag{9.9}
+$$
+
+That punctured space is connected: its underlying manifold is
+$\mathbb R^4$ with two points removed. Both logarithms are smooth
+there. Thus a single constant $c>0$ satisfies
+
+$$
+h(Dp)=c\,h(p)\quad(p\ne e,d_{-1}).
+\tag{9.10}
+$$
+
+Even a nonunit constant cannot coexist with the supplied $L^2(\mu)$
+normalization. Choose a bounded box $E$ of positive measure with its
+$w$ coordinate strictly between $0$ and $\ell$, away from $e$.
+Its translates $D^nE$ are disjoint. Iterating (9.10), ignoring the
+irrelevant countable source orbit if necessary, gives
+
+$$
+0<\int_E h^2\,d\mu<\infty,\qquad
+\int_{D^nE}h^2\,d\mu
+   =c^{2n}\int_Eh^2\,d\mu\quad(n\in\mathbb Z).
+\tag{9.11}
+$$
+
+The bilateral sum $\sum_{n\in\mathbb Z}c^{2n}$ diverges for every
+$c>0$, contradicting $\|h\|_2^2=1$. This is the familiar repeated-cell
+$L^2$ argument, used already in [G, Proposition 11.1], with its
+necessary constant-multiplier variant included. The new step leading
+to it was the forced conditional law from one legitimate source and
+the full-domain paired tests, not a new periodic-amplitude obstruction.
+This contradiction proves the theorem. $\square$
+
+## 10. Literature correspondence and the exact surviving scope
+
+**Mathematical citation 10.1 (standard tools and source-specific content).**
+The intertwining convention is the standard one in S. Pal and
+M. Shkolnikov, [*Intertwining diffusions and wave equations*,
+arXiv:1306.0857v2, §1, Definitions 1--2](https://arxiv.org/html/1306.0857v2#S1).
+Their stochastic link $L$ is $\Lambda$ here, their upstairs semigroup
+$P_t$ is the present $T_t$, their downstairs semigroup $Q_t$ has the
+same role as here, and their equation $Q_tL=LP_t$ is (7.10). The
+initial conditional law at the distinguished base source is exactly
+$\Lambda_{b_0}=\delta_e$. The state spaces here are $G$ and
+$\mathcal B_\ell$, with a link concentrated on a countable covering
+fiber, not a density with respect to four-dimensional Lebesgue
+measure. Consequently the differentiable link-density and joint
+diffusion hypotheses of their Theorems 1--2 are not assumed or used.
+No regularity of $Q_t$ is supplied by analogy with their SDEs.
+
+Their convention (1.1)--(1.2) puts a factor $1/2$ before a covariance
+matrix. In the present local formula that matrix is twice
+
+$$
+\begin{pmatrix}
+a&0&0&0\\
+0&a&0&ax\\
+0&0&a&0\\
+0&ax&0&ax^2+\eta
+\end{pmatrix},
+\tag{10.1}
+$$
+
+and the drift is precisely the first-order part of (9.6). This is
+only the parameter correspondence off the source. The full operator
+and source response are (7.2) and (8.5), not an SDE extension inferred
+from that matrix. The discount $\lambda$ in (8.5) multiplies the
+original time $t$; it does not rescale it.
+
+Uniqueness of conditional laws on standard Borel spaces, contraction
+of total variation by kernels, Jensen's inequality, Hilbert adjoints
+and the spectral theorem are established tools. Their elementary
+uses are shown in (8.5)--(9.5). The source input that makes them
+decisive is specifically [S, (116.12)--(116.14)] for the actual selector
+(112.5). Proposition 5.3 shows why an arbitrary mixing law cannot
+be assumed reversible in the general killed native class. Proposition
+8.1 proves that premise for this conservative source-anchored candidate;
+the adjoint step then reuses Proposition 5.4's mechanism. The endpoint
+application and its source-forced weights (8.2)--(8.4), together with
+the full-domain test (9.4)--(9.9), are repo-derived ordinary deductions.
+Neither standard intertwining theory nor the reused periodic-source
+observations alone supply that deduction. No worldwide priority or
+Lean certification is asserted.
+
+**Definition 10.2 (carrier and operation boundaries).** The native
+guarded lift, its lifetime approximations and its real chronological
+area are supplied by [Guarded lift limits, §§2--4](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md#2-the-original-source-its-guard-and-its-entire-chronological-path).
+They retain finite lawful histories and their separate stochastic-law
+premises. The free hidden-circle rigidity of §§1--6, the
+[variable-coefficient Green model, §§1--3](FIB_NATIVE_VARIABLE_COEFFICIENT_GREEN_STABILITY.md#1-fixed-model-and-the-exact-question),
+and the [central-noise model, Definitions 1.1--1.2](FIB_NATIVE_CENTRAL_NOISE_GREEN_STABILITY.md#1-fixed-source-conditional-law-and-the-matched-operator)
+use native phase cylinders with inherited height killing. Their
+central noise, source density and kinetic normalization are not the
+global $a,\eta,\Gamma,h$ of (7.1)--(7.2). The
+[spatial-cap source form, Proposition 5.2](FIB_NATIVE_SPATIAL_CAP_RETAINED_AND_RESONANT_LIMITS.md#5-the-natural-logarithmic-source-form-and-positive-point-capacity)
+and its [all-real cap limit, Theorem 12.1](FIB_NATIVE_SPATIAL_CAP_RETAINED_AND_RESONANT_LIMITS.md#12-the-all-real-parameter-operator-limit)
+also retain different outer domains and source pairs. No identification
+of their parameters, clocks, walls or operators is used here.
+
+Theorem 9.1 excludes one fixed, time-homogeneous probabilistic
+intertwining through the actual native central period, anchored at the
+one original endpoint source. It does not exclude time-dependent or
+history-conditioned posterior kernels, retained real-area histories,
+or source-law representations with a different state contract. In
+particular the exact nonlinear pure-state action and its lawful
+pushforward on retained source laws in [B, §12.3](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY_CONTINUATION.md#123-the-surviving-nonlinear-state-and-source-law-action)
+remain intact; their Theorem 12.2 is a distinct affine/CPTP result and
+is not an antecedent of this proof.
+
+Failure on $\mathcal B_\ell$ alone proves nothing about all coarser
+quotients: a link from a coarser space need not factor through a
+fiber-supported link on this intermediate covering. The map $\Psi$
+continues to have precisely its slab domain and native readouts; it
+has not become a map of the full endpoint into the positive native
+source. A full native source/evolution/representation/readout
+correspondence, and a determination of physical spatial dimension,
+remain unresolved.
+
+## 追加锚（本行以下为增补区）
