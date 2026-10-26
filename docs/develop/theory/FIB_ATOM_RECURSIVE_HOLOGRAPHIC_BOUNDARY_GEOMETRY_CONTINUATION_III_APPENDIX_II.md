@@ -249,3 +249,267 @@ $$
 A finite time net therefore makes the convergence uniform on every $[t_0,T]$. Together with (114.21) this proves (114.15) on the full original half-line. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+
+## 115. Positivity and the full ground-state form of the actual endpoint
+
+**Definition 115.1 (the unchanged endpoint and its positive cone).** Retain exactly the group, product, source, Haar measure, clock and units of Definition 114.1. Thus
+
+$$
+\begin{gathered}
+G=H^1\times\mathbb R,\qquad
+p p'=(x+x',y+y',z+z',w+w'+xy'),\qquad
+d\mu=dx\,dy\,dz\,dw,\\
+X_1=\partial_x,\qquad X_2=\partial_y+x\partial_w,\qquad
+X_3=\partial_z,\qquad L=-\sum_{i=1}^3X_i^2,\\
+L\Gamma=\delta_e,\qquad
+S=(aL+\eta D_w^2-g_c\Gamma)|_{\mathcal D_0},\qquad
+g_c=16\sqrt{a\eta},\qquad a,\eta>0,\\
+M=G\setminus\{e\},\qquad
+\mathcal D_0=C_c^\infty(M;\mathbb C),\qquad
+\mathcal H_+=\{f\in L^2(G,d\mu;\mathbb R):f\ge0\text{ a.e.}\}.
+\end{gathered}
+\tag{115.1}
+$$
+
+Here $\Gamma$ remains the original positive homogeneous degree-$-3$ unit-source Green field of $L$. Write $F$ for the Friedrichs operator of Theorem 87.4, with form $(\overline q_c,\mathcal Q_c)$, and let
+
+$$
+\begin{gathered}
+h=\frac{w_*}{\|w_*\|_2},\qquad
+c_h=C(h)=\|w_*\|_2^{-1}>0,\qquad
+\rho=\frac{A(h)}{C(h)},\\
+H=H_{\rm end},\qquad
+D(H)=\{u\in D(S^*):A(u)=\rho C(u)\},\qquad Hu=S^*u.
+\end{gathered}
+\tag{115.2}
+$$
+
+The vector $w_*$ is exactly (110.2); $A,C$, their source expansion and their boundary pairing are exactly (112.2)--(112.3). In particular $\ker F=\{0\}$, $h\notin\mathcal Q_c$, $\ker H=\mathbb Ch$, and $\mathcal D_0+\mathbb Ch$ is the supplied graph core of this actual $H$. The normalization in (115.2) chooses the coefficient-positive representative of the actual zero line, without imposing a condition on any finite-$\sigma$ state. Denote the closed form of $H$ by $q_H$, and set
+
+$$
+\mathcal C[v]=a\sum_{i=1}^3|X_iv|^2+\eta|\partial_wv|^2.
+\tag{115.3}
+$$
+
+**Theorem 115.2 (the actual zero line is positive, and the actual heat preserves the original cone).** For every fixed original $a,\eta>0$, the vector $h$ of (115.2) has a real representative smooth and strictly positive on $M$, hence strictly positive $\mu$-a.e. For every $r>0$ put
+
+$$
+G_r=(F+r)^{-1},\qquad n_r=h-rG_rh,\qquad d_r=\langle h,n_r\rangle.
+\tag{115.4}
+$$
+
+Then $n_r\in\mathcal H_+\setminus\{0\}$, $d_r>0$, and the full original-space resolvent is
+
+$$
+(H+r)^{-1}
+ =G_r+\frac{|n_r\rangle\langle n_r|}{r d_r}.
+\tag{115.5}
+$$
+
+Consequently
+
+$$
+e^{-tH}\mathcal H_+\subset\mathcal H_+
+\qquad\text{for every }t\ge0.
+\tag{115.6}
+$$
+
+These are statements about selector (112.5), on the entire original $L^2$, including its singular zero state.
+
+**Proof.** The differential expression and the punctured core are invariant under complex conjugation. Uniqueness of the coefficient-one vector in Theorems 109.2 and 110.2 therefore gives $\overline{w_*}=w_*$: its conjugate is another maximal zero vector with source coefficient one. Thus $h$ is real and $C(h)=c_h>0$. Local elliptic regularity gives its smooth representative on $M$; no sign has yet been inferred.
+
+First the Friedrichs resolvent preserves $\mathcal H_+$. On a punctured compact support, the weak modulus inequality for the first derivatives gives
+$\overline q_c[|u|]\le\overline q_c[u]$ for $u\in\mathcal D_0$. The absolute value belongs to $\mathcal E_2\subset\mathcal Q_c$; smooth local approximation is legitimate because $\Gamma$ and the kinetic coefficients are bounded on that support. For $u\in\mathcal Q_c$, approximate by $u_j\in\mathcal D_0$. The vectors $|u_j|$ converge to $|u|$ in $L^2$ and have bounded closed-form norm. Weak compactness in $\mathcal Q_c$ and lower semicontinuity extend the same inequality to all of $\mathcal Q_c$. For real $f\ge0$, replacing a vector by its absolute value cannot increase
+
+$$
+\overline q_c[v]+r\|v\|_2^2-2\operatorname{Re}\langle f,v\rangle.
+\tag{115.7}
+$$
+
+The unique minimizer is $y=G_rf$, so $y\ge0$. This uses the closed critical form, without subtracting possibly infinite separate kinetic and potential integrals.
+
+For this $y\in D(F)$, (112.2)--(112.3) give $C(y)=0$ and
+$H_y=A(y)e_0+Z_y$, where $e^{\tau/8}Z_y\in H^1$ on the positive cylinder end. The coordinate multiplier defining $H_y$ is positive, and $e_0$ in (109.3) is real and strictly positive. Thus
+$\langle e_0,H_y(\tau)\rangle\ge0$ for almost every sufficiently large $\tau$. Along a sequence of such slices the remainder tends to zero in angular $L^2$, so
+
+$$
+A(G_rf)\ge0\qquad(f\in\mathcal H_+).
+\tag{115.8}
+$$
+
+Only the supplied weighted remainder is used; no pointwise source estimate is required.
+
+The exact original boundary pairing, with first slot $h$ and second slot $y$, now fixes the sign:
+
+$$
+\begin{aligned}
+\langle n_r,f\rangle
+ &=\langle h,(I-rG_r)f\rangle
+  =\langle h,Fy\rangle\\
+ &=a c_h A(y)\ge0\qquad(f\in\mathcal H_+).
+\end{aligned}
+\tag{115.9}
+$$
+
+Here $S^*h=0$ and $C(y)=0$ have been used in (112.3), with its stated antilinear-first-slot convention. Since the real positive cone is self-dual, (115.9) proves $n_r\ge0$. The spectral theorem for the supplied nonnegative $F$ with zero kernel gives $rG_rh\to0$ as $r\downarrow0$. Hence $n_r\to h$ in $L^2$, and the cone is closed, so $h\ge0$ and $h\ne0$.
+
+On every relatively compact coordinate region in $M$, the principal matrix of the original equation is smooth and uniformly positive: its quadratic symbol is
+
+$$
+a\bigl(p_x^2+(p_y+xp_w)^2+p_z^2\bigr)+\eta p_w^2.
+\tag{115.10}
+$$
+
+The potential $-g_c\Gamma$ is smooth there. The local elliptic Harnack principle applies to the nonnegative solution $S^*h=0$. Its local-to-global chain on connected $M$ makes a nonzero such solution strictly positive everywhere on $M$. These are precisely the local divergence-form ellipticity and locally bounded-potential hypotheses used for positive solutions in Pinchover--Tintarev, [*A ground state alternative for singular Schrödinger operators*, arXiv:math/0411658v1, §1, (1.1)--(1.4) and §2](https://arxiv.org/html/math/0411658v1), and the Harnack implication discussed by Lenz--Stollmann--Veselić, [*The Allegretto--Piepenbrink theorem for strongly local Dirichlet forms*, arXiv:0811.2135v1, §3](https://arxiv.org/html/0811.2135v1). They are used on $M$ only. Neither a global potential-form bound at $e$ nor a Harnack estimate across $e$ is asserted.
+
+To verify (115.5) on its full domain, note first that
+$(S^*+r)n_r=0$. Conversely the supplied decomposition $D(S^*)=D(F)\dotplus\mathbb Ch$ shows that every vector in $\ker(S^*+r)$ equals a multiple of $n_r$: for $u=y+ch$, its equation is $(F+r)y=-rc h$. Moreover, if $E_F$ is the spectral resolution of $F$, then
+
+$$
+d_r=\int_{[0,\infty)}\frac{\lambda}{\lambda+r}
+                  \,d\langle h,E_F(\lambda)h\rangle>0.
+\tag{115.11}
+$$
+
+The strict inequality follows from $\|h\|_2=1$ and $\ker F=\{0\}$. Thus $n_r\ne0$. For any complex $f\in\mathcal H$, every maximal-domain solution of $(S^*+r)u=f$ is $u=G_rf+c n_r$. The actual selector in the first line of (112.5) requires
+
+$$
+0=\langle h,S^*u\rangle
+  =\langle n_r,f\rangle-r c d_r,
+\tag{115.12}
+$$
+
+which gives exactly (115.5). In particular this computation does not apply a zero inverse to a general forcing or substitute a Friedrichs source condition. Both terms on its right preserve the real positive cone, by (115.9) and $d_r>0$. Positivity of $e^{-tH}$ follows from the usual strong resolvent-power approximation to the nonnegative self-adjoint heat semigroup, including the identity at $t=0$. This final semigroup step is standard functional calculus; the source-specific content is (115.8)--(115.12) for the actual original boundary pairing. $\square$
+
+**Theorem 115.3 (full-domain correspondence and conservative strongly local dynamics).** Use the positive representative $h$ from Theorem 115.2 and set
+
+$$
+\begin{gathered}
+dm_h=h^2d\mu,\qquad m_h(G)=1,\qquad
+U_h:L^2(G,dm_h;\mathbb C)\longrightarrow\mathcal H,
+\quad U_hv=hv,\\
+K=U_h^{-1}HU_h,\qquad T_t=U_h^{-1}e^{-tH}U_h.
+\end{gathered}
+\tag{115.13}
+$$
+
+Define $\mathscr V_0$ as the closure of $C_c^\infty(M;\mathbb C)$ in the norm
+
+$$
+\|v\|_{h,1}^2=\int_G|v|^2dm_h+\int_M\mathcal C[v]dm_h.
+\tag{115.14}
+$$
+
+Then the entire closed form of $K$ has exactly the domain and values
+
+$$
+\begin{gathered}
+\mathscr V=\mathscr V_0\dotplus\mathbb C1,
+\qquad U_h\mathscr V_0=\mathcal Q_c,
+\qquad D(H^{1/2})=\mathcal Q_c\dotplus\mathbb Ch,\\
+\mathscr E[v,z]=\int_M\left(
+ a\sum_{i=1}^3\overline{X_iv}X_iz
+ +\eta\overline{\partial_wv}\partial_wz\right)dm_h,
+\qquad v,z\in\mathscr V,\\
+q_H[y+ch]=\overline q_c[y]
+\quad(y\in\mathcal Q_c,\ c\in\mathbb C).
+\end{gathered}
+\tag{115.15}
+$$
+
+The derivatives in the integral are the local weak derivatives on $M$, with their global weighted $L^2$ limits. The form $(\mathscr E,\mathscr V)$ is a regular strongly local Dirichlet form on the original space $G$ with measure $m_h$. Its semigroup is conservative:
+
+$$
+T_t1=1\qquad(t\ge0).
+\tag{115.16}
+$$
+
+In particular it is a Markov contraction on real bounded functions, and $m_h$ is an invariant probability measure. The full operator domain is
+
+$$
+D(K)=\{v\in\mathscr V:hv\in D(S^*),\ A(hv)=\rho C(hv)\},
+\qquad Kv=h^{-1}S^*(hv).
+\tag{115.17}
+$$
+
+**Proof.** Because $h>0$ a.e., (115.13) is a unitary map, and multiplication or division by $h$ maps $C_c^\infty(M)$ bijectively to itself. On a compact punctured support the usual ground-state identity gives
+
+$$
+q_c[h\psi]=\int_Mh^2\mathcal C[\psi]d\mu,
+\qquad \psi\in C_c^\infty(M;\mathbb C).
+\tag{115.18}
+$$
+
+For its direct verification expand the derivatives of $h\psi$ and test the original weak equation for $h$ against $h|\psi|^2$. The derivatives of the real $h$ and the real potential cancel; the remaining terms are those on the right. All integrals are finite on this support. For real factors this is exactly Pinchover--Tintarev, Lemma 2.4, (2.6), with their solution $\psi$ equal to the present $h$, their multiplier $v$ equal to the present test, their $A$ given by (115.10), and their $V=-g_c\Gamma$ on a bounded punctured region. Real and imaginary parts and polarization give the complex identity. Equivalently it is Lenz--Stollmann--Veselić, Theorem 2.3 with $E=0$, $\Phi=h$, and $\nu=-g_c\Gamma\,d\mu$, again only locally on $M$, where $h,h^{-1}$ are smooth and locally bounded. This established identity is an intermediate step, not an identification of endpoint domains by itself.
+
+The domain identification instead uses the actual graph core in (112.4)--(112.5). On it $Hh=0$, and hence
+
+$$
+q_H[\phi+ch]=q_c[\phi]
+\qquad(\phi\in\mathcal D_0,\ c\in\mathbb C).
+\tag{115.19}
+$$
+
+A graph core of a nonnegative self-adjoint operator is a form core: spectral truncation first approximates every form-domain vector by operator-domain vectors, and graph approximation then implies form approximation. Consequently the closed form of $K$ is exactly the completion of
+$C_c^\infty(M)+\mathbb C1$ with the integral energy in (115.18), and not merely a form agreeing with it on punctured tests. Its completion of the smaller core $C_c^\infty(M)$ is isometrically $U_h^{-1}\mathcal Q_c$, by (115.18) and the definition of the Friedrichs form. This is a closed subspace of the complete form space of $K$. Adding the finite-dimensional subspace $\mathbb C1$ gives another closed subspace; density of the larger core makes it the whole space. The sum is direct because $h\notin\mathcal Q_c$. This proves the domain equalities in (115.15).
+
+For any Cauchy sequence in this form core, its derivatives are Cauchy in $L^2(m_h)$. On each compact subset of $M$, positivity and smoothness of $h$ make the weighted norm equivalent to the ordinary local $H^1$ norm. The limits are therefore the distributional derivatives of the actual $L^2(m_h)$ limit. Exhausting $M$ proves exactly the integral formula in (115.15), with no additional source energy. In particular the constant has zero energy, and polarization gives $q_H[y+ch]=\overline q_c[y]$. Formula (115.17) now follows from unitary conjugation of the actual operator selector, rather than from a condition imposed on smooth tests.
+
+This also records the singular source component at form level. Every $v\in\mathscr V$ has a unique decomposition $v=v_0+c$, with $v_0\in\mathscr V_0$, and the coefficient $c$ is a continuous linear functional in the full form norm. It vanishes on the closed punctured form core and takes value one at the constant. If $hv\in D(H)$, the maximal-domain decomposition and $\mathcal Q_c\cap D(S^*)=D(F)$ give
+
+$$
+c=\frac{C(hv)}{C(h)}.
+\tag{115.20}
+$$
+
+Thus deleting $\mathbb C1$ would give the Friedrichs form, not the actual endpoint. No pointwise limit of an arbitrary form-domain vector at $e$ is needed for this source coordinate, and no separate kinetic or potential integral of $hv$ is asserted finite.
+
+For the Markov property, let $N:\mathbb R\to\mathbb R$ satisfy $N(0)=0$ and $|N(s)-N(t)|\le|s-t|$. If $v=c+\psi$ is in the real form core, then $N(v)-N(c)$ is a compactly supported $H^1$ function on $M$. On its compact support, local smooth approximation and the equivalence of weighted and unweighted $H^1$ norms put it in $\mathscr V_0$. The weak chain rule gives
+
+$$
+N(v)\in\mathscr V,\qquad
+\mathscr E[N(v)]\le\mathscr E[v].
+\tag{115.21}
+$$
+
+For general real $v\in\mathscr V$, choose core approximants. Their contractions converge in $L^2(m_h)$ by the Lipschitz bound, and have bounded form norms by (115.21). Weak compactness in the closed form and lower semicontinuity extend (115.21) to $v$. This is the normal-contraction criterion for a Dirichlet form, used on the real form and then complexified, as in Lenz--Stollmann--Veselić, §1. All source coefficients $c$ are retained in this argument; contractions have not been tested only on a vanishing-source subdomain.
+
+We verify regularity on $G$, including the point $e$. The measure $m_h$ is a finite Radon measure with full support and no atom at $e$. Use the original smooth Carnot cutoffs $\chi_R$ of (108.7), equal to one on growing balls and satisfying
+
+$$
+|X_i\chi_R|\le C/R,\qquad
+|\partial_w\chi_R|\le C/R^2.
+\tag{115.22}
+$$
+
+Fix any $\chi\in C_c^\infty(G;\mathbb R)$ equal to one near $e$. The vectors $\chi_R(1-\chi)$ are punctured compact tests and converge to $1-\chi$ in (115.14): the $L^2(m_h)$ tail vanishes since $m_h(G)=1$, the derivative of $\chi$ lies in a fixed compact set where $\chi_R=1$ for large $R$, and the remaining derivative cost is bounded by $C(R^{-2}+R^{-4})m_h(G)$. Thus $1-\chi\in\mathscr V_0$ and $\chi\in\mathscr V$. Applying this to $\chi_R$ itself gives
+
+$$
+\|1-\chi_R\|_{L^2(m_h)}\longrightarrow0,
+\qquad
+\mathscr E[1-\chi_R]=\mathscr E[\chi_R]
+ \le C(R^{-2}+R^{-4})\longrightarrow0.
+\tag{115.23}
+$$
+
+It follows that $\mathbb C\chi+C_c^\infty(M)$, whose members are continuous and compactly supported on $G$, is form dense: approximate the constant by $\chi_R$, and observe that $\chi_R-\chi$ is a punctured compact test. It is also uniformly dense in $C_c(G)$, by ordinary smooth approximation followed by making a smooth approximant constant in a sufficiently small source neighborhood. Uniform continuity controls that last change, and every such function has the form $c\chi+\psi$ with $\psi\in C_c^\infty(M)$. This proves regularity without treating $e$ as a discarded boundary.
+
+Strong locality follows from the full integral formula (115.15). If $v$ is constant on a neighborhood of the compact support of $z$, its local weak gradient vanishes there, and that of $z$ vanishes off its support. The energy pairing is zero. The point $e$ contributes no extra term: the gradient completion already proved the entire energy to be the displayed integral, with $m_h(\{e\})=0$. Finally $1\in\mathscr V$ has zero energy, so it lies in $D(K)$ with $K1=0$. Therefore $T_t1=1$. The standard Dirichlet-form semigroup correspondence gives positivity and the Markov contractions; symmetry and $T_t1=1$ give invariance of $m_h$. These standard consequences consume the full-domain source identification above. $\square$
+
+**Definition 115.4 (supplier correspondence and the remaining native bridge).** The source-specific deductions in this section are the sign of the original boundary functional in (115.9), its actual resolvent (115.5), and the closure (115.15) retaining the source coefficient (115.20). Their suppliers are the unchanged actual field of §§82--87, the Friedrichs completion and zero kernel of Theorem 87.4, the full source expansion of Theorems 109.2 and 112.2, the coefficient-one global vector of Theorem 110.2, and the actual graph core and selector of (112.4)--(112.5). The actual zero projections and convergence of §§111--114 are retained; no convergence theorem or spectral gap is inferred anew from positivity. The ground-state identity and Dirichlet-form consequences retain the precise primary-source correspondences in the proofs. They are established methods, while their application to this particular source coefficient and non-Friedrichs endpoint is a repository deduction, without a worldwide-priority assertion. The positive-lower-bound domain formulas in Ashbaugh et al., [*A Survey on the Krein--von Neumann Extension*, arXiv:1203.5713v1, Theorem 2.1, (2.9)--(2.11)](https://arxiv.org/html/1203.5713v1), require $S\ge\varepsilon I$, $\varepsilon>0$; that hypothesis is absent here and those formulas are not used.
+
+The resulting dynamics has, away from $e$, Markov generator
+
+$$
+-Kv=a\sum_{i=1}^3X_i^2v+\eta\partial_w^2v
+ +2a\sum_{i=1}^3(X_i\log h)X_iv
+ +2\eta(\partial_w\log h)\partial_wv.
+\tag{115.24}
+$$
+
+Its source behavior is determined by (115.15) and (115.17), not by extending this displayed differential formula across $e$. Its principal matrix (115.10) has rank four for $\eta>0$; conjugation changes the drift, not that rank. The original horizontal distribution still has rank three, the carrier still has four coordinates and homogeneous dimension five, and none of these numbers is a derived physical spatial dimension.
+
+A native legal transport realization of this endpoint would additionally require an actual admissible source and native evolution, a specified representation and observation map, and proofs that this same source, raw units, clock, full generator including its source domain, and observation law intertwine with that native evolution. In particular the conservative probability dynamics $T_t$ on $L^2(h^2d\mu)$, the original positive Schrödinger heat on $L^2(d\mu)$, signed or complex amplitudes, and any proposed finite positive network have different state and observation contracts until those maps are supplied. Theorems 115.2--115.3 settle the three endpoint questions for the exact original selector; they do not supply that native realization or assert positivity of any finite-$\sigma>2$ regulator. The native source/operator/readout correspondence remains unproved.
+
+## 追加锚（本行以下为增补区）
