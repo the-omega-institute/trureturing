@@ -727,3 +727,643 @@ Every zero-gain clock still has its mandatory action and read. Among $s+2$ conse
 All gain signs, initial roots, later roots, repeated roots, degree drops, and unbounded legal coefficients remain in the argument. Every trace used by either decoder comes from the same fixed source and one continuing legal trajectory. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Exact continuation interface and the inherited integer bound
+
+**Definition 13.1 (the calibrated optimization problem).** Fix independent integers $k,d\ge0$, an original clock $T\ge2$, and a scalar $b>0$. Throughout Sections 13–19,
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+A_0=I,\qquad A_i=E_iA_{i-1},\quad E_i\in\{M,J\},
+$$
+
+$$
+z_i=H(i)\operatorname{tr}(A_iP)+D(i),\qquad
+0\ne H\in\mathbb R[t],\quad \deg H\le k,\quad D\in\Pi_d,
+\tag{13.1}
+$$
+
+where $\Pi_d$ includes zero and $P$ is strictly entrywise positive, rank one, and trace one. The actual prefix is $A_i=M^i$ through clock $T$. The exact $H,D,b=\operatorname{tr}(MP)$ are supplied, and the compatible source set is the entire $\mathcal F_b$ of (8.2), with no representative or further source promise. All coefficient signs and magnitudes, degree drops, roots at any clock, and repeated roots are retained. The target is the actual normalized triple $(P,H,D)$.
+
+There is one trajectory. Every atom has its mandatory immediate read at the next consecutive original integer clock, and the initial read is counted. There is no reset, copy, empty action, skipped read, clock jump, unread composite action, inverse acquisition, or side sensor. A chronological word of length $n$ means exactly $n$ individually performed atoms and $n$ additional reads, even if its matrix admits cancellations. Competitors may choose actions, stopping, and nonlinear answers by arbitrary deterministic functions of their whole actual histories; no regularity assumption is imposed.
+
+Write $I_S=(L_S,U_S)$ for (9.1), $S\ge2$, with $F_0=0,F_1=1$. Let $C_T(b;H,D)$ be the minimum uniform additional-read bound among protocols correct for every $P\in\mathcal F_b$ at this calibrated state. This is a worst case over the whole source fiber, with the particular $H,D,b,T$ fixed. It does not assert a minimum for each individual source or for an uncalibrated acquisition problem.
+
+**Lemma 13.2 (off-diagonal difference at literal cost).** If $A=E_m\cdots E_1$ is any literal word of length $m\ge3$, and $A=(a_{ij})$, then
+
+$$
+|a_{12}-a_{21}|\le F_{m-1}.
+\tag{13.2}
+$$
+
+**Proof.** Reuse the signed bound $-(W_{22}-W_{11})\le F_{\ell-2}$ for every literal word $W$ of length $\ell\ge3$, from Lemma 25.1 of [*FIB Self-Calibrating Relation Mathematics*](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md#25-fibonacci-系数与两个受限稳定性最优区). Its existing Lean source declaration is `raw_word_fibonacci_bounds` in `D5/S3/Arith/FibonacciAtomic/SelfCalibratingFibonacciBounds.lean`. No induction for that bound is needed here. Both $JA$ and $AJ$ are literal words of length $m+1$, and
+
+$$
+(JA)_{22}-(JA)_{11}=a_{12}-a_{21},\qquad
+(AJ)_{22}-(AJ)_{11}=a_{21}-a_{12}.
+$$
+
+Applying the inherited signed bound to both words proves (13.2). These two words are algebraic inputs to a universal word inequality, not additional acquisitions. In particular, no permission to prepend an action to the actual trajectory is used. $\square$
+
+**Lemma 13.3 (the denominator gap).** For $S\ge2$, put
+
+$$
+u_S=\frac{F_{S-2}}{F_{S-1}},\qquad
+v_S=\frac{F_{S-1}}{F_S},\qquad
+K_b=\left[\min\{b-1,b^{-1}\},\max\{b-1,b^{-1}\}\right].
+\tag{13.3}
+$$
+
+If $b\in I_S$, then $1<b<2$, and $K_b$ lies strictly between $u_S$ and $v_S$. Every rational in $K_b$, in reduced form with positive denominator $q$, satisfies
+
+$$
+q\ge F_{S-1}+F_S=F_{S+1}>F_S.
+\tag{13.4}
+$$
+
+**Proof.** The nesting established in (11.2)–(11.3) gives $I_S\subseteq I_2=(1,2)$. The endpoints defining $I_S$ are exactly $1+u_S$ and $1+v_S$, so $b-1$ is strictly between $u_S,v_S$. The reciprocal map $x\mapsto1/(1+x)$ sends $u_S$ to $v_S$ and $v_S$ to
+
+$$
+\frac{F_S}{F_{S+1}}
+=\frac{F_{S-2}+F_{S-1}}{F_{S-1}+F_S},
+$$
+
+the strict mediant of the two distinct fractions $u_S,v_S$. Thus $1/b$ also lies strictly between them, as does the whole closed segment $K_b$.
+
+Cassini's determinant identity from the Fibonacci recurrence gives
+
+$$
+\left|F_{S-2}F_S-F_{S-1}^2\right|=1.
+$$
+
+For completeness, if $a/c<p/q<a'/c'$ with positive denominators and $a'c-ac'=1$, the positive integers
+
+$$
+x=a'q-c'p,\qquad y=cp-aq
+$$
+
+satisfy $q=cx+c'y\ge c+c'$. Applying this to the two fractions $u_S,v_S$ in increasing order proves (13.4), including $S=2$ with neighbors $0/1,1/1$. This is the elementary Farey-neighbor denominator fact; the determinant and mediant setting agrees with [MathWorld, *Farey Sequence*, equations (6)–(9)](https://mathworld.wolfram.com/FareySequence.html). Its only use here is this integer inequality, whose proof does not assume an acquisition model. $\square$
+
+## 14. Scalar collision directions on the whole positive fiber
+
+**Lemma 14.1 (necessary directions for an injective scalar).** Fix $1<b<2$ and a real matrix
+
+$$
+A=\begin{pmatrix}\alpha&\beta\\\gamma&\delta\end{pmatrix},\qquad
+ e=\beta-\gamma,\qquad f=\delta-\alpha-\gamma.
+$$
+
+If $P\mapsto\operatorname{tr}(AP)$ is injective on the entire $\mathcal F_b$, then $e\ne0$ and, with $\rho=-f/e$, at least one of
+
+$$
+\rho\in K_b,\qquad -1-\rho\in K_b
+\tag{14.1}
+$$
+
+holds. Every collision used to prove this necessity consists of two distinct strictly positive rank-one trace-one matrices with the same prescribed $b$.
+
+**Proof.** Write $P=\left(\begin{smallmatrix}1-t&u\\v&t\end{smallmatrix}\right)$. On $\mathcal F_b$, $u+v+t=b$, and hence
+
+$$
+\operatorname{tr}(AP)=\alpha+\gamma b+ft+ev.
+\tag{14.2}
+$$
+
+If $e=0$, a nonsymmetric $P$ and its transpose have equal (14.2). Such sources exist for every $b>0$: in (8.3)–(8.5) take $r>0$ sufficiently small, so $q\to b>0$ while $r\to0$. Then $P\ne P^{\mathsf T}$ and both belong to $\mathcal F_b$. This proves noninjectivity when $e=0$.
+
+Suppose $e\ne0$. Equal responses are equivalent to equal values of $v-\rho t$. Reuse the algebraic pair (9.6): for a real $\rho$ and $0<x<y$, put
+
+$$
+\Delta=(1+\rho)xy+x+y+\rho,
+$$
+
+$$
+\begin{aligned}
+P_{x,y}&=\frac1\Delta
+\begin{pmatrix}y+\rho&(1+\rho)y+1\\x(y+\rho)&x((1+\rho)y+1)\end{pmatrix},\\
+Q_{x,y}&=\frac1\Delta
+\begin{pmatrix}x+\rho&(1+\rho)x+1\\y(x+\rho)&y((1+\rho)x+1)\end{pmatrix}.
+\end{aligned}
+\tag{14.3}
+$$
+
+Whenever all the displayed entries are positive, these are rank-one trace-one sources, and
+
+$$
+Q_{x,y}-P_{x,y}=\frac{y-x}{\Delta}
+\begin{pmatrix}-1&-(1+\rho)\\\rho&1\end{pmatrix}.
+\tag{14.4}
+$$
+
+Their common $M$ trace is the quotient (9.7). Requiring this quotient to equal $b$ gives exactly
+
+$$
+y(x)=\frac{1-b\rho+(1+\rho-b)x}
+{b-1-\rho+\bigl(b(1+\rho)-(2+\rho)\bigr)x}.
+\tag{14.5}
+$$
+
+For $\rho>0$ outside $K_b$, $b$ lies strictly between $1+\rho$ and $1/\rho$. Consequently $1-b\rho$ and $b-1-\rho$ are nonzero with the same sign, so $y(0)>0$. Take $x>0$ sufficiently small that (14.5) is defined and $y(x)>x$. All entries and $\Delta$ in (14.3) are then strictly positive. Equations (14.4)–(14.5) give two distinct actual sources in $\mathcal F_b$ with equal response. This is precisely the positive-direction collision construction underlying Theorem 9.1, with its parameter left free.
+
+For $-1\le\rho\le0$, set $x_0=-\rho$ and $y_0=1/(b-1)>1\ge x_0$. Let $c_\rho=1-\rho-\rho^2>0$. The denominator in (14.5) at $x_0$ is $(b-1)c_\rho>0$, and $y(x_0)=y_0$. Also $\Delta(x_0,y_0)=c_\rho y_0>0$. Take $x>x_0$ sufficiently close to $x_0$. Then $0<x<y(x)$, $x+\rho>0$, $y(x)+\rho>0$, and both $(1+\rho)x+1$ and $(1+\rho)y(x)+1$ are positive. Thus (14.3) again supplies a strictly positive distinct colliding pair with exactly this $b$. The limiting zero entry at $x=x_0$ is not used as a source; the chosen $x>x_0$ is essential.
+
+Finally transposition preserves $\mathcal F_b$ and sends the direction $\rho$ to $\rho'=-1-\rho$, since
+
+$$
+(v-\rho t)(P^{\mathsf T})=u-\rho t
+=b-\bigl(v-\rho't\bigr)(P).
+$$
+
+If $\rho<-1$, then $\rho'>0$, and the positive-direction construction applies unless $\rho'\in K_b$. These cases exhaust all real $\rho$ and establish (14.1). The lemma asserts a necessary condition, which is all that the word lower bound needs. $\square$
+
+## 15. A universal exact-length acquisition bridge
+
+**Theorem 15.1 (all literal continuations and an attained terminal trace).** For every $T\ge2$, $n\ge1$, and $b>0$, there exists an actual $n$-atom continuation of the prefix $M^T$ whose terminal scalar trace is injective on the whole $\mathcal F_b$ if and only if
+
+$$
+b\notin I_{T+n-1}.
+\tag{15.1}
+$$
+
+Both interval endpoints belong to the injective side. If $b\in I_{T+n-1}$, every permitted literal $n$-atom continuation has a terminal trace collision between two distinct actual sources in $\mathcal F_b$, including continuations whose matrices contain cancellations.
+
+**Proof.** Put $S=T+n-1$. If $b\notin I_S$, perform $n-1$ individual $M$ actions and then one $J$. Its terminal matrix is $JM^S$, and Theorem 9.1 proves whole-fiber injectivity, including equality at either endpoint. The word has exactly $n$ actions and reads; it is not an arbitrary selected matrix or an unread composite.
+
+For necessity, fix any literal $n$-atom continuation. Its terminal matrix $A=E_n\cdots E_1M^T$ is an integer matrix of literal length $m=T+n=S+1$. Suppose $b\in I_S$ and its scalar were injective. Lemma 14.1 applies because $1<b<2$. With its notation, $e\ne0$ is an integer, and Lemma 13.2 gives $|e|\le F_S$. Each of $\rho=-f/e$ and $-1-\rho$ is rational with reduced positive denominator at most $|e|$. By Lemma 14.1 one lies in $K_b$, whereas Lemma 13.3 says every rational there has denominator greater than $F_S$. This contradiction excludes injectivity for the arbitrarily fixed word. For $e=0$, the explicit transpose collision in Lemma 14.1 already excludes it.
+
+The inherited word inequality uses the literal length, so no reduction of a word containing $JJ$ or any other cancellation escapes the argument. This theorem concerns the terminal scalar alone. Earlier nonzero-gain observations may carry additional information; the next theorem uses the root pattern to specify exactly when the terminal-scalar obstruction becomes a whole-history lower bound. $\square$
+
+## 16. The first two nonroot clocks determine the exact optimum
+
+**Theorem 16.1 (exact fixed-gain calibrated continuation).** For any particular known $H\ne0$ and known $D$ in (13.1), let $r_1<r_2$ be the first two positive integer offsets $j$ with $H(T+j)\ne0$. Then
+
+$$
+C_T(b;H,D)=
+\begin{cases}
+r_1,&b\notin I_{T+r_1-1},\\
+r_2,&b\in I_{T+r_1-1}.
+\end{cases}
+\tag{16.1}
+$$
+
+This minimum is attained by legal atomic continuations. Its lower bound holds against all the deterministic adaptive competitors of Definition 13.1, with two fixed complete legal worlds on a common actual history whenever a collision is needed.
+
+**Proof of attainment.** A nonzero polynomial has finitely many distinct roots, so $r_1,r_2$ exist. On the first branch of (16.1), perform $M$ separately at offsets $1,\ldots,r_1-1$ and $J$ at offset $r_1$, reading immediately after every action. All the former clocks are gain roots. With $S=T+r_1-1$, the terminal matrix is $JM^S$ and
+
+$$
+\lambda=\frac{z_{T+r_1}-D(T+r_1)}{H(T+r_1)}
+=\operatorname{tr}(JM^SP).
+\tag{16.2}
+$$
+
+Theorem 9.1 and the admissible positive-root inverse of Corollary 9.2 recover the unique actual $P$. Only this nonzero gain is divided by. Known $H,D$ complete the target, at exactly $r_1$ additional reads.
+
+On the second branch perform $J$ at offset $1$, then individual $M$ actions through offset $r_2$, retaining every mandatory read. At each of the two nonroot offsets $j\in\{r_1,r_2\}$ retain
+
+$$
+h_j=\frac{z_{T+j}-D(T+j)}{H(T+j)}
+=\operatorname{tr}(M^{j-1}JM^TP).
+\tag{16.3}
+$$
+
+By Lemmas 3.1–3.2, the matrices
+
+$$
+I,\quad M,\quad M^{r_1-1}JM^T,\quad M^{r_2-1}JM^T
+$$
+
+form a basis of all real $2\times2$ matrices. Solve the four trace equations with right sides $1,b,h_{r_1},h_{r_2}$, equivalently the two-step inverse (4.3)–(4.4). The actual source supplies a solution and the nondegenerate trace pairing makes it unique. This is the existing moving-trace decoder with $D$ subtracted at the actual original clocks. It recovers exactly $P$ in $r_2$ additional reads, even if the first $J$ occurs at a gain root. Every intervening root clock still executes its specified paid atom and takes its read.
+
+**Proof of the adaptive lower bound.** Fix any correct deterministic competitor and the particular $H,D,b,T$. Proposition 8.2 gives a common entire pure-$M$ prefix and common supplied calibration data on all of $\mathcal F_b$. Through offsets $1,\ldots,r_1-1$, each observation is the fixed value $D(T+j)$ whatever atom is selected. Induction therefore makes all selected actions and histories common to the entire fiber. A correct competitor cannot stop there, since this infinite fiber contains different complete targets. Thus at least $r_1$ reads are necessary on either branch.
+
+Suppose now that $b\in I_{T+r_1-1}$. The common history just proved fixes the entire literal word through offset $r_1$ before its nonzero-gain response is received. Theorem 15.1 applies to this particular word and supplies distinct $P',P''\in\mathcal F_b$ with equal terminal scalar trace. The two complete worlds $(P',H,D)$ and $(P'',H,D)$ have equal observations through offset $r_1$, including its nonzero gain. At every offset strictly between $r_1$ and $r_2$ the gain is zero. Induction on this same pair therefore keeps all subsequent actions and histories equal through offset $r_2-1$, irrespective of any dependence on the first useful response. Stopping at any of these common histories would produce one answer for two different targets. No correct competitor can have a uniform bound below $r_2$.
+
+The worlds in this argument are fixed for the given competitor before executing it on either selected source. Their selection uses the word already determined by a source-independent history, not a succession of response-dependent replacements of a source. They realize the entire common prefix and every subsequent action used in the contradiction. Together with the two attained upper bounds, this proves (16.1) without linearity, continuity, measurability, a countable answer palette, or any other regularity premise. It does not say that every individual interior response has a collision; the singleton response in Corollary 9.2 remains possible. $\square$
+
+## 17. Sharp budgets on each fiber and delayed exterior savings
+
+**Corollary 17.1 (each fixed interior fiber has the sharp full degree budget).** Fix $T\ge2$, $b\in I_T$, and any fixed known allowed $D$. For each integer $0\le s\le k$, the optimal uniform continuation budget over all known gains of actual degree $s$, with the entire $\mathcal F_b$ retained, is exactly $s+2$. Over all nonzero gains of degree at most $k$ it is exactly $k+2$. These statements hold for every fixed interior $b$, including $b\ne\phi$.
+
+**Proof.** Among the first $s+2$ future integer clocks at least two are nonroots, so $r_2\le s+2$. Theorem 16.1 gives the upper bound. For the matching lower bound take the single common gain
+
+$$
+H_s(t)=c\prod_{j=2}^{s+1}(t-(T+j)),\qquad c\ne0.
+\tag{17.1}
+$$
+
+The empty product for $s=0$ is $1$. This gain has actual degree $s$, with $r_1=1$ and $r_2=s+2$. Since $b\in I_T$, the second branch of Theorem 16.1 proves that its uniform optimum is $s+2$. Its fixed collision worlds use the same arbitrary allowed $D$. Taking $s=k$ proves the degree-at-most-$k$ lower bound, and root counting proves its upper bound. Coefficients of either sign are allowed. The construction places its zeros after the first useful read; zeros before that read can instead yield the saving below. For comparison, the already established exterior budgets of Theorem 11.1 are $s+1$ and $k+1$ for each fixed $b\notin I_T$. $\square$
+
+**Corollary 17.2 (a finite exit criterion away from the golden crossing).** Define
+
+$$
+\ell_T(b)=\min\{j\ge1:b\notin I_{T+j-1}\},
+\tag{17.2}
+$$
+
+with value $+\infty$ if this set is empty. For $b\in I_T\setminus\{\phi\}$ this is finite and at least $2$, while $\ell_T(\phi)=+\infty$. For every known $H,D$, formula (16.1) is equivalently $C_T=r_1$ when $r_1\ge\ell_T(b)$ and $C_T=r_2$ otherwise.
+
+**Proof.** The intervals are nested by (11.2)–(11.3), contain $\phi$ strictly by Theorem 9.1, and have length
+
+$$
+U_S-L_S=\frac1{F_{S-1}F_S}\longrightarrow0.
+\tag{17.3}
+$$
+
+Cassini gives the equality, and the Fibonacci recurrence gives unbounded denominators. Thus every fixed $b\ne\phi$ is outside all sufficiently late intervals. Nesting includes the equality endpoints in the exit side, and (16.1) proves the claimed reformulation. This criterion does not change the original degree budget or assume that a comparison of arbitrary real inputs is effectively decidable. $\square$
+
+**Example 17.3 (an interior saving on the actual paid trajectory).** Take $k=1,d=0$, $N=5$, $T=4$, $b=8/5$, $H(t)=t-5$, and $D(t)=0$. This fiber is realized, for example, by
+
+$$
+P=\frac15\begin{pmatrix}1&2\\2&4\end{pmatrix};
+$$
+
+no promise that this is the actual representative is supplied. One has $b\in I_4=(3/2,5/3)$, while $r_1=2,r_2=3$ and $b=8/5$ is an endpoint of $I_5=(8/5,5/3)$. Perform $M$ at original clock $5$ and retain its zero-gain read; then perform $J$ at clock $6$. The terminal matrix $JM^5$ is injective on the entire $\mathcal F_{8/5}$, so (16.2) and Corollary 9.2 recover any actual source in it. The exact additional cost is $2$, rather than $r_2=3$, and the total after the five paid calibration reads is $7$. This saves one read against the interior actual-degree guarantee $N+s+2=8$, without skipping the root clock or excluding any source from the fiber.
+
+## 18. A consumer after the paid polynomial calibration
+
+**Theorem 18.1 (exact continuation count for the prescribed architecture).** In (13.1), start with the paid pure-$M$ prefix of
+
+$$
+N=2k+d+3\quad\hbox{reads},\qquad T=N-1=2k+d+2.
+$$
+
+Use its existing exact calibration to obtain $H,D,b$, and then apply Theorem 16.1. For these particular calibrated data the minimum uniform total read bound among protocols with this prescribed prefix is
+
+$$
+N+
+\begin{cases}
+r_1,&b\notin I_{N+r_1-2},\\
+r_2,&b\in I_{N+r_1-2}.
+\end{cases}
+\tag{18.1}
+$$
+
+For each fixed $b$ at this $T$, the exact uniform totals over gains of actual degree $s\le k$ are
+
+$$
+\begin{cases}
+N+s+1=2k+d+s+4,&b\notin I_T,\\
+N+s+2=2k+d+s+5,&b\in I_T.
+\end{cases}
+\tag{18.2}
+$$
+
+Over degree at most $k$ these become $3k+d+4$ on the exterior and $3k+d+5$ on the interior. The last number is a uniform upper bound for this architecture on the full source domain; no unrestricted pre-calibration optimum is asserted.
+
+**Proof.** Reuse the prefix part of Theorem 39.2 of [*FIB Self-Calibrating Relation Mathematics*](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md#39-任意已知有限次共同增益的零安全固定历史恢复), as in Theorem 12.1. Its normalized $R_0$ is the present $P$; its gain and drift are exactly $H,D$ at the same original integer clocks. The $N$ reads at $0,\ldots,N-1$ recover the coefficient polynomials $H,bH,D$, and a nonzero coefficient of $H$ determines $b$. No sampled nonzero gain, sign restriction, exact maximum degree, or nonvanishing second spectral mode is needed. All $N$ reads, including the initial one, have been paid.
+
+Proposition 8.2 shows that the compatible source set after this actual prefix is exactly the entire $\mathcal F_b$, with common histories for fixed $H,D,b$. Thus Theorem 16.1 applies without an extra source promise and gives (18.1), both its decoder and its adaptive lower bound. Adding the paid $N$ to Theorem 11.1 and Corollary 17.1 gives (18.2) and its sharpness for each fixed $b$. A prescribed-prefix protocol cannot stop on a partial pure-$M$ history and still recover all sources of this same fiber, since the common-history obstruction already holds there. Giving calibration freely in the continuation lower bound only makes a competitor stronger. Hence those lower bounds apply to this paid-prefix architecture as well. This conclusion leaves protocols that mix earlier or use a different calibration outside its sharpness scope. $\square$
+
+## 19. Source correspondence and applicability
+
+The integer input to Lemma 13.2 is the existing signed literal-word bound of main Lemma 25.1 and its `raw_word_fibonacci_bounds` declaration. The consequence (13.2) uses it twice and does not reprove or replace its induction. The determinant and mediant arithmetic in Lemma 13.3 is the classical Farey-neighbor fact cited there. The positive-direction pair and its strict-positivity checks come from (9.6)–(9.10); Lemma 14.1 supplies the additional nonpositive-direction argument and transposition needed for arbitrary terminal words. Theorem 15.1 combines these inputs at the actual literal length. Theorem 16.1 combines its universal obstruction with common original-world histories, and attains the resulting count using the already established exterior inverse and two-moving-trace basis. Theorem 39.2 supplies the paid calibration in Theorem 18.1. Neither calibration, the old next-$J$ exterior classification, the quadratic exterior inverse, nor the two-trace inverse is a new result here.
+
+All scalar comparisons, polynomial evaluations, divisions at certified nonzero gains, and matrix inversions in these statements are over exact real numbers. No finite-precision, noise-robust, uniform conditioning, bit-complexity, or effective-real comparison conclusion follows. In particular a comparison of a general presented real $b$ with a rational endpoint, or a test that a general real polynomial value equals zero, needs an additional effective representation contract before it is an executable numerical test. These are optimal counts in the ideal exact-real read model.
+
+The collision lower bounds retain one actual source, one whole gain polynomial, one whole drift polynomial, and the same original clock in each world. They concern uniform recovery on $\mathcal F_b$, not the assertion that all individual response fibers collide. Strict positivity is used both in the collision constructions and in the endpoint inverse; replacing it by nonnegativity would require another boundary analysis. Root multiplicity affects the polynomial degree but not the number of distinct failed integer-clock reads. All root clocks in the attained protocols have real paid $M$ or $J$ actions.
+
+These ordinary mathematical proofs do not supply a new Lean verification or an external-priority claim. The global optimum over unrestricted original acquisition protocols, noisy or approximate recovery, and the wider research programme are not settled by the calibrated and prescribed-prefix optimality statements above.
+
+## 追加锚（本行以下为增补区）
+
+## 20. Post-calibration bounded error on the whole normalized fiber
+
+**Definition 20.1 (source loss, effective error, and stable read budgets).** Retain Definition 13.1, including the particular exact $H,D,b$, the entire strictly positive source set $\mathcal F_b$, and the actual paid prefix $M^T$, $T\ge2$. At a subsequent nonroot clock $i$ the effective observation is
+
+$$
+ y_i=\operatorname{tr}(A_iP)+\eta_i,\qquad |\eta_i|\le\varepsilon.
+ \tag{20.1}
+$$
+
+At a root clock the observation remains exactly $D(i)$. Only the post-calibration nonroot effective scalars are perturbed. The prefix and supplied calibration are exact. Errors are arbitrary bounded deterministic numbers; they need not be independent or have zero mean. Actions, stopping, and the estimate can be arbitrary deterministic functions of the whole received history, the exact calibration, and $\varepsilon$. Each action still incurs its mandatory read at the next original clock, including every gain root.
+
+The estimate is any $\widehat P\in\operatorname{Mat}_2(\mathbb R)$, without positivity, rank, trace, or fiber constraints. Its complete-target answer is $(\widehat P,H,D)$ and its loss is $\|\widehat P-P\|_{\max}$. For an integer additional-read bound $q\ge0$, define
+
+$$
+ R_q(\varepsilon)=\inf_{\mathcal A}\ \sup_{P\in\mathcal F_b,\ |\eta_i|\le\varepsilon}
+       \|\widehat P_{\mathcal A}-P\|_{\max},
+ \tag{20.2}
+$$
+
+where each competing strategy stops within $q$ additional reads for every source and allowed error history. The infimum is separately taken for each $\varepsilon$; thus competitors may form arbitrary $\varepsilon$-dependent families. The asymptotic uniformly consistent budget is the least fixed $q$ for which $R_q(\varepsilon)\to0$ as $\varepsilon\downarrow0$. The asymptotic linear-error budget is the least fixed $q$ for which $R_q(\varepsilon)=O(\varepsilon)$. Equivalently these conditions permit a family of strategies attaining the stated rate: an extra error $\varepsilon^2$ in selecting an infimum suffices. Rate constants can depend on the exact $T,b,H,D$ and $q$, and never on the actual source or error. Neither definition permits an uncounted root wait.
+
+For a fixed terminal matrix $A$ put
+
+$$
+ \Omega_{A,b}(\tau)=\sup\{\|P-Q\|_{\max}:P,Q\in\mathcal F_b,
+                   |\operatorname{tr}(A(P-Q))|\le\tau\}.
+ \tag{20.3}
+$$
+
+A uniformly continuous inverse means injectivity on the entire fiber and $\Omega_{A,b}(\tau)\to0$. A global Lipschitz inverse means $\|P-Q\|_{\max}\le L|\operatorname{tr}(A(P-Q))|$ for a finite $L$ and every pair in the fiber. These are comparisons of the same source pair under the same actual matrix.
+
+If instead an original post-calibration observation has error $\xi_i$, exact subtraction and nonroot division give
+
+$$
+ \eta_i=\frac{\xi_i}{H(i)},\qquad
+ |\xi_i|\le\delta_i\ \Longrightarrow\ |\eta_i|\le\frac{\delta_i}{|H(i)|}.
+ \tag{20.4}
+$$
+
+Thus (20.1) corresponds exactly to the original weighted bounds $|\xi_i|\le\varepsilon|H(i)|$ at nonroots. For a fixed finite set of used nonroots, a common original bound $\delta$ gives effective bound $\delta\max_i|H(i)|^{-1}$. Root observations can be discarded using the known root pattern; replacing a perturbed root response by its known $D(i)$ adds no information. This last preprocessing allows upper bounds to handle original error also at root reads. It does not perturb the prefix or the calibration and gives no conditioning uniform over nonzero gains of arbitrary magnitude.
+
+**Proposition 20.2 (the actual closure and the fixed-offdiagonal correspondence).** In the coordinates
+
+$$
+ P(t,v)=\begin{pmatrix}1-t&b-t-v\\v&t\end{pmatrix},\qquad
+ F_b(t,v)=t^2-tv-v^2-t+bv,
+ \tag{20.5}
+$$
+
+let $\mathcal K_b$ be the closure of $\mathcal F_b$ in the ambient matrix space. For $b\ne1$ it is exactly the nonnegative algebraic fiber $F_b(t,v)=0$, $0\le t\le1$, $v\ge0$, $b-t-v\ge0$. For $b=1$ that algebraic fiber has the extra isolated point $\left(\begin{smallmatrix}0&0\\0&1\end{smallmatrix}\right)$, and $\mathcal K_1$ is the algebraic fiber with this point removed. In particular every $\mathcal K_b$ is compact, without adding any source to $\mathcal F_b$.
+
+The fixed-offdiagonal fibers of main §§23–32 are different fibers. Specifically, for their $x,\zeta>0$, normalizing $R_U(s)$ by $x$ and putting $t=s/x$, $a=\zeta/x$ gives
+
+$$
+ R_U(s)/x=\begin{pmatrix}1-t&t(1-t)/a\\a&t\end{pmatrix},\qquad
+ \operatorname{tr}(MR_U(s)/x)=a+t+\frac{t(1-t)}a.
+ \tag{20.6}
+$$
+
+For $R_V$ the off-diagonal entries are interchanged and the same last formula holds. The expression in (20.6) is nonconstant on $0<t<1$; fixing $b$ selects at most two of its parameters. Consequently their exact fixed-offdiagonal inverse moduli and action frontiers do not by normalization become whole-$\mathcal F_b$ results.
+
+**Proof.** Trace, $M$ trace, and determinant give (20.5), with $u=b-t-v$ and $uv=t(1-t)$. All entries lie between $0$ and $\max(1,b)$ on the nonnegative algebraic fiber, which is closed and bounded. At $0<t<1$, its equation forces $u,v>0$, so these points already belong to $\mathcal F_b$. At $t=0$ its two endpoints are $(u,v)=(b,0),(0,b)$. Near the first, the equation solves as $v=t/b+O(t^2)$, with positive $u,v$ for small positive $t$; transposition handles the other. At $t=1$, a point exists only if $b\ge1$, and $uv=0$, $u+v=b-1$. For $b>1$, near $(u,v)=(b-1,0)$ one has $v=(1-t)/(b-1)+O((1-t)^2)$, again giving positive approximants; transpose for the other endpoint. These expansions follow by solving the displayed quadratic, or by its nonzero partial derivative in $v$ at the indicated endpoint.
+
+For $b=1$, put $h=1-t$. Then $u+v=h$ and $uv=h(1-h)$. If $h>0$, $uv\le h^2/4$ forces $h\ge4/5$. Thus the point with $t=1$ is isolated and cannot be approached by positive sources; all remaining boundary points have the approximants already given. Removing an isolated point here leaves a closed bounded set. This proves exactly the claimed closure, including its exceptional point. Substitution of $s=xt$, $\zeta=ax$ in the main §23 formulas proves (20.6); its quadratic coefficient is $-1/a\ne0$. $\square$
+
+## 21. The two different endpoint geometries
+
+**Theorem 21.1 (whole-fiber canonical stability and its two sharp boundaries).** Fix $S\ge2$ and write
+
+$$
+ c=F_S,\qquad \rho=F_{S-1}/F_S,\qquad
+ b_t=1/\rho,\qquad b_c=1+\rho,\qquad
+ \lambda_S(P)=\operatorname{tr}(JM^SP).
+ \tag{21.1}
+$$
+
+The two numbers $b_t,b_c$ are distinct and are the endpoints of $I_S$. On the entire $\mathcal F_b$ the following classification holds.
+
+* For $b$ strictly outside the closed interval with endpoints $b_t,b_c$, $\lambda_S$ has a global Lipschitz inverse.
+* At $b=b_t$, it has a global Hölder inverse of exponent $1/2$, and no finite global Hölder bound of any exponent greater than $1/2$. For the single noisy scalar and arbitrary ambient estimates, its minimax risk is $\Theta(\sqrt\varepsilon)$ as $\varepsilon\downarrow0$.
+* At $b=b_c$, it is exactly injective, but
+
+$$
+ \Omega_{JM^S,b_c}(0)=0,\qquad
+ \Omega_{JM^S,b_c}(\tau)=b_c\quad(\tau>0).
+ \tag{21.2}
+$$
+
+For every $\varepsilon>0$, its single-scalar minimax risk over arbitrary ambient estimates is exactly $b_c/2$.
+
+* In $I_S$ it is not injective, as in Theorem 9.1.
+
+The geometric assertions also hold for $\ell_\theta(P)=v-\theta t$ with any positive rational $\theta$, with endpoints $1/\theta,1+\theta$. For this version (21.2) uses $\ell_\theta$ in (20.3). Nonzero scalar scaling and an additive known constant affect finite stability coefficients, but not the classification or the positive-error radius at the collapsed endpoint.
+
+**Proof.** Use the already established canonical trace formula (9.4):
+
+$$
+ \lambda_S(P)=c+F_{S-1}b+c(v-\rho t).
+ \tag{21.3}
+$$
+
+It suffices to analyze $\ell_\theta=v-\theta t$. Put $C=\theta^2+\theta-1\ne0$, since $\theta$ is positive rational. The positive-source collision calculation (9.5)–(9.10) applies with $\theta$ in place of $\rho$. It already proves exact injectivity outside the open endpoint interval and positive-source collisions inside it. We examine the actual closure from Proposition 20.2, rather than inferring stability from injectivity on an open set.
+
+First classify possible equal-trace pairs on that closure. If $Q\ne P$ and $\ell_\theta(Q)=\ell_\theta(P)$, interchange the two so that
+
+$$
+ Q-P=h\begin{pmatrix}-1&-(1+\theta)\\\theta&1\end{pmatrix},\qquad h>0.
+ \tag{21.4}
+$$
+
+Then $P_{11}\ge h>0$. If $Q_{11}>0$, the row-ratio derivation of (9.6) remains valid with $0\le x<y<\infty$. Its common $b$ is (9.7), a weighted average of $1/\theta$, $1+\theta$, and $(2+\theta)/(1+\theta)$ with weights $\theta$, $x+y$, and $(1+\theta)xy$. The first two weights are positive. The third value is strictly between the first two by (9.9), so $b$ is strictly between the endpoints. If $Q_{11}=0$, (21.4) gives $Q_{21}>0$; determinant zero then gives $Q_{12}=0$, $Q_{22}=1$. Writing $p=P_{11}=h\in(0,1]$ gives
+
+$$
+ P_{12}=p(1+\theta),\quad P_{21}=\frac{1-p}{1+\theta},\quad
+ b=\frac{2+\theta}{1+\theta}
+            +p\left(\theta-\frac1{1+\theta}\right).
+ \tag{21.5}
+$$
+
+For $p<1$ this is strictly between the endpoints; for $p=1$ it equals $1+\theta$. Thus on either closed exterior sector the only possible distinct closure pair is, at $b=1+\theta$,
+
+$$
+ A=\begin{pmatrix}1&1+\theta\\0&0\end{pmatrix},\qquad
+ Z=\begin{pmatrix}0&0\\\theta&1\end{pmatrix}.
+ \tag{21.6}
+$$
+
+Both are actual closure points, since $b>1$. In particular the closure is still injective at $b=1/\theta$ and strictly outside the closed interval.
+
+We also need tangent directions, since absence of distinct closure collisions alone does not prove a Lipschitz inverse. Away from $b=\phi$ the conic (20.5) is nonsingular: solving both zero partial derivatives and $F_b=0$ forces $b^2-b-1=0$. All exterior and endpoint values under consideration differ from $\phi$. A tangent annihilated by $\ell_\theta$ has direction (21.4). At a point with $P_{11}>0$, write its row ratio as $x\ge0$. The first derivative of the determinant in that direction vanishes exactly when
+
+$$
+ \frac{P_{12}}{P_{11}}=
+       \frac{1+(1+\theta)x}{x+\theta}.
+$$
+
+Trace normalization therefore gives the tangent's fiber value
+
+$$
+ b(x)=\frac{(2+\theta)x^2+2(1+\theta)x+1}
+                 {(1+\theta)x^2+2x+\theta}.
+ \tag{21.7}
+$$
+
+For $x>0$ this is a strict weighted average of the same three values. At $x=0$ it equals $1/\theta$, at the source $A_t=\left(\begin{smallmatrix}1&1/\theta\\0&0\end{smallmatrix}\right)$. At a point with $P_{11}=0$, the endpoint with $P_{21}=0$ has nonzero determinant derivative $-1-\theta(b-1)$; the other endpoint has zero derivative only when $b=(2+\theta)/(1+\theta)$, strictly inside the interval. This also accounts for the limit $x\to\infty$ in (21.7). Hence strictly outside the closed interval there are neither closure collisions nor annihilated tangents; at $b=1/\theta$ the only annihilated tangent is at $A_t$.
+
+For completeness, these geometric facts give global estimates as follows. On a regular local parametrization of the compact actual closure, a nonzero scalar derivative bounds matrix distance by a constant times scalar distance for two sufficiently nearby points in that chart. A finite collection of such charts covers the closure in the strictly exterior case. Pairs outside these local neighborhoods form a compact set disjoint from the diagonal; injectivity on the closure makes their scalar separation have a positive minimum. Its finite diameter then supplies the remaining Lipschitz bound. This uses the actual $\mathcal K_b$, including the removal at $b=1$.
+
+At $b=1/\theta$, solve (20.5) for $v$ near $A_t$ using $t$ as parameter. Direct coefficient comparison gives
+
+$$
+ v(t)=\theta t+\theta C t^2+O(t^3),\qquad
+ \ell_\theta(P(t))=\theta C t^2+O(t^3),\qquad t\ge0.
+ \tag{21.8}
+$$
+
+These are actual positive sources for all sufficiently small $t>0$. Analyticity gives a neighborhood and constants $a,L>0$ in which
+
+$$
+ |\ell_\theta(P(t))-\ell_\theta(P(s))|
+       \ge a|t^2-s^2|\ge a|t-s|^2,\qquad
+ \|P(t)-P(s)\|_{\max}\le L|t-s|.
+ \tag{21.9}
+$$
+
+Indeed the derivative of the second expression in (21.8) has the fixed sign of $C$ and absolute value at least a positive constant times $t$; integration proves (21.9). The other charts have the previous Lipschitz bound. Combining this chart with those charts and the compact separated-pair set yields a finite global Hölder $1/2$ bound. The two positive sources $P(t),P(2t)$ have distance at least $t$ and scalar separation $O(t^2)$. Their ratios for every exponent greater than $1/2$ diverge, proving sharpness on the original positive domain.
+
+Here is also an attained noise bound with the declared ambient-estimator domain. Project the noisy scalar to the compact realized scalar set of $\mathcal K_b$ and apply its unique inverse, using the least scalar in case of a tie. The selected scalar differs from the true one by at most $2\varepsilon$. The exterior or tangent estimate just proved gives error at most $2L_b\varepsilon$ or $C_b\sqrt{2\varepsilon}$, respectively. Boundary outputs are allowed ambient estimates. For the canonical scalar, obtain that closure point using the existing quadratic (9.11) of Corollary 9.2, with membership in the actual $\mathcal K_b$ as the admissibility condition; the preceding geometry proves uniqueness. Conversely any two positive sources with scalar separation at most $2\varepsilon$ admit the same midpoint observation, and the triangle inequality forces error at least half their distance for one of them, regardless of the estimate's domain. Taking $P(t),P(2t)$ with $t$ a sufficiently small fixed multiple of $\sqrt\varepsilon$ gives the matching square-root lower bound.
+
+Finally at $b=1+\theta$, (21.6) has equal $\ell_\theta$ values and distance $b$. To exhibit strictly positive worlds, use (8.3)–(8.5) at this fixed $b$: put
+
+$$
+ q(r)=\frac{b-r}{1-(b-1)r},\qquad
+ P_r=P(r,q(r)),\qquad Q_r=P(r^{-1},q(r^{-1})).
+ \tag{21.10}
+$$
+
+For every sufficiently small positive $r$, both arguments $q(r),q(r^{-1})$ are positive, so both matrices are actual sources in the same $\mathcal F_b$. They tend to $A,Z$, respectively. Their scalar difference tends to zero and their matrix distance tends to $b$. Every source has diagonal entries in $(0,1)$ and off-diagonal entries in $(0,b)$, so its whole-fiber diameter is at most $b$ and (21.10) attains this supremum at every positive scalar tolerance. Exact injectivity gives the zero-tolerance statement. The midpoint-observation lower bound therefore gives minimax risk at least $b/2$ for every positive error. The constant ambient estimate
+
+$$
+ \widehat P_0=\begin{pmatrix}1/2&b/2\\b/2&1/2\end{pmatrix}
+ \tag{21.11}
+$$
+
+has error at most $b/2$ for all sources, proving equality. Known translation and nonzero scaling of the scalar preserve this argument for every positive error. Formula (21.3) completes all canonical assertions. $\square$
+
+## 22. Stability thresholds at every literal terminal length
+
+**Theorem 22.1 (all-word uniform and Lipschitz thresholds).** Fix $T\ge2$, $n\ge1$, put $S=T+n-1$, and retain all literal continuations $E_n\cdots E_1M^T$ with exactly $n$ actions and mandatory reads. There exists one whose terminal scalar has a uniformly continuous inverse on the entire $\mathcal F_b$ if and only if
+
+$$
+ b\notin I_S\quad\hbox{and}\quad b\ne1+F_{S-1}/F_S.
+ \tag{22.1}
+$$
+
+There exists one with a global Lipschitz inverse if and only if $b$ is strictly outside the closed interval $\overline I_S$. Both attained conditions use the actual chronological continuation $M^{n-1}J$. At the other endpoint $b=F_S/F_{S-1}$ it gives the sharp square-root inverse of Theorem 21.1. These statements concern the terminal scalar; they do not discard earlier useful observations in a whole-history problem.
+
+**Proof.** Sufficiency follows from Theorem 21.1 for the attained terminal matrix $JM^S$. The entire open interval is excluded by the all-word exact obstruction, Theorem 15.1. It remains to exclude uniform continuity at the collapsed endpoint and Lipschitz inversion at the tangent endpoint for every literal word, including noncanonical words.
+
+Write $A=\left(\begin{smallmatrix}\alpha&\beta\\\gamma&\delta\end{smallmatrix}\right)$ for an arbitrary such terminal matrix and set $e=\beta-\gamma$, $f=\delta-\alpha-\gamma$. Lemma 13.2 gives $|e|\le F_S$, at the literal length $S+1$. If $e=0$, transposed nonsymmetric sources give the exact collision of Lemma 14.1. If $e\ne0$, its scalar is the known constant $\alpha+\gamma b$ plus $e(v-\theta t)$ with $\theta=-f/e$. For $1<b<2$, Lemma 14.1 says that injectivity requires
+
+$$
+ \theta\in K_b\quad\hbox{or}\quad -1-\theta\in K_b.
+ \tag{22.2}
+$$
+
+Each of these rational numbers has reduced denominator at most $F_S$. Transposition exchanges them, up to a sign and a known scalar constant, and is an isometry of $\mathcal F_b$ in the matrix norm.
+
+Let $u=F_{S-2}/F_{S-1}$ and $v=F_{S-1}/F_S$. The Farey determinant and denominator calculation in Lemma 13.3 says that the only rationals in the closed interval with endpoints $u,v$ having denominator at most $F_S$ are its endpoints. No new word-bound induction is required. At $b_c=1+v$ and $S\ge3$, $K_{b_c}$ is the interval from $v$ to $1/(1+v)$; the second endpoint lies strictly inside the Farey interval from $u$ to $v$. Hence the only permitted value in (22.2) is $v$. Every injective terminal scalar is therefore a nonzero affine rescaling of $\ell_v$, possibly after transposition. Theorem 21.1 gives its positive-error discontinuity on the whole fiber. Noninjective scalars already fail uniform continuity.
+
+At $b_t=1/v=1+u$ and $S\ge3$, $K_{b_t}$ is the entire interval from $u$ to $v$. Thus an injective terminal scalar must, after the same possible transposition, use $\ell_v$ or $\ell_u$. The first has the square-root boundary at $b=1/v$; the second has the collapsed boundary at $b=1+u$. Neither has a Lipschitz inverse. This argument also supplies, for each injective candidate of tangent type, strictly positive pairs whose source distance is of order $t$ while their trace separation is of order $t^2$.
+
+There are two low-order endpoint issues. For $S=2$, necessarily $T=2,n=1$. The only terminal matrices are $M^3$, constant on $\mathcal F_b$, and $JM^2$. At $b_t=1$ use its actual closure $\mathcal K_1$, not the extra isolated algebraic point; Theorem 21.1 gives precisely the square-root inverse. At $b_c=2$ the same theorem gives the collapsed pair, so no other word repairs it. For $S=3$, the tangent endpoint is $b_t=2$, outside the strict range of Lemma 14.1. Its necessary condition (22.2) still holds at $b=2$: the positive-$\theta$ collision construction (14.5) for $\theta\notin[1/2,1]$ is unchanged; for $-1<\theta\le0$ its limiting row ratios are $x_0=-\theta<1$ and $y_0=1$, so the same small positive perturbation gives strictly positive collisions. The case $\theta=-1$ is the transpose of $\theta=0$, and $\theta<-1$ is again reduced by transposition. Thus the only permitted denominator-at-most-two slopes are $u=1$ and $v=1/2$, giving respectively the collapsed and tangent geometries just proved. The collapsed endpoint $b_c=3/2$ is already within the ordinary range. These cases exhaust $S\ge2$ and prove both necessary thresholds. $\square$
+
+## 23. Asymptotic stable costs on one actual history
+
+**Theorem 23.1 (first-two-nonroot stable budgets against adaptive families).** In Definition 20.1 let $r_1<r_2$ be the first two positive nonroot offsets of the particular known $H$, and put $S=T+r_1-1$. The asymptotic uniformly consistent and linear-error additional-read budgets are exactly
+
+$$
+ C_T^{\rm uc}(b;H,D)=
+ \begin{cases}
+ r_1,& b\notin I_S\ \hbox{and}\ b\ne1+F_{S-1}/F_S,\\
+ r_2,&\hbox{otherwise},
+ \end{cases}
+ \tag{23.1}
+$$
+
+$$
+ C_T^{\rm lin}(b;H,D)=
+ \begin{cases}
+ r_1,& b\notin\overline I_S,\\
+ r_2,&\hbox{otherwise}.
+ \end{cases}
+ \tag{23.2}
+$$
+
+At $b=F_S/F_{S-1}$ and every fixed $r_1\le q<r_2$, one has $R_q(\varepsilon)=\Theta(\sqrt\varepsilon)$. All lower bounds allow arbitrary ambient estimates and deterministic strategies depending on $\varepsilon$. Every upper bound is achieved on one mandatory-read trajectory, retaining all gain-root actions and the original clocks.
+
+**Proof of attainment.** On either $r_1$ branch, execute $M$ at each offset less than $r_1$ and $J$ at offset $r_1$. The terminal matrix is $JM^S$. Theorem 21.1's compact-image projection decoder, using the actual closure only, has uniform linear error strictly outside $\overline I_S$ and uniform square-root error at the tangent endpoint. It reads precisely $r_1$ times, even when all preceding gains vanish.
+
+For every other case execute $J$ at offset $1$ and then $M$ at every offset through $r_2$. Retain the noisy effective traces at $r_1,r_2$. Reuse the exact two-moving-trace basis and inverse in Lemmas 3.1–3.2 and (16.3):
+
+$$
+ \mathcal L(P)=\bigl(\operatorname{tr}P,\operatorname{tr}(MP),
+  \operatorname{tr}(M^{r_1-1}JM^TP),
+  \operatorname{tr}(M^{r_2-1}JM^TP)\bigr).
+ \tag{23.3}
+$$
+
+This is a fixed linear isomorphism on all real matrices. Return
+
+$$
+ \widehat P=\mathcal L^{-1}(1,b,y_{T+r_1},y_{T+r_2}).
+ \tag{23.4}
+$$
+
+Writing $L_1=\mathcal L^{-1}(0,0,1,0)$ and $L_2=\mathcal L^{-1}(0,0,0,1)$, the ordinary finite-dimensional error estimate is explicitly
+
+$$
+ \|\widehat P-P\|_{\max}
+ \le (\|L_1\|_{\max}+\|L_2\|_{\max})\varepsilon.
+ \tag{23.5}
+$$
+
+In original error units it is bounded by
+
+$$
+ \|L_1\|_{\max}\frac{\delta_{T+r_1}}{|H(T+r_1)|}
+ +\|L_2\|_{\max}\frac{\delta_{T+r_2}}{|H(T+r_2)|}.
+ \tag{23.6}
+$$
+
+These constants are finite for the fixed known gain and actual indices. No positivity projection, division by a root, second trajectory, or unacquired trace is used. This is the inherited double-moving-trace inverse with noisy right sides, rather than a new calibration result.
+
+**Proof of necessity.** Fix an error level and one competitor with uniform read bound $q<r_2$. Proposition 8.2 makes the whole paid prefix and supplied $H,D,b$ identical on every source in $\mathcal F_b$. Every offset before $r_1$ is a gain root and has exactly the same response $D(T+j)$, whatever actions have been selected. Induction fixes a common word up to the first nonroot, independent of $P$. If $q<r_1$, any two fixed distinct positive sources remain on the same history, giving a fixed positive minimax lower bound.
+
+If the competitor stops before $r_1$ on that source-independent history, the same fixed-pair obstruction already applies, regardless of its larger allowed bound $q$. Otherwise it actually reaches $r_1$, and its matrix $A$ there is a literal continuation of length $r_1$, fixed before its response is seen. Choose two actual positive sources $P,Q$ for that fixed matrix with trace separation at most $2\varepsilon$, and give both worlds the common midpoint effective response. Each world's error has magnitude at most $\varepsilon$. The two complete worlds are $(P,H,D)$ and $(Q,H,D)$ with their same exact full polynomials. All later clocks through offset $q$ are roots, so induction preserves the common actual actions and observations, even if they depend on the midpoint response. Any stopping estimate on that history is the same ambient matrix in both worlds. Its worst loss is at least $\|P-Q\|_{\max}/2$. Stopping on the common history after $r_1$ gives the same obstruction; if needed its history can be padded through $q$ with ignored mandatory root reads. The worlds are fixed for this competitor and error level before either run; they are not replaced as the history evolves.
+
+There are only finitely many possible words through offset $r_1$, even though the competitor can depend arbitrarily on $\varepsilon$. In the interior $b\in I_S$, Theorem 15.1 supplies a strictly positive exact collision for each word; the minimum of the finitely many positive collision distances is positive. At the collapsed endpoint, Theorem 22.1 shows that each word either has such a collision or has the collapsed geometry of Theorem 21.1, up to nonzero scaling and possible transposition. In the latter case strictly positive pairs have arbitrarily small scalar separation and distance tending to $b$. Again a positive lower bound can be chosen uniformly over the finite word set for all sufficiently small $\varepsilon$. Thus no such family with $q<r_2$ is uniformly consistent on these branches.
+
+At the tangent endpoint, every word either has a positive collision, has the collapsed geometry, or has the quadratic tangent geometry identified in Theorem 22.1. In the third case the positive pairs from (21.8)–(21.9), rescaled for that particular trace, force risk at least $a_A\sqrt\varepsilon$ for small $\varepsilon$, where $a_A>0$. In the other cases a constant lower bound also implies a square-root lower bound for sufficiently small $\varepsilon$. Taking the minima of these finitely many positive constants and error cutoffs gives $R_q(\varepsilon)\ge a\sqrt\varepsilon$. The canonical $r_1$ construction gives its matching upper bound, and in particular excludes uniform $O(\varepsilon)$ error below $r_2$. Together with the root-wait lower bound and attained decoders, this proves (23.1)–(23.2), including arbitrary $\varepsilon$-dependent deterministic choices. $\square$
+
+## 24. Paid calibration consumers and degree-controlled gaps
+
+**Theorem 24.1 (stable totals after exact paid polynomial calibration).** Start with the actual pure-$M$ prefix of $N=2k+d+3$ reads at original clocks $0,\ldots,N-1$, so $T=N-1\ge2$. Retain the complete exact calibration returned by the prefix of main Theorem 39.2. For every fixed resulting $H,D,b$, the uniformly consistent and linear-error total budgets for this prescribed architecture are exactly
+
+$$
+ N+C_T^{\rm uc}(b;H,D),\qquad N+C_T^{\rm lin}(b;H,D),
+ \tag{24.1}
+$$
+
+respectively. The complete source fiber remains $\mathcal F_b$. The exact total budget remains the already proved Theorem 18.1; (24.1) compares a different, positive-error task on that same source domain.
+
+**Proof.** The prefix theorem recovers the coefficient polynomials $H,bH,D$ at these exact original clocks; a nonzero coefficient of $H$ returns $b$, including all gain roots and degree drops. Its fixed-known-node confluent interpolation is the established Hermite ingredient, as represented by Batenkov–Yomdin, *On the Accuracy of Solving Confluent Prony Systems*, §2B, Definitions 2.3–2.4 and (2.2)–(2.4), [arXiv:1106.1137v3](https://arxiv.org/abs/1106.1137v3). Only that known-node linear evaluation fact is used here, not their unknown-node nondegeneracy or stability hypotheses. The calibration and its read count are reused premises, not inferred from the new perturbation model.
+
+Proposition 8.2 identifies the compatible positive sources with exactly $\mathcal F_b$, all having this same entire exact prefix. Add the $N$ already paid reads to Theorem 23.1's attained continuation and common-history lower bound. A protocol constrained to this prefix cannot resolve the fiber by stopping on a shorter pure-$M$ history. Freely supplying the calibration in the lower bound only strengthens the competitor. This proves (24.1) within the prescribed architecture. No statement about noisy calibration, unknown $H,D,b$, or the unrestricted optimum over earlier mixed trajectories follows. $\square$
+
+**Proposition 24.2 (the original seven-read example needs eight reads for uniform stability).** Keep precisely Example 17.3: $k=1,d=0,N=5,T=4,b=8/5,H(t)=t-5,D=0$, with the whole $\mathcal F_{8/5}$. Its exact total optimum for the prescribed prefix is $7$, while both stable totals in (24.1) are $8$. One actual eight-read trajectory has the following explicit robust decoder. Execute $J$ at clock $5$ and $M$ at each of clocks $6,7$. The clock-$5$ action and its zero-gain read are paid. Write the two received effective nonroot scalars as $y_6,y_7$ and set
+
+$$
+ \widehat v=\frac{131}{5}-y_6-y_7,\qquad
+ \widehat t=\frac{212}{5}-y_6-2y_7,\qquad
+ \widehat u=-67+2y_6+3y_7,\qquad
+ \widehat P=\begin{pmatrix}1-\widehat t&\widehat u\\\widehat v&\widehat t\end{pmatrix}.
+ \tag{24.2}
+$$
+
+For every source and every finite effective error bound $\varepsilon\ge0$ it has $\|\widehat P-P\|_{\max}\le5\varepsilon$. If the original errors at clocks $6,7$ have magnitude at most $\delta$, its error is at most $7\delta/2$. For every $\varepsilon>0$, every deterministic family constrained to the same exact prefix and at most seven total reads has worst error at least $543/1090$.
+
+**Proof.** Here $r_1=2,r_2=3,S=5$, $F_4/F_5=3/5$, and $b=1+3/5=b_c$. The exact seven-read assertion is the existing example and Theorem 18.1. Theorem 23.1 gives the all-source stable lower bound at $r_2=3$, allowing arbitrary intervening words and ambient outputs. An explicit positive lower constant is also available. The four possible terminal matrices after two more actions are $M^6,JM^5,MJM^4,M^4$. For $JM^5$, Theorem 21.1 gives risk $4/5$ at every positive error. For each other matrix the two strictly positive sources
+
+$$
+ P'=\frac1{545}\begin{pmatrix}470&750\\47&75\end{pmatrix},\qquad
+ P''=\frac1{545}\begin{pmatrix}108&207\\228&437\end{pmatrix}
+ \tag{24.3}
+$$
+
+are in $\mathcal F_{8/5}$ and have equal terminal traces. For $M^6,M^4$ this follows from the pure-$M$ identity (8.6); for $MJM^4$ direct multiplication gives zero trace pairing with their difference. Their distance is $543/545$. They have the same entire prefix and same whole $H,D$, and clock $5$ is a root. Thus their actual two-read histories coincide and the midpoint lower bound gives $543/1090$. The first action and the action at clock $6$ are fixed on the common history before that first nonroot response; early stopping cannot improve this lower bound. This proves the asserted constant for every permitted strategy.
+
+For the attained eight-read path, direct multiplication gives
+
+$$
+ A_6=MJM^4=\begin{pmatrix}2&3\\5&8\end{pmatrix},\qquad
+ A_7=M^2JM^4=\begin{pmatrix}5&8\\7&11\end{pmatrix}.
+$$
+
+For $P=\left(\begin{smallmatrix}1-t&u\\v&t\end{smallmatrix}\right)$, $u+v+t=8/5$, their exact traces are $10+t-2v$ and $81/5-t+v$. Solving these two linear equations is exactly (24.2) without error. If their effective errors are $a,e$, the errors of $v,t,u$ are $-a-e,-a-2e,2a+3e$. Their maximum absolute value is at most $5\varepsilon$ when $|a|,|e|\le\varepsilon$. Since $H(6)=1,H(7)=2$, original error at most $\delta$ instead gives $|a|\le\delta$, $|e|\le\delta/2$ and the bound $7\delta/2$. These estimates are uniform over the entire fiber and impose no output constraints. This trajectory uses the already paid five reads and precisely three further reads; it does not change the separate exact trajectory $M$ at clock $5$, $J$ at clock $6$ in Example 17.3. $\square$
+
+**Proposition 24.3 (arbitrarily large exact/stable gaps with controlled degree).** Fix $k,d\ge0$, $0\le s\le k$, the paid prefix $N=2k+d+3$, $T=N-1$, any allowed exact $D$, and
+
+$$
+ H_s(t)=c_*\prod_{j=2}^{s+1}(t-(T+j)),\qquad c_*\ne0.
+ \tag{24.4}
+$$
+
+The empty product is $1$. At $b=1+F_{T-1}/F_T$, the exact total optimum is $N+1$, whereas both stable totals are $N+s+2$. Their gap is exactly $s+1$. At $b=F_T/F_{T-1}$ the exact and uniformly consistent totals are $N+1$, with sharp square-root risk at that budget, whereas the linear-error total is $N+s+2$. Thus increasing the declared degree permits arbitrarily large gaps without changing the normalized strictly positive source domain or omitting any root read.
+
+**Proof.** This is the existing root arrangement (17.1), now used at the endpoint fibers: $\deg H_s=s$, $r_1=1$, and $r_2=s+2$. Exact endpoint injectivity and the already proved exact budget (16.1) give the $N+1$ exact totals. Apply (23.1)–(23.2) at $S=T$ and add the paid prefix. For the collapsed fiber both stable notions wait for the second nonroot; for the tangent fiber the first nonroot already has the sharp square-root decoder, while linear error requires the second. The full lower bounds retain $H_s$ itself and the same entire $D$ in both worlds. These are fixed-gain, prescribed-prefix comparisons; they assert neither optimal finite-error coefficients nor an unrestricted global optimum for the original uncalibrated model. $\square$
+
+## 追加锚（本行以下为增补区）
