@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/SignedShortLargeExchange
    mirror-E: none(waiver:audit-open-22063)
-   anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic, D5/S3/Combinatorics/Circle/PositiveSmallReturnExchange, D5/S3/Combinatorics/Circle/ThreeLargePacketExchange]
+   anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic, mathlib/module/Mathlib.Logic.Equiv.Fin.Rotate]
    utility: none
    digest: Constructive signed short-reserve selection supplies the shared full physical three-LARGE exchange under actual signed reserve bounds. -/
 module
