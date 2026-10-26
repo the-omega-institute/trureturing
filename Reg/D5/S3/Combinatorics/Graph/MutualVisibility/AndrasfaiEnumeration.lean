@@ -36,13 +36,12 @@ def wordActual : Realization wordSignature :=
 abbrev wordArena : Arena where
   signature := wordSignature
   Law r := ∀ N : ℕ, 0 < N → N % 3 ≠ 0 →
-    (Fintype.card {labels : Fin N → Bool // r.readout () N labels} : ℚ) =
+    (Nat.card {labels : Fin N → Bool // r.readout () N labels} : ℚ) =
       Matrix.trace (AndrasfaiTransfer.transfer ^ N)
 
 theorem word_source_bridge : wordScope ↔ wordArena.Law wordActual := by
   dsimp only [wordScope, wordArena, wordActual, realize]
   simp only [← Nat.card_eq_fintype_card]
-  rfl
 
 theorem word_actual_positive : wordArena.Law wordActual :=
   word_source_bridge.mp periodic_word_card_eq_trace
@@ -53,8 +52,8 @@ def wordRejected : Realization wordSignature :=
 theorem word_rejected_law : ¬ wordArena.Law wordRejected := by
   intro h
   have he := h 1 (by decide) (by decide)
-  have hc : Fintype.card {labels : Fin 1 → Bool // False} = 0 := by simp
-  change (Fintype.card {labels : Fin 1 → Bool // False} : ℚ) = _ at he
+  have hc : Nat.card {labels : Fin 1 → Bool // False} = 0 := by simp
+  change (Nat.card {labels : Fin 1 → Bool // False} : ℚ) = _ at he
   rw [hc] at he
   have ht : Matrix.trace (AndrasfaiTransfer.transfer ^ 1) = (1 : ℚ) := by decide +kernel
   rw [ht] at he
@@ -76,8 +75,9 @@ theorem word_dependence : ObservationalDependence wordSignature wordActual := by
     intro hp
     obtain ⟨q, hq, _⟩ :=
       (AndrasfaiLanguage.exists_unique_closed_run [true] (by decide)).mp hp
-    fin_cases q <;> decide +kernel at hq
-  simpa using fun he => hb (he ▸ hg)
+    fin_cases q <;> revert hq <;> decide +kernel
+  simpa using (show AndrasfaiLanguage.PeriodicAvoidance [false] ≠
+    AndrasfaiLanguage.PeriodicAvoidance [true] from fun he => hb (he ▸ hg))
 
 def wordFamily : Registration wordArena wordScope where
   actual := wordActual
@@ -186,7 +186,13 @@ theorem initial_dependence : ObservationalDependence initialSignature initialAct
   intro role
   cases role
   refine ⟨(), (0, 0), (0, 1), ?_⟩
-  decide +kernel
+  change (Andrasfai.host 0).Adj 0 0 ≠ (Andrasfai.host 0).Adj 0 1
+  have hn : ¬ (Andrasfai.host 0).Adj 0 0 := (Andrasfai.host 0).loopless.irrefl 0
+  have hy : (Andrasfai.host 0).Adj 0 1 := by
+    change ((1 - 0 : Andrasfai.Vertex 0).val % 3) = 1
+    decide +kernel
+  intro he
+  exact hn (he.mpr hy)
 
 def initialFamily : Registration initialArena initialScope where
   actual := initialActual
