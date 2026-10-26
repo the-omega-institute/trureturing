@@ -2890,18 +2890,28 @@ x_1-x_0=8^{-r}e_f.
 \tag{25.8}
 $$
 
-**Proof.** The only old crossing vertex for either birth is $p$, and
-$\operatorname{dist}_s(\varepsilon,p)=d$, so Theorem 25.2 gives the
-whole-field criterion. Fresh coordinates of $x_0$ are zero. In $u$ the
-unique root-to-$f$ path has length $d+1$; positive diagonal pads that
-path for every later $r$. Thus $q_1>0$ for $r>d$.
-At $r=d+1$, (25.6) has only its last potentially nonzero term.
-The coefficient of $e_p$ in $T_s^de_\varepsilon$ is exactly $8^{-d}$:
-the unique path has length $d$, leaving no time for a stay or detour.
-In a promotion the only fresh neighbour of an old cell is $pL=f$;
-in a split it is $pR=f$, whereas the other fresh cell $pLL$ is attached
-to old $pL$, at old distance $d+1$ from the root. Formula (25.5)
-therefore gives precisely (25.8). $\square$
+**Proof.** Definition 2.1 and the incidences in Theorem 21.2 give the
+actual crossing sets. A promotion adds only the edge $p$--$pL$, so
+$R=\{p\}$. A split retains old $p,pL$ and their edge, and adds
+the edges $p$--$pR$ and $pL$--$pLL$, so $R=\{p,pL\}$.
+The old root distances are $d$ for $p$ and, in the split case, $d+1$
+for $pL$. Since the seed has positive support $\{\varepsilon\}$,
+the minimum distance $D_{e_\varepsilon}$ in (25.3) is $d$ for both
+births. Theorem 25.2 therefore gives the whole-field criterion.
+Fresh coordinates of $x_0$ are zero. In $u$ the unique root-to-$f$
+path has length $d+1$; positive diagonal pads that path for every
+later $r$. Thus $q_0=0<q_1$ for $r>d$.
+
+At $r=d+1$, every term of (25.6) with $k<d$ vanishes, leaving
+$x_1-x_0=DT_s^de_\varepsilon$. Put $z=T_s^de_\varepsilon$.
+Its coordinate $z_p$ is exactly $8^{-d}$: the unique root-to-$p$
+path has length $d$, leaving no time for a stay or detour. In the
+split case $z_{pL}=0$, since that old vertex is at distance $d+1$.
+By (25.5), $Dz$ has zero old coordinates. For a promotion its only
+fresh coordinate is $(Dz)_{pL}=z_p/8$; for a split the fresh
+coordinates are $(Dz)_{pR}=z_p/8$ and $(Dz)_{pLL}=z_{pL}/8=0$.
+In either case this is exactly $8^{-(d+1)}e_f$, proving (25.8),
+including the root case $d=0$. $\square$
 
 The depth range is unbounded within the same native class. For example
 execute $P_\varepsilon;S_\varepsilon$, then
