@@ -111,8 +111,26 @@ private lemma fixed_input_bound
 private lemma parallel_bound (q : StdSimplex ℝ (Fin 6 × Fin 6))
     (δ : (Fin 6 × Fin 6) → (Fin 6 × Fin 6) → StdSimplex ℝ (Fin 4)) :
     parallelSuccess prior channels q δ ≤ 3 / 4 := by
-  have h := fixed_input_bound δ
-  sorry
+  calc
+    parallelSuccess prior channels q δ =
+        ∑ x, q.weights x * (1 / 4 *
+          ∑ i, (δ x (channels i x.1, channels i x.2)).weights i) := by
+      simp only [parallelSuccess, prior, Finsupp.coe_equivFunOnFinite_symm]
+      simp_rw [Finset.mul_sum]
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro x _
+      apply Finset.sum_congr rfl
+      intro i _
+      exact mul_left_comm _ _ _
+    _ ≤ ∑ x, q.weights x * (1 / 4 * 3) := by
+      apply Finset.sum_le_sum
+      intro x _
+      exact mul_le_mul_of_nonneg_left
+        (mul_le_mul_of_nonneg_left (fixed_input_bound δ x) (by norm_num)) (q.weights_nonneg x)
+    _ = 3 / 4 := by
+      rw [← Finset.sum_mul, q.total_of_fintype]
+      norm_num
 
 /-- Sequential strategies can strictly outperform all parallel strategies for classical
 permutation channels, even with only two uses of the same unknown channel. -/
