@@ -59,7 +59,7 @@ theorem normalized_readAt {d : ℕ} (W : UnnormalizedWorld d) (w : List Bool) (i
 
 def identicalRow (θ : ℝ) : Mat := !![1 - θ, θ; 1 - θ, θ]
 
-private theorem identical_row_chart (θ : ℝ) (hθ : 0 < θ) (hθ' : θ < 1) :
+private theorem identical_row_chart (θ : ℝ) (hθ' : θ < 1) :
     identicalRow θ = sourceChart 1 (θ / (1 - θ)) := by
   have ht : 1 - θ ≠ 0 := by linarith
   have hi : (1 + 1 * (θ / (1 - θ)))⁻¹ = 1 - θ := by
@@ -67,12 +67,12 @@ private theorem identical_row_chart (θ : ℝ) (hθ : 0 < θ) (hθ' : θ < 1) :
     field_simp
     ring
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [identicalRow, sourceChart, hi] <;> field_simp
+  fin_cases i <;> fin_cases j <;> simp [identicalRow, sourceChart, hi] <;> field_simp <;> ring
 
 /-- Every parameter in the open unit interval gives a legal original source. -/
 theorem identical_row_legal (θ : ℝ) (hθ : 0 < θ) (hθ' : θ < 1) :
     LegalSource (identicalRow θ) := by
-  rw [identical_row_chart θ hθ hθ']
+  rw [identical_row_chart θ hθ']
   exact source_chart_legal 1 _ zero_lt_one (div_pos hθ (by linarith))
 
 def rowWorld (d : ℕ) (θ : ℝ) (hθ : 0 < θ) (hθ' : θ < 1)
@@ -98,7 +98,8 @@ private theorem identical_row_pureJ (θ : ℝ) (n : ℕ) :
 theorem identical_row_readings (d : ℕ) (θ : ℝ) (hθ : 0 < θ) (hθ' : θ < 1)
     (β : Coeff d) (hβ : β ≠ 0) (δ : ℝ) (n : ℕ) :
     readings (rowWorld d θ hθ hθ' β hβ δ) (List.replicate n true) =
-      fun i => (gain d β).eval (i : ℝ) + δ := by
+      fun i : Fin ((List.replicate n true).length + 1) =>
+        (gain d β).eval (i.val : ℝ) + δ := by
   ext i
   change (gain d β).eval (i.val : ℝ) *
     Matrix.trace (acquisition ((List.replicate n true).take i.val) * identicalRow θ) + δ = _
