@@ -128,6 +128,7 @@ theorem pi_machin_bounds : (piLowerQ : ℝ) ≤ Real.pi ∧ Real.pi ≤ (piUpper
       (mul_le_mul_of_nonneg_left h239.1 (by norm_num))⟩
 
 /-- Exact rational width; this is much smaller than 10^-250. -/
+set_option exponentiation.threshold 1024 in
 theorem pi_machin_width : piUpperQ - piLowerQ < (1 : ℚ) / 10 ^ 320 := by
   have hw : piUpperQ - piLowerQ =
       16 * ((1 / 5 : ℚ) ^ 461 / 461) + 4 * ((1 / 239 : ℚ) ^ 461 / 461) := by
@@ -138,6 +139,7 @@ theorem pi_machin_width : piUpperQ - piLowerQ < (1 : ℚ) / 10 ^ 320 := by
 
 /-- Coarse admissibility of the exact Machin endpoints, independent of the
 optional closed-value evaluations and 250-place rounding proofs. -/
+set_option exponentiation.threshold 1024 in
 private theorem machin_endpoints_range :
     (0 : ℝ) ≤ (piLowerQ : ℝ) ∧ (piUpperQ : ℝ) < 8 := by
   have hpi := pi_machin_bounds
@@ -154,8 +156,8 @@ private theorem machin_endpoints_range :
   · exact (by norm_num : (0 : ℝ) ≤ 2).trans hl2.le
   · calc
       (piUpperQ : ℝ) < (piLowerQ : ℝ) + 1 := ha
-      _ ≤ Real.pi + 1 := add_le_add_right hpi.1 1
-      _ < 8 := (add_lt_add_right Real.pi_lt_four 1).trans_le (by norm_num)
+      _ ≤ Real.pi + 1 := by linarith [hpi.1]
+      _ < 8 := by linarith [Real.pi_lt_four]
 
 /-- Taylor polynomial through degree N (N+1 terms). -/
 def expPrefix (y : ℝ) (N : ℕ) : ℝ := ∑ n ∈ range (N + 1), y ^ n / n.factorial
@@ -187,7 +189,7 @@ theorem exp_tail_ratio_lt_one {y : ℝ} (hy : y < 1) (N : ℕ) :
   have hd : (0 : ℝ) < (N + 2 : ℕ) := Nat.cast_pos.mpr (Nat.succ_pos _)
   have hd1 : (1 : ℝ) ≤ (N + 2 : ℕ) := by
     exact_mod_cast (Nat.succ_le_succ (Nat.zero_le (N + 1)))
-  exact (div_lt_iff₀ hd).2 (hy.trans_le hd1)
+  exact (div_lt_iff₀ hd).2 (by simpa only [one_mul] using hy.trans_le hd1)
 
 /-- First omitted term times a geometric majorant; factorial growth is proved
 by the existing Nat.factorial_mul_pow_le_factorial theorem. -/
@@ -254,7 +256,8 @@ theorem exp_neg_sixteen_bounds {y : ℝ} (hy0 : 0 ≤ y) (hy1 : y < 1) (N : ℕ)
     pow_le_pow_left₀ hp.le ht.1 16
   have hup : Real.exp y ^ 16 ≤ expUpper y N ^ 16 :=
     pow_le_pow_left₀ (Real.exp_pos y).le ht.2 16
-  have h := Real.exp_nat_mul y 16
+  have h : Real.exp (16 * y) = Real.exp y ^ 16 := by
+    simpa only [Nat.cast_ofNat] using Real.exp_nat_mul y 16
   have hid : Real.exp (-(16 * y)) = 1 / Real.exp y ^ 16 := by
     rw [Real.exp_neg, h, one_div]
   rw [hid]
