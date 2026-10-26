@@ -190,7 +190,12 @@ def arena : Arena where
   Law R := ∀ (B : Finset Bool) (as : List (Finset Window)), NativeContinuation.Acquisition.NativeBinaryRow.value (row B as) = R.readout () B as
 private theorem faithful : arena.Law actual := by intro B as; exact row_value B as
 private theorem alternate_fails : ¬ arena.Law alternate := by intro h; have hc := h {false} []; norm_num [alternate,realize,row,terminalColumns,NativeContinuation.Acquisition.NativeBinaryRow.value,Lax51Proofs.RamToTM.bitsValue,Nat.bit_val] at hc
-private theorem dependence : ObservationalDependence signature actual := by intro role; refine ⟨{false}, [], [∅], ?_⟩; norm_num [actual,realize,counts,table,NativeContinuation.Acquisition.NativeSuffixAcquisition.terminal,NativeContinuation.Acquisition.NativeSuffixAcquisition.advance,Finset.mem_singleton]
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨{false}, [], [∅], ?_⟩
+  simp [actual, realize, counts, table,
+    NativeContinuation.Acquisition.NativeSuffixAcquisition.terminal,
+    NativeContinuation.Acquisition.NativeSuffixAcquisition.advance]
 
 def family : Registration arena (type_of% row_value) where
   actual := actual

@@ -31,27 +31,27 @@ def arena : Arena where
     let as := List.ofFn A
     let answer := reconstruct B as (table B as) s
     (input B as s).length = 3+5*L ∧
-    NativeBinaryTable.decodeTable L (NativeBinaryTable.records B as) = table B as ∧
+    _root_.D5.S3.Arith.FibonacciAtomic.NativeContinuation.Acquisition.NativeBinaryTable.decodeTable L (_root_.D5.S3.Arith.FibonacciAtomic.NativeContinuation.Acquisition.NativeBinaryTable.records B as) = table B as ∧
     (∀ (t : Fin (L+1)) (b : Bool),
-      (NativeBinaryTable.decodeTable L (NativeBinaryTable.records B as))[t.val]? =
+      (_root_.D5.S3.Arith.FibonacciAtomic.NativeContinuation.Acquisition.NativeBinaryTable.decodeTable L (_root_.D5.S3.Arith.FibonacciAtomic.NativeContinuation.Acquisition.NativeBinaryTable.records B as))[t.val]? =
         some (counts B (as.drop t.val)) ∧
-      R.readout () ⟨L,A,B,s,t⟩ b = (NativeSuffixAcquisition.completions B (as.drop t.val) b).card ∧
+      R.readout () ⟨L,A,B,s,t⟩ b = (NativeContinuation.Acquisition.NativeSuffixAcquisition.completions B (as.drop t.val) b).card ∧
       entry (counts B (as.drop t.val)) b ≤ 5^(L-t.val)) ∧
     (answer = none ↔ entry (counts B as) s = 0) ∧
     (entry (counts B as) s = 0 ↔
       ¬ ∃ (w : List Window) (u : Bool) (d : ℕ × ℕ),
-        Allowed as w ∧ u ∈ B ∧ NullReplyFiber.NativeHistory s (0,0) w u d) ∧
+        Allowed as w ∧ u ∈ B ∧ _root_.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.NativeHistory s (0,0) w u d) ∧
     (0 < entry (counts B as) s →
       ∃ (w : List Window) (u : Bool) (d : ℕ × ℕ),
         answer = some w ∧ w.length = L ∧ Allowed as w ∧ u ∈ B ∧
-        NullReplyFiber.NativeHistory s (0,0) w u d ∧
+        _root_.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.NativeHistory s (0,0) w u d ∧
         (ImmediateWindowStateCapacity.rawMachine 0).toDFA.evalFrom
           (some (s,GraftAffineClosure.residue 0 (0,0))) w = some (u,GraftAffineClosure.residue 0 d) ∧
         decodeWord (printed w) = some w) ∧
     ∃ time tape, time ≤ 1073741824 * (L+1)^4 ∧
       Complexity.runInput binaryMachine time (input B as s) = some (answer.isSome,tape) ∧
       tape.output = output B as s ∧
-      NativeBinaryTable.decodeTable L (tape.output.take ((L+1)*(6*L+5))) = table B as ∧
+      _root_.D5.S3.Arith.FibonacciAtomic.NativeContinuation.Acquisition.NativeBinaryTable.decodeTable L (tape.output.take ((L+1)*(6*L+5))) = table B as ∧
       decodeAnswer (tape.output.drop ((L+1)*(6*L+5))) = some answer
 
 private theorem faithful : arena.Law actual := native_binary_word
