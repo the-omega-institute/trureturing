@@ -6,6 +6,7 @@
    utility: none
    digest: Actual signed left-nested covariance with the original full clearing and numerator. -/
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorFinalLaurentFiber
+import D5.S3.VertexAlgebra.Sectors.LatticeSectorMiddleCommonNumerator
 import D5.S3.VertexAlgebra.FormalSeries.SupportedFinalCovariance
 
 /-!
@@ -564,14 +565,9 @@ private theorem sameR_from_actual_middle (D : LatticeData) (α β γ δ : Charge
     simpa only [H] using (signed_extra_mul Ptri Acore Bcore x y z)
   exact remove_supported_extra G H Acore Bcore U lowerG lowerH extra x y z
 
-/-- SAME original global k, statewise a, generally infinite P, six products,
-inner/middle identifications, original-left finite Jacobi/inverse data, and
-original-middle reconstruction. The new conclusion is the actual final K
-cleared by the fixed Rfinal, on EVERY signed exponent.
-
-No K/LaurentCoefficient comparison, other bracketing, coherence, analytic
-convergence, or complete Monster/string/AdS realization is asserted.
--/
+/-- The literal final polynomial acts on the actual canonical left-nested
+channel as the triangular substitution of the original common numerator.
+The original k, a, P, truncation and all six signed product laws are retained. -/
 theorem actual_three_field_same_R_left_covariance
     (D : LatticeData) (α β γ : Charge D)
     (u : Sector D α) (v : Sector D β) (t : Sector D γ) :

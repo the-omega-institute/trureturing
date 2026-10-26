@@ -47,6 +47,19 @@ theorem source_bridge :
 
 theorem actual_positive : arena.Law actual := actual_three_field_final_laurent_coefficients
 
+/-- A proposition readout of a universally proved law cannot witness dependence. -/
+theorem proposition_readout_has_no_dependence :
+    ¬ ObservationalDependence signature actual := by
+  intro dependence
+  obtain ⟨p, x, y, different⟩ := dependence ()
+  apply different
+  apply propext
+  constructor <;> intro _
+  · exact actual_three_field_final_laurent_coefficients p.D p.α p.β p.γ
+      y.1 y.2.1 y.2.2
+  · exact actual_three_field_final_laurent_coefficients p.D p.α p.β p.γ
+      x.1 x.2.1 x.2.2
+
 abbrev RequiredEvidence :=
   Registration arena (type_of% (@actual_three_field_final_laurent_coefficients))
 

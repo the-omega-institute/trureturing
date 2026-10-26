@@ -22,16 +22,19 @@ def finalSlice {R : Type*} [CommRing R] [Algebra ℂ R]
     (P : MvPowerSeries (Fin 3) R) (z : ℤ) : MvPowerSeries (Fin 2) R :=
   fun d => signedExtend P ![(d 0 : ℤ), (d 1 : ℤ), z]
 
+private theorem finalSlice_coeff {R : Type*} [CommRing R] [Algebra ℂ R]
+    (P : MvPowerSeries (Fin 3) R) (a b : ℕ) (z : ℤ) :
+    MvPowerSeries.coeff (powerIndex a b) (finalSlice P z) =
+      signedExtend P ![(a : ℤ), (b : ℤ), z] := by
+  simp [MvPowerSeries.coeff_apply, finalSlice, powerIndex]
+
 private theorem finalSlice_extend {R : Type*} [CommRing R] [Algebra ℂ R]
     (P : MvPowerSeries (Fin 3) R) (x y z : ℤ) :
     extend (finalSlice P z) x y = signedExtend P ![x, y, z] := by
   by_cases hx : 0 ≤ x
   · by_cases hy : 0 ≤ y
-    · simp only [extend, if_pos ⟨hx, hy⟩, MvPowerSeries.coeff_apply, finalSlice,
-        powerIndex, Finsupp.add_apply, Finsupp.single_eq_same,
-        Finsupp.single_eq_of_ne (by decide : (0 : Fin 2) ≠ 1),
-        Finsupp.single_eq_of_ne (by decide : (1 : Fin 2) ≠ 0), zero_add, add_zero,
-        Int.toNat_of_nonneg hx, Int.toNat_of_nonneg hy]
+    · rw [extend, if_pos ⟨hx, hy⟩, finalSlice_coeff]
+      simp [Int.toNat_of_nonneg hx, Int.toNat_of_nonneg hy]
     · have hn : ¬ ∀ i : Fin 3, 0 ≤ (![x, y, z] : Fin 3 → ℤ) i := fun h => hy (h 1)
       simp [extend, signedExtend, hy, hn]
   · have hn : ¬ ∀ i : Fin 3, 0 ≤ (![x, y, z] : Fin 3 → ℤ) i := fun h => hx (h 0)
@@ -58,6 +61,7 @@ private theorem finalSlice_collision {R : Type*} [CommRing R] [Algebra ℂ R]
   by_cases hx : 0 ≤ x
   · by_cases hy : 0 ≤ y
     · rw [extend, if_pos ⟨hx, hy⟩, collision_coeff]
+      simp_rw [finalSlice_coeff]
       by_cases hz : 0 ≤ z
       · have ee : (![x, y, z] : Fin 3 → ℤ) =
             ![(x.toNat : ℤ), (y.toNat : ℤ), (z.toNat : ℤ)] := by
@@ -81,7 +85,7 @@ private theorem finalSlice_collision {R : Type*} [CommRing R] [Algebra ℂ R]
         have hn' : ¬ ∀ i : Fin 3, 0 ≤
             (![((x.toNat + d : ℕ) : ℤ), ((y.toNat - d : ℕ) : ℤ), z] : Fin 3 → ℤ) i :=
           fun h => hz (h 2)
-        simp [signedExtend, hn']
+        rw [signedExtend, if_neg hn', smul_zero]
     · have hn : ¬ ∀ i : Fin 3, 0 ≤ (![x, y, z] : Fin 3 → ℤ) i := fun h => hy (h 1)
       simp [extend, signedExtend, hy, hn]
   · have hn : ¬ ∀ i : Fin 3, 0 ≤ (![x, y, z] : Fin 3 → ℤ) i := fun h => hx (h 0)
@@ -121,6 +125,7 @@ theorem signed_final_transform {R : Type*} [CommRing R] [Algebra ℂ R]
     have hiy : y < i := by
       simp only [Finset.mem_coe, Finset.mem_range, not_lt] at hout
       omega
+    change _ • M (y - (i : ℤ)) (x + (i : ℤ)) z = 0
     rw [lower _ _ (by omega), smul_zero]
   rw [← finiteSum]
   have signedEq :
@@ -223,7 +228,7 @@ theorem signed_extra_mul {R : Type*} [CommRing R] [Algebra ℂ R]
   rw [mul_assoc, mul_assoc, signed_X_pow_mul, signed_X_pow_mul, signed_X_pow_mul]
   apply congrArg (signedExtend P)
   funext i
-  fin_cases i <;> simp [nsmul_eq_mul, Nat.cast_sub hhA] <;> omega
+  fin_cases i <;> simp [nsmul_eq_mul, Nat.cast_sub hhA, Pi.single_apply, Matrix.vecHead, Matrix.vecTail] <;> omega
 
 /-- Removing y^B is a signed translation. Removing (x+y)^A uses the existing
 finite supported inverse, with the SAME genuine x support bound on both sides.

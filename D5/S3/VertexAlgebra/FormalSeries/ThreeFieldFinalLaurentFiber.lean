@@ -12,11 +12,12 @@ admission_basis: escape-witness
 escape_witness: signed exponent balance proves finite support of the inverse coefficient fiber.
 The binomial factors retain the Mathlib suppliers and their attribution. -/
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.VertexAlgebra.ThreeFieldFinalLaurentFiber
 open UniformGradedLocalCorrelator UngradedLocalWordSeries SupportedThreeFieldCollision
 open StateFieldResidueReconstruction (integerBinomial)
 open scoped BigOperators
-open SupportedMiddleCollision
+open SupportedMiddleCollision SupportedChannelSeries
 noncomputable section
 
 private def swap12 : Fin 3 ≃ Fin 3 := Equiv.swap 1 2
@@ -24,7 +25,7 @@ private def swap12 : Fin 3 ≃ Fin 3 := Equiv.swap 1 2
 private theorem swap12_index (x y z : ℕ) :
     (index3 x z y).embDomain swap12.toEmbedding = index3 x y z := by
   simp [index3, Finsupp.embDomain_eq_mapDomain, Finsupp.mapDomain_add,
-    Finsupp.mapDomain_single, swap12]
+    Finsupp.mapDomain_single, swap12, Equiv.swap_apply_def, add_comm, add_left_comm, add_assoc]
 
 private theorem swap12_signed {R : Type*} [CommRing R] [Algebra ℂ R]
     (P : MvPowerSeries (Fin 3) R) (x y z : ℤ) :
@@ -90,10 +91,18 @@ private theorem final_as_swapped_outer {R : Type*} [CommRing R]
     MvPowerSeries.subst_comp_subst_apply hc hr]
   congr 1
   funext i
-  fin_cases i <;>
-    simp [r, Function.comp_def, swap12, outerArguments, finalArguments,
-      MvPowerSeries.subst_X hr, MvPowerSeries.subst_X ho,
-      MvPowerSeries.subst_add hr]
+  simp only [r, Function.comp_apply, MvPowerSeries.subst_X ho]
+  fin_cases i
+  · change MvPowerSeries.X 0 + MvPowerSeries.X 1 =
+      MvPowerSeries.subst r (MvPowerSeries.X 0 + MvPowerSeries.X 2)
+    rw [MvPowerSeries.subst_add hr, MvPowerSeries.subst_X hr, MvPowerSeries.subst_X hr]
+    simp [r, swap12, Equiv.swap_apply_def]
+  · change MvPowerSeries.X 1 = MvPowerSeries.subst r (MvPowerSeries.X 2)
+    rw [MvPowerSeries.subst_X hr]
+    simp [r, swap12]
+  · change MvPowerSeries.X 2 = MvPowerSeries.subst r (MvPowerSeries.X 1)
+    rw [MvPowerSeries.subst_X hr]
+    simp [r, swap12]
 
 /-- Reassociation of legal substitutions keeps the original P unchanged. -/
 theorem final_middle_substitution {R : Type*} [CommRing R]
@@ -107,10 +116,18 @@ theorem final_middle_substitution {R : Type*} [CommRing R]
   rw [finalCollision, MvPowerSeries.subst_comp_subst_apply hm (final_hasSubst R)]
   congr 1
   funext i
-  fin_cases i <;>
-    simp [middleArguments, finalArguments, triangularArguments,
-      MvPowerSeries.subst_X (final_hasSubst R),
-      MvPowerSeries.subst_add (final_hasSubst R)]
+  fin_cases i
+  · change MvPowerSeries.subst (finalArguments R) (MvPowerSeries.X 0 + MvPowerSeries.X 2) = _
+    rw [MvPowerSeries.subst_add (final_hasSubst R), MvPowerSeries.subst_X (final_hasSubst R),
+      MvPowerSeries.subst_X (final_hasSubst R)]
+    rfl
+  · change MvPowerSeries.subst (finalArguments R) (MvPowerSeries.X 1 + MvPowerSeries.X 2) = _
+    rw [MvPowerSeries.subst_add (final_hasSubst R), MvPowerSeries.subst_X (final_hasSubst R),
+      MvPowerSeries.subst_X (final_hasSubst R)]
+    rfl
+  · change MvPowerSeries.subst (finalArguments R) (MvPowerSeries.X 2) = _
+    rw [MvPowerSeries.subst_X (final_hasSubst R)]
+    rfl
 
 private theorem signed_nat {R : Type*} [CommRing R] [Algebra ℂ R]
     (P : MvPowerSeries (Fin 3) R) (x y z : ℕ) :

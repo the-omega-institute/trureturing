@@ -24,7 +24,7 @@ private def swap01 : Fin 3 ≃ Fin 3 := Equiv.swap 0 1
 private theorem swap_index (s b z : ℕ) :
     (index3 b s z).embDomain swap01.toEmbedding = index3 s b z := by
   simp [index3, Finsupp.embDomain_eq_mapDomain, Finsupp.mapDomain_add,
-    Finsupp.mapDomain_single, swap01]
+    Finsupp.mapDomain_single, swap01, Equiv.swap_apply_def, add_comm, add_left_comm, add_assoc]
 
 private theorem swap_signed {R : Type*} [CommRing R] [Algebra ℂ R]
     (P : MvPowerSeries (Fin 3) R) (s b z : ℤ) :
@@ -92,10 +92,19 @@ private theorem outer_as_swapped_inner {R : Type*} [CommRing R]
     MvPowerSeries.subst_comp_subst_apply hc hr]
   congr 1
   funext i
-  fin_cases i <;>
-    simp [r, Function.comp_def, swap01, innerArguments, outerArguments,
-      MvPowerSeries.subst_X hr, MvPowerSeries.subst_X hi,
-      MvPowerSeries.subst_add hr]
+  simp only [r, Function.comp_apply, MvPowerSeries.subst_X hi]
+  fin_cases i
+  · change MvPowerSeries.X 0 + MvPowerSeries.X 2 =
+      MvPowerSeries.subst r (MvPowerSeries.X 1 + MvPowerSeries.X 2)
+    rw [MvPowerSeries.subst_add hr, MvPowerSeries.subst_X hr, MvPowerSeries.subst_X hr]
+    simp [r, swap01, Equiv.swap_apply_def]
+  · change MvPowerSeries.X 1 = MvPowerSeries.subst r (MvPowerSeries.X 0)
+    rw [MvPowerSeries.subst_X hr]
+    simp [r, swap01]
+  · change MvPowerSeries.X 2 = MvPowerSeries.subst r (MvPowerSeries.X 2)
+    rw [MvPowerSeries.subst_X hr]
+    simp [r, swap01, Equiv.swap_apply_def]
+
 
 /-- Actual legal outer collision equals the signed bivariate collision on
 its fixed middle slice. No statement about canonical iterates is assumed. -/
@@ -123,10 +132,17 @@ theorem outer_inner_substitution {R : Type*} [CommRing R]
   rw [innerCollision, MvPowerSeries.subst_comp_subst_apply hi (outer_hasSubst R)]
   congr 1
   funext i
-  fin_cases i <;>
-    simp [innerArguments, outerArguments, middleArguments,
-      MvPowerSeries.subst_X (outer_hasSubst R),
-      MvPowerSeries.subst_add (outer_hasSubst R)]
+  fin_cases i
+  · change MvPowerSeries.subst (outerArguments R) (MvPowerSeries.X 0) = _
+    rw [MvPowerSeries.subst_X (outer_hasSubst R)]
+    rfl
+  · change MvPowerSeries.subst (outerArguments R) (MvPowerSeries.X 1 + MvPowerSeries.X 2) = _
+    rw [MvPowerSeries.subst_add (outer_hasSubst R),
+      MvPowerSeries.subst_X (outer_hasSubst R), MvPowerSeries.subst_X (outer_hasSubst R)]
+    rfl
+  · change MvPowerSeries.subst (outerArguments R) (MvPowerSeries.X 2) = _
+    rw [MvPowerSeries.subst_X (outer_hasSubst R)]
+    rfl
 
 end
 end D5.S3.VertexAlgebra.SupportedMiddleCollision

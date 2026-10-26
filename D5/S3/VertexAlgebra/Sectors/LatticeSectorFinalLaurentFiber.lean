@@ -4,23 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual canonical and Jacobi consumers of the finite final Laurent fiber. -/
-import D5.S3.VertexAlgebra.Sectors.LatticeSectorMiddleCommonNumerator
-import D5.S3.VertexAlgebra.FormalSeries.ThreeFieldFinalLaurentFiber
+   digest: The actual left-nested canonical three-field channel. -/
+import D5.S3.VertexAlgebra.Sectors.LatticeSectorChannelTransport
 
 set_option autoImplicit false
-set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.VertexAlgebra.LatticeSectorFinalLaurentFiber
-open LatticeGeneratingFieldLocality LatticeSugawaraCurrents LatticeAllStateField
-open LatticeSectorIntertwiner LatticeSectorChannelTransport
-open LatticeSectorThreeFieldCommonSeries LatticeSectorThreeFieldInnerIterate
-open LatticeSectorSecondCollisionSlice LatticeSectorMiddleCommonNumerator
-open UniformGradedLocalCorrelator UngradedLocalWordSeries
-open SupportedChannelSeries SupportedThreeFieldCollision SupportedMiddleCollision
-open SupportedCollisionSlice ThreeFieldFinalLaurentFiber
-open StateFieldResidueReconstruction (integerBinomial)
-open FieldNormalProductLocality (deltaEnd commutator)
-open scoped BigOperators VertexOperator
+open LatticeGeneratingFieldLocality LatticeSugawaraCurrents LatticeSectorIntertwiner
 noncomputable section
 
 /-- The actual fully left-nested channel requested in the task. This is K,

@@ -52,7 +52,7 @@ private theorem actual_inner_recoupling (D : LatticeData) (α β γ δ : Charge 
   have recouple := finite_inner_recoupling F k a x b z
   simpa only [F, clearedInnerIterate, clearIterate, crossProductSlice,
     innerIterate, iterate, product, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val_two] using recouple
+    Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, Nat.cast_add] using recouple
 
 /-- Finite covariance of the ACTUAL Jacobi residue. B bounds only the exact
 fixed-b mode interval. The scalar convolution recovers 2k-p-s-1; the right side
@@ -145,13 +145,8 @@ private theorem actual_residue_covariance (D : LatticeData) (α β γ δ : Charg
       rw [Finset.sum_comm]
     _ = _ := by rw [Finset.sum_comm]
 
-/-- SAME k,a,P as actual_three_field_inner_iterate_transport, with the genuine
-fully cleared middle/common-P equality added. All six original products,
-the inner equality and the actual fixed-b Jacobi/inverse certificates remain.
-
-The fixed-b inverse is stable for EVERY N' >= N and returns the SAME actual
-middleSlice. It is not asserted that the union of such inverse fibers after
-s=x+y is finite. The fully left-nested channel and coherence remain open. -/
+/-- The original common numerator gives the fully cleared middle channel
+at every signed exponent, preserving k, a, P and all six product laws. -/
 theorem actual_three_field_middle_common_numerator
     (D : LatticeData) (α β γ : Charge D)
     (u : Sector D α) (v : Sector D β) (t : Sector D γ) :
@@ -194,10 +189,11 @@ theorem actual_three_field_middle_common_numerator
     clearedInnerIterate D α β γ δ u v t w k a ![x, b, y]
   let S : MvPowerSeries (Fin 2) (Oscillator D) := middleNativeSlice (innerCollision P) b
   have common (x y : ℤ) : clear 0 F (x - (0 : ℤ)) (y - (0 : ℤ)) = extend S x y := by
-    simpa only [clear, Finset.sum_range_succ, Finset.sum_range_zero, pow_zero,
-      Nat.choose_zero_right, Nat.cast_one, mul_one, zero_add, add_zero, sub_zero,
-      one_smul, S, F] using
-      (inner ![x, b, y]).trans (middleNativeSlice_extend (innerCollision P) b x y).symm
+    have zeroClear (G : ℤ → ℤ → Oscillator D) (s z : ℤ) : clear 0 G s z = G s z := by
+      simp [clear]
+    rw [sub_zero, sub_zero, zeroClear]
+    exact (inner ![x, b, y]).trans
+      (middleNativeSlice_extend (innerCollision P) b x y).symm
   have lower : ∀ x y : ℤ, y < -(0 : ℤ) → F x y = 0 := by
     intro x y hy
     dsimp only [F]
@@ -220,6 +216,7 @@ theorem actual_three_field_middle_common_numerator
     have hib : z + B < i := by
       simp only [Finset.mem_coe, Finset.mem_range, not_lt] at hout
       omega
+    change _ • F (s + (i : ℤ)) (z - (i : ℤ)) = 0
     rw [lower _ _ (by omega), smul_zero]
   have covariance := actual_residue_covariance D α β γ δ u v t w k a b B hB s z
   calc

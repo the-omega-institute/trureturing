@@ -34,8 +34,8 @@ private theorem minus_pow {T : Type*} [CommRing T] [Algebra ℂ T]
   rw [show U - V = -V + U by ring, plus_pow]
   apply Finset.sum_congr rfl
   intro j hj
-  simp only [neg_pow, smul_smul, Algebra.smul_def, map_mul, map_pow,
-    map_neg, map_one, map_natCast]
+  simp only [Algebra.smul_def, map_mul, map_pow, map_neg, map_one, map_natCast]
+  rw [neg_pow]
   ring
 
 private theorem old_expansion {T : Type*} [CommRing T] [Algebra ℂ T]
@@ -112,7 +112,7 @@ private theorem act_positive {V : Type*} [AddCommGroup V] [Module ℂ V]
   intro h hh
   have hhH : h ≤ H := by simpa using Finset.mem_range.mp hh
   apply congrArg (fun v : V => (H.choose h : ℂ) • v)
-  have poly : variablePolynomial 0 ^ L * variablePolynomial 1 ^ K *
+  have poly : (variablePolynomial (0 : Fin 3)) ^ L * variablePolynomial 1 ^ K *
       (variablePolynomial 1 ^ h * variablePolynomial 2 ^ (H - h)) *
       variablePolynomial 2 ^ B =
       variablePolynomial 0 ^ L * variablePolynomial 1 ^ (K + h) *
@@ -123,8 +123,7 @@ private theorem act_positive {V : Type*} [AddCommGroup V] [Module ℂ V]
   rw [poly, act_monomial]
   congr 1
   funext i
-  fin_cases i <;> simp only [Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val_two, Nat.cast_add,
+  fin_cases i <;> simp [Nat.cast_add,
     Nat.cast_sub (show h ≤ B + H by omega)] <;> omega
 
 private theorem act_cross {V : Type*} [AddCommGroup V] [Module ℂ V]
@@ -147,7 +146,7 @@ private theorem act_cross {V : Type*} [AddCommGroup V] [Module ℂ V]
       ∑ h ∈ Finset.range (H + 1), (H.choose h : ℂ) •
         F ![x - A - M + q, b - K - h, z - (B + H - h : ℕ) - q] := by
     have hqM : q ≤ M := by simpa using Finset.mem_range.mp hq
-    have poly : variablePolynomial 0 ^ A *
+    have poly : (variablePolynomial (0 : Fin 3)) ^ A *
         (variablePolynomial 0 ^ (M - q) * variablePolynomial 2 ^ q) *
         variablePolynomial 1 ^ K * (variablePolynomial 1 + variablePolynomial 2) ^ H *
         variablePolynomial 2 ^ B =
