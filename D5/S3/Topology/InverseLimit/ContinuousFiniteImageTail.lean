@@ -9,6 +9,7 @@
 /- Same-path private tail preparation; no event or history existence is asserted. -/
 import D5.S3.Topology.InverseLimit.SignedBirthEnumeration
 import D5.S3.Topology.InverseLimit.CountableClopenReflection
+import D5.S3.Topology.Separation.DisjointCopyTower
 import Mathlib.Topology.InductiveDimension.Classes
 
 /-! A continuous clopen preimage contradicts the original proper-stage F law. -/
@@ -313,5 +314,44 @@ private theorem final_no_continuous_pool_separation
     (fun n => H.projection c (x n).val) hsource' (B ()) (hB ())
     (fun n hn => (htracec (x n)).mpr (hsplit.1 n hn))
     (fun n hn hmem => hsplit.2 n hn ((htracec (x n)).mp hmem))
+
+/-- A homeomorphism into a disjoint subspace has exactly that subspace as its
+ambient range, so the finite-image law makes both subspaces finite. -/
+private theorem finite_disjoint_homeomorphic_of_finite_image {X : Type u}
+    [TopologicalSpace X]
+    (hFI : ∀ (A : Set X), IsClosed A → ∀ (f : A → X), Continuous f →
+      Disjoint A (Set.range f) → (Set.range f).Finite)
+    (A B : Set X) (hA : IsClosed A) (e : A ≃ₜ B) (hdisj : Disjoint A B) :
+    A.Finite ∧ B.Finite := by
+  let f : A → X := (Subtype.val : B → X) ∘ e
+  have hf : Continuous f := continuous_subtype_val.comp e.continuous
+  have hrange : Set.range f = B := by
+    ext x
+    constructor
+    · rintro ⟨a, rfl⟩
+      exact (e a).property
+    · intro hx
+      obtain ⟨a, ha⟩ := e.surjective ⟨x, hx⟩
+      exact ⟨a, congrArg Subtype.val ha⟩
+  have hB : B.Finite := by
+    have hfinite := hFI A hA f hf (by rw [hrange]; exact hdisj)
+    rwa [hrange] at hfinite
+  letI : Finite B := hB.to_subtype
+  letI : Finite A := Finite.of_injective e e.injective
+  exact ⟨Set.toFinite A, hB⟩
+
+/-- A nonempty compact binary-copy tower would give disjoint infinite closed
+homeomorphic subspaces, contradicting the finite-image law. -/
+private theorem no_compact_binary_copy_tower_of_finite_image {X : Type u}
+    [TopologicalSpace X] [T2Space X]
+    (hFI : ∀ (A : Set X), IsClosed A → ∀ (f : A → X), Continuous f →
+      Disjoint A (Set.range f) → (Set.range f).Finite)
+    (K : ℕ → Set X) (hcompact : ∀ n, IsCompact (K n))
+    (hne : ∀ n, (K n).Nonempty)
+    (hcopies : ∀ n, ∃ A B : Set X, A ⊆ K n ∧ B ⊆ K n ∧ Disjoint A B ∧
+      Nonempty (K (n + 1) ≃ₜ A) ∧ Nonempty (K (n + 1) ≃ₜ B)) : False := by
+  obtain ⟨A, B, hA, _, _, hBi, hdisj, ⟨e⟩⟩ :=
+    Separation.DisjointCopyTower.exists_disjoint_infinite_closed_copies K hcompact hne hcopies
+  exact hBi (finite_disjoint_homeomorphic_of_finite_image hFI A B hA e hdisj).2
 
 end D5.S3.Topology.InverseLimit.ContinuousFiniteImageTail
