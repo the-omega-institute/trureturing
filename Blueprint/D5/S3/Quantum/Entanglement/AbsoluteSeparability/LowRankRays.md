@@ -24,7 +24,7 @@ $$\forall (J:Type), [Fintype\left(J\right)], \forall (d:J \to \mathbb{C}), \fora
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.cs_sq` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Sheldon Axler (2024). *Linear Algebra Done Right, fourth edition*. URL: <https://linear.axler.net/>.
 
 *Commentary.*
 
