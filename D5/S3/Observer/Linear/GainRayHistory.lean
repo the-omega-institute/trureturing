@@ -73,7 +73,7 @@ private theorem readings_before_append {d : ℕ} (W W' : World d) (w : List Bool
     readings W w = readings W' w := by
   ext i
   have hi : i.val ≤ w.length := by omega
-  have he := congrFun h ⟨i.val, by simp; omega⟩
+  have he := congrFun h ⟨i.val, by simp <;> omega⟩
   simpa [readings, readAt, List.take_append_of_le_length hi] using he
 
 /-- The identical values are actual for both worlds, through all prior decisions. -/

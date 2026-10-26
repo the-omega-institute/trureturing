@@ -54,7 +54,7 @@ theorem evaluation_surjective (d n : ℕ) (t : Fin n → ℝ)
     exact ⟨0, Subsingleton.elim _ _⟩
   let p := Lagrange.interpolate (Finset.univ : Finset (Fin n)) t y
   have hp : p.degree < (n : ℕ) := by
-    simpa [p] using Lagrange.degree_interpolate_lt y
+    simpa [p] using Lagrange.degree_interpolate_lt (s := Finset.univ) (v := t) y
       (fun _ _ _ _ h => ht h)
   have hdeg : p.natDegree < d + 1 := by
     by_cases h0 : p = 0
