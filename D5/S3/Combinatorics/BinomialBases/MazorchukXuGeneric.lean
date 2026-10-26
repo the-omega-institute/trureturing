@@ -34,6 +34,7 @@ theorem generic_exceptional_edge {E : ℕ → ℕ → Prop} (h : Rules E)
     (hcspt : cs ≠ pt) (hctps : ct ≠ ps) :
     E s t ↔ cs < pt ∧ ct < ps := by
   have hpsM : ps < M := hpst.trans_le hpost.1
+  have hptM : pt ≤ M := hpost.1
   have hst : s < t := by
     let r : Fin M := ⟨ps, hpsM⟩
     exact ((hposs.2 r).2.mpr le_rfl).trans ((hpost.2 r).1.mpr hpst)
@@ -294,7 +295,8 @@ theorem exists_unique_generic_completion {N M i : ℕ}
     · have hkj : s k ≤ s j := hs.monotone (le_of_not_gt hjk)
       exact iff_of_false (fun he => (not_lt_of_ge hkj) (hE.ordered he))
         (fun he => (not_lt_of_ge hkj) (hF.ordered he))
-  exact (edges_determined_by_data hE hF (fun he => hEb _ _ he) (fun he => hFb _ _ he) g s c hcover hEo
+  exact (edges_determined_by_data hE hF (fun he => hEb _ _ he)
+    (fun he => hFb _ _ he) g s c hcover hEo
     (fun a => (hEa' a).trans (hFa a).symm) hEc hFc hbits).symm
 
 /-- The position and exceptional index reconstruct the original natural label.
