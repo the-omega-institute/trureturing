@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The literal norm-four annihilator equals the full actual cyclic-vacuum state commutant. -/
+   digest: Equality of the literal annihilator and full actual cyclic-vacuum commutant. -/
 
 import D5.S3.VertexAlgebra.Lattice.NormFourCommutant
 import D5.S3.VertexAlgebra.Lattice.NormFourVacuumIrreducible
@@ -41,11 +41,15 @@ def fullStateCommutant (D : LatticeData) (a : Charge D) (s : ℂ) :
   add_mem' := by
     intro v w hv hw u hu j hj
     change ((Y D u)[[j]]) (v + w) = 0
-    rw [map_add, hv u hu j hj, hw u hu j hj, add_zero]
+    rw [map_add]
+    change mu D u j v + mu D u j w = 0
+    rw [hv u hu j hj, hw u hu j hj, add_zero]
   smul_mem' := by
     intro c v hv u hu j hj
     change ((Y D u)[[j]]) (c • v) = 0
-    rw [map_smul, hv u hu j hj, smul_zero]
+    rw [map_smul]
+    change c • mu D u j v = 0
+    rw [hv u hu j hj, smul_zero]
 
 /-- For fixed v, the actual states whose full nonnegative fields annihilate v. -/
 private def annihilatingStates (D : LatticeData) (v : Carrier D) :
@@ -87,14 +91,12 @@ private theorem iterate_annihilates (D : LatticeData) (v e b : Carrier D)
     rw [he i (by omega)]
     simp only [mu, map_zero, smul_zero]
   have identity := actual.2.2
-  change mu D (mu D e r b) n v = _ at identity
-  simpa only [show ∀ i : ℕ,
-      (((-1 : ℂ)^i) * ((Ring.choose r i : ℤ) : ℂ)) •
-        mu D e (r - i) (mu D b (n + i) v) = 0 from first,
-    show ∀ i : ℕ,
-      (((-1 : ℂ)^i) * ((Ring.choose r i : ℤ) : ℂ)) •
-        mu D b (r + n - i) (mu D e i v) = 0 from second,
-    finsum_zero, smul_zero, sub_zero] using identity
+  change mu D (mu D e r b) n v =
+    (∑ᶠ i : ℕ, (((-1 : ℂ)^i) * ((Ring.choose r i : ℤ) : ℂ)) •
+      mu D e (r - i) (mu D b (n + i) v)) -
+    ((-1 : ℂ)^r) • (∑ᶠ i : ℕ, (((-1 : ℂ)^i) * ((Ring.choose r i : ℤ) : ℂ)) •
+      mu D b (r + n - i) (mu D e i v)) at identity
+  simpa only [first, second, finsum_zero, smul_zero, sub_zero] using identity
 
 private theorem word_annihilates (D : LatticeData) (a : Charge D) (s : ℂ)
     (v : Carrier D) (hv : v ∈ NormFourCommutant.space D a s) (w : List ℕ) :
@@ -114,7 +116,7 @@ private theorem generator_mem (D : LatticeData) (a : Charge D) (s : ℂ) :
 
 /-- Equality on the full production carrier, with every integer j at least zero,
 for arbitrary lattice data, charge and scalar. No Virasoro or norm hypothesis is needed. -/
-theorem space_eq_fullStateCommutant (D : LatticeData) (a : Charge D) (s : ℂ) :
+theorem space_eq_full_state_commutant (D : LatticeData) (a : Charge D) (s : ℂ) :
     NormFourCommutant.space D a s = fullStateCommutant D a s := by
   apply le_antisymm
   · intro v hv u hu
