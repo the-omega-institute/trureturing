@@ -31,6 +31,8 @@ The source records that the discrete and indiscrete relations give Marcus's perm
 
 ## Verified locator
 
+DOI: https://doi.org/10.1016/j.geomphys.2026.105993 (Journal of Geometry and Physics; the journal text was not read).
+
 Source: https://arxiv.org/abs/2508.13472v3
 - URL: https://arxiv.org/abs/2508.13472v3 (the e-print is a tar archive; member `finite_graphs_and_configurations_of_points_v5.tex`, 842 lines, md5 `3c520a352e066a90cdcffb75a2ee568c`):
   - the groups and the function, l. 405–408;
