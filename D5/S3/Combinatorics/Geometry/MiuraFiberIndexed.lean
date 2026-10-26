@@ -48,8 +48,8 @@ private theorem increment_position (w v : Fin n → ℕ) (j k : Fin n)
     columnPosition w k = columnPosition v k + if j ≤ k then 1 else 0 := by
   classical
   simp only [columnPosition, hw, Finset.sum_add_distrib]
-  simp only [Finset.sum_ite_eq']
-  split_ifs <;> omega
+  simp only [Finset.sum_ite_eq', Finset.mem_filter, Finset.mem_univ, true_and]
+  omega
 
 private theorem increment_total (w v : Fin n → ℕ) (j : Fin n)
     (hw : ∀ l, w l = v l + if l = j then 1 else 0) :
@@ -107,13 +107,13 @@ private theorem insertion_extrema (g : Cell m N → ℤ) (hg : IsHeight g)
     let f := stretchColumn g hm j hj
     let j' : Fin (N+1) := ⟨j.val, by have := j.isLt; omega⟩
     (∀ q, IsStrictLocalMin f q ↔ ∃ p, IsStrictLocalMin g p ∧
-      q = cellExpand j' p hj.1 (by simp only [Fin.val_mk]; have := hj.2.1; omega)) ∧
+      q = cellExpand j' p hj.1 (by change j.val + 1 < N + 1; have := hj.2.1; omega)) ∧
     (∀ q, IsStrictLocalMax f q ↔ ∃ p, IsStrictLocalMax g p ∧
-      q = cellExpand j' p hj.1 (by simp only [Fin.val_mk]; have := hj.2.1; omega)) := by
+      q = cellExpand j' p hj.1 (by change j.val + 1 < N + 1; have := hj.2.1; omega)) := by
   dsimp only
   let f := stretchColumn g hm j hj
   let j' : Fin (N+1) := ⟨j.val, by have := j.isLt; omega⟩
-  have hs : SeamSlope g j' hj.1 (by simp only [Fin.val_mk]; have := hj.2.1; omega) (frozenSlope g hm j hj) := by
+  have hs : SeamSlope g j' hj.1 (by change j.val + 1 < N + 1; have := hj.2.1; omega) (frozenSlope g hm j hj) := by
     intro i
     exact frozenSlope_eq g hg hm j hj i
   have hf : IsHeight f := restoreColumn_isHeight (n := N + 1) g hg j' hj.1 _ _
@@ -145,5 +145,123 @@ private theorem insertion_extrema (g : Cell m N → ℤ) (hg : IsHeight g)
       exact contractAt_isSLM_of_h_max f hf hm j' hfr p (hp.symm ▸ hq)
     · rintro ⟨p, hp, rfl⟩
       exact h_max_of_contractAt_isSLM f hf hm j' hfr p (hc.symm ▸ hp)
+
+private theorem increment_cell {N : ℕ} (w v : Fin n → ℕ) (j : Fin n)
+    (hw : ∀ l, w l = v l + if l = j then 1 else 0)
+    (k : Fin N) (hk0 : 0 < k.val) (hk1 : k.val + 1 < N)
+    (hkj : k.val = columnPosition v j) (p : Cell m n) (r : Cell m N)
+    (hr : r.1 = p.1 ∧ r.2.val = columnPosition v p.2) :
+    let k' : Fin (N+1) := ⟨k.val, by have := k.isLt; omega⟩
+    (cellExpand k' r hk0 (by simp only [Fin.val_mk]; omega)).1 = p.1 ∧
+      (cellExpand k' r hk0 (by simp only [Fin.val_mk]; omega)).2.val = columnPosition w p.2 := by
+  dsimp only
+  rw [increment_position w v j p.2 hw]
+  by_cases hp : p.2 < j
+  · have hpos := position_strict v hp
+    have hlt : r.2.val < k.val := by omega
+    have hnle : ¬ j ≤ p.2 := not_le.mpr hp
+    simp only [cellExpand, Fin.val_mk, hlt, dite_true, hnle, ite_false, add_zero]
+    exact hr
+  · have hle : j ≤ p.2 := le_of_not_gt hp
+    have hpos := (position_strict v).monotone hle
+    have hnlt : ¬ r.2.val < k.val := by omega
+    simp only [cellExpand, Fin.val_mk, hnlt, dite_false, hle, ite_true]
+    exact ⟨hr.1, by omega⟩
+
+private theorem column_trans {N P Q : ℕ} {f : Cell m N → ℤ}
+    {g : Cell m P → ℤ} {h : Cell m Q → ℤ}
+    (hf : ColumnReduction f g) (hg : ColumnReduction g h) : ColumnReduction f h := by
+  induction hf with
+  | refl _ => exact hg
+  | step f hm j k hj hk hjk tail ih => exact .step f hm j k hj hk hjk (ih hg)
+
+/-- Every coordinate of the entire finite extra-length vector is simultaneously realized
+by one actual normalized array, with exact individual extremum positions. -/
+theorem indexed_column_expansion (a b : ℕ) (h : Cell m n → ℤ)
+    (hm : 0 < m) (hr : Residual a b h) (w : Fin n → ℕ)
+    (hsupport : ∀ j, 0 < w j → frozenColumn h j) :
+    ∃ g : Cell m (n + ∑ j, w j) → ℤ,
+      Residual a b g ∧ ColumnReduction g h ∧ ColumnExtremaExpansion h w g := by
+  classical
+  have go : ∀ S (w : Fin n → ℕ), (∑ j, w j) = S →
+      (∀ j, 0 < w j → frozenColumn h j) →
+      ∃ N (g : Cell m N → ℤ), N = n + ∑ j, w j ∧
+        Residual a b g ∧ ColumnReduction g h ∧ ColumnExtremaExpansion h w g := by
+    intro S
+    induction S using Nat.strong_induction_on with
+    | h S ih =>
+      intro w hS hs
+      by_cases hz : S = 0
+      · have hwzero : ∀ j, w j = 0 := by
+          intro j
+          have hle : w j ≤ ∑ k, w k := Finset.single_le_sum (fun _ _ => Nat.zero_le _) (Finset.mem_univ j)
+          omega
+        have hpzero : ∀ j, columnPosition w j = j.val := by simp [columnPosition, hwzero]
+        refine ⟨n, h, by simp [hwzero], hr, .refl h, ?_⟩
+        constructor <;> intro q <;> constructor
+        · intro hq; exact ⟨q, hq, rfl, (hpzero q.2).symm⟩
+        · rintro ⟨p, hp, he1, he2⟩
+          have he : q = p := Prod.ext he1 (Fin.ext (he2.trans (hpzero p.2)))
+          exact he.symm ▸ hp
+        · intro hq; exact ⟨q, hq, rfl, (hpzero q.2).symm⟩
+        · rintro ⟨p, hp, he1, he2⟩
+          have he : q = p := Prod.ext he1 (Fin.ext (he2.trans (hpzero p.2)))
+          exact he.symm ▸ hp
+      · have hp : 0 < ∑ j, w j := by omega
+        obtain ⟨j, _, hj⟩ := Finset.sum_pos_iff.mp hp
+        let v := Function.update w j (w j - 1)
+        have hw : ∀ l, w l = v l + if l = j then 1 else 0 := by
+          intro l
+          by_cases hl : l = j
+          · subst l; simp only [v, Function.update_same, ite_true]; omega
+          · simp [v, Function.update_noteq hl, hl]
+        have ht := increment_total w v j hw
+        have hvs : (∑ l, v l) < S := by omega
+        have hv : ∀ l, 0 < v l → frozenColumn h l := by
+          intro l hl
+          have := hw l
+          exact hs l (by omega)
+        obtain ⟨N, g, hN, hg, hred, he⟩ := ih (∑ l, v l) hvs v rfl hv
+        obtain ⟨k, hk, hkj⟩ := expansion_frozen he hN hg.1.1 hm j (hs j hj)
+        let f := stretchColumn g hm k hk
+        have hN' : N + 1 = n + ∑ l, w l := by omega
+        have hi := insertion_extrema g hg.1.1 hm k hk
+        have hinc := increment_cell w v j hw k hk.1 hk.2.1 hkj
+        have hposlt : ∀ p : Cell m n, columnPosition v p.2 < N := by
+          intro p; rw [hN]; exact position_lt v p.2
+        refine ⟨N+1, f, hN', stretchColumn_residual a b g hm k hk hg,
+          column_trans (stretchColumn_reduction g hg.1.1 hm k hk) hred, ?_⟩
+        constructor
+        · intro q
+          constructor
+          · intro hq
+            obtain ⟨r, hr, hqr⟩ := (hi.1 q).mp hq
+            obtain ⟨p, hp, hrp⟩ := (he.1 r).mp hr
+            refine ⟨p, hp, ?_⟩
+            exact hqr.symm ▸ hinc p r hrp
+          · rintro ⟨p, hp, hqp⟩
+            let r : Cell m N := (p.1, ⟨columnPosition v p.2, hposlt p⟩)
+            have hrp : r.1 = p.1 ∧ r.2.val = columnPosition v p.2 := ⟨rfl,rfl⟩
+            have hqr := hinc p r hrp
+            apply (hi.1 q).mpr
+            refine ⟨r, (he.1 r).mpr ⟨p,hp,hrp⟩, ?_⟩
+            exact Prod.ext (hqp.1.trans hqr.1.symm) (Fin.ext (hqp.2.trans hqr.2.symm))
+        · intro q
+          constructor
+          · intro hq
+            obtain ⟨r, hr, hqr⟩ := (hi.2 q).mp hq
+            obtain ⟨p, hp, hrp⟩ := (he.2 r).mp hr
+            refine ⟨p, hp, ?_⟩
+            exact hqr.symm ▸ hinc p r hrp
+          · rintro ⟨p, hp, hqp⟩
+            let r : Cell m N := (p.1, ⟨columnPosition v p.2, hposlt p⟩)
+            have hrp : r.1 = p.1 ∧ r.2.val = columnPosition v p.2 := ⟨rfl,rfl⟩
+            have hqr := hinc p r hrp
+            apply (hi.2 q).mpr
+            refine ⟨r, (he.2 r).mpr ⟨p,hp,hrp⟩, ?_⟩
+            exact Prod.ext (hqp.1.trans hqr.1.symm) (Fin.ext (hqp.2.trans hqr.2.symm))
+  obtain ⟨N,g,hN,hg,hred,he⟩ := go (∑ j,w j) w rfl hsupport
+  subst N
+  exact ⟨g,hg,hred,he⟩
 
 end D5.S3.Combinatorics.Geometry.MiuraFiberIndexed
