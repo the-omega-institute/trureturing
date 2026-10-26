@@ -810,3 +810,23 @@ public additions are data structures and construction definitions; the
 transport proofs are private and consumed. The inherited information
 audit remains unfinished under
 https://github.com/the-omega-institute/trureturing/issues/21750.
+
+## Proper-stage continuous clopen obstruction
+
+`ContinuousFiniteImageTail.proper_F_clopen_dichotomy` uses the original
+`SignedProperLimit.Prefix.Data` and `Laws`. At a proper stage c, every whole
+Dirac lift of the original birth sequence has only finitely many visits or
+only finitely many misses of each clopen along its original J(r,d,c). The
+reference is chosen after the entire selected lift, exactly as in F. No split
+event, final-stage convergence or final common J is assumed.
+
+Its consumer `no_continuous_pool_separation` extends a continuous clopen set
+preimage from a closed domain to an ambient clopen. For pools in the original
+disjoint reservoirs whose union is the stored earlier J, DJ leaves only a
+finite error at c. Removing that error from each original C-pool leaves two
+infinite opposite indicator pools, contradicting the dichotomy. This is a
+repository-derived local step in the finite-image argument; it does not
+construct a raw history or assert that a delayed event occurs. The final
+application still needs the constructed arrival/birth readback and the same
+executed event, followed by reflection of the ambient preimage to one later
+proper stage. No final FI/AH, full CH Talagrand or official solution is claimed.
