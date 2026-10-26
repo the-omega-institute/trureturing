@@ -91,7 +91,7 @@ private theorem infix_avoid_cons {a : X} {t w : List X}
   · exact h
 
 omit [DecidableEq X] in
-private theorem infix_avoid_separator {a : X} {t l r : List X}
+theorem infix_avoid_separator {a : X} {t l r : List X}
     (h : t <:+: l ++ a :: r) (hn : a ∉ t) : t <:+: l ∨ t <:+: r := by
   rcases List.infix_append_iff_ne_nil.mp h with h | h | ⟨s,q,hs,hq,he,hsl,hqr⟩
   · exact Or.inl h

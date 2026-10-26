@@ -1,0 +1,46 @@
+**Theorem 9.4 (sharp adaptive countable-palette gain-ray threshold).** For every declared $d\ge1$, no deterministic full-domain adaptive protocol in Definitions 1.1–1.2 has a uniformly successful gain-ray output from countable palettes of fixed matrices with at most $2d+2$ total reads. Its actions, stopping, answers, and palette selectors may be arbitrary functions of actual history. The exact adaptive gain-ray threshold in this model is therefore
+
+$$
+N_{\rm adaptive\ gain}(d)=2d+3.
+\tag{9.11}
+$$
+
+This determines the adaptive gain-only quantity left undetermined in Section 8, on the same whole-polynomial and constant-drift domain.
+
+**Proof.** Fix $d$, put $m=d+1$, and suppose for a contradiction that a correct protocol has uniform bound $2m$. There are finitely many words with at most $2m$ reads. Their preassigned palettes have countable union. Apply Lemma 9.3 to every palette pair whose word contains at least one $M$, obtaining $E_n$ for $1\le n\le m$.
+
+On $\Xi_d$, a pure-$J$ prefix of $n$ reads is the linear history map
+
+$$
+H_n(\theta,\beta,\delta)
+=\bigl(g(0)+\delta,\ldots,g(n-1)+\delta\bigr).
+\tag{9.12}
+$$
+
+For $n\le m$ its extension to the full real coefficient-and-drift space is surjective, by evaluation rank in Lemma 2.1. Hence the pullback by $H_n$ of each nonzero polynomial defining $E_n$ is still a nonzero polynomial in $(\theta,\beta,\delta)$. Its zero set is nowhere dense relative to the nonempty open domain $\Xi_d$. Consequently
+
+$$
+\bigcup_{n=1}^m H_n^{-1}(E_n)
+\tag{9.13}
+$$
+
+is a countable union of such sets.
+
+Consider also all palette pairs whose word is pure $J$, or whose first $M$ is at clock $n>m$. In the latter case there are $N-n\le2m-n<m$ reads at and after that first $M$. Lemma 9.2 applies in both cases. Every pair successful somewhere on $\Xi_d$ must therefore have a nonzero collinearity polynomial on $\Xi_d$: if all its wedge polynomials were identically zero, it would be universally collinear, and Lemma 9.2 would make its output zero everywhere on this family. The reads here are polynomial in $(\theta,\beta,\delta)$ by (9.3), so these are ordinary real polynomials without denominators. Choose one nonzero polynomial for each such pair. Their countable union of zero sets, denoted $L$, contains every successful restricted world for any of these pairs.
+
+The Euclidean Baire principle now gives a point
+
+$$
+\xi=(\theta,\beta,\delta)\in
+\Xi_d\setminus\left(L\cup\bigcup_{n=1}^mH_n^{-1}(E_n)\right).
+\tag{9.14}
+$$
+
+Follow the protocol on this actual legal world, with every action immediately read and the initial read counted. If it terminates without an $M$, its selected pair is among those defining $L$, and (9.14) contradicts success. If its first $M$ is at clock $n>m$, the same contradiction follows from the other words defining $L$.
+
+The only remaining case is a first $M$ at some clock $1\le n\le m$. The $n$ preceding reads, at literal clocks $0,\ldots,n-1$, were acquired on $J^{n-1}$ and equal $y=H_n(\xi)\notin E_n$. Lemma 9.3 gives a whole world $\omega'$ with exactly this pure-$J$ prefix, at which no palette pair containing an $M$ succeeds. The prefix is actual for $\omega'$ as well. Indeed, induction through its identical read values forces the same deterministic decisions as on $\xi$: no earlier stop, the same $J$ actions, and then the same decision to execute $M$ at clock $n$. Its subsequent actions and stopping need not agree with those on $\xi$. The uniform bound nevertheless forces it to terminate within $2m$ reads on some word containing that $M$. Correctness would make its selected palette pair successful at $\omega'$, contrary to the defining conclusion of Lemma 9.3. This excludes the last case and proves the lower bound.
+
+Theorem 5.2 supplies the matching upper bound: the single literal trajectory $M^{2m}$ takes $2m+1=2d+3$ reads and its fixed matrix returns $\beta$ exactly on every world. It is also an adaptive protocol, with constant action choices and one matrix per terminal word. This proves (9.11).
+
+Every completion and restricted world used above is a world of Definition 1.1 with a whole nonzero real gain of degree at most the declared $d$. The proof uses neither the actual degree nor any exclusion of gain roots, coefficient signs, or drift values. The success sets use nonzero scalar output of either sign; allowing zero only in the intermediate collinearity identities does not count a zero output as success. The history transfer uses the consecutive original clocks, with no reset, copy, skip, extra observation, or reindexing. All category arguments concern polynomial success sets and compatible whole-world fibers, not any regularity of the protocol or selector. The conclusion is gain-only with the fixed-matrix mechanism of Definition 1.2. $\square$
+
