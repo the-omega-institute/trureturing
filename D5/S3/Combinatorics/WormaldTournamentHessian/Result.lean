@@ -7,40 +7,52 @@
    digest: Analytic Hessian and determinant-square structure of regular tournaments. -/
 
 /-
-The utility classification is none: the objects and intended conclusion are
-general theorems over arbitrary finite tournaments, not finite computations.
-This is an unfinished implementation of Conjecture 6; no resolution is asserted.
-Definitions have proof_shape bind-only (definition), escape_witness none.
+admission_basis: open-problem-resolution (#21941; Proved)
+escape_witness: none
+Utility is none: the result is a general theorem over arbitrary finite
+regular tournaments and every complex C2 local solution, not a finite certificate.
 Frozen D5 dependencies: none (Mathlib-only imports).
-Module admission_basis: none; WIP, the settling result has not been proved.
-The definitions and all helpers have proof_shape: bind-only; escape_witness: none.
-Helper consumers:
-  skewDiag -> shiftedDetNeZero, shiftedDetPureImaginary
-  skewNormLe -> shiftedDetNeZero
-  shiftedDetNeZero -> algebraicRatioRational
-  shiftedDetPureImaginary -> imaginaryShiftIntegral
-  imaginaryShiftIntegral -> algebraicRatioRational
-  algebraicRatioRational -> algebraicSquareIdentity
-  regularDegree -> regularOdd, determinantAtBase
-  regularOdd -> regularAlgebraicSquare
-  algebraicSquareIdentity -> regularAlgebraicSquare
-  regularAlgebraicSquare -> none (unfinished analytic bridge)
-  determinantAtBase -> localSolutionOfInvertible
-  polynomialSmooth -> localSolutionOfInvertible
-  localSolutionOfInvertible -> none (nonzero derivative not yet proved).
-This is a staged source checkpoint, not an admissible completed settlement.
+All definitions have proof_shape: bind-only (definition), escape_witness: none.
+All theorems and lemmas have proof_shape: bind-only, escape_witness: none.
+The proof composes pinned Mathlib determinant, finite-sum and calculus theorems
+with scalar algebra and coordinate normalization. No new escape witness is claimed.
+The external named conjecture supplies the module admission basis.
+Every auxiliary declaration is consumed on the proof path to result.
+Principal consumers:
+  skewDiag, skewNormLe -> shiftedDetNeZero, shiftedDetPureImaginary
+  shiftedDetPureImaginary -> imaginaryShiftIntegral -> algebraicRatioRational
+  algebraicRatioRational -> algebraicSquareIdentity -> regularAlgebraicSquare
+  regularDegree -> regularOdd, determinantAtBase, regularSkewRowSum
+  determinantAtBase, polynomialSmooth -> localSolutionOfInvertible
+  cofactor_eq_of_zero_sums -> regularColumnSlopeValue -> regularLocalSolution
+  determinant_column_deriv -> K_coordinate_deriv -> regularLocalSolution
+  scalar_map_invertible -> scalar_partial_invertible -> regularLocalSolution
+  det_rank_one_sub -> K_resolvent_factorization -> K_eq_zero_iff_resolvent_sum
+  K_eq_zero_iff_resolvent_sum -> localSolution_resolvent_eq -> calH_closedForm
+  WormaldAnalytic.second_comp -> WormaldAnalytic.hessian_of_implicit_coordinates
+  alpha_second_const, alpha_first_const -> calH_closedForm
+  bridge_det -> differenceMinor_det -> skew_difference_det -> calH_closedForm
+  regularLocalSolution, regularAlgebraicSquare, calH_closedForm -> result
+The original analytic definitions of claim, K, phase, hessian and calH are retained.
 -/
 
 module
 
 public import Mathlib.Analysis.Calculus.ImplicitContDiff
 public import Mathlib.Analysis.Calculus.Deriv.Prod
+public import Mathlib.Analysis.Calculus.Deriv.Pow
 public import Mathlib.Topology.Instances.Matrix
 public import Mathlib.LinearAlgebra.Matrix.SchurComplement
 public import Mathlib.LinearAlgebra.Matrix.Determinant.Misc
 public import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
 public import Mathlib.LinearAlgebra.Matrix.Gershgorin
 public import Mathlib.NumberTheory.Zsqrtd.GaussianInt
+
+public import Mathlib.Analysis.Calculus.FDeriv.CompCLM
+public import Mathlib.Analysis.Calculus.ContDiff.RestrictScalars
+public import Mathlib.Analysis.Matrix.Normed
+public import Mathlib.Analysis.Calculus.ContDiff.Operations
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
 
 /-! # The tournament determinant and its analytic Hessian -/
 
@@ -905,5 +917,1137 @@ private theorem regularLocalSolution {d : ℕ} (A : Fin d → Fin d → Bool)
     simpa only [Function.comp_def, appendLastLinearApply] using hp
   exact localSolutionOfInvertible A hd hA
     (scalar_partial_invertible F (fun _ => z d) (z d) c hF hlast hc)
+
+
+open scoped Topology ContDiff
+open Filter
+
+namespace WormaldAnalytic
+
+variable {𝕜 E F G : Type*} [NontriviallyNormedField 𝕜]
+  [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+  [NormedAddCommGroup F] [NormedSpace 𝕜 F]
+  [NormedAddCommGroup G] [NormedSpace 𝕜 G]
+
+private noncomputable def second (f : E → F) (x v w : E) : F :=
+  fderiv 𝕜 (fun y => fderiv 𝕜 f y v) x w
+
+private theorem second_comp (f : E → F) (g : F → G) (x v w : E)
+    (hf : ContDiffAt 𝕜 2 f x) (hg : ContDiffAt 𝕜 2 g (f x)) :
+    second (𝕜 := 𝕜) (g ∘ f) x v w =
+      second (𝕜 := 𝕜) g (f x) (fderiv 𝕜 f x v) (fderiv 𝕜 f x w) +
+      fderiv 𝕜 g (f x) (second (𝕜 := 𝕜) f x v w) := by
+  have hf₁ := hf.differentiableAt (by norm_num)
+  have hg₁ := hg.differentiableAt (by norm_num)
+  have hf₂ : DifferentiableAt 𝕜 (fderiv 𝕜 f) x :=
+    (hf.fderiv_right (m := 1) (by norm_num)).differentiableAt_one
+  have hg₂ : DifferentiableAt 𝕜 (fderiv 𝕜 g) (f x) :=
+    (hg.fderiv_right (m := 1) (by norm_num)).differentiableAt_one
+  have heq : (fun y => fderiv 𝕜 (g ∘ f) y v) =ᶠ[𝓝 x]
+      (fun y => fderiv 𝕜 g (f y) (fderiv 𝕜 f y v)) := by
+    filter_upwards [hf.eventually (by norm_num),
+      hf₁.continuousAt (hg.eventually (by norm_num))] with y hyf hyg
+    have hyg' : ContDiffAt 𝕜 2 g (f y) := hyg
+    rw [fderiv_comp y (hyg'.differentiableAt (by norm_num))
+      (hyf.differentiableAt (by norm_num))]
+    rfl
+  unfold second
+  rw [heq.fderiv_eq]
+  have hc : DifferentiableAt 𝕜 (fun y => fderiv 𝕜 g (f y)) x := hg₂.comp x hf₁
+  have hu : DifferentiableAt 𝕜 (fun y => fderiv 𝕜 f y v) x :=
+    hf₂.clm_apply (differentiableAt_const v)
+  rw [fderiv_clm_apply hc hu]
+  simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.comp_apply,
+    ContinuousLinearMap.flip_apply]
+  have hgapp : fderiv 𝕜 (fun y => fderiv 𝕜 g y (fderiv 𝕜 f x v)) (f x) =
+      (fderiv 𝕜 (fderiv 𝕜 g) (f x)).flip (fderiv 𝕜 f x v) := by
+    rw [fderiv_clm_apply hg₂ (differentiableAt_const (fderiv 𝕜 f x v))]
+    simp
+  rw [hgapp]
+  rw [fderiv_fun_comp x hg₂ hf₁]
+  simp only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.flip_apply]
+  abel
+
+private theorem second_eq_zero_of_eventually {f : E → F} {x : E}
+    (hf : f =ᶠ[𝓝 x] fun _ => 0) (v w : E) : second (𝕜 := 𝕜) f x v w = 0 := by
+  have he : (fun y => fderiv 𝕜 f y v) =ᶠ[𝓝 x] fun _ => 0 := by
+    filter_upwards [hf.fderiv (𝕜 := 𝕜)] with y hy
+    rw [hy]
+    simpa using congrArg (fun L : E →L[𝕜] F => L v)
+      (hasFDerivAt_const (𝕜 := 𝕜) (0 : F) y).fderiv
+  unfold second
+  rw [he.fderiv_eq]
+  simp
+
+private theorem second_graph {h : E → F} {x : E} (hh : ContDiffAt 𝕜 2 h x) (v w : E) :
+    second (𝕜 := 𝕜) (fun y => (y, h y)) x v w =
+      (0, second (𝕜 := 𝕜) h x v w) := by
+  have he : (fun y => fderiv 𝕜 (fun y => (y, h y)) y v) =ᶠ[𝓝 x]
+      (fun y => (v, fderiv 𝕜 h y v)) := by
+    filter_upwards [hh.eventually (by norm_num)] with y hy
+    have hp := (hasFDerivAt_id y).prodMk (hy.differentiableAt (by norm_num)).hasFDerivAt
+    change HasFDerivAt (fun y : E => (y, h y)) _ y at hp
+    rw [hp.fderiv]
+    simp
+  unfold second
+  rw [he.fderiv_eq]
+  have hh₂ : DifferentiableAt 𝕜 (fderiv 𝕜 h) x :=
+    (hh.fderiv_right (m := 1) (by norm_num)).differentiableAt_one
+  have hp := (hasFDerivAt_const (𝕜 := 𝕜) v x).prodMk
+    (hh₂.clm_apply (differentiableAt_const v)).hasFDerivAt
+  rw [hp.fderiv]
+  simp
+
+private theorem implicit_first_graph {h : E → F} {F₀ : E × F → G} {x : E}
+    (hh : ContDiffAt 𝕜 2 h x) (hF : ContDiffAt 𝕜 2 F₀ (x, h x))
+    (he : (fun y => F₀ (y, h y)) =ᶠ[𝓝 x] fun _ => 0) (v : E) :
+    fderiv 𝕜 F₀ (x, h x) (v, fderiv 𝕜 h x v) = 0 := by
+  have hh₁ := hh.differentiableAt (by norm_num)
+  have hF₁ := hF.differentiableAt (by norm_num)
+  have hd : fderiv 𝕜 (fun y => F₀ (y, h y)) x = 0 := by
+    rw [he.fderiv_eq]
+    simp
+  have hp := (hasFDerivAt_id x).prodMk hh₁.hasFDerivAt
+  change HasFDerivAt (fun y : E => (y, h y)) _ x at hp
+  have hc := hF₁.hasFDerivAt.comp x hp
+  change HasFDerivAt (fun y : E => F₀ (y, h y)) _ x at hc
+  rw [hc.fderiv] at hd
+  have hv := congrArg (fun L : E →L[𝕜] G => L v) hd
+  simpa using hv
+
+private theorem implicit_second_graph {h : E → F} {F₀ : E × F → G} {x : E}
+    (hh : ContDiffAt 𝕜 2 h x) (hF : ContDiffAt 𝕜 2 F₀ (x, h x))
+    (he : (fun y => F₀ (y, h y)) =ᶠ[𝓝 x] fun _ => 0) (v w : E) :
+    second (𝕜 := 𝕜) F₀ (x, h x) (v, fderiv 𝕜 h x v) (w, fderiv 𝕜 h x w) +
+      fderiv 𝕜 F₀ (x, h x) (0, second (𝕜 := 𝕜) h x v w) = 0 := by
+  have hh₁ := hh.differentiableAt (by norm_num)
+  have hp : ContDiffAt 𝕜 2 (fun y => (y, h y)) x := contDiffAt_id.prodMk hh
+  have hs := second_comp (𝕜 := 𝕜) (fun y => (y, h y)) F₀ x v w hp hF
+  have hp' := (hasFDerivAt_id x).prodMk hh₁.hasFDerivAt
+  change HasFDerivAt (fun y : E => (y, h y)) _ x at hp'
+  rw [second_graph hh v w, hp'.fderiv] at hs
+  simp only [fderiv_id, ContinuousLinearMap.prod_apply, ContinuousLinearMap.id_apply] at hs
+  rw [← hs]
+  exact second_eq_zero_of_eventually he v w
+
+private theorem implicit_first_scalar {h : E → 𝕜} {F₀ : E × 𝕜 → 𝕜} {x : E}
+    (hh : ContDiffAt 𝕜 2 h x) (hF : ContDiffAt 𝕜 2 F₀ (x, h x))
+    (he : (fun y => F₀ (y, h y)) =ᶠ[𝓝 x] fun _ => 0)
+    (hq : fderiv 𝕜 F₀ (x, h x) (0, 1) ≠ 0) (v : E) :
+    fderiv 𝕜 h x v = -fderiv 𝕜 F₀ (x, h x) (v, 0) /
+      fderiv 𝕜 F₀ (x, h x) (0, 1) := by
+  have H := implicit_first_graph hh hF he v
+  have hp : (v, fderiv 𝕜 h x v) =
+      (v, (0 : 𝕜)) + (fderiv 𝕜 h x v) • ((0 : E), (1 : 𝕜)) := by simp
+  rw [hp, map_add, map_smul, smul_eq_mul] at H
+  apply (eq_div_iff hq).mpr
+  linear_combination H
+
+private theorem implicit_second_scalar {h : E → 𝕜} {F₀ : E × 𝕜 → 𝕜} {x : E}
+    (hh : ContDiffAt 𝕜 2 h x) (hF : ContDiffAt 𝕜 2 F₀ (x, h x))
+    (he : (fun y => F₀ (y, h y)) =ᶠ[𝓝 x] fun _ => 0)
+    (hq : fderiv 𝕜 F₀ (x, h x) (0, 1) ≠ 0) (v w : E) :
+    second (𝕜 := 𝕜) h x v w =
+      -second (𝕜 := 𝕜) F₀ (x, h x)
+        (v, fderiv 𝕜 h x v) (w, fderiv 𝕜 h x w) /
+          fderiv 𝕜 F₀ (x, h x) (0, 1) := by
+  have H := implicit_second_graph hh hF he v w
+  have hp : ((0 : E), second (𝕜 := 𝕜) h x v w) =
+      (second (𝕜 := 𝕜) h x v w) • ((0 : E), (1 : 𝕜)) := by simp
+  rw [hp, map_smul, smul_eq_mul] at H
+  apply (eq_div_iff hq).mpr
+  linear_combination H
+
+private theorem second_sub_const (f : E → F) (c : F) (x v w : E) :
+    second (𝕜 := 𝕜) (fun y => f y - c) x v w = second (𝕜 := 𝕜) f x v w := by
+  unfold second
+  simp_rw [fderiv_sub_const]
+
+private theorem second_comp_clm (L : E →L[𝕜] F) (f : F → G) (x v w : E)
+    (hf : ContDiffAt 𝕜 2 f (L x)) :
+    second (𝕜 := 𝕜) (f ∘ L) x v w = second (𝕜 := 𝕜) f (L x) (L v) (L w) := by
+  have hL : ContDiffAt 𝕜 2 L x := L.contDiff.contDiffAt
+  have hs := second_comp (𝕜 := 𝕜) L f x v w hL hf
+  have hsecond : second (𝕜 := 𝕜) L x v w = 0 := by
+    unfold second
+    simp [L.fderiv]
+  simpa only [L.fderiv, hsecond, map_zero, add_zero] using hs
+
+section Angular
+
+variable {n : ℕ}
+
+private theorem second_eq_derivative {f : (Fin n → ℂ) → ℂ} {x : Fin n → ℂ}
+    (hf : ContDiffAt ℂ 2 f x) (v w : Fin n → ℂ) :
+    second (𝕜 := ℂ) f x v w = fderiv ℂ (fderiv ℂ f) x w v := by
+  have hd : DifferentiableAt ℂ (fderiv ℂ f) x :=
+    (hf.fderiv_right (m := 1) (by norm_num)).differentiableAt_one
+  unfold second
+  rw [fderiv_clm_apply hd (differentiableAt_const v)]
+  simp
+
+private theorem second_sub_sub {f : (Fin n → ℂ) → ℂ} {x : Fin n → ℂ}
+    (hf : ContDiffAt ℂ 2 f x) (a b c d : Fin n → ℂ) :
+    second (𝕜 := ℂ) f x (a - b) (c - d) =
+      second (𝕜 := ℂ) f x a c - second (𝕜 := ℂ) f x a d -
+        second (𝕜 := ℂ) f x b c + second (𝕜 := ℂ) f x b d := by
+  simp only [second_eq_derivative hf, map_sub, _root_.sub_apply]
+  abel
+
+private theorem second_complex_to_real {f : (Fin n → ℂ) → ℂ} {x : Fin n → ℂ}
+    (hf : ContDiffAt ℂ 2 f x) (v w : Fin n → ℂ) :
+    second (𝕜 := ℝ) f x v w = second (𝕜 := ℂ) f x v w := by
+  have he : (fun y => fderiv ℝ f y v) =ᶠ[𝓝 x] (fun y => fderiv ℂ f y v) := by
+    filter_upwards [hf.eventually (by norm_num)] with y hy
+    rw [(hy.differentiableAt (by norm_num)).fderiv_restrictScalars ℝ]
+    rfl
+  have hd : DifferentiableAt ℂ (fderiv ℂ f) x :=
+    (hf.fderiv_right (m := 1) (by norm_num)).differentiableAt_one
+  have hdv := hd.clm_apply (differentiableAt_const (c := v))
+  unfold second
+  rw [he.fderiv_eq, hdv.fderiv_restrictScalars ℝ]
+  rfl
+
+private noncomputable def angularMap : (Fin n → ℝ) →L[ℝ] (Fin n → ℂ) :=
+  ContinuousLinearMap.pi fun j =>
+    Complex.I • (Complex.ofRealCLM.comp (ContinuousLinearMap.proj j))
+
+@[simp] private theorem angularMap_apply (θ : Fin n → ℝ) (j : Fin n) :
+    angularMap θ j = Complex.I * (θ j : ℂ) := rfl
+
+private theorem second_angular_substitution {f : (Fin n → ℂ) → ℂ}
+    (hf : ContDiffAt ℂ 2 f 0) (j k : Fin n) :
+    second (𝕜 := ℝ) (fun θ : Fin n → ℝ => f (angularMap θ)) 0
+      (Pi.single j 1) (Pi.single k 1) =
+      -second (𝕜 := ℂ) f 0 (Pi.single j 1) (Pi.single k 1) := by
+  let L : (Fin n → ℝ) →L[ℝ] (Fin n → ℂ) := angularMap
+  have hL : ContDiffAt ℝ 2 L 0 := L.contDiff.contDiffAt
+  have hs := second_comp (𝕜 := ℝ) L f 0 (Pi.single j 1) (Pi.single k 1)
+    hL (by simpa using hf.restrict_scalars ℝ)
+  have hsecond : second (𝕜 := ℝ) L 0 (Pi.single j 1) (Pi.single k 1) = 0 := by
+    unfold second
+    simp [L.fderiv]
+  rw [hsecond] at hs
+  simp only [map_zero, add_zero, L.fderiv] at hs
+  change second (𝕜 := ℝ) (f ∘ L) 0 (Pi.single j 1) (Pi.single k 1) = _
+  rw [hs, second_complex_to_real hf]
+  have hLj : L (Pi.single j 1) = Complex.I • (Pi.single j (1 : ℂ)) := by
+    ext i
+    by_cases hij : i = j <;> simp [L, Pi.single_apply, hij]
+  have hLk : L (Pi.single k 1) = Complex.I • (Pi.single k (1 : ℂ)) := by
+    ext i
+    by_cases hik : i = k <;> simp [L, Pi.single_apply, hik]
+  rw [hLj, hLk, second_eq_derivative hf, second_eq_derivative hf]
+  simp only [map_smul, ContinuousLinearMap.smul_apply, smul_smul, smul_eq_mul]
+  rw [← mul_assoc, Complex.I_mul_I, neg_one_mul]
+
+private noncomputable def logarithmicPhase (a : ℂ) (h : (Fin n → ℂ) → ℂ)
+    (u : Fin n → ℂ) : ℂ := Complex.log (h (fun j => a * Complex.exp (u j)))
+
+private theorem logarithmicPhase_smooth {a : ℂ} {h : (Fin n → ℂ) → ℂ}
+    (hh : ContDiffAt ℂ 2 h (fun _ => a))
+    (ha : h (fun _ => a) ∈ Complex.slitPlane) :
+    ContDiffAt ℂ 2 (logarithmicPhase a h) 0 := by
+  have he : ContDiff ℂ 2 (fun u : Fin n → ℂ => fun j => a * Complex.exp (u j)) := by
+    fun_prop
+  have hs : ContDiffAt ℂ 2 (fun u : Fin n → ℂ => h (fun j => a * Complex.exp (u j))) 0 := by
+    have hh' : ContDiffAt ℂ 2 h ((fun u : Fin n → ℂ => fun j => a * Complex.exp (u j)) 0) := by simpa using hh
+    exact hh'.comp 0 he.contDiffAt
+  have hl : ContDiffAt ℂ 2 Complex.log ((fun u : Fin n → ℂ => h (fun j => a * Complex.exp (u j))) 0) := by simpa using Complex.contDiffAt_log (n := 2) ha
+  exact hl.comp 0 hs
+
+private noncomputable def exponentialChart (a : ℂ) (u : Fin n → ℂ) : Fin n → ℂ :=
+  fun j => a * Complex.exp (u j)
+
+private theorem fderiv_exponentialChart (a : ℂ) (u v : Fin n → ℂ) :
+    fderiv ℂ (exponentialChart a) u v = fun j => a * Complex.exp (u j) * v j := by
+  have hd : HasFDerivAt (exponentialChart a)
+      (ContinuousLinearMap.pi fun j => a • (Complex.exp (u j) • (ContinuousLinearMap.proj j : (Fin n → ℂ) →L[ℂ] ℂ))) u := by
+    change HasFDerivAt (fun u : Fin n → ℂ => fun j => a * Complex.exp (u j)) _ u
+    apply hasFDerivAt_pi.mpr
+    intro j
+    exact ((hasFDerivAt_apply (𝕜 := ℂ) j u).cexp).const_mul a
+  rw [hd.fderiv]
+  ext j
+  simp [mul_assoc]
+
+private theorem second_exponentialChart (a : ℂ) (v w : Fin n → ℂ) :
+    second (𝕜 := ℂ) (exponentialChart a) 0 v w = fun j => a * v j * w j := by
+  unfold second
+  simp_rw [fderiv_exponentialChart]
+  have hd : HasFDerivAt (fun u : Fin n → ℂ => fun j =>
+      a * Complex.exp (u j) * v j)
+      (ContinuousLinearMap.pi fun j => (v j) • (a •
+        (Complex.exp ((0 : Fin n → ℂ) j) • (ContinuousLinearMap.proj j : (Fin n → ℂ) →L[ℂ] ℂ)))) 0 := by
+    apply hasFDerivAt_pi.mpr
+    intro j
+    exact (((hasFDerivAt_apply (𝕜 := ℂ) j (0 : Fin n → ℂ)).cexp).const_mul a).mul_const (v j)
+  rw [hd.fderiv]
+  ext j
+  simp [mul_assoc, mul_left_comm, mul_comm]
+
+private theorem second_clog {g : (Fin n → ℂ) → ℂ} {x : Fin n → ℂ}
+    (hg : ContDiffAt ℂ 2 g x) (hslit : g x ∈ Complex.slitPlane)
+    (v w : Fin n → ℂ) :
+    second (𝕜 := ℂ) (fun y => Complex.log (g y)) x v w =
+      -(g x ^ 2)⁻¹ * fderiv ℂ g x w * fderiv ℂ g x v +
+      (g x)⁻¹ * second (𝕜 := ℂ) g x v w := by
+  have hg₁ := hg.differentiableAt (by norm_num)
+  have hg₂ : DifferentiableAt ℂ (fderiv ℂ g) x :=
+    (hg.fderiv_right (m := 1) (by norm_num)).differentiableAt_one
+  have he : (fun y => fderiv ℂ (fun y => Complex.log (g y)) y v) =ᶠ[𝓝 x]
+      (fun y => (g y)⁻¹ * fderiv ℂ g y v) := by
+    filter_upwards [hg.eventually (by norm_num),
+      hg₁.continuousAt (Complex.isOpen_slitPlane.mem_nhds hslit)] with y hy hys
+    have hys' : g y ∈ Complex.slitPlane := hys
+    rw [((hy.differentiableAt (by norm_num)).hasFDerivAt.clog hys').fderiv]
+    simp
+  have hg0 : g x ≠ 0 := Complex.slitPlane_ne_zero hslit
+  have hi := (hasDerivAt_inv hg0).comp_hasFDerivAt x hg₁.hasFDerivAt
+  have hdv := hg₂.clm_apply (differentiableAt_const (c := v))
+  change HasFDerivAt (fun y => (g y)⁻¹) _ x at hi
+  have hp := hi.mul hdv.hasFDerivAt
+  change HasFDerivAt (fun y => (g y)⁻¹ * fderiv ℂ g y v) _ x at hp
+  unfold second
+  rw [he.fderiv_eq, hp.fderiv]
+  simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply,
+    ContinuousLinearMap.comp_apply, ContinuousLinearMap.smulRight_apply,
+    ContinuousLinearMap.one_apply, smul_eq_mul]
+  ring
+
+private theorem logarithmicPhase_second {a : ℂ} {h : (Fin n → ℂ) → ℂ}
+    (ha : a ≠ 0) (hh : ContDiffAt ℂ 2 h (fun _ => a))
+    (hh0 : h (fun _ => a) = a) (hslit : a ∈ Complex.slitPlane)
+    (j k : Fin n) :
+    second (𝕜 := ℂ) (logarithmicPhase a h) 0 (Pi.single j 1) (Pi.single k 1) =
+      a * second (𝕜 := ℂ) h (fun _ => a) (Pi.single j 1) (Pi.single k 1) +
+        (if j = k then fderiv ℂ h (fun _ => a) (Pi.single j 1) else 0) -
+          fderiv ℂ h (fun _ => a) (Pi.single j 1) *
+            fderiv ℂ h (fun _ => a) (Pi.single k 1) := by
+  let e : (Fin n → ℂ) → (Fin n → ℂ) := exponentialChart a
+  have he0 : e 0 = (fun _ => a) := by ext i; simp [e, exponentialChart]
+  have he : ContDiffAt ℂ 2 e 0 := by
+    change ContDiffAt ℂ 2 (fun u : Fin n → ℂ => fun j => a * Complex.exp (u j)) 0
+    fun_prop
+  have hh' : ContDiffAt ℂ 2 h (e 0) := by simpa [he0] using hh
+  have hg : ContDiffAt ℂ 2 (h ∘ e) 0 := hh'.comp 0 he
+  have hD1 (v : Fin n → ℂ) : fderiv ℂ (h ∘ e) 0 v =
+      a * fderiv ℂ h (fun _ => a) v := by
+    rw [fderiv_comp 0 (by simpa [he0] using hh.differentiableAt (by norm_num))
+      (he.differentiableAt (by norm_num))]
+    simp only [ContinuousLinearMap.comp_apply, he0]
+    have heD : fderiv ℂ e 0 v = a • v := by
+      ext i
+      simp [e, fderiv_exponentialChart]
+    rw [heD, map_smul, smul_eq_mul]
+  have hD2 := second_comp (𝕜 := ℂ) e h 0 (Pi.single j 1) (Pi.single k 1) he
+    (by simpa [he0] using hh)
+  rw [he0] at hD2
+  have heDj : fderiv ℂ e 0 (Pi.single j 1) = a • (Pi.single j (1 : ℂ)) := by
+    ext i
+    simp [e, fderiv_exponentialChart]
+  have heDk : fderiv ℂ e 0 (Pi.single k 1) = a • (Pi.single k (1 : ℂ)) := by
+    ext i
+    simp [e, fderiv_exponentialChart]
+  rw [heDj, heDk] at hD2
+  have hscale : second (𝕜 := ℂ) h (fun _ => a)
+      (a • (Pi.single j (1 : ℂ))) (a • (Pi.single k (1 : ℂ))) =
+      a * a * second (𝕜 := ℂ) h (fun _ => a) (Pi.single j 1) (Pi.single k 1) := by
+    simp only [second_eq_derivative hh, map_smul, ContinuousLinearMap.smul_apply, smul_eq_mul]
+    ring
+  rw [hscale] at hD2
+  have heD2 : second (𝕜 := ℂ) e 0 (Pi.single j 1) (Pi.single k 1) =
+      if j = k then a • (Pi.single j (1 : ℂ)) else 0 := by
+    rw [show e = exponentialChart a from rfl, second_exponentialChart]
+    split_ifs with hjk
+    · subst k; ext i; by_cases hi : i = j <;> simp [hi]
+    · ext i; by_cases hi : i = j <;> by_cases hk : i = k <;> simp_all
+  rw [heD2] at hD2
+  have hlog := second_clog hg (by simp [he0, hh0]; exact hslit)
+    (Pi.single j 1) (Pi.single k 1)
+  change second (𝕜 := ℂ) (logarithmicPhase a h) 0 (Pi.single j 1) (Pi.single k 1) = _ at hlog
+  rw [hlog, hD2, hD1, hD1]
+  simp only [Function.comp_apply, he0, hh0]
+  split_ifs with hjk
+  · simp only [map_smul, smul_eq_mul]
+    field_simp
+    ring
+  · simp only [map_zero, add_zero]
+    field_simp
+    ring
+
+end Angular
+
+end WormaldAnalytic
+
+
+namespace WormaldAnalytic
+
+private theorem actual_hessian {d : ℕ} {A : Fin d → Fin d → Bool}
+    {h : (Fin (d - 1) → ℂ) → ℂ} (hd : 3 ≤ d) (hh : IsLocalSolution A h)
+    (j k : Fin (d - 1)) :
+    hessian h j k =
+      fderiv ℂ h (fun _ => z d) (Pi.single j 1) *
+          fderiv ℂ h (fun _ => z d) (Pi.single k 1) -
+        z d * second (𝕜 := ℂ) h (fun _ => z d) (Pi.single j 1) (Pi.single k 1) -
+          (if j = k then fderiv ℂ h (fun _ => z d) (Pi.single j 1) else 0) := by
+  have hz0 : z d ≠ 0 := by
+    unfold z
+    apply div_ne_zero (by norm_num)
+    exact_mod_cast (by omega : d ≠ 0)
+  have hzs : z d ∈ Complex.slitPlane := by
+    rw [show z d = (((2 : ℝ) / d : ℝ) : ℂ) by simp [z]]
+    apply Complex.ofReal_mem_slitPlane.mpr
+    exact div_pos (by norm_num) (by exact_mod_cast (by omega : 0 < d))
+  have hsm := logarithmicPhase_smooth hh.2.1 (by rw [hh.1]; exact hzs)
+  have hang := second_angular_substitution hsm j k
+  change hessian h j k =
+    -second (𝕜 := ℂ) (logarithmicPhase (z d) h) 0 (Pi.single j 1) (Pi.single k 1) at hang
+  rw [hang, logarithmicPhase_second hz0 hh.2.1 hh.1 hzs]
+  ring
+
+end WormaldAnalytic
+
+namespace WormaldAnalytic
+
+private theorem hessian_of_implicit_scalar {d : ℕ} {A : Fin d → Fin d → Bool}
+    {h : (Fin (d - 1) → ℂ) → ℂ} (hd : 3 ≤ d) (hh : IsLocalSolution A h)
+    (L : ((Fin (d - 1) → ℂ) × ℂ) →L[ℂ] (Fin d → ℂ))
+    (α : (Fin d → ℂ) → ℂ)
+    (hα : ContDiffAt ℂ 2 α (L ((fun _ => z d), z d)))
+    (he : ∀ᶠ y in 𝓝 (fun _ : Fin (d - 1) => z d), α (L (y, h y)) = 1)
+    (c : ℂ) (hc : c ≠ 0)
+    (hfirst : ∀ j, fderiv ℂ α (L ((fun _ => z d), z d))
+      (L (Pi.single j 1, 0)) = c)
+    (hlast : fderiv ℂ α (L ((fun _ => z d), z d)) (L (0, 1)) = c)
+    (j k : Fin (d - 1)) :
+    hessian h j k = 1 + (if j = k then 1 else 0) + (z d / c) *
+      second (𝕜 := ℂ) α (L ((fun _ => z d), z d))
+        (L (Pi.single j 1, -1)) (L (Pi.single k 1, -1)) := by
+  let x : Fin (d - 1) → ℂ := fun _ => z d
+  let F₀ : ((Fin (d - 1) → ℂ) × ℂ) → ℂ := fun p => α (L p) - 1
+  change (∀ j, fderiv ℂ α (L (x, z d)) (L (Pi.single j 1, 0)) = c) at hfirst
+  change fderiv ℂ α (L (x, z d)) (L (0, 1)) = c at hlast
+  have hh0 : h x = z d := hh.1
+  have hhC : ContDiffAt ℂ 2 h x := hh.2.1
+  have hα' : ContDiffAt ℂ 2 α (L (x, h x)) := by simpa [hh0] using hα
+  have hF : ContDiffAt ℂ 2 F₀ (x, h x) := by
+    exact (hα'.comp (x, h x) L.contDiff.contDiffAt).sub contDiffAt_const
+  have hzero : (fun y => F₀ (y, h y)) =ᶠ[𝓝 x] fun _ => 0 := by
+    filter_upwards [he] with y hy
+    dsimp [F₀]
+    rw [hy, sub_self]
+  have dF (v : (Fin (d - 1) → ℂ) × ℂ) :
+      fderiv ℂ F₀ (x, h x) v = fderiv ℂ α (L (x, z d)) (L v) := by
+    change fderiv ℂ (fun p => α (L p) - 1) (x, h x) v = _
+    rw [fderiv_sub_const]
+    have hcomp := (hα'.differentiableAt (by norm_num)).hasFDerivAt.comp (x, h x)
+      L.hasFDerivAt
+    change HasFDerivAt (fun p => α (L p)) _ (x, h x) at hcomp
+    rw [hcomp.fderiv]
+    simp [hh0]
+  have hq : fderiv ℂ F₀ (x, h x) (0, 1) ≠ 0 := by
+    rw [dF, hlast]
+    exact hc
+  have dh (i : Fin (d - 1)) : fderiv ℂ h x (Pi.single i 1) = -1 := by
+    have H := implicit_first_scalar hhC hF hzero hq (Pi.single i 1)
+    rw [dF, dF, hfirst, hlast] at H
+    simpa [hc] using H
+  have h2F (v w : (Fin (d - 1) → ℂ) × ℂ) :
+      second (𝕜 := ℂ) F₀ (x, h x) v w =
+        second (𝕜 := ℂ) α (L (x, z d)) (L v) (L w) := by
+    change second (𝕜 := ℂ) (fun p => α (L p) - 1) (x, h x) v w = _
+    rw [second_sub_const]
+    have H := second_comp_clm L α (x, h x) v w hα'
+    change second (𝕜 := ℂ) (fun p => α (L p)) (x, h x) v w = _ at H
+    simpa [hh0] using H
+  have dh2 := implicit_second_scalar hhC hF hzero hq (Pi.single j 1) (Pi.single k 1)
+  rw [dh j, dh k, dF, hlast, h2F] at dh2
+  dsimp only [x] at dh dh2
+  rw [actual_hessian hd hh, dh j, dh k, dh2]
+  split_ifs <;> ring
+
+end WormaldAnalytic
+
+namespace WormaldAnalytic
+
+private theorem hessian_of_implicit_coordinates {d : ℕ} {A : Fin d → Fin d → Bool}
+    {h : (Fin (d - 1) → ℂ) → ℂ} (hd : 3 ≤ d) (hh : IsLocalSolution A h)
+    (L : ((Fin (d - 1) → ℂ) × ℂ) →L[ℂ] (Fin d → ℂ))
+    (ι : Fin (d - 1) → Fin d) (last : Fin d)
+    (hLj : ∀ j, L (Pi.single j 1, 0) = Pi.single (ι j) 1)
+    (hLl : L (0, 1) = Pi.single last 1)
+    (α : (Fin d → ℂ) → ℂ)
+    (hα : ContDiffAt ℂ 2 α (L ((fun _ => z d), z d)))
+    (he : ∀ᶠ y in 𝓝 (fun _ : Fin (d - 1) => z d), α (L (y, h y)) = 1)
+    (c : ℂ) (hc : c ≠ 0)
+    (hfirst : ∀ i, fderiv ℂ α (L ((fun _ => z d), z d)) (Pi.single i 1) = c)
+    (M : Matrix (Fin d) (Fin d) ℂ)
+    (hsecond : ∀ i l, second (𝕜 := ℂ) α (L ((fun _ => z d), z d))
+      (Pi.single i 1) (Pi.single l 1) = M i l)
+    (j k : Fin (d - 1)) :
+    hessian h j k = 1 + (if j = k then 1 else 0) + (z d / c) *
+      (M (ι j) (ι k) - M (ι j) last - M last (ι k) + M last last) := by
+  have hFj (i : Fin (d - 1)) : fderiv ℂ α (L ((fun _ => z d), z d))
+      (L (Pi.single i 1, 0)) = c := by rw [hLj]; exact hfirst (ι i)
+  have hFl : fderiv ℂ α (L ((fun _ => z d), z d)) (L (0, 1)) = c := by
+    rw [hLl]; exact hfirst last
+  rw [hessian_of_implicit_scalar hd hh L α hα he c hc hFj hFl]
+  have hdiff (i : Fin (d - 1)) : L (Pi.single i 1, -1) =
+      Pi.single (ι i) (1 : ℂ) - Pi.single last 1 := by
+    have hp : (Pi.single i (1 : ℂ), (-1 : ℂ)) =
+        (Pi.single i (1 : ℂ), (0 : ℂ)) - ((0 : Fin (d - 1) → ℂ), (1 : ℂ)) := by simp
+    rw [hp, map_sub, hLj, hLl]
+  rw [hdiff, hdiff, second_sub_sub hα, hsecond, hsecond, hsecond, hsecond]
+
+end WormaldAnalytic
+
+
+
+open Matrix
+open scoped Matrix
+
+section
+variable {m : Type*} [Fintype m] [DecidableEq m]
+
+private noncomputable def bridgeU : Matrix (Sum m Unit) (Sum m Unit) ℂ :=
+  Matrix.fromBlocks 1 (Matrix.of fun _ _ => 1) (Matrix.of fun _ _ => -1) 1
+
+private lemma bridgeU_det : (bridgeU (m := m)).det = (Fintype.card m : ℂ) + 1 := by
+  unfold bridgeU
+  rw [Matrix.det_fromBlocks_one₁₁, Matrix.det_unique]
+  simp [Matrix.mul_apply] <;> ring
+
+private noncomputable def bridgeH (T : Matrix (Sum m Unit) (Sum m Unit) ℂ) : Matrix m m ℂ :=
+  fun j k => T (.inl j) (.inl k) - T (.inl j) (.inr ()) - T (.inr ()) (.inl k) + T (.inr ()) (.inr ())
+
+private lemma bridgeU_entry_left (i : Sum m Unit) (j : m) :
+    bridgeU i (.inl j) = (if i = .inl j then 1 else 0) - (if i = .inr () then 1 else 0) := by
+  cases i <;> simp [bridgeU, Matrix.fromBlocks, Matrix.one_apply]
+
+private lemma bridgeU_entry_right (i : Sum m Unit) : bridgeU (m := m) i (.inr ()) = 1 := by
+  cases i <;> simp [bridgeU, Matrix.fromBlocks]
+
+private lemma bridgeU_congr (T : Matrix (Sum m Unit) (Sum m Unit) ℂ)
+    (hrow : ∀ i, ∑ j, T i j = -1) (hcol : ∀ j, ∑ i, T i j = -1) :
+    (bridgeU (m := m)).transpose * T * bridgeU =
+      Matrix.fromBlocks (bridgeH T) 0 0 (Matrix.of fun (_ _ : Unit) => -((Fintype.card m : ℂ) + 1)) := by
+  ext i j
+  cases i with
+  | inl i =>
+    cases j with
+    | inl j =>
+      simp [Matrix.mul_apply, Matrix.transpose_apply, Fintype.sum_sum_type,
+        bridgeU, Matrix.fromBlocks, Matrix.one_apply, bridgeH,
+        Finset.sum_sub_distrib, Finset.sum_add_distrib]
+      ring
+    | inr j =>
+      cases j
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, bridgeU_entry_right, mul_one]
+      rw [Finset.sum_comm]
+      simp_rw [← Finset.mul_sum, hrow]
+      simp [bridgeU_entry_left, Fintype.sum_sum_type, Matrix.fromBlocks]
+  | inr i =>
+    cases i
+    cases j with
+    | inl j =>
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, bridgeU_entry_right, one_mul,
+        hcol, bridgeU_entry_left, mul_sub, Finset.sum_sub_distrib, Fintype.sum_sum_type]
+      simp [Matrix.fromBlocks]
+    | inr j =>
+      cases j
+      simp [Matrix.mul_apply, Matrix.transpose_apply, bridgeU_entry_right, hcol,
+        Matrix.fromBlocks, Fintype.card_sum]
+
+private lemma bridge_det (T : Matrix (Sum m Unit) (Sum m Unit) ℂ)
+    (hrow : ∀ i, ∑ j, T i j = -1) (hcol : ∀ j, ∑ i, T i j = -1) :
+    (bridgeH T).det = -((Fintype.card m : ℂ) + 1) * T.det := by
+  have hd := congrArg Matrix.det (bridgeU_congr T hrow hcol)
+  rw [Matrix.det_mul, Matrix.det_mul, Matrix.det_transpose, bridgeU_det,
+    Matrix.det_fromBlocks_zero₂₁] at hd
+  rw [Matrix.det_unique (Matrix.of fun (_ _ : Unit) => -((Fintype.card m : ℂ) + 1))] at hd
+  simp only [Matrix.of_apply] at hd
+  have hn : (Fintype.card m : ℂ) + 1 ≠ 0 := by
+    have h : (0 : ℝ) < (Fintype.card m : ℝ) + 1 := by positivity
+    exact_mod_cast ne_of_gt h
+  have heq : ((Fintype.card m : ℂ) + 1) *
+      ((bridgeH T).det + ((Fintype.card m : ℂ) + 1) * T.det) = 0 := by
+    linear_combination hd
+  have := (mul_eq_zero.mp heq).resolve_left hn
+  linear_combination this
+end
+
+section Skew
+variable {n : Type*} [Fintype n] [DecidableEq n]
+
+private lemma skew_resolvent_det (S : Matrix n n ℂ) (c : ℂ)
+    (hS : S.transpose = -S) (hn : Odd (Fintype.card n))
+    (hq : (c • (1 : Matrix n n ℂ) - S).det ≠ 0) :
+    (1 - c • ((c • (1 : Matrix n n ℂ) - S)⁻¹ +
+      ((c • (1 : Matrix n n ℂ) - S)⁻¹).transpose)).det =
+      -(c^2 • (1 : Matrix n n ℂ) + S*S).det /
+        (c^2 • (1 : Matrix n n ℂ) - S*S).det := by
+  let Q : Matrix n n ℂ := c • 1 - S
+  let P : Matrix n n ℂ := c • 1 + S
+  have hQT : Q.transpose = P := by
+    simp [Q, P, Matrix.transpose_sub, Matrix.transpose_smul, hS]
+  have hq' : Q.det ≠ 0 := hq
+  have hp : P.det ≠ 0 := by rw [← hQT, Matrix.det_transpose]; exact hq'
+  have hqp : Q*P = c^2 • 1 - S*S := by
+    simp [Q, P, sub_mul, mul_add, smul_add, smul_sub, smul_smul, pow_two] <;> abel
+  have hpq : P*Q = c^2 • 1 - S*S := by
+    simp [Q, P, add_mul, mul_sub, smul_smul, pow_two]
+    abel
+  have hqi : Q⁻¹ * (Q*P) = P :=
+    Matrix.nonsing_inv_mul_cancel_left Q P (isUnit_iff_ne_zero.mpr hq')
+  have hpi : P⁻¹ * (Q*P) = Q := by
+    rw [show Q*P=P*Q from hqp.trans hpq.symm]
+    exact Matrix.nonsing_inv_mul_cancel_left P Q (isUnit_iff_ne_zero.mpr hp)
+  have hid : (1 - c • (Q⁻¹ + P⁻¹)) * (Q*P) = -(c^2 • 1 + S*S) := by
+    calc
+      _ = Q*P - c • (Q⁻¹*(Q*P) + P⁻¹*(Q*P)) := by
+        simp [sub_mul, Matrix.smul_mul, add_mul]
+      _ = Q*P - c • (P+Q) := by rw [hqi,hpi]
+      _ = _ := by
+        rw [hqp]
+        simp [Q, P, smul_add, smul_sub, smul_smul, pow_two]
+        abel
+  have hd : (c^2 • (1 : Matrix n n ℂ) - S*S).det ≠ 0 := by
+    rw [← hqp, Matrix.det_mul]
+    exact mul_ne_zero hq' hp
+  rw [Matrix.transpose_nonsing_inv, hQT]
+  change (1-c • (Q⁻¹+P⁻¹)).det = _
+  apply (eq_div_iff hd).mpr
+  have hh := congrArg Matrix.det hid
+  rw [Matrix.det_mul, hqp, Matrix.det_neg] at hh
+  simpa [hn.neg_one_pow] using hh
+end Skew
+
+section Fin
+private noncomputable def bridgeFinEquiv (n : ℕ) : (Fin n ⊕ Unit) ≃ Fin (n+1) :=
+  (Equiv.sumCongr (Equiv.refl (Fin n)) (Equiv.ofUnique Unit (Fin 1))).trans finSumFinEquiv
+
+@[simp] private lemma bridgeFinEquiv_inl (n : ℕ) (i : Fin n) :
+    bridgeFinEquiv n (.inl i) = i.castSucc := rfl
+@[simp] private lemma bridgeFinEquiv_inr (n : ℕ) :
+    bridgeFinEquiv n (.inr ()) = Fin.last n := rfl
+
+private lemma differenceMinor_det (n : ℕ) (T : Matrix (Fin (n+1)) (Fin (n+1)) ℂ)
+    (hrow : ∀ i, ∑ j, T i j = -1) (hcol : ∀ j, ∑ i, T i j = -1) :
+    (Matrix.of fun j k : Fin n =>
+      T j.castSucc k.castSucc - T j.castSucc (Fin.last n) -
+        T (Fin.last n) k.castSucc + T (Fin.last n) (Fin.last n)).det =
+      -((n : ℂ)+1) * T.det := by
+  let e := bridgeFinEquiv n
+  let T' := T.submatrix e e
+  have hr : ∀ i, ∑ j, T' i j = -1 := by
+    intro i
+    exact (e.sum_comp (fun j => T (e i) j)).trans (hrow (e i))
+  have hc : ∀ j, ∑ i, T' i j = -1 := by
+    intro j
+    exact (e.sum_comp (fun i => T i (e j))).trans (hcol (e j))
+  have h := bridge_det T' hr hc
+  rw [Matrix.det_submatrix_equiv_self] at h
+  have hh : bridgeH T' = (Matrix.of fun j k : Fin n =>
+      T j.castSucc k.castSucc - T j.castSucc (Fin.last n) -
+        T (Fin.last n) k.castSucc + T (Fin.last n) (Fin.last n)) := by
+    ext j k
+    simp [bridgeH, T', e, Matrix.submatrix_apply]
+  rw [hh] at h
+  simpa using h
+end Fin
+
+section RowSum
+variable {n : Type*} [Fintype n] [DecidableEq n]
+
+private lemma inverse_row_sum (Q : Matrix n n ℂ) (c : ℂ) (hc : c ≠ 0)
+    (hQ : Q.det ≠ 0) (hr : ∀ i, ∑ j, Q i j = c) :
+    ∀ i, ∑ j, Q⁻¹ i j = c⁻¹ := by
+  letI := Matrix.invertibleOfIsUnitDet Q (isUnit_iff_ne_zero.mpr hQ)
+  have hu : (fun _ : n => (1 : ℂ)) = Q *ᵥ (fun _ => c⁻¹) := by
+    ext i
+    simp [Matrix.mulVec, dotProduct, ← Finset.sum_mul, hr, hc]
+  have hv := Matrix.inv_mulVec_eq_vec hu
+  intro i
+  simpa [Matrix.mulVec, dotProduct] using congrFun hv i
+
+private lemma inverse_col_sum (Q : Matrix n n ℂ) (c : ℂ) (hc : c ≠ 0)
+    (hQ : Q.det ≠ 0) (hr : ∀ j, ∑ i, Q i j = c) :
+    ∀ j, ∑ i, Q⁻¹ i j = c⁻¹ := by
+  have hv := inverse_row_sum Q.transpose c hc (by simpa using hQ) hr
+  simpa [← Matrix.transpose_nonsing_inv, Matrix.transpose_apply] using hv
+
+private lemma resolvent_row_col_sum (Q : Matrix n n ℂ) (c : ℂ) (hc : c ≠ 0)
+    (hQ : Q.det ≠ 0) (hr : ∀ i, ∑ j, Q i j = c) (hcol : ∀ j, ∑ i, Q i j = c) :
+    (∀ i, ∑ j, (1-c • (Q⁻¹+(Q⁻¹).transpose)) i j = -1) ∧
+    (∀ j, ∑ i, (1-c • (Q⁻¹+(Q⁻¹).transpose)) i j = -1) := by
+  have hri := inverse_row_sum Q c hc hQ hr
+  have hci := inverse_col_sum Q c hc hQ hcol
+  constructor
+  · intro i
+    simp [Matrix.sub_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul,
+      Finset.sum_sub_distrib, Finset.sum_add_distrib, ← Finset.mul_sum,
+      Matrix.transpose_apply, Matrix.one_apply, hri, hci, hc, mul_add]
+  · intro j
+    simp [Matrix.sub_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul,
+      Finset.sum_sub_distrib, Finset.sum_add_distrib, ← Finset.mul_sum,
+      Matrix.transpose_apply, Matrix.one_apply, hri, hci, hc, mul_add]
+end RowSum
+
+private lemma skew_difference_det (n : ℕ) (S : Matrix (Fin (n+1)) (Fin (n+1)) ℂ)
+    (c : ℂ) (hc : c ≠ 0) (hS : S.transpose = -S) (hn : Odd (n+1))
+    (hq : (c • (1 : Matrix (Fin (n+1)) (Fin (n+1)) ℂ) - S).det ≠ 0)
+    (hr : ∀ i, ∑ j, S i j = 0) :
+    let T := 1-c • ((c • (1 : Matrix (Fin (n+1)) (Fin (n+1)) ℂ) - S)⁻¹ +
+      ((c • (1 : Matrix (Fin (n+1)) (Fin (n+1)) ℂ) - S)⁻¹).transpose)
+    (Matrix.of fun j k : Fin n => T j.castSucc k.castSucc - T j.castSucc (Fin.last n) -
+      T (Fin.last n) k.castSucc + T (Fin.last n) (Fin.last n)).det =
+      ((n : ℂ)+1) * (c^2 • (1 : Matrix (Fin (n+1)) (Fin (n+1)) ℂ) + S*S).det /
+        (c^2 • (1 : Matrix (Fin (n+1)) (Fin (n+1)) ℂ) - S*S).det := by
+  let Q := c • (1 : Matrix (Fin (n+1)) (Fin (n+1)) ℂ) - S
+  let T := 1-c • (Q⁻¹ + (Q⁻¹).transpose)
+  have hcol : ∀ j, ∑ i, S i j = 0 := by
+    intro j
+    calc
+      _ = ∑ i, -S j i := by
+        apply Finset.sum_congr rfl
+        intro i _
+        exact congrArg (fun M : Matrix (Fin (n+1)) (Fin (n+1)) ℂ => M j i) hS
+      _ = -(∑ i, S j i) := Finset.sum_neg_distrib (fun i => S j i)
+      _ = 0 := neg_eq_zero.mpr (hr j)
+  have hqr : ∀ i, ∑ j, Q i j = c := by
+    intro i
+    simp [Q, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul,
+      Finset.sum_sub_distrib, ← Finset.mul_sum, Matrix.one_apply, hr]
+  have hqc : ∀ j, ∑ i, Q i j = c := by
+    intro j
+    simp [Q, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul,
+      Finset.sum_sub_distrib, ← Finset.mul_sum, Matrix.one_apply, hcol]
+  have hsum := resolvent_row_col_sum Q c hc hq hqr hqc
+  have hdet := differenceMinor_det n T hsum.1 hsum.2
+  have hid := skew_resolvent_det S c hS (by simpa using hn) hq
+  change (Matrix.of fun j k : Fin n => T j.castSucc k.castSucc - T j.castSucc (Fin.last n) -
+      T (Fin.last n) k.castSucc + T (Fin.last n) (Fin.last n)).det = _
+  rw [hdet]
+  change -((n : ℂ)+1) * (1-c • (Q⁻¹+(Q⁻¹).transpose)).det = _
+  rw [hid]
+  ring
+
+open Matrix Filter
+open scoped Matrix Matrix.Norms.Operator Topology ContDiff
+
+section
+variable {n : Type*} [Fintype n] [DecidableEq n]
+
+private noncomputable def diagonalCLM : (n → ℂ) →L[ℂ] Matrix n n ℂ :=
+  ({ toFun := Matrix.diagonal
+     map_add' := by intro u v; exact (Matrix.diagonal_add u v).symm
+     map_smul' := by intro c u; exact Matrix.diagonal_smul c u } :
+    (n → ℂ) →ₗ[ℂ] Matrix n n ℂ).toContinuousLinearMap
+
+private noncomputable def sumEntriesCLM : Matrix n n ℂ →L[ℂ] ℂ :=
+  ({ toFun := fun M => ∑ i, ∑ j, M i j
+     map_add' := by intro M N; simp [Finset.sum_add_distrib]
+     map_smul' := by intro c M; simp [← Finset.mul_sum] } :
+    Matrix n n ℂ →ₗ[ℂ] ℂ).toContinuousLinearMap
+
+private lemma matrixInverse_hasFDerivAt (Q : Matrix n n ℂ) (hQ : Q.det ≠ 0) :
+    HasFDerivAt (fun M : Matrix n n ℂ => M⁻¹)
+      (-ContinuousLinearMap.mulLeftRight ℂ (Matrix n n ℂ) Q⁻¹ Q⁻¹) Q := by
+  rw [show (fun M : Matrix n n ℂ => M⁻¹) = Ring.inverse from
+    funext fun M => Matrix.nonsing_inv_eq_ringInverse M]
+  exact hasFDerivAt_ringInverse (𝕜 := ℂ)
+    (Matrix.nonsingInvUnit Q (isUnit_iff_ne_zero.mpr hQ))
+
+private noncomputable def inverseQ (S : Matrix n n ℂ) (y : n → ℂ) : Matrix n n ℂ :=
+  Matrix.diagonal (fun i => 2 / y i) - S
+private noncomputable def alpha (S : Matrix n n ℂ) (y : n → ℂ) : ℂ :=
+  ∑ i, ∑ j, ((inverseQ S y)⁻¹) i j
+
+private noncomputable def inverseQDeriv (y : n → ℂ) :
+    (n → ℂ) →L[ℂ] Matrix n n ℂ :=
+  diagonalCLM ∘L ContinuousLinearMap.pi (fun i =>
+    (-(2 : ℂ) / (y i)^2) • (ContinuousLinearMap.proj i : (n → ℂ) →L[ℂ] ℂ))
+
+private lemma inverseQ_hasFDerivAt (S : Matrix n n ℂ) (y : n → ℂ)
+    (hy : ∀ i, y i ≠ 0) :
+    HasFDerivAt (inverseQ S) (inverseQDeriv y) y := by
+  have hscalar : HasFDerivAt (fun y : n → ℂ => fun i => 2 / y i)
+      (ContinuousLinearMap.pi (fun i =>
+        (-(2 : ℂ) / (y i)^2) • (ContinuousLinearMap.proj i : (n → ℂ) →L[ℂ] ℂ))) y := by
+    apply hasFDerivAt_pi.mpr
+    intro i
+    convert (((hasDerivAt_inv (hy i)).comp_hasFDerivAt y ((ContinuousLinearMap.proj i : (n → ℂ) →L[ℂ] ℂ)).hasFDerivAt).const_mul 2) using 1
+    · ext y; simp [div_eq_mul_inv]
+    · ext t; simp [ContinuousLinearMap.smul_apply, smul_eq_mul]; ring
+  exact ((diagonalCLM (n := n)).hasFDerivAt.comp y hscalar).sub_const S
+
+private lemma inverse_hasFDerivAt (S : Matrix n n ℂ) (y : n → ℂ)
+    (hy : ∀ i, y i ≠ 0) (hQ : (inverseQ S y).det ≠ 0) :
+    HasFDerivAt (fun y => (inverseQ S y)⁻¹)
+      ((-ContinuousLinearMap.mulLeftRight ℂ (Matrix n n ℂ)
+        (inverseQ S y)⁻¹ (inverseQ S y)⁻¹) ∘L inverseQDeriv y) y :=
+  (matrixInverse_hasFDerivAt (inverseQ S y) hQ).comp y (inverseQ_hasFDerivAt S y hy)
+
+private lemma alpha_hasFDerivAt (S : Matrix n n ℂ) (y : n → ℂ)
+    (hy : ∀ i, y i ≠ 0) (hQ : (inverseQ S y).det ≠ 0) :
+    HasFDerivAt (alpha S)
+      (sumEntriesCLM ∘L ((-ContinuousLinearMap.mulLeftRight ℂ (Matrix n n ℂ)
+        (inverseQ S y)⁻¹ (inverseQ S y)⁻¹) ∘L inverseQDeriv y)) y := by
+  change HasFDerivAt ((sumEntriesCLM (n := n)) ∘ (fun u => (inverseQ S u)⁻¹)) _ y
+  exact (sumEntriesCLM (n := n)).hasFDerivAt.comp y (inverse_hasFDerivAt S y hy hQ)
+private lemma inverseQ_contDiffAt (S : Matrix n n ℂ) (y : n → ℂ) (hy : ∀ i, y i ≠ 0) :
+    ContDiffAt ℂ 2 (inverseQ S) y := by
+  have hs : ContDiffAt ℂ 2 (fun y : n → ℂ => fun i => 2 / y i) y := by
+    apply contDiffAt_pi.mpr
+    intro i
+    have hi : ContDiffAt ℂ 2 (fun u : n → ℂ => (u i)⁻¹) y :=
+      (contDiffAt_apply ℂ (fun _ : n => ℂ) i y).inv (hy i)
+    have hm : ContDiffAt ℂ 2 (fun u : n → ℂ => (2 : ℂ) * (u i)⁻¹) y :=
+      contDiffAt_const.mul hi
+    simpa [div_eq_mul_inv] using hm
+  exact ((diagonalCLM (n := n)).contDiff.contDiffAt.comp y hs).sub contDiffAt_const
+
+private lemma inverse_contDiffAt (S : Matrix n n ℂ) (y : n → ℂ)
+    (hy : ∀ i, y i ≠ 0) (hQ : (inverseQ S y).det ≠ 0) :
+    ContDiffAt ℂ 2 (fun y => (inverseQ S y)⁻¹) y := by
+  have h := (contDiffAt_ringInverse ℂ
+    (Matrix.nonsingInvUnit (inverseQ S y) (isUnit_iff_ne_zero.mpr hQ))).comp y
+      (inverseQ_contDiffAt S y hy)
+  rw [show (fun u => (inverseQ S u)⁻¹) = Ring.inverse ∘ inverseQ S from
+    funext fun u => Matrix.nonsing_inv_eq_ringInverse (inverseQ S u)]
+  exact h
+
+private lemma alpha_contDiffAt (S : Matrix n n ℂ) (y : n → ℂ)
+    (hy : ∀ i, y i ≠ 0) (hQ : (inverseQ S y).det ≠ 0) :
+    ContDiffAt ℂ 2 (alpha S) y := by
+  change ContDiffAt ℂ 2 ((sumEntriesCLM (n := n)) ∘ (fun u => (inverseQ S u)⁻¹)) y
+  exact (sumEntriesCLM (n := n)).contDiff.contDiffAt.comp y (inverse_contDiffAt S y hy hQ)
+
+private lemma inverseQDeriv_single (y : n → ℂ) (j : n) :
+    inverseQDeriv y (Pi.single j 1) =
+      (-(2 : ℂ) / (y j)^2) • Matrix.diagonal (Pi.single j 1) := by
+  ext i k
+  by_cases hik : i = k
+  · subst k
+    by_cases hij : i = j
+    · subst j; simp [inverseQDeriv, diagonalCLM, Matrix.diagonal_apply,
+        ContinuousLinearMap.comp_apply, ContinuousLinearMap.pi_apply, Pi.single_apply]
+    · simp [inverseQDeriv, diagonalCLM, Matrix.diagonal_apply,
+        ContinuousLinearMap.comp_apply, ContinuousLinearMap.pi_apply, Pi.single_apply,
+        hij, Ne.symm hij]
+  · simp [inverseQDeriv, diagonalCLM, Matrix.diagonal_apply,
+      ContinuousLinearMap.comp_apply, ContinuousLinearMap.pi_apply, hik]
+
+private lemma inverse_fderiv_single (S : Matrix n n ℂ) (y : n → ℂ)
+    (hy : ∀ i, y i ≠ 0) (hQ : (inverseQ S y).det ≠ 0) (j : n) :
+    fderiv ℂ (fun y => (inverseQ S y)⁻¹) y (Pi.single j 1) =
+      (2 / (y j)^2) • Matrix.of (fun i k =>
+        ((inverseQ S y)⁻¹) i j * ((inverseQ S y)⁻¹) j k) := by
+  rw [(inverse_hasFDerivAt S y hy hQ).fderiv]
+  let V := (inverseQ S y)⁻¹
+  change -(V * inverseQDeriv y (Pi.single j 1) * V) =
+    (2 / (y j)^2) • Matrix.of (fun i k => V i j * V j k)
+  rw [inverseQDeriv_single]
+  ext i k
+  simp [Matrix.mul_apply, Matrix.mul_diagonal, Matrix.diagonal_apply, Matrix.smul_apply, smul_eq_mul,
+    Pi.single_apply, Matrix.neg_apply]
+  ring
+
+private noncomputable def rowSumCLM (j : n) : Matrix n n ℂ →L[ℂ] ℂ :=
+  ({ toFun := fun M => ∑ k, M j k
+     map_add' := by intro M N; simp [Finset.sum_add_distrib]
+     map_smul' := by intro c M; simp [← Finset.mul_sum] } :
+    Matrix n n ℂ →ₗ[ℂ] ℂ).toContinuousLinearMap
+private noncomputable def colSumCLM (j : n) : Matrix n n ℂ →L[ℂ] ℂ :=
+  ({ toFun := fun M => ∑ k, M k j
+     map_add' := by intro M N; simp [Finset.sum_add_distrib]
+     map_smul' := by intro c M; simp [← Finset.mul_sum] } :
+    Matrix n n ℂ →ₗ[ℂ] ℂ).toContinuousLinearMap
+
+private lemma row_fderiv_single (S : Matrix n n ℂ) (y : n → ℂ)
+    (hy : ∀ i, y i ≠ 0) (hQ : (inverseQ S y).det ≠ 0) (j k : n) :
+    fderiv ℂ (fun y => ∑ l, ((inverseQ S y)⁻¹) j l) y (Pi.single k 1) =
+      (2 / (y k)^2) * ((inverseQ S y)⁻¹) j k *
+        (∑ l, ((inverseQ S y)⁻¹) k l) := by
+  have hd := (rowSumCLM j).hasFDerivAt.comp y (inverse_hasFDerivAt S y hy hQ)
+  change HasFDerivAt (fun u => ∑ l, ((inverseQ S u)⁻¹) j l) _ y at hd
+  rw [hd.fderiv]
+  rw [← (inverse_hasFDerivAt S y hy hQ).fderiv]
+  change rowSumCLM j (fderiv ℂ (fun y => (inverseQ S y)⁻¹) y (Pi.single k 1)) = _
+  rw [inverse_fderiv_single S y hy hQ k]
+  simp [rowSumCLM, Matrix.smul_apply, smul_eq_mul, ← Finset.mul_sum, mul_assoc]
+
+private lemma col_fderiv_single (S : Matrix n n ℂ) (y : n → ℂ)
+    (hy : ∀ i, y i ≠ 0) (hQ : (inverseQ S y).det ≠ 0) (j k : n) :
+    fderiv ℂ (fun y => ∑ l, ((inverseQ S y)⁻¹) l j) y (Pi.single k 1) =
+      (2 / (y k)^2) * ((inverseQ S y)⁻¹) k j *
+        (∑ l, ((inverseQ S y)⁻¹) l k) := by
+  have hd := (colSumCLM j).hasFDerivAt.comp y (inverse_hasFDerivAt S y hy hQ)
+  change HasFDerivAt (fun u => ∑ l, ((inverseQ S u)⁻¹) l j) _ y at hd
+  rw [hd.fderiv]
+  rw [← (inverse_hasFDerivAt S y hy hQ).fderiv]
+  change colSumCLM j (fderiv ℂ (fun y => (inverseQ S y)⁻¹) y (Pi.single k 1)) = _
+  rw [inverse_fderiv_single S y hy hQ k]
+  simp [colSumCLM, Matrix.smul_apply, smul_eq_mul, ← Finset.mul_sum, ← Finset.sum_mul]
+  ring
+
+private lemma alpha_fderiv_single (S : Matrix n n ℂ) (y : n → ℂ)
+    (hy : ∀ i, y i ≠ 0) (hQ : (inverseQ S y).det ≠ 0) (j : n) :
+    fderiv ℂ (alpha S) y (Pi.single j 1) =
+      (2 / (y j)^2) * (∑ k, ((inverseQ S y)⁻¹) j k) *
+        (∑ i, ((inverseQ S y)⁻¹) i j) := by
+  rw [(alpha_hasFDerivAt S y hy hQ).fderiv]
+  let V := (inverseQ S y)⁻¹
+  change (∑ i, ∑ k, (-(V * inverseQDeriv y (Pi.single j 1) * V)) i k) = _
+  rw [inverseQDeriv_single]
+  have he : -(V * ((-(2 : ℂ) / (y j)^2) • Matrix.diagonal (Pi.single j 1)) * V) =
+      (2 / (y j)^2) • Matrix.of (fun i k => V i j * V j k) := by
+    ext i k
+    simp [Matrix.mul_apply, Matrix.mul_diagonal, Matrix.diagonal_apply, Matrix.smul_apply, smul_eq_mul,
+      Pi.single_apply, Matrix.neg_apply]
+    ring
+  rw [he]
+  simp only [Matrix.smul_apply, smul_eq_mul, Matrix.of_apply]
+  simp_rw [← Finset.mul_sum, ← Finset.sum_mul]
+  ring
+
+private lemma inverse_square_hasDerivAt (t : ℂ) (ht : t ≠ 0) :
+    HasDerivAt (fun t : ℂ => 2 / t^2) (-(4 : ℂ) / t^3) t := by
+  have hd := (((hasDerivAt_id t).inv ht).pow 2).const_mul (2 : ℂ)
+  convert hd using 1
+  · ext u
+    simp [div_eq_mul_inv]
+  · dsimp
+    field_simp [ht] <;> ring
+
+private lemma alpha_second_single (S : Matrix n n ℂ) (y : n → ℂ)
+    (hy : ∀ i, y i ≠ 0) (hQ : (inverseQ S y).det ≠ 0) (j k : n) :
+    fderiv ℂ (fun u => fderiv ℂ (alpha S) u (Pi.single j 1)) y (Pi.single k 1) =
+      (-(4 : ℂ) / (y j)^3) * (if k = j then 1 else 0) *
+        (∑ l, ((inverseQ S y)⁻¹) j l) * (∑ l, ((inverseQ S y)⁻¹) l j) +
+      (4 / ((y j)^2 * (y k)^2)) *
+        (((inverseQ S y)⁻¹) j k * (∑ l, ((inverseQ S y)⁻¹) k l) *
+          (∑ l, ((inverseQ S y)⁻¹) l j) +
+        ((inverseQ S y)⁻¹) k j * (∑ l, ((inverseQ S y)⁻¹) j l) *
+          (∑ l, ((inverseQ S y)⁻¹) l k)) := by
+  have hys : ∀ᶠ u in 𝓝 y, ∀ i, u i ≠ 0 :=
+    Filter.eventually_all.mpr fun i => (continuous_apply i).continuousAt.eventually_ne (hy i)
+  have hdet : ContinuousAt (fun u => (inverseQ S u).det) y :=
+    (show Continuous (Matrix.det : Matrix n n ℂ → ℂ) from continuous_id.matrix_det).continuousAt.comp
+      (inverseQ_contDiffAt S y hy).continuousAt
+  have heq : (fun u => fderiv ℂ (alpha S) u (Pi.single j 1)) =ᶠ[𝓝 y]
+      (fun u => (2 / (u j)^2) * (∑ l, ((inverseQ S u)⁻¹) j l) *
+        (∑ l, ((inverseQ S u)⁻¹) l j)) := by
+    filter_upwards [hys, hdet.eventually_ne hQ] with u hu hqu
+    exact alpha_fderiv_single S u hu hqu j
+  have hcoef := (inverse_square_hasDerivAt (y j) (hy j)).comp_hasFDerivAt y
+    ((ContinuousLinearMap.proj j : (n → ℂ) →L[ℂ] ℂ)).hasFDerivAt
+  change HasFDerivAt (fun u : n → ℂ => 2 / (u j)^2) _ y at hcoef
+  have hrow := (rowSumCLM j).hasFDerivAt.comp y (inverse_hasFDerivAt S y hy hQ)
+  have hcol := (colSumCLM j).hasFDerivAt.comp y (inverse_hasFDerivAt S y hy hQ)
+  change HasFDerivAt (fun u => ∑ l, ((inverseQ S u)⁻¹) j l) _ y at hrow
+  change HasFDerivAt (fun u => ∑ l, ((inverseQ S u)⁻¹) l j) _ y at hcol
+  have hh := ((hcoef.mul hrow).mul hcol).congr_of_eventuallyEq heq
+  rw [hh.fderiv]
+  have hr := row_fderiv_single S y hy hQ j k
+  have hc := col_fderiv_single S y hy hQ j k
+  rw [hrow.fderiv] at hr
+  rw [hcol.fderiv] at hc
+  simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply,
+    smul_eq_mul, ContinuousLinearMap.comp_apply, ContinuousLinearMap.proj_apply,
+    Pi.single_apply, ContinuousLinearMap.smulRight_apply,
+    ContinuousLinearMap.toSpanSingleton_apply, ContinuousLinearMap.one_apply] at *
+  rw [hr, hc]
+  dsimp [rowSumCLM, colSumCLM]
+  by_cases hjk : j = k
+  · subst k
+    simp <;> ring
+  · simp [hjk, Ne.symm hjk] <;> ring
+
+private lemma alpha_first_const (S : Matrix n n ℂ) (b : ℂ) (hb : b ≠ 0)
+    (hQ : (inverseQ S (fun _ => b)).det ≠ 0)
+    (hr : ∀ i, ∑ j, ((inverseQ S (fun _ => b))⁻¹) i j = b / 2)
+    (hc : ∀ j, ∑ i, ((inverseQ S (fun _ => b))⁻¹) i j = b / 2) (j : n) :
+    fderiv ℂ (alpha S) (fun _ => b) (Pi.single j 1) = 1 / 2 := by
+  rw [alpha_fderiv_single S (fun _ => b) (fun _ => hb) hQ j, hr, hc]
+  field_simp <;> ring
+
+private lemma alpha_second_const (S : Matrix n n ℂ) (b : ℂ) (hb : b ≠ 0)
+    (hQ : (inverseQ S (fun _ => b)).det ≠ 0)
+    (hr : ∀ i, ∑ j, ((inverseQ S (fun _ => b))⁻¹) i j = b / 2)
+    (hc : ∀ j, ∑ i, ((inverseQ S (fun _ => b))⁻¹) i j = b / 2) (j k : n) :
+    fderiv ℂ (fun u => fderiv ℂ (alpha S) u (Pi.single j 1)) (fun _ => b) (Pi.single k 1) =
+      (b^2)⁻¹ * (((inverseQ S (fun _ => b))⁻¹) j k +
+        ((inverseQ S (fun _ => b))⁻¹) k j) - (if j = k then b⁻¹ else 0) := by
+  rw [alpha_second_single S (fun _ => b) (fun _ => hb) hQ j k]
+  simp_rw [hr, hc]
+  by_cases hjk : j = k
+  · subst k
+    simp only [ite_true]
+    field_simp <;> ring
+  · simp only [hjk, Ne.symm hjk, ite_false, mul_zero, zero_mul, zero_add, sub_zero]
+    field_simp <;> ring
+
+end
+
+
+theorem calH_closedForm {d : ℕ} (A : Fin d → Fin d → Bool)
+    (hd : 3 ≤ d) (hA : IsRegularTournament A)
+    (h : (Fin (d-1) → ℂ) → ℂ) (hh : IsLocalSolution A h) :
+    calH h = (d : ℂ) *
+      ((d : ℂ)^2 • (1 : Matrix (Fin d) (Fin d) ℂ) +
+        (skewAdjacency A).map (Int.castRingHom ℂ) *
+          (skewAdjacency A).map (Int.castRingHom ℂ)).det /
+      ((d : ℂ)^2 • (1 : Matrix (Fin d) (Fin d) ℂ) -
+        (skewAdjacency A).map (Int.castRingHom ℂ) *
+          (skewAdjacency A).map (Int.castRingHom ℂ)).det := by
+  cases d with
+  | zero => omega
+  | succ n =>
+    let D : ℂ := ((n+1 : ℕ) : ℂ)
+    let b : ℂ := z (n+1)
+    let S := (skewAdjacency A).map (Int.castRingHom ℂ)
+    let Q : Matrix (Fin (n+1)) (Fin (n+1)) ℂ := D • 1 - S
+    let V := Q⁻¹
+    let T : Matrix (Fin (n+1)) (Fin (n+1)) ℂ := 1-D • (V+V.transpose)
+    let H : Matrix (Fin n) (Fin n) ℂ := Matrix.of fun j k =>
+      T j.castSucc k.castSucc - T j.castSucc (Fin.last n) -
+        T (Fin.last n) k.castSucc + T (Fin.last n) (Fin.last n)
+    let M : Matrix (Fin (n+1)) (Fin (n+1)) ℂ := Matrix.of fun i l =>
+      (b^2)⁻¹ * (V i l + V l i) - (if i = l then b⁻¹ else 0)
+    let L := appendLastLinear (n+1)
+    have hD : D ≠ 0 := by
+      dsimp [D]
+      exact_mod_cast Nat.succ_ne_zero n
+    have hb : b ≠ 0 := div_ne_zero (by norm_num) hD
+    have htwo : 2 / b = D := by
+      dsimp [b, z, D]
+      field_simp
+    have hrec : D⁻¹ = b / 2 := by
+      dsimp [b, z, D]
+      field_simp
+      <;> ring
+    have hQ : Q.det ≠ 0 := shiftedNegativeDetNeZero A
+    have hQeq : inverseQ S (fun _ => b) = Q := by
+      ext i j
+      simp only [inverseQ, Q, Matrix.sub_apply, Matrix.diagonal_apply,
+        Matrix.smul_apply, smul_eq_mul, Matrix.one_apply, htwo]
+      split_ifs <;> simp
+    have hQi : (inverseQ S (fun _ => b)).det ≠ 0 := by rwa [hQeq]
+    have hSr : ∀ i, ∑ j, S i j = 0 := regularSkewRowSum A hd hA
+    have hSc : ∀ j, ∑ i, S i j = 0 := regularSkewColSum A hd hA
+    have hQr : ∀ i, ∑ j, Q i j = D := by
+      intro i
+      simp [Q, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul,
+        Finset.sum_sub_distrib, ← Finset.mul_sum, Matrix.one_apply, hSr]
+    have hQc : ∀ j, ∑ i, Q i j = D := by
+      intro j
+      simp [Q, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul,
+        Finset.sum_sub_distrib, ← Finset.mul_sum, Matrix.one_apply, hSc]
+    have hVr : ∀ i, ∑ j, ((inverseQ S (fun _ => b))⁻¹) i j = b / 2 := by
+      simpa only [hQeq, hrec] using inverse_row_sum Q D hD hQ hQr
+    have hVc : ∀ j, ∑ i, ((inverseQ S (fun _ => b))⁻¹) i j = b / 2 := by
+      simpa only [hQeq, hrec] using inverse_col_sum Q D hD hQ hQc
+    have hLsnoc (v : Fin n → ℂ) (s : ℂ) : L (v,s) = Fin.snoc v s := by
+      rw [show L = appendLastLinear (n+1) from rfl, appendLastLinearApply]
+      ext i
+      change (@Fin.snoc n (fun _ => ℂ) v s) (Fin.ofNat (n+1) i.val) =
+        (@Fin.snoc n (fun _ => ℂ) v s) i
+      congr 1
+      apply Fin.ext
+      simp [Fin.ofNat, Nat.mod_eq_of_lt i.isLt]
+    have hL0 : L ((fun _ => b), b) = (fun _ => b) := by
+      rw [hLsnoc]
+      ext i
+      refine Fin.lastCases ?_ (fun j => ?_) i <;> simp
+    have hLj (j : Fin n) : L (Pi.single j 1, 0) = Pi.single j.castSucc 1 := by
+      rw [hLsnoc]
+      ext i
+      refine Fin.lastCases ?_ (fun k => ?_) i
+      · simp
+      · simp [Pi.single_apply]
+    have hLl : L (0, 1) = Pi.single (Fin.last n) 1 := by
+      rw [hLsnoc]
+      ext i
+      refine Fin.lastCases ?_ (fun k => ?_) i <;> simp [Pi.single_apply]
+    have hα : ContDiffAt ℂ 2 (alpha S) (L ((fun _ => b), b)) := by
+      rw [hL0]
+      exact alpha_contDiffAt S (fun _ => b) (fun _ => hb) hQi
+    have hg : ∀ᶠ y in 𝓝 (fun _ : Fin n => b), alpha S (L (y, h y)) = 1 := by
+      have he := localSolution_resolvent_eq A hd hA h hh hQi
+      filter_upwards [he] with y hy
+      simpa only [show L = appendLastLinear (n+1) from rfl,
+        appendLastLinearApply, alpha, inverseQ] using hy
+    have hfirst (i : Fin (n+1)) :
+        fderiv ℂ (alpha S) (L ((fun _ => b), b)) (Pi.single i 1) = 1/2 := by
+      rw [hL0]
+      exact alpha_first_const S b hb hQi hVr hVc i
+    have hsecond (i l : Fin (n+1)) :
+        WormaldAnalytic.second (𝕜 := ℂ) (alpha S) (L ((fun _ => b), b))
+          (Pi.single i 1) (Pi.single l 1) = M i l := by
+      rw [hL0]
+      simpa only [WormaldAnalytic.second, M, Matrix.of_apply, hQeq] using
+        alpha_second_const S b hb hQi hVr hVc i l
+    have hlastne (i : Fin n) : Fin.last n ≠ i.castSucc := (Fin.castSucc_ne_last i).symm
+    have hcastlast (i : Fin n) : i.castSucc ≠ Fin.last n := Fin.castSucc_ne_last i
+    have hmat : hessian (d := n+1) h = -H := by
+      ext j k
+      have he := WormaldAnalytic.hessian_of_implicit_coordinates hd hh L
+        (fun j : Fin n => j.castSucc) (Fin.last n) hLj hLl
+        (alpha S) hα hg (1/2) (by norm_num) hfirst M hsecond j k
+      simp only [H, Matrix.neg_apply, Matrix.of_apply]
+      rw [he]
+      change 1 + (if j = k then 1 else 0) + (b / (1/2)) *
+        (M j.castSucc k.castSucc - M j.castSucc (Fin.last n) -
+          M (Fin.last n) k.castSucc + M (Fin.last n) (Fin.last n)) =
+        -(T j.castSucc k.castSucc - T j.castSucc (Fin.last n) -
+          T (Fin.last n) k.castSucc + T (Fin.last n) (Fin.last n))
+      simp only [M, T, Matrix.of_apply, Matrix.sub_apply, Matrix.add_apply,
+        Matrix.smul_apply, smul_eq_mul, Matrix.transpose_apply, Matrix.one_apply,
+        Fin.castSucc_inj, hcastlast, hlastne, ite_false, ite_true]
+      rw [← htwo]
+      by_cases hjk : j = k <;> simp only [hjk, ite_true, ite_false]
+      <;> field_simp [hb] <;> ring
+    have hS : S.transpose = -S := by
+      ext i j
+      simp [S, skewAdjacency, adjacency]
+    have hn : Even n := by
+      obtain ⟨r, hr⟩ := regularOdd A hd hA
+      refine ⟨r, ?_⟩
+      omega
+    have hdet := skew_difference_det n S D hD hS (regularOdd A hd hA) hQ hSr
+    change (hessian (d := n+1) h).det = D * (D^2 • 1 + S*S).det / (D^2 • 1-S*S).det
+    rw [hmat, Matrix.det_neg, Fintype.card_fin]
+    simp only [Nat.add_sub_cancel, hn.neg_one_pow, one_mul]
+    simpa only [H, T, V, Q, D, Nat.cast_add, Nat.cast_one] using hdet
+
+theorem result : claim := by
+  intro d hd A hA
+  refine ⟨regularLocalSolution A hd hA, ?_⟩
+  intro h hh
+  let N : ℂ := ((d : ℂ)^2 • (1 : Matrix (Fin d) (Fin d) ℂ) -
+    (skewAdjacency A).map (Int.castRingHom ℂ) *
+      (skewAdjacency A).map (Int.castRingHom ℂ)).det
+  let D : ℂ := ((d : ℂ)^2 • (1 : Matrix (Fin d) (Fin d) ℂ) +
+    (skewAdjacency A).map (Int.castRingHom ℂ) *
+      (skewAdjacency A).map (Int.castRingHom ℂ)).det
+  obtain ⟨q, hq0, hq⟩ := regularAlgebraicSquare A hd hA
+  change N / D = (q : ℂ)^2 at hq
+  have hqc : (q : ℂ) ≠ 0 := by exact_mod_cast hq0
+  have hratio : N / D ≠ 0 := by rw [hq]; exact pow_ne_zero _ hqc
+  have hN : N ≠ 0 := by
+    intro hn
+    exact hratio (by rw [hn, zero_div])
+  have hD : D ≠ 0 := by
+    intro hd
+    exact hratio (by rw [hd, div_zero])
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
+  have hclosed : calH h = (d : ℂ) * D / N := calH_closedForm A hd hA h hh
+  refine ⟨?_, q, ?_⟩
+  · rw [hclosed]
+    exact div_ne_zero (mul_ne_zero hd0 hD) hN
+  · rw [hclosed, ← hq]
+    field_simp [hd0, hN, hD]
 
 end D5.S3.Combinatorics.WormaldTournamentHessian.Result
