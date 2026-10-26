@@ -169,6 +169,9 @@ private def omission {ι : Type*} (a : Option ι) : ι ≃ {b : Option ι // b �
   classical
   exact Equiv.optionSubtype a ⟨Equiv.swap none a, Equiv.swap_apply_left _ _⟩
 
+private lemma omission_val {ι : Type*} (a : Option ι) (i : ι) :
+    (omission a i).val = (by classical exact Equiv.swap none a (some i)) := rfl
+
 private lemma wronskian_permute {K : Type*} [Field K] {d k : ℕ}
     (f : I d k → MvPolynomial (Fin d) K) (σ : Equiv.Perm (I d k)) :
     wronskian (f ∘ σ) = ((Equiv.Perm.sign σ : ℤ) : K) • wronskian f := by
@@ -368,6 +371,168 @@ private lemma upper_order_obstruction {K : Type*} [Field K] [CharZero K]
       (Finset.card_image_le.trans_eq (by simp))
   simp only [Fintype.card_option, Fintype.card_fin] at hdim
   omega
+
+private lemma pderivMulti_zero {K : Type*} [Field K] {d : ℕ}
+    (f : MvPolynomial (Fin d) K) : pderivMulti 0 f = f := by
+  rw [pderivMulti]
+  simp only [Finsupp.coe_zero, Pi.zero_apply, pow_zero, List.map_const', List.prod_replicate,
+    one_pow, Module.End.one_apply]
+
+private lemma pderivMulti_single {K : Type*} [Field K] {d : ℕ}
+    (i : Fin d) (f : MvPolynomial (Fin d) K) :
+    pderivMulti (Finsupp.single i 1) f = pderiv i f := by
+  rw [pderivMulti, List.prod_map_eq_pow_single i]
+  · simp only [List.count_finRange, Finsupp.single_eq_same, pow_one]
+    rfl
+  · intro j hji _
+    rw [Finsupp.single_eq_of_ne hji, pow_zero]
+
+private def affineIndex (d : ℕ) : Option (Fin d) ≃ I d 1 := by
+  classical
+  refine Equiv.ofBijective (fun b => b.elim
+    ⟨0, mem_I.mpr (by simp)⟩ (fun i => ⟨Finsupp.single i 1, mem_I.mpr (by simp)⟩)) ⟨?_, ?_⟩
+  · intro a b h
+    have he := congrArg Subtype.val h
+    cases a with
+    | none => cases b with
+      | none => rfl
+      | some j =>
+        have hh := congrArg Finsupp.degree he
+        simp only [Option.elim_none, Option.elim_some, map_zero, Finsupp.degree_single] at hh
+        omega
+    | some i => cases b with
+      | none =>
+        have hh := congrArg Finsupp.degree he
+        simp only [Option.elim_none, Option.elim_some, map_zero, Finsupp.degree_single] at hh
+        omega
+      | some j =>
+        exact congrArg some (Finsupp.single_left_injective one_ne_zero he)
+  · intro α
+    have hα := mem_I.mp α.property
+    by_cases hz : α.val.degree = 0
+    · exact ⟨none, Subtype.ext ((Finsupp.degree_eq_zero_iff _).mp hz).symm⟩
+    · obtain ⟨i, hi⟩ := Finsupp.range_single_one.ge (show α.val.degree = 1 by omega)
+      exact ⟨some i, Subtype.ext hi⟩
+
+private lemma first_order_matrix {K : Type*} [Field K] {d : ℕ}
+    (f : I d 1 → MvPolynomial (Fin d) K) :
+    wronskian f = Matrix.det (fun a b : Option (Fin d) =>
+      a.elim (f (affineIndex d b)) (fun i => pderiv i (f (affineIndex d b)))) := by
+  classical
+  rw [wronskian]
+  have h := Matrix.det_submatrix_equiv_self (affineIndex d)
+    (Matrix.of (fun α β : I d 1 => pderivMulti α.val (f β)))
+  refine h.symm.trans (congrArg Matrix.det ?_)
+  apply Matrix.ext
+  intro a b
+  cases a with
+  | none => exact pderivMulti_zero _
+  | some i => exact pderivMulti_single i _
+
+private lemma affineIndex_monomial {K : Type*} [Field K] {d : ℕ}
+    (a : Option (Fin d)) :
+    (monomial (affineIndex d a).val 1 : MvPolynomial (Fin d) K) = a.elim 1 X := by
+  cases a with
+  | none => exact map_one C
+  | some i => rfl
+
+private lemma omittedBracket_none {K : Type*} [Field K] {d k : ℕ}
+    (p : MvPolynomial (Fin d) K) :
+    omittedBracket (k := k) p none = wronskian (fun α : I d k => monomial α.val 1) := by
+  rw [omittedBracket]
+  congr 1
+
+private lemma omittedBracket_some {K : Type*} [Field K] {d k : ℕ}
+    (p : MvPolynomial (Fin d) K) (β : I d k) :
+    omittedBracket p (some β) =
+      wronskian (Function.update (fun α : I d k => monomial α.val 1) β p) := by
+  classical
+  rw [omittedBracket]
+  congr 1
+  funext i
+  rw [omission_val]
+  by_cases hi : i = β
+  · subst i; simp
+  · simp [Equiv.swap_apply_of_ne_of_ne, hi, Function.update_of_ne hi]
+
+private lemma first_order_evaluations {K : Type*} [Field K] {d : ℕ}
+    (p : MvPolynomial (Fin d) K) (hp : p.IsHomogeneous 2) :
+    wronskian (K := K) (fun α : I d 1 => monomial α.val 1) = 1 ∧
+      ∀ β : I d 1, wronskian (Function.update (fun α : I d 1 => monomial α.val 1) β p) =
+        ((affineIndex d).symm β).elim (-p) (fun i => pderiv i p) := by
+  classical
+  let e := affineIndex d
+  let b : Option (Fin d) → MvPolynomial (Fin d) K := fun a => a.elim 1 X
+  let m : Matrix (Option (Fin d)) (Option (Fin d)) (MvPolynomial (Fin d) K) :=
+    Matrix.of fun a j => a.elim (b j) (fun i => pderiv i (b j))
+  let c : Option (Fin d) → MvPolynomial (Fin d) K := fun a =>
+    a.elim (-p) (fun i => pderiv i p)
+  have hb : ∀ a, (monomial (e a).val 1 : MvPolynomial (Fin d) K) = b a := by
+    intro a
+    exact affineIndex_monomial a
+  have hrow : (∑ j : Option (Fin d), b j •
+      (1 : Matrix (Option (Fin d)) (Option (Fin d)) (MvPolynomial (Fin d) K)) j) = b := by
+    funext j
+    simp [Finset.sum_apply, Pi.smul_apply, Matrix.one_apply]
+  have hm : m.det = 1 := by
+    have he : m = (1 : Matrix (Option (Fin d)) (Option (Fin d))
+        (MvPolynomial (Fin d) K)).updateRow none b := by
+      apply Matrix.ext
+      intro a j
+      cases a with
+      | none => rw [Matrix.updateRow_self]; rfl
+      | some i =>
+        rw [Matrix.updateRow_ne (Option.some_ne_none i)]
+        cases j <;> simp [m, b, Matrix.one_apply, pderiv_X, Pi.single_apply, eq_comm]
+    rw [he]
+    have h := Matrix.det_updateRow_sum
+      (1 : Matrix (Option (Fin d)) (Option (Fin d)) (MvPolynomial (Fin d) K)) none b
+    rw [hrow, Matrix.det_one] at h
+    simpa only [b, Option.elim_none, smul_eq_mul, mul_one] using h
+  have hc : ∀ a, a.elim p (fun i => pderiv i p) = ∑ j, c j * m a j := by
+    intro a
+    cases a with
+    | none =>
+      simp only [Fintype.sum_option, c, m, b, Matrix.of_apply, Option.elim_none,
+        Option.elim_some, mul_one]
+      have he := hp.sum_X_mul_pderiv
+      rw [show (∑ i, pderiv i p * X i) = ∑ i, X i * pderiv i p by
+        apply Finset.sum_congr rfl; intro i _; exact mul_comm _ _, he]
+      simp only [two_nsmul]
+      abel
+    | some i =>
+      simp [c, m, b, Fintype.sum_option, pderiv_X, Pi.single_apply]
+  constructor
+  · rw [first_order_matrix]
+    have he : (Matrix.of (fun a j : Option (Fin d) =>
+        a.elim (monomial (e j).val 1) (fun i => pderiv i (monomial (e j).val 1)))) = m := by
+      apply Matrix.ext
+      intro a j
+      cases a <;> simp only [m, Matrix.of_apply, Option.elim_none, Option.elim_some, hb]
+    exact (congrArg Matrix.det he).trans hm
+  · intro β
+    rw [first_order_matrix]
+    have he : (Matrix.of (fun a j : Option (Fin d) =>
+        a.elim (Function.update (fun α : I d 1 => monomial α.val 1) β p (e j))
+          (fun i => pderiv i
+            (Function.update (fun α : I d 1 => monomial α.val 1) β p (e j))))) =
+        m.updateCol (e.symm β) (fun a => a.elim p (fun i => pderiv i p)) := by
+      apply Matrix.ext
+      intro a j
+      by_cases hj : j = e.symm β
+      · subst j
+        simp only [Matrix.updateCol_self, Matrix.of_apply, Equiv.apply_symm_apply,
+          Function.update_self]
+      · have hje : e j ≠ β := fun h => hj (e.eq_symm_apply.mpr h)
+        rw [Matrix.updateCol_ne hj]
+        simp only [Matrix.of_apply, Function.update_of_ne hje, hb]
+        rfl
+    have hc' : (fun a => a.elim p (fun i => pderiv i p)) =
+        (fun a => ∑ j, c j • m a j) := by
+      funext a
+      simpa only [smul_eq_mul] using hc a
+    refine (congrArg Matrix.det he).trans ?_
+    rw [hc', Matrix.det_updateCol_sum, hm, smul_eq_mul, mul_one]
 
 private lemma quadratic_construction {K : Type*} [Field K] [CharZero K]
     {d : ℕ} (hd : 2 ≤ d)
