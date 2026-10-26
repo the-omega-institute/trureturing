@@ -9,6 +9,8 @@
 import Mathlib.RingTheory.Adjoin.Tower
 import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
 
+/-! Finite generation for subalgebras of univariate polynomial rings. -/
+
 namespace D5.S3.Topology.KnotFamilyVassilievFiniteGeneration
 
 open Polynomial
@@ -19,7 +21,12 @@ def claim : Prop :=
 
 private theorem fg_of_constant {k : Type*} [Field k] (a : Subalgebra k (Polynomial k))
     (h : ∀ f ∈ a, f.natDegree = 0) : a.FG := by
-  sorry
+  have ha : a = ⊥ := by
+    refine le_antisymm (fun f hf ↦ ?_) bot_le
+    rw [eq_C_of_natDegree_eq_zero (h f hf)]
+    exact (⊥ : Subalgebra k (Polynomial k)).algebraMap_mem (f.coeff 0)
+  rw [ha]
+  exact Subalgebra.fg_bot
 
 private theorem integral_X {k : Type*} [Field k] (a : Subalgebra k (Polynomial k))
     (f : Polynomial k) (hf : f ∈ a) (hd : 0 < f.natDegree) :
@@ -38,7 +45,7 @@ private theorem fg_of_finite {k : Type*} [Field k] (a : Subalgebra k (Polynomial
 theorem subalgebra_fg {k : Type*} [Field k] (a : Subalgebra k (Polynomial k)) : a.FG := by
   by_cases h : ∀ f ∈ a, f.natDegree = 0
   · exact fg_of_constant a h
-  · push_neg at h
+  · push Not at h
     obtain ⟨f, hf, hd⟩ := h
     exact fg_of_finite a (finite_of_integral_X a (integral_X a f hf (Nat.pos_of_ne_zero hd)))
 
