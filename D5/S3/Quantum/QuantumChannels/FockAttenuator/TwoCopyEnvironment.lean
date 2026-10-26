@@ -99,8 +99,10 @@ theorem environment_marginal :
   rw [Finset.sum_insert (by decide : (0 : ℕ) ∉ ({2, 4} : Finset ℕ)),
     Finset.sum_insert (by decide : (2 : ℕ) ∉ ({4} : Finset ℕ)),
     Finset.sum_singleton]
-  norm_num only [environment_slice]
-  rw [show -(1 / 2 : ℂ) = ((-1 / 2 : ℝ) : ℂ) by norm_num]
+  simp only [environment_slice, if_pos rfl,
+    if_neg (by decide : (2 : ℕ) ≠ 0), if_neg (by decide : (4 : ℕ) ≠ 0),
+    if_neg (by decide : (4 : ℕ) ≠ 2)]
+  rw [show (-1 / 2 : ℂ) = ((-1 / 2 : ℝ) : ℂ) by norm_num]
   simp only [real_scaled_rankOne]
   have hs : (Real.sqrt (6 : ℝ) : ℂ) ^ 2 = 6 := by
     exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 6)

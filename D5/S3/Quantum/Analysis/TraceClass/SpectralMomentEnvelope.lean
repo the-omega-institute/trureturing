@@ -9,6 +9,7 @@
 import D5.S3.Entropy.SpectralEnvelope
 import D5.S3.Quantum.Analysis.TraceClass.Spectral
 import D5.S3.Quantum.Analysis.TraceClass.GeneralIdeal
+import D5.S3.Quantum.Analysis.TraceClass.GeneralProduct
 
 noncomputable section
 open scoped BigOperators InnerProductSpace ComplexOrder
@@ -33,11 +34,12 @@ structure CountableSpectralData (T : H →L[ℂ] H) where
 private def spectralData {T : H →L[ℂ] H} (hT : 0 ≤ T) (hTC : IsTraceClass T) :
     CountableSpectralData T := by
   classical
+  apply Classical.choice
   obtain ⟨w, b, s, hn, he, hs, _⟩ :=
     TraceClassSpectral.exists_nonneg_trace_spectral_data hT hTC
   letI : Countable (Function.support s) := hs.countable_support.to_subtype
   letI : Encodable (Function.support s) := Countable.toEncodable _
-  exact ⟨w, b, s, hn, he, ⟨Encodable.encode, Encodable.encode_injective⟩⟩
+  exact ⟨⟨w, b, s, hn, he, ⟨Encodable.encode, Encodable.encode_injective⟩⟩⟩
 
 def spectrum {T : H →L[ℂ] H} (d : CountableSpectralData T) : ℕ → ℝ :=
   Function.extend d.embed (fun i => d.value i) 0
@@ -106,8 +108,10 @@ private theorem spectrum_power_hasSum {T : H →L[ℂ] H} (d : CountableSpectral
   have hext : (fun k => spectrum d k ^ (n + 1)) =
       Function.extend d.embed (fun i : Function.support d.value => d.value i ^ (n + 1)) 0 := by
     funext k
-    simpa only [spectrum, Function.comp_apply, zero_pow (by omega : n + 1 ≠ 0)] using
-      Function.apply_extend (fun z : ℝ => z ^ (n + 1)) d.embed 0 k
+    simpa only [spectrum, Function.comp_def, Pi.zero_apply,
+      zero_pow (by omega : n + 1 ≠ 0)] using
+      Function.apply_extend (g := fun i : Function.support d.value => d.value i)
+        (fun z : ℝ => z ^ (n + 1)) d.embed 0 k
   rw [hext]
   exact (hasSum_extend_zero d.embed.injective).mpr hs
 
@@ -132,8 +136,9 @@ theorem spectral_moments {T : H →L[ℂ] H} (hT : 0 ≤ T) (hTC : IsTraceClass 
   have hs2 := spectrum_power_hasSum d hTC 2
   have ht : powerTrace T hTC 0 = 1 := by simp [powerTrace, htrace]
   have hmass : mass (spectrum d) = 1 := by
-    simpa only [mass, pow_one, ht] using hs0.tsum_eq
-  have hsum : Summable (spectrum d) := by simpa only [pow_one] using hs0.summable
+    simpa only [mass, Nat.zero_add, pow_one, ht] using hs0.tsum_eq
+  have hsum : Summable (spectrum d) := by
+    simpa only [Nat.zero_add, pow_one] using hs0.summable
   have hq : purity (spectrum d) = powerTrace T hTC 1 := by
     simpa only [purity, Nat.reduceAdd] using hs1.tsum_eq
   have hr : cubicMoment (spectrum d) = powerTrace T hTC 2 := by
@@ -194,14 +199,15 @@ theorem spectral_moments_at_mass {T : H →L[ℂ] H} (hT : 0 ≤ T)
   have hs1 := spectrum_power_hasSum d hTC 1
   have hs2 := spectrum_power_hasSum d hTC 2
   have hmass : powerTrace T hTC 0 = t := by simp [powerTrace, htrace]
-  have hsum : Summable (spectrum d) := by simpa only [pow_one] using hs0.summable
+  have hsum : Summable (spectrum d) := by
+    simpa only [Nat.zero_add, pow_one] using hs0.summable
   have hp : Summable p := hsum.div_const t
   have hn : ∀ n, 0 ≤ p n := fun n => div_nonneg (spectrum_nonneg d n) ht.le
   have hm : mass p = 1 := by
     unfold mass p
     rw [tsum_div_const]
     have hs : (∑' n, spectrum d n) = t := by
-      simpa only [pow_one, hmass] using hs0.tsum_eq
+      simpa only [Nat.zero_add, pow_one, hmass] using hs0.tsum_eq
     rw [hs, div_self ht.ne']
   have hq : purity p = powerTrace T hTC 1 / t ^ 2 := by
     unfold purity p
