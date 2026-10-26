@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/BinomialBases/MazorchukXuGeneric
    mirror-E: none(waiver:universal-generic-pattern-edge-proof)
-   anchors: [mathlib/module/Mathlib.Data.Fin.Basic]
+   anchors: [mathlib/module/Mathlib.Data.Finset.Sort]
    utility: none
    digest: Finite source coordinates, labelled reconstruction and generic completions. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/BinomialBases/MazorchukXuReconstruction
    mirror-E: none(waiver:finite-coordinate-source-reconstruction)
-   anchors: [mathlib/module/Mathlib.Data.Finset.Card]
+   anchors: [mathlib/module/Mathlib.Data.Finset.Powerset]
    utility: none
    digest: Admissible weak coordinate data reconstruct literal bounded edge families. -/
 

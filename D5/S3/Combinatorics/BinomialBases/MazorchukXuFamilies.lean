@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/BinomialBases/MazorchukXuFamilies
    mirror-E: none(waiver:finite-family-bijection)
-   anchors: [mathlib/module/Mathlib.Data.Finset.Card]
+   anchors: [mathlib/module/Mathlib.Data.Finset.Powerset]
    utility: none
    digest: The literal triangular count equals its bounded ordered-edge count. -/
 

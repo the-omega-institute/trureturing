@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/BinomialBases/MazorchukXuOrder
    mirror-E: none(waiver:universal-order-and-clique-fiber-proofs)
-   anchors: [mathlib/module/Mathlib.Order.Hom.Basic]
+   anchors: [mathlib/module/Mathlib.Data.Fintype.Fin]
    utility: none
    digest: Ordered clique-fiber expansion preserves the cokernel closure rules. -/
 
