@@ -1,0 +1,3 @@
+WIP: implement literal Burri replacement-channel source objects
+
+Preserve the source dimensions, transposed M, explicit right-polar candidate, Stinespring isometry and composite decoder Kraus operators. Kernel verification pending; no two-direction claim.
