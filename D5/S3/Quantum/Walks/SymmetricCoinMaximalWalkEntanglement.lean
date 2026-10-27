@@ -7,6 +7,7 @@
    digest: The symmetric coin maximizes full-mode geometric entanglement on every circle. -/
 
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays
+import D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry
 
 /-! The circle walk, its single-excitation vector, and full-mode product overlaps. -/
 
@@ -17,9 +18,6 @@ noncomputable section
 open scoped BigOperators ComplexConjugate
 
 namespace D5.S3.Quantum.Walks.SymmetricCoinMaximalWalkEntanglement
-
-/-- A normalized two-component coin, with component zero denoting the left mover. -/
-def unitCoin (c : Fin 2 → ℂ) : Prop := ∑ b, Complex.normSq (c b) = 1
 
 /-- The Hadamard coin followed by the controlled periodic shift. -/
 def hadamardStep (p : ℕ) (ψ : Fin 2 × ZMod p → ℂ) : Fin 2 × ZMod p → ℂ :=
@@ -44,7 +42,7 @@ def productState {ι : Type*} [Fintype ι] (z : ι → Fin 2 → ℂ) : (ι → 
   fun s => ∏ k, z k (if s k then 1 else 0)
 
 /-- Every local vector has unit Hilbert norm. -/
-def unitFactors {ι : Type*} (z : ι → Fin 2 → ℂ) : Prop := ∀ k, unitCoin (z k)
+def unitFactors {ι : Type*} (z : ι → Fin 2 → ℂ) : Prop := ∀ k, D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor (z k)
 
 /-- The standard inner product of a product vector with the generalized W vector. -/
 def overlap {ι : Type*} [Fintype ι] (lam : ι → ℂ) (z : ι → Fin 2 → ℂ) : ℂ := by
@@ -60,7 +58,7 @@ def geometricEntanglement {ι : Type*} [Fintype ι] (lam : ι → ℂ) : ℝ := 
 
 /-- The source expectation, for every positive circle size, time, and normalized coin. -/
 def claim : Prop :=
-  ∀ (p : ℕ) (hp : 1 ≤ p) (n : ℕ) (c : Fin 2 → ℂ), unitCoin c →
+  ∀ (p : ℕ) (hp : 1 ≤ p) (n : ℕ) (c : Fin 2 → ℂ), D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor c →
     letI : NeZero p := ⟨by omega⟩
     geometricEntanglement (walkState p n c) ≤ geometricEntanglement (walkState p n cStar)
 
@@ -101,7 +99,7 @@ private lemma overlap_bounded {ι : Type*} [Fintype ι] (lam : ι → ℂ) :
         apply Finset.prod_congr rfl
         intro k hk
         have h := hz k
-        unfold unitCoin at h
+        unfold D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor at h
         rw [Fin.sum_univ_two] at h
         simpa only [Fintype.sum_bool, Bool.cond_false, Bool.cond_true,
           Bool.false_eq_true, ite_false, ite_true,
@@ -116,10 +114,10 @@ private lemma overlap_bounded {ι : Type*} [Fintype ι] (lam : ι → ℂ) :
 private lemma overlap_attained {ι : Type*} [Fintype ι] (lam : ι → ℂ) :
     ∃ z : ι → Fin 2 → ℂ, unitFactors z ∧ gMax lam = Complex.normSq (overlap lam z) := by
   classical
-  have hclosed : IsClosed {c : Fin 2 → ℂ | unitCoin c} := by
-    unfold unitCoin
+  have hclosed : IsClosed {c : Fin 2 → ℂ | D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor c} := by
+    unfold D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor
     exact isClosed_eq (by fun_prop) continuous_const
-  have hlocal : IsCompact {c : Fin 2 → ℂ | unitCoin c} := by
+  have hlocal : IsCompact {c : Fin 2 → ℂ | D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor c} := by
     apply (isCompact_closedBall (0 : Fin 2 → ℂ) 1).of_isClosed_subset hclosed
     intro c hc
     rw [Metric.mem_closedBall, dist_zero_right, pi_norm_le_iff_of_nonneg zero_le_one]
@@ -138,7 +136,7 @@ private lemma overlap_attained {ι : Type*} [Fintype ι] (lam : ι → ℂ) :
         norm_nonneg (c 1)]
   have hcompact : IsCompact {z : ι → Fin 2 → ℂ | unitFactors z} := by
     have heq : {z : ι → Fin 2 → ℂ | unitFactors z} =
-        Set.pi Set.univ (fun _ : ι => {c | unitCoin c}) := by
+        Set.pi Set.univ (fun _ : ι => {c | D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor c}) := by
       ext z
       exact Set.mem_univ_pi.symm
     rw [heq]
@@ -146,7 +144,7 @@ private lemma overlap_attained {ι : Type*} [Fintype ι] (lam : ι → ℂ) :
   have hnonempty : Set.Nonempty {z : ι → Fin 2 → ℂ | unitFactors z} := by
     refine ⟨fun _ => ![1, 0], ?_⟩
     intro k
-    unfold unitCoin
+    unfold D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor
     norm_num [Fin.sum_univ_two]
   have hcont : Continuous (fun z : ι → Fin 2 → ℂ => Complex.normSq (overlap lam z)) := by
     unfold overlap productState
@@ -177,7 +175,7 @@ private lemma phase_transport {ι : Type*} [Fintype ι] (lam μ : ι → ℂ)
   refine ⟨w, ?_, ?_⟩
   · intro k
     have hk := hz k
-    unfold unitCoin at hk ⊢
+    unfold D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor at hk ⊢
     rw [Fin.sum_univ_two] at hk ⊢
     dsimp only [w, Matrix.cons_val_zero, Matrix.cons_val_one]
     rw [Complex.normSq_mul, (hρ k).1, one_mul]
@@ -253,12 +251,12 @@ private lemma positive_max {ι : Type*} [Fintype ι] (a : ι → ℝ) (ha : ∀ 
   let z : ι → Fin 2 → ℝ := fun k b => ‖w k b‖
   have hzn (k : ι) : z k 0 ^ 2 + z k 1 ^ 2 = 1 := by
     have h := hw k
-    unfold unitCoin at h
+    unfold D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor at h
     rw [Fin.sum_univ_two] at h
     simpa only [Complex.normSq_eq_norm_sq] using h
   have hz : unitFactors (fun k b => (z k b : ℂ)) := by
     intro k
-    unfold unitCoin
+    unfold D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor
     rw [Fin.sum_univ_two, Complex.normSq_ofReal, Complex.normSq_ofReal]
     simpa only [pow_two] using hzn k
   have hnonneg : 0 ≤ positiveOverlap a z := by
@@ -510,7 +508,7 @@ private lemma positive_pair_balancing {ι : Type*} [Fintype ι]
     exact hzn k
   have hw : unitFactors (fun k t => (w k t : ℂ)) := by
     intro k
-    unfold unitCoin
+    unfold D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor
     rw [Fin.sum_univ_two, Complex.normSq_ofReal, Complex.normSq_ofReal]
     simpa only [pow_two] using hwn k
   have hed : (∑ k ∈ s, a k * w k 1 * ∏ l ∈ s.erase k, w l 0) = d := by
@@ -620,7 +618,7 @@ private lemma walk_reflection (p n : ℕ) :
           rw [hn, (hback (x + 1)).2, (ih.2 (x + 1)).2, pow_succ]
           ring
 
-private lemma walk_pair_probabilities (p n : ℕ) (c : Fin 2 → ℂ) (hc : unitCoin c) :
+private lemma walk_pair_probabilities (p n : ℕ) (c : Fin 2 → ℂ) (hc : D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor c) :
     ∀ x : ZMod p,
       Complex.normSq (walkState p n cStar (0, x)) =
         Complex.normSq (walkState p n cStar (1, -x)) ∧
@@ -646,7 +644,7 @@ private lemma walk_pair_probabilities (p n : ℕ) (c : Fin 2 → ℂ) (hc : unit
       (-1 : ℂ) ^ n * (d 1 * (a : ℂ) - d 0 * (b : ℂ)) by ring]
     rw [Complex.normSq_mul, he, one_mul]
   have hcs : Complex.normSq (c 0) + Complex.normSq (c 1) = 1 := by
-    unfold unitCoin at hc
+    unfold D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor at hc
     exact Fin.sum_univ_two (fun b => Complex.normSq (c b)) ▸ hc
   have hsum : Complex.normSq (walkState p n c (0, x)) +
       Complex.normSq (walkState p n c (1, -x)) = a ^ 2 + b ^ 2 := by
