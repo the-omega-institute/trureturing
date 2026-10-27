@@ -80,18 +80,18 @@ def L (k : ℕ) : BernoulliSpace →L[ℂ] BernoulliSpace :=
   (1 / 2 : ℂ) • (creation k + annihilation k - ContinuousLinearMap.id ℂ BernoulliSpace)
 
 /-- Equations (53) and (16): the localized state and its walk recursion. -/
-def walk (φ : BernoulliSpace) : ℕ → ℤ → BernoulliSpace
-  | 0, x => if x = 0 then φ else 0
-  | n + 1, x => R n (walk φ n (x - 1)) + L n (walk φ n (x + 1))
+def walk (φ : BernoulliSpace) : ℕ → ℤ → BernoulliSpace :=
+  Nat.rec (fun x => if x = 0 then φ else 0)
+    (fun n ψ x => R n (ψ (x - 1)) + L n (ψ (x + 1)))
 
 /-- The squared amplitude law of the position divided by the square root of time. -/
 def walkLaw (φ : BernoulliSpace) (n : ℕ) : Measure ℝ :=
   ∑ x ∈ Finset.Icc (-(n : ℤ)) n,
     ENNReal.ofReal (‖walk φ n x‖ ^ 2) • Measure.dirac ((x : ℝ) / Real.sqrt n)
 
-private def branch : ℕ → Finset ℕ → BernoulliSpace →L[ℂ] BernoulliSpace
-  | 0, _ => ContinuousLinearMap.id ℂ BernoulliSpace
-  | n + 1, σ => (if n ∈ σ then -L n else R n).comp (branch n σ)
+private def branch : ℕ → Finset ℕ → BernoulliSpace →L[ℂ] BernoulliSpace :=
+  Nat.rec (fun _ => ContinuousLinearMap.id ℂ BernoulliSpace)
+    (fun n b σ => (if n ∈ σ then -L n else R n).comp (b σ))
 
 private def displacement (n : ℕ) (σ : Finset ℕ) : ℤ := (n : ℤ) - 2 * σ.card
 
@@ -99,9 +99,9 @@ private def phaseStep (k : ℕ) (u : ℝ) : BernoulliSpace →L[ℂ] BernoulliSp
   (Real.cos u : ℂ) • ContinuousLinearMap.id ℂ BernoulliSpace +
     ((Real.sin u : ℂ) * Complex.I) • (flipOperator k).toContinuousLinearMap
 
-private def phaseProduct : ℕ → ℝ → BernoulliSpace →L[ℂ] BernoulliSpace
-  | 0, _ => ContinuousLinearMap.id ℂ BernoulliSpace
-  | n + 1, u => (phaseStep n u).comp (phaseProduct n u)
+private def phaseProduct : ℕ → ℝ → BernoulliSpace →L[ℂ] BernoulliSpace :=
+  Nat.rec (fun _ => ContinuousLinearMap.id ℂ BernoulliSpace)
+    (fun n p u => (phaseStep n u).comp (p u))
 
 private lemma flipIndex_of_mem (k : ℕ) (σ : Finset ℕ) (hk : k ∈ σ) :
     flipIndex k σ = σ.erase k := by
@@ -130,11 +130,7 @@ private lemma flip_basis (k : ℕ) (σ : Finset ℕ) :
       rw [h]
       exact symmDiff_symmDiff_cancel_right {k} σ
   simp only [Pi.single_apply]
-  have he' : σ = flipIndex k τ ↔ flipIndex k σ = τ := by
-    simpa only [eq_comm] using he
-  first
-  | exact if_congr he rfl rfl
-  | exact if_congr he' rfl rfl
+  exact if_congr he rfl rfl
 
 private lemma mask_apply (s : Set (Finset ℕ)) (φ : BernoulliSpace) (σ : Finset ℕ) :
     mask s φ σ = s.indicator φ σ := by
@@ -171,10 +167,10 @@ private lemma annihilation_basis (k : ℕ) (σ : Finset ℕ) :
   rw [flip_basis, mask_basis]
   by_cases hk : k ∈ σ
   · rw [flipIndex_of_mem k σ hk]
-    simp only [Set.mem_setOf_eq, Finset.notMem_erase, not_false_eq_true, ite_true, if_pos hk]
+    simp only [Set.mem_ofPred_eq, Finset.notMem_erase, not_false_eq_true, ite_true, ite_eq_left hk]
   · rw [flipIndex_of_notMem k σ hk]
-    simp only [Set.mem_setOf_eq, Finset.mem_insert_self, not_true_eq_false, ite_false,
-      if_neg hk]
+    simp only [Set.mem_ofPred_eq, Finset.mem_insert_self, not_true_eq_false, ite_false,
+      ite_eq_right hk]
 
 private lemma creation_basis (k : ℕ) (σ : Finset ℕ) :
     creation k (lp.single 2 σ (1 : ℂ)) =
@@ -185,9 +181,9 @@ private lemma creation_basis (k : ℕ) (σ : Finset ℕ) :
   rw [flip_basis, mask_basis]
   by_cases hk : k ∈ σ
   · rw [flipIndex_of_mem k σ hk]
-    simp only [Set.mem_setOf_eq, Finset.notMem_erase, ite_false, if_pos hk]
+    simp only [Set.mem_ofPred_eq, Finset.notMem_erase, ite_false, ite_eq_left hk]
   · rw [flipIndex_of_notMem k σ hk]
-    simp only [Set.mem_setOf_eq, Finset.mem_insert_self, ite_true, if_neg hk]
+    simp only [Set.mem_ofPred_eq, Finset.mem_insert_self, ite_true, ite_eq_right hk]
 
 private lemma flip_involution (k : ℕ) (φ : BernoulliSpace) :
     flipOperator k (flipOperator k φ) = φ := by
@@ -215,13 +211,14 @@ private lemma operators_eq_flip (k : ℕ) :
   change (creation k + annihilation k) (lp.single 2 σ c) =
     flipOperator k (lp.single 2 σ c)
   have hs : (lp.single 2 σ c : BernoulliSpace) = c • lp.single 2 σ (1 : ℂ) := by
-    simpa only [smul_eq_mul, mul_one] using lp.single_smul (E := fun _ : Finset ℕ => ℂ) 2 σ c (1 : ℂ)
+    simpa only [smul_eq_mul, mul_one] using
+      lp.single_smul (E := fun _ : Finset ℕ => ℂ) 2 σ c (1 : ℂ)
   rw [hs, map_smul, map_smul]
   apply congrArg (fun η : BernoulliSpace => c • η)
-  rw [ContinuousLinearMap.add_apply, annihilation_basis, creation_basis, flip_basis]
+  rw [add_apply, annihilation_basis, creation_basis, flip_basis]
   by_cases hk : k ∈ σ
-  · rw [if_pos hk, if_pos hk, zero_add, flipIndex_of_mem k σ hk]
-  · rw [if_neg hk, if_neg hk, add_zero, flipIndex_of_notMem k σ hk]
+  · rw [ite_eq_left hk, ite_eq_left hk, zero_add, flipIndex_of_mem k σ hk]
+  · rw [ite_eq_right hk, ite_eq_right hk, add_zero, flipIndex_of_notMem k σ hk]
 
 private lemma right_apply (k : ℕ) (φ : BernoulliSpace) :
     R k φ = (1 / 2 : ℂ) • (flipOperator k φ + φ) := by
@@ -249,7 +246,7 @@ private lemma walk_support (φ : BernoulliSpace) (n : ℕ) (x : ℤ)
   induction n generalizing x with
   | zero =>
     have h : x ≠ 0 := by intro h; subst x; norm_num at hx
-    exact if_neg h
+    exact ite_eq_right h
   | succ n ih =>
     have hm : (n : ℤ) < |x - 1| := by
       have hh := abs_add_le (x - 1) 1
@@ -259,12 +256,15 @@ private lemma walk_support (φ : BernoulliSpace) (n : ℕ) (x : ℤ)
       have hh := abs_sub (x + 1) 1
       rw [add_sub_cancel_right, abs_one] at hh
       omega
-    rw [walk, ih (x - 1) hm, ih (x + 1) hp, map_zero, map_zero, add_zero]
+    rw [walk.eq_1]
+    change R n (walk φ n (x - 1)) + L n (walk φ n (x + 1)) = 0
+    rw [ih (x - 1) hm, ih (x + 1) hp, map_zero, map_zero, add_zero]
 
 private lemma branch_step (n : ℕ) (σ : Finset ℕ) (φ : BernoulliSpace) :
     branch (n + 1) σ φ =
       if n ∈ σ then -L n (branch n σ φ) else R n (branch n σ φ) := by
-  rw [branch]
+  rw [branch.eq_1]
+  change (if n ∈ σ then -L n else R n) (branch n σ φ) = _
   split_ifs <;> rfl
 
 private lemma branch_congr (n : ℕ) (σ τ : Finset ℕ)
@@ -274,7 +274,9 @@ private lemma branch_congr (n : ℕ) (σ τ : Finset ℕ)
   | zero => intro _; rfl
   | succ n ih =>
     intro h
-    simp only [branch, h n (Nat.lt_succ_self n),
+    change (if n ∈ σ then -L n else R n).comp (branch n σ) =
+      (if n ∈ τ then -L n else R n).comp (branch n τ)
+    simp only [h n (Nat.lt_succ_self n),
       ih (fun k hk => h k (Nat.lt_succ_of_lt hk))]
 
 private lemma branch_insert (n : ℕ) (σ : Finset ℕ) :
@@ -306,10 +308,14 @@ private lemma branch_eigen (n : ℕ) (σ : Finset ℕ) (φ : BernoulliSpace)
       have hsum (ζ : BernoulliSpace) : flipOperator n ζ = R n ζ + L n ζ := by
         rw [right_apply, left_apply]
         module
-      have hrr := congrArg (fun a : BernoulliSpace →L[ℂ] BernoulliSpace => a (branch n σ φ)) hp.1
-      have hll := congrArg (fun a : BernoulliSpace →L[ℂ] BernoulliSpace => a (branch n σ φ)) hp.2.1
-      have hrl := congrArg (fun a : BernoulliSpace →L[ℂ] BernoulliSpace => a (branch n σ φ)) hp.2.2.1
-      have hlr := congrArg (fun a : BernoulliSpace →L[ℂ] BernoulliSpace => a (branch n σ φ)) hp.2.2.2
+      have hrr := congrArg
+        (fun a : BernoulliSpace →L[ℂ] BernoulliSpace => a (branch n σ φ)) hp.1
+      have hll := congrArg
+        (fun a : BernoulliSpace →L[ℂ] BernoulliSpace => a (branch n σ φ)) hp.2.1
+      have hrl := congrArg
+        (fun a : BernoulliSpace →L[ℂ] BernoulliSpace => a (branch n σ φ)) hp.2.2.1
+      have hlr := congrArg
+        (fun a : BernoulliSpace →L[ℂ] BernoulliSpace => a (branch n σ φ)) hp.2.2.2
       change R n (R n (branch n σ φ)) = R n (branch n σ φ) at hrr
       change L n (L n (branch n σ φ)) = -L n (branch n σ φ) at hll
       change R n (L n (branch n σ φ)) = 0 at hrl
@@ -343,10 +349,10 @@ private lemma branch_orthogonal (n : ℕ) (σ τ : Finset ℕ)
     inner_smul_left, inner_smul_right] at hh
   by_cases hks : k ∈ σ
   · have hkt : k ∉ τ := by intro ht; exact hk (by simp only [hks, ht])
-    simp only [if_pos hks, if_neg hkt, map_neg, map_one, neg_mul, one_mul] at hh
+    simp only [ite_eq_left hks, ite_eq_right hkt, map_neg, map_one, neg_mul, one_mul] at hh
     linear_combination -hh / 2
   · have hkt : k ∈ τ := by tauto
-    simp only [if_neg hks, if_pos hkt, map_neg, map_one, neg_mul, one_mul] at hh
+    simp only [ite_eq_right hks, ite_eq_left hkt, map_one, neg_mul, one_mul] at hh
     linear_combination hh / 2
 
 private lemma orthogonal_norm_sum (s : Finset (Finset ℕ)) (v : Finset ℕ → BernoulliSpace)
@@ -380,11 +386,12 @@ private lemma branch_resolution (n : ℕ) (φ : BernoulliSpace) :
         apply congrArg₂ (fun a b : BernoulliSpace => a + b)
         · apply Finset.sum_congr rfl
           intro σ hσ
-          have hn : n ∉ σ := fun h => Finset.notMem_range_self (n := n) ((Finset.mem_powerset.mp hσ) h)
-          rw [branch_step, if_neg hn]
+          have hn : n ∉ σ :=
+            fun h => Finset.notMem_range_self (n := n) ((Finset.mem_powerset.mp hσ) h)
+          rw [branch_step, ite_eq_right hn]
         · apply Finset.sum_congr rfl
           intro σ hσ
-          rw [branch_step, if_pos (Finset.mem_insert_self n σ), branch_insert]
+          rw [branch_step, ite_eq_left (Finset.mem_insert_self n σ), branch_insert]
       _ = ∑ σ ∈ (Finset.range n).powerset, branch n σ φ := by
         rw [← Finset.sum_add_distrib]
         apply Finset.sum_congr rfl
@@ -397,7 +404,7 @@ private lemma displacement_bound (n : ℕ) (σ : Finset ℕ) (hσ : σ ⊆ Finse
     displacement n σ ∈ Finset.Icc (-(n : ℤ)) n := by
   have hc := Finset.card_le_card hσ
   rw [Finset.card_range] at hc
-  change (n : ℤ) - 2 * σ.card ∈ Finset.Icc (-(n : ℤ)) n
+  rw [displacement]
   rw [Finset.mem_Icc]
   constructor <;> omega
 
@@ -411,35 +418,38 @@ private lemma walk_expansion (φ : BernoulliSpace) (n : ℕ) (x : ℤ) :
     rw [Finset.range_zero, Finset.powerset_empty, Finset.sum_filter, Finset.sum_singleton]
     simp [walk, displacement, branch, eq_comm]
   | succ n ih =>
-    rw [walk, ih (x - 1), ih (x + 1)]
+    change R n (walk φ n (x - 1)) + L n (walk φ n (x + 1)) = _
+    rw [ih (x - 1), ih (x + 1)]
     simp_rw [Finset.sum_filter]
     rw [Finset.range_add_one, Finset.sum_powerset_insert (Finset.notMem_range_self (n := n))]
     simp only [map_sum]
     apply congrArg₂ (fun a b : BernoulliSpace => a + b)
     · apply Finset.sum_congr rfl
       intro σ hσ
-      have hn : n ∉ σ := fun h => Finset.notMem_range_self (n := n) ((Finset.mem_powerset.mp hσ) h)
+      have hn : n ∉ σ :=
+        fun h => Finset.notMem_range_self (n := n) ((Finset.mem_powerset.mp hσ) h)
       have hd : displacement (n + 1) σ = x ↔ displacement n σ = x - 1 := by
         unfold displacement
         push_cast
         omega
-      rw [branch_step, if_neg hn]
+      rw [branch_step, ite_eq_right hn]
       by_cases hx : displacement n σ = x - 1
-      · rw [if_pos hx, if_pos (hd.mpr hx), map_smul]
-      · rw [if_neg hx, if_neg (mt hd.mp hx), map_zero]
+      · rw [ite_eq_left hx, ite_eq_left (hd.mpr hx), map_smul]
+      · rw [ite_eq_right hx, ite_eq_right (mt hd.mp hx), map_zero]
     · apply Finset.sum_congr rfl
       intro σ hσ
-      have hn : n ∉ σ := fun h => Finset.notMem_range_self (n := n) ((Finset.mem_powerset.mp hσ) h)
+      have hn : n ∉ σ :=
+        fun h => Finset.notMem_range_self (n := n) ((Finset.mem_powerset.mp hσ) h)
       have hd : displacement (n + 1) (insert n σ) = x ↔ displacement n σ = x + 1 := by
         unfold displacement
         rw [Finset.card_insert_of_notMem hn]
         push_cast
         omega
-      rw [branch_step, if_pos (Finset.mem_insert_self n σ), branch_insert]
+      rw [branch_step, ite_eq_left (Finset.mem_insert_self n σ), branch_insert]
       by_cases hx : displacement n σ = x + 1
-      · rw [if_pos hx, if_pos (hd.mpr hx), map_smul, Finset.card_insert_of_notMem hn, pow_succ]
+      · rw [ite_eq_left hx, ite_eq_left (hd.mpr hx), map_smul, Finset.card_insert_of_notMem hn, pow_succ]
         module
-      · rw [if_neg hx, if_neg (mt hd.mp hx), map_zero]
+      · rw [ite_eq_right hx, ite_eq_right (mt hd.mp hx), map_zero]
 
 private lemma walk_exact_law (φ : BernoulliSpace) (n : ℕ) (x : ℤ) :
     ‖walk φ n x‖ ^ 2 =
@@ -511,14 +521,15 @@ private lemma phaseProduct_expansion (n : ℕ) (u : ℝ) (φ : BernoulliSpace) :
     rw [Finset.range_zero, Finset.powerset_empty, Finset.sum_singleton]
     simp [phaseProduct, branch, displacement]
   | succ n ih =>
+    rw [phaseProduct.eq_1]
     change phaseStep n u (phaseProduct n u φ) = _
     rw [ih, map_sum, Finset.range_add_one,
       Finset.sum_powerset_insert (Finset.notMem_range_self (n := n)), ← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro σ hσ
     have hn : n ∉ σ := fun h => Finset.notMem_range_self ((Finset.mem_powerset.mp hσ) h)
-    rw [map_smul, phaseStep_spectral, branch_step, if_neg hn,
-      branch_step, if_pos (Finset.mem_insert_self n σ), branch_insert]
+    rw [map_smul, phaseStep_spectral, branch_step, ite_eq_right hn,
+      branch_step, ite_eq_left (Finset.mem_insert_self n σ), branch_insert]
     have hp : (displacement (n + 1) σ : ℂ) * u * Complex.I =
         (displacement n σ : ℂ) * u * Complex.I + (u : ℂ) * Complex.I := by
       unfold displacement
@@ -548,7 +559,8 @@ private lemma branch_inner (n : ℕ) (σ : Finset ℕ) (hσ : σ ⊆ Finset.rang
       · intro hh
         exact (hh (Finset.mem_powerset.mpr hσ)).elim
     _ = ((‖branch n σ φ‖ ^ 2 : ℝ) : ℂ) := by
-      convert (inner_self_eq_norm_sq_to_K (𝕜 := ℂ) (branch n σ φ)) using 1 <;> push_cast
+      convert (inner_self_eq_norm_sq_to_K (𝕜 := ℂ) (branch n σ φ)) using 1
+      push_cast
       congr 1
 
 private lemma charFun_formula (φ : BernoulliSpace) (n : ℕ) (t : ℝ) :
@@ -884,7 +896,8 @@ private lemma matrix_gaussian_limit (φ : BernoulliSpace) (hφ : ‖φ‖ = 1) (
 theorem result (φ : BernoulliSpace) (hφ : ‖φ‖ = 1) (f : ℝ →ᵇ ℝ) :
     Tendsto (fun n : ℕ => ∫ y, f y ∂(walkLaw φ n)) atTop
       (𝓝 (∫ y, f y ∂(gaussianReal 0 1))) := by
-  let μ : ℕ → ProbabilityMeasure ℝ := fun n => ⟨walkLaw φ n, walkLaw_probability φ hφ n⟩
+  let μ : ℕ → ProbabilityMeasure ℝ :=
+    fun n => ⟨walkLaw φ n, walkLaw_probability φ hφ n⟩
   let γ : ProbabilityMeasure ℝ := ⟨gaussianReal 0 1, inferInstance⟩
   have hc : Tendsto μ atTop (𝓝 γ) := by
     apply ProbabilityMeasure.tendsto_iff_tendsto_charFun.mpr
@@ -893,7 +906,9 @@ theorem result (φ : BernoulliSpace) (hφ : ‖φ‖ = 1) (f : ℝ →ᵇ ℝ) :
       (𝓝 (charFun (gaussianReal 0 1) t))
     simp only [charFun_formula, charFun_gaussianReal, zero_mul, mul_zero,
       NNReal.coe_one, Complex.ofReal_zero, Complex.ofReal_one, one_mul, zero_sub]
-    convert matrix_gaussian_limit φ hφ t using 2 <;> congr 1 <;> ring
+    convert matrix_gaussian_limit φ hφ t using 2
+    congr 1
+    ring
   exact ProbabilityMeasure.tendsto_iff_forall_integral_tendsto.mp hc f
 
 end D5.S3.Quantum.Dynamics.BernoulliNoiseWalkGaussianLimit
