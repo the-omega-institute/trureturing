@@ -89,7 +89,8 @@ theorem faceSimplex_eq_convexHull (s : Finset V) :
       simp only [Pi.single_apply]
       split_ifs <;> norm_num
     · intro w hw
-      exact Pi.single_eq_of_ne (fun h => hw (h ▸ hv))
+      have hwv : w ≠ v := fun h => hw (h.symm ▸ hv)
+      simp [Pi.single_apply, hwv, Ne.symm hwv]
 
 namespace ConePair
 
@@ -115,7 +116,7 @@ private theorem apex_faceSimplex : Pi.single P.apex (1 : ℝ) ∈ faceSimplex {P
     split_ifs <;> norm_num
   · intro v hv
     simp only [mem_singleton] at hv
-    exact Pi.single_eq_of_ne hv
+    simp [Pi.single_apply, hv, Ne.symm hv]
 
 /-- The coordinate vertex at the cone apex. -/
 def apexPoint : P.Space :=
@@ -400,7 +401,10 @@ private theorem controlled_apexPoint (t : I) : P.controlledHomotopy t P.apexPoin
 def collapseSetoid : Setoid P.Space where
   r x y := x = y ∨ (x ∈ P.coneSet ∧ y ∈ P.coneSet)
   iseqv := ⟨fun _ => Or.inl rfl,
-    by rintro x y (h | ⟨hx, hy⟩); exact Or.inl h.symm; exact Or.inr ⟨hy, hx⟩,
+    by
+      rintro x y (h | ⟨hx, hy⟩)
+      · exact Or.inl h.symm
+      · exact Or.inr ⟨hy, hx⟩,
     by
       rintro x y z (rfl | ⟨hx, hy⟩) hz
       · exact hz
