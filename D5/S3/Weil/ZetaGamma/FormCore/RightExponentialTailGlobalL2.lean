@@ -1,5 +1,5 @@
 /- GID: D5/S3/Weil/ZetaGamma/FormCore/RightExponentialTailGlobalL2
-   generality: G
+   generality: I
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:actual-halfline-l2-mass-estimate)
    anchors: []
