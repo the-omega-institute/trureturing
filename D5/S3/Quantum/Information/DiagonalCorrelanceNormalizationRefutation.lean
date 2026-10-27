@@ -69,6 +69,71 @@ private lemma witness_marginal (i : Fin 7) (b : Bool) :
   unfold marginal
   cases b <;> simp [witness, Finset.sum_add_distrib, Finset.sum_ite_eq']
 
+private noncomputable def q (b : Bool) : ℝ := if b = false then 3 / 5 else 2 / 5
+
+private lemma witness_product (x : Fin 7 → Bool) :
+    ∏ i, marginal witness i (x i) = ∏ i, q (x i) := by
+  apply Finset.prod_congr rfl
+  intro i hi
+  rw [witness_marginal]
+  rfl
+
+private lemma sum_q_square : (∑ b : Bool, q b ^ 2) = 13 / 25 := by
+  simp [q]
+  norm_num
+
+private lemma sum_product_q_square :
+    (∑ x : Fin 7 → Bool, (∏ i, q (x i)) ^ 2) = (13 / 25) ^ 7 := by
+  have hpow (x : Fin 7 → Bool) :
+      (∏ i, q (x i)) ^ 2 = ∏ i, q (x i) ^ 2 := by
+    rw [pow_two, ← Finset.prod_mul_distrib]
+    apply Finset.prod_congr rfl
+    intro i hi
+    rw [pow_two]
+  simp_rw [hpow]
+  rw [← Fintype.prod_sum (fun (_ : Fin 7) (b : Bool) => q b ^ 2)]
+  norm_num [q]
+
+private lemma sum_witness_square :
+    (∑ x : Fin 7 → Bool, witness x ^ 2) = 13 / 25 := by
+  have h01 : (fun _ : Fin 7 => false) ≠ fun _ => true := by
+    intro h
+    have h' := congrFun h (0 : Fin 7)
+    cases h'
+  have hterm (x : Fin 7 → Bool) : witness x ^ 2 =
+      (if x = fun _ => false then (3 / 5 : ℝ) ^ 2 else 0) +
+        (if x = fun _ => true then (2 / 5 : ℝ) ^ 2 else 0) := by
+    by_cases h0 : x = fun _ => false
+    · subst x
+      simp [witness, h01]
+    · by_cases h1 : x = fun _ => true
+      · simp [witness, h0, h1, h01, Ne.symm h01]
+      · simp [witness, h0, h1]
+  simp_rw [hterm]
+  simp [Finset.sum_add_distrib, Finset.sum_ite_eq']
+  norm_num
+
+private lemma sum_witness_product :
+    (∑ x : Fin 7 → Bool, witness x * ∏ i, q (x i)) =
+      (3 / 5) ^ 8 + (2 / 5) ^ 8 := by
+  have h01 : (fun _ : Fin 7 => false) ≠ fun _ => true := by
+    intro h
+    have h' := congrFun h (0 : Fin 7)
+    cases h'
+  have hterm (x : Fin 7 → Bool) : witness x * ∏ i, q (x i) =
+      (if x = fun _ => false then (3 / 5 : ℝ) ^ 8 else 0) +
+        (if x = fun _ => true then (2 / 5 : ℝ) ^ 8 else 0) := by
+    by_cases h0 : x = fun _ => false
+    · subst x
+      simp [witness, q, h01]
+      norm_num
+    · by_cases h1 : x = fun _ => true
+      · simp [witness, q, h0, h1, h01, Ne.symm h01]
+        norm_num
+      · simp [witness, q, h0, h1]
+  simp_rw [hterm]
+  simp [Finset.sum_add_distrib, Finset.sum_ite_eq']
+
 private lemma witness_raw : correlanceRaw witness = 3023545392 / 6103515625 := by sorry
 
 theorem result : ¬ claim := by
