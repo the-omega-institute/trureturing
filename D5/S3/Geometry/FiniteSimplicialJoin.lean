@@ -282,14 +282,7 @@ def joinHomeomorph (hM : Nonempty (Space M)) (hN : Nonempty (Space N)) :
     (f := Equiv.ofBijective (realizationMap M N) (realizationMap_bijective M N hM hN))
     (continuous_realizationMap M N)
 
-/-- Representative formula, including both endpoint identifications. -/
-theorem joinHomeomorph_apply (hM : Nonempty (Space M)) (hN : Nonempty (Space N))
-    (x : Space M) (y : Space N) (t : I) :
-    (joinHomeomorph M N hM hN (Quotient.mk _ (x,y,t))).val =
-      Sum.elim (fun v => (1 - (t : ℝ)) * x.val v) (fun w => (t : ℝ) * y.val w) := rfl
-
 #print axioms representative_eq_iff
 #print axioms joinHomeomorph
-#print axioms joinHomeomorph_apply
 
 end D5.S3.Geometry.FiniteSimplicialJoin
