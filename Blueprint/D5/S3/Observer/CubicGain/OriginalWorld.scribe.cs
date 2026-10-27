@@ -28,6 +28,20 @@ internal sealed class OriginalWorldDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text("For every original parent W, decoding gives strict parent coordinates, encoding their reconstructed parent world returns W, and their response equals originalResponse W."))),
             DescribeRole.Theorem),
         Describe.Lean(
+            DescribeId.Create("cubic-gain-encoded-parent"),
+            DeclarationHandle.Create("D5/S3/Observer/CubicGain/OriginalWorld.encoded_parent"),
+            H("encoded strict parent"),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For every strict parent coordinate triple C, encoding parentWorld C produces an OriginalParent with the literal original history rows."))),
+            DescribeRole.Theorem),
+        Describe.Lean(
+            DescribeId.Create("cubic-gain-encoded-response"),
+            DeclarationHandle.Create("D5/S3/Observer/CubicGain/OriginalWorld.encoded_response"),
+            H("encoded actual response"),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For every coordinate triple C, the actual original response of encodeWorld (parentWorld C) equals the response computed from C."))),
+            DescribeRole.Theorem),
+        Describe.Lean(
             DescribeId.Create("cubic-gain-bounded-response-coefficients"),
             DeclarationHandle.Create("D5/S3/Observer/CubicGain/OriginalWorld.bounded_response_coefficients"),
             H("bounded response coefficients"),

@@ -141,8 +141,56 @@ def determinantalLiftNumerator : Polynomial ℝ := polyDesc [
 private def rootLo : ℝ := 12758053 / 100000000
 private def rootHi : ℝ := 12758054 / 100000000
 
+private theorem polyDesc_degree_le (cs : List ℤ) :
+    (polyDesc cs).degree ≤ (cs.length - 1 : ℕ) := by
+  induction cs with
+  | nil => simp [polyDesc]
+  | cons c cs ih =>
+      rw [polyDesc]
+      apply le_trans (Polynomial.degree_add_le _ _)
+      apply max_le
+      · simpa only [List.length_cons, Nat.succ_sub_one] using
+          (Polynomial.degree_C_mul_X_pow_le (R := ℝ) cs.length (c : ℝ))
+      · calc
+          (polyDesc cs).degree ≤ (cs.length - 1 : ℕ) := ih
+          _ ≤ (cs.length : ℕ) := WithBot.coe_le_coe.mpr (Nat.pred_le _)
+
+private theorem polyDesc_degree_of_head (c : ℤ) (cs : List ℤ)
+    (hc : (c : ℝ) ≠ 0) :
+    (polyDesc (c :: cs)).degree = cs.length := by
+  rw [polyDesc]
+  have hterm0 :
+      Polynomial.C (c : ℝ) * Polynomial.X ^ cs.length ≠ 0 :=
+    mul_ne_zero (Polynomial.C_ne_zero.mpr hc)
+      (pow_ne_zero _ Polynomial.X_ne_zero)
+  have htermdeg :
+      (Polynomial.C (c : ℝ) * Polynomial.X ^ cs.length).degree =
+        (cs.length : WithBot ℕ) := by
+    rw [Polynomial.degree_eq_natDegree hterm0,
+      Polynomial.natDegree_C_mul_X_pow cs.length (c : ℝ) hc]
+  have hlt : (polyDesc cs).degree <
+      (Polynomial.C (c : ℝ) * Polynomial.X ^ cs.length).degree := by
+    cases cs with
+    | nil =>
+        rw [htermdeg]
+        simp [polyDesc]
+    | cons d ds =>
+        rw [htermdeg]
+        calc
+          (polyDesc (d :: ds)).degree ≤ ((d :: ds).length - 1 : ℕ) :=
+            polyDesc_degree_le (d :: ds)
+          _ < (d :: ds).length := by
+            exact WithBot.coe_lt_coe.mpr (by simp)
+  calc
+    (Polynomial.C (c : ℝ) * Polynomial.X ^ cs.length + polyDesc cs).degree =
+        (Polynomial.C (c : ℝ) * Polynomial.X ^ cs.length).degree :=
+      Polynomial.degree_add_eq_left_of_degree_lt hlt
+    _ = (cs.length : WithBot ℕ) := htermdeg
+
 private theorem criticalPolynomial_degree : criticalPolynomial.degree = 67 := by
-  norm_num [criticalPolynomial, polyDesc]
+  rw [criticalPolynomial]
+  apply polyDesc_degree_of_head
+  norm_num
 
 private theorem critical_endpoint_signs :
     0 < Polynomial.eval rootLo criticalPolynomial ∧
