@@ -28,6 +28,8 @@ For a positive-length interval, finite logical indices d with d nonempty, and fi
 
 The Peano-Baker and Dyson constructions and projector parallel transport are classical. This declaration assembles their finite-interval realization with the repository's computed full matrix-unit generator; it claims no mathematical priority. The result concerns finite complex matrices and one time interval. It supplies neither a parameter-bundle trivialization nor a physical control-cost or adiabatic-error estimate.
 
+ST40.1 application. Given a continuous logical Hermitian path hL, hbar>0 and Delta>0, instantiate the same ordered-series result with A_L=(-i/hbar)hL. Its series VL has the stated initial value, within derivative and unique integral equation; differentiating VL*VL and applying the interval constancy result gives both inverse identities. With P0=unitSupport(F 0), set B=representedMatrix(F 0,VL)+exp(-i Delta t/hbar)(I-P0) and V=G B. Matrix-unit transport gives representedMatrix(F t,A)=G representedMatrix(F 0,A) G*, while the matrix-unit support relations make B*B=BB*=I. Thus V(0)=I and product differentiation yields i hbar V'=Hphys V for the literal Hphys=i hbar K+representedMatrix(F t,hL t)+Delta(I-P t). The same continuous-generator uniqueness identifies V with the ordered Dyson series for (-i/hbar)Hphys; the zero-duration endpoint is inherited from the actual path tangent data rather than a singleton derivative assumption. No equality with a prescribed syndrome state, control-bandwidth estimate, locality claim, or adiabatic novelty claim is part of this application.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Transport/MatrixUnitDyson.constructive_transport`
