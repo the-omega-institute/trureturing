@@ -4,7 +4,7 @@
    mirror-E: none(waiver:occupied-fiber-substitution)
    anchors: [D5/S3/Geometry/FiniteGraphVertexSubstitution]
    utility: none
-   digest: Every induced heterogeneous substitution is the substitution on its occupied base and selected fibers, also at the level of independence realizations. -/
+   digest: Induced substitutions split into occupied bases and selected fibers. -/
 import D5.S3.Geometry.FiniteGraphVertexSubstitution
 
 /-!
@@ -61,7 +61,7 @@ theorem adjacency_iff (G : SimpleGraph V) (H : ∀ v, SimpleGraph (D v))
     · exact Or.inl h
     · cases hx
       cases hy
-      exact Or.inr ⟨⟨v, ⟨a, ha⟩⟩, ⟨a, ha⟩, ⟨b, hb⟩, rfl, rfl, hcd⟩
+      exact Or.inr ⟨_, _, _, rfl, rfl, hcd⟩
   · rintro (h | ⟨i, c, d, hx, hy, hcd⟩)
     · exact Or.inl h
     · right
@@ -79,6 +79,7 @@ section Finite
 variable [Fintype V] [DecidableEq V] [∀ v, Fintype (D v)] [∀ v, DecidableEq (D v)]
 local instance (p : Prop) : Decidable p := Classical.propDecidable p
 
+omit [Fintype V] [∀ v, Fintype (D v)] in
 /-- Independent faces map exactly to independent faces of the selected graph. -/
 theorem mapped_independence_faces (G : SimpleGraph V) (H : ∀ v, SimpleGraph (D v))
     (T : Set (Sigma D)) :
