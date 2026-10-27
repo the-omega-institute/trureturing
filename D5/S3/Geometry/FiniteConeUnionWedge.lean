@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/FiniteConeUnionWedge
    mirror-E: none(waiver:finite-cone-union-wedge)
-   anchors: [D5/S3/Geometry/FiniteConeCollapse, mathlib/module/Mathlib.Topology.Homeomorph.Quotient]
+   anchors: [mathlib/module/Mathlib.Topology.Homeomorph.Quotient]
    utility: none
    digest: A finite union along a nonempty cone is equivalent to the actual quotient wedge. -/
 import D5.S3.Geometry.FiniteConeCollapse
