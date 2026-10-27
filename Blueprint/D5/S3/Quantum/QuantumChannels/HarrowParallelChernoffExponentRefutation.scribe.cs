@@ -133,7 +133,10 @@ internal sealed class HarrowParallelChernoffExponentRefutationDocument : IScribe
                             + "to the limit in EReal and give two at most one, a contradiction. "
                             + "The argument excludes the limit one and supplies the stated lower "
                             + "bound; it does not determine the exact optimal asymptotic exponent."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("salek-hayashi-winter-2020-harrow-parallel-chernoff-exponent"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
         AssessedProvenance provenance, string prose) => Describe.Lean(
