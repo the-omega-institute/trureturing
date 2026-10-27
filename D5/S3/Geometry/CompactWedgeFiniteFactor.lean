@@ -62,7 +62,8 @@ private theorem raw_eq_point {j : J} {z : Z j} (hz : z ≠ b j)
     · have hk : j = k := congrArg Sigma.fst (Sum.inr.inj h)
       subst k
       exact hz (sigma_mk_injective (Sum.inr.inj h))
-  change (_ = _ ↔ _)
+  change (Quotient.mk (subsetSetoid (basePoints b)) x =
+    Quotient.mk (subsetSetoid (basePoints b)) (Sum.inr ⟨j, z⟩)) ↔ _
   rw [Quotient.eq]
   exact ⟨fun h => h.elim id (fun h => (hn h.2).elim), Or.inl⟩
 
@@ -95,6 +96,8 @@ theorem compact_support [∀ j, T1Space (Z j)] {K : Set (FamilyWedge b)}
           have hh := (raw_eq_point b (hz j) (Sum.inl x)).mp hj.symm
           cases hh
         · exact False.elim
+      change IsClosed ((fun x : Unit => Quotient.mk (subsetSetoid (basePoints b))
+        (Sum.inl x)) ⁻¹' (p '' E))
       rw [he]
       exact isClosed_empty
     · apply isClosed_sigma_iff.mpr
@@ -158,7 +161,7 @@ private def descend {T : Type*} [TopologicalSpace T] (c : T)
 abbrev Subwedge (F : Finset J) := FamilyWedge (fun j : F => b j.val)
 
 /-- The actual continuous inclusion of a selected-family quotient wedge. -/
-def include (F : Finset J) : C(Subwedge b F, FamilyWedge b) :=
+def inclusionMap (F : Finset J) : C(Subwedge b F, FamilyWedge b) :=
   descend (fun j : F => b j.val) (base b) (fun j => point b j.val)
     (fun j => point_base b j.val)
 
@@ -172,22 +175,26 @@ def retract (F : Finset J) : C(FamilyWedge b, Subwedge b F) := by
     intro j
     dsimp [maps]
     split_ifs with h
-    · exact point_base _ ⟨j, h⟩
+    · exact point_base (fun j : F => b j.val) ⟨j, h⟩
     · rfl)
 
 private theorem retract_include (F : Finset J) (x : Subwedge b F) :
-    retract b F (include b F x) = x := by
+    retract b F (inclusionMap b F x) = x := by
   classical
   induction x using Quotient.inductionOn with
   | h x =>
     rcases x with x | ⟨⟨j, hj⟩, z⟩
     · cases x
       rfl
-    · simp [retract, include, descend, point, dif_pos hj]
+    · change (if h : j ∈ F then point (fun j : F => b j.val) ⟨j, h⟩
+        else ContinuousMap.const _ (base (fun j : F => b j.val))) z =
+          Quotient.mk _ (Sum.inr ⟨⟨j, hj⟩, z⟩)
+      rw [dif_pos hj]
+      rfl
 
 private theorem include_retract_of_support (F : Finset J) {K : Set (FamilyWedge b)}
     (hF : support b K ⊆ (F : Set J)) {x : FamilyWedge b} (hx : x ∈ K) :
-    include b F (retract b F x) = x := by
+    inclusionMap b F (retract b F x) = x := by
   classical
   induction x using Quotient.inductionOn with
   | h x =>
@@ -196,11 +203,15 @@ private theorem include_retract_of_support (F : Finset J) {K : Set (FamilyWedge 
       rfl
     · by_cases hz : z = b j
       · subst z
-        change include b F (retract b F (point b j (b j))) = point b j (b j)
+        change inclusionMap b F (retract b F (point b j (b j))) = point b j (b j)
         rw [point_base]
         rfl
       · have hj : j ∈ F := hF ⟨z, hz, hx⟩
-        simp [retract, include, descend, point, dif_pos hj]
+        change inclusionMap b F
+          ((if h : j ∈ F then point (fun j : F => b j.val) ⟨j, h⟩
+            else ContinuousMap.const _ (base (fun j : F => b j.val))) z) = _
+        rw [dif_pos hj]
+        rfl
 
 end OneWedge
 
@@ -245,7 +256,8 @@ def finiteFactor [∀ a j, T1Space (Z a j)] [CompactSpace X] [Nonempty X]
     have hh : f x ∈ s.sigma t := he.symm ▸ (mem_range_self x)
     exact hs.mem_toFinset.mpr hh.1
   have hA : A₀.Nonempty := ⟨(f (Classical.choice inferInstance)).1, outer_mem _⟩
-  let Kₐ : ∀ a, Set (FamilyWedge (b a)) := fun a => Sigma.mk a ⁻¹' K
+  let Kₐ : ∀ a, Set (FamilyWedge (b a)) := fun a =>
+    (@Sigma.mk A (fun a => FamilyWedge (b a)) a) ⁻¹' K
   have hKa : ∀ a, IsCompact (Kₐ a) := fun _ =>
     Topology.IsClosedEmbedding.sigmaMk.isCompact_preimage hK
   let F : ∀ a : A₀, Finset (I a.val) := fun a =>
@@ -254,8 +266,12 @@ def finiteFactor [∀ a j, T1Space (Z a j)] [CompactSpace X] [Nonempty X]
     intro a j hj
     exact (compact_support (b a.val) (hKa a.val)).mem_toFinset.mpr hj
   let inc : C(SelectedModel b A₀ F, WedgeSum b) :=
-    ⟨fun m => ⟨m.1.val, include (b m.1.val) (F m.1) m.2⟩,
-      continuous_sigma_iff.mpr (fun a => continuous_sigmaMk.comp (include _ _).continuous)⟩
+    ⟨fun m => ⟨m.1.val, inclusionMap (b m.1.val) (F m.1) m.2⟩,
+      continuous_sigma_iff.mpr (by
+        intro a
+        change Continuous ((@Sigma.mk A (fun a => FamilyWedge (b a)) a.val) ∘
+          inclusionMap (b a.val) (F a))
+        exact continuous_sigmaMk.comp (inclusionMap _ _).continuous)⟩
   let a₀ : A₀ := ⟨hA.choose, hA.choose_spec⟩
   let m₀ : SelectedModel b A₀ F := ⟨a₀, base _⟩
   let ret : C(WedgeSum b, SelectedModel b A₀ F) :=
@@ -265,6 +281,8 @@ def finiteFactor [∀ a j, T1Space (Z a j)] [CompactSpace X] [Nonempty X]
         intro a
         by_cases h : a ∈ A₀
         · simp only [h, dite_true]
+          change Continuous ((@Sigma.mk A₀ (fun a => Subwedge (b a.val) (F a))
+            ⟨a, h⟩) ∘ retract (b a) (F ⟨a, h⟩))
           exact continuous_sigmaMk.comp (retract _ _).continuous
         · simp only [h, dite_false]
           exact continuous_const)⟩
@@ -274,11 +292,18 @@ def finiteFactor [∀ a j, T1Space (Z a j)] [CompactSpace X] [Nonempty X]
     simp only [a.property, dite_true]
     exact congrArg (Sigma.mk a) (retract_include (b a.val) (F a) z)
   · intro x
-    dsimp [ret, inc]
-    simp only [outer_mem x, dite_true]
+    have hr : ret (f x) =
+        ⟨⟨(f x).1, outer_mem x⟩, retract (b (f x).1)
+          (F ⟨(f x).1, outer_mem x⟩) (f x).2⟩ := by
+      change (if h : (f x).1 ∈ A₀ then _ else _) = _
+      rw [dif_pos (outer_mem x)]
+    rw [hr]
+    change (⟨(f x).1, inclusionMap (b (f x).1) (F ⟨(f x).1, outer_mem x⟩)
+      (retract (b (f x).1) (F ⟨(f x).1, outer_mem x⟩) (f x).2)⟩ : WedgeSum b) = f x
     exact congrArg (Sigma.mk (f x).1)
       (include_retract_of_support (b (f x).1) (F ⟨(f x).1, outer_mem x⟩)
-        (hF _) (show (f x).2 ∈ Kₐ (f x).1 from mem_range_self x))
+        (hF ⟨(f x).1, outer_mem x⟩)
+        (show (f x).2 ∈ Kₐ (f x).1 from mem_range_self x))
 
 /-- An actual finite selected-family homotopy model. The right homotopy is r H i,
 so the original homotopy need not preserve the finite submodel. -/
@@ -316,11 +341,11 @@ def emptySourceHomotopyEquiv [IsEmpty X] :
     X ≃ₕ SelectedModel b ∅ (fun _ => ∅) := by
   classical
   letI : IsEmpty (SelectedModel b ∅ (fun _ => ∅)) :=
-    ⟨fun m => Finset.not_mem_empty m.1.val m.1.property⟩
+    ⟨fun m => (Finset.notMem_empty m.1.val) m.1.property⟩
   exact (show X ≃ₜ SelectedModel b ∅ (fun _ => ∅) from {
     toEquiv := Equiv.equivOfIsEmpty _ _
-    continuous_toFun := continuous_of_isEmpty
-    continuous_invFun := continuous_of_isEmpty }).toHomotopyEquiv
+    continuous_toFun := continuous_of_discreteTopology
+    continuous_invFun := continuous_of_discreteTopology }).toHomotopyEquiv
 
 end Coproduct
 
