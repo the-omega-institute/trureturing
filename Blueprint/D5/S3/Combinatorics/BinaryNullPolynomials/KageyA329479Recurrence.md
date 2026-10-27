@@ -34,6 +34,10 @@ $$\forall (n: \mathrm{Nat}), 9 \le n \Rightarrow (a (n): \mathrm{Int}) = 2 \cdot
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinaryNullPolynomials/KageyA329479Recurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kag329479-binarynull` (proved) by `D5/S3/Combinatorics/BinaryNullPolynomials/KageyA329479Recurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kag329479-binarynull","declaration_gid":"D5/S3/Combinatorics/BinaryNullPolynomials/KageyA329479Recurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Kagey (2019). *OEIS A329479: Binary null polynomials modulo three*. URL: <https://oeis.org/A329479/internal>.
