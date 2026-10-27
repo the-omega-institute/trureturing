@@ -42,6 +42,8 @@ def recoveredPurification (D : E → Matrix A B ℂ) : Matrix (A × A) (A × A) 
 def fidelity (D : E → Matrix A B ℂ) : ℝ :=
   (star (maxEntangledVector A) ⬝ᵥ recoveredPurification D *ᵥ maxEntangledVector A).re
 
+set_option maxRecDepth 4096 in
+-- The finite source-label cardinality is retained during Kraus-map elaboration.
 theorem purification_overlap (D : E → Matrix A B ℂ) :
     fidelity D = ∑ p : E × E, Complex.normSq (Matrix.trace (composite D p) / 2) := by
   have hamplitude (j : Fin (Fintype.card (E × E))) :
@@ -54,12 +56,12 @@ theorem purification_overlap (D : E → Matrix A B ℂ) :
       _ = _ := by
         rw [amplified, Matrix.kronecker, max_entangled_trace, Matrix.mul_one,
           Matrix.trace_transpose, Fintype.card_fin]
+        norm_num
+  have hpur : maxEntangled A = rankOneDensity (maxEntangledVector A) := by
+    rw [maxEntangled.eq_1]
+    rfl
   unfold fidelity recoveredPurification
-  rw [maxEntangled.eq_1]
-  change (star (maxEntangledVector A) ⬝ᵥ
-    MatrixMap.of_kraus (amplified D) (amplified D)
-      (rankOneDensity (maxEntangledVector A)) *ᵥ maxEntangledVector A).re = _
-  rw [D5.S3.Quantum.QuantumChannels.MayerZeroFidelityTightness.kraus_survival]
+  rw [hpur, D5.S3.Quantum.QuantumChannels.MayerZeroFidelityTightness.kraus_survival]
   simp_rw [hamplitude, ← Complex.normSq_eq_norm_sq]
   exact labels.sum_comp (fun p => Complex.normSq (Matrix.trace (composite D p) / 2))
 
@@ -109,6 +111,8 @@ theorem source_overlap (cp cm kp km : ℝ) :
   norm_num [active, traceNumerator, Fintype.sum_prod_type,
     Fin.sum_univ_two, Fin.sum_univ_three, Complex.normSq_div,
     Complex.normSq_ofReal, hs, hmul]
+  norm_num [Complex.normSq, Complex.add_re, Complex.add_im, Complex.sub_re,
+    Complex.sub_im, Complex.mul_re, Complex.mul_im]
   ring
 
 theorem slice_overlap : fidelity slice = 27 / 31 := by
