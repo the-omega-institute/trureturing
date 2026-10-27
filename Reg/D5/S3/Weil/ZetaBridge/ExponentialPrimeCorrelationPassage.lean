@@ -3,7 +3,7 @@ import D5.S3.Weil.ZetaBridge.ExponentialPrimeCorrelationPassage
 import Reg.Support.SingleDependentReadout
 import Batteries.Tactic.OpenPrivate
 
-/- The original eight telescope binders and all three conclusions are retained.
+/-! The original eight telescope binders and all three conclusions are retained.
 Only the complete sequence in the first Summable clause is observed. Its
 coefficients, both signed logarithmic samples and all prime powers are literal.
 The original test family f is the parameter; its index k is the state. -/
@@ -68,7 +68,7 @@ private theorem weilTest_eq (f g : ℝ → ℂ) (s : ℝ) :
     weilTest f g s = ∫ x : ℝ, f x * conj (g (x - s)) := by
   simp only [weilTest, convolution_def, ContinuousLinearMap.mul_apply', tilde, neg_sub]
 
-private def exponentialTest (x : ℝ) : ℂ := (exp (-|x|) : ℂ)
+private def exponentialTest (x : ℝ) : ℂ := (Real.exp (-|x|) : ℂ)
 
 private theorem exponentialTest_continuous : Continuous exponentialTest := by
   unfold exponentialTest
@@ -90,14 +90,14 @@ private theorem dependenceFamily_admitted :
   refine ⟨?_, ?_, ?_⟩
   · intro k
     by_cases hk : k = 0
-    · simp only [dependenceFamily, if_pos hk]
+    · simp only [dependenceFamily, ite_eq_left hk]
       exact continuous_const
-    · simpa only [dependenceFamily, if_neg hk] using exponentialTest_continuous
+    · simpa only [dependenceFamily, ite_eq_right hk] using exponentialTest_continuous
   · intro k x
     by_cases hk : k = 0
-    · simp only [dependenceFamily, if_pos hk, norm_zero, one_mul]
+    · simp only [dependenceFamily, ite_eq_left hk, norm_zero, one_mul]
       exact (exp_pos _).le
-    · simpa only [dependenceFamily, if_neg hk] using exponentialTest_bound x
+    · simpa only [dependenceFamily, ite_eq_right hk] using exponentialTest_bound x
   · intro x
     apply tendsto_const_nhds.congr'
     filter_upwards [eventually_ge_atTop (1 : ℕ)] with k hk
@@ -140,7 +140,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
     (((ArithmeticFunction.vonMangoldt 2 / sqrt 2 : ℝ) : ℂ) *
       (weilTest (dependenceFamily 1) (dependenceFamily 1) (log 2) +
         weilTest (dependenceFamily 1) (dependenceFamily 1) (-log 2))) at hv
-  simp only [dependenceFamily, if_pos rfl, if_neg (by norm_num : (1 : ℕ) ≠ 0),
+  simp only [dependenceFamily, Nat.reduceEq, ite_true, ite_false,
     hz, zero_add, mul_zero] at hv
   have hcoef : (((ArithmeticFunction.vonMangoldt 2 / sqrt 2 : ℝ) : ℂ)) ≠ 0 := by
     apply Complex.ofReal_ne_zero.mpr
@@ -168,7 +168,8 @@ def evidence : Registration arena (type_of% @complete_prime_correlation_tendsto)
 
 def registration_1 : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@complete_prime_correlation_tendsto) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Weil.ZetaBridge.ExponentialPrimeCorrelationPassage.complete_prime_correlation_tendsto.__information_unit
+  unitName :=
+    `D5.S3.Weil.ZetaBridge.ExponentialPrimeCorrelationPassage.complete_prime_correlation_tendsto.__information_unit
   realizationName := `Reg.D5.S3.Weil.ZetaBridge.ExponentialPrimeCorrelationPassage.evidence
   realizationSource := none
   generated := false

@@ -68,9 +68,6 @@ private theorem correlation_bound_pointwise {A : ℝ} (hA : 0 ≤ A)
 
 private def envelopeConstant (A : ℝ) : ℝ := A ^ 2 * ∫ x : ℝ, majorant x
 
-private theorem envelopeConstant_nonneg (A : ℝ) : 0 ≤ envelopeConstant A :=
-  mul_nonneg (sq_nonneg A) (integral_nonneg fun _ => (exp_pos _).le)
-
 private theorem correlation_bound {A : ℝ} (hA : 0 ≤ A)
     {f : ℝ → ℂ} (hc : Continuous f)
     (hf : ∀ x, ‖f x‖ ≤ A * exp (-|x|)) (s : ℝ) :
