@@ -186,10 +186,11 @@ private lemma unit_span_value (ψ : Fin 4 → ℂ)
       hunit, Complex.ofReal_one]
   have hc : ((Complex.normSq a + Complex.normSq b : ℝ) : ℂ) = 1 := by
     rw [hrep] at hunitc
-    simpa only [star_add, star_smul, add_dotProduct, dotProduct_add, smul_dotProduct,
+    simp only [star_add, star_smul, add_dotProduct, dotProduct_add, smul_dotProduct,
       dotProduct_smul, frame.1, frame.2.1, frame.2.2.1, frame.2.2.2.1,
-      smul_eq_mul, mul_one, mul_zero, add_zero, zero_add, starRingEnd_apply,
-      Complex.star_def, Complex.mul_conj, ← Complex.ofReal_add] using hunitc
+      smul_eq_mul, mul_one, mul_zero, add_zero, zero_add] at hunitc
+    rw [Complex.ofReal_add, ← Complex.mul_conj a, ← Complex.mul_conj b]
+    exact hunitc
   have hab : Complex.normSq a + Complex.normSq b = 1 := by exact_mod_cast hc
   have hpoint : ∀ i, ψ i = a * v i + b * w i := fun i => congrFun hrep i
   rw [quadratic]
