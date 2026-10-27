@@ -45,7 +45,7 @@ abbrev arena : Arena where
   signature := signature.{u,v}
   Law R := ∀ p : Parameters.{u,v}, ∀ a b : signature.State p,
     R.readout () p a = R.readout () p b ↔
-      (ordinaryJoinSetoid (Space p.M) (Space p.N)).Rel a b
+      (ordinaryJoinSetoid (Space p.M) (Space p.N)).r a b
 
 private theorem bridge : (type_of% (@representative_eq_iff.{u,v})) ↔ arena.{u,v}.Law actual := by
   constructor

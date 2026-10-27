@@ -102,7 +102,12 @@ private theorem compact_realization : IsCompact (realization M) := by
   have he : realization M = ⋃ s ∈ M.faces,
       convexHull ℝ ((fun v : V => Pi.single v (1 : ℝ)) '' (s : Set V)) := by
     ext x
-    simp [realization]
+    constructor
+    · rintro ⟨s, hs, hx⟩
+      exact Set.mem_iUnion₂.mpr ⟨s, hs, hx⟩
+    · intro hx
+      obtain ⟨s, hs, hx⟩ := Set.mem_iUnion₂.mp hx
+      exact ⟨s, hs, hx⟩
   rw [he]
   exact (Set.toFinite M.faces).isCompact_biUnion fun s _ =>
     (s.finite_toSet.image _).isCompact_convexHull ℝ
@@ -157,7 +162,7 @@ private theorem right_mass (p : Space M × Space N × I) :
 /-- The barycentric map has exactly the ordinary join's endpoint fibers. -/
 theorem representative_eq_iff (p q : Space M × Space N × I) :
     representative M N p = representative M N q ↔
-      (ordinaryJoinSetoid (Space M) (Space N)).Rel p q := by
+      (ordinaryJoinSetoid (Space M) (Space N)).r p q := by
   constructor
   · intro h
     have ht : p.2.2 = q.2.2 := Subtype.ext (by
