@@ -27,12 +27,12 @@ namespace D5.S3.Quantum.Recovery.BurriReverseSource
 def lift (Z : Matrix B B ℂ) : Matrix P P ℂ := inject * Z * injectᴴ
 def pad (Z : Matrix B B ℂ) : Matrix P P ℂ := lift Z + (1 - lift 1)
 
-theorem inject_mul {n : Type*} [Fintype n] (Z : Matrix B n ℂ) (p : P) (b : n) :
+theorem inject_mul {n : Type*} (Z : Matrix B n ℂ) (p : P) (b : n) :
     (inject * Z) p b = if active p.2 then Z (p.1, p.2.2.2) b else 0 := by
   by_cases hp : active p.2 <;>
     simp [Matrix.mul_apply, inject, hp]
 
-theorem mul_inject_adjoint {n : Type*} [Fintype n] (Z : Matrix n B ℂ) (b : n) (p : P) :
+theorem mul_inject_adjoint {n : Type*} (Z : Matrix n B ℂ) (b : n) (p : P) :
     (Z * injectᴴ) b p = if active p.2 then Z b (p.1, p.2.2.2) else 0 := by
   by_cases hp : active p.2 <;>
     simp [Matrix.mul_apply, Matrix.conjTranspose_apply, inject, hp]
@@ -57,9 +57,6 @@ theorem lift_mul (Z T : Matrix B B ℂ) : lift Z * lift T = lift (Z * T) := by
 theorem lift_adjoint (Z : Matrix B B ℂ) : (lift Z)ᴴ = lift Zᴴ := by
   simp only [lift, Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
     Matrix.mul_assoc]
-
-theorem lift_add (Z T : Matrix B B ℂ) : lift (Z + T) = lift Z + lift T := by
-  simp only [lift, Matrix.mul_add, Matrix.add_mul]
 
 theorem lift_smul (c : ℂ) (Z : Matrix B B ℂ) : lift (c • Z) = c • lift Z := by
   simp only [lift, Matrix.mul_smul, Matrix.smul_mul]
@@ -127,10 +124,12 @@ theorem complementary_state : X = lift output := by
     smul_smul]
   have hs : (Real.sqrt 62 : ℂ) * (Real.sqrt 62 : ℂ) = 62 := by
     exact_mod_cast Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 62)
-  simp only [star_div₀, star_one, Complex.star_def, map_ofReal, one_div_mul_one_div, hs]
+  simp only [star_div₀, star_one, Complex.star_def, Complex.conj_ofReal,
+    one_div_mul_one_div, hs]
   simp only [output, lift, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_assoc]
 
 set_option maxHeartbeats 4000000 in
+-- The literal environment marginal keeps all twelve source labels.
 theorem physical_marginals : partialTraceRight X = rho ∧ partialTraceLeft X = sigmaE := by
   rw [complementary_state]
   constructor
@@ -170,11 +169,12 @@ theorem lift_diagonal (v : B → ℂ) : lift (Matrix.diagonal v) =
     fin_cases l <;> fin_cases m <;> fin_cases n <;> fin_cases b <;>
     simp [lift_apply, active, Matrix.diagonal_apply]
 
+set_option maxHeartbeats 4000000 in
+-- The full product marginal includes all twenty-four source coordinates.
 theorem product_marginal_root : CFC.sqrt (Matrix.kronecker rho sigmaE) = sqrtQ := by
   have hd : D.PosSemidef := by
     apply Matrix.posSemidef_diagonal_iff.mpr
     intro b
-    dsimp [D]
     split_ifs <;> simp [s, t, Complex.nonneg_iff, Real.sqrt_nonneg]
   have hp : sqrtQ.PosSemidef :=
     (hd.mul_mul_conjTranspose_same inject).smul (by
@@ -206,7 +206,7 @@ theorem source_matrix : M = lift activeM := by
   have hy : Y (q.1, q.2.2.2) (p.1, p.2.2.2) =
       Y (p.1, p.2.2.2) (q.1, q.2.2.2) := by
     have h := congrFun (congrFun amplitude_adjoint (p.1, p.2.2.2)) (q.1, q.2.2.2)
-    simpa only [Matrix.conjTranspose_apply, Y, map_ofReal] using h
+    simpa only [Matrix.conjTranspose_apply, Y, Complex.star_def, Complex.conj_ofReal] using h
   rw [hy]
   ring
 

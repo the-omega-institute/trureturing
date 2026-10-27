@@ -38,7 +38,7 @@ def padUnitary (Z : Matrix.unitaryGroup B ℂ) : Matrix.unitaryGroup P ℂ :=
     apply Unitary.mem_iff.mpr
     simpa only [star_eq_conjTranspose] using
       pad_unitary (Z : Matrix B B ℂ) (by
-        simpa only [star_eq_conjTranspose] using Z.prop)⟩
+        simpa only [Unitary.mem_iff, star_eq_conjTranspose] using Z.prop)⟩
 
 /-- Nonnegative active singular values are extended by zero, and both unitary
 factors by the identity, on the eighteen unused source coordinates. -/
@@ -51,7 +51,11 @@ theorem full_source_svd :
   obtain ⟨H, T, v, hv, hM, hU⟩ := active_svd
   refine ⟨padUnitary H, padUnitary T,
     fun p => if active p.2 then v (p.1, p.2.2.2) else 0,
-    fun p => by split_ifs; exact hv _; exact le_rfl, ?_, ?_⟩
+    fun p => by
+      dsimp only
+      split_ifs
+      · exact hv _
+      · exact le_rfl, ?_, ?_⟩
   · have hd : Matrix.diagonal (fun p : P =>
         ((if active p.2 then v (p.1, p.2.2.2) else 0 : ℝ) : ℂ)) =
         lift (Matrix.diagonal (fun b => (v b : ℂ))) := by
@@ -69,7 +73,6 @@ theorem active_matrix_invertible : IsUnit activeM := by
   have hd : D.PosDef := by
     apply Matrix.posDef_diagonal_iff.mpr
     intro b
-    dsimp [D]
     split_ifs <;> simp [s, t, Complex.pos_iff]
   simpa only [activeM, D, Matrix.smul_mul] using
     (amplitude_positive.smul (by norm_num [Complex.pos_iff] : (0 : ℂ) < 1 / 62)).isUnit.mul hd.isUnit
@@ -129,12 +132,41 @@ theorem injection_transpose : inject.transpose = injectᴴ := by
   ext p b
   simp [inject, Matrix.transpose_apply, Matrix.conjTranspose_apply]
 
+theorem physical_reference_amplitude (p : P) (b : B) :
+    purifiedAmplitude p b = ∑ i : A, cfc Real.sqrt rho p.1 i * V (b, p.2) i := by
+  rw [reference_root]
+  simp [purifiedAmplitude, Matrix.one_apply, div_eq_mul_inv, mul_comm]
+
+theorem physical_pure_density : physicalState.PosSemidef ∧ Matrix.trace physicalState = 1 := by
+  refine ⟨Matrix.posSemidef_vecMulVec_self_star _, ?_⟩
+  have h : Matrix.trace physicalState = Matrix.trace X :=
+    (D5.S3.Quantum.Information.PartialTraceMutualInformation.trace_partialTraceLeft physicalState).symm
+  rw [h, ← D5.S3.Quantum.Information.PartialTraceMutualInformation.trace_partialTraceRight X,
+    physical_marginals.1, reference_trace]
+
+theorem physical_isometry : Vᴴ * V = 1 := by
+  ext i j
+  have h := congrFun (congrFun noise_normalization i) j
+  simp only [Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    noiseKraus, Fintype.sum_prod_type] at h ⊢
+  rw [Finset.sum_comm]
+  exact h
+
 /-- Appendix A.9 as a full matrix of purification amplitudes, including zeros. -/
 theorem source_purification_identity :
     purifiedAmplitude * (W * prepare).transpose = CFC.sqrt X := by
   rw [source_injection, injection_transpose, purified_amplitude, Matrix.smul_mul,
     complementary_root]
   rfl
+
+/-- Acting on the purifying coordinate multiplies its amplitude matrix on the
+right by the transpose of the source unitary, as opposed to its adjoint. -/
+theorem source_recovered_amplitude :
+    purifiedAmplitude *
+      ((sourceU (cosine 4) (cosine 2) (sine 4) (sine 2) * W) * prepare).transpose =
+      CFC.sqrt X * (sourceU (cosine 4) (cosine 2) (sine 4) (sine 2)).transpose := by
+  rw [Matrix.mul_assoc, Matrix.transpose_mul, ← Matrix.mul_assoc,
+    source_purification_identity]
 
 /-- Appendix A.11 followed by actual ancilla preparation is independent of all
 unitary choices in the nonnegative source SVD's zero singular subspace. -/

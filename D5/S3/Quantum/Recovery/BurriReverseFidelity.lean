@@ -6,7 +6,7 @@
    utility: none
    digest: Canonical entanglement fidelity for the actual reverse-instance channels. -/
 
-import D5.S3.Quantum.Recovery.BurriReverseSource
+import D5.S3.Quantum.Recovery.BurriReverseCompletion
 
 /-! The channel acts on the first tensor factor and the reference is the second. -/
 
@@ -121,9 +121,31 @@ theorem actual_strict_fidelity :
     actual_entanglement_fidelity _ _ petz_channel_action]
   exact canonical_overlap_gap
 
+def completedKraus (Uprime : Matrix P P ℂ) (e : E) : Matrix A B ℂ :=
+  ((Uprime * W) * prepare).submatrix (fun k => (k, e)) id
+
+/-- Every admissible complex completion defines the same physical recovery and
+therefore satisfies the strict comparison with ordinary Petz. -/
+theorem actual_strict_fidelity_all_completions (Uprime : Matrix P P ℂ)
+    (hu : Uprime * Uprimeᴴ = 1)
+    (hp : (BurriReverseSource.M * Uprime).PosSemidef) :
+    ∃ decoder : QuantumChannel B A,
+      (∀ T : Matrix B B ℂ, CStarMatrix.ofMatrix.symm
+        (decoder.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+        ∑ e : E, completedKraus Uprime e * T * (completedKraus Uprime e)ᴴ) ∧
+      entanglementFidelity (decoder.comp noiseChannel) <
+        entanglementFidelity (petzChannel.comp noiseChannel) := by
+  have hD : completedKraus Uprime = swKraus (cosine 4) (cosine 2) (sine 4) (sine 2) := by
+    funext e
+    ext k b
+    exact BurriReverseCompletion.source_decoder_completion_independent Uprime hu hp e k b
+  rw [hD]
+  exact ⟨swChannel, recovery_channels.1.choose_spec, actual_strict_fidelity⟩
+
 #print axioms canonical_reference_purification
 #print axioms tensor_reference_kraus
 #print axioms actual_recovered_purification
 #print axioms actual_strict_fidelity
+#print axioms actual_strict_fidelity_all_completions
 
 end D5.S3.Quantum.Recovery.BurriReverseFidelity
