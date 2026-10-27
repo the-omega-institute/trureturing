@@ -7,8 +7,9 @@
    digest: A rank-two state in four dimensions has equal coherence roofs. -/
 
 
-import Mathlib.Analysis.Convex.Mul
 import D5.S3.Quantum.Measurement.AntidistinguishabilityGram
+import D5.S3.Divergence.CoherenceL1RelativeEntropyBound
+import D5.S3.Quantum.PureState.PureStateHandshake
 
 /-! The quadratic coherence is constant on the unit sphere of an explicit two-dimensional subspace. -/
 
@@ -16,6 +17,7 @@ set_option autoImplicit false
 set_option linter.style.longLine false
 open scoped BigOperators ComplexOrder
 open Matrix
+open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 
 noncomputable section
 namespace D5.S3.Quantum.Information.CoherenceAssistanceRoofEquality
@@ -36,7 +38,7 @@ def IsDecomposition {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ) (k : ℕ)
     (p : Fin k → ℝ) (ψ : Fin k → Fin n → ℂ) : Prop :=
   (∀ j, 0 ≤ p j) ∧ (∑ j, p j) = 1 ∧
     (∀ j, ∑ i, Complex.normSq (ψ j i) = 1) ∧
-    ρ = ∑ j, (p j : ℂ) • vecMulVec (ψ j) (star (ψ j))
+    ρ = ∑ j, (p j : ℂ) • rankOneDensity (ψ j)
 
 /-- The source averages over all finite pure-state decompositions. -/
 def decompositionValues {n : ℕ} (f : (Fin n → ℝ) → ℝ)
@@ -74,7 +76,7 @@ private def w : Fin 4 → ℂ :=
     ((-Real.sqrt 3 / 6 : ℝ) : ℂ) - ((1 / 2 : ℝ) : ℂ) * Complex.I]
 
 private def projection : Matrix (Fin 4) (Fin 4) ℂ :=
-  vecMulVec v (star v) + vecMulVec w (star w)
+  rankOneDensity v + rankOneDensity w
 
 private def rho : Matrix (Fin 4) (Fin 4) ℂ := (1 / 2 : ℂ) • projection
 
@@ -90,33 +92,30 @@ private lemma frame :
   have hw : (∑ i, Complex.normSq (w i)) = 1 := by
     simp only [w.eq_1]
     norm_num [Fin.sum_univ_succ, Complex.normSq_apply] <;> nlinarith
-  have hn : ∀ x : Fin 4 → ℂ, star x ⬝ᵥ x = ((∑ i, Complex.normSq (x i) : ℝ) : ℂ) := by
-    intro x
-    change (∑ i, star (x i) * x i) = _
-    simp only [Complex.star_def, ← Complex.normSq_eq_conj_mul_self, Complex.ofReal_sum]
   have hvw : star v ⬝ᵥ w = 0 := by
     change (∑ i, star (v i) * w i) = 0
     apply Complex.ext <;> norm_num [v, w, Fin.sum_univ_succ, Complex.star_def] <;> ring
   refine ⟨?_, ?_, hvw, ?_, hv, hw⟩
-  · rw [hn, hv, Complex.ofReal_one]
-  · rw [hn, hw, Complex.ofReal_one]
+  · simpa only [dotProduct_comm, ← Complex.normSq_eq_norm_sq, hv, Complex.ofReal_one] using
+      D5.S3.Divergence.CoherenceL1RelativeEntropyBound.vector_dot_star v
+  · simpa only [dotProduct_comm, ← Complex.normSq_eq_norm_sq, hw, Complex.ofReal_one] using
+      D5.S3.Divergence.CoherenceL1RelativeEntropyBound.vector_dot_star w
   · rw [star_dotProduct w v, hvw, star_zero]
 
 private lemma projection_properties :
-    projection.IsHermitian ∧ projection * projection = projection ∧
-      ((1 - projection) * rho).trace = 0 := by
+    IsStarProjection projection ∧ ((1 - projection) * rho).trace = 0 := by
   have hf := frame
   have hh : projection.IsHermitian :=
     ((Matrix.posSemidef_vecMulVec_self_star v).add
       (Matrix.posSemidef_vecMulVec_self_star w)).isHermitian
   have hpp : projection * projection = projection := by
-    rw [projection]
+    rw [projection, rankOneDensity, rankOneDensity]
     simp only [add_mul, mul_add, Matrix.vecMulVec_mul_vecMulVec,
       hf.1, hf.2.1, hf.2.2.1, hf.2.2.2.1, one_smul, zero_smul,
       Matrix.vecMulVec_zero, add_zero, zero_add]
-  refine ⟨hh, hpp, ?_⟩
-  rw [rho]
-  rw [Matrix.mul_smul, sub_mul, one_mul, hpp, sub_self, smul_zero, Matrix.trace_zero]
+  refine ⟨⟨hpp, hh.isSelfAdjoint⟩, ?_⟩
+  rw [rho, Matrix.mul_smul, IsIdempotentElem.one_sub_mul_self hpp,
+    smul_zero, Matrix.trace_zero]
 
 private lemma decomposition_support {n k : ℕ}
     (ρ q : Matrix (Fin n) (Fin n) ℂ) (p : Fin k → ℝ) (ψ : Fin k → Fin n → ℂ)
@@ -128,7 +127,7 @@ private lemma decomposition_support {n k : ℕ}
     rw [hd.2.2.2, Matrix.mul_sum, Matrix.trace_sum]
     apply Finset.sum_congr rfl
     intro t _
-    rw [Matrix.mul_smul, Matrix.trace_smul, Matrix.mul_vecMulVec,
+    rw [Matrix.mul_smul, Matrix.trace_smul, rankOneDensity, Matrix.mul_vecMulVec,
       Matrix.trace_vecMulVec, dotProduct_comm]
     simp only [smul_eq_mul]
   have hs : (∑ t, p t * (star (ψ t) ⬝ᵥ (q *ᵥ ψ t)).re) = 0 := by
@@ -181,9 +180,9 @@ private lemma unit_span_value (ψ : Fin 4 → ℂ)
     change v i * a + w i * b = a * v i + b * w i
     ring
   have hunitc : star ψ ⬝ᵥ ψ = 1 := by
-    change (∑ i, star (ψ i) * ψ i) = 1
-    simp only [Complex.star_def, ← Complex.normSq_eq_conj_mul_self, ← Complex.ofReal_sum,
-      hunit, Complex.ofReal_one]
+    simpa only [dotProduct_comm, ← Complex.normSq_eq_norm_sq, hunit,
+      Complex.ofReal_one] using
+      D5.S3.Divergence.CoherenceL1RelativeEntropyBound.vector_dot_star ψ
   have hc : ((Complex.normSq a + Complex.normSq b : ℝ) : ℂ) = 1 := by
     rw [hrep] at hunitc
     simp only [star_add, star_smul, add_dotProduct, dotProduct_add, smul_dotProduct,
@@ -221,9 +220,9 @@ private lemma quadratic_coherence : IsCoherenceFunction quadratic := by
 
 private lemma quadratic_nonzero :
     ∃ p ∈ stdSimplex ℝ (Fin 4), quadratic p ≠ 0 := by
-  refine ⟨fun _ => 1 / 4, ⟨fun _ => by norm_num, ?_⟩, ?_⟩
-  · norm_num [Fin.sum_univ_succ]
-  · norm_num [quadratic, Fin.sum_univ_succ]
+  refine ⟨(stdSimplex.barycenter : stdSimplex ℝ (Fin 4)).val,
+    (stdSimplex.barycenter : stdSimplex ℝ (Fin 4)).property, ?_⟩
+  norm_num [quadratic, stdSimplex.barycenter, Fin.sum_univ_succ]
 
 private lemma witness_decomposition :
     IsDecomposition rho 2 (fun _ => 1 / 2) ![v, w] := by
@@ -243,7 +242,7 @@ private lemma witness_decomposition :
 private lemma values_singleton : decompositionValues quadratic rho = {2 / 3} := by
   have hproj := projection_properties
   have hq := D5.S3.Quantum.Measurement.AntidistinguishabilityGram.hermitian_projection_complement_psd
-    projection hproj.1 hproj.2.1
+    projection hproj.1.isSelfAdjoint.isHermitian hproj.1.isIdempotentElem
   have havg : ∀ k p ψ, IsDecomposition rho k p ψ →
       (∑ j, p j * quadratic (coherenceVector (ψ j))) = 2 / 3 := by
     intro k p ψ hd
@@ -254,7 +253,7 @@ private lemma values_singleton : decompositionValues quadratic rho = {2 / 3} := 
         by_cases hp : p j = 0
         · rw [hp, zero_mul, zero_mul]
         · rw [unit_span_value (ψ j) (hd.2.2.1 j)
-            (decomposition_support rho (1 - projection) p ψ hd hq hproj.2.2 j
+            (decomposition_support rho (1 - projection) p ψ hd hq hproj.2 j
               (lt_of_le_of_ne (hd.1 j) (Ne.symm hp)))]
       _ = 2 / 3 := by rw [← Finset.sum_mul, hd.2.1, one_mul]
   rw [decompositionValues]
@@ -282,7 +281,7 @@ private lemma witness_mixed : IsMixed rho := by
     rw [Matrix.trace_smul, htrace]
     norm_num
   · change (((1 / 2 : ℂ) • projection) * ((1 / 2 : ℂ) • projection)).trace ≠ 1
-    rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul, projection_properties.2.1,
+    rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul, projection_properties.1.isIdempotentElem,
       Matrix.trace_smul, htrace]
     norm_num
 

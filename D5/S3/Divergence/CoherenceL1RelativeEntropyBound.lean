@@ -394,7 +394,7 @@ open D5.S3.Quantum.Foundation.FiniteTraceDistance
 private theorem basisVector_sq {n : ℕ} (k : Fin n) : star ((Pi.single k (1 : ℂ))) ⬝ᵥ (Pi.single k (1 : ℂ)) = 1 := by
   simpa only [dotProduct_single_one, Pi.star_apply, Pi.single_eq_same, star_one]
 
-private theorem vector_dot_star {n : ℕ} (v : Fin n → ℂ) : v ⬝ᵥ star v = ((∑ j, ‖v j‖ ^ 2 : ℝ) : ℂ) := by
+theorem vector_dot_star {n : ℕ} (v : Fin n → ℂ) : v ⬝ᵥ star v = ((∑ j, ‖v j‖ ^ 2 : ℝ) : ℂ) := by
   simp only [dotProduct, Pi.star_apply, Complex.star_def, Complex.mul_conj, Complex.normSq_eq_norm_sq,
     Complex.ofReal_sum, Complex.ofReal_pow]
 
