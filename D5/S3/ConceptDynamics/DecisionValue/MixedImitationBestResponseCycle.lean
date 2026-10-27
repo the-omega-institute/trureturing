@@ -7,6 +7,7 @@
    digest: A persistent mixed imitation and best-response trajectory never reaches equilibrium. -/
 
 import Mathlib.Basic.Real.Basic
+import Mathlib.Data.Nat.Periodic
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
@@ -240,16 +241,11 @@ private theorem trajectory_period (t : ℕ) (ht : 2 ≤ t) :
 private theorem trajectory_reduce (t : ℕ) :
     traj graph kinds payoffs (orbit 0) activation (t + 2) =
       traj graph kinds payoffs (orbit 0) activation (t % 8 + 2) := by
-  induction t using Nat.strong_induction_on with
-  | h t ih =>
-    by_cases hsmall : t < 8
-    · rw [Nat.mod_eq_of_lt hsmall]
-    · have hp := trajectory_period (t - 8 + 2) (by omega)
-      have heq : t - 8 + 2 + 8 = t + 2 := by omega
-      rw [heq] at hp
-      rw [hp, ih (t - 8) (by omega)]
-      have hmod : (t - 8) % 8 = t % 8 := by omega
-      rw [hmod]
+  have hp : Function.Periodic
+      (fun k => traj graph kinds payoffs (orbit 0) activation (k + 2)) 8 := by
+    intro k
+    exact trajectory_period (k + 2) (by omega)
+  exact (hp.map_mod_nat t).symm
 
 private theorem equilibrium_step {n : ℕ} (adj : Fin n → Fin n → Prop)
     (imitator : Fin n → Bool) (pay : Fin n → Bool → Bool → ℝ)
