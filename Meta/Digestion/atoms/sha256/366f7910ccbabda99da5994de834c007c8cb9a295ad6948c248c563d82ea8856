@@ -1,0 +1,49 @@
+**定理 6.2（递归核守恒的记录等距定理）。**
+将自由复线性空间商去零范数关系并完成，得到
+
+$$
+H_t=\overline{\mathbb C[\mathscr X_t]/\mathcal N_t}.
+$$
+
+定义 [6.1](#def:kernel) 的每个接续唯一下降为有界复线性映射
+$M_o:H_t\to H_{t+1}$，且
+
+$$
+M_o|x\rangle=|r_{a,o}x\rangle,\qquad
+\sum_oM_o^\dagger M_o=I.
+$$
+
+因而
+
+$$
+\boxed{V_a\psi=\sum_oM_o\psi\otimes|o\rangle}
+$$
+
+是一个把结果记录纳入输出的等距映射。
+有限维时
+
+$$
+\mathcal I_o(\rho)=M_o\rho M_o^\dagger,\qquad
+\sum_o\mathcal I_o\ \text{完全正且保迹}.
+$$
+
+证明。
+正半内积的 Cauchy--Schwarz 不等式使每个零范数向量与所有向量正交，
+所以 $\mathcal N_t$ 为线性子空间，商内积非退化。
+在自由空间按生成元延拓接续为线性映射 $L_o$。
+将式 (K) 乘以 $\overline c_ic_j$ 并求和，得到
+
+$$
+\sum_oQ_{t+1}(L_ov)=Q_t(v).
+$$
+
+若 $Q_t(v)=0$，每个非负项都为零，
+故每个 $L_o$ 保持全部零关系，下降到商。
+又 $\left\lVert M_ov\right\rVert\le\left\lVert v\right\rVert$，所以唯一连续延拓到完成。
+显示的求和式给 $\sum_o\left\lVert M_ov\right\rVert^2=\left\lVert v\right\rVert^2$，
+极化得算子恒等式及 $V_a^\dagger V_a=I$。
+对任意辅助维数，每项共轭
+$(M_o\otimes I)X(M_o^\dagger\otimes I)$ 保正；
+循环迹和求和恒等式给总和保迹。
+证毕。
+

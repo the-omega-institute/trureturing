@@ -1,0 +1,51 @@
+**定义 18.1（实际物理基、码和擦标签边界）。**
+本节是 §19 条件记录应用的供应接口。
+取[预测波 §17.1](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md)的物理正交基
+$(e_0,\ldots,e_4)$，令
+
+$$
+u=\frac{e_0+e_3}{\sqrt2},\qquad
+v=\frac{e_1+e_4}{\sqrt2},\qquad z=e_2,\qquad
+B=(u,v,z):\mathbb C^3\to\mathbb C^5.
+$$
+
+$B^\dagger B=I_3$，$R=\operatorname{Ran}B$。
+定义同一实际来源的算子
+
+$$
+\begin{aligned}
+K_0&=|u\rangle\langle e_0|+|v\rangle\langle e_2|/\sqrt2+|z\rangle\langle e_4|,\\
+K_1&=|u\rangle\langle e_1|+|v\rangle\langle e_2|/\sqrt2+|z\rangle\langle e_3|,\\
+A_0&=\cos\theta K_0+i\sin\theta K_1,\qquad
+A_1=i\sin\theta K_0+\cos\theta K_1,\qquad\theta\in\mathbb R,\\
+\mathcal G(X)&=K_0XK_0^\dagger+K_1XK_1^\dagger
+             =A_0XA_0^\dagger+A_1XA_1^\dagger.
+\end{aligned}
+$$
+
+每个 $\theta$ 是固定已标定参数；全实参数公式不授予任意角控制。
+$K_0^\dagger K_0=\operatorname{diag}(1,0,1/2,0,1)$，
+$K_1^\dagger K_1=\operatorname{diag}(0,1,1/2,1,0)$，故和为单位。
+系数矩阵 $\left(\begin{smallmatrix}\cos\theta&i\sin\theta\\i\sin\theta&\cos\theta\end{smallmatrix}\right)$
+酉，给全 $M_5(\mathbb C)$ 上的通道恒等；线性恒等张量任意参考仍成立。
+所有输出均在 $R$，但一般输入不承诺在码内。
+
+码内令
+
+$$
+U=\begin{pmatrix}1&0&0\\0&0&1\\0&1&0\end{pmatrix},\qquad
+W=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},\qquad
+P_\pm=(I_3\pm W)/2,
+$$
+
+则 $K_0B=BU/\sqrt2$、$K_1B=BUW/\sqrt2$，故
+
+$$
+\mathcal T(X):=B^\dagger\mathcal G(BXB^\dagger)B
+ =\tfrac12(UXU^\dagger+UWXW^\dagger U^\dagger)
+ =\operatorname{Ad}_U(P_+XP_++P_-XP_-).
+$$
+
+深度 $n$ 表示所选有限静态区域内同类原子的复合数。
+每次擦环境的模型使用新供应的独立环境，不将保留相关环境的模型偷换成这条齐次通道。
+
