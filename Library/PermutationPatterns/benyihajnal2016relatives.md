@@ -34,3 +34,7 @@ non-exclusive license. This repository imports no article code, figures
 or full text; this bibliographic note is `citation-only` and grants no
 rights over the original article. Imported mathlib code retains its
 upstream Apache-2.0 attribution and is called through imports.
+
+## Verified locator
+
+https://arxiv.org/abs/1602.08684v1

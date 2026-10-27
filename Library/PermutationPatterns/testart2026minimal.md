@@ -51,3 +51,7 @@ applicability result, not novelty clearance.
 This note contains bibliographic attribution and a short question quotation;
 it does not redistribute article or thesis source. `citation-only` describes
 this repository's use and grants no license over the original works.
+
+## Verified locator
+
+https://arxiv.org/abs/2602.12130v2

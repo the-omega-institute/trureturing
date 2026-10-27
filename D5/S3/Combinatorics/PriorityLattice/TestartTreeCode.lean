@@ -48,16 +48,8 @@ private theorem insert_zero (n : ℕ) (s : Perm (Fin n)) (v : Fin n) :
     insertEquiv n (0,s) v.castSucc = (s v).castSucc := by
   simp [insert_apply]
 
-private theorem insert_last_zero (n : ℕ) (s : Perm (Fin n)) :
-    insertEquiv n (0,s) (Fin.last n) = Fin.last n := by
-  simp [insert_apply]
-
 private theorem insert_parent (n : ℕ) (p : Fin n) (s : Perm (Fin n)) :
     insertEquiv n (p.succ,s) p.castSucc = Fin.last n := by
-  simp [insert_apply]
-
-private theorem insert_last (n : ℕ) (p : Fin n) (s : Perm (Fin n)) :
-    insertEquiv n (p.succ,s) (Fin.last n) = (s p).castSucc := by
   simp [insert_apply]
 
 private theorem insert_other (n : ℕ) (p v : Fin n) (s : Perm (Fin n)) (h : v ≠ p) :
