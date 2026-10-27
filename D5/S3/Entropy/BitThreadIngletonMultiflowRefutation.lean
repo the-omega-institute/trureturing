@@ -227,7 +227,13 @@ private lemma witness_is_multiflow :
       Fin.ext_iff, starCapacity]
 
 private lemma witness_max :
-    IsMaxMultiflow starCapacity starBoundary witnessFlow witnessThreads := by sorry
+    IsMaxMultiflow starCapacity starBoundary witnessFlow witnessThreads := by
+  refine ⟨witness_is_multiflow, ?_⟩
+  intro i
+  rw [star_cut_values]
+  fin_cases i <;> unfold subflow starWeight
+  all_goals simp only [Fin.sum_univ_succ]
+  all_goals norm_num [witnessThreads]
 
 private lemma star_min_combo :
     combo ingletonCoefficient (minCut starCapacity starBoundary) = 0 := by
