@@ -10,12 +10,15 @@ import Mathlib.Basic.Real.Basic
 import Mathlib.Data.Nat.Periodic
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic.NormNum
+import D5.S3.Combinatorics.Graph.GeneralPosition.CylinderSevenTen
 
 /-! A periodic trajectory for coordinating imitation and best-response dynamics. -/
 
 set_option autoImplicit false
 
 namespace D5.S3.ConceptDynamics.DecisionValue.MixedImitationBestResponseCycle
+
+open D5.S3.Combinatorics.Graph.GeneralPosition.CylinderSevenTen (movingIndex)
 
 /-- The accumulated payoff against the neighbours, with `false` denoting A. -/
 noncomputable def utility {n : ℕ} (adj : Fin n → Fin n → Prop)
@@ -96,7 +99,7 @@ private def orbit : Fin 8 → Fin 4 → Bool :=
     ![false, false, false, true], ![false, false, true, true]]
 
 private def activation (t : ℕ) : Fin 4 :=
-  ![2, 0, 3, 1] ⟨t % 4, Nat.mod_lt t (by decide)⟩
+  movingIndex 7 (Fin.ofNat 4 t)
 
 private theorem graph_symmetric : Symmetric graph := by
   intro i j h
@@ -121,22 +124,21 @@ private theorem activation_persistent : IsPersistent activation := by
   intro i t
   fin_cases i
   · refine ⟨4 * t + 1, by omega, ?_⟩
-    dsimp only [activation]
+    dsimp only [activation, movingIndex, Fin.ofNat]
     norm_num [Nat.add_mod, Nat.mul_mod]
   · refine ⟨4 * t + 3, by omega, ?_⟩
-    dsimp only [activation]
+    dsimp only [activation, movingIndex, Fin.ofNat]
     norm_num [Nat.add_mod, Nat.mul_mod]
   · refine ⟨4 * t, by omega, ?_⟩
-    dsimp only [activation]
+    dsimp only [activation, movingIndex, Fin.ofNat]
     norm_num [Nat.mul_mod]
   · refine ⟨4 * t + 2, by omega, ?_⟩
-    dsimp only [activation]
+    dsimp only [activation, movingIndex, Fin.ofNat]
     norm_num [Nat.add_mod, Nat.mul_mod]
 
 private theorem activation_period (t : ℕ) : activation (t + 8) = activation t := by
-  have hm : (t + 8) % 4 = t % 4 := by omega
   unfold activation
-  exact congrArg (![2, 0, 3, 1] : Fin 4 → Fin 4) (Fin.ext hm)
+  exact congrArg (movingIndex 7) (Fin.ext (Nat.add_mul_mod_self_left t 4 2))
 
 private theorem utility_values (r : Fin 8) (i : Fin 4) :
     utility graph payoffs (orbit r) i =
@@ -164,7 +166,7 @@ private theorem first_two :
   classical
   constructor
   all_goals
-    unfold activation
+    unfold activation movingIndex Fin.ofNat
     norm_num only
     unfold step update
     dsimp only [kinds]
@@ -180,7 +182,7 @@ private theorem cycle_steps (r : Fin 8) :
   classical
   fin_cases r
   all_goals
-    unfold activation
+    unfold activation movingIndex Fin.ofNat
     norm_num only
     unfold step update
     dsimp only [kinds]
