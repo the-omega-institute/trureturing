@@ -52,8 +52,7 @@ theorem cubic_character_neg_one {F K : Type*}
     [CommRing F] [CommMonoidWithZero K] (χ : MulChar F K) (hc : χ ^ 3 = 1) :
     χ (-1) = 1 := by
   have hs : χ (-1) ^ 2 = 1 := by
-    rw [← map_pow]
-    norm_num
+    rw [← map_pow, neg_one_sq, map_one]
   have ht := congrArg (fun η : MulChar F K => η (-1)) hc
   rw [MulChar.pow_apply' χ (by decide : 3 ≠ 0),
     MulChar.one_apply (isUnit_one.neg)] at ht
