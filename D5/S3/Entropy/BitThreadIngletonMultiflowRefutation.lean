@@ -10,7 +10,7 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Ring.RingNF
 
 /-! Pair flows are oriented from `i` to `j`, using `i < j` as the single
 representative of each unordered boundary pair. -/
