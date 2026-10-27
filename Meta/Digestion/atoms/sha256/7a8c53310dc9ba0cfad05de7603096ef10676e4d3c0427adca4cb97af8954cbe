@@ -1,0 +1,120 @@
+**Proposition 77.5 (U4 views and exact recovery limits).** On the fixed WLAB-ord
+installation define the four expressions at the startup/endpoint cut as follows:
+
+| View | Independent meaning |
+| --- | --- |
+| Space | the actual ordered material tree, its commissioned $T$, and the current field $x_*$ |
+| Time | the actually executed free scan, ordered pulse epochs $(\tau_j,j)$, literal terminal returns, and completed Tick/Add/Hold chronology |
+| Boundary | the terminal transfer function $\Phi_T(z)=C(zI-T)^{-1}J$ together with a declared current readout $Cx_*$ |
+| Memory | the retained full predictor, current field, law, roster, parser and callable rights |
+
+Time is the paid startup chronology, not an unrestricted old journal.  Boundary's
+transfer function is computed from the acquired law; it is not a claim that every
+coefficient was separately read.  Memory contains a callable predictor and its
+actual backing, not a free copy of Time.
+
+The complete startup transcript has exact kernel $(u,T,x_0)$: the free and pulse
+blocks determine that triple, and the triple determines every return of the fixed
+schedule.  At a settled cut, complete future service has kernel $(u,T,x_*)$:
+equality of this triple gives the same guarded menu and successor induction, while
+a difference in the current field is separated by a finite terminal Krylov Read.
+These are task kernels for the named installation, not a statement that a bare
+Boundary value or an erased command journal is sufficient.
+
+For fixed $T$ and fixed pulse schedule put
+
+$$
+r=\sum_{j=1}^{b}T^{L-\tau_j}e_{\ell_j},
+\qquad x_*=T^Lx_0+r.
+\tag{77.14}
+$$
+
+Then the following are exact on their stated domains.
+
+1. Time recovers Space by (77.13) and (77.9), and the actual source run realizes
+   that endpoint. Space recovers Time's mathematical scalar sequence by replaying
+   the fixed schedule with recovered $T$ and $x_0$ only under the condition in
+   item 3; this replay is a calculation and does not replace the provenance of
+   the literal returns.
+2. Space and Memory recover one another by the retained predictor equality.  The
+   route remains valid after a future growth because the predictor is updated with
+   the actual new incidence and old coefficients.
+3. Space recovers the performed Time, including the original field, exactly when
+   $T$ is invertible.  If $T$ is singular, an archive $D x_0$ restores this route
+   exactly when
+
+   $$
+   \ker T\cap\ker D=\{0\};
+   \tag{77.15}
+   $$
+
+   any linear archive satisfying (77.15) has rank at least $\dim\ker T$.
+4. On the attained endpoint affine space $r+\operatorname{im}T$, Boundary recovers
+   the current field exactly when
+
+   $$
+   \ker C\cap\operatorname{im}T=\{0\}.
+   \tag{77.16}
+   $$
+
+   Under (77.15) and (77.16), all displayed routes agree through the same
+   $(T,x_0,x_*)$; when either condition fails, the corresponding inverse is not
+   claimed.
+
+**Proof.** Since $T$ is symmetric, $\ker T^L=\ker T$ for $L\ge1$.  Thus two
+startup fields have the same endpoint exactly when their difference lies in
+$\ker T$.  Adding the archive $D$ distinguishes every such difference exactly
+when (77.15) holds, proving the third assertion and its rank lower bound.  For
+Boundary, two attained endpoints differ by an element of $\operatorname{im}T^L=
+\operatorname{im}T$; equality of $Cx_*$ is therefore equivalent to a difference
+in $\ker C\cap\operatorname{im}T$, proving (77.16).  The first two assertions
+follow from Theorem 77.4.  Every route computes the same affine formula (77.14),
+so compositions commute wherever the displayed injectivity conditions hold. $\square$
+
+The limits are real on the named domain.  In the seven-vertex source of (71.1),
+with unit $T=A$, put
+
+$$
+\eta_\varepsilon=1,\qquad
+\eta_{LL}=\eta_{RR}=-1,
+\qquad \eta_v=0\ \text{otherwise}.
+\tag{77.17}
+$$
+
+The explicit edge list in (71.1) gives $A\eta=0$, while the earned terminal
+values are $(-1,0,-1)$.  Hence $x_0$ and $x_0+\eta$ have different startup Time
+and identical endpoint and complete future service.  This is a counterexample to
+unqualified Time-from-Space recovery.  Conversely, if $T$ is invertible then
+$\operatorname{im}T=\mathbb Q^N$; since $b<N$, terminal Boundary with
+$C=J^{\mathsf T}$ has a nonzero kernel and cannot recover an arbitrary current
+interior coordinate.  No unrestricted four-view inverse, unknown-coefficient
+oracle, arbitrary raw permutation, or physical installation theorem follows.
+
+[Unknown Field Native Startup](RECURSIVE_RELATIONAL_OBSERVATION_UNKNOWN_FIELD_NATIVE_STARTUP.md)
+§§1–5 already supplies paid free/forced subtraction,
+unknown-law acquisition, installation at the true advanced field, complete
+retained adaptive prediction and subsequent actual terminal control. Its source
+is a rooted rational Jacobi path with a supplied order cap, $0<T<I$, one scalar
+port, and Tick returning the updated root value. Here the authentic complete
+ordered roster earns $R=3b-1$ on an unknown branching native tree; $T$ may be
+singular or indefinite with arbitrary diagonal, Tick returns only ACK, and each
+vector scan costs $b$ separate Reads. Lemmas 77.2–77.3 provide the rational
+vector recurrence and successive pulse columns under precisely these changed
+hypotheses. The generic subtraction, predictor and control methods are reused;
+neither the Jacobi reconstruction nor its returning-Tick counts are transferred.
+
+The WLAB-ord result uses the finite-dimensional saturation supplier
+`D5.S3.ObserverMemory.Dynamics.FiniteTimeTomographySaturation.all_future_kernel_eq_finrank_kernel`
+only to justify a finite moment horizon after a full ambient law is known; the
+actual rational recurrence and the pulse subtraction above are source-specific.
+The terminal linear algebra uses the finite observability/Gram supplier over
+$\mathbb R$ after extension of scalars, with rational rank certified by nonzero
+minors.  Native material/root recognition is the exact ordered $D$, $b\ge3$
+supplier in
+`D5.S3.Arith.FibonacciAtomic.Geometry.NativeMaterialRootRecognition`; it supplies
+syntax and incidence recognition, not coefficients, rights or an unknown-law
+port.  The infection mechanism is the established positive-tree argument and the
+primary zero-forcing/infection literature cited in §§1–3.  The added content is
+the one-source WLAB-ord pulse schedule, its arbitrary-diagonal recurrence proof,
+the actual endpoint, and the exact kernels (77.15)–(77.16).
+

@@ -1,0 +1,11 @@
+**Construction 77.4a (one acquired callable successor).** After the final held
+cut, choose the earned last terminal $\ell_b$, compute its current rational
+$q=(x_*)_{\ell_b}$ from the retained predictor, and actually execute
+$\operatorname{Add}(b,q)$, Hold, and $\operatorname{Read}(b)$.  The returned scalar
+is $(x_*)_{\ell_b}+q$, and the retained predictor updates to
+$x_*+q e_{\ell_b}$.  The terminal choice and the whole rational operand are
+earned data and are paid through the real selector, frame, acknowledgement and
+Return.  This is a concrete same-source callable use; it is not a free selector,
+an extra coefficient port, or a claim that the post-use field remains a startup
+image.
+
