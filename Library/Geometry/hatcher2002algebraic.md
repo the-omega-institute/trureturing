@@ -29,6 +29,10 @@ interpretation of a probability-observation kernel.
 
 # Ordinary joins and the sphere identity
 
+## Locator
+
+Source: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf
+
 Chapter 0, “Operations on Spaces,” printed p. 9 (PDF page 18), defines
 the ordinary join $X * Y$ as the quotient of $X \times Y \times I$ by
 $(x,y_1,0) \sim (x,y_2,0)$ and
