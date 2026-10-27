@@ -7,6 +7,7 @@
    digest: A singular real matrix of exact semimonotone order three refutes the general inverse assertion. -/
 
 import Mathlib.Basic.Real.Basic
+import Mathlib.LinearAlgebra.Matrix.Nondegenerate
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Tactic.FinCases
@@ -66,7 +67,7 @@ private theorem diagonal (i : Fin 4) : counterexample i i = 1 := by
   fin_cases i <;> norm_num [counterexample, Matrix.of_apply]
 
 private theorem off_diagonal (i j : Fin 4) (h : i ≠ j) : counterexample i j ≤ -2 := by
-  fin_cases i <;> fin_cases j <;> norm_num [counterexample, Matrix.of_apply] at h ⊢
+  fin_cases i <;> fin_cases j <;> norm_num [counterexample, Matrix.of_apply] at *
 
 private theorem singleton_semimonotone (a : Fin 4) :
     Semimonotone (counterexample.submatrix (fun i : ({a} : Finset (Fin 4)) => i.val)
@@ -129,7 +130,7 @@ private theorem kernel_vector_mul : counterexample.mulVec kernelVector = 0 := by
 /-- Remark 4.1's conjunction fails at n=4 and k=3. -/
 theorem result : ¬ claim := by
   intro h
-  obtain ⟨hdet, hunit, _⟩ := h 4 3 counterexample (by norm_num) (by norm_num)
+  obtain ⟨hdet, _, _⟩ := h 4 3 counterexample (by norm_num) (by norm_num)
     (by norm_num) exact_order
   exact kernel_vector_nonzero
     (Matrix.eq_zero_of_mulVec_eq_zero (ne_of_lt hdet) kernel_vector_mul)
