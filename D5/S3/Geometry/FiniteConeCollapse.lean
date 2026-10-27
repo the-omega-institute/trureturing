@@ -76,7 +76,7 @@ theorem faceSimplex_eq_convexHull (s : Finset V) :
     have heq : s.centerMass x (fun v => Pi.single v (1 : ℝ)) = x := by
       rw [s.centerMass_eq_of_sum_1 _ hsum']
       ext v
-      simp only [sum_apply, Pi.smul_apply, smul_eq_mul]
+      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
       by_cases hv : v ∈ s
       · simp [Pi.single_apply, hv]
       · simp [Pi.single_apply, hv, hz v hv]
@@ -125,7 +125,7 @@ private theorem apex_faceSimplex : Pi.single P.apex (1 : ℝ) ∈ faceSimplex {P
     simp only [Pi.single_apply]
     split_ifs <;> norm_num
   · intro v hv
-    simp only [mem_singleton] at hv
+    simp only [Finset.mem_singleton] at hv
     simp [Pi.single_apply, hv, Ne.symm hv]
 
 /-- The coordinate vertex at the cone apex. -/
@@ -356,7 +356,11 @@ private def homotopyCoords (t : I) (x : P.Space) (v : V) : ℝ :=
 private theorem homotopy_mem (t : I) (x : P.Space) :
     P.homotopyCoords t x ∈ realization P.ambient := by
   by_cases h : P.coefficient t x = 0
-  · simpa [homotopyCoords, h] using (P.deform (earlyTime t) x).property
+  · have heq : P.homotopyCoords t x = (P.deform (earlyTime t) x).val := by
+      funext v
+      simp only [homotopyCoords, h, sub_zero, one_mul, zero_mul, add_zero]
+    rw [heq]
+    exact (P.deform (earlyTime t) x).property
   · exact realization_mono P.inclusion (P.cone_segment (P.deform (earlyTime t) x)
       (P.active_deform_mem t x h) (P.coefficient t x)
       (P.coefficient_bounds t x).1 (P.coefficient_bounds t x).2)
@@ -393,9 +397,14 @@ private theorem controlled_zero (x : P.Space) : P.controlledHomotopy 0 x = x := 
 private theorem controlled_preserves_cone (t : I) (x : P.Space) (hx : x ∈ P.coneSet) :
     P.controlledHomotopy t x ∈ P.coneSet := by
   change P.homotopyCoords t x ∈ realization P.cone
-  simpa only [homotopyCoords, P.deform_fixed (earlyTime t) x hx] using
-    P.cone_segment x hx (P.coefficient t x)
-      (P.coefficient_bounds t x).1 (P.coefficient_bounds t x).2
+  have heq : P.homotopyCoords t x =
+      (fun v => (1 - P.coefficient t x) * x.val v +
+        P.coefficient t x * P.apexPoint.val v) := by
+    funext v
+    rw [homotopyCoords, P.deform_fixed (earlyTime t) x hx]
+  rw [heq]
+  exact P.cone_segment x hx (P.coefficient t x)
+    (P.coefficient_bounds t x).1 (P.coefficient_bounds t x).2
 
 private theorem controlled_one_cone (x : P.Space) (hx : x ∈ P.coneSet) :
     P.controlledHomotopy 1 x = P.apexPoint := by

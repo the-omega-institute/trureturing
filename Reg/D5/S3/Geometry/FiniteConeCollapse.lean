@@ -47,7 +47,7 @@ private theorem bridge : (type_of% (@faceSimplex_eq_convexHull.{u})) ↔ arena.{
   · intro h V fv dv s
     exact h ⟨V, fv, dv⟩ s
 
-private def unitParameters : Parameters.{u} :=
+private abbrev unitParameters : Parameters.{u} :=
   ⟨ULift.{u} Unit, inferInstance, inferInstance⟩
 
 private theorem singleton_mem :
