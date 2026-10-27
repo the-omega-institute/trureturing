@@ -96,7 +96,7 @@ def family : Registration arena.{u, v} (type_of% (@representative_eq_iff.{u, v})
     fun e => nomatch e⟩
   dependence := dependence
 
-def registration : LeanInformationAudit.Contract.Registration
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@representative_eq_iff.{u, v}) (Realization signature.{u, v}) Unit Unit where
   unitName := `Reg.D5.S3.Geometry.FiniteSimplicialJoin.__information_unit
   realizationName := `Reg.D5.S3.Geometry.FiniteSimplicialJoin.family
@@ -211,7 +211,7 @@ def family : Registration arena.{u, v} (type_of% (@joinHomeomorph_apply.{u, v}))
     fun e => nomatch e⟩
   dependence := dependence
 
-def registration : LeanInformationAudit.Contract.Registration
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@joinHomeomorph_apply.{u, v}) (Realization signature.{u, v}) Unit Unit where
   unitName := `Reg.D5.S3.Geometry.FiniteSimplicialJoin.Formula.__information_unit
   realizationName := `Reg.D5.S3.Geometry.FiniteSimplicialJoin.Formula.family
