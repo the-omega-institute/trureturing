@@ -146,7 +146,7 @@ Let A(e) = {y_1 < ... < y_k} and append y_(k+1) = n. Row r consists of labels t 
 
 **Theorem 1.12 (The complete image characterization).**
 
-Lean statement: `D5/S3/Combinatorics/PartitionMatrix/ChernFuImage.result`
+$$\forall n \in \mathbb{N}, \forall e \in \operatorname{List}(\mathbb{N}), (1 \le n \land \operatorname{length}(e) = n \land \operatorname{IsInversionSeq}(e)) \Rightarrow ((\exists k \in \mathbb{N}, \exists P \in \operatorname{NativePM}(n, k), \operatorname{Improper}(P) \land \operatorname{fixedPi}(P) = e) \Leftrightarrow \operatorname{Phi}(e))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PartitionMatrix/ChernFuImage.result` (`✓ std3`). ∎
 

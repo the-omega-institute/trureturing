@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/PartitionMatrix/ChernFuImage
    mirror-E: none(waiver:general-native-partition-matrix-characterization)
-   anchors: [D5/L/PartitionMatrix/chernfu2026signed, D5/L/PartitionMatrix/claesson2011partition]
+   anchors: [D5/L/PermutationPatterns/chernfu2026signed, D5/L/PermutationPatterns/claesson2011partition]
    utility: none
    digest: Improper partition matrices have exactly the whole-alphabet gap image. -/
 

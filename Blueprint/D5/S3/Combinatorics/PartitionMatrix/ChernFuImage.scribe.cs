@@ -7,8 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.PartitionMatrix;
 internal sealed class ChernFuImageDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/PartitionMatrix/ChernFuImage.";
-    private static readonly LibraryNoteRef CF = LibraryNoteRef.Create("D5/L/PartitionMatrix/chernfu2026signed");
-    private static readonly LibraryNoteRef CDK = LibraryNoteRef.Create("D5/L/PartitionMatrix/claesson2011partition");
+    private static readonly LibraryNoteRef CF = LibraryNoteRef.Create("D5/L/PermutationPatterns/chernfu2026signed");
+    private static readonly LibraryNoteRef CDK = LibraryNoteRef.Create("D5/L/PermutationPatterns/claesson2011partition");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The fixed Claesson-Dukes-Kubitzke image of improper partition matrices is characterized by the gaps in the whole alphabet of an inversion sequence.",
@@ -48,7 +48,7 @@ internal sealed class ChernFuImageDocument : IScribeDocumentDefinition
                 "Let A(e) = {y_1 < ... < y_k} and append y_(k+1) = n. Row r consists of labels t with e_t = y_r, and column c consists of labels y_c < t <= y_(c+1). Equivalently, the row of t is the rank of e_t, and its column is the rank of b_e(t). The inversion bounds alone ensure upper triangularity, nonempty rows and columns, unique membership and monotone column indices. The least label of column c is y_c + 1, so the fixed Pi sends this native matrix back to e. No gap-condition assumption is used to make the matrix valid.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(CDK)),
             Node("result", "The complete image characterization", "result",
-                "For every natural n >= 1 and every list e of length n satisfying 0 <= e_i <= i - 1 at all native indices, e is the fixed Pi image of an improper native partition matrix, of some dimension k with no dimension restriction, if and only if Phi(e). In every native matrix, equal adjacent columns are equivalent to i not occurring in A(Pi(P)); the preceding value b_(Pi(P))(i) is the least label in that column minus one. The two row indices agree exactly when the corresponding Pi entries agree. Proper parity becomes oddness of i - b_(Pi(P))(i), so absence of both proper row orders gives precisely Phi. Conversely, the CDK reconstruction is a valid native matrix for every inversion sequence; Phi makes this matrix improper, and its fixed Pi image is e.",
+                "In the formula, entries(e,n) denotes the function on Fin n sending t to e.getD t.val 0. For every natural n >= 1 and every list e of length n satisfying 0 <= e_i <= i - 1 at all native indices, e is the fixed Pi image of an improper native partition matrix, of some dimension k with no dimension restriction, if and only if Phi(e). In every native matrix, equal adjacent columns are equivalent to i not occurring in A(Pi(P)); the preceding value b_(Pi(P))(i) is the least label in that column minus one. The two row indices agree exactly when the corresponding Pi entries agree. Proper parity becomes oddness of i - b_(Pi(P))(i), so absence of both proper row orders gives precisely Phi. Conversely, the CDK reconstruction is a valid native matrix for every inversion sequence; Phi makes this matrix improper, and its fixed Pi image is e.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(CF))),
         []));
 
@@ -62,17 +62,18 @@ internal sealed class ChernFuImageDocument : IScribeDocumentDefinition
     private static Formula ResultFormula()
     {
         Formula n = F.Id("n"), e = F.Id("e"), k = F.Id("k"), p = F.Id("P");
+        Formula f = Call("entries", e, n);
         Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
         Formula hypothesis = Seq(D(1), Sp, Le, Sp, n, Sp, Land, Sp,
             Call("length", e), Sp, Eq, Sp, n, Sp, Land, Sp,
             Call("IsInversionSeq", e));
         Formula image = Seq(Exists, Sp, k, Sp, InMacro, Sp, naturals, Comma, Sp,
             Exists, Sp, p, Sp, InMacro, Sp, Call("NativePM", n, k), Comma, Sp,
-            Call("Improper", p), Sp, Land, Sp, Call("fixedPi", p), Sp, Eq, Sp, e);
+            Call("Improper", p), Sp, Land, Sp, Call("fixedPi", p), Sp, Eq, Sp, f);
         return Disp(Seq(Forall, Sp, n, Sp, InMacro, Sp, naturals, Comma, Sp,
             Forall, Sp, e, Sp, InMacro, Sp, Call("List", naturals), Comma, Sp,
             Open, hypothesis, Close, Sp, Rightarrow, Sp, Open,
-            Open, image, Close, Sp, Leftrightarrow, Sp, Call("Phi", e), Close));
+            Open, image, Close, Sp, Leftrightarrow, Sp, Call("Phi", f), Close));
     }
 
     private static Formula Call(string name, params Formula[] arguments) =>
