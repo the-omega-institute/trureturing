@@ -24,6 +24,10 @@ $$\forall m: \mathbb{N}, \exists z: \mathbb{Z}, ((z: \mathbb{Q}) = \operatorname
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/TebniA364822PowerOfTwo.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/tebni364822-power-of-two-cong` (proved) by `D5/S1/Recurrence/Residue/TebniA364822PowerOfTwo.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"tebni364822-power-of-two-cong","declaration_gid":"D5/S1/Recurrence/Residue/TebniA364822PowerOfTwo.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Tebni (2023). *OEIS A364822, Expansion of e.g.f. cosh(x) / (1 - 2*sinh(x))*. URL: <https://oeis.org/A364822>.
