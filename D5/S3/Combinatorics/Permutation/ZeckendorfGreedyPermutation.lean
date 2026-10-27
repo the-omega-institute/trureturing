@@ -5,19 +5,15 @@
    anchors: []
    utility: none
    digest: The one-common-Zeckendorf-term greedy sequence permutes the positive integers. -/
-module
-
-public import D5.S0.Conventions.WDigits
-public import Mathlib.Data.Nat.Find
-public import Mathlib.Data.Finset.Card
-public import Mathlib.Data.Finset.Lattice.Basic
-public import Mathlib.Algebra.Order.BigOperators.Group.List
-public import Mathlib.Order.Filter.Cofinite
-public import Mathlib.Tactic.Push
+import D5.S0.Conventions.WDigits
+import Mathlib.Data.Nat.Find
+import Mathlib.Data.Finset.Card
+import Mathlib.Data.Finset.Lattice.Basic
+import Mathlib.Algebra.Order.BigOperators.Group.List
+import Mathlib.Order.Filter.Cofinite
+import Mathlib.Tactic.Push
 
 /-! The support uses canonical Fibonacci indices, and minimization uses the full actual history. -/
-
-@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -278,7 +274,8 @@ private theorem record_pairs (B : ℕ) : ∃ i j, B < j ∧ 2 ≤ i ∧ i + 2 �
   have hlarge : C < j := by
     rcases hn with ⟨u, hu, hU⟩
     rw [hk] at hu
-    have := le_peak hu
+    have hpeak : u ≤ Nat.greatestFib (v (k + 1)) := by
+      simpa only [Nat.succ_eq_add_one] using le_peak hu
     dsimp [j]
     omega
   have ha := (step_spec k).2.2
@@ -356,17 +353,19 @@ private theorem pair_forces_two (n i j : ℕ) (hi : 4 ≤ i) (hij : i + 2 ≤ j)
   have hap : Adjacent (v (n + 1)) p := by
     unfold Adjacent
     rw [hsingle, hps]
-    have he : ({i} : Finset ℕ) ∩ {2, i} = {i} := by ext k; simp; omega
+    have he : ({i} : Finset ℕ) ∩ {2, i} = {i} := by ext k; simp
     rw [he]; simp
   have hle2 : v (n + 2) ≤ p := greedy (n + 1) p hp (omitted_not_mem omitted (n + 1)) hap
   have hi_next2 : i ∈ support (v (n + 2)) := by
-    have hadj := (step_spec (n + 1)).2.2
+    have hadj : Adjacent (v (n + 1)) (v (n + 2)) := by
+      simpa only [Nat.add_assoc] using (step_spec (n + 1)).2.2
     unfold Adjacent at hadj
     rw [hsingle] at hadj
     obtain ⟨k, hk⟩ := Finset.card_pos.mp
       (show 0 < ({i} ∩ support (v (n + 2))).card by omega)
     have hk' := Finset.mem_inter.mp hk
-    simpa using hk'.2
+    have hki : k = i := Finset.mem_singleton.mp hk'.1
+    simpa only [hki] using hk'.2
   have hlo2 := fib_le hi_next2
   have hne2 : v (n + 2) ≠ Nat.fib i := by
     intro h
@@ -387,7 +386,7 @@ private theorem rooted_pairs : ∃ r, 2 ≤ r ∧ ∀ B, ∃ j, B < j ∧
     by_cases hi : 2 ≤ i
     · have h : ¬ (∀ B, ∃ j, B < j ∧ i + 2 ≤ j ∧ Visited (Nat.fib i + Nat.fib j)) :=
         fun h => hn ⟨i, hi, h⟩
-      push_neg at h
+      push Not at h
       obtain ⟨B, hB⟩ := h
       exact ⟨B, fun j hj hpair => hB j hj hpair.2.1 hpair.2.2⟩
     · exact ⟨0, fun _ _ hpair => hi hpair.1⟩
@@ -396,7 +395,10 @@ private theorem rooted_pairs : ∃ r, 2 ≤ r ∧ ∀ B, ∃ j, B < j ∧
     induction I with
     | zero =>
         obtain ⟨B, hB⟩ := cutoff 0
-        exact ⟨B, by intro i hi; have : i = 0 := by omega; subst i; exact hB⟩
+        refine ⟨B, ?_⟩
+        intro i hi
+        have hi0 : i = 0 := Nat.eq_zero_of_le_zero hi
+        simpa only [hi0] using hB
     | succ I ih =>
         obtain ⟨B, hB⟩ := ih
         obtain ⟨C, hC⟩ := cutoff (I + 1)
@@ -515,6 +517,8 @@ theorem result : IsGreedyPermutation a := by
       apply (mem_terms (n - 1) (v n)).mpr
       exact ⟨k - 1, by omega, he⟩
     · intro m hm
+      change v n ≤ m
+      rw [← hnidx]
       apply greedy (n - 1) m hm.1
       · intro hmem
         obtain ⟨i, hi, he⟩ := (mem_terms (n - 1) m).mp hmem
@@ -522,7 +526,6 @@ theorem result : IsGreedyPermutation a := by
       · exact hm.2.2
   · intro i j hi hj he
     have h := v_injective he
-    dsimp [a] at h
     omega
   · intro m hm
     obtain ⟨n, hn⟩ := every_positive m (by omega)
