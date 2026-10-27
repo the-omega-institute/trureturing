@@ -185,4 +185,3 @@ Tier 1: a named conjecture, preregistered in #16068. Admission basis:
 Worldwide novelty and priority are not conclusions of the formal refutation.
 The numerical variants and the optimised sandwiched quantity are distinct
 from the theorem's CFC expression and remain outside its proof scope.
-
