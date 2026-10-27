@@ -136,5 +136,113 @@ def registration : LeanInformationAudit.Contract.Registration
   familyRecord := none
   options := #[]
 
+namespace Formula
+
+structure Parameters extends FiniteSimplicialJoin.Parameters.{u,v} where
+  nonemptyM : Nonempty (Space M)
+  nonemptyN : Nonempty (Space N)
+
+abbrev signature : Signature where
+  Params := Parameters.{u,v}
+  State p := Space p.M × Space p.N × unitInterval
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := (p.V ⊕ p.W) → ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u,v} :=
+  realize signature (fun _ p s =>
+    (joinHomeomorph p.M p.N p.nonemptyM p.nonemptyN (Quotient.mk _ s)).val)
+    (fun e => nomatch e)
+
+def rejected : Realization signature.{u,v} :=
+  realize signature (fun _ _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u,v}
+  Law R := ∀ p : Parameters.{u,v}, ∀ s : signature.State p,
+    R.readout () p s = representative p.M p.N s
+
+private theorem bridge : (type_of% (@joinHomeomorph_apply.{u,v})) ↔ arena.{u,v}.Law actual := by
+  constructor
+  · intro h p s
+    exact h p.M p.N p.nonemptyM p.nonemptyN s.1 s.2.1 s.2.2
+  · intro h V W dv dw fv fw M N hM hN x y t
+    exact h ⟨⟨V,W,dv,dw,fv,fw,M,N⟩,hM,hN⟩ (x,y,t)
+
+private def testParameters : Parameters.{u,v} :=
+  ⟨FiniteSimplicialJoin.testParameters, ⟨testPoint _⟩, ⟨testPoint _⟩⟩
+
+private def leftState : signature.{u,v}.State testParameters :=
+  (testPoint _, testPoint _, 0)
+
+private def rightState : signature.{u,v}.State testParameters :=
+  (testPoint _, testPoint _, 1)
+
+private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
+  intro h
+  have hc := congrFun (h testParameters leftState)
+    (Sum.inl (⟨()⟩ : ULift.{u} Unit))
+  norm_num [rejected, realize, representative, leftState, testPoint] at hc
+
+private theorem dependence : ObservationalDependence signature.{u,v} actual := by
+  intro i
+  refine ⟨testParameters, leftState, rightState, ?_⟩
+  intro h
+  have hc := congrFun h (Sum.inl (⟨()⟩ : ULift.{u} Unit))
+  change (joinHomeomorph _ _ _ _ (Quotient.mk _ leftState)).val _ =
+    (joinHomeomorph _ _ _ _ (Quotient.mk _ rightState)).val _ at hc
+  rw [joinHomeomorph_apply, joinHomeomorph_apply] at hc
+  norm_num [leftState, rightState, testPoint] at hc
+
+def family : Registration arena.{u,v} (type_of% (@joinHomeomorph_apply.{u,v})) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨bridge.mp (@joinHomeomorph_apply.{u,v}), rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration
+    (@joinHomeomorph_apply.{u,v}) (Realization signature.{u,v}) Unit Unit where
+  unitName := `Reg.D5.S3.Geometry.FiniteSimplicialJoin.Formula.__information_unit
+  realizationName := `Reg.D5.S3.Geometry.FiniteSimplicialJoin.Formula.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p s =>
+    (joinHomeomorph p.M p.N p.nonemptyM p.nonemptyN (Quotient.mk _ s)).val)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Geometry.FiniteSimplicialJoin
+    definition := none
+    coordinates := #[0,1,2,3,4,5,6,7,8,9]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","body","body",
+        "body","body","body","fn","arg"],
+      stateBinder := 10,
+      functionOperand := false,
+      stateOperand := none,
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Formula
+
 #print axioms registration
+#print axioms Formula.registration
 end Reg.D5.S3.Geometry.FiniteSimplicialJoin
