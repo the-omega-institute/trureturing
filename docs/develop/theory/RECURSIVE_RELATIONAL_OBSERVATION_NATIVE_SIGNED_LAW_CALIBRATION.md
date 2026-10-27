@@ -722,9 +722,11 @@ unchanged terminals $R,LR$. The two actual runs have different Time.
 This concretely rules out a current-to-entrance inverse without
 (SC.15); the costs of those two alternative preparations are not
 pooled into one run. Conversely invertible $A$ makes $A^LE$ injective,
-but that is only a sufficient subcase. Continued singular Ticks can
-lose further historical distinctions while exact current prediction
-remains valid.
+but that is only a sufficient subcase. On this fixed passive startup
+family, symmetry makes the kernel constant after the first positive
+Tick, as (SC.16) states. On a general current-field domain, a later
+singular Tick can erase historical distinctions while exact current
+prediction remains valid.
 
 ## 7. A same-run resource vector and its limits
 
@@ -910,9 +912,10 @@ protection require their own distinct hypotheses, histories, actual
 actuators and costs; the signed known-design theorem cannot substitute
 for either. Acquired dark-family feedback and alternative preparations
 belong to distinct actual runs. Their reporting and fixed-graph bounds
-are unchanged; an additional adaptive-growth no-report converse is a
-separate worth-seat proposal requiring its own complete proof,
-not a consequence of this sign argument or of agreement among readers.
+are unchanged. The additional adaptive-growth no-report converse in
+[Native Leaf Boundary Acquisition IV, Theorem 106.4][NLBAIV] uses the
+symmetric growth-survival lemma on its own unit-law family; it is
+separate from the signed commissioning argument here.
 Conditional stationary-source endpoint theorems may take an ideal
 stationary law, continuous observation, exact clock/alignment,
 nondisturbing sensor and exact real-path processing as supplied
@@ -935,6 +938,7 @@ the stated historical boundary.
 [NLBA]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION.md
 [NLBAII]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md
 [NLBAIII]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_III.md
+[NLBAIV]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_IV.md
 [AGAIII]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_III.md
 [CLBA]: RECURSIVE_RELATIONAL_OBSERVATION_CYCLIC_LEAF_BOUNDARY_AMBIGUITY.md
 [MRQB]: RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY_CONTINUATION_I.md
