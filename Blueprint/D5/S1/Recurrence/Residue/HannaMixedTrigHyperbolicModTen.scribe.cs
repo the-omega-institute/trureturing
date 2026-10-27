@@ -55,13 +55,17 @@ internal sealed class HannaMixedTrigHyperbolicModTenDocument : IScribeDocumentDe
                 + "and its inverse modulo five with 1,3,3,... . Coprimality of two and five "
                 + "gives the stated congruence. The calculation uses finite coefficient identities "
                 + "and does not invert factorials in a residue field.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("h227051-cossinhmod10"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("hanna-a227051-" + (name == "A" ? "reciprocal" : name.ToLowerInvariant())),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));

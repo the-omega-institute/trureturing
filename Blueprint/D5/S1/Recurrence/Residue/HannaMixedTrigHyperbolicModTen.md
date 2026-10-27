@@ -72,6 +72,10 @@ $$\forall n: \mathbb{N}, 1 \le n \Rightarrow \exists z:\mathbb{Z}, \operatorname
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/HannaMixedTrigHyperbolicModTen.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/h227051-cossinhmod10` (proved) by `D5/S1/Recurrence/Residue/HannaMixedTrigHyperbolicModTen.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"h227051-cossinhmod10","declaration_gid":"D5/S1/Recurrence/Residue/HannaMixedTrigHyperbolicModTen.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2013). *OEIS A227051: mixed trigonometric and hyperbolic reciprocal*. URL: <https://oeis.org/A227051>.
