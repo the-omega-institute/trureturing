@@ -33,7 +33,7 @@ entanglement-fidelity definition.
 ## Gap
 
 Question 1 does not specify a uniform ordering. The bounded checked primary
-sources and the related literature in the [literature entry](../Library/Quantum/burri2025petztransmission.md)
+sources and the related literature in the [literature entry](../Library/Divergence/burri2025petztransmission.md)
 do not provide this exact unrestricted two-instance comparison. This dossier
 does not claim an exhaustive citation search or global novelty.
 
