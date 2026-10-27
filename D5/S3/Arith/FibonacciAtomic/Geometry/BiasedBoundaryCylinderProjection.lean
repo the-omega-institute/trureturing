@@ -49,8 +49,7 @@ private theorem cylinder_ray (p : Address) (ω : Omega) :
     intro i hi hj
     have he := h i (Finset.mem_range.mpr hi)
     simpa [rayPrefix, List.getD_eq_getElem?_getD, hi] using he.symm
-  · intro h
-    intro i hi
+  · intro h i hi
     have hi' : i < p.length := Finset.mem_range.mp hi
     change ω i = p.getD i false
     rw [h]
@@ -208,7 +207,10 @@ private theorem Q_ae (A : Finset Edge) (F : G) :
   classical
   rw [Q_apply]
   induction A using Finset.induction_on with
-  | empty => simpa using (Lp.coeFn_zero (E := ℝ) (p := 2) (μ := M))
+  | empty =>
+    simp only [Finset.sum_empty]
+    filter_upwards [Lp.coeFn_zero ℝ 2 M] with ω hω
+    exact hω
   | @insert p A hp ih =>
     rw [Finset.sum_insert hp]
     filter_upwards [Lp.coeFn_add (atomMean p F • indicator p)
@@ -216,18 +218,19 @@ private theorem Q_ae (A : Finset Edge) (F : G) :
       Lp.coeFn_smul (atomMean p F) (indicator p),
       (show indicator p =ᵐ[M] (cylinder p.val).indicator (fun _ => (1 : ℝ)) from
         indicatorConstLp_coeFn), ih] with ω ha hs hi hsum
+    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul] at ha hs
     rw [ha, hs, hi, hsum, Finset.sum_insert hp]
-    rfl
 
 private theorem Q_pullback (A : Finset Edge)
     (hA : IsPrefixFree (Subtype.val '' (A : Set Edge))) {p : Edge}
     (hp : p ∈ A) (F : G) : pullback p.val (Q A F) = constG (atomMean p F) := by
   classical
   have hq : Q A F =ᵐ[conditional p.val] (fun _ => atomMean p F) := by
-    have ha := Measure.ae_smul_measure (ae_restrict_of_ae (Q_ae A F))
+    have ha := Measure.ae_smul_measure
+      (ae_restrict_of_ae (s := cylinder p.val) (Q_ae A F))
       ((M (cylinder p.val))⁻¹)
     have hm := Measure.ae_smul_measure
-      (ae_restrict_mem (BiasedBoundaryTrace.indicator._proof_1 p))
+      (ae_restrict_mem (μ := M) (BiasedBoundaryTrace.indicator._proof_1 p))
       ((M (cylinder p.val))⁻¹)
     filter_upwards [ha, hm] with ω hsum hω
     rw [hsum, Finset.sum_eq_single p]
@@ -271,7 +274,8 @@ private theorem partition_norm_sq (A : Finset Edge)
   have hu : (⋃ p ∈ A, cylinder p.val) = Set.univ := by
     ext ω
     simp only [Set.mem_iUnion, Set.mem_univ, iff_true]
-    exact hcover ω
+    obtain ⟨p, hp, hω⟩ := hcover ω
+    exact ⟨p, hp, hω⟩
   have hi : Integrable (fun ω => (F ω)^2) M := by
     simpa only [Real.inner_apply, pow_two] using (L2.integrable_inner (𝕜 := ℝ) F F)
   rw [norm_sq_integral, ← setIntegral_univ, ← hu]
@@ -286,9 +290,12 @@ private theorem partition_norm_sq (A : Finset Edge)
 private theorem atomMean_const (p : Edge) (c : ℝ) : atomMean p (constG c) = c := by
   rw [atomMean_integral,
     integral_congr_ae (ae_restrict_of_ae (boundary_path_split.2.2.2.1 c)), integral_const]
+  simp only [measureReal_def, Measure.restrict_apply MeasurableSet.univ,
+    Set.univ_inter, smul_eq_mul]
   change (M.real (cylinder p.val))⁻¹ * (M.real (cylinder p.val) * c) = c
-  rw [← mul_assoc, inv_mul_cancel₀
-    (ENNReal.toReal_pos (conditional_pullback_law.1 p.val) (measure_ne_top _ _)).ne', one_mul]
+  have hm : M.real (cylinder p.val) ≠ 0 :=
+    (ENNReal.toReal_pos (conditional_pullback_law.1 p.val) (measure_ne_top _ _)).ne'
+  rw [← mul_assoc, inv_mul_cancel₀ hm, one_mul]
 
 private theorem Q_const (A : Finset Edge)
     (hA : IsPrefixFree (Subtype.val '' (A : Set Edge)))

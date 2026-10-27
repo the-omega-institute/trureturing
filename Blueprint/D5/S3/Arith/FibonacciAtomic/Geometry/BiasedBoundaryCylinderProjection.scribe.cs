@@ -46,9 +46,18 @@ internal sealed class BiasedBoundaryCylinderProjectionDocument : IScribeDocument
     {
         Formula p=V("p"), f=V("F"), a=V("A"), z=V("z");
         Formula residual=Seq(Call("C",z),Minus,Call("Q",a,Call("C",z)));
-        Formula local=Seq(Call("pullback",p,Par(residual)),Eq,Call("C",Call("S",p,z)));
-        Formula norm=Seq(SqNorm(Par(residual)),Eq,SumA(Seq(Call("mass",V("M"),Call("cylinder",p)),Cdot,SqNorm(Call("C",Call("S",p,z))))));
-        return Seq(Call("IsCylinderPartition",a),Implies,Par(local),Land,Par(norm),Land,Call("fixesConstants",Call("Q",a)),Land,Call("commutes",Call("Q",a),Call("Pi")));
+        Formula onAtom=Seq(Forall,Sp,p,InMacro,a,Comma,Sp,All("F",Call("G"),
+            Seq(Call("pullback",p,Call("Q",a,f)),Eq,Call("constG",Call("atomMean",p,f)))));
+        Formula local=Seq(Forall,Sp,p,InMacro,a,Comma,Sp,All("z",Call("H"),
+            Seq(Call("pullback",p,Par(residual)),Eq,Call("C",Call("S",p,z)))));
+        Formula disintegration=All("F",Call("G"),Seq(SqNorm(f),Eq,
+            SumA(Seq(Call("mass",V("M"),Call("cylinder",p)),Cdot,SqNorm(Call("pullback",p,f))))));
+        Formula norm=All("z",Call("H"),Seq(SqNorm(Par(residual)),Eq,
+            SumA(Seq(Call("mass",V("M"),Call("cylinder",p)),Cdot,SqNorm(Call("C",Call("S",p,z)))))));
+        Formula constants=All("c",Call("Real"),Seq(Call("Q",a,Call("constG",V("c"))),Eq,Call("constG",V("c"))));
+        Formula commutation=All("F",Call("G"),Seq(Call("Q",a,Call("Pi",f)),Eq,Call("Pi",Call("Q",a,f))));
+        return Seq(Call("IsCylinderPartition",a),Implies,Par(onAtom),Land,Par(local),Land,
+            Par(disintegration),Land,Par(norm),Land,Par(constants),Land,Par(commutation));
     }
     private static Formula BoundFormula() => Seq(
         Call("IsCylinderPartition",V("A")),Land,D(0),Leq,V("t"),Land,
