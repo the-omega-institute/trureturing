@@ -51,8 +51,13 @@ internal sealed class OriginalMarkedConcatenationDocument : IScribeDocumentDefin
             A(k,t),Eq,A(z,D(0)),Land,Sp,a,InMacro,Sp,C("Ioo",D(0),c),Land,Sp,
             A(k,t),InMacro,Sp,C("Ioo",D(0),c),Land,Sp,A(z,s),InMacro,Sp,C("Ioo",D(0),c),Land,Sp,
             C("OC",c,t,k,chi),Land,Sp,C("OC",c,s,z,chi));
-        Formula action=Seq(C("Act",F.Id("Pt"),C("Act",F.Id("Po"),psi)),Eq,C("Act",F.Id("Pj"),psi));
-        Formula jump=Seq(C("Act",C("At",g,i),C("Act",F.Id("Po"),psi)),Eq,C("Act",C("Aj",g,i),psi));
+        Formula po=C("P",c,a,A(k,t),C("S",c,k,t));
+        Formula pt=C("P",c,A(k,t),A(z,s),C("S",c,z,s));
+        Formula pj=C("P",c,a,A(z,s),C("S",c,j,end));
+        Formula at=C("A",c,A(k,t),A(z,s),C("S",c,z,s),g,i);
+        Formula aj=C("A",c,a,A(z,s),C("S",c,j,end),g,i);
+        Formula action=Seq(C("Act",pt,C("Act",po,psi)),Eq,C("Act",pj,psi));
+        Formula jump=Seq(C("Act",at,C("Act",po,psi)),Eq,C("Act",aj,psi));
         return Disp(Seq(Begin,Grp(F.Id("gathered")),Forall,Sp,c,Comma,t,Comma,s,Comma,a,Comma,chi,Colon,r,Comma,
             Sp,k,Comma,z,Colon,Seq(r,To,Sp,r),Comma,RowBreak,Grp(),h,Rightarrow,Sp,RowBreak,Grp(),
             Open,C("ae",u,C("Lebesgue")),Comma,C("lambda",c,j,u),Eq,

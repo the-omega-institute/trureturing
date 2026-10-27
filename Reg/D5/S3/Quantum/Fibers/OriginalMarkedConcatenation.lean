@@ -331,6 +331,20 @@ noncomputable def registration_1 : Contract.Registration.{_, _, _, 0, 0, 0, _, _
       stateBinder := 5
       functionOperand := false
       stateOperand := none
+      booleanPredicate := false },{
+      path := #["body","body","body","body","body","body","body","body",
+        "body","body","body","body","body","body","body","body",
+        "arg","arg","fn","arg","body","arg","fn","arg","arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false },{
+      path := #["body","body","body","body","body","body","body","body",
+        "body","body","body","body","body","body","body","body",
+        "arg","arg","arg","body","body","body","arg","fn","arg","fn","fn","arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

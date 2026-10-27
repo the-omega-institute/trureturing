@@ -36,7 +36,7 @@ internal sealed class OriginalRepeatedPrefixDocument : IScribeDocumentDefinition
         Formula a=C("a",b), high=C("b",b), c=C("c",b), q=C("q",b);
         Formula e=C("E",b,n), l=C("L",b,n), p=C("P",b,n);
         Formula re=Seq(Mathbb,Grp(F.Id("R"))), nat=Seq(Mathbb,Grp(F.Id("N")));
-        Formula exponent=new Formula.Superscript(q,Seq(n,Plus,D(1)));
+        Formula exponent=new Formula.Power(q,Seq(n,Plus,D(1)));
         Formula prefix=Seq(Open,Forall,Sp,t,Colon,re,Comma,t,InMacro,Sp,C("Icc",D(0),D(1)),Rightarrow,Sp,
             V(e,t),Eq,V(p,t),Land,Sp,V(l,t),Eq,V(p,t),Close);
         return Disp(Seq(Begin,Grp(F.Id("gathered")),Forall,Sp,b,Colon,F.Id("Band"),Comma,

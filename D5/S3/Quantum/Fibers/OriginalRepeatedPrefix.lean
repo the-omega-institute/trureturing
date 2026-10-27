@@ -145,6 +145,7 @@ private theorem prefix_facts (B : Band) (d chi : ℝ) (hd : 0 < d) (j : ℕ) :
     have hc := (LipschitzWith.const chi).lipschitzOnWith.absolutelyContinuousOnInterval
       (a:=0) (b:=0)
     refine ⟨?_,by simp [repeated],by simp [repeated],by simp [survival]⟩
+    simp only [Nat.cast_zero,mul_zero,zero_mul,repeated]
     change OriginalControl (B.c,B.c,1-2*B.c) 0 (fun _ => B.a) (fun _ => chi)
     refine ⟨by simp,continuousOn_const,continuousOn_const,?_,hc.boundedVariationOn,
       Or.inl ⟨ha,hc⟩⟩
@@ -192,7 +193,7 @@ private theorem suffix_facts (B : Band) (chi : ℝ) (e : Bool) :
   have hl0 := loop_zero B (1/4) (by norm_num)
   have hl1 := loop_end B (1/4) (by norm_num)
   have hls := loop_survival B (1/4) (by norm_num)
-  norm_num only at hlo hl1 hls
+  rw [show (2:ℝ)*(1/4)=1/2 by norm_num] at hlo hl1 hls
   obtain ⟨hwo,hw0,hw1,hws⟩ := wait_facts B chi
   cases e <;> simp only [Bool.false_eq_true, ↓reduceIte]
   · have hj : B.wait.height (1/2)=B.loop (1/4) (by norm_num) 0 := hw1.trans hl0.symm
@@ -201,22 +202,22 @@ private theorem suffix_facts (B : Band) (chi : ℝ) (e : Bool) :
       (by norm_num) (by norm_num) hj ⟨B.a_pos,B.ab.trans B.bc⟩
       (by rw [hw1]; exact ⟨B.a_pos,B.ab.trans B.bc⟩)
       (by rw [hl1]; exact ⟨B.a_pos,B.ab.trans B.bc⟩) hwo hlo).2.1
-    norm_num only at ho hs
+    rw [show (1/2:ℝ)+1/2=1 by norm_num] at ho hs
     refine ⟨ho,?_,?_,?_⟩
     · simpa [lateSuffix,concatenate] using hw0
     · norm_num [lateSuffix,concatenate,hw1,hl1,hl0]
-    · simpa [lateSuffix,hws,hls] using hs
+    · simpa only [lateSuffix,hws,hls,one_mul] using hs
   · have hj : B.loop (1/4) (by norm_num) (1/2)=B.wait.height 0 := hl1.trans hw0.symm
     have ho := append_control B (1/2) (1/2) chi _ _ hlo hwo hj
     have hs := (native_concatenation B.c (1/2) (1/2) B.a chi _ _ B.c_lt
       (by norm_num) (by norm_num) hj ⟨B.a_pos,B.ab.trans B.bc⟩
       (by rw [hl1]; exact ⟨B.a_pos,B.ab.trans B.bc⟩)
       (by rw [hw1]; exact ⟨B.a_pos,B.ab.trans B.bc⟩) hlo hwo).2.1
-    norm_num only at ho hs
+    rw [show (1/2:ℝ)+1/2=1 by norm_num] at ho hs
     refine ⟨ho,?_,?_,?_⟩
     · simpa [earlySuffix,concatenate] using hl0
     · norm_num [earlySuffix,concatenate,hw1,hl1,hw0]
-    · simpa [earlySuffix,hws,hls] using hs
+    · simpa only [earlySuffix,hws,hls,mul_one] using hs
 
 end Band
 open Band
