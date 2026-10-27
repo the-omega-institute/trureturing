@@ -6,9 +6,6 @@
    utility: none
    digest: Cubic price expansion bounds the actual-prime error on the full selected domain.
 
-WIP CANDIDATE, 2026-10-27. Native elaboration is in progress;
-no successful build is yet asserted.
-
 Purpose: a cubic-in-price approximation of the literal selected-Euler kernel,
 with absolute centered actual-prime error at most 40 ell^(-1/10) M on the
 UNCHANGED complete selectedDomain of OriginalFirstClockTransport.
@@ -31,7 +28,7 @@ On selectedDomain the live exclusion proof below gives the stronger q>t;
 GM on (t,t+H] itself therefore suffices for the stated active-clock mass.
 
 Existing A13 already warns that the leading triangular baseline need not
-have o(M) absolute error. This candidate makes no novelty claim for A13,
+have o(M) absolute error. This result makes no novelty claim for A13,
 does not prove EL.14, and does not supply a kappa or a proof of RH.
 -/
 

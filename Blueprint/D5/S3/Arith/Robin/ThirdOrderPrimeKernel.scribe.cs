@@ -1,6 +1,4 @@
-// UNCOMPILED CANDIDATE, 2026-10-27. Neither this Scribe source nor its Lean
-// declaration handle has been built or emitted. Intended canonical location:
-// Blueprint/D5/S3/Arith/Robin/ThirdOrderPrimeKernel.scribe.cs.
+// Blueprint source for the complete original-domain cubic kernel estimate.
 using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
@@ -14,9 +12,9 @@ internal sealed class ThirdOrderPrimeKernelDocument : IScribeDocumentDefinition
         H("A Cubic Approximation of the Actual First-Clock Kernel"),
         Blocks(
             Paragraph(Text(
-                "This document and its matching Lean source are uncompiled candidates. "
-                + "No kernel verification, Scribe emission, freeze, registration validation "
-                + "or official acceptance is asserted. The one proposed public theorem is "
+                "The cubic approximation retains the original selected domain and clocks. "
+                + "The external prime-mass bound and both response-integrability premises "
+                + "remain explicit. The one public theorem is "
                 + "complete_selected_actual_prime_error; the derivative, remainder and "
                 + "centering calculations are private suppliers used in its proof.")),
             Describe.Lean(
@@ -75,7 +73,7 @@ internal sealed class ThirdOrderPrimeKernelDocument : IScribeDocumentDefinition
                         "The analytic premises remain explicit. For every t in S "
                         + "assume sum_(q prime, q<=floor(2R), t<tau_q<=t+H) "
                         + "log(q)<=3H, and assume that both Phi_act and Phi3 are "
-                        + "IntegrableOn S. Under exactly these premises the proposed "
+                        + "IntegrableOn S. Under exactly these premises the "
                         + "conclusion is |integral_S Phi_act-integral_S Phi3| "
                         + "<=40 ell^(-1/10) M. No positive-mass premise is added; "
                         + "the statement also retains M=0. No component count or "
