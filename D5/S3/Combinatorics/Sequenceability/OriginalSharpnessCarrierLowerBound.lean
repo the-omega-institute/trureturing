@@ -25,10 +25,10 @@ open OriginalFiniteOrderSharpness (Index Coordinate q p a b full triple)
 variable {G : Type*} [AddCommGroup G] [Finite G]
 variable {m : ℕ} {f : Coordinate m → G}
 
-private def paired (m : ℕ) (K : Finset (Index m)) : Finset (Coordinate m) :=
+def paired (m : ℕ) (K : Finset (Index m)) : Finset (Coordinate m) :=
   K.image (a m) ∪ K.image (b m)
 
-private lemma pair_sum
+lemma pair_sum
     (hzero : ∀ C : Finset (Coordinate m),
       (C.Nonempty ∧ (∑ x ∈ C, f x) = 0) ↔
         ∃ j : Index m, C = triple m j)
@@ -42,7 +42,7 @@ private lemma pair_sum
         (f (q m) + f (a m i) + f (b m i)) - f (q m) := by abel
     _ = -f (q m) := by simp only [ht, zero_sub]
 
-private lemma paired_sum
+lemma paired_sum
     (hzero : ∀ C : Finset (Coordinate m),
       (C.Nonempty ∧ (∑ x ∈ C, f x) = 0) ↔
         ∃ j : Index m, C = triple m j)
@@ -153,7 +153,7 @@ private lemma mixed_completion_ne_zero
     · exact Finset.mem_insert_of_mem ha
     · simpa [q, b] using hb
 
-private lemma residue_of_mem_zmultiples
+lemma residue_of_mem_zmultiples
     (hq : addOrderOf (f (q m)) = m) {x : G}
     (hx : x ∈ AddSubgroup.zmultiples (f (q m))) :
     ∃ t : ℕ, t < m ∧ t • f (q m) = x := by
@@ -165,7 +165,7 @@ private lemma residue_of_mem_zmultiples
   obtain ⟨t, ht, he⟩ := Finset.mem_image.mp hx'
   exact ⟨t, Finset.mem_range.mp ht, he⟩
 
-private lemma label_not_mem_zmultiples
+lemma label_not_mem_zmultiples
     (hm : 2 ≤ m) (hq : addOrderOf (f (q m)) = m)
     (hzero : ∀ C : Finset (Coordinate m),
       (C.Nonempty ∧ (∑ x ∈ C, f x) = 0) ↔
@@ -280,7 +280,7 @@ private lemma difference_eq_neg_of_mem
     _ = ((m - 1) • f (q m) + f (q m)) - f (q m) := by abel
     _ = -f (q m) := by simp only [hsplit, zero_sub]
 
-private lemma difference_not_mem_zmultiples
+lemma difference_not_mem_zmultiples
     (hm : 2 ≤ m) (hq : addOrderOf (f (q m)) = m)
     (hzero : ∀ C : Finset (Coordinate m),
       (C.Nonempty ∧ (∑ x ∈ C, f x) = 0) ↔
@@ -535,7 +535,7 @@ private lemma sentinel_plus_not_mem_zmultiples
     rw [he]
     abel
 
-private lemma sum_not_mem_zmultiples
+lemma sum_not_mem_zmultiples
     (hm : 2 ≤ m) (hq : addOrderOf (f (q m)) = m)
     (hzero : ∀ C : Finset (Coordinate m),
       (C.Nonempty ∧ (∑ x ∈ C, f x) = 0) ↔
