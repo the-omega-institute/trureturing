@@ -1,0 +1,154 @@
+import LeanInformationAuditInterface.Contract.Registration
+import Reg.Support.DependentFamily
+import D5.S3.Combinatorics.Sequenceability.OriginalSharpnessCarrierLowerBound
+import D5.S3.Combinatorics.Sequenceability.OriginalPolynomialCyclicOrderSharpness
+import Mathlib.Algebra.Group.ULift
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+universe u
+
+namespace Reg.D5.S3.Combinatorics.Sequenceability.OriginalSharpnessCarrierLowerBound
+
+open LeanInformationAudit
+open _root_.D5.S3.ConceptDynamics.InformationEscape
+open _root_.D5.S3.Combinatorics.Sequenceability.OriginalFiniteOrderSharpness
+  (Index Coordinate q triple)
+open _root_.D5.S3.Combinatorics.Sequenceability.OriginalSharpnessCarrierLowerBound
+  (carrier_card_lower_bound)
+open _root_.D5.S3.Combinatorics.Sequenceability.OriginalPolynomialCyclicOrderSharpness
+  (WitnessGroup label sharpness)
+open scoped Classical BigOperators
+
+abbrev signature : DependentFamily.Signature where
+  Params := Unit
+  State _ := Type u
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : DependentFamily.Realization signature.{u} :=
+  DependentFamily.realize signature (fun _ _ G => Nat.card G) (fun e => nomatch e)
+
+def rejected : DependentFamily.Realization signature.{u} :=
+  DependentFamily.realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+/-- The entire source telescope, with only its carrier-cardinality readout varied. -/
+abbrev arena : DependentFamily.Arena where
+  signature := signature.{u}
+  Law R := ∀ {G : Type u} [AddCommGroup G] [Finite G]
+    (m : ℕ) (_hm : 2 ≤ m) (f : Coordinate m → G)
+    (_hq : addOrderOf (f (q m)) = m)
+    (_hzero : ∀ C : Finset (Coordinate m),
+      (C.Nonempty ∧ (∑ x ∈ C, f x) = 0) ↔
+        ∃ j : Index m, C = triple m j),
+    m * (m + 1) ≤ R.readout () () G
+
+abbrev sourceScope := type_of% (@carrier_card_lower_bound.{u})
+
+private theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law actual := Iff.rfl
+
+private theorem actual_positive : arena.{u}.Law actual :=
+  @carrier_card_lower_bound.{u}
+
+/-- A universe lift of an existing finite cyclic realization. -/
+private abbrev Fixture := ULift.{u} (WitnessGroup 2)
+
+private def fixtureLabel (x : Coordinate 2) : Fixture.{u} :=
+  (AddEquiv.ulift : Fixture.{u} ≃+ WitnessGroup 2).symm (label 2 x)
+
+private theorem fixture_properties :
+    addOrderOf (fixtureLabel.{u} (q 2)) = 2 ∧
+    (∀ C : Finset (Coordinate 2),
+      (C.Nonempty ∧ (∑ x ∈ C, fixtureLabel.{u} x) = 0) ↔
+        ∃ j : Index 2, C = triple 2 j) := by
+  obtain ⟨_, _, _, _, _, _, horder, hclass, _, _, _, _, _⟩ :=
+    sharpness 2 (by decide)
+  constructor
+  · simpa only [fixtureLabel, AddEquiv.addOrderOf_eq] using horder
+  · intro C
+    let e : Fixture.{u} ≃+ WitnessGroup 2 := AddEquiv.ulift
+    have hsum : e (∑ x ∈ C, fixtureLabel.{u} x) = ∑ x ∈ C, label 2 x := by
+      simp only [map_sum, fixtureLabel, e, AddEquiv.apply_symm_apply]
+    have htransport :
+        (C.Nonempty ∧ (∑ x ∈ C, fixtureLabel.{u} x) = 0) ↔
+          (C.Nonempty ∧ (∑ x ∈ C, label 2 x) = 0) := by
+      constructor
+      · rintro ⟨hn, hz⟩
+        refine ⟨hn, ?_⟩
+        rw [← hsum, hz, map_zero]
+      · rintro ⟨hn, hz⟩
+        refine ⟨hn, e.injective ?_⟩
+        rw [hsum, hz, map_zero]
+    exact htransport.trans (hclass C)
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  letI : Finite (WitnessGroup 2) := (sharpness 2 (by decide)).1
+  have hf := fixture_properties.{u}
+  have hbad := h (G := Fixture.{u}) 2 (by decide) fixtureLabel hf.1 hf.2
+  change 2 * (2 + 1) ≤ (0 : ℕ) at hbad
+  omega
+
+private theorem dependence :
+    DependentFamily.ObservationalDependence signature.{u} actual := by
+  intro i
+  refine ⟨(), ULift.{u} Unit, ULift.{u} Bool, ?_⟩
+  change Nat.card (ULift.{u} Unit) ≠ Nat.card (ULift.{u} Bool)
+  simp [Nat.card_eq_fintype_card]
+
+def familyRegistration : DependentFamily.Registration arena.{u} sourceScope.{u} where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨actual_positive, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@carrier_card_lower_bound.{u}) (DependentFamily.Realization signature.{u})
+      Unit Unit where
+  unitName := `D5.S3.Combinatorics.Sequenceability.OriginalSharpnessCarrierLowerBound.carrier_card_lower_bound.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Sequenceability.OriginalSharpnessCarrierLowerBound.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨familyRegistration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence
+    ⟨(show Nonempty (DependentFamily.Realization signature.{u}) from ⟨actual.{u}⟩)⟩ trivial
+  readout := some (DependentFamily.realize signature.{u}
+    (fun _ _ G => Nat.card G) (fun e => nomatch e))
+  variation := .evidence ⟨(familyRegistration.{u}).variation⟩ trivial
+  sensitivity := .evidence ⟨(familyRegistration.{u}).sensitivity⟩ trivial
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Sequenceability.OriginalSharpnessCarrierLowerBound
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Reg.D5.S3.Combinatorics.Sequenceability.OriginalSharpnessCarrierLowerBound
