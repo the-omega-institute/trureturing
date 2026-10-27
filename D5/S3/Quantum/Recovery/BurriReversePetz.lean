@@ -8,6 +8,8 @@
 
 import D5.S3.Quantum.Recovery.BurriReverseOverlap
 
+/-! Full-rank functional calculus for the physical reverse-instance Petz map. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -42,7 +44,7 @@ theorem amplitude_positive : Y.PosDef := by
     apply Matrix.posDef_diagonal_iff.mpr
     intro p
     split_ifs <;> norm_num [Complex.pos_iff]
-  exact ((((hd.add_posSemidef (Matrix.posSemidef_vecMulVec_self_star v03)).add_posSemidef
+  exact (((hd.add_posSemidef (Matrix.posSemidef_vecMulVec_self_star v03)).add_posSemidef
     (Matrix.posSemidef_vecMulVec_self_star v14)).add_posSemidef
     (Matrix.posSemidef_vecMulVec_self_star v02)).add_posSemidef
     (Matrix.posSemidef_vecMulVec_self_star v35)
@@ -50,7 +52,7 @@ theorem amplitude_positive : Y.PosDef := by
 theorem output_positive : output.PosDef := by
   have h : (Y * Y).PosDef := by
     simpa only [amplitude_adjoint] using
-      Matrix.posDef_conjTranspose_mul_self.mpr amplitude_positive.mulVec_injective
+      Matrix.PosDef.conjTranspose_mul_self Y amplitude_positive.mulVec_injective
   exact h.smul (by norm_num [Complex.pos_iff])
 
 theorem reference_positive : rho.PosSemidef :=
@@ -70,8 +72,7 @@ theorem reference_root : cfc Real.sqrt rho =
     exact_mod_cast Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 2)
   have hp : ((1 / (Real.sqrt 2 : ℂ)) • (1 : Matrix A A ℂ)).PosSemidef :=
     Matrix.PosSemidef.one.smul (by
-      norm_num [Complex.nonneg_iff, Complex.div_re, Complex.div_im]
-      positivity)
+      norm_num [Complex.nonneg_iff, Complex.div_re, Complex.div_im])
   have hh : CFC.sqrt rho = (1 / (Real.sqrt 2 : ℂ)) • (1 : Matrix A A ℂ) := by
     apply CFC.sqrt_unique _ hp.nonneg
     rw [Matrix.smul_mul, Matrix.mul_smul, Matrix.one_mul, smul_smul, rho,
@@ -83,8 +84,7 @@ theorem output_root : cfc Real.sqrt output = (1 / (Real.sqrt 62 : ℂ)) • Y :=
     exact_mod_cast Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 62)
   have hp : ((1 / (Real.sqrt 62 : ℂ)) • Y).PosSemidef :=
     amplitude_positive.posSemidef.smul (by
-      norm_num [Complex.nonneg_iff, Complex.div_re, Complex.div_im]
-      positivity)
+      norm_num [Complex.nonneg_iff, Complex.div_re, Complex.div_im])
   have hh : CFC.sqrt output = (1 / (Real.sqrt 62 : ℂ)) • Y := by
     apply CFC.sqrt_unique _ hp.nonneg
     rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul, one_div_mul_one_div, hs]
@@ -100,13 +100,15 @@ theorem output_support : spectralSupport output = 1 := by
       rw [output_positive.isHermitian.spectrum_real_eq_range_eigenvalues] at hx
       obtain ⟨i, rfl⟩ := hx
       simp [ne_of_gt (output_positive.eigenvalues_pos i)]
-    _ = 1 := cfc_const_one ℝ output
+    _ = 1 := cfc_const_one ℝ output (ha := output_positive.isHermitian.isSelfAdjoint)
 
 theorem output_inverse_root_cancel : Y * spectralInverseSqrt output =
     (Real.sqrt 62 : ℂ) • (1 : Matrix B B ℂ) := by
   have hh : cfc Real.sqrt output * spectralInverseSqrt output = 1 := by
     unfold spectralInverseSqrt
-    rw [← cfc_mul]
+    rw [← cfc_mul Real.sqrt (fun x : ℝ => (Real.sqrt x)⁻¹) output
+      (output.finite_real_spectrum.continuousOn _)
+      (output.finite_real_spectrum.continuousOn _)]
     calc
       _ = cfc (fun _ : ℝ => (1 : ℝ)) output := by
         apply cfc_congr
@@ -114,7 +116,7 @@ theorem output_inverse_root_cancel : Y * spectralInverseSqrt output =
         rw [output_positive.isHermitian.spectrum_real_eq_range_eigenvalues] at hx
         obtain ⟨i, rfl⟩ := hx
         exact mul_inv_cancel₀ (ne_of_gt (Real.sqrt_pos.mpr (output_positive.eigenvalues_pos i)))
-      _ = 1 := cfc_const_one ℝ output
+      _ = 1 := cfc_const_one ℝ output (ha := output_positive.isHermitian.isSelfAdjoint)
   rw [output_root, Matrix.smul_mul] at hh
   have hn : (Real.sqrt 62 : ℂ) ≠ 0 := by
     exact_mod_cast ne_of_gt (Real.sqrt_pos.mpr (by norm_num : (0 : ℝ) < 62))
@@ -136,10 +138,83 @@ theorem noise_adjoint_slice (e : E) : (noiseKraus e)ᴴ =
     norm_num [noiseKraus, V, slice, active, Y, amplitude, sign,
       Matrix.mul_apply, Matrix.conjTranspose_apply, Fintype.sum_prod_type,
       Fin.sum_univ_two, Fin.sum_univ_three, div_eq_mul_inv]
+  all_goals ring
+
+theorem petz_kraus_identification (e : E) :
+    cfc Real.sqrt rho * (noiseKraus e)ᴴ * spectralInverseSqrt output = slice e := by
+  simp only [reference_root, noise_adjoint_slice, Matrix.smul_mul, Matrix.mul_smul,
+    Matrix.one_mul, smul_smul, Matrix.mul_assoc]
+  rw [output_inverse_root_cancel, Matrix.mul_smul, Matrix.mul_one, smul_smul]
+  have hs : (Real.sqrt 2 : ℂ) * (Real.sqrt 31 : ℂ) = Real.sqrt 62 := by
+    exact_mod_cast (Real.sqrt_mul (by norm_num : (0 : ℝ) ≤ 2) 31).symm
+  have hn : (Real.sqrt 62 : ℂ) ≠ 0 := by
+    exact_mod_cast ne_of_gt (Real.sqrt_pos.mpr (by norm_num : (0 : ℝ) < 62))
+  rw [one_div_mul_one_div, mul_comm (Real.sqrt 31 : ℂ) (Real.sqrt 2 : ℂ),
+    hs, one_div_mul_cancel hn, one_smul]
+
+/-- The original reference-completed Petz formula on every physical output. -/
+theorem ordinary_petz_formula (T : Matrix B B ℂ) :
+    (∑ e : E, cfc Real.sqrt rho * (noiseKraus e)ᴴ * spectralInverseSqrt output * T *
+      spectralInverseSqrt output * noiseKraus e * cfc Real.sqrt rho) +
+        Matrix.trace ((1 - spectralSupport output) * T) • rho =
+      ∑ e : E, slice e * T * (slice e)ᴴ := by
+  have hS : (cfc Real.sqrt rho)ᴴ = cfc Real.sqrt rho :=
+    (cfc_predicate Real.sqrt rho : IsSelfAdjoint (cfc Real.sqrt rho)).star_eq
+  have hW : (spectralInverseSqrt output)ᴴ = spectralInverseSqrt output :=
+    (cfc_predicate (fun x : ℝ => (Real.sqrt x)⁻¹) output :
+      IsSelfAdjoint (spectralInverseSqrt output)).star_eq
+  rw [output_support, sub_self, Matrix.zero_mul, Matrix.trace_zero, zero_smul, add_zero]
+  apply Finset.sum_congr rfl
+  intro e he
+  rw [← petz_kraus_identification e, Matrix.conjTranspose_mul,
+    Matrix.conjTranspose_mul, hW, hS, Matrix.conjTranspose_conjTranspose]
+  simp only [Matrix.mul_assoc]
+
+/-- The chosen channel comes from the ordinary reference-completed Petz theorem. -/
+theorem ordinary_petz_channel : ∃ recovery : QuantumChannel B A,
+    (∀ T : Matrix B B ℂ,
+      CStarMatrix.ofMatrix.symm
+        (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+        (∑ e : E, cfc Real.sqrt rho * (noiseKraus e)ᴴ * spectralInverseSqrt output * T *
+          spectralInverseSqrt output * noiseKraus e * cfc Real.sqrt rho) +
+            Matrix.trace ((1 - spectralSupport output) * T) • rho) ∧
+    (∀ T : Matrix B B ℂ,
+      CStarMatrix.ofMatrix.symm
+        (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+        ∑ e : E, slice e * T * (slice e)ᴴ) ∧
+    CStarMatrix.ofMatrix.symm
+      (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix output)) = rho := by
+  obtain ⟨recovery, hact, hrec⟩ :=
+    completed_reference_petz_channel noiseKraus noise_normalization referenceState
+  change ∀ T : Matrix B B ℂ, _ = _ at hact
+  change CStarMatrix.ofMatrix.symm
+    (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix
+      (∑ e : E, noiseKraus e * rho * (noiseKraus e)ᴴ))) = rho at hrec
+  change ∀ T : Matrix B B ℂ,
+    CStarMatrix.ofMatrix.symm
+      (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+      (∑ e : E, cfc Real.sqrt rho * (noiseKraus e)ᴴ *
+        spectralInverseSqrt (∑ e : E, noiseKraus e * rho * (noiseKraus e)ᴴ) * T *
+        spectralInverseSqrt (∑ e : E, noiseKraus e * rho * (noiseKraus e)ᴴ) *
+        noiseKraus e * cfc Real.sqrt rho) +
+        Matrix.trace ((1 - spectralSupport
+          (∑ e : E, noiseKraus e * rho * (noiseKraus e)ᴴ)) * T) • rho at hact
+  rw [noise_output] at hact hrec
+  exact ⟨recovery, hact, fun T => (hact T).trans (ordinary_petz_formula T), hrec⟩
+
+def petzChannel : QuantumChannel B A := ordinary_petz_channel.choose
+
+theorem petz_channel_action (T : Matrix B B ℂ) :
+    CStarMatrix.ofMatrix.symm
+      (petzChannel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+      ∑ e : E, slice e * T * (slice e)ᴴ := ordinary_petz_channel.choose_spec.2.1 T
 
 #print axioms amplitude_positive
 #print axioms output_root
 #print axioms output_support
 #print axioms output_inverse_root
+#print axioms petz_kraus_identification
+#print axioms ordinary_petz_channel
+#print axioms petz_channel_action
 
 end D5.S3.Quantum.Recovery.BurriReversePetz
