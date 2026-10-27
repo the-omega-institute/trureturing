@@ -4,7 +4,7 @@
 
 An exact faithful state and a rectangular Kraus channel contradict the original optimized SBW A-channel inequality at alpha = 1/2.
 
-**Definition 1.1 (The registered assertion on 0 < alpha < 1).**
+**Definition 1.1 (The assertion on 0 < alpha < 1).**
 
 $$claim \Leftrightarrow (\forall dA \in \mathbb{N},\; \forall dAPrime \in \mathbb{N},\; \forall dB \in \mathbb{N},\; \forall dE \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall rho \in \operatorname{Matrix}\left(((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(dE\right)), ((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(dE\right)), \mathbb{C}\right),\; \forall K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(dAPrime\right), \operatorname{Fin}\left(dA\right), \mathbb{C}\right),\; \forall alpha \in \mathbb{R},\; (\operatorname{Matrix.PosSemidef}\left(rho\right)) \Rightarrow ((\operatorname{Matrix.trace}\left(rho\right) = 1) \Rightarrow ((\sum_{j} \operatorname{conjTranspose}\left(\operatorname{K}\left(j\right)\right) \cdot \operatorname{K}\left(j\right) = 1) \Rightarrow (((0 < alpha) \land (alpha < 1)) \Rightarrow (\operatorname{renyiCMI}\left(alpha, \operatorname{applyA}\left(K, rho\right)\right) \le \operatorname{renyiCMI}\left(alpha, rho\right))))))$$
 
@@ -14,7 +14,7 @@ $$claim \Leftrightarrow (\forall dA \in \mathbb{N},\; \forall dAPrime \in \mathb
 
 *Commentary.*
 
-The claim quantifies over every natural input and output dimension and finite Kraus count. A positive semidefinite trace-one input and a complete Kraus family acting only on A must satisfy renyiCMI(alpha,applyA(K,rho)) <= renyiCMI(alpha,rho) for every 0 < alpha < 1. The functional, continuous-functional-calculus powers, Kraus action and carrier ((A times B) times E) are imported unchanged from RenyiCMILocalChannelRefutation. Issue #17673 preregisters precisely this remaining low-alpha assertion. The frozen expression is the original optimized quantity; no fixed-sigma, sandwiched replacement or log-Euclidean quantity is substituted.
+The claim quantifies over every natural input and output dimension and finite Kraus count. A positive semidefinite trace-one input and a complete Kraus family acting only on A must satisfy renyiCMI(alpha,applyA(K,rho)) <= renyiCMI(alpha,rho) for every 0 < alpha < 1. The functional, continuous-functional-calculus powers, Kraus action and carrier ((A times B) times E) are imported unchanged from RenyiCMILocalChannelRefutation. At alpha=1/2, the counterexample below makes the output functional strictly larger than the input functional. The frozen expression is the original optimized quantity; no fixed-sigma, sandwiched replacement or log-Euclidean quantity is substituted.
 
 **Theorem 1.2 (A half-alpha counterexample).**
 
@@ -38,7 +38,7 @@ Write x=t^2, r=sqrt(1-289*x), s=sqrt(17+8*r), p=sqrt(1-64*x), q=sqrt(1-576*x), m
 
 The exact comparison factors as Zout-Zin=(m-a)*(m+a+2*n)/4+4*x*(1/m-b)*(1/m+b-6/n). On 0<x<=10^(-8), the radical relations give 1-a<(5441/500)*x and 1-m>=8*x. The first summand is therefore less than (1441/500)*x. They also give 1/m-b>=1999/10000 and 1/m+b-6/n<=-41989/10000. The second summand is at most -4*(1999/10000)*(41989/10000)*x. Their sum is strictly less than -(473/1000)*x. The fixed x=2^(-60) lies in that interval. Positivity of Zout and strict monotonicity of the natural logarithm give output CMI strictly greater than input CMI, contradicting claim at alpha=1/2.
 
-This is a settlement of the originally registered low-alpha mathematical assertion with the original optimized functional. The alpha=2 theorem remains a separate result. The recent log-Euclidean and dual-J counterexamples concern different functionals and are not used as evidence for this theorem. No worldwide novelty or priority claim is made.
+The counterexample refutes the low-alpha mathematical assertion for the original optimized functional. The alpha=2 theorem remains a separate result. The recent log-Euclidean and dual-J counterexamples concern different functionals and are not used as evidence for this theorem. No worldwide novelty or priority claim is made.
 
 ## References
 
