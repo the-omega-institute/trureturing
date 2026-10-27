@@ -82,6 +82,10 @@ $$\forall i \in \mathrm{Nat},\; i < 2 \Rightarrow \left(\exists k \in \mathrm{Na
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/MetaFibonacci/SobolewskiUlasParityPositions.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sobolewski-ulas-2022-meta-fibonacci-parity-positions-question-7-5` (proved) by `D5/S1/Recurrence/MetaFibonacci/SobolewskiUlasParityPositions.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sobolewski-ulas-2022-meta-fibonacci-parity-positions-question-7-5","declaration_gid":"D5/S1/Recurrence/MetaFibonacci/SobolewskiUlasParityPositions.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Bartosz Sobolewski and Maciej Ulas (2022). *Solutions of certain meta-Fibonacci recurrences*. DOI: [10.4064/aa220613-19-1](https://doi.org/10.4064/aa220613-19-1). URL: <https://arxiv.org/abs/2204.04011v1>.

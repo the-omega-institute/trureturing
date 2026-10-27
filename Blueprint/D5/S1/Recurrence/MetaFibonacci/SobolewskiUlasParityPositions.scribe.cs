@@ -63,7 +63,12 @@ internal sealed class SobolewskiUlasParityPositionsDocument : IScribeDocumentDef
         string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
         DescribeId.Create("su-parity-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role,
+        name == "result"
+            ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("sobolewski-ulas-2022-meta-fibonacci-parity-positions-question-7-5"),
+                ResolutionKind.Proved)
+            : null);
 
     private static Formula SequenceFormula()
     {
