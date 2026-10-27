@@ -148,10 +148,11 @@ private theorem cubicOffset_continuousOn
     hd1.div (continuousAt_const.mul hw) (mul_ne_zero (by norm_num) hw0)
   have hr2 : ContinuousAt (fun x => densityD2 x/(6*activationDensity x)) t :=
     hd2.div (continuousAt_const.mul hw) (mul_ne_zero (by norm_num) hw0)
-  simpa only [cubicOffset] using
+  convert
     ((((hH.sub hu).add (hr1.mul ((hH.pow 2).sub (hu.pow 2)))).add
       (hr2.mul ((hH.pow 3).sub (hu.pow 3)))).div hN hN0).continuousWithinAt
-        (s := selectedDomain X)
+        (s := selectedDomain X) using 1 <;>
+    ext x <;> simp only [cubicOffset, Pi.add_apply, Pi.sub_apply, Pi.mul_apply, Pi.div_apply, Pi.pow_apply]
 
 private theorem cubicCenter_continuousOn
     (X : OriginalWindow) {ell R : ℝ} (hell : 243 ≤ ell)
@@ -176,11 +177,12 @@ private theorem cubicCenter_continuousOn
     mul_ne_zero (mul_ne_zero (by norm_num) hw0) hN0
   have h8 : 8*activationDensity t*normalization t ≠ 0 :=
     mul_ne_zero (mul_ne_zero (by norm_num) hw0) hN0
-  simpa only [cubicCenter] using
+  convert
     ((((hH.pow 2).div (continuousAt_const.mul hN) h2).add
       ((hd1.mul (hH.pow 3)).div ((continuousAt_const.mul hw).mul hN) h3)).add
         ((hd2.mul (hH.pow 4)).div ((continuousAt_const.mul hw).mul hN) h8)).continuousWithinAt
-          (s := selectedDomain X)
+          (s := selectedDomain X) using 1 <;>
+    ext x <;> simp only [cubicCenter, Pi.add_apply, Pi.sub_apply, Pi.mul_apply, Pi.div_apply, Pi.pow_apply]
 
 private theorem actual_atom_integrable
     (X : OriginalWindow) {ell R : ℝ} (hell : 243 ≤ ell)
@@ -189,7 +191,7 @@ private theorem actual_atom_integrable
       (activationDensity t*normalization t) (firstClock q)) (selectedDomain X) := by
   have href : IntegrableOn (fun t => Real.log q * referenceKernel g t (t+windowLength t)
       (activationDensity t*normalization t) (firstClock q)) (selectedDomain X) := by
-    simpa only [windowLength, normalization] using
+    simpa only [IntegrableOn, windowLength, normalization] using
       (original_kernel_integrable X hell hbounds (firstClock q)).const_mul (Real.log q)
   apply href.congr
   filter_upwards [ae_restrict_mem (domain_compact X).measurableSet] with t ht
@@ -209,13 +211,14 @@ private theorem cubic_atom_integrable
         Real.log q*cubicOffset t (windowLength t) (normalization t) (firstClock q-t)
       else 0) (selectedDomain X) := by
   have hc := (cubicOffset_continuousOn X hell hbounds (firstClock q)).const_mul (Real.log q)
-  have hi := hc.integrableOn_compact (domain_compact X)
+  have hi := hc.integrableOn_compact (μ := volume) (domain_compact X)
   have hB : Continuous (fun t : ℝ => t+windowLength t) :=
     continuous_id.add (Real.continuous_rpow_const (by norm_num : (0 : ℝ) ≤ 4/5))
   have hm : MeasurableSet {t : ℝ | t < firstClock q ∧ firstClock q ≤ t+windowLength t} :=
     MeasurableSet.inter measurableSet_Iio
       (measurableSet_le (measurable_const : Measurable (fun _ : ℝ => firstClock q)) hB.measurable)
-  simpa only [Set.indicator, Set.mem_setOf_eq] using hi.indicator hm
+  convert hi.indicator hm using 1 <;>
+    ext x <;> simp only [Set.indicator, Set.mem_ofPred_eq]
 
 /-- Both ordinary response integrability premises follow from the unchanged
 complete selected domain and its original bounds. No GM mass or response
@@ -227,9 +230,9 @@ theorem complete_selected_responses_integrable
       canonicalActualPrimeResponse R t (windowLength t) (normalization t)) (selectedDomain X) ∧
     IntegrableOn (fun t =>
       cubicPrimeResponse R t (windowLength t) (normalization t)) (selectedDomain X) := by
-  have hcont := (continuumExact_continuousOn X hell hbounds).integrableOn_compact
+  have hcont := (continuumExact_continuousOn X hell hbounds).integrableOn_compact (μ := volume)
     (domain_compact X)
-  have hcenter := (cubicCenter_continuousOn X hell hbounds).integrableOn_compact
+  have hcenter := (cubicCenter_continuousOn X hell hbounds).integrableOn_compact (μ := volume)
     (domain_compact X)
   constructor
   · have hsum : IntegrableOn (fun t => ∑ q ∈ Nat.primesLE ⌊2*R⌋₊,
