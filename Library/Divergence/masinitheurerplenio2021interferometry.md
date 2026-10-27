@@ -5,7 +5,7 @@ year: 2021
 title: "Coherence of operations and interferometry"
 doi: 10.1103/PhysRevA.103.042426
 url: https://arxiv.org/abs/2102.04863v2
-claim: "The paper defines dynamical coherence measures from discrimination games in multi-path interferometers: pre-processed improvements for the ability of an operation to detect coherence and post-processed improvements N for its ability to create coherence, optimized over maximally incoherent operations; it proves that the pre-processed improvements are faithful exactly for unbiased priors and that the post-processed improvements are faithful for unbiased priors, and leaves open whether analogous results hold for the post-processed improvements."
+claim: "The paper defines dynamical coherence measures from discrimination games in multi-path interferometers: pre-processed improvements for the ability of an operation to detect coherence and post-processed improvements N for its ability to create coherence, optimized over maximally incoherent operations; for phase vectors with at least two different components it proves that the pre-processed improvements are faithful exactly for unbiased priors and that the post-processed improvements are faithful for unbiased priors, and leaves open whether analogous results hold for the post-processed improvements."
 strata_touched:
   - D5/S3/Quantum/QuantumChannels/PostprocessedImprovementUnfaithful
 license: citation-only
@@ -24,7 +24,7 @@ where $\Delta$ is the full dephasing in the incoherent basis, and a measure is f
 
 > $N_{\lambda,\vec{\phi}}(\Theta):=\max_{\Psi\in\mathcal{MIO}}\left|\left|\left(\lambda-\mu \Lambda_{\vec{\phi}}\right) \Psi \Theta\Delta\right|\right|_1-|\lambda-\mu |$.
 
-The pre-processed improvements are faithful if and only if $\lambda=\frac12$ (Theorem 2), and $N_{\frac12,\vec\phi}$ is faithful (Theorem 5). The question (Section IV):
+For every $\vec\phi\in\mathbb R^M$ with at least two different components, the pre-processed improvements are faithful if and only if $\lambda=\frac12$ (Theorem 2), and $N_{\frac12,\vec\phi}$ is faithful (Theorem 5). The question (Section IV):
 
 > Whilst we provided a method to compute the pre-processed improvements and showed that they are not faithful for $\lambda\ne\mu$, it is an open question whether there exist analogous results for the post-processed cases.
 
