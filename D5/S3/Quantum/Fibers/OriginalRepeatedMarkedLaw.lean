@@ -601,7 +601,7 @@ private theorem suffix_range (B : Band) (e : Bool) :
     norm_num only at h
     exact h
 
-private theorem actual_range (B : Band) (n : ℕ) (hn : 1≤n) (e : Bool) :
+theorem actual_range (B : Band) (n : ℕ) (hn : 1≤n) (e : Bool) :
     ∀ t ∈ Icc 0 2, (if e then B.early n hn else B.late n hn) t ∈ Icc B.a B.b := by
   have ht : 2*(n:ℝ)*Band.halfStep n=1 := by
     have hn0 : (n:ℝ)≠0 := by exact_mod_cast (by omega : n≠0)

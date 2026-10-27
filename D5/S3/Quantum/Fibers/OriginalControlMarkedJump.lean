@@ -25,7 +25,7 @@ set_option relaxedAutoImplicit false
 def p (c k : ℝ) : Fin 5 → ℝ :=
   FiniteRectangleTransport.probability (c,c,1-2*c) k
 
-private theorem p_explicit (c k : ℝ) : p c k = ![k,c-k,1-2*c,c-k,k] := by
+theorem p_explicit (c k : ℝ) : p c k = ![k,c-k,1-2*c,c-k,k] := by
   funext i
   fin_cases i <;> simp [p,FiniteRectangleTransport.probability] <;> ring
 
