@@ -24,7 +24,7 @@ Per declaration: name | proof_shape | live consumers.
   period_exists | content | period_even, value_at_three
   recurrence_norm | content | period_even
   period_even | content | fiber_subset
-  count_partition | content | fiber_subset
+  count_partition | bind-only | fiber_subset
   zero_mod_three | content | value_at_three
   value_at_three | content | result
   fiber_subset | content | result
