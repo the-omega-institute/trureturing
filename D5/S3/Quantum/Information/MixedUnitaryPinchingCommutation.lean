@@ -163,6 +163,28 @@ private lemma mixed_channel_data (φ : QubitMatrix → QubitMatrix) (hφ : IsMix
   simp only [Fin.sum_univ_three, Complex.ofReal_add, Complex.ofReal_mul]
   module
 
+private lemma spin_triple (a b : Fin 3 → ℝ) :
+    spin a * spin b * spin a = (2 * (a ⬝ᵥ b) : ℂ) • spin a -
+      ((a ⬝ᵥ a : ℝ) : ℂ) • spin b := by
+  unfold dotProduct
+  ext i j
+  fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+    simp [spin, sigma, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply,
+      Fin.sum_univ_two, Fin.sum_univ_three, Complex.mul_re, Complex.mul_im] <;> ring
+
+private lemma spin_scale (r : ℝ) (a : Fin 3 → ℝ) :
+    spin (r • a) = (r : ℂ) • spin a := by
+  unfold spin
+  simp only [Pi.smul_apply, smul_eq_mul, Complex.ofReal_mul, mul_smul, Finset.smul_sum]
+
+private lemma spin_square (a : Fin 3 → ℝ) :
+    spin a * spin a = ((a ⬝ᵥ a : ℝ) : ℂ) • (1 : QubitMatrix) := by
+  unfold dotProduct
+  ext i j
+  fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+    simp [spin, sigma, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply,
+      Fin.sum_univ_two, Fin.sum_univ_three, Complex.mul_re, Complex.mul_im] <;> ring
+
 private lemma linear_eq_of_spin (f g : QubitMatrix →ₗ[ℂ] QubitMatrix)
     (h1 : f 1 = g 1) (hs : ∀ v : Fin 3 → ℝ, f (spin v) = g (spin v)) : f = g := by
   have hh (a : QubitMatrix) (ha : a.IsHermitian) : f a = g a := by
@@ -239,12 +261,143 @@ private lemma scalar_gram_bounds (φ : QubitMatrix → QubitMatrix) (hφ : IsMix
     exact hdiag 2
   exact ⟨hc, by norm_num at hn; nlinarith [norm_nonneg (WithLp.toLp 2 (t *ᵥ e))]⟩
 
+private lemma reflection_spin_lift (v : EuclideanSpace ℝ (Fin 3)) :
+    ∃ u ∈ unitaryGroup (Fin 2) ℂ,
+      (∀ w : EuclideanSpace ℝ (Fin 3),
+        spin (WithLp.ofLp (((ℝ ∙ v)ᗮ).reflection w)) = u * spin (WithLp.ofLp w) * star u) ∨
+      (∀ w : EuclideanSpace ℝ (Fin 3),
+        spin (WithLp.ofLp (((ℝ ∙ v)ᗮ).reflection w)) = u * (spin (WithLp.ofLp w))ᵀ * star u) := by
+  by_cases hv : v = 0
+  · subst v
+    refine ⟨1, one_mem _, Or.inl ?_⟩
+    intro w
+    have hr := Submodule.reflection_mem_subspace_eq_self
+      (K := ((ℝ ∙ (0 : EuclideanSpace ℝ (Fin 3)))ᗮ)) (x := w) (by simp)
+    simpa only [star_one, one_mul, mul_one] using congrArg (fun z => spin (WithLp.ofLp z)) hr
+  · have hn : ‖v‖ ≠ 0 := norm_ne_zero_iff.mpr hv
+    have hvv : WithLp.ofLp v ⬝ᵥ WithLp.ofLp v = ‖v‖ ^ 2 := by
+      rw [EuclideanSpace.real_norm_sq_eq]
+      simp only [dotProduct, pow_two]
+    let a : QubitMatrix := ((‖v‖⁻¹ : ℝ) : ℂ) • spin (WithLp.ofLp v)
+    have ha : a.IsHermitian := by
+      apply Matrix.IsHermitian.ext
+      intro i j
+      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+        simp [a, spin, sigma, pauliMatrix, qubitX, qubitZ, Fin.sum_univ_three]
+    have haa : a * a = 1 := by
+      simp only [a, Matrix.smul_mul, Matrix.mul_smul, smul_smul, spin_square, hvv]
+      have hc : ((‖v‖⁻¹ : ℝ) : ℂ) * (((‖v‖⁻¹ : ℝ) : ℂ) * ((‖v‖ ^ 2 : ℝ) : ℂ)) = 1 := by
+        push_cast
+        have hn0 : (‖v‖ : ℂ) ≠ 0 := by exact_mod_cast hn
+        field_simp
+      rw [hc, one_smul]
+    have hau : a ∈ unitaryGroup (Fin 2) ℂ := by
+      apply Matrix.mem_unitaryGroup_iff'.mpr
+      rw [ha.star_eq, haa]
+    have hy : sigma 2 ∈ unitaryGroup (Fin 2) ℂ := by
+      apply Matrix.mem_unitaryGroup_iff.mpr
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        norm_num [sigma, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply,
+          Fin.sum_univ_two, Matrix.star_apply]
+    have hflip (w : EuclideanSpace ℝ (Fin 3)) :
+        sigma 2 * (spin (WithLp.ofLp w))ᵀ * star (sigma 2) = -spin (WithLp.ofLp w) := by
+      ext i j
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.star_apply,
+        Fin.sum_univ_two, Matrix.neg_apply]
+      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+        simp [spin, sigma, pauliMatrix, qubitX, qubitZ, Fin.sum_univ_three] <;> ring
+    refine ⟨a * sigma 2, (unitaryGroup (Fin 2) ℂ).mul_mem hau hy, Or.inr ?_⟩
+    intro w
+    have hr : spin (WithLp.ofLp (((ℝ ∙ v)ᗮ).reflection w)) =
+        spin (WithLp.ofLp w) - ((2 * (inner ℝ v w / ‖v‖ ^ 2) : ℝ) : ℂ) •
+          spin (WithLp.ofLp v) := by
+      rw [Submodule.reflection_orthogonal_apply, Submodule.reflection_singleton_apply]
+      ext i j
+      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+        simp [spin, sigma, pauliMatrix, qubitX, qubitZ, Fin.sum_univ_three] <;> ring
+    calc
+      _ = a * (-spin (WithLp.ofLp w)) * star a := by
+        rw [hr, ha.star_eq]
+        simp only [a, Matrix.smul_mul, Matrix.mul_smul, smul_smul, mul_neg,
+          neg_mul, spin_triple, hvv]
+        have hip : inner ℝ v w = WithLp.ofLp v ⬝ᵥ WithLp.ofLp w := by
+          rw [EuclideanSpace.inner_eq_star_dotProduct, star_trivial, dotProduct_comm]
+        rw [hip]
+        ext i j
+        simp only [Matrix.sub_apply, Matrix.smul_apply, Matrix.neg_apply, smul_eq_mul]
+        push_cast
+        field_simp
+        ring
+      _ = (a * sigma 2) * (spin (WithLp.ofLp w))ᵀ * star (a * sigma 2) := by
+        rw [star_mul]
+        calc
+          _ = a * (sigma 2 * (spin (WithLp.ofLp w))ᵀ * star (sigma 2)) * star a := by
+            rw [hflip]
+          _ = _ := by simp only [Matrix.mul_assoc]
+
+private lemma isometry_spin_lift
+    (e : EuclideanSpace ℝ (Fin 3) ≃ₗᵢ[ℝ] EuclideanSpace ℝ (Fin 3)) :
+    ∃ u ∈ unitaryGroup (Fin 2) ℂ,
+      (∀ v : EuclideanSpace ℝ (Fin 3), spin (WithLp.ofLp (e v)) =
+        u * spin (WithLp.ofLp v) * star u) ∨
+      (∀ v : EuclideanSpace ℝ (Fin 3), spin (WithLp.ofLp (e v)) =
+        u * (spin (WithLp.ofLp v))ᵀ * star u) := by
+  obtain ⟨l, hl, he⟩ := e.reflections_generate_dim
+  rw [he]
+  clear he hl
+  induction l with
+  | nil =>
+    refine ⟨1, one_mem _, Or.inl ?_⟩
+    intro v
+    simp
+  | cons v l ih =>
+    obtain ⟨u, hu, huact⟩ := reflection_spin_lift v
+    obtain ⟨w, hw, hwact⟩ := ih
+    have hc : star wᵀ ∈ unitaryGroup (Fin 2) ℂ :=
+      Unitary.star_mem (Matrix.transpose_mem_unitaryGroup_iff.mpr hw)
+    rcases huact with huact | huact <;> rcases hwact with hwact | hwact
+    · refine ⟨u * w, (unitaryGroup (Fin 2) ℂ).mul_mem hu hw, Or.inl ?_⟩
+      intro x
+      simp only [List.map_cons, List.prod_cons, LinearIsometryEquiv.coe_mul, Function.comp_apply,
+        huact, hwact, star_mul, Matrix.mul_assoc]
+    · refine ⟨u * w, (unitaryGroup (Fin 2) ℂ).mul_mem hu hw, Or.inr ?_⟩
+      intro x
+      simp only [List.map_cons, List.prod_cons, LinearIsometryEquiv.coe_mul, Function.comp_apply,
+        huact, hwact, star_mul, Matrix.mul_assoc]
+    · refine ⟨u * star wᵀ, (unitaryGroup (Fin 2) ℂ).mul_mem hu hc, Or.inr ?_⟩
+      intro x
+      simp only [List.map_cons, List.prod_cons, LinearIsometryEquiv.coe_mul, Function.comp_apply,
+        huact, hwact, Matrix.transpose_mul, star_mul, star_star, Matrix.mul_assoc]
+      try rfl
+    · refine ⟨u * star wᵀ, (unitaryGroup (Fin 2) ℂ).mul_mem hu hc, Or.inl ?_⟩
+      intro x
+      simp only [List.map_cons, List.prod_cons, LinearIsometryEquiv.coe_mul, Function.comp_apply,
+        huact, hwact, Matrix.transpose_mul, Matrix.transpose_transpose,
+        star_mul, star_star, Matrix.mul_assoc]
+      try rfl
+
 private lemma orthogonal_spin_lift (o : Matrix (Fin 3) (Fin 3) ℝ)
     (ho : oᵀ * o = 1) :
     ∃ u ∈ unitaryGroup (Fin 2) ℂ,
       (∀ v : Fin 3 → ℝ, spin (o *ᵥ v) = u * spin v * star u) ∨
       (∀ v : Fin 3 → ℝ, spin (o *ᵥ v) = u * (spin v)ᵀ * star u) := by
-  sorry
+  let b := WithLp.linearEquiv 2 ℝ (Fin 3 → ℝ)
+  let f := b.symm.toLinearMap ∘ₗ Matrix.mulVecLin o ∘ₗ b.toLinearMap
+  have hi (v w : EuclideanSpace ℝ (Fin 3)) : inner ℝ (f v) (f w) = inner ℝ v w := by
+    simp only [EuclideanSpace.inner_eq_star_dotProduct, star_trivial]
+    change (o *ᵥ WithLp.ofLp w) ⬝ᵥ (o *ᵥ WithLp.ofLp v) =
+      WithLp.ofLp w ⬝ᵥ WithLp.ofLp v
+    have hg (x y : Fin 3 → ℝ) : (o *ᵥ x) ⬝ᵥ (o *ᵥ y) = x ⬝ᵥ ((oᵀ * o) *ᵥ y) := by
+      symm
+      rw [← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, Matrix.vecMul_transpose]
+    rw [hg, ho, Matrix.one_mulVec]
+  let e := (f.isometryOfInner hi).toLinearIsometryEquiv rfl
+  obtain ⟨u, hu, hact⟩ := isometry_spin_lift e
+  refine ⟨u, hu, ?_⟩
+  rcases hact with hact | hact
+  · exact Or.inl (fun v => hact (WithLp.toLp 2 v))
+  · exact Or.inr (fun v => hact (WithLp.toLp 2 v))
 
 private lemma scalar_gram_isotropic (φ : QubitMatrix → QubitMatrix)
     (hφ : IsMixedUnitary φ)
@@ -571,28 +724,6 @@ private lemma local_kronecker (f : QubitMatrix →ₗ[ℂ] QubitMatrix) (a b : Q
     exact mul_comm _ _
   rw [he, map_smul]
   exact mul_comm _ _
-
-private lemma spin_triple (a b : Fin 3 → ℝ) :
-    spin a * spin b * spin a = (2 * (a ⬝ᵥ b) : ℂ) • spin a -
-      ((a ⬝ᵥ a : ℝ) : ℂ) • spin b := by
-  unfold dotProduct
-  ext i j
-  fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-    simp [spin, sigma, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply,
-      Fin.sum_univ_two, Fin.sum_univ_three, Complex.mul_re, Complex.mul_im] <;> ring
-
-private lemma spin_scale (r : ℝ) (a : Fin 3 → ℝ) :
-    spin (r • a) = (r : ℂ) • spin a := by
-  unfold spin
-  simp only [Pi.smul_apply, smul_eq_mul, Complex.ofReal_mul, mul_smul, Finset.smul_sum]
-
-private lemma spin_square (a : Fin 3 → ℝ) :
-    spin a * spin a = ((a ⬝ᵥ a : ℝ) : ℂ) • (1 : QubitMatrix) := by
-  unfold dotProduct
-  ext i j
-  fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-    simp [spin, sigma, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply,
-      Fin.sum_univ_two, Fin.sum_univ_three, Complex.mul_re, Complex.mul_im] <;> ring
 
 private lemma witness_density (n x : Fin 3 → ℝ)
     (hn : n ⬝ᵥ n = 1) (hx : x ⬝ᵥ x = 1) (hnx : n ⬝ᵥ x = 0) :
