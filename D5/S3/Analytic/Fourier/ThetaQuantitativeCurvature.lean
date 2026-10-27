@@ -1,3 +1,10 @@
+/- GID: D5/S3/Analytic/Fourier/ThetaQuantitativeCurvature
+   generality: I
+   mirror-B: D5/B/S3/Analytic/Fourier/ThetaQuantitativeCurvature
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Quantitative consumer of the complete theta fourth-log curvature reserve. -/
 import D5.S3.Analytic.Fourier.ThetaRadialCurvature
 import Batteries.Tactic.OpenPrivate
 import Mathlib.Tactic

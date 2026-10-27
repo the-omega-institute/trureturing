@@ -14,6 +14,13 @@ triage: anchor
 
 # Classical square-variable concavity of the theta kernel
 
+## Verified locator
+
+- URL: https://arxiv.org/abs/1309.0055v2
+
+The retained primary version is the cited arXiv v2 text; Theorem 4.2(b) and
+Remark 4.3(a) are the canonical theorem locations used by the Scribe.
+
 For the kernel K in equation (4.2), Theorem 4.2(b) states that
 log K(sqrt(t)) is strictly concave for every t>0. It explicitly attributes this
 result to reference [21], Theorem 2.1: G. Csordas and R. S. Varga, Moment

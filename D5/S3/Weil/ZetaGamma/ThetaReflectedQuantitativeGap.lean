@@ -1,3 +1,10 @@
+/- GID: D5/S3/Weil/ZetaGamma/ThetaReflectedQuantitativeGap
+   generality: I
+   mirror-B: D5/B/S3/Weil/ZetaGamma/ThetaReflectedQuantitativeGap
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Quantitative reflected theta-kernel gap from the square-variable curvature reserve. -/
 /- Quantitative consumer of the already paid full-theta fourth-log reserve.
    This fragment is intentionally separate from the pointwise W12 theorem:
    it adds a polynomial correction to the square-variable logarithm and
