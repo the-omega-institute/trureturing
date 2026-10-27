@@ -1,0 +1,19 @@
+**Definition 50.2 (literal precision and one stored implementation).** For a nonnegative integer $n$, let $b(n)$ be its binary length, with $b(0)=1$. A reduced rational $q=n/d$, $d>0$, has literal payload length
+
+$$
+\ell(q)=2b(|n|)+2b(d)+3
+\tag{50.1}
+$$
+
+in §17.2's encoding. A terminal selector $j$ has $2b(j)+1$ bits. Thus the $2k$ Add operands cost $2\sum_i\ell(a_i)$ bits, and their selectors cost
+$\sum_i(2b(2i-1)+2b(2i)+2)$ bits, besides their fixed tags and complete framing/returns. Root Reads use the fixed original-root binding, without a hidden coordinate payload. Their scalar payload total is exactly $\sum_i\ell(y_i)$. All field acknowledgements have their fixed actual frame lengths; packet copying, decoding and cleanup cost actual bit operations. A scalar equal to zero still has a complete literal encoding and reply.
+
+For an explicit finite layout, compute and retain the matrices $B,\iota Z,M,U,\mathcal O_N,F,L_U,L_F$ and the two $k$-Gram matrices and elimination work, together with $y,a,x_{\rm now},m$. Allocate source two-vector backing of $2N$ rational slots, and an observer arena of
+
+$$
+C_A=12N^2+12Nk+16k^2+8N+8k+16
+\tag{50.2}
+$$
+
+numeric slots. These deliberately sufficient capacities accommodate the listed dense matrices, simultaneous old/new matrix/vector work and augmented elimination arrays; reserved slots are actually allocated and initialized, not a claim of used-slot minimality. Fixed source-independent matrices may be constructed from the earned topology while held, without using hidden amplitudes. Store the earned syntax, explicit material/terminal correspondence, mutable addresses, counters, fixed code/framing, actual reference/rights and all live I/O buffers as separate literal records. A simple explicit-address representation has $O(N(k+1))$ address bits here; counters/selectors pay their actual binary widths. Provider input reception and preparation use their own backed operand records. Clear receiver-accessible dependent copies before the handoff; if a provider archive is isolated but retained, its cells/widths coexist in the total bill. Outputting the recovered pulse list, matrices or vector creates additional literal copies whenever actually retained.
+

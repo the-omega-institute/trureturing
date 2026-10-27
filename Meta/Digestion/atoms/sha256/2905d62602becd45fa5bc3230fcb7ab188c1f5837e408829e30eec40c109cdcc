@@ -1,0 +1,2 @@
+**Construction 62.2 (actual nulling after acquisition).** At the earned field $w$ compute $g=-CA^{I+1}w$ and execute the $I+1$ reversed control rounds of (58.5)–(58.6) with target zero. This physically ends at zero, adds exactly $I+1$ Tick and Hold and $b(I+1)$ Add, and adds no Read. Its $r$-Read total attains the same lower bound for the arbitrary-current nulling task. It does not restore the entry values. A four-way zero-cut inverse then uses the already supplied zero-cut views of §36; no inverse from structural Time to an arbitrary intermediate field is inferred.
+
