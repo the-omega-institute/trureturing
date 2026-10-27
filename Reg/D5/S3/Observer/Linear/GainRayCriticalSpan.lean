@@ -21,10 +21,10 @@ abbrev growthSignature : Signature where
   finiteAnchor := inferInstance
 
 def growthActual : Realization growthSignature.{u} :=
-  realize growthSignature (fun _ _ K => Module.finrank ℝ K) (fun e => nomatch e)
+  realize growthSignature (fun _ _ K => Module.finrank ℝ K) (fun e => Empty.elim e)
 
 def growthRejected : Realization growthSignature.{u} :=
-  realize growthSignature (fun _ _ _ => 0) (fun e => nomatch e)
+  realize growthSignature (fun _ _ _ => 0) (fun e => Empty.elim e)
 
 def growthArena : Arena where
   signature := growthSignature.{u}
@@ -42,7 +42,8 @@ theorem growthRejected_law : ¬ growthArena.{u}.Law growthRejected := by
   norm_num [growthRejected, realize, ι, growthSignature] at hh
 
 def growthRegistration : Registration growthArena.{u} (growthArena.Law growthActual) where
-  actual := growthActual
+  actual := realize growthSignature.{u} (fun _ _ K => Module.finrank ℝ K)
+    (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨weighted_polynomial_span_growth, growthRejected, growthRejected_law⟩
   sensitivity := by
@@ -63,7 +64,7 @@ def growthRegistration : Registration growthArena.{u} (growthArena.Law growthAct
 
 def growth : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@weighted_polynomial_span_growth.{u})
     (type_of% (realize growthSignature.{u} (fun _ _ K => Module.finrank ℝ K)
-      (fun e => nomatch e))) Unit Unit := {
+      (fun e => Empty.elim e))) Unit Unit := {
   unitName := `Reg.D5.S3.Observer.Linear.GainRayCriticalSpan.growthUnit,
   realizationName := `Reg.D5.S3.Observer.Linear.GainRayCriticalSpan.growthRegistration,
   realizationSource := none,
@@ -76,7 +77,7 @@ def growth : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@weighted_polynomi
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize growthSignature.{u} (fun _ _ K => Module.finrank ℝ K)
-    (fun e => nomatch e)),
+    (fun e => Empty.elim e)),
   variation := .absent,
   sensitivity := .absent,
   partialSensitivity := none,
