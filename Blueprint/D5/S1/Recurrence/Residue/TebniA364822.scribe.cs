@@ -43,14 +43,15 @@ internal sealed class TebniA364822Document : IScribeDocumentDefinition
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("result", "Residue two at every odd prime", ClaimBody(),
                 "At a prime p>2 the even Taylor coefficient is zero. Every interior binomial coefficient is divisible by p; only the constant-index term survives and contributes two.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source()))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source()),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("tebni364822-cong"), ResolutionKind.Proved))),
         edges: [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Recurrence/Residue/IntegralEGFComposition"))]));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("tebni364822-" + name.Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, claim);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));

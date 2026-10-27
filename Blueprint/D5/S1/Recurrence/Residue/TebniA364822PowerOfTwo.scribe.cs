@@ -22,13 +22,14 @@ internal sealed class TebniA364822PowerOfTwoDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source())),
             Node("result", "Residue one at every power of two", ClaimBody(),
                 "For odd k, 2^m divides the binomial coefficient choose(2^m,k), by the adjacent binomial identity and coprimality of k and 2^m. At a positive exponent, all nonzero sinh terms in the integer recurrence have odd k and therefore vanish modulo 2^m. The cosh term is one. The zero exponent has modulus one.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source()))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source()),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("tebni364822-power-of-two-cong"), ResolutionKind.Proved))),
         edges: [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Recurrence/Residue/TebniA364822"))]));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("tebni364822-dyadic-" + name), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, claim);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));
