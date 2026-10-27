@@ -49,11 +49,11 @@ abbrev arena : Arena where
     ∀ E : Set Record, MeasurableSet E →
       (R.readout () () L) E =
         (if Sum.inl () ∈ E then ENNReal.ofReal
-          (∑ i, Complex.normSq ((successfulKraus L.c L.x L.y (L.survival L.duration) *ᵥ 
+          (∑ i, Complex.normSq ((successfulKraus L.c L.x L.y (L.survival L.duration) *ᵥ
             source L.c L.x beta m theta) i)) else 0) +
         ∑ i : Fin 5, ∫⁻ t in (Ioc 0 L.duration) ∩ {t | Sum.inr (i,t) ∈ E},
           ENNReal.ofReal (Complex.normSq
-            ((jumpKraus L.c L.x (L.height t) (L.survival t) (L.jumpRate t) i *ᵥ 
+            ((jumpKraus L.c L.x (L.height t) (L.survival t) (L.jumpRate t) i *ᵥ
               source L.c L.x beta m theta) 0))
 
 private def wait : Leg where
