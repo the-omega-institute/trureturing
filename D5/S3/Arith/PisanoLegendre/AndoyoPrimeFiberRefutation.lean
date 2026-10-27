@@ -1,6 +1,8 @@
 import D5.S3.Arith.AndoyoPisanoSetCollision
 import Mathlib.Tactic
 
+/-! The value -1 at the zero orbit is isolated by parity at every other odd prime. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -25,7 +27,7 @@ private theorem recurrence_state (p : ℕ) (a b : ℤ) (n : ℕ) :
   | zero => simp [F]
   | succ n ih =>
     rw [Function.iterate_succ_apply', ih]
-    simp only [step, Nat.succ_eq_add_one, Nat.add_assoc, F, Int.cast_add]
+    simp only [step, F, Int.cast_add]
     congr 1
     ring
 
@@ -48,7 +50,8 @@ private theorem period_exists (p : ℕ) (hp : p.Prime) (a b : ℤ) :
         (step (A := ZMod p))^[n] (a, b) := by
       rw [Function.iterate_add_apply, hr.eq]
     simpa only [recurrence_state] using congrArg Prod.fst he
-  exact csInf_mem ⟨t, hs⟩
+  have hne : {t | ScalarPeriod p a b t}.Nonempty := ⟨t, hs⟩
+  exact csInf_mem hne
 
 private theorem recurrence_norm (a b : ℤ) (n : ℕ) :
     F a b (n + 1) ^ 2 - F a b n * F a b (n + 1) - F a b n ^ 2 =
@@ -99,15 +102,15 @@ private theorem count_partition (p : ℕ) (hp : p.Prime) (a b : ℤ) :
         by_cases hz : (F a b n : ZMod p) = 0
         · have h := (legendreSym.eq_zero_iff p _).mpr hz
           simp [h]
-        · rcases legendreSym.eq_one_or_neg_one hz with h | h <;> simp [h]
+        · rcases legendreSym.eq_one_or_neg_one p hz with h | h <;> simp [h]
       _ = _ := by simp
-  simpa only [Finset.sum_add_distrib, Finset.sum_boole, signCount] using hsum
+  simpa only [Finset.sum_add_distrib, Finset.sum_boole, signCount, Nat.cast_id] using hsum
 
 private theorem zero_mod_three (n : ℕ) : (F 0 3 n : ZMod 3) = 0 := by
   induction n using Nat.twoStepInduction with
   | zero => norm_num [F]
-  | one => norm_num [F]
-  | more n h0 h1 => simpa only [F, Int.cast_add, h0, h1, add_zero]
+  | one => change (3 : ZMod 3) = 0; decide
+  | more n h0 h1 => simp only [F, Int.cast_add, h0, h1, add_zero]
 
 private theorem value_at_three : K 3 Nat.prime_three 0 3 = -1 := by
   have hp : pi 3 0 3 = 1 := by
@@ -115,7 +118,7 @@ private theorem value_at_three : K 3 Nat.prime_three 0 3 = -1 := by
     · exact csInf_le' (show ScalarPeriod 3 0 3 1 from
         ⟨by decide, fun n => by rw [zero_mod_three, zero_mod_three]⟩)
     · exact (period_exists 3 Nat.prime_three 0 3).1
-  norm_num [K, signCount, hp, F, legendreSym]
+  simp [K, signCount, hp, Finset.filter_singleton, F]
 
 private theorem fiber_subset : fiber 0 3 (-1) ⊆ {3} := by
   rintro p ⟨hp, hp2, hk⟩
@@ -127,8 +130,8 @@ private theorem fiber_subset : fiber 0 3 (-1) ⊆ {3} := by
     exact hne ((Nat.prime_dvd_prime_iff_eq hp Nat.prime_three).mp
       ((ZMod.natCast_eq_zero_iff 3 p).mp h))
   have he := period_even p hp hp2 0 3 (by
-    norm_num
-    exact pow_ne_zero 2 hthree)
+    simpa only [zero_mul, zero_pow (by decide : 2 ≠ 0), sub_zero,
+      Int.cast_pow, Int.cast_ofNat] using pow_ne_zero 2 hthree)
   obtain ⟨t, ht⟩ := he
   have hc := count_partition p hp 0 3
   have hci : (signCount p hp 0 3 1 : ℤ) + signCount p hp 0 3 (-1) +
