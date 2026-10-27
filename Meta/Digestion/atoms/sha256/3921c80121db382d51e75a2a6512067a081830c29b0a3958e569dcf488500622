@@ -1,0 +1,14 @@
+**Corollary 10.2 (Nonmatching necessary and sufficient state orders).** At fixed $H_c$ and $0<\alpha<1/2$, the supplied necessary growth rate for an eventual cubic mean is $\Omega(s^{-4/5})$, while Theorem 8.1 realizes both cubic means with $O(s^{-1})$ complete configurations. These statements leave the optimal state-growth exponent unresolved.
+
+Proof. The necessary assertion is (10.3): for sufficiently small $s$, $A_Ts^{-4/5}\ge2b$, so $M(s)-2\ge A_Ts^{-4/5}/(4\delta)$. The sufficient assertion uses the single source-blind table at each selected $q$, with constants
+
+$$
+C_M=\frac{16\ell}{c}+5,\qquad
+C_{\rm up}=\frac{176\ell}{c^2}+\frac{44}{c}+7
+\tag{10.4}
+$$
+
+from (8.1)–(8.2). Its two means obey the same fixed $C_{\rm up}$, so the supplied necessary theorem also applies to this family with $C_T=C_{\rm up}$ and either fixed target. The two powers differ, and neither implication supplies a construction of order $s^{-4/5}$ or a necessary lower bound of order $s^{-1}$. $\square$
+
+The uniform companion's Theorem 7.2 already gives an observer-uniform eleventh-power lower order for every fixed complete budget. The new family has a budget depending on $s$, so it changes that quantifier. The geometric row coordinate and retuned probabilities do not by themselves alter that fixed-budget conclusion. The supplied fixed classifier of Section 9 remains a distinct attained fixed-budget benchmark. No new fixed-$M$ performance classification or minimum nonempty threshold is asserted here.
+
