@@ -84,6 +84,10 @@ $$\forall n \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall k \in \mathbb{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hutton-mehta-vukovic-2025-cq-output-overlap-minimum` (proved) by `D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hutton-mehta-vukovic-2025-cq-output-overlap-minimum","declaration_gid":"D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Kiera Hutton; Arthur Mehta; Andrej Vukovic (2025). *Deciding whether a C–Q channel preserves a bit is QCMA-complete*. DOI: [10.48550/arXiv.2508.10664](https://doi.org/10.48550/arXiv.2508.10664). URL: <https://arxiv.org/abs/2508.10664v1>.

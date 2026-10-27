@@ -35,15 +35,17 @@ internal sealed class HuttonMehtaVukovicOutputOverlapDocument : IScribeDocumentD
                 "Conjecture 1.5, page 3: “Let σ₁, …, σₙ ∈ M_d(ℂ) be arbitrary quantum states. Then for any collection of k ≤ n of pairwise orthogonal pure states |u₁⟩, …, |u_k⟩ ∈ ℂⁿ, the following bound holds: (1/(k(k−1))) Σ_{r≠s} Tr((Σᵢ |⟨i|u_r⟩|² σᵢ)(Σⱼ |⟨j|u_s⟩|² σⱼ)) ≥ min_{i₁,…,i_k ∈ [n] distinct} (1/(k(k−1))) Σ_{r≠s} Tr(σ_{i_r} σ_{i_s}).” A quantum state is positive semidefinite with trace one. The coordinate inner-product equality expresses that the pure input vectors have norm one and are pairwise orthogonal. The real reciprocal requires 2 ≤ k."),
             Node("result", "The orthogonal lower bound", Disp(ClaimBody()), "result",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
-                "The squared absolute determinants of the k-row minors of the input matrix form a probability distribution on k-element subsets, by Cauchy–Binet and orthonormality. Its average subset overlap is at least the minimum subset overlap. The difference between the total output overlap and this average is a sum of traces of products TᴴT, where T is the cross combination Σᵢ conj(Uᵢᵣ)Uᵢₛσᵢ. Each term is nonnegative. Dividing by the positive real number k(k−1) gives the inequality. The residual identity uses Hermiticity; no non-orthogonal correction is asserted.")),
+                "The squared absolute determinants of the k-row minors of the input matrix form a probability distribution on k-element subsets, by Cauchy–Binet and orthonormality. Its average subset overlap is at least the minimum subset overlap. The difference between the total output overlap and this average is a sum of traces of products TᴴT, where T is the cross combination Σᵢ conj(Uᵢᵣ)Uᵢₛσᵢ. Each term is nonnegative. Dividing by the positive real number k(k−1) gives the inequality. The residual identity uses Hermiticity; no non-orthogonal correction is asserted.",
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hutton-mehta-vukovic-2025-cq-output-overlap-minimum"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula,
-        string declaration, DescribeRole role, AssessedProvenance provenance, string prose) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance, string prose,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hmv-output-overlap-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Qualified(string name)
