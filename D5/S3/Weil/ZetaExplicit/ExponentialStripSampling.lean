@@ -7,7 +7,6 @@
    digest: Noncompact exponential reproduction supplies uniform closed-strip zero sampling. -/
 
 import D5.S3.Weil.ZetaExplicit.WeightedZeroSampling
-import D5.S3.Weil.ZetaExplicit.RvM
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Batteries.Tactic.OpenPrivate
 import Mathlib.Tactic
@@ -49,7 +48,7 @@ private theorem margin_pos {a : ℝ} (ha : 1 / 2 < a) : 0 < margin a := by
   apply lt_min (by norm_num)
   nlinarith
 
-private theorem denominator_bound {a : ℝ} (ha : 1 / 2 < a)
+private theorem denominator_bound {a : ℝ}
     {z : ℂ} (hz : |z.im| ≤ 1 / 2) :
     margin a * (1 + z.re ^ 2) ≤ ‖(a : ℂ) ^ 2 + z ^ 2‖ := by
   have hm1 : margin a ≤ 1 := min_le_left _ _
@@ -72,7 +71,7 @@ private theorem cauchyKernel_bound {a : ℝ} (ha : 1 / 2 < a)
     ‖cauchyKernel a z‖ ≤ envelope a / (1 + z.re ^ 2) := by
   have ha0 : 0 < a := by linarith
   have hm := margin_pos ha
-  have hd := denominator_bound ha hz
+  have hd := denominator_bound hz
   rw [cauchyKernel, norm_div, Complex.norm_real, Real.norm_eq_abs,
     abs_of_pos (div_pos ha0 Real.pi_pos)]
   calc
@@ -144,7 +143,7 @@ private theorem tilted_exp_fourier {a beta : ℝ} (ha : 1 / 2 < a)
     linarith
   have hd : (a : ℂ) ^ 2 + ((t : ℂ) + Complex.I * (beta : ℂ)) ^ 2 ≠ 0 := by
     intro h
-    have hp := denominator_bound ha (z := ((t : ℂ) + Complex.I * (beta : ℂ)))
+    have hp := denominator_bound (z := ((t : ℂ) + Complex.I * (beta : ℂ)))
       (by simpa using hb)
     rw [h, norm_zero] at hp
     have hm := margin_pos ha
