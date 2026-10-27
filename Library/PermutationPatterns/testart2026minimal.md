@@ -34,7 +34,7 @@ and leaves exactly a through a+b-1. Trees are unordered and increasing.
 The positive labels are encoded by Fin(a+b-1), with one added to each
 index; the existing native carrier stores root and all parent incidences.
 
-The construction under implementation deletes root 0 and reads each
+The construction deletes root 0 and reads each
 component in preorder with decreasing child-root order. It turns these
 words into cycles in their given direction, then applies D. Its inverse
 applies D, starts every cycle at its minimum, attaches each later entry

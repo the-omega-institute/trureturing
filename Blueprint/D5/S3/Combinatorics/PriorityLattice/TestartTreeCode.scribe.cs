@@ -29,7 +29,7 @@ internal sealed class TestartTreeCodeDocument : IScribeDocumentDefinition
             Node("insertionClassEquiv", "Restricted insertion equivalence", "For every positive a and b, the insertion implementation restricts to an equivalence between the exact native internal-label class and the published permutation class. This equivalence supplies the restricted inverse laws used by TestartTraversal.result. The latter also proves the literal DFS and minimum-first reconstruction specifications of its algorithms.")), []));
 
     private static DocumentBlock Node(string declaration, string title, string prose, DescribeRole role = DescribeRole.Definition) =>
-        Describe.Lean(DescribeId.Create("testart-code-" + declaration.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("testart-code-" + declaration.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
