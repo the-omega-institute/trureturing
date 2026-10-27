@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/FockAttenuator/CompletedTwoCopySw
 
 The published balanced Fock expansion of e2 tensor e2 has amplitudes sqrt(6)/4 at (4,0) and (0,4), and -1/2 at (2,2), in the original phase convention. Odd difference occupations cancel. Their squared moduli are 3/8,1/4,3/8; these actual coefficients enter the completed difference-swap row sum directly.
 
-The same expansion gives the reduced environment (3/8)|e0><e0|+(1/4)|e2><e2|+(3/8)|e4><e4|: substitute its three nonzero slices into the norm-convergent rank-one mixture. Its difference from (3/8)I has quadratic form (3/8)norm(x)^2-(3/8)|x0|^2-(1/4)|x2|^2-(3/8)|x4|^2>=0 by the finite-coordinate Bessel bound. Every other coordinate remains in norm(x). This calculation supports the readable environment argument; the physical compression proof consumes the exact amplitudes directly.
+The same expansion gives the reduced environment (3/8)|e0><e0|+(1/4)|e2><e2|+(3/8)|e4><e4|: substitute its three nonzero slices into the norm-convergent rank-one mixture. Writing this marginal as A, the positive difference (3/8)I-A has quadratic form (3/8)norm(x)^2-(3/8)|x0|^2-(1/4)|x2|^2-(3/8)|x4|^2>=0 by the finite-coordinate Bessel bound. Every other coordinate remains in norm(x). This calculation supports the readable environment argument; the physical compression proof consumes the exact amplitudes directly.
 
 **Definition 1.4 (The bounded retained-mode exchange).**
 
@@ -154,9 +154,9 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/FockAttenuator/CompletedTwoCopySw
 
 *Commentary.*
 
-For arbitrary complex l2 input a, form the actual completed output by applying the published balanced beam splitter to a tensor |2>. The trace-square/swap identity, unitary conjugation and actual environment compression give Tr(sigma_a^2) <= (3/8)norm(a)^4. The two-copy input norm is norm(a)^4. The zero vector and arbitrary infinite support are included.
+For arbitrary complex l2 input a, form the actual completed output by applying the published balanced beam splitter to a tensor |2>. The trace-square/swap identity, unitary conjugation and actual environment compression give Tr(sigma_a^2) <= (3/8)norm(a)^4. The squared norm of the two-copy input is norm(a)^4. The zero vector and arbitrary infinite support are included.
 
-Apply the countable trace/purity envelope to the actual nonzero output divided by its trace norm(a)^2. The resulting increasing-triple value is at least (25/864)norm(a)^6, and its gap from norm(a)^6/32 is at least -norm(a)^6/432; zero input gives equality at zero. These are homogeneous applications of the actual purity theorem and the spectral envelope, not a claim that the abstract optimizer (5/12,5/12,1/6) is physically realizable. The stronger universal nonnegative gap and the all-density entropy conclusion remain open.
+Apply the countable trace/purity envelope to the actual nonzero output divided by its trace norm(a)^2. The normalized increasing-triple value is at least 25/864. Rescaling by the cube of the trace, (norm(a)^2)^3=norm(a)^6, gives the original increasing-triple value e3(sigma_a)>=(25/864)norm(a)^6 and the signed gap e3(sigma_a)-norm(a)^6/32>=-norm(a)^6/432; zero input gives equality at zero. These are homogeneous applications of the actual purity theorem and the spectral envelope, not a claim that the abstract optimizer (5/12,5/12,1/6) is physically realizable. The stronger universal nonnegative gap and the all-density entropy conclusion remain open.
 
 ## References
 
