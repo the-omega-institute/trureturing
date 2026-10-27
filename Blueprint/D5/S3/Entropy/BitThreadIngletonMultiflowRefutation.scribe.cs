@@ -123,7 +123,10 @@ internal sealed class BitThreadIngletonMultiflowRefutationDocument : IScribeDocu
                             + "a finite 2-graph and the Ingleton combination named in BT_Hyper.tex "
                             + "line 426. Its minimum-cut value here is zero, so the counterexample "
                             + "does not violate the Ingleton inequality itself."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bao-harper-2020-bit-thread-ingleton-multiflow"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, AssessedProvenance provenance, string prose) =>
