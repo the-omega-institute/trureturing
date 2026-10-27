@@ -69,7 +69,11 @@ private lemma full_spectra :
   constructor
   · change ([6/20, 6/20, 7/20, 1/20] : List ℝ).mergeSort
       (fun a b => decide (b ≤ a)) = _
-    norm_num [List.mergeSort, List.merge, List.MergeSort.Internal.splitInTwo, List.splitAt_eq]
+    apply List.Perm.eq_of_pairwise' (r := fun a b : ℝ => b ≤ a)
+      (List.pairwise_mergeSort' _ _) (by norm_num)
+    exact (List.mergeSort_perm _ _).trans
+      (((List.Perm.swap (7/20 : ℝ) (6/20) [1/20]).cons (6/20)).trans
+        (List.Perm.swap (7/20) (6/20) [6/20, 1/20]))
   · change ([7/20, 5/20, 4/20, 4/20] : List ℝ).mergeSort
       (fun a b => decide (b ≤ a)) = _
     exact List.mergeSort_of_pairwise (by norm_num)
