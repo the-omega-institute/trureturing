@@ -1,0 +1,13 @@
+**Proposition 4.2 (a full-current-state comparator).** If instead the
+observation is the actual current $p\in G$, the identity link
+$\Lambda_p=\delta_p$ and $Q_t=T_t$ satisfy the analogous conditions
+with source $e$. For $\chi_L^+$ the same pointwise recovery is
+available at each outside point, but not as a global link (3.1).
+
+Proof. For the identity observation both orders apply $T_t$ to
+the same bounded Borel function at $p$. Its fibers are singletons
+and the initial link is $\delta_e$. The outside assertion follows
+from the singleton fibers in (2.2); Theorem 3.1 prevents extending
+it to the whole cover observation. This comparator is a mathematical
+information allowance, not an acquired sensor. $\square$
+
