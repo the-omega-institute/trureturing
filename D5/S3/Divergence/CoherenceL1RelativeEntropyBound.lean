@@ -350,7 +350,7 @@ private theorem rowL2_le_rowL1 {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ) (k : 
   simpa only [PiLp.norm_single, PiLp.norm_eq_of_L1, PiLp.toLp_apply] using
     norm_sum_le (Finset.univ) (fun i => PiLp.single 2 i (v i))
 
-private theorem coherenceL1_eq_twice_upper {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ)
+theorem coherenceL1_eq_twice_upper {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ)
     (hρ : ρ.IsHermitian) : l1Coherence ρ = 2 * ∑ k, ‖WithLp.toLp 1 (fun j : Fin n => if k < j then ρ k j else 0)‖ := by
   have hnorm (i j : Fin n) : ‖ρ i j‖ = ‖ρ j i‖ := by
     have h := congrArg (fun A : Matrix (Fin n) (Fin n) ℂ => A i j) hρ.eq
