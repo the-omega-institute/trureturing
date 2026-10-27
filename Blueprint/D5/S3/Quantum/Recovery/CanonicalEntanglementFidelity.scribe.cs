@@ -16,7 +16,7 @@ internal sealed class CanonicalEntanglementFidelityDocument : IScribeDocumentDef
                     "In reference-first coordinates (r,i), let v(r,i) = (sqrt(rho))(i,r), where sqrt(rho) is the positive functional-calculus square root. "
                     + "Let P = |v><v|. For a genuine QuantumChannel C, apply C to each reference-indexed matrix block of P. "
                     + "The fidelity is Re <v|(id tensor C)(P)|v>. This is squared Uhlmann fidelity against a pure state, "
-                    + "with no additional square, square root, or output normalization. The matrix argument is used on the positive trace-one domain certified below.")),
+                    + "with no additional square, square root, or output normalization. The matrix argument is used on the positive trace-one domain certified below."))),
                 DescribeRole.Definition),
             Entry("purification", "canonical_purification", "A density with input marginal rho",
                 "For every finite complex positive semidefinite rho of trace one, P is positive semidefinite, has trace one, and tracing the reference factor gives rho. "

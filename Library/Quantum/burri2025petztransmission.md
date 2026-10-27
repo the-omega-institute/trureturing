@@ -14,7 +14,7 @@ strata_touched:
   - D5/S3/Quantum/Recovery/BurriReverseFidelity
   - D5/S3/Quantum/Recovery/BurriDecoderComparison
 license: citation-only
-triage: theorem
+triage: anchor
 ---
 
 # SW and ordinary Petz need not have a uniform order
