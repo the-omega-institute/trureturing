@@ -48,6 +48,18 @@ private def eulerProduct {e : Type*} [Ring e] [Module ℝ e]
 private def centeredSum {e : Type*} [AddCommGroup e] (a : ℕ → e) (b : e) (n : ℕ) : e :=
   ∑ i ∈ Finset.range n, (a i - b)
 
+private lemma ordered_norm {e : Type*} [NormedRing e] [NormOneClass e]
+    (a : ℕ → e) (l : ℝ) (n : ℕ) (ha : ∀ i < n, ‖a i‖ ≤ l) :
+    ‖(List.ofFn fun i : Fin n => a i).prod‖ ≤ l ^ n := by
+  refine (List.norm_prod_le _).trans ?_
+  have hb := List.prod_map_le_prod_map₀
+    (s := List.ofFn fun i : Fin n => a i) (fun z : e => ‖z‖) (fun _ => l)
+    (fun z _ => norm_nonneg z) (by
+      intro z hz
+      obtain ⟨i, rfl⟩ := List.mem_ofFn.mp hz
+      exact ha i i.isLt)
+  simpa only [List.map_const', List.prod_replicate, List.length_ofFn] using hb
+
 private lemma euler_succ {e : Type*} [Ring e] [Module ℝ e]
     (a : ℕ → e) (h : ℝ) (n : ℕ) :
     eulerProduct a h (n + 1) = eulerProduct a h n * (1 + h • a n) := by
@@ -61,19 +73,16 @@ private lemma centered_succ {e : Type*} [AddCommGroup e] (a : ℕ → e) (b : e)
 
 private lemma euler_norm {e : Type*} [NormedRing e] [NormedAlgebra ℝ e]
     [NormOneClass e] (a : ℕ → e) (m h : ℝ) (n : ℕ)
-    (hm : 0 ≤ m) (hh : 0 ≤ h) (ha : ∀ i < n, ‖a i‖ ≤ m) :
+    (hh : 0 ≤ h) (ha : ∀ i < n, ‖a i‖ ≤ m) :
     ‖eulerProduct a h n‖ ≤ (1 + h * m) ^ n := by
-  induction n with
-  | zero => change ‖(1 : e)‖ ≤ (1 + h * m) ^ 0; rw [norm_one, pow_zero]
-  | succ n ih =>
-    rw [euler_succ, pow_succ]
-    have hf : ‖1 + h • a n‖ ≤ 1 + h * m := by
-      calc
-        _ ≤ ‖(1 : e)‖ + ‖h • a n‖ := norm_add_le _ _
-        _ = 1 + h * ‖a n‖ := by rw [norm_one, norm_smul, Real.norm_eq_abs, abs_of_nonneg hh]
-        _ ≤ _ := by gcongr; exact ha n (by omega)
-    exact (norm_mul_le _ _).trans
-      (mul_le_mul (ih (fun i hi => ha i (by omega))) hf (norm_nonneg _) (by positivity))
+  change ‖(List.ofFn fun i : Fin n => 1 + h • a i).prod‖ ≤ _
+  apply ordered_norm (fun i => 1 + h • a i) (1 + h * m) n
+  intro i hi
+  calc
+    _ ≤ ‖(1 : e)‖ + ‖h • a i‖ := norm_add_le _ _
+    _ = 1 + h * ‖a i‖ := by
+      rw [norm_one, norm_smul, Real.norm_eq_abs, abs_of_nonneg hh]
+    _ ≤ _ := by gcongr; exact ha i hi
 
 private lemma abel_step {e : Type*} [Ring e] [Algebra ℝ e]
     (a : ℕ → e) (b : e) (h : ℝ) (n : ℕ) :
@@ -85,7 +94,7 @@ private lemma abel_step {e : Type*} [Ring e] [Algebra ℝ e]
         (centeredSum a b n * b - a n * centeredSum a b (n + 1))) := by
   rw [euler_succ, pow_succ, centered_succ]
   simp only [mul_add, add_mul, sub_mul, mul_sub, mul_smul_comm, smul_mul_assoc,
-    smul_add, smul_sub, smul_smul, one_mul, mul_one, mul_assoc]
+    smul_add, smul_sub, smul_smul, mul_one, mul_assoc]
   module
 
 private lemma euler_abel_bound {e : Type*} [NormedRing e] [NormedAlgebra ℝ e]
@@ -110,11 +119,11 @@ private lemma euler_abel_bound {e : Type*} [NormedRing e] [NormedAlgebra ℝ e]
     | zero =>
       unfold eulerProduct centeredSum
       rw [List.ofFn_zero, List.prod_nil, Finset.sum_range_zero, pow_zero]
-      simp only [sub_self, mul_zero, smul_zero, sub_zero, norm_zero,
-        Nat.cast_zero, mul_zero, zero_mul, pow_zero, le_refl]
+      simp only [sub_self, mul_zero, smul_zero, norm_zero,
+        Nat.cast_zero, zero_mul, pow_zero, le_refl]
     | succ k ih =>
       rw [abel_step]
-      have hp := euler_norm a m h k hm hh (fun i hi => ha i (by omega))
+      have hp := euler_norm a m h k hh (fun i hi => ha i (by omega))
       have hterm : ‖centeredSum a b k * b - a k * centeredSum a b (k + 1)‖ ≤ 2 * m * r := by
         calc
           _ ≤ ‖centeredSum a b k * b‖ + ‖a k * centeredSum a b (k + 1)‖ := norm_sub_le _ _
@@ -141,7 +150,7 @@ private lemma euler_abel_bound {e : Type*} [NormedRing e] [NormedAlgebra ℝ e]
         _ = 2 * (k + 1 : ℕ) * h ^ 2 * m * r * l ^ (k + 1) := by
           rw [pow_succ l k, Nat.cast_add, Nat.cast_one]
           ring
-  have hp := euler_norm a m h n hm hh ha
+  have hp := euler_norm a m h n hh ha
   have hp_exp : l ^ n ≤ Real.exp (h * m * n) := by
     calc
       l ^ n ≤ (Real.exp (h * m)) ^ n := by
@@ -158,19 +167,6 @@ private lemma euler_abel_bound {e : Type*} [NormedRing e] [NormedAlgebra ℝ e]
       exact (norm_mul_le _ _).trans (mul_le_mul hp (hs n le_rfl) (norm_nonneg _) (by positivity))
     _ = h * l ^ n * (1 + 2 * h * m * n) * r := by ring
     _ ≤ _ := by gcongr
-
-
-private lemma ordered_norm {e : Type*} [NormedRing e] [NormOneClass e]
-    (a : ℕ → e) (l : ℝ) (n : ℕ) (ha : ∀ i < n, ‖a i‖ ≤ l) :
-    ‖(List.ofFn fun i : Fin n => a i).prod‖ ≤ l ^ n := by
-  refine (List.norm_prod_le _).trans ?_
-  have hb := List.prod_map_le_prod_map₀
-    (s := List.ofFn fun i : Fin n => a i) (fun z : e => ‖z‖) (fun _ => l)
-    (fun z _ => norm_nonneg z) (by
-      intro z hz
-      obtain ⟨i, rfl⟩ := List.mem_ofFn.mp hz
-      exact ha i i.isLt)
-  simpa only [List.map_const', List.prod_replicate, List.length_ofFn] using hb
 
 private lemma ordered_perturbation {e : Type*} [NormedRing e] [NormOneClass e]
     (a b : ℕ → e) (l d : ℝ) (n : ℕ) (hl : 1 ≤ l) (hd : 0 ≤ d)
@@ -209,7 +205,7 @@ private lemma ordered_perturbation {e : Type*} [NormedRing e] [NormOneClass e]
         ring
 
 private lemma norm_exp_bound {e : Type*} [NormedRing e] [NormedAlgebra ℝ e]
-    [NormOneClass e] [CompleteSpace e] (z : e) (r : ℝ) (hr : 0 ≤ r) (hz : ‖z‖ ≤ r) :
+    [NormOneClass e] [CompleteSpace e] (z : e) (r : ℝ) (hz : ‖z‖ ≤ r) :
     ‖NormedSpace.exp z‖ ≤ Real.exp r := by
   have hs : HasSum (fun k : ℕ => ((k.factorial : ℝ)⁻¹) * r ^ k) (Real.exp r) := by
     simpa only [smul_eq_mul, ← Real.exp_eq_exp_ℝ] using
@@ -224,7 +220,8 @@ private lemma exp_euler_remainder {e : Type*} [NormedRing e] [NormedAlgebra ℝ 
     [NormOneClass e] [CompleteSpace e] (z : e) (r : ℝ)
     (hr : 0 ≤ r) (hz : ‖z‖ ≤ r) (hsmall : r ≤ 1) :
     ‖NormedSpace.exp z - (1 + z)‖ ≤ (3 / 4 : ℝ) * r ^ 2 := by
-  have h := D5.S3.Quantum.AURICOmega.ExponentialTail.exp_remainder_le z r 2 hr hz (by norm_num only [Nat.cast_ofNat]; linarith)
+  have h := D5.S3.Quantum.AURICOmega.ExponentialTail.exp_remainder_le z r 2 hr hz
+    (by norm_num only [Nat.cast_ofNat]; linarith)
   simp only [Finset.sum_range_succ, Finset.sum_range_zero, pow_zero, pow_one,
     Nat.factorial_zero, Nat.factorial_one, Nat.cast_one, inv_one, one_smul, zero_add] at h
   norm_num only [Nat.factorial_succ, Nat.factorial_zero, Nat.cast_mul, Nat.cast_ofNat] at h
@@ -249,7 +246,7 @@ private lemma exponential_euler_bound {e : Type*} [NormedRing e] [NormedAlgebra 
     (fun i => NormedSpace.exp ((t / n) • a i)) (fun i => 1 + (t / n) • a i)
     (Real.exp (t / n * m)) ((3 / 4 : ℝ) * (t / n * m) ^ 2) n
     (Real.one_le_exp hr) (by positivity)
-    (fun i hi => norm_exp_bound _ _ hr (hnorm i hi))
+    (fun i hi => norm_exp_bound _ _ (hnorm i hi))
     (fun i hi => (norm_add_le _ _).trans (by
       rw [norm_one, norm_smul, Real.norm_eq_abs, abs_of_nonneg hh]
       exact (add_le_add (le_refl (1 : ℝ)) (mul_le_mul_of_nonneg_left (ha i hi) hh)).trans
@@ -260,11 +257,9 @@ private lemma exponential_euler_bound {e : Type*} [NormedRing e] [NormedAlgebra 
     (List.ofFn fun i : Fin n => 1 + (t / n) • a i).prod‖ ≤ _
   convert he using 1
   rw [← Real.exp_nat_mul]
-  have harg : (n : ℝ) * (t / n * m) = m * t := by field_simp <;> ring
+  have harg : (n : ℝ) * (t / n * m) = m * t := by field_simp
   rw [harg]
   field_simp
-  <;> ring
-
 
 private lemma centered_max_sublinear {e : Type*} [NormedAddCommGroup e]
     [NormedSpace ℝ e] (a : ℕ → e) (b : e)
@@ -305,7 +300,6 @@ private lemma centered_max_sublinear {e : Type*} [NormedAddCommGroup e]
       unfold centeredSum
       rw [Finset.sum_range_zero, norm_zero]
       positivity
-
 
 private lemma deterministic_uniform {e : Type*} [NormedRing e] [NormedAlgebra ℝ e]
     [NormOneClass e] [CompleteSpace e] (a : ℕ → e) (b : e) (m : ℝ)
@@ -357,21 +351,20 @@ private lemma deterministic_uniform {e : Type*} [NormedRing e] [NormedAlgebra �
   rw [List.ofFn_const, List.prod_replicate, List.ofFn_const, List.prod_replicate] at hconst
   have hcancel : (n : ℝ) * (s / n) = s := by field_simp
   have hexp : NormedSpace.exp ((s / n) • b) ^ n = w := by
-    letI := NormedAlgebra.restrictScalars ℚ ℝ e
+    let := NormedAlgebra.restrictScalars ℚ ℝ e
     rw [← NormedSpace.exp_nsmul, ← Nat.cast_smul_eq_nsmul ℝ, smul_smul, hcancel]
   rw [hexp, norm_sub_rev] at hconst
   have hvw : ‖v - w‖ ≤ k := hconst.trans herr
   have habel := euler_abel_bound a b m (s / n) (δ * n) n hm hh (by positivity)
     (fun i _ => ha i) hb hsums
-  have harg : s / n * m * n = m * s := by field_simp <;> ring
-  have hfactor : 1 + 2 * (s / n) * m * n = 1 + 2 * m * s := by field_simp <;> ring
+  have harg : s / n * m * n = m * s := by field_simp
+  have hfactor : 1 + 2 * (s / n) * m * n = 1 + 2 * m * s := by field_simp
   have hqv : ‖q - v‖ ≤ d * δ := by
     refine habel.trans ?_
     calc
       _ = δ * s * Real.exp (m * s) * (1 + 2 * m * s) := by
         rw [harg, hfactor]
         field_simp
-        <;> ring
       _ ≤ δ * t * c * (1 + 2 * m * t) := by dsimp [c]; gcongr
       _ = d * δ := by dsimp [d]; ring
   change ‖p - w‖ < ε
@@ -398,12 +391,12 @@ private lemma operator_uniform_to_sot {𝕜 e α : Type} [RCLike 𝕜]
       ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop, ∀ s ∈ Set.Icc (0 : ℝ) t,
         ‖(randomProduct a n s ω -
           NormedSpace.exp (((s : ℝ) : 𝕜) • ∫ z, a 0 z ∂μ)) x‖ < ε := by
-  letI := NormedAlgebra.restrictScalars ℝ 𝕜 (e →L[𝕜] e)
-  letI : MeasurableSpace (e →L[𝕜] e) := borel (e →L[𝕜] e)
-  letI : BorelSpace (e →L[𝕜] e) := ⟨rfl⟩
+  let := NormedAlgebra.restrictScalars ℝ 𝕜 (e →L[𝕜] e)
+  let : MeasurableSpace (e →L[𝕜] e) := borel (e →L[𝕜] e)
+  let : BorelSpace (e →L[𝕜] e) := ⟨rfl⟩
   intro x t ht
   by_cases htriv : Subsingleton e
-  · letI := htriv
+  · let := htriv
     refine Filter.Eventually.of_forall fun ω ε hε => ?_
     refine Filter.Eventually.of_forall fun n s hs => ?_
     have hz : ∀ y : e, ‖y‖ = 0 := by
@@ -411,7 +404,7 @@ private lemma operator_uniform_to_sot {𝕜 e α : Type} [RCLike 𝕜]
       rw [Subsingleton.elim y 0, norm_zero]
     rw [hz]
     exact hε
-  · letI : Nontrivial e := not_subsingleton_iff_nontrivial.mp htriv
+  · let : Nontrivial e := not_subsingleton_iff_nontrivial.mp htriv
     let b : e →L[𝕜] e := ∫ z, a 0 z ∂μ
     have hint : Integrable (a 0) μ := Integrable.of_bound (hsm 0) m (ha 0)
     have hm : 0 ≤ m := by
@@ -441,8 +434,8 @@ private lemma operator_uniform_to_sot {𝕜 e α : Type} [RCLike 𝕜]
 
 theorem result : claim := by
   intro 𝕜 e α _ _ _ _ _ μ _
-  letI := NormedAlgebra.restrictScalars ℝ 𝕜 (e →L[𝕜] e)
-  letI : MeasurableSpace (e →L[𝕜] e) := borel (e →L[𝕜] e)
+  let := NormedAlgebra.restrictScalars ℝ 𝕜 (e →L[𝕜] e)
+  let : MeasurableSpace (e →L[𝕜] e) := borel (e →L[𝕜] e)
   intro a hsm hind hid m ha
   exact operator_uniform_to_sot μ a hsm hind hid m ha
 
