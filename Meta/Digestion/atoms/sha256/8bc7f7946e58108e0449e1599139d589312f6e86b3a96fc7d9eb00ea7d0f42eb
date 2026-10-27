@@ -1,0 +1,33 @@
+**Definition 123.1 (the original three-time coefficient).** Fix the original parameters $a,\eta,t,\Delta _1,\Delta _2>0$ and retain the source-start diffusion, clock, state space, and common Borel readout of §§115–122. Write
+
+$$
+L=\{0,1,3,B\},\qquad P=T_{\Delta _1},\qquad R=T_{\Delta _2},\qquad g=g_t.
+$$
+
+Retain $G=H^1\times\mathbb R$, $pp'=(x+x',y+y',z+z',w+w'+xy')$, the raw Haar measure $\mu=dx\,dy\,dz\,dw$, and the source $e$. The unit-source field $\Gamma$, actual selector $A(u)=\rho C(u)$ of (112.2)–(112.5), and coefficient-positive normalized zero vector $h$ are unchanged. Thus $m=h^2\mu$, $m(G)=1$, $U_hv=hv$, $K=U_h^{-1}HU_h\geq0$, and $T_s=e^{-sK}$ use the full conservative self-adjoint extension $H$ and the entire form of (115.15). The process starts at $e$ at time zero.
+
+The measure $m$ is equivalent to Lebesgue measure off the null source and has no atoms, $T_s$ is conservative, Markov, and symmetric, and the source densities satisfy $g_s>0$ almost everywhere, $g_s\in L^2(m)$, $\int g_s\,dm=1$, and $g_{s+r}=T_rg_s$. The off-source transition kernel $p_s$ of (120.8)–(120.10) is nonnegative, symmetric and measurable; its values on the null source do not affect integration against $m$, and $\int p_s(x,y)m(dy)=1$ for almost every $x$.
+
+For bounded real Borel functions define
+
+$$
+\mathcal C(u,v,w)=\int_G g\,u\,P(vRw)\,dm.
+\tag{123.1}
+$$
+
+For a pointwise Borel simplex tuple $f=(f_y)_{y\in L}$, with $f_y\geq0$ and $\sum_yf_y=1$, the same readout is used at all three epochs and the fresh reads are conditionally independent. Therefore its complete three-time law is
+
+$$
+\nu_f^{(3)}(y,z,w)=\mathcal C(f_y,f_z,f_w)\qquad(y,z,w\in L).
+\tag{123.2}
+$$
+
+The transition-density form is
+
+$$
+W(x_1,x_2,x_3)=g(x_1)p_{\Delta _1}(x_1,x_2)p_{\Delta _2}(x_2,x_3),
+\tag{123.3}
+$$
+
+so that $d\mathbb P_{(Z_t,Z_{t+\Delta _1},Z_{t+\Delta _1+\Delta _2})}=W\,dm^3$. Here $W\geq0$, $W\in L^1(m^3)$, and $\int W\,dm^3=1$.
+

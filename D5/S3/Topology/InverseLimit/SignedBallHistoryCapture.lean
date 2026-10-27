@@ -76,7 +76,7 @@ private theorem exists_free_extension {I : Type u} [Nonempty I]
 /-- Two fixed distinct free ultrafilters contain every historical set and
 respectively the two original reservoirs. The index type is arbitrary;
 only pairwise downward directedness modulo finite sets is required. -/
-private theorem exists_distinct_free_ultrafilters {I : Type u} [Nonempty I]
+theorem exists_distinct_free_ultrafilters {I : Type u} [Nonempty I]
     (J : I → Set ℕ)
     (hd : ∀ i j, ∃ k, (J k \ J i).Finite ∧ (J k \ J j).Finite)
     (N₀ N₁ : Set ℕ) (hdis : Disjoint N₀ N₁)
@@ -95,7 +95,7 @@ private theorem exists_distinct_free_ultrafilters {I : Type u} [Nonempty I]
 under a continuous map if separating continuous Hausdorff-valued
 observables converge, each on its own historical set. No common stage
 for the observables is assumed. -/
-private theorem eq_of_historical_observables {I : Type u} (J : I → Set ℕ)
+theorem eq_of_historical_observables {I : Type u} (J : I → Set ℕ)
     (u₀ u₁ : Ultrafilter ℕ)
     (hf₀ : (u₀ : Filter ℕ) ≤ cofinite) (hf₁ : (u₁ : Filter ℕ) ≤ cofinite)
     (hJ₀ : ∀ i, J i ∈ u₀) (hJ₁ : ∀ i, J i ∈ u₁)
