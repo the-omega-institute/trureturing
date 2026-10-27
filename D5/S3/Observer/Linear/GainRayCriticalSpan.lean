@@ -139,7 +139,7 @@ theorem critical_scalar_span (d : ℕ) (hd : 1 ≤ d) (w : List Bool)
   apply le_antisymm _ hthree
   by_contra hbad
   have hmat : Module.finrank ℝ Mat = 4 := by
-    simp [Mat, Matrix, Module.finrank_pi]
+    simpa using (Module.finrank_matrix (R := ℝ) (M := ℝ) (Fin 2) (Fin 2))
   have hfour : Module.finrank ℝ H = 4 := by
     have hh := H.finrank_le
     rw [hmat] at hh
@@ -184,11 +184,11 @@ theorem critical_scalar_span (d : ℕ) (hd : 1 ≤ d) (w : List Bool)
     · exact congrFun hT ⟨i,hi⟩
   let V := LinearMap.range obs
   have hE : Module.finrank ℝ E = 3 := by
-    have hh := LinearMap.finrank_ker_add_one_of_ne_zero hell
+    have hh := Module.Dual.finrank_ker_add_one_of_ne_zero hell
     change Module.finrank ℝ E + 1 = Module.finrank ℝ Mat at hh
     omega
   have hV : Module.finrank ℝ V = 3 := (LinearMap.finrank_range_of_inj hinj).trans hE
-  let K0 : Submodule ℝ (History w) where
+  let K0 : Submodule ℝ (History w) := {
     carrier := {v | v ∈ LinearMap.ker C.mulVecLin ∧ ∀ i ∈ Q, v i = 0}
     zero_mem' := by simp
     add_mem' := by
@@ -196,7 +196,7 @@ theorem critical_scalar_span (d : ℕ) (hd : 1 ≤ d) (w : List Bool)
       exact ⟨(LinearMap.ker C.mulVecLin).add_mem ha hb, fun i hi => by simp [hqa i hi,hqb i hi]⟩
     smul_mem' := by
       rintro c a ⟨ha,hqa⟩
-      exact ⟨(LinearMap.ker C.mulVecLin).smul_mem c ha, fun i hi => by simp [hqa i hi]⟩
+      exact ⟨(LinearMap.ker C.mulVecLin).smul_mem c ha, fun i hi => by simp [hqa i hi]⟩ }
   let K := K0.map cut
   have hk0 : K0 ≤ LinearMap.ker C.mulVecLin := fun _ h => h.1
   have hsurj := scalar_readout_surjective d w C _ hell he
@@ -204,9 +204,12 @@ theorem critical_scalar_span (d : ℕ) (hd : 1 ≤ d) (w : List Bool)
     rw [LinearMap.range_eq_top.mpr hsurj, finrank_top, Module.finrank_pi]
     simp
   have hdim := C.mulVecLin.finrank_range_add_finrank_ker
-  simp only [Module.finrank_pi, Fintype.card_fin, Module.finrank_self, mul_one, hrC] at hdim
+  have htotal : Module.finrank ℝ (Fin (w.length+1) → ℝ) = w.length+1 := by simp
+  have hkerdim : Module.finrank ℝ (LinearMap.ker C.mulVecLin) = d+2 := by
+    rw [hrC,htotal] at hdim
+    omega
   have hKdim : Module.finrank ℝ K ≤ d+2 :=
-    (Submodule.finrank_map_le cut K0).trans ((Submodule.finrank_mono hk0).trans (by omega))
+    (Submodule.finrank_map_le cut K0).trans ((Submodule.finrank_mono hk0).trans hkerdim.le)
   have hKstrict : Q.Nonempty → Module.finrank ℝ K ≤ d+1 := by
     rintro ⟨i,hi⟩
     have hlt : K0 < LinearMap.ker C.mulVecLin := by
@@ -217,6 +220,8 @@ theorem critical_scalar_span (d : ℕ) (hd : 1 ≤ d) (w : List Bool)
       norm_num at hz
     have hh := Submodule.finrank_lt_finrank_of_lt hlt
     have hmap := Submodule.finrank_map_le cut K0
+    rw [hkerdim] at hh
+    change Module.finrank ℝ K ≤ Module.finrank ℝ K0 at hmap
     omega
   let a : U → ℝ := obs ⟨S,hS⟩
   have ha : a ∈ V := ⟨⟨S,hS⟩,rfl⟩
@@ -229,6 +234,7 @@ theorem critical_scalar_span (d : ℕ) (hd : 1 ≤ d) (w : List Bool)
     intro i j hij
     apply Subtype.ext
     apply Fin.ext
+    change (i.val.val : ℝ) = (j.val.val : ℝ) at hij
     exact_mod_cast hij
   have hproducts : ∀ v ∈ V, ∀ j ≤ d, (fun i => v i * t i ^ j) ∈ K := by
     rintro _ ⟨T,rfl⟩ j hj
