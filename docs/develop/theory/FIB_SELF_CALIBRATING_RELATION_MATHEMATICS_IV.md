@@ -1545,3 +1545,368 @@ claim. The unrestricted eight-versus-nine original-root feasibility
 question remains undetermined.
 
 ## 追加锚（本行以下为增补区）
+
+## 15. 四世界原根障碍的两个恒定且不同的首响应
+
+**定理 15.1（另一首响应恒定的三世界不能在首动作后失败六层）。**
+Let $T$ consist of three complete worlds in the domain of Definition 1.1,
+with pairwise different sources and a common initial reading $a_0$.
+Suppose that, for each $E\in\{J,M\}$, the function
+
+$$
+W\longmapsto \delta_W+g_W(1)\operatorname{tr}(EP_W)
+\tag{15.1}
+$$
+
+is constant on $T$, with possibly different constants for the two
+actions. For either first action $F$, let $H_F$ be its resulting
+two-reading history. Then $\neg L_6(T,H_F)$.
+
+Proof. We use the actual-history pair and product results of
+[*FIB 同父历史的采样零层坍缩与失效核心*, Lemmas 22.1–22.3](FIB_SAMPLED_ROOT_COLLAPSE_AND_SAME_PARENT_FAILURE_CORE.md).
+In particular a two-world $L_s$ at clock $k$, for $s\ge3$, has common
+drift, different sources and gain roots at $k+2,\ldots,k+s$; a
+two-world $L_5$ is impossible. The four length-two products
+
+$$
+\mathscr S_2=\{I,MJ,JM,M^2\}
+\tag{15.2}
+$$
+
+linearly span all matrices, and their common-trace equations satisfy
+$\operatorname{tr}(BH)=c$ for all $B\in\mathscr S_2$ exactly when
+$H=cE_{11}$. Products of each fixed length at least three also
+linearly span all matrices. These facts retain the actual prefix
+matrix and the original clocks.
+
+We also use the following polynomial consequence only after its
+roots and drift have been established. A nonzero polynomial of
+degree at most three with three distinct positive roots $r_1,r_2,r_3$
+is $c(t-r_1)(t-r_2)(t-r_3)$. Its value $g(0)=a_0-\delta$
+uniquely fixes $c$. If that value is zero, the polynomial would
+have four distinct roots and the branch is impossible. Otherwise
+its samples outside the three specified roots are nonzero. Thus
+these uses of a common entire gain do not assume exact degree
+three or exclude lower-degree gains in advance.
+
+Assume $L_6(T,H_F)$. Each second action must retain the entire $T$
+with $L_5$: a smaller nonempty losing child would be a forbidden
+two-world $L_5$ or violate the cardinality guard. Thus all worlds
+share both second responses after $F$.
+
+Two members with the same entire gain $G$, the same drift and
+$G(1)G(2)\ne0$ would consequently have equal traces against
+$I,J,M,JF,MF$. These matrices span all matrices: use
+$\{I,J,M,MJ\}$ when $F=J$ and $\{I,J,M,JM\}$ when $F=M$.
+Hence their sources, and then their complete targets, would be equal.
+We will use this consequence only after establishing the common
+gain and its stated nonzero samples.
+
+At either clock-two history, a two-world losing third child would
+have $L_4$ at clock three. Its gains would have roots $5,6,7$ and
+its drifts would agree. The common initial reading fixes the entire
+gain to one scalar multiple of $(t-5)(t-6)(t-7)$. A zero scalar is
+illegal; otherwise its first and second samples are nonzero. The
+preceding trace argument excludes that pair. Each third action must
+therefore retain the entire $T$, with $L_4$.
+
+For distinct $W,Z\in T$, put
+
+$$
+D_3=g_W(3)P_W-g_Z(3)P_Z,\qquad c=\delta_Z-\delta_W.
+\tag{15.3}
+$$
+
+The four retained length-three histories beginning with $F$ give
+$FD_3=cE_{11}$ by (15.2). This equation forces $c=0$. Indeed set
+$X=g_W(3)FP_W$ and $Y=g_Z(3)FP_Z$. The matrices $FP_W,FP_Z$
+are strictly positive and rank one. If either scalar is zero,
+$X_{22}=Y_{22}$ forces both to be zero. Otherwise their common
+$(2,2)$ entry is nonzero, and their equal $(1,2),(2,1),(2,2)$
+entries determine the $(1,1)$ entry by the rank-one identity.
+Thus $X=Y$ in both cases. Since $F$ is invertible, $D_3=0$.
+Taking traces and then using $P_W\ne P_Z$ gives
+
+$$
+\delta_W=\delta_Z=\delta,\qquad
+g_W(3)=g_Z(3)=0.
+\tag{15.4}
+$$
+
+Each fourth action now needs an $L_3$ child. A two-world child
+would have gain roots $6,7$ in addition to the already proved root
+$3$. Common drift and initial reading again fix one common entire
+gain, nonzero at $1,2$, and the trace argument excludes the pair.
+Thus all fourth children retain $T$. Their matrices are $BF$ for
+all length-three products $B$. Common drift and the full matrix
+span imply $g_W(4)P_W=g_Z(4)P_Z$, so all fourth samples are zero.
+
+A two-world fifth child would have $L_2$ at clock five. Write $Q$
+for its actual clock-five matrix. Equality on all its length-two
+continuations, with the common drift already established, gives
+
+$$
+\operatorname{tr}\!\left(BQ[g_W(7)P_W-g_Z(7)P_Z]\right)=0
+\quad(B\in\mathscr S_2).
+\tag{15.5}
+$$
+
+The span in (15.2) first gives
+$Q[g_W(7)P_W-g_Z(7)P_Z]=0$. Invertibility of $Q$ and the
+trace-one sources give equal seventh samples; a nonzero common
+sample would identify the two sources. Both samples therefore
+vanish. Roots $3,4,7$ and the common initial value then fix a common
+entire gain, again nonzero at $1,2$. This excludes the pair. Every
+fifth action therefore retains $T$, with $L_2$. The retained
+length-five histories beginning with $F$ and the full span of
+length-four products force all fifth samples to vanish. Roots
+$3,4,5$ now fix the same entire gain on all of $T$; its first two
+samples are nonzero. The trace argument identifies all its sources,
+contrary to their pairwise difference.
+
+Every pair used above is a complete actual response child whose
+cardinality is exactly two. Every other losing child has to be the
+original three-world set. Thus all shared histories used in the
+span arguments concern these same fixed worlds; no failure is
+transferred to an arbitrarily selected nonterminal pair. ∎
+
+**引理 15.2（首根三元层的两种完整排除）。**
+Let $T$ consist of three worlds with pairwise different sources,
+common drift $\delta$ and common initial reading $a_0$.
+
+1. If $T$ realizes an entire history $H$ through clock two and every
+   gain has root $1$, then $\neg L_5(T,H)$.
+2. If $T$ realizes an entire history $H$ through clock three and
+   every gain has roots $1,2$, then $\neg L_4(T,H)$.
+
+Proof. Retain the pair and product facts cited in Theorem 15.1.
+We first give three elementary trace consequences used inside the
+proof. Put
+
+$$
+K=\begin{pmatrix}0&1\\-1&0\end{pmatrix}.
+\tag{15.6}
+$$
+
+The simultaneous kernel of $S\mapsto
+(\operatorname{tr}S,\operatorname{tr}(JS),\operatorname{tr}(MS))$
+is $\mathbb RK$: the first equation fixes the diagonal sum, the
+second the off-diagonal sum, and subtracting the second from the
+third gives $S_{22}=0$. In a fixed affine fiber of these three
+traces, rank-one members have the form $S_0+tK$ and satisfy
+
+$$
+\det(S_0+tK)=\det S_0+((S_0)_{12}-(S_0)_{21})t+t^2=0.
+\tag{15.7}
+$$
+
+The coefficient of $t^2$ is one, so there are at most two such
+matrices, including repeated-root cases. Consequently, for
+$n\in\{2,3\}$, if one entire gain $G$ and drift are fixed and
+$G(n)G(n+1)\ne0$, at most two
+different sources can share the clock-$n$ response at a matrix $Q$
+and both clock-$(n+1)$ responses. Here $Q$ is any actual prefix,
+and the three traces are those of $QP$. The actual $Q$ is
+invertible, so distinct sources give distinct matrices $QP$.
+
+If $G(n),G(n+1),G(n+2)$ are all nonzero, two worlds with this
+common gain and drift are identical whenever they share the
+clock-$n$ reading, both next-action readings, and both readings
+after one fixed next action. The relevant matrices, after right
+multiplication by $Q$, contain $I,J,M$ and either $MJ$ or $JM$,
+so span all matrices. The case $n=2$ is the four-trace argument of
+[the same source, Lemma 28.1](FIB_SAMPLED_ROOT_COLLAPSE_AND_SAME_PARENT_FAILURE_CORE.md).
+The displayed span also proves the case $n=3$ using its actual
+clock-three $Q$ and the nonzero samples $G(3),G(4),G(5)$;
+no history or clock is reset.
+
+Finally, a different-source pair with common drift and $L_2$ at
+clock five has seventh roots. Equation (15.5), with its own actual
+$Q$, proves this without invoking the $s\ge3$ pair restriction.
+
+For part 1, assume $L_5(T,H)$ and let $Q$ be the clock-two matrix.
+Every third action retains all of $T$: a two-world $L_4$ child
+would require roots $5,6,7$ in addition to root $1$, impossible for
+a nonzero cubic-or-lower gain.
+
+Suppose a fourth child were a two-world $L_3$. Its gains have
+roots $1,6,7$ and, by the common initial value and drift, are one
+common entire polynomial $G$. A zero scalar is illegal. Otherwise
+$G(2)G(3)G(4)\ne0$. Every possible two-world $L_3$ fourth child
+must use this same $G$, since its roots $1,6,7$, drift and initial
+value are fixed independently of the action. The shared clock-two
+and both clock-three responses and (15.7) show that at most two
+members of $T$ can have this $G$. Therefore there is at most one
+possible two-world $L_3$ fourth-child pair in $T$. At the chosen
+clock-three history the other fourth action retains either that
+same pair or all of $T$.
+The pair thus shares both fourth responses after that third action.
+The four-trace consequence with $n=2$ identifies the pair, a
+contradiction. All fourth children consequently retain $T$.
+At clock four the full length-two span from $Q$, with common
+drift and different sources, forces $g_W(4)=0$ for every $W\in T$.
+
+If a fifth child were a two-world $L_2$, its seventh roots would
+combine with roots $1,4$ to fix a common entire $G$, nonzero at
+$2,3,5,6$. For this pair write $S=Q(P_W-P_Z)$. The common
+clock-two and both clock-three readings give $S=hK$, with $h\ne0$.
+Let $B$ be the actual three-action product from clock two to clock
+five along this child. Its clock-five reading and both clock-six
+readings give $BS=h'K$. Since $B$ and $S$ are invertible, $h'\ne0$,
+and therefore
+
+$$
+B=(h'/h)I.
+\tag{15.8}
+$$
+
+This is impossible: three atoms have determinant $-1$, whereas
+a nonzero scalar matrix has positive determinant. Thus no fifth
+child is a pair, and every fifth action retains all of $T$.
+The full length-three span from $Q$ forces all fifth samples to
+vanish. Roots $1,4,5$ now fix a common entire gain on $T$, nonzero
+at $2,3$. Its shared three traces contradict the at-most-two
+bound (15.7). This proves part 1.
+
+For part 2, assume $L_4(T,H)$ and now let $Q$ be its clock-three
+matrix. A fourth pair would have $L_3$ and roots $6,7$ in addition
+to roots $1,2$, so every fourth action retains $T$. A fifth pair
+would have $L_2$ and hence root $7$. Roots $1,2,7$ fix a common
+entire $G$, nonzero at $3,4,5$. The clock-three and both clock-four
+readings, together with (15.7), permit at most two members with
+this $G$. Every possible fifth pair must use that same polynomial,
+because the roots $1,2,7$, drift and initial value are fixed.
+Hence there is at most one such fifth pair. At its clock-four
+parent the other fifth action retains the same pair or all of
+$T$. Thus both fifth responses after that fourth action agree
+on the pair. The four-trace consequence with $n=3$ identifies it,
+a contradiction. Every fifth action retains all of $T$.
+The full length-two span from $Q$ then forces all fifth samples
+to vanish. Roots $1,2,5$ fix a common entire gain on $T$, nonzero
+at $3,4$, and (15.7) again excludes three different sources.
+
+In each use of three specified roots, the scalar is fixed by
+$g(0)=a_0-\delta$. If that value is zero, the three positive
+roots would force a fourth root and the zero polynomial, so the
+corresponding pair or triple is already impossible. Otherwise
+the displayed nonzero samples follow from the specified roots.
+All divisions above are confined to these nonzero branches. ∎
+
+**定理 15.3（恰四世界原根失败的双恒定非对角首响应）。**
+For any $a_0\in\mathbb R$, let $K$ be a set of exactly four
+different complete worlds in the entire initial-$a_0$ fiber.
+If $L_7(K,(a_0))$, there are real numbers $j,m$, with $m\ne j$,
+such that
+
+$$
+\begin{aligned}
+\delta_W+g_W(1)\operatorname{tr}(JP_W)&=j,\\
+\delta_W+g_W(1)\operatorname{tr}(MP_W)&=m
+\end{aligned}
+\qquad(W\in K).
+\tag{15.9}
+$$
+
+The sources are pairwise different. Writing $\ell=m-j$, every
+member has unique $x_W,y_W>0$ satisfying
+
+$$
+\begin{gathered}
+P_W=\frac1{1+x_Wy_W}
+ \begin{pmatrix}x_Wy_W&x_W\\y_W&1\end{pmatrix},\qquad
+g_W(1)=\ell(1+x_Wy_W),\\
+\delta_W=j-\ell(x_W+y_W),\qquad
+g_W(0)=a_0-j+\ell(x_W+y_W).
+\end{gathered}
+\tag{15.10}
+$$
+
+In particular all first gain samples are nonzero and have the
+same sign. The assertion concerns the whole fixed four-world
+support, including members not assigned to a particular subtree
+in a terminal-slot representation.
+
+Proof. The necessary source difference is
+[the same source, Theorem 30.1](FIB_SAMPLED_ROOT_COLLAPSE_AND_SAME_PARENT_FAILURE_CORE.md).
+Its Theorem 25.2 gives at least one first action whose response
+is constant on all of $K$, with an $L_6$ child equal to $K$.
+If the other first action were nonconstant, its losing child
+would have exactly three worlds: the pair restriction excludes
+two, and nonconstancy excludes four. This triple has $L_6$ at
+that actual first history, pairwise different sources, and both
+first response functions constant on it. Theorem 15.1 excludes
+it. Hence both first responses are constant on $K$. Their only
+nonempty first response children are $K$, each with $L_6$.
+
+Suppose their constants were equal, $j=m$. Their difference is
+$g_W(1)(P_W)_{22}$, so positivity forces
+
+$$
+g_W(1)=0,\qquad\delta_W=j\quad(W\in K).
+\tag{15.11}
+$$
+
+At each first history, every losing second child has $L_5$.
+It cannot be a pair by the pair restriction, or a triple by
+Lemma 15.2(1). It is therefore all of $K$. Thus all four
+length-two histories retain $K$. Their full matrix span and
+common drift force $g_W(2)P_W$ to be independent of $W$.
+Different trace-one sources force all these samples to be zero.
+
+Every losing third child has $L_4$. A pair would have roots
+$5,6,7$ in addition to roots $1,2$; a triple is excluded by
+Lemma 15.2(2). Hence every third action also retains all of $K$.
+The full length-three matrix span forces all third gain samples
+to vanish. Roots $1,2,3$ and the common initial value then fix
+one common nonzero entire gain
+
+$$
+G(t)=\frac{j-a_0}{6}(t-1)(t-2)(t-3)
+\tag{15.12}
+$$
+
+on $K$; if $j=a_0$, legality has already been contradicted.
+This gain is nonzero at $4,5,6,7$. After any clock-four
+reading, the next three actual actions $J,M,J$ distinguish all
+sources compatible with that reading: after factoring out the
+known nonzero samples and common drift, the four matrices are
+
+$$
+Q,\quad JQ,\quad MJQ,\quad JMJQ,
+\tag{15.13}
+$$
+
+where $Q$ is the actual clock-four matrix. They span all
+matrices, since $\{I,J,MJ,JMJ\}$ does and $Q$ is invertible.
+For completeness, the span follows from $MJ-I=E_{21}$,
+$J-E_{21}=E_{12}$, $JMJ-J=E_{11}$ and $I-E_{11}=E_{22}$.
+If a clock-four child had $L_3$, its recursion along these three
+fixed next actions would retain a terminal pair agreeing at clocks
+$4,5,6,7$ and on all earlier ancestors. Dividing only by the
+already nonzero values of $G$ gives equal traces against (15.13),
+so the sources agree. The common entire gain and drift then make
+the complete worlds equal, contradicting the terminal guard.
+Thus no clock-four child has $L_3$, contradicting the retained
+$L_4$ at clock three and proving $m\ne j$.
+
+Finally $\ell=g_W(1)(P_W)_{22}\ne0$, so
+$g_W(1)/\ell=1/(P_W)_{22}>0$. The rank-one matrix
+$(g_W(1)/\ell)P_W$ is strictly positive and has bottom-right
+entry one. It therefore has the unique form
+$\left(\begin{smallmatrix}xy&x\\y&1\end{smallmatrix}\right)$,
+$x,y>0$. Taking traces gives $g_W(1)/\ell=1+xy$;
+the first-$J$ equation and the initial reading give the other
+identities in (15.10).
+
+This is a repository-derived necessary condition. The two inherited
+necessary conditions cited above are used with their exact
+four-world hypotheses. The added conclusions
+are simultaneous constancy of both first functions and inequality
+of their constants, obtained by excluding their actual three-world
+children and equal-response case. No subset of a larger failing
+family is asserted to inherit $L_7$. In particular (15.9)–(15.10)
+are necessary conditions on four-world original-root obstructions,
+not a source tuple satisfying all guards of Theorem 13.3 and not
+an eight-reading decoder on the unrestricted domain. ∎
+
+## 追加锚（本行以下为增补区）
