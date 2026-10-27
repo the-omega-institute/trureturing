@@ -58,6 +58,10 @@ $$\forall (n: \mathbb{N}), \forall (k: \mathbb{N}), \operatorname{T}\left(n, k\r
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Compositions/WisemanA388712.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wiseman388-partitions` (proved) by `D5/S1/Words/Compositions/WisemanA388712.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wiseman388-partitions","declaration_gid":"D5/S1/Words/Compositions/WisemanA388712.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gus Wiseman (2025). *OEIS A388712, A387118 and A388713*. URL: <https://oeis.org/A388712>.
