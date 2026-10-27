@@ -1,6 +1,6 @@
 /- GID: D5/S1/Words/AdmissibleWords/FiveMode5040Bridge
    generality: G
-   mirror-B: none
+   mirror-B: D5/B/S1/Words/AdmissibleWords/FiveMode5040Bridge
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
