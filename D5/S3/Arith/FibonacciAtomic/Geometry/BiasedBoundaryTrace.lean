@@ -273,7 +273,7 @@ private theorem trace_bound (s : Finset Edge) (h : ℕ) (z : H) :
 def indicator (p : Edge) : G :=
   indicatorConstLp 2 (cylinder_measurable p.val) (measure_ne_top _ _) 1
 
-/-- Finitely supported increments finiteInclusiond in the original real edge space. -/
+/-- Inclusion of finitely supported increments in the original real edge space. -/
 private def finiteInclusion : (Edge →₀ ℝ) →ₗ[ℝ] H :=
   Finsupp.linearCombination ℝ (fun p => lp.single 2 p (1 : ℝ))
 

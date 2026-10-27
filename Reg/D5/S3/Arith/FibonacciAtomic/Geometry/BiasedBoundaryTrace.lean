@@ -1,5 +1,6 @@
 import D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace
 import Reg.Support.DependentFamily
+import LeanInformationAuditInterface.Contract.Registration
 
 /-! The actual boundary operator as the readout of the full Hardy family. -/
 
@@ -61,20 +62,24 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   simp only [lp.coeFn_zero, Pi.zero_apply, zero_smul] at hh
   have hz : HasSum (fun _ : Edge => (0 : G)) 0 := hasSum_zero
   have he := hh.unique hz
-  simp only [rejected, realize, lp.coeFn_zero, Pi.zero_apply, zero_smul,
-    map_zero, zero_add] at he
+  simp only [rejected, realize, map_zero, zero_add] at he
   exact indicator_ne_zero he
 
 private theorem single_trace : J (lp.single 2 leftEdge (1 : ℝ)) = indicator leftEdge := by
-  have hs := hasSum_single (f := fun p : Edge =>
-    (lp.single 2 leftEdge (1 : ℝ) : H) p • indicator p) leftEdge (by
-      intro q hq
-      rw [lp.single_apply_ne 2 leftEdge (1 : ℝ) hq]
-      exact zero_smul ℝ _)
-  have hs' : HasSum (fun p : Edge =>
-    (lp.single 2 leftEdge (1 : ℝ) : H) p • indicator p) (indicator leftEdge) := by
-    simpa only [lp.single_apply_self, one_smul] using hs
-  exact (boundary_trace_hardy.1 _).unique hs'
+  let z : H := lp.single 2 leftEdge (1 : ℝ)
+  change J z = indicator leftEdge
+  have he : (fun p : Edge => z p • indicator p) =
+      (fun p : Edge => if p = leftEdge then indicator leftEdge else 0) := by
+    funext p
+    change Pi.single (M := fun _ : Edge => ℝ) leftEdge (1 : ℝ) p • indicator p = _
+    by_cases hp : p = leftEdge
+    · subst p
+      simp
+    · rw [Pi.single_eq_of_ne hp]
+      simp [hp]
+  have hs := boundary_trace_hardy.1 z
+  rw [he] at hs
+  exact hs.unique (hasSum_ite_eq leftEdge (indicator leftEdge))
 
 /-- The full all-vector convergence and Hardy family, with the actual boundary map as readout. -/
 def familyRegistration : Registration arena (type_of% boundary_trace_hardy) where
@@ -94,12 +99,14 @@ def familyRegistration : Registration arena (type_of% boundary_trace_hardy) wher
     rw [map_zero, single_trace]
     exact indicator_ne_zero.symm
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+noncomputable def registration_1 :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace.boundary_trace_hardy)
     (type_of% (realize.{0,0,0,0,0} signature (fun _ _ z => J z) (fun e => nomatch e)))
     Unit Unit := {
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace.hardyUnit,
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace.familyRegistration,
+  realizationName :=
+    `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace.familyRegistration,
   realizationSource := none,
   generated := false,
   arena := .source ⟨arena⟩,
@@ -118,7 +125,7 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
     owner := `D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace,
     definition := none, coordinates := #[],
     readouts := #[{
-      path := #["fn", "arg", "body", "arg"],
+      path := #["fn", "arg", "body", "fn", "arg"],
       stateBinder := 0, functionOperand := false, stateOperand := none,
       booleanPredicate := false }] },
   continuation := .unknown,
