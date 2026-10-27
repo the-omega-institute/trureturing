@@ -6,13 +6,23 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Entropy/BitThreadIngletonMultiflowRefutation.claim; result=D5/S3/Entropy/BitThreadIngletonMultiflowRefutation.result; claim=D5/S3/Entropy/BitThreadIngletonMultiflowRefutation.claim
    digest: Star Ingleton bit-thread combination refutation on a capacitated 2-graph star. -/
 
-import D5.S3.Analytic.Knapsack.FractionalKnapsackDual
+module
+
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Data.Matrix.Mul
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Data.Finset.Max
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
 
 /-! Pair flows are oriented from `i` to `j`, using `i < j` as the single
 representative of each unordered boundary pair. -/
 set_option autoImplicit false
+set_option linter.style.longLine false
 open scoped BigOperators
-open D5.S3.Analytic.Knapsack.FractionalKnapsackDual (objective)
+
+@[expose] public section
 
 namespace D5.S3.Entropy.BitThreadIngletonMultiflowRefutation
 
@@ -61,10 +71,10 @@ def claim : Prop :=
     (∀ u v, cap u v = cap v u) →
     (∀ u, cap u u = 0) →
     (∀ u v, 0 ≤ cap u v) →
-    (∀ f n, IsMultiflow cap b f n → objective α (subflow n) ≥ 0) →
-    (∃ f n, IsMultiflow cap b f n ∧ objective α (subflow n) ≠ 0) →
+    (∀ f n, IsMultiflow cap b f n → dotProduct α (subflow n) ≥ 0) →
+    (∃ f n, IsMultiflow cap b f n ∧ dotProduct α (subflow n) ≠ 0) →
     ∀ f n, IsMaxMultiflow cap b f n →
-      objective α (minCut cap b) = objective α (subflow n)
+      dotProduct α (minCut cap b) = dotProduct α (subflow n)
 
 private def starCapacity (u v : Fin 6) : ℝ :=
   if u = 5 then if v.val < 4 then 1 else if v = 4 then 2 else 0
@@ -93,17 +103,17 @@ private def witnessFlow (i j : Fin 5) (u v : Fin 6) : ℝ :=
   witnessThreads i j * pathFlow i j u v
 
 private lemma ingleton_combo (x : Finset (Fin 5) → ℝ) :
-    objective ingletonCoefficient x =
+    dotProduct ingletonCoefficient x =
       x {0, 1} + x {0, 2} + x {0, 3} + x {1, 2} + x {1, 3} -
       x {0} - x {1} - x {2, 3} - x {0, 1, 2} - x {0, 1, 3} := by
-  delta objective ingletonCoefficient
+  delta dotProduct ingletonCoefficient
   simp only [add_mul, sub_mul, ite_mul, one_mul, zero_mul,
     Finset.sum_add_distrib, Finset.sum_sub_distrib, Finset.sum_ite_eq',
     Finset.mem_univ, ite_true]
 
 private lemma combo_identity :
     ∀ n : Fin 5 → Fin 5 → ℝ,
-      objective ingletonCoefficient (subflow n) = 2 * n 0 1 + 2 * n 2 3 := by
+      dotProduct ingletonCoefficient (subflow n) = 2 * n 0 1 + 2 * n 2 3 := by
   intro n
   rw [ingleton_combo]
   delta subflow
@@ -217,7 +227,7 @@ private lemma witness_max :
   all_goals norm_num
 
 private lemma star_min_combo :
-    objective ingletonCoefficient (minCut starCapacity Fin.castSuccEmb) = 0 := by
+    dotProduct ingletonCoefficient (minCut starCapacity Fin.castSuccEmb) = 0 := by
   rw [ingleton_combo]
   repeat rw [star_cut_values]
   delta starWeight
@@ -225,14 +235,14 @@ private lemma star_min_combo :
   norm_num
 
 private lemma star_witness_combo :
-    objective ingletonCoefficient (subflow witnessThreads) = 2 := by
+    dotProduct ingletonCoefficient (subflow witnessThreads) = 2 := by
   rw [combo_identity]
   delta witnessThreads
   norm_num
 
 private lemma star_nonnegative :
     ∀ f n, IsMultiflow starCapacity Fin.castSuccEmb f n →
-      objective ingletonCoefficient (subflow n) ≥ 0 := by
+      dotProduct ingletonCoefficient (subflow n) ≥ 0 := by
   intro f n h
   rw [combo_identity]
   exact add_nonneg (mul_nonneg (by norm_num) (h.2.2.1 0 1 (by decide)).1)
@@ -257,7 +267,7 @@ theorem result : ¬ claim := by
   intro h
   have hnonneg := star_nonnegative
   have hex : ∃ f n, IsMultiflow starCapacity Fin.castSuccEmb f n ∧
-      objective ingletonCoefficient (subflow n) ≠ 0 :=
+      dotProduct ingletonCoefficient (subflow n) ≠ 0 :=
     ⟨witnessFlow, witnessThreads, witness_is_multiflow, by norm_num [star_witness_combo]⟩
   have heq := h (Fin 6) 5 starCapacity Fin.castSuccEmb ingletonCoefficient
     star_symmetric star_loopless star_capacity_nonnegative hnonneg hex
