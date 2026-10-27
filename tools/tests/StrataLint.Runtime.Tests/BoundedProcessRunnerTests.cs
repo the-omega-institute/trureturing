@@ -262,8 +262,9 @@ public sealed class BoundedProcessRunnerTests
             {
                 ioToken = token;
                 cancellation.Cancel();
-                await Task.Delay(Timeout.Infinite, token);
-                return 0;
+                var completion = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
+                using var registration = token.Register(() => completion.TrySetCanceled(token));
+                return await completion.Task;
             }, cancellationToken: cancellation.Token));
         Assert.True(ioToken.IsCancellationRequested);
         Assert.NotEqual(cancellation.Token, ioToken);
