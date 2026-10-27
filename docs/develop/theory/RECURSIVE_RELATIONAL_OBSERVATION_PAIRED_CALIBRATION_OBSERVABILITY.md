@@ -4998,3 +4998,586 @@ history, basis and arithmetic hypotheses; none is a generic controller
 theorem or a resource-preservation theorem.
 
 ## 追加锚（本行以下为增补区）
+
+## 22. Stationary-Q endpoint sensors and the deterministic handoff boundary
+
+This continuation concerns the stationary native $Q$ experiment already
+defined in [FIB long-time phase diffusion](FIB_NATIVE_LONG_TIME_PHASE_DIFFUSION.md),
+especially Definitions 55.1 and 62.1 and Theorems 63.1--67.1. Those sections
+supply continuous wrapped $v$ observation, magnitude and shifted-height
+recovery, actual-law overlap, and eventual $v$-only resolution. The results
+below add a fixed endpoint interface and a specific observation-selected
+interface. They do not replace the source or turn its stipulated law into an
+acquired preparation.
+
+### 22.1. The supplied stationary source and observation interface
+
+**Definition 22.1 (stationary-Q experiment).** Fix $0<\ell<u<H$,
+$\varepsilon>0$, the admissible calibration radius $\delta$ of L Definition
+62.1, the original clock, and known initial phases $(\theta _0,v_0,D_0)$.
+Write
+
+$$
+\begin{gathered}
+\sigma=\sqrt 2\,\varepsilon,
+\qquad
+\phi(k)=\sqrt{\frac{2}{u-\ell}}
+       \sin\!\left(\frac{\pi(k-\ell)}{u-\ell}\right),
+\qquad
+\pi(dk)=\phi(k)^2\,dk,\\
+\alpha_\kappa=\kappa+\frac{\kappa^2}{H},\\
+A_\kappa(k)=\frac{(k-2\kappa)(H+\kappa-k)}{2H(k-\alpha_\kappa)},\\
+B_\kappa(k)=-\frac{k(k-2\kappa)}{2H(k-\alpha_\kappa)},\\
+b_\kappa(k)=\frac{H+\kappa-k}{H(k-\alpha_\kappa)}.
+\end{gathered}
+\tag{22.1}
+$$
+
+The unknown fixed calibration is $\kappa\in[-\delta,\delta]$. Under the
+supplied probability law $\mathbf Q_\kappa$, $K_0$ has density $\pi$ and,
+with independent Brownian motions $W^1,W^2$,
+
+$$
+\begin{aligned}
+dK_a&=\sigma\,dW^1_a+
+       \sigma^2\frac{\phi'(K_a)}{\phi(K_a)}\,da,\\
+d\theta_a&=\sqrt2\,A_\kappa(K_a)\,dW^2_a,\\
+dv_a&=\sqrt2\,B_\kappa(K_a)\,dW^2_a,\\
+dD_a&=\sqrt2\,\kappa b_\kappa(K_a)\,dW^2_a.
+\end{aligned}
+\tag{22.2}
+$$
+
+At $\kappa=0$ the actual coordinate is $D_a=D_0$; a moving comparison
+coordinate is not observed. The admissibility margins in L Definition 62.1
+are retained: on every allowed shifted domain the denominators in (22.1) are
+nonzero, $B_\kappa$ is bounded away from zero, and the coefficients have the
+bounded derivatives used by the inherited source. These are hypotheses, not a
+new smaller parameter family.
+
+The base observation at a positive time $t$ is the complete continuous
+wrapped path $(e^{iv_a})_{0\leq a\leq t}$, with its known initial lift and
+the exact original clock. Its unique continuous lift, denoted $V$, is a
+Borel causal functional of that prefix, with $V_0=v_0$. This is a supplied
+ideal interface, not a finite sampler, finite-bit register, or physical
+acquisition result.
+
+For a fixed endpoint comparison, install before observing a Borel map
+
+$$
+q:\mathbb T=\mathbb R/(2\pi\mathbb Z)\longrightarrow Y,
+\qquad |Y|\leq\aleph_0,
+\tag{22.3}
+$$
+
+and at a predeclared $t>0$ return the single value
+$q((D_t-D_0)\bmod 2\pi)$. The endpoint detector is stipulated to be aligned
+with $D_0$, exact in phase, nondisturbing, and delivered at the same clock
+time. A comparison using $\theta_t$ has an analogous separately installed
+interface. The detector, reference, request/reply transaction and physical
+state successor are declared interface premises; none is inferred from the
+decoder.
+
+**Definition 22.2 (views and common-source image).** On a run through $t$,
+
+$$
+\begin{aligned}
+\mathsf{Space}_t&=(K_t,\theta_t,v_t,D_t),\\
+\mathsf{Time}_t&=(K_a,\theta_a,v_a,D_a)_{0\leq a\leq t},\\
+\mathsf{Boundary}_{q,t}&=\bigl((e^{iv_a})_{0\leq a\leq t},
+              q((D_t-D_0)\bmod2\pi)\bigr),\\
+\mathsf{Memory}_t&=\text{retained }(\kappa,\mathsf{Space}_t)\text{ and the
+              retained }v\text{-prefix needed for the declared task}.
+\end{aligned}
+\tag{22.4}
+$$
+
+The parameter $\kappa$ is not a moving spatial coordinate. The temporal
+target is the ordered original path, while the boundary is only the actual
+$v$ prefix and the declared endpoint response; no hidden $\theta$ or $D$
+history is appended. On the image where the inverse below is defined, the
+boundary and full parameter/path prefix are mutually recoverable. The prefix
+then gives current space and, when retained, the passive continuation law.
+No current-space-to-arbitrary-past inverse or unrestricted four-view
+equivalence is asserted.
+
+The same-run resource vector is componentwise. The supplied stationary law
+and preparation, exact clock and phase reference, continuous $v$ acquisition
+and archive, and ideal real path processing are base premises. Computing
+quadratic variations and stochastic integrals from the record is computation
+and retention, not an additional acquired source. Installing the $D$ detector
+and acquiring its reply is a separate endpoint resource. A selected-handoff
+policy additionally pays continuous monitoring, the causal selector, the
+handoff tag and retained timing context even on a branch where no query is
+made. An exact $\theta$ endpoint is a different payload from a binary $D$
+reply. These alternatives are distinct runs; favorable coordinates from
+separate runs are not pooled into a total-cost claim.
+
+### 22.2. The common shifted calculation
+
+**Lemma 22.3 (one phase driver and the reflected endpoint).** Fix
+$r\in(0,\delta]$. On a common admissible shifted-height path put
+
+$$
+\alpha_\eta=\eta r+\frac{r^2}{H},\qquad
+c_a=U_a+\frac{r^2}{H},\qquad
+B_r(U_a)=-\frac{c_a^2-r^2}{2HU_a},\qquad
+g_r(U_a)=\frac{H-c_a}{HU_a},
+\tag{22.5}
+$$
+
+for $\eta\in\{+1,-1\}$. The two candidate heights are
+$K_a^\eta=U_a+\alpha_\eta=c_a+\eta r$. Direct substitution into (22.1)
+gives
+
+$$
+\begin{aligned}
+B_{\eta r}(K_a^\eta)&=B_r(U_a),&
+b_{\eta r}(K_a^\eta)&=g_r(U_a),\\
+A_{\eta r}(K_a^\eta)&=
+ \frac{(c_a-\eta r)(H-c_a)}{2HU_a}.
+\end{aligned}
+\tag{22.6}
+$$
+
+Define the record functional
+
+$$
+\Xi_a=r\int_0^a\frac{g_r(U_s)}{B_r(U_s)}\,dV_s.
+\tag{22.7}
+$$
+
+Then, on the common phase driver,
+
+$$
+d\Xi_a=\sqrt2\,r g_r(U_a)\,dW^2_a,\qquad
+D_a^\eta-D_0=\eta\Xi_a,\qquad
+\theta_a^+-\theta_a^-=-\Xi_a.
+\tag{22.8}
+$$
+
+In particular, conditional on $U$, $\Xi_t$ is centered Gaussian with
+
+$$
+\operatorname{Var}(\Xi_t\mid U)=2r^2\int_0^t g_r(U_s)^2\,ds>0.
+\tag{22.9}
+$$
+
+**Proof.** Substitute $K=c+\eta r$ and
+$K-\alpha_{\eta r}=U$ into (22.1). This gives (22.6), and division of the
+$D$ and $\theta$ equations by the nonzero $B_r$ gives (22.7)--(22.8).
+The strict positivity in (22.9) follows from the admissibility margins. The
+two signs use one and the same $W^2$ after conditioning on the common $U$;
+they are not separately optimized phase laws. $\square$
+
+**Lemma 22.4 (causal Borel versions).** For every $t>0$, $r$,
+$U_{[0,t]}$, and the integrals in (22.7)--(22.8) have parameter-independent
+Borel versions computed from the supplied $v$ prefix. A version can be
+chosen simultaneously for all positive times outside one null set for each
+fixed $\mathbf Q_\kappa$.
+
+**Proof.** Theorem 63.1 of the inherited source supplies $r$ and $U$ from
+the nested quadratic-variation construction, including the zero leaf. On a
+compact interior localization $B_r$ is bounded away from zero and the ratios
+in (22.7)--(22.8) have bounded derivatives. Dyadic left sums against $V$ have
+squared error $O(2^{-n})$ by the martingale isometry and maximal inequality.
+Markov's inequality at a summable threshold and Borel--Cantelli give uniform
+almost-sure convergence on that localization. Intersect over finitely many
+ratios, integer horizons and countably many compact localizations. The
+resulting limits are Borel prefix functionals; assign a fixed default off
+their convergence and range domain. Every finite $Q$ path lies in one of the
+localizations. This introduces neither a random-driver port nor a finite
+numerical algorithm. $\square$
+
+**Lemma 22.5 (actual-law overlap).** For $t>0$ and $r>0$, put
+
+$$
+I_\eta=I-\alpha_\eta,qquad
+E_\eta=\{u\in C([0,t]):u_a\in I_\eta\text{ for all }a\leq t\}.
+\tag{22.10}
+$$
+
+Let $\Lambda_t$ be the common Lebesgue-start Brownian-height reference with
+variance rate $\sigma^2$, and let $\Gamma_r(dv\mid u)$ be the common wrapped
+phase kernel from (22.6). The joint $(U,V)$ law under sign $\eta$ has density
+
+$$
+f_\eta(u)=e^{\lambda t}
+ \phi(u_0+\alpha_\eta)\phi(u_t+\alpha_\eta)\mathbf1_{E_\eta}(u)
+\tag{22.11}
+$$
+
+with respect to $\Lambda_t(du)\Gamma_r(dv\mid u)$, for the same positive
+constant factor $e^{\lambda t}$. Thus the two laws are mutually absolutely
+continuous on $E_+\cap E_-$, which has positive reference and positive mass
+under both signs. Each sign also has a positive-probability singleton branch
+where the other shifted height is inadmissible.
+
+**Proof.** The stationary Doob-transform density from L Theorem 64.1,
+translated by $\alpha_\eta$, is (22.11). The coefficient identity (22.6)
+makes the conditional phase kernel identical, including all wrapped
+windings. A compact interval in the nonempty intersection
+$I_+\cap I_-$ has positive Brownian survival probability on every finite
+horizon, and both endpoint factors in (22.11) are positive there. This
+proves positive overlap. Initial points in $I\setminus(I+\alpha_{-\eta})$
+give the singleton branches. $\square$
+
+
+### 22.3. Fixed deterministic endpoints
+
+**Theorem 22.6 (classification of fixed $D$ endpoint sensors).** Fix
+$t>0$ and a countable-output Borel sensor $q$ as in (22.3). On every paired
+nonzero magnitude $r$, the boundary record
+
+$$
+\mathsf O_{q,t}=\bigl((e^{iv_a})_{0\leq a\leq t},
+q((D_t-D_0)\bmod2\pi)\bigr)
+\tag{22.12}
+$$
+
+admits one parameter-independent Borel decoder for the signed calibration
+and the full lifted original prefix if and only if
+
+$$
+\lambda_{\mathbb T}\{z:q(z)=q(-z)\}=0.
+\tag{22.13}
+$$
+
+The assertion is parameterwise almost sure for every fixed $\kappa$; its
+null set may depend on $t$ and $\kappa$. The zero branch $\kappa=0$ is already
+resolved by the inherited magnitude theorem and needs no endpoint reply.
+
+**Proof (sufficiency).** From the $v$ prefix recover $r,U$ by Theorem 63.1.
+When the admissible candidate set is a singleton, choose it. On a paired
+fiber, compute $\Xi_t$ from (22.7) and the two candidate replies
+$q(\Xi_t)$ and $q(-\Xi_t)$. By (22.9), the wrapped $\Xi_t$ has a
+strictly positive density on $\mathbb T$. Condition (22.13) therefore makes
+the two candidate replies unequal almost surely. Comparing the observed
+reply selects $\eta$, and then $\kappa=\eta r$ and
+$K_{[0,t]}=U_{[0,t]}+\alpha_\kappa$ are recovered.
+
+**Proof (necessity).** Suppose $C=\{z:q(z)=q(-z)\}$ has positive Haar
+measure. Conditional on any common $U$ path, (22.9) gives positive
+probability that $\Xi_t\bmod2\pi\in C$. Restrict (22.11) to this event in
+$E_+\cap E_-$ and use its positive common submeasure. On that submeasure
+the complete $v$ records and endpoint replies agree literally for the two
+signs, while $\kappa$ and every height coordinate differ. A decoder correct
+almost surely for both signs would create a measurable event of mass one
+under one law and zero under the equivalent other law, which is impossible
+by `equivalent_probability_laws_exclude_perfect_separator` and its posterior
+interior companion. Hence (22.13) is necessary. $\square$
+
+**Corollary 22.7 (binary $D$ and its limited minimum).** The fixed test
+
+$$
+h(z)=
+\begin{cases}
++1,&\sin z\geq0,\\
+-1,&\sin z<0
+\end{cases}
+\tag{22.14}
+$$
+
+satisfies (22.13), since its reflection-collision set is contained in
+$\{0,\pi\}$. It therefore supplies the signed calibration and full lifted
+prefix with one binary reply on every unresolved paired branch. A constant
+sensor fails. Thus two is the least response-alphabet cardinality in this
+fixed-endpoint comparison. This is not a minimum installation, arithmetic,
+archive, clock, physical, or total-cost resource.
+
+### 22.4. A countable $\theta$ endpoint is different
+
+**Theorem 22.8 (binary $D$ versus countable $\theta$).** Fix $t>0$ and
+$r>0$. Let $p:\mathbb T\to Y$ be any fixed countable-output Borel quantizer
+of the current wrapped $\theta$ endpoint, chosen before observing the $v$
+prefix. The record consisting of the complete $v$ prefix and
+$p(\theta_t\bmod2\pi)$ does not exactly recover the sign. In contrast, the
+exact circle-valued endpoint $\theta_t\bmod2\pi$ recovers it almost surely.
+
+**Proof.** Conditional on $U$, the two unwrapped candidate increments are
+centered Gaussian integrals with deterministic integrands
+
+$$
+A_\eta(U_a)=\frac{(c_a-\eta r)(H-c_a)}{2HU_a}.
+\tag{22.15}
+$$
+
+Their ratio is $(c_a-r)/(c_a+r)$. Equality in the Cauchy--Schwarz
+criterion for a singular covariance would force this ratio to be constant in
+time, hence $U$ constant. The height has quadratic variation
+$\sigma^2t>0$, so constant paths have probability zero. The conditional
+Gaussian pair $(\theta_t^+,\theta_t^-)$ consequently has a positive density
+on $\mathbb R^2$, and its wrapped pair has a positive density on $\mathbb T^2$.
+
+The countable Borel cells $p^{-1}(y)$ cannot all have Haar measure zero.
+Choose one cell of positive measure. Positive two-torus density gives a
+positive common collision event on which the quantized replies agree.
+Combining it with the positive actual-law overlap of Lemma 22.5 rules out a
+common zero-error sign decoder by the same equivalent-law argument as in
+Theorem 22.6. For the exact circle-valued endpoint, the two candidates are
+equal only when $\Xi_t\in2\pi\mathbb Z$, which has probability zero by
+(22.9). Comparing the exact candidates selects the sign, after which the
+prefix formulas in Theorem 22.9 apply. A partition selected from $v$ would
+be a different paid interface and is outside this fixed-quantizer claim. $\square$
+
+### 22.5. Full-prefix inverse and dynamics
+
+**Theorem 22.9 (the exact inverse on the attained image).** Under the
+separation condition (22.13), the augmented boundary record at a fixed
+deterministic $t$ and the target
+
+$$
+\mathsf T_t=(\kappa,K_{[0,t]},\theta_{[0,t]},v_{[0,t]},D_{[0,t]})
+\tag{22.16}
+$$
+
+are Borel inverses modulo the law-wise null sets of the paired source. The
+inverse from boundary to target is
+
+$$
+\begin{aligned}
+K_a&=U_a+\alpha_\kappa,\\
+\theta_a&=\theta_0+\int_0^a
+       \frac{A_\kappa(K_s)}{B_\kappa(K_s)}\,dV_s,\\
+D_a&=D_0+\int_0^a
+       \frac{\kappa b_\kappa(K_s)}{B_\kappa(K_s)}\,dV_s,
+\qquad 0\leq a\leq t,
+\end{aligned}
+\tag{22.17}
+$$
+
+with the actual zero convention $D_a=D_0$. The forward map projects to the
+$v$ record and evaluates the installed endpoint sensor. On every good path
+the two composites are the identity.
+
+**Proof.** Theorem 22.6 recovers the signed $\kappa$ and $U$. The first line
+of (22.17) is the shifted-coordinate definition. Dividing the common-driver
+equations in (22.2) by $B_\kappa$ gives the other lines, and Lemma 22.4
+supplies their causal Borel versions. Substitution back into (22.2) reproduces
+the same stochastic increments, so the forward endpoint reply is exactly the
+observed reply. Conversely, projecting a reconstructed prefix and evaluating
+the declared sensor returns its boundary record. The inverse is an identity
+on the attained good image, not on arbitrary continuous records.
+
+After acquisition, retained $\kappa$ and the current state determine the
+conditional passive $Q$ transition law. Continued supplied $v$ observation
+updates (22.17) on the same source and agrees with the known-calibration
+inverse of L Theorem 55.2. A conditional law is not a prediction of future
+Brownian outcomes without future observations. No arbitrary intervention,
+native control, or current-state-to-past inverse is supplied. $\square$
+
+
+### 22.6. An arbitrary-stop counterexample
+
+**Theorem 22.10 (bounded causal stopping can destroy endpoint recovery).**
+For every $r>0$ and $L>0$, let
+
+$$
+T=\inf\{a>0:\Xi_a=2\pi\},\qquad \tau=T\wedge L.
+\tag{22.18}
+$$
+
+The time $\tau$ is computed causally from the $v$ prefix. On a positive
+common submeasure of the two actual sign laws with $T\leq L$, the stopped
+$v$ record, observed $\tau$, and even the exact *wrapped* current pair
+$(\theta_\tau\bmod2\pi,D_\tau\bmod2\pi)$ are identical for the two signs.
+Consequently no decoder from that stopped record can recover the sign almost
+surely. This does not contradict Theorem 22.6, whose time is fixed in
+advance.
+
+**Proof.** Lemma 22.4 makes $\Xi$ a continuous causal functional of the
+positive-time record. Choose a compact interval strictly inside
+$I_+\cap I_-$ and restrict the common height path to remain there through
+$L$; (22.11) gives this event positive common mass. On it, the quadratic
+variation rate in (22.9) is bounded above and below by positive constants.
+The time-changed Brownian motion therefore has positive probability of
+hitting $2\pi$ before $L$. Restrict the common submeasure further to this
+hitting event and push it forward under the stopped record.
+
+At $T$, (22.8) gives
+
+$$
+D_T^+-D_0=2\pi,\qquad D_T^--D_0=-2\pi,\qquad
+\theta_T^+-\theta_T^-=-2\pi.
+\tag{22.19}
+$$
+
+Thus both wrapped endpoint coordinates coincide, and the base prefix and
+$\tau=T$ coincide because they are computed from the common $U,V$ path. The
+two target calibrations and height paths remain different. The positive
+common submeasure then rules out an almost-sure decoder exactly as in the
+necessity part of Theorem 22.6. The statement concerns a bounded stopping
+rule and exact circle observations; it does not claim a collision for exact
+real unwrapped endpoint values. $\square$
+
+### 22.7. A specific causal selector with a delay bound
+
+**Theorem 22.11 (quadrant selector).** Fix $t_0>0$. Let $S$ be the first
+$a\geq t_0$ at which the inherited L64 candidate set is a singleton. If it
+is already singleton at $t_0$, hand off immediately without an endpoint
+query. Otherwise, for $r>0$ define
+
+$$
+T_\square=\inf\{a\geq t_0:\Xi_a\in\pi/2+\pi\mathbb Z\},
+\qquad
+\tau=\min\{S,T_\square\}.
+\tag{22.20}
+$$
+
+Query the binary sensor $h$ of (22.14) only if the candidate set is still
+double at $\tau=T_\square$. Then $\tau<\infty$ almost surely, at most one
+binary reply is used, and the full original prefix through $\tau$ is
+recovered. Relative to waiting for the $v$-only time $S$, $\tau\leq S$ on
+the same run and $\Pr(\tau<S)>0$ under each nonzero sign law. The sensor is
+an installed resource and is charged even on a no-query branch.
+
+For each fixed $r>0$, put
+
+$$
+\beta_-(r)=\sqrt2\,r\inf_{u\in\overline{I_+\cup I_-}}g_r(u)>0.
+\tag{22.21}
+$$
+
+The selector obeys the fixed-parameter conditional delay bound
+
+$$
+\mathbf E\bigl[(T_\square-t_0)^+\mid\mathcal F_{t_0}\bigr]
+\leq\frac{\pi^2}{4\beta_-(r)^2},
+\qquad
+\mathbf E[\tau-t_0\mid\mathcal F_{t_0},\,S>t_0]
+\leq\frac{\pi^2}{4\beta_-(r)^2}.
+\tag{22.22}
+$$
+
+There is no bound in this statement uniform as $r\downarrow0$.
+
+**Proof.** All candidate tests use only the recovered $r,U$, the prefix
+$V$, and the known clock. If $S$ occurs first, the inherited quotient
+classification supplies the sign. If $T_\square$ occurs first while two
+candidates remain, $\sin(\Xi_{T_\square})=\pm1$ and (22.14) separates them.
+No future driver is consulted.
+
+For the delay bound, choose adjacent lattice points $a<b$ in
+$\pi/2+\pi\mathbb Z$ bracketing $\Xi_{t_0}$; if it is already on the lattice,
+the delay is zero. Until the first exit, apply Itô's formula to
+$f(x)=(x-a)(b-x)$:
+
+$$
+df(\Xi_s)=f'(\Xi_s)\,d\Xi_s-d[\Xi]_s.
+\tag{22.23}
+$$
+
+Since $d[\Xi]_s=2r^2g_r(U_s)^2ds\geq\beta_-(r)^2ds$ and
+$0\leq f\leq\pi^2/4$, stopping at the exit and at $t_0+n$ gives
+
+$$
+\beta_-(r)^2\,
+\mathbf E[(T_\square-t_0)\wedge n\mid\mathcal F_{t_0}]
+\leq f(\Xi_{t_0})\leq\frac{\pi^2}{4}.
+\tag{22.24}
+$$
+
+Monotone convergence proves (22.22) and almost-sure finiteness. Since
+$\tau\leq T_\square$ and $\tau\leq S$, the same bound holds for $\tau$.
+
+For strict improvement, choose a compact common height interval and a finite
+$L>t_0$. The event that the height stays in that interval through $L$ has
+positive probability and keeps both candidates admissible, so $S>L$. Given
+such a path, the nondegenerate time-changed Brownian $\Xi$ has positive
+probability of hitting the quadrant lattice before $L$. Hence
+$\Pr(T_\square<S)>0$ under either sign. At $r=0$, Theorem 63.1 resolves the
+target at $t_0$ and no division or selector is used. The bound is
+per-parameter and does not claim finite operations, finite precision,
+uniform cost, or a physical implementation. $\square$
+
+### 22.8. Resource separation, reuse, and remaining boundary
+
+**Proposition 22.12 (what this result does and does not acquire).** In the
+fixed-time theorem, the continuous $v$ path, stationary $Q$ source, exact
+clock/reference and nondisturbing detector are supplied premises. The $v$
+path and (when queried) the endpoint reply are acquired observations; $r,U,
+\Xi$, candidate comparison and prefix integrals are computed from retained
+records. Source preparation is not counted as an earned installation. The
+selector of Theorem 22.11 adds continuous monitoring, exact trigger
+recognition and a handoff tag. Exact real registers, archives, limits,
+request/reply traffic, output copies and continued callable use have their
+own resource coordinates. A simultaneous fixed-time bill can therefore be
+written as
+
+$$
+R_{\mathrm{fixed}}=\bigl(
+ \mathrm{Prep}_Q^{\mathrm{supplied}},
+ \mathrm{Obs}_v^{\mathrm{acquired}},
+ \mathrm{ClockRef}^{\mathrm{supplied}},
+ \mathrm{Sensor}_D^{\mathrm{installed}},
+ \mathrm{Reply}_D^{\mathrm{acquired}},
+ \mathrm{Compute}(r,U,\Xi,\mathrm{prefix}),
+ \mathrm{Retain}(V,\kappa,\mathsf{Space}),
+ \mathrm{Use}_Q^{\mathrm{callable}}\bigr).
+\tag{22.25}
+$$
+
+The selected-handoff bill is this same-run vector plus
+$\mathrm{Monitor}_v$, $\mathrm{Selector}$, the stop tag, and the retained
+trigger state; the exact-$\theta$ comparison replaces the endpoint payload
+with $\mathrm{Reply}_\theta$. The first, third, and fourth coordinates are
+supplied or installed premises, the second and fifth are actual observations,
+and the middle coordinates are computed or retained outputs. No coordinate
+may be copied from a different preparation or run. No finite apparatus,
+finite-bit, energy, lifetime, or total-cost bound follows.
+
+The mathematical reuse is source-specific. L Theorems 55.2 and 63.1 supply
+causal lifting and magnitude/shift recovery; L Theorem 64.1 supplies the
+actual translated-law overlap; L Theorems 66.1 and 67.1 supply continuous
+extra-phase and eventual-$v$ alternatives. The existing endpoint-timing
+volume, [FIB optimal endpoint query timing](FIB_NATIVE_OPTIMAL_ENDPOINT_QUERY_TIMING.md),
+already treats finite adaptive point queries and its own stopping domain; it
+does not supply the fixed $D$ reflection classification or the countable
+$\theta$ obstruction here. The D5 measure-separation declarations
+`equivalent_probability_laws_exclude_perfect_separator` and
+`equivalent_law_posterior_stays_interior` supply generic null-set transport
+only after the actual common measures (22.11) are established. The finite
+native prefix and common-flow declarations `native_acquired_prefix_reconstruction`
+and `NativeBorelCommonFlow` concern discrete acquired words and are not
+transported to this diffusion.
+
+The published E26 native contributions in [NLBA II](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md),
+[NLBA III](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_III.md),
+[clocked recovery](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md),
+[paid view conversion](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md),
+[structural storage](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md),
+[callable storage](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md),
+[transport completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md),
+and [process geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) retain
+their native acquired sources, rights, controls and resource vectors. They
+do not install the stationary-Q $v$ history or the nondisturbing endpoint
+sensor used here. The current third-germ/common-word additions likewise
+concern their own cubic response sensitivity and gluing interfaces; they
+provide no stationary-Q endpoint sensor or continuous diffusion acquisition.
+No claim from those sources is duplicated or used outside its declared model.
+
+The classical ingredients are quadratic variation and Itô calculus, Gaussian
+conditioning, Brownian time change, and the common-submeasure separator. The
+variation convention is the one associated with Föllmer,
+[*Calcul d'Itô sans probabilités*](https://www.numdam.org/item/SPS_1981__15__143_0/),
+pp. 143--150. Elworthy--Le Jan--Li,
+[*The Geometry of Filtering*](https://arxiv.org/html/0810.2253v1), §§2.4 and
+5.1, gives filtering/projectibility context; its projectible-symbol and
+cohesive-descent hypotheses are not assumed here, so no filtering theorem is
+imported. The pinned upstream mathematical library is used only as a
+read-only source of standard measure and stochastic-analysis primitives; no
+new kernel verification is claimed.
+
+The result is conditional analytic mathematics. It does not prove physical
+acquisition or finite implementation of the stationary law, continuous $v$,
+exact clock/reference, endpoint detector, or ideal processing. It does not
+solve unchanged fixed-$G_{gc}$, original-$Q$, parked-consumer, or
+unchanged-initialization obligations; it does not claim a common physical
+apparatus, universal four-way recovery, a universal $\alpha/\beta$ minimum,
+or a conservative-source theorem. Arbitrary stopping rules remain outside
+the deterministic classification except for the explicit counterexample and
+the quadrant selector proved above. The old continuous-stream, eventual
+handoff, native acquisition, and physical-realization boundaries remain in
+force.
+
+## 追加锚（本行以下为增补区）
