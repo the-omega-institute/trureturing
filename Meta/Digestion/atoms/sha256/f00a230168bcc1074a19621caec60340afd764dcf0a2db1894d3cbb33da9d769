@@ -1,0 +1,69 @@
+**Definition 7.3 (one-run resource vector and acquisition boundary).**
+The continuous records granted in Theorems 3.1 and 6.1 contain exact
+real information and unrestricted monitoring/retention. No finite
+sample, finite-bit, finite-bandwidth or finite-storage implementation
+of them is asserted. Their strength makes the obstructions apply to
+every passive actual record measurable in them; it is not a resource
+saving credited to a receiver.
+
+For an actual finite service/consumer run on $[0,T]$, keep its own
+$\epsilon,\delta,N,\rho$ and its actual polygon variations
+$V_A,V_B,V_W$, with $K_I=\max(|l-k_0|,|u-k_0|)$. The reused bounds
+on this same run are
+
+$$
+\begin{aligned}
+N_{\rm arr}&\le2\lfloor T/\epsilon\rfloor+\lfloor T/\delta\rfloor,\\
+N_{\rm init}&\le N_{\rm arr}+1,\\
+N_{\rm legs}&\le
+6\left(N+\frac{V_A+V_B}{\rho}
+          +\frac{V_W+K_IV_B}{\rho^2}\right)+1.
+\end{aligned}
+\tag{7.3}
+$$
+
+These are event and leg counts from [F, (24.6), (26.5)]. Type
+$\mathrm C$ packets denote a known source, while each
+$\mathrm E/\mathrm D$ packet has three exact-real projected state
+fields instead of four, as well as its type and original timestamp.
+For realized arrival counts $n_{ED}$ and $n_C$, the literal full
+service of [F, Assumption 25.1] delivers $4(n_{ED}+n_C)$ state
+coordinate fields. This projected format delivers $3n_{ED}$ such
+fields, omitting $n_{ED}+4n_C$. If contact packets instead keep their
+four known zero coordinates, deleting only the hidden coordinate
+from $\mathrm E/\mathrm D$ packets omits exactly $n_{ED}$ fields.
+Types, timestamps and framing are counted separately in either format. It changes no event
+time, monitoring interval, native leg or own exit. The law provider
+can still require hidden state internally; deletion of delivered
+fields does not remove its source calibration or memory.
+
+The simultaneous resource vector includes the original source and
+preparation, fixed rotations and constants, calibrated
+$F,h,q,P^0,\nu,\kappa$ service, exact original clock, nonarrival
+monitoring and notification, selection and request work, actual
+arrived state fields/types/timestamps, retained and callable records,
+all comparisons, clipping, ceiling and connector calculations,
+actuation durations and operands, requests and complete returns,
+framing and acknowledgement traffic, and all retained copies and
+workspace. Exported or duplicated records and computed predictions
+pay their own arithmetic, precision, storage and output costs.
+Independent randomization has its own source and retention cost;
+independence gives no access to a hidden source seed. No physical
+tariff or measured bit count is supplied for these exact-real
+contracts. Finite per-run counts do not give a uniform lifetime
+memory, precision, speed, energy or computation bound.
+
+The projected values are measured service disclosures under its
+availability premise; lifted paths, posterior laws, connector targets
+and regenerated outputs are computed mathematical objects. Theorems
+3.1 and 6.1 do not acquire an ideal path. Proposition 7.1 does not
+acquire the service from bare native operations. If only the existing
+native-output approximation is required, its consumer already avoids
+$z$ and reuse suffices. If the task is instead sign recovery at a
+specified $t>0$, an explicitly installed port disclosing the actual
+bit $\mathbf1_{\{z_t>0\}}$ supplies it. Both bit values occur, so
+two distinct messages are necessary for deterministic exact success
+in that added-port task; sensor installation, same-source coupling,
+time selection, reference and traffic remain separately charged.
+This is neither a full-state repair nor a physical minimum theorem.
+

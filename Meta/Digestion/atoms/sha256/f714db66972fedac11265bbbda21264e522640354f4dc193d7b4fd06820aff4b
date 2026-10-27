@@ -1,0 +1,38 @@
+**Corollary 126.2 (simultaneous equal-gap adjacent marginals).** Let $\Delta _1=\Delta _2=d>0$. Then every nonzero pencil
+
+$$
+Q_{\alpha,\beta}(v)=\alpha\int g_t vT_dv\,dm
++\beta\int g_{t+d}vT_dv\,dm,\qquad(\alpha,\beta)\neq(0,0),
+\tag{126.6}
+$$
+
+has infinite negative index on every positive-measure overlap. After any finitely many homogeneous linear constraints there is a two-dimensional subspace on which both forms in (126.6) vanish identically; this plane contains a nonzero zero of the actual cubic $\mathcal C(v,v,v)$.
+
+**Proof.** Source regularity makes $\alpha g_t+\beta g_{t+d}$ analytic and rotation-invariant. It is nonconstant for every $(\alpha,\beta)\neq(0,0)$. Otherwise, using its mass, one would obtain
+
+$$
+(\alpha+\beta T_d)(g_t-1)=0.
+\tag{126.7}
+$$
+
+The multiplier $\alpha+\beta e^{-d\lambda}$ has at most one positive zero. Since $\ker K=\mathbb C1$, spectral calculus would make $g_t-1$ either zero or an eigenvector for one positive eigenvalue. In the eigenvector case, for $0<u<t$,
+
+$$
+g_u=1+e^{\lambda_0(t-u)}(g_t-1).
+$$
+
+The displayed identity follows by injectivity of $T_{t-u}$, and has an $L^2(m)$ limit $r$ as $u\downarrow0$. In the first case the same injectivity gives $g_u=1$ for $0<u<t$, with limit $r=1$. In either case, for every $\psi\in C_c(G)$, finiteness of $m$ and $L^2$ convergence give
+
+$$
+\int_G\psi r\,dm
+=\lim_{u\downarrow0}\int_G\psi g_u\,dm
+=\lim_{u\downarrow0}\mathbb E_e[\psi(Z_u)]
+=\psi(e).
+$$
+
+The last equality uses continuity of the actual source-start paths and bounded convergence. Compactly supported continuous tests on the original $G$ identify finite Borel measures, so $r\,m=\delta_e$. This contradicts $m(\{e\})=0$ and absolute continuity of $r\,m$; no stationarity or additional regularity is assumed. Proposition 126.1 applied to this coefficient proves the index assertion for every pencil. Lemma 125.3 with $d=2$ gives the common zero plane and the cubic zero. $\square$
+
+The two forms in (126.6) are the first and third marginal sums in (125.6) when the gaps are equal. This conclusion supplies simultaneous cancellation for those two adjacent marginal conditions only. It does not impose the total-gap form, the remaining weighted forms in (125.3), or the other coordinates among the 64 equations; in particular it does not assert an unrestricted or exact three-time representative.
+
+The finite linear vector-measure range theorem of Dvoretzky–Wald–Wolfowitz, *Relations among certain ranges of vector measures*, Pacific J. Math. 1 (1951), §3 Theorem 4 and Lemma 2, pp. 66–67, concerns linear integrals of a probability vector. The common-readout map (123.2) is trilinear, so that theorem alone does not supply the exact three-time conclusion. The conditional splitting input used in Proposition 124.3 is only the displayed Lemma 4(2) of He–Sun–Sun–Zeng, with its nowhere-equivalence, bounded-density, and absolute-integrability hypotheses. The multiplier step in Proposition 126.1 is only the finite-codimensional application of Agler–Young under the stated analytic uniqueness and nonsingular-kernel conditions.
+

@@ -1910,3 +1910,347 @@ not a source tuple satisfying all guards of Theorem 13.3 and not
 an eight-reading decoder on the unrestricted domain. ∎
 
 ## 追加锚（本行以下为增补区）
+## 16. 混合二步历史的三世界排除与四世界恒定性
+
+**定理 16.1（双首响应约束下的混合时钟二三元排除）。**
+Fix arbitrary $a_0,j,m,b\in\mathbb R$, with $\ell=m-j\ne0$,
+and a chronological word $v=E_1E_2\in\{JM,MJ\}$. Let $T$ consist
+of exactly three complete worlds in the entire domain of Definition
+1.1, with pairwise different sources. Suppose every $W\in T$ has
+initial reading $a_0$, first-$J$ response $j$, first-$M$ response $m$,
+and clock-two response $b$ at the actual matrix $Q=E_2E_1$.
+Writing $r_J=j$, $r_M=m$ and
+
+$$
+H_v=(a_0,E_1,r_{E_1},E_2,b),
+\tag{16.1}
+$$
+
+one has $\neg L_5(T,H_v)$, with all descendants on the original
+clocks three through seven. Both first-response equations are
+hypotheses about the same three fixed worlds, not two observations
+acquired by a protocol.
+
+Proof. We use the pair and product facts of
+[*FIB 同父历史的采样零层坍缩与失效核心*, Lemmas 22.1–22.3](FIB_SAMPLED_ROOT_COLLAPSE_AND_SAME_PARENT_FAILURE_CORE.md),
+with the actual prefix matrix retained. A two-world $L_4$ at clock
+three has common drift and gain roots $5,6,7$; a two-world $L_3$
+at clock four has common drift and gain roots $6,7$. The products
+$\mathscr S_2=\{I,MJ,JM,M^2\}$ span all matrices, their equal-trace
+certificate is $\operatorname{tr}(BS)=c$ for every
+$B\in\mathscr S_2$ if and only if $S=cE_{11}$, and the length-three
+products have full affine span. All these statements concern
+actual left products and the stated original clocks.
+
+The calculation giving (15.10) uses only the two first-response
+equations and $\ell\ne0$, so it applies to each member here without
+a four-world hypothesis. More explicitly, their difference gives
+$g_W(1)(P_W)_{22}=\ell$. Positivity and rank one therefore give
+unique coordinates
+
+$$
+\begin{gathered}
+R_W=\begin{pmatrix}x_Wy_W&x_W\\y_W&1\end{pmatrix},\qquad
+q_W=1+x_Wy_W>0,\qquad s_W=x_W+y_W,\qquad x_W,y_W>0,\\
+P_W=R_W/q_W,\qquad h_W(t)=g_W(t)/q_W,\qquad
+h_W(1)=\ell,\\
+\delta_W=j-\ell s_W,\qquad
+h_W(0)=(a_0-\delta_W)/q_W.
+\end{gathered}
+\tag{16.2}
+$$
+
+Each $h_W$ is one entire nonzero real polynomial of degree at most
+three. At every actual matrix $A$ and original clock $i$ the read
+is exactly $\delta_W+h_W(i)\operatorname{tr}(AR_W)$.
+Set
+
+$$
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},\qquad
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad
+\Omega=\begin{pmatrix}0&1\\-1&0\end{pmatrix}.
+\tag{16.3}
+$$
+
+Thus chronological $JM$ has matrix $L$ and chronological $MJ$
+has matrix $U$. Suppressing the world subscript and putting
+$w=xy=q-1$, the needed traces are
+
+$$
+\begin{array}{c|ccc}
+Q&\operatorname{tr}(QR)&\operatorname{tr}(JQR)&\operatorname{tr}(MQR)\\ \hline
+L&q+x&w+s&w+s+x+1\\
+U&q+y&s+1&s+2
+\end{array}.
+\tag{16.4}
+$$
+
+We also use the kernel calculation (15.6): the three equations
+$\operatorname{tr}S=\operatorname{tr}(JS)=\operatorname{tr}(MS)=0$
+are equivalent to $S\in\mathbb R\Omega$. For a common nonzero
+entire gain $G$, common drift, and $G(1)G(2)\ne0$, equality of
+the initial, both first, and the selected mixed second reads
+identifies the source. Indeed those equalities give equal traces
+against $I,J,M,Q$, which span all matrices for either $Q=L$ or
+$Q=U$, as in the proof of Theorem 15.1. This observation will be
+used only after its common gain and nonzero samples are established.
+
+Assume $L_5(T,H_v)$. A selected losing third child has $L_4$ and
+cardinality at least two. If it were a pair, its roots $5,6,7$
+and common initial value and drift would fix one common entire
+gain $G$. If $G(0)=0$, four roots would make that gain illegal;
+otherwise $G(1)G(2)\ne0$. The preceding four-trace observation
+identifies the pair, contrary to the guard. Hence each third action
+retains the entire $T$ with $L_4$. In particular both third-response
+functions at $JQ,MQ$ are constant on these same three worlds.
+
+We next exclude every selected two-world fourth child. Such a
+child would have $L_3$, common drift $\delta$, and roots $6,7$.
+For its two members write $c=a_0-\delta$. Their sums
+$s=(j-\delta)/\ell$ agree by (16.2); the third member is not
+assumed to have this drift. Let $E$ be the third action and $F$
+the fourth action of this child, so its actual matrix is $FEQ$.
+
+First take $Q=L$. By (16.4), the difference of the two shared
+third responses is $h_W(3)(x_W+1)$. If this difference is nonzero,
+the ratio of the third-$J$ response minus $\delta$ to this
+difference is, for both endpoints,
+
+$$
+\frac{x_W(s-x_W)+s}{x_W+1}
+=s+1-x_W-\frac1{x_W+1}.
+\tag{16.5}
+$$
+
+As a function of $x>0$ with $s$ fixed, its derivative is
+$-1+(x+1)^{-2}<0$. Thus the endpoints have the same $x$, then the
+same $y=s-x$, contradicting different sources. If the difference
+is zero, both gains have the additional root $3$. Roots $3,6,7$
+and their common value $g(0)=c$ fix a common entire gain; $c=0$
+is already illegal and otherwise its samples at $1,2$ are nonzero.
+The four-trace observation again identifies the pair. This excludes
+all fourth pairs for $Q=L$.
+
+Now take $Q=U$. The shared third-response difference and (16.4)
+give a common value $h_W(3)=k$ for the two endpoints. Both
+normalized polynomials have the same values at $1,3,6,7$, namely
+$\ell,k,0,0$. Uniqueness of cubic-or-lower interpolation makes
+them one common entire polynomial $H$.
+
+If $c\ne0$, the equations $q_WH(0)=c$ give the same $q$ at both
+endpoints. Their common $s,q$ imply
+$R_W-R_Z=\eta\Omega$ with $\eta\ne0$, since the sources differ.
+If $H(2)\ne0$, the shared clock-two reading and (16.4) give the
+same $q+y$, hence the same $y,x$ and source, a contradiction.
+If $H(2)=0$, the nonzero polynomial $H$ has roots $2,6,7$, so
+$H(4)H(5)\ne0$. Equality at clock four and both clock-five
+actions in this pair's $L_3$ gives
+
+$$
+FEU(R_W-R_Z)\in\mathbb R\Omega.
+\tag{16.6}
+$$
+
+Since $R_W-R_Z=\eta\Omega$ is invertible, (16.6) forces $FEU$
+to be a scalar matrix. This is impossible. For any nonnegative
+invertible matrix $B$, $(BU)_{12}=B_{11}+B_{12}>0$; every actual
+left product $B$, including $FE$, has these properties.
+
+If $c=0$, then $H$ has roots $0,6,7$ and $H(1)=\ell\ne0$.
+In particular $H(2)H(4)H(5)\ne0$. Write $t=y_W-y_Z$. Equality
+of $s$ and of the clock-two traces $q+y$ gives
+
+$$
+R_W-R_Z=t\begin{pmatrix}-1&-1\\1&0\end{pmatrix},\qquad
+U(R_W-R_Z)=-t\Omega,\qquad t\ne0.
+\tag{16.7}
+$$
+
+The last inequality follows because $t=0$ would also fix $x$.
+Equality at clock four and both fifth actions, divided only by
+the already nonzero $H(4),H(5)$, now forces $FE$ to be a scalar
+matrix. Among $\mathscr S_2$ only $I=JJ$ is scalar. Thus any
+possible fourth pair for $Q=U$ must occur with third action $J$
+and fourth action $J$.
+
+At that same third-$J$ history, recursion also requires a losing
+fourth-$M$ child. It cannot be a pair by the preceding necessary
+condition, so its full response intersection is the entire $T$.
+The putative fourth-$J$ pair therefore also shares the fourth-$M$
+response. This contradicts (16.7), because
+
+$$
+\operatorname{tr}\bigl(MJU(R_W-R_Z)\bigr)
+=-t\operatorname{tr}(MJ\Omega)=-t\ne0,
+\tag{16.8}
+$$
+
+and $H(4)\ne0$. No drift assumption on the third member was used.
+This excludes the final fourth-pair possibility.
+
+Consequently each third action and each subsequent fourth action
+has its selected losing child equal to $T$, the latter with $L_3$.
+For different $W,Z\in T$ put
+$D_4=g_W(4)P_W-g_Z(4)P_Z$ and $c_{WZ}=\delta_Z-\delta_W$.
+The four retained clock-four histories give
+
+$$
+\operatorname{tr}(BQD_4)=c_{WZ}\quad(B\in\mathscr S_2),\qquad
+QD_4=c_{WZ}E_{11}.
+\tag{16.9}
+$$
+
+The positivity argument in the proof of Theorem 15.1 applies here
+as well. The matrices $X=g_W(4)QP_W$ and $Y=g_Z(4)QP_Z$ have
+rank at most one and agree in entries $(1,2),(2,1),(2,2)$. Since
+$QP_W,QP_Z$ are strictly positive, a zero common $(2,2)$ entry
+makes both scalars zero. Otherwise the rank-one identity determines
+the remaining $(1,1)$ entry, so again $X=Y$. Thus $c_{WZ}=0$
+and $D_4=0$. Taking traces and using different trace-one sources
+forces both fourth samples to be zero. Varying the pair proves
+
+$$
+\delta_W=\delta\quad(W\in T),\qquad g_W(4)=0\quad(W\in T).
+\tag{16.10}
+$$
+
+From now on $s=(j-\delta)/\ell$ and $c=a_0-\delta$ are common
+to all three members, and $h_W(0)=c/q_W$.
+
+A selected fifth child has $L_2$. If it is a pair, write $A$ for
+its actual clock-five matrix. Common drift and the exact pair
+recursion give
+
+$$
+\operatorname{tr}\bigl(BA[g_W(7)P_W-g_Z(7)P_Z]\bigr)=0
+\quad(B\in\mathscr S_2).
+\tag{16.11}
+$$
+
+The linear span, invertibility of $A$, and the different trace-one
+sources imply $g_W(7)=g_Z(7)=0$. This use of $L_2$ is separate
+from the $s\ge3$ pair lemma.
+
+For $Q=L$, the argument (16.5) now applies to every pair in $T$.
+A nonzero common third-response difference would identify all
+sources, so that difference must be zero and all gains have root
+$3$. A fifth pair would therefore have roots $3,4,7$, common drift
+and common initial value. Its entire gain is common, illegal if
+$c=0$, and otherwise nonzero at $1,2$; the four-trace observation
+excludes it. Hence all fifth actions retain the whole $T$ with
+$L_2$. Their eight actual clock-five matrices are $BQ$ for all
+length-three products $B$. Common drift and the full span force
+all fifth samples to be zero, by the same trace-one argument used
+in (16.10). Roots $3,4,5$ and the common initial value then fix
+one common entire gain on $T$, nonzero at $1,2$ unless already
+illegal. The four-trace observation identifies every pair. This
+contradicts the three different sources and finishes the case $Q=L$.
+
+For $Q=U$, (16.4) gives one common value $h_W(3)=k$ on all of
+$T$. Suppose a fifth pair exists. Its normalized polynomials agree
+at $1,3,4,7$, so they are one common entire $H$.
+If $c\ne0$, the same equations $q_WH(0)=c$ fix $q$ for this pair,
+and its matrix difference is $\eta\Omega$, $\eta\ne0$.
+If $H(2)\ne0$, the clock-two reading identifies its source as
+before. If $H(2)=0$, roots $2,4,7$ give $H(5)H(6)\ne0$.
+The clock-five reading and both sixth readings give
+$A(R_W-R_Z)\in\mathbb R\Omega$, forcing $A$ scalar. But
+$A=BU$ for a nonnegative invertible actual product $B$, so its
+$(1,2)$ entry is positive, a contradiction.
+
+If $c=0$, all three normalized polynomials already agree at
+$0,1,3,4$. They are one common entire $H$. The root $7$ of the
+putative pair is therefore a root of this same $H$ for all three
+worlds. Its roots $0,4,7$ and $H(1)=\ell\ne0$ give $H(2)\ne0$.
+The common clock-two reading fixes $q_W+y_W$ on $T$. With
+$x_W=s-y_W$, every $y_W$ satisfies one fixed quadratic equation
+
+$$
+q_W+y_W=1+(s+1)y_W-y_W^2=C.
+\tag{16.12}
+$$
+
+There are at most two such real $y_W$ and each fixes $x_W$ and
+the source. This contradicts three different sources. Thus no
+fifth pair exists in either $c$ case.
+
+All fifth actions consequently retain the entire $T$. As in the
+$Q=L$ case, the length-three span forces $g_W(5)=0$ for every
+member. If $c\ne0$, the normalized polynomials now agree at
+$1,3,4,5$, so are one common $H$. The initial equations
+$q_WH(0)=c$ fix $q$ on $T$. The common $s,q$ leave at most two
+ordered positive solutions of $x+y=s$, $xy=q-1$, again too few.
+If $c=0$, the normalized polynomials agree at $0,1,3,4$ and their
+common $H$ also has root $5$. Roots $0,4,5$ give $H(2)\ne0$,
+and (16.12) again leaves at most two sources. This final
+contradiction proves the theorem.
+
+At each nonterminal node above, a selected losing response is an
+entire intersection with the current support. Its cardinality
+forces either an actual pair or all three worlds; no arbitrary
+nonterminal pair is extracted. A fourth sibling retained on all
+three worlds contains the pair being compared, which is the exact
+reason it constrains that pair in (16.8). All polynomials remain
+the original entire gains, or their fixed positive rescalings in
+(16.2), across every ancestor and descendant. Three specified
+roots force exact degree three only within the corresponding
+nonzero branch; no initial sign, degree or root restriction is
+imposed. ∎
+
+**推论 16.2（恰四世界原根失败的两个混合二步响应都恒定）。**
+For any $a_0\in\mathbb R$, let $K$ consist of exactly four distinct
+complete worlds in the entire initial-$a_0$ fiber. If
+$L_7(K,(a_0))$, then for each chronological word
+$v=E_1E_2\in\{JM,MJ\}$ there is a real $b_v$ such that
+
+$$
+\delta_W+g_W(2)\operatorname{tr}(E_2E_1P_W)=b_v
+\qquad(W\in K).
+\tag{16.13}
+$$
+
+Moreover $L_5(K,(a_0,E_1,r_{E_1},E_2,b_v))$ holds for both
+words, with $r_J=j$, $r_M=m$ the unequal constants of Theorem
+15.3. No equality or inequality between $b_{JM}$ and $b_{MJ}$
+is asserted.
+
+Proof. Theorem 15.3 supplies pairwise different sources and both
+constant first responses $j\ne m$ on $K$. For each first action
+$E_1$, its only nonempty response intersection within $K$ is
+exactly $K$, so recursion gives
+$L_6(K,H_{E_1})$, where $H_{E_1}=(a_0,E_1,r_{E_1})$.
+For the selected mixed second action $E_2$, recursion supplies a
+real $b$ with the full intersection
+
+$$
+C=K\cap\mathcal F(H_{E_1},E_2,b),\qquad
+L_5(C,(H_{E_1},E_2,b)).
+\tag{16.14}
+$$
+
+The stopping guard gives $|C|\ge2$. A two-world $L_5$ at clock
+two is impossible by the same source, Lemma 22.3. If $|C|=3$,
+this literal $C$ has all the hypotheses of Theorem 16.1: its
+sources differ, it inherits both first-response equations and the
+initial reading, and every member realizes the same mixed second
+history with response $b$. That theorem excludes its $L_5$.
+Thus $|C|=4$ and $C=K$. Set $b_v=b$. This proves (16.13) and
+the stated retained $L_5$ for each word separately. The full
+ambient fiber may contain other worlds; only its displayed
+intersection with $K$ is used. ∎
+
+The mixed-prefix triple exclusion and its four-world consequence
+are repository-derived model-specific deductions. The pair root
+classification, actual-product certificates, finite-game recursion,
+polynomial interpolation and positive-source chart are reused
+suppliers, not separate new general results. Theorem 15.3 and
+its source-injection supplier, the cited core's Theorem 30.1,
+retain their exact four-world original-root hypotheses in the
+corollary. These conclusions do not decide whether any exactly-four
+original-root $L_7$ support exists, do not extract one from a larger
+or infinite support, and do not prove or refute an unrestricted
+eight-read decoder. No gain direction, known gain plane, promise
+detector or union inverse is supplied. No external-priority claim
+is made.
+
+## 追加锚（本行以下为增补区）
