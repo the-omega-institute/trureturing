@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unfinished-actual-decoder-comparison)
    anchors: []
    utility: none
-   digest: Explicit six-dimensional amplitude and literal source spaces for the reverse Burri instance. -/
+   digest: Physical channel and literal source spaces for the reverse Burri instance. -/
 
 import D5.S3.Quantum.Recovery.ReferencePetzChannel
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
@@ -18,7 +18,6 @@ The real four-parameter rotation keeps both polar blocks visible. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 2000000
 
 noncomputable section
 open scoped BigOperators CStarAlgebra ComplexOrder MatrixOrder
@@ -63,6 +62,10 @@ def activeU (cp cm kp km : ℝ) : Matrix B B ℂ :=
 def embed (a : F) : E := (0, (0, a))
 def active (e : E) : Prop := e.1 = 0 ∧ e.2.1 = 0
 
+instance activeDecidable (e : E) : Decidable (active e) := by
+  unfold active
+  infer_instance
+
 def V : Matrix (B × E) A ℂ := fun p i =>
   if active p.2 then Y (i, p.2.2.2) p.1 / (Real.sqrt 31 : ℂ) else 0
 def noiseKraus (e : E) : Matrix B A ℂ := fun b i => V (b, e) i
@@ -102,6 +105,8 @@ theorem amplitude_adjoint : Yᴴ = Y := by
   fin_cases i <;> fin_cases a <;> fin_cases j <;> fin_cases b <;>
     norm_num [Y, amplitude, sign, Matrix.conjTranspose_apply]
 
+set_option maxHeartbeats 2000000 in
+-- Finite source coordinates are evaluated entrywise.
 theorem noise_normalization : (∑ e : E, (noiseKraus e)ᴴ * noiseKraus e) = 1 := by
   obtain ⟨hs, hn⟩ := root31
   ext i j
@@ -112,6 +117,8 @@ theorem noise_normalization : (∑ e : E, (noiseKraus e)ᴴ * noiseKraus e) = 1 
       Complex.div_re, Complex.div_im]
   all_goals field_simp <;> nlinarith
 
+set_option maxHeartbeats 2000000 in
+-- Finite source coordinates are evaluated entrywise.
 theorem noise_output : (∑ e : E, noiseKraus e * rho * (noiseKraus e)ᴴ) = output := by
   obtain ⟨hs, hn⟩ := root31
   ext ⟨i, a⟩ ⟨j, b⟩
@@ -128,6 +135,8 @@ theorem physical_channel : ∃ channel : QuantumChannel A B, ∀ T : Matrix A A 
       ∑ e : E, noiseKraus e * T * (noiseKraus e)ᴴ :=
   finite_kraus_quantum_channel noiseKraus noise_normalization
 
+set_option maxHeartbeats 2000000 in
+-- Finite source coordinates are evaluated entrywise.
 theorem rotation_unitary (cp cm kp km : ℝ)
     (hp : cp ^ 2 + kp ^ 2 = 1) (hm : cm ^ 2 + km ^ 2 = 1) :
     (activeU cp cm kp km)ᴴ * activeU cp cm kp km = 1 ∧
@@ -139,17 +148,18 @@ theorem rotation_unitary (cp cm kp km : ℝ)
       Fin.sum_univ_three, Complex.ext_iff, Complex.div_re, Complex.div_im]
   all_goals nlinarith
 
+set_option maxHeartbeats 2000000 in
+-- Finite source coordinates are evaluated entrywise.
 theorem source_injection : W * prepare = inject := by
-  ext p b
-  rw [Matrix.mul_apply]
-  simp [W, Equiv.Perm.permMatrix, PEquiv.toMatrix_apply,
-    sourceSwap, prepare, ancilla, inject, active, Fintype.sum_prod_type,
-    Fin.sum_univ_two, Fin.sum_univ_three]
-  rcases p with ⟨i, j, k, a⟩
-  rcases b with ⟨l, b⟩
+  change sourceSwap.toPEquiv.toMatrix * prepare = inject
+  rw [PEquiv.toMatrix_toPEquiv_mul]
+  ext ⟨i, j, k, a⟩ ⟨l, b⟩
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases a <;>
-    fin_cases l <;> fin_cases b <;> norm_num
+    fin_cases l <;> fin_cases b <;>
+    norm_num [Matrix.submatrix_apply, sourceSwap, prepare, ancilla, inject, active]
 
+set_option maxHeartbeats 2000000 in
+-- Finite source coordinates are evaluated entrywise.
 theorem supported_rows (cp cm kp km : ℝ) (e : E) (i : A) (b : B) :
     swKraus cp cm kp km e i b =
       if active e then activeU cp cm kp km (i, e.2.2) b else 0 := by
