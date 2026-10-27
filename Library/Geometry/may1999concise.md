@@ -14,6 +14,8 @@ triage: anchor
 
 # Cofiber homotopy equivalence and prescribed traces
 
+## Locator
+
 Source: https://www.math.uchicago.edu/~may/CONCISE/ConciseRevised.pdf
 
 Chapter 6, section 5, printed pp. 46–48 (physical PDF pages 54–56),
