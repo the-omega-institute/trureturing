@@ -109,7 +109,10 @@ internal sealed class BiasedTrineJointMeasurabilityThresholdDocument : IScribeDo
                             + "uses the positive-bias construction. Both endpoints −1/3 and 1/3 "
                             + "belong to the central branch. This proves sufficiency and completes "
                             + "the equivalence on the full stated domain."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("yadavalli-andrejic-kunjwal-2024-biased-trine-joint-measurability"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, string prose) => Describe.Lean(
