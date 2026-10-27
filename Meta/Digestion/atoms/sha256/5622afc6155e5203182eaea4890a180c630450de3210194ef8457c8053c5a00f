@@ -1,0 +1,18 @@
+**定义 103.1（固定原动作块和实际记录保存）。** 令
+
+$$
+\begin{gathered}
+\Lambda=A_0+A_1,\qquad
+D_W(X)=\frac{X+WXW}{2},\qquad
+\Theta_N=\Lambda^2\circ\operatorname{Ad}_N\circ\Lambda^2,\\
+s_\star=\mathsf J\mathsf J\mathsf N\mathsf J\mathsf J,\qquad
+\mathscr F=\operatorname{span}_{\mathbb C}\{I_3,P_\xi\},\qquad
+D_\xi=P_\xi-I_3/3,\\
+r_N=\sup_{\operatorname{Tr}X=0,\ \|X\|_2=1}\|\Theta_N(X)\|_2,
+\qquad \|X\|_2=\sqrt{\operatorname{Tr}(X^\dagger X)}.
+\end{gathered}
+\tag{103.1}
+$$
+
+每个块只有四次原仪器和一次原 $N$。取全部标签而不选择任何一支，系统边缘为 $\Theta_N$；立即读取后忘记标签或从不读取后取环境偏迹都给这个边缘。相干保留时则保留这四个原载体，既不把随机分支改成可调用控制，也不引入外部随机时钟。执行 $n$ 块时档案空间为 $R_{\rm env}^{\otimes4n}$；这里没有固定档案维数的资源结论。
+

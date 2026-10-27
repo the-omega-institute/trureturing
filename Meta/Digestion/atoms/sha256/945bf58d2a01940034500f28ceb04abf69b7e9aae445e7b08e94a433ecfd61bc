@@ -1,0 +1,75 @@
+**命题 15.3（有向静态表示及所选表示的边界）。**
+定义 15.1 的有向等距系统具有 $H_\infty$ 和等距 $j_C$，满足
+
+$$
+j_DV_{DC}=j_C,\qquad
+\overline{\bigcup_Cj_CH_C}=H_\infty,
+$$
+
+并在保持这些嵌入的酉同构下唯一。
+相容局部代数态在
+$\mathcal A=\overline{\bigcup_C\mathcal A_C}^{\|\cdot\|}$ 上有唯一全局态及其循环 GNS 表示；
+局部 GNS 空间的有向等距极限是该全局 GNS 空间。
+相容局部态不必是任意预选 $H_\infty$ 上的正常态。
+
+证明。
+第一项把本卷定理 11.2 的序列指标改为 $\mathcal I(C_*)$，
+其证明唯一需要的共同后继由有向性供应。
+精确地，令 $(C,x)\sim(D,y)$ 当某个共同上界 $F$ 满足 $V_{FC}x=V_{FD}y$。
+若需组合两个见证上界，再取其共同上界；接续一致性和等距性给等价关系。
+加法先送到共同上界，内积定义为
+
+$$
+\langle[C,x],[D,y]\rangle
+ =\langle V_{FC}x,V_{FD}y\rangle_{H_F}.
+$$
+
+任意两个上界可再向前比较，故值与选择无关。
+这给内积空间；完备化后 $j_Cx=[C,x]$，其像有向且并稠密。
+另一实现上 $j_Cx\mapsto j'_Cx$ 是稠密保内积映射，唯一延拓为满酉。
+若全部 $H_C$ 均为同一有限维 $d$，运输皆满酉，极限仍为 $d$ 维；
+有限切面维数无界时极限无穷维。增加节点数不独自增加独立维数。
+
+第二项消费[静态相融纤维 §12](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)的局部态/GNS 构造。
+在当前有向族上，任何有限代数运算都可放入一个共同上界，
+因此相同证明在并集上定义良好的 $\omega(a)=\omega_C(a)$。
+正泛函不等式给 $|\omega(a)|^2\le\omega(a^\dagger a)\le\|a\|^2$，
+故唯一连续延拓；在并集中逼近任一正元的平方根证明延拓仍正，且 $\omega(I)=1$。
+令 $N=\{a:\omega(a^\dagger a)=0\}$，取
+
+$$
+\langle[a],[b]\rangle=\omega(a^\dagger b),\qquad
+\pi(c)[a]=[ca],\qquad \Omega_\omega=[I].
+$$
+
+$\omega(a^\dagger c^\dagger ca)\le\|c\|^2\omega(a^\dagger a)$
+使 $N$ 为左理想且 $\pi(c)$ 有界；完备化得循环表示
+$\omega(a)=\langle\Omega_\omega,\pi(a)\Omega_\omega\rangle$。
+局部商向量按 $[a]_C\mapsto[a]_D$ 保范数，并满足复合；
+代数并集在全局 GNS 范数中稠密，故第一项的唯一性识别两种极限。
+这里使用标准 GNS 中间构造，参见 [Fewster–Rejzner](https://arxiv.org/abs/1904.04051v2)；
+有向 Hilbert 系统的背景亦见 [Morinelli 等 §2.2](https://arxiv.org/abs/2010.11121)。
+
+最后给当前切面应用的所选表示反例。
+令 $H_n=(\mathbb C^2)^{\otimes n}$，嵌入 $x\mapsto x\otimes|0\rangle$，极限为 $H_0$。
+局部密度 $I_{2^n}/2^n$ 对偏迹相容。
+$H_0$ 有以自然数有限子集 $S$ 标记的可数完整正交基，表示有限个一激发。
+若存在迹类密度 $D$ 产生这些局部态，令 $P_{S,n}$ 为前 $n$ 位等于 $S$ 的投影，$n\ge\max S$。
+有 $|S\rangle\langle S|\le P_{S,n}$，所以
+
+$$
+0\le\langle S,DS\rangle\le\operatorname{Tr}(DP_{S,n})=2^{-n}.
+$$
+
+令 $n\to\infty$，全部基对角均为零，正迹类性给 $\operatorname{Tr}D=0$，矛盾。
+这族局部态在准局部代数上仍有态及自己的 GNS 表示。
+例如在单个 $M_d$ 上，$\omega(a)=\operatorname{Tr}(\rho a)$、$\operatorname{rank}\rho=r$ 时，
+$[a]\mapsto a\sqrt\rho$ 给 GNS 维数 $dr$，并非一概等于原粒子的 $d$。
+交换代数也有 Hilbert 表示，故存在该载体不单独选出非交换量子论。证毕。
+
+$\Psi\in H_\infty$ 的 $j_C^\dagger\Psi$ 未必单位范数；
+一般极限向量不自动在每个粗切面给归一纯态。
+同样，将所有切面另作正交标签而写无穷等权和
+$\sum_C|C\rangle\otimes\psi_C$ 通常不归一化，
+它不同于在归纳极限中识别同一个向量。粗读出必须另给限制映射。
+

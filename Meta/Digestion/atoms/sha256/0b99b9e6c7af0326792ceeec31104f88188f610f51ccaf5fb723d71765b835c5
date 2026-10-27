@@ -1,0 +1,39 @@
+**Lemma 58.2 (Jacobi normalization in the selected Eisenstein prime).**
+Let $P$ be a maximal ideal of $\mathcal E=\mathbb Z[\omega]$ with
+finite residue field of cardinality $q$, where $q\equiv1\pmod3$,
+and suppose $3\notin P$. Extend the Euler cubic residue character
+$\chi_P$ by zero at zero, with nonzero values in
+$\{1,\omega,\omega^2\}$ characterized by
+
+$$
+\chi_P(x)\bmod P=x^{(q-1)/3}.
+$$
+
+For every $\pi\in\mathcal E$ satisfying
+$P=(\pi)$ and $3\mid\pi-1$, one has
+
+$$
+-\sum_{x\in\mathcal E/P}\chi_P(x)\chi_P(1-x)=\pi.
+$$
+
+Proof. Write $m=(q-1)/3$ and $J=J(\chi_P,\chi_P)$.
+The Euler selector gives a multiplicative character of exact
+order three. Reducing $J$ modulo $P$ and expanding $(1-x)^m$
+produces power sums with exponents $m,m+1,\ldots,2m$.
+All these exponents lie strictly between zero and $q-1$, so
+the power sums vanish. Consequently $J\in P$ for the specified
+prime $P$, rather than merely one of a pair of conjugate primes.
+Conjugation in $\mathcal E$ sends $\chi_P$ to its inverse;
+the Jacobi product identity then gives $N(J)=q$.
+The classical congruence
+$J=-1+z(\omega-1)^2$ and
+$(\omega-1)^2=-3\omega$ show $3\mid-J-1$.
+Thus $(-J)\subseteq P$. The principal ideal $(-J)$ has absolute
+norm $q$, and $P$ has the same finite index $q$, so this inclusion
+is equality. The generators $-J$ and $\pi$ therefore differ by
+a unit. Both are congruent to one modulo three, forcing that
+unit to be congruent to one. An Eisenstein unit with that
+congruence is one, giving $-J=\pi$. No norm or ideal-direction
+identity for the Jacobi sum is assumed. The convention and
+classical attribution are those cited immediately above.
+

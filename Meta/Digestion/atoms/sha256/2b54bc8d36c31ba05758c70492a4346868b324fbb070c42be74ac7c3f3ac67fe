@@ -1,0 +1,49 @@
+**Theorem 2.7 (all-source terminal prediction minimax order).** On $0<h\le1/80$, $0<\delta\le1/4$, the same ideal experiment class has
+
+$$
+\boxed{
+ m_{\mathrm{pred}}(h,\delta)=\Theta(h^{-2}\log(1/\delta)),
+ \qquad
+ m_{\mathrm{pred}}(h,\delta)\ge\frac{\log(1/\delta)}{1600h^2}.
+}
+\tag{2.29}
+$$
+
+The constants are independent of $h,\delta$, and hence also of any $r$ in (2.21); this prediction assertion is over the full class $\mathcal D$, not only $\mathcal S_r$.
+
+Proof of the upper bound. Use exactly the same nominal decoder and schedule with
+
+$$
+ N=\left\lceil(240(1+K_0))^2h^{-2}\log(130/\delta)\right\rceil,
+ \qquad
+ b=\max\left\{3,\left\lceil\log_2\frac{5120(1+K_0)}h\right\rceil\right\},
+ \qquad m=50N.
+\tag{2.30}
+$$
+
+The statistical and bank terms of $E$ are each at most $h/(10(1+K_0))$. Therefore (2.9), at $\eta=0$, gives $d_{\mathrm{cons}}\le5(1+K_0)E\le h$ except on a probability-$\delta$ event, for every lawful source, including real states. The logarithm comparison in the proof of Theorem 2.6 gives the stated uniform upper order. Its full resource coordinates remain (2.10)–(2.11), with $N,b$ as in (2.30); there is no replacement of the bank by an efficient optimizer.
+
+Proof of the lower bound. Use $\rho_0$ and $\rho_\theta$ from (2.14) with $\theta^2=2h$. In this entire precision range,
+
+$$
+ \theta\le1/\sqrt{40}<1/5,\qquad
+ \lambda_{\min}(\rho_\theta)=1/5-\theta>0,\qquad
+ q_\theta\ge3/200>0.
+$$
+
+In particular $\theta$ may exceed $1/10$; Theorem 2.5 proves the needed reduction directly on its actual domain. The single-copy difference is zero and the pair difference is $\theta^2Y\otimes Y$. The eigenvalues of $Y$ are $1,-1,0,0,0$, so $\|Y\|_1=2$ and $\|Y\otimes Y\|_1=4$. Equation (2.3) consequently gives the exact separation
+
+$$
+ d_{\mathrm{cons}}(\rho_\theta,\rho_0)=2\theta^2=4h>2h,
+ \qquad \chi^2(q_\theta\Vert q_0)=100\theta^4=400h^2.
+\tag{2.31}
+$$
+
+The disjoint $h$-balls in this quotient metric produce the same two-error-$\delta$ test as above. Apply (2.16) with $c_*=400h^2$ and repeat (2.27)–(2.28):
+
+$$
+ m\log(1+400h^2)\ge A_\delta\ge\tfrac14\log(1/\delta).
+$$
+
+The inequality $\log(1+400h^2)\le400h^2$ gives the lower constant in (2.29). All source probabilities and conditional likelihoods remain positive, and the confidence argument includes $\delta=1/4$. This proves prediction optimality for the stated attempted-pair coordinate, without implying any lower bound for an experiment retaining quantum memory between attempts. $\square$
+

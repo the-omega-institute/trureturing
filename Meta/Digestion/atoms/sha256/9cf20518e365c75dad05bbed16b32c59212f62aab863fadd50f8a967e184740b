@@ -1,0 +1,45 @@
+**Theorem 117.5 (the actual endpoint cannot realize this passive law by the declared emissions).** For every original $a,\eta>0$, every fixed $\Delta>0$, every choice of the native parameters in (117.10), and every emission kernel of Definition 117.3, the candidate complete record law differs from the target of Definition 117.4. This holds also for every fixed positive lead-in and for every deterministic coarse graining in that class. If the positive one-letter target marginals for symbols $1$ and $3$ are matched at a positive sampled epoch, then for every corresponding adjacent pair whose first time $t$ is positive,
+
+$$
+\begin{aligned}
+\mathbb P_e(\widehat Y_n=1,\widehat Y_{n+1}=3)
+ &=\int_Gg_t f_1\,T_\Delta f_3\,dm>0,\\
+\mathbb P(Y_n=1,Y_{n+1}=3)
+ &=\tfrac15(P_{\rm N})_{13}=0,
+\end{aligned}
+\qquad
+\begin{cases}
+t=n\Delta>0,&\text{without lead-in},\\
+t=t_*+n\Delta>0,&\text{with lead-in}.
+\end{cases}
+\tag{117.12}
+$$
+
+Thus matching the complete law fails already at this two-record marginal once those one-letter marginals are matched.
+
+**Proof.** Each column sum of $P_{\rm N}$ is one: the first is $c_{\rm N}+q_{\rm N}+p_{\rm N}+r_{\rm N}$, the next three are $a_{\rm N}+p_{\rm N}+q_{\rm N}$, and the last is $r_{\rm N}+b_{\rm N}$. Hence $\pi P_{\rm N}=\pi$. At every native epoch the four one-letter probabilities in order $(0,1,3,B)$ are therefore $(1/5,1/5,1/5,2/5)$. Because $\chi^{-1}(1)=\{1\}$ and $\chi^{-1}(3)=\{3\}$, the target adjacent event in (117.12) is exactly $\{X_n=1,X_{n+1}=3\}$, of probability $(P_{\rm N})_{13}/5=0$. This calculation uses the actual indexed matrix, including its forbidden entry, rather than a different five-state or quantum instrument.
+
+For any positive sampled time $u$, Theorem 117.2 and the emission rule give
+
+$$
+\mathbb P_e(\widehat Y_j=y)=\int_G g_u f_y\,dm.
+\tag{117.13}
+$$
+
+If the $1$ and $3$ marginals are matched there, both integrals are $1/5$. Since $0\le f_y\le1$ and $m$ is a probability, $f_1,f_3\in L^2(m)$; neither is the zero $L^2$ vector. In particular the Borel set $\{f_1>0\}$ has positive $m$-measure. This conclusion would already follow from any positive values for those two marginals, and does not depend on how small their supports are.
+
+Conditional independence of the read noises given the path first gives
+
+$$
+\begin{aligned}
+\mathbb P_e(\widehat Y_n=1,\widehat Y_{n+1}=3)
+ &=\mathbb E_e[f_1(Z_t)f_3(Z_{t+\Delta})]\\
+ &=\int_Gg_t(x)f_1(x)\,(T_\Delta f_3)(x)\,m(dx).
+\end{aligned}
+\tag{117.14}
+$$
+
+The second line is the ordinary Markov conditional-expectation formula in the same source process and original clock. Proper association identifies its transition expectation with $T_\Delta[f_3]$ $m$-a.e.; the law $g_t m$ from (117.2) makes that representative equality sufficient in this integral. The read has not intervened in the transition to $t+\Delta$. Since $\Delta>0$ and $f_3$ is nonnegative and nonzero, the positivity improvement used in (117.7) gives $T_\Delta f_3>0$ $m$-a.e. Also $g_t>0$ $m$-a.e. The integrand is therefore strictly positive almost everywhere on $\{f_1>0\}$, a set of positive measure, so its integral is strictly positive. It is finite because $0\le T_\Delta f_3\le1$ and $\int g_t\,dm=1$.
+
+If either positive one-letter marginal is not matched, the complete record law already differs on one record. If both are matched, (117.12) proves a difference on two records. With sampling from time zero, take $n=1$, so $t=\Delta>0$; no assertion about a density at $e$ at time zero is used. With a positive lead-in, $n=0$ already suffices. Indicator emissions satisfy every hypothesis, proving the coarse-graining case. No stationarity of the endpoint source-start distribution has been imposed. $\square$
+

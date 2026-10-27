@@ -1,0 +1,46 @@
+**应用 31.1（幸存支持与隐藏总维数）。** 一个真正的成功选择是 CP 迹不增映射 $\Lambda$，成功率 $s_\rho=\operatorname{Tr}\Lambda(\rho)$，只在 $s_\rho>0$ 时定义成功态 $\Lambda(\rho)/s_\rho$。
+若来源 $i$ 的经典权重为 $p_i$、成功率为 $s_i$，则联合成功质量为 $p_is_i$，归一成功记录的权重是 $p_is_i/\sum_jp_js_j$，不是原来的 $p_i$。
+§29 的 $\mathcal G$ 是保迹通道，码内输出来自 Kraus 值域，不能改称丢掉失败样本的选择。
+
+对任意有限 $H_v$、任意态 $\rho_v$、任意有限 $H_h$ 及其任意态 $\sigma_h$，令
+
+$$
+\rho=p\rho_v\oplus(1-p)\sigma_h\quad(0<p<1),\qquad
+\Lambda(X)=P_vXP_v\quad\text{在 }H_v\oplus H_h\text{ 上}.
+$$
+
+直接压缩给 $\Lambda(\rho)=p\rho_v$，成功率 $p$、成功态 $\rho_v$，与隐藏维数及隐藏态无关。
+即使记录成功与失败频率从而估计 $p$，也没有识别隐藏态或总维数。
+任意正整数 $r$ 都可为反复选择后的稳定支持秩：取 $d\ge r$、秩 $r$ 投影 $P_r$、初态 $I_d/d$，成功率 $r/d$，成功态 $P_r/r$ 再过滤保持不变。
+因此仅“幸存且稳定”不选择数字三。
+
+更强的非选择性隐藏扩张已有原归属：[静态相容纤维，标题 §63，定义 82.1、定理 82.2、推论 82.3](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)。
+其逻辑输入是 $\iota:\mathbb C^4\to\mathcal C\subset\mathcal H=\mathbb C^5$ 的 **四维** 编码，按原合同处理辅助 $|010\rangle$。
+对任意有限 $K$，每个原语 $m$ 扩为 $\widetilde m=m\oplus V_m$、$V_m\in U(K)$，且 $\widetilde\iota=J_0\iota$、$J_0:\mathcal H\hookrightarrow\mathcal H\oplus K$。
+若原字 $W=m_s\cdots m_1$ 每个前缀保码且 $W\iota=e^{i\gamma}\iota U$，则直接使用供应等式
+
+$$
+\widetilde W=W\oplus V_{m_s}\cdots V_{m_1},\qquad
+\widetilde W\widetilde\iota=e^{i\gamma}\widetilde\iota U.
+$$
+
+它对每个前缀和脉冲中途成立，张量每个有限被动参考仍给完全相同的逻辑联合通道；效果 $\widetilde F$ 对应原效果 $J_0^\dagger\widetilde FJ_0$，迹配对相同。
+参数取 $K=\mathbb C^r$ 给任意 $5+r$ 环境维数而不改变这些响应。
+这个合同不是 §29 的三维码 $B:\mathbb C^3\to\mathbb C^5$；也不包含跨编码与辅助或新隐藏块的相干干涉权限，后者需另给相位资源。
+由此两类不同输入任务都说明可见响应不提供隐藏总维数上界，但不能把四维编码的证明直接套给三码。
+
+同一选择映射上的误差可定量控制。若 $\rho,\sigma$ 为态、$\operatorname{Tr}\Lambda(\rho),\operatorname{Tr}\Lambda(\sigma)\ge s_0>0$，则
+
+$$
+\left\|\frac{\Lambda(\rho)}{\operatorname{Tr}\Lambda(\rho)}-
+\frac{\Lambda(\sigma)}{\operatorname{Tr}\Lambda(\sigma)}\right\|_1
+\le\min\{2,\ 2\|\rho-\sigma\|_1/s_0\}. \tag{31.1}
+$$
+
+置 $X=\Lambda(\rho),Y=\Lambda(\sigma),p=\operatorname{Tr}X,q=\operatorname{Tr}Y$。
+分解 $X/p-Y/q=(X-Y)/p+Y(1/p-1/q)$ 得上界 $(\|X-Y\|_1+|p-q|)/p\le2\|X-Y\|_1/s_0$。
+CP 迹不增对自伴差迹范数收缩：用差的正负分解，各正部分的输出迹至多原迹，再用三角不等式。
+归一态差范数至多二，得 (31.1)。这里必须是共同的 $\Lambda$；两个不同模型若有不同选择映射，还须先控制未归一输出差。
+本卷命题 19.3 已供应有限网络、全参考返回误差的后选择放大；(31.1) 是同图同映射、仅初态不同这一较窄接口的显式形式。
+小成功率能放大误差，但不因此把所有突变都判为新动力学。
+

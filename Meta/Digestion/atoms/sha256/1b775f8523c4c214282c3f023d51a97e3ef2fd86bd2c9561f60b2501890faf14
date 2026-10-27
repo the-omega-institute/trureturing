@@ -1,0 +1,26 @@
+**定义 15.1（有限相干比较与有向运输）。**
+所有内积第一变量共轭线性。对边界表达式集 $X$ 给 Hermitian 核 $K$，要求
+
+$$
+\sum_{j,k=1}^m\overline c_jc_kK(x_j,x_k)\ge0
+\quad(m<\infty,\ c_j\in\mathbb C).
+$$
+
+复相干组合、共轭与拼接的意义均为供应的结构。
+对 $C\in\mathcal I(C_*)$ 给 $H_C$，对 $C\subseteq D$ 给全定义线性等距
+$V_{DC}:H_C\to H_D$，满足
+
+$$
+V_{CC}=I,\qquad V_{FC}=V_{FD}V_{DC}.
+$$
+
+若它来自表达式运输 $r_{DC}$，则要求所有交叉项
+$K_D(r_{DC}x,r_{DC}y)=K_C(x,y)$，以及接续复合一致；
+仅保持每个标签的单独范数不足。
+
+另外可以供应共享单位的有向递增 $C^*$ 代数族 $\mathcal A_C$ 及相容态
+$\omega_D|_{\mathcal A_C}=\omega_C$。
+这是不同类型的输入：一般非满等距给的角嵌入
+$A\mapsto V_{DC}AV_{DC}^\dagger$ 把 $I$ 送到 $V_{DC}V_{DC}^\dagger$，
+不能直接将它称作共享单位的代数包含。
+

@@ -1,0 +1,62 @@
+**定义 34.1（原算子、自然角谱与同一加权核）。** 沿用定义 31.1--31.2、33.1--33.2 的全部条件和对象。具体地，原定义 18.1 取自修订 [d6d829c43b0ed4f127a09666bc40088b6f440b94](https://github.com/the-omega-institute/trureturing/blob/d6d829c43b0ed4f127a09666bc40088b6f440b94/docs/develop/theory/FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE.md)，其定义 1.1 所固定的解析供应者 C、V 取自修订 5cec4fa83ae7bbb4e787c42606525db4cd11ed48；V 的自然角域、紧嵌入与原场归一化见该修订的[第 10 节](https://github.com/the-omega-institute/trureturing/blob/5cec4fa83ae7bbb4e787c42606525db4cd11ed48/docs/develop/theory/FIB_NATIVE_VARIABLE_COEFFICIENT_GREEN_STABILITY.md)。$G$ 第 24--26、28、30 节以及本卷第 31、33 节的解析结论按修订 [47176ca9b3af67894cfd4856beeb929c82fa63fa](https://github.com/the-omega-institute/trureturing/blob/47176ca9b3af67894cfd4856beeb929c82fa63fa/docs/develop/theory/FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GREEN_TAIL.md) 中的原陈述使用。
+
+固定任意整数 $n\ge2$ 和整个原隔离区间中的任意固定 $g\in(\lambda_n,g_n^{\rm iso})$。区间非空和 $L=L_{n,g}>0$ 是 $G$ 引理 24.2、命题 24.3 的结论。原恒等单位源、完整时间积分、完整无权边缘、raw Lebesgue 测度 $d\xi=dx\,dy\,dz$、covariance-$2$ 热时钟、$\epsilon=1$、原场 $U,V,Z$ 和单位均与 (31.1)--(31.2) 相同。$\mathscr A=A_{n,1,g}$ 是包含极点的完整复 Friedrichs 算子，其自由闭包为原 $\mathcal H_1$，算子域由 (31.3) 给出。本节只在实际复轴对称、$z$ 偶对称约化扇区 $\mathcal S$ 中分类零能解；原全算子及其全部整数角模不作改变，不附加角端点迹条件，不排除原条件允许的任何核或零能共振。
+
+记 $J=(-\pi/2,\pi/2)$、$c(a)=\cos a$、$k=g/(2\pi)$，沿用 (31.4) 的自然角域
+
+$$
+\mathcal H_c=\{b\in L^2(J,da):b\in AC_{\rm loc}(J),\ \sqrt c\,b'\in L^2(J,da)\},
+$$
+
+以及原角形式
+
+$$
+\begin{aligned}
+A[b]&=\int_J(4c|b'|^2+c|b|^2)\,da,
+&C[b]&=\int_Jc|b|^2\,da,\\
+h&=A-kQ_n,
+&Q_n[b]&=\int_Jq_n|b|^2\,da,\\
+q_n(a)&=\frac1{I_n}\int_0^1
+       \frac{u^{n-2}}{\sqrt{1-u^2\sin^2a}}\,du,
+&I_n&=\int_0^{\pi/2}\sin^{n-2}t\,dt.
+\end{aligned}
+$$
+
+内积及形式的极化均取第一变量线性。令 $\mathsf K_g$ 为偶子空间上 $h$ 在 $L^2(J,c\,da)$ 中的自然自伴表示。$G$ 命题 24.3 给出其紧预解式、唯一单负本征值 $-s^2$、无零本征值以及与零有正距离的正谱，其中 $s=2\pi L$。负本征向量记为 $\psi$，取 $C[\psi]=1$；每个正本征值写为 $\nu^2$，$\nu>0$，相应有限维复偶自然本征空间记为 $E_\nu$。不同本征空间在 $C$ 中正交，在物理角配对 $L^2(da)$ 中不必正交。
+
+始终使用 (31.4)、(31.6) 的原规范坐标 $R=((x^2+y^2)^2+16z^2)^{1/4}$、$\ell=\log R$ 和 $w_f$。精确物理质量配对为
+
+$$
+4\langle f,u\rangle_{L^2(d\xi)}
+ =\int e^{2\ell}\langle w_f(\ell),w_u(\ell)\rangle_{L^2(da)}\,d\ell.
+\tag{34.1}
+$$
+
+在充分远的外部，原零能弱方程由 $G$ (25.7)--(25.10) 写成
+
+$$
+\begin{aligned}
+p(w,z)&=\int\bigl\{C(w',z')+h(w,z)
+       +t\langle Dw,Dz\rangle_{L^2(da)}
+       -g\langle B_nw,z\rangle_{L^2(da)}\bigr\}\,d\ell=0,\\
+t&=e^{-2\ell},\qquad
+D=\upsilon(a)(\partial_\ell-1)+4c\partial_a,
+\qquad \upsilon(a)=2\sin a,\\
+\|B_n(\ell,\cdot)\|_\infty&\le C e^{-2\ell}.
+\end{aligned}
+\tag{34.2}
+$$
+
+这里 $B_n$ 是 (31.7) 中完整原 Green 边缘的误差；$D$ 项与 $B_n$ 项均用无权 $da$ 配对，中央场耦合全部保留。
+
+辅助加权空间 $H_\sigma$ 仍严格取 (33.1) 与 $G$ (26.8)--(26.10) 的完成空间：内区为原自由范数，外部图能量为
+$\int\{C[w']+A[w]+t\|Dw\|_2^2\}\,d\ell$，权重为 $e^{\sigma\rho}$，$\rho=(\ell-L_*)_+$。取原构造允许的固定小权重 $d>0$，并取 $d<1/2$ 且小于最小正角指数。后一选择与原高角强制估计及小权重条件相容；这些辅助选择不限制 $n,g$。定义
+
+$$
+K=\ker\bigl(P_d:H_d\longrightarrow(H_{-d})^*\bigr),
+\qquad (P_df)(z)=4q(f,z),
+\qquad N=\ker\mathscr A\cap\mathcal S.
+$$
+
+这是 (33.2) 的同一 $K$。由 $G$ (26.23)--(26.24)，$K$ 有限维；由 $G$ (26.8)--(26.10) 及第 26 节证明第 (9) 步的平均论证，其中元素均为包含原极点的全局局部自由形式解，并对全部原复紧光滑测试成立。记 $H_1^{\rm aux}$ 为辅助指数等于一的空间，始终与原自由闭包 $\mathcal H_1$ 区分。
+

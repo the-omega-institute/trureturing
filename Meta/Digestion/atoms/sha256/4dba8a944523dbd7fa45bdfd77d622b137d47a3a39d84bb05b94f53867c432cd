@@ -1,0 +1,15 @@
+**定义 11.3（未来效果闭包）。**
+在固定有限维完整载体上，给有限仪器菜单 $\{\Phi_{a,o}\}$，
+以及含 $I$ 的有限末端效果族 $\mathcal G$。
+令
+
+$$
+W_0=\operatorname{span}_{\mathbb R}\mathcal G,\qquad
+W_{n+1}=W_n+\sum_{a,o}\Phi_{a,o}^*W_n,\qquad
+W_\infty=\bigcup_nW_n.
+$$
+
+所有分支必须在共同声明域内合法，全部相关记忆已计入载体。
+
+<a id="thm:future"></a>
+

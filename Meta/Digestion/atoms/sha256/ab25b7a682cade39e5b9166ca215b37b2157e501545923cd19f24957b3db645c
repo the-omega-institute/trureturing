@@ -1,0 +1,45 @@
+**Theorem 25.2 (filtration containment and released-state accuracy).**
+Under Theorem 24.3's coupling,
+$\mathcal G_t\subseteq\mathcal F_t^{\mathsf Z}$ for every $t$.
+Let $V_t$ be the last released state, with initial value $e$,
+held constant between releases and changed to $e$ at type
+$\mathrm C$. Then $V$ is a finite right-continuous step path on
+$[0,T]$, measurable from the acquired prefix, and
+
+$$
+ \sup_{0\le t\le T}|V_t-\mathsf Z_t|_\infty
+       \le\Omega_T(\mathsf Z;\epsilon\vee\delta).
+\tag{25.2}
+$$
+
+Here $\Omega_T$ is the original coordinate modulus (21.2); it is
+only a proof quantity. No query for it is part of the service.
+
+**Proof.** The stopping-time and stopped-state assertions of Theorem
+24.3 make every variable in (25.1) measurable in
+$\mathcal F_t^{\mathsf Z}$. Nonarrival, including a pending request
+started at an earlier random event time, is measurable there as well.
+Usual augmentation preserves containment because the containing
+filtration is complete and right-continuous. This proves containment
+for the actual timed records, rather than just a generative kernel
+with a hidden seed revealed at time zero.
+
+In killed mode, if the last release was at $s$ and the next one has
+not arrived, then $t-s<\delta$, and $V_t=\mathsf Z_s$.
+In source mode $V_t=e$. Before (24.7), the current excursion has
+age less than $\epsilon$, so either $\mathsf Z_t=e$, or its most
+recent source visit $g_c(t)$ is less than $\epsilon$ time units
+old. Hence $|\mathsf Z_t-e|_\infty\le\Omega_T(\mathsf Z;\epsilon)$.
+Unannounced earlier small excursions need not be identified.
+At every release the new value is exactly $\mathsf Z_t$.
+This proves (25.2), including all waiting intervals and endpoints.
+Finiteness is (24.6). No Poisson label or complete excursion is
+supplied, and no small-duration total or list is supplied separately
+or in advance. At a type $\mathrm E$ release time $R$ for a
+source-mode request begun at the known time $c$, Theorem 24.3 gives
+$R-c-\epsilon=\mathsf D^\epsilon_{E-}$. This retrospective total of
+the preceding small-excursion durations in that episode is measurable
+from the released prefix, hence belongs to
+$\mathcal G_R\subseteq\mathcal F_R^{\mathsf Z}$.
+The consumer of §26 does not use this total. $\square$
+

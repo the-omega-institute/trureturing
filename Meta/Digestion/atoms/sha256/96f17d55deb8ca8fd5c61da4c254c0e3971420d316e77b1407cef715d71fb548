@@ -1,0 +1,47 @@
+**定理 5.3（Born 形式与自动连续性）。**
+对任意有限正整数 $d$，把上一定义的维数五换为 $d$，
+每个赋值唯一写为
+
+$$
+\boxed{\mu(E)=\operatorname{tr}(\rho E),\quad \rho\succeq0,\quad\operatorname{tr}\rho=1.}
+$$
+
+并有
+
+$$
+|\mu(E)-\mu(F)|\le\left\lVert E-F\right\rVert_{\rm op}.
+$$
+
+极端赋值对应秩一状态；对单位 $\psi,\phi$，
+
+$$
+\rho=|\psi\rangle\langle \psi|,\quad E=|\phi\rangle\langle \phi|
+\quad\Longrightarrow\quad \mu(E)=|\langle\phi,\psi\rangle|^2.
+$$
+
+证明。
+可加性给 $\mu(0)=0$、单调性和有理齐次性；
+有理上下夹逼给 $\mu(tE)=t\mu(E)$，$0\le t\le1$。
+对 $A\ge0$ 取充分大 $c$，置
+$L_+(A)=c\mu(A/c)$。
+齐次性使它与 $c$ 无关，可加性传到正锥。
+令 $L(A-B)=L_+(A)-L_+(B)$；
+若两种正差相同，交叉移项及正锥可加性保证良定义。
+于是 $L$ 为 Hermitian 空间的实线性正泛函。
+迹配对给唯一 Hermitian $\rho$；
+秩一投影上的非负性给 $\rho\ge0$，$L(I)=1$ 给迹一。
+由 $-\left\lVert X\right\rVert I\le X\le\left\lVert X\right\rVert I$ 得连续界。
+
+若 $\rho$ 有至少两个正本征值，可在二者间作相反小扰动，
+把它写为两个不同密度态的平均。
+若 $\rho=|\psi\rangle\langle \psi|$ 是两个密度态的严格凸组合，
+在 $\psi^\perp$ 上的非负期望之和为零，迫使两态均支撑于 $\mathbb C\psi$，
+故都等于 $\rho$。最后迹计算给平方模。
+证毕。
+
+这是 Busch 全效果版本的有限维形式 [busch](#ref-busch)。
+其作用是把*已定义的效果合并逻辑*约束为唯一的权重形式，
+并使赋值连续性成为结论。
+全效果域和效果的操作标定仍须建立。
+五结果的单个测量只确定 $\rho$ 的对角，不能据此援引全效果定理。
+

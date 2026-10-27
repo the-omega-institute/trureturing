@@ -1,0 +1,47 @@
+**Theorem 3.8 (finite acquired acceptance, uniform on the structural class).** For every $d\in(0,1)$, $h,p,s\ge1$ and every fixed $|\gamma|\le1$, the actual gate terminates after the fixed calls of Definition 3.6. It satisfies
+
+$$
+\sup_{\substack{|\gamma|\le1\\\operatorname{Re}\gamma\le1-\kappa}}
+       \Pr_\gamma(\mathsf{PASS})\le e^{-t}\le\delta,
+\qquad
+\Pr_1(\mathsf{PASS})\ge1-e^{-t}\ge1-\delta.
+\tag{3.16}
+$$
+
+The inequalities hold for the same one evolving source, with its actual entire measured F tape retained. They are not posterior probabilities for $\gamma$ and do not certify that an unknown device belongs to the structural class.
+
+**Proof.** For any current conditional marginal $\sigma$, an immediate F read has plus probability $[1+a\operatorname{tr}(W\sigma)]/2$. After $L=9$ washes, (3.6) and tracelessness of $\sigma-I/3$ give
+
+$$
+\left|p_+-\left(\tfrac12+\tfrac a6\right)\right|
+ \le\tfrac12\|W-I/3\|_2\sqrt{2/3}(2/3)^9
+ =\tfrac23(2/3)^9\le\tfrac1{48}.
+\tag{3.17}
+$$
+
+Here $\|W-I/3\|_2^2=8/3$ and $(2/3)^9\le1/32$. These estimates apply conditional on all earlier measured bits, because each conditional density is a legitimate input to the next actual wash. If $a\le0$, every conditional plus mean is at most $25/48$. If $\gamma=1$, it is at least $31/48$. The sign threshold $7/12=28/48$ has gap $1/16$ in either case.
+
+Let $X_i=1_{\{x_i=+1\}}$, $\mu_i=\mathbb E(X_i\mid x_1,\ldots,x_{i-1})$ and $M_n=\sum_{i=1}^n(X_i-\mu_i)$. The bounded-variable Hoeffding lemma gives, conditionally, $\mathbb E(e^{\lambda(X_i-\mu_i)}\mid\text{past})\le e^{\lambda^2/8}$. Applying the tower property and then Markov's inequality, and minimizing $e^{-\lambda B_0u+B_0\lambda^2/8}$ at $\lambda=4u$, gives
+
+$$
+\Pr(M_{B_0}\ge B_0u),\quad
+\Pr(M_{B_0}\le-B_0u)\le e^{-2B_0u^2}.
+\tag{3.18}
+$$
+
+At $u=1/16$ this is $e^{-t}$. Thus the sign test alone bounds acceptance when $a\le0$ and bounds sign rejection when $\gamma=1$. No independent preparations, independent sign samples or state estimation have been used.
+
+For $0<a\le1-\kappa$, Lemma 3.7 gives, for every entrance after the entire sign tape,
+
+$$
+\begin{aligned}
+\Pr(\text{constant word}\mid\text{sign tape})
+ &=q_a^m+(1-q_a)^m\\
+ &\le\max(q_a,1-q_a)^{m-1}
+ \le(1-\kappa/2)^{m-1}\le e^{-t}.
+\end{aligned}
+\tag{3.19}
+$$
+
+The first inequality uses $q_a+(1-q_a)=1$. The cases $a\le0$ and $0<a\le1-\kappa$ are disjoint parameter cases, so no sum of two error probabilities is needed. For $\gamma=1$, the word is constant with probability one for every entrance, and only the sign test can reject. Finally $e^{-(s+2)}\le2^{-s}$. This proves (3.16). The constant-word statistic alone also accepts $\gamma=-1$ with probability one; this explains the sign stage for this particular construction, without a necessity claim for all possible assays. $\square$
+

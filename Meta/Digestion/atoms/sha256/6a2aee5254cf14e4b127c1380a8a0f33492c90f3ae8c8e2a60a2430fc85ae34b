@@ -1,0 +1,90 @@
+**Theorem 115.2 (the actual zero line is positive, and the actual heat preserves the original cone).** For every fixed original $a,\eta>0$, the vector $h$ of (115.2) has a real representative smooth and strictly positive on $M$, hence strictly positive $\mu$-a.e. For every $r>0$ put
+
+$$
+G_r=(F+r)^{-1},\qquad n_r=h-rG_rh,\qquad d_r=\langle h,n_r\rangle.
+\tag{115.4}
+$$
+
+Then $n_r\in\mathcal H_+\setminus\{0\}$, $d_r>0$, and the full original-space resolvent is
+
+$$
+(H+r)^{-1}
+ =G_r+\frac{|n_r\rangle\langle n_r|}{r d_r}.
+\tag{115.5}
+$$
+
+Consequently
+
+$$
+e^{-tH}\mathcal H_+\subset\mathcal H_+
+\qquad\text{for every }t\ge0.
+\tag{115.6}
+$$
+
+These are statements about selector (112.5), on the entire original $L^2$, including its singular zero state.
+
+**Proof.** The differential expression and the punctured core are invariant under complex conjugation. Uniqueness of the coefficient-one vector in Theorems 109.2 and 110.2 therefore gives $\overline{w_*}=w_*$: its conjugate is another maximal zero vector with source coefficient one. Thus $h$ is real and $C(h)=c_h>0$. Local elliptic regularity gives its smooth representative on $M$; no sign has yet been inferred.
+
+First the Friedrichs resolvent preserves $\mathcal H_+$. On a punctured compact support, the weak modulus inequality for the first derivatives gives
+$\overline q_c[|u|]\le\overline q_c[u]$ for $u\in\mathcal D_0$. The absolute value belongs to $\mathcal E_2\subset\mathcal Q_c$; smooth local approximation is legitimate because $\Gamma$ and the kinetic coefficients are bounded on that support. For $u\in\mathcal Q_c$, approximate by $u_j\in\mathcal D_0$. The vectors $|u_j|$ converge to $|u|$ in $L^2$ and have bounded closed-form norm. Weak compactness in $\mathcal Q_c$ and lower semicontinuity extend the same inequality to all of $\mathcal Q_c$. For real $f\ge0$, replacing a vector by its absolute value cannot increase
+
+$$
+\overline q_c[v]+r\|v\|_2^2-2\operatorname{Re}\langle f,v\rangle.
+\tag{115.7}
+$$
+
+The unique minimizer is $y=G_rf$, so $y\ge0$. This uses the closed critical form, without subtracting possibly infinite separate kinetic and potential integrals.
+
+For this $y\in D(F)$, (112.2)--(112.3) give $C(y)=0$ and
+$H_y=A(y)e_0+Z_y$, where $e^{\tau/8}Z_y\in H^1$ on the positive cylinder end. The coordinate multiplier defining $H_y$ is positive, and $e_0$ in (109.3) is real and strictly positive. Thus
+$\langle e_0,H_y(\tau)\rangle\ge0$ for almost every sufficiently large $\tau$. Along a sequence of such slices the remainder tends to zero in angular $L^2$, so
+
+$$
+A(G_rf)\ge0\qquad(f\in\mathcal H_+).
+\tag{115.8}
+$$
+
+Only the supplied weighted remainder is used; no pointwise source estimate is required.
+
+The exact original boundary pairing, with first slot $h$ and second slot $y$, now fixes the sign:
+
+$$
+\begin{aligned}
+\langle n_r,f\rangle
+ &=\langle h,(I-rG_r)f\rangle
+  =\langle h,Fy\rangle\\
+ &=a c_h A(y)\ge0\qquad(f\in\mathcal H_+).
+\end{aligned}
+\tag{115.9}
+$$
+
+Here $S^*h=0$ and $C(y)=0$ have been used in (112.3), with its stated antilinear-first-slot convention. Since the real positive cone is self-dual, (115.9) proves $n_r\ge0$. The spectral theorem for the supplied nonnegative $F$ with zero kernel gives $rG_rh\to0$ as $r\downarrow0$. Hence $n_r\to h$ in $L^2$, and the cone is closed, so $h\ge0$ and $h\ne0$.
+
+On every relatively compact coordinate region in $M$, the principal matrix of the original equation is smooth and uniformly positive: its quadratic symbol is
+
+$$
+a\bigl(p_x^2+(p_y+xp_w)^2+p_z^2\bigr)+\eta p_w^2.
+\tag{115.10}
+$$
+
+The potential $-g_c\Gamma$ is smooth there. The local elliptic Harnack principle applies to the nonnegative solution $S^*h=0$. Its local-to-global chain on connected $M$ makes a nonzero such solution strictly positive everywhere on $M$. These are precisely the local divergence-form ellipticity and locally bounded-potential hypotheses used for positive solutions in Pinchover--Tintarev, [*A ground state alternative for singular Schrödinger operators*, arXiv:math/0411658v1, §1, (1.1)--(1.4) and §2](https://arxiv.org/html/math/0411658v1), and the Harnack implication discussed by Lenz--Stollmann--Veselić, [*The Allegretto--Piepenbrink theorem for strongly local Dirichlet forms*, arXiv:0811.2135v1, §3](https://arxiv.org/html/0811.2135v1). They are used on $M$ only. Neither a global potential-form bound at $e$ nor a Harnack estimate across $e$ is asserted.
+
+To verify (115.5) on its full domain, note first that
+$(S^*+r)n_r=0$. Conversely the supplied decomposition $D(S^*)=D(F)\dotplus\mathbb Ch$ shows that every vector in $\ker(S^*+r)$ equals a multiple of $n_r$: for $u=y+ch$, its equation is $(F+r)y=-rc h$. Moreover, if $E_F$ is the spectral resolution of $F$, then
+
+$$
+d_r=\int_{[0,\infty)}\frac{\lambda}{\lambda+r}
+                  \,d\langle h,E_F(\lambda)h\rangle>0.
+\tag{115.11}
+$$
+
+The strict inequality follows from $\|h\|_2=1$ and $\ker F=\{0\}$. Thus $n_r\ne0$. For any complex $f\in\mathcal H$, every maximal-domain solution of $(S^*+r)u=f$ is $u=G_rf+c n_r$. The actual selector in the first line of (112.5) requires
+
+$$
+0=\langle h,S^*u\rangle
+  =\langle n_r,f\rangle-r c d_r,
+\tag{115.12}
+$$
+
+which gives exactly (115.5). In particular this computation does not apply a zero inverse to a general forcing or substitute a Friedrichs source condition. Both terms on its right preserve the real positive cone, by (115.9) and $d_r>0$. Positivity of $e^{-tH}$ follows from the usual strong resolvent-power approximation to the nonnegative self-adjoint heat semigroup, including the identity at $t=0$. This final semigroup step is standard functional calculus; the source-specific content is (115.8)--(115.12) for the actual original boundary pairing. $\square$
+
