@@ -74,15 +74,12 @@ private lemma kraus_action (m : ℕ) (x : Matrix (Fin 2) (Fin 2) ℂ) :
   rw [MatrixMap.of_kraus]
   simp only [Fin.sum_univ_three, LinearMap.add_apply, LinearMap.coe_mk, AddHom.coe_mk]
   ext i j
+  simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul,
+    Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply]
   fin_cases i <;> fin_cases j <;>
-    norm_num [kraus, p, Matrix.of_apply, Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply,
-      smul_eq_mul, Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply,
-      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
-      Matrix.head_cons, Matrix.tail_cons, Matrix.zero_apply,
-      Matrix.one_apply, Matrix.diagonal_apply, star_mul, star_neg, star_zero,
-      star_inv, star_natCast, Complex.star_def, map_inv₀, Complex.conj_ofReal,
-      zero_mul, mul_zero, add_zero, zero_add, ↓reduceIte] <;>
+    norm_num [kraus, p, Matrix.diagonal_apply, Matrix.one_apply] <;>
     ring_nf at hr hs ⊢ <;> rw [hr, hs] <;> field_simp <;> ring
+
 
 private lemma pure_mem (m : ℕ) : p m ∈ majorizationSet d a := by
   refine ⟨MatrixMap.of_kraus (kraus m) (kraus m),
