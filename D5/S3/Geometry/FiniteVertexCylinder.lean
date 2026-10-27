@@ -37,7 +37,8 @@ def vertexPoint (hv : ({v} : Finset V) ∈ M) : Space M :=
 
 private theorem simplex_data (x : Space M) :
     (∀ w, 0 ≤ x.val w) ∧ (∑ w, x.val w) = 1 := by
-  obtain ⟨s, _, hx⟩ := (realization_mem_iff M x.val).1 x.property
+  obtain ⟨s, _, hx⟩ := x.property
+  rw [← faceSimplex_eq_convexHull] at hx
   exact ⟨hx.1, hx.2.1⟩
 
 private theorem coord_le_one (x : Space M) (w : V) : x.val w ≤ 1 := by
@@ -113,8 +114,10 @@ private theorem coordinates_mem_face (t : I) (x : Space M) {s : Finset V}
 
 private def horizontal (t : I) (x : Space M) : Space M :=
   ⟨coordinates M v t x, by
-    obtain ⟨s, hs, hx⟩ := (realization_mem_iff M x.val).1 x.property
-    exact (realization_mem_iff M _).2 ⟨s, hs, coordinates_mem_face M v t x hx⟩⟩
+    obtain ⟨s, hs, hx⟩ := x.property
+    refine ⟨s, hs, ?_⟩
+    rw [← faceSimplex_eq_convexHull] at hx ⊢
+    exact coordinates_mem_face M v t x hx⟩
 
 private def heightValue (t : I) (x : Space M) : ℝ :=
   max (amount M v t x + x.val v - 1) 0

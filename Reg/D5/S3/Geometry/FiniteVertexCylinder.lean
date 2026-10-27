@@ -136,7 +136,11 @@ structure Parameters where
   vertexFace : ({vertex} : Finset V) ∈ complex
   Y : Type w
   topology : TopologicalSpace Y
-  initial : C(Space complex, Y)
+  initial :
+    letI := finiteVertices
+    letI := decidableVertices
+    letI := topology
+    C(Space complex, Y)
 
 attribute [instance] Parameters.finiteVertices Parameters.decidableVertices Parameters.topology
 
