@@ -9,6 +9,7 @@
 import D5.S3.Arith.Robin.OriginalMaximumPurePackets
 import D5.S3.Arith.Robin.RestrictedDivisorStrictInventory
 import D5.S3.Arith.Robin.ActualTwoPriceDefect
+import Mathlib.NumberTheory.Bertrand
 
 /-!
 The legal exchange is the late, large-label branch of AVB10--AVB14 in
@@ -161,6 +162,91 @@ theorem original_prime_source_order {p r N M : ℕ} (hp : p.Prime) (hr : r.Prime
       (price_antitone ht1 ht.2)
   have htU : strictInteger (λ₀ t) = U := Nat.dvd_antisymm (by simpa only [heq] using htV) hUt
   rw [← htU, strictInteger_counts hpriceT]
+
+private theorem adjacent_prime_log_gap {p r : ℕ} (hp : p.Prime) (hr : r.Prime)
+    (hpr : p < r)
+    (hadj : ∀ q : ℕ, q.Prime → p < q → q < r → False) :
+    Real.log (r : ℝ) - Real.log (p : ℝ) ≤ Real.log 2 := by
+  obtain ⟨q, hq, hpq, hq2⟩ := Nat.exists_prime_lt_and_le_two_mul p hp.ne_zero
+  have hqr : r ≤ q := Nat.le_of_not_gt (fun hqr => hadj q hq hpq hqr)
+  have hr2p : r ≤ 2 * p := hqr.trans hq2
+  have hpR : (0 : ℝ) < p := by exact_mod_cast hp.pos
+  have hrR : (0 : ℝ) < r := by exact_mod_cast hr.pos
+  have hlog : Real.log (r : ℝ) ≤ Real.log (2 * (p : ℝ)) := by
+    apply Real.log_le_log hrR
+    exact_mod_cast hr2p
+  rw [Real.log_mul (by norm_num) hpR.ne'] at hlog
+  linarith
+
+/-- A strict inventory change pays for the whole logarithmic source gap.
+
+This is the arithmetic charge used later when the complete prime-label window
+is decomposed into selected and omitted source intervals.  The `5040` core is
+retained in the source-order corollary below; no normalizer or signed-moment
+claim is made here. -/
+theorem inventory_gap_log_bound {p r U V : ℕ} (hp : p.Prime) (hr : r.Prime)
+    (hpr : p < r)
+    (hadj : ∀ q : ℕ, q.Prime → p < q → q < r → False)
+    (hU : 0 < U) (hV : 0 < V) (hUV : U ∣ V) (hneq : U ≠ V) :
+    Real.log (r * V : ℕ) - Real.log (p * U : ℕ) ≤
+      2 * (Real.log (V : ℝ) - Real.log (U : ℝ)) := by
+  obtain ⟨k, hk⟩ := hUV
+  have hkpos : 0 < k := by
+    by_contra hk0
+    have hkz : k = 0 := Nat.eq_zero_of_not_pos hk0
+    subst k
+    simp at hk
+    omega
+  have hkne : k ≠ 1 := by
+    intro hk1
+    subst k
+    apply hneq
+    omega
+  have hk2 : 2 ≤ k := by omega
+  have h2U : 2 * U ≤ V := by
+    rw [hk]
+    nlinarith
+  have hpR : (0 : ℝ) < p := by exact_mod_cast hp.pos
+  have hrR : (0 : ℝ) < r := by exact_mod_cast hr.pos
+  have hUR : (0 : ℝ) < U := by exact_mod_cast hU
+  have hVR : (0 : ℝ) < V := by exact_mod_cast hV
+  have hlogV : Real.log 2 ≤ Real.log (V : ℝ) - Real.log (U : ℝ) := by
+    have hlog : Real.log (2 * (U : ℝ)) ≤ Real.log (V : ℝ) := by
+      apply Real.log_le_log (by positivity)
+      exact_mod_cast h2U
+    rw [Real.log_mul (by norm_num) hUR.ne'] at hlog
+    linarith
+  have hlogp := adjacent_prime_log_gap hp hr hpr hadj
+  have hlogs : Real.log (r * V : ℕ) - Real.log (p * U : ℕ) =
+      (Real.log (r : ℝ) - Real.log (p : ℝ)) +
+        (Real.log (V : ℝ) - Real.log (U : ℝ)) := by
+    rw [Nat.cast_mul, Nat.cast_mul, Real.log_mul hrR.ne' hVR.ne',
+      Real.log_mul hpR.ne' hUR.ne']
+    ring
+  rw [hlogs]
+  linarith
+
+/- The source-order interface supplies the exact 5040-core factors consumed by
+   `inventory_gap_log_bound`; only the strict-change implication is new. -/
+theorem original_prime_source_inventory_gap {p r N M : ℕ} (hp : p.Prime)
+    (hr : r.Prime) (hpr : p < r) (hmaxN : originalMaximizes p N)
+    (hmaxM : originalMaximizes r M)
+    (hlateN : 243 ≤ Real.log (N : ℝ)) (hlateM : 243 ≤ Real.log (M : ℝ))
+    (hlargeN : Real.log (N : ℝ) < (p : ℝ))
+    (hlargeM : Real.log (M : ℝ) < (p : ℝ))
+    (hadj : ∀ q : ℕ, q.Prime → p < q → q < r → False) :
+    ∃ U V : ℕ, N = p * U ∧ M = r * V ∧ 0 < U ∧ 0 < V ∧
+      5040 ∣ U ∧ 5040 ∣ V ∧ U ∣ V ∧
+      (U ≠ V →
+        Real.log (M : ℝ) - Real.log (N : ℝ) ≤
+          2 * (Real.log (V : ℝ) - Real.log (U : ℝ))) := by
+  obtain ⟨U, V, hNU, hMV, hU, hV, hcoreU, hcoreV, hpU, hrU, hpV, hrV,
+      hUV, hclock, hNM, hcountsU, hcountsV, hinterval⟩ :=
+    original_prime_source_order hp hr hpr hmaxN hmaxM hlateN hlateM hlargeN hlargeM
+  refine ⟨U, V, hNU, hMV, hU, hV, hcoreU, hcoreV, hUV, ?_⟩
+  intro hneq
+  have hgap := inventory_gap_log_bound hp hr hpr hadj hU hV hUV hneq
+  simpa [hNU, hMV] using hgap
 
 end D5.S3.Arith.Robin.OriginalPrimeSourceOrder
 
