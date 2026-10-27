@@ -228,8 +228,8 @@ private theorem common_gain_source (j m b : ℝ) (v : List Bool)
   have hread (u : List Bool) (hz : (gain 3 W.coeff).eval (u.length : ℝ) ≠ 0)
       (he : readAt W u u.length = readAt Z u u.length) :
       Matrix.trace (acquisition u * W.source) = Matrix.trace (acquisition u * Z.source) := by
-    simp only [readAt, List.take_length, ← hd, ← hg, add_left_inj] at he
-    exact mul_left_cancel₀ hz he
+    simp only [readAt, List.take_length, ← hd, ← hg] at he
+    exact mul_left_cancel₀ hz (add_right_cancel he)
   have hj := hread [true] (by simpa using hg1) (hWJ.trans hZJ.symm)
   have hm := hread [false] (by simpa using hg1) (hWM.trans hZM.symm)
   have hvlen : v.length = 2 := by rcases hv with rfl | rfl <;> rfl
@@ -246,14 +246,14 @@ private theorem common_gain_source (j m b : ℝ) (v : List Bool)
       D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
       Matrix.mul_apply, Matrix.trace, Matrix.diag, Fin.sum_univ_two] at hj hm hq
     ext i k
-    fin_cases i <;> fin_cases k <;> linarith
+    fin_cases i <;> fin_cases k <;> dsimp only <;> linarith
 
 /-- Both first-response equations constrain each of the same three complete worlds.
 The recursion begins at the chosen chronological mixed word and uses clocks three to seven. -/
 theorem mixed_prefix_three_world_exclusion (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
     (v : List Bool) (hv : v = [true,false] ∨ v = [false,true])
     (T : Finset World3) (hT : T.card = 3)
-    (hP : T.Pairwise (fun W Z => W.source ≠ Z.source))
+    (hP : ∀ W ∈ T, ∀ Z ∈ T, W ≠ Z → W.source ≠ Z.source)
     (hreads : ∀ W ∈ T, readAt W [] 0 = a₀ ∧ readAt W [true] 1 = j ∧
       readAt W [false] 1 = m ∧ readAt W v 2 = b) : ¬ Losing 5 T v := by
   classical
@@ -272,7 +272,7 @@ theorem mixed_prefix_three_world_exclusion (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
       obtain ⟨W,hW,Z,hZ,hWZ⟩ := Finset.one_lt_card.mp (show 1 < S.card by omega)
       have hWroot := hsub hW
       have hZroot := hsub hZ
-      have hsource : W.source ≠ Z.source := hP hWroot hZroot hWZ
+      have hsource : W.source ≠ Z.source := hP W hWroot Z hZroot hWZ
       have hd := pair_common_drift 4 S (v ++ [E]) h2 hz (by omega) W Z hW hZ
       have h5 := pair_gain_zero 4 S (v ++ [E]) h2 hz (by omega) W Z hW hZ
         hsource 2 (by omega) (by omega)
@@ -307,5 +307,45 @@ theorem mixed_prefix_three_world_exclusion (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
     exact ⟨z,he,he ▸ hz⟩
   obtain ⟨zJ,hJ,hJL⟩ := third_full true
   obtain ⟨zM,hM,hML⟩ := third_full false
+  have shared_third (E : Bool) (z : ℝ) (he : responseSlice T v E z = T)
+      (W : World3) (hW : W ∈ T) : readAt W (v ++ [E]) 3 = z := by
+    have hm : W ∈ responseSlice T v E z := he.symm ▸ hW
+    simpa [hvlen] using (Finset.mem_filter.mp hm).2
+  have fourth_m_not_pair : ∀ z : ℝ,
+      Losing 3 (responseSlice T (v ++ [true]) false z) (v ++ [true] ++ [false]) →
+        (responseSlice T (v ++ [true]) false z).card ≠ 2 := by
+    intro z hz h2
+    let S := responseSlice T (v ++ [true]) false z
+    have hsub : S ⊆ T := responseSlice_subset T (v ++ [true]) false z
+    obtain ⟨W,hW,Z,hZ,hWZ⟩ := Finset.one_lt_card.mp (show 1 < S.card by omega)
+    have hWroot := hsub hW
+    have hZroot := hsub hZ
+    have hsource := hP W hWroot Z hZroot hWZ
+    have hd := pair_common_drift 3 S (v ++ [true] ++ [false]) h2 hz
+      (by omega) W Z hW hZ
+    have h6 := pair_gain_zero 3 S (v ++ [true] ++ [false]) h2 hz
+      (by omega) W Z hW hZ hsource 2 (by omega) (by omega)
+    have h7 := pair_gain_zero 3 S (v ++ [true] ++ [false]) h2 hz
+      (by omega) W Z hW hZ hsource 3 (by omega) (by omega)
+    norm_num [List.length_append, hvlen] at h6 h7
+    have hWJ := shared_third true zJ hJ W hWroot
+    have hZJ := shared_third true zJ hJ Z hZroot
+    have hWM := shared_third false zM hM W hWroot
+    have hZM := shared_third false zM hM Z hZroot
+  obtain ⟨zFourthM,hFourthM⟩ := hJL.2 false
+  have hFourthMsub := responseSlice_subset T (v ++ [true]) false zFourthM
+  have hFourthMlow := losing_guard 3 _ _ hFourthM
+  have hFourthMhigh : (responseSlice T (v ++ [true]) false zFourthM).card ≤ 3 :=
+    by simpa [hT] using Finset.card_le_card hFourthMsub
+  have hFourthMwhole : responseSlice T (v ++ [true]) false zFourthM = T :=
+    Finset.eq_of_subset_of_card_le hFourthMsub
+      (by rw [hT]; have hn := fourth_m_not_pair zFourthM hFourthM; omega)
+  have shared_fourth_sibling (W Z : World3) (hW : W ∈ T) (hZ : Z ∈ T) :
+      readAt W (v ++ [true] ++ [false]) 4 = readAt Z (v ++ [true] ++ [false]) 4 := by
+    have hWm : W ∈ responseSlice T (v ++ [true]) false zFourthM := hFourthMwhole.symm ▸ hW
+    have hZm : Z ∈ responseSlice T (v ++ [true]) false zFourthM := hFourthMwhole.symm ▸ hZ
+    have hw := (Finset.mem_filter.mp hWm).2
+    have hz := (Finset.mem_filter.mp hZm).2
+    simpa [hvlen] using hw.trans hz.symm
 
 end D5.S3.Observer.CubicGain.MixedTripleExclusion
