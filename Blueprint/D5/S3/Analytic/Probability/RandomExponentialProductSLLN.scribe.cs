@@ -38,7 +38,7 @@ internal sealed class RandomExponentialProductSLLNDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text(
                     "The proposition quantifies a scalar field K satisfying RCLike, a complete "
                         + "normed space e, a measurable index space alpha, a probability measure mu, "
-                        + "and an operator-valued sequence a. The sequence is strongly measurable, "
+                        + "and an operator-valued sequence a. Each a i is mu-almost-everywhere strongly measurable; the sequence is "
                         + "pairwise independent, identically distributed with a 0, and almost surely "
                         + "bounded by one real m. For every vector x and nonnegative time t, almost "
                         + "every omega satisfies an eventual epsilon estimate uniformly for s in "
@@ -67,7 +67,7 @@ internal sealed class RandomExponentialProductSLLNDocument : IScribeDocumentDefi
                             + "and the centered maximum to compare the product of (1+(s/n)a i) with "
                             + "(1+(s/n)b)^n uniformly for s in [0,t].")),
                     Paragraph(Text(
-                        "The exponential Taylor remainder bounds each exponential factor by three "
+                        "The exponential Taylor remainder bounds the difference between each exponential factor and its first-order approximation by three "
                             + "quarters of the squared scaled norm. A product perturbation estimate "
                             + "then compares the exponential product with the Euler product, and the "
                             + "same estimate compares the constant Euler product with exp(s b). The "
@@ -84,7 +84,7 @@ internal sealed class RandomExponentialProductSLLNDocument : IScribeDocumentDefi
 
     private static Formula RandomProductFormula()
     {
-        Formula K = Scalar(), e = F.Id("e"), alpha = F.Id("alpha");
+        Formula K = Scalar(), e = F.Id("e"), alpha = Alpha;
         Formula map = ContinuousLinearMap(K, e, e);
         Formula family = Arrow(Naturals(), Arrow(alpha, map));
         Formula product = At(Qualified("List", "prod"), At(Qualified("List", "ofFn"),
@@ -92,17 +92,17 @@ internal sealed class RandomExponentialProductSLLNDocument : IScribeDocumentDefi
                 At(Qualified("NormedSpace", "exp"),
                     Smul(
                         Typed(Typed(Div(F.Id("t"), Typed(F.Id("n"), Reals())), Reals()), K),
-                        At(At(F.Id("a"), Typed(F.Id("i"), Naturals())), F.Id("omega")))))));
+                        At(At(F.Id("a"), Typed(F.Id("i"), Naturals())), Omega))))));
         Formula equation = Equal(
-            At(Local("randomProduct"), F.Id("a"), F.Id("n"), F.Id("t"), F.Id("omega")),
+            At(Local("randomProduct"), F.Id("a"), F.Id("n"), F.Id("t"), Omega),
             product);
         Formula binders = All("a", family,
             All("n", Naturals(),
                 All("t", Reals(),
-                    All("omega", alpha, equation))));
-        return All("K", Type(),
-            All("e", Type(),
-                All("alpha", Type(),
+                    All(Omega, alpha, equation))));
+        return All(K, Type(),
+            All(e, Type(),
+                All(alpha, Type(),
                     Seq(Instance("RCLike", K), Sp,
                         Instance("NormedAddCommGroup", e), Sp,
                         Instance("NormedSpace", K, e), Comma, Sp,
@@ -111,10 +111,10 @@ internal sealed class RandomExponentialProductSLLNDocument : IScribeDocumentDefi
 
     private static Formula ClaimFormula()
     {
-        Formula K = Scalar(), e = F.Id("e"), alpha = F.Id("alpha");
+        Formula K = Scalar(), e = F.Id("e"), alpha = Alpha;
         Formula map = ContinuousLinearMap(K, e, e);
         Formula operatorFamily = Arrow(Naturals(), Arrow(alpha, map));
-        Formula a = F.Id("a"), mu = F.Id("mu");
+        Formula a = F.Id("a"), mu = Mu;
         Formula measurable = All("i", Naturals(),
             Call("AEStronglyMeasurable", At(a, F.Id("i")), mu));
         Formula independent = Call("Pairwise",
@@ -124,25 +124,25 @@ internal sealed class RandomExponentialProductSLLNDocument : IScribeDocumentDefi
         Formula identical = All("i", Naturals(),
             Call("IdentDistrib", At(a, F.Id("i")), At(a, D(0)), mu, mu));
         Formula bounded = All("i", Naturals(),
-            AlmostEverywhere("omega", alpha, mu,
+            AlmostEverywhere(Omega, alpha, mu,
                 LessOrEqual(
-                    new Formula.Norm(At(At(a, F.Id("i")), F.Id("omega"))),
+                    new Formula.Norm(At(At(a, F.Id("i")), Omega)),
                     F.Id("m"))));
         Formula integral = At(Qualified("MeasureTheory", "integral"), mu,
             LambdaOf("z", alpha, At(At(a, D(0)), F.Id("z"))));
         Formula limit = At(Qualified("NormedSpace", "exp"),
             Smul(Typed(Typed(F.Id("s"), Reals()), K), integral));
-        Formula random = At(Local("randomProduct"), a, F.Id("n"), F.Id("s"), F.Id("omega"));
+        Formula random = At(Local("randomProduct"), a, F.Id("n"), F.Id("s"), Omega);
         Formula estimate = LessThan(
             new Formula.Norm(At(Subtract(random, limit), F.Id("x"))),
-            F.Id("epsilon"));
+            Varepsilon);
         Formula interval = Member(F.Id("s"),
             At(Qualified("Set", "Icc"), Typed(D(0), Reals()), F.Id("t")));
         Formula eventualN = EventuallyAtTop("n", Naturals(),
             All("s", Reals(), Arrow(interval, estimate)));
-        Formula epsilon = All("epsilon", Reals(),
-            Arrow(LessThan(Typed(D(0), Reals()), F.Id("epsilon")), eventualN));
-        Formula almostEverywhere = AlmostEverywhere("omega", alpha, mu, epsilon);
+        Formula epsilon = All(Varepsilon, Reals(),
+            Arrow(LessThan(Typed(D(0), Reals()), Varepsilon), eventualN));
+        Formula almostEverywhere = AlmostEverywhere(Omega, alpha, mu, epsilon);
         Formula time = All("t", Reals(),
             Arrow(LessOrEqual(Typed(D(0), Reals()), F.Id("t")), almostEverywhere));
         Formula vector = All("x", e, time);
@@ -157,11 +157,11 @@ internal sealed class RandomExponentialProductSLLNDocument : IScribeDocumentDefi
             Instance("NormedSpace", K, e), Sp,
             Instance("CompleteSpace", e), Sp,
             Instance("MeasurableSpace", alpha), Comma, Sp,
-            All("mu", Call("Measure", alpha),
+            All(mu, Call("Measure", alpha),
                 Seq(Instance("IsProbabilityMeasure", mu), Comma, Sp,
                     LetI(RestrictScalars(K, e),
                         LetIAnnotated(Call("MeasurableSpace", map), Call("borel", map), body)))));
-        return All("K", Type(), All("e", Type(), All("alpha", Type(), instances)));
+        return All(K, Type(), All(e, Type(), All(alpha, Type(), instances)));
     }
 
     private static Formula Local(string name) =>
@@ -176,7 +176,7 @@ internal sealed class RandomExponentialProductSLLNDocument : IScribeDocumentDefi
         }
         return Seq(Operatorname, Grp(Seq([.. items])));
     }
-    private static Formula Scalar() => Seq(Mathbb, Grp(F.Id("K")));
+    private static Formula Scalar() => Seq(Mathbb, Grp(F.Id("k")));
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Type() => Qualified("Type");
@@ -199,11 +199,13 @@ internal sealed class RandomExponentialProductSLLNDocument : IScribeDocumentDefi
         new Formula.Apply(function, [.. args]);
     private static Formula Call(string name, params Formula[] args) =>
         At(Qualified(name), args);
-    private static Formula All(string name, Formula type, Formula body) =>
-        Seq(Forall, Sp, Typed(F.Id(name), type), Comma, Sp, Parenthesized(body));
-    private static Formula LambdaOf(string name, Formula type, Formula body) =>
-        Seq(LambdaLower, Sp, Typed(F.Id(name), type), Sp, Mapsto, Sp, Parenthesized(body));
-    private static Formula AlmostEverywhere(string name, Formula type, Formula measure, Formula body) =>
+    private static Formula All(Formula name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Typed(name, type), Comma, Sp, Parenthesized(body));
+    private static Formula All(string name, Formula type, Formula body) => All(F.Id(name), type, body);
+    private static Formula LambdaOf(Formula name, Formula type, Formula body) =>
+        Seq(LambdaLower, Sp, Typed(name, type), Sp, Mapsto, Sp, Parenthesized(body));
+    private static Formula LambdaOf(string name, Formula type, Formula body) => LambdaOf(F.Id(name), type, body);
+    private static Formula AlmostEverywhere(Formula name, Formula type, Formula measure, Formula body) =>
         At(Qualified("Filter", "Eventually"), LambdaOf(name, type, body),
             At(Qualified("MeasureTheory", "ae"), measure));
     private static Formula EventuallyAtTop(string name, Formula type, Formula body) =>
