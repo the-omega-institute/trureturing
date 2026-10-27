@@ -1,0 +1,52 @@
+**Definition 24.1 (original data and two timed laws).** Retain exactly
+Definitions 7.1, 11.1 and 15.1, for every original $a,\eta>0$.
+Thus $F$ has only its source-killed role, $P_t^0=J_h^{-1}e^{-tF}J_h$,
+$q_t=J_h^{-1}Fe^{-tF}h$, $m=h^2\mu$, and $\nu,\kappa$ are (15.2).
+The full conservative process has the entire complex domains (7.2),
+(16.6), original source trace and response (16.5)--(16.7), and selector
+[E, (112.5)]. Neither a value $h(e)$ nor a new source condition is used.
+All times below are original elapsed times.
+
+Fix $\epsilon,\delta>0$. Use the already defined $\mathfrak d$ and
+$\chi_\epsilon$ of (20.1), and put $c_\epsilon=\kappa(\epsilon)$.
+Let $\mathsf D^\epsilon$ be the driftless subordinator with Levy measure
+$\mathbf1_{(0,\epsilon]}(v)\mathfrak d(v)dv$; only its scalar laws
+are used in the following probability measure on $[0,\infty)$:
+
+$$
+\begin{gathered}
+ \mathsf U_\epsilon(B)=\int_0^\infty
+ c_\epsilon e^{-c_\epsilon b}
+               \mathbb P(\mathsf D_b^\epsilon\in B)\,db,\\
+ \int e^{-\lambda u}\mathsf U_\epsilon(du)
+       =\frac{c_\epsilon}{c_\epsilon+\chi_\epsilon(\lambda)},
+                  \qquad \lambda\ge0,\\
+ \mathsf W_\epsilon(dv,dp)
+       =\mathsf U_\epsilon(d(v-\epsilon))
+                    \frac{q_\epsilon(p)m(dp)}{c_\epsilon},
+              \qquad v\ge\epsilon,\quad p\in M.
+\end{gathered}
+\tag{24.1}
+$$
+
+The notation in the last line means the pushforward under
+$(u,p)\mapsto(u+\epsilon,p)$. It is a joint elapsed-wait/state law,
+not advance disclosure of either variable.
+For $p\in M$ define the marked killed-release kernel by
+
+$$
+\begin{aligned}
+ \mathsf K_\delta(p;ds,\mathrm C,dp')
+   &=\mathbf1_{(0,\delta]}(s)q_s(p)\,ds\,\delta_e(dp'),\\
+ \mathsf K_\delta(p;ds,\mathrm D,dp')
+   &=\delta_\delta(ds)P_\delta^0(p,dp').
+\end{aligned}
+\tag{24.2}
+$$
+
+Type $\mathrm C$ denotes first original-source contact. Type
+$\mathrm D$ denotes survival for $\delta$ and the then current state.
+The legitimate versions and normalization of this formula are part
+of the next assertion. Neither law is a full-process transition
+sampler $T_t(p,\cdot)$.
+

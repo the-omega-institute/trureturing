@@ -1,0 +1,87 @@
+**Theorem 24.3 (recursive timed correspondence with one original source).**
+Start at elapsed time zero with the source flag $e$. In source mode
+use $\mathsf W_\epsilon$, release its state with type $\mathrm E$
+when its wait expires, and enter killed mode. In killed mode at a
+released state $p$, use $\mathsf K_\delta(p;\cdot)$; a type
+$\mathrm D$ event repeats killed mode at its released state and a
+type $\mathrm C$ event reenters source mode. Add each elapsed wait
+to the preceding event time. This defines a joint law of all finite
+released prefixes by the usual iterated Borel kernels.
+
+There is a coupling with one unchanged full original source
+$\mathsf Z\sim\mathbb P_e$ in which every released state is its
+actual state at its release time. Each event time is a stopping
+time in its usual source filtration $\mathcal F^{\mathsf Z}$.
+During a source-mode wait, the event is the first time a new
+excursion has reached age $\epsilon$, not a forecast of its lifetime.
+In killed mode it is precisely (24.3), in the original clock.
+The source is never killed at a type $\mathrm C$ event.
+On $[0,T]$ the number of completed events is at most
+
+$$
+ 2\lfloor T/\epsilon\rfloor+\lfloor T/\delta\rfloor,
+\tag{24.6}
+$$
+
+and the number of initiated timed primitives is at most this bound
+plus one. A primitive still pending at $T$ supplies only nonarrival.
+
+**Proof.** On a source path started at $e$ at time $c$, let
+$g_c(t)=\sup\{s\in[c,t]:\mathsf Z_s=e\}$ and set
+
+$$
+ D_\epsilon(c)=\inf\{t\ge c:t-g_c(t)\ge\epsilon\}.
+\tag{24.7}
+$$
+
+This uses only the path through the indicated time. More explicitly,
+$\{D_\epsilon(c)<t\}$ is the union, over rational $v<t$ with
+$v>c+\epsilon$, of the events
+$g_c(v)<v-\epsilon$. The latter says that the compact segment
+$[v-\epsilon,v]$ contains no source visit and is a Borel event in
+$\mathcal F_v^{\mathsf Z}$. An excursion reaching age $\epsilon$
+has strictly greater lifetime, so has such rational times immediately
+after its age-$\epsilon$ time. Right-continuity of the filtration
+proves the stopping assertion; the same argument after a source
+stopping time proves the recursive assertion. The state at that time
+is measurable in its stopping-time sigma-field. All these path
+functionals are Borel, by the same rational and compact-minimum tests.
+
+Use the original excursion representation of §§15--16 only as a
+proof witness. The first label $E$ with $\zeta>\epsilon$ is exponential
+of rate $c_\epsilon$. The excursions with $\zeta\le\epsilon$
+are independent of these labels, with duration subordinator
+$\mathsf D^\epsilon$. There is no inverse-clock drift. The elapsed
+start of that first long excursion is therefore
+$\mathsf D_{E-}^\epsilon$, and its age-$\epsilon$ state has law
+$q_\epsilon m/c_\epsilon$, independent of that elapsed start.
+Independence follows by restriction and marking of the original
+Poisson measure; conditionally on $E=b$ the small total has law
+$\mathsf D_b^\epsilon$, since a fixed label is not an atom.
+This gives exactly (24.1), with release at
+$c+\mathsf D_{E-}^\epsilon+\epsilon$.
+The original lifetime density $\mathfrak d(v)dv$ gives no mass to
+$\zeta=\epsilon$, and $D_\epsilon(c)<\infty$ almost surely.
+These assertions require no bridge from a singular fixed endpoint.
+
+At an entrance release, apply the strong Markov property of the
+original full diffusion at $D_\epsilon(c)$. Until its next source
+contact its law is precisely the part process (15.1), with the
+entire killed domain [S, (116.11)]. Lemma 24.2 gives (24.2).
+At a survived release the same strong Markov argument restarts
+that part law. At source contact the full process restarts with
+$\mathbb P_e$, by [S, Theorem 116.4]; apply (24.7) again.
+Induction proves every iterated joint kernel, not only one-event
+marginals. Lemma 24.2 supplies all reached-state qualifications.
+This constructs the claimed coupling and identifies the recursive
+law without supplying a complete path to its consumer.
+
+Each completed entrance uses a disjoint elapsed wait of at least
+$\epsilon$, so there are at most $\lfloor T/\epsilon\rfloor$
+such events. Each completed type $\mathrm D$ consumes a disjoint
+$\delta$ interval, so there are at most $\lfloor T/\delta\rfloor$
+of those. A type $\mathrm C$ closes an episode begun by a distinct
+entrance, so its count is bounded by the entrance count. These facts
+prove (24.6), rule out finite-time accumulation, and bound initiated
+primitives since only one is pending at a time. $\square$
+
