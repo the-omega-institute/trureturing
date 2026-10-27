@@ -7,7 +7,7 @@ internal sealed class BurriReplacementDecoderDocument : IScribeDocumentDefinitio
     private const string Prefix = "D5/S3/Quantum/Recovery/BurriReplacementDecoder.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Appendix A objects for a qubit replacement channel.",
+        "Actual Appendix A replacement-channel decoders and their strict squared-fidelity comparison.",
         H("A replacement channel and the Schumacher-Westmoreland construction"), Blocks(
             Paragraph(Text("The input is a qubit with reference density diag(2/3,1/3). The channel output space B has dimension one. "
                 + "The environment is literally A times B', as prescribed in Appendix A of Burri, arXiv:2502.17411v1. "
@@ -43,8 +43,27 @@ internal sealed class BurriReplacementDecoderDocument : IScribeDocumentDefinitio
                 "Both the composite source decoder Kraus family and the reference-root times noise-adjoint Kraus family have Gram sum equal to the identity of B.", DescribeRole.Theorem),
             Entry("actual-channels", "actual_channels", "Canonical completely positive trace-preserving maps",
                 "Each of the three specified Kraus families is realized by the repository's canonical QuantumChannel interface, with equality of its action and the finite Kraus sum on every input matrix. "
-                    + "The identification of sqrtQ with the positive root of the product of the actual marginals, the identification of the reference-root family with the ordinary Petz interface, "
-                    + "and the comparison of their canonical-purification fidelities require additional statements.", DescribeRole.Theorem))));
+                    + "The following statements identify the physical marginals and ordinary Petz recovery and evaluate the overlap for the actual composite maps.", DescribeRole.Theorem),
+            Entry("physical-marginals", "physical_marginals", "Marginals of the physical Stinespring purification",
+                "The RBE pure density is constructed from the canonical reference vector and V. Its RE marginal is X, its R marginal is rho, "
+                    + "and its E marginal is diag(2/3,1/3) in the full source environment coordinates.", DescribeRole.Theorem),
+            Entry("reference-root", "reference_root", "Positive reference square root",
+                "The functional-calculus positive square root of rho is the diagonal matrix with entries sqrt(2)/sqrt(3) and 1/sqrt(3).", DescribeRole.Theorem),
+            Entry("product-marginal-root", "product_marginal_root", "Positive root of the actual product marginals",
+                "The displayed matrix sqrtQ is the unique positive square root of rho tensor sigmaE, where both factors are proved physical marginals.", DescribeRole.Theorem),
+            Entry("ordinary-petz-channel", "ordinary_petz_channel", "The ordinary Petz channel with zero completion defect",
+                "The noise output of rho is the identity on Fin 1 and is positive definite. Its spectral support and inverse positive square root are both the identity. "
+                    + "The displayed petzKraus are therefore exactly the ordinary Petz Kraus factors. The reference-state completion theorem supplies the canonical CPTP map, "
+                    + "and its complementary reset term vanishes on every input matrix.", DescribeRole.Theorem),
+            Entry("canonical-reference-amplitude", "canonical_reference_amplitude", "Canonical purification amplitude",
+                "The reference vector is entrywise the positive square root of the nonuniform density rho.", DescribeRole.Theorem),
+            Entry("actual-recovered-purifications", "actual_recovered_purifications", "Actual recovered reference-output densities",
+                "The reference tensor extension of the actual Petz-after-noise channel sends the canonical pure reference density to rho tensor rho. "
+                    + "The actual Appendix A SW-after-noise channel sends it to rho tensor diag(8/9,1/9). These identities precede the fidelity calculation.", DescribeRole.Theorem),
+            Entry("actual-strict-fidelity", "actual_strict_fidelity", "SW strictly beats ordinary Petz for this physical channel",
+                "The squared pure-reference overlap of the actual Petz composite is 1/3, and that of the actual source SW composite is 11/27. "
+                    + "Their difference is 2/27, so the SW fidelity is strictly larger. Fidelity is defined by the actual recovered density's overlap with the canonical reference vector, "
+                    + "rather than by a reduced target formula. This is the replacement-channel direction of Burri's Question 1 only; the opposite direction and the full no-order conclusion are not asserted.", DescribeRole.Theorem))));
 
     private static DocumentBlock Entry(string id, string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name),

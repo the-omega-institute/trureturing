@@ -354,34 +354,28 @@ theorem petz_kraus_identification (e : E) :
   rw [noise_reference, petz_spectral_factors.2, Matrix.mul_one, reference_root]
   rfl
 
-/-- The canonical reference completion has identically zero defect. -/
-set_option maxHeartbeats 1000000 in
+/-- The canonical reference completion has identically zero defect. The full-rank
+Petz factors were identified above, so no singular-branch simplification is needed. -/
 theorem ordinary_petz_channel : ∃ recovery : QuantumChannel B A,
     ∀ T : Matrix B B ℂ,
       CStarMatrix.ofMatrix.symm
         (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
         ∑ e : E, petzKraus e * T * (petzKraus e)ᴴ := by
-  obtain ⟨recovery, haction, _⟩ :=
-    ReferencePetzChannel.completed_reference_petz_channel noiseKraus noise_normalization
-      referenceState
+  have hS : Matrix.trace
+      ((Matrix.diagonal fun i => (weight i : ℂ)) *
+        (Matrix.diagonal fun i => (weight i : ℂ))ᴴ) = 1 := by
+    obtain ⟨h2, h3, ht⟩ := sqrt_facts
+    norm_num [Matrix.trace, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      Matrix.diagonal_apply, weight, Fin.sum_univ_two,
+      Complex.ext_iff, Complex.div_re, Complex.div_im]
+    field_simp <;> nlinarith
+  obtain ⟨recovery, haction⟩ :=
+    ReferencePetzChannel.complete_quantum_channel_with_reference petzKraus
+      (1 : Matrix B B ℂ) (Matrix.diagonal fun i => (weight i : ℂ))
+      (by simp) (by simp) decoder_normalizations.2 hS
   refine ⟨recovery, fun T => ?_⟩
-  have h := haction T
-  change CStarMatrix.ofMatrix.symm
-    (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
-    (∑ e : E, cfc Real.sqrt rho * (noiseKraus e)ᴴ *
-      SpectralTransposeRecovery.spectralInverseSqrt
-        (∑ f : E, noiseKraus f * rho * (noiseKraus f)ᴴ) * T *
-      SpectralTransposeRecovery.spectralInverseSqrt
-        (∑ f : E, noiseKraus f * rho * (noiseKraus f)ᴴ) *
-      noiseKraus e * cfc Real.sqrt rho) +
-      Matrix.trace ((1 - SpectralTransposeRecovery.spectralSupport
-        (∑ f : E, noiseKraus f * rho * (noiseKraus f)ᴴ)) * T) • rho at h
-  rw [noise_reference, petz_spectral_factors.1, petz_spectral_factors.2,
-    sub_self, Matrix.zero_mul, Matrix.trace_zero, zero_smul, add_zero] at h
-  simpa only [petzKraus, reference_root, Matrix.mul_one, Matrix.conjTranspose_mul,
-    Matrix.conjTranspose_conjTranspose, Matrix.diagonal_conjTranspose,
-    Pi.star_def, Complex.conj_ofReal, Matrix.mul_assoc] using h
-
+  simpa only [sub_self, Matrix.zero_mul, Matrix.trace_zero, zero_smul, add_zero]
+    using haction T
 
 /-- The canonical purification amplitude is the positive square root of rho. -/
 theorem canonical_reference_amplitude (r i : A) :
@@ -413,6 +407,7 @@ theorem sw_channel_action (T : Matrix B B ℂ) :
     CStarMatrix.ofMatrix.symm
       (swChannel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
       Matrix.trace T • swOutput := by
+  unfold swChannel
   rw [(finite_kraus_quantum_channel swKraus decoder_normalizations.1).choose_spec T]
   obtain ⟨h2, h3, ht⟩ := sqrt_facts
   ext i j
@@ -429,6 +424,7 @@ theorem petz_channel_action (T : Matrix B B ℂ) :
     CStarMatrix.ofMatrix.symm
       (petzChannel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
       Matrix.trace T • rho := by
+  unfold petzChannel
   rw [ordinary_petz_channel.choose_spec T]
   obtain ⟨h2, h3, ht⟩ := sqrt_facts
   ext i j
@@ -487,7 +483,7 @@ private theorem recovered_purification_of_reset (channel : QuantumChannel A A)
     norm_num [referencePure, referenceVector, weight, rho, Matrix.trace,
       Matrix.vecMulVec_apply, Matrix.diagonal_apply, Matrix.kroneckerMap_apply,
       Fin.sum_univ_two]
-  all_goals congr 1; apply Complex.ext <;>
+  all_goals left; apply Complex.ext <;>
     norm_num [Complex.div_re, Complex.div_im] <;> field_simp <;> nlinarith
 
 /-- The full recovered reference-output states, before taking any overlap. -/
@@ -500,6 +496,87 @@ theorem actual_recovered_purifications :
       (composite_reset petzChannel rho petz_channel_action),
     recovered_purification_of_reset _ _
       (composite_reset swChannel swOutput sw_channel_action)⟩
+
+private theorem pure_kraus_overlap {n : Type*} [Fintype n]
+    (v : n → ℂ) (K : Matrix n n ℂ) :
+    (star v ⬝ᵥ ((K * Matrix.vecMulVec v (star v) * Kᴴ) *ᵥ v)).re =
+      Complex.normSq (star v ⬝ᵥ (K *ᵥ v)) := by
+  rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.vecMul_conjTranspose]
+  simp only [star_star, Matrix.vecMulVec_mulVec, dotProduct_smul]
+  have hc : star (K *ᵥ v) ⬝ᵥ v = star (star v ⬝ᵥ (K *ᵥ v)) :=
+    star_dotProduct (K *ᵥ v) v
+  rw [hc]
+  change ((star v ⬝ᵥ (K *ᵥ v)) * star (star v ⬝ᵥ (K *ᵥ v))).re = _
+  simp [Complex.normSq_apply, Complex.mul_re]
+
+private theorem reference_extension_kraus {s : Type*} [Fintype s]
+    (channel : QuantumChannel A A) (K : s → Matrix A A ℂ)
+    (h : ∀ T : Matrix A A ℂ, CStarMatrix.ofMatrix.symm
+      (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+      ∑ k : s, K k * T * (K k)ᴴ)
+    (T : Matrix (A × A) (A × A) ℂ) :
+    referenceExtension channel T = ∑ k : s,
+      Matrix.kronecker (1 : Matrix A A ℂ) (K k) * T *
+        (Matrix.kronecker (1 : Matrix A A ℂ) (K k))ᴴ := by
+  ext ⟨r, i⟩ ⟨t, j⟩
+  dsimp only [referenceExtension]
+  rw [h]
+  simp [Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    Matrix.kroneckerMap_apply, Matrix.one_apply, Fintype.sum_prod_type,
+    Finset.mul_sum, Finset.sum_mul]
+
+/-- The actual tensor-channel overlap is the sum of squared pure amplitudes.
+This fixes the squared-fidelity convention without defining fidelity by that sum. -/
+theorem actual_fidelity_squared_overlap {s : Type*} [Fintype s]
+    (channel : QuantumChannel A A) (K : s → Matrix A A ℂ)
+    (h : ∀ T : Matrix A A ℂ, CStarMatrix.ofMatrix.symm
+      (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+      ∑ k : s, K k * T * (K k)ᴴ) :
+    entanglementFidelity channel = ∑ k : s, Complex.normSq
+      (star referenceVector ⬝ᵥ
+        (Matrix.kronecker (1 : Matrix A A ℂ) (K k) *ᵥ referenceVector)) := by
+  unfold entanglementFidelity
+  rw [reference_extension_kraus channel K h]
+  simp only [Matrix.sum_mulVec, dotProduct_sum, Complex.sum_re]
+  exact Finset.sum_congr rfl fun k _ => pure_kraus_overlap referenceVector _
+
+private theorem composite_kraus_action {s : Type*} [Fintype s]
+    (decoder : QuantumChannel B A) (D : s → Matrix A B ℂ)
+    (hD : ∀ T : Matrix B B ℂ, CStarMatrix.ofMatrix.symm
+      (decoder.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+      ∑ e : s, D e * T * (D e)ᴴ) (T : Matrix A A ℂ) :
+    CStarMatrix.ofMatrix.symm
+      ((decoder.comp noiseChannel).toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+      ∑ ef : s × E, (D ef.1 * noiseKraus ef.2) * T *
+        (D ef.1 * noiseKraus ef.2)ᴴ := by
+  change CStarMatrix.ofMatrix.symm
+    (decoder.toCompletelyPositiveMap
+      (noiseChannel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T))) = _
+  have hn : noiseChannel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T) =
+      CStarMatrix.ofMatrix (∑ f : E, noiseKraus f * T * (noiseKraus f)ᴴ) :=
+    congrArg CStarMatrix.ofMatrix
+      ((finite_kraus_quantum_channel noiseKraus noise_normalization).choose_spec T)
+  rw [hn, hD]
+  simp only [Fintype.sum_prod_type, Matrix.mul_sum, Matrix.sum_mul,
+    Matrix.conjTranspose_mul, Matrix.mul_assoc]
+
+/-- Both actual composites satisfy the squared pure-state overlap formula
+with their physical noise and decoder Kraus operators. -/
+theorem actual_composite_squared_overlaps :
+    entanglementFidelity (petzChannel.comp noiseChannel) =
+      ∑ ef : E × E, Complex.normSq (star referenceVector ⬝ᵥ
+        (Matrix.kronecker (1 : Matrix A A ℂ)
+          (petzKraus ef.1 * noiseKraus ef.2) *ᵥ referenceVector)) ∧
+    entanglementFidelity (swChannel.comp noiseChannel) =
+      ∑ ef : E × E, Complex.normSq (star referenceVector ⬝ᵥ
+        (Matrix.kronecker (1 : Matrix A A ℂ)
+          (swKraus ef.1 * noiseKraus ef.2) *ᵥ referenceVector)) := by
+  constructor
+  · apply actual_fidelity_squared_overlap
+    exact composite_kraus_action petzChannel petzKraus ordinary_petz_channel.choose_spec
+  · apply actual_fidelity_squared_overlap
+    exact composite_kraus_action swChannel swKraus
+      (finite_kraus_quantum_channel swKraus decoder_normalizations.1).choose_spec
 
 /-- A strict comparison of the actual Appendix A SW and ordinary Petz channels,
 using the nonuniform canonical reference purification. This is one direction only. -/
@@ -526,6 +603,66 @@ theorem actual_strict_fidelity :
       Fin.sum_univ_two, Complex.div_re, Complex.div_im]
     field_simp <;> nlinarith
   exact ⟨hp, hs, by rw [hp, hs]; norm_num, by rw [hp, hs]; norm_num⟩
+
+private theorem polar_product_unique (Uprime : Matrix P P ℂ)
+    (hu : Uprime * Uprimeᴴ = 1) (hp : (M * Uprime).PosSemidef) :
+    M * Uprime = M * U := by
+  have hs (T : Matrix P P ℂ) (hT : T * Tᴴ = 1)
+      (hP : (M * T).PosSemidef) : (M * T) * (M * T) = M * Mᴴ := by
+    calc
+      _ = (M * T) * (M * T)ᴴ := by rw [hP.isHermitian]
+      _ = M * Mᴴ := by
+        rw [Matrix.conjTranspose_mul, Matrix.mul_assoc,
+          ← Matrix.mul_assoc T Tᴴ, hT, Matrix.one_mul]
+  have h1 := CFC.sqrt_unique (hs Uprime hu hp) hp.nonneg
+  have h2 := CFC.sqrt_unique (hs U source_unitary.2 source_polar_positive)
+    source_polar_positive.nonneg
+  exact h1.symm.trans h2
+
+/-- Every allowed positive right-polar unitary has the same action on the
+prepared source vector. Null-space SVD completion cannot change this decoder. -/
+theorem source_supported_action_unique (Uprime : Matrix P P ℂ)
+    (hu : Uprime * Uprimeᴴ = 1) (hp : (M * Uprime).PosSemidef) :
+    Uprime *ᵥ psi = U *ᵥ psi := by
+  have hpol := polar_product_unique Uprime hu hp
+  have hleft (T : Matrix P P ℂ) (hT : T * Tᴴ = 1) :
+      T * (M * T)ᴴ = Mᴴ := by
+    rw [Matrix.conjTranspose_mul, ← Matrix.mul_assoc, hT, Matrix.one_mul]
+  have hEq : Uprime * ((1 / (Real.sqrt 3 : ℂ)) • X) =
+      U * ((1 / (Real.sqrt 3 : ℂ)) • X) := by
+    rw [← source_polar_product, ← hpol, hleft Uprime hu, hpol,
+      hleft U source_unitary.2]
+  have hx : X *ᵥ psi = psi := by
+    rw [X, Matrix.vecMulVec_mulVec]
+    have hn : (star psi) ⬝ᵥ psi = (1 : ℂ) := psi_normalized
+    rw [hn]
+    simp
+  have h := congrArg (fun Z : Matrix P P ℂ => Z *ᵥ psi) hEq
+  simp only [Matrix.mul_smul, Matrix.smul_mulVec, Matrix.mulVec_mulVec, hx] at h
+  have hc : (1 / (Real.sqrt 3 : ℂ)) ≠ 0 := by
+    exact one_div_ne_zero (by exact_mod_cast sqrt_facts.2.2)
+  funext p
+  exact mul_left_cancel₀ hc (congrFun h p)
+
+/-- The actual composite Kraus rows agree for every allowed completion. -/
+theorem source_decoder_completion_independent (Uprime : Matrix P P ℂ)
+    (hu : Uprime * Uprimeᴴ = 1) (hp : (M * Uprime).PosSemidef) (e : E) :
+    (fun k p => Uprime (k, e) p) * prepare = swKraus e := by
+  have h := source_supported_action_unique Uprime hu hp
+  ext k b
+  simpa only [Matrix.mul_apply, Matrix.mulVec, dotProduct, prepare,
+    swKraus, sourceKraus, W, Matrix.mul_one] using congrFun h (k, e)
+
+#print axioms physical_marginals
+#print axioms reference_root
+#print axioms product_marginal_root
+#print axioms ordinary_petz_channel
+#print axioms actual_recovered_purifications
+#print axioms actual_fidelity_squared_overlap
+#print axioms actual_composite_squared_overlaps
+#print axioms source_supported_action_unique
+#print axioms source_decoder_completion_independent
+#print axioms actual_strict_fidelity
 
 #print axioms psi_normalized
 #print axioms source_isometry
