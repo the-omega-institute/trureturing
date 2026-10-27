@@ -243,12 +243,14 @@ private theorem changed_fails (i : Fin 3) : ¬ arena.Law (changed i) := by
     norm_num at he
   · have he := hh.2.2.1 (fun _ => 1)
     have he0 := congrFun he 0
-    simp [changed,realize,leg_survival wait,wait_survival] at he0
+    simp only [successful_action] at he0
+    simp only [changed,realize,leg_survival wait,wait_survival] at he0
     norm_num [successful_action,live,wait,Leg.height,Leg.speed,p,
       FiniteRectangleTransport.probability] at he0
   · have he := hh.2.2.2 (fun _ => 1) 0 (fun _ => 1)
     have he0 := congrFun he 0
-    simp [changed,realize,leg_survival wait,wait_survival] at he0
+    simp only [jump_action,successful_action] at he0
+    simp only [changed,realize,leg_survival wait,wait_survival] at he0
     norm_num [jump_action,successful_action,jump,live,wait,Leg.height,Leg.speed,p,
       FiniteRectangleTransport.probability] at he0
 
@@ -272,6 +274,10 @@ private theorem move_value : value ⟨wait.c,wait.duration,move.duration,wait.he
     rw [leg_survival move,move_survival]
   simpa [value,leg_survival wait,wait_survival,hm] using he
 
+private theorem changed_other (i j : Fin 3) (hj : j ≠ i) (param : Unit) (d : Input) :
+    actual.readout j param d = (changed i).readout j param d := by
+  simp [actual,changed,realize,hj]
+
 def registration : Registration arena (type_of% (@native_concatenation)) where
   actual := actual
   bridge := Iff.rfl
@@ -282,8 +288,7 @@ def registration : Registration arena (type_of% (@native_concatenation)) where
       refine ⟨changed i,?_,rfl,changed_fails i⟩
       intro j hj
       funext param d
-      change value d = if (j : Fin 3) = i then 0 else value d
-      rw [ite_eq_right (show (j : Fin 3) ≠ i from hj)]
+      exact changed_other i j hj param d
     · intro i
       exact nomatch i
   dependence := by
