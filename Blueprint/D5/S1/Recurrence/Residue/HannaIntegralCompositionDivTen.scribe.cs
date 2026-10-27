@@ -50,7 +50,10 @@ internal sealed class HannaIntegralCompositionDivTenDocument : IScribeDocumentDe
                     + "in degrees three through six and zero elsewhere. Thus P solves the coefficient "
                     + "equation modulo ten. Uniqueness identifies its residues with those of the integral sequence. "
                     + "Reduction acts on integral coefficient sequences and requires no factorial inverses modulo ten."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("h277403-div10"),
+                    ResolutionKind.Proved)))));
 
     private static Formula SolutionBody()
     {
