@@ -164,7 +164,7 @@ theorem original_prime_source_order {p r N M : ℕ} (hp : p.Prime) (hr : r.Prime
   rw [← htU, strictInteger_counts hpriceT]
 
 private theorem adjacent_prime_log_gap {p r : ℕ} (hp : p.Prime) (hr : r.Prime)
-    (hpr : p < r)
+    (_hpr : p < r)
     (hadj : ∀ q : ℕ, q.Prime → p < q → q < r → False) :
     Real.log (r : ℝ) - Real.log (p : ℝ) ≤ Real.log 2 := by
   obtain ⟨q, hq, hpq, hq2⟩ := Nat.exists_prime_lt_and_le_two_mul p hp.ne_zero
@@ -177,6 +177,29 @@ private theorem adjacent_prime_log_gap {p r : ℕ} (hp : p.Prime) (hr : r.Prime)
     exact_mod_cast hr2p
   rw [Real.log_mul (by norm_num) hpR.ne'] at hlog
   linarith
+
+/- Completeness of the literal prime window turns label adjacency into the
+   ordinary Bertrand bound; no thinned prime subsequence is allowed. -/
+theorem original_label_window_adjacent_prime_bound {ell : ℝ} {p r : ℕ}
+    (hp : p ∈ originalLabelWindow ell) (hr : r ∈ originalLabelWindow ell)
+    (_hpr : p < r)
+    (hadj : ∀ q : ℕ, q ∈ originalLabelWindow ell →
+      ¬(p < q ∧ q < r)) :
+    r ≤ 2 * p := by
+  rcases Finset.mem_filter.mp hp with ⟨hpLE, hpLower⟩
+  rcases Finset.mem_filter.mp hr with ⟨hrLE, hrLower⟩
+  have hpp : p.Prime := (Nat.mem_primesLE.mp hpLE).2
+  obtain ⟨q, hq, hpq, hq2⟩ := Nat.exists_prime_lt_and_le_two_mul p hpp.ne_zero
+  by_contra hnot
+  have h2pr : 2 * p < r := Nat.lt_of_not_ge hnot
+  have hqr : q < r := lt_of_le_of_lt hq2 h2pr
+  have hqLE : q ≤ ⌊Real.exp (2 * ell)⌋₊ :=
+    (Nat.le_of_lt hqr).trans (Nat.mem_primesLE.mp hrLE).1
+  have hqLower : Real.exp ell ≤ (q : ℝ) := by
+    exact hpLower.trans (by exact_mod_cast hpq.le)
+  have hqmem : q ∈ originalLabelWindow ell := by
+    refine Finset.mem_filter.mpr ⟨Nat.mem_primesLE.mpr ⟨hqLE, hq⟩, hqLower⟩
+  exact (hadj q hqmem ⟨hpq, hqr⟩).elim
 
 /-- A strict inventory change pays for the whole logarithmic source gap.
 
