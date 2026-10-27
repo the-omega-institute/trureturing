@@ -9,12 +9,13 @@
 import D5.S3.Quantum.Fibers.OriginalRepeatedPrefix
 import Mathlib.MeasureTheory.Group.LIntegral
 
+/-! Actual native failure measures, normalization and early/late event variation. -/
 noncomputable section
 namespace D5.S3.Quantum.Fibers.OriginalRepeatedMarkedLaw
 open Set Filter Topology MeasureTheory intervalIntegral
 open OriginalControlComposition OriginalControlMarkedJump OriginalMarkedConcatenation
 open OriginalRepeatedPrefix
-open scoped BigOperators Matrix
+open scoped BigOperators Matrix ENNReal
 attribute [local instance] Classical.propDecidable
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -40,7 +41,9 @@ private theorem translate_integral (T U : ℝ) (f : ℝ → ℝ≥0∞)
       ∫⁻ s in (Ioc 0 U) ∩ {s | s+T ∈ A}, f s := by
   rw [← lintegral_indicator (measurableSet_Ioc.inter hA),
     ← lintegral_add_right_eq_self _ T]
-  rw [← lintegral_indicator (measurableSet_Ioc.inter (hA.preimage (measurable_id.add_const T)))]
+  have hm : MeasurableSet ((Ioc (0:ℝ) U) ∩ {s | s+T ∈ A}) :=
+    measurableSet_Ioc.inter (hA.preimage (measurable_id.add_const T))
+  rw [← lintegral_indicator hm]
   apply lintegral_congr
   intro s
   have he : s+T ∈ (Ioc T (T+U)) ∩ A ↔ s ∈ (Ioc 0 U) ∩ {s | s+T ∈ A} := by
@@ -59,14 +62,13 @@ private theorem raw_density (c a k S beta : ℝ) (m : ℤ) (theta : Fin 5 → �
     Real.mul_self_sqrt (div_nonneg (p_pos c k hc hk i).le (p_pos c a hc ha i).le),
     source_diagonal c a beta m theta hc ha]
   field_simp [(p_pos c a hc ha i).ne']
-  <;> ring
 
 private theorem native_bounds (c U chi : ℝ) (k : ℝ → ℝ)
     (hk : OriginalControl (c,c,1-2*c) U k (fun _ => chi))
     (t : ℝ) (ht : t ∈ Icc 0 U) : k t ∈ Ioo 0 c := by
   have hl : FiniteRectangleTransport.lower (c,c,1-2*c)=0 := by
     dsimp [FiniteRectangleTransport.lower]; ring_nf; simp
-  simpa [hl,FiniteRectangleTransport.upper,uIcc_of_le hk.1] using hk.2.2.2.1 t ht
+  simpa [hl,FiniteRectangleTransport.upper,uIcc_of_le hk.1] using hk.2.2.2.1 t (by simpa only [uIcc_of_le hk.1] using ht)
 
 private theorem survival_after (c T U chi : ℝ) (k K : ℝ → ℝ)
     (hT : 0 ≤ T) (hU : 0 ≤ U) (hj : k T=K 0)
@@ -114,21 +116,26 @@ theorem failure_join (c a b beta T U chi : ℝ) (m : ℤ) (theta : Fin 5 → ℝ
       have htT : t<T := lt_of_le_of_ne hmem.1.2 ht
       simp only [failureDensity,survival_before c T t k K hmem.1.1.le hmem.1.2,
         rate_before c T k K t htT,concatenate,if_pos hmem.1.2]
-    · rw [← translate_integral T U (fun s => ENNReal.ofReal
-        (failureDensity c b beta m theta K i s)) _ (hm i),
-        ← lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
+    · have htr : (∫⁻ t in (Ioc T (T+U)) ∩ {t | Sum.inr (i,t) ∈ A},
+          ENNReal.ofReal (failureDensity c b beta m theta K i (t-T))) =
+          ∫⁻ s in (Ioc 0 U) ∩ {s | Sum.inr (i,s+T) ∈ A},
+            ENNReal.ofReal (failureDensity c b beta m theta K i s) := by
+        simpa only [mem_setOf_eq] using translate_integral T U
+          (fun s => ENNReal.ofReal (failureDensity c b beta m theta K i s))
+          {t | Sum.inr (i,t) ∈ A} (hm i)
+      rw [← htr,← lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
       apply setLIntegral_congr_fun (measurableSet_Ioc.inter (hm i))
       intro t ht
       have hs : t-T ∈ Icc 0 U := ⟨by linarith [ht.1.1],by linarith [ht.1.2]⟩
       have hS := survival_after c T U chi k K hT hU hj h0 h1 (t-T) hs
-      rw [add_sub_cancel T t] at hS
+      rw [show T+(t-T)=t by ring] at hS
       have hh : concatenate k K T t=K (t-T) := by
         simp [concatenate,not_le.mpr ht.1.1,hj]
       simp only [failureDensity,hh,hS,rate_after c T k K hj t ht.1.1]
-      rw [raw_density c a _ _ beta m theta _ hc ha (native_bounds c U chi K h1 _ hs)
+      rw [raw_density c a (K (t-T)) (survival c k T*survival c K (t-T)) beta m theta _ hc ha (native_bounds c U chi K h1 _ hs)
         (mul_nonneg (Real.exp_pos _).le (Real.exp_pos _).le),
-        raw_density c b _ _ beta m theta _ hc hb (native_bounds c U chi K h1 _ hs)
-        (Real.exp_pos _).le,← ENNReal.ofReal_mul (Real.exp_pos _).le]
+        raw_density c b (K (t-T)) (survival c K (t-T)) beta m theta _ hc hb (native_bounds c U chi K h1 _ hs)
+        (Real.exp_pos _).le,← ENNReal.ofReal_mul (show 0 ≤ survival c k T from (Real.exp_pos _).le)]
       congr 1
       ring
   unfold F
@@ -162,7 +169,7 @@ private theorem balance_leg (L : Leg) (beta : ℝ) (m : ℤ) (theta : Fin 5 → 
     <;> ring
   rw [source_live_mass L.c L.x L.y (L.survival L.duration) beta m theta L.c_lt
     ⟨L.x_pos,L.x_lt⟩ ⟨L.y_pos,L.y_lt⟩ (Real.exp_pos _).le] at he
-  simpa only [Balance,F,leg_survival,hend] using he.symm
+  simpa only [Balance,F,leg_survival,hend,failureDensity,leg_rate,mem_univ] using he.symm
 
 private theorem balance_join (c a b beta T U : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
     (k K : ℝ → ℝ) (hc : c<1/2) (ha : a ∈ Ioo 0 c) (hb : b ∈ Ioo 0 c)
@@ -174,7 +181,7 @@ private theorem balance_join (c a b beta T U : ℝ) (m : ℤ) (theta : Fin 5 →
   unfold Balance at *
   rw [failure_join c a b beta T U 0 m theta k K hc ha hb hT hU hj h0 h1 univ MeasurableSet.univ]
   have hs := survival_after c T U 0 k K hT hU hj h0 h1 U ⟨hU,le_rfl⟩
-  rw [hs,ENNReal.ofReal_mul (Real.exp_pos _).le]
+  rw [hs,ENNReal.ofReal_mul (show 0 ≤ survival c k T from (Real.exp_pos _).le)]
   change ENNReal.ofReal (survival c k T)*ENNReal.ofReal (survival c K U)+
     (F c a beta T m theta k univ+ENNReal.ofReal (survival c k T)*F c b beta U m theta K univ)=1
   calc
@@ -182,7 +189,6 @@ private theorem balance_join (c a b beta T U : ℝ) (m : ℤ) (theta : Fin 5 →
         (ENNReal.ofReal (survival c K U)+F c b beta U m theta K univ) := by ring
     _ = 1 := by rw [hB1,mul_one,add_comm,hB0]
 
-namespace Band
 private theorem loop_balance (B : Band) (d : ℝ) (hd : 0<d)
     (beta : ℝ) (m : ℤ) (theta : Fin 5 → ℝ) :
     Balance B.c B.a beta (2*d) m theta (B.loop d hd) := by
@@ -210,12 +216,12 @@ private theorem prefix_balance (B : Band) (d : ℝ) (hd : 0<d) (j : ℕ)
     simpa only [he,Band.repeated] using
       balance_join B.c B.a B.a beta _ (2*d) m theta _ _ B.c_lt
         ⟨B.a_pos,B.ab.trans B.bc⟩ ⟨B.a_pos,B.ab.trans B.bc⟩ (by positivity) (by positivity)
-        hj hp (B.loop_control d 0 hd) ih (B.loop_balance d hd beta m theta)
+        hj hp (B.loop_control d 0 hd) ih (loop_balance B d hd beta m theta)
 
 private theorem suffix_balance (B : Band) (beta : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
     (e : Bool) :
     Balance B.c B.a beta 1 m theta (if e then B.earlySuffix else B.lateSuffix) := by
-  have hl := B.loop_balance (1/4) (by norm_num) beta m theta
+  have hl := loop_balance B (1/4) (by norm_num) beta m theta
   have hw := balance_leg B.wait beta m theta
   have hc := B.loop_control (1/4) 0 (by norm_num)
   have hz := B.loop_zero (1/4) (by norm_num)
@@ -235,7 +241,17 @@ private theorem suffix_balance (B : Band) (beta : ℝ) (m : ℤ) (theta : Fin 5 
       hj hc hwo hl hw
     norm_num only at h
     exact h
-end Band
+
+private theorem control_restrict (c T s : ℝ) (K : ℝ → ℝ)
+    (h : OriginalControl (c,c,1-2*c) T K (fun _ => (0:ℝ)))
+    (hs : s ∈ Icc 0 T) : OriginalControl (c,c,1-2*c) s K (fun _ => (0:ℝ)) := by
+  have hsub : uIcc (0:ℝ) s ⊆ uIcc 0 T := by
+    rw [uIcc_of_le hs.1,uIcc_of_le h.1]
+    exact Icc_subset_Icc le_rfl hs.2
+  have ha := original_ac _ _ _ _ h
+  exact ⟨hs.1,h.2.1.mono hsub,h.2.2.1.mono hsub,
+    (fun t ht => h.2.2.2.1 t (hsub ht)),h.2.2.2.2.1.mono hsub,
+    Or.inl ⟨ha.1.mono hsub,ha.2.mono hsub⟩⟩
 
 /-- Every n uses the existing repeated heights and native Kraus law. The same
 source is retained through the prefix, with its actual q^n survival weight. -/
@@ -245,21 +261,31 @@ theorem early_late_marked_probability (B : Band) (n : ℕ) (hn : 1≤n)
       let k := if e then B.early n hn else B.late n hn
       let H := if e then B.earlySuffix else B.lateSuffix
       IsProbabilityMeasure (markedLaw B.c B.a beta 2 m theta k) ∧
-      ∀ A : Set Leg.Record, MeasurableSet A →
+      (∀ A : Set Leg.Record, MeasurableSet A →
         markedLaw B.c B.a beta 2 m theta k A =
           (if Sum.inl () ∈ A then ENNReal.ofReal (B.q^(n+1)) else 0)+
           F B.c B.a beta 1 m theta
             (B.repeated (Band.halfStep n) (Band.halfStep_pos n hn) n) A+
-          ENNReal.ofReal (B.q^n)*F B.c B.a beta 1 m theta H (shift 1 A) := by
+          ENNReal.ofReal (B.q^n)*F B.c B.a beta 1 m theta H (shift 1 A)) ∧
+      (∀ t ∈ Ioc (1:ℝ) 2, ∀ psi : Fin 5 → ℂ,
+        successfulKraus B.c B.a (k t) (survival B.c k t) *ᵥ psi =
+          successfulKraus B.c B.a (H (t-1)) (survival B.c H (t-1)) *ᵥ
+            (successfulKraus B.c B.a B.a (B.q^n) *ᵥ psi) ∧
+        ∀ i : Fin 5,
+          jumpKraus B.c B.a (k t) (survival B.c k t) (jumpRate B.c k t) i *ᵥ psi =
+            jumpKraus B.c B.a (H (t-1)) (survival B.c H (t-1))
+              (jumpRate B.c H (t-1)) i *ᵥ
+                (successfulKraus B.c B.a B.a (B.q^n) *ᵥ psi)) ∧
+      (∀ (i : Fin 5) (t : ℝ), failureMeasure B.c B.a beta 2 m theta k i {t}=0) := by
   intro e
   have hn0 : (n:ℝ)≠0 := by exact_mod_cast (by omega : n≠0)
   have ht : 2*(n:ℝ)*Band.halfStep n=1 := by dsimp [Band.halfStep]; field_simp
   obtain ⟨hp,hp0,hp1,hps⟩ := B.prefix_facts (Band.halfStep n) 0 (Band.halfStep_pos n hn) n
   rw [ht] at hp hp1 hps
   obtain ⟨hs,hs0,hs1,hss⟩ := B.suffix_facts 0 e
-  have hbp := B.prefix_balance (Band.halfStep n) (Band.halfStep_pos n hn) n beta m theta
+  have hbp := prefix_balance B (Band.halfStep n) (Band.halfStep_pos n hn) n beta m theta
   rw [ht] at hbp
-  have hbs := B.suffix_balance beta m theta e
+  have hbs := suffix_balance B beta m theta e
   have hj := hp1.trans hs0.symm
   have hB := balance_join B.c B.a B.a beta 1 1 m theta _ _ B.c_lt
     ⟨B.a_pos,B.ab.trans B.bc⟩ ⟨B.a_pos,B.ab.trans B.bc⟩ zero_le_one zero_le_one
@@ -270,7 +296,7 @@ theorem early_late_marked_probability (B : Band) (n : ℕ) (hn : 1≤n)
   norm_num only at hf
   have hsall := early_late_native_survival B n hn 0
   have hend : (if e then B.early n hn else B.late n hn) 2=B.a := by
-    cases e <;> simp_all only [Bool.false_eq_true,↓reduceIte]
+    cases e <;> simp only [Bool.false_eq_true,↓reduceIte]
     · exact hsall.2.2.2.2.2.2.2.2.1
     · exact hsall.2.2.2.2.2.2.2.1
   have hsurv : survival B.c (if e then B.early n hn else B.late n hn) 2=B.q^(n+1) := by
@@ -281,13 +307,41 @@ theorem early_late_marked_probability (B : Band) (n : ℕ) (hn : 1≤n)
       (if e then B.earlySuffix else B.lateSuffix) 1 =
       (if e then B.early n hn else B.late n hn) := by cases e <;> rfl
   rw [hconcat] at hB hf
-  refine ⟨isProbabilityMeasure_iff.mpr ?_,?_⟩
+  refine ⟨isProbabilityMeasure_iff.mpr ?_,?_,?_,?_⟩
   · rw [native_law_apply _ _ _ _ _ _ _ B.c_lt ⟨B.a_pos,B.ab.trans B.bc⟩
       (by rw [hend]; exact ⟨B.a_pos,B.ab.trans B.bc⟩) univ MeasurableSet.univ]
-    exact hB
+    simpa only [Balance,mem_univ,ite_true] using hB
   · intro A hA
     rw [native_law_apply _ _ _ _ _ _ _ B.c_lt ⟨B.a_pos,B.ab.trans B.bc⟩
       (by rw [hend]; exact ⟨B.a_pos,B.ab.trans B.bc⟩) A hA,hsurv,hf A hA,hps,add_assoc]
+  · intro t ht psi
+    have htime : t-1 ∈ Icc (0:ℝ) 1 := ⟨by linarith [ht.1],by linarith [ht.2]⟩
+    have hcat := native_concatenation B.c 1 (t-1) B.a 0 _ _ B.c_lt zero_le_one
+      htime.1 hj ⟨B.a_pos,B.ab.trans B.bc⟩
+      (by rw [hp1]; exact ⟨B.a_pos,B.ab.trans B.bc⟩)
+      (native_bounds B.c 1 0 _ hs (t-1) htime) hp (control_restrict B.c 1 (t-1) _ hs htime)
+    have hact := hcat.2.2.1 psi
+    have hjump := hcat.2.2.2 (jumpRate B.c (if e then B.earlySuffix else B.lateSuffix) (t-1))
+    rw [hp1,hps,show (1:ℝ)+(t-1)=t by ring,hconcat] at hact hjump
+    have hheight : (if e then B.early n hn else B.late n hn) t=
+        (if e then B.earlySuffix else B.lateSuffix) (t-1) := by
+      rw [← hconcat]
+      simp [concatenate,not_le.mpr ht.1,hj]
+    have hrate : jumpRate B.c (if e then B.early n hn else B.late n hn) t=
+        jumpRate B.c (if e then B.earlySuffix else B.lateSuffix) (t-1) := by
+      rw [← hconcat]
+      exact rate_after B.c 1 _ _ hj t ht.1
+    refine ⟨?_,?_⟩
+    · rw [hheight]
+      exact hact.symm
+    · intro i
+      rw [hheight,hrate]
+      exact (hjump i psi).symm
+  · intro i t
+    change ((volume.restrict (Ioc (0:ℝ) 2)).withDensity
+      (fun u => ENNReal.ofReal (failureDensity B.c B.a beta m theta
+        (if e then B.early n hn else B.late n hn) i u))) {t}=0
+    exact measure_singleton t
 
 
 /-- Probability total variation is the supremum over all measurable events. -/
@@ -332,7 +386,7 @@ private theorem balance_mass (c a beta T : ℝ) (m : ℤ) (theta : Fin 5 → ℝ
   have hfin := ne_top_of_le_ne_top ENNReal.one_ne_top hle
   have he := congrArg ENNReal.toReal h
   rw [ENNReal.toReal_add ENNReal.ofReal_ne_top hfin,
-    ENNReal.toReal_ofReal (Real.exp_pos _).le,ENNReal.toReal_one] at he
+    ENNReal.toReal_ofReal (show 0 ≤ survival c k T from (Real.exp_pos _).le),ENNReal.toReal_one] at he
   exact ⟨hfin,by linarith⟩
 
 /-- The actual early failure window, including every original mode. -/
@@ -341,7 +395,6 @@ def earlyEvent : Set Leg.Record := Sum.inr '' (univ ×ˢ Ioc (1:ℝ) (3/2))
 private theorem earlyEvent_measurable : MeasurableSet earlyEvent :=
   (MeasurableSet.univ.prod measurableSet_Ioc).inr_image
 
-namespace Band
 private theorem wait_F (B : Band) (beta T : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
     (A : Set Leg.Record) : F B.c B.a beta T m theta B.wait.height A=0 := by
   have hh : B.wait.height=(fun _ => B.a) := by
@@ -357,7 +410,7 @@ private theorem suffix_mass (B : Band) (beta : ℝ) (m : ℤ) (theta : Fin 5 →
     let H := if e then B.earlySuffix else B.lateSuffix
     F B.c B.a beta 1 m theta H univ ≠ ⊤ ∧
       (F B.c B.a beta 1 m theta H univ).toReal=1-B.q := by
-  have h := balance_mass B.c B.a beta 1 m theta _ (B.suffix_balance beta m theta e)
+  have h := balance_mass B.c B.a beta 1 m theta _ (suffix_balance B beta m theta e)
   rw [(B.suffix_facts 0 e).2.2.2] at h
   exact h
 
@@ -398,9 +451,8 @@ private theorem suffix_early_event (B : Band) (beta : ℝ) (m : ℤ)
   norm_num only at hE hL
   constructor
   · rw [Band.earlySuffix,hE _ hA,hE _ MeasurableSet.univ]
-    simp only [B.wait_F,hfirst,mul_zero,add_zero]
-  · rw [Band.lateSuffix,hL _ hA,B.wait_F,hsecond,mul_zero,zero_add]
-end Band
+    simp only [wait_F B,hfirst,mul_zero,add_zero]
+  · rw [Band.lateSuffix,hL _ hA,wait_F B,hsecond,mul_zero,zero_add]
 
 
 private theorem event_difference (B : Band) (n : ℕ) (hn : 1≤n)
@@ -410,20 +462,20 @@ private theorem event_difference (B : Band) (n : ℕ) (hn : 1≤n)
       (markedLaw B.c B.a beta 2 m theta (B.late n hn) A).toReal =
       B.q^n*((F B.c B.a beta 1 m theta B.earlySuffix (shift 1 A)).toReal-
         (F B.c B.a beta 1 m theta B.lateSuffix (shift 1 A)).toReal) := by
-  have he := (early_late_marked_probability B n hn beta m theta true).2 A hA
-  have hl := (early_late_marked_probability B n hn beta m theta false).2 A hA
-  dsimp only at he hl
+  have he := (early_late_marked_probability B n hn beta m theta true).2.1 A hA
+  have hl := (early_late_marked_probability B n hn beta m theta false).2.1 A hA
+  simp only [Bool.false_eq_true,↓reduceIte] at he hl
   have hT : 2*(n:ℝ)*Band.halfStep n=1 := by
     have hn0 : (n:ℝ)≠0 := by exact_mod_cast (by omega : n≠0)
     dsimp [Band.halfStep]; field_simp
   have hbp := balance_mass B.c B.a beta _ m theta _
-    (B.prefix_balance (Band.halfStep n) (Band.halfStep_pos n hn) n beta m theta)
+    (prefix_balance B (Band.halfStep n) (Band.halfStep_pos n hn) n beta m theta)
   rw [hT] at hbp
   have hpf := ne_top_of_le_ne_top hbp.1
     (F_mono B.c B.a beta 1 m theta _ (subset_univ A))
-  have hef := ne_top_of_le_ne_top (B.suffix_mass beta m theta true).1
+  have hef := ne_top_of_le_ne_top (suffix_mass B beta m theta true).1
     (F_mono B.c B.a beta 1 m theta B.earlySuffix (subset_univ (shift 1 A)))
-  have hlf := ne_top_of_le_ne_top (B.suffix_mass beta m theta false).1
+  have hlf := ne_top_of_le_ne_top (suffix_mass B beta m theta false).1
     (F_mono B.c B.a beta 1 m theta B.lateSuffix (subset_univ (shift 1 A)))
   have hc : (if Sum.inl () ∈ A then ENNReal.ofReal (B.q^(n+1)) else 0)≠⊤ := by
     split_ifs <;> simp
@@ -450,25 +502,30 @@ theorem native_marked_tv (B : Band) (n : ℕ) (hn : 1≤n)
   have hq := early_late_native_survival B n hn 0
   have hqn : 0 ≤ B.q^n := pow_nonneg hq.1.le n
   have hmass : 0 ≤ 1-B.q := by linarith [hq.2.1]
+  have hme : (F B.c B.a beta 1 m theta B.earlySuffix univ).toReal=1-B.q := by
+    simpa only [↓reduceIte] using (suffix_mass B beta m theta true).2
+  have hml : (F B.c B.a beta 1 m theta B.lateSuffix univ).toReal=1-B.q := by
+    simpa only [Bool.false_eq_true,↓reduceIte] using (suffix_mass B beta m theta false).2
   have hb (A : Set Leg.Record) (hA : MeasurableSet A) :
       |(markedLaw B.c B.a beta 2 m theta (B.early n hn) A).toReal-
         (markedLaw B.c B.a beta 2 m theta (B.late n hn) A).toReal| ≤ B.q^n*(1-B.q) := by
     rw [event_difference B n hn beta m theta A hA,abs_mul,abs_of_nonneg hqn]
-    have hx := ENNReal.toReal_mono (B.suffix_mass beta m theta true).1
+    have hx := ENNReal.toReal_mono (suffix_mass B beta m theta true).1
       (F_mono B.c B.a beta 1 m theta B.earlySuffix (subset_univ (shift 1 A)))
-    have hy := ENNReal.toReal_mono (B.suffix_mass beta m theta false).1
+    have hy := ENNReal.toReal_mono (suffix_mass B beta m theta false).1
       (F_mono B.c B.a beta 1 m theta B.lateSuffix (subset_univ (shift 1 A)))
-    rw [(B.suffix_mass beta m theta true).2] at hx
-    rw [(B.suffix_mass beta m theta false).2] at hy
+    simp only [Bool.false_eq_true,↓reduceIte] at hx hy
+    rw [hme] at hx
+    rw [hml] at hy
     apply mul_le_mul_of_nonneg_left _ hqn
-    exact abs_sub_le_iff.mpr ⟨by linarith [ENNReal.toReal_nonneg
-      (F B.c B.a beta 1 m theta B.lateSuffix (shift 1 A))],by
-      linarith [ENNReal.toReal_nonneg (F B.c B.a beta 1 m theta B.earlySuffix (shift 1 A))]⟩
+    have hx0 : 0 ≤ (F B.c B.a beta 1 m theta B.earlySuffix (shift 1 A)).toReal := ENNReal.toReal_nonneg
+    have hy0 : 0 ≤ (F B.c B.a beta 1 m theta B.lateSuffix (shift 1 A)).toReal := ENNReal.toReal_nonneg
+    exact abs_sub_le_iff.mpr ⟨by linarith,by linarith⟩
   have he : |(markedLaw B.c B.a beta 2 m theta (B.early n hn) earlyEvent).toReal-
       (markedLaw B.c B.a beta 2 m theta (B.late n hn) earlyEvent).toReal|=B.q^n*(1-B.q) := by
     rw [event_difference B n hn beta m theta earlyEvent earlyEvent_measurable,
-      (B.suffix_early_event beta m theta).1,(B.suffix_early_event beta m theta).2,
-      ENNReal.toReal_zero,sub_zero,(B.suffix_mass beta m theta true).2,
+      (suffix_early_event B beta m theta).1,(suffix_early_event B beta m theta).2,
+      ENNReal.toReal_zero,sub_zero,hme,
       abs_of_nonneg (mul_nonneg hqn hmass)]
   refine ⟨hb,earlyEvent_measurable,he,?_⟩
   unfold eventTV
@@ -481,15 +538,117 @@ theorem native_marked_tv (B : Band) (n : ℕ) (hn : 1≤n)
     · exact ⟨_,by rintro x ⟨A,hA,rfl⟩; exact hb A hA⟩
     · exact ⟨earlyEvent,earlyEvent_measurable,he.symm⟩
 
+
+/-- The actual supremum height distance on the declared clock interval. -/
+def heightDistance (k K : ℝ → ℝ) (T : ℝ) : ℝ :=
+  sSup {x : ℝ | ∃ t ∈ Icc 0 T, x=|k t-K t|}
+
+private theorem leg_range (L : Leg) (lo hi : ℝ) (hx : L.x ∈ Icc lo hi)
+    (hy : L.y ∈ Icc lo hi) (t : ℝ) (ht : t ∈ Icc 0 L.duration) :
+    L.height t ∈ Icc lo hi := by
+  have hθ : 0 ≤ t/L.duration ∧ t/L.duration ≤ 1 :=
+    ⟨div_nonneg ht.1 L.duration_pos.le,(div_le_one L.duration_pos).mpr ht.2⟩
+  rw [show L.height t=(1-t/L.duration)*L.x+(t/L.duration)*L.y by dsimp [Leg.height,Leg.speed]; ring]
+  exact convex_Icc (𝕜:=ℝ) lo hi hx hy (by linarith) hθ.1 (by ring)
+
+private theorem join_range (lo hi T U : ℝ) (k K : ℝ → ℝ)
+    (hT : 0 ≤ T) (hj : k T=K 0)
+    (h0 : ∀ t ∈ Icc 0 T, k t ∈ Icc lo hi)
+    (h1 : ∀ t ∈ Icc 0 U, K t ∈ Icc lo hi)
+    (t : ℝ) (ht : t ∈ Icc 0 (T+U)) :
+    concatenate k K T t ∈ Icc lo hi := by
+  by_cases h : t ≤ T
+  · simpa only [concatenate,if_pos h] using h0 t ⟨ht.1,h⟩
+  · have hs : t-T ∈ Icc 0 U := ⟨by linarith,by linarith [ht.2]⟩
+    simpa only [concatenate,if_neg h,hj,add_sub_cancel_left] using h1 (t-T) hs
+
+private theorem loop_range (B : Band) (d : ℝ) (hd : 0<d) :
+    ∀ t ∈ Icc 0 (2*d), B.loop d hd t ∈ Icc B.a B.b := by
+  have hj : (B.up d hd).height d=(B.down d hd).height 0 := by
+    dsimp [Band.up,Band.down,Leg.height,Leg.speed]
+    field_simp [hd.ne']
+    <;> ring
+  have h := join_range B.a B.b d d _ _ hd.le hj
+    (leg_range (B.up d hd) B.a B.b ⟨le_rfl,B.ab.le⟩ ⟨B.ab.le,le_rfl⟩)
+    (leg_range (B.down d hd) B.a B.b ⟨B.ab.le,le_rfl⟩ ⟨le_rfl,B.ab.le⟩)
+  simpa only [← two_mul,Band.loop] using h
+
+private theorem prefix_range (B : Band) (d : ℝ) (hd : 0<d) (j : ℕ) :
+    ∀ t ∈ Icc 0 (2*(j:ℝ)*d), B.repeated d hd j t ∈ Icc B.a B.b := by
+  induction j with
+  | zero => intro t ht; exact ⟨le_rfl,B.ab.le⟩
+  | succ j ih =>
+    have hj : B.repeated d hd j (2*(j:ℝ)*d)=B.loop d hd 0 := by
+      rw [(B.prefix_facts d 0 hd j).2.2.1,B.loop_zero]
+    have h := join_range B.a B.b (2*(j:ℝ)*d) (2*d) _ _ (by positivity) hj ih (loop_range B d hd)
+    have he : 2*((j+1:ℕ):ℝ)*d=2*(j:ℝ)*d+2*d := by push_cast; ring
+    simpa only [he,Band.repeated] using h
+
+private theorem suffix_range (B : Band) (e : Bool) :
+    ∀ t ∈ Icc 0 1, (if e then B.earlySuffix else B.lateSuffix) t ∈ Icc B.a B.b := by
+  have hr := loop_range B (1/4) (by norm_num)
+  have he := B.loop_end (1/4) (by norm_num)
+  have hz := B.loop_zero (1/4) (by norm_num)
+  rw [show (2:ℝ)*(1/4)=1/2 by norm_num] at hr he
+  have hw : ∀ t ∈ Icc (0:ℝ) (1/2), B.wait.height t ∈ Icc B.a B.b :=
+    leg_range B.wait B.a B.b ⟨le_rfl,B.ab.le⟩ ⟨le_rfl,B.ab.le⟩
+  obtain ⟨_,hw0,hw1,_⟩ := B.wait_facts 0
+  cases e <;> simp only [Bool.false_eq_true,↓reduceIte]
+  · have h := join_range B.a B.b (1/2) (1/2) _ _ (by norm_num) (hw1.trans hz.symm) hw hr
+    norm_num only at h
+    exact h
+  · have h := join_range B.a B.b (1/2) (1/2) _ _ (by norm_num) (he.trans hw0.symm) hr hw
+    norm_num only at h
+    exact h
+
+private theorem actual_range (B : Band) (n : ℕ) (hn : 1≤n) (e : Bool) :
+    ∀ t ∈ Icc 0 2, (if e then B.early n hn else B.late n hn) t ∈ Icc B.a B.b := by
+  have ht : 2*(n:ℝ)*Band.halfStep n=1 := by
+    have hn0 : (n:ℝ)≠0 := by exact_mod_cast (by omega : n≠0)
+    dsimp [Band.halfStep]; field_simp
+  have hr := prefix_range B (Band.halfStep n) (Band.halfStep_pos n hn) n
+  have he := (B.prefix_facts (Band.halfStep n) 0 (Band.halfStep_pos n hn) n).2.2.1
+  rw [ht] at hr he
+  have hz := (B.suffix_facts 0 e).2.1
+  have h := join_range B.a B.b 1 1 _ _ zero_le_one (he.trans hz.symm) hr (suffix_range B e)
+  norm_num only at h
+  cases e <;> exact h
+
+private theorem actual_height_distance (B : Band) (n : ℕ) (hn : 1≤n) :
+    heightDistance (B.early n hn) (B.late n hn) 2=B.b-B.a := by
+  have hb (t : ℝ) (ht : t ∈ Icc 0 2) : |B.early n hn t-B.late n hn t| ≤ B.b-B.a := by
+    have he := actual_range B n hn true t ht
+    have hl := actual_range B n hn false t ht
+    simp only [Bool.false_eq_true, ↓reduceIte] at he hl
+    exact abs_sub_le_iff.mpr ⟨by linarith [he.2,hl.1],by linarith [hl.2,he.1]⟩
+  obtain ⟨_,_,_,_,_,_,_,_,_,_,_,he,hl⟩ := early_late_native_survival B n hn 0
+  have ha : |B.early n hn (5/4)-B.late n hn (5/4)|=B.b-B.a := by
+    rw [he,hl,abs_of_pos (sub_pos.mpr B.ab)]
+  unfold heightDistance
+  apply le_antisymm
+  · apply csSup_le
+    · exact ⟨_,5/4,by norm_num,rfl⟩
+    · rintro x ⟨t,ht,rfl⟩
+      exact hb t ht
+  · apply le_csSup
+    · exact ⟨_,by rintro x ⟨t,ht,rfl⟩; exact hb t ht⟩
+    · exact ⟨5/4,by norm_num,ha.symm⟩
+
 /-- On the actual all-n original controls the native marked distance tends
 to zero while the fixed height gap defeats every modulus at zero. -/
 theorem marked_inverse_nonuniformity (B : Band) (beta : ℝ) (m : ℤ)
     (theta : Fin 5 → ℝ) (omega : ℝ → ℝ)
     (homega : Tendsto omega (nhdsWithin 0 (Ioi 0)) (nhds 0)) :
+    (∀ (n : ℕ) (hn : 1≤n) (t : ℝ), t ∈ Icc 0 2 →
+      B.early n hn t ∈ Icc B.a B.b ∧ B.late n hn t ∈ Icc B.a B.b) ∧
+    (∀ (n : ℕ) (hn : 1≤n), heightDistance (B.early n hn) (B.late n hn) 2=B.b-B.a) ∧
     ¬ (∀ (n : ℕ) (hn : 1≤n),
-      |B.early n hn (5/4)-B.late n hn (5/4)| ≤
+      heightDistance (B.early n hn) (B.late n hn) 2 ≤
         omega (eventTV (markedLaw B.c B.a beta 2 m theta (B.early n hn))
           (markedLaw B.c B.a beta 2 m theta (B.late n hn)))) := by
+  refine ⟨?_,actual_height_distance B,?_⟩
+  · intro n hn t ht
+    exact ⟨actual_range B n hn true t ht,actual_range B n hn false t ht⟩
   intro h
   have hq := early_late_native_survival B 1 (by omega) 0
   have ht : Tendsto (fun n : ℕ => B.q^(n+1)*(1-B.q)) atTop (nhds 0) := by
@@ -506,10 +665,9 @@ theorem marked_inverse_nonuniformity (B : Band) (beta : ℝ) (m : ℤ)
     intro n
     have hn : 1≤n+1 := by omega
     have hx := h (n+1) hn
-    have hs := early_late_native_survival B (n+1) hn 0
-    rw [hs.2.2.2.2.2.2.2.2.2.2.2.1,hs.2.2.2.2.2.2.2.2.2.2.2.2,
-      abs_of_pos (sub_pos.mpr B.ab),(native_marked_tv B (n+1) hn beta m theta).2.2.2] at hx
+    rw [actual_height_distance B (n+1) hn,
+      (native_marked_tv B (n+1) hn beta m theta).2.2.2] at hx
     exact hx
-  have hz : B.b-B.a ≤ 0 := le_of_tendsto ho (Filter.Eventually.of_forall hg)
+  have hz : B.b-B.a ≤ 0 := ge_of_tendsto ho (Filter.Eventually.of_forall hg)
   linarith [B.ab]
 end D5.S3.Quantum.Fibers.OriginalRepeatedMarkedLaw

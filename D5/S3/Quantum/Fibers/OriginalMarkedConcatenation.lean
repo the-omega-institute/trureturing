@@ -168,7 +168,7 @@ theorem leg_survival (L : Leg) : survival L.c L.height = L.survival := by
   funext t
   simp [survival, Leg.survival, leg_hazard]
 
-private theorem leg_rate (L : Leg) : jumpRate L.c L.height = L.jumpRate := by
+theorem leg_rate (L : Leg) : jumpRate L.c L.height = L.jumpRate := by
   funext t i
   simp [jumpRate, Leg.jumpRate, leg_hazard]
 
