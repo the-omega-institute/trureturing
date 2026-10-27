@@ -10,6 +10,9 @@ import D5.S3.Quantum.Recovery.ReferencePetzChannel
 import D5.S3.Quantum.Foundation.FiniteDensityPurification
 import Mathlib.Tactic
 
+/-! The replacement instance retains the auxiliary spaces and ordered matrices of
+Burri's Appendix A. No assertion of a comparison in the reverse direction is made. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -97,9 +100,129 @@ theorem source_polar_product : M * U = (1 / (Real.sqrt 3 : ℂ)) • X := by
       Fin.sum_univ_one, Complex.ext_iff, Complex.div_re, Complex.div_im]
   all_goals field_simp <;> nlinarith
 
+theorem source_square_root :
+    CStarMatrix.ofMatrix.symm (CFC.sqrt (CStarMatrix.ofMatrix X)) = X := by
+  have hp := Matrix.posSemidef_vecMulVec_self_star psi
+  have hsquare : X * X = X := by
+    simpa only [X, Matrix.vecMulVec_mul_vecMulVec, dotProduct,
+      psi_normalized, one_smul]
+  have hx : 0 ≤ CStarMatrix.ofMatrix X :=
+    map_nonneg CStarMatrix.ofMatrixStarAlgEquiv hp.nonneg
+  have hs : CFC.sqrt (CStarMatrix.ofMatrix X) = CStarMatrix.ofMatrix X := by
+    apply CFC.sqrt_unique _ hx
+    exact congrArg CStarMatrix.ofMatrix hsquare
+  exact congrArg CStarMatrix.ofMatrix.symm hs
+
+theorem source_polar_positive : (M * U).PosSemidef := by
+  rw [source_polar_product]
+  apply (Matrix.posSemidef_vecMulVec_self_star psi).smul
+  exact_mod_cast (one_div_nonneg.mpr (Real.sqrt_nonneg 3))
+
+/-- An actual SVD giving exactly this source unitary, not only a polar label. -/
+theorem source_svd :
+    ∃ H T : Matrix.unitaryGroup P ℂ, ∃ s : P → ℝ,
+      (∀ i, 0 ≤ s i) ∧
+      M = (H : Matrix P P ℂ) * Matrix.diagonal (fun i => (s i : ℂ)) * T ∧
+      U = (T : Matrix P P ℂ)ᴴ * (H : Matrix P P ℂ)ᴴ := by
+  let h := source_polar_positive.isHermitian
+  let H := h.eigenvectorUnitary
+  let u : Matrix.unitaryGroup P ℂ := ⟨U, by
+    simpa only [Unitary.mem_iff, star_eq_conjTranspose] using source_unitary⟩
+  have hspec : M * U = (H : Matrix P P ℂ) *
+      Matrix.diagonal (fun i => (h.eigenvalues i : ℂ)) * (H : Matrix P P ℂ)ᴴ := by
+    simpa only [Matrix.conjStarAlgAut_apply, H, Function.comp_apply,
+      star_eq_conjTranspose] using h.spectral_theorem
+  refine ⟨H, star H * star u, h.eigenvalues,
+    source_polar_positive.eigenvalues_nonneg, ?_, ?_⟩
+  · change M = (H : Matrix P P ℂ) * _ * ((H : Matrix P P ℂ)ᴴ * Uᴴ)
+    calc
+      M = (M * U) * Uᴴ := by
+        rw [Matrix.mul_assoc, source_unitary.2, Matrix.mul_one]
+      _ = _ := by rw [hspec]; simp only [Matrix.mul_assoc]
+  · change U = ((H : Matrix P P ℂ)ᴴ * Uᴴ)ᴴ * (H : Matrix P P ℂ)ᴴ
+    have hh : (H : Matrix P P ℂ) * (H : Matrix P P ℂ)ᴴ = 1 := by
+      simpa only [star_eq_conjTranspose] using H.prop.2
+    rw [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
+      Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc, hh, Matrix.mul_one]
+
+def referenceVector (p : A × A) : ℂ :=
+  if p.1 = p.2 then (weight p.1 : ℂ) else 0
+/-- The physical purification after applying the specified Stinespring map. -/
+def sigmaVector (r : A) (b : B) (e : E) : ℂ :=
+  ∑ i : A, referenceVector (r, i) * V (b, e) i
+
+/-- Appendix A.9 entrywise, with W=I and the fixed unit ancilla psi. -/
+theorem source_purification_identity (r : A) (e : E) (q : P) :
+    CStarMatrix.ofMatrix.symm (CFC.sqrt (CStarMatrix.ofMatrix X)) (r, e) q =
+      ∑ z : P, W q z * (sigmaVector r 0 e * psi z) := by
+  rw [source_square_root]
+  have hsigma : sigmaVector r 0 e = psi (r, e) := by
+    rcases e with ⟨j, b⟩
+    fin_cases r <;> fin_cases j <;> fin_cases b <;>
+      simp [sigmaVector, referenceVector, V, psi, Fin.sum_univ_two]
+  rw [hsigma]
+  simp [W, X, Matrix.vecMulVec_apply, Matrix.one_apply, psi]
+
+theorem noise_normalization : (∑ e : E, (noiseKraus e)ᴴ * noiseKraus e) = 1 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [noiseKraus, V, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      Matrix.one_apply, Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_one]
+
+theorem sw_columns (e : E) (k : A) (b : B) :
+    swKraus e k b = if k = e.1 then
+      (if k = 0 then ((2 * Real.sqrt 2 / 3 : ℝ) : ℂ) else 1 / 3) else 0 := by
+  obtain ⟨h2, h3, ht⟩ := sqrt_facts
+  rcases e with ⟨j, c⟩
+  fin_cases j <;> fin_cases c <;> fin_cases k <;> fin_cases b <;>
+    norm_num [swKraus, sourceKraus, prepare, W, Matrix.mul_one, U, psi, weight,
+      Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_one,
+      Complex.ext_iff, Complex.div_re, Complex.div_im]
+  all_goals field_simp <;> nlinarith
+
+theorem decoder_normalizations :
+    (∑ e : E, (swKraus e)ᴴ * swKraus e) = 1 ∧
+    (∑ e : E, (petzKraus e)ᴴ * petzKraus e) = 1 := by
+  obtain ⟨h2, h3, ht⟩ := sqrt_facts
+  constructor <;> ext b c
+  all_goals fin_cases b <;> fin_cases c
+  · norm_num [Matrix.mul_apply, Matrix.conjTranspose_apply, sw_columns,
+      Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_one,
+      Complex.ext_iff, Complex.div_re, Complex.div_im]
+    <;> nlinarith
+  · norm_num [petzKraus, noiseKraus, V, weight, Matrix.mul_apply,
+      Matrix.conjTranspose_apply, Matrix.diagonal_apply,
+      Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_one,
+      Complex.ext_iff, Complex.div_re, Complex.div_im]
+    <;> field_simp <;> nlinarith
+
+/-- All three maps use the repository's canonical all-amplification CPTP carrier. -/
+theorem actual_channels :
+    (∃ channel : QuantumChannel A B, ∀ T : Matrix A A ℂ,
+      CStarMatrix.ofMatrix.symm
+        (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+        ∑ e : E, noiseKraus e * T * (noiseKraus e)ᴴ) ∧
+    (∃ channel : QuantumChannel B A, ∀ T : Matrix B B ℂ,
+      CStarMatrix.ofMatrix.symm
+        (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+        ∑ e : E, swKraus e * T * (swKraus e)ᴴ) ∧
+    (∃ channel : QuantumChannel B A, ∀ T : Matrix B B ℂ,
+      CStarMatrix.ofMatrix.symm
+        (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+        ∑ e : E, petzKraus e * T * (petzKraus e)ᴴ) := by
+  exact ⟨finite_kraus_quantum_channel noiseKraus noise_normalization,
+    finite_kraus_quantum_channel swKraus decoder_normalizations.1,
+    finite_kraus_quantum_channel petzKraus decoder_normalizations.2⟩
+
 #print axioms psi_normalized
 #print axioms source_isometry
 #print axioms source_unitary
 #print axioms source_polar_product
+#print axioms source_square_root
+#print axioms source_polar_positive
+#print axioms source_svd
+#print axioms source_purification_identity
+#print axioms sw_columns
+#print axioms actual_channels
 
 end D5.S3.Quantum.Recovery.BurriReplacementDecoder
