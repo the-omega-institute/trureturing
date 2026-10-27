@@ -21,7 +21,7 @@ Question 22; it does not settle that question.
 
 noncomputable section
 open Set Topology
-open scoped BigOperators
+open scoped BigOperators ContinuousMap
 
 namespace D5.S3.Geometry.FiniteGraphVertexSubstitution
 
@@ -97,7 +97,9 @@ private theorem restrict_mem (K : PreAbstractSimplicialComplex U) (f : U ↪ X)
   obtain ⟨t, ⟨s, hs, rfl⟩, hy⟩ := (native_mem _ _).mp y.property
   apply (native_mem _ _).mpr
   refine ⟨s, hs, fun u => hy.1 (f u), ?_, ?_⟩
-  · rw [← sum_push f, mapped_coordinates K f y]
+  · rw [← sum_push f]
+    have he : push f (fun u => y.val (f u)) = y.val := mapped_coordinates K f y
+    rw [he]
     exact hy.2.1
   · intro u hu
     apply hy.2.2
@@ -119,7 +121,7 @@ def mapHomeomorph (K : PreAbstractSimplicialComplex U) (f : U ↪ X) :
     apply continuous_finset_sum
     intro u _
     by_cases h : f u = z
-    · simpa only [if_pos h] using
+    · simpa only [if_pos h, Function.comp_def] using
         (continuous_apply u).comp (continuous_subtype_val : Continuous (Subtype.val : Space K → _))
     · simpa only [if_neg h] using (continuous_const : Continuous (fun _ : Space K => (0 : ℝ)))
   continuous_invFun := by
@@ -164,7 +166,7 @@ private theorem restricted_map (G : SimpleGraph U) (F : SimpleGraph X)
     (restricted G p).map f = restricted F (fun x => ∃ a, p a ∧ f a = x) := by
   classical
   ext s
-  change (∃ t, (t.Nonempty ∧ G.IsIndepSet (t : Set U) ∧ ∀ a ∈ t, p a) ∧
+  change (∃ t : Finset U, (t.Nonempty ∧ G.IsIndepSet (t : Set U) ∧ ∀ a ∈ t, p a) ∧
     t.image f = s) ↔ s.Nonempty ∧ F.IsIndepSet (s : Set X) ∧
       ∀ x ∈ s, ∃ a, p a ∧ f a = x
   constructor
@@ -181,13 +183,13 @@ private theorem restricted_map (G : SimpleGraph U) (F : SimpleGraph X)
     let t := s.preimage f f.injective.injOn
     have he : t.image f = s := by
       ext x
-      simp only [Finset.mem_image, Finset.mem_preimage]
+      simp only [Finset.mem_image]
       constructor
       · rintro ⟨a, ha, rfl⟩
-        exact ha
+        exact Finset.mem_preimage.mp ha
       · intro hx
         obtain ⟨a, _, rfl⟩ := hp x hx
-        exact ⟨a, hx, rfl⟩
+        exact ⟨a, Finset.mem_preimage.mpr hx, rfl⟩
     refine ⟨t, ⟨?_, ?_, ?_⟩, he⟩
     · exact Finset.image_nonempty.mp (he.symm ▸ hn)
     · intro a ha b hb hab hadj
@@ -200,9 +202,12 @@ private theorem restricted_map (G : SimpleGraph U) (F : SimpleGraph X)
 private def disjointGraph (G : SimpleGraph U) (H : SimpleGraph X) : SimpleGraph (U ⊕ X) where
   Adj := Sum.elim (fun a => Sum.elim (fun b => G.Adj a b) (fun _ => False))
     (fun a => Sum.elim (fun _ => False) (fun b => H.Adj a b))
-  symm := ⟨by rintro (a | a) (b | b) h <;> try exact h.elim
-               · exact h.symm
-               · exact h.symm⟩
+  symm := ⟨by
+    rintro (a | a) (b | b) h
+    · exact h.symm
+    · exact h.elim
+    · exact h.elim
+    · exact h.symm⟩
   loopless := ⟨by rintro (a | a) h <;> exact h.ne rfl⟩
 
 private theorem restricted_join (G : SimpleGraph U) (H : SimpleGraph X)
@@ -349,14 +354,15 @@ def linkComplex : PreAbstractSimplicialComplex (LinkVerts G v D) :=
 
 private def linkEmbedding : LinkVerts G v D ↪ Tail v D :=
   Function.Embedding.sigmaMap
-    ⟨fun u => ⟨u.val, u.property.1⟩, fun _ _ h => Subtype.ext (congrArg Subtype.val h)⟩
+    ⟨fun u => ⟨u.val, u.property.1⟩, fun x y h =>
+      Subtype.ext (congrArg (fun z : {u : V // u ≠ v} => z.val) h)⟩
     (fun _ => Function.Embedding.refl _)
 
 private theorem link_adj (a b : LinkVerts G v D) :
     (linkGraph G H v).Adj a b ↔
       (tailGraph G H v).Adj (linkEmbedding G v a) (linkEmbedding G v b) := by
-  rw [restriction_adj, restriction_adj]
-  rfl
+  exact (restriction_adj G H (LinkBaseSet G v) a b).trans
+    (restriction_adj G H {u | u ≠ v} (linkEmbedding G v a) (linkEmbedding G v b)).symm
 
 variable (Hnew : SimpleGraph W)
 
@@ -396,6 +402,8 @@ private theorem join_range (x : Tail v D ⊕ W) :
   · constructor
     · rintro ⟨a | a, _, h⟩
       · have he := congrArg (fun x : Tail v D => x.1.val) (Sum.inl.inj h)
+        change a.1.val = u at he
+        change ¬ G.Adj v u
         exact he ▸ a.1.property.2
       · cases h
     · intro h
@@ -422,7 +430,10 @@ private theorem deletion_eq : deletion G H v =
     restricted (replacementGraph G H v Hnew) (Sum.elim (fun _ => True) (fun _ => False)) := by
   unfold deletion
   rw [← unrestricted]
-  rw [restricted_map _ _ (Function.Embedding.inl) (fun _ _ => Iff.rfl)]
+  change (restricted (tailGraph G H v) (fun _ => True)).map
+    (Function.Embedding.inl : Tail v D ↪ Tail v D ⊕ W) = _
+  rw [restricted_map _ (replacementGraph G H v Hnew)
+    (Function.Embedding.inl) (fun _ _ => Iff.rfl)]
   congr 1
   funext x
   cases x <;> simp
@@ -435,7 +446,10 @@ private theorem Bpiece_eq : Bpiece G H v Hnew =
   congr 1
   funext x
   apply propext
-  simpa only [Sum.elim_const_const] using join_range G v x
+  have hp : Sum.elim (fun _ : LinkVerts G v D => True) (fun _ : W => True) =
+      (fun _ => True) := by funext a; cases a <;> rfl
+  rw [hp]
+  exact join_range G v x
 
 private theorem cone_eq (l0 : W) : cone G H v Hnew l0 =
     restricted (replacementGraph G H v Hnew)
@@ -450,6 +464,8 @@ private theorem cone_eq (l0 : W) : cone G H v Hnew l0 =
   · constructor
     · rintro ⟨a | a, hp, h⟩
       · have he := congrArg (fun x : Tail v D => x.1.val) (Sum.inl.inj h)
+        change a.1.val = u at he
+        change (¬ G.Adj v u) ∧ True
         exact ⟨he ▸ a.1.property.2, trivial⟩
       · cases h
     · rintro ⟨h, _⟩
@@ -537,7 +553,7 @@ private theorem cone_face (l0 : W) (s : Finset (Tail v D ⊕ W))
     · exact (hs.2.2 (Sum.inl a) hx).1
     · have he : w = l0 := (hs.2.2 (Sum.inr w) hx).2
       subst w
-      exact Hnew.irrefl _
+      exact Hnew.loopless.irrefl l0
   refine ⟨Finset.insert_nonempty _ _, ?_, ?_⟩
   · intro a ha b hb hab hadj
     rcases Finset.mem_insert.mp ha with rfl | ha
@@ -597,8 +613,9 @@ private theorem old_adj (l0 : W) (x y : Σ u, D u) :
     · subst w
       rw [substitution_ne _ _ hu]
       simpa [oldTo, hu, replacementGraph] using (G.adj_comm u v)
-    · simpa [oldTo, hu, hw, replacementGraph] using
-        (restriction_adj G H {u | u ≠ v} ⟨⟨u, hu⟩, a⟩ ⟨⟨w, hw⟩, b⟩).symm
+    · dsimp only [oldTo]
+      rw [dif_neg hu, dif_neg hw]
+      exact (restriction_adj G H {u | u ≠ v} ⟨⟨u, hu⟩, a⟩ ⟨⟨w, hw⟩, b⟩).symm
 
 private theorem old_eq (l0 : W) :
     ((independenceComplex (substitution G H)).toPreAbstractSimplicialComplex).map
@@ -617,7 +634,7 @@ private theorem old_eq (l0 : W) :
     · rintro ⟨⟨u, d⟩, _, h⟩
       change oldTo v l0 ⟨u, d⟩ = Sum.inr w at h
       by_cases hu : u = v
-      · simpa [oldTo, hu] using h.symm
+      · simpa [oldTo, hu, atMostApex] using h.symm
       · simp [oldTo, hu] at h
     · intro h
       subst w
@@ -638,8 +655,13 @@ instance newFiberDecidableEq (u : V) : DecidableEq (newFiber v D W u) := by
 /-- The actual replacement graphs on the new sigma fibers. -/
 def newGraphs (u : V) : SimpleGraph (newFiber v D W u) := by
   by_cases h : u = v
-  · simpa only [newFiber, if_pos h] using Hnew
-  · simpa only [newFiber, if_neg h] using H u
+  · exact Hnew.comap (fun a => cast (by simp only [newFiber, if_pos h]) a)
+  · exact (H u).comap (fun a => cast (by simp only [newFiber, if_neg h]) a)
+
+private theorem cast_cancel {A B : Type w} (h : A = B) (k : B = A) (a : A) :
+    _root_.cast k (_root_.cast h a) = a := by
+  subst B
+  rfl
 
 private def newTo (x : Σ u, newFiber v D W u) : Tail v D ⊕ W :=
   if h : x.1 = v then Sum.inr (cast (by simp only [newFiber, if_pos h]) x.2)
@@ -661,7 +683,9 @@ private def newEquiv : (Σ u, newFiber v D W u) ≃ Tail v D ⊕ W where
   right_inv := by
     rintro (⟨⟨u, hu⟩, d⟩ | w)
     · simp [newTo, newFrom, hu]
+      exact cast_cancel _ _ d
     · simp [newTo, newFrom]
+      exact cast_cancel _ _ w
 
 private theorem new_adj (x y : Σ u, newFiber v D W u) :
     (substitution G (newGraphs H v Hnew)).Adj x y ↔
@@ -691,7 +715,7 @@ private theorem new_adj (x y : Σ u, newFiber v D W u) :
 
 private theorem new_eq :
     ((independenceComplex (substitution G (newGraphs H v Hnew))).toPreAbstractSimplicialComplex).map
-      (newEquiv (D := D) (W := W) v) =
+      (newEquiv (D := D) (W := W) v).toEmbedding =
       (independenceComplex (replacementGraph G H v Hnew)).toPreAbstractSimplicialComplex := by
   rw [← unrestricted, restricted_map _ _ (newEquiv v).toEmbedding (new_adj G H v Hnew),
     ← unrestricted]
@@ -713,8 +737,14 @@ def oldPoint : Space (independenceComplex (substitution G H)).toPreAbstractSimpl
 def joinPoint (l0 : W) : Space (simplicialJoin (linkComplex G H v)
     (independenceComplex Hnew).toPreAbstractSimplicialComplex) :=
   vertex _ (Sum.inr l0) (by
-    refine ⟨Finset.singleton_nonempty _, Or.inl (by simp), Or.inr ?_⟩
-    simpa using (independenceComplex Hnew).singleton_mem l0)
+    have hl : ({Sum.inr l0} : Finset (LinkVerts G v D ⊕ W)).toLeft = ∅ := by
+      ext a
+      simp only [Finset.mem_toLeft, Finset.mem_singleton, Sum.inl_ne_inr, Finset.notMem_empty]
+    have hr : ({Sum.inr l0} : Finset (LinkVerts G v D ⊕ W)).toRight = {l0} := by
+      ext a
+      simp only [Finset.mem_toRight, Finset.mem_singleton, Sum.inr.injEq]
+    exact ⟨Finset.singleton_nonempty _, Or.inl hl,
+      Or.inr (hr.symm ▸ (independenceComplex Hnew).singleton_mem l0)⟩)
 
 private def oldHomeomorph (l0 : W) :
     Space (independenceComplex (substitution G H)).toPreAbstractSimplicialComplex ≃ₜ
@@ -748,8 +778,8 @@ private def wedgeHomeomorph {X Y X' Y' : Type*}
   have hp (z : X ⊕ Y) : z ∈ wedgePoints a b ↔
       (e.sumCongr f) z ∈ wedgePoints a' b' := by
     rcases z with x | y
-    · simp [wedgePoints, ← ha, e.injective.eq_iff]
-    · simp [wedgePoints, ← hb, f.injective.eq_iff]
+    · simp [wedgePoints, Homeomorph.sumCongr, Equiv.sumCongr, ← ha, e.injective.eq_iff]
+    · simp [wedgePoints, Homeomorph.sumCongr, Equiv.sumCongr, ← hb, f.injective.eq_iff]
   intro z t
   change (z = t ∨ (z ∈ wedgePoints a b ∧ t ∈ wedgePoints a b)) ↔ _
   exact or_congr (e.sumCongr f).injective.eq_iff.symm (and_congr (hp z) (hp t))
@@ -772,7 +802,7 @@ def oneVertexReplacementEquiv (l0 : W) :
     apply Subtype.ext
     change push (oldEmbedding v d0 hsingle l0) (Pi.single ⟨v, d0⟩ 1) = Pi.single (Sum.inr l0) 1
     rw [push_vertex]
-    rfl
+    simp [oldEmbedding, oldTo]
   have hj : ej (joinPoint G H v Hnew l0) = P.rightPair.apexPoint := by
     apply Subtype.ext
     change push (joinEmbedding G v) (Pi.single (Sum.inr l0) 1) = Pi.single (Sum.inr l0) 1

@@ -58,32 +58,40 @@ private theorem bridge :
 
 private abbrev testParameters : Parameters.{u,x} :=
   ⟨ULift.{u} Bool, ULift.{x} Bool, inferInstance, inferInstance, inferInstance,
-    inferInstance, ⊤, ⟨fun a => ⟨a.down⟩, fun _ _ h => ULift.ext (congrArg ULift.down h)⟩⟩
+    inferInstance, ⊤, ⟨fun a => ⟨a.down⟩, fun _ _ h =>
+      ULift.ext (congrArg (fun z : ULift.{x} Bool => z.down) h)⟩⟩
 
-private def testPoint (b : Bool) : Space (testParameters.{u,x}.K.map testParameters.f) := by
-  refine ⟨Pi.single (⟨b⟩ : testParameters.X) 1, ?_⟩
-  refine ⟨{⟨b⟩}, ⟨{⟨b⟩}, Finset.singleton_nonempty _, by simp⟩, ?_⟩
+private def testPoint (b : Bool) : Space (testParameters.{u,x}.K.map testParameters.{u,x}.f) := by
+  refine ⟨Pi.single (⟨b⟩ : testParameters.{u,x}.X) 1, ?_⟩
+  refine ⟨{⟨b⟩}, ⟨{⟨b⟩}, Finset.singleton_nonempty _, ?_⟩, ?_⟩
+  · simp only [Finset.image_singleton]
+    rfl
   exact subset_convexHull ℝ _ ⟨⟨b⟩, by simp, rfl⟩
 
 private theorem rejected_law : ¬ arena.{u,x}.Law rejected := by
   intro h
-  have hh := congrFun (h testParameters (testPoint false)) (⟨false⟩ : testParameters.X)
-  change (0 : ℝ) = Pi.single (⟨false⟩ : ULift.{x} Bool) 1 ⟨false⟩ at hh
+  have hh := congrFun (h testParameters.{u,x} (testPoint.{u,x} false)) (⟨false⟩ : testParameters.{u,x}.X)
+  change (0 : ℝ) = 1 at hh
   norm_num at hh
 
 private theorem dependence : ObservationalDependence signature.{u,x} actual := by
   intro i
-  refine ⟨testParameters, testPoint false, testPoint true, ?_⟩
+  refine ⟨testParameters.{u,x}, testPoint.{u,x} false, testPoint.{u,x} true, ?_⟩
   intro h
-  have h0 := mapped_coordinates testParameters.K testParameters.f (testPoint false)
-  have h1 := mapped_coordinates testParameters.K testParameters.f (testPoint true)
-  change (fun z => ∑ a, if testParameters.f a = z then
-    (testPoint false).val (testParameters.f a) else 0) =
-      (fun z => ∑ a, if testParameters.f a = z then
-        (testPoint true).val (testParameters.f a) else 0) at h
+  have h0 := mapped_coordinates testParameters.{u,x}.K testParameters.{u,x}.f (testPoint.{u,x} false)
+  have h1 := mapped_coordinates testParameters.{u,x}.K testParameters.{u,x}.f (testPoint.{u,x} true)
+  change (fun z => ∑ a, if testParameters.{u,x}.f a = z then
+    (testPoint.{u,x} false).val (testParameters.{u,x}.f a) else 0) =
+      (fun z => ∑ a, if testParameters.{u,x}.f a = z then
+        (testPoint.{u,x} true).val (testParameters.{u,x}.f a) else 0) at h
   rw [h0, h1] at h
-  have hh := congrFun h (⟨false⟩ : testParameters.X)
-  norm_num [testPoint, Pi.single_apply] at hh
+  have hh := congrFun h (⟨false⟩ : testParameters.{u,x}.X)
+  have hne : (⟨false⟩ : ULift.{x} Bool) ≠ ⟨true⟩ := by
+    intro he
+    cases congrArg (fun z : ULift.{x} Bool => z.down) he
+  change (Pi.single (⟨false⟩ : ULift.{x} Bool) (1 : ℝ) : ULift.{x} Bool → ℝ) ⟨false⟩ =
+    (Pi.single (⟨true⟩ : ULift.{x} Bool) (1 : ℝ) : ULift.{x} Bool → ℝ) ⟨false⟩ at hh
+  norm_num [Pi.single_apply, hne, Ne.symm hne] at hh
 
 def family : Registration arena.{u,x} (type_of% (@mapped_coordinates.{u,x})) where
   actual := actual
