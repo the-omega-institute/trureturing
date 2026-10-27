@@ -61,7 +61,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   norm_num [halfParameter,x] at hc
 
 def familyRegistration : Registration arena.{u} (type_of% (@lower_geometry.{u})) where
-  actual := actual
+  actual := realize signature.{u} (fun _ p => q p.2) actual.anchor
   bridge := bridge
   variation := ⟨bridge.mp @lower_geometry,rejected,rejected_law⟩
   sensitivity := by
@@ -77,7 +77,7 @@ def familyRegistration : Registration arena.{u} (type_of% (@lower_geometry.{u}))
 /-- The lower-cell construction observed through the full original quotient projection. -/
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@lower_geometry.{u})
-    (type_of% (actual.{u}))
+    (type_of% (realize signature.{u} (fun _ p => q p.2) actual.anchor))
     Unit Unit := {
   unitName := `D5.S3.Geometry.Gluing.TruncatedTetrahedronLowerCW.lower_geometry.information_unit,
   realizationName := `Reg.D5.S3.Geometry.Gluing.TruncatedTetrahedronLowerCW.familyRegistration,
@@ -90,7 +90,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨familyRegistration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some actual.{u},
+  readout := some (realize signature.{u} (fun _ p => q p.2) actual.anchor),
   variation := .absent,
   sensitivity := .absent,
   partialSensitivity := none,
