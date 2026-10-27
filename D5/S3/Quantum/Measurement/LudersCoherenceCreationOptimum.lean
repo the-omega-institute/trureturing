@@ -47,7 +47,8 @@ private theorem hermitian_entries (m : Matrix (Fin 2) (Fin 2) ℂ) (hm : m.IsHer
 private theorem coherence_two (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : ρ.IsHermitian) :
     l1Coherence ρ = 2 * ‖ρ 0 1‖ := by
   unfold l1Coherence
-  simp only [Fin.sum_univ_two, Fin.isValue, ↓reduceIte, zero_add, add_zero, Fin.zero_ne_one, (by decide : (1 : Fin 2) ≠ 0),
+  simp only [Fin.sum_univ_two, Fin.isValue, ↓reduceIte, zero_add, add_zero,
+    Fin.zero_ne_one, (by decide : (1 : Fin 2) ≠ 0),
     (hermitian_entries ρ hρ).2.2, norm_star]
   ring
 
@@ -131,19 +132,17 @@ private theorem luders_decomposition {n : ℕ} (ρ : Matrix (Fin 2) (Fin 2) ℂ)
       ((2 * (star (z i) * ρ 0 1).re + v i * (ρ 0 0 - ρ 1 1).re : ℝ) : ℂ) * z i +
       (((p i + q i) / 2 : ℝ) : ℂ) * z i := by
     apply Complex.ext <;>
-      simp only [Matrix.mul_apply, Fin.sum_univ_two, h00 i, h11 i, h10 i, hr.2.2] <;>
-      change _ = _
+      simp only [Matrix.mul_apply, Fin.sum_univ_two, h00 i, h11 i, hr.2.2]
     · dsimp only [k, v]
-      simp only [Complex.add_re, Complex.add_im, Complex.sub_re, Complex.sub_im,
+      simp only [Complex.add_re, Complex.add_im, Complex.sub_re,
         Complex.mul_re, Complex.mul_im,
         Complex.ofReal_re, Complex.ofReal_im, Complex.star_def, Complex.conj_re,
         Complex.conj_im, zero_mul, mul_zero, sub_zero, zero_add, hr.1, hr.2.1]
       rw [hzsq i]
-      change _ = _
       dsimp only [z]
       linear_combination (p i + q i) * (m i 0 1).re / 2 * hx
     · dsimp only [k, v]
-      simp only [Complex.add_re, Complex.add_im, Complex.sub_re, Complex.sub_im,
+      simp only [Complex.add_re, Complex.add_im, Complex.sub_re,
         Complex.mul_im, Complex.mul_re,
         Complex.ofReal_re, Complex.ofReal_im, Complex.star_def, Complex.conj_re,
         Complex.conj_im, zero_mul, mul_zero, sub_zero, zero_add, hr.1, hr.2.1]
@@ -268,6 +267,126 @@ private theorem measurement_bound {n : ℕ} (ρ : Matrix (Fin 2) (Fin 2) ℂ)
       Finset.sum_le_sum (fun i _ => hi i)
     _ = l := by rw [← Finset.sum_mul, hs, one_mul]
 
+private theorem phase_exists (c : ℂ) :
+    ∃ a : ℂ, ‖a‖ = 1 ∧ star a * c = (‖c‖ : ℂ) := by
+  by_cases hc : c = 0
+  · exact ⟨1, norm_one, by simp only [hc, mul_zero, norm_zero, Complex.ofReal_zero]⟩
+  have hn : ‖c‖ ≠ 0 := norm_ne_zero_iff.mpr hc
+  refine ⟨c / (‖c‖ : ℂ), ?_, ?_⟩
+  · rw [norm_div, Complex.norm_of_nonneg (norm_nonneg c), div_self hn]
+  · rw [star_div₀, Complex.star_def, Complex.conj_ofReal, div_mul_eq_mul_div,
+      ← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq, Complex.ofReal_pow]
+    field_simp
+
+private theorem optimal_axis (c : ℂ) (r : ℝ) :
+    ∃ (z : ℂ) (v : ℝ), ‖z‖ ^ 2 + v ^ 2 = 1 ∧
+      ‖((2 * (star z * c).re + v * r : ℝ) : ℂ) * z‖ =
+        (2 * ‖c‖ + Real.sqrt (r ^ 2 + 4 * ‖c‖ ^ 2)) / 2 := by
+  let s := 2 * ‖c‖
+  let d := Real.sqrt (r ^ 2 + 4 * ‖c‖ ^ 2)
+  let l := (s + d) / 2
+  have hs : 0 ≤ s := by positivity
+  have hd0 : 0 ≤ d := Real.sqrt_nonneg _
+  have hd : d ^ 2 = r ^ 2 + s ^ 2 := by
+    have h := Real.sq_sqrt (show 0 ≤ r ^ 2 + 4 * ‖c‖ ^ 2 by positivity)
+    dsimp only [d, s]
+    nlinarith only [h]
+  by_cases hdne : d = 0
+  · have hr : r = 0 := by nlinarith only [hd, hdne, sq_nonneg s]
+    have hc : c = 0 := by
+      apply norm_eq_zero.mp
+      dsimp only [s] at hd
+      nlinarith only [hd, hdne, sq_nonneg r]
+    subst c
+    subst r
+    exact ⟨1, 0, by norm_num, by norm_num⟩
+  have hdpos : 0 < d := lt_of_le_of_ne hd0 (Ne.symm hdne)
+  have hl : 0 < l := by dsimp only [l]; linarith
+  have hdisc : 4 * l * (l - s) = r ^ 2 := by dsimp only [l]; nlinarith only [hd]
+  obtain ⟨a, ha, hac⟩ := phase_exists c
+  let t := Real.sqrt (l / d)
+  let v := r * t / (2 * l)
+  let z := (t : ℂ) * a
+  have ht : 0 ≤ t := Real.sqrt_nonneg _
+  have ht2 : t ^ 2 = l / d := Real.sq_sqrt (div_nonneg hl.le hd0)
+  have hz : ‖z‖ = t := by
+    dsimp only [z]
+    rw [norm_mul, Complex.norm_of_nonneg ht, ha, mul_one]
+  have hv : v ^ 2 = (l - s) / d := by
+    dsimp only [v]
+    rw [div_pow, mul_pow, ht2, ← hdisc]
+    field_simp [hdne, hl.ne']
+    <;> ring
+  have hunit : ‖z‖ ^ 2 + v ^ 2 = 1 := by
+    rw [hz, ht2, hv, ← add_div]
+    dsimp only [l]
+    field_simp
+    ring
+  have hinner : (star z * c).re = t * ‖c‖ := by
+    have hh : star z * c = ((t * ‖c‖ : ℝ) : ℂ) := by
+      dsimp only [z]
+      rw [star_mul, Complex.star_def, Complex.conj_ofReal]
+      calc
+        _ = (t : ℂ) * (star a * c) := by rw [Complex.star_def]; ring
+        _ = _ := by rw [hac, Complex.ofReal_mul]
+    rw [hh, Complex.ofReal_re]
+  have hdot : 2 * (star z * c).re + v * r = d * t := by
+    rw [hinner]
+    have hf : 2 * (t * ‖c‖) = s * t := by dsimp only [s]; ring
+    rw [hf]
+    calc
+      s * t + v * r = (s + r ^ 2 / (2 * l)) * t := by dsimp only [v]; ring
+      _ = (s + 4 * l * (l - s) / (2 * l)) * t := by rw [← hdisc]
+      _ = (2 * l - s) * t := by field_simp [hl.ne'] <;> ring
+      _ = d * t := by dsimp only [l]; ring
+  refine ⟨z, v, hunit, ?_⟩
+  change _ = l
+  rw [hdot, norm_mul, Complex.norm_of_nonneg (mul_nonneg hd0 ht), hz]
+  calc
+    d * t * t = d * t ^ 2 := by ring
+    _ = l := by rw [ht2]; field_simp
+
+private def projector (z : ℂ) (v : ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
+  !![(((1 + v) / 2 : ℝ) : ℂ), z / 2; star z / 2, (((1 - v) / 2 : ℝ) : ℂ)]
+
+private theorem projector_facts (z : ℂ) (v : ℝ) (hu : ‖z‖ ^ 2 + v ^ 2 = 1) :
+    (projector z v).IsHermitian ∧ projector z v * projector z v = projector z v := by
+  have hz : (z.re ^ 2 + z.im ^ 2) + v ^ 2 = 1 := by
+    rw [Complex.sq_norm, Complex.normSq_apply] at hu
+    nlinarith only [hu]
+  constructor
+  · change (projector z v)ᴴ = projector z v
+    unfold projector
+    ext i j
+    fin_cases i <;> fin_cases j <;> apply Complex.ext <;> norm_num
+  · unfold projector
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp only [Matrix.mul_apply, Fin.sum_univ_two] <;>
+      apply Complex.ext <;> norm_num <;> nlinarith only [hz]
+
+private theorem padded_measurement {n : ℕ} (hn : 2 ≤ n)
+    (p q ρ : Matrix (Fin 2) (Fin 2) ℂ) (hp : p.PosSemidef) (hq : q.PosSemidef)
+    (hpp : p * p = p) (hqq : q * q = q) (hs : p + q = 1) :
+    ∃ e : Fin n → Matrix (Fin 2) (Fin 2) ℂ, IsPOVM e ∧
+      luders e ρ = p * ρ * p + q * ρ * q := by
+  obtain ⟨m, rfl⟩ : ∃ m, n = m + 2 := ⟨n - 2, by omega⟩
+  let e : Fin (m + 2) → Matrix (Fin 2) (Fin 2) ℂ :=
+    Fin.cons p (Fin.cons q (fun _ : Fin m => 0))
+  have he (i : Fin (m + 2)) : (e i).PosSemidef :=
+    Fin.cases hp (fun j => Fin.cases hq (fun _ => Matrix.PosSemidef.zero) j) i
+  have hsum : ∑ i, e i = 1 := by
+    rw [Fin.sum_univ_succ, Fin.sum_univ_succ]
+    change p + (q + ∑ _ : Fin m, (0 : Matrix (Fin 2) (Fin 2) ℂ)) = 1
+    rw [Finset.sum_const_zero, add_zero, hs]
+  refine ⟨e, ⟨he, hsum⟩, ?_⟩
+  unfold luders
+  rw [Fin.sum_univ_succ, Fin.sum_univ_succ]
+  change CFC.sqrt p * ρ * CFC.sqrt p + (CFC.sqrt q * ρ * CFC.sqrt q +
+    ∑ _ : Fin m, CFC.sqrt (0 : Matrix (Fin 2) (Fin 2) ℂ) * ρ * CFC.sqrt 0) = _
+  rw [CFC.sqrt_unique hpp hp.nonneg, CFC.sqrt_unique hqq hq.nonneg]
+  simp only [CFC.sqrt_zero, zero_mul, mul_zero, Finset.sum_const_zero, add_zero]
+
 private theorem measurement_attainment {n : ℕ} (hn : 2 ≤ n)
     (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity ρ) :
     ∃ e : Fin n → Matrix (Fin 2) (Fin 2) ℂ, IsPOVM e ∧
@@ -276,13 +395,68 @@ private theorem measurement_attainment {n : ℕ} (hn : 2 ≤ n)
 
 private theorem zero_gain (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity ρ) :
     (l1Coherence ρ + blochNorm ρ) / 2 - l1Coherence ρ = 0 ↔ ρ 0 0 = ρ 1 1 := by
-  sorry
+  obtain ⟨hc, hcr, _, hsq⟩ := radius_data ρ hρ
+  have hn : 0 ≤ blochNorm ρ := hc.trans hcr
+  have he := hermitian_entries ρ hρ.1.isHermitian
+  constructor
+  · intro h
+    have heq : blochNorm ρ = l1Coherence ρ := by linarith only [h]
+    rw [heq] at hsq
+    have hz : (ρ 0 0 - ρ 1 1).re = 0 := by nlinarith only [hsq]
+    apply Complex.ext
+    · simpa only [Complex.sub_re, sub_eq_zero] using hz
+    · rw [he.1, he.2.1]
+  · intro h
+    rw [h, sub_self, Complex.zero_re, zero_pow (by decide : 2 ≠ 0), zero_add] at hsq
+    nlinarith only [hsq, hn, hc]
 
 private theorem maximal_gain (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity ρ) :
     (l1Coherence ρ + blochNorm ρ) / 2 - l1Coherence ρ ≤ 1 / 2 ∧
       ((l1Coherence ρ + blochNorm ρ) / 2 - l1Coherence ρ = 1 / 2 ↔
         ρ = Matrix.diagonal ![1, 0] ∨ ρ = Matrix.diagonal ![0, 1]) := by
-  sorry
+  obtain ⟨hc, hcr, hr, hsq⟩ := radius_data ρ hρ
+  refine ⟨by linarith, ?_⟩
+  constructor
+  · intro h
+    have hc0 : l1Coherence ρ = 0 := by linarith
+    have hr1 : blochNorm ρ = 1 := by linarith
+    have hz : ρ 0 1 = 0 := by
+      rw [coherence_two ρ hρ.1.isHermitian] at hc0
+      exact norm_eq_zero.mp (by linarith)
+    have he := hermitian_entries ρ hρ.1.isHermitian
+    have h10 : ρ 1 0 = 0 := by rw [he.2.2, hz, star_zero]
+    have ht : (ρ 0 0).re + (ρ 1 1).re = 1 := by
+      have hh := congrArg Complex.re hρ.2
+      rwa [Matrix.trace_fin_two, Complex.add_re] at hh
+    have hd : (ρ 0 0 - ρ 1 1).re ^ 2 = 1 := by rw [hc0, hr1] at hsq; nlinarith
+    rcases sq_eq_one_iff.mp hd with hd | hd
+    · left
+      have hp : (ρ 0 0).re = 1 ∧ (ρ 1 1).re = 0 := by
+        rw [Complex.sub_re] at hd
+        constructor <;> linarith
+      ext i j
+      fin_cases i <;> fin_cases j
+      · change ρ 0 0 = 1
+        apply Complex.ext <;> simp only [Complex.one_re, Complex.one_im] <;> tauto
+      · exact hz
+      · exact h10
+      · change ρ 1 1 = 0
+        apply Complex.ext <;> simp only [Complex.zero_re, Complex.zero_im] <;> tauto
+    · right
+      have hp : (ρ 0 0).re = 0 ∧ (ρ 1 1).re = 1 := by
+        rw [Complex.sub_re] at hd
+        constructor <;> linarith
+      ext i j
+      fin_cases i <;> fin_cases j
+      · change ρ 0 0 = 0
+        apply Complex.ext <;> simp only [Complex.zero_re, Complex.zero_im] <;> tauto
+      · exact hz
+      · exact h10
+      · change ρ 1 1 = 1
+        apply Complex.ext <;> simp only [Complex.one_re, Complex.one_im] <;> tauto
+  · intro h
+    rw [coherence_two ρ hρ.1.isHermitian]
+    rcases h with rfl | rfl <;> unfold blochNorm <;> norm_num
 
 /-- The attained maximum over all finite qubit POVMs, with both extremal gain criteria. -/
 theorem result (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity ρ)
