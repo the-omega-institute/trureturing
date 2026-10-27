@@ -70,7 +70,7 @@ def prefixSum (p : Address) : H →L[ℝ] ℝ :=
 
 private theorem prefixSum_apply (p : Address) (z : H) :
     prefixSum p z = ∑ q ∈ prefixes p, z q := by
-  simp only [prefixSum, ContinuousLinearMap.sum_apply]
+  simp only [prefixSum, sum_apply]
   rfl
 
 /-- The actual constant function in the same L2(M) as J. -/
@@ -161,8 +161,11 @@ private theorem pullback_indicator_descendant (p : Address) (u : Edge) :
   rw [hi, hj]
   change (cylinder (p++u.val)).indicator (fun _ : Omega => (1:ℝ)) (prepend p ω) =
     (cylinder u.val).indicator (fun _ : Omega => (1:ℝ)) ω
-  simp only [Set.indicator]
-  rw [cylinder_prepend_append]
+  by_cases h : ω ∈ cylinder u.val
+  · rw [Set.indicator_of_mem ((cylinder_prepend_append p u.val ω).mpr h),
+      Set.indicator_of_mem h]
+  · rw [Set.indicator_of_notMem (mt (cylinder_prepend_append p u.val ω).mp h),
+      Set.indicator_of_notMem h]
 
 private theorem pullback_indicator_incomparable (p : Address) (q : Edge)
     (hqp : ¬ q.val.IsPrefix p) (hpq : ¬ p.IsPrefix q.val) :
@@ -187,14 +190,14 @@ private theorem prefixSum_single (p : Address) (q : Edge) (c : ℝ) :
   classical
   rw [prefixSum_apply]
   change (∑ u ∈ prefixes p, (lp.single 2 q c : H) u) = _
-  simp [lp.coeFn_single, Pi.single_apply, mem_prefixes]
+  simp [Pi.single_apply, mem_prefixes]
 
 private theorem suffix_single_descendant (p : Address) (q : Edge) (c : ℝ) :
     S p (lp.single 2 (descendant p q) c) = lp.single 2 q c := by
   ext u
   change (lp.single 2 (descendant p q) c : H) (descendant p u) =
     (lp.single 2 q c : H) u
-  simp [lp.coeFn_single, Pi.single_apply, (descendant_injective p).eq_iff]
+  simp [Pi.single_apply, (descendant_injective p).eq_iff]
 
 private theorem suffix_single_of_not_prefix (p : Address) (q : Edge) (c : ℝ)
     (h : ¬ p.IsPrefix q.val) : S p (lp.single 2 q c) = 0 := by
@@ -235,7 +238,8 @@ theorem boundary_path_split :
   have he : (pullback p).comp J = constG.comp (prefixSum p) + J.comp (S p) := by
     apply lp.ext_continuousLinearMap (by norm_num : (2 : ℝ≥0∞) ≠ ⊤)
     intro q
-    ext c
+    apply ContinuousLinearMap.ext
+    intro c
     change pullback p (J (lp.single 2 q c)) =
       constG (prefixSum p (lp.single 2 q c)) + J (S p (lp.single 2 q c))
     rw [J_single, map_smul, prefixSum_single]
@@ -249,7 +253,8 @@ theorem boundary_path_split :
         have hun : u ≠ [] := by
           intro hh
           apply hqp
-          rw [← hu, hh, List.append_nil]
+          have heqp : q.val = p := by simpa [hh] using hu.symm
+          simp [heqp]
         let v : Edge := ⟨u, hun⟩
         have heq : q = descendant p v := Subtype.ext hu.symm
         rw [heq, suffix_single_descendant, J_single, pullback_indicator_descendant]

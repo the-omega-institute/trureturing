@@ -57,7 +57,8 @@ private theorem mean_integral (F : G) : mean F = ∫ ω, F ω ∂M := by
 
 private theorem Pi_formula (F : G) : Pi F = F-constG (mean F) := by
   rw [Pi, Submodule.starProjection_orthogonal_val,
-    Submodule.starProjection_unit_singleton ℝ constG_norm_one]
+    Submodule.starProjection_unit_singleton ℝ constG_norm_one,
+    constG_eq_smul (mean F)]
   rfl
 
 private theorem Pi_const (c : ℝ) : Pi (constG c) = 0 := by
