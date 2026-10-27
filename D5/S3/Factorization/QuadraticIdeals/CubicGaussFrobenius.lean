@@ -40,18 +40,17 @@ open D5.S3.Factorization.QuadraticIdeals.CubicJacobiNormalization
 
 abbrev E := EisensteinOrder
 
-section FiniteSum
-
-variable {F K : Type*} [Field F] [Fintype F] [Field K]
-
 /-- Cubic character values are fixed by the q-th power when q≡1 mod 3. -/
-theorem cubic_character_pow_eq_self (χ : MulChar F K) (hc : χ ^ 3 = 1)
+theorem cubic_character_pow_eq_self {F K : Type*}
+    [CommMonoid F] [CommMonoidWithZero K] (χ : MulChar F K) (hc : χ ^ 3 = 1)
     {q : ℕ} (hq : q % 3 = 1) : χ ^ q = χ := by
   have hq' : q = 3 * (q / 3) + 1 := by omega
   rw [hq', pow_add, pow_mul, hc, one_pow, pow_one, one_mul]
 
 /-- Every character of exponent dividing three has χ(-1)=1. -/
-theorem cubic_character_neg_one (χ : MulChar F K) (hc : χ ^ 3 = 1) : χ (-1) = 1 := by
+theorem cubic_character_neg_one {F K : Type*}
+    [CommRing F] [CommMonoidWithZero K] (χ : MulChar F K) (hc : χ ^ 3 = 1) :
+    χ (-1) = 1 := by
   have hs : χ (-1) ^ 2 = 1 := by
     rw [← map_pow]
     norm_num
@@ -61,6 +60,10 @@ theorem cubic_character_neg_one (χ : MulChar F K) (hc : χ ^ 3 = 1) : χ (-1) =
   calc
     χ (-1) = χ (-1) ^ 3 := by rw [pow_succ, hs, one_mul]
     _ = 1 := ht
+
+section FiniteSum
+
+variable {F K : Type*} [Field F] [Fintype F] [Field K]
 
 /-- Frobenius plus the additive-character shift fixes the inverse direction.
 This is valid in every target field of characteristic q. -/
@@ -299,7 +302,6 @@ private theorem cubic_roots_mul {a b : E} (ha : IsCubicRoot a) (hb : IsCubicRoot
 /-- The §58 comparison for the actual residue characters. The finite extension
 and primitive additive character are constructed, not assumed. Norm π=p and
 J_P=-π are both imported conclusions of the companion normalization. -/
-set_option maxHeartbeats 800000 in
 theorem cubic_residue_prime_comparison
     (P Q : Ideal E) [P.IsMaximal] [Q.IsMaximal]
     [Finite (E ⧸ P)] [Finite (E ⧸ Q)]
