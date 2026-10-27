@@ -61,34 +61,59 @@ theorem purification_overlap (D : E → Matrix A B ℂ) :
   simp_rw [hamplitude, ← Complex.normSq_eq_norm_sq]
   exact labels.sum_comp (fun p => Complex.normSq (Matrix.trace (composite D p) / 2))
 
+def traceNumerator (cp cm kp km : ℝ) (a : F) : ℝ :=
+  if a = 0 then 4 * cp + 2 * cm + kp + km
+  else if a = 1 then 6 else 3 * cp + 3 * cm - (kp + km)
+
 set_option maxHeartbeats 2000000 in
--- The full twelve-by-twelve label sum has only three nonzero trace overlaps.
+-- This computes the literal composite Kraus traces, with every source label retained.
+theorem source_composite_trace (cp cm kp km : ℝ) (e f : E) :
+    Matrix.trace (composite (swKraus cp cm kp km) (e, f)) =
+      if active e ∧ active f ∧ e.2.2 = f.2.2 then
+        (traceNumerator cp cm kp km e.2.2 : ℂ) / (Real.sqrt 31 : ℂ) else 0 := by
+  rcases e with ⟨i, j, a⟩
+  rcases f with ⟨k, l, b⟩
+  fin_cases i <;> fin_cases j <;> fin_cases a <;>
+    fin_cases k <;> fin_cases l <;> fin_cases b <;>
+    norm_num [composite, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply,
+      supported_rows, noiseKraus, V, active, activeU,
+      BurriReverseDecoder.rotation, Y, amplitude, sign, traceNumerator,
+      Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three]
+  all_goals push_cast; ring
+
+set_option maxHeartbeats 2000000 in
+-- The environment slices also retain the complete source label set.
+theorem slice_composite_trace (e f : E) :
+    Matrix.trace (composite slice (e, f)) =
+      if active e ∧ active f ∧ e.2.2 = f.2.2 then
+        6 / (Real.sqrt 31 : ℂ) else 0 := by
+  rcases e with ⟨i, j, a⟩
+  rcases f with ⟨k, l, b⟩
+  fin_cases i <;> fin_cases j <;> fin_cases a <;>
+    fin_cases k <;> fin_cases l <;> fin_cases b <;>
+    norm_num [composite, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply,
+      slice, noiseKraus, V, active, Y, amplitude, sign,
+      Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three]
+  all_goals ring
+
 theorem source_overlap (cp cm kp km : ℝ) :
     fidelity (swKraus cp cm kp km) =
       ((4 * cp + 2 * cm + kp + km) ^ 2 + 36 +
         (3 * cp + 3 * cm - (kp + km)) ^ 2) / 124 := by
   have hs : Real.sqrt 31 ^ 2 = 31 := Real.sq_sqrt (by norm_num)
-  have hn : Real.sqrt 31 ≠ 0 := ne_of_gt (Real.sqrt_pos.2 (by norm_num))
   rw [purification_overlap]
-  norm_num [composite, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply,
-    supported_rows, noiseKraus, V, active, activeU, BurriReverseDecoder.rotation, Y, amplitude, sign,
-    Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three,
-    Complex.normSq, Complex.div_re, Complex.div_im]
-  field_simp
-  nlinarith
+  simp only [Fintype.sum_prod_type, source_composite_trace]
+  norm_num [active, traceNumerator, Fintype.sum_prod_type,
+    Fin.sum_univ_two, Fin.sum_univ_three, Complex.normSq_div,
+    Complex.normSq_ofReal, hs]
+  ring
 
-set_option maxHeartbeats 2000000 in
--- Environment slices give the second actual purified Kraus overlap.
 theorem slice_overlap : fidelity slice = 27 / 31 := by
   have hs : Real.sqrt 31 ^ 2 = 31 := Real.sq_sqrt (by norm_num)
-  have hn : Real.sqrt 31 ≠ 0 := ne_of_gt (Real.sqrt_pos.2 (by norm_num))
   rw [purification_overlap]
-  norm_num [composite, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply,
-    slice, noiseKraus, V, active, Y, amplitude, sign,
-    Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three,
-    Complex.normSq, Complex.div_re, Complex.div_im]
-  field_simp
-  nlinarith
+  simp only [Fintype.sum_prod_type, slice_composite_trace]
+  norm_num [active, Fintype.sum_prod_type, Fin.sum_univ_two,
+    Fin.sum_univ_three, Complex.normSq_div, Complex.normSq_ofReal, hs]
 
 set_option maxHeartbeats 2000000 in
 -- The full source-label Gram matrix is the active unitary Gram matrix.
