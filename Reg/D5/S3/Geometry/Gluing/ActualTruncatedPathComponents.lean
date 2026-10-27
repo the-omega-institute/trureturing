@@ -3,6 +3,8 @@ import D5.S3.Geometry.Gluing.ActualTruncatedPathComponents
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Group.ULift
 
+/-! # Registration for the full retained quotient component classification -/
+
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators Topology
@@ -29,7 +31,7 @@ structure ActionData where
 attribute [instance] ActionData.groupG ActionData.action ActionData.topologyΩ ActionData.discreteΩ
 
 abbrev signature : Signature where
-  Params := ActionData.{a,b}
+  Params := ActionData.{a, b}
   State p := TruncatedPoint p.Ω
   Role := Unit
   finiteRole := inferInstance
@@ -38,25 +40,25 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{a,b} :=
+def actual : Realization signature.{a, b} :=
   realize signature (fun _ p s =>
     Quotient.mk (Relation.EqvGen.setoid (TruncatedStep p.u p.v)) s)
     (fun e => nomatch e)
 
-def rejected : Realization signature.{a,b} :=
+def rejected : Realization signature.{a, b} :=
   realize signature (fun _ p _ =>
     Quotient.mk (Relation.EqvGen.setoid (TruncatedStep p.u p.v)) p.point)
     (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature.{a,b}
-  Law R := ∀ (p : ActionData.{a,b}) (s : TruncatedPoint p.Ω),
+  signature := signature.{a, b}
+  Law R := ∀ (p : ActionData.{a, b}) (s : TruncatedPoint p.Ω),
     Joined (Quotient.mk (Relation.EqvGen.setoid (TruncatedStep p.u p.v)) p.point)
       (R.readout () p s) ↔
       ∃ g ∈ Subgroup.closure ({p.u,p.v} : Set p.G), act p.point.1 g = s.1
 
 theorem bridge :
-    (type_of% (@actual_truncated_joined_iff.{a,b})) ↔ arena.{a,b}.Law actual := by
+    (type_of% (@actual_truncated_joined_iff.{a, b})) ↔ arena.{a, b}.Law actual := by
   constructor
   · intro h p s
     exact h p.u p.v p.point s
@@ -66,7 +68,7 @@ theorem bridge :
 private def center : TruncatedTetrahedron :=
   ⟨fun _ => 1/4, by constructor <;> norm_num [Fin.sum_univ_succ]⟩
 
-private def testData : ActionData.{a,b} := by
+private def testData : ActionData.{a, b} := by
   let G := Equiv.Perm (ULift.{a} (Fin 1))
   let Ω := ULift.{b} Bool
   letI : MulAction Gᵐᵒᵖ Ω := {
@@ -77,13 +79,13 @@ private def testData : ActionData.{a,b} := by
   letI : DiscreteTopology Ω := ⟨rfl⟩
   exact ⟨G,Ω,inferInstance,inferInstance,inferInstance,inferInstance,1,1,(⟨false⟩,center)⟩
 
-private def low : TruncatedPoint testData.{a,b}.Ω := testData.point
-private def high : TruncatedPoint testData.{a,b}.Ω := (⟨true⟩,center)
+private def low : TruncatedPoint testData.{a, b}.Ω := testData.point
+private def high : TruncatedPoint testData.{a, b}.Ω := (⟨true⟩,center)
 
-private theorem test_act (x : testData.{a,b}.Ω) (g : testData.{a,b}.G) : act x g = x := rfl
+private theorem test_act (x : testData.{a, b}.Ω) (g : testData.{a, b}.G) : act x g = x := rfl
 
 private theorem separated : ¬ Joined
-    (Quotient.mk (Relation.EqvGen.setoid (TruncatedStep testData.{a,b}.u testData.v)) low)
+    (Quotient.mk (Relation.EqvGen.setoid (TruncatedStep testData.{a, b}.u testData.v)) low)
     (Quotient.mk (Relation.EqvGen.setoid (TruncatedStep testData.u testData.v)) high) := by
   intro h
   obtain ⟨g,_,he⟩ := (actual_truncated_joined_iff testData.u testData.v low high).mp h
@@ -91,13 +93,13 @@ private theorem separated : ¬ Joined
   have hf : (false : Bool) = true := congrArg ULift.down he
   cases hf
 
-theorem rejected_law : ¬ arena.{a,b}.Law rejected := by
+theorem rejected_law : ¬ arena.{a, b}.Law rejected := by
   intro h
   apply separated
   exact (actual_truncated_joined_iff testData.u testData.v low high).mpr
     ((h testData high).mp (Joined.refl _))
 
-theorem dependence : ObservationalDependence signature.{a,b} actual := by
+theorem dependence : ObservationalDependence signature.{a, b} actual := by
   intro i
   refine ⟨testData,low,high,?_⟩
   intro he
@@ -105,10 +107,9 @@ theorem dependence : ObservationalDependence signature.{a,b} actual := by
     Quotient.mk (Relation.EqvGen.setoid (TruncatedStep testData.u testData.v)) high at he
   apply separated
   rw [← he]
-  exact Joined.refl _
 
-def registration : Registration arena.{a,b}
-    (type_of% (@actual_truncated_joined_iff.{a,b})) where
+def registration : Registration arena.{a, b}
+    (type_of% (@actual_truncated_joined_iff.{a, b})) where
   actual := actual
   bridge := bridge
   variation := ⟨bridge.mp @actual_truncated_joined_iff,rejected,rejected_law⟩
@@ -118,22 +119,22 @@ def registration : Registration arena.{a,b}
   dependence := dependence
 
 def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@actual_truncated_joined_iff.{a,b})
-    (type_of% (realize signature.{a,b} (fun _ p s =>
+    (@actual_truncated_joined_iff.{a, b})
+    (type_of% (realize signature.{a, b} (fun _ p s =>
       Quotient.mk (Relation.EqvGen.setoid (TruncatedStep p.u p.v)) s)
       (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S3.Geometry.Gluing.ActualTruncatedPathComponents.actual_truncated_joined_iff.information_unit,
   realizationName := `Reg.D5.S3.Geometry.Gluing.ActualTruncatedPathComponents.registration,
   realizationSource := none,
   generated := false,
-  arena := .source ⟨arena.{a,b}⟩,
-  objectArena := .source ⟨arena.{a,b}⟩,
+  arena := .source ⟨arena.{a, b}⟩,
+  objectArena := .source ⟨arena.{a, b}⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
-  realization := .source arena.{a,b} ⟨registration⟩,
+  realization := .source arena.{a, b} ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize signature.{a,b} (fun _ p s =>
+  readout := some (realize signature.{a, b} (fun _ p s =>
     Quotient.mk (Relation.EqvGen.setoid (TruncatedStep p.u p.v)) s)
     (fun e => nomatch e)),
   variation := .absent,
