@@ -12,6 +12,10 @@ Lean statement: `D5/S0/Certificates/Polynomials/JavaheriArrangementDimensionRefu
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Polynomials/JavaheriArrangementDimensionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/javaheri-2026-cyclic-arrangement-conjecture-refutation` (refuted) by `D5/S0/Certificates/Polynomials/JavaheriArrangementDimensionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"javaheri-2026-cyclic-arrangement-conjecture-refutation","declaration_gid":"D5/S0/Certificates/Polynomials/JavaheriArrangementDimensionRefutation.result","resolution_kind":"refuted"} -->
+
 *Citation.* Mohammad Javaheri (2026). *A new arrangement inequality (revised and extended version)*. DOI: [10.48550/arXiv.2610.33653](https://doi.org/10.48550/arXiv.2610.33653). URL: <https://arxiv.org/abs/2610.33653v1>.
 
 *Commentary.*

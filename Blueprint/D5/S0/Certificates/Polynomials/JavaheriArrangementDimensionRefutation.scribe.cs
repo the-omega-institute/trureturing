@@ -33,6 +33,9 @@ internal sealed class JavaheriArrangementDimensionRefutationDocument : IScribeDo
                             + "valid. The least-upper-bound specification of a valid "
                             + "dimension therefore cannot equal the threshold greatest "
                             + "element, contradicting the universal conjecture."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("javaheri-2026-cyclic-arrangement-conjecture-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 }
