@@ -6,9 +6,7 @@
    utility: none
    digest: Generalized Pauli channel regions have three explicit volume ratios. -/
 
-import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
 import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
-import Mathlib.Analysis.Convex.Measure
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Tactic.FieldSimp
