@@ -4,7 +4,7 @@
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
-   digest: Cubic price Taylor expansion controls the actual-prime centered error on the complete original selected domain.
+   digest: Cubic price expansion bounds the actual-prime error on the full selected domain.
 
 UNCOMPILED CANDIDATE, 2026-10-27. No Lean process has checked this file.
 
@@ -41,6 +41,8 @@ import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Batteries.Tactic.OpenPrivate
 import Mathlib.Tactic
+
+/-! Cubic price expansion on the unchanged complete original first-clock domain. -/
 
 noncomputable section
 
@@ -105,21 +107,21 @@ private theorem densityD3_eq_negativeKernel {t : ℝ} (ht : 1 < t) :
 private theorem activationDensity_hasDerivAt {t : ℝ} (ht : 1 < t) :
     HasDerivAt activationDensity (densityD1 t) t := by
   have he : activationDensity =ᶠ[𝓝 t] positiveKernel 1 0 0 :=
-    (isOpen_Ioi.mem_nhds ht).mono fun x hx => density_eq_positiveKernel hx
+    (isOpen_Ioi.mem_nhds (show t ∈ Ioi (1 : ℝ) from ht)).mono fun x hx => density_eq_positiveKernel hx
   exact ((hasDerivAt_positiveKernel 1 0 0 ht).congr_of_eventuallyEq he).congr_deriv
     (densityD1_eq_negativeKernel ht).symm
 
 private theorem densityD1_hasDerivAt {t : ℝ} (ht : 1 < t) :
     HasDerivAt densityD1 (densityD2 t) t := by
   have he : densityD1 =ᶠ[𝓝 t] (fun x => -positiveKernel 2 0 0 x) :=
-    (isOpen_Ioi.mem_nhds ht).mono fun x hx => densityD1_eq_negativeKernel hx
+    (isOpen_Ioi.mem_nhds (show t ∈ Ioi (1 : ℝ) from ht)).mono fun x hx => densityD1_eq_negativeKernel hx
   have h := ((hasDerivAt_positiveKernel 2 0 0 ht).neg).congr_of_eventuallyEq he
   simpa only [neg_neg, ← densityD2_eq_positiveKernel ht] using h
 
 private theorem densityD2_hasDerivAt {t : ℝ} (ht : 1 < t) :
     HasDerivAt densityD2 (densityD3 t) t := by
   have he : densityD2 =ᶠ[𝓝 t] positiveKernel 3 0 0 :=
-    (isOpen_Ioi.mem_nhds ht).mono fun x hx => densityD2_eq_positiveKernel hx
+    (isOpen_Ioi.mem_nhds (show t ∈ Ioi (1 : ℝ) from ht)).mono fun x hx => densityD2_eq_positiveKernel hx
   exact ((hasDerivAt_positiveKernel 3 0 0 ht).congr_of_eventuallyEq he).congr_deriv
     (densityD3_eq_negativeKernel ht).symm
 
@@ -168,7 +170,7 @@ private theorem densityD3_forward_bound {t s : ℝ} (ht : 3 ≤ t) (hts : t ≤ 
       exact div_le_div_of_nonneg_right (by linarith) (pow_nonneg hs0.le 3)
     _ ≤ 228 * activationDensity t / t^3 := by
       exact div_le_div_of_nonneg_left (by positivity) (by positivity)
-        (pow_le_pow_left₀ ht0.le hts)
+        (pow_le_pow_left₀ ht0.le hts 3)
 
 /- A derivative comparison, used three times below. It supplies the actual
    factorial constants rather than assuming a Taylor-remainder hypothesis. -/
@@ -211,13 +213,13 @@ private theorem density_quadratic_error {t H v : ℝ} (ht : 3 ≤ t) (hH : 0 ≤
   have hE₁ (u : ℝ) (hu : u ∈ Icc 0 H) : HasDerivAt E₁ (E₂ u) u := by
     convert (((hasDerivAt_id u).const_mul (densityD2 t)).const_add (densityD1 t)).sub
       ((densityD1_hasDerivAt (hu1 u hu)).comp u
-        ((hasDerivAt_id u).const_add t)) using 1 <;> dsimp [E₁, E₂] <;> ring
+        ((hasDerivAt_id u).const_add t)) using 1 <;> (try funext x) <;> dsimp [E₁, E₂] <;> ring
   have hE₀ (u : ℝ) (hu : u ∈ Icc 0 H) : HasDerivAt E₀ (E₁ u) u := by
     convert ((((hasDerivAt_id u).const_mul (densityD1 t)).const_add
       (activationDensity t)).add
         (((hasDerivAt_id u).pow 2).const_mul (densityD2 t) |>.div_const 2)).sub
       ((activationDensity_hasDerivAt (hu1 u hu)).comp u
-        ((hasDerivAt_id u).const_add t)) using 1 <;>
+        ((hasDerivAt_id u).const_add t)) using 1 <;> (try funext x) <;>
       dsimp [E₀, E₁, densityQuadratic] <;> ring
   have h₂lo : ∀ u ∈ Icc 0 H, 0 ≤ E₂ u :=
     nonneg_of_deriv_nonneg hH hE₂ (by simp [E₂]) (fun u hu => (hC u hu).1)
@@ -225,7 +227,7 @@ private theorem density_quadratic_error {t H v : ℝ} (ht : 3 ≤ t) (hH : 0 ≤
     have hh := nonneg_of_deriv_nonneg hH
       (F := fun u => C*u-E₂ u) (F' := fun u => C+ densityD3 (t+u))
       (fun u hu => by
-        convert ((hasDerivAt_id u).const_mul C).sub (hE₂ u hu) using 1 <;> ring)
+        convert ((hasDerivAt_id u).const_mul C).sub (hE₂ u hu) using 1 <;> (try funext x) <;> dsimp [id, Function.comp_def] <;> ring)
       (by simp [E₂]) (fun u hu => by linarith [(hC u hu).2])
     intro u hu
     linarith [hh u hu]
@@ -236,7 +238,7 @@ private theorem density_quadratic_error {t H v : ℝ} (ht : 3 ≤ t) (hH : 0 ≤
       (F := fun u => C*u^2/2-E₁ u) (F' := fun u => C*u-E₂ u)
       (fun u hu => by
         convert ((((hasDerivAt_id u).pow 2).const_mul C).div_const 2).sub
-          (hE₁ u hu) using 1 <;> ring)
+          (hE₁ u hu) using 1 <;> (try funext x) <;> dsimp [id, Function.comp_def] <;> ring)
       (by simp [E₁]) (fun u hu => by linarith [h₂hi u hu])
     intro u hu
     linarith [hh u hu]
@@ -247,7 +249,7 @@ private theorem density_quadratic_error {t H v : ℝ} (ht : 3 ≤ t) (hH : 0 ≤
       (F := fun u => C*u^3/6-E₀ u) (F' := fun u => C*u^2/2-E₁ u)
       (fun u hu => by
         convert ((((hasDerivAt_id u).pow 3).const_mul C).div_const 6).sub
-          (hE₀ u hu) using 1 <;> ring)
+          (hE₀ u hu) using 1 <;> (try funext x) <;> dsimp [id, Function.comp_def] <;> ring)
       (by simp [E₀, densityQuadratic]) (fun u hu => by linarith [h₁hi u hu])
     intro u hu
     linarith [hh u hu]
@@ -271,7 +273,7 @@ private theorem integral_densityQuadratic (t a b : ℝ) :
   have hd (v : ℝ) : HasDerivAt F (densityQuadratic t v) v := by
     convert (((hasDerivAt_id v).const_mul (activationDensity t)).add
       ((((hasDerivAt_id v).pow 2).const_mul (densityD1 t)).div_const 2)).add
-        ((((hasDerivAt_id v).pow 3).const_mul (densityD2 t)).div_const 6) using 1 <;>
+        ((((hasDerivAt_id v).pow 3).const_mul (densityD2 t)).div_const 6) using 1 <;> (try funext x) <;>
       dsimp [F, densityQuadratic] <;> ring
   have hi : IntervalIntegrable (densityQuadratic t) volume a b :=
     (show Continuous (densityQuadratic t) by unfold densityQuadratic; fun_prop).intervalIntegrable _ _
@@ -285,7 +287,8 @@ private theorem integral_density_shift {t a b : ℝ} (hta : 1 < t+a) (hab : a �
       HasDerivAt (fun u => -g (t+u)) (activationDensity (t+v)) v := by
     rw [uIcc_of_le hab] at hv
     have hv1 : 1 < t+v := by linarith [hv.1]
-    simpa using ((g_has_deriv_at hv1).comp v ((hasDerivAt_id v).const_add t)).neg
+    convert ((g_has_deriv_at hv1).comp v ((hasDerivAt_id v).const_add t)).neg using 1 <;>
+      (try funext x) <;> simp
   have hi : IntervalIntegrable (fun v => activationDensity (t+v)) volume a b := by
     apply ContinuousOn.intervalIntegrable
     intro v hv
@@ -293,7 +296,10 @@ private theorem integral_density_shift {t a b : ℝ} (hta : 1 < t+a) (hab : a �
     have hv1 : 1 < t+v := by linarith [hv.1]
     exact ((activationDensity_hasDerivAt hv1).continuousAt.comp
       (continuousAt_const.add continuousAt_id)).continuousWithinAt
-  simpa using intervalIntegral.integral_eq_sub_of_hasDerivAt hd hi
+  calc
+    _ = (-g (t+b)) - (-g (t+a)) :=
+      intervalIntegral.integral_eq_sub_of_hasDerivAt hd hi
+    _ = _ := by ring
 
 private theorem cubic_kernel_error {t H d u : ℝ} (ht : 3 ≤ t) (hH : 0 ≤ H)
     (hd : 0 < d) (hu : u ∈ Icc 0 H) :
@@ -378,11 +384,13 @@ private theorem cubic_continuum_error {t H d : ℝ} (ht : 3 ≤ t) (hH : 0 ≤ H
   have hiB : IntervalIntegrable B volume 0 H :=
     (by dsimp [B]; fun_prop : Continuous B).intervalIntegrable _ _
   have hib : (∫ u in 0..H, B u) = (38 / 5 : ℝ) * H^5 / (t^3*d) := by
+    have hi4 : IntervalIntegrable (fun u : ℝ => u^4) volume 0 H :=
+      (show Continuous (fun u : ℝ => u^4) by fun_prop).intervalIntegrable _ _
     rw [show B = (fun u => ((228 / 24 : ℝ)/(t^3*d)) * (H^4-u^4)) by
       funext u; dsimp [B]; ring,
       intervalIntegral.integral_const_mul,
       intervalIntegral.integral_sub intervalIntegrable_const
-        ((continuous_id.pow 4).intervalIntegrable _ _),
+        hi4,
       intervalIntegral.integral_const, integral_pow]
     norm_num
     ring
@@ -414,7 +422,7 @@ private theorem continuumCubic_closed_form (t H d : ℝ) :
           (densityD1 t/(2*activationDensity t)))).add
       ((((hasDerivAt_id u).const_mul (H^3)).sub
         (((hasDerivAt_id u).pow 4).div_const 4)).const_mul
-          (densityD2 t/(6*activationDensity t)))).div_const d using 1 <;>
+          (densityD2 t/(6*activationDensity t)))).div_const d using 1 <;> (try funext x) <;>
       dsimp [F, cubicOffset] <;> ring
   unfold continuumCubic
   rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun u _ => hF u)
@@ -519,7 +527,8 @@ private theorem actual_prime_centered_error {R t H d : ℝ} (ht : 3 ≤ t) (hH :
     _ ≤ (57 / 2 : ℝ)*H^5/(t^3*d) + (38 / 5 : ℝ)*H^5/(t^3*d) := add_le_add hsum hcont
     _ ≤ 40*H^5/(t^3*d) := by
       have hn : 0 ≤ H^5/(t^3*d) := by positivity
-      nlinarith
+      simpa only [add_mul, mul_div_assoc] using
+        mul_le_mul_of_nonneg_right (show (57 / 2 : ℝ) + 38 / 5 ≤ 40 by norm_num) hn
 
 def windowLength (t : ℝ) : ℝ := t ^ (4 / 5 : ℝ)
 def normalization (t : ℝ) : ℝ := t ^ (11 / 10 : ℝ)
@@ -544,7 +553,8 @@ private theorem actual_prime_scaled_error {R t : ℝ} (ht : 3 ≤ t)
       cubicPrimeResponse R t (windowLength t) (normalization t)| ≤
         40 * t ^ (-1 / 10 : ℝ) := by
   have ht0 : 0 < t := by linarith
-  have h := actual_prime_centered_error ht
+  have h := actual_prime_centered_error (R := R) (t := t)
+    (H := windowLength t) (d := normalization t) ht
     (Real.rpow_nonneg ht0.le _) (Real.rpow_pos_of_pos ht0 _) hGMmass
   simpa only [mul_div_assoc, cubic_scale_identity ht0] using h
 
@@ -567,7 +577,7 @@ theorem complete_selected_actual_prime_error
       40 * ell ^ (-1 / 10 : ℝ) * volume.real (selectedDomain X) := by
   have hsub := selected_domain_bounds X hbounds
   have hmeas : MeasurableSet (selectedDomain X) := (domain_compact X).measurableSet
-  have hfinite : volume (selectedDomain X) ≠ ∞ :=
+  have hfinite : volume (selectedDomain X) ≠ ⊤ :=
     (domain_compact X).measure_lt_top.ne
   letI : IsFiniteMeasure (volume.restrict (selectedDomain X)) :=
     ⟨by simpa using lt_top_iff_ne_top.mpr hfinite⟩
