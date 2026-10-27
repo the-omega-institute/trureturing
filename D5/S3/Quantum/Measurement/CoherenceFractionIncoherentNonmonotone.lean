@@ -7,6 +7,7 @@
    digest: An incoherent operation increases the quantum coherence fraction. -/
 
 import D5.S3.Quantum.Information.SLDSpectralEnergy
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
 
 /-! # Incoherent operations can increase the quantum coherence fraction
 
@@ -19,7 +20,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 open Matrix Set
-open scoped BigOperators ComplexOrder
+open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf (MatrixMap)
+open scoped BigOperators ComplexOrder MatrixOrder
 
 namespace D5.S3.Quantum.Measurement.CoherenceFractionIncoherentNonmonotone
 
@@ -70,11 +72,6 @@ private def k : Fin 2 → Matrix (Fin 4) (Fin 4) ℂ :=
   ![Matrix.diagonal ![1, 0, (3 : ℂ) / 5, (3 : ℂ) / 5],
     Matrix.diagonal ![0, 1, (4 : ℂ) / 5, (-4 : ℂ) * Complex.I / 5]]
 
-private def phi (ρ : Matrix (Fin 4) (Fin 4) ℂ) : Matrix (Fin 4) (Fin 4) ℂ :=
-  ∑ i, k i * ρ * (k i)ᴴ
-
-private def ones : Fin 4 → ℂ := fun _ => 1
-
 private lemma p_star : pᴴ = p := by
   ext i j
   change star (p j i) = p i j
@@ -92,10 +89,8 @@ private lemma p_trace : trace p = 2 := by
   delta p
   norm_num [Fin.sum_univ_succ]
 
-private lemma p_pos : p.PosSemidef := by
-  have h := Matrix.PosSemidef.mul_mul_conjTranspose_same
-    (Matrix.PosSemidef.one : (1 : Matrix (Fin 4) (Fin 4) ℂ).PosSemidef) p
-  simpa [p_star, p_square] using h
+private lemma p_pos : p.PosSemidef :=
+  (show IsStarProjection p from ⟨p_square, p_star⟩).nonneg.posSemidef
 
 private lemma rho_half : rho = (1 / 2 : ℝ) • p := by
   have hs (i j : Fin 4) : ((1 / 2 : ℝ) • p) i j = (1 / 2 : ℂ) * p i j := by
@@ -174,30 +169,25 @@ private def q : Matrix (Fin 4) (Fin 4) ℂ :=
         (75 / 721 + (400 : ℂ) * Complex.I / 2163),
       (1 / 2 : ℂ) * (913 / 2163)]]
 
-private lemma diag_sandwich (a b : Fin 4 → ℂ) (m : Matrix (Fin 4) (Fin 4) ℂ)
-    (i j : Fin 4) :
-    (Matrix.diagonal a * m * Matrix.diagonal b) i j = a i * m i j * b j := by
-  simp only [Matrix.mul_diagonal, Matrix.diagonal_mul]
-
 set_option maxHeartbeats 1000000 in
 -- Both four-dimensional diagonal sandwiches require rational normalization.
-private lemma phi_rho : phi rho = q := by
-  delta phi
+private lemma phi_rho : MatrixMap.of_kraus k k rho = q := by
+  simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp only [Fin.sum_univ_two, Matrix.add_apply] <;>
     delta k <;>
     simp only [Matrix.cons_val_zero, Matrix.cons_val_one,
       Matrix.diagonal_conjTranspose] <;>
-    simp only [diag_sandwich] <;>
+    simp only [Matrix.mul_diagonal, Matrix.diagonal_mul] <;>
     delta q rho <;>
     simp [Complex.ext_iff, div_eq_mul_inv] <;>
     norm_num <;> ring
 
 private lemma output_at_ones :
-    (star ones ⬝ᵥ (phi rho *ᵥ ones)).re / (4 : ℝ) = 1 / 2 := by
+    (star 1 ⬝ᵥ (MatrixMap.of_kraus k k rho *ᵥ 1)).re / (4 : ℝ) = 1 / 2 := by
   rw [phi_rho]
-  delta q ones
+  delta q
   norm_num [Matrix.mulVec, Pi.star_apply, dotProduct, Fin.sum_univ_succ,
     Complex.mul_re, Complex.mul_im, div_eq_mul_inv]
 
@@ -305,21 +295,37 @@ private lemma residual_functional_bound (a b c d : ℂ) :
     (sq_le_sq₀ (norm_nonneg _) (by positivity)).2 h₂
   have h₁c : (‖c‖ + (3 * ‖a‖ + 4 * ‖b‖) / 5) ^ 2 ≤
       2 * (‖a‖ ^ 2 + ‖b‖ ^ 2 + ‖c‖ ^ 2) := by
-    nlinarith [sq_nonneg (4 * ‖a‖ - 3 * ‖b‖),
-      sq_nonneg (5 * ‖a‖ - 3 * ‖c‖), sq_nonneg (5 * ‖b‖ - 4 * ‖c‖)]
+    have h := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ
+      (![‖c‖, ‖a‖, ‖b‖] : Fin 3 → ℝ) (![1, 3 / 5, 4 / 5] : Fin 3 → ℝ)
+    norm_num [Fin.sum_univ_succ] at h
+    nlinarith only [h]
   have h₂c : (‖d‖ + (3 * ‖a‖ + 4 * ‖b‖) / 5) ^ 2 ≤
       2 * (‖a‖ ^ 2 + ‖b‖ ^ 2 + ‖d‖ ^ 2) := by
-    nlinarith [sq_nonneg (4 * ‖a‖ - 3 * ‖b‖),
-      sq_nonneg (5 * ‖a‖ - 3 * ‖d‖), sq_nonneg (5 * ‖b‖ - 4 * ‖d‖)]
+    have h := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ
+      (![‖d‖, ‖a‖, ‖b‖] : Fin 3 → ℝ) (![1, 3 / 5, 4 / 5] : Fin 3 → ℝ)
+    norm_num [Fin.sum_univ_succ] at h
+    nlinarith only [h]
   nlinarith
 
 private lemma projection_energy (z : Fin 4 → ℂ) :
     (star z ⬝ᵥ (p *ᵥ z)).re +
         ∑ i, ‖z i - (p *ᵥ z) i‖ ^ 2 = ∑ i, ‖z i‖ ^ 2 := by
-  delta p
-  simp [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, Complex.sq_norm,
-    Complex.normSq_apply, Pi.star_apply, Complex.star_def]
-  ring_nf
+  have hnorm := @norm_sub_sq ℂ (EuclideanSpace ℂ (Fin 4)) _ _ _
+    (WithLp.toLp 2 z) (WithLp.toLp 2 (p *ᵥ z))
+  simp only [EuclideanSpace.norm_sq_eq, EuclideanSpace.inner_eq_star_dotProduct,
+    WithLp.ofLp_sub, Pi.sub_apply,
+    dotProduct_comm (p *ᵥ z) (star z)] at hnorm
+  have hp : star (p *ᵥ z) ⬝ᵥ (p *ᵥ z) = star z ⬝ᵥ (p *ᵥ z) := by
+    rw [Matrix.star_mulVec, ← dotProduct_mulVec, p_star,
+      Matrix.mulVec_mulVec, p_square]
+  have hsq : ∑ i, ‖(p *ᵥ z) i‖ ^ 2 = (star z ⬝ᵥ (p *ᵥ z)).re := by
+    rw [← hp]
+    simp [dotProduct, Complex.re_sum, Complex.sq_norm, Complex.normSq_apply]
+  rw [hsq] at hnorm
+  change (∑ i, ‖z i - (p *ᵥ z) i‖ ^ 2) =
+    (∑ i, ‖z i‖ ^ 2) - 2 * (star z ⬝ᵥ (p *ᵥ z)).re +
+      (star z ⬝ᵥ (p *ᵥ z)).re at hnorm
+  linarith
 
 private lemma p_functionals (z : Fin 4 → ℂ) :
     ((p *ᵥ z) 2 - (3 * (p *ᵥ z) 0 + 4 * (p *ᵥ z) 1) / 5 = 0) ∧
@@ -375,25 +381,24 @@ private lemma input_bound (z : Fin 4 → ℂ) (hz : ∀ j, ‖z j‖ = 1) :
   rw [hr]
   linarith
 
-private lemma output_lower : 1 / 2 ≤ coherenceFraction (phi rho) := by
+private lemma output_lower : 1 / 2 ≤ coherenceFraction (MatrixMap.of_kraus k k rho) := by
   unfold coherenceFraction
-  apply le_csSup (coherence_bddAbove (phi rho))
-  refine ⟨ones, ?_, output_at_ones.symm⟩
+  apply le_csSup (coherence_bddAbove (MatrixMap.of_kraus k k rho))
+  refine ⟨1, ?_, output_at_ones.symm⟩
   intro j
-  delta ones
   simp
 
 private lemma input_upper : coherenceFraction rho ≤ 1 / 2 - 1 / 200 := by
   unfold coherenceFraction
   refine csSup_le ?_ ?_
-  · exact ⟨_, ones, (by intro j; delta ones; simp), rfl⟩
+  · exact ⟨_, 1, (by intro j; simp), rfl⟩
   rintro r ⟨z, hz, rfl⟩
   exact input_bound z hz
 
 theorem result : ¬ claim := by
   intro h
   have hm := h 4 2 rho k rho_density k_incoherent
-  have hlt : coherenceFraction (phi rho) > coherenceFraction rho :=
+  have hlt : coherenceFraction (MatrixMap.of_kraus k k rho) > coherenceFraction rho :=
     lt_of_le_of_lt input_upper ?_
   · exact (not_lt_of_ge hm) hlt
   · exact lt_of_lt_of_le (by norm_num : (1 / 2 - 1 / 200 : ℝ) < 1 / 2) output_lower
