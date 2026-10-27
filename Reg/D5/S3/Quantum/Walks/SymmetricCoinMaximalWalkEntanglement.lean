@@ -14,76 +14,59 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-/-- Observe the amplitude vector at the original circle size, time and coin. -/
+/-- Observe real comparison at the lower endpoint of the entanglement bound. -/
 abbrev signature : Signature where
-  Params := Σ _ : ℕ, ℕ
-  State _ := Fin 2 → ℂ
+  Params := Unit
+  State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ pn := Fin 2 × ZMod pn.1 → ℂ
+  Output _ _ := ℝ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ pn c => walkState pn.1 pn.2 c) (fun e => nomatch e)
+  realize signature (fun _ _ lower upper => lower ≤ upper) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => fun _ => 2) (fun e => nomatch e)
+  realize signature (fun _ _ lower upper => lower < upper) (fun e => nomatch e)
 
-/-- Retain every original parameter, normalization hypothesis and entanglement bound. -/
+/-- Retain every original parameter, normalization hypothesis and local instance. -/
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ (p : ℕ) (hp : 1 ≤ p) (n : ℕ) (c : Fin 2 → ℂ),
     _root_.D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor c →
     letI : NeZero p := ⟨by omega⟩
-    r.readout () ⟨p, n⟩ c = walkState p n c ∧
-      geometricEntanglement (r.readout () ⟨p, n⟩ c) ≤
-        geometricEntanglement (walkState p n cStar)
+    r.readout () () (geometricEntanglement (walkState p n c))
+      (geometricEntanglement (walkState p n cStar))
+
+private lemma cStar_unit :
+    _root_.D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor cStar := by
+  have hs : Complex.normSq (Real.sqrt 2 : ℂ) = 2 := by
+    rw [Complex.normSq_ofReal, Real.mul_self_sqrt (by norm_num)]
+  norm_num [D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor,
+    Fin.sum_univ_two, cStar, hs]
+
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hbad := h 1 (by norm_num) 0 cStar (by
-    have hs : Complex.normSq (Real.sqrt 2 : ℂ) = 2 := by
-      rw [Complex.normSq_ofReal, Real.mul_self_sqrt (by norm_num)]
-    norm_num [D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.UnitSpinor,
-      Fin.sum_univ_two, cStar, hs])
-  have heq := hbad.1
-  change (fun _ : Fin 2 × ZMod 1 => (2 : ℂ)) = walkState 1 0 cStar at heq
-  have hcoord := congrFun heq (0, 0)
-  change (2 : ℂ) = cStar 0 at hcoord
-  rw [cStar] at hcoord
-  change (2 : ℂ) = 1 / (Real.sqrt 2 : ℂ) at hcoord
-  have hsqrt : (Real.sqrt 2 : ℂ) ≠ 0 := by
-    exact_mod_cast (Real.sqrt_ne_zero'.mpr (by norm_num))
-  have hm := congrArg (fun z : ℂ => z * (Real.sqrt 2 : ℂ)) hcoord
-  rw [div_mul_cancel₀ _ hsqrt] at hm
-  have hmr := congrArg Complex.re hm
-  norm_num at hmr
-  have hsq := congrArg (fun x : ℝ => x ^ 2) hmr
-  have hsquare : (Real.sqrt 2) ^ 2 = 2 := Real.sq_sqrt (by norm_num)
-  nlinarith
+  have hbad := h 1 (by norm_num) 0 cStar cStar_unit
+  change geometricEntanglement (walkState 1 0 cStar) <
+    geometricEntanglement (walkState 1 0 cStar) at hbad
+  exact (lt_irrefl _) hbad
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨⟨1, 0⟩, 0, cStar, ?_⟩
-  intro he
-  have h := congrFun he (0, 0)
-  have hn : cStar 0 ≠ 0 := by simp [cStar]
-  apply hn
-  change (0 : ℂ) = cStar 0 at h
-  exact h.symm
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have hle : (0 : ℝ) ≤ 0 := le_rfl
+  change (fun upper : ℝ => 0 ≤ upper) = (fun upper : ℝ => 1 ≤ upper) at h
+  have hfalse : (1 : ℝ) ≤ 0 := (congrFun h 0).mp hle
+  exact (not_le_of_gt zero_lt_one) hfalse
 
 def source_registration : Registration arena claim where
   actual := actual
-  bridge := by
-    constructor
-    · intro h p hp n c hc
-      exact ⟨rfl, h p hp n c hc⟩
-    · intro h p hp n c hc
-      exact (h p hp n c hc).2
-  variation := ⟨by
-    intro p hp n c hc
-    exact ⟨rfl, result p hp n c hc⟩, rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨result, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -108,8 +91,8 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some
-    (realize signature (fun _ pn c => walkState pn.1 pn.2 c) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ _ lower upper => lower ≤ upper) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -120,11 +103,11 @@ def registration :
       owner := `D5.S3.Quantum.Walks.SymmetricCoinMaximalWalkEntanglement
       name := `D5.S3.Quantum.Walks.SymmetricCoinMaximalWalkEntanglement.claim
       path := #[] }
-    coordinates := #[0, 2]
+    coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 3
-      functionOperand := false
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
