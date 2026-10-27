@@ -48,6 +48,7 @@
         {"pattern": "tools/scripts/worktree/cache_material.py", "optional": false},
         {"pattern": "tools/scripts/worktree/lean-cache-ensure.sh", "optional": false},
         {"pattern": "tools/scripts/worktree/lean-cache-run.sh", "optional": false},
+        {"pattern": "tools/scripts/worktree/lean-git/git", "optional": false},
         {"pattern": "tools/scripts/worktree/lean-cache-publish.sh", "optional": false},
         {"pattern": "tools/scripts/workflow/install-lean-toolchain.sh", "optional": false},
         {"pattern": "Directory.Build.targets", "optional": true},

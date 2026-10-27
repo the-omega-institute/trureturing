@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5a7a0ab4a4b3fefd459ca26e570dd3ff8a0413e942bcea6d01b3e5c58543bbe0
+  normalized_sha256: sha256:5a7a0ab4a4b3fefd459ca26e570dd3ff8a0413e942bcea6d01b3e5c58543bbe0
+cas_ref: sha256:5a7a0ab4a4b3fefd459ca26e570dd3ff8a0413e942bcea6d01b3e5c58543bbe0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: ADMIT 正规形的谓词参数与输运定义引言。
+    previous_atom_id: 6d3d2498732797496da98307f66d215ad700cc24ac9b0796ba2cc60d453f6dd9
+    next_atom_id: 83aa1e2b9a1a439067312e5a7158b7317fa9733d08d08f9c9bbe85100c4d2373

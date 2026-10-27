@@ -3225,3 +3225,1746 @@ ordinary on-paper mathematical results, without a claim of Lean
 verification or physical realization.
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Fixed real-filter drift for the original nominal decoder
+
+**Definition 17.1 (unchanged detectors and fixed real drift).** Use the
+lawful sources, fixed frame and orientation of Definition 6.1 and the
+skew coordinates $a(A)$, map $U$ and norms of Definition 13.1. Write
+$\beta(A)=b(A)=*_5(a_A\wedge a_A)$ for the five Hodge coordinates;
+$K(A)=-A^2$. For any real contraction $H\in M_5(\mathbb R)$ set
+$A_j^H=H^jA(H^j)^T$ and define $Q_H(A)\in\mathbb R^{50}$ by
+
+$$
+Q_H(A)=\left(
+ \left(\frac{K(A)_{ik}}{M_{ik}}\right)_{i\le k},
+ \left(\frac{\beta(A)_r}{5/2}\right)_{r=1}^5,
+ \left(\frac{K(A_1^H)_{ik}}{M_{ik}}\right)_{i\le k},
+ \left(\frac{K(A_2^H)_{ik}}{M_{ik}}\right)_{i\le k}
+ \right),\qquad
+M_{ii}=2,\quad M_{ik}=7/4\ (i<k).
+\tag{17.1}
+$$
+
+Thus the depths are exactly $0,1,2$, with twenty coordinates at depth
+zero and fifteen at each later depth. These are the base detector
+normalizations of (10.1) and Definition 13.1, including at nonzero
+depth. Put
+
+$$
+\mathsf B_H(u,v)=\tfrac14\{Q_H(U(u+v))-Q_H(U(u-v))\},\qquad
+F=\operatorname{diag}(1,2,3,4,5)/6,
+$$
+
+$$
+\gamma=c_F=\frac1{40310784000},\qquad
+K_0=K_F=\gamma^{-1},\qquad
+\mathcal C=\frac{16\sqrt{10}}7.
+\tag{17.2}
+$$
+
+The nominal certificate is exactly Theorem 13.4:
+$\|\mathsf B_F(u,v)\|_2\ge\gamma\|u\|_2\|v\|_2$.
+The equivalent real quadratic coefficient matrices are those at the end
+of §13, with dimension ten, fifty outputs and squared lower frame bound
+$\gamma^2$. Their general nonsingular-polarization and product-distance
+suppliers are Wang--Xu,
+[*Generalized phase retrieval*, Theorem 2.1](https://arxiv.org/html/1605.08034v3),
+and Zhuang,
+[*On stability of generalized phase retrieval and generalized affine
+phase retrieval*, Theorem 2.3, (2.3)](https://doi.org/10.1186/s13660-019-1968-z).
+
+Fix $\eta\ge0$. Throughout every attempt and every depth of the actual
+schedule, the success Kraus operator is one and the same real
+contraction $\widetilde F$, with
+$\|\widetilde F-F\|_{\mathrm{op}}\le\eta$; its failure Kraus operator
+is $\widetilde L=(I-\widetilde F^T\widetilde F)^{1/2}$.
+Preparations remain stationary independent copies of the fixed
+$\rho=S+iA$, instruments have independent initial environments, and
+the fifteen single-copy instruments and twenty base joint detector
+designs remain those of Definition 10.1. The schedule and complete
+record grammar remain those of Definitions 10.1 and 15.1. Both chains
+are executed independently even if the other member fails; all failure
+prefixes are retained, and the denominator of every mean is $N$, the
+number of all attempts. No invertibility or strictly positive success
+probability is imposed on $\widetilde F$. An all-success branch is used
+only in its unnormalized form
+$\widetilde F^j\rho(\widetilde F^j)^T$. A zero-probability branch has
+zero mass and requires no conditional state.
+
+The public number $\eta$ and this fixed-drift assumption are supplied
+calibration premises. They include neither an estimator of the drift
+nor an acquisition of its certified bound. The decoder is exactly
+$\mathsf{Dec}_b$ of Definition 15.2, using the nominal $Q_F$ and its
+fixed integer polynomials; it receives no matrix $\widetilde F$.
+
+**Theorem 17.2 (radius and perturbation of this detector certificate).**
+Every lawful $S+iA$ has $r_A=\|a(A)\|_2\le1/2$, and this radius is
+attained by a pure source. For all real $u,v\in\mathbb R^{10}$, the
+fixed-drift model satisfies
+
+$$
+\|\mathsf B_{\widetilde F}(u,v)-\mathsf B_F(u,v)\|_2
+ \le\mathcal C\eta\|u\|_2\|v\|_2,
+\tag{17.3}
+$$
+
+$$
+\|\mathsf B_{\widetilde F}(u,v)\|_2
+ \ge(\gamma-\mathcal C\eta)\|u\|_2\|v\|_2.
+\tag{17.4}
+$$
+
+Consequently, if $\eta<\gamma/\mathcal C$, the actual map
+$Q_{\widetilde F}$ is injective on all real skew matrices modulo one
+common sign and obeys
+
+$$
+d_\pm(A,B)D_\pm(A,B)
+ \le\frac{\|Q_{\widetilde F}(A)-Q_{\widetilde F}(B)\|_2}
+ {\gamma-\mathcal C\eta}.
+\tag{17.5}
+$$
+
+Here $d_\pm,D_\pm$ are exactly (14.1). The positive-radius hypothesis
+in (17.5) is a sufficient condition for this actual-map certificate;
+it is not a necessary calibration threshold.
+
+Proof. Since $\rho$ and $\overline\rho$ are positive semidefinite,
+$\operatorname{tr}(\rho\overline\rho)\ge0$ (write the trace as that
+of $\rho^{1/2}\overline\rho\rho^{1/2}$). Also
+$\operatorname{tr}\rho^2\le(\operatorname{tr}\rho)^2=1$.
+Expanding the two traces gives
+
+$$
+2\|A\|_{\mathrm F}^2
+ =\operatorname{tr}\rho^2-\operatorname{tr}(\rho\overline\rho)
+ \le1,\qquad \|A\|_{\mathrm F}^2=2\|a(A)\|_2^2.
+\tag{17.6}
+$$
+
+For $\psi=(e_1+ie_2)/\sqrt2$, the density $\psi\psi^\dagger$ has
+$A_{12}=-1/2$ as its only nonzero upper skew entry, proving sharpness.
+
+A real skew matrix has two nonnegative singular-value pairs and one
+zero singular value. Thus
+$\|U(u)\|_{\mathrm{op}}\le\|u\|_2$ and
+$\|U(u)\|_{\mathrm F}=\sqrt2\|u\|_2$. The contraction-power
+identity, valid without commutativity, is
+
+$$
+\widetilde F^j-F^j
+ =\sum_{k=0}^{j-1}\widetilde F^{j-1-k}(\widetilde F-F)F^k,
+\qquad \|\widetilde F^j-F^j\|_{\mathrm{op}}\le j\eta.
+\tag{17.7}
+$$
+
+Write $A_j(u)=F^jU(u)(F^j)^T$ and
+$\widetilde A_j(u)=\widetilde F^jU(u)(\widetilde F^j)^T$.
+Splitting the difference into its left-factor and right-factor changes
+and using contraction of both powers gives
+
+$$
+\begin{aligned}
+\|\widetilde A_j(u)-A_j(u)\|_{\mathrm{op}}
+ &\le2j\eta\|u\|_2,\\
+\|\widetilde A_j(u)-A_j(u)\|_{\mathrm F}
+ &\le2\sqrt2j\eta\|u\|_2.
+\end{aligned}
+\tag{17.8}
+$$
+
+The polarization of $K$ on skew matrices is
+$\mathsf K(C,D)=-(CD+DC)/2$. Its depth-$j$ difference splits as
+
+$$
+\mathsf K(\widetilde A_j(u)-A_j(u),\widetilde A_j(v))
+ +\mathsf K(A_j(u),\widetilde A_j(v)-A_j(v)).
+$$
+
+The inequalities $\|CD\|_{\mathrm F}\le
+\|C\|_{\mathrm{op}}\|D\|_{\mathrm F}$ and their right-multiplication
+versions bound each summand by
+$2\sqrt2j\eta\|u\|_2\|v\|_2$. Hence their sum has Frobenius norm
+at most $4\sqrt2j\eta\|u\|_2\|v\|_2$.
+Upper-triangular coordinate norm is no greater than Frobenius norm,
+and the largest inverse base $K$ divisor is $4/7$. All depth-zero
+coordinates, including $\beta$, are unchanged. Combining just the
+nonzero-depth blocks in Euclidean norm gives
+
+$$
+\tfrac47\,4\sqrt2\sqrt{1^2+2^2}
+ =\frac{16\sqrt{10}}7=\mathcal C,
+$$
+
+which proves (17.3). The triangle inequality with Theorem 13.4 proves
+(17.4). Finally
+$Q_H(A)-Q_H(B)=\mathsf B_H(a(A)-a(B),a(A)+a(B))$ for every $H$.
+Its two input norms have product $d_\pm D_\pm$. Dividing (17.4) by
+its strictly positive coefficient proves (17.5), and equal outputs
+then force $A=B$ or $A=-B$. The only invoked inverse result is the
+existing nominal certificate; the perturbation calculation above
+concerns the particular depth blocks (17.1). $\square$
+
+**Theorem 17.3 (linear drift error for the same rational decoder).**
+For every fixed lawful source, integer $N\ge1$, integer $b\ge3$,
+$0<\delta<1$ and fixed drift as in Definition 17.1, execute the original
+schedule once with the actual instrument and apply the nominal
+$\mathsf{Dec}_b$. Its output $T+iB$ is lawful on every grammatical
+record. With probability at least $1-\delta$, put
+
+$$
+E=24\sqrt{\frac{\log(130/\delta)}N}+512\,2^{-b},
+\qquad r_A=\|a(A)\|_2.
+\tag{17.9}
+$$
+
+The following inequalities hold simultaneously:
+
+$$
+\begin{aligned}
+\|S-T\|_{\mathrm F}&\le E+2\mathcal C\eta r_A^2,\\
+d_\pm(A,B)D_\pm(A,B)&\le K_0E+2K_0\mathcal C\eta r_A^2,\\
+d_\pm(A,B)&\le\sqrt{K_0E}+2K_0\mathcal C\eta r_A,\\
+\mathfrak d(S+iA,T+iB)
+ &\le\sqrt{(E+2\mathcal C\eta r_A^2)^2
+            +2(\sqrt{K_0E}+2K_0\mathcal C\eta r_A)^2}\\
+ &\le\sqrt{(E+\mathcal C\eta/2)^2
+            +2(\sqrt{K_0E}+K_0\mathcal C\eta)^2}.
+\end{aligned}
+\tag{17.10}
+$$
+
+No restriction $\eta<\gamma/\mathcal C$ is required in this theorem.
+The bound includes $A=0$, singular sources and repeated spectra.
+At fixed confidence its global error order is
+$O(N^{-1/4}+2^{-b/2}+\eta)$, with constants depending on the fixed
+certificate. It concerns the common-conjugation orbit metric (15.2),
+not an actual state preparation or a callable continuation.
+
+Proof. For each actual pair attempt the subnormalized all-success
+input is $\tau=\widetilde F^j\rho(\widetilde F^j)^T$. Equation (10.2)
+therefore gives $\mathbb E Z_\nu=Q_{\widetilde F}(A)_\nu$,
+including when that branch has probability zero. Failure attempts have
+$Z_\nu=0$. Single-copy means remain the fifteen probabilities of $S$.
+Thus the bounded-independent-variable argument of Proposition 14.2
+applies to these actual means, with the same fifty variables of range
+length two and fifteen variables of range length one. In particular,
+writing $s_N=\sqrt{\log(130/\delta)/N}$, the exact count extractions
+(15.1) satisfy, on one event of probability at least $1-\delta$,
+
+$$
+\|y-Q_{\widetilde F}(A)\|_2\le10s_N,\qquad
+\|\widehat S-S\|_{\mathrm F}\le\sqrt{85/2}\,s_N.
+\tag{17.11}
+$$
+
+The concentration supplier is Hoeffding,
+[*Probability Inequalities for Sums of Bounded Random Variables*,
+Theorem 2, (2.6)](https://doi.org/10.1080/01621459.1963.10500830),
+with the two-sided tails and $65$-setting union bound of (14.9).
+No success-conditioned sample count is used.
+
+Taking $u=v=a(A)$ in (17.3) gives
+$\|Q_{\widetilde F}(A)-Q_F(A)\|_2\le\mathcal C\eta r_A^2$.
+Consequently the same record has nominal joint error
+
+$$
+\begin{aligned}
+e&=\left(\|\widehat S-S\|_{\mathrm F}^2
+                 +\|y-Q_F(A)\|_2^2\right)^{1/2}\\
+ &\le\sqrt{100+85/2}\,s_N+\mathcal C\eta r_A^2
+ \le12s_N+\mathcal C\eta r_A^2.
+\end{aligned}
+\tag{17.12}
+$$
+
+Apply the deterministic Theorem 15.3 to the nominal decoder, using
+$\nu=2e+512\,2^{-b}\le E+2\mathcal C\eta r_A^2$.
+Its symmetric and product-distance conclusions are the first two lines
+of (17.10). This application uses Theorem 13.4 for $Q_F$, not (17.5).
+It therefore imposes no positive-radius condition on the actual map.
+
+For the linear drift term set $a=a(A)$, $c=a(B)$, $d=d_\pm(A,B)$,
+$D=D_\pm(A,B)$ and $t=\sqrt{K_0E}$. The parallelogram identity gives
+
+$$
+D^2\ge\tfrac12(\|a-c\|_2^2+\|a+c\|_2^2)
+ =r_A^2+\|c\|_2^2,\qquad D\ge\max\{d,r_A\}.
+\tag{17.13}
+$$
+
+If $D<t$, then $d<t$. If $D\ge t$ and $D>0$, division of the
+product bound by $D$ gives
+
+$$
+d\le\frac{K_0E}{D}
+       +\frac{2K_0\mathcal C\eta r_A^2}{D}
+ \le t+2K_0\mathcal C\eta r_A.
+\tag{17.14}
+$$
+
+For $D=0$ one has $d=r_A=0$, so the conclusion also holds.
+Finally $\mathfrak d^2=\|S-T\|_{\mathrm F}^2+2d^2$ by (15.2),
+and $r_A\le1/2$ by (17.6), proving the last two lines of (17.10).
+Using (17.13) before coarsening the radius is essential: taking only a
+square-root inverse of a source-independent mean bias would give a
+weaker calibration term. $\square$
+
+**Corollary 17.4 (complete resource contract of the drift consumer).**
+In Theorem 17.3 take the classical bit model, readable input and
+write-only output tapes, signed-binary arithmetic and self-delimiting
+encodings of Definition 15.4. Let $B_0$ be the length of its metadata
+string, including any explicitly represented source, frame, calibration
+and occurrence labels. With the exact parameter correspondence
+
+$$
+n=\lceil\log_2(N+1)\rceil,\qquad
+\ell_0=\lceil\log_2(B_0+2)\rceil,\qquad
+w=b+n+\ell_0+64,\qquad
+G_b=(2^{b+1}+1)^{50}-1,
+\tag{17.15}
+$$
+
+the same actual acquisition and nominal scan have the bounds
+
+$$
+\begin{array}{c|c}
+\text{setting attempts}&65N=15N+50N\\
+\text{pair attempts}&50N\\
+\text{source preparations}&115N\\
+\text{single-copy detector calls}&15N\\
+\text{local filter calls}&60N+U_1\le90N\\
+\text{joint detector calls}&20N+C_T\le50N\\
+\text{retained padded outcome bits}&155N
+\end{array}
+\tag{17.16}
+$$
+
+$$
+\begin{aligned}
+\text{nominal scan bit time}
+ &=O((B_0+155N+G_b+1)w^2),\\
+\text{additional arithmetic workspace}&=O(w)\text{ bits},\\
+\text{matrix-description output}&\le60b+200\text{ bits},\\
+\text{total output including binding copy}
+ &\le B_0+2\ell_0+60b+210\text{ bits},\\
+\text{separately retained input}
+ &=155N+B_0+O(n+\log(b+1)+\ell_0)\text{ bits}.
+\end{aligned}
+\tag{17.17}
+$$
+
+The fixed program and its readable backing, allocation of input/output
+and actual permissions remain separate resources. Metadata is copied,
+not authenticated or reconstructed, by the scan. Descriptions and
+calibration of the actual instruments and acquisition of a certified
+$\eta$ are additional supplied resources. The rows do not convert
+calls or bit transitions into elementary gates, physical time or energy.
+
+Proof. Proposition 10.2's counting applies to the identical schedule
+with the actual instrument: $U_1$ counts first successes among the
+$30N$ individual specimens at depth two, and $C_T$ counts double
+successes at the prescribed depth among the $30N$ filtered pairs.
+There are $30N$ depth-one calls, $30N$ first depth-two calls and $U_1$
+second calls. The $20N$ unfiltered pairs always use their detector;
+the others do so exactly on the $C_T$ double successes. Two-bit
+prefixes at depth two and one-bit flags at depth one give payload
+$15N+20N+3(15N)+5(15N)=155N$. This includes all failures and the
+padding for unexecuted detectors, with no free replacement.
+
+For computation, the program is literally Definition 15.2. It extracts
+(15.1) in one forward record pass, scans the $G_b$ nonzero Gaussian
+integer matrices, and uses the integer polynomials with denominator
+$C=70\,6^8$ and exact score cross-comparisons (15.5)--(15.6).
+Neither these polynomials nor the bank are changed to depend on
+$\widetilde F$. Hence Theorem 15.5 applies with exactly (17.15), on
+every grammatical actual record. It supplies (17.17), counting all bit
+reads and writes, odometer enumeration, score arithmetic, the stored
+best candidate and the binding copy. In particular the bounds are
+independent of $\eta$ and of the success counts. Input backing and
+emitted output are excluded from its additional-workspace account,
+exactly as in (15.16)--(15.17); the ordered record is retained even
+though the scan subsequently uses just its counts.
+
+For an explicit sufficient prescription take $0<h\le1$,
+$0<\delta\le1/4$ and
+
+$$
+N\ge(768K_0)^2h^{-4}\log(130/\delta),\qquad
+2^{-b}\le\frac{h^2}{16384K_0},\qquad
+\eta\le\frac{h}{4K_0\mathcal C}.
+$$
+
+Then $E\le h^2/(16K_0)$, so (17.10) gives $d_\pm\le h/2$
+and $\|S-T\|_{\mathrm F}\le3h/(16K_0)\le3h/16$.
+Thus $\mathfrak d^2\le(9/256+1/2)h^2<h^2$. Taking the least
+admissible integer $N$ and dyadic precision $b$ gives
+$N=O(h^{-4}\log(1/\delta))$, $2^{-b}=O(h^2)$ and the sufficient
+calibration order $\eta=O(h)$, since
+$\log(130/\delta)=O(\log(1/\delta))$ uniformly for $\delta\le1/4$.
+These are sufficient prescriptions for this certificate. The bank
+exponent fifty and the displayed resource coordinates remain unchanged;
+this proves neither efficient decoding nor a necessary calibration law
+for other estimation or self-calibration procedures. $\square$
+
+## 18. Adaptive terminal real-pair acquisition and precision-confidence order
+
+**Definition 18.1 (experiment class and full classical history).** Fix
+an integer $m\ge0$ and a stationary independent preparation service for an unknown lawful
+$\rho\in\mathcal D(\mathbb C^5)$ in the frame of Definition 6.1.
+A controller may select a finite-outcome POVM on one or two fresh copies
+as a measurable function of all past classical observations and common
+randomness. Each single-copy total effect on the unfiltered input is a
+real symmetric positive matrix, summing to $I_5$; each pair total effect
+is real symmetric positive, summing to $I_{25}$. This includes real
+filtering followed by terminal measurement when every local prefix and
+failure is recorded as part of the complete outcome. Source-dependent
+postselection or advice is not supplied.
+
+The controller seed, all common random draws used, settings, source-call
+positions, both chain prefixes, detector outcomes, failures, decisions
+to stop and any randomized output belong to the classical history.
+Their initial law and all randomization rules are the same for all
+sources. Any auxiliary starting state is source-independent, and its
+induced input POVM must satisfy the preceding realness condition.
+After each attempt all source registers, their successors and every
+source-dependent quantum environment are discarded. No
+source-dependent quantum system passes between attempts. Only classical
+history informs later actions. Each run stops after a finite history;
+there are at most $m$ pair attempts on every run. Arbitrarily many
+single-copy insertions are allowed subject to this finite-history
+condition. Pair budget is charged per attempted pair, including failures,
+not per successful detector call or as an expected stopping time.
+
+The optimization class grants mathematical choice of these finite real
+POVMs and common classical processing. Their actual installation,
+calibration, record backing and processing are additional operational
+resources; class membership supplies no such implementation. The
+original ideal depth protocol is a member, with $m=50N$ and the extra
+resource contract (16.5), (15.16)--(15.17). The coherent $r$-copy
+consumer of Definition 12.3 and experiments retaining source-dependent
+quantum memory between attempts are outside this class.
+
+**Theorem 18.2 (conditional real-pair information bound).** Let
+$Y=iJ_{12}$, $\rho_\theta=I_5/5+\theta Y$, $0\le\theta\le1/10$,
+and let $P_\theta$ be the complete classical-history law for any common
+experiment of Definition 18.1. At each fixed history $h$ preceding a
+pair, its conditional record law is $q_\theta K_h$, where $K_h$ is a
+source-independent classical probability kernel and
+
+$$
+q_\theta(a,b)=\frac1{25}+\theta^2y_ay_b,
+\qquad y=(1,-1,0,0,0),\quad 1\le a,b\le5.
+\tag{18.1}
+$$
+
+The single-pair defect is $\chi^2(q_\theta\Vert q_0)=100\theta^4$.
+For the complete stopped histories, with likelihood
+$L_m=dP_\theta/dP_0$ after padding unused pair slots,
+
+$$
+\begin{aligned}
+\mathbb E_0L_m^2
+ =1+\chi^2(P_\theta\Vert P_0)&\le(1+100\theta^4)^m,\\
+D_{\mathrm{KL}}(P_\theta\Vert P_0)
+ &\le m\log(1+100\theta^4),\\
+\operatorname{TV}(P_\theta,P_0)
+ &\le\tfrac12\sqrt{(1+100\theta^4)^m-1}.
+\end{aligned}
+\tag{18.2}
+$$
+
+Here $\chi^2(P\Vert Q)=\int(dP/dQ-1)^2dQ$, logarithms are natural,
+and total variation has the half-$L^1$ convention of Theorem 12.2.
+The estimates include settings, failures, finite stopping, all common
+randomness and any common randomized postprocessing.
+
+Proof. The source eigenvalues $1/5\pm\theta,1/5,1/5,1/5$ are
+strictly positive. Conditional on the same classical history (including
+the controller seed), fresh inputs still have state
+$\rho_\theta^{\otimes2}$. For a chosen complete real pair effect
+$Q_{h,z}$, the odd term in this tensor square is purely imaginary
+with skew transpose, so its trace pairing with $Q_{h,z}$ vanishes.
+The exact supplier calculation (12.4)--(12.8) therefore applies at
+this history:
+
+$$
+\operatorname{tr}(Q_{h,z}\rho_\theta^{\otimes2})
+ =\operatorname{tr}(Q_{h,z}\sigma_\theta),\qquad
+\sigma_\theta=I_{25}/25+\theta^2Y\otimes Y.
+\tag{18.3}
+$$
+
+In a fixed eigenbasis $u_a$ of $Y$, set
+
+$$
+K_h(z\mid a,b)=
+\langle u_a\otimes u_b,Q_{h,z}(u_a\otimes u_b)\rangle.
+\tag{18.4}
+$$
+
+Positivity and completeness make this a probability kernel, giving
+(18.1). It depends on the same supplied policy and the fixed history,
+not on the unknown parameter. The labels $(a,b)$ are a mathematical
+probability representation, not available outcomes or nonreal controls.
+Directly,
+
+$$
+\chi^2(q_\theta\Vert q_0)
+ =25\theta^4\sum_{a,b}y_a^2y_b^2=100\theta^4.
+\tag{18.5}
+$$
+
+This is Theorem 12.2's existing defect, with its symmetric-binomial
+correspondence $B=2$, $z=5\theta$ and both-active weight $4/25$.
+The actual service has one fixed $\theta$ throughout: (18.3) does not
+replace it by a fresh random choice of conjugation sign on each call.
+
+Under $q_0K_h$, the observed likelihood factor $\ell_h$ is the
+conditional expectation of the spectral likelihood
+$R(a,b)=q_\theta(a,b)/q_0(a,b)$ given the output. Jensen gives
+
+$$
+\mathbb E_0(\ell_h\mid h)=1,\qquad
+\mathbb E_0(\ell_h^2\mid h)\le1+100\theta^4.
+\tag{18.6}
+$$
+
+These are the ordinary data-processing steps for order-two divergence;
+see van Erven--Harremoës,
+[*Rényi Divergence and Kullback--Leibler Divergence*,
+Theorems 1 and 9, Example 2](https://arxiv.org/html/1206.2459v2).
+Single-copy real effects have probability
+$\operatorname{tr}(PI_5/5)$ and hence likelihood factor one.
+The seed and subsequent random draws also have factor one conditional
+on their past, and settings and stopping decisions use the same
+classical policy at the same history.
+
+To accommodate an unbounded but finite number of single-copy
+insertions, group their full records and intervening common draws
+into the block before the first pair, and then the block after each
+pair until the next pair or stop. Conditional on the preceding history,
+a block containing only these single-copy actions and common draws has
+a source-independent law, even when its length is random: each finite
+path has the same successive kernels, and the finite paths have total
+mass one by the stopping assumption. The initial such block has a
+common law. A later block consists of the current real pair followed
+by a common classical kernel, and therefore still satisfies (18.6).
+This accounts for every recorded single-copy action and every stop
+decision, without assuming a uniform bound on their number.
+
+After stopping, append a fixed, source-independent dummy symbol at
+each remaining pair slot up to $m$. The stopped history is recovered
+by deleting dummy slots, and the padding is determined by that history;
+no information is lost or added. Let $\mathcal H_t$ include the seed
+and the full first $t$ blocks, and $L_t$ their likelihood. Then
+
+$$
+L_t=L_{t-1}\ell_t,\qquad
+\mathbb E_0(L_t^2\mid\mathcal H_{t-1})
+ \le(1+100\theta^4)L_{t-1}^2.
+\tag{18.7}
+$$
+
+Iterating $m$ times from $L_0=1$ proves the first line of (18.2).
+All likelihood factors lie in $[3/4,5/4]$, since the spectral factors
+do and $25\theta^2\le1/4$; dummy factors equal one. Thus the final
+log likelihood is integrable, including with a continuous seed and
+random finite block lengths. For one conditional block, Jensen also gives
+
+$$
+D(p_h\Vert p_{0,h})=\mathbb E_{p_h}\log\ell_h
+ \le\log\mathbb E_{p_h}\ell_h
+ =\log\mathbb E_{p_{0,h}}\ell_h^2
+ \le\log(1+100\theta^4).
+\tag{18.8}
+$$
+
+This is the order-one/order-two comparison in van Erven--Harremoës,
+Theorem 3, with $D_2=\log(1+\chi^2)$.
+The product identity for $L_m$ and conditional expectation give the
+relative-entropy chain rule here as
+$D(P_\theta\Vert P_0)=\sum_{t=1}^m
+\mathbb E_\theta[D(p_{\mathcal H_{t-1}}\Vert
+p_{0,\mathcal H_{t-1}})]$. Equation (18.8) proves its bound.
+Finally Cauchy--Schwarz gives
+$\operatorname{TV}=\tfrac12\mathbb E_0|L_m-1|
+\le\tfrac12\sqrt{\mathbb E_0L_m^2-1}$.
+The proof explicitly uses terminal discard: a surviving
+source-dependent quantum carrier would not be part of the common
+classical kernels just constructed. $\square$
+
+**Proposition 18.3 (attainable information on this two-point family).**
+For the family in Theorem 18.2, the one-pair chi-square bound is attained
+by a three-outcome real projective measurement. Its one-pair relative
+entropy is exactly
+
+$$
+\kappa(\theta)=\frac2{25}
+ \{(1+a)\log(1+a)+(1-a)\log(1-a)\},\qquad a=25\theta^2,
+\tag{18.9}
+$$
+
+which is also the maximum one-pair relative entropy over all allowed
+real POVMs for comparison with $\theta=0$. Independent repetition of
+this measurement $m$ times attains
+$\mathbb E_0L_m^2=(1+100\theta^4)^m$ and
+$D(P_\theta\Vert P_0)=m\kappa(\theta)$.
+These are properties of the selected subfamily, not optimal constants
+for estimating all lawful state orbits.
+
+Proof. Put $Z=Y\otimes Y$ and $K=Y^2\otimes Y^2$. Both are real
+symmetric, $Z^2=K$, $K^2=K$ and $KZ=Z$. Therefore
+
+$$
+Q_+=(K+Z)/2,\qquad Q_-=(K-Z)/2,\qquad Q_0=I-K
+\tag{18.10}
+$$
+
+are mutually orthogonal real projections summing to $I_{25}$.
+They have ranks $2,2,21$, and $Z$ acts as $+1,-1,0$ on their ranges.
+The projection Kraus operators are real, so terminal measurement and
+discard is a legal attempt of Definition 18.1. By (18.3) its
+probabilities are
+
+$$
+p_\theta(+)=2/25+2\theta^2,\qquad
+p_\theta(-)=2/25-2\theta^2,\qquad p_\theta(0)=21/25.
+\tag{18.11}
+$$
+
+Thus $\chi^2(p_\theta\Vert p_0)
+=2(2\theta^2)^2/(2/25)=100\theta^4$, and direct substitution gives
+(18.9). The spectral likelihood (18.1) is constant on the three
+sets $y_ay_b=1,-1,0$, so this aggregation preserves both divergences
+of $q_\theta$ relative to $q_0$. Every other real POVM is a kernel
+of that spectral law by (18.4), and data processing bounds its
+relative entropy by the same value. Independent attempts multiply
+second moments and add relative entropies, proving the asserted
+repetition formulas. This exact calculation supplies no uniform
+state-estimation risk constant or efficient all-state decoder. $\square$
+
+**Theorem 18.4 (precision-confidence lower bound in this experiment class).**
+Fix $0<h\le1/40$ and $0<\delta\le1/4$. If a common randomized
+estimator in Definition 18.1 returns a density-orbit description within
+$\mathfrak d$-distance $h$ with probability at least $1-\delta$ for
+every lawful source, its uniform pair budget satisfies
+
+$$
+\begin{aligned}
+m&\ge
+\frac{\max\{\log(1+4(1-2\delta)^2),\ \log(1/(4\delta))\}}
+ {\log(1+25600h^4)}\\
+ &\ge\frac{\log(1/\delta)}{102400h^4}.
+\end{aligned}
+\tag{18.12}
+$$
+
+The conclusion already follows if success is required only for
+$\rho_0$ and $\rho_{4h}$.
+
+Proof. Set $\theta=4h\le1/10$. The two source orbits have distance
+$\sqrt2\theta>2h$. The metric (15.2) is the quotient metric by the
+isometric common-conjugation action; its triangle inequality follows
+by composing the two sign choices and applying the Frobenius triangle
+inequality. Hence the two closed $h$-balls are disjoint. A test that
+selects $\rho_\theta$ when the estimate lies in its $h$-ball has
+both errors at most $\delta$. The two-point testing supplier used
+in Theorem 12.5 therefore gives
+$\operatorname{TV}(P_\theta,P_0)\ge1-2\delta$, also for randomized
+estimators with the seed included. Combining with (18.2) proves the
+first numerator term in (18.12).
+
+For the confidence dependence let
+$\alpha=\int\sqrt{dP_\theta\,dP_0}$ be the affinity. Jensen under
+$P_\theta$ gives
+
+$$
+\alpha=\mathbb E_\theta L_m^{-1/2}
+ \ge\exp\{-D(P_\theta\Vert P_0)/2\}.
+$$
+
+For densities $p,q$ with respect to one dominating measure,
+Cauchy--Schwarz on
+$|p-q|=|\sqrt p-\sqrt q|(\sqrt p+\sqrt q)$ gives
+$\operatorname{TV}\le\sqrt{1-\alpha^2}$. Thus any test has error
+sum at least
+
+$$
+1-\operatorname{TV}\ge1-\sqrt{1-\alpha^2}
+ \ge\alpha^2/2\ge\tfrac12e^{-D(P_\theta\Vert P_0)}.
+\tag{18.13}
+$$
+
+These are classical affinity and testing inequalities, not additional
+state-measurement assumptions. Equivalently the affinity step is
+$D_{1/2}=-2\log\alpha\le D_1$, the order comparison in
+van Erven--Harremoës, Theorem 3. Since the two errors sum to at most
+$2\delta$, (18.13) and (18.2) yield
+$m\log(1+100\theta^4)\ge\log(1/(4\delta))$.
+Now $100(4h)^4=25600h^4$, proving the first line of (18.12).
+
+Finally $\log(1+x)\le x$. If $1/16\le\delta\le1/4$, the first
+numerator term is at least $\log2\ge\tfrac14\log(1/\delta)$.
+If $0<\delta<1/16$, the second is at least
+$\tfrac12\log(1/\delta)$. Division by $25600h^4$ proves the
+uniform second line. Integer budgets obey the ceilings of these
+bounds. $\square$
+
+**Corollary 18.5 (matching pair-budget order, with its operational scope).**
+Under ideal calibration and stationary independent preparations let
+$m_*(h,\delta)$ be the minimum uniform pair budget among the
+experiments of Definition 18.1 achieving $\mathfrak d$-error at most
+$h$ and failure probability at most $\delta$ for every lawful source.
+For $0<h\le1/40$, $0<\delta\le1/4$,
+
+$$
+m_*(h,\delta)=\Theta(h^{-4}\log(1/\delta)),
+\tag{18.14}
+$$
+
+with constants independent of $h,\delta$. This is statistical
+pair-budget optimality in this exact terminal-discard real experiment
+class. The constants are not asserted optimal; neither are decoding
+time, total storage or drift calibration optimized. No assertion about
+a quantum-memory experiment class follows.
+
+Proof. The lower bound is Theorem 18.4. For the upper bound use the
+existing original fixed protocol and nominal rational decoder of
+Corollary 16.2, with the precise correspondence
+
+$$
+s=\lceil\log_2(1/h)\rceil,\qquad
+ d=\lceil\log_2(1/\delta)\rceil,\qquad A_*=2K_0+1,
+$$
+
+$$
+b=47+2s,\qquad N=2304(d+8)A_*^2\,2^{4s},\qquad m=50N.
+\tag{18.15}
+$$
+
+That supplier gives output error at most $2^{-s}\le h$ except with
+probability $2^{-d}\le\delta$. Its fixed experiments are complete
+real pair POVMs including failed chains, with no source-dependent
+quantum carrier surviving attempts, and its $15N$ single-copy
+observations are allowed insertions. Hence it belongs to exactly the
+class optimized here. Since $2^s<2/h$ and
+$d\le\log_2(1/\delta)+1$, one has
+
+$$
+50N<1843200 A_*^2h^{-4}
+ \{\log_2(1/\delta)+9\}
+ =O(h^{-4}\log(1/\delta))
+$$
+
+uniformly on the stated confidence range. Its full acquisition and
+classical costs remain (16.5), (15.16)--(15.17), equivalently
+(17.15)--(17.17) with ideal drift. In particular the exhaustive bank
+is retained rather than replaced by an unproved efficient optimizer.
+Nonreal effects, coherent access to more than two fresh copies in one
+attempt, surviving source-dependent quantum memory, or new
+source-dependent starting resources invalidate the conditional
+reduction (18.3)--(18.7) and define a different optimization problem.
+The separate all-size continuation and native acquisition interfaces
+of §§11--12 retain their own contracts. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 19. Calibrated-filter classification: domain and intermediate ingredients
+
+Let $E=\mathbb R^5$ have its fixed Euclidean metric and orientation.
+For a real skew matrix $A$, write
+$$
+ a_A=\sum_{i<j}A_{ij}e_i\wedge e_j,\qquad
+ K(A)=-A^2,\qquad b(A)=*_5(a_A\wedge a_A).
+$$
+Fix an invertible real $F$ with $F^TF\preceq I$. Set
+$$
+ A_j=F^jA(F^T)^j,\qquad G_j=(F^T)^jF^j,\qquad G=G_1.
+$$
+The datum at depth $d$ is precisely
+$$
+ (S,K(A),b(A),K(A_1),\ldots,K(A_d)).
+$$
+Its lawful domain consists of all real symmetric trace-one $S$ and real
+skew $A$ with $S+iA\succeq0$. The target identifies $A$ with $-A$,
+and makes no other identification. The number $n(F)$ is the least
+successful depth, or infinity when there is no successful finite depth.
+
+The proof uses the base-fiber classification in the proof of
+Theorem 8.2, (8.6)–(8.7), and the quaternionic identities
+(9.4)–(9.5) in the proof of Theorem 9.1, with the following correspondence.
+
+* The only non-sign fiber of $(K,b)$ occurs at rank four with
+  $K=\lambda^2P_W$. Its elements are the magnitude-$\lambda$
+  orthogonal complex structures of one chirality on the same oriented
+  four-plane $W$.
+* In an oriented orthonormal basis of that four-plane their three
+  coefficient matrices are
+  $$
+  I_1=J_{12}+J_{34},\quad I_2=J_{13}-J_{24},\quad
+  I_3=J_{14}+J_{23}.
+  $$
+  They square to $-I_W$ and pairwise anticommute by (9.4).
+* Rank zero, rank two and rank four with unequal positive squared
+  singular values are already separated up to sign by $(K,b)$.
+* Theorem 8.2, (8.12), supplies lawful depth-zero non-sign
+  collisions. Theorem 9.1 supplies recovery through depth
+  two for $F_0=\operatorname{diag}(1,2,3,4,5)/6$, on all real skew
+  matrices and all lawful source supports.
+
+The orthogonal-complex-structure/isotropic-subspace correspondence is
+classical; see Salamon–Viaclovsky,
+[Orthogonal complex structures on domains in $\mathbb R^4$,
+Section 2.4, Propositions 2.1–2.2](https://arxiv.org/html/0704.3422v2).
+Only its finite-dimensional linear algebra is used here.
+The compression existence result used below is Fan–Pall,
+[Imbedding Conditions for Hermitian and Normal Matrices, Theorem 1
+and the real-symmetric observation at the end of Section 2](https://doi.org/10.4153/CJM-1957-036-1).
+The explicit small-dimensional quadratic-form calculations appearing in
+the classification are intermediate classical linear algebra.
+
+The evaluated filter classification in Theorem 24.1 comprises spectral strata, finite transition structures, exact
+depth values, all infinity cases, and lawful sharpness witnesses.
+The classification explicitly constructs eigenspaces of the known
+calibration, at most eight point vertices or four parametrized
+families, Gram matrices of order three, at most sixteen exceptional
+point vertices, and bounded finite matrix sums. It leaves no injectivity test, collision
+quantifier, optimization over sources, or intersection with a
+rank-constrained observation kernel to be resolved. Different finite
+graphs define the remaining structural strata of $F$.
+
+The formulas use ideal exact arithmetic, comparisons, square roots and
+spectral decomposition, as do the exact-law inverses in Theorems 8.2 and 9.1. They make
+no finite digital representation or finite-sample exactness promise.
+
+All changes of basis below are calculations in the fixed frame. They
+are neither additional controls nor additional identifications of
+sources.
+
+## 20. From collisions to isotropic-plane orbits
+
+Put $E_{\mathbb C}=\mathbb C^5$, and use the complex bilinear form
+$$
+ B(x,y)=x^Ty,
+$$
+not the Hermitian form, to define isotropy. Complex conjugation always
+refers to the fixed real frame. Let $\mathscr Q$ be the set of
+two-dimensional complex subspaces $U\subset E_{\mathbb C}$ satisfying
+$B|_{U\times U}=0$. Define
+$$
+ \mathscr S_G
+ =\{U\in\mathscr Q:x^TGy=0\text{ for all }x,y\in U\}.
+ \tag{20.1}
+$$
+This set will be explicitly eliminated in Sections 22–24.
+
+**Lemma 20.1 (isotropic-orbit equivalence).**
+For any integer $d\ge0$, a lawful common-$S$ non-sign collision
+through depth $d$ exists if and only if there is $U\in\mathscr Q$
+such that $F^jU\in\mathscr Q$ for $0\le j\le d$.
+For $d\ge1$, this is equivalent to
+$$
+ U,FU,\ldots,F^{d-1}U\in\mathscr S_G.
+ \tag{20.2}
+$$
+Whenever such a plane exists, there is a collision with the common
+$S=I_5/5$ and both source states strictly positive.
+
+Proof.
+First, a plane $U\in\mathscr Q$ satisfies $U\cap\overline U=0$.
+Indeed, if $z$ belongs to that intersection, both $z,\overline z$
+belong to $U$, so $0=B(z,\overline z)=\|z\|^2$.
+Choose a Hermitian orthonormal basis of $U$. Its real and imaginary
+parts, multiplied by $\sqrt2$, give a real orthonormal four-frame
+$f_1,f_2,f_3,f_4$ with
+$$
+ U=\operatorname{span}_{\mathbb C}
+       \{f_1+if_2,\ f_3+if_4\}.
+$$
+To verify the orthogonality assertion, apply both bilinear isotropy
+and Hermitian orthogonality to the two basis vectors: their sum and
+difference give all four vanishing real cross inner products.
+
+Write
+$$
+ \zeta=(f_1+if_2)\wedge(f_3+if_4)=a_X+i a_Y,
+$$
+so
+$$
+ X=J^f_{13}-J^f_{24},\qquad
+ Y=J^f_{14}+J^f_{23}.
+ \tag{20.3}
+$$
+These are two of the supplied quaternionic matrices. Consequently
+$$
+ X^2=Y^2=-P_W,\quad XY+YX=0,\quad
+ a_X^2=a_Y^2=2f_{1234},\qquad W=\operatorname{span}_{\mathbb R}f_i.
+ \tag{20.4}
+$$
+Here a square of a two-form means its exterior square.
+The same conclusions, with a common positive magnitude, hold for
+the real and imaginary parts of any nonzero simple two-form spanning
+$\Lambda^2U$. In fact its scalar multiplier is some
+$\alpha+i\beta$; the new real and imaginary parts are
+$\alpha X-\beta Y,\ \beta X+\alpha Y$. Equation (20.4) proves equality
+of their matrix squares and their exterior squares.
+
+If $F^jU$ is isotropic, apply this observation to
+$\Lambda^2(F^j)\zeta$. The real and imaginary skew matrices are
+$F^jX(F^T)^j$ and $F^jY(F^T)^j$. Thus $A=\epsilon X$ and
+$B=\epsilon Y$ have equal $K$ at every required depth and equal
+base $b$, while $B\ne\pm A$. For $0<\epsilon<1/5$, the states
+$I_5/5+i\epsilon X$ and $I_5/5+i\epsilon Y$ are strictly positive:
+their eigenvalues are $1/5$, and $1/5\pm\epsilon$, each latter
+value twice. This proves the forward construction on the original
+lawful domain.
+
+Conversely, take any non-sign collision $A,B$. The supplied
+base-fiber classification gives $A=\lambda I(a)$,
+$B=\lambda I(b)$ on one $W$, where $a,b\in\mathbb R^3$ are unit
+and $c=a\cdot b$ satisfies $|c|<1$. Put
+$$
+ X=A,\qquad Y=(B-cA)/\sqrt{1-c^2}.
+$$
+Then $X,Y$ anticommute, have the same scalar square on $W$, and
+have the same chirality. In a real orthonormal four-frame they have
+the form $\lambda I_2,\lambda I_3$. This can also be checked without
+a transitivity claim: for a unit $f_1\in W$, set
+$$
+ f_3=-Xf_1/\lambda,\quad f_4=-Yf_1/\lambda,\quad
+ f_2=XYf_1/\lambda^2.
+$$
+The anticommutation identities give the required orthonormal frame
+and the displayed matrices. Hence $a_X+i a_Y$ is simple and spans
+an isotropic plane $U$.
+
+Exterior square equality is transported by every real congruence:
+$$
+ a_{A_j}\wedge a_{A_j}
+   =\Lambda^4(F^j)(a_A\wedge a_A).
+$$
+Thus $A_j,B_j$ have equal $b$ as well as their assumed equal $K$;
+they remain non-sign because $F$ is invertible. They belong to
+another repeated rank-four fiber. The coefficient inner product at
+that fiber is still $c$, since
+$$
+ a_A\wedge a_B=c\,a_A\wedge a_A
+$$
+is transported by the same invertible $\Lambda^4(F^j)$.
+It follows that $X_j=A_j$ and
+$Y_j=(B_j-cA_j)/\sqrt{1-c^2}$ again have equal scalar squares and
+anticommute. Therefore $\Lambda^2(F^j)(a_X+i a_Y)$ spans an
+isotropic plane, necessarily $F^jU$.
+
+Finally, $FU$ is isotropic precisely when
+$B(Fx,Fy)=x^TGy$ vanishes on $U$. This proves (20.2). $\square$
+
+**Lemma 20.2 (compression version and universal lower bound).**
+For $U\in\mathscr Q$, let $W$ be the real four-plane whose
+complexification is $U\oplus\overline U$, and let $J$ be the real
+orthogonal complex structure on $W$ with $+i$-eigenspace $U$.
+Then
+$$
+ U\in\mathscr S_G
+ \quad\Longleftrightarrow\quad
+ [P_WG|_W,J]=0.
+ \tag{20.5}
+$$
+The set $\mathscr S_G$ is nonempty for every positive definite
+real symmetric $G$. In particular $n(F)\ge2$ for every admissible
+$F$.
+
+Proof.
+For a real symmetric $H=P_WG|_W$, vanishing of its complex bilinear
+form on $U$ is equivalent to
+$H(U)\subset U$, using the bilinear pairing between $U$ and
+$\overline U$. Reality gives preservation of $\overline U$, too.
+These two preservation statements are exactly commutation with $J$.
+
+Order the eigenvalues of $G$, with multiplicity, as
+$g_1\le\cdots\le g_5$. Fan–Pall's real-symmetric compression theorem
+applies because
+$$
+ (g_2,g_2,g_4,g_4)
+$$
+interlaces $(g_1,\ldots,g_5)$. It supplies a real four-plane
+compression with that spectrum. Choose an orthogonal complex
+structure on each even-dimensional eigenspace of the compression.
+It commutes with the compression, proving nonemptiness by (20.5).
+Lemma 20.1 then supplies a lawful depth-one non-sign collision.
+The depth-zero obstruction is (8.12).
+$\square$
+
+## 21. Explicit quadratic-form families and finite intersection rules
+
+This section specifies all auxiliary operations used in the
+classification. They involve known calibration subspaces only.
+
+Let $H\subset E_{\mathbb C}$ be a four-dimensional hyperplane.
+
+If $B|_H$ is nondegenerate, choose a Witt basis
+$p_1,p_2,q_1,q_2$, with
+$$
+ B(p_i,p_j)=B(q_i,q_j)=0,\qquad B(p_i,q_j)=\delta_{ij}.
+$$
+Use the following two families of isotropic two-planes in $H$:
+$$
+\begin{split}
+ C_{\mathrm e}(t)
+ &=\operatorname{span}\{p_1+tq_2,\ p_2-tq_1\},
+      &&t\in\mathbb C,\\
+ C_{\mathrm e}(\infty)&=\operatorname{span}\{q_1,q_2\},\\
+ C_{\mathrm o}([\alpha:\beta])
+ &=\operatorname{span}
+       \{\alpha p_1+\beta p_2,\ -\beta q_1+\alpha q_2\},
+      &&[\alpha:\beta]\in\mathbb {CP}^1.
+\end{split}
+ \tag{21.1}
+$$
+If $B|_H$ has rank three, write its radical as $\mathbb Cr$;
+choose $p,q,s$ in a complementary three-space with
+$B(p,q)=B(s,s)=1$ and all other pairings zero.
+Use the following family:
+$$
+ \begin{split}
+ C(t)&=\operatorname{span}\{r,\ p+ts-t^2q/2\},
+       &&t\in\mathbb C,\\
+ C(\infty)&=\operatorname{span}\{r,q\}.
+ \end{split}
+ \tag{21.2}
+$$
+Such bases can be obtained by diagonalizing the nonsingular quotient
+form by congruence and taking complex square roots; no existence oracle is needed.
+
+Here is an evaluated rule for the only intersections needed later.
+If $H'\ne H''$ are hyperplanes, put $M=H'\cap H''$, choose any
+basis of this known three-space, and evaluate its $3$-by-$3$
+Gram matrix for $B$. Its isotropic two-planes are exactly:
+$$
+\begin{array}{c|l}
+ \operatorname{rank}(B|_M)&\text{complete list}\\ \hline
+ 3&\text{none},\\
+ 2& R\oplus L_1,\ R\oplus L_2,\\
+ 1& R.
+\end{array}
+ \tag{21.3}
+$$
+In the rank-two row $R=\operatorname{rad}(B|_M)$ has dimension one,
+and $L_1,L_2$ lift the two null lines of the nondegenerate
+two-dimensional quotient. These lines are obtained by factoring
+one quadratic polynomial. In the rank-one row $R$ has dimension
+two. Rank zero cannot occur.
+
+To verify (21.3), pass to the nondegenerate quotient by the radical.
+An isotropic subspace in a nondegenerate space is contained in its
+orthogonal complement, so its dimension is at most half the ambient
+dimension. This gives the three rows and forces containment of the
+radical when needed. Rank zero would be a three-dimensional isotropic
+subspace of the nondegenerate five-space, which is impossible.
+Thus (21.3) produces actual finite lists, rather than leaving an
+isotropic-subspace feasibility problem open.
+
+## 22. Strata with all eigenvalue multiplicities at most two
+
+Let the ordered eigenvalues of $G$ be $g_1,\ldots,g_5$, and put
+$$
+ \alpha=g_2,\qquad\beta=g_4.
+$$
+In this section $\alpha<\beta$. Let $T$ be the subset of
+$\{\alpha,\beta\}$ consisting of simple eigenvalues of $G$.
+Let $R$ be the set of simple eigenvalues not in $T$. Define
+$$
+ Q(z)=\prod_{t\in T}(z-t),\qquad
+ P(z)=\prod_{r\in R}(z-r),\qquad
+ w_r=\frac{Q(r)}{P'(r)}.
+ \tag{22.1}
+$$
+Here $|R|=k\in\{1,2,3\}$, $|T|=k-1$. The values $w_r$ are
+strictly positive and sum to one. Choose a real unit eigenvector
+$v_r$ for each simple eigenvalue. List the real normal lines
+$$
+ \mathbb Rn,\qquad
+ n=\sum_{r\in R}\epsilon_r\sqrt{w_r}\,v_r,\quad
+ \epsilon_r\in\{1,-1\},
+ \tag{22.2}
+$$
+counting a line only once. There are $2^{k-1}$ of them.
+
+For each line let $W=n^\perp$ and form the known compression
+$H=P_WG|_W$. Its $\alpha$- and $\beta$-eigenspaces are two-planes.
+Choose real orthonormal bases $u_1,u_2$ and $v_1,v_2$ for these
+two eigenspaces. List the four complex planes
+$$
+ U_{\epsilon,\delta}
+ =\operatorname{span}_{\mathbb C}
+      \{u_1+i\epsilon u_2,\ v_1+i\delta v_2\},
+ \qquad \epsilon,\delta\in\{1,-1\}.
+ \tag{22.3}
+$$
+Take conjugate pairs as vertices: $[U]=\{U,\overline U\}$.
+There are exactly
+$$
+ N=2^k=
+ \begin{cases}
+ 8&\text{multiplicities }1+1+1+1+1,\\
+ 4&\text{multiplicities }2+1+1+1,\\
+ 2&\text{multiplicities }2+2+1
+ \end{cases}
+ \tag{22.4}
+$$
+vertices.
+
+Put an edge $[U]\longrightarrow[V]$ exactly when
+$FU=V$ or $FU=\overline V$. This is a test of equality of
+explicit two-planes. For example, it is evaluated by the vanishing
+of the $3$-by-$3$ minors of their joined basis matrices.
+Let $M$ be the resulting $N$-by-$N$ zero-one adjacency matrix.
+
+**Proposition 22.1 (evaluated point stratum).**
+If $M^N\ne0$, then $n(F)=\infty$.
+Otherwise
+$$
+ n(F)=2+\max\{j:0\le j\le N-1,\ M^j\ne0\}.
+ \tag{22.5}
+$$
+In particular the maximum finite answers in these three rows are
+bounded by $9,5,3$, respectively. These bounds are not asserted to
+be attained in every row.
+
+Proof.
+For an orthogonal complex structure $J$ on a real four-plane,
+every real symmetric operator commuting with $J$ has even
+eigenvalue multiplicities. Interlacing therefore forces the
+compression eigenvalues to be $(\alpha,\alpha,\beta,\beta)$.
+If an eigenspace of $G$ of multiplicity two had a nonzero
+component of the normal $n$, the compressed eigenspace at that
+eigenvalue would have dimension exactly one. Indeed
+$(G-tI)x=c n$, projected to that eigenspace, forces $c=0$.
+This is impossible for the paired compression. Thus $n$ is
+orthogonal to every double eigenspace. The same argument makes
+$n$ orthogonal to each simple eigenvector in $T$, since that
+eigenvalue must have multiplicity two after compression.
+
+Consequently $n$ is supported on the eigenlines in $R$.
+The remaining compression has characteristic polynomial
+$$
+ \sum_{r\in R}n_r^2\prod_{\substack{s\in R\\s\ne r}}(z-s).
+ \tag{22.6}
+$$
+This identity follows by the cofactor formula for compression to
+$n^\perp$, or by the resolvent identity
+$n^T(zI-G)^{-1}n=\sum_r n_r^2/(z-r)$.
+It must equal $Q(z)$. Evaluation at $z=r$ gives (22.1).
+The values in $R$ and $T$ strictly interlace, so each $w_r>0$;
+the leading coefficient gives their sum as one.
+Conversely those weights give exactly the required compression.
+This proves (22.2), including all repeated-eigenvalue placements.
+
+An orthogonal complex structure commuting with this compression
+must restrict to a positive or negative quarter-turn on each of
+its two real eigenspaces. These are exactly (22.3). Thus the list
+is precisely $\mathscr S_G$, modulo conjugation, not a superset.
+
+The graph has at most one outgoing and at most one incoming edge
+at each vertex, because $F$ is real and invertible. Lemma 20.1
+says that a collision through depth $d\ge1$ exists precisely when
+an orbit occupies graph vertices for $d$ consecutive steps.
+A directed cycle gives an orbit of arbitrary length and hence
+infinity. A finite graph has a directed cycle if and only if
+$M^N\ne0$. If there is no cycle, the largest number of occupied
+vertices is $1+\max\{j:M^j\ne0\}$. The next depth is the first
+successful depth, giving (22.5).
+
+A starting vertex on a longest path supplies, by (20.3), a strictly
+lawful non-sign witness at every smaller depth. This proves exact
+minimality as well as sufficiency. $\square$
+
+## 23. Strata with an eigenvalue of multiplicity at least three
+
+The scalar case is set aside until Theorem 24.1.
+Let $a$ be the eigenvalue of multiplicity at least three.
+
+If the multiplicities are $4+1$, let $v$ span the other
+eigenline and use the single complex hyperplane
+$$
+ H_1=\{x:v^Tx=0\}.
+ \tag{23.1}
+$$
+If they are $3+2$ or $3+1+1$, choose a real orthonormal basis
+$v,w$ for the other two-dimensional spectral space, with eigenvalues
+$b,c$, allowing $b=c$. Choose complex square roots
+$\rho^2=b-a$, $\sigma^2=c-a$, and put
+$$
+ H_\pm=\ker\ell_\pm,\qquad
+ \ell_\pm(x)=\rho\,v^Tx\ \pm i\sigma\,w^Tx.
+ \tag{23.2}
+$$
+Both coefficients are nonzero. Square-root choices only interchange
+labels.
+
+Use the complete families (21.1) or (21.2) in these hyperplanes.
+Call the resulting disjoint families $C_1,\ldots,C_r$.
+The full spectral table is
+$$
+\begin{array}{c|c|c|c}
+ \text{multiplicities}&\text{hyperplanes}&
+          \operatorname{rank}(B|_H)&r\\ \hline
+ 4+1&1&4&2\\
+ 3+2&2&3&2\\
+ 3+1+1&2&4&4.
+\end{array}
+ \tag{23.3}
+$$
+In the last row, all positions of the triple eigenvalue are included.
+If $a$ is between $b,c$, the two hyperplanes in (23.2) are real
+hyperplanes after multiplying their defining forms by scalars.
+If $a$ is an extreme eigenvalue, they are a conjugate nonreal pair.
+The construction and rules below apply to both.
+
+The following finite construction eliminates all parameters of
+these families.
+
+1. **Whole-family transitions.** For $C_i$ spanning $H$, form
+   $FH$. If this is one of the hyperplanes (23.1)–(23.2), the image
+   $FC_i$ is exactly one family $C_j$. Put a whole-family edge
+   $i\to j$. Identify $j$ by the image of any displayed parameter
+   value and the membership rule proved below in Proposition 23.1.
+   If $FH$ is not a listed hyperplane, put no whole-family edge.
+
+2. **Finite exits which remain in the list.** For a family $C_i$
+   with no whole-family edge, compute a finite set $B_i$ as follows.
+   For each listed target hyperplane $H'$, form the known
+   three-space $FH\cap H'$. Apply all rows of (21.3). Keep just the
+   listed isotropic planes $V$ belonging to the known image family
+   $FC_i$, and put $F^{-1}V$ in $B_i$.
+   In a nondegenerate $FH$, this membership is tested by even
+   intersection dimension with one known plane of $FC_i$.
+   In a rank-three $FH$ there is just one family.
+   Thus $B_i$ has at most four explicitly listed points.
+
+Let $A$ be the $r$-by-$r$ adjacency matrix of whole-family edges.
+If $A^r\ne0$, the answer is infinity. In the remaining rules assume
+$A^r=0$, and evaluate
+$$
+ \ell=\sum_{j=0}^{r-1}A^j\mathbf 1.
+ \tag{23.4}
+$$
+Thus $\ell_i$ is a positive integer. Follow the unique whole-family
+chain from $i$ to its end $e(i)$, which has no whole-family edge.
+Set
+$$
+ P_i=F^{-(\ell_i-1)}B_{e(i)}\subset C_i,\qquad
+ P=\coprod_i P_i,\qquad N=|P|\le16.
+ \tag{23.5}
+$$
+Every item of (23.5) is a known two-plane; the coproduct is disjoint.
+
+If $N>0$, give $P$ the edges $p\to q$ exactly when $Fp=q$;
+let $M$ be their $N$-by-$N$ adjacency matrix.
+For every $p\in P$, $Fp$ belongs to exactly one listed family.
+If $M^N\ne0$, the answer is infinity.
+If $M^N=0$, define a vector $\tau$ indexed by $P$:
+$$
+ \tau_p=
+ \begin{cases}
+ 1,&Fp\in P,\\
+ 1+\ell_i,&Fp\in C_i\setminus P_i.
+ \end{cases}
+ \qquad
+ h=\sum_{j=0}^{N-1}M^j\tau .
+ \tag{23.6}
+$$
+All matrix powers and sums in (23.4)–(23.6) have the displayed fixed
+finite bounds. If $P$ is empty, omit $M,\tau,h$.
+
+**Proposition 23.1 (evaluated family stratum).**
+In the three spectral rows (23.3), the complete answer is:
+$$
+ n(F)=
+ \begin{cases}
+ \infty,&A^r\ne0,\\
+ \infty,&A^r=0,\ N>0,\ M^N\ne0,\\
+ 1+\max_i\ell_i,&A^r=0,\ N=0,\\
+ 1+\max\{\max_i\ell_i,\ \max_{p\in P}h_p\},
+    &A^r=0,\ N>0,\ M^N=0.
+ \end{cases}
+ \tag{23.7}
+$$
+Every finite value in (23.7) is the exact least depth.
+
+Proof.
+The family calculations used in this filter classification are as follows.
+For the nondegenerate families (21.1), the primary antecedent is
+Salamon–Viaclovsky,
+[Orthogonal complex structures on domains in $\mathbb R^4$,
+Section 2.4, Proposition 2.1](https://arxiv.org/html/0704.3422v2#S2.SS4).
+With $p_i=dz_i/\sqrt2$ and $q_i=d\bar z_i/\sqrt2$, their oriented
+family is $C_{\mathrm e}(-\xi_{12}/\xi_0)$, including infinity;
+the form-preserving exchange $p_2\leftrightarrow q_2$ gives
+$C_{\mathrm o}$.
+
+The lists (21.1)–(21.2) are exhaustive and injectively parametrized.
+Each family spans its ambient hyperplane. In the nondegenerate case,
+two isotropic planes $V,V'$ belong to the same family if and only if
+$\dim_{\mathbb C}(V\cap V')$ is even.
+Every conformal isomorphism of these quadratic hyperplanes maps a whole
+family bijectively to a whole family.
+
+For (21.1), an isotropic two-plane transverse to
+$Q=\operatorname{span}(q_1,q_2)$ is the graph of a skew
+$2$-by-$2$ matrix, giving $C_{\mathrm e}(t)$.
+A plane meeting $Q$ in dimension two is $Q$.
+For intersection dimension one, orthogonality to that line forces
+the projected line in $\operatorname{span}(p_1,p_2)$; the remaining
+self-pairing removes the extra component modulo the line in $Q$.
+This gives exactly $C_{\mathrm o}([\alpha:\beta])$.
+The displayed bases show injectivity, show that distinct planes in
+one family meet in dimension zero, and show that a plane from each
+of the two families meets in dimension one.
+
+For rank three, the nondegenerate quotient of $H$ by its radical
+has dimension three and isotropic subspaces of dimension at most one.
+Every isotropic two-plane therefore contains $r$, and its quotient
+is a null line. In the basis $p,q,s$, all null lines are
+$[1:-t^2/2:t]$, together with $[0:1:0]$. This is (21.2).
+The explicit formulas show that each family spans $H$.
+A conformal isomorphism preserves isotropy and intersection dimensions;
+the preceding exhaustive lists then show that it sends each family
+onto one of the target families.
+
+For $4+1$, the equation $x^T(G-aI)x=0$ on an isotropic
+two-plane forces that plane into (23.1).
+For the other rows,
+$$
+ x^T(G-aI)x=\ell_+(x)\ell_-(x).
+$$
+A product of two linear forms vanishes identically on a complex
+vector space only if one factor vanishes identically. Therefore
+$$
+ \mathscr S_G=\coprod_{i=1}^r C_i.
+ \tag{23.8}
+$$
+The hyperplane (23.1) is nondegenerate. In (23.2), the square of its
+normal is $b-c$; hence its rank is three precisely when $b=c$,
+and otherwise four. The intersection $H_+\cap H_-$ is the
+complexification of the real three-dimensional $a$-eigenspace.
+It is nondegenerate and contains no isotropic two-plane. The two
+lists of families are therefore disjoint. The preceding family
+calculations prove the other assertions of (23.3) and (23.8).
+
+For $x,y$ in any listed $H$,
+$$
+ B(Fx,Fy)=x^TGy=aB(x,y).
+ \tag{23.9}
+$$
+Thus $F:H\to FH$ is a conformal isomorphism of quadratic
+four-spaces; the rank of the restricted form is preserved.
+It sends $C_i$ bijectively to a complete family in $FH$.
+If $FH$ is a listed hyperplane this is exactly a whole-family
+transition. Conversely every family spans its hyperplane, so an
+equality $FC_i=C_j$ forces $FH$ to be the hyperplane of $C_j$.
+
+If $FH$ is not listed, an image plane lying in a listed target
+hyperplane must belong to the isotropic-plane list of
+$FH\cap H'$. Rule (21.3) gives every such plane, and the explicit
+family membership rule gives exactly those in $FC_i$.
+Consequently $B_i$ is precisely
+$$
+ \{p\in C_i:Fp\in\mathscr S_G\},
+ \tag{23.10}
+$$
+now as a computed list of at most four planes. There is no
+positive-dimensional unprocessed intersection.
+
+A cycle of whole-family edges gives an orbit remaining in (23.8)
+forever, for any initial point of that cycle. It therefore gives
+infinity by Lemma 20.1. Such a cycle exists exactly when $A^r\ne0$.
+
+Assume there is no such cycle. The unique whole-family chain from
+$C_i$ occupies exactly $\ell_i$ families, and its final map is
+$F^{\ell_i-1}:C_i\to C_{e(i)}$, a bijection.
+A point in $C_i\setminus P_i$ stays in $\mathscr S_G$ for exactly
+$\ell_i$ consecutive positions before its next image leaves
+$\mathscr S_G$. A point in $P_i$ passes that exit.
+In particular, $Fp\in\mathscr S_G$ for every $p\in P$, as used
+in (23.6). There are at most four points in each $P_i$, which
+proves $N\le16$.
+
+An infinite orbit must pass from exceptional point to exceptional
+point: outside $P$ only its known finite whole-family tail
+remains. Thus it is infinite exactly when the finite point graph
+has a cycle, equivalently $M^N\ne0$.
+When there is no cycle, let $h_p$ count the number of consecutive
+positions in $\mathscr S_G$ starting at $p$. It satisfies
+$$
+ h_p=
+ \begin{cases}
+ 1+h_{Fp},&Fp\in P,\\
+ 1+\ell_i,&Fp\in C_i\setminus P_i.
+ \end{cases}
+$$
+This is $h=\tau+Mh$. Nilpotence gives exactly (23.6).
+The largest possible number of positions in $\mathscr S_G$ is
+therefore the maximum in (23.7). Lemma 20.1 says that the first
+successful depth is one more than this number.
+
+This maximum is attained, not just bounded. A point height is
+attained at that explicit point. A generic height $\ell_i$ is
+attained by a point of $C_i\setminus P_i$: at most four parameter
+values are excluded, so one of the five finite parameter
+values $0,1,2,3,4$ is available, using $[1:t]$ as the affine
+parameter for $C_{\mathrm o}$. Applying (20.3) supplies strictly
+positive common-$I_5/5$ witnesses at the last failing depth, and
+therefore at all smaller depths. This proves exact minimality.
+$\square$
+
+## 24. Complete classification, exception strata and sharpness
+
+**Theorem 24.1 (every-filter classification).**
+For every real invertible contractive $5$-by-$5$ filter $F$,
+form $G=F^TF$. Exactly one row of the following table applies:
+$$
+\begin{array}{c|l}
+ \text{spectral multiplicities of }G&\text{value of }n(F)\\ \hline
+ 5&\infty\\
+ 4+1&\text{the evaluated formula (23.7), with }r=2\\
+ 3+2&\text{the evaluated formula (23.7), with }r=2\\
+ 3+1+1&\text{the evaluated formula (23.7), with }r=4\\
+ 2+2+1&\text{the evaluated formula (22.5), with }N=2\\
+ 2+1+1+1&\text{the evaluated formula (22.5), with }N=4\\
+ 1+1+1+1+1&\text{the evaluated formula (22.5), with }N=8.
+\end{array}
+ \tag{24.1}
+$$
+In the point rows, the infinity alternative is $M^N\ne0$.
+In the family rows, both infinity alternatives in (23.7) apply.
+Repeated eigenvalues in every possible spectral order, real and
+nonreal hyperplanes, all Gram ranks in (21.3), empty exceptional sets,
+and all directed-cycle and acyclic transition patterns are included.
+
+The formulas define a finite structural stratification of the
+calibration $F$: spectral multiplicities; equality or inequality
+of the displayed known hyperplanes; ranks of the displayed
+three-dimensional Gram forms; explicit plane membership and
+equality; and finite zero-one transition matrices.
+On each such stratum the formula assigns an integer or infinity
+by bounded finite sums and maxima. No unknown source or detector
+kernel is an input to this stratification.
+
+For every finite answer $d=n(F)$, separation holds algebraically
+for all real skew matrices and hence for all lawful common-$S$
+pairs, including every singular support face. A strictly lawful
+non-sign common-$I_5/5$ collision exists through depth $d-1$.
+For every infinity answer, one strictly lawful non-sign
+common-$I_5/5$ pair has equal data at all finite depths.
+
+Proof.
+The seven rows exhaust the partitions of five. In the scalar row,
+$F=\sqrt c\,O$ with $O$ real orthogonal. Orthogonal congruence
+transports the supplied base collisions without separating them;
+equivalently every isotropic plane remains isotropic.
+This is also the conformal case of Theorem 7.1.
+
+For maximum multiplicity at most two, Proposition 22.1 evaluates
+$\mathscr S_G$ and every orbit in it. For all remaining nonscalar
+rows, Proposition 23.1 does so. Lemma 20.1 converts the resulting
+finite heights and infinite orbits into precisely the required
+collision and separation statements. Its necessity starts with
+any possible non-sign collision, so no source rank or source
+support is omitted.
+
+In the infinity cases choose an explicit point on a point cycle,
+or any displayed parameter value on a whole-family cycle.
+Its infinite orbit supplies, by the fixed pair construction (20.3),
+one pair working at all depths simultaneously. In the finite
+cases use the maximizing points already specified in the
+propositions. Scaling their two skews by any $0<\epsilon<1/5$
+makes both source states strictly positive. These are exact
+sharpness witnesses, not formal differences outside the lawful
+domain. $\square$
+
+**Corollary 24.2 (no larger finite-depth tail).**
+Every finite $n(F)$ is at most fourteen.
+
+Proof.
+The linear operator $T:X\mapsto F^TXF$ acts on the
+fifteen-dimensional real space of symmetric $5$-by-$5$ matrices,
+and $G_j=T^jI$. Cayley–Hamilton puts every $G_j$ in the span of
+$G_0,\ldots,G_{14}$. The depth-$j$ square data, after invertible
+outer congruence, are $-AG_jA$. Equality through depth fourteen
+therefore implies equality at every later depth.
+Thus failure at depth fourteen is infinity; any finite least depth
+is at most fourteen. This is an auxiliary nonsharp horizon, not
+the classification or the method for evaluating the least depth.
+$\square$
+
+## 25. Explicit closed subcases and an actual nonnormal depth-three family
+
+**Corollary 25.1 (complete real-normal subcase).**
+Suppose $F$ is real normal. Let $m_1,\ldots,m_t$ be the
+multiplicities of the distinct eigenvalues of $G=F^TF$.
+Then
+$$
+ n(F)=
+ \begin{cases}
+ \infty,&\text{exactly one }m_i\text{ is odd},\\
+ 2,&\text{at least three }m_i\text{ are odd}.
+ \end{cases}
+ \tag{25.1}
+$$
+In particular $n(F_0)=2$ for the filter $F_0$ in (9.1).
+
+Proof.
+Normality gives $G_j=G^j$.
+Suppose a non-sign collision survives through depth two.
+The quaternionic argument (9.4)–(9.6) in the proof of
+Theorem 9.1, or (20.5) applied to the corresponding pair, gives an
+orthogonal complex structure $J$ on $W=n^\perp$ commuting with
+$$
+ H=P_WG|_W,\qquad H_2=P_WG^2|_W.
+$$
+With $v=P_WGn$, the compression identity (9.7) is
+$H_2=H^2+vv^T$. Hence $J$ commutes with $vv^T$.
+A nonzero rank-one symmetric operator cannot commute with an
+orthogonal complex structure, since its range would be a
+one-dimensional invariant real subspace. Thus $v=0$, so $n$
+is an eigenvector of $G$.
+The multiplicities of $G|_W$ must all be even. This happens
+precisely when deleting one dimension from one eigenspace makes
+all multiplicities even, that is, exactly one original
+multiplicity is odd.
+
+Conversely, when exactly one multiplicity is odd, choose $n$
+in that eigenspace. Every eigenspace of $G|_W$ has even
+dimension. Choose an orthogonal complex structure on each.
+It commutes with all $G^j|_W$, giving one all-depth collision
+by Lemma 20.1 and (20.5).
+If there are at least three odd multiplicities no depth-two
+collision exists, and Lemma 20.2 makes the least depth exactly two.
+The Gram matrix $F_0^TF_0=F_0^2$ has five simple eigenvalues.
+Its supplied upper bound is therefore sharp. $\square$
+
+**Corollary 25.2 (closed $4+1$ subcase).**
+Let $G=aI+(b-a)vv^T$, with $v$ unit, $a,b>0$, $a\ne b$.
+Write the positive polar decomposition $F=OD$, $D=\sqrt G$.
+Then
+$$
+ n(F)=
+ \begin{cases}
+ \infty,&O(\mathbb Rv)=\mathbb Rv,\\
+ 2,&O(\mathbb Rv)\ne\mathbb Rv.
+ \end{cases}
+ \tag{25.2}
+$$
+
+Proof.
+In this case $\mathscr S_G$ consists of all isotropic two-planes
+inside $H=v^\perp_{\mathbb C}$.
+The map $D$ preserves $H$ and is scalar there, so $FH=OH$.
+If $OH=H$, all points in those families remain in them forever.
+Otherwise $H\cap OH$ is the complexification of a positive
+definite real three-space. It has no isotropic two-plane, so no
+point can remain in $\mathscr S_G$ for two consecutive positions.
+Lemma 20.1 and the universal depth-one obstruction prove (25.2).
+$\square$
+
+**Proposition 25.3 (a nonnormal family with exact depth three).**
+Choose $0<a,b\le1$, $a\ne b$.
+Let $\pi=(1\ 4)(2\ 5\ 3)$, let $Oe_i=e_{\pi(i)}$, and put
+$$
+ F=O\,\operatorname{diag}(\sqrt a,\sqrt a,\sqrt a,\sqrt b,\sqrt b).
+ \tag{25.3}
+$$
+Then $F$ is invertible, contractive and nonnormal, and $n(F)=3$.
+For any $0<\epsilon<1/5$, the explicit lawful pair
+$$
+ S=I_5/5,\quad
+ A=\epsilon(J_{14}-J_{25}),\qquad
+ B=\epsilon(J_{15}+J_{24})
+ \tag{25.4}
+$$
+has equal data through depth two and unequal data at depth three.
+
+Proof.
+The first three Gram matrices are
+$$
+\begin{split}
+ G_1&=\operatorname{diag}(a,a,a,b,b),\\
+ G_2&=abI+a(a-b)e_3e_3^T,\\
+ G_3&=a^2bI+ab(b-a)e_4e_4^T.
+\end{split}
+ \tag{25.5}
+$$
+These follow by multiplying the weights along the displayed
+permutation cycles.
+
+Any collision through depth two supplies $W=n^\perp,J$ with
+both compressed $G_1,G_2$ commuting with $J$.
+The rank-one part of $G_2$ forces $P_We_3=0$, by the
+rank-one argument in Corollary 25.1. Thus $W=e_3^\perp$.
+On this $W$, $G_2$ is scalar and $G_1$ has the paired
+eigenspaces $\operatorname{span}(e_1,e_2)$ and
+$\operatorname{span}(e_4,e_5)$.
+There are commuting orthogonal complex structures, so depth-two
+collisions do exist.
+The rank-one part of $G_3|_W$ is nonzero, and cannot commute
+with any such complex structure. Hence no collision survives
+through depth three.
+
+For the stated pair, the four-plane is
+$\operatorname{span}(e_1,e_2,e_4,e_5)$, and $A/\epsilon,B/\epsilon$
+are $I_2,I_3$ in that four-frame. Their common
+$b$ is $2\epsilon^2e_3$, their common $K$ is
+$\epsilon^2P_W$, and (25.5) gives equal pulled-back square data
+at depths one and two. At depth three the rank-one contribution
+is proportional to $Ae_4(Ae_4)^T$ versus
+$Be_4(Be_4)^T$, namely $\epsilon^2e_1e_1^T$ versus
+$\epsilon^2e_2e_2^T$, and is unequal.
+The states are strictly positive as in Lemma 20.1.
+Finally $O$ moves spectral subspaces of the nonscalar diagonal
+$D^2$, so $FF^T\ne F^TF$.
+This proves all assertions. $\square$
+
+**Proposition 25.4 (simple Gram spectrum does not imply finite recovery).**
+The rational filter
+$$
+ F=\frac15
+ \begin{pmatrix}
+ 1&0&0&0&1\\
+ 0&1&0&0&0\\
+ 0&0&2&0&1\\
+ 0&0&0&2&0\\
+ 0&0&0&0&3
+ \end{pmatrix}
+ \tag{25.6}
+$$
+is invertible and strictly contractive, its Gram matrix has five
+distinct eigenvalues, and $n(F)=\infty$.
+One all-depth lawful non-sign pair is
+$$
+ S=I_5/5,\quad A=\epsilon(J_{13}-J_{24}),\quad
+ B=\epsilon(J_{14}+J_{23}),\qquad 0<\epsilon<1/5.
+ \tag{25.7}
+$$
+
+Proof.
+The squared Frobenius norm of the unscaled matrix is $21$;
+hence $\|F\|_{\mathrm{op}}\le\sqrt{21}/5<1$.
+Its determinant is nonzero. The vectors $e_2,e_4$ are eigenvectors
+of $25F^TF$ with eigenvalues $1,4$. On
+$\operatorname{span}(e_1,e_3,e_5)$ its matrix is
+$$
+ T=\begin{pmatrix}1&0&1\\0&4&2\\1&2&11\end{pmatrix}.
+$$
+This positive definite matrix has no eigenvalue $1$ or $4$.
+Its other eigenvalues are the zeros of
+$$
+ 11-z-\frac1{1-z}-\frac4{4-z}.
+$$
+This expression is strictly decreasing on each interval between
+its poles. Its one-sided limits give exactly one zero in each
+of $(-\infty,1),(1,4),(4,\infty)$; positive definiteness places
+the first in $(0,1)$. Thus all five Gram eigenvalues are distinct.
+
+The real four-plane $W=e_5^\perp$ is $F$-invariant, with
+$F|_W=\operatorname{diag}(1,1,2,2)/5$.
+Every nonzero entry of the two skews in (25.7) joins the first
+two-plane to the second two-plane. Therefore
+$$
+ F^jA(F^T)^j=(2/25)^jA,\qquad
+ F^jB(F^T)^j=(2/25)^jB
+$$
+for every $j\ge0$.
+The supplied quaternionic identities give equal base $K,b$,
+so these remain equal at every depth. The pair is strictly lawful
+and non-sign. This proves infinity despite the simple Gram
+spectrum. $\square$
+
+## 26. Original instrument correspondence and source boundaries
+
+**Proposition 26.1 (unchanged lawful detector contract).**
+The classification of Theorem 24.1 is the classification for the
+original all-success-prefix instruments and detectors, with no
+extra controls or later $b$-measurements.
+
+Proof.
+The all-success branch has success probability
+$$
+ p_j=\operatorname{tr}(F^jS(F^T)^j)>0,
+$$
+and normalized imaginary part $A_j/p_j$. Invertibility of $F$
+and trace one of $S\succeq0$, which follows from lawfulness,
+give positivity of $p_j$, including
+singular $S$. Homogeneity gives
+$p_j^2K(A_j/p_j)=K(A_j)$.
+The direct real two-copy detectors of Definition 10.1
+therefore supply exactly these unnormalized square coordinates,
+with their original base detector normalizations and visible
+failure flags. The base detectors supply precisely $K(A),b(A)$.
+Every branch flag probability depends on the common real part
+only; the local chains have the same flag laws for a common-$S$
+pair. Thus equality of these coordinates is precisely equality
+of the stipulated detector laws on their lawful image.
+
+All inverse matrices, eigenvectors, complex planes and graph
+calculations in the proof are arithmetic on the known calibration
+or exact laws. None is an additional experimental setting.
+The completion failure operator remains
+$(I-F^TF)^{1/2}$, actual failed preparations remain failures,
+and no repeat-until-success replacement is made.
+The result concerns exact laws and least successful-filter depth,
+not almost-sure exact recovery from a finite record. $\square$
+
+Proposition 10.2 and the depth column of (10.5) use the
+filter $F_0$ in (9.1). Corollary 25.1 proves that the existing $F_0$
+depth-two bound is its least possible depth for this detector
+architecture. It does not alter the already supplied $115N$
+preparations or $155N$ padded bits, and no cost saving or
+sample/hardware optimality is asserted.
+
+The following primary results are distinguished from the
+classification above.
+
+* Aldroubi–Krishtal–Tang,
+  [Phaseless reconstruction from space-time samples,
+  Proposition 3.1, Theorem 3.2 and Remark 3.5](https://arxiv.org/html/1706.05360v1),
+  concern orbit-generated scalar magnitude measurements, penthouse
+  local complementarity and, for sufficiency, iteration regularity.
+  A scalar functional $|\langle F^jx,\phi\rangle|$ is not one of
+  the present full square-matrix responses of a skew two-form.
+  No implication from iteration regularity, or its failure, is
+  used in Theorem 24.1.
+* Wang–Xu,
+  [Generalized phase retrieval: measurement number, matrix recovery
+  and beyond, Theorems 2.1 and 4.1](https://arxiv.org/html/1605.08034v3),
+  supply general real quadratic phase-retrieval criteria and generic
+  measurement results. The skew coordinates do give quadratic
+  measurements, but their criterion by itself is an unevaluated
+  measurement-family criterion; their generic matrices are not this
+  fixed all-prefix detector family. Those hypotheses do not evaluate
+  the spectral and finite-transition structures above.
+* Kech,
+  [Dynamical Quantum Tomography, Theorems III.3 and IV.1](https://arxiv.org/html/1605.06786v2),
+  assumes feasible unitary or feasible invertible simple-spectrum
+  CPTP dynamics and concludes completeness for almost all POVMs
+  satisfying dimension inequalities. The success branch here is
+  generally trace-decreasing, and the detector family is fixed.
+  These hypotheses and quantifiers do not supply Theorem 24.1.
+* Fan–Pall supplies compression existence and interlacing, used
+  exactly with the real spectra $g_1,\ldots,g_5$ and
+  $(g_2,g_2,g_4,g_4)$. It does not supply the transition
+  classification or least depths.
+* Salamon–Viaclovsky supplies the classical finite-dimensional
+  isotropic/orthogonal-complex-structure fiber correspondence.
+  No integrability, global twistor realization or physical
+  instrument-to-Hecke correspondence is assumed or proved here.
+
+## 追加锚（本行以下为增补区）
+
+## 等待读出递归续卷
+
+**约定。** 固定来源及逐轮等待读出的边缘、完整历史与资源条件见 [同主题续卷 I 的等待读出递归 1](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY_CONTINUATION_I.md#等待读出递归-1-同一仪器的边缘稳定完整历史与持续变标)。
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,55 @@
+**Theorem 73.1 (all-terminal, all-fixed-time obstruction).** For every fixed finite passive schedule of Definition 71.2 using at most two literal scalar Reads, two distinct histories have the same complete late transcript. In particular no decoder of such a transcript recovers every quaternary history. This holds for every choice of earned terminals and finite Tick offsets.
+
+**Proof.** Use the positive vector and rational constant
+
+$$
+h=(27,52,75,96,66,34,49)^{\mathsf T},\qquad c=\frac{95}{48}<2.
+$$
+
+Direct multiplication in (71.1) gives
+
+$$
+Ah=(52,102,148,190,130,66,96)^{\mathsf T}
+   =2h-2\mathbf1\le ch.
+\tag{73.1}
+$$
+
+The inequality follows coordinatewise from $h_i\le96$. The standard weighted maximum norm $\|x\|_h=\max_i|x_i|/h_i$, positivity of $A$ and (73.1) give $\|Ax\|_h\le c\|x\|_h$ and $\|e\|_h=1/27$. The recurrence in (71.3) therefore gives, for every length-$m$ word,
+
+$$
+\|x_w\|_h\le\frac1{27}\left(c^m+3\sum_{j<m}c^j\right)
+ <\frac{191}{1269}c^m.
+\tag{73.2}
+$$
+
+Every coordinate remains a nonnegative integer. At any earned terminal after any $t\le K$ passive Ticks its literal Read $y$ consequently satisfies
+
+$$
+0\le y<96\frac{191}{1269}c^{m+K}
+ =\frac{6112}{423}c^{m+K}<15c^{m+K}.
+\tag{73.3}
+$$
+
+This single bound covers all terminals and all offsets, including repeated Reads and Ticks after the last Read.
+
+Choose the common history length $m=100(K+4)$. Bernoulli's inequality gives
+
+$$
+\left(\frac{96}{95}\right)^{100}
+ \ge1+\frac{100}{95}=\frac{39}{19}>2.
+$$
+
+Since $2/c=96/95$ and $c<2$, it follows that
+
+$$
+(2/c)^m>2^{K+4}\ge16c^K,\qquad
+15c^{m+K}+1\le16c^{m+K}<2^m.
+\tag{73.4}
+$$
+
+The number of nonnegative integer values allowed by (73.3) is less than $15c^{m+K}+1$, hence less than $2^m$. A transcript with at most two scalar replies therefore has fewer than $4^m$ possible scalar tuples; pad any absent Reads by fixed dummy values. There are exactly $4^m$ length-$m$ histories. The pigeonhole principle supplies two distinct histories with identical scalar tuples for this proposed schedule.
+
+The graph, complete map and authentic context are common. Every other permitted reply consists of the fixed original Tick, zero-Add and Hold acknowledgements and their completed returns. A scalar's frame and literal width are determined by its already counted exact value. Thus equality of the scalar tuples gives equality of the entire permitted transcripts; no decoder of that transcript can choose the correct history on both inputs. This uses standard weighted-norm bounds, Bernoulli's inequality and integer pigeonhole counting inside the actual source observation contract.
+
+On each input the actual endpoint is $A^KF_w(A)e$. Failure to recover the required word already rules out the joint task of history recovery and complete-service initialization. It does not assert equality of the two entire initial fields, which Theorem 72.1 excludes, or equality of their advanced fields. Nor does it establish impossibility of current-service acquisition alone: §64's controller applies when the entire actual current field and its other stated premises have separately been earned. The binary and ternary positive acquisitions of §§55–56 and 67–70 retain their own alphabets and hypotheses. $\square$
+

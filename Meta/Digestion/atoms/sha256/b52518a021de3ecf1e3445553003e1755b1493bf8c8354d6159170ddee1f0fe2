@@ -1,0 +1,71 @@
+**Theorem 81.1 (uniform terminating scalar trial).** There is one fixed
+procedure, with no geometry or size advice, for every source of Definition
+80.1. Let $r$ be its first departure in Lemma 78.1. The procedure earns
+$m_0,\ldots,m_{2r}$ on this actual source, returns the finite certificate
+below, and stops held at
+
+$$
+x_{\rm out}=T^{2r}e_o.
+\tag{81.1}
+$$
+
+Its exact successful source-call vector is
+
+$$
+(\mathrm{Reset},\mathrm{Add},\mathrm{Tick},\mathrm{Read},\mathrm{Hold})
+ =(1,1,2r,2r+1,2r+1).
+\tag{81.2}
+$$
+
+The output is $\mathrm{Path}(r)$ when $h_r=0$, or
+$\mathrm{Incompatible}(r,b)$ when $h_r=b\in\{2,3\}$, accompanied by
+$a,c$ and the literal acquired moment prefix. No observation is treated
+as leaving the field at the earlier unit origin.
+
+**Proof.** Execute Reset; Add$(1)$; Hold; Read. The state is now $e_o$
+and the actual reply is $m_0=1$. At stage $j=1,2,\ldots$, execute twice
+Tick; Hold; Read, obtaining the next two moments. While held, form $p_j$
+by (77.3) and compute $h_j$ by (77.4). Continue exactly when $h_j=1$.
+Lemma 78.1 proves finite termination at $r$, with precisely one of the
+three announced stopping values. No bound on $r$ is an input to the
+procedure. At each acquired epoch $k$, induction on the actual calls
+gives field $T^ke_o$ and Read reply $m_k$. Local calculations under Hold
+do not alter it. This proves the endpoint and all counts in (81.2).
+
+The certificate has an explicit finite rational verifier. First check a
+positive integer $r$, exactly $2r+1$ rational moment entries, the supplied
+rational $a,c$ with $c>0$, and one correctly formed output tag. The public
+parameters must be those of the actual installation. Reconstruct
+$p_0,\ldots,p_r$ from them and check
+
+$$
+\begin{gathered}
+m_0=1,\qquad G_{ij}=\delta_{ij}\ (0\le i,j<r),\qquad
+D_j=a\ (0\le j<r),\\
+h_j=1\ (0\le j<r),\qquad
+h_r=0\text{ or }h_r\in\{2,3\},
+\end{gathered}
+\tag{81.3}
+$$
+
+using only (77.4) and the acquired prefix. Check that the tag is
+$\mathrm{Path}(r)$ exactly when $h_r=0$, and otherwise is
+$\mathrm{Incompatible}(r,h_r)$. The procedure performs these
+finite checks before returning; they hold by Lemma 78.1. The $G$ and $D$
+checks make explicit all moment pairings used in Lemma 78.2, not just a
+squared-norm slogan. In the negative case Lemma 78.2 and the rational-square
+argument prove that no competitor matches this very prefix. In the
+positive case the actual-tree promise and Lemma 78.1 prove endpoint-path
+membership and order $r$; Theorem 78.3 specifies its whole matrix.
+The verifier checks the arithmetic implication of the reported prefix.
+Its identification of this prefix with actual observations, and the
+positive classification of the actual source, retain the installation
+and tree-class hypotheses. It does not authenticate those hypotheses.
+
+All arithmetic, checks, output encoding and optional clearing are finite
+local work under the last Hold. They use growing actual backing and are
+additional to the source-call vector. Unexpected stopping values or a
+failed check can be tagged outside the declared promise; neither occurs
+on this domain. No termination or complete classification of arbitrary
+off-domain instruments is asserted. $\square$
+

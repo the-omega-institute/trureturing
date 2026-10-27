@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:e64d388f6a7ae40618e6779dad1be67ee9eb958a6fea1795addbcb52a8be17ba
+  normalized_sha256: sha256:e64d388f6a7ae40618e6779dad1be67ee9eb958a6fea1795addbcb52a8be17ba
+cas_ref: sha256:e64d388f6a7ae40618e6779dad1be67ee9eb958a6fea1795addbcb52a8be17ba
+coverage_gids:
+  - gid: D5/S3/Weil/WeilObservables/WeilEvaluationObservableSubspace.finiteWeilCoordinateEvaluation_fiber_constant
+    target_statement_id: sha256:d486cc17945b287061c00c91176831fcbb470fb73d4d7cb190fa60db07a9571b
+  - gid: D5/S3/Weil/WeilObservables/WeilEvaluationObservableSubspace.finiteWeilCoordinateEvaluation_not_surjective_of_two_copies
+    target_statement_id: sha256:7f767191834ef535ced68fd1f926548c6b4685e4c35361133485ed18e99e5a7f
+  - gid: D5/S3/Weil/WeilObservables/WeilEvaluationObservableSubspace.finiteWeilIndexEvaluation_not_surjective_of_reflection_pair
+    target_statement_id: sha256:d51018fded30e131eaeb59b3472be70fb29f5e2e6f779467247ead10cf755130
+  - gid: D5/S3/Weil/WeilObservables/WeilEvaluationObservableSubspace.finiteWeilIndexEvaluation_reflection
+    target_statement_id: sha256:234bb60446cd7d96a7e1de15a3008db6f38c699ebfbd396a711403c9fbaf2b66
+receipts:
+  unresolved_subitems: []

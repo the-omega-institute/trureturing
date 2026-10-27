@@ -1,0 +1,4 @@
+**Lemma 5.1 (the square interpolation system).** For any prescribed Euler jets through order $d$ at each of $\phi,\psi$, and any prescribed value at $1$, there is exactly one polynomial of degree at most $2m$ satisfying them. The same assertion holds with $D+1$ in place of $D$.
+
+**Proof.** The polynomial space has dimension $2m+1$, equal to the number of conditions. In the homogeneous system, Lemma 4.2 gives roots of multiplicity at least $m$ at $\phi,\psi$, together with a root at the distinct node $1$. A nonzero polynomial would have degree at least $2m+1$, which is forbidden. Thus the linear map from coefficients to conditions is injective between equal finite dimensions, hence bijective. This proves both existence and uniqueness for arbitrary prescribed conditions. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d672770be85928de7864dbd071f5f4537134410372810ad0a5a2651dce1c8d46
+  normalized_sha256: sha256:d672770be85928de7864dbd071f5f4537134410372810ad0a5a2651dce1c8d46
+cas_ref: sha256:d672770be85928de7864dbd071f5f4537134410372810ad0a5a2651dce1c8d46
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 论文安排的片段：结束第二篇主题列表并介绍第三篇标题，不含数学断言。
+    previous_atom_id: 537d801566bf330eef13e0e31118883377118a3b66bdb324209619dbaa6c63f0
+    next_atom_id: 247965bc2c96f0279b810e70887cdde4b9e352de960ff02d897a014e959cba47

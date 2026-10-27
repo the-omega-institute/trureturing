@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0e6e26dd6449db7a59cc86b28d4ed9c2468bc79501181db317c68a07c378939d
+  normalized_sha256: sha256:0e6e26dd6449db7a59cc86b28d4ed9c2468bc79501181db317c68a07c378939d
+cas_ref: sha256:0e6e26dd6449db7a59cc86b28d4ed9c2468bc79501181db317c68a07c378939d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 概念余纤维定义的标题和变量设置，等式在下一 atom。
+    previous_atom_id: 3206f75c4fd98f619ab7422103186864faf8ba137d3524ecf0bd29a49c2b2952
+    next_atom_id: 08a8d1a427a62931fc0cf881959a6788bdc0abd509924786aaf5cc11f8c94d29

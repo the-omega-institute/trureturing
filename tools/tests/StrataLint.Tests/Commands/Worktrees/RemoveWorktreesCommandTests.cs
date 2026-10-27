@@ -6,6 +6,32 @@ namespace StrataLint.Tests;
 public sealed partial class RemoveWorktreesCommandTests
 {
     [Fact]
+    public void NamedRemovalRendersClearanceBeforeFailedCheckpointRetry()
+    {
+        using var fixture = new RemovalFixture();
+        var target = fixture.Add("failed-retry");
+        fixture.CommitAndDirty(target);
+        var hooks = fixture.UnregisteredDirectory("rejecting-hooks");
+        var hook = Path.Combine(hooks, "pre-commit");
+        File.WriteAllText(hook, "#!/bin/sh\nexit 1\n");
+        if (!OperatingSystem.IsWindows()) File.SetUnixFileMode(hook, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        fixture.Git(target, "config", "core.hooksPath", hooks);
+        var metadata = fixture.Git(target, "rev-parse", "--absolute-git-dir").Trim();
+        var path = Path.Combine(metadata, "index.lock");
+        File.WriteAllText(path, "cleared before failure\n");
+        var result = fixture.Remove("failed-retry");
+        AssertResult(result, 74, 0, 1, 0);
+        Assert.True(Directory.Exists(target));
+        Assert.False(File.Exists(path));
+        using var receipt = JsonDocument.Parse(result.Output.Split('\n')[0]);
+        var clearance = Assert.Single(receipt.RootElement.GetProperty("native_locks").EnumerateArray());
+        Assert.Equal("native_lock_cleared", clearance.GetProperty("status").GetString());
+        Assert.Equal(path, clearance.GetProperty("path").GetString());
+        Assert.Equal("cleared before failure\n".Length, clearance.GetProperty("size").GetInt32());
+        Assert.True(clearance.GetProperty("age_seconds").GetDouble() >= 0);
+    }
+
+    [Fact]
     public void NamedDetachedBatchReportsUsableRecoveryBranches()
     {
         using var fixture = new RemovalFixture();

@@ -1,0 +1,40 @@
+**应用 30.2（同一概念数据的后继风险）。** 供应给每个实对称效果 $F$ 的完整算子相等
+$T_+^\dagger(F)=T_-^\dagger(F)$，特别是全部 $J_s$；同时
+
+$$
+\|S_+-S_-\|_\diamond=4t\alpha_t,\qquad
+\inf_{A:M_3\to M_5\ {\rm CPTP}}
+\max_{\pm}\|A-S_\pm\|_\diamond=2t\alpha_t. \tag{30.2}
+$$
+
+其参数满足 $B^\dagger c=0$、$c,p_0$ 单位正交、$P_++ff^\dagger=I_3$；所以 (30.1) 的两个 Kraus 算子完备，通道在整个复域 CPTP。
+实 $F$ 的交叉项是实数，$w_\pm^\dagger Fw_\pm=\alpha_t^2c^\dagger Fc+t^2p_0^\dagger Fp_0$，符号消失；$K_j,p_0$ 全实使 $J_s$ 对每个深度仍实。
+这实例化了 §28 的盲空间：在同一个实效果族内增加深度不切开该纤维；它不证明扩大菜单后的同律。
+
+为明确 (30.2) 的完整复参考域，供应的实际关系是 $K_jc=Bg/\sqrt2$、$K_jp_0=Ba/\sqrt2$，$g,a$ 单位正交。
+置 $v_\pm=\alpha_tg\pm ita$，则
+
+$$
+(S_+-S_-)(X)=(f^\dagger Xf)BDB^\dagger,\quad
+D=v_+v_+^\dagger-v_-v_-^\dagger
+=\begin{pmatrix}0&-2it\alpha_t\\2it\alpha_t&0\end{pmatrix}_{(g,a)}.
+$$
+
+本征值为 $\pm2t\alpha_t$。对任意有限参考和任意复矩阵 $Z$，放大输出是 $Z_{ff}\otimes BDB^\dagger$，其中 $Z_{ff}=(I\otimes f^\dagger)Z(I\otimes f)$。
+压缩的迹范数不增、张量迹范数相乘，故范数比至多 $\|D\|_1=4t\alpha_t$；输入 $ff^\dagger$ 达到它。
+任意仅据共同数据给出的同一个重建 $A$，由三角不等式最坏误差至少为端点距离一半；CPTP 中点 $(S_++S_-)/2$ 达到它。
+这些是定理 29.2–29.3 的同一证明接口，不将只对状态输入的计算冒充 diamond 范数证明。
+对更大的完整相容纤维，(30.2) 只给风险下界；中点未必控制其余世界。
+
+供应的新效果 $E_y=Bhh^\dagger B^\dagger$、$h=(g+ia)/\sqrt2$ 合法，因为 $Bh$ 为单位向量，并满足
+
+$$
+\operatorname{Tr}[E_yS_\pm(ff^\dagger)]=\tfrac12\pm t\alpha_t. \tag{30.3}
+$$
+
+这是 $|h^\dagger v_\pm|^2=(\alpha_t\pm t)^2/2$ 的直接代入。
+$t=1/\sqrt2$ 时概率为一、零；一般 $t$ 时概率不同不等于有限样本必定判对。
+$E_y$ 有虚交叉项，超出原实菜单。它证明一个新增关系如何区分这对世界；能否由原生许可原语取得该效果、参考与控制，仍是实现问题。
+原菜单的效果误差 $\delta=t^2$、到基准 $S_B=\mathcal G\operatorname{Ad}_B$ 的距离 $2t$ 亦由供应给出；它们与双世界半径 $2t\sqrt{1-t^2}$ 不同，不能相互替换。
+后者在 $t\uparrow1$ 趋零尤其不能解释成到基准的误差也趋零。∎
+

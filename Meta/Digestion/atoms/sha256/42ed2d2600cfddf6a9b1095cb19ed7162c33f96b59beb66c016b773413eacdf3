@@ -1,0 +1,24 @@
+**Proposition 44.3 (the exact pulse polynomial on the actual phase).** For every promised source, $H,L$ and actual word $u$,
+
+$$
+\begin{aligned}
+x_L(u)&=T^Lx_*+E_L(u),\\
+E_L(u)&=\sum_{j=0}^{L-1}T^jb\,u_{L-1-j}.
+\end{aligned}
+$$
+
+For two words of this same length, put
+
+$$
+P_{uv}(z)=\sum_{j=0}^{L-1}
+ (u_{L-1-j}-v_{L-1-j})z^j\in\mathbb Z[z].
+$$
+
+Their full native endpoints agree if and only if $q\mid P_{uv}$ in $\mathbb Q[z]$. This is also equivalent to $P_{uv}=qS$ for some $S\in\mathbb Z[z]$.
+
+Proof. The state formula is Lemma 38.2 with pulses at the successive post-Tick epochs; equivalently its induction has step $x\mapsto Tx+ub$. In particular the homogeneous term is $T^{L+2N}b$, with no new zero preparation. Subtracting two equal-length formulas gives $P_{uv}(T)b$.
+
+Divide an arbitrary rational $P$ by the monic $\bar q$, obtaining $P=\bar q A+R$ with $\deg R<N$. If $P(T)b=0$, then $R(T)b=0$, hence $R=0$ by the independence of the columns of $K$. The converse follows from $q(T)=0$. Scaling $\bar q$ by $a$ does not change rational divisibility.
+
+For the integral quotient, apply Gauss's primitive-divisibility lemma with coefficient domain $\mathbb Z$, fraction field $\mathbb Q$, primitive divisor $q$ and integral dividend $P_{uv}$. Its precise supplied statement is `Polynomial.IsPrimitive.dvd_of_fraction_map_dvd_fraction_map` in [pinned Mathlib, GaussLemma](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/RingTheory/Polynomial/GaussLemma.lean). It requires primitivity of the divisor, not irreducibility or primitivity of the dividend. It supplies $S\in\mathbb Z[z]$ directly. This mature algebraic step is an intermediate supplier, not a new divisibility theorem. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:02092587bbe149a3a483a9d24f922c978b2fa7e50f0335537f0ffa4c105b43a7
+  normalized_sha256: sha256:02092587bbe149a3a483a9d24f922c978b2fa7e50f0335537f0ffa4c105b43a7
+cas_ref: sha256:02092587bbe149a3a483a9d24f922c978b2fa7e50f0335537f0ffa4c105b43a7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 指向原始模型的章节引言，没有给出待证结论。
+    previous_atom_id: 774f8933c4d42cbc07cbd0423f8be707b15e98e659bfec6fc76641af0049c9ef
+    next_atom_id: 84383fd3252b6732d48521d28b42f2f3d485bae08729890993647b2a30d9cc07

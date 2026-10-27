@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4063f1187158c21c3b529a2e52d3bb5d9ee41afd873170552259718fe89b6a0f
+  normalized_sha256: sha256:4063f1187158c21c3b529a2e52d3bb5d9ee41afd873170552259718fe89b6a0f
+cas_ref: sha256:4063f1187158c21c3b529a2e52d3bb5d9ee41afd873170552259718fe89b6a0f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Q08 要求补齐离散测度/Hermitian/smooth-number 的具体对象与必要充分性，属于缺口清单。'
+    previous_atom_id: ad23c32ceb677702bae5063174cfcde6381ad22163f00332f1d6f78ad3f0d199
+    next_atom_id: 81cbdf74658bcdc2173f3f54401bcad7ce98dfbd69865958eab0bc623f308444

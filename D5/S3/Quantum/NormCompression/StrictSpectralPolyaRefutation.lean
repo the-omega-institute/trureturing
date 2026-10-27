@@ -435,7 +435,7 @@ private theorem schattenPow_roots {n : ℕ} {p : ℝ} (hp : 0 < p) (A : Matrix (
     (Matrix.isHermitian_conjTranspose_mul_self A).roots_charpoly_eq_eigenvalues]
   simp [Multiset.map_map, Function.comp_def, RCLike.ofReal_eq_complex_ofReal, List.sum_ofFn]
 
-private theorem rpow_square_half (a p : ℝ) : (a ^ 2) ^ (p / 2) = |a| ^ p := by
+theorem rpow_square_half (a p : ℝ) : (a ^ 2) ^ (p / 2) = |a| ^ p := by
   rw [Real.rpow_div_two_eq_sqrt _ (sq_nonneg a), Real.sqrt_sq_eq_abs]
 
 private theorem block_schattenPow {p : ℝ} (hp : 0 < p) (d h s t a b : ℝ)

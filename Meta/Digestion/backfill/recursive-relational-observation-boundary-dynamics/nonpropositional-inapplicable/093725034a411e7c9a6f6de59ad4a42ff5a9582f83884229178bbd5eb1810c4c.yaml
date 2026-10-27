@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:093725034a411e7c9a6f6de59ad4a42ff5a9582f83884229178bbd5eb1810c4c
+  normalized_sha256: sha256:093725034a411e7c9a6f6de59ad4a42ff5a9582f83884229178bbd5eb1810c4c
+cas_ref: sha256:093725034a411e7c9a6f6de59ad4a42ff5a9582f83884229178bbd5eb1810c4c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition of the state-family-completion residual predicate, without an assertion that an arbitrary test family converges.
+    previous_atom_id: 28b6a90542787e48295fa04b5a9ce95358e2ad9e2ca04e4f1ab0b37031c882cd
+    next_atom_id: fbf0ac38ae007532371c21b745bf2d82181b7a2b573fa3d18009d9a85a540a66

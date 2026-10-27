@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1c8e14c0ec5bd8b99eb846eb8b65148694ce67898aa22e2d48f4b10af86e1028
+  normalized_sha256: sha256:1c8e14c0ec5bd8b99eb846eb8b65148694ce67898aa22e2d48f4b10af86e1028
+cas_ref: sha256:1c8e14c0ec5bd8b99eb846eb8b65148694ce67898aa22e2d48f4b10af86e1028
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该行列边界维数和尺度标定的审查项目，没有声称某个网络达到秩界或误差界。
+    previous_atom_id: 09887e76a9ecc3ca50532c27aa1621cb63a9fa4896c76f85a914bf0208e5183f
+    next_atom_id: 955a68fb3f4560008db23b9961b17815011a11d7013ee3e05f22a42d1e1ff802

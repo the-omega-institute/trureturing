@@ -26,21 +26,20 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(head, ReadSummary(result.Output).GetProperty("dev_commit").GetString());
     }
 
-    [Theory]
-    [InlineData(10799, false)]
-    [InlineData(10800, true)]
-    public void ReusedLaneCheckedOutToDevRequiresThreeHours(int seconds, bool reclaim)
+    [Fact]
+    public void ReusedLaneCheckoutToOldDevDoesNotRenewSavedWorkOrAllocation()
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/reused-task");
         fixture.AdvanceBase(1);
-        CleanLanesFixture.Git(lane, "checkout", "--detach", "dev");
+        var later = fixture.LastUpdate(lane).AddDays(2);
+        CleanLanesFixture.GitAt(lane, later, "checkout", "--detach", "dev");
 
-        var result = fixture.RunAt(fixture.LastUpdate(lane).AddSeconds(seconds), "--force", "--lanes-only");
+        var result = fixture.RunAt(later.AddHours(1), "--force", "--lanes-only");
 
         Assert.True(result.Success, result.Error);
-        Assert.Equal(!reclaim, Directory.Exists(lane));
-        Assert.Equal(reclaim ? "merged_to_dev" : "recently_updated", ReasonFor(result.Output, lane));
+        Assert.False(Directory.Exists(lane));
+        Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));
     }
 
     [Theory]

@@ -778,3 +778,746 @@ claims or an unrestricted scalar-interface realization.
 [ATLAS]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Actual pair actions and exact composition reachability
+
+**Definition 9.1 (the pair extension of the literal LAB installation).**
+Retain exactly the source representation, source binding, current exclusive
+rights, ancestral routing tapes and seven-request driver of AA17–23 and
+Definitions 1.1, 4.1 and 5.1 above. In particular the tape at every branch
+records both kinds of actual generation event, not merely splits. Write
+
+$$
+v(t)=\binom{a(t)}{b(t)},\qquad
+\mathcal D_+=\mathcal D\setminus\{\alpha\},\qquad
+\alpha_{\rm vec}=\binom10,\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+\tag{LAGP.1}
+$$
+
+A composition target $(A,B)\in\mathbb N^2$ is reachable from a particular
+$t$ if some finite legal addressed LAB continuation from that very source
+ends at a term with those counts. This does not specify the endpoint
+shape or erase the earlier attained history. All material, completion,
+serialization and rights assumptions remain those of AA20.1. A call below
+is a mathematical finite-control procedure on those objects, not a new
+source primitive.
+
+**Theorem 9.2 (exact source-relative pair reach criterion).** Let
+$t\in\mathcal D_+$ have composition $(a,b)$, so $b\ge1$. For every
+$(A,B)\in\mathbb N^2$,
+
+$$
+t\longrightarrow^* \{u:v(u)=(A,B)\}
+\quad\Longleftrightarrow\quad
+B\ge b\ \hbox{ and }\ A+B\ge a+b.
+\tag{LAGP.2}
+$$
+
+Whenever this holds, every realizing word has precisely
+
+$$
+p=B-b,\qquad s=A+B-a-b
+\tag{LAGP.3}
+$$
+
+promotions and splits. From the excluded source alpha the exact criterion
+is instead $(A,B)=(1,0)$ or $B\ge1$. Consequently
+$v[\mathcal D_+]=\mathbb N\times\mathbb N_{>0}$.
+
+Proof. Every actual promotion changes composition by $(-1,1)$, and every
+split by $(1,0)$. Thus $B=b+p$ and $A=a-p+s$, proving necessity and
+(LAGP.3), including their nonnegativity.
+
+For sufficiency acquire a current beta leaf at address $z$. Carry out
+$s$ splits on its continuing left beta spine, at
+$z,zL,\ldots,zL^{s-1}$, with an empty list when $s=0$. Each target is the
+beta left by the preceding split. The current counts are now $(a+s,b)$.
+The target inequalities give $0\le p\le a+s$. Traverse the current finite
+source and promote its first $p$ alpha leaves in preorder. Promotions at
+distinct leaves preserve the other leaves, so all these operations are
+enabled. The resulting counts are $(A,B)$. This is a legal addressed word
+on each particular starting source, not just a solution of its state
+equation. It is also the one-state instance of AA37.2's supplied
+current-leaf lifting principle.
+
+At alpha, a nonempty word must start with the root promotion, after which
+the preceding construction applies to $(0,1)$. For any $A\ge0,B\ge1$,
+use $s=A+B-1$ splits and then $p=B-1$ further promotions; $p\le s$.
+The empty word is the only possibility with $B=0$, since beta count
+never decreases. This proves the alpha criterion and realizes every
+stated positive-beta composition from the known seed. Lemma 2.1's
+beta assertion, or the leftmost-leaf argument in its proof, identifies
+these sources with exactly $\mathcal D_+$. $\square$
+
+**Definition 9.3 (the two actual macros).** For a current finite source
+$t$, acquire its complete logical leaf frontier in left-first order,
+while the source is stationary. A frontier row contains the actual
+target reference, its backed logical address and its acquired alpha/beta
+tag. Rows have real next links. Exclude every material unary marker.
+The finite traversal of Definition 4.2 constructs this list through
+individual field operations; the list is not an input supplied by an
+unknown source.
+
+The macro $\mathsf R$ traverses this sealed entry list once. For an
+entry-alpha row at $p$ it calls the original addressed $P_p$; for an
+entry-beta row it calls the original $S_p$. It consumes the complete
+literal reply and real return of each inner call before advancing the
+list. Newly created leaves never enter this old list.
+
+For $t\in\mathcal D_+$, follow current logical left children from the bound
+root to its first leaf, acquiring the path and actual reference. Let
+$\lambda(t)$ be this acquired address. The macro $\mathsf G$ makes the
+single original call $S_{\lambda(t)}$, consumes its complete literal
+reply and returns. All calls navigate from the same bound root, check
+the current guard and compare the reached reference with the acquired
+operand. Holding a reference does not bypass current authority or a guard.
+
+**Theorem 9.4 (exact replacement, alpha translation and the alpha
+obstruction).** On every particular $t\in\mathcal D_+$ and every admitted
+earlier history ending there, the procedures of Definition 9.3 terminate
+under the stated finite-resource premises, use only original legal source
+events and satisfy
+
+$$
+\mathsf R(t)=\rho(t),\qquad
+v(\mathsf R(t))=Mv(t)=(b,a+b),\qquad
+v(\mathsf G(t))=(a+1,b).
+\tag{LAGP.4}
+$$
+
+Their successful-event counts are respectively $(p,s)=(a,b)$ and $(0,1)$.
+These event counts are forced for their respective pair targets.
+Both successors lie in $\mathcal D_+$. The action $\mathsf R$ alone also
+works at alpha, but there is no LAB procedure with the claimed
+$\mathsf G$ pair effect there. Thus $\mathcal D_+$ is exactly the domain
+within $\mathcal D$ where both pair actions can be total.
+
+Proof. Distinct entry leaf addresses are prefix-incomparable. A local
+edit at one changes no subtree rooted at another, and does not move its
+root reference. Induct over the sealed list: before its next row the
+acquired tag, address and reference are still current at that target.
+Its original guard therefore succeeds. An original alpha becomes beta;
+an original beta becomes $\langle\beta,\alpha\rangle$. Every original
+branch and its ordered child positions persist. Structural induction
+now identifies the endpoint with FARG3.1's literal $\rho(t)$, not merely
+a term of equal quantity. In particular the unary marker reused during a
+split was not an entry logical leaf and never receives another scheduled
+edit. Finite list length and AA20.3's finite inner calls prove termination.
+
+The leftmost leaf of a non-alpha source in $\mathcal D$ is beta: if the
+root is not itself beta, the final edge of its left descent is $L$, where
+alpha is forbidden. Thus the single split defining $\mathsf G$ is enabled
+and has effect $(1,0)$. Each procedure preserves the beta-positive domain.
+The forced counts follow by substituting the two targets in (LAGP.3).
+
+For alpha the desired target would be $(2,0)$, excluded by Theorem 9.2.
+Equivalently any promotion irreversibly creates beta, whereas a first
+split is disabled. Reads, arithmetic and rejected calls cannot repair
+this obstruction. The macro $\mathsf G$ is a local split, not a literal
+root graft $t\mapsto\langle t,\alpha\rangle$: at
+$t=\langle\beta,\beta\rangle$ its endpoint is
+$\langle\langle\beta,\alpha\rangle,\beta\rangle$, different from
+$\langle\langle\beta,\beta\rangle,\alpha\rangle$. This $t$ is attained by
+$P_\varepsilon S_\varepsilon P_R$. No new parent, rerooting or graft right
+has been used. $\square$
+
+## 10. Earned pair memory and complete finite pair calls
+
+**Definition 10.1 (initial acquisition and retained fields).** Fix a
+public pair modulus $H\ge1$. Keep the scalar service's existing modulus
+$H_s\ge2$ and divisor $d_o\mid H_s$; one may choose $H_s=H$ when $H\ge2$.
+All inherited scalar symbols $E,B,P,r_s$ below retain that scalar
+modulus. Add two owned pair fields $e,c\in A_H^2$, where
+$A_H=\mathbb Z/H\mathbb Z$. The immutable
+$e$ records the pair at attachment; the mutable $c$ records the current
+source pair. They supplement the existing scalar fields
+$E(q(t))=(B(q(t)),r_s(q(t)))$, with $r_s=q(t)\bmod P$ as in (LAG.10).
+They do not replace those scalar fields or the ancestral tapes.
+
+At an attained quiescent attachment cut $t_0$, lock the actual source
+and traverse its logical leaves through its existing read rights.
+Initialize a scratch residue pair to $(0,0)$; each actually observed alpha
+adds $(1,0)$ and each beta adds $(0,1)$, modulo $H$. The stationary finite
+traversal visits each logical leaf exactly once. Really write its result
+to $e$ and $c$, then clear the traversal, path and accumulator scratch
+before enabling new outer calls. Existing source, tapes, scalar records,
+bindings and rights remain attached. At the actually constructed alpha
+seed the pair $(1,0)$ is instead known from that construction and may
+be written directly. In either case all computation, reads, writes,
+allocation and cleanup are charged.
+
+The attachment need not acquire exact integer counts or the previous
+word. At a later cut it uses actual source access, not a supplied unknown
+seed, a Native Read port or a hypothetical complete behavior oracle.
+Attachment at alpha maintains correct fields, but successful pair calls
+have the domain $\mathcal D_+$ specified below; existing legacy or scalar
+growth can subsequently enter that domain.
+
+**Definition 10.2 (one coexisting connection and framing contract).**
+Keep the scalar and public legacy connections, and their internal bound
+driver connection, of Definition 4.1. Add a distinct pair requester and
+reply connection to that same supervisor. A single owned arbiter
+serializes all three outer ingresses from a returned idle cut. A call
+holds the lock through input, inner calls, commits, complete output,
+local acknowledgement, root return and cleanup. Inner returns do not
+release the outer lock. All connection fields, grants and arbiter
+storage are part of the installation.
+
+On the pair connection use the following complete grammar, with
+$U(k)=1^k0$ and word bits $0=\mathsf R$, $1=\mathsf G$.
+
+| Pair request | Complete input | Complete reply at a source in $\mathcal D_+$ |
+| --- | --- | --- |
+| $\mathsf R$ | $00$ | $00$, a fixed acknowledgement |
+| $\mathsf G$ | $01$ | $00$, the same fixed acknowledgement |
+| $\operatorname{Out}$ | $10$ | $01\,U(d)$, where $d=\gcd(2c_1+3c_2,H)$ |
+| $\operatorname{Predict}(W)$ | $11\,U(k)\,w_1\cdots w_k$, $k=|W|$ | $10\,U(k)\,U(d_0)\cdots U(d_k)$ |
+
+For prediction let $\xi_0=c$ and, for $0\le i<k$, put
+$\xi_{i+1}=M\xi_i$ for $w_{i+1}=0$ and
+$\xi_{i+1}=\xi_i+(1,0)$ for $w_{i+1}=1$. Its payload has
+$d_i=\gcd(2\xi_{i,1}+3\xi_{i,2},H)$ for every prefix, including the empty
+one. Gcd is evaluated on integer residue representatives; it is
+representative-independent. Prediction changes neither source nor current
+records. The $k=0$ request returns precisely the one current value.
+
+After receiving the complete frame, test the actual root constructor.
+At alpha every pair request returns $11$ with no payload and no source
+change. Thus an alpha refusal is not decided from a modular pair that
+might coincide with an admitted source's pair. Every complete pair frame
+is one of these cases; there is no unused request tag. Concatenated calls
+are parsed successively. A proper frame prefix retains its acquired bits,
+parser subphase and remaining length and waits for its supplied suffix;
+it has no premature reply or implicit timeout.
+
+Every finite reply is sealed in backing, really printed to that call's
+pair receiver and followed by End. The supplied local acknowledgement
+enables real return and cleanup. Rights failures, competing writers,
+interruptions and resource exhaustion have the same excluded status as
+in AA20.1, rather than extra source-dependent reply tags.
+
+**Definition 10.3 (unchanged recipients and complete inner traffic).**
+Scalar Add, Multiply, Query and their invalid frames keep exactly
+Definition 4.1's grammar, allowed parameters and replies. The seven
+public legacy calls keep AA20.2's exact request/reply grammar. In
+particular Tag, HasPromotion, HasSplit, addressed $P/S$, FetchGrowth and
+Next retain their original complete results and original legacy receiver.
+An out-of-range Next has no new growth. An in-range Next still outputs
+both the acquired old event and the actual newly selected event.
+
+Every $P/S$ call made by either scalar or pair macros uses the original
+internal addressed frame and prints the full Growth kind/address reply
+to the bound supervisor receiver. The receiver backs and parses every
+bit and End, checks its saved kind/address and actual continuation,
+acknowledges and consumes the driver's real return. A legacy-origin
+Growth or Next reply instead goes to its original public receiver.
+There is no suppression of a literal reply because a larger macro later
+returns only a fixed acknowledgement or scalar value. These distinct
+recipients are fixed actual connections, not a retrospective deletion
+of outputs. All their traffic belongs to the joint process.
+
+## 11. A single all-event synchronization invariant
+
+**Definition 11.1 (pre-edit banks and accepted-event commit).** Extend the
+existing commit of Definition 5.1 at every successful source event,
+irrespective of its outer or inner origin. After actual guard success,
+reserve the required material, retain the accepted kind, target
+reference/address and unfinished maintenance cursor, and read the
+pre-edit arithmetic fields into backed temporary fields. From the
+pre-edit pair $c^-$ compute
+
+$$
+c^+=
+\begin{cases}
+c^-+(-1,1),&P_p,\\
+c^-+(1,0),&S_p,
+\end{cases}
+\quad\text{in }A_H^2.
+\tag{LAGP.5}
+$$
+
+Compute the two scalar successors from the pre-edit scalar snapshot by
+(LAG.11), with increment one or two respectively. Execute the actual
+guarded source template, complete all ancestral tape appends, write every
+arithmetic successor, and discharge the pending edit/append/commit state.
+Only then may BuildAnswer release that event's original literal reply.
+Keep $e$ unchanged. All simultaneous formulas use old operands; a field
+overwritten while computing another is not a substitute for its snapshot.
+
+Queries, predictions, refusals, input/output work and acknowledgements do
+not change any source arithmetic record. For Next the hook is attached
+to its one newly executed $P/S$ event. Its recalled old event is an
+operand of the selector, not another edit or increment. Legacy growth,
+Next growth, scalar-macro growth and pair-macro growth all pass this
+same accepted-event hook. Source-independent arithmetic changes are not
+additional edits.
+
+PairReady is the returned idle domain with root cursor, true full
+ancestral tapes, current rights/bindings, correct scalar fields and
+$c=\overline{v(t)}$, immutable $e=\overline{v(t_0)}$, and empty transient
+input, output, traversal, frontier, locator, call, arithmetic and pending
+fields. The source need not be in $\mathcal D_+$ for this idle predicate;
+that is separately the success domain of pair requests. Busy states
+retain their actual finite backing: received bits and remaining lengths;
+old-frontier rows and list cursor; source root/current reference and path;
+saved inner continuation; reserved objects and pending appends; old/new
+arithmetic banks; prediction word, cursor and scratch pair; and sealed
+output with emission cursor. None is identified with PairReady merely
+because the inner driver has reached its own Ready.
+
+**Theorem 11.2 (common-source acquisition, synchronization and completion).**
+Under Definitions 9.1 and 10.1–11.1, every supplied complete finite outer
+call returns on the same bound root with its specified full reply and
+reenters PairReady. Every finite serialized mixture of all three outer
+interfaces has, at each returned cut,
+
+$$
+c=\overline{v(t)},\qquad
+(B,r_s)=E(q(t)),\qquad
+e=\overline{v(t_0)},
+\tag{LAGP.6}
+$$
+
+and the original literal tapes for its entire actual generation word,
+including every pair/scalar macro edit and every new Next edit.
+At a completed pair action the exact source and vector laws are
+(LAGP.4), not merely congruences.
+
+Proof. The initial leaf traversal earns the residue fold of the actual
+stationary tree, so its writes establish (LAGP.6). Existing scalar
+correctness and tape invariants hold at the attachment cut by the
+hypotheses. They are also established directly at the known seed.
+Suppose they hold before an accepted event. Its two actual vector
+increments are exactly those in (LAGP.5), and its actual quantity
+increments are those in (LAG.11). Both pre-edit snapshots therefore
+give the true successors. AA19.2 and AA20.3 give exactly the proper
+ancestral appends for that very event. Completing all three changes
+before publication proves the invariant at its next available cut.
+
+The argument applies to Next's actual new kind/address after its real
+recall and current left descent. Its old kind can differ from the new
+one, so counting the recalled event instead would not prove the
+invariant. OutOfRange, queries, refusals and prediction have no edit.
+Induction on actual accepted events establishes (LAGP.6) without any
+assumption on the earlier chronology at a fixed source.
+
+For $\mathsf R$, stationary finite traversal constructs the old-frontier
+operands. Theorem 9.4 proves each next guard and the exact endpoint;
+AA20.3 proves that each inner call, literal output and return terminates.
+The caller's list cursor and remaining rows survive these inner returns
+until consumed. The finite list then exhausts. For $\mathsf G$, finite
+left descent and its single accepted split prove the same assertions.
+Every intermediate commit has the true current pair; no erroneous
+macro-end overwrite by $Mc$ or $c+(1,0)$ is performed after these
+per-event updates.
+
+Out reads the correct finite pair and performs finite gcd arithmetic.
+Predict consumes its actual finite word, copies $c$ to scratch, performs
+the stated finite updates and builds all $k+1$ results. Neither uses a
+source response table. At alpha the actual root guard gives the fixed
+refusal after full input receipt. Original scalar calls terminate by
+Theorem 5.3 and the same hook; legacy calls terminate by AA20.3–20.5.
+Every result word is finite. Its Print, End, supplied acknowledgement,
+root return and finite clearing/reuse of transient backing restore
+PairReady. Proper prefixes instead remain busy until their completion
+is supplied. Induction on returned calls proves the entire mixture.
+No intermediate macro cut admits another outer call. $\square$
+
+## 12. The selected arithmetic task and its exact recovery domain
+
+**Definition 12.1 (pair task, source projection and independent fields).**
+The selected task $Q_{\rm pair}$ uses only the four pair requests at
+returned cuts with $t\in\mathcal D_+$. Its observations are their complete
+pair-channel replies, legality and continued $Q_{\rm pair}$ behavior at
+the actual returned successors. All same finite pair-request sequences
+are compared. The task admits no legacy or scalar interleaving, raw
+source/record reads, internal driver traffic, scratch read, time/work
+meter, allocation ordinal or observable capacity guard as observation or
+selector input. These remain distinct resources or channels of the
+larger process. Authentic binding and rights are fixed at this domain;
+they are retained premises, not values encoded by a residue.
+
+Write $F_W(t)$ for the actual source reached by the chronological
+$\mathsf R/\mathsf G$ word $W$. Define the following arithmetic fields
+independently:
+
+$$
+\begin{aligned}
+\mathcal S_H(t)&=\overline{v(t)},\\
+\mathcal T_H(t)(k)&=(2,3)M^k v(t)\pmod H,\quad k\ge0,\\
+\mathcal B_H(t)(W)&=\gcd(q(F_W(t)),H).
+\end{aligned}
+\tag{LAGP.7}
+$$
+
+$\mathcal S_H$ counts occurrences of the two actual logical leaf types.
+$\mathcal T_H$ is the prospective quantity progression of successive
+whole-frontier replacements, not actual elapsed time or a supplied
+clock. $\mathcal B_H$ is the controlled continuation boundary of the
+declared pair actions, not just its current gcd. The acquired memory
+contains actual $e,c$, source/tapes, code, bindings, rights and retained
+work facilities. Its current pair field computes these arithmetic
+expressions; the expressions do not define that whole installation.
+
+**Theorem 12.2 (operation correspondence and restricted recovery).**
+For every $t\in\mathcal D_+$ and finite chronological $W$,
+
+$$
+v(F_W(t))=\operatorname{Run}(W,v(t)),\qquad
+\operatorname{Run}(\mathsf R,u)=Mu,\quad
+\operatorname{Run}(\mathsf G,u)=u+\alpha_{\rm vec}.
+\tag{LAGP.8}
+$$
+
+Under Theorem 11.2, the actual callable $c$ supports current Out and
+every specified prediction, with
+
+$$
+c_W=\overline{v(F_W(t))},\qquad
+d_i=\gcd(q(F_{W_{\le i}}(t)),H)
+\quad(0\le i\le |W|).
+\tag{LAGP.9}
+$$
+
+The fields in (LAGP.7) mutually recover one another on their actual
+arithmetic images, their routes agree, and they commute with these
+pair actions. Equality of $Q_{\rm pair}$ behavior is exactly equality
+of $\overline{v(t)}$. There are exactly $H^2$ behavior classes across
+all admitted attained starting sources. When $H_s=H$, at a returned cut
+the pair Out value times the existing scalar Query value is exactly $H$.
+
+Proof. Theorem 9.4 supplies each actual action, its authentic operands,
+same-source legality and exact vector effect. The beta-positive domain
+is invariant, so induction on $W$ proves (LAGP.8) at every prefix.
+Theorem 11.2 then gives the first equality in (LAGP.9). Scratch execution
+has the same residue updates, proving the entire prediction reply,
+including the empty prefix. This proves the actual source correspondence
+required before using an arithmetic supplier. When $H_s=H$, the
+same-source current records give Out equal to $g=\gcd(q(t),H)$ and scalar
+Query equal to $H/g$, proving their stated product. This identity concerns their
+current replies, not equality of their future task kernels.
+
+Now reuse the mathematical recovery and synchronized-continuation
+formulas of [Arithmetic Acquisition Return][AQBR] Definition 9.2,
+(AQBRP.22)–(AQBRP.23), and Theorem 10.3. The parameter correspondence
+is its same $H$, $q=(2,3)$, $M$, alpha translation, chronological words,
+current residue and fixed action acknowledgements, restricted here to
+the invariant image $\mathbb N\times\mathbb N_{>0}$. Our initial pair
+is earned by the stronger field access of Definition 10.1, and the
+macro source/commit bridge is Theorems 9.4 and 11.2. Thus this reuse is
+of its recovery/continuation conclusion, not its opaque-port acquisition
+procedure, read-count theorem or literal source model.
+
+Concretely its supplied FARG5.4 inverse applies to the first two terms
+of $\mathcal T_H$:
+
+$$
+\binom{n}{z}=
+\begin{pmatrix}2&3\\3&5\end{pmatrix}\mathcal S_H,\qquad
+\mathcal S_H=\binom{5n-3z}{-3n+2z}\quad\text{in }A_H^2.
+\tag{LAGP.10}
+$$
+
+The forward progression and the boundary are computed from this same
+pair by (LAGP.8). FARG130.5, or GraftAffineClosure.result with actual
+graft composition $(1,0)$, says that different residues are separated
+by a common positive $\mathsf R/\mathsf G$ word's terminal gcd. Every
+such word is actually legal from every LAB source in this domain.
+Thus restriction to beta-positive compositions loses no separating
+word. Equal residues give all same replies and equal successor residues;
+Predictions add only the corresponding finite prefix replies. Conversely
+execute a separating word and Out to distinguish unequal residues.
+This proves the exact task kernel and the boundary-to-pair recovery
+on its actual image.
+
+All residues occur here: for residues $x,y$ choose $A=x$'s least
+nonnegative representative and $B=y$'s representative if positive,
+or $B=H$ if it is zero. Theorem 9.2 constructs an attained LAB source
+of $(A,B)$. Hence the kernel has exactly $H^2$ classes. The same
+separating-word argument forces any autonomous representation for this
+selected task across all these starting sources to distinguish them.
+It is a task-state alphabet assertion, not a minimum for the retained
+literal installation.
+
+Every route just described evaluates the same current residue.
+At $H=1$ it is the singleton pair and every arithmetic output is one;
+the same actual source actions, domain guards and literal traffic remain.
+For $\mathsf R$ the progression shifts by one; for $\mathsf G$ its
+$k$th term increases by $(2,3)M^k\alpha_{\rm vec}$. Boundary successors
+prefix the same actual action to the tested word. These identities and
+(LAGP.9) prove route agreement and dynamics compatibility. They do not
+recover actual chronology from a prospective progression. $\square$
+
+**Theorem 12.3 (strict limits of the arithmetic kernel).** The
+$H^2$-class assertion is not a classification of the joint legacy,
+scalar and pair process, its Tag/legal-address behavior, its literal
+tapes or its complete chronology. Equality of scalar quantity does not
+imply equality of vector successors or even scalar successors under
+$\mathsf R$.
+
+Proof. The two sources of (LAG.14) have the same exact composition and
+therefore the same pair residues for every $H$. Nevertheless $P_R$ is
+enabled at one and refused at the other, and Tag at $R$ separates them.
+AA20.5's two histories at its common source have identical composition
+but different FetchGrowth$(3)$, Next output and Next successor.
+The literal-backend invariant of Theorem 11.2 retains these distinctions;
+no arithmetic theorem identifies them.
+
+For a counterexample entirely within $\mathcal D_+$, take compositions
+$(3,1)$ and $(0,3)$, both attained by Theorem 9.2. Their quantities both
+equal nine, whereas their replacement compositions are $(1,4)$ and
+$(3,3)$, with quantities fourteen and fifteen. Modulus three already
+separates their post-replacement gcds. Thus neither a scalar endpoint
+nor the existing scalar records can authorize a vector-successor
+identity. The new $\mathsf R$ is not one of the old scalar Add/Multiply
+macros.
+
+Finally $\mathsf G^H$ changes the actual source, adds $H$ real splits
+and extends the old tapes, while returning its pair residue and every
+selected arithmetic continuation behavior to their entry values.
+Consequently the arithmetic fields recover neither the syntax, event
+word, literal traffic, actual time/work nor whole memory. Their
+mathematical inverses do not grant new references or rights. $\square$
+
+## 13. A single same-run resource account
+
+**Definition 13.1 (located work and backing on the joint run).** For
+any finite suffix of the one actual execution let $p,s$ be its successful
+promotion/split counts and let
+
+$$
+N=p+s,\qquad J=\sum_{\text{actual new events }e}|\operatorname{addr}(e)|.
+\tag{LAGP.11}
+$$
+
+Count events from all pair macros, scalar macros, accepted legacy
+addressed calls and in-range Next calls once. Recalled old events,
+queries, prediction, refusals and acknowledgements contribute no event
+to this sum. Add the source, headers and tapes already present at
+attachment; no account discards that earlier material.
+
+For each completed pair $\mathsf R$ whose entry counts are $(a,b)$,
+its event list has
+
+$$
+p_{\mathsf R}=a,\quad s_{\mathsf R}=b,\quad
+N_{\mathsf R}=a+b,\quad
+J_{\mathsf R}=\sum_{z\in\operatorname{Leaves}(t)}|z|.
+\tag{LAGP.12}
+$$
+
+For $\mathsf G$ with acquired leftmost address of depth $d$ the
+corresponding values are $p_{\mathsf G}=0,s_{\mathsf G}=1,
+N_{\mathsf G}=1,J_{\mathsf G}=d$. Traversal, field access, operand-list
+construction, arithmetic, output and return are additional actual
+work, rather than successful source events.
+
+**Theorem 13.2 (literal source, tapes, traffic and operands are jointly
+accounted).** On this same finite suffix the incremental attached
+source/tape resources are
+
+$$
+\begin{aligned}
+\text{source vertices}&=p+2s,\\
+\text{tape headers}&=s,\\
+\text{tape cells and side appends}&=J,\\
+\text{located source-field assignments}&=4p+8s,\\
+\text{auxiliary-slot/header/tape assignments}&=p+5s+4J.
+\end{aligned}
+\tag{LAGP.13}
+$$
+
+The two assignment coordinates use precisely AA22.1's layout and
+exclude allocation, grants and reference-bit expansion. Across any
+set of macro-origin successful inner calls with values $N,J$, the
+request/reply bit totals are respectively $2J+4N$ and $2J+5N$, together
+with $N$ reply End and local acknowledgement actions. Each such reply
+is actually received by the supervisor. Legacy-origin calls instead
+retain their original complete public traffic, charged separately.
+
+Proof. AA22.1 and Definition 6.1 count one or two new source vertices
+per actual promotion or split, one header per split and one appended
+side cell per proper ancestor. Every present event, including each
+Next-selected edit, satisfies exactly that layout. Summing its located
+assignments gives (LAGP.13); the last expression is
+$(p+2s)+3s+4J$. No event is charged twice merely because both a pair
+record and a scalar record observe it.
+
+For an inner event at depth $d$, AA20.2's addressed request has $2d+4$
+bits and Growth reply has $2d+5$. Summation proves the totals.
+Their full kind/address payloads are not replaced in the account by
+the shorter outer acknowledgement. A successful legacy Next has its
+original pair of old/new kind-address payloads, hence $2d_{\rm old}
++2d_{\rm new}+7$ reply bits, plus End and acknowledgement. An in-range
+FetchGrowth has $2d_{\rm old}+5$ reply bits; OutOfRange has its three-bit
+tag. Other legacy payloads and scalar calls retain their exact original
+frames from AA20.2 and Definition 4.1. All their input, backing,
+navigation, emission, acknowledgement and return work is additional.
+$\square$
+
+**Definition 13.3 (remaining simultaneous resources).** Pair input
+costs two bits for $\mathsf R,\mathsf G,\operatorname{Out}$ and $2k+3$
+bits for a length-$k$ prediction. Successful action replies have two
+bits, Out has $d+3$, and prediction has
+
+$$
+k+3+\sum_{i=0}^{k}(d_i+1)
+\tag{LAGP.14}
+$$
+
+bits. Each has its own End and supplied local acknowledgement.
+An alpha refusal has two reply bits. Received input bits remain backed
+until parsing/consumption; emitted bits remain backed through their
+required output phases. Their clearing/reuse is paid.
+
+The logical payloads of $e,c$ use $4\lceil\log_2 H\rceil$ bits in a
+fixed-width binary layout, beyond the installed scalar fields,
+bindings and callable source/tapes. Field framing, references and rights
+are additional. At each accepted event the old $c$ pair and its two
+successor coordinates are backed while the old scalar snapshot, decoded
+quantity residue and scalar successors of (LAG.11) are live. All reads,
+finite modular arithmetic and writes are charged. No whole-macro
+update is charged in place of these real per-event commits.
+
+The displayed $\mathsf R$ acquires one row per entry leaf, its kind bit,
+actual target reference, next link and backed address; its copied
+address content totals $J_{\mathsf R}$ direction bits, with list/path
+framing and actual reference widths additional. Its construction stack,
+row cursor, saved inner call, requested address, pending target and
+unfinished tape appends coexist when their phases overlap. Consumed
+rows are cleared/reused at finite cost before outer return. This is
+transient old-frontier memory, not a permanent source copy or a free
+selector. $\mathsf G$ pays its real left descent, depth-$d$ path backing
+and current reference. Prediction pays the received finite word, its
+scratch pair, prefix/output buffers and loops. Initialization pays the
+full stationary traversal, stack and modulo counters.
+
+The one joint state also retains all actual source vertices and
+ancestral records, root and record references, connection latches,
+arbiter, installed scalar/pair/legacy finite controls and constants,
+current source/record/channel grants, work arenas, reserved unattached
+objects, bit arithmetic operands, output cursors and acknowledgement
+state. Reference widths are not assumed constant. Source requests
+re-navigate and guard their targets; cached rows save no unperformed
+driver work. No fixed physical quota, source-dependent failure reply,
+free storage supplier or unit-cost global replacement is asserted.
+
+**Theorem 13.4 (scope of the resource claims).** The event counts for
+the pair targets in Theorem 9.4 are exact, but neither the pair-field
+width nor these counts establish a minimum total memory, traffic, work
+or material cost for the joint installation. The current Out and
+prediction values are computed from an earned modular pair; they are
+not fresh acquisitions through a gcd-only source observation.
+
+Proof. Theorem 9.2 forces the successful-event multiplicities for each
+specified pair target. All other listed resources have separate
+operands, loops and simultaneous lifetimes; they were not minimized
+by that equation. The $H^2$ arithmetic alphabet concerns only
+$Q_{\rm pair}$ and omits the retained original source, tapes, references
+and control. It therefore supplies no bound of that size on the full
+literal service.
+
+Definition 10.1 observes actual leaf types and links. Later local gcd
+arithmetic and prediction use this acquired information. FARG133 and
+AQBR10.2 instead lower-bound policies with initially no source label
+and only paid complete current/terminal gcd replies, fixed action
+acknowledgements and no field traversal. Their sole-observation
+hypothesis fails here. Charging these stronger field operations does
+not turn their observations into gcd replies or make their lower
+bound applicable. No gcd-query optimum, reset access, narrower-port
+acquisition or physical cost bound follows. $\square$
+
+## 14. Supplier correspondence and the remaining recovery boundary
+
+**Definition 14.1 (source-relative contribution and exact subtraction).**
+The contribution is the actual two-coordinate LAB action/access/commit
+bridge on $\mathcal D_+$, including the exact source-relative composition
+reach criterion and the alpha obstruction. Its arithmetic consequence
+uses an existing pair recovery theorem after that bridge is proved.
+The following correspondences fix what is reused.
+
+| Supplier | Reused mathematics and retained boundary |
+| --- | --- |
+| AA17–23 and AA37.1–37.2 | Birth-typed reachable terms, actual field/ref/rights installation, literal all-event tapes, complete seven-call grammar, Next and guarded count-path lifting. The new pair reach formula specializes and solves that lifting problem; the event-record theorem itself is reused. |
+| This volume §§1–7, especially Definition 5.1 | Actual scalar actuators, paid traversal, full inner/public traffic and every-event scalar commit, including Next. The added pair fields and exact whole-frontier action are different from scalar quantity targets. |
+| FARG2–5 and FARG130.1–130.5 | Syntax fold, literal global substitution, the matrix and unimodular quantity pair, affine-word law and full-alpha continuation quotient. Definition 9.3 supplies their actual LAB action realization; Definition 10.1 supplies earned initialization. No new arithmetic classification is claimed. |
+| AQBR9–12 | Arithmetic field meanings, entry/current distinction, actual continued output/prediction and residue-transport formulas. Only their recovery/continuation conclusion is used for $Q_{\rm pair}$; their gcd-only acquisition and sharp read budget are not transferred. |
+| Native Entry Reference and Graft Order §§20–23 | Actual newly acquired operand rows, entry frontier rather than newly born leaves, real bindings, old/pending operand distinctions and complete return are existing methods. Its received-body codec, encoded source, changing root-port reference, canonical event bank and row tariffs are not LAB primitives or this installation's tariff. |
+
+In the owning formal sources,
+GraftAffineClosure.step, quantity, observe, run, residue and
+residueReadout and the internal castRun, wordAffine, period, classifier
+and separates arguments of its result have the arithmetic meanings
+used in Theorem 12.2. They neither acquire our frontier nor grant its
+local edits. Its owning Blueprint Scribe fixes the same parameters and
+the all-initializations scope. Here the positive-beta representatives
+and actual macro legality supply the additional restriction argument.
+
+There are opposite Boolean conventions in these suppliers.
+GraftAffineClosure.run and realizationWord use false for $\mathsf R$
+and true for $\mathsf G$, agreeing with Definition 10.2's word bits.
+TerminalGcdAcquisitionCost.runWord uses true for $\mathsf R$ and false
+for $\mathsf G$; PositiveProbeCompiler.emit/compile and
+CommonDirectionScheduler.compiledReply use that latter interpreter.
+Transporting a chronological Boolean list between them requires
+pointwise Boolean negation, without reversal. Named words throughout
+(LAGP.7)–(LAGP.10) avoid this encoding ambiguity.
+
+PositiveProbeCompiler's private run_append, run_replacements,
+quantity_graft and emit_spec already prove the positive compiler's
+word/quantity correspondence. CommonDirectionScheduler's private
+effective_common_direction, decode_scalars and closing_cut already
+identify its requested reply tape and the entry-residue condition at
+an experiment cut. Their owning Scribes expressly retain a separate
+paid current gcd and closing-trajectory obligation.
+TerminalGcdAcquisitionCost's scalar_word_realization, word_affine,
+word_response and simulation arguments and its owning Scribe concern
+sole terminal gcd acquisition from a common entry. None is a new
+LAB-access or unknown-source acquisition result in this extension;
+Theorem 13.4 excludes their acquisition lower bound here.
+
+The intermediate mathematical tools are literature-attested.
+Geffroy, Leroux and Sutre,
+[*Occam's Razor Applied to the Petri Net Coverability Problem*,
+Section 2](https://arxiv.org/html/1607.05956v1), define enabled transitions
+by input-token inequalities and consumption/production. The two places
+here count alpha and beta; promotion consumes alpha and produces beta,
+and split consumes beta and produces beta plus alpha. This identifies
+the count abstraction, while the explicit same-source spine and leaf
+words in Theorem 9.2 supply its concrete LAB legality. No coverability
+algorithm or relaxation is used to infer an exact endpoint.
+Engelfriet, [*Tree Automata and Tree Grammars*, Definition 3.62](https://arxiv.org/html/1510.02036),
+supplies the standard tree-homomorphism interpretation of replacement.
+Its ability to describe substitution does not authorize local source
+edits, acquired rows or live references; those are the separate bridge
+of Theorem 9.4. The source-specific synthesis is repo-derived, without
+a worldwide literature-priority assertion.
+
+**Theorem 14.2 (precise remaining scope).** This construction supplies
+an earned, retained, actually usable common-source pair realization
+for the selected arithmetic task. It does not settle general recovery
+of independently meaningful space, actual time, full boundary and
+whole memory, any original fixed-model acquisition obstruction or
+universal generator/resource minimality.
+
+Proof. Theorems 9.4 and 11.2 establish the actual retained source,
+lawful actions, authentic operands, complete replies, records and
+return. Theorem 12.2 supplies the restricted arithmetic recovery
+directions on that same source. Theorem 12.3 gives actual fibres that
+lose syntax, history and original legal menus, and $\mathsf G^H$
+separates actual growth chronology from identical arithmetic behavior.
+Theorem 13.4 separates the strong-access acquisition from the
+gcd-only interface and its cost theorem. Rights and installation data
+were supplied and retained, not recovered from a residue. Busy states
+still need their listed operands and pending fields. Thus unknown-source
+acquisition with narrower access, whole-service recovery including
+legacy selectors and literal traffic, all-phase inversion, physical
+realization, actual metric/duration interpretation and whole-resource
+parsimony remain separate obligations. Original fixed-$G_{\rm gc}$,
+original-$Q$, parked-consumer and unchanged-initialization claims keep
+their original domains. No full-programme completion follows. $\square$
+
+[AQBR]: RECURSIVE_RELATIONAL_OBSERVATION_ARITHMETIC_ACQUISITION_RETURN.md
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f2ccb8837dbf02553dc0955cabcfac44acecc3e4e5f2d58445c79a5763b27eda
+  normalized_sha256: sha256:f2ccb8837dbf02553dc0955cabcfac44acecc3e4e5f2d58445c79a5763b27eda
+cas_ref: sha256:f2ccb8837dbf02553dc0955cabcfac44acecc3e4e5f2d58445c79a5763b27eda
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Completion/FixedTargetCompletionFlatness.fixed_target_completion_curvature_empty
+    target_statement_id: sha256:8c80e9cba3ffa35026da360626617cfcd5664bcd9536ed96e9bc6adb69914323
+receipts:
+  unresolved_subitems: []

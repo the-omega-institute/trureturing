@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d7749b2a22549eaeb06c15fc772430f2248daccfcea9b204abbbe0d4ebaa4cf1
+  normalized_sha256: sha256:d7749b2a22549eaeb06c15fc772430f2248daccfcea9b204abbbe0d4ebaa4cf1
+cas_ref: sha256:d7749b2a22549eaeb06c15fc772430f2248daccfcea9b204abbbe0d4ebaa4cf1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: G 波将 RH 等价定位列为第三门，不宣告等价已经成立。
+    previous_atom_id: 53e8884b9caf17c6b925c0dfe7fa4756353f03d1e3c801031113521c5114bddf
+    next_atom_id: 976e7f642c50242e5417d6c936ed65b23f7f98c63635361601d95fe1df049d47

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c173874f1336be61f338ea9bdd4596e184b2d67fe0aa2b67d6262427b0122a66
+  normalized_sha256: sha256:c173874f1336be61f338ea9bdd4596e184b2d67fe0aa2b67d6262427b0122a66
+cas_ref: sha256:c173874f1336be61f338ea9bdd4596e184b2d67fe0aa2b67d6262427b0122a66
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: E0 零个新 axiom 是实施约束，不宣称某证明的公理闭包。
+    previous_atom_id: d8d45f533547cc52a618794ba757580b2823f01464fe2a2d71c7d4329d22f8d5
+    next_atom_id: a8b9db4df6fb71c7d341ae50c9b38d068c882cb2f8891f7538129e5a4d653b38

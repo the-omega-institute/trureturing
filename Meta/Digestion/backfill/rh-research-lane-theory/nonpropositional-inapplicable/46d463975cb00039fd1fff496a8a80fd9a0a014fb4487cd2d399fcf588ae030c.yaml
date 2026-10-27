@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:46d463975cb00039fd1fff496a8a80fd9a0a014fb4487cd2d399fcf588ae030c
+  normalized_sha256: sha256:46d463975cb00039fd1fff496a8a80fd9a0a014fb4487cd2d399fcf588ae030c
+cas_ref: sha256:46d463975cb00039fd1fff496a8a80fd9a0a014fb4487cd2d399fcf588ae030c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项是五个后续节点的研究任务清单；求和表达式与积分只作为待研究对象列出，未断言这些目标已经成立。
+    previous_atom_id: 61284f2555f76064f1f4c5e0aa084ebb3813538e13147f3c88ce56a4dd4270b6
+    next_atom_id: 2ad211f052013ed78bfbe5b3c214eef2785314616e34ce21ddf7f8c36d312068

@@ -1,0 +1,20 @@
+**Theorem 21.3 (producer and direct-source charges).** Let the actual producer also have $R_{\rm p}$ Reads and $H_{\rm p}$ Holds. End-to-end through the right-hand column of Theorem 21.2, define
+
+$$
+J=J_{\rm p}+7N-1,\quad A=A_{\rm p}+N+2,\quad
+R=R_{\rm p}+3,\quad H=H_{\rm p}+3N+2.
+\tag{UFS.50}
+$$
+
+These are the actual respective operation counts. There are $J+R$ scalar returns, $A+H$ fixed acknowledgements, $J+A+R+H$ service calls and $A$ transmitted pulse rationals. Producer zero initialization, source construction, assurance, reference/grant setup and actual retained producer material are additional charges. The direct simultaneous-buffer path update of P Proposition 41.2 performs
+
+$$
+J(3N-2)\ \text{rational multiplications},\qquad
+J(2N-2)+A\ \text{rational additions},
+\tag{UFS.51}
+$$
+
+with $NJ$ destination-cell writes, in addition to initialization and all decoding, Read, Hold, framing and control work. There is no bound on the producer coordinates in (UFS.50) from $N$ alone.
+
+Proof. The producer and receiver act consecutively on the same actual $N$-cell source. Each Tick, including a producer Tick, has P41.2's $3N-2$ products and $2N-2$ additions; every Add has one actual root addition. Every destination cell is written in a simultaneous-buffer update. Initial zeroing writes all $N$ cells; any additional buffer initialization or coefficient/source installation has its actual further cost. The producer's scalar and acknowledgement semantics are those of Definition 17.1, giving the complete traffic sums. Optional surviving archives are counted rather than assumed to vanish or given to the receiver for free. Finally arbitrarily many producer zero Adds or Ticks from zero preserve an admitted endpoint, so producer command counts have no $N$-only upper bound. Their actual emitted frames and work remain charged even when endpoints coincide. $\square$
+

@@ -18,6 +18,8 @@ internal sealed class MoreauYosidaFormationSelectiveLoccRefutationDocument : ISc
                 "Coeff(a,b) is the complex a by b coefficient matrix of a vector in C^a tensor C^b. Fin(a) labels Alice's basis and Fin(b) labels Bob's basis.", false),
             Node("mass", "Squared vector norm", MassFormula(),
                 "The mass of M is the sum of the squared complex norms of all its entries. normSq(z) = |z|^2.", false),
+            Node("minor", "Two by two coefficient minors", MinorFormula(),
+                "The selected rows i,k and columns j,l determine a two by two determinant of the coefficient matrix.", false),
             Node("Pure", "Normalized pure vectors", PureFormula(),
                 "Pure(a,b) consists of coefficient matrices with mass one. Every normalized joint pure vector is represented, without a restriction to either selected block.", true),
             Node("Ensemble", "All finite pure ensembles", EnsembleFormula(),
@@ -142,6 +144,17 @@ internal sealed class MoreauYosidaFormationSelectiveLoccRefutationDocument : ISc
     private static Formula CoeffFormula() => Dims(Eqn(CoeffType(), MatrixType(Fin(A),Fin(B))));
     private static Formula MassFormula() => Dims(All("M",CoeffType(),Eqn(Call("mass",M),
         SumOver("i",Fin(A),SumOver("j",Fin(B),Call("normSq",At(M,F.Id("i"),F.Id("j"))))))));
+    private static Formula MinorFormula()
+    {
+        Formula i = F.Id("i"), j = F.Id("j"), l = F.Id("l");
+        Formula formula = Eqn(Call("minor",M,i,K,j,l),
+            Subtract(Mul(At(M,i,j),At(M,K,l)),Mul(At(M,i,l),At(M,K,j))));
+        formula = All("l",Fin(B),formula);
+        formula = All("j",Fin(B),formula);
+        formula = All("k",Fin(A),formula);
+        formula = All("i",Fin(A),formula);
+        return Dims(All("M",CoeffType(),formula));
+    }
     private static Formula PureFormula() => Dims(Eqn(PureType(),Subset("M",CoeffType(),Eqn(Call("mass",M),D(1)))));
 
     private static Formula EnsembleFormula()

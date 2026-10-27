@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ec745d94df0e938a32ee4d11b433103d57f71ed5fa7be74b1d059dd176e3f305
+  normalized_sha256: sha256:ec745d94df0e938a32ee4d11b433103d57f71ed5fa7be74b1d059dd176e3f305
+cas_ref: sha256:ec745d94df0e938a32ee4d11b433103d57f71ed5fa7be74b1d059dd176e3f305
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 以存在 CPTP 左逆作为完整量子恢复的术语定义，未断言这样的左逆存在；其余为实现资源和文献适用条件说明。
+    previous_atom_id: a191af0e5afc6ed1eadc43bad6b7a97be600db3c47bdcc793f5be55e5034cc4c
+    next_atom_id: f8e286a0cafbc8cad3a5acd151d483e01f16794f4970eb6efbe09301e876b054

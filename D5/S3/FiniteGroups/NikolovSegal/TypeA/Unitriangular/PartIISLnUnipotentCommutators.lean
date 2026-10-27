@@ -34,7 +34,7 @@ def doubleEmbed : SpecialLinearGroup (Fin n) F →*
 private def upperBlock (A : Matrix (Fin n) (Fin n) F) :
     SpecialLinearGroup (Fin n ⊕ Fin n) F :=
   ⟨fromBlocks 1 A 0 1,by simp [det_fromBlocks_zero₂₁]⟩
-private def lowerBlock (A : Matrix (Fin n) (Fin n) F) :
+def lowerBlock (A : Matrix (Fin n) (Fin n) F) :
     SpecialLinearGroup (Fin n ⊕ Fin n) F :=
   ⟨fromBlocks 1 0 A 1,by simp [det_fromBlocks_zero₁₂]⟩
 private theorem upper_inverse (A : Matrix (Fin n) (Fin n) F) :

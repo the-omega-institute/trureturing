@@ -23,10 +23,18 @@ except KeyboardInterrupt:
 PY
 fi
 # Lake checks each pinned Git dependency with `git diff --exit-code HEAD`.
-# Restoring the dependency files changes their stat data, so Git's optional
-# index refresh would change an otherwise identical cache. Keep the content
-# comparison and required writes (such as checkout), but disable that refresh
-# for this process tree. Append to, rather than replace, caller configuration.
+# Compare with disposable indexes so Git can refresh restored stat data without
+# rewriting the dependency's index. Required writes still use the native index.
+reader_git="$ROOT/tools/scripts/worktree/lean-git/git"
+[[ -x "$reader_git" ]] || { echo 'lean-cache-run: reader Git adapter is absent' >&2; exit 2; }
+if [[ -z "${STRATALINT_LEAN_READER_GIT:-}" ]]; then
+  native_git="$(command -v git)" || { echo 'lean-cache-run: git is required' >&2; exit 2; }
+  [[ "$native_git" == /* ]] || native_git="$PWD/$native_git"
+  export STRATALINT_LEAN_READER_GIT="$native_git"
+fi
+export PATH="$(dirname "$reader_git"):$PATH"
+# Keep optional refresh disabled outside the adapter's private-index comparisons.
+# Append to, rather than replace, caller configuration.
 git_config_count="${GIT_CONFIG_COUNT:-0}"
 [[ "$git_config_count" =~ ^[0-9]+$ ]] || { echo 'lean-cache-run: invalid GIT_CONFIG_COUNT' >&2; exit 2; }
 while [[ ${#git_config_count} -gt 1 && "$git_config_count" == 0* ]]; do

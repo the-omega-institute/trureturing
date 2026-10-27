@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:21fbc61879c83ed84bb06250b8bce7fb736fae4cc8e3fc12dca19ce3092043b9
+  normalized_sha256: sha256:21fbc61879c83ed84bb06250b8bce7fb736fae4cc8e3fc12dca19ce3092043b9
+cas_ref: sha256:21fbc61879c83ed84bb06250b8bce7fb736fae4cc8e3fc12dca19ce3092043b9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为 presentation、偶奇分解、Krein 逆与 Gram 惯性的增补标题和四个候选路径。
+    previous_atom_id: da9825295c227048ebd1b6889ed478a34857c1d17e86f138b7e7152fa75ce494
+    next_atom_id: 380b0ce40c744ffe1ec417627571d72eeee9768172bc2586207da5513aa2ecf9
+  chain_atoms:
+    - 52f2b5b0ff266653955d4727d7fe619e3d614441920d74bb017ea5989861f811
+    - 6729ecc5139bd67c441b0b7d43b93972070e367208017da01167cafd98e3ffef

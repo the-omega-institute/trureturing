@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ef5dfaa41ee160a93a9c6eb0a798e0b2693e3f9f4d416ad732045c45fce94735
+  normalized_sha256: sha256:ef5dfaa41ee160a93a9c6eb0a798e0b2693e3f9f4d416ad732045c45fce94735
+cas_ref: sha256:ef5dfaa41ee160a93a9c6eb0a798e0b2693e3f9f4d416ad732045c45fce94735
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 本条询问传播锥、钟尺与维数的相容来源，不声称已经构造共同几何。'
+    previous_atom_id: 276012e230bc10f4ee8d2c312738a04fb9705b2a28769cd6a8b37442f114c7e4
+    next_atom_id: 36c1a52fc843b1ec9b3202a6b258c781ad50c2c8945fc9ee0f4b30e098cf9c34

@@ -1,0 +1,77 @@
+Proof. For part 1, run a proposed total correct controller on the
+one-cell zero-entry reference. Its successful stopping transcript
+$\pi$ is finite. Lemma 24.2 supplies one admitted specimen that repeats
+that whole transcript and hence the same successful export. The two
+native orders differ, and their impulse laws differ already at the
+second moment. Thus neither a native-law export nor an impulse-law
+export can be correct on both.
+
+For the predictor target it is essential to use the actual final states,
+not the entries or an unexecuted reset. They are respectively
+
+$$
+a=\sum_\ell u_\ell\lambda^{t-s_\ell},\qquad
+b=S^t z+\sum_\ell u_\ell S^{t-s_\ell}e_0.
+\tag{UFS.59}
+$$
+
+Starting at these very cuts, consider the two legal alternative words
+$W=$ Tick; Tick and $W^+=$ Add$(1)$; Tick; Tick. On any one source the
+last-root difference between these two alternatives is its second
+native impulse moment, independently of its current state. If the
+complete continuations agreed between the two sources for both words,
+subtracting their final scalars would force
+$\lambda^2=\lambda^2+\epsilon^2$. Hence at least one word has different
+returns. The same exported self-sufficient predictor cannot be correct
+on both actual stopping states. These are two alternatives quantified
+by the task, not an experiment requiring cloning, reset or execution
+of both words on one specimen. A failure on fixed words also defeats
+prediction of every legal adaptive continuation.
+
+For part 2, first fix the reference specimen, independently of all bits.
+Almost-sure successful finite acquisition implies that at least one
+successful finite execution reads a finite bit word $w$. More explicitly,
+the successful finite executions are a countable union of cylinders of
+finite bit prefixes; every such cylinder has probability
+$2^{-|w|}>0$, with probability one when $w$ is empty. Fix one stopping
+prefix. All its infinite extensions give the same finite transcript
+$\pi$ and export, because no further bit has been read at this stop.
+Zero error on the reference forces that export to be correct there:
+an incorrect fixed export on this cylinder would already have positive
+error probability.
+
+Construct the single witness $(S,z)$ from this one $\pi$ by Lemma 24.2,
+and fix it before a fresh independent fair-bit run. On its $w$ cylinder,
+local computation and all returning observations agree by induction,
+so the controller again stops with the identical export. The native-law
+or actual-cut predictor contradiction from part 1 makes it incorrect
+on this witness. Its error probability is at least $2^{-|w|}>0$.
+This contradicts zero error. The witness is not selected separately for
+each infinite tape. No numerical error floor independent of the
+controller, transcript or radius is asserted. The exported predictor
+here is the finite locally evaluable exact predictor in Definition 24.1;
+future random bits are not a source observation. Even if its evaluation
+were allowed fresh independent bits with zero-error almost-sure exact
+answers, their common law could not equal two different required scalar
+answers almost surely on the separating word.
+
+For part 3, the closed condition $\|z\|_2\le0$ gives $z=0$ on the
+actual source, without an observation or an inferred unknown norm.
+Execute the authorized Add$(1)$ and receive its acknowledgement. This
+really establishes $e_0$. Apply [P Theorem 37.2][P]: the initial Read
+and $2N$ actual returning Ticks give $2N+1$ scalar returns; the first
+singular positive impulse Hankel block earns the uncapped order.
+[P Propositions 37.3–37.4][P] supply native rational Jacobi inversion,
+least recurrence and transfer. The actual final vector is
+$T^{2N}e_0$, and [P §§40–41][P] supply its retained complete-menu
+predictor and continued same-root use, conditional on the already
+supplied binding and rights. Every Hold, acknowledgement, scalar,
+calculation and retained record has its stated real cost. These are
+applications of the supplied positive endpoint, not new inversion or
+retention theorems. The fixed enclosure lies strictly inside $0<T<I$,
+so all those supplier hypotheses hold. $\square$
+
+An open radius-zero ball is empty and is not this positive endpoint.
+The dichotomy concerns exactly these nested **closed** entry classes,
+this service and these exact successful acquisition contracts.
+

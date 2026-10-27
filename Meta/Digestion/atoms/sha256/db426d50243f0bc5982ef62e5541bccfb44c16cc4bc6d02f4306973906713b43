@@ -1,0 +1,109 @@
+**Theorem 17.2 (finite law, prefix guards and the full signed readout limit).**
+For every fixed $I,T$ and $\rho$ above, Definition 17.1 defines a
+measurable probability law on finite lawful original commands.
+Every command has finitely many linear legs of positive duration,
+with finite pathwise velocities, and obeys at all prefixes
+
+$$
+ k_0+\min_{[0,T]}a_\rho\ge l>0,
+ \qquad k_0+\max_{[0,T]}a_\rho\le u<H_{\rm n}.
+\tag{17.5}
+$$
+
+Its own first observation exit from $(l,u)$ equals $\theta$ whenever
+$\theta\le T$, including $\theta=T$; otherwise it has no such exit
+on $[0,T]$. Its chronological triple agrees with $(A,B,W)$ at every
+partition endpoint and throughout the final hold. With
+$K_I=\max(|l-k_0|,|u-k_0|)$ it satisfies
+
+$$
+\begin{gathered}
+ \|a_\rho-A\|_\infty\le3\rho,\qquad
+ \|b_\rho-B\|_\infty\le4\rho,\\
+ \|J_\rho-W\|_\infty\le4K_I\rho+4\rho^2.
+\end{gathered}
+\tag{17.6}
+$$
+
+For every deterministic $\rho_n\downarrow0$ in the allowed range,
+the complete ten-output held paths of these actual commands converge
+almost surely uniformly on $[0,T]$ to $O$. Their probability laws
+therefore converge weakly to the original held source-start output
+law $\nu_{I,T}$ of §13. The outputs include every ordered signed
+component, every factor two and every fixed preparation rotation in
+(7.8), with the original $2\pi$ phases and unchanged probabilities.
+
+The selector uses the complete source marks and offline exact
+stopped-path information, including $S$ and the cell oscillations
+in (17.2). It asserts neither causal or finite-bit acquisition nor
+any uniform command count, speed, energy or other resource bound.
+Hidden $z$ is never a native command coordinate or readout.
+
+**Proof.** Formula (16.2) is a measurable source path map. The first
+exit from the open height interval is a Borel path functional, and
+so are its censored value and the stopped path. Continuity at the
+interior source gives $S>0$. Supremum functionals in (17.2) can be
+evaluated on rational relative fractions of each cell. They are
+Borel functions of the path and of $S$; hence the first successful
+integer $m$ is measurable. Uniform continuity makes the first two
+oscillations tend to zero as $m\to\infty$. The third tends to zero
+as well, bounded by the oscillation of $W$ plus $K_I$ times that
+of $B$. This proves finite termination for each fixed $\rho$,
+without a uniform modulus assumption on the source law.
+
+At every cell start $h_i\in(l,u)$, and its terminal height is in
+$[l,u]$; it can lie on the boundary only at $S=\theta\le T$.
+Conditions (17.2)--(17.3) imply all the hypotheses of [GL, Lemma
+17.1], with the stronger $|X|,|Y|\le\rho$, $|C|\le\rho^2$.
+That supplier proves that the entire inward rectangle and phase
+leg remain interior, that the final height leg reaches a boundary
+only at its terminal time, and that the endpoint relative integral
+is exactly $C$. Its prefix bounds are
+$|x|\le2\rho$, $|y|\le3\rho$, $|j|\le3\rho^2$.
+It does not use a primitive central command. The rectangle actually
+executes the real value $dq=C$, with the sign of $C$ unchanged.
+
+Inductively, if the global integral equals $W_s$ at the beginning
+of a cell, at its end it is
+$W_s+A_sY+C=W_t$. The same induction gives the two first-level
+endpoints. Thus there is no reset of the integral at a join, and
+the chronological cross term $A_sY$ is retained. For a partial
+prefix $v$ in this cell the exact global integral is
+$W_s+A_s y(v)+j(v)$. Subtract the target identity
+$W_v=W_s+A_s(B_v-B_s)+C_{s,v}$ from (17.2). The just-quoted
+supplier bounds give (17.6). After $S$ both triples are held at
+their exactly matching endpoint. This also proves (17.5) and exact
+observation exit. Since $I$ is strictly inside the original native
+slab, boundary arrival for the observation remains strictly lawful
+for the original command. The entire numerical command still has
+precisely its original domain
+$(-\min a_\rho,H_{\rm n}-\max a_\rho)$; the claim is at the fixed
+preparation, not uniformly over all starting heights in that domain.
+
+Each of the finitely many cells has positive length and six finite
+vertices. The connector and final hold therefore give a finite
+list of actual native instructions with finite pathwise variation
+and velocities. On each event specifying $m$, their times, vertices,
+orientation and slopes are Borel functions of the selected data.
+Thus the finite-list command map is measurable. This proves an
+actual pushforward command law, not only existence of a conditional
+law on unspecified controls.
+
+Apply the supplied lift continuity [GL, Theorem 3.1] to (17.6).
+Explicitly the real phase differences are bounded by
+$\tfrac12\|b_\rho-B\|_\infty$ and
+$|c_0|\|b_\rho-B\|_\infty+r^{-1}\|J_\rho-W\|_\infty$.
+Reduce these same phases modulo $2\pi$. The exact ten-output map
+(7.8) is uniformly continuous on $I\times\mathbb T^2$, with all
+its preparation rotations fixed. It carries uniform triple
+convergence to uniform convergence of the complete outputs.
+Because every stage has the exact same observation exit on the
+horizon, this holds for the held paths as stated. Almost-sure
+uniform convergence implies weak convergence of their laws by
+bounded continuous tests. Theorem 16.2 identifies the limiting
+law as the actual $\nu_{I,T}$. No exact-contact event was passed
+through weak convergence. Neither $z$ nor a new central actuator
+enters this deterministic selector. All stochastic dependence of
+the visible coordinates on $z$ remains part of the declared
+complete-mark source law. $\square$
+

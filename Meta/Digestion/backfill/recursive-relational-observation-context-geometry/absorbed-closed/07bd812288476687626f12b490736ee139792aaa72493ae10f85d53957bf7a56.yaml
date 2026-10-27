@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:07bd812288476687626f12b490736ee139792aaa72493ae10f85d53957bf7a56
+  normalized_sha256: sha256:07bd812288476687626f12b490736ee139792aaa72493ae10f85d53957bf7a56
+cas_ref: sha256:07bd812288476687626f12b490736ee139792aaa72493ae10f85d53957bf7a56
+coverage_gids:
+  - gid: D5/S3/Observer/MetricGeometryLaws/CanonicalDiscountedFutureGeometry.canonical_discounted_future_geometry
+    target_statement_id: sha256:ceb3ded471bd861c154b7a6fc53cfc88e906da873a954cd5557138e585e8a748
+  - gid: D5/S3/Observer/MetricGeometryLaws/FirstDifferencePowerLaw.first_difference_power_law
+    target_statement_id: sha256:4c1a848f06b40e6522ce4037cb93bf5c21592c118c8b00ea500c6f45394274c5
+receipts:
+  unresolved_subitems: []

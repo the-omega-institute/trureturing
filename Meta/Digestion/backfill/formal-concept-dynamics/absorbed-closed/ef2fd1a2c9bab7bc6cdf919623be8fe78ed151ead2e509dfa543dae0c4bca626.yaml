@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ef2fd1a2c9bab7bc6cdf919623be8fe78ed151ead2e509dfa543dae0c4bca626
+  normalized_sha256: sha256:ef2fd1a2c9bab7bc6cdf919623be8fe78ed151ead2e509dfa543dae0c4bca626
+cas_ref: sha256:ef2fd1a2c9bab7bc6cdf919623be8fe78ed151ead2e509dfa543dae0c4bca626
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DecisionValue/DominantStrategyDirectification.dominant_strategy_directification
+    target_statement_id: sha256:0956495380cde436243e40902dcd1796a487eabecd2788ea13d802d681c91471
+receipts:
+  unresolved_subitems: []

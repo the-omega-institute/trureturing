@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:df8ec2aefae4cb09ed2ab74ba5b0d22ac5e6f124986a49c9df6ebfe38ec7dfb5
+  normalized_sha256: sha256:df8ec2aefae4cb09ed2ab74ba5b0d22ac5e6f124986a49c9df6ebfe38ec7dfb5
+cas_ref: sha256:df8ec2aefae4cb09ed2ab74ba5b0d22ac5e6f124986a49c9df6ebfe38ec7dfb5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：此段为 OrthogonalSyndromeDecoding 等模块的覆盖范围及未覆盖事项说明，不能据此增加任何通道范数或 Chern 数覆盖。
+    previous_atom_id: a4d3131f53782d3691d0e0cf333aad1714b11b2a1d026368faec77ad61fdf293
+    next_atom_id: f9b05acbfcfb38c2bbf51ce9640e83a41842b03c86fcba2bcb9cd07846ae8a41

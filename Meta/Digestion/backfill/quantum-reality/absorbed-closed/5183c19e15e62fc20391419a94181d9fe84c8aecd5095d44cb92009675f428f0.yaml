@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5183c19e15e62fc20391419a94181d9fe84c8aecd5095d44cb92009675f428f0
+  normalized_sha256: sha256:5183c19e15e62fc20391419a94181d9fe84c8aecd5095d44cb92009675f428f0
+cas_ref: sha256:5183c19e15e62fc20391419a94181d9fe84c8aecd5095d44cb92009675f428f0
+coverage_gids:
+  - gid: D5/S3/Factorization/LogarithmicLength.factorization_log_length_eq_log
+    target_statement_id: sha256:98e819e84ea1e30d096ce0cfef41e4b76e313a6960081918f077f17ee28deb37
+receipts:
+  unresolved_subitems: []

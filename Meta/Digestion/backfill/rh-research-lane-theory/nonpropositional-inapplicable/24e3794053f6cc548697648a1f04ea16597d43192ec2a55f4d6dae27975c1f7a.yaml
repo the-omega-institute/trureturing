@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:24e3794053f6cc548697648a1f04ea16597d43192ec2a55f4d6dae27975c1f7a
+  normalized_sha256: sha256:24e3794053f6cc548697648a1f04ea16597d43192ec2a55f4d6dae27975c1f7a
+cas_ref: sha256:24e3794053f6cc548697648a1f04ea16597d43192ec2a55f4d6dae27975c1f7a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: PR 5602 的源码/结果哈希、迭代器修复和未执行内核检查的状态收据。
+    previous_atom_id: d47a9992ebe3d1d2deac39260535b920dc4e7146e13a7156f9230ccab71a780d
+    next_atom_id: ac43bf23280a3c7e9fcd19428abefc40d8bb0cfb3745761dba26ed6a0fbdb44e

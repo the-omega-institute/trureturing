@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7916ca038cb795846618d85ceab687d1eac2958fc13fe3e71ff17bb4da2c2c5e
+  normalized_sha256: sha256:7916ca038cb795846618d85ceab687d1eac2958fc13fe3e71ff17bb4da2c2c5e
+cas_ref: sha256:7916ca038cb795846618d85ceab687d1eac2958fc13fe3e71ff17bb4da2c2c5e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条受“本轮不主张”清单支配，只限定prime phases 同步未被本轮声称完成，不对该数学内容作断言。
+    previous_atom_id: 9f4d34e191501789d79ebc1f1c1ac519ca0bcd72dd80bc9fbee3852edca0b688
+    next_atom_id: effe9500a6976a3be72510b505b4343a0397a3e6e080dd108ba01f4d845bad77

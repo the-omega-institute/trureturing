@@ -1,0 +1,14 @@
+**Theorem 20.2 (actual four-view entry, all recoveries and passive transport).** For every positive-history entrance in Assumption 17.2, the operations of Definition 20.1 actually prepare $e_0$ at $o$ and then reach P Definition 39.1's domain with current state $x=T^ke_0$. On that domain every view recovers the same $(T,k,x)$, hence every other view; all recovery routes agree and commute with actual passive Tick. This consumes P's existing four-view theorem, with a paid entrance earned by Theorems 18.1–19.2.
+
+Proof. The reversed native Krylov matrix in (UFS.49) is invertible. After the first $j$ actual Tick/Add pairs the field is
+
+$$
+x_j=T^jx_*+\sum_{l<j}u_lT^{j-1-l}e_0.
+$$
+
+At $j=N$, (UFS.49) gives $x_N=e_0$. This is exactly Theorem 5.1's actual preparation proof; it uses only the known native law and current field, both earned here. Theorem 19.2 predicts and retains every intermediate Tick return, including outputs before a pair's Add. Thereafter the actual passive field is $T^ke_0$, and the origin Read and all $k$ Tick returns are exactly $(m_0,\ldots,m_k)$. Thus the full actual-source and paid-list hypotheses of P39 hold, rather than merely a numerical recurrence matching a unit orbit.
+
+For explicit recovery correspondence, Time's length gives $k$; its first flat impulse block gives $N$, and P37 gives the native $T$. Boundary's finite transfer generates native moments locally, thereby recovering $T$; its present root identifies $k$. Memory's least recurrence degree gives $N$, and its initial values and recurrence generate the same native moments, thereby recovering $T$; its first predictive entry identifies $k$, and $\mathcal O_N^{-1}a$ is the current native $x$. Space already exposes $T,x$ and uses its present root to identify $k$. Each phase inversion terminates on the stated actual image because P Lemma 39.2 gives $1=m_0>m_1>\cdots>0$. There is no terminating off-image recognition claim.
+
+Each route therefore recovers the unique same $(T,k,T^ke_0)$. Re-forming any target view from that triple gives the direct result, as in P Propositions 39.3–39.4. In particular a reconstructed numerical Time list equals this already paid list, without creating provenance for an unexecuted segment. Actual passive Tick sends the triple to $(T,k+1,Tx)$, appends its real root to Time, keeps $F_T$ and updates Boundary's present root, and shifts Memory with its last entry supplied by $q(T)=0$. Read and Hold preserve the passive epoch. These updates agree under every recovery route. A later Add remains correctly predicted by Theorem 19.2, but does not inherit this passive-domain claim for arbitrary controlled journals. $\square$
+

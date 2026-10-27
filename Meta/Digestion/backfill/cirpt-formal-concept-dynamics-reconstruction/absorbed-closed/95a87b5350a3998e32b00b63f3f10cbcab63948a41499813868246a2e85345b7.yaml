@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:95a87b5350a3998e32b00b63f3f10cbcab63948a41499813868246a2e85345b7
+  normalized_sha256: sha256:95a87b5350a3998e32b00b63f3f10cbcab63948a41499813868246a2e85345b7
+cas_ref: sha256:95a87b5350a3998e32b00b63f3f10cbcab63948a41499813868246a2e85345b7
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.conceptKernel
+    target_statement_id: sha256:58f4ad4fa102eebd6d9ecd14144bfa40fbcf5ecdf7b4642daf611c7ce402f2e0
+  - gid: D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.DynClosure
+    target_statement_id: sha256:7ff7670c89df7da4496a18364b9091b09402aa9f41385851514e75e545076cdb
+  - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.controlledBehavior
+    target_statement_id: sha256:7b25fb9d7c463ccf633afe79dd8561557aa85cd22539cba8b84c86b6ad92b2b7
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8c800dd7c8c099c01918935e0cd99f4106e42450bc551207d3db1b22e738661e
+  normalized_sha256: sha256:8c800dd7c8c099c01918935e0cd99f4106e42450bc551207d3db1b22e738661e
+cas_ref: sha256:8c800dd7c8c099c01918935e0cd99f4106e42450bc551207d3db1b22e738661e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names zero density as a quantity requiring control.
+    previous_atom_id: 092689f2d0c81770855b7cf1e142e4538ea956c1b63970fac4420a1ef58b0819
+    next_atom_id: 5026d823ec7834d792c10eed86ea04f4b6b10e2c5ed9a198ebe0cdc6f13d3795

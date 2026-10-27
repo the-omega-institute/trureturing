@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c890e3f01bbfd12f1525cef2e63241934f01f3c9f7e04047d2d1659fa113feb5
+  normalized_sha256: sha256:c890e3f01bbfd12f1525cef2e63241934f01f3c9f7e04047d2d1659fa113feb5
+cas_ref: sha256:c890e3f01bbfd12f1525cef2e63241934f01f3c9f7e04047d2d1659fa113feb5
+coverage_gids:
+  - gid: D5/S3/Observer/HyperbolicTransport/GoldenImageRecoveryObstruction.golden_image_recovery_obstruction
+    target_statement_id: sha256:7f0d212f0a8149c78f04b9687878bf1f1354f8bd582e9ade62df64db81c6cc7c
+receipts:
+  unresolved_subitems: []

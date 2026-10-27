@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:69037b3356229925092afedd4f7cdb3ee67c811b9e839635eca6903b96c3efe8
+  normalized_sha256: sha256:69037b3356229925092afedd4f7cdb3ee67c811b9e839635eca6903b96c3efe8
+cas_ref: sha256:69037b3356229925092afedd4f7cdb3ee67c811b9e839635eca6903b96c3efe8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只列出“theta–Mellin 表示”这一图册候选名称，不陈述积分恒等式或延拓结论。
+    previous_atom_id: 13d8207b753d5fcacad7e201872d4585ff0a6a0b207226c021d098a20256ef17
+    next_atom_id: 47c89b31199224d5569c48c3897aa2e980d6f0143e755beb1c0efaec87107a14

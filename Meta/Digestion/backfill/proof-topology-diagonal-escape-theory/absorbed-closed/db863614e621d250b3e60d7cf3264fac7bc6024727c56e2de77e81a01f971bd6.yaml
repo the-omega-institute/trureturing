@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:db863614e621d250b3e60d7cf3264fac7bc6024727c56e2de77e81a01f971bd6
+  normalized_sha256: sha256:db863614e621d250b3e60d7cf3264fac7bc6024727c56e2de77e81a01f971bd6
+cas_ref: sha256:db863614e621d250b3e60d7cf3264fac7bc6024727c56e2de77e81a01f971bd6
+coverage_gids:
+  - gid: D5/S3/Factorization/Automata/PrimeHistoryNormalForm.realize
+    target_statement_id: sha256:e4f106ff4f01841942c714bb2ac7623b8d700ec65777e119dac77148a0da2c00
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:b6c7b5c0028c3d3fc79017dee19c01a6e21b1b1568430e84540c967d890ccafb
+  normalized_sha256: sha256:b6c7b5c0028c3d3fc79017dee19c01a6e21b1b1568430e84540c967d890ccafb
+cas_ref: sha256:b6c7b5c0028c3d3fc79017dee19c01a6e21b1b1568430e84540c967d890ccafb
+coverage_gids:
+  - gid: D5/S3/Observer/Completion/InfiniteParityContinuityObstruction.finite_support_parity_has_no_continuous_completion
+    target_statement_id: sha256:4ef1ca9014c41d0d7b74fa60eafabb783b157e5b656f54f8fed5d21bfa36a2bd
+  - gid: D5/S3/Observer/Completion/TerminalResidualDimension.constant_dimension_with_zero_terminal
+    target_statement_id: sha256:482808d926e211241b3762d581ca512882698543493b01d6c8073ebc29008e50
+  - gid: D5/S3/Quantum/Completion/LimitResidualDecomposition.limit_residual_orthogonal_decomposition
+    target_statement_id: sha256:1afc2073c7b3226f60a25113c34345421bec46ecde8fbf1f088ed6e2d8f89bda
+  - gid: D5/S3/Quantum/Completion/LimitStageResidualIntersection.limit_stage_residual_intersection
+    target_statement_id: sha256:8f3168b346ff632901a2044018da409da07e361a48933f26b0aac74689e72ca2
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 2baf6699881c2f808a054c540985e8dbb4d4664b0cca8a2476fcc7278f35f89b
+    - 8fe406323d892ae96cc8ab6f632b97a1d4135ad33ccbf60e311cdc38141b8819
+    - 180f5cebaf5c258d0fc69eb2d89f1aee9055806df2d2b8110cc128600b53ad80

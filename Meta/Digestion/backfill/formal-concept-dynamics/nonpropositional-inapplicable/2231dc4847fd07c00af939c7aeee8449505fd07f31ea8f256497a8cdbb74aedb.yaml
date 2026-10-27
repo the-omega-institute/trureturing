@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2231dc4847fd07c00af939c7aeee8449505fd07f31ea8f256497a8cdbb74aedb
+  normalized_sha256: sha256:2231dc4847fd07c00af939c7aeee8449505fd07f31ea8f256497a8cdbb74aedb
+cas_ref: sha256:2231dc4847fd07c00af939c7aeee8449505fd07f31ea8f256497a8cdbb74aedb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: “由实验获得”是证书来源途径的例举，不给出概率成功率或复杂度数学断言。'
+    previous_atom_id: 4440ac06a48b2a05090162e51ce3dd9f0d3021483550833410d8bcdc72cca4d9
+    next_atom_id: 9a104986bbdc8afd9ea135e4234e2be8e5fad91232671808d64b9ff9d3e19dd8

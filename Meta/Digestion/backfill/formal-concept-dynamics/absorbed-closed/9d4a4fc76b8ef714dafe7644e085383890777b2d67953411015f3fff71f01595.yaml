@@ -1,0 +1,22 @@
+fingerprints:
+  raw_sha256: sha256:9d4a4fc76b8ef714dafe7644e085383890777b2d67953411015f3fff71f01595
+  normalized_sha256: sha256:9d4a4fc76b8ef714dafe7644e085383890777b2d67953411015f3fff71f01595
+cas_ref: sha256:9d4a4fc76b8ef714dafe7644e085383890777b2d67953411015f3fff71f01595
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Evidence/ConflictingEvidenceAggregation.EvidenceValue
+    target_statement_id: sha256:285f16949675858d88693209c01efeac8b129a2e1ae7b2fb9f7958fad012ed9f
+  - gid: D5/S3/ConceptDynamics/Evidence/ConflictingEvidenceAggregation.bothSupported
+    target_statement_id: sha256:2f88383912a9be34be7f8bc31c6dc8b14d1506c7f2fb94be942650695040d8bc
+  - gid: D5/S3/ConceptDynamics/Evidence/ConflictingEvidenceAggregation.falseOnly
+    target_statement_id: sha256:788a27e6dea576b7aea994eca3786b08ff62a61a86779e41f46cda2664f9963a
+  - gid: D5/S3/ConceptDynamics/Evidence/ConflictingEvidenceAggregation.trueOnly
+    target_statement_id: sha256:5c9efd0720a09f4b3b39b9908cfc5c1589c74b2cd40754b12b13596b7fd75acb
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 57b639135be485676943b1ddb8f58d09062899e0b00989c90140d78ccbbdaccf
+    - 75ffb4fa8005f1c8adc43b5c4e6914604a81a8f90f84c558a2a97285242fc3dd
+    - 990fc72a481aecd2ef6770697f9204949b11ab8c65707a474ca062eb9d0bb9a6
+    - 0f919bd28ea9ad17ace225fec375ec8e081b9ea2e40ae4646ea7dfea9d321df7
+    - c0092df28b4fc85245b0161e14f80757fd5759ca1ac3ea942957a0cb31f78e42
+    - fabdc379f426785e18820e97526a2c591628b914f6c850f82038ac9c0e15edc5

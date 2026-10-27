@@ -1,0 +1,33 @@
+**Definition 16.1 (the marked source map).** Sample a Poisson random
+measure $\Pi$ with intensity $d\ell\,\mathbf n(d\omega)$ on
+$(0,\infty)\times\mathcal W$. A label $\ell$ indexes source local
+time; it is not the elapsed time of a native command. Almost surely
+there is at most one atom at any label. Put
+
+$$
+ \tau_\ell=\int_{(0,\ell]\times\mathcal W}\zeta(\omega)
+                     \,\Pi(ds,d\omega),\qquad \tau_0=0.
+\tag{16.1}
+$$
+
+For an atom $(\ell,\omega_\ell)$ define the synthesized path by
+
+$$
+ \mathsf Z_t=\omega_\ell(t-\tau_{\ell-})
+       \quad\hbox{if }\tau_{\ell-}<t<\tau_\ell,
+ \qquad \mathsf Z_t=e\quad\hbox{at all other times}.
+\tag{16.2}
+$$
+
+The endpoint convention agrees with the continuous mark endpoints.
+Define the auxiliary continuous clock
+
+$$
+ \mathsf L_t=\inf\{\ell\ge0:\tau_\ell>t\}.
+\tag{16.3}
+$$
+
+Each mark is used for its full original duration. Formula (16.2)
+adds no holding interval, killing, drift in the inverse clock or
+retiming of any mark.
+

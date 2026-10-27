@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:84daee29775ab91cb6c461053cd3be2af766349cd3763ceb132ece25490e64c2
+  normalized_sha256: sha256:84daee29775ab91cb6c461053cd3be2af766349cd3763ceb132ece25490e64c2
+cas_ref: sha256:84daee29775ab91cb6c461053cd3be2af766349cd3763ceb132ece25490e64c2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只引入语言读出 L 的类型；相对不可表达的条件与见证在后续定义，不在本切片。
+    previous_atom_id: 272b7038c8b67208820626b7060fcf8afde6e11a04f5e1812ef4a8040ff4a5b1
+    next_atom_id: c3e6679f8f51ca3486ce4ef65195d19d974ba85a542c0df7e78a66eb758dc5b1

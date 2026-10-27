@@ -14,6 +14,13 @@ internal sealed class StrictSpectralPolyaRefutationDocument : IScribeDocumentDef
         "Schatten-p approximants need not converge to the strict spectral approximant. A complex linear subspace of three-by-three matrices has a strict residual with singular values (1,1,0), whereas every minimizing residual for sufficiently large p has real last diagonal entry less than -1/4.",
         H("A counterexample to strict spectral convergence"),
         Blocks(
+            Node("rpow-square-half", "Real powers of a square",
+                All("a", Real(), All("p", Real(),
+                    Eqn(new Formula.Power(new Formula.Power(F.Id("a"), D(2)),
+                            new Formula.Fraction(P, D(2))),
+                        new Formula.Power(new Formula.Absolute(F.Id("a")), P)))),
+                "For real a and p, the nonnegative square a² has power p/2 equal to the p-th power of |a|.",
+                "rpow_square_half", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("cp", "Schatten-p approximation", CpFormula(),
                 "Page 308, verbatim: \"Thus for 1 < p < ∞ the cₚ-approximant B = Bₚ ∈ ℳ to A satisfying (1.1) is unique.\" Equation (1.1) minimizes the Schatten p-norm of A - X over X in the linear subspace. Here p is real, matrices have row and column carriers Fin m and Fin n, and schattenNorm is the finite singular-value norm in UpperBranchReduction. The limiting assertion below requires p > 1.",
                 "IsCpApproximant", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),

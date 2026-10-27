@@ -1,0 +1,8 @@
+**Definition 47.2 (independent sampled meanings).** Fix $k$, the earned oriented tree, the preparation order, actual installation and cleared handoff, and the acquisition schedule of Definition 46.2. Consider its returned held cuts as $a$ ranges over all $\mathbb Q^k$. Common context includes this fixed geometry/law/schedule and real access, but no old $a$-dependent advice. The numerical expressions have the following independently specified meanings.
+
+| Expression | Content at its specified cut |
+| --- | --- |
+| Space | The actual final oriented material tree and its complete present field $x_{\rm now}$ |
+| Time | The actual chronological list of $2k$ signed terminal preparation pulses, in the specified alternating order |
+| Boundary | The actual paid historical list $y$ of the $k$ root scalars at epochs $h_i$ |
+| Memory | The current autonomous root-prediction block $m=(e_o^{\mathsf T}B^rx_{\rm now})_{0\le r<N}$, with the earned model and a callable current-state updater |

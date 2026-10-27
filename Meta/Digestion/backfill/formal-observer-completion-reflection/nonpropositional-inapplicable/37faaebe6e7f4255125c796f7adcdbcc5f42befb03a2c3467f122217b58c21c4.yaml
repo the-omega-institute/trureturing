@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:37faaebe6e7f4255125c796f7adcdbcc5f42befb03a2c3467f122217b58c21c4
+  normalized_sha256: sha256:37faaebe6e7f4255125c796f7adcdbcc5f42befb03a2c3467f122217b58c21c4
+cas_ref: sha256:37faaebe6e7f4255125c796f7adcdbcc5f42befb03a2c3467f122217b58c21c4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 在协议操作清单中列出后处理这个操作名，不断言某个后处理的数学性质。'
+    previous_atom_id: abd0652f8337fff1619eddff5acf078b1c21f760454971941a2d6e431f193e22
+    next_atom_id: 7ebd220d7305430e9cc0cfad518ab60c3e2ed5786f801709ba749d7bb83e2efb

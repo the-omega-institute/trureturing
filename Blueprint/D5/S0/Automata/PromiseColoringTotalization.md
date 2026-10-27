@@ -4,7 +4,91 @@
 
 Consistent conflict colorings characterize total output automata on promise domains.
 
-**Theorem 1.1 (Exact state budget on an arbitrary nonempty promise domain).**
+**Definition 1.1 (Terminal prefixes).**
+
+Lean statement: `D5/S0/Automata/PromiseColoringTotalization.terminal`
+
+*Formalization.* `D5/S0/Automata/PromiseColoringTotalization.terminal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A word in the promise domain is a prefix of a legal word by using the empty continuation.
+
+**Definition 1.2 (The root prefix).**
+
+Lean statement: `D5/S0/Automata/PromiseColoringTotalization.root`
+
+*Formalization.* `D5/S0/Automata/PromiseColoringTotalization.root` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A chosen legal seed witnesses that the empty word belongs to the prefix domain.
+
+**Theorem 1.3 (Output uniqueness within a terminal color).**
+
+Lean statement: `D5/S0/Automata/PromiseColoringTotalization.terminal_eq`
+
+*Proof.* Machine-checked in Lean as `D5/S0/Automata/PromiseColoringTotalization.terminal_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any proper transition-consistent coloring, two legal words of the same terminal color have equal prescribed outputs. Otherwise the empty continuation makes their prefixes conflict.
+
+**Theorem 1.4 (Agreement on observed successors).**
+
+Lean statement: `D5/S0/Automata/PromiseColoringTotalization.completedStep_eq`
+
+*Proof.* Machine-checked in Lean as `D5/S0/Automata/PromiseColoringTotalization.completedStep_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each prefix p and letter a whose extension pa is still a prefix, the completed transition from the color of p is the color of pa. The choice of a representative prefix does not affect this result.
+
+**Theorem 1.5 (Agreement on legal outputs).**
+
+Lean statement: `D5/S0/Automata/PromiseColoringTotalization.completedOutput_eq`
+
+*Proof.* Machine-checked in Lean as `D5/S0/Automata/PromiseColoringTotalization.completedOutput_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At the terminal color of every legal word, the completed output equals that word's prescribed output, independently of the legal seed used for default choices.
+
+**Theorem 1.6 (Evaluation reaches the prefix color).**
+
+Lean statement: `D5/S0/Automata/PromiseColoringTotalization.complete_reaches`
+
+*Proof.* Machine-checked in Lean as `D5/S0/Automata/PromiseColoringTotalization.complete_reaches` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every legal prefix, evaluating the completed total automaton from its initial state reaches exactly the supplied color of that prefix. The assertion holds for every prefix length and for arbitrary promise domains.
+
+**Theorem 1.7 (Correctness of the completed machine).**
+
+Lean statement: `D5/S0/Automata/PromiseColoringTotalization.complete_correct`
+
+*Proof.* Machine-checked in Lean as `D5/S0/Automata/PromiseColoringTotalization.complete_correct` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The completed deterministic output automaton produces f on every word in D. Its behavior outside D is total but is not prescribed by this correctness condition.
+
+**Theorem 1.8 (Exact state budget on an arbitrary nonempty promise domain).**
 
 $$\operatorname{Realizable}(D, f, s) \iff \operatorname{ConsistentlyColorable}(D, f, s).$$
 
@@ -34,5 +118,12 @@ The construction includes an empty alphabet, a promise containing the empty word
 
 ## References
 
+- Truth anchor: `D5/S0/Automata/PromiseColoringTotalization.complete_correct`
+- Truth anchor: `D5/S0/Automata/PromiseColoringTotalization.complete_reaches`
+- Truth anchor: `D5/S0/Automata/PromiseColoringTotalization.completedOutput_eq`
+- Truth anchor: `D5/S0/Automata/PromiseColoringTotalization.completedStep_eq`
 - Truth anchor: `D5/S0/Automata/PromiseColoringTotalization.promise_coloring_iff_total_dfao`
+- Truth anchor: `D5/S0/Automata/PromiseColoringTotalization.root`
+- Truth anchor: `D5/S0/Automata/PromiseColoringTotalization.terminal`
+- Truth anchor: `D5/S0/Automata/PromiseColoringTotalization.terminal_eq`
 - Dependency: [D5/S0/Automata/FiniteSampleRestriction](FiniteSampleRestriction.md)

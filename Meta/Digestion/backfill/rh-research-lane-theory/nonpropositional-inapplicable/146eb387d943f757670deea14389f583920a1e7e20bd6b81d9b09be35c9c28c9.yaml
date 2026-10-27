@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:146eb387d943f757670deea14389f583920a1e7e20bd6b81d9b09be35c9c28c9
+  normalized_sha256: sha256:146eb387d943f757670deea14389f583920a1e7e20bd6b81d9b09be35c9c28c9
+cas_ref: sha256:146eb387d943f757670deea14389f583920a1e7e20bd6b81d9b09be35c9c28c9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此条只说明本轮不声明时间积分能量已经定义，不给出积分对象的数学性质。
+    previous_atom_id: 6217242bfa4b2bdc2b841fe44d0442dcccdebd66bdbecaad07c22db021de875f
+    next_atom_id: e7ae78e7b0833be8f908f16895d467349d7b19a087d990a2ea48e6064701ef17

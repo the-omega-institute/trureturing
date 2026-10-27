@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:28843323bc05dabfc5dd63293bff713cc287556bfa2cb209c3b32ac361bfa797
+  normalized_sha256: sha256:28843323bc05dabfc5dd63293bff713cc287556bfa2cb209c3b32ac361bfa797
+cas_ref: sha256:28843323bc05dabfc5dd63293bff713cc287556bfa2cb209c3b32ac361bfa797
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：把公共边缘相等作为重叠兼容性的定义要求，不宣称任意经验模型兼容。
+    previous_atom_id: a8380893012e2e217d5634386e8575a43b5ad126bb943f5dedffd0bf326279e6
+    next_atom_id: ed8925c3d0c20b706d0d9822ad39e50c3fc2c9ef1573620a99539212b2dd187a

@@ -20,6 +20,10 @@ internal sealed class GawronUlasFactorialSignConjectureDocument : IScribeDocumen
         "Factorial partition signs fail on an unbounded even progression.",
         H("Factorial Partition Signs: Conjecture 4.4 is False"),
         Blocks(
+            Node("partition-one-two-six", "A partition with prescribed multiplicities",
+                Partition126Formula(),
+                "For natural n, y and z with 2y+6z ≤ n, partition126 uses n−2y−6z ones, y twos and z sixes, whose total is n; the proof argument h supplies this inequality and the sum proof passed to ofSums is omitted from the formula.",
+                "partition126", DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Paragraph(Text(
                 "The statements are from arXiv:2202.05221v1. The integers n and k are nonnegative. "
                 + "Nat.Partition n represents unordered "
@@ -71,6 +75,21 @@ internal sealed class GawronUlasFactorialSignConjectureDocument : IScribeDocumen
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
             Blocks(Paragraph(Text(prose))), role, resolution);
+
+    private static Formula Partition126Formula()
+    {
+        var n = F.Id("n");
+        var y = F.Id("y");
+        var z = F.Id("z");
+        var twice = Multiply(Num(2), y);
+        var sixfold = Multiply(Num(6), z);
+        var parts = Add(Add(App("Multiset", "replicate", Subtract(Subtract(n, twice), sixfold), Num(1)),
+            App("Multiset", "replicate", y, Num(2))), App("Multiset", "replicate", z, Num(6)));
+        return Disp(All("n", Nat(), All("y", Nat(), All("z", Nat(),
+            Seq(Forall, Sp, Parenthesized(Seq(F.Id("h"), Colon, Sp, Le(Add(twice, sixfold), n))),
+                Comma, Sp, Parenthesized(Equal(Call("partition126", n, y, z, F.Id("h")),
+                    new Formula.Apply(Qualified("Nat", "Partition", "ofSums"), [n, parts]))))))));
+    }
 
     private static Formula CFormula()
     {

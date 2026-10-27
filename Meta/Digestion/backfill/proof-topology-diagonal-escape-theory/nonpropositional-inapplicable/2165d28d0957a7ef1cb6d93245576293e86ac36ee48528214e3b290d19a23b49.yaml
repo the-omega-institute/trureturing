@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2165d28d0957a7ef1cb6d93245576293e86ac36ee48528214e3b290d19a23b49
+  normalized_sha256: sha256:2165d28d0957a7ef1cb6d93245576293e86ac36ee48528214e3b290d19a23b49
+cas_ref: sha256:2165d28d0957a7ef1cb6d93245576293e86ac36ee48528214e3b290d19a23b49
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: PC.5 的纯记号约定：以 A_a(e,w) 命名从给定状态执行给定词成功的谓词，未断言任何词成功、两个词等价或正规形完备。
+    previous_atom_id: cb7f31bb9baa6eb951ff3a2f38e96e8bf39cb324f92e61d01f31e5289c68dd0c
+    next_atom_id: c143df00c04d7d843b314156485305172f5db0ea6efa574a2ab792d59dc46e02

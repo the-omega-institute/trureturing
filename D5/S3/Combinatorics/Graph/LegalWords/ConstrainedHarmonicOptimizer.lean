@@ -66,7 +66,7 @@ private theorem objective_unordered (n : ℕ) (p : Legal n → ℝ) :
       Sym2.lift ⟨fun a b => harmonic (p a) (p b), fun a b => harmonic_symm _ _⟩ e.val)
   simpa [deletionEdge, harmonic_symm] using he.symm
 
-private theorem adj_iff (n : ℕ) (a b : Legal n) :
+theorem adj_iff (n : ℕ) (a b : Legal n) :
     (legalWordGraph n).Adj a b ↔
       ∃ i : Fin n, a.val i ≠ b.val i ∧ ∀ j, j ≠ i → a.val j = b.val j := by
   classical

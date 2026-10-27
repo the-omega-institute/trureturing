@@ -1,0 +1,171 @@
+# First negative omission and actual inverse-parent exchanges
+
+## Abstract
+
+Native prefix truncation, actual even-half insertion or relocation, and odd-parent prefix insertion construct full physical strict J competitors in complementary first-negative regions.
+
+**Theorem 1.1 (Physical inverse-parent parity formula).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.negative_parent`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.negative_parent` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary natural k,t with k>=3 and a physical y:Fin k with s(k,t,y)<0, put b=rho^(-1)(y), Y=-s(k,t,y), Q=2^(k-2), N=4Q-1 and rho=finRotate k. Exactly the stated parity alternative holds: either Y mod 2=0, 2s(b)=-Y, abs(s(b))<Q and s(b)<0; or Y mod 2=1, 2s(b)=N-Y and Q<=s(b). The source-cycle carry equation at the actual b, including the seam rho(b)=y, and centered bounds exclude the negative wrap. The positive wrap yields the odd branch and the zero wrap yields the even branch. Equal numerical values at different physical labels remain distinct. This formula determines the parent used in the even-half, odd uniform-prefix and odd two-generation exchanges.
+
+**Theorem 1.2 (Full physical exchange retaining every SMALL occurrence).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_firstNegative_shift_exchange_full`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_firstNegative_shift_exchange_full` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The exchange is conditional on the two actual old arrival measurements stated below. It reuses native_geometry, strip_split, inStrip_append, exists_order_between and inventory_of_perm. The new construction joins the complete T0++T1 batch across the omitted first negative and checks the two retained negative gates at their translated actual endpoints.
+
+For arbitrary k>=3 and natural t, use physical labels Fin k and the full centered dyadic source s(k,t). Put Q=2^(k-2), N=4Q-1, C=2Q-1, n=rho(p), x=rho(n), P=s(p)>0, D=abs(s(n)), r=abs(s(x)). Assume n is LARGE and N<3P. Native geometry proves s(n)=-D, s(x)=r, Q<=D<P<r<=C, D=N-2P, r=2P-D and 2P<=C+Q. The actual old word W=A++[x]++T0++[y]++T1++[zpen]++T2++[z]++E is Legal from ORIGINAL zero, with all natural takes and physical Nodup. Both p and n are unused in all W. A is arbitrary; every occurrence of S=T0++T1++T2++E is SMALL, with abs(s(i))<Q. The three physical occurrences y,zpen,z are negative LARGE. No numerical-source injectivity is assumed.
+
+Write Y=-s(y), a0=sum(A), h=sum(W). Assume C-P<h<D and Y<=P. The two additional measurements are the actual old prefix sums AFTER zpen and AFTER z, each >=C-P. Explicitly they are sum(A++[x]++T0++[y]++T1++[zpen]) and sum(A++[x]++T0++[y]++T1++[zpen]++T2++[z]). These are not sums of suffixes and are not shifted or reordered measurements. Equality with C-P is allowed. The theorem adds no q, a, crossing-band or source-edge premise, no Bad-count premise and no Z<=D premise. It does not assume a new Legal word or an available return batch.
+
+Set delta=Y-P<=0 and b=a0+P-D. Old legality at the physical x gives a0>=0 and a0+r<=C. Thus [p,n] is legal at a0, including its intermediate arrival a0+P; its final height is b in [0,C-P], hence in [0,Q-1]. Let d1,a1 be the old departure and arrival of zpen, and d2,a2 those of z. All four are in [0,C], and a1<=d1, a2<=d2. For each measured arrival a, a+delta>=C+Y-2P>=C+Q-2P>=0. The shifted departures are no lower than the corresponding shifted arrivals; all four shifted heights are <=C because delta<=0. This verifies the retained LARGE gates separately, even if their magnitudes exceed D.
+
+The first COMPLETE batch is T0++T1. Its required endpoints are b and d1+delta, and b+sum(T0++T1)=d1+delta follows exactly from r=2P-D and Y=-s(y). It joins across the omitted FIRST y. One must not translate the intermediate old T0 or T1 prefixes blindly. The next complete batch T2 runs from a1+delta to d2+delta, and the complete final E runs from a2+delta to e0=h+Y-P. Both identities use their full actual old prefixes. The blocking inequalities give e0>C+Y-2P>=0 and e0<D+Y-P<Y<=P<=C, so e0 is strictly interior.
+
+For two opposite SMALL entries i,j, integer strictness gives s(i)-s(j)<=2Q-2<C=2Q-1. Thus exists_order_between applies to EACH complete batch, including empty batches, producing L01.Perm(T0++T1), L2.Perm(T2), LE.Perm(E), with every intermediate height checked at its respective required start. The literal new suffix is L=L01++[zpen]++L2++[z]++LE, and the literal new full word is V=A++[p,n]++L. The proof assembles these strips using inStrip_append, keeping A from its original zero. It obtains InStrip(V), physical Nodup and Legal(V), together with every natural take, including zero and overlength takes. The retained zpen,z remain in that order and y is the first occurrence omitted, regardless of which negative magnitude is largest.
+
+Complete-batch permutations give (L++[y]).Perm(T0++[y]++T1++[zpen]++T2++[z]++E) and the exact whole-word permutation (V++[x,y]).Perm(W++[p,n]). inventory_of_perm supplies exact disjoint used and complementary unused partitions, source balance and physical Nodup. It also verifies that x,y are actually absent from V and that zpen,z are present. All S and every old SMALL in A remain; no SMALL occurrence is returned. The full physical source, not a proper subset, has total zero. Consequently sum(V)=e0 and remainingMass(V)=-e0.
+
+Both inserted p,n and returned x,y are LARGE. Thus G(V)=G(W), U(V)=U(W), and remainingSmall(V)=remainingSmall(W). The exact natural-number identity is H(V)+3^abs(s(x))+3^abs(s(y))=H(W)+3^abs(s(p))+3^abs(s(n)). Native expanding-path energy gives 3^P+3^D<3^r; the returned y term further increases the removed energy. It follows that H(V)<H(W) and J(V)<J(W), with no truncated subtraction or change to the frozen definitions of G,H,U,J.
+
+This remains the dedicated all-SMALL-retaining branch result. The arrival-free theorem below handles low old arrivals by literal prefix truncations with strict G descent, and invokes this theorem only when both actual arrivals exceed C-P. It does not assert uniform SMALL retention for those truncations. Numerical ties remain distinct physical labels. The even-half and odd-parent results below cover further first-Y>P regions; the remaining placements and full original-quantifier Circle C3.1 remain open.
+
+**Theorem 1.3 (Consumed native low-prefix pair construction).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_prefix_pair_truncation`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_prefix_pair_truncation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary natural k,t with k>=3, p:Fin k and physical lists F,R, put n=rho(p), W=F++R and V=F++[p,n]. Assume P=s(k,t,p)>0, Q<=abs(s(k,t,n)), N<3*abs(s(k,t,p)), Legal(k,t,W), both p,n unused in ALL W, sum(F)<=C-P and largeUsed(k,t,R)<=1. R may contain SMALL occurrences. These are the complete hypotheses. The theorem returns Legal(V), Inventory(k,t,W,V,[p,n],R), (V++R).Perm(W++[p,n]), G(V)+2=G(W)+largeUsed(R), G(V)<G(W) and J(V)<J(W).
+
+native_geometry gives s(n)=-D, D<P and both inserted labels LARGE. strip_split retains the complete old F from ORIGINAL zero and gives 0<=v=sum(F). The two literal new arrivals are v+P and v+P-D, both in [0,C], using v<=C-P and D<P. inStrip_append assembles V. Distinctness and whole-W unusedness of p,n, plus the full-word permutation, feed inventory_of_perm; its physical Nodup, exact used/unused disjoint partitions, energy, counts, source/complement and SMALL partition all apply to the actual R, even when it contains SMALL. Its large balance gives strict G directly, so no H or U comparison is needed. Both low-arrival branches of the full consumer use this construction on their live proof paths.
+
+This is a native physical prefix construction, with no assumed replacement Legal word and no duplicated inventory engine. No claim that every old SMALL survives truncation is made.
+
+**Theorem 1.4 (Full physical strict J competitor without arrival assumptions).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_firstNegative_arrival_free_exchange_full`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_firstNegative_arrival_free_exchange_full` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The telescope is exactly that of actualSource_threeNegative_firstNegative_shift_exchange_full with ONLY harrivalpen and harrivalz removed: arbitrary k,t, hk:3<=k, physical p,y,zpen,z:Fin k, lists A,T0,T1,T2,E, P=s(p)>0, n=rho(p) LARGE, N<3*abs(s(p)), original Legal(W), p,n unused in ALL W, every occurrence of T0++T1++T2++E SMALL, y,zpen,z negative LARGE, Y=-s(y)<=P and strict C-P<sum(W)<abs(s(n)). Here x=rho(n) and W=A++[x]++T0++[y]++T1++[zpen]++T2++[z]++E. There is no crossing/q/resource/count/Z<=D premise, numerical injectivity assumption or new Legal premise.
+
+Put Fpen=A++[x]++T0++[y]++T1++[zpen], Rpen=T2++[z]++E and Fz=Fpen++T2++[z]. The theorem constructs literal existential physical lists V,R. In every branch it supplies Legal(V), V.Nodup, InStrip(s,C,0,V), every natural original-zero take bound (including zero and overlength), Inventory(k,t,W,V,[p,n],R), the whole-word permutation (V++R).Perm(W++[p,n]) and strict J(V)<J(W). Inventory exposes the exact full-source used and unused disjoint partitions, count/energy/source balances, zero-source complement identity and remaining-SMALL disjoint partition.
+
+Branch 1: if sum(Fpen)<=C-P, V=Fpen++[p,n] and R=Rpen. Existing small_weights and largeUsed_append prove largeUsed(Rpen)=1 because only z is LARGE there. The consumed prefix-pair helper yields G(V)+1=G(W), hence strict G. Branch 2: if sum(Fpen)>C-P but sum(Fz)<=C-P, V=Fz++[p,n], R=E, largeUsed(E)=0 and G(V)+2=G(W), again strict G. R can contain SMALL in either truncation; all exact physical balances use that actual R, without uniform SMALL retention or an asserted H decrease.
+
+Branch 3: both actual old arrivals exceed C-P, which supplies the two non-strict arrival premises of the unchanged rich shift theorem. R=[x,y]. The output retains explicit L01.Perm(T0++T1), L2.Perm(T2), LE.Perm(E), L=L01++[zpen]++L2++[z]++LE, V=A++[p,n]++L and (L++[y]).Perm(T0++[y]++T1++[zpen]++T2++[z]++E). Every occurrence of S=T0++T1++T2++E lies in L; returned x,y are absent from V, zpen,z are present, and every old SMALL including those in A is retained. This branch has G(V)=G(W), U(V)=U(W), remainingSmall(V)=remainingSmall(W), H(V)+3^abs(s(x))+3^abs(s(y))=H(W)+3^abs(s(p))+3^abs(s(n)), and strict H(V)<H(W). It also gives sum(V)=e0=sum(W)-s(y)-s(p), 0<e0<C and remainingMass(s,V)=-e0. The theorem's explicit disjunction distinguishes all three branches.
+
+At a genuine GLOBAL J minimum W over all Legal physical words for these same k,t, assume all source hypotheses above except Y<=P. If Y<=P held, instantiate the arrival-free theorem with the exact same p,y,zpen,z,A,T0,T1,T2,E. Its witness V is Legal and has J(V)<J(W), contradicting the global condition that J(W)<=J(V) for every Legal V. Linear order therefore gives P<Y for this native three-negative source configuration. This is a necessary exclusion of the Y<=P region at a global minimum; it supplies neither a competitor in the remaining Y>P region nor full Circle C3.1.
+
+**Theorem 1.5 (Actual even half, fresh or in the terminal SMALL batch).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_even_half_arrival_free_exchange_full`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_even_half_arrival_free_exchange_full` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Keep the same native physical source and original Legal W=A++[x]++T0++[y]++T1++[zpen]++T2++[z]++E, with p,n unused in all W, all T0,T1,T2,E SMALL, and y,zpen,z negative LARGE. Put P=s(p)>0, D=abs(s(n)), r=s(x)=2P-D, B=C-P, Y=-s(y) and h=sum(W). Assume B<h<D, Y>P, Y even and r<=Y+1, equivalently Y>=r-1. The actual inverse physical label is b=rho inverse(y), with the cyclic seam included. Its required status is b unused in all W OR b in terminal E. No replacement Legal, favorable reordered prefixes, additional arrival, endpoint or capacity premise is present.
+
+The exact source-cycle equation at b is 2s(b)-s(y)=N times its wrap indicator. The negative wrapped branch contradicts s(y)<0; the positive wrapped branch gives odd Y since N is odd. Even Y therefore forces 2s(b)=-Y and s(b)=-mu where mu=Y/2, 0<mu<Q. This is an actual negative SMALL occurrence, with no numerical-source injectivity assumption. For odd Y the positive wrapped branch instead gives 2s(b)=N-Y and b positive LARGE. The parity premise cannot be removed.
+
+Use the same actual Fpen,Fz,Rpen as the arrival-free first-negative theorem. If sum(Fpen)<=B, literal V=Fpen++[p,n], R=Rpen drops G by one. Otherwise if sum(Fz)<=B, literal V=Fz++[p,n], R=E drops G by two. Both calls reuse actualSource_prefix_pair_truncation and provide ordinary Inventory W V [p,n] R. SMALL retention and consuming b are not promised in these truncation branches. Every branch gives Legal(V), physical Nodup, InStrip from zero, all natural take bounds and strict J descent.
+
+In the remaining branch both actual old arrivals exceed B. Let Extra=[] and Efinal=E.erase(b) when b is in E; otherwise Extra=[b] and Efinal=E. The physical erase permutation proves ([b]++Efinal).Perm(E++Extra). Nodup of W++Extra follows from original Nodup and fresh b when Extra is nonempty. This appended baseline need not be Legal. Set delta=Y+s(b)-P=mu-P<0. Since r=4P-N and N=2C+1, even Y>=r-1 gives C+1+mu-2P>=0. Integer old arrivals>B imply their translated arrivals are nonnegative; each old departure is at least its negative-step arrival. All four translated upper bounds follow from delta<0 and original legality. The literal p,n gates are unchanged: original a0+r<=C and D<P<r imply a0+P and a0+P-D lie in the strip.
+
+The first complete SMALL batch is T0++T1++[b], from a0+P-D to d1+delta. T2 goes from a1+delta to d2+delta; Efinal goes from a2+delta to e=h+Y+sum(Extra)-P. These are exact full-word identities. Every opposite SMALL pair has difference <=2Q-2<C, so exists_order_between orders all three complete batches. The public complete_small_shift theorem in FirstNegativeShiftCore also proves the original rich Y<=P theorem with F=[], Efinal=E and Extra=[]; its public strict-interior conclusion is unchanged. The literal rich competitor is V=A++[p,n]++L01++[zpen]++L2++[z]++LE, with L01.Perm(T0++T1++[b]), L2.Perm(T2) and LE.Perm(Efinal). It retains all old SMALL, zpen,z and A; x,y are absent. Equal-valued physical labels remain distinct.
+
+For fresh b, Extra=[b], e=h+mu-P lies in [0,C). The lower endpoint may be zero at Y=r-1 and is allowed by Legal. The exact physical permutation is (V++[x,y]).Perm(W++[p,n,b]); G(V)=G(W), U(V)+1=U(W), and remainingSmall(V)=remainingSmall(W) minus {b}. Existing Inventory is specialized to LARGE insertions, so the theorem gives Inventory (W++[b]) V [p,n] [x,y], together with ORIGINAL-W used and unused disjoint partitions for the true inserted list [p,n,b]. It does not assert the false Inventory W V [p,n,b] [x,y], nor Legal(W++[b]). For terminal b, Extra=[], Efinal=E.erase(b), e=h+Y-P is strictly inside (0,C), ordinary Inventory W V [p,n] [x,y] applies, U(V)=U(W) and remainingSmall is equal. Exactly one physical b is moved, with no loss or duplication.
+
+In both rich cases H(V)+3^abs(s(x))+3^abs(s(y))=H(W)+3^abs(s(p))+3^abs(s(n)). Extra has zero LARGE weight and energy; native geometry gives 3^P+3^D<3^r, hence strict H and J descent. The complement identity is remainingMass(V)=-e for the full physical source. At a genuine global J minimum over all zero-start Legal words, the theorem contradicts either available status. Under its even Y>P and Y>=r-1 source hypotheses, b must therefore already be used and lie outside terminal E. It may lie in A,T0,T1 or T2; no stronger placement is asserted.
+
+**Theorem 1.6 (An odd first negative supplies a uniform three-LARGE prefix competitor).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_odd_parent_uniform_prefix_exchange`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_odd_parent_uniform_prefix_exchange` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This result uses a GENERAL actual Legal word W=F++[y]++R; it does not require three SMALL batches, a blocking endpoint or any last-negative arrival. Assume native expanding positive p, n=rho(p) LARGE, p,n unused in all W, odd Y=-s(y)>P, actual b=rho inverse(y) unused in all W, largeUsed(R)<=2 and 3Y>=6P-N. The inverse source-cycle proof gives L=s(b)=(N-Y)/2, Q<=L<P, so p,n,b are three distinct LARGE physical labels. The literal competitor is V=(F++[y])++[p,n,b], returning the ENTIRE actual R including its SMALL occurrences.
+
+Let v=sum(F++[y]) and d=P-D>0. The original literal y gate gives 0<=v and v+Y<=C, hence v<=C-Y<C-P automatically. Thus v+P and v+P-D=v+d lie in the strip. Since N=2C+1, the uniform threshold gives 2v+2d<=2C-2Y+2d<=Y-1. Together with 2L=N-Y this proves v+d+L<=C. All lower gates follow from v>=0, d>0 and L>0. The old prefix is preserved literally; inStrip_append verifies every new prefix from original zero, including zero and overlength takes. No separate measured low-valley premise or replacement Legal premise is assumed.
+
+The output includes Legal, physical Nodup, InStrip, all natural take bounds, Inventory W V [p,n,b] R and the physical whole-word permutation. Its exact large balance is G(V)+3=G(W)+largeUsed(R). The return bound <=2 therefore gives strict G and J descent, with all source, energy, count, complement and remaining-SMALL balances supplied by ordinary Inventory. The uniform threshold covers Y>=r and can also hold below r; it is a sufficient condition, not a claimed necessary boundary.
+
+For the actual three-negative word above, set F=A++[x]++T0 and R=T1++[zpen]++T2++[z]++E. The SMALL weight identity gives exactly two returned LARGE. The odd inverse parent is positive LARGE and L<P<r, so it differs from x and from all three negative occurrences, and cannot belong to the SMALL batches. Consequently b lies in W if and only if it lies in A. At a genuine global J minimum, odd Y>P and 3Y>=6P-N force b in A by this prefix competitor. This necessary placement leaves relocation from A and the remaining odd threshold region open, and does not prove full C3.1.
+
+Actual second inverse parent: append and quarter relocation
+
+Let k≥3, t∈ℕ, ρ=finRotate k, N=2^k−1, Q=2^(k−2), C=2Q−1, and let f(i)=((2^i t+C) mod N)−C be the actual centered source on physical labels Fin k. Write m(L)=∑_{i∈L}f(i), counting occurrences. SMALL means |f(i)|<Q and LARGE means |f(i)|≥Q; G counts unused LARGE labels, H is the sum of 3^|f(i)| over used LARGE labels, U counts unused physical labels, and J=(G,H,U) is ordered lexicographically. Put n=ρ(p), x=ρ²(p), P=f(p), D=|f(n)|, r=f(x), B=C−P, and W=A,[x],T₀,[y],T₁,[zpen],T₂,[z],E. Assume P>0, Q≤|f(n)|, N<3P, W is Nodup with every natural zero-start prefix in [0,C], and p,n are absent from the whole W. All labels in T₀,T₁,T₂,E are SMALL, while Y=−f(y), −f(zpen), −f(z) are at least Q. Assume B<h=m(W)<D, P<Y and 4∣Y. The initial physical word A is arbitrary subject to these whole-word conditions. The native geometry gives f(n)=−D, Q≤D<P<r≤C, r=2P−D and 2P≤3Q−1.
+
+Set θ=Y/4, b=ρ⁻¹(y) and c=ρ⁻²(y). Applying negative_parent first to y and then to b gives f(b)=−2θ and f(c)=−θ, both negative SMALL. These are actual inverse rotations; equality of source values is never used to identify physical labels. In particular θ>0. For every such Y, without an upper threshold on Y, a c absent from the whole W can be appended directly. Indeed 4θ=Y≤C=2Q−1, while the native budget implies 2B≥Q−1; hence 4θ≤4B+1, and integrality yields θ≤B<h. Thus V=W,[c] is Nodup, every old prefix is retained literally, and its new endpoint e=h−θ satisfies 0<e<C, using θ≤B<h<D<P≤C and θ>0. Its physical used set is set(W)∪{c}, a disjoint union, and its unused set is complement(W)\{c}. All old labels are retained, G(V)=G(W), H(V)=H(W), U(V)+1=U(W), remainingSmall(V)=remainingSmall(W)\{c}, and the unused source mass is −e. Consequently J(V)<J(W). In particular every actual c of this kind must already occur in W at a genuine J-minimum among all legal physical words, for every 4-divisible Y>P.
+
+For the quarter relocation, additionally suppose 3Y≤4P and c occurs in E. Set Efinal=E.erase(c); then [c],Efinal is a physical permutation of E. Let Fpen=A,[x],T₀,[y],T₁,[zpen], Rpen=T₂,[z],E and Fz=Fpen,T₂,[z]. If m(Fpen)≤B, actualSource_prefix_pair_truncation gives V=Fpen,[p,n], returned tail Rpen, ordinary Inventory(W,V,[p,n],Rpen), the full physical permutation V,Rpen∼W,[p,n], and G(V)+1=G(W). If m(Fpen)>B but m(Fz)≤B, the same result gives V=Fz,[p,n], returned tail E, Inventory(W,V,[p,n],E), V,E∼W,[p,n], and G(V)+2=G(W). Both alternatives have all natural zero-start prefixes legal and strict J descent. Their returned literal tails may contain SMALL labels.
+
+If both cut tests fail, let d₁=m(A,[x],T₀,[y],T₁), a₁=d₁+f(zpen), d₂=m(A,[x],T₀,[y],T₁,[zpen],T₂) and a₂=d₂+f(z). Old legality gives d₁,a₁,d₂,a₂∈[0,C], and the failed cuts give a₁,a₂≥B+1. Set δ=Y+f(c)−P=3θ−P≤0. The native budget also gives 5P<4C+4, so 4(B+1+δ)=4C+4+3Y−8P>4C+4−5P>0. Since d₁≥a₁ and d₂≥a₂, all four translated gates lie in (0,C]. The final endpoint e=h+Y−P is strictly positive and satisfies e<D+C−P<C. Thus the gates and endpoint are consequences of the source assumptions, rather than extra legality hypotheses.
+
+Apply FirstNegativeShiftExchange.complete_small_shift, declared in FirstNegativeShiftCore, with F=[c], Efinal=E.erase(c) and Extra=[]. It provides complete physical permutations L₀₁∼T₀,T₁,[c], L₂∼T₂ and LE∼Efinal. With L=L₀₁,[zpen],L₂,[z],LE and V=A,[p,n],L, it proves every natural zero-start prefix legal, including all prefixes inside the reordered SMALL batches and all saturated take indices. Its ordinary inventory is exactly Inventory(W,V,[p,n],[x,y]); only the LARGE pair [p,n] is inserted relative to W. In particular V,[x,y]∼W,[p,n], with the disjoint physical partitions set(V)=(set(W)\{x,y})∪{p,n} and complement(V)=(complement(W)\{p,n})∪{x,y}. It retains zpen,z and every old SMALL label, removes x,y, and yields G(V)=G(W), U(V)=U(W), remainingSmall(V)=remainingSmall(W), H(V)+3^r+3^Y=H(W)+3^P+3^D, H(V)<H(W), J(V)<J(W), m(V)=e and remainingMass(V)=−e. The energy decrease uses the existing native inequality 3^P+3^D<3^r. Together with the two cuts this is a full arrival-free existence of a legal strict-J competitor for terminal c in the quarter range; the literal append covers fresh c throughout the full range.
+
+The upper terminal gap remains: when 3Y>4P and c is used in E, δ>0 can overflow a retained gate, and the actual half-parent b may be blocked in an earlier part of W. The native inequalities give 3r<4P, so the numerical high-half boundary is satisfied in this upper region, but its physical resource hypothesis does not follow. A fresh c in the upper region already gives the direct append above, even when the quarter translation overflows; such a control is not a counterexample to descent. At a genuine minimum c must therefore be used, and the lower quarter region also excludes c∈E, but neither statement establishes the required resource in general. Full C3.1 and generic actual-resource availability remain open.
+
+Negative SMALL half and source-value band applications
+
+The following consequences are applications of the existing strip_split, LargeSkeletonOrdering.exists_order_preserving_large, inventory_of_perm, negative_parent, actualSource_prefix_pair_truncation and complete_small_shift results. Their exact anonymous applications and an actual physical control have been checked by Lean; no additional named exchange declaration is needed.
+
+Use the centered dyadic source f=s(k,t) on physical Fin k labels, N=2^k-1=4Q-1 and C=2Q-1. Legal means physical Nodup and every natural zero-start take-prefix mass in [0,C], including zero and overlength takes. LARGE means abs(f)>=Q and SMALL means abs(f)<Q. G counts unused LARGE, H sums 3^abs(f) over used LARGE, U counts unused physical labels, and J=(G,H,U) is ordered lexicographically. Distinct labels with equal source values remain distinct physical resources.
+
+Let W=F,[c],R be Legal, with f(c)=-2mu, fresh n and b absent from ALL W, f(n)=-D and f(b)=-mu. Assume 0<mu<Q<=D<2mu and put e=D-mu>0. The final old mass is at least e. Every actual LARGE occurrence in R must be negative, and its ORIGINAL zero-start arrival must be at least e. No source-parent relation, favorable new ordering or lower bound on the old arrival immediately after c is assumed. The derived construction uses these exact physical labels and source values; an actual inverse parent is supplied only in the minimum application below.
+
+Write u=mass(F). Original legality at c gives u>=2mu>D, so replacing c by n has both sides in [0,C]. Order the COMPLETE suffix [b],R from u-D. Its endpoint is mass(W)-e. At every retained LARGE in R both sides are the old sides minus e; the old arrival bound supplies both lower gates because that step is negative, and e>=0 preserves both upper gates. The new b is SMALL and can move across the SMALL part of R, so it need not occur first and its old-slot arrival imposes no extra gate. One call to the existing LARGE-skeleton ordering theorem yields L permuting [b],R and V=F,[n],L. This constructs every SMALL interior and every natural zero-start prefix rather than translating the old SMALL order.
+
+The existing Inventory is applied to the physical baseline W,[b], inserting [n] and returning [c]. This baseline needs Nodup only; it is not assumed Legal, since b may fail to append at the old endpoint. The resulting original-word identity is (V,[c]) permutes (W,[n,b]). Thus used(V)=(used(W) minus {c}) union {n,b}, with the complementary unused partition. Relative to ORIGINAL W, G(V)=G(W), U(V)+1=U(W), and remainingSmall(V)=remainingSmall(W) minus {b}. The exact energy identity is H(V)+3^(2mu)=H(W)+3^D, so D<2mu gives strict H and J descent. The final mass is mass(W)-e and the unused source mass is its negative. An Inventory with original baseline W and inserted [n,b] would have the wrong SMALL-partition formula; the explicit baseline and returned original-word identities prevent that loss of the consumed SMALL label.
+
+A separate kernel-checked actual-source control uses k=53, t=3347513596725618, W=[12,15,3,27,14,49,33,21] and V=[12,15,3,1,26,14,49,33,21]. Both physical words are Legal and (V,[27]) permutes (W,[1,26]); the actual inverse of 27 is 26. The fresh negative half b=26 cannot be appended at the original endpoint: mass(W,[26])<0. Thus the Nodup-only W,[b] Inventory baseline and complete SMALL reordering cover an inhabited situation that a Legal-append baseline would exclude. This control checks exact source values, source masses and physical legality with ordinary kernel reduction; it does not evaluate the enormous energy powers.
+
+For the minimum application take the native expanding p,n with f(p)=P>0, n=rho(p), D=abs(f(n))>=Q, N<3P, and require p,n absent from ALL W=F,[c],R. Suppose c is negative with even magnitude, R contains at most TWO LARGE occurrences, and every such occurrence is negative. The existing exact inverse-source lemma gives the ACTUAL b=rho^(-1)(c), f(b)=-mu, 0<mu<Q and f(c)=-2mu. At a minimum over ALL Legal physical lists, this actual b must already occur in W. There is no endpoint, valley or supplied arrival hypothesis in this conclusion.
+
+Indeed, if b were fresh and mu<=h=mass(W), appending b is legal and leaves G,H unchanged while reducing U. Otherwise mu>h. Prefix-pair truncation at the ENTIRE W gives h>B=C-P: if h<=B, appending [p,n] strictly improves G by two. Native N=2P+D and C=(N-1)/2 give D=2B+1; integer mu>h>B implies D<2mu and 0<e=D-mu<=B. For any retained LARGE i in R, the suffix strictly after i has at most one LARGE, since R has at most two and i itself consumes one. If the old arrival at i were at most B, the same existing prefix-pair truncation would strictly improve G. Therefore every required old LARGE arrival exceeds B>=e, while h>B gives the final endpoint margin. This derived half exchange now gives strict J descent, contradicting the SAME unrestricted minimum. In the native three-negative word this applies to an even first negative y as well as to even zpen or z, because their later LARGE lists have lengths two, one and zero respectively.
+
+There is also a parity-free placement consequence for an entire band of negative SMALL source values. In the native three-negative word W=A,[x],T0,[y],T1,[zpen],T2,[z],E, assume the usual expanding p,n geometry, whole-W p,n freshness, all T batches and E SMALL, both later negatives LARGE, and Y=-f(y)>P=f(p). Put delta=Y-P>0 and B=C-P. At a minimum over ALL Legal physical lists, EVERY actual SMALL label b whose negative magnitude mu=-f(b) satisfies delta<=mu<=delta+B must belong to A,T0,T1,T2. It can be neither fresh in ALL W nor an occurrence of the terminal E. This applies to each physical label separately, including distinct labels with equal source values, and assumes no parity or inverse-parent relation.
+
+This consequence reuses the existing complete_small_shift engine rather than introducing another public exchange. If b lies in E, move that physical occurrence into its added early SMALL batch [b], take Efinal=E.erase(b) and Extra empty. If b is fresh, use the same [b], take Efinal=E and Extra=[b]. In both cases ([b],Efinal) permutes (E,Extra), so no resource is duplicated. The retained later negatives are shifted by sigma=delta-mu in [-B,0]. Minimum prefix-pair truncation gives both old arrivals strictly above B, hence both shifted lower gates; sigma<=0 preserves both upper gates. The same minimum gives B<h=mass(W)<D: the lower bound follows from appending [p,n], and the upper bound from appending the unused negative LARGE n. When b came from E the final mass is h+delta<C, using h<D<P and Y<=C. In the fresh case it is h+sigma>0 and at most C. Thus all complete SMALL batches and both physical alternatives satisfy the existing engine, whose exact original-word balances give strict H and J descent. Inventory is taken against W in the relocation case and W,[b] in the fresh case, preserving the explicit SMALL consumption.
+
+The exact inverse-source calculation and literal prefix-pair truncation are reused from FirstNegativeShiftExchange. Existing even-half first-negative exchanges overlap with the c=y specialization. The existing LARGE-skeleton ordering and Inventory results supply the one-LARGE replacement with a consumed SMALL half for arbitrary matching physical labels, and the anonymous minimum application also covers later negative labels. The even-half consequence alone locates the actual inverse parent somewhere in W; outside the additional source band above, its position and a general exchange when it is already used remain to be proved. Original-quantifier Circle C3.1 and the general construction with an already-used beta remain open.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_odd_parent_uniform_prefix_exchange`
+- Truth anchor: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_prefix_pair_truncation`
+- Truth anchor: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_even_half_arrival_free_exchange_full`
+- Truth anchor: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_firstNegative_arrival_free_exchange_full`
+- Truth anchor: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_firstNegative_shift_exchange_full`
+- Truth anchor: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.negative_parent`
+- Dependency: [D5/S3/Combinatorics/Circle/FirstNegativeShiftCore](FirstNegativeShiftCore.md)

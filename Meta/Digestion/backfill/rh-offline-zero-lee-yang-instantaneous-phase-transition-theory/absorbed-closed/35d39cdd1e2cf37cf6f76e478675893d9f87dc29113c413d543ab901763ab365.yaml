@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:35d39cdd1e2cf37cf6f76e478675893d9f87dc29113c413d543ab901763ab365
+  normalized_sha256: sha256:35d39cdd1e2cf37cf6f76e478675893d9f87dc29113c413d543ab901763ab365
+cas_ref: sha256:35d39cdd1e2cf37cf6f76e478675893d9f87dc29113c413d543ab901763ab365
+coverage_gids:
+  - gid: D5/S3/Analytic/EulerGerm/GoldenGermNextExponentPattern.golden_germ_next_exponent_pattern
+    target_statement_id: sha256:256c6f5a1933e8d651d5512dfdff30e22d4d4d2088de9b99fa8be15ae3d585b4
+receipts:
+  unresolved_subitems: []

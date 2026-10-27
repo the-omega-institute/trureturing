@@ -1,0 +1,41 @@
+**Assumption 106.2 (Retention, spectator action and one forward return).**
+In addition to the original menu, the very emitted two-dimensional record
+can be held and returned once to the same forward interaction $\mathsf J$.
+During retention the old system operations act as their original maps
+on $H$ tensored with the identity on this record and every untouched
+reference. There is no extra record rotation, chosen record phase, inverse
+interaction, system reset, new system preparation or selectable label.
+The return is deterministic, at its specified position in the clock, and
+has no success selection. Its entire output remains in $\mathcal H$.
+
+Before return the retained-record map on the code is the member
+$\mathcal L_\gamma$, $|\gamma|\le1$, of the complete CP class (101.6).
+Here $\gamma$ is a fixed retention/leakage parameter, not an available
+control. Compare different values only with the same $\mathsf J$, the
+same original preparation, clocks and operations. In particular,
+$\gamma=1$ means coherent retention and $\gamma=0$ means complete
+dephasing in the original $g$ basis. A classical read of that record
+before return is not simultaneously available in the coherent context.
+Fresh records used by intervening original measured calls still have
+exactly their original ready, measurement and discard contract.
+
+On all five emission inputs the specified extension is
+
+$$
+\widehat{\mathcal L}_\gamma(Y)
+ =(\operatorname{id}_H\otimes\mathcal D_\gamma)
+       (\mathcal VY\mathcal V^\dagger),\qquad Y\in M_5,
+\tag{106.8}
+$$
+
+where $\mathcal D_\gamma$ is the record Schur channel defined after
+(101.6). Its restriction through $B$ is exactly $\mathcal L_\gamma$.
+Its original $g$-diagonal branches on every five-dimensional input and
+untouched reference equal those of the original instrument. This is a
+specified full-input leakage family, not a classification of all
+possible off-code leakage maps.
+
+These are extension premises. The old menu discards the emitted record;
+it supplies neither a wire for its return nor its coherent retention.
+Mathematical unitary-completion existence does not supply either action.
+

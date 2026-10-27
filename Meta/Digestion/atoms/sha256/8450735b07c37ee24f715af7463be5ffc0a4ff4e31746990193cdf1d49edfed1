@@ -1,0 +1,43 @@
+**Definition 30.1 (compatible whole worlds and two limit spaces).** Fix any declared integers $k,d\ge0$ and exactly the $L=3k+d+5$ cumulative matrices and original clocks of (26.2). Retain the entire contract of Definition 25.1. For a legal whole world $W=(P,H,D)$ write its noiseless acquired vector as
+
+$$
+ Z(W)_i=H(i)\operatorname{tr}(A_iP)+D(i),\qquad 0\le i<L.
+$$
+
+For a received vector $y\in\mathbb R^L$ and a radius $\rho\ge0$, define
+
+$$
+ \mathcal W_\rho(y)=\{W\text{ legal}:\|Z(W)-y\|_\infty\le\rho\}.
+ \tag{30.1}
+$$
+
+Each member uses its one fixed source and two whole polynomials at all $L$ paid reads; the corresponding deterministic errors are exactly $y_i-Z(W)_i$. Bounded complete targets means boundedness of $P$ in the maximum entry norm and of both padded original-variable coefficient vectors in (25.2). Put
+
+$$
+ U_i=(A_i)_{21},\qquad V_i=(A_i)_{12},
+$$
+
+$$
+ \begin{aligned}
+ \mathcal E_{12}&=\{(U_iQ(i)+F(i))_{i=0}^{L-1}:
+                                  Q\in\Pi_k,\ F\in\Pi_d\},\\
+ \mathcal E_{21}&=\{(V_iQ(i)+F(i))_{i=0}^{L-1}:
+                                  Q\in\Pi_k,\ F\in\Pi_d\},\\
+ e(y)&=\min\{\operatorname{dist}_\infty(y,\mathcal E_{12}),
+             \operatorname{dist}_\infty(y,\mathcal E_{21})\}.
+ \end{aligned}
+ \tag{30.2}
+$$
+
+The subscripts name the escaping source entry: $\operatorname{tr}(A_iE_{12})=U_i$ and $\operatorname{tr}(A_iE_{21})=V_i$. In these auxiliary spaces $Q=0$ is allowed. This does not enlarge the actual-world contract, which still requires $H\ne0$.
+
+Both spaces are linear subspaces of the finite-dimensional record space and hence closed. Their distances are attained: a minimizing sequence of record vectors is bounded, has a convergent subsequence, and its limit is in the closed subspace. Each distance is the standard Chebyshev linear program
+
+$$
+ \min_{Q\in\Pi_k,\,F\in\Pi_d,\,r\ge0}r,
+ \qquad -r\le y_i-U_iQ(i)-F(i)\le r\quad(0\le i<L),
+ \tag{30.3}
+$$
+
+with $V$ replacing $U$ for the second space. Only coefficients and the scalar $r$ are optimization variables; no new read, source, or calibration is introduced. This is the ordinary real-arithmetic LP representation, not a finite-bit algorithm for arbitrary presented reals.
+

@@ -1,0 +1,65 @@
+**Theorem 45.2 (exact source certificates and reconstruction).** At every $\alpha,\beta>0$, for either chart, the following are equivalent:
+
+1. There is an original compatible whole world at $P_\nu(\alpha,\beta)$.
+2. $\Theta_{\nu,I}$ holds for some $I$.
+3. $\Xi_{\nu,I,T}$ holds for some $(I,T)$.
+
+A passing complete certificate explicitly supplies one actual world and every original raw error. Suppress the fixed labels in the formulas and put
+
+$$
+ \begin{aligned}
+ q_j&=N_j/\Delta,&
+ \mu_a&=M_a/(c_T\Delta),\\
+ \xi_i&=\sum_{a=0}^r\mu_a\sigma_i^{t_a},&
+ Q(\tau)&=\sum_{j=0}^{p-1}q_j\tau^j,\\
+ R_i&=y_i-B_{\nu,i}Q(i)-\xi_i,&
+ D(\tau)&=\sum_{j=0}^dR_j
+             \prod_{\substack{0\le h\le d\\h\ne j}}
+                       \frac{\tau-h}{j-h},\\
+ P&=X_\nu/(\alpha+\beta),&H&=(\alpha+\beta)Q.
+ \end{aligned}
+ \tag{45.7}
+$$
+
+Empty products are one. These formulas use the fixed original clocks, one polynomial $Q$, one polynomial $D$, and one $L$-component raw error vector. The interpolation nodes are fixed, so there is no additional node-selection label.
+
+**Proof.** By Theorem 44.2, assertion 1 is equivalent to $K_\nu$ containing a nonzero vector. At a nonsingular reduced basis, Cramer's rule and the bordered determinant identity give
+
+$$
+ q=N/\Delta,\qquad
+ S_\ell=\Delta(\lambda_\ell-A_{\nu,\ell}q).
+ \tag{45.8}
+$$
+
+Thus (45.3) is exactly feasibility and nonzero gain for that vector. If a compact polytope contains a nonzero vector, at least one vertex is nonzero, since it is the convex hull of its vertices. At that vertex $p$ independent active rows exist, also for a lower-dimensional polytope. Applying these standard vertex facts (Kaibel, Theorems 13 and 15) to (44.6) proves $1\Longleftrightarrow2$. No assumption of an interior fiber has entered.
+
+It remains to produce the joint lift rather than just invoke its existence. For any $t\in Z_\delta$, there is a retained $T$ with
+
+$$
+ \binom\delta t=E_T\mu,\qquad \mu_a\ge0.
+ \tag{45.9}
+$$
+
+For $\delta>0$, (44.11) expresses $t/\delta$ as a convex combination of vertices. The elementary affine-dependence elimination underlying Carathéodory's theorem reduces its nonzero coefficients to an affinely independent subset of at most $r+1$ vertices: if the current support is dependent, take a nonzero relation $\sum a_jv_j=0$, $\sum a_j=0$, and subtract the largest multiple of this relation that keeps all weights nonnegative; at least one positive weight vanishes. Iterate until independence. Since $Z_1$ is full-dimensional, extend that independent subset to $r+1$ independent vertices, assigning zero weights to added vertices. Multiplying the weights by $\delta$ gives (45.9). This is the classical convex version of the standard conic reduction in Kaibel, Theorem 4, applied to $(1,v_j)$. For $\delta=0$, $t=0$, and any retained $T$ with $\mu=0$ works. In particular this proof introduces no division by the noise radius or full-dimensionality assumption on the original compatibility fiber.
+
+Apply (45.9) to $t=b-C_\nu N/\Delta$ for a passing reduced basis. Cramer's rule for the constant matrix $E_T$ gives exactly $\mu_a=M_a/(c_T\Delta)$; their nonnegativity is exactly (45.6). This proves $2\Longrightarrow3$, including active zero weights. Conversely a complete certificate supplies
+
+$$
+ \sum_a\mu_a=\delta,\qquad
+ W\xi=\sum_a\mu_av_{t_a}=b-C_\nu q,\qquad
+ |\xi_i|\le\sum_a\mu_a=\delta.
+ \tag{45.10}
+$$
+
+Theorem 44.2 now proves that the single interpolated $D$ in (45.7) has the values $R_i$ at all $L$ clocks. Equations (37.3) and (45.7) therefore give
+
+$$
+ y_i=H(i)\operatorname{tr}(A_iP)+D(i)+\xi_i
+                         \quad(0\le i<L)
+ \tag{45.11}
+$$
+
+in one and the same world. At least one $N_j$ is nonzero, so $Q$ and $H$ are nonzero whole polynomials. This proves $3\Longrightarrow1$ with the promised explicit reconstruction.
+
+For necessity, start with any original compatible world, take its exact chart coordinates from Lemma 37.2, and apply (44.4) to its own whole polynomials and original errors. It yields a nonzero feasible $q$ in this very fiber; the vertex and simplex arguments then give a passing certificate at the identical source. The selected world may be another witness in the same fiber; the test excludes no original compatible source or world on account of its gain sign, degree, roots or coefficient size. The exact correspondence (44.4) retains the original world itself before witness selection. The finite certificate family decides existence and supplies a witness; it is not asserted to list each continuum of worlds individually. $\square$
+

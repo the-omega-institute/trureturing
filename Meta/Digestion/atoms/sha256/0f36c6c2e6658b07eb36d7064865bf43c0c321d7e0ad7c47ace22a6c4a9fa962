@@ -1,0 +1,38 @@
+**Proposition 37.3 (the acquired orthogonal coordinates are the actual cells).** From the acquired prefix in Theorem 37.2 define, for $0\le j<N$, the unique monic polynomial $p_j$ of degree $j$ orthogonal to all smaller degrees for
+
+$$
+\langle p,s\rangle_m=\sum_{i,l}p_i s_l m_{i+l},
+\qquad h_j=\langle p_j,p_j\rangle_m.
+$$
+
+In particular $p_0=1$ and $h_0=1$. The actual native coefficients are exactly
+
+$$
+a_j=\frac{\langle Xp_j,p_j\rangle_m}{h_j}
+\quad(0\le j<N),\qquad
+b_j=\sqrt{h_{j+1}/h_j}>0
+\quad(0\le j<N-1).
+$$
+
+All these quantities are effectively recoverable as exact rationals from moments through $m_{2N-1}$. The additional $m_{2N}$ earns the unknown-tail termination certificate, rather than an additional native coefficient.
+
+**Proof.** If $p_j=X^j+\sum_{i<j}c_i X^i$, its orthogonality equations are
+
+$$
+H_{j-1}(c_i)_{i<j}=-(m_{j+l})_{l<j}.
+$$
+
+They have a unique rational solution since $H_{j-1}>0$; the $j=0$ case needs no solve. The moment pairing is the actual Euclidean pairing after the map $p\mapsto p(T)e_0$.
+
+The mature Jacobi/Gram--Schmidt construction is reused here. Its source-specific correspondence is the following exact identity:
+
+$$
+p_j(T)e_0=\beta_j e_j,\qquad h_j=\beta_j^2.
+$$
+
+Indeed, the vectors of degrees less than $j$ span exactly the first $j$ native cells by Lemma 37.1. Removing their orthogonal projections from $T^j e_0$ therefore leaves only its coordinate $\beta_j$ in cell $j$. Monicity preserves that coordinate. This proves the identity, including its positive orientation. Hence the normalized polynomial vector is the actual $e_j$, not a freely chosen orthogonal gauge. Taking its diagonal matrix entry gives the displayed $a_j$, and dividing successive squared native leading coordinates gives $b_j^2=h_{j+1}/h_j$.
+
+For clarity, the coefficient-driven Jacobi supplier applies with $E=\mathbb R^N$, power basis $T^j e_0$ for $j<N$, the ordinary Euclidean inner product, and the characteristic recurrence $q$ of Proposition 37.4. Its coefficient multiplication is the actual $T$ in that power basis; the Hankel inner-product identity, strict positivity and self-adjointness hypotheses are exactly the ones just verified. Its monic orthogonal matrix has subdiagonal $1$ and opposite entry $h_j/h_{j-1}$; normalization gives the native symmetric entries above. No normalized-companion-trace-moment hypothesis is used.
+
+The diagonal pairing uses degrees at most $2j+1\le2N-1$, and the link norms use degrees at most $2N-2$. Each link ratio is a positive rational square because the actual promised $b_j$ is rational and positive. In reduced form $A/C>0$, both coprime integers $A,C$ are squares: the prime exponents in a rational square are even. Integer square-root extraction on numerator and denominator, with exact squaring checks, therefore gives the unique positive rational root. This is an effective integer calculation, not an oracle for arbitrary real square roots. $\square$
+

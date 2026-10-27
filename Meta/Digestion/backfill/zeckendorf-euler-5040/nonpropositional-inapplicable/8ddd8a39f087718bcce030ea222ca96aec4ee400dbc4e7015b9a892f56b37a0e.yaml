@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8ddd8a39f087718bcce030ea222ca96aec4ee400dbc4e7015b9a892f56b37a0e
+  normalized_sha256: sha256:8ddd8a39f087718bcce030ea222ca96aec4ee400dbc4e7015b9a892f56b37a0e
+cas_ref: sha256:8ddd8a39f087718bcce030ea222ca96aec4ee400dbc4e7015b9a892f56b37a0e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 提出随尺度变化的安全上包络研究问题并列参考链接；未宣称该全尺度估计已经成立。'
+    previous_atom_id: 0f91aea907728a1ac0663b6ea4570d6cbaa843c8ee76b7a706fc58c99d94c194
+    next_atom_id: 514c5d703fcd256c4f3ce3bd1d5a8992d7023a4701bd6a7b723f25b49e663dd8

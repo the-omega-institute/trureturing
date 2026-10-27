@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:a83d8728570a6aa86d131c5a29503e7a605d0e9aab47d944959041b20f9fe947
+  normalized_sha256: sha256:a83d8728570a6aa86d131c5a29503e7a605d0e9aab47d944959041b20f9fe947
+cas_ref: sha256:a83d8728570a6aa86d131c5a29503e7a605d0e9aab47d944959041b20f9fe947
+coverage_gids:
+  - gid: D5/S0/Conventions/WDigits.wValue_one
+    target_statement_id: sha256:027020f066fe99e34e39510a648eee969bb5e0c7bfbed0f24768b88731ad9760
+  - gid: D5/S0/Conventions/WDigits.wValue_two
+    target_statement_id: sha256:5aced3f5900219eb07fde76fda0e9d34bdbc89fa324e9edc9fb5a0e1100c4bae
+  - gid: D5/S0/Conventions/WDigits.wValue_zero
+    target_statement_id: sha256:e19ad2d942bd85e9fd27c6cb0dfa867d7b540d653578f33058b6834986a6198a
+  - gid: D5/S0/Conventions/WDigits.wdigits_unique
+    target_statement_id: sha256:a85c044d3f237c1d3c2a95a515470e2bcc94ebca613e89c39f603471e61bd20f
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.full_window_5040
+    target_statement_id: sha256:1b12d70b228721873c95b20291f72555c412a8a77f790104efadeca5a0804415
+receipts:
+  unresolved_subitems: []

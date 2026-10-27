@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1d85e2ae85499e4b0b0d7737c0dc46bf9911bdc0483c13f2861bd2ad38c239c7
+  normalized_sha256: sha256:1d85e2ae85499e4b0b0d7737c0dc46bf9911bdc0483c13f2861bd2ad38c239c7
+cas_ref: sha256:1d85e2ae85499e4b0b0d7737c0dc46bf9911bdc0483c13f2861bd2ad38c239c7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: ANCHOR 作为实际见证的解释与角色职责约定。
+    previous_atom_id: b3451cfd72b4e66c6608eca08839338041278d576c4a09c4ca2ffab5e9013ac3
+    next_atom_id: 774f8933c4d42cbc07cbd0423f8be707b15e98e659bfec6fc76641af0049c9ef

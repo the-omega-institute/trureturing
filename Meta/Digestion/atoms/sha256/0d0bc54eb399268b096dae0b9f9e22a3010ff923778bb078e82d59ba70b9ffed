@@ -1,0 +1,46 @@
+## 3. Uniform transition-window theorem
+
+For $j\ge1$ write $t_j=F_{j-1}/F_j$. Define the positive open cells
+
+$$
+I_2=(1,\infty),\qquad
+I_b=\begin{cases}
+(t_b,t_{b-2}),&b\ge4\text{ even},\\
+(t_{b-2},t_b),&b\ge3\text{ odd}.
+\end{cases}
+\tag{3.1}
+$$
+
+**Theorem 3.1.** Suppose $m\ge5$ and (1.9)–(1.10) hold for some $a,\rho,R$ in the entire domain (1.4). The first same-sign exponent index
+
+$$
+b=\min\{k\in\{2,\ldots,K\}:u_{k-1}u_k>0\}
+\tag{3.2}
+$$
+
+exists and satisfies
+
+$$
+2\le b\le m-2,\qquad
+m-1\le a\le m+b-2,\qquad \rho\in I_b.
+\tag{3.3}
+$$
+
+If $a=m-1$, then
+
+$$
+b\equiv m\pmod2.
+\tag{3.4}
+$$
+
+Consequently, for every $m\ge5$ and every $\rho>0$, interpolation is impossible at every gap
+
+$$
+0\le a\le m-2,\qquad a=2m-3,\qquad a=2m-2.
+\tag{3.5}
+$$
+
+These statements do not assume (2.2). The proof occupies Sections 4–9.
+
+The same-sign index is an exponent relation, not an extra action or a changed acquisition clock. Formula (3.3) is a necessary condition, not an existence assertion for any point in its remaining window.
+

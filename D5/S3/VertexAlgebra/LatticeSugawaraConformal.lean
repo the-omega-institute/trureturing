@@ -673,7 +673,7 @@ theorem actual_translation_generators (D : LatticeData) :
     actual_lattice_translation_covariance D, neutral_translation_covariance D⟩
 
 
-private theorem inverse_charge_contractions (D : LatticeData)
+theorem inverse_charge_contractions (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1) (β : Charge D) :
     (∀ i, ∑ j : Fin D.rank, H i j * chargeScalar D β j = (β i : ℂ)) ∧

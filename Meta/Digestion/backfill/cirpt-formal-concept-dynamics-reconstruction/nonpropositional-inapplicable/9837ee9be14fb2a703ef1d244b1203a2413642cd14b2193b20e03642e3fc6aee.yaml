@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9837ee9be14fb2a703ef1d244b1203a2413642cd14b2193b20e03642e3fc6aee
+  normalized_sha256: sha256:9837ee9be14fb2a703ef1d244b1203a2413642cd14b2193b20e03642e3fc6aee
+cas_ref: sha256:9837ee9be14fb2a703ef1d244b1203a2413642cd14b2193b20e03642e3fc6aee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 研究状态差异清单中的覆盖边一项，没有声明任何覆盖成立。
+    previous_atom_id: d39f712667e57abfdd71ce8b0c699cb25ff5e0bf15f31e17d16dac2df75cf809
+    next_atom_id: 1b8f8609a85a8d7ef089887c79ea13624fe0d1edd111b0ee85bd25dafdea0c5a

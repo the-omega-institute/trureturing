@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9db4efb30df562c1fdb012a7d766f3cad6149605c7847e670ec36c96b12ce615
+  normalized_sha256: sha256:9db4efb30df562c1fdb012a7d766f3cad6149605c7847e670ec36c96b12ce615
+cas_ref: sha256:9db4efb30df562c1fdb012a7d766f3cad6149605c7847e670ec36c96b12ce615
+coverage_gids:
+  - gid: D5/S3/Quantum/EnvironmentRecords.trace_environment_controlled_record_eq_phase_damping
+    target_statement_id: sha256:538b2139f42013c11b481364cd5c830484adb9ec81ac3d2070fcc9ca99aca26a
+receipts:
+  unresolved_subitems: []

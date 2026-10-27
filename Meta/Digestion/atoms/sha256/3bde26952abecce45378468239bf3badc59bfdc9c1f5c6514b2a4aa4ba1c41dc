@@ -1,0 +1,12 @@
+**Proposition 49.4 (simultaneous stores and later use).** There is one layout realizing Propositions 49.2–49.3 in which the following resources coexist at the decoding cut:
+
+| Coexisting resource | Size or mathematical charge |
+| --- | --- |
+| Actual source | $N$ cells, $N-1$ links, coefficient store $B$ and two state buffers of $O(NW_L)$ bits. |
+| Acquired data and fixed observer law | The retained $2N+1$-value acquisition record, of $O(N^2B+N)$ bits by §41, and the fixed $F$-bit data of Definition 49.1. |
+| Current observer and observation record | Native/predictive vectors, the $N$ paid observation replies, and $O(NW_L)$ bits of current numeric data. |
+| Inverse-matrix scratch | At most $O(N^2W_L)$ bits, retained here as a conservative allowance even if some fixed calculations have finished. |
+| Candidate, counters and recovered word | $O(Ld_H+L+\log(N+2)+1)$ bits, with distinct retained input/output copies added when present. |
+| Optional pulse-reply archive | Its actual $A_{\rm past}$ bits, including both scalar replies if both are retained. |
+| Serialization and extra delivery copies | Their actual simultaneous $A_{\rm io}$ bits. |
+| Installation and access | Actual origin/class assurance, finite controller description, source reference, Read/Tick/Hold/Add rights and their backing. |

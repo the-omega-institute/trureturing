@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8eabeb4bf4ef956e6450eb36252c0fc055a2ff95f3e8152bb3148c5b2feaeec5
+  normalized_sha256: sha256:8eabeb4bf4ef956e6450eb36252c0fc055a2ff95f3e8152bb3148c5b2feaeec5
+cas_ref: sha256:8eabeb4bf4ef956e6450eb36252c0fc055a2ff95f3e8152bb3148c5b2feaeec5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: operator blocks 是候选对象名称；末句报告尚未建立有限维闭合律，并非不可能性定理。
+    previous_atom_id: d97f6bb671876c33ce4aafe5754d16b0b67cd3c57ee6880f4ef701ad0c2103bc
+    next_atom_id: 410bc8fbc1f487faf91c829126f2fc8f0ecef6310b82305c200104e9c66c1002

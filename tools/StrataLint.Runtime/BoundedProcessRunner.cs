@@ -9,6 +9,9 @@ internal sealed record StreamedProcessOutput<T>(int ExitCode, T StandardOutput, 
 internal static class BoundedProcessRunner
 {
     internal static readonly TimeSpan HangDetectionBudget = TimeSpan.FromMinutes(5);
+    private static readonly object StartFailureKey = new();
+
+    internal static bool FailedBeforeStart(Exception exception) => exception.Data[StartFailureKey] is true;
 
     // Flow the startup seam into Task.Run without sharing overrides between checks.
     internal static readonly AsyncLocal<Func<Process, bool>?> StartProcess = new();
@@ -70,15 +73,23 @@ internal static class BoundedProcessRunner
         }
 
         using var process = new Process { StartInfo = startInfo };
-        if (!(StartProcess.Value?.Invoke(process) ?? process.Start()))
+        try
         {
-            throw new InvalidOperationException($"could not start {fileName}");
+            if (!(StartProcess.Value?.Invoke(process) ?? process.Start()))
+                throw new InvalidOperationException($"could not start {fileName}");
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            exception.Data[StartFailureKey] = true;
+            throw;
         }
 
         using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         cancellation.CancelAfter(timeout);
         using var drain = new CancellationTokenSource();
-        var ioCancellation = interruptBeforeKill is null ? cancellation.Token : drain.Token;
+        // Execution cancellation settles the child first. Its complete pipe
+        // observations remain readable until EOF or the bounded drain expires.
+        var ioCancellation = drain.Token;
         Task? stdout = null;
         Task? stderr = null;
         Task? stdin = null;
@@ -143,8 +154,7 @@ internal static class BoundedProcessRunner
         {
             // Destinations cannot outlive their consumer. In particular, the
             // fixture's settlement output must be drained before its sinks close.
-            if (interruptBeforeKill is not null) drain.CancelAfter(TimeSpan.FromSeconds(5));
-            else drain.Cancel();
+            drain.CancelAfter(TimeSpan.FromSeconds(5));
             foreach (var task in new[] { stdout, stderr, stdin })
             {
                 try { task?.GetAwaiter().GetResult(); }

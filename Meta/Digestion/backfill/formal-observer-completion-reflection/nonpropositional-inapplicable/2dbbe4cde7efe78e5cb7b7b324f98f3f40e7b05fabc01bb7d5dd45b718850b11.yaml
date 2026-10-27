@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2dbbe4cde7efe78e5cb7b7b324f98f3f40e7b05fabc01bb7d5dd45b718850b11
+  normalized_sha256: sha256:2dbbe4cde7efe78e5cb7b7b324f98f3f40e7b05fabc01bb7d5dd45b718850b11
+cas_ref: sha256:2dbbe4cde7efe78e5cb7b7b324f98f3f40e7b05fabc01bb7d5dd45b718850b11
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 为反身观察者模型设定世界状态的环境分量记号，没有关于动力学的结论。'
+    previous_atom_id: 160cdddc9b8ab6c00de4b6392b8d52818a7a1c850f27f0b5503cd6fcb9cbe3ef
+    next_atom_id: 9e8b4125578481b39cb9962aa0cf94a407b563adad0f68240a3ecdfa19f7acdc

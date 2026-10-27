@@ -1,0 +1,11 @@
+**Proposition 68.1 (the common scalar case is one result).** On the authentic $N=1$ specialization, the clock/residue consumer and the scalar valuation/digit consumer recover the same length and word. Their common authentic scalar case is a single deduction. The later-origin classification of §§59–61 and arbitrary-order computed consumer of §§63–67 have distinct additional domains.
+
+**Proof.** The primitive law is $q(z)=sz-r$, so $a=s$ and $v_j=(r/s)^j$. For $n\ge1$,
+
+$$
+\Lambda_n=s^{-(n-1)}\mathbb Z.
+\tag{68.1}
+$$
+
+Indeed each generator is in the right-hand side; conversely $1$ and $r^{n-1}/s^{n-1}$ generate it by $\gcd(r^{n-1},s^{n-1})=1$. The authentic origin is $\lambda^2=r^2/s^2$, whose reduced numerator is coprime to $s$. For every prime $\ell\mid s$, its valuation formula is $\nu_\ell(X(u))=-(L+2)\nu_\ell(s)$. Hence the first membership index in (68.1) is $L+3$, agreeing with $L+2N+1$ and the scalar formula. For the allowed digits $H<s$, both procedures return the unique actual word; for $H=s-1$ the scalar residue formula applies directly, and restriction gives the smaller alphabets. No second independent authentic-scalar theorem is needed. An arbitrary actual later scalar $p/q$ need not equal $\lambda^2$, so its exact good/bad-origin classification is additional. Conversely §§59–61 do not supply the matrix construction or whole-law residues for arbitrary $N$. $\square$
+

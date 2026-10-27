@@ -4,7 +4,21 @@
 
 TwoPositiveTransitionTrace for the spectral bound of conditionally two-positive maps.
 
-**Lemma 1.1 (Trace against a rank-one matrix).**
+**Lemma 1.1 (Trace in the matrix-unit basis).**
+
+$$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi : \operatorname{Matrix}\left(\operatorname{Fin}\left(\operatorname{d}\right), \operatorname{Fin}\left(\operatorname{d}\right), \mathbb{C}\right)\to_{l[\mathbb{C}]}\operatorname{Matrix}\left(\operatorname{Fin}\left(\operatorname{d}\right), \operatorname{Fin}\left(\operatorname{d}\right), \mathbb{C}\right)) , \operatorname{LinearMap}.\operatorname{trace}\left(\mathbb{C}, \operatorname{Matrix}\left(\operatorname{Fin}\left(\operatorname{d}\right), \operatorname{Fin}\left(\operatorname{d}\right), \mathbb{C}\right), \phi\right) = \sum \operatorname{i} : \operatorname{Fin}\left(\operatorname{d}\right) , \sum \operatorname{j} : \operatorname{Fin}\left(\operatorname{d}\right) , \phi\left(\operatorname{Matrix}.\operatorname{single}\left(\operatorname{i}, \operatorname{j}, 1\right), \operatorname{i}, \operatorname{j}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/TwoPositiveTransitionTrace.trace_standard` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* F. vom Ende, D. Chruściński, G. Kimura, P. Muratore-Ginanneschi (2025). *Universal Bound on the Eigenvalues of 2-Positive Trace-Preserving Maps*. DOI: [10.1016/j.laa.2025.10.022](https://doi.org/10.1016/j.laa.2025.10.022). URL: <https://arxiv.org/abs/2506.02145v1>.
+
+*Commentary.*
+
+The trace of a complex-linear map on finite square matrices is the sum of its diagonal coefficients in the matrix-unit basis.
+
+**Lemma 1.2 (Trace against a rank-one matrix).**
 
 $$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(\operatorname{n}\right)] [\operatorname{DecidableEq}\left(\operatorname{n}\right)] \forall X \in \operatorname{Matrix}\left(\operatorname{n}, \operatorname{n}, \mathbb{C}\right),\; \forall v \in \operatorname{n} \to \mathbb{C},\; \operatorname{Matrix}.\operatorname{trace}\left(\operatorname{X} \cdot \operatorname{Matrix}.\operatorname{vecMulVec}\left(\operatorname{v}, \operatorname{star}\left(\operatorname{v}\right)\right)\right) = \operatorname{dotProduct}\left(\operatorname{star}\left(\operatorname{v}\right), \operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{X}, \operatorname{v}\right)\right)$$
 
@@ -18,7 +32,7 @@ $$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(\operatornam
 
 For any finite complex matrix X and vector v, the trace of X times the rank-one matrix of v equals the scalar product of star v with X applied to v.
 
-**Definition 1.2 (minReSpectrum).**
+**Definition 1.3 (minReSpectrum).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) (\operatorname{L} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \operatorname{minReSpectrum} \operatorname{L} = \operatorname{sInf} (\operatorname{Set} . \operatorname{image} \operatorname{Complex} . \operatorname{re} (\{\operatorname{z} : \mathbb{C} | \operatorname{z} \in \operatorname{L} . \operatorname{charpoly} . \operatorname{roots}\}))$$
 
@@ -30,7 +44,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) (\operatorname{L} : (\operatorname{Mat
 
 The displayed statement gives the hypotheses and conclusion for minReSpectrum. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Definition 1.3 (maxReSpectrum).**
+**Definition 1.4 (maxReSpectrum).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) (\operatorname{L} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \operatorname{maxReSpectrum} \operatorname{L} = \operatorname{sSup} (\operatorname{Set} . \operatorname{image} \operatorname{Complex} . \operatorname{re} (\{\operatorname{z} : \mathbb{C} | \operatorname{z} \in \operatorname{L} . \operatorname{charpoly} . \operatorname{roots}\}))$$
 
@@ -42,7 +56,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) (\operatorname{L} : (\operatorname{Mat
 
 The displayed statement gives the hypotheses and conclusion for maxReSpectrum. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Definition 1.4 (spectralBound).**
+**Definition 1.5 (spectralBound).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{L} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \operatorname{spectralBound} \operatorname{L} \Leftrightarrow ((\operatorname{LinearMap} . \operatorname{trace} \mathbb{C} (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C}) \operatorname{L})) . \operatorname{re} \leq (\operatorname{d} : \mathbb{R}) * \operatorname{minReSpectrum} \operatorname{L} + ((\operatorname{d} : \mathbb{R})^{2} - \operatorname{d}) * \operatorname{maxReSpectrum} \operatorname{L}$$
 
@@ -54,7 +68,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{L} : (\operat
 
 The displayed statement gives the hypotheses and conclusion for spectralBound. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.5 (pair extraction).**
+**Theorem 1.6 (pair extraction).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , ((\operatorname{KPositive} 2 \operatorname{d} \phi)) \to \forall (\operatorname{j} \operatorname{k} : \operatorname{Fin} \operatorname{d}) , (\phi (\operatorname{Matrix} . \operatorname{single} \operatorname{k} \operatorname{j} 1) \operatorname{k} \operatorname{j}) . \operatorname{re} + (\phi (\operatorname{Matrix} . \operatorname{single} \operatorname{j} \operatorname{k} 1) \operatorname{j} \operatorname{k}) . \operatorname{re} \leq (\phi (\operatorname{Matrix} . \operatorname{single} \operatorname{k} \operatorname{k} 1) \operatorname{k} \operatorname{k}) . \operatorname{re} + (\phi (\operatorname{Matrix} . \operatorname{single} \operatorname{j} \operatorname{j} 1) \operatorname{j} \operatorname{j}) . \operatorname{re}$$
 
@@ -66,7 +80,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi : (\operatorname{Matri
 
 The pair estimate in the proof of Lemma 1, page 7, arXiv:2506.02145v1. Testing the amplified map on the entangled rank-one matrix formed from two matrix units and using the opposite-sign vector bounds the two crossed diagonal coefficients by the two uncrossed coefficients.
 
-**Theorem 1.6 (transition trace bound).**
+**Theorem 1.7 (transition trace bound).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , ((\operatorname{KPositive} 2 \operatorname{d} \phi)) \to (\operatorname{LinearMap} . \operatorname{trace} \mathbb{C} ((\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) \phi) . \operatorname{re} \leq (\operatorname{d} : \mathbb{R}) * \sum \operatorname{i} : \operatorname{Fin} \operatorname{d} , (\phi (\operatorname{Matrix} . \operatorname{single} \operatorname{i} \operatorname{i} 1) \operatorname{i} \operatorname{i}) . \operatorname{re}$$
 
@@ -78,7 +92,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi : (\operatorname{Matri
 
 Lemma 1, page 6, arXiv:2506.02145v1, equation (8), specialized to the standard orthonormal basis. Summing the pair estimates over every ordered pair yields the dimension-wide superoperator trace estimate. LinearMap.trace is the trace on the matrix space, rather than Matrix.trace of an output matrix.
 
-**Theorem 1.7 (twoPositive star preserving).**
+**Theorem 1.8 (twoPositive star preserving).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , ((\operatorname{KPositive} 2 \operatorname{d} \phi)) \to \forall (\operatorname{Y} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \phi \operatorname{Y} . \operatorname{conjTranspose} = (\phi \operatorname{Y}) . \operatorname{conjTranspose}$$
 
@@ -92,7 +106,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi : (\operatorname{Matri
 
 The displayed statement gives the hypotheses and conclusion for twoPositive_star_preserving. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.8 (twoPositive add).**
+**Theorem 1.9 (twoPositive add).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi \psi : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , ((\operatorname{KPositive} 2 \operatorname{d} \phi)) \to ((\operatorname{KPositive} 2 \operatorname{d} \psi)) \to (\operatorname{KPositive} 2 \operatorname{d} (\phi + \psi))$$
 
@@ -106,7 +120,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi \psi : (\operatorname{
 
 The displayed statement gives the hypotheses and conclusion for twoPositive_add. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.9 (twoPositive smul).**
+**Theorem 1.10 (twoPositive smul).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , ((\operatorname{KPositive} 2 \operatorname{d} \phi)) \to \forall (\operatorname{c} : \mathbb{R}) , (0 \leq \operatorname{c}) \to (\operatorname{KPositive} 2 \operatorname{d} ((\operatorname{c} : \mathbb{C}) \cdot \phi))$$
 
@@ -120,7 +134,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi : (\operatorname{Matri
 
 The displayed statement gives the hypotheses and conclusion for twoPositive_smul. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.10 (traceIdentity twoPositive).**
+**Theorem 1.11 (traceIdentity twoPositive).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , (\operatorname{KPositive} 2 \operatorname{d} (((\operatorname{Matrix} . \operatorname{traceLinearMap} (\operatorname{Fin} \operatorname{d}) \mathbb{C} \mathbb{C}) . \operatorname{smulRight} (1 : \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C}))))$$
 
@@ -134,7 +148,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , (\operatorname{KPositive} 2 \operato
 
 The displayed statement gives the hypotheses and conclusion for traceIdentity_twoPositive. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.11 (regularization twoPositive).**
+**Theorem 1.12 (regularization twoPositive).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{T} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , ((\operatorname{KPositive} 2 \operatorname{d} \operatorname{T})) \to \forall (\varepsilon : \mathbb{R}) , (0 \leq \varepsilon) \to (\operatorname{KPositive} 2 \operatorname{d} (\operatorname{T} + (\varepsilon : \mathbb{C}) \cdot ((\operatorname{Matrix} . \operatorname{traceLinearMap} (\operatorname{Fin} \operatorname{d}) \mathbb{C} \mathbb{C}) . \operatorname{smulRight} (1 : \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C}))))$$
 
@@ -148,7 +162,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{T} : (\operat
 
 The displayed statement gives the hypotheses and conclusion for regularization_twoPositive. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.12 (twoPositive positive).**
+**Theorem 1.13 (twoPositive positive).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{T} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , ((\operatorname{KPositive} 2 \operatorname{d} \operatorname{T})) \to \forall (\operatorname{X} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , (\operatorname{X} . \operatorname{PosSemidef}) \to (\operatorname{T} \operatorname{X}) . \operatorname{PosSemidef}$$
 
@@ -162,7 +176,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{T} : (\operat
 
 The displayed statement gives the hypotheses and conclusion for twoPositive_positive. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.13 (regularization strictly improving).**
+**Theorem 1.14 (regularization strictly improving).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{T} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , ((\operatorname{KPositive} 2 \operatorname{d} \operatorname{T})) \to \forall (\varepsilon : \mathbb{R}) , (0 < \varepsilon) \to \forall (\operatorname{X} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , (\operatorname{X} . \operatorname{PosSemidef}) \to (\operatorname{X} \neq 0) \to (((\operatorname{T} + (\varepsilon : \mathbb{C}) \cdot ((\operatorname{Matrix} . \operatorname{traceLinearMap} (\operatorname{Fin} \operatorname{d}) \mathbb{C} \mathbb{C}) . \operatorname{smulRight} (1 : \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C}))) : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) \operatorname{X}) . \operatorname{PosDef}$$
 
@@ -176,7 +190,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{T} : (\operat
 
 The displayed statement gives the hypotheses and conclusion for regularization_strictly_improving. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.14 (positive diag of two).**
+**Theorem 1.15 (positive diag of two).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , ((\operatorname{KPositive} 2 \operatorname{d} \phi)) \to \forall (\operatorname{i} \operatorname{j} : \operatorname{Fin} \operatorname{d}) , 0 \leq (\phi (\operatorname{Matrix} . \operatorname{single} \operatorname{j} \operatorname{j} 1) \operatorname{i} \operatorname{i}) . \operatorname{re}$$
 
@@ -190,7 +204,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi : (\operatorname{Matri
 
 The displayed statement gives the hypotheses and conclusion for positive_diag_of_two. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Definition 1.15 (transition).**
+**Definition 1.16 (transition).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \operatorname{transition} \phi = \lambda \operatorname{i} \operatorname{j} \mapsto (\phi (\operatorname{Matrix} . \operatorname{single} \operatorname{j} \operatorname{j} 1) \operatorname{i} \operatorname{i})$$
 
@@ -202,7 +216,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi : (\operatorname{Matri
 
 Page 6, arXiv:2506.02145v1: "given Φ ∈ L(Cd×d) and any orthonormal basis G := {gj}dj=1 of Cd define TG(Φ) ∈ Cd×d (or TG, for short) via (TG)jk := ⟨gj|Φ(|gk⟩⟨gk|)|gj⟩." In the standard basis the entry is Phi (Matrix.single j j 1) i i, with its full complex value. Fin d indexes all d basis vectors.
 
-**Theorem 1.16 (transition colStochastic).**
+**Theorem 1.17 (transition colStochastic).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{NeZero} \operatorname{d}] , \forall (\phi : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , (\forall \operatorname{i} \operatorname{j} : \operatorname{Fin} \operatorname{d} , 0 \leq (\phi (\operatorname{Matrix} . \operatorname{single} \operatorname{j} \operatorname{j} 1) \operatorname{i} \operatorname{i}) . \operatorname{re}) \to ((\forall \operatorname{X} , \operatorname{Matrix} . \operatorname{trace} (\phi \operatorname{X}) = \operatorname{Matrix} . \operatorname{trace} \operatorname{X})) \to (\operatorname{transition} \phi).\operatorname{map} \operatorname{Complex}.\operatorname{re} \in \operatorname{Matrix} . \operatorname{colStochastic} \mathbb{R} (\operatorname{Fin} \operatorname{d})$$
 
@@ -216,7 +230,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{NeZero} \operatorname
 
 The displayed statement gives the hypotheses and conclusion for transition_colStochastic. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Definition 1.17 (hsInner).**
+**Definition 1.18 (hsInner).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \operatorname{hsInner} . \operatorname{toNormedSpace} = \operatorname{Matrix} . \operatorname{frobeniusNormedSpace} \land \forall (\operatorname{X} \operatorname{Y} : \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C}) , \operatorname{hsInner} . \operatorname{inner} \operatorname{X} \operatorname{Y} = (\operatorname{X} . \operatorname{conjTranspose} * \operatorname{Y}) . \operatorname{trace}$$
 
@@ -228,7 +242,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \operatorname{hsInner} . \operatorna
 
 The Hilbert–Schmidt structure uses the Frobenius norm already supplied by Mathlib. Its inner product is exactly the trace of conjTranspose X times Y; the normed-space field is Matrix.frobeniusNormedSpace. The equality specifies the data fields; the remaining structure fields certify the inner-product laws.
 
-**Definition 1.18 (weightedAdjoint).**
+**Definition 1.19 (weightedAdjoint).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{hsInner}] , \forall (\operatorname{Phi} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \forall (\operatorname{W} \operatorname{V} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \operatorname{weightedAdjoint} \operatorname{Phi} \operatorname{W} \operatorname{V} = ((\operatorname{LinearMap} . \operatorname{mulLeftRight} \mathbb{C} (\operatorname{W} , \operatorname{W} . \operatorname{conjTranspose}))) . \operatorname{comp} ((\operatorname{LinearMap} . \operatorname{adjoint} \operatorname{Phi}) . \operatorname{comp} ((\operatorname{LinearMap} . \operatorname{mulLeftRight} \mathbb{C} (\operatorname{V} , \operatorname{V} . \operatorname{conjTranspose}))))$$
 
@@ -240,7 +254,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{hsInner}] , \forall (
 
 The displayed statement gives the hypotheses and conclusion for weightedAdjoint. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.19 (hsAdjoint inner left).**
+**Theorem 1.20 (hsAdjoint inner left).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{hsInner}] , \forall (\operatorname{Phi} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \forall (\operatorname{X} \operatorname{Y} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \operatorname{inner} \mathbb{C} (\operatorname{LinearMap} . \operatorname{adjoint} \operatorname{Phi} \operatorname{Y}) \operatorname{X} = \operatorname{inner} \mathbb{C} \operatorname{Y} (\operatorname{Phi} \operatorname{X})$$
 
@@ -254,7 +268,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{hsInner}] , \forall (
 
 The displayed statement gives the hypotheses and conclusion for hsAdjoint_inner_left. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.20 (hsAdjoint entry).**
+**Theorem 1.21 (hsAdjoint entry).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{hsInner}] , \forall (\operatorname{Phi} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \forall (\operatorname{Y} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \forall (\operatorname{a} \operatorname{b} : \operatorname{Fin} \operatorname{d}) , \operatorname{LinearMap} . \operatorname{adjoint} \operatorname{Phi} \operatorname{Y} \operatorname{a} \operatorname{b} = \sum \operatorname{i} : \operatorname{Fin} \operatorname{d} , \sum \operatorname{j} : \operatorname{Fin} \operatorname{d} , \operatorname{star} (\operatorname{Phi} (\operatorname{Matrix} . \operatorname{single} \operatorname{a} \operatorname{b} 1) \operatorname{i} \operatorname{j}) * \operatorname{Y} \operatorname{i} \operatorname{j}$$
 
@@ -268,7 +282,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{hsInner}] , \forall (
 
 The displayed statement gives the hypotheses and conclusion for hsAdjoint_entry. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.21 (unital iff adjoint tracePreserving).**
+**Theorem 1.22 (unital iff adjoint tracePreserving).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{hsInner}] , \forall (\operatorname{Phi} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \operatorname{Phi} 1 = 1 \Leftrightarrow (\forall \operatorname{X} , \operatorname{Matrix} . \operatorname{trace} ((\operatorname{LinearMap} . \operatorname{adjoint} \operatorname{Phi}) \operatorname{X}) = \operatorname{Matrix} . \operatorname{trace} \operatorname{X})$$
 
@@ -282,7 +296,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{hsInner}] , \forall (
 
 The displayed statement gives the hypotheses and conclusion for unital_iff_adjoint_tracePreserving. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.22 (adjoint twoPositive).**
+**Theorem 1.23 (adjoint twoPositive).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{hsInner}] , \forall (\operatorname{Phi} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , ((\operatorname{KPositive} 2 \operatorname{d} \operatorname{Phi})) \to (\operatorname{KPositive} 2 \operatorname{d} (\operatorname{LinearMap} . \operatorname{adjoint} \operatorname{Phi}))$$
 
@@ -296,7 +310,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{hsInner}] , \forall (
 
 The displayed statement gives the hypotheses and conclusion for adjoint_twoPositive. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.23 (congrMap twoPositive).**
+**Theorem 1.24 (congrMap twoPositive).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{A} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , (\operatorname{KPositive} 2 \operatorname{d} ((\operatorname{LinearMap} . \operatorname{mulLeftRight} \mathbb{C} (\operatorname{A} , \operatorname{A} . \operatorname{conjTranspose}))))$$
 
@@ -310,7 +324,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{A} : (\operat
 
 The displayed statement gives the hypotheses and conclusion for congrMap_twoPositive. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.24 (twoPositive comp).**
+**Theorem 1.25 (twoPositive comp).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{T} \operatorname{S} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , ((\operatorname{KPositive} 2 \operatorname{d} \operatorname{T})) \to ((\operatorname{KPositive} 2 \operatorname{d} \operatorname{S})) \to (\operatorname{KPositive} 2 \operatorname{d} (\operatorname{T} . \operatorname{comp} \operatorname{S}))$$
 
@@ -324,7 +338,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{T} \operatorn
 
 The displayed statement gives the hypotheses and conclusion for twoPositive_comp. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.25 (superoperator trace real twoPositive).**
+**Theorem 1.26 (superoperator trace real twoPositive).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , ((\operatorname{KPositive} 2 \operatorname{d} \phi)) \to (\operatorname{LinearMap} . \operatorname{trace} \mathbb{C} ((\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) \phi) . \operatorname{im} = 0$$
 
@@ -338,7 +352,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\phi : (\operatorname{Matri
 
 The displayed statement gives the hypotheses and conclusion for superoperator_trace_real_twoPositive. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.26 (faithful fixed eigenvalue norm le one).**
+**Theorem 1.27 (faithful fixed eigenvalue norm le one).**
 
 $$\forall (\operatorname{A} : \operatorname{Type} *) , [\operatorname{CStarAlgebra} \operatorname{A}] , [\operatorname{PartialOrder} \operatorname{A}] , [\operatorname{StarOrderedRing} \operatorname{A}] , [\operatorname{NonnegSpectrumClass} \mathbb{R} \operatorname{A}] , [\operatorname{Nontrivial} \operatorname{A}] , [\operatorname{NormOneClass} \operatorname{A}] , \forall (\operatorname{U} : (\operatorname{A} \to_{l[\mathbb{C}]} \operatorname{A})) , (\forall \operatorname{X} , 0 \leq \operatorname{X} \to 0 \leq \operatorname{U} \operatorname{X}) \to \forall (\rho : \operatorname{A}) , (\operatorname{IsStrictlyPositive} \rho) \to (\operatorname{U} \rho = \rho) \to \forall (\operatorname{z} : \mathbb{C}) , (\operatorname{Module} . \operatorname{End} . \operatorname{HasEigenvalue} \operatorname{U} \operatorname{z}) \to \Vert \operatorname{z} \Vert \leq 1$$
 
@@ -352,7 +366,7 @@ $$\forall (\operatorname{A} : \operatorname{Type} *) , [\operatorname{CStarAlgeb
 
 A strictly positive invariant element bounds the order unit from below. Positivity of every power then bounds its action uniformly on every eigenvector. An eigenvalue of modulus greater than one would contradict this bound through geometric growth.
 
-**Theorem 1.27 (root mem iff).**
+**Theorem 1.28 (root mem iff).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{Phi} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \forall (\operatorname{z} : \mathbb{C}) , \operatorname{z} \in (\operatorname{Phi} . \operatorname{charpoly} . \operatorname{roots}) \Leftrightarrow \operatorname{Module} . \operatorname{End} . \operatorname{HasEigenvalue} \operatorname{Phi} \operatorname{z}$$
 
@@ -366,7 +380,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{Phi} : (\oper
 
 The displayed statement gives the hypotheses and conclusion for root_mem_iff. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.28 (roots finite).**
+**Theorem 1.29 (roots finite).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{Phi} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \{\operatorname{z} : \mathbb{C} | \operatorname{z} \in (\operatorname{Phi} . \operatorname{charpoly} . \operatorname{roots})\} . \operatorname{Finite}$$
 
@@ -380,7 +394,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{Phi} : (\oper
 
 The displayed statement gives the hypotheses and conclusion for roots_finite. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.29 (roots nonempty).**
+**Theorem 1.30 (roots nonempty).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{NeZero} \operatorname{d}] , \forall (\operatorname{Phi} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{l[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \{\operatorname{z} : \mathbb{C} | \operatorname{z} \in (\operatorname{Phi} . \operatorname{charpoly} . \operatorname{roots})\} . \operatorname{Nonempty}$$
 
@@ -394,7 +408,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{NeZero} \operatorname
 
 The displayed statement gives the hypotheses and conclusion for roots_nonempty. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.30 (extrema tendsto).**
+**Theorem 1.31 (extrema tendsto).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{NeZero} \operatorname{d}] , \forall (\alpha : \operatorname{Type} *) , \forall (\operatorname{l} : \operatorname{Filter} \alpha) , \forall (\operatorname{A} : \alpha \to (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{L[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , \forall (\operatorname{B} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{L[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C})) , (\operatorname{Tendsto} \operatorname{A} \operatorname{l} (\operatorname{nhds} \operatorname{B})) \to \operatorname{Tendsto} (\lambda \operatorname{x} \mapsto \operatorname{minReSpectrum} (\operatorname{A} \operatorname{x}) . \operatorname{toLinearMap}) \operatorname{l} (\operatorname{nhds} (\operatorname{minReSpectrum} \operatorname{B} . \operatorname{toLinearMap})) \land \operatorname{Tendsto} (\lambda \operatorname{x} \mapsto \operatorname{maxReSpectrum} (\operatorname{A} \operatorname{x}) . \operatorname{toLinearMap}) \operatorname{l} (\operatorname{nhds} (\operatorname{maxReSpectrum} \operatorname{B} . \operatorname{toLinearMap}))$$
 
@@ -408,7 +422,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , [\operatorname{NeZero} \operatorname
 
 The displayed statement gives the hypotheses and conclusion for extrema_tendsto. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.31 (superTrace continuous).**
+**Theorem 1.32 (superTrace continuous).**
 
 $$\forall (\operatorname{d} : \mathbb{N}) , \operatorname{Continuous} (\lambda \operatorname{L} : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C} \to_{L[\mathbb{C}]} \operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C}) \mapsto (\operatorname{LinearMap} . \operatorname{trace} \mathbb{C} (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C}) \operatorname{L} . \operatorname{toLinearMap}))$$
 
@@ -445,6 +459,7 @@ The displayed statement gives the hypotheses and conclusion for superTrace_conti
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TwoPositiveTransitionTrace.superoperator_trace_real_twoPositive`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TwoPositiveTransitionTrace.traceIdentity_twoPositive`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TwoPositiveTransitionTrace.trace_rank_one`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/TwoPositiveTransitionTrace.trace_standard`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TwoPositiveTransitionTrace.transition`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TwoPositiveTransitionTrace.transition_colStochastic`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TwoPositiveTransitionTrace.transition_trace_bound`

@@ -120,7 +120,7 @@ private lemma multiset_126 (p : Multiset ℕ) (hp : ∀ a ∈ p, a = 1 ∨ a = 2
   have ha : a ∉ p := by intro h; rcases hp a h with h | h | h <;> contradiction
   simp [Multiset.count_replicate, Multiset.count_eq_zero_of_notMem ha, Ne.symm h1, Ne.symm h2, Ne.symm h6]
 
-private def partition126 (n y z : ℕ) (h : 2*y+6*z ≤ n) : Nat.Partition n :=
+def partition126 (n y z : ℕ) (h : 2*y+6*z ≤ n) : Nat.Partition n :=
   Nat.Partition.ofSums n (Multiset.replicate (n - 2*y - 6*z) 1 +
     Multiset.replicate y 2 + Multiset.replicate z 6) (by simp; omega)
 

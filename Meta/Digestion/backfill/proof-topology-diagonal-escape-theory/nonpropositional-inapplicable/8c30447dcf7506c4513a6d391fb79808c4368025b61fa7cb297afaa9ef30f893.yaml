@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8c30447dcf7506c4513a6d391fb79808c4368025b61fa7cb297afaa9ef30f893
+  normalized_sha256: sha256:8c30447dcf7506c4513a6d391fb79808c4368025b61fa7cb297afaa9ef30f893
+cas_ref: sha256:8c30447dcf7506c4513a6d391fb79808c4368025b61fa7cb297afaa9ef30f893
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 以所有 ker(BD^n) 的交定义静默子空间 N_H，没有断言其与可见轨迹的等价。
+    previous_atom_id: d0dbe8481aa34b40258d18dbaa91244dbf7da07d3fbf722cac6883ac5ea816d6
+    next_atom_id: 3800c34827846804a87a7fad468b7a8b7484a83cdaaf009cba562287e436d9e4

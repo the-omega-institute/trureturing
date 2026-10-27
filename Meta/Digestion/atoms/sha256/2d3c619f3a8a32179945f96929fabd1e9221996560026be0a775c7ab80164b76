@@ -1,0 +1,84 @@
+**Definition 31.2 (the supplied core and physical exterior family).**
+For every integer $n\ge2$ and every fixed
+$g\in(\lambda_n,g_n^{\rm iso})$, use the entire isolation interval
+of Lemma 24.2. Proposition 24.3 and (26.5) supply
+$s=2\pi L>0$ and a real positive even $\psi\in\mathcal H_c$ with
+$C[\psi]=1$ and
+
+$$
+\left(A-\frac{g}{2\pi}Q_n\right)(\psi,v)
+             =-s^2C(\psi,v)\qquad(v\in\mathcal H_c).
+$$
+
+Here forms are polarized linearly in their first argument. These
+are derived parameters, not added restrictions on $n,g$. All
+constants below may depend on the fixed pair $n,g$.
+
+Theorem 26.2 supplies a real axisymmetric $z$-even $f_0$, defined
+on all of $\mathbb R^3$, and $b\in\mathbb C\setminus\{0\}$.
+For every $\eta\in C_c^\infty(\mathbb R^3)$ one has
+$\eta f_0\in\mathcal H_1$, and
+$q(f_0,\phi)=0$ for every original complex compact smooth test
+$\phi$, including tests through the pole. With continuous slice
+representatives and $w_0=w_{f_0}$,
+
+$$
+\begin{aligned}
+\|w_0(\ell)-2\operatorname{Re}(be^{is\ell})\psi\|_{\mathcal H_c}
+ &\longrightarrow0,\\
+\|\partial_\ell w_0(\ell)
+       -2\operatorname{Re}(isbe^{is\ell})\psi\|_{L^2(c\,da)}
+ &\longrightarrow0\qquad(\ell\longrightarrow\infty).
+\end{aligned}
+\tag{31.8}
+$$
+
+This is a global local-form solution; neither global $L^2$
+membership nor membership in $D(\mathscr A)$ is presumed for $f_0$.
+
+Write $F_E$ for the single exterior family furnished by Theorem
+30.6. There are fixed $R_0>1$, $E_0\in(0,1)$ and $\beta\in\mathbb C$
+with $|\beta|=1$ such that for every $0<E<E_0$, $F_E$ is real,
+axisymmetric and $z$-even on $\Omega_{R_0}=\{R>R_0\}$. Every compact
+smooth exterior multiplier of $F_E$ belongs to $\mathcal H_1$, and
+
+$$
+q(F_E,\phi)+E\langle F_E,\phi\rangle=0
+\quad\bigl(\phi\in C_c^\infty(\Omega_{R_0};\mathbb C)\bigr).
+\tag{31.9}
+$$
+
+The test class includes all nonaxisymmetric complex tests. For every
+$R_0<r_1<r_2<\infty$ and every smooth real radial $\eta$, with
+$0\le\eta\le1$, $\eta=0$ on $R\le r_1$ and $\eta=1$ on $R\ge r_2$,
+the physical tail $\eta F_E$ belongs to $\mathcal H_1$, with zero
+extension inward. This includes the physical $L^2$ mass and all
+three original field energies.
+
+Set $w_E=w_{F_E}$ and $T_E=\tfrac12\log(1/E)$. The value and
+derivative slice representatives satisfy, with the same $\beta$
+for every sufficiently small $E$,
+
+$$
+\begin{aligned}
+\mathfrak r_E(\ell)
+ &=\|w_E(\ell)-2\operatorname{Re}(\beta e^{is(\ell-T_E)})\psi
+                                                   \|_{\mathcal H_c}\\
+ &\quad+\|\partial_\ell w_E(\ell)
+       -2\operatorname{Re}(is\beta e^{is(\ell-T_E)})\psi\|_{L^2(c\,da)},\\
+\lim_{K\to\infty}\limsup_{E\downarrow0}
+          \sup_{K\le\ell\le T_E-K}\mathfrak r_E(\ell)&=0.
+\end{aligned}
+\tag{31.10}
+$$
+
+Here $K>\log R_0$ and the inner limit uses $T_E>2K$.
+Equivalently, for each $\varepsilon>0$ there is $K_0$ such that for
+every fixed $K\ge K_0$ there is $E_K>0$ for which every
+$0<E<E_K$ and every $\ell\in[K,T_E-K]$ have
+$\mathfrak r_E(\ell)<\varepsilon$. No continuity in $E$ is required.
+All higher even components of $f_0$ and $F_E$ are retained.
+Neither solution is replaced by its $\psi$ component. Every kernel
+or zero-energy resonance allowed by the original hypotheses remains
+allowed, with no exceptional coupling or energy removed.
+

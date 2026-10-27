@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e1130fd7d821bb66785db7737033378f1c0a9a0bc982f6b4bb5558adedbd16ec
+  normalized_sha256: sha256:e1130fd7d821bb66785db7737033378f1c0a9a0bc982f6b4bb5558adedbd16ec
+cas_ref: sha256:e1130fd7d821bb66785db7737033378f1c0a9a0bc982f6b4bb5558adedbd16ec
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 窄通道首片禁止全局放宽按重数/不同点计数，是规范保护要求。
+    previous_atom_id: e80f162580b1320296b4e9c92de853e4ecb47de1f26214b62a3b924d71fc14c7
+    next_atom_id: 9b81e779a0beef585fc8b69b81beae2028a79a4e763cd1c1e6bec8e9b6349473

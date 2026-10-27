@@ -14,10 +14,123 @@ triage: anchor
 # Fractional-part Gram kernels and known moment centering
 
 The pinned source is [arXiv:2405.06349v2](https://arxiv.org/html/2405.06349v2),
-revised 13 May 2024. The selected statements and the argument of
-Proposition 8.1 were inspected. No independent whole-paper proof audit,
+revised 13 May 2024. The introductory approximation claims, the selected kernel statements
+and the argument of Proposition 8.1 were inspected. No independent whole-paper proof audit,
 Lean certification or originality claim is made. The citation records
 the author version without asserting a journal DOI.
+
+## Optimized coefficients and the fixed-array claim
+
+The Introduction defines $d_q^2(N;a)$ for $q=1,2$. Its
+Báez-Duarte criterion optimizes over all real coefficient arrays:
+
+$$
+\mathrm{RH}\quad\Longleftrightarrow\quad
+\liminf_{N\to\infty}\inf_{a\in\mathbb R^N}d_q^2(N;a)=0.
+$$
+
+Fix instead $\lambda_{n,N}=\mu(n)(1-\log n/\log N)$ and write
+$Q_{\lambda,N}^{(q)}=\sum_{m,n\le N}\lambda_{m,N}\lambda_{n,N}
+G_{m,n}^{(q)}$. The square expansion and Proposition 1.1 give
+
+$$
+d_q^2(N;\lambda)
+=q-2\sum_{n\le N}\lambda_{n,N}F_n^{(q)}+Q_{\lambda,N}^{(q)},
+\qquad
+\sum_{n\le N}\lambda_{n,N}F_n^{(q)}\longrightarrow q.
+$$
+
+Consequently $Q_{\lambda,N}^{(q)}\to q$ is equivalent to
+$d_q^2(N;\lambda)\to0$. The optimized criterion then implies RH.
+The sentence following Proposition 1.1 also states the reverse
+implication from RH. The displayed optimization and the mixed-term
+limit do not supply that reverse implication for the fixed array.
+This note therefore does not use it as an RH-only supplier.
+This applicability limitation does not establish that the reverse
+claim is false.
+
+The preceding paragraph of the source explicitly retains extra
+hypotheses when citing the fixed-array result of
+[Bettin–Conrey–Farmer, arXiv:1211.5191v1, Theorem 1](https://arxiv.org/pdf/1211.5191v1).
+For $q=1$ that theorem assumes RH and, for some fixed $\delta>0$,
+
+$$
+\sum_{|\Im\rho|\le T}|\zeta'(\rho)|^{-2}\ll T^{3/2-\delta}.
+$$
+
+The derivative condition includes simplicity of the zeros. With
+these complete assumptions the theorem supplies the known
+$1/\log N$ approximation asymptotic. Neither that conditional result
+nor the mixed-term limit removes the fixed-array convergence
+condition in the FIB source, Section 391.4.
+
+### Multiplicity calibration for the complete $q=1$ residual
+
+The distinction has a concrete paper-level consequence, obtained by
+directly applying (I11), (I15) and (I16) of the
+[existing Selberg analysis](corvalan2023interpolation.md).
+Define on the half-line
+
+$$
+\mathcal F_N(x)=\mathbf1_{(0,1)}(x)
++\sum_{n\le N}\lambda_{n,N}\{1/(nx)\},\qquad
+\varepsilon_N=\|\mathcal F_N\|_{L^2(0,\infty)}.
+$$
+
+Mellin–Plancherel identifies $\varepsilon_N^2=d_1^2(N;\lambda)$.
+If $\varepsilon_N\to0$ over all integer $N$, the known natural-dilation
+criterion gives RH. In fact this convergence also forces every
+nontrivial zero to be simple, as follows.
+
+Retain $S_y(t)=\log y+\sum_{n\le y}\mu(n)\log(y/n)\{t/n\}$.
+For $N=\lfloor y\rfloor$, (I11) gives
+$|S_y(t)-S_N(t)|\le2$ uniformly in $t$. On $J=(5/4,7/4)$,
+$S_N(yq)=\log N\,\mathcal F_N(1/(yq))$ for large $y$.
+The substitution $x=1/(yq)$ gives
+
+$$
+\|S_N(y\,\cdot)\|_{L^2(J)}
+\le\frac74\sqrt y\log N\,\varepsilon_N,
+\qquad
+\|S_y(y\,\cdot)\|_{L^2(J)}=o(\sqrt y\log y).
+$$
+
+This passes from all integer cutoffs to all real $y$, without
+replacing the original residual by a sampled step residual.
+Fix a nontrivial zero $\rho$, now on $\Re\rho=1/2$.
+Equation (I16) provides $h\in C_c^\infty(J)$ with
+$H_h(\rho)\ne0$. Set $A_h(y)=\int_Jh(q)S_y(yq)\,dq$.
+Then $A_h(y)=o(\sqrt y\log y)$, and (I15) identifies
+
+$$
+\mathcal M_h(s)=\int_1^\infty A_h(y)y^{-s-1}\,dy
+=\frac{\int_Jh(q)\,dq}{s^2}+\frac{H_h(s)}{\zeta(s)}
+\qquad(\Re s>1/2).
+$$
+
+For real $u\downarrow0$, the little-oh bound gives
+$u^2\mathcal M_h(\rho+u)\to0$. Indeed, for every $\eta>0$
+choose $Y$ so that $|A_h(y)|\le\eta\sqrt y\log y$ for $y\ge Y$.
+The finite initial integral vanishes after multiplication by $u^2$,
+while the tail is bounded by
+
+$$
+\eta u^2\int_1^\infty\log y\,y^{-u-1}\,dy=\eta.
+$$
+
+The meromorphic right side has a genuine pole of order $m_\rho$ at
+$\rho$, since $H_h(\rho)\ne0$ and $\rho\ne0$.
+Its radial asymptotic is $c u^{-m_\rho}$ with $c\ne0$.
+The little-oh limit excludes $m_\rho\ge2$. Thus the complete
+fixed-array convergence implies RH together with zero simplicity.
+
+This is a direct application of the existing cutoff and Mellin
+identities, with an explicit little-oh integral estimate; it is not
+a new convergence supplier or a Lean-certified statement. No
+converse from RH, convergence along a subsequence, $q=2$ simplicity
+conclusion or derivative-moment bound is asserted. A further
+simplicity consequence alone does not prove that this convergence
+condition is strictly stronger than RH.
 
 ## Existing kernels and their remaining signed term
 

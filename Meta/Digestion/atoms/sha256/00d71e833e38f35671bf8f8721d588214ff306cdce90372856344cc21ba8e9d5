@@ -1,0 +1,51 @@
+**命题 9.4（一个关系量与一个关系角的辛配对）。** 在 $\mathbb {CP}^4$ 的全正人口层，
+固定振幅约定 $\psi_s=\sqrt{p_s}e^{-i\theta_s}$，并以
+
+$$
+\theta_s=\theta_0+\alpha_xx_s+\alpha_yy_s+\alpha_zz_s+\Phi x_sy_s
+\pmod{2\pi}
+$$
+
+为相位坐标。在单位向量的局部提升上置
+
+$$
+\alpha=i\langle\psi,d\psi\rangle=\sum_sp_s\,d\theta_s
+=d\theta_0+X\,d\alpha_x+Y\,d\alpha_y+Z\,d\alpha_z+\kappa\,d\Phi,
+\qquad\omega=-d\alpha.
+$$
+
+整体相位已在射影化中商去。固定均值 $(X,Y,Z)$，只在满足
+
+$$
+Z>0,\qquad
+\max(0,X+Y+Z-1)<\kappa<\min(X,Y)
+$$
+
+的非空全正纤维上，再商去由 $N_x,N_y,N_z$ 生成的三维相位环面。
+这个正则内部约化空间的坐标是
+$(\kappa,\Phi)\in(\max(0,X+Y+Z-1),\min(X,Y))\times S^1$，且
+
+$$
+\omega_{\rm rel}=d\Phi\wedge d\kappa.
+$$
+
+以 $\iota_{X_h}\omega_{\rm rel}=dh$ 定义 Hamilton 场，便有
+$\dot\Phi=\partial_\kappa h$、$\dot\kappa=-\partial_\Phi h$。
+
+证明。五个相位的展开由 $1,x,y,z,xy$ 的基性质唯一给出，且这是整数单位三角变换，
+故在模 $2\pi$ 的角上也可逆。将它代入有限和并用 $\sum_sp_s=1$ 即得 $\alpha$。
+全正概率的独立坐标可取 $X,Y,Z,\kappa$；其开域正是逐项 $p_s>0$。
+所以均值映射在这里秩三。相位环面在正射影层自由作用：
+空模式和三个单位置模式的相位差迫使固定点的三个相位平移均为 $0\pmod{2\pi}$。
+因而所述定值层的商是正则的，实维数为 $8-2\cdot3=2$。
+拉回定值层后 $dX=dY=dZ=0$，$-d\alpha$ 的三个均值配对消失，
+剩下 $-d\kappa\wedge d\Phi$；它沿被商去的方向为零且不随这些方向变化，故下降为显示的非退化二形式。
+收缩给 $\iota_{X_h}\omega_{\rm rel}=\dot\Phi\,d\kappa-\dot\kappa\,d\Phi$，比较系数即得 Hamilton 方程。证毕。
+
+这是 [bundle](#ref-bundle) §§4、18.3 的矩角配对在指定正支撑上的应用。
+当 $h$ 的关系项为 $J_f\kappa$ 时，$\kappa$ 不变而 $\Phi$ 以速度 $J_f$ 增长，与定理 9.1 同号。
+若改用 $e^{+i\widetilde\theta_s}$ 表示同一态，须同时取 $\widetilde\theta=-\theta$、$\widetilde\Phi=-\Phi$，
+不能保持相位变量及二形式的显示符号都不变。
+人口为零、均值位于边界或纤维退化时，相位坐标或自由作用可能失效，必须按实际支撑分层；
+本命题不宣称那里仍有这个二维光滑约化空间，也不把其坐标识别为物理时空。
+

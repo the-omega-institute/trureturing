@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:197cc4c4dcfa84bab191cf7f5733309c6a2dd4e3e3c8b7c94901a88795f46c12
+  normalized_sha256: sha256:197cc4c4dcfa84bab191cf7f5733309c6a2dd4e3e3c8b7c94901a88795f46c12
+cas_ref: sha256:197cc4c4dcfa84bab191cf7f5733309c6a2dd4e3e3c8b7c94901a88795f46c12
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 承认缺陷可能来源目录中的“制度禁止组合”标签，不声称具体组合存在或被禁止。
+    previous_atom_id: 3f0e902b3feabad04c9dc8703542d2bb997040eddf0a2e3da9303fbca0393685
+    next_atom_id: 10fd8d83232b3d3d71fab82deaae002ffb881ab8ccd00eb718cd9c68547ed5bc

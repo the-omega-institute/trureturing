@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:898500e31b6af1ef57181c3e782eda8af7ae6ef3b9784c35b257c75c533e0a2d
+  normalized_sha256: sha256:898500e31b6af1ef57181c3e782eda8af7ae6ef3b9784c35b257c75c533e0a2d
+cas_ref: sha256:898500e31b6af1ef57181c3e782eda8af7ae6ef3b9784c35b257c75c533e0a2d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Chooses the finite-window right representatives and declares nonnegative displacements, multiplicities, and positive weights as model data; it introduces the generating function definition.
+    previous_atom_id: c686c0e3b14c1e0f55696377676d30a51ffa55ddb27f254d5530d086fede585a
+    next_atom_id: 22a3be4111cc6502a8e450d9c89f11f8241ed7ec254f3663062fffe52dcce9e7

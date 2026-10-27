@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7c2ec9321777db911d88fbf43c6dd36dd347e59ce1dfb101e0235a9ed74237c0
+  normalized_sha256: sha256:7c2ec9321777db911d88fbf43c6dd36dd347e59ce1dfb101e0235a9ed74237c0
+cas_ref: sha256:7c2ec9321777db911d88fbf43c6dd36dd347e59ce1dfb101e0235a9ed74237c0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只列决策、规则、责任主体、来源和审计日志的读出签名，没有可恢复性断言。
+    previous_atom_id: 6017a1cd23720b9790b4027783c906a43afaa57cc8a375d1452d5e8008776e1d
+    next_atom_id: 71a89f2e7117b7f943adf919bdd365277da85d97ec5dd56b2d434d11ed8a003b

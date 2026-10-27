@@ -5,13 +5,14 @@ year: 2019
 title: "Perfect quantum state transfer in weighted paths with potentials (loops) using orthogonal polynomials"
 doi: 10.1080/03081087.2018.1442810
 url: https://arxiv.org/abs/1708.03283v2
-claim: "Rational weights conjecture: a weighted path on at least four vertices, with or without potentials, whose edge weights are all rational has no adjacency matrix perfect state transfer between its end vertices at readout time π. Proposition prop:rat proves it for n = 4 and for n ≥ 5 with n ≡ 3 or 5 (mod 8)."
+claim: "Rational weights conjecture: a weighted path on at least four vertices, with or without potentials, whose edge weights are all rational has no adjacency matrix perfect state transfer between its end vertices at readout time π. Proposition prop:rat proves it for n = 4 and for n ≥ 5 with n ≡ 3 or 5 (mod 8). Proposition prop:internal proves that endpoint PST implies PST between each pair of mirror interior vertices, with a converse when no eigenvector vanishes at the interior vertex, and leaves the general converse open."
 strata_touched:
   - D5/S3/Quantum/Dynamics/RationalWeightPathTransfer
   - D5/S3/Quantum/Dynamics/PathMiddleVertexMoments
   - D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer
   - D5/S3/Quantum/Dynamics/PathMiddleEdgeMoments
   - D5/S3/Quantum/Dynamics/EvenPathRationalWeightTransfer
+  - D5/S3/Quantum/Dynamics/InteriorPathTransferConverseRefutation
 license: citation-only
 triage: anchor
 ---
@@ -102,7 +103,22 @@ $m \equiv 2 \pmod 4$ and to 2 modulo 4 for $m \equiv 3, 5 \pmod 8$. The
 conjecture is not settled by the source or these modules for
 $n \equiv 0 \pmod 8$ and $n \equiv 2, 14 \pmod{16}$.
 
+Proposition `prop:internal`:
+
+> For a weighted path with or without potentials, PST between vertices $1$ and $n$ implies PST between vertices $j$ and $n+1-j$, for each $j=2, \ldots, n-1$.
+> If for some $j$ with $2 \le j \le n-1$ there is PST between vertices $j$ and $n+1-j$, and if in addition none of the eigenvectors of the Hamiltonian has a zero entry in the $j$--th position, then the converse holds.
+
+The open question that follows it:
+
+> It is an open question if the converse holds even if there are eigenvectors with zeros in the jth place.  We note that in the more relaxed setting of PGST, this more general conjectured version of the converse fails to be true \cite{internal}: PGST can occur between internal vertices of paths in the absence of PGST between the end vertices.
+
+The question is restated as open by R. Bailey, arXiv:2412.16351
+(`Library/GraphInvariants/bailey2024orthogonalpst.md`). The module
+`D5/S3/Quantum/Dynamics/InteriorPathTransferConverseRefutation` refutes the
+general converse on five vertices without potentials.
+
 ## Verified locator
 
 - DOI: https://doi.org/10.1080/03081087.2018.1442810
 - arXiv: https://arxiv.org/abs/1708.03283v2
+- Proposition `prop:internal` and the open question: v2 TeX `main.tex` (md5 `2c4b26f8efb3320ad9213c1f07370f73`), l. 309–315.

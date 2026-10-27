@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound audits of tensor adjoints and binary Hermitian involutions. -/
+
 namespace Reg.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
 open _root_.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Tensor
 open _root_.D5.S3.Quantum.Recovery
@@ -109,3 +111,102 @@ def registration :
 
 end
 end Reg.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
+
+namespace Reg.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.InvolutionBinary
+open LeanInformationAudit Matrix
+open _root_.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Upper
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open scoped ComplexOrder
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+universe u_1
+
+/-- Observe the subtraction in the positivity conclusion at its identity operand. -/
+abbrev signature : Signature where
+  Params := Σ m : Type u_1, Matrix m m ℂ
+  State p := Matrix p.1 p.1 ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Matrix p.1 p.1 ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u_1} :=
+  realize signature (fun _ p X => X - p.2) (fun e => nomatch e)
+
+def rejected : Realization signature.{u_1} := by
+  classical
+  exact realize signature (fun _ p _ => (-1 : Matrix p.1 p.1 ℂ)) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u_1}
+  Law R := ∀ {m : Type u_1} [Fintype m] [DecidableEq m]
+    (A : Matrix m m ℂ), A.IsHermitian → A ^ 2 = 1 →
+      (R.readout () ⟨m, A⟩ 1).PosSemidef ∧ (1 + A).PosSemidef
+
+theorem rejected_law : ¬ arena.{u_1}.Law rejected.{u_1} := by
+  intro h
+  have he := (h (m := ULift.{u_1} Unit) 1 (by simp) (by simp)).1
+  have hd := he.diag_nonneg (i := (⟨()⟩ : ULift.{u_1} Unit))
+  norm_num [rejected, realize, Matrix.neg_apply, Matrix.one_apply, Complex.le_def] at hd
+
+def source_registration : Registration arena.{u_1} (type_of% @involution_binary.{u_1}) where
+  actual := realize signature (fun _ p X => X - p.2) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨involution_binary, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨ULift.{u_1} Unit, 0⟩, 0, 1, ?_⟩
+    intro h
+    have he := congrArg (fun X : Matrix (ULift.{u_1} Unit) (ULift.{u_1} Unit) ℂ =>
+      X ⟨()⟩ ⟨()⟩) h
+    norm_num [actual, realize, Matrix.sub_apply, Matrix.one_apply, Matrix.zero_apply] at he
+    exact zero_ne_one he
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@involution_binary.{u_1}) (Realization signature.{u_1}) Unit Unit := {
+  unitName := `Reg.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.InvolutionBinary.unit
+  realizationName :=
+    `Reg.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.InvolutionBinary.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p X => X - p.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
+    definition := none
+    coordinates := #[0, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end
+end Reg.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.InvolutionBinary

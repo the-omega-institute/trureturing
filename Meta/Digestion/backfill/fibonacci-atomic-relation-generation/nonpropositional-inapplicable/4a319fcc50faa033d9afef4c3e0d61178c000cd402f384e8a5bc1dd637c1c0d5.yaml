@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4a319fcc50faa033d9afef4c3e0d61178c000cd402f384e8a5bc1dd637c1c0d5
+  normalized_sha256: sha256:4a319fcc50faa033d9afef4c3e0d61178c000cd402f384e8a5bc1dd637c1c0d5
+cas_ref: sha256:4a319fcc50faa033d9afef4c3e0d61178c000cd402f384e8a5bc1dd637c1c0d5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 仅说明第234节使用的 benefit 文献、函数来源及比较范围；未断言后文比较公式。
+    previous_atom_id: eab075920e5a974b7c194ec30f427e0a416789ab9b9b67cd6317596a94790d71
+    next_atom_id: 64f5a846a6a46440b5ff5989b6ee70a088012ce3de1f7ef30cc778a85ef7ad91

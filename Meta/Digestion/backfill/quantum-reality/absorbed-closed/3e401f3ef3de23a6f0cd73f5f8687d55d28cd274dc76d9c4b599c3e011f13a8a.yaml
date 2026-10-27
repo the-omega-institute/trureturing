@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:3e401f3ef3de23a6f0cd73f5f8687d55d28cd274dc76d9c4b599c3e011f13a8a
+  normalized_sha256: sha256:3e401f3ef3de23a6f0cd73f5f8687d55d28cd274dc76d9c4b599c3e011f13a8a
+cas_ref: sha256:3e401f3ef3de23a6f0cd73f5f8687d55d28cd274dc76d9c4b599c3e011f13a8a
+coverage_gids:
+  - gid: D5/S3/QuantumBounds/ReferenceFrame/ChannelFidelityBridge.exchange_basis_preserves_total_excitation
+    target_statement_id: sha256:e598c5ad90175748546dd722eac18d82a94606b957305405c8c0d7a9e4cf7f39
+  - gid: D5/S3/QuantumBounds/ReferenceFrame/ChannelFidelityBridge.exchange_channel_kraus_form
+    target_statement_id: sha256:6eb0829f3a0b6c2b44000cc0e6fb5811f23c5caac5b16a01b4a72277dd176e08
+  - gid: D5/S3/QuantumBounds/ReferenceFrame/ChannelFidelityBridge.exchange_unitary_is_unitary
+    target_statement_id: sha256:659bcc989f6c7ad9560a23a48e4b07ff243c4ab6767c110ef1c1f72927c35b16
+receipts:
+  unresolved_subitems: []

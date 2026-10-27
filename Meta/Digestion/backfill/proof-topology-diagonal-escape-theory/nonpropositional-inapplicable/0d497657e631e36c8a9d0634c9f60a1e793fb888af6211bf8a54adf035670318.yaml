@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0d497657e631e36c8a9d0634c9f60a1e793fb888af6211bf8a54adf035670318
+  normalized_sha256: sha256:0d497657e631e36c8a9d0634c9f60a1e793fb888af6211bf8a54adf035670318
+cas_ref: sha256:0d497657e631e36c8a9d0634c9f60a1e793fb888af6211bf8a54adf035670318
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有非负原始数位黄金像节标题。
+    previous_atom_id: 3f2658cafb9adb358cab76b798bdbf5551030c2c35767780f502bb7b76f09b7e
+    next_atom_id: 9e07a8921296fad4a514a075ae7528d07e9e35bc282146f86b9c607167aacbf2

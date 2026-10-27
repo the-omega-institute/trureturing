@@ -62,7 +62,7 @@ theorem centered_unique {N x y : ℤ} (hN : 0 < N) (hodd : N % 2 = 1)
   simp [hq0] at hq
   omega
 
-private theorem centered_congr {N x y : ℤ} (h : x % N = y % N) :
+theorem centered_congr {N x y : ℤ} (h : x % N = y % N) :
     centered N x = centered N y := by
   unfold centered
   exact congrArg (fun z : ℤ => z - N / 2) (Int.add_emod_eq_add_emod_right (N / 2) h)
@@ -155,7 +155,7 @@ theorem dyadic_sum {α : Type*} {f : α → ℤ} {b : ℤ} {l : List α}
     simp only [List.map_cons, List.sum_cons, hl.1, ih hl.2, List.length_cons, pow_succ]
     ring
 
-private theorem dyadic_nonneg {α : Type*} {f : α → ℤ} {b : ℤ} {l : List α}
+theorem dyadic_nonneg {α : Type*} {f : α → ℤ} {b : ℤ} {l : List α}
     (hb : 0 ≤ b) (hl : Dyadic f b l) : ∀ x ∈ l, 0 ≤ f x := by
   induction l generalizing b with
   | nil => simp

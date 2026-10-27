@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:5cf4d61c8f1e3d2a818143f5ce6e665a77eb05bb7df7ff3e14b47dc7cffe9601
+  normalized_sha256: sha256:5cf4d61c8f1e3d2a818143f5ce6e665a77eb05bb7df7ff3e14b47dc7cffe9601
+cas_ref: sha256:5cf4d61c8f1e3d2a818143f5ce6e665a77eb05bb7df7ff3e14b47dc7cffe9601
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Causal/FiniteCausalQueryHierarchy.jointLaw
+    target_statement_id: sha256:b92dd00f29dd968b7d2d0787a9cec2a9c20335e5e20ff8392c39a18b4a073dc5
+  - gid: D5/S3/ConceptDynamics/Causal/FiniteCausalQueryHierarchy.observationalForwardModel
+    target_statement_id: sha256:16c3e9ebcb1f20e7faed75004d41323801993f4f84cff519380b77b5cbd9e717
+  - gid: D5/S3/ConceptDynamics/Causal/FiniteCausalQueryHierarchy.observationalReverseModel
+    target_statement_id: sha256:16752db9913ee276a7d3b6ba342481a2b8e46800dbc772bf4bb3549c38f6c3f8
+  - gid: D5/S3/ConceptDynamics/Causal/FiniteCausalQueryHierarchy.response
+    target_statement_id: sha256:34044928a9897d8afbbef6ee40716cb464002a29096ccf718a30193c50a6f731
+  - gid: D5/S3/ConceptDynamics/Causal/FiniteCausalQueryHierarchy.stableCouplingModel
+    target_statement_id: sha256:7a72b3306d0e4287a756dfdc9b0206323401bd40c0ffba71219be5943e3b2fed
+receipts:
+  unresolved_subitems: []

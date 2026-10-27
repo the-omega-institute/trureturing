@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a5a19f091e3f0d2b0d980788b3b7d37a4758f132e2fa1ae36d9205d9c00180e0
+  normalized_sha256: sha256:a5a19f091e3f0d2b0d980788b3b7d37a4758f132e2fa1ae36d9205d9c00180e0
+cas_ref: sha256:a5a19f091e3f0d2b0d980788b3b7d37a4758f132e2fa1ae36d9205d9c00180e0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic entries containing authors, titles and publication identifiers, with no mathematical theorem stated.
+    previous_atom_id: 1a4903843c2c806be40b4155b507a1a782070309a558bf186b3702f0da8f62d5
+    next_atom_id: 60cb612ca1b47cf4a7c0a1727f6a859704fc5f5fa974dbabf85e1b0cde32b329

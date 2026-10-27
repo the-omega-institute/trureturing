@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6e0b4026832beadec632456a5a51a78ed74ae3e2d0f37773e8312cecb4764d78
+  normalized_sha256: sha256:6e0b4026832beadec632456a5a51a78ed74ae3e2d0f37773e8312cecb4764d78
+cas_ref: sha256:6e0b4026832beadec632456a5a51a78ed74ae3e2d0f37773e8312cecb4764d78
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 观察者索引概念族的变量设置与“分类空间是否独立”的研究问题。
+    previous_atom_id: 6de62f97de44fb18f00096f566253ede053435fc592304d8895ed4c24976c164
+    next_atom_id: 3005a029bebaf169c8193918a8a711c87af3ba2f5f78f3eec5c08ae4b39a98e1

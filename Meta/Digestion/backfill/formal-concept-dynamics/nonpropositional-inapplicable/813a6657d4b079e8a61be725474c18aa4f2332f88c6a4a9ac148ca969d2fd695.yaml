@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:813a6657d4b079e8a61be725474c18aa4f2332f88c6a4a9ac148ca969d2fd695
+  normalized_sha256: sha256:813a6657d4b079e8a61be725474c18aa4f2332f88c6a4a9ac148ca969d2fd695
+cas_ref: sha256:813a6657d4b079e8a61be725474c18aa4f2332f88c6a4a9ac148ca969d2fd695
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 兼容亏损定义的标题和有限非空模型的语境设置。
+    previous_atom_id: 96f73afff3b60277e96d36cf3d3759345d4a028b2a420bba122502f59da70402
+    next_atom_id: 2fb67a0a5742cbf4f52410528af33aa00f758d7c143fe42ee4fa78346a9d58e6

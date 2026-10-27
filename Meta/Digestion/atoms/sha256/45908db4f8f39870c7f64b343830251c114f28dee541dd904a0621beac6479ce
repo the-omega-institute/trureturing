@@ -1,0 +1,65 @@
+**Theorem 60.1 (all signed lengths, with a constructive converse).** For every actual scalar law and earned origin in Definition 59.1,
+
+$$
+\begin{split}
+&\bigl[\ \forall L,M\ge0\ \forall u\in\mathbb Z^L\ \forall w\in\mathbb Z^M,
+\quad X_v(u)=X_v(w)\Longrightarrow L=M\ \bigr]\\
+&\hspace{45mm}\Longleftrightarrow\quad s\nmid p.
+\end{split}
+\tag{60.1}
+$$
+
+When $s\nmid p$, one prime divisor of $s$ gives an exact length formula on the whole signed image. When $s\mid p$, two unequal positive lengths, both at most $2q$, and signed words at those lengths with equal endpoints can be constructed by finite integer arithmetic. This is length separation, not signed-word uniqueness.
+
+**Proof.** Suppose first that $s\nmid p$. Then $p\ne0$. Choose a prime $\ell\mid s$ with $\nu_\ell(p)<e:=\nu_\ell(s)$. For nonzero rationals, $\nu_\ell$ denotes numerator valuation minus denominator valuation, so $c:=\nu_\ell(v)<e$. Since $\ell\nmid r$, multiplication by $\lambda$ lowers this valuation by $e$. After the first such multiplication its valuation is $c-e<0$. Adding an integer cannot change a negative valuation: for nonzero integer $k$, $\nu_\ell(k)\ge0$, and the valuation of a sum of two nonzero terms of different valuations is their minimum. Adding zero leaves the term unchanged. In particular the resulting term cannot vanish. Induction gives, for every signed word, including the empty word,
+
+$$
+X_v(u)\ne0,\qquad \nu_\ell(X_v(u))=c-Le,
+\qquad L=\frac{c-\nu_\ell(X_v(u))}{e}.
+\tag{60.2}
+$$
+
+The $L=0$ assertion uses $v\ne0$ directly; the induction only uses the negative valuation after each Tick. Equal endpoints therefore have equal lengths. All valuations here are of nonzero rationals; no convention assigning a finite valuation to zero is used.
+
+Now suppose $s\mid p$. Reducedness implies $\gcd(q,s)=1$. Put
+
+$$
+m=q,\qquad q_r=\gcd(q,r^m),\qquad q_0=q/q_r.
+\tag{60.3}
+$$
+
+For each prime $\ell\mid r$, if $\ell^t\mid q$ then $t\le q=m$, and $r^m$ contains the entire $\ell$-primary part of $q$. Thus $q_r$ contains exactly the primary factors of $q$ whose primes divide $r$, $\gcd(q_r,q_0)=1$, and $\gcd(q_0,rs)=1$. If $q_0=1$, take $d=1$. Otherwise the unit $sr^{-1}$ modulo $q_0$ has a positive power equal to one with exponent at most $q_0$: among $q_0+1$ consecutive powers two coincide, and cancellation is valid for a unit. In either case choose
+
+$$
+1\le d\le q_0,\qquad s^d\equiv r^d\pmod {q_0},\qquad n=m+d.
+\tag{60.4}
+$$
+
+Then $2\le n\le2q$. The factor $q_r$ divides $r^m$, while $q_0$ divides $s^d-r^d$. Consequently
+
+$$
+Z=\frac{r^m(s^d-r^d)p}{qs}\in\mathbb Z.
+\tag{60.5}
+$$
+
+The additional division by $s$ is legitimate because $s\mid p$. Since $\gcd(r^{n-1},s^{n-1})=1$, extended Euclid constructs integers $A,B$ with
+
+$$
+Ar^{n-1}+Bs^{n-1}=Z.
+\tag{60.6}
+$$
+
+Take the length-$m$ zero word and the length-$n$ word whose first and last symbols are $A,B$, with every intervening symbol zero. Formula (59.3) gives
+
+$$
+\begin{aligned}
+X_v(A,0,\ldots,0,B)
+ &=\lambda^n v+\frac{Z}{s^{n-1}}\\
+ &=\lambda^n v+\frac{r^m(s^d-r^d)p}{q s^n}
+ =\lambda^m v=X_v(0^m).
+\end{aligned}
+\tag{60.7}
+$$
+
+For $p=0$ this also works, with $A=B=0$. The lengths differ because $d\ge1$. Searching the finitely many exponents in (60.4), then applying Euclid, is a terminating construction. The two-symbol words $(s,0)$ and $(0,r)$ always have equal endpoints at the same length two, since their input contributions are both $r$. Thus even the favorable case in (60.1) does not give arbitrary signed-word uniqueness. $\square$
+

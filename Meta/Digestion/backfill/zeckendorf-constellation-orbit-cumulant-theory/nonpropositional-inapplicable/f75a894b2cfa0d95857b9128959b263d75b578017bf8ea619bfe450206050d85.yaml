@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f75a894b2cfa0d95857b9128959b263d75b578017bf8ea619bfe450206050d85
+  normalized_sha256: sha256:f75a894b2cfa0d95857b9128959b263d75b578017bf8ea619bfe450206050d85
+cas_ref: sha256:f75a894b2cfa0d95857b9128959b263d75b578017bf8ea619bfe450206050d85
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names the Jacobi truncation component of a desired congruence diagram.
+    previous_atom_id: 7884c6bf567cd097de22c6ed093fe704de86a307acfe770d26aff9767df02dce
+    next_atom_id: 4ccf98c6aa3d5763baf2b732e801c166b161068b65bd1521677de3f94c9cd7ec

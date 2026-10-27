@@ -1,0 +1,6 @@
+**Theorem 3.3 (countable-palette complete-protocol lower bound).** No correct complete-target protocol using at most $2d+2$ reads can obtain a successful countable-palette gain-ray output on every world.
+
+**Proof.** Lemma 3.2 makes every actual terminal word mixed. Theorem 3.1 and Lemma 2.3 exclude successful coverage by their countable palettes. This applies to arbitrary action, stopping, and selection functions. It does not assert that a gain-only protocol has mixed terminal words. $\square$
+
+For $d=3$, the fixed mixed-word argument and the finite-palette complete-protocol obstruction are the credited results of *FIB Self-Calibrating Relation Mathematics IV*, Theorem 10.2. The countable extension uses Lemma 2.3 instead of a finite product of polynomials.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a4ef72e217834df00a0113f4feb3ee7095697dc465261f2c7f97eb5ee4643372
+  normalized_sha256: sha256:a4ef72e217834df00a0113f4feb3ee7095697dc465261f2c7f97eb5ee4643372
+cas_ref: sha256:a4ef72e217834df00a0113f4feb3ee7095697dc465261f2c7f97eb5ee4643372
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只记录席位、模块、依赖次序与结账安排；未提出需要证明的数学断言。文本定位：## 五 预算与结算 一席位轮(codex-cli,独立 worktree,四条公开定理同模块;deposit 绑 M3-d-2 atom,其余三条走 PR-1b 收据后 PR-2 cover)。M3-d-1 为难点,给足 3 小时;若席位以 open 归位,把它的具名缺口(哪一步在钉版 API 下
+    previous_atom_id: 1452ff2445f1757cb4cbfa44a8363a815e38bf8c4395aec23f44b25900b47cb6
+    next_atom_id: null

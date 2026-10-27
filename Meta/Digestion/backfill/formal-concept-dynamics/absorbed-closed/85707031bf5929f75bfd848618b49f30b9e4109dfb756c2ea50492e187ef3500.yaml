@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:85707031bf5929f75bfd848618b49f30b9e4109dfb756c2ea50492e187ef3500
+  normalized_sha256: sha256:85707031bf5929f75bfd848618b49f30b9e4109dfb756c2ea50492e187ef3500
+cas_ref: sha256:85707031bf5929f75bfd848618b49f30b9e4109dfb756c2ea50492e187ef3500
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Refinement/HumeInductiveCore.hume_inductive_core
+    target_statement_id: sha256:9cd65210146b3c4aac76cb05651aece74cca910b03a4d5279a109fcfae250ea2
+receipts:
+  unresolved_subitems: []

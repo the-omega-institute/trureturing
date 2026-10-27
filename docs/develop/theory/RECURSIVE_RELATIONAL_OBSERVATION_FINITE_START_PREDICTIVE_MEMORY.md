@@ -2173,3 +2173,315 @@ reduction remain unresolved. This bounded result does not complete that
 programme.
 
 ## 追加锚（本行以下为增补区）
+
+## 19. Observable-return acquisition on the original five-mode stream
+
+**Assumption 19.1 (one unknown source and completed-cut queries).** Use precisely Assumptions 1.1 and 10.1 without an authentic parameter label. One fixed unknown $\vartheta=(p,q,r)\in\mathfrak A$ governs the whole run, $X_0\sim\pi$, and every $Y_0,Y_1,\ldots$ is read chronologically through the original $\chi$. There is no prior on $\vartheta$, reset, hidden-state read, chosen transition, independent sampling port or announced true law. Put
+
+$$
+c=1-p-q-r,\qquad s=p+q,\qquad
+\xi_\vartheta=(c,p,q,r)
+\tag{19.1}
+$$
+
+in visible order $(0,1,3,B)$. A departure from $0$ means one transition whose departure state is $0$, including the self-transition $0\to0$. Queries in §§20–21 concern completed acquired cuts after the sampling stop, and predict symbols strictly after that cut. They impose no precompletion accuracy requirement. All earlier initialized, every-positive-history and all-horizon contracts keep their original quantifiers.
+
+**Definition 19.2 (observable sampling and the retained parser).** Define
+
+$$
+S_1=\inf\{t\ge0:Y_t=0\},\qquad
+S_{k+1}=\inf\{t\ge S_k+1:Y_t=0\},\qquad
+Z_k=Y_{S_k+1}.
+\tag{19.2}
+$$
+
+For an installed integer $n\ge1$, stop acquiring calibration samples at $T_n=S_n+1$, immediately after recording $Z_n$. No additional wait or read is imposed to complete the return at $S_{n+1}$. If $Z_n=0$, departure and return already coincide at that final acquired symbol. Read every intervening symbol, including the initial read and every symbol in the search for the first $0$ and in subsequent returns. Retain four category counts $K_y$, incrementing $K_y$ exactly when the previous read was $0$ and the newly read symbol is $y$, until their sum is $n$.
+
+The source-independent pure-mode update is the supplied total parser
+
+$$
+u(i,j)=j\quad(j\in\{0,1,3\}),\qquad
+u(i,B)=\begin{cases}4&i\in\{0,4\},\\2&i\in\{1,2,3\}.\end{cases}
+\tag{19.3}
+$$
+
+During acquisition add an unsynchronized tag $\bot$, with $u(\bot,B)=\bot$ and $u(\bot,j)=j$ for singleton $j$. It does not claim a posterior before the first singleton and stores no startup length. The first read has no preceding departure and increments no count. At the stop the mode is pure: it is $0,1,3,4$ when $Z_n$ is respectively $0,1,3,B$. Thereafter use the same $u$ on every actual input, regardless of its forecast probability. This is the pure restriction of Theorem 2.2, not a new source-identification rule.
+
+**Theorem 19.3 (actual categorical samples and the exact mean acquisition clock).** For every strict $\vartheta$ and integer $n\ge1$, all times in (19.2) needed for $T_n$ are finite almost surely, and $(Z_1,\ldots,Z_n)$ has product law $\xi_\vartheta^{\otimes n}$. The literal number of calibration reads and hidden transitions on that same run are
+
+$$
+R_n=T_n+1=S_n+2,\qquad R_n-1,
+\qquad
+\mathbb E_\vartheta R_n=g(\vartheta)+5n-3,
+\tag{19.4}
+$$
+
+where
+
+$$
+g(\vartheta)=\frac15\left(
+\frac2{p+q}+\frac{4(p+q)}{p^2+q^2}+\frac1r\right).
+\tag{19.5}
+$$
+
+The count vector has the ordinary four-category multinomial law with sample size $n$. Neither a finite deterministic deadline nor a uniform mean read bound over $\mathfrak A$ is supplied by a fixed sample size.
+
+*Proof.* The event $Y_t=0$ is exactly $X_t=0$. Thus the $S_k$ are observable stopping times, also stopping times for the hidden chain. Reuse the finite irreducibility and uniform stationarity verified in Theorem 10.2. Finite-state recurrence makes their required visits almost surely finite. The strong Markov property, in Levin–Peres–Wilmer, *Markov Chains and Mixing Times*, second edition, Appendix A.3, Proposition A.19, gives conditional distribution $\xi_\vartheta$ for $Z_k$ given the entire history through $S_k$. Every earlier sampled $Z_l$, $l<k$, is measurable at $S_k$, including the case $S_k=S_{k-1}+1$ after a self-transition. Iterating these conditional probabilities gives the product law. This conclusion does not make the intervening visible symbols independent or make excursion lengths independent of their departure samples.
+
+For the initial wait let $h_i=\mathbb E_i\inf\{t\ge0:X_t=0\}$. The finite irreducible chain has finite hitting means. Its first-step equations, with $h_0=0$, give
+
+$$
+s h_1=1+p h_2,\qquad
+s h_2=1+q h_1+p h_3,\qquad
+s h_3=1+q h_2,\qquad h_4=1/r.
+$$
+
+Consequently $h_2=2s/(p^2+q^2)$ and $h_1+h_3=2/s+h_2$. Averaging the five initial states yields $\mathbb E_\vartheta S_1=g(\vartheta)$. Proposition 1.19 of the same primary reference gives mean strictly positive return time $1/\pi(0)=5$, with self-returns included. Apply strong Markov at each $S_k$ and sum the $n-1$ completed return lengths to get $\mathbb E S_n=g+5(n-1)$. The final departure consumes one transition and its read; the initial symbol consumes one read. Hence $R_n=S_n+2$ and (19.4) follows. No $n$th complete-return length is added.
+
+For every finite $L$, the event $X_0=4$ followed by at least $L$ holds at $4$ has positive probability $(1-r)^L/5$ and postpones the first observed $0$. There is therefore no deterministic calibration deadline. Also $g\ge1/(5r)$ diverges as $r\downarrow0$ with fixed admissible $p,q$. This proves the asserted nonuniformity, even though each fixed-source mean in (19.4) is finite. The iid sample law gives the multinomial count law directly. $\square$
+
+## 20. C: finite-catalogue selection and risky exact continuation
+
+**Definition 20.1 (installed catalogue and deterministic selection).** Install an ordered catalogue of $M\ge2$ distinct rational strict triples
+
+$$
+\Theta_C=(\vartheta^1,\ldots,\vartheta^M),\qquad
+\Delta=\min_{j\ne k}\|\vartheta^j-\vartheta^k\|_\infty>0.
+\tag{20.1}
+$$
+
+The actual source is promised to be one member $j$, whose index is unknown. Catalogue membership and the common source/read interface are premises, not conclusions of the sampling. For $N\ge1$ samples from Definition 19.2 set
+
+$$
+\widehat\vartheta(K)=(K_1,K_3,K_B)/N,\qquad
+A_N(K)=\min\mathop{\rm argmin}_{1\le k\le M}
+\|\widehat\vartheta(K)-\vartheta^k\|_\infty.
+\tag{20.2}
+$$
+
+The minimum index resolves every tie. After selection retain only $\widehat j=A_N(K)$ and the current pure mode $i$. Consult the installed rows for $\vartheta^{\widehat j}$, use $u$ for actual mode updates, and decode the complete row-product law $F_{\vartheta^{\widehat j},i}^h$. The selected index stays fixed. Calibration counts can be erased after this installation has completed. No true-member label is received.
+
+**Theorem 20.2 (exact finite risk and one all-future success event).** For each actual member $j$ define the rational finite sum
+
+$$
+R_j(N)=
+\sum_{\substack{k_0+k_1+k_3+k_B=N\\k_y\ge0}}
+\frac{N!}{k_0!k_1!k_3!k_B!}
+\prod_{y\in\mathcal A}(\xi_{\vartheta^j,y})^{k_y}
+\mathbf1_{\{A_N(k)\ne j\}}.
+\tag{20.3}
+$$
+
+Then $\mathbb P_j\{\widehat j\ne j\}=R_j(N)$ and
+
+$$
+R_j(N)\le\frac3{N\Delta^2}.
+\tag{20.4}
+$$
+
+For any $0<\delta<1$, the choice $N=\lceil3/(\delta\Delta^2)\rceil$ gives $0<R_j(N)\le\delta$. Write $a_t=Y_0\cdots Y_t$ and let $i_t$ be its retained pure mode after calibration. On almost every completed run,
+
+$$
+\begin{aligned}
+L_C&=\sup_{t\ge T_N}\ \sup_{h\ge1}
+\operatorname{TV}\left(F_{\vartheta^j,a_t}^h,
+F_{\vartheta^{\widehat j},i_t}^h\right)
+=\mathbf1_{\{\widehat j\ne j\}},\\
+\mathbb P_j\{L_C=0\}&=1-R_j(N).
+\end{aligned}
+\tag{20.5}
+$$
+
+On this single success event, laws are exact at every later acquired cut, every finite horizon and every source-legal finite continuation of the completed calibration word. Each decoder is generated by its own normalized rows and the same total retained update.
+
+*Proof.* Theorem 19.3 gives exactly the count masses in (20.3); no chronological-length weighting is added. If all three empirical coordinates differ from their true coordinates by less than $\Delta/2$, the true member is strictly nearer than every other member in (20.2). Thus a wrong selection implies at least one coordinate deviation of size at least $\Delta/2$. Each coordinate is the average of $N$ iid Bernoulli indicators and has variance at most $1/(4N)$. Chebyshev's inequality bounds each such deviation by $1/(N\Delta^2)$, and the union of these three events proves (20.4), including selection ties.
+
+At $T_N$ a $0$ has already been observed. The supplied pure-history classification, conditional-law identity and total parser in §§1–2 identify the true future law after each later positive word as $F_{\vartheta^j,i_t}$. The supplied pure row-product identity gives the installed decoder. If $\widehat j=j$ the two are equal for all modes and all horizons, independently of what later observations occur. If $\widehat j\ne j$, Theorem 10.2 gives profile distance one between the two strict-parameter pure laws at every mode. Its hypotheses apply because each pure mode has a positive witness under each catalogue member, and its conclusion compares any positive acquired histories. Therefore already at $T_N$ the supremum over finite horizons is one. TV never exceeds one, proving (20.5). This is a supremum statement, not a claim of unit distance at a particular finite horizon.
+
+For strict positivity of the residual error fix $k\ne j$. The bound just proved under source $k$, with $\delta<1$, ensures positive probability of selection $k$ there. Since the count set is finite, at least one count vector selecting $k$ has positive mass. All four entries of every $\xi_{\vartheta^j}$ are positive, so that same vector has positive mass under $j$. Hence $R_j(N)>0$. Almost-sure completion and countability of finite terminal words also give an actual finite positive terminal transcript with that wrong selection. No zero-error certificate is produced. $\square$
+
+**Corollary 20.3 (the original worst-history boundary is preserved).** Under the stated sample choice, the observer succeeds in exact continued prediction with probability at least $1-\delta$ separately for each promised member, without a prior. It does not satisfy the initialized uniform requirement of Definition 11.1 at any tolerance below one over this unknown catalogue.
+
+*Proof.* The probability statement is (20.5). A positive terminal history selecting the wrong member exists by Theorem 20.2; at that history the all-finite-horizon error supremum is one. This violates the old every-positive-history requirement, irrespective of how rare the terminal history is. Theorems 10.5 and 11.3–11.6 already supply the general zero-error and compatible-update obstructions; their proofs and their authentic-supply hypotheses are unchanged. $\square$
+
+## 21. D: continuous unknown calibration with a capped future horizon
+
+**Definition 21.1 (retained empirical kernel, including zero entries).** Here the actual $\vartheta$ is any member of the full strict real domain $\mathfrak A$; no catalogue or rationality of the source is assumed. For $m\ge1$ actual departures retain $K=(K_0,K_1,K_3,K_B)$, with sum $m$, and put
+
+$$
+v=(v_0,v_1,v_3,v_B)=K/m.
+\tag{21.1}
+$$
+
+Freeze these counts at $T_m$ and continue updating the pure mode by (19.3). Substitute $(\widehat p,\widehat q,\widehat r)=(v_1,v_3,v_B)$ and $\widehat c=v_0$ into the supplied five pure rows. In visible order $(0,1,3,B)$ these are
+
+$$
+\begin{aligned}
+g_{v,0}&=(v_0,v_1,v_3,v_B),\\
+g_{v,1}&=(v_3,v_0+v_B,0,v_1),\\
+g_{v,2}&=(0,v_3,v_1,v_0+v_B),\\
+g_{v,3}&=(v_1,0,v_0+v_B,v_3),\\
+g_{v,4}&=(v_B,0,0,v_0+v_1+v_3).
+\end{aligned}
+\tag{21.2}
+$$
+
+They are nonnegative and normalized on the whole closed four-simplex. Define $Q_{v,i}^0(\varnothing)=1$ and, for every complete word,
+
+$$
+Q_{v,i}^{h+1}(yw)=g_{v,i}(y)Q_{v,u(i,y)}^h(w).
+\tag{21.3}
+$$
+
+This is the supplied same-update generator applied to these rows. Actual reads with $g_{v,i}(y)=0$ still invoke $u(i,y)$ and still have queried successors. There is no division by an empirical forecast mass and no deletion of such actual inputs.
+
+**Theorem 21.2 (complete-word error from the observable empirical row).** For every strict $\vartheta$, every $v$ in the closed four-simplex, every mode $i\in\{0,1,2,3,4\}$ and every integer $h\ge0$,
+
+$$
+\operatorname{TV}(Q_{v,i}^h,F_{\vartheta,i}^h)
+\le\sqrt{\frac{hD(v\Vert\xi_\vartheta)}2},\qquad
+D(v\Vert\xi)=\sum_{y:v_y>0}v_y\log\frac{v_y}{\xi_y}.
+\tag{21.4}
+$$
+
+Logarithms are natural, and a zero numerator contributes zero. All $4^h$ word entries, including zero entries, occur in the TV. The right side may be replaced by its minimum with one.
+
+*Proof.* The source-specific correspondence to the mature product-law tools is explicit. Use driver labels $C,P,Q,R$ with law $(c,p,q,r)$, and the following deterministic next-state table, whose rows are current modes and whose columns are driver labels:
+
+$$
+\begin{array}{c|rrrr}
+&C&P&Q&R\\\hline
+0&0&1&3&4\\
+1&1&2&0&1\\
+2&2&3&1&2\\
+3&3&0&2&3\\
+4&4&4&4&0
+\end{array}.
+\tag{21.5}
+$$
+
+Following this table from mode $i$ and reading each successor through $\chi$ defines one parameter-independent map $\Phi_{i,h}$ from driver words of length $h$ to visible words of length $h$. With driver law $\xi_\vartheta$, its hidden transitions are the literal matrix of Assumption 1.1. With driver law $v$, its visible rows are (21.2). For every possible table step the visible successor updates the current mode by $u$; thus the pushforwards of $\xi_\vartheta^{\otimes h}$ and $v^{\otimes h}$ are respectively $F_{\vartheta,i}^h$ and (21.3). This verifies the parameter correspondence without asserting that the observer reads the drivers.
+
+Apply the existing finite-channel TV contraction to this deterministic map. Apply the existing finite Pinsker inequality to the driver product distributions. Its absolute-continuity hypothesis holds because every coordinate of $\xi_\vartheta$ is positive; no positivity of $v$ is required. Product KL additivity gives
+
+$$
+D(v^{\otimes h}\Vert\xi_\vartheta^{\otimes h})
+=hD(v\Vert\xi_\vartheta).
+$$
+
+Indeed on the support of $v^{\otimes h}$ the logarithm of the product ratio is the sum of the $h$ coordinate log ratios; summing each coordinate against the normalized remaining factors gives the displayed identity. Outside that support its contribution is zero. The finite Pinsker and channel inequalities now give (21.4), with the same argument at zeros and the trivial empty-word case at $h=0$. The reused declarations are `TotalVariation.DataProcessing.total_variation_channel_le` and `TotalVariation.Pinsker.pinsker_inequality`; their hypotheses, normalization and proofs are not new results here. $\square$
+
+**Theorem 21.3 (one acquisition event controls every later capped query).** Fix an integer $H\ge1$, a real $\epsilon>0$ and a real $0<\delta<1$. Take
+
+$$
+m=\left\lceil\frac{3H}{2\delta\epsilon^2}\right\rceil
+\tag{21.6}
+$$
+
+actual departures using Definition 19.2. For each strict real source $\vartheta$, the acquisition event
+
+$$
+E_\vartheta=\left\{D(K/m\Vert\xi_\vartheta)
+\le\frac{2\epsilon^2}{H}\right\}
+\tag{21.7}
+$$
+
+has probability at least $1-\delta$. On that one event, simultaneously for all five modes and all $0\le h\le H$, the error in (21.4) is at most $\epsilon$. In particular, for every later acquired cut $t\ge T_m$ and every source-legal finite continuation of its completed calibration history,
+
+$$
+\operatorname{TV}(F_{\vartheta,a_t}^h,Q_{K/m,i_t}^h)
+\le\epsilon\qquad(0\le h\le H).
+\tag{21.8}
+$$
+
+There is no additional failure probability for the number of later queries or for their adaptation to previously acquired reports. This is not an all-horizon or exact-parameter conclusion.
+
+*Proof.* Reuse the iid categorical count law of Theorem 19.3. For a fixed positive four-vector $\xi=\xi_\vartheta$, the elementary log bound $\log x\le x-1$, applied only where $v_y>0$, gives
+
+$$
+\begin{aligned}
+D(v\Vert\xi)
+&\le\sum_y\frac{(v_y-\xi_y)^2}{\xi_y},\\
+\mathbb E_\vartheta\sum_y\frac{(K_y/m-\xi_y)^2}{\xi_y}
+&=\frac1m\sum_y(1-\xi_y)=\frac3m.
+\end{aligned}
+\tag{21.9}
+$$
+
+For the first line, the sum obtained directly from the log bound is $\sum_y v_y^2/\xi_y-1$, equal to the displayed sum by normalization; zero $v_y$ cause no missing term. For the second line use the Bernoulli variance $\xi_y(1-\xi_y)/m$ separately in each coordinate. Independence between the four coordinates is not asserted or needed. Markov's inequality gives
+
+$$
+\mathbb P_\vartheta\left\{D(v\Vert\xi_\vartheta)
+>2\epsilon^2/H\right\}
+\le\frac{3H}{2m\epsilon^2}\le\delta.
+$$
+
+On its complement Theorem 21.2 is a deterministic simultaneous bound for every mode and every capped horizon. The supplied true conditional-law identity and parser identify the actual future at every positive acquired continuation with its pure-mode law. The same $v$ is retained while the mode is updated, so this single deterministic bound applies after every such continuation, including ones assigned zero probability by an earlier empirical forecast. No union over future histories, times or queries is taken. The probability lower bound refers to the original acquisition experiment under each fixed source; it is not a claim of the same probability conditional on every rare acquisition history. Event (21.7) uses the unknown true $\xi$ for analysis and is not an observer-computable certificate. $\square$
+
+## 22. Whole configurations, retained calls and resources on one run
+
+**Definition 22.1 (resource and input conventions).** A calibration run consists of its actual $R_n$ chronological reads, the subsequent selection or empirical installation, and any specified $k$ further chronological reads and requested captured-cut outputs. The integers $n$, the catalogue in C, and the horizon cap $H$ in D are installed static inputs. The formulas for $N$ and $m$ hold for real design tolerances mathematically. An effective installation takes those integers directly, or computes them from rational $\delta,\epsilon$ and, for C, the rational catalogue and its rational separation. Exact ceiling or comparison against an arbitrary real name is not part of the interface. The unknown continuous triple in D is never supplied numerically.
+
+Static programs, tables and input descriptions, mutable complete configurations, temporary arithmetic/query workspace, numeric output, and physical backing are separate coordinates. Charging only configuration names does not make the other coordinates free. The sampling controller and pure parser have a constant-size rule table; installing $n$ takes $O(\log(n+1))$ static bits, and installing D's cap additionally takes $O(\log(H+1))$ bits. C's catalogue storage is charged in Proposition 22.3. Design-tolerance descriptions, if still consulted, are also static backing. They may instead be discarded after the sample-size integer has been installed.
+
+A captured-cut call copies the retained parameter representation and mode at a completed read boundary, and returns that cut's complete law for the requested horizon. At the sampling cut, C can capture $K$ and its mode first and compute (20.2) before answering; after selection it need only capture the selected index and mode. If selection finishes after further actual reads, the live mode continues to update while this captured mode remains fixed. Keeping that extra snapshot is additional query workspace. No law is promised for the physical state at the later instant when computation finishes. The source has not been reset, copied or stopped.
+
+**Proposition 22.2 (sufficient finite retention and literal streaming charges).** For either consumer, at sample size $n$ one sufficient acquisition configuration contains the six-valued parser tag, four counts in $\{0,\ldots,n\}$, a sample-total counter in that same range, and a fixed finite control phase. No chronological-age counter or stored visible archive is needed. With $b_n=\max\{1,\lceil\log_2(n+1)\rceil\}$, this uses at most
+
+$$
+5b_n+O(1)
+\tag{22.1}
+$$
+
+mutable naming bits before selection/query workspace. A sufficient postinstallation C carrier is $(\widehat j,i)\in\{1,\ldots,M\}\times\{0,\ldots,4\}$, with $5M$ nominal configurations. A sufficient postinstallation D carrier is $(K,i)$ with $\sum_y K_y=m$, at most $5\binom{m+3}{3}$ nominal configurations, or $4b_m+O(1)$ bits using four ordinary count registers and a mode tag. These are upper bounds, not sharp whole-system storage minima.
+
+On one realized run through $k$ later acquired symbols the source charges are exactly
+
+$$
+\begin{array}{c|c}
+\text{chronological reads}&R_n+k\\
+\text{hidden transitions since initialization}&R_n+k-1\\
+\text{one-symbol streaming updates}&R_n+k\\
+\text{category-count increments during calibration}&n\\
+\text{sample-total increments during calibration}&n
+\end{array}
+\tag{22.2}
+$$
+
+in addition to selection, calls and physical service charges. In particular their mean calibration read count is (19.4), with $n=N$ or $m$ as appropriate.
+
+*Proof.* Start all counts and the total at zero and the parser at $\bot$. A read increments its category and the total exactly when the previous parser tag is $0$ and the total is below $n$, then updates the parser. The first read, whose previous tag is $\bot$, cannot be counted. The total reaches $n$ exactly at $T_n$. All five integer fields are bounded despite an arbitrarily long wait, proving (22.1). The invariant in Definition 19.2 identifies the actual mode and the sample counts, and the installed stopping comparison uses only the bounded total. Erasing C's counts after selection leaves precisely its index and mode; D freezes its counts. Their stated updates do not consult an erased field. The number of nonnegative quadruples of sum $m$ is $\binom{m+3}{3}$, giving the D bound. Hypothetical generated words also stay in these postinstallation carriers because $u$ is total.
+
+Every actual read invokes exactly one streaming update. Each of the $n$ sampled transitions increments exactly one category and the total; all other observed transitions are still read and processed. A read sequence beginning at $Y_0$ and ending after $R_n+k$ symbols spans $R_n+k-1$ hidden transitions. This proves (22.2). An external analysis counter for those charges is not an input to the observer. If that counter is itself retained for billing, its storage and increments are additional resources. $\square$
+
+**Proposition 22.3 (effective selection and complete rational law output).** Suppose C's catalogue member $j$ is presented as an integer triple $(P_j,Q_j,R_j)/d_j$, with $0<P_j,Q_j,R_j$ and $P_j+Q_j+R_j<d_j$, all of bit length at most $B$. Exact selection (20.2), including all ties, is effective using $O(M)$ integer arithmetic operations on $O(B+b_N)$-bit operands, with $O(B+b_N+\log M)$ temporary bits in addition to acquisition fields and the $O(MB)$ installed catalogue and its derived rows. Streaming acquisition needs $O(R_n+k)$ finite-control operations, $2n$ bounded-counter increments and $n$ sample-total equality checks, with each integer operation implementable in $O(b_n)$ bit operations. D requires no real arithmetic to install (21.2).
+
+For a captured C cut use denominator $d_{\widehat j}$ and for a captured D cut use denominator $m$. Write $b=B$ or $b=b_m$, respectively. For any requested horizon $h$, an explicit complete-law output has exactly $4^h$ entries. It can be generated with $O(h4^h+h)$ integer multiplications, $O(h4^h)$ integer additions and mode/table steps, with operands and streamed probability entries of $O(hb+1)$ bits, and $O(h(b+1)+1)$ temporary bits besides installed data and the captured configuration. Horizon zero directly outputs the single entry one. Materializing the whole array instead needs $O(4^h(hb+1))$ output backing in this representation. These arithmetic-operation counts are not unit-cost bit-time bounds.
+
+*Proof.* For each candidate compute
+
+$$
+E_j=\max_{\ell\in\{1,3,B\}}
+|d_j K_\ell-N A_{j,\ell}|,
+\qquad (A_{j,1},A_{j,3},A_{j,B})=(P_j,Q_j,R_j).
+$$
+
+Its distance is $E_j/(Nd_j)$. Compare candidates by the integers $E_jd_l$ and $E_ld_j$ and keep the smaller index on equality. A single catalogue scan needs only a candidate, the incumbent and their arithmetic scratch fields; the displayed operand and workspace bounds follow. This uses exact rational descriptions throughout and needs no test against the unknown true triple. If $\Delta$ is computed rather than supplied for installation, comparing all catalogue pairs uses $O(M^2)$ additional rational-coordinate operations with $O(B)$-bit operands; this preparation is separate from the $O(M)$ terminal selection. Computing a sample-size integer also pays its rational arithmetic and its resulting bit length. No setup-cost optimum is asserted. Counter increments have ordinary bounded binary implementations. D's row numerators are sums of retained counts and have denominator $m$, even when some are zero.
+
+For either captured configuration, all five installed rows have a common integer denominator $d$ ($d=d_{\widehat j}$ or $m$), and numerators between zero and $d$. Enumerate the $4^h$ visible words in a fixed order. For each word, start from the captured mode, multiply its $h$ row numerators while updating that temporary mode by $u$, and output the resulting numerator over $d^h$. Compute $d^h$ once. This is the row-product law, including its zero entries. Each product numerator and the common denominator have $O(hb+1)$ bits. An enumerating word, one accumulator, one temporary mode and the denominator give the asserted streaming workspace and arithmetic bounds; keeping all entries gives the output-backing bound. Query enumeration invokes hypothetical mode steps, not new source reads or new stochastic samples. The emitted laws are nonnegative, normalized and prefix coherent by the supplied generator result.
+
+While selection or a captured-cut call is computed, any continued actual source reads still incur their own streaming updates and (22.2) charges. For one run with an actual finite list of requested horizons $h_1,\ldots,h_q$, output-entry counts add to $\sum_l4^{h_l}$ and the stated arithmetic bounds add over that same list; $k$ includes every source read during those computations. Serial temporary workspace is bounded by the largest individual-call requirement, whereas simultaneously retained arrays or snapshots require their combined backing. An implementation that cannot process reads at source rate needs an explicitly paid queue or a separately supplied timing/service interface; no such uniform physical-rate guarantee follows from these arithmetic bounds. A retained output array, queue, model-table access, selector register, program phase and query workspace all belong within the whole material system boundary whenever present. $\square$
+
+## 23. Supplier correspondence and realization limits of C and D
+
+**Definition 23.1 (the source-relative additional content).** The source matrix, initialization and complete conditional-law meaning are the existing §§1–2 and 10–11, with the published [FiniteStartFiveModeSource declarations](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/D5/S3/ObserverMemory/Prediction/FiniteStartFiveModeSource.lean) and [owning Scribe](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/Blueprint/D5/S3/ObserverMemory/Prediction/FiniteStartFiveModeSource.scribe.cs). Their positive-history classification, total `sourceUpdate`, `all_history_conditional_identity`, `actual_positive_conditional_law` and `first_singleton_and_all_later` supply the actual-source bridge used here. The pure generator is supplied by `FiveModeSelfGeneratedLaws.pure_cons`, `pure_generated`, `generated_coherent` and the pure rows recorded in [Self-generated predictive memory, §2, at the fixed source revision](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SELF_GENERATED_PREDICTIVE_MEMORY.md). No recurrent rigidity, startup-tail minimum or source-law proof is reclassified as new content. In particular C does not solve that volume's remaining unequal-source minimum, and neither C nor D changes this volume's earlier fixed-known or authentic-calibration minima.
+
+The iid stopping-time principle and mean-return identity are `literature-attested` at [Levin–Peres–Wilmer, second edition, Proposition 1.19, p.13, and Proposition A.19, pp.372–373](https://pages.uoregon.edu/dlevin/MARKOV/markovmixing.pdf). Their correspondence here is the observable event $Y=0\iff X=0$, its successive positive returns, the literal row (19.1) and stationary mass $1/5$. They do not provide an extra iid read port. The finite Pinsker and channel inequalities are reused from the [published finite-TV modules](https://github.com/the-omega-institute/trureturing/tree/d5e7fbecb49c0e928696f6857b331b3dbd54d128/D5/S3/TotalVariation) and [their Scribes](https://github.com/the-omega-institute/trureturing/tree/d5e7fbecb49c0e928696f6857b331b3dbd54d128/Blueprint/D5/S3/TotalVariation), with finite driver alphabet, natural logarithms and absolute continuity in the direction $v\ll\xi_\vartheta$. Multinomial variances, Chebyshev, Markov, the elementary KL upper bound and product KL are mature statistical intermediates, not independent novelty claims.
+
+The `repo-derived` application consists of the common original-stream stop and exact clock (19.4)–(19.5), the catalogue selector's exact finite risk and its simultaneous continued-use interpretation (20.3)–(20.5), and the continuous-source driver correspondence giving the zero-safe retained empirical law and single-event guarantee (21.4)–(21.9), together with their same-run material interfaces. The existing parameter-separation and zero-error no-go results of §§10–11 are reused to locate C's residual failure; their proofs are not duplicated. The published `OriginalRectangleSmoothing.finite_record_smoothing_by_original_success_count` treats two-sided center-bit posterior differences for a stationary binary marked presentation with an exact supported rectangle. Its `PositiveRectangleLaw` suppliers concern the actual twelve-state full-erasure law and same-law representations. Neither conclusion is an unknown five-mode departure experiment, a catalogue-selection risk, or the empirical same-update kernel bound here; no rectangle/full-erasure hypothesis is imported into (19.1). These source-relative comparisons assert no global literature priority.
+
+**Assumption 23.2 (material realization and unresolved recovery).** Applying these results to an actual apparatus requires the same persistent five-mode source law, authentic chronological singleton reports, installed effective input data, reliable retention, lawful read access and a mechanism that actually processes every charged read. Uniform sample counts in (20.4) and (21.6) give no uniform tick budget over $\mathfrak A$, and ticks have no asserted conversion to physical duration, energy or storage volume. A finite catalogue supplies candidate descriptions and a membership promise, not the true member. The continuous empirical kernel supplies finite rational probabilities for a capped-horizon prediction task, not exact real calibration; (21.7) is not an acquired truth label.
+
+In this unit the independent source structure is the five-state transition graph and observation fibers; time is the acquired transition order and return clock; the predictive boundary is the conditional complete-word interface at a completed cut; memory is the actually retained selector/counts and mode used by (19.3), (20.2) and (21.3). The proved acquisition-to-memory-to-prediction directions preserve that common source and its actual continuation. They do not reconstruct a discarded archive, the unknown initial hidden path, an independent spatial metric or physical elapsed time from that memory. There is no proved mutual recovery of four unrestricted expressions or common physical realization with atomic, quantum and continuous models. Original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization and original-tree/FIB recovery obligations retain their stated sources, permissions and open boundaries. C's risky exact all-horizon event and D's approximate capped-horizon event remain separately quantified results; neither is completion of the full common-process objective.
+
+## 追加锚（本行以下为增补区）

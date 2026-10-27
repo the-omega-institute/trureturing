@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d0416cd58f903c57cfcf42ee339d944e268eff684cf204f475b12ab88f7f880d
+  normalized_sha256: sha256:d0416cd58f903c57cfcf42ee339d944e268eff684cf204f475b12ab88f7f880d
+cas_ref: sha256:d0416cd58f903c57cfcf42ee339d944e268eff684cf204f475b12ab88f7f880d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 上位 governing-list 明确为“本轮不主张”；本片只排除对相位扭曲 holonomy 支配零点能量的完成声称，不断言对应数学命题。
+    previous_atom_id: f3a6801abfaeda7f9a401746dab56b11c1724d4062d94cc0127fec0eebf8b975
+    next_atom_id: 9ef70953f454232b6ae6d5a5dbfa090bba82534ca1025eb8a0b7779552dd2a2e

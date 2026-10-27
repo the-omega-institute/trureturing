@@ -43,7 +43,7 @@ private def pairing {d : Type*} [Fintype d] (ρ : Matrix d d ℂ) :
     change Matrix.trace (ρ * (c • CStarMatrix.ofMatrix.symm E)) = _
     simp [Matrix.mul_smul, Matrix.trace_smul]
 
-private theorem effect_trace_unique {d : Type*} [Fintype d] [DecidableEq d] (ρ σ : Matrix d d ℂ)
+theorem effect_trace_unique {d : Type*} [Fintype d] [DecidableEq d] (ρ σ : Matrix d d ℂ)
     (h : ∀ E : CStarMatrix d d ℂ, 0 ≤ E → E ≤ 1 → pairing ρ E = pairing σ E) : ρ = σ := by
   have heq : pairing ρ = pairing σ := by
     apply LinearMap.ext_on CStarAlgebra.span_nonneg_inter_unitClosedBall

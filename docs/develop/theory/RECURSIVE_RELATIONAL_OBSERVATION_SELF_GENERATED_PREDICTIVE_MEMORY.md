@@ -837,3 +837,885 @@ These are the existing propagation/holonomy conditions, not consequences of the 
 A classical gate program and record do not supply a second copy of an arbitrary unknown quantum state.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 共同相干域上的摘要下降与连续接续
+
+**定义 12.1（预测接口的相干扩展数据）。** 固定阶段、输入类型及共同动作合法域。在这个域内，令 $\mathscr X_t$ 为过程描述集，给出 Hermitian 正核 $K_t$；其意义是对每个有限形式组合均有
+
+$$
+v=\sum_i c_i[x_i],\qquad
+Q_t(v)=\sum_{i,j}\overline{c_i}c_jK_t(x_i,x_j)\geq0.
+$$
+
+不同输入类型、不同 guard 答案或不同控制权限的描述，不在同一个公式中任意混加。允许的相干制备、实际动作及末端读口另行指定；形式线性张成不授予这些操作。特别地，已经保存在经典寄存器中的可区分历史，不因被列入一个描述集合就成为可相干制备的过程。
+
+记自由复向量空间为 $\mathcal F_t$，零范数子空间为 $\mathcal N_t$，并令
+
+$$
+H_t=\overline{\mathcal F_t/\mathcal N_t},\qquad
+|x\rangle=[x]+\mathcal N_t.
+$$
+
+这里复数系数、二次权重与正核均是供应的数据。正核的零空间商及完成采用 [QUANTUM-RH，式 U22–U23](QUANTUM-RH.md) 的既有标准构造；相容正泛函的完成背景见 [静态相融纤维 §12](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)。$\mathscr X_t$ 可以无限；这些构造不提供有限秩结论。符号 $|x\rangle=0$ 表示零范数类，与定义 1.1 的隐藏模式 $0$、空历史及定义 11.3 的初始化辅助态分别定型；五模式的 $|N\rangle$ 范数为一。
+
+对合法动作 $a$，取共同描述子集 $\mathscr X_{t,a}$，令 $H_{t,a}$ 为相应向量的闭线性张成。指定每个输出的接续
+
+$$
+r_{t,a,o}:\mathscr X_{t,a}\longrightarrow\mathscr X_{t+1},\qquad
+K_t(x,y)=\sum_{o\in O_{t,a}}
+K_{t+1}(r_{t,a,o}x,r_{t,a,o}y).
+\tag{12.1}
+$$
+
+输出必须包括协议中的失败、拒绝和停止分支；不能通过只比较两个菜单的交集消去可见差别。不可能输出用零范数描述承载，不从共同输出域删去。停止后的接口可以另定为吸收类型。输入具有相同 guard 答案不意味着输出后的 guard 自动相同，后者也须由摘要保持。
+
+输出集 $O_{t,a}$ 有限，或明确取可数集合。在可数情形，式 (12.1) 使用平方可和直和拓扑，要求其对角级数有有限和并满足等式；正性给
+
+$$
+\sum_o|K_{t+1}(r_{t,a,o}x,r_{t,a,o}y)|
+\leq
+\left(\sum_oQ_{t+1}([r_{t,a,o}x])\right)^{1/2}
+\left(\sum_oQ_{t+1}([r_{t,a,o}y])\right)^{1/2}.
+$$
+
+因此交叉级数绝对收敛。不可数输出不适用这个离散求和契约，需要另给可测结构、测度及仪器。
+
+预测描述具有对应数据 $\widehat{\mathscr X}_t,\widehat K_t,\widehat H_t,\widehat r_{t,a,o}$ 和相同输出标签。摘要候选为类型相容的映射 $s_t:\mathscr X_t\to\widehat{\mathscr X}_t$，它保持共同请求的 guard 答案，并满足 $s_t(\mathscr X_{t,a})\subseteq\widehat{\mathscr X}_{t,a}$。在自由空间上记 $S_t^0[x]=[s_t(x)]$。当实际合法态集不是线性空间时，以下算子结论作用于所指定的张成；可执行结论仍只量化于实际许可的输入与动作。
+
+**命题 12.2（定义 11.1 的振幅层接续条件）。** 对定义 12.1 的数据，$S_t^0$ 下降为代数商上的线性摘要，当且仅当它保持全部有限零关系：
+
+$$
+Q_t\!\left(\sum_i c_i[x_i]\right)=0
+\quad\Longrightarrow\quad
+\widehat Q_t\!\left(\sum_i c_i[s_t(x_i)]\right)=0.
+\tag{12.2}
+$$
+
+该摘要连续延拓到 $H_t$ 的充要条件是存在一个与组合无关的有限常数 $C_t$，使
+
+$$
+\widehat Q_t(S_t^0v)\leq C_t^2 Q_t(v)
+\qquad(v\in\mathcal F_t).
+\tag{12.3}
+$$
+
+在实际与预测两侧均满足式 (12.1)、各阶段满足式 (12.3) 时，以下逐描述条件恰好保证相应有界摘要与每个分支接续相容：
+
+$$
+\left|
+s_{t+1}(r_{t,a,o}x)
+\right\rangle
+=
+\left|
+\widehat r_{t,a,o}(s_t(x))
+\right\rangle,
+\qquad x\in\mathscr X_{t,a}.
+\tag{12.4}
+$$
+
+等号在共同的预测输出商空间中理解，容许两描述之差为零范数；它不要求描述字符串相同。于是
+
+$$
+S_{t+1}M_{t,a,o}
+=\widehat M_{t,a,o}S_t
+\quad\text{于 }H_{t,a},
+\tag{12.5}
+$$
+
+其中 $M_{t,a,o}|x\rangle=|r_{t,a,o}x\rangle$，预测侧同样定义。若要求只在较小许可输入集上比较，式 (12.4) 的量词也只取该集所指定的生成域。
+
+证明。正半内积的 Cauchy–Schwarz 不等式使零范数向量与全部向量正交。因此两个自由向量代表同一实际向量，恰好是其差属于 $\mathcal N_t$；摘要不依赖代表，恰好要求式 (12.2)。这里必须检查一般有限系数关系，不能只检查两描述是否表示同一向量。例如实际向量满足 $|x_3\rangle=|x_1\rangle+|x_2\rangle$ 时，三个两两不同的预测向量仍可能违反这一关系。
+
+若式 (12.3) 成立，它同时保证式 (12.2) 及代数商上的有界性。把 Cauchy 序列逐项送入摘要，得到唯一连续延拓；反向取 $C_t=\|S_t\|$ 即得该界。仅有代数下降不足以完成：取实际核 $K(n,m)=\delta_{nm}$、预测核 $\widehat K(n,m)=n^2\delta_{nm}$ 及 $s(n)=n$，其中 $n\geq1$。两侧均无非零有限零关系，但实际向量 $|n\rangle/n$ 趋于零，预测像的范数恒为一，故无连续延拓。这只是完成条件的边界，不是新的物理过程。
+
+把式 (12.1) 代入任意有限组合，得
+
+$$
+\sum_o\|L_{t,a,o}v\|^2=Q_t(v),\qquad
+L_{t,a,o}[x]=[r_{t,a,o}x].
+\tag{12.6}
+$$
+
+每个零关系都被送到各分支的零关系。映射 $v\mapsto(L_{t,a,o}v)_o$ 在商上保范数，因而唯一延拓为到 $\bigoplus_o H_{t+1}$ 的等距映射；其坐标就是有界分支 $M_{t,a,o}$。这一步直接控制整个输出向量的范数，不交换未经控制的无穷求和与极限。可数输出时，等式
+
+$$
+\sum_oM_{t,a,o}^{\dagger}M_{t,a,o}=I_{H_{t,a}}
+\tag{12.7}
+$$
+
+指有限部分和的强算子极限；式 (12.6) 的直和等距保证该极限。最后，式 (12.4) 先在生成向量上给式 (12.5)，再经线性及连续性延到闭张成。反向将式 (12.5) 作用于生成向量即得式 (12.4)。所有等式只在共同类型及动作域上使用。$\square$
+
+## 13. 全相干权重摘要对自生成预测的加强
+
+**定义 13.1（全相干权重保真与任务充分）。** 称定义 12.1 的摘要全相干权重保真，若对每个有限组合都有
+
+$$
+\widehat Q_t(S_t^0v)=Q_t(v).
+\tag{13.1}
+$$
+
+它要求整个所给相干核的保持，包括所有有限线性关系与相对相位。相对地，任务充分只要求在指定输入上保留指定后继菜单的记录律，并满足定义 11.1 的共同 guard 与实际更新条件。任务菜单没有要求的相干读口，不由“充分”一词补入。全相干权重契约是关于所给表示的更强要求；其物理制备和检验权限仍须另给。
+
+**命题 13.2（相干接续产生记录一致的自生成摘要）。** 假设实际与预测数据满足定义 12.1、式 (12.4) 及式 (13.1)。则 $S_t$ 为等距摘要，且把显式输出记录 $R_{t,a}=\ell^2(O_{t,a})$ 纳入后有
+
+$$
+\begin{aligned}
+V_{t,a}\psi&=\sum_oM_{t,a,o}\psi\otimes|o\rangle,\\
+(S_{t+1}\otimes I_R)V_{t,a}
+&=\widehat V_{t,a}S_t.
+\end{aligned}
+\tag{13.2}
+$$
+
+若各空间有限维，令
+
+$$
+\begin{aligned}
+\mathcal E_t(X)&=S_tXS_t^{\dagger},\\
+\mathcal I_{t,a,o}(X)&=M_{t,a,o}XM_{t,a,o}^{\dagger},\\
+\mathcal J_{t,a,o}(Y)&=\widehat M_{t,a,o}Y\widehat M_{t,a,o}^{\dagger}.
+\end{aligned}
+$$
+
+对动作 $a$，这些映射先限制在 $H_{t,a}$ 与 $\widehat H_{t,a}$ 的矩阵代数上；没有另给全域延拓时，不宣称动作在其余输入上合法。它们满足定义 11.1 的仪器及逐分支摘要等式，并保留式 (13.2) 供应的完整相干记录提升。若使用定义 11.1 中已有的 cq 程序块，还要求这些映射把所声明的块代数送到对应块代数，才在该限制上作同一识别。
+
+初态对应、guard 对应、每个许可后继满足同类接续等式，且所比较末端效果满足 $F=S_t^{\dagger}\widehat F S_t$ 于共同输入域时，同一有限协议的生成状态对应、这些末端概率相同，包括合法的后来记录重合。也可把末端测量作为满足接续条件的最后一个仪器。对仅保留经典输出的子菜单，结论退回命题 11.2。
+
+证明。复极化把式 (13.1) 变成全部内积保持，即
+
+$$
+\widehat K_t(s_t(x),s_t(y))=K_t(x,y).
+$$
+
+命题 12.2 因而取 $C_t=1$，给等距 $S_t$。式 (12.5) 逐输出相等，在有限和或平方可和直和中即得式 (13.2)。这是把正核接续接到本卷摘要上的步骤；正核表示本身及有限维 Kraus、Stinespring 工具分别复用定义 12.1 的来源和 [Watrous，Theorems 2.22、2.26、Corollary 2.27](../../../Library/Quantum/watrous2018theory.md)。由 $S_t^{\dagger}S_t=I$，$\mathcal E_t$ 完全正且保迹；式 (12.7) 给分支和保迹。把式 (12.5) 及其伴随代入，得到
+
+$$
+\mathcal E_{t+1}\mathcal I_{t,a,o}(X)
+=\mathcal J_{t,a,o}\mathcal E_t(X).
+$$
+
+把 $V$ 及 $\widehat V$ 作同样代入则保留记录的非对角块。沿所供应的后继等式归纳，得到全协议状态对应；对应末端效果在输入像上的拉回相同，故概率相同。经典反馈只在已取得的输出上选择动作；相干反馈则必须另行供应在相干寄存器上的共同操作及其相容等式，不能从经典策略自动升级。
+
+可数输出的式 (13.2) 按 Hilbert 范数收敛。若另采用迹类态及正规完全正映射的无限维框架，上述等距共轭同样有意义，分支正算子之和按迹范数收敛：正输入的尾项迹等于尚未计入的输出概率，趋于零；一般迹类输入分解为四个正迹类算子的线性组合处理。这并不把定义 11.1 的有限 cq 代数自动改成无限寄存器模型。不可数仪器及未指定的无界接续均未包含在本命题内。$\square$
+
+**命题 13.3（全权重摘要的维数约束及受限菜单的差别）。** 在命题 13.2 的合同下，令
+
+$$
+d_t=\sup_{F\subseteq\mathscr X_t\ \mathrm{finite}}
+\operatorname{rank}[K_t(x,y)]_{x,y\in F}.
+$$
+
+当 $d_t$ 有限时，实际最小生成空间的维数为 $d_t$，故 $\dim\widehat H_t\geq d_t$；若这些秩无界，不存在有限维全权重摘要。该约束不适用于一般受限菜单 CPTP 摘要。特别地，保留全部相干权重不是定义 11.1 的必要条件。
+
+证明。每个有限 Gram 矩阵的秩等于这些生成向量的线性张成维数。有限秩上确界为 $d_t$ 时，整个代数张成已有维数 $d_t$，有限维空间完成不再增加维数；秩无界时则有任意大的有限独立族。等距 $S_t$ 保持这些独立族，给所述下界。仅有可数描述不使秩有限，例如 $K(n,m)=\delta_{nm}$ 的完成为 $\ell^2$。若两侧有限维且维数相同，等距才自动满射而为幺正；增长载体一般没有这个结论。
+
+为比较两个摘要契约，在五模式空间选两个基向量 $|u\rangle,|v\rangle$，限制后继为基投影读、恒等等待及只依赖经典记录的控制，guard 固定。令 $\Delta$ 为全基去相干。每个读分支 $\mathcal I_j(X)=P_jXP_j$ 满足
+
+$$
+\Delta\mathcal I_j=\mathcal I_j\Delta,
+\qquad \Delta\operatorname{id}=\operatorname{id}\Delta.
+$$
+
+所以 $\mathcal E=\Delta$、$\mathcal J_j=\mathcal I_j$ 是此受限菜单的 CPTP 摘要，对全部输入保持完整记录律。这是 [静态相融纤维 §§6–7、9](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md) 中对角效果与仪器的直接应用。可是 $\Delta$ 将 $(|u\rangle+|v\rangle)/\sqrt2$ 的纯态投影送到二项混合，不是等距共轭，因而不满足全权重契约。若再许可相干混合和相位敏感末端效果，原来充分的摘要就须重新判定。反过来，全权重表示的存在也未供应这个新增菜单。$\square$
+
+## 14. 逐记录摘要的相干提升与路径合并
+
+**定义 14.1（另行供应的相干记录提升）。** 先在有限维共同矩阵载体上固定定义 11.1 的仪器分支。为讨论可相干访问的记录 $R$，另给 CPTP 映射
+
+$$
+\Lambda_{t,a}:\mathcal L(H_t)\longrightarrow
+\mathcal L(H_{t+1}\otimes R),\qquad
+\Lambda_{oo'}(X)
+=(I\otimes\langle o|)\Lambda_{t,a}(X)(I\otimes|o'\rangle),
+$$
+
+满足 $\Lambda_{oo}(X)=\mathcal I_{t,a,o}(X)$。预测侧另给 $\widehat\Lambda_{t,a}$，其对角块为 $\mathcal J_{t,a,o}$。所有输出、相干相位参考和寄存器类型对应固定。这个 $R$ 具有另行声明的相干访问权限；只读经典输出的接口只使用其去相干。
+
+若原摘要只定义在 cq 块代数上，还须给出共同完整矩阵域上的 CPTP 延拓 $\mathcal E_t^{\mathrm{coh}}$，在原块代数上与 $\mathcal E_t$ 相同。原块代数上的公式没有定义跨块算子的像，不能直接套用到相干控制。以下省略上标，但始终指这项已经给出的延拓；不宣称延拓唯一。输入比较域 $\mathfrak D_t$ 取指定许可输入算子的复线性张成，逐步后继比较时也须保留相应的共同域及 guard。
+
+**命题 14.2（相干记录接续的缺失块）。** 对定义 14.1 的两个供应提升，完整摘要等式
+
+$$
+(\mathcal E_{t+1}\otimes\operatorname{id}_R)\Lambda_{t,a}(X)
+=\widehat\Lambda_{t,a}\mathcal E_t(X),
+\qquad X\in\mathfrak D_t,
+\tag{14.1}
+$$
+
+等价于对每对输出都满足
+
+$$
+\mathcal E_{t+1}\Lambda_{oo'}(X)
+=\widehat\Lambda_{oo'}\mathcal E_t(X).
+\tag{14.2}
+$$
+
+命题 11.2 所用的分支条件只提供 $o=o'$ 的部分，且只在其原有可达输入域上提供。式 (14.2) 的非对角部分是保留这个供应提升的新增义务。若后继始终把 $R$ 当作经典记录，新增部分不参与其概率；若许可后来重合 $R$，它就能参与预测。
+
+证明。输出算子唯一展开为 $\sum_{o,o'}\Lambda_{oo'}(X)\otimes|o\rangle\langle o'|$，逐块比较即得等价。这里是给定提升与摘要的接续检验，不是又一次构造一般通道表示。命题 13.2 的等距等式给出满足全部块等式的一类充分条件。
+
+为准确保留受限任务的范围，记两侧差为 $D(X)$。对于一组已许可的后继末端事件，其拉回到当前输出的效果为 $F$，所需且足够的统计条件只是
+
+$$
+\operatorname{tr}(F D(X))=0
+\quad\text{对全部指定 }X,F.
+\tag{14.3}
+$$
+
+若这些 $F$ 均在 $R$ 上对角，非对角差的迹配对为零；若允许全部输出效果，效果分离 Hermitian 算子，式 (14.3) 才恢复完整的式 (14.1)。任意实际受限菜单不自动达到后一条件。后继包含反馈时，用该协议实际复合分支的对偶拉回取得 $F$，而非假定任意线性组合都是一次合法效果。
+
+粗分支的 CP 映射本身没有典范的 $\Lambda$。即使每个分支已经为 $M_oXM_o^{\dagger}$，不同供应映射
+
+$$
+V_\theta\psi=\sum_o e^{i\theta_o}M_o\psi\otimes|o\rangle
+$$
+
+具有相同的对角分支，交叉块却为 $e^{i(\theta_o-\theta_{o'})}M_oXM_{o'}^{\dagger}$。对具有多个 Kraus 项的粗分支，环境中不同细分向量之间的对应及重叠还会影响跨输出块；单独选择每个粗分支的 Kraus 表不能赋予这些对应以操作权威。对角提升 $\sum_o\mathcal I_o(X)\otimes|o\rangle\langle o|$ 与某个保留相干的提升都可能合法，须由实际供应的实现决定使用哪一个。
+
+Watrous 的有限表示及 [静态相融纤维 §§6–7](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md) 保证通常的环境表示工具，但没有授予隐藏 Kraus 指标的读取、相干控制或环境回收权限。相干参考也不能由重新命名一个经典标签得到。若输出可数，要把本命题用于任意粗仪器，须另给迹类空间上的正规 CPTP 提升及相应收敛；有限矩阵块展开本身不建立这项无限框架。$\square$
+
+**命题 14.3（既有受控相位见证对摘要及路径商的检验）。** 固定共同相干记录访问及相位参考，普通记录分支完全相同的两个模型，仍可不满足式 (14.1)。在定义 11.3 的可逆路径接口中，把到达同一节点的两个射线相同历史直接合并，也不保证后继相干预测充分；必须保留其可测试的相对相位或相应交叉关系。
+
+证明。使用 [波粒事件，例 335.4](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md) 与 [FIB 合法门 §5](FIB_LEGAL_GATES_STATE_MACHINES_AND_SHOR_READOUT.md) 的同通道、反受控相位见证，作如下接口对应。取一维系统、两个输出及 $\mathcal E_t=\mathcal E_{t+1}=\operatorname{id}$，两侧普通分支均为
+
+$$
+\mathcal I_0(X)=\mathcal I_1(X)
+=\mathcal J_0(X)=\mathcal J_1(X)=\tfrac12X.
+$$
+
+实际供应 $V_+z=z\otimes|+\rangle$，预测供应 $V_-z=z\otimes|-\rangle$。其对角块一致，所以原有摘要等式在整个输入代数上成立；交叉块分别为 $X/2$ 与 $-X/2$。后来执行同一个许可效果 $I\otimes|+\rangle\langle+|$，对归一化输入的概率分别为一和零。这里实际更新与预测更新的普通记录合同没有失败，失败的是在不补充交叉块条件时把它升级为供应提升的替代合同。若只许经典记录反馈，该效果不在菜单中，便没有这一升级任务。
+
+再将相同见证接到定义 11.3。令可逆路径 $p,q$ 从共同根到达同一载体，载体包含所有仍会返回的记忆，初态为单位向量 $\psi$。若受控选择路径、相干制备控制 $|+\rangle$ 并在末端重合均实际许可，则
+
+$$
+\frac{|0\rangle U_p\psi+|1\rangle U_q\psi}{\sqrt2}
+\quad\text{给出}\quad
+p_+=\frac{1+\operatorname{Re}\langle U_p\psi,U_q\psi\rangle}{2}.
+\tag{14.4}
+$$
+
+特别地，$U_q\psi=e^{i\phi}U_p\psi$ 时，普通末端纯态投影相同，而 $p_+=(1+\cos\phi)/2$。把两条路径换成同一个带同一相位的节点代表，会把这个概率换成一。以 $\phi=\pi$ 就得到上述确定分离。因此，射线商只有在后继菜单忽略这个交叉区别，或摘要另存并正确接续该区别时，才满足预测任务。
+
+式 (14.4) 的内积也是定义 12.1 中两路径描述的核值；全权重摘要必须保留它。对于已许可相干比较的可逆路径，取 $W=U_q^{\dagger}U_p$，定义 11.3 的固定向量条件 $W\psi=\psi$ 保证该初态的路径合并；仅有 $W\psi=e^{i\theta}\psi$ 只保证射线合并。要求在整个输入空间上作全权重路径合并时，须有 $W=I$。沿全部根回路要求这些条件，正好接回定义 11.3 的 holonomy 条件，而不是从节点标签相同推出平坦性。不可逆图没有许可反向操作时，不能据此编造闭环；应直接比较两条正向传输。
+
+若两路径另留归一记忆 $m_p,m_q$，且后继只访问系统与控制，式 (14.4) 的内积改为
+
+$$
+\langle U_p\psi,U_q\psi\rangle\langle m_p,m_q\rangle.
+$$
+
+这正是静态相融纤维 §7 的既有记录重叠公式：正交且不可访问的记录消去此项；保留整体相干及另行供应记忆控制，才可能重新测试它。把环境写进表示而后不提供它的操作权限，不能使用后一结论。$\square$
+
+## 15. 递归、复合与重建接口的前提边界
+
+**定义 15.1（内生历史律及有限展开的适用条件）。** 在定义 11.1 的完整保留状态中，经典策略 $\pi_e(a)$、预测行 $q_e^a(o)$ 和更新 $\delta(e,a,o)$ 使用同一状态 $e$。它们分别归一化，并在共同请求域上处理所有输出及停止。历史律因此按
+
+$$
+P(\varnothing)=1,\qquad
+P(h(a,o))=P(h)\pi_{e_h}(a)q_{e_h}^{a}(o),\qquad
+\sum_{a,o}P(h(a,o))=P(h)
+$$
+
+递归确定。此处有限或可数的和使用非负级数；零概率历史不定义条件态，实际需要的更新域仍由原协议指定。程序、旧记录、保留随机种子、时钟和优化器记忆若影响未来，都计入 $e$，不能作为免费旁寄存器。
+
+对固定深度 $N$，若每个可达前缀的可达下一动作输出分支有限，则深度不超过 $N$ 的历史集有限。于是可直接使用 [静态相融纤维 §12 的有限反馈树表示](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)：把这些前缀作为状态，沿边使用上述概率即可。有限性由每一层是有限个有限孩子集的并归纳得到，不依赖一个统一的分支数上界。任意连续值随机控制若不满足此条件，应按来源无关种子积分为树族的混合，不声称其随机资料装入有限经典载体。只有深度有限而可达分支无限，不能由这个论证得到有限树或有限记忆；有限展开也没有给模拟效率。
+
+该归一化及有限展开只供应经典历史概率，与命题 11.2 一样不单独推出复数、相干制备或纯化。相干描述、已获记录和静态图路径索引分别定型；图上每条边还须指定操作语义，连接形状不决定其传输算子。节点合并后的条件由命题 14.3 而非索引名称决定。
+
+**定义 15.2（观察者边界及记忆的既有合法性条件）。** 本卷使用 [静态相融纤维，假设 1.3、§§6–7、10](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md) 已有的矩阵、张量积、记录等距与无扰动结论作为表示层前提。具体地，在该矩阵复合规则内，局部分支的完全正性要求其对每个附带系统均保持正性；该卷 §6 的部分转置反例说明单系统正性不足。输入相关且以后返回的环境须保留在共同接口内，不能只用局部边缘假定闭合更新。
+
+该卷 §10 的等距内积论证同时约束可新增的记忆：若来源单位向量 $\psi,\phi$ 被原样保留，写入归一记忆 $m_\psi,m_\phi$，则
+
+$$
+\langle\psi,\phi\rangle
+=\langle\psi,\phi\rangle\langle m_\psi,m_\phi\rangle.
+$$
+
+来源非正交时记忆相同，不能无扰动地生成彼此可区分的知识；一般路径记录对干涉的作用则由该卷 §7 的重叠公式决定。这些都是已给等距和张量规则下的条件，不能反向从“获得记录”推导整个量子表示。有限维同维等距是幺正，维度增长或无限维等距则未必满射；定义 11.3 和该卷 §7 的历史右移已经给出相应边界。单个粗仪器分支也不必等距。
+
+**定义 15.3（五模式的态空间选择与控制权限）。** 五个标签
+
+$$
+\{N,[2],[3],[5],[2,5]\}
+$$
+
+只指定可区分模式及相容语法。经典概率单纯形、实五维密度态、复五维密度态的归一化实维数分别为
+
+$$
+5-1=4,\qquad \frac{5\cdot6}{2}-1=14,\qquad 5^2-1=24.
+$$
+
+这些参数计数与 [静态相融纤维，假设 1.3、定义 1.4、§9](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md) 的模式／态空间区别相接；五个标签没有选择其中一种。该卷假设 45.1 与命题 45 已在另供三个可独立调节的单参数门后给出 $\mathfrak{so}(5)$，再供 $iE_{00}$ 的相位控制后给出 $\mathfrak u(5)$。对应闭包是被动变基后的 $SO(5)$ 与 $U(5)$，并非原来单一固定生成元的菜单；闭包逼近也不提供统一门数或精度成本。若只把幺正通道作为任务，整体相位须取商；若使用命题 14.3 的控制参考，实现之间的相对相位又须按该供应接口保留。
+
+仅有平方范数概率和非交换操作也未排除实量子模型。CDP 的局部可区分性条件说明还须核对复合规则，见下面定义 15.4 的来源 §III A4。作为该条件在五维上的中间检验，取非零实反对称 $A,B$，令 $\Delta=A\otimes B$。它是非零实对称、迹零矩阵。对 $0<\varepsilon<1/(25\|\Delta\|)$，
+
+$$
+\rho_\pm=I_{25}/25\pm\varepsilon\Delta
+$$
+
+是不同的实密度态，而任意局部实对称效果满足
+
+$$
+\operatorname{tr}((E\otimes F)\Delta)
+=\operatorname{tr}(EA)\operatorname{tr}(FB)=0.
+$$
+
+最后一个等号来自对称矩阵与反对称矩阵的迹配对为零。因此全部局部乘积测试的联合统计仍遗漏这个区别；只给两个局部边缘当然更弱。这项检验解释为什么复合系统条件不能由五模式或单系统的正核替代，不另作为新的一般层析定理。
+
+**定义 15.4（操作重建的确切输入）。** 若采用 Chiribella–D’Ariano–Perinotti，[*Informational derivation of quantum theory*，arXiv:1011.6451v3](https://arxiv.org/pdf/1011.6451v3) 的有限维操作概率及系统组合框架，须同时保留 §II B 的操作范数闭合和 §III 的五个公理加纯化假设：
+
+| 原则 | 所需操作条件 |
+| --- | --- |
+| 因果性 | 制备事件的概率不依赖后来选择的观察测试；确定性效果唯一。 |
+| 完美可区分性 | 每个非完全混合的态都能与某个态完全区分；完全混合意为每个态的某个正比例都可细化它，不能把它误写成唯一的均匀态。 |
+| 理想压缩 | 对每个态 $\rho$，有合法编码、解码在其生成面 $F_\rho$ 上无损，且编码像恰为压缩系统的全部归一化态；只在 $\rho$ 这一个点可逆不够。 |
+| 局部可区分性 | 不同复合态被某个局部乘积实验的联合概率区分，等价于该框架内的局部层析；分别知道两个边缘不足。 |
+| 纯条件化 | 纯双系统态经一侧原子效果测量后，每个非零条件分支归一化仍纯。 |
+| 纯化 | 每个态是某个合法纯复合态的边缘；固定同一个纯化系统时，任意两个纯化由该系统上的合法可逆变换连接。 |
+
+原子的定义取该文 §II C1：若 $C_i$ 是非零变换 $C$ 的任何细化，则 $C_i=p_iC$，$p_i\geq0$；全细化的比例和为一。它容许比例拆分，不能写成“禁止任何进一步拆分”。纯归一化态为归一化态空间的极点，零概率条件分支不归一化。纯化的唯一性是固定纯化系统上的可逆性，不能省去这一限定，也不把可逆性预先解释成已经供应的任意幺正。
+
+在这一整套框架和原则下，所引文献 Theorem 20 给全部复密度矩阵态空间，Corollary 52 给全部 CP、迹不增的物理分支。这两项是文献结果在此接口中的适用结论，不是由定义 12.1 的复核重新推导出的原理。该核已经选择复系数及二次权重，没有解释为何原生协议满足上述全部公理。
+
+[时空算术量子卷，更正 346.1](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md) 已明确阻止用一源表示代替操作纯化：通常有限经典复合系统的纯态是点质量，其边缘仍为点质量，非平凡混合态没有这种纯化；它的正核／GNS 向量表示及共同来源相关记录仍可存在。因此不能从“整个世界在一个静态图中”或“观察者与环境共同生成”补入表中的纯化原则。理想压缩、局部层析、原子效果和可逆纯化都要在同一操作理论内兑现。
+
+**定义 15.5（连续接续与尚缺的原生桥梁）。** 历史逐步追加首先给出离散次序。要使用 [静态相融纤维 §7](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md) 的已有 Schrödinger 接续，另须固定有限维闭合载体、连续时间标定及可微幺正群 $U(t+s)=U(t)U(s)$。该处 $G=U'(0)$、$H=i\hbar G$ 的计算给自伴生成元及 $i\hbar\psi'=H\psi$；它不适用于未经嵌入的增长空间、一般选择性分支或任意记忆粗粒化。无限维的强连续群还须处理生成元定义域，不能直接沿用有限维微分。
+
+从原生 AURIC FIB 接口走到本卷的全相干预测，还缺明确的数学义务：在同一许可协议内构造复相干系数及正核，证明所有有限关系与交叉分支守恒，给出实际可用且 guard 相容的摘要和后继控制，并在需要重建时证明定义 15.4 的系统组合原则。把这些结构作为模型数据供应，已经足以使用命题 12.2–14.3；它们是否由原生观察规则取得，仍是待证的桥梁。历史增长不保证每步新增可识别信息，有限秩、有限记忆、有效取得及物理成本也各需独立条件。
+
+## 追加锚（本行以下为增补区）
+
+## 16. 原生等待与读出对精确预测摘要的检验
+
+**定义 16.1（共同边界上的原生预测任务）。** 采用 [静态相融纤维，定义 1.4](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#1-共同对象历史与量子接口) 的同一个五模式空间、矩阵 $K$、非负等待 $U(t)$、完整秩一读分支及 Stop。以下在该定义写出 $K$ 的原模式坐标中计算，记 $P_s=\Pi_s$；不把其被动变基当作额外门。记等待通道与忽略完整读结果后的通道为
+
+$$
+\mathcal W_t(X)=U(t)XU(t)^\dagger,\qquad
+\Delta(X)=\sum_s\mathcal J_s(X)=\sum_sP_sXP_s.
+\tag{16.1}
+$$
+
+$\Delta$ 表示实际执行完整读后对结果求和，不表示省略该操作，也不增加粗块 Lüders 仪器。所有模式的下一读都合法，后继控制固定且不使用先前结果。初态固定为 $P_N$，比较有限协议
+
+$$
+A:\ \mathcal W_t,\ \mathcal W_t,\ \text{完整读};\qquad
+B:\ \mathcal W_t,\ \text{完整读并忽略结果},\ \mathcal W_t,\ \text{完整读},
+\quad t\geq0.
+\tag{16.2}
+$$
+
+在共同的中间预测边界，所比较的系统态为
+
+$$
+\rho_c(t)=\mathcal W_t(P_N),\qquad
+\rho_m(t)=\Delta(\rho_c(t)).
+\tag{16.3}
+$$
+
+此边界之后的同一任务是再等待 $t$ 并读末端 $N$。摘要的声明输入域至少包含式 (16.3) 的两个态，且两者使用同一个摘要、同一个后继解码及相同 guard；静态定义 1.4 的全密度态输入域满足这一要求。若保留中间输出的经典档案，$\rho_m$ 是对那些分支取边缘后的态，不能把它冒充某个已知结果的条件态。
+
+称摘要仅依赖 populations，意为它是向量 $(\operatorname{tr}(P_sX))_s$ 的函数，不另保留仍会参与预测的相干、动作标记或档案。这里的检验对象正是 [定义 11.1 与命题 11.2](#11-endogenous-quantum-summaries-and-the-learning-state-they-must-retain) 的精确未来记录合同，并接续 [命题 13.3](#13-全相干权重摘要对自生成预测的加强) 对受限后继菜单的区分。
+
+**命题 16.2（原生后继不允许合并这两个 populations 相同的输入）。** 在定义 16.1 的任务中，存在 $\delta>0$，使每个 $0<t<\delta$ 都满足
+
+$$
+\begin{aligned}
+p_A(N)&=1-12t^2+O(t^4),\\
+p_B(N)&=1-6t^2+O(t^4),\\
+p_B(N)-p_A(N)&=6t^2+O(t^4)>0.
+\end{aligned}
+\tag{16.4}
+$$
+
+两态 $\rho_c(t),\rho_m(t)$ 的全部模式 populations 相同，但同一个后继等待—读出任务区分它们。因此，在含这两个态的声明输入域上，仅依赖 populations 的摘要不能精确保留该未来概率，不能作为这个菜单的定义 11.1 精确预测接口。命题 13.3 中只含恒等等待及基读的充分摘要 $\Delta$，不能直接升级到这里的原生非零等待菜单。
+
+证明。直接读取所引原生矩阵的 $N$ 行，得到
+
+$$
+K_{NN}=0,\qquad (K^2)_{NN}=\sum_sK_{Ns}K_{sN}=3.
+$$
+
+有限维矩阵指数解析，且 $K$ 为实矩阵，所以 $U(-t)=\overline{U(t)}$。因此每个转移概率 $|U(t)_{rs}|^2$ 都是实变量 $t$ 的偶解析函数；这个解析延拓仅用于 Taylor 余项，实际协议只使用非负等待。于是
+
+$$
+U(t)_{NN}=1-\tfrac32t^2+O(t^3),\qquad
+q(t):=|U(t)_{NN}|^2=1-3t^2+O(t^4).
+\tag{16.5}
+$$
+
+协议 $A$ 的两次等待合成 $U(2t)$，故 $p_A(N)=q(2t)$。协议 $B$ 的第一次读得 $s$ 的概率为 $|U(t)_{sN}|^2$；其正概率条件态恰为 $P_s$，故
+
+$$
+p_B(N)=\sum_s|U(t)_{Ns}|^2|U(t)_{sN}|^2.
+\tag{16.6}
+$$
+
+$s=N$ 项为 $q(t)^2=1-6t^2+O(t^4)$。对每个 $s\ne N$，两个非对角振幅都为 $O(t)$，其概率乘积为 $O(t^4)$，总项数有限。因此得到式 (16.4) 的三个展开。若差的余项绝对值至多 $Ct^4$ 于一个零邻域，进一步缩小 $\delta$ 使 $C\delta^2<6$，就得到所述小正时刻的严格不等式；不声称它在任意正时刻成立。在 $t=0$，两态均为 $P_N$，两概率均为一，差为零。
+
+另一方面，秩一基去相干保留每个对角元，故
+
+$$
+\operatorname{tr}(P_s\rho_c(t))=\operatorname{tr}(P_s\rho_m(t))
+\quad\text{对全部 }s.
+$$
+
+同一个后继的 $N$ 概率在两态上分别为 $p_A(N)$ 与 $p_B(N)$。若摘要将它们合并，任何只从该摘要生成的共同后继预测只能给出一个数，与式 (16.4) 矛盾。若摘要满足定义 11.1 的逐分支条件，命题 11.2 对这一有限后继给精确记录概率，同样产生矛盾。这里把共同中间边界作为预测起点；不要求先前两个不同协议具有相同经典记录。
+
+可选的线性表述把要求加强为：在整个 $M_5(\mathbb C)$ 输入域上，以同一个 $\Delta$ 作前后摘要，存在等待更新 $\widehat{\mathcal W}_t$ 使
+
+$$
+\Delta\mathcal W_t(X)=\widehat{\mathcal W}_t\Delta(X)
+\qquad\text{对每个 }X\in M_5(\mathbb C).
+\tag{16.7}
+$$
+
+在 $X=\rho_c(t),\rho_m(t)$ 上，右侧相同，而左侧的 $N$ 对角元不同，故这种全输入 intertwining 不存在，甚至不必使用目标更新的正性。只验证某一初态的一条轨迹，不能代替式 (16.7) 的全输入量词；原任务的两态反例本身则不依赖这个加强表述。
+
+同一精确数值合同还排除只保留有限协议事件之可能／不可能的摘要。取原模式顺序下的两个许可输入
+
+$$
+\rho_*={I_5\over5},\qquad
+\sigma_*=\operatorname{diag}(1/3,1/6,1/6,1/6,1/6).
+\tag{16.8}
+$$
+
+对任何同一个固定有限原生协议及其记录事件 $D$，[静态相融纤维 §6、§29](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#6-主定理的概率前提效果通道与实际记录) 的仪器拉回给一个 $0\leq E_{\pi,D}\leq I$，概率为 $\operatorname{tr}(XE_{\pi,D})$。有限反馈的事件效果由各相应复合分支拉回再相加；来源无关的可测经典随机化再对其种子积分。这里 $E_{\pi,D}$ 是该原生协议产生的效果，未授予任意效果的执行权限。由于
+
+$$
+\operatorname{tr}(\rho_*E)\geq\tfrac15\operatorname{tr}E,\qquad
+\operatorname{tr}(\sigma_*E)\geq\tfrac16\operatorname{tr}E
+\quad(E\geq0),
+$$
+
+两输入对此同一事件都有正概率当且仅当 $E_{\pi,D}\ne0$。故它们的全部这类有限协议事件支持完全相同。但是许可的立即完整读，其 $N$ 概率分别为 $1/5$ 和 $1/3$。把两输入按事件支持合并的摘要，已经无法给出这个数值发射行。这个正定态计算只是本预测任务的另一条合并检验，不另要求一个一般支持表示定理。$\square$
+
+**定义 16.3（结果求和、充分状态与概率来源的合同对应）。** 式 (16.6) 也是协议 $B$ 内的塔式平均：若 $S$ 是实际中间读、$R$ 是末读，则
+
+$$
+\Pr_B(R=N)=\sum_s\Pr_B(S=s)\Pr_B(R=N\mid S=s).
+\tag{16.9}
+$$
+
+零权重项不需要条件态；归一化的任意零行补全不改变和。即使最后不保存 $S$，被求和的仪器仍是 $\sum_s\mathcal J_s=\Delta$，所以式 (16.9) 给 $p_B$。省略中间操作则插入恒等通道，给 $p_A$；不能用塔式性质把前者换成后者。$A$、$B$ 各自在其固定协议内都有一致的普通记录历史。这个区别正对应 Milz、Sakuldee、Pollock、Modi，[*Kolmogorov extension theorem for (quantum) causal modelling and general probabilistic theories*，Quantum **4**, 255，§4.3，pp. 15–16](https://quantum-journal.org/papers/q-2020-04-20-255/pdf/#page=15) 的仪器结果求和与恒等操作之别。
+
+上述反例要求保留的是会影响任务的预测区别。保留一个对原生 Markov 仪器充分的密度态及共同菜单／guard，就能继续计算后继概率，不必逐字存储全部动作历史。若经典历史还控制后继，则应把这项控制信息纳入摘要，正如定义 11.1。这里只否定两种指定的合并，不排除所有摘要，不给任意模型的记忆位数或量子维数下界，也不把状态表示的存在当作其有效取得。
+
+以下对应把递归概率的不同条件接到这个精确摘要消费者；各来源只承担所列条件，经典中间结果不另立为本卷的新定理族。项目来源均取 [固定快照 cc7d285a62b9159b974a8ad851c13f8945d04ea7](https://github.com/the-omega-institute/trureturing/commit/cc7d285a62b9159b974a8ad851c13f8945d04ea7) 中的同名条目；本卷后续的摘要合同由上面的本卷链接指定。
+
+| 对应 | 参数、来源及在本任务中的适用条件 |
+| --- | --- |
+| I．同更新预测 | 本卷定义 1.3 的 $e_z(y),U(z,y)$ 对应有限记录的条件行与实际取得符号后的同一更新；定义 11.1 把它换成实际／内部的逐输出仪器。假设 1.1 中 $p,q,r$ 是显式数值输入，支持图没有选定这些值。命题 16.2 检验保留的状态能否供应下一次发射，而非外部任配一个未来答案。 |
+| II．树赋值、条件核及延拓 | 本卷定义 15.1 与 [静态相融纤维，定义 47.1、§6](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#6-主定理的概率前提效果通道与实际记录) 给非终端节点的 $v(h)=\sum_yv(hy)$。正质量处 $q_h(y)=v(hy)/v(h)$，零质量处可任补归一化行；核与赋值的对应模掉这些零历史选择，不能声称全部核唯一。终端节点不强加空孩子和等于其正质量：或只对非终端守恒，或增加吸收 Stop。有限字母柱事件生成的 Borel 域使用 [Context Geometry，定理 9.18 及式 (9.19)–(9.20)](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md#9-经典概率拼接记忆增益与可组合恢复) 的相容柱扩张；一般核须另给可测空间和可测性，见 Shalizi，[*Advanced Probability II*，§3.2，Theorem 33](https://www.stat.cmu.edu/~cshalizi/754/notes/all.pdf)。空历史 $\varepsilon$ 始终不同于模式 $N=000$。 |
+| III．等权补全与边界 | [FIB Source Completion，命题 12.5、12.8–12.9](FIB_SOURCE_COMPLETION_DYNAMICS.md#12-有限来源的删位律与保留端点的极限) 给均匀有限来源、双端桥及固定左端柱极限；本任务若借用此经典数值来源，须声明虚拟上一位为 $0$、等权合法补全，并先固定前缀再令总深度趋于无穷。对应的 $r_n$、误差及五模式数值在下式列出。[Recursive Relational Observation，定理 33.9–33.10](RECURSIVE_RELATIONAL_OBSERVATION.md#33-几何观察的临界测度最优相位正则性与时间尺度变换) 区分初始律与位置平稳律；[Source Completion，定理 14.16](FIB_SOURCE_COMPLETION_DYNAMICS.md#14-折叠延续与边界几何) 也保留其不同推前。Hu–Lin，[*The natural measure of a symbolic dynamical system*，式 (1.7)、Theorem 3.1](https://arxiv.org/pdf/1308.2996v1)，取的是两端距离都趋于无穷的体相极限，不能用作固定根表的平稳性证明。 |
+| IV．活动权与同支持不同数值 | [Local Clock Kernel，命题 15.6、15.8、定理 15.9](AURIC_FIB_ATOM_LOCAL_CLOCK_KERNEL_AND_OUTPUT_RESOLVED_SEAM_VISIBILITY.md#十五完整因子化来源的守卫遗忘体相与统计响应) 分别给单位权体相、正活动权 Perron 归一化和开放计数递推。代入该处 $\lambda=z,\Lambda=\lambda_z,\eta=p$，即得下面的 $A_z,P_p$，$0<p<1$ 保证所有允许边都有正权。等权只是 $z=1$；相同 no-11 支持不决定发射数值。该计数／Gibbs 来源不被识别为定义 16.1 的固定 Hamiltonian 测量来源。 |
+| V．固定事件的自预测 | 在同一个固定协议的概率空间上，固定事件 $D$，取递增且不遗忘的 $\mathcal F_n$，令 $q_n=\mathbb E[\mathbf1_D\mid\mathcal F_n]$。塔式性质给 $q_n=\mathbb E[q_{n+1}\mid\mathcal F_n]$；Lévy 向上极限为 $\mathbb E[\mathbf1_D\mid\sigma(\bigcup_n\mathcal F_n)]$，几乎处处且 $L^1$ 收敛。所用有界／一致可积鞅收敛见 [MIT 6.436J，Lecture 26，Proposition 1、Theorem 2](https://ocw.mit.edu/courses/6-436j-fundamentals-of-probability-fall-2018/f8ffbc1a27d17d83aaca980fc499d477_MIT6_436JF18_lec26.pdf#page=6)；极限识别由每个 $\mathcal F_m$ 测试事件上的条件期望等式及单调类延拓。只有 $D$ 在极限信息中可测时极限才为 $\mathbf1_D$，不提供统一速度。事件逐步改变或信息遗忘时不直接适用。式 (16.9) 是该固定事件原则在 $B$ 的一次应用。 |
+| VI．插入观察与边缘化 | 定义 16.1 只用静态定义 1.4 的非负等待和完整读；命题 16.2 把实际插入仪器的区别交给定义 11.1 的未来解码。式 (16.9) 求和保留仪器，Milz 等的恒等省略与结果求和对应在此得到具体消费者。无需相位门、任意效果或控制整个环境的权限。 |
+| VII．效果表示与数值发射 | [静态相融纤维，假设 6.1](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#6-主定理的概率前提效果通道与实际记录) 复用 Busch，[*Quantum states and generalized observables: a simple proof of Gleason's theorem*，主定理](https://arxiv.org/pdf/quant-ph/9909073v3)：在全部矩阵效果上给正、归一、对允许和可加且效果非语境的赋值，才得到唯一表示该赋值的密度态。它不从无权支持图生成效果域，也不选择初态。命题 16.2 的式 (16.8) 及立即 $N$ 读把 §29 的支持／Born 区别接到同一个数值摘要合同；反例只用实际菜单产生的效果。 |
+| VIII．数学递推、有限程序与认证 | 本卷定义 1.3 是数学状态与数值行的递推描述，任意实参数不等于有限有效输入。有限程序可数，Bernoulli 参数律不可数，故不能无条件把所有数学概率改称有限程序可计算的概率。即使逐阶段有算法且收敛，仍需单独的误差模量；[Effective Resolution，§2.4.8、推论 2.18、式 (TM.523)](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md#248-总质量不可计算有限层概率没有可计算收敛模量) 给可计算有理近似但无总可计算收敛模量的既有见证。确定性重算已有资料不增加其生成的 $\sigma$ 代数；有限观察者借重算取得此前不可取得的答案，则还需计算资源合同。这里的预测状态充分性不保证这类取得能力。 |
+
+表中 III 使用的明确参数是 $F_0=0,F_1=1$、$\varphi=(1+\sqrt5)/2$，以及上一位为 $b$ 后的补全数 $c_n^{(0)}=F_{n+2},c_n^{(1)}=F_{n+1}$。下一位概率只在剩余长度 $n\geq1$ 时定义为
+
+$$
+r_n=\frac{F_{n+1}}{F_{n+2}},\qquad
+r_{n+1}=\frac1{1+r_n},\quad r_1=\tfrac12,\qquad
+\left|r_n-\varphi^{-1}\right|
+\leq(4/9)^{n-1}\left|\tfrac12-\varphi^{-1}\right|.
+\tag{16.10}
+$$
+
+这是所引补全递推的归一化：$c_0^{(b)}=1$、$c_{n+1}^{(0)}=c_n^{(0)}+c_n^{(1)}$、$c_{n+1}^{(1)}=c_n^{(0)}$。误差界使用 $r_n\in[1/2,1]$ 及 $f(r)=1/(1+r)$ 在该区间的 Lipschitz 常数 $4/9$，给这项经典补全数值的有效深度；不把它当作一般鞅收敛速度。固定上一位 $0$ 得转移行 $(\varphi^{-1},\varphi^{-2})$，上一位 $1$ 强制转到 $0$。所以按静态五模式的顺序 $000,100,010,001,101$，固定根的三位概率是
+
+$$
+(\varphi^{-3},\varphi^{-3},\varphi^{-3},\varphi^{-4},\varphi^{-4}).
+\tag{16.11}
+$$
+
+它不是平稳三位律，也不是局部五项均匀律。各总长度分别等权的有限律还未前缀相容：长度一首位为零的概率是 $1/2$，长度二是 $2/3$；相容的是所引固定前缀极限。体相平稳律则须同时远离两端，不能只令右补全增长。
+
+表中 IV 使用的参数对应为
+
+$$
+A_z=\begin{pmatrix}1&z\\1&0\end{pmatrix},\quad
+\lambda_z=\frac{1+\sqrt{1+4z}}2,\quad h=(\lambda_z,1)^T,\quad
+(P_p)_{ij}=\frac{(A_z)_{ij}h_j}{\lambda_z h_i},\qquad
+P_p=\begin{pmatrix}1-p&p\\1&0\end{pmatrix},\quad
+z=\frac{p}{(1-p)^2},\quad 0<p<1.
+\tag{16.12}
+$$
+
+由该来源的 $A_zh=\lambda_zh$ 得行归一化，$p=z/\lambda_z^2$，反解即为所列 $z$。固定上一位为零时，各 $p$ 给同一全部合法有限字支持而给不同首步 $1$ 概率；$p=0,1$ 的端点不在这个正权共同支持域。其用途是说明若摘要声称输出数值，就必须保留选定的权重与边界，正如原生量子任务必须保留式 (16.3) 中可被后继检测的区别。
+
+本节的承重结论是这些既有仪器和数值边界在本卷精确摘要合同中的应用；采用普通有限维数学证明，不主张新的概率表示、量子重建、物理定律或文献原创性。相干态、去相干态和正定态两组输入分别检验 populations 与事件支持的合并，不能将任一反例扩大为全部摘要不可能或任意记忆下界。
+
+## 追加锚（本行以下为增补区）
+
+## 17. Normalized periodic startup laws and their exact phase constraints
+
+**Definition 17.1 (a source-bound startup lasso).** Throughout §§17–20 keep Assumption 1.1 and Definition 1.4, with $a\ne b$ and $0<2\epsilon<\kappa$. The parameters $p,q,r,\epsilon$ are real. In particular $0<u<v<1$, both holding orientations are included, and $p=q$ is allowed. All histories, initialization, normalized emissions and the same total actual/generated update have exactly the meanings of Definitions 1.2–1.3. No synchronization delay or history-probability cutoff is added.
+
+Fix integers $K\ge1$, $\ell\ge1$. For each phase $i\in\{0,\ldots,\ell-1\}$ supply real numbers
+
+$$
+t_i,\alpha_i,\beta_i\ge0,\qquad
+ t_i+\alpha_i+\beta_i=1,\qquad
+ \Gamma=\prod_{i=0}^{\ell-1}t_i<1.
+\tag{17.1}
+$$
+
+Here $\alpha_i$ is unconditional dominant-category exit mass, and $\beta_i$ is unconditional minority-category exit mass. They are not source transition parameters. Write $[i+j]$ for reduction modulo $\ell$, and use the source conditional exit rows $E_d,E_f$ of Definition 5.1. Define one observer on the disjoint labels
+
+$$
+I,\quad R_0,\ldots,R_4,\quad
+ A_0,\ldots,A_{K-1},\quad T_0,\ldots,T_{\ell-1}.
+\tag{17.2}
+$$
+
+For every label $z$ and every singleton $j\in\{0,1,3\}$ set $U(z,j)=R_j$. Its complete $B$ update is
+
+$$
+\begin{aligned}
+U(I,B)&=A_0,&
+U(A_k,B)&=A_{k+1} &&(0\le k<K-1),\\
+U(A_{K-1},B)&=T_0,&
+U(T_i,B)&=T_{[i+1]},\\
+U(R_0,B)&=R_4,&
+U(R_1,B)=U(R_3,B)&=R_2,\\
+U(R_2,B)&=R_2,&U(R_4,B)&=R_4.
+\end{aligned}
+\tag{17.3}
+$$
+
+The initial label is $I$. In visible order $(0,1,3,B)$ its row is $(1/5,1/5,1/5,2/5)$. The row at $R_j$ is $v_j$ from Proposition 2.1, and the row at $A_k$ is $(1-\delta_k)v_d+\delta_kv_f$. At phase $T_i$ set
+
+$$
+e_{T_i}(B)=t_i,\qquad
+ e_{T_i}(j)=\alpha_iE_d(j)+\beta_iE_f(j)
+ \quad(j\in\{0,1,3\}).
+\tag{17.4}
+$$
+
+These data specify every row and every update, including actual source-legal exits of forecast probability zero. A phase with $t_i=1$ has $\alpha_i=\beta_i=0$ and is allowed if another phase makes $\Gamma<1$. A zero $t_i$ is also allowed. No division by $1-t_i$ is needed. The label phase is retained internally; no external counter advances it.
+
+**Definition 17.2 (two complete-law errors per phase).** Let $Q_i$ be the complete generated profile at $T_i$. For $n\ge0$ put
+
+$$
+C_{i,n}=\prod_{h=0}^{n-1}t_{[i+h]},\qquad C_{i,0}=1.
+\tag{17.5}
+$$
+
+The probability of first exit after exactly $n$ further $B$ symbols, in category $d$ or $f$, is respectively
+
+$$
+q_i(n,d)=C_{i,n}\alpha_{[i+n]},\qquad
+q_i(n,f)=C_{i,n}\beta_{[i+n]}.
+\tag{17.6}
+$$
+
+For every $x\in[0,1]$ define
+
+$$
+\begin{aligned}
+\mathcal E_i(x)=1
+ &-\sum_{n\ge0}\min\bigl((1-x)(1-v)v^n,
+                          C_{i,n}\alpha_{[i+n]}\bigr)\\
+ &-\sum_{n\ge0}\min\bigl(x(1-u)u^n,
+                          C_{i,n}\beta_{[i+n]}\bigr).
+\end{aligned}
+\tag{17.7}
+$$
+
+All series are nonnegative and bounded by one. The phase feasibility conditions are exactly
+
+$$
+\boxed{\quad
+\mathcal E_i(0)\le\epsilon,\qquad
+\mathcal E_i(\delta_{K+i})\le\epsilon
+\quad(0\le i<\ell).
+\quad}
+\tag{17.8}
+$$
+
+The second endpoint is the minority weight at that phase's first actual occurrence, $K+i$. It is not replaced by the larger weight $\delta_K$ at all phases.
+
+The already defined weighted geometric overlap $\mathcal O$ of Definition 5.4 gives a finite-residue expression for each error. Define, for $0\le j<\ell$,
+
+$$
+\begin{aligned}
+V_j(x)&=\frac{(1-x)(1-v)v^j}{1-v^\ell},&
+U_j(x)&=\frac{x(1-u)u^j}{1-u^\ell},\\
+D_{ij}&=\frac{C_{i,j}\alpha_{[i+j]}}{1-\Gamma},&
+L_{ij}&=\frac{C_{i,j}\beta_{[i+j]}}{1-\Gamma}.
+\end{aligned}
+\tag{17.9}
+$$
+
+Then the equivalent expression used below is
+
+$$
+\mathcal E_i(x)=1-\sum_{j=0}^{\ell-1}
+\left[
+\mathcal O\bigl(V_j(x),v^\ell;D_{ij},\Gamma\bigr)
++\mathcal O\bigl(U_j(x),u^\ell;L_{ij},\Gamma\bigr)
+\right].
+\tag{17.10}
+$$
+
+Thus, for fixed $K,\ell$, feasibility has $2\ell$ inequalities on $\ell$ normalized triples, or $2\ell$ free real row coordinates. The source and phase indices in this expression are finite; no finite truncation of a future horizon is being substituted for the errors.
+
+**Theorem 17.3 (necessary and sufficient phase feasibility).** The observer of Definition 17.1 satisfies the unchanged uniform accuracy contract of Definition 1.3 if and only if (17.8) holds. For all $i$ and $x\in[0,1]$,
+
+$$
+d(G_x,Q_i)=\mathcal E_i(x).
+\tag{17.11}
+$$
+
+For each $k<K$ its exact transient error and initialized error are
+
+$$
+\begin{aligned}
+d(G_{\delta_k},D_{A_k})
+ &=\frac{u^K+v^K}{u^k+v^k}\,\mathcal E_0(\delta_K),\\
+d(F_*,D_I)
+ &=\frac{u^K+v^K}{5}\,\mathcal E_0(\delta_K).
+\end{aligned}
+\tag{17.12}
+$$
+
+Every label in (17.2) is actually reached. In particular the full initialized cardinality is $6+K+\ell$, with no omitted generated-only resource. Feasibility implies the strict condition $K\ge J$.
+
+Proof. The exact pure generator and its total update are the suppliers in Proposition 2.1 and Theorem 6.1. Each $E_d,E_f$ is normalized, so (17.1) makes (17.4) a normalized nonnegative row. Consequently Definition 1.3 gives coherent profiles on the whole carrier. The actual-history invariant, obtained from Proposition 2.1 and (17.3), is
+
+$$
+z(h)=
+\begin{cases}
+I,&h=\varnothing,\\
+A_k,&h=B^{k+1},\ k<K,\\
+T_{[k-K]},&h=B^{k+1},\ k\ge K,\\
+R_j,&h\text{ contains a singleton and its current mode is }j.
+\end{cases}
+\tag{17.13}
+$$
+
+This invariant uses actual source probabilities, irrespective of any zero in a forecast row. All five pure labels have the positive witnesses in Proposition 2.1; every startup label has its displayed positive all-$B$ witness.
+
+For the error computation, the survivor mass at phase $i$ after $m\ell+j$ generated $B$ symbols is
+
+$$
+C_{i,m\ell+j}=\Gamma^m C_{i,j},\qquad
+m\ge0,\quad0\le j<\ell.
+\tag{17.14}
+$$
+
+In particular it tends to zero. Products and (17.14) remain valid at $\Gamma=0$, with $0^0=1$. The exit law (17.6) is normalized, since exit masses telescope as $C_{i,n}-C_{i,n+1}$ and the survivor limit is zero. The true law $G_x$ exits in the same two disjoint categories with masses $(1-x)(1-v)v^n$ and $x(1-u)u^n$. Within category $d$ its exit symbol has law $E_d$, and within category $f$ it has law $E_f$; these conditional proportions agree with (17.4) whenever the corresponding mass is positive. After individual exit symbol $j$, both laws have the exact continuation $F_j$.
+
+Apply Lemma 2.2 and the normalized overlap identity, grouping exit symbols within each category. The common within-category law and common post-exit continuations make each category's absolute contribution the absolute difference of its coefficients. This gives (17.11) with precisely (17.7). Regrouping its nonnegative terms by $n=m\ell+j$, and using (17.14), gives (17.10): for example the dominant sequences are
+
+$$
+V_j(x)(1-v^\ell)(v^\ell)^m,
+\qquad D_{ij}(1-\Gamma)\Gamma^m.
+$$
+
+The minority sequences give the other overlap. This is a complete-law identity, not only a next-symbol or unmarked waiting-time calculation.
+
+For necessity of (17.8), phase $i$ occurs on every actual history $B^{K+i+m\ell+1}$, $m\ge0$. The true profiles there are $G_{\delta_{K+i+m\ell}}$. Accuracy at $m=0$ and (17.11) give the second inequality. Since their distances to $F_d=G_0$ tend to zero, the triangle inequality gives $d(F_d,Q_i)\le\epsilon$, hence the first inequality. No actual infinite history is acquired in taking this limit.
+
+For sufficiency, $G_x$ is affine in $x$ and finite-word TV is convex. Therefore the two bounds at $0$ and $\delta_{K+i}>0$ give
+
+$$
+d(G_x,Q_i)\le\epsilon
+\quad\text{for every }0\le x\le\delta_{K+i}.
+\tag{17.15}
+$$
+
+This includes all later minority weights assigned to phase $i$ by (17.13). Every synchronized actual history is exact at its pure label. At $A_k$, put $m=K-k$. The true rows on the transient chain and singleton resets agree with the source until either the first singleton or $m$ further $B$ symbols. In the first case the full continuation agrees. In the second, the common prefix has probability
+
+$$
+S_{k,K}=\frac{u^K+v^K}{u^k+v^k}\le1,
+$$
+
+and the two residuals are $G_{\delta_K}$ and $Q_0$. Thus finite-word TV is zero for $H\le m$, and equals
+
+$$
+S_{k,K}\operatorname{TV}
+\bigl(G_{\delta_K}^{H-m},Q_0^{H-m}\bigr)
+\quad\text{for }H>m.
+$$
+
+This is the exact-prefix localization of Theorem 6.1 with its terminal residual replaced by $Q_0$; agreement on all other prefix branches is unchanged. Taking the supremum proves the first identity of (17.12). The initialized singleton branches agree, and the first $B$ has probability $2/5$ and enters $A_0$. The same localization proves the second identity, since $u^0+v^0=2$. Both prefactors are at most one. Hence (17.8) verifies all remaining histories and the empty query.
+
+Finally $T_0$ repeats after $\ell$ further $B$ inputs. Apply the strict recurrence theorem 4.2 to its first occurrence at startup index $K$. It gives $\delta_K<2\epsilon$, equivalently $K\ge J$. This uses the existing periodic diameter obstruction, including the excluded exact tie, without restricting the phase rows further. $\square$
+
+## 18. Normalization of every smaller unrestricted carrier
+
+**Theorem 18.1 (no-larger normalized replacement).** Let $O$ be any finite observer of Definition 1.3 satisfying the original guarantee. Write $n=|Z|$ for its whole carrier, including initialization and generated-only configurations. If
+
+$$
+n<6+N_1,
+\tag{18.1}
+$$
+
+then there are integers $K\ge J$, $\ell\ge1$, with
+
+$$
+K+\ell\le n-6<N_1,
+\tag{18.2}
+$$
+
+and real normalized rows (17.1) satisfying all of (17.8). Consequently Definition 17.1 gives an accurate replacement of size $6+K+\ell\le n$.
+
+The statement imposes no form on $O$ before the replacement. It includes duplicated recurrent presentations, synchronized transient exits, arbitrary singleton proportions, generated-only states, and arbitrary total updates. It asserts existence of another accurate observer; it does not assert an isomorphism or preservation of all the original observer's generated profiles.
+
+Proof. By Theorem 3.1 choose any closed irreducible class $C$ of the actual synchronized source–observer pair chain. Its complete generated profiles are exact pure profiles, and its configuration projection contains at least five distinct labels. By Corollary 4.4 and (18.1), the startup orbit
+
+$$
+z_k=z(B^{k+1}),\qquad k\ge0,
+$$
+
+never meets this projection. Initialization lies outside that projection because its accurate profile is separated from every pure law by Proposition 2.1. It also lies outside the startup orbit: otherwise its one decoder would be within $\epsilon$ of both $F_*$ and a startup mixture, whose distance is at least $1/25>2\epsilon$.
+
+The startup orbit is a finite orbit of $z\mapsto U(z,B)$. Reuse finite-map eventual periodicity, as in `FiniteOrbitPeriodBound.finite_orbit_and_readout_eventually_periodic`, choosing its least entry index and least period. It consists of $K$ distinct transient labels followed by $\ell\ge1$ distinct cyclic labels, with no collisions among those $K+\ell$ labels. These labels avoid initialization and all five selected exact labels. Hence $K+\ell\le n-6$. The collision $z_K=z_{K+\ell}$ and Theorem 4.2 give $K\ge J\ge1$.
+
+Extract only the following row data from each original cyclic label $z_{K+i}$:
+
+$$
+\begin{aligned}
+t_i&=e_{z_{K+i}}(B),\\
+\alpha_i&=\sum_{j\in\operatorname{supp}E_d}e_{z_{K+i}}(j),\\
+\beta_i&=\sum_{j\in\operatorname{supp}E_f}e_{z_{K+i}}(j).
+\end{aligned}
+\tag{18.3}
+$$
+
+The two exit supports partition $\{0,1,3\}$, so these triples are nonnegative and normalized. If $\Gamma=1$, all cyclic $B$ emissions equal one and the generated future from every cyclic label is all $B$ forever. At such a label its TV distance from $F_d$ tends to one, whereas the positive startup histories at that phase force distance at most $\epsilon$ from $F_d$ by their limiting true profiles. Since $\epsilon<1$, this is impossible. Thus $\Gamma<1$.
+
+Before its first singleton the original generator follows precisely this cycle. Its first-exit time and category distribution is therefore (17.6), independently of what its singleton updates do afterward. Call its full profile at $z_{K+i}$ $Q_i^{\mathrm{old}}$. Accuracy on all $B^{K+i+m\ell+1}$ gives
+
+$$
+d(G_{\delta_{K+i}},Q_i^{\mathrm{old}})\le\epsilon,
+\qquad d(F_d,Q_i^{\mathrm{old}})\le\epsilon.
+\tag{18.4}
+$$
+
+The second bound again follows by the profile-metric limit. Coarsen each profile in (18.4) to first-exit time and category, using Lemma 2.2 and a further finite category coarsening. This contracts both distances, and the contracted endpoint errors are exactly $\mathcal E_i(\delta_{K+i})$ and $\mathcal E_i(0)$. Thus (17.8) holds for the extracted triples.
+
+Use these triples in Definition 17.1. Replacing exit proportions by $E_d,E_f$ and sending each singleton directly to $R_j$ realizes those contracted errors as full errors by Theorem 17.3. Replacing all startup transient rows by the true transient rows makes the earlier errors the localized quantities (17.12), each at most $\epsilon$. The resulting five-state pure generator, initialization, transients and phases are all on one explicitly specified carrier. Its size is $6+K+\ell\le n$ and its actual update is total.
+
+No deletion of a generated-only label from $O$ was presumed harmless. Rather, $n$ first counts every such label, and (18.2) is a lower count inside that complete carrier. The different constructed observer then uses only its own listed labels. Likewise no unique recurrent source presentation or exact synchronized exit machinery was inferred from $O$; only the supplied exact class and the contracted first-exit data were used. $\square$
+
+## 19. The exact unrestricted cardinality as phase feasibility
+
+**Definition 19.1 (the bounded phase-feasible set).** Let
+
+$$
+\mathscr F=\left\{(K,\ell):
+\begin{array}{l}
+K,\ell\text{ integers},\quad K\ge J,\quad\ell\ge1,\quad K+\ell<N_1,\\
+\text{there exist real triples satisfying (17.1) and (17.8)}
+\end{array}\right\}.
+\tag{19.1}
+$$
+
+There are only finitely many integer pairs in this set. Its real-row existence tests are the explicit phase constraints (17.7), equivalently (17.10), rather than a quantification over arbitrary observers, decoders or exit graphs. No existence of a rational optimizer is included in this definition.
+
+**Theorem 19.2 (unrestricted initialized minimum).** For the whole competitor class of Definition 1.3, at every allowed real unequal-holding source and tolerance in the separation domain,
+
+$$
+\boxed{\displaystyle
+N_{\mathrm{gen}}(\epsilon)
+=6+\min\left(\{N_1\}\cup
+             \{K+\ell:(K,\ell)\in\mathscr F\}\right).
+}
+\tag{19.2}
+$$
+
+All the phase error inequalities are non-strict. The entry cutoff remains strict through $K\ge J$, and the source-exact alternative accepts $\delta_{N_1}=\epsilon$. The formula holds in both holding orientations and at $p=q$.
+
+Proof. The source-exact construction of Theorem 6.1 has $6+N_1$ configurations and satisfies the unchanged guarantee. Every pair in $\mathscr F$, with any of its witnessing real rows, gives $6+K+\ell$ accurate configurations by Theorem 17.3. The finite nonempty set on the right of (19.2) therefore gives an attained upper bound.
+
+Conversely let $O$ be any accurate finite competitor of size $n$. If $n\ge6+N_1$, it is no smaller than that right-hand side. If $n<6+N_1$, Theorem 18.1 supplies a pair in $\mathscr F$ with $6+K+\ell\le n$. Again the right-hand side is no larger than $n$. This applies to every finite carrier, so it proves the matching lower bound and (19.2). $\square$
+
+For $\ell=1$, write $t=t_0$ and, since $\Gamma=t<1$, $\beta_0=(1-t)\beta$, $\alpha_0=(1-t)(1-\beta)$. Then (17.8) is exactly the two-variable geometric criterion of Definition 5.4 at $D=\delta_K$. Thus no new one-phase optimization is claimed. In the first-candidate situation of Theorem 6.3, $K+\ell=N_2+1$ and $K\ge J\ge N_2$ force $K=N_2,\ell=1$; a diameter tie makes even that impossible. Equation (19.2) retains that theorem and its tie behavior while admitting every larger candidate below the source-exact alternative.
+
+The reduction is stronger than eventual periodicity alone: it removes all separate exit machinery and duplicated synchronized presentations, normalizes within-category exit proportions, replaces every startup transient row by its true row, and reduces every infinite family of actual startup obligations to two complete-law errors for each retained phase. These replacements, together with the bound $K+\ell<N_1$, are the additional content relative to Definition 10.2. The remaining continuous feasibility problems are not analytically eliminated for every real parameter.
+
+At equal holdings $a=b$ the assumptions of §§17–19 do not apply; Theorem 7.1 supplies the separate initialized minimum seven, including zero error. At unequal holdings and zero error it supplies absence of a finite observer. Neither result is changed by substituting a limiting value into (19.2).
+
+## 20. Supplied-witness checking, actual acquisition and callable use
+
+**Corollary 20.1 (an exact checker for rational supplied witnesses).** Suppose exact rational $p,q,r,\epsilon$ are supplied in binary, as in Assumption 9.1, together with integers $K,\ell$ and rational phase triples. There is a terminating exact decision of whether these data satisfy the small unequal-holding domain, (19.1)'s integer bounds, (17.1) and all of (17.8), including equality cases. Accepted data specify an accurate total observer by (17.2)–(17.4). This checks a supplied witness, without deciding existence of real rows, existence of rational rows at every feasible boundary, or which structural pair attains the minimum.
+
+Proof. Rational arithmetic checks admissibility, the tolerance including its strict margin, unequal holdings, normalization and $\Gamma<1$. Proposition 9.2 supplies exact terminating cutoff calculations for $J,N_1$, including ties. All quantities in (17.9) are rational, with positive denominators.
+
+For completeness, each occurrence of the existing overlap $\mathcal O(A,\rho;B,\sigma)$ in (17.10) has $A,B\ge0$ and $0\le\rho,\sigma<1$. Write $a_0=A(1-\rho)$ and $b_0=B(1-\sigma)$. Its summands are $\min(a_0\rho^m,b_0\sigma^m)$. A zero $A$ or $B$ gives zero. If $\rho=\sigma$, the overlap is $\min(A,B)$. If $\sigma=0<\rho$, it is $\min(a_0,B)$; the symmetric zero case is $\min(A,b_0)$. These cases include a cycle with $\Gamma=0$ and zero exit-category masses.
+
+In the remaining case both ratios are positive and unequal. If $\rho<\sigma$, let $M$ be the first integer with $a_0\rho^M\le b_0\sigma^M$. The positive ratio $a_0\rho^m/(b_0\sigma^m)$ strictly decreases to zero, so exact successive rational comparisons find $M$. Summing the two geometric pieces gives
+
+$$
+\mathcal O(A,\rho;B,\sigma)
+=B(1-\sigma^M)+A\rho^M.
+\tag{20.1}
+$$
+
+If $\rho>\sigma$, use the first $M$ with $a_0\rho^M\ge b_0\sigma^M$, which exists by the increasing ratio. Then
+
+$$
+\mathcal O(A,\rho;B,\sigma)
+=A(1-\rho^M)+B\sigma^M.
+\tag{20.2}
+$$
+
+Zero coefficients were already handled. At an exact crossing either assignment of its equal summands gives the same value. Each overlap, hence each endpoint error and its non-strict comparison against the supplied rational $\epsilon$, is now an exact rational computation. There are at most $4\ell^2$ overlap occurrences in all $2\ell$ endpoint tests. This proves termination and the claimed exact boundary decisions. These geometric sums are intermediate evaluations of Definition 5.4, not a new general distance algorithm for arbitrary labelled Markov chains. $\square$
+
+The rational hypothesis includes the tolerance. A finite rational source and rational witness do not provide an exact comparison against an arbitrary real tolerance name. Conversely, the real-parameter theorems 17.3–19.2 do not require rationality of any of their parameters or witnessing rows. General approximation names, without a stronger comparison service or certified slack, provide neither their exact equality tests nor uniform synthesis at their boundary cases, as already distinguished in §9.
+
+**Definition 20.2 (one installed execution and its separately charged requests).** Fix one actual source run from Assumption 1.1, one supplied feasible observer from Definition 17.1 and its installed model/row data. Initialization writes $I$. After $n$ actual acquired symbols, where $n\ge0$, exactly $n$ passive read deliveries and $n$ applications of the total table $U$ produce the retained label in (17.13). There is no hidden-mode access, reset, replayed source, supplied recording age or archive consultation. The labels $A_k,T_i$ encode precisely the unresolved transient position or periodic phase used by this observer. A singleton acquired on this very run overwrites it by the correct $R_j$, even if the forecast probability of that singleton was zero.
+
+At a chosen boundary a request can return the installed symbolic generator together with its current label, a single generated word probability, or the full horizon-$H$ law. Its interpretation is the next-read convention of Definition 1.2, including $Y_0$ at initialization. A hypothetical word evaluator uses a scratch copy of the classical label and applies this same $U$ along that word; it does not advance or clone the actual source, or replace the retained actual label by a hypothetical successor. Scratch, request and output storage are additional to the retained configuration. Subsequent actual acquisitions continue from the retained label by (17.3).
+
+For general real row data these requests specify mathematical laws, and finite-word outputs may be left as symbolic products in the supplied row names. The finite label update is directly tabulated; effective exact numerical output is asserted below only for the rational representation. A finite list of arbitrary real names is not thereby a finite exact numerical implementation.
+
+**Proposition 20.3 (same-run represented resources).** In the execution of Definition 20.2 put $N=6+K+\ell$. Under the fixed-width naming convention of Definition 9.3, the retained label requires and admits $\lceil\log_2N\rceil$ bits; all $N$ values are actually reachable on some positive history. For the one chosen execution with $n$ reads and any finite list of subsequent word-law requests, the acquisition work is exactly the $n$ reads and $n$ table updates just specified, and each individual length-$H$ word request can be evaluated with $H$ row-factor multiplications and $H$ scratch-label updates. A direct complete horizon-$H$ table uses $4^H$ entries and can be evaluated with $H4^H$ such multiplications and updates. These arithmetic-operation counts do not declare unit bit cost for rational arithmetic or for sensor acquisition.
+
+In the rational specialization, let $B$ bound the numerator and denominator bit lengths of each supplied source parameter and tolerance, and let $L$ bound those of each supplied phase coordinate. One sufficient installed emission/update table for this same observer has size
+
+$$
+O\bigl((K+1)^2B+\ell(B+L)+N\log(N+1)\bigr)
+\quad\text{bits}.
+\tag{20.3}
+$$
+
+For $C=O((K+1)B+B+L)$ bounding a single installed rational row entry's numerator and denominator lengths, a single length-$H$ product has a sufficient $O(HC+1)$-bit rational output and accumulator. Its materialized input word uses $2H$ symbol bits; a scratch label and traversal indices must also be allocated. A direct materialized full law with explicit word addresses has sufficient output size $O(4^H(HC+H+1))$ bits. Copying a standalone symbolic descriptor copies the installed table and current label; referring to an already retained table still charges that table to this execution.
+
+Proof. Reachability and the exact initialized cardinality are Theorem 17.3. The naming argument is the existing capacity statement in Definition 9.3. A word probability is exactly the product in Definition 1.3, which performs the stated number of factors and total updates without conditional divisions. Evaluating all $4^H$ words separately proves the sufficient full-table operation count. No claim of optimal evaluation or simultaneous scratch-space minimality is made.
+
+For (20.3), source rows have $O(B)$-bit entries. The true row at transient $k$ has $O((k+1)B)$-bit rational entries by the power-ratio calculation of Proposition 9.2; summing over $k<K$ gives $O((K+1)^2B)$. Each phase row is made from its supplied coordinates and the fixed source exit proportions $E_2=(0,q/s,p/s)$ and $E_4=(1,0,0)$, costing $O(B+L)$ bits per entry and a constant number of entries per phase. Four successor addresses per label cost $O(N\log(N+1))$. Products of $H$ entry numerators and denominators add at most their bit lengths, proving the accumulator/output bound; fraction reduction cannot enlarge it. Materializing the addresses and every probability gives the sufficient full-law storage bound.
+
+If the supplied-witness checker is used once when installing this very table, its work and workspace are charged separately to that run. For an implementation scanning successive rational powers as in Corollary 20.1, let $M_\nu$ be the crossing index actually reached by each nontrivial overlap test in this installation. A sufficient rational-operation count for that check is
+
+$$
+O\left(N_1+\ell^2+\sum_\nu(M_\nu+1)\right).
+\tag{20.4}
+$$
+
+Computing cutoffs up to $N_1$ covers $J\le N_1$; forming all phase-prefix products takes $O(\ell^2)$ operations; each crossing scan takes $O(M_\nu+1)$ operations, with its exact geometric sums afterward. All operands' growing bit lengths, comparison work, input decoding and installation writes still count. The values $M_\nu$ belong to this one supplied witness, and (20.4) asserts no parameter-independent or polynomial bit bound. Choosing or obtaining the witness is not included as a free oracle operation. $\square$
+
+The accuracy statements concern conditional laws, not a realized future word or an old archive. A periodic phase admits unboundedly many startup ages, and the source witnesses of Proposition 10.3 already prevent general archive/age recovery from a predictive boundary. Equation (19.2) optimizes only the abstract initialized label count among fixed-installed-source deterministic observers. It does not optimize the total table, scratch, numerical precision, latency or physical memory of the one execution above. The source-bound model and witnessing rows are supplied design data; §§17–20 do not acquire an unknown real calibration, choose a feasible real witness effectively, or install a native sensor. In particular the nonsingleton-calibration obstructions of [Finite-start Predictive Memory, §§10–11](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FINITE_START_PREDICTIVE_MEMORY.md) retain their original common-observer domains.
+
+## 21. Supplier subtraction and the remaining recovery boundary
+
+**Definition 21.1 (source-relative content and correspondence).** The normalization theorem 18.1, the phase-complete characterization 17.3 and the unrestricted cardinality identity 19.2 are `repo-derived` ordinary mathematical results. Their source-specific addition is the contraction-and-replacement argument for every carrier below $6+N_1$, including all the extra machinery enumerated in Definition 10.2. The following previously supplied results keep their own proofs and scopes.
+
+| Supplier | Reused content and the remaining application |
+| --- | --- |
+| This volume, Proposition 2.1 and Lemma 2.2; [Finite-start Predictive Memory, §§1–5](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FINITE_START_PREDICTIVE_MEMORY.md) | Actual reachable profiles, positive startup histories, singleton synchronization, mixture geometry, separation, first-exit contraction and common-continuation equality. Their new consumer is the normalized multi-phase replacement; these facts are not new claims here. |
+| This volume, Theorems 3.1, 4.2 and Corollary 4.4; [`FiveModeRecurrentPairRigidity`](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/D5/S3/ObserverMemory/Prediction/FiveModeRecurrentPairRigidity.lean), `recurrent_pair_rigidity`; [`FiveModeStrictStartup`](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/D5/S3/ObserverMemory/Prediction/FiveModeStrictStartup.lean), `startup_collision_strict` | Exact synchronized recurrent classes and the strict periodic tie obstruction. Theorem 18.1 uses their original unrestricted hypotheses to reserve five exact labels and separate the entire smaller startup orbit. Their affinity and diameter proofs are not repeated. |
+| [`FiniteOrbitPeriodBound`](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound.lean), `finite_orbit_and_readout_eventually_periodic` | Ordinary finite-map eventual periodicity supplies the orbit form. It does not remove exit graphs, normalize rows, certify all-history approximation or prove (19.2); those are the additional source-specific steps. |
+| This volume, Definitions 5.1, 5.4, Theorems 5.5, 6.1 and 6.3; [`FiveModeSelfGeneratedLaws`](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/D5/S3/ObserverMemory/Prediction/FiveModeSelfGeneratedLaws.lean), `GeneratedObserver`, `source_product_localization`, `N1_generator_accuracy`, `initialized_generated_minimum` | The same-update interface, exact-prefix localization, source-exact alternative, attained-minimum background, and one-phase geometric feasibility are suppliers. The new phase constraints use the first weight $\delta_{K+i}$ at each phase and cover every structural pair below that alternative. The geometric crossing sums and rational storage estimates are intermediate applications of existing geometric laws and §9's representations. |
+| Chen–Kiefer, [*On the Total Variation Distance of Labelled Markov Chains*, arXiv:1405.2852v1, Definition 1, §4 and Theorem 7](https://arxiv.org/html/1405.2852v1), [DOI](https://doi.org/10.1145/2603088.2603099) | Source symbol matrices are $PD_y$; a generated observer has matrices $e_z(y)\mathbf1_{z'=U(z,y)}$. These are the primary finite labelled-chain definitions and fixed-machine full-process TV background. Their rational representation assumption for algorithms is retained. Fixed-machine equivalence and distance approximation do not themselves give this all-actual-history minimum or exact rational phase-witness test. |
+| [`OriginalRectangleSmoothing`](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleSmoothing.lean), `finite_record_smoothing_by_original_success_count`; [`PositiveRectangleLaw`](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.lean), `actual_trimmed_obstruction` | The former bounds changes of a center-bit posterior under added exterior records, using positive rectangular words in a stationary binary presentation. The latter excludes those rectangles for presentations of its specified twelve-state visible law. Neither statement supplies this five-mode initialized cardinality normalization or its phase errors; no same-law identification or theorem transfer from those different tasks is assumed here. |
+
+The exact full-class statement is (19.2) with its explicit finite family of real-row feasibility problems. Analytical resolution of every such problem, a rational witness at every real feasible boundary, and effective arbitrary-real minimum synthesis remain unproved. All existing equality, zero-error, first-candidate and near-equality results retain their stated domains. There is no physical-realization, global-novelty or new Lean-certification claim for this addition.
+
+In this passive source, time exposes acquisition order, boundary exposes the coarse read $\chi$ and the retained conditional-law interface, and memory exposes the internally updated label. The relation established here is the exact minimum size of a boundary that can continue its own approximate law through the actual update, with source-bound acquisition and callable use given in §20. It supplies no spatial metric, clock duration, general old-archive inverse or four-way recovery. The original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer and unchanged-initialization problems are not replaced by this stochastic instance. Acquiring calibration, references and rights, constructing a common atomic/quantum/continuous realization, and proving total-resource parsimony and unrestricted space–time–boundary–memory mutual recovery remain separate obligations of the full objective.
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:90fd0d17a8786844b09f32dd220b13e7a28b56fdc39dfca0e9a08a0cc5970e60
+  normalized_sha256: sha256:90fd0d17a8786844b09f32dd220b13e7a28b56fdc39dfca0e9a08a0cc5970e60
+cas_ref: sha256:90fd0d17a8786844b09f32dd220b13e7a28b56fdc39dfca0e9a08a0cc5970e60
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Only the section title for partition-lattice inversion and an introduction to the forthcoming connected-coefficient formula; no formula or completed mathematical predicate occurs in this fragment.
+    previous_atom_id: a525a833eadaccbcf49d4c681ed352e5428e10c223480b2335ed2673e6899dd0
+    next_atom_id: 3204df979ee8a7acf38ef8f349a46e9ce284d00cff7d840387b2cbef52b247f4

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bddf9bd1bcc09380cafe27ff81fcf5c1b20febefdd4f25f97686b56e56e18825
+  normalized_sha256: sha256:bddf9bd1bcc09380cafe27ff81fcf5c1b20febefdd4f25f97686b56e56e18825
+cas_ref: sha256:bddf9bd1bcc09380cafe27ff81fcf5c1b20febefdd4f25f97686b56e56e18825
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenPell.pell_form_eq_four_mul_norm
+    target_statement_id: sha256:5151cbbd9289f6c66b252252c03292017ac43409b56315ac85c50db10f8390e8
+receipts:
+  unresolved_subitems: []

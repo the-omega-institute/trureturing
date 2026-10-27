@@ -1,0 +1,44 @@
+# A robust random rainbow connector
+
+## Abstract
+
+The original-colour robust random connector on one common independent reservoir law.
+
+This is the colour-aware formalization of arXiv:2503.01825v2, Section 4.3, Lemma 4.3 B1+B2+B3. Let G be a finite loopless directed graph with literal edge colours, proper separately on incoming and outgoing stars. Put n=card(V). Assume positive nu,tau,alpha,p, p<=1, nu+tau<=alpha, both semidegrees at least alpha n, exterior robust expansion with all thresholds normalized by the original n, and p^3 nu^2 n>=144 log n. The result applies in particular when all four original parameters are at most one; upper bounds on nu,tau,alpha need not be supplied separately.
+
+The probability space samples a single independent Bernoulli-p bit for every vertex and every literal colour actually occurring on an edge. Sum tags keep the two sorts independent even if their ambient types coincide. The original colour type can be infinite. The colour reservoir is the image under subtype inclusion, with no identification or replacement of literal colours. Unused original colours never occur on a path and may freely belong to a forbidden colour set.
+
+**Theorem 1.1 (Numerical and rank bounds from the original graph).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Rainbow/ReservoirConnector.original_parameter_bounds`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Rainbow/ReservoirConnector.original_parameter_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Given any vertex, the loopless graph, positive parameters, semidegree, exterior expansion and original scale inequality imply nu<1/2, n>=64, log n>3 and floor(nu^(-1))<n. The integer-boundary argument is reused from RobustLayers.graph_parameter_bounds, including a possibly empty integer expansion interval. The logarithm and scale estimates then put every needed natural rank into the probability supplier's Fin n index set. No numerical assumptions are added to the final connector.
+
+**Theorem 1.2 (B1, both B2 directions, and all post-revelation connectors).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Rainbow/ReservoirConnector.full_original_colour_connector`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Rainbow/ReservoirConnector.full_original_colour_connector` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+With probability at least 1-5/n the one outcome simultaneously has |V0|<=2pn; for every vertex both outgoing and incoming degrees outside V0 and outside C0 are at least (1-3p) times their respective original degrees; and for every distinct ordered endpoint pair and all finite forbidden vertex and literal-colour sets of cardinalities at most beta n, where beta=p^3 nu/100, there exists an actual simple rainbow directed path of length at most nu^(-1)+1. Its internal vertices belong to V0 outside the forbidden vertices, and all its literal edge colours belong to C0 outside the forbidden colours. The forbidden sets are quantified after the outcome and need not be subsets of either reservoir.
+
+The actual fixed rows are L_u(i) minus L_u(0), with L_u(0)=N^+(u) and L_u(i+1)=L_u(i) union RN_nu^+(L_u(i)). Count identities transfer the common-event base, predecessor and incoming inequalities exactly at b=beta n into RankDescent.robust_connector. The finite used-colour subtype preserves edge equality and the actual repeated-colour exceptional sets. B1 and B2 are cardinalities of the selected vertices and complements of the same sampled loss rows. Thus no endpoints, forbidden sets or reservoirs are selected independently of that single outcome. Empty V is handled directly on the same probability law.
+
+Attribution: RobustLayers and RankDescent are the substantive deterministic proofs from immutable candidate a05b5edab3f020d7ea01c493d11fa891736ef720. CommonReservoirRows, CommonReservoirGraph and CommonReservoir are consumed probability helpers from c705ceba5be669a3c3768ae227bf955db35bd53a; FiniteColourLowerTail and TripleReservoir are unchanged helpers from 32551f54ea6f029dfbc0d402a4194a77319f9f46. The already frozen TwoEdgeChoices core is reused unchanged. This module supplies the missing original-parameter, actual-layer and literal-colour composition on their live path proof chain. This is a formalization of the literature connector, with no new literature-priority claim. It does not close the full original Good or unrestricted AM problems.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Graph/Rainbow/ReservoirConnector.full_original_colour_connector`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Rainbow/ReservoirConnector.original_parameter_bounds`
+- Dependency: [D5/S3/Combinatorics/Graph/Rainbow/RankDescent](RankDescent.md)
+- Dependency: [D5/S3/Combinatorics/Probability/CommonReservoir](../../Probability/CommonReservoir.md)

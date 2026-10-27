@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d4b7db94c7b77cfcb8b2d6a675802e7056bef11ed9b983515204f597ddd55ec7
+  normalized_sha256: sha256:d4b7db94c7b77cfcb8b2d6a675802e7056bef11ed9b983515204f597ddd55ec7
+cas_ref: sha256:d4b7db94c7b77cfcb8b2d6a675802e7056bef11ed9b983515204f597ddd55ec7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 只引入案件类型 X、结果函数 J 和允许法律概念类 E；ratio 最粗充分性的具体定义在后续 atom，标题为其主题名称，不在本片证明该最粗元存在。
+    previous_atom_id: d4a2e790462b9843fb0ff0944dd1bab6aceb6cae2fdf6cf53c99c6236fcad813
+    next_atom_id: 67e1ac901890a8ecbe27f9789433e9527ec00cfc87b117deb6fc12b3c23e3aaa

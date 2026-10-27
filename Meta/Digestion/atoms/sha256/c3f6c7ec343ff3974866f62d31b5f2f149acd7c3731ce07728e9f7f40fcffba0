@@ -1,0 +1,22 @@
+**Lemma 4.1 (spectral coordinates).** Define
+
+$$
+\phi=\frac{1+\sqrt5}{2},\quad \psi=\frac{1-\sqrt5}{2}=-\phi^{-1},\quad
+\Pi_+=\frac{M-\psi I}{\phi-\psi},\quad
+\Pi_-=\frac{\phi I-M}{\phi-\psi}.
+\tag{4.1}
+$$
+
+Then $\Pi_\pm$ are complementary rank-one spectral projectors and
+
+$$
+M^i=\phi^i\Pi_++\psi^i\Pi_-,\quad
+\alpha(S)=\operatorname{tr}(\Pi_+S),\quad
+\eta(S)=\operatorname{tr}(\Pi_-S).
+\tag{4.2}
+$$
+
+For legal $P$, $\alpha(P)>0$ and $\alpha(P)+\eta(P)=1$. The value $\eta(P)$ may be zero or negative.
+
+**Proof.** The characteristic identity $(M-\phi I)(M-\psi I)=0$ and $\phi\ne\psi$ give $\Pi_++\Pi_-=I$, $\Pi_+\Pi_-=0$, and $M\Pi_\pm=\phi\Pi_+$ or $\psi\Pi_-$, respectively. These prove (4.2), including $i=0$. Each projector has trace one and is nonzero, hence has rank one. The entries of $\Pi_+$ are $(-\psi,1,1,1-\psi)/(\phi-\psi)$, all strictly positive. Thus its trace pairing with positive $P$ is positive. The sum identity gives $\alpha(P)+\eta(P)=\operatorname{tr}P=1$. $\square$
+

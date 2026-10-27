@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f11b5c2687750d9f209f1d65565a18add7442907267d946ac55417f058631e5a
+  normalized_sha256: sha256:f11b5c2687750d9f209f1d65565a18add7442907267d946ac55417f058631e5a
+cas_ref: sha256:f11b5c2687750d9f209f1d65565a18add7442907267d946ac55417f058631e5a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：把占据能量定义为占据数之和，仅解释所读字段。
+    previous_atom_id: c76d377bfd1f208933a3077d326bd9f5e2ac38972686d915df0613ef67eed96b
+    next_atom_id: c00cb257afbf4983528525c2277446d60bfd42db87e0e54fd5455e05b92c6b0c

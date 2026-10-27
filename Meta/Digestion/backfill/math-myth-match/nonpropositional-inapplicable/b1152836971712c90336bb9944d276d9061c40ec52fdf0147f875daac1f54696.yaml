@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b1152836971712c90336bb9944d276d9061c40ec52fdf0147f875daac1f54696
+  normalized_sha256: sha256:b1152836971712c90336bb9944d276d9061c40ec52fdf0147f875daac1f54696
+cas_ref: sha256:b1152836971712c90336bb9944d276d9061c40ec52fdf0147f875daac1f54696
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Ross 译本伦理学 II.7–8 的品格分类与情境解释；没有数值或数学定理。
+    previous_atom_id: afcd9d64b567728639a89ba1984e8bf1ad3f076da4c5cdbed158b01869461908
+    next_atom_id: eed9ac350f7ca50ec73024a84e5b7cebdc754ee9cd7dc89f87ec7f51de0e9cfd

@@ -18,7 +18,19 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIISLnUn
 
 Genuine embedding with an auxiliary block of the same size.
 
-**Theorem 1.2 (actual upper double three commutators).**
+**Definition 1.2 (Lower block shear).**
+
+$$\forall u, \forall F \in \operatorname{Type} u,\; Field\left(F\right) \Rightarrow \left(\forall n \in \mathbb{N},\; \forall A \in Matrix\left(Fin\left(n\right), Fin\left(n\right), F\right),\; val\left(lowerBlock\left(A\right)\right) = fromBlocks\left(1, 0, A, 1\right) \land det\left(val\left(lowerBlock\left(A\right)\right)\right) = 1\right)$$
+
+*Formalization.* `D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIISLnUnipotentCommutators.lowerBlock` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every field F in an arbitrary universe u, natural dimension n and square matrix A over F, lowerBlock(A) is the special linear matrix with identity diagonal blocks, zero upper right block and lower left block A; val denotes its underlying matrix, fromBlocks assembles the four displayed blocks, and det(val(lowerBlock(A))) is one, including when n is zero.
+
+**Theorem 1.3 (actual upper double three commutators).**
 
 Lean statement: `D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIISLnUnipotentCommutators.actual_upper_double_three_commutators`
 
@@ -36,5 +48,6 @@ Nikolov and Segal, On finitely generated profinite groups, I: Strong completenes
 
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIISLnUnipotentCommutators.actual_upper_double_three_commutators`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIISLnUnipotentCommutators.doubleEmbed`
+- Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIISLnUnipotentCommutators.lowerBlock`
 - Dependency: [D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIIUnitriangularProper](PartIIUnitriangularProper.md)
 - Dependency: [D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/SLnUnipotentBlocks](SLnUnipotentBlocks.md)

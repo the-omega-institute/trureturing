@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9d3a4f6a826c8f381fde98437c5514fd70b11af0fbfa23735c845499417b0a65
+  normalized_sha256: sha256:9d3a4f6a826c8f381fde98437c5514fd70b11af0fbfa23735c845499417b0a65
+cas_ref: sha256:9d3a4f6a826c8f381fde98437c5514fd70b11af0fbfa23735c845499417b0a65
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: InvolutionLogic 的文件路由列表，没有数学断言。
+    previous_atom_id: 7c208ba6262785213e2879d97577fd5a4021718d81134fbb3ac162c29987b645
+    next_atom_id: 8f02fd79754a9ff18f19b4275d47391602af8aa53c7d4b74e26579017de6ac20

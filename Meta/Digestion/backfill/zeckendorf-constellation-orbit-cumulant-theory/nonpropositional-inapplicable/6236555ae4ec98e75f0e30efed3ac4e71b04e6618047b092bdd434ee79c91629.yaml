@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6236555ae4ec98e75f0e30efed3ac4e71b04e6618047b092bdd434ee79c91629
+  normalized_sha256: sha256:6236555ae4ec98e75f0e30efed3ac4e71b04e6618047b092bdd434ee79c91629
+cas_ref: sha256:6236555ae4ec98e75f0e30efed3ac4e71b04e6618047b092bdd434ee79c91629
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Repository reference list only: D5/S3/Zeros/Symmetry/MultiscaleFingerprintAppend; these addresses cite sources and state no mathematical assertion.'
+    previous_atom_id: e495455d438fc43b65df431ae12d6d79c11e5b6c4c5e532f509c401904c6f61e
+    next_atom_id: 2b6f72c9dc8be983b3674963f89c8d1ac8cbca65dedaef2241ea066bb10f6144

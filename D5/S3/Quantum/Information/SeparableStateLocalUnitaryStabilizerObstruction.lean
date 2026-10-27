@@ -120,7 +120,7 @@ private theorem tensor_smul_left (a b : (Fin 2 → ℂ)) (z : ℂ) : productVect
 private theorem trace_projector {n : Type*} [Fintype n] (x : n → ℂ) : (rankOneDensity x).trace = star x ⬝ᵥ x := by
   simp only [rankOneDensity, Matrix.trace, Matrix.diag_apply, Matrix.vecMulVec_apply,
     dotProduct]; apply Finset.sum_congr rfl; intro i hi; exact mul_comm _ _
-private theorem unit_e0 : unitVector ![1, 0] := by
+theorem unit_e0 : unitVector ![1, 0] := by
   norm_num [unitVector, dotProduct, Fin.sum_univ_two]
 private theorem unit_b {c s : ℝ} (h : c^2+s^2=1) : unitVector (b c s) := by
   unfold unitVector b

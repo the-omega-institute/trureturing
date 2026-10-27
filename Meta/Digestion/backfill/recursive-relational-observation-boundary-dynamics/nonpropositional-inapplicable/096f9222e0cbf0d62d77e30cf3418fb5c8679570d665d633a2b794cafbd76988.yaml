@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:096f9222e0cbf0d62d77e30cf3418fb5c8679570d665d633a2b794cafbd76988
+  normalized_sha256: sha256:096f9222e0cbf0d62d77e30cf3418fb5c8679570d665d633a2b794cafbd76988
+cas_ref: sha256:096f9222e0cbf0d62d77e30cf3418fb5c8679570d665d633a2b794cafbd76988
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只介绍第13节拟比较的后验与续接残余及研究目的，没有陈述联合profile最小性公式。
+    previous_atom_id: e04080a377eb811e0e41aee41120660f760ca025415d86da4e1abcfaa4f66028
+    next_atom_id: ef4c4ef4802fb4f3adf60795db6753024aa7ceb8cd5b812ce511c19ffbab712d

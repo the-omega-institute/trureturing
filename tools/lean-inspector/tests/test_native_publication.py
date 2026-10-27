@@ -711,6 +711,24 @@ class NativeColdPublicationTests:
         # Unstage admits only compiler artifacts; each fixture still creates
         # its own producer build, reports, utility inputs, and ensure stamp.
         self.assertFalse((self.root / '.lake/build/lean-inspector').exists())
+        # Both compiler tools must restore through Lake without compilation.
+        # Restoring compiler outputs must leave all project/report work cold.
+        self.run_lake('--no-build', '-d', 'tools/lean-inspector', 'build',
+                      'reportInspector', 'inputDiscovery')
+        # The compiler library shares the root Lean directory. Its exact
+        # inventory must be restored, with no project-owned modules mixed in.
+        library = self.root / '.lake/build/lib/lean'
+        self.assertEqual({str(path.relative_to(library)) for path in library.rglob('*.olean')}, {
+            'Inspector.olean', 'LeanInformationAudit/RawArtifacts.olean',
+            'LeanInformationAudit/CompiledMetadata.olean', 'LeanInformationAudit/CompiledAxioms.olean',
+            'LeanInformationAudit/Contract/SourceAudit.olean', 'LeanInformationAudit/Contract/InputDiscovery.olean'})
+        self.assertEqual({path.name for path in library.parent.iterdir()}, {'lean'})
+        self.assertFalse((self.root / '.lake/build/ir').exists())
+        self.assertEqual({path.name for path in (self.root / '.lake/build/lean-inspector').iterdir()}, {'producer'})
+        self.assertFalse((self.root / '.lake/build/reg').exists())
+        self.assertFalse((self.root / 'Reg/.lake/build').exists())
+        self.assertFalse((self.root / '.lake/build/lean-inspector/modules').exists())
+        self.assertFalse((self.root / '.lake/build/lean-inspector/report.zip').exists())
         for name in before:
             if name == 'outputs.jsonl':
                 continue

@@ -1,0 +1,23 @@
+**Definition 34.1 (the unit comb installation).** This installation uses AA §§17 and 20's birth-typed local syntax and NLBA II §17's persistent material templates, but changes the field ports. Put
+
+$$
+u_0=\alpha,\qquad u_{n+1}=\langle\beta,u_n\rangle,\qquad
+G_n=C(u_n),\qquad N_n=3n+1.
+\tag{UFS.82}
+$$
+
+Here $C(\alpha)$ is one vertex; $C(\beta)$ is a root with one terminal left marker; and a branch has a root and its two ordered material subtrees. Thus the original root of $G_n$ is internal when $n>0$. Logical navigation descends only through branches, never through a beta marker. Material coordinates are root-based words, ordered by a fixed depth-first traversal. Let $A_n$ be the symmetric, zero-diagonal, unit adjacency matrix in these coordinates, and let $e$ be the original-root coordinate vector. No diagonal calibration, edge rescaling or contraction is applied.
+
+The concealed entry is some $u_n$, $n\ge3$, with arbitrary $x^0\in\mathbb Q^{N_n}$. Neither $n$, the term, the coordinates nor $x^0$ is supplied to the receiving controller. This is a class promise about an actually prepared source, not an assertion that every native term is a comb. The following root field interface is installed on that same source, in addition to the original addressed $P/S$ dispatcher:
+
+| Request | Actual successor | Complete semantic reply |
+| --- | --- | --- |
+| Read | $x$ | the literal original-root value $e^{\mathsf T}x$ |
+| Add$(q)$, $q\in\mathbb Q$ | $x+qe$ | fixed ACK |
+| Tick | $A_u x$ for the current material tree $C(u)$ | fixed ACK |
+| Hold | $x$, with no autonomous evolution during local work | fixed ACK |
+| $P_p$ at logical alpha | retain $p$, add a fresh zero marker $pL$ | Growth$(P,p)$ |
+| $S_p$ at logical beta | retain $p,pL$, add fresh zero cells $pLL,pR$ | Growth$(S,p)$ |
+
+At a split, $pL$ becomes the left logical beta root and $p$ becomes a branch; all old fields and old material addresses persist. These are the original material edits, not grafts or surrogate operations. A growth request at an absent address, branch, or wrong leaf type returns, respectively, AbsentRefusal, BranchRefusal or WrongTypeRefusal, with identical material and field successor. There is no Reset. Tick has no scalar payload. There are no terminal labels or terminal ports, constructor Read, interior-coordinate Read, size port, old-journal port, inverse Tick, clone or response table. In particular, this is an added internal-root Add/Read installation, not the unchanged original terminal-only installation of NLBA II §17.
+

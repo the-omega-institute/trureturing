@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:36328c105893278bb7c814327bef666ec8ef884f29ecd515b866e7758b6cd543
+  normalized_sha256: sha256:36328c105893278bb7c814327bef666ec8ef884f29ecd515b866e7758b6cd543
+cas_ref: sha256:36328c105893278bb7c814327bef666ec8ef884f29ecd515b866e7758b6cd543
+coverage_gids:
+  - gid: D5/S1/Digit/PrimeAxisEncoding.prime_axis_encoding_spec
+    target_statement_id: sha256:ae93a63b1116d0bc027007a29de8c654d4f2d4e60a65c4d7cb1781451573572e
+  - gid: D5/S3/Factorization/ExponentCoordinates/PrimeExponentBijection.prime_exponent_language_bijection
+    target_statement_id: sha256:a21e69796f2f64c03d16b923b8cc2ed1f1caae074967144ef86e9a2dd3e1ea83
+  - gid: D5/S3/Factorization/ExponentCoordinates/PrimeExponentBijection.prime_exponent_product_formula
+    target_statement_id: sha256:6b0924fd266b4abdf50baa6098d602188e2a2c1c2c1ba447f31c2ef60dfbef9a
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - d2faba3142e27e8036ae98da6441ee00885bd8e1441f267d05f0420f756cde8f
+    - 2110ad5704db09ad24ded0d2471deed5fad1f4bdb3d193a98da82feb28d0dbf1

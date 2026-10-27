@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:03edb4ac459ee5a2311e8f10d711a6a743a5f4f0ed2898e0d6084ec3918ddd1b
+  normalized_sha256: sha256:03edb4ac459ee5a2311e8f10d711a6a743a5f4f0ed2898e0d6084ec3918ddd1b
+cas_ref: sha256:03edb4ac459ee5a2311e8f10d711a6a743a5f4f0ed2898e0d6084ec3918ddd1b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该句是误差记账的方法要求，要求三阶段沿同一误差链连接，没有量化数学断言。
+    previous_atom_id: eea15c13e3695050d339b83c63851f7f01cf0823921ccdd6e597b92035d24d90
+    next_atom_id: 7ee5a6304fb9c41105a4d43a2075f5835b7b1fae908161022caf514ecce5da42

@@ -1,0 +1,17 @@
+**Proposition 11.2 (totality, exact capped specialization and preserved field).** For every finite promised specimen, every current rational field, and every $n\ge1$, $\mathcal B_n$ either accepts or rejects after finite work. If the actual $N\le n$, it accepts, with $d=N$, the exact native law and actual field, genuine unit preparation and a real P39 passive segment. Its counts in that case are exactly those of Proposition 8.2 with $R=n$.
+
+On every branch, including a rejected one, the next source state is the actual advanced state. If $t$ Ticks and pulses $(s_l,u_l)$ have been executed since that branch's entry field $z$, then
+
+$$
+x_{\rm next}=T^t z+\sum_l u_lT^{t-s_l}e_0.
+\tag{UFS.31}
+$$
+
+The specimen remains at this field and all its emitted values, input words and acknowledgements remain in the retained record. Rejection does not restore $z$, undo a pulse or erase a returned scalar. It need not reveal the coordinates of $x_{\rm next}$.
+
+Proof. Every loop has a bound in $n$ or $d\le n$; all exact tests terminate on rational/integer inputs. Elimination searches a finite set of pivots, and a singular required system rejects before division. The integer square-root tests are finite also when the input is not a rational square. The suffix has predetermined finite length and rational inputs even if $A$ is not the actual law. The actual source remains finite and rational under every such command. These facts prove totality without assuming the trial cap.
+
+If $N\le n$, Proposition 2.2 proves the free recurrence, including zero and noncyclic entry fields. Every added guard in step 1 then succeeds. Theorem 3.1 makes the differences in step 2 the actual impulse moments. P Lemma 37.1 makes the first singular block occur at $d=N$, with all required positive leading blocks. P Proposition 37.3 gives the actual positive rational links, so every root, positivity and moment check succeeds and $A=T$. The observability solve in (UFS.30) is exactly (UFS.12); hence $\widehat x_*$ is the true advanced field. Theorems 4.2 and 5.1 make every preparation comparison true and the actual proposed origin equal to $e_0$. Theorem 6.2 then makes the passive segment and every comparison true. The fresh initial Hold and all pair Holds follow Convention 8.1, yielding the same capped counts. The guards add local calculation, not source commands.
+
+Finally (UFS.31) is (UFS.3), based on the actually executed prefix, whether or not a candidate passed. Read and Hold leave it unchanged. Retaining the same source and its complete command/return record proves the asserted preservation. Neither the rank calculated in step 1, the singularity in step 2, nor finite consistency in step 7 certifies the trial cap on its own. $\square$
+

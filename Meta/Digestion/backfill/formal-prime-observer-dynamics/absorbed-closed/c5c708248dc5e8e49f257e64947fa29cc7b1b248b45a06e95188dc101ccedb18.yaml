@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:c5c708248dc5e8e49f257e64947fa29cc7b1b248b45a06e95188dc101ccedb18
+  normalized_sha256: sha256:c5c708248dc5e8e49f257e64947fa29cc7b1b248b45a06e95188dc101ccedb18
+cas_ref: sha256:c5c708248dc5e8e49f257e64947fa29cc7b1b248b45a06e95188dc101ccedb18
+coverage_gids:
+  - gid: D5/S3/Entropy/MutualInformationProduct.mutual_information_product_eq_zero
+    target_statement_id: sha256:fb1662e5f72b135780e9503d18aa6a2efd045eddf99bc3403804384352cd8acc
+  - gid: D5/S3/Entropy/Submodularity/CanonicalConditionalInformationSubmodularity.canonical_conditional_information_submodular
+    target_statement_id: sha256:8e4637909b22d2d79de80b5a83fb7bc3492a53e7646e6bf36b229a523b67ba17
+  - gid: D5/S3/Entropy/Submodularity/SelectedObservationInformationMonotonicityCanonical.selected_observation_information_monotone_canonical
+    target_statement_id: sha256:8b702ad57c140218ac12a71c3029c5fd73f464e2c9ceb68fb0bb53ea4118264a
+  - gid: D5/S3/Resource/SubmodularGreedyApproximation.cardinality_greedy_one_sub_inv_exp_guarantee
+    target_statement_id: sha256:29a148d8ec234b3ee58583594e4ded62d15a18d98135dcc404c2d9afb4698392
+receipts:
+  unresolved_subitems: []

@@ -378,11 +378,11 @@ theorem mutually_unbiased_diagonal_planes
   · exact ⟨full_composition_of_zero hd B C, zero_composition_of_full B C⟩
   · exact ⟨hFullMub, hMubFull⟩
 
-private def coordinateProjectorTwo :
+def coordinateProjectorTwo :
     Fin 2 → Matrix (Fin 2) (Fin 2) ℂ :=
   ![!![1, 0; 0, 0], !![0, 0; 0, 1]]
 
-private def coordinateContextTwo : RankOneContext 2 where
+def coordinateContextTwo : RankOneContext 2 where
   projector := coordinateProjectorTwo
   rankOne := by
     intro j

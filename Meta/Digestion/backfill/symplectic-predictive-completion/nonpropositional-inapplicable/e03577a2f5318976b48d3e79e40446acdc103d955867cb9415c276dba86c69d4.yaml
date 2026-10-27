@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e03577a2f5318976b48d3e79e40446acdc103d955867cb9415c276dba86c69d4
+  normalized_sha256: sha256:e03577a2f5318976b48d3e79e40446acdc103d955867cb9415c276dba86c69d4
+cas_ref: sha256:e03577a2f5318976b48d3e79e40446acdc103d955867cb9415c276dba86c69d4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 记录旧卷第4至8及10至11节的新章节地址，只有文档定位关系。
+    previous_atom_id: 22b743cbe7516ba2eae46523a87404700ae23c9aabcd887bfe5563b074e583e7
+    next_atom_id: cba5bfc4670399dd3ad47575800f3f14a260cac4abbd3b19e78d91b90f1bbb83

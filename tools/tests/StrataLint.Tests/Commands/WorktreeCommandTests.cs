@@ -294,6 +294,39 @@ public sealed partial class WorktreeCommandTests
     }
 
     [Fact]
+    public void LargeCheckoutCompletesWithoutEnteringInitializationRecovery()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        StampCache(repository.Path);
+        var target = Path.Combine(repository.Path, "large-checkout");
+        var recorder = new RecordingWorktreeProcessRunner();
+        var runner = new SlowCheckoutProcessRunner(recorder);
+
+        var result = WorktreeCommand.Run(repository.Path,
+            ["--kind", "governance", "--name", "large-checkout", "--path", target,
+             "--base", "HEAD", "--source", repository.Path, "--skip-restore"], runner);
+
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain(recorder.Invocations,
+            call => call.Arguments.Contains("recover-init"));
+        Assert.True(File.Exists(Path.Combine(target, "lean-toolchain")));
+    }
+
+    private sealed class SlowCheckoutProcessRunner(IWorktreeProcessRunner inner) : IWorktreeProcessRunner
+    {
+        public ProcessOutput Run(string fileName, IReadOnlyList<string> arguments,
+            string workingDirectory, TimeSpan timeout)
+        {
+            // Model a checkout that needs more than the ordinary five-minute Git budget.
+            if (fileName == "git" && arguments.Take(2).SequenceEqual(["reset", "--hard"])
+                && timeout < TimeSpan.FromSeconds(600))
+                throw new TimeoutException("simulated large checkout exceeds the supplied timeout");
+            return inner.Run(fileName, arguments, workingDirectory, timeout);
+        }
+    }
+
+    [Fact]
     public void CommandAppendsOnlyMissingReviewScaffoldIgnores()
     {
         using var repository = new TemporaryDirectory();

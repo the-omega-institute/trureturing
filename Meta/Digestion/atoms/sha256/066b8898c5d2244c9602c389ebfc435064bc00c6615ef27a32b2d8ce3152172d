@@ -1,0 +1,64 @@
+**Theorem 2.3 (prediction from the same nominal decoder, including fixed drift).** Supply the original fifteen single-copy and fifty pair settings, independent preparations and instrument initialization, the complete padded record and readable binding, and the nominal rational Gram decoder $\mathsf{Dec}_b$ of parent Definitions 15.1–15.4. The nominal filter is $F=\operatorname{diag}(1,2,3,4,5)/6$. The actual filter is one fixed real contraction $\widetilde F$ at every attempt and depth, with supplied bound $\|\widetilde F-F\|_{\mathrm{op}}\le\eta$ and failure Kraus operator $(I-\widetilde F^T\widetilde F)^{1/2}$. The decoder and its fifty integer polynomials still use $F$, with no access to $\widetilde F$. For $N\ge1$, $b\ge3$, $0<\delta<1$, put
+
+$$
+ E=24\sqrt{\frac{\log(130/\delta)}N}+512\,2^{-b},
+ \qquad C_{\mathrm{cal}}=\frac{16\sqrt{10}}7,
+ \qquad r_A=\|a(A)\|_2.
+\tag{2.8}
+$$
+
+Its output $\widehat\rho=T+iB$ is lawful on every grammatical record. On one event of probability at least $1-\delta$,
+
+$$
+\boxed{
+ d_\Xi(\rho,\widehat\rho)
+ \le(1+K_0)(E+2C_{\mathrm{cal}}\eta r_A^2),\qquad
+ d_{\mathrm{cons}}(\rho,\widehat\rho)
+ \le5(1+K_0)(E+2C_{\mathrm{cal}}\eta r_A^2).
+}
+\tag{2.9}
+$$
+
+Thus at fixed confidence the terminal prediction error is $O(N^{-1/2}+2^{-b}+\eta r_A^2)$ for this fixed detector certificate, without a positive-radius restriction on $\eta$.
+
+Proof. Parent Theorem 17.3 applies to exactly these preparations, actual failure records and unchanged decoder. On its single confidence event, with $v=E+2C_{\mathrm{cal}}\eta r_A^2$, it gives $x\le v$ and $dD\le K_0v$. Equation (2.4) gives $y\le K_0v$ and (2.3) gives (2.9). The radius bound $r_A\le1/2$, the constant $C_{\mathrm{cal}}$ and the coefficient $2$ in the nominal residual are those of parent (17.3), (17.6), (17.10)–(17.12); no inverse certificate for the actual perturbed map is assumed. Failed attempts contribute zero to the specified means and remain in the denominator $N$.
+
+For completeness, the resource statement of parent Corollary 17.4 applies without change to this decoder or the ideal special case $\eta=0$. With $U_1$ the actual first successes among the $30N$ specimens at depth two and $C_T$ the actual double successes among the $30N$ filtered pairs, its charges are
+
+$$
+\begin{array}{c|c}
+\text{all setting attempts}&65N=15N+50N\\
+\text{attempted pairs, including failures}&50N\\
+\text{source preparations}&115N\\
+\text{single-copy detector calls}&15N\\
+\text{local filter calls}&60N+U_1\le90N\\
+\text{joint detector calls}&20N+C_T\le50N\\
+\text{retained padded outcome bits}&155N.
+\end{array}
+\tag{2.10}
+$$
+
+Both prescribed filter chains execute even if the other specimen fails; only unexecuted detectors are padded. There are no free replacement successes. In the finite-bit model of parent Definition 15.4 set
+
+$$
+ n=\lceil\log_2(N+1)\rceil,\quad
+ \ell_0=\lceil\log_2(B_0+2)\rceil,\quad
+ w=b+n+\ell_0+64,\quad
+ G_b=(2^{b+1}+1)^{50}-1,
+$$
+
+where $B_0$ is the binding metadata length. The very same exhaustive bank and exact integer score comparisons give
+
+$$
+\begin{aligned}
+\text{bit time}&=O((B_0+155N+G_b+1)w^2),\\
+\text{additional workspace}&=O(w)\text{ bits},\\
+\text{matrix-description output}&\le60b+200\text{ bits},\\
+\text{total output with copied binding}&\le B_0+2\ell_0+60b+210\text{ bits},\\
+\text{separately retained input}&=155N+B_0+O(n+\log(b+1)+\ell_0)\text{ bits}.
+\end{aligned}
+\tag{2.11}
+$$
+
+These are the parent's signed-binary multitape-machine bounds, counting reads, writes, candidate enumeration and arithmetic, not unit-cost real operations. Additional workspace includes counters, current and best candidate matrices, arithmetic scratch, finite control and address cursors. The retained input is read-only and the output is write-only; their backing and allocation, the fixed program, actual permissions and installation/calibration descriptions are separate resources. Copying metadata does not authenticate it. Acquiring a certified $\eta$ is also a supplied resource. Neither (2.10) nor (2.11) asserts efficient decoding, elementary gate counts, physical time or energy, or preparation of the returned density. $\square$
+

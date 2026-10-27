@@ -59,7 +59,7 @@ theorem intervalIntegrable_beta {p q : ℝ} (hp : 0 < p) (hq : 0 < q) :
   rw [he]
   rfl
 
-private lemma gamma_pochhammer {s : ℝ} (hs : 0 < s) (n : ℕ) :
+lemma gamma_pochhammer {s : ℝ} (hs : 0 < s) (n : ℕ) :
     Real.Gamma (s+n) = (ascPochhammer ℝ n).eval s * Real.Gamma s := by
   have hg : Real.Gamma (s+n) / Real.Gamma s = (ascPochhammer ℝ n).eval s := by
     apply Complex.ofReal_injective

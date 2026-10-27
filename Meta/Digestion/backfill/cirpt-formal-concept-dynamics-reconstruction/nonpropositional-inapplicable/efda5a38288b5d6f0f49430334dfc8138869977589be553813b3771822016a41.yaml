@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:efda5a38288b5d6f0f49430334dfc8138869977589be553813b3771822016a41
+  normalized_sha256: sha256:efda5a38288b5d6f0f49430334dfc8138869977589be553813b3771822016a41
+cas_ref: sha256:efda5a38288b5d6f0f49430334dfc8138869977589be553813b3771822016a41
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 创造力的概念性解释，不定义可计算数值或陈述代数恒等式。
+    previous_atom_id: deafff7dd19942082cdccd22b44ee0ee1b936fc38bf40fa468ebf36b51423b92
+    next_atom_id: 7e84ae9d83a79047e38dff4271b850c7ae6c0be5356494d1965ff73cda56381e

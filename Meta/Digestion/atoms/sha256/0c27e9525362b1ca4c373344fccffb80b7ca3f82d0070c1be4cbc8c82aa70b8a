@@ -1,0 +1,60 @@
+**Definition 19.1 (mature inputs and the source-specific deduction).**
+Fukushima--Tanaka Lemma 2.2, Theorem 2.2 and §3.1 Theorem 3.1,
+(3.3)--(3.12), supply the general recurrent-point excursion and
+inverse-local-time framework. Their measure $m_0=\phi m$ is $m$
+here, their $\phi=1$, their $u_\lambda=b_\lambda$, their absorbed
+semigroup is the transform of the original $F$, their entrance
+measure is $q_t m$, their lifetime measure $\Theta$ has tail
+$\kappa$, and their inverse local-time exponent is
+$\lambda(u_\lambda,1)=\lambda d_\lambda$. Their local time is
+normalized by Revuz measure $\delta_a$, here $\delta_e$.
+The original $a$ in our endpoint remains its fixed positive kinetic
+coefficient, not the distinguished-point symbol of that paper.
+No compactification, Poincare inequality, spectral gap or assumption
+A.4 from its independent-extension construction is imported.
+Poisson uniqueness and compensation, spectral calculus, and the
+martingale inequality used in (18.6) are standard tools inside
+these source-specific deductions, not new general theorems.
+
+The additional deduction for this source is the positive density
+$J_h^{-1}Fe^{-tF}h$ with its full mark cylinders, the explicit
+spectral lifetime and normalization, their original-duration full
+endpoint synthesis, the measurable finite native-command consumer
+of that particular source, and the completed-preparation-gap clock
+with its spectral denominator and uniform convergence. The domain
+identification uses [S, §§115--116] exactly; [S, §117]'s
+positive-time source densities describe full transitions, whereas
+$q_t m$ describes one still-uncompleted excursion and is not a
+probability transition density. They are not interchanged.
+The mark construction is neither an abstract disintegration of a
+supplied full trajectory nor a scalar-lifetime proxy for its
+complete law: the actual source input has all of (15.3), and the
+path law equality is established before its native output is taken.
+These are ordinary source-specific results without a worldwide
+priority or Lean-certification claim.
+
+The geometry used in (17.4) and its guards is already [GL, §§2--4,
+Lemma 17.1 and Definition 17.2]. Its Brownian offline mesh and
+resource conclusions in §§16--18 are not transferred to this
+source. The new measurable mesh uses only continuity of the
+explicitly generated source and has no expectation or uniform
+resource bound. The prefix action is exactly (7.4)--(7.8), including
+its central period $2\pi r$ and original phases $2\pi$.
+The false-fiber polarity, exact detector and source reset of §§11--12
+are reused only at their exact source law. The Brownian-reference
+singularity and bounded-weight-mass escape of §§13--14 remain
+valid: the marked law changes the first-level source premise;
+it is not a bounded reweighting of that planar Brownian reference.
+No new version of those exclusions is inferred.
+
+The free hidden-circle rigidity and arbitrary fixed Borel
+central-fiber exclusion of §§1--10 remain unchanged. The
+[variable-coefficient Green model](FIB_NATIVE_VARIABLE_COEFFICIENT_GREEN_STABILITY.md#1-fixed-model-and-the-exact-question),
+[central-noise Green model](FIB_NATIVE_CENTRAL_NOISE_GREEN_STABILITY.md#1-fixed-source-conditional-law-and-the-matched-operator),
+and [spatial-cap and all-real limits](FIB_NATIVE_SPATIAL_CAP_RETAINED_AND_RESONANT_LIMITS.md#12-the-all-real-parameter-operator-limit)
+retain their different carriers, wall conditions, clocks and source
+domains. They supply no substitution for $H$, $F$, $h$ or $m$
+in this construction. The lawful nonlinear/source-law possibility
+in [B, §12.3] is consistent with this additional marked source
+premise; its affine/CPTP obstruction is not repeated or overturned.
+

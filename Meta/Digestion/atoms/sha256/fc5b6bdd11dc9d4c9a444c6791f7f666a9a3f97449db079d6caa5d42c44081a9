@@ -1,0 +1,27 @@
+**Theorem 46.1 (polynomial certificate accounting).** With $p,r,L,F,V$ as above, put
+
+$$
+ B_0=\binom Fp,\qquad T_0=\binom V{r+1},\qquad
+ \mathcal B=2B_0T_0.
+ \tag{46.1}
+$$
+
+There are at most $2B_0$ reduced basis labels and at most $\mathcal B$ complete certificate labels over both charts. The latter includes every additional raw-witness simplex selection; singular constant simplices and identically singular bases can be omitted. No other reconstruction enumeration is needed. For fixed $k$,
+
+$$
+ \mathcal B=O_k\!\left((d+1)^{(r-1)(p+r+1)}\right)
+           =O_k\!\left((d+1)^{12k^2+30k+18}\right).
+ \tag{46.2}
+$$
+
+These are counts of candidate certificates, not runtime, arithmetic or bit complexity bounds, and not optimality assertions. The displayed binomial expressions are explicit bounds for every $k,d\ge0$, not just asymptotic bounds.
+
+All source-dependent scalar data needed for the complete predicates have total degree at most $D_0=2p=2(k+1)$ in $\alpha,\beta$. More precisely:
+
+| Scalar data | Source degree bound |
+|---|---:|
+| Entries of $C_\nu$ and $A_\nu$ | $2$ |
+| $\lambda_\ell$, entries of $E_T$, and $c_T$ | $0$ |
+| $\Delta_{\nu,I}$ and $S_{\nu,I,\ell}$ | $2p$ |
+| Gain numerator $N_{\nu,I,j}$ | $2(p-1)$ |
+| Components of $u_{\nu,I}$ and witness numerators $M_{\nu,I,T,a}$ | $2p$ |

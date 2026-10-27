@@ -1,0 +1,28 @@
+**推论 94.1（完整数学效果锥不供应完整有界读出）。** 沿用 V (105.5) 的源效果锥
+
+$$
+D=\overline{\operatorname{cone}\{2^{-k(w)}U_w^\dagger EU_w:
+                 w\in\{0,1,N\}^*\}},
+\tag{94.1}
+$$
+
+对每个原允许 $N$，有
+
+$$
+D=\mathrm{PSD}_3,\qquad
+P_N\in D\cap[0,I_3],\qquad
+\mathcal B_N\subsetneq[0,I_3],\qquad
+\operatorname{dist}_{\|\cdot\|_\infty}(P_N,\mathcal B_N)\ge\frac1{12}.
+\tag{94.2}
+$$
+
+证明。直接使用 [V 定理 95.1 及 §§105–107](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_V.md#105-定理-1021-的完整运输锥及两侧约束) 的正词共轭闭包与效果轨道锥恒等式，特别是 (106.5)，得到 $D=\mathrm{PSD}_3$。$P_N$ 是秩一投影，故属于 $D\cap[0,I_3]$。定义 91.2 给 $\mathcal B_N\subseteq[0,I_3]$，定理 92.1 则给严格包含及所示正距离。锥运算能消去每个历史的正权重；有界完整事件 (91.4) 同时保留所有历史，接受系数受 $[0,1]$ 限制，故这两个结论相容。原五维提升的效果 $\widehat F$ 满足 $B^\dagger\widehat FB=F$；算子范数在该压缩下不增，因而还得到
+
+$$
+\|BP_NB^\dagger-\widehat F\|_\infty
+ \ge\|P_N-F\|_\infty\ge\frac1{12}
+\tag{94.3}
+$$
+
+对所有上述五维完整事件效果及其数学凸闭包成立。∎
+

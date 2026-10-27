@@ -106,7 +106,7 @@ private theorem sicProjector_span {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d) :
   apply hlin.span_eq_top_of_card_eq_finrank'
   simp only [Fintype.card_fin, Module.finrank_matrix, Module.finrank_self, mul_one]
 
-private theorem trace_pairing_ext {d : ℕ} {ι : Type*}
+theorem trace_pairing_ext {d : ℕ} {ι : Type*}
     (P : ι → Matrix (Fin d) (Fin d) ℂ)
     (hP : Submodule.span ℂ (Set.range P) = ⊤)
     {X Y : Matrix (Fin d) (Fin d) ℂ}

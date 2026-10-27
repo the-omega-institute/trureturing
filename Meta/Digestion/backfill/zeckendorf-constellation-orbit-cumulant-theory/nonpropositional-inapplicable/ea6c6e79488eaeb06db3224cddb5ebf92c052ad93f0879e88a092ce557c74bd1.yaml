@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ea6c6e79488eaeb06db3224cddb5ebf92c052ad93f0879e88a092ce557c74bd1
+  normalized_sha256: sha256:ea6c6e79488eaeb06db3224cddb5ebf92c052ad93f0879e88a092ce557c74bd1
+cas_ref: sha256:ea6c6e79488eaeb06db3224cddb5ebf92c052ad93f0879e88a092ce557c74bd1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: States the intended purpose of the preceding counterexample task, rather than a further mathematical assertion.
+    previous_atom_id: ad3a85b54aea88d8994db61289bbd53a29353520400e0e19b488ed19a8031819
+    next_atom_id: f3011b2f0b74faae0fd91623c814a610ad1ffb5ce479bef7a2f9d83d796e6aa3

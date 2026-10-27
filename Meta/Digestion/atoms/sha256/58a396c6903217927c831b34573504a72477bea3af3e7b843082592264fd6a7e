@@ -1,0 +1,6 @@
+**Theorem 45.2 (exact source certificates and reconstruction).** At every $\alpha,\beta>0$, for either chart, the following are equivalent:
+
+1. There is an original compatible whole world at $P_\nu(\alpha,\beta)$.
+2. $\Theta_{\nu,I}$ holds for some $I$.
+3. $\Xi_{\nu,I,T}$ holds for some $(I,T)$.
+

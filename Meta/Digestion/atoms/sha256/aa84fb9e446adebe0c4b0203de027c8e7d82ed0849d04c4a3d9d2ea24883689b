@@ -1,0 +1,112 @@
+**定义 18.2（平衡和全输入极限的供应公式）。**
+令
+
+$$
+\begin{gathered}
+\xi=(1,1,1)^T/\sqrt3,\qquad P=|\xi\rangle\langle\xi|,\quad Q=I_3-P,\\
+\tau_p=pP+(1-p)Q/2,\qquad\widehat\tau_p=B\tau_pB^\dagger,\quad0\le p\le1,\\
+\chi=B\xi,\qquad d=(e_0-e_1-e_3+e_4)/2,\qquad
+J=|\chi\rangle\langle\chi|+\tfrac23|d\rangle\langle d|.
+\end{gathered}
+$$
+
+$d\perp R$，$\chi,d$ 为正交单位向量，故 $0\le J\le I_5$。
+下表将[五窗口量子记忆 §§17–19](AURIC_FIB_FIVE_WINDOW_QUANTUM_MEMORY.md)的供应符号加下标 FW，
+使其与当前码坐标不混淆。
+
+| 供应符号/条目 | 当前对象 | 假设及精确对应 |
+| --- | --- | --- |
+| 定义 17.2 的 $\Phi_\circ,K_j^\circ,R$ | $\mathcal G,K_j,\operatorname{Ran}B$ | 同一物理基、同一 $u,v,z$，参数为 $\eta=r=1/2$ |
+| 定理 18.1 的 $s,P_{\rm FW},M_{\rm FW}$ | $\chi,BPB^\dagger,BQB^\dagger/2$ | $s=B\xi$，$P_R=BB^\dagger$ |
+| 定理 18.1 的 $\rho_t$ | $\widehat\tau_p$ | $t=p\in[0,1]$，包括两个端点 |
+| 定理 18.3 的 $h_0,h_1,E_{\rm FW}$ | $K_0^\dagger\chi,K_1^\dagger\chi,J$ | $h_0=(e_0+e_4)/\sqrt3+e_2/\sqrt6$，$h_1=(e_1+e_3)/\sqrt3+e_2/\sqrt6$ |
+| 定理 19.1 的限制 $F$ | $\mathcal T$ | 由 $X\mapsto BXB^\dagger$ 共轭识别整个 $M_3$ |
+| 定理 19.2 的 $\mathcal T_{\rm FW}$ | $\mathcal E_G$ | $\mathcal E_G=(\mathcal G^2+2\mathcal G^3)/3$ |
+
+这些是实际算子相同，不仅是谱相似。
+供应的固定空间为 $\operatorname{Fix}\mathcal T=\operatorname{span}_{\mathbb C}\{P,Q\}$，
+所有固定密度恰为 $\tau_p$，全五维固定密度恰为 $\widehat\tau_p$。
+其机制是等 Hilbert–Schmidt 范数的两个酉共轭平均达到原范数时，两项都等于原矩阵；
+$U,UW$ 生成三坐标置换群，交换子只有共同对角及共同非对角两类。
+所以不是唯一平衡，而是由隐藏扇区权重 $p$ 参数化的平衡段。
+
+供应定理 19.1 在整个复算子空间给
+
+$$
+\begin{aligned}
+\operatorname{spec}\mathcal T&=\{1\ [2],-1/2\ [3],0\ [4]\},\\
+\mathcal T(\mathcal T-I)(\mathcal T+I/2)&=0,\\
+\chi_{\mathcal G}(t)&=t^{20}(t-1)^2(t+1/2)^3,\\
+\mathcal G^2(\mathcal G-I)(\mathcal G+I/2)&=0.
+\end{aligned}
+$$
+
+限制多项式无重根，故 $\mathcal T$ 可对角化；全五维多项式保留零模的二阶瞬态，
+不据此断言 $\mathcal G$ 可对角化。
+码内的谱投影及全部幂为
+
+$$
+\begin{gathered}
+\mathcal E(X)=\operatorname{Tr}(PX)P+\tfrac12\operatorname{Tr}(QX)Q,\\
+2\mathcal T^2+\mathcal T=3\mathcal E,\qquad
+\mathcal T\mathcal E=\mathcal E\mathcal T=\mathcal E,\\
+\mathcal T^n=\mathcal E+(-1/2)^{n-1}(\mathcal T-\mathcal E)\quad(n\ge1).
+\end{gathered}
+$$
+
+这是供应限制多项式的直接代入：常数、一和负半三个特征空间上逐一计算。
+置 $\mathcal C(X)=B^\dagger\mathcal G(X)B$，则
+$\mathcal G^n=\operatorname{Ad}_B\mathcal T^{n-1}\mathcal C$，
+$\mathcal C^\dagger(P)=J$，从而供应极限在全部复输入上为
+
+$$
+\begin{aligned}
+\mathcal E_G(X)
+ &=\operatorname{Tr}(JX)|\chi\rangle\langle\chi|
+ +\frac{\operatorname{Tr}X-\operatorname{Tr}(JX)}2
+       (BB^\dagger-|\chi\rangle\langle\chi|),\\
+\mathcal E_G^2&=\mathcal E_G,\qquad
+\mathcal G\mathcal E_G=\mathcal E_G\mathcal G=\mathcal E_G,\\
+\mathcal G^n-\mathcal E_G
+ &=(-1/2)^{n-2}(\mathcal G^2-\mathcal E_G)\quad(n\ge2),\\
+\|\mathcal G^n-\mathcal E_G\|_\diamond
+ &\le\tfrac43\,2^{-(n-2)}\le2^{3-n}\quad(n\ge2).
+\end{aligned}
+$$
+
+采用未除二的 diamond 范数：上确界遍历任意有限参考及任意非零复测试矩阵，
+不只遍历密度或 Hermitian 输入。
+最后一界沿用供应定理 19.2，因为
+$\mathcal G^2-\mathcal E_G=\tfrac23(\mathcal G^2-\mathcal G^3)$，
+每个 CPTP 通道完全迹范数为一。
+因此任意五维密度的极限为 $\widehat\tau_{\operatorname{Tr}(J\rho)}$。
+上述完整范数结论并未把一般参考相关态的极限误写成两个边缘的乘积：
+对于任意联合正输入 $X_{HZ}$，准确表达式是
+
+$$
+(\mathcal E_G\otimes\operatorname{id}_Z)(X_{HZ})
+ =|\chi\rangle\langle\chi|\otimes Z_+
+   +\frac{BQB^\dagger}{2}\otimes Z_-,
+$$
+
+其中
+
+$$
+Z_+=\operatorname{Tr}_H[(J\otimes I_Z)X_{HZ}],\qquad
+Z_-=\operatorname{Tr}_H[((I_5-J)\otimes I_Z)X_{HZ}].
+$$
+
+二者为正，迹之和为 $\operatorname{Tr}X_{HZ}$；它们可保留扇区与参考的经典相关。
+
+这些公式同时给人口盲性：码基 $(u,v,z)$ 上对角恒为 $(1/3,1/3,1/3)$，
+非对角恒为 $(3p-1)/6$；原五基人口恒为
+
+$$
+(1/6,1/6,1/3,1/6,1/6).
+$$
+
+这是供应定理 18.1 的两端态有同一人口以及 $B$ 三列不交叠支撑的直接应用。
+两个端点支撑正交，故 $\|\widehat\tau_1-\widehat\tau_0\|_1=2$，
+效果 $|\chi\rangle\langle\chi|$ 可完美区分。
+指定人口稳定与全态稳定因此不同；信息完备且已标定的全部效果不具有这个盲性。
+

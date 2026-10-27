@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:dcf83c90f2808ee4bf981cdbe85bad10ba4792669d871e3d85274833c63c4486
+  normalized_sha256: sha256:dcf83c90f2808ee4bf981cdbe85bad10ba4792669d871e3d85274833c63c4486
+cas_ref: sha256:dcf83c90f2808ee4bf981cdbe85bad10ba4792669d871e3d85274833c63c4486
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaBridge/PrimeJumpDecomposition.prime_jump_decomposition
+    target_statement_id: sha256:1f563b3d7f440452e470a74be69587bcb82ee82457977bd9b93cf5a171dd6380
+receipts:
+  unresolved_subitems: []

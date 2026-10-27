@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a96ccbe5b53914c0cdd546aaf3ae92377c4196912a9933e4326a7ef0f4bbd1ee
+  normalized_sha256: sha256:a96ccbe5b53914c0cdd546aaf3ae92377c4196912a9933e4326a7ef0f4bbd1ee
+cas_ref: sha256:a96ccbe5b53914c0cdd546aaf3ae92377c4196912a9933e4326a7ef0f4bbd1ee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条仅设定实际仿射来源的参数、假设 N≥8 与记号 U,Q,c,N,D；h=1 是单位字段的命名约定，不断言字符公式或规范地址保持。
+    previous_atom_id: 32f314866d2b721189bfcde6cc6e9b277a5bb9aa6d5a4dd5063919e975919a69
+    next_atom_id: ae73a6b406df04e3b173948d12c777d02d4376080b5b3673098138bf4296814c

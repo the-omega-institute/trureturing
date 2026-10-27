@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:455a60eae224dda1dff6100f42fabb9acdb5daa3d89bb66d884e40c83da4b6a9
+  normalized_sha256: sha256:455a60eae224dda1dff6100f42fabb9acdb5daa3d89bb66d884e40c83da4b6a9
+cas_ref: sha256:455a60eae224dda1dff6100f42fabb9acdb5daa3d89bb66d884e40c83da4b6a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：给定正半定 G_p 与正则参数后定义 W_S，不包含优化或次模性断言。
+    previous_atom_id: e066a702760349ea4c2dec248e90aca0654af6355145e5f7fbdd212ac0485f7d
+    next_atom_id: ed6db063668df6dc83df5e59a2bb13e2aa5e76b0a09d860a3fd4e383f011e18e

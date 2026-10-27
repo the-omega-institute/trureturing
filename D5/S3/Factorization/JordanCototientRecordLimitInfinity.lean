@@ -39,7 +39,7 @@ private lemma rpow_inv_factor_le_one {k : ℝ} (hk : 0 ≤ k) {p : ℕ} (hp : 2 
   exact Real.rpow_le_one_of_one_le_of_nonpos
     (by exact_mod_cast (show 1 ≤ p by omega)) (neg_nonpos.mpr hk)
 
-private lemma one_sub_prod_le_sum {ι : Type*} [LinearOrder ι]
+lemma one_sub_prod_le_sum {ι : Type*} [LinearOrder ι]
     (s : Finset ι) (x : ι → ℝ)
     (hx0 : ∀ i ∈ s, 0 ≤ x i) (hx1 : ∀ i ∈ s, x i ≤ 1) :
     1 - ∏ i ∈ s, (1 - x i) ≤ ∑ i ∈ s, x i := by

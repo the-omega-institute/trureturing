@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cea89c0c9b44412edfa1049424706c2de6df85eb8016cf2a647e060bfdf951e0
+  normalized_sha256: sha256:cea89c0c9b44412edfa1049424706c2de6df85eb8016cf2a647e060bfdf951e0
+cas_ref: sha256:cea89c0c9b44412edfa1049424706c2de6df85eb8016cf2a647e060bfdf951e0
+coverage_gids:
+  - gid: D5/S3/Factorization/Automata/GuardedPrimeProduct.Live
+    target_statement_id: sha256:b15feabe8548220ffe3e62595ec64ce4635fa11a60dd445e4e22be1bf605609d
+  - gid: D5/S3/Factorization/Automata/GuardedPrimeProduct.machine
+    target_statement_id: sha256:f7b845152d511655f67fd4a0e12b7ba2cc2232c45dc49fd6f0dec3b594d3c05a
+receipts:
+  unresolved_subitems: []

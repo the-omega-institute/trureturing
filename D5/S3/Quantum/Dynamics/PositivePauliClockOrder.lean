@@ -154,7 +154,7 @@ theorem positive_clock_coefficients :
 
 def sigma : QubitMatrix := (1 / 2 : ℂ) • 1
 
-private lemma sigma_posDef : sigma.PosDef := by
+lemma sigma_posDef : sigma.PosDef := by
   convert posDef_two (1/2) 0 (1/2) (by norm_num) (by norm_num) using 1
   ext i j
   fin_cases i <;> fin_cases j <;> norm_num [sigma]

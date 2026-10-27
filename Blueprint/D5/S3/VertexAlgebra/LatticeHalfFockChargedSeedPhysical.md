@@ -20,7 +20,35 @@ Source attribution: the classical twisted lattice construction follows Frenkel, 
 
 This coefficient law is the charged-seed prerequisite of the original arbitrary-source physical translation endpoint for correctedField, whose shift is e to e+2 and scalar is (e+2)/2. Word permutation and polynomial insertion, singleton Leibniz and shift calculus, normalEvaluation_physical, Corr_sectorTranslation and the final arbitrary-source evaluator induction remain further obligations. The present theorem does not establish that endpoint, a full VOA or CFT, anomaly or fusion structures, string dynamics, spacetime reconstruction or AdS/CFT. The Monster moonshine to string and AdS/CFT programme remains active.
 
-**Theorem 1.1 (The actual all-tensor charged-seed coefficient law).**
+**Theorem 1.1 (Charged special-conformal coefficient base).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedSeedPhysical.charged_l1_coefficient`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockChargedSeedPhysical.charged_l1_coefficient` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+For every original D, determinant-unit proof hu, signed charge a and integer e, the commutator of tensorL at mode 1 with chargedCoefficient at e equals ((e-2)/2+B(a,a)) times chargedCoefficient at e-2, as an endomorphism of the original actual tensor module. The proof expands the pointwise finite quadratic sum, retains the j=0 boundary, contracts both inverse Gram identities and consumes the original physical seed identity. The full-source proof uses this charged base. No positivity, rank restriction or homogeneous target is assumed.
+
+**Theorem 1.2 (The existing charged singleton support).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedSeedPhysical.singleton_finite`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockChargedSeedPhysical.singleton_finite` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+Visibility-only exposure of the original pointwise charged singleton finite-support result. The exact proof is preserved and the charged L1 quadratic-to-singleton summation consumes it for the two inverse Gram contractions.
+
+**Theorem 1.3 (The actual all-tensor charged-seed coefficient law).**
 
 $$\operatorname{K}\left(a, e, v\right)-\operatorname{smul}\left(\frac{\operatorname{q}\left(a\right)}{2}, \operatorname{E}\left(a, e+2, v\right)\right)=\operatorname{smul}\left(\frac{e+2}{2}, \operatorname{E}\left(a, e+2, v\right)\right)$$
 
@@ -36,5 +64,9 @@ For every D:LatticeData, hu:IsUnit D.G.det, a:Charge D, e:Int and v:ActualTensor
 
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedSeedPhysical.charged_l1_coefficient`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedSeedPhysical.charged_seed_physical_coefficient`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedSeedPhysical.singleton_finite`
+- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero](LatticeHalfFockChargedLZero.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField](LatticeHalfFockFockNormalField.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeSugawaraConformal](LatticeSugawaraConformal.md)

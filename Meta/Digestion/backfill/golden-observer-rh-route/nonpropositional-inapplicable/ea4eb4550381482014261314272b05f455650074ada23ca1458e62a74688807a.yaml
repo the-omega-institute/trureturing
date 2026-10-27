@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ea4eb4550381482014261314272b05f455650074ada23ca1458e62a74688807a
+  normalized_sha256: sha256:ea4eb4550381482014261314272b05f455650074ada23ca1458e62a74688807a
+cas_ref: sha256:ea4eb4550381482014261314272b05f455650074ada23ca1458e62a74688807a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof-method remark that the forward route needs no separator construction.
+    previous_atom_id: a1d290f17981c97cb71b74f9fcb862f2fc40471f98bf606355c0b68cfd17c383
+    next_atom_id: 706ac5ce22b7e461a03172e504fa3eb1103a32c8e175cc80f7bdcaa93170fa7d

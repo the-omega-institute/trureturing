@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:fe70867a183b3f780a4ac44e7087403178c41c0123e8d7a30dc8930c028de9ed
+  normalized_sha256: sha256:fe70867a183b3f780a4ac44e7087403178c41c0123e8d7a30dc8930c028de9ed
+cas_ref: sha256:fe70867a183b3f780a4ac44e7087403178c41c0123e8d7a30dc8930c028de9ed
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: DECT 整段规定先定语言、目标和停止条件及遇盲核换语言的研究纪律，未声称已建立具体 blind-kernel 关系。
+    previous_atom_id: 57eb1eeadae7e67901d5baa0971d20a55270d608b8fe1c2b373e53b5826e2639
+    next_atom_id: 1c6b890407ad7bb9d421cb90d0b3793bf1606ba5950a1a554bc80240d4ba6d5e
+  chain_atoms:
+    - 09c6590e1aa3357117d13ba0e4434a5afaeec9a5e01983e8ffb80440f34cd694
+    - cf78c453b9fe5ec644c6b9c3ad1754031c862b338214012a4cc98e52041b6616
+    - 6d271d6860c6be86aa2a74e09106cd70c6e96cfd657ec507e9a3a2d2953c0fe4
+    - 4d207c215f09843fd4429ebdd245e45ab0e291f302ceb6e4105b8e31301fa0f0

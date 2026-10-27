@@ -1,0 +1,70 @@
+**Definition 26.1 (fixed linear ingredients and degree-only constants).** Set
+
+$$
+ N=2k+d+3,\qquad T=N-1,\qquad L=N+k+2=3k+d+5,
+ \tag{26.1}
+$$
+
+and acquire exactly the actual trajectory
+
+$$
+ A_i=M^i\quad(0\le i<N),\qquad
+ A_{N+r}=G_r=M^rJM^T\quad(0\le r\le k+1).
+ \tag{26.2}
+$$
+
+Thus $T$ individual $M$ actions are followed by one $J$ and $k+1$ individual $M$ actions. There are $L$ reads at clocks $0,\ldots,L-1$, with no restarting of $H,D$ or the clock. Let $f_i,g_i$ be the Fibonacci solutions with initial values $(f_0,f_1)=(1,0)$ and $(g_0,g_1)=(0,1)$. Write $\mathsf V$ for the square $N$-row matrix whose row $i$ is
+
+$$
+ \big((f_i i^j)_{j=0}^k,\ (g_i i^j)_{j=0}^k,
+                                      \ (i^j)_{j=0}^d\big),
+ \qquad 0\le i<N,
+ \tag{26.3}
+$$
+
+with $i^0=1$, including at zero. Main Definition 39.1 and Theorem 39.2 in [*FIB Self-Calibrating Relation Mathematics*](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md#39-任意已知有限次共同增益的零安全固定历史恢复) supply its invertibility and its exact coefficient output $(H,bH,D)$. This is a reused calibration map, not an assumed exact measurement. Define
+
+$$
+ (\widehat h,\widehat q,\widehat a)
+       =\mathsf V^{-1}(\widetilde z_0,\ldots,
+                                  \widetilde z_{N-1})^{\mathsf T},
+ \quad \widehat H(t)=\sum_{j=0}^k\widehat h_jt^j,
+ \quad \widehat D(t)=\sum_{j=0}^d\widehat a_jt^j,
+ \quad a=\max\{1,\|\mathsf V^{-1}\|_{\infty\to\infty}\}.
+ \tag{26.4}
+$$
+
+The symbol $a$ in §§26–28 is this fixed inverse bound. The following constants also depend only on $k,d$. Put $n_r=N+r$ and
+
+$$
+ E_j=\max_{0\le r\le k+1}\sum_{v=0}^j n_r^v,
+ \qquad \Lambda=\max\left\{1,\max_{0\le r\le k+1}
+                                      \sum_{u,v}|(G_r)_{uv}|\right\}.
+ \tag{26.5}
+$$
+
+For every subset $S\subset\{n_0,\ldots,n_{k+1}\}$ of size $k+1$, let $V_S=(x^j)_{x\in S,\,0\le j\le k}$, with rows in increasing order, and set
+
+$$
+ c=\left(\max\{1,\max_S\|V_S^{-1}\|_{\infty\to\infty}\}\right)^{-1}>0.
+ \tag{26.6}
+$$
+
+The inverses here are the classical Lagrange interpolation inverses, also recorded in Lemma 2.1 of [*Common Polynomial-Gain Shear Calibration and Erasure Recovery*](FIB_POLYNOMIAL_GAIN_SHEAR_CALIBRATION_AND_ERASURE_RECOVERY.md#2-elementary-polynomial-interfaces). Only that elementary polynomial fact is reused; its recorded-read acquisition model is not substituted for (26.2).
+
+For $0\le p<q\le k+1$ let $\mathcal I_{p,q}$ be the inverse taking four traces against $I,M,G_p,G_q$ to a real matrix. Lemma 3.2 supplies every such inverse, including nonadjacent pairs. Its output norm is the maximum entry norm. Define
+
+$$
+ \Gamma=\max\{1,\max_{p<q}\|\mathcal I_{p,q}\|_{\infty\to\max}\},
+ \quad s=\frac{c}{2\Gamma},\quad
+ B=1+aE_d+aE_k\Lambda,
+ \quad K=\sqrt{(k+1)a^2+(k+2)B^2},
+$$
+
+$$
+ C_{k,d}=(K+2)\sqrt{s^{-2}+a^2}.
+ \tag{26.7}
+$$
+
+All these constants are finite, specified by finite matrices, and independent of the actual source, gain, drift, and error level. No optimality of these constants is part of their definition.
+

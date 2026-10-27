@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1fc159716d926ea1bc32f2397395e5b1dcaede27985aff5b04e335bd65b3ae21
+  normalized_sha256: sha256:1fc159716d926ea1bc32f2397395e5b1dcaede27985aff5b04e335bd65b3ae21
+cas_ref: sha256:1fc159716d926ea1bc32f2397395e5b1dcaede27985aff5b04e335bd65b3ae21
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅含“分支遗忘后的对称读出”和“定义”标题，数学等式属于后续 atom。
+    previous_atom_id: d9a188bf36f0d80d86adfcff953ad5532cb1ff14be77be2aae2b05812aeadfd4
+    next_atom_id: 9434b313bb5ccbd93c6074ed1ff51d555b2045212e95b97c49a84e125d087b97

@@ -1,0 +1,10 @@
+**Lemma 37.1 (native triangularity).** For every source of Definition 36.1 and $0\le j<N$, $T^j e_0$ is supported on cells $0,\ldots,j$, and its coordinate at cell $j$ is
+
+$$
+\beta_j=\prod_{i=0}^{j-1}b_i>0,\qquad \beta_0=1.
+$$
+
+Consequently $K_{N-1}$ is invertible, $H_r$ is positive definite for $r<N$, and $H_N$ has rank $N$, equal to the rank of $H_{N-1}$.
+
+**Proof.** The assertion at $j=0$ is the preparation. Multiplication by a tridiagonal matrix enlarges support by at most one cell. The new cell $j+1$ can receive a contribution only from cell $j$, so its value is $b_j\beta_j$. Induction proves the assertion. The first $N$ columns form a triangular square matrix with positive diagonal $\beta_j$. All shorter column families are independent. Apply the Gram identity in Definition 36.4; adding $T^N e_0$ to an already complete $N$-dimensional basis cannot increase the rank. $\square$
+

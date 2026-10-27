@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:992aeac105803ec660b1a455e9d11ab4ba5acd0374dc39363eaf665d647695ec
+  normalized_sha256: sha256:992aeac105803ec660b1a455e9d11ab4ba5acd0374dc39363eaf665d647695ec
+cas_ref: sha256:992aeac105803ec660b1a455e9d11ab4ba5acd0374dc39363eaf665d647695ec
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 将任意函数类型的目标读数命名为 CUT，并说明 q、T 的语义分工。
+    previous_atom_id: 49dca486009df6dc98699d3e7ef1c0516d2b9cd146e5f90d338d885255507202
+    next_atom_id: d24acfe7f0653bc1b39862636839eeb150c968674581de48ec0d3388db6fd225

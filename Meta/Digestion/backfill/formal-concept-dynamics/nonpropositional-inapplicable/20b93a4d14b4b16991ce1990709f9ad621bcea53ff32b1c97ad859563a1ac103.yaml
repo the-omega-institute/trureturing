@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:20b93a4d14b4b16991ce1990709f9ad621bcea53ff32b1c97ad859563a1ac103
+  normalized_sha256: sha256:20b93a4d14b4b16991ce1990709f9ad621bcea53ff32b1c97ad859563a1ac103
+cas_ref: sha256:20b93a4d14b4b16991ce1990709f9ad621bcea53ff32b1c97ad859563a1ac103
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 由钉版上游声明及定义展开闭合；D5 全树含 private 的形状检索未找到供应该完整关系的冻结声明。 上游声明：OrderDual.toDual_le_toDual, Set.Subset。mathlib 修订 56a005855ea17e0b0958f73ec801ae140b0a1679 (v4.35.0)。检索范围：D5/**/*.lean 含 private；OrderDual / reverse inclusion / Set subset / information order；ConceptKernelOrderDuality 针对 setoid，IndexedObservationClosureLaws 针对观察核，不是任意可能世界集合的信息序定义。无可用冻结 GID；不新增 Lean 声明。
+    previous_atom_id: b33e29319e377b513865ad57cac25c6acb9cb31a9442d7b142697cd821d7d643
+    next_atom_id: 16d1ed895aa3681f647bf7e23292ebb15d81c2e473f5d97911f0889ec9cdbba6

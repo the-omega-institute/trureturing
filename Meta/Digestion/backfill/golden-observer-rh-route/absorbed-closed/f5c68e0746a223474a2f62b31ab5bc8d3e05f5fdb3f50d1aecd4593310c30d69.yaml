@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f5c68e0746a223474a2f62b31ab5bc8d3e05f5fdb3f50d1aecd4593310c30d69
+  normalized_sha256: sha256:f5c68e0746a223474a2f62b31ab5bc8d3e05f5fdb3f50d1aecd4593310c30d69
+cas_ref: sha256:f5c68e0746a223474a2f62b31ab5bc8d3e05f5fdb3f50d1aecd4593310c30d69
+coverage_gids:
+  - gid: D5/S1/Deficit/Beatty/GoldenBandOrder.structuralPole
+    target_statement_id: sha256:56279cfd69fae9027b1d3bade28c59e299d70d798549ba78c34a245d74af6d75
+receipts:
+  unresolved_subitems: []

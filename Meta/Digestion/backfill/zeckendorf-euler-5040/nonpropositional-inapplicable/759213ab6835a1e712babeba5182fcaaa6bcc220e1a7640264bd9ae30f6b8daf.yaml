@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:759213ab6835a1e712babeba5182fcaaa6bcc220e1a7640264bd9ae30f6b8daf
+  normalized_sha256: sha256:759213ab6835a1e712babeba5182fcaaa6bcc220e1a7640264bd9ae30f6b8daf
+cas_ref: sha256:759213ab6835a1e712babeba5182fcaaa6bcc220e1a7640264bd9ae30f6b8daf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section introduction announcing the roles of 5040, Euler constant and golden ratio; the mathematical claims are in separate atoms.
+    previous_atom_id: 8b7646909841ac64de8aa7605fc0a5cdafc2707c60e23d2b304fc3bc201f1f79
+    next_atom_id: 8ad49a54406aec236614dade691c4e8f712e6abea8d711890b4295a14657b6b6

@@ -24,13 +24,13 @@ open OriginalErasureComparison ErasedExteriorFiltration PositiveRectangleMessage
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.PositiveRectangleLaw
 variable {H : Type*} [Fintype H] [MeasurableSpace H] [MeasurableSingletonClass H]
 
-private def product (θ : Presentation H) (w : List Bool) : Matrix H H ℝ :=
+def product (θ : Presentation H) (w : List Bool) : Matrix H H ℝ :=
   (w.map θ.matrix).prod
 
-private def block (t : ℤ) (w : List Bool) : Set (ℤ → Bool) :=
+def block (t : ℤ) (w : List Bool) : Set (ℤ → Bool) :=
   {z | ∀ k : Fin w.length, z (t+k.val) = w.get k}
 
-private theorem product_word (θ : Presentation H) (w : List Bool) :
+theorem product_word (θ : Presentation H) (w : List Bool) :
     product θ w = wordMatrix θ.matrix w.length w.get := by
   induction w with
   | nil => rfl
@@ -47,7 +47,7 @@ private theorem block_mass (θ : Presentation H) (t : ℤ) (w : List Bool) :
   rw [h]
   simp only [futureMass,← product_word,Finset.mul_sum]
 
-private theorem block_append (t : ℤ) (u v : List Bool) :
+theorem block_append (t : ℤ) (u v : List Bool) :
     block t (u++v) = block t u ∩ block (t+u.length) v := by
   ext z
   simp only [block,Set.mem_setOf_eq,Set.mem_inter_iff]
@@ -75,7 +75,7 @@ private theorem block_append (t : ℤ) (u v : List Bool) :
       rw [Int.natCast_sub (by omega)]
       ring
 
-private theorem product_nonneg (θ : Presentation H) (w : List Bool) (i j : H) :
+theorem product_nonneg (θ : Presentation H) (w : List Bool) (i j : H) :
     0 ≤ product θ w i j := by
   induction w generalizing i with
   | nil => simp [product,Matrix.one_apply]; split_ifs <;> norm_num

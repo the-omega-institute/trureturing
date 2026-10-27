@@ -149,14 +149,14 @@ private def binaryPinch {n : ℕ} (P ρ : Matrix (Fin n) (Fin n) ℂ) :=
     (fun b : Bool => if b then P else 1-P)
     (fun b : Bool => (if b then P else 1-P)ᴴ) ρ
 
-private def reflection {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ) := (2 : ℂ) • P - 1
+def reflection {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ) := (2 : ℂ) • P - 1
 
-private theorem reflection_hermitian {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ)
+theorem reflection_hermitian {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ)
     (hP : P.IsHermitian) : (reflection P).IsHermitian := by
   change ((2 : ℂ) • P - 1)ᴴ = (2 : ℂ) • P - 1
   simp [Matrix.conjTranspose_sub, Matrix.conjTranspose_smul, hP.eq]
 
-private theorem reflection_unitary {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ)
+theorem reflection_unitary {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ)
     (hP : P.IsHermitian) (hPP : P * P = P) : reflection P ∈ Matrix.unitaryGroup (Fin n) ℂ := by
   have hp : IsStarProjection P := ⟨hPP, hP.isSelfAdjoint⟩
   simpa only [reflection, Matrix.unitaryGroup, two_smul, two_mul] using

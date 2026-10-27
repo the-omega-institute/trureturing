@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:85e459ed1ebe00d7892bd87bfdd1d467e6e2e0d908f4a71002361a89732957ae
+  normalized_sha256: sha256:85e459ed1ebe00d7892bd87bfdd1d467e6e2e0d908f4a71002361a89732957ae
+cas_ref: sha256:85e459ed1ebe00d7892bd87bfdd1d467e6e2e0d908f4a71002361a89732957ae
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是有效时空及观察者角色的解释性定义与适用要求，没有宣称新等式、存在性或普适经验规律。
+    previous_atom_id: 5b0055c6feb770c779781e590072fc86bb61553436ae001338cdbd49c0726c68
+    next_atom_id: null

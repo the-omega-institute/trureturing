@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:93c5102bbf170fac8b78581197a7bad17b4919fcb0ecc0a9cf9a12f921eeaf8f
+  normalized_sha256: sha256:93c5102bbf170fac8b78581197a7bad17b4919fcb0ecc0a9cf9a12f921eeaf8f
+cas_ref: sha256:93c5102bbf170fac8b78581197a7bad17b4919fcb0ecc0a9cf9a12f921eeaf8f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只记录声明适用范围或不作何种断言的边界；未提出需要证明的数学断言。文本定位：**边界**:本条不断言 `ZeroData` 非空(M1-b 仍 open),只是类型正确的蕴含。
+    previous_atom_id: 54a164e91c638c3ec59afe35a81f5993b80fb958bb71ffa65462d20b16f030c6
+    next_atom_id: 7e96a6e764a21fd9186f97b4e2e04a3ec96862fa2ef45bdd8d51f2ec6528faaa

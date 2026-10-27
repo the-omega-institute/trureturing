@@ -1,0 +1,30 @@
+**Proposition 78.5 (U5 completed-endpoint views, transport and failure boundary).**
+Fix the context of Definition 78.1, the deterministic selectors and tie orders of
+Theorem 78.4, and a declared rational input subspace $X\subseteq\mathbb Q^N$.
+The lower bound remains an all-$\mathbb Q^N$ theorem; $X$ specifies only the
+view-recovery domain. The common cut here is **after all sampling, solving,
+control, full outputs/Returns and predictor updates of that transfer**, in its
+final Hold with no pending packet and a retained completed-transfer phase marker.
+It is not an arbitrary settled acquisition/control cut.
+
+The receiver actually retains the chosen sample/column lists, $H,L$, phase and
+counter records, $Mx$, fresh sample triples, performed Add operands and complete
+transaction chronology, and the synchronized predictor at $z=Fx$. Lists and
+counters are obtained by the paid selections and actual calls just specified;
+$Mx$ comes from the paid entrance acquisition, $y$ from the new actual Reads,
+and $c$ from the paid solve and performed Adds. Their distinct live copies and
+retained backing are charged. Fixed contextual data $\kappa$ includes the
+material/law, $f,M$, program, selectors, schedule/phase convention, installed
+references and rights. It includes **no values $Mx,y,c,x$ or $Fx$**. Actual
+bindings/authority and the fact that these transactions occurred are common
+installation/run premises; numerical recovery does not manufacture them.
+
+On completed runs starting at $x\in X$ define these views by their independent
+exposures, relative to that retained context and phase:
+
+| View | Independent meaning |
+| --- | --- |
+| Space $\mathsf S(x)$ | the actual fixed native material, $A$, and current field $z=Fx$ at the completed transfer endpoint |
+| Time $\mathsf T(x)$ | this transfer's actual ordered selected Read triples $(j,\ell,y_{j,\ell})$, all performed control Add inputs $(L-j_r,i_r,c_r)$, and completed Tick/Hold/ACK/framing/Return chronology |
+| Boundary $\mathsf B(x)$ | the declared target $f$, actual terminal control interface, and a specified rational linear endpoint readout $w=C_Fz$ |
+| Memory $\mathsf M(x)$ | the retained synchronized predictor at $z$, acquired literal record $Mx$, solved control vector $c$, and completed phase/schedule/callable control state |

@@ -24,7 +24,11 @@ internal sealed class LatticeSugawaraConformalDocument : IScribeDocumentDefiniti
                 + "support. Positive currents above R kill v. The normal summand "
                 + "N(i,j;k,m-k)v is supported in [min(0,m-R),R]. Each input, "
                 + "including each intermediate current image, has its own bound.")),
-            Describe.Lean(
+            Describe.Lean(DescribeId.Create("actual-charge-contractions-consumed-l1"), DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeSugawaraConformal.inverse_charge_contractions"),
+ H("Both original inverse charge contractions"), StatementSource.WithoutFormula(),
+ AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+ Blocks(Paragraph(Text("Visibility-only exposure, with the original joint statement and proof body retained. The charged L1 proof consumes each inverse Gram contraction separately before using the existing physical charged-seed coefficient identity. This is not a new matrix-equality or covariance endpoint."))), DescribeRole.Theorem),
+Describe.Lean(
                 DescribeId.Create("latticesugawaraconformal-exponential-constant"),
                 DeclarationHandle.Create(Prefix + "exponential_constant"),
                 H("exponential constant"),

@@ -103,7 +103,7 @@ private theorem beta_digits_add (r s : RawDigits) :
   classical
   rw [betaDigits, Finsupp.sum_single_index (by simp)]
 
-private theorem beta_digits_shift (offset : Nat) (r : RawDigits) :
+theorem beta_digits_shift (offset : Nat) (r : RawDigits) :
     betaDigits (shiftDigits offset r) = phi ^ offset * betaDigits r := by
   classical
   rw [betaDigits, shiftDigits]

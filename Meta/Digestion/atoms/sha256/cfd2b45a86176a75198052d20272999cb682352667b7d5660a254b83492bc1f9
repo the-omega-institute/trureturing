@@ -1,0 +1,93 @@
+**定理 74.1（原权重下的有界对比与二阶矩）。** Put
+
+$$
+z=e^{-2\mathrm i\theta},\quad
+R=\begin{pmatrix}-1/2&\sqrt3/2\\\sqrt3/2&1/2\end{pmatrix},\quad
+Z=\operatorname{diag}(1,-1),\quad
+B_0=R\operatorname{diag}(1,z),\quad B_1=B_0Z,\quad u=(1,0)^{\mathsf T}.
+\tag{74.1}
+$$
+
+For chronological $B_h=B_{j_n}\cdots B_{j_1}$ set
+
+$$
+b(h)=\Im(u^\dagger B_hu),\qquad a_n=2^{-n}\sum_{|h|=n}b(h)^2.
+\tag{74.2}
+$$
+
+Then $|b(h)|\le1$, the closed matrix group $G=\overline{\langle B_0,B_1\rangle}\subset U(2)$ is infinite and complex irreducible, and the positive-word semigroup is dense in $G$. For the exact pair (73.1),
+
+$$
+\begin{aligned}
+P_{+,n}(h,1)-P_{-,n}(h,1)&=2t\,2^{-n}b(h),\\
+P_{+,n}(h,0)-P_{-,n}(h,0)&=-2t\,2^{-n}b(h),\\
+\lim_{N\to\infty}\frac1N\sum_{n<N}a_n&=\frac14.
+\end{aligned}
+\tag{74.3}
+$$
+
+Here $P_{\pm,n}=P_{\rho_\pm,n}$. The moment uses precisely the target iid word weights, without a Haar-mixing premise.
+
+证明。The supplied time-word bridge can also be read directly from $K_0B=BU/\sqrt2$, $K_1B=BUW/\sqrt2$:
+
+$$
+A_jB=BV_j/\sqrt2,\quad A_hB=2^{-n/2}BV_h,\quad
+B^\dagger A_h^\dagger PA_hB=2^{-n}M_h,
+\quad B^\dagger A_h^\dagger(I_5-P)A_hB=2^{-n}(I_3-M_h).
+\tag{74.4}
+$$
+
+Thus (72.7) retains both actual outcomes. Their sum at each $h$ is $2^{-n}$, so target labels are iid fair. This establishes no comparator fairness.
+
+In the real orthonormal basis $(\xi,e,f)$, $U=1\oplus R$, $W=\operatorname{diag}(1,1,-1)$, and $E=\frac12\bigl(\begin{smallmatrix}1&1&0\\1&1&0\\0&0&0\end{smallmatrix}\bigr)$. Therefore
+
+$$
+e^{-\mathrm i\theta}V_j=1\oplus B_j.
+\tag{74.5}
+$$
+
+The removed scalar is common to the entire qutrit matrix. A length-$n$ word has scalar $e^{\mathrm in\theta}$, which cancels in conjugation; no relative block phase is removed. The $\xi e$ and $e\xi$ entries of $(1\oplus B_h)^\dagger E(1\oplus B_h)$ are $(B_h)_{11}/2$ and its conjugate. Hence
+
+$$
+\operatorname{Tr}(\Delta M_h)=\frac{\mathrm i}{2}\overline{(B_h)_{11}}-\frac{\mathrm i}{2}(B_h)_{11}=b(h).
+\tag{74.6}
+$$
+
+Unitarity gives the bound on $b$, and $\rho_+-\rho_-=2t\Delta$ proves the two contrast identities with the stated signs and word order.
+
+For the group hypotheses, $B_0^\dagger B_1=Z$. A common invariant complex line would be invariant under $Z$, so would be a coordinate line; both are mixed by the nonzero off-diagonal entries of $B_0$. This proves irreducibility. Infiniteness is the finite-order obstruction already used in V55: $\det B_0=-z$, $\operatorname{Tr}B_0=(z-1)/2$. If $B_0$ had finite order, its eigenvalues would be roots of unity; thus $z$ would be a root of unity and $(z-1)/2$ an algebraic integer. For primitive order $m>2$, all conjugates $(z^a-1)/2$ in $\mathbb Q(z)$ are nonzero and have modulus strictly less than one. Their product would be a nonzero integer of modulus less than one, impossible. Orders one and two are exactly $z=1,-1$, excluded here. Thus $B_0$ has infinite order.
+
+To see positive-word density without acquiring inverse operations, take any generator $A$ and a strictly increasing sequence $m_j$ with $A^{m_j}$ convergent in the compact unitary group. Then $A^{m_{2j}-m_j}\to I$, with $m_{2j}-m_j\to\infty$. Consequently the nonnegative powers $A^{m_{2j}-m_j-1}\to A^{-1}$. The closed positive semigroup contains both inverses and equals $G$.
+
+We use the following elementary finite-dimensional mean-ergodic fact inside the moment calculation and later proofs. If $L$ is power bounded in a finite-dimensional complex normed space, then its Cesàro means converge in operator norm to the projection onto $\ker(I-L)$. In Jordan form, eigenvalues have modulus at most one, and a nontrivial Jordan block at any unit-modulus eigenvalue would make powers grow polynomially, so is excluded. Interior blocks decay; a unit eigenvalue $\lambda\ne1$ has Cesàro multiplier $(1-\lambda^N)/(N(1-\lambda))\to0$; the $1$ blocks survive as identities. This proves the fact without claiming convergence of $L^n$.
+
+For the conjugated moment, consider the Hilbert–Schmidt contraction
+
+$$
+\mathscr C(X)=\tfrac12(B_0XB_0^\dagger+B_1XB_1^\dagger).
+\tag{74.7}
+$$
+
+A fixed $X$ must be fixed by both conjugations: equality of the norm of the average of two equal-norm vectors forces the vectors to coincide, by the squared-norm variance identity. It then commutes with $Z$, hence is diagonal, and commuting with the mixing $B_0$ makes both diagonal entries equal. Thus the fixed space is $\mathbb CI_2$. Trace preservation and the mean-ergodic fact imply that the Cesàro mean of $\mathscr C^n(uu^\dagger)$ tends to $I_2/2$. Consequently
+
+$$
+\lim_{N\to\infty}\frac1N\sum_{n<N}2^{-n}\sum_{|h|=n}|u^\dagger B_hu|^2=\frac12.
+\tag{74.8}
+$$
+
+For the nonconjugated square, restrict
+
+$$
+\mathscr A=\tfrac12(B_0\otimes B_0+B_1\otimes B_1)
+\tag{74.9}
+$$
+
+to $\operatorname{Sym}^2(\mathbb C^2)$. It is again a Hilbert-space contraction. A fixed vector must be fixed by both tensor unitaries, hence by $Z\otimes Z$. Writing $v=(0,1)^{\mathsf T}$, it must be $\alpha u\otimes u+\gamma v\otimes v$. Applying $B_0\otimes B_0$ gives normalized mixed coefficient $\sqrt6(-\alpha+z^2\gamma)/4$. Its vanishing forces $\alpha=z^2\gamma$; the two diagonal coefficients are then both $\alpha$, so fixedness also requires $\gamma=\alpha$. Since $z^2\ne1$, both vanish. Thus $\mathscr A$ has no fixed vector in the symmetric square and its Cesàro powers tend to zero. In particular
+
+$$
+\lim_{N\to\infty}\frac1N\sum_{n<N}2^{-n}\sum_{|h|=n}(u^\dagger B_hu)^2=0.
+\tag{74.10}
+$$
+
+Finally $(\Im w)^2=(|w|^2-\Re w^2)/2$ gives the exact $1/4$ in (74.3). The tensor square describes two moments of the same random word; it introduces no physical two-copy resource. Neither density in $SU(2)$ nor convergence to Haar measure nor phase averaging is assumed. ∎
+

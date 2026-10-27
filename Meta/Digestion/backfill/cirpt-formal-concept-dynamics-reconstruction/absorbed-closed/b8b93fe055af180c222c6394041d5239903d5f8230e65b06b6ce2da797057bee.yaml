@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b8b93fe055af180c222c6394041d5239903d5f8230e65b06b6ce2da797057bee
+  normalized_sha256: sha256:b8b93fe055af180c222c6394041d5239903d5f8230e65b06b6ce2da797057bee
+cas_ref: sha256:b8b93fe055af180c222c6394041d5239903d5f8230e65b06b6ce2da797057bee
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Fibers/CanonicalAdmissibleFiberDecomposition.canonical_admissible_fiber_decomposition
+    target_statement_id: sha256:01380891f2d3a4b4f6aa99bec46b82e2ab7345a25a8d8d5d6859a4feb83489b6
+  - gid: D5/S3/ConceptDynamics/Refinement/HumeInductiveCore.hume_inductive_core
+    target_statement_id: sha256:9cd65210146b3c4aac76cb05651aece74cca910b03a4d5279a109fcfae250ea2
+receipts:
+  unresolved_subitems: []

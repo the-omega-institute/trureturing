@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1a8429e51a26d7bd1c463c1707c09285a9a40096346172ae24c7d2ccadefd831
+  normalized_sha256: sha256:1a8429e51a26d7bd1c463c1707c09285a9a40096346172ae24c7d2ccadefd831
+cas_ref: sha256:1a8429e51a26d7bd1c463c1707c09285a9a40096346172ae24c7d2ccadefd831
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Introduces H,E,D and the convention that output 1 means accept. The burden-of-proof heading is a normative interpretation; the mixed-fiber error claim is in the separate assigned error atom.'
+    previous_atom_id: 8c5e65b8a5dfd455312dc4db27916675bfc6e4e29ace36bb799fa731761d75c7
+    next_atom_id: 1c819935a81b06c1e82e882397cdab37fd3d8b5eb5a83dce4736b117ed59ef64

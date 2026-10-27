@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ab93fb88f2a4ec05aaac29d51fb733c0c457da374af5a2300db0b0ff9cefa015
+  normalized_sha256: sha256:ab93fb88f2a4ec05aaac29d51fb733c0c457da374af5a2300db0b0ff9cefa015
+cas_ref: sha256:ab93fb88f2a4ec05aaac29d51fb733c0c457da374af5a2300db0b0ff9cefa015
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 列出观察窗、换极限、归一化和目标权重可能造成遗漏的研究风险；没有断言某一具体定量关系。'
+    previous_atom_id: 25b4a5c00d35d26ce3f4da29a92c3becd31332457158cf7ebae9746e859888f2
+    next_atom_id: 60143afacf9c5b794f37021e98eb5be1ee60e519c1253b33f633c0980de857d1

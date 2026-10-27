@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:95db6919b1fd8689ced8613124a7863293611907860734a5581eaa7f49192920
+  normalized_sha256: sha256:95db6919b1fd8689ced8613124a7863293611907860734a5581eaa7f49192920
+cas_ref: sha256:95db6919b1fd8689ced8613124a7863293611907860734a5581eaa7f49192920
+coverage_gids:
+  - gid: D5/S3/Observer/MetricGeometry/FinitePredictionTruncation.finite_prediction_truncation_formula_and_error
+    target_statement_id: sha256:c7a1e5bd69444454850c6af715cb076e12c58d0f63afb6d39a00e826eb8ff7e7
+receipts:
+  unresolved_subitems: []

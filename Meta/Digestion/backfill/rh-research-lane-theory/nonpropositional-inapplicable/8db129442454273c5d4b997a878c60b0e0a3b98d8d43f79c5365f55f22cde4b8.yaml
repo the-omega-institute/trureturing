@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8db129442454273c5d4b997a878c60b0e0a3b98d8d43f79c5365f55f22cde4b8
+  normalized_sha256: sha256:8db129442454273c5d4b997a878c60b0e0a3b98d8d43f79c5365f55f22cde4b8
+cas_ref: sha256:8db129442454273c5d4b997a878c60b0e0a3b98d8d43f79c5365f55f22cde4b8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: P1 行列出 Li/概率解析闭环的待实现工作和预期产物，没有断言这些桥已经成立。'
+    previous_atom_id: 912260bcb1f8126f2231be4efae60750def4645daab354b60f02028326f47494
+    next_atom_id: dc4cbafb1c27bcf2aa51e0e61b8df37267726c09e5e0f6ad7efe8edaa5a3f7f1

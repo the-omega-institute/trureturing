@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:00ce7c162224f9150d4288359c0244ebb75ece11bc93c5bbcab4df3a3f5e1850
+  normalized_sha256: sha256:00ce7c162224f9150d4288359c0244ebb75ece11bc93c5bbcab4df3a3f5e1850
+cas_ref: sha256:00ce7c162224f9150d4288359c0244ebb75ece11bc93c5bbcab4df3a3f5e1850
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 文献查核范围及未获桥接的工作状态说明，不声称已证明某个算术命题或反例。
+    previous_atom_id: 2d547c80e3345373d50c02dcdb10804929dccb867a4da3d4b4ce29f2c45590eb
+    next_atom_id: 686037cf795e52738a5dcd6a53479a7b8435f746a997c9cc4e1c7b20efc8e729

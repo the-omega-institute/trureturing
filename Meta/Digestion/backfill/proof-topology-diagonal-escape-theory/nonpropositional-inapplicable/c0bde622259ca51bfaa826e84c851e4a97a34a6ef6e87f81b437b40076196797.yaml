@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c0bde622259ca51bfaa826e84c851e4a97a34a6ef6e87f81b437b40076196797
+  normalized_sha256: sha256:c0bde622259ca51bfaa826e84c851e4a97a34a6ef6e87f81b437b40076196797
+cas_ref: sha256:c0bde622259ca51bfaa826e84c851e4a97a34a6ef6e87f81b437b40076196797
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯节标题 PC.3 每个容许正规形的实现；仅标识以下条目的主题，不包含量化命题、等式结论或证明断言。
+    previous_atom_id: f36564e34523540d9c5ca23933f2d3b0ffd1f0f4bfa6a745f405ec4bf297d5c7
+    next_atom_id: a373e6b551b511d303c33df0d2d3f32c72b4ffbd197a12f8c508a82cb694f35e

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e88eb4135a65b537412474c59f1f11e8f7e4c9f621cd54954df51966a359d5e7
+  normalized_sha256: sha256:e88eb4135a65b537412474c59f1f11e8f7e4c9f621cd54954df51966a359d5e7
+cas_ref: sha256:e88eb4135a65b537412474c59f1f11e8f7e4c9f621cd54954df51966a359d5e7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 区分几何识别与有限截断数值近似的证明责任，是方法及适用范围说明，无新增算子关系。'
+    previous_atom_id: 44ee9c74f42144e42affeb770a343845120a5013f736dd4e95d898ed99f06df3
+    next_atom_id: e1621a009e6eb8bc1a0b4452ee3478556558a818b6c8ca0110bde50578100637

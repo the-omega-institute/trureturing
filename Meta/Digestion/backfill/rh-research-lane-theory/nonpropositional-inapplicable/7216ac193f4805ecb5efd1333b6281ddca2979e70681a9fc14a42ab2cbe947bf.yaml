@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7216ac193f4805ecb5efd1333b6281ddca2979e70681a9fc14a42ab2cbe947bf
+  normalized_sha256: sha256:7216ac193f4805ecb5efd1333b6281ddca2979e70681a9fc14a42ab2cbe947bf
+cas_ref: sha256:7216ac193f4805ecb5efd1333b6281ddca2979e70681a9fc14a42ab2cbe947bf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项明确区分解释性图景与证明，列出可审计成果种类；没有对具体对象作数学断言。
+    previous_atom_id: 857f65d8e293dc2ee3ab4e4f6d1af3d77d387f21130ab555ca1afad78082f537
+    next_atom_id: 0299f7417a044c10c2897e2902719fb977f2d356205b281bee27408b1a71f45e

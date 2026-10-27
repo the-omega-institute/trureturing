@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b60218519704c2bc6587204221a46705e2ab43cf0b77f4307e240404ab6f8b1f
+  normalized_sha256: sha256:b60218519704c2bc6587204221a46705e2ab43cf0b77f4307e240404ab6f8b1f
+cas_ref: sha256:b60218519704c2bc6587204221a46705e2ab43cf0b77f4307e240404ab6f8b1f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只记录声明适用范围或不作何种断言的边界；未提出需要证明的数学断言。文本定位：**边界**:同 §〇 ①。
+    previous_atom_id: b73b946ccbf4e4026748239dc24b7c42a6d8c82a02cd45fce53721adf676ed50
+    next_atom_id: 3ba0943d3eaa57c9eb8cca17f23387155b1416c2609787d733cb541842ff4056

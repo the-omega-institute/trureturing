@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:22d6b9b199068a0d625ab62b1b636051634e010e19019aeb70ae6d509f7b7ff8
+  normalized_sha256: sha256:22d6b9b199068a0d625ab62b1b636051634e010e19019aeb70ae6d509f7b7ff8
+cas_ref: sha256:22d6b9b199068a0d625ab62b1b636051634e010e19019aeb70ae6d509f7b7ff8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names the Hausdorff moment theorem as a dependency of the proposed argument.
+    previous_atom_id: 82c660f4e6ae50cda27017864f070185b25385aea44a4b227d2c936440837024
+    next_atom_id: 3bf85dc022ad48c42ba31aceaf675e867772637e4e84a184b50d5043c4e49523

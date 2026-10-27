@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aa95f915964d7908891779023fec15fac689f8b6aca32a47720228dabfc2a5bd
+  normalized_sha256: sha256:aa95f915964d7908891779023fec15fac689f8b6aca32a47720228dabfc2a5bd
+cas_ref: sha256:aa95f915964d7908891779023fec15fac689f8b6aca32a47720228dabfc2a5bd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Evidence responsiveness is a listed evaluation dimension without a specified mathematical predicate.
+    previous_atom_id: acbf70ef438149a7c694e9fe790424fa7b98384d440b8320821ff45787c0a81d
+    next_atom_id: 241b9a8ed8584f2a7b8d870712a83e21016682e3a50eda9291961f965a1001b2

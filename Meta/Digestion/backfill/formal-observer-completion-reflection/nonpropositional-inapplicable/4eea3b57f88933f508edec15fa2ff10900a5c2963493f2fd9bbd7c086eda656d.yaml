@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4eea3b57f88933f508edec15fa2ff10900a5c2963493f2fd9bbd7c086eda656d
+  normalized_sha256: sha256:4eea3b57f88933f508edec15fa2ff10900a5c2963493f2fd9bbd7c086eda656d
+cas_ref: sha256:4eea3b57f88933f508edec15fa2ff10900a5c2963493f2fd9bbd7c086eda656d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：以协议距离的上确界定义 d_Q，未在此声称三角不等式或零层定理。
+    previous_atom_id: 80f02017c1fa400f9406e2dd4640a7b5afb1c869dab3edd465f9754c95091b72
+    next_atom_id: 282b9ed75e15655825bec6dfa1b3f245359f732c2a547c8bc45857fdfb3711ab

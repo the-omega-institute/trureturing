@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:52cc651bbb5f46f27fc25e242e89ef8df57e6435d558163f28d375dc09fdd4f1
+  normalized_sha256: sha256:52cc651bbb5f46f27fc25e242e89ef8df57e6435d558163f28d375dc09fdd4f1
+cas_ref: sha256:52cc651bbb5f46f27fc25e242e89ef8df57e6435d558163f28d375dc09fdd4f1
+coverage_gids:
+  - gid: D5/S3/Factorization/Automata/BoundedPrimeHorizon.run
+    target_statement_id: sha256:50fcbd9c2923bcb2c0985ddb8a0364b67430bbc4ee096bc91ce5c440a5f6d9c7
+receipts:
+  unresolved_subitems: []

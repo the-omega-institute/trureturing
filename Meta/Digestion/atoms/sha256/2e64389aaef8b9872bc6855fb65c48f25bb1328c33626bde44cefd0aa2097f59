@@ -1,0 +1,36 @@
+**Definition 28.2 (added premises and the exact unpaid boundary).**
+Calibration and availability of the exact timed service, including
+source-versus-false-contact discrimination, hidden four-coordinate
+states, nonarrival monitoring, immediate notification and exact
+original-clock timestamps, are Assumption 25.1. Finite exact real
+computation and original two-control execution are Assumption 26.1.
+These are explicit analytic model additions. Deriving their joint
+law and filtration coupling is not deriving their availability from
+bare FIB. No omitted-gap total or list is supplied separately or in
+advance; at entrance arrival the preceding small-duration total is
+retrospectively inferable as in the proof of Theorem 25.2, but is not
+used by the consumer. No pending sample, seed, future lifetime,
+Poisson label, complete mark, full source path, target exit or target
+modulus is available to execution.
+A full path is only the coupling witness; the acquired finite
+record is exactly (25.1). All decisions use its released prefix.
+
+Native acquisition, finite bits or shots, effective sampler evaluation,
+effective accuracy rates, uniform information/leg/speed/energy bounds,
+and physical timed notification and actuation remain separate
+obligations. The realized finite command has its entire original
+partial domain; the causal service law does not assert arbitrary
+intervention equivalence, install a source-independent affine/CPTP
+action, or provide a post-slab map for $\Psi$. Sections 1--14 and
+[B, §§12.1--12.3] retain their free/central-fiber, contact, reference-law
+and affine/CPTP boundaries and their surviving nonlinear source-law
+actions. The variable-coefficient, independent-central-noise and
+spatial-cap/all-real-limit suppliers retain the different carriers,
+sources, walls and clocks specified in Definition 19.1.
+No source-clock recovery of §18 follows from these approximations.
+The original complete native legal-source/evolution/representation/
+readout correspondence, physical spatial dimension and full
+why-three objective remain unresolved. These are conditional ordinary
+mathematical results, with no Lean-certification or worldwide-priority
+claim.
+

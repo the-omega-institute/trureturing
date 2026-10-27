@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c657867217c6bce21900f5034955020100243257071a24f4f7ac7630a6ea60e1
+  normalized_sha256: sha256:c657867217c6bce21900f5034955020100243257071a24f4f7ac7630a6ea60e1
+cas_ref: sha256:c657867217c6bce21900f5034955020100243257071a24f4f7ac7630a6ea60e1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这里只以元组记号命名状态、准入、锚点、过程族和概念族构成的模型数据，没有关于该元组的性质断言。
+    previous_atom_id: c70a3ed94b1e7ee5d94c329a774296817eede19550e5247a9f9abda022c3302a
+    next_atom_id: 31d13956498df82689e7979f9fcbc9b6c3fefa3aace5c05daafd35f9514bc77f

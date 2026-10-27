@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:a014cac017568972fba9edc384d6afbb8cb5ea2ba7d6b0b50c202d0e25a3ffc4
+  normalized_sha256: sha256:a014cac017568972fba9edc384d6afbb8cb5ea2ba7d6b0b50c202d0e25a3ffc4
+cas_ref: sha256:a014cac017568972fba9edc384d6afbb8cb5ea2ba7d6b0b50c202d0e25a3ffc4
+coverage_gids:
+  - gid: D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceLeft_add
+    target_statement_id: sha256:e6760db4f2b81a485feb8f32a73a245853102feb954e6212826a771dd28dbaf3
+  - gid: D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceLeft_kronecker
+    target_statement_id: sha256:1fa42c02a50864971045c3c86abddd8fc906aca8723acb97552cdd92c7196b9d
+  - gid: D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight_add
+    target_statement_id: sha256:b9bdbbf9eb046a8b8b45384527347b653edead7fd52e914aa4b6ebbd144f8a39
+  - gid: D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight_kronecker
+    target_statement_id: sha256:a0838f79000777eac14a35e86139cd9f264a8cd9569370843c5210242ee58673
+receipts:
+  unresolved_subitems: []

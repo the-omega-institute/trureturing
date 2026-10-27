@@ -16,7 +16,7 @@ namespace D5.S3.Combinatorics.Circle.GeometricSourceRelocation
 
 open D5.S3.Combinatorics.Circle.SourceWidth
 
-private theorem geometric_quotient (r m : ℕ) (hm : 1 ≤ m) :
+theorem geometric_quotient (r m : ℕ) (hm : 1 ≤ m) :
     let B : ℕ := 2 ^ m
     (B ^ r - 1) / (B - 1) = ∑ j ∈ Finset.range r, B ^ j := by
   dsimp only

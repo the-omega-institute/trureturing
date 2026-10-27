@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ca830f905b605a8a982c978b0c04b300b89438a9ecb2a3232b86f92be3b4c0d4
+  normalized_sha256: sha256:ca830f905b605a8a982c978b0c04b300b89438a9ecb2a3232b86f92be3b4c0d4
+cas_ref: sha256:ca830f905b605a8a982c978b0c04b300b89438a9ecb2a3232b86f92be3b4c0d4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 上位 governing-list 明确是“本轮不主张”；本条仅排除对prime holonomy 支配离线奇能量的完成主张，不断言该命题成立或不成立。
+    previous_atom_id: c3643a7966cfbda004421311a033183a808dd60193eb8112aadd664b3df8242d
+    next_atom_id: 5ed9fa7c7ef5773ced3e4e6964acd0722ce9b5b6a29114e0dd1257417247bb90

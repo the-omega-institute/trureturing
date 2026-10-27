@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:d486af9b213510156a45e117b8869af1054e604b63b5108f6e7ed0e3e8f3411b
+  normalized_sha256: sha256:d486af9b213510156a45e117b8869af1054e604b63b5108f6e7ed0e3e8f3411b
+cas_ref: sha256:d486af9b213510156a45e117b8869af1054e604b63b5108f6e7ed0e3e8f3411b
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/GoldenResource5040EndpointComparison.golden_resource_objective_single_layer_delta
+    target_statement_id: sha256:ca2302d016055ee1683ad273058d99dac09e1b5794774ad83e53f6306bf83a99
+  - gid: D5/S3/Arith/GoldenResource/ObjectiveCore.goldenPrimeLocalObjective
+    target_statement_id: sha256:08165068366104c35554b682caaf53fc9af4203f6bc240380bc9f8c4730d7d41
+  - gid: D5/S3/Arith/GoldenResource/ObjectiveCore.golden_resource_sigma_identity
+    target_statement_id: sha256:422e35723b2862614c2dc89f788ad1a52cba9136c04f3e846fb0edcf3b790def
+  - gid: D5/S3/Arith/GoldenResourceOptimalInteger.goldenLayerMarginal
+    target_statement_id: sha256:2ce07dd866e772a093f7b6a94a73cc2d1f1d1defe31cd2e5afac3738f74427e0
+receipts:
+  unresolved_subitems: []

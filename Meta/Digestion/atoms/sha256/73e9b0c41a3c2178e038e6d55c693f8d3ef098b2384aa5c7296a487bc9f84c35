@@ -1,0 +1,20 @@
+**定义 72.3（任意有限经典比较器及误差）。** A comparator has any finite $k\ge1$, real matrices $T_0,T_1\ge0$, a fixed effect $f_{\rm cl}\in[0,1]^k$, and arbitrary preparation probability columns $p_+,p_-$. Its only transition normalization is
+
+$$
+\mathbf1^{\mathsf T}S=\mathbf1^{\mathsf T},\quad S=T_0+T_1,\qquad
+Q_{\pm,n}(h,1)=f_{\rm cl}^{\mathsf T}T_hp_\pm,\quad
+Q_{\pm,n}(h,0)=(\mathbf1-f_{\rm cl})^{\mathsf T}T_hp_\pm.
+\tag{72.8}
+$$
+
+Here $T_h=T_{j_n}\cdots T_{j_1}$. Summing over $h,y$ gives $\mathbf1^{\mathsf T}S^np_\pm=1$, so these are probability laws. No individual branch is required to have mass $1/2$, and no preparation is required to be stationary. There is no assumption of fairness, reversibility, covariance, primitivity, irreducibility of $S$, minimality, reachability, observability, or absence of hidden junk. Preparations on the whole $\mathcal K_d$, when requested, may be arbitrary functions $p(\rho)$ without affineness or continuity. The same transition matrices and effect apply to all preparations of a given comparator.
+
+For two laws on $\Omega_n$ set
+
+$$
+\operatorname{TV}(P,Q)=\frac12\sum_{h\in\{0,1\}^n}\sum_{y=0}^1|P(h,y)-Q(h,y)|.
+\tag{72.9}
+$$
+
+Every norm on $\mathbb C^r$ is Euclidean unless specified. On $(\mathbb C^r)^k$ use $\|x\|_{1,2}=\sum_a\|x_a\|_2$ and its induced operator norm; on matrices use the Hilbert–Schmidt norm when treating conjugation as a Hilbert-space operator.
+

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b5fdc8da27d2366492bc1cffeb66796ae9575c2c79c1833ff4de0eaf13ceb2ad
+  normalized_sha256: sha256:b5fdc8da27d2366492bc1cffeb66796ae9575c2c79c1833ff4de0eaf13ceb2ad
+cas_ref: sha256:b5fdc8da27d2366492bc1cffeb66796ae9575c2c79c1833ff4de0eaf13ceb2ad
+coverage_gids:
+  - gid: D5/S3/Observer/MetricGeometry/ArithmeticHorizon.Psi
+    target_statement_id: sha256:6d713f137c10e0f1877a9f9117d94ded29b3e84c6cf726d5e2dcafdffba953a7
+  - gid: D5/S3/Observer/MetricGeometry/ArithmeticHorizon.finite_predictor_horizon
+    target_statement_id: sha256:1338bf4564a8000df3f0231277c073fd037266cf15a7e6da39da161d26da0456
+  - gid: D5/S3/Observer/MetricGeometry/ArithmeticHorizon.torusNorm
+    target_statement_id: sha256:baf19431b298057974391a450a0b898fba3274c8e446cf763e057e8f6fd99544
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 1d8a4ee00ccc99ab38eaab31ad6eec6cc0ce768fc0327ed4584d3cd7a8b890e2
+    - 8d107b8b170aa76c504c21dd2d0b7a370da4cd371a255e7f134b2165efa111a4

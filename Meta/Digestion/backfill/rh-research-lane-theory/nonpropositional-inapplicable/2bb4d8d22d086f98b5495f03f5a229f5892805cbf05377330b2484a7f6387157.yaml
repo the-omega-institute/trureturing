@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2bb4d8d22d086f98b5495f03f5a229f5892805cbf05377330b2484a7f6387157
+  normalized_sha256: sha256:2bb4d8d22d086f98b5495f03f5a229f5892805cbf05377330b2484a7f6387157
+cas_ref: sha256:2bb4d8d22d086f98b5495f03f5a229f5892805cbf05377330b2484a7f6387157
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: F02 分类标题及空表头；未断言 Li 系数性质。
+    previous_atom_id: 1267d305f1df5106921a04fa267e73da928d597a28e5ba04993a0a6e1585c065
+    next_atom_id: f75861ab5b8245fe878109f368912d66a13667fc4ac811331349c0df0585ef0b

@@ -372,6 +372,61 @@ public sealed class RepositorySymlinkTests
     }
 
     [Fact]
+    public void ShallowGlobRetainsImmediateUntrackedFilesAndGitIgnoreSemantics()
+    {
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        Write(repository.Path, "Meta/deleted.toml", "deleted\n");
+        Commit(repository.Path);
+        File.Delete(Path.Combine(repository.Path, "Meta/deleted.toml"));
+        Write(repository.Path, "Meta/.gitignore", "ignored.toml\n");
+        Write(repository.Path, "Meta/.hidden", "hidden\n");
+        Write(repository.Path, "Meta/[literal].toml", "literal\n");
+        Write(repository.Path, "Meta/ignored.toml", "ignored\n");
+        Write(repository.Path, "Meta/deep/unselected.toml", "unselected\n");
+        Write(repository.Path, "D5/untracked.lean", "source\n");
+        Write(repository.Path, "Reg/untracked.lean", "audit\n");
+
+        var read = GitRepositorySnapshotReader.ReadCurrent(repository.Path,
+            pathspecs: ["D5", "Reg", ":(glob)Meta/*"]);
+
+        Assert.Equal(
+            ["D5/untracked.lean", "Meta/.gitignore", "Meta/.hidden", "Meta/[literal].toml", "Reg/untracked.lean"],
+            read.Entries.Select(entry => entry.Path));
+        Assert.Contains(read.PathInventory, entry => entry.Path == "Meta/deleted.toml" && entry.State == "absent");
+        Assert.Equal("literal\n", Text(read, "Meta/[literal].toml"));
+    }
+
+    [Fact]
+    public void EmptyShallowGlobDoesNotBecomeAnUnscopedUntrackedQuery()
+    {
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        Write(repository.Path, "Meta/deep/unselected.toml", "unselected\n");
+        Write(repository.Path, "outside.txt", "outside\n");
+
+        var read = GitRepositorySnapshotReader.ReadCurrent(repository.Path, pathspecs: [":(glob)Meta/*"]);
+
+        Assert.Empty(read.Entries);
+        Assert.Empty(read.PathInventory);
+    }
+
+    [Fact]
+    public void ShallowGlobWithExclusionKeepsNativeGitSelection()
+    {
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        Write(repository.Path, "Meta/kept.toml", "kept\n");
+        Write(repository.Path, "Meta/excluded.toml", "excluded\n");
+        Write(repository.Path, "Meta/deep/unselected.toml", "unselected\n");
+
+        var read = GitRepositorySnapshotReader.ReadCurrent(repository.Path,
+            pathspecs: [":(glob)Meta/*", ":(exclude)Meta/excluded.toml"]);
+
+        Assert.Equal("Meta/kept.toml", Assert.Single(read.Entries).Path);
+    }
+
+    [Fact]
     public void LargeLiteralScopeKeepsSelectedFilesAndValidatesTheirLinkReferents()
     {
         if (OperatingSystem.IsWindows()) return;

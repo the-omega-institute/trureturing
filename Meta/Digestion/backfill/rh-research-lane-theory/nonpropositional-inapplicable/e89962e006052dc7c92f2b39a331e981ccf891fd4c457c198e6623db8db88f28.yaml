@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e89962e006052dc7c92f2b39a331e981ccf891fd4c457c198e6623db8db88f28
+  normalized_sha256: sha256:e89962e006052dc7c92f2b39a331e981ccf891fd4c457c198e6623db8db88f28
+cas_ref: sha256:e89962e006052dc7c92f2b39a331e981ccf891fd4c457c198e6623db8db88f28
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: F15 仅定义 PF-infinity 这一谓词的非零可积性和全部节点行列式条件，没有断言任何函数满足它。'
+    previous_atom_id: 32565d966b6eb646eef12c970633bc28af3e418f88517962df39cd7edc62f0b0
+    next_atom_id: e83f51d980c89845feb149aa562faa2a10c1a41aac6abdb900049a33acf9b068

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4c94c43b5eed565206056af4990719410c16b8a0ec92f59471157d85e995ebf8
+  normalized_sha256: sha256:4c94c43b5eed565206056af4990719410c16b8a0ec92f59471157d85e995ebf8
+cas_ref: sha256:4c94c43b5eed565206056af4990719410c16b8a0ec92f59471157d85e995ebf8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是要求补充跨全部尺度统一估计的研究指令，没有声称该估计已经成立。
+    previous_atom_id: 78d1be12db749df2cec2717301fd7f9dd795c546aa54f72681856c8f3bd644e1
+    next_atom_id: 972561020d165f3939d94b8cb00977ed2ea40f3360fb64d5b0399b15765004d4

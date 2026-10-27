@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:05045890bd1769dfd10ed3d7ca71d5b68734e9a11cbd8188e032d114f0c55bd7
+  normalized_sha256: sha256:05045890bd1769dfd10ed3d7ca71d5b68734e9a11cbd8188e032d114f0c55bd7
+cas_ref: sha256:05045890bd1769dfd10ed3d7ca71d5b68734e9a11cbd8188e032d114f0c55bd7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该表项披露选择三组平移方向且唯一性未证明，不宣告维数唯一性定理。
+    previous_atom_id: ea9880348111e48db8ccc26598fecbcf8866afabcf99427cf2c58ab0a8573b21
+    next_atom_id: fc42a79b9a13a0e7d473de80ee0a42ac808092b975969b827d33479dfd8bdb8f

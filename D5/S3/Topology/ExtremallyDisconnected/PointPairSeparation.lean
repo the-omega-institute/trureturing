@@ -23,13 +23,13 @@ namespace D5.S3.Topology.ExtremallyDisconnected.PointPairSeparation
 
 universe u
 
-private theorem enumerate_pool {A : Set ℕ} (hA : A.Infinite) :
+theorem enumerate_pool {A : Set ℕ} (hA : A.Infinite) :
     ∃ a : ℕ → ℕ, StrictMono a ∧ ∀ n, a n ∈ A := by
   exact Nat.exists_strictMono_subsequence (fun N => by
     obtain ⟨n, hn, hN⟩ := hA.exists_gt N
     exact ⟨n, hN, hn⟩)
 
-private theorem split_pool {A : Set ℕ} (hA : A.Infinite) :
+theorem split_pool {A : Set ℕ} (hA : A.Infinite) :
     ∃ T V : Set ℕ, T ⊆ A ∧ V ⊆ A ∧ T.Infinite ∧ V.Infinite ∧ Disjoint T V := by
   obtain ⟨a, ha, hmem⟩ := enumerate_pool hA
   refine ⟨range (fun n => a (2 * n)), range (fun n => a (2 * n + 1)),
@@ -49,7 +49,7 @@ private theorem split_pool {A : Set ℕ} (hA : A.Infinite) :
     have := ha.injective hm
     omega
 
-private theorem diagonal_pool (A : ℕ → Set ℕ) (hA : ∀ n, (A n).Infinite)
+theorem diagonal_pool (A : ℕ → Set ℕ) (hA : ∀ n, (A n).Infinite)
     (hdec : ∀ n, A (n + 1) ⊆ A n) :
     ∃ S : Set ℕ, S.Infinite ∧ S ⊆ A 0 ∧ ∀ n, (S \ A n).Finite := by
   classical

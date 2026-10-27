@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:44f27cc1fd52d6d634c1e06d42ea1943f4b5ed7e7b1f6b419c32b5af0f42c753
+  normalized_sha256: sha256:44f27cc1fd52d6d634c1e06d42ea1943f4b5ed7e7b1f6b419c32b5af0f42c753
+cas_ref: sha256:44f27cc1fd52d6d634c1e06d42ea1943f4b5ed7e7b1f6b419c32b5af0f42c753
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 在协议操作清单中列出并行组合，没有关于联合分布或核的断言。'
+    previous_atom_id: 7ebd220d7305430e9cc0cfad518ab60c3e2ed5786f801709ba749d7bb83e2efb
+    next_atom_id: 9489f6a6146f3cec4372ebb4519a44b65f2a6cd462857a25af3a1401cdcad6e3

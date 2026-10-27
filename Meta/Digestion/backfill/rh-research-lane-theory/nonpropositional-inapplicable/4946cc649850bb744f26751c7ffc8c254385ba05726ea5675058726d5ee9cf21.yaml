@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:4946cc649850bb744f26751c7ffc8c254385ba05726ea5675058726d5ee9cf21
+  normalized_sha256: sha256:4946cc649850bb744f26751c7ffc8c254385ba05726ea5675058726d5ee9cf21
+cas_ref: sha256:4946cc649850bb744f26751c7ffc8c254385ba05726ea5675058726d5ee9cf21
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 第19节参考文献清单与规格计数状态，仅为题名/定理定位及审查范围记录。'
+    previous_atom_id: b5b76fd53d8f93ca1cb2d734fb4a8ae7ffad108ccb14d1c4df607b233ce5d9b3
+    next_atom_id: null
+  chain_atoms:
+    - 8418cc9858d567b7f05f87e2ca41a473f795c238c3c42fd98c3ce0926da7abec
+    - 5954f0b0ef8963def9a7ba1559c777123ab5cebc62c88794f5dff274367c86cb

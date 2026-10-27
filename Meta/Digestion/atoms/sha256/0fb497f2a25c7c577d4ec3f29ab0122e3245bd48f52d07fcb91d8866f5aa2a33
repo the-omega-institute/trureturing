@@ -1,0 +1,73 @@
+**Theorem 116.2 (the source trace and its exact capacity).** The original point $e$ is nonpolar, and every $v\in\mathscr V$ satisfies
+
+$$
+\widetilde v(e)=\operatorname{tr}v,\qquad
+\mathscr V_0=\{v\in\mathscr V:\widetilde v(e)=0\}.
+\tag{116.3}
+$$
+
+In particular $\mathscr V_0$ is exactly the part-form domain on $M$. For every $r>0$, $b_r\in\mathscr V$ is the equilibrium potential of $\{e\}$, $0\le\widetilde b_r\le1$ quasi-everywhere, and
+
+$$
+\begin{gathered}
+\operatorname{tr}b_r=1,\qquad
+\mathscr E_r[b_r,v]=r d_r\,\operatorname{tr}v
+                              \quad(v\in\mathscr V),\\
+\operatorname{Cap}_r(\{e\})=\mathscr E_r[b_r]=r d_r,\qquad
+|\widetilde v(e)|^2\le\frac{\mathscr E_r[v]}{r d_r}
+                              \quad(v\in\mathscr V).
+\end{gathered}
+\tag{116.4}
+$$
+
+Equality in the last inequality holds exactly for complex multiples of $b_r$. The corresponding equilibrium measure is $r d_r\delta_e$, with $\delta_e$ the unit point mass at the original identity. The original boundary coefficients give the additional exact normalization
+
+$$
+\begin{gathered}
+C(n_r)=c_h,\qquad
+A(n_r)=\rho c_h-rA(G_rh),\qquad
+d_r=a c_h A(G_rh),\\
+r d_r=a c_h\bigl(\rho C(n_r)-A(n_r)\bigr).
+\end{gathered}
+\tag{116.5}
+$$
+
+Here $A,C$ are evaluated only on the displayed maximal-domain vectors. For $v\in D(K)$ the source value also equals $C(hv)/c_h$, as in (115.20); no such maximal-domain coefficient is assigned to a general form vector.
+
+**Proof.** We first identify the point without assuming that a measure-zero set is polar. Theorem 115.3 supplies regularity on all of $G$, the continuous functional $\operatorname{tr}$, and the form core
+$\mathcal A=\mathbb C\chi+C_c^\infty(M;\mathbb C)$, where $\chi\in C_c^\infty(G)$ equals one near $e$ and $\chi-1\in\mathscr V_0$. On this core, $\operatorname{tr}v=v(e)$.
+
+The standard part-form theorem identifies its domain on the open set $M$ with the form-norm closure of $\mathscr V\cap C_c(M)$, and also with the vectors vanishing quasi-everywhere on $G\setminus M$. This is the part-process correspondence stated in Chen--Fukushima--Ying, [*Traces of symmetric Markov processes and their characterizations*, arXiv:math/0606784v1, §2, (2.2)--(2.3)](https://arxiv.org/pdf/math/0606784v1). The open-set part theorem itself requires regularity, not transience or a spectral gap. In the present form, every member of $\mathscr V\cap C_c(M)$ can be approximated by $C_c^\infty(M)$ in form norm: on a compact punctured neighborhood of its support, $h$ is smooth and bounded above and below by positive constants, and the principal matrix (115.10) is uniformly positive. The integral norm (115.15) is therefore equivalent there to the ordinary $H^1$ norm. A punctured smooth cutoff and local mollification give the approximation. Thus this closure is exactly $\mathscr V_0$. If $\{e\}$ were polar, the part theorem would make the same closure all of $\mathscr V$. This contradicts the closed direct sum in (115.15), since $\operatorname{tr}1=1$. Hence $\{e\}$ has positive capacity.
+
+For $v\in\mathscr V$, take a form-convergent sequence $v_j\in\mathcal A$. The usual capacity estimate for a form-convergent sequence gives a subsequence converging quasi-everywhere to $\widetilde v$: choose a subsequence with $\|v_{j+1}-v_j\|_{\mathscr E_1}\le2^{-2j}$, where $\|u\|_{\mathscr E_1}^2=\mathscr E_1[u]$. The capacity estimate gives $\operatorname{Cap}_1(\{|\widetilde v_{j+1}-\widetilde v_j|>2^{-j}\})\le2^{-2j}$. Outside the capacity-zero limsup set the differences are eventually summable; outside the unions of the tails the convergence is uniform. This yields the quasi-continuous version of the form limit. No polar exceptional set can contain $e$. Consequently
+$\widetilde v(e)=\lim_jv_j(e)=\lim_j\operatorname{tr}v_j=\operatorname{tr}v$.
+This proves (116.3). It asserts a quasi-continuous value, not an ordinary limit along arbitrary points approaching $e$.
+
+Since $G_rh\in D(F)\subset\mathcal Q_c$, (115.15) gives $b_r\in1+\mathscr V_0$. Put $y=G_rh$. The spectral resolvent equation gives $Fy=n_r$. For any $z\in\mathscr V_0$, write $w=hz\in\mathcal Q_c$. The form identity and closed-form representation for $F$ give
+
+$$
+\begin{aligned}
+\mathscr E_r[b_r,z]
+ &=-r\,\overline q_c[y,w]+r\langle n_r,w\rangle_{\mathcal H}\\
+ &=-r\langle Fy,w\rangle_{\mathcal H}
+                       +r\langle n_r,w\rangle_{\mathcal H}=0,\\
+\mathscr E_r[b_r,1]&=r\langle n_r,h\rangle_{\mathcal H}=r d_r.
+\end{aligned}
+\tag{116.6}
+$$
+
+The identity with the constant uses $\mathscr E[b_r,1]=0$ and the reality of $d_r$. Decomposing $v$ first in $\mathscr V_0+\mathbb C1$ proves the pairing in (116.4). Decomposing instead as
+$v=(\operatorname{tr}v)b_r+z$, $z\in\mathscr V_0$, proves the orthogonal identity
+
+$$
+\mathscr E_r[v]=r d_r|\operatorname{tr}v|^2+\mathscr E_r[z].
+\tag{116.7}
+$$
+
+The supplied $d_r>0$ makes $b_r$ the unique minimizer among real vectors with trace one, and (116.7) makes it the unique minimizer with trace at least one. This proves the capacity, sharp inequality and equality condition. Truncation to $[0,1]$ preserves the value one at $e$ and cannot increase either energy or squared norm; uniqueness of the minimizer proves $0\le\widetilde b_r\le1$. The pairing in (116.4) identifies its equilibrium measure as $r d_r\delta_e$, and proves directly that evaluation at $e$ has finite shifted energy. These variational and equilibrium-measure identifications are the standard equilibrium construction applied to this particular form.
+
+Finally $C(y)=0$, $C(h)=c_h$, $A(h)=\rho c_h$ and $S^*h=0$. Applying exactly (112.3) to $h,y$ gives
+$\langle h,Fy\rangle=a c_h A(y)$.
+Its left side is $d_r$, and the coefficients of $n_r=h-ry$ give all of (116.5). In particular $n_r$ has boundary defect
+$A(n_r)-\rho C(n_r)=-r d_r/(a c_h)$; it is not a vector in the actual operator domain $D(H)$. The form argument has not imposed the selector on an equilibrium potential. $\square$
+

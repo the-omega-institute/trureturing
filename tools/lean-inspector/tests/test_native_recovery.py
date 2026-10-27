@@ -60,6 +60,92 @@ class NativeBatchPartitionTests:
 
 
 class NativeRecoveryConsumerTests:
+    def _exercise_chunk_durability(self, interruption):
+        # More than one real native chunk, with the existing four fixture roots.
+        for index in range(100):
+            self.write(f'D5/Durable{index:03}.lean', f'def durable{index:03} : Nat := {index}\n')
+        fixture = self.root / 'Fixture.lean'
+        fixture.write_text(fixture.read_text() + '\nnamespace LeanInformationAudit.Contract\n'
+            'structure Registration where\n  value : Nat\nend LeanInformationAudit.Contract\n'
+            'def durabilityInput : LeanInformationAudit.Contract.Registration := { value := 1 }\n')
+        control = self.root / 'chunk-interruption'
+        control.write_text(interruption)
+        producer = self.root / 'tools/lean-inspector/native.py'
+        source = producer.read_text()
+        source = source.replace('def produce_batch_chunk(requests):',
+            'def produce_batch_chunk(requests):\n'
+            '    control = Path(requests[0][0]) / "chunk-interruption"\n'
+            '    if control.exists() and any(row[1] == "Fixture" for row in requests):\n'
+            '        mode = control.read_text()\n'
+            '        (control.parent / "interrupted-chunk.json").write_text(json.dumps([row[1] for row in requests]))\n'
+            '        if mode == "failure": raise ValueError("fixture later chunk failure")\n'
+            '        if mode == "cancel": os.kill(os.getpid(), 15)')
+        call = '            run_inspector(root, executable, arguments, argument_file)'
+        source = source.replace(call, call + '\n'
+            '            control = root / "chunk-interruption"\n'
+            '            if control.exists() and control.read_text() == "truncated" and "Fixture" in triples:\n'
+            '                output = directory / "spool.json"\n'
+            '                output.write_bytes(output.read_bytes()[:-7])')
+        producer.write_text(source)
+        result = self.build(success=False)
+        state = self.root / '.lake/build/lean-inspector'
+        names = json.loads((state / 'module-inputs.json').read_text())['modules']
+        self.assertEqual(len(names), 104)
+        first = sorted(name for name in names if name != 'Fixture')
+        remaining = ['Fixture']
+        projection = json.loads((state / 'judge-inputs/Fixture.json').read_text())
+        self.assertEqual([row['name'] for row in projection['inputs']], ['durabilityInput'])
+        self.assertIn('Fixture', json.loads((self.root / 'interrupted-chunk.json').read_text()))
+        self.assertFalse((state / 'report.zip').exists())
+        before = self.stamps()
+        self.record_result('interrupted', dict(mode=interruption, exit=result.returncode,
+            registered_modules=names, completed_modules=sorted(before), expected_completed=first,
+            pending=sorted(p.name for p in (state / 'modules').glob('*.pending'))))
+        self.assertEqual(sorted(before), first)
+        traces = {name: [(state / 'modules' / (name + suffix)).read_bytes()
+                        for suffix in ('.zip.trace', '.zip.hash')] for name in first}
+        for name in remaining:
+            self.assertFalse((state / 'modules' / (name + '.zip.trace')).exists())
+        self.write('activity.jsonl', '')
+        accepted = self.run_lake('--no-build', 'build', *(name + ':report' for name in first))
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.assertEqual(self.stamps(), before)
+        self.assertEqual(traces, {name: [(state / 'modules' / (name + suffix)).read_bytes()
+                        for suffix in ('.zip.trace', '.zip.hash')] for name in first})
+        refused = self.run_lake('--no-build', 'build', ':report', success=False)
+        self.assertFalse((state / 'report.zip').exists())
+        self.record_result('fresh-native-reuse', dict(mode=interruption, accepted_exit=accepted.returncode,
+            aggregate_refusal_exit=refused.returncode, reused_modules=first,
+            extraction=0, artifacts_and_traces_unchanged=True))
+        control.unlink()
+        # A changed source must miss even though its completed chunk was committed.
+        changed = self.root / 'D5/Alone.lean'
+        changed.write_text(changed.read_text() + '-- changed committed input\n')
+        self.run_lake('--no-build', 'build', 'D5.Alone:report', success=False)
+        self.write('activity.jsonl', '')
+        self.run_lake('build', 'D5.Alone:report')
+        activity = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        self.assertEqual(sum(row['count'] for row in activity if row['kind'] == 'extract'), 1)
+        refreshed = self.stamps()
+        self.assertEqual([name for name in first if refreshed[name] != before[name]], ['D5.Alone'])
+        resumed = self.build()
+        activity = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        self.assertEqual(sum(row['count'] for row in activity if row['kind'] == 'extract'), len(remaining))
+        self.assertEqual(sorted(row['module'] for row in self.report()[0]), sorted(names))
+        self.assertEqual({name: self.stamps()[name] for name in first}, refreshed)
+        self.record_result('complete-resume', dict(mode=interruption, exit=resumed.returncode,
+            changed_source_extractions=1, resumed_extractions=len(remaining),
+            registered_modules=len(names), aggregate_modules=len(self.report()[0])))
+
+    def test_completed_chunk_survives_later_failure(self):
+        self._exercise_chunk_durability('failure')
+
+    def test_completed_chunk_survives_later_cancellation(self):
+        self._exercise_chunk_durability('cancel')
+
+    def test_completed_chunk_survives_later_truncation(self):
+        self._exercise_chunk_durability('truncated')
+
     def test_release_stage_and_verify_preserve_absent_lake(self):
         self.build()
         self.publish()

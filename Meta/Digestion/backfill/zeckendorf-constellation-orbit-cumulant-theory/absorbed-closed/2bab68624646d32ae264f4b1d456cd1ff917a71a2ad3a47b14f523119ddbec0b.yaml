@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2bab68624646d32ae264f4b1d456cd1ff917a71a2ad3a47b14f523119ddbec0b
+  normalized_sha256: sha256:2bab68624646d32ae264f4b1d456cd1ff917a71a2ad3a47b14f523119ddbec0b
+cas_ref: sha256:2bab68624646d32ae264f4b1d456cd1ff917a71a2ad3a47b14f523119ddbec0b
+coverage_gids:
+  - gid: D5/S3/Analytic/ReflectedSpectrum/ParityConditionedMoments.parity_conditioned_probability_form
+    target_statement_id: sha256:c285eee20f6df615e7c27112e9c47c8bb823a21cafb67dd8294791599f89e9c3
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:57acc669b4a6493efb0318d053da1b3e13454eb17297fa6566abebb8bd229206
+  normalized_sha256: sha256:57acc669b4a6493efb0318d053da1b3e13454eb17297fa6566abebb8bd229206
+cas_ref: sha256:57acc669b4a6493efb0318d053da1b3e13454eb17297fa6566abebb8bd229206
+coverage_gids:
+  - gid: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled_clock_evolution
+    target_statement_id: sha256:f108419fb8d19ca873a6e37fbda183dfd5658a6607a6f3d3d28d84201d92fb92
+  - gid: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.pi_clock_pulses
+    target_statement_id: sha256:0adfd43ae15caec827d9abafceaa243a375ce08140f6e9de64206f850eb3c0f4
+  - gid: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.positive_clock_speed
+    target_statement_id: sha256:2672b7865a04fdf7022200ff47619ab130dbd2cf945a17055507b577e1541943
+  - gid: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.special_directions_mem
+    target_statement_id: sha256:62a6bfb3ab701abfcb5ec2387064421af32a2fac26993b4516c800e10a68fde2
+receipts:
+  unresolved_subitems: []

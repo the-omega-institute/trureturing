@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f98be4308bdcc979135d10e91675d15c83c169f2034e5d231f9b1a09ef2e1db2
+  normalized_sha256: sha256:f98be4308bdcc979135d10e91675d15c83c169f2034e5d231f9b1a09ef2e1db2
+cas_ref: sha256:f98be4308bdcc979135d10e91675d15c83c169f2034e5d231f9b1a09ef2e1db2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：定义91.1规定对称对数导数和量子Fisher矩阵的记号，公式作为对象定义而非推导等式；末句说明其统计解释，未声称正性或坐标变换定理。
+    previous_atom_id: 965631add0f7486119b81f59fd78c7622ee76fd47bdf600fdfcb6e4a72b5a778
+    next_atom_id: a442d8a760d336cb9849abb499c4b66c8f16723f1a711dca9b2a4076a2fd12cd

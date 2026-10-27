@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d2ec2245177877562d49b932c5e09e6fdd565c596a6ba5e8c7a3f7ab258ccc2f
+  normalized_sha256: sha256:d2ec2245177877562d49b932c5e09e6fdd565c596a6ba5e8c7a3f7ab258ccc2f
+cas_ref: sha256:d2ec2245177877562d49b932c5e09e6fdd565c596a6ba5e8c7a3f7ab258ccc2f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅由钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 闭合：Function.Antiperiodic.periodic_two_mul；仓内无可用冻结 GID。全 D5（含 private），按 Antiperiodic/反周期/周期或 involution/差分/范数/一加一减乘积数学形状扫描；复核 LucasVerticalSlice 的专用整数递推结论和 RationalIntervalExpression.checked_expression_encloses 的实区间语义；未找到可供应此任意实函数/任意环子目标的冻结 GID。；临时 D5.YD142ReuseProbe 经 make lean 接受。
+    previous_atom_id: 47c89b31199224d5569c48c3897aa2e980d6f0143e755beb1c0efaec87107a14
+    next_atom_id: 9c9ba5e7848b4ecac4f05e7b6f231e5b7a79bd397fe80b26415ddd5cb6e6a437

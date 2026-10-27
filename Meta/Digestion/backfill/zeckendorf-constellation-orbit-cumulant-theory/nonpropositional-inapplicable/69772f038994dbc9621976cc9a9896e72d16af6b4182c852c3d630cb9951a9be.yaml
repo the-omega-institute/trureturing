@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:69772f038994dbc9621976cc9a9896e72d16af6b4182c852c3d630cb9951a9be
+  normalized_sha256: sha256:69772f038994dbc9621976cc9a9896e72d16af6b4182c852c3d630cb9951a9be
+cas_ref: sha256:69772f038994dbc9621976cc9a9896e72d16af6b4182c852c3d630cb9951a9be
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Heading and unfinished conditional preamble introducing the following interpretation of C1-C6, without an independent consequent.
+    previous_atom_id: 3f48658c415ae447b86148804546333e862a783b0adb6704eaa09916a3820f8e
+    next_atom_id: 30a065a5a77168394ff62ba2bea7646a9a8313f4b310767aea53b09453899ed2

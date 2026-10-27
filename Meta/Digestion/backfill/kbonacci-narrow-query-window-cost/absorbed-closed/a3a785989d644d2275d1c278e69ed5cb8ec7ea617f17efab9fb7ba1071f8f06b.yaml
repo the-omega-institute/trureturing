@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a3a785989d644d2275d1c278e69ed5cb8ec7ea617f17efab9fb7ba1071f8f06b
+  normalized_sha256: sha256:a3a785989d644d2275d1c278e69ed5cb8ec7ea617f17efab9fb7ba1071f8f06b
+cas_ref: sha256:a3a785989d644d2275d1c278e69ed5cb8ec7ea617f17efab9fb7ba1071f8f06b
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FiveLabelSeamCost.original_five_label_seam_cost
+    target_statement_id: sha256:e14158a83c8d30f9219d8080047bb7a38016b14806a24222da6b8c5893457a74
+receipts:
+  unresolved_subitems: []

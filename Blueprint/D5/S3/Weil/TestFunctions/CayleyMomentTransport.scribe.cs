@@ -49,6 +49,14 @@ internal sealed class CayleyMomentTransportDocument : IScribeDocumentDefinition
                 "The pairing is the real-line integral of the local Fourier-Laplace transform "
                     + "against the supplied positive measure."),
             Describe.Lean(
+                DescribeId.Create("cayley-circle-ne-one"),
+                DeclarationHandle.Create(Prefix + "cayley_circle_ne_one"),
+                H("The positive-scale Cayley map omits the identity"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("At every finite real spectral parameter and every positive scale, the existing Cayley circle map differs from the circle identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("local-fourier-moment-cayley-transport"),
                 DeclarationHandle.Create(Prefix + "cayley_moment_transport"),
                 H("Local Fourier moments transport through Cayley compactification"),

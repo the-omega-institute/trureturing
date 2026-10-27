@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:ad36dd4391b14057c0fee439385c9a70ff97c6c8e43cb2877b4393c32610e1fd
+  normalized_sha256: sha256:ad36dd4391b14057c0fee439385c9a70ff97c6c8e43cb2877b4393c32610e1fd
+cas_ref: sha256:ad36dd4391b14057c0fee439385c9a70ff97c6c8e43cb2877b4393c32610e1fd
+coverage_gids:
+  - gid: D5/S3/Observer/Reversal/VisibleNegationLifts.fixedPart_idempotent
+    target_statement_id: sha256:4c7ec9947f20ca5e2873b3ecbda736689e0304d2a6c0972b9737ed370944002b
+  - gid: D5/S3/Observer/Reversal/VisibleNegationLifts.fixedPart_in_observation_kernel
+    target_statement_id: sha256:87e1b1d5fcfbf0a1ad05a0916e8283b48c30e8e6ccf178e420a4b943d8242b2a
+  - gid: D5/S3/Weil/HolonomyBridge/OffLineOrbitParityDecomposition.off_line_orbit_parity_decomposition
+    target_statement_id: sha256:e9c3bd1747b450a0dae5ea505a9e8496a7d3b27181a1a728ca80b9677c8d03bd
+  - gid: D5/S3/Weil/HolonomyBridge/OrbitReversalObservation.fixedPart_eq_even_channel
+    target_statement_id: sha256:6676971157ca13024294856c50826196b1d413ea216f8c27784e7ed15850f838
+  - gid: D5/S3/Weil/HolonomyBridge/OrbitReversalObservation.off_line_orbit_in_reversal_coordinates
+    target_statement_id: sha256:60446cc8e4c8d2d31d5f8dbdc7a2b066ffa7749dc08969f79c0f6219c8db28fe
+  - gid: D5/S3/Weil/HolonomyBridge/OrbitReversalObservation.weil_visible_negation_lift
+    target_statement_id: sha256:f6c2592fd0c2ae2544808eeaea80efa55a55dc5e222ff6cda05eabec49ea615b
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:07d4872b7d720dff447d6387720dd862ba7aafb62c588ec0ee892d43217b6e36
+  normalized_sha256: sha256:07d4872b7d720dff447d6387720dd862ba7aafb62c588ec0ee892d43217b6e36
+cas_ref: sha256:07d4872b7d720dff447d6387720dd862ba7aafb62c588ec0ee892d43217b6e36
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 增订三标题及编辑范围声明只说明公式编号、同卷追加与不将条件证书称为 RH 证明，不含数学推论。
+    previous_atom_id: 99d741f2f2c69e342597bf3d5ed827732bc21e8bde9bf8b46f930667d55c6455
+    next_atom_id: f5e5c084ea276215d10c8a65912d1212ac98009479c8fd60ffa5f9333e6fbea0

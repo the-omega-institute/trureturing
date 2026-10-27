@@ -1,0 +1,6 @@
+**Theorem 32.1 (robust boundedness and genuine source escape).** Fix $y$ and $\delta\ge0$ on the acquired trajectory (26.2).
+
+1. If $e(y)>\delta$, every $0\le\eta<e(y)-\delta$ has bounded compatible complete targets in $\mathcal W_{\delta+\eta}(y)$, with the explicit bounds of Theorem 31.2 at $\rho=\delta+\eta$.
+2. If $e(y)<\delta$, the source projection of $\mathcal W_\delta(y)$ is unbounded. This is actual whole-world compatibility at every paid clock, not a failed sufficient certificate.
+3. There exists some $\eta>0$ for which $\mathcal W_{\delta+\eta}(y)$ has bounded complete targets if and only if $e(y)>\delta$. If $e(y)\le\delta$, its source projection is unbounded for every $\eta>0$.
+

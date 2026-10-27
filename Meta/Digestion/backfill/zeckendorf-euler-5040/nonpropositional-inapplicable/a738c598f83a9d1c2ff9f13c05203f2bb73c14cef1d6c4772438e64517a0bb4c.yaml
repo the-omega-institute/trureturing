@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a738c598f83a9d1c2ff9f13c05203f2bb73c14cef1d6c4772438e64517a0bb4c
+  normalized_sha256: sha256:a738c598f83a9d1c2ff9f13c05203f2bb73c14cef1d6c4772438e64517a0bb4c
+cas_ref: sha256:a738c598f83a9d1c2ff9f13c05203f2bb73c14cef1d6c4772438e64517a0bb4c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这里只提出“给定因子结构应补哪些素数与指数”的问题，没有另行声称答案或最小性定理。
+    previous_atom_id: bcbd4b04b806fff972848d8ed7eb2dccd6ae72036d2143f6d6f4b1df2e4e4461
+    next_atom_id: 3a80ea38a737ff2051d6a1ccad6d69a9cf5fc72d43e8dda455d7ac86a48ad4c1

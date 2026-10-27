@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:162419cf6a25bf8781d04cfa86554781ddac0e2bad6c455c0cef3e0993614a63
+  normalized_sha256: sha256:162419cf6a25bf8781d04cfa86554781ddac0e2bad6c455c0cef3e0993614a63
+cas_ref: sha256:162419cf6a25bf8781d04cfa86554781ddac0e2bad6c455c0cef3e0993614a63
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 仅列出有限历史作为记录窗口种类，无关于历史可恢复性的结论。'
+    previous_atom_id: 10d0619310950992d0a1550957f530d5d0856e03a712a5d563b03de1068811c4
+    next_atom_id: fce7dee89294e4ed21f2411292ac8c8c212addef3b51661c64f5dded581c464d

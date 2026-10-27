@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:00aa0ae509c1341ee5c5a357bb2a3899445f7697d01a5079a095611e95999358
+  normalized_sha256: sha256:00aa0ae509c1341ee5c5a357bb2a3899445f7697d01a5079a095611e95999358
+cas_ref: sha256:00aa0ae509c1341ee5c5a357bb2a3899445f7697d01a5079a095611e95999358
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只声明第一、第三人称读出的类型及待研究目标，未比较两者的充分性。
+    previous_atom_id: ea333006214b5ab5651338b8aae64c2b01a3bf98c4d2aae61b6c0d55d1a7439a
+    next_atom_id: 223f49a04e9a4a128447e8d6617556e502755af2f953aea7ea947340fc56fdda

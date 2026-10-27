@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3005a029bebaf169c8193918a8a711c87af3ba2f5f78f3eec5c08ae4b39a98e1
+  normalized_sha256: sha256:3005a029bebaf169c8193918a8a711c87af3ba2f5f78f3eec5c08ae4b39a98e1
+cas_ref: sha256:3005a029bebaf169c8193918a8a711c87af3ba2f5f78f3eec5c08ae4b39a98e1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 关于观察者之间是否存在规范 transport 的疑问句。
+    previous_atom_id: 6e0b4026832beadec632456a5a51a78ed74ae3e2d0f37773e8312cecb4764d78
+    next_atom_id: 09f5a170f2fb8abb35dbd9f6d3b3cfd29749ad7fb616db4798bbd22e0fd7579c

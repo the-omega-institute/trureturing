@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0432670d572041aba97fc0a965c6520f87c0bd11994e051a2348471d4375f93b
+  normalized_sha256: sha256:0432670d572041aba97fc0a965c6520f87c0bd11994e051a2348471d4375f93b
+cas_ref: sha256:0432670d572041aba97fc0a965c6520f87c0bd11994e051a2348471d4375f93b
+coverage_gids:
+  - gid: D5/S3/Observer/Hankel/PositiveGramianBalancing.coordinates_nonempty
+    target_statement_id: sha256:f958fcca705bb3f91e1f5eef46833f7eb8ae2ea80c5cacd5568e926a7dd68dcb
+receipts:
+  unresolved_subitems: []

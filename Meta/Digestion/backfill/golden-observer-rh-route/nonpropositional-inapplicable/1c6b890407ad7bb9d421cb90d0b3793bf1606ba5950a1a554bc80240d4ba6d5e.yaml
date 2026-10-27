@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1c6b890407ad7bb9d421cb90d0b3793bf1606ba5950a1a554bc80240d4ba6d5e
+  normalized_sha256: sha256:1c6b890407ad7bb9d421cb90d0b3793bf1606ba5950a1a554bc80240d4ba6d5e
+cas_ref: sha256:1c6b890407ad7bb9d421cb90d0b3793bf1606ba5950a1a554bc80240d4ba6d5e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 建议将 Γ_Weil 用作全测试类 Weil criterion/separator 路线的名称，是路线注册条目。
+    previous_atom_id: 4d207c215f09843fd4429ebdd245e45ab0e291f302ceb6e4105b8e31301fa0f0
+    next_atom_id: 71a05d846724624fc2509a0d0ee0788d1a8c7e6e8ea74d4962068f729bbed9d5

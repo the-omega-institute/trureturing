@@ -1,0 +1,32 @@
+**Definition 77.2 (a fixed chain recurrence).** Put
+
+$$
+Q_{-1}(y)=0,\quad Q_0(y)=1,\quad
+Q_{j+1}(y)=yQ_j(y)-Q_{j-1}(y),\qquad
+p_j(z)=Q_j((z-a)/c),\quad v_j=p_j(T)e_o.
+\tag{77.3}
+$$
+
+Thus $v_{-1}=0$, $v_0=e_o$ and $v_{j+1}=Av_j-v_{j-1}$. Write
+$p_j(z)=\sum_{i=0}^j q_{j,i}z^i$. Symmetry of this actual $T$ gives
+
+$$
+\begin{aligned}
+G_{ij}&:=\langle v_i,v_j\rangle
+ =\sum_{s=0}^i\sum_{t=0}^j q_{i,s}q_{j,t}m_{s+t},\\
+D_j&:=\langle v_j,Tv_j\rangle
+ =\sum_{s,t=0}^j q_{j,s}q_{j,t}m_{s+t+1},\\
+h_j&:=G_{jj}=\|p_j(T)e_o\|^2.
+\end{aligned}
+\tag{77.4}
+$$
+
+All coefficients and sums are rational. In particular $h_j$ uses only
+moments through $2j$, and $D_j$ uses only moments through $2j+1$.
+These are local calculations on a supplied or earned prefix, rather than
+additional observation primitives. The moment inner product and its
+three-term reconstruction are the classical tools of
+[Teschl, §2.5, (2.94)–(2.118) and the finite-support paragraph](../../../Library/Dynamics/teschl2000jacobi.md).
+The source-specific issue below is the rationality of the normalized
+symmetric links forced by this particular tree.
+

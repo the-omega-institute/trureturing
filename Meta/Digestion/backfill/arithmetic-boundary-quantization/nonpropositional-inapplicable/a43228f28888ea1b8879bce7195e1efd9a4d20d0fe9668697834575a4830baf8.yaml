@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a43228f28888ea1b8879bce7195e1efd9a4d20d0fe9668697834575a4830baf8
+  normalized_sha256: sha256:a43228f28888ea1b8879bce7195e1efd9a4d20d0fe9668697834575a4830baf8
+cas_ref: sha256:a43228f28888ea1b8879bce7195e1efd9a4d20d0fe9668697834575a4830baf8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Provenance and scope note only: repo-derived paper construction, local algebra checking, no kernel-frozen or novelty claim, and the following discussion targets a named rule rather than RH. The mathematical counterexample itself is in the next atom; this note contains no formula, construction or standalone mathematical assertion.'
+    previous_atom_id: 267f855a71ab1eaf12fda4b022d72ef7eb007cc066adefc458de7dd86df944be
+    next_atom_id: a801f84b3efa71b82d61d4d5babf9180365738319a1f4a2038a21c67c1e1e3cb

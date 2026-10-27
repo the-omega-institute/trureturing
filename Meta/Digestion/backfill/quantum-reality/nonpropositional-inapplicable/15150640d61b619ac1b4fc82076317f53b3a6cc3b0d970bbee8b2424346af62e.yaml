@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:15150640d61b619ac1b4fc82076317f53b3a6cc3b0d970bbee8b2424346af62e
+  normalized_sha256: sha256:15150640d61b619ac1b4fc82076317f53b3a6cc3b0d970bbee8b2424346af62e
+cas_ref: sha256:15150640d61b619ac1b4fc82076317f53b3a6cc3b0d970bbee8b2424346af62e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该段是外部脚本和检查结果的历史报告及链接，不把49项检查或外部数值样例认证为本仓数学证明。
+    previous_atom_id: be7b0f7230f45c1de4ce4a04cfd09462fc1ff32f9ce99af95ff1d58f31307e58
+    next_atom_id: 18ab5f6e7cf035c955b48005831075f0f45e41aa911ce78b4955089b315878b4

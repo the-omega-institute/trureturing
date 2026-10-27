@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:df8e3546a91e96130fef60dc0a6b7862a157b4e797c3025de650909fd5672b6e
+  normalized_sha256: sha256:df8e3546a91e96130fef60dc0a6b7862a157b4e797c3025de650909fd5672b6e
+cas_ref: sha256:df8e3546a91e96130fef60dc0a6b7862a157b4e797c3025de650909fd5672b6e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: An educational interpretation comparing transfer and training accuracy. It introduces no quantitative notion of understanding and asserts no mathematical implication.
+    previous_atom_id: c3eb8c5ce0c0155574535e3cd53d3e51ed57045fc269adb703b2a2ec577f84dd
+    next_atom_id: 2661fbb651b639148ed960a51be5f1d737435885aaeb697bdbbc642b8f072e31

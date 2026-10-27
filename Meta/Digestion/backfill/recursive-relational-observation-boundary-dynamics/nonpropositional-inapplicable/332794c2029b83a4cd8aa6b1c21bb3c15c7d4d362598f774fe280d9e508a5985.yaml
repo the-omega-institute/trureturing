@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:332794c2029b83a4cd8aa6b1c21bb3c15c7d4d362598f774fe280d9e508a5985
+  normalized_sha256: sha256:332794c2029b83a4cd8aa6b1c21bb3c15c7d4d362598f774fe280d9e508a5985
+cas_ref: sha256:332794c2029b83a4cd8aa6b1c21bb3c15c7d4d362598f774fe280d9e508a5985
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 44 title only.
+    previous_atom_id: 64959e3ed2a729162700eb257f0754be79a3adb1851856fd952e0c08c9b7417d
+    next_atom_id: 7b77a7bcb0403e6c0b0c6f505f88c72f7851aa97baa5db5d51e3555ca4cc245c

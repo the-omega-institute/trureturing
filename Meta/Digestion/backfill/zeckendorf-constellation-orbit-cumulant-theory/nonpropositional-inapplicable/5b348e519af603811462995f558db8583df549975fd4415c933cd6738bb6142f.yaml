@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5b348e519af603811462995f558db8583df549975fd4415c933cd6738bb6142f
+  normalized_sha256: sha256:5b348e519af603811462995f558db8583df549975fd4415c933cd6738bb6142f
+cas_ref: sha256:5b348e519af603811462995f558db8583df549975fd4415c933cd6738bb6142f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition heading and setup for maintaining residue data, with no completed update equation or correctness claim in this atom.
+    previous_atom_id: 79e513a9835678cec845b9f2455ba3135acb3963e7d50e8cbbf057a4d4ac2021
+    next_atom_id: 449dc475a394158ee3a5e0cd6c20287ff85dfc4caaf702c9e0986fa99bc8ee2f

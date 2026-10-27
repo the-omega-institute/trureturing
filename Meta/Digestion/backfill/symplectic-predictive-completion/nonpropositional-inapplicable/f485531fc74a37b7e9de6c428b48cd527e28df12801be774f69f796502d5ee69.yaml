@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f485531fc74a37b7e9de6c428b48cd527e28df12801be774f69f796502d5ee69
+  normalized_sha256: sha256:f485531fc74a37b7e9de6c428b48cd527e28df12801be774f69f796502d5ee69
+cas_ref: sha256:f485531fc74a37b7e9de6c428b48cd527e28df12801be774f69f796502d5ee69
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只固定有界B、C并定义轨迹算子、a(T)、mu_N及常数b、c，不断言正性或稳定性。
+    previous_atom_id: 4adc4cc10c55583a70b2f9e405a97718dcb21d4131588dc431558730cd6ba66b
+    next_atom_id: d2bf8c85bd24b84d4d55f1e175e44a947f7b999aaa2c2fd6623145140df6f624

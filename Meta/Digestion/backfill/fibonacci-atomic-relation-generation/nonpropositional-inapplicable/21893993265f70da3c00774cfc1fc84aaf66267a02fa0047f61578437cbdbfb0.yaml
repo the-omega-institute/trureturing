@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:21893993265f70da3c00774cfc1fc84aaf66267a02fa0047f61578437cbdbfb0
+  normalized_sha256: sha256:21893993265f70da3c00774cfc1fc84aaf66267a02fa0047f61578437cbdbfb0
+cas_ref: sha256:21893993265f70da3c00774cfc1fc84aaf66267a02fa0047f61578437cbdbfb0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为高素数幂碰撞独立编号和适用范围的导航，不陈述构造成立或新数学关系。
+    previous_atom_id: de345e328bc6fa9831a71da06e0388ecdb75c941339213207855d7e994fdedd8
+    next_atom_id: c7ec0878282b4f98be7be8e020a12bf4d9f59c261ffda9b100a598a4fe8c9d7d

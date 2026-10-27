@@ -12,7 +12,19 @@ The positive and negative parts of a Hermitian matrix define its real-linear ext
 
 This converse includes dimension two. It supplies the probability representation assumed by the finite-instrument application; neither static event structure nor positive history length implies its probability hypotheses. Busch supplies the mathematical source, while the finite-dimensional construction uses only binary additivity.
 
-**Theorem 1.1 (Unique density representation).**
+**Theorem 1.1 (All complex effects separate matrices).**
+
+Lean statement: `D5/S3/Quantum/Foundation/EffectProbabilityExtension.effect_trace_unique`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/EffectProbabilityExtension.effect_trace_unique` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two arbitrary finite complex matrices are equal if their trace pairings agree on every positive contraction in the native C-star matrix algebra. The positive contractions span that algebra. Shared-energy pinching consumes this separation after pinching each test effect into the full total-energy commutant.
+
+**Theorem 1.2 (Unique density representation).**
 
 Lean statement: `D5/S3/Quantum/Foundation/EffectProbabilityExtension.effect_density_representation`
 
@@ -27,4 +39,5 @@ Every nonnegative normalized finitely additive probability on all effects is the
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Foundation/EffectProbabilityExtension.effect_density_representation`
+- Truth anchor: `D5/S3/Quantum/Foundation/EffectProbabilityExtension.effect_trace_unique`
 - Dependency: [D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation](../QuantumChannels/PositiveFilterTransposeRefutation.md)

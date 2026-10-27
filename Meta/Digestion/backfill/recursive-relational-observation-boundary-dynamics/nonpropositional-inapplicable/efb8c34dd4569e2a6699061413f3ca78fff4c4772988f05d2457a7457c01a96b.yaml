@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:efb8c34dd4569e2a6699061413f3ca78fff4c4772988f05d2457a7457c01a96b
+  normalized_sha256: sha256:efb8c34dd4569e2a6699061413f3ca78fff4c4772988f05d2457a7457c01a96b
+cas_ref: sha256:efb8c34dd4569e2a6699061413f3ca78fff4c4772988f05d2457a7457c01a96b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条是卷首范围说明和五个既有卷的导航清单；只在其五个分解子项均结算后处理，不主张接口中的任何新定理。
+    previous_atom_id: null
+    next_atom_id: 3f142a225228b7829667ff8f3a5537c9093769001e6b19d4d1787bf199dc5269
+  chain_atoms:
+    - 5ba66a5458ff71bdf7b3f3b678c157dec3a8ab12c58a0000ea425133018d8d0c
+    - 1a876a00594f4548dd8936fcf4f73a8f5ec05c2bcd65033b36894dc93c61bcdf
+    - 60df495d41082b40ff7e505e7cd73e77665ccd14f7207cfa8b4b36832c7d9995
+    - 12e4a50dc96051ee5cc9fce6030e882ecd807a6038177ad74bb8bf6e68205e28
+    - e6f12b38f6079c8845c0b93dc09a1d244afef18e190eaa634914a164fb7ab364

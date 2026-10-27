@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:491700e6abc83b4aeed9d5a7aa7c0f46dcbf24a7f3a7ef943f66dd940b7315ea
+  normalized_sha256: sha256:491700e6abc83b4aeed9d5a7aa7c0f46dcbf24a7f3a7ef943f66dd940b7315ea
+cas_ref: sha256:491700e6abc83b4aeed9d5a7aa7c0f46dcbf24a7f3a7ef943f66dd940b7315ea
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/InterventionsExchange/MarginalTransportCouplingGap.marginal_transport_does_not_determine_coupling
+    target_statement_id: sha256:2c87ecf8a1d614b0c9435f4641c4b3ddf0045a7f98fcbdfd29f1efedea147d23
+  - gid: D5/S3/ConceptDynamics/InterventionsExchange/StableFlipCounterfactualOpposition.stable_flip_intervention_equivalent_counterfactual_opposite
+    target_statement_id: sha256:703a109be9a59eb76f0e285b9c5c9544f83a31520101758851c313d8ac94cdd0
+receipts:
+  unresolved_subitems: []

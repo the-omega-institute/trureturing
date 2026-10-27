@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:380b0ce40c744ffe1ec417627571d72eeee9768172bc2586207da5513aa2ecf9
+  normalized_sha256: sha256:380b0ce40c744ffe1ec417627571d72eeee9768172bc2586207da5513aa2ecf9
+cas_ref: sha256:380b0ce40c744ffe1ec417627571d72eeee9768172bc2586207da5513aa2ecf9
+coverage_gids:
+  - gid: D5/S3/Midline/Cayley/ZeroDataHilbertPresentationTransport.zeroData_hilbert_presentation_transport_spec
+    target_statement_id: sha256:fecd8fd8be3be2647e5b926870be1b82c6fdf4c70a00b6163cd3048c2a76091f
+receipts:
+  unresolved_subitems: []

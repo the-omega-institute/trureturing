@@ -34,7 +34,19 @@ $$\forall N \in \mathit{Nat},\; \forall v \in \mathit{Real},\; (\operatorname{\m
 
 Equation (15) acts on the full fermionic Fock space by the sum of hopping coefficients times cᵢ†cⱼ. JordanWigner.fullC uses the stated ordering of the modes, so the annihilator at j has the parity string from all earlier modes. The periodic bond is included in the same operator sum, with these fermionic signs.
 
-**Definition 1.3 (Half filling and ground-state minimality).**
+**Theorem 1.3 (The mixed canonical anticommutation relation).**
+
+$$\forall M \in \mathit{Nat},\; \forall i \in \operatorname{\mathit{Fin}}\left(M\right),\; \forall j \in \operatorname{\mathit{Fin}}\left(M\right),\; \operatorname{\mathit{JordanWigner}}.\operatorname{\mathit{fullC}}\left(i\right) \cdot \operatorname{\mathit{Matrix}}.\operatorname{\mathit{conjTranspose}}\left(\operatorname{\mathit{JordanWigner}}.\operatorname{\mathit{fullC}}\left(j\right)\right) + \operatorname{\mathit{Matrix}}.\operatorname{\mathit{conjTranspose}}\left(\operatorname{\mathit{JordanWigner}}.\operatorname{\mathit{fullC}}\left(j\right)\right) \cdot \operatorname{\mathit{JordanWigner}}.\operatorname{\mathit{fullC}}\left(i\right) = \operatorname{\mathit{if}} (i = j) \operatorname{\mathit{then}} (1:\operatorname{\mathit{Matrix}}\left((\operatorname{\mathit{Fin}}\left(M\right) \to \mathit{Bool}), (\operatorname{\mathit{Fin}}\left(M\right) \to \mathit{Bool}), \mathit{Complex}\right)) \operatorname{\mathit{else}} 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/PeriodicSshExcessPseudoEntropyRefutation.fullC_mixed` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The anticommutator of an annihilator and a creator is the identity for equal modes and zero for distinct modes.
+
+**Definition 1.4 (Half filling and ground-state minimality).**
 
 $$\forall N \in \mathit{Nat},\; \forall v \in \mathit{Real},\; \forall psi \in (\operatorname{\mathit{Fin}}\left(2 \cdot N\right) \to \mathit{Bool}) \to \mathit{Complex},\; (\operatorname{\mathit{IsHalfFilledGroundState}}\left(N, v, \mathit{psi}\right)) \Leftrightarrow ((\mathit{psi} \ne 0) \land ((\operatorname{\mathit{Matrix}}.\operatorname{\mathit{mulVec}}\left(\operatorname{\mathit{FockMajoranaCarrier}}.\operatorname{\mathit{numberOperator}}\left(2 \cdot N\right), \mathit{psi}\right) = \operatorname{\mathit{SMul}}.\operatorname{\mathit{smul}}\left((N:\mathit{Complex}), \mathit{psi}\right)) \land (\forall phi \in (\operatorname{\mathit{Fin}}\left(2 \cdot N\right) \to \mathit{Bool}) \to \mathit{Complex},\; (\mathit{phi} \ne 0) \Rightarrow ((\operatorname{\mathit{Matrix}}.\operatorname{\mathit{mulVec}}\left(\operatorname{\mathit{FockMajoranaCarrier}}.\operatorname{\mathit{numberOperator}}\left(2 \cdot N\right), \mathit{phi}\right) = \operatorname{\mathit{SMul}}.\operatorname{\mathit{smul}}\left((N:\mathit{Complex}), \mathit{phi}\right)) \Rightarrow (\operatorname{\mathit{Complex}}.\operatorname{\mathit{re}}\left(\operatorname{\mathit{dotProduct}}\left(\operatorname{\mathit{star}}\left(\mathit{psi}\right), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{mulVec}}\left(\operatorname{\mathit{hamiltonian}}\left(N, v\right), \mathit{psi}\right)\right)\right) \cdot \operatorname{\mathit{Complex}}.\operatorname{\mathit{re}}\left(\operatorname{\mathit{dotProduct}}\left(\operatorname{\mathit{star}}\left(\mathit{phi}\right), \mathit{phi}\right)\right) \le \operatorname{\mathit{Complex}}.\operatorname{\mathit{re}}\left(\operatorname{\mathit{dotProduct}}\left(\operatorname{\mathit{star}}\left(\mathit{phi}\right), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{mulVec}}\left(\operatorname{\mathit{hamiltonian}}\left(N, v\right), \mathit{phi}\right)\right)\right) \cdot \operatorname{\mathit{Complex}}.\operatorname{\mathit{re}}\left(\operatorname{\mathit{dotProduct}}\left(\operatorname{\mathit{star}}\left(\mathit{psi}\right), \mathit{psi}\right)\right))))))$$
 
@@ -48,7 +60,7 @@ $$\forall N \in \mathit{Nat},\; \forall v \in \mathit{Real},\; \forall psi \in (
 
 Half filling means exactly N particles among the 2N modes. The vector is nonzero and is an eigenvector of FockMajoranaCarrier.numberOperator with eigenvalue N. Its energy is minimal among all nonzero vectors in that particle sector. The inequality is the comparison of Rayleigh quotients after multiplication by the two positive squared norms, so no normalization is required.
 
-**Definition 1.4 (Partial trace over the later cells).**
+**Definition 1.5 (Partial trace over the later cells).**
 
 $$\forall N \in \mathit{Nat},\; \forall L \in \mathit{Nat},\; \forall h \in 2 \cdot L \le 2 \cdot N,\; \forall X \in \operatorname{\mathit{Matrix}}\left((\operatorname{\mathit{Fin}}\left(2 \cdot N\right) \to \mathit{Bool}), (\operatorname{\mathit{Fin}}\left(2 \cdot N\right) \to \mathit{Bool}), \mathit{Complex}\right),\; (\operatorname{\mathit{reduce}}\left(h, X\right):\operatorname{\mathit{Matrix}}\left((\operatorname{\mathit{Fin}}\left(2 \cdot L\right) \to \mathit{Bool}), (\operatorname{\mathit{Fin}}\left(2 \cdot L\right) \to \mathit{Bool}), \mathit{Complex}\right)) = \lambda(a:\operatorname{\mathit{Fin}}\left(2 \cdot L\right) \to \mathit{Bool})\mapsto(\lambda(b:\operatorname{\mathit{Fin}}\left(2 \cdot L\right) \to \mathit{Bool})\mapsto(\sum_{x:\operatorname{\mathit{Fin}}\left(2 \cdot N\right) \to \mathit{Bool}}(\sum_{y:\operatorname{\mathit{Fin}}\left(2 \cdot N\right) \to \mathit{Bool}}(\operatorname{\mathit{if}} ((\forall i \in \operatorname{\mathit{Fin}}\left(2 \cdot L\right),\; x\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{castLE}}\left(h, i\right)\right) = a\left(i\right)) \land ((\forall i \in \operatorname{\mathit{Fin}}\left(2 \cdot L\right),\; y\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{castLE}}\left(h, i\right)\right) = b\left(i\right)) \land (\forall k \in \operatorname{\mathit{Fin}}\left(2 \cdot N\right),\; (2 \cdot L \le \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(k\right)) \Rightarrow (x\left(k\right) = y\left(k\right))))) \operatorname{\mathit{then}} X\left(x, y\right) \operatorname{\mathit{else}} 0))))$$
 
@@ -62,7 +74,7 @@ $$\forall N \in \mathit{Nat},\; \forall L \in \mathit{Nat},\; \forall h \in 2 \c
 
 Subsystem A consists of the first L cells, hence the first 2L modes in the Jordan–Wigner order. Fin.castLE embeds these initial indices into Fin(2N). The two full configurations agree on every later orbital and restrict to a and b on the initial modes. Summing their matrix entries traces out the modes of the remaining cells. This initial partition crosses no modes.
 
-**Definition 1.5 (Spectral entropy with algebraic multiplicity).**
+**Definition 1.6 (Spectral entropy with algebraic multiplicity).**
 
 $$\forall n \in \mathit{Type}*,\; [\operatorname{\mathit{Fintype}}\left(n\right)], [\operatorname{\mathit{DecidableEq}}\left(n\right)], \forall X \in \operatorname{\mathit{Matrix}}\left(n, n, \mathit{Complex}\right),\; (\operatorname{\mathit{matrixEntropy}}\left(X\right):\mathit{Complex}) = \operatorname{\mathit{Multiset}}.\operatorname{\mathit{sum}}\left(\operatorname{\mathit{Multiset}}.\operatorname{\mathit{map}}\left(\lambda(z:\mathit{Complex})\mapsto(-\left(z \cdot \operatorname{\mathit{Complex}}.\operatorname{\mathit{log}}\left(z\right)\right)), \operatorname{\mathit{Polynomial}}.\operatorname{\mathit{roots}}\left(\operatorname{\mathit{Matrix}}.\operatorname{\mathit{charpoly}}\left(X\right)\right)\right)\right)$$
 
@@ -76,7 +88,7 @@ $$\forall n \in \mathit{Type}*,\; [\operatorname{\mathit{Fintype}}\left(n\right)
 
 The characteristic roots are taken with algebraic multiplicity. The multiset is mapped by z ↦ −z log z and then summed. Complex.log is the principal scalar logarithm, with Complex.log(0) = 0. This is the spectral form of equations (1)–(3), agreeing with −Tr(X log X) wherever that matrix function is defined.
 
-**Definition 1.6 (The averaged excess pseudo-entropy).**
+**Definition 1.7 (The averaged excess pseudo-entropy).**
 
 $$\forall N \in \mathit{Nat},\; \forall L \in \mathit{Nat},\; \forall h \in 2 \cdot L \le 2 \cdot N,\; \forall psi1 \in (\operatorname{\mathit{Fin}}\left(2 \cdot N\right) \to \mathit{Bool}) \to \mathit{Complex},\; \forall psi2 \in (\operatorname{\mathit{Fin}}\left(2 \cdot N\right) \to \mathit{Bool}) \to \mathit{Complex},\; (\operatorname{\mathit{averagedExcess}}\left(h, \mathit{psi1}, \mathit{psi2}\right):\mathit{Real}) = \operatorname{\mathit{Complex}}.\operatorname{\mathit{re}}\left(\operatorname{\mathit{matrixEntropy}}\left(\operatorname{\mathit{reduce}}\left(h, \operatorname{\mathit{SMul}}.\operatorname{\mathit{smul}}\left(\operatorname{\mathit{Inv}}.\operatorname{\mathit{inv}}\left(\operatorname{\mathit{dotProduct}}\left(\operatorname{\mathit{star}}\left(\mathit{psi2}\right), \mathit{psi1}\right)\right), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecMulVec}}\left(\mathit{psi1}, \operatorname{\mathit{star}}\left(\mathit{psi2}\right)\right)\right)\right)\right)\right) - \frac{\operatorname{\mathit{Complex}}.\operatorname{\mathit{re}}\left(\operatorname{\mathit{matrixEntropy}}\left(\operatorname{\mathit{reduce}}\left(h, \operatorname{\mathit{SMul}}.\operatorname{\mathit{smul}}\left(\operatorname{\mathit{Inv}}.\operatorname{\mathit{inv}}\left(\operatorname{\mathit{dotProduct}}\left(\operatorname{\mathit{star}}\left(\mathit{psi1}\right), \mathit{psi1}\right)\right), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecMulVec}}\left(\mathit{psi1}, \operatorname{\mathit{star}}\left(\mathit{psi1}\right)\right)\right)\right)\right)\right) + \operatorname{\mathit{Complex}}.\operatorname{\mathit{re}}\left(\operatorname{\mathit{matrixEntropy}}\left(\operatorname{\mathit{reduce}}\left(h, \operatorname{\mathit{SMul}}.\operatorname{\mathit{smul}}\left(\operatorname{\mathit{Inv}}.\operatorname{\mathit{inv}}\left(\operatorname{\mathit{dotProduct}}\left(\operatorname{\mathit{star}}\left(\mathit{psi2}\right), \mathit{psi2}\right)\right), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{vecMulVec}}\left(\mathit{psi2}, \operatorname{\mathit{star}}\left(\mathit{psi2}\right)\right)\right)\right)\right)\right)}{2}$$
 
@@ -90,7 +102,7 @@ $$\forall N \in \mathit{Nat},\; \forall L \in \mathit{Nat},\; \forall h \in 2 \c
 
 Matrix.vecMulVec forms the outer product. The first reduced matrix is the transition ψ₁ψ₂† divided by the overlap ψ₂†ψ₁. The other two are the normalized pure-state density matrices. Equation (21) subtracts the mean of the two input entropies from the real part of the transition entropy. The definition takes real parts of all three spectral entropies; for reduced density matrices their entropies are real.
 
-**Definition 1.7 (Non-positivity for every same-phase periodic chain).**
+**Definition 1.8 (Non-positivity for every same-phase periodic chain).**
 
 $$(\mathit{claim}) \Leftrightarrow (\forall N \in \mathit{Nat},\; \forall L \in \mathit{Nat},\; \forall h \in 2 \cdot L \le 2 \cdot N,\; (1 \le L) \Rightarrow ((L < N) \Rightarrow (\forall v1 \in \mathit{Real},\; \forall v2 \in \mathit{Real},\; (((\left|\mathit{v1}\right| < 1) \land (\left|\mathit{v2}\right| < 1)) \lor ((1 < \left|\mathit{v1}\right|) \land (1 < \left|\mathit{v2}\right|))) \Rightarrow (\forall psi1 \in (\operatorname{\mathit{Fin}}\left(2 \cdot N\right) \to \mathit{Bool}) \to \mathit{Complex},\; \forall psi2 \in (\operatorname{\mathit{Fin}}\left(2 \cdot N\right) \to \mathit{Bool}) \to \mathit{Complex},\; (\operatorname{\mathit{IsHalfFilledGroundState}}\left(N, \mathit{v1}, \mathit{psi1}\right)) \Rightarrow ((\operatorname{\mathit{IsHalfFilledGroundState}}\left(N, \mathit{v2}, \mathit{psi2}\right)) \Rightarrow ((\operatorname{\mathit{dotProduct}}\left(\operatorname{\mathit{star}}\left(\mathit{psi2}\right), \mathit{psi1}\right) \ne 0) \Rightarrow (\operatorname{\mathit{averagedExcess}}\left(h, \mathit{psi1}, \mathit{psi2}\right) \le 0)))))))$$
 
@@ -102,7 +114,7 @@ $$(\mathit{claim}) \Leftrightarrow (\forall N \in \mathit{Nat},\; \forall L \in 
 
 Section IV asserts non-positivity for same-phase half-filled SSH ground states at w = 1, and Section VI states that periodic boundary conditions give no exceptions at any system size. Here 1 ≤ L < N makes A a nonempty proper initial segment of cells. Both couplings have absolute value below one, or both have absolute value above one. The assertion includes every pair of half-filled ground states with nonzero overlap, and retains both the topological and the trivial phase.
 
-**Theorem 1.8 (Positive excess for three unit cells).**
+**Theorem 1.9 (Positive excess for three unit cells).**
 
 $$\neg (\mathit{claim})$$
 
@@ -129,6 +141,7 @@ Consequently ∆S = (1/21) log(2²·3²¹·5¹⁵·13¹³/7⁴²) > 0. The sign 
 - Truth anchor: `D5/S3/Quantum/Fermionic/PeriodicSshExcessPseudoEntropyRefutation.IsHalfFilledGroundState`
 - Truth anchor: `D5/S3/Quantum/Fermionic/PeriodicSshExcessPseudoEntropyRefutation.averagedExcess`
 - Truth anchor: `D5/S3/Quantum/Fermionic/PeriodicSshExcessPseudoEntropyRefutation.claim`
+- Truth anchor: `D5/S3/Quantum/Fermionic/PeriodicSshExcessPseudoEntropyRefutation.fullC_mixed`
 - Truth anchor: `D5/S3/Quantum/Fermionic/PeriodicSshExcessPseudoEntropyRefutation.hamiltonian`
 - Truth anchor: `D5/S3/Quantum/Fermionic/PeriodicSshExcessPseudoEntropyRefutation.matrixEntropy`
 - Truth anchor: `D5/S3/Quantum/Fermionic/PeriodicSshExcessPseudoEntropyRefutation.reduce`

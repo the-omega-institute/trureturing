@@ -108,7 +108,7 @@ private lemma parseval_three (d : Fin 3 → ℂ) :
   simp only [hs, hs4]
   ring
 
-private lemma density_purity (σ : Matrix (Fin 3) (Fin 3) ℂ) (hσ : IsDensity σ) :
+lemma density_purity (σ : Matrix (Fin 3) (Fin 3) ℂ) (hσ : IsDensity σ) :
     (∑ j, ∑ c, ‖σ j c‖ ^ 2) ≤ 1 := by
   have he : (∑ i, hσ.1.isHermitian.eigenvalues i) = 1 := by
     apply Complex.ofReal_injective

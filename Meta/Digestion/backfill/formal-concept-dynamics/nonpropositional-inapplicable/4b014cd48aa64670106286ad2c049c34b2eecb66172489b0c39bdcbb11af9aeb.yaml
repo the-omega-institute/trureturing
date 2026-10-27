@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b014cd48aa64670106286ad2c049c34b2eecb66172489b0c39bdcbb11af9aeb
+  normalized_sha256: sha256:4b014cd48aa64670106286ad2c049c34b2eecb66172489b0c39bdcbb11af9aeb
+cas_ref: sha256:4b014cd48aa64670106286ad2c049c34b2eecb66172489b0c39bdcbb11af9aeb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 兼容像定义的标题和参数引句；没有给出相容性断言。
+    previous_atom_id: 6a0d546a31001af2f9208bd84370c7bf5d7c5b47827801cfa936f7ec8deffed3
+    next_atom_id: 8f1fdccb942308c92b694bf049d24820e34dce03c9460141ac57c71a45144165

@@ -114,7 +114,7 @@ private theorem isNontrivialZero_conj {rho : ℂ} (h : IsNontrivialZero rho) :
   · simpa using h.2.1
   · simpa using h.2.2
 
-private theorem hasZetaZeroMultiplicity_iff_analyticOrderAt_eq {rho : ℂ}
+theorem hasZetaZeroMultiplicity_iff_analyticOrderAt_eq {rho : ℂ}
     (h : IsNontrivialZero rho) {m : ℕ} :
     HasZetaZeroMultiplicity rho m ↔ analyticOrderAt riemannZeta rho = m := by
   have hrho1 : rho ≠ 1 := ne_one_of_isNontrivialZero h

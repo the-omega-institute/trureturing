@@ -1,0 +1,21 @@
+**Definition 39.1 (the sampled four-expression domain).** Consider completed Sample cuts of the fixed comb binary phase, after every input, reply and predictor update has finished and the controller has returned to Ready. Put $v=w0^{N-1}$ for the actual binary chain including the last Sample's zero pulses. The four expressions expose the following different objects.
+
+| Expression | Independently specified content |
+| --- | --- |
+| Space | The actual rooted ordered unit material tree and its current field $x_v$, modulo rooted order-preserving isomorphism |
+| Time | The actual successful labelled native generation projection, and the actual binary pulse chain $v$ since the earned origin |
+| Boundary | Only the framed ordered list of $N$ literal root values received in the last Sample |
+| Memory | The retained current recursive native term and current full predictive field $x_v$ in its material-address coordinates |
+
+Space does not contain a command journal; Memory does not contain a binary word or an old-history oracle. Boundary is a finite actual window, not a table of arbitrary future responses or a counterfactual full-field measurement. Time's generation projection includes only actual successful original $P/S$ events. For this comb it is the forced chain
+
+$$
+P_{\varepsilon}S_{\varepsilon}P_RS_R\cdots
+P_{R^{n-1}}S_{R^{n-1}}.
+\tag{UFS.94}
+$$
+
+Time excludes old field preparation, acquisition, nulling, refused requests, Reads, Holds, waiting and wrapper segmentation. Two zero pulses issued as Next requests and two zero pulses inside a Sample are not distinguished by this Time expression. It is an event projection with this stated meaning, not the total old serialization or a claim about elapsed physical time. These exclusions are necessary to the inverse statement.
+
+The common callable context consists of the actual original-root binding and orientation, current rights, the source-independent codec/program, available backing and the authentic installation and binary-origin promises. It is not a hidden second copy of $n$, the term, window or word supplied to each expression. When an expression is used as the sole numerical input, missing finite arrays are reconstructed from it. Numeric reconstruction never reconstructs a grant. The actual joint process may retain the predictive arrays and last window simultaneously, paying for both. Receiving an exported numerical expression without its lawful context does not authorize calls on its source.
+

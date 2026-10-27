@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:d6d35b89b18f673a02edbe109e18a97d85b538728a277a21a7bbcac1b6f6a991
+  normalized_sha256: sha256:d6d35b89b18f673a02edbe109e18a97d85b538728a277a21a7bbcac1b6f6a991
+cas_ref: sha256:d6d35b89b18f673a02edbe109e18a97d85b538728a277a21a7bbcac1b6f6a991
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/CriticalPrefixSeparation.residual
+    target_statement_id: sha256:1387bdcb4f31d775c7833ba5db05b7d68314cd34f508240e3d3f6d507903a637
+  - gid: D5/S1/Digit/Infinite/CriticalPrefixSeparation.result
+    target_statement_id: sha256:6b17491e6c4781b21bb16be802eb923eeb41b4985d3a6b5a8ba8e748c426d35f
+  - gid: D5/S1/Digit/Infinite/OddColorThreeSource.golden_relations
+    target_statement_id: sha256:3c069fcfc51babb0c3caca588afc5dcb9ace493582f73ac83fad1c78ff56deef
+  - gid: D5/S1/Digit/Infinite/OddColorThreeSource.label_cases
+    target_statement_id: sha256:d42cc1fe85f4547b1f27843c05e49140c44468f9affdeb58f861a09ac904bfff
+receipts:
+  unresolved_subitems: []

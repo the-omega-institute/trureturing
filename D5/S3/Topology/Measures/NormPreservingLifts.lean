@@ -89,6 +89,38 @@ lemma signedFunctional_norm_le (s : SignedMeasure K) :
     ‖signedFunctional s‖ ≤ s.totalVariation.real univ :=
   (signedLinear s).mkContinuous_norm_le (measureReal_nonneg) (signedLinear_bound s)
 
+/-- The signed functional of a difference of finite positive measures is the
+    difference of their ordinary Bochner integrals. -/
+lemma signedFunctional_sub_toSignedMeasure (μ ν : Measure K)
+    [IsFiniteMeasure μ] [IsFiniteMeasure ν] (f : C(K, ℝ)) :
+    signedFunctional (μ.toSignedMeasure - ν.toSignedMeasure) f =
+      (∫ x, f x ∂μ) - ∫ x, f x ∂ν := by
+  change (∫ᵛ x, f x ∂•(μ.toSignedMeasure - ν.toSignedMeasure)) = _
+  rw [VectorMeasure.integral_sub_vectorMeasure]
+  · have hflip : (ContinuousLinearMap.lsmul ℝ ℝ) =
+        (ContinuousLinearMap.lsmul ℝ ℝ).flip := by
+      ext a b
+      simp [mul_comm]
+    have htoSigned (q : Measure K) [IsFiniteMeasure q] :
+        (∫ᵛ x, f x ∂•q.toSignedMeasure) =
+          (∫ᵛ x, f x ∂<•q.toSignedMeasure) := by
+      unfold VectorMeasure.integral
+      congr 2
+      exact congrArg (fun B => VectorMeasure.transpose q.toSignedMeasure B) hflip
+    rw [htoSigned, htoSigned, VectorMeasure.integral_toSignedMeasure,
+      VectorMeasure.integral_toSignedMeasure]
+  · exact continuous_integrable _ f
+  · exact continuous_integrable _ f
+
+/-- Variation of a difference is dominated by the sum of the positive measures. -/
+lemma totalVariation_sub_toSignedMeasure_le {X : Type u} [MeasurableSpace X]
+    (μ ν : Measure X)
+    [IsFiniteMeasure μ] [IsFiniteMeasure ν] :
+    (μ.toSignedMeasure - ν.toSignedMeasure).totalVariation ≤ μ + ν := by
+  rw [SignedMeasure.totalVariation_eq_variation]
+  simpa only [Measure.variation_toSignedMeasure] using
+    (VectorMeasure.variation_sub_le (μ := μ.toSignedMeasure) (ν := ν.toSignedMeasure))
+
 lemma apply_eq_of_supported_clopen {L : Type v} [TopologicalSpace L]
     [T2Space L] [MeasurableSpace L] [BorelSpace L]
     (p : K → L) (hp : Continuous p) {V : Set L} (hV : IsClopen V)

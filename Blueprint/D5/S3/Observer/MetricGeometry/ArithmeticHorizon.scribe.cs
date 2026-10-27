@@ -67,6 +67,37 @@ internal sealed class ArithmeticHorizonDocument : IScribeDocumentDefinition
                         + "The strict inequality comes from the remainder bound, even though "
                         + "the accuracy and small-arc inequalities are non-strict.")),
                     Paragraph(Text(
+                        "For a Diophantine consequence, keep the same finite S, update G, arbitrary "
+                        + "complex readout h, actual initial state s0, irrational alpha, fixed phase x, "
+                        + "and accuracy at every natural time 0 <= n <= H with 0 < epsilon < 1/2. "
+                        + "Set s=card S >= 1 and a=arcsin(epsilon)/pi. Let kappa and nu be real "
+                        + "numbers with kappa > 0 and nu >= 1, and assume "
+                        + "torusNorm(p alpha) >= kappa p^(-nu) for every positive natural p. "
+                        + "The positive Diophantine constant, often denoted c, is written kappa "
+                        + "to distinguish it from the complex-valued map c(z). Powers here are "
+                        + "real powers, represented by Real.rpow; nu need not be an integer.")),
+                    Paragraph(Text(
+                        "For each natural p with 1 <= p <= s, positivity of p and kappa gives "
+                        + "torusNorm(p alpha) >= kappa p^(-nu) > 0. The real-power identity "
+                        + "p^(nu+1) p^(-nu)=p, supplied by Real.rpow_add and Real.rpow_one, then "
+                        + "gives p/torusNorm(p alpha) <= p^(nu+1)/kappa. Since nu+1 >= 0, "
+                        + "Real.rpow_le_rpow applied to p <= s yields "
+                        + "p^(nu+1)/kappa <= s^(nu+1)/kappa.")),
+                    Paragraph(Text(
+                        "The range 1 <= p <= s is nonempty because the actual initial state "
+                        + "forces s >= 1. Taking its exact finite maximum, as expressed by "
+                        + "Finset.sup'_le in the definition of Psi, proves "
+                        + "Psi(alpha,s) <= s^(nu+1)/kappa. Multiplying by the positive a and "
+                        + "combining with finite_predictor_horizon gives the complete chain "
+                        + "H < s+a Psi(alpha,s) <= s+(a/kappa)s^(nu+1). Thus the resulting "
+                        + "Diophantine horizon bound is strict for every real nu >= 1.")),
+                    Paragraph(Text(
+                        "The first strict bound H < s+a Psi(alpha,s) uses no Diophantine "
+                        + "hypothesis; the extra assumption is used only to estimate Psi. Both "
+                        + "bounds concern the same fixed phase and initial state and allow any "
+                        + "complex-valued h. The case H=0 remains included, while an empty state "
+                        + "type cannot supply the required initial state.")),
+                    Paragraph(Text(
                         "Periodicity is derived from finiteness of the autonomous state map. "
                         + "The readout may take arbitrary complex values, and the accuracy premise "
                         + "requires neither other initial states nor other phases. The conclusion "

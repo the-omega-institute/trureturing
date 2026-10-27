@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ab89d7eaefb79f4093431fd718ba8d1ff6e8bb595eba26a111a409b180c618bc
+  normalized_sha256: sha256:ab89d7eaefb79f4093431fd718ba8d1ff6e8bb595eba26a111a409b180c618bc
+cas_ref: sha256:ab89d7eaefb79f4093431fd718ba8d1ff6e8bb595eba26a111a409b180c618bc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项仅说明本节使用的既有编码背景和形式化范围，并定义 φ、ψ、x_± 与 q(A,B)；未陈述收缩窗口识别或范数界。
+    previous_atom_id: 657f81a5679b685ec7dc75beffc55d440b756d5823f4e8244d208428de4ca255
+    next_atom_id: 7c1ab43f7c55f8d627967366a48553e5f5c1467514ad9390aad5c938b27e0790

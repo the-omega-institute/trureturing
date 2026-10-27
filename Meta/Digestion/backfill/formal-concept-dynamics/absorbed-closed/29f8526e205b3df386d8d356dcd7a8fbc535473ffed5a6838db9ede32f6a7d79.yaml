@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:29f8526e205b3df386d8d356dcd7a8fbc535473ffed5a6838db9ede32f6a7d79
+  normalized_sha256: sha256:29f8526e205b3df386d8d356dcd7a8fbc535473ffed5a6838db9ede32f6a7d79
+cas_ref: sha256:29f8526e205b3df386d8d356dcd7a8fbc535473ffed5a6838db9ede32f6a7d79
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DecisionValueScale/StrictPreferenceReversalValueState.strict_preference_reversal_changes_value_state
+    target_statement_id: sha256:ec838c5e46dc2a419784732554c9862eb8bb4518f9913129fd30b61878865d22
+receipts:
+  unresolved_subitems: []

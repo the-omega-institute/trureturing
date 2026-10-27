@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:86f761da3ec25229d17fe5e0b7e9c677ce1565bd07d06c6ba26fdabe6bcb7081
+  normalized_sha256: sha256:86f761da3ec25229d17fe5e0b7e9c677ce1565bd07d06c6ba26fdabe6bcb7081
+cas_ref: sha256:86f761da3ec25229d17fe5e0b7e9c677ce1565bd07d06c6ba26fdabe6bcb7081
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条说明 refinement_records.py 的输入范围、实验方法、来源与未编译参考输入的证据边界，不在此给出公式、实验结果或全称数学结论。
+    previous_atom_id: beffba5bc84f904b7f85253adf47f969c880d3c6aa86350d1f912a33494385bb
+    next_atom_id: 53214bd1fc2ff05e05bedb7a532f8a2a9206ea237bf7355184a15b62024cf4ed

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:739a7227a472a0394782568d1ed66666b0dfe9dd28ed17e7c5a59ce28efc26ce
+  normalized_sha256: sha256:739a7227a472a0394782568d1ed66666b0dfe9dd28ed17e7c5a59ce28efc26ce
+cas_ref: sha256:739a7227a472a0394782568d1ed66666b0dfe9dd28ed17e7c5a59ce28efc26ce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Six-layer inventory of objects and their conceptual roles, explicitly labeling the Trace-Jet layer open; it states no connecting identity.
+    previous_atom_id: 056b83a06a25d379a2bc9d8fef23c53bedf11f603c83a7d32d96b5b45d93367a
+    next_atom_id: 0eaa891b340695fc47bcba5125f939d461d6d5cca7ebcee9e6aa61f5765b9fe3

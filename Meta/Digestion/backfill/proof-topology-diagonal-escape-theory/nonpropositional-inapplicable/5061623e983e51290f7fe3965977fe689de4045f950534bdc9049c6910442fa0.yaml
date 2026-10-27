@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5061623e983e51290f7fe3965977fe689de4045f950534bdc9049c6910442fa0
+  normalized_sha256: sha256:5061623e983e51290f7fe3965977fe689de4045f950534bdc9049c6910442fa0
+cas_ref: sha256:5061623e983e51290f7fe3965977fe689de4045f950534bdc9049c6910442fa0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 指定有限维算子 K、幂等投影 P 和补投影 Q，并定义压缩算子、两步缺陷与 B；PT3/PT4 等式另列。
+    previous_atom_id: 94e49a9aabee1d2a9c4a16f9be4373d716d8f58b8131778de78f6d30877e56c8
+    next_atom_id: 9936532034c9fc0a379d4c3102ee4725cc27fc34241a859e37199f720d943fef

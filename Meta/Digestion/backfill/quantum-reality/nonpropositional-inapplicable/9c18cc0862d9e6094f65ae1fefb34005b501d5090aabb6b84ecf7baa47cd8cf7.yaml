@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9c18cc0862d9e6094f65ae1fefb34005b501d5090aabb6b84ecf7baa47cd8cf7
+  normalized_sha256: sha256:9c18cc0862d9e6094f65ae1fefb34005b501d5090aabb6b84ecf7baa47cd8cf7
+cas_ref: sha256:9c18cc0862d9e6094f65ae1fefb34005b501d5090aabb6b84ecf7baa47cd8cf7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段评价5040作为实验起点并提出编译、量子实现与未来预测的研究问题，末尾为文献链接；没有断言这些问题已经解决。
+    previous_atom_id: e6a02a931ab16b347df975a6c64f1035585578b92ea3190092168d5404ce1313
+    next_atom_id: bf3d267eb250adcf0cbf87d75da080e0617d8e4a85e7a805795acabefdf7e4f2

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:148ad309f1ee39739e1f8399b96617d37e5e071f41ad1f0123ff2689d9933880
+  normalized_sha256: sha256:148ad309f1ee39739e1f8399b96617d37e5e071f41ad1f0123ff2689d9933880
+cas_ref: sha256:148ad309f1ee39739e1f8399b96617d37e5e071f41ad1f0123ff2689d9933880
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Paley–Wiener frame 的统一下界在此是候选应满足的要求，未宣称已有这样的 frame。
+    previous_atom_id: 1c07ec1ed453e588507b857709fe38de4bad73390ddf0ef80807bb0af42d9655
+    next_atom_id: c98c5d55447a5d22fae75866553dbae95a2edb3b99c2cedb2ef9379c6fee9d81

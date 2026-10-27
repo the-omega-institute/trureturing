@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d97f6bb671876c33ce4aafe5754d16b0b67cd3c57ee6880f4ef701ad0c2103bc
+  normalized_sha256: sha256:d97f6bb671876c33ce4aafe5754d16b0b67cd3c57ee6880f4ef701ad0c2103bc
+cas_ref: sha256:d97f6bb671876c33ce4aafe5754d16b0b67cd3c57ee6880f4ef701ad0c2103bc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Jacobi coefficients 仅列为拟议重整化的候选状态对象。
+    previous_atom_id: 1c98bdbdb76f647a7b88c7ea7e615a87960ae09c61c95e040d211b4f0c47a275
+    next_atom_id: 8eabeb4bf4ef956e6450eb36252c0fc055a2ff95f3e8152bb3148c5b2feaeec5

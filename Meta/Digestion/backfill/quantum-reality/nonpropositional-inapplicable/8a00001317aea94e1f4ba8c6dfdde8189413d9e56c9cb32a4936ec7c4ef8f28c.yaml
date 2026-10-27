@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8a00001317aea94e1f4ba8c6dfdde8189413d9e56c9cb32a4936ec7c4ef8f28c
+  normalized_sha256: sha256:8a00001317aea94e1f4ba8c6dfdde8189413d9e56c9cb32a4936ec7c4ef8f28c
+cas_ref: sha256:8a00001317aea94e1f4ba8c6dfdde8189413d9e56c9cb32a4936ec7c4ef8f28c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 本条提出几何描述必须解释实际行动后的预测一致性并列文献，只规定研究要求，不给出数学结论。'
+    previous_atom_id: d764139e468e62edb900b1ad886d886e14596bc9b7b2520cf9ea97c66a1c587f
+    next_atom_id: 5c8f2de0dd1aa12335c84d3f00692188246ae92103248cd8a89ace91e83471b8

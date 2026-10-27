@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:da11402b66a4e9fd8e860351622d8897cea20e736d7c0a99430cd4bdf132e8d2
+  normalized_sha256: sha256:da11402b66a4e9fd8e860351622d8897cea20e736d7c0a99430cd4bdf132e8d2
+cas_ref: sha256:da11402b66a4e9fd8e860351622d8897cea20e736d7c0a99430cd4bdf132e8d2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: An availability-field identifier, without asserting entire extension.
+    previous_atom_id: c1d22cd50ee2dd349ab8afdfd5024bc36346e4ec4e3ff87c85501c4659f7f9de
+    next_atom_id: 100fca65607c9073f35a7b277c2ce06be9c175bb04ae91da1d23314112c4382c

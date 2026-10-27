@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c4b92052be30526e9856dbaf847974c552aaafe7a6822fbc512d7615d96349fc
+  normalized_sha256: sha256:c4b92052be30526e9856dbaf847974c552aaafe7a6822fbc512d7615d96349fc
+cas_ref: sha256:c4b92052be30526e9856dbaf847974c552aaafe7a6822fbc512d7615d96349fc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只有 RS.6 章节标题；共振擦除及预测闭合的等式、PSD 结论在后续 RS5 atom。
+    previous_atom_id: e39a6af2ceee638c139c64a06a9c0ddfabc706cd49cdfc694777a9c2c96a2f24
+    next_atom_id: cac0a87bf3531431fb79b5ac4826f9362a23f9f73ae77f02b65e7c60025821cb

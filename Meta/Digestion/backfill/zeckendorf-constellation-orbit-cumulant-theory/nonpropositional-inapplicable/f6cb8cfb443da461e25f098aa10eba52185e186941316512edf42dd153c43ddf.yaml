@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f6cb8cfb443da461e25f098aa10eba52185e186941316512edf42dd153c43ddf
+  normalized_sha256: sha256:f6cb8cfb443da461e25f098aa10eba52185e186941316512edf42dd153c43ddf
+cas_ref: sha256:f6cb8cfb443da461e25f098aa10eba52185e186941316512edf42dd153c43ddf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the editorial label derived and describes the provenance classification, rather than stating a mathematical implication.
+    previous_atom_id: 9394a0403f568ba2a1892125c72a4b64cfc89ef20be7b71327f3dfa8e0b8680f
+    next_atom_id: 3b1989f554c175ffef4aa8adef42b6f54475d71dfad4e79c324fd27caa80c716

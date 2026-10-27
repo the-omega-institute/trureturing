@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2f3b92f73669fd82c97a0116da2c59cfb627b9bd868761cdb736c1ac122a23e9
+  normalized_sha256: sha256:2f3b92f73669fd82c97a0116da2c59cfb627b9bd868761cdb736c1ac122a23e9
+cas_ref: sha256:2f3b92f73669fd82c97a0116da2c59cfb627b9bd868761cdb736c1ac122a23e9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：给定动作映射及基础读出，并按词序定义复合 F_w。
+    previous_atom_id: 7405195d952dd22ecdf8adec949a1bd177794f5b81dbd7da23cc587bb16198ae
+    next_atom_id: c3afb3ed9866ffd0e23183c2bd67ce7ad3f46d65d26b6c1484af582b814221c7

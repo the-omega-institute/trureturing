@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d50bbbbd20d3ef9d8f865cd7fca55910c2a7ad40fdb72083556435b20b85dabd
+  normalized_sha256: sha256:d50bbbbd20d3ef9d8f865cd7fca55910c2a7ad40fdb72083556435b20b85dabd
+cas_ref: sha256:d50bbbbd20d3ef9d8f865cd7fca55910c2a7ad40fdb72083556435b20b85dabd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第7章电磁观测与参数辨识的研究提问，不含辨识定理。
+    previous_atom_id: 26a60a16dde513915eee567c60510bba7d5a7b38beb522bbed5c0fea79bbc5dd
+    next_atom_id: 3c9fe7f6628c3fb447cebca7de01197330eb32b3e2941e98645145a1a8acb1ee

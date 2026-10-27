@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4007fbf1092e04f12b03b68782fbad34e1b06fab47d5b2548d4c489d175163a8
+  normalized_sha256: sha256:4007fbf1092e04f12b03b68782fbad34e1b06fab47d5b2548d4c489d175163a8
+cas_ref: sha256:4007fbf1092e04f12b03b68782fbad34e1b06fab47d5b2548d4c489d175163a8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：只列出 X 紧致凸这一条件，未断言任意 X 都紧致凸。
+    previous_atom_id: 52023005d4854b4084f6cf96e071bf9fe7a8d099b753a12d61791cbd255010e5
+    next_atom_id: 35ed969a152f67f7e7b4221b00ef920c305cbd42d163fe3892a7994c3038dd80

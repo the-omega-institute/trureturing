@@ -99,7 +99,7 @@ The settlement would fail if these matrices did not satisfy the source's project
 
 Kernel-checked source: [ProjectionAMGMRefutation.lean](../D5/S3/Quantum/Matrix/ProjectionAMGMRefutation.lean), namespace `D5.S3.Quantum.Matrix.ProjectionAMGMRefutation`. The public conclusion is `result`; the axiom closure of every public declaration is contained in $\{\mathrm{propext},\mathrm{Classical.choice},\mathrm{Quot.sound}\}$.
 
-The scalar three-coordinate complement-projection argument under Triage is prose. Its corresponding unpublished source has reported Lean 4.33 compilation evidence, but no accepted current exact-type/axiom report. It is outside the kernel-checked refutation cited above.
+The scalar three-coordinate complement-projection argument under Triage is prose. A separate private scalar200 source now has native Lean 4.35 evidence for the complete all-order scalar basis refutation, but it is not an admitted public declaration or a new open-problem-resolution binding. Its exact scope and evidence boundary are recorded below; it remains separate from the public kernel-checked dimension-three result.
 
 The six-dimensional block counterexample under Triage is a separate prose
 proof with an exact integer certificate and a self-contained checker. It
@@ -121,7 +121,7 @@ The public result is the designated refutation result (`basis=refutes`) and is e
 
 Experiment entry: [sun-luo-ye-2020-projection-matrix-amgm](https://github.com/the-omega-institute/trureturing-experiments/tree/38f78a9f7126378ad73d9b496e1c73b6df883bc7/docs/reports/sun-luo-ye-2020-projection-matrix-amgm), script `check.py`. Command: `python3 check.py` from that directory, with NumPy installed. Exit code: 0. Script SHA-256: `5e7643a7ccb84fb77ca498bf6b810c56eb769b401d27b042e55f5e322d3bcfc9`. Final discrepancy count: `bad= 0`.
 
-The exact rational checks enumerate all $n!$ words at $n=3,5,7$: respectively 6, 120 and 5040 words, with quadratic forms $-8/243$, $-50624/232058125$ and $-1838265624/3236831537545039$. Direct matrix word multiplication is also checked at $n=3$. The floating-point checks use the 399 interior points of a 400-step grid for each equiangular family at $n=2,3,4,5$. Negative points at $n=3$ range from $-0.49625$ to $-0.20375$; at $n=5$ from $-0.246875$ to $-0.1125$. There are no negative grid points at $n=2,4$. These grid readings do not establish a uniform continuum or even-$n$ result.
+The exact rational checks enumerate all $n!$ words at $n=3,5,7$: respectively 6, 120 and 5040 words, with quadratic forms $-8/243$, $-50624/232058125$ and $-1838265624/3236831537545039$. Direct matrix word multiplication is also checked at $n=3$. The floating-point checks use the 399 interior points of a 400-step grid for each equiangular family at $n=2,3,4,5$. Negative points at $n=3$ range from $-0.49625$ to $-0.20375$; at $n=5$ from $-0.246875$ to $-0.1125$. There are no negative grid points at $n=2,4$; those finite grid readings do not settle the even-$n$ question. The scalar200 certificate below supplies an exact even-$n$ refutation at $n=200$.
 
 ## Triage
 
@@ -132,13 +132,13 @@ The exact rational checks enumerate all $n!$ words at $n=3,5,7$: respectively 6,
 | Exact rational family readings | Computed by the experiment entry | $n=3,5,7$; quadratic forms and permutation enumeration listed in Evidence |
 | Equiangular failing interval $-1/(n-1)<t<-1/(2n-1)$ for odd $n$ | Proved in prose below | Full-rank equiangular Gram matrices |
 | Odd-$n$ transition grid readings | Computed by the experiment entry | $n=3,5$, 399 interior points of a 400-step grid each; agrees with the derived interval on those points |
-| No equiangular failure at $n=2,4$ | Computed by the experiment entry | 399 interior grid points at each dimension; unrestricted even-$n$ inequality remains open |
+| No equiangular failure at $n=2,4$ | Computed by the experiment entry | 399 interior grid points at each dimension; this finite grid does not conflict with the separate $n=200$ scalar certificate |
 | Scalar coordinate-descent class $P_i=I-a_i a_i^\top$, $n=N=3$ | Proved in prose below | Every unit, linearly independent triple; no sign or conditioning restriction |
 | Arbitrary-block coordinate-descent assertion $G\preceq M^n$ | Refuted in prose with exact integer checks below | $n=3$, $N=6$, $d_1=d_2=d_3=2$; actual orthonormal blocks and square nonsingular concatenation |
-| All-$n$ scalar coordinate-descent assertion | Open | The six-dimensional witness has two columns per block; it does not settle the all-$n$ scalar class |
+| All-order scalar basis assertion `claimScalar` | Refuted by the complete scalar200 certificate below; private native evidence, no new public admission | An actual real unit-column basis at $n=N=200$, with the complete $200!$ reversed-permutation average and exponent $200$ |
 | Optimal RP-CD convergence rate | Open | The source's intended application is not settled by this refutation |
 | Kim–Lee–Yun second-moment comparison | Open | Separate from the first-moment matrix inequality tested here |
-| Unrestricted projection inequality for even $n$ | Open | No universal even-$n$ theorem or counterexample is delivered |
+| Unrestricted projection inequality for even $n$ | Refuted in the scalar basis subclass at $n=200$ | The smallest failing dimension and a characterization of the remaining even-$n$ cases are open |
 
 ### What the settlement shows
 
@@ -168,7 +168,7 @@ For odd $n$, the second eigenvalue is nonnegative. For $t\ge0$ the first is nonn
 
 **Failure mechanism and surviving statements.** Symmetry, idempotence and positive semidefiniteness of the individual rank-one projections do not ensure the proposed comparison of the two averages. Negative pairwise inner products produce positive word contributions when $n-1$ is even, exceeding the mean-power value in the direction $z$. The paper's weaker bound $G\preceq M$ remains a literature result; it is not a theorem of this module. The conjecture's proposed implication for an optimal RP-CD rate cannot be obtained from the refuted unrestricted assertion.
 
-The constructed rank-one projections in $\mathbb R^n$ have complements of rank $n-1$. Any factorization $I-P_i=A_iA_i^\top$ therefore needs at least $n-1$ columns in each $A_i$. Their concatenation needs at least $n(n-1)>n$ columns for $n\ge3$, so it cannot be square. This prose rank argument explains why the original witness itself is outside the structured class; it is not kernel-checked here. It does not preclude a higher-dimensional structured perturbation. The construction below refutes the arbitrary-block assertion. The all-$n$ scalar inequality, rate question and unrestricted even-$n$ case remain open.
+The constructed rank-one projections in $\mathbb R^n$ have complements of rank $n-1$. Any factorization $I-P_i=A_iA_i^\top$ therefore needs at least $n-1$ columns in each $A_i$. Their concatenation needs at least $n(n-1)>n$ columns for $n\ge3$, so it cannot be square. This prose rank argument explains why the original dimension-three witness is outside the structured block class; it is not kernel-checked here. It does not preclude a higher-dimensional structured perturbation. The scalar200 basis certificate below settles the unrestricted all-order scalar assertion, including an even value of $n$, while the optimal rate, second moment and smallest failing dimension remain open. The construction below separately refutes the arbitrary-block assertion.
 
 ### Three scalar coordinate-descent columns, proved in prose
 
@@ -311,14 +311,102 @@ strict inequality $\delta>0$, so it includes independent columns
 arbitrarily close to singularity.
 
 This positive partial result concerns rank-two complements of unit
-rank-one matrices. The kernel-checked counterexample above uses rank-one
-$P_i$ and lies outside this coordinate-descent class. The all-$n$ scalar
-inequality remains open. The arbitrary-block assertion has $n\ge1$,
+rank-one matrices. The kernel-checked dimension-three counterexample above
+uses rank-one $P_i$ and lies outside this coordinate-descent class. The
+complete scalar200 basis certificate below now refutes the unrestricted
+all-order scalar inequality, without identifying its smallest failing
+dimension. The arbitrary-block assertion has $n\ge1$,
 $d_i\ge1$, $N=\sum_i d_i$, $A_i\in\mathbb R^{N\times d_i}$,
 $A_i^\top A_i=I_{d_i}$ and square nonsingular concatenation
 $[A_1,\ldots,A_n]$; the next construction refutes it. The optimal RP-CD
 convergence rate and the separate Kim–Lee–Yun second-moment comparison
 remain open.
+
+### The complete scalar200 basis refutation
+
+This is the full finite scalar counterexample carried by the existing
+owner exposition. It is source-faithful and native-verified privately on
+Mac Studio, while its source remains unpublished and unadmitted. It does
+not add a second resolution marker to this dossier.
+
+Fix $n=200$, $K=10^9$ and $s=\sqrt{K^2+1}$. In the standard orthonormal
+basis $e_0,\ldots,e_{199}$, put
+
+$$
+a_0=e_1,\qquad a_i=\frac{K e_1+e_{i+1}}s\ (1\le i\le198),\qquad
+a_{199}=\frac{e_0-e_1}{\sqrt2},\qquad z=e_0+200e_1.
+$$
+
+Every column has squared length one. The identities
+$e_1=a_0$, $e_{i+1}=s a_i-Ka_0$, and
+$e_0=\sqrt2 a_{199}+a_0$ recover every standard basis vector, so the
+200 columns span $\mathbb R^{200}$ and are linearly independent. Set
+$P_i=I-a_i a_i^\top$.
+
+For the comparison, retain the last projection $Q=P_{199}$ and replace
+the first 199 projections by $P=I-e_1e_1^\top$. In the complete labelled
+permutation sum the unique $Q$ position occurs $199!$ times, hence the
+full reversed-permutation average is exactly
+
+$$
+\frac1{200}\sum_{k=0}^{199}P^{199-k}QP^k
+ =\frac{PQ+QP+198PQP}{200}.
+$$
+
+No permutation terms are discarded. On $\operatorname{span}(e_0,e_1)$,
+the auxiliary mean is $B=\left[\begin{smallmatrix}399&1\\1&1\end{smallmatrix}\right]/400$
+and the auxiliary product average is
+$\left[\begin{smallmatrix}1/2&1/400\\1/400&0\end{smallmatrix}\right]$;
+at $(1,200)$ the latter difference has quadratic form $3/2$.
+
+The Euclidean operator norm of $B$ is at most $401/402$. The exact
+binomial estimate
+$(402/401)^{196}\ge258507/160801>8/5$ gives
+$(401/402)^{196}<5/8$. Direct multiplication gives
+$B^2(1,200)=(119601/80000,1/200)$ with squared length below $9/4$.
+Using symmetry and $B^{100}=B^{98}B^2$ yields
+
+$$
+(1,200)^\top B^{200}(1,200)<45/32,
+$$
+
+so the auxiliary AM-GM difference has quadratic form below $-3/32$.
+
+Exactly 198 factors change between the actual and auxiliary families.
+Each difference is supported on $\operatorname{span}(e_1,e_{i+1})$ and has
+matrix $\left[\begin{smallmatrix}1&-K\\-K&-1\end{smallmatrix}\right]/(K^2+1)$;
+its square is the plane identity divided by $K^2+1$, so its norm is at
+most $1/s$. Product telescoping for contractions bounds every original
+permutation word against its auxiliary word by $198/s$. The mean
+difference is at most $198/(200s)$, and telescoping its 200th power gives
+$198/s$. Thus the two original differences differ in norm by at most
+$396/s<396/K$.
+
+Since $\|z\|^2=40001$, Cauchy--Schwarz gives the strict full-space
+certificate
+
+$$
+z^\top(M^{200}-G)z
+ < -\frac3{32}+\frac{15840396}{1000000000}
+ < -\frac1{16}<0.
+$$
+
+This is a literal negation of the all-order scalar basis assertion and,
+because $n=200$ is even, an even-$n$ counterexample. It preserves the
+complete $200!$ average, exponent 200, finite $K$, actual basis and all
+full-space error estimates. The source correspondence with a Hessian
+square-root convention uses $C=A^\top A$, $U=AC^{-1/2}$, so $U$ is
+orthogonal and carries every projection, mean, power and permutation word
+by conjugation; $U^\top z$ has the same negative form. This bridge does
+not assign a sign to the separate expected-inverse reformulation.
+
+The private native source has literal result type $\operatorname{Not}
+\texttt{claimScalar}$, no `sorryAx` in its scoped report, and SHA-256
+`1067ac81d5cb1acca53faf795d906c6d832b55ab7c16c3890f44a6c143ca15ec`.
+That evidence is unpublished and is not presented as a new public Lean
+declaration or a new open-problem resolution. The smallest failing
+dimension, optimal RP-CD rate and separate second-moment comparison stay
+open.
 
 ### Three blocks of two columns: an exact counterexample, proved in prose
 
@@ -505,10 +593,11 @@ The square-concatenation condition thus does not rescue the general
 block AM-GM comparison. The example has two columns per block and does
 not contradict the scalar-three positive result. Splitting its blocks
 into six scalar updates changes the average, the words and the exponent;
-no all-$n$ scalar conclusion follows. Failure of this sufficient matrix
-inequality also does not refute the RP-CD rate conjecture or the separate
-second-moment comparison. The weaker literature bound $G\preceq M$
-remains distinct.
+that operation alone gives no scalar conclusion. The separate scalar200
+basis certificate above refutes the unrestricted all-order scalar claim.
+Failure of this sufficient matrix inequality also does not refute the
+RP-CD rate conjecture or the separate second-moment comparison. The
+weaker literature bound $G\preceq M$ remains distinct.
 
 **Admission boundary.** The finite certificate consists of exact
 substitution, matrix multiplication and arithmetic normalization. It is
@@ -520,4 +609,4 @@ disposition are unchanged.
 
 ## ASSUMED-UNVERIFIED
 
-The literature screen's completeness is unverified. In particular, the body of Luenberger–Ye, *Linear and Nonlinear Programming*, fifth edition, Chapter 14, DOI 10.1007/978-3-030-85450-8_14, was access-blocked in the recorded source check. Absence of a settlement in the searched sources is not a proof that none exists elsewhere. The family, transition, scalar-three and six-dimensional block derivations above are prose proofs, not new kernel-checked results. The block refutation has exact integer computational evidence; literature priority is not established. The all-$n$ scalar inequality, optimal RP-CD rate and separate second-moment comparison remain open. Numerical grid readings cover only their stated finite samples.
+The literature screen's completeness is unverified. In particular, the body of Luenberger–Ye, *Linear and Nonlinear Programming*, fifth edition, Chapter 14, DOI 10.1007/978-3-030-85450-8_14, was access-blocked in the recorded source check. Absence of a settlement in the searched sources is not a proof that none exists elsewhere. The family, transition, scalar-three and six-dimensional block derivations above are prose proofs, not new kernel-checked results. The block refutation has exact integer computational evidence; literature priority is not established. The scalar200 claim is refuted by a complete private native-verified source, but that source has no public declaration, freeze or new resolution binding here. The optimal RP-CD rate, separate second-moment comparison and smallest failing dimension remain open. Numerical grid readings cover only their stated finite samples.

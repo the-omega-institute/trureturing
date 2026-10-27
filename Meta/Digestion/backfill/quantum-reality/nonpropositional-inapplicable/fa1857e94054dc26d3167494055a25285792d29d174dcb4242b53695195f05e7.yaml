@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fa1857e94054dc26d3167494055a25285792d29d174dcb4242b53695195f05e7
+  normalized_sha256: sha256:fa1857e94054dc26d3167494055a25285792d29d174dcb4242b53695195f05e7
+cas_ref: sha256:fa1857e94054dc26d3167494055a25285792d29d174dcb4242b53695195f05e7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该独立片只限定真空模型的研究范围，没有给出微观或宏观源项的数学结论。
+    previous_atom_id: e0d32e366be1cde96df6fb37196d831d14d3ac8306f657351a86d9e94ca00c4e
+    next_atom_id: 08d6e8fd6b24237f435bee435df3423ab935e121fc5014c9fb700b31477dfe6e

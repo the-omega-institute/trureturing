@@ -1,0 +1,28 @@
+**定理 9.6（复矩阵层析与实模型的剩余关联）。**
+在复张量模型中，全部局部乘积效果的联合概率唯一确定联合密度态。
+标准实张量模型在两侧维数至少二时不满足同一性质。
+
+证明。
+复 Hermitian 空间的实基 $\{A_i\}$、$\{B_j\}$
+给联合空间的实基 $\{A_i\otimes B_j\}$；
+其个数为 $d^2e^2=(de)^2$。
+每个 Hermitian 算子经缩放、平移是效果的实线性组合，
+故乘积效果确定全部基系数。
+
+实二维中令
+$J_0=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$，
+$T=J_0\otimes J_0$。
+它实对称、$T^2=I$、$\operatorname{tr} T=0$，
+所以 $\rho_\pm=(I\pm\varepsilon T)/4$，
+$0<\varepsilon\le1$，是不同实密度态。
+任意局部实对称效果 $A,B$ 满足
+$\operatorname{tr}(AJ_0)=\operatorname{tr}(BJ_0)=0$，
+所以全部乘积效果对两态给同一值，
+而 $\operatorname{tr}(T\rho_\pm)=\pm\varepsilon$。
+更高维嵌入此二维子空间即可。
+证毕。
+
+局部层析在这个候选类中排除了标准实张量完成；
+它单独还不能排除经典理论和所有广义概率理论。
+而分别知道两个边缘态比知道全部乘积实验的联合概率更弱。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:506710f8d5b09e759ffbdd38c19a81908fcf431d6d08ab17a53eae773f62a7ee
+  normalized_sha256: sha256:506710f8d5b09e759ffbdd38c19a81908fcf431d6d08ab17a53eae773f62a7ee
+cas_ref: sha256:506710f8d5b09e759ffbdd38c19a81908fcf431d6d08ab17a53eae773f62a7ee
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Prediction/PublicPredictionDiagonal.actual
+    target_statement_id: sha256:7f4c9c133217faf8f27b48643f3c10e558252204928478a2e567abb822bad750
+receipts:
+  unresolved_subitems: []

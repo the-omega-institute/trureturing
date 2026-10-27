@@ -52,7 +52,10 @@ for p,rp,linked in paths:
                 result=remove(argparse.Namespace(source=source,names="",path=[Path(rp)],force=False,
                     preview=not delete,expected=[]))
                 outcome=result["items"][0]["outcome"]
+                if outcome=="refused": raise Refused(result["items"][0]["reason"])
                 if result["status"]=="failed": raise OSError(str(result))
+                if result["status"]!="succeeded" or outcome!=("removed" if delete else "would_remove"):
+                    raise ValueError("unexpected removal receipt:"+str(result))
             elif delete:
                 shutil.rmtree(rp) if os.path.isdir(rp) else os.remove(rp)
             rec["eligible"]=True

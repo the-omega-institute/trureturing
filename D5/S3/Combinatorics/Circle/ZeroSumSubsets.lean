@@ -5,18 +5,21 @@
    anchors: [mathlib/module/Mathlib.Combinatorics.Colex, mathlib/module/Mathlib.Data.Nat.GCD.Basic, mathlib/module/Mathlib.Data.Finset.Powerset]
    utility: none
    digest: Unique natural cyclic carries give sharp unit relation length and source gcd restrictions. -/
-import D5.S3.Combinatorics.Circle.SourceWidth
-import Mathlib.Combinatorics.Colex
-import Mathlib.Data.Nat.GCD.Basic
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Set.Pairwise.Lattice
-import Mathlib.Logic.Equiv.Fin.Rotate
-import Mathlib.Algebra.Ring.GeomSum
+module
+public import D5.S3.Combinatorics.Circle.SourceWidth
+public import Mathlib.Combinatorics.Colex
+public import Mathlib.Data.Nat.GCD.Basic
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Data.Set.Pairwise.Lattice
+public import Mathlib.Logic.Equiv.Fin.Rotate
+public import Mathlib.Algebra.Ring.GeomSum
 
 /-! # Integer zero subsets of the labelled centered doubling source -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+@[expose] public section
 
 namespace D5.S3.Combinatorics.Circle.ZeroSumSubsets
 open SourceWidth
@@ -276,7 +279,7 @@ private theorem carry_pair_unique {k : ℕ} (hk : 0 < k) (n : Fin k → ℕ)
   funext i
   exact_mod_cast congrFun hc i
 
-private theorem source_cycle {k : ℕ} (hk : 0 < k) (t : ℕ) :
+theorem source_cycle {k : ℕ} (hk : 0 < k) (t : ℕ) :
     0 < modulus k ∧
     (∑ i : Fin k, actualSource k t i) = 0 ∧
     ∀ i : Fin k, 2 * actualSource k t i - actualSource k t (finRotate k i) =

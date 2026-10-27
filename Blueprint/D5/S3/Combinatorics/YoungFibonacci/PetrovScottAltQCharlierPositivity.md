@@ -100,7 +100,19 @@ $$(claim) \Leftrightarrow ((\exists rho \in Real, q \in Real,\; FibonacciPositiv
 
 There exist values of ρ and q for which the following specialization (which we call the alternative q-Charlier) is Fibonacci positive: (Conjecture 6.3, p. 31). The specialization is xAQC and yAQC above. Both existential parameters range over Real, and positivity quantifies over every Fibonacci word.
 
-**Theorem 1.9 (Positivity at rho = q = one quarter).**
+**Theorem 1.9 (Positive determinant from diagonal dominance).**
+
+$$\forall (\iota : Type), [Fintype\left(\iota\right)] [DecidableEq\left(\iota\right)] \forall M \in Matrix\left(\iota, \iota, Real\right),\; (\forall i \in \iota,\; 0 < M\left(i, i\right)) \Rightarrow ((\forall i \in \iota,\; \operatorname{Finset}.\operatorname{sum}\left(\operatorname{Finset}.\operatorname{erase}\left(\operatorname{Finset}.\operatorname{univ}, i\right), (fun (j : \iota) \mapsto \Vert M\left(i, j\right) \Vert)\right) < M\left(i, i\right)) \Rightarrow (0 < \operatorname{Matrix}.\operatorname{det}\left(M\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/YoungFibonacci/PetrovScottAltQCharlierPositivity.det_pos_of_dominant` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A real matrix with positive diagonal entries and strict row diagonal dominance has positive determinant.
+
+**Theorem 1.10 (Positivity at rho = q = one quarter).**
 
 $$\exists rho \in Real, q \in Real,\; FibonacciPositive\left(xAQC\left(rho, q\right), yAQC\left(rho, q\right)\right)$$
 
@@ -124,6 +136,7 @@ Take rho=q=1/4. A positive diagonal rescaling turns the tridiagonal determinants
 - Truth anchor: `D5/S3/Combinatorics/YoungFibonacci/PetrovScottAltQCharlierPositivity.B`
 - Truth anchor: `D5/S3/Combinatorics/YoungFibonacci/PetrovScottAltQCharlierPositivity.FibonacciPositive`
 - Truth anchor: `D5/S3/Combinatorics/YoungFibonacci/PetrovScottAltQCharlierPositivity.claim`
+- Truth anchor: `D5/S3/Combinatorics/YoungFibonacci/PetrovScottAltQCharlierPositivity.det_pos_of_dominant`
 - Truth anchor: `D5/S3/Combinatorics/YoungFibonacci/PetrovScottAltQCharlierPositivity.result`
 - Truth anchor: `D5/S3/Combinatorics/YoungFibonacci/PetrovScottAltQCharlierPositivity.s`
 - Truth anchor: `D5/S3/Combinatorics/YoungFibonacci/PetrovScottAltQCharlierPositivity.sAux`
