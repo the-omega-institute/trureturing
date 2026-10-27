@@ -134,7 +134,25 @@ private lemma sum_witness_product :
   simp_rw [hterm]
   simp [Finset.sum_add_distrib, Finset.sum_ite_eq']
 
-private lemma witness_raw : correlanceRaw witness = 3023545392 / 6103515625 := by sorry
+private lemma witness_raw : correlanceRaw witness = 3023545392 / 6103515625 := by
+  rw [correlanceRaw_eq_sum]
+  simp_rw [witness_product]
+  calc
+    (∑ x : Fin 7 → Bool, (witness x - ∏ i : Fin 7, q (x i)) ^ 2) =
+        ∑ x : Fin 7 → Bool, (witness x ^ 2 -
+          2 * (witness x * ∏ i : Fin 7, q (x i)) +
+          (∏ i : Fin 7, q (x i)) ^ 2) := by
+      apply Finset.sum_congr rfl
+      intro x hx
+      ring
+    _ = (∑ x : Fin 7 → Bool, witness x ^ 2) -
+          2 * (∑ x : Fin 7 → Bool, (witness x *
+            (∏ i : Fin 7, q (x i)))) +
+          ∑ x : Fin 7 → Bool, ((∏ i : Fin 7, q (x i)) ^ 2) := by
+      rw [Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum]
+    _ = 3023545392 / 6103515625 := by
+      rw [sum_witness_square, sum_witness_product, sum_product_q_square]
+      norm_num
 
 theorem result : ¬ claim := by
   intro h
