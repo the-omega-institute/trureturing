@@ -1,0 +1,55 @@
+**Theorem 11.10 (Stable two-reference recovery of the calibrated pure family).**
+On the known symmetric double-wall pure source with fixed $Z>0$, retain
+
+$$
+w=C_{02}=\sqrt{Z\kappa}\,e^{iu},\qquad
+q=C_{12}=\sqrt{Z(L-\kappa)}\,e^{iv}.
+$$
+
+In the reference gauge one has the affine recovery
+
+$$
+\psi=\frac1{\sqrt Z}(\overline w,\overline q,Z,\overline q,\overline w).
+$$
+
+For $Y^*=(2\operatorname{Re}w,2\operatorname{Im}w,
+2\operatorname{Re}q,2\operatorname{Im}q)$ and two states of this same
+fixed-$Z$ family,
+
+$$
+\|\psi-\psi'\|^2
+=\frac2Z(|w-w'|^2+|q-q'|^2)
+=\frac{\|Y^*-Y^{*\prime}\|^2}{2Z},
+\qquad
+D(\psi,\psi')\le\frac{\|Y^*-Y^{*\prime}\|}{\sqrt{2Z}}.
+\tag{11.10}
+$$
+
+The bound is uniform on the entire ray closure $0\le\kappa\le L$ for
+fixed $Z$. Its constant diverges as $Z\downarrow0$; no uniformity in
+that additional parameter is asserted.
+
+Proof. Division by the fixed $\sqrt Z$ recovers the two distinct
+nonreference amplitudes; the known symmetry duplicates them in the
+indicated modes. The constraint $|w|^2+|q|^2=ZL$ makes the vector
+normalized. Summing its component differences gives the norm equality.
+For $a=\langle\psi,\psi'\rangle$,
+
+$$
+D^2=1-|a|^2\le 2-2\operatorname{Re}a=\|\psi-\psi'\|^2,
+$$
+
+because $|1-a|^2\ge0$. This gives the distance estimate.
+The same argument applies after undoing the single known preparation
+diagonal unitary, which preserves the norm and ray distance.
+
+At $\kappa=0,L$ the reference stays nonzero and the formulas divide by
+neither $\kappa$ nor $L-\kappa$. Zero-amplitude phases disappear at the
+level of rays; the formulas extend continuously to precisely this ray
+closure. Two reference coherences recover and stabilize a known pure
+family. For certification against arbitrary mixed matrices, Theorem 11.8
+uses the native menu plus $12$ and the calibrated means instead.
+Current affine recovery also does not provide a finite shared affine
+decoder for all future outputs: (10.16) still supplies arbitrarily many
+independent future frequencies by Transport Theorem 9.8. $\square$
+
