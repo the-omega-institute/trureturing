@@ -234,7 +234,11 @@ def finiteFactor [∀ a j, T1Space (Z a j)] [CompactSpace X] [Nonempty X]
   classical
   let K : Set (WedgeSum b) := range f
   have hK : IsCompact K := isCompact_range f.continuous
-  obtain ⟨s, t, hs, ht, he⟩ := hK.sigma_exists_finite_sigma_eq K
+  have decomposition := IsCompact.sigma_exists_finite_sigma_eq K hK
+  let s := decomposition.choose
+  let t := decomposition.choose_spec.choose
+  have hs : s.Finite := decomposition.choose_spec.choose_spec.1
+  have he : s.sigma t = K := decomposition.choose_spec.choose_spec.2.2
   let A₀ := hs.toFinset
   have outer_mem : ∀ x : X, (f x).1 ∈ A₀ := by
     intro x
