@@ -1,0 +1,71 @@
+## 10. An exact positive clock-interpolation criterion
+
+For $m\ge2$, $0\le a\le2m-2$, and $\rho>0$, keep $r,T,k_i$ from (9.1) and put
+
+$$
+w_i=F_{k_i-1}-\rho F_{k_i},\qquad \lambda_i=F_{k_i}\quad(i\in T).
+\tag{10.1}
+$$
+
+Let $\mathcal D$ be the $2m\times2m$ matrix with rows, in increasing original-clock order,
+
+$$
+\bigl(w_i,w_i i,\ldots,w_i i^{m-1},\lambda_i,\lambda_i i,\ldots,\lambda_i i^{m-1}\bigr).
+\tag{10.2}
+$$
+
+**Theorem 10.1.** For fixed $m$, an all-input countable-palette gain output on some preassigned critical mixed word exists if and only if there are $a,\rho$ as above and $R\in\mathcal P_{m-1}$ such that
+
+$$
+w_iR(i)=1\quad\text{for every }i\in T,
+\qquad \mathcal D\text{ is invertible}.
+\tag{10.3}
+$$
+
+This is also the exact criterion for one universal matrix succeeding everywhere on some critical mixed word.
+
+**Proof.** Theorems 4.1–6.2, Proposition 7.1, and Proposition 8.1 leave only a $JJ$ word for fixed-word all-input success. Theorem 9.1 forces $L=\rho I+M$ with $\rho>0$. On $T$,
+
+$$
+A_i=w_iI+\lambda_iL.
+\tag{10.4}
+$$
+
+The trace functionals represented by $I,L$ are independent. The identity therefore implies
+
+$$
+C_T\operatorname{diag}(w)V_T=0,\qquad
+C_T\operatorname{diag}(\lambda)V_T=I_m.
+\tag{10.5}
+$$
+
+Every $w_i$ is nonzero, since otherwise $A_i$ would be proportional to $L$. The first block in (10.5) has rank $m$. The second also has rank $m$, and the two images intersect trivially: applying $C_T$ to a vector in their intersection gives zero from the first representation and its full coefficient vector from the second. Thus the concatenated matrix $\mathcal D$ is invertible. The first image is exactly $\ker C_T$. Drift annihilation is equivalent to $\mathbf1_T$ belonging to that image, which is precisely the polynomial condition in (10.3).
+
+Conversely, (10.3) implies all $w_i\ne0$. Acquire the word $M^aJJM^{2m-2-a}$ with every required immediate read. Set the outlier column to zero and define the fixed matrix
+
+$$
+C_T=[\,0_{m\times m}\ \ I_m\,]\mathcal D^{-1}.
+\tag{10.6}
+$$
+
+For the actual normalized source, (10.4) gives
+
+$$
+Z_T=\operatorname{diag}(w)V_T\beta+
+\operatorname{diag}(\lambda)V_T
+\bigl((\rho+\operatorname{tr}(MP))\beta\bigr)+\delta\mathbf1_T.
+$$
+
+The polynomial condition puts the drift in the first-block image. Hence
+
+$$
+CZ=(\rho+\operatorname{tr}(MP))\beta\ne0.
+\tag{10.7}
+$$
+
+All entries of $C$ depend only on $m,a,\rho$. Every original clock, including the ignored outlier read, is acquired. Positivity of the scale does not require a generic source, nonvanishing sampled polynomial, particular sign of a coefficient, or a spectral restriction. This proves sufficiency. $\square$
+
+Subtracting $\rho$ times each second-block column from the corresponding Fibonacci-previous column shows that $\det\mathcal D$ is independent of $\rho$. This identity is not a feasibility decision. Both parts of (10.3), including the positive parameter and the low-degree interpolation on the repeated-state clocks, are required for a construction. Section 13 excludes interpolation itself for $m=3,4$ and excludes even unrestricted-sign $JJ$ identities for $m=2$. These arguments make no assertion that $\mathcal D$ is singular.
+
+For $m\ge5$, existence of a positive solution of (10.3) remains unresolved here. A positive solution gives the explicit conditional construction (10.6); nonexistence at a particular $m$ would, together with the prior upper construction, make $2m+2$ the sharp fixed mixed threshold at that $m$. No conclusion about adaptive choice among multiple words follows merely from having an obstruction for each individual word: exceptional failure sets for different words need not coincide.
+

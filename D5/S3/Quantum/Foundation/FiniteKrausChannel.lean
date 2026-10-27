@@ -404,7 +404,7 @@ private theorem finset_sum {ι : Type*} [Fintype ι] {m : ι → MatrixMap A B R
 end IsCompletelyPositive
 
 @[simps]
-private def conj (y : Matrix B A R) : MatrixMap A B R where
+def conj (y : Matrix B A R) : MatrixMap A B R where
   toFun x := y * x * y.conjTranspose
   map_add' x y := by rw [Matrix.mul_add, Matrix.add_mul]
   map_smul' r x := by rw [RingHom.id_apply, Matrix.mul_smul, Matrix.smul_mul]
