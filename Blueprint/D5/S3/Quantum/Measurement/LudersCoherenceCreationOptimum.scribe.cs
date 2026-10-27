@@ -47,7 +47,10 @@ internal sealed class LudersCoherenceCreationOptimumDocument : IScribeDocumentDe
                 StatementSource.FromAuthor(Disp(ResultFormula())),
                 AssessedProvenance.FromRepo(Source),
                 ResultProof(),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mohanty-sharma-sazim-pradhan-pati-2022-luders-coherence-optimum"),
+                    ResolutionKind.Proved)))));
 
     private static Formula LudersFormula() => All("n", Naturals(),
         All("e", Effects(), All("ρ", QubitMatrix(),
