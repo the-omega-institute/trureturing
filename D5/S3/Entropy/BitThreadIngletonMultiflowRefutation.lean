@@ -148,7 +148,51 @@ private lemma star_cut (I : Finset (Fin 5)) (W : Finset (Fin 6))
 
 private lemma star_cut_values :
     ∀ I : Finset (Fin 5), minCut starCapacity starBoundary I =
-      min (starWeight I) (6 - starWeight I) := by sorry
+      min (starWeight I) (6 - starWeight I) := by
+  intro I
+  classical
+  have hb (i : Fin 5) : starBoundary i ≠ (5 : Fin 6) := by
+    fin_cases i <;> decide
+  have hi (i : Fin 5) : starBoundary i ∈ Finset.image starBoundary I ↔ i ∈ I := by
+    constructor
+    · intro h
+      obtain ⟨j, hj, hji⟩ := Finset.mem_image.mp h
+      have hji := starBoundary.injective hji
+      subst j
+      exact hj
+    · exact Finset.mem_image_of_mem starBoundary
+  have hc : (5 : Fin 6) ∉ Finset.image starBoundary I := by
+    intro h
+    obtain ⟨i, _, hi⟩ := Finset.mem_image.mp h
+    exact hb i hi
+  have hio (i : Fin 5) :
+      starBoundary i ∈ Finset.image starBoundary I ∪ {5} ↔ i ∈ I := by
+    simp only [Finset.mem_union, Finset.mem_singleton, hb i, or_false, hi]
+  have ha : Finset.image starBoundary I ∈ admissibleCuts starBoundary I := by
+    unfold admissibleCuts
+    exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, hi⟩
+  have hao : Finset.image starBoundary I ∪ {5} ∈ admissibleCuts starBoundary I := by
+    unfold admissibleCuts
+    exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, hio⟩
+  have hva := star_cut I (Finset.image starBoundary I) hi
+  rw [if_neg hc] at hva
+  have hvao := star_cut I (Finset.image starBoundary I ∪ {5}) hio
+  rw [if_pos (Finset.mem_union_right _ (Finset.mem_singleton_self _))] at hvao
+  unfold minCut
+  apply le_antisymm
+  · apply le_min
+    · rw [← hva]
+      exact Finset.min'_le _ _ (Finset.mem_image.mpr ⟨_, ha, rfl⟩)
+    · rw [← hvao]
+      exact Finset.min'_le _ _ (Finset.mem_image.mpr ⟨_, hao, rfl⟩)
+  · apply Finset.le_min'
+    intro x hx
+    obtain ⟨W, hW, rfl⟩ := Finset.mem_image.mp hx
+    have hv := star_cut I W (Finset.mem_filter.mp hW).2
+    rw [hv]
+    split_ifs
+    · exact min_le_right _ _
+    · exact min_le_left _ _
 
 private lemma witness_is_multiflow :
     IsMultiflow starCapacity starBoundary witnessFlow witnessThreads := by sorry
