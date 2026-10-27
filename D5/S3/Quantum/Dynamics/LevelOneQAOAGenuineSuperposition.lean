@@ -10,7 +10,10 @@ import D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity
 import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 import D5.S3.Quantum.Entanglement.RandomizedGraphNegativityRefutation
 
-/-! The phase layer separates the parity sectors of the first two qubits. The uniform and
+/-! A counterexample to the intermediate-dimensional exclusion in Streif and Leib,
+*Forbidden subspaces for level-1 QAOA and IQP circuits*, arXiv:2007.13563v1.
+
+The phase layer separates the parity sectors of the first two qubits. The uniform and
 parity vectors have mixer eigenvalues `3` and `-1`; their evolved coefficients cancel in
 exactly the four non-target coordinates at angle `pi/8`. -/
 
@@ -62,7 +65,8 @@ private def parity (x : Fin 3 → Bool) : ℂ := if x 0 = x 1 then 1 else -1
 
 private lemma mixer_action {n : ℕ} (v : (Fin n → Bool) → ℂ) (x : Fin n → Bool) :
     (mixer n *ᵥ v) x = ∑ i : Fin n, v (Function.update x i (!(x i))) := by
-  rw [mixer, Matrix.sum_mulVec, Finset.sum_apply]
+  unfold mixer
+  rw [Matrix.sum_mulVec, Finset.sum_apply]
   apply Finset.sum_congr rfl
   intro i _
   change (∑ y, (if y = Function.update x i (!(x i)) then (1 : ℂ) else 0) * v y) = _
@@ -192,6 +196,5 @@ theorem result : ¬ claim := by
   intro h
   exact h 3 spectrum (Real.pi / 8) 1 targets (by rw [target_card]; norm_num)
     (by rw [target_card]; norm_num) genuine_output
-
 
 end D5.S3.Quantum.Dynamics.LevelOneQAOAGenuineSuperposition
