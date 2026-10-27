@@ -1,0 +1,76 @@
+{
+  "purpose": "custody archive only; no mathematical acceptance or source delivery",
+  "original_flight": "6ae040846fc84762482d4650",
+  "snapshot_commit": "105d4ef7318213ff91fea1f96afddd8aa83a18bb",
+  "source_tree": "90015cca1f72fbe06d358ff8a857be5b9b481335",
+  "base": "25f001b709289210d22a337b978f33bc9ac722d1",
+  "bundle": {
+    "bytes": 8562,
+    "sha256": "2c67f037ab2074df8e83f23f70f931f02ad73dc372af964fcd09b98cb0913ab9",
+    "prerequisite": "25f001b709289210d22a337b978f33bc9ac722d1"
+  },
+  "root": "ExactDigit10.section10Root",
+  "root_outcome": "UNKNOWN",
+  "historical_native4_invocations": "UNKNOWN",
+  "actual_compiler_exit": null,
+  "current_recovery_native_invocations": 0,
+  "source_content_changes": 0,
+  "sources": [
+    {
+      "source": "/Users/lexa/.sshx/6adf1c14d0bf13a29cb33762/attempt-1/ExactDigit10.lean",
+      "preserved": "/Users/lexa/.sshx/6ae05375acaf2fe19d29160f/attempt-1/recovery-evidence/source-custody/ExactDigit10.lean",
+      "bytes": 24070,
+      "sha256": "b50ee926fc1c5ddedbe2c068dc02f3ae1716181dd30eca138276ed25ffe27411",
+      "authenticated": true
+    },
+    {
+      "source": "/Users/lexa/.sshx/6adf1c14d0bf13a29cb33762/attempt-1/native-input.lean",
+      "preserved": "/Users/lexa/.sshx/6ae05375acaf2fe19d29160f/attempt-1/recovery-evidence/source-custody/native-input.lean",
+      "bytes": 27401,
+      "sha256": "230cde7aea437e4d31b83c88677f4ebcf0315713fe3544d8a8dca600507f24c8",
+      "authenticated": true
+    },
+    {
+      "source": "/Users/lexa/.sshx/6adf1c14d0bf13a29cb33762/attempt-1/footer.lean",
+      "preserved": "/Users/lexa/.sshx/6ae05375acaf2fe19d29160f/attempt-1/recovery-evidence/source-custody/footer.lean",
+      "bytes": 3331,
+      "sha256": "b8bbb19715eece3c1e16c04727082b79192cf3e9f46a03253c0cdd83cd1ce1ec",
+      "authenticated": true
+    },
+    {
+      "source": "/Users/lexa/.sshx/6adf1c14d0bf13a29cb33762/attempt-1/source/ContractingDigitMemory.lean",
+      "preserved": "/Users/lexa/.sshx/6ae05375acaf2fe19d29160f/attempt-1/recovery-evidence/source-custody/source/ContractingDigitMemory.lean",
+      "bytes": 25010,
+      "sha256": "998b9983d48a5163339fe3f0b444f6701d9e79cf4cfb1a8144ea2f520f459e2b",
+      "authenticated": true
+    },
+    {
+      "source": "/Users/lexa/.sshx/6adf1c14d0bf13a29cb33762/attempt-1/source/ForwardInvariantPredictorCover.lean",
+      "preserved": "/Users/lexa/.sshx/6ae05375acaf2fe19d29160f/attempt-1/recovery-evidence/source-custody/source/ForwardInvariantPredictorCover.lean",
+      "bytes": 7162,
+      "sha256": "445bd4451912d916e945c5c2a4074ea31a86bf825414c9257f3620c5130874bd",
+      "authenticated": true
+    },
+    {
+      "source": "/Users/lexa/.sshx/6adf1c14d0bf13a29cb33762/attempt-1/source/ControlledBehaviorUniversality.lean",
+      "preserved": "/Users/lexa/.sshx/6ae05375acaf2fe19d29160f/attempt-1/recovery-evidence/source-custody/source/ControlledBehaviorUniversality.lean",
+      "bytes": 9562,
+      "sha256": "e939169d4c425e072839c4b24038dea9e536d3f4a9287fc46ce0455d5986048d",
+      "authenticated": true
+    },
+    {
+      "source": "/Users/lexa/.sshx/6adf1c14d0bf13a29cb33762/attempt-1/source-bindings.json",
+      "preserved": "/Users/lexa/.sshx/6ae05375acaf2fe19d29160f/attempt-1/recovery-evidence/source-custody/source-bindings.json",
+      "bytes": 15087,
+      "sha256": "7b8384486d2bd831040026332b4c20875cdca15108355916050aae5aa9d88b2d",
+      "authenticated": true
+    },
+    {
+      "source": "/Users/lexa/.sshx/6adf1c14d0bf13a29cb33762/attempt-1/source-owners.json",
+      "preserved": "/Users/lexa/.sshx/6ae05375acaf2fe19d29160f/attempt-1/recovery-evidence/source-custody/source-owners.json",
+      "bytes": 5584,
+      "sha256": "a0e5a97bb49871be3fdea0d10998a27b05d95c9a505bbfa4160f77dc626b310f",
+      "authenticated": true
+    }
+  ]
+}
