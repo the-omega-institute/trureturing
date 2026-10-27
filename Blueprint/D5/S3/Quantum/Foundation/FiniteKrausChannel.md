@@ -44,9 +44,35 @@ $$\forall A \in \operatorname{Type}, B \in \operatorname{Type}, R \in \operatorn
 
 For finite A and B and an RCLike scalar R, the sum of two completely positive matrix maps is completely positive. At every finite amplification, add_kron expresses the image as the sum of two positive semidefinite images. IptPptSquaredEquivalence.gamma_cp uses this closure to combine the four branches of the flag lift.
 
+**Definition 1.4 (Conjugation as a linear matrix map).**
+
+$$\forall A \in \operatorname{Type}, B \in \operatorname{Type}, R \in \operatorname{Type},\; [\operatorname{Fintype}\left(A\right)] [\operatorname{RCLike}\left(R\right)] \forall y \in \operatorname{Matrix}\left(B, A, R\right), x \in \operatorname{Matrix}\left(A, A, R\right),\; \operatorname{MatrixMap}.\operatorname{conj}\left(y\right)\left(x\right) = y \cdot x \cdot \operatorname{conjTranspose}\left(y\right)$$
+
+*Formalization.* `D5/S3/Quantum/Foundation/FiniteKrausChannel.conj` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a finite input coordinate type A and an RCLike scalar R, MatrixMap.conj y is the linear map sending x to y x y adjoint, with arbitrary output coordinate type B.
+
+**Theorem 1.5 (Evaluation of matrix conjugation).**
+
+$$\forall A \in \operatorname{Type}, B \in \operatorname{Type}, R \in \operatorname{Type},\; [\operatorname{Fintype}\left(A\right)] [\operatorname{RCLike}\left(R\right)] \forall y \in \operatorname{Matrix}\left(B, A, R\right), x \in \operatorname{Matrix}\left(A, A, R\right),\; \operatorname{MatrixMap}.\operatorname{conj}\left(y\right)\left(x\right) = y \cdot x \cdot \operatorname{conjTranspose}\left(y\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/FiniteKrausChannel.conj_apply` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Evaluating MatrixMap.conj y at x gives y x y adjoint for every matrix x on the finite input coordinate type.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteKrausChannel.add`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteKrausChannel.add_kron`
+- Truth anchor: `D5/S3/Quantum/Foundation/FiniteKrausChannel.conj`
+- Truth anchor: `D5/S3/Quantum/Foundation/FiniteKrausChannel.conj_apply`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](FiniteStateChannel.md)
