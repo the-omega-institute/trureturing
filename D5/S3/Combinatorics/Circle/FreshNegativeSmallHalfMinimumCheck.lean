@@ -30,7 +30,7 @@ private theorem negative_small_append_descent
       0 ≤ mass (s k t) W + s k t b ∧ mass (s k t) W + s k t b ≤ C k
     exact ⟨hh.1, hh.2, by omega, by omega⟩
   have hv : Legal k t V := legal_of_strip hn
-    (inStrip_append (strip_of_legal hW) (by simpa only [zero_add] using hs))
+    (inStrip_append (strip_of_legal hW) (by simpa only [mass, zero_add] using hs))
   have inv : Inventory k t V W [] [b] :=
     inventory_of_perm hk t V W [] [b] hn (by simp) (by simp)
       (by intro i hi; obtain rfl := List.mem_singleton.mp hi; simp [V])
@@ -51,7 +51,8 @@ private theorem negative_small_append_descent
 set_option maxHeartbeats 1800000 in
 /-- Anonymous ALL-Legal-minimum application. There is no endpoint restriction
 on competitors. This applies in particular to c=zpen in the native three-
-negative word, where R=T2++[z]++E has exactly one LARGE, negative. -/
+negative word, where R=T2++[z]++E has exactly one LARGE, negative; it also covers
+the first negative when its two remaining LARGE are negative. -/
 example (k t : ℕ) (hk : 3 ≤ k) (p c : Fin k) (F R : List (Fin k))
     (hpositive : 0 < s k t p)
     (hnlarge : Q k ≤ |s k t (hit k 1 p)|)
@@ -60,7 +61,7 @@ example (k t : ℕ) (hk : 3 ≤ k) (p c : Fin k) (F R : List (Fin k))
     (hpunused : p ∉ F ++ [c] ++ R)
     (hnunused : hit k 1 p ∉ F ++ [c] ++ R)
     (hcneg : s k t c < 0) (hceven : (-s k t c) % 2 = 0)
-    (hcount : largeUsed k t R ≤ 1)
+    (hcount : largeUsed k t R ≤ 2)
     (hnegative : ∀ i ∈ R, Large k t i → s k t i < 0)
     (hmin : ∀ V : List (Fin k), Legal k t V →
       J k t (F ++ [c] ++ R) ≤ J k t V) :
@@ -130,6 +131,8 @@ example (k t : ℕ) (hk : 3 ≤ k) (p c : Fin k) (F R : List (Fin k))
       rw [hsplit] at hh
       simp only [largeUsed, mass, List.map_append, List.sum_append,
         List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, add_zero] at hh
+      simp only [largeWeight, if_pos hi] at hh
+      change (R1.map (largeWeight k t)).sum ≤ 1
       omega
     have hWsplit : W = (F ++ [c] ++ R0 ++ [i]) ++ R1 := by
       simp only [W, hsplit, List.append_assoc]

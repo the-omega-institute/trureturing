@@ -4,7 +4,7 @@
    mirror-E: none(waiver:audit-open-22063)
    anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic]
    utility: none
-   digest: A fresh negative SMALL half and a fresh negative LARGE replace an old LARGE with exact physical inventory and strict energy descent. -/
+   digest: A fresh negative SMALL half repairs a LARGE exchange with exact inventory. -/
 module
 public import D5.S3.Combinatorics.Circle.FirstNegativeShiftExchange
 public import D5.S3.Combinatorics.Circle.LargeSkeletonOrdering
@@ -104,10 +104,10 @@ theorem actualSource_fresh_negative_small_half_exchange_full
       add_zero, zero_add] using inStrip_prefix hsTail 0
   have ha : 0 ≤ u - 2 * μ ∧ u - 2 * μ ≤ C k := by
     have hh := inStrip_prefix hsTail 1
-    simpa [u, mass, hcval] using hh
+    simpa [u, f, mass, hcval] using hh
   have hsR : InStrip f (C k) (u - 2 * μ) R := by
     have hh := hsTail.2.2
-    simpa [u, mass, hcval] using hh
+    simpa [u, f, mass, hcval, sub_eq_add_neg] using hh
   have hwEnd : 0 ≤ mass f W ∧ mass f W ≤ C k := by
     simpa only [List.take_length] using hW.2 W.length
   have hmW : mass f W = u - 2 * μ + mass f R := by
@@ -180,10 +180,10 @@ theorem actualSource_fresh_negative_small_half_exchange_full
     rw [hnval]
     exact ⟨hu.1, hu.2, by omega, by omega⟩
   have hsFn : InStrip f (C k) 0 (F ++ [n]) :=
-    inStrip_append hsF (by simpa only [u, zero_add] using hsN)
+    inStrip_append hsF (by simpa only [u, mass, zero_add] using hsN)
   have hsV : InStrip f (C k) 0 V := by
     apply inStrip_append hsFn
-    simpa [u, f, mass, hnval] using hsL
+    simpa [u, f, mass, hnval, sub_eq_add_neg] using hsL
   have hperm : (V ++ [c]).Perm (W ++ [n,b]) := by
     apply List.perm_iff_count.mpr
     intro i
@@ -192,7 +192,7 @@ theorem actualSource_fresh_negative_small_half_exchange_full
     omega
   have hpermBase : (V ++ [c]).Perm (Wb ++ [n]) := by
     apply hperm.trans
-    simpa only [Wb, List.append_assoc] using
+    simpa only [Wb, List.append_assoc, List.cons_append, List.nil_append] using
       (List.perm_append_comm : ([n] ++ [b]).Perm ([b] ++ [n])).append_left W
   have inv : Inventory k t Wb V [n] [c] :=
     inventory_of_perm hk t Wb V [n] [c] hWb (by simp)
@@ -249,13 +249,19 @@ theorem actualSource_fresh_negative_small_half_exchange_full
   have hsmBase : remainingSmall t Wb = remainingSmall t W \ {b} := by
     ext i
     simp only [remainingSmall, Wb, List.toFinset_append,
-      List.toFinset_cons, List.toFinset_nil, Finset.union_singleton,
+      List.toFinset_cons, List.toFinset_nil,
       Finset.mem_filter, Finset.mem_compl, Finset.mem_insert,
-      Finset.mem_sdiff, Finset.mem_singleton]
+      Finset.mem_sdiff, Finset.mem_singleton, Finset.mem_union, Finset.notMem_empty]
     tauto
   have hsm : remainingSmall t V = remainingSmall t W \ {b} := by
     have hh := inv.smallPartition
-    simpa [hcLarge, hsmBase] using hh
+    have hfilter : ([c].toFinset).filter (fun q => ¬ Large k t q) = ∅ := by
+      apply Finset.filter_eq_empty_iff.mpr
+      intro q hq
+      have hqc : q = c := by simpa using hq
+      subst q
+      exact not_not.mpr hcLarge
+    simpa only [hfilter, Finset.union_empty, hsmBase] using hh
   have hmass : mass f V = mass f W - e := by
     have hh := inv.sourceBalance
     simp only [Wb, mass, List.map_append, List.sum_append, List.map_cons,
@@ -287,6 +293,9 @@ theorem actualSource_fresh_negative_small_half_exchange_full
   have hv : Legal k t V := legal_of_strip inv.nodup hsV
   refine ⟨L, hL, hv, hsV, hv.2, inv, hperm, hused, hunused,
     hg, huV, henergy, hH, hJ, hsm, hmass, ?_⟩
-  simpa only [hmass] using inv.complementSum
+  have hcomp := inv.complementSum
+  change remainingMass f V = -mass f V at hcomp
+  rw [hmass] at hcomp
+  exact hcomp
 
 end D5.S3.Combinatorics.Circle.FreshNegativeSmallHalf
