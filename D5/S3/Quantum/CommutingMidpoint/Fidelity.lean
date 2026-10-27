@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/CommutingMidpoint/Fidelity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Matrix root-fidelity identities and binary preparation estimates used by commuting midpoint contraction. -/
 
 import D5.S3.Quantum.GeneralizedFidelity

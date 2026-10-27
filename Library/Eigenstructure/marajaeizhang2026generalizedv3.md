@@ -46,3 +46,11 @@ squared-Bures and transported-reference conventions. Vuong,
 arXiv:2605.28885v1, recomputes pair-dependent polar references; those output
 references need not be the transported midpoint Phi(I/2). Neither source
 is used as an assumed transported-reference channel-DPI bridge.
+
+## Verified locator
+
+Source: https://arxiv.org/html/2609.09753v3
+
+Version: arXiv:2609.09753v3, 20 October 2026.
+
+Verified PDF SHA-256: `485bdca9ed47570ebdcb59862c822c785a7d6b4a48740c353b08c2be56d229ca`.
