@@ -1009,7 +1009,7 @@ path velocity at zero when the entire interval is a singleton. No evolution, tra
 reference-system identity is an input. The weight transported by this evolution
 is deliberately distinguished from the preset weight of the channel family. -/
 set_option maxHeartbeats 3000000 in
-theorem st40_source2_exact_native_check
+example
     {E H B : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [TopologicalSpace H] [TopologicalSpace B] [ChartedSpace H B] [CompactSpace B]
     (I : ModelWithCorners ℝ E H) [IsManifold I ∞ B]
