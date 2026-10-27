@@ -77,7 +77,7 @@ def familyRegistration : Registration arena.{u} (type_of% (@lower_geometry.{u}))
 /-- The lower-cell construction observed through the full original quotient projection. -/
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@lower_geometry.{u})
-    (type_of% (realize signature.{u} (fun _ p => q p.2) (fun e => nomatch e)))
+    (type_of% (actual.{u}))
     Unit Unit := {
   unitName := `D5.S3.Geometry.Gluing.TruncatedTetrahedronLowerCW.lower_geometry.information_unit,
   realizationName := `Reg.D5.S3.Geometry.Gluing.TruncatedTetrahedronLowerCW.familyRegistration,
@@ -90,7 +90,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨familyRegistration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize signature.{u} (fun _ p => q p.2) (fun e => nomatch e)),
+  readout := some actual.{u},
   variation := .absent,
   sensitivity := .absent,
   partialSensitivity := none,
