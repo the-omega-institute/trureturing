@@ -14,7 +14,7 @@ $$\forall ( n: Type)[\operatorname{Fintype}\left( n\right)][\operatorname{Decida
 
 *Formalization.* `D5/S3/Quantum/CommutingMidpoint.rootFidelity` (`✓ std3`).
 
-*Citation.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Citation.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -26,7 +26,7 @@ $$\forall ( n: Type)[\operatorname{Fintype}\left( n\right)][\operatorname{Decida
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/CommutingMidpoint.bures_eq_weighted_root_norm_sq` (`✓ std3`). ∎
 
-*Citation.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Citation.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -38,7 +38,7 @@ $$\forall ( S:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \oper
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/CommutingMidpoint.qubit_root_fidelity_quotient` (`✓ std3`). ∎
 
-*Citation.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Citation.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -52,7 +52,7 @@ $$\forall ( p:\mathbb{ R})( q:\mathbb{ R}),\quad\operatorname{H}\left( p,  q\rig
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -66,7 +66,7 @@ $$\forall ( S:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \oper
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -80,7 +80,7 @@ $$\forall ( p:\mathbb{ R})( q:\mathbb{ R})( x:\mathbb{ R})( y:\mathbb{ R}),\quad
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -94,7 +94,7 @@ $$\forall ( d:\operatorname{EuclideanSpace}\left(\mathbb{ R}, \operatorname{Fin}
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -108,7 +108,7 @@ $$\forall ( d:\operatorname{EuclideanSpace}\left(\mathbb{ R}, \operatorname{Fin}
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -122,7 +122,7 @@ $$\forall ( d:\operatorname{EuclideanSpace}\left(\mathbb{ R}, \operatorname{Fin}
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -136,7 +136,7 @@ $$\forall ( d:\operatorname{EuclideanSpace}\left(\mathbb{ R}, \operatorname{Fin}
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -150,7 +150,7 @@ $$\forall ( p:\mathbb{ R})( A:\operatorname{Matrix}\left(\operatorname{Fin}\left
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -164,7 +164,7 @@ $$\forall ( A:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \oper
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -178,7 +178,7 @@ $$ R_{0}=\frac{1}{2} I$$
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -192,7 +192,7 @@ $$\forall ( P:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \oper
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -206,7 +206,7 @@ $$\forall ( P,  Q:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -220,7 +220,7 @@ $$\forall ( P:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \oper
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -234,7 +234,7 @@ $$\forall ( P,  Q:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -248,7 +248,7 @@ $$\forall ( P,  Q:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -262,7 +262,7 @@ $$\operatorname{claim}\left(\right)\Leftrightarrow (\forall ( P:\operatorname{Ma
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
@@ -276,7 +276,7 @@ $$\neg \operatorname{claim}\left(\right)$$
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
 
 *Commentary.*
 
