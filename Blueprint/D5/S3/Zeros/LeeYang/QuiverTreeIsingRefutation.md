@@ -72,81 +72,7 @@ $$\neg \operatorname{claim}$$
 
 The witness is the path 0 → 1 ← 2 with totals (4,4), τ = −1, and weights W₃₁ = ((1,1,1),(1,10,1),(1,1,31)), indexed by the two splits in {1,2,3}. Its masses are (k₁,8−k₁−k₂,k₂). The same polynomial arises from 0 → 1 → 2 with the second weight index reversed. Exact state and split enumeration gives 48−6X+8X²−62X³+24X⁴−62X⁵+8X⁶−6X⁷+48X⁸. It equals 2(X−1)²X³q(X+X⁻¹), where q(y)=24y³+45y²−2y−26. The cubic discriminant is −16404; Cubic.discr_eq_prod_three_roots would make it a square, so q cannot split over ℝ. Algebraic closure and descent of splitting give a nonreal complex root w. A root z of z²−wz+1=0 is nonzero and satisfies w=z+z⁻¹. It is an octic root; if ‖z‖=1, then z⁻¹=conj z, forcing w to be real. The general product-weight version and physical questions outside the separately described all-vertex e8 result remain open.
 
-**Definition 1.6 (The number of endpoint incidences).**
-
-Lean statement: `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.deg`
-
-*Formalization.* `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.deg` (`✓ std3`).
-
-*Citation.* B. Fiol; J. Martínez-Montoya; A. Rios Fukelman (2020). *The planar limit of N=2 superconformal quiver theories*. DOI: [10.1007/JHEP08(2020)161](https://doi.org/10.1007/JHEP08(2020)161). URL: <https://arxiv.org/abs/2006.06379v2>.
-
-*Commentary.*
-
-For finite edge type E, deg src tgt v counts every source and target incidence. On the explicit witness the degrees are (2,4,4,1,1,1,1,1,1).
-
-**Definition 1.7 (Endpoint factorial factor).**
-
-Lean statement: `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.fEnd`
-
-*Formalization.* `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.fEnd` (`✓ std3`).
-
-*Citation.* B. Fiol; J. Martínez-Montoya; A. Rios Fukelman (2020). *The planar limit of N=2 superconformal quiver theories*. DOI: [10.1007/JHEP08(2020)161](https://doi.org/10.1007/JHEP08(2020)161). URL: <https://arxiv.org/abs/2006.06379v2>.
-
-*Commentary.*
-
-For a natural number a, fEnd a = (2a)!/((a−1)!a!), with real casts and natural subtraction. This is the endpoint factor from (2.15) on the positive split domain.
-
-**Definition 1.8 (Vertex factorial ratio).**
-
-Lean statement: `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.cVert`
-
-*Formalization.* `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.cVert` (`✓ std3`).
-
-*Citation.* B. Fiol; J. Martínez-Montoya; A. Rios Fukelman (2020). *The planar limit of N=2 superconformal quiver theories*. DOI: [10.1007/JHEP08(2020)161](https://doi.org/10.1007/JHEP08(2020)161). URL: <https://arxiv.org/abs/2006.06379v2>.
-
-*Commentary.*
-
-For natural d and α, cVert d α = (d−1)!/(d−α+2)!, with real casts and natural subtraction. It is the remaining vertex factor in (2.15).
-
-**Definition 1.9 (The all-vertex physical split weight).**
-
-Lean statement: `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.physRho`
-
-*Formalization.* `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.physRho` (`✓ std3`).
-
-*Citation.* B. Fiol; J. Martínez-Montoya; A. Rios Fukelman (2020). *The planar limit of N=2 superconformal quiver theories*. DOI: [10.1007/JHEP08(2020)161](https://doi.org/10.1007/JHEP08(2020)161). URL: <https://arxiv.org/abs/2006.06379v2>.
-
-*Commentary.*
-
-physRho is the unfactorized product over every edge and every vertex: edge binomials, all cVert factors, and the actual fEnd factors at both endpoint incidences. Frozen mass, splits and treePoly are reused; source and target follow the frozen orientation convention.
-
-**Definition 1.10 (The all-vertex physical FMR-P claim).**
-
-Lean statement: `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.claim`
-
-*Formalization.* `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.claim` (`✓ std3`).
-
-*Citation.* B. Fiol; J. Martínez-Montoya; A. Rios Fukelman (2020). *The planar limit of N=2 superconformal quiver theories*. DOI: [10.1007/JHEP08(2020)161](https://doi.org/10.1007/JHEP08(2020)161). URL: <https://arxiv.org/abs/2006.06379v2>.
-
-*Commentary.*
-
-This closed proposition quantifies over finite named spanning trees with at least two edges, all edge totals at least two, and the physical weight physRho at τ=−1. It asserts that every complex root of the frozen tree polynomial has norm one. It uses the all-vertex (2.19) reading; the shorter printed (2.31) expression remains distinct.
-
-**Theorem 1.11 (The all-vertex physical FMR-P claim is false).**
-
-$$\neg \operatorname{claim}$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.result` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* B. Fiol; J. Martínez-Montoya; A. Rios Fukelman (2020). *The planar limit of N=2 superconformal quiver theories*. DOI: [10.1007/JHEP08(2020)161](https://doi.org/10.1007/JHEP08(2020)161). URL: <https://arxiv.org/abs/2006.06379v2>.
-
-*Commentary.*
-
-The explicit nine-vertex, eight-edge witness has all totals equal to three. The proof retains all 256 complementary splits and all 512 spin states per split, keeps all nine actual cVert factors, proves the exact physical normalization (360⁸·36/512), and reduces to the reciprocal polynomial certificate with a nonreal root. Reciprocal lifting yields roots inside and outside the unit circle, so this is a literal closed refutation of the exact physical claim. The readable automorphism factor 72 and source prefactor 120⁸/4 are correspondence only; the kernel result uses the proved nonzero normalization. No claim is made about printed (2.31), an erratum, author intent, priority, other τ, the full tree ensemble or Conjecture 2.
-
-Analytical coefficient exposition. The following complete assignment-summed calculation is independently source-assessed analysis, not a new Lean theorem or a consequence certified by either result above. The arbitrary-joint-weight refutation and the separate all-total-three e8 physical refutation do not certify this 123-vertex physical-weight calculation. The readable derivation is also in the existing Fiol Problems dossier. This m60 exposition is analytical and supplies no additional formal theorem.
+Analytical coefficient exposition. The following complete assignment-summed calculation is independently source-assessed analysis, not a new Lean theorem or a consequence certified by either refutation. The arbitrary-joint-weight refutation and the separate all-total-three e8 physical refutation do not certify this 123-vertex physical-weight calculation. The readable derivation is also in the existing Fiol Problems dossier. This m60 exposition is analytical and supplies no additional formal theorem.
 
 Fixed tree and formal coordinates. T has a unique degree-2 centre c, two degree-61 hubs h1,h2 joined to c, and 60 degree-1 leaves at each hub. Thus |E|=122, |V|=123 and there are 122 odd-degree vertices. Replace each occurrence of zeta(2n-1) in the source expansion by an independent commuting formal generator Z_(2n-1), and let F_(0,T) denote only the summand of the fixed unlabelled tree T in equation (2.19). Coefficient extraction below is in these formal generators. No algebraic independence of the numerical odd zeta values is asserted or needed.
 
@@ -218,7 +144,7 @@ Exhaustive root count and simplicity. The intermediate value theorem gives a zer
 
 Multiplicity in the full coefficient. Multiplication by (1-X)^122 adds exactly the root 1 of multiplicity 122 because Q(1)>0. The scalar 200*12^120 is nonzero, so it changes no root or multiplicity. The degree is 122+124=246 and all zeros counted with multiplicity lie on the unit circle.
 
-Fixed-labelled target preserved. The both-central placement has exactly q_CC=7442*H_2*V^2+488*H_3*U*V+9*H_4*U^2, matching the supplied fixed-model source. Its fixed-assignment off-circle argument and the new unit-circle aggregate concern different polynomials. The aggregate result does not retract the fixed-labelled mathematical target or provide a new current kernel verdict for the existing candidate. In particular, one cannot present that placement alone as the full assignment-summed coefficient, and one cannot use the positive aggregate to establish the universal fixed-labelled claimPhys. The retained candidate targets result : Not claimPhys for every finite tree with at least two edges, every fixed assignment n_e>=2, all physical factors and tau=-1. This m60 candidate has no current kernel or admission verdict here. The separate all-total-three e8 result above refutes the registered all-vertex fixed-labelled claim; it does not identify that claim with the assignment-summed planar contribution. In particular, the disagreement over identifying a fixed-labelled external problem with the assignment-summed planar contribution is not resolved by this example. The separate two-edge boundary argument remains a prose result. An unguarded generic strict degree-zero bound fails; its unused proposed n>=1, degree-2n correction is not an accepted theorem.
+Fixed-labelled target preserved. The both-central placement has exactly q_CC=7442*H_2*V^2+488*H_3*U*V+9*H_4*U^2, matching the supplied fixed-model source. Its fixed-assignment off-circle argument and the new unit-circle aggregate concern different polynomials. The aggregate result does not retract the fixed-labelled mathematical target or provide a new current kernel verdict for the existing candidate. In particular, one cannot present that placement alone as the full assignment-summed coefficient, and one cannot use the positive aggregate to establish the universal fixed-labelled claimPhys. The retained candidate targets result : Not claimPhys for every finite tree with at least two edges, every fixed assignment n_e>=2, all physical factors and tau=-1. This m60 candidate has no current kernel or admission verdict here. The separate all-total-three e8 result refutes the registered all-vertex fixed-labelled claim; it does not identify that claim with the assignment-summed planar contribution. In particular, the disagreement over identifying a fixed-labelled external problem with the assignment-summed planar contribution is not resolved by this example. The separate two-edge boundary argument remains a prose result. An unguarded generic strict degree-zero bound fails; its unused proposed n>=1, degree-2n correction is not an accepted theorem.
 
 Remaining domain. This statement concerns tau=-1, this tree, this formal monomial, and the all-vertex source construction. It does not concern an individual fixed-labelled assignment, other multisets, other trees, other tau, the sum across all trees, or a full infinite coupling series. No further coefficient or root-location step is missing for this precisely bounded all-vertex formal coefficient. Authorial intent and the general assignment-summed physical tree conjecture remain unresolved by this calculation. Conjecture 2, which sums over trees, and the conditional Wilson-loop assertions also remain unresolved here. No general-conjecture settlement or literature-priority claim is made.
 
@@ -229,10 +155,4 @@ Remaining domain. This statement concerns tau=-1, this tree, this formal monomia
 - Truth anchor: `D5/S3/Zeros/LeeYang/QuiverTreeIsingRefutation.result`
 - Truth anchor: `D5/S3/Zeros/LeeYang/QuiverTreeIsingRefutation.splits`
 - Truth anchor: `D5/S3/Zeros/LeeYang/QuiverTreeIsingRefutation.treePoly`
-- Truth anchor: `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.cVert`
-- Truth anchor: `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.claim`
-- Truth anchor: `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.deg`
-- Truth anchor: `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.fEnd`
-- Truth anchor: `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.physRho`
-- Truth anchor: `D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.result`
 - Dependency: [D5/S3/Observer/AgencyHolonomy/NamedTreePhaseTransport](../../Observer/AgencyHolonomy/NamedTreePhaseTransport.md)
