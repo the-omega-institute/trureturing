@@ -91,13 +91,13 @@ private theorem finite_limit_iff {C : Nat → CompletionTree} {X : CompletionTre
       intro p b hp
       exact (lim p b).mpr ⟨n, ht ▸ hp⟩)).symm⟩
 
-private noncomputable def approximants {m : Nat} (S : System m) :=
+noncomputable def approximants {m : Nat} (S : System m) :=
   extensionIterate S (fun _ => False) (fun _ => Omega)
 
-private noncomputable def nativeCanonical {m : Nat} (S : System m)
+noncomputable def nativeCanonical {m : Nat} (S : System m)
     (i : Fin m) : CompletionTree := nativeLimit (fun n => approximants S n i)
 
-private theorem canonical_limit {m : Nat} (S : System m) (i : Fin m) :
+theorem canonical_limit {m : Nat} (S : System m) (i : Fin m) :
     LeafLimit (fun n => approximants S n i) (nativeCanonical S i) :=
   nativeLimit_leaves _ (fun n k h => extensionIterate_mono S _ _ n k h i)
 
@@ -156,7 +156,7 @@ def satisfies {k m : Nat} (S : FunctionalSystem k m) (mode : Fin k → Bool)
     (p : Fin k → Nat) (v : Fin m → CompletionTree) : Prop :=
   ∀ i E, S i = some E → v i = CompletionPositiveDriftRegion.value mode p v E
 
-private def specialize {k m : Nat} (mode : Fin k → Bool) (p : Fin k → Nat) :
+def specialize {k m : Nat} (mode : Fin k → Bool) (p : Fin k → Nat) :
     CompletionPositiveDriftRegion.Expr k m → Expr (m + 1)
   | .ground t => .ground t
   | .token j c => if mode j then .ground (substitution^[p j + c] (.of true))
@@ -164,11 +164,11 @@ private def specialize {k m : Nat} (mode : Fin k → Bool) (p : Fin k → Nat) :
   | .var a j => .var a j.castSucc
   | .pair A B => .pair (specialize mode p A) (specialize mode p B)
 
-private def nativeSystem {k m : Nat} (S : FunctionalSystem k m)
+def nativeSystem {k m : Nat} (S : FunctionalSystem k m)
     (mode : Fin k → Bool) (p : Fin k → Nat) : System (m + 1) :=
   Fin.lastCases none (fun i => (S i).map (specialize mode p))
 
-private theorem specialize_value {k m : Nat} (mode : Fin k → Bool) (p : Fin k → Nat)
+theorem specialize_value {k m : Nat} (mode : Fin k → Bool) (p : Fin k → Nat)
     (v : Fin (m + 1) → CompletionTree) (last : v (Fin.last m) = Omega)
     (E : CompletionPositiveDriftRegion.Expr k m) :
     value v (specialize mode p E) =
@@ -191,7 +191,7 @@ private theorem approximants_last {k m : Nat} (S : FunctionalSystem k m)
   | zero => rfl
   | succ n => simp [approximants, extensionIterate, extensionStep, nativeSystem]
 
-private theorem canonical_last {k m : Nat} (S : FunctionalSystem k m)
+theorem canonical_last {k m : Nat} (S : FunctionalSystem k m)
     (mode : Fin k → Bool) (p : Fin k → Nat) :
     nativeCanonical (nativeSystem S mode p) (Fin.last m) = Omega := by
   apply leafLimit_unique (canonical_limit _ _)
