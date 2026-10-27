@@ -8,7 +8,6 @@
 
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Basic.Real.Basic
-import Mathlib.Data.Finset.Lattice.Fold
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
