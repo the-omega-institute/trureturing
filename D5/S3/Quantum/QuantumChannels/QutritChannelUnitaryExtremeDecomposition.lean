@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import Mathlib.Analysis.Convex.Extreme
-import Mathlib.Analysis.Complex.Polynomial.Basic
 
 /-! The equal-modulus HMR channel and its unitary and extreme-point decomposition. -/
 
