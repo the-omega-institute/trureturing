@@ -62,7 +62,10 @@ internal sealed class CoherenceFractionIncoherentNonmonotoneDocument : IScribeDo
                 StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(Local("claim"))))),
                 AssessedProvenance.FromRepo(Source),
                 ResultProof(),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("yao-li-sun-2019-coherence-fraction-incoherent-nonmonotone"),
+                    ResolutionKind.Refuted)))));
 
     private static BlockSequence ResultProof() => Blocks(
         Paragraph(Text(
