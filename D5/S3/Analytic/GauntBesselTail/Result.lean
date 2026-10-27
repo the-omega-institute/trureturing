@@ -2,26 +2,76 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/GauntBesselTail/Result
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.Analysis.Convex.Deriv, mathlib/module/Mathlib.Analysis.SpecialFunctions.Sqrt]
+   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Gaussian.FourierTransform, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp]
    utility: none
    digest: Squared-order convexity supplies the kernel comparison for Gaunt's Bessel tail bound. -/
 
 /-
-The utility classification is none: the statements concern arbitrary real
-parameters and analytic integrals, rather than finite computations or instances.
-The intended settlement is open-problem-resolution (#22457; Proved).
-No settlement theorem is asserted by the definitions alone.
+admission_basis: open-problem-resolution (#22457; Proved).
+The utility is none: arbitrary real parameters and analytic integrals, not a computation.
+The signed Laplace estimate constructs a fixed inner indicator and compares two
+distinct exponential rates. Its eventual negative sign is the escape witness
+for larger_order_failure and result. Other proof steps are bind-only after
+expansion to frozen owners and pinned Mathlib; no calculus instantiation is
+claimed as independent content. The source conjecture is the admission basis.
+Frozen declaration keys (GID; full Lean name; declaration statement_id):
+B = D5/S3/Analytic/GammaGammaNBU/Result; D5.S3.Analytic.GammaGammaNBU.Result.besselK; sha256:5a3ca159aba2c04563f4a7b9beb0957d5c5ae45d4ba06ba9eaf010113202e223
+F = D5/S3/Zeros/Jensen/FactorialJensenKernelBound; D5.S3.Zeros.Jensen.FactorialJensenKernelBound.evenFactorialSum; sha256:262940885a557195dc39a65b8c64d69729b11766c1adb23ff10226ed527e1db3
+E = D5/S3/Zeros/Jensen/FactorialJensenKernelBound; D5.S3.Zeros.Jensen.FactorialJensenKernelBound.even_sum_le_cosh; sha256:d5c2bde58c99e2e549704f48f68a15c4b9dc14eff57c59e914b267cd074b8a4d
+All rows below use these exact identities, not module pins.
+Per declaration: name | proof_shape | frozen keys | escape_witness | consumers.
+  alpha | bind-only (definition) | none | none | claim,result
+  alphaPrime | bind-only (definition) | none | none | claim,result
+  tail | bind-only (definition) | B | none | claim,tail_identity,strict_tail,n_one_identity,larger_order_failure,result
+  claim | bind-only (definition) | B | none | result (type)
+  sinh_gap_pos | bind-only | none | none | squared_order_strictConvex
+  cosh_sqrt_deriv | bind-only | none | none | squared_order_strictConvex,zero_order_kernel
+  cosh_sqrt_deriv2 | bind-only | none | none | squared_order_strictConvex
+  squared_order_strictConvex | bind-only | none | none | positive_order_kernel,zero_order_kernel
+  cosh_sqrt_sq | bind-only | none | none | positive_order_kernel,zero_order_kernel
+  positive_order_kernel | bind-only | none | none | strict_tail
+  zero_order_kernel | bind-only | none | none | strict_tail
+  parameters | bind-only | none | none | result
+  cosh_quadratic | bind-only | F,E | none | exponential_kernel_integrable,exponential_kernel_tendsto
+  exponential_kernel_integrable | bind-only | F,E | none | bessel_kernel_integrable,u_exponential_integrable
+  bessel_kernel_integrable | bind-only | F,E | none | bessel_cosh_integrable,bessel_hasDerivAt,bessel_bigO,bessel_ibp,H_integrable,J_eq,tail_identity,bessel_order_lt
+  bessel_cosh_integrable | bind-only | F,E | none | bessel_hasDerivAt,bessel_sinh_integrable,H_integrable,J_eq
+  bessel_hasDerivAt | bind-only | B,F,E | none | tail_integrable,weighted_bessel_tendsto,tail_identity
+  integral_decay | bind-only | none | none | bessel_bigO
+  bessel_bigO | bind-only | B,F,E | none | tail_integrable,weighted_bessel_tendsto
+  weighted_decay | bind-only | none | none | tail_integrable,weighted_bessel_tendsto
+  tail_integrable | bind-only | B,F,E | none | weighted_J_integrable,tail_identity
+  weighted_bessel_tendsto | bind-only | B,F,E | none | tail_identity
+  abs_sinh_le_cosh | bind-only | none | none | bessel_sinh_integrable
+  bessel_sinh_integrable | bind-only | F,E | none | S_sinh_integrable
+  exponential_kernel_tendsto | bind-only | F,E | none | u_exponential_tendsto,S_kernel_tendsto
+  u_exponential_integrable | bind-only | F,E | none | S_sinh_integrable
+  u_exponential_tendsto | bind-only | F,E | none | S_kernel_tendsto
+  S | bind-only (definition) | none | none | S_deriv,S_sinh_integrable,S_kernel_tendsto,bessel_ibp,H,H_integrable,J_eq,strict_tail,H_negative_near
+  S_deriv | bind-only | none | none | bessel_ibp,H_negative_near
+  S_sinh_integrable | bind-only | F,E | none | bessel_ibp,H_integrable,J_eq
+  S_kernel_tendsto | bind-only | F,E | none | bessel_ibp
+  bessel_ibp | bind-only | B,F,E | none | J_eq
+  H | bind-only (definition) | none | none | J,H_integrable,J_eq,strict_tail,n_one_identity,H_negative_near,larger_order_failure
+  J | bind-only (definition) | none | none | J_eq,weighted_J_integrable,tail_identity,strict_tail,n_one_identity,larger_order_failure
+  H_integrable | bind-only | F,E | none | strict_tail,larger_order_failure
+  J_eq | bind-only | B,F,E | none | weighted_J_integrable,tail_identity
+  weighted_J_integrable | bind-only | B,F,E | none | tail_identity,strict_tail,larger_order_failure
+  tail_identity | bind-only | B,F,E | none | strict_tail,n_one_identity,larger_order_failure
+  integral_Ioi_pos | bind-only | none | none | strict_tail,larger_order_failure,bessel_order_lt
+  strict_tail | bind-only | B,F,E | none | result
+  n_one_identity | bind-only | B,F,E | none | result
+  laplace_negative | content | none | laplace_negative | larger_order_failure
+  H_negative_near | bind-only | none | none | larger_order_failure
+  larger_order_failure | content | B,F,E | laplace_negative | result
+  bessel_order_lt | bind-only | B,F,E | none | result
+  result | content | B,F,E | laplace_negative | settling result
 -/
 
 import D5.S3.Analytic.GammaGammaNBU.Result
 import D5.S3.Zeros.Jensen.FactorialJensenKernelBound
 import Mathlib.Analysis.SpecialFunctions.Gaussian.FourierTransform
-import Mathlib.Analysis.Calculus.ParametricIntegral
-import Mathlib.MeasureTheory.Integral.ExpDecay
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import Mathlib.Analysis.Convex.Deriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Mathlib.Analysis.SpecialFunctions.Sqrt
 
 /-! The sharp weighted Bessel tail bound and its optimality. -/
 
@@ -283,7 +333,7 @@ private lemma bessel_sinh_integrable (r z : ℝ) (hz : 0 < z) :
   calc
     _ ≤ exp (-z * cosh u) * cosh (r * u) * cosh u := by
       gcongr <;> apply abs_sinh_le_cosh
-    _ = _ := by ring
+    _ = _ := mul_right_comm _ _ _
 
 private lemma exponential_kernel_tendsto (z A : ℝ) (hz : 0 < z) :
     Tendsto (fun u : ℝ => exp (-z * cosh u + A * u)) atTop (𝓝 0) := by
@@ -655,7 +705,7 @@ theorem result : claim := by
     have he : p ^ 2 = q ^ 2 + 2 * ν + 1 := by dsimp [q, p]; nlinarith [sq_sqrt hp.1]
     have hne : |p - β| ≠ q := by
       intro h
-      have hβ' : β ≠ alpha ν n ∧ β ≠ alphaPrime ν n := by simpa using hβ
+      have hβ' : β ≠ alpha ν n ∧ β ≠ alphaPrime ν n := not_or.mp hβ
       rcases abs_cases (p - β) with hpos | hneg
       · apply hβ'.1; dsimp [alpha]; dsimp [q, p] at h; linarith [hpos.1]
       · apply hβ'.2; dsimp [alphaPrime]; dsimp [q, p] at h; linarith [hneg.1]
