@@ -80,7 +80,10 @@ internal sealed class RandomExponentialProductSLLNDocument : IScribeDocumentDefi
                             + "The continuous-linear-map operator bound converts this to the displayed "
                             + "vector estimate for every x, and the resulting almost-everywhere statement "
                             + "is exactly claim."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("dzhenzher-sakbaev-2025-random-semigroup-slln"),
+                    ResolutionKind.Proved)))));
 
     private static Formula RandomProductFormula()
     {
