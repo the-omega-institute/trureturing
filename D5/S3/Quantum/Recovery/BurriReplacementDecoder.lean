@@ -255,7 +255,7 @@ theorem physical_marginals :
     fin_cases i <;> fin_cases j <;> fin_cases b <;>
       fin_cases k <;> fin_cases l <;> fin_cases c <;>
       simp [physicalState, sigmaVector, referenceVector, V, X, psi,
-        Fin.sum_univ_two, Fin.sum_univ_one]
+        Matrix.vecMulVec_apply, Pi.star_apply, Fin.sum_univ_two, Fin.sum_univ_one]
   constructor
   · ext i j
     fin_cases i <;> fin_cases j <;>
@@ -355,6 +355,7 @@ theorem petz_kraus_identification (e : E) :
   rfl
 
 /-- The canonical reference completion has identically zero defect. -/
+set_option maxHeartbeats 1000000 in
 theorem ordinary_petz_channel : ∃ recovery : QuantumChannel B A,
     ∀ T : Matrix B B ℂ,
       CStarMatrix.ofMatrix.symm
@@ -378,9 +379,153 @@ theorem ordinary_petz_channel : ∃ recovery : QuantumChannel B A,
   rw [noise_reference, petz_spectral_factors.1, petz_spectral_factors.2,
     sub_self, Matrix.zero_mul, Matrix.trace_zero, zero_smul, add_zero] at h
   simpa only [petzKraus, reference_root, Matrix.mul_one, Matrix.conjTranspose_mul,
-    Matrix.conjTranspose_conjTranspose, Matrix.conjTranspose_diagonal,
+    Matrix.conjTranspose_conjTranspose, Matrix.diagonal_conjTranspose,
     Pi.star_def, Complex.conj_ofReal, Matrix.mul_assoc] using h
 
+
+/-- The canonical purification amplitude is the positive square root of rho. -/
+theorem canonical_reference_amplitude (r i : A) :
+    cfc Real.sqrt rho r i = referenceVector (r, i) := by
+  rw [reference_root]
+  simp [referenceVector, Matrix.diagonal_apply]
+
+/-- The actual noise channel, with its finite Kraus realization. -/
+def noiseChannel : QuantumChannel A B :=
+  (finite_kraus_quantum_channel noiseKraus noise_normalization).choose
+
+theorem noise_channel_action (T : Matrix A A ℂ) :
+    CStarMatrix.ofMatrix.symm
+      (noiseChannel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+      Matrix.trace T • 1 := by
+  exact ((finite_kraus_quantum_channel noiseKraus noise_normalization).choose_spec T).trans
+    (noise_action T)
+
+def swChannel : QuantumChannel B A :=
+  (finite_kraus_quantum_channel swKraus decoder_normalizations.1).choose
+
+/-- This channel is chosen from the ordinary, reference-completed Petz theorem. -/
+def petzChannel : QuantumChannel B A := ordinary_petz_channel.choose
+
+/-- The source SW output, derived below from U W and the actual ancilla preparation. -/
+def swOutput : Matrix A A ℂ := Matrix.diagonal ![8 / 9, 1 / 9]
+
+theorem sw_channel_action (T : Matrix B B ℂ) :
+    CStarMatrix.ofMatrix.symm
+      (swChannel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+      Matrix.trace T • swOutput := by
+  rw [(finite_kraus_quantum_channel swKraus decoder_normalizations.1).choose_spec T]
+  obtain ⟨h2, h3, ht⟩ := sqrt_facts
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [Matrix.mul_apply, Matrix.conjTranspose_apply, sw_columns,
+      swOutput, Matrix.trace, Matrix.diagonal_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_two, Fin.sum_univ_one]
+  all_goals push_cast
+  all_goals ring_nf
+  all_goals simp only [← Complex.ofReal_pow, h2]
+  all_goals ring
+
+theorem petz_channel_action (T : Matrix B B ℂ) :
+    CStarMatrix.ofMatrix.symm
+      (petzChannel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+      Matrix.trace T • rho := by
+  rw [ordinary_petz_channel.choose_spec T]
+  obtain ⟨h2, h3, ht⟩ := sqrt_facts
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [petzKraus, noiseKraus, V, weight, rho, Matrix.mul_apply,
+      Matrix.conjTranspose_apply, Matrix.diagonal_apply, Matrix.trace,
+      Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_one]
+  all_goals push_cast; field_simp; ring_nf
+  all_goals simp only [← Complex.ofReal_pow, h2, h3]; ring
+
+private theorem composite_reset (decoder : QuantumChannel B A)
+    (S : Matrix A A ℂ)
+    (h : ∀ T : Matrix B B ℂ, CStarMatrix.ofMatrix.symm
+      (decoder.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) = Matrix.trace T • S)
+    (T : Matrix A A ℂ) :
+    CStarMatrix.ofMatrix.symm
+      ((decoder.comp noiseChannel).toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+      Matrix.trace T • S := by
+  change CStarMatrix.ofMatrix.symm
+    (decoder.toCompletelyPositiveMap
+      (noiseChannel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T))) = _
+  have hn : noiseChannel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T) =
+      CStarMatrix.ofMatrix (Matrix.trace T • (1 : Matrix B B ℂ)) :=
+    congrArg CStarMatrix.ofMatrix (noise_channel_action T)
+  rw [hn, h]
+  simp [Matrix.trace_smul, Matrix.trace_one, Fintype.card_fin]
+
+/-- The tensor extension acts on the input matrix's reference-indexed blocks.
+The channel argument is the actual canonical CPTP composite. -/
+def referenceExtension (channel : QuantumChannel A A)
+    (T : Matrix (A × A) (A × A) ℂ) : Matrix (A × A) (A × A) ℂ :=
+  fun p q => CStarMatrix.ofMatrix.symm
+    (channel.toCompletelyPositiveMap
+      (CStarMatrix.ofMatrix (fun i j => T (p.1, i) (q.1, j)))) p.2 q.2
+
+/-- The pure density of the canonical reference purification. -/
+def referencePure : Matrix (A × A) (A × A) ℂ :=
+  Matrix.vecMulVec referenceVector (star referenceVector)
+
+/-- Squared fidelity with a pure reference is its overlap with the actual
+recovered density, without an extra square or a square root. -/
+def entanglementFidelity (channel : QuantumChannel A A) : ℝ :=
+  (star referenceVector ⬝ᵥ (referenceExtension channel referencePure *ᵥ referenceVector)).re
+
+private theorem recovered_purification_of_reset (channel : QuantumChannel A A)
+    (S : Matrix A A ℂ)
+    (h : ∀ T : Matrix A A ℂ, CStarMatrix.ofMatrix.symm
+      (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) = Matrix.trace T • S) :
+    referenceExtension channel referencePure = Matrix.kronecker rho S := by
+  obtain ⟨h2, h3, ht⟩ := sqrt_facts
+  ext ⟨r, i⟩ ⟨t, j⟩
+  change (CStarMatrix.ofMatrix.symm (channel.toCompletelyPositiveMap
+    (CStarMatrix.ofMatrix (fun k l => referencePure (r, k) (t, l))))) i j = _
+  rw [h]
+  fin_cases r <;> fin_cases t <;>
+    norm_num [referencePure, referenceVector, weight, rho, Matrix.trace,
+      Matrix.vecMulVec_apply, Matrix.diagonal_apply, Matrix.kroneckerMap_apply,
+      Fin.sum_univ_two]
+  all_goals congr 1; apply Complex.ext <;>
+    norm_num [Complex.div_re, Complex.div_im] <;> field_simp <;> nlinarith
+
+/-- The full recovered reference-output states, before taking any overlap. -/
+theorem actual_recovered_purifications :
+    referenceExtension (petzChannel.comp noiseChannel) referencePure =
+      Matrix.kronecker rho rho ∧
+    referenceExtension (swChannel.comp noiseChannel) referencePure =
+      Matrix.kronecker rho swOutput := by
+  exact ⟨recovered_purification_of_reset _ _
+      (composite_reset petzChannel rho petz_channel_action),
+    recovered_purification_of_reset _ _
+      (composite_reset swChannel swOutput sw_channel_action)⟩
+
+/-- A strict comparison of the actual Appendix A SW and ordinary Petz channels,
+using the nonuniform canonical reference purification. This is one direction only. -/
+theorem actual_strict_fidelity :
+    entanglementFidelity (petzChannel.comp noiseChannel) = 1 / 3 ∧
+    entanglementFidelity (swChannel.comp noiseChannel) = 11 / 27 ∧
+    entanglementFidelity (swChannel.comp noiseChannel) -
+      entanglementFidelity (petzChannel.comp noiseChannel) = 2 / 27 ∧
+    entanglementFidelity (petzChannel.comp noiseChannel) <
+      entanglementFidelity (swChannel.comp noiseChannel) := by
+  obtain ⟨h2, h3, ht⟩ := sqrt_facts
+  have hp : entanglementFidelity (petzChannel.comp noiseChannel) = 1 / 3 := by
+    unfold entanglementFidelity
+    rw [actual_recovered_purifications.1]
+    norm_num [referenceVector, weight, rho, Matrix.mulVec, dotProduct,
+      Matrix.kroneckerMap_apply, Matrix.diagonal_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_two, Complex.div_re, Complex.div_im]
+    field_simp <;> nlinarith
+  have hs : entanglementFidelity (swChannel.comp noiseChannel) = 11 / 27 := by
+    unfold entanglementFidelity
+    rw [actual_recovered_purifications.2]
+    norm_num [referenceVector, weight, rho, swOutput, Matrix.mulVec, dotProduct,
+      Matrix.kroneckerMap_apply, Matrix.diagonal_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_two, Complex.div_re, Complex.div_im]
+    field_simp <;> nlinarith
+  exact ⟨hp, hs, by rw [hp, hs]; norm_num, by rw [hp, hs]; norm_num⟩
 
 #print axioms psi_normalized
 #print axioms source_isometry
