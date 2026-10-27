@@ -95,7 +95,7 @@ noncomputable def family : Registration arena
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Combinatorics.PartitionMatrix.ChernFuImage.result)
-    (Realization signature) Type Unit where
+    (Realization signature) Unit Unit where
   unitName := `D5.S3.Combinatorics.PartitionMatrix.ChernFuImage.result.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.PartitionMatrix.ChernFuImage.family
   realizationSource := none
@@ -111,7 +111,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (List ℕ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.PartitionMatrix.ChernFuImage
     definition := none

@@ -5,8 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.PartitionMatrix;
 internal sealed class ChernFuImageDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/PartitionMatrix/ChernFuImage.";
-    private static readonly LibraryNoteRef CF = LibraryNoteRef.Create("D5/L/Combinatorics/chernfu2026signed");
-    private static readonly LibraryNoteRef CDK = LibraryNoteRef.Create("D5/L/Combinatorics/claesson2011partition");
+    private static readonly LibraryNoteRef CF = LibraryNoteRef.Create("D5/L/PartitionMatrix/chernfu2026signed");
+    private static readonly LibraryNoteRef CDK = LibraryNoteRef.Create("D5/L/PartitionMatrix/claesson2011partition");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The fixed Claesson-Dukes-Kubitzke image of improper partition matrices is characterized by the gaps in the whole alphabet of an inversion sequence.",
