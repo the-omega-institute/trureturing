@@ -8,6 +8,9 @@
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
+import D5.S3.Quantum.Information.ActualQubitChordObstruction
+
+/-! Spectral marginal pinching and mixed-unitary qubit channels. -/
 
 set_option autoImplicit false
 noncomputable section
@@ -18,6 +21,7 @@ open D5.S3.Quantum.FiniteDimensional (QubitMatrix qubitX qubitZ)
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (bloch blochMatrix blochLinear)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
 open D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (sigma spin)
+open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (pauliMatrix)
 
 namespace D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation
 
@@ -72,11 +76,54 @@ private def witness (n x : Fin 3 → ℝ) :
     (1 / 2 : ℂ) • (spin n ⊗ₖ (1 : QubitMatrix)) +
     (1 / 4 : ℂ) • (spin x ⊗ₖ qubitZ))
 
+private lemma mixed_basic (φ : QubitMatrix → QubitMatrix) (hφ : IsMixedUnitary φ) :
+    (∃ f : QubitMatrix →ₗ[ℂ] QubitMatrix, ∀ a, φ a = f a) ∧
+    φ 1 = 1 ∧ (∀ a, (φ a).trace = a.trace) ∧
+    (∀ a, a.IsHermitian → (φ a).IsHermitian) := by
+  obtain ⟨k, p, u, _, hp, hu, hrep⟩ := hφ
+  let f : QubitMatrix →ₗ[ℂ] QubitMatrix :=
+    { toFun := fun a => ∑ j, (p j : ℂ) • (u j * a * star (u j))
+      map_add' := by
+        intro a b
+        simp only [Matrix.mul_add, Matrix.add_mul, smul_add, Finset.sum_add_distrib]
+      map_smul' := by
+        intro c a
+        simp only [Matrix.mul_smul, Matrix.smul_mul, smul_smul, Finset.smul_sum,
+          RingHom.id_apply]
+        congr 1
+        funext j
+        rw [mul_comm c] }
+  refine ⟨⟨f, hrep⟩, ?_, ?_, ?_⟩
+  · rw [hrep]
+    simp only [mul_one, Unitary.mul_star_self_of_mem (hu _), ← Finset.sum_smul,
+      ← Complex.ofReal_sum, hp, Complex.ofReal_one, one_smul]
+  · intro a
+    rw [hrep, Matrix.trace_sum]
+    have he (j : Fin k) : trace (u j * a * star (u j)) = trace a := by
+      rw [Matrix.trace_mul_cycle, Unitary.star_mul_self_of_mem (hu j), one_mul]
+    simp only [Matrix.trace_smul, he, smul_eq_mul, ← Finset.sum_mul,
+      ← Complex.ofReal_sum, hp, Complex.ofReal_one, one_mul]
+  · intro a ha
+    rw [hrep]
+    apply Matrix.IsHermitian.ext
+    intro i j
+    simp only [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, star_sum, star_mul,
+      Complex.star_def, Complex.conj_ofReal]
+    apply Finset.sum_congr rfl
+    intro l _
+    have hs : (u l * a * star (u l)).IsHermitian := by
+      simpa only [Matrix.star_eq_conjTranspose] using
+        Matrix.isHermitian_mul_mul_conjTranspose (u l) ha
+    rw [← Complex.star_def, hs.apply]
+    ring
+
 private lemma mixed_channel_data (φ : QubitMatrix → QubitMatrix) (hφ : IsMixedUnitary φ) :
     (∃ f : QubitMatrix →ₗ[ℂ] QubitMatrix, ∀ a, φ a = f a) ∧
     φ 1 = 1 ∧ (∀ a, (φ a).trace = a.trace) ∧
     (∀ a, a.IsHermitian → (φ a).IsHermitian) ∧
     ∀ v : Fin 3 → ℝ, φ (spin v) = spin (blochOperator φ *ᵥ v) := by
+  obtain ⟨hf, h1, htr, hh⟩ := mixed_basic φ hφ
+  refine ⟨hf, h1, htr, hh, ?_⟩
   sorry
 
 private lemma scalar_gram_isotropic (φ : QubitMatrix → QubitMatrix)
@@ -91,13 +138,112 @@ private lemma orthogonal_probe (t : Matrix (Fin 3) (Fin 3) ℝ)
       (t *ᵥ n) ⬝ᵥ (t *ᵥ x) ≠ 0 := by
   sorry
 
+private lemma spectral_projectors (a : QubitMatrix) (h : a.IsHermitian) :
+    let p : Fin 2 → QubitMatrix := fun i r s =>
+      h.eigenvectorBasis i r * star (h.eigenvectorBasis i s)
+    p 0 + p 1 = 1 ∧
+      a = (h.eigenvalues 0 : ℂ) • p 0 + (h.eigenvalues 1 : ℂ) • p 1 := by
+  dsimp only
+  have hu : (h.eigenvectorUnitary : QubitMatrix) *
+      star (h.eigenvectorUnitary : QubitMatrix) = 1 :=
+    Unitary.coe_mul_star_self h.eigenvectorUnitary
+  have hs := h.spectral_theorem
+  rw [Unitary.conjStarAlgAut_apply] at hs
+  constructor
+  · ext i j
+    have he := congrFun (congrFun hu i) j
+    change h.eigenvectorBasis 0 i * star (h.eigenvectorBasis 0 j) +
+      h.eigenvectorBasis 1 i * star (h.eigenvectorBasis 1 j) = (1 : QubitMatrix) i j
+    simpa only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.star_apply,
+      Matrix.IsHermitian.eigenvectorUnitary_apply] using he
+  · calc
+      a = _ := hs
+      _ = _ := by
+        ext i j
+        simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.star_apply,
+          Matrix.IsHermitian.eigenvectorUnitary_apply, Matrix.diagonal_apply]
+        ring
+
 private lemma pinching_formula
     (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) (v : Fin 3 → ℝ)
     (hm : marginalA ρ = blochMatrix 1 (WithLp.toLp 2 v)) (hv : v ≠ 0) :
     pinchA ρ = (1 / 2 : ℂ) •
       (ρ + (((v ⬝ᵥ v)⁻¹ : ℝ) : ℂ) •
         ((spin v ⊗ₖ (1 : QubitMatrix)) * ρ * (spin v ⊗ₖ (1 : QubitMatrix)))) := by
-  sorry
+  classical
+  let a := blochMatrix 1 (WithLp.toLp 2 v)
+  have ha : a.IsHermitian := by
+    apply Matrix.IsHermitian.ext
+    intro i j
+    fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+      simp [a, blochMatrix]
+  have h : (marginalA ρ).IsHermitian := hm.symm ▸ ha
+  let p : Fin 2 → QubitMatrix := fun i r s =>
+    h.eigenvectorBasis i r * star (h.eigenvectorBasis i s)
+  obtain ⟨hsum, hspec⟩ := spectral_projectors (marginalA ρ) h
+  change p 0 + p 1 = 1 at hsum
+  change marginalA ρ = (h.eigenvalues 0 : ℂ) • p 0 +
+    (h.eigenvalues 1 : ℂ) • p 1 at hspec
+  have htrace : h.eigenvalues 0 + h.eigenvalues 1 = 1 := by
+    have ht := h.trace_eq_sum_eigenvalues
+    conv_lhs at ht =>
+      rw [hm, D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace]
+    rw [Fin.sum_univ_two] at ht
+    exact_mod_cast ht.symm
+  have hdet : h.eigenvalues 0 * h.eigenvalues 1 = (1 - v ⬝ᵥ v) / 4 := by
+    have hd := h.det_eq_prod_eigenvalues
+    conv_lhs at hd =>
+      rw [hm, D5.S3.Quantum.Information.ActualQubitChordObstruction.det_bloch]
+    rw [Fin.prod_univ_two] at hd
+    have hr := congrArg Complex.re hd
+    simp only [Complex.ofReal_re, Complex.mul_re, Complex.ofReal_im,
+      mul_zero, sub_zero] at hr
+    rw [← hr, EuclideanSpace.real_norm_sq_eq]
+    unfold dotProduct
+    simp only [pow_two]
+  have hdelta : (h.eigenvalues 0 - h.eigenvalues 1) ^ 2 = v ⬝ᵥ v := by
+    nlinarith [hdet]
+  have hvv : v ⬝ᵥ v ≠ 0 := dotProduct_self_eq_zero.not.mpr hv
+  let c : ℂ := (h.eigenvalues 0 : ℂ) - (h.eigenvalues 1 : ℂ)
+  have hc : c ^ 2 = ((v ⬝ᵥ v : ℝ) : ℂ) := by
+    dsimp only [c]
+    exact_mod_cast hdelta
+  have hspin : spin v = c • (p 0 - p 1) := by
+    have he : spin v = (2 : ℂ) • marginalA ρ - 1 := by
+      rw [hm]
+      ext i j
+      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+        simp [spin, sigma, pauliMatrix, qubitX, qubitZ, blochMatrix,
+          Fin.sum_univ_three] <;> ring
+    rw [he, hspec, ← hsum]
+    have ht : (h.eigenvalues 1 : ℂ) = 1 - (h.eigenvalues 0 : ℂ) := by
+      exact_mod_cast (show h.eigenvalues 1 = 1 - h.eigenvalues 0 by linarith)
+    rw [ht]
+    dsimp only [c]
+    rw [ht]
+    module
+  let p0 := p 0 ⊗ₖ (1 : QubitMatrix)
+  let p1 := p 1 ⊗ₖ (1 : QubitMatrix)
+  have hpsum : p0 + p1 = 1 := by
+    rw [← Matrix.add_kronecker, hsum, Matrix.one_kronecker_one]
+  have hk : spin v ⊗ₖ (1 : QubitMatrix) = c • (p0 - p1) := by
+    rw [hspin, Matrix.smul_kronecker]
+    congr 1
+    ext i j
+    change (p 0 i.1 j.1 - p 1 i.1 j.1) * (1 : QubitMatrix) i.2 j.2 =
+      p 0 i.1 j.1 * (1 : QubitMatrix) i.2 j.2 -
+        p 1 i.1 j.1 * (1 : QubitMatrix) i.2 j.2
+    exact sub_mul _ _ _
+  have hcoeff : (((v ⬝ᵥ v)⁻¹ : ℝ) : ℂ) * (c * c) = 1 := by
+    rw [← pow_two, hc, Complex.ofReal_inv]
+    exact inv_mul_cancel₀ (by exact_mod_cast hvv)
+  rw [pinchA, dite_eq_left h, Fin.sum_univ_two]
+  change p0 * ρ * p0 + p1 * ρ * p1 = _
+  simp only [hk, Matrix.smul_mul, Matrix.mul_smul, smul_smul, hcoeff, one_smul]
+  have hr : ρ = (p0 + p1) * ρ * (p0 + p1) := by rw [hpsum, one_mul, mul_one]
+  conv_rhs => arg 2; arg 1; rw [hr]
+  simp only [Matrix.add_mul, Matrix.mul_add, Matrix.sub_mul, Matrix.mul_sub]
+  module
 
 private lemma witness_density (n x : Fin 3 → ℝ)
     (hn : n ⬝ᵥ n = 1) (hx : x ⬝ᵥ x = 1) (hnx : n ⬝ᵥ x = 0) :
@@ -106,18 +252,134 @@ private lemma witness_density (n x : Fin 3 → ℝ)
 
 private lemma witness_marginal (n x : Fin 3 → ℝ) :
     marginalA (witness n x) = blochMatrix 1 (WithLp.toLp 2 ((1 / 2 : ℝ) • n)) := by
-  sorry
+  ext i j
+  change (∑ b : Fin 2, witness n x (i, b) (j, b)) = _
+  rw [Fin.sum_univ_two]
+  fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+    simp [witness, spin, sigma, pauliMatrix, qubitX, qubitZ, blochMatrix,
+      Fin.sum_univ_three] <;> ring
+
+private def localLinear (f : QubitMatrix →ₗ[ℂ] QubitMatrix) :
+    Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ →ₗ[ℂ]
+      Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ where
+  toFun := localMap f
+  map_add' a b := by
+    ext i j
+    exact congrFun (congrFun (f.map_add
+      (fun r s : Fin 2 => a (r, i.2) (s, j.2))
+      (fun r s : Fin 2 => b (r, i.2) (s, j.2))) i.1) j.1
+  map_smul' c a := by
+    ext i j
+    exact congrFun (congrFun (f.map_smul c
+      (fun r s : Fin 2 => a (r, i.2) (s, j.2))) i.1) j.1
+
+private lemma local_kronecker (f : QubitMatrix →ₗ[ℂ] QubitMatrix) (a b : QubitMatrix) :
+    localLinear f (a ⊗ₖ b) = f a ⊗ₖ b := by
+  ext i j
+  change f (fun r s => a r s * b i.2 j.2) i.1 j.1 = f a i.1 j.1 * b i.2 j.2
+  have he : (fun r s => a r s * b i.2 j.2) = b i.2 j.2 • a := by
+    ext r s
+    exact mul_comm _ _
+  rw [he, map_smul]
+  exact mul_comm _ _
+
+private lemma spin_triple (a b : Fin 3 → ℝ) :
+    spin a * spin b * spin a = (2 * (a ⬝ᵥ b) : ℂ) • spin a -
+      ((a ⬝ᵥ a : ℝ) : ℂ) • spin b := by
+  unfold dotProduct
+  ext i j
+  fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+    simp [spin, sigma, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply,
+      Fin.sum_univ_two, Fin.sum_univ_three, Complex.mul_re, Complex.mul_im] <;> ring
+
+private lemma spin_scale (r : ℝ) (a : Fin 3 → ℝ) :
+    spin (r • a) = (r : ℂ) • spin a := by
+  unfold spin
+  simp only [Pi.smul_apply, smul_eq_mul, Complex.ofReal_mul, mul_smul, Finset.smul_sum]
+
+private lemma spin_square (a : Fin 3 → ℝ) :
+    spin a * spin a = ((a ⬝ᵥ a : ℝ) : ℂ) • (1 : QubitMatrix) := by
+  unfold dotProduct
+  ext i j
+  fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+    simp [spin, sigma, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply,
+      Fin.sum_univ_two, Fin.sum_univ_three, Complex.mul_re, Complex.mul_im] <;> ring
+
+private lemma local_witness (φ : QubitMatrix → QubitMatrix) (hφ : IsMixedUnitary φ)
+    (n x : Fin 3 → ℝ) :
+    localMap φ (witness n x) = witness (blochOperator φ *ᵥ n) (blochOperator φ *ᵥ x) := by
+  obtain ⟨⟨f, hf⟩, h1, _, _, hspin⟩ := mixed_channel_data φ hφ
+  have he : φ = f := funext hf
+  subst φ
+  change localLinear f (witness n x) = _
+  simp only [witness, map_add, map_smul, local_kronecker, h1, hspin]
+
+private lemma pinch_witness (a b : Fin 3 → ℝ) (ha : a ≠ 0) :
+    pinchA (witness a b) = witness a (((a ⬝ᵥ b) / (a ⬝ᵥ a)) • a) := by
+  have haa : a ⬝ᵥ a ≠ 0 := dotProduct_self_eq_zero.not.mpr ha
+  have hc : ((a ⬝ᵥ a : ℝ) : ℂ) ≠ 0 := by exact_mod_cast haa
+  rw [pinching_formula (witness a b) ((1 / 2 : ℝ) • a) (witness_marginal a b)
+    (smul_ne_zero (by norm_num) ha)]
+  simp only [spin_scale, smul_dotProduct, dotProduct_smul, smul_eq_mul]
+  unfold witness
+  simp only [spin_scale, Matrix.smul_kronecker, Matrix.one_kronecker_one,
+    Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul,
+    ← Matrix.mul_kronecker_mul, Matrix.one_mul, Matrix.mul_one, spin_triple,
+    spin_square, smul_smul]
+  ext i j
+  simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply,
+    Matrix.kronecker_apply, smul_eq_mul]
+  push_cast
+  field_simp [hc]
+  ring
 
 private lemma mapped_marginal (φ : QubitMatrix → QubitMatrix) (hφ : IsMixedUnitary φ)
     (n x : Fin 3 → ℝ) :
     marginalA (localMap φ (witness n x)) = φ (marginalA (witness n x)) ∧
     φ (marginalA (witness n x)) =
       blochMatrix 1 (WithLp.toLp 2 ((1 / 2 : ℝ) • (blochOperator φ *ᵥ n))) := by
-  sorry
+  obtain ⟨⟨f, hf⟩, _, _, _⟩ := mixed_basic φ hφ
+  have he : φ = f := funext hf
+  have hl : marginalA (localMap φ (witness n x)) = φ (marginalA (witness n x)) := by
+    rw [he]
+    ext i j
+    change (∑ b : Fin 2, f (fun r s => witness n x (r, b) (s, b)) i j) =
+      f (fun r s => ∑ b : Fin 2, witness n x (r, b) (s, b)) i j
+    have hs : (fun r s => ∑ b : Fin 2, witness n x (r, b) (s, b)) =
+        ∑ b : Fin 2, (fun r s => witness n x (r, b) (s, b)) := by
+      ext r s
+      simp only [Matrix.sum_apply]
+    rw [hs, map_sum, Matrix.sum_apply]
+  refine ⟨hl, ?_⟩
+  rw [← hl, local_witness φ hφ, witness_marginal]
 
 private lemma bloch_nondegenerate (v : Fin 3 → ℝ) (hv : v ≠ 0) :
     IsNondegenerate (blochMatrix 1 (WithLp.toLp 2 v)) := by
-  sorry
+  let a := blochMatrix 1 (WithLp.toLp 2 v)
+  have h : a.IsHermitian := by
+    apply Matrix.IsHermitian.ext
+    intro i j
+    fin_cases i <;> fin_cases j <;> apply Complex.ext <;> simp [a, blochMatrix]
+  refine ⟨h, ?_⟩
+  have hn : h.eigenvalues 0 ≠ h.eigenvalues 1 := by
+    intro he
+    obtain ⟨hsum, hspec⟩ := spectral_projectors a h
+    rw [he, ← smul_add, hsum] at hspec
+    have hb := congrArg bloch hspec
+    have hz : bloch ((h.eigenvalues 1 : ℂ) • (1 : QubitMatrix)) = 0 := by
+      ext i
+      fin_cases i <;> simp [bloch]
+    change bloch (blochMatrix 1 (WithLp.toLp 2 v)) = _ at hb
+    rw [D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_blochMatrix, hz] at hb
+    apply hv
+    funext i
+    exact congrArg (fun w : EuclideanSpace ℝ (Fin 3) => w i) hb
+  intro i j hij
+  fin_cases i <;> fin_cases j
+  · rfl
+  · exact False.elim (hn hij)
+  · exact False.elim (hn hij.symm)
+  · rfl
 
 private lemma commutator_identity (φ : QubitMatrix → QubitMatrix) (hφ : IsMixedUnitary φ)
     (n x : Fin 3 → ℝ) (hn : n ⬝ᵥ n = 1) (hnx : n ⬝ᵥ x = 0)
@@ -126,16 +388,36 @@ private lemma commutator_identity (φ : QubitMatrix → QubitMatrix) (hφ : IsMi
       ((((blochOperator φ *ᵥ n) ⬝ᵥ (blochOperator φ *ᵥ x) /
         ((blochOperator φ *ᵥ n) ⬝ᵥ (blochOperator φ *ᵥ n)) : ℝ) : ℂ) / 16) •
         (spin (blochOperator φ *ᵥ n) ⊗ₖ qubitZ) := by
-  have hpin := pinching_formula (witness n x) ((1 / 2 : ℝ) • n)
-    (witness_marginal n x)
-  have hout := mapped_marginal φ hφ n x
-  have hpinout := pinching_formula (localMap φ (witness n x))
-    ((1 / 2 : ℝ) • (blochOperator φ *ᵥ n)) (hout.1.trans hout.2)
-  sorry
+  have hn0 : n ≠ 0 := by
+    intro h
+    simp only [h, zero_dotProduct] at hn
+    norm_num at hn
+  rw [local_witness φ hφ, pinch_witness _ _ htn, pinch_witness n x hn0,
+    hnx, zero_div, zero_smul, local_witness φ hφ, Matrix.mulVec_zero]
+  unfold witness
+  simp only [spin_scale, Matrix.smul_kronecker]
+  module
 
 private lemma commutator_nonzero (a b : Fin 3 → ℝ) (hab : a ⬝ᵥ b ≠ 0) :
     ((((a ⬝ᵥ b) / (a ⬝ᵥ a) : ℝ) : ℂ) / 16) • (spin a ⊗ₖ qubitZ) ≠ 0 := by
-  sorry
+  have ha : a ≠ 0 := by
+    intro h
+    exact hab (by rw [h, zero_dotProduct])
+  have haa : a ⬝ᵥ a ≠ 0 := dotProduct_self_eq_zero.not.mpr ha
+  have hc : ((((a ⬝ᵥ b) / (a ⬝ᵥ a) : ℝ) : ℂ) / 16) ≠ 0 := by
+    exact div_ne_zero (by exact_mod_cast div_ne_zero hab haa) (by norm_num)
+  apply smul_ne_zero hc
+  intro hk
+  have hs : spin a = 0 := by
+    ext i j
+    have he := congrFun (congrFun hk (i, 0)) (j, 0)
+    change spin a i j * qubitZ 0 0 = 0 at he
+    simpa [qubitZ] using he
+  have he := spin_square a
+  rw [hs, zero_mul] at he
+  have hz := congrFun (congrFun he 0) 0
+  have : ((a ⬝ᵥ a : ℝ) : ℂ) = 0 := by simpa using hz.symm
+  exact haa (by exact_mod_cast this)
 
 /-- Every non-isotropic mixed-unitary qubit channel fails to commute with marginal pinching
 on a two-qubit density matrix whose input and output marginals are nondegenerate. -/
