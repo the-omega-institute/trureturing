@@ -233,11 +233,12 @@ private theorem retraction_vertex (t : I) :
 /-- Both parts of the bottom-or-vertex cylinder are fixed pointwise. -/
 theorem retraction_fixed (z : Cylinder M v hv) :
     (retraction M v hv z.val).val = z.val := by
-  rcases z.property with h | h
-  · obtain ⟨x, t⟩ := z.val
+  rcases z with ⟨⟨x, t⟩, hz⟩
+  rcases hz with h | h
+  · change t = 0 at h
     subst t
     exact retraction_bottom M v hv x
-  · obtain ⟨x, t⟩ := z.val
+  · change x = vertexPoint M v hv at h
     subst x
     exact retraction_vertex M v hv t
 
