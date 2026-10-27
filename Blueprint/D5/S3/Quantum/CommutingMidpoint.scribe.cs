@@ -9,7 +9,7 @@ internal sealed class CommutingMidpointDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Quantum/CommutingMidpoint.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/QuantumChannels/rajaei2026generalized");
-    private static Formula V(string name) => F.Id(name);
+    private static Formula V(string name) => Seq(Sp, F.Id(name));
     private static Formula Sq(Formula a) => Seq(a, Caret, Grp(D(2)));
     private static Formula U(Formula a, Formula b) => Call("U", a, b);
     private static Formula Hf(Formula a, Formula b) => Call("H", a, b);
