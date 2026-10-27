@@ -3316,3 +3316,873 @@ premises; they provide no new physical-conformance or Lean certification,
 uniform lifetime bound, common apparatus or universal alpha/beta minimum.
 
 ## 追加锚（本行以下为增补区）
+
+## 103. Legal completion for ambient-injective native Tick
+
+**Definition 103.1 (the stronger structural task).** Fix any finite original
+term $u\in\mathcal D$ of Definition 75.1, with $a$ alpha leaves, $c$ beta
+leaves, $b=a+c$, and $N=2b+c-1$ material cells. A refinement is a finite
+word of enabled original $P/S$ calls, with exactly the original addressed
+guards and persistent templates. No marker is a logical target. For this
+structural task no Tick, Add, Read, reset, deletion, rerooting, reweighting,
+self-loop, graft or replacement of an old cell is allowed. The cost pair
+$(p,s)\in\mathbb N^2$ counts successful promotions and splits. Refusals
+cannot improve the task and are unnecessary for the witnesses below.
+The logical code and actual bindings must already have been earned;
+this definition does not acquire them for free.
+
+Write $v$ for the final term and $B=A_v$ for its actual unit adjacency.
+The task is that the primitive map $w\mapsto Bw$ be injective on the
+**whole** $\mathbb Q^{V(v)}$. This ambient requirement is stronger than
+preserving information on a specified entrance image or in a controller
+archive. If $E:\mathbb Q^{V(u)}\to\mathbb Q^{V(v)}$ is the literal old-cell
+inclusion, the untouched entry $x$ becomes exactly $Ex$: every fresh
+coordinate is zero, every old coordinate, edge and root depth persists.
+In particular
+
+$$
+E^{\mathsf T}E=\mathrm{Id}_N,\qquad E^{\mathsf T}BE=A_u,\qquad
+M=|V(v)|=N+p+2s,\qquad b(v)=b+s.
+\tag{103.1}
+$$
+
+The compression identity is not $BE=EA_u$. A later Tick may move an old
+value into a fresh cell.
+
+A tree is in state $F$ if it has a perfect matching. It is in state $R$
+if it has a matching covering every cell except its root and leaving
+that root unmatched. The root in $R$ is available to an edge from its
+parent; it is not deleted. For $X=F,R$, let $\mathcal C_X(u)$ be all cost
+pairs of refinements attaining state $X$. Use the componentwise order on
+$\mathbb N^2$ and write $\operatorname{Min}$ for its undominated elements.
+A scalar cost below means $p+s$, not allocated cells or total resources.
+
+**Lemma 103.2 (the classical tree criterion).** For any finite unit tree
+with $m\ge1$ vertices and adjacency $B$ over $\mathbb Q$,
+
+$$
+\det B=\begin{cases}
+(-1)^{m/2},&\text{if the tree has a perfect matching},\\
+0,&\text{otherwise}.
+\end{cases}
+\tag{103.2}
+$$
+
+Consequently state $F$ is equivalent to ambient injectivity of native
+Tick. In that state $B^{-1}$ has integer entries.
+
+**Proof.** A nonzero term of the determinant permutation expansion cannot
+have a fixed point, since the diagonal is zero. A permutation cycle of
+length at least three would require a cycle of distinct edges in the
+tree. Thus every nonzero term consists of disjoint edge transpositions,
+which are exactly perfect matchings. Two different perfect matchings
+would have a nonempty symmetric difference with degree two at each of
+its vertices, hence an alternating cycle. There is at most one. Its
+$m/2$ transpositions have sign $(-1)^{m/2}$ and unit product. This proves
+(103.2), including odd $m$ and the single-vertex case. A square rational
+matrix is injective exactly when its determinant is nonzero. The
+adjugate identity then gives the integer inverse because the determinant
+is $1$ or $-1$. This is an algebraic inverse; no inverse-Tick command
+has been installed. $\square$
+
+This determinant fact is classical. Godsil, *Inverses of trees*,
+[Combinatorica 5, 33–39](https://doi.org/10.1007/BF02579440), studies the
+stronger $(0,1,-1)$ inverse structure for perfectly matched trees. Only
+the elementary criterion just proved is used here.
+
+**Lemma 103.3 (original leaf repairs, with guards).** The exact
+undominated cost sets at original leaves are
+
+$$
+\begin{array}{c|cc}
+ &F&R\\\hline
+\alpha&\{(1,0)\}&\{(0,0)\}\\
+\beta&\{(0,0)\}&\{(1,1)\}.
+\end{array}
+\tag{103.3}
+$$
+
+All four witnesses preserve $\mathcal D$, old material and old values.
+
+**Proof.** A single alpha is already $R$. One legal $P_p$ makes a beta,
+whose sole edge is a perfect matching. Any alpha refinement has
+$1+p+2s$ cells. State $F$ requires an even number, so $p$ is odd and
+at least one. Its cost dominates $(1,0)$.
+
+A beta is already $F$. A beta refinement in $R$ has odd size
+$2+p+2s$, so again $p$ is odd and at least one. Initially the cone has
+only its logical beta and a nongrowth marker; before the first $P$
+anywhere in it, its root must be split at least once. Thus $s\ge1$.
+The original legal sequence
+
+$$
+S_p;P_{pR}:\quad\beta\longmapsto
+\langle\beta,\alpha\rangle\longmapsto\langle\beta,\beta\rangle
+\tag{103.4}
+$$
+
+attains $(1,1)$. Its five material cells are
+$p,pL,pLL,pR,pRL$. The edges $(pL,pLL)$ and $(pR,pRL)$ cover exactly the
+four nonroot cells. The original root and its original marker $pL$
+remain. The split first moves the acted raw label to $pLL$ and appends
+the fresh integer at $pR$; the promotion then moves that latter label
+to $pRL$. These are the real label updates, even if a canonical selector
+is used by the controller. The sole intermediate alpha is at $pR$,
+which ends in $R$; no forbidden left-ending alpha is introduced.
+No other case can beat these coordinatewise lower bounds. $\square$
+
+## 104. Exact successful-growth minima and an infinite family
+
+For finite sets $X,Y\subseteq\mathbb N^2$, put
+$X+Y=\{x+y:x\in X,y\in Y\}$. Define finite sets
+$\mathcal F_u,\mathcal R_u$ recursively by the bases (103.3) and
+
+$$
+\begin{aligned}
+\mathcal F_{\langle l,r\rangle}
+ &=\operatorname{Min}\bigl((\mathcal R_l+\mathcal F_r)
+                    \cup(\mathcal F_l+\mathcal R_r)\bigr),\\
+\mathcal R_{\langle l,r\rangle}
+ &=\operatorname{Min}(\mathcal F_l+\mathcal F_r).
+\end{aligned}
+\tag{104.1}
+$$
+
+**Theorem 104.1 (exact Pareto frontiers over all finite refinements).** For
+every $u\in\mathcal D$,
+
+$$
+\mathcal F_u=\operatorname{Min}\mathcal C_F(u),\qquad
+\mathcal R_u=\operatorname{Min}\mathcal C_R(u).
+\tag{104.2}
+$$
+
+Each displayed pair is attained by a legal finite original-leaf repair
+word with no failed probe or field operation. Moreover every attaining
+refinement, of arbitrary depth and arbitrary interleaving, has a cost
+pair dominating one of these words. Thus every finite native term can
+be completed for ambient-injective primitive unit Tick.
+
+**Proof.** At any original branch its old root, two child roots and two
+attachment edges persist. Growth happens separately within the two
+original child cones. If the final root is unmatched and all other
+vertices are covered, no root attachment is used, and both child cones
+are in $F$. If the final matching is perfect, its root is matched to
+exactly one child root. Deleting that used edge leaves that child's
+cone in $R$ and the other cone in $F$. Conversely either such pair of
+child matchings, with the indicated root edge when needed, gives the
+required parent matching. There is only one edge entering each cone,
+so no third possibility is lost. Costs add over disjoint cones,
+independently of their execution interleaving.
+
+Restrict any attaining global matching recursively to these original
+cones until reaching each original leaf. Its local state is $F$ or $R$.
+Lemma 103.3 replaces all growth in that leaf cone by a legal base repair
+of no greater promotion cost and no greater split cost. Combining the
+local replacements upward preserves the required state. Thus every
+attaining arbitrary refinement dominates a member of the finite set
+of normalized repair choices. Conversely every normalized choice is
+performed by executing its base repairs in fixed original-leaf order;
+a previous leaf's repair changes neither another original leaf nor its
+logical address or guard. Branch matchings assemble as above. This
+proves both necessity and attainment before pruning.
+
+Pruning at intermediate nodes is sound: if $z'\le z$, then
+$z'+y\le z+y$ for every $y$. Every element of a finite candidate set
+dominates an undominated one. Consequently pruning loses no eventual
+undominated cost. Conversely an undominated normalized cost cannot
+be dominated by any arbitrary refinement, since that refinement itself
+dominates a normalized cost. These two statements prove (104.2).
+Finiteness and nonemptiness follow by induction from (103.3)–(104.1).
+Lemma 103.2 supplies the last assertion. $\square$
+
+**Corollary 104.2 (scalar minimum and a definite policy).** Let $f(u)$ and
+$r(u)$ be the minimum successful-call counts in states $F,R$ over all
+finite legal refinements. Then
+
+$$
+\begin{gathered}
+f(\alpha)=1,\quad r(\alpha)=0,\quad
+f(\beta)=0,\quad r(\beta)=2,\\
+f(\langle l,r\rangle)=\min\{r(l)+f(r),f(l)+r(r)\},\qquad
+r(\langle l,r\rangle)=f(l)+f(r).
+\end{gathered}
+\tag{104.3}
+$$
+
+In particular $f(u)=0$ exactly when $C(u)$ already has a perfect matching.
+A minimum is attained with
+
+$$
+p\le b,\quad s\le c,\quad p+s\le a+2c,\quad
+p+2s\le a+3c.
+\tag{104.4}
+$$
+
+**Proof.** Minimize $p+s$ in the attained sets (104.1); the objective is
+additive under Minkowski sum. Each original alpha contributes either
+$(0,0)$ or $(1,0)$, and each beta either $(0,0)$ or $(1,1)$, giving
+(104.4). Zero successful growth is the unchanged graph, so Lemma 103.2
+also proves the zero criterion. $\square$
+
+For a fixed policy one may minimize $p+s$, then $p$, then the binary
+list of repaired original leaves in their address order, and then choose
+the left root edge at any remaining matching tie. Store backpointers
+and execute the chosen local recipes. Scalar dynamic programming uses
+a bounded number of integer comparisons/additions at each logical
+node, plus the actual traversal, output and backing. Computing an entire
+Pareto set uses the finite sums, comparisons and storage in (104.1);
+no linear-size frontier or constant-width arithmetic is asserted.
+For any specified nonnegative weights on promotions and splits, minimizing
+their weighted sum over (104.1) also gives the exact structural optimum.
+None of these optimizations includes acquisition, traffic, precision,
+Tick, local arithmetic, authority or simultaneous storage coordinates.
+
+**Theorem 104.3 (all-beta balanced family).** Put
+$t_0=\beta$ and $t_{h+1}=\langle t_h,t_h\rangle$ for every integer $h\ge0$.
+These terms belong to $\mathcal D$, with $b_h=2^h$ and $N_h=3b_h-1$.
+Their exact frontiers are singletons
+
+$$
+\mathcal F_{t_h}=\{(k_h,k_h)\},\qquad
+\mathcal R_{t_h}=\{(j_h,j_h)\},
+\quad
+k_h=\frac{2^h-(-1)^h}{3},\quad
+j_h=\frac{2^h+2(-1)^h}{3}.
+\tag{104.5}
+$$
+
+Ambient completion therefore needs exactly $2k_h$ successful calls,
+with the unique undominated pair $P=S=k_h$. Its normalized witness
+adds $3k_h$ cells and $k_h$ terminal labels and has
+
+$$
+M_h=4\cdot2^h-1-(-1)^h.
+\tag{104.6}
+$$
+
+**Proof.** All leaves are beta, so there is no forbidden alpha. At $h=0$
+the sets are $(0,0)$ and $(1,1)$, respectively. The two alternatives
+for $F$ in (104.1) coincide for equal subtrees; hence
+$k_{h+1}=k_h+j_h$ and $j_{h+1}=2k_h$. Substitution of (104.5) verifies
+both recurrences and their bases, proving the formula for all $h$ by
+induction, including its integrality and nonnegativity. Equation (103.1)
+gives (104.6). Theorem 104.1 supplies the lower bounds against deeper
+refinements, not just against this symmetric recipe. At $h=0$ no growth
+is needed; at $h=1$ exactly one beta repair suffices. The branching
+acquisition application below uses $h\ge2$, so $b_h\ge4$; it does not
+apply a three-terminal root theorem to these smaller bases. $\square$
+
+## 105. A paid original entrance and performed acquisition
+
+**Definition 105.1 (one installation and one completion template).** Fix
+one earned $u\in\mathcal D$ with $b\ge3$, its authentic original root and
+orientation, its exhaustive actual raw/canonical binding, known exact
+unit law and framing, current and fresh grants, exclusive serialized
+access, Hold and sufficient actual finite backing. Use Definition 75.1's
+complete interface, including pending packets and all distinct refusals.
+Fix one normalized $F$ witness from Theorem 104.1, for example the scalar
+policy of Corollary 104.2, with pair $(p,s)$ and final term $v$. Its
+addresses, tie choices and label-update algorithm depend only on the
+earned geometry. Fix material-address orders and all later pivot orders.
+
+At receiver handoff the field ranges over every $x\in\mathbb Q^N$.
+Every receiver-visible initial program, advice, selector, reference,
+resource attribute and control byte is independent of $x$. All dependent
+preparation inputs, targets, control blocks, stale predictors, operand
+packets, replies, transport copies and unused dependent frame suffixes
+have actually been overwritten or isolated from this receiver. There is
+no accessible numerical archive or timing/capacity/guard channel.
+Physical conformance, authentic allocation/rights, zero initialization
+and this clearing/isolation are explicit **ASSUMED-UNVERIFIED**
+installation premises, not conclusions of matrix algebra.
+
+The quantifier is one uniform finite procedure for every rational entry,
+with sufficient finite backing for each admitted run. It is not one
+fixed finite store holding all rational widths. Provisioned capacity
+does not encode the entry: for any compared finite family it can be
+chosen commonly large enough, and provider-only variable capacities
+remain isolated. Requests, allocation and widths encountered during
+acquisition and use are charged as actual work, not initial advice.
+
+A paid realization of this entrance is Construction 62.3 on the same
+specimen. Start with an allocated known-zero alpha and construct $u$
+with $c$ promotions and $b-1$ splits, allocating $N-1$ further cells.
+Receive the arbitrary owned $x$ into separately backed provider storage.
+With $I_0=N-b$, the existing forcing/control identity prepares exactly
+$x$ by $I_0$ Tick, $b(I_0+1)$ Add, including zero operands, and one Hold.
+Perform the stated clearing/isolation before the receiver phase. All
+reception, control calculation, overwriting, isolation and retained
+cleared capacities are paid; this is an entrance construction, not a
+free numerical oracle or an empirical claim that a physical device has
+been run.
+
+**Theorem 105.2 (selected actual samples after zero completion).** Under
+Definition 105.1 execute its completion before any receiver Tick or Add.
+Let $M=N+p+2s$, $b'=b+s$, $I'=M-b'$, $E$ be its actual old-cell inclusion,
+and $B=A_v$. There is a geometry-only choice of exactly $N$ terminal/epoch
+pairs with largest epoch $0\le H\le I'$ such that the following real-call
+protocol recovers the whole original $x$ and installs a synchronized
+whole-current predictor at the actual endpoint
+
+$$
+w=B^HEx.
+\tag{105.1}
+$$
+
+It uses $N$ scalar Reads, $H$ Tick and $H+1$ Hold in the receiver assay,
+with no Add, Reset, clone or repeated unknown preparation. Each selected
+scalar is actually read at its stated epoch on this specimen.
+
+**Proof.** The completion is the enabled zero-appending word already
+proved; it takes the actual field to $Ex$ without sampling or changing
+old values. On its earned final tree let $J'$ inject the $b'$ current
+canonical terminals and put $C'=J'^{\mathsf T}$. The all-leaf forcing
+supplier (75.1), now on this same $v$, gives full column rank $M$ to
+
+$$
+O=\begin{bmatrix}C'\\C'B\\\vdots\\C'B^{I'}\end{bmatrix}.
+\tag{105.2}
+$$
+
+Thus $OE$ has rank $N$: $OEz=0$ implies $Ez=0$ by the forcing left
+inverse, and then $z=0$ by (103.1). Enumerate its rows by increasing
+epoch and then canonical terminal, keep a row exactly when it increases
+rank, and stop at $N$. Exact finite elimination yields an invertible
+$N$-square matrix $R_e$ and the selected pairs $(k_i,j_i)$; their largest
+epoch is $H\le I'$. This is a paid geometry calculation independent of
+$x$, not an additional observation channel.
+
+Actually Hold and take selected epoch-zero Reads; for epochs
+$1,\ldots,H$ actually Tick, Hold, and take exactly that epoch's selected
+Reads. Each raw selector is obtained from the earned current binding,
+and each whole reply/End/acknowledgement/Return is consumed. Since Read
+and Hold leave the field unchanged, the measured vector satisfies
+
+$$
+y_i=e_{\ell_{j_i}}^{\mathsf T}B^{k_i}Ex,\qquad
+y=R_ex,\qquad x=R_e^{-1}y.
+\tag{105.3}
+$$
+
+The actual source has advanced exactly $H$ Ticks, so calculate and
+install $B^HEx$, not the original $x$ advertised as current. All local
+work takes place under Hold. Finite exact arithmetic and the stipulated
+backing give termination. Nothing here uses a numerical Tick ACK.
+$\square$
+
+**Corollary 105.3 (ambient recovery at every known epoch).** For every
+integer $h\ge0$,
+
+$$
+D_h=E^{\mathsf T}B^{-h},\qquad D_hB^hE=\mathrm{Id}_N.
+\tag{105.4}
+$$
+
+A paid rational left inverse $L_O$ of (105.2) recovers any whole current
+field $z$ from the computed germ $Oz$.
+
+**Proof.** Lemma 103.2 makes $B$ invertible on $\mathbb Q^M$. Cancellation
+and $E^{\mathsf T}E=\mathrm{Id}_N$ prove (105.4); (75.1) gives $L_O$.
+No invariance of $\operatorname{im}E$ under $B$ is required. $\square$
+
+The ambient completion criterion is separate from the observation
+supplier: all-leaf forcing holds even on a singular native tree. If an
+unchanged adjacency $A$ is singular, $z$ and $z+\eta$ with
+$0\ne\eta\in\ker A$ have the same result after one literal Tick.
+That fact obstructs this ambient primitive-injectivity task. It does
+not rule out an entrance image avoiding that kernel, a pre-Tick Read,
+control, or a retained archive; it is no no-go theorem for the original
+complete observer programme. Conversely invertibility alone does not
+acquire the old field or pay for its callable use. The selected assay
+supplies that separate step. No optimum in the Read coordinate is
+claimed by this construction.
+
+## 106. Retained callable use and a fixed-script image
+
+**Construction 106.1 (a performed acquired shear).** At the synchronized
+endpoint fix a material donor $a$ and a genuinely callable current
+terminal $\ell$, with $a\ne\ell$. The donor need not be a readable port.
+Use the retained full predictor to compute $q=z_a$ for the actual present
+field $z$, then actually execute Add$(\ell,q)$; Hold; Read$(\ell)$.
+The entire Read reply is $z_\ell+z_a$, and the actual successor is
+
+$$
+G_{a,\ell}z,\qquad
+G_{a,\ell}=\mathrm{Id}_M+e_\ell e_a^{\mathsf T},\qquad
+G_{a,\ell}^{-1}=\mathrm{Id}_M-e_\ell e_a^{\mathsf T}.
+\tag{106.1}
+$$
+
+Indeed $(e_\ell e_a^{\mathsf T})^2=0$ because $a\ne\ell$. This reuses
+the retained donor/terminal shear of §90; it is an actual terminal Add
+computed from acquired data, not an internal donor actuator. The
+operand, selector, bindings, one Add, one Hold, one Read and all complete
+traffic and copies are paid. It can leave the fresh-zero entrance image.
+
+**Definition 106.2 (fixed finite script and exposed phase).** Fix in
+advance a finite geometry-only list of Tick; Hold pairs and operations
+of Construction 106.1. Every donor and terminal choice is fixed, with its
+real binding and rights. The numerical Add operand is computed as in
+(106.1); there is no field-dependent choice of the list or its branches.
+At a completed prefix retain/expose the prefix index and phase, and let
+$W$ be the product of its $B$ and $G$ factors, latest on the left. The
+actual endpoint and its left inverse are
+
+$$
+z=Lx,\qquad L=WB^HE,\qquad
+D=E^{\mathsf T}B^{-H}W^{-1},\qquad DL=\mathrm{Id}_N.
+\tag{106.2}
+$$
+
+The empty script has $W=\mathrm{Id}_M$. Every fixed prefix, including
+zero prefixes and zero entry field, is admitted.
+
+**Theorem 106.3 (one realized four-expression image).** Fix the common
+context of Definition 105.1, its completion and assay template, and a
+completed phase of Definition 106.2. The original-cell mask $E$, original
+and current binding/authority/framing, root/orientation, future selectors
+and this phase are part of that paid common context. They are not
+inferred from a scalar or from an unmarked grown graph. As
+$x$ ranges over **all** $\mathbb Q^N$, define the four exposed contents
+of this single protocol as follows.
+
+| Expression | Independent observation/retention meaning |
+| --- | --- |
+| Space | The actual grown unit tree, its ordered terminals and entire actual current field $z=Lx$ |
+| Time | The actual constructor birth/lifecycle partial order $E(v)$, the declared completion/assay template, exactly the $N$ measured triples $(k_i,j_i,y_i)$ of (105.3), and the performed fixed-script prefix calls with their whole replies |
+| Boundary | The complete ordered current terminal metric of the actual unit tree, and the **computed/exported** current autonomous germ $Oz$ |
+| Memory | The retained synchronized whole-current predictor, logical code/graph and exhaustive raw/canonical map, with its actual reference/grant/parser/phase context |
+
+The sample journal is a separate paid Time store and is not hidden in
+the Memory projection. The context is common, not an extra independent
+field-dependent view. Time's $E(v)$ is AA Theorem 17.2's causal order;
+it is not a physical age, a chosen serial ordering of incomparable
+constructors, or an erased provider history. Boundary's germ is not a
+newly measured window. Measuring that germ at a current endpoint would
+require its own source calls, record, advancement and resource account.
+
+On these exact fixed-context images, every view recovers the old entry
+$x$, the actual current pair $(v,z)$ and every other view. Both inverse
+identities hold on each image and all conversion routes agree. On each
+completed prefix of the fixed script the conversions also intertwine
+its actual dynamics and complete replies.
+
+**Proof.** The geometry is the performed legal completion, not a graph
+chosen independently for different views. Its $b'\ge b\ge3$ ordered
+terminals satisfy Convention 75.2's root and full-unit-subdivision
+reconstruction conditions. Space and Memory give $z$ directly and
+recover $x=Dz$ by (106.2). Boundary first reconstructs that same graph
+from its complete ordered metric and the original-root theorem, then
+recovers $z=L_O(Oz)$, and finally $x=Dz$. Time recovers $v$ from $E(v)$
+by AA Theorem 17.2 and its old-cell/template context identifies $E,R_e,H$.
+Its **measured** vector gives $x=R_e^{-1}y$. Equation (106.2) then gives
+its actual current field.
+
+Conversely any $x\in\mathbb Q^N$ is an admitted paid entrance in
+Definition 105.1. Its geometry, causal order, selected epochs and phase
+are fixed. Formula (105.3) determines exactly its measured scalars;
+ordinary recurrence through the actual fixed calls determines all
+script operands, ACKs and whole scalar replies. The same recurrence
+constructs $z$, the metric, computed $Oz$ and predictor. Each decoding
+just given returns precisely this original $x$, so decoding after
+encoding is the identity on $\mathbb Q^N$. Encoding that decoded entry
+reproduces each view, proving the other identity on its image. All
+routes pass through this same entry and hence agree. This identity is
+about contents on a realized image: a computed numerical replica does
+not itself prove that a measurement took place or authenticate a
+binding.
+
+For the dynamic claim, at one next Tick; Hold prefix the actual and
+retained fields both change to $Bz$, and the ACKs are the installed
+fixed ones. At one next shear they both change to $G_{a,\ell}z$ with
+operand $z_a$ and literal reply $z_\ell+z_a$. The new product is
+$W'=BW$ or $G_{a,\ell}W$, respectively. Its decoder cancels that same
+factor in (106.2), and Time appends the actual transaction and advances
+the exposed phase. Boundary computes its new current germ; Space and
+Memory use the new actual current field. Thus encoding then performing
+that operation equals performing it then encoding at the new phase,
+including complete replies and phase counters. Induction proves the
+claim for every prefix. There is no assertion that a conversion can
+physically undo a Tick or delete the retained transaction. $\square$
+
+**Proposition 106.4 (continued full service, and its different domain).**
+At every settled endpoint above, the retained whole-current predictor
+also supports every common sufficiently backed finite adaptive
+continuation of the original complete menu, including growth. This is
+the existing Theorem 64.1 applied at the now proved current endpoint.
+Within fixed common authority/framing/selector context, equality of
+entry $x$ on this image is equivalent to equality of the current field
+and to equality of the complete canonical continuation kernel.
+
+**Proof.** Theorem 105.2 and each actual script update initialize and
+preserve equality of the entire actual and retained field. Use §64's
+one-step correspondence: enabled P/S preserve old values, append zeros
+and make the real raw-label moves; terminal Add translates its bound
+cell; Tick uses current adjacency; Read returns the whole rational;
+Hold is the stated hold. Absent, branch, wrong-type, range and malformed
+complete packets have their distinct original whole outcomes, while
+proper incomplete bytes remain pending with their real parser state.
+Missing rights disable dispatch. Finish every entire output, End,
+acknowledgement and Return and synchronize before the next settled cut.
+The same invariant then proves every finite common adaptive service
+continuation, with sufficient backing and exclusive serialization.
+
+On our fixed image, (106.2) makes equality of current fields equivalent
+to equality of $x$. Equal fields and equal fixed term/context have the
+same service by that induction. Unequal fields have a nonzero difference,
+which (105.2)'s full rank detects in some terminal row after a finite
+common number of Ticks. The corresponding actual continuation therefore
+separates their service. This is precisely the current-kernel supplier
+of Convention 75.2. $\square$
+
+Arbitrary growth can again make the current adjacency singular; it is
+covered by the retained-service statement, not by (106.2)'s historical
+chart. Likewise a field-dependent branching script is not a single
+fixed invertible $W$: a branch may merge distinct inputs, and exposing
+or separately proving its branch-image inverse would be an additional
+obligation. Unknown elapsed phase, different completion templates,
+unmarked old-cell masks, erased service journals and different
+reference/grant contexts are not identified by Theorem 106.3.
+
+## 107. Every cost belongs to the performed specimen
+
+**Proposition 107.1 (exact primitive vector for the paid construction).**
+Include Definition 105.1's known-alpha origin, arbitrary owned input,
+preparation and held handoff, the chosen completion $(p,s)$ and
+Theorem 105.2's assay on that same specimen. Before the optional script,
+the exact successful source-call vector is
+
+$$
+\begin{aligned}
+P&=c+p,& S&=b-1+s,&\operatorname{Read}&=N,\\
+\operatorname{Add}&=b(I_0+1),&
+\operatorname{Tick}&=I_0+H,&\operatorname{Hold}&=H+2,&
+\operatorname{Reset}&=0.
+\end{aligned}
+\tag{107.1}
+$$
+
+If the performed fixed prefix contains $k$ Tick; Hold pairs and $d$
+shears, add $k$ Tick, $k+d$ Hold, $d$ Add and $d$ Read. Its actual endpoint
+is the $Lx$ of that very prefix. There are $M-1$ fresh material cells
+beyond the allocated initial alpha and $b+s$ final labels; the receiver
+completion adds exactly $p+2s$ cells and $s$ labels.
+
+**Proof.** The paid origin has $c$ P, $b-1$ S, $I_0$ Tick,
+$b(I_0+1)$ Add and one Hold by Construction 62.3. The completion adds
+exactly $(p,s)$. The assay has its initial Hold, $H$ Tick/Hold rounds
+and exactly $N$ selected Reads. Construction 106.1 and the fixed Tick
+pairs give the stated further increments. The size and label formulas
+are (103.1). Every displayed call is enabled; no failed growth probe is
+being omitted. No export or local computation is being counted as a
+free primitive call. $\square$
+
+**Definition 107.2 (traffic, work and coexistence account).** For each
+chosen normalized pair and script use its own actual $M,b',H,W$, maps,
+widths and outputs. The primitive vector (107.1) is only one coordinate
+group. The rest of the same-run account is as follows.
+
+Use exactly Definition 65.1's literal finite codecs. For a reduced
+rational $n/d$, $d>0$, its payload is
+$\ell(n/d)=2\mathsf b(|n|)+2\mathsf b(d)+3$, with
+$\mathsf b(0)=1$. Valid raw selector $j$ has $2\mathsf b(j)+1$ bits;
+growth at $q$ has $2|q|+4$ request and $2|q|+5$ successful-reply bits.
+The exact source-channel traffic is formula (65.2), evaluated on **all**
+actual growth, field and script calls of this run, with its actual
+operands and replies. Include every fixed tag, frame, End, local
+acknowledgement and Return, including separately present inner/outward
+transactions. Add actual producer ingress, graph navigation, report
+and four-view export traffic, reception, encoding and all copies.
+Zero Adds, zero Reads and zero entry fields still have their nonempty
+literal encodings. A vector export has its count prefix and the sum
+of all its rational payloads, not the cost of a symbolic array name.
+
+Local work includes earning/maintaining the logical graph and exhaustive
+binding, the original constructor and completion traversals, matching
+DP, its chosen backpointers or Pareto comparisons, real address descents
+and returns, forcing coefficients, row selection, exact pivot tests,
+solving (105.3), computing powers on vectors, predictor updates, script
+operands, phase/counter updates, inverse/left-inverse calculation when
+used, causal-order construction, metric/germ calculation and output
+encoding. The existing dense implementations in §§65,93 give, for the
+assay matrices at size $M$, conservative $O(M^4)$ exact rational
+operations and $O(M^3)$ scalar slots; add the actual finite DP/frontier,
+script and output work. For example $b'(I'+1)$ rows, each of length
+$N\le M$, admit rank selection in
+$O(b'(I'+1)N^2)\subseteq O(M^4)$ operations. A single adjacency step
+on a tree of size $m$ initializes $m$ new slots and makes $2(m-1)$
+directed neighbour additions. The source pays its own step; a separate
+predictor pays its own old/new buffers and arithmetic. Powers and inverse
+products are not zero-cost primitives.
+
+These are arithmetic-operation and slot bounds, not bit-complexity,
+energy, elapsed-time, conditioning or optimality claims. Charge the
+actual numerator/denominator widths of source values, selected samples,
+provider controls, intermediate elimination, inverse coefficients,
+script operands, counters and exports. Arbitrary $x\in\mathbb Q^N$
+already rules out an $N$-only uniform field-width bound. Exact arithmetic
+and Hold are hypotheses; finite rational formulas do not establish a
+bounded-precision physical realization.
+
+At each stage separately back all simultaneously live plant old/new
+fields, predictor old/new fields, graph/code, structural references,
+raw/canonical tables and current/fresh grants; parser/incomplete bytes,
+acquired request, pending output, packet/transport buffers and complete
+replies; the $N$ measured triples retained for Time; DP/backpointers or
+frontiers; original entry/target, current vectors and provider controls
+while live; matrices $O,R_e$, solve/left-inverse/inverse scratch when
+used; counters/phase and causal-order data; and all requested exported
+arrays and caller-retained copies. Some matrices may be streamed or
+released with their actual work paid; this does not license counting
+one live copy as two views' simultaneous store. Distinct copies are
+charged separately and genuinely shared stores once. The provider's
+isolated dependent archive, or overwritten but retained capacity,
+remains physical material even though it supplies no receiver advice.
+In an erasing implementation count every actual capacity-bit overwrite,
+including reused-frame suffixes, as in (65.2). Acquisition, clearing,
+retention and callable use remain different paid tasks.
+
+Theorem 104.1 is an exact Pareto theorem only for successful $(P,S)$
+**in the ambient completion task**. Its choices can lead to different
+assay sizes, epochs, matrices, operand widths and stores. One may not
+combine one choice's smaller growth cost with another choice's smaller
+Tick count or a third choice's outputs and call the vector attained.
+No total physical-resource optimum or universal alpha/beta sufficiency
+or minimality follows.
+
+## 108. Supplier scope and the unclosed original duties
+
+**Correspondence 108.1 (what is reused and what is proved here).** The
+native grammar, guards, original field/source, zero-appending templates,
+raw-label lifecycle and complete interface are Definition 75.1 and
+NLBAII §§17–20,34,64. AA §17 supplies the exact birth-typed class and
+constructor causal order. NLBA §§2–3 and Convention 75.2 supply the
+full unit metric/root and all-leaf forcing inverses. NLBAII Construction
+62.3 supplies the paid arbitrary-current entrance; §§64–65 supply
+retained complete service and literal resource accounting. Sections
+89–90 already distinguish entrance-image injectivity from ambient
+injectivity and supply the acquired shear. Their fresh-only leaf
+replacement is not repeated as an ambient completion theorem.
+
+Sections 94–102 supply the fixed-graph serial observation comparison.
+Their $A$ is the original unit adjacency, with samples at the actual
+phases $Ln+r$ and endpoint $A^{LN}x$. Theorem 95.2 already uses
+the determinant/perfect-matching criterion on its combs; Lemma 103.2
+uses that same classical criterion for every completed tree, rather
+than claiming a new determinant theorem. Sections 95–96 exhibit an
+invertible odd-comb family for which the natural serial period loses
+half the current dimensions, and repair that schedule by an extra
+Tick per cycle. Ambient invertibility therefore does not replace
+an observation proof. Here the different schedule is the selected
+set of actual terminal/epoch rows of $OE$ in (105.2)–(105.3).
+
+Sections 97–98 already give an acquired predictor, feedback and four
+expressions on a fixed-phase image. Their primer replaces $x$ by
+$z=Ax\in V_+=\operatorname{im}A$ and their completed feedback map
+$A(I+e_se_s^{\mathsf T})$ is bijective on $V_+$; it need not recover
+the pre-primer $x$. In §§105–106 the earned completion instead gives
+the ambient-invertible $B$ and the literal old-cell inclusion $E$.
+The acquired entry is every original $x\in\mathbb Q^N$, and its
+current image is $WB^HE\mathbb Q^N$, with the explicitly displayed
+left inverse. The measured Time journal, computed Boundary germ,
+phase context and separate full-service invariant reuse those public
+meanings. No serial-period minimum, arbitrary-phase inverse or
+joint-resource minimum is transferred between these different runs.
+
+The source-specific additions here are the complete guarded repair
+normal form, the exact frontiers (104.1), their lower bounds over
+arbitrary deeper refinements, the all-$h$ consequence (104.5), and the
+paid use of **these ambient-invertible completions** with the measured
+assay and fixed-script inverses. They do not claim novelty for the
+tree determinant, matching DP principle, observability, exact
+elimination, donor shear or four-view transport through an injective
+map. A literature-search non-hit is not evidence of originality.
+
+The declaration
+`D5.S3.ObserverMemory.Dynamics.FiniteTimeTomographySaturation.all_future_kernel_eq_finrank_kernel`
+and its owning Blueprint supply finite-dimensional autonomous
+kernel stabilization. Here the autonomous space, if that supplier is
+used, is $\mathbb Q^M$ with $B,C'$, **before** precomposing by $E$;
+$\operatorname{im}E$ need not be invariant. The shorter degree $I'$
+window used in (105.2) is the actual tree forcing supplier, not an
+application of an unjustified restricted autonomous operator. The
+owning `FiniteObservabilityEquivalence` exposition gives the real
+inner-product observability interpretation; the rational left inverses
+here follow from the explicit integer identity (75.1) or rational
+nonzero minors. No real-only hypothesis is silently transferred.
+
+The graph theorem `NoEvenCycleRank.rank_eq_twice_maximum_matching` is
+formulated with characteristic-two hypotheses and is not a supplier
+for a rational determinant. Lemma 103.2 supplies the required rational
+proof directly.
+Pinned mathlib revision `56a005855ea17e0b0958f73ec801ae140b0a1679`
+provides `SimpleGraph.Matching` perfect-matching vocabulary and
+`Matrix.NonsingularInverse` adjugate/nonsingular-inverse identities;
+these upstream results do not assert the guarded native completion
+recurrence. These ordinary proofs do not constitute a Lean application
+or kernel verification of §§103–108.
+
+The zero-forcing literature is a sufficient observation supplier, not
+a general necessity principle: Burgarth, D'Alessandro, Hogben, Severini
+and Young, *Zero forcing, linear and quantum controllability for
+systems evolving on networks*,
+[arXiv:1111.1475v1](https://arxiv.org/html/1111.1475v1), Theorem 4.1,
+Corollary 4.2 and Example 4.3. Our matching lower bound concerns ambient
+unit adjacency and successful original growth; it is not inferred from
+necessity of zero forcing or generic nonzero edge weights.
+
+**Boundary 108.2 (adjacent public results have different objects).**
+[Selection Calculus §27](AURIC_FIB_ATOM_SELECTION_CALCULUS.md) concerns
+conditional fixed-3CNF counting, entropy and paid original-variable
+selection, with shared-port joint constraints. [Hierarchical Phases
+§14](AURIC_FIB_OBSERVATION_HIERARCHICAL_PHASES_AND_PREDICTIVE_SPECTRA.md)
+uses an original-vertex carry-save CNF completion for independent-set
+counting. Neither use of “completion” is a legal P/S matching repair
+of the native material tree.
+
+[Geometric Continuation III, Appendix II §121](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md)
+proves a fixed-lead-in/gap passive stochastic pair optimum with no
+positive-measure simultaneous emissions in components 1 and 3. It
+retains its source anchoring, marginal equalities and compactness
+hypotheses, and supplies neither deterministic native acquisition nor
+our matching optimization. The public
+[Appendix II §122](https://github.com/the-omega-institute/trureturing/blob/27db8edb6c06d3ea80575cba4078f0a9ee287a57/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#122-exact-deterministic-attainment-for-the-original-passive-pair)
+additionally proves equality of the stochastic and deterministic
+attainable pair-law sets and attainment by one Borel partition,
+under its inherited source and analytic suppliers. Thus the
+deterministic-attainment question described as unresolved in
+§§100–101 has this supplied resolution for that precise passive
+two-positive-time problem. It still supplies no native sampler,
+hidden-coordinate decoder or matching optimum.
+[Self-Calibrating IV §15](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md)
+has positive rank-one gain/drift worlds with actual $J/M$ clocks and
+cubic calibration; its four-world ambiguity includes distinct constant
+functions. It is a different observation model, not a calibration
+lemma for the known rational unit law here.
+
+`NativeFunctionalEffectivePrefix` and its owning Scribe construct finite
+effective prefixes of the canonical functional native solution using
+finite pattern stabilization. That formal prefix result has no rational
+field, selected P/S matching repairs or ambient Tick claim.
+`NativeSymbolicFiniteForcing` classifies finite original values across
+joint functional solutions with shared parameters, while
+`NativeCompletionPrefixLifting` identifies infinite-tree prefix
+cylinders and simultaneous finite disequality witnesses. Those
+statements retain their joint assignments and prefix domains; neither
+is the ambient material-field completion proved in Theorem 104.1. The current
+Schur-minimum owning exposition treats real positive energy, Gaussian
+free energy and projected gradient memory; energy minimization there
+is explicitly distinct from exact dynamical closure. It does not
+supply native invertibility or an installation correspondence.
+
+For an adjacent citation, [Coherent Reconstruction §36](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md)
+uses the physical $\mathbb C^5$ apparatus: its real polar support has
+dimension four, compatible waiting preserves its complex structure,
+and the full native read separates a polar ray and can create
+zero-mode mass. It is an adjacent operational obstruction, with no
+state or observation identification with the material fields here.
+
+[Atomic Generation Acquisition III, §§28–34](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_III.md)
+changes the read channel to integer floor bins. Its dense rational
+source has finite-record collisions even under adaptive finite
+queries; its assured-lattice alternative uses a known integral
+symmetric law and excludes eigenvalues $0,1,-1$ for passive finite
+acquisition. Our literal rational Reads are a different channel.
+In particular excluding zero by ambient completion supplies neither
+the floor channel's separation nor its lattice promise. Its
+fixed-assay image inverses and autonomous error results retain
+their own entries, clocks and records.
+
+[Cyclic Leaf Boundary Ambiguity, §§11–20](RECURSIVE_RELATIONAL_OBSERVATION_CYCLIC_LEAF_BOUNDARY_AMBIGUITY.md)
+acquires an unknown positive weighted symmetric law with a
+controllable port using installed Reset and whole-field Square.
+Its moment/Gram and multiplication reconstruction identifies native
+axes up to the stated port-preserving permutation, and its cyclic
+assay retains its own primitive-count and conditioning limits.
+The known unit law here and its original menu supply neither of
+those added operations. Conversely that calibration does not prove
+the guarded P/S optimum (104.1).
+
+[Measurement-Relative Quantum Boundary Continuation I, §§4–7](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY_CONTINUATION_I.md)
+keeps one initialized fixed-DU quantum source and counts immediate
+F reads, including adaptive selective acceptance. Its accepted-law
+converse and finite exact-certification obstruction preserve their
+source, reference, effect and read contracts. No quantum F-read cost
+is identified with a rational terminal Read or imported into
+(107.1). These public results are available with their actual
+assumptions; their separate resource vectors do not form one run.
+
+**Boundary 108.3 (the original programme remains).** The installation
+premises of Definition 105.1 remain conditional, including real
+conformance, erasure/isolation, source control, authentic references and
+allocation/grants. Algebra cannot manufacture them. The particular
+four expressions recover exactly the fixed-template entry/current
+image and its stated measured Time; they do not recover an arbitrary
+erased history, unknown clock phase, physical age or different
+apparatus. Full service after arbitrary growth is a retained-predictor
+claim and does not extend the fixed historical inverse through every
+new graph. Continuous/quantum/path correspondences, genuinely common
+physical realization, the complete original INITIAL domain, and
+joint-resource optimality still need their own source/interface and
+same-run proofs. A finite-word packet adapter also still needs a
+faithful acquired packet-to-native execution and resource correspondence;
+the fixed script here presupposes its authentic complete call interface.
+
+Every exact old fixed-$G_{gc}$, original-$Q$, parked-consumer,
+unchanged-initialization, final-no-Ready and other model-specific duty
+keeps its original hypotheses and success standard. The finite classical
+ambient-completion subtask is stronger along its named coordinate; it
+is not substituted for those duties. Separate full-source projection,
+noncontact stopping and reflected endpoint questions retain their own
+observation records, quantifiers and domains. No separate
+ownership/factorization theorem is needed for these source-specific
+statements. These ordinary mathematical conclusions assert
+no new kernel certification and do not complete the sustained original
+four-expression objective.
+
+
+## 109. Third-germ inverses and common-word stability
+
+**Boundary 109.1 (the exact coefficient-world correspondence).**
+[Third Germ Retention Threshold, §§15–18](RECURSIVE_RELATIONAL_OBSERVATION_THIRD_GERM_RETENTION_THRESHOLD.md)
+uses complete coefficient worlds
+$\omega=(r,b,c,d,k_0,k_1,k_2,k_3)$, with their original maximum
+norm, source matrix $P$, one whole cubic $g$ and the absolute
+clock-eight matrix $Q_8=\left(\begin{smallmatrix}3&1\\8&3\end{smallmatrix}\right)$.
+Theorem 15.2 proves an inverse Lipschitz estimate from
+$B_M=(p,v,f_M)$ on an entire original preimage
+$\mathcal D=\Phi^{-1}(\mathcal K)$ of a suitable compact base
+rectangle. This includes its remote branch and all permitted strata;
+the rectangle and constant are existential. Theorem 15.3 composes
+that inverse with a common-word response estimate on this same
+domain. Section 16 supplies actual frozen-record witnesses with
+uncancelled growing response differences; those witnesses retain
+their declared positive record errors and future-word experiment.
+Section 17 supplies the exact singleton-world inverses and route
+agreement for its exposed boundary on its actual image, with its
+seven-action/eight-read and eight-action/nine-read records. Its
+stipulated retained inputs and future execution rights remain
+separate acquisition obligations.
+
+Section 18 and the owning
+[`CommonWordSensitivity` exposition](../../../Blueprint/D5/S3/Observer/CubicGain/CommonWordSensitivity.md)
+give the uniform original-coordinate bound
+$(1+1048576H)\varphi^n(1+n)^3\|\omega-\omega'\|_\infty$
+for two complete worlds bounded by a common $H\ge1$ and one common
+chronological word of length $n$. This latter supplier supplies the
+source-distance estimate, without claiming the acquired-boundary
+inverse of §15.2 as part of that declaration. The same original $P,g,d$
+are used at every absolute clock; no polynomial is fitted to a later
+window. These are positive inverse and stability results on their
+stated coefficient-world domains. Their $P$ and actions $J/M$ have
+no supplied identification with the inclusion $E$, unit adjacency
+$B$, terminal Reads or P/S growth here. They therefore supply no
+matching-completion or native-acquisition premise for §§103–107.
+
+The coefficient-world word and its original coordinate vector also do
+not identify the diffusion hidden coordinate in the separate
+full-source volumes. Their common notation and clock growth are not a
+transport of source, observation, or recovery hypotheses.
+
+## 追加锚（本行以下为增补区）
