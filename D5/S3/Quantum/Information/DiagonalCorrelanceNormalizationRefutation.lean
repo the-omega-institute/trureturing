@@ -12,7 +12,6 @@ public import Mathlib.Algebra.BigOperators.Fin
 public import Mathlib.Data.Matrix.Mul
 public import Mathlib.LinearAlgebra.Matrix.Trace
 public import Mathlib.Basic.Real.Basic
-import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
@@ -77,10 +76,6 @@ private lemma witness_product (x : Fin 7 → Bool) :
   intro i hi
   rw [witness_marginal]
   rfl
-
-private lemma sum_q_square : (∑ b : Bool, q b ^ 2) = 13 / 25 := by
-  simp [q]
-  norm_num
 
 private lemma sum_product_q_square :
     (∑ x : Fin 7 → Bool, (∏ i, q (x i)) ^ 2) = (13 / 25) ^ 7 := by
