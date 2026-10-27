@@ -179,13 +179,14 @@ private abbrev sample : Parameters.{u,w} :=
   ⟨ULift.{u} Unit, inferInstance, inferInstance, ⊤, ⟨()⟩, by exact Finset.singleton_nonempty _,
     ULift.{w} I, inferInstance, ContinuousMap.const _ ⟨0⟩⟩
 
-private def path : signature.State sample :=
+private def path : C(I, ULift.{w} I) :=
   ⟨fun t => ⟨t⟩, continuous_uliftUp⟩
 
 private theorem rejected_law : ¬ arena.{u,w}.Law rejected := by
   intro h
-  obtain ⟨F, hf, hp⟩ := h sample path rfl
-  have hh := (hf (vertexPoint sample.complex sample.vertex sample.vertexFace)).symm.trans (hp 0)
+  let p : Parameters.{u,w} := sample.{u,w}
+  obtain ⟨F, hf, hp⟩ := h p path rfl
+  have hh := (hf (vertexPoint p.complex p.vertex p.vertexFace)).symm.trans (hp 0)
   have h01 := congrArg ULift.down hh
   change (0 : I) = 1 at h01
   exact zero_ne_one h01
@@ -199,9 +200,10 @@ def family : Registration arena.{u,w} (type_of% (@vertex_homotopy_extension.{u,w
     fun e => nomatch e⟩
   dependence := by
     intro i
-    refine ⟨sample, ContinuousMap.const _ ⟨0⟩, ContinuousMap.const _ ⟨1⟩, ?_⟩
+    let p : Parameters.{u,w} := sample.{u,w}
+    refine ⟨p, ContinuousMap.const _ ⟨0⟩, ContinuousMap.const _ ⟨1⟩, ?_⟩
     intro h
-    have hh := congrArg (fun f : C(I, sample.Y) => (f 0).down) h
+    have hh := congrArg (fun f : C(I, p.Y) => (f 0).down) h
     exact zero_ne_one hh
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
