@@ -642,5 +642,39 @@ private lemma lattice_error_variation {f : ℝ → ℝ} (hf : BoundedVariationOn
   rw [heq] at htotal
   exact (mul_le_mul_iff_right₀ hd).mp htotal
 
+/- The complete small-label row has a definite sign.  This isolates the
+   only sign change in a moving-cut row at the actual cutoff clock, while
+   retaining the literal posterior ratio. -/
+theorem cutRow_sign_of_small_label {ell R t : ℝ} (hell : 256 ≤ ell)
+    (horder : ell < R) (ht : t ∈ Icc ell R) {d : ℕ} (hd : 1 ≤ d)
+    (hcut : (d : ℝ) ≤ endpoint t ^ (151 / 500 : ℝ)) (x : ℝ) :
+    (t < (d : ℝ) ^ (500 / 151 : ℝ) → 0 ≤ cutRow ell R t d x) ∧
+      (¬t < (d : ℝ) ^ (500 / 151 : ℝ) → cutRow ell R t d x ≤ 0) := by
+  have ht256 : 256 ≤ t := hell.trans ht.1
+  have ht4 : 4 ≤ t := by linarith
+  have hK : 0 ≤ kernel t x := kernel_nonneg ht4
+  by_cases hz : kernel t x = 0
+  · simp [cutRow, hz]
+  have hk : 0 < kernel t x := lt_of_le_of_ne hK (Ne.symm hz)
+  have hpos := (kernel_pos_iff ht4).mp hk
+  have hsmall := crossing_label_small ht256 hcut
+  have hd0 : (0 : ℝ) < d := by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_one hd)
+  have hx0 : 0 < x := by linarith [hpos.1]
+  have hxd : (1 : ℝ) ≤ x / d := by
+    apply (le_div_iff₀ hd0).2
+    nlinarith [hsmall, hpos.1, ht4]
+  have hlog : 0 ≤ Real.log (x / d) := Real.log_nonneg hxd
+  have hratio := localRatio_bounds hell horder ht d x
+  constructor
+  · intro hactive
+    rw [cutRow_eq_local]
+    simp only [if_pos hactive]
+    exact mul_nonneg (mul_nonneg hlog hK) (sub_nonneg.mpr hratio.2)
+  · intro hinactive
+    rw [cutRow_eq_local]
+    simp only [if_neg hinactive, zero_sub]
+    exact mul_nonpos_of_nonneg_of_nonpos (mul_nonneg hlog hK)
+      (neg_nonpos.mpr hratio.1)
+
 
 end D5.S3.Arith.Robin.OriginalMovingCutRow
