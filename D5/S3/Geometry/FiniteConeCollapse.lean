@@ -7,6 +7,7 @@
    digest: Coordinate truncation and cone contraction give a based equivalence for the actual cone quotient. -/
 import Mathlib.AlgebraicTopology.SimplicialComplex.Basic
 import Mathlib.Analysis.Convex.Combination
+import Mathlib.Data.Fintype.Powerset
 import Mathlib.Topology.Homotopy.Equiv
 import Mathlib.Tactic
 
