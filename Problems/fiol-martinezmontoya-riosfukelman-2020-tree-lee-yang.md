@@ -6,9 +6,10 @@ url: https://arxiv.org/abs/2006.06379v2
 triage: theorem
 motivation_gids:
   - D5/S3/Zeros/LeeYang/QuiverTreeIsingRefutation.result
+  - D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.result
 ---
 
-# Positive joint weights and the tree Lee–Yang conjecture
+# Positive joint weights and all-vertex physical weights in the tree Lee–Yang conjecture
 
 ## Problem
 
@@ -61,6 +62,10 @@ to its search producer, with no settlement of Conjecture 1 found. This is
 `not-found-in-searched-scope`, not an exhaustive novelty claim.
 The fixed-configuration Lee–Yang theorem and the one-edge result do not
 assert closure under arbitrary positive mixing of different vertex masses.
+The exact all-vertex physical claim at issue #17677 is now separately refuted
+by the kernel-checked nine-vertex/eight-edge all-total-three result below; the
+older arbitrary-joint-weight settlement does not supply that implication.
+
 
 ## Route
 
@@ -110,11 +115,21 @@ The canonical module is
 `Blueprint/D5/S3/Zeros/LeeYang/QuiverTreeIsingRefutation.scribe.cs`.
 The source note is
 `Library/StatisticalMechanics/fiolmartinezmontoyariosfukelman2020quiver.md`.
-The Scribe records exactly one `OpenProblemResolutionClaim`, `Refuted`, on
-`result`. Its axiom closure is contained in
+The Scribe is designed to record one `OpenProblemResolutionClaim`, `Refuted`,
+on the existing `result`, with
+`D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.result` as its supported
+`additionalMembers`. The authorized Mac `deposit-uncovered` run completed
+with exit 0 and `PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED`, with `reason=NO_ATOM`;
+it added the module to
+`Golden/Frozen/state/D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.lean.json`.
+The deposited `statement_id` is
+`sha256:e4a7de999321ecb7471bcc989fe84a2733afd351a1caa39ac4131053095b1e5f`,
+and the current delivery scoped report is
+`sha256:502415af958772b8c0adff34accb8ed232d6b3426572bc93db96c8fbd462e557`.
+No duplicate claim is emitted; the native axiom closure remains bounded by
 $\{\mathrm{propext},\mathrm{Classical.choice},\mathrm{Quot.sound}\}$.
 
-The positive-sequence and physical boundary arguments under Triage are prose, with reciprocal completion attributed to Lalín–Smyth Theorem 1. Their corresponding unpublished source has reported Lean 4.33 compilation evidence, but no accepted current native exact-type/axiom report. The kernel-checked result above is the arbitrary-joint-weight refutation; it supplies no physical positive theorem.
+The positive-sequence and physical boundary arguments under Triage are prose, with reciprocal completion attributed to Lalín–Smyth Theorem 1. Their corresponding unpublished source has reported Lean 4.33 compilation evidence, but no accepted current native exact-type/axiom report. The new physical e8 result is the separate current kernel-checked settlement; it does not turn those prose families into Lean theorems.
 
 Experiment entry:
 [tree Lee–Yang checks at commit 811abbf954710a5a35374d89403c2ea7ce6913eb](https://github.com/the-omega-institute/trureturing-experiments/tree/811abbf954710a5a35374d89403c2ea7ce6913eb/docs/reports/fiol-martinezmontoya-riosfukelman-2020-tree-lee-yang).
@@ -139,6 +154,44 @@ arbitrary positive joint weights by `result`. Every theorem in this module
 has `proof_shape: bind-only`; the module asserts no escape witness.
 
 ### What the settlement shows
+
+### All-vertex physical e8 settlement
+
+The canonical resolution claim remains the single claim for this dossier. Its
+existing arbitrary-joint-weight result is joined by the additional member
+`D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.result`, whose source is
+`D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.lean`. The physical result uses
+`admission_basis: open-problem-resolution` under preregistration [#17677](https://github.com/the-omega-institute/trureturing/issues/17677),
+which records the published Fiol--Martínez-Montoya--Rios Fukelman statement,
+complete quantifiers, the all-vertex (2.19) reading and a bounded literature
+screen before the probe. Its Scribe member is emitted through the existing
+`QuiverTreeIsingRefutation` document with `additionalMembers`; no duplicate
+problem slug or second resolution claim is introduced. Final freeze membership
+and the emitted current report are established only by the authorized deposit
+run below.
+
+The refutation is literal for the registered all-vertex physical proposition:
+vertices `Fin 9 = c,u,v,u1,u2,u3,v1,v2,v3`, edges
+`cu,cv,uu1,uu2,uu3,vv1,vv2,vv3`, all eight totals equal to three, and
+`tau = -1`. The proof keeps all 256 complementary splits and all 512 spins
+per split, retains the nine actual vertex factors, proves the exact
+`360^8*36/512` normalization, and uses the reciprocal/nonreal-root certificate
+to produce a root inside and its reciprocal outside the unit circle. The exact
+Lean result is a closed `Not claim` with axiom closure contained in
+`propext`, `Classical.choice`, and `Quot.sound`; its public declaration is a
+designated `refutes` utility result. The readable automorphism count
+`|Aut(T)| = 72` and source prefactor `120^8/4` remain correspondence prose,
+not separate kernel theorems.
+
+The physical settlement is scoped to the all-vertex (2.19) construction and
+this exact witness. It preserves the printed shorter (2.31) expression as a
+distinct source reading and asserts no author-approved erratum or intent. It
+does not settle arbitrary other total multisets, other trees, other tau, the
+full tree ensemble, Conjecture 2, the all-tau family, or priority. The existing
+assignment-summed m60 coefficient exposition remains a separate complete
+source-assessed calculation; it is not silently promoted to the Lean result or
+used to weaken the fixed-labelled claim.
+
 
 - **Mechanism, kernel-checked at $M=31$.** The private `path_poly` identifies
   the exact octic; `q_discr` and `q_not_splits` supply the negative-discriminant
@@ -196,9 +249,16 @@ has `proof_shape: bind-only`; the module asserts no escape witness.
   every fixed labelled two-edge pair $a,b\ge2$ with $\min(a,b)=2$ is
   covered using all three physical vertex factors. This is separate from
   the kernel-checked arbitrary-weight refutation and from the experiment.
-- **General physical-weight version, open.** Both two-edge totals at least
-  three and the full tree family with the binomial and all-vertex factors
-  of (2.31) remain open. The experiment entry has no physical-weight reading.
+- **All-vertex physical e8 result, kernel-checked.** The separate
+  `QuiverTreePhysicalE8.result` refutes the exact all-vertex physical claim at
+  the explicit nine-vertex/eight-edge all-total-three witness. It is grouped
+  with the existing resolution through `additionalMembers`, while preserving
+  the arbitrary-joint-weight result and its different witness.
+- **Residual physical-weight questions, open.** Other fixed total multisets,
+  other trees, both two-edge totals at least three, the full tree family with
+  the binomial and all-vertex factors of (2.31), the all-τ variant, and the
+  general assignment-summed family remain open. The experiment entry has no
+  physical-weight reading.
 - **Consequences for the source, source reading.** Its fixed-configuration
   result and its one-edge theorem remain outside the refutation. The
   physical planar-free-energy specialization requires its own restricted
@@ -959,37 +1019,43 @@ $\deg q_{CC}\le124$. Hence $\operatorname{Re}w\ge-558$ and
 $q_{CC}''(1)\le4402q_{CC}(1)$, contrary to
 $q_{CC}''(1)=269676602388$ and
 $q_{CC}''(1)-4402q_{CC}(1)=1276511376>0$.
-This is a source-assessed fixed-assignment argument, with no new current
-kernel or admission verdict here. The non-strict multiset bound covers
-an empty multiset. An unguarded generic strict variant fails at degree
-zero; its unused proposed $n\ge1$, degree-$2n$ correction is not an
-accepted general theorem.
+This source-assessed fixed-assignment argument has no new current kernel
+theorem of its own. The non-strict multiset bound covers an empty multiset.
+An unguarded generic strict variant fails at degree zero; its unused proposed
+$n\ge1$, degree-$2n$ correction is not an accepted general theorem. The exact
+universal physical claim is settled separately by the all-total-three e8 Lean
+result above; this m60 calculation remains prose and does not change that
+result's admission or scope.
 
-The admission disagreement remains unresolved: the fixed-labelled
-assertion is explicitly preregistered, but identifying it with a tree's
-assignment-summed contribution in the source prose is a different claim.
-Neither the present positive coefficient example nor its analytical proof
-awards that candidate a new admission basis or settles the source's
-general physical conjecture. The earlier bind-only disposition for the
-two-edge boundary formalization is also unchanged. No new declaration,
-proof-shape classification, escape witness, registration, freeze or
-open-problem-resolution admission is supplied by this exposition.
+Identifying the preregistered fixed-labelled assertion with a tree's
+assignment-summed contribution in the source prose is a separate question.
+The positive coefficient example and its analytical proof supply no new
+admission basis and do not settle the source's general assignment-summed
+physical conjecture. The earlier bind-only disposition for the two-edge
+boundary formalization is unchanged. This m60 exposition supplies no new
+declaration, proof-shape classification, escape witness, registration, freeze
+or open-problem-resolution admission.
 
 The fixed-labelled obstruction and the positive aggregate are compatible
-because they concern different polynomials. One placement is not the
-whole formal coefficient, and a positive aggregate does not establish
-the universal fixed-labelled assertion. Other multisets, other trees,
-other $\tau$, the full coupling series, sums over trees (Conjecture 2)
-and the conditional Wilson-loop questions remain unresolved here. The
-general assignment-summed physical tree conjecture remains open; no
-literature-priority or universal-conjecture resolution is claimed.
-
+because they concern different polynomials. One placement is not the whole
+formal coefficient, and a positive aggregate does not establish the universal
+fixed-labelled assertion for this 123-vertex calculation. Other multisets,
+other trees, other $\tau$, the full coupling series, sums over trees
+(Conjecture 2) and the conditional Wilson-loop questions remain unresolved
+here. The general assignment-summed physical tree conjecture remains open; no
+literature-priority or broader universal-conjecture resolution is claimed.
 
 ## ASSUMED-UNVERIFIED
 
 The preregistration's search producer reports its forward-citation screen;
 worldwide priority is unverified. Kernel checking establishes the encoded
-statement and axiom boundary, while correspondence to the source requires
-the stated finite-type and parameter conventions. The positive-sequence and physical $\min(a,b)=2$ statements are complete prose arguments, not newly kernel-checked public theorems. Product-weight and physical-weight generalizations remain open separately, including both totals at least three, all physical trees and stars, all-$\tau$ and general edge-assignment sums, Conjecture 2 and conditional Wilson-loop claims; the numerical product-weight trials do not prove these extensions.
+statements and axiom boundaries, while correspondence to the source requires
+the stated finite-type and parameter conventions. The positive-sequence and
+physical $\min(a,b)=2$ statements are complete prose arguments, not newly
+kernel-checked public theorems. Product-weight questions and physical-weight
+generalizations outside the exact all-total-three e8 witness remain open,
+including other multisets, other trees and stars, all-$\tau$ and general
+edge-assignment sums, Conjecture 2 and conditional Wilson-loop claims; the
+numerical product-weight trials do not prove these extensions.
 
-The fixed 123-vertex tree coefficient above has a complete independently checked analytical root proof. It has no new Lean verification or admission; the fixed-labelled physical candidate and its admission disagreement remain separate, and the general assignment-summed physical conjecture remains open.
+The fixed 123-vertex tree coefficient above has a complete independently checked analytical root proof and remains separate prose evidence. The fixed-labelled all-total-three physical candidate has passed the independent prefreeze review under issue #17677 and now has the deposited state pin recorded above; the broader assignment-summed physical conjecture and all residual families remain open.
