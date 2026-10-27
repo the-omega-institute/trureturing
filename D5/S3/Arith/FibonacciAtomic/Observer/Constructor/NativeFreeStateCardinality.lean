@@ -64,40 +64,29 @@ private theorem streamTree_subtree (s : Nat → Bool) (j : Nat) :
     rw [streamTree_unfold]
     rfl
   | succ j ih =>
+    simp only [bitAddress, List.replicate_succ, List.cons_append]
     rw [streamTree_unfold]
     change subtree (bitAddress j) (streamTree (tail s)) = _
     simpa only [tail] using ih (tail s)
-
-private theorem leaf_injective : Function.Injective leaf := by
-  intro b c h
-  exact Sum.inl.inj (congrArg Sigma.fst (PFunctor.M.mk_inj h))
 
 private theorem streamTree_injective : Function.Injective streamTree := by
   intro s t h
   funext j
   have bits := congrArg (subtree (bitAddress j)) h
   rw [streamTree_subtree, streamTree_subtree] at bits
-  have labels := leaf_injective (Option.some.inj bits)
-  exact Bool.not_inj.mp labels
-
-private theorem omega_subtree (p : Address) : subtree p Omega = some Omega := by
-  induction p with
-  | nil => rfl
-  | cons b p ih =>
-    rw [omega_node]
-    cases b <;> exact ih
-
-private theorem leaf_ne_omega (b : Bool) : leaf b ≠ Omega := by
-  intro h
-  have tag := congrArg (fun X => (PFunctor.M.dest X).1) h
-  conv_rhs at tag => rw [omega_node]
-  simp [leaf, node] at tag
+  have labels := GenealogicalFiberTransport.Source.of.inj
+    (NativeCompletionSupportClosure.embed_injective
+      (show embed (.of (!(s j))) = embed (.of (!(t j))) from Option.some.inj bits))
+  exact Bool.not_inj labels
 
 private theorem streamTree_ne_omega (s : Nat → Bool) : streamTree s ≠ Omega := by
   intro h
-  have right := streamTree_subtree s 0
-  rw [h, omega_subtree] at right
-  exact leaf_ne_omega _ (Option.some.inj right).symm
+  have equation := streamTree_unfold s
+  rw [h] at equation
+  have right := (node_inj (omega_node.symm.trans equation)).2
+  have tag := congrArg (fun X => (PFunctor.M.dest X).1) right
+  conv_lhs at tag => rw [omega_node]
+  simp [leaf, node] at tag
 
 private theorem completed_not_countable : ¬ Countable CompletionTree := by
   classical
