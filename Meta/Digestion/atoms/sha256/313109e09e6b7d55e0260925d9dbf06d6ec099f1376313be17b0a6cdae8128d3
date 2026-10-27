@@ -1,0 +1,48 @@
+**应用 28.4（忠实固定乘法与近似概念组合）。** 当一个切面的效果转换为 UCP 映射 $\Theta:M_d\to M_d$，并 **另有** 密度 $\varrho\succ0$ 满足
+$\operatorname{Tr}[\varrho\Theta(A)]=\operatorname{Tr}(\varrho A)$ 对所有复 $A$ 成立时，稳定概念可用普通乘法。
+这里消费忠实不变态与乘法域的标准机制（Carbone–Girotti，[*Absorption in Invariant Domains for Semigroups of Quantum Channels*](https://doi.org/10.1007/s00023-021-01016-5)）；对本应用所需的全部条件和估计展开如下。
+若 $\Theta(A)=A$，Schwarz 差 $D=\Theta(A^\dagger A)-A^\dagger A\succeq0$ 且 $\operatorname{Tr}(\varrho D)=0$，忠实性迫使 $D=0$；$AA^\dagger$ 同理。
+写 $\Theta(X)=V^\dagger(X\otimes I)V$、$V^\dagger V=I$，差为
+
+$$
+D=V^\dagger(A^\dagger\otimes I)(I-VV^\dagger)(A\otimes I)V.
+$$
+
+故 $(A\otimes I)V=VA$；由 $A^\dagger$ 的同一关系也得 $V^\dagger(A\otimes I)=AV^\dagger$。
+于是 $\Theta(AB)=A\Theta(B)$、$\Theta(BA)=\Theta(B)A$。
+当 $B$ 也固定时乘积固定；单位、线性、伴随与有限维闭性均保持，故固定集为普通 $C^*$-子代数。
+若若干 UCP 映射各自有这样的忠实不变密度，其共同固定集是这些子代数的交；不要求它们有同一个密度，但不能省略各自忠实性。
+
+对近似稳定概念，还须定量保留密度下界及算子收缩条件：设 $\varrho\succeq mI$、$m>0$，$\|A\|,\|B\|\le1$，记 $\delta_A=\|\Theta(A)-A\|$、$\delta_B=\|\Theta(B)-B\|$。则
+
+$$
+\|\Theta(AB)-AB\|\le
+\delta_A+\delta_B+\frac2m\sqrt{\delta_A\delta_B}. \tag{28.4}
+$$
+
+证明。置 $\Delta(A)=\Theta(A^\dagger A)-\Theta(A)^\dagger\Theta(A)\succeq0$。
+不变性、$\|\Theta(A)\|\le\|A\|\le1$ 与 $\operatorname{Tr}\varrho=1$ 给
+
+$$
+\operatorname{Tr}[\varrho\Delta(A)]
+ =\operatorname{Tr}[\varrho(A^\dagger A-\Theta(A)^\dagger\Theta(A))]
+ \le2\delta_A.
+$$
+
+而 $m\operatorname{Tr}\Delta(A)\le\operatorname{Tr}[\varrho\Delta(A)]$，所以 $\|\Delta(A)\|\le2\delta_A/m$；对 $A^\dagger$ 亦然，因为 UCP 保伴随。
+Stinespring 的两侧缺陷因子给
+
+$$
+\begin{aligned}
+\Theta(AB)-\Theta(A)\Theta(B)
+ &=V^\dagger(A\otimes I)(I-VV^\dagger)(B\otimes I)V,\\
+\|\Theta(AB)-\Theta(A)\Theta(B)\|
+ &\le\sqrt{\|\Delta(A^\dagger)\|\,\|\Delta(B)\|}
+ \le\frac2m\sqrt{\delta_A\delta_B}.
+\end{aligned}
+$$
+
+再用 $\|\Theta(A)\Theta(B)-AB\|\le\delta_A+\delta_B$ 得 (28.4)。它适用于复算子，不只自伴效果。
+因此读数近似稳定还需控制乘法关系的误差；$m\downarrow0$ 时不能宣称同一个统一误差界。
+下节实际五维通道没有满秩不变密度，正是不能直接应用普通固定代数结论的情形。∎
+

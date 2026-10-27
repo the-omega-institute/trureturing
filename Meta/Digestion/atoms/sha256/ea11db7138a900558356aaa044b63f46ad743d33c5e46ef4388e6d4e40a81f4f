@@ -1,0 +1,22 @@
+**定义 30.1（与预测波 §29 的精确符号映射）。** 沿用 §29 的同一 $B,K_j,U,W,\xi$，令
+
+$$
+f=(1,-1,0)^{\mathsf T}/\sqrt2,\quad e=(1,1,-2)^{\mathsf T}/\sqrt6,\quad
+q=(\xi+e)/\sqrt2,\quad p_0=Bq,\quad P_+=(I_3+W)/2,
+$$
+
+$$
+c=(e_0+e_1-e_3-e_4)/2,\quad a=Uq,\quad g=Uf,\quad
+\alpha_t=\sqrt{1-t^2},\quad w_\pm=\alpha_tc\pm itp_0,\quad0<t<1,
+$$
+
+$$
+T_\pm(X)=BP_+XP_+B^\dagger+(f^\dagger Xf)w_\pm w_\pm^\dagger,
+\qquad S_\pm=\mathcal G T_\pm,\qquad J_s=(\mathcal G^\dagger)^s(p_0p_0^\dagger).
+\tag{30.1}
+$$
+
+[预测波定义 29.1、定理 29.2–29.3](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md)中的 $p,P,T_{t,\pm},S_\pm,J_s$ 分别就是这里的 $p_0,p_0p_0^\dagger,T_\pm,S_\pm,J_s$；其 $c$ 是本节 $c$，不是 §29 的 $d$，其 $P$ 也不是码投影 $\xi\xi^\dagger$。
+原数据合同只有全部 $s\ge0$ 的完整效果算子，不含分支标签、任意后选择历史、新相位控制或全效果菜单。
+该映射把既有双世界直接接入概念查询，不把有限随机读数当作已知完整效果。
+

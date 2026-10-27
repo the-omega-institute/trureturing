@@ -1,0 +1,24 @@
+**定义 18.2（平衡和全输入极限的供应公式）。**
+令
+
+$$
+\begin{gathered}
+\xi=(1,1,1)^T/\sqrt3,\qquad P=|\xi\rangle\langle\xi|,\quad Q=I_3-P,\\
+\tau_p=pP+(1-p)Q/2,\qquad\widehat\tau_p=B\tau_pB^\dagger,\quad0\le p\le1,\\
+\chi=B\xi,\qquad d=(e_0-e_1-e_3+e_4)/2,\qquad
+J=|\chi\rangle\langle\chi|+\tfrac23|d\rangle\langle d|.
+\end{gathered}
+$$
+
+$d\perp R$，$\chi,d$ 为正交单位向量，故 $0\le J\le I_5$。
+下表将[五窗口量子记忆 §§17–19](AURIC_FIB_FIVE_WINDOW_QUANTUM_MEMORY.md)的供应符号加下标 FW，
+使其与当前码坐标不混淆。
+
+| 供应符号/条目 | 当前对象 | 假设及精确对应 |
+| --- | --- | --- |
+| 定义 17.2 的 $\Phi_\circ,K_j^\circ,R$ | $\mathcal G,K_j,\operatorname{Ran}B$ | 同一物理基、同一 $u,v,z$，参数为 $\eta=r=1/2$ |
+| 定理 18.1 的 $s,P_{\rm FW},M_{\rm FW}$ | $\chi,BPB^\dagger,BQB^\dagger/2$ | $s=B\xi$，$P_R=BB^\dagger$ |
+| 定理 18.1 的 $\rho_t$ | $\widehat\tau_p$ | $t=p\in[0,1]$，包括两个端点 |
+| 定理 18.3 的 $h_0,h_1,E_{\rm FW}$ | $K_0^\dagger\chi,K_1^\dagger\chi,J$ | $h_0=(e_0+e_4)/\sqrt3+e_2/\sqrt6$，$h_1=(e_1+e_3)/\sqrt3+e_2/\sqrt6$ |
+| 定理 19.1 的限制 $F$ | $\mathcal T$ | 由 $X\mapsto BXB^\dagger$ 共轭识别整个 $M_3$ |
+| 定理 19.2 的 $\mathcal T_{\rm FW}$ | $\mathcal E_G$ | $\mathcal E_G=(\mathcal G^2+2\mathcal G^3)/3$ |
