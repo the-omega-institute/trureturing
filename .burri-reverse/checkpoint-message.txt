@@ -1,0 +1,3 @@
+WIP math: explicit reverse Burri source and active rotation
+
+Retain E12, the physical Kraus construction, source permutation and polynomial SOS. Lean verification pending; no actual fidelity comparison claimed.
