@@ -38,3 +38,7 @@ unverified premise.
 
 The arXiv source has the nonexclusive distribution license. It is used as
 mathematical literature, not as software. No third-party code is copied.
+
+## Verified locator
+
+DOI: 10.48550/arXiv.1006.1312; versioned source: https://arxiv.org/abs/1006.1312v2.

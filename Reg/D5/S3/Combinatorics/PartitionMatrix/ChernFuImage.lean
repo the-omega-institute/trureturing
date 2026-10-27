@@ -23,10 +23,9 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-noncomputable def actual : Realization signature := by
-  classical
+def actual : Realization signature := by
   exact realize signature
-    (fun _ _ f => decide (Phi f))
+    (fun _ _ f => @decide (Phi f) (by unfold Phi; infer_instance))
     (fun e => nomatch e)
 
 def rejected : Realization signature := realize signature
@@ -57,12 +56,12 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   classical
   intro i
   have hp : actual.readout i 3 (fun _ => 0) = true := by
-    apply decide_eq_true
+    simp only [actual,realize,decide_eq_true_eq]
     unfold Phi
     decide
   have hq : actual.readout i 3
       (fun t => ([0,0,1] : List ℕ).getD t.val 0) = false := by
-    apply decide_eq_false
+    simp only [actual,realize,decide_eq_false_iff_not]
     unfold Phi
     decide
   refine ⟨3,(fun _ => 0),(fun t => ([0,0,1] : List ℕ).getD t.val 0),?_⟩

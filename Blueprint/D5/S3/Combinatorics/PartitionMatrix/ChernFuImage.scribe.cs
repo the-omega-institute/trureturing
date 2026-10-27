@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.PartitionMatrix;
 
@@ -53,6 +55,29 @@ internal sealed class ChernFuImageDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string id, string title, string declaration,
         string prose, DescribeRole role, AssessedProvenance provenance) =>
         Describe.Lean(DescribeId.Create("chernfu-image-" + id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.WithoutFormula(), provenance,
+            H(title), declaration == "result"
+                ? StatementSource.FromAuthor(ResultFormula())
+                : StatementSource.WithoutFormula(), provenance,
             Blocks(Paragraph(Text(prose))), role);
+    private static Formula ResultFormula()
+    {
+        Formula n = F.Id("n"), e = F.Id("e"), k = F.Id("k"), p = F.Id("P");
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula hypothesis = Seq(D(1), Sp, Le, Sp, n, Sp, Land, Sp,
+            Call("length", e), Sp, Eq, Sp, n, Sp, Land, Sp,
+            Call("IsInversionSeq", e));
+        Formula image = Seq(Exists, Sp, k, Sp, InMacro, Sp, naturals, Comma, Sp,
+            Exists, Sp, p, Sp, InMacro, Sp, Call("NativePM", n, k), Comma, Sp,
+            Call("Improper", p), Sp, Land, Sp, Call("fixedPi", p), Sp, Eq, Sp, e);
+        return Disp(Seq(Forall, Sp, n, Sp, InMacro, Sp, naturals, Comma, Sp,
+            Forall, Sp, e, Sp, InMacro, Sp, Call("List", naturals), Comma, Sp,
+            Open, hypothesis, Close, Sp, Rightarrow, Sp, Open,
+            Open, image, Close, Sp, Leftrightarrow, Sp, Call("Phi", e), Close));
+    }
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        Seq(Operatorname, Grp(F.Id(name)), Open,
+            Seq(arguments.SelectMany((a, i) => i == 0
+                ? new[] { a } : new[] { Comma, Sp, a }).ToArray()), Close);
 }
+

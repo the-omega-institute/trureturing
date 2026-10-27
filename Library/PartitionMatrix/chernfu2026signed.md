@@ -37,3 +37,7 @@ in v2. That separate problem is not the assertion here.
 The source has the arXiv nonexclusive distribution license. It is cited as
 mathematical literature; that license is not treated as a software license.
 No third-party implementation is copied.
+
+## Verified locator
+
+DOI: 10.48550/arXiv.2508.21318; versioned source: https://arxiv.org/abs/2508.21318v2.
