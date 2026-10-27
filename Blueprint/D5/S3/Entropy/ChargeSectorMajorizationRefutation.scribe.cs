@@ -58,7 +58,10 @@ internal sealed class ChargeSectorMajorizationRefutationDocument : IScribeDocume
                             + "required for Majorizes in the proposed direction would be "
                             + "1/2 ≥ 7/12, which is false. Thus the positive-sector hypotheses "
                             + "hold while the sector majorization conclusion fails, proving ¬claim."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("arias-di-giulio-keski-vakkuri-tonni-2023-charge-sector-majorization"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula SectorSpectrumDefinition()
     {
