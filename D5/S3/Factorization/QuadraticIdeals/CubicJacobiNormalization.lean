@@ -11,6 +11,7 @@ import D5.S3.Factorization.QuadraticIdeals.EisensteinCyclotomicBridge
 import Mathlib.NumberTheory.MulChar.Basic
 import Mathlib.NumberTheory.JacobiSum.Basic
 import Mathlib.Algebra.QuadraticAlgebra.Int
+import Mathlib.Algebra.QuadraticAlgebra.NormDeterminant
 import Mathlib.RingTheory.Ideal.Norm.AbsNorm
 
 /-! # Cubic Jacobi normalization
@@ -341,7 +342,8 @@ theorem cubicJacobiSum_norm
   have hχχ : χ * χ ≠ 1 := by
     intro h
     have hc : χ ^ 3 = 1 := cubicResidueMulChar_cube P hcard hthree
-    rw [show χ ^ 3 = (χ * χ) * χ by group, h, one_mul] at hc
+    rw [show χ ^ 3 = (χ * χ) * χ by
+      simp only [pow_succ, pow_zero, one_mul], h, one_mul] at hc
     exact hχ hc
   have H := jacobiSum_mul_jacobiSum_inv
     (F := E ⧸ P) (F' := FractionRing E)
@@ -351,13 +353,15 @@ theorem cubicJacobiSum_norm
     ((MulChar.ringHomComp_ne_one_iff hf).mpr hχ)
     (by rw [← MulChar.ringHomComp_mul]; exact
       (MulChar.ringHomComp_ne_one_iff hf).mpr hχχ)
+  have hsχ : χ.ringHomComp (starRingEnd E) = χ⁻¹ :=
+    cubicResidueMulChar_star P hcard hthree
+  have hs : star (jacobiSum χ χ) = jacobiSum χ⁻¹ χ⁻¹ := by
+    simpa only [starRingEnd_apply, hsχ] using
+      (jacobiSum_ringHomComp χ χ (starRingEnd E)).symm
   have Hj : jacobiSum χ χ * star (jacobiSum χ χ) = (Fintype.card (E ⧸ P) : E) := by
     apply hf
-    rw [map_mul, ← jacobiSum_ringHomComp,
-      ← jacobiSum_ringHomComp χ χ (starRingEnd E)]
-    rw [cubicResidueMulChar_star P hcard hthree]
-    rw [← jacobiSum_ringHomComp, ← MulChar.ringHomComp_inv]
-    simpa only [map_natCast] using H
+    simpa only [map_mul, hs, ← jacobiSum_ringHomComp,
+      ← MulChar.ringHomComp_inv, map_natCast] using H
   have Hnorm : (algebraMap ℤ E) (QuadraticAlgebra.norm (jacobiSum χ χ)) =
       (Nat.card (E ⧸ P) : E) := by
     rw [QuadraticAlgebra.algebraMap_norm_eq_mul_star, Hj, Fintype.card_eq_nat_card]
@@ -379,7 +383,7 @@ theorem cubicJacobiSum_primary
   have hwne : (QuadraticAlgebra.omega : E) ≠ 1 := by
     intro h
     have hi := congrArg QuadraticAlgebra.im h
-    norm_num [QuadraticAlgebra.omega] at hi
+    norm_num [QuadraticAlgebra.omega, QuadraticAlgebra.im_one] at hi
   have hprim : IsPrimitiveRoot (QuadraticAlgebra.omega : E) 3 :=
     IsPrimitiveRoot.iff_orderOf.mpr (orderOf_eq_prime omega_cube hwne)
   obtain ⟨z, hz, H⟩ := exists_jacobiSum_eq_neg_one_add (by decide : 2 < 3)
@@ -389,7 +393,9 @@ theorem cubicJacobiSum_primary
       rw [Fintype.card_eq_nat_card]; omega) hprim
   have hw2 : ((QuadraticAlgebra.omega : E) - 1) ^ 2 =
       -3 * QuadraticAlgebra.omega := by
-    apply QuadraticAlgebra.ext <;> norm_num [pow_two, QuadraticAlgebra.omega]
+    apply QuadraticAlgebra.ext <;>
+      norm_num [pow_two, QuadraticAlgebra.omega, QuadraticAlgebra.re_one,
+        QuadraticAlgebra.im_one, QuadraticAlgebra.re_ofNat, QuadraticAlgebra.im_ofNat]
   refine ⟨z * QuadraticAlgebra.omega, ?_⟩
   rw [H, hw2]
   ring
@@ -398,14 +404,14 @@ theorem cubicJacobiSum_primary
 theorem cubicJacobiSum_span
     (hcard : Nat.card (E ⧸ P) % 3 = 1) (hthree : (3 : E) ∉ P) :
     letI : Fintype (E ⧸ P) := Fintype.ofFinite _
-    Ideal.span {-jacobiSum (cubicResidueMulChar P hcard hthree)
-      (cubicResidueMulChar P hcard hthree)} = P := by
+    Ideal.span {-(jacobiSum (cubicResidueMulChar P hcard hthree)
+      (cubicResidueMulChar P hcard hthree))} = P := by
   classical
   letI : Fintype (E ⧸ P) := Fintype.ofFinite _
-  let J := -jacobiSum (cubicResidueMulChar P hcard hthree)
-    (cubicResidueMulChar P hcard hthree)
+  let J := -(jacobiSum (cubicResidueMulChar P hcard hthree)
+    (cubicResidueMulChar P hcard hthree))
   have hmem : J ∈ P := P.neg_mem (cubicJacobiSum_mem P hcard hthree)
-  have hle : Ideal.span {J} ≤ P := Ideal.span_singleton_le_iff_mem.mpr hmem
+  have hle : Ideal.span {J} ≤ P := (Ideal.span_singleton_le_iff_mem P).mpr hmem
   have hnorm : QuadraticAlgebra.norm J = (Nat.card (E ⧸ P) : ℤ) := by
     dsimp [J]
     simpa using cubicJacobiSum_norm P hcard hthree
@@ -480,13 +486,13 @@ norm nor the choice between conjugate ideals is assumed. -/
 theorem cubicJacobiSum_eq_primary_generator
     (hcard : Nat.card (E ⧸ P) % 3 = 1) (hthree : (3 : E) ∉ P)
     (π : E) (hπ : Ideal.span {π} = P) (hπprimary : (3 : E) ∣ π - 1) :
-    letI : Fintype (E ⧸ P) := Fintype.ofFinite _
-    -jacobiSum (cubicResidueMulChar P hcard hthree)
-      (cubicResidueMulChar P hcard hthree) = π := by
+    letI : Fintype (E ⧸ P) := Fintype.ofFinite _;
+    -(jacobiSum (cubicResidueMulChar P hcard hthree)
+      (cubicResidueMulChar P hcard hthree)) = π := by
   classical
   letI : Fintype (E ⧸ P) := Fintype.ofFinite _
-  let j := -jacobiSum (cubicResidueMulChar P hcard hthree)
-    (cubicResidueMulChar P hcard hthree)
+  let j := -(jacobiSum (cubicResidueMulChar P hcard hthree)
+    (cubicResidueMulChar P hcard hthree))
   have hjspan : Ideal.span {j} = P := cubicJacobiSum_span P hcard hthree
   have hjprimary : (3 : E) ∣ j - 1 := cubicJacobiSum_primary P hcard hthree
   have ha : Associated π j :=
