@@ -13,17 +13,17 @@ noncomputable section
 open scoped Matrix Classical
 namespace D5.S3.Observer.Linear.GainRay
 
-private theorem action_m_shape : action false = !![0,1;1,1] := by
+theorem action_m_shape : action false = !![0,1;1,1] := by
   ext i j
   fin_cases i <;> fin_cases j <;> norm_num [action,
     D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
     D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM]
-private theorem action_j_shape : action true = !![0,1;1,0] := by
+theorem action_j_shape : action true = !![0,1;1,0] := by
   ext i j
   fin_cases i <;> fin_cases j <;> norm_num [action,
     D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic]
 
-private theorem m_power_coordinates (k : ℕ) :
+theorem m_power_coordinates (k : ℕ) :
     ∃ a b : ℝ, 0 ≤ a ∧ 0 < b ∧
       action false ^ (k+1) = a • (1 : Mat) + b • action false := by
   have packet := (D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.result.2
@@ -80,7 +80,7 @@ private theorem independent_IJ (B : Mat)
   intro i
   fin_cases i <;> simp [hc0,hc1,hc2]
 
-private theorem first_switch_independent (a : Bool) (k : ℕ) (hk : 0 < k) :
+theorem first_switch_independent (a : Bool) (k : ℕ) (hk : 0 < k) :
     LinearIndependent ℝ ![(1 : Mat), action a, action (!a) * action a ^ k] := by
   cases a with
   | false =>
@@ -103,7 +103,7 @@ private theorem first_switch_independent (a : Bool) (k : ℕ) (hk : 0 < k) :
     · right
       norm_num [h, action_j_shape, action_m_shape, Matrix.mul_apply, Fin.sum_univ_two]
 
-private theorem switch_decomposition (w : List Bool) (hM : false ∈ w) (hJ : true ∈ w) :
+theorem switch_decomposition (w : List Bool) (hM : false ∈ w) (hJ : true ∈ w) :
     ∃ a : Bool, ∃ k : ℕ, ∃ r : List Bool,
       0 < k ∧ w = List.replicate k a ++ ((!a) :: r) := by
   rcases List.eq_replicate_or_eq_replicate_append_cons w with
@@ -113,12 +113,11 @@ private theorem switch_decomposition (w : List Bool) (hM : false ∈ w) (hJ : tr
   · have hb : b = !a := by cases a <;> cases b <;> simp_all
     exact ⟨a,k,r,hk,by simpa [hb] using h⟩
 
-/-- A mixed literal trajectory has at least three source-observation directions. -/
-theorem mixed_cumulative_span (w : List Bool) (hM : false ∈ w) (hJ : true ∈ w) :
-    3 ≤ Module.finrank ℝ (Submodule.span ℝ
-      (Set.range (fun i : Fin (w.length+1) => acquisition (w.take i.val)))) := by
-  classical
-  obtain ⟨a,k,r,hk,hw⟩ := switch_decomposition w hM hJ
+theorem first_switch_generators_mem (w : List Bool) (a : Bool) (k : ℕ)
+    (r : List Bool) (hk : 0 < k) (hw : w = List.replicate k a ++ ((!a) :: r)) :
+    let K := Submodule.span ℝ
+      (Set.range (fun i : Fin (w.length+1) => acquisition (w.take i.val)))
+    (1 : Mat) ∈ K ∧ action a ∈ K ∧ action (!a) * action a ^ k ∈ K := by
   let K := Submodule.span ℝ
     (Set.range (fun i : Fin (w.length+1) => acquisition (w.take i.val)))
   have hlen : k+1 ≤ w.length := by simp [hw]
@@ -142,6 +141,17 @@ theorem mixed_cumulative_span (w : List Bool) (hM : false ∈ w) (hJ : true ∈ 
       simp [hw, List.take_append]
     change acquisition (w.take (k+1)) = action (!a) * action a ^ k
     rw [he, acquisition_append, acquisition_pure]
+  exact ⟨h0,h1,hswitch⟩
+
+/-- A mixed literal trajectory has at least three source-observation directions. -/
+theorem mixed_cumulative_span (w : List Bool) (hM : false ∈ w) (hJ : true ∈ w) :
+    3 ≤ Module.finrank ℝ (Submodule.span ℝ
+      (Set.range (fun i : Fin (w.length+1) => acquisition (w.take i.val)))) := by
+  classical
+  obtain ⟨a,k,r,hk,hw⟩ := switch_decomposition w hM hJ
+  let K := Submodule.span ℝ
+    (Set.range (fun i : Fin (w.length+1) => acquisition (w.take i.val)))
+  obtain ⟨h0,h1,hswitch⟩ := first_switch_generators_mem w a k r hk hw
   let v : Fin 3 → K := ![⟨1,h0⟩, ⟨action a,h1⟩,
     ⟨action (!a) * action a ^ k,hswitch⟩]
   have hv : LinearIndependent ℝ v := by
@@ -155,7 +165,7 @@ theorem mixed_cumulative_span (w : List Bool) (hM : false ∈ w) (hJ : true ∈ 
 
 #print axioms mixed_cumulative_span
 
-private theorem acquisition_unit (v : List Bool) : IsUnit (acquisition v) := by
+theorem acquisition_unit (v : List Bool) : IsUnit (acquisition v) := by
   apply (Matrix.isUnit_iff_isUnit_det _).mpr
   have hd := (D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.raw_word_signed_bound v).2.2.1
   have he : (acquisition v).det = (-1 : ℝ)^v.length := by
