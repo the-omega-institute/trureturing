@@ -197,8 +197,34 @@ private lemma star_cut_values :
     · exact min_le_right _ _
     · exact min_le_left _ _
 
+set_option maxRecDepth 4000 in
+set_option maxHeartbeats 800000 in
 private lemma witness_is_multiflow :
-    IsMultiflow starCapacity starBoundary witnessFlow witnessThreads := by sorry
+    IsMultiflow starCapacity starBoundary witnessFlow witnessThreads := by
+  have hb (i : Fin 5) : starBoundary i = i.castSucc := rfl
+  unfold IsMultiflow
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro i j u v hij
+    fin_cases i <;> fin_cases j <;> norm_num at hij
+    all_goals norm_num [witnessFlow, witnessThreads]
+    all_goals fin_cases u <;> fin_cases v <;> norm_num [pathFlow, hb, Fin.ext_iff]
+  · intro i j u hij hui huj
+    fin_cases i <;> fin_cases j <;> norm_num at hij
+    all_goals fin_cases u <;> norm_num [hb, Fin.ext_iff] at hui
+    all_goals norm_num [hb, Fin.ext_iff] at huj
+    all_goals simp only [Fin.sum_univ_succ]
+    all_goals norm_num [witnessFlow, witnessThreads, pathFlow, hb,
+      Fin.ext_iff]
+  · intro i j hij
+    fin_cases i <;> fin_cases j <;> norm_num at hij
+    all_goals simp only [Fin.sum_univ_succ]
+    all_goals norm_num [witnessFlow, witnessThreads, pathFlow, hb,
+      Fin.ext_iff]
+  · intro u v
+    fin_cases u <;> fin_cases v <;>
+      simp only [Fin.sum_univ_succ]
+    all_goals norm_num [witnessFlow, witnessThreads, pathFlow, hb,
+      Fin.ext_iff, starCapacity]
 
 private lemma witness_max :
     IsMaxMultiflow starCapacity starBoundary witnessFlow witnessThreads := by sorry
