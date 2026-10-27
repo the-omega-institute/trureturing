@@ -29,6 +29,9 @@ internal sealed class HughesPeriodicRepairDocument : IScribeDocumentDefinition
     private static Formula E => Call("fourCuts", Left, X, Letters(A), Join(Letters(A), Q), Right, Num(0));
     private static Formula RepairStatement()
     {
+        Formula U = F.Id("u"), V = F.Id("v"), W = F.Id("w");
+        Formula M = F.Id("M"), N = F.Id("N"), E = F.Id("E"), Z = F.Id("Z");
+        Formula Cut(Formula n) => Call("C", n);
         Formula i = F.Id("i");
         Formula exchange = All("i", Call("Fin", Num(4)), Conjoin(
             Equal(Call("original", Cut(i)), W), Call("Admissible", Cut(i), M),
@@ -81,6 +84,17 @@ internal sealed class HughesPeriodicRepairDocument : IScribeDocumentDefinition
                     Paragraph(Text("This statement computes the native degree of the "
                         + "displayed successor. It does not assert that the preceding output "
                         + "has degree three or classify its minimum masks."))), DescribeRole.Theorem),
+            Paragraph(Text("For each choice of A,B,H,J,K,L in the next theorem, use the "
+                + "following word, mask, and cut abbreviations:")),
+            Paragraph(Math(Equal(F.Id("u"), U))),
+            Paragraph(Math(Equal(F.Id("v"), V))),
+            Paragraph(Math(Equal(F.Id("w"), W))),
+            Paragraph(Math(Equal(F.Id("M"), M))),
+            Paragraph(Math(Equal(F.Id("N"), N))),
+            Paragraph(Math(Equal(F.Id("E"), E))),
+            Paragraph(Math(Equal(F.Id("Z"), Z))),
+            Paragraph(Math(All("i", Call("Fin", Num(4)),
+                Equal(Call("C", F.Id("i")), Cut(F.Id("i")))))),
             Describe.Lean(DescribeId.Create("periodic-repair"),
                 DeclarationHandle.Create("D5/S1/Words/HughesPeriodicRepair.periodic_repair"),
                 H("The original and shifted native masks"),
