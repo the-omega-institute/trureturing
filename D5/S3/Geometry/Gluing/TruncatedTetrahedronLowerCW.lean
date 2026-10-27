@@ -8,6 +8,8 @@
 
 import D5.S3.Geometry.Gluing.TruncatedTetrahedronRelativeCW
 
+/-! Actual vertices and midpoint-subdivided edges of the original truncated quotient. -/
+
 set_option autoImplicit false
 set_option maxRecDepth 10000
 set_option backward.isDefEq.respectTransparency false
@@ -44,17 +46,18 @@ private theorem twoCoords_second (ij : {ij : Fin 4 × Fin 4 // ij.1 ≠ ij.2}) (
 private theorem twoCoords_sum (ij : {ij : Fin 4 × Fin 4 // ij.1 ≠ ij.2}) (r : ℝ) :
     ∑ k, twoCoords ij r k = 1 := by
   rcases ij with ⟨⟨i,j⟩,h⟩
+  change i ≠ j at h
   fin_cases i <;> fin_cases j <;> simp_all [twoCoords, Fin.sum_univ_four] <;> ring
 
 /-- The closed retained halfedge in the original four coordinates. -/
-def halfPoint (h : HalfOccurrence T) (r : Set.Icc (1/2 : ℝ) (3/4)) : TruncatedPoint T :=
+def halfPoint (h : HalfOccurrence T) (r : Set.Icc (1 / 2 : ℝ) (3 / 4)) : TruncatedPoint T :=
   (h.1, ⟨twoCoords h.2 r.val, (by
     intro i
     dsimp [twoCoords]
     split_ifs <;> constructor <;> linarith [r.property.1, r.property.2]), twoCoords_sum h.2 r.val⟩)
 
-def oldPoint (h : HalfOccurrence T) : TruncatedPoint T := halfPoint h ⟨3/4, by norm_num⟩
-def midPoint (h : HalfOccurrence T) : TruncatedPoint T := halfPoint h ⟨1/2, by norm_num⟩
+def oldPoint (h : HalfOccurrence T) : TruncatedPoint T := halfPoint h ⟨3 / 4, by norm_num⟩
+def midPoint (h : HalfOccurrence T) : TruncatedPoint T := halfPoint h ⟨1 / 2, by norm_num⟩
 
 private def reindex (rho : Equiv.Perm (Fin 4)) (a : TruncatedTetrahedron) : TruncatedTetrahedron :=
   ⟨fun i => a.val (rho.symm i), (fun i => a.property.1 _),
@@ -65,7 +68,7 @@ private theorem transport (P : RawFacePairing T) (a b : TruncatedPoint T)
     ∃ rho : Equiv.Perm (Fin 4), b.2 = reindex rho a.2 ∧
       ∀ z : TruncatedTetrahedron, (∀ i, a.2.val i = 0 → z.val i = 0) →
         q P (a.1,z) = q P (b.1,reindex rho z) := by
-  let S : Set (Fin 4 → ℝ) := {z | (∀ i, 0 ≤ z i ∧ z i ≤ 3/4) ∧ (∑ i, z i) = 1}
+  let S : Set (Fin 4 → ℝ) := {z | (∀ i, 0 ≤ z i ∧ z i ≤ 3 / 4) ∧ (∑ i, z i) = 1}
   have hI : ∀ (rho : Equiv.Perm (Fin 4)) (z : Fin 4 → ℝ),
       z ∈ S → (fun i => z (rho.symm i)) ∈ S := by
     intro rho z hz
@@ -79,7 +82,7 @@ private theorem transport (P : RawFacePairing T) (a b : TruncatedPoint T)
   exact Quotient.sound (s := Relation.EqvGen.setoid (TruncatedStep P))
     (hg z (fun i hi => hzero i (hz i hi)))
 
-private theorem half_zero_iff (h : HalfOccurrence T) (r : Set.Icc (1/2 : ℝ) (3/4))
+private theorem half_zero_iff (h : HalfOccurrence T) (r : Set.Icc (1 / 2 : ℝ) (3 / 4))
     (i : Fin 4) : (halfPoint h r).2.val i = 0 ↔ i ≠ h.2.val.1 ∧ i ≠ h.2.val.2 := by
   dsimp [halfPoint, twoCoords]
   split_ifs <;> simp_all <;> linarith [r.property.1,r.property.2]
@@ -88,17 +91,17 @@ private def movedHalf (h : HalfOccurrence T) (u : T) (rho : Equiv.Perm (Fin 4)) 
   (u, ⟨(rho h.2.val.1,rho h.2.val.2), fun he => h.2.property (rho.injective he)⟩)
 
 private theorem half_reindex (h : HalfOccurrence T) (u : T) (rho : Equiv.Perm (Fin 4))
-    (r : Set.Icc (1/2 : ℝ) (3/4)) :
+    (r : Set.Icc (1 / 2 : ℝ) (3 / 4)) :
     (halfPoint (movedHalf h u rho) r).2 = reindex rho (halfPoint h r).2 := by
   apply Subtype.ext
   funext i
   simp only [halfPoint, movedHalf, reindex, twoCoords]
   have h1 : rho.symm i = h.2.val.1 ↔ i = rho h.2.val.1 := rho.symm_apply_eq
   have h2 : rho.symm i = h.2.val.2 ↔ i = rho h.2.val.2 := rho.symm_apply_eq
-  rw [h1,h2]
+  simp only [h1,h2]
 
 private theorem half_parameter (h k : HalfOccurrence T)
-    (r s : Set.Icc (1/2 : ℝ) (3/4)) (rho : Equiv.Perm (Fin 4))
+    (r s : Set.Icc (1 / 2 : ℝ) (3 / 4)) (rho : Equiv.Perm (Fin 4))
     (he : (halfPoint k s).2 = reindex rho (halfPoint h r).2) : r = s := by
   have hr : r.val ≤ s.val := by
     have hv := congrArg (fun a : TruncatedTetrahedron => a.val (rho h.2.val.1)) he
@@ -116,7 +119,7 @@ private theorem half_parameter (h k : HalfOccurrence T)
   exact Subtype.ext (le_antisymm hr hs)
 
 private theorem half_support (h k : HalfOccurrence T)
-    (r : Set.Icc (1/2 : ℝ) (3/4)) (hr : 1/2 < r.val)
+    (r : Set.Icc (1 / 2 : ℝ) (3 / 4)) (hr : 1 / 2 < r.val)
     (he : halfPoint h r = halfPoint k r) : h = k := by
   have ht := congrArg (fun a : TruncatedPoint T => a.1) he
   have hi : h.2.val.1 = k.2.val.1 := by
@@ -141,10 +144,10 @@ private theorem half_support (h k : HalfOccurrence T)
 
 private theorem half_transport (P : RawFacePairing T) (h k : HalfOccurrence T)
     (he : q P (oldPoint h) = q P (oldPoint k))
-    (r : Set.Icc (1/2 : ℝ) (3/4)) : q P (halfPoint h r) = q P (halfPoint k r) := by
+    (r : Set.Icc (1 / 2 : ℝ) (3 / 4)) : q P (halfPoint h r) = q P (halfPoint k r) := by
   obtain ⟨rho,hb,hg⟩ := transport P _ _ he
   let l := movedHalf h k.1 rho
-  have hl : halfPoint k ⟨3/4, by norm_num⟩ = halfPoint l ⟨3/4, by norm_num⟩ :=
+  have hl : halfPoint k ⟨3 / 4, by norm_num⟩ = halfPoint l ⟨3 / 4, by norm_num⟩ :=
     Prod.ext rfl (hb.trans (half_reindex h k.1 rho _).symm)
   have hkl : k = l := half_support k l _ (by norm_num) hl
   have hz : ∀ i, (oldPoint h).2.val i = 0 → (halfPoint h r).2.val i = 0 := by
@@ -157,7 +160,7 @@ private theorem half_transport (P : RawFacePairing T) (h k : HalfOccurrence T)
   simpa only [← hkl] using heq
 
 private theorem half_fiber (P : RawFacePairing T) (h k : HalfOccurrence T)
-    (r s : Set.Icc (1/2 : ℝ) (3/4)) (hr : 1/2 < r.val)
+    (r s : Set.Icc (1 / 2 : ℝ) (3 / 4)) (hr : 1 / 2 < r.val)
     (he : q P (halfPoint h r) = q P (halfPoint k s)) :
     r = s ∧ q P (oldPoint h) = q P (oldPoint k) := by
   obtain ⟨rho,hb,hg⟩ := transport P _ _ he
@@ -171,7 +174,8 @@ private theorem half_fiber (P : RawFacePairing T) (h k : HalfOccurrence T)
     exact (half_zero_iff h _ i).mpr ((half_zero_iff h r i).mp hi)
   have heq := hg (oldPoint h).2 hz
   change q P (oldPoint h) = q P (k.1,reindex rho (oldPoint h).2) at heq
-  rw [← half_reindex h k.1 rho ⟨3/4, by norm_num⟩] at heq
+  change q P (oldPoint h) = q P (k.1,reindex rho (halfPoint h ⟨3 / 4, by norm_num⟩).2) at heq
+  rw [← half_reindex h k.1 rho ⟨3 / 4, by norm_num⟩] at heq
   change q P (oldPoint h) = q P (oldPoint l) at heq
   exact ⟨rfl, by simpa only [← hkl] using heq⟩
 
@@ -185,8 +189,8 @@ def midSetoid (P : RawFacePairing T) : Setoid (HalfOccurrence T) :=
 abbrev MidVertex (P : RawFacePairing T) := Quotient (midSetoid P)
 abbrev Vertex (P : RawFacePairing T) := OldVertex P ⊕ MidVertex P
 
-private def halfParameter (x : Disk 1) : Set.Icc (1/2 : ℝ) (3/4) :=
-  ⟨5/8 + x.val 0 / 8, by
+private def halfParameter (x : Disk 1) : Set.Icc (1 / 2 : ℝ) (3 / 4) :=
+  ⟨5 / 8 + x.val 0 / 8, by
     have hx : ‖x.val‖ ≤ 1 := mem_closedBall_zero_iff.mp x.property
     have h0 : ‖x.val 0‖ ≤ 1 := (norm_le_pi_norm x.val 0).trans hx
     have hb := abs_le.mp (show |x.val 0| ≤ 1 from h0)
@@ -197,6 +201,8 @@ def halfCharacteristic (P : RawFacePairing T) (v : OldVertex P) : Disk 1 → Tru
 
 private theorem halfCharacteristic_continuous (P : RawFacePairing T) (v : OldVertex P) :
     Continuous (halfCharacteristic P v) := by
+  have hc : Continuous (fun x : Disk 1 => x.val 0) :=
+    (continuous_apply 0).comp continuous_subtype_val
   apply (continuous_q P).comp
   apply Continuous.prodMk continuous_const
   apply Continuous.subtype_mk
@@ -225,5 +231,184 @@ def halfCell (P : RawFacePairing T) (v : OldVertex P) :
 
 private theorem halfCell_coe (P : RawFacePairing T) (v : OldVertex P) (x : Disk 1) :
     halfCell P v x.val = q P (halfPoint v.out (halfParameter x)) := diskExtend_coe _ x
+
+
+open private paired_twice from D5.S3.Geometry.Gluing.RawFaceLinkPathConnected
+
+/-- The cap corner and the original zero face determine a cap-edge occurrence. -/
+abbrev CapOccurrence (T : Type*) := HalfOccurrence T
+
+private def capFrame (c : {uf : Fin 4 × Fin 4 // uf.1 ≠ uf.2}) : Equiv.Perm (Fin 4) :=
+  let e := Equiv.swap 0 c.val.1
+  (Equiv.swap 1 (e.symm c.val.2)).trans e
+
+private theorem capFrame_values (c : {uf : Fin 4 × Fin 4 // uf.1 ≠ uf.2}) :
+    capFrame c 0 = c.val.1 ∧ capFrame c 1 = c.val.2 := by
+  rcases c with ⟨⟨u,f⟩,h⟩
+  fin_cases u <;> fin_cases f <;> norm_num [capFrame, Equiv.swap_apply_def] at *
+
+private theorem disk_one_bounds (x : Disk 1) : -1 ≤ x.val 0 ∧ x.val 0 ≤ 1 := by
+  have hx : ‖x.val‖ ≤ 1 := mem_closedBall_zero_iff.mp x.property
+  exact abs_le.mp ((norm_le_pi_norm x.val 0).trans hx)
+
+private def capCoords (s : ℝ) : Fin 4 → ℝ := ![3 / 4,0,(1+s)/8,(1-s)/8]
+
+def capPoint (c : CapOccurrence T) (x : Disk 1) : TruncatedPoint T :=
+  (c.1, ⟨fun i => capCoords (x.val 0) ((capFrame c.2).symm i), (by
+    intro i
+    have hb := disk_one_bounds x
+    generalize (capFrame c.2).symm i = k
+    fin_cases k <;> dsimp [capCoords] <;> constructor <;> linarith), (by
+    rw [(capFrame c.2).symm.sum_comp]
+    simp [capCoords, Fin.sum_univ_four]
+    ring)⟩)
+
+private theorem capPoint_at (c : CapOccurrence T) (x : Disk 1) (i : Fin 4) :
+    (capPoint c x).2.val (capFrame c.2 i) = capCoords (x.val 0) i := by
+  simp [capPoint]
+
+private theorem capPoint_fixed (c : CapOccurrence T) (x : Disk 1) :
+    (capPoint c x).2.val c.2.val.1 = 3 / 4 ∧ (capPoint c x).2.val c.2.val.2 = 0 := by
+  rw [← (capFrame_values c.2).1, ← (capFrame_values c.2).2]
+  simp only [capPoint_at, capCoords, Matrix.cons_val_zero, Matrix.cons_val_one]
+
+private theorem capPoint_max_unique (c : CapOccurrence T) (x : Disk 1) (i : Fin 4)
+    (hi : (capPoint c x).2.val i = 3 / 4) : i = c.2.val.1 := by
+  obtain ⟨k,rfl⟩ := (capFrame c.2).surjective i
+  rw [capPoint_at] at hi
+  have hb := disk_one_bounds x
+  fin_cases k
+  · exact (capFrame_values c.2).1
+  all_goals norm_num [capCoords] at hi <;> linarith
+
+private theorem disk_one_open (x : Disk 1) (hx : x.val ∈ ball 0 1) :
+    -1 < x.val 0 ∧ x.val 0 < 1 := by
+  have hn : ‖x.val‖ < 1 := mem_ball_zero_iff.mp hx
+  exact abs_lt.mp ((norm_le_pi_norm x.val 0).trans_lt hn)
+
+private theorem capPoint_faceInterior (c : CapOccurrence T) (x : Disk 1)
+    (hx : x.val ∈ ball 0 1) : FaceInterior (capPoint c x) c.2.val.2 := by
+  refine ⟨(capPoint_fixed c x).2,?_⟩
+  intro i hi
+  obtain ⟨k,rfl⟩ := (capFrame c.2).surjective i
+  rw [capPoint_at] at hi
+  have hb := disk_one_open x hx
+  fin_cases k
+  · norm_num [capCoords] at hi
+  · exact (capFrame_values c.2).2
+  all_goals norm_num [capCoords] at hi <;> linarith
+
+private def capMate (P : RawFacePairing T) (c : CapOccurrence T) : CapOccurrence T :=
+  ((P.facePair (c.1,c.2.val.2)).1,
+    ⟨(sigma P (c.1,c.2.val.2) c.2.val.1, (P.facePair (c.1,c.2.val.2)).2), by
+      rw [← sigma_face P (c.1,c.2.val.2)]
+      exact fun he => c.2.property ((sigma P _).injective he)⟩)
+
+private theorem capMate_twice (P : RawFacePairing T) (c : CapOccurrence T) :
+    capMate P (capMate P c) = c := by
+  apply Prod.ext
+  · change (P.facePair (P.facePair (c.1,c.2.val.2))).1 = c.1
+    rw [paired_twice]
+  · apply Subtype.ext
+    apply Prod.ext
+    · change sigma P (P.facePair (c.1,c.2.val.2))
+        (sigma P (c.1,c.2.val.2) c.2.val.1) = c.2.val.1
+      rw [sigma_inverse, Equiv.symm_apply_apply]
+    · change (P.facePair (P.facePair (c.1,c.2.val.2))).2 = c.2.val.2
+      rw [paired_twice]
+
+/-- Pairing orbits of the original cap edges. -/
+def capSetoid (P : RawFacePairing T) : Setoid (CapOccurrence T) where
+  r c d := d = c ∨ d = capMate P c
+  iseqv := by
+    refine ⟨fun c => Or.inl rfl,?_,?_⟩
+    · intro c d h
+      rcases h with rfl | rfl
+      · exact Or.inl rfl
+      · exact Or.inr (capMate_twice P c).symm
+    · intro c d e h1 h2
+      rcases h1 with rfl | rfl
+      · exact h2
+      · rcases h2 with rfl | rfl
+        · exact Or.inr rfl
+        · exact Or.inl (capMate_twice P c)
+
+abbrev CapEdge (P : RawFacePairing T) := Quotient (capSetoid P)
+
+private theorem capPoint_equal_index (c d : CapOccurrence T) (x y : Disk 1)
+    (hx : x.val ∈ ball 0 1) (hy : y.val ∈ ball 0 1)
+    (he : capPoint c x = capPoint d y) : c = d := by
+  apply Prod.ext (congrArg Prod.fst he)
+  apply Subtype.ext
+  apply Prod.ext
+  · apply (capPoint_max_unique d y _)
+    rw [← he]
+    exact (capPoint_fixed c x).1
+  · apply (capPoint_faceInterior d y hy).2
+    rw [← he]
+    exact (capPoint_fixed c x).2
+
+private theorem capPoint_moved_index (P : RawFacePairing T) (c d : CapOccurrence T)
+    (x y : Disk 1) (hy : y.val ∈ ball 0 1)
+    (he : capPoint d y = truncatedMove P c.2.val.2 (capPoint c x)) : d = capMate P c := by
+  apply Prod.ext (congrArg Prod.fst he)
+  apply Subtype.ext
+  apply Prod.ext
+  · apply Eq.symm
+    apply capPoint_max_unique d y
+    rw [he]
+    change (capPoint c x).2.val ((sigma P (c.1,c.2.val.2)).symm
+      (sigma P (c.1,c.2.val.2) c.2.val.1)) = 3 / 4
+    rw [Equiv.symm_apply_apply]
+    exact (capPoint_fixed c x).1
+  · apply Eq.symm
+    apply (capPoint_faceInterior d y hy).2
+    rw [he]
+    change (capPoint c x).2.val ((sigma P (c.1,c.2.val.2)).symm
+      (P.facePair (c.1,c.2.val.2)).2) = 0
+    rw [← sigma_face P (c.1,c.2.val.2), Equiv.symm_apply_apply]
+    exact (capPoint_fixed c x).2
+
+def capCharacteristic (P : RawFacePairing T) (e : CapEdge P) : Disk 1 → TruncatedQuotient P :=
+  fun x => q P (capPoint e.out x)
+
+private theorem capCharacteristic_continuous (P : RawFacePairing T) (e : CapEdge P) :
+    Continuous (capCharacteristic P e) := by
+  have hc : Continuous (fun x : Disk 1 => x.val 0) :=
+    (continuous_apply 0).comp continuous_subtype_val
+  apply (continuous_q P).comp
+  apply Continuous.prodMk continuous_const
+  apply Continuous.subtype_mk
+  apply continuous_pi
+  intro i
+  change Continuous (fun x : Disk 1 => capCoords (x.val 0) ((capFrame e.out.2).symm i))
+  generalize (capFrame e.out.2).symm i = k
+  fin_cases k <;> dsimp [capCoords] <;> fun_prop
+
+open private hex_same_face_fiber from D5.S3.Geometry.Gluing.TruncatedTetrahedronRelativeCW
+
+private theorem capCharacteristic_fiber (P : RawFacePairing T) (e : CapEdge P)
+    (x y : Disk 1) (hx : x.val ∈ ball 0 1)
+    (he : capCharacteristic P e y = capCharacteristic P e x) : y = x := by
+  have hp : capPoint e.out y = capPoint e.out x :=
+    hex_same_face_fiber P _ _ e.out.2.val.2
+      (capPoint_faceInterior e.out x hx) rfl (capPoint_fixed e.out y).2
+      (Quotient.exact (s := Relation.EqvGen.setoid (TruncatedStep P)) he.symm)
+  have hv := congrArg (fun a : TruncatedPoint T => a.2.val (capFrame e.out.2 2)) hp
+  rw [capPoint_at,capPoint_at] at hv
+  apply Subtype.ext
+  funext i
+  have hi : i = 0 := Subsingleton.elim _ _
+  subst i
+  dsimp [capCoords] at hv
+  linarith
+
+def capCell (P : RawFacePairing T) (e : CapEdge P) :
+    PartialEquiv (Fin 1 → ℝ) (TruncatedQuotient P) :=
+  diskPartial (capCharacteristic P e) (capCharacteristic_continuous P e)
+    (capCharacteristic_fiber P e)
+
+private theorem capCell_coe (P : RawFacePairing T) (e : CapEdge P) (x : Disk 1) :
+    capCell P e x.val = q P (capPoint e.out x) := diskExtend_coe _ x
 
 end D5.S3.Geometry.Gluing.TruncatedTetrahedronLowerCW
