@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Geometry.CompactWedgeFiniteFactor
 
+/-! Source-bound finite-support observation for arbitrary pointed T1 families. -/
+
 noncomputable section
 open Set Topology
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -67,12 +69,17 @@ private theorem dependence : ObservationalDependence signature.{u,v} actual := b
   let y := point pointParameters.b j (⟨true⟩ : ULift.{v} Bool)
   refine ⟨pointParameters, ∅, {y}, ?_⟩
   intro h
-  have hy : j ∈ support pointParameters.b {y} :=
-    ⟨⟨true⟩, by intro hh; cases hh, rfl⟩
+  change support pointParameters.b ∅ = support pointParameters.b {y} at h
+  have hy : j ∈ support pointParameters.b {y} := by
+    refine ⟨⟨true⟩, ?_, rfl⟩
+    intro hh
+    have hbool := congrArg ULift.down hh
+    cases hbool
   have hn : j ∉ support pointParameters.b ∅ := by
     rintro ⟨_, _, hf⟩
     exact hf
-  exact hn (h.symm ▸ hy)
+  rw [← h] at hy
+  exact hn hy
 
 def family : Registration arena.{u,v} (type_of% (@compact_support.{u,v})) where
   actual := actual
