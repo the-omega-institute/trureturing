@@ -39,7 +39,7 @@ internal sealed class BiasedBoundaryPathSplitDocument : IScribeDocumentDefinitio
         Formula coordinates=All("p",addr,All("z",h,All("u",edge,Seq(Call("S",p,z,u),Eq,Call("apply",z,Call("descendant",p,u))))));
         Formula bound=All("p",addr,All("z",h,Seq(Norm(Call("S",p,z)),Leq,Norm(z))));
         Formula prefix=All("p",addr,All("z",h,Seq(Call("prefixSum",p,z),Eq,Call("sum",Call("prefixes",p),z))));
-        Formula constant=All("c",R,Call("aeEq",V("M"),Call("constG",c),Call("constant",c)));
+        Formula constant=All("c",Seq(Mathbb,Grp(V("R"))),Call("aeEq",V("M"),Call("constG",c),Call("constant",c)));
         Formula split=All("p",addr,All("z",h,Seq(Call("pullback",p,Call("J",z)),Eq,Call("constG",Call("prefixSum",p,z)),Plus,Call("J",Call("S",p,z)))));
         return Seq(Par(coordinates),Land,Par(bound),Land,Par(prefix),Land,Par(constant),Land,Par(split));
     }

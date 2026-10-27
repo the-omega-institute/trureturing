@@ -68,6 +68,11 @@ private theorem mem_prefixes (p : Address) (q : Edge) :
 def prefixSum (p : Address) : H →L[ℝ] ℝ :=
   ∑ q ∈ prefixes p, lp.evalCLM ℝ (fun _ : Edge => ℝ) 2 q
 
+private theorem prefixSum_apply (p : Address) (z : H) :
+    prefixSum p z = ∑ q ∈ prefixes p, z q := by
+  simp only [prefixSum, ContinuousLinearMap.sum_apply]
+  rfl
+
 /-- The actual constant function in the same L2(M) as J. -/
 def constG : ℝ →L[ℝ] G :=
   (ContinuousLinearMap.id ℝ ℝ).smulRight (Lp.const 2 M (1 : ℝ))
@@ -137,7 +142,7 @@ private theorem indicator_pullback_ae (p : Address) (q : Edge) :
       (cylinder q.val).indicator (fun _ : Omega => (1 : ℝ)) := indicatorConstLp_coeFn
   have hc : (indicator q : Omega → ℝ) =ᵐ[BiasedBoundaryConditionalLaw.conditional p]
       (cylinder q.val).indicator (fun _ : Omega => (1 : ℝ)) :=
-    ae_smul_measure (ae_restrict_of_ae hb) _
+    Measure.ae_smul_measure (ae_restrict_of_ae hb) _
   exact (conditional_pullback_law.2.2.2.2.1 p (indicator q)).trans
     ((conditional_pullback_law.2.2.1 p).quasiMeasurePreserving.ae_eq_comp hc)
 
@@ -154,7 +159,10 @@ private theorem pullback_indicator_descendant (p : Address) (u : Edge) :
       (cylinder u.val).indicator (fun _ : Omega => (1 : ℝ)) := indicatorConstLp_coeFn
   filter_upwards [indicator_pullback_ae p (descendant p u), hu] with ω hi hj
   rw [hi, hj]
-  simp only [descendant, Set.indicator, cylinder_prepend_append]
+  change (cylinder (p++u.val)).indicator (fun _ : Omega => (1:ℝ)) (prepend p ω) =
+    (cylinder u.val).indicator (fun _ : Omega => (1:ℝ)) ω
+  simp only [Set.indicator]
+  rw [cylinder_prepend_append]
 
 private theorem pullback_indicator_incomparable (p : Address) (q : Edge)
     (hqp : ¬ q.val.IsPrefix p) (hpq : ¬ p.IsPrefix q.val) :
@@ -177,6 +185,7 @@ private theorem J_single (q : Edge) (c : ℝ) : J (lp.single 2 q c) = c • indi
 private theorem prefixSum_single (p : Address) (q : Edge) (c : ℝ) :
     prefixSum p (lp.single 2 q c) = if q.val.IsPrefix p then c else 0 := by
   classical
+  rw [prefixSum_apply]
   change (∑ u ∈ prefixes p, (lp.single 2 q c : H) u) = _
   simp [lp.coeFn_single, Pi.single_apply, mem_prefixes]
 
@@ -221,7 +230,7 @@ theorem boundary_path_split :
     (∀ c : ℝ, constG c =ᵐ[M] (fun _ : Omega => c)) ∧
     (∀ (p : Address) (z : H),
       pullback p (J z) = constG (prefixSum p z) + J (S p z)) := by
-  refine ⟨fun _ _ _ => rfl, suffix_norm, (fun _ _ => rfl), constG_ae, ?_⟩
+  refine ⟨fun _ _ _ => rfl, suffix_norm, prefixSum_apply, constG_ae, ?_⟩
   intro p z
   have he : (pullback p).comp J = constG.comp (prefixSum p) + J.comp (S p) := by
     apply lp.ext_continuousLinearMap (by norm_num : (2 : ℝ≥0∞) ≠ ⊤)
