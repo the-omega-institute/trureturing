@@ -1,0 +1,35 @@
+# Fresh pair exchange retaining the entire old tail
+
+## Abstract
+
+A fresh physical pair gives strict energy descent while retaining the complete original SMALL resource and both later negatives.
+
+Use the centered dyadic source f=s(k,t) on physical Fin k labels, N=2^k-1=4Q-1, C=2Q-1 and the actual rotation rho. Legal means physical Nodup and every natural zero-start take-prefix mass in [0,C], including overlength takes. LARGE means abs(f)>=Q, G counts unused LARGE, H sums 3^abs(f) over used LARGE, U counts unused physical labels, and J=(G,H,U) is lexicographic. Equal-valued physical labels remain separate resources.
+
+**Theorem 1.1 (A fresh pair retains the entire old tail).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/FreshPairRetainedTailExchange.actualSource_fresh_pair_retained_tail_exchange_full`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FreshPairRetainedTailExchange.actualSource_fresh_pair_retained_tail_exchange_full` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Keep the native expanding p,n,x and the Legal physical old word W=A,[x],T0,[y],T1,[zpen],T2,[z],E, with every T0,T1,T2,E occurrence SMALL and zpen,z negative LARGE. Let P=f(p)>0, f(n)=-D, r=f(x)=2P-D, Y=-f(y)>P and B=C-P. Take any actual physical q absent from ALL W, with L=f(q)>D; n is likewise absent from ALL W. Define eta=r-Y-L+D and assume eta>=0. Native r=2P-D and Y>P then derive L<P, so it is not an extra premise. Require only the old total mass and the old arrivals immediately after zpen and z to exceed B. No upper blocking mass, valley, gamma placement, half parity or new-word availability condition is used.
+
+Put q immediately after the literal old A. Its height a0+L lies in [0,C] because 0<L<r and a0+r<=C. Start the COMPLETE retained suffix R=[n],T0,T1,[zpen],T2,[z],E there. The new n arrival is a0+L-D>0. The exact net displacement of the retained later tail is -eta. Since Y>P and L>D, eta<P-D<=B. The two sides of each later negative are its old sides minus eta: the original arrival exceeds B>eta, the departure is at least that arrival, and eta>=0 preserves both upper bounds. The final endpoint is mass(W)-eta>0 and at most C.
+
+One application of the existing LARGE-skeleton ordering theorem constructs Lstar permuting this ENTIRE R while preserving the literal LARGE filter [n,zpen,z]. It reorders the complete pooled T0,T1, all of T2 and all of E; it never assumes that translating their old SMALL order is legal. Thus V=A,[q],Lstar has physical Nodup and every natural zero-start prefix in [0,C], including overlength takes. Exactly the original x,y are returned, with (V,[x,y]) permuting (W,[q,n]). The existing Inventory supplies the disjoint used and complementary unused physical partitions and the exact source balances. Every old SMALL is retained, G(V)=G(W), U(V)=U(W), and remainingSmall(V)=remainingSmall(W). The exact energy identity is H(V)+3^r+3^Y=H(W)+3^L+3^D. Since r>Y>P>L>D, the inserted two powers are strictly smaller, giving strict H and J descent. The final mass is mass(W)-eta and the unused source mass is its negative.
+
+For the ACTUAL odd inverse parent beta=rho^(-1)(y), source parity gives 2L=N-Y and N=2P+D. If P<Y<r, then D<L<P and eta=L-D>0, so the fresh-pair exchange applies. At a true J minimum over ALL Legal physical lists, the required total mass margin follows by appending [p,n] to the ENTIRE W if mass(W)<=B; that would strictly improve G by two. Both required old arrival margins likewise follow from the existing literal prefix-pair truncation: an arrival at most B after zpen allows [p,n] to replace a suffix containing only one LARGE, while an arrival at most B after z allows the same pair to replace the entirely SMALL E. These competitors strictly improve G by one and two respectively. Thus the new exchange excludes a globally fresh actual beta throughout P<Y<r, without adding an arrival hypothesis to the minimum application.
+
+Assume the native old word W=A,[x],T0,[y],T1,[zpen],T2,[z],E is a minimum over ALL Legal physical lists, with p,n absent from ALL W, every T batch and E SMALL, both later negatives LARGE, and Y=-f(y)>P=f(p). No parity of Y is required. Every physical label q in the complete source-value band D<f(q)<=2P-Y must then already lie in A, including all distinct labels with a repeated value. Indeed, native r=2P-D makes eta=r-Y-f(q)+D=2P-Y-f(q)>=0. The band also gives 0<f(q)<P<r and f(q)>D>=Q, so q can occur neither at x, at any of the three negatives nor in any SMALL batch. If q were absent from A it would be fresh in ALL W and the existing fresh-pair exchange would strictly improve J. Its old-total and two arrival margins are consequences of the same minimum: prefix-pair truncation at W, immediately after zpen, or immediately after z yields strict G improvements by two, one, and two whenever the respective mass is at most C-P. Thus no quality of the old endpoint, upper blocking bound, valley inequality, parent relation or oddness is an extra premise. The endpoint f(q)=2P-Y is included: eta=0 still has D<f(q), hence strict energy descent. This locates an entire physical source-value band in A; original-quantifier Circle C3.1 and a general exchange when the relevant labels already occur in A remain open.
+
+The complementary odd region Y>=r uses the EXISTING uniform-prefix odd-parent exchange: 3Y>=3r>=6P-N is its threshold, so appending [p,n,beta] after the old first-negative prefix gives strict G descent when all three are fresh. If beta occurs outside A in the old word, its positive LARGE value excludes all SMALL batches and the negative labels y,zpen,z; its strict value bound L<P<r also excludes x. Consequently, under the native word, whole-W p,n freshness, odd Y>P, a true ALL-Legal J minimum forces the actual beta into A. The original twenty-field Residual assumed beta absent from ALL W, so that entire Residual is excluded. This is a conditional placement result for the stated native words; original-quantifier Circle C3.1 and the branch with beta already in A remain open.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Circle/FreshPairRetainedTailExchange.actualSource_fresh_pair_retained_tail_exchange_full`
+- Dependency: [D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange](FirstNegativeShiftExchange.md)
+- Dependency: [D5/S3/Combinatorics/Circle/LargeSkeletonOrdering](LargeSkeletonOrdering.md)
