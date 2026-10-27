@@ -1,0 +1,22 @@
+**Lemma 3.2 (countable covering).** If no nonzero identity exists for a word, no countable palette for that word succeeds on the entire domain. The same conclusion holds for finitely many words none of which has a nonzero identity.
+
+**Proof.** Collinearity is the system
+
+$$
+\beta_j(CZ_w)_k-\beta_k(CZ_w)_j=0\quad(0\le j<k<m).
+\tag{3.2}
+$$
+
+After substitution of (2.4) and multiplication by $1+xr$, these are polynomials on
+
+$$
+(0,\infty)^2\times(\mathbb R^m\setminus\{0\})\times\mathbb R.
+\tag{3.3}
+$$
+
+For every matrix successful somewhere, at least one polynomial is nonzero; otherwise Lemma 3.1 supplies a forbidden nonzero identity. A nonzero real polynomial has no open zero set: induction on the number of variables, expanding in the last variable on a product of intervals, reduces this to the univariate root bound. Its zero set is closed and nowhere dense relative to (3.3).
+
+A nonempty Euclidean open set is not a countable union of such sets. For this form of the Baire principle, start with a positive-radius closed ball inside the open set and choose nested positive-radius closed subballs avoiding successive zero sets, with diameters tending to zero. Completeness supplies a common point, which avoids every set. There are only countably many word-matrix pairs. Every successful world must belong to the zero set for its selected pair, a contradiction. No regularity of the selection sets has entered. $\square$
+
+The same proof works on any nonempty open parameter domain of realized observations with polynomial, or nowhere-singular rational, dependence. In particular, to obstruct covering an exceptional source stratum, it suffices to prove that every fixed matrix collinear throughout that stratum is zero throughout it. Every matrix successful there then supplies a nonzero collinearity polynomial on that parameter domain. Realization of every parameter value is required; a continuous or measurable choice of source realizing it is not.
+

@@ -1,0 +1,30 @@
+**Theorem 16.2 (supplied moving-trace recovery).** Let $s=\deg g$, with $0\le s\le d$. Every world admits deterministic complete-target recovery in at most
+
+$$
+2d+s+5\le3d+5
+\tag{16.1}
+$$
+
+total reads, with exactly the full $\beta$ returned by one fixed matrix per terminal word.
+
+**Proof.** First perform the pure prefix $M^{2m}$ of Theorem 12.3. Its $2m+1=2d+3$ reads give the entire $g$, $\delta$, and $\operatorname{tr}(MP)$ by the coefficient division already justified in Theorem 16.1. Put $C_0=M^{2m}$ and $B=JC_0$. Perform one $J$, then individual $M$ actions, reading after every action. The continuation matrices and original clocks are
+
+$$
+M^pB,\qquad n_p=2m+1+p,\qquad p=0,1,\ldots.
+\tag{16.2}
+$$
+
+Stop as soon as two continuation reads have nonzero sampled gain. At each such read retain $(z_{n_p}-\delta)/g(n_p)=\operatorname{tr}(M^pBP)$. At a zero gain retain the mandatory read and continue with one $M$. Among $s+2$ consecutive continuation clocks at most $s$ are roots of the nonzero polynomial, so at least two are useful. The protocol need not know $s$ in advance. Repeated roots and roots at other clocks do not increase this count.
+
+Any two distinct useful indices $p<q$ suffice. Indeed $I,M,J,MJ$ are a basis by Section 2. Right multiplication by the invertible $C_0$ preserves $\operatorname{span}\{I,M\}$ bijectively, so $I,M,B,MB$ are a basis. The matrices $M^p,M^q$ are independent: applying a putative relation $aM^p+bM^q=0$ to the two spectral eigenspaces gives $a+b\phi^{q-p}=a+b\psi^{q-p}=0$; the two powers are distinct since $\phi>1>|\psi|$. Thus their coordinate rows in the basis $I,M$ form an invertible matrix. Multiplication on the right by $B$ proves that replacing $B,MB$ by $M^pB,M^qB$ preserves the four-matrix basis. The known trace pairings with this basis are
+
+$$
+1,\quad \operatorname{tr}(MP),\quad
+\operatorname{tr}(M^pBP),\quad \operatorname{tr}(M^qBP).
+\tag{16.3}
+$$
+
+The nondegenerate trace pairing gives exactly the actual $P$. Every divided gain was checked nonzero. Together with the calibrated $g,\delta$, this recovers the complete target.
+
+The prefix costs $2d+3$ reads and the continuation at most $s+2$, proving (16.1). If $q$ is the second useful index the terminal word is $M^{2m}JM^q$, and its gain matrix is the fixed prefix matrix of Theorem 12.3 padded with zero columns. It returns exactly the full declared vector $\beta$, including its zero high coefficients. The bound permits finitely many terminal words. Data-dependent root tests and source reconstruction leave these matrix entries fixed. All original clocks and root reads remain counted. $\square$
+

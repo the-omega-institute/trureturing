@@ -1,0 +1,4 @@
+**Lemma 3.1.** If a fixed matrix is collinear with $\beta$ at every world, allowing zero output in this hypothesis, it satisfies (3.1) for some possibly zero $L$. Success at one world forces $L\ne0$.
+
+**Proof.** Varying $\delta$ for each fixed $\beta\ne0$ puts $C\mathbf1$ in every line $\mathbb R\beta$. Their intersection is zero because $m\ge2$. At fixed $P$, the linear coefficient map sends every vector into its own line. Its action on basis vectors is diagonal, and its action on each sum of two basis vectors makes all diagonal entries equal. One diagonal entry defines a linear functional of $S$, represented uniquely by $\operatorname{tr}(LS)$. The other entries agree with this scalar on all legal $P$, and hence on all matrices by the source-span fact. If $L=0$, the output is zero at every world. $\square$
+

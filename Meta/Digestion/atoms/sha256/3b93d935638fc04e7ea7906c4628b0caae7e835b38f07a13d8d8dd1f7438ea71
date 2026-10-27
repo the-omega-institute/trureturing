@@ -1,0 +1,16 @@
+## 17. The supplied DEV cubic frontier at its literal histories
+
+This section concerns the separate full cubic domain $0\ne g\in\mathcal P_3$, with the positive normalized sources and original-clock model of Section 1. It records the supplied results of *FIB Self-Calibrating Relation Mathematics VI* and *VII*. Their II/V dependencies below are credited interfaces; those nested texts have not been independently consulted. These local results are not premises of the critical classification or the low-degree interpolation proofs.
+
+For any actual history $H$, let $\mathcal F(H)$ retain every action and read. For a known set $K\subseteq\mathcal F(H)$ define
+
+$$
+L_0(K,H)\Longleftrightarrow |K|\ge2,\qquad
+L_{h+1}(K,H)\Longleftrightarrow |K|\ge2\ \land\
+\bigwedge_{E\in\{M,J\}}\exists z:\
+L_h(K\cap\mathcal F(H,E,z),(H,E,z)).
+\tag{17.1}
+$$
+
+The horizon is bounded by the remaining original clocks. Negation means that one deterministic policy recovers the entire known set within that horizon, including early stopping. Every child is the actual response fiber of the same fixed worlds.
+

@@ -1,0 +1,7 @@
+We now cover every allowed positive $p$.
+
+* If $0<p<1/2$, strict decrease and $\mathscr P(1/3)>0$ make $\mathscr P(p)=0$ imply $p>1/3$. Then $1<q<2$, contradicting $\mathscr P(q)=0$.
+* If $1/2<p<2/3$, the five denominators $u_0,\ldots,u_4$ have signs $+,-,+,-,+$. The same holds for their reciprocals. By the intermediate value property, $H$ has a root in each of $(0,1),(1,2),(2,3),(3,4)$. These are four distinct roots, impossible for a nonzero cubic; $H(0)=1$ excludes the zero polynomial.
+* If $2/3<p<1$, strict increase and $\mathscr P(7/10)>0$ force $p<7/10$. Therefore $3/7<q<1/2$. Strict decrease on $[0,1/2]$ and $\mathscr P(3/7)<0$ give $\mathscr P(q)<0$, a contradiction.
+* If $p>1$, then $-1<q<0$, where $\mathscr P(q)>0$.
+

@@ -1,0 +1,10 @@
+**Corollary 12.4 (prior sharp unrestricted-word fixed acquisition).** The sharp fixed-acquisition gain-ray threshold is $2d+3$, even with countable palettes.
+
+**Proof.** Theorem 12.3 gives the upper bound. Below it, Theorem 11.1 excludes mixed words and Theorem 12.1 excludes pure-$M$ words, in both cases by Lemma 3.2. On a pure-$J$ word use
+
+$$
+P_*=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix}.
+$$
+
+The worlds $(P_*,t,0)$ and $(P_*,t+1,-1)$ have the same reads $z_i=i$ at every clock because $JP_*=P_*$. Their full coefficient vectors are noncollinear for every $d\ge1$. No selector, even nonlinear, can return a nonzero ray valid for both. This also covers the empty word. For early stopping on a preassigned word, pad every earlier matrix with zero columns to its final prescribed length; the palette remains countable. $\square$
+
