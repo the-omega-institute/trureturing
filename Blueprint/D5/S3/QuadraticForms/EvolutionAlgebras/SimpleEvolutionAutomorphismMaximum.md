@@ -36,10 +36,6 @@ $$\forall (n : \mathbb{N}), ((1 \le n) \Rightarrow ((\forall (A : \operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/EvolutionAlgebras/SimpleEvolutionAutomorphismMaximum.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/kmvc4-simpleaut` (proved) by `D5/S3/QuadraticForms/EvolutionAlgebras/SimpleEvolutionAutomorphismMaximum.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kmvc4-simpleaut","declaration_gid":"D5/S3/QuadraticForms/EvolutionAlgebras/SimpleEvolutionAutomorphismMaximum.result","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ivan Kaygorodov; Cándido Martín González; Antonio Viruel (2026). *Evolution algebras: a survey of results and a list of open problems*. DOI: [10.48550/arXiv.2610.22248](https://doi.org/10.48550/arXiv.2610.22248). URL: <https://arxiv.org/abs/2610.22248v1>.
@@ -57,5 +53,13 @@ The cyclic product has full group order n(2ⁿ−1). The product with structure 
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/SimpleEvolutionAutomorphismMaximum.IsSimple`
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/SimpleEvolutionAutomorphismMaximum.claim`
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/SimpleEvolutionAutomorphismMaximum.result`
+- Dependency: [D5/S3/Combinatorics/Partitions/EvolutionAutomorphismWeight](../../Combinatorics/Partitions/EvolutionAutomorphismWeight.md)
+- Dependency: [D5/S3/FiniteGroups/SuccessorPowerAssignments](../../FiniteGroups/SuccessorPowerAssignments.md)
+- Dependency: [D5/S3/FiniteGroups/SuccessorQuotient](../../FiniteGroups/SuccessorQuotient.md)
+- Dependency: [D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionAutomorphismControl](EvolutionAutomorphismControl.md)
+- Dependency: [D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport](EvolutionBasisTransport.md)
 - Dependency: [D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionPermutationFamily](EvolutionPermutationFamily.md)
+- Dependency: [D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionSharpBound](EvolutionSharpBound.md)
+- Dependency: [D5/S3/QuadraticForms/EvolutionAlgebras/HuEvolutionJordanFamily](HuEvolutionJordanFamily.md)
+- Dependency: [D5/S3/QuadraticForms/EvolutionAlgebras/HuEvolutionLowerBound](HuEvolutionLowerBound.md)
 - Dependency: [D5/S3/QuadraticForms/EvolutionAlgebras/NondegenerateDerivationBlocks](NondegenerateDerivationBlocks.md)

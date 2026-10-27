@@ -9,24 +9,24 @@
 /-
 result:
   proof_shape: content
-  escape_witness: none
+  escape_witness: coordinate_simple_bound
   admission_basis: open-problem-resolution (#21769; Proved)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22095
 The simplicity predicate and maximum statement retain the source expressions.
 The coordinate product, pair-product span and full automorphism group use their existing owners.
-All declaration rows have escape_witness: none. Frozen identities use the merged-base report.
+Content declarations name their live mathematical witness below. Frozen identities use the merged-base report.
 Declarations (proof_shape; consumers; direct frozen dependency labels):
   IsSimple: bind-only; consumers: claim, complete_simple, coordinate_simple_bound, cyclic_family, result, simple_bound, simple_of_connected, simple_perfect, simple_support_connected, simple_transport; dependencies: F30
   claim: bind-only; consumers: result; dependencies: F10, F30, F47, F48, F50, F51
   simple_perfect: bind-only; consumers: coordinate_simple_bound; dependencies: F30, F31
   simple_transport: bind-only; consumers: simple_bound; dependencies: F30, F31, F32, F33
-  forward_span_ideal: content; consumers: simple_support_connected; dependencies: F21, F24, F47, F48, F49, F55, F56
-  simple_support_connected: content; consumers: coordinate_simple_bound; dependencies: F21, F24, F30, F47, F48, F49, F55, F56
-  simple_of_connected: content; consumers: complete_simple, cyclic_family; dependencies: F22, F24, F30, F31, F47, F48, F49, F56
-  factorial_binary_base: content; consumers: factorial_period_bound; dependencies: none
-  factorial_period_bound: content; consumers: coordinate_simple_bound; dependencies: none
-  connected_beta_cycle: content; consumers: coordinate_simple_bound; dependencies: F3, F5, F6, F7, F9
-  equal_fibers: content; consumers: coordinate_simple_bound; dependencies: F3, F4, F5, F6, F7, F8, F9
+  forward_span_ideal: content; escape_witness: forward_span_ideal; consumers: simple_support_connected; dependencies: F21, F24, F47, F48, F49, F55, F56
+  simple_support_connected: content; escape_witness: simple_support_connected; consumers: coordinate_simple_bound; dependencies: F21, F24, F30, F47, F48, F49, F55, F56
+  simple_of_connected: content; escape_witness: simple_of_connected; consumers: complete_simple, cyclic_family; dependencies: F22, F24, F30, F31, F47, F48, F49, F56
+  factorial_binary_base: content; escape_witness: factorial_binary_base; consumers: factorial_period_bound; dependencies: none
+  factorial_period_bound: content; escape_witness: factorial_period_bound; consumers: coordinate_simple_bound; dependencies: none
+  connected_beta_cycle: content; escape_witness: connected_beta_cycle; consumers: coordinate_simple_bound; dependencies: F3, F5, F6, F7, F9
+  equal_fibers: content; escape_witness: equal_fibers; consumers: coordinate_simple_bound; dependencies: F3, F4, F5, F6, F7, F8, F9
   cycle_weight_single: bind-only; consumers: coordinate_simple_bound, cyclic_family; dependencies: F1, F2, F40
   supported_permutation: bind-only; consumers: coordinate_simple_bound; dependencies: F23, F24, F47, F48, F49, F52, F53
   completeLinear: bind-only; consumers: completeProduct, complete_natural, complete_perfect, complete_square, result; dependencies: F47
@@ -35,14 +35,14 @@ Declarations (proof_shape; consumers; direct frozen dependency labels):
   complete_square: bind-only; consumers: complete_support; dependencies: F41, F42, F43, F44, F45, F47, F48, F49
   complete_support: bind-only; consumers: complete_aut_card, complete_simple; dependencies: F24, F41, F42, F43, F44, F45, F47, F48, F49
   complete_natural: bind-only; consumers: complete_aut_card, complete_simple, result; dependencies: F41, F47, F48, F49
-  complete_simple: content; consumers: result; dependencies: F22, F24, F30, F31, F41, F42, F43, F44, F45, F46, F47, F48, F49, F54, F56
+  complete_simple: content; escape_witness: simple_of_connected; consumers: result; dependencies: F22, F24, F30, F31, F41, F42, F43, F44, F45, F46, F47, F48, F49, F54, F56
   completeLift: bind-only; consumers: complete_aut_card; dependencies: F10, F18, F34, F41, F47, F48
-  complete_aut_card: content; consumers: result; dependencies: F10, F11, F12, F13, F14, F15, F17, F18, F19, F20, F24, F30, F34, F35, F41, F42, F43, F44, F45, F46, F47, F48, F49, F53, F54
-  coordinate_simple_bound: content; consumers: simple_bound; dependencies: F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F15, F16, F21, F23, F24, F25, F30, F31, F40, F47, F48, F49, F52, F53, F54, F55, F56
-  simple_bound: content; consumers: result; dependencies: F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F15, F16, F21, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F40, F47, F48, F49, F52, F53, F54, F55, F56
+  complete_aut_card: content; escape_witness: complete_aut_card; consumers: result; dependencies: F10, F11, F12, F13, F14, F15, F17, F18, F19, F20, F24, F30, F34, F35, F41, F42, F43, F44, F45, F46, F47, F48, F49, F53, F54
+  coordinate_simple_bound: content; escape_witness: equal_fibers; consumers: simple_bound; dependencies: F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F15, F16, F21, F23, F24, F25, F30, F31, F40, F47, F48, F49, F52, F53, F54, F55, F56
+  simple_bound: content; escape_witness: coordinate_simple_bound; consumers: result; dependencies: F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F15, F16, F21, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F40, F47, F48, F49, F52, F53, F54, F55, F56
   cycle_on_finRotate: bind-only; consumers: cyclic_family; dependencies: none
-  cyclic_family: content; consumers: result; dependencies: F1, F2, F10, F22, F24, F30, F31, F36, F37, F38, F39, F40, F47, F48, F49, F50, F51, F53, F54, F56
-  result: content; consumers: terminal; dependencies: F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56
+  cyclic_family: content; escape_witness: simple_of_connected; consumers: result; dependencies: F1, F2, F10, F22, F24, F30, F31, F36, F37, F38, F39, F40, F47, F48, F49, F50, F51, F53, F54, F56
+  result: content; escape_witness: coordinate_simple_bound; consumers: terminal; dependencies: F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56
 Frozen declaration identities:
   F1: D5/S3/Combinatorics/Partitions/EvolutionAutomorphismWeight.weight
     sha256:f01d9a74dc62ad1748f40d0383cd5b8bc608ff363304170eff81c52661b0c56a
@@ -165,6 +165,7 @@ Frozen declaration identities:
     base declaration: _private.D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.0.D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.Equations.mul_basis_right
 -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Partitions.EvolutionAutomorphismWeight
 import D5.S3.FiniteGroups.SuccessorPowerAssignments
 import D5.S3.FiniteGroups.SuccessorQuotient
@@ -180,6 +181,17 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open scoped BigOperators
 namespace D5.S3.QuadraticForms.EvolutionAlgebras.SimpleEvolutionAutomorphismMaximum
+open private D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionAutomorphismControl.structure_map_injective
+  from D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionAutomorphismControl
+open private D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionBasisTransport.dimensionBasis_natural
+  from D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionBasisTransport
+open private D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionPermutationFamily.permutationLinear_basis
+  D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionPermutationFamily.permutation_mixed
+  D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionPermutationFamily.permutation_support
+  from D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionPermutationFamily
+open private D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.Equations.mul_basis_left
+  D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.Equations.mul_basis_right
+  from D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks
 open D5.S3.QuadraticForms.EvolutionAlgebras.HuEvolutionLowerBound
 open D5.S3.QuadraticForms.EvolutionAlgebras.HuEvolutionJordanFamily
 open D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionAutomorphismControl
