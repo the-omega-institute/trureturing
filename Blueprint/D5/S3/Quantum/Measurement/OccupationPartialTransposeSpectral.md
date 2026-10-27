@@ -240,7 +240,19 @@ $$\forall a \in \mathbb{R},\; \forall b \in \mathbb{R},\; \forall c \in \mathbb{
 
 The spectral gap product equals the square of the off-diagonal coupling.
 
-**Theorem 1.19 (Complex.distinguished_block_identity).**
+**Theorem 1.19 (Scalar.topRoot_quadratic_bound).**
+
+$$\forall a \in \mathbb{R},\; \forall b \in \mathbb{R},\; \forall c \in \mathbb{R},\; \forall x \in \mathbb{R},\; \forall y \in \mathbb{R},\; a \cdot x^{2} + 2 \cdot b \cdot x \cdot y + c \cdot y^{2} \le \operatorname{topRoot}\left(a, b, c\right) \cdot \left(x^{2} + y^{2}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OccupationPartialTransposeSpectral.topRoot_quadratic_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The quadratic form of a real symmetric two-by-two matrix is bounded above by its larger eigenvalue times the squared Euclidean length.
+
+**Theorem 1.20 (Complex.distinguished_block_identity).**
 
 $$\forall n \in \mathbb{R},\; \forall k \in \mathbb{R},\; \forall p \in \mathbb{R},\; 0 \le n \cdot k \Rightarrow \operatorname{blockMaximum}\left(n + k, p, n\right) = \operatorname{topRoot}\left(n + 1, p \cdot \operatorname{Real}.\operatorname{sqrt}\left(n \cdot k\right), n + p \cdot \left(k + 1 - n\right)\right)$$
 
@@ -254,7 +266,7 @@ $$\forall n \in \mathbb{R},\; \forall k \in \mathbb{R},\; \forall p \in \mathbb{
 
 The block supported on the reference occupation has the stated two-dimensional root.
 
-**Theorem 1.20 (BlockSpectral.rankOneQuadratic).**
+**Theorem 1.21 (BlockSpectral.rankOneQuadratic).**
 
 $$\forall I \in Type,\; [\operatorname{Fintype}\left(I\right)] \forall z \in I \to \mathbb{C},\; \forall psi \in I \to \mathbb{C},\; \operatorname{dotProduct}\left(\operatorname{star}\left(z\right), \operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{Matrix}.\operatorname{vecMulVec}\left(psi, \operatorname{star}\left(psi\right)\right), z\right)\right) = (\operatorname{Complex}.\operatorname{normSq}\left(\operatorname{dotProduct}\left(\operatorname{star}\left(z\right), psi\right)\right): \mathbb{C})$$
 
@@ -266,7 +278,7 @@ $$\forall I \in Type,\; [\operatorname{Fintype}\left(I\right)] \forall z \in I \
 
 The quadratic form of a rank-one density matrix is the squared modulus of its overlap.
 
-**Definition 1.21 (BlockSpectral.blockOperator).**
+**Definition 1.22 (BlockSpectral.blockOperator).**
 
 $$\forall I \in Type,\; [\operatorname{DecidableEq}\left(I\right)] \forall v \in I \to \mathbb{R},\; \forall i0 \in I,\; \forall a \in \mathbb{R},\; \forall p \in \mathbb{R},\; \operatorname{blockOperator}\left(v, i0, a, p\right) = ((p + \left(1 - p\right) \cdot a: \mathbb{C})) \cdot ((1: \operatorname{Matrix}\left(I, I, \mathbb{C}\right))) + ((p: \mathbb{C})) \cdot (\operatorname{Matrix}.\operatorname{vecMulVec}\left(\operatorname{fun} (i: I) \mapsto (v\left(i\right): \mathbb{C}), \operatorname{fun} (i: I) \mapsto (v\left(i\right): \mathbb{C})\right)) + ((1 - p: \mathbb{C})) \cdot (\operatorname{Matrix}.\operatorname{diagonal}\left(\operatorname{fun} (i: I) \mapsto \operatorname{if} (i = i0) \operatorname{then} 1 \operatorname{else} 0\right))$$
 
@@ -280,7 +292,7 @@ $$\forall I \in Type,\; [\operatorname{DecidableEq}\left(I\right)] \forall v \in
 
 Each block is a scalar identity plus a real rank-one matrix and one coordinate projector.
 
-**Theorem 1.22 (BlockSpectral.blockOperator_quadratic).**
+**Theorem 1.23 (BlockSpectral.blockOperator_quadratic).**
 
 $$\forall I \in Type,\; [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(I\right)] \forall v \in I \to \mathbb{R},\; \forall i0 \in I,\; \forall a \in \mathbb{R},\; \forall p \in \mathbb{R},\; \forall x \in I \to \mathbb{C},\; \operatorname{dotProduct}\left(\operatorname{star}\left(x\right), \operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{blockOperator}\left(v, i0, a, p\right), x\right)\right) = (\left(p + \left(1 - p\right) \cdot a\right) \cdot \sum_{i: I}(\operatorname{Complex}.\operatorname{normSq}\left(x\left(i\right)\right)) + p \cdot \operatorname{Complex}.\operatorname{normSq}\left(\sum_{i: I}((v\left(i\right): \mathbb{C}) \cdot x\left(i\right))\right) + \left(1 - p\right) \cdot \operatorname{Complex}.\operatorname{normSq}\left(x\left(i0\right)\right): \mathbb{C})$$
 
@@ -294,7 +306,7 @@ $$\forall I \in Type,\; [\operatorname{Fintype}\left(I\right)] [\operatorname{De
 
 The quadratic form is the sum of its norm, coherent rank-one score and reference-coordinate score.
 
-**Definition 1.23 (BlockMatrices.blockVector).**
+**Definition 1.24 (BlockMatrices.blockVector).**
 
 $$\forall K \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall m \in \{n: \operatorname{Fin}\left(d\right) \to \mathbb{N} // \sum_{i: \operatorname{Fin}\left(d\right)}(n\left(i\right)) = K\},\; \forall i \in \operatorname{Fin}\left(d\right),\; \operatorname{blockVector}\left(m, i\right) = \operatorname{Real}.\operatorname{sqrt}\left((\operatorname{val}\left(m\right)\left(i\right): \mathbb{R}) + 1\right)$$
 
@@ -308,7 +320,7 @@ $$\forall K \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall m \in \{n: \op
 
 The block vector has entries sqrt(m_i+1).
 
-**Theorem 1.24 (BlockMatrices.weighted_block).**
+**Theorem 1.25 (BlockMatrices.weighted_block).**
 
 $$\forall K \in \mathbb{N},\; \forall d \in \mathbb{N},\; 1 \le d \Rightarrow \left(\forall m \in \{n: \operatorname{Fin}\left(d\right) \to \mathbb{N} // \sum_{i: \operatorname{Fin}\left(d\right)}(n\left(i\right)) = K\},\; \forall p \in \mathbb{R},\; \operatorname{Matrix}.\operatorname{submatrix}\left(((p: \mathbb{C})) \cdot (\operatorname{A}\left(K + 1, d\right)) + ((1 - p: \mathbb{C})) \cdot (\operatorname{C}\left(K + 1, d\right)), \operatorname{blockIndex}\left(m\right), \operatorname{blockIndex}\left(m\right)\right) = \operatorname{blockOperator}\left(\operatorname{blockVector}\left(m\right), (0: \operatorname{Fin}\left(d\right)), (\operatorname{val}\left(m\right)\left((0: \operatorname{Fin}\left(d\right))\right): \mathbb{R}) + 1, p\right)\right)$$
 
@@ -322,7 +334,7 @@ $$\forall K \in \mathbb{N},\; \forall d \in \mathbb{N},\; 1 \le d \Rightarrow \l
 
 Restricting the weighted fidelity operator to an occupation block gives its rank-one-plus-coordinate form.
 
-**Theorem 1.25 (GlobalBound.global_operator_bound).**
+**Theorem 1.26 (GlobalBound.global_operator_bound).**
 
 $$\forall K \in \mathbb{N},\; \forall k \in \mathbb{N},\; 1 \le k \Rightarrow \left(\forall p \in \mathbb{R},\; 0 \le p \Rightarrow \left(p \le 1 \Rightarrow \operatorname{Matrix}.\operatorname{PosSemidef}\left(((\operatorname{blockMaximum}\left((K: \mathbb{R}) + (k: \mathbb{R}) + 1, p, (K: \mathbb{R}) + 1\right): \mathbb{C})) \cdot ((1: \operatorname{Matrix}\left(\operatorname{Prod}\left(\{n: \operatorname{Fin}\left(k + 1\right) \to \mathbb{N} // \sum_{i: \operatorname{Fin}\left(k + 1\right)}(n\left(i\right)) = K + 1\}, \operatorname{Fin}\left(k + 1\right)\right), \operatorname{Prod}\left(\{n: \operatorname{Fin}\left(k + 1\right) \to \mathbb{N} // \sum_{i: \operatorname{Fin}\left(k + 1\right)}(n\left(i\right)) = K + 1\}, \operatorname{Fin}\left(k + 1\right)\right), \mathbb{C}\right))) - \operatorname{AffineMap}.\operatorname{lineMap}\left(\operatorname{C}\left(K + 1, k + 1\right), \operatorname{A}\left(K + 1, k + 1\right), (p: \mathbb{C})\right)\right)\right)\right)$$
 
@@ -361,6 +373,7 @@ The exhaustive occupation partition and block Rayleigh bound show that the refer
 - Truth anchor: `D5/S3/Quantum/Measurement/OccupationPartialTransposeSpectral.topRoot_bounds`
 - Truth anchor: `D5/S3/Quantum/Measurement/OccupationPartialTransposeSpectral.topRoot_determinant`
 - Truth anchor: `D5/S3/Quantum/Measurement/OccupationPartialTransposeSpectral.topRoot_product`
+- Truth anchor: `D5/S3/Quantum/Measurement/OccupationPartialTransposeSpectral.topRoot_quadratic_bound`
 - Truth anchor: `D5/S3/Quantum/Measurement/OccupationPartialTransposeSpectral.topRoot_sum`
 - Truth anchor: `D5/S3/Quantum/Measurement/OccupationPartialTransposeSpectral.weighted_block`
 - Dependency: [D5/S3/Quantum/Entanglement/OccupancyWordSectors](../Entanglement/OccupancyWordSectors.md)
