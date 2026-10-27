@@ -48,7 +48,7 @@ internal sealed class ChargeSectorMajorizationRefutationDocument : IScribeDocume
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
-                        "Use four levels with chargeData=(0,0,1,1), r=(6/20,6/20,7/20,1/20), "
+                        "Use four levels with charge vector (0,0,1,1), r=(6/20,6/20,7/20,1/20), "
                             + "and s=(7/20,5/20,4/20,4/20). Each vector is nonnegative and sums "
                             + "to one. Their descending spectra are (7,6,6,1)/20 and "
                             + "(7,5,4,4)/20, so the prefix sums establish Majorizes(desc r, desc s).")),
