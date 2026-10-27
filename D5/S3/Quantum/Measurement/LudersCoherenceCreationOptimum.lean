@@ -6,8 +6,8 @@
    utility: none
    digest: General qubit measurements attain half the sum of coherence and Bloch length. -/
 
-import D5.S3.Quantum.Information.SLDSpectralEnergy
-import D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality
+import D5.S3.Quantum.Information.ActualQubitChordObstruction
+import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 import D5.S3.Divergence.CoherenceL1RelativeEntropyBound
 import D5.S3.Quantum.QuantumChannels.HiaiRuskaiRiemannianContraction
 import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
@@ -340,12 +340,13 @@ private theorem projector_facts (z : ℂ) (v : ℝ) (hu : ‖z‖ ^ 2 + v ^ 2 = 
     rw [Complex.sq_norm, Complex.normSq_apply] at hu
     nlinarith only [hu]
   constructor
-  · change projector z v * projector z v = projector z v
-    unfold projector blochMatrix
-    ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp only [Matrix.mul_apply, Fin.sum_univ_two] <;>
-      apply Complex.ext <;> norm_num <;> nlinarith only [hz]
+  · let r : EuclideanSpace ℝ (Fin 3) := WithLp.toLp 2 ![z.re, -z.im, v]
+    have hsq : ‖r‖ ^ 2 = 1 := by
+      rw [EuclideanSpace.real_norm_sq_eq, Fin.sum_univ_three]
+      change z.re ^ 2 + (-z.im) ^ 2 + v ^ 2 = 1
+      simpa only [neg_sq] using hz
+    exact D5.S3.Quantum.Information.ActualQubitChordObstruction.pure r
+      (by nlinarith only [hsq, norm_nonneg r])
   · exact (D5.S3.Quantum.QuantumChannels.HiaiRuskaiRiemannianContraction.Pauli.rho_hermitian
       z.re (-z.im) v).isSelfAdjoint
 
