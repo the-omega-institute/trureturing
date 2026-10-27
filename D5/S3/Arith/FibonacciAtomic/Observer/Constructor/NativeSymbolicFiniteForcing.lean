@@ -374,11 +374,11 @@ private theorem symbolic_realizes {k m : Nat} (mode : Fin k → Bool) (p : Fin k
     | none =>
       simp only [symbolic, hj, Option.map_none, Realizes,
         CompletionPositiveDriftRegion.value]
-      exact fun hf => (show ¬ IsFinite (v j) from hj ▸ h j) ((finite_iterate_iff a _).mp hf)
+      exact fun hf => (show ¬ IsFinite (v j) from (by simpa only [hj, Realizes] using h j)) ((finite_iterate_iff a _).mp hf)
     | some f =>
       simp only [symbolic, hj, Option.map_some, Realizes,
         CompletionPositiveDriftRegion.value]
-      rw [show v j = embed (finiteValue p f) from hj ▸ h j, iterate_embed]
+      rw [show v j = embed (finiteValue p f) from (by simpa only [hj, Realizes] using h j), iterate_embed]
       exact congrArg embed (NativeSimultaneousPrefixSeparation.eval_shift a _ f).symm
   | pair A B ihA ihB =>
     cases hA : symbolic mode q A with
@@ -386,18 +386,18 @@ private theorem symbolic_realizes {k m : Nat} (mode : Fin k → Bool) (p : Fin k
       simp only [symbolic, hA, Option.bind_none, Realizes,
         CompletionPositiveDriftRegion.value]
       exact fun hf => (show ¬ IsFinite (CompletionPositiveDriftRegion.value mode p v A)
-        from hA ▸ ihA) ((finite_node_iff _ _).mp hf).1
+        from (by simpa only [hA, Realizes] using ihA)) ((finite_node_iff _ _).mp hf).1
     | some f =>
       cases hB : symbolic mode q B with
       | none =>
         simp only [symbolic, hA, hB, Option.bind_some, Option.map_none, Realizes,
           CompletionPositiveDriftRegion.value]
         exact fun hf => (show ¬ IsFinite (CompletionPositiveDriftRegion.value mode p v B)
-          from hB ▸ ihB) ((finite_node_iff _ _).mp hf).2
+          from (by simpa only [hB, Realizes] using ihB)) ((finite_node_iff _ _).mp hf).2
       | some g =>
         simp only [symbolic, hA, hB, Option.bind_some, Option.map_some, Realizes,
           CompletionPositiveDriftRegion.value]
-        exact congrArg₂ node (show _ = _ from hA ▸ ihA) (show _ = _ from hB ▸ ihB)
+        exact congrArg₂ node (show _ = _ from (by simpa only [hA, Realizes] using ihA)) (show _ = _ from (by simpa only [hB, Realizes] using ihB))
 
 private theorem pass_realizes {k m : Nat} (S : FunctionalSystem k m)
     (mode : Fin k → Bool) (p : Fin k → Nat) (n : Nat) (i : Fin m) :
@@ -449,7 +449,7 @@ private theorem expression_pass_value {k m : Nat} (S : FunctionalSystem k m)
   have eq : value (approximants (nativeSystem S mode p) n) (specialize mode p E) =
       embed (finiteValue p f) := by
     rw [specialize_value mode p _ (approximants_last S mode p n) E]
-    exact hf ▸ real
+    simpa only [hf, Realizes] using real
   have below := value_leafBelow (approximant_below_solution (lift_solution sat) n)
     (specialize mode p E)
   rw [eq, specialize_value mode p _ (by simp) E] at below
@@ -487,6 +487,8 @@ theorem symbolic_finite_forcing {k m r : Nat} (S : FunctionalSystem k m)
       (fun n j hj => value_leafBelow
         (extensionIterate_mono (nativeSystem S mode p) _ _ n j hj)
         (specialize mode p (R i))) hlim).mp finite
+    change IsFinite (value (approximants (nativeSystem S mode p) n)
+      (specialize mode p (R i))) at hn
     rw [specialize_value mode p _ (approximants_last S mode p n) (R i)] at hn
     have real := symbolic_realizes mode p _ _ (pass_realizes S mode p n) (R i)
     obtain ⟨f, hf⟩ := Option.isSome_iff_exists.mp ((realizes_finite real).mp hn)
