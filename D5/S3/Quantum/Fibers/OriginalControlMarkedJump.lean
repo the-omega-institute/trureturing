@@ -6,7 +6,6 @@
    utility: none
    digest: Continuous time and mode loss from the original double-wall jumps. -/
 
-import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Fibers.OriginalControlComposition
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
@@ -43,7 +42,7 @@ private def originalProbability (c k : ℝ) (hc : c < 1 / 2) (hk : k ∈ Ioo 0 c
       simp
     simpa [he,FiniteRectangleTransport.upper] using hk)
 
-private theorem p_pos (c k : ℝ) (hc : c < 1 / 2) (hk : k ∈ Ioo 0 c) (i : Fin 5) :
+theorem p_pos (c k : ℝ) (hc : c < 1 / 2) (hk : k ∈ Ioo 0 c) (i : Fin 5) :
     0 < p c k i := (originalProbability c k hc hk).positive i
 
 private theorem p_sum (c k : ℝ) (hc : c < 1 / 2) (hk : k ∈ Ioo 0 c) :
@@ -100,7 +99,7 @@ def live (c a k S : ℝ) (psi : Fin 5 → ℂ) : Fin 5 → ℂ :=
 def jump (c a k S : ℝ) (g : Fin 5 → ℝ) (psi : Fin 5 → ℂ) (i : Fin 5) : ℂ :=
   (Real.sqrt (g i) : ℂ) * live c a k S psi i
 
-private theorem source_jump_density (c a k S beta : ℝ) (m : ℤ)
+theorem source_jump_density (c a k S beta : ℝ) (m : ℤ)
     (theta : Fin 5 → ℝ) (g : Fin 5 → ℝ)
     (hc : c < 1 / 2) (ha : a ∈ Ioo 0 c) (hk : k ∈ Ioo 0 c)
     (hS : 0 ≤ S) (hg : ∀ i, 0 ≤ g i) (i : Fin 5) :
@@ -124,18 +123,18 @@ def jumpKraus (c a k S : ℝ) (g : Fin 5 → ℝ) (i : Fin 5) :
     Matrix (Fin 1) (Fin 5) ℂ :=
   absorbingRow g i * successfulKraus c a k S
 
-private theorem successful_action (c a k S : ℝ) (psi : Fin 5 → ℂ) :
+theorem successful_action (c a k S : ℝ) (psi : Fin 5 → ℂ) :
     (successfulKraus c a k S) *ᵥ psi=live c a k S psi := by
   ext i
   simp [successfulKraus,Matrix.mulVec,live]
 
-private theorem jump_action (c a k S : ℝ) (g : Fin 5 → ℝ)
+theorem jump_action (c a k S : ℝ) (g : Fin 5 → ℝ)
     (psi : Fin 5 → ℂ) (i : Fin 5) :
     (jumpKraus c a k S g i *ᵥ psi) 0=jump c a k S g psi i := by
   rw [jumpKraus,← Matrix.mulVec_mulVec,successful_action]
   simp [Matrix.mulVec,absorbingRow,jump,dotProduct,ite_mul]
 
-private theorem source_live_mass (c a k S beta : ℝ) (m : ℤ)
+theorem source_live_mass (c a k S beta : ℝ) (m : ℤ)
     (theta : Fin 5 → ℝ) (hc : c < 1 / 2) (ha : a ∈ Ioo 0 c)
     (hk : k ∈ Ioo 0 c) (hS : 0 ≤ S) :
     (∑ i,Complex.normSq ((successfulKraus c a k S *ᵥ source c a beta m theta) i)) = S := by
@@ -161,7 +160,7 @@ structure Leg where
 
 namespace Leg
 
-open private probability_derivative from D5.S3.Quantum.Fibers.FiniteRectangleTransport
+open D5.S3.Quantum.Fibers.FiniteRectangleTransport
 
 def speed (L : Leg) : ℝ := (L.y-L.x)/L.duration
 
@@ -179,7 +178,7 @@ def jumpRate (L : Leg) (t : ℝ) (i : Fin 5) : ℝ :=
 def density (L : Leg) (t : ℝ) (i : Fin 5) : ℝ :=
   L.jumpRate t i * L.survival t * p L.c (L.height t) i
 
-private theorem height_bounds (L : Leg) (t : ℝ) (ht : t ∈ Icc 0 L.duration) :
+theorem height_bounds (L : Leg) (t : ℝ) (ht : t ∈ Icc 0 L.duration) :
     L.height t ∈ Ioo 0 L.c := by
   have hθ : 0 ≤ t/L.duration ∧ t/L.duration ≤ 1 :=
     ⟨div_nonneg ht.1 L.duration_pos.le,(div_le_one L.duration_pos).mpr ht.2⟩
@@ -189,14 +188,14 @@ private theorem height_bounds (L : Leg) (t : ℝ) (ht : t ∈ Icc 0 L.duration) 
   exact convex_Ioo (𝕜:=ℝ) 0 L.c ⟨L.x_pos,L.x_lt⟩ ⟨L.y_pos,L.y_lt⟩
     (by linarith) hθ.1 (by ring)
 
-private theorem height_deriv (L : Leg) (t : ℝ) : HasDerivAt L.height L.speed t := by
+theorem height_deriv (L : Leg) (t : ℝ) : HasDerivAt L.height L.speed t := by
   change HasDerivAt (fun u : ℝ => L.x+L.speed*u) L.speed t
   simpa only [id_eq,mul_one] using ((hasDerivAt_id t).const_mul L.speed).const_add L.x
 
 private theorem height_cont (L : Leg) : Continuous L.height := by
   exact continuous_iff_continuousAt.mpr (fun t => (L.height_deriv t).continuousAt)
 
-private theorem hazard_cont (L : Leg) : ContinuousOn L.hazard (Icc 0 L.duration) := by
+theorem hazard_cont (L : Leg) : ContinuousOn L.hazard (Icc 0 L.duration) := by
   apply ContinuousOn.add
   · exact continuousOn_const.div L.height_cont.continuousOn
       (fun t ht => (L.height_bounds t ht).1.ne')
@@ -257,7 +256,7 @@ private theorem jumpRate_formula (L : Leg) (t : ℝ) (ht : t ∈ Icc 0 L.duratio
   rw [jumpRate,((L.probability_deriv t i).log
     (p_pos L.c (L.height t) L.c_lt (L.height_bounds t ht) i).ne').deriv]
 
-private theorem jumpRate_nonneg (L : Leg) (t : ℝ) (ht : t ∈ Icc 0 L.duration)
+theorem jumpRate_nonneg (L : Leg) (t : ℝ) (ht : t ∈ Icc 0 L.duration)
     (i : Fin 5) : 0 ≤ L.jumpRate t i := by
   have hk := L.height_bounds t ht
   have hp : 0 < L.c-L.height t := sub_pos.mpr hk.2
