@@ -79,7 +79,8 @@ internal sealed class SemimonotoneExactOrderInverseRefutationDocument : IScribeD
                 Definition("kernelVector", Eqn(V("kernelVector"), App("vector", D(1), D(1), Seq(Minus, D(1)), Seq(Minus, D(1)))),
                     "The real column vector (1,1,-1,-1) is nonzero and its product with A is zero. The equal-sized sign blocks cancel exactly: each row gives either 1-5+2+2 or -2-2-1+5. This proves singularity by ordinary matrix algebra, independently of testing finitely many numerical matrices."),
                 Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
-                    H("The full second-bullet assertion is false"), StatementSource.FromLean(),
+                    H("The full second-bullet assertion is false"),
+                    StatementSource.FromAuthor(Disp(new Formula.Not(Par(Body)))),
                     AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
                         "Specialize the universal assertion to n=4, k=3 and the displayed matrix. Exact-order membership was established for every principal index subset. A negative determinant would be nonzero, and Mathlib's kernel theorem would then force the displayed nonzero kernel vector to vanish, a contradiction. The same kernel vector also rules out an actual inverse; no property of the total inverse on singular matrices is used. The failure occurs in the allowed n-k=1 boundary case, through cancellation between two groups of coordinates with opposite signs. This refutes the universal conjunction, without asserting that every individual inverse-Z conclusion fails or settling the distinct exact-order-two conjecture."))), DescribeRole.Theorem))));
     }
