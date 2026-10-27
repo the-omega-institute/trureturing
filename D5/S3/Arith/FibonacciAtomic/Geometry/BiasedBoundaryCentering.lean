@@ -37,14 +37,15 @@ def C : H →L[ℝ] G := Pi.comp J
 
 private theorem constG_norm_one : ‖constG 1‖ = 1 := by
   change ‖(1:ℝ) • Lp.const 2 M (1:ℝ)‖ = 1
-  simp [Lp.norm_const (by norm_num : (2:ℝ≥0∞) ≠ 0)]
+  rw [one_smul, Lp.norm_const (μ := M) (p := 2) (c := (1:ℝ)) (by norm_num)]
+  simp
 
 private theorem constG_eq_smul (c : ℝ) : constG c = c • constG 1 := by
   simp [BiasedBoundaryPathSplit.constG]
 
 private theorem mean_const (c : ℝ) : mean (constG c) = c := by
   change inner ℝ (constG 1) (constG c) = c
-  rw [constG_eq_smul, inner_smul_right, real_inner_self_eq_norm_sq, constG_norm_one]
+  rw [constG_eq_smul c, inner_smul_right, real_inner_self_eq_norm_sq, constG_norm_one]
   simp
 
 private theorem mean_integral (F : G) : mean F = ∫ ω, F ω ∂M := by
@@ -52,8 +53,7 @@ private theorem mean_integral (F : G) : mean F = ∫ ω, F ω ∂M := by
   rw [L2.inner_def]
   apply integral_congr_ae
   filter_upwards [boundary_path_split.2.2.2.1 (1:ℝ)] with ω hω
-  change (constG 1 ω) * F ω = F ω
-  rw [hω, one_mul]
+  rw [Real.inner_apply, hω, one_mul]
 
 private theorem Pi_formula (F : G) : Pi F = F-constG (mean F) := by
   rw [Pi, Submodule.starProjection_orthogonal_val,
@@ -88,11 +88,12 @@ private theorem J_norm_sq (z : H) : ‖J z‖^2 ≤ Real.goldenRatio*‖z‖^2 :
   have hb := BiasedBoundaryTrace.boundary_trace_hardy.2 0 z
   have he : a/(1-a) = Real.goldenRatio := by
     have hp : Real.goldenRatio ≠ 0 := Real.goldenRatio_pos.ne'
-    have hp1 : Real.goldenRatio-1 ≠ 0 := (sub_pos.mpr Real.one_lt_goldenRatio).ne'
-    change Real.goldenRatio⁻¹/(1-Real.goldenRatio⁻¹) = Real.goldenRatio
-    field_simp
-    nlinarith [Real.goldenRatio_sq]
-  simpa [hz, he] using hb
+    have ha1 : a < 1 := inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio
+    apply (div_eq_iff (sub_pos.mpr ha1).ne').mpr
+    change Real.goldenRatio⁻¹ = Real.goldenRatio*(1-Real.goldenRatio⁻¹)
+    rw [mul_sub, mul_one, mul_inv_cancel₀ hp, Real.inv_goldenRatio]
+    linarith only [Real.goldenRatio_add_goldenConj]
+  simpa only [hz, sub_zero, zero_add, pow_one, he] using hb
 
 /-- Actual integral centering cancels the prefix and global constants for every
 original increment vector. The centered suffix obeys the original Hardy bound. -/
