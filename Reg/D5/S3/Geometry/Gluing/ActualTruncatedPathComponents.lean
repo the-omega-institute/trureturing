@@ -99,9 +99,9 @@ theorem rejected_law : ¬ arena.{a, b}.Law rejected := by
 
 theorem dependence : ObservationalDependence signature.{a, b} actual := by
   intro i
-  refine ⟨testData,low,high,?_⟩
+  refine ⟨testData.{a, b},low.{a, b},high.{a, b},?_⟩
   intro he
-  change low.1 = high.1 at he
+  change low.{a, b}.1 = high.{a, b}.1 at he
   have hf : (false : Bool) = true := congrArg ULift.down he
   cases hf
 
@@ -130,8 +130,7 @@ def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{a, b} ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize signature.{a, b} (fun _ p s =>
-    Quotient.mk (Relation.EqvGen.setoid (TruncatedStep p.u p.v)) s)
+  readout := some (realize signature.{a, b} (fun _ _ s => s.1)
     (fun e => nomatch e)),
   variation := .absent,
   sensitivity := .absent,
