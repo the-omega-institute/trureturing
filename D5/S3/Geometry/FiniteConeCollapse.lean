@@ -270,7 +270,9 @@ private theorem deform_one_mem_cone (x : P.Space) (hx : P.delta x ≤ P.epsilon)
   refine ⟨f, hf, (P.simplex_data (P.deform 1 x)).1,
     (P.simplex_data (P.deform 1 x)).2, ?_⟩
   intro v hv
-  have hcoord : x.val v ≤ P.delta x := heq ▸ P.outside_coord_le x hv
+  have hcoord : x.val v ≤ P.delta x := by
+    rw [heq]
+    exact P.outside_coord_le x hv
   change max (x.val v - (1 : I).val * P.theta x) 0 / _ = 0
   rw [show (1 : I).val = (1 : ℝ) from rfl, one_mul, theta, min_eq_left hx,
     max_eq_right (sub_nonpos.mpr hcoord), zero_div]
