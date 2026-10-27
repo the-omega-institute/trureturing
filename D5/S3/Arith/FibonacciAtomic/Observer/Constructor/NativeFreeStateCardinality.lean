@@ -14,6 +14,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
+/-! Infinite native trees retain an arbitrary stream in their reached atomic subtrees. -/
+
 namespace D5.S3.Arith.FibonacciAtomic.Observer.NativeFreeStateCardinality
 
 open NativeCompletionPrefixLifting
@@ -41,7 +43,7 @@ private theorem streamStep_leaf (b : Bool) :
   rw [PFunctor.M.corec_def]
   apply congrArg PFunctor.M.mk
   apply Sigma.ext (by
-    simp [streamStep, PFunctor.map, PFunctor.Obj.mk, PFunctor.Obj.fst, PFunctor.Obj.snd] <;> rfl)
+    simp [streamStep, PFunctor.map, PFunctor.Obj.mk, PFunctor.Obj.fst, PFunctor.Obj.snd])
   apply heq_of_eq
   funext e
   exact e.elim
@@ -78,7 +80,7 @@ private theorem streamTree_injective : Function.Injective streamTree := by
   rw [streamTree_subtree, streamTree_subtree] at bits
   have leaves := NativeCompletionSupportClosure.embed_injective
     (show embed (.of (!(s j))) = embed (.of (!(t j))) from Option.some.inj bits)
-  have labels : !(s j) = !(t j) := by injection leaves
+  have labels : (!(s j)) = (!(t j)) := by injection leaves
   exact Bool.not_inj labels
 
 private theorem streamTree_ne_omega (s : Nat → Bool) : streamTree s ≠ Omega := by
@@ -93,7 +95,7 @@ private theorem streamTree_ne_omega (s : Nat → Bool) : streamTree s ≠ Omega 
 private theorem completed_not_countable : ¬ Countable CompletionTree := by
   classical
   intro h
-  letI := h
+  let := h
   obtain ⟨encode, hinj⟩ := Countable.exists_injective_nat CompletionTree
   let characteristic : Set Nat → Nat → Bool := fun S n => decide (n ∈ S)
   have hc : Function.Injective characteristic := by
