@@ -76,7 +76,9 @@ private theorem constG_ae (c : ℝ) : constG c =ᵐ[M] (fun _ : Omega => c) := b
   filter_upwards [Lp.coeFn_smul c (Lp.const 2 M (1 : ℝ)),
     Lp.coeFn_const (μ := M) (p := 2) (1 : ℝ)] with ω hs hc
   change (c • Lp.const 2 M (1 : ℝ) : G) ω = c
-  rw [hs, hc]
+  rw [hs]
+  change c * (Lp.const 2 M (1 : ℝ)) ω = c
+  rw [hc]
   simp
 
 private theorem cylinder_prefix (q p : Address) (h : q.IsPrefix p) (ω : Omega) :
@@ -124,6 +126,7 @@ private theorem prepend_cylinder_long (p : Address) (q : Edge) (ω : Omega)
   intro i hi
   have hiq := hi.trans hl
   have he := h i (Finset.mem_range.mpr hiq)
+  change (if i < p.length then p.getD i false else ω (i-p.length)) = q.val.getD i false at he
   simpa only [prepend, hi, ite_true, List.getD_eq_getElem?_getD,
     List.getElem?_eq_getElem hi, List.getElem?_eq_getElem hiq, Option.getD_some] using he
 
@@ -237,7 +240,7 @@ theorem boundary_path_split :
         have hun : u ≠ [] := by
           intro hh
           apply hqp
-          simpa [hh] using (show q.val.IsPrefix (p++u) from hu ▸ List.prefix_rfl)
+          rw [← hu, hh, List.append_nil]
         let v : Edge := ⟨u, hun⟩
         have heq : q = descendant p v := Subtype.ext hu.symm
         rw [heq, suffix_single_descendant, J_single, pullback_indicator_descendant]
