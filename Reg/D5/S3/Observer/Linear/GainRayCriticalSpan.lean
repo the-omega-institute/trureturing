@@ -61,7 +61,7 @@ def growthRegistration : Registration growthArena.{u} (growthArena.Law growthAct
       Module.finrank ℝ (⊤ : Submodule ℝ (ULift.{u} (Fin 1) → ℝ))
     simp
 
-def growth : Contract.Registration (@weighted_polynomial_span_growth.{u})
+def growth : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@weighted_polynomial_span_growth.{u})
     (type_of% (realize growthSignature.{u} (fun _ _ K => Module.finrank ℝ K)
       (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.Observer.Linear.GainRayCriticalSpan.growthUnit,
@@ -202,7 +202,7 @@ def scalarRegistration : Registration scalarArena (scalarArena.Law scalarActual)
     rw [audit_scale] at hh
     norm_num [response] at hh
 
-def scalar : Contract.Registration (@critical_scalar_span)
+def scalar : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@critical_scalar_span)
     (type_of% (realize scalarSignature (fun _ p C => response p.1 p.2 C)
       (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.Observer.Linear.GainRayCriticalSpan.scalarUnit,

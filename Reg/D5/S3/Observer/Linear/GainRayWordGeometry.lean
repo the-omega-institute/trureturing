@@ -61,7 +61,7 @@ def registration : Registration arena (arena.Law actual) where
       ∃ c : ℝ, acquisition ([].take j.val) = c • (1 : Mat))).card
     simp [he, show ∃ c : ℝ, (1 : Mat) = c • (1 : Mat) from ⟨1,by simp⟩]
 
-def entry : Contract.Registration (@cumulative_proportionality_card_even)
+def entry : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@cumulative_proportionality_card_even)
     (type_of% (realize signature (fun _ w L => (Finset.univ.filter
       (fun i : Fin (w.length+1) => ∃ c : ℝ, acquisition (w.take i.val) = c • L)).card)
       (fun e => nomatch e))) Unit Unit := {
