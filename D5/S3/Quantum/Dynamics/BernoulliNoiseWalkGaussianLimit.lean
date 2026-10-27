@@ -6,17 +6,8 @@
    utility: none
    digest: Every localized quantum Bernoulli noise walk has the standard Gaussian limit. -/
 
-import Mathlib.Analysis.InnerProductSpace.l2Space
-import Mathlib.MeasureTheory.Measure.LevyConvergence
 import Mathlib.Probability.CentralLimitTheorem
 import Mathlib.Probability.Distributions.Bernoulli
-import Mathlib.Data.Finset.SymmDiff
-import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Module
 
 /-! The localized quantum Bernoulli noise walk of C. Wang, C. Wang, Y. Tang and S. Ren,
 Advances in Mathematical Physics 2018, Article 2507265, DOI 10.1155/2018/2507265 (CC BY 4.0).
@@ -447,7 +438,8 @@ private lemma walk_expansion (φ : BernoulliSpace) (n : ℕ) (x : ℤ) :
         omega
       rw [branch_step, ite_eq_left (Finset.mem_insert_self n σ), branch_insert]
       by_cases hx : displacement n σ = x + 1
-      · rw [ite_eq_left hx, ite_eq_left (hd.mpr hx), map_smul, Finset.card_insert_of_notMem hn, pow_succ]
+      · rw [ite_eq_left hx, ite_eq_left (hd.mpr hx), map_smul,
+          Finset.card_insert_of_notMem hn, pow_succ]
         module
       · rw [ite_eq_right hx, ite_eq_right (mt hd.mp hx), map_zero]
 
