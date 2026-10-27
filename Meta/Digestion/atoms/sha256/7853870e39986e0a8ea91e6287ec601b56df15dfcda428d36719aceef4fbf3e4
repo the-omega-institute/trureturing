@@ -1,0 +1,17 @@
+**定义 4.4（相融的五事件运输）。**
+在非零实含幺 $*$-代数 $\mathfrak A$ 中，给非零元素 $E_{st}$，
+$s,t\in\Sigma$，满足
+
+$$
+E_{st}E_{uv}=\delta_{tu}E_{sv},\quad
+E_{st}^\dagger=E_{ts},\quad
+\sum_sE_{ss}=1.
+$$
+
+记 $P_s=E_{ss}$。再在角 $P_0\mathfrak A P_0$ 中给
+$\jmath^\dagger=-\jmath$、$\jmath^2=-P_0$。
+这里 $E_{st}$ 表示相干的模式运输及其相融关系；
+它不是只表示“图上存在一条边”。
+
+<a id="thm:globalcomplex"></a>
+

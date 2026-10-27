@@ -1,0 +1,54 @@
+**Definition 71.1 (native material and monic histories).** Retain the original AA §17 birth-typed source and Definition 55.1's six-operation installation. Fix
+
+$$
+u=\langle\beta,\langle\beta,\alpha\rangle\rangle.
+$$
+
+From a known zero alpha, the enabled addressed growth sequence is $P_\varepsilon,S_\varepsilon,P_R,S_R$. In the resulting materialization the logical beta vertices are $L,RL$, with their respective unary markers $LL,RLL$. In material-coordinate order
+
+$$
+(LL,L,\varepsilon,R,RL,RLL,RR),
+$$
+
+the complete undirected unit-edge set is
+
+$$
+\{LL\!\sim\!L,\ L\!\sim\!\varepsilon,\ \varepsilon\!\sim\!R,
+\ R\!\sim\!RL,\ RL\!\sim\!RLL,\ R\!\sim\!RR\}.
+$$
+
+Thus the actual symmetric zero-diagonal adjacency and complete canonical terminal list are
+
+$$
+A=\begin{pmatrix}
+0&1&0&0&0&0&0\\
+1&0&1&0&0&0&0\\
+0&1&0&1&0&0&0\\
+0&0&1&0&1&0&1\\
+0&0&0&1&0&1&0\\
+0&0&0&0&1&0&0\\
+0&0&0&1&0&0&0
+\end{pmatrix},\qquad
+(LL,RLL,RR),\qquad e=e_{LL}.
+\tag{71.1}
+$$
+
+Assume this same specimen has physically established whole zero, its exhaustive earned raw/canonical material and terminal correspondence, genuine binding, current and fresh authority, exclusive completed-call serialization, no autonomous motion, finite exact framing and sufficient finite backing as in §§55 and 67. Original growth preserves whole zero; actually Add one at $e$ and Hold to establish $x_\emptyset=e$. For each digit of $w=d_0\cdots d_{m-1}\in\{0,1,2,3\}^*$ execute the complete original composite
+
+$$
+\operatorname{Next}(d_i)=
+\operatorname{Tick};\ \operatorname{Add}(e,d_i);\
+\operatorname{Hold};\ \operatorname{Read}(e).
+\tag{71.2}
+$$
+
+Every composite includes its three original acknowledgements, its literal scalar Read and all completed framed returns. Tick applies $A$ and returns only its fixed acknowledgement. There is no growth, Reset, extra Tick or other Add in this encoding phase. Consequently
+
+$$
+x_w=F_w(A)e,\qquad
+F_w(z)=z^m+\sum_{i=0}^{m-1}d_i z^{m-1-i}.
+\tag{71.3}
+$$
+
+In particular $F_\emptyset=1$ and $F_{0^m}=z^m$; zero digits and empty histories are retained without an identification by leading zeros.
+

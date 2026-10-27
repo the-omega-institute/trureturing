@@ -1,0 +1,33 @@
+**Lemma 77.3 (sequential pulses expose the complete terminal law).** Let
+
+$$
+f_k=CT^kx_0,
+\qquad h_j(k)=CT^ke_{\ell_j}.
+\tag{77.6}
+$$
+
+The actual free scan and the $j$th pulse scan determine $f_k$ and the complete
+vector sequence $h_j(k)$ for every $j$, first for $0\le k\le H$ and then for all
+$k$ by Lemma 77.2.  In particular they determine every terminal moment matrix
+
+$$
+M_k=C T^kJ=[h_1(k)\ \cdots\ h_b(k)]\in\mathbb Q^{b\times b}.
+\tag{77.7}
+$$
+
+**Proof.** The first scan literally returns $f_0,\ldots,f_H$.  The $j$th pulse
+block returns, for $0\le k\le H$,
+
+$$
+y_{j,k}=f_{\tau_j+k}
+ +\sum_{i<j}h_i\bigl((j-i)H+k\bigr)+h_j(k).
+\tag{77.8}
+$$
+
+The free recurrence from the first scan gives every required $f$ value.  By
+induction on $j$, all earlier $h_i$ values in the sum are already known and can
+be evaluated by their earned recurrences.  Subtracting those actual, already
+paid responses from the literal $y_{j,k}$ leaves $h_j(k)$ for $0\le k\le H$.
+Lemma 77.2 then continues the sequence.  No second source, Reset, or hypothetical
+response run is used. $\square$
+

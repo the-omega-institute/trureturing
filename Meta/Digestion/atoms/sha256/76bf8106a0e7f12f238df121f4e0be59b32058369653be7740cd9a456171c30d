@@ -1,0 +1,14 @@
+**定义 16.1（同一过程的合法比较）。**
+固定相容配置中的基本扩展给同类型全定义运输。
+同一有限区域的两种线性扩张只有在属于同一实验的重新展开时才比较为同一过程。
+不同干预可有不同 holonomy。部分运输另须保留实际域、失败记录、完整标签及资源合同。
+
+全定义情形直接消费[静态相融纤维 §3](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)
+与[无序原子定理 7.2](AURIC_UNORDERED_COMPATIBLE_ATOM_AND_QUANTUM_REPRESENTATION_THEORY.md)：
+同端点运输相同当且仅当所有合法交换菱形交换。
+证明的对应是有限差集的线性扩张：把目标排序的首元素向左移动，
+跨过的元素与它不可比，再对剩余排序归纳；每步恰为合法菱形。
+部分域情形消费[图册定理 4.1、命题 4.3](RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md)：
+闭路在其实际域为恒等保证图册注入，但严格路线相等还须同域、同完整标签及同后继。
+基图连通也不保证每个纤维点均能运到根图册，不能据此宣称一个满的共同坐标系。
+

@@ -1,0 +1,19 @@
+**Proposition 50.1 (one complete run).** Include the actual seed construction, signed preparation, cleared handoff and precisely Definition 46.2's acquisition, with no optional later continuation. The exact source-operation totals are
+
+| Stage | $P$ | $S$ | Add | Tick | $\operatorname{Read}_0$ | Hold | Reset |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Known-zero construction | $2k+1$ | $2k$ | $0$ | $0$ | $0$ | $0$ | $0$ |
+| Signed preparation | $0$ | $0$ | $2k$ | $0$ | $0$ | $0$ | $0$ |
+| Acquisition and final cut | $0$ | $k$ | $0$ | $k+4$ | $k$ | $1$ | $0$ |
+| Total | $2k+1$ | $3k$ | $2k$ | $k+4$ | $k$ | $1$ | $0$ |
+
+There are $5k+1$ successful Growth replies, $3k+5$ fixed field acknowledgements, and exactly $k$ scalar replies $y_1,\ldots,y_k$. Thus $9k+6$ complete source calls/replies/returns occur. Source growth allocates $8k+1$ fresh vertices beyond the seed and leaves $N=8k+2$ live vertices; it leaves no frozen-topology historical copy of that source. The source's $H$ advanced fields and the decoded current predictor refer to this same specimen.
+
+**Proof and addressed costs.** The first row is Lemma 45.2 and the last acquisition row is Definition 46.2. All preparation Adds, including zeros, are counted. At spine stage $i$, the four event-address depths sum to $4i-1$; the tail event has depth $k$. The construction depth sum is $2k(k+1)$. Acquisition depths sum to $k(k+3)/2$. For the complete successful event word put
+
+$$
+E_g=5k+1,\qquad D_g=\frac{5k^2+7k}{2}.
+$$
+
+Using AA's original three-bit tag and $1^{|p|}0p$ address framing, the growth request payload total is $2D_g+4E_g=5k^2+27k+4$, and the Growth reply payload total is $2D_g+5E_g=5k^2+32k+5$. Each still has its full End/acknowledgement/return lifecycle. Root-based navigation pays $D_g$ descents and $D_g$ ascents in the parent-return implementation. AA's three-reference-field material implementation has $3+4(2k+1)+8(3k)=32k+7$ structural reference assignments including seed initialization. Fresh field initialization, arithmetic, dispatcher/roster changes, grants, allocations and communications are additional actual operations. $\square$
+

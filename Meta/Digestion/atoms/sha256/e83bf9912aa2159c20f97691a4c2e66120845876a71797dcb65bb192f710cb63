@@ -1,0 +1,36 @@
+**Lemma 77.2 (a rational recurrence earned from $2R$ vector returns).** For any
+$v\in\mathbb Q^N$, the vector sequence
+
+$$
+s_k(v)=CT^kv\in\mathbb Q^b
+\tag{77.4}
+$$
+
+is determined by its first $2R$ values and can be continued by one monic rational
+recurrence of order $R$.  The assertion includes singular $T$, zero $v$, repeated
+eigenvalues and signed transients.
+
+**Proof.** Cayley--Hamilton gives a monic annihilator of degree $N$. Multiplying it
+by $z^{R-N}$ gives a monic $q(z)$ of degree $R$ annihilating every sequence
+$s_k(v)$.  Solve over $\mathbb Q$ for coefficients $\gamma_0,\ldots,\gamma_{R-1}$
+in the $bR$ equations
+
+$$
+s_{k+R}(v)+\sum_{i=0}^{R-1}\gamma_i s_{k+i}(v)=0,
+\qquad 0\le k<R.
+\tag{77.5}
+$$
+
+The system has a solution because the coefficients of $q$ are one.  Let $p$ be
+the resulting monic polynomial and let $\widetilde s$ be the sequence generated
+by $p$ from the first $R$ values of $s$.  The first $R$ values of
+$d=s-\widetilde s$ vanish, and (77.5) gives the next $R$ values as zero.  The
+operator product $pq$ annihilates both $s$ and $\widetilde s$, hence annihilates
+$d$.  A monic recurrence of order $2R$ with $2R$ initial zero vectors has every
+later vector zero by forward induction.  Thus $s=\widetilde s$.  This proves both
+finite determination and exact rational continuation. $\square$
+
+The recurrence is a local calculation on the returned scalars.  It is not a
+preinstalled response oracle and it does not identify the order $N$ with the
+visible rank of the initial field.
+

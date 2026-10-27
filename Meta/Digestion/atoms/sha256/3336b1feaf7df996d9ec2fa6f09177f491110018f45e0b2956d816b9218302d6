@@ -1,0 +1,26 @@
+**Proposition 22.1 (a sufficient propagation alternative and its resource distinction).** On exactly the installation of §17, repeated first-arrival assays from one persistent raw anchor also suffice to acquire the acted label after each single successful edit. This alternative uses adjacency propagation; the marking acquisition above does not need it. Neither construction is asserted to minimize the whole resource vector.
+
+Proof. Fix raw anchor $h=1$ at a settled current source. Reset, Add$(h,1)$, and Hold. At each positive Tick, Hold and Read just the still-pending other raw terminals until each has first returned nonzero, removing a terminal from the pending list when it arrives. NLBA Lemma 2.1 says that its first epoch is exactly $d(\lambda(h),\lambda(k))$ and its first value is one. Finite connectivity proves termination without a size bound. This is the existing first-arrival fact, applied to raw-labelled terminals without using their original order.
+
+Let $d,d'$ be the distances before and after one successful edit whose inherited old label is $j$. Every old edge persists and the terminal carrying $j$ moves one edge farther outward, for either growth template. Thus for distinct old labels $r,k$,
+
+$$
+d'(r,k)-d(r,k)={\bf1}_{r=j}+{\bf1}_{k=j}.
+\tag{NLBAII.17}
+$$
+
+When $j\ne h$, the anchor-row change on old $k\ne h$ is a single one at $j$. When $j=h$, all those entries increase by one. Since the old roster has at least three terminals, these signatures are distinct. Comparing consecutive earned rows identifies $j$, and the fixed append rule identifies a split's new label. The same old-frontier traversal therefore earns the two maps. One may omit the last new row: after the first $L-1$ distinct initial labels have been identified, the last original leaf has the sole unused initial label. This elimination uses actual recorded labels, not a supplied correspondence.
+
+For example, an alternative that measures the initial row and the rows after the first $L-1$ leaf edits has $L$ unit trials on actual intermediate sources $u_s$, $s=0,\ldots,L-1$. Write $N_s=|V(u_s)|$, let $D_s$ be the current anchor eccentricity and set
+
+$$
+K=\sum_{s=0}^{L-1}D_s,
+\qquad
+R_{\rm row}=\sum_{s=0}^{L-1}\sum_{k\ne h}d_s(h,k).
+\tag{NLBAII.18}
+$$
+
+Including final Reset/Hold, that specified schedule uses Reset $L+1$, Add $L$, Tick $K$, Read $R_{\rm row}$ and Hold $K+L+1$. Its direct source field additions are $2\sum_s D_s(N_s-1)+L$, before its additional actual dispatch, decoding and retention work. These are counts on that alternative's own one run. Marking instead has the counts of Theorem 21.2, more unit Adds and no propagation; no sum of different alternatives' separately best coordinates is claimed attained.
+
+Reacquiring the complete raw leaf metric after every edit is another sufficient choice, using one pulse at every current terminal rather than one anchor trial at that stage; (NLBAII.17) still identifies the inherited label. The old NLBA ordered-roster installation is a sufficient stationary alternative when authentic initial order is already supplied, and preserves the entry source. Guard-only constructor traversal can suffice for source syntax with appropriate destructive updates, but syntax by itself contains no arbitrary raw bijection, as Proposition 20.4 proves. The final rearming of the marking schedule is also dispensable if followed immediately by final Reset; omitting its one or two Adds changes its attained counts, not its correspondence theorem. These are sufficient operational comparisons, not a whole-resource optimum. $\square$
+

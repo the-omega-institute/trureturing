@@ -1,0 +1,54 @@
+**定理 9.1（关系系数同时控制统计与相位）。**
+在五模式复表示中，另供应对角门
+$U_f(t)=e^{-\mathrm{i} t\operatorname{diag}(f)}$。
+定义正振幅域上的关系相位
+
+$$
+\Phi=\theta_0+\theta_{13}-\theta_1-\theta_3,\qquad
+\psi_s=\sqrt{p_s}\,e^{-\mathrm{i}\theta_s}.
+$$
+
+则
+
+$$
+\frac{\partial\,\mathbb E_pf}{\partial\kappa}=J_f,\qquad
+\Phi(t)=\Phi(0)+tJ_f\pmod{2\pi}.
+$$
+
+整体及单位置相位平移
+$\theta_s\mapsto\theta_s+\alpha_0+\alpha_xx_s+\alpha_yy_s+\alpha_zz_s$
+不改变 $\Phi$。
+在底面两逻辑位上，$U_f(t)$ 为两侧局部门的张量积，
+当且仅当 $tJ_f\in2\pi\mathbb Z$；
+否则它把 $|++\rangle$ 变成纠缠态。
+
+证明。
+统计式来自定理 [2.3](#thm:fiber)。
+门使 $\theta_s$ 增加 $tf_s$，代入四角差分得相位式；
+对单位置仿射相位代入则四角差分为零。
+
+在逻辑底面，用 $a,b\in\{0,1\}$ 写
+
+$$
+f_{ab}=f_{00}+(f_{10}-f_{00})a+(f_{01}-f_{00})b+J_fab.
+$$
+
+前三项只给整体及两侧相位。
+输出 $|++\rangle$ 的系数矩阵为
+$C_{ab}=\tfrac12e^{-\mathrm{i} tf_{ab}}$，
+其行列式为
+
+$$
+\det C=\frac14e^{-\mathrm{i} t(f_{10}+f_{01})}
+                 (e^{-\mathrm{i} tJ_f}-1).
+$$
+
+两位纯态可分当且仅当该矩阵秩一，
+所以得到必要性、充分性及纠缠结论。
+证毕。
+
+这正是关系丛卷 §18 的统计与相位接口在五模式上的形式 [bundle](#ref-bundle)。
+它给隐藏关系一个具体动力学作用：
+一个对三均值不可见的系数，可以在已供应的相位执行器中积累可测试相位。
+但函数 $f$ 存在与自然界能够执行 $e^{-\mathrm{i} t\operatorname{diag}(f)}$ 仍是两个条件。
+

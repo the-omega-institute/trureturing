@@ -1,0 +1,51 @@
+**Definition 39.2 (earned syntax and the actual chain word).** First actually Hold and run the all-$P$ traversal of Definition 24.1, namely [AAII Definition 54.1 and Theorem 54.2](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md). Consume every complete Growth or tagged refusal and return. This earns separate entry and current constructor words for $t$ and $\nu(t)$, without earning the arbitrary raw permutation. It makes $2L-1$ actual $P$ calls, of which $a$ succeed; its other replies are $L-1$ branch refusals and $c$ wrong-type refusals. No $S$, field input or scalar Read occurs in this pass. Every original logical leaf is now beta, the raw length is still $L$, and the actual entire field is still zero.
+
+Index the earned original logical leaves by $i=0,\ldots,L-1$ in their original left-to-right order, at addresses $p_i$, and retain their original types $\eta_i$. Put
+
+$$
+q_i=p_iL,\qquad
+\delta_i=d_{C(\nu(t))}(q_0,q_i),\qquad
+D_0=\max_{0\le i<L}\delta_i,
+\tag{NLBAII.50}
+$$
+
+where these distances are finite local computations on the earned graph, not observations of an unknown wave response. Define
+
+$$
+k_0=1,\qquad
+k_i=D_0+i+4-\delta_i\quad(1\le i<L),\qquad
+K=\sum_{i=0}^{L-1}k_i,\qquad D=D_0+L+3.
+\tag{NLBAII.51}
+$$
+
+For $i=0,\ldots,L-1$, in that order, perform the $k_i$ actual splits at
+
+$$
+p_i,\ p_iL,\ \ldots,\ p_iL^{k_i-1}.
+\tag{NLBAII.52}
+$$
+
+Here $L^s$ in an address means $s$ repetitions of the left letter. At split $(i,s)$, $0\le s<k_i$, consume the complete Growth reply and record the appended label and address
+
+$$
+\ell(i,s)=L+\sum_{h<i}k_h+s+1,
+\qquad \ell(i,s)\longmapsto p_iL^sR.
+\tag{NLBAII.53}
+$$
+
+The label is obtained from the installed append rule and the maintained actual length, not from the Growth payload or a concealed allocation ordinal. In particular the first split earns the usable raw anchor
+
+$$
+r_*=L+1=\ell(0,0),\qquad z=p_0R.
+\tag{NLBAII.54}
+$$
+
+Never act at any of the appended right leaves. Let $u$ be the resulting actual term, obtained by replacing original leaf $i$ by $B_{k_i}$, where $B_0=\beta$ and $B_{s+1}=\langle B_s,\alpha\rangle$. Its ordered constructor word and material graph are maintained from the actual replies. For proof only, write $j_i$ for the unknown original raw label of cone $i$. Its current terminal is
+
+$$
+v_i=p_iL^{k_i+1}.
+\tag{NLBAII.55}
+$$
+
+The controller uses the earned logical addresses for growth and known raw integers for field calls; no $j_i$ is an operand before acquisition.
+
