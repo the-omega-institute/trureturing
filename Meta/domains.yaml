@@ -119,6 +119,9 @@ domains:
   Hamming:
     stratum: S3
     definition: Mixed-alphabet Hamming graph partitions, coordinate-line cliques, and their maximality and direction-completeness.
+  HilbertOperators:
+    stratum: S3
+    definition: Approximation numbers, min-max bounds, finite-dimensional attainment and finite Ky Fan gauge inequalities for bounded rectangular maps between arbitrary real or complex Hilbert spaces with independent source and target universes.
   History:
     stratum: S0
     definition: Finite marker and event histories, their append operation, and faithful self-encoding bridges.
