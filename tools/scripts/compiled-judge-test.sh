@@ -8,7 +8,7 @@ unset SEARCH_REDUCTION_INDEX
 # compile those modules one at a time before the ordinary aggregate build.
 make -C "$ROOT" search-reduction-index-fixtures
 search_reduction_modules=(
-  GraphCandidates GraphModel LookupModel LookupBaseline LookupTests LookupRecallTests LookupColdTests LookupCacheTests LookupIsolationTests GraphCalibration Baseline Model FiniteModel PresentationBaseline Candidates PresentationCandidates
+  GraphCandidates GraphModel LookupModel LookupBaseline LookupTests LookupRecallTests LookupColdTests LookupCacheTests LookupIsolationTests IsolationUnitTests GraphCalibration Baseline Model FiniteModel PresentationBaseline Candidates PresentationCandidates
   FaultPaths SingleSourceModel PresentationCoverage RawOriginsTests SingleSourceTests PublicationMutation
   Calibration Faults RealNegative
   VocabularyCandidates VocabularyModel VocabularyTransport VocabularyTests InformationTests

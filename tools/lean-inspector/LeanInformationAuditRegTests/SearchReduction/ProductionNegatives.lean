@@ -6,11 +6,11 @@ stop are separate results. No heartbeat injection or alternate index is used. -/
 open Lean Meta Elab Command LeanInformationAudit.SearchReduction
 open LeanInformationAudit.Tests.SearchReduction.ProductionNegativeCandidates
 set_option Elab.async false
-set_option maxHeartbeats 0
-
+set_option maxHeartbeats 0 in
 run_cmd do
   let some selected ← IO.getEnv "SEARCH_REDUCTION_NEGATIVE_CASE"
-    | throwError "set SEARCH_REDUCTION_NEGATIVE_CASE via the production-negative make target"
+    | return
+  if selected.isEmpty then return
   let fixtures : Array (String × Name × Array Name × ObviousCertificate × String) := #[
     ("kappa", ``squareVia, #[``squareFact], .lookup ``Nat.exists_mul_self, "searchKappa"),
     ("G", ``squareVia, #[``squareFact], .lookup ``Nat.exists_mul_self, "coveragePrefixG"),

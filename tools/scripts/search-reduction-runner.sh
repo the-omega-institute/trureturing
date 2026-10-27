@@ -13,7 +13,7 @@ case "${1:-}" in
     make search-reduction-probe-cache-test
     modules=(GraphModel LookupModel CertificateModel CertificateTests CertificateScope
       ProbeCacheKernel ProbeCacheReplay ProbeCacheReplayCertificate ProbeCacheReplayVerdict
-      LookupPruningTests LookupTests LookupRecallTests LookupColdTests LookupCacheTests LookupIsolationTests LookupTelemetry LookupScope NativeCertification GraphCalibration PublicationMutation
+      LookupPruningTests LookupTests LookupRecallTests LookupColdTests LookupCacheTests LookupIsolationTests IsolationUnitTests LookupTelemetry LookupScope NativeCertification GraphCalibration PublicationMutation
       Calibration FaultPaths SingleSourceModel VocabularyModel PresentationCoverage
       SingleSourceTests RawOriginsTests Faults RealNegative VocabularyTransport
       VocabularyTests InformationTests)

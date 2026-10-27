@@ -55,6 +55,35 @@ private partial def restatementDomain (source base : Environment) (pending : Lis
             dependencies := dep :: dependencies
     restatementDomain source base dependencies (seen.insert n)
 
+/-- The production per-check boundary, including durable named fault readings.
+Recursive work inside the action shares this allocation. -/
+def withRestatementUnit (target n : Name) (phase : IO.Ref String)
+    (action : MetaM Unit) : MetaM Nat := do
+  let started ← IO.getNumHeartbeats
+  let record (status : String) : MetaM Unit := do
+    let used := (← IO.getNumHeartbeats) - started
+    let row := Json.mkObj [
+      ("target", toJson target.toString), ("source", toJson n.toString),
+      ("guard", toJson "single-source-and-legacy-restatement"),
+      ("status", toJson status), ("internal_heartbeats", toJson used),
+      ("external_heartbeats", toJson (used / 1000)),
+      ("limit_external", toJson reconstructionBudget)]
+    isolationUnitReadings.modify (·.push row)
+    IO.eprintln s!"ISOLATION_CHECK_UNIT {row.compress}"
+  catchLookupCandidate
+    (withTheReader Core.Context (fun ctx => {ctx with
+        initHeartbeats := started, maxHeartbeats := reconstructionBudget * 1000}) do
+      phase.set s!"restatement-unit:{target}:{n}:single-source-and-legacy"
+      action
+      checkSystem "isolation.restatement-unit"
+      record "complete")
+    (fun ex => do
+      let rejection ← isolationRejection.get
+      record (if ex.isMaxHeartbeat then "incomplete:unit-heartbeat"
+        else if rejection.isSome then "reject" else "fault")
+      throw ex)
+  return (← IO.getNumHeartbeats) - started
+
 /-- One complete single-source plus legacy check owns one allocation. All
 recursive legacy calls share it; only the enclosing continuation excludes it. -/
 private def checkRestatementUnits (source : Environment) (target : Name)
@@ -62,35 +91,13 @@ private def checkRestatementUnits (source : Environment) (target : Name)
     (phase : IO.Ref String) : List Name → MetaM Nat
   | [] => pure 0
   | n :: rest => do
-    let started ← IO.getNumHeartbeats
-    let record (status : String) : MetaM Unit := do
-      let used := (← IO.getNumHeartbeats) - started
-      let row := Json.mkObj [
-        ("target", toJson target.toString), ("source", toJson n.toString),
-        ("guard", toJson "single-source-and-legacy-restatement"),
-        ("status", toJson status), ("internal_heartbeats", toJson used),
-        ("external_heartbeats", toJson (used / 1000)),
-        ("limit_external", toJson reconstructionBudget)]
-      isolationUnitReadings.modify (·.push row)
-      IO.eprintln s!"ISOLATION_CHECK_UNIT {row.compress}"
-    catchLookupCandidate
-      (withTheReader Core.Context (fun ctx => {ctx with
-          initHeartbeats := started, maxHeartbeats := reconstructionBudget * 1000}) do
-        phase.set s!"restatement-unit:{target}:{n}:single-source-and-legacy"
-        let info ← checkedSource source n
-        let type ← copyStatement source n info.type
-        let single := (← singleSourceConversion targetType type).isSome
-        if single || (← certifiedRestatement targetType type index (some normalization)) then
-          isolationRejection.set (some s!"single-source-and-legacy-restatement:{target}:{n}")
-          throwError "search.target_restatement: {n}"
-        checkSystem "isolation.restatement-unit"
-        record "complete")
-      (fun ex => do
-        let rejection ← isolationRejection.get
-        record (if ex.isMaxHeartbeat then "incomplete:unit-heartbeat"
-          else if rejection.isSome then "reject" else "fault")
-        throw ex)
-    let used := (← IO.getNumHeartbeats) - started
+    let used ← withRestatementUnit target n phase do
+      let info ← checkedSource source n
+      let type ← copyStatement source n info.type
+      let single := (← singleSourceConversion targetType type).isSome
+      if single || (← certifiedRestatement targetType type index (some normalization)) then
+        isolationRejection.set (some s!"single-source-and-legacy-restatement:{target}:{n}")
+        throwError "search.target_restatement: {n}"
     withTheReader Core.Context (fun ctx => {ctx with initHeartbeats := ctx.initHeartbeats + used}) do
       return used + (← checkRestatementUnits source target targetType index normalization phase rest)
 
@@ -240,6 +247,19 @@ private def prepareAdditions (source base : Environment) (index : FactIndex) :
       let (types, remainingUsed) ← prepareAdditions source base index rest types
       return (types, used + remainingUsed)
 
+/-- The operation pair and actual stop survive every isolation exception. -/
+def isolationFailure (ex : Exception) (paired : Bool) (stage : String) : IO (Failure × String) := do
+  let failure := if ex.isMaxHeartbeat then Failure.heartbeat
+    else if ex.isInterrupt then .cancelled
+    else if ex.isRuntime then .execution else .isolation
+  let arm := if paired then "paired" else "baseline"
+  let detail ← ex.toMessageData.toString
+  let reason := if ex.isMaxHeartbeat then
+      s!"search.isolation_reconstruction_heartbeat: arm={arm};stage={stage};\
+        limit={reconstructionBudget};{detail}"
+    else s!"{detail};isolation_arm={arm};isolation_stage={stage}"
+  return (failure, reason)
+
 /-- Reconstruct one arm without running or pricing any graph query. -/
 def prepare (source base : Environment) (request : Request)
     (paired : Bool) (originalBaseline? : Option Environment := none) : IO (Except (Failure × String) (Environment × ConstantInfo × Option Attempt)) := do
@@ -326,17 +346,7 @@ def prepare (source base : Environment) (request : Request)
       if state.messages.hasErrors then return .error (.execution, "search.isolation_errors")
       return .ok value
     | .error ex =>
-      let failure := if ex.isMaxHeartbeat then Failure.heartbeat
-        else if ex.isInterrupt then .cancelled
-        else if ex.isRuntime then .execution else .isolation
-      let arm := if paired then "paired" else "baseline"
-      let detail ← ex.toMessageData.toString
-      let stage ← phase.get
-      let reason := if ex.isMaxHeartbeat then
-          s!"search.isolation_reconstruction_heartbeat: arm={arm};stage={stage};\
-            limit={reconstructionBudget};{detail}"
-        else s!"{detail};isolation_arm={arm};isolation_stage={stage}"
-      return .error (failure, reason)
+      return .error (← isolationFailure ex paired (← phase.get))
   catch ex => return .error (.execution, ex.toString)
 
 /-- Provenance uses source identity, never program size as a reuse criterion.
