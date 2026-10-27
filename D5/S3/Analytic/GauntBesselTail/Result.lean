@@ -14,12 +14,17 @@ No settlement theorem is asserted by the definitions alone.
 -/
 
 import D5.S3.Analytic.GammaGammaNBU.Result
+import D5.S3.Zeros.Jensen.FactorialJensenKernelBound
+import Mathlib.Analysis.SpecialFunctions.Gaussian.FourierTransform
+import Mathlib.Analysis.Calculus.ParametricIntegral
+import Mathlib.MeasureTheory.Integral.ExpDecay
+import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Analysis.Convex.Deriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 
 open Real Set MeasureTheory Filter
-open scoped Topology
+open scoped Topology Asymptotics
 noncomputable section
 namespace D5.S3.Analytic.GauntBesselTail.Result
 open D5.S3.Analytic.GammaGammaNBU.Result (besselK)
@@ -138,5 +143,143 @@ private lemma parameters {ν n : ℝ} (hn : n < 1)
   have hb : sqrt ((ν+n)^2-2*ν-1) < ν+n-1 := by nlinarith
   exact ⟨hdisc, by linarith, by linarith⟩
 
+
+private lemma cosh_quadratic (u : ℝ) : 1+u^2/2 ≤ cosh u := by
+  have h := D5.S3.Zeros.Jensen.FactorialJensenKernelBound.even_sum_le_cosh
+    2 (u^2) (sq_nonneg u)
+  rw [sqrt_sq_eq_abs, cosh_abs] at h
+  norm_num [D5.S3.Zeros.Jensen.FactorialJensenKernelBound.evenFactorialSum,
+    Fin.sum_univ_two] at h
+  exact h
+
+private lemma exponential_kernel_integrable (z A : ℝ) (hz : 0 < z) :
+    Integrable (fun u : ℝ => exp (-z*cosh u+A*u)) := by
+  have hi := (integrable_cexp_quadratic (b := ((z/2 : ℝ) : ℂ))
+    (by simpa using half_pos hz) (A : ℂ) 0).norm
+  have hg : Integrable (fun u : ℝ => exp (-(z/2)*u^2+A*u)) := by
+    convert hi using 1
+    ext u
+    simp [Complex.norm_exp, Complex.mul_re, pow_two]
+  apply hg.mono' (by fun_prop)
+  filter_upwards with u
+  rw [Real.norm_of_nonneg (exp_nonneg _)]
+  apply exp_le_exp.mpr
+  have h := mul_le_mul_of_nonneg_left (cosh_quadratic u) hz.le
+  nlinarith
+
+private lemma bessel_kernel_integrable (r z : ℝ) (hz : 0 < z) :
+    IntegrableOn (fun u : ℝ => exp (-z*cosh u)*cosh (r*u)) (Ioi 0) := by
+  have hi := ((exponential_kernel_integrable z r hz).add
+    (exponential_kernel_integrable z (-r) hz)).div_const 2
+  apply hi.integrableOn.congr
+  filter_upwards with u
+  dsimp
+  simp only [cosh_eq, exp_add, neg_mul]
+  ring
+
+private lemma bessel_cosh_integrable (r z : ℝ) (hz : 0 < z) :
+    IntegrableOn (fun u : ℝ => exp (-z*cosh u)*cosh u*cosh (r*u)) (Ioi 0) := by
+  have hi := ((bessel_kernel_integrable (r+1) z hz).add
+    (bessel_kernel_integrable (r-1) z hz)).div_const 2
+  apply hi.congr
+  filter_upwards with u
+  dsimp
+  rw [add_mul, sub_mul, one_mul, cosh_add, cosh_sub]
+  ring
+
+private lemma bessel_hasDerivAt (r : ℝ) {z : ℝ} (hz : 0 < z) :
+    HasDerivAt (besselK r)
+      (-(∫ u in Ioi 0, exp (-z*cosh u)*cosh u*cosh (r*u))) z := by
+  have hd := hasDerivAt_integral_of_dominated_loc_of_deriv_le
+    (μ := volume.restrict (Ioi (0 : ℝ))) (F := fun z u : ℝ => exp (-z*cosh u)*cosh (r*u))
+    (F' := fun z u : ℝ => -(exp (-z*cosh u)*cosh u*cosh (r*u)))
+    (s := Ioi (z/2)) (bound := fun u => exp (-(z/2)*cosh u)*cosh u*cosh (r*u))
+    (Ioi_mem_nhds (by linarith : z/2 < z))
+    (Eventually.of_forall (fun _ => by fun_prop)) (bessel_kernel_integrable r z hz)
+    (by fun_prop) ?_ (bessel_cosh_integrable r (z/2) (half_pos hz)) ?_
+  · unfold besselK
+    simpa only [integral_neg] using hd.2
+  · filter_upwards with u
+    intro t ht
+    rw [norm_neg, Real.norm_of_nonneg (by positivity)]
+    gcongr
+    exact ht.le
+  · filter_upwards with u
+    intro t _
+    convert (((hasDerivAt_id t).neg.mul_const (cosh u)).exp).mul_const (cosh (r*u)) using 1
+    · rfl
+    · dsimp
+      ring
+
+private lemma integral_decay (f : ℝ → ℝ) (hf : ∀ u ∈ Ioi 0, 0 ≤ f u)
+    (hi : ∀ z : ℝ, 0 < z → IntegrableOn (fun u => exp (-z*cosh u)*f u) (Ioi 0))
+    {t : ℝ} (ht : 1 ≤ t) :
+    |∫ u in Ioi 0, exp (-t*cosh u)*f u| ≤
+      exp (-t/2)*(∫ u in Ioi 0, exp (-(1/2:ℝ)*cosh u)*f u) := by
+  have hn : 0 ≤ ∫ u in Ioi 0, exp (-t*cosh u)*f u := by
+    apply integral_nonneg_of_ae
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
+    exact mul_nonneg (exp_nonneg _) (hf u hu)
+  rw [abs_of_nonneg hn, ← integral_const_mul]
+  apply integral_mono_ae (hi t (by linarith)) ((hi (1/2) (by norm_num)).const_mul _)
+  filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
+  rw [← mul_assoc, ← exp_add]
+  apply mul_le_mul_of_nonneg_right _ (hf u hu)
+  apply exp_le_exp.mpr
+  have hc := one_le_cosh u
+  nlinarith [mul_nonneg (sub_nonneg.mpr ht) (sub_nonneg.mpr hc)]
+
+private lemma bessel_bigO (r : ℝ) :
+    (besselK r) =O[atTop] (fun t : ℝ => exp (-t/2)) := by
+  apply Asymptotics.IsBigO.of_bound (besselK r (1/2))
+  filter_upwards [eventually_ge_atTop (1 : ℝ)] with t ht
+  simpa only [Real.norm_eq_abs, abs_of_pos (exp_pos _), besselK, mul_comm] using
+    integral_decay (fun u => cosh (r*u)) (fun _ _ => (cosh_pos _).le)
+      (fun z hz => bessel_kernel_integrable r z hz) ht
+
+private lemma weighted_decay {F : ℝ → ℝ} (hF : ContinuousOn F (Ioi 0))
+    (hb : F =O[atTop] (fun t : ℝ => exp (-t/2))) (ν : ℝ) {x : ℝ} (hx : 0 < x) :
+    IntegrableOn (fun t => t^(-ν)*F t) (Ioi x) ∧
+    Tendsto (fun t => t^(-ν)*F t) atTop (𝓝 0) := by
+  have h := (isLittleO_rpow_exp_pos_mul_atTop (-ν) (by norm_num : 0 < (1/4:ℝ))).mul_isBigO hb
+  have ho : (fun t => t^(-ν)*F t) =o[atTop] (fun t : ℝ => exp (-(1/4:ℝ)*t)) := by
+    convert h using 1
+    ext t
+    rw [← exp_add]
+    congr 1
+    ring
+  have hc : ContinuousOn (fun t => t^(-ν)*F t) (Ici x) := by
+    apply (continuousOn_id.rpow_const (fun t ht => Or.inl (ne_of_gt (lt_of_lt_of_le hx ht)))).mul
+    exact hF.mono (fun t ht => lt_of_lt_of_le hx ht)
+  refine ⟨integrable_of_isBigO_exp_neg (by norm_num : 0 < (1/4:ℝ)) hc ho.isBigO, ?_⟩
+  apply ho.tendsto_zero_of_tendsto
+  exact tendsto_exp_atBot.comp (tendsto_id.const_mul_atTop_of_neg (by norm_num : -(1/4:ℝ) < 0))
+
+private lemma tail_integrable (ν r : ℝ) {x : ℝ} (hx : 0 < x) :
+    IntegrableOn (fun t => t^(-ν)*besselK r t) (Ioi x) :=
+  (weighted_decay (fun _ ht => (bessel_hasDerivAt r ht).continuousAt.continuousWithinAt)
+    (bessel_bigO r) ν hx).1
+
+private lemma weighted_bessel_tendsto (ν r : ℝ) :
+    Tendsto (fun t => t^(-ν)*besselK r t) atTop (𝓝 0) :=
+  (weighted_decay (fun _ ht => (bessel_hasDerivAt r ht).continuousAt.continuousWithinAt)
+    (bessel_bigO r) ν (show (0:ℝ) < 1 by norm_num)).2
+
+private lemma abs_sinh_le_cosh (u : ℝ) : |sinh u| ≤ cosh u := by
+  apply abs_le.mpr
+  constructor
+  · simpa only [sinh_neg, cosh_neg, neg_le_neg_iff] using (sinh_lt_cosh (x := -u)).le
+  · exact (sinh_lt_cosh (x := u)).le
+
+private lemma bessel_sinh_integrable (r z : ℝ) (hz : 0 < z) :
+    IntegrableOn (fun u : ℝ => exp (-z*cosh u)*sinh (r*u)*sinh u) (Ioi 0) := by
+  apply (bessel_cosh_integrable r z hz).mono' (by fun_prop)
+  filter_upwards with u
+  rw [norm_mul, norm_mul, Real.norm_eq_abs, Real.norm_eq_abs,
+    Real.norm_of_nonneg (exp_nonneg _)]
+  calc
+    _ ≤ exp (-z*cosh u)*cosh (r*u)*cosh u := by
+      gcongr <;> apply abs_sinh_le_cosh
+    _ = _ := by ring
 
 end D5.S3.Analytic.GauntBesselTail.Result
