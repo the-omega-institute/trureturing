@@ -110,7 +110,10 @@ internal sealed class BlowUpMatchingAdjacencyTransferDocument : IScribeDocumentD
                             + "so the matrix entry with row (v,j) and column (v,ρ.val j) equals i. "
                             + "The propagator at negative time −π/2 is exactly this positive-sign "
                             + "matrix exponential. Since Complex.normSq i = 1, the asserted HasPST follows."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("monterde-pal-kirkland-2025-blowup-matching-adjacency-transfer"),
+                    ResolutionKind.Proved)))));
 
     private static Formula IntegralSupportFormula()
     {
