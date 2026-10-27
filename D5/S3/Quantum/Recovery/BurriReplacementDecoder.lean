@@ -135,7 +135,7 @@ theorem source_svd :
   have hd : Matrix.diagonal (RCLike.ofReal ∘ h.eigenvalues) =
       Matrix.diagonal (fun i => (h.eigenvalues i : ℂ)) := by
     ext i j
-    simp [Function.comp_apply, RCLike.ofReal_eq_complex_ofReal]
+    simp [Matrix.diagonal_apply, Function.comp_apply, RCLike.ofReal_eq_complex_ofReal]
   have hspec : M * U = (H : Matrix P P ℂ) *
       Matrix.diagonal (fun i => (h.eigenvalues i : ℂ)) * (H : Matrix P P ℂ)ᴴ := by
     have hspectral : M * U = (H : Matrix P P ℂ) *
