@@ -1,4 +1,3 @@
-// Blueprint source for ordinary integrability of the complete selected-domain responses.
 using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
@@ -12,10 +11,7 @@ internal sealed class AutomaticCubicResponseIntegrabilityDocument : IScribeDocum
         H("Ordinary Integrability of the Complete Actual and Cubic Responses"),
         Blocks(
             Paragraph(Text(
-                "The theorem complete_selected_responses_integrable supplies "
-                + "the two ordinary response-integrability premises required for "
-                + "integrating a cubic replacement estimate, using only the "
-                + "existing original bounds and the complete selected domain.")),
+                "Both literal responses are integrable on the unchanged complete selected domain from its original bounds. The moving center uses the exact log-log primitive and the finite clock atoms use measurable threshold restrictions.")),
             Describe.Lean(
                 DescribeId.Create("complete-selected-responses-integrable"),
                 DeclarationHandle.Create(Prefix + "complete_selected_responses_integrable"),

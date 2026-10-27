@@ -1,4 +1,3 @@
-// CANDIDATE: candidate Scribe source; not emitted, compiled, frozen or accepted.
 using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
@@ -8,17 +7,11 @@ internal sealed class CompleteCubicErrorDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Arith/Robin/CompleteCubicError.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Candidate elementary cubic replacement error on the unchanged complete original selected domain, with ordinary integrability supplied and no prime-distribution premise.",
+        "Elementary cubic replacement error on the unchanged complete original selected domain, with ordinary integrability supplied and no prime-distribution premise.",
         H("An Elementary Complete-Domain Cubic Replacement Budget"),
         Blocks(
             Paragraph(Text(
-                "CANDIDATE. This Describe corresponds to the uncompiled Lean "
-                + "candidate complete_selected_cubic_error. Neither this Scribe "
-                + "source nor that Lean candidate has been emitted or accepted. "
-                + "The candidate depends on the likewise uncompiled canonical "
-                + "AutomaticCubicResponseIntegrability module; the dependency "
-                + "must first be installed and checked before this candidate can "
-                + "be checked as a module.")),
+                "Elementary active-prime counting and automatic response integrability give a vanishing replacement-error budget on the complete unchanged original domain, with no prime-distribution premise.")),
             Describe.Lean(
                 DescribeId.Create("complete-selected-cubic-error"),
                 DeclarationHandle.Create(Prefix + "complete_selected_cubic_error"),
@@ -87,7 +80,7 @@ internal sealed class CompleteCubicErrorDocument : IScribeDocumentDefinition
                         + "(399+38/5)t^(-1/20)<=408t^(-1/20). Since "
                         + "ell<=t on S, the negative power is at most ell^(-1/20).")),
                     Paragraph(Text(
-                        "The candidate directly consumes "
+                        "The proof directly consumes "
                         + "AutomaticCubicResponseIntegrability."
                         + "complete_selected_responses_integrable to establish "
                         + "both ordinary IntegrableOn premises from the same "
@@ -114,7 +107,7 @@ internal sealed class CompleteCubicErrorDocument : IScribeDocumentDefinition
                         + "a fixed kappa<sqrt(2)/4 for EL.14, cofinal original "
                         + "witnesses, RH or unrestricted Robin. Those mathematical "
                         + "obligations remain beyond this replacement estimate. "
-                        + "The present source remains CANDIDATE and unaccepted."))),
+                        + "The signed prime-moment obligation remains open."))),
                 DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(
