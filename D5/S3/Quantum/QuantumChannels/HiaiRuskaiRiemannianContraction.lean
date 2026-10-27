@@ -367,7 +367,7 @@ private lemma tangent_coordinates (A : Matrix (Fin 2) (Fin 2) ℂ) (h : A.IsHerm
   ext i j
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
     simp [blochMatrix,spin,Complex.mul_re,Complex.mul_im] <;> ring
-private lemma rho_hermitian (w1 w2 w3 : ℝ) : ((blochMatrix 1 (WithLp.toLp 2 ![w1,w2,w3]))).IsHermitian := by
+lemma rho_hermitian (w1 w2 w3 : ℝ) : ((blochMatrix 1 (WithLp.toLp 2 ![w1,w2,w3]))).IsHermitian := by
   apply Matrix.IsHermitian.ext; intro i j
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
     simp [blochMatrix,spin,Complex.mul_re,Complex.mul_im]

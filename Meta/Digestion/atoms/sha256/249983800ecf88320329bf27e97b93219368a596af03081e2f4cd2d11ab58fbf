@@ -1,0 +1,269 @@
+3. For every affine predictor in Definition 12.1,
+
+$$
+\max_{\varepsilon,j,\tau}
+ \left|f(P_{\varepsilon j\tau})-q_I(P'_{\varepsilon j\tau})\right|
+ \ge4c=\frac{\sqrt{6Zr}}{1+\sqrt3}.
+\tag{12.9}
+$$
+
+   This finite-set minimax value is attained by
+   $f_*(R)=\frac{\sqrt3-1}{\sqrt3+1}q_R(R)$.
+   Thus (12.9) also bounds below the worst-input error on the entire
+   variable-height source. The same lower bound applies to the Euclidean
+   error of any affine predictor of the original $02$ pair or all ten
+   original outputs, by selecting their $q_I$ coordinate.
+
+4. For every common CPTP implementation in Definition 12.1,
+
+$$
+\begin{aligned}
+\max_{\varepsilon,j,\tau}
+ \left|q_I(\Phi(P_{\varepsilon j\tau}))
+              -q_I(P'_{\varepsilon j\tau})\right|&\ge4c,\\
+\max_{\varepsilon,j,\tau}
+ D\bigl(\Phi(P_{\varepsilon j\tau}),P'_{\varepsilon j\tau}\bigr)
+ &\ge2\sqrt2\,c
+   =\frac{\sqrt{3Zr}}{1+\sqrt3}>0.
+\end{aligned}
+\tag{12.10}
+$$
+
+   No optimality of the latter channel lower bound is asserted.
+   In particular no such channel implements this one original command
+   exactly throughout $\mathcal M$.
+
+**Proof.** Transport Theorems 9.2–9.3 give, with
+$A=K=m_\gamma=M_\gamma=0$ and $B=4\pi$,
+
+$$
+T(k,u,v)=\bigl(k,u+4\pi(1/2-k/r),v-4\pi k/r\bigr).
+\tag{12.11}
+$$
+
+The probability coordinate is unchanged at every intermediate time.
+The command is therefore lawful at every $0<k<L$ and every phase,
+with finite phase variation $4\pi$, and no other starting state in
+the specified source needs to be excluded. It appends to each actual
+history by adding $4\pi s$ to its own real control lift. It does not
+replace that lift by a common absolute phase.
+
+The values (12.5) are ordinary points of the two original circles.
+For example one may choose $v_+=0$, $v_-=\pi$, and
+$u_{\varepsilon j}=-\eta_0$ or $-\eta_0+\pi$ according as
+$\varepsilon s_j=1$ or $-1$. Transport Theorem 8.2 supplies an exact finite
+history for each such prescribed $(k_j,u,v)$ from the one chosen
+$k_{\rm in},\theta^{\rm in}$. Specifically its synthesis uses
+$L_*=2(u-v)$ and the zero-winding rectangle residual
+$h-L_*w(k_{\rm in})$, followed by the fixed-height phase leg of
+increment $L_*$ and a phase-fixed probability leg to $k_j$.
+These are precisely its original controls. Their finite collection
+of interior heights and finite real phase increments ensures full
+support and finite phase variation on every constituent history.
+Nothing requires a change of preparation, a sensor or a uniform
+resource bound over all of $\mathcal M$.
+
+For a calculation in the full original Hilbert space put
+
+$$
+\begin{aligned}
+|a\rangle&=|0\rangle+
+                  e^{-i(\eta_{13}-\eta_0)}|13\rangle,\\
+|b\rangle&=e^{-i\eta_1}|1\rangle+e^{-i\eta_3}|3\rangle,
+\qquad |e\rangle=|2\rangle.
+\end{aligned}
+\tag{12.12}
+$$
+
+Their supports are disjoint, $\|a\|^2=\|b\|^2=2$ and $\|e\|^2=1$.
+Equations (12.1) and (12.5) give exactly
+
+$$
+|\psi_{\varepsilon j\tau}\rangle
+ =\varepsilon s_j\sqrt{k_j}|a\rangle
+       +\tau\sqrt{L-k_j}|b\rangle+\sqrt Z|e\rangle.
+\tag{12.13}
+$$
+
+The squared norm is $2k_j+2(L-k_j)+Z=1$.
+At both heights all five probabilities are positive. Distinct heights
+give distinct rays; at a fixed height the positive middle entry fixes
+the ray gauge and both independent signs change nonzero entries.
+This proves distinctness and nondegeneracy for every permitted $Z$.
+
+Averaging the two values of $\tau$ first cancels every cross term
+involving $b$. The remaining expression at height $k_j$ is
+
+$$
+\begin{aligned}
+\frac12\sum_\tau P_{\varepsilon j\tau}
+ ={}&k_j|a\rangle\langle a|+(L-k_j)|b\rangle\langle b|
+          +Z|e\rangle\langle e|\\
+ &+\varepsilon s_j\sqrt{Zk_j}
+        (|a\rangle\langle e|+|e\rangle\langle a|).
+\end{aligned}
+\tag{12.14}
+$$
+
+The last term cancels on summing over $j$ because
+$\lambda_1\sqrt{Zk_1}=\lambda_2\sqrt{Zk_2}=c$.
+Writing $\bar k=\lambda_1k_1+\lambda_2k_2=\sqrt3\,r/8$ gives
+
+$$
+R_0=\bar k|a\rangle\langle a|
+       +(L-\bar k)|b\rangle\langle b|+Z|e\rangle\langle e|.
+\tag{12.15}
+$$
+
+In particular, if
+$W=\operatorname{diag}(1,e^{-i\eta_1},1,e^{-i\eta_3},
+e^{-i(\eta_{13}-\eta_0)})$, the common matrix is the complete
+five-mode matrix
+
+$$
+R_0=W
+\begin{pmatrix}
+\bar k&0&0&0&\bar k\\
+0&L-\bar k&0&L-\bar k&0\\
+0&0&Z&0&0\\
+0&L-\bar k&0&L-\bar k&0\\
+\bar k&0&0&0&\bar k
+\end{pmatrix}
+W^\dagger.
+\tag{12.16}
+$$
+
+This proves equality of every diagonal and every measured or unmeasured
+off-diagonal entry, not only equality of the native menu. Its nonzero
+eigenvalues are $2\bar k$, $2(L-\bar k)$ and $Z$, all positive.
+
+At $k_1$ the increments of $(u,v)$ in (12.11) are
+$(3\pi/2,-\pi/2)$; at $k_2$ they are $(\pi/2,-3\pi/2)$.
+Consequently the phase factors multiplying both bottom groups are
+$i$ at $k_1$ and $-i$ at $k_2$. These statements use reduction modulo
+$2\pi$ on each circle. They do not treat the real command increment
+$4\pi$ as an identity operation. The exact output representatives are
+
+$$
+|\psi'_{\varepsilon j\tau}\rangle
+ =i\varepsilon\sqrt{k_j}|a\rangle
+      +i s_j\tau\sqrt{L-k_j}|b\rangle+\sqrt Z|e\rangle.
+\tag{12.17}
+$$
+
+In the original $02$ orientation this gives
+
+$$
+C_{02}(P'_{\varepsilon j\tau})=-i\varepsilon\sqrt{Zk_j},
+\qquad q_I(P'_{\varepsilon j\tau})=-2\varepsilon\sqrt{Zk_j}.
+\tag{12.18}
+$$
+
+The cancellation over $\tau$ still removes every $b$ cross term.
+The two $a$--$e$ terms now add instead of canceling, so
+
+$$
+R'_\varepsilon
+ =R_0+2i\varepsilon c
+       (|a\rangle\langle e|-|e\rangle\langle a|).
+\tag{12.19}
+$$
+
+Since $a_0=1$, its $20$ entry is $-2i\varepsilon c$.
+This proves both signed readout assertions in (12.8).
+On the orthonormal pair $a/\sqrt2,e$, the difference $R'_+-R'_-$
+has matrix
+
+$$
+\begin{pmatrix}0&4i\sqrt2\,c\\-4i\sqrt2\,c&0\end{pmatrix};
+\tag{12.20}
+$$
+
+it is zero on the orthogonal complement. Its two nonzero eigenvalues
+are $4\sqrt2\,c$ and $-4\sqrt2\,c$. Thus its trace norm is
+$8\sqrt2\,c$ and its trace distance is $4\sqrt2\,c$.
+This verifies the normalization in (12.8).
+
+For an affine $f$, its weighted prediction on either list equals
+$f(R_0)$ by (12.7). If its maximum absolute error on the eight inputs
+is $E$, (12.18) therefore implies
+
+$$
+|f(R_0)+4c|\le E,\qquad |f(R_0)-4c|\le E.
+\tag{12.21}
+$$
+
+The triangle inequality gives $8c\le2E$, proving (12.9).
+For the asserted finite-set attainment, the original input readout is
+$q_R(P_{\varepsilon j\tau})=2\varepsilon s_j\sqrt{Zk_j}$.
+Put $t=(\sqrt3-1)/(\sqrt3+1)$. The absolute errors of $f_*=tq_R$
+at the two heights are respectively
+
+$$
+2\sqrt{Zk_1}(1+t)=4c,
+\qquad 2\sqrt{Zk_2}(1-t)=4c.
+\tag{12.22}
+$$
+
+They do not depend on $\varepsilon$ or $\tau$. This is attainment
+only on these eight inputs; no full-source minimax equality is inferred.
+
+For a CPTP $\Phi$, $q_I\circ\Phi$ is an affine predictor, so (12.9)
+gives the first inequality of (12.10). For its state error put
+
+$$
+E_D=\max_{\varepsilon,j,\tau}
+       D\bigl(\Phi(P_{\varepsilon j\tau}),P'_{\varepsilon j\tau}\bigr).
+$$
+
+Linearity of $\Phi$ and convexity of the trace norm give, separately
+for each sign,
+
+$$
+D(\Phi(R_0),R'_\varepsilon)
+ \le\sum_{j,\tau}\frac{\lambda_j}{2}
+       D\bigl(\Phi(P_{\varepsilon j\tau}),P'_{\varepsilon j\tau}\bigr)
+ \le E_D.
+\tag{12.23}
+$$
+
+Apply the triangle inequality between $R'_+$ and $R'_-$ to obtain
+$4\sqrt2\,c\le2E_D$. This proves the second inequality of (12.10).
+In unhalved trace norm its lower bound is $4\sqrt2\,c$.
+For comparison, the single-observable inequality is
+$|q_I(R)-q_I(S)|\le\|R-S\|_1=2D(R,S)$; using that inequality alone
+would give only $E_D\ge2c$. The stronger bound in (12.10) uses both
+original $0$--$2$ and $13$--$2$ matrix entries in (12.19), without
+adding either to the native measurement menu. $\square$
+
+The convex compatibility step is established mathematics. In
+Simon–Bužek–Gisin, [*The no-signaling condition and quantum dynamics*,
+equations (1)–(5)][SBG12], their pure projectors correspond here to
+$P_{\varepsilon j\tau}$, their weights to $\lambda_j/2$, and their
+component dynamics to $P(x)\mapsto P(Tx)$. Only the algebraic implication
+that a common affine map preserves equal convex combinations is used.
+Their remote ensemble preparation, spacelike separation and no-signaling
+premises are not premises or conclusions of Theorem 12.2.
+
+Chefles–Jozsa–Winter, [*On the existence of physical transformations
+between sets of quantum states*, §2, Theorem 2][CJW12], characterize a
+common pure-state transformation by
+$G_{\rm in}=M\circ G_{\rm out}$ with $M\succeq0$ and $M_{ii}=1$.
+Here their indexed input and target projectors would be the eight
+$P_{\varepsilon j\tau}$ and $P'_{\varepsilon j\tau}$. Their fixed
+blank-ancilla dilation is exactly the source-independent assistance
+premise in Definition 12.1. The contradiction (12.7)–(12.19) already
+rules out such a channel by linearity, without having to solve for
+that Gram multiplier. Their Corollary 1 concerns transformations in
+both directions; it is not used to infer one-way impossibility from
+the reversibility of the native ray map. These standard results do not
+supply the particular reachable eight-ray equality or its constants.
+
+The source-specific deduction is (12.7)–(12.10), including the complete
+matrix (12.16), for the unchanged five-mode transport. It is
+repo-derived ordinary mathematics, with the convex compatibility and
+channel methods attributed above. Propositions 10.9 and 11.6–11.7
+compare matrices with equal native menus, whereas (12.7) is equality
+of the complete matrix. No worldwide-priority or formal-certification
+claim is made.
+

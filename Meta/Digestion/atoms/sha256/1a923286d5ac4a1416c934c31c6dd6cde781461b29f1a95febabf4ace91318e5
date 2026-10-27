@@ -1,0 +1,92 @@
+**Theorem 11.11 (Arbitrary-rank star certificate).**
+Let $\rho$ be any PSD trace-one matrix with known $Z=\rho_{22}>0$.
+Suppose all four exact coherences $C_{i2}$, $i\ne2$, are known and
+consistent with this same matrix. Define
+
+$$
+\varepsilon_{\rm ref}
+=1-Z-\frac1Z\sum_{i\ne2}|C_{i2}|^2=\operatorname{tr}R.
+\tag{11.11}
+$$
+
+Then $0\le\varepsilon_{\rm ref}\le1-Z<1$ and
+
+$$
+\|v\|^2=1-\varepsilon_{\rm ref}\ge Z>0,\qquad
+\widehat\psi=v/\|v\|.
+$$
+
+The state is pure exactly when $\varepsilon_{\rm ref}=0$.
+For $\varepsilon_{\rm ref}>0$, $\sigma=R/\varepsilon_{\rm ref}$ is a
+density matrix and
+
+$$
+\rho=(1-\varepsilon_{\rm ref})|\widehat\psi\rangle\langle\widehat\psi|
++\varepsilon_{\rm ref}\sigma,\qquad
+D(\rho,|\widehat\psi\rangle\langle\widehat\psi|)
+\le\varepsilon_{\rm ref}.
+$$
+
+Proof. In the orientation of Definition 11.1,
+$v_i=\overline{C_{i2}}/\sqrt Z$ for $i\ne2$, and $v_2=\sqrt Z$.
+Thus the star and $Z$ determine $v$, and
+
+$$
+\|v\|^2=Z+\frac1Z\sum_{i\ne2}|C_{i2}|^2=1-\varepsilon_{\rm ref}.
+$$
+
+Proposition 11.2 gives $R\succeq0$, and its trace gives (11.11).
+The positive reference component gives the lower bound on $\|v\|^2$.
+If $\operatorname{tr}R=0$, every nonnegative eigenvalue of $R$ vanishes,
+so $R=0$ and the state is pure; the converse follows from the rank
+formula. For positive trace, normalization of $R$ gives $\sigma$ and
+the displayed convex decomposition. Finally
+
+$$
+D(\rho,|\widehat\psi\rangle\langle\widehat\psi|)
+=\varepsilon_{\rm ref}D(\sigma,|\widehat\psi\rangle\langle\widehat\psi|)
+\le\varepsilon_{\rm ref},
+$$
+
+using the trace-norm triangle inequality and the unit traces of the
+two positive matrices.
+
+The full star is $\{02,12,32,(13)2\}$. Its last three edges are additional
+to the original native menu; reversed orientations can be conjugated.
+Together with the native menu the union has eight complex edges.
+The star certificate itself needs only those four coherences and $Z$,
+not the other individual probabilities or means. It is a deterministic
+bound for exact, mutually consistent data at arbitrary rank.
+Substituting noisy entries without a separate positivity and statistical
+model does not give a finite-shot confidence interval. $\square$
+
+The relevant distinction between recovery within a rank-constrained family
+and identification against all PSD states is the distinction called
+rank completeness and strict completeness by Baldwin–Deutsch–Kalev,
+[*Strictly-complete measurements for bounded-rank quantum-state
+tomography*, §II, equations (1)–(2), and §IV.1][SC11]. Their rank bound
+is specialized to one; their comparison sets are respectively rank-at-most-one
+PSD matrices and all PSD matrices. Their general measurement framework is an intermediate
+comparison here; it does not supply the fixed-mean height interval,
+the particular additional $12$ edge or the componentwise future law.
+The Schur and Gram inputs in §§11.1–11.3 are the mechanisms specialized
+to these five modes. Likewise the current source and phase increments
+are exactly Transport Theorems 8.2, 8.4, 9.2 and 9.3.
+
+The behavioral terminology of §10.6 uses Leinster,
+[*Basic Category Theory*, chapter 4][Y11], only for the scope of the
+Yoneda comparison. Restricted coherences and partial commands do not
+constitute the full hom-functor data of that lemma.
+The trace-distance input is the pure specialization of
+Fuchs–van de Graaf, [*Cryptographic Distinguishability Measures for
+Quantum Mechanical States*, Theorem 1, equation (46)][FV11]. Their
+Bhattacharyya fidelity $B$ is $|\langle\psi,\phi\rangle|$ for pure states,
+and their trace distance is the same $\frac12\|\rho-\sigma\|_1$ used here;
+the direct two-projector calculation
+above fixes its normalization for the present estimates.
+
+[G11]: AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md
+[SC11]: https://arxiv.org/abs/1605.02109
+[FV11]: https://arxiv.org/abs/quant-ph/9712042
+[Y11]: https://arxiv.org/abs/1612.09375
+

@@ -193,7 +193,7 @@ private lemma weak_limit_uniform_cdf {μn : ℕ → ProbabilityMeasure ℝ} {μ 
     (cdf_nonneg _) (cdf_le_one _) (tendsto_cdf_atBot _) (tendsto_cdf_atTop _)
     (weak_limit_pointwise_cdf hweak)
 
-private lemma gaussian_charFun_standard (u : ℝ) :
+lemma gaussian_charFun_standard (u : ℝ) :
     charFun (gaussianReal 0 1) u = (Real.exp (-u^2/2):ℂ) := by
   rw [charFun_gaussianReal,Complex.ofReal_exp]
   congr 1
@@ -252,7 +252,7 @@ private lemma centeredBernoulli_norm_le (p s : ℝ) (hp0 : 0≤p) (hp1 : p≤1) 
         abs_of_nonneg (by linarith : 0≤1-p)]
       ring
 
-private lemma gaussian_factor_norm_le (v s : ℝ) (hv : 0≤v) :
+lemma gaussian_factor_norm_le (v s : ℝ) (hv : 0≤v) :
     ‖(Real.exp (-s^2*v/2):ℂ)‖ ≤ 1 := by
   rw [Complex.norm_real, Real.norm_eq_abs, abs_of_pos (Real.exp_pos _)]
   exact Real.exp_le_one_iff.mpr (by have := sq_nonneg s; nlinarith)
