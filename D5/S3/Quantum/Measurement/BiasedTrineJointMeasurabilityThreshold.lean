@@ -130,10 +130,7 @@ private lemma scalarB_injective (t u : ℝ) (a v : EuclideanSpace ℝ (Fin 3))
       linarith
 
 private lemma scalarB_one : scalarB 1 (0 : EuclideanSpace ℝ (Fin 3)) = 1 := by
-  unfold scalarB
-  rw [B_formula]
-  ext i j
-  fin_cases i <;> fin_cases j <;> norm_num
+  simp only [scalarB, Complex.ofReal_one, one_smul, B_zero, add_zero]
 
 private lemma effect_coordinates (b η : ℝ) (k : Fin 3) (x : Bool) :
     trineEffect b η k x = scalarB ((1 + sgn x * b) / 2)
@@ -157,16 +154,11 @@ private lemma parent_coordinates (b η : ℝ)
     D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch (g s)
   have he : ∀ s, g s = scalarB (q s) (r s) := fun s =>
     hermitian_decomposition (g s) (hg.1 s).isHermitian
-  have hs (t : Finset (Fin 3 → Bool)) :
-      (∑ s ∈ t, scalarB (q s) (r s)) = scalarB (∑ s ∈ t, q s) (∑ s ∈ t, r s) := by
-    unfold scalarB
-    rw [B_sum]
-    simp only [Finset.sum_add_distrib, ← Finset.sum_smul, Complex.ofReal_sum]
   refine ⟨q, r, ?_, ?_, ?_⟩
   · intro s
     exact (scalarB_posSemidef_iff _ _).mp ((he s) ▸ hg.1 s)
   · have ht : scalarB (∑ s, q s) (∑ s, r s) = scalarB 1 0 := by
-      rw [← hs, scalarB_one, ← hg.2]
+      rw [scalarB_sum, scalarB_one, ← hg.2]
       exact Finset.sum_congr (by ext s; simp) fun s _ => (he s).symm
     exact (scalarB_injective _ _ _ _ ht).1
   · intro k
@@ -175,7 +167,7 @@ private lemma parent_coordinates (b η : ℝ)
       intro x
       have ht : scalarB (∑ s with s k = x, q s) (∑ s with s k = x, r s) =
           scalarB ((1 + sgn x * b) / 2) ((η * sgn x / 2) • trineDir k) := by
-        rw [← hs, ← effect_coordinates, ← hm k x]
+        rw [scalarB_sum, ← effect_coordinates, ← hm k x]
         exact Finset.sum_congr (by ext s; simp) fun s _ => (he s).symm
       exact (scalarB_injective _ _ _ _ ht).2
     have hp := hx true
