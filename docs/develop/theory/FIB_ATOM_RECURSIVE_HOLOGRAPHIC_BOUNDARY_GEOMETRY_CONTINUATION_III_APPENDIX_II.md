@@ -2586,3 +2586,401 @@ original finite-positive-time family and the unchanged target and quantifiers
 of Definition 119.1.
 
 ## 追加锚（本行以下为增补区）
+
+## 123. The three-time coefficient image and its compact fibers
+
+**Definition 123.1 (the original three-time coefficient).** Fix the original parameters $a,\eta,t,\Delta _1,\Delta _2>0$ and retain the source-start diffusion, clock, state space, and common Borel readout of §§115–122. Write
+
+$$
+L=\{0,1,3,B\},\qquad P=T_{\Delta _1},\qquad R=T_{\Delta _2},\qquad g=g_t.
+$$
+
+Retain $G=H^1\times\mathbb R$, $pp'=(x+x',y+y',z+z',w+w'+xy')$, the raw Haar measure $\mu=dx\,dy\,dz\,dw$, and the source $e$. The unit-source field $\Gamma$, actual selector $A(u)=\rho C(u)$ of (112.2)–(112.5), and coefficient-positive normalized zero vector $h$ are unchanged. Thus $m=h^2\mu$, $m(G)=1$, $U_hv=hv$, $K=U_h^{-1}HU_h\geq0$, and $T_s=e^{-sK}$ use the full conservative self-adjoint extension $H$ and the entire form of (115.15). The process starts at $e$ at time zero.
+
+The measure $m$ is equivalent to Lebesgue measure off the null source and has no atoms, $T_s$ is conservative, Markov, and symmetric, and the source densities satisfy $g_s>0$ almost everywhere, $g_s\in L^2(m)$, $\int g_s\,dm=1$, and $g_{s+r}=T_rg_s$. The off-source transition kernel $p_s$ of (120.8)–(120.10) is nonnegative, symmetric and measurable; its values on the null source do not affect integration against $m$, and $\int p_s(x,y)m(dy)=1$ for almost every $x$.
+
+For bounded real Borel functions define
+
+$$
+\mathcal C(u,v,w)=\int_G g\,u\,P(vRw)\,dm.
+\tag{123.1}
+$$
+
+For a pointwise Borel simplex tuple $f=(f_y)_{y\in L}$, with $f_y\geq0$ and $\sum_yf_y=1$, the same readout is used at all three epochs and the fresh reads are conditionally independent. Therefore its complete three-time law is
+
+$$
+\nu_f^{(3)}(y,z,w)=\mathcal C(f_y,f_z,f_w)\qquad(y,z,w\in L).
+\tag{123.2}
+$$
+
+The transition-density form is
+
+$$
+W(x_1,x_2,x_3)=g(x_1)p_{\Delta _1}(x_1,x_2)p_{\Delta _2}(x_2,x_3),
+\tag{123.3}
+$$
+
+so that $d\mathbb P_{(Z_t,Z_{t+\Delta _1},Z_{t+\Delta _1+\Delta _2})}=W\,dm^3$. Here $W\geq0$, $W\in L^1(m^3)$, and $\int W\,dm^3=1$.
+
+**Proposition 123.2 (continuity, compact fibers, and common-partition approximation).** Let $\mathcal S$ be the product of four copies of the weak-star compact order interval $[0,1]\subset L^\infty(m)$, cut out by the a.e. equation $\sum_yf_y=1$. Define
+
+$$
+\Phi _3:\mathcal S\longrightarrow\mathbb R^{64},\qquad
+\Phi _3(f)=\bigl(\mathcal C(f_y,f_z,f_w)\bigr)_{y,z,w\in L}.
+\tag{123.4}
+$$
+
+Then $\Phi _3$ is continuous, its image is compact, and every nonempty fiber is compact. If $\mathcal D$ denotes the indicator tuples of pointwise Borel partitions of $G$, then
+
+$$
+\Phi _3(\mathcal S)=\overline{\Phi _3(\mathcal D)}.
+\tag{123.5}
+$$
+
+The closure is in all 64 coordinates, equivalently in total variation on $L^3$.
+
+**Proof.** Since $m$ is a finite Borel measure on $\mathbb R^4$, $L^1(m)$ is separable, and the weak-star compactness of the order interval makes $\mathcal S$ compact and metrizable. Suppose $f_n\to f$ coordinatewise weak-star. For fixed $y,z,w$, set $b=Rf_w$. The exact difference is
+
+$$
+\begin{aligned}
+&\mathcal C(f_{n,y},f_{n,z},f_{n,w})-\mathcal C(f_y,f_z,f_w)\\
+={}&\int g f_{n,y}P\bigl(f_{n,z}R(f_{n,w}-f_w)\bigr)\,dm\\
+&+\int g f_{n,y}P\bigl((f_{n,z}-f_z)b\bigr)\,dm\\
+&+\int g(f_{n,y}-f_y)P(f_zb)\,dm.
+\end{aligned}
+\tag{123.6}
+$$
+
+Use precisely (119.6): weak-star convergence in $[0,1]$ implies strong $L^2(m)$ convergence after $T_s$, for every $s>0$. This is compactness on that order interval, not on the whole $L^2$ unit ball. The first term tends to zero by this bounded order-interval compactness $R(f_{n,w}-f_w)\to0$ in $L^2(m)$, the $L^2$ contraction of $P$, $0\leq f_{n,z}\leq1$, and Cauchy–Schwarz. For every $\psi\in L^1(m)$, $\psi b\in L^1(m)$, so $f_{n,z}b\to f_zb$ weak-star and the same compactness statement makes the second term tend to zero. The last term tends to zero against the fixed $L^1$ function $gP(f_zb)$. Thus every one of the 64 coordinates is continuous; no product of two unprocessed weak-star limits is taken.
+
+Weak-star classes have Borel representatives. Combine the null sets on which their bounds or sum constraint fail and assign one fixed label there. The three positive-time laws are absolutely continuous with respect to $m$, so this common repair leaves (123.2) unchanged. Compactness of the image and its fibers follows.
+
+For the reverse approximation, let $(\mathcal P_n)$ be increasing finite Borel partitions generating the Borel sigma algebra. In a cell $A\in\mathcal P_n$, split its $m$-mass into four Borel pieces of masses $\int_Af_y\,dm$. Such a split exists because $m\ll\mu$: the distribution $s\mapsto m(B\cap\{x\leq s\})$ is continuous for every Borel remainder $B$. The resulting partition $(E_{n,y})_y$ satisfies
+
+$$
+\int\psi(\mathbf1_{E_{n,y}}-f_y)\,dm=0
+$$
+
+for every $\mathcal P_n$-simple $\psi$. Density of these simple functions in $L^1(m)$ and the uniform bound by $1$ give $\mathbf1_{E_{n,y}}\to f_y$ weak-star. Continuity of $\Phi _3$ yields (123.5). In particular every continuous objective of the complete three-time law attains its stochastic optimum, and its deterministic infimum equals that optimum; (123.5) gives approximation, not deterministic attainment. $\square$
+
+## 124. Obstructions to common factorization
+
+**Proposition 124.1 (proper common factors are impossible for the full path density).** The heat operator $T_s$ is injective on $L^2(m)$ for every $s>0$. If the density $W$ in (123.3) has an $\mathcal A\otimes\mathcal A\otimes\mathcal A$-measurable version modulo $m^3$, for a sub-$\sigma$-algebra $\mathcal A$ of the completed Borel $\sigma$-algebra $\mathcal F$, then $\mathcal A=\mathcal F$ modulo $m$.
+
+**Proof.** Spectral calculus gives
+
+$$
+\|T_su\|_2^2=\int_{[0,\infty)}e^{-2s\lambda}\,d\langle u,E_K(\lambda)u\rangle,
+$$
+
+so $T_su=0$ implies $u=0$. Integrating (123.3) in $x_3$ and then in $x_2$ gives
+
+$$
+D(x_1,x_2)=g(x_1)p_{\Delta _1}(x_1,x_2),
+$$
+
+with $g$ measurable for $\mathcal A$; division by $g>0$ almost everywhere then makes $p_{\Delta _1}$ measurable for $\mathcal A\otimes\mathcal A$, modulo null sets. If $\mathbb E_m[u\mid\mathcal A]=0$, boundedness and truncation of the kernel sections give $Pu=0$; $L^2$ approximation extends this to every such $u$. Injectivity of $P$ therefore makes conditional expectation the identity on $L^2(m)$, and every $L^2$ indicator is $\mathcal A$-measurable modulo null sets. Hence $\mathcal A=\mathcal F$ modulo $m$. $\square$
+
+This rules out the route that simultaneously requires a proper common factor, conditional atomlessness over that factor, and measurability of the complete $W$ over its three coordinates. It does not exclude conditional constructions for smaller quantities.
+
+**Proposition 124.2 (no finite separable path density).** There are no $N<\infty$ and integrable factors $a_j,b_j,c_j\in L^1(m)$ such that
+
+$$
+W(x_1,x_2,x_3)=\sum_{j=1}^Na_j(x_1)b_j(x_2)c_j(x_3)\quad\text{a.e.}
+\tag{124.1}
+$$
+
+**Proof.** Integrate (124.1) in $x_3$, write $d_j=\int c_j\,dm$, and apply the resulting identity to a bounded $u$:
+
+$$
+g(x)Pu(x)=\sum_{j=1}^Nd_ja_j(x)\int b_j(y)u(y)\,dm(y).
+$$
+
+Since $g>0$ almost everywhere, the range of $P$ on bounded functions lies in a finite-dimensional subspace of $L^2(m)$. Bounded functions are dense in $L^2(m)$ and $P$ is bounded, so the entire range of $P$ would be finite-dimensional, contradicting injectivity on the infinite-dimensional space $L^2(m)$. $\square$
+
+**Proposition 124.3 (finite conditional decompositions).** Let $\mathcal A_1,\mathcal A_2,\mathcal A_3\subset\mathcal F$ and suppose $\mathcal F$ is nowhere equivalent to $\mathcal A_2$ under $m$. The density $W$ cannot have a representation
+
+$$
+W=\sum_{j=1}^{N}A_j(x_1,x_2,x_3)\alpha_j(x_1)\beta_j(x_2)\gamma_j(x_3),
+\tag{124.2}
+$$
+
+where every $A_j$ is $\mathcal A_1\otimes\mathcal A_2\otimes\mathcal A_3$-measurable, the single-coordinate factors are nonnegative and integrable, and every individual product term in (124.2) is absolutely integrable on $G^3$.
+
+**Proof.** Put $b=1+\sum_j\beta_j$, $B=\int b\,dm$, and $d\mu _0=(b/B)\,dm$. This reference probability is equivalent to $m$, so the nowhere-equivalence hypothesis is preserved; it does not replace the process law. For every nonzero $\beta_j$, let $d\mu_j=\beta_jdm/\int\beta_j\,dm$; its density relative to $\mu _0$ is bounded by $B/\int\beta_j\,dm$. Zero factors are omitted. The conditional splitting lemma of He–Sun–Sun–Zeng, *Characterization of equilibrium existence and purification in general Bayesian games*, arXiv:2106.08563v1, Lemma 4(2), pp. 28–29, applied with $\mathcal A=\mathcal A_2$ and the constant fair distribution on the compact discrete action space $\{-1,1\}$ (with zero payoff), gives a measurable $v\in\{-1,1\}$ satisfying
+
+$$
+\int_D\beta_jv\,dm=0\qquad(D\in\mathcal A_2,\ j=1,\ldots,N).
+\tag{124.3}
+$$
+
+For almost every fixed $(x_1,x_3)$, the section $A_j(x_1,\cdot,x_3)$ is $\mathcal A_2$-measurable. Equation (124.3), first for bounded simple sections and then by truncation, makes each term in (124.2) integrate to zero against $v(x_2)\,dm(dx_2)$; the asserted absolute integrability permits Fubini. Hence
+
+$$
+\int W(x_1,x_2,x_3)v(x_2)\,m(dx_2)m(dx_3)=0
+$$
+
+for almost every $x_1$. By (123.3) and conservation this is $g(x_1)Pv(x_1)$. Positivity of $g$ and injectivity of $P$ force $v=0$, contradicting $|v|=1$. The absolute-integrability hypothesis is used exactly in this Fubini step. $\square$
+
+## 125. The common-readout coefficient boundary
+
+**Definition 125.1 (a two-label perturbation).** Let $f$ be a pointwise Borel simplex tuple, let $i\neq j$ be labels, and let $\kappa>0$ satisfy
+
+$$
+E=\{f_i\geq\kappa,\ f_j\geq\kappa\},\qquad m(E)>0.
+$$
+
+Set $\sigma_i=1$, $\sigma_j=-1$, and $\sigma_y=0$ otherwise. For a bounded real Borel $v$ supported in $E$, put $f_y^s=f_y+s\sigma_yv$. The tuple remains a pointwise Borel simplex tuple whenever $|s|\|v\|_\infty\leq\kappa$.
+
+**Proposition 125.2 (the exact 64-equation expansion).** For every $y,z,w\in L$,
+
+$$
+\nu_{f^s}^{(3)}(y,z,w)-\nu_f^{(3)}(y,z,w)
+=s\ell_{yzw}(v)+s^2q_{yzw}(v)+s^3\sigma_y\sigma_z\sigma_w\mathcal C(v,v,v),
+\tag{125.1}
+$$
+
+where
+
+$$
+\begin{aligned}
+\ell_{yzw}(v)={}&\sigma_y\mathcal C(v,f_z,f_w)
++\sigma_z\mathcal C(f_y,v,f_w)
++\sigma_w\mathcal C(f_y,f_z,v),\\
+q_{yzw}(v)={}&\sigma_y\sigma_z\mathcal C(v,v,f_w)
++\sigma_y\sigma_w\mathcal C(v,f_z,v)
++\sigma_z\sigma_w\mathcal C(f_y,v,v).
+\end{aligned}
+\tag{125.2}
+$$
+
+Thus preservation of the complete law means all 64 equations (125.1), one for each $(y,z,w)\in L^3$. The 48 slotwise linear conditions
+
+$$
+\mathcal C(v,f_z,f_w)=\mathcal C(f_y,v,f_w)=\mathcal C(f_y,f_z,v)=0
+$$
+
+are sufficient for all first-order coefficients to vanish. The twelve conditions
+
+$$
+A_w(v)=\mathcal C(v,v,f_w)=0,\qquad
+B_z(v)=\mathcal C(v,f_z,v)=0,\qquad
+D_y(v)=\mathcal C(f_y,v,v)=0
+\tag{125.3}
+$$
+
+are sufficient for all second-order coefficients to vanish, and $\mathcal C(v,v,v)=0$ removes the cubic term. For a fixed nonzero $s$, the exact conditions for both signs in (125.1) are instead
+
+$$
+q_{yzw}(v)=0,\qquad
+\ell_{yzw}(v)+s^2\sigma_y\sigma_z\sigma_w\mathcal C(v,v,v)=0
+\quad(y,z,w\in L).
+\tag{125.4}
+$$
+
+Consequently the slotwise system is sufficient, not necessary for every same-fiber perturbation.
+
+The quadratic forms in (125.3) are
+
+$$
+\begin{aligned}
+A_w(v)&=\int g v\,P(vRf_w)\,dm,\\
+B_z(v)&=\int f_z\,P(gv)\,Rv\,dm,\\
+D_y(v)&=\int P(gf_y)\,vRv\,dm.
+\end{aligned}
+\tag{125.5}
+$$
+
+All these integrals are finite by boundedness of $v$, $g\in L^2(m)$, and the Markov contractions. Summing over the free label gives
+
+$$
+\begin{aligned}
+\sum_wA_w(v)&=\int g_t vT_{\Delta _1}v\,dm,\\
+\sum_zB_z(v)&=\int g_t vT_{\Delta _1+\Delta _2}v\,dm,\\
+\sum_yD_y(v)&=\int g_{t+\Delta _1}vT_{\Delta _2}v\,dm.
+\end{aligned}
+\tag{125.6}
+$$
+
+The three marginal sums in (125.6) do not determine the twelve individual forms. In particular, an index statement for one form does not supply simultaneous nullity of (125.3).
+
+Let $U=\mathbb R^4$ and split $U=\mathbb R\sigma\oplus U_0$ with $\dim U_0=3$. The first-order coefficient tensor lies in
+
+$$
+(\mathbb R\sigma\otimes U\otimes U)+(U\otimes\mathbb R\sigma\otimes U)+(U\otimes U\otimes\mathbb R\sigma),
+$$
+
+of dimension $4^3-3^3=37$. The quadratic coefficient tensor lies in
+
+$$
+(\mathbb R\sigma\otimes\mathbb R\sigma\otimes U)+(\mathbb R\sigma\otimes U\otimes\mathbb R\sigma)+(U\otimes\mathbb R\sigma\otimes\mathbb R\sigma),
+$$
+
+of dimension $3\cdot3+1=10$, and the cubic tensor lies on $\mathbb R\sigma^{\otimes3}$. These counts compress the actual coefficient families; they do not discard any of the 64 equations.
+
+**Lemma 125.3 (a conditional full-fiber criterion).** Let $V$ be a real vector space, let $d\geq1$, and let $q_1,\ldots,q_d$ be a linearly independent basis of a finite-dimensional family of quadratic forms. Suppose every nonzero pencil $\sum_j\lambda_jq_j$ has infinite negative index, meaning that it is negative definite on finite-dimensional subspaces of arbitrarily large dimension. After any finitely many homogeneous linear constraints on $V$, there is a two-dimensional subspace on which every $q_j$ vanishes identically. Every homogeneous cubic form consequently has a nonzero zero on that plane.
+
+**Proof.** Intersecting a sufficiently large negative-definite subspace with finitely many linear kernels preserves infinite negative index. For $\lambda\in S^{d-1}$ choose a finite-dimensional subspace on which $q_\lambda=\sum_j\lambda_jq_j$ has at least $d+2$ negative dimensions. Negative definiteness on a fixed finite-dimensional subspace is open in $\lambda$, so a finite cover of $S^{d-1}$ and the span of the selected subspaces give a finite-dimensional $F$ on which every $q_\lambda$ has at least $d+2$ negative dimensions.
+
+On the unit sphere of $F$, minimize $H(x)=\sum_jq_j(x)^2$. If the minimum at $x$ were positive, put $\lambda_j=q_j(x)$. The subspace satisfying $b_j(x,w)=0$ for all symmetric polar forms $b_j$ has codimension at most $d$; after the sphere constraint it still contains a nonzero $w$ with $q_\lambda(w)<0$. For
+
+$$
+x(s)=\frac{x+sw}{\sqrt{1+s^2\|w\|^2}},
+$$
+
+the first derivatives of all $q_j(x(s))$ vanish and
+
+$$
+\left.\frac{d^2}{ds^2}H(x(s))\right|_{s=0}
+=4\bigl(q_\lambda(w)-H(x)\|w\|^2\bigr)<0,
+$$
+
+contradicting minimality. Thus there is a nonzero simultaneous zero $v_1$. Impose the additional equations $b_j(v_1,v)=0$ and one linear equation that is nonzero at $v_1$, and repeat the argument to obtain an independent simultaneous zero $v_2$. Polarization makes every $q_j$ vanish on $\operatorname{span}\{v_1,v_2\}$. A homogeneous cubic is odd on this plane, so it has a nonzero zero there. $\square$
+
+For the actual perturbation, take $V_E$ to be the real $L^\infty(m)$ classes supported in $E$ and satisfying $\ell_{yzw}(v)=0$ for all labels. Since $m$ is nonatomic and $m(E)>0$, arbitrarily many disjoint positive-measure subsets of $E$ give independent indicators. Thus $L^\infty(E,m)$ is infinite-dimensional, and $V_E$ remains infinite-dimensional after these at most 37 linear constraints. The restricted span of the actual quadratic forms $q_{yzw}$ has dimension at most ten. If that dimension is positive and every nonzero pencil has infinite negative index on $V_E$, Lemma 125.3 supplies a common zero plane. If the restricted span is zero, take any two-dimensional subspace of $V_E$ directly; no pencil argument is needed. In either case the odd cubic $\mathcal C(v,v,v)$ has a nonzero zero on the plane. Choose bounded Borel representatives and repair their null exceptional sets inside $E$, obtaining $v$ nonzero as an $L^\infty(m)$ class, with all first- and second-order coefficients and the cubic zero. Taking $0<|s|\leq\kappa/\|v\|_\infty$ preserves the simplex, and (125.1) preserves all 64 coordinates for both signs. This is a sufficient criterion; the individual index statements for the three sums in (125.6) do not imply it.
+
+If this criterion holds on some positive-measure overlap of every non-indicator tuple, then every compact fiber of $\Phi _3$ contains an indicator tuple. Indeed, maximize on a fiber the continuous strictly convex separator
+
+$$
+J(f)=\sum_{n\geq1}2^{-n}\sum_{y\in L}
+\left(\int_G\psi_nf_y\,dm\right)^2,
+\tag{125.7}
+$$
+
+where $(\psi_n)$ is a countable separating family in the real $L^1(m)$ unit ball. A maximizer with positive-measure overlap would be the midpoint of two distinct points of the same fiber by the criterion, contradicting strict convexity and maximality. It is therefore an indicator tuple almost everywhere; the common Borel null-set repair from Proposition 123.2 gives a pointwise Borel partition. This conditional implication is the full-fiber bridge, and its all-pencil hypothesis for the actual forms remains an additional premise.
+
+## 126. Signed analytic coefficients and the equal-gap marginal consequence
+
+**Proposition 126.1 (signed analytic rotation-invariant coefficient).** Let $s>0$ and let $\varphi\in L^1(m;\mathbb R)$ have a real analytic, rotation-invariant representative on
+
+$$
+\Omega=\{(x,y,z,w)\in G:x^2+y^2>0\}.
+$$
+
+If $\varphi$ is nonconstant on the connected set $\Omega$, then for every positive-measure Borel set $E$ the symmetric form
+
+$$
+Q_{\varphi,s}(u,v)=\frac12\int_G\varphi\{uT_sv+vT_su\}\,dm
+\tag{126.1}
+$$
+
+on bounded real functions supported in $E$ has infinite negative index. Applying the assertion to $-\varphi$ gives infinite positive index as well.
+
+**Proof.** Complexify the actual heat RKHS $\mathcal H_s=\operatorname{Ran}T_{s/2}$ with its pullback $L^2$ norm. Its kernel is $p_s$ and is nonsingular by the off-source kernel construction of §120. Every member of $\mathcal H_s$ and of $\mathcal H_s\mathcal H_s+\mathcal H_s\mathcal H_s$ is analytic on $\Omega$ by the heat-regularity argument used in §122.
+
+Assume the negative index of (126.1) on $E$ is finite, say $\kappa$. If $E\cap\{\varphi<0\}$ has positive measure, the rotation-invariant density-point construction selects, for every $N$, points in one angular slice at which $\varphi=c<0$. The limiting Gram matrix is $c(p_s(p_i,p_j))$, strictly negative definite. Indicators of sufficiently small intersections of $E$ with balls around these points then give $N$ negative directions, a contradiction. Up to a null set we may therefore restrict to $E\cap\{\varphi\geq0\}$ and to a positive-measure relatively compact subset.
+
+Suppose $\varphi(q)<0$ somewhere and put $c_0=-\varphi(q)>0$. On the density-point uniqueness set $E^*$ define
+
+$$
+b=\frac{\varphi-c_0}{\varphi+c_0},\qquad |b|\leq1.
+$$
+
+The Gram identity
+
+$$
+\frac{\varphi(p)+\varphi(q')}{2}p_s(p,q')
+=\frac{(\varphi(p)+c_0)(\varphi(q')+c_0)}{4c_0}
+(1-b(p)b(q'))p_s(p,q')
+\tag{126.2}
+$$
+
+transfers the negative-square bound to $(1-b(p)\overline{b(q')})p_s(p,q')$. The Agler–Young theorem, *Functions which are almost multipliers of Hilbert function spaces*, arXiv:math/9605224v1, Theorem 2.1, p. 11, applies after complexification because $E^*$ is a uniqueness set for both analytic classes and $p_s$ is nonsingular. It supplies a closed finite-codimensional $W\subset\mathcal H_s$ and a bounded $L:W\to\mathcal H_s$ with $Lu=bu$ on $E^*$.
+
+Analytic uniqueness extends
+
+$$
+(\varphi+c_0)Lu=(\varphi-c_0)u
+\tag{126.3}
+$$
+
+to all of $\Omega$. At every point of the rotation orbit of $q$, $\varphi=-c_0$, so (126.3) gives $u=0$. That orbit contains arbitrarily many distinct points, while their evaluation functionals are linearly independent by nonsingularity of $p_s$. A finite-codimensional $W$ cannot be annihilated by arbitrarily many independent evaluations. Hence $\varphi\geq0$ on $\Omega$.
+
+Now put $b=(\varphi-1)/(\varphi+1)$. The same theorem yields a finite-codimensional multiplication domain
+
+$$
+D=\{u\in\mathcal H_s:bu\in\mathcal H_s\}.
+$$
+
+The domain contains the closed finite-codimensional space supplied by the theorem, so it too is closed and finite-codimensional. Point evaluations give the closed graph of multiplication on $D$, hence boundedness. Rotation invariance preserves $D$ and $D^\perp$. Choose an angular character $\ell$ absent from the finite-dimensional representation on $D^\perp$. The corresponding sector lies in $D$, and
+
+$$
+B_\ell=e^{(s/2)K_\ell}M_be^{-(s/2)K_\ell}
+$$
+
+is bounded, since the pullback norm is $\|u\|_{\mathcal H_s}=\|e^{(s/2)K}u\|_2$. For $P_R=\mathbf1_{[0,R]}(K_\ell)$, the entire functions
+
+$$
+F_R(z)=P_Re^{zK_\ell}M_be^{-zK_\ell}P_R
+$$
+
+have uniform bound $\|B_\ell\|$ on the two boundary lines $\Re z=\pm s/2$: the positive boundary uses $B_\ell$, and the negative boundary uses its adjoint since $b$ is real. The three-lines theorem and Cauchy's estimate on a circle of radius $s/4$ give
+
+$$
+\|F_R'(0)\|\leq\frac{4\|B_\ell\|}{s}.
+$$
+
+Passing to spectral limits gives a bounded commutator form $[K_\ell,M_b]$. In cylindrical coordinates $(r,\theta,z,\xi)$, the principal symbol of the actual operator is
+
+$$
+a\left[p_r^2+\left(\frac{p_\theta}{r}+\frac r2p_\xi\right)^2+p_z^2\right]+\eta p_\xi^2.
+\tag{126.4}
+$$
+
+Use compact-core tests supported in $r>0$,
+
+$$
+u_N=e^{i\ell\theta}\chi(r,z,\xi)e^{iN\zeta\cdot(r,z,\xi)},\qquad
+\chi\in C_c^\infty(\{r>0\}),\quad\zeta\in\mathbb R^3.
+$$
+
+The divergence-form Leibniz identity gives, at order $N$,
+
+$$
+-2iN e^{i\ell\theta+iN\zeta\cdot(r,z,\xi)}\chi
+\left[a b_r\zeta_r+a b_z\zeta_z
++\left(\eta+\frac{ar^2}{4}\right)b_\xi\zeta_\xi\right].
+\tag{126.5}
+$$
+
+All remaining terms are uniformly bounded in $L^2(m)$ as $N\to\infty$. Boundedness of the commutator forces $b_r=b_z=b_\xi=0$ on every compact patch of $\Omega$; rotation invariance gives $b_\theta=0$. Thus $b$, and hence $\varphi$, is constant, contradicting the hypothesis. This proves infinite negative index. Replacing $\varphi$ by $-\varphi$ proves infinite positive index. $\square$
+
+**Corollary 126.2 (simultaneous equal-gap adjacent marginals).** Let $\Delta _1=\Delta _2=d>0$. Then every nonzero pencil
+
+$$
+Q_{\alpha,\beta}(v)=\alpha\int g_t vT_dv\,dm
++\beta\int g_{t+d}vT_dv\,dm,\qquad(\alpha,\beta)\neq(0,0),
+\tag{126.6}
+$$
+
+has infinite negative index on every positive-measure overlap. After any finitely many homogeneous linear constraints there is a two-dimensional subspace on which both forms in (126.6) vanish identically; this plane contains a nonzero zero of the actual cubic $\mathcal C(v,v,v)$.
+
+**Proof.** Source regularity makes $\alpha g_t+\beta g_{t+d}$ analytic and rotation-invariant. It is nonconstant for every $(\alpha,\beta)\neq(0,0)$. Otherwise, using its mass, one would obtain
+
+$$
+(\alpha+\beta T_d)(g_t-1)=0.
+\tag{126.7}
+$$
+
+The multiplier $\alpha+\beta e^{-d\lambda}$ has at most one positive zero. Since $\ker K=\mathbb C1$, spectral calculus would make $g_t-1$ either zero or an eigenvector for one positive eigenvalue. In the eigenvector case, for $0<u<t$,
+
+$$
+g_u=1+e^{\lambda_0(t-u)}(g_t-1).
+$$
+
+The displayed identity follows by injectivity of $T_{t-u}$, and has an $L^2(m)$ limit $r$ as $u\downarrow0$. In the first case the same injectivity gives $g_u=1$ for $0<u<t$, with limit $r=1$. In either case, for every $\psi\in C_c(G)$, finiteness of $m$ and $L^2$ convergence give
+
+$$
+\int_G\psi r\,dm
+=\lim_{u\downarrow0}\int_G\psi g_u\,dm
+=\lim_{u\downarrow0}\mathbb E_e[\psi(Z_u)]
+=\psi(e).
+$$
+
+The last equality uses continuity of the actual source-start paths and bounded convergence. Compactly supported continuous tests on the original $G$ identify finite Borel measures, so $r\,m=\delta_e$. This contradicts $m(\{e\})=0$ and absolute continuity of $r\,m$; no stationarity or additional regularity is assumed. Proposition 126.1 applied to this coefficient proves the index assertion for every pencil. Lemma 125.3 with $d=2$ gives the common zero plane and the cubic zero. $\square$
+
+The two forms in (126.6) are the first and third marginal sums in (125.6) when the gaps are equal. This conclusion supplies simultaneous cancellation for those two adjacent marginal conditions only. It does not impose the total-gap form, the remaining weighted forms in (125.3), or the other coordinates among the 64 equations; in particular it does not assert an unrestricted or exact three-time representative.
+
+The finite linear vector-measure range theorem of Dvoretzky–Wald–Wolfowitz, *Relations among certain ranges of vector measures*, Pacific J. Math. 1 (1951), §3 Theorem 4 and Lemma 2, pp. 66–67, concerns linear integrals of a probability vector. The common-readout map (123.2) is trilinear, so that theorem alone does not supply the exact three-time conclusion. The conditional splitting input used in Proposition 124.3 is only the displayed Lemma 4(2) of He–Sun–Sun–Zeng, with its nowhere-equivalence, bounded-density, and absolute-integrability hypotheses. The multiplier step in Proposition 126.1 is only the finite-codimensional application of Agler–Young under the stated analytic uniqueness and nonsingular-kernel conditions.
+
+## 追加锚（本行以下为增补区）
