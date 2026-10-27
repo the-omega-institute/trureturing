@@ -103,19 +103,20 @@ private lemma p_pos : p.PosSemidef := by
     (Matrix.PosSemidef.one : (1 : Matrix (Fin 4) (Fin 4) ℂ).PosSemidef) p
   simpa [p_star, p_square] using h
 
-private lemma rho_density :
-    D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity rho := by
+private lemma rho_half : rho = (1 / 2 : ℝ) • p := by
   have hs (i j : Fin 4) : ((1 / 2 : ℝ) • p) i j = (1 / 2 : ℂ) * p i j := by
     change (1 / 2 : ℝ) • p i j = _
     rw [Algebra.smul_def]
     norm_num
-  have hr : rho = (1 / 2 : ℝ) • p := by
-    ext i j
-    rw [hs]
-    fin_cases i <;> fin_cases j <;>
-      simp [rho, p, Complex.ext_iff, Complex.I_sq, div_eq_mul_inv] <;>
-      norm_num <;> ring
-  rw [hr]
+  ext i j
+  rw [hs]
+  fin_cases i <;> fin_cases j <;>
+    simp [rho, p, Complex.ext_iff, Complex.I_sq, div_eq_mul_inv] <;>
+    norm_num <;> ring
+
+private lemma rho_density :
+    D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity rho := by
+  rw [rho_half]
   constructor
   · simpa using p_pos.smul (by norm_num : (0 : ℝ) ≤ 1 / 2)
   · simp [Matrix.trace_smul, p_trace]
@@ -208,9 +209,6 @@ private lemma output_at_ones :
     Complex.ofReal_re, Complex.ofReal_im, div_eq_mul_inv] <;>
       simp_rw [Matrix.smul_apply, Algebra.smul_def] <;>
       norm_num <;> ring_nf <;> norm_num
-
-private lemma input_bound (z : Fin 4 → ℂ) (hz : ∀ j, ‖z j‖ = 1) :
-    (star z ⬝ᵥ (rho *ᵥ z)).re / (4 : ℝ) ≤ 1 / 2 - 1 / 200 := by sorry
 
 private lemma norm_defect (u w : ℂ) (hu : ‖u‖ ≤ 7 / 5) (hw : ‖w‖ = 1) :
     (‖u‖ ^ 2 - 1) ^ 2 ≤ 144 / 25 * ‖w - u‖ ^ 2 := by
@@ -363,6 +361,26 @@ private lemma defect_identities (z : Fin 4 → ℂ) :
               simp only [Pi.sub_apply]
               ring
       _ = _ := by rw [h₂, add_zero]
+
+private lemma input_bound (z : Fin 4 → ℂ) (hz : ∀ j, ‖z j‖ = 1) :
+    (star z ⬝ᵥ (rho *ᵥ z)).re / (4 : ℝ) ≤ 1 / 2 - 1 / 200 := by
+  have ht := torus_defect (z 0) (z 1) (z 2) (z 3) (hz 0) (hz 1) (hz 2) (hz 3)
+  rcases defect_identities z with ⟨h₁, h₂⟩
+  rw [h₁, h₂] at ht
+  have hf := residual_functional_bound
+    ((z - p *ᵥ z) 0) ((z - p *ᵥ z) 1) ((z - p *ᵥ z) 2) ((z - p *ᵥ z) 3)
+  have he : 1 / 25 ≤ ∑ i, ‖z i - (p *ᵥ z) i‖ ^ 2 := by
+    simp only [Pi.sub_apply] at ht hf
+    norm_num [Fin.sum_univ_succ]
+    linarith
+  have hp := projection_energy z
+  have hzsum : ∑ i, ‖z i‖ ^ 2 = 4 := by simp [hz]
+  rw [hzsum] at hp
+  have hr : (star z ⬝ᵥ (rho *ᵥ z)).re = (star z ⬝ᵥ (p *ᵥ z)).re / 2 := by
+    rw [rho_half, Matrix.smul_mulVec, dotProduct_smul]
+    simp [div_eq_mul_inv, mul_comm]
+  rw [hr]
+  linarith
 
 private lemma output_lower : 1 / 2 ≤ coherenceFraction (phi rho) := by
   unfold coherenceFraction
