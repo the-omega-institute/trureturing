@@ -10,6 +10,8 @@
 import Mathlib.Analysis.Convex.Mul
 import D5.S3.Quantum.Measurement.AntidistinguishabilityGram
 
+/-! The quadratic coherence is constant on the unit sphere of an explicit two-dimensional subspace. -/
+
 set_option autoImplicit false
 set_option linter.style.longLine false
 open scoped BigOperators ComplexOrder
@@ -83,22 +85,22 @@ private lemma frame :
   have h3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
   have h6 : Real.sqrt 6 ^ 2 = 6 := Real.sq_sqrt (by norm_num)
   have hv : (∑ i, Complex.normSq (v i)) = 1 := by
-    norm_num [v, Fin.sum_univ_succ, Complex.normSq_apply]
-    nlinarith
+    simp only [v.eq_1]
+    norm_num [Fin.sum_univ_succ, Complex.normSq_apply] <;> nlinarith
   have hw : (∑ i, Complex.normSq (w i)) = 1 := by
-    norm_num [w, Fin.sum_univ_succ, Complex.normSq_apply]
-    nlinarith
+    simp only [w.eq_1]
+    norm_num [Fin.sum_univ_succ, Complex.normSq_apply] <;> nlinarith
   have hn : ∀ x : Fin 4 → ℂ, star x ⬝ᵥ x = ((∑ i, Complex.normSq (x i) : ℝ) : ℂ) := by
     intro x
     change (∑ i, star (x i) * x i) = _
     simp only [Complex.star_def, ← Complex.normSq_eq_conj_mul_self, Complex.ofReal_sum]
-  refine ⟨?_, ?_, ?_, ?_, hv, hw⟩
+  have hvw : star v ⬝ᵥ w = 0 := by
+    change (∑ i, star (v i) * w i) = 0
+    apply Complex.ext <;> norm_num [v, w, Fin.sum_univ_succ, Complex.star_def] <;> ring
+  refine ⟨?_, ?_, hvw, ?_, hv, hw⟩
   · rw [hn, hv, Complex.ofReal_one]
   · rw [hn, hw, Complex.ofReal_one]
-  · change (∑ i, star (v i) * w i) = 0
-    apply Complex.ext <;> norm_num [v, w, Fin.sum_univ_succ, Complex.star_def] <;> ring
-  · change (∑ i, star (w i) * v i) = 0
-    apply Complex.ext <;> norm_num [v, w, Fin.sum_univ_succ, Complex.star_def] <;> ring
+  · rw [star_dotProduct w v, hvw, star_zero]
 
 private lemma projection_properties :
     projection.IsHermitian ∧ projection * projection = projection ∧
@@ -108,19 +110,19 @@ private lemma projection_properties :
     ((Matrix.posSemidef_vecMulVec_self_star v).add
       (Matrix.posSemidef_vecMulVec_self_star w)).isHermitian
   have hpp : projection * projection = projection := by
-    change (vecMulVec v (star v) + vecMulVec w (star w)) *
-      (vecMulVec v (star v) + vecMulVec w (star w)) = _
-    simp only [add_mul, mul_add, Matrix.vecMulVec_mul_vecMulVec, Matrix.vecMulVec_smul,
-      hf.1, hf.2.1, hf.2.2.1, hf.2.2.2.1, one_smul, zero_smul, add_zero, zero_add]
-    rfl
+    rw [projection]
+    simp only [add_mul, mul_add, Matrix.vecMulVec_mul_vecMulVec,
+      hf.1, hf.2.1, hf.2.2.1, hf.2.2.2.1, one_smul, zero_smul,
+      Matrix.vecMulVec_zero, add_zero, zero_add]
   refine ⟨hh, hpp, ?_⟩
-  change ((1 - projection) * ((1 / 2 : ℂ) • projection)).trace = 0
+  rw [rho]
   rw [Matrix.mul_smul, sub_mul, one_mul, hpp, sub_self, smul_zero, Matrix.trace_zero]
 
 private lemma decomposition_support {n k : ℕ}
     (ρ q : Matrix (Fin n) (Fin n) ℂ) (p : Fin k → ℝ) (ψ : Fin k → Fin n → ℂ)
     (hd : IsDecomposition ρ k p ψ) (hq : q.PosSemidef) (hzero : (q * ρ).trace = 0)
     (j : Fin k) (hp : 0 < p j) : q *ᵥ ψ j = 0 := by
+  rw [IsDecomposition] at hd
   have htrace : (q * ρ).trace =
       ∑ t, (p t : ℂ) * (star (ψ t) ⬝ᵥ (q *ᵥ ψ t)) := by
     rw [hd.2.2.2, Matrix.mul_sum, Matrix.trace_sum]
@@ -128,7 +130,7 @@ private lemma decomposition_support {n k : ℕ}
     intro t _
     rw [Matrix.mul_smul, Matrix.trace_smul, Matrix.mul_vecMulVec,
       Matrix.trace_vecMulVec, dotProduct_comm]
-    rfl
+    simp only [smul_eq_mul]
   have hs : (∑ t, p t * (star (ψ t) ⬝ᵥ (q *ᵥ ψ t)).re) = 0 := by
     have hz := congrArg Complex.re (htrace.symm.trans hzero)
     simpa only [Complex.re_sum, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
@@ -162,8 +164,7 @@ private lemma fourth_moment (a b : ℂ) :
   norm_num [v, w, Fin.sum_univ_succ, Complex.normSq_apply,
     Complex.mul_re, Complex.mul_im, Complex.add_re, Complex.add_im]
   ring_nf
-  simp only [h2, h3, h6, h24, h34, h64, h33]
-  ring
+  simp only [h2, h3, h6, h24, h34, h64, h33] <;> ring
 
 private lemma unit_span_value (ψ : Fin 4 → ℂ)
     (hunit : ∑ i, Complex.normSq (ψ i) = 1)
@@ -187,16 +188,17 @@ private lemma unit_span_value (ψ : Fin 4 → ℂ)
     rw [hrep] at hunitc
     simpa only [star_add, star_smul, add_dotProduct, dotProduct_add, smul_dotProduct,
       dotProduct_smul, frame.1, frame.2.1, frame.2.2.1, frame.2.2.2.1,
-      smul_eq_mul, mul_one, mul_zero, add_zero, zero_add, Complex.star_def,
-      ← Complex.normSq_eq_conj_mul_self, ← Complex.ofReal_add] using hunitc
+      smul_eq_mul, mul_one, mul_zero, add_zero, zero_add, starRingEnd_apply,
+      Complex.star_def, Complex.mul_conj, ← Complex.ofReal_add] using hunitc
   have hab : Complex.normSq a + Complex.normSq b = 1 := by exact_mod_cast hc
   have hpoint : ∀ i, ψ i = a * v i + b * w i := fun i => congrFun hrep i
-  change 1 - ∑ i, Complex.normSq (ψ i) ^ 2 = 2 / 3
-  simp only [hpoint]
+  rw [quadratic]
+  simp only [coherenceVector.eq_1, hpoint]
   rw [fourth_moment, hab]
   norm_num
 
 private lemma quadratic_coherence : IsCoherenceFunction quadratic := by
+  rw [IsCoherenceFunction]
   refine ⟨⟨convex_stdSimplex ℝ (Fin 4), ?_⟩, ?_, ?_⟩
   · intro x hx y hy a b ha hb hab
     have hs : (∑ i, (a * x i + b * y i) ^ 2) ≤
@@ -212,7 +214,7 @@ private lemma quadratic_coherence : IsCoherenceFunction quadratic := by
     change 1 - ∑ i, (p (σ i)) ^ 2 = 1 - ∑ i, p i ^ 2
     rw [Equiv.sum_comp σ (fun i => p i ^ 2)]
   · intro i
-    change 1 - ∑ j, (Pi.single i (1 : ℝ) j) ^ 2 = 0
+    change (1 : ℝ) - ∑ j : Fin 4, (Pi.single i (1 : ℝ) j) ^ 2 = 0
     simp only [Pi.single_apply, ite_pow, one_pow, zero_pow (by decide : 2 ≠ 0)]
     simp
 
@@ -224,6 +226,7 @@ private lemma quadratic_nonzero :
 
 private lemma witness_decomposition :
     IsDecomposition rho 2 (fun _ => 1 / 2) ![v, w] := by
+  rw [IsDecomposition]
   refine ⟨fun _ => by norm_num, ?_, ?_, ?_⟩
   · norm_num [Fin.sum_univ_succ]
   · intro j
@@ -253,6 +256,7 @@ private lemma values_singleton : decompositionValues quadratic rho = {2 / 3} := 
             (decomposition_support rho (1 - projection) p ψ hd hq hproj.2.2 j
               (lt_of_le_of_ne (hd.1 j) (Ne.symm hp)))]
       _ = 2 / 3 := by rw [← Finset.sum_mul, hd.2.1, one_mul]
+  rw [decompositionValues]
   ext x
   constructor
   · rintro ⟨k, p, ψ, hd, rfl⟩
@@ -262,6 +266,7 @@ private lemma values_singleton : decompositionValues quadratic rho = {2 / 3} := 
     exact (Set.mem_singleton_iff.mp hx).trans (havg _ _ _ witness_decomposition).symm
 
 private lemma witness_mixed : IsMixed rho := by
+  rw [IsMixed]
   have htrace : projection.trace = 2 := by
     change (vecMulVec v (star v) + vecMulVec w (star w)).trace = 2
     rw [Matrix.trace_add, Matrix.trace_vecMulVec, Matrix.trace_vecMulVec,
@@ -269,7 +274,9 @@ private lemma witness_mixed : IsMixed rho := by
     norm_num
   refine ⟨?_, ?_, ?_⟩
   · exact ((Matrix.posSemidef_vecMulVec_self_star v).add
-      (Matrix.posSemidef_vecMulVec_self_star w)).smul (a := (1 / 2 : ℂ)) (by norm_num)
+      (Matrix.posSemidef_vecMulVec_self_star w)).smul (a := (1 / 2 : ℂ))
+      (Complex.nonneg_iff.mpr (by
+        constructor <;> norm_num [Complex.div_re, Complex.div_im, Complex.normSq_apply]))
   · change ((1 / 2 : ℂ) • projection).trace = 1
     rw [Matrix.trace_smul, htrace]
     norm_num
@@ -280,8 +287,9 @@ private lemma witness_mixed : IsMixed rho := by
 
 theorem result : ¬ claim := by
   intro h
+  rw [claim] at h
   have hlt := h 4 quadratic quadratic_coherence quadratic_nonzero rho witness_mixed
-  change sInf (decompositionValues quadratic rho) < sSup (decompositionValues quadratic rho) at hlt
+  rw [convexRoof, assistance] at hlt
   rw [values_singleton, csInf_singleton, csSup_singleton] at hlt
   exact (lt_irrefl _ hlt)
 
