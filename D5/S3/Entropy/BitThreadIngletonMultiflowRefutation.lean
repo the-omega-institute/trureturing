@@ -99,19 +99,22 @@ private def pathFlow (i j : Fin 5) (u v : Fin 6) : ℝ :=
 private def witnessFlow (i j : Fin 5) (u v : Fin 6) : ℝ :=
   witnessThreads i j * pathFlow i j u v
 
+private lemma ingleton_combo (x : Finset (Fin 5) → ℝ) :
+    combo ingletonCoefficient x =
+      x {0, 1} + x {0, 2} + x {0, 3} + x {1, 2} + x {1, 3} -
+      x {0} - x {1} - x {2, 3} - x {0, 1, 2} - x {0, 1, 3} := by
+  unfold combo ingletonCoefficient
+  simp only [add_mul, sub_mul, ite_mul, one_mul, zero_mul,
+    Finset.sum_add_distrib, Finset.sum_sub_distrib, Finset.sum_ite_eq',
+    Finset.mem_univ, ite_true]
+
 private lemma combo_identity :
     ∀ n : Fin 5 → Fin 5 → ℝ,
       combo ingletonCoefficient (subflow n) = 2 * n 0 1 + 2 * n 2 3 := by
   intro n
-  unfold combo ingletonCoefficient
-  ring_nf
-  repeat rw [Finset.sum_add_distrib]
-  repeat rw [Finset.sum_sub_distrib]
-  simp only [ite_mul, one_mul, zero_mul]
-  repeat rw [Finset.sum_add_distrib]
-  repeat rw [Finset.sum_sub_distrib]
-  simp only [Fintype.sum_ite_eq', Finset.sum_ite_eq', Finset.mem_univ, if_true]
-  norm_num [subflow, Fin.sum_univ_succ]
+  rw [ingleton_combo]
+  unfold subflow
+  norm_num [Fin.sum_univ_succ]
   ring
 
 private lemma star_weight_expand (I : Finset (Fin 5)) :
@@ -201,7 +204,12 @@ private lemma witness_max :
     IsMaxMultiflow starCapacity starBoundary witnessFlow witnessThreads := by sorry
 
 private lemma star_min_combo :
-    combo ingletonCoefficient (minCut starCapacity starBoundary) = 0 := by sorry
+    combo ingletonCoefficient (minCut starCapacity starBoundary) = 0 := by
+  rw [ingleton_combo]
+  simp only [star_cut_values]
+  unfold starWeight
+  simp only [Fin.sum_univ_succ]
+  norm_num
 
 private lemma star_witness_combo :
     combo ingletonCoefficient (subflow witnessThreads) = 2 := by
