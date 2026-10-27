@@ -24,7 +24,7 @@ Otherwise select h=A_o=-A_o, which is nonzero and has additive order exactly two
 
 There are therefore at least r elements in K/<h>. Since <h> has exactly two elements, K has at least 2*r elements. In both branches, H has exactly m elements and card(G)=card(K)*card(H), proving the stated lower bound. At m=three the already established generic bound m*(m+1) equals 2*m*(m-1), so that boundary case needs no triple argument and no new numerical theorem.
 
-This lower bound and the existing affine binary construction determine an infinite family of exact minima among all finite abelian carriers with the original hypotheses. If d is at least one and m-1=2^d, then m is odd and the affine construction has exactly m*2^(Nat.clog 2 (m-1)+1)=m*2^(d+1)=2*m*(m-1) elements. It has the same exact q order and full original zero-support classification, so it attains the universal lower bound. This is a comparison of the general results, not a retained numerical or bind-only wrapper theorem. No exact minimum is asserted for parameters whose predecessor is not a power of two, and no literature-priority claim is made.
+This lower bound and the existing affine binary construction determine an infinite family of exact minima among all finite abelian carriers with the original hypotheses. If d is at least one and m-1=2^d, then m is odd and the affine construction has exactly m*2^(Nat.clog 2 (m-1)+1)=m*2^(d+1)=2*m*(m-1) elements. It has the same exact q order and full original zero-support classification, so it attains the universal lower bound. No exact minimum is asserted for parameters whose predecessor is not a power of two, and no literature-priority claim is made.
 
 ## References
 
