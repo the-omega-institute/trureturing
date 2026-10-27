@@ -55,6 +55,8 @@ structure Observation where
   structureChecked : Bool := false
   structureClean : Bool := false
   graph? : Option GraphReading := none
+  isolationUnits : Array Json := #[]
+  isolationUnitCount : Nat := 0
   information : InformationReading := {}
 
 def withInformation (r : Observation) (information : InformationReading) : Observation :=

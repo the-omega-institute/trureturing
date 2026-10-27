@@ -234,6 +234,14 @@ def computationalJson (r : Observation) (baselineCommit : String := "") : Json :
   ("target_checked", toJson r.targetChecked),
   ("structure_checked", toJson r.structureChecked),
   ("structure_clean", toJson r.structureClean),
+  ("isolation_checks", Json.mkObj [
+    ("budget_semantics", toJson "independent_units"),
+    ("m", toJson r.isolationUnitCount),
+    ("unit_limit_external", toJson reconstructionBudget),
+    ("original_limit_external", toJson reconstructionBudget),
+    ("preregistered_total_external", toJson ((r.isolationUnitCount + 1) * reconstructionBudget)),
+    ("internal_per_external", toJson (1000 : Nat)),
+    ("units", toJson r.isolationUnits)]),
   ("attempt_count", toJson r.attempts.size),
   ("paired_attempt_count", toJson r.pairAttempts.size),
   ("attempts", Json.arr (r.attempts.map attemptJson)),
@@ -637,7 +645,7 @@ private def snapshotProbeSourceData (directory : System.FilePath)
 private def probeIdentity (request : Request) (owners : Array Name) (name : Name)
     (fixture : Bool) : IO String := do
   return reprStr (localConfiguration, certificateLanguageVersion, transportVersion,
-    "probe-record-v7", ← IO.getEnv "SEARCH_REDUCTION_PROBE_ID", request.target,
+    "probe-record-v8", ← IO.getEnv "SEARCH_REDUCTION_PROBE_ID", request.target,
     request.baseline, request.additions, request.baselineCommit, request.informationApplication,
     request.certificates.map CertificateNomination.encode,
     request.edgeCertificates.map (fun (n, c) => (n, c.encode)), owners, name, fixture)

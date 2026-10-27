@@ -25,7 +25,7 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v18/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v2/N-memo-2000000/checkpoint-v5/views-kappa"
+abbrev lookupVersion : String := "R_lookup/v18-isolation-independent-v1/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v2/N-memo-2000000/checkpoint-v5/views-kappa"
 abbrev lookupExecutionVersion : String := "execution-stops-v1"
 
 abbrev lookupCandidateBudget : Nat := 200000

@@ -30,12 +30,70 @@ private def checkedSource (source : Environment) (n : Name) : MetaM ConstantInfo
   unless standardAxioms xs do throwError "search.axioms_outside_standard: {n}: {xs}"
   return info
 
+initialize isolationUnitReadings : IO.Ref (Array Json) ← IO.mkRef #[]
+initialize isolationUnitCount : IO.Ref Nat ← IO.mkRef 0
+
+/-- The immutable, deduplicated check domain includes transitive proof
+dependencies absent from the reconstructed prefix. -/
+private partial def restatementDomain (source base : Environment) (pending : List Name)
+    (seen : NameSet := {}) : MetaM NameSet := do
+  match pending with
+  | [] => return seen
+  | n :: rest =>
+    if seen.contains n || base.contains n then
+      return ← restatementDomain source base rest seen
+    let info ← checkedSource source n
+    let mut dependencies := rest
+    for dep in info.getUsedConstantsAsSet do
+      unless base.contains dep do
+        let depInfo ← sourceInfo source dep
+        if ← withEnv source (isProp depInfo.type) then
+          dependencies := dep :: dependencies
+    restatementDomain source base dependencies (seen.insert n)
+
+/-- One complete single-source plus legacy check owns one allocation. All
+recursive legacy calls share it; only the enclosing continuation excludes it. -/
+private def checkRestatementUnits (source : Environment) (target : Name)
+    (targetType : Expr) (index : FactIndex) (normalization : IO.Ref LegacyNormalizationMemo)
+    (phase : IO.Ref String) : List Name → MetaM Nat
+  | [] => pure 0
+  | n :: rest => do
+    let started ← IO.getNumHeartbeats
+    let record (status : String) : MetaM Unit := do
+      let used := (← IO.getNumHeartbeats) - started
+      let row := Json.mkObj [
+        ("target", toJson target.toString), ("source", toJson n.toString),
+        ("guard", toJson "single-source-and-legacy-restatement"),
+        ("status", toJson status), ("internal_heartbeats", toJson used),
+        ("external_heartbeats", toJson (used / 1000)),
+        ("limit_external", toJson reconstructionBudget)]
+      isolationUnitReadings.modify (·.push row)
+      IO.eprintln s!"ISOLATION_CHECK_UNIT {row.compress}"
+    catchLookupCandidate
+      (withTheReader Core.Context (fun ctx => {ctx with
+          initHeartbeats := started, maxHeartbeats := reconstructionBudget * 1000}) do
+        phase.set s!"restatement-unit:{target}:{n}:single-source-and-legacy"
+        let info ← checkedSource source n
+        let type ← copyStatement source n info.type
+        let single := (← singleSourceConversion targetType type).isSome
+        if single || (← certifiedRestatement targetType type index (some normalization)) then
+          throwError "search.target_restatement: {n}"
+        checkSystem "isolation.restatement-unit"
+        record "complete")
+      (fun ex => do
+        record (if ex.isMaxHeartbeat then "incomplete:unit-heartbeat" else "fault")
+        throw ex)
+    let used := (← IO.getNumHeartbeats) - started
+    withTheReader Core.Context (fun ctx => {ctx with initHeartbeats := ctx.initHeartbeats + used}) do
+      return used + (← checkRestatementUnits source target targetType index normalization phase rest)
+
 /-- S may not contain T, its supported full-statement aliases, or a dependency
 on either. Conjunction packaging is inspected before the structure is copied. -/
 partial def copyStructure (source : Environment) (target : Name) (targetType : Expr)
     (n : Name) (index : FactIndex) (visiting : NameSet := {})
     (phase? : Option (IO.Ref String) := none)
-    (normalization? : Option (IO.Ref LegacyNormalizationMemo) := none) : MetaM Unit := do
+    (normalization? : Option (IO.Ref LegacyNormalizationMemo) := none)
+    (checked? : Option NameSet := none) : MetaM Unit := do
   let mark := fun step => phase?.mapM fun phase => phase.set s!"structure-copy:{n}:{step}"
   discard <| mark "source-check"
   if n == target then throwError "search.target_leak: {n}"
@@ -50,17 +108,18 @@ partial def copyStructure (source : Environment) (target : Name) (targetType : E
   discard <| mark "statement"
   let type ← copyStatement source n info.type
   discard <| mark "single-source"
-  let single := (← singleSourceConversion targetType type).isSome
-  discard <| mark "legacy-restatement"
-  if single || (← certifiedRestatement targetType type index normalization?) then
-    throwError "search.target_restatement: {n}"
+  unless checked?.any (·.contains n) do
+    let single := (← singleSourceConversion targetType type).isSome
+    discard <| mark "legacy-restatement"
+    if single || (← certifiedRestatement targetType type index normalization?) then
+      throwError "search.target_restatement: {n}"
   if (← getEnv).contains n then return
   discard <| mark "dependencies"
   for dep in info.getUsedConstantsAsSet do
     if (← getEnv).contains dep then continue
     let depInfo ← sourceInfo source dep
     if ← withEnv source (isProp depInfo.type) then
-      copyStructure source target targetType dep index (visiting.insert n) phase? normalization?
+      copyStructure source target targetType dep index (visiting.insert n) phase? normalization? checked?
     else
       throwError "search.structure_vocabulary_not_reconstructed: {dep}"
   discard <| mark "kernel-install"
@@ -234,10 +293,16 @@ def prepare (source base : Environment) (request : Request)
             phase.set "collection-leak"
             if ← collectionLeak target.type types then throwError "search.structure_collection_restatement"
             let normalization ← IO.mkRef ({} : LegacyNormalizationMemo)
-            for n in request.additions do
-              phase.set s!"structure-copy:{n}"
-              copyStructure source request.target target.type n index (phase? := some phase)
-                (normalization? := some normalization)
+            let domain ← restatementDomain source (← getEnv) request.additions.toList
+            let units := domain.toArray.qsort (fun a b => a.toString < b.toString)
+            isolationUnitCount.set units.size
+            IO.eprintln s!"ISOLATION_CHECK_BUDGET m={units.size} unit_external={reconstructionBudget} original_external={reconstructionBudget} total_external={(units.size + 1) * reconstructionBudget} internal_per_external=1000"
+            let used ← checkRestatementUnits source request.target target.type index normalization phase units.toList
+            withTheReader Core.Context (fun ctx => {ctx with initHeartbeats := ctx.initHeartbeats + used}) do
+              for n in request.additions do
+                phase.set s!"structure-copy:{n}"
+                copyStructure source request.target target.type n index (phase? := some phase)
+                  (normalization? := some normalization) (checked? := some domain)
             let normalization ← normalization.get
             IO.eprintln s!"legacy normalization: hits={normalization.hits}, misses={normalization.misses}"
       return (← getEnv, target, none)
@@ -444,6 +509,8 @@ private unsafe def runCore (source base : Environment) (request : Request)
     (lookupComplete : Bool) (disk? : Option DiskLookup.Index := none)
     (sharedImports? : Option ImportState := none)
     (implicationModules? : Option (Array Name) := none) : IO Observation := do
+  isolationUnitReadings.set #[]
+  isolationUnitCount.set 0
   let unknown (reason : String) (failure := Failure.isolation) : Observation := {
     target := request.target, base := .incomplete failure,
     paired := .incomplete failure, verdict := .insufficient, reason}
@@ -521,7 +588,8 @@ private unsafe def runCore (source base : Environment) (request : Request)
         verdict := classifyGraph reading, attempts, pairAttempts,
         targetChecked := true, structureChecked, structureClean := structureChecked,
         presentation, presentationEvidence?, presentationDetail, graph? := some reading,
-        reason := structureReason}
+        reason := structureReason, isolationUnits := ← isolationUnitReadings.get,
+        isolationUnitCount := ← isolationUnitCount.get}
     let context : Core.Context := {
       fileName := "<proof graph>", fileMap := default,
       options := options.set `maxHeartbeats 0,

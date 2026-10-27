@@ -18,9 +18,9 @@ import tempfile
 import time
 
 
-VERSION = "probe-cache-v7"
+VERSION = "probe-cache-v8"
 # Explicit procedure identity, checked against Lean's configuration by tests.
-R_VERSION = "R_lookup/v18/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v2/N-memo-2000000/checkpoint-v5/views-kappa/analytic-cut-k2/200000"
+R_VERSION = "R_lookup/v18-isolation-independent-v1/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v2/N-memo-2000000/checkpoint-v5/views-kappa/analytic-cut-k2/200000"
 
 
 def wall_phase(label):
