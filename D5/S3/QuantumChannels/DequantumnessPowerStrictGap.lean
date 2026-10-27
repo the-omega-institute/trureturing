@@ -81,7 +81,7 @@ private lemma orthonormal_cross_lower (r s : Fin 3 → ℝ)
     rw [cross_dot_cross]
     dsimp only [f]
     simp only [add_dotProduct, smul_dotProduct, hr, hs, hrs, hsr]
-    simp only [vec3_dotProduct, cons_val_zero, cons_val_one, cons_val_two,
+    simp only [vec3_dotProduct, cons_val_zero, cons_val_one, cons_val_two, head_cons, tail_cons,
       zero_mul, one_mul, zero_add, smul_eq_mul]
     ring
   have hsum : (r 2 + s 2)^2 ≤ 2 := by
@@ -91,7 +91,7 @@ private lemma orthonormal_cross_lower (r s : Fin 3 → ℝ)
       norm_num
     rw [hn] at hc
     simpa only [vec3_dotProduct, Pi.add_apply, cons_val_zero, cons_val_one,
-      cons_val_two, mul_zero, mul_one, zero_mul, one_mul, zero_add, add_zero,
+      cons_val_two, head_cons, tail_cons, mul_zero, mul_one, zero_mul, one_mul, zero_add, add_zero,
       one_add_one_eq_two] using hc
   have hsqrt := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
   have hsqrt0 := Real.sqrt_nonneg (2 : ℝ)
@@ -112,6 +112,7 @@ private lemma density_bloch (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity �
     rw [hρ.2, Complex.one_re] at hn
     have hn2 : ‖bloch ρ‖^2 ≤ 1 := by nlinarith [norm_nonneg (bloch ρ)]
     rw [EuclideanSpace.real_norm_sq_eq] at hn2
+    change (∑ i, (bloch ρ).ofLp i * (bloch ρ).ofLp i) ≤ 1
     simpa only [pow_two] using hn2
 
 private lemma quantumness_bloch (p : ℝ) (r s : EuclideanSpace ℝ (Fin 3)) :
@@ -119,8 +120,8 @@ private lemma quantumness_bloch (p : ℝ) (r s : EuclideanSpace ℝ (Fin 3)) :
       p * (1-p) * ((r.ofLp ⨯₃ s.ofLp) ⬝ᵥ (r.ofLp ⨯₃ s.ofLp)) := by
   unfold quantumness blochMatrix
   simp [Fin.sum_univ_two, pow_two, Matrix.trace_fin_two, Matrix.mul_apply,
-    cross_apply, vec3_dotProduct]
-  <;> ring
+    cross_apply]
+  ring
 
 private lemma cross_bounds (r s : Fin 3 → ℝ)
     (hr : r ⬝ᵥ r ≤ 1) (hs : s ⬝ᵥ s ≤ 1) :
@@ -237,7 +238,7 @@ private lemma channel_cptp : IsCPTP channel := by
     simp only [Fin.sum_univ_succ, Matrix.add_apply, Matrix.mul_apply,
       Matrix.conjTranspose_apply]
     fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-      simp [k, channel, Fin.sum_univ_succ, Matrix.trace_fin_two] <;>
+      simp [k, channel, Matrix.trace_fin_two] <;>
       ring_nf <;> simp only [h2, h6] <;> ring
   refine ⟨he ▸ MatrixMap.of_kraus_isCompletelyPositive k, ?_⟩
   intro x
