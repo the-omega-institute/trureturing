@@ -22,6 +22,10 @@ $$\forall n \in \mathbb{N},\; (1 \le n) \Rightarrow (\operatorname{padicValInt}\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/BalaA363412Valuation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bala3634-paired-valuations` (proved) by `D5/S3/Arith/Congruence/BalaA363412Valuation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bala3634-paired-valuations","declaration_gid":"D5/S3/Arith/Congruence/BalaA363412Valuation.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* P. Bala (2023). *OEIS A363411 and A363412 — quadratic integer product coordinates*. URL: <https://oeis.org/A363411>.

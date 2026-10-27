@@ -22,6 +22,10 @@ $$\forall p \in \mathbb{N},\; (p \le 101) \Rightarrow (((\operatorname{Nat}.\ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/BalaA363411TypeOne.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bala3634-type-one` (proved) by `D5/S3/Arith/Congruence/BalaA363411TypeOne.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bala3634-type-one","declaration_gid":"D5/S3/Arith/Congruence/BalaA363411TypeOne.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* P. Bala (2023). *OEIS A363411 and A363412 — quadratic integer product coordinates*. URL: <https://oeis.org/A363411>.
