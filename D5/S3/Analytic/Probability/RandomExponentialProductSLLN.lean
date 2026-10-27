@@ -257,9 +257,9 @@ private lemma exponential_euler_bound {e : Type*} [NormedRing e] [NormedAlgebra 
     (List.ofFn fun i : Fin n => 1 + (t / n) • a i).prod‖ ≤ _
   convert he using 1
   rw [← Real.exp_nat_mul]
-  have harg : (n : ℝ) * (t / n * m) = m * t := by field_simp
+  have harg : (n : ℝ) * (t / n * m) = m * t := by field_simp (discharger := positivity)
   rw [harg]
-  field_simp
+  field_simp (discharger := positivity)
 
 private lemma centered_max_sublinear {e : Type*} [NormedAddCommGroup e]
     [NormedSpace ℝ e] (a : ℕ → e) (b : e)
@@ -349,7 +349,7 @@ private lemma deterministic_uniform {e : Type*} [NormedRing e] [NormedAlgebra �
   change ‖(List.ofFn fun _ : Fin n => NormedSpace.exp ((s / n) • b)).prod -
     (List.ofFn fun _ : Fin n => 1 + (s / n) • b).prod‖ ≤ _ at hconst
   rw [List.ofFn_const, List.prod_replicate, List.ofFn_const, List.prod_replicate] at hconst
-  have hcancel : (n : ℝ) * (s / n) = s := by field_simp
+  have hcancel : (n : ℝ) * (s / n) = s := by field_simp (discharger := positivity)
   have hexp : NormedSpace.exp ((s / n) • b) ^ n = w := by
     let := NormedAlgebra.restrictScalars ℚ ℝ e
     rw [← NormedSpace.exp_nsmul, ← Nat.cast_smul_eq_nsmul ℝ, smul_smul, hcancel]
@@ -357,14 +357,14 @@ private lemma deterministic_uniform {e : Type*} [NormedRing e] [NormedAlgebra �
   have hvw : ‖v - w‖ ≤ k := hconst.trans herr
   have habel := euler_abel_bound a b m (s / n) (δ * n) n hm hh (by positivity)
     (fun i _ => ha i) hb hsums
-  have harg : s / n * m * n = m * s := by field_simp
-  have hfactor : 1 + 2 * (s / n) * m * n = 1 + 2 * m * s := by field_simp
+  have harg : s / n * m * n = m * s := by field_simp (discharger := positivity)
+  have hfactor : 1 + 2 * (s / n) * m * n = 1 + 2 * m * s := by field_simp (discharger := positivity)
   have hqv : ‖q - v‖ ≤ d * δ := by
     refine habel.trans ?_
     calc
       _ = δ * s * Real.exp (m * s) * (1 + 2 * m * s) := by
         rw [harg, hfactor]
-        field_simp
+        field_simp (discharger := positivity)
       _ ≤ δ * t * c * (1 + 2 * m * t) := by dsimp [c]; gcongr
       _ = d * δ := by dsimp [d]; ring
   change ‖p - w‖ < ε
