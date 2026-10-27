@@ -41,7 +41,7 @@ private theorem zeta3_quad : zeta3 * zeta3 = -1 - zeta3 := by
 /-- A concrete embedding fixes the same orientation throughout the count. -/
 def eisensteinComplex : E →+* ℂ :=
   (QuadraticAlgebra.lift (R := ℤ) (a := -1) (b := -1)
-    ⟨zeta3, by simpa using zeta3_quad⟩).toRingHom
+    ⟨zeta3, by simpa [sub_eq_add_neg] using zeta3_quad⟩).toRingHom
 
 theorem eisensteinComplex_re (z : E) :
     (eisensteinComplex z).re = (z.re : ℝ) - (z.im : ℝ) / 2 := by
@@ -67,7 +67,7 @@ theorem eisensteinComplex_injective : Function.Injective eisensteinComplex := by
   · exact_mod_cast hb
 
 theorem twice_re_eisensteinComplex (z : E) :
-    2 * (eisensteinComplex z).re = (QuadraticAlgebra.trace z : ℝ) := by
+    2 * (eisensteinComplex z).re = ((QuadraticAlgebra.trace z : ℤ) : ℝ) := by
   rw [eisensteinComplex_re]
   simp only [QuadraticAlgebra.trace_def, Int.cast_add, Int.cast_mul,
     Int.cast_ofNat, Int.cast_neg, Int.cast_one]
@@ -80,7 +80,9 @@ theorem cubic_projective_count {F : Type*} [Field F] [Fintype F]
       (Fintype.card F : ℝ) + 1 + 2 * (jacobiSum χ χ).re := by
   have hpow : χ ^ 2 = χ⁻¹ := by
     apply eq_inv_iff_mul_eq_one.mpr
-    rw [← pow_succ, ← hχ, pow_orderOf_eq_one]
+    rw [← pow_succ]
+    change χ ^ 3 = 1
+    rw [← hχ, pow_orderOf_eq_one]
   have hcount := projective_point_count χ (d := 3) (by decide) hχ
   have hs : Finset.Ico 1 3 = ({1, 2} : Finset ℕ) := by decide
   have hc : (Nat.card (projectivePoints F 3) : ℂ) =
@@ -126,7 +128,7 @@ private theorem three_not_mem_of_residue_mod
   letI : Fact (Nat.Prime 3) := ⟨Nat.prime_three⟩
   intro hmem
   have hz : (3 : E ⧸ P) = 0 := by
-    simpa using (Ideal.Quotient.eq_zero_iff_mem.mpr hmem)
+    simpa only [map_ofNat] using (Ideal.Quotient.eq_zero_iff_mem.mpr hmem)
   have hchar : ringChar (E ⧸ P) = 3 :=
     CharP.ringChar_of_prime_eq_zero Nat.prime_three hz
   have hdiv : 3 ∣ Fintype.card (E ⧸ P) :=
@@ -143,7 +145,7 @@ theorem cubic_projective_count_primary
     (P : Ideal E) [P.IsMaximal] [Finite (E ⧸ P)]
     (hcard : Nat.card (E ⧸ P) % 3 = 1)
     (π : E) (hπ : Ideal.span {π} = P) (hπprimary : (3 : E) ∣ π - 1) :
-    letI : Field (E ⧸ P) := Ideal.Quotient.field P
+    letI : Field (E ⧸ P) := Ideal.Quotient.field P;
     (Nat.card (projectivePoints (E ⧸ P) 3) : ℤ) =
       (Nat.card (E ⧸ P) : ℤ) + 1 - QuadraticAlgebra.trace π := by
   classical
