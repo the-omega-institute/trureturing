@@ -160,7 +160,8 @@ theorem hazard_integrable (c T chi : ℝ) (k : ℝ → ℝ)
     max (-deriv k t) 0 / (c-k t)) volume 0 T
   simpa only [div_eq_mul_inv, Pi.inv_apply, Pi.sub_apply] using hi0.add hi1
 
-private theorem leg_hazard (L : Leg) : hazard L.c L.height = L.hazard := by
+private theorem leg_hazard (L : Leg) :
+    OriginalControlSurvivalInstability.hazard L.c L.height = L.hazard := by
   funext t
   simp [hazard, OriginalControlSurvivalInstability.hazard, Leg.hazard,
     (L.height_deriv t).deriv]
@@ -295,7 +296,6 @@ theorem native_concatenation (c T s a chi : ℝ) (k K : ℝ → ℝ)
   have hS : survival c (concatenate k K T) (T + s) = survival c k T * survival c K s := by
     simp only [OriginalControlSurvivalInstability.survival]
     rw [hazard_integral c T s k K hT hs hj hi hI, neg_add, Real.exp_add]
-    rfl
   have hmat := successful_compose c a (k T) (K s) (survival c k T)
     (survival c K s) hc ha hb hk (Real.exp_pos _).le (Real.exp_pos _).le
   rw [← hS] at hmat
