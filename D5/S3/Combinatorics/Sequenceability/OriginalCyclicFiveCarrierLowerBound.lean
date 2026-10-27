@@ -99,7 +99,7 @@ private lemma signed_triple_completion_ne_zero
 
 /-- Three labels from distinct pairs, with either coordinate chosen in each pair,
 never sum to a multiple of the distinguished label. -/
-private lemma signed_triple_not_mem_zmultiples
+lemma signed_triple_not_mem_zmultiples
     (hm : 4 ≤ m) (hq : addOrderOf (f (q m)) = m)
     (hzero : ∀ C : Finset (Coordinate m),
       (C.Nonempty ∧ (∑ x ∈ C, f x) = 0) ↔ ∃ j : Index m, C = triple m j)
