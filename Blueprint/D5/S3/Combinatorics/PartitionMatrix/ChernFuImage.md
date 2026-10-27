@@ -150,6 +150,10 @@ $$\forall n \in \mathbb{N}, \forall e \in \operatorname{List}(\mathbb{N}), (1 \l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PartitionMatrix/ChernFuImage.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chern-fu-improper-partition-matrix-fixed-image` (proved) by `D5/S3/Combinatorics/PartitionMatrix/ChernFuImage.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chern-fu-improper-partition-matrix-fixed-image","declaration_gid":"D5/S3/Combinatorics/PartitionMatrix/ChernFuImage.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Shane Chern, Shishuo Fu (2026). *Signed counting of partition matrices*. DOI: [10.48550/arXiv.2508.21318](https://doi.org/10.48550/arXiv.2508.21318). URL: <https://arxiv.org/abs/2508.21318v2>.
