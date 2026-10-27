@@ -58,6 +58,10 @@ $$\neg (\forall n \in \operatorname{Nat},\; \forall G \in \operatorname{SimpleGr
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/ArizmendiEnergyGameShapleyRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/aa2012` (refuted) by `D5/S3/Combinatorics/SpectralGraph/ArizmendiEnergyGameShapleyRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"aa2012","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/ArizmendiEnergyGameShapleyRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gerardo Arizmendi and Octavio Arizmendi (2020). *The graph energy game*. DOI: [10.1016/j.dam.2023.01.030](https://doi.org/10.1016/j.dam.2023.01.030). URL: <https://arxiv.org/abs/2012.14114v2>.

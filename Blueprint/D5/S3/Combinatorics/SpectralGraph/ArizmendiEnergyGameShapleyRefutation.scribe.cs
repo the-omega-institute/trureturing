@@ -55,14 +55,15 @@ internal sealed class ArizmendiEnergyGameShapleyRefutationDocument : IScribeDocu
                     DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
                 Node("result", "Refutation by K₂,₅₀", "result", Seq(Neg, Sp, Parenthesized(ClaimBody())),
                     "For every m ≥ 50, the graph with two scarce-side vertices a and b and m other vertices, with exactly the cross edges, has coalition energy 2√(rk) when the coalition contains r scarce-side vertices and k other vertices. Its scarce-side Shapley payoff is 2((m + √2)∑ₖ₌₀ᵐ√k + (√2 − 2)∑ₖ₌₀ᵐk√k)/((m + 1)(m + 2)). Summing the one-step inequalities gives ∑ₖ₌₀ᵐ√k ≥ (2/3)m√m and ∑ₖ₌₀ᵐk√k ≤ (2/5)m²√m + m√m. With the negative coefficient √2 − 2 treated in its correct direction, these bounds put the payoff above 2(√2 − 1)√m. If the allocation were in the core, its efficiency equality would make the coalition excluding a violate its lower payoff bound 2√m. Taking m = 50 and vertices 0 and 1 in Fin 52 disproves the universal proposition. No optimal threshold, asymptotic limit, or classification of trees or regular graphs is asserted.",
-                    DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                    DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                    new OpenProblemResolutionClaim(ProblemSlugRef.Create("aa2012"), ResolutionKind.Refuted)))));
     }
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("arizmendi-energy-" + id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula ClaimBody() => All("n", C("Nat"), All("G", Call("SimpleGraph", Call("Fin", V("n"))),
         new Formula.Relation(Call("shapley", Call("worth", V("G"))), FormulaRelationOperator.MemberOf,
             Call("core", Call("worth", V("G"))))));
