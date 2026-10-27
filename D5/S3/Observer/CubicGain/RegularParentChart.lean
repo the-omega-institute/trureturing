@@ -4,10 +4,12 @@
    mirror-E: none(waiver:analytic-original-parent-chart)
    anchors: [mathlib/module/Mathlib.Analysis.Analytic.Constructions]
    utility: none
-   digest: A regular source strip has an analytic lift to all original parent coordinates and actual reads. -/
+   digest: A regular source strip lifts analytically to original parent worlds and actual reads. -/
 
 import D5.S3.Observer.CubicGain.CommonWordSensitivity
 import Mathlib.Analysis.Analytic.Constructions
+
+/-! Rational regular coordinates for the literal original parent. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -17,6 +19,8 @@ namespace D5.S3.Observer.CubicGain.RegularParentChart
 
 open D5.S3.Observer.CubicGain
 open CommonWordSensitivity
+
+attribute [local fun_prop] analyticAt_fst analyticAt_snd
 
 /-- The parent equation determines the drift increment on the regular stratum. -/
 def regularError (r b : ℝ) : ℝ :=
@@ -96,9 +100,27 @@ private theorem chart_analytic (x : ℝ × ℝ)
     (hn : sourceN (x.1*x.2) x.2 ≠ 0) (ht : 1+x.2 ≠ 0)
     (hu : 1+2*x.2 ≠ 0) (hl : parentLambda (x.1*x.2) x.2 ≠ 0) :
     AnalyticAt ℝ chartWorld x := by
+  have hJ : AnalyticAt ℝ (fun y : ℝ × ℝ => sourceJ (y.1*y.2) y.2) x := by
+    unfold sourceJ
+    fun_prop (disch := exact hb)
+  have hN : AnalyticAt ℝ (fun y : ℝ × ℝ => sourceN (y.1*y.2) y.2) x := by
+    unfold sourceN
+    fun_prop
+  have hL : AnalyticAt ℝ (fun y : ℝ × ℝ => parentLambda (y.1*y.2) y.2) x := by
+    unfold parentLambda
+    fun_prop (disch := first | exact hj | exact hn | exact ht | exact hu)
+  have hE : AnalyticAt ℝ (fun y : ℝ × ℝ => regularError (y.1*y.2) y.2) x := by
+    unfold regularError parentB
+    fun_prop (disch := first | exact ht | exact hu | exact hl)
   unfold chartWorld encodeWorld parentWorld chartCoordinates gainCoefficients parentGain
   dsimp
-  fun_prop (disch := first | exact hb | exact hj | exact hn | exact ht | exact hu | exact hl)
+  apply AnalyticAt.prod (by fun_prop)
+  apply AnalyticAt.prod (by fun_prop)
+  apply AnalyticAt.prod (by fun_prop)
+  apply AnalyticAt.pi
+  intro i
+  fin_cases i <;> dsimp [Matrix.vecCons, Fin.cases]
+  all_goals fun_prop (disch := first | exact hj | exact hn | exact ht)
 
 /-- The lift contains every original parent world with the specified source.
 The source and read maps are analytic in the genuine `(t,b)` chart. -/
@@ -118,15 +140,25 @@ theorem analytic_original_parent_chart (x : ℝ × ℝ)
   have hl := ne_of_lt (strip_denominator _ _ hr hr' hb hb')
   have hworld := chart_analytic x (ne_of_gt h0) (ne_of_gt hj) (ne_of_gt hn)
     (ne_of_gt ht) (ne_of_gt hu) hl
+  have wr : AnalyticAt ℝ (fun y => (chartWorld y).1) x := analyticAt_fst.comp hworld
+  have wtail := analyticAt_snd.comp hworld
+  have wb : AnalyticAt ℝ (fun y => (chartWorld y).2.1) x := analyticAt_fst.comp wtail
+  have wtail' := analyticAt_snd.comp wtail
+  have wd : AnalyticAt ℝ (fun y => (chartWorld y).2.2.1) x := analyticAt_fst.comp wtail'
+  have wcoeff := analyticAt_snd.comp wtail'
+  have wa (i : Fin 4) : AnalyticAt ℝ (fun y => (chartWorld y).2.2.2 i) x :=
+    ((ContinuousLinearMap.proj (R := ℝ) i).analyticAt _).comp wcoeff
   refine ⟨encoded_parent _ (chart_parent x hr0 hr1 h0 hl),hworld,?_,?_,
     chart_unique x hl,encoded_response _,?_⟩
   · unfold chartSource sourceCoordinates
     apply AnalyticAt.pi
     intro i
-    fin_cases i <;> simp only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_succ]
+    fin_cases i <;> dsimp [Matrix.vecCons, Fin.cases]
     all_goals fun_prop (disch := exact ne_of_gt h0)
   · unfold chartRead originalResponse originalRead originalPolynomial futureRead
     simp only [List.length_nil, Nat.cast_zero,add_zero]
+    simp [originalPolynomial,Polynomial.ofFn_eq_sum_monomial,Fin.sum_univ_four,
+      sourceMatrix,Matrix.trace,Matrix.diag,Matrix.mul_apply,Fin.sum_univ_two]
     fun_prop (disch := exact ne_of_gt h0)
   · dsimp [chartWorld,encodeWorld,parentWorld,chartCoordinates]
     exact mul_div_cancel_right₀ _ (ne_of_gt h0)
