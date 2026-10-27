@@ -99,8 +99,14 @@ internal sealed class KohenMotzkinGenerationRefutationDocument : IScribeDocument
     }
 
     private static Formula D(byte n) => new Formula.Number(n);
-    private static Formula Call(string name, params Formula[] args) =>
-        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+    private static Formula Call(string name, params Formula[] args)
+    {
+        var parts = name.Split('.');
+        Formula head = F.Id(parts[0]);
+        for (var i = 1; i < parts.Length; i++)
+            head = Seq(head, Dot, F.Id(parts[i]));
+        return new Formula.Apply(head, [.. args]);
+    }
     private static Formula Cast(Formula term, Formula type) =>
         Seq(Open, term, Sp, Colon, Sp, type, Close);
     private static Formula All(string name, Formula type, Formula body) =>
