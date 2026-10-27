@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.PisanoLegendre.AndoyoPrimeFiberRefutation
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound audit of the exact universal prime-fiber refutation. -/
+
 namespace Reg.D5.S3.Arith.PisanoLegendre.AndoyoPrimeFiberRefutation
 
 open _root_.D5.S3.Arith.PisanoLegendre.AndoyoPrimeFiberRefutation
@@ -49,7 +51,7 @@ def registration : Registration arena (Not claim) where
   dependence := dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
-    (@result) (Realization signature) Type Unit where
+    (@_root_.D5.S3.Arith.PisanoLegendre.AndoyoPrimeFiberRefutation.result) (Realization signature) Type Unit where
   unitName := `D5.S3.Arith.PisanoLegendre.AndoyoPrimeFiberRefutation.result.audit
   realizationName := `Reg.D5.S3.Arith.PisanoLegendre.AndoyoPrimeFiberRefutation.registration
   realizationSource := none
@@ -74,11 +76,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
       name := `D5.S3.Arith.PisanoLegendre.AndoyoPrimeFiberRefutation.claim
       path := #["arg"] }
     coordinates := #[]
-    readouts := #[{ path := #["arg", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 3
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
+    readouts := #[
+      { path := #["arg", "body", "body", "body", "body", "body", "arg"]
+        stateBinder := 3
+        functionOperand := false
+        stateOperand := none
+        booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
