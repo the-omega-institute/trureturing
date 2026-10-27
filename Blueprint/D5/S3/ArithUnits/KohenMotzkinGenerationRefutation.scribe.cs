@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ArithUnits;
 
@@ -60,6 +62,63 @@ internal sealed class KohenMotzkinGenerationRefutationDocument : IScribeDocument
         DescribeRole role = DescribeRole.Definition) =>
         Describe.Lean(DescribeId.Create("kohen-" + selector),
             DeclarationHandle.Create(Prefix + selector), H(title),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Disp(Statement(selector))), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Statement(string selector)
+    {
+        var p = F.Id("p"); var a = F.Id("a"); var b = F.Id("b");
+        var n = F.Id("n"); var u = F.Id("u");
+        var z = Seq(Mathbb, Grp(F.Id("Z")));
+        var naturals = Seq(Mathbb, Grp(F.Id("N")));
+        var field = Call("ZMod", p);
+        var term = Call("central", a, b, n);
+        var generatingSet = Call("generators", p, a, b);
+        Formula Parameters(Formula body) => All("a", z, All("b", z, body));
+        var notDivisible = new Formula.Not(new Formula.Relation(
+            Cast(p, z), FormulaRelationOperator.Divides, term));
+        var assertion = All("p", naturals, Imp(Call("Nat.Prime", p), Parameters(
+            Imp(All("n", naturals, Imp(Lt(n, p), notDivisible)),
+                Eq(Call("Subgroup.closure", generatingSet), Seq(Operatorname, Grp(F.Id("top"))))))));
+        return selector switch
+        {
+            "step" => Parameters(Eq(Call("step", a, b),
+                Add(Add(Mul(Call("LaurentPolynomial.C", a),
+                    Call("LaurentPolynomial.T", new Formula.Negate(D(1)))),
+                    Call("LaurentPolynomial.C", b)),
+                    Mul(Call("LaurentPolynomial.C", a), Call("LaurentPolynomial.T", D(1)))))),
+            "central" => Parameters(All("n", naturals, Eq(term,
+                Call("coeff", new Formula.Power(Call("step", a, b), n), D(0))))),
+            "generators" => All("p", naturals, Parameters(All("u", Call("Units", field),
+                Iff(new Formula.Relation(u, FormulaRelationOperator.MemberOf, generatingSet),
+                    Exists("n", naturals, And(Lt(n, p), Eq(Cast(u, field), Cast(term, field)))))))),
+            "claim" => Iff(F.Id("claim"), assertion),
+            "result" => new Formula.Not(F.Id("claim")),
+            _ => throw new ArgumentException("Unknown Kohen declaration selector.", nameof(selector))
+        };
+    }
+
+    private static Formula D(byte n) => new Formula.Number(n);
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+    private static Formula Cast(Formula term, Formula type) =>
+        Seq(Open, term, Sp, Colon, Sp, type, Close);
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Exists(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula Eq(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Lt(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Imp(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Iff(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Iff, b);
+    private static Formula And(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula Add(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula Mul(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
 }
