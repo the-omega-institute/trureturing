@@ -99,6 +99,7 @@ internal sealed class KohenMotzkinGenerationRefutationDocument : IScribeDocument
     }
 
     private static Formula D(byte n) => new Formula.Number(n);
+    private static Formula Parenthesized(Formula term) => Seq(Open, term, Close);
     private static Formula Call(string name, params Formula[] args)
     {
         var parts = name.Split('.');
