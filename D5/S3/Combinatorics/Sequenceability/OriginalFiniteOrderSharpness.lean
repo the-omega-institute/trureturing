@@ -129,7 +129,7 @@ private lemma label_nonzero (m : ℕ) (hm : 2 ≤ m) (x : Coordinate m) :
   · have he := congrArg (fun z : WitnessGroup m => z.2.1 j) h
     norm_num [label] at he
 
-private lemma coordinate_sum {A : Type*} [AddCommMonoid A]
+lemma coordinate_sum {A : Type*} [AddCommMonoid A]
     (m : ℕ) (C : Finset (Coordinate m)) (h : Coordinate m → A) :
     (∑ x ∈ C, h x) =
       ((if q m ∈ C then h (q m) else 0) +

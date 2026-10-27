@@ -1,0 +1,34 @@
+# Quadratic carriers from affine binary points
+
+## Abstract
+
+Affine binary points give quadratic abelian carriers for every odd original order.
+
+**Theorem 1.1 (The complete original zero-support family at every odd order).**
+
+Lean statement: `D5/S3/Combinatorics/Sequenceability/OriginalAffineBinarySharpness.sharpness`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Sequenceability/OriginalAffineBinarySharpness.sharpness` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let s be any positive natural number, m = 2*s+1, and d = Nat.clog 2 (2*s), the least exponent with 2*s <= 2^d. The construction therefore covers every odd m at least three. The finite abelian carrier is G = ZMod m times (ZMod 2 times the space of d-tuples over ZMod 2). Its cardinality is exactly m*2^(clog_2(m-1)+1), and is strictly less than 4*m*(m-1).
+
+Retain the original pair index I = Fin(m-1) and Coordinate = Option I summed with Option I. In particular q = inl none, p = inr none, a_i = inl (some i), and b_i = inr (some i). The full zero-support statement quantifies over every finite subset of these coordinates; it does not select only prescribed supports.
+
+The bound 2*s <= 2^d gives an embedding e of I into the binary d-space by the finite-type cardinality theorem. Put A_i = (1,e_i). Since s is positive, d is at least one; choose a nonzero standard basis vector v_0 and put P = (0,v_0). Label q by (1,0), both a_i and b_i by (s,A_i), and p by (-1,P). The label of q has additive order exactly m, while a_i and b_i are equal labels on distinct original coordinates. Thus the labeling is noninjective.
+
+For an arbitrary original coordinate subset C, let T be the pair indices at which exactly one label is selected, let k count the indices at which both labels are selected, and let epsilon be one or zero according as q belongs to C or not. These two index sets are disjoint, so card(T)+k <= 2*s. The first coordinate of every A_i is one and the first coordinate of P is zero. The binary projection of a zero sum therefore makes card(T) even; write card(T) = 2*l. Since 2*s = -1 in ZMod m, the torsion projection is epsilon-l-k if p is absent, and epsilon-1-l-k if p is present.
+
+If p is absent and T is nonempty, T cannot have two members: two distinct A_i would have zero sum only if they were equal, since the binary group has exponent two, contrary to injectivity of e. Hence l is at least two. The disjointness bound gives 2 <= l+k < m. Vanishing of the torsion coordinate would identify the natural numbers epsilon and l+k, both below m, which contradicts epsilon <= 1.
+
+If p is present, the nonzero vector P forces T to be nonempty. Thus l is at least one, and the disjointness bound gives 2 <= 1+l+k <= 2*s < m. The torsion coordinate would identify epsilon with 1+l+k, again impossible. Consequently p occurs in no nonempty zero support. In the remaining case T is empty, so the selected a_i and b_i occur in complete pairs. Vanishing of epsilon-k with 0 <= k < m forces k = epsilon; nonemptiness then forces k = epsilon = 1. The support is precisely {q,a_i,b_i}. Conversely, every such triple has first-coordinate sum 1+2*s = m and binary sum 2*A_i = 0.
+
+The ceiling-logarithm estimate 2^d < 2*(m-1) gives the strict quadratic bound after multiplying by 2*m. Applying this same family at m = 3, 5, 7, and 9 gives carrier cardinalities 12, 40, 112, and 144 respectively. These are faithful numerical applications of the one general construction, not additional public wrapper theorems. For m = 5, the carrier size 40 is the exact minimum among finite abelian carriers satisfying the original hypotheses: the existing generic bound and divisibility by 5 leave only 30 and 35 below 40, both square-free orders force cyclicity, and the existing cyclic lower bound excludes both. No minimum-carrier assertion for general odd m and no literature-priority claim is made. The construction reuses the repository's original coordinate and zero-support framework.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Sequenceability/OriginalAffineBinarySharpness.sharpness`
+- Dependency: [D5/S3/Combinatorics/Sequenceability/OriginalFiniteOrderSharpness](OriginalFiniteOrderSharpness.md)
