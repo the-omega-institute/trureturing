@@ -1,3 +1,40 @@
+/- GID: D5/S3/Arith/PisanoLegendre/AndoyoPrimeFiberRefutation
+   generality: I
+   mirror-B: D5/B/S3/Arith/PisanoLegendre/AndoyoPrimeFiberRefutation
+   mirror-E: none(waiver:symbolic-external-open-problem-refutation)
+   anchors: [andoyo2026pisanolegendrecollision]
+   utility: none
+   digest: Andoyo Question 5.2 fails: seeds (0,3) have exact odd-prime fiber {3} at -1. -/
+
+/-
+admission_basis: open-problem-resolution (#22882; Refuted)
+Applicability: arbitrary signed integer seeds, not both zero; every odd prime,
+including primes dividing both seeds. The fixed seeds (0,3) refute the original
+universal assertion; no coprime-seed infinitude statement is asserted.
+Utility: none. The declarations describe exact recurrence periods and unbounded
+prime fibers. No bounded enumeration, checker, numerical reduction or certified
+finite-instance delivery occurs: the zero orbit at three is a consumed base case
+inside the symbolic norm/parity obstruction for every other odd prime.
+The instance designation records the specific permitted seed counterexample;
+the obstruction itself quantifies over all odd primes.
+Per declaration: name | proof_shape | live consumers.
+  fiber | bind-only definition | claim, fiber_subset, result
+  claim | bind-only definition | result
+  recurrence_state | content | period_exists
+  period_exists | content | period_even, value_at_three
+  recurrence_norm | content | period_even
+  period_even | content | fiber_subset
+  count_partition | content | fiber_subset
+  zero_mod_three | content | value_at_three
+  value_at_three | content | result
+  fiber_subset | content | result
+  result | content | external Question 5.2 settlement
+The consumed content comprises recurrence-state periodicity, the alternating
+norm, period parity and the exact Legendre-count partition. All eight helpers
+remain private. Imported F, ScalarPeriod, pi, signCount, K and chi retain their
+original definitions; no private Q5.3 supplier is used or re-proved.
+-/
+
 import D5.S3.Arith.AndoyoPisanoSetCollision
 import Mathlib.Tactic
 
