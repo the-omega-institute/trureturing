@@ -627,7 +627,7 @@ private def pattern {r : ℕ} [NeZero r] (b : Fin r) (q : Fin 5) : Fin 4 → Fin
     ![![0,4,1,5],![0,4,2,5],![1,4,2,5],![1,4,2,6],![1,5,2,6]]
     else ![![0,5,1,6],![0,5,2,6],![0,5,2,7],![1,5,2,7],![1,6,2,7]]) q i
 
-def movingIndex (r : ℕ) : Fin 4 → Fin 4 :=
+private def movingIndex (r : ℕ) : Fin 4 → Fin 4 :=
   if r = 7 then ![2,0,3,1] else ![2,3,0,1]
 
 private theorem pattern7 : ∀ b : Fin 7,
