@@ -8,6 +8,9 @@
 
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Algebra.BigOperators.Field
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Order.Interval.Finset.Fin
+import Mathlib.Data.Finset.Max
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Finset.Lattice.Fold
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
@@ -90,181 +93,6 @@ private lemma top_sum_mono {d : ℕ} (f : Fin d × Fin d → ℝ) (hf : ∀ ij, 
   exact (Finset.sum_le_sum_of_subset_of_nonneg hst (fun ij _ _ => hf ij)).trans
     (sum_le_top_sum f t ht)
 
-private lemma young_weight (a x y : ℝ) (ha : 0 < a) :
-    2 * x * y ≤ y ^ 2 / a + a * x ^ 2 := by
-  apply (mul_le_mul_iff_left₀ ha).mp
-  calc
-    2 * x * y * a ≤ y ^ 2 + (a * x) ^ 2 := by
-      nlinarith [sq_nonneg (y - a * x)]
-    _ = (y ^ 2 / a + a * x ^ 2) * a := by field_simp [ne_of_gt ha]
-
-private lemma weighted_schur_bound {n : ℕ} (s : Finset (Fin n))
-    (h : Fin n → Fin n → ℝ) (v : Fin n → ℝ) (l x : ℝ) (y : Fin n → ℝ)
-    (hsym : ∀ i j, h i j = h j i) (hh : ∀ i j, 0 ≤ h i j)
-    (hv : ∀ i ∈ s, 0 < v i)
-    (hrow : ∀ i ∈ s, 1 + ∑ j ∈ s, h i j * v j ≤ l * v i) :
-    2 * x * (∑ i ∈ s, y i) + (∑ i ∈ s, ∑ j ∈ s, h i j * y i * y j) ≤
-      l * (∑ i ∈ s, (y i) ^ 2) + (∑ i ∈ s, v i) * x ^ 2 := by
-  have hlinear := Finset.sum_le_sum (s := s) (fun i hi => young_weight (v i) x (y i) (hv i hi))
-  rw [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.sum_mul] at hlinear
-  have hswap :
-      (∑ i ∈ s, ∑ j ∈ s, h i j * (v i / v j * (y j) ^ 2)) =
-        ∑ i ∈ s, ∑ j ∈ s, h i j * (v j / v i * (y i) ^ 2) := by
-    rw [Finset.sum_comm]
-    apply Finset.sum_congr rfl
-    intro i hi
-    apply Finset.sum_congr rfl
-    intro j hj
-    rw [hsym j i]
-  have hquad :
-      2 * (∑ i ∈ s, ∑ j ∈ s, h i j * y i * y j) ≤
-        (∑ i ∈ s, ∑ j ∈ s, h i j * (v j / v i * (y i) ^ 2)) +
-        (∑ i ∈ s, ∑ j ∈ s, h i j * (v i / v j * (y j) ^ 2)) := by
-    rw [Finset.mul_sum, ← Finset.sum_add_distrib]
-    apply Finset.sum_le_sum
-    intro i hi
-    rw [Finset.mul_sum, ← Finset.sum_add_distrib]
-    apply Finset.sum_le_sum
-    intro j hj
-    have hy := young_weight (v i / v j) (y j) (y i) (div_pos (hv i hi) (hv j hj))
-    have hy' : 2 * y i * y j ≤ v j / v i * (y i) ^ 2 +
-        v i / v j * (y j) ^ 2 := by
-      convert hy using 1 <;> field_simp <;> ring
-    nlinarith [mul_le_mul_of_nonneg_left hy' (hh i j)]
-  rw [hswap] at hquad
-  have hfactor :
-      (∑ i ∈ s, ∑ j ∈ s, h i j * (v j / v i * (y i) ^ 2)) =
-        ∑ i ∈ s, (∑ j ∈ s, h i j * v j) * ((y i) ^ 2 / v i) := by
-    apply Finset.sum_congr rfl
-    intro i hi
-    rw [Finset.sum_mul]
-    apply Finset.sum_congr rfl
-    intro j hj
-    ring
-  rw [hfactor] at hquad
-  have hdiag :
-      (∑ i ∈ s, (y i) ^ 2 / v i) +
-          (∑ i ∈ s, (∑ j ∈ s, h i j * v j) * ((y i) ^ 2 / v i)) ≤
-        l * (∑ i ∈ s, (y i) ^ 2) := by
-    rw [← Finset.sum_add_distrib, Finset.mul_sum]
-    apply Finset.sum_le_sum
-    intro i hi
-    have hhrow := mul_le_mul_of_nonneg_right (hrow i hi)
-      (div_nonneg (sq_nonneg (y i)) (hv i hi).le)
-    have he : l * v i * ((y i) ^ 2 / v i) = l * (y i) ^ 2 := by
-      field_simp [ne_of_gt (hv i hi)]
-    rw [he] at hhrow
-    nlinarith
-  linarith
-
-/-- A finite-dimensional quadratic certificate for the support budget. -/
-private lemma support_budget_bound {n k : ℕ} (f p : Finset (Fin n))
-    (h : Fin n → Fin n → ℝ) (x : ℝ) (y : Fin n → ℝ)
-    (hdisj : Disjoint f p) (hsym : ∀ i j, h i j = h j i)
-    (hzero : ∀ i j, 0 ≤ h i j) (hone : ∀ i j, h i j ≤ 1)
-    (hsupp : ∀ i j, i ∉ f ∨ j ∉ f → h i j = 0)
-    (hbudget : 2 * (f.card : ℝ) + p.card + ∑ i, ∑ j, h i j ≤ 2 * k) :
-    2 * x * ((∑ i ∈ f, y i) + (∑ i ∈ p, y i) / 2) +
-        (∑ i, ∑ j, h i j * y i * y j) ≤
-      ((k : ℝ) + 2) * (∑ i, (y i) ^ 2) + k / ((k : ℝ) + 2) * x ^ 2 := by
-  classical
-  let r : ℝ := f.card
-  let l : ℝ := (k : ℝ) + 2
-  let b : ℝ := ∑ i ∈ f, ∑ j ∈ f, h i j
-  have hrestrict (a : Fin n → Fin n → ℝ) :
-      (∑ i, ∑ j, h i j * a i j) = ∑ i ∈ f, ∑ j ∈ f, h i j * a i j := by
-    symm
-    calc
-      _ = ∑ i ∈ f, ∑ j, h i j * a i j := by
-        apply Finset.sum_congr rfl
-        intro i hi
-        apply Finset.sum_subset (Finset.subset_univ f)
-        intro j hj hjf
-        rw [hsupp i j (Or.inr hjf), zero_mul]
-      _ = _ := by
-        apply Finset.sum_subset (Finset.subset_univ f)
-        intro i hi hif
-        apply Finset.sum_eq_zero
-        intro j hj
-        rw [hsupp i j (Or.inl hif), zero_mul]
-  have hb : 0 ≤ b := Finset.sum_nonneg (fun i _ =>
-    Finset.sum_nonneg (fun j _ => hzero i j))
-  have htotal : (∑ i, ∑ j, h i j) = b := by
-    simpa only [mul_one] using hrestrict (fun _ _ => 1)
-  rw [htotal] at hbudget
-  have hr : r ≤ k := by dsimp only [r]; nlinarith [(Nat.cast_nonneg p.card : (0 : ℝ) ≤ p.card)]
-  have hl : 0 < l := by dsimp only [l]; positivity
-  have hgap : 2 ≤ l - r := by dsimp only [l]; linarith
-  have hgap0 : 0 < l - r := by linarith
-  have hrows (i : Fin n) : 0 ≤ ∑ j ∈ f, h i j :=
-    Finset.sum_nonneg (fun j _ => hzero i j)
-  have hrowle (i : Fin n) : (∑ j ∈ f, h i j) ≤ r := by
-    calc
-      _ ≤ ∑ _j ∈ f, (1 : ℝ) := Finset.sum_le_sum (fun j _ => hone i j)
-      _ = r := by simp only [Finset.sum_const, nsmul_eq_mul, mul_one]; rfl
-  let v : Fin n → ℝ := fun i => (1 + (∑ j ∈ f, h i j) / (l - r)) / l
-  have hv (i : Fin n) : 0 < v i := by
-    exact div_pos (by linarith [div_nonneg (hrows i) hgap0.le]) hl
-  have hvle (i : Fin n) : v i ≤ 1 / (l - r) := by
-    apply (div_le_iff₀ hl).mpr
-    have hrdiv := (div_le_div_iff_of_pos_right hgap0).mpr (hrowle i)
-    have he : 1 + r / (l - r) = (1 / (l - r)) * l := by
-      field_simp <;> ring
-    linarith
-  have hsuper (i : Fin n) : 1 + (∑ j ∈ f, h i j * v j) ≤ l * v i := by
-    have hle : (∑ j ∈ f, h i j * v j) ≤ (∑ j ∈ f, h i j) / (l - r) := by
-      calc
-        _ ≤ ∑ j ∈ f, h i j * (1 / (l - r)) :=
-          Finset.sum_le_sum (fun j _ => mul_le_mul_of_nonneg_left (hvle j) (hzero i j))
-        _ = _ := by rw [← Finset.sum_mul]; ring
-    have he : l * v i = 1 + (∑ j ∈ f, h i j) / (l - r) := by
-      dsimp only [v]
-      field_simp [ne_of_gt hl]
-    linarith
-  have hf := weighted_schur_bound f h v l x y hsym hzero (fun i _ => hv i)
-    (fun i _ => hsuper i)
-  have hp := weighted_schur_bound p (fun _ _ => 0) (fun _ => 1 / l) l (x / 2) y
-    (fun _ _ => rfl) (fun _ _ => le_rfl) (fun _ _ => div_pos (by norm_num) hl)
-    (fun _ _ => by
-      simp only [zero_mul, Finset.sum_const_zero, add_zero]
-      exact le_of_eq (by field_simp [ne_of_gt hl]))
-  simp only [zero_mul, Finset.sum_const_zero, add_zero, Finset.sum_const,
-    nsmul_eq_mul] at hp
-  have hsv : (∑ i ∈ f, v i) = (r + b / (l - r)) / l := by
-    dsimp only [v, r, b]
-    rw [← Finset.sum_div, Finset.sum_add_distrib, ← Finset.sum_div]
-    simp only [Finset.sum_const, nsmul_eq_mul, mul_one]
-  have hbd : b / (l - r) ≤ b / 2 := by
-    apply (div_le_iff₀ hgap0).mpr
-    nlinarith [mul_nonneg hb (sub_nonneg.mpr hgap)]
-  have hcoef : (∑ i ∈ f, v i) + (p.card : ℝ) / (4 * l) ≤ (k : ℝ) / l := by
-    calc
-      _ = (r + b / (l - r) + (p.card : ℝ) / 4) / l := by
-        rw [hsv]; field_simp <;> ring
-      _ ≤ _ := div_le_div_of_nonneg_right (by dsimp only [r]; linarith) hl.le
-  have hnorm : (∑ i ∈ f, (y i) ^ 2) + (∑ i ∈ p, (y i) ^ 2) ≤ ∑ i, (y i) ^ 2 := by
-    rw [← Finset.sum_union hdisj]
-    exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _)
-      (fun i _ _ => sq_nonneg (y i))
-  have hq : (∑ i, ∑ j, h i j * y i * y j) =
-      ∑ i ∈ f, ∑ j ∈ f, h i j * y i * y j := by
-    simpa only [mul_assoc] using hrestrict (fun i j => y i * y j)
-  rw [hq]
-  have hpid : (p.card : ℝ) * (1 / l) * (x / 2) ^ 2 =
-      ((p.card : ℝ) / (4 * l)) * x ^ 2 := by field_simp <;> ring
-  rw [hpid] at hp
-  have hcombine := mul_le_mul_of_nonneg_right hcoef (sq_nonneg x)
-  have hn := mul_le_mul_of_nonneg_left hnorm hl.le
-  change _ ≤ l * (∑ i, (y i) ^ 2) + (k : ℝ) / l * x ^ 2
-  nlinarith
-
-private lemma small_coordinate_bound {d : ℕ} (hd : 5 ≤ d) (p : Fin d → ℝ)
-    (hp : IsProbability p) (ht : ∀ i, p i ≤ 2 / 3)
-    (s t : Finset (Fin d × Fin d)) (hs : s.card = 2 * d - 5)
-    (htc : t.card = 2 * d - 5) :
-    (∑ ij ∈ s, arith p ij) + (∑ ij ∈ t, geom p ij) ≤ d := by
-  sorry
-
 private lemma probability_le_one {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p)
     (i : Fin d) : p i ≤ 1 := by
   have h := Finset.single_le_sum (fun j (_ : j ∈ (Finset.univ : Finset (Fin d))) =>
@@ -278,144 +106,221 @@ private lemma probability_pair_le_one {d : ℕ} {p : Fin d → ℝ}
     (Finset.subset_univ ({i, j} : Finset (Fin d))) (fun a _ _ => hp.1 a)
   simpa only [Finset.sum_pair hij, hp.2] using h
 
-private lemma optimal_selection_exchange {d : ℕ} (v : Fin d × Fin d → ℝ)
-    (t : Finset (Fin d × Fin d))
-    (hopt : ∀ u : Finset (Fin d × Fin d), u.card = t.card →
-      (∑ ij ∈ u, v ij) ≤ ∑ ij ∈ t, v ij)
-    {a b : Fin d × Fin d} (ha : a ∈ t) (hab : v a < v b) : b ∈ t := by
+private lemma incidence_bound {d : ℕ} (s : Finset (Fin d × Fin d))
+    (q : Finset (Fin d)) :
+    (∑ ab ∈ s, ((if ab.1 ∈ q then (1 : ℝ) else 0) +
+      (if ab.2 ∈ q then (1 : ℝ) else 0))) ≤ s.card + (q.card : ℝ) ^ 2 := by
   classical
-  by_contra hb
-  have hbe : b ∉ t.erase a := fun h => hb (Finset.mem_of_mem_erase h)
-  have hcard : (insert b (t.erase a)).card = t.card := by
-    rw [Finset.card_insert_of_notMem hbe, Finset.card_erase_of_mem ha]
-    have := Finset.card_pos.mpr ⟨a, ha⟩
+  have hpoint (ab : Fin d × Fin d) :
+      (if ab.1 ∈ q then (1 : ℝ) else 0) + (if ab.2 ∈ q then 1 else 0) ≤
+        1 + if ab ∈ q ×ˢ q then 1 else 0 := by
+    by_cases ha : ab.1 ∈ q <;> by_cases hb : ab.2 ∈ q <;>
+      simp only [Finset.mem_product, ha, hb, and_self, if_true, if_false] <;> norm_num
+  have hr : (∑ ab : Fin d × Fin d, if ab ∈ q ×ˢ q then (1 : ℝ) else 0) =
+      (q.card : ℝ) ^ 2 := by
+    simp only [Finset.sum_boole, Finset.filter_mem_eq_inter, Finset.univ_inter,
+      Finset.card_product, Nat.cast_mul, pow_two]
+  calc
+    _ ≤ ∑ ab ∈ s, (1 + if ab ∈ q ×ˢ q then (1 : ℝ) else 0) :=
+      Finset.sum_le_sum (fun ab _ => hpoint ab)
+    _ = s.card + ∑ ab ∈ s, if ab ∈ q ×ˢ q then (1 : ℝ) else 0 := by
+      rw [Finset.sum_add_distrib]; simp only [Finset.sum_const, nsmul_eq_mul, mul_one]
+    _ ≤ s.card + ∑ ab : Fin d × Fin d, if ab ∈ q ×ˢ q then (1 : ℝ) else 0 := by
+      apply add_le_add le_rfl
+      exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ s)
+        (fun ab _ _ => by split_ifs <;> norm_num)
+    _ = _ := by rw [hr]
+
+private lemma arithmetic_coefficients {d : ℕ} (s : Finset (Fin d × Fin d))
+    (p : Fin d → ℝ) :
+    ∃ c : Fin d → ℝ,
+      (∑ ab ∈ s, arith p ab) = ∑ i, c i * p i ∧
+      (∀ i, c i ≤ ((s.card : ℝ) + 1) / 2) ∧
+      (∀ i j, i ≠ j → c i + c j ≤ (s.card : ℝ) / 2 + 2) := by
+  classical
+  let c : Fin d → ℝ := fun i =>
+    (∑ ab ∈ s, ((if ab.1 = i then (1 : ℝ) else 0) +
+      (if ab.2 = i then (1 : ℝ) else 0))) / 2
+  refine ⟨c, ?_, ?_, ?_⟩
+  · dsimp only [c]
+    simp only [div_mul_eq_mul_div, Finset.sum_mul, ← Finset.sum_div]
+    rw [Finset.sum_comm, Finset.sum_div]
+    apply Finset.sum_congr rfl
+    intro ab hab
+    dsimp only [arith]
+    congr 1
+    simp only [add_mul, Finset.sum_add_distrib, ite_mul, one_mul, zero_mul,
+      Finset.sum_ite_eq, Finset.mem_univ, if_true]
+  · intro i
+    have h := incidence_bound s {i}
+    simp only [Finset.mem_singleton, Finset.card_singleton, Nat.cast_one, one_pow] at h
+    dsimp only [c]
+    linarith
+  · intro i j hij
+    have h := incidence_bound s {i, j}
+    simp only [Finset.mem_insert, Finset.mem_singleton, Finset.card_pair hij,
+      Nat.cast_ofNat] at h
+    have hpoint (ab : Fin d × Fin d) :
+        ((if ab.1 = i then (1 : ℝ) else 0) + (if ab.2 = i then 1 else 0)) +
+          ((if ab.1 = j then 1 else 0) + (if ab.2 = j then 1 else 0)) =
+        (if ab.1 = i ∨ ab.1 = j then 1 else 0) +
+          (if ab.2 = i ∨ ab.2 = j then 1 else 0) := by
+      by_cases hai : ab.1 = i <;> by_cases haj : ab.1 = j <;>
+        by_cases hbi : ab.2 = i <;> by_cases hbj : ab.2 = j <;> simp_all
+    have he := Finset.sum_congr (s₁ := s) rfl (fun ab _ => hpoint ab)
+    rw [Finset.sum_add_distrib] at he
+    dsimp only [c]
+    linarith
+
+private lemma probability_weighted_bound {d : ℕ} {p : Fin d → ℝ}
+    (hp : IsProbability p) (c : Fin d → ℝ) (u v t : ℝ)
+    (hu : ∀ i, c i ≤ u) (hv : ∀ i j, i ≠ j → c i + c j ≤ v)
+    (ht : 1 / 2 ≤ t) (hmax : ∀ i, p i ≤ t) (hvu : v ≤ 2 * u) :
+    (∑ i, c i * p i) ≤ (2 * t - 1) * u + (1 - t) * v := by
+  classical
+  by_cases hall : ∀ i, c i ≤ v / 2
+  · have hh := Finset.sum_le_sum (s := Finset.univ) (fun i _ =>
+      mul_le_mul_of_nonneg_right (hall i) (hp.1 i))
+    rw [← Finset.mul_sum, hp.2, mul_one] at hh
+    nlinarith
+  · push Not at hall
+    obtain ⟨j, hj⟩ := hall
+    have hh : (∑ i, c i * p i) ≤ (v - c j) + (2 * c j - v) * p j := by
+      calc
+        _ ≤ ∑ i, ((v - c j) * p i + if i = j then (2 * c j - v) * p j else 0) := by
+          apply Finset.sum_le_sum
+          intro i hi
+          by_cases hij : i = j
+          · subst i; rw [if_pos rfl]; nlinarith
+          · rw [if_neg hij, add_zero]
+            exact mul_le_mul_of_nonneg_right (by linarith [hv i j hij]) (hp.1 i)
+        _ = _ := by
+          rw [Finset.sum_add_distrib, ← Finset.mul_sum, hp.2, mul_one]
+          simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    have htj := mul_le_mul_of_nonneg_left (hmax j) (by linarith : 0 ≤ 2 * c j - v)
+    have htu := mul_le_mul_of_nonneg_left (hu j) (by linarith : 0 ≤ 2 * t - 1)
+    nlinarith
+
+private lemma geometric_square_sum {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p) :
+    (∑ ab : Fin d × Fin d, (geom p ab) ^ 2) = 1 := by
+  have hpoint (ab : Fin d × Fin d) : (geom p ab) ^ 2 = p ab.1 * p ab.2 :=
+    Real.sq_sqrt (mul_nonneg (hp.1 _) (hp.1 _))
+  simp_rw [hpoint]
+  rw [Fintype.sum_prod_type]
+  simp_rw [← Finset.mul_sum, hp.2, mul_one]
+  exact hp.2
+
+private lemma geometric_coarse_bound {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p)
+    (s : Finset (Fin d × Fin d)) : (∑ ab ∈ s, geom p ab) ≤ Real.sqrt s.card := by
+  have hcs := Real.sum_mul_le_sqrt_mul_sqrt s (fun _ => 1) (geom p)
+  simp only [one_mul, one_pow, Finset.sum_const, nsmul_eq_mul, mul_one] at hcs
+  have hh := Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ s)
+    (fun ab _ _ => sq_nonneg (geom p ab))
+  rw [geometric_square_sum hp] at hh
+  have hs := Real.sqrt_le_sqrt hh
+  rw [Real.sqrt_one] at hs
+  nlinarith [Real.sqrt_nonneg (s.card : ℝ)]
+
+private lemma selection_with_center {d : ℕ} (g : Fin d × Fin d → ℝ)
+    (s : Finset (Fin d × Fin d)) (hs : s.Nonempty) (a : Fin d × Fin d)
+    (hmax : ∀ b, g b ≤ g a) :
+    ∃ t : Finset (Fin d × Fin d), t.card = s.card ∧ a ∈ t ∧
+      (∑ b ∈ s, g b) ≤ ∑ b ∈ t, g b := by
+  classical
+  by_cases ha : a ∈ s
+  · exact ⟨s, rfl, ha, le_rfl⟩
+  obtain ⟨b, hb⟩ := hs
+  have hae : a ∉ s.erase b := fun h => ha (Finset.mem_of_mem_erase h)
+  refine ⟨insert a (s.erase b), ?_, Finset.mem_insert_self _ _, ?_⟩
+  · rw [Finset.card_insert_of_notMem hae, Finset.card_erase_of_mem hb]
+    have := Finset.card_pos.mpr ⟨b, hb⟩
     omega
-  have hh := hopt (insert b (t.erase a)) hcard
-  rw [Finset.sum_insert hbe] at hh
-  have he := Finset.sum_erase_add t v ha
-  linarith
+  · rw [Finset.sum_insert hae]
+    have hh := Finset.sum_erase_add s g hb
+    linarith [hmax b]
 
-private lemma large_arithmetic_bound {d : ℕ} (hd : 5 ≤ d) (p : Fin d → ℝ)
-    (hp : IsProbability p) (i : Fin d) (hi : 2 / 3 < p i)
-    (s : Finset (Fin d × Fin d)) (hs : s.card = 2 * d - 5) :
-    (∑ ij ∈ s, arith p ij) ≤ ((d - 3 : ℕ) + 1 : ℝ) * p i + (1 - p i) := by
+private lemma geometric_refined_bound {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p)
+    (i : Fin d) (hi : ∀ j, p j ≤ p i) (s : Finset (Fin d × Fin d))
+    (hs : s.Nonempty) :
+    (∑ ab ∈ s, geom p ab) ≤ p i + Real.sqrt (s.card - 1 : ℕ) *
+      Real.sqrt (1 - (p i) ^ 2) := by
   classical
-  let e : Fin d × Fin d → ℝ := fun ab =>
-    if ab.1 = i then p ab.2 / 2 else if ab.2 = i then p ab.1 / 2 else 0
-  have he : ∀ ab, 0 ≤ e ab := by
-    intro ab
-    dsimp only [e]
-    split_ifs <;> positivity
-  have hpoint : ∀ ab, arith p ab ≤ p i / 2 + e ab := by
-    rintro ⟨a, b⟩
-    dsimp only [arith, e]
-    by_cases ha : a = i
-    · subst a; rw [if_pos rfl]; linarith
-    · rw [if_neg ha]
-      by_cases hb : b = i
-      · subst b; rw [if_pos rfl]; linarith
-      · rw [if_neg hb]
-        have hpa := probability_pair_le_one hp ha
-        have hpb := probability_pair_le_one hp hb
-        linarith
-  have heval : (∑ ab, e ab) = 1 - p i / 2 := by
-    rw [Fintype.sum_prod_type]
-    change (∑ a, ∑ b, if a = i then p b / 2 else if b = i then p a / 2 else 0) = _
-    simp only [ite_apply, Finset.sum_ite_irrel, Finset.sum_ite_eq', Finset.mem_univ,
-      if_true, ← Finset.sum_div, hp.2]
-    rw [Finset.sum_ite]
-    simp only [Finset.filter_eq', Finset.mem_univ, if_true, Finset.sum_singleton]
-    have herase : (∑ a ∈ Finset.univ.filter (fun a => ¬a = i), p a / 2) =
-        (1 - p i) / 2 := by
-      rw [Finset.filter_ne', ← Finset.sum_div]
-      have hh := Finset.sum_erase_add Finset.univ p (Finset.mem_univ i)
-      rw [hp.2] at hh
-      congr 1
-      linarith
-    rw [herase]
-    ring
-  have hh := Finset.sum_le_sum (s := s) (fun ab _ => hpoint ab)
-  rw [Finset.sum_add_distrib, Finset.sum_const, nsmul_eq_mul, hs] at hh
-  have hsub := Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ s)
-    (fun ab _ _ => he ab)
-  rw [heval] at hsub
-  have hcast : ((2 * d - 5 : ℕ) : ℝ) = 2 * (d : ℝ) - 5 := by
-    rw [Nat.cast_sub (by omega), Nat.cast_mul]
-    norm_num
-  have hk : ((d - 3 : ℕ) : ℝ) = (d : ℝ) - 3 := by
-    rw [Nat.cast_sub (by omega)]; norm_num
-  rw [hcast, hk] at *
+  have hdiag : geom p (i, i) = p i := Real.sqrt_mul_self (hp.1 i)
+  have hmax (ab : Fin d × Fin d) : geom p ab ≤ geom p (i, i) := by
+    apply Real.sqrt_le_sqrt
+    exact mul_le_mul (hi ab.1) (hi ab.2) (hp.1 _) (hp.1 _)
+  obtain ⟨t, ht, hai, hh⟩ := selection_with_center (geom p) s hs (i, i) hmax
+  have hcs := Real.sum_mul_le_sqrt_mul_sqrt (t.erase (i, i)) (fun _ => 1) (geom p)
+  simp only [one_mul, one_pow, Finset.sum_const, nsmul_eq_mul, mul_one,
+    Finset.card_erase_of_mem hai, ht] at hcs
+  have hsq : (∑ ab ∈ t.erase (i, i), (geom p ab) ^ 2) ≤ 1 - (p i) ^ 2 := by
+    have hsub : t.erase (i, i) ⊆ Finset.univ.erase (i, i) :=
+      Finset.erase_subset_erase _ (Finset.subset_univ t)
+    have hle := Finset.sum_le_sum_of_subset_of_nonneg hsub
+      (fun ab _ _ => sq_nonneg (geom p ab))
+    have he := Finset.sum_erase_add Finset.univ (fun ab => (geom p ab) ^ 2)
+      (Finset.mem_univ (i, i))
+    rw [geometric_square_sum hp, hdiag] at he
+    linarith
+  have hroot := mul_le_mul_of_nonneg_left (Real.sqrt_le_sqrt hsq)
+    (Real.sqrt_nonneg (s.card - 1 : ℕ))
+  have he := Finset.sum_erase_add t (geom p) hai
+  rw [hdiag] at he
   linarith
 
-private lemma selected_tail_closed {d : ℕ} (p : Fin d → ℝ) (hp : IsProbability p)
-    (i : Fin d) (hi : 2 / 3 < p i) (t : Finset (Fin d × Fin d))
-    (hopt : ∀ u : Finset (Fin d × Fin d), u.card = t.card →
-      (∑ ij ∈ u, geom p ij) ≤ ∑ ij ∈ t, geom p ij) :
-    ∀ a b, a ≠ i → b ≠ i → (a, b) ∈ t → 0 < p a → 0 < p b →
-      (i, a) ∈ t ∧ (a, i) ∈ t ∧ (i, b) ∈ t ∧ (b, i) ∈ t := by
-  intro a b hai hbi hab hpa hpb
-  have hia : p a < p i := by
-    have := probability_pair_le_one hp hai
+private lemma selected_mean_bound {d : ℕ} (hd : 5 ≤ d) (p : Fin d → ℝ)
+    (hp : IsProbability p) (s t : Finset (Fin d × Fin d))
+    (hs : s.card = 2 * d - 5) (ht : t.card = 2 * d - 5) :
+    (∑ ab ∈ s, arith p ab) + (∑ ab ∈ t, geom p ab) ≤ d := by
+  classical
+  have hdd : (5 : ℝ) ≤ d := by exact_mod_cast hd
+  obtain ⟨c, he, hu, hv⟩ := arithmetic_coefficients s p
+  have hm : ((2 * d - 5 : ℕ) : ℝ) = 2 * (d : ℝ) - 5 := by
+    rw [Nat.cast_sub (by omega), Nat.cast_mul]; norm_num
+  rw [hs, hm] at hu hv
+  obtain ⟨i, _, hi⟩ := Finset.exists_max_image Finset.univ p
+    (by exact ⟨⟨0, by omega⟩, Finset.mem_univ _⟩)
+  have hmax (j : Fin d) : p j ≤ p i := hi j (Finset.mem_univ j)
+  by_cases hsmall : p i ≤ 1 / 2
+  · have ha := probability_weighted_bound hp c (((2 * d - 5 : ℕ) + 1 : ℝ) / 2)
+      (((2 * d - 5 : ℕ) : ℝ) / 2 + 2) (1 / 2)
+      (by rw [hm]; exact hu) (by rw [hm]; exact hv) le_rfl
+      (fun j => (hmax j).trans hsmall) (by rw [hm]; nlinarith)
+    have hg := geometric_coarse_bound hp t
+    rw [hm] at ha
+    rw [ht, hm] at hg
+    rw [he]
+    have hr : Real.sqrt (2 * (d : ℝ) - 5) ≤ (d : ℝ) / 2 - 1 / 4 := by
+      have hdd : (5 : ℝ) ≤ d := by exact_mod_cast hd
+      have hh := Real.sq_sqrt (show 0 ≤ 2 * (d : ℝ) - 5 by linarith)
+      nlinarith [Real.sqrt_nonneg (2 * (d : ℝ) - 5), sq_nonneg ((d : ℝ) - 9 / 2)]
     linarith
-  have hib : p b < p i := by
-    have := probability_pair_le_one hp hbi
+  · have hlarge : 1 / 2 ≤ p i := le_of_lt (lt_of_not_ge hsmall)
+    have ha := probability_weighted_bound hp c (((2 * d - 5 : ℕ) + 1 : ℝ) / 2)
+      (((2 * d - 5 : ℕ) : ℝ) / 2 + 2) (p i)
+      (by rw [hm]; exact hu) (by rw [hm]; exact hv) hlarge hmax
+      (by rw [hm]; nlinarith)
+    have hg := geometric_refined_bound hp i hmax t
+      (Finset.card_pos.mp (by rw [ht]; omega))
+    have hmc : ((t.card - 1 : ℕ) : ℝ) = 2 * (d : ℝ) - 6 := by
+      rw [ht, Nat.cast_sub (by omega), hm]; norm_num <;> ring
+    rw [hm] at ha
+    rw [hmc] at hg
+    rw [he]
+    have hdd : (5 : ℝ) ≤ d := by exact_mod_cast hd
+    have hpi := probability_le_one hp i
+    have hs0 : 0 ≤ 1 - (p i) ^ 2 := by nlinarith [hp.1 i]
+    have hb := Real.sq_sqrt (show 0 ≤ 2 * (d : ℝ) - 6 by linarith)
+    have hc := Real.sq_sqrt hs0
+    have hcs : (((d : ℝ) - 5 / 2) * p i +
+        Real.sqrt (2 * (d : ℝ) - 6) * Real.sqrt (1 - (p i) ^ 2)) ^ 2 ≤
+        ((d : ℝ) - 5 / 2) ^ 2 + (2 * (d : ℝ) - 6) := by
+      nlinarith [sq_nonneg (((d : ℝ) - 5 / 2) * Real.sqrt (1 - (p i) ^ 2) -
+        Real.sqrt (2 * (d : ℝ) - 6) * p i)]
+    have hlin : ((d : ℝ) - 5 / 2) * p i +
+        Real.sqrt (2 * (d : ℝ) - 6) * Real.sqrt (1 - (p i) ^ 2) ≤ (d : ℝ) - 3 / 2 := by
+      nlinarith
     linarith
-  have hmul := mul_nonneg (hp.1 a) (hp.1 b)
-  have hga : geom p (a, b) < geom p (i, a) := by
-    apply Real.sqrt_lt_sqrt hmul
-    dsimp only
-    nlinarith
-  have hgb : geom p (a, b) < geom p (i, b) := by
-    apply Real.sqrt_lt_sqrt hmul
-    dsimp only
-    nlinarith
-  have hgas : geom p (i, a) = geom p (a, i) := by
-    dsimp only [geom]; rw [mul_comm]
-  have hgbs : geom p (i, b) = geom p (b, i) := by
-    dsimp only [geom]; rw [mul_comm]
-  exact ⟨optimal_selection_exchange (geom p) t hopt hab hga,
-    optimal_selection_exchange (geom p) t hopt hab (hga.trans_eq hgas),
-    optimal_selection_exchange (geom p) t hopt hab hgb,
-    optimal_selection_exchange (geom p) t hopt hab (hgb.trans_eq hgbs)⟩
-
-/-- Reduction of an optimal geometric selection to its full and partial cross supports. -/
-private lemma large_coordinate_reduction {d : ℕ} (hd : 5 ≤ d) (p : Fin d → ℝ)
-    (hp : IsProbability p) (i : Fin d) (hi : 2 / 3 < p i)
-    (s t : Finset (Fin d × Fin d)) (hs : s.card = 2 * d - 5)
-    (ht : t.card = 2 * d - 5)
-    (hopt : ∀ u : Finset (Fin d × Fin d), u.card = t.card →
-      (∑ ij ∈ u, geom p ij) ≤ ∑ ij ∈ t, geom p ij) :
-    ∃ (f q : Finset (Fin d)) (h : Fin d → Fin d → ℝ) (x : ℝ) (y : Fin d → ℝ),
-      Disjoint f q ∧ (∀ a b, h a b = h b a) ∧
-      (∀ a b, 0 ≤ h a b) ∧ (∀ a b, h a b ≤ 1) ∧
-      (∀ a b, a ∉ f ∨ b ∉ f → h a b = 0) ∧
-      2 * (f.card : ℝ) + q.card + ∑ a, ∑ b, h a b ≤ 2 * (d - 3 : ℕ) ∧
-      x ^ 2 + (∑ a, (y a) ^ 2) = 1 ∧
-      (∑ ij ∈ s, arith p ij) + (∑ ij ∈ t, geom p ij) ≤
-        ((d - 3 : ℕ) + 2 : ℝ) * x ^ 2 + (∑ a, (y a) ^ 2) +
-        2 * x * ((∑ a ∈ f, y a) + (∑ a ∈ q, y a) / 2) +
-        (∑ a, ∑ b, h a b * y a * y b) := by
-  have ha := large_arithmetic_bound hd p hp i hi s hs
-  have hc := selected_tail_closed p hp i hi t hopt
-  sorry
-
-private lemma large_coordinate_bound {d : ℕ} (hd : 5 ≤ d) (p : Fin d → ℝ)
-    (hp : IsProbability p) (i : Fin d) (hi : 2 / 3 < p i)
-    (s t : Finset (Fin d × Fin d)) (hs : s.card = 2 * d - 5)
-    (ht : t.card = 2 * d - 5)
-    (hopt : ∀ u : Finset (Fin d × Fin d), u.card = t.card →
-      (∑ ij ∈ u, geom p ij) ≤ ∑ ij ∈ t, geom p ij) :
-    (∑ ij ∈ s, arith p ij) + (∑ ij ∈ t, geom p ij) ≤ d := by
-  obtain ⟨f, q, h, x, y, hdj, hsy, hz, ho, hsp, hb, hn, he⟩ :=
-    large_coordinate_reduction hd p hp i hi s t hs ht hopt
-  have hm := support_budget_bound f q h x y hdj hsy hz ho hsp hb
-  have hk : ((d - 3 : ℕ) : ℝ) + 3 = d := by
-    have : d - 3 + 3 = d := Nat.sub_add_cancel (by omega)
-    exact_mod_cast this
-  have hq : ((d - 3 : ℕ) : ℝ) / (((d - 3 : ℕ) : ℝ) + 2) ≤ 1 :=
-    (div_le_one (by positivity)).mpr (by linarith)
-  have hy : 0 ≤ ∑ a, (y a) ^ 2 := Finset.sum_nonneg (fun _ _ => sq_nonneg _)
-  nlinarith [sq_nonneg x, mul_le_mul_of_nonneg_right hq (sq_nonneg x)]
 
 private lemma main_bound {d : ℕ} (hd : 5 ≤ d) (p : Fin d → ℝ)
     (hp : IsProbability p) :
@@ -428,28 +333,220 @@ private lemma main_bound {d : ℕ} (hd : 5 ≤ d) (p : Fin d → ℝ)
     omega
   rw [hm] at hs ht
   rw [he, hf]
-  by_cases hi : ∀ i, p i ≤ 2 / 3
-  · exact small_coordinate_bound hd p hp hi s t hs ht
-  · push Not at hi
-    obtain ⟨i, hi⟩ := hi
-    apply large_coordinate_bound hd p hp i hi s t hs ht
-    intro u hu
-    rw [← hf]
-    exact sum_le_top_sum _ u (hu.trans (ht.trans hm.symm))
+  exact selected_mean_bound hd p hp s t hs ht
+
+private lemma star_card_sum {d : ℕ} (j : Finset (Fin d)) (o : Fin d) (ho : o ∉ j) :
+    let c := insert (o, o) (({o} ×ˢ j) ∪ (j ×ˢ {o}))
+    c.card = 2 * j.card + 1 ∧
+      ∀ g : Fin d × Fin d → ℝ,
+        (∑ ab ∈ c, g ab) = g (o, o) + ∑ a ∈ j, (g (o, a) + g (a, o)) := by
+  classical
+  have hdj : Disjoint ({o} ×ˢ j) (j ×ˢ {o}) := by
+    apply Finset.disjoint_left.mpr
+    intro ab ha hb
+    have ha := Finset.mem_product.mp ha
+    have hb := Finset.mem_product.mp hb
+    exact ho ((Finset.mem_singleton.mp ha.1) ▸ hb.1)
+  have hdiag : (o, o) ∉ ({o} ×ˢ j) ∪ (j ×ˢ {o}) := by
+    simp only [Finset.mem_union, Finset.mem_product, Finset.mem_singleton, ho,
+      and_false, false_and, or_self, not_false_eq_true]
+  constructor
+  · rw [Finset.card_insert_of_notMem hdiag, Finset.card_union_of_disjoint hdj,
+      Finset.card_product, Finset.card_product, Finset.card_singleton]
+    omega
+  · intro g
+    rw [Finset.sum_insert hdiag, Finset.sum_union hdj, Finset.sum_product,
+      Finset.sum_product]
+    simp only [Finset.sum_singleton]
+    rw [Finset.sum_add_distrib]
 
 private lemma failure_next {d : ℕ} (hd : 5 ≤ d) :
     ∃ p : Fin d → ℝ, IsProbability p ∧
       (d : ℝ) < topSum (arith p) (2 * d - 4) + topSum (geom p) (2 * d - 4) := by
-  sorry
+  classical
+  let o : Fin d := ⟨0, by omega⟩
+  let j : Fin d := ⟨1, by omega⟩
+  let z : Fin d := ⟨d - 2, by omega⟩
+  let q : Finset (Fin d) := Finset.Ioo o z
+  have hq : q.card = d - 3 := by
+    dsimp only [q]
+    rw [Fin.card_Ioo]
+    dsimp only [o, z]
+    omega
+  have ho : o ∉ q := by simp only [q, Finset.mem_Ioo, lt_self_iff_false, false_and,
+    not_false_eq_true]
+  have hz : z ∉ q := by simp only [q, Finset.mem_Ioo, lt_self_iff_false, and_false,
+    not_false_eq_true]
+  have hj : j ∈ q := by
+    simp only [q, Finset.mem_Ioo, Fin.lt_def]
+    dsimp only [o, j, z]
+    constructor <;> omega
+  have hjo : j ≠ o := by intro h; exact ho (h ▸ hj)
+  have hzo : z ≠ o := by
+    intro h
+    have hh := congrArg Fin.val h
+    dsimp only [z, o] at hh
+    omega
+  let r : ℝ := (d : ℝ) - 2
+  let k : ℝ := (d : ℝ) - 3
+  let n : ℝ := r ^ 2 + k
+  have hdd : (5 : ℝ) ≤ d := by exact_mod_cast hd
+  have hr : 0 < r := by dsimp only [r]; linarith
+  have hn : 0 < n := by dsimp only [n, k]; nlinarith [sq_nonneg r]
+  have hk : ((d - 3 : ℕ) : ℝ) = k := by
+    dsimp only [k]
+    rw [Nat.cast_sub (by omega)]; norm_num
+  let p : Fin d → ℝ := fun a =>
+    (if a = o then r ^ 2 / n else 0) + (if a ∈ q then 1 / n else 0)
+  have hpo : p o = r ^ 2 / n := by simp only [p, eq_self_iff_true, ite_true, if_neg ho, add_zero]
+  have hpq (a : Fin d) (ha : a ∈ q) : p a = 1 / n := by
+    have hao : a ≠ o := by intro h; exact ho (h ▸ ha)
+    simp only [p, if_neg hao, if_pos ha, zero_add]
+  have hpz : p z = 0 := by simp only [p, if_neg hzo, if_neg hz, add_zero]
+  have hp : IsProbability p := by
+    constructor
+    · intro a
+      dsimp only [p]
+      split_ifs <;> positivity
+    · dsimp only [p]
+      rw [Finset.sum_add_distrib]
+      simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true, Finset.sum_ite,
+        Finset.filter_mem_eq_inter, Finset.univ_inter, Finset.sum_const_zero, add_zero,
+        Finset.sum_const, nsmul_eq_mul, hq, hk]
+      field_simp [ne_of_gt hn] <;> dsimp only [n] <;> ring
+  let c := insert (o, o) (({o} ×ˢ q) ∪ (q ×ˢ {o}))
+  have hc := star_card_sum q o ho
+  have hzc : (o, z) ∉ c := by
+    simp only [c, Finset.mem_insert, Prod.mk.injEq, Finset.mem_union,
+      Finset.mem_product, Finset.mem_singleton, hz, ho, hzo, Ne.symm hzo,
+      and_false, false_and, or_self, not_false_eq_true]
+  have hjc : (j, j) ∉ c := by
+    simp only [c, Finset.mem_insert, Prod.mk.injEq, Finset.mem_union,
+      Finset.mem_product, Finset.mem_singleton, hjo, false_and, and_false,
+      or_self, not_false_eq_true]
+  have hcard (a : Fin d × Fin d) (ha : a ∉ c) :
+      (insert a c).card = min (2 * d - 4) (d * d) := by
+    rw [Finset.card_insert_of_notMem ha, hc.1, hq]
+    have hdim : 2 * d ≤ d * d := by nlinarith
+    rw [Nat.min_eq_left (by omega)]
+    omega
+  have hacross (a : Fin d) (ha : a ∈ q) :
+      arith p (o, a) + arith p (a, o) = (r ^ 2 + 1) / n := by
+    dsimp only [arith]
+    rw [hpo, hpq a ha]
+    ring
+  have hgcross (a : Fin d) (ha : a ∈ q) :
+      geom p (o, a) + geom p (a, o) = 2 * r / n := by
+    have hsqrt : Real.sqrt ((r ^ 2 / n) * (1 / n)) = r / n := by
+      apply (Real.sqrt_eq_iff_eq_sq (by positivity) (by positivity)).mpr
+      field_simp <;> ring
+    dsimp only [geom]
+    rw [hpo, hpq a ha, hsqrt, mul_comm (1 / n), hsqrt]
+    ring
+  have ha := sum_le_top_sum (arith p) (insert (o, z) c) (hcard _ hzc)
+  have hg := sum_le_top_sum (geom p) (insert (j, j) c) (hcard _ hjc)
+  have hea : (∑ ab ∈ insert (o, z) c, arith p ab) =
+      r ^ 2 / (2 * n) + r ^ 2 / n + k * ((r ^ 2 + 1) / n) := by
+    rw [Finset.sum_insert hzc, hc.2 (arith p)]
+    have hh := Finset.sum_congr (s₁ := q) rfl (fun a ha => hacross a ha)
+    rw [hh, Finset.sum_const, nsmul_eq_mul, hq, hk]
+    dsimp only [arith]
+    rw [hpo, hpz]
+    ring
+  have heg : (∑ ab ∈ insert (j, j) c, geom p ab) =
+      1 / n + r ^ 2 / n + k * (2 * r / n) := by
+    rw [Finset.sum_insert hjc, hc.2 (geom p)]
+    have hh := Finset.sum_congr (s₁ := q) rfl (fun a ha => hgcross a ha)
+    rw [hh, Finset.sum_const, nsmul_eq_mul, hq, hk]
+    dsimp only [geom]
+    rw [Real.sqrt_mul_self (hp.1 j), Real.sqrt_mul_self (hp.1 o), hpq j hj, hpo]
+    ring
+  have hidentity : r ^ 2 / (2 * n) + r ^ 2 / n + k * ((r ^ 2 + 1) / n) +
+      (1 / n + r ^ 2 / n + k * (2 * r / n)) =
+      (d : ℝ) + ((d : ℝ) - 4) ^ 2 / (2 * n) := by
+    field_simp [ne_of_gt hn]
+    dsimp only [n, r, k]
+    ring
+  rw [hea] at ha
+  rw [heg] at hg
+  have hpos : 0 < ((d : ℝ) - 4) ^ 2 / (2 * n) :=
+    div_pos (sq_pos_of_pos (by linarith)) (by positivity)
+  exact ⟨p, hp, by linarith⟩
+
+private lemma geom_le_arith {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p)
+    (ab : Fin d × Fin d) : geom p ab ≤ arith p ab := by
+  have hs := Real.sq_sqrt (mul_nonneg (hp.1 ab.1) (hp.1 ab.2))
+  have hn := Real.sqrt_nonneg (p ab.1 * p ab.2)
+  dsimp only [geom, arith]
+  nlinarith [sq_nonneg (p ab.1 - p ab.2), hp.1 ab.1, hp.1 ab.2]
+
+private lemma arithmetic_two_bound {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p)
+    (s : Finset (Fin d × Fin d)) (hs : s.card = 2) :
+    (∑ ab ∈ s, arith p ab) ≤ 3 / 2 := by
+  classical
+  obtain ⟨a, b, hab, rfl⟩ := Finset.card_eq_two.mp hs
+  rw [Finset.sum_pair hab]
+  have hone (ab : Fin d × Fin d) : arith p ab ≤ 1 := by
+    dsimp only [arith]
+    linarith [probability_le_one hp ab.1, probability_le_one hp ab.2]
+  have hoff (ab : Fin d × Fin d) (h : ab.1 ≠ ab.2) : arith p ab ≤ 1 / 2 := by
+    dsimp only [arith]
+    linarith [probability_pair_le_one hp h]
+  by_cases ha : a.1 = a.2
+  · by_cases hb : b.1 = b.2
+    · have hij : a.1 ≠ b.1 := by
+        intro hh
+        apply hab
+        exact Prod.ext hh (ha.symm.trans (hh.trans hb))
+      have hh := probability_pair_le_one hp hij
+      dsimp only [arith]
+      rw [ha, hb] at *
+      linarith
+    · linarith [hone a, hoff b hb]
+  · linarith [hoff a ha, hone b]
 
 private lemma three_bound (p : Fin 3 → ℝ) (hp : IsProbability p) :
     topSum (arith p) 2 + topSum (geom p) 2 ≤ 3 := by
-  sorry
+  have ha : topSum (arith p) 2 ≤ 3 / 2 := by
+    apply top_sum_le
+    intro s hs
+    apply arithmetic_two_bound hp s
+    norm_num at hs
+    exact hs
+  have hg : topSum (geom p) 2 ≤ 3 / 2 := by
+    apply top_sum_le
+    intro s hs
+    have hs : s.card = 2 := by norm_num at hs; exact hs
+    exact (Finset.sum_le_sum (fun ab _ => geom_le_arith hp ab)).trans
+      (arithmetic_two_bound hp s hs)
+  linarith
 
 private lemma three_failure :
     ∃ p : Fin 3 → ℝ, IsProbability p ∧
       3 < topSum (arith p) 3 + topSum (geom p) 3 := by
-  sorry
+  classical
+  let p : Fin 3 → ℝ := ![4 / 5, 1 / 5, 0]
+  let s : Finset (Fin 3 × Fin 3) := {(0, 0), (0, 1), (1, 0)}
+  have hp : IsProbability p := by
+    constructor
+    · intro i; fin_cases i <;> norm_num [p]
+    · norm_num [p, Fin.sum_univ_succ]
+  have hs : s.card = min 3 (3 * 3) := by norm_num [s]
+  have ha := sum_le_top_sum (arith p) s hs
+  have hg := sum_le_top_sum (geom p) s hs
+  have hea : (∑ ab ∈ s, arith p ab) = 9 / 5 := by norm_num [s, arith, p]
+  have h4 : Real.sqrt (4 : ℝ) = 2 := by
+    apply (Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)).mpr
+    norm_num
+  have h16 : Real.sqrt (16 : ℝ) = 4 := by
+    apply (Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)).mpr
+    norm_num
+  have h25 : Real.sqrt (25 : ℝ) = 5 := by
+    apply (Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)).mpr
+    norm_num
+  have heg : (∑ ab ∈ s, geom p ab) = 8 / 5 := by
+    norm_num [s, geom, p, h4, h16, h25]
+  exact ⟨p, hp, by linarith⟩
 
 private lemma greatest_of_bound_failure {d m : ℕ}
     (hb : m ∈ admissibleIndices d)
