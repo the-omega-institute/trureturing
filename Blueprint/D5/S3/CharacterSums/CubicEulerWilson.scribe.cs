@@ -70,7 +70,7 @@ internal sealed class CubicEulerWilsonDocument : IScribeDocumentDefinition
         Forall, Sp, F.Id("m"), Colon, Sp, F.Id("N"), Comma, Sp,
         Call("card", F.Id("F")), Eq, ThreeMPlusOne(), Comma, Sp,
         Call("Even", F.Id("m")), Sp, Implies, Sp,
-        Sum, Underscore, Grp(F.Id("x"), InMacro, F.Id("F")), Sp,
+        Sum, Underscore, Grp(F.Id("x"), InMacro, Sp, F.Id("F")), Sp,
         Call("pow", F.Id("x"), F.Seq(D(2), F.Id("m"))), Sp,
         Call("pow", F.Seq(D(1), Minus, F.Id("x")), F.Seq(D(2), F.Id("m"))), Eq,
         Minus, Call("cast", Choose(), F.Id("F"))));

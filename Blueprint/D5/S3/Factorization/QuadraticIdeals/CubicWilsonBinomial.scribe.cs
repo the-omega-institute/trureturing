@@ -29,7 +29,7 @@ internal sealed class CubicWilsonBinomialDocument : IScribeDocumentDefinition
                     Call("mod", Call("card", Quotient("P")), D(3)), Eq, D(1), Comma, Sp,
                     Neg, Sp, Call("member", Cast(D(3), F.Id("E")), F.Id("P")), Sp, Implies, Sp,
                     Call("modIdeal", Call("star", Call("jacobiSum", Character("P"), Character("P"))), F.Id("P")), Eq,
-                    Sum, Underscore, Grp(F.Id("x"), InMacro, Quotient("P")), Sp,
+                    Sum, Underscore, Grp(F.Id("x"), InMacro, Sp, Quotient("P")), Sp,
                     Call("pow", F.Id("x"), DoubleIndex(Call("card", Quotient("P")))), Sp,
                     Call("pow", F.Seq(D(1), Minus, F.Id("x")), DoubleIndex(Call("card", Quotient("P"))))))),
                 AssessedProvenance.FromRepo(),
