@@ -51,13 +51,15 @@ theorem canonical_reference_amplitude (i j : A) :
 theorem canonical_reference_purification :
     (maxEntangled A).PosSemidef ∧ Matrix.trace (maxEntangled A) = 1 ∧
       partialTraceRight (maxEntangled A) = rho := by
+  have hs : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
+    exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
   refine ⟨Matrix.posSemidef_vecMulVec_self_star _, (max_entangled_density A).2, ?_⟩
   ext i j
   fin_cases i <;> fin_cases j <;>
     norm_num [partialTraceRight, maxEntangled, maxEntangledVector,
       Fintype.card_fin, rho, Matrix.one_apply, Matrix.vecMulVec_apply,
       Fin.sum_univ_two, ← Complex.ofReal_mul, ← pow_two,
-      Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+      Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2), hs]
 
 theorem tensor_reference_kraus {s : Type*} [Fintype s]
     (channel : QuantumChannel A A) (K : s → Matrix A A ℂ)
@@ -119,8 +121,8 @@ theorem actual_entanglement_fidelity (decoder : QuantumChannel B A) (D : E → M
 theorem actual_strict_fidelity :
     entanglementFidelity (swChannel.comp noiseChannel) <
       entanglementFidelity (petzChannel.comp noiseChannel) := by
-  rw [actual_entanglement_fidelity _ _ recovery_channels.1.choose_spec,
-    actual_entanglement_fidelity _ _ petz_channel_action]
+  rw [actual_entanglement_fidelity swChannel _ recovery_channels.1.choose_spec,
+    actual_entanglement_fidelity petzChannel slice petz_channel_action]
   exact canonical_overlap_gap
 
 def completedKraus (Uprime : Matrix P P ℂ) (e : E) : Matrix A B ℂ :=
