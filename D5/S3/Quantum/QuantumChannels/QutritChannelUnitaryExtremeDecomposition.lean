@@ -588,8 +588,7 @@ private lemma phase_reduction (α β : ℂ)
       Fin.sum_univ_three, Fin.sum_univ_four, Matrix.star_eq_conjTranspose,
       Matrix.conjTranspose_apply, Matrix.vecMul_apply_eq_sum, star_mul, star_div₀,
       star_pow, hrstar, hsstar] <;>
-    field_simp (disch := first | assumption | norm_num) <;>
-    ring_nf <;> norm_num [map_ofNat, htwo, hfour] <;> ring
+    field_simp (disch := first | assumption | norm_num)
 
 private lemma conjugate_cp (d e : Matrix (Fin 3) (Fin 3) ℂ)
     (φ : MatrixMap (Fin 3) (Fin 3) ℂ) (hφ : φ.IsCompletelyPositive) :
