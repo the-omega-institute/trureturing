@@ -227,12 +227,8 @@ private theorem tensor_values (n : ℕ) :
   funext c
   have hp : (∏ k : Fin n, if c k = 0 then (1 : ℂ) else 0) =
       if c = fun _ => 0 then 1 else 0 := by
-    by_cases hc : c = fun _ => 0
-    · subst c
-      simp
-    · rw [ite_eq_right hc]
-      obtain ⟨k, hk⟩ := Function.ne_iff.mp hc
-      exact Finset.prod_eq_zero (Finset.mem_univ k) (ite_eq_right hk)
+    simpa only [← funext_iff] using
+      (Fintype.prod_boole (p := fun k : Fin n => c k = 0) (M₀ := ℂ))
   change (∏ k, if c k = 0 then (1 : ℂ) else 0) -
     (∏ k, if c k = 0 then (1 / 4 : ℂ) else 3 / 4) = _
   rw [hp]
@@ -244,14 +240,13 @@ private theorem input_density (n : ℕ) :
     (single (input n, reference n) (input n, reference n) (1 : ℂ)).PosSemidef ∧
     (single (input n, reference n) (input n, reference n) (1 : ℂ)).trace = 1 := by
   classical
-  rw [← Matrix.diagonal_single]
   constructor
-  · apply Matrix.posSemidef_diagonal_iff.mpr
+  · rw [← Matrix.diagonal_single]
+    apply Matrix.posSemidef_diagonal_iff.mpr
     intro i
     rw [Pi.single_apply]
     split_ifs <;> norm_num
-  · rw [Matrix.trace_diagonal]
-    exact Fintype.sum_pi_single' _ _
+  · exact Matrix.trace_single_eq_same _ _
 
 private theorem amplified_output (n : ℕ) :
     kron (tensorPow harrowM n - tensorPow harrowMbar n) LinearMap.id
