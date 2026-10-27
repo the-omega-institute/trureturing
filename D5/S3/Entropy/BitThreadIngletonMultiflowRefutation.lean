@@ -140,7 +140,9 @@ private lemma star_nonnegative :
   exact add_nonneg (mul_nonneg (by norm_num) (h.2.2.1 0 1 (by decide)).1)
     (mul_nonneg (by norm_num) (h.2.2.1 2 3 (by decide)).1)
 
-private lemma star_symmetric : ∀ u v, starCapacity u v = starCapacity v u := by sorry
+private lemma star_symmetric : ∀ u v, starCapacity u v = starCapacity v u := by
+  intro u v
+  fin_cases u <;> fin_cases v <;> norm_num [starCapacity]
 
 private lemma star_loopless : ∀ u, starCapacity u u = 0 := by sorry
 
