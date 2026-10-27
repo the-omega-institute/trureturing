@@ -230,7 +230,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "arg", "body", "arg", "body", "arg", "fn", "arg"]
       stateBinder := 9
-      functionOperand := true
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
