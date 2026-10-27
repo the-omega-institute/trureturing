@@ -316,7 +316,7 @@ private theorem optimal_axis (c : ℂ) (r : ℝ) :
     dsimp only [v]
     rw [div_pow, mul_pow, ht2, ← hdisc]
     field_simp [hdne, hl.ne']
-    <;> ring
+    ring
   have hunit : ‖z‖ ^ 2 + v ^ 2 = 1 := by
     rw [hz, ht2, hv, ← add_div]
     dsimp only [l]
@@ -337,7 +337,7 @@ private theorem optimal_axis (c : ℂ) (r : ℝ) :
     calc
       s * t + v * r = (s + r ^ 2 / (2 * l)) * t := by dsimp only [v]; ring
       _ = (s + 4 * l * (l - s) / (2 * l)) * t := by rw [← hdisc]
-      _ = (2 * l - s) * t := by field_simp [hl.ne'] <;> ring
+      _ = (2 * l - s) * t := by field_simp [hl.ne']; ring
       _ = d * t := by dsimp only [l]; ring
   refine ⟨z, v, hunit, ?_⟩
   change _ = l
@@ -387,11 +387,67 @@ private theorem padded_measurement {n : ℕ} (hn : 2 ≤ n)
   rw [CFC.sqrt_unique hpp hp.nonneg, CFC.sqrt_unique hqq hq.nonneg]
   simp only [CFC.sqrt_zero, zero_mul, mul_zero, Finset.sum_const_zero, add_zero]
 
+private theorem projector_output (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity ρ)
+    (z : ℂ) (v : ℝ) (hu : ‖z‖ ^ 2 + v ^ 2 = 1) :
+    let p := projector z v
+    l1Coherence (p * ρ * p + (1 - p) * ρ * (1 - p)) =
+      ‖((2 * (star z * ρ 0 1).re + v * (ρ 0 0 - ρ 1 1).re : ℝ) : ℂ) * z‖ := by
+  let p := projector z v
+  have hp := (projector_facts z v hu).1
+  have hq : (1 - p).IsHermitian := Matrix.isHermitian_one.sub hp
+  have hh : (p * ρ * p + (1 - p) * ρ * (1 - p)).IsHermitian := by
+    have ha := Matrix.isHermitian_mul_mul_conjTranspose p hρ.1.isHermitian
+    have hb := Matrix.isHermitian_mul_mul_conjTranspose (1 - p) hρ.1.isHermitian
+    rw [hp.eq] at ha
+    rw [hq.eq] at hb
+    exact ha.add hb
+  have hr := hermitian_entries ρ hρ.1.isHermitian
+  have hz : (z.re ^ 2 + z.im ^ 2) + v ^ 2 = 1 := by
+    rw [Complex.sq_norm, Complex.normSq_apply] at hu
+    nlinarith only [hu]
+  have hf : (p * ρ * p + (1 - p) * ρ * (1 - p)) 0 1 =
+      (((2 * (star z * ρ 0 1).re + v * (ρ 0 0 - ρ 1 1).re : ℝ) : ℂ) * z) / 2 := by
+    dsimp only [p]
+    unfold projector
+    simp only [Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_two, Matrix.sub_apply]
+    apply Complex.ext
+    · norm_num [hr.2.2, hr.1, hr.2.1]
+      linear_combination -(ρ 0 1).re / 2 * hz
+    · norm_num [hr.2.2, hr.1, hr.2.1]
+      linear_combination -(ρ 0 1).im / 2 * hz
+  change l1Coherence (p * ρ * p + (1 - p) * ρ * (1 - p)) = _
+  rw [coherence_two _ hh, hf, norm_div]
+  norm_num
+  ring
+
 private theorem measurement_attainment {n : ℕ} (hn : 2 ≤ n)
     (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity ρ) :
     ∃ e : Fin n → Matrix (Fin 2) (Fin 2) ℂ, IsPOVM e ∧
       l1Coherence (luders e ρ) = (l1Coherence ρ + blochNorm ρ) / 2 := by
-  sorry
+  obtain ⟨z, v, hu, hv⟩ := optimal_axis (ρ 0 1) (ρ 0 0 - ρ 1 1).re
+  let p := projector z v
+  let q := 1 - p
+  have hp := (projector_facts z v hu).1
+  have hpp : p * p = p := (projector_facts z v hu).2
+  have hq : q.IsHermitian := Matrix.isHermitian_one.sub hp
+  have hqq : q * q = q := by
+    dsimp only [q]
+    rw [sub_mul, one_mul, mul_sub, mul_one, hpp, sub_self, sub_zero]
+  have hps : p.PosSemidef := by
+    have h := Matrix.posSemidef_conjTranspose_mul_self p
+    rwa [hp.eq, hpp] at h
+  have hqs : q.PosSemidef := by
+    have h := Matrix.posSemidef_conjTranspose_mul_self q
+    rwa [hq.eq, hqq] at h
+  have hs : p + q = 1 := by dsimp only [q]; abel
+  obtain ⟨e, he, heq⟩ := padded_measurement hn p q ρ hps hqs hpp hqq hs
+  refine ⟨e, he, ?_⟩
+  rw [heq]
+  change l1Coherence (p * ρ * p + (1 - p) * ρ * (1 - p)) = _
+  rw [projector_output ρ hρ z v hu]
+  rw [coherence_two ρ hρ.1.isHermitian]
+  unfold blochNorm
+  exact hv
 
 private theorem zero_gain (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity ρ) :
     (l1Coherence ρ + blochNorm ρ) / 2 - l1Coherence ρ = 0 ↔ ρ 0 0 = ρ 1 1 := by
