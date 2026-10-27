@@ -191,8 +191,121 @@ private theorem pair_gain_zero (n : ℕ) (T : Finset World3) (v : List Bool)
     simpa only [hu, hd, sub_self, acquisition_concat, acquisition_two,
       Matrix.mul_assoc] using he
   have hz := two_product_equal_trace (acquisition (v ++ p) * D) 0 hh
+  have hm0 : (!![0,0;0,0] : Mat) = 0 := by
+    ext i k
+    fin_cases i <;> fin_cases k <;> rfl
+  rw [hm0] at hz
   have hz' : acquisition (v ++ p) * D = acquisition (v ++ p) * 0 := by simpa using hz
   have hd0 : D = 0 := (acquisition_unit (v ++ p)).mul_left_cancel hz'
   exact weighted_sources_zero W Z hP _ _ (sub_eq_zero.mp hd0)
+
+
+
+private theorem four_evaluations (β γ : Coeff 3) (t : Fin 4 → ℝ)
+    (ht : Function.Injective t)
+    (he : ∀ i, (gain 3 β).eval (t i) = (gain 3 γ).eval (t i)) : β = γ := by
+  apply evaluation_injective 3 4 t ht (by omega)
+  ext i
+  simpa only [evaluation_polynomial] using he i
+
+private theorem not_four_roots (W : World3) (t : Fin 4 → ℝ)
+    (ht : Function.Injective t) : ¬ ∀ i, (gain 3 W.coeff).eval (t i) = 0 := by
+  intro he
+  apply W.nonzero
+  apply four_evaluations W.coeff 0 t ht
+  intro i
+  simpa [gain, Polynomial.ofFn_eq_sum_monomial] using he i
+
+private theorem common_gain_source (j m b : ℝ) (v : List Bool)
+    (hv : v = [true,false] ∨ v = [false,true]) (W Z : World3)
+    (hWJ : readAt W [true] 1 = j) (hWM : readAt W [false] 1 = m)
+    (hWQ : readAt W v 2 = b)
+    (hZJ : readAt Z [true] 1 = j) (hZM : readAt Z [false] 1 = m)
+    (hZQ : readAt Z v 2 = b)
+    (hd : W.drift = Z.drift) (hg : gain 3 W.coeff = gain 3 Z.coeff)
+    (hg1 : (gain 3 W.coeff).eval 1 ≠ 0)
+    (hg2 : (gain 3 W.coeff).eval 2 ≠ 0) : W.source = Z.source := by
+  have hread (u : List Bool) (hz : (gain 3 W.coeff).eval (u.length : ℝ) ≠ 0)
+      (he : readAt W u u.length = readAt Z u u.length) :
+      Matrix.trace (acquisition u * W.source) = Matrix.trace (acquisition u * Z.source) := by
+    simp only [readAt, List.take_length, ← hd, ← hg, add_left_inj] at he
+    exact mul_left_cancel₀ hz he
+  have hj := hread [true] (by simpa using hg1) (hWJ.trans hZJ.symm)
+  have hm := hread [false] (by simpa using hg1) (hWM.trans hZM.symm)
+  have hvlen : v.length = 2 := by rcases hv with rfl | rfl <;> rfl
+  have hq := hread v (by simpa [hvlen] using hg2)
+    (by simpa [hvlen] using hWQ.trans hZQ.symm)
+  have htW := W.legal.2.2
+  have htZ := Z.legal.2.2
+  simp [Matrix.trace, Matrix.diag, Fin.sum_univ_two] at htW htZ
+  rcases hv with rfl | rfl
+  all_goals
+    simp [acquisition, Raw,
+      D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
+      D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
+      D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
+      Matrix.mul_apply, Matrix.trace, Matrix.diag, Fin.sum_univ_two] at hj hm hq
+    ext i k
+    fin_cases i <;> fin_cases k <;> linarith
+
+/-- Both first-response equations constrain each of the same three complete worlds.
+The recursion begins at the chosen chronological mixed word and uses clocks three to seven. -/
+theorem mixed_prefix_three_world_exclusion (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
+    (v : List Bool) (hv : v = [true,false] ∨ v = [false,true])
+    (T : Finset World3) (hT : T.card = 3)
+    (hP : T.Pairwise (fun W Z => W.source ≠ Z.source))
+    (hreads : ∀ W ∈ T, readAt W [] 0 = a₀ ∧ readAt W [true] 1 = j ∧
+      readAt W [false] 1 = m ∧ readAt W v 2 = b) : ¬ Losing 5 T v := by
+  classical
+  intro hL
+  have hvlen : v.length = 2 := by rcases hv with rfl | rfl <;> rfl
+  have third_full : ∀ E : Bool, ∃ z : ℝ,
+      responseSlice T v E z = T ∧ Losing 4 T (v ++ [E]) := by
+    intro E
+    obtain ⟨z,hz⟩ := hL.2 E
+    let S := responseSlice T v E z
+    have hsub : S ⊆ T := responseSlice_subset T v E z
+    have hlow : 2 ≤ S.card := losing_guard 4 S (v ++ [E]) hz
+    have hhigh : S.card ≤ 3 := by simpa [hT] using Finset.card_le_card hsub
+    have hnotpair : S.card ≠ 2 := by
+      intro h2
+      obtain ⟨W,hW,Z,hZ,hWZ⟩ := Finset.one_lt_card.mp (show 1 < S.card by omega)
+      have hWroot := hsub hW
+      have hZroot := hsub hZ
+      have hsource : W.source ≠ Z.source := hP hWroot hZroot hWZ
+      have hd := pair_common_drift 4 S (v ++ [E]) h2 hz (by omega) W Z hW hZ
+      have h5 := pair_gain_zero 4 S (v ++ [E]) h2 hz (by omega) W Z hW hZ
+        hsource 2 (by omega) (by omega)
+      have h6 := pair_gain_zero 4 S (v ++ [E]) h2 hz (by omega) W Z hW hZ
+        hsource 3 (by omega) (by omega)
+      have h7 := pair_gain_zero 4 S (v ++ [E]) h2 hz (by omega) W Z hW hZ
+        hsource 4 (by omega) (by omega)
+      norm_num [List.length_append, hvlen] at h5 h6 h7
+      have h0W := (hreads W hWroot).1
+      have h0Z := (hreads Z hZroot).1
+      simp [readAt, acquisition, Raw,
+        D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
+        W.legal.2.2, Z.legal.2.2, ← hd] at h0W h0Z
+      have h0 : (gain 3 W.coeff).eval 0 = (gain 3 Z.coeff).eval 0 := by linarith
+      have ht0 : Function.Injective (![0,5,6,7] : Fin 4 → ℝ) := by
+        intro i k he
+        fin_cases i <;> fin_cases k <;> norm_num at *
+      have hc : W.coeff = Z.coeff := four_evaluations W.coeff Z.coeff
+        ![0,5,6,7] ht0 (by intro i; fin_cases i <;> simp [h0,h5,h6,h7])
+      have hn (r : ℝ) (hr : r = 1 ∨ r = 2) : (gain 3 W.coeff).eval r ≠ 0 := by
+        intro her
+        apply not_four_roots W ![r,5,6,7]
+          (by rcases hr with rfl | rfl <;> intro i k he <;>
+              fin_cases i <;> fin_cases k <;> norm_num at *)
+        intro i
+        fin_cases i <;> simp [her,h5,h6,h7]
+      exact hsource (common_gain_source j m b v hv W Z
+        (hreads W hWroot).2.1 (hreads W hWroot).2.2.1 (hreads W hWroot).2.2.2
+        (hreads Z hZroot).2.1 (hreads Z hZroot).2.2.1 (hreads Z hZroot).2.2.2
+        hd (congrArg (gain 3) hc) (hn 1 (Or.inl rfl)) (hn 2 (Or.inr rfl)))
+    have he : S = T := Finset.eq_of_subset_of_card_le hsub (by rw [hT]; omega)
+    exact ⟨z,he,he ▸ hz⟩
+  obtain ⟨zJ,hJ,hJL⟩ := third_full true
+  obtain ⟨zM,hM,hML⟩ := third_full false
 
 end D5.S3.Observer.CubicGain.MixedTripleExclusion
