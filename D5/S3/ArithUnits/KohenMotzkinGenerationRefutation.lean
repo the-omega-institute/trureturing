@@ -53,7 +53,7 @@ theorem result : ¬ claim := by
     intro n hn
     rw [values n hn]
     split_ifs <;> norm_num
-  have hgen := h 3 (by norm_num) 3 1 hnotdiv
+  have hgen := h 3 Nat.prime_three 3 1 hnotdiv
   have hle : Subgroup.closure (generators 3 3 1) ≤ ⊥ := by
     apply (Subgroup.closure_le _).2
     rintro u ⟨n, hn, hu⟩
