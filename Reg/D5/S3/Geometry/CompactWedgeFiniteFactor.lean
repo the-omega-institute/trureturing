@@ -90,7 +90,7 @@ def family : Registration arena.{u,v} (type_of% (@compact_support.{u,v})) where
     fun e => nomatch e⟩
   dependence := dependence
 
-def registration : LeanInformationAudit.Contract.Registration
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@compact_support.{u,v}) (Realization signature.{u,v}) Unit Unit where
   unitName := `Reg.D5.S3.Geometry.CompactWedgeFiniteFactor.__information_unit
   realizationName := `Reg.D5.S3.Geometry.CompactWedgeFiniteFactor.family
