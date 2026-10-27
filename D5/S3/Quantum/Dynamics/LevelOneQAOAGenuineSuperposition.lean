@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Dynamics/LevelOneQAOAGenuineSuperposition.claim; result=D5/S3/Quantum/Dynamics/LevelOneQAOAGenuineSuperposition.result; claim=D5/S3/Quantum/Dynamics/LevelOneQAOAGenuineSuperposition.claim
    digest: Level-one QAOA reaches a genuine four-state superposition on three qubits. -/
 
+import D5.S3.Combinatorics.IsingUniquenessSets
 import D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity
 import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 import D5.S3.Quantum.Entanglement.RandomizedGraphNegativityRefutation
@@ -34,7 +35,10 @@ open D5.S3.Quantum.Entanglement.RandomizedGraphNegativityRefutation (plusState)
 
 /-- The sum of the single-qubit Pauli-X operators in the computational basis. -/
 def mixer (n : ℕ) : Matrix (Fin n → Bool) (Fin n → Bool) ℂ :=
-  ∑ i : Fin n, Matrix.of fun x y => if y = Function.update x i (!(x i)) then 1 else 0
+  ∑ i : Fin n,
+    Equiv.Perm.permMatrix ℂ
+      (Equiv.piCongrRight (Function.update (fun _ : Fin n => Equiv.refl Bool)
+        i Equiv.boolNot))
 
 /-- One phase-separation layer followed by one transverse-field mixing layer. -/
 def qaoaState (n : ℕ) (e : (Fin n → Bool) → ℝ) (β γ : ℝ) :
@@ -59,9 +63,8 @@ private def targets : Finset (Fin 3 → Bool) :=
 private def spectrum (x : Fin 3 → Bool) : ℝ :=
   if x 0 = x 1 then 2 * Real.pi else Real.pi / 2
 
-private def uniform : (Fin 3 → Bool) → ℂ := fun _ => 1
-
-private def parity (x : Fin 3 → Bool) : ℂ := if x 0 = x 1 then 1 else -1
+private def parity (x : Fin 3 → Bool) : ℂ :=
+  (D5.S3.Combinatorics.IsingUniquenessSets.walsh {0, 1} x : ℂ)
 
 private lemma mixer_action {n : ℕ} (v : (Fin n → Bool) → ℂ) (x : Fin n → Bool) :
     (mixer n *ᵥ v) x = ∑ i : Fin n, v (Function.update x i (!(x i))) := by
@@ -69,31 +72,41 @@ private lemma mixer_action {n : ℕ} (v : (Fin n → Bool) → ℂ) (x : Fin n �
   rw [Matrix.sum_mulVec, Finset.sum_apply]
   apply Finset.sum_congr rfl
   intro i _
-  change (∑ y, (if y = Function.update x i (!(x i)) then (1 : ℂ) else 0) * v y) = _
-  simp only [ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+  rw [Matrix.permMatrix_mulVec]
+  change v ((Equiv.piCongrRight (Function.update (fun _ : Fin n => Equiv.refl Bool)
+    i Equiv.boolNot)) x) = _
+  congr 1
+  funext j
+  by_cases h : j = i
+  · subst j
+    simp [Equiv.piCongrRight_apply]
+  · simp [Equiv.piCongrRight_apply, h]
 
-private lemma mixer_uniform : mixer 3 *ᵥ uniform = (3 : ℂ) • uniform := by
+private lemma mixer_uniform :
+    mixer 3 *ᵥ (1 : (Fin 3 → Bool) → ℂ) = (3 : ℂ) • (1 : (Fin 3 → Bool) → ℂ) := by
   ext x
   rw [mixer_action]
-  unfold uniform
   simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin,
-    nsmul_eq_mul, Nat.cast_ofNat, Pi.smul_apply, smul_eq_mul, mul_one]
+    nsmul_eq_mul, Nat.cast_ofNat, Pi.smul_apply, smul_eq_mul, Pi.one_apply, mul_one]
 
 private lemma mixer_parity : mixer 3 *ᵥ parity = (-1 : ℂ) • parity := by
   ext x
   rw [mixer_action]
-  unfold parity
-  simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.succ_zero_eq_one,
+  simp only [parity, D5.S3.Combinatorics.IsingUniquenessSets.walsh,
+    Finset.prod_pair (by decide : (0 : Fin 3) ≠ 1),
+    Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.succ_zero_eq_one,
     Fin.isValue, Fin.succ_one_eq_two, Pi.smul_apply, smul_eq_mul,
     Function.update_self, Function.update_of_ne (by decide : (0 : Fin 3) ≠ 1),
     Function.update_of_ne (by decide : (1 : Fin 3) ≠ 0),
     Function.update_of_ne (by decide : (0 : Fin 3) ≠ 2),
-    Function.update_of_ne (by decide : (1 : Fin 3) ≠ 2)]
-  cases x 0 <;> cases x 1 <;> norm_num
+    Function.update_of_ne (by decide : (1 : Fin 3) ≠ 2),
+    D5.S3.Combinatorics.IsingUniquenessSets.sgn_not,
+    Complex.ofReal_mul, Complex.ofReal_neg]
+  ring
 
 private lemma mixer_evolution (β : ℝ) :
-    hamiltonianPropagator (mixer 3) β *ᵥ uniform =
-      Complex.exp (-3 * (β : ℂ) * Complex.I) • uniform ∧
+    hamiltonianPropagator (mixer 3) β *ᵥ (1 : (Fin 3 → Bool) → ℂ) =
+      Complex.exp (-3 * (β : ℂ) * Complex.I) • (1 : (Fin 3 → Bool) → ℂ) ∧
     hamiltonianPropagator (mixer 3) β *ᵥ parity =
       Complex.exp ((β : ℂ) * Complex.I) • parity := by
   constructor
@@ -113,17 +126,15 @@ private lemma mixer_evolution (β : ℝ) :
 private lemma plus_three (x : Fin 3 → Bool) :
     plusState 3 x = (Real.sqrt 8 : ℂ)⁻¹ := by
   have hs : Real.sqrt 8 = Real.sqrt 2 ^ 3 := by
-    calc
-      Real.sqrt 8 = Real.sqrt (4 * 2) := by norm_num
-      _ = Real.sqrt 4 * Real.sqrt 2 := Real.sqrt_mul (by norm_num) 2
-      _ = 2 * Real.sqrt 2 := by norm_num
-      _ = Real.sqrt 2 ^ 3 := by rw [pow_succ, Real.sq_sqrt (by norm_num)]
+    have h := congrArg (fun x : NNReal => (x : ℝ)) (map_pow NNReal.sqrtHom (2 : NNReal) 3)
+    norm_num [NNReal.sqrtHom, Real.coe_sqrt] at h ⊢
+    exact h
   unfold plusState
   rw [inv_pow, ← hs, Complex.ofReal_inv]
 
 private lemma phase_layer :
     hamiltonianPropagator (diagonal (fun x => (spectrum x : ℂ))) 1 *ᵥ plusState 3 =
-      ((Real.sqrt 8 : ℂ)⁻¹ * ((1 - Complex.I) / 2)) • uniform +
+      ((Real.sqrt 8 : ℂ)⁻¹ * ((1 - Complex.I) / 2)) • (1 : (Fin 3 → Bool) → ℂ) +
       ((Real.sqrt 8 : ℂ)⁻¹ * ((1 + Complex.I) / 2)) • parity := by
   unfold hamiltonianPropagator hamiltonianGenerator
   rw [one_smul, ← Matrix.diagonal_smul, Matrix.exp_diagonal]
@@ -131,18 +142,23 @@ private lemma phase_layer :
   rw [Matrix.mulVec_diagonal, Pi.coe_exp, Pi.smul_apply, smul_eq_mul,
     ← Complex.exp_eq_exp_ℂ]
   rw [plus_three]
-  unfold spectrum uniform parity
-  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+  unfold spectrum parity
+  simp only [Pi.add_apply, Pi.smul_apply, Pi.one_apply, smul_eq_mul]
   split_ifs with h
   · have he : -Complex.I * ((2 * Real.pi : ℝ) : ℂ) =
         -(2 * (Real.pi : ℂ) * Complex.I) := by push_cast; ring
     rw [he, Complex.exp_neg, Complex.exp_two_pi_mul_I]
-    norm_num
-    ring
+    cases h0 : x 0 <;> cases h1 : x 1 <;>
+      norm_num [h0, h1] at h <;>
+      norm_num [D5.S3.Combinatorics.IsingUniquenessSets.walsh,
+        D5.S3.Combinatorics.IsingUniquenessSets.sgn, h0, h1] <;> ring
   · have he : -Complex.I * ((Real.pi / 2 : ℝ) : ℂ) =
         -(Real.pi : ℂ) / 2 * Complex.I := by push_cast; ring
     rw [he, Complex.exp_neg_pi_div_two_mul_I]
-    ring
+    cases h0 : x 0 <;> cases h1 : x 1 <;>
+      norm_num [h0, h1] at h <;>
+      norm_num [D5.S3.Combinatorics.IsingUniquenessSets.walsh,
+        D5.S3.Combinatorics.IsingUniquenessSets.sgn, h0, h1] <;> ring
 
 private lemma angle_phase :
     Complex.exp (-3 * ((Real.pi / 8 : ℝ) : ℂ) * Complex.I) =
@@ -162,9 +178,12 @@ private lemma output_amplitudes (x : Fin 3 → Bool) :
   unfold qaoaState
   rw [phase_layer, Matrix.mulVec_add, Matrix.mulVec_smul, Matrix.mulVec_smul,
     (mixer_evolution (Real.pi / 8)).1, (mixer_evolution (Real.pi / 8)).2, angle_phase]
-  unfold uniform parity
-  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
-  split_ifs <;> ring_nf <;> simp only [Complex.I_sq] <;> ring
+  unfold parity
+  simp only [Pi.add_apply, Pi.smul_apply, Pi.one_apply, smul_eq_mul]
+  cases h0 : x 0 <;> cases h1 : x 1 <;>
+    norm_num [D5.S3.Combinatorics.IsingUniquenessSets.walsh,
+      D5.S3.Combinatorics.IsingUniquenessSets.sgn, h0, h1] <;>
+    ring_nf <;> simp only [Complex.I_sq] <;> ring
 
 private lemma output_coefficient_ne_zero :
     -(Real.sqrt 8 : ℂ)⁻¹ * (1 + Complex.I) *
@@ -173,9 +192,7 @@ private lemma output_coefficient_ne_zero :
   · apply mul_ne_zero
     · exact neg_ne_zero.mpr (inv_ne_zero (by exact_mod_cast
         (ne_of_gt (Real.sqrt_pos.mpr (by norm_num : (0 : ℝ) < 8)))))
-    · intro h
-      have k := congrArg Complex.re h
-      norm_num at k
+    · exact Complex.ne_zero_of_re_pos (by norm_num)
   · exact Complex.exp_ne_zero _
 
 private lemma target_card : targets.card = 4 := by
