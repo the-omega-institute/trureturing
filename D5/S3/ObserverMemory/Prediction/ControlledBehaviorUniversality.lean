@@ -76,7 +76,7 @@ def completionReadout {U Y O : Type*}
     intro y y' h
     simpa [controlledBehavior, runWord] using congrFun h [])
 
-private theorem run_word_intertwines {U Y W : Type*}
+theorem run_word_intertwines {U Y W : Type*}
     (update : U -> Y -> Y) (realizedUpdate : U -> W -> W)
     (realization : Y -> W)
     (updates_commute : forall u,

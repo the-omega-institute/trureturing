@@ -46,19 +46,15 @@ noncomputable def futureDistance {X A Y : Type*} [MetricSpace Y]
     (F : A → X → X) (o : X → Y) (x x' : X) : ENNReal :=
   ⨆ w : List A, edist (o (runWord F w x)) (o (runWord F w x'))
 
-/-- Finite full-future prediction is equivalent to a finite deterministic
-forward-invariant cover. Every such cover has future diameter at most twice
-the error, including covers unrelated to a chosen predictor. -/
-theorem finite_predictor_iff_forward_invariant_cover
-    {X A Y : Type*} [Nonempty X] [MetricSpace Y]
-    (F : A → X → X) (o : X → Y) (ε : ℝ) (hε : 0 ≤ ε)
-    (s : ℕ) (_hs : 1 ≤ s) :
-    (HasFinitePredictor F o ε s ↔ HasFiniteInvariantCover F o ε s) ∧
-      (∀ (I : Type) (C : I → Set X) (δ : A → I → I) (y : I → Y),
-        IsInvariantCover F o ε C δ y →
-          ∀ i x, x ∈ C i → ∀ x', x' ∈ C i →
-            futureDistance F o x x' ≤ ENNReal.ofReal (2 * ε)) := by
-  classical
+/-- An invariant cover preserves its membership and radius bound along every
+finite action word. This is the word/radius proof used by the cover equivalence. -/
+theorem IsInvariantCover.word_radius
+    {X A Y : Type*} [MetricSpace Y]
+    (F : A → X → X) (o : X → Y) (ε : ℝ)
+    (I : Type) (C : I → Set X) (δ : A → I → I) (y : I → Y)
+    (hc : IsInvariantCover F o ε C δ y) :
+    ∀ w i x, x ∈ C i →
+      edist (o (runWord F w x)) (y (runWord δ w i)) ≤ ENNReal.ofReal ε := by
   have word_mem (I : Type) (C : I → Set X) (δ : A → I → I) (y : I → Y)
       (hc : IsInvariantCover F o ε C δ y) :
       ∀ w i x, x ∈ C i → runWord F w x ∈ C (runWord δ w i) := by
@@ -72,6 +68,22 @@ theorem finite_predictor_iff_forward_invariant_cover
       (hc : IsInvariantCover F o ε C δ y) (i : I) (x : X) (hx : x ∈ C i) :
       edist (o x) (y i) ≤ ENNReal.ofReal ε :=
     (le_iSup (fun z : C i => edist (o z) (y i)) ⟨x, hx⟩).trans (hc.radius i)
+  exact fun w i x hx =>
+    point_radius I C δ y hc _ _ (word_mem I C δ y hc w i x hx)
+
+/-- Finite full-future prediction is equivalent to a finite deterministic
+forward-invariant cover. Every such cover has future diameter at most twice
+the error, including covers unrelated to a chosen predictor. -/
+theorem finite_predictor_iff_forward_invariant_cover
+    {X A Y : Type*} [Nonempty X] [MetricSpace Y]
+    (F : A → X → X) (o : X → Y) (ε : ℝ) (hε : 0 ≤ ε)
+    (s : ℕ) (_hs : 1 ≤ s) :
+    (HasFinitePredictor F o ε s ↔ HasFiniteInvariantCover F o ε s) ∧
+      (∀ (I : Type) (C : I → Set X) (δ : A → I → I) (y : I → Y),
+        IsInvariantCover F o ε C δ y →
+          ∀ i x, x ∈ C i → ∀ x', x' ∈ C i →
+            futureDistance F o x x' ≤ ENNReal.ofReal (2 * ε)) := by
+  classical
   constructor
   · constructor
     · rintro ⟨S, finiteS, _hne, hcard, e, G, h, herr⟩
@@ -114,8 +126,8 @@ theorem finite_predictor_iff_forward_invariant_cover
       intro x w
       rw [dist_comm]
       apply (edist_le_ofReal hε).1
-      exact point_radius I C δ y hc _ _
-        (word_mem I C δ y hc w (e x) x (Classical.choose_spec (hc.covers x)))
+      exact IsInvariantCover.word_radius F o ε I C δ y hc w (e x) x
+        (Classical.choose_spec (hc.covers x))
   · intro I C δ y hc i x hx x' hx'
     apply iSup_le
     intro w
@@ -125,9 +137,9 @@ theorem finite_predictor_iff_forward_invariant_cover
           edist (y (runWord δ w i)) (o (runWord F w x')) := edist_triangle _ _ _
       _ ≤ ENNReal.ofReal ε + ENNReal.ofReal ε := by
         apply add_le_add
-        · exact point_radius I C δ y hc _ _ (word_mem I C δ y hc w i x hx)
+        · exact IsInvariantCover.word_radius F o ε I C δ y hc w i x hx
         · rw [edist_comm]
-          exact point_radius I C δ y hc _ _ (word_mem I C δ y hc w i x' hx')
+          exact IsInvariantCover.word_radius F o ε I C δ y hc w i x' hx'
       _ = ENNReal.ofReal (2 * ε) := by rw [← ENNReal.ofReal_add hε hε, two_mul]
 
 #print axioms finite_predictor_iff_forward_invariant_cover
