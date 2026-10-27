@@ -48,7 +48,9 @@ internal sealed class KageyA329479RecurrenceDocument : IScribeDocumentDefinition
                     + "starting states. The transition is linear, so induction propagates "
                     + "that identity to every power. The coefficient-word correspondence "
                     + "then gives the claimed recurrence.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("kag329479-binarynull"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
