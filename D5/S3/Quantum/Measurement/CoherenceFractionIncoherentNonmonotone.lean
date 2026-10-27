@@ -134,7 +134,32 @@ private lemma k_incoherent : IsIncoherentOperation k := by
 
 private lemma coherence_bddAbove (σ : Matrix (Fin 4) (Fin 4) ℂ) :
     BddAbove {r : ℝ | ∃ z : Fin 4 → ℂ, (∀ j, ‖z j‖ = 1) ∧
-      r = (star z ⬝ᵥ (σ *ᵥ z)).re / (4 : ℝ)} := by sorry
+      r = (star z ⬝ᵥ (σ *ᵥ z)).re / (4 : ℝ)} := by
+  let c : ℝ := ∑ i, ∑ j, ‖σ i j‖
+  refine ⟨c, ?_⟩
+  rintro r ⟨z, hz, rfl⟩
+  have hnorm : ‖star z ⬝ᵥ (σ *ᵥ z)‖ ≤ c := by
+    calc
+      ‖star z ⬝ᵥ (σ *ᵥ z)‖ ≤ ∑ i, ‖star z i * (σ *ᵥ z) i‖ := by
+        simpa [dotProduct] using (norm_sum_le (Finset.univ : Finset (Fin 4))
+          (fun i => star z i * (σ *ᵥ z) i))
+      _ = ∑ i, ‖(σ *ᵥ z) i‖ := by
+        apply Finset.sum_congr rfl
+        intro i hi
+        simp [Pi.star_apply, norm_star, hz i]
+      _ ≤ ∑ i, ∑ j, ‖σ i j * z j‖ := by
+        apply Finset.sum_le_sum
+        intro i hi
+        simpa [Matrix.mulVec, dotProduct] using
+          (norm_sum_le (Finset.univ : Finset (Fin 4))
+            (fun j => σ i j * z j))
+      _ = c := by
+        simp [c, norm_mul, hz]
+  have hre : (star z ⬝ᵥ (σ *ᵥ z)).re ≤ ‖star z ⬝ᵥ (σ *ᵥ z)‖ :=
+    Complex.re_le_norm _
+  have hc : 0 ≤ c := by
+    exact Finset.sum_nonneg (fun i hi => Finset.sum_nonneg (fun j hj => norm_nonneg _))
+  nlinarith
 
 private def q : Matrix (Fin 4) (Fin 4) ℂ :=
   ![ ![(1 / 2 : ℂ) * (475 / 721), 0,
