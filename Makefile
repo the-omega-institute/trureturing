@@ -214,8 +214,7 @@ search-reduction-test: export SEARCH_REDUCTION_WORKERS := 1
 
 # CASE selects one isolated production calibration; the index stays caller-owned.
 search-reduction-production-negative:
-	@test -n "$$SEARCH_REDUCTION_NEGATIVE_CASE" || { echo 'CASE is required' >&2; exit 2; }
-	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegAnalysis.SearchReduction.Commands LeanInformationAuditRegTests.SearchReduction.ProductionNegativeCandidates" && $(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/ProductionNegatives.lean
+	@test -n "$$SEARCH_REDUCTION_NEGATIVE_CASE" && $(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegAnalysis.SearchReduction.Commands LeanInformationAuditRegTests.SearchReduction.ProductionNegativeCandidates" && $(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/ProductionNegatives.lean
 search-reduction-production-negative: export SEARCH_REDUCTION_NEGATIVE_CASE := $(value CASE)
 search-reduction-production-negative: export SEARCH_REDUCTION_PROBE_CACHE := 0
 search-reduction-production-negative: export SEARCH_REDUCTION_RESUME :=

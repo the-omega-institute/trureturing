@@ -1,5 +1,6 @@
 import LeanInformationAuditRegAnalysis.SearchReduction.Commands
 import LeanInformationAuditRegTests.SearchReduction.ProductionNegativeCandidates
+import LeanInformationAuditRegTests.SearchReduction.Candidates
 
 /-! Opt-in production calibrations. A safe verdict and coverage of a budget
 stop are separate results. No heartbeat injection or alternate index is used. -/
@@ -19,7 +20,9 @@ run_cmd do
     ("bounds", ``sqrtTarget, #[``bounds], .lookup ``Nat.sqrt_eq, "reverse-kappa-or-G"),
     ("iff", ``sqrtTarget, #[``reverseIff], .lookup ``Nat.sqrt_eq, "reverse-kappa-or-G"),
     ("split", ``sqrtTarget, #[``lower, ``upper], .lookup ``Nat.sqrt_eq, "reverse-kappa-or-G"),
-    ("expensive", ``expensiveVia, #[``cachedInstance], .close, "baseline-hit")]
+    ("expensive", ``expensiveVia, #[``cachedInstance], .close, "baseline-hit"),
+    ("unwrapped", ``LeanInformationAudit.Tests.SearchReduction.Candidates.unwrapped,
+      #[], .close, "zero-intervals")]
   let some (_, target, additions, label, intendedStop) := fixtures.find? (·.1 == selected)
     | throwError "unknown production-negative case: {selected}"
   let some directory ← IO.getEnv "SEARCH_REDUCTION_INDEX"
@@ -42,13 +45,16 @@ run_cmd do
         throwError "B-only label certificate failed: {selected}: {checked.detail}"
       checkLocalProof type checked.proof?.get!
   let request : Request := {
-    target, additions, «baseline» := #[`Mathlib.Data.Nat.Sqrt], baselineCommit := basis,
+    target, additions,
+    «baseline» := if selected == "unwrapped" then #[] else #[`Mathlib.Data.Nat.Sqrt],
+    baselineCommit := basis,
     certificates := if selected == "G-control" then #[⟨label, "G-trap-control"⟩] else #[]}
   -- This is the same startup, source audit and kernel publication as research
   -- requests. Explicit false selects the production population and scheduler.
   let resultName := `productionNegative ++ selected.toName
   executeProbe request #[`LeanInformationAuditRegAnalysis.SearchReduction.Commands,
-    `LeanInformationAuditRegTests.SearchReduction.ProductionNegativeCandidates] resultName false
+    `LeanInformationAuditRegTests.SearchReduction.ProductionNegativeCandidates,
+    `LeanInformationAuditRegTests.SearchReduction.Candidates] resultName false
   let reading ← liftTermElabM <| evalConst GraphReading (resultName ++ `graphReading)
   let disposition := classifyDisposition reading
   let a1 := classifyDisposition (priceMappingV18 reading)
@@ -66,6 +72,10 @@ run_cmd do
     throwError "negative calibration produced a reduction: {selected}"
   if selected == "G-control" || selected == "expensive" then
     unless disposition == .bindOnly do throwError "positive label control did not erase gain: {selected}"
+  if selected == "unwrapped" then
+    unless reading.baseline.lower == .finite 0 && reading.baseline.upper == .finite 0 &&
+        reading.paired.lower == .finite 0 && reading.paired.upper == .finite 0 do
+      throwError "unwrapped lost its [0,0]/[0,0] intervals"
   logInfo s!"PRODUCTION_NEGATIVE {Json.mkObj [
     ("case", toJson selected), ("target", toJson target.toString),
     ("label_certificate", toJson label.render), ("label_B_only_kernel_checked", toJson true),
