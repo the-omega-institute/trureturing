@@ -8,6 +8,8 @@
 
 import D5.S3.Observer.Linear.GainRayWordGeometry
 
+/-! Entire cubic worlds and current-support losing response trees. -/
+
 set_option autoImplicit false
 noncomputable section
 open scoped Matrix Classical
@@ -51,9 +53,9 @@ private theorem losing_pair_step (n : ℕ) (T : Finset World3) (v : List Bool)
 private theorem losing_pair_suffix (n : ℕ) (T : Finset World3) (v : List Bool)
     (hT : T.card = 2) (h : Losing n T v) (u : List Bool) (hu : u.length ≤ n) :
     Losing (n - u.length) T (v ++ u) ∧
-      u ≠ [] → ∀ W ∈ T, ∀ Z ∈ T,
+      (u ≠ [] → ∀ W ∈ T, ∀ Z ∈ T,
         readAt W (v ++ u) (v.length + u.length) =
-          readAt Z (v ++ u) (v.length + u.length) := by
+          readAt Z (v ++ u) (v.length + u.length)) := by
   induction u using List.reverseRecOn generalizing n with
   | nil =>
     constructor
@@ -71,7 +73,7 @@ private theorem losing_pair_suffix (n : ℕ) (T : Finset World3) (v : List Bool)
     · intro _ W hW Z hZ
       have hw := hz W hW
       have hz' := hz Z hZ
-      simpa [List.append_assoc, List.length_append] using hw.trans hz'.symm
+      simpa [List.append_assoc, List.length_append, Nat.add_assoc] using hw.trans hz'.symm
 
 private theorem two_product_equal_trace (S : Mat) (c : ℝ)
     (h : ∀ E F : Bool, Matrix.trace (action F * action E * S) = c) :
@@ -80,7 +82,7 @@ private theorem two_product_equal_trace (S : Mat) (c : ℝ)
   have hJM := h true false
   have hMJ := h false true
   have hMM := h false false
-  simp only [action_j_shape, action_m_shape, Matrix.mul_apply, Matrix.trace,
+  simp [action_j_shape, action_m_shape, Matrix.mul_apply, Matrix.trace, Matrix.diag,
     Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
     Matrix.head_fin_const] at hJJ hJM hMJ hMM
   ext i j
@@ -94,12 +96,103 @@ private theorem three_product_equal_trace (S : Mat) (c : ℝ)
   have hJMJ := h true false true
   have hJMM := h true false false
   have hMMJ := h false false true
-  simp only [action_j_shape, action_m_shape, Matrix.mul_apply, Matrix.trace,
+  simp [action_j_shape, action_m_shape, Matrix.mul_apply, Matrix.trace, Matrix.diag,
     Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
     Matrix.head_fin_const] at hJJJ hJJM hJMJ hJMM hMMJ
   have hzero : S = 0 := by
     ext i j
     fin_cases i <;> fin_cases j <;> simp <;> linarith
   exact ⟨hzero, by simpa [hzero] using hJJJ.symm⟩
+
+
+
+private theorem acquisition_concat (v u : List Bool) :
+    acquisition (v ++ u) = acquisition u * acquisition v := by
+  have h := (D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.raw_word_signed_bound v).2.2.2.1 u
+  simpa only [acquisition, Raw, Matrix.map_mul] using
+    congrArg (fun A : Matrix (Fin 2) (Fin 2) ℤ => A.map (Int.castRingHom ℝ)) h
+
+private theorem acquisition_two (E F : Bool) :
+    acquisition [E,F] = action F * action E := by
+  have hE : acquisition [E] = action E := by simpa using acquisition_pure E 1
+  change acquisition ([E] ++ [F]) = _
+  rw [acquisition_append, hE]
+
+private theorem acquisition_three (E F G : Bool) :
+    acquisition [E,F,G] = action G * action F * action E := by
+  change acquisition ([E,F] ++ [G]) = _
+  rw [acquisition_append, acquisition_two, Matrix.mul_assoc]
+
+private theorem read_concat (W : World3) (v u : List Bool) :
+    readAt W (v ++ u) (v.length + u.length) =
+      (gain 3 W.coeff).eval ((v.length + u.length : ℕ) : ℝ) *
+        Matrix.trace (acquisition u * acquisition v * W.source) + W.drift := by
+  rw [← List.length_append, readAt, List.take_length, acquisition_concat]
+
+private theorem pair_read_difference (n : ℕ) (T : Finset World3) (v : List Bool)
+    (hT : T.card = 2) (h : Losing n T v)
+    (W Z : World3) (hW : W ∈ T) (hZ : Z ∈ T)
+    (u : List Bool) (hu : u ≠ []) (hun : u.length ≤ n) :
+    Matrix.trace (acquisition u * (acquisition v *
+      ((gain 3 W.coeff).eval ((v.length + u.length : ℕ) : ℝ) • W.source -
+        (gain 3 Z.coeff).eval ((v.length + u.length : ℕ) : ℝ) • Z.source))) =
+      Z.drift - W.drift := by
+  have he := (losing_pair_suffix n T v hT h u hun).2 hu W hW Z hZ
+  rw [read_concat, read_concat] at he
+  simp only [Matrix.mul_sub, Matrix.mul_smul, Matrix.trace_sub, Matrix.trace_smul,
+    smul_eq_mul, ← Matrix.mul_assoc]
+  linarith
+
+private theorem pair_common_drift (n : ℕ) (T : Finset World3) (v : List Bool)
+    (hT : T.card = 2) (h : Losing n T v) (hn : 3 ≤ n)
+    (W Z : World3) (hW : W ∈ T) (hZ : Z ∈ T) : W.drift = Z.drift := by
+  let S : Mat := acquisition v *
+    ((gain 3 W.coeff).eval ((v.length + 3 : ℕ) : ℝ) • W.source -
+      (gain 3 Z.coeff).eval ((v.length + 3 : ℕ) : ℝ) • Z.source)
+  have hh : ∀ E F G : Bool,
+      Matrix.trace (action G * action F * action E * S) = Z.drift - W.drift := by
+    intro E F G
+    simpa only [List.length_cons, List.length_nil, zero_add, acquisition_three,
+      Matrix.mul_assoc] using
+      pair_read_difference n T v hT h W Z hW hZ [E,F,G] (by simp) (by simpa using hn)
+  have hc := (three_product_equal_trace S (Z.drift-W.drift) hh).2
+  linarith
+
+private theorem weighted_sources_zero (W Z : World3) (hP : W.source ≠ Z.source)
+    (a b : ℝ) (he : a • W.source = b • Z.source) : a = 0 ∧ b = 0 := by
+  have ht := congrArg Matrix.trace he
+  simp only [Matrix.trace_smul, W.legal.2.2, Z.legal.2.2, smul_eq_mul, mul_one] at ht
+  have ha : a = 0 := by
+    by_contra hane
+    apply hP
+    ext i k
+    apply mul_left_cancel₀ hane
+    have hentry := congrFun (congrFun he i) k
+    simpa only [Matrix.smul_apply, smul_eq_mul, ← ht] using hentry
+  exact ⟨ha, by simpa [ha] using ht.symm⟩
+
+private theorem pair_gain_zero (n : ℕ) (T : Finset World3) (v : List Bool)
+    (hT : T.card = 2) (h : Losing n T v) (hn : 3 ≤ n)
+    (W Z : World3) (hW : W ∈ T) (hZ : Z ∈ T) (hP : W.source ≠ Z.source)
+    (j : ℕ) (hj : 2 ≤ j) (hjn : j ≤ n) :
+    (gain 3 W.coeff).eval ((v.length+j : ℕ) : ℝ) = 0 ∧
+      (gain 3 Z.coeff).eval ((v.length+j : ℕ) : ℝ) = 0 := by
+  let D : Mat := (gain 3 W.coeff).eval ((v.length+j : ℕ) : ℝ) • W.source -
+    (gain 3 Z.coeff).eval ((v.length+j : ℕ) : ℝ) • Z.source
+  let p : List Bool := List.replicate (j-2) true
+  have hlen : p.length + 2 = j := by simp [p]; omega
+  have hd := pair_common_drift n T v hT h hn W Z hW hZ
+  have hh : ∀ E F : Bool,
+      Matrix.trace (action F * action E * (acquisition (v ++ p) * D)) = 0 := by
+    intro E F
+    have hu : (p ++ [E,F]).length = j := by simpa using hlen
+    have he := pair_read_difference n T v hT h W Z hW hZ (p ++ [E,F])
+      (by simp) (by rw [hu]; exact hjn)
+    simpa only [hu, hd, sub_self, acquisition_concat, acquisition_two,
+      Matrix.mul_assoc] using he
+  have hz := two_product_equal_trace (acquisition (v ++ p) * D) 0 hh
+  have hz' : acquisition (v ++ p) * D = acquisition (v ++ p) * 0 := by simpa using hz
+  have hd0 : D = 0 := (acquisition_unit (v ++ p)).mul_left_cancel hz'
+  exact weighted_sources_zero W Z hP _ _ (sub_eq_zero.mp hd0)
 
 end D5.S3.Observer.CubicGain.MixedTripleExclusion
