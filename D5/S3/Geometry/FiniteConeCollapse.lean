@@ -8,7 +8,6 @@
 import Mathlib.AlgebraicTopology.SimplicialComplex.Basic
 import Mathlib.Analysis.Convex.Combination
 import Mathlib.Topology.Homotopy.Equiv
-import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.Tactic
 
 /-!
@@ -26,7 +25,7 @@ No homotopy extension property or cofibration hypothesis is used.
 noncomputable section
 
 open Set Finset Topology
-open scoped BigOperators unitInterval
+open scoped BigOperators unitInterval ContinuousMap
 
 namespace D5.S3.Geometry.FiniteConeCollapse
 
@@ -73,7 +72,7 @@ theorem faceSimplex_eq_convexHull (s : Finset V) :
       rw [← hsum]
       exact sum_subset (subset_univ s) (fun v _ hv => hz v hv)
     have heq : s.centerMass x (fun v => Pi.single v (1 : ℝ)) = x := by
-      rw [centerMass_eq_of_sum_1 _ hsum']
+      rw [s.centerMass_eq_of_sum_1 _ hsum']
       ext v
       simp only [sum_apply, Pi.smul_apply, smul_eq_mul]
       by_cases hv : v ∈ s
@@ -182,7 +181,7 @@ private theorem epsilon_pos : 0 < P.epsilon := by unfold epsilon; positivity
 
 private theorem card_mul_epsilon : (Fintype.card V : ℝ) * P.epsilon ≤ 1 / 2 := by
   unfold epsilon
-  rw [mul_div_assoc]
+  rw [← mul_div_assoc, mul_one]
   apply (div_le_iff₀ (by positivity : 0 < 2 * ((Fintype.card V : ℝ) + 1))).2
   nlinarith [Nat.cast_nonneg (α := ℝ) (Fintype.card V)]
 
@@ -220,7 +219,8 @@ private def deformCoords (s : I) (x : P.Space) (v : V) : ℝ :=
 private theorem deform_mem_face (s : I) (x : P.Space) {f : Finset V}
     (hx : x.val ∈ faceSimplex f) : P.deformCoords s x ∈ faceSimplex f := by
   refine ⟨fun v => div_nonneg (le_max_right _ _) (P.denominator_pos s x).le, ?_, ?_⟩
-  · simp only [deformCoords, ← sum_div, ← denominator]
+  · simp only [deformCoords, ← sum_div]
+    change P.denominator s x / P.denominator s x = 1
     exact div_self (P.denominator_pos s x).ne'
   · intro v hv
     simp only [deformCoords, truncated, hx.2.2 v hv, zero_sub]
