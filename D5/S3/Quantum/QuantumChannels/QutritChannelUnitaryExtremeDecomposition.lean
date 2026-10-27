@@ -7,7 +7,6 @@
    digest: Unitary and doubly extreme decomposition of the equal-modulus HMR qutrit channel. -/
 
 import D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility
-import Mathlib.Analysis.Convex.Extreme
 
 /-! The equal-modulus HMR channel and its unitary and extreme-point decomposition. -/
 
