@@ -43,7 +43,7 @@ namespace ExponentialConjugation
 
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
-    (ℝ × (ℝ → ℂ)) (fun _ => ℝ) (fun _ => ℂ)
+    ((_ : ℝ) × (ℝ → ℂ)) (fun _ => ℝ) (fun _ => ℂ)
 
 def actual : Realization signature :=
   realize signature (fun _ p t => rightExponentialTail p.1 p.2 t) (fun e => nomatch e)
@@ -54,7 +54,7 @@ def rejected : Realization signature :=
 def arena : Arena where
   signature := signature
   Law R := ∀ (k a : ℝ) (u : ℝ → ℂ) (t : ℝ),
-    (Real.exp (a * t) : ℂ) * R.readout () (k, u) t =
+    (Real.exp (a * t) : ℂ) * R.readout () ⟨k, u⟩ t =
       rightExponentialTail (k + a) (fun x => (Real.exp (a * x) : ℂ) * u x) t
 
 private theorem source_reconstruction :
@@ -67,7 +67,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(1, l1_exp_profile 1), 0, 1, ?_⟩
+  refine ⟨⟨1, l1_exp_profile 1⟩, 0, 1, ?_⟩
   change rightExponentialTail 1 (l1_exp_profile 1) 0 ≠
     rightExponentialTail 1 (l1_exp_profile 1) 1
   rw [l1_exp_tail (by norm_num) (by norm_num),
