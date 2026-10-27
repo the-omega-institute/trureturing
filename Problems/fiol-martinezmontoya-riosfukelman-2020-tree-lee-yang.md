@@ -1027,6 +1027,15 @@ universal physical claim is settled separately by the all-total-three e8 Lean
 result above; this m60 calculation remains prose and does not change that
 result's admission or scope.
 
+Identifying the preregistered fixed-labelled assertion with a tree's
+assignment-summed contribution in the source prose is a separate question.
+The positive coefficient example and its analytical proof supply no new
+admission basis and do not settle the source's general assignment-summed
+physical conjecture. The earlier bind-only disposition for the two-edge
+boundary formalization is unchanged. This m60 exposition supplies no new
+declaration, proof-shape classification, escape witness, registration, freeze
+or open-problem-resolution admission.
+
 The fixed-labelled obstruction and the positive aggregate are compatible
 because they concern different polynomials. One placement is not the whole
 formal coefficient, and a positive aggregate does not establish the universal

@@ -1,0 +1,86 @@
+**Theorem 13.2 (source-return singularity for every such retained history).**
+For every nondegenerate $\mathsf D$ in (13.2), every allowed joint
+central history and every $T>0$,
+
+$$
+\mu_{I,T}\perp\nu_{I,T}.
+\tag{13.4}
+$$
+
+More precisely, there is a Borel event $\mathcal A_{I,T}$ on the
+actual held ten-output path space such that
+
+$$
+\begin{gathered}
+\mathcal A_{I,T}
+ =\{\omega:\hbox{for every }\delta>0
+       \hbox{ there is }t\in(0,\min(\delta,T))
+                                     \hbox{ with }\omega(t)=v_0\},\\
+\nu_{I,T}(\mathcal A_{I,T})=1,\qquad
+\mu_{I,T}\{\omega:\omega(t)=v_0
+                         \hbox{ for some }t\in(0,T]\}=0.
+\end{gathered}
+\tag{13.5}
+$$
+
+Consequently, on any complete-history sampling space carrying the
+reference (13.3), no probability law absolutely continuous with
+respect to that sampling law can have held output law $\nu_{I,T}$.
+This includes every normalized nonnegative integrable weight depending
+on all retained histories and all auxiliary randomness.
+
+**Proof.** Theorem 12.2 gives arbitrarily small positive contacts from
+$e$ before its strictly positive observation exit, hence the first
+probability in (13.5). The event is Borel in the uniform topology.
+For example set $\delta_n=T/(n+1)$ and express it as
+
+$$
+\mathcal A_{I,T}
+ =\bigcap_{n\ge1}\ \bigcup_{m:\,1/m<\delta_n}
+   \left\{\omega:
+    \min_{t\in[1/m,\delta_n]}|\omega(t)-v_0|=0\right\}.
+\tag{13.6}
+$$
+
+Each minimum is a continuous function of $\omega$ in (13.1).
+Positive-time returns are used; all these paths already have the
+same initial output $v_0$.
+
+For a reference path before exit, the two pairs used in (11.6)
+and the fiber proof imply
+
+$$
+O_t^{\rm ref}=v_0
+ \quad\Longrightarrow\quad A_t=0,\qquad B_t\in4\pi\mathbb Z.
+\tag{13.7}
+$$
+
+This implication does not involve $J$. A nondegenerate planar
+Brownian motion avoids each fixed point at all strictly positive
+times, including a return to its starting point. The exact standard
+statement is Mörters--Peres, *Brownian Motion*,
+[public draft, Corollary 2.23, p.52](https://www.stat.berkeley.edu/~aldous/205B/bmbook.pdf):
+for $d\ge2$, $\mathbb P_x\{y\in B(0,1]\}=0$ for every $x,y$.
+For (13.2), choose an invertible matrix $C$ with
+$CC^{\mathsf T}=2\mathsf D$. Then $(A,B)$ has the law of $CW$
+for a standard planar Brownian motion $W$ of covariance $tI_2$.
+Apply the cited statement to each point
+$C^{-1}(0,4\pi j)$, using Brownian scaling for the fixed finite
+horizon, and take the countable union over $j$. This is a comparison
+of laws with their declared covariance; the observations in (13.3)
+remain in the original time. It proves that (13.7) never occurs at
+positive time almost surely, independently of the joint choice of
+$J$. At and after a finite exit, the held height is $l$ or $u$ and
+cannot be $k_0$. This proves the second probability in (13.5) and
+therefore (13.4).
+
+Finally let $\mathbb P$ be any complete-history reference law with
+output map $O$ and let $\mathbb Q\ll\mathbb P$. The preimage
+$O^{-1}(\mathcal A_{I,T})$ is $\mathbb P$-null by (13.5), so is
+$\mathbb Q$-null. Its image law cannot be $\nu_{I,T}$, which assigns
+it mass one. In particular $d\mathbb Q=W\,d\mathbb P$ with
+$W\ge0$, $\mathbb E_{\mathbb P}W=1$ cannot change this conclusion.
+No filtration, conditional-kernel regularity or Markov property of
+the retained history is needed for this absolute-continuity argument.
+$\square$
+

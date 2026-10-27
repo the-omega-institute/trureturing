@@ -1,0 +1,38 @@
+**定理 4.2（三轴关系的内生虚单位）。**
+对正向正交单位标架 $(u,v,n)$，令 $\omega=uvn$。
+则
+
+$$
+\omega^2=-1,\qquad \omega^\dagger=-\omega,\qquad
+\omega\in Z(\mathrm{Cl}_{3,0}),\qquad
+\mathrm{Cl}_{3,0}\cong M_2(\mathbb C)
+$$
+
+作为实 $*$-代数成立。
+且
+
+$$
+uv=\omega n,\qquad (uv)^2=-1.
+$$
+
+平面 $\operatorname{span}_{\mathbb R}(u,v)$ 上的 $J_nx=xuv=n\times x$ 满足 $J_n^2=-I$。
+
+证明。
+正交生成元平方为一、两两反交换。
+计算 $\omega^2$ 有三次负号；反转三个因子也有三次负号。
+每个生成元与 $\omega$ 交换，故后者居中。
+所有单词约化为
+$1,u,v,n,uv,vn,nu,uvn$ 的实线性组合。
+将 $(u,v,n)$ 送到 $(\sigma_x,\sigma_y,\sigma_z)$，
+这八项的像在 $M_2(\mathbb C)$ 中实线性独立并张成全部空间，
+给所述 $*$-同构。
+右乘 $n$ 得 $uv=\omega n$；
+若 $x=su+tv$，则 $xuv=sv-tu$，逐项得平面公式。
+证毕。
+
+这个定理给“复平面来自正交读出”一个精确版本：
+*定向、度量及 Clifford 复合把面积关系变成平方为负一的操作。*
+复数没有被预放进实代数的系数中，
+但 Clifford 复合本身是需要解释或验证的输入。
+三维实坐标空间不是一维复平面，也不是量子位的态空间。
+

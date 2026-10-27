@@ -1,0 +1,13 @@
+**Lemma 3.5 (reference-safe paid refresh).** Let $Z$ be any finite untouched reference and $\sigma_{QZ}$ any density matrix, including an actual state conditioned on an earlier measured tape. Then
+
+$$
+\left\|(\Theta^n\otimes\operatorname{id}_Z)(\sigma_{QZ})
+      -\tfrac I3\otimes\sigma_Z\right\|_1
+ \le\min\{2,3(2/3)^n\}.
+\tag{3.10}
+$$
+
+This conclusion returns the earlier tape and reference, but excludes all new wash carriers as in Definition 3.3.
+
+**Proof.** Put $\mathcal D(X)=\operatorname{tr}(X)I/3$ and $\Delta=\Theta^n-\mathcal D$. The identity component is killed, and (3.5) bounds the Hilbert–Schmidt operator norm of $\Delta$ by $(2/3)^n$ on all matrices. Tensoring with an identity preserves this Hilbert–Schmidt operator norm. For a pure $QZ$ input, its Schmidt support in $Z$ has dimension at most three and is preserved by $\Delta\otimes\operatorname{id}$. The output is supported on at most nine dimensions. Cauchy–Schwarz on its singular values gives $\|Y\|_1\le3\|Y\|_2\le3(2/3)^n$. Decompose a mixed input into pure states and use linearity and the triangle inequality. Both states in (3.10) are normalized, which also gives the cap two. Including the old finite classical tape in $Z$ is permitted. Including the discarded new carriers would change $\Theta$ and invalidate this proof. $\square$
+

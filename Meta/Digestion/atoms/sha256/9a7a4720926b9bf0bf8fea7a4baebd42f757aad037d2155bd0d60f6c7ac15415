@@ -1,0 +1,8 @@
+**定义 21.3（有向信息候选与共同查询）。**
+设 $\Omega$ 为非空紧空间，$C\in\mathcal I$ 是有向信息切面。
+令 $K_C\subseteq\Omega$ 非空闭，且 $C\le D\Rightarrow K_D\subseteq K_C$。
+查询 $q:\Omega\to\mathbb R$ 连续，$K_\infty=\bigcap_CK_C$。
+结构、核、端口及记录类型可以共同进入 $\Omega$，但其紧拓扑、闭约束和共同查询必须分别供应。
+有限维固定对角 PSD 核集合或固定输入输出的 Choi 通道集合是有界闭的具体紧载体；
+任意变化的无界图类并不自动具有这些性质。
+

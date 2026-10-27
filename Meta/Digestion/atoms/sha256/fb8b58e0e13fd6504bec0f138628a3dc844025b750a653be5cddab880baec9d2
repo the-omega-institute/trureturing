@@ -1,0 +1,96 @@
+### 同时满足 A1–A6 的共同模型
+
+取固定系统 $H=\mathbb C^5$，基顺序为 $(0,1,2,3,13)$，
+$E_{st}=|s\rangle\langle t|$、$P_s=E_{ss}$、$\mathfrak B=M_5(\mathbb C)$。
+它也可视为实十维空间上的实 $*$-代数。取
+
+$$
+q=P_0+P_1,\qquad
+u=E_{01}+E_{10},\qquad
+v=-iE_{01}+iE_{10},\qquad
+n=P_0-P_1.
+$$
+
+三轴在 $qH$ 上是 Pauli 矩阵，在其正交补上为零，故
+
+$$
+u^2=v^2=n^2=q,\qquad uv=-vu=in,\qquad uvn=iq,
+\qquad p=\frac{q+n}2=P_0,\qquad\jmath=iP_0.
+$$
+
+这实现的是单位为 $q$ 的局部 $\mathrm{Cl}_{3,0}$，并不要求三轴平方为 $I_5$。
+由它运输得到 $F_{st}=iE_{st}$、$J=iI_5$，矩阵单位乘法与所有角单位逐项成立。
+五模式来自声明的合法三位码；几何读出可独立取 $o=0,a=e_x,b=e_y,h=1$。
+这给 A1–A3 的共同实现。若另取重数 $m$，所有这些固定系统算子张量 $I_m$ 即得带重数模型；
+标准模型本身取 $m=1$，不从事件语法排除更大环境。
+
+系统态取全部 $\rho\ge0$、$\operatorname{tr}\rho=1$，效果取全部 $0\le E\le I$，
+赋值为 $\operatorname{tr}(\rho E)$；随机制备按凸组合，满足 A4。
+对每个动作供应任意有限归一 Kraus 族 $\{K_{a,o,\alpha}\}$，
+将结果细分为 $r=(o,\alpha)$，令 $M_{a,r}=K_{a,o,\alpha}$。
+核描述集可取 $\mathscr X=H$，$K(x,y)=\langle x,y\rangle$，包含零向量描述。
+于是
+
+$$
+r_{a,r}(x)=M_{a,r}x,\qquad
+\sum_rK(r_{a,r}x,r_{a,r}y)
+=\left\langle x,\sum_rM_{a,r}^\dagger M_{a,r}y\right\rangle
+=K(x,y).
+$$
+
+任意有限零关系 $\sum_ic_ix_i=0$ 都被每个 $M_{a,r}$ 送为零；
+核商的评价映射 $[x]\mapsto x$ 是满射等距，所以其完成恰为同一个 $H$。
+每个分支范数至多一，且 $M_{a,r}J=JM_{a,r}$。这把 A5 的核、零关系、完成、
+复结构与系统效果接在同一表示，未另造一份只共享维数的 Hilbert 空间。
+
+固定深度的**完整记录载体**另为
+
+$$
+G_n=H\otimes R_1\otimes\cdots\otimes R_n,
+\qquad R_k=\operatorname{span}_{\mathbb C}\{|r\rangle:r\text{ 为第 }k\text{ 步细分结果}\}.
+$$
+
+共同有限输出域可用零 Kraus 项补齐。无反馈时完整接续为
+
+$$
+V_n(x\otimes|h\rangle)=\sum_rM_{a_n,r}x\otimes|h\rangle\otimes|r\rangle.
+$$
+
+若动作依赖历史，用供应的相干受控实现把 $a_n$ 改为 $a(h)$；
+经典策略本身不自动供应这种相干实现。在这里可显式选择它：
+历史块正交，逐块的归一 Kraus 等式给 $V_n^\dagger V_n=I_{G_n}$。
+$J_{G_n}=iI_{G_n}$，故完整接续同样相位相容；$G_n$ 上的核也统一为内积，
+完整增长等距保存其所有有限交叉关系及完成范数。
+$\mathcal L(G_n)$ 的增长并未被称为固定的 $M_5(\mathbb C)$；固定系统代数只通过 $A\mapsto A\otimes I$ 作用。
+这些 $V_n$ 正是定理 11.2 使用的记录等距序列。
+
+正交细分记录中的投影 $Q_o=\sum_\alpha|o,\alpha\rangle\langle o,\alpha|$ 给粗分支
+
+$$
+\operatorname{Tr}_{R}\!\left[(I\otimes Q_o)V\rho V^\dagger(I\otimes Q_o)\right]
+=\sum_\alpha K_{o\alpha}\rho K_{o\alpha}^\dagger=\mathcal I_o(\rho).
+$$
+
+因此一般仪器与细分核模型一致；取粗记录是指定的量子操作，
+不将不同 $\alpha$ 的正交向量直接识别为同一个振幅。
+完整 $V$ 已指定记录相位，所以也指定交叉块；若只给 $\mathcal I_o$，它们仍不唯一。
+所有相干制备和记录比较在此作为模型操作供应，不由标签可枚举推出。
+
+对任意参考 $R'$ 及**任意** $X\ge0$，包括纠缠 $X$，
+
+$$
+(\operatorname{id}_{R'}\otimes\mathcal I_o)(X)
+=\sum_\alpha(I\otimes K_{o\alpha})X(I\otimes K_{o\alpha}^\dagger)\ge0.
+$$
+
+归一 Kraus 等式又给总和保迹，故 A6 在整个正锥成立。
+同样的公式作用于包含旧记录和会返回环境的完整载体，不以局部边缘替换相关记忆。
+独立第二原子使用声明的 $H\otimes H$，或第 9 节的零分隔编码。
+原生 $K$、完整模式读、独立 $R_j$ 以及 $S_*$ 都是本模型中的指定操作；
+模式读的 Kraus 族是 $P_s$，酉动作是单个 Kraus 算子，Stop 可取吸收记录及恒等分支。
+因而四种菜单、原生相干见证、条件相位和控制结论可共存于这个模型的不同已声明子菜单中。
+
+这给 A1–A6 的一个非空共同模型及逐项验证。它是有限系统、各有限阶段有限记录的模型族；
+无限增长只取定理 11.2 的 Hilbert 极限，不声称在五维中存下无限完整记录。
+它也没有证明该全效果、全制备和全参考操作域由最小等待菜单取得，或自然界唯一采用这套条件。
+

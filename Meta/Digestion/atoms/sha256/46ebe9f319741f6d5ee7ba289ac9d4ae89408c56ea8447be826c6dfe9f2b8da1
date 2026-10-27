@@ -1,0 +1,28 @@
+**Definition 21.1 (the finite interpolated source).**
+For each tuple in (20.3), interpolate its four ordinary real
+coordinates linearly between zero at age zero, its sampled nodes,
+and zero at age $V_i$ if $V_i\le T$. If $V_i>T$, interpolate only
+up to its sampled value at age $T$. Denote this finite polygon by
+$Q_i$ on $[0,\min(V_i,T)]$. The zero vector denotes $e$ in the
+fixed coordinates of $G$; interpolation is coordinate interpolation,
+not group multiplication and not a native command.
+
+Put
+
+$$
+ b_i=\sum_{j=0}^{i-1}U_j+\sum_{j=1}^{i-1}V_j,
+       \qquad 1\le i\le\mathsf N.
+\tag{21.1}
+$$
+
+On $[0,T]$ set $\widehat{\mathsf Z}_t=Q_i(t-b_i)$ when
+$b_i\le t\le b_i+V_i$ for a retained excursion whose interval
+meets $[0,T]$. Set it equal to $e$ at all remaining times,
+including after $C_\Lambda$ if $C_\Lambda<T$.
+Zero-length intervals are omitted. The definitions agree at all
+joins and give a continuous finite polygon on $[0,T]$.
+Every retained interval has its entire original duration $V_i$;
+only the portion intersecting the horizon needs evaluation.
+Every $U_i$ is represented by an interval of that exact length.
+No duration is deleted or redistributed among retained intervals.
+

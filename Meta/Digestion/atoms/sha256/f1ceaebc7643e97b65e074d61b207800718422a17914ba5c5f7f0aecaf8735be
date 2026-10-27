@@ -1,0 +1,23 @@
+**定义 29.1（同一供应的输入、码与符号对应）。** 本节完整沿用定义 18.1–18.2 的物理基 $e_0,\ldots,e_4$、等距 $B=(u,v,z)$、Kraus 算子 $K_0,K_1$、擦标签通道 $\mathcal G:M_5\to M_5$ 和码通道 $\mathcal T:M_3\to M_3$。
+这里码的 $z=e_2$，且空模式 $e_0$ 范数为一。
+令
+
+$$
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\quad P=\xi\xi^\dagger,\quad Q=I_3-P,
+\quad\chi=B\xi,\quad d=(e_0-e_1-e_3+e_4)/2,
+$$
+
+$$
+R=BB^\dagger-\chi\chi^\dagger=BQB^\dagger,\qquad
+J=\chi\chi^\dagger+\tfrac23dd^\dagger,\qquad M=R/2. \tag{29.1}
+$$
+
+本节 $R$ 是秩二投影；§18 的 $R=\operatorname{Ran}B$ 是整个三码子空间，两个类型不互换。
+供应[Half-Gram 分类，Corollary 6.1、(6.1)–(6.7)](AURIC_FIB_FIVE_WINDOW_HALF_GRAM_CLASSIFICATION.md)取规范 gauge $D=I$，其参数对应为
+
+| Half-Gram 符号 | 本节符号与类型 |
+| --- | --- |
+| $\Phi_\circ$ | 同一完整通道 $\mathcal G:M_5\to M_5$ |
+| recurrent $F$，基 $(u,v,z)$ | 经 $B$ 识别的码通道 $\mathcal T:M_3\to M_3$ |
+| $s,P,M,E$ | $\chi,\chi\chi^\dagger,R/2,J$ |
+| full limit $T$ | $\mathcal E_G:M_5\to M_5$，**不是**码通道 $\mathcal T$ |

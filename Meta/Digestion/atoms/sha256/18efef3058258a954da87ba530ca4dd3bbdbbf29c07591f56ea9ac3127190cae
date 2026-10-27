@@ -1,0 +1,35 @@
+**定理 7.4（参考一致性的有限证书）。**
+对复线性 $\Phi:M_d(\mathbb C)\to M_e(\mathbb C)$，以下等价：
+
+$$
+\Phi\text{ 完全正}
+\quad\Longleftrightarrow\quad
+C_\Phi:=\sum_{ij}e_{ij}\otimes\Phi(e_{ij})\succeq0
+\quad\Longleftrightarrow\quad
+\Phi(X)=\sum_\alpha K_\alpha X K_\alpha^\dagger.
+$$
+
+保迹当且仅当 $\sum_\alpha K_\alpha^\dagger K_\alpha=I$，
+等价于 $\operatorname{tr}_{\rm out}C_\Phi=I$。
+
+证明。
+$C_\Phi=(\operatorname{id}_d\otimes\Phi)(|\Omega\rangle\langle \Omega|)$，其中
+$|\Omega\rangle=\sum_i|i\rangle|i\rangle$ 未归一化，故 CP 蕴含其正性。
+反过来正谱分解 $C_\Phi=\sum_\alpha|v_\alpha\rangle\langle v_\alpha|$，
+唯一写 $v_\alpha=\sum_i|i\rangle\otimes K_\alpha|i\rangle$。
+比较第一因子的各矩阵块，得到每个 $e_{ij}$ 的 Kraus 公式，
+线性给全部 $X$。
+Kraus 共轭在任意辅助系统上保持正性。
+循环迹以及矩阵块偏迹分别给最后两个等价条件。
+证毕。
+
+这是标准 Choi--Kraus 表示的有限维证明，参见 [watrous](#ref-watrous)。
+单系统正性并不足够：
+维数 $d\ge2$ 时，转置 $X\mapsto X^{\mathsf T}$ 正且保迹，
+但它对最大纠缠投影的部分作用为交换算子除以 $d$，
+在反对称向量上有负本征值。
+因此“预测结果必须非负”要升级为
+“与任何未触碰参考共同使用时仍合法”，才能得到 CP。
+
+<a id="thm:unitary"></a>
+
