@@ -156,7 +156,7 @@ public sealed partial class WorktreeCommandTests
             runner);
 
         Assert.False(result.Success);
-        Assert.Contains("not a git repository", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.True(result.Error.Contains("not a git repository", StringComparison.OrdinalIgnoreCase), result.Error);
         Assert.True(Directory.Exists(target));
         Assert.NotNull(ownedMetadata);
         Assert.NotEqual(otherMetadata, ownedMetadata);
