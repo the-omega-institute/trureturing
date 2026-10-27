@@ -23,7 +23,27 @@ internal sealed class BurriReplacementDecoderDocument : IScribeDocumentDefinitio
                     + "The orthogonal complement is fixed. Both adjoint products are the identity.", DescribeRole.Theorem),
             Entry("source-polar-product", "source_polar_product", "Exact ordered polar product",
                 "For X=|psi><psi| and M=(sqrt(Q) X) transposed, the product M U equals X/sqrt(3). "
-                    + "This statement retains the source multiplication order.", DescribeRole.Theorem))));
+                    + "This statement retains the source multiplication order.", DescribeRole.Theorem),
+            Entry("source-square-root", "source_square_root", "The actual positive square root of X",
+                "The rank-one state X is a projection. Its positive square root in the canonical CStarMatrix functional calculus is X itself.", DescribeRole.Theorem),
+            Entry("source-polar-positive", "source_polar_positive", "Positivity of the polar product",
+                "The ordered product M U is positive semidefinite, since it equals the positive multiple X/sqrt(3).", DescribeRole.Theorem),
+            Entry("source-svd", "source_svd", "Singular value decomposition with the specified source action",
+                "There are unitary matrices H and T and nonnegative real diagonal entries s such that M=H diag(s) T and U=T adjoint H adjoint. "
+                    + "Thus the explicit U arises from an SVD with precisely the Appendix A convention. The proof applies the Hermitian spectral theorem to M U.", DescribeRole.Theorem),
+            Entry("source-purification-identity", "source_purification_identity", "The purification identity with a fixed ancilla",
+                "For every reference, environment and purifying index, the canonical positive-root amplitude of X agrees with the physical Stinespring purification "
+                    + "tensored with the fixed unit ancilla and acted on by W=I. This is the entrywise identity of Eq. A.9 on the full prescribed spaces.", DescribeRole.Theorem),
+            Entry("noise-normalization", "noise_normalization", "Replacement-channel Kraus normalization",
+                "The Gram sum of the environment components of V is the input identity.", DescribeRole.Theorem),
+            Entry("sw-columns", "sw_columns", "Actual composite decoder columns",
+                "Composing the source Kraus rows with the ancilla preparation gives two nonzero correlated columns: 2 sqrt(2)/3 and 1/3. "
+                    + "These columns are derived from U W and the preparation matrix.", DescribeRole.Theorem),
+            Entry("decoder-normalizations", "decoder_normalizations", "Decoder Kraus normalizations",
+                "Both the composite source decoder Kraus family and the reference-root times noise-adjoint Kraus family have Gram sum equal to the identity of B.", DescribeRole.Theorem),
+            Entry("actual-channels", "actual_channels", "Canonical completely positive trace-preserving maps",
+                "Each of the three specified Kraus families is realized by the repository's canonical QuantumChannel interface, with equality of its action and the finite Kraus sum on every input matrix. "
+                    + "The comparison of their canonical-purification fidelities and the identification of the reference-root family with the ordinary Petz interface require additional statements.", DescribeRole.Theorem))));
 
     private static DocumentBlock Entry(string id, string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name),

@@ -15,6 +15,7 @@ Burri's Appendix A. No assertion of a comparison in the reverse direction is mad
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 open scoped BigOperators CStarAlgebra ComplexOrder MatrixOrder
 open Matrix
@@ -28,6 +29,9 @@ abbrev B := Fin 1
 /-- The source environment is literally A times a copy of B. -/
 abbrev E := A × B
 abbrev P := A × E
+
+local instance : NonUnitalContinuousFunctionalCalculus ℝ (CStarMatrix P P ℂ)
+    IsSelfAdjoint := IsSelfAdjoint.instNonUnitalContinuousFunctionalCalculus
 
 def rho : Matrix A A ℂ := Matrix.diagonal ![2 / 3, 1 / 3]
 def weight : A → ℝ := ![Real.sqrt 2 / Real.sqrt 3, 1 / Real.sqrt 3]
@@ -131,7 +135,7 @@ theorem source_svd :
   have hspec : M * U = (H : Matrix P P ℂ) *
       Matrix.diagonal (fun i => (h.eigenvalues i : ℂ)) * (H : Matrix P P ℂ)ᴴ := by
     simpa only [Unitary.conjStarAlgAut_apply, H, Function.comp_apply,
-      star_eq_conjTranspose] using h.spectral_theorem
+      RCLike.ofReal_eq_complex_ofReal, star_eq_conjTranspose] using h.spectral_theorem
   refine ⟨H, star H * star u, h.eigenvalues,
     source_polar_positive.eigenvalues_nonneg, ?_, ?_⟩
   · change M = (H : Matrix P P ℂ) * _ * ((H : Matrix P P ℂ)ᴴ * Uᴴ)
@@ -164,7 +168,10 @@ theorem source_purification_identity (r : A) (e : E) (q : P) :
   rw [hsigma]
   simp only [W, Matrix.one_apply, ite_mul, one_mul, zero_mul,
     Finset.sum_ite_eq', Finset.mem_univ, ite_true]
-  simp [W, X, Matrix.vecMulVec_apply, Matrix.one_apply, psi]
+  change psi (r, e) * star (psi q) = psi (r, e) * psi q
+  congr 1
+  unfold psi
+  split_ifs <;> simp
 
 theorem noise_normalization : (∑ e : E, (noiseKraus e)ᴴ * noiseKraus e) = 1 := by
   ext i j
