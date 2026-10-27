@@ -81,7 +81,7 @@ private theorem finite_log_resolvent_integral {ι κ : Type*} [Fintype ι] [Fint
   have h := integral_Ioi_of_hasDerivAt_of_nonneg' hd' hn' hlimit
   simpa only [F, G, zero_add, zero_sub, neg_sub] using h
 
-private theorem continuousAt_shift_inverse {ι : Type*} [Fintype ι] [DecidableEq ι]
+theorem continuousAt_shift_inverse {ι : Type*} [Fintype ι] [DecidableEq ι]
     (A : Matrix ι ι ℂ) (hA : A.PosSemidef) (t : ℝ) (ht : 0 < t) :
     ContinuousAt (fun s : ℝ => (A + s • (1 : Matrix ι ι ℂ))⁻¹) t := by
   let H := A + t • (1 : Matrix ι ι ℂ)
