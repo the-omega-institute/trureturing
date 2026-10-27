@@ -349,13 +349,13 @@ local infixl:100 " ⊗ₖₘ " => kron
 
 section tp
 variable [Fintype B] {κ : Type*} [Fintype κ]
-private def IsTracePreserving [Semiring R] (M : MatrixMap A B R) : Prop :=
+def IsTracePreserving [Semiring R] (M : MatrixMap A B R) : Prop :=
   ∀ x, Matrix.trace (M x) = Matrix.trace x
 namespace IsTracePreserving
 variable {S : Type*} [CommSemiring S] [Star S]
 /-- The channel X ↦ ∑ k : κ, (M k) * X * (N k)ᴴ formed by Kraus operators M, N : κ → Matrix B A R
 is trace-preserving if ∑ k : κ, (N k)ᴴ * (M k) = 1 -/
-private theorem of_kraus_isTracePreserving
+theorem of_kraus_isTracePreserving
   (M N : κ → Matrix B A S)
   (hTP : (∑ k, (N k).conjTranspose * (M k)) = 1) :
   (MatrixMap.of_kraus M N).IsTracePreserving := by

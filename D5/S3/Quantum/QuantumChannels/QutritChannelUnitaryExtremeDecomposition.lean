@@ -7,6 +7,7 @@
    digest: Unitary and doubly extreme decomposition of the equal-modulus HMR qutrit channel. -/
 
 import D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility
+import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 
 /-! The equal-modulus HMR channel and its unitary and extreme-point decomposition. -/
 
@@ -35,10 +36,6 @@ def hmrChannel (α β : ℂ) : MatrixMap (Fin 3) (Fin 3) ℂ :=
 
 /-- A map is unital when it preserves the identity matrix. -/
 def IsUnital (φ : MatrixMap (Fin 3) (Fin 3) ℂ) : Prop := φ 1 = 1
-
-/-- Trace preservation is required on every complex matrix. -/
-def IsTracePreserving (φ : MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
-  ∀ x, (φ x).trace = x.trace
 
 private def krausChannel (y : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ) :
     MatrixMap (Fin 3) (Fin 3) ℂ :=
@@ -122,15 +119,8 @@ private lemma coefficients_unique
 
 private lemma kraus_tp (y : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ)
     (htp : ∑ i, y i * star (y i) = 1) : IsTracePreserving (krausChannel y) := by
-  intro ρ
-  rw [kraus_action, Matrix.trace_sum]
-  calc
-    ∑ i, (star (y i) * ρ * y i).trace = ∑ i, (ρ * (y i * star (y i))).trace := by
-      apply Finset.sum_congr rfl
-      intro i hi
-      simpa only [Matrix.mul_assoc] using Matrix.trace_mul_comm (star (y i)) (ρ * y i)
-    _ = ρ.trace := by
-      rw [← Matrix.trace_sum, ← Matrix.mul_sum, htp, Matrix.mul_one]
+  apply IsTracePreserving.of_kraus_isTracePreserving
+  simpa only [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_conjTranspose] using htp
 
 private lemma choi_range_lift (y : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ)
     (θ : MatrixMap (Fin 3) (Fin 3) ℂ) (t : ℝ) (ht : 0 < t)
@@ -536,10 +526,8 @@ private lemma diagonal_unitary (r : ℂ) (hr : ‖r‖ = 1) :
   fin_cases i
   · exact hmem
   · exact (unitary ℂ).one_mem
-  · apply (isUnit_iff_ne_zero.mpr (inv_ne_zero hrne)).mem_unitary_of_star_mul_self
-    calc
-      star (r⁻¹) * r⁻¹ = (r * star r)⁻¹ := by rw [_root_.mul_inv_rev, star_inv₀]
-      _ = 1 := by rw [mul_comm r, hstar, inv_one]
+  · rw [Complex.inv_eq_conj hr]
+    exact Unitary.star_mem hmem
 
 set_option maxHeartbeats 1000000 in
 -- The phase identity expands the nine entries of two finite Kraus sums.
@@ -554,15 +542,9 @@ private lemma phase_reduction (α β : ℂ)
   have hrne : r ≠ 0 := by intro hz; rw [hz, norm_zero] at hr; norm_num at hr
   have hsne : s ≠ 0 := by intro hz; rw [hz, norm_zero] at hs; norm_num at hs
   have hrstar : (starRingEnd ℂ) r = r⁻¹ := by
-    rw [← one_div r]
-    apply (eq_div_iff hrne).mpr
-    rw [← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq, hr]
-    norm_num
+    exact (Complex.inv_eq_conj hr).symm
   have hsstar : (starRingEnd ℂ) s = s⁻¹ := by
-    rw [← one_div s]
-    apply (eq_div_iff hsne).mpr
-    rw [← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq, hs]
-    norm_num
+    exact (Complex.inv_eq_conj hs).symm
   have htwo : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
     exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
   have hfour : (Real.sqrt 2 : ℂ) ^ 4 = 4 := by
@@ -592,18 +574,8 @@ private lemma phase_reduction (α β : ℂ)
 private lemma conjugate_cp (d e : Matrix (Fin 3) (Fin 3) ℂ)
     (φ : MatrixMap (Fin 3) (Fin 3) ℂ) (hφ : φ.IsCompletelyPositive) :
     (conjugateChannel d e φ).IsCompletelyPositive := by
-  obtain ⟨k, hk⟩ := IsCompletelyPositive.exists_kraus φ hφ
-  have heq : conjugateChannel d e φ =
-      of_kraus (fun i => star e * k i * star d) (fun i => star e * k i * star d) := by
-    apply LinearMap.ext
-    intro ρ
-    rw [conjugate_action, hk]
-    unfold of_kraus
-    simp only [LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk,
-      Matrix.mul_sum, Finset.sum_mul, Matrix.star_eq_conjTranspose,
-      Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc]
-  rw [heq]
-  exact of_kraus_isCompletelyPositive _
+  exact IptPptSquaredEquivalence.cp_comp (of_kraus_isCompletelyPositive _)
+    (IptPptSquaredEquivalence.cp_comp hφ (of_kraus_isCompletelyPositive _))
 
 private lemma conjugate_unital (d e : Matrix (Fin 3) (Fin 3) ℂ)
     (hd : d ∈ Matrix.unitaryGroup (Fin 3) ℂ) (he : e ∈ Matrix.unitaryGroup (Fin 3) ℂ)
