@@ -221,16 +221,43 @@ theorem jShapeRejected : ¬ jShapeArena.Law actionRejected := by
   change (0 : ℝ) = 1 at hh
   exact zero_ne_one hh
 
-def independenceArena : Arena where
-  signature := actionSignature
-  Law R := ∀ (a : Bool) (k : ℕ) (_hk : 0 < k),
-    LinearIndependent ℝ ![(1 : Mat), R.readout () () a,
-      R.readout () () (!a) * R.readout () () a ^ k]
+abbrev independenceSignature : Signature where
+  Params := Bool × ℕ
+  State _ := Fin 3
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Mat
+  Anchor := Empty
+  finiteAnchor := inferInstance
 
-theorem independenceRejected : ¬ independenceArena.Law actionRejected := by
+def independenceActual : Realization independenceSignature :=
+  realize independenceSignature (fun _ p i =>
+    ![(1 : Mat), action p.1, action (!p.1) * action p.1 ^ p.2] i)
+    (fun e => nomatch e)
+
+def independenceRejected : Realization independenceSignature :=
+  realize independenceSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def independenceArena : Arena where
+  signature := independenceSignature
+  Law R := ∀ (a : Bool) (k : ℕ) (_hk : 0 < k),
+    LinearIndependent ℝ (R.readout () (a,k))
+
+theorem independenceRejected_law : ¬ independenceArena.Law independenceRejected := by
   intro h
-  have hh := (h false 1 zero_lt_one).ne_zero (1 : Fin 3)
-  simpa [actionRejected,realize] using hh
+  have hh := (h false 1 zero_lt_one).ne_zero (0 : Fin 3)
+  exact hh rfl
+
+theorem independenceDependence :
+    ObservationalDependence independenceSignature independenceActual := by
+  intro i
+  refine ⟨(false,1),0,1,?_⟩
+  intro he
+  have hh := congrArg (fun A : Mat => A 0 0) he
+  change (1 : Mat) 0 0 = action false 0 0 at hh
+  rw [action_m_shape] at hh
+  norm_num at hh
 
 abbrev powerSignature : Signature where
   Params := Unit
@@ -394,22 +421,23 @@ def jShapeEntry : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
 
-def independenceRegistration : Registration independenceArena (independenceArena.Law actionActual) where
-  actual := actionActual
+def independenceRegistration : Registration independenceArena (independenceArena.Law independenceActual) where
+  actual := independenceActual
   bridge := Iff.rfl
-  variation := ⟨first_switch_independent,actionRejected,independenceRejected⟩
+  variation := ⟨first_switch_independent,independenceRejected,independenceRejected_law⟩
   sensitivity := by
     constructor
     · intro i
-      refine ⟨actionRejected, ?_, rfl, independenceRejected⟩
+      refine ⟨independenceRejected, ?_, rfl, independenceRejected_law⟩
       intro j h
       exact (h (@Subsingleton.elim Unit _ j i)).elim
     · intro i
       exact nomatch i
-  dependence := actionDependence
+  dependence := independenceDependence
 
 def independenceEntry : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@first_switch_independent) (type_of% (realize actionSignature (fun _ _ a => action a)
+    (@first_switch_independent) (type_of% (realize independenceSignature (fun _ p i =>
+      ![(1 : Mat), action p.1, action (!p.1) * action p.1 ^ p.2] i)
       (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.Observer.Linear.GainRayWordGeometry.independenceUnit,
   realizationName := `Reg.D5.S3.Observer.Linear.GainRayWordGeometry.independenceRegistration,
@@ -419,19 +447,14 @@ def independenceEntry : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source independenceArena ⟨independenceRegistration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize actionSignature (fun _ _ a => action a) (fun e => nomatch e)),
+  readout := some (realize independenceSignature (fun _ p i =>
+      ![(1 : Mat), action p.1, action (!p.1) * action p.1 ^ p.2] i) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S3.Observer.Linear.GainRayWordGeometry,
-    definition := none, coordinates := #[], readouts := #[{
-      path := #["body","body","body","fn","fn","fn","arg","arg","fn","arg","fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none,
-      booleanPredicate := false },{
-      path := #["body","body","body","fn","fn","fn","arg","arg","arg","fn","arg","fn","arg","fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none,
-      booleanPredicate := false },{
-      path := #["body","body","body","fn","fn","fn","arg","arg","arg","fn","arg","arg","fn","arg","fn"],
+    definition := none, coordinates := #[0,1], readouts := #[{
+      path := #["body","body","body","fn","fn","fn","arg"],
       stateBinder := 0, functionOperand := true, stateOperand := none,
       booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
