@@ -1,0 +1,33 @@
+**定义 1.1（合法链与编码）。** 令
+
+$$
+\Sigma_F=\{x\in\{0,1\}^3:x_jx_{j+1}=0\},
+\qquad
+\Sigma_7=\{z\in\{0,1\}^7:z_jz_{j+1}=0\}.
+$$
+
+令 $K_3$、$K_7$ 为合法字符串上的单比特翻转邻接矩阵。定义零分隔等距嵌入
+
+$$
+V|x,y\rangle=|x\,0\,y\rangle,
+\qquad x,y\in\Sigma_F,
+$$
+
+并令 $P=VV^*$、$Q=I-P$。有限计数给出
+
+$$
+|\Sigma_F|=5,
+\qquad |\Sigma_7|=34,
+\qquad \dim\operatorname{ran}V=25,
+\qquad \dim Q\mathcal H=9.
+$$
+
+取自然的共同耦合
+
+$$
+H_7=\sum_{j=1}^7T_j,
+\qquad U(t)=\exp(-itH_7),
+$$
+
+其中 $T_j$ 只翻转仍使相邻位不同时为一的位。
+

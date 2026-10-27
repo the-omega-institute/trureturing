@@ -1,0 +1,10 @@
+**命题 2.2（移动支撑的条件运输）。** 若改在移动支撑 $U(t)\operatorname{ran}V$ 上定义
+
+$$
+F_{ab}(t)=U(t)V|a\rangle\langle b|V^*U(t)^*,
+$$
+
+则每个数学参数 $t$ 下 $F_{ab}(t)$ 满足完整矩阵单位乘法律和伴随律。令 $D_{ab}(t)=\frac{d}{dt}F_{ab}(t)$，则这些导数满足矩阵单位的 Leibniz 和伴随切向关系，因而可以应用既有 [MatrixUnitGenerator](../../../D5/S3/Quantum/Transport/MatrixUnitGenerator.md) 接口得到斜自伴的瞬时生成元及支撑速度。
+
+该命题描述的是已经给定的移动酉族的代数运输。它没有把生成元变成固定编码上的独立控制，也没有证明传播子、Dyson 收敛或物理实现。
+
