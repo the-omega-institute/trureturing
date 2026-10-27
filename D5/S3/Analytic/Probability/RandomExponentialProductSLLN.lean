@@ -7,8 +7,8 @@
    digest: Bounded iid operator exponentials satisfy the strong law on every Banach space. -/
 
 import D5.S3.Quantum.AURICOmega.ExponentialTail
+import D5.S3.Observer.Linear.ExactTaylorObservationRemainder
 import Mathlib.Probability.StrongLaw
-import Mathlib.Analysis.SpecialFunctions.Exponential
 
 /-! Products of bounded iid operator exponentials and their deterministic Abel estimate. -/
 
@@ -67,10 +67,6 @@ private lemma euler_succ {e : Type*} [Ring e] [Module ℝ e]
   rw [List.ofFn_succ', List.prod_concat]
   rfl
 
-private lemma centered_succ {e : Type*} [AddCommGroup e] (a : ℕ → e) (b : e) (n : ℕ) :
-    centeredSum a b (n + 1) = centeredSum a b n + (a n - b) := by
-  exact Finset.sum_range_succ (fun i => a i - b) n
-
 private lemma euler_norm {e : Type*} [NormedRing e] [NormedAlgebra ℝ e]
     [NormOneClass e] (a : ℕ → e) (m h : ℝ) (n : ℕ)
     (hh : 0 ≤ h) (ha : ∀ i < n, ‖a i‖ ≤ m) :
@@ -92,7 +88,9 @@ private lemma abel_step {e : Type*} [Ring e] [Algebra ℝ e]
         h • (eulerProduct a h n * centeredSum a b n)) * (1 + h • b) +
       h ^ 2 • (eulerProduct a h n *
         (centeredSum a b n * b - a n * centeredSum a b (n + 1))) := by
-  rw [euler_succ, pow_succ, centered_succ]
+  rw [euler_succ, pow_succ]
+  unfold centeredSum
+  rw [Finset.sum_range_succ]
   simp only [mul_add, add_mul, sub_mul, mul_sub, mul_smul_comm, smul_mul_assoc,
     smul_add, smul_sub, smul_smul, mul_one, mul_assoc]
   module
@@ -204,18 +202,6 @@ private lemma ordered_perturbation {e : Type*} [NormedRing e] [NormOneClass e]
         rw [pow_succ, Nat.cast_add, Nat.cast_one]
         ring
 
-private lemma norm_exp_bound {e : Type*} [NormedRing e] [NormedAlgebra ℝ e]
-    [NormOneClass e] [CompleteSpace e] (z : e) (r : ℝ) (hz : ‖z‖ ≤ r) :
-    ‖NormedSpace.exp z‖ ≤ Real.exp r := by
-  have hs : HasSum (fun k : ℕ => ((k.factorial : ℝ)⁻¹) * r ^ k) (Real.exp r) := by
-    simpa only [smul_eq_mul, ← Real.exp_eq_exp_ℝ] using
-      NormedSpace.exp_series_hasSum_exp' (𝕂 := ℝ) r
-  apply (NormedSpace.exp_series_hasSum_exp' (𝕂 := ℝ) z).norm_le_of_bounded hs
-  intro k
-  rw [norm_smul, Real.norm_eq_abs, abs_of_nonneg (by positivity : 0 ≤ (k.factorial : ℝ)⁻¹)]
-  exact mul_le_mul_of_nonneg_left
-    ((norm_pow_le z k).trans (pow_le_pow_left₀ (norm_nonneg z) hz k)) (by positivity)
-
 private lemma exp_euler_remainder {e : Type*} [NormedRing e] [NormedAlgebra ℝ e]
     [NormOneClass e] [CompleteSpace e] (z : e) (r : ℝ)
     (hr : 0 ≤ r) (hz : ‖z‖ ≤ r) (hsmall : r ≤ 1) :
@@ -246,7 +232,11 @@ private lemma exponential_euler_bound {e : Type*} [NormedRing e] [NormedAlgebra 
     (fun i => NormedSpace.exp ((t / n) • a i)) (fun i => 1 + (t / n) • a i)
     (Real.exp (t / n * m)) ((3 / 4 : ℝ) * (t / n * m) ^ 2) n
     (Real.one_le_exp hr) (by positivity)
-    (fun i hi => norm_exp_bound _ _ (hnorm i hi))
+    (fun i hi => by
+      simpa only [Finset.sum_range_zero, sub_zero, pow_zero, Nat.factorial_zero,
+        Nat.cast_one, div_one, one_mul] using
+        D5.S3.Observer.Linear.ExactTaylorObservationRemainder.exp_tail_le
+          (𝕜 := ℝ) ((t / n) • a i) (t / n * m) 0 hr (hnorm i hi))
     (fun i hi => (norm_add_le _ _).trans (by
       rw [norm_one, norm_smul, Real.norm_eq_abs, abs_of_nonneg hh]
       exact (add_le_add (le_refl (1 : ℝ)) (mul_le_mul_of_nonneg_left (ha i hi) hh)).trans
