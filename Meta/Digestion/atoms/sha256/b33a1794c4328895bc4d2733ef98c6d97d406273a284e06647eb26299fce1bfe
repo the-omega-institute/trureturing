@@ -1,0 +1,21 @@
+**定义 31.4（生成方向与保留标架的区别）。** 本编码的第二方向是已供应的独立观察。
+对于只接收一个非零向量且满足全部 $SO(3)$ 等变的确定性规则 $r$，
+[Villar 等，arXiv:2106.06610v3，命题 5](https://arxiv.org/html/2106.06610v3#Thmtheorem5)
+在 $d=3$、输入数为一时只允许 $r(a)=f(\|a\|)a$：
+绕 $a$ 的全部旋转固定输入，其共同固定向量空间为 $\mathbb Ra$，
+同长度轨道又固定该比例系数。空间定向本身不能供应独立的 $b$。
+
+若保留正交单位对，几何更新 $C_+(u,v)=(v,u\times v)$ 则有
+$(u,v)\mapsto(v,n)\mapsto(n,u)\mapsto(u,v)$；
+这里两次使用向量三重积即得 $v\times n=u,n\times u=v$。
+它的定义域是标架对，周期三不等于 (31.5) 的五态周期二。
+[三轴几何卷定义 6.1–6.3](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md#六从两个-fib-原子产生第三个可继续关系)
+的原生约定是 $c_{\rm nat}=B(b,a)$。在正校准 $B=\times$、$a=u,b=v$ 下，
+$c_{\rm nat}=-n$；其原生标架循环为 $(u,v)\mapsto(v,-n)\mapsto(-n,u)\mapsto(u,v)$。
+自由树替换 $\rho$、其方向读出三循环、参数运输和这些几何更新并非同一个映射。
+任意非正交制备的参数运输及丢失信息，直接使用
+[参数化叉积恢复定理 3.1–3.3](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md#3-解释运输实际参数像与不可逆性)，
+不能由单位标架循环推出全域可逆。
+三轴卷 §§1、7–8、10 的同源标定、读出、守卫与菜单条件仍须逐项满足；
+给一个代数法向没有同时取得未知第三响应。
+

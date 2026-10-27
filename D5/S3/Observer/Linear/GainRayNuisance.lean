@@ -545,7 +545,7 @@ theorem weighted_evaluation_rank (d n : ℕ) (t : Fin n → ℝ)
   · exact Matrix.rank_le_width B
 
 
-private theorem scalar_readout_surjective (d : ℕ) (w : List Bool) (C : Readout d w)
+theorem scalar_readout_surjective (d : ℕ) (w : List Bool) (C : Readout d w)
     (ell : Mat →ₗ[ℝ] ℝ) (hell : ell ≠ 0)
     (he : ∀ T : Mat, response d w C T = ell T • (1 : Matrix _ _ ℝ)) :
     Function.Surjective C.mulVec := by
@@ -559,7 +559,7 @@ private theorem scalar_readout_surjective (d : ℕ) (w : List Bool) (C : Readout
   change (response d w C S).mulVec ((ell S)⁻¹ • y) = y
   rw [he, Matrix.smul_mulVec, Matrix.one_mulVec, smul_inv_smul₀ hS]
 
-private theorem response_range_le_kernel (d : ℕ) (w : List Bool) (C : Readout d w)
+theorem response_range_le_kernel (d : ℕ) (w : List Bool) (C : Readout d w)
     (ell : Mat →ₗ[ℝ] ℝ)
     (he : ∀ T : Mat, response d w C T = ell T • (1 : Matrix _ _ ℝ))
     (S : Mat) (hS : ell S = 0) :

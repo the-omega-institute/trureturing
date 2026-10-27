@@ -1,0 +1,56 @@
+**Theorem 5.1.** Every critical mixed identity has one of the following structures.
+
+1. There are matrices $B,D$, independent modulo $\mathbb RL$, and scalars $w_i\ne0,\lambda_i$ such that
+
+$$
+A_i=\lambda_iL+w_i(B+iD).
+\tag{5.1}
+$$
+
+Moreover $K$ is $\operatorname{diag}(w)$ times degree-at-most-$m$ evaluation, so $w_iR(i)=1$ for some $R\in\mathcal P_m$. The projective classes of $A_i$ modulo $L$ are injective functions of the original clock.
+
+2. There is a unique exceptional index $r$ with $Ce_r=0$, and all $A_i$ with $i\ne r$ span a two-dimensional plane containing $L$. The exceptional $A_r$ is outside that plane.
+
+**Proof.** By Theorem 4.1 choose a full-support vector $a\in a(E)$ and an independent $b\in a(E)$; these span $a(E)$. Put $h_i=b_i/a_i$, a nonconstant vector. The space
+
+$$
+W=\operatorname{diag}(a)\bigl(U+\operatorname{diag}(h)U\bigr)
+$$
+
+lies in $K$. Its dimension exceeds $m$, for equality would make the diagonal operator $h$ preserve $U$ and therefore make $h$ constant. Hence $W=K$ and $\dim W=m+1$.
+
+Consider the polynomial-pair space
+
+$$
+\mathcal T=\{(p,q)\in\mathcal P_{m-1}^2:p(i)=h_iq(i)\text{ at every node}\}.
+\tag{5.2}
+$$
+
+The map $(p,q)\mapsto(p(i)-h_iq(i))_i$ has image dimension $m+1$, so $\dim\mathcal T=m-1$. A nonzero pair has $q\ne0$, since $q=0$ would give too many roots for $p$. For any two pairs, $pq'-p'q$ has degree at most $2m-2$ and $2m+1$ roots; it is zero.
+
+Reduce the ratio of one nonzero pair to coprime polynomials $p_*,q_*$. Every pair is $(fp_*,fq_*)$ for a polynomial $f$. For nonzero $p_*$ this follows from the cross-product identity and coprimality, which makes $q_*$ divide $q$ and then makes $p=fp_*$. If the numerator is zero, take $(p_*,q_*)=(0,1)$; the same identity makes every numerator zero, and the assertion still holds. Let $s=\max(\deg p_*,\deg q_*)\ge0$, ignoring the degree of a zero numerator.
+
+Let $B_{\rm bad}$ be the nodes where $p_*(i)\ne h_iq_*(i)$. Exactly at these nodes must $f$ vanish. Every zero of $q_*$ is bad, since coprime polynomials have no common root. The degree condition on both components is precisely $\deg f\le m-1-s$. Thus
+
+$$
+\dim\mathcal T=\max\{m-s-|B_{\rm bad}|,0\}=m-1,
+$$
+
+and $s+|B_{\rm bad}|=1$.
+
+If $s=1$ and there are no bad nodes, $h$ is a nonconstant fractional linear function of clock, with denominator nonzero at every node. The linear polynomials $p_*,q_*$ are independent, or their reduced ratio would be constant. With $w_i=a_i/q_*(i)$, we get
+
+$$
+a(E)=\operatorname{diag}(w)\operatorname{span}\{\mathbf1,(i)_i\}.
+$$
+
+The two coefficient functionals on $E$ may be extended to the full matrix space and represented by matrices $B,D$. Their restrictions are independent, so $B,D$ are independent modulo $L$. Each $a_i$ differs from $w_i(B+iD)$, as a trace functional, by a multiple of $L$, proving (5.1). Also $K=\operatorname{diag}(w)\operatorname{eval}(\mathcal P_m)$, since $\mathcal P_{m-1}+t\mathcal P_{m-1}=\mathcal P_m$. The inclusion $\mathbf1\in K$ proves the $R$ assertion. Independence of $B,D$ modulo $L$ makes the projective classes $[B+iD]$ pairwise distinct. In particular no two cumulative matrices can be proportional.
+
+If $s=0$ and there is one bad node $r$, $h$ is constant except there. Then
+
+$$
+K=\operatorname{diag}(a)U+\mathbb Re_r,
+$$
+
+so $Ce_r=0$. Off $r$, the restrictions of $a_i$ to $E$ span a line. Therefore those $A_i$ span at most two dimensions. Deleting one node from at least five leaves an adjacent pair, whose matrices are independent, so the span is exactly two. Its image modulo $L$ is one-dimensional, hence it contains $L$. The full span has dimension three, so $A_r$ is outside it. For uniqueness, if $Ce_s=0$ with $s\ne r$, the displayed formula for $K$ would give $e_s=\operatorname{diag}(a)\operatorname{eval}(p)+te_r$ for $p\in\mathcal P_{m-1}$. Then $p$ has the $2m-1$ distinct zeros outside $\{r,s\}$ and is zero, contradicting the coordinate at $s$. Thus $r$ is the only zero column, and in particular the only possible exceptional index for this identity. $\square$
+
