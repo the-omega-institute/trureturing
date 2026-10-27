@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/FiniteVertexCylinder
    mirror-E: none(waiver:finite-vertex-cylinder)
-   anchors: [mathlib/module/Mathlib.Topology.Homotopy.Basic]
+   anchors: [mathlib/module/Mathlib.Topology.Piecewise]
    utility: none
    digest: A division-free coordinate retraction gives homotopy extension at every realized vertex. -/
 import D5.S3.Geometry.FiniteConeCollapse
