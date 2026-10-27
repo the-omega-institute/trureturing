@@ -1,13 +1,13 @@
 ---
 bibkey: suzuki2026heatallowance
-authors: Masatoshi Suzuki
+authors: trureturing research continuation
 year: 2026
-title: Weil's quadratic form via the screw function
+title: Quadratic heat loss and the four-fifths height allowance
 doi: null
-url: https://arxiv.org/abs/2606.09096v3
-claim: Repository continuation of the screw-kernel source - under RH(T) the complete energy satisfies E(F) >= -C (log T)^(-4/5) M(F) for T >= 3 and every source in the class V, with an absolute constant C; optimality of the exponent 4/5 is not claimed.
+url: https://github.com/the-omega-institute/trureturing/blob/f108f1335eb9ed0a02569f5a0ef9f363d84a368e/Library/Weil/suzuki2026heatallowance.md
+claim: Internal research continuation deriving the four-fifths logarithmic heat allowance under the stated verified-height hypothesis.
 strata_touched: []
-license: citation-only
+license: repository-original
 triage: anchor
 ---
 
