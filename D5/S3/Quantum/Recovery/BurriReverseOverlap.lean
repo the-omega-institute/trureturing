@@ -9,6 +9,8 @@
 import D5.S3.Quantum.Recovery.BurriReversePolar
 import D5.S3.Quantum.QuantumChannels.MayerZeroFidelityTightness
 
+/-! Canonical purified overlaps for the full source-labelled composite Kraus maps. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -101,19 +103,21 @@ theorem source_overlap (cp cm kp km : ℝ) :
       ((4 * cp + 2 * cm + kp + km) ^ 2 + 36 +
         (3 * cp + 3 * cm - (kp + km)) ^ 2) / 124 := by
   have hs : Real.sqrt 31 ^ 2 = 31 := Real.sq_sqrt (by norm_num)
+  have hmul : Real.sqrt 31 * Real.sqrt 31 = 31 := Real.mul_self_sqrt (by norm_num)
   rw [purification_overlap]
   simp only [Fintype.sum_prod_type, source_composite_trace]
   norm_num [active, traceNumerator, Fintype.sum_prod_type,
     Fin.sum_univ_two, Fin.sum_univ_three, Complex.normSq_div,
-    Complex.normSq_ofReal, hs]
+    Complex.normSq_ofReal, hs, hmul]
   ring
 
 theorem slice_overlap : fidelity slice = 27 / 31 := by
   have hs : Real.sqrt 31 ^ 2 = 31 := Real.sq_sqrt (by norm_num)
+  have hmul : Real.sqrt 31 * Real.sqrt 31 = 31 := Real.mul_self_sqrt (by norm_num)
   rw [purification_overlap]
   simp only [Fintype.sum_prod_type, slice_composite_trace]
   norm_num [active, Fintype.sum_prod_type, Fin.sum_univ_two,
-    Fin.sum_univ_three, Complex.normSq_div, Complex.normSq_ofReal, hs]
+    Fin.sum_univ_three, Complex.normSq_div, Complex.normSq_ofReal, hs, hmul]
 
 set_option maxHeartbeats 2000000 in
 -- The full source-label Gram matrix is the active unitary Gram matrix.

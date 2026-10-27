@@ -9,6 +9,8 @@
 import D5.S3.Quantum.Recovery.BurriReverseDecoder
 import D5.S3.Quantum.Matrix.SpectralPower
 
+/-! Exact radical block congruences and an active source-ordered SVD. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -142,9 +144,9 @@ theorem actual_polar_positive : (activeM * U).PosSemidef := by
     have h := posDef_two (3 * t) (-t) (3 * t)
       (by positivity : 0 < 3 * t) (by nlinarith [root_facts.2.1] : 0 < 3 * t * (3 * t) - (-t) ^ 2)
     simpa [middleBlock] using h.posSemidef
-  exact ((hp.add hm).smul (by exact_mod_cast (show (0 : ℝ) ≤ 1 / 124 by norm_num))).add
+  exact ((hp.add hm).smul (by norm_num [Complex.nonneg_iff, Complex.div_re, Complex.div_im])).add
     ((ht.mul_mul_conjTranspose_same middleColumns).smul
-      (by exact_mod_cast (show (0 : ℝ) ≤ 1 / 62 by norm_num)))
+      (by norm_num [Complex.nonneg_iff, Complex.div_re, Complex.div_im]))
 
 /-- An actual nonnegative SVD in the source right-polar convention on the active block. -/
 theorem active_svd :
