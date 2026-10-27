@@ -156,7 +156,10 @@ internal sealed class SymmetricCoinMaximalWalkEntanglementDocument : IScribeDocu
                             + "The pair comparison therefore cannot increase gMax. Starting with the empty set and ending with all positions gives "
                             + "gMax of walkState p n cStar at most gMax of walkState p n c. "
                             + "Subtracting this inequality from one proves the stated entanglement comparison for every p, n, and c under the displayed hypotheses."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("donkersloot-sondenheimer-sperling-2026-symmetric-coin-entanglement"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, string prose, AssessedProvenance provenance) => Describe.Lean(
