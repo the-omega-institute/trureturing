@@ -20,6 +20,7 @@ run_cmd do
     ("bounds", ``sqrtTarget, #[``bounds], .lookup ``Nat.sqrt_eq, "reverse-kappa-or-G"),
     ("iff", ``sqrtTarget, #[``reverseIff], .lookup ``Nat.sqrt_eq, "reverse-kappa-or-G"),
     ("split", ``sqrtTarget, #[``lower, ``upper], .lookup ``Nat.sqrt_eq, "reverse-kappa-or-G"),
+    ("wide-packed", ``sqrtTarget, #[``widePacked], .lookup ``Nat.sqrt_eq, "reverse-kappa-or-G"),
     ("expensive", ``expensiveVia, #[``cachedInstance], .close, "baseline-hit"),
     ("unwrapped", ``LeanInformationAudit.Tests.SearchReduction.Candidates.unwrapped,
       #[], .close, "zero-intervals")]
@@ -63,7 +64,7 @@ run_cmd do
   let reached := match selected with
     | "kappa" => kappa
     | "G" => coverage
-    | "packed" | "bounds" | "iff" | "split" => kappa || coverage
+    | "packed" | "bounds" | "iff" | "split" | "wide-packed" => kappa || coverage
     | _ => disposition == .bindOnly
   if selected == "G" then
     if disposition == .reductionR && !budgetBasis reading then

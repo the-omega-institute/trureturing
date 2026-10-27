@@ -33,6 +33,18 @@ set_option maxRecDepth 10000 in
 theorem upper (n : Nat) : shell 2048 (n ≤ Nat.sqrt (n * n)) :=
   Nat.le_of_eq (Nat.sqrt_eq n).symm
 
+@[reducible] def wideShell : Nat → Prop → Prop
+  | 0, p => p
+  | k + 1, p => wideShell k True ∧ wideShell k p
+
+theorem wideShellIntro (k : Nat) {p : Prop} (hp : p) : wideShell k p := by
+  induction k generalizing p with
+  | zero => exact hp
+  | succ k ih => exact ⟨ih True.intro, ih hp⟩
+
+theorem widePacked (n : Nat) : wideShell 14 (Nat.sqrt (n * n) = n ∧ True) :=
+  wideShellIntro 14 ⟨Nat.sqrt_eq n, True.intro⟩
+
 theorem hiddenTarget (n : Nat) : Nat.sqrt (n * n) = n ∧ True :=
   ⟨sqrtTarget n, True.intro⟩
 
