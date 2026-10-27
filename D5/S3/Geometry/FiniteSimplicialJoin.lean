@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/FiniteSimplicialJoin
    mirror-E: none(waiver:finite-simplicial-join)
-   anchors: [mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic, mathlib/module/Mathlib.Topology.Constructions]
+   anchors: [mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic, mathlib/module/Mathlib.Topology.Homeomorph.Lemmas]
    utility: none
    digest: The barycentric map identifies the ordinary quotient join with the actual finite simplicial join realization. -/
 import D5.S3.Geometry.FiniteConeCollapse
