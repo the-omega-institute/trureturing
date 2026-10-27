@@ -27,7 +27,7 @@ def bitAddress (j : Nat) : Address := List.replicate j false ++ [true]
 
 private def streamStep : (Nat → Bool) ⊕ Bool →
     completionFunctor ((Nat → Bool) ⊕ Bool)
-  | .inl s => ⟨.inr (), fun b => if b then .inr (s 0) else .inl (tail s)⟩
+  | .inl s => ⟨.inr (), fun b : Bool => if b then .inr (s 0) else .inl (tail s)⟩
   | .inr b => ⟨.inl (!b), Empty.elim⟩
 
 /-- The infinite left spine retains the original bit at its j-th right leaf.
@@ -39,7 +39,8 @@ private theorem streamStep_leaf (b : Bool) :
     PFunctor.M.corec streamStep (.inr b) = leaf (!b) := by
   rw [PFunctor.M.corec_def]
   apply congrArg PFunctor.M.mk
-  apply Sigma.ext rfl
+  apply Sigma.ext (by
+    simp [streamStep, PFunctor.map, PFunctor.Obj.mk, PFunctor.Obj.fst, PFunctor.Obj.snd])
   apply heq_of_eq
   funext e
   exact e.elim
@@ -74,7 +75,7 @@ private theorem streamTree_injective : Function.Injective streamTree := by
   funext j
   have bits := congrArg (subtree (bitAddress j)) h
   rw [streamTree_subtree, streamTree_subtree] at bits
-  have labels := GenealogicalFiberTransport.Source.of.inj
+  have labels := FreeMagma.of.inj
     (NativeCompletionSupportClosure.embed_injective
       (show embed (.of (!(s j))) = embed (.of (!(t j))) from Option.some.inj bits))
   exact Bool.not_inj labels
@@ -97,7 +98,7 @@ private theorem completed_not_countable : ¬ Countable CompletionTree := by
   have hc : Function.Injective characteristic := by
     intro S T hST
     ext n
-    exact of_decide_eq_decide (congrFun hST n)
+    exact decide_eq_decide.mp (congrFun hST n)
   exact Function.cantor_injective (encode ∘ streamTree ∘ characteristic)
     (hinj.comp (streamTree_injective.comp hc))
 
