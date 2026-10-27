@@ -217,6 +217,7 @@ private lemma maximal_bloch {p : ℝ} {ρ σ : Matrix (Fin 2) (Fin 2) ℂ}
 private lemma channel_bloch (r : EuclideanSpace ℝ (Fin 3)) :
     channel (blochMatrix 1 r) =
       blochMatrix 1 (WithLp.toLp 2 ((1/2 : ℝ) • r.ofLp + (1/4 : ℝ) • ![0, 0, 1])) := by
+  rw [channel.eq_1]
   change (1/2 : ℂ) • blochMatrix 1 r +
     (Matrix.trace (blochMatrix 1 r) / 2) • !![(3/4 : ℂ), 0; 0, 1/4] = _
   rw [blochMatrix_trace]
