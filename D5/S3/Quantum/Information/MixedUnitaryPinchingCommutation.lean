@@ -10,7 +10,15 @@ import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
 import D5.S3.Quantum.Information.ActualQubitChordObstruction
 
-/-! Spectral marginal pinching and mixed-unitary qubit channels. -/
+/-! Spectral marginal pinching and mixed-unitary qubit channels.
+
+The channel classes and marginal pinching are those of Liu–Takagi–Lloyd,
+“Diagonal quantum discord”, arXiv:1708.09076v2, Section 3.2.
+A nonscalar Bloch Gram matrix supplies orthogonal directions whose images are not
+orthogonal. They give a two-qubit density matrix with nonzero pinching commutator.
+The scalar Gram case is isotropic by lifting orthogonal transformations through
+Mathlib's Cartan–Dieudonné reflection decomposition.
+-/
 
 set_option autoImplicit false
 noncomputable section
@@ -18,7 +26,7 @@ noncomputable section
 open Matrix
 open scoped BigOperators ComplexOrder Kronecker
 open D5.S3.Quantum.FiniteDimensional (QubitMatrix qubitX qubitZ)
-open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (bloch blochMatrix blochLinear)
+open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (bloch blochMatrix)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
 open D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (sigma spin)
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (pauliMatrix)
@@ -224,12 +232,13 @@ private lemma scalar_gram_bounds (φ : QubitMatrix → QubitMatrix) (hφ : IsMix
   let t := blochOperator φ
   have hdiag (j : Fin 3) : (fun i => t i j) ⬝ᵥ (fun i => t i j) = c := by
     have he := congrFun (congrFun hq j) j
+    change (∑ i, t i j * t i j) = c
     simpa only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.smul_apply,
-      Matrix.one_apply_eq, smul_eq_mul, mul_one, dotProduct, t] using he
+      Matrix.one_apply_eq, smul_eq_mul, mul_one, t] using he
   have hc : 0 ≤ c := by
     rw [← hdiag 0]
     exact Finset.sum_nonneg (fun i _ => mul_self_nonneg _)
-  obtain ⟨⟨f, hf⟩, h1, htr, _, hs⟩ := mixed_channel_data φ hφ
+  obtain ⟨⟨f, hf⟩, h1, _, _, hs⟩ := mixed_channel_data φ hφ
   let e : Fin 3 → ℝ := Pi.single 2 1
   have he : spin e = qubitZ := by
     ext i j
@@ -249,7 +258,7 @@ private lemma scalar_gram_bounds (φ : QubitMatrix → QubitMatrix) (hφ : IsMix
   have hp : (diagonal ![1, 0] : QubitMatrix).PosSemidef := by
     apply Matrix.posSemidef_diagonal_iff.mpr
     intro i
-    fin_cases i <;> norm_num [Complex.nonneg_iff]
+    fin_cases i <;> norm_num
   have hn := D5.S3.Quantum.Information.ActualPureQubitCostInfimum.norm_bloch_le_trace_of_posSemidef
     _ (mixed_positive φ hφ _ hp)
   rw [hout, D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_blochMatrix,
@@ -277,7 +286,8 @@ private lemma reflection_spin_lift (v : EuclideanSpace ℝ (Fin 3)) :
   · have hn : ‖v‖ ≠ 0 := norm_ne_zero_iff.mpr hv
     have hvv : WithLp.ofLp v ⬝ᵥ WithLp.ofLp v = ‖v‖ ^ 2 := by
       rw [EuclideanSpace.real_norm_sq_eq]
-      simp only [dotProduct, pow_two]
+      change (∑ i, v i * v i) = ∑ i, v i ^ 2
+      simp only [pow_two]
     let a : QubitMatrix := ((‖v‖⁻¹ : ℝ) : ℂ) • spin (WithLp.ofLp v)
     have ha : a.IsHermitian := by
       apply Matrix.IsHermitian.ext
