@@ -30,14 +30,19 @@ internal sealed class TestartTraversalDocument : IScribeDocumentDefinition
             Node("ReverseSpec", "Native inverse specification", "The supplied words are actual minimum-first directed cycles of D. Every reconstructed native parent equals the cycle lookup and satisfies the explicit rightmost-smaller certificate. The restored root has no parent."),
             Node("result", "The full fixed-map theorem",
                 "For all positive integers a,b, set n=a+b-1. The source consists of all unordered increasing trees on labels 0 through n with root zero, internal labels exactly 0 through a-1, and leaves exactly a through n. The target consists of all actual permutations of labels 1 through n whose strict excedance positions are exactly 1 through b-1; fixed points are allowed. F and H satisfy their literal operational specifications, F lands in the target, H lands in the source, H(F(t))=t for every source tree, and F(H(s))=s for every target permutation. There is no bound on n, no planar or binary restriction, and no omitted a=1, b=1 or n=1 case.",
-                DescribeRole.Theorem),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("testart-2026-question-one-type-c-tree-bijection"),
+                    ResolutionKind.Proved)),
             Paragraph(Text("The proof inserts the current maximum immediately after its parent, or as a singleton cycle when its parent is zero. Induction proves that this insertion has the literal decreasing-child DFS recursion, the exact directed cycle successor relation, and the rightmost-smaller parent reconstruction. The individual-label statistic identifies every positive internal vertex with a strict excedance position. The fixed involution D exchanges the required prefix statistics, yielding both restricted landings and inverse identities.")),
             Paragraph(Text("Testart, arXiv:2602.12130v2, Sections 6 and 7 Question 1, supplies the source family and question. Bényi and Hajnal, arXiv:1602.08684v1, Section 3.2 Theorem 12(ii), supplies the published interpretation of the target by C(a,b-1). The count interpretation is attributed to that paper; it is not a newly formalized counting theorem here. The construction answers the tree side of the source disjunction at the mathematical level. No priority claim is made here."))), []));
 
     private static DocumentBlock Node(string declaration, string title, string prose,
-        DescribeRole role = DescribeRole.Definition) =>
+        DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("testart-traversal-" + declaration.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: resolution);
 }
