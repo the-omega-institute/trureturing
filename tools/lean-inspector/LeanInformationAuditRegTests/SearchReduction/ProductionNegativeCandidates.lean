@@ -11,6 +11,12 @@ namespace LeanInformationAudit.Tests.SearchReduction.ProductionNegativeCandidate
 theorem squareFact : (42 : Nat) * 42 = 1764 := rfl
 theorem squareVia : ∃ n : Nat, n * n = 1764 := ⟨42, squareFact⟩
 
+theorem squareFactLarge : (18446744073709551739 : Nat) * 18446744073709551739 =
+    340282366920938468001273649564317924121 := rfl
+
+theorem squareViaLarge : ∃ n : Nat, n * n = 340282366920938468001273649564317924121 :=
+  ⟨18446744073709551739, squareFactLarge⟩
+
 theorem sqrtTarget (n : Nat) : Nat.sqrt (n * n) = n := Nat.sqrt_eq n
 
 set_option maxRecDepth 10000 in

@@ -16,6 +16,9 @@ run_cmd do
     ("kappa", ``squareVia, #[``squareFact], .lookup ``Nat.exists_mul_self, "searchKappa"),
     ("G", ``squareVia, #[``squareFact], .lookup ``Nat.exists_mul_self, "coveragePrefixG"),
     ("G-control", ``squareVia, #[``squareFact], .lookup ``Nat.exists_mul_self, "positive-control"),
+    ("kappa-large", ``squareViaLarge, #[``squareFactLarge], .lookup ``Nat.exists_mul_self, "searchKappa"),
+    ("G-large", ``squareViaLarge, #[``squareFactLarge], .lookup ``Nat.exists_mul_self, "coveragePrefixG"),
+    ("G-large-control", ``squareViaLarge, #[``squareFactLarge], .lookup ``Nat.exists_mul_self, "positive-control"),
     ("packed", ``sqrtTarget, #[``packed], .lookup ``Nat.sqrt_eq, "reverse-kappa-or-G"),
     ("bounds", ``sqrtTarget, #[``bounds], .lookup ``Nat.sqrt_eq, "reverse-kappa-or-G"),
     ("iff", ``sqrtTarget, #[``reverseIff], .lookup ``Nat.sqrt_eq, "reverse-kappa-or-G"),
@@ -39,17 +42,20 @@ run_cmd do
     withEnv labelBase do
       let info := (source.find? target).get!
       let type ← copyStatement source target info.type
+      let labelBudget ← IO.mkRef ({} : LookupBudgetState)
       let checked ← replayCertificate type [] label (some {
         environment := labelBase, disk? := some index,
-        implicationModules? := some labelBase.header.moduleNames})
+        implicationModules? := some labelBase.header.moduleNames,
+        budget? := some labelBudget})
       unless checked.cost == .zero && checked.proof?.isSome do
         throwError "B-only label certificate failed: {selected}: {checked.detail}"
       checkLocalProof type checked.proof?.get!
   let request : Request := {
     target, additions,
-    «baseline» := if selected == "unwrapped" then #[] else #[`Mathlib.Data.Nat.Sqrt],
+      «baseline» := if selected == "unwrapped" then #[] else #[`Mathlib.Data.Nat.Sqrt],
     baselineCommit := basis,
-    certificates := if selected == "G-control" then #[⟨label, "G-trap-control"⟩] else #[]}
+    certificates := if selected == "G-control" || selected == "G-large-control" then
+      #[⟨label, "G-trap-control"⟩] else #[]}
   -- This is the same startup, source audit and kernel publication as research
   -- requests. Explicit false selects the production population and scheduler.
   let resultName := `productionNegative ++ selected.toName
@@ -61,17 +67,24 @@ run_cmd do
   let a1 := classifyDisposition (priceMappingV18 reading)
   let kappa := reading.queryRecords.any (·.encounteredSearchKappa)
   let coverage := reading.queryRecords.any (·.encounteredCoveragePrefixG)
+  let reverseBudget := reading.queryRecords.any fun query =>
+    query.role.startsWith "target-part-reverse:" &&
+      (query.encounteredSearchKappa || query.encounteredCoveragePrefixG)
+  let guardDecided := disposition == .reject ||
+    (disposition == .incomplete && !guardsComplete reading)
+  let kappaThenHit := reading.queryRecords.any fun query =>
+    query.encounteredSearchKappa && (match query.terminal with | .hit _ => true | _ => false)
   let reached := match selected with
-    | "kappa" => kappa
-    | "G" => coverage
-    | "packed" | "bounds" | "iff" | "split" | "wide-packed" => kappa || coverage
+    | "kappa" | "kappa-large" => kappaThenHit && disposition == .bindOnly
+    | "G" | "G-large" => coverage
+    | "packed" | "bounds" | "iff" | "split" | "wide-packed" => reverseBudget && guardDecided
     | _ => disposition == .bindOnly
-  if selected == "G" then
+  if selected == "G" || selected == "G-large" then
     if disposition == .reductionR && !budgetBasis reading then
       throwError "G trap produced an exhaustive reduction"
   else if disposition == .reductionR then
     throwError "negative calibration produced a reduction: {selected}"
-  if selected == "G-control" || selected == "expensive" then
+  if selected == "G-control" || selected == "G-large-control" || selected == "expensive" then
     unless disposition == .bindOnly do throwError "positive label control did not erase gain: {selected}"
   if selected == "unwrapped" then
     unless reading.baseline.lower == .finite 0 && reading.baseline.upper == .finite 0 &&
@@ -83,8 +96,15 @@ run_cmd do
     ("intended_stop", toJson intendedStop), ("targeted_stop_covered", toJson reached),
     ("coverage_gap", toJson (!reached)), ("encountered_search_kappa", toJson kappa),
     ("encountered_coverage_prefix_G", toJson coverage),
+    ("kappa_followed_by_hit", toJson kappaThenHit),
+    ("reverse_budget_stop", toJson reverseBudget),
+    ("guard_decided", toJson guardDecided),
+    ("query_stop_records", toJson (reading.queryRecords.map fun query => Json.mkObj [
+      ("role", toJson query.role), ("terminal", toJson (reprStr query.terminal)),
+      ("search_kappa", toJson query.encounteredSearchKappa),
+      ("coverage_prefix_G", toJson query.encounteredCoveragePrefixG)])),
     ("A1", toJson (reprStr a1)), ("B", toJson (reprStr disposition)),
-    ("pool_control", toJson (selected == "G-control")),
+    ("pool_control", toJson (selected == "G-control" || selected == "G-large-control")),
     ("structure_checked", toJson reading.structureChecked),
     ("structure_clean", toJson reading.structureClean),
     ("index_digest", toJson index.header.digest), ("index_inputs", toJson index.header.inputs),
