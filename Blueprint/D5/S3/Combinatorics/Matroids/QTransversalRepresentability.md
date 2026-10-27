@@ -58,6 +58,10 @@ $$\forall (F: Type), [Field\left(F\right)] [Fintype\left(F\right)] \forall (m: \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/QTransversalRepresentability.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/saaltink-2025-q-transversal-representability` (proved) by `D5/S3/Combinatorics/Matroids/QTransversalRepresentability.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"saaltink-2025-q-transversal-representability","declaration_gid":"D5/S3/Combinatorics/Matroids/QTransversalRepresentability.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Saaltink (2025). *A theory of q-transversals*. DOI: [10.48550/arXiv.2503.12201](https://doi.org/10.48550/arXiv.2503.12201). URL: <https://arxiv.org/abs/2503.12201v1>.

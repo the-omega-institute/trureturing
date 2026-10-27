@@ -27,7 +27,10 @@ internal sealed class QTransversalRepresentabilityDocument : IScribeDocumentDefi
             H(name), StatementSource.FromAuthor(Disp(formula)),
             derived ? AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/FiniteGeometry/saaltink2025qtransversals"))
                 : AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/FiniteGeometry/saaltink2025qtransversals")),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            derived ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("saaltink-2025-q-transversal-representability"),
+                ResolutionKind.Proved) : null);
 
     private static Formula Ambient => Arrow(Fin(V("m")), V("F"));
     private static Formula Family => Arrow(Fin(V("k")), Sub(V("F"), Ambient));
