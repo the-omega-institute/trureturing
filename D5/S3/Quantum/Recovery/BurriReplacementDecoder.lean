@@ -680,8 +680,13 @@ theorem source_decoder_completion_independent (Uprime : Matrix P P ℂ)
     (e : E) (k : A) (b : B) :
     (∑ p : P, Uprime (k, e) p * prepare p b) = swKraus e k b := by
   have h := source_supported_action_unique Uprime hu hp
-  simpa only [Matrix.mul_apply, Matrix.mulVec, dotProduct, prepare,
-    swKraus, sourceKraus, W, Matrix.mul_one] using congrFun h (k, e)
+  have hrow (p : P) : sourceKraus e k p = U (k, e) p := by
+    change (U * (1 : Matrix P P ℂ)) (k, e) p = U (k, e) p
+    rw [Matrix.mul_one]
+  change (∑ p : P, Uprime (k, e) p * psi p) =
+    ∑ p : P, sourceKraus e k p * psi p
+  simp only [hrow]
+  exact congrFun h (k, e)
 
 #print axioms canonical_reference_purification
 #print axioms physical_marginals
