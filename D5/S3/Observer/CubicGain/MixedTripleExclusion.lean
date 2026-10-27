@@ -249,7 +249,6 @@ private theorem common_gain_source (j m b : ℝ) (v : List Bool)
     exact Matrix.ext (fun i k => by
       fin_cases i <;> fin_cases k <;>
         first | exact h00 | exact h01 | exact h10 | exact h11)
-
 private def nx (W : World3) : ℝ := W.source 0 1 / W.source 1 1
 private def ny (W : World3) : ℝ := W.source 1 0 / W.source 1 1
 private def nr (W : World3) : Mat := !![nx W * ny W,nx W;ny W,1]
@@ -322,7 +321,6 @@ private theorem norm_injective (W Z : World3) (hx : nx W = nx Z) (hy : ny W = ny
     simpa [← hx,← hy] using hqW.trans hqZ.symm
   rw [(norm_source W).2.2.1,(norm_source Z).2.2.1]
   simp [nr,hx,hy,hd]
-
 private theorem nh_zero (W : World3) (t : ℝ) : nh W t = 0 ↔ (gain 3 W.coeff).eval t = 0 := by
   rw [nh_eval, mul_eq_zero]
   simp [ne_of_gt (W.legal.1 1 1)]
@@ -453,7 +451,8 @@ private theorem fourth_pair_constraint (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
       linarith
     have hc : nc W = nc Z := four_evaluations (nc W) (nc Z) ![1,3,6,7]
       (by intro i k he; fin_cases i <;> fin_cases k <;> norm_num at *)
-      (by intro i; fin_cases i <;> simp [← nh, fW.1,fZ.1,he3,nh_eval,h6,h7])
+      (by intro i; change nh W _ = nh Z _; fin_cases i <;>
+        first | exact fW.1.trans fZ.1.symm | exact he3 | simp [nh_eval,h6,h7])
     have hnh (r : ℝ) : nh Z r = nh W r := by simp [nh,hc]
     have hq (he0 : a₀-W.drift ≠ 0) : nx W*ny W = nx Z*ny Z := by
       have hn : nh W 0 ≠ 0 := by
@@ -612,7 +611,8 @@ private theorem fifth_pair_nezero (a₀ j m b : ℝ) (W Z : World3)
   have fZ := norm_first Z a₀ j m hZ.1 hZ.2.1 hZ.2.2.1
   have hc : nc W = nc Z := four_evaluations (nc W) (nc Z) ![1,3,4,7]
     (by intro i k he; fin_cases i <;> fin_cases k <;> norm_num at *)
-    (by intro i; fin_cases i <;> simp [← nh,fW.1,fZ.1,h3,nh_eval,h4,h7])
+    (by intro i; change nh W _ = nh Z _; fin_cases i <;>
+      first | exact fW.1.trans fZ.1.symm | exact h3 | simp [nh_eval,h4,h7])
   have hnh (r : ℝ) : nh Z r = nh W r := by simp [nh,hc]
   have hn0 : nh W 0 ≠ 0 := by intro he; exact hc0 (by nlinarith [fW.2.2])
   have hp : nx W*ny W = nx Z*ny Z := by
@@ -868,7 +868,7 @@ theorem mixed_prefix_three_world_exclusion (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
       have := (norm_source W).1; have := (norm_source W).2.1; positivity
     have he := (first W hW).2.2
     have hd := all_drift W W₀ hW hW₀
-    have hz : (1+nx W*ny W)*nh W 0 = 0 := by simpa [hd,← hc,c] using he
+    have hz : (1+nx W*ny W)*nh W 0 = 0 := he.trans (by dsimp [c] at hc; linarith [hd])
     exact (mul_eq_zero.mp hz).resolve_left hp
   have coef_zero_initial (hvU : v = [false,true]) (hc : c = 0)
       (W Z : World3) (hW : W ∈ T) (hZ : Z ∈ T) : nc W = nc Z := by
@@ -879,7 +879,7 @@ theorem mixed_prefix_three_world_exclusion (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
     · exact (zero_initial hc W hW).trans (zero_initial hc Z hZ).symm
     · exact (first W hW).1.trans (first Z hZ).1.symm
     · exact right_third hvU W Z hW hZ
-    · simp [← nh,nh_eval,all_fourth W hW,all_fourth Z hZ]
+    · exact ((nh_zero W 4).mpr (all_fourth W hW)).trans ((nh_zero Z 4).mpr (all_fourth Z hZ)).symm
   have quadratic_one (hvU : v = [false,true])
       (hco : ∀ W ∈ T, nc W = nc W₀) (hn2 : nh W₀ 2 ≠ 0) : False := by
     apply three_quadratic T hT hP s (nx W₀*ny W₀+ny W₀) 1 sum0
@@ -985,8 +985,8 @@ theorem mixed_prefix_three_world_exclusion (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
         fin_cases i
         · exact (first W hW).1.trans (first W₀ hW₀).1.symm
         · exact right_third hvU W W₀ hW hW₀
-        · simp [← nh,nh_eval,all_fourth W hW,all_fourth W₀ hW₀]
-        · simp [← nh,nh_eval,all_fifth W hW,all_fifth W₀ hW₀]
+        · exact ((nh_zero W 4).mpr (all_fourth W hW)).trans ((nh_zero W₀ 4).mpr (all_fourth W₀ hW₀)).symm
+        · exact ((nh_zero W 5).mpr (all_fifth W hW)).trans ((nh_zero W₀ 5).mpr (all_fifth W₀ hW₀)).symm
       have hn0 : nh W₀ 0 ≠ 0 := by intro he; exact hc (by dsimp [c]; nlinarith [(first W₀ hW₀).2.2])
       apply three_quadratic T hT hP s (nx W₀*ny W₀) 0 sum0
       intro W hW
