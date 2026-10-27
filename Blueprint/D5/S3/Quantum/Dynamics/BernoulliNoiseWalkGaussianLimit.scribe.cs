@@ -98,7 +98,10 @@ internal sealed class BernoulliNoiseWalkGaussianLimitDocument : IScribeDocumentD
                         + "The characteristic-function criterion for weak convergence applies at every real frequency, "
                         + "using the standard Gaussian characteristic function exp(−t²/2). "
                         + "The characterization of weak convergence by integrals of bounded continuous real functions then gives exactly the displayed conclusion."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wang-wang-tang-ren-2018-bernoulli-noise-walk-gaussian-limit"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(name == "walkLaw" ? "walk-law" : name.ToLowerInvariant()),
