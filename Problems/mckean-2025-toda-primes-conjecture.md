@@ -56,7 +56,7 @@ The natural-number restriction suffices to refute the integer conjecture.
 ## Motivation
 
 The settling declaration is `D5/S3/Arith/McKeanTodaPrimes/Result.result`.
-The source note is `D5/L/PrimeForms/mckean2025todaprimes`.
+The source note is `D5/L/Factorization/mckean2025todaprimes`.
 A Bernoulli denominator records predecessor divisibility, whereas Toda
 primality additionally depends on a prime not dividing the input.
 These two pieces of information behave differently under multiplication.

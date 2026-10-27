@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.McKeanTodaPrimes;
 internal sealed class ResultDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Arith/McKeanTodaPrimes/Result.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PrimeForms/mckean2025todaprimes");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Factorization/mckean2025todaprimes");
     private const string DefinitionQuote = "Definition 1.1. Let n be an integer. A Toda prime of n is an odd prime p such that p − 1 | 4n and gcd(p, 4n/(p−1)) = 1. Denote the set of Toda primes of n by T (n) (see Table 1), and let t(n) := |T (n)| (see Figure 1).";
     private const string NotationQuote = "Notation 5.5. Given an even integer 2m, let P (2m) denote the set of primes such that p − 1 | 2m, so that D₂ₘ = ∏ₚ∈P(2m) p. Let F (d) = min{2m > 0 : D₂ₘ = d} [PW23].";
     private const string ConjectureQuote = "Conjecture 5.6. Let d be a Bernoulli denominator. (i) If F (d) = 4a for some integer a, then T (am) = T (a) whenever D₄ₐₘ = D₄ₐ. (ii) If D₄ₐₘ ≠ D₄ₐ = d, then t(am) ≥ t(a).";
