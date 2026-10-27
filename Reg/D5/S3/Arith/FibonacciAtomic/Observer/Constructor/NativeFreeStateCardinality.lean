@@ -63,7 +63,7 @@ def evidence : Registration arena (type_of% free_state_cardinality) where
 
 noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     free_state_cardinality (Realization signature) Unit Unit where
-  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeFreeStateCardinality.free_state_cardinality
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeFreeStateCardinality.free_state_cardinality
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeFreeStateCardinality.evidence
   realizationSource := none
   generated := false
