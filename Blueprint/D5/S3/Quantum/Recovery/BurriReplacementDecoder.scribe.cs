@@ -60,6 +60,12 @@ internal sealed class BurriReplacementDecoderDocument : IScribeDocumentDefinitio
             Entry("actual-recovered-purifications", "actual_recovered_purifications", "Actual recovered reference-output densities",
                 "The reference tensor extension of the actual Petz-after-noise channel sends the canonical pure reference density to rho tensor rho. "
                     + "The actual Appendix A SW-after-noise channel sends it to rho tensor diag(8/9,1/9). These identities precede the fidelity calculation.", DescribeRole.Theorem),
+            Entry("source-supported-action-unique", "source_supported_action_unique", "Supported source action is independent of the polar completion",
+                "For every unitary Uprime with M Uprime positive semidefinite, Uprime psi equals U psi. Positive-square-root uniqueness first fixes M Uprime; "
+                    + "unitarity then fixes its action on the prepared rank-one source support. Thus arbitrary null-space completion cannot alter the actual replacement decoder Kraus rows.", DescribeRole.Theorem),
+            Entry("actual-composite-squared-overlaps", "actual_composite_squared_overlaps", "Squared pure-amplitude fidelity for the actual composites",
+                "The overlap of the actual recovered reference density equals the sum of squared pure-state amplitudes of the tensor-lifted composite Kraus operators. "
+                    + "The Kraus operators are the products of the actual decoder and physical noise Kraus operators. The equality is proved from the canonical channel action on every input matrix.", DescribeRole.Theorem),
             Entry("actual-strict-fidelity", "actual_strict_fidelity", "SW strictly beats ordinary Petz for this physical channel",
                 "The squared pure-reference overlap of the actual Petz composite is 1/3, and that of the actual source SW composite is 11/27. "
                     + "Their difference is 2/27, so the SW fidelity is strictly larger. Fidelity is defined by the actual recovered density's overlap with the canonical reference vector, "

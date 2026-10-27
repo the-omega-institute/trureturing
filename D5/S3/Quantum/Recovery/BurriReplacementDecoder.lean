@@ -418,6 +418,7 @@ theorem sw_channel_action (T : Matrix B B ℂ) :
   all_goals push_cast
   all_goals ring_nf
   all_goals simp only [← Complex.ofReal_pow, h2]
+  all_goals norm_num
   all_goals ring
 
 theorem petz_channel_action (T : Matrix B B ℂ) :
@@ -433,7 +434,9 @@ theorem petz_channel_action (T : Matrix B B ℂ) :
       Matrix.conjTranspose_apply, Matrix.diagonal_apply, Matrix.trace,
       Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_one]
   all_goals push_cast; field_simp; ring_nf
-  all_goals simp only [← Complex.ofReal_pow, h2, h3]; ring
+  all_goals simp only [← Complex.ofReal_pow, h2, h3]
+  all_goals norm_num
+  all_goals ring
 
 private theorem composite_reset (decoder : QuantumChannel B A)
     (S : Matrix A A ℂ)
@@ -463,6 +466,22 @@ def referenceExtension (channel : QuantumChannel A A)
 /-- The pure density of the canonical reference purification. -/
 def referencePure : Matrix (A × A) (A × A) ℂ :=
   Matrix.vecMulVec referenceVector (star referenceVector)
+
+/-- The actual reference purification is normalized, positive, and has marginal rho. -/
+theorem canonical_reference_purification :
+    (∑ p : A × A, star (referenceVector p) * referenceVector p) = 1 ∧
+    referencePure.PosSemidef ∧
+    (fun r t : A => ∑ i : A, referencePure (r, i) (t, i)) = rho := by
+  refine ⟨?_, Matrix.posSemidef_vecMulVec_self_star referenceVector, ?_⟩
+  · simpa [psi, referenceVector, Fintype.sum_prod_type, Fin.sum_univ_one]
+      using psi_normalized
+  · obtain ⟨h2, h3, ht⟩ := sqrt_facts
+    ext r t
+    fin_cases r <;> fin_cases t <;>
+      norm_num [referencePure, referenceVector, weight, rho,
+        Matrix.vecMulVec_apply, Matrix.diagonal_apply, Fin.sum_univ_two,
+        Complex.ext_iff, Complex.div_re, Complex.div_im]
+    all_goals field_simp <;> nlinarith
 
 /-- Squared fidelity with a pure reference is its overlap with the actual
 recovered density, without an extra square or a square root. -/
@@ -521,7 +540,7 @@ private theorem reference_extension_kraus {s : Type*} [Fintype s]
   ext ⟨r, i⟩ ⟨t, j⟩
   dsimp only [referenceExtension]
   rw [h]
-  simp [Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
+  fin_cases t <;> simp [Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
     Matrix.kroneckerMap_apply, Matrix.one_apply, Fintype.sum_prod_type,
     Finset.mul_sum, Finset.sum_mul]
 
@@ -537,7 +556,9 @@ theorem actual_fidelity_squared_overlap {s : Type*} [Fintype s]
         (Matrix.kronecker (1 : Matrix A A ℂ) (K k) *ᵥ referenceVector)) := by
   unfold entanglementFidelity
   rw [reference_extension_kraus channel K h]
-  simp only [Matrix.sum_mulVec, dotProduct_sum, Complex.sum_re]
+  simp only [Matrix.sum_mulVec, dotProduct_sum]
+  change Complex.reCLM _ = _
+  rw [map_sum]
   exact Finset.sum_congr rfl fun k _ => pure_kraus_overlap referenceVector _
 
 private theorem composite_kraus_action {s : Type*} [Fintype s]
@@ -628,17 +649,26 @@ theorem source_supported_action_unique (Uprime : Matrix P P ℂ)
   have hleft (T : Matrix P P ℂ) (hT : T * Tᴴ = 1) :
       T * (M * T)ᴴ = Mᴴ := by
     rw [Matrix.conjTranspose_mul, ← Matrix.mul_assoc, hT, Matrix.one_mul]
+  have hP' : M * Uprime = (1 / (Real.sqrt 3 : ℂ)) • X :=
+    hpol.trans source_polar_product
+  have hHerm : ((1 / (Real.sqrt 3 : ℂ)) • X)ᴴ =
+      (1 / (Real.sqrt 3 : ℂ)) • X := by
+    rw [← source_polar_product]
+    exact source_polar_positive.isHermitian
   have hEq : Uprime * ((1 / (Real.sqrt 3 : ℂ)) • X) =
       U * ((1 / (Real.sqrt 3 : ℂ)) • X) := by
-    rw [← source_polar_product, ← hpol, hleft Uprime hu, hpol,
-      hleft U source_unitary.2]
+    calc
+      _ = Uprime * (M * Uprime)ᴴ := by rw [hP', hHerm]
+      _ = Mᴴ := hleft Uprime hu
+      _ = U * (M * U)ᴴ := (hleft U source_unitary.2).symm
+      _ = _ := by rw [source_polar_product, hHerm]
   have hx : X *ᵥ psi = psi := by
     rw [X, Matrix.vecMulVec_mulVec]
     have hn : (star psi) ⬝ᵥ psi = (1 : ℂ) := psi_normalized
     rw [hn]
     simp
   have h := congrArg (fun Z : Matrix P P ℂ => Z *ᵥ psi) hEq
-  simp only [Matrix.mul_smul, Matrix.smul_mulVec, Matrix.mulVec_mulVec, hx] at h
+  simp only [Matrix.mul_smul, Matrix.smul_mulVec, ← Matrix.mulVec_mulVec, hx] at h
   have hc : (1 / (Real.sqrt 3 : ℂ)) ≠ 0 := by
     exact one_div_ne_zero (by exact_mod_cast sqrt_facts.2.2)
   funext p
@@ -647,12 +677,13 @@ theorem source_supported_action_unique (Uprime : Matrix P P ℂ)
 /-- The actual composite Kraus rows agree for every allowed completion. -/
 theorem source_decoder_completion_independent (Uprime : Matrix P P ℂ)
     (hu : Uprime * Uprimeᴴ = 1) (hp : (M * Uprime).PosSemidef) (e : E) :
-    (fun k p => Uprime (k, e) p) * prepare = swKraus e := by
+    ((fun k p => Uprime (k, e) p) : Matrix A P ℂ) * prepare = swKraus e := by
   have h := source_supported_action_unique Uprime hu hp
   ext k b
   simpa only [Matrix.mul_apply, Matrix.mulVec, dotProduct, prepare,
     swKraus, sourceKraus, W, Matrix.mul_one] using congrFun h (k, e)
 
+#print axioms canonical_reference_purification
 #print axioms physical_marginals
 #print axioms reference_root
 #print axioms product_marginal_root
