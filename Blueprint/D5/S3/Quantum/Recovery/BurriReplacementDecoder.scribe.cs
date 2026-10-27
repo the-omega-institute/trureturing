@@ -57,6 +57,8 @@ internal sealed class BurriReplacementDecoderDocument : IScribeDocumentDefinitio
                     + "and its complementary reset term vanishes on every input matrix.", DescribeRole.Theorem),
             Entry("canonical-reference-amplitude", "canonical_reference_amplitude", "Canonical purification amplitude",
                 "The reference vector is entrywise the positive square root of the nonuniform density rho.", DescribeRole.Theorem),
+            Entry("canonical-reference-purification", "canonical_reference_purification", "Normalized canonical reference purification",
+                "The reference vector has squared norm one, its rank-one density is positive semidefinite, and its input marginal is exactly rho.", DescribeRole.Theorem),
             Entry("actual-recovered-purifications", "actual_recovered_purifications", "Actual recovered reference-output densities",
                 "The reference tensor extension of the actual Petz-after-noise channel sends the canonical pure reference density to rho tensor rho. "
                     + "The actual Appendix A SW-after-noise channel sends it to rho tensor diag(8/9,1/9). These identities precede the fidelity calculation.", DescribeRole.Theorem),

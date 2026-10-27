@@ -676,10 +676,10 @@ theorem source_supported_action_unique (Uprime : Matrix P P ℂ)
 
 /-- The actual composite Kraus rows agree for every allowed completion. -/
 theorem source_decoder_completion_independent (Uprime : Matrix P P ℂ)
-    (hu : Uprime * Uprimeᴴ = 1) (hp : (M * Uprime).PosSemidef) (e : E) :
-    ((fun k p => Uprime (k, e) p) : Matrix A P ℂ) * prepare = swKraus e := by
+    (hu : Uprime * Uprimeᴴ = 1) (hp : (M * Uprime).PosSemidef)
+    (e : E) (k : A) (b : B) :
+    (∑ p : P, Uprime (k, e) p * prepare p b) = swKraus e k b := by
   have h := source_supported_action_unique Uprime hu hp
-  ext k b
   simpa only [Matrix.mul_apply, Matrix.mulVec, dotProduct, prepare,
     swKraus, sourceKraus, W, Matrix.mul_one] using congrFun h (k, e)
 
