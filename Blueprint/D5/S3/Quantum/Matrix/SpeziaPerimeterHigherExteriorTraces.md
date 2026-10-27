@@ -34,6 +34,10 @@ $$\forall (n: \mathbb{N}), (0 < n) \Rightarrow (\forall (k: \mathbb{N}), (2 < k)
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/SpeziaPerimeterHigherExteriorTraces.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sp330700` (proved) by `D5/S3/Quantum/Matrix/SpeziaPerimeterHigherExteriorTraces.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sp330700","declaration_gid":"D5/S3/Quantum/Matrix/SpeziaPerimeterHigherExteriorTraces.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Stefano Spezia (2019). *OEIS A330700, second exterior-trace conjecture*. URL: <https://oeis.org/A330700>.

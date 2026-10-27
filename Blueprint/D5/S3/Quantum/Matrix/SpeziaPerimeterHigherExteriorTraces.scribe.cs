@@ -39,7 +39,9 @@ internal sealed class SpeziaPerimeterHigherExteriorTracesDocument : IScribeDocum
             DescribeId.Create("spezia-perimeter-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance, Blocks(Paragraph(Text(prose))), role,
-            null);
+            name == "result"
+                ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("sp330700"), ResolutionKind.Proved)
+                : null);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula All(string name, Formula type, Formula body) =>
