@@ -92,7 +92,7 @@ private lemma mixer_uniform :
 private lemma mixer_parity : mixer 3 *ᵥ parity = (-1 : ℂ) • parity := by
   ext x
   rw [mixer_action]
-  simp only [parity, D5.S3.Combinatorics.IsingUniquenessSets.walsh,
+  simp only [parity.eq_1, D5.S3.Combinatorics.IsingUniquenessSets.walsh,
     Finset.prod_pair (by decide : (0 : Fin 3) ≠ 1),
     Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.succ_zero_eq_one,
     Fin.isValue, Fin.succ_one_eq_two, Pi.smul_apply, smul_eq_mul,
