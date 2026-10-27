@@ -4,9 +4,9 @@
 
 Uniform height convergence with common scalar resource bounds need not preserve original hazard survival.
 
-Use the original five-mode base B(c)=(c,c,1-2c), with modes ordered 0,1,2,3,13. Its probability vector is (k,c-k,1-2c,c-k,k). Throughout I=[0,1], the duration is one, c lies strictly between zero and one half, n is any positive natural number, and q is the constant real phase with arbitrary value phi.
+For every real c define doubleWall(c)=B(c)=(c,c,1-2c). This is the original five-mode base, with modes ordered 0,1,2,3,13 and probability vector (k,c-k,1-2c,c-k,k). The theorems use I=[0,1], duration one, 0<c<1/2, any positive natural n, and the constant real phase q(t)=phi with arbitrary real phi.
 
-For j<n define tent(n,j,t)=max(0,min(t-j/n,(j+1)/n-t)), and set C(c,n,t)=(c/2) times the sum of these n tents. The actual height is k(t)=height(c,n,t)=c/2-C(c,n,t)/(2-t). A finite sum gives a globally defined triangle and retains every corner as a control value. On each closed rising half-cycle C=(c/2)(t-j/n); on each closed falling half-cycle C=(c/2)((j+1)/n-t). The predicate Legs(c,n) below denotes exactly these two universally quantified closed-leg equations for every natural j<n.
+For natural n,j and real t define tent(n,j,t)=max(0,min(t-j/n,(j+1)/n-t)). For real c,t and natural n define triangle(c,n,t)=C(c,n,t)=(c/2) times the sum of tent(n,j,t) over j in the finite natural range 0<=j<n, and height(c,n,t)=c/2-C(c,n,t)/(2-t). These are total real functions with Lean's total real division; the theorems use n>=1 and t in I, where both denominators are nonzero. A finite sum retains every corner as a control value. On each closed rising half-cycle C=(c/2)(t-j/n); on each closed falling half-cycle C=(c/2)((j+1)/n-t). The predicate Legs(c,n) below denotes exactly these two universally quantified closed-leg equations for every natural j<n.
 
 **Definition 1.1 (Survival from the original derivative hazard).**
 
@@ -32,7 +32,7 @@ $$\forall c: \mathbb{R}, \forall phi: \mathbb{R}, \forall n: \mathbb{N}, 0<c<\fr
 
 In the formula, k=height(c,n), q=constant(phi), a=c/2, m=min(c/4,1-2c), and B=B(c). OC is OriginalControl on this same base and duration one. FC is FiniteC1Control with continuous derivative rates on the closed partition pieces, and AC means AbsolutelyContinuousOnInterval on [0,1]. TV is eVariationOn on I, with real upper bounds embedded by ENNReal.ofReal. Lip(k,I,L) is LipschitzOnWith(Real.toNNReal(L),k,I). These abbreviations retain the original carrier and both regularity alternatives.
 
-Length(k,q) is the integral on [0,1] of sqrt(k prime squared plus q prime squared), and Cost(k,q) is the integral of k prime squared plus q prime squared. IL and IQ assert interval integrability of those actual integrands. II(h,0,t) asserts IntervalIntegrable(h,volume,0,t). AE(t in I,P) means that for Lebesgue-almost every real t, membership in I implies P. All remaining time quantifiers include both endpoints. The margin inequality holds for every one of the five actual probabilities.
+For arbitrary real functions k,q, coordinateLength(k,q)=Length(k,q) is the real interval integral from zero to one of sqrt(k prime squared plus q prime squared), and quadraticCost(k,q)=Cost(k,q) is the same interval integral of k prime squared plus q prime squared. Both use Lebesgue measure. IL and IQ assert interval integrability of those actual integrands. II(h,0,t) asserts IntervalIntegrable(h,volume,0,t). AE(t in I,P) means that for Lebesgue-almost every real t, membership in I implies P. All remaining time quantifiers include both endpoints. The margin inequality holds for every one of the five actual probabilities.
 
 The partition times are j/(2n), with 2n legs. The triangle is continuous, and 2-t is at least one on I. On an open leg, differentiating the height gives -C prime/(2-t)-C/(2-t)^2. The triangle derivative is c/2 on rising legs and -c/2 on falling legs. Consequently the height derivative is -(c-k)/(2-t) on rising legs and k/(2-t) on falling legs. These rates extend continuously to each closed leg. The original finite-C1-to-AC theorem supplies absolute continuity of both coordinates.
 

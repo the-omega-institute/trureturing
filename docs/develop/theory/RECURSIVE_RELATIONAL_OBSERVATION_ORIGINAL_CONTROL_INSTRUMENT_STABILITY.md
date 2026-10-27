@@ -1336,7 +1336,8 @@ $$
 
 Division by zero in the total hazard formula is assigned value zero.
 All integrals are real interval integrals with Lebesgue measure; an
-integral with reversed endpoints has the opposite sign. Write $V_I(f)$
+integral with reversed endpoints has the opposite sign, and a nonintegrable
+integrand is assigned integral zero. Write $V_I(f)$
 for the extended nonnegative total variation of $f$ on $I$; finite real
 upper bounds below are included in the extended nonnegative reals.
 
