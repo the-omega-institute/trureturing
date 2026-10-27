@@ -155,6 +155,220 @@ private def pointJoinContraction [Subsingleton X] (x₀ : X) (y₀ : Y) :
 
 end JoinTransport
 
+section ConeBaseSuspension
+
+variable {Z : Type*} [TopologicalSpace Z]
+
+private abbrev TopologicalCone (Z : Type*) [TopologicalSpace Z] :=
+  FiniteSimplicialJoin.OrdinaryJoin Unit Z
+
+private def coneHeight : C(TopologicalCone Z, I) where
+  toFun := Quotient.lift (fun p => p.2.2) (fun _ _ h => h.1)
+  continuous_toFun := (by fun_prop : Continuous
+    (fun p : Unit × Z × I => p.2.2)).quotient_lift _
+
+private abbrev ConeBaseQuotient (Z : Type*) [TopologicalSpace Z] :=
+  FiniteConeUnionWedge.Collapse {x : TopologicalCone Z | coneHeight x = 1}
+
+private def halfParameter (b : Bool) (t : I) : I :=
+  ⟨(1 + (if b then (1 : ℝ) else -1) * (t : ℝ)) / 2, by
+    cases b <;> norm_num <;> constructor <;> linarith [t.property.1, t.property.2]⟩
+
+private theorem halfParameter_continuous :
+    Continuous (fun z : Bool × I => halfParameter z.1 z.2) := by
+  apply Continuous.subtype_mk
+  exact (continuous_const.add
+    ((continuous_of_discreteTopology (f := fun b : Bool => if b then (1 : ℝ) else -1)).comp
+      continuous_fst |>.mul (continuous_subtype_val.comp continuous_snd))).div_const 2
+
+private def coneClass (z : Z) (t : I) : ConeBaseQuotient Z :=
+  Quotient.mk _ (Quotient.mk _ ((), z, t))
+
+private theorem coneClass_zero (z w : Z) : coneClass z 0 = coneClass w 0 :=
+  congrArg (Quotient.mk _) (Quotient.sound ⟨rfl, Or.inr rfl, Or.inl rfl⟩)
+
+private theorem coneClass_one (z w : Z) : coneClass z 1 = coneClass w 1 :=
+  Quotient.sound (Or.inr ⟨rfl, rfl⟩)
+
+private def suspensionToConeBase :
+    C(FiniteSimplicialJoin.OrdinaryJoin Z Bool, ConeBaseQuotient Z) where
+  toFun := Quotient.lift (fun p => coneClass p.1 (halfParameter p.2.1 p.2.2)) (by
+    rintro ⟨z, b, t⟩ ⟨w, c, u⟩ ⟨ht, hz, hb⟩
+    dsimp at ht hz hb ⊢
+    subst u
+    rcases hb with hb | hb
+    · subst t
+      have h (d : Bool) : halfParameter d 0 = (⟨1 / 2, by norm_num⟩ : I) := by
+        apply Subtype.ext; simp [halfParameter]
+      rw [h, h]
+      rcases hz with hz | rfl
+      · norm_num at hz
+      · rfl
+    · subst c
+      rcases hz with hz | rfl
+      · subst t
+        cases b
+        · simpa [halfParameter] using coneClass_zero z w
+        · simpa [halfParameter] using coneClass_one z w
+      · rfl)
+  continuous_toFun := by
+    apply Continuous.quotient_lift
+    apply continuous_quotient_mk'.comp
+    apply continuous_quotient_mk'.comp
+    exact continuous_const.prodMk
+      (continuous_fst.prodMk (halfParameter_continuous.comp continuous_snd))
+
+private def lowerParameter (t : I) : I :=
+  ⟨max 0 (1 - 2 * (t : ℝ)), ⟨le_max_left _ _,
+    max_le (by norm_num) (by linarith [t.property.1])⟩⟩
+
+private def upperParameter (t : I) : I :=
+  ⟨max 0 (2 * (t : ℝ) - 1), ⟨le_max_left _ _,
+    max_le (by norm_num) (by linarith [t.property.2])⟩⟩
+
+private def foldedSuspension : C(Z × I, FiniteSimplicialJoin.OrdinaryJoin Z Bool) where
+  toFun p := if (p.2 : ℝ) ≤ 1 / 2 then
+    Quotient.mk _ (p.1, false, lowerParameter p.2)
+    else Quotient.mk _ (p.1, true, upperParameter p.2)
+  continuous_toFun := by
+    apply Continuous.if_le
+      (continuous_quotient_mk'.comp (continuous_fst.prodMk
+        (continuous_const.prodMk (by dsimp [lowerParameter]; fun_prop))))
+      (continuous_quotient_mk'.comp (continuous_fst.prodMk
+        (continuous_const.prodMk (by dsimp [upperParameter]; fun_prop))))
+      (continuous_subtype_val.comp continuous_snd) continuous_const
+    intro p hp
+    change (p.2 : ℝ) = 1 / 2 at hp
+    apply Quotient.sound
+    have hl : lowerParameter p.2 = 0 := by apply Subtype.ext; simp [lowerParameter, hp]
+    have hu : upperParameter p.2 = 0 := by apply Subtype.ext; simp [upperParameter, hp]
+    exact ⟨hl.trans hu.symm, Or.inr rfl, Or.inl hl⟩
+
+private theorem foldedSuspension_zero (z w : Z) :
+    foldedSuspension (z, (0 : I)) = foldedSuspension (w, (0 : I)) := by
+  change (if _ then _ else _) = (if _ then _ else _)
+  norm_num
+  apply Quotient.sound
+  exact ⟨rfl, Or.inl (Subtype.ext (by norm_num [lowerParameter])), Or.inr rfl⟩
+
+private theorem foldedSuspension_one (z w : Z) :
+    foldedSuspension (z, (1 : I)) = foldedSuspension (w, (1 : I)) := by
+  change (if _ then _ else _) = (if _ then _ else _)
+  norm_num
+  apply Quotient.sound
+  exact ⟨rfl, Or.inl (Subtype.ext (by norm_num [upperParameter])), Or.inr rfl⟩
+
+private def coneToSuspension : C(TopologicalCone Z, FiniteSimplicialJoin.OrdinaryJoin Z Bool) where
+  toFun := Quotient.lift (fun p => foldedSuspension (p.2.1, p.2.2)) (by
+    rintro p q ⟨ht, _, hz⟩
+    rcases hz with hz | hz
+    · simpa only [hz, ← ht] using foldedSuspension_zero p.2.1 q.2.1
+    · rw [ht, hz])
+  continuous_toFun := (foldedSuspension.continuous.comp
+    (continuous_snd.fst.prodMk continuous_snd.snd)).quotient_lift _
+
+private def coneBaseToSuspension :
+    C(ConeBaseQuotient Z, FiniteSimplicialJoin.OrdinaryJoin Z Bool) where
+  toFun := Quotient.lift coneToSuspension (by
+    rintro x y (rfl | ⟨hx, hy⟩)
+    · rfl
+    · induction x using Quotient.inductionOn with
+      | h p =>
+        induction y using Quotient.inductionOn with
+        | h q =>
+          change p.2.2 = 1 at hx
+          change q.2.2 = 1 at hy
+          change foldedSuspension (p.2.1, p.2.2) = foldedSuspension (q.2.1, q.2.2)
+          rw [hx, hy]
+          exact foldedSuspension_one _ _)
+  continuous_toFun := coneToSuspension.continuous.quotient_lift _
+
+private theorem coneBase_roundtrip (x : ConeBaseQuotient Z) :
+    suspensionToConeBase (coneBaseToSuspension x) = x := by
+  induction x using Quotient.inductionOn with
+  | h x =>
+    induction x using Quotient.inductionOn with
+    | h p =>
+      rcases p with ⟨⟨⟩, z, t⟩
+      change suspensionToConeBase (foldedSuspension (z, t)) = coneClass z t
+      change suspensionToConeBase (if _ then _ else _) = _
+      split_ifs with ht
+      · change coneClass z (halfParameter false (lowerParameter t)) = coneClass z t
+        have h : halfParameter false (lowerParameter t) = t := by
+          apply Subtype.ext
+          dsimp [halfParameter, lowerParameter]
+          rw [max_eq_right (by linarith)]
+          ring
+        rw [h]
+      · change coneClass z (halfParameter true (upperParameter t)) = coneClass z t
+        have h : halfParameter true (upperParameter t) = t := by
+          apply Subtype.ext
+          dsimp [halfParameter, upperParameter]
+          rw [max_eq_right (by linarith)]
+          ring
+        rw [h]
+
+private theorem suspension_roundtrip (x : FiniteSimplicialJoin.OrdinaryJoin Z Bool) :
+    coneBaseToSuspension (suspensionToConeBase x) = x := by
+  induction x using Quotient.inductionOn with
+  | h p =>
+    rcases p with ⟨z, b, t⟩
+    change foldedSuspension (z, halfParameter b t) = Quotient.mk _ (z, b, t)
+    cases b
+    · have ht : (halfParameter false t : ℝ) ≤ 1 / 2 := by
+        dsimp [halfParameter]; linarith [t.property.1]
+      change (if _ then _ else _) = _
+      rw [if_pos ht]
+      apply Quotient.sound
+      refine ⟨?_, Or.inr rfl, Or.inr rfl⟩
+      apply Subtype.ext
+      dsimp [lowerParameter, halfParameter]
+      have h : 1 - 2 * ((1 + -1 * (t : ℝ)) / 2) = (t : ℝ) := by ring
+      rw [h, max_eq_right t.property.1]
+    · change (if _ then _ else _) = _
+      split_ifs with ht
+      · have hz : t = 0 := by
+          apply Subtype.ext
+          dsimp [halfParameter] at ht
+          change (t : ℝ) = 0
+          linarith [t.property.1]
+        subst t
+        apply Quotient.sound
+        exact ⟨Subtype.ext (by norm_num [lowerParameter, halfParameter]), Or.inr rfl,
+          Or.inl (Subtype.ext (by norm_num [lowerParameter, halfParameter]))⟩
+      · apply Quotient.sound
+        refine ⟨?_, Or.inr rfl, Or.inr rfl⟩
+        apply Subtype.ext
+        dsimp [upperParameter, halfParameter]
+        have h : 2 * ((1 + 1 * (t : ℝ)) / 2) - 1 = (t : ℝ) := by ring
+        rw [h, max_eq_right t.property.1]
+
+/-- Cone/base is the actual unreduced suspension, with both continuous inverse maps. -/
+private def coneBaseSuspensionHomeomorph :
+    ConeBaseQuotient Z ≃ₜ FiniteSimplicialJoin.OrdinaryJoin Z Bool where
+  toFun := coneBaseToSuspension
+  invFun := suspensionToConeBase
+  left_inv := coneBase_roundtrip
+  right_inv := suspension_roundtrip
+  continuous_toFun := coneBaseToSuspension.continuous
+  continuous_invFun := suspensionToConeBase.continuous
+
+private theorem coneBase_north (x : TopologicalCone Z) (hx : coneHeight x = 1) (z : Z) :
+    coneBaseSuspensionHomeomorph (Quotient.mk _ x) =
+      Quotient.mk (FiniteSimplicialJoin.ordinaryJoinSetoid Z Bool) (z, true, (1 : I)) := by
+  induction x using Quotient.inductionOn with
+  | h p =>
+    change p.2.2 = 1 at hx
+    change foldedSuspension (p.2.1, p.2.2) = _
+    rw [hx, foldedSuspension_one p.2.1 z]
+    change (if _ then _ else _) = _
+    norm_num
+    exact congrArg (fun t : I => Quotient.mk
+      (FiniteSimplicialJoin.ordinaryJoinSetoid Z Bool) (z, true, t))
+      (Subtype.ext (by norm_num [upperParameter]))
+
+end ConeBaseSuspension
+
 section TwoPoints
 
 /-- The two-point complex has singleton faces only. -/
@@ -925,7 +1139,230 @@ private theorem based_normalization {V : Type*} [Fintype V] [DecidableEq V]
     e.toFun e.invFun e.left_inv.some e.right_inv.some (normalPath m b z)
   exact ⟨m, hm, b, i, ⟨E⟩⟩
 
+section VertexGluing
+
+variable {V W : Type*} [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
+
+private abbrev GluedVertices (a : V) (b : W) := FiniteConeUnionWedge.Wedge a b
+
+private instance (a : V) (b : W) : Fintype (GluedVertices a b) := Fintype.ofFinite _
+private instance (a : V) (b : W) : DecidableEq (GluedVertices a b) := Classical.decEq _
+
+private def glueLeft (a : V) (b : W) : V ↪ GluedVertices a b where
+  toFun v := Quotient.mk _ (Sum.inl v)
+  inj' := by
+    intro v w h
+    have h := Quotient.exact h
+    change (Sum.inl v = Sum.inl w ∨
+      ((Sum.inl v = Sum.inl a ∨ Sum.inl v = Sum.inr b) ∧
+      (Sum.inl w = Sum.inl a ∨ Sum.inl w = Sum.inr b))) at h
+    simp only [Sum.inl.injEq, Sum.inl_ne_inr, or_false] at h
+    exact h.elim id (fun h => h.1.trans h.2.symm)
+
+private def glueRight (a : V) (b : W) : W ↪ GluedVertices a b where
+  toFun w := Quotient.mk _ (Sum.inr w)
+  inj' := by
+    intro v w h
+    have h := Quotient.exact h
+    change (Sum.inr v = Sum.inr w ∨
+      ((Sum.inr v = Sum.inl a ∨ Sum.inr v = Sum.inr b) ∧
+      (Sum.inr w = Sum.inl a ∨ Sum.inr w = Sum.inr b))) at h
+    simp only [Sum.inr.injEq, Sum.inr_ne_inl, false_or] at h
+    exact h.elim id (fun h => h.1.trans h.2.symm)
+
+private theorem glue_cross (a : V) (b : W) (v : V) (w : W) :
+    glueLeft a b v = glueRight a b w ↔ v = a ∧ w = b := by
+  change Quotient.mk _ (Sum.inl v) = Quotient.mk _ (Sum.inr w) ↔ _
+  rw [Quotient.eq]
+  change (Sum.inl v = Sum.inr w ∨
+    ((Sum.inl v = Sum.inl a ∨ Sum.inl v = Sum.inr b) ∧
+    (Sum.inr w = Sum.inl a ∨ Sum.inr w = Sum.inr b))) ↔ _
+  simp
+
+private def vertexGluing (K : PreAbstractSimplicialComplex V)
+    (L : PreAbstractSimplicialComplex W) (a : V) (b : W) :
+    PreAbstractSimplicialComplex (GluedVertices a b) :=
+  K.map (glueLeft a b) ⊔ L.map (glueRight a b)
+
+private def gluedLeft (K : PreAbstractSimplicialComplex V)
+    (L : PreAbstractSimplicialComplex W) (a : V) (b : W) :
+    C(FiniteSimplicialJoin.Space K, FiniteSimplicialJoin.Space (vertexGluing K L a b)) :=
+  (FiniteConeUnionWedge.realizationInclusion le_sup_left).comp
+    ⟨coordinateHomeomorph K (glueLeft a b), (coordinateHomeomorph K (glueLeft a b)).continuous⟩
+
+private def gluedRight (K : PreAbstractSimplicialComplex V)
+    (L : PreAbstractSimplicialComplex W) (a : V) (b : W) :
+    C(FiniteSimplicialJoin.Space L, FiniteSimplicialJoin.Space (vertexGluing K L a b)) :=
+  (FiniteConeUnionWedge.realizationInclusion le_sup_right).comp
+    ⟨coordinateHomeomorph L (glueRight a b), (coordinateHomeomorph L (glueRight a b)).continuous⟩
+
+private theorem gluedLeft_injective (K : PreAbstractSimplicialComplex V)
+    (L : PreAbstractSimplicialComplex W) (a : V) (b : W) :
+    Function.Injective (gluedLeft K L a b) := by
+  intro x y h
+  apply (coordinateHomeomorph K (glueLeft a b)).injective
+  exact Subtype.ext (congrArg (fun z : FiniteSimplicialJoin.Space
+    (vertexGluing K L a b) => z.val) h)
+
+private theorem gluedRight_injective (K : PreAbstractSimplicialComplex V)
+    (L : PreAbstractSimplicialComplex W) (a : V) (b : W) :
+    Function.Injective (gluedRight K L a b) := by
+  intro x y h
+  apply (coordinateHomeomorph L (glueRight a b)).injective
+  exact Subtype.ext (congrArg (fun z : FiniteSimplicialJoin.Space
+    (vertexGluing K L a b) => z.val) h)
+
+private theorem glued_bases (K : PreAbstractSimplicialComplex V)
+    (L : PreAbstractSimplicialComplex W) (a : V) (b : W)
+    (ha : ({a} : Finset V) ∈ K) (hb : ({b} : Finset W) ∈ L) :
+    gluedLeft K L a b (FiniteVertexCylinder.vertexPoint K a ha) =
+      gluedRight K L a b (FiniteVertexCylinder.vertexPoint L b hb) := by
+  apply Subtype.ext
+  change coordinateLinear (glueLeft a b) (Pi.single a 1) =
+    coordinateLinear (glueRight a b) (Pi.single b 1)
+  rw [coordinateLinear_single, coordinateLinear_single, (glue_cross a b a b).mpr ⟨rfl, rfl⟩]
+
+private theorem glued_intersection (K : PreAbstractSimplicialComplex V)
+    (L : PreAbstractSimplicialComplex W) (a : V) (b : W)
+    (ha : ({a} : Finset V) ∈ K) (hb : ({b} : Finset W) ∈ L)
+    (x : FiniteSimplicialJoin.Space K) (y : FiniteSimplicialJoin.Space L)
+    (h : gluedLeft K L a b x = gluedRight K L a b y) :
+    x = FiniteVertexCylinder.vertexPoint K a ha ∧
+      y = FiniteVertexCylinder.vertexPoint L b hb := by
+  have hx : x = FiniteVertexCylinder.vertexPoint K a ha := by
+    apply coordinates_eq_vertex x a ha
+    intro v hv
+    have he := congrArg (fun z : FiniteSimplicialJoin.Space (vertexGluing K L a b) =>
+      z.val (glueLeft a b v)) h
+    have hz : coordinateLinear (glueRight a b) y.val (glueLeft a b v) = 0 := by
+      apply Finset.sum_eq_zero
+      intro w _
+      have hn : glueRight a b w ≠ glueLeft a b v :=
+        fun hh => hv ((glue_cross a b v w).mp hh.symm).1
+      simp [hn]
+    change coordinateLinear (glueLeft a b) x.val (glueLeft a b v) =
+      coordinateLinear (glueRight a b) y.val (glueLeft a b v) at he
+    rwa [coordinateLinear_at, hz] at he
+  refine ⟨hx, gluedRight_injective K L a b ?_⟩
+  rw [← h, hx, glued_bases K L a b ha hb]
+
+private def gluingSum (K : PreAbstractSimplicialComplex V)
+    (L : PreAbstractSimplicialComplex W) (a : V) (b : W) :
+    C(FiniteSimplicialJoin.Space K ⊕ FiniteSimplicialJoin.Space L,
+      FiniteSimplicialJoin.Space (vertexGluing K L a b)) :=
+  ⟨Sum.elim (gluedLeft K L a b) (gluedRight K L a b),
+    (gluedLeft K L a b).continuous.sumElim (gluedRight K L a b).continuous⟩
+
+private theorem gluingSum_surjective (K : PreAbstractSimplicialComplex V)
+    (L : PreAbstractSimplicialComplex W) (a : V) (b : W) :
+    Function.Surjective (gluingSum K L a b) := by
+  intro z
+  obtain ⟨s, hs, hz⟩ := z.property
+  rcases hs with hs | hs
+  · let w : FiniteSimplicialJoin.Space (K.map (glueLeft a b)) := ⟨z.val, s, hs, hz⟩
+    refine ⟨Sum.inl ((coordinateHomeomorph K (glueLeft a b)).symm w), ?_⟩
+    apply Subtype.ext
+    exact congrArg (fun z : FiniteSimplicialJoin.Space (K.map (glueLeft a b)) => z.val)
+      ((coordinateHomeomorph K (glueLeft a b)).apply_symm_apply w)
+  · let w : FiniteSimplicialJoin.Space (L.map (glueRight a b)) := ⟨z.val, s, hs, hz⟩
+    refine ⟨Sum.inr ((coordinateHomeomorph L (glueRight a b)).symm w), ?_⟩
+    apply Subtype.ext
+    exact congrArg (fun z : FiniteSimplicialJoin.Space (L.map (glueRight a b)) => z.val)
+      ((coordinateHomeomorph L (glueRight a b)).apply_symm_apply w)
+
+private theorem gluingSum_kernel (K : PreAbstractSimplicialComplex V)
+    (L : PreAbstractSimplicialComplex W) (a : V) (b : W)
+    (ha : ({a} : Finset V) ∈ K) (hb : ({b} : Finset W) ∈ L)
+    (x y : FiniteSimplicialJoin.Space K ⊕ FiniteSimplicialJoin.Space L) :
+    (FiniteConeUnionWedge.subsetSetoid (FiniteConeUnionWedge.wedgePoints
+      (FiniteVertexCylinder.vertexPoint K a ha) (FiniteVertexCylinder.vertexPoint L b hb))).r
+      x y ↔ gluingSum K L a b x = gluingSum K L a b y := by
+  constructor
+  · rintro (rfl | ⟨hx, hy⟩)
+    · rfl
+    · have h (z) (hz : z ∈ FiniteConeUnionWedge.wedgePoints
+          (FiniteVertexCylinder.vertexPoint K a ha) (FiniteVertexCylinder.vertexPoint L b hb)) :
+          gluingSum K L a b z = gluedLeft K L a b (FiniteVertexCylinder.vertexPoint K a ha) := by
+        rcases hz with rfl | rfl
+        · rfl
+        · exact (glued_bases K L a b ha hb).symm
+      exact (h x hx).trans (h y hy).symm
+  · intro h
+    rcases x with x | x <;> rcases y with y | y
+    · exact Or.inl (congrArg Sum.inl (gluedLeft_injective K L a b h))
+    · obtain ⟨rfl, rfl⟩ := glued_intersection K L a b ha hb x y h
+      exact Or.inr ⟨Or.inl rfl, Or.inr rfl⟩
+    · obtain ⟨rfl, rfl⟩ := glued_intersection K L a b ha hb y x h.symm
+      exact Or.inr ⟨Or.inr rfl, Or.inl rfl⟩
+    · exact Or.inl (congrArg Sum.inr (gluedRight_injective K L a b h))
+
+/-- The quotient wedge is homeomorphic to the actual finite coordinate vertex gluing. -/
+private def vertexGluingHomeomorph (K : PreAbstractSimplicialComplex V)
+    (L : PreAbstractSimplicialComplex W) (a : V) (b : W)
+    (ha : ({a} : Finset V) ∈ K) (hb : ({b} : Finset W) ∈ L) :
+    FiniteConeUnionWedge.Wedge (FiniteVertexCylinder.vertexPoint K a ha)
+      (FiniteVertexCylinder.vertexPoint L b hb) ≃ₜ
+      FiniteSimplicialJoin.Space (vertexGluing K L a b) := by
+  letI := FiniteSimplicialJoin.realizationCompactSpace K
+  letI := FiniteSimplicialJoin.realizationCompactSpace L
+  have hq : IsQuotientMap (gluingSum K L a b) :=
+    (gluingSum K L a b).continuous.isClosedMap.isQuotientMap
+      (gluingSum K L a b).continuous (gluingSum_surjective K L a b)
+  exact (Homeomorph.Quotient.congrRight (gluingSum_kernel K L a b ha hb)).trans
+    (Topology.IsQuotientMap.homeomorph (f := gluingSum K L a b) hq)
+
+end VertexGluing
+
 section ConeCovers
+
+private def wedgeSubsingletonHomeomorph {X Y : Type*}
+    [TopologicalSpace X] [TopologicalSpace Y] [Subsingleton Y] (a : X) (b : Y) :
+    FiniteConeUnionWedge.Wedge a b ≃ₜ X := by
+  let f : X ⊕ Y → X := Sum.elim id (fun _ => a)
+  have hc : Continuous f := continuous_id.sumElim continuous_const
+  have hq : IsQuotientMap f := IsQuotientMap.of_inverse continuous_inl hc (fun _ => rfl)
+  refine (Homeomorph.Quotient.congrRight (r' := Setoid.ker f) ?_).trans
+    (Topology.IsQuotientMap.homeomorph (f := ⟨f, hc⟩) hq)
+  intro z w
+  change (z = w ∨
+    ((z = Sum.inl a ∨ z = Sum.inr b) ∧ (w = Sum.inl a ∨ w = Sum.inr b))) ↔ f z = f w
+  rcases z with x | y <;> rcases w with x' | y'
+  · simp [f]
+    intro hx hx'
+    exact hx.trans hx'.symm
+  · have hy : y' = b := Subsingleton.elim _ _
+    simp [f, hy]
+  · have hy : y = b := Subsingleton.elim _ _
+    simp [f, hy, eq_comm]
+  · have hy : y = y' := Subsingleton.elim _ _
+    simp [f, hy]
+
+private def wedgeHomeomorph {X Y X' Y' : Type*}
+    [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace X'] [TopologicalSpace Y']
+    (a : X) (b : Y) (e : X ≃ₜ X') (d : Y ≃ₜ Y') :
+    FiniteConeUnionWedge.Wedge a b ≃ₜ FiniteConeUnionWedge.Wedge (e a) (d b) := by
+  apply Homeomorph.Quotient.congr (e.sumCongr d)
+  intro x y
+  have h (w : X ⊕ Y) :
+      (e.sumCongr d) w ∈ FiniteConeUnionWedge.wedgePoints (e a) (d b) ↔
+        w ∈ FiniteConeUnionWedge.wedgePoints a b := by
+    cases w <;> simp [FiniteConeUnionWedge.wedgePoints, Homeomorph.sumCongr,
+      e.injective.eq_iff, d.injective.eq_iff]
+  change (x = y ∨ (_ ∧ _)) ↔ (_ = _ ∨ (_ ∧ _))
+  rw [(e.sumCongr d).injective.eq_iff, h x, h y]
+
+private def coverCollapseRightHomeomorph {X Y Z : Type*}
+    [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace Z]
+    {a : X} {b : Y} {C : Set Z}
+    (P : FiniteConeUnionWedge.CollapseCover a b C)
+    (hY : ∀ y, P.right y ∈ C) :
+    FiniteConeUnionWedge.Collapse C ≃ₜ
+      FiniteConeUnionWedge.Collapse (P.left ⁻¹' C) := by
+  letI : Subsingleton (FiniteConeUnionWedge.Collapse (P.right ⁻¹' C)) :=
+    ⟨fun x y => Quotient.inductionOn₂ x y
+      (fun x y => Quotient.sound (Or.inr ⟨hY x, hY y⟩))⟩
+  exact P.quotientWedgeHomeomorph.symm.trans
+    (wedgeSubsingletonHomeomorph (Quotient.mk _ a) (Quotient.mk _ b))
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -984,6 +1421,20 @@ private def coneCoverEquiv (X Y C : PreAbstractSimplicialComplex V)
     ⟨X ⊔ Y, C, hC, a, haC, hcone⟩
   let P := finiteConeCover X Y C a b ha hb haC hbC hXY
   exact Q.collapseEquiv.trans P.quotientWedgeHomeomorph.symm.toHomotopyEquiv
+
+/-- Collapsing a whole closed summand leaves the other summand modulo their actual intersection.
+No contractibility of either summand or of the intersection is used. -/
+private def unionCollapseRightHomeomorph (X Y : PreAbstractSimplicialComplex V)
+    (a : V) (haX : ({a} : Finset V) ∈ X) (haY : ({a} : Finset V) ∈ Y) :
+    FiniteConeUnionWedge.Collapse
+      {z : FiniteSimplicialJoin.Space (X ⊔ Y) |
+        z.val ∈ FiniteConeCollapse.realization Y} ≃ₜ
+      FiniteConeUnionWedge.Collapse
+        {x : FiniteSimplicialJoin.Space X |
+          x.val ∈ FiniteConeCollapse.realization Y} :=
+  coverCollapseRightHomeomorph
+    (finiteConeCover X Y Y a a haX haY haY haY inf_le_right)
+    (fun y => y.property)
 
 end ConeCovers
 
@@ -1057,6 +1508,201 @@ private theorem join_vertex_cone (Z : PreAbstractSimplicialComplex W) (a : V) :
       rw [hl]; simp
   · simpa only [Finset.toRight_insert_inl] using hr
 
+private theorem vertexSpace_eq (a : V) (x : FiniteSimplicialJoin.Space (vertexComplex a)) :
+    x.val = Pi.single a 1 := by
+  obtain ⟨s, hs, hx⟩ := x.property
+  change s = {a} at hs
+  rw [hs, ← FiniteConeCollapse.faceSimplex_eq_convexHull] at hx
+  exact singleton_coordinates a hx
+
+private def vertexSpaceHomeomorph (a : V) :
+    FiniteSimplicialJoin.Space (vertexComplex a) ≃ₜ Unit where
+  toFun _ := ()
+  invFun _ := FiniteVertexCylinder.vertexPoint (vertexComplex a) a rfl
+  left_inv x := Subtype.ext (vertexSpace_eq a x).symm
+  right_inv _ := rfl
+  continuous_toFun := continuous_const
+  continuous_invFun := continuous_const
+
+private def nativeConeHomeomorph (Z : PreAbstractSimplicialComplex W)
+    (a : V) (z : FiniteSimplicialJoin.Space Z) :
+    FiniteSimplicialJoin.Space
+      (FiniteSimplicialJoin.simplicialJoin (vertexComplex a) Z) ≃ₜ
+      TopologicalCone (FiniteSimplicialJoin.Space Z) :=
+  (FiniteSimplicialJoin.joinHomeomorph (vertexComplex a) Z
+    ⟨FiniteVertexCylinder.vertexPoint _ a rfl⟩ ⟨z⟩).symm.trans
+    (joinHomeomorph (vertexSpaceHomeomorph a) (Homeomorph.refl _))
+
+private theorem join_base_mem (Z : PreAbstractSimplicialComplex W)
+    (z : FiniteSimplicialJoin.Space Z) :
+    (Sum.elim (fun _ : V => (0 : ℝ)) z.val) ∈
+      FiniteConeCollapse.realization
+        (FiniteSimplicialJoin.simplicialJoin (⊥ : PreAbstractSimplicialComplex V) Z) := by
+  obtain ⟨s, hs, hz⟩ := z.property
+  rw [← FiniteConeCollapse.faceSimplex_eq_convexHull] at hz
+  refine ⟨(∅ : Finset V).disjSum s, ?_, ?_⟩
+  · refine ⟨?_, Or.inl Finset.toLeft_disjSum,
+      Or.inr (by simpa only [Finset.toRight_disjSum] using hs)⟩
+    obtain ⟨w, hw⟩ := (Z.isRelLowerSet_faces hs).1
+    exact ⟨Sum.inr w, by simpa using hw⟩
+  · rw [← FiniteConeCollapse.faceSimplex_eq_convexHull]
+    refine ⟨?_, ?_, ?_⟩
+    · intro v; cases v with
+      | inl v => exact le_refl 0
+      | inr w => exact hz.1 w
+    · simpa only [Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr,
+        Finset.sum_const_zero, zero_add] using hz.2.1
+    · intro v hv
+      cases v with
+      | inl v => rfl
+      | inr w => exact hz.2.2 w (by simpa using hv)
+
+private theorem nativeCone_base (Z : PreAbstractSimplicialComplex W)
+    (a : V) (z : FiniteSimplicialJoin.Space Z)
+    (x : FiniteSimplicialJoin.Space
+      (FiniteSimplicialJoin.simplicialJoin (vertexComplex a) Z)) :
+    x.val ∈ FiniteConeCollapse.realization
+      (FiniteSimplicialJoin.simplicialJoin (⊥ : PreAbstractSimplicialComplex V) Z) ↔
+      coneHeight (nativeConeHomeomorph Z a z x) = 1 := by
+  let e := FiniteSimplicialJoin.joinHomeomorph (vertexComplex a) Z
+    ⟨FiniteVertexCylinder.vertexPoint _ a rfl⟩ ⟨z⟩
+  obtain ⟨p, rfl⟩ := e.surjective x
+  induction p using Quotient.inductionOn with
+  | h p =>
+    have hr : coneHeight (nativeConeHomeomorph Z a z (e (Quotient.mk _ p))) = p.2.2 := by
+      change coneHeight ((joinHomeomorph (vertexSpaceHomeomorph a) (Homeomorph.refl _))
+        (e.symm (e (Quotient.mk _ p)))) = _
+      rw [e.symm_apply_apply]
+      rfl
+    rw [hr]
+    change FiniteSimplicialJoin.representative (vertexComplex a) Z p ∈ _ ↔ _
+    constructor
+    · rintro ⟨s, hs, hx⟩
+      rw [← FiniteConeCollapse.faceSimplex_eq_convexHull] at hx
+      have hl : s.toLeft = ∅ := hs.2.1.resolve_right (fun h => h)
+      have hn : Sum.inl a ∉ s := by
+        simpa only [Finset.mem_toLeft] using
+          (show a ∉ s.toLeft by rw [hl]; simp)
+      have hcoord := hx.2.2 (Sum.inl a) hn
+      have hpa : p.1.val a = 1 := by rw [vertexSpace_eq a p.1]; simp
+      change (1 - (p.2.2 : ℝ)) * p.1.val a = 0 at hcoord
+      apply Subtype.ext
+      change (p.2.2 : ℝ) = 1
+      rw [hpa] at hcoord
+      linarith
+    · intro ht
+      have he : FiniteSimplicialJoin.representative (vertexComplex a) Z p =
+          Sum.elim (fun _ : V => (0 : ℝ)) p.2.1.val := by
+        ext v; cases v <;> simp [FiniteSimplicialJoin.representative, ht]
+      rw [he]
+      exact join_base_mem Z p.2.1
+
+private def nativeConeBaseHomeomorph (Z : PreAbstractSimplicialComplex W)
+    (a : V) (z : FiniteSimplicialJoin.Space Z) :
+    FiniteConeUnionWedge.Collapse
+      {x : FiniteSimplicialJoin.Space
+        (FiniteSimplicialJoin.simplicialJoin (vertexComplex a) Z) |
+        x.val ∈ FiniteConeCollapse.realization
+          (FiniteSimplicialJoin.simplicialJoin (⊥ : PreAbstractSimplicialComplex V) Z)} ≃ₜ
+      FiniteSimplicialJoin.OrdinaryJoin (FiniteSimplicialJoin.Space Z) Bool :=
+  (Homeomorph.Quotient.congr (nativeConeHomeomorph Z a z) (by
+    intro x y
+    change (x = y ∨ (_ ∧ _)) ↔ (_ = _ ∨ (_ ∧ _))
+    simp only [Set.mem_setOf_eq]
+    rw [(nativeConeHomeomorph Z a z).injective.eq_iff,
+      nativeCone_base Z a z x, nativeCone_base Z a z y])).trans
+    coneBaseSuspensionHomeomorph
+
+private theorem realization_pullback_intersection
+    (X Y D : PreAbstractSimplicialComplex (V ⊕ W)) (h : X ⊓ Y = D) :
+    {x : FiniteSimplicialJoin.Space X | x.val ∈ FiniteConeCollapse.realization Y} =
+      {x : FiniteSimplicialJoin.Space X | x.val ∈ FiniteConeCollapse.realization D} := by
+  ext x
+  rw [← h, FiniteConeUnionWedge.realization_intersection]
+  exact ⟨fun hy => ⟨x.property, hy⟩, fun hxy => hxy.2⟩
+
+/-- The auxiliary cone quotient is the other join with precisely its base collapsed. -/
+private def auxiliaryConeQuotientHomeomorph
+    (N : PreAbstractSimplicialComplex V) (Z : PreAbstractSimplicialComplex W)
+    (d : V) (hNd : N ⊓ vertexComplex d = ⊥)
+    (b : W) (hb : ({b} : Finset W) ∈ Z) :
+    FiniteConeUnionWedge.Collapse
+      {z : FiniteSimplicialJoin.Space
+          (FiniteSimplicialJoin.simplicialJoin N Z ⊔
+            FiniteSimplicialJoin.simplicialJoin (vertexComplex d) Z) |
+        z.val ∈ FiniteConeCollapse.realization
+          (FiniteSimplicialJoin.simplicialJoin (vertexComplex d) Z)} ≃ₜ
+      FiniteConeUnionWedge.Collapse
+        {y : FiniteSimplicialJoin.Space (FiniteSimplicialJoin.simplicialJoin N Z) |
+          y.val ∈ FiniteConeCollapse.realization
+            (FiniteSimplicialJoin.simplicialJoin (⊥ : PreAbstractSimplicialComplex V) Z)} := by
+  refine (unionCollapseRightHomeomorph _ _ (Sum.inr b)
+    (join_right_vertex N Z b hb)
+    (join_right_vertex (vertexComplex d) Z b hb)).trans ?_
+  apply Homeomorph.Quotient.congrRight
+  have h := realization_pullback_intersection _ _ _ (disjoint_join_overlap N _ Z hNd)
+  intro x y
+  rw [h]
+
+/-- The auxiliary space is collapsed along either of two actual cones.
+The remaining cone modulo its base is identified by its actual suspension homeomorphism. -/
+private def auxiliaryBaseSplit (N : PreAbstractSimplicialComplex V)
+    (Z : PreAbstractSimplicialComplex W)
+    (d : V) (hNd : N ⊓ vertexComplex d = ⊥)
+    (v : V) (hv : ({v} : Finset V) ∈ N)
+    (b : W) (hb : ({b} : Finset W) ∈ Z) :
+    Σ y : FiniteSimplicialJoin.OrdinaryJoin (FiniteSimplicialJoin.Space Z) Bool,
+      FiniteConeUnionWedge.Collapse
+        {x : FiniteSimplicialJoin.Space (FiniteSimplicialJoin.simplicialJoin N Z) |
+          x.val ∈ FiniteConeCollapse.realization
+            (FiniteSimplicialJoin.simplicialJoin (⊥ : PreAbstractSimplicialComplex V) Z)} ≃ₕ
+        FiniteConeUnionWedge.Wedge
+          (Quotient.mk (FiniteConeUnionWedge.subsetSetoid
+            {x : FiniteSimplicialJoin.Space (FiniteSimplicialJoin.simplicialJoin N Z) |
+              x.val ∈ FiniteConeCollapse.realization
+                (FiniteSimplicialJoin.simplicialJoin (vertexComplex v) Z)})
+            (FiniteVertexCylinder.vertexPoint _ _ (join_left_vertex N Z v hv))) y := by
+  let X := FiniteSimplicialJoin.simplicialJoin N Z
+  let D := FiniteSimplicialJoin.simplicialJoin (vertexComplex d) Z
+  let C := FiniteSimplicialJoin.simplicialJoin (vertexComplex v) Z
+  let B := FiniteSimplicialJoin.simplicialJoin (⊥ : PreAbstractSimplicialComplex V) Z
+  have hCX : C ≤ X := join_mono_left (vertexComplex_le N v hv) Z
+  have hXD : X ⊓ D ≤ C := by
+    rw [disjoint_join_overlap N (vertexComplex d) Z hNd]
+    exact join_mono_left bot_le Z
+  have hdv : vertexComplex d ⊓ vertexComplex v = ⊥ := by
+    apply le_antisymm _ bot_le
+    intro s hs
+    have h : s ∈ N ⊓ vertexComplex d :=
+      ⟨vertexComplex_le N v hv hs.2, hs.1⟩
+    exact hNd ▸ h
+  have hDC : D ⊓ C = B := disjoint_join_overlap _ _ Z hdv
+  let Q : FiniteConeCollapse.ConePair (V ⊕ W) :=
+    ⟨X ⊔ D, D, le_sup_right, Sum.inl d,
+      join_left_vertex (vertexComplex d) Z d rfl, join_vertex_cone Z d⟩
+  let A := auxiliaryConeQuotientHomeomorph N Z d hNd b hb
+  let E : FiniteConeUnionWedge.Collapse
+      {x : FiniteSimplicialJoin.Space D | x.val ∈ FiniteConeCollapse.realization C} ≃ₜ
+      FiniteSimplicialJoin.OrdinaryJoin (FiniteSimplicialJoin.Space Z) Bool :=
+    (Homeomorph.Quotient.congrRight (by
+      intro x y
+      have h := realization_pullback_intersection D C B hDC
+      change (x = y ∨ (_ ∧ _)) ↔ (x = y ∨ (_ ∧ _))
+      rw [h])).trans
+      (nativeConeBaseHomeomorph Z d (FiniteVertexCylinder.vertexPoint Z b hb))
+  let xa := FiniteVertexCylinder.vertexPoint X (Sum.inl v) (join_left_vertex N Z v hv)
+  let yb := FiniteVertexCylinder.vertexPoint D (Sum.inr b)
+    (join_right_vertex (vertexComplex d) Z b hb)
+  let e := coneCoverEquiv X D C (Sum.inl v) (Sum.inr b)
+    (join_left_vertex N Z v hv) (join_right_vertex (vertexComplex d) Z b hb)
+    (join_left_vertex (vertexComplex v) Z v rfl)
+    (join_right_vertex (vertexComplex v) Z b hb)
+    (hCX.trans le_sup_left) hXD (join_vertex_cone Z v)
+  refine ⟨E (Quotient.mk _ yb), ?_⟩
+  exact (A.symm.toHomotopyEquiv.trans Q.collapseEquiv.symm).trans
+    (e.trans (wedgeHomeomorph (Quotient.mk _ xa) (Quotient.mk _ yb)
+      (Homeomorph.refl _) E).toHomotopyEquiv)
+
 /-- The first actual two-component split collapses `a*Z`, and retains the right base quotient. -/
 private def disjointJoinConeSplit (M N : PreAbstractSimplicialComplex V)
     (Z : PreAbstractSimplicialComplex W) (hMN : M ⊓ N = ⊥)
@@ -1087,6 +1733,43 @@ private def disjointJoinConeSplit (M N : PreAbstractSimplicialComplex V)
     (join_right_vertex (vertexComplex a) Z b hb)
     (hCX.trans le_sup_left) hXY (join_vertex_cone Z a)
 
+private theorem join_intersection (M N : PreAbstractSimplicialComplex V)
+    (Z : PreAbstractSimplicialComplex W) :
+    FiniteSimplicialJoin.simplicialJoin M Z ⊓ FiniteSimplicialJoin.simplicialJoin N Z =
+      FiniteSimplicialJoin.simplicialJoin (M ⊓ N) Z := by
+  apply SetLike.ext
+  intro s
+  change ((s.Nonempty ∧ (s.toLeft = ∅ ∨ s.toLeft ∈ M) ∧
+    (s.toRight = ∅ ∨ s.toRight ∈ Z)) ∧
+    (s.Nonempty ∧ (s.toLeft = ∅ ∨ s.toLeft ∈ N) ∧
+    (s.toRight = ∅ ∨ s.toRight ∈ Z))) ↔
+    (s.Nonempty ∧ (s.toLeft = ∅ ∨ (s.toLeft ∈ M ∧ s.toLeft ∈ N)) ∧
+    (s.toRight = ∅ ∨ s.toRight ∈ Z))
+  tauto
+
+/-- Distribution over two finite pieces uses their common actual cone in the join. -/
+private def vertexUnionJoinEquiv (M N : PreAbstractSimplicialComplex V)
+    (Z : PreAbstractSimplicialComplex W) (a : V)
+    (hMN : M ⊓ N = vertexComplex a) :
+    let haM := (show ({a} : Finset V) ∈ M from
+      (show ({a} : Finset V) ∈ M ⊓ N from by rw [hMN]; rfl).1)
+    let haN := (show ({a} : Finset V) ∈ N from
+      (show ({a} : Finset V) ∈ M ⊓ N from by rw [hMN]; rfl).2)
+    FiniteSimplicialJoin.Space (FiniteSimplicialJoin.simplicialJoin (M ⊔ N) Z) ≃ₕ
+      FiniteConeUnionWedge.Wedge
+        (FiniteVertexCylinder.vertexPoint _ _ (join_left_vertex M Z a haM))
+        (FiniteVertexCylinder.vertexPoint _ _ (join_left_vertex N Z a haN)) := by
+  rw [join_union]
+  let P : FiniteConeUnionWedge.ConeUnion (V ⊕ W) :=
+    { left := FiniteSimplicialJoin.simplicialJoin M Z
+      right := FiniteSimplicialJoin.simplicialJoin N Z
+      cone := FiniteSimplicialJoin.simplicialJoin (vertexComplex a) Z
+      intersection := by rw [join_intersection, hMN]
+      apex := Sum.inl a
+      apex_face := join_left_vertex (vertexComplex a) Z a rfl
+      cone_face := join_vertex_cone Z a }
+  exact P.homotopyEquiv
+
 end DisjointJoin
 
 #print axioms sphereHomeomorph
@@ -1094,5 +1777,10 @@ end DisjointJoin
 #print axioms normalHomeomorph
 #print axioms based_normalization
 #print axioms disjointJoinConeSplit
+#print axioms coneBaseSuspensionHomeomorph
+#print axioms nativeConeBaseHomeomorph
+#print axioms auxiliaryBaseSplit
+#print axioms vertexUnionJoinEquiv
+#print axioms vertexGluingHomeomorph
 
 end D5.S3.Geometry.FiniteComponentClosure
