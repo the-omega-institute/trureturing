@@ -171,7 +171,9 @@ abbrev arena : Arena where
     (∀ z : H, ‖C z-R.readout () A (C z)‖ ^ 2 =
       ∑ p ∈ A, M.real (cylinder p.val) * ‖C (S p.val z)‖ ^ 2) ∧
     (∀ c : ℝ, R.readout () A (constG c) = constG c) ∧
-    (∀ F : G, R.readout () A (Pi F) = Pi (R.readout () A F))
+    (∀ F : G, R.readout () A (Pi F) = Pi (R.readout () A F)) ∧
+    Module.finrank ℝ (V A) = A.card ∧
+    Module.finrank ℝ (V0 A) = A.card - 1
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => (0 : G)) (fun e => nomatch e)

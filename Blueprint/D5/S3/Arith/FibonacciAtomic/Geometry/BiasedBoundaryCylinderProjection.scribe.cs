@@ -13,6 +13,7 @@ internal sealed class BiasedBoundaryCylinderProjectionDocument : IScribeDocument
             Def("atomMean", "For a nonempty original address p, atomMean(p) is the inner product with the actual cylinder indicator, divided by the actual M mass of that cylinder. It is a continuous real functional on the original L2(M)."),
             Def("Q", "For a finite set A of original nonempty addresses, Q(A) is the sum over p in A of the actual cylinder indicator multiplied by atomMean(p). The operator is constructed as a finite sum of continuous linear maps."),
             Def("V", "V(A) is the real linear span in the original L2(M) of the actual indicators of the cylinders with addresses in A."),
+            Def("V0", "V0(A) is the kernel of the actual mean restricted to V(A). Its elements are exactly the vectors in the actual cylinder span whose original M mean is zero."),
             Describe.Lean(DescribeId.Create("biasedboundarycylinderprojection-average"),
                 DeclarationHandle.Create(Prefix + "cylinder_average_projection"), H("Normalized Means and Orthogonal Projection"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(
@@ -25,7 +26,8 @@ internal sealed class BiasedBoundaryCylinderProjectionDocument : IScribeDocument
                 StatementSource.FromAuthor(ResidualFormula()), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("Suppose the finite prefix-free family A covers every original infinite ray. For every p in A and every F in G, the conditional pullback of Q(A)F is the actual constant with value atomMean(p)(F). Consequently, for every original z in H, the conditional pullback of Cz minus Q(A)Cz equals exactly C(S(p)z).")),
                     Paragraph(Text("For every F in the original G, its squared norm equals the sum over A of the actual cylinder mass times the squared norm of its conditional pullback. Apply the measure-preserving identification with the normalized restriction separately on each cylinder, then sum the disjoint cylinder integrals over the covering partition. Applying this identity to Cz minus Q(A)Cz gives exactly the weighted sum of the squared norms of C(S(p)z).")),
-                    Paragraph(Text("The same constructed Q(A) fixes every actual constant and commutes with Pi. The constant identity follows by summing its actual atom values on the partition. Orthogonal symmetry then shows that Q(A) preserves the actual mean, and the formula for Pi gives commutation."))), DescribeRole.Theorem),
+                    Paragraph(Text("The same constructed Q(A) fixes every actual constant and commutes with Pi. The constant identity follows by summing its actual atom values on the partition. Orthogonal symmetry then shows that Q(A) preserves the actual mean, and the formula for Pi gives commutation.")),
+                    Paragraph(Text("The dimension of V(A) is exactly the number of addresses in A. Indeed applying each actual atom mean to a linear relation among the indicators extracts that indicator's coefficient, so the indicators are linearly independent. The actual mean restricted to V(A) is nonzero because the actual constant one lies in V(A) and has mean one. Rank-nullity therefore gives dimension card(A) minus one for the actual mean-zero subspace V0(A)."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("biasedboundarycylinderprojection-bound"),
                 DeclarationHandle.Create(Prefix + "bounded_partition_residual"), H("An Actual Mass Threshold Bound"),
                 StatementSource.FromAuthor(BoundFormula()), AssessedProvenance.FromRepo(), Blocks(
@@ -56,8 +58,10 @@ internal sealed class BiasedBoundaryCylinderProjectionDocument : IScribeDocument
             SumA(Seq(Call("mass",V("M"),Call("cylinder",p)),Cdot,SqNorm(Call("C",Call("S",p,z)))))));
         Formula constants=All("c",Call("Real"),Seq(Call("Q",a,Call("constG",V("c"))),Eq,Call("constG",V("c"))));
         Formula commutation=All("F",Call("G"),Seq(Call("Q",a,Call("Pi",f)),Eq,Call("Pi",Call("Q",a,f))));
+        Formula dimensions=Seq(Call("dim",Call("V",a)),Eq,Call("card",a),Land,
+            Call("dim",Call("V0",a)),Eq,Call("card",a),Minus,D(1));
         return Seq(Call("IsCylinderPartition",a),Implies,Par(onAtom),Land,Par(local),Land,
-            Par(disintegration),Land,Par(norm),Land,Par(constants),Land,Par(commutation));
+            Par(disintegration),Land,Par(norm),Land,Par(constants),Land,Par(commutation),Land,Par(dimensions));
     }
     private static Formula BoundFormula() => Seq(
         Call("IsCylinderPartition",V("A")),Land,D(0),Leq,V("t"),Land,

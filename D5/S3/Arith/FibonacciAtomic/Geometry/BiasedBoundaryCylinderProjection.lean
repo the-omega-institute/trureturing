@@ -9,6 +9,7 @@
 import D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryCentering
 import D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundarySuffixEnergy
 import D5.S0.Computability.Coding.BiasedMassFrontier
+import Mathlib.LinearAlgebra.Dual.Lemmas
 
 /-! Cylinder averages on the original biased boundary Hilbert space. -/
 
@@ -40,6 +41,10 @@ def Q (A : Finset Edge) : G →L[ℝ] G :=
 /-- The actual cylinder-constant subspace. -/
 def V (A : Finset Edge) : Submodule ℝ G :=
   Submodule.span ℝ (indicator '' (A : Set Edge))
+
+/-- The actual mean-zero subspace of the finite cylinder span. -/
+def V0 (A : Finset Edge) : Submodule ℝ (V A) :=
+  LinearMap.ker (mean.toLinearMap.comp (V A).subtype)
 
 private theorem cylinder_ray (p : Address) (ω : Omega) :
     ω ∈ cylinder p ↔ p = rayPrefix ω p.length := by
@@ -330,6 +335,54 @@ private theorem Q_Pi (A : Finset Edge)
   rw [centered_suffix_residual.2.2.1, map_sub, Q_const A hA hcover,
     centered_suffix_residual.2.2.1, Q_mean A hA hcover]
 
+private theorem indicators_independent (A : Finset Edge)
+    (hA : IsPrefixFree (Subtype.val '' (A : Set Edge))) :
+    LinearIndependent ℝ (fun p : A => indicator p.val) := by
+  classical
+  apply LinearIndependent.of_pairwise_dual_eq_zero_one
+    (fun p : A => indicator p.val) (fun p : A => (atomMean p.val).toLinearMap)
+  · intro p q hne
+    change atomMean p.val (indicator q.val) = 0
+    rw [atomMean_indicator A hA p.property q.property,
+      ite_eq_right (fun he => hne (Subtype.ext he))]
+  · intro p
+    change atomMean p.val (indicator p.val) = 1
+    rw [atomMean_indicator A hA p.property p.property, ite_eq_left rfl]
+
+private theorem V_finrank (A : Finset Edge)
+    (hA : IsPrefixFree (Subtype.val '' (A : Set Edge))) :
+    Module.finrank ℝ (V A) = A.card := by
+  have he : Set.range (fun p : A => indicator p.val) = indicator '' (A : Set Edge) := by
+    ext F
+    constructor
+    · rintro ⟨p, rfl⟩
+      exact ⟨p.val, p.property, rfl⟩
+    · rintro ⟨p, hp, rfl⟩
+      exact ⟨⟨p, hp⟩, rfl⟩
+  unfold V
+  rw [← he]
+  simpa only [Fintype.card_coe] using
+    finrank_span_eq_card (indicators_independent A hA)
+
+private theorem V0_finrank (A : Finset Edge)
+    (hA : IsPrefixFree (Subtype.val '' (A : Set Edge)))
+    (hcover : ∀ ω : Omega, ∃ p ∈ A, ω ∈ cylinder p.val) :
+    Module.finrank ℝ (V0 A) = A.card - 1 := by
+  let f : Module.Dual ℝ (V A) := mean.toLinearMap.comp (V A).subtype
+  have hf : f ≠ 0 := by
+    intro hf
+    have hm : constG 1 ∈ V A := by
+      have h := Q_mem A (constG 1)
+      rwa [Q_const A hA hcover] at h
+    let e : V A := ⟨constG 1, hm⟩
+    have he : f e = 1 := centered_suffix_residual.2.1 1
+    have hz : f e = 0 := by rw [hf]; rfl
+    linarith
+  have h := Module.Dual.finrank_ker_add_one_of_ne_zero hf
+  change Module.finrank ℝ (V0 A) + 1 = Module.finrank ℝ (V A) at h
+  rw [V_finrank A hA] at h
+  omega
+
 /-- On an actual cylinder partition the constructed average has a constant
 conditional pullback, and the centered residual has the exact weighted norm. -/
 theorem partition_centered_residual (A : Finset Edge)
@@ -342,13 +395,16 @@ theorem partition_centered_residual (A : Finset Edge)
     (∀ z : H, ‖C z-Q A (C z)‖ ^ 2 =
       ∑ p ∈ A, M.real (cylinder p.val) * ‖C (S p.val z)‖ ^ 2) ∧
     (∀ c : ℝ, Q A (constG c) = constG c) ∧
-    (∀ F : G, Q A (Pi F) = Pi (Q A F)) := by
+    (∀ F : G, Q A (Pi F) = Pi (Q A F)) ∧
+    Module.finrank ℝ (V A) = A.card ∧
+    Module.finrank ℝ (V0 A) = A.card - 1 := by
   have hlocal (p : Edge) (hp : p ∈ A) (z : H) :
       pullback p.val (C z-Q A (C z)) = C (S p.val z) := by
     rw [map_sub, Q_pullback A hA hp, atomMean_pullback,
       ← centered_suffix_residual.2.2.1, centered_suffix_residual.2.2.2.2.1]
   refine ⟨fun p hp F => Q_pullback A hA hp F, hlocal,
-    partition_norm_sq A hA hcover, ?_, Q_const A hA hcover, Q_Pi A hA hcover⟩
+    partition_norm_sq A hA hcover, ?_, Q_const A hA hcover, Q_Pi A hA hcover,
+    V_finrank A hA, V0_finrank A hA hcover⟩
   intro z
   rw [partition_norm_sq A hA hcover]
   apply Finset.sum_congr rfl
