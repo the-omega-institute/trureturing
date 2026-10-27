@@ -13,6 +13,9 @@ internal sealed class NondegenerateDerivationBlocksDocument : IScribeDocumentDef
         "Derivation blocks of nondegenerate evolution algebras.",
         H("Derivation blocks of nondegenerate evolution algebras"),
         Blocks(
+                NondegenerateDerivationBlocksPublication.Node("Equations.mul_basis_right", NondegenerateDerivationBlocksPublication.Multiplication(false), "Multiplying a vector on the right by one natural-basis vector keeps exactly that coordinate times its square.", AssessedProvenance.FromRepo()),
+                NondegenerateDerivationBlocksPublication.Node("Equations.mul_basis_left", NondegenerateDerivationBlocksPublication.Multiplication(true), "Multiplying a vector on the left by one natural-basis vector keeps exactly that coordinate times its square.", AssessedProvenance.FromRepo()),
+
             Describe.Lean(
                 DescribeId.Create("pi-piliering"),
                 DeclarationHandle.Create(Prefix + "piLieRing"),
@@ -98,4 +101,40 @@ internal sealed class NondegenerateDerivationBlocksDocument : IScribeDocumentDef
     private static Formula Label =>Apply(Qualified("Set", "rangeFactorization"), Fn(X("i"), Seq(X("k"), Sp, Cdot, Sp, Apply(Mu, Apply(X("b"), X("i")), Apply(X("b"), X("i"))))));
     private static Formula Representative =>Apply(Qualified("Rescaling", "squareRepresentative"), Mu, X("b"));
     private static Formula BlockSpan(Formula b) =>Apply(Qualified("Decomposition", "blockW"), b, Label, Representative, X("a"));
+}
+
+internal static class NondegenerateDerivationBlocksPublication
+{
+
+    internal static DocumentBlock.Describe Node(string name, Formula formula, string text, AssessedProvenance provenance) => Describe.Lean(
+        DescribeId.Create("published-" + name.Replace('_', '-').Replace('.', '-').ToLowerInvariant()),
+        DeclarationHandle.Create("D5/S3/QuadraticForms/EvolutionAlgebras/NondegenerateDerivationBlocks." + name.Replace("Equations.", "")), H(name),
+        StatementSource.FromAuthor(Disp(formula)), provenance,
+        Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+    private static Formula X(string s) => F.Id(s);
+    private static Formula Name(string s) => Seq(Operatorname, Grp(X(s)));
+    private static Formula Q(string owner, string name) => Seq(Name(owner), Dot, Name(name));
+    private static Formula App(Formula f, params Formula[] a) => new Formula.Apply(f, [.. a]);
+    private static Formula Call(string s, params Formula[] a) => App(Name(s), a);
+    private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
+    private static Formula All(Formula x, Formula t, Formula b) => Seq(Forall, Sp, Parenthesized(Seq(x, Sp, Colon, Sp, t)), Comma, Sp, Parenthesized(b));
+    private static Formula Instance(Formula t, Formula b) => Seq(OpenBracket, t, CloseBracket, Sp, b);
+    private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, Parenthesized(b));
+    private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
+    private static Formula Product(Formula k, Formula a) => Call("LinearMap", k, a, Call("LinearMap", k, a, a));
+    private static Formula Basis(Formula k, Formula i, Formula a) => App(Q("Module", "Basis"), i, k, a);
+    private static Formula Mixed(Formula mu, Formula b, Formula index) => All(X("i"), index, All(X("j"), index, Imp(Ne(X("i"), X("j")), Eq(App(mu, App(b, X("i")), App(b, X("j"))), D(0)))));
+
+    internal static Formula Multiplication(bool left)
+    {
+        var k=X("k");var v=X("V");var mu=X("mu");var index=X("I");var b=X("b");var x=X("x");var i=X("i");
+        var bi=App(b,i); var coeff=App(Seq(b,Dot,Name("repr")),x,i);
+        var rhs=App(Q("SMul","smul"),coeff,App(mu,bi,bi));
+        var lhs=left ? App(mu,bi,x) : App(mu,x,bi);
+        return All(k,Name("Type"),Instance(Call("Field",k),All(v,Name("Type"),
+            Instance(Call("AddCommGroup",v),Instance(Call("Module",k,v),
+                All(mu,Product(k,v),All(index,Name("Type"),All(b,Basis(k,index,v),
+                    Imp(Mixed(mu,b,index),Instance(Call("Fintype",index),All(x,v,All(i,index,Eq(lhs,rhs)))))))))))));
+    }
 }

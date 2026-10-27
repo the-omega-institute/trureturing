@@ -60,6 +60,8 @@ internal sealed class EvolutionAutomorphismControlDocument : IScribeDocumentDefi
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The full multiplication-preserving linear group of a perfect evolution product is finite and obeys a joint successor-quotient bound.",
         H("Algebra automorphisms and the canonical support quotient"), Blocks(
+                EvolutionAutomorphismControlPublication.Node("structure_map_injective", EvolutionAutomorphismControlPublication.Injectivity(), "Perfectness makes a natural-basis structure map surjective, hence injective in finite dimension."),
+
             Paragraph(Text("For the coordinate estimates the space is Coord(n)=Fin(n) to the complex numbers. The multiplication is a bilinear map, with no associativity or unit assumption. "
                 + "NaturalBasisAt(mu,b) means mu(b(i),b(j))=0 whenever i differs from j. Perfectness means all pair products span the coordinate space. "
                 + "The support relation has an arrow i to j exactly when the j-coordinate of mu(b(i),b(i)) in b is nonzero; loops are retained.")),
@@ -107,4 +109,37 @@ internal sealed class EvolutionAutomorphismControlDocument : IScribeDocumentDefi
                 + "cycle-family attainment and final maximum assembly remain separate statements. "
                 + "EvolutionBasisTransport conjugates the entire group on an arbitrary complex module to this coordinate model. "
                 + "The diagonal root count is an equality: cycle evaluation has an independently constructed inverse."))), []));
+}
+
+internal static class EvolutionAutomorphismControlPublication
+{
+
+    internal static DocumentBlock.Describe Node(string name, Formula formula, string text) => Describe.Lean(
+        DescribeId.Create("published-" + name.Replace('_', '-').Replace('.', '-').ToLowerInvariant()),
+        DeclarationHandle.Create("D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionAutomorphismControl." + name), H(name),
+        StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+    private static Formula X(string s) => F.Id(s);
+    private static Formula Name(string s) => Seq(Operatorname, Grp(X(s)));
+    private static Formula Q(string owner, string name) => Seq(Name(owner), Dot, Name(name));
+    private static Formula App(Formula f, params Formula[] a) => new Formula.Apply(f, [.. a]);
+    private static Formula Call(string s, params Formula[] a) => App(Name(s), a);
+    private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
+    private static Formula All(Formula x, Formula t, Formula b) => Seq(Forall, Sp, Parenthesized(Seq(x, Sp, Colon, Sp, t)), Comma, Sp, Parenthesized(b));
+    private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, Parenthesized(b));
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
+    private static Formula Complex => Seq(Mathbb, Grp(X("C")));
+    private static Formula Natural => Seq(Mathbb, Grp(X("N")));
+    private static Formula Basis(Formula k, Formula i, Formula a) => App(Q("Module", "Basis"), i, k, a);
+
+    internal static Formula Injectivity()
+    {
+        var n=X("n");var mu=X("mu");var b=X("b");var m=X("M");var coord=Call("Coord",n);
+        var e=Seq(b,Dot,Name("equivFun"));var x=X("x");var y=X("y");
+        var identity=All(x,coord,All(y,coord,Eq(App(e,App(mu,x,y)),
+            App(m,new Formula.Binary(App(e,x),FormulaBinaryOperator.Multiply,App(e,y))))));
+        return All(n,Natural,All(mu,Call("Product",n),All(b,Basis(Complex,Call("Fin",n),coord),
+            Imp(Call("perfect",mu),All(m,Call("LinearMap",Complex,coord,coord),
+                Imp(identity,App(Q("Function","Injective"),m)))))));
+    }
 }

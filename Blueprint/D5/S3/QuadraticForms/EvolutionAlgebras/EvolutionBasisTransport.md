@@ -4,9 +4,21 @@
 
 All multiplication automorphisms of an arbitrary finite-dimensional perfect complex evolution algebra obey joint cycle, quotient and block control.
 
+**Theorem 1.1 (dimensionBasis_natural).**
+
+$$\forall (A : \operatorname{Type}), ([\operatorname{AddCommGroup}\left(A\right)] [\operatorname{Module}\left(\mathbb{C}, A\right)] [\operatorname{FiniteDimensional}\left(\mathbb{C}, A\right)] \forall (I : \operatorname{Type}), ([\operatorname{Fintype}\left(I\right)] \forall (n : \mathbb{N}), (\forall (hn : \operatorname{Module}.\operatorname{finrank}\left(\mathbb{C}, A\right) = (n)), (\forall (mu : \operatorname{LinearMap}\left(\mathbb{C}, A, \operatorname{LinearMap}\left(\mathbb{C}, A, A\right)\right)), (\forall (b : \operatorname{Module}.\operatorname{Basis}\left(I, \mathbb{C}, A\right)), ((\forall (i : I), (\forall (j : I), ((i \ne j) \Rightarrow (mu\left(b\left(i\right), b\left(j\right)\right) = (0))))) \Rightarrow (\forall (i : \operatorname{Fin}\left(n\right)), (\forall (j : \operatorname{Fin}\left(n\right)), ((i \ne j) \Rightarrow (mu\left(\operatorname{dimensionBasis}\left(hn, b\right)\left(i\right), \operatorname{dimensionBasis}\left(hn, b\right)\left(j\right)\right) = (0)))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport.dimensionBasis_natural` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Reindexing a finite natural basis by its dimension preserves every zero mixed product.
+
 A and B are complex vector spaces with bilinear multiplication mu. Neither associativity nor a multiplicative unit is required. productSpan(mu) is the span of every mu(x,y); perfection means productSpan(mu)=Top. The automorphism group is the single Aut definition of EvolutionAutomorphismControl: all complex LinearEquivs preserving every pair product.
 
-**Definition 1.1 (Transporting the multiplication).**
+**Definition 1.2 (Transporting the multiplication).**
 
 $$\forall A \in Typeu,\; \forall B \in Typeu,\; \operatorname{ComplexVectorSpace}\left(A\right) \Rightarrow \left(\operatorname{ComplexVectorSpace}\left(B\right) \Rightarrow \left(\forall e \in \operatorname{LinearEquiv}\left(A, B\right),\; \forall mu \in \operatorname{BilinearProduct}\left(A\right),\; \forall x \in B,\; \forall y \in B,\; \operatorname{ApplyProduct}\left(\operatorname{transportProduct}\left(e, mu\right), x, y\right) = \operatorname{e}\left(\operatorname{ApplyProduct}\left(mu, \operatorname{inverse}\left(e, x\right), \operatorname{inverse}\left(e, y\right)\right)\right)\right)\right)$$
 
@@ -18,7 +30,7 @@ $$\forall A \in Typeu,\; \forall B \in Typeu,\; \operatorname{ComplexVectorSpace
 
 For x,y in B, the transported multiplication is e(mu(e inverse(x),e inverse(y))). Bilinearity follows from composition of linear maps.
 
-**Theorem 1.2 (Exact product-span correspondence).**
+**Theorem 1.3 (Exact product-span correspondence).**
 
 $$\forall A \in Typeu,\; \forall B \in Typeu,\; \operatorname{ComplexVectorSpace}\left(A\right) \Rightarrow \left(\operatorname{ComplexVectorSpace}\left(B\right) \Rightarrow \left(\forall e \in \operatorname{LinearEquiv}\left(A, B\right),\; \forall mu \in \operatorname{BilinearProduct}\left(A\right),\; \operatorname{map}\left(e, \operatorname{productSpan}\left(mu\right)\right) = \operatorname{productSpan}\left(\operatorname{transportProduct}\left(e, mu\right)\right)\right)\right)$$
 
@@ -30,7 +42,7 @@ $$\forall A \in Typeu,\; \forall B \in Typeu,\; \operatorname{ComplexVectorSpace
 
 The image under e of the span of all pair products is exactly the span of all transported pair products. Surjectivity of e supplies the reverse inclusion. Since e has zero kernel and full range, perfection is equivalent on the two spaces.
 
-**Definition 1.3 (Conjugacy of the entire automorphism group).**
+**Definition 1.4 (Conjugacy of the entire automorphism group).**
 
 $$\forall A \in Typeu,\; \forall B \in Typeu,\; \operatorname{ComplexVectorSpace}\left(A\right) \Rightarrow \left(\operatorname{ComplexVectorSpace}\left(B\right) \Rightarrow \left(\forall e \in \operatorname{LinearEquiv}\left(A, B\right),\; \forall mu \in \operatorname{BilinearProduct}\left(A\right),\; \operatorname{GroupEquiv}\left(\operatorname{Aut}\left(mu\right), \operatorname{Aut}\left(\operatorname{transportProduct}\left(e, mu\right)\right)\right)\right)\right)$$
 
@@ -42,7 +54,7 @@ $$\forall A \in Typeu,\; \forall B \in Typeu,\; \operatorname{ComplexVectorSpace
 
 The map sends f to e composed with f composed with e inverse. Its inverse conjugates by e inverse. Both maps preserve multiplication because the transported product is defined on all pairs. They are inverse group homomorphisms; no monomiality, support lift, finiteness or conjugacy premise is inserted.
 
-**Theorem 1.4 (The natural-basis correspondence).**
+**Theorem 1.5 (The natural-basis correspondence).**
 
 $$\forall A \in Typeu,\; \operatorname{ComplexVectorSpace}\left(A\right) \Rightarrow \left(\forall n \in NaturalNumbers,\; \forall mu \in \operatorname{BilinearProduct}\left(A\right),\; \forall b \in \operatorname{Basis}\left(\operatorname{Fin}\left(n\right), Complex, A\right),\; \left(\operatorname{NaturalBasisAt}\left(mu, b\right) \Rightarrow \operatorname{CoordinateBasisNatural}\left(mu, b\right)\right) \land \left(\operatorname{CoordinateBasisNatural}\left(mu, b\right) \Rightarrow \operatorname{NaturalBasisAt}\left(mu, b\right)\right)\right)$$
 
@@ -54,7 +66,7 @@ $$\forall A \in Typeu,\; \operatorname{ComplexVectorSpace}\left(A\right) \Righta
 
 The equivalence b.equivFun sends b(i) to the i-th coordinate vector. Products of distinct basis vectors therefore vanish exactly when products of the corresponding coordinate basis vectors vanish.
 
-**Definition 1.5 (The finite-index bridge).**
+**Definition 1.6 (The finite-index bridge).**
 
 $$\forall A \in Typeu,\; \operatorname{FiniteDimensionalComplexVectorSpace}\left(A\right) \Rightarrow \left(\forall I \in Typeu,\; \operatorname{Fintype}\left(I\right) \Rightarrow \left(\forall n \in \operatorname{NaturalNumbers}\left(\right),\; \operatorname{finrank}\left(A\right) = n \Rightarrow \left(\forall b \in \operatorname{Basis}\left(I, Complex, A\right),\; \operatorname{Basis}\left(\operatorname{Fin}\left(n\right), Complex, A\right)\right)\right)\right)$$
 
@@ -66,7 +78,7 @@ $$\forall A \in Typeu,\; \operatorname{FiniteDimensionalComplexVectorSpace}\left
 
 For any finite index type I and any basis b indexed by I, finrank equals card(I). Given finrank(A)=n, Fintype.equivFinOfCardEq and Basis.reindex produce the n-indexed basis. Its naturality follows by injectivity of the index equivalence. Thus the original natural basis is arbitrary, and the n-dimensional source quantifier is retained.
 
-**Theorem 1.6 (Joint control on the actual algebra group).**
+**Theorem 1.7 (Joint control on the actual algebra group).**
 
 $$\forall A \in Typeu,\; \operatorname{FiniteDimensionalComplexVectorSpace}\left(A\right) \Rightarrow \left(\forall I \in Typeu,\; \operatorname{Fintype}\left(I\right) \Rightarrow \left(\forall n \in \operatorname{NaturalNumbers}\left(\right),\; \operatorname{finrank}\left(A\right) = n \Rightarrow \left(\forall mu \in \operatorname{BilinearProduct}\left(A\right),\; \forall b \in \operatorname{Basis}\left(I, Complex, A\right),\; \operatorname{NaturalBasisAt}\left(mu, b\right) \Rightarrow \left(\operatorname{productSpan}\left(mu\right) = Top \Rightarrow \left(\operatorname{Finite}\left(\operatorname{Aut}\left(mu\right)\right) \land \operatorname{card}\left(\operatorname{Aut}\left(mu\right)\right) \le \operatorname{cycleWeight}\left(\operatorname{beta}\left(\operatorname{SupportOfCoordinateProduct}\left(mu, b, n\right)\right)\right) \cdot \operatorname{card}\left(\operatorname{centralizer}\left(\operatorname{beta}\left(\operatorname{SupportOfCoordinateProduct}\left(mu, b, n\right)\right)\right)\right) \cdot \operatorname{BlockFactorialProduct}\left(\operatorname{SupportOfCoordinateProduct}\left(mu, b, n\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -84,6 +96,7 @@ This joint control concerns the full source family in Conjecture 3 of Kaygorodov
 
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport.automorphismConjugacy`
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport.dimensionBasis`
+- Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport.dimensionBasis_natural`
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport.finite_and_joint_bound`
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport.natural_basis_transport_iff`
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport.product_span_transport`

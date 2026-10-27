@@ -59,6 +59,8 @@ internal sealed class EvolutionBasisTransportDocument : IScribeDocumentDefinitio
         return DocumentDefinition.Create(ScribeNode.Create(
             "All multiplication automorphisms of an arbitrary finite-dimensional perfect complex evolution algebra obey joint cycle, quotient and block control.",
             H("Basis transport and the full algebra group"),Blocks(
+                EvolutionBasisTransportPublication.Node("dimensionBasis_natural", EvolutionBasisTransportPublication.Naturality(), "Reindexing a finite natural basis by its dimension preserves every zero mixed product."),
+
                 Paragraph(Text("A and B are complex vector spaces with bilinear multiplication mu. Neither associativity nor a multiplicative unit is required. "
                     + "productSpan(mu) is the span of every mu(x,y); perfection means productSpan(mu)=Top. "
                     + "The automorphism group is the single Aut definition of EvolutionAutomorphismControl: all complex LinearEquivs preserving every pair product.")),
@@ -104,5 +106,43 @@ internal sealed class EvolutionBasisTransportDocument : IScribeDocumentDefinitio
                 Paragraph(Text("This joint control concerns the full source family in Conjecture 3 of Kaygorodov, Martín González and Viruel, arXiv:2610.22248v1. "
                     + "It does not assert the conjecture's sharp maximum or attainment. The partition maximum, six small dimensions, factorial tail and absorption, "
                     + "coefficient-one cyclic-family attainment, and final upper-bound-plus-attainment assembly remain further mathematical requirements."))),[]));
+    }
+}
+
+internal static class EvolutionBasisTransportPublication
+{
+
+    internal static DocumentBlock.Describe Node(string name, Formula formula, string text) => Describe.Lean(
+        DescribeId.Create("published-" + name.Replace('_', '-').Replace('.', '-').ToLowerInvariant()),
+        DeclarationHandle.Create("D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport." + name), H(name),
+        StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+    private static Formula X(string s) => F.Id(s);
+    private static Formula Name(string s) => Seq(Operatorname, Grp(X(s)));
+    private static Formula Q(string owner, string name) => Seq(Name(owner), Dot, Name(name));
+    private static Formula App(Formula f, params Formula[] a) => new Formula.Apply(f, [.. a]);
+    private static Formula Call(string s, params Formula[] a) => App(Name(s), a);
+    private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
+    private static Formula All(Formula x, Formula t, Formula b) => Seq(Forall, Sp, Parenthesized(Seq(x, Sp, Colon, Sp, t)), Comma, Sp, Parenthesized(b));
+    private static Formula Instance(Formula t, Formula b) => Seq(OpenBracket, t, CloseBracket, Sp, b);
+    private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, Parenthesized(b));
+    private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
+    private static Formula Complex => Seq(Mathbb, Grp(X("C")));
+    private static Formula Natural => Seq(Mathbb, Grp(X("N")));
+    private static Formula VectorContext(Formula a, Formula f) => All(a, Name("Type"), Instance(Call("AddCommGroup", a), Instance(Call("Module", Complex, a), f)));
+    private static Formula Product(Formula k, Formula a) => Call("LinearMap", k, a, Call("LinearMap", k, a, a));
+    private static Formula Basis(Formula k, Formula i, Formula a) => App(Q("Module", "Basis"), i, k, a);
+    private static Formula Mixed(Formula mu, Formula b, Formula index) => All(X("i"), index, All(X("j"), index, Imp(Ne(X("i"), X("j")), Eq(App(mu, App(b, X("i")), App(b, X("j"))), D(0)))));
+
+    internal static Formula Naturality()
+    {
+        var a=X("A"); var index=X("I"); var n=X("n"); var mu=X("mu"); var b=X("b");
+        var bn=Call("dimensionBasis", X("hn"), b); var fin=Call("Fin", n);
+        return VectorContext(a, Instance(Call("FiniteDimensional",Complex,a),
+            All(index,Name("Type"),Instance(Call("Fintype",index),All(n,Natural,
+                All(X("hn"),Eq(App(Q("Module","finrank"),Complex,a),n),
+                    All(mu,Product(Complex,a),All(b,Basis(Complex,index,a),
+                        Imp(Mixed(mu,b,index),Mixed(mu,bn,fin))))))))));
     }
 }

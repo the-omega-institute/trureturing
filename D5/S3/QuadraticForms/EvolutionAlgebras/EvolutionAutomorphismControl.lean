@@ -6,6 +6,9 @@
    utility: none
    digest: Perfect evolution products force genuine monomial multiplication automorphisms and an exact diagonal arrow equation. -/
 
+
+/- Escape audit unfinished for structure_map_injective:
+https://github.com/the-omega-institute/trureturing/issues/22095 -/
 import D5.S3.QuadraticForms.EvolutionAlgebras.HuEvolutionLowerBound
 import Mathlib.LinearAlgebra.Dimension.OrzechProperty
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
@@ -41,7 +44,7 @@ def supportRelation {n : ℕ} (μ : Product n)
     (b : Module.Basis (Fin n) ℂ (Coord n)) (i j : Fin n) : Prop :=
   structureCoefficient μ b i j ≠ 0
 
-private theorem structure_map_injective {n : ℕ} (μ : Product n)
+theorem structure_map_injective {n : ℕ} (μ : Product n)
     (b : Module.Basis (Fin n) ℂ (Coord n)) (hp : perfect μ)
     (M : Coord n →ₗ[ℂ] Coord n)
     (hM : ∀ x y, b.equivFun (μ x y) = M (b.equivFun x * b.equivFun y)) :

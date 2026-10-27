@@ -41,6 +41,10 @@ internal sealed class EvolutionPermutationFamilyDocument : IScribeDocumentDefini
         return DocumentDefinition.Create(ScribeNode.Create(
             "Coefficient-one permutation evolution algebras realize the complete root kernel and permutation centralizer.",
             H("Attaining permutation algebras"),Blocks(
+                EvolutionPermutationFamilyPublication.Node("permutationLinear_basis", EvolutionPermutationFamilyPublication.BasisImage(), "The coordinate permutation sends each coordinate basis vector to the basis vector at its permuted index.", AssessedProvenance.FromRepo()),
+                EvolutionPermutationFamilyPublication.Node("permutation_mixed", EvolutionPermutationFamilyPublication.MixedProduct(), "Distinct coordinate basis vectors have zero product.", AssessedProvenance.FromRepo()),
+                EvolutionPermutationFamilyPublication.Node("permutation_support", EvolutionPermutationFamilyPublication.Support(), "An arrow of the coefficient-one permutation product goes exactly from an index to its image under the permutation.", AssessedProvenance.FromRepo()),
+
                 SF.Desc(Prefix,"permutationLinear","The coordinate permutation",SF.PermContext(SF.All("x",SF.Coord(n),
                     SF.All("j",SF.Index(n),SF.Eq(SF.Call("coordinate",Apply(SF.Call("permutationLinear",sigma),x),SF.V("j")),
                         SF.Call("coordinate",x,SF.Call("inverseApply",sigma,SF.V("j"))))))),
@@ -65,4 +69,37 @@ internal sealed class EvolutionPermutationFamilyDocument : IScribeDocumentDefini
                     "Every permutation gives a commutative, perfect complex evolution algebra on Fin(n) to C. It need not be associative. "
                     + "Naturality and perfection use the original coordinate-product facts. The same actual algebra and same full automorphism group satisfy the exact order formula.",provenance:Source)),[]));
     }
+}
+
+internal static class EvolutionPermutationFamilyPublication
+{
+
+    internal static DocumentBlock.Describe Node(string name, Formula formula, string text, AssessedProvenance provenance) => Describe.Lean(
+        DescribeId.Create("published-" + name.Replace('_', '-').Replace('.', '-').ToLowerInvariant()),
+        DeclarationHandle.Create("D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionPermutationFamily." + name), H(name),
+        StatementSource.FromAuthor(Disp(formula)), provenance,
+        Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+    private static Formula X(string s) => F.Id(s);
+    private static Formula Name(string s) => Seq(Operatorname, Grp(X(s)));
+    private static Formula Q(string owner, string name) => Seq(Name(owner), Dot, Name(name));
+    private static Formula App(Formula f, params Formula[] a) => new Formula.Apply(f, [.. a]);
+    private static Formula Call(string s, params Formula[] a) => App(Name(s), a);
+    private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
+    private static Formula All(Formula x, Formula t, Formula b) => Seq(Forall, Sp, Parenthesized(Seq(x, Sp, Colon, Sp, t)), Comma, Sp, Parenthesized(b));
+    private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, Parenthesized(b));
+    private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
+    private static Formula Complex => Seq(Mathbb, Grp(X("C")));
+    private static Formula Natural => Seq(Mathbb, Grp(X("N")));
+    private static Formula Mixed(Formula mu, Formula b, Formula index) => All(X("i"), index, All(X("j"), index, Imp(Ne(X("i"), X("j")), Eq(App(mu, App(b, X("i")), App(b, X("j"))), D(0)))));
+
+    private static Formula Fin => Call("Fin",X("n"));
+    private static Formula Standard => App(Q("Pi","basisFun"),Complex,Fin);
+    private static Formula PermutationContext(Formula f) => All(X("n"),Natural,All(X("sigma"),App(Q("Equiv","Perm"),Fin),f));
+    internal static Formula BasisImage() => PermutationContext(All(X("i"),Fin,
+        Eq(App(Call("permutationLinear",X("sigma")),App(Standard,X("i"))),App(Standard,App(X("sigma"),X("i"))))));
+    internal static Formula MixedProduct() => PermutationContext(Mixed(Call("permutationProduct",X("sigma")),Standard,Fin));
+    internal static Formula Support() => PermutationContext(All(X("i"),Fin,All(X("j"),Fin,
+        new Formula.Logic(Call("supportRelation",Call("permutationProduct",X("sigma")),Standard,X("i"),X("j")),
+            FormulaLogicOperator.Iff,Eq(X("j"),App(X("sigma"),X("i")))))));
 }

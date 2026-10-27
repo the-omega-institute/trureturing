@@ -6,6 +6,9 @@
    utility: none
    digest: Nonzero natural squares give independent orthogonal derivation blocks. -/
 
+
+/- Escape audit unfinished for Equations.mul_basis_left, Equations.mul_basis_right:
+https://github.com/the-omega-institute/trureturing/issues/22095 -/
 /-
 admission_basis: escape-witness
 Direct frozen dependencies: none.
@@ -157,7 +160,7 @@ private theorem mem_derivations_iff_basis (D : Module.End k V) :
 variable (hn : ∀ i j, i ≠ j → μ (b i) (b j) = 0)
 
 include hn in
-private theorem mul_basis_right [Fintype ι] (x : V) (j : ι) :
+theorem mul_basis_right [Fintype ι] (x : V) (j : ι) :
     μ x (b j) = b.repr x j • μ (b j) (b j) := by
   classical
   calc
@@ -172,7 +175,7 @@ private theorem mul_basis_right [Fintype ι] (x : V) (j : ι) :
       · simp
 
 include hn in
-private theorem mul_basis_left [Fintype ι] (x : V) (i : ι) :
+theorem mul_basis_left [Fintype ι] (x : V) (i : ι) :
     μ (b i) x = b.repr x i • μ (b i) (b i) := by
   classical
   calc
