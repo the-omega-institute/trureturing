@@ -69,7 +69,7 @@ open Equiv
 variable {X : Type*} [Finite X]
 
 omit [Finite X] in
-private theorem square_of_involutive (p : Perm X)
+theorem square_of_involutive (p : Perm X)
     (hp : Function.Involutive p) : p * p = 1 := by
   ext x
   exact hp x

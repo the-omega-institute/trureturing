@@ -7,6 +7,8 @@
    digest: Perfect matchings in every clone set induce adjacency transfer at pi/2. -/
 
 import D5.S3.Quantum.Dynamics.RationalWeightPathTransfer
+import D5.S3.Zeros.Convolution.PerfectMatchingCount
+import D5.S3.Combinatorics.PerfectMatchings.FiniteEndpointPairing
 
 /-! Adjacency transfer from integral eigenvalue support and uniform clone matchings. -/
 
@@ -20,6 +22,7 @@ namespace D5.S3.Quantum.Dynamics.BlowUpMatchingAdjacencyTransfer
 
 open Matrix Complex Finset
 open D5.S3.Quantum.Dynamics.RationalWeightPathTransfer
+open D5.S3.Zeros.Convolution.PerfectMatchingCount (FixedPointFreeInvolution)
 open scoped BigOperators Matrix.Norms.Operator
 
 /-- The adjacency eigenvalue support at `v` is integral: every complex eigenvector for a real
@@ -28,10 +31,6 @@ def IntegralSupport {m : ℕ} (g : SimpleGraph (Fin m)) [DecidableRel g.Adj] (v 
     Prop :=
   ∀ (l : ℝ) (x : Fin m → ℂ), g.adjMatrix ℂ *ᵥ x = (l : ℂ) • x →
     x v ≠ 0 → ∃ z : ℤ, l = z
-
-/-- A perfect matching of clone indices is a fixed-point-free involutive permutation. -/
-def IsPerfectMatching {n : ℕ} (ρ : Equiv.Perm (Fin n)) : Prop :=
-  ρ * ρ = 1 ∧ ∀ j, ρ j ≠ j
 
 /-- Adjacency of the blow-up with a matching in every clone set. Indices are `(vertex, clone)`;
 `permMatrix` sends a basis vector to its inverse image, equal to its image for an involution. -/
@@ -155,17 +154,18 @@ private theorem exp_involution {ι : Type*} [Fintype ι] [DecidableEq ι]
   rw [hp, hm]
   module
 
-private theorem matching_exp {m n : ℕ} (ρ : Equiv.Perm (Fin n))
-    (hρ : IsPerfectMatching ρ) :
+private theorem matching_exp {m n : ℕ} (ρ : FixedPointFreeInvolution (Fin n)) :
     NormedSpace.exp ((((Real.pi / 2 : ℝ) : ℂ) * I) •
-      Matrix.kroneckerMap (· * ·) (1 : Matrix (Fin m) (Fin m) ℂ) (ρ.permMatrix ℂ)) =
+      Matrix.kroneckerMap (· * ·) (1 : Matrix (Fin m) (Fin m) ℂ) (ρ.val.permMatrix ℂ)) =
       I • Matrix.kroneckerMap (· * ·) (1 : Matrix (Fin m) (Fin m) ℂ)
-        (ρ.permMatrix ℂ) := by
+        (ρ.val.permMatrix ℂ) := by
   apply exp_involution
-  change Matrix.kronecker (1 : Matrix (Fin m) (Fin m) ℂ) (ρ.permMatrix ℂ) *
-    Matrix.kronecker 1 (ρ.permMatrix ℂ) = 1
+  change Matrix.kronecker (1 : Matrix (Fin m) (Fin m) ℂ) (ρ.val.permMatrix ℂ) *
+    Matrix.kronecker 1 (ρ.val.permMatrix ℂ) = 1
   unfold Matrix.kronecker
-  rw [← Matrix.mul_kronecker_mul, Matrix.one_mul, ← Matrix.permMatrix_mul, hρ.1,
+  rw [← Matrix.mul_kronecker_mul, Matrix.one_mul, ← Matrix.permMatrix_mul,
+    D5.S3.Combinatorics.PerfectMatchings.FiniteEndpointPairing.square_of_involutive
+      ρ.val ρ.property.1,
     Matrix.permMatrix_one, Matrix.one_kronecker_one]
 
 private theorem blowup_pow_succ {m n : ℕ} (a : Matrix (Fin m) (Fin m) ℂ) (r : ℕ) :
@@ -199,17 +199,12 @@ private theorem blowup_exp_column {m n : ℕ} (a : Matrix (Fin m) (Fin m) ℂ)
   change NormedSpace.exp (c • Matrix.kroneckerMap (· * ·) a
     (Matrix.of fun _ _ : Fin n => (1 : ℂ))) p (v, k) = _
   let l : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ →L[ℂ] ℂ :=
-    { toLinearMap :=
-        { toFun := fun b => b p (v, k)
-          map_add' := fun _ _ => rfl
-          map_smul' := fun _ _ => rfl }
-      cont := (continuous_apply (v, k)).comp (continuous_apply p) }
+    (ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin m × Fin n => ℂ) (v, k)).comp
+      (ContinuousLinearMap.proj (R := ℂ)
+        (φ := fun _ : Fin m × Fin n => Fin m × Fin n → ℂ) p)
   let q : Matrix (Fin m) (Fin m) ℂ →L[ℂ] ℂ :=
-    { toLinearMap :=
-        { toFun := fun b => b p.1 v
-          map_add' := fun _ _ => rfl
-          map_smul' := fun _ _ => rfl }
-      cont := (continuous_apply v).comp (continuous_apply p.1) }
+    (ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin m => ℂ) v).comp
+      (ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin m => Fin m → ℂ) p.1)
   have hb := l.hasSum (NormedSpace.exp_series_hasSum_exp' (𝕂 := ℂ)
     (c • Matrix.kroneckerMap (· * ·) a (Matrix.of fun _ _ : Fin n => (1 : ℂ))))
   have ha := q.hasSum (NormedSpace.exp_series_hasSum_exp' (𝕂 := ℂ) ((c * n) • a))
@@ -261,60 +256,52 @@ private theorem blowup_exp_column {m n : ℕ} (a : Matrix (Fin m) (Fin m) ℂ)
   rw [hbig, hsmall]
   ring
 
-private theorem matching_column {m n : ℕ} (ρ : Equiv.Perm (Fin n))
-    (hρ : IsPerfectMatching ρ) (v : Fin m) (j : Fin n) :
+private theorem matching_column {m n : ℕ} (ρ : FixedPointFreeInvolution (Fin n))
+    (v : Fin m) (j : Fin n) :
     Matrix.kroneckerMap (· * ·) (1 : Matrix (Fin m) (Fin m) ℂ)
-      (ρ.permMatrix ℂ) *ᵥ Pi.single (v, j) 1 = Pi.single (v, ρ j) 1 := by
-  have hinv (k : Fin n) : ρ (ρ k) = k :=
-    congrArg (fun p : Equiv.Perm (Fin n) => p k) hρ.1
-  have hp : ρ.permMatrix ℂ *ᵥ Pi.single j 1 = Pi.single (ρ j) 1 := by
+      (ρ.val.permMatrix ℂ) *ᵥ Pi.single (v, j) 1 = Pi.single (v, ρ.val j) 1 := by
+  have hp : ρ.val.permMatrix ℂ *ᵥ Pi.single j 1 = Pi.single (ρ.val j) 1 := by
     rw [Matrix.permMatrix_mulVec]
-    ext k
-    change (Pi.single j 1 : Fin n → ℂ) (ρ k) = (Pi.single (ρ j) 1 : Fin n → ℂ) k
-    by_cases hk : k = ρ j
-    · subst k
-      rw [hinv]
-      simp
-    · have hkj : ρ k ≠ j := fun h => hk (by rw [← hinv k, h])
-      simp [hkj, hk]
+    simpa only [ρ.property.1.symm_eq_self_of_involutive ρ.val] using
+      Pi.single_comp_equiv ρ.val j (1 : ℂ)
   rw [Matrix.mulVec_single_one] at hp ⊢
   ext ⟨w, k⟩
-  change (1 : Matrix (Fin m) (Fin m) ℂ) w v * ρ.permMatrix ℂ k j = _
+  change (1 : Matrix (Fin m) (Fin m) ℂ) w v * ρ.val.permMatrix ℂ k j = _
   have hpk := congrFun hp k
-  change ρ.permMatrix ℂ k j = _ at hpk
+  change ρ.val.permMatrix ℂ k j = _ at hpk
   rw [hpk]
   by_cases hw : w = v
   · subst w
-    by_cases hk : k = ρ j <;> simp [hk]
+    by_cases hk : k = ρ.val j <;> simp [hk]
   · simp [Matrix.one_apply_ne hw, hw, Prod.mk.injEq]
 
 private theorem transfer_column {m n : ℕ} (g : SimpleGraph (Fin m))
-    [DecidableRel g.Adj] (v : Fin m) (ρ : Equiv.Perm (Fin n))
-    (hv : IntegralSupport g v) (hn : 4 ∣ n) (hρ : IsPerfectMatching ρ) (j : Fin n) :
-    NormedSpace.exp ((((Real.pi / 2 : ℝ) : ℂ) * I) • blowUpMatching g n ρ) *ᵥ
-      Pi.single (v, j) 1 = I • Pi.single (v, ρ j) 1 := by
-  have hn0 : n ≠ 0 := by have := j.isLt; omega
+    [DecidableRel g.Adj] (v : Fin m) (ρ : FixedPointFreeInvolution (Fin n))
+    (hv : IntegralSupport g v) (hn : 4 ∣ n) (j : Fin n) :
+    NormedSpace.exp ((((Real.pi / 2 : ℝ) : ℂ) * I) • blowUpMatching g n ρ.val) *ᵥ
+      Pi.single (v, j) 1 = I • Pi.single (v, ρ.val j) 1 := by
+  have hn0 : n ≠ 0 := Nat.ne_zero_of_lt j.isLt
   have hfix : NormedSpace.exp ((((Real.pi / 2 : ℝ) : ℂ) * I) •
       Matrix.kroneckerMap (· * ·) (g.adjMatrix ℂ)
-        (Matrix.of fun _ _ : Fin n => (1 : ℂ))) *ᵥ Pi.single (v, ρ j) 1 =
-      Pi.single (v, ρ j) 1 := by
+        (Matrix.of fun _ _ : Fin n => (1 : ℂ))) *ᵥ Pi.single (v, ρ.val j) 1 =
+      Pi.single (v, ρ.val j) 1 := by
     rw [blowup_exp_column _ _ hn0, base_periodic g v hv hn]
     ext p
     simp
   unfold blowUpMatching
   rw [smul_add, Matrix.exp_add_of_commute _ _
-    ((blowup_commute g ρ).smul_left _ |>.smul_right _), matching_exp ρ hρ,
-    ← Matrix.mulVec_mulVec, Matrix.smul_mulVec, matching_column ρ hρ,
+    ((blowup_commute g ρ.val).smul_left _ |>.smul_right _), matching_exp ρ,
+    ← Matrix.mulVec_mulVec, Matrix.smul_mulVec, matching_column ρ,
     Matrix.mulVec_smul, hfix]
 
 /-- Integral adjacency support and a clone multiplicity divisible by four give adjacency
 perfect state transfer across every inserted matching edge in the clone set of `v`. -/
 theorem result (m n : ℕ) (g : SimpleGraph (Fin m)) [DecidableRel g.Adj]
-    (v : Fin m) (ρ : Equiv.Perm (Fin n)) (hv : IntegralSupport g v)
-    (hn : 4 ∣ n) (hρ : IsPerfectMatching ρ) (j : Fin n) :
-    HasPST (blowUpMatching g n ρ) (Real.pi / 2) (v, j) (v, ρ j) := by
-  have h := congrFun (transfer_column g v ρ hv hn hρ (ρ j)) (v, j)
-  have hinv : ρ (ρ j) = j := congrArg (fun p : Equiv.Perm (Fin n) => p j) hρ.1
+    (v : Fin m) (ρ : FixedPointFreeInvolution (Fin n)) (hv : IntegralSupport g v)
+    (hn : 4 ∣ n) (j : Fin n) :
+    HasPST (blowUpMatching g n ρ.val) (Real.pi / 2) (v, j) (v, ρ.val j) := by
+  have h := congrFun (transfer_column g v ρ hv hn (ρ.val j)) (v, j)
+  have hinv : ρ.val (ρ.val j) = j := ρ.property.1 j
   rw [hinv] at h
   rw [Matrix.mulVec_single_one, Matrix.col_apply, Pi.smul_apply, Pi.single_eq_same,
     smul_eq_mul, mul_one] at h
