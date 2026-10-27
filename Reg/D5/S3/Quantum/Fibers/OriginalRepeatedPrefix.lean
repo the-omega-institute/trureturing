@@ -57,7 +57,7 @@ def arena : Arena where
 
 private theorem actual_law : arena.Law actual := by
   intro B n hn chi
-  simpa only [actual,realize,value,ite_eq_left rfl,ite_eq_right (by decide : (1:Fin 2)≠0)]
+  simpa [actual,realize,value]
     using early_late_native_survival B n hn chi
 
 private def sample : Band :=
@@ -67,8 +67,8 @@ private theorem value_pow (i : Fin 2) (B : Band) (n : ℕ) (hn : 1 ≤ n) :
     value i ⟨B,n,hn⟩=B.q^(n+1) := by
   obtain ⟨_,_,_,_,_,_,_,_,_,he,hl,_,_⟩ := early_late_native_survival B n hn 0
   fin_cases i
-  · simpa only [value,ite_eq_left rfl] using he
-  · simpa only [value,ite_eq_right (by decide : (1:Fin 2)≠0)] using hl
+  · simpa [value] using he
+  · simpa [value] using hl
 
 private theorem changed_fails (i : Fin 2) : ¬ arena.Law (changed i) := by
   intro h
@@ -82,6 +82,15 @@ private theorem changed_fails (i : Fin 2) : ¬ arena.Law (changed i) := by
 private theorem changed_other (i j : Fin 2) (hj : j≠i) (param : Unit) (d : Input) :
     actual.readout j param d=(changed i).readout j param d := by
   simp [actual,changed,realize,hj]
+
+private theorem counts_differ (i : Fin 2) :
+    value i ⟨sample,1,by omega⟩≠value i ⟨sample,2,by omega⟩ := by
+  rw [value_pow,value_pow]
+  obtain ⟨hq0,hq1,_⟩ := early_late_native_survival sample 1 (by omega) 0
+  have hlt : sample.q^3 < sample.q^2 := by
+    simpa only [pow_succ,mul_one] using
+      mul_lt_mul_of_pos_left hq1 (pow_pos hq0 2)
+  exact (ne_of_lt hlt).symm
 
 def registration : Registration arena (type_of% (@early_late_native_survival)) where
   actual := actual
@@ -98,15 +107,7 @@ def registration : Registration arena (type_of% (@early_late_native_survival)) w
       exact nomatch i
   dependence := by
     intro i
-    refine ⟨(),⟨sample,1,by omega⟩,⟨sample,2,by omega⟩,?_⟩
-    intro he
-    change value i ⟨sample,1,by omega⟩=value i ⟨sample,2,by omega⟩ at he
-    rw [value_pow,value_pow] at he
-    obtain ⟨hq0,hq1,_⟩ := early_late_native_survival sample 1 (by omega) 0
-    have hlt : sample.q^3 < sample.q^2 := by
-      simpa only [pow_succ,mul_one] using
-        mul_lt_mul_of_pos_left hq1 (pow_pos hq0 2)
-    exact (ne_of_lt hlt) he.symm
+    exact ⟨(),⟨sample,1,by omega⟩,⟨sample,2,by omega⟩,counts_differ i⟩
 
 noncomputable def registration_1 : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@early_late_native_survival)
