@@ -4,12 +4,10 @@ import D5.S3.Weil.ZetaSeam.StatementSeamClosed
 import D5.S3.Weil.ZeroData.UnconditionalCanonicalZeroData
 import Reg.Support.SingleDependentReadout
 
-/-! Retain the original actual zeta seam, complete strip envelope and
-pointwise convergence telescope. The complete signed complex sample in
-the first summability clause is observed by the identity readout; all
-other clauses retain their original signed products. The rejected
-constant-one readout fails actual summability,
-using the already established infinitude of the actual zeta-zero carrier. -/
+/-! Retain the full strip telescope and all signed products. Intervene only
+on the first sampled function V_n in the approximant summability clause.
+The rejected quadratic readout turns a lawful inverse-square input into
+the nonsummable actual multiplicity series. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -26,13 +24,14 @@ open scoped Topology ComplexConjugate
 
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
-    Unit (fun _ => ℂ) (fun _ => ℂ)
+    (ℕ → ℂ → ℂ) (fun _ => ℕ) (fun _ => ℂ → ℂ)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ z => z) (fun e => nomatch e)
+  realize signature (fun _ V n => V n) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+  realize signature (fun _ _ _ z => (((1 + z.re ^ (2 : ℕ)) : ℝ) : ℂ))
+    (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
@@ -42,8 +41,8 @@ def arena : Arena where
     (∀ z : ℂ, |z.im| ≤ 1 / 2 →
       Tendsto (fun n => V n z) atTop (𝓝 (U z))) →
     (∀ n, Summable (fun ρ : (zetaZeros hs).carrier =>
-      R.readout () () ((zeroMult ρ : ℂ) * V n (gammaOf ρ) *
-        conj (V n (conj (gammaOf ρ)))))) ∧
+      (zeroMult ρ : ℂ) * (R.readout () V n) (gammaOf ρ) *
+        conj (V n (conj (gammaOf ρ))))) ∧
     Summable (fun ρ : (zetaZeros hs).carrier =>
       (zeroMult ρ : ℂ) * U (gammaOf ρ) * conj (U (conj (gammaOf ρ)))) ∧
     Tendsto (fun n => ∑' ρ : (zetaZeros hs).carrier,
@@ -54,18 +53,39 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   letI : Infinite ((zetaZeros zetaSeam).carrier) := Set.infinite_coe_iff.mpr (by
-    simpa only [zetaZeros_carrier] using zetaZeroData_closed_chain.1)
-  have hall := h zetaSeam (U := fun _ => 0) (V := fun _ _ => 0) (D := 0)
-    (by norm_num) (by intro n z hz; simp) (fun _ _ => tendsto_const_nhds)
-  have hi : Summable (fun _ : (zetaZeros zetaSeam).carrier => (1 : ℂ)) := hall.1 0
+    simpa only [zetaZeros_carrier, _root_.D5.S3.Weil.ZeroSum.IsNontrivialZero,
+      _root_.D5.S3.Weil.Convention.classicalZeta, Zeta23.IsNontrivialZero] using
+      zetaZeroData_closed_chain.1)
+  let W : ℂ → ℂ := fun z => ((1 / (1 + z.re ^ (2 : ℕ)) : ℝ) : ℂ)
+  have hall := h zetaSeam (U := W) (V := fun _ => W) (D := 1)
+    (by norm_num) (by
+      intro n z hz
+      change ‖((1 / (1 + z.re ^ (2 : ℕ)) : ℝ) : ℂ)‖ ≤
+        1 / (1 + z.re ^ (2 : ℕ))
+      rw [Complex.norm_real, Real.norm_eq_abs, abs_of_pos (by positivity)])
+    (fun _ _ => tendsto_const_nhds)
+  have hterm (ρ : (zetaZeros zetaSeam).carrier) :
+      (zeroMult ρ : ℂ) * (((1 + (gammaOf ρ).re ^ (2 : ℕ)) : ℝ) : ℂ) *
+        conj (W (conj (gammaOf ρ))) = (zeroMult ρ : ℂ) := by
+    dsimp only [W]
+    rw [Complex.conj_re, Complex.conj_ofReal, mul_assoc, ← Complex.ofReal_mul]
+    have hq : 1 + (gammaOf ρ).re ^ (2 : ℕ) ≠ 0 := by positivity
+    simp [hq]
+  have hmult : Summable (fun ρ : (zetaZeros zetaSeam).carrier =>
+      (zeroMult ρ : ℂ)) := (hall.1 0).congr hterm
+  have hi : Summable (fun _ : (zetaZeros zetaSeam).carrier => (1 : ℂ)) :=
+    hmult.norm.of_norm_bounded (fun ρ => by
+      rw [norm_one, Complex.norm_natCast]
+      exact_mod_cast zetaSeam.one_le_mult (ρ : ℂ) ρ.property)
   have hz : (1 : ℂ) = 0 := (summable_const_iff (1 : ℂ)).mp hi
   norm_num at hz
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, 1, ?_⟩
-  change (0 : ℂ) ≠ 1
-  norm_num
+  refine ⟨(fun n _ => (n : ℂ)), 0, 1, ?_⟩
+  intro h
+  have hzero := congrFun h (0 : ℂ)
+  norm_num [actual, realize] at hzero
 
 def evidence : Registration arena (type_of% actual_zeta_signed_zero_tendsto) where
   actual := actual
@@ -88,7 +108,7 @@ def registration_1 : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source arena ⟨evidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e))
+  readout := some (realize signature (fun _ V n => V n) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -96,13 +116,13 @@ def registration_1 : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.ClosedStripSignedZeroPassage
     definition := none
-    coordinates := #[]
+    coordinates := #[2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
-        "fn", "arg", "body", "fn", "arg", "body"]
+        "fn", "arg", "body", "fn", "arg", "body", "fn", "arg", "arg", "fn"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

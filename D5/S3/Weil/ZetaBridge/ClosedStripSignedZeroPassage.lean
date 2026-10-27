@@ -4,11 +4,13 @@
    mirror-E: none(waiver:infinite-zero-sum-passage)
    anchors: []
    utility: none
-   digest: A common closed-half-strip inverse-square envelope pays the actual signed Weil zero sum. -/
+   digest: A common inverse-square strip envelope pays the actual signed zero sum. -/
 
 import D5.S3.Weil.ZetaExplicit.ZeroSummability
 import Mathlib.Analysis.Normed.Group.Tannery
 import Mathlib.Tactic
+
+/-! Absolute summability and dominated passage for the actual signed zeta-zero series. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -45,7 +47,8 @@ private theorem signed_sample_bound {D : ℝ} (hD : 0 ≤ D)
     nlinarith [sq_nonneg z.re, sq_nonneg (z.re ^ (2 : ℕ))]
   have hdecay : D ^ (2 : ℕ) / (1 + z.re ^ (2 : ℕ)) ^ (2 : ℕ) ≤
       ((5 / 4 : ℝ) * D ^ (2 : ℕ)) / (1 + Complex.normSq z) := by
-    apply (div_le_div_iff₀ (by positivity) (by positivity)).2
+    apply (div_le_div_iff₀ (by positivity)
+      (by linarith [Complex.normSq_nonneg z])).2
     have hm := mul_le_mul_of_nonneg_left hQ (sq_nonneg D)
     nlinarith only [hm]
   rw [norm_mul, norm_mul, Complex.norm_natCast, Complex.norm_conj]
@@ -57,7 +60,9 @@ private theorem signed_sample_bound {D : ℝ} (hD : 0 ≤ D)
         (mul_le_mul (hF z hz) hFc (norm_nonneg _) (by positivity))
         (Nat.cast_nonneg m)
     _ = (m : ℝ) * (D ^ (2 : ℕ) /
-        (1 + z.re ^ (2 : ℕ)) ^ (2 : ℕ)) := by ring
+        (1 + z.re ^ (2 : ℕ)) ^ (2 : ℕ)) := by
+      rw [← div_pow]
+      ring
     _ ≤ (m : ℝ) * (((5 / 4 : ℝ) * D ^ (2 : ℕ)) /
         (1 + Complex.normSq z)) :=
       mul_le_mul_of_nonneg_left hdecay (Nat.cast_nonneg m)
