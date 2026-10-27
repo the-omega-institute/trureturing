@@ -10,6 +10,7 @@ import D5.S3.Combinatorics.Sequenceability.OriginalFiniteOrderSharpness
 import Mathlib.GroupTheory.Coset.Card
 import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.Data.ZMod.QuotientGroup
+import Mathlib.GroupTheory.SpecificGroups.Cyclic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -478,6 +479,273 @@ theorem carrier_card_lower_bound {G : Type*} [AddCommGroup G] [Finite G]
   calc
     m * (m + 1) = (m + 1) * m := Nat.mul_comm m (m + 1)
     _ ≤ Nat.card (G ⧸ H) * Nat.card H := by
+      rw [hH]
+      exact Nat.mul_le_mul_right m hquot
+    _ = Nat.card G :=
+      (AddSubgroup.card_eq_card_quotient_mul_card_addSubgroup H).symm
+
+
+private lemma sentinel_plus_not_mem_zmultiples
+    (hm : 2 ≤ m) (hq : addOrderOf (f (q m)) = m)
+    (hzero : ∀ C : Finset (Coordinate m),
+      (C.Nonempty ∧ (∑ x ∈ C, f x) = 0) ↔
+        ∃ j : Index m, C = triple m j)
+    (i : Index m) :
+    f (p m) + f (a m i) ∉ AddSubgroup.zmultiples (f (q m)) := by
+  classical
+  intro hmem
+  obtain ⟨t, ht, he⟩ := residue_of_mem_zmultiples hq hmem
+  have hforbid (C : Finset (Coordinate m)) (hpC : p m ∈ C) :
+      (∑ x ∈ C, f x) ≠ 0 := by
+    intro hz
+    obtain ⟨j, hC⟩ := (hzero C).mp ⟨⟨p m, hpC⟩, hz⟩
+    have hpT : p m ∈ triple m j := hC ▸ hpC
+    simpa [triple, p, q, a, b] using hpT
+  by_cases hlast : t = m - 1
+  · have hord : m • f (q m) = 0 := by
+      simpa only [hq] using addOrderOf_nsmul_eq_zero (f (q m))
+    apply hforbid {q m, p m, a m i} (by simp)
+    have hs : (∑ x ∈ ({q m, p m, a m i} : Finset (Coordinate m)), f x) =
+        f (q m) + (f (p m) + f (a m i)) := by
+      simp [q, p, a, add_assoc]
+    rw [hs, ← he]
+    calc
+      f (q m) + t • f (q m) = (t + 1) • f (q m) := by
+        rw [add_nsmul, one_nsmul]; abel
+      _ = m • f (q m) := by congr 1; omega
+      _ = 0 := hord
+  · have hcard : ((Finset.univ : Finset (Index m)).erase i).card = m - 2 := by
+      rw [Finset.card_erase_of_mem (Finset.mem_univ i), Finset.card_univ,
+        Fintype.card_fin]
+      omega
+    have hbound : t ≤ ((Finset.univ : Finset (Index m)).erase i).card := by
+      rw [hcard]
+      omega
+    obtain ⟨K, hK, hKcard⟩ := Finset.exists_subset_card_eq hbound
+    have hi : i ∉ K := by
+      intro hi
+      have h := hK hi
+      simpa using h
+    let C := insert (p m) (insert (a m i) (paired m K))
+    have hai : a m i ∉ paired m K := by simp [paired, a, b, hi]
+    have hp : p m ∉ insert (a m i) (paired m K) := by simp [paired, p, a, b]
+    apply hforbid C (by simp [C])
+    dsimp only [C]
+    rw [Finset.sum_insert hp, Finset.sum_insert hai, paired_sum hzero K, hKcard]
+    rw [he]
+    abel
+
+private lemma sum_not_mem_zmultiples
+    (hm : 2 ≤ m) (hq : addOrderOf (f (q m)) = m)
+    (hzero : ∀ C : Finset (Coordinate m),
+      (C.Nonempty ∧ (∑ x ∈ C, f x) = 0) ↔
+        ∃ j : Index m, C = triple m j)
+    (i j : Index m) (hij : i ≠ j) :
+    f (a m i) + f (a m j) ∉ AddSubgroup.zmultiples (f (q m)) := by
+  classical
+  intro hmem
+  have hm3 : 3 ≤ m := by
+    by_contra h
+    have hi := i.isLt
+    have hj := j.isLt
+    apply hij
+    apply Fin.ext
+    omega
+  obtain ⟨t, ht, he⟩ := residue_of_mem_zmultiples hq hmem
+  have hord : m • f (q m) = 0 := by
+    simpa only [hq] using addOrderOf_nsmul_eq_zero (f (q m))
+  by_cases hlast : t = m - 1
+  · let C : Finset (Coordinate m) := {q m, a m i, a m j}
+    have hs : (∑ x ∈ C, f x) =
+        f (q m) + (f (a m i) + f (a m j)) := by
+      simp [C, q, a, hij, add_assoc]
+    apply forbidden_sum hzero i C (by simp [C]) (by simp [C, q, a, b])
+    rw [hs, ← he]
+    calc
+      f (q m) + t • f (q m) = (t + 1) • f (q m) := by
+        rw [add_nsmul, one_nsmul]; abel
+      _ = m • f (q m) := by congr 1; omega
+      _ = 0 := hord
+  · by_cases hpenult : t = m - 2
+    · have hsplit : t • f (q m) + f (q m) + f (q m) = m • f (q m) := by
+        calc
+          t • f (q m) + f (q m) + f (q m) = ((t + 1) + 1) • f (q m) := by
+            simp only [add_nsmul, one_nsmul]
+          _ = m • f (q m) := by congr 1; omega
+      have hsum : f (b m i) + f (b m j) = 0 := by
+        calc
+          f (b m i) + f (b m j) =
+              (f (a m i) + f (b m i)) + (f (a m j) + f (b m j)) -
+                (f (a m i) + f (a m j)) := by abel
+          _ = -f (q m) + -f (q m) - t • f (q m) := by
+            rw [pair_sum hzero i, pair_sum hzero j, ← he]
+          _ = -(t • f (q m) + f (q m) + f (q m)) := by abel
+          _ = 0 := by rw [hsplit, hord, neg_zero]
+      let C : Finset (Coordinate m) := {b m i, b m j}
+      have hz : (∑ x ∈ C, f x) = 0 := by
+        simpa [C, b, hij] using hsum
+      obtain ⟨k, hC⟩ := (hzero C).mp ⟨by simp [C], hz⟩
+      have hqC : q m ∈ C := hC ▸ (by simp [triple])
+      simpa [C, q, b] using hqC
+    · have hjmem : j ∈ (Finset.univ : Finset (Index m)).erase i := by
+        simp [hij, Ne.symm hij]
+      have hcard : (((Finset.univ : Finset (Index m)).erase i).erase j).card =
+          m - 3 := by
+        rw [Finset.card_erase_of_mem hjmem,
+          Finset.card_erase_of_mem (Finset.mem_univ i), Finset.card_univ,
+          Fintype.card_fin]
+        omega
+      have hbound : t ≤ (((Finset.univ : Finset (Index m)).erase i).erase j).card := by
+        rw [hcard]
+        omega
+      obtain ⟨K, hK, hKcard⟩ := Finset.exists_subset_card_eq hbound
+      have hi : i ∉ K := by
+        intro hi
+        have h := hK hi
+        simpa using h
+      have hj : j ∉ K := by
+        intro hj
+        have h := hK hj
+        simpa using h
+      let C := insert (a m i) (insert (a m j) (paired m K))
+      have haj : a m j ∉ paired m K := by simp [paired, a, b, hj]
+      have hai : a m i ∉ insert (a m j) (paired m K) := by
+        simp [paired, a, b, hi, hij]
+      apply forbidden_sum hzero i C (by simp [C]) (by simp [C, paired, a, b, hi])
+      dsimp only [C]
+      rw [Finset.sum_insert hai, Finset.sum_insert haj, paired_sum hzero K, hKcard]
+      rw [he]
+      abel
+
+private lemma signed_classes_card_bound
+    {K : Type*} [AddCommGroup K] [Finite K] [IsAddCyclic K]
+    (m : ℕ) (hm : 2 ≤ m) (A : Index m → K) (P : K)
+    (hA0 : ∀ i, A i ≠ 0) (hAA : Function.Injective A)
+    (hAN : ∀ i j, i ≠ j → A i ≠ -A j)
+    (hP0 : P ≠ 0) (hPA : ∀ i, P ≠ A i) (hPN : ∀ i, P ≠ -A i) :
+    2 * m ≤ Nat.card K := by
+  classical
+  letI := Fintype.ofFinite K
+  let e : K ≃+ ZMod (Nat.card K) := (zmodAddCyclicAddEquiv (G := K) inferInstance).symm
+  let T := (Finset.univ : Finset (Index m)).image A
+  let U := (Finset.univ : Finset (Index m)).image (fun i => -A i)
+  have hT : T.card = m - 1 := by
+    rw [Finset.card_image_of_injective _ hAA, Finset.card_univ, Fintype.card_fin]
+  have hU : U.card = m - 1 := by
+    have hnegA : Function.Injective (fun i => -A i) :=
+      fun _ _ h => hAA (neg_injective h)
+    rw [Finset.card_image_of_injective _ hnegA, Finset.card_univ, Fintype.card_fin]
+  have hself (x : K) (hx : x ∈ T ∩ U) : x = -x ∧ x ≠ 0 := by
+    obtain ⟨hxT, hxU⟩ := Finset.mem_inter.mp hx
+    obtain ⟨i, _, rfl⟩ := Finset.mem_image.mp hxT
+    obtain ⟨j, _, he⟩ := Finset.mem_image.mp hxU
+    have hij : i = j := by
+      by_contra hij
+      exact hAN i j hij he.symm
+    subst j
+    exact ⟨he.symm, hA0 i⟩
+  have hval (x : K) (hx : x ∈ T ∩ U) : 2 * (e x).val = Nat.card K := by
+    have hs := hself x hx
+    have he : -(e x) = e x := by simpa using congrArg e hs.1.symm
+    have hn : e x ≠ 0 := by
+      intro hz
+      apply hs.2
+      exact e.injective (by simpa using hz)
+    exact ((ZMod.neg_eq_self_iff (e x)).mp he).resolve_left hn
+  have hinter : (T ∩ U).card ≤ 1 := by
+    apply Finset.card_le_one.mpr
+    intro x hx y hy
+    apply e.injective
+    apply ZMod.val_injective
+    have hxv := hval x hx
+    have hyv := hval y hy
+    omega
+  have h0 : (0 : K) ∉ T ∪ U := by
+    intro hz
+    rcases Finset.mem_union.mp hz with hz | hz
+    · obtain ⟨i, _, hi⟩ := Finset.mem_image.mp hz
+      exact hA0 i hi
+    · obtain ⟨i, _, hi⟩ := Finset.mem_image.mp hz
+      exact hA0 i (neg_eq_zero.mp hi)
+  have hP : P ∉ T ∪ U := by
+    intro hz
+    rcases Finset.mem_union.mp hz with hz | hz
+    · obtain ⟨i, _, hi⟩ := Finset.mem_image.mp hz
+      exact hPA i hi.symm
+    · obtain ⟨i, _, hi⟩ := Finset.mem_image.mp hz
+      exact hPN i hi.symm
+  have hS : (T ∪ U).card + 2 ≤ Nat.card K := by
+    have hcard := Finset.card_le_univ (insert (0 : K) (insert P (T ∪ U)))
+    rw [Finset.card_insert_of_notMem (by simp [h0, hP0.symm]),
+      Finset.card_insert_of_notMem hP] at hcard
+    simpa only [Nat.card_eq_fintype_card, Nat.add_assoc] using hcard
+  have hunion := Finset.card_union_add_card_inter T U
+  by_cases hodd : Odd (Nat.card K)
+  · have hempty : T ∩ U = ∅ := by
+      apply Finset.eq_empty_iff_forall_notMem.mpr
+      intro x hx
+      have hs := hself x hx
+      have hn : e x ≠ 0 := by
+        intro hz
+        exact hs.2 (e.injective (by simpa using hz))
+      exact ZMod.ne_neg_self hodd hn (by simpa using congrArg e hs.1)
+    rw [hempty, Finset.card_empty, hT, hU] at hunion
+    omega
+  · have heven : Nat.card K % 2 = 0 := Nat.not_odd_iff.mp hodd
+    rw [hT, hU] at hunion
+    omega
+
+theorem cyclic_carrier_card_lower_bound {G : Type*} [AddCommGroup G] [Finite G]
+    [IsAddCyclic G] (m : ℕ) (hm : 2 ≤ m) (f : Coordinate m → G)
+    (hq : addOrderOf (f (q m)) = m)
+    (hzero : ∀ C : Finset (Coordinate m),
+      (C.Nonempty ∧ (∑ x ∈ C, f x) = 0) ↔
+        ∃ j : Index m, C = triple m j) :
+    2 * m * m ≤ Nat.card G := by
+  classical
+  let H := AddSubgroup.zmultiples (f (q m))
+  letI : IsAddCyclic (G ⧸ H) :=
+    isAddCyclic_of_surjective (QuotientAddGroup.mk' H) (QuotientAddGroup.mk'_surjective H)
+  let A : Index m → G ⧸ H := fun i => (f (a m i) : G ⧸ H)
+  let P : G ⧸ H := (f (p m) : G ⧸ H)
+  have hA0 (i : Index m) : A i ≠ 0 := by
+    intro h
+    have heq : (f (a m i) : G ⧸ H) = ((0 : G) : G ⧸ H) := h
+    exact label_not_mem_zmultiples hm hq hzero i
+      (by simpa only [sub_zero] using QuotientAddGroup.eq_iff_sub_mem.mp heq)
+  have hAA : Function.Injective A := by
+    intro i j heq
+    by_contra hij
+    exact difference_not_mem_zmultiples hm hq hzero i j hij
+      (QuotientAddGroup.eq_iff_sub_mem.mp heq)
+  have hAN (i j : Index m) (hij : i ≠ j) : A i ≠ -A j := by
+    intro heq
+    have heq' : (f (a m i) : G ⧸ H) = ((-f (a m j) : G) : G ⧸ H) := by
+      simpa only [QuotientAddGroup.mk_neg] using heq
+    exact sum_not_mem_zmultiples hm hq hzero i j hij
+      (by simpa only [sub_neg_eq_add] using QuotientAddGroup.eq_iff_sub_mem.mp heq')
+  have hP0 : P ≠ 0 := by
+    intro h
+    have heq : (f (p m) : G ⧸ H) = ((0 : G) : G ⧸ H) := h
+    exact sentinel_not_mem_zmultiples hq hzero
+      (by simpa only [sub_zero] using QuotientAddGroup.eq_iff_sub_mem.mp heq)
+  have hPA (i : Index m) : P ≠ A i := by
+    intro heq
+    exact sentinel_difference_not_mem_zmultiples hm hq hzero i
+      (QuotientAddGroup.eq_iff_sub_mem.mp heq)
+  have hPN (i : Index m) : P ≠ -A i := by
+    intro heq
+    have heq' : (f (p m) : G ⧸ H) = ((-f (a m i) : G) : G ⧸ H) := by
+      simpa only [QuotientAddGroup.mk_neg] using heq
+    exact sentinel_plus_not_mem_zmultiples hm hq hzero i
+      (by simpa only [sub_neg_eq_add] using QuotientAddGroup.eq_iff_sub_mem.mp heq')
+  have hquot : 2 * m ≤ Nat.card (G ⧸ H) :=
+    signed_classes_card_bound m hm A P hA0 hAA hAN hP0 hPA hPN
+  have hH : Nat.card H = m := by
+    dsimp [H]
+    rw [Nat.card_zmultiples, hq]
+  calc
+    2 * m * m ≤ Nat.card (G ⧸ H) * Nat.card H := by
       rw [hH]
       exact Nat.mul_le_mul_right m hquot
     _ = Nat.card G :=
