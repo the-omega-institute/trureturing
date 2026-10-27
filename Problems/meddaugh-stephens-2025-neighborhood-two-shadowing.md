@@ -60,6 +60,19 @@ $n$ with $uzv$ in the language would force the first return after the
 leading one to lie in $(H,H+n+1]$. This interval lies strictly between
 the consecutive powers $H$ and $2H$, so no such return is allowed.
 
+## Falsifier
+
+The proposed source-level answer would fail if some $\varepsilon>0$
+allowed, for every $\delta>0$, a natural-time $\delta$-pseudo-orbit in
+$X_D$ with no fixed nonempty finite $A\subseteq X_D$ satisfying
+$|A|\leq2$, $\operatorname{diam}(A)<\varepsilon$ and
+$\operatorname{dist}(x_i,\sigma^i(A))<\varepsilon$ for every $i\geq0$.
+The displayed QFT obstruction would fail if, for some proposed threshold
+$M$, its words admitted a language word $z$ of length exactly
+$n=\max(M,1)$ with $uzv$ in the language. A mismatch with the original
+Definitions 2.1 or 3.5 would defeat the claimed source correspondence.
+These are failure criteria for the inference, not claims that they occur.
+
 ## Evidence
 
 The endpoint is
@@ -102,3 +115,13 @@ the full Question 5.2 hierarchy or assert nonsoficity. Kernel verification
 certifies the encoded statements; correspondence to the scholarly
 question remains a source-reading judgement. No official acceptance is
 claimed.
+
+## ASSUMED-UNVERIFIED
+
+Source correspondence remains a source-reading judgement using the
+genuine compatible product metric, not equality with the degenerate
+printed infimum. Literature exclusions are bounded: the full texts of
+Carrasco-Olivera et al. (2022) and Dastjerdi–Hosseini (2010) remain unread.
+The audit under issue #22664 remains unfinished; the 23 positive-law
+checks are not `declared_validated`. No exhaustive novelty, global
+priority or official acceptance is claimed.
