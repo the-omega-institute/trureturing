@@ -134,6 +134,12 @@ private lemma star_nonnegative :
     ∀ f n, IsMultiflow starCapacity starBoundary f n →
       combo ingletonCoefficient (subflow n) ≥ 0 := by sorry
 
+private lemma star_symmetric : ∀ u v, starCapacity u v = starCapacity v u := by sorry
+
+private lemma star_loopless : ∀ u, starCapacity u u = 0 := by sorry
+
+private lemma star_capacity_nonnegative : ∀ u v, 0 ≤ starCapacity u v := by sorry
+
 theorem result : ¬ claim := by
   intro h
   have hnonneg := star_nonnegative
@@ -141,7 +147,8 @@ theorem result : ¬ claim := by
       combo ingletonCoefficient (subflow n) ≠ 0 :=
     ⟨witnessFlow, witnessThreads, witness_is_multiflow, by norm_num [star_witness_combo]⟩
   have heq := h (Fin 6) 5 starCapacity starBoundary ingletonCoefficient
-    (by sorry) (by sorry) (by sorry) hnonneg hex witnessFlow witnessThreads witness_max
+    star_symmetric star_loopless star_capacity_nonnegative hnonneg hex
+    witnessFlow witnessThreads witness_max
   rw [star_min_combo, star_witness_combo] at heq
   norm_num at heq
 
