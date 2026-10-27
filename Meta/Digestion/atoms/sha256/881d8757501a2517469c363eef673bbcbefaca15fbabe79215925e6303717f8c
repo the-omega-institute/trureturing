@@ -1,0 +1,47 @@
+## 6. Completeness of the legal-word classification
+
+**Lemma 6.1.** A mixed word with three-dimensional cumulative span is precisely of the form
+
+$$
+M^aJ^bM^c,\qquad a,c\ge0,\quad a+c>0,\quad b>0,
+\tag{6.1}
+$$
+
+with $b$ even when both $a,c>0$.
+
+**Proof.** If a word starts with $J^b$ and then takes $M$, its span becomes $\operatorname{span}\{I,J,M\}$ for even $b$ and $\operatorname{span}\{I,J,MJ\}$ for odd $b$. Further $M$ actions remain there, by (2.3). A later $J$ after $k\ge1$ such $M$ actions adds $JM^k$ or $JM^kJ$. In the even case $JM^k=F_{k-1}J+F_kJM$ is outside $\operatorname{span}\{I,J,M\}$. In the odd case $JM^kJ=F_{k-1}I+F_kJMJ$ is outside $\operatorname{span}\{I,J,MJ\}$, using (2.2) and the independent basis. Thus there is no later $J$.
+
+If the word starts with $M^a$, $a\ge1$, its first $J$ adds $JM^a$ to $\operatorname{span}\{I,M\}$. Consecutive $J$ actions toggle $JM^a$ and $M^a$. An $M$ after an odd number of them gives $MJM^a$, outside the current span: right multiplication by $M^{-a}$ reduces this to the independence of $I,M,J,MJ$. After an even number of $J$ actions, $M$ actions return to the pure-$M$ algebra. A later $J$ at a larger exponent would add $JM^{a+k}$, $k\ge1$. Right multiplication by $M^{-a}$ reduces the fourth-direction claim to independence of $J$ and $JM^k$ modulo $\operatorname{span}\{I,M\}$, which follows from $F_k>0$ and the basis $I,M,J,JM$. Thus there is at most one $J$ block, and an interior block must have even length. Conversely all forms in (6.1) with this parity condition stay in the indicated three-plane and are mixed, so have span three. $\square$
+
+**Theorem 6.2.** The clock-pencil alternative (5.1) is impossible for a legal critical mixed word. In the exceptional alternative, the only word families are
+
+$$
+M^{2m-1}J,\qquad JM^{2m-1},\qquad
+M^aJJM^{2m-2-a}\ (0\le a\le2m-2),\qquad
+MJ^{2m-1},\qquad J^{2m-1}M.
+\tag{6.2}
+$$
+
+For each family the exceptional read is uniquely the one outside its repeated or translated two-plane.
+
+**Proof.** Apply Lemma 6.1. A $J$ block of length at least two repeats its preceding cumulative matrix two clocks later, forbidden by clock-pencil injectivity. Thus a pencil word has one $J$, at an edge. It contains $2m\ge4$ consecutive cumulative matrices in a right-translated $M$ trajectory. The first four are
+
+$$
+B,\quad MB,\quad B+MB,\quad B+2MB.
+$$
+
+If $L$ lies in their two-plane, their nonzero projections modulo $L$ are projectively identical, contradicting pencil injectivity. Otherwise projection is injective on the plane and preserves projective cross ratio. In the basis $B,MB$ their projective coordinates are $0,\infty,1,2$, with cross ratio $1/2$, using the convention
+
+$$
+[x_0,x_1;x_2,x_3]=
+\frac{(x_0-x_2)(x_1-x_3)}{(x_0-x_3)(x_1-x_2)}.
+$$
+
+Four consecutive clocks have cross ratio $4/3$. Formula (5.1) induces an invertible projective linear map from clock to projected matrix, so these ratios would agree. This is impossible.
+
+For the exceptional case let (6.1) have $a+b+c=2m$. If $b=2h$ is even, the pure states have exponents $0,\ldots,a+c$ and the other state $JM^a$ occurs $h$ times. The positive even integer $a+c$ is at least two. Deleting one pure state leaves two distinct pure powers, which span their plane. Deleting just one index can therefore reduce total rank to two only when it removes the sole occurrence of $JM^a$, that is, $h=1$. This is the $JJ$ family.
+
+If $b$ is odd the $J$ block is at an edge. If the $M$ run has length at least two, its plane contains three distinct projective $M$ states, or three right-translates of such states. Deleting one still leaves that plane. The state outside it occurs $(b+1)/2$ times, so it can be removed by one deletion only if $b=1$. These are the two edge-$J$ words. If the $M$ run has length one, $b=2m-1$, giving the two predominantly-$J$ words.
+
+For a $JJ$ word the unique outside state is $JM^a$, at clock $a+1$; the pure exponents $0,\ldots,2m-2$ leave at least two distinct powers after any other deletion. For an edge-$J$ word the outside state is its last or initial read; the other $2m$ states span the translated $M$ plane after any other deletion. For a predominantly-$J$ word the outside state is its initial or last read; each of the other two states occurs $m\ge2$ times. Thus the exceptional index is unique for the word, not merely for a chosen identity. $\square$
+
