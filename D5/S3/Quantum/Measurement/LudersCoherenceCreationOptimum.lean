@@ -456,11 +456,12 @@ private theorem measurement_attainment {n : ℕ} (hn : 2 ≤ n)
 private theorem zero_gain (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity ρ) :
     (l1Coherence ρ + blochNorm ρ) / 2 - l1Coherence ρ = 0 ↔ ρ 0 0 = ρ 1 1 := by
   obtain ⟨hc, hcr, _, hsq⟩ := radius_data ρ hρ
+  rw [coherence_two ρ hρ.1.isHermitian] at hc hcr hsq ⊢
   have hn : 0 ≤ blochNorm ρ := hc.trans hcr
   have he := hermitian_entries ρ hρ.1.isHermitian
   constructor
   · intro h
-    have heq : blochNorm ρ = l1Coherence ρ := by linarith only [h]
+    have heq : blochNorm ρ = 2 * ‖ρ 0 1‖ := by linarith only [h]
     rw [heq] at hsq
     have hz : (ρ 0 0 - ρ 1 1).re = 0 := by nlinarith only [hsq]
     apply Complex.ext
@@ -475,13 +476,13 @@ private theorem maximal_gain (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity 
       ((l1Coherence ρ + blochNorm ρ) / 2 - l1Coherence ρ = 1 / 2 ↔
         ρ = Matrix.diagonal ![1, 0] ∨ ρ = Matrix.diagonal ![0, 1]) := by
   obtain ⟨hc, hcr, hr, hsq⟩ := radius_data ρ hρ
+  rw [coherence_two ρ hρ.1.isHermitian] at hc hcr hsq ⊢
   refine ⟨by linarith, ?_⟩
   constructor
   · intro h
-    have hc0 : l1Coherence ρ = 0 := by linarith
+    have hc0 : 2 * ‖ρ 0 1‖ = 0 := by linarith
     have hr1 : blochNorm ρ = 1 := by linarith
     have hz : ρ 0 1 = 0 := by
-      rw [coherence_two ρ hρ.1.isHermitian] at hc0
       exact norm_eq_zero.mp (by linarith)
     have he := hermitian_entries ρ hρ.1.isHermitian
     have h10 : ρ 1 0 = 0 := by rw [he.2.2, hz, star_zero]
@@ -517,8 +518,8 @@ private theorem maximal_gain (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity 
   · intro h
     rcases h with h | h
     all_goals
-      have hc0 : l1Coherence ρ = 0 := by
-        rw [coherence_two ρ hρ.1.isHermitian, h]
+      have hc0 : 2 * ‖ρ 0 1‖ = 0 := by
+        rw [h]
         norm_num
       have hr1 : blochNorm ρ = 1 := by
         rw [h]
@@ -541,4 +542,3 @@ theorem result (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity ρ)
   exact measurement_bound ρ hρ f hf
 
 end D5.S3.Quantum.Measurement.LudersCoherenceCreationOptimum
-
