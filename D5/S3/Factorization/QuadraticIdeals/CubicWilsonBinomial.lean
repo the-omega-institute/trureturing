@@ -9,14 +9,13 @@
 import D5.S3.CharacterSums.CubicEulerWilson
 import D5.S3.Factorization.QuadraticIdeals.CubicGaussFrobenius
 
-/-! UNCOMPILED research consumer. The imported CubicEulerWilson module supplies
+/-! The imported CubicEulerWilson module supplies
 its finite-field sum and factorial-cube identities; none is reproved here.
 The actual Jacobi-star reduction and both conjugate-primary symbols are derived
 in the original quotient, without a conjugate-field isomorphism.
 
 The arithmetic endpoints require prime residue cardinalities explicitly.
 The generic identities retain their own separately stated scopes.
-No parser, kernel, scoped report or official acceptance is claimed for this file.
 -/
 
 set_option autoImplicit false
@@ -53,8 +52,8 @@ theorem cubicJacobiSum_star_reduction
         x ^ (2 * ((Nat.card (E ⧸ P) - 1) / 3)) *
           (1 - x) ^ (2 * ((Nat.card (E ⧸ P) - 1) / 3)) := by
   classical
-  letI : Field (E ⧸ P) := Ideal.Quotient.field P
-  letI : Fintype (E ⧸ P) := Fintype.ofFinite _
+  let : Field (E ⧸ P) := Ideal.Quotient.field P
+  let : Fintype (E ⧸ P) := Fintype.ofFinite _
   let χ := cubicResidueMulChar P hcard hthree
   have hsq : χ⁻¹ = χ ^ 2 := by
     symm
@@ -68,8 +67,9 @@ theorem cubicJacobiSum_star_reduction
   change Ideal.Quotient.mk P (star (jacobiSum χ χ)) = _
   rw [hs, hsq]
   simp only [jacobiSum, map_sum, map_mul,
-    MulChar.pow_apply' χ (by decide : 2 ≠ 0), map_pow,
-    cubicResidueMulChar_reduction P hcard hthree, ← pow_mul, Nat.mul_comm]
+    MulChar.pow_apply' χ (by decide : 2 ≠ 0), map_pow]
+  dsimp only [χ]
+  simp only [cubicResidueMulChar_reduction P hcard hthree, ← pow_mul, Nat.mul_comm]
 
 private theorem cubic_index_even (p : ℕ) [Fact p.Prime] (hp : p % 3 = 1) :
     Even ((p - 1) / 3) := by
@@ -89,9 +89,9 @@ theorem primary_conjugate_reduction_eq_factorial_cube
     let m := (p - 1) / 3
     Ideal.Quotient.mk P (star π) = (-((m.factorial : E ⧸ P)⁻¹)) ^ 3 := by
   classical
-  letI : Field (E ⧸ P) := Ideal.Quotient.field P
-  letI : Fintype (E ⧸ P) := Fintype.ofFinite _
-  letI : CharP (E ⧸ P) p :=
+  let : Field (E ⧸ P) := Ideal.Quotient.field P
+  let : Fintype (E ⧸ P) := Fintype.ofFinite _
+  let : CharP (E ⧸ P) p :=
     charP_of_card_eq_prime (by simpa only [Fintype.card_eq_nat_card] using hPcard)
   let m := (p - 1) / 3
   have hpm : p = 3 * m + 1 := by dsimp [m]; omega
@@ -124,9 +124,9 @@ theorem cubic_character_conjugate_primary_eq_one
     let χ := cubicResidueMulChar P (by omega : Nat.card (E ⧸ P) % 3 = 1) hPthree
     χ (Ideal.Quotient.mk P (star π)) = 1 := by
   classical
-  letI : Field (E ⧸ P) := Ideal.Quotient.field P
-  letI : Fintype (E ⧸ P) := Fintype.ofFinite _
-  letI : CharP (E ⧸ P) p :=
+  let : Field (E ⧸ P) := Ideal.Quotient.field P
+  let : Fintype (E ⧸ P) := Fintype.ofFinite _
+  let : CharP (E ⧸ P) p :=
     charP_of_card_eq_prime (by simpa only [Fintype.card_eq_nat_card] using hPcard)
   let m := (p - 1) / 3
   let hPthree := three_not_mem_of_residue_prime_card P p hPcard hp
@@ -159,6 +159,7 @@ theorem cubic_character_conjugate_primary_eq_one
     intro h
     exact hPthree (Ideal.Quotient.eq_zero_iff_mem.mp h)
   apply cubic_roots_injective (Ideal.Quotient.mk P) h3
+    (z := χ (Ideal.Quotient.mk P (star π))) (z' := 1)
     (residueCubicValue_mem_roots P hPmod hPthree _ hinput) (Or.inl rfl)
   simpa only [map_one] using Hred.trans hpower
 
@@ -189,9 +190,5 @@ theorem conjugate_primary_symbol_pair
   · have H := cubic_character_conjugate_primary_eq_one Q p hQcard hp
       (star π) hQ hbarprimary
     simpa only [star_star] using H
-
-/- Acceptance boundary: this source has not been compiled. Its two imported
-companion modules must be accepted before this arithmetic consumer can be checked.
--/
 
 end D5.S3.Factorization.QuadraticIdeals.CubicWilsonBinomial
