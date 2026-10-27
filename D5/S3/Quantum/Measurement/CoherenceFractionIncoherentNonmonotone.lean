@@ -52,7 +52,7 @@ private def p : Matrix (Fin 4) (Fin 4) ℂ :=
       (-60 : ℂ) / 721 + (680 : ℂ) * Complex.I / 2163,
       (75 : ℂ) / 721 + (400 : ℂ) * Complex.I / 2163, (913 : ℂ) / 2163]]
 
-private def rho : Matrix (Fin 4) (Fin 4) ℂ := (1 / 2 : ℂ) • p
+private def rho : Matrix (Fin 4) (Fin 4) ℂ := (1 / 2 : ℝ) • p
 
 private def k : Fin 2 → Matrix (Fin 4) (Fin 4) ℂ
   | 0 => Matrix.diagonal ![1, 0, (3 : ℂ) / 5, (3 : ℂ) / 5]
@@ -86,12 +86,28 @@ private lemma p_range : p * b = b := by
     simp [p, b, Fin.sum_univ_succ] <;> ring_nf <;>
       try rw [Complex.I_sq] <;> norm_num <;> ring
 
-private lemma p_pos : p.PosSemidef := by sorry
+private lemma p_pos : p.PosSemidef := by
+  have h := Matrix.PosSemidef.mul_mul_conjTranspose_same
+    (Matrix.PosSemidef.one : (1 : Matrix (Fin 4) (Fin 4) ℂ).PosSemidef) p
+  simpa [p_star, p_square] using h
 
 private lemma rho_density :
-    D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity rho := by sorry
+    D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity rho := by
+  constructor
+  · simpa [rho] using p_pos.smul (by norm_num : (0 : ℝ) ≤ 1 / 2)
+  · simp [rho, Matrix.trace_smul, p_trace]
 
-private lemma k_incoherent : IsIncoherentOperation k := by sorry
+private lemma k_incoherent : IsIncoherentOperation k := by
+  constructor
+  · ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [k, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
+        Fin.sum_univ_two, map_inv₀, map_ofNat, Complex.I_sq] <;>
+      norm_num [Complex.ext_iff, Complex.I_sq, div_eq_mul_inv] <;> ring
+  · intro i σ hσ
+    rw [← hσ.diagonal_diag]
+    fin_cases i <;>
+      simp [k, Matrix.diagonal_mul_diagonal, Matrix.diagonal_conjTranspose]
 
 private lemma coherence_bddAbove (σ : Matrix (Fin 4) (Fin 4) ℂ) :
     BddAbove {r : ℝ | ∃ z : Fin 4 → ℂ, (∀ j, ‖z j‖ = 1) ∧
