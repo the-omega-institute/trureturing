@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/QuadraticForms/SemimonotoneExactOrderInverseRefutation.claim; result=D5/S3/QuadraticForms/SemimonotoneExactOrderInverseRefutation.result; claim=D5/S3/QuadraticForms/SemimonotoneExactOrderInverseRefutation.claim
    digest: A singular real matrix of exact semimonotone order three refutes the general inverse assertion. -/
 
+import Mathlib.Basic.Real.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Tactic.FinCases
