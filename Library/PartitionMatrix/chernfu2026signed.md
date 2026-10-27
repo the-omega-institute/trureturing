@@ -3,6 +3,7 @@ bibkey: chernfu2026signed
 authors: Shane Chern, Shishuo Fu
 year: 2026
 title: "Signed counting of partition matrices"
+doi: 10.48550/arXiv.2508.21318
 url: https://arxiv.org/abs/2508.21318v2
 claim: "Question 5.5 asks for a characterization of the fixed CDK image of improper partition matrices."
 strata_touched:

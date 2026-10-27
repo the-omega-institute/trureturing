@@ -3,6 +3,7 @@ bibkey: claesson2011partition
 authors: Anders Claesson, Mark Dukes, Martina Kubitzke
 year: 2011
 title: "Partition and composition matrices"
+doi: 10.48550/arXiv.1006.1312
 url: https://arxiv.org/abs/1006.1312v2
 claim: "Theorem 3: Lambda is a bijection from inversion tables to partition matrices, with inverse K."
 strata_touched:
