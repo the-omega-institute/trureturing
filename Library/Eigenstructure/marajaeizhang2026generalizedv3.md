@@ -53,4 +53,4 @@ Source: https://arxiv.org/html/2609.09753v3
 
 Version: arXiv:2609.09753v3, 20 October 2026.
 
-Verified PDF SHA-256: `485bdca9ed47570ebdcb59862c822c785a7d6b4a48740c353b08c2be56d229ca`.
+Verified HTML snapshot SHA-256: `485bdca9ed47570ebdcb59862c822c785a7d6b4a48740c353b08c2be56d229ca`.
