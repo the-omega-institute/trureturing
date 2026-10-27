@@ -245,8 +245,13 @@ private theorem common_gain_source (j m b : ℝ) (v : List Bool)
       D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
       D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
       Matrix.mul_apply, Matrix.trace, Matrix.diag, Fin.sum_univ_two] at hj hm hq
-    ext i k
-    fin_cases i <;> fin_cases k <;> dsimp only <;> linarith
+    have h00 : W.source 0 0 = Z.source 0 0 := by linarith
+    have h01 : W.source 0 1 = Z.source 0 1 := by linarith
+    have h10 : W.source 1 0 = Z.source 1 0 := by linarith
+    have h11 : W.source 1 1 = Z.source 1 1 := by linarith
+    exact Matrix.ext (fun i k => by
+      fin_cases i <;> fin_cases k <;>
+        first | exact h00 | exact h01 | exact h10 | exact h11)
 
 /-- Both first-response equations constrain each of the same three complete worlds.
 The recursion begins at the chosen chronological mixed word and uses clocks three to seven. -/
@@ -317,6 +322,7 @@ theorem mixed_prefix_three_world_exclusion (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
     intro z hz h2
     let S := responseSlice T (v ++ [true]) false z
     have hsub : S ⊆ T := responseSlice_subset T (v ++ [true]) false z
+    have hScard : S.card = 2 := h2
     obtain ⟨W,hW,Z,hZ,hWZ⟩ := Finset.one_lt_card.mp (show 1 < S.card by omega)
     have hWroot := hsub hW
     have hZroot := hsub hZ
