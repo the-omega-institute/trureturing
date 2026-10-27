@@ -132,10 +132,18 @@ theorem source_svd :
   let H := h.eigenvectorUnitary
   let u : Matrix.unitaryGroup P ℂ := ⟨U, by
     simpa only [Unitary.mem_iff, star_eq_conjTranspose] using source_unitary⟩
+  have hd : Matrix.diagonal (RCLike.ofReal ∘ h.eigenvalues) =
+      Matrix.diagonal (fun i => (h.eigenvalues i : ℂ)) := by
+    ext i j
+    simp [Function.comp_apply, RCLike.ofReal_eq_complex_ofReal]
   have hspec : M * U = (H : Matrix P P ℂ) *
       Matrix.diagonal (fun i => (h.eigenvalues i : ℂ)) * (H : Matrix P P ℂ)ᴴ := by
-    simpa only [Unitary.conjStarAlgAut_apply, H, Function.comp_apply,
-      RCLike.ofReal_eq_complex_ofReal, star_eq_conjTranspose] using h.spectral_theorem
+    have hspectral : M * U = (H : Matrix P P ℂ) *
+        Matrix.diagonal (RCLike.ofReal ∘ h.eigenvalues) * (H : Matrix P P ℂ)ᴴ := by
+      simpa only [Unitary.conjStarAlgAut_apply, H, star_eq_conjTranspose]
+        using h.spectral_theorem
+    exact hspectral.trans (congrArg
+      (fun D : Matrix P P ℂ => (H : Matrix P P ℂ) * D * (H : Matrix P P ℂ)ᴴ) hd)
   refine ⟨H, star H * star u, h.eigenvalues,
     source_polar_positive.eigenvalues_nonneg, ?_, ?_⟩
   · change M = (H : Matrix P P ℂ) * _ * ((H : Matrix P P ℂ)ᴴ * Uᴴ)
@@ -166,8 +174,9 @@ theorem source_purification_identity (r : A) (e : E) (q : P) :
     fin_cases r <;> fin_cases j <;> fin_cases b <;>
       simp [sigmaVector, referenceVector, V, psi, Fin.sum_univ_two]
   rw [hsigma]
-  simp only [W, Matrix.one_apply, ite_mul, one_mul, zero_mul,
-    Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+  change X (r, e) q =
+    ((1 : Matrix P P ℂ) *ᵥ (fun z => psi (r, e) * psi z)) q
+  rw [Matrix.one_mulVec]
   change psi (r, e) * star (psi q) = psi (r, e) * psi q
   congr 1
   unfold psi
