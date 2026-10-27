@@ -7,7 +7,6 @@
    digest: Generalized Pauli channel regions have three explicit volume ratios. -/
 
 import D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound
-import Mathlib.LinearAlgebra.Matrix.SchurComplement
 
 /-! Volumes of the source eigenvalue regions for generalized Pauli channels. -/
 
