@@ -25,8 +25,8 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v18-isolation-independent-v1/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v2/N-memo-2000000/checkpoint-v5/views-kappa"
-abbrev lookupExecutionVersion : String := "execution-stops-v1"
+abbrev lookupVersion : String := "R_lookup/v19/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v3/N-memo-2000000/checkpoint-v6/views-kappa/isolation-independent-units"
+abbrev lookupExecutionVersion : String := "execution-stops-v2/typed-terminal"
 
 abbrev lookupCandidateBudget : Nat := 200000
 /-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
@@ -76,7 +76,21 @@ structure LookupTrace where
   capped : Array String := #[]
   fallbackVisited : Nat := 0
   fallbackTotal : Nat := 0
+  scheduled : Bool := false
+  searchKappa : Bool := false
+  coveragePrefixG : Bool := false
+  faults : Array String := #[]
   deriving Inhabited
+
+/-- Only structured execution fields determine the terminal. A successful
+checked certificate may absorb earlier failures; a miss may not. -/
+def LookupTrace.terminal (trace : LookupTrace) : RQuery :=
+  if !trace.faults.isEmpty then .fault (reprStr trace.faults)
+  else if !trace.scheduled then .notRun
+  else if trace.coveragePrefixG then .miss .coveragePrefixG
+  else if trace.searchKappa then .miss .searchKappa
+  else if trace.complete then .miss .exhaustive
+  else .fault "incomplete-scheduler-record"
 
 private def eligible : ConstantInfo → Bool
   | .thmInfo _ | .defnInfo _ | .opaqueInfo _ => true
@@ -245,14 +259,18 @@ private def checkLookupGoal (table : LookupTable) (base : Environment)
     ("query_environment_only", toJson true)] |>.compress}"
   return proof
 
-private def mergeLookupTrace (a b : LookupTrace) : LookupTrace := {
+def mergeLookupTrace (a b : LookupTrace) : LookupTrace := {
   visited := a.visited + b.visited, attempted := a.attempted + b.attempted,
   pages := a.pages + b.pages, missing := a.missing ++ b.missing,
   failures := a.failures ++ b.failures, capped := a.capped ++ b.capped,
   unloaded := a.unloaded + b.unloaded, source? := a.source?.or b.source?,
   complete := a.complete && b.complete,
   fallbackVisited := a.fallbackVisited + b.fallbackVisited,
-  fallbackTotal := a.fallbackTotal + b.fallbackTotal}
+  fallbackTotal := a.fallbackTotal + b.fallbackTotal,
+  scheduled := a.scheduled || b.scheduled,
+  searchKappa := a.searchKappa || b.searchKappa,
+  coveragePrefixG := a.coveragePrefixG || b.coveragePrefixG,
+  faults := a.faults ++ b.faults}
 
 def ownedLookupName : Name → Name
   | .anonymous => .anonymous
@@ -362,6 +380,7 @@ private def ownedCheckpointTrace (t : LookupTrace) : LookupTrace :=
   {t with
     missing := t.missing.foldl (fun out n => out.push (ownedLookupName n)) #[],
     failures := t.failures.foldl (fun out s => out.push (String.ofList s.toList)) #[],
+    faults := t.faults.foldl (fun out s => out.push (String.ofList s.toList)) #[],
     capped := t.capped.foldl (fun out s => out.push (String.ofList s.toList)) #[],
     source? := t.source?.map ownedLookupName}
 
@@ -449,6 +468,11 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
         else pure s!"exception:{← ex.toMessageData.toString}"
       return {
         complete := false, missing := #[entry.leanName], failures := #[reason],
+        scheduled := true,
+        searchKappa := ex.isMaxHeartbeat &&
+          after.preparation - before.preparation < lookupPreparationBudget * 1000,
+        faults := if ex.isMaxHeartbeat &&
+          after.preparation - before.preparation < lookupPreparationBudget * 1000 then #[] else #[reason],
         capped := if ex.isMaxHeartbeat then #[entry.name] else #[]})
   let search := (← IO.getNumHeartbeats) - started
   let after := (← table.budget?.mapM (·.get)).getD {}
@@ -470,6 +494,10 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
     modifyThe Core.State fun state => {state with cache := original.core.cache}
   let result := {result with
     visited := 1,
+    scheduled := true,
+    faults := if !result.complete && result.source?.isNone &&
+        !result.searchKappa && !result.coveragePrefixG && result.faults.isEmpty then
+      #["incomplete-candidate-record"] else result.faults,
     failures := if result.complete then result.failures else
       result.failures.map (fun reason => s!"{entry.module}:{entry.name}:{reason}")}
   if let some path := checkpoint? then
@@ -486,19 +514,23 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
 /-- Hashes only recall candidates; equality and a final certificate decide. -/
 unsafe def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goal.withContext do
   if !table.enabled then return {complete := true}
-  let some index ← tableIndex table | return {}
+  let some index ← tableIndex table | return {faults := #["missing-membership-index"]}
   let type ← goal.getType
   let candidates ← DiskLookup.queryMembership index type table.budget?
   let mut trace : LookupTrace := {
     complete := candidates.complete && table.complete,
+    scheduled := true,
+    faults := candidates.missing ++ (if table.complete && candidates.complete then #[] else #["incomplete-membership-basis"]),
     pages := candidates.pages, failures := candidates.missing}
   for entry in candidates.entries do
     unless ← coverageAvailable table do
-      return {trace with complete := false, failures := trace.failures.push "G-truncated:membership"}
+      return {trace with
+        complete := false, coveragePrefixG := true,
+        failures := trace.failures.push "G-truncated:membership"}
     let attempt ← boundedLookupCandidate table entry goal do
       let candidate ← candidateValue table entry none type
       if let some reason := candidate.failure? then
-        return {complete := false, failures := #[reason], missing := #[entry.leanName]}
+        return {complete := false, faults := #[reason], failures := #[reason], missing := #[entry.leanName]}
       for value in candidate.values do
         if ← withReducible <| isDefEq (← inferType value) type then
           candidate.certify
@@ -523,7 +555,7 @@ unsafe def lookupNamedMember (table : LookupTable) (name : Name)
   boundedLookupCandidate table entry goal do
     let candidate ← candidateValue table entry none type
     if let some reason := candidate.failure? then
-      return {failures := #[reason], missing := #[name]}
+      return {faults := #[reason], failures := #[reason], missing := #[name]}
     for value in candidate.values do
       if ← withReducible <| isDefEq (← inferType value) type then
         candidate.certify
@@ -691,7 +723,7 @@ unsafe def attemptLookupLeaf (table : LookupTable) (entry : DiskLookup.Entry)
     let candidate ← candidateValue table entry head (← goal.getType)
     if let some reason := candidate.failure? then
       return {
-        complete := false, failures := #[reason], missing := #[name],
+        complete := false, faults := #[reason], failures := #[reason], missing := #[name],
         unloaded := if candidate.unloaded then 1 else 0}
     let mut attempted := 0
     for value in candidate.values do
@@ -779,7 +811,7 @@ is accounted for locally; only the coverage guard truncates enumeration. -/
 unsafe def lookupLeafPass (table : LookupTable) (goal : MVarId)
     (unify close : MVarId → MetaM Bool) : MetaM LookupTrace := goal.withContext do
   if !table.enabled then return {complete := true}
-  let some index ← tableIndex table | return {}
+  let some index ← tableIndex table | return {faults := #["missing-primary-index"]}
   let telemetry := (← IO.getEnv "SEARCH_REDUCTION_TELEMETRY").isSome
   let floorStart ← IO.getNumHeartbeats
   let floorNs ← IO.monoNanosNow
@@ -800,6 +832,8 @@ unsafe def lookupLeafPass (table : LookupTable) (goal : MVarId)
   let mut ordinal := 0
   let mut trace : LookupTrace := {
     complete := candidates.complete && table.complete,
+    scheduled := true,
+    faults := candidates.missing ++ (if table.complete && candidates.complete then #[] else #["incomplete-primary-basis"]),
     pages := candidates.pages}
   let mut pending : Array (LookupTrace × LookupBudgetState) := #[]
   let mut pendingStart := 0
@@ -808,7 +842,8 @@ unsafe def lookupLeafPass (table : LookupTable) (goal : MVarId)
     ordinal := ordinal + 1
     unless ← coverageAvailable table do
       trace := {trace with
-        complete := false, failures := trace.failures.push s!"G-truncated:primary-index:remaining={candidates.entries.size - trace.visited}"}
+        complete := false, coveragePrefixG := true,
+        failures := trace.failures.push s!"G-truncated:primary-index:remaining={candidates.entries.size - trace.visited}"}
       break
     if position % 128 == 0 then
       emitLookupRecord s!"LOOKUP_ENUMERATION_PROGRESS fallback=false next={position} total={candidates.entries.size}"

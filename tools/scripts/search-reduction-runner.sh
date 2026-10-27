@@ -81,7 +81,7 @@ LEAN
     }
     if test -z "${SEARCH_REDUCTION_RESUME+x}"; then
       lookup_request_hash=$(shasum -a 256 "$SEARCH_REDUCTION_REQUESTS")
-      export SEARCH_REDUCTION_RESUME="build/lean-inspector/search-reduction-checkpoints/R_lookup-v18-isolation-independent-v1-checkpoint-v5/${lookup_request_hash%% *}"
+      export SEARCH_REDUCTION_RESUME="build/lean-inspector/search-reduction-checkpoints/R_lookup-v19-checkpoint-v6/${lookup_request_hash%% *}"
     fi
     while :; do
       lookup_exit=0

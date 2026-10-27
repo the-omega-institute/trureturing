@@ -109,8 +109,71 @@ private def boundJson : Bound → Json
 private def intervalJson (i : Interval) : Json := Json.mkObj [
   ("lower", boundJson i.lower), ("upper", boundJson i.upper)]
 
+private def dispositionName : Disposition → String
+  | .bindOnly => "bind-only"
+  | .reductionR => "reduction_R"
+  | .noGainR => "no-gain_R"
+  | .reject => "reject"
+  | .incomplete => "incomplete"
+
+private def queryJson (q : RQuery) : Json := Json.mkObj [
+  ("terminal", toJson (match q with
+    | .hit _ => "Hit" | .miss _ => "Miss_R" | .fault _ => "Fault" | .notRun => "NotRun")),
+  ("stop", toJson (match q with | .miss stop => some (reprStr stop) | _ => none)),
+  ("fault", toJson (match q with | .fault reason => some reason | _ => none)),
+  ("certificate", toJson (match q with | .hit cert => some cert.render | _ => none)),
+  ("v18_price", toJson q.priceV18), ("v19_price", toJson q.price),
+  ("guard_completion", runJson q.guardRun)]
+
+private def mappingJson (r : GraphReading) : Json := Json.mkObj [
+  ("verdict", toJson (dispositionName (classifyDisposition r))),
+  ("legacy_verdict", toJson (reprStr (classifyGraph r))),
+  ("closure", toJson ((classifyClosure r).map fun c =>
+    match c with | .zero => "zero" | .partial_ => "partial")),
+  ("baseline_interval", intervalJson r.baseline), ("paired_interval", intervalJson r.paired),
+  ("basis", toJson (if budgetBasis r then "budget" else "exhaustive")),
+  ("admission", toJson (if budgetBasis r then "Observe-only; not a section 3.2 admission basis"
+    else "separate section 3.2 review required"))]
+
+/-- Deterministic first blocker. Additional diagnostics never replace this
+unique operation-level reason or turn an incomplete guard into no-gain. -/
+private def blockerJson (r : Observation) : Json := Id.run do
+  let block (guard query stop remedy : String) := Json.mkObj [
+    ("guard", toJson guard), ("query_or_check_pair", toJson query),
+    ("stop", toJson stop), ("remedy", toJson remedy),
+    ("disposition", toJson "reduction not certified; no admission")]
+  let some g := r.graph? | return block "isolation" r.target.toString r.reason "complete the named isolation operation"
+  if classifyDisposition g != .incomplete then return Json.null
+  if !g.isolated then return block "isolation" r.target.toString r.reason "complete isolation"
+  if !g.presentationComplete then
+    return block "single-source-presentation" r.target.toString r.presentationDetail "complete this presentation check"
+  if !g.structureChecked || !g.structureClean then
+    return block "wide-S-and-source-isolation" r.target.toString r.reason "complete the named reconstruction or restatement unit"
+  if !g.graph.complete then
+    return block "graph-extraction" r.target.toString (reprStr g.graph.issues) "resolve the named extraction operation"
+  if !g.targetPartComplete then
+    for id in g.selectedSeeds do
+      if let some v := g.graph.vertices.find? (·.id == id) then
+        if let .incomplete _ := targetPartDecision v.independentLookup v.reverseLookup then
+          return block "target-part" s!"{r.target}:seed:{id}"
+            s!"independent={v.independentLookupDetail};reverse={v.reverseLookupDetail}"
+            "supply a permitted positive certificate or complete the reverse exhaustive guard"
+  for q in g.queryRecords do
+    if q.terminal.price.isNone then
+      return block "R-pricing" s!"{q.role}:{q.target}" (reprStr q.terminal) "complete this faulted or unscheduled query"
+  return block "numerical-evidence" r.target.toString "intervals do not decide reduction or no-gain"
+    "complete the remaining named author-edge queries"
+
 private def graphJson (r : GraphReading) : Json := Json.mkObj [
-  ("lookup_backend", toJson "B_T implication without imports; full B0 alpha membership; unfinished candidates remain unknown"),
+  ("lookup_backend", toJson "B_T implication without imports; full B0 alpha membership; typed R v19 terminals"),
+  ("A1", mappingJson (priceMappingV18 r)), ("B", mappingJson r),
+  ("basis", toJson (if budgetBasis r then "budget" else "exhaustive")),
+  ("query_records", toJson (r.queryRecords.map fun q => Json.mkObj [
+    ("role", toJson q.role), ("target_hash", toJson q.target),
+    ("premise_hashes", toJson q.premises), ("execution", queryJson q.terminal),
+    ("encountered_search_kappa", toJson q.encounteredSearchKappa),
+    ("encountered_coverage_prefix_G", toJson q.encounteredCoveragePrefixG),
+    ("encountered_faults", toJson q.encounteredFaults)])),
   ("certificate_language", toJson certificateLanguageVersion),
   ("certificate_pool_digest", toJson (hash (reprStr
     (nominationCertificates r.certificatePool, canonicalCertificateBindings r.certificateBindings)))),
@@ -170,6 +233,7 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
     ("paired_cost", toJson (if edgeActive edge true then some (reprStr edge.pairedCost) else none)),
     ("certificate", toJson (edge.certificate?.map ObviousCertificate.render)),
     ("paired_certificate", toJson (edge.pairedCertificate?.map ObviousCertificate.render)),
+    ("query", queryJson edge.query), ("paired_query", queryJson edge.pairedQuery),
     ("detail", toJson edge.detail)])),
   ("witness_edges", toJson r.witnessEdges),
   ("witness_kinds", Json.mkObj [
@@ -225,7 +289,10 @@ def computationalJson (r : Observation) (baselineCommit : String := "") : Json :
     ("coverageMaxHeartbeats", toJson lookupCoverageBudget),
     ("queryAnswerMemoization", toJson (r.graph?.any (·.queryAnswerMemoization))),
   ("membershipNormalizationFuel", toJson DiskLookup.membershipNormalizationFuel),
-  ("target", toJson r.target.toString), ("verdict", toJson (if r.verdict == .nonBindOnly then s!"non-bind-only[G,R_lookup,k; scope=B_T]" else verdictName r.verdict)),
+  ("target", toJson r.target.toString),
+  ("verdict", toJson (r.graph?.map (fun g => dispositionName (classifyDisposition g)) |>.getD "incomplete")),
+  ("legacy_verdict", toJson (verdictName r.verdict)),
+  ("blocker", blockerJson r),
   ("baseline", runJson r.base), ("paired", runJson r.paired),
   ("presentation", runJson r.presentation),
   ("presentation_source", toJson (r.presentationEvidence?.map (·.source.toString))),
@@ -389,6 +456,20 @@ def publish (name : Name) (r : Observation) (source? : Option Environment := non
   addAndCompile (.thmDecl {
     name := name ++ `verdictProof, levelParams := [], type := equalityType,
     value := equalityProof })
+  for (label, mapped) in #[(`publishedDisposition, reading),
+      (`a1Disposition, kernelGraphReading (priceMappingV18 reading))] do
+    let mappedName := name ++ label ++ `reading
+    addAndCompile (.defnDecl {
+      name := mappedName, levelParams := [],
+      type := mkConst ``GraphReading, value := toExpr mapped, hints := .abbrev, safety := .safe})
+    let value := mkApp (mkConst ``classifyDisposition) (mkConst mappedName)
+    addAndCompile (.defnDecl {
+      name := name ++ label, levelParams := [],
+      type := mkConst ``Disposition, value, hints := .abbrev, safety := .safe})
+    let type := mkApp2 (mkApp (mkConst ``Eq [1]) (mkConst ``Disposition)) value
+      (toExpr (classifyDisposition mapped))
+    let proof ← synthesizeUsingTactic' (u := .zero) type (← `(tactic| decide))
+    discard <| checkProof (name ++ label ++ `proof) [] type proof
   let baselineProbe := mkApp (mkConst ``GraphReading.baselineProbe) (mkConst graphName)
   let baselineOutcome := mkApp (mkConst ``ProbeResult.outcome) baselineProbe
   let noHitType ← mkArrow (mkApp (mkConst ``NoHit) baselineOutcome) equalityType
@@ -645,7 +726,7 @@ private def snapshotProbeSourceData (directory : System.FilePath)
 private def probeIdentity (request : Request) (owners : Array Name) (name : Name)
     (fixture : Bool) : IO String := do
   return reprStr (localConfiguration, certificateLanguageVersion, transportVersion,
-    "probe-record-v8", ← IO.getEnv "SEARCH_REDUCTION_PROBE_ID", request.target,
+    "probe-record-v9", ← IO.getEnv "SEARCH_REDUCTION_PROBE_ID", request.target,
     request.baseline, request.additions, request.baselineCommit, request.informationApplication,
     request.certificates.map CertificateNomination.encode,
     request.edgeCertificates.map (fun (n, c) => (n, c.encode)), owners, name, fixture)
@@ -989,6 +1070,10 @@ unsafe def replayPublication (constants : Array ConstantInfo) (target name : Nam
       name ++ `catalogVerified, name ++ `presentationSource,
       name ++ `presentationConversion, name ++ `presentationProof,
       name ++ `graphReading, name ++ `verdictProof,
+      name ++ `publishedDisposition ++ `reading, name ++ `publishedDisposition,
+      name ++ `publishedDisposition ++ `proof,
+      name ++ `a1Disposition ++ `reading, name ++ `a1Disposition,
+      name ++ `a1Disposition ++ `proof,
       name ++ `verdictWithNoHit, name,
       name ++ `baselineProof, name ++ `pairedProof,
       name ++ `baselineFailureGuard] do

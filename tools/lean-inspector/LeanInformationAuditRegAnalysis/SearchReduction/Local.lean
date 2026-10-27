@@ -325,12 +325,15 @@ structure LocalResult where
   sharedData? : Option Bool := none
   lookup : LookupTrace := {}
   certificate? : Option ObviousCertificate := none
+  query : RQuery := .notRun
+
+initialize currentQueryRecords : IO.Ref (List QueryRecord) ← IO.mkRef []
 
 /-- A positive-only boundary cannot manufacture a negative price. A reported
 success without a proof is rejected even if its producer sets cost to zero. -/
 def certificateOnlyResult (certificate : ObviousCertificate) (result : LocalResult) : LocalResult :=
   if result.cost == .zero && result.proof?.isSome then
-    {result with certificate? := some certificate}
+    {result with certificate? := some certificate, query := .hit certificate}
   else {result with cost := .unknown, proof? := none, certificate? := none}
 
 private unsafe def solveLookupGoal (table : LookupTable) (goal : MVarId)
@@ -348,16 +351,7 @@ private unsafe def solveLookupGoal (table : LookupTable) (goal : MVarId)
     let mut solved := true
     for next in goals do
       let leaf ← solveLookupGoal table next facts true name?
-      trace := {
-        visited := trace.visited + leaf.visited
-        attempted := trace.attempted + leaf.attempted
-        pages := trace.pages + leaf.pages
-        missing := trace.missing ++ leaf.missing
-        failures := trace.failures ++ leaf.failures
-        capped := trace.capped ++ leaf.capped
-        unloaded := trace.unloaded + leaf.unloaded
-        source? := trace.source?.or leaf.source?
-        complete := trace.complete && leaf.complete}
+      trace := mergeLookupTrace trace leaf
       unless ← next.isAssigned do solved := false
     if solved then return trace
     -- A split query is part of the same R success space as its parent.
@@ -454,12 +448,14 @@ def boundedRebuildBranch (action : MetaM LocalResult)
       if ex.isMaxHeartbeat then
         let preparation := (← budget?.mapM (·.get)).any
           (·.preparation >= lookupPreparationBudget * 1000)
-        return {detail := if preparation then "candidate-preparation-limit"
+        let reason := if preparation then "candidate-preparation-limit"
           else if budget?.isSome then "lookup-enclosing-heartbeat"
-          else "local-closure-heartbeat"}
-      if ex.isInterrupt then return {detail := "cancelled"}
-      if ex.isRuntime then return {detail := "runtime-limit"}
-      return {detail := s!"execution:{← ex.toMessageData.toString}"})
+          else "local-closure-heartbeat"
+        return {detail := reason, query := .fault reason}
+      if ex.isInterrupt then return {detail := "cancelled", query := .fault "cancelled"}
+      if ex.isRuntime then return {detail := "runtime-limit", query := .fault "runtime-limit"}
+      let reason := s!"execution:{← ex.toMessageData.toString}"
+      return {detail := reason, query := .fault reason})
   let search := (← IO.getNumHeartbeats) - started
   let elapsed := (← IO.monoNanosNow) - nanos
   let preparation := (← budget?.mapM (·.get)).getD {}
@@ -491,7 +487,9 @@ def independentRebuild (localRoute lookup : MetaM LocalResult)
   lookupPhase s!"rebuild/lookup ms={(← IO.monoMsNow) - lookupStart} cost={reprStr found.cost} detail={found.detail}"
   if found.cost == .zero then return found
   return {found with
-    cost := if old.cost == .one && found.cost == .one then .one else .unknown
+    cost := if old.cost == .one && found.cost == .one &&
+      old.query.price == some 1 && found.query.price == some 1 then .one else .unknown
+    query := if old.cost == .one then found.query else .fault s!"local-branch:{old.detail}"
     detail := s!"local={old.detail};lookup={found.detail}"}
 
 /-- Only statement types enter R. The successful lambda retains precisely its
@@ -525,6 +523,7 @@ private unsafe def rebuildRoute (target : Expr) (types : List Expr)
           return {
             cost := .zero, proof? := some proof, lookup := exactTrace,
             certificate? := exactTrace.source?.map ObviousCertificate.member,
+            query := .hit (.member exactTrace.source?.get!),
             detail := s!"kernel-checked-lookup:{exactTrace.source?}"}
     if certificate?.any (fun c => match c with | .member _ => true | _ => false) then
       return {detail := "certificate.member_not_verified"}
@@ -534,16 +533,14 @@ private unsafe def rebuildRoute (target : Expr) (types : List Expr)
       else do
         discard <| goal.withContext (solveLocalGoal goal available)
         pure {complete := true}
-    let trace := {trace with
-      complete := trace.complete && membershipTrace.complete,
-      missing := membershipTrace.missing ++ trace.missing,
-      failures := membershipTrace.failures ++ trace.failures}
+    let trace := mergeLookupTrace membershipTrace trace
     if let some (.lookup name) := certificate? then
       unless trace.source? == some name do
         return {detail := "certificate.lookup_name_not_used_or_out_of_scope"}
     unless ← goal.isAssigned do
+      let query := if lookup?.isSome then trace.terminal else RQuery.miss .exhaustive
       return {
-        cost := if trace.complete then .one else .unknown, lookup := trace
+        cost := query.cost, query, lookup := trace
         detail := if trace.complete then
           if lookup?.isSome then
             s!"normal-exhaustion/lookup-complete:pages={trace.pages},visited={trace.visited},attempted={trace.attempted},unloaded_checked={trace.unloaded}"
@@ -557,9 +554,10 @@ private unsafe def rebuildRoute (target : Expr) (types : List Expr)
     let certificate ← finish (← mkLambdaFVars selected proof)
     let certificateType ← mkForallFVars selected target
     withEnv originalEnv <| checkLocalProof certificateType certificate
+    let obvious := trace.source?.map ObviousCertificate.lookup |>.getD .close
     return {
       cost := .zero, proof? := some certificate, used, lookup := trace,
-      certificate? := some (trace.source?.map ObviousCertificate.lookup |>.getD .close),
+      certificate? := some obvious, query := .hit obvious,
       detail := if let some name := trace.source? then s!"kernel-checked-lookup:{name}"
         else "kernel-checked-statement"}
 
@@ -665,7 +663,21 @@ private unsafe def memoizedLocalRebuild (target : Expr) (types : List Expr)
   return result
 
 unsafe def localRebuild (target : Expr) (types : List Expr := [])
-    (lookup? : Option LookupTable := none) : MetaM LocalResult := do
+    (lookup? : Option LookupTable := none) (role : String := "R") : MetaM LocalResult := do
+  let finish (result : LocalResult) : MetaM LocalResult := do
+    currentQueryRecords.modify (· ++ [{
+      role, target := target.hash,
+      premises := types.map Expr.hash, terminal := result.query,
+      encounteredSearchKappa := result.lookup.searchKappa,
+      encounteredCoveragePrefixG := result.lookup.coveragePrefixG,
+      encounteredFaults := result.lookup.faults}])
+    emitLookupRecord s!"R_QUERY {Json.mkObj [
+      ("role", toJson role), ("target_hash", toJson target.hash),
+      ("terminal", toJson (reprStr result.query)),
+      ("v18_price", toJson result.query.priceV18),
+      ("v19_price", toJson result.query.price),
+      ("guard_run", toJson (reprStr result.query.guardRun))] |>.compress}"
+    return result
   let result ← memoizedLocalRebuild target types do
     let localRoute := rebuildRoute target types none
     if let some table := lookup? then
@@ -675,14 +687,18 @@ unsafe def localRebuild (target : Expr) (types : List Expr := [])
         finally
           if let some close := table.close? then close
     boundedRebuildBranch localRoute
-  if result.cost != .zero then return result
+  if result.cost != .zero then return ← finish result
   let some certificate := result.certificate?
-    | return {detail := "certificate.R_hit_has_no_name_only_export"}
+    | return ← finish {
+        detail := "certificate.R_hit_has_no_name_only_export",
+        query := .fault "certificate.R_hit_has_no_name_only_export"}
   let checked ← replayCertificate target types certificate lookup?
   if checked.cost != .zero then
-    return {detail := s!"certificate.R_export_replay_failed:{certificate.render}"}
+    return ← finish {
+      detail := s!"certificate.R_export_replay_failed:{certificate.render}",
+      query := .fault "certificate.R_export_replay_failed"}
   certificateNominations.modify (·.push ⟨certificate, "R-hit"⟩)
-  return checked
+  return ← finish {checked with lookup := result.lookup}
 
 /-- Positive-only front end. Empty nominations and failed verification remain
 unknown; neither path invokes primary-index enumeration. -/
@@ -808,11 +824,11 @@ unsafe def priceGraph (graph : ProofGraph) (paired := false) (allGiven := false)
         else {edge with visibleCost := result.cost, givenUsedPremises := used}
       else if paired then {edge with
         pairedCost := result.cost, pairedZeroProof := result.proof?, pairedUsedPremises := used,
-        pairedCertificate? := result.certificate?}
+        pairedCertificate? := result.certificate?, pairedQuery := result.query}
       else {edge with
         cost := result.cost, zeroProof := result.proof?, usedPremises := used,
         certificate? := result.certificate?,
-        analytic, detail := result.detail}
+        analytic, detail := result.detail, query := result.query}
     let edge := if allGiven then edge else
       match result.certificate?, result.proof? with
       | some certificate, some proof => attachCertificate edge paired certificate proof used
@@ -836,7 +852,7 @@ unsafe def rootProbe (graph : ProofGraph) (paired := false)
     (lookup? : Option LookupTable := none) (negative := false) : MetaM ProbeResult := do
   let seeds := armSeeds graph paired
   let result ← if negative && !paired then
-      localRebuild (vertex graph graph.root).type (seeds.map (vertex graph · |>.type)) lookup?
+      localRebuild (vertex graph graph.root).type (seeds.map (vertex graph · |>.type)) lookup? "baseline-root"
     else
       certifyLocal (vertex graph graph.root).type (seeds.map (vertex graph · |>.type))
         lookup? (vertex graph graph.root).origin.constName?
@@ -844,7 +860,8 @@ unsafe def rootProbe (graph : ProofGraph) (paired := false)
     | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
   return {
     outcome, checked := result.proof?.isSome, premises := result.used.map (seeds[·]!),
-    proof? := result.proof?, certificate? := result.certificate?, detail := result.detail}
+    proof? := result.proof?, certificate? := result.certificate?, detail := result.detail,
+    query := result.query}
 
 /-- Only zero certificates and seed constants are assembled, never author
 nonseed values. The backpointers come from the same table as the reported DP. -/
@@ -899,6 +916,7 @@ private def addRootProbe (graph : ProofGraph) (probe : ProbeResult) (paired : Bo
     zeroProof := if paired then none else probe.proof?, pairedZeroProof := probe.proof?,
     certificate? := if paired then none else probe.certificate?,
     pairedCertificate? := probe.certificate?,
+    query := if paired then .notRun else probe.query, pairedQuery := probe.query,
     sharedData? := (graph.edges.find? (·.conclusion == graph.root)).bind (·.sharedData?),
     detail := if paired then "paired-root-certificate" else "baseline-root-certificate"}]}
 
@@ -954,12 +972,13 @@ private unsafe def refineBaseline (initial : ProofGraph) (lookup? : Option Looku
     let some edge := graph.edges[index]? | continue
     let available := statementPremises edge (armSeeds graph false)
     let result ← localRebuild (vertex graph edge.conclusion).type
-      (available.map (vertex graph · |>.type)) lookup?
+      (available.map (vertex graph · |>.type)) lookup? s!"author-edge:{edge.source}:{edge.conclusion}"
     calls := calls + 1
     let used := result.used.map (available[·]!)
     let edge := {edge with
       cost := result.cost, zeroProof := result.proof?,
-      certificate? := result.certificate?, usedPremises := used, detail := result.detail}
+      certificate? := result.certificate?, usedPremises := used, detail := result.detail,
+      query := result.query}
     let edge := if result.cost == .zero then {edge with
       pairedCost := .zero, pairedZeroProof := result.proof?, pairedUsedPremises := used,
       pairedCertificate? := result.certificate?} else edge
@@ -977,6 +996,7 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
     (nominations : Array CertificateNomination := #[])
     (bindings : Array (Name × CertificateNomination) := #[])
     (positiveEligible : Bool := true) : MetaM GraphReading := do
+  currentQueryRecords.set []
   if raw.vertices.isEmpty then return {graph := raw}
   let mut raw := raw
   let enabled := (← IO.getEnv "SEARCH_REDUCTION_LOOKUP") != some "0"
@@ -1035,10 +1055,9 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
           selectedStructureSeed graph selected id && !probed.contains id) | break
       probed := id :: probed
       let mut v := vertex graph id
-      let independent ← localRebuild v.type baseTypes lookup?
+      let independent ← localRebuild v.type baseTypes lookup? s!"target-part-independent:{id}"
       independentCalls := independentCalls + 1
-      let toRun (result : LocalResult) := match result.cost with
-        | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
+      let toRun (result : LocalResult) := result.query.guardRun
       let independentRun := toRun independent
       v := {v with
         independentLookup := independentRun,
@@ -1051,7 +1070,7 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
         if reverse.cost != .zero &&
             (exhaustive || needsReverseNegative decisive independentRun (toRun reverse)) then
           -- Reverse evidence affects only target-part exclusion, never prices.
-          reverse ← localRebuild v.type (rootType :: baseTypes) lookup?
+          reverse ← localRebuild v.type (rootType :: baseTypes) lookup? s!"target-part-reverse:{id}"
           reverseCalls := reverseCalls + 1
         let reverseRun := toRun reverse
         v := {v with reverseLookup := reverseRun, reverseLookupDetail := reverse.detail}
@@ -1089,6 +1108,7 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
       certificatePool := ← certificateNominations.get,
       certificateBindings := bindings,
       lookupEnabled := table.enabled, lookupBasisComplete := table.complete,
+      queryRecords := ← currentQueryRecords.get,
       queryAnswerMemoization := ← localMemoEnabled}
     lookupPhase s!"graph/lazy-end negative_calls={reading.negativeCalls}"
     return reading
@@ -1098,5 +1118,22 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
     localMemoContext.set ""
     localMemoAnswers.set {}
     certificateOnlyAnswers.set {}
+
+/-- A1 changes only the price mapping of this run's records. It performs no
+search, restores no old cache, and preserves every guard completion state. -/
+def priceMappingV18 (r : GraphReading) : GraphReading := Id.run do
+  let graph := {r.graph with edges := r.graph.edges.map fun e => {e with
+    cost := if e.query.budget then .unknown else e.cost,
+    pairedCost := if e.pairedQuery.budget then .unknown else e.pairedCost}}
+  let selectedSeeds := optimalSeeds (armGraph graph true false) costUpper (armSeeds graph true)
+  return {r with
+    graph,
+    baseline := {armInterval graph with upper := r.baseline.upper},
+    paired := {armInterval graph true with upper := r.paired.upper},
+    selectedSeeds,
+    witnessEdges := graph.edges.zipIdx.filterMap fun (e, i) =>
+      if isWitnessEdge graph selectedSeeds e then some i else none,
+    baselineProbe := if r.baselineProbe.query.budget then
+      {r.baselineProbe with outcome := .incomplete .undecided} else r.baselineProbe}
 
 end LeanInformationAudit.SearchReduction

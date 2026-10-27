@@ -74,7 +74,8 @@ run_cmd liftTermElabM do
     IO.addHeartbeats (localBudget * 1000 + 1)
     checkSystem "lookup.isolation.fixture"
     return {cost := .one}
-  let exhausted : MetaM LocalResult := pure {cost := .one, detail := "exhausted"}
+  let exhausted : MetaM LocalResult := pure {
+    cost := .one, query := .miss .exhaustive, detail := "exhausted"}
   let success : MetaM LocalResult := do
     let type := mkConst ``True
     let proof := mkConst ``True.intro
@@ -177,3 +178,51 @@ run_cmd liftTermElabM do
   unless recovered.complete && recovered.source?.isSome do
     throwError "earlier failure starved a later checked candidate"
   logInfo "LOOKUP_V7_REGRESSION cap=unknown exception=local preparation=unknown later_candidate=checked"
+
+
+/- These boundary probes use real checked propositions and the unchanged
+allocations. Injected heartbeat charges test the execution boundary; they do
+not establish production coverage of a slow-before-easy candidate population. -/
+run_cmd liftTermElabM do
+  let type := mkConst ``True
+  let table : LookupTable := {environment := ← getEnv}
+  let goal ← mkFreshExprMVar type
+  let slow : DiskLookup.Entry := {module := "boundary", name := "slow", parts := #[]}
+  let easy : DiskLookup.Entry := {module := "boundary", name := "easy", parts := #[]}
+  let capped ← boundedLookupCandidate table slow goal.mvarId! do
+    IO.addHeartbeats (lookupCandidateBudget * 1000 + 1)
+    checkSystem "v19.candidate-search-kappa"
+    return {complete := true}
+  unless capped.searchKappa && capped.faults.isEmpty && !capped.complete do
+    throwError "candidate kappa was not recorded as a typed search stop"
+  let hit ← boundedLookupCandidate table easy goal.mvarId! do
+    goal.mvarId!.assign (mkConst ``True.intro)
+    return {complete := true, source? := some ``True.intro}
+  let continued := mergeLookupTrace capped hit
+  unless continued.source?.isSome && continued.searchKappa do
+    throwError "successor certificate was lost after candidate kappa"
+  let short ← replayCertificate type [] .close
+  unless short.cost == .zero && short.query.price == some 0 do
+    throwError "B-only by_close certificate failed"
+  let budgetMiss : LookupTrace := {
+    scheduled := true, searchKappa := true, coveragePrefixG := true}
+  unless budgetMiss.terminal == .miss .coveragePrefixG do
+    throwError "coverage stop kind was not retained"
+  let fault := {budgetMiss with faults := #["preparation-fault"]}
+  unless fault.terminal.price.isNone do
+    throwError "unabsorbed fault was hidden by a later budget stop"
+  for reason in ["missing-data", "preparation-failed", "oom", "cancelled"] do
+    unless (RQuery.fault reason).price.isNone do throwError "fault was priced"
+  unless ({} : LookupTrace).terminal == .notRun && RQuery.notRun.price.isNone do
+    throwError "unscheduled query was priced"
+  let exhausted : MetaM LocalResult := pure {
+    cost := .one, query := .miss .exhaustive}
+  let unscheduled ← independentRebuild exhausted (pure {query := .notRun})
+  unless unscheduled.cost == .unknown && unscheduled.query.price.isNone do
+    throwError "unscheduled lookup acquired a price through the local branch"
+  let big := mkNatLit 1000000000000000000000000000000000000
+  let application ← mkAppM ``Nat.add_assoc #[big, big, big]
+  let instanceType ← inferType application
+  let trivial ← replayCertificate instanceType [] .close
+  unless trivial.cost == .zero do throwError "large general-lemma instance was priced hard"
+  logInfo "R_V19_BOUNDARIES kappa=actual-injected-charge successor=kernel-hit B_only=by_close G=typed-prefix-record faults=unpriced notRun=unpriced large-instance=zero production-stop-coverage=open"

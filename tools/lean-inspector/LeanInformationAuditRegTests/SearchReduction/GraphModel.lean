@@ -1000,4 +1000,66 @@ theorem two_point_strict_family :
 #print axioms zero_path_sound
 #print axioms incomplete_not_nonBindOnly
 #print axioms graph_verdict_partition
+
+/-- Repricing preserves the fixed graph's premise sets. Only additional
+positive certificates can change a cost to zero. -/
+def hitEdge (hits : GraphEdge → Bool) (e : GraphEdge) : GraphEdge :=
+  {e with cost := if hits e then .zero else e.cost}
+
+def hitGraph (g : ProofGraph) (hits : GraphEdge → Bool) : ProofGraph :=
+  {g with edges := g.edges.map (hitEdge hits)}
+
+/-- On a fixed graph, inclusion of positive hits cannot increase either
+arm's distance. Each arm may supply its own fixed seed list and endpoint
+weight. This does not assert monotonicity of their difference. -/
+theorem hit_inclusion_distance (g : ProofGraph) (small large : GraphEdge → Bool)
+    (included : ∀ e, small e = true → large e = true)
+    (seeds : List Nat) (weight : EdgeCost → Nat) (zero : weight .zero = 0)
+    (fuel v : Nat) :
+    depthFuel (hitGraph g large) weight seeds fuel v ≤
+      depthFuel (hitGraph g small) weight seeds fuel v := by
+  apply cut_dominates_given _ _ _ _ seeds seeds (fun _ h => h)
+  intro edge member
+  obtain ⟨e, he, rfl⟩ := List.mem_map.mp member
+  refine ⟨hitEdge large e, List.mem_map.mpr ⟨e, he, rfl⟩, rfl, rfl, ?_⟩
+  by_cases hs : small e = true
+  · have hl := included e hs
+    simp [hitEdge, hs, hl]
+  · by_cases hl : large e = true
+    · simp [hitEdge, hs, hl, zero]
+    · simp [hitEdge, hs, hl]
+
+/-- A zero route contains positive hit certificates at every nonseed edge.
+Seeds retain their independently kernel-checked proof payloads. -/
+def PositiveRoute (g : ProofGraph) (seeds : List Nat) : Nat → Nat → Prop
+  | 0, v => v ∈ seeds
+  | fuel + 1, v => v ∈ seeds ∨ ∃ e ∈ incoming g v,
+      (∃ c, e.query = .hit c) ∧ ∀ p ∈ e.premises, PositiveRoute g seeds fuel p
+
+theorem zero_route_requires_positive_certificates (g : ProofGraph) (seeds : List Nat)
+    (recorded : ∀ e ∈ g.edges, e.cost = .zero → ∃ c, e.query = .hit c)
+    (fuel v : Nat) (route : Derivable g (fun e => costUpper e.cost) seeds fuel v 0) :
+    PositiveRoute g seeds fuel v := by
+  induction fuel generalizing v with
+  | zero => exact route
+  | succ fuel ih =>
+    rcases route with hs | ⟨e, he, hc, hp⟩
+    · exact Or.inl hs
+    · have hz : e.cost = .zero := by
+        cases h : e.cost <;> simp_all [costUpper]
+      exact Or.inr ⟨e, he, recorded e (List.mem_filter.mp he).1 hz,
+        fun p hm => ih p (by simpa [hz, costUpper] using hp p hm)⟩
+
+#print axioms hit_inclusion_distance
+#print axioms zero_route_requires_positive_certificates
+#print axioms LeanInformationAudit.SearchReduction.fault_not_priced
+#print axioms LeanInformationAudit.SearchReduction.notRun_not_priced
+#print axioms LeanInformationAudit.SearchReduction.zero_price_iff_hit
+#print axioms LeanInformationAudit.SearchReduction.one_price_iff_miss
+#print axioms LeanInformationAudit.SearchReduction.hit_miss_exclusive
+#print axioms LeanInformationAudit.SearchReduction.miss_fault_exclusive
+#print axioms LeanInformationAudit.SearchReduction.budget_miss_does_not_complete_guard
+#print axioms LeanInformationAudit.SearchReduction.unfinished_guards_not_reduction
+#print axioms LeanInformationAudit.SearchReduction.miss_does_not_supply_zero
+
 end LeanInformationAudit.Tests.SearchReduction.GraphModel

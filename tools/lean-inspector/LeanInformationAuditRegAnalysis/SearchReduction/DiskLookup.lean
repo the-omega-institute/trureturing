@@ -8,6 +8,67 @@ Only candidate certificates carry semantic authority. -/
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
+/-- Untrusted data. There is deliberately no expression, tactic, witness,
+instance, attribute, direction or lemma-list field. -/
+inductive ObviousCertificate where
+  | close
+  | lookup (name : Name)
+  | member (name : Name)
+  deriving Inhabited, Repr, DecidableEq
+
+/-- Registered scheduler stops, distinct from execution faults. -/
+inductive RStop where
+  | exhaustive | searchKappa | coveragePrefixG
+  deriving Inhabited, DecidableEq, Repr
+
+/-- A hit is installed only after name-only certificate replay and kernel
+checking. The sum type prevents an execution fault from being a miss. -/
+inductive RQuery where
+  | hit (certificate : ObviousCertificate)
+  | miss (stop : RStop)
+  | fault (reason : String)
+  | notRun
+  deriving Inhabited, DecidableEq, Repr
+
+def RQuery.price : RQuery → Option Nat
+  | .hit _ => some 0
+  | .miss _ => some 1
+  | .fault _ | .notRun => none
+
+def RQuery.priceV18 : RQuery → Option Nat
+  | .hit _ => some 0
+  | .miss .exhaustive => some 1
+  | _ => none
+
+def RQuery.budget : RQuery → Bool
+  | .miss .searchKappa | .miss .coveragePrefixG => true
+  | _ => false
+
+
+def ObviousCertificate.toExpr : ObviousCertificate → Expr
+  | .close => mkConst ``ObviousCertificate.close
+  | .lookup name => mkApp (mkConst ``ObviousCertificate.lookup) (Lean.toExpr name)
+  | .member name => mkApp (mkConst ``ObviousCertificate.member) (Lean.toExpr name)
+
+instance : ToExpr ObviousCertificate where
+  toExpr := ObviousCertificate.toExpr
+  toTypeExpr := mkConst ``ObviousCertificate
+
+instance : ToExpr RStop where
+  toExpr
+    | .exhaustive => mkConst ``RStop.exhaustive
+    | .searchKappa => mkConst ``RStop.searchKappa
+    | .coveragePrefixG => mkConst ``RStop.coveragePrefixG
+  toTypeExpr := mkConst ``RStop
+
+instance : ToExpr RQuery where
+  toExpr
+    | .hit cert => mkApp (mkConst ``RQuery.hit) (Lean.toExpr cert)
+    | .miss stop => mkApp (mkConst ``RQuery.miss) (Lean.toExpr stop)
+    | .fault reason => mkApp (mkConst ``RQuery.fault) (Lean.toExpr reason)
+    | .notRun => mkConst ``RQuery.notRun
+  toTypeExpr := mkConst ``RQuery
+
 /-- Independent per-candidate preparation allocation, in public heartbeats. -/
 abbrev lookupPreparationBudget : Nat := 8000000
 

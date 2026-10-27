@@ -61,6 +61,46 @@ inductive EdgeCost where
   | zero | one | unknown
   deriving DecidableEq, Repr, ToExpr
 
+/-- A guard requires exhaustive negative completion; budget misses never
+discharge it, even though the same recorded query has numerical price one. -/
+def RQuery.guardRun : RQuery → Run
+  | .hit _ => .found
+  | .miss .exhaustive => .exhausted
+  | _ => .incomplete .undecided
+
+def RQuery.cost (q : RQuery) : EdgeCost :=
+  match q.price with
+  | some 0 => .zero
+  | some _ => .one
+  | none => .unknown
+
+theorem fault_not_priced (reason : String) : (RQuery.fault reason).price = none := rfl
+theorem notRun_not_priced : RQuery.notRun.price = none := rfl
+theorem zero_price_iff_hit (q : RQuery) :
+    q.price = some 0 ↔ ∃ certificate, q = .hit certificate := by
+  cases q <;> simp [RQuery.price]
+theorem one_price_iff_miss (q : RQuery) :
+    q.price = some 1 ↔ ∃ stop, q = .miss stop := by
+  cases q <;> simp [RQuery.price]
+theorem hit_miss_exclusive (certificate : ObviousCertificate) (stop : RStop) :
+    RQuery.hit certificate ≠ .miss stop := by simp
+theorem miss_fault_exclusive (stop : RStop) (reason : String) :
+    RQuery.miss stop ≠ .fault reason := by simp
+theorem budget_miss_does_not_complete_guard (stop : RStop)
+    (budget : (RQuery.miss stop).budget = true) :
+    (RQuery.miss stop).guardRun = .incomplete .undecided := by
+  cases stop <;> simp_all [RQuery.budget, RQuery.guardRun]
+
+structure QueryRecord where
+  role : String
+  target : UInt64
+  premises : List UInt64
+  terminal : RQuery
+  encounteredSearchKappa : Bool := false
+  encounteredCoveragePrefixG : Bool := false
+  encounteredFaults : Array String := #[]
+  deriving Inhabited, ToExpr
+
 inductive Bound where
   | finite (value : Nat)
   | top
@@ -106,6 +146,8 @@ structure GraphEdge where
   detail : String := ""
   window : Nat := 1
   sharedData? : Option Bool := none
+  query : RQuery := .notRun
+  pairedQuery : RQuery := .notRun
   deriving Inhabited, ToExpr
 
 /-- Statement visibility depends only on seed membership and the analytic
@@ -128,6 +170,7 @@ structure ProbeResult where
   proof? : Option Expr := none
   certificate? : Option ObviousCertificate := none
   detail : String := ""
+  query : RQuery := .notRun
   deriving Inhabited, ToExpr
 
 /-- The production attachment preserves the actual support and checked term;
@@ -136,10 +179,11 @@ def attachCertificate (edge : GraphEdge) (paired : Bool)
     (certificate : ObviousCertificate) (proof : Expr) (used : List Nat) : GraphEdge :=
   if paired then {edge with
     pairedCost := .zero, pairedZeroProof := some proof,
-    pairedCertificate? := some certificate, pairedUsedPremises := used}
+    pairedCertificate? := some certificate, pairedUsedPremises := used,
+    pairedQuery := .hit certificate}
   else {edge with
     cost := .zero, zeroProof := some proof,
-    certificate? := some certificate, usedPremises := used}
+    certificate? := some certificate, usedPremises := used, query := .hit certificate}
 
 structure GraphReading where
   graph : ProofGraph := {}
@@ -174,6 +218,8 @@ structure GraphReading where
   certificatePool : Array CertificateNomination := #[]
   certificateBindings : Array (Name × CertificateNomination) := #[]
   queryAnswerMemoization : Bool := false
+  rejection? : Option String := none
+  queryRecords : List QueryRecord := []
   deriving Inhabited, ToExpr
 
 def NoHit (run : Run) : Prop := run = .exhausted
@@ -501,5 +547,42 @@ theorem early_stop_verdict_eq (early full : GraphReading)
 
 def classifyClosure (reading : GraphReading) : Option Closure :=
   if classifyGraph reading == .nonBindOnly then some (closureOf reading.paired) else none
+
+inductive Disposition where
+  | bindOnly | reductionR | noGainR | reject | incomplete
+  deriving DecidableEq, Repr, ToExpr
+
+def guardsComplete (r : GraphReading) : Bool :=
+  r.graph.complete && r.targetPartComplete && r.presentationComplete &&
+    r.isolated && r.structureChecked && r.structureClean
+
+def classifyDisposition (r : GraphReading) : Disposition :=
+  if classifyGraph r == .bindOnly then .bindOnly
+  else if r.rejection?.isSome then .reject
+  else if !guardsComplete r then .incomplete
+  else if classifyGraph r == .nonBindOnly then .reductionR
+  else if finite r.baseline.upper && finite r.paired.lower &&
+      !better r.paired.lower r.baseline.upper then .noGainR
+  else .incomplete
+
+/-- Conservatively include every consumed one-price graph record and the
+baseline root miss; no minimal-dependency analysis is assumed. -/
+def budgetBasis (r : GraphReading) : Bool :=
+  (r.baselineProbe.outcome == .exhausted && r.baselineProbe.query.budget) || r.graph.edges.any (fun e =>
+    (e.cost == .one && e.query.budget) ||
+    (e.pairedCost == .one && e.pairedQuery.budget))
+
+theorem unfinished_guards_not_reduction (r : GraphReading)
+    (unfinished : guardsComplete r = false) :
+    classifyDisposition r ≠ .reductionR := by
+  unfold classifyDisposition
+  split
+  · simp
+  · split
+    · simp
+    · simp [unfinished]
+
+theorem miss_does_not_supply_zero (stop : RStop) :
+    (RQuery.miss stop).cost ≠ .zero := by simp [RQuery.cost, RQuery.price]
 
 end LeanInformationAudit.SearchReduction

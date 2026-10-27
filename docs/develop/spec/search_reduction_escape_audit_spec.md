@@ -18,7 +18,7 @@
 
 `B_used` 是图上已核验可调用的种子，其已取得身份须带证书；受保护常量须通过隔离核验，满足 `B_used ⊆ B_load`。图上负读数相对登记的 `B_T` 和实际可见前提，不上传为全 `B0` 的搜索结论。合规的 bind-only 证明或单源呈现证书可以从子基底用于较大基底；有限耗尽加配对证书不能这样上传，也不证明增强后的重建者仍会找到或仍会失败。
 
-两臂共用一份核验后的词汇和不可变基底导入。探针不获得作者证明体、作者属性、simp 表、批内实例注册、初始化器或全库索引。私有常量按 Lean `Name` AST 传输，包括数字段，不经文本名重建。缺片、隔离失败、不支持的形态、预算耗尽与故障均具名记为 `unknown/incomplete`，不等同正常耗尽。
+两臂共用一份核验后的词汇和不可变基底导入。探针不获得作者证明体、作者属性、simp 表、批内实例注册、初始化器或全库索引。私有常量按 Lean `Name` AST 传输，包括数字段，不经文本名重建。缺片、隔离失败、不支持的形态与故障均具名记为 `incomplete`，不等同正常穷尽。守卫预算耗尽仍 incomplete；R 查询的 κ/G 停点按 §3.4 分型定价。
 
 ### 2.1 词汇与实例
 
@@ -58,7 +58,7 @@ matcher、等式引理、`_proof_n` 等编译器生成常量用 Lean 自身的�
 
 - `c_X(v)=0`：探针闭合 `type(v)`，证明通过 kernel 复核。零价边保留证书**实际使用**的前提；其深度是所用解析前提深度的最大值，种子前提深度为零。
 - `c_X(v)=1`：冻结允许表的全部尝试正常结束仍未闭合。作者边保留全部活的非种子前提，其深度为这些前提的最大深度加一。
-- `unknown`：预算、故障、缺件或不完整读取；不得改记为一。
+- `unknown`：Fault、NotRun、缺件或未登记停点的不完整读取；无价格。登记的 κ/G Miss_R 仅给已有作者边一价，守卫仍未完成。
 
 边的单位是辅助构造层，不是作者证明体中的原语数、数据实参个数或历史搜索回溯次数。一个局部 `rfl` 可证的具体等式仍能作为存在性目标的合成辅助线；选择该等式所携带的见证可有代价。
 
@@ -66,11 +66,13 @@ matcher、等式引理、`_proof_n` 等编译器生成常量用 Lean 自身的�
 
 ### 3.4 `R_lookup`：冻结闭合表与一步查表
 
-闭合表按以下顺序冻结，旧局部闭合路线保留独立的 `200000` 搜索心跳预算。查表对每个候选独立分配 κ = `200000` 搜索心跳及 `8000000` 准备心跳。候选的全部视图、实例化、副条件闭合、证书组装与最终 kernel 核验共用 κ；每次候选尝试均从分支初态开始并重置 Core/Meta 缓存。视图遍历不设独立深度上限，全部工作计入 κ。候选超限记 capped；异常只使该候选 unknown，枚举继续。每个 unknown 报出模块、名字、原因及两份预算消耗，超过 κ 不属于正常失败。
+闭合表按以下顺序冻结，旧局部闭合路线保留独立的 `200000` 搜索心跳预算。查表对每个候选独立分配 κ = `200000` 搜索心跳及 `8000000` 准备心跳。候选的全部视图、实例化、副条件闭合、证书组装与最终 kernel 核验共用 κ；每次候选尝试均从分支初态开始并重置 Core/Meta 缓存。视图遍历不设独立深度上限，全部工作计入 κ。搜索 κ 超限记结构化 searchKappa，枚举继续；准备或执行异常保留具名 Fault。每个停点报告模块、名字、原因及两份预算消耗，超过 κ 不属于正常穷尽。
 
 搜索计入查询规范化、视图生成、实例化、合一、实例合成、闭合表义务、新证书构造与最终 kernel 核验。准备计入索引读取、olean 加载、签名与证明体的确定性词汇搬运和重建；这些物化操作不选择候选、不创建或赋值查询元变量。已认证 B0 的内联证明载荷不重复做中间 kernel 复核；重建计算声明的合法性及最终查询环境中的闭合证书仍经 kernel 检查。心跳均以 Lean 对外单位报告，内部读数为其 1000 倍。
 
-每查询另有覆盖上界 G = `340000000` 心跳，计量候选搜索与准备之和。G 由判词无关的主索引候选成本分布预先冻结，并写入 R 版本；它仅截断枚举，未访问部分为 unknown，不是语义难度上界。穷举否定的审计成本随 B_T 增长，只作遥测。成功证书优先；NoHit 要求成员完整、主索引完整、所有候选均在两份上限内正常失败且 capped 为空。G 增大只允许结算 unknown，不能推翻已认证结果。允许表、顺序、κ、准备上限和 G 不按读数调整。当前 R v18 只枚举主索引候选；star 后备页不进入生产候选流；And/Iff 拆分子枚举属于同一成功空间，任一子枚举不完整即为 unknown。
+每查询另有覆盖上界 G = `340000000` 对外心跳，计量候选搜索与准备之和。每次 R 查询使用互斥终态 `Hit(cert) | Miss_R(exhaustive | searchKappa | coveragePrefixG) | Fault(reason) | NotRun`。Hit 只由合规 name-only 证书经 kernel 重放取得，价格为 `some 0`；实际冻结调度到达登记停点且无证书的 Miss_R 价格为 `some 1`；Fault 与 NotRun 无价格，保留未知区间。停点来自结构化执行字段，不从诊断字符串推断。单个候选 κ 耗尽只结束该候选，调度继续；未被正证书吸收的 Fault 优先于随后 κ/G 停点。准备失败、缺数据、中断与 OOM 不定价。允许表、候选顺序、κ、准备上限和 G 不按读数调整。
+
+Miss_R 只给已有作者边定价，不制造 shortcut、根边或零 closure。所有零价新增路线均来自正证书；零 closure 还须实际装配并核验零路线。守卫独立消费 `guardRun`：只有 Hit 或 exhaustive Miss 提供其所需的完成信息；预算 Miss 不解除 target-part、单源呈现、宽 S/换装、来源或隔离守卫。And/Iff 子查询保留全部结构化停点和 Fault，不能用后继停点掩盖先前故障。
 
 1. `intro`；
 2. `assumption`；
@@ -93,13 +95,13 @@ matcher、等式引理、`_proof_n` 等编译器生成常量用 Lean 自身的�
 
 磁盘索引契约要求独立生产者按模块分片、分页写出，并对账受保护 B0 清单。索引按基底数据输入与显式版本号复用，不哈希程序字节。消费者将完整路由 manifest 物化为堆数组，命中页及必要通配页通过 mmap 读取，只复制命中元数据；当前实现尚无总额外索引内存为 O(命中) 的严格上界。消费者不对全环境建树，不调用 `exact?`、`apply?` 或 `LazyDiscrTree` 全库树。总内存还包含 Lean 导入闭包与缓存区域。
 
-The current backend is `R_lookup/v18/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v2/N-memo-2000000/checkpoint-v5/views-kappa`. `make search-reduction-index INDEX_BASIS=<protected-commit> INDEX_DIR=<build-directory>` produces the index offline. Reuse depends on compiled basis data, the Mathlib pin, Lean version and explicit format versions. Implication candidates use Lean core `DiscrTree.mkPath` and `getMatch`, including projection and direction views. Batteries pickle/withUnpickle supplies module shards and mapped compacted storage. Candidate order is a stable partition with already loaded owners first, followed within each partition by module name and module-local declaration ordinal. R v18 excludes dropped `[*]` and `[Eq,*,*,*]` star-fallback keys from production enumeration; the static-pruning implementation is outside the production candidate space. Implication candidates are filtered to B_T without changing their module-local order.
+The current backend is `R_lookup/v19/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v3/N-memo-2000000/checkpoint-v6/views-kappa/isolation-independent-units`. `make search-reduction-index INDEX_BASIS=<protected-commit> INDEX_DIR=<build-directory>` produces the index offline. Reuse depends on compiled basis data, the Mathlib pin, Lean version and explicit format versions. Implication candidates use Lean core `DiscrTree.mkPath` and `getMatch`, including projection and direction views. Batteries pickle/withUnpickle supplies module shards and mapped compacted storage. Candidate order is a stable partition with already loaded owners first, followed within each partition by module name and module-local declaration ordinal. R v19 excludes dropped `[*]` and `[Eq,*,*,*]` star-fallback keys from production enumeration; the static-pruning implementation is outside the production candidate space. Implication candidates are filtered to B_T without changing their module-local order.
 
 `staticStarImpossible` and `LookupModel.static_star_impossible_no_certificate` describe an independent static-pruning interface. This interface does not participate in the production candidate space or current NoHit accounting.
 
 `SEARCH_REDUCTION_PROFILE=<path>` records production phase boundaries, including imports, isolation, presentation, structure exclusion, graph extraction, pricing, certificate assembly, independent negative replay and publication. Nested replay spans are reported separately. The production command always checks the transitive original dependencies of the production run's existing baseline and paired zero certificates and emits `PRODUCTION_SOURCE_AUDIT`. Baseline certificates exclude T and registered S; paired certificates exclude T. These checks reuse the assembled certificates and do not repeat graph evaluation. Neither option changes R's candidate scope, order, budgets or classification.
 
-The preparation allocation is the fixed R v18 budget of 8000000 heartbeats per candidate. Preparation exhaustion is unknown and never counts as normal failure; the allocation is unchanged throughout calibration and replay.
+The preparation allocation is the fixed R v19 budget of 8000000 heartbeats per candidate. Preparation exhaustion is a Fault and is unpriced; the allocation is unchanged throughout calibration and replay.
 
 Exact membership has the independent format `R_lookup/membership-alpha-syntax-v5-qualified-parts-memo-2000000`. Both producer and query normalize the complete statement, preserving its telescope, using the shared frozen syntax normalization from the presentation path, with beta/zeta preprocessing. Only noncomputational acyclic aliases unfold; recursive computations, matchers, recursors and instance dictionaries remain opaque. Metadata, binder names and binder annotations are removed; universe parameters receive canonical names in occurrence order. Alias-stack-sensitive memoization preserves N's result. Production and queries use the same fixed 2000000-node normalization fuel. The de Bruijn expression's core hash addresses one disk bucket containing a hash map. Only equal-hash entries undergo the existing definitional-equality and certificate checks; collisions never certify a proof. `make search-reduction-membership-index-run INDEX_DIR=<directory>` adds this sidecar to an existing complete implication index. The sidecar binds to that index's compiled-input fingerprint. Each module retains the first eligible copy of a name across main, server and private parts; ineligible placeholders do not consume membership identity. The ordinal remains the name's first occurrence across all parts, and identities remain (module, Name). A selected declaration that is unavailable or ineligible in the imported environment is recorded as missing and prevents completeness. Missing membership data, normalization failures and unreadable buckets cannot certify NoHit.
 
@@ -133,11 +135,11 @@ The stat memo maps each absolute file path and complete `(device, inode, size, m
 
 Required CI's `current` compiled-audit path calls `make compiled-judge-test` and includes the aggregated Lean audit tests. The dedicated `make search-reduction-test` path additionally executes the Python cache-authentication/input-binding regressions, the runtime shared-closure regression, missing-production-index rejection and telemetry checks, as well as its serial Lean module suite. Success of one path does not claim execution of the other's extra runtime checks. Local dedicated checks do not replace the remote required result. The dedicated suite uses fixture indexes; production measurements use the explicitly selected protected production index and source library. Resource readings describe the sampled process tree and actual build/cache state, not a hosted cold-build capacity guarantee.
 
-The whole process tree remains subject to the 12 GiB physical-footprint limit. NoHit requires complete membership and complete primary-index enumeration with normal candidate failures. Membership completeness belongs to the query: every missing entry must be checked as ineligible, outside that query's acyclic scope, excluded by a compiled and mutation-tested necessary-condition theorem, or definitionally unequal. Until that theorem and its mutations are verified, unresolved membership entries conservatively block NoHit; a global incomplete bit cannot certify a negative query. Missing data, candidate budget exhaustion, G truncation, load failure and unsupported transport remain unknown and retain their candidate residuals. Whole-tree 12 GiB or wall-clock guards yield interrupted execution; they are infrastructure limits outside R. Complete recall for general N-equivalence and the implementation bridge for query-local constant-closure exclusion remain open.
+The whole process tree remains subject to the 12 GiB physical-footprint limit. Missing data, load failures, unsupported transport and interrupted execution are unpriced faults. Exhaustive guard completion requires complete membership and complete primary-index enumeration with normal candidate failures; budget Miss_R never supplies that completion. Membership completeness is query-local and unresolved entries block exhaustive completion. Whole-tree memory and wall-clock limits are infrastructure faults outside R. Complete recall for general N-equivalence and the implementation bridge for query-local constant-closure exclusion remain open.
 
-主索引路线独立运行与恢复状态。成功并取得闭合 kernel 证书即为零价；只有主索引候选全部正常失败才为一价。主索引路线超时、中断或故障只使该路为 unknown。查表关闭时只重放旧局部路线及其原预算；star 后备路线在 R v18 中明确排除；And/Iff 拆分的任一不完整子枚举使父查询保持 unknown。
+The local closure route retains its independent original budget. An unabsorbed local execution fault prevents a combined negative price; a kernel-checked hit from either route may absorb it. Typed query records retain candidate κ, coverage G and fault fields even when a later positive certificate wins. A1 applies the v18 price mapping to those same records: budget misses remain unknown. B applies v19: budget misses have price one. Both projections preserve every guard completion state and the checked upper-route bounds. Neither projection reruns search or migrates an old negative record.
 
-只在主索引候选的冻结枚举完整结束时报告 NoHit。缺索引、漏页、未遍历页、部分基底、预算耗尽和中断均为 unknown/insufficient，不计一价。NoHit 只表示冻结 R 未识别，不表示不可证明或本征困难；一步有界推论类不等于全部 B⊢T。`SEARCH_REDUCTION_LOOKUP=0` 只用于重放旧局部路线的消融读数，不冒充新 R 的完整查表。
+Reuse domains include the explicit R v19, execution-stops-v2, checkpoint-v6 and probe-cache-v9 identities. Old unknowns and negative caches are not migrated. Program bytes remain outside reuse identity. Cache replay preserves typed terminals and current kernel certificate checks; a cache hit cannot upgrade Fault, NotRun or an incomplete guard.
 
 ### 3.5 Lean 显然证书与惰性否定
 
@@ -147,7 +149,7 @@ The whole process tree remains subject to the 12 GiB physical-footprint limit. N
 
 `#search_reduction_certificates [by_close, by_lookup n, by_member m]` 提交下一份请求的受限数据池；`#search_reduction_nominations "出处标签" [n, m]` 追加仅含名字的提名。LLM 接口只接收名字与冻结的模型、模板、次数出处，不调用 LLM、不保存思考文本。R 的命中须再由单名字证书重放后导出；不能用一份单名字证书重放的组合命中保持 unknown。`SEARCH_REDUCTION_NOMINATORS=core` 启用 Lean 核心 MePo 与 SineQuaNon，各提名至多八项，在目标局部的冻结预算内运行一次；默认只使用已提交的数据、成员哈希和冻结闭合表。核心分数、提名顺序与重复次数不参与代价。已提交的名字先按去重后的规范顺序核验，再核验自动成员哈希提名。`#search_reduction_edge_certificates head [by_lookup n, by_member m]` 将同一语言的证书绑定到指定声明边，两臂共用绑定；名字仍须通过原范围检查。
 
-先核验两臂全部边和根的证书。基底上界为零时可认证 bind-only。`U_B ≤ U_{B∪S}` 时停止并给出 insufficient，不执行任何完整 NoHit 搜索。只有 `U_{B∪S} < U_B` 时才请求基底根、候选见证边及 `L_B` 最优路线上的 unknown 作者边的 R；每个请求的相同查询由原有缓存结算，失败或超限保留 unknown。只在 `L_B > U_{B∪S}` 且其他守卫完成时授予阳性。配对边和配对根不运行完整否定。决定集还包含 target-part 反向查询：严格区间下降、基底根 NoHit 和图完整性均成立，且所选种子的独立探针完成 NoHit、反向正证书仍未决时，才按成功优先的原有 R 补跑该反向查询；命中即停。反向 NoHit 只解除种子排除的未决状态，不计入任何图边价格。没有两臂全边守卫，也不要求有限的配对下界。
+先核验两臂全部边和根的证书。基底上界为零时可认证 bind-only。`U_B ≤ U_{B∪S}` 时停止完整 R 搜索，并按已完成数值与守卫证据发布 no-gain_R 或 incomplete，不执行任何完整 NoHit 搜索。只有 `U_{B∪S} < U_B` 时才请求基底根、候选见证边及 `L_B` 最优路线上的 unknown 作者边的 R；每个请求的相同查询由原有缓存结算，Fault/NotRun 保留 unknown，实际 κ/G Miss_R 按 v19 定价。只在 `L_B > U_{B∪S}` 且其他守卫完成时授予阳性。配对边和配对根不运行完整否定。决定集还包含 target-part 反向查询：严格区间下降、基底根已取得定价 Miss_R 和图完整性均成立，且所选种子的独立探针完成 NoHit、反向正证书仍未决时，才按成功优先的原有 R 补跑该反向查询；命中即停。反向 NoHit 只解除种子排除的未决状态，不计入任何图边价格。没有两臂全边守卫，也不要求有限的配对下界。
 
 当 `S=∅`、两臂上界相等且非零、默认正证书核验未闭合目标时，两臂保持 unknown，判 insufficient，不追加完整 R 查询。作者证明使用了某条基底引理，不等于已提交并核验该引理的名字证书；零次完整 R 查询既不是 NoHit，也不是 bind-only 证据。
 
@@ -159,7 +161,7 @@ The whole process tree remains subject to the 12 GiB physical-footprint limit. N
 
 保留声明级 `k=1` 作者边。`k=2` 对每个声明至多追加一个统一的两层祖先候选，不枚举前提子集，不由跳边生成新窗口。新增候选数至多是批内活声明数；声明拆分不得改变窗口规则或生成额外选择自由。候选仍按 §3.2–3.4 作陈述级解析检验和定价。
 
-两臂的根证书核验分别只持 `B_used` 和 `B_used∪S`。只有出现严格的上界差距时，基底根才追加一次完整 R；配对根不请求 NoHit。成功且经 kernel 复核时，将零价根超边加入两臂共享的候选图；边的前提是证书实际使用的事实，不能用无前提零边抹去 `S` 的成本。基底根探针成功直接提供 bind-only 证书。根探针和两层窗口候选探针仅在该臂闭合并经 kernel 复核时加入零价边；失败或耗尽不加边，不记一价。作者边的未知仍是 unknown。已有 `R_v1` 成功证书也可支持 bind-only，`R_v1` 不必跑，其旧耗尽不成为新下界。
+两臂的根证书核验分别只持 `B_used` 和 `B_used∪S`。只有出现严格的上界差距时，基底根才追加一次完整 R；配对根不请求 NoHit。成功且经 kernel 复核时，将零价根超边加入两臂共享的候选图；边的前提是证书实际使用的事实，不能用无前提零边抹去 `S` 的成本。基底根探针成功直接提供 bind-only 证书。根探针和两层窗口候选探针仅在该臂闭合并经 kernel 复核时加入零价边；失败或耗尽不加边，不记一价。作者边仅在其实际 R 查询取得 Miss_R 后变为一价；Fault/NotRun 保持 unknown。已有 `R_v1` 成功证书也可支持 bind-only，`R_v1` 不必跑，其旧耗尽不成为新下界。
 
 对种子 `v∈X`，`d_X(v)=0`。其余节点按入边候选取最小值：
 
@@ -193,21 +195,21 @@ The decision set follows the current paired optimum. After excluding a seed, the
 
 `T`、其别名/重述以及依赖它的声明不得偷偷进入配对环境。宽排除不因私有名、拆文件或声明包装失效。若 `S` 全为 target-part，不能判非 bind-only。例行可证的合成前提仍可因其陈述提供了隐去的信息而产生约化；防刷边界是 `T` 自身被基底根探针例行闭合时判 bind-only，读数必须保留其 R 和图作用域。
 
-## 6. 判词、closure 与见证边
+## 6. 发布判词与处置
 
-`classifyGraph` 的三态互斥且穷尽，按以下顺序计算：
+发布判词为互斥的 `bind-only | reduction_R | no-gain_R | reject | incomplete`。内部三态 `Verdict` 保留既有模型与消费者接口，发布分类由 `classifyDisposition` 从 GraphReading 计算。
 
-门槛 A 为现行定案：满足下面守卫的严格下降即判非 bind-only，强制报告 `closure=zero|partial`；不要求配对距离降到零。守卫采用声明图最优活路径上的实际种子使用，`cut` 与 `proof_hard` 都计入约化，分别报告。
+- `bind-only`：存在已核验的基底零价路线、呈现证书或既有参照成功。
+- `reduction_R`：所有原守卫完成，图完整，基底根的 R Miss 已定价；两臂上界与基底下界有限，`L_B(T)>U_{B∪S}(T)`，且配对最优活路线实际使用合规 S 种子。报告两臂区间、closure 及 cut/proof_hard 见证。
+- `no-gain_R`：守卫完成，并有有限数值证据 `U_B(T)≤L_{B∪S}(T)`。守卫超时不能产生此判词。
+- `reject`：实际检出来源泄漏、重述或换装等拒绝证据。
+- `incomplete`：未完成所需守卫或数值证据。输出唯一首要阻塞点（守卫名、查询或检查对、实际停点及补足方式），处置为「约化未获认证，不准入」，可并报区间。它不宣称未约化或无收益。
 
-- **bind-only**：取得合规单源呈现证书、`U_B(T)=0`、基底根探针成功或已有 `R_v1` 成功证书之一。
-- **non-bind-only[G,R_lookup,k,B_used,closure]**：图提取完整；隔离、呈现与宽 `S` 排除完成；无必需 incomplete；基底根处查表正常耗尽；基底下界与两臂上界有限；`L_B(T)>U_{B∪S}(T)`；存在合规 `S` 种子在配对臂最优活路线实际使用；见证分为 `cut`（已播种的合成 `S` 成员使边从一变零）和 `proof_hard`（最优路径使用的 `S` 顶点满足 `d_B(s) ≥ 1` 且附有 s 对 B 独立查表正常耗尽记录）。`d_B(s)=0` 或独立查表命中的 s 不能作 proof_hard。`U_{B∪S}(T)=0` 时 `closure=zero`，否则为 `partial`。
-- **insufficient-evidence**：其余情形。`d_B>0` 且两臂距离相等时另报“未见约化”，不判 bind-only；`S=∅` 时另报“无辅助声明”，不能判非 bind-only。
-
-非 bind-only 读数逐条输出 cut 见证边及其合成前提，或 proof_hard 种子及其基底深度，并输出实际种子依赖、两臂区间和 closure。`zero` 提供沿已核验证书零价闭合的更强读数，`partial` 只说明该图上的剩余构造层减少；两者都不自动取得 `CLAUDE.md` §3.2 的 content 资格。单体证明若基底不能零价闭合而没有具名辅助声明，只能给出“无辅助声明 / 证据不足”。
+发布消费的任何一价记录为 searchKappa 或 coveragePrefixG 时，`basis=budget`，否则为 exhaustive；保守计算包括全部已定价作者边与所消费的基底根 Miss，不求最小依赖集。budget 读数仅用于带 R 版本与作用域的 Observe，不作为 CLAUDE.md §3.2 准入依据；exhaustive 也不自动取得 content 资格。`closure=zero` 只报告经装配核验的正证书零路线，partial 只说明所登记图的剩余构造层减少。
 
 ### 6.1 现在时限制
 
-证书语法、命名重放、来源审计、图、DP 和分类由 Lean 执行；正证书经 kernel 核验，JSON 只作输出。unsafe 枚举器、磁盘索引完整性和预算记账属于运行时信任边界，标为 meta-computed，由命名重放与枚举器的差分测试及变异测试守护。`RuntimeBridge` 在 `ArmCompletion` 的连续编号、范围、共同轮数和实际支持模拟条件下证明生产 DP 的完成包络及阳性差距；条件定理保持条件形式，不声称端到端运行时健全性。NoHit 是具名的正常穷尽前提，不是新增公理。每个审计模块将 `GraphReading` 写成 Lean 数据，并以 `classifyGraph reading = v := by decide` 交 kernel 重算判词。纯分类器的 `early_stop_verdict_eq` 要求分类状态相同；运行时提前停止与全量求值的一致性另作差分验收。完整分类器的基底证书单调性保持 open，部分信息精化可从 insufficient 转阳。未命中的非作者 shortcut 不进入当前下界图，其未来激活需要额外模拟依据。
+证书语法、命名重放、来源审计、图、DP 和分类由 Lean 执行；正证书经 kernel 核验，JSON 只作输出。unsafe 枚举器、磁盘索引完整性和预算记账属于运行时信任边界，标为 meta-computed，由命名重放与枚举器的差分测试及变异测试守护。`RuntimeBridge` 在 `ArmCompletion` 的连续编号、范围、共同轮数和实际支持模拟条件下证明生产 DP 的完成包络及阳性差距；条件定理保持条件形式，不声称端到端运行时健全性。Miss_R 是记录的冻结调度停点，exhaustive 才提供正常穷尽的守卫前提，均不是新增公理。Kernel 证明终态互斥、Option 价格、Fault/NotRun 无价、预算 Miss 不完成守卫、零路线依赖正证书以及固定图上 Hit 集合包含时各臂距离不增；零路线定理显式要求每条零价记录具有正证书。Kernel 只证明这些记录的分类及所列条件定理，不证明现实搜索穷尽、不证明没有其他显然证书，也不证明 unsafe 执行器与模型的端到端等价。`GraphModel.delta_not_monotone` 保留距离差不单调的边界。每个审计模块将 `GraphReading` 写成 Lean 数据，分别以 `classifyGraph reading = v := by decide` 及 A1/B 的 `classifyDisposition reading = d := by decide` 交 kernel 重算内部与发布判词。纯分类器的 `early_stop_verdict_eq` 要求分类状态相同；运行时提前停止与全量求值的一致性另作差分验收。完整分类器的基底证书单调性保持 open，部分信息精化可从 insufficient 转阳。未命中的非作者 shortcut 不进入当前下界图，其未来激活需要额外模拟依据。
 
 距离下降不证明辅助结构难被发现；同一声明体内的重复引用在依赖去重后不计次数。本契约不主张 Frege / Extended Frege 分离，未发现获准证书也不表示不存在获准证书。
 
@@ -215,7 +217,7 @@ The decision set follows the current paired optimum. After excluding a seed, the
 
 图外短路线可能消除图上的正差；猜测型绕路也可能抬高作者路线距离。窗口不能覆盖所有替代证明。声明粒度与证明项粒度的距离无统一大小关系，不能宣称互为上下界。
 
-在假设单调的模型中，增加种子不增每臂距离；增强 R 也不增每臂距离，bind-only 对 R 增强向上单调。实际固定预算过程须另核验该前提，不能把超预算当正常失败来推单调性。
+在假设单调的模型中，增加种子不增每臂距离；增强 R 也不增每臂距离，bind-only 对 R 增强向上单调。实际固定预算过程须另核验该前提，不能从预算 Miss 推出穷尽或搜索过程本身的单调性。
 
 距离差 `Δ` 对 R 增强不单调。例如 `B={b}`、`S={s}`，`b→s`、`b→t`、`s→t` 初始代价均为一时 `Δ=0`；只把 `s→t` 降为零可使 `Δ=1`，再把 `b→t` 降为零又使 `Δ=0`。重建者强度的单调方向由 bind-only 的单调性承担，不能替换成 `Δ` 单调。
 
@@ -282,7 +284,7 @@ FIB 五模式单元刻画两个选择的耦合，不刻画是否存在选择。�
 
 ## 10. 资源边界
 
-顶点数不超过活闭包内批内声明数加 `|B_used|`。每臂每顶点至多两次声明探针，另有两次根探针、每个 `S` 成员至多一次反向探针和一次基底独立探针，每次探针的旧局部路线分配 `200000` 搜索心跳；查表按 §3.4 为每候选分配 κ = `200000` 搜索心跳与 `8000000` 准备心跳，每查询另受覆盖上界 G = `340000000` 约束。截断与超限保留 unknown，不改变判词逻辑。没有证明项顶点容量扩容或子项义务搜索路径。
+顶点数不超过活闭包内批内声明数加 `|B_used|`。每臂每顶点至多两次声明探针，另有两次根探针、每个 `S` 成员至多一次反向探针和一次基底独立探针，每次探针的旧局部路线分配 `200000` 搜索心跳；查表按 §3.4 为每候选分配 κ = `200000` 搜索心跳与 `8000000` 准备心跳，每查询另受覆盖上界 G = `340000000` 约束。R 的 κ/G 截断按 Miss_R 定价；守卫超限与执行 Fault 保留 incomplete，不授予约化。没有证明项顶点容量扩容或子项义务搜索路径。
 
 内存包含一份共享不可变基底导入，加 `O(Σ|type(v)|+|前提|)` 的当前目标数据；证明体仅线性遍历取依赖，消费者不对全环境建树。完整路由 manifest 在堆上驻留，答案缓存与断点的 compacted regions 保留至进程退出；当前实现没有任意长批次跨目标常驻量的严格上界。探针串行执行，整棵进程树物理 footprint 受 `12 GiB` 基础设施守卫约束；触发该守卫或挂钟截止时中断运行并记录 interrupted，不把基础设施中断计入 R 的语义判词。导入环境的基础驻留另行实测，不能冒称与库大小无关。
 
@@ -291,3 +293,12 @@ FIB 五模式单元刻画两个选择的耦合，不刻画是否存在选择。�
 本契约只提供搜索约化的 Observe 读数，不替换 `CLAUDE.md` §3.2 的判形、活路径、有消费辅助声明、模块准入依据或开放问题结算规则，不替代 §3.3 用途规则、§3.9 四槽义务和 AURIC 来源绑定。把带作用域的 non-bind-only 升级为 §3.2 content 或修改该条，必须另获 owner 裁决；模型定理、实现通过与校准读数都不能代替。
 
 “只要能写出 Lean 代码就是非 bind-only”会把别名和薄包装当成新内容；无界地把已证明结论全部免费提供又会使 content 为空。本契约固定有限图和可复现重建者，把“变容易”落实为声明辅助构造层数之差，并保留证据不足、作用域和未决边界。
+
+
+### 9.1 热延迟与对照数据域
+
+同一最终 head、索引数据域、请求和冻结证书池上，A1 为逐检查计额加 v18 价格映射，B 为相同查询记录的 v19 价格映射。历史 A0 不改写。数据域保存逐文件输入清单与声明清单；不同指纹的负记录不复用。
+
+热序列固定为同机串行 `F0,H1,F1,H2,F2,H3,F3`，通过条件为 `median(H1..H3) ≤ median(F0..F3)+30 s`，偶数中位数取中间两值的均值。F 是登记 sha256 的固定开销请求，走同样的启动、导入与核验路径。请求定义改变后与历史固定开销不可比。每次 H 断言整次认证缓存命中且新增 R 搜索为零；报告全部原始样本、最慢值与负载，不删除慢样本或重复选优。
+
+内部兼容接口的基底根 `Run.exhausted` 表示已定价的 Miss_R；只有结构化 `RQuery.guardRun` 的 exhausted 表示可供守卫消费的穷尽。两者不得互换。新阴性校准须记录实际 κ/G/Fault/NotRun 停点；未触发预定停点时报告覆盖缺口，不能改变预期。边界注入回归不替代真实生产候选人口的防假阳性校准。

@@ -32,6 +32,7 @@ private def checkedSource (source : Environment) (n : Name) : MetaM ConstantInfo
 
 initialize isolationUnitReadings : IO.Ref (Array Json) ← IO.mkRef #[]
 initialize isolationUnitCount : IO.Ref Nat ← IO.mkRef 0
+initialize isolationRejection : IO.Ref (Option String) ← IO.mkRef none
 
 /-- The immutable, deduplicated check domain includes transitive proof
 dependencies absent from the reconstructed prefix. -/
@@ -40,15 +41,18 @@ private partial def restatementDomain (source base : Environment) (pending : Lis
   match pending with
   | [] => return seen
   | n :: rest =>
-    if seen.contains n || base.contains n then
+    if seen.contains n then
       return ← restatementDomain source base rest seen
     let info ← checkedSource source n
+    if let .ctorInfo _ := info then
+      if base.contains n then return ← restatementDomain source base rest seen
     let mut dependencies := rest
-    for dep in info.getUsedConstantsAsSet do
-      unless base.contains dep do
-        let depInfo ← sourceInfo source dep
-        if ← withEnv source (isProp depInfo.type) then
-          dependencies := dep :: dependencies
+    unless base.contains n do
+      for dep in info.getUsedConstantsAsSet do
+        unless base.contains dep do
+          let depInfo ← sourceInfo source dep
+          if ← withEnv source (isProp depInfo.type) then
+            dependencies := dep :: dependencies
     restatementDomain source base dependencies (seen.insert n)
 
 /-- One complete single-source plus legacy check owns one allocation. All
@@ -77,11 +81,14 @@ private def checkRestatementUnits (source : Environment) (target : Name)
         let type ← copyStatement source n info.type
         let single := (← singleSourceConversion targetType type).isSome
         if single || (← certifiedRestatement targetType type index (some normalization)) then
+          isolationRejection.set (some s!"single-source-and-legacy-restatement:{target}:{n}")
           throwError "search.target_restatement: {n}"
         checkSystem "isolation.restatement-unit"
         record "complete")
       (fun ex => do
-        record (if ex.isMaxHeartbeat then "incomplete:unit-heartbeat" else "fault")
+        let rejection ← isolationRejection.get
+        record (if ex.isMaxHeartbeat then "incomplete:unit-heartbeat"
+          else if rejection.isSome then "reject" else "fault")
         throw ex)
     let used := (← IO.getNumHeartbeats) - started
     withTheReader Core.Context (fun ctx => {ctx with initHeartbeats := ctx.initHeartbeats + used}) do
@@ -96,7 +103,9 @@ partial def copyStructure (source : Environment) (target : Name) (targetType : E
     (checked? : Option NameSet := none) : MetaM Unit := do
   let mark := fun step => phase?.mapM fun phase => phase.set s!"structure-copy:{n}:{step}"
   discard <| mark "source-check"
-  if n == target then throwError "search.target_leak: {n}"
+  if n == target then
+    isolationRejection.set (some s!"source-isolation:{target}:{n}")
+    throwError "search.target_leak: {n}"
   if visiting.contains n then return
   let info ← checkedSource source n
   -- A kernel-rebuilt constructor is common vocabulary, never an added fact.
@@ -291,7 +300,9 @@ def prepare (source base : Environment) (request : Request)
           withTheReader Core.Context (fun ctx =>
               {ctx with initHeartbeats := ctx.initHeartbeats + extraSearch}) do
             phase.set "collection-leak"
-            if ← collectionLeak target.type types then throwError "search.structure_collection_restatement"
+            if ← collectionLeak target.type types then
+              isolationRejection.set (some s!"collection-restatement:{request.target}")
+              throwError "search.structure_collection_restatement"
             let normalization ← IO.mkRef ({} : LegacyNormalizationMemo)
             let domain ← restatementDomain source (← getEnv) request.additions.toList
             let units := domain.toArray.qsort (fun a b => a.toString < b.toString)
@@ -511,6 +522,7 @@ private unsafe def runCore (source base : Environment) (request : Request)
     (implicationModules? : Option (Array Name) := none) : IO Observation := do
   isolationUnitReadings.set #[]
   isolationUnitCount.set 0
+  isolationRejection.set none
   let unknown (reason : String) (failure := Failure.isolation) : Observation := {
     target := request.target, base := .incomplete failure,
     paired := .incomplete failure, verdict := .insufficient, reason}
@@ -572,6 +584,7 @@ private unsafe def runCore (source base : Environment) (request : Request)
           {reading.paired with upper := .top} else reading.paired
         baselineProof?, pairedProof?, isolated := true, structureChecked,
         structureClean := structureChecked, presentationCertified := presentation == .found,
+        rejection? := ← isolationRejection.get,
         presentationComplete := match presentation with | .incomplete _ => false | _ => true}
       let baseRun := intervalRun reading.graph reading.baseline
       let pairedGraph := {reading.graph with edges := reading.graph.edges.map (fun edge => {edge with cost := edge.pairedCost})}
@@ -647,7 +660,9 @@ unsafe def run (source : Environment) (request : Request)
     return {result with
       catalogCount := catalog.eligible.size, loadedModules := catalog.loaded,
       catalogExcluded := catalog.excluded, scope := "B_T",
-      catalogVerified := true, pairedStructureUse := used}
+      catalogVerified := true, pairedStructureUse := used,
+      isolationUnits := ← isolationUnitReadings.get,
+      isolationUnitCount := ← isolationUnitCount.get}
   catch ex =>
     unless fixture do throw ex
     return {

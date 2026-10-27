@@ -1,18 +1,9 @@
-import Lean
-import Mathlib.Tactic.ToExpr
+import LeanInformationAuditRegAnalysis.SearchReduction.DiskLookup
 
 namespace LeanInformationAudit.SearchReduction
 open Lean
 
 abbrev certificateLanguageVersion : String := "obvious/v1/name-only"
-
-/-- Untrusted data. There is deliberately no expression, tactic, witness,
-instance, attribute, direction or lemma-list field. -/
-inductive ObviousCertificate where
-  | close
-  | lookup (name : Name)
-  | member (name : Name)
-  deriving Inhabited, Repr, DecidableEq, ToExpr
 
 declare_syntax_cat obvious_certificate
 syntax "by_close" : obvious_certificate
@@ -35,12 +26,12 @@ def ObviousCertificate.render : ObviousCertificate → String
 structure CertificateNomination where
   certificate : ObviousCertificate
   provenance : String
-  deriving Inhabited, Repr, DecidableEq, ToExpr
+  deriving Inhabited, Repr, DecidableEq
 
-def ObviousCertificate.toExpr : ObviousCertificate → Expr
-  | .close => mkConst ``ObviousCertificate.close
-  | .lookup name => mkApp (mkConst ``ObviousCertificate.lookup) (Lean.toExpr name)
-  | .member name => mkApp (mkConst ``ObviousCertificate.member) (Lean.toExpr name)
+instance : ToExpr CertificateNomination where
+  toExpr n := mkApp2 (mkConst ``CertificateNomination.mk)
+    (Lean.toExpr n.certificate) (Lean.toExpr n.provenance)
+  toTypeExpr := mkConst ``CertificateNomination
 
 /-- Only built-in data types cross the request-module boundary. -/
 def CertificateNomination.encode (n : CertificateNomination) : Nat × Name × String :=
