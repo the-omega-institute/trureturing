@@ -7,6 +7,7 @@
    digest: Native hazard, survival and chronological Kraus composition. -/
 
 import D5.S3.Quantum.Fibers.OriginalControlMarkedJump
+import D5.S3.Quantum.Fibers.OriginalControlSurvivalInstability
 
 /-! The native derivative hazard and original Kraus measure of concatenated controls. -/
 
@@ -19,13 +20,10 @@ attribute [local instance] Classical.propDecidable
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-/-- The double-wall hazard computed from the actual height derivative. -/
-def hazard (c : ℝ) (k : ℝ → ℝ) (t : ℝ) : ℝ :=
-  max (deriv k t) 0 / k t + max (-deriv k t) 0 / (c-k t)
-
-/-- Survival is the exponential of the original integrated hazard. -/
-def survival (c : ℝ) (k : ℝ → ℝ) (t : ℝ) : ℝ :=
-  Real.exp (-(∫ u in (0:ℝ)..t, hazard c k u))
+/- The concatenation proofs consume the frozen scalar supplier directly while
+   retaining the local names used by the marked-law interface. -/
+abbrev hazard := OriginalControlSurvivalInstability.hazard
+abbrev survival := OriginalControlSurvivalInstability.survival
 
 /-- The logarithmic jump rate of the actual concatenated programme. -/
 def jumpRate (c : ℝ) (k : ℝ → ℝ) (t : ℝ) (i : Fin 5) : ℝ :=
