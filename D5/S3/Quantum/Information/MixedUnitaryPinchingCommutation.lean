@@ -163,11 +163,193 @@ private lemma mixed_channel_data (φ : QubitMatrix → QubitMatrix) (hφ : IsMix
   simp only [Fin.sum_univ_three, Complex.ofReal_add, Complex.ofReal_mul]
   module
 
+private lemma linear_eq_of_spin (f g : QubitMatrix →ₗ[ℂ] QubitMatrix)
+    (h1 : f 1 = g 1) (hs : ∀ v : Fin 3 → ℝ, f (spin v) = g (spin v)) : f = g := by
+  have hh (a : QubitMatrix) (ha : a.IsHermitian) : f a = g a := by
+    have he : a = (((trace a).re / 2 : ℝ) : ℂ) • 1 +
+        (1 / 2 : ℂ) • spin (fun i => bloch a i) := by
+      calc
+        a = blochMatrix (trace a).re (bloch a) :=
+          (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_geometry_of_isHermitian
+            a ha).1
+        _ = _ := by
+          ext i j
+          fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+            simp [blochMatrix, spin, sigma, pauliMatrix, qubitX, qubitZ,
+              Fin.sum_univ_three] <;> ring
+    rw [he, map_add, map_add, map_smul, map_smul, map_smul, map_smul, h1, hs]
+  ext a : 1
+  calc
+    f a = f ((realPart a : QubitMatrix) + Complex.I • (imaginaryPart a : QubitMatrix)) :=
+      congrArg f (realPart_add_I_smul_imaginaryPart a).symm
+    _ = g ((realPart a : QubitMatrix) + Complex.I • (imaginaryPart a : QubitMatrix)) := by
+      rw [map_add, map_add, map_smul, map_smul,
+        hh _ (realPart a).property, hh _ (imaginaryPart a).property]
+    _ = g a := congrArg g (realPart_add_I_smul_imaginaryPart a)
+
+private lemma mixed_positive (φ : QubitMatrix → QubitMatrix) (hφ : IsMixedUnitary φ)
+    (a : QubitMatrix) (ha : a.PosSemidef) : (φ a).PosSemidef := by
+  obtain ⟨k, p, u, hp, _, _, hrep⟩ := hφ
+  rw [hrep]
+  apply Matrix.posSemidef_sum
+  intro j _
+  exact (ha.mul_mul_conjTranspose_same (u j)).smul
+    (Complex.nonneg_iff.mpr ⟨hp j, rfl⟩)
+
+private lemma scalar_gram_bounds (φ : QubitMatrix → QubitMatrix) (hφ : IsMixedUnitary φ)
+    (c : ℝ) (hq : (blochOperator φ)ᵀ * blochOperator φ = c • 1) :
+    0 ≤ c ∧ c ≤ 1 := by
+  let t := blochOperator φ
+  have hdiag (j : Fin 3) : (fun i => t i j) ⬝ᵥ (fun i => t i j) = c := by
+    have he := congrFun (congrFun hq j) j
+    simpa only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.smul_apply,
+      Matrix.one_apply_eq, smul_eq_mul, mul_one, dotProduct, t] using he
+  have hc : 0 ≤ c := by
+    rw [← hdiag 0]
+    exact Finset.sum_nonneg (fun i _ => mul_self_nonneg _)
+  obtain ⟨⟨f, hf⟩, h1, htr, _, hs⟩ := mixed_channel_data φ hφ
+  let e : Fin 3 → ℝ := Pi.single 2 1
+  have he : spin e = qubitZ := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [spin, e, sigma, pauliMatrix, qubitX, qubitZ, Fin.sum_univ_three]
+  have hpure : diagonal ![1, 0] =
+      (1 / 2 : ℂ) • (1 : QubitMatrix) + (1 / 2 : ℂ) • spin e := by
+    rw [he]
+    ext i j
+    fin_cases i <;> fin_cases j <;> norm_num [Matrix.diagonal_apply, qubitZ]
+  have hout : φ (diagonal ![1, 0]) = blochMatrix 1 (WithLp.toLp 2 (t *ᵥ e)) := by
+    rw [hpure, hf, map_add, map_smul, map_smul, ← hf, ← hf, h1, hs]
+    ext i j
+    fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+      simp [blochMatrix, spin, sigma, pauliMatrix, qubitX, qubitZ,
+        Fin.sum_univ_three] <;> ring
+  have hp : (diagonal ![1, 0] : QubitMatrix).PosSemidef := by
+    apply Matrix.posSemidef_diagonal_iff.mpr
+    intro i
+    fin_cases i <;> norm_num [Complex.nonneg_iff]
+  have hn := D5.S3.Quantum.Information.ActualPureQubitCostInfimum.norm_bloch_le_trace_of_posSemidef
+    _ (mixed_positive φ hφ _ hp)
+  rw [hout, D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_blochMatrix,
+    D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace] at hn
+  have hnorm : ‖WithLp.toLp 2 (t *ᵥ e)‖ ^ 2 = c := by
+    rw [EuclideanSpace.real_norm_sq_eq]
+    change (∑ i, (t *ᵥ e) i ^ 2) = c
+    simp only [e, Matrix.mulVec_single_one, Matrix.col_apply, pow_two]
+    exact hdiag 2
+  exact ⟨hc, by norm_num at hn; nlinarith [norm_nonneg (WithLp.toLp 2 (t *ᵥ e))]⟩
+
+private lemma orthogonal_spin_lift (o : Matrix (Fin 3) (Fin 3) ℝ)
+    (ho : oᵀ * o = 1) :
+    ∃ u ∈ unitaryGroup (Fin 2) ℂ,
+      (∀ v : Fin 3 → ℝ, spin (o *ᵥ v) = u * spin v * star u) ∨
+      (∀ v : Fin 3 → ℝ, spin (o *ᵥ v) = u * (spin v)ᵀ * star u) := by
+  sorry
+
 private lemma scalar_gram_isotropic (φ : QubitMatrix → QubitMatrix)
     (hφ : IsMixedUnitary φ)
     (hq : ∃ c : ℝ, (blochOperator φ)ᵀ * blochOperator φ = c • 1) :
     IsIsotropic φ := by
-  sorry
+  obtain ⟨c, hc⟩ := hq
+  obtain ⟨hc0, hc1⟩ := scalar_gram_bounds φ hφ c hc
+  obtain ⟨⟨f, hf⟩, h1, _, _, hs⟩ := mixed_channel_data φ hφ
+  let d : QubitMatrix →ₗ[ℂ] QubitMatrix :=
+    (1 / 2 : ℂ) • (Matrix.traceLinearMap (Fin 2) ℂ ℂ).smulRight 1
+  have hd (a : QubitMatrix) : d a = (a.trace / 2) • 1 := by
+    change (1 / 2 : ℂ) • (trace a • (1 : QubitMatrix)) = _
+    rw [smul_smul]
+    congr 1
+    ring
+  have hds (v : Fin 3 → ℝ) : d (spin v) = 0 := by
+    rw [hd]
+    have ht : trace (spin v) = 0 := by
+      simp [spin, sigma, pauliMatrix, qubitX, qubitZ, Matrix.trace_fin_two,
+        Fin.sum_univ_three]
+    rw [ht, zero_div, zero_smul]
+  have hd1 : d 1 = 1 := by rw [hd]; norm_num [Matrix.trace_fin_two]
+  by_cases hz : c = 0
+  · have ht : blochOperator φ = 0 := by
+      apply Matrix.conjTranspose_mul_self_eq_zero.mp
+      simpa only [Matrix.conjTranspose_eq_transpose_of_trivial, hz, zero_smul] using hc
+    have hfd : f = d := linear_eq_of_spin f d (by rw [← hf, h1, hd1]) (by
+      intro v
+      rw [← hf, hs, ht, Matrix.zero_mulVec, hds]
+      simp [spin])
+    refine ⟨1, by norm_num, 1, one_mem _, Or.inl ?_⟩
+    intro a
+    rw [hf, hfd, hd]
+    norm_num
+  · let s := Real.sqrt c
+    have hs0 : 0 < s := Real.sqrt_pos.mpr (lt_of_le_of_ne hc0 (Ne.symm hz))
+    have hs1 : s ≤ 1 := by
+      dsimp only [s]
+      exact (Real.sqrt_le_one).mpr hc1
+    have hsq : s ^ 2 = c := Real.sq_sqrt hc0
+    let o := s⁻¹ • blochOperator φ
+    have ho : oᵀ * o = 1 := by
+      simp only [o, Matrix.transpose_smul, Matrix.smul_mul, Matrix.mul_smul,
+        smul_smul, hc]
+      have he : s⁻¹ * (s⁻¹ * c) = 1 := by rw [← hsq]; field_simp
+      rw [he, one_smul]
+    have ht : blochOperator φ = s • o := by
+      simp only [o, smul_smul, mul_inv_cancel₀ hs0.ne', one_smul]
+    have hscale (v : Fin 3 → ℝ) : spin (blochOperator φ *ᵥ v) =
+        (s : ℂ) • spin (o *ᵥ v) := by
+      rw [ht, Matrix.smul_mulVec]
+      unfold spin
+      simp only [Pi.smul_apply, smul_eq_mul, Complex.ofReal_mul, mul_smul, Finset.smul_sum]
+    obtain ⟨u, hu, huact⟩ := orthogonal_spin_lift o ho
+    let a := (Unitary.conjStarAlgAut ℂ QubitMatrix ⟨u, hu⟩).toAlgEquiv.toLinearMap
+    refine ⟨1 - s, ⟨by linarith, by linarith⟩, u, hu, ?_⟩
+    rcases huact with huact | huact
+    · left
+      let g : QubitMatrix →ₗ[ℂ] QubitMatrix := (s : ℂ) • a + ((1 - s : ℝ) : ℂ) • d
+      have hg (b : QubitMatrix) : g b = (s : ℂ) • (u * b * star u) +
+          ((1 - s : ℝ) : ℂ) • (b.trace / 2) • 1 := by
+        change (s : ℂ) • (u * b * star u) + ((1 - s : ℝ) : ℂ) • d b = _
+        rw [hd]
+      have hfg : f = g := by
+        apply linear_eq_of_spin
+        · rw [← hf, h1, hg, mul_one, Unitary.mul_star_self_of_mem hu]
+          norm_num [Matrix.trace_fin_two]
+          module
+        · intro v
+          rw [← hf, hs, hscale, huact, hg]
+          have ht : trace (spin v) = 0 := by
+            simp [spin, sigma, pauliMatrix, qubitX, qubitZ, Matrix.trace_fin_two,
+              Fin.sum_univ_three]
+          rw [ht, zero_div, zero_smul, smul_zero, add_zero]
+      intro b
+      rw [hf, hfg, hg]
+      congr 1
+      congr 1
+      push_cast
+      ring
+    · right
+      let tr := (Matrix.transposeLinearEquiv (Fin 2) (Fin 2) ℂ ℂ).toLinearMap
+      let g : QubitMatrix →ₗ[ℂ] QubitMatrix := (s : ℂ) • (a.comp tr) + ((1 - s : ℝ) : ℂ) • d
+      have hg (b : QubitMatrix) : g b = (s : ℂ) • (u * bᵀ * star u) +
+          ((1 - s : ℝ) : ℂ) • (b.trace / 2) • 1 := by
+        change (s : ℂ) • (u * bᵀ * star u) + ((1 - s : ℝ) : ℂ) • d b = _
+        rw [hd]
+      have hfg : f = g := by
+        apply linear_eq_of_spin
+        · rw [← hf, h1, hg, Matrix.transpose_one, mul_one,
+            Unitary.mul_star_self_of_mem hu]
+          norm_num [Matrix.trace_fin_two]
+          module
+        · intro v
+          rw [← hf, hs, hscale, huact, hg]
+          have ht : trace (spin v) = 0 := by
+            simp [spin, sigma, pauliMatrix, qubitX, qubitZ, Matrix.trace_fin_two,
+              Fin.sum_univ_three]
+          rw [ht, zero_div, zero_smul, smul_zero, add_zero]
+      intro b
+      rw [hf, hfg, hg]
+      congr 1
+      congr 1
+      push_cast
+      ring
 
 private lemma normalize_probe (t : Matrix (Fin 3) (Fin 3) ℝ) (a b : Fin 3 → ℝ)
     (hab : a ⬝ᵥ b = 0) (hc : (t *ᵥ a) ⬝ᵥ (t *ᵥ b) ≠ 0) :
