@@ -9,18 +9,8 @@
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Order.Interval.Finset.Fin
-import Mathlib.Data.Finset.Max
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Finset.Lattice.Fold
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
 import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Push
 
 /-! The two mean matrices are optimized over independent sets of ordered positions. -/
 
@@ -115,7 +105,7 @@ private lemma incidence_bound {d : ℕ} (s : Finset (Fin d × Fin d))
       (if ab.1 ∈ q then (1 : ℝ) else 0) + (if ab.2 ∈ q then 1 else 0) ≤
         1 + if ab ∈ q ×ˢ q then 1 else 0 := by
     by_cases ha : ab.1 ∈ q <;> by_cases hb : ab.2 ∈ q <;>
-      simp only [Finset.mem_product, ha, hb, and_self, if_true, if_false] <;> norm_num
+      simp only [Finset.mem_product, ha, hb, and_self, ite_true, ite_false] <;> norm_num
   have hr : (∑ ab : Fin d × Fin d, if ab ∈ q ×ˢ q then (1 : ℝ) else 0) =
       (q.card : ℝ) ^ 2 := by
     simp only [Finset.sum_boole, Finset.filter_mem_eq_inter, Finset.univ_inter,
@@ -150,7 +140,7 @@ private lemma arithmetic_coefficients {d : ℕ} (s : Finset (Fin d × Fin d))
     dsimp only [arith]
     congr 1
     simp only [add_mul, Finset.sum_add_distrib, ite_mul, one_mul, zero_mul,
-      Finset.sum_ite_eq, Finset.mem_univ, if_true]
+      Finset.sum_ite_eq, Finset.mem_univ, ite_true]
   · intro i
     have h := incidence_bound s {i}
     simp only [Finset.mem_singleton, Finset.card_singleton, Nat.cast_one, one_pow] at h
@@ -191,12 +181,12 @@ private lemma probability_weighted_bound {d : ℕ} {p : Fin d → ℝ}
           apply Finset.sum_le_sum
           intro i hi
           by_cases hij : i = j
-          · subst i; rw [if_pos rfl]; nlinarith
-          · rw [if_neg hij, add_zero]
+          · subst i; rw [ite_eq_left rfl]; nlinarith
+          · rw [ite_eq_right hij, add_zero]
             exact mul_le_mul_of_nonneg_right (by linarith [hv i j hij]) (hp.1 i)
         _ = _ := by
           rw [Finset.sum_add_distrib, ← Finset.mul_sum, hp.2, mul_one]
-          simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true]
+          simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
     have htj := mul_le_mul_of_nonneg_left (hmax j) (by linarith : 0 ≤ 2 * c j - v)
     have htu := mul_le_mul_of_nonneg_left (hu j) (by linarith : 0 ≤ 2 * t - 1)
     nlinarith
@@ -398,11 +388,11 @@ private lemma failure_next {d : ℕ} (hd : 5 ≤ d) :
     rw [Nat.cast_sub (by omega)]; norm_num
   let p : Fin d → ℝ := fun a =>
     (if a = o then r ^ 2 / n else 0) + (if a ∈ q then 1 / n else 0)
-  have hpo : p o = r ^ 2 / n := by simp only [p, eq_self_iff_true, ite_true, if_neg ho, add_zero]
+  have hpo : p o = r ^ 2 / n := by simp only [p, ite_true, ite_eq_right ho, add_zero]
   have hpq (a : Fin d) (ha : a ∈ q) : p a = 1 / n := by
     have hao : a ≠ o := by intro h; exact ho (h ▸ ha)
-    simp only [p, if_neg hao, if_pos ha, zero_add]
-  have hpz : p z = 0 := by simp only [p, if_neg hzo, if_neg hz, add_zero]
+    simp only [p, ite_eq_right hao, ite_eq_left ha, zero_add]
+  have hpz : p z = 0 := by simp only [p, ite_eq_right hzo, ite_eq_right hz, add_zero]
   have hp : IsProbability p := by
     constructor
     · intro a
@@ -410,7 +400,7 @@ private lemma failure_next {d : ℕ} (hd : 5 ≤ d) :
       split_ifs <;> positivity
     · dsimp only [p]
       rw [Finset.sum_add_distrib]
-      simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true, Finset.sum_ite,
+      simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true, Finset.sum_ite,
         Finset.filter_mem_eq_inter, Finset.univ_inter, Finset.sum_const_zero, add_zero,
         Finset.sum_const, nsmul_eq_mul, hq, hk]
       field_simp [ne_of_gt hn] <;> dsimp only [n] <;> ring
@@ -418,8 +408,8 @@ private lemma failure_next {d : ℕ} (hd : 5 ≤ d) :
   have hc := star_card_sum q o ho
   have hzc : (o, z) ∉ c := by
     simp only [c, Finset.mem_insert, Prod.mk.injEq, Finset.mem_union,
-      Finset.mem_product, Finset.mem_singleton, hz, ho, hzo, Ne.symm hzo,
-      and_false, false_and, or_self, not_false_eq_true]
+      Finset.mem_product, Finset.mem_singleton, hz, ho, hzo,
+      and_false, or_self, not_false_eq_true]
   have hjc : (j, j) ∉ c := by
     simp only [c, Finset.mem_insert, Prod.mk.injEq, Finset.mem_union,
       Finset.mem_product, Finset.mem_singleton, hjo, false_and, and_false,
@@ -477,7 +467,7 @@ private lemma geom_le_arith {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p)
     (ab : Fin d × Fin d) : geom p ab ≤ arith p ab := by
   have hs := Real.sq_sqrt (mul_nonneg (hp.1 ab.1) (hp.1 ab.2))
   have hn := Real.sqrt_nonneg (p ab.1 * p ab.2)
-  dsimp only [geom, arith]
+  rw [geom.eq_1, arith.eq_1]
   nlinarith [sq_nonneg (p ab.1 - p ab.2), hp.1 ab.1, hp.1 ab.2]
 
 private lemma arithmetic_two_bound {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p)
