@@ -28,32 +28,32 @@ internal sealed class NativeSymbolicFiniteForcingDocument : IScribeDocumentDefin
         var canonical = Call("canonicalSolution", s, mode, p);
         var original = Call("value", mode, p, canonical, Call("at", rec, i));
         var output = Call("embed", Call("finiteValue", p, f));
+        var classification = IffOf(Call("IsFinite", original),
+            Seq(i, Sp, InMacro, Sp, Call("finiteOriginals", s, mode, rec)));
+        var allSolutions = All("v", Call("NativeValues", m),
+            Imp(Call("satisfies", s, mode, p, v),
+                Seq(Call("value", mode, p, v, Call("at", rec, i)), Sp, Eq, Sp, output)));
+        var forcing = All("f", Call("FiniteExpression", k),
+            Imp(Seq(Call("finiteExpressions", s, mode, rec, i), Sp, Eq, Sp, Call("some", f)),
+                AndAlso(Seq(original, Sp, Eq, Sp, output), allSolutions)));
+        var coordinates = All("p", Call("Parameters", k),
+            All("i", Call("Fin", r), AndAlso(classification, forcing)));
+        var solution = All("p", Call("Parameters", k),
+            Call("satisfies", s, mode, p, canonical));
+        var body = AndAlso(solution, coordinates);
         return StatementSource.FromAuthor(Disp(
             All("k", V("Nat"), All("m", V("Nat"), All("r", V("Nat"),
-            All("S", Call("FunctionalSystem", k, m), All("b", Call("Modes", k),
-            All("R", Call("Reconstructions", k, m, r),
-                AndAlso(
-                    All("p", Call("Parameters", k), Call("satisfies", s, mode, p, canonical)),
-                    All("p", Call("Parameters", k), All("i", Call("Fin", r),
-                        AndAlso(
-                            Iff(Call("IsFinite", original),
-                                Seq(i, Sp, InMacro, Sp, Call("finiteOriginals", s, mode, rec))),
-                            All("f", Call("FiniteExpression", k),
-                                Imp(Seq(Call("finiteExpressions", s, mode, rec, i), Sp, Eq, Sp, Call("some", f)),
-                                    AndAlso(Seq(original, Sp, Eq, Sp, output),
-                                        All("v", Call("NativeValues", m),
-                                            Imp(Call("satisfies", s, mode, p, v),
-                                                Seq(Call("value", mode, p, v, Call("at", rec, i)),
-                                                    Sp, Eq, Sp, output)))))))))))))))));
+                All("S", Call("FunctionalSystem", k, m), All("b", Call("Modes", k),
+                    All("R", Call("Reconstructions", k, m, r), body))))))));
     }
 
-    private static FormulaNode V(string name) => F.Id(name);
-    private static FormulaNode Call(string name, params FormulaNode[] args) =>
-        Seq(Operatorname(name), Apply(args));
-    private static FormulaNode All(string name, FormulaNode type, FormulaNode body) =>
-        Seq(Forall, Sp, V(name), Sp, InMacro, Sp, type, Comma, Sp, body);
-    private static FormulaNode Imp(FormulaNode p, FormulaNode q) => Seq(p, Sp, Implies, Sp, q);
-    private static FormulaNode Iff(FormulaNode p, FormulaNode q) => Seq(p, Sp, IffMacro, Sp, q);
-    private static FormulaNode AndAlso(FormulaNode p, FormulaNode q) =>
-        Seq(OpenParen, p, Sp, Wedge, Sp, q, CloseParen);
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Par(Formula value) => Seq(Open, value, Close);
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, Par(body));
+    private static Formula Imp(Formula p, Formula q) => Seq(Par(p), Sp, Implies, Sp, Par(q));
+    private static Formula IffOf(Formula p, Formula q) => Seq(Par(p), Sp, Iff, Sp, Par(q));
+    private static Formula AndAlso(Formula p, Formula q) => Seq(Par(p), Sp, Land, Sp, Par(q));
 }
