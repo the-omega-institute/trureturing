@@ -81,4 +81,3 @@ internal sealed class ChernFuImageDocument : IScribeDocumentDefinition
             Seq(arguments.SelectMany((a, i) => i == 0
                 ? new[] { a } : new[] { Comma, Sp, a }).ToArray()), Close);
 }
-

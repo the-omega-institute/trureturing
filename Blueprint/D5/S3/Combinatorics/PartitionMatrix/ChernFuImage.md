@@ -146,7 +146,7 @@ Let A(e) = {y_1 < ... < y_k} and append y_(k+1) = n. Row r consists of labels t 
 
 **Theorem 1.12 (The complete image characterization).**
 
-$$\forall n \in \mathbb{N}, \forall e \in \operatorname{List}(\mathbb{N}), (1 \le n \land \operatorname{length}(e) = n \land \operatorname{IsInversionSeq}(e)) \Rightarrow ((\exists k \in \mathbb{N}, \exists P \in \operatorname{NativePM}(n, k), \operatorname{Improper}(P) \land \operatorname{fixedPi}(P) = e) \Leftrightarrow \operatorname{Phi}(e))$$
+$$\forall n \in \mathbb{N}, \forall e \in \operatorname{List}(\mathbb{N}), (1 \le n \land \operatorname{length}(e) = n \land \operatorname{IsInversionSeq}(e)) \Rightarrow ((\exists k \in \mathbb{N}, \exists P \in \operatorname{NativePM}(n, k), \operatorname{Improper}(P) \land \operatorname{fixedPi}(P) = \operatorname{entries}(e, n)) \Leftrightarrow \operatorname{Phi}(\operatorname{entries}(e, n)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PartitionMatrix/ChernFuImage.result` (`✓ std3`). ∎
 
@@ -156,7 +156,7 @@ $$\forall n \in \mathbb{N}, \forall e \in \operatorname{List}(\mathbb{N}), (1 \l
 
 *Commentary.*
 
-For every natural n >= 1 and every list e of length n satisfying 0 <= e_i <= i - 1 at all native indices, e is the fixed Pi image of an improper native partition matrix, of some dimension k with no dimension restriction, if and only if Phi(e). In every native matrix, equal adjacent columns are equivalent to i not occurring in A(Pi(P)); the preceding value b_(Pi(P))(i) is the least label in that column minus one. The two row indices agree exactly when the corresponding Pi entries agree. Proper parity becomes oddness of i - b_(Pi(P))(i), so absence of both proper row orders gives precisely Phi. Conversely, the CDK reconstruction is a valid native matrix for every inversion sequence; Phi makes this matrix improper, and its fixed Pi image is e.
+In the formula, entries(e,n) denotes the function on Fin n sending t to e.getD t.val 0. For every natural n >= 1 and every list e of length n satisfying 0 <= e_i <= i - 1 at all native indices, e is the fixed Pi image of an improper native partition matrix, of some dimension k with no dimension restriction, if and only if Phi(e). In every native matrix, equal adjacent columns are equivalent to i not occurring in A(Pi(P)); the preceding value b_(Pi(P))(i) is the least label in that column minus one. The two row indices agree exactly when the corresponding Pi entries agree. Proper parity becomes oddness of i - b_(Pi(P))(i), so absence of both proper row orders gives precisely Phi. Conversely, the CDK reconstruction is a valid native matrix for every inversion sequence; Phi makes this matrix improper, and its fixed Pi image is e.
 
 ## References
 
