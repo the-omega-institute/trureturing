@@ -89,7 +89,8 @@ private theorem rejected_fails : ¬ arena.Law rejected := by
   obtain ⟨_,_,_,_,_,_,_,hp,_⟩ := h wait 0 0 0 (fun _ => 0)
   change IsProbabilityMeasure (0 : Measure Record) at hp
   have hh := isProbabilityMeasure_iff.mp hp
-  simpa using hh
+  change (0 : ENNReal) = 1 at hh
+  exact zero_ne_one hh
 
 private theorem success_mass (L : Leg) :
     L.markedLaw {Sum.inl ()}=ENNReal.ofReal (L.survival L.duration) := by
@@ -148,7 +149,7 @@ noncomputable def registration_1 : Contract.Registration.{_, _, _, 0, 0, 0, _, _
     (@Leg.affine_marked_probability)
     (type_of% (realize signature (fun _ _ L => L.markedLaw) (fun e => nomatch e)))
     Unit Unit := {
-  unitName := `D5.S3.Quantum.Fibers.OriginalControlMarkedJump.Leg.affine_marked_probability.__information_unit
+  unitName := `Reg.D5.S3.Quantum.Fibers.OriginalControlMarkedJump.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Fibers.OriginalControlMarkedJump.registration
   realizationSource := none
   generated := false

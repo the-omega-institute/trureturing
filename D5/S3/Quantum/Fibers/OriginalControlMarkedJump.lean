@@ -6,6 +6,7 @@
    utility: none
    digest: Continuous time and mode loss from the original double-wall jumps. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Fibers.OriginalControlComposition
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
@@ -29,14 +30,24 @@ private theorem p_explicit (c k : ℝ) : p c k = ![k,c-k,1-2*c,c-k,k] := by
   funext i
   fin_cases i <;> simp [p,FiniteRectangleTransport.probability] <;> ring
 
-private theorem p_pos (c k : ℝ) (hc : c < 1 / 2) (hk : k ∈ Ioo 0 c) (i : Fin 5) :
-    0 < p c k i := by
-  rw [p_explicit]
-  fin_cases i <;> simp <;> linarith [hk.1,hk.2]
+private def originalProbability (c k : ℝ) (hc : c < 1 / 2) (hk : k ∈ Ioo 0 c) :
+    InteriorProbabilityPhaseFiber.InteriorProbability 4 :=
+  FiniteRectangleTransport.fiberProbability (c,c,1-2*c) k (by
+    change 0 < 1-2*c ∧ 1-2*c < 1 ∧ 0 < c ∧ c < 1-(1-2*c) ∧
+      0 < c ∧ c < 1-(1-2*c)
+    refine ⟨by linarith,by linarith [hk.1,hk.2],by linarith [hk.1,hk.2],
+      by linarith [hk.1,hk.2],by linarith [hk.1,hk.2],by linarith [hk.1,hk.2]⟩) (by
+    have he : FiniteRectangleTransport.lower (c,c,1-2*c)=0 := by
+      dsimp [FiniteRectangleTransport.lower]
+      ring_nf
+      simp
+    simpa [he,FiniteRectangleTransport.upper] using hk)
 
-private theorem p_sum (c k : ℝ) : ∑ i, p c k i = 1 := by
-  simp [p_explicit,Fin.sum_univ_succ]
-  ring
+private theorem p_pos (c k : ℝ) (hc : c < 1 / 2) (hk : k ∈ Ioo 0 c) (i : Fin 5) :
+    0 < p c k i := (originalProbability c k hc hk).positive i
+
+private theorem p_sum (c k : ℝ) (hc : c < 1 / 2) (hk : k ∈ Ioo 0 c) :
+    ∑ i, p c k i = 1 := (originalProbability c k hc hk).total
 
 /-- The original fixed preparation, including its unknown common phase and parity. -/
 private def sourceCoordinates (c a beta : ℝ) (m : ℤ) (theta : Fin 5 → ℝ) : Fin 5 → ℂ :=
@@ -133,7 +144,7 @@ private theorem source_live_mass (c a k S beta : ℝ) (m : ℤ)
     simpa [jump] using source_jump_density c a k S beta m theta (fun _ => 1)
       hc ha hk hS (fun _ => zero_le_one) i
   simp_rw [he]
-  rw [← Finset.mul_sum,p_sum,mul_one]
+  rw [← Finset.mul_sum,p_sum c k hc hk,mul_one]
 
 /-- One affine leg, with its actual positive duration and both original height walls. -/
 structure Leg where
@@ -149,6 +160,8 @@ structure Leg where
   duration_pos : 0 < duration
 
 namespace Leg
+
+open private probability_derivative from D5.S3.Quantum.Fibers.FiniteRectangleTransport
 
 def speed (L : Leg) : ℝ := (L.y-L.x)/L.duration
 
@@ -235,12 +248,8 @@ private theorem survival_formula (L : Leg) (t : ℝ) (ht : t ∈ Icc 0 L.duratio
 private theorem probability_deriv (L : Leg) (t : ℝ) (i : Fin 5) :
     HasDerivAt (fun u => p L.c (L.height u) i)
       (FiniteRectangleTransport.direction i*L.speed) t := by
-  fin_cases i <;> simp only [p_explicit,FiniteRectangleTransport.direction]
-  · simpa using L.height_deriv t
-  · simpa using (L.height_deriv t).const_sub L.c
-  · simpa using hasDerivAt_const t (1-2*L.c)
-  · simpa using (L.height_deriv t).const_sub L.c
-  · simpa using L.height_deriv t
+  exact probability_derivative (L.c,L.c,1-2*L.c) L.height L.speed t
+    (L.height_deriv t) i
 
 private theorem jumpRate_formula (L : Leg) (t : ℝ) (ht : t ∈ Icc 0 L.duration)
     (i : Fin 5) : L.jumpRate t i = L.hazard t -
@@ -417,7 +426,9 @@ private theorem markedLaw_probability (L : Leg) : IsProbabilityMeasure L.markedL
     exact L.density_nonneg t ht i
   have hsum : (∑ i,(p L.c L.x i-L.survival L.duration*p L.c L.y i))=
       1-L.survival L.duration := by
-    rw [Finset.sum_sub_distrib,← Finset.mul_sum,p_sum,p_sum,mul_one]
+    rw [Finset.sum_sub_distrib,← Finset.mul_sum,
+      p_sum L.c L.x L.c_lt ⟨L.x_pos,L.x_lt⟩,
+      p_sum L.c L.y L.c_lt ⟨L.y_pos,L.y_lt⟩,mul_one]
   have hS : 0 ≤ 1-L.survival L.duration := by
     rw [← hsum]
     exact Finset.sum_nonneg (fun i _ => hnon i)
