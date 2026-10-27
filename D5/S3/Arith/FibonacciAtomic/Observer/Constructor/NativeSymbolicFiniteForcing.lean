@@ -403,7 +403,7 @@ private theorem pass_realizes {k m : Nat} (S : FunctionalSystem k m)
     (mode : Fin k → Bool) (p : Fin k → Nat) (n : Nat) (i : Fin m) :
     Realizes p (approximants (nativeSystem S mode p) n i.castSucc)
       (finitePass S mode n i) := by
-  induction n with
+  induction n generalizing i with
   | zero => exact CompletionPositiveDriftRegion.omega_not_finite
   | succ n ih =>
     cases hi : S i with
@@ -419,7 +419,7 @@ private theorem pass_realizes {k m : Nat} (S : FunctionalSystem k m)
       simp only [extensionStep, ite_false, nativeSystem, Fin.lastCases_castSucc,
         hi, Option.map_some]
       rw [specialize_value mode p _ (approximants_last S mode p n) E]
-      exact symbolic_realizes mode p _ _ (fun j => pass_realizes S mode p n j) E
+      exact symbolic_realizes mode p _ _ ih E
 
 private theorem lift_solution {k m : Nat} {S : FunctionalSystem k m}
     {mode : Fin k → Bool} {p : Fin k → Nat} {v : Fin m → CompletionTree}
