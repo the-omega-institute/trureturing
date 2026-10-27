@@ -25,12 +25,14 @@ internal sealed class HannaGaussianSquareParityDocument : IScribeDocumentDefinit
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Integral coefficients and exact odd support", Disp(ClaimBody()),
                 "At positive degree, the exponent equation is symmetric in the two indices and off-diagonal pairs are even integers. A diagonal term is present exactly when N = r^2, and its weight is odd. The constant coefficient is 1.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna323-gaussparity"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-        H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+        H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(V(name)));

@@ -46,6 +46,10 @@ $$\forall N: \mathbb{N}, (\exists z: \mathbb{Z}, ((\operatorname{coeff}\left(N, 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaGaussianShiftedSquareParity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna324-gaussparity` (proved) by `D5/S1/Recurrence/Algebraic/HannaGaussianShiftedSquareParity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna324-gaussparity","declaration_gid":"D5/S1/Recurrence/Algebraic/HannaGaussianShiftedSquareParity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2019). *OEIS A324300: Gaussian generating function and square parity*. URL: <https://oeis.org/A324300>.
