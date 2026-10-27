@@ -82,7 +82,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeFunctionalEffectivePrefix
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeFunctionalEffectivePrefix
     definition := none
     coordinates := #[7]
     readouts := #[{
