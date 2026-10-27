@@ -1,8 +1,0 @@
-**定理 332.4（相位二态的不可恢复下界）。** 对
-\[
-\rho_\pm=|\psi_\pm\rangle\langle\psi_\pm|,
-\qquad
-|\psi_\pm\rangle=\frac{|0\rangle\pm|1\rangle}{\sqrt2},
-\]
-任意只依赖 \(\Delta_Z(\rho)\) 的经典边界都给出同一摘要。对区分任务 \(+\) 与 \(-\)，均匀先验下任意解码器的平均错误率至少为 \(1/2\)。允许相干效果 \(|\psi_+\rangle\langle\psi_+|\) 时，错误率可降为零。
-

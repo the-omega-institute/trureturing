@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:45ca2b50c93ca288730f554ff89b60f050373f347b30dd7c0fe1e664528e3ca9
-  normalized_sha256: sha256:45ca2b50c93ca288730f554ff89b60f050373f347b30dd7c0fe1e664528e3ca9
-cas_ref: sha256:45ca2b50c93ca288730f554ff89b60f050373f347b30dd7c0fe1e664528e3ca9
-coverage_gids:
-  - gid: D5/S3/Analytic/SeriesInequalities/GoldenShellMomentDiscretization.golden_shell_moment_sandwich
-    target_statement_id: sha256:570d6ccea051fc1187fa009720f1e33535ba202b63439feb1f6566b089080593
-receipts:
-  unresolved_subitems: []

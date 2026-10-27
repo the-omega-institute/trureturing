@@ -1,7 +1,0 @@
-有限窗口波 F：
-
-- 在计算前冻结 $(L,N,T)$、基、规范和容许误差；
-- 只接受 exact rational 或 outward-rounded interval certificate；
-- 数值失败后不得缩小窗口并仍称原目标成功；
-- 每次扩大 $L$ 必须同时报告 $\delta_{\rm PSD}$ 与 $B_T$。
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c662181f9abaeea8781b26f292b4cda6f87c795b92e4c2264ed7891b4071ebdf
-  normalized_sha256: sha256:c662181f9abaeea8781b26f292b4cda6f87c795b92e4c2264ed7891b4071ebdf
-cas_ref: sha256:c662181f9abaeea8781b26f292b4cda6f87c795b92e4c2264ed7891b4071ebdf
-coverage_gids:
-  - gid: D5/S3/Observer/AgencyHolonomy/LocalEulerTransitionNonreconstruction.local_euler_determinants_do_not_determine_transition
-    target_statement_id: sha256:7842d04aa6582a268df755bf3d1d28e38398fa88e5f514a6b13bb02e103c3ded
-receipts:
-  unresolved_subitems: []

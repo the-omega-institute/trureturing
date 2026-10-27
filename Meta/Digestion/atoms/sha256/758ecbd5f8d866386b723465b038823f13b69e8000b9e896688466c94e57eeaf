@@ -1,4 +1,0 @@
-**Proposition 14.4 (source work and literal widths).** With P Proposition 41.2's direct simultaneous-buffer source update, the very same run performs $J(3N-2)$ source rational multiplications and $J(2N-2)+A$ source rational additions. Every scalar, Add input, random-bit return, command, acknowledgement and final export has its literal encoding and framing cost. A fixed acknowledgement is not a rational scalar. Neither a failed candidate nor a merely predicted scalar removes any actual source work or emitted item.
-
-Proof. Each real Tick uses the original $N$-cell source, regardless of a candidate's smaller dimension. Every actual Add performs one real root addition. Read, Hold and serialization contribute their own actual work. The counts thus follow from the original service and the attained totals, with no substitution of the candidate size for the physical $N$. $\square$
-

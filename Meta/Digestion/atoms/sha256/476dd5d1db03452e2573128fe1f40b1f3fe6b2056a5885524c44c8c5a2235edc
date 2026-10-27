@@ -1,9 +1,0 @@
-\[
-\boxed{
-d_{\min}(J)
-=
-\min_{M\neq N}
-d_J(M,N).
-}
-\]
-

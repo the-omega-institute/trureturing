@@ -1,9 +1,0 @@
-**Definition 1.1 (Projective conjugacy and invariant subspaces).** Let $G$ be a finite group and write $[A]$ for the class of $A\in GL_3(\mathbb C)$ in $PGL_3(\mathbb C)$. Homomorphisms $\rho_1,\rho_2:G\to PGL_3(\mathbb C)$ are *element-conjugate* if
-
-$$
-\forall g\in G\quad\exists h_g\in PGL_3(\mathbb C)
-\quad \rho_2(g)=h_g\rho_1(g)h_g^{-1}.
-$$
-
-They are *globally conjugate* if one $h$ works for every $g$. Both comparisons use the same original source element $g$, without precomposing either map by an automorphism of $G$. A projective homomorphism is *reducible* if the full inverse image of its image under $GL_3(\mathbb C)\to PGL_3(\mathbb C)$ preserves a nonzero proper complex subspace. Its image is *toral* if it lies in an algebraic torus of $PGL_3(\mathbb C)$, and *non-toral* otherwise. These are the fixed-source and invariant-subspace conventions of [*Irreducible projective rigidity over the dyadic local field*, Definition 1.1](LOCAL_Q2_IRREDUCIBLE_PROJECTIVE_RIGIDITY.md#1-the-fixed-source-comparison).
-

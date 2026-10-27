@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6d3f8b99611afb93b0b03a69230f973c0731b8011c671d35f97ecd19cda8b60e
-  normalized_sha256: sha256:6d3f8b99611afb93b0b03a69230f973c0731b8011c671d35f97ecd19cda8b60e
-cas_ref: sha256:6d3f8b99611afb93b0b03a69230f973c0731b8011c671d35f97ecd19cda8b60e
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Reversibility/LeftInvertibleRecoversAllTargets.identity_erasure_preserves_nontrivial_value
-    target_statement_id: sha256:5a39d385b032ff264b5d017bee6802dee58e9ef7e4ee30bf174005c6d4e08349
-receipts:
-  unresolved_subitems: []

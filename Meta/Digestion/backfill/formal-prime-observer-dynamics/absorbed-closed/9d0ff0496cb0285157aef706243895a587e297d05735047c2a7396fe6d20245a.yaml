@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9d0ff0496cb0285157aef706243895a587e297d05735047c2a7396fe6d20245a
-  normalized_sha256: sha256:9d0ff0496cb0285157aef706243895a587e297d05735047c2a7396fe6d20245a
-cas_ref: sha256:9d0ff0496cb0285157aef706243895a587e297d05735047c2a7396fe6d20245a
-coverage_gids:
-  - gid: D5/S3/Analytic/ZetaEntropyPlane/PrimeEvidenceCardinalityBudget.equal_cardinality_prime_budget_gap_unbounded
-    target_statement_id: sha256:4d7d7c742f98e5008841acfd1a0d2504d4397ffe942d88d971d0445fd992e8aa
-receipts:
-  unresolved_subitems: []

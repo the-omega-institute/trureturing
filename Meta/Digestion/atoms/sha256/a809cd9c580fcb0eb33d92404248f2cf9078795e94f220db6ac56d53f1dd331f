@@ -1,6 +1,0 @@
-## 17. Verification boundary
-
-The branch contains candidate Lean and matching Scribe sources for observation time, involutive parity, product transversality, prime-Zeckendorf coordinates, prime-frequency rigidity, finite-place calibration, Euler phase letters, forbidden words, and real-imaginary mode separation.
-
-GitHub admission is the compilation authority. No new declaration in this PR is described as kernel-closed until engineering checks, canonical Lean report production, mathematical content checks, and protected admission all succeed.
-

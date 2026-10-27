@@ -1,9 +1,0 @@
-**Theorem 13.3 (determinism, lawful updates and finite administration).**
-The machines of Definition 13.2 are classical deterministic one-counter
-machines with epsilon moves. For each control, input letter and counter test
-there is at most one transition; an epsilon rule excludes input rules at the
-same control and test. All reachable counters are nonnegative. From the
-initial configuration and after every consumed address letter, finite
-administration reaches exactly one stable head, and every stable head has
-both next-letter moves.
-

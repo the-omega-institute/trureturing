@@ -1,4 +1,0 @@
-## 391. 实际 Binet 系数的 Nyman 半直线运输与自然前缀障碍
-
-本节把 §§384–386 的实际 $e=\mu*\beta$ 接到 §146 已引用的 Nyman–Beurling 半直线任务。经典自然前缀不收敛结论直接复用 Báez-Duarte，[arXiv:math/0011254v1，Proposition 4.4，PDF p. 17](https://arxiv.org/pdf/math/0011254v1)；其条件与子序列边界见[文献条目](../../../Library/Weil/baezduarte2000natural.md)。下面的运输是标准伸缩、绝对可和 Dirichlet 逆和序列收敛事实在同一实际输入上的纸面应用，不作为新的经典判据、重新证明文献结论或原创性声明。新增接口未完成 Lean 核验。
-

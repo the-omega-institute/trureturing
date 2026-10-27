@@ -1,9 +1,0 @@
-**Convention 2.3 (the canonical boundary, not an additional read port).**
-The inverse of $c_d$ reconstructs a canonical tree. It does not recover
-unobserved deeper labels of an arbitrary original $v$. For the latter,
-$c_d(\pi_d(v))$ is precisely its actual $W_d$ reply table, and
-Convention 1.5 is the required whole-encoder bridge. These arrays are
-mathematical coordinates; Assumption 1.2 supplies no array to the late
-reader. The actual source and all its original-root literals remain as
-in Definition 1.1.
-

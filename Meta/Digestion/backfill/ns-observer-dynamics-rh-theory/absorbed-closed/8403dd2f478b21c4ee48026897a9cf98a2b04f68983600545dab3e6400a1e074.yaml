@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8403dd2f478b21c4ee48026897a9cf98a2b04f68983600545dab3e6400a1e074
-  normalized_sha256: sha256:8403dd2f478b21c4ee48026897a9cf98a2b04f68983600545dab3e6400a1e074
-cas_ref: sha256:8403dd2f478b21c4ee48026897a9cf98a2b04f68983600545dab3e6400a1e074
-coverage_gids:
-  - gid: D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.minimax_all_upper
-    target_statement_id: sha256:3ab70566be0749f01b534b8cc672b596e7da18be76214858d6b4f853b663734b
-receipts:
-  unresolved_subitems: []

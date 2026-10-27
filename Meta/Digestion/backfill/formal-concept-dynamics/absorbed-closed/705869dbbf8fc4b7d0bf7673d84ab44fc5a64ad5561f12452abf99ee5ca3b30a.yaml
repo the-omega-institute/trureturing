@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:705869dbbf8fc4b7d0bf7673d84ab44fc5a64ad5561f12452abf99ee5ca3b30a
-  normalized_sha256: sha256:705869dbbf8fc4b7d0bf7673d84ab44fc5a64ad5561f12452abf99ee5ca3b30a
-cas_ref: sha256:705869dbbf8fc4b7d0bf7673d84ab44fc5a64ad5561f12452abf99ee5ca3b30a
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DecisionValueScale/OptimalAcceptanceThreshold.optimal_acceptance_threshold
-    target_statement_id: sha256:63b7e67692d0d3c0de1426d38dc90d1cdc958ef30093fd97bcb11e2c57568067
-receipts:
-  unresolved_subitems: []

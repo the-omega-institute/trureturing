@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4a6f9dfa437cd061ea5cd823de12c18186a17c94e79760fe6d77d65436c3e3cd
-  normalized_sha256: sha256:4a6f9dfa437cd061ea5cd823de12c18186a17c94e79760fe6d77d65436c3e3cd
-cas_ref: sha256:4a6f9dfa437cd061ea5cd823de12c18186a17c94e79760fe6d77d65436c3e3cd
-coverage_gids:
-  - gid: D5/S3/Weil/TestFunctions/WhiteSpectrumDeltaNormalization.normalized_white_spectrum_inverse_fourier
-    target_statement_id: sha256:c9aebf39a0a9a72a658492e91d3c088a52298fa1ac6be8f92b2eabaf030e1c8e
-receipts:
-  unresolved_subitems: []

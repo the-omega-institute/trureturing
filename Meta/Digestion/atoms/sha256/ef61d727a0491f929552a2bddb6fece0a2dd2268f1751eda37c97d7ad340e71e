@@ -1,4 +1,0 @@
-**Corollary 45.3 (short horizons and delayed collisions).** For every menu bound $H$, no collision is possible at $L\le N$. At $L=N+1$, a collision exists if and only if $H\ge h$. Consequently, when $a\le H<h$, collisions exist at some finite lengths but none at or before $N+1$.
-
-Proof. A nonzero polynomial of degree below $N$ cannot annihilate $b$. At length $N+1$, a nonzero divisible difference polynomial has degree $N$ and, by integral divisibility, equals $cq$ for an integer $c\ne0$. Its maximum coefficient magnitude is $|c|h\ge h$. Conversely, if $H\ge h$, write $q_j=q_j^+-q_j^-$ with $q_j^\pm\in\{0,\ldots,h\}$ and assign these coefficients in reverse order to two length-$N+1$ words. They are distinct and their difference polynomial is $q$. Apply Proposition 44.3. The remaining assertion follows from Theorem 45.2. $\square$
-

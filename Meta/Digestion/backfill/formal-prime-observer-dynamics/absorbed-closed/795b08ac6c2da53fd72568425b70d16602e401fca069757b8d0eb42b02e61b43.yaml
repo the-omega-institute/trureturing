@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:795b08ac6c2da53fd72568425b70d16602e401fca069757b8d0eb42b02e61b43
-  normalized_sha256: sha256:795b08ac6c2da53fd72568425b70d16602e401fca069757b8d0eb42b02e61b43
-cas_ref: sha256:795b08ac6c2da53fd72568425b70d16602e401fca069757b8d0eb42b02e61b43
-coverage_gids:
-  - gid: D5/S3/Arith/BlindPrimes/IntegerPairClassification.blind_primes_eq_primeDivisors
-    target_statement_id: sha256:8141af933a61a623ddc3968ed586540a3ea8884c10a1f19f43d5bd0667bd4fb4
-receipts:
-  unresolved_subitems: []

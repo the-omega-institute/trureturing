@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:36c5861dad8adeed1b69e0e773e0263a8bc665d201ec259b39a80e63edeff010
-  normalized_sha256: sha256:36c5861dad8adeed1b69e0e773e0263a8bc665d201ec259b39a80e63edeff010
-cas_ref: sha256:36c5861dad8adeed1b69e0e773e0263a8bc665d201ec259b39a80e63edeff010
-coverage_gids:
-  - gid: D5/S3/Factorization/QuadraticIdeals/NormTwoIdeal.ideal_norm_two
-    target_statement_id: sha256:ad275f69585b2d698e0cefa10b3faa947101a24e50ab130ab1a970d8891d6933
-receipts:
-  unresolved_subitems: []

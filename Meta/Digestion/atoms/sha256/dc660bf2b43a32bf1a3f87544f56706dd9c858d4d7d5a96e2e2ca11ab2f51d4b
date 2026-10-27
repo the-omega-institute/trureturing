@@ -1,4 +1,0 @@
-**定理 10.4（从边界输运产生不可约谱对象）。** $\widetilde\rho$ 和 $\rho$ 都是良定义表示，分别在 $\operatorname{Sp}_4(\mathbb C)$ 和 $\operatorname{SO}_5(\mathbb C)$ 中 Zariski 稠密。由 $\rho$ 得到的平坦 $\operatorname{SO}_5(\mathbb C)$ 主局部系统 $E$ 不存在到任何真抛物子群的水平约化；这里约化须保持连接，而不是底层主丛的任意约化。
-
-**证明。** 所有 $b_j$ 的像为单位，所以每个交换子像为单位，曲面关系成立。定理 9.2 给出第一种稠密性，定理 9.4 的满射把它送到第二种。表示构造平坦主丛 $(\widetilde X\times\operatorname{SO}_5(\mathbb C))/\pi_1(X)$。若它约化到真抛物子群，其单值共轭后落入该闭真子群，与稠密性矛盾。在射影复曲线上，用 Riemann–Hilbert 与代数化得到相应代数平坦主丛；这一代数化步骤调用外部定理 10.3 所列的正则接口。$□$
-

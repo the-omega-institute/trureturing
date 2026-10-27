@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:49c51c9f75f62a7b13233f9e2f9bced565dfcefa51f7008779ba5c2518be6cca
-  normalized_sha256: sha256:49c51c9f75f62a7b13233f9e2f9bced565dfcefa51f7008779ba5c2518be6cca
-cas_ref: sha256:49c51c9f75f62a7b13233f9e2f9bced565dfcefa51f7008779ba5c2518be6cca
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Provenance/AcyclicSourceFormulaCorrectness.source_formula_iff_valid_source_proof
-    target_statement_id: sha256:897d9ba647c8d584a733ceb5871a72cb9dd846a3de21892181710e01e2b91ffa
-receipts:
-  unresolved_subitems: []

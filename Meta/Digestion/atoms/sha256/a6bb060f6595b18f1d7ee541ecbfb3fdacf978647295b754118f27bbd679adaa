@@ -1,5 +1,0 @@
-每张表都可由
-$$
-\Lambda_\sigma(A)=\sum_{w\in W_k}\langle w|A|w\rangle\sigma_w
-$$
-实现，

@@ -1,8 +1,0 @@
-**Corollary 2.2 (Fair-bit obstruction).** Under the hypotheses of Theorem 2.1, if $N=2^r$, no fixed type has expected count $m/3$.
-
-Proof. Otherwise $3\mid2^r$, a contradiction. ∎
-
-The denominator obstruction is sharp as an arithmetic bound: whenever coprime a,b and N admit integers k with |bk-aN|=1 and 0≤k≤N, an equivariant classifier with marginal k/N attains equality (take a trivial action on Ω and the same k-element event for every edge).
-
-The result is about a uniform transitive marginal. An arbitrary aggregate integer-valued count on a dyadic space can have integer expectation $m/3$ when $3\mid m$. Thus edge transitivity cannot be omitted from this proof.
-

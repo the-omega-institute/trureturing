@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0791b45af96b94d13e873a5cc04192934027e2824774a4edf1d2052aca8e34a1
-  normalized_sha256: sha256:0791b45af96b94d13e873a5cc04192934027e2824774a4edf1d2052aca8e34a1
-cas_ref: sha256:0791b45af96b94d13e873a5cc04192934027e2824774a4edf1d2052aca8e34a1
-coverage_gids:
-  - gid: D5/S3/Analytic/Toroidal/GoldenToroidalIndexExtension.golden_toroidal_index_extension
-    target_statement_id: sha256:5734f8bc9c6392ebc10e77b575c787d8e56668db6325ea5acccde3c25b0fa2ff
-receipts:
-  unresolved_subitems: []

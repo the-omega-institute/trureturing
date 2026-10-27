@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:969d10e5165ce88227e61dd91fefa2c58272dd48355370070285b1ce5cf7a9ca
-  normalized_sha256: sha256:969d10e5165ce88227e61dd91fefa2c58272dd48355370070285b1ce5cf7a9ca
-cas_ref: sha256:969d10e5165ce88227e61dd91fefa2c58272dd48355370070285b1ce5cf7a9ca
-coverage_gids:
-  - gid: D5/S0/Tower/OneStepMemoryUniqueNaming.one_step_memory_unique_naming
-    target_statement_id: sha256:35b3ad37612ed56f62b2e16c0f969cc4cb77686f6c6e28e4dc4adc2b739ecdef
-receipts:
-  unresolved_subitems: []

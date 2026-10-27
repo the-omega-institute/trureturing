@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8843ce484f45e70c2f102c2eb1201c02565954b4efcc08882935cb06674d5f09
-  normalized_sha256: sha256:8843ce484f45e70c2f102c2eb1201c02565954b4efcc08882935cb06674d5f09
-cas_ref: sha256:8843ce484f45e70c2f102c2eb1201c02565954b4efcc08882935cb06674d5f09
-coverage_gids:
-  - gid: D5/S3/Observer/HiddenFlow/DiscreteRigidity.nonzero_integer_action_has_no_continuous_real_extension
-    target_statement_id: sha256:efa21270210e8cf66f2862f7dc6dcf5d791fad5577208bf0d39da8b656ba8ea9
-receipts:
-  unresolved_subitems: []

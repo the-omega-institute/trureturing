@@ -1,2 +1,0 @@
-**约定 2.5（二面体作用、游程与生成代数）。** 二面体群 $D_L$ 由旋转 $i\mapsto i+s$ 与反射 $i\mapsto s-i$ 组成,作为置换矩阵作用于 $\mathbb R^L$;势 $v$ 的稳定子是满足 $v_{\pi(i)}=v_i$ 的 $\pi\in D_L$ 全体。设 $\pm1$ 势 $v$ 两种值都出现;$v$ 的一个**游程**是循环相邻、取值相同的站点的极大集合,取值为 $\varepsilon$ 的游程称 $\varepsilon$-游程,其站点数称为长度。记 $P_\varepsilon=\tfrac12(I+\varepsilon V)$($\varepsilon=\pm1$),对站点集 $S$ 记 $P_S=\sum_{i\in S}E_{ii}$。$\mathcal A_v$ 表示由 $A_L$ 与 $V$ 生成的实有单位代数,它也由 $\Delta_L$ 与 $V$ 生成。$J_\ell$ 表示 $\ell$ 个顶点的路的邻接矩阵($J_1=(0)$)。
-

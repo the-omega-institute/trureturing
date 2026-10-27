@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ca3c0be97327be1b804f8a802cf1b23f4ec9e7141a55a00b0a5f8f892b57c474
-  normalized_sha256: sha256:ca3c0be97327be1b804f8a802cf1b23f4ec9e7141a55a00b0a5f8f892b57c474
-cas_ref: sha256:ca3c0be97327be1b804f8a802cf1b23f4ec9e7141a55a00b0a5f8f892b57c474
-coverage_gids:
-  - gid: D5/S3/AnalyticClosure/PrimeSpectrumBoundaryDivergent.prime_spectrum_boundary_divergent
-    target_statement_id: sha256:8af345c2a1c26b23a378c80b6faf39a6b055ba7839fc07dfd3479f4a96d4ceac
-receipts:
-  unresolved_subitems: []

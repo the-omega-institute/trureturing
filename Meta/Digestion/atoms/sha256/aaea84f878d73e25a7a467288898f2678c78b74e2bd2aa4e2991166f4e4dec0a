@@ -1,7 +1,0 @@
-## 15. Diagonal paths
-
-A diagonal is naturally a path on a product carrier in which local and layer coordinates change together. The current library proves the uncoupled product geometry and the separable frequency law `beta(v) log p`. It does not yet supply a canonical diagonal update.
-
-Any proposed diagonal must specify:
-
-- the update on prime or local coordinates;

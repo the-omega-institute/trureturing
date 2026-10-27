@@ -1,9 +1,0 @@
-**定义 9.2（正交而零次序响应的两量子位输入）。** 在两量子位的反 Hermitian 实空间，取
-
-$$
-A=-iX\otimes I,\qquad D=-iI\otimes X,
-\qquad \langle A,D\rangle=\frac14\operatorname{Re}\operatorname{tr}(A^\dagger D).
-$$
-
-同一内积用于所有输入。由于 $A^\dagger A=D^\dagger D=I_4$，两者范数为一；$\operatorname{tr}(X\otimes X)=\operatorname{tr}X\operatorname{tr}X=0$，所以正交。两张量因子作用于不同量子位，$AD=DA=-X\otimes X$，故 $[A,D]/2=0$，但 Gram 面积平方为一。这个计算展示结合算子与 Jacobi 不自动供应假设 5.1 的面积律。一般量子系统不因此被压成同一个三维关系载体。
-

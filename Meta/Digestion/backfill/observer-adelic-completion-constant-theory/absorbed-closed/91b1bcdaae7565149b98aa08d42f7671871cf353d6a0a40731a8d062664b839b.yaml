@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:91b1bcdaae7565149b98aa08d42f7671871cf353d6a0a40731a8d062664b839b
-  normalized_sha256: sha256:91b1bcdaae7565149b98aa08d42f7671871cf353d6a0a40731a8d062664b839b
-cas_ref: sha256:91b1bcdaae7565149b98aa08d42f7671871cf353d6a0a40731a8d062664b839b
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Identity/ConceptRelativeIdentity.concept_identity_equivalence
-    target_statement_id: sha256:195e50dada7a8da6137ed9c38d8988ff04a078198f8a4819f74a207bf117ecc6
-receipts:
-  unresolved_subitems: []

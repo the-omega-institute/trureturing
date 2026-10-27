@@ -1,7 +1,0 @@
-## 实验材料入口
-
-正文中的程序名与结果文件路径对应以下固定版本；有限核验数据不代替普遍证明或 Lean 证书。
-
-- [README.md](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/rro-sft-29-35/README.md)
-- [verify_closure.py](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/rro-sft-profile-closure/verify_closure.py)
-- [verification-summary.json](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/rro-sft-profile-closure/verification-summary.json)

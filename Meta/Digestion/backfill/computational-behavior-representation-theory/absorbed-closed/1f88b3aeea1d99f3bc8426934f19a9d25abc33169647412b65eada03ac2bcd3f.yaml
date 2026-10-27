@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1f88b3aeea1d99f3bc8426934f19a9d25abc33169647412b65eada03ac2bcd3f
-  normalized_sha256: sha256:1f88b3aeea1d99f3bc8426934f19a9d25abc33169647412b65eada03ac2bcd3f
-cas_ref: sha256:1f88b3aeea1d99f3bc8426934f19a9d25abc33169647412b65eada03ac2bcd3f
-coverage_gids:
-  - gid: D5/S3/Observer/Hankel/WordHankelRealization.finite_hankel_realization
-    target_statement_id: sha256:d8329d9d136d906ed613e13c46afec4f385f033bbb23b6619de631bd9aba0a01
-receipts:
-  unresolved_subitems: []

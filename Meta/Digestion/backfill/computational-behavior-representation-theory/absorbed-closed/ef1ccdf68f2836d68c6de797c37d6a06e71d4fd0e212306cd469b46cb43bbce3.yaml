@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ef1ccdf68f2836d68c6de797c37d6a06e71d4fd0e212306cd469b46cb43bbce3
-  normalized_sha256: sha256:ef1ccdf68f2836d68c6de797c37d6a06e71d4fd0e212306cd469b46cb43bbce3
-cas_ref: sha256:ef1ccdf68f2836d68c6de797c37d6a06e71d4fd0e212306cd469b46cb43bbce3
-coverage_gids:
-  - gid: D5/S3/Arith/Robin/PrimePrefixPhiMandatoryUnitThreshold.atom_kernel_integral
-    target_statement_id: sha256:f21c0adc6eb43e886d4b51dde2ab42f6d9d4156bc6846fc1ae4f8724c2c9b55e
-receipts:
-  unresolved_subitems: []

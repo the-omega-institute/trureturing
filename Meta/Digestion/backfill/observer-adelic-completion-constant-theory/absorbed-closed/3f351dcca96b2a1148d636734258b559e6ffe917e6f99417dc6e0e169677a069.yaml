@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3f351dcca96b2a1148d636734258b559e6ffe917e6f99417dc6e0e169677a069
-  normalized_sha256: sha256:3f351dcca96b2a1148d636734258b559e6ffe917e6f99417dc6e0e169677a069
-cas_ref: sha256:3f351dcca96b2a1148d636734258b559e6ffe917e6f99417dc6e0e169677a069
-coverage_gids:
-  - gid: D5/S3/Weil/Pick/InvertibleHermitianInertiaPullback.inertia_invariant_of_isUnit_det
-    target_statement_id: sha256:48545f8f6ed6d6ad2b9c8728092770c308ac7141898cc98c206d4bd156581a36
-receipts:
-  unresolved_subitems: []

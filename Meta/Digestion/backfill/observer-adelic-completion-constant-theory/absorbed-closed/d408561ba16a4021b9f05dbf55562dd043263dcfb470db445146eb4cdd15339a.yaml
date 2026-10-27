@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d408561ba16a4021b9f05dbf55562dd043263dcfb470db445146eb4cdd15339a
-  normalized_sha256: sha256:d408561ba16a4021b9f05dbf55562dd043263dcfb470db445146eb4cdd15339a
-cas_ref: sha256:d408561ba16a4021b9f05dbf55562dd043263dcfb470db445146eb4cdd15339a
-coverage_gids:
-  - gid: D5/S3/Fourier/Concentration/SlepianConcentrationBound.slepian_concentration_bound
-    target_statement_id: sha256:3ac4e123c9082b61a6cf9a07e6a71f5f6bd13caa878435b00a6a60e1569cf1dd
-receipts:
-  unresolved_subitems: []

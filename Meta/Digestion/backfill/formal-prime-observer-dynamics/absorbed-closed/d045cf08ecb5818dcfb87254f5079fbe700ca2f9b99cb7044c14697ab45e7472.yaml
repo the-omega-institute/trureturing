@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d045cf08ecb5818dcfb87254f5079fbe700ca2f9b99cb7044c14697ab45e7472
-  normalized_sha256: sha256:d045cf08ecb5818dcfb87254f5079fbe700ca2f9b99cb7044c14697ab45e7472
-cas_ref: sha256:d045cf08ecb5818dcfb87254f5079fbe700ca2f9b99cb7044c14697ab45e7472
-coverage_gids:
-  - gid: D5/S3/Observer/MeasureSeparation/RobustMinimaxKernelBound.common_kernel_minimax_lower_bounds
-    target_statement_id: sha256:f4d78163fb8d9a09132468cb78f683e136cb5079a6d51c98ee18279cd237609f
-receipts:
-  unresolved_subitems: []

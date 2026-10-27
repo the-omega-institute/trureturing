@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:aa3e9213dd8e5b96811fd2d6306983001ca09131bb4884fc85269374ce049d59
-  normalized_sha256: sha256:aa3e9213dd8e5b96811fd2d6306983001ca09131bb4884fc85269374ce049d59
-cas_ref: sha256:aa3e9213dd8e5b96811fd2d6306983001ca09131bb4884fc85269374ce049d59
-coverage_gids:
-  - gid: D5/S0/Automata/SparseContinuationNontransitivity.result
-    target_statement_id: sha256:48731075a28ba58e0dd5ea12b6319f3d4c096c0dcb52a5e9a08b60c5d36107a0
-receipts:
-  unresolved_subitems: []

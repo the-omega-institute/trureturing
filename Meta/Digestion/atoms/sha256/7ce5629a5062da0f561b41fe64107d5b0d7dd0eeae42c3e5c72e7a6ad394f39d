@@ -1,6 +1,0 @@
-闭合路线只允许：
-
-- 消去两个合法性证明；
-- 对 `LedgerEntry` 和 `RekeyResult` 做结构外延；
-- 使用函数外延处理 `newActive` 与 `newSettlement`。
-

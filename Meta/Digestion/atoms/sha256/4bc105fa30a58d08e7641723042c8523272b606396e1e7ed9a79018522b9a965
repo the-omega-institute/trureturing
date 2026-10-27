@@ -1,9 +1,0 @@
-\[
-\sigma_{-3}(p)
-=
-\begin{cases}
-\mathrm S,&p\equiv1\pmod3,\\
-\mathrm I,&p\equiv2\pmod3.
-\end{cases}
-\]
-

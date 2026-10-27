@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:bcb486942c80805c52a19e2c73af4110f2dd948621cbc4147885e18581472630
-  normalized_sha256: sha256:bcb486942c80805c52a19e2c73af4110f2dd948621cbc4147885e18581472630
-cas_ref: sha256:bcb486942c80805c52a19e2c73af4110f2dd948621cbc4147885e18581472630
-coverage_gids:
-  - gid: D5/S3/Observer/WindowAlgebra/FinitePartitionAlgebraAntiequivalence.finite_partition_algebra_antiequivalence
-    target_statement_id: sha256:ab1c723b7792c3f4bd9e750b457391dbd5dcc9a3da28afe17b35e838da1b9e76
-receipts:
-  unresolved_subitems: []

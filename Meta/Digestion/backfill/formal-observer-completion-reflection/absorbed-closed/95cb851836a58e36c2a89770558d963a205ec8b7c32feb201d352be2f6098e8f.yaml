@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:95cb851836a58e36c2a89770558d963a205ec8b7c32feb201d352be2f6098e8f
-  normalized_sha256: sha256:95cb851836a58e36c2a89770558d963a205ec8b7c32feb201d352be2f6098e8f
-cas_ref: sha256:95cb851836a58e36c2a89770558d963a205ec8b7c32feb201d352be2f6098e8f
-coverage_gids:
-  - gid: D5/S3/Observer/LinearMemory/DualGramKernels.dual_gram_kernels
-    target_statement_id: sha256:677ed18e98b739e1ebabdf5c231aa975071d70228b838b7b1624e66b72545c70
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:620954fb20039927da6916cb03f880335c1c956d2efceae9fd88811aebdd1ff8
-  normalized_sha256: sha256:620954fb20039927da6916cb03f880335c1c956d2efceae9fd88811aebdd1ff8
-cas_ref: sha256:620954fb20039927da6916cb03f880335c1c956d2efceae9fd88811aebdd1ff8
-coverage_gids:
-  - gid: D5/S3/Analytic/ZetaObservation/FinitePrimeObservationPosterior.finite_prime_observation_posterior
-    target_statement_id: sha256:d9a3ef6e119fef9309e95adc3883f809eec00c5e0cac48a3654b37ff35285861
-receipts:
-  unresolved_subitems: []

@@ -1,8 +1,0 @@
-- On a decoded leaf bit $x$, if $l=h$ go to ERROR; otherwise put
-  $l'=l+1$, $a'=a\oplus x$. If $p$ contains an $L$, take its rightmost
-  $L$, replace it by $R$, and delete everything after it. Set $s$ to
-  the new length and zero the discarded path padding. This is the next
-  preorder node; preserve $b,j$, store $l',a'$, and use GUARD
-  when $N>0$ or VALUE when $N=0$. If $p$ has no $L$, traversal is
-  complete: go to the canonical HALT$a'$ exactly when
-  $l'=h$ and $b=h-1$, and otherwise go to ERROR.

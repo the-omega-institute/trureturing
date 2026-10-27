@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:52c9a2ebbc45db7def84de526f0e46314b1acd696edde2615911dddda21aa70f
-  normalized_sha256: sha256:52c9a2ebbc45db7def84de526f0e46314b1acd696edde2615911dddda21aa70f
-cas_ref: sha256:52c9a2ebbc45db7def84de526f0e46314b1acd696edde2615911dddda21aa70f
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/SemanticTransportCertificateValidity.valid_semantic_transport_cert_iff_valid_transport_cert
-    target_statement_id: sha256:dc909392553ec489ecd48231f12829bddc81c3fed53ae29ba79fa1480727764a
-receipts:
-  unresolved_subitems: []

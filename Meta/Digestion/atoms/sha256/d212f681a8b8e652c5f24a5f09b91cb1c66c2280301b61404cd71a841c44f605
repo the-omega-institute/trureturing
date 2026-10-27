@@ -1,9 +1,0 @@
-**假设 66.1（自治二级载体）。** 令 $V=\operatorname{span}\{|2\rangle,|5\rangle\}$。仅对 $\operatorname{supp}\varrho\subseteq V$、迹一及保持 $V$ 的实际操作讨论自治 qubit 边界。固定标准 Pauli
-
-$$
-X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
-Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
-Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
-\varrho_V=\frac{I+xX+yY+zZ}{2}.
-$$
-

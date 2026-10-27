@@ -1,5 +1,0 @@
-**命题 4.2（$\Psi_m$ 与 $B^m=I$）。** 设 $m\ge3$。
-
-1. $\Psi_m$ 是 $S_{m-1}$ 与 $S_{m-2}+1$ 在 $\mathbb Q[x]$ 中的首一最大公因式;特别地 $\Psi_m\in\mathbb Z[x]$。
-2. 设 $K$ 是含 $\mathbb R$ 的代数闭域,$B\in K^{2\times2}$,$\det B=1$,$\Psi_m(\operatorname{tr}B)=0$。则 $B^m=I$,且 $B\ne\pm I$。
-

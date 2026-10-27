@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b9acdacf0a74192371794cd19a874d025e3e118398b8ac94798f5a19c13f59fd
-  normalized_sha256: sha256:b9acdacf0a74192371794cd19a874d025e3e118398b8ac94798f5a19c13f59fd
-cas_ref: sha256:b9acdacf0a74192371794cd19a874d025e3e118398b8ac94798f5a19c13f59fd
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/EscapeSpectrum/BlindResidualChargeDecomposition.blind_residual_charge_decomposition
-    target_statement_id: sha256:01ec7cdaad6675b113c612a6c1d09f60e0d5bb400f9850b9dc3bbfcb3fba0cca
-receipts:
-  unresolved_subitems: []

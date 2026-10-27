@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c5c2c3155ddef6747800224ac2e9b396c6c07a6b611be2bb44162522e248dcf6
-  normalized_sha256: sha256:c5c2c3155ddef6747800224ac2e9b396c6c07a6b611be2bb44162522e248dcf6
-cas_ref: sha256:c5c2c3155ddef6747800224ac2e9b396c6c07a6b611be2bb44162522e248dcf6
-coverage_gids:
-  - gid: D5/S3/Weil/Scattering/VerticalAttenuation.vertical_attenuation_tomography
-    target_statement_id: sha256:95ffaf946a24c87c7e814036afa1d4b621f62e2cd4240b5b8e8c93a258196c4c
-receipts:
-  unresolved_subitems: []

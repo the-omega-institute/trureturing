@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:028496d2001d0e0fc4417ac94f4330b5ff26c1eaac20ee742f4073abc7b4e8aa
-  normalized_sha256: sha256:028496d2001d0e0fc4417ac94f4330b5ff26c1eaac20ee742f4073abc7b4e8aa
-cas_ref: sha256:028496d2001d0e0fc4417ac94f4330b5ff26c1eaac20ee742f4073abc7b4e8aa
-coverage_gids:
-  - gid: D5/S3/Observer/GoldenCoding/PrimeGoldenScaleCoordinate.prime_golden_scale_coordinate_pos
-    target_statement_id: sha256:2c29a44fbb7b11ad8a45008cf686ce45affb204808d9f39a0532738d84a0011d
-receipts:
-  unresolved_subitems: []

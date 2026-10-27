@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a2863b684586f3d727e96706d48a4dfbee55665c65bc671c53c2866de5e1c653
-  normalized_sha256: sha256:a2863b684586f3d727e96706d48a4dfbee55665c65bc671c53c2866de5e1c653
-cas_ref: sha256:a2863b684586f3d727e96706d48a4dfbee55665c65bc671c53c2866de5e1c653
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/ObservationTopology/CircleGraphCharts.planar_chord_dot
-    target_statement_id: sha256:8b3ef97b8532867f16b90ca4fdf1efb37b1a9306e24ef9bfadfd120456685c04
-receipts:
-  unresolved_subitems: []

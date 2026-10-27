@@ -1,8 +1,0 @@
-**Proof.** The first item is exactly the zero-update pair rule together with
-native distribution. The second and third follow from (SPC.51). The fourth
-holds because both finite leaves have no reached children. In the fifth item,
-$J_{d,X}$ has no finite remainder to reach a stable root, so the epsilon
-chain never terminates. These checks delimit the construction; they are not
-claims about all unguarded semantics or about decidability outside
-Definition 13.1. $\square$
-

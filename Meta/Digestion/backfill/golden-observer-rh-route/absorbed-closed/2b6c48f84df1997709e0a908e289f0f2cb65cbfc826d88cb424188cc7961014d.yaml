@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2b6c48f84df1997709e0a908e289f0f2cb65cbfc826d88cb424188cc7961014d
-  normalized_sha256: sha256:2b6c48f84df1997709e0a908e289f0f2cb65cbfc826d88cb424188cc7961014d
-cas_ref: sha256:2b6c48f84df1997709e0a908e289f0f2cb65cbfc826d88cb424188cc7961014d
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DefinitionEscape/EscapeRefinementAntitone.primitive_escape_refinement_antitone
-    target_statement_id: sha256:92ef2da0bfa93e3f2738bead95e729004b503e30381223fc61fc9ad50e7730e9
-receipts:
-  unresolved_subitems: []

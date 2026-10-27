@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4af85c2ea89a1902421a2677fc7dfb5cf3b11239f2dc38f9eb0f8b52df64f61c
-  normalized_sha256: sha256:4af85c2ea89a1902421a2677fc7dfb5cf3b11239f2dc38f9eb0f8b52df64f61c
-cas_ref: sha256:4af85c2ea89a1902421a2677fc7dfb5cf3b11239f2dc38f9eb0f8b52df64f61c
-coverage_gids:
-  - gid: D5/S3/Weil/PrimePoleTerms.primeSummand_hasFiniteSupport
-    target_statement_id: sha256:9039d50d54c7641c3a78b9c9ddc4e7ba39a855e5cdbc7f7127346ad8da75961c
-receipts:
-  unresolved_subitems: []

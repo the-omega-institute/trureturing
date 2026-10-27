@@ -1,8 +1,0 @@
-**假设 40.1（固定通道振幅与共同探测端）。** 模式控制通道开闭，三个固定复振幅 $A_2,A_3,A_5$ 在同一个输出端相加：
-
-$$
-\mathcal A(w)=A_2x(w)+A_3z(w)+A_5y(w),\qquad I(w)=|\mathcal A(w)|^2.
-$$
-
-不同配置比较时制备、传播和探测合同保持这些振幅；相位的稳定性与取得、概率或强度的采样及误差另须满足所用实验合同。标准振幅相加与路径记录的中间依据为 Feynman–Leighton–Sands，[*The Feynman Lectures on Physics*, III.3，§§3–1、3–2](https://www.feynmanlectures.caltech.edu/III_03.html)，其中 III.3 的路径信息讨论不授予本卷原生 FIB 任意相干控制。
-

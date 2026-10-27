@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2cb280b7d4bbd93a9295b72e4c42a165c4cdbe0ac10eb444e314266c6d3c57fe
-  normalized_sha256: sha256:2cb280b7d4bbd93a9295b72e4c42a165c4cdbe0ac10eb444e314266c6d3c57fe
-cas_ref: sha256:2cb280b7d4bbd93a9295b72e4c42a165c4cdbe0ac10eb444e314266c6d3c57fe
-coverage_gids:
-  - gid: D5/S3/Weil/Pick/HorizonEffectiveIndex.horizonEffectiveIndex
-    target_statement_id: sha256:db6f75db767b6199cf7f08ebed89af6f0272bd130fce8dff7e5028f3356f84ca
-receipts:
-  unresolved_subitems: []

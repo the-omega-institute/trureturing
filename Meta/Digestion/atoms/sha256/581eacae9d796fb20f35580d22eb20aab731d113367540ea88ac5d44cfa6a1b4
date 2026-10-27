@@ -1,7 +1,0 @@
-**定理 8.6(先立门后补账)**〔证〕。设社会持续以容许变换生长,每步新增节点集 $\Delta_t$,目标是建立不变量「$\forall v\in\mathrm{Frozen}(L_t),\ Q(v)$」。记违例集 $V_t=\{v\in\mathrm{Frozen}(L_t)\mid\neg Q(v)\}$。
-(a) 若先对存量补账(每步移除若干违例)而未立门,则 $V_{t+1}=(V_t\setminus\text{本步补账})\cup\{v\in\Delta_t\mid\neg Q(v)\}$,不保证单调递减;
-(b) 若先立**只作用于增量的门**($\Delta_t\cap\{\neg Q\}=\varnothing$),则 $V_{t+1}\subseteq V_t$;再逐步补账则 $V_t$ 严格递减至空;
-(c) 若立的门作用于全量(在 $V_t\neq\varnothing$ 时拒绝一切变换),则社会停摆:$\Delta_t=\varnothing$ 对一切 $t$。
-*证明*。(a)(b) 由 $V_{t+1}$ 的递推式直接读出;(c) 全量门在 $V_t\neq\varnothing$ 时拒绝每个候选账本。∎
-*读法*。母仓第 6.4 条「系统在动时先立门后补账,反序即追移动靶」与第 6.2 条层序律(delta 门 → 分批补账 → 债务清空后同一道门自动改判全树)是 (b) 的三段;(c) 是「立门当场把全仓判红」的形式。
-

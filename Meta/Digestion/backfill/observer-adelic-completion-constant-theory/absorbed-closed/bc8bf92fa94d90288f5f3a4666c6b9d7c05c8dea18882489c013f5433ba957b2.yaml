@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:bc8bf92fa94d90288f5f3a4666c6b9d7c05c8dea18882489c013f5433ba957b2
-  normalized_sha256: sha256:bc8bf92fa94d90288f5f3a4666c6b9d7c05c8dea18882489c013f5433ba957b2
-cas_ref: sha256:bc8bf92fa94d90288f5f3a4666c6b9d7c05c8dea18882489c013f5433ba957b2
-coverage_gids:
-  - gid: D5/S3/Arith/IcosahedralAxisDecomposition.icosahedral_axis_stabilizer_orders
-    target_statement_id: sha256:b1fb801e0a82e94e26d3ecf051bcad1fcba10da320a5a28d7e6fb4ea8e23ab8f
-receipts:
-  unresolved_subitems: []

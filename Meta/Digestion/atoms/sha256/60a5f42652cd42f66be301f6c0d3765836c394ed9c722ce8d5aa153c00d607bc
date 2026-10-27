@@ -1,6 +1,0 @@
-### [PR #5065] Exact image of the original scalar even observer
-
-[PR #5065] For a fixed ZeroData presentation Z and symmetric finite window T, write I_T for its distinct-zero indices and C_T for the dependent sum of the actual multiplicity copies. The original state space remains all WeilTestFunction values. The new owner `WeilEvaluationExactObservableRange` proves that an index vector v is a genuine Fourier-Laplace evaluation of an actual compact smooth even test if and only if v is invariant under the existing reflection permutation. The proof extends v by zero outside the window and reuses `even_weil_interpolation_on_finite_indices`. Symmetric-window closure proves that the extension remains compatible.
-
-[PR #5065] At the expanded-coordinate level the exact characterization is: w is reachable if and only if w is constant on each multiplicity fiber and its collapsed index vector is reflection even. Every actual analytic multiplicity is positive, so collapse can read its zeroth genuine copy. Expansion and collapse are inverse on the fiber-constant subspace. The previously defined `finiteWeilReducedEvaluation` is consequently surjective onto its specified reduced codomain. These statements supply the converse missing from the earlier necessary-constraint package.
-

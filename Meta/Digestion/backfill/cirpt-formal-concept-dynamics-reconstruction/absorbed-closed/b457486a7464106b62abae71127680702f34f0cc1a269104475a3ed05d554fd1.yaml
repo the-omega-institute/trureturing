@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b457486a7464106b62abae71127680702f34f0cc1a269104475a3ed05d554fd1
-  normalized_sha256: sha256:b457486a7464106b62abae71127680702f34f0cc1a269104475a3ed05d554fd1
-cas_ref: sha256:b457486a7464106b62abae71127680702f34f0cc1a269104475a3ed05d554fd1
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/ConceptFiberDecomposition.ConceptFiber
-    target_statement_id: sha256:e4b73e5d78d92f99475947175c972cba5b90fa4580a02ae062023702aa768593
-receipts:
-  unresolved_subitems: []

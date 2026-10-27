@@ -1,9 +1,0 @@
-**假设 7.1（几何接口）。** $X$ 是光滑连通复曲线，$E$ 是平坦
-$SO_5(\mathbb C)$ 局部系统。若调用无分歧几何朗兰兹的本征存在性，另要求 $X$ 射影、
-$E$ 不可约并固定半典范归一化。记
-
-$$
-V_E=E_{\mathrm{std}},\qquad \mathfrak g_E=\operatorname{ad}E\simeq\Lambda^2V_E,
-\qquad W_E=\operatorname{Sym}^2_0V_E.
-$$
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0a4e64db5e322f75162020620eb807074403fd60edefcdc1a805d545c73feea3
-  normalized_sha256: sha256:0a4e64db5e322f75162020620eb807074403fd60edefcdc1a805d545c73feea3
-cas_ref: sha256:0a4e64db5e322f75162020620eb807074403fd60edefcdc1a805d545c73feea3
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Coding/PriceCannotCarryAllMicroInformation.strictly_coarser_price_misses_some_target
-    target_statement_id: sha256:c0955c5f787b0cc6688f0514aa4c62dcc65de23a1fab580619597442544a7fb3
-receipts:
-  unresolved_subitems: []

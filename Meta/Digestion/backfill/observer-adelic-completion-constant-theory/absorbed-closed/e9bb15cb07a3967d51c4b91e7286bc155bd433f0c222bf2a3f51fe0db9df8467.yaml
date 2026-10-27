@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e9bb15cb07a3967d51c4b91e7286bc155bd433f0c222bf2a3f51fe0db9df8467
-  normalized_sha256: sha256:e9bb15cb07a3967d51c4b91e7286bc155bd433f0c222bf2a3f51fe0db9df8467
-cas_ref: sha256:e9bb15cb07a3967d51c4b91e7286bc155bd433f0c222bf2a3f51fe0db9df8467
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/InverseLimits/CompletionIsomorphismCriterion.completion_map_equiv_iff
-    target_statement_id: sha256:091956630b34334b5a72852cbd27b7e45156f8977c7a790b2454fa7ae288e75f
-receipts:
-  unresolved_subitems: []

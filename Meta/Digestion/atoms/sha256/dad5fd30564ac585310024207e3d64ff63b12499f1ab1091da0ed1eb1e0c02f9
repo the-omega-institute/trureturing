@@ -1,8 +1,0 @@
-**Corollary 29.2 (all-field and all-menu service from this cut).** Retain $N,T,q$, $\mu=(m_0,\ldots,m_{N-1})$, $\widehat x=x_*$ and $a=\mathcal O_Nx_*$. Retain also the actual source reference, applicable call/input rights and backing, and the prescribed actual return records. The following supplied predictive updates are correctly initialized at this actual cut for every finite adaptive continuation with arbitrary rational Add inputs.
-
-| Actual command | Native record after the command | Predictive record after the command | Complete output |
-| --- | --- | --- | --- |
-| Read | $\widehat x$ | $a$ | $a_0$ |
-| Tick | $T\widehat x$ | $a'_j=a_{j+1}$ for $j<N-1$; $a'_{N-1}=-\sum_{j<N}q_ja_j$ | $a'_0$ |
-| Add$(r)$, $r\in\mathbb Q$ | $\widehat x+r e_0$ | $a'=a+r\mu$ | fixed acknowledgement |
-| Hold | $\widehat x$ | $a$ | fixed acknowledgement |

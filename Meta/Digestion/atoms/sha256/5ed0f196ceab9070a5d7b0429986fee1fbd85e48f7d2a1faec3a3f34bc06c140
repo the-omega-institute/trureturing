@@ -1,9 +1,0 @@
-**Proof.** The fiber consists of $\langle\beta,z\rangle$ with arbitrary
-$z\in\mathcal T$. Alpha realizes $[R]$ and beta realizes $\bot$.
-The retained branch reply forces $z$ to be a branch, hence not alpha;
-for example $z=\langle\alpha,\alpha\rangle$ witnesses nonemptiness.
-Theorem 5.2 gives one state and Theorem 3.1 computes the response procedure.
-Obtaining and retaining the extra reply are premises, not free operations.
-The example prevents transferring a full-fiber query lower bound to all
-history restrictions. $\square$
-

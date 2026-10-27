@@ -1,4 +1,0 @@
-**F = Σ_{v≥0} P^{S(v)} Q^v(Hecke–Mahler 级数);Dirichlet 射线上 P = p^{−(2φ²−φ³)s} = p^{−s},Q = p^{−s/φ}**
-
-——亏空硬币 2φ² − φ³ = 1 第三次现身,恰使第一变量为整变量;Mahler 形 f(P, Q) = f(PQ, P) + P²Q·f(P²Q, PQ)(数值证书精确至 0)。前沿引注:Mahler(1929)超越性、Loxton–van der Poorten(1977)、Nishioka(1994);值超越性时效链(第 14 轮检索):Bugeaud–Laurent(Acta Arith. 209 (2023) 59–90:二变量 F_{θ,ρ} 于代数点之超越 + 连分数展开)、Luca–Ouaknine–Worrell(Bull. LMS 57 (2025) 1360–1368:多项式权 HM 级数之超越,p-adic 子空间定理)、Masser(⌊nθ⌋ 级数之代数无关,θ 二次无理——θ = φ 恰属其辖)、Kebis–Luca–Ouaknine–Scoones–Worrell(ICALP 2024:Sturmian/Arnoux–Rauzy 数之超越);Hecke(1921)之精确关系列文献核查(N-3)。函数层之延拓边界工具(Mahler 二分法)另见前沿引注 6.65。**三条定界与识别同时入账:识别是定理、杠杆是希望;已知理论给超越性而非零点控制;逐轴延拓 ≠ 乘积延拓。**
-

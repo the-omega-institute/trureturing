@@ -1,9 +1,0 @@
-**Corollary 76.2 (one-point second-prime exclusion).** Let $P,Q>5$ be distinct primes. If there is a rational point $U\in E_Q(\mathbb Q)$ with nonsingular reduction at $Q$ and nonzero reduction at $P$, then
-
-$$L_{3^j}^{\,2}+3\ne P^2Q^3\qquad\text{for every }j\ge1.$$
-
-**Proof.** A hypothetical factorization puts $U$ in the global group of Theorem 76.1, whose reduction at $P$ is zero, a contradiction. ∎
-
-This certificate may use a point in the $Q$-formal kernel; it does not require that point to generate any rational subgroup. Neither existence of a certificate for every pair, an infinite family of certificates, nor a general non-WSS conclusion follows. The rank-one hypothesis used in the proof is obtained only from the hypothetical actual factorization through Section 74, without a parity conjecture or finiteness assumption on a Tate–Shafarevich group.
-
-

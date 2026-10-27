@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6092aa5a6b8f52b5f9151d85ba5abfbf07be4e3e3198fe5ee7515524694c5b32
-  normalized_sha256: sha256:6092aa5a6b8f52b5f9151d85ba5abfbf07be4e3e3198fe5ee7515524694c5b32
-cas_ref: sha256:6092aa5a6b8f52b5f9151d85ba5abfbf07be4e3e3198fe5ee7515524694c5b32
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DefinitionEscapeLaws/MarginalCaptureLawBridge.marginal_capture_law_of_finite_additive_mass
-    target_statement_id: sha256:6b81dcd034dac07f8dabfe4cd95426077f14c54f02b4166fdc039aa469857126
-receipts:
-  unresolved_subitems: []

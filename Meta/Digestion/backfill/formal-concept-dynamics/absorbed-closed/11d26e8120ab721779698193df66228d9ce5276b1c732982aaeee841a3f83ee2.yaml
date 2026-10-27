@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:11d26e8120ab721779698193df66228d9ce5276b1c732982aaeee841a3f83ee2
-  normalized_sha256: sha256:11d26e8120ab721779698193df66228d9ce5276b1c732982aaeee841a3f83ee2
-cas_ref: sha256:11d26e8120ab721779698193df66228d9ce5276b1c732982aaeee841a3f83ee2
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Transport/MacroInterventionCriterion.macro_intervention_carry_criterion
-    target_statement_id: sha256:41b9453e7d659578b02bf4afb75d8d002404b91db57d60a78ab573da53fe13fb
-receipts:
-  unresolved_subitems: []

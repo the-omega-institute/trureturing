@@ -1,2 +1,0 @@
-**定义 89.1（七点 Steiner 模型）。** 令 $D_7=\mathbb F_2^3\setminus\{0\}$，并定义 $x\star_7x=x$，$x\star_7y=x+y$ 当 $x\ne y$。每个不同输入对给一个三点块 $\{x,y,x+y\}$。
-

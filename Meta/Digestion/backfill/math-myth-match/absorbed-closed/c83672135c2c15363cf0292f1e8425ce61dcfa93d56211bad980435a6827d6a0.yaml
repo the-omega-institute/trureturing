@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c83672135c2c15363cf0292f1e8425ce61dcfa93d56211bad980435a6827d6a0
-  normalized_sha256: sha256:c83672135c2c15363cf0292f1e8425ce61dcfa93d56211bad980435a6827d6a0
-cas_ref: sha256:c83672135c2c15363cf0292f1e8425ce61dcfa93d56211bad980435a6827d6a0
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.whole_horizon_leaves_no_remainder
-    target_statement_id: sha256:532ef114edb90a3a8eecdd01d0f8b368f021774706fdb0440c0ca3cf5d6cae57
-receipts:
-  unresolved_subitems: []

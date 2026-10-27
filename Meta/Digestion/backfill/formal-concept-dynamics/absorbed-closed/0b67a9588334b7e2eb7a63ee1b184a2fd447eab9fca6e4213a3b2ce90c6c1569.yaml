@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0b67a9588334b7e2eb7a63ee1b184a2fd447eab9fca6e4213a3b2ce90c6c1569
-  normalized_sha256: sha256:0b67a9588334b7e2eb7a63ee1b184a2fd447eab9fca6e4213a3b2ce90c6c1569
-cas_ref: sha256:0b67a9588334b7e2eb7a63ee1b184a2fd447eab9fca6e4213a3b2ce90c6c1569
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/InstitutionalCapture/ProceduralJusticeNotOutcomeCorrect.ProcedurallyComplete
-    target_statement_id: sha256:8889404444890ffec6003b8a1e53568928bd6a09940d01112fb98554747ecfd4
-receipts:
-  unresolved_subitems: []

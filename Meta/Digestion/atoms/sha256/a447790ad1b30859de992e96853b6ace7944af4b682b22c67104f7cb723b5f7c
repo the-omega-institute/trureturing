@@ -1,9 +1,0 @@
-**Definition 22.4 (the remaining endogenous acquisition obligation).**
-For this family, a proposed observer must obtain the parameters, relevant summaries and verifiable final output from its actual retained state.
-The cost-supported progress contract is Definition 21.4: acquisition, sampling, memory updates, compilation and delivery are included in the completed costs $c_j$.
-Its telescoping bound supplies polynomial total work only after a uniform controller, a nonnegative polynomially bounded potential,
-and the charged descent inequality are supplied on every reachable nonterminal state.
-Theorem 22.2 supplies none of those global-progress objects, and local gate universality does not supply them.
-A bounded-error polynomial quantum SAT procedure has the different consequence $\mathrm{NP}\subseteq\mathrm{BQP}$;
-the deterministic classical value algorithm in Proposition 22.3 is the one that gives $\mathrm P=\mathrm{NP}$.
-

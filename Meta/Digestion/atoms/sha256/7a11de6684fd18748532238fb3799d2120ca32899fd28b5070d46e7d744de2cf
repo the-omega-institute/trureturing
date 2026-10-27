@@ -1,7 +1,0 @@
-这里 $i$ 存实际累计步数，$v=0$ 表示尚未记录首个变化；有变化后 $v$ 保存恢复的低位余数。表如下，各项未改变的字段保留。
-
-- $\mathrm{Start}$ 发出 $R$，收到 $y$ 后置 $(b,v,i)=(y,0,0)$；$P=1$ 则进 $\mathrm{Done}$，否则进 $\mathrm{Step}$。
-- $\mathrm{Step}$ 在 $i<P-1$ 时发出一个 $W$，把 $i$ 加一并直接进 $\mathrm{Read}$。
-- $\mathrm{Read}$ 在 $1\le i<P$ 时发出 $R$。若 $v=0$ 且答案 $y\ne b$，置 $v=P-i$；否则保留 $v$。$i=P-1$ 时进 $\mathrm{Done}$，否则进 $\mathrm{Step}$。
-- $\mathrm{Done}$ 停止，输出 $(bP+v,[bP+v+i]_M)$，形式后继为自身。其余非终止元组，包括 $i=P-1$ 的 $\mathrm{Step}$ 和 $i=0$ 的 $\mathrm{Read}$，均发出一次计费的 $R$、忽略答案、保留数值字段并进 $\mathrm{Done}$。
-

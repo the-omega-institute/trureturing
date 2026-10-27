@@ -1,4 +1,0 @@
-**Corollary 2.3 (Obstruction to faithful extension).** Let $P$ be as in Corollary 2.2 and $B=P[2]\times C_3$. A projectively faithful pointwise matched but not globally matched pair on $B$ cannot be the restriction of a projectively faithful pointwise matched pair on $P\times C_3$. The same holds if the two prescribed restrictions are independently twisted by characters or permuted.
-
-Proof. Corollary 2.2 makes any such extended pair globally matched. Restriction of its common character and permutation gives a global match on $B$, a contradiction. Independent twists and permutations preserve the existence of a global match. ∎
-

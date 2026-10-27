@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c1221306ad413cab3ec26b3fd234dd726cb9c702ab6f1871d2e65780f945625e
-  normalized_sha256: sha256:c1221306ad413cab3ec26b3fd234dd726cb9c702ab6f1871d2e65780f945625e
-cas_ref: sha256:c1221306ad413cab3ec26b3fd234dd726cb9c702ab6f1871d2e65780f945625e
-coverage_gids:
-  - gid: D5/S3/Factorization/Automata/BoundedPrimeHorizon.close
-    target_statement_id: sha256:a14ad568224575245fce0a6342127c7de57bfcc8ba2029633ee7beae7faeaccf
-receipts:
-  unresolved_subitems: []

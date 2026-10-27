@@ -1,1 +1,0 @@
-../archive/theory/GICT.md

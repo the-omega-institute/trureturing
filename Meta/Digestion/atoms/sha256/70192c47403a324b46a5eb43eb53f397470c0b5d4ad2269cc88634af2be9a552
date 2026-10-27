@@ -1,8 +1,0 @@
-因而反向搜索首次访问层数满足
-
-$$
-\operatorname{reverseBfsDistance}(x,y)
-=
-\delta(x,y).
-$$
-

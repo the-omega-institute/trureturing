@@ -1,8 +1,0 @@
-概率差为
-\[
-p_T(\mathcal E)-p_T(\mathcal F)
-=
-\operatorname{Tr}\bigl(T(J_{\mathcal E}-J_{\mathcal F})\bigr).
-\]
-对所有 \(T\in\mathfrak T\) 为零，正好等价于差算子对其线性张成空间正交。若张成空间为全空间，残余只有零；若为真子空间，取非零 Hermitian 残余并在合法过程的一个内部点附近作足够小的正负扰动，即得不可区分过程对。证毕。
-

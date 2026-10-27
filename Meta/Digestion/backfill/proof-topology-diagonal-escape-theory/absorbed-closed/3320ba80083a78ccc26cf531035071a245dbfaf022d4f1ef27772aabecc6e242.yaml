@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3320ba80083a78ccc26cf531035071a245dbfaf022d4f1ef27772aabecc6e242
-  normalized_sha256: sha256:3320ba80083a78ccc26cf531035071a245dbfaf022d4f1ef27772aabecc6e242
-cas_ref: sha256:3320ba80083a78ccc26cf531035071a245dbfaf022d4f1ef27772aabecc6e242
-coverage_gids:
-  - gid: D5/S3/Factorization/Automata/WordExcursionLowerBound.word_length_lower_bound
-    target_statement_id: sha256:a035a6b8b08eea2e9e9afd427cf336d41b35e1dbcdd4d07b42e2a7dad19c1347
-receipts:
-  unresolved_subitems: []

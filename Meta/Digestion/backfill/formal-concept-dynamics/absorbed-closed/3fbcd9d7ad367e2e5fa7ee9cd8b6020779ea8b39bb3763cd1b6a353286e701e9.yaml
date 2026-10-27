@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3fbcd9d7ad367e2e5fa7ee9cd8b6020779ea8b39bb3763cd1b6a353286e701e9
-  normalized_sha256: sha256:3fbcd9d7ad367e2e5fa7ee9cd8b6020779ea8b39bb3763cd1b6a353286e701e9
-cas_ref: sha256:3fbcd9d7ad367e2e5fa7ee9cd8b6020779ea8b39bb3763cd1b6a353286e701e9
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Aggregation/MajorityCycleNotScalarOrder.majority_cycle_not_scalar_order
-    target_statement_id: sha256:715ea485a1ce9782405ca362f733bf38f95ce7e1f869228d42255681b88b24cf
-receipts:
-  unresolved_subitems: []

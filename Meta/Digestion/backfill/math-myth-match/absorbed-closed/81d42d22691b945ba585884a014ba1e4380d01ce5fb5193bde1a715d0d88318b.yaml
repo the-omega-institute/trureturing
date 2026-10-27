@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:81d42d22691b945ba585884a014ba1e4380d01ce5fb5193bde1a715d0d88318b
-  normalized_sha256: sha256:81d42d22691b945ba585884a014ba1e4380d01ce5fb5193bde1a715d0d88318b
-cas_ref: sha256:81d42d22691b945ba585884a014ba1e4380d01ce5fb5193bde1a715d0d88318b
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/ResidualCoverage/WeightedResidualCoverage.weightedGain_mono
-    target_statement_id: sha256:0062fe3c3b461ed401846c2737ba9ba005f2a942e67f51d3949668aa69ad3ea4
-receipts:
-  unresolved_subitems: []

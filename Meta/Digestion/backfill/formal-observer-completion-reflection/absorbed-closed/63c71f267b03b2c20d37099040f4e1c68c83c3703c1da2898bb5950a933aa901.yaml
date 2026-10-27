@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:63c71f267b03b2c20d37099040f4e1c68c83c3703c1da2898bb5950a933aa901
-  normalized_sha256: sha256:63c71f267b03b2c20d37099040f4e1c68c83c3703c1da2898bb5950a933aa901
-cas_ref: sha256:63c71f267b03b2c20d37099040f4e1c68c83c3703c1da2898bb5950a933aa901
-coverage_gids:
-  - gid: D5/S3/Quantum/PredictionDepth/LocalDynamicsNoTomography.local_dynamics_no_tomography
-    target_statement_id: sha256:481d77492904c198a2c54ff79d43fd307a21e2361345921eb8be783eafa0314b
-receipts:
-  unresolved_subitems: []

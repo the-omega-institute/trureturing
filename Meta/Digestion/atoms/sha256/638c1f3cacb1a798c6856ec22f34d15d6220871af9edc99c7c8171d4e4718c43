@@ -1,2 +1,0 @@
-**V-1**:前缀最小公倍数的赋值公式。对素数 \(p\),\(v_p(\operatorname{lcm}(1,\dots,X))=\lfloor\log_p X\rfloor\)。**本轮检索已在钉版 Mathlib 中命中**:`Nat.factorization_lcmUpto (n : ℕ) {p : ℕ} (hp : p.Prime) : (Nat.lcmUpto n).factorization p = p.log n`,其中 `Nat.lcmUpto n = (Finset.Icc 1 n).lcm id`(`Mathlib/NumberTheory/Chebyshev.lean:220`)。按先库后证,本条**直接引用,不重证**;形式化时也因此不必展开 `Finset.range X`。
-

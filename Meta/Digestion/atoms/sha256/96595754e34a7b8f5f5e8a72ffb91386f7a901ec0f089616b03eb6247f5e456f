@@ -1,3 +1,0 @@
-### 定义 249.2　独立见证对与同对联合签名
-以支持卷 V §1 的实际终端响应 $a(W),m(W)$ 定义 $R_J(\beta)=\{(W,W')\in C_\beta^2:W\ne W',\ a(W)=a(W')\}$、$R_M(\beta)=\{(W,W')\in C_\beta^2:W\ne W',\ m(W)=m(W')\}$，并令 $D_J(U)=\{\beta\in U:R_J(\beta)\ne\varnothing\}$、$D_M(U)=\{\beta\in U:R_M(\beta)\ne\varnothing\}$。同对集合 $D_{JM}^{\rm same}(U)=\{\beta\in U:R_J(\beta)\cap R_M(\beta)\ne\varnothing\}$ 只满足 $D_{JM}^{\rm same}(U)\subseteq D_J(U)\cap D_M(U)$；后者允许同一完整 child 中的两组独立见证对，允许交叉重合且不要求两对的公共终端值相同。反向包含一般不成立：三个抽象世界的 $(a,m)$ 分别为 $(0,0),(0,1),(1,0)$ 时，两种响应各有碰撞而联合签名单射；这是量词反例，不是 strict-real 世界构造。令 $O_q=\pi$、$O_J=(\pi,a)$、$O_M=(\pi,m)$、$O_{JM}=(\pi,a,m)$，则 $D_{JM}^{\rm same}(U)$ 正是 $E_U(O_{JM};T_{\rm src})$ 的基点投影。数学联合签名来自同一世界；其物理取得还须另给允许同时读取、复制或重置的协议。
-

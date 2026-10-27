@@ -1,6 +1,0 @@
-这给 Wang–Deng 方法一个精确动力学原型：
-
-* Wang 层：区分 continued-fraction word 是否长期集中于少数 digit；
-* Deng 层：将重复周期 word 收缩为 primitive orbit 及其重复次数；
-* determinant：自动完成全部 primitive orbit 的重求和。
-

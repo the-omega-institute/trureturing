@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9abcf5e892933e9e61b2445b505110b034ab601deadd03c4abfe8e3fec307a8a
-  normalized_sha256: sha256:9abcf5e892933e9e61b2445b505110b034ab601deadd03c4abfe8e3fec307a8a
-cas_ref: sha256:9abcf5e892933e9e61b2445b505110b034ab601deadd03c4abfe8e3fec307a8a
-coverage_gids:
-  - gid: D5/S3/Estimation/DecisionRisk/AsymmetricFamilyDeficiency.asymmetric_family_deficiency
-    target_statement_id: sha256:0405d81102a05c0d34def6372d2dd871f1fd72c2af899799d149a192bbbdcac2
-receipts:
-  unresolved_subitems: []

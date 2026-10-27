@@ -1,4 +1,0 @@
-### 证明
-
-第 1 项由 \(\mathsf I_\theta,\mathsf H\) 和定理 371.3；第 2 项由 \(\mathsf K_{\mathrm{evt}},\mathsf L_{\mathrm{coarse}}\) 的数据处理合同；第 3 项由 \(\mathsf A\) 与定理 372.3、373.2；第 4 项由 \(\mathsf{Cost}},\mathsf{Risk},\mathsf{Event},\mathsf{Stop}\) 对有限记录树归纳。故声明任务的外部响应相同。证毕。
-

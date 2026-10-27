@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:501e6dddf785fb4a37b46f0bc5015cfc6f4bd267c96cc7992d0849a9aa3aaf6d
-  normalized_sha256: sha256:501e6dddf785fb4a37b46f0bc5015cfc6f4bd267c96cc7992d0849a9aa3aaf6d
-cas_ref: sha256:501e6dddf785fb4a37b46f0bc5015cfc6f4bd267c96cc7992d0849a9aa3aaf6d
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Gluing/LocalFactorOverlapCompatibility.local_factor_overlap_compatibility
-    target_statement_id: sha256:562723510d223829c90831b57c253a7ffa55bcc8d62cf92e0e1567e6e5026e74
-receipts:
-  unresolved_subitems: []

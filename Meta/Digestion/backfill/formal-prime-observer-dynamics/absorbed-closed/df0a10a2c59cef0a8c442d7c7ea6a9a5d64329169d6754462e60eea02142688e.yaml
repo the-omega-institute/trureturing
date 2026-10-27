@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:df0a10a2c59cef0a8c442d7c7ea6a9a5d64329169d6754462e60eea02142688e
-  normalized_sha256: sha256:df0a10a2c59cef0a8c442d7c7ea6a9a5d64329169d6754462e60eea02142688e
-cas_ref: sha256:df0a10a2c59cef0a8c442d7c7ea6a9a5d64329169d6754462e60eea02142688e
-coverage_gids:
-  - gid: D5/S3/Arith/Congruence/PadicPrecisionBlindSpot.first_distinguishing_precision
-    target_statement_id: sha256:e1d21da0d6019a2e82b8fb377c71c618007622e8a4d4881dc629f5924c3c391e
-receipts:
-  unresolved_subitems: []

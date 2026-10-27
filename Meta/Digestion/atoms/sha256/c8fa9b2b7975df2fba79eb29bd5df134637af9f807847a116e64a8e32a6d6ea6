@@ -1,7 +1,0 @@
-# 2026-09-05：保留边界矩的 Gamma 尾项压缩与最低模态误差预算
-
-对应 Lean：`D5/S3/Weil/ZetaBridge/WeilArchimedeanTailJet.lean`。
-配套 Scribe：`Blueprint/D5/S3/Weil/ZetaBridge/WeilArchimedeanTailJet.scribe.cs`。
-
-本增补接续内部平移障碍。目标是保留实际候选的边界行为，并量化有限计算省略的 Gamma 尾项。下面第 3 节的逐频率密度误差已有 Lean 证明脚本；脚本经过数学和源码审查，尚未在本环境编译。Fourier 识别、积分预算、正投影修正、奇扇区推广和残差推论是本轮纸面推导。有限频带上的全方向估计与整个窗口 Hilbert 空间上的余维一强制性必须分别证明。
-

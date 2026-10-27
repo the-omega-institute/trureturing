@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:18614ce6ba2029a96f22ca9b7d4ccaed3699dd5467ded5906e74b9ec75184000
-  normalized_sha256: sha256:18614ce6ba2029a96f22ca9b7d4ccaed3699dd5467ded5906e74b9ec75184000
-cas_ref: sha256:18614ce6ba2029a96f22ca9b7d4ccaed3699dd5467ded5906e74b9ec75184000
-coverage_gids:
-  - gid: D5/S3/Observer/MetricGeometry/AutonomousPredictionEntropy.autonomous_run
-    target_statement_id: sha256:99abc319ebef2a9a60b13f97014e9f237a4e4c56b09db18739f434f14c7772b7
-receipts:
-  unresolved_subitems: []

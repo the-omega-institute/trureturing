@@ -1,6 +1,0 @@
-**引理 44.2（残差平方和交换子）。** 由 $S=S^*$，
-$$
-\|[P,S]\|=\|QSP\|=\ell,\qquad
- aI_E\le A\le bI_E.
-$$
-证明。$FF^*=I_E$ 使 $P=P^*=P^2$，$F^*$ 等距到 $\operatorname{ran}P$；

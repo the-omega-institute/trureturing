@@ -1,5 +1,0 @@
-等价地，存在 $c\in\mathbb Z$、$S^-\subseteq\mathbb Z^3$ 及任意 $B_+\subseteq\{t\ge c\}\times\mathbb Z^3$，使
-$B=(\{t<c\}\times S^-)\cup B_+$。等价性由每个位置在 $t<c$ 上取共同真值直接给出；这里必须是一个对全部位置有效的 $c$。
-
-命题 53 的 $H_B$ 分类的是至 $\cong_h$ 的丰富输出表达；本节 Tail 分类的是 q 表达；在 $\Gamma_t$ 上语义下降仅指摘要决定输出摘要，不提供原语言的表达构造。三者各有量词与结论，不能互相替代。
-

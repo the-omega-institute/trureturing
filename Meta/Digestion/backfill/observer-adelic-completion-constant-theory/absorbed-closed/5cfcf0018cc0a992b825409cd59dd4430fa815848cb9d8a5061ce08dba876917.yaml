@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5cfcf0018cc0a992b825409cd59dd4430fa815848cb9d8a5061ce08dba876917
-  normalized_sha256: sha256:5cfcf0018cc0a992b825409cd59dd4430fa815848cb9d8a5061ce08dba876917
-cas_ref: sha256:5cfcf0018cc0a992b825409cd59dd4430fa815848cb9d8a5061ce08dba876917
-coverage_gids:
-  - gid: D5/S3/Observer/ArithmeticTomography/GoldenSlopeSeparation.golden_separation_bound
-    target_statement_id: sha256:7b842e3b0449c5a1c914361965e54f245e98196d2a613cf9c868bd07a9510008
-receipts:
-  unresolved_subitems: []

@@ -1,7 +1,0 @@
-是本部定义的强制边界：
-
-- `SemanticTargetLaunderingAt` 不得增加原判词与修订判词不等前件；
-- `SemanticTargetLaunderingAt` 不得增加报告时间戳等于冻结时刻前件；
-- 时间戳等式只属于 `SemanticSketchTargetLaunderingAt`；
-- 任一新增义务若排除上述两个冻结见证，即为 statement-revise，而不是证明失败。
-

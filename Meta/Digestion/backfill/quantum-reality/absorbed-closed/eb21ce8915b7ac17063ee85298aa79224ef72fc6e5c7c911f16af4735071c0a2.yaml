@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:eb21ce8915b7ac17063ee85298aa79224ef72fc6e5c7c911f16af4735071c0a2
-  normalized_sha256: sha256:eb21ce8915b7ac17063ee85298aa79224ef72fc6e5c7c911f16af4735071c0a2
-cas_ref: sha256:eb21ce8915b7ac17063ee85298aa79224ef72fc6e5c7c911f16af4735071c0a2
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Dynamics/MaximalUnobservableSubspace.future_kernel_is_maximal_invariant
-    target_statement_id: sha256:ff77ba6700713017877de2df4d7f1cacd45fb12f3b7fa724d994fcbd6fac72f1
-receipts:
-  unresolved_subitems: []

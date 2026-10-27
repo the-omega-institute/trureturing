@@ -6,6 +6,7 @@ url: https://arxiv.org/abs/2006.06379v2
 triage: theorem
 motivation_gids:
   - D5/S3/Zeros/LeeYang/QuiverTreeIsingRefutation.result
+  - D5/S3/Zeros/LeeYang/QuiverTreePhysicalCounterexample.result
 ---
 
 # Positive joint weights and the tree Lee–Yang conjecture
@@ -196,14 +197,94 @@ has `proof_shape: bind-only`; the module asserts no escape witness.
   every fixed labelled two-edge pair $a,b\ge2$ with $\min(a,b)=2$ is
   covered using all three physical vertex factors. This is separate from
   the kernel-checked arbitrary-weight refutation and from the experiment.
-- **General physical-weight version, open.** Both two-edge totals at least
-  three and the full tree family with the binomial and all-vertex factors
-  of (2.31) remain open. The experiment entry has no physical-weight reading.
+- **General physical-weight version, refutation candidate.** The 122-edge
+  construction below uses the binomial and all-vertex factors of (2.31)
+  at $\tau=-1$. Its complete Lean source awaits canonical build, report
+  and freeze acceptance. Both two-edge totals at least three remain a
+  separate question. The experiment entry has no physical-weight reading.
 - **Consequences for the source, source reading.** Its fixed-configuration
   result and its one-edge theorem remain outside the refutation. The
   physical planar-free-energy specialization requires its own restricted
   argument; the arbitrary-joint-weight conjecture cannot supply it.
   Conjecture 2 concerns a sum over trees and is not settled by this instance.
+
+### All-vertex physical refutation candidate on 122 edges
+
+[Issue #17677](https://github.com/the-omega-institute/trureturing/issues/17677)
+registers the physical assertion for all finite trees with at least two
+labelled edges, totals at least two and $\tau=-1$. The candidate source is
+`D5/S3/Zeros/LeeYang/QuiverTreePhysicalCounterexample.lean`, with corresponding
+Blueprint Scribe. Its literal conclusion is `result : ¬ claimPhys`.
+Canonical build, scoped axiom report, Scribe emission and freeze acceptance
+are pending; the candidate is not reported here as a completed formal delivery.
+
+The construction has a centre, two hubs and sixty distinct leaves attached
+to each hub: 123 vertices and 122 labelled edges. The two hub-centre totals
+are three, and each of the 120 pendant totals is two. The pendant splits
+are forced to one, leaving four labelled split configurations $(k,l)$ with
+$k,l\in\{1,2\}$. Every edge binomial and all 123 vertex factors are included.
+Native arrows reverse the paper arrows because the public `mass` assigns
+$k$ to `src`. With $f(t)=(2t)!/((t-1)!t!)$, a leaf contributes one, a hub
+with distinguished part $k$ contributes
+$2^{60}f(k)(59+k)!/(k+1)!$, and the centre contributes
+$f(3-k)f(3-l)/(6-k-l)$. Including the edge binomials gives the four weights
+
+$$
+C(9,244,244,7442),\qquad C=900(60!)^2 12^{120}>0.
+$$
+
+These are reductions of the physical product, not a replacement weight
+definition. Parity of the opposite-spin edge count gives the product of
+$1+(-1)^{d_v}X^{m_v}$ over vertices for each fixed split at $\tau=-1$.
+The original public `splits`, `mass`, `treePoly` and `NamedSpanningTree`
+therefore give
+
+$$
+P=C(1-X)^{122}Q,\qquad
+Q=7442S_{62}^2(1+X^2)+488S_{62}S_{61}(1+X^3)+9S_{61}^2(1+X^4),
+\quad S_m=\sum_{j=0}^{m-1}X^j.
+$$
+
+A Hermitian completed square excludes unit roots with real part at least
+$9/10$. For $|z|=1$, set $a=1-z^{62}$, $b=1-z^{61}$,
+$c=\operatorname{Re}z$, $K=(z+\bar z^2)/2$, $h=7442c$ and
+$d=9(2c^2-1)$. Then $(1-z)^2Q(z)=-2z^{63}E$, where
+$E=h|a|^2+488\operatorname{Re}(a\bar bK)+d|b|^2$, and
+
+$$
+hE=|ha+244\bar Kb|^2+(hd-244^2|K|^2)|b|^2,
+\qquad hd-244^2|K|^2=7442(2c^3+3c-4)>0\quad(c\ge9/10).
+$$
+
+A root on that arc would force $a=b=0$, hence $z^{61}=z^{62}=1$
+and $z=1$, contrary to $Q(1)=60972306$.
+
+Count all roots with multiplicity and set $v=\sum_r(1-r)^{-1}$ and
+$w=\sum_r(1-r)^{-2}$. Differentiating the root product gives
+$Q'(1)=Q(1)v$ and $Q''(1)=Q(1)(v^2-w)$. The exact values are
+$Q'(1)=3780282972=62Q(1)$ and $Q''(1)=269676602388$.
+If every root were a unit root, the excluded arc and
+$\operatorname{Re}((1-r)^{-1}-(1-r)^{-2})=1/(2(1-\operatorname{Re}r))<5$
+would give $\operatorname{Re}(v-w)\le620$, since $\deg Q\le124$.
+Thus $\operatorname{Re}w\ge-558$ and $Q''(1)\le4402Q(1)$, contradicting
+
+$$
+Q''(1)-4402Q(1)=1276511376>0.
+$$
+
+Equivalently, $2J_2-4402J_0>0$ with $J_0=Q(1)$ and $J_2=Q''(1)/2$.
+The finite-multiset sum bound used here is non-strict and remains valid
+for an empty multiset. The earlier independent review rejected an
+unguarded generic strict statement because $n=0$, $F=1$ would require
+$0<0$. The proposed correction requires natural $n\ge1$ and degree $2n$;
+it remains independently unreviewed and is unused by this fixed proof.
+
+Equation (2.31) prints the vertex-product upper index $m$. This is the
+preregistered all-vertex interpretation supported by (2.16)--(2.19) and
+the explicit construction; no published erratum is asserted. The bounded
+literature screen is not exhaustive and establishes neither priority nor
+minimality. The two-edge interior case, product weights, stars, other
+$\tau$, assignment sums and Conjecture 2 require their own arguments.
 
 ### Physical two-edge boundary family, proved in prose
 
@@ -450,8 +531,8 @@ support. A degree-two centre generally contributes the joint factor
 $1/m$, and the boundary proof above uses its exact value rather than
 a general positive-mixture principle.
 
-The physical two-edge case with both totals at least three, the full
-physical-tree and all-stars families, the all-$\tau$ variant, sums over
+The physical two-edge case with both totals at least three, the all-stars
+family, the classification at other $\tau$, sums over
 edge assignments or total multisets, Conjecture 2's sum over trees, and
 the conditional Wilson-loop assertions remain open. Neither the
 general product-weight question nor these residuals follow from the
@@ -593,7 +674,7 @@ interior pair $a,b\ge3$. It does not produce a zero of
 $P^{\mathrm{ph}}_{a,b}(-1,X)$ off the unit circle: that polynomial still
 contains the three spin factors from (2.30); the scalar bridge only
 relates the weights without identifying the two zero sets. The physical
-two-edge Lee--Yang question for $a,b\ge3$, the full tree problem, other
+two-edge Lee--Yang question for $a,b\ge3$, other
 $\tau$, assignment sums, and Conjecture 2 therefore remain open. This is
 source-grounded prose only, with no new Lean declaration, kernel claim,
 or literature-priority assertion; alternative disk-specific or
@@ -604,4 +685,4 @@ interlacing routes remain available.
 The preregistration's search producer reports its forward-citation screen;
 worldwide priority is unverified. Kernel checking establishes the encoded
 statement and axiom boundary, while correspondence to the source requires
-the stated finite-type and parameter conventions. The positive-sequence and physical $\min(a,b)=2$ statements are complete prose arguments, not newly kernel-checked public theorems. Product-weight and physical-weight generalizations remain open separately, including both totals at least three, all physical trees and stars, all-$\tau$ and edge-assignment sums, Conjecture 2 and conditional Wilson-loop claims; the numerical product-weight trials do not prove these extensions.
+the stated finite-type and parameter conventions. The positive-sequence and physical $\min(a,b)=2$ statements are complete prose arguments, not newly kernel-checked public theorems. The complete 122-edge physical refutation candidate above still requires canonical validation and freeze acceptance. Product weights, both two-edge totals at least three, physical stars, other-$\tau$ classification, edge-assignment sums, Conjecture 2 and conditional Wilson-loop claims remain separate residuals; the numerical product-weight trials do not prove these extensions.

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:010578c430a180f1a4592a69557f79694e4c86d114f5243b238d5a70098bb70a
-  normalized_sha256: sha256:010578c430a180f1a4592a69557f79694e4c86d114f5243b238d5a70098bb70a
-cas_ref: sha256:010578c430a180f1a4592a69557f79694e4c86d114f5243b238d5a70098bb70a
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/InstitutionalCapture/CommonControlApprovalCollapse.common_control_source_approval_collapse
-    target_statement_id: sha256:c817f555227bbecf29ccf4144a952126327a7cfb620dd9e9f0b65648c17b870e
-receipts:
-  unresolved_subitems: []

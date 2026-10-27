@@ -1,9 +1,0 @@
-## 24. Selected-pair preparation noise in the original Gaussian apparatus
-
-The relation studied here connects preparation, internal separability and observation in one
-specified apparatus. Independent momentum noise on two initial system modes leaves every
-original position-record law unchanged. The same noise has a computable effect on the actual
-record-averaged JM pair, and supplementary momentum pointers can recover information that the
-original records discard. Each conclusion below is a conditional consequence of the declared
-preparation and measurement model, with ordinary analytic proofs.
-

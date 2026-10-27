@@ -1,9 +1,0 @@
-**Remark 5.5 (quantifier and correlation boundaries).** The order is
-$\exists\mathbf p\ \forall M\ \exists\mathbf w$, not
-$\forall M\ \exists\mathbf p,\mathbf w$. For example $w\le p$ admits the
-latter order with $w\ge M$ and not the former. Likewise
-$\{(w_1,w_2):w_1=0\text{ or }w_2=0\}$ has cofinal marginals but no
-jointly cofinal support. These elementary arithmetic distinctions explain
-the retained incidence in (SFS.14); they assert no additional acquired
-family or native impossibility theorem.
-

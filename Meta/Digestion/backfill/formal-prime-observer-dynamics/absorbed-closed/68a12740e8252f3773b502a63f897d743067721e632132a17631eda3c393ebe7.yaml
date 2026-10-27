@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:68a12740e8252f3773b502a63f897d743067721e632132a17631eda3c393ebe7
-  normalized_sha256: sha256:68a12740e8252f3773b502a63f897d743067721e632132a17631eda3c393ebe7
-cas_ref: sha256:68a12740e8252f3773b502a63f897d743067721e632132a17631eda3c393ebe7
-coverage_gids:
-  - gid: D5/S3/Factorization/IdealClassGroups/LocalPrincipalityBlindness.local_principality_observers_are_blind_of_nontrivial_class_group
-    target_statement_id: sha256:9eca7aae1e44cf389c5f2e96c8a18e82a60ef3e538dd5163d24444b63149bcb5
-receipts:
-  unresolved_subitems: []

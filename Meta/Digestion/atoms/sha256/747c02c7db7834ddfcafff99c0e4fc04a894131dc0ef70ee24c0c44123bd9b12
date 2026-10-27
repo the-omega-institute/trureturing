@@ -1,7 +1,0 @@
-2. For the same positive radii, no controller using independent paid fair
-   bits has both zero error on every fixed specimen and almost-sure
-   successful finite acquisition on every specimen. A successful finite
-   computation is required to have read only finitely many bits. Zero
-   error means probability zero of an incorrect successful export;
-   unsuccessful runs or nontermination do not count as successful
-   acquisition.

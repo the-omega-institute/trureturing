@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ff097df1ca4af4ac671f7f13610786f5854f3a2637a626dd4043250808037141
-  normalized_sha256: sha256:ff097df1ca4af4ac671f7f13610786f5854f3a2637a626dd4043250808037141
-cas_ref: sha256:ff097df1ca4af4ac671f7f13610786f5854f3a2637a626dd4043250808037141
-coverage_gids:
-  - gid: D5/S3/Weil/BurnolGram/FiniteReflectionCompatibleWeilInterpolation.exists_even_weil_finite_unit_peak
-    target_statement_id: sha256:5e39c5935d77c1c41668297bb9347cdccda451d7e452feea1bc5280a187a4c42
-receipts:
-  unresolved_subitems: []
