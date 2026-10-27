@@ -118,9 +118,11 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/RenyiCMILocalChannelRefutation.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/seshadreesan-berta-wilde-2015-renyi-cmi-local-channel` (refuted) by `D5/S3/Quantum/Information/RenyiCMILocalChannelRefutation.result`.
+*Resolves.* `Problems/seshadreesan-berta-wilde-2015-renyi-cmi-local-channel` (refuted) by `D5/S3/Quantum/Information/RenyiCMILocalChannelRefutation.result` and `D5/S3/Quantum/Information/RenyiCMILowAlphaRefutation.result`.
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"seshadreesan-berta-wilde-2015-renyi-cmi-local-channel","declaration_gid":"D5/S3/Quantum/Information/RenyiCMILocalChannelRefutation.result","resolution_kind":"refuted"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"seshadreesan-berta-wilde-2015-renyi-cmi-local-channel","declaration_gid":"D5/S3/Quantum/Information/RenyiCMILowAlphaRefutation.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 

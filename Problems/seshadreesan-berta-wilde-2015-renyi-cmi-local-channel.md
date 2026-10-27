@@ -138,10 +138,11 @@ check of the compiled artifact confirms that `claim` has the literal type
 parameters. Both axiom closures are exactly `propext`, `Classical.choice` and
 `Quot.sound`; the refutation is a closed kernel theorem.
 
-Canonical selected build/report validation, Scribe emission, independent
-prefreeze review and freeze/deposit admission remain required for repository
-acceptance. Until those gates pass, this continuation is a natively verified
-candidate awaiting canonical admission.
+Canonical selected build/report validation, Scribe emission and independent
+prefreeze review have passed. The scoped canonical deposit has frozen the exact
+low-alpha result. The existing Refuted resolution claim includes both the
+original alpha-two result and this low-alpha result. Final whole-delivery review
+and all applicable exact-head CI checks remain required before merge.
 The already accepted alpha-two result above is separate. The log-Euclidean,
 dual-J and other optimized quantities are not substitutions for this target.
 
