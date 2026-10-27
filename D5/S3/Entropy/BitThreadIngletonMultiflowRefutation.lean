@@ -128,11 +128,17 @@ private lemma star_min_combo :
     combo ingletonCoefficient (minCut starCapacity starBoundary) = 0 := by sorry
 
 private lemma star_witness_combo :
-    combo ingletonCoefficient (subflow witnessThreads) = 2 := by sorry
+    combo ingletonCoefficient (subflow witnessThreads) = 2 := by
+  rw [combo_identity]
+  norm_num [witnessThreads]
 
 private lemma star_nonnegative :
     ∀ f n, IsMultiflow starCapacity starBoundary f n →
-      combo ingletonCoefficient (subflow n) ≥ 0 := by sorry
+      combo ingletonCoefficient (subflow n) ≥ 0 := by
+  intro f n h
+  rw [combo_identity]
+  exact add_nonneg (mul_nonneg (by norm_num) (h.2.2.1 0 1 (by decide)).1)
+    (mul_nonneg (by norm_num) (h.2.2.1 2 3 (by decide)).1)
 
 private lemma star_symmetric : ∀ u v, starCapacity u v = starCapacity v u := by sorry
 
