@@ -1,0 +1,25 @@
+**Theorem 30.2 (native full-field binary inverse, including length).** For every source and origin of Definition 30.1, the map
+
+$$
+\{0,1\}^{*}\longrightarrow\mathbb Z^{V(u)},\qquad w\longmapsto x_w
+\tag{NLBAII.34}
+$$
+
+is injective. Given the earned finite graph and the full present field promised to lie in this image, a finite procedure recovers the unique word and its length. It needs no retained copy of the old binary word or its length. This is an inverse on the promised image, with no asserted efficient or total off-image recognizer.
+
+Proof. The material tree has maximum degree three and exactly $b$ graph leaves. If $n_j$ counts degree-$j$ vertices, the tree identity gives $n_3=b-2\ge2$. Choose distinct degree-three vertices and their joining path. Give every path vertex weight two, each of the four off-path neighbours at its endpoints weight one, and every other vertex weight zero; call this integral vector $g$. The four neighbours are distinct and outside the path: a failure of either property gives a cycle. At each path vertex the sum of neighbouring weights is at least four, and at each chosen off-path neighbour it is at least two. Thus $Ag\ge2g$ coordinatewise, including the zero coordinates.
+
+Set $h=(\operatorname{Id}+A)^{N-1}g$. Every vertex has a path of length at most $N-1$ to a positive coordinate of $g$; the identity terms pad that path. Consequently $h$ is integral and strictly positive. Commutation and nonnegative coefficients give $Ah\ge2h$. For $s_j=h^{\mathsf T}A^je$, symmetry and positivity imply
+
+$$
+s_0>0,\qquad s_{j+1}\ge2s_j,\qquad
+s_D>\sum_{j=0}^{D-1}s_j\quad(D\ge1).
+\tag{NLBAII.35}
+$$
+
+For the last inequality, $s_j\le2^{-(D-j)}s_D$, whose finite geometric sum is strictly smaller than $s_D$. Hence if $P(z)=\sum_{j=0}^D a_jz^j$ is nonzero with all $a_j\in\{-1,0,1\}$ and $a_D\ne0$, the absolute value of the leading contribution to $h^{\mathsf T}P(A)e$ exceeds the sum of the absolute values of all the others. For $D=0$ positivity gives the same nonvanishing. Therefore $P(A)e\ne0$.
+
+The field of a word is the value at $A$ and $e$ of the monic polynomial $z^m+\sum_{i<m}d_i z^{m-1-i}$. Distinct words, including words of different lengths and the empty word, give distinct such polynomials; their difference has coefficients in $\{-1,0,1\}$. Nonvanishing proves (NLBAII.34). Enumerate finite binary words by increasing length and then lexicographically, calculate each finite field exactly, and compare coordinates. On the promised image the unique match is reached after finitely many comparisons and gives both outputs. This procedure uses neither a scalar port for $h^{\mathsf T}x$ nor knowledge of the previous word. The weights are a proof and computation device on the earned graph. $\square$
+
+The source-specific content is the applicability of leading-term separation to this actual native material adjacency, for every $b\ge4$, without changing its edge weights or Tick. Positional leading-term separation itself is not a new general numeration principle. Four leaves are a sufficient condition here, not a necessity or a minimality claim.
+

@@ -1,0 +1,9 @@
+**Proposition 77.5 (U4 views and exact recovery limits).** On the fixed WLAB-ord
+installation define the four expressions at the startup/endpoint cut as follows:
+
+| View | Independent meaning |
+| --- | --- |
+| Space | the actual ordered material tree, its commissioned $T$, and the current field $x_*$ |
+| Time | the actually executed free scan, ordered pulse epochs $(\tau_j,j)$, literal terminal returns, and completed Tick/Add/Hold chronology |
+| Boundary | the terminal transfer function $\Phi_T(z)=C(zI-T)^{-1}J$ together with a declared current readout $Cx_*$ |
+| Memory | the retained full predictor, current field, law, roster, parser and callable rights |

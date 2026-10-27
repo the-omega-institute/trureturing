@@ -1,0 +1,32 @@
+**Proposition 63.1 (binary run including its real entrance).** For one actual arbitrary-field entry of §58 let
+
+$$
+R_{\rm mark}=L^2+\sum_{q\in\mathcal B}(L-q),
+\tag{63.1}
+$$
+
+where $\mathcal B$ is the set of preorder positions of the entry beta leaves among its $L$ leaves. For a binary experiment first use exactly §§34–36's original full-window no-Reset acquisition with target zero, rather than §58's target $f$. Then actually Add one at the first earned terminal and Hold. Let $K_1$ count subsequent Next, $R_1$ count Sample2, and $Q_1$ count Recall/Length. With $m=K_1+R_1I$, the exact primitive counts on this one specimen are
+
+$$
+\begin{aligned}
+P&=2L-1,&S&=c,&\mathrm{Reset}&=0,\\
+\mathrm{Read}&=L+R_{\rm mark}+b(I+1)+K_1+2R_1,\\
+\mathrm{Add}&=2L+c+b(I+1)+1+m,\\
+\mathrm{Tick}&=2I+1+m,\\
+\mathrm{Hold}&=L+2I+5+K_1+R_1(I+1)+Q_1.
+\end{aligned}
+\tag{63.2}
+$$
+
+Here $P$ counts all attempted promotions, including branch and wrong-type refusals; $S$ counts the actual successful splits. For the separate known-alpha small entrance of §55, putting $\eta=0$ for the four-vertex case and $\eta=1$ for the five-vertex case gives instead
+
+$$
+P=1+\eta,\quad S=1,\quad\mathrm{Reset}=0,\quad
+\mathrm{Read}=K_1+2R_1,\quad\mathrm{Add}=1+m,\quad
+\mathrm{Tick}=m,\quad
+\mathrm{Hold}=1+K_1+R_1(I+1)+Q_1.
+\tag{63.3}
+$$
+
+**Proof.** The original full-window zero entrance has Theorem 36.2's counts, including its final Hold. The origin adds one Add and Hold. Each Next adds one Tick/Add/Hold/Read; each Sample2 adds $I$ Tick/Add, $I+1$ Hold and two Read; Recall/Length add one Hold each. This proves (63.2). The two known-alpha construction words and the same origin/continuation give (63.3). Relative to replacing Sample2 by the original full-window Sample on this same acquired graph, the Read reduction is exactly $R_1[b(I+1)-2]$; the actual final graph, field and Tick/Add/Hold counts agree, but the literal returned sampling contracts differ. $\square$
+
