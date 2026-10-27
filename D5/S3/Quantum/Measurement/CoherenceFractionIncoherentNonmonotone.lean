@@ -63,13 +63,28 @@ private def phi (ρ : Matrix (Fin 4) (Fin 4) ℂ) : Matrix (Fin 4) (Fin 4) ℂ :
 
 private def ones : Fin 4 → ℂ := fun _ => 1
 
-private lemma p_star : pᴴ = p := by sorry
+private lemma p_star : pᴴ = p := by
+  ext i j
+  change star (p j i) = p i j
+  fin_cases i <;> fin_cases j <;> simp [p, Complex.star_def] <;> ring
 
-private lemma p_square : p * p = p := by sorry
+private lemma p_square : p * p = p := by
+  ext i j
+  change (∑ t, p i t * p t j) = p i j
+  fin_cases i <;> fin_cases j <;>
+    simp [p, Fin.sum_univ_succ] <;> ring_nf <;>
+      try rw [Complex.I_sq] <;> norm_num <;> ring
 
-private lemma p_trace : trace p = 2 := by sorry
+private lemma p_trace : trace p = 2 := by
+  change ∑ i, p i i = 2
+  simp [p, Matrix.diag, Fin.sum_univ_succ] <;> norm_num <;> ring
 
-private lemma p_range : p * b = b := by sorry
+private lemma p_range : p * b = b := by
+  ext i j
+  change (∑ t, p i t * b t j) = b i j
+  fin_cases i <;> fin_cases j <;>
+    simp [p, b, Fin.sum_univ_succ] <;> ring_nf <;>
+      try rw [Complex.I_sq] <;> norm_num <;> ring
 
 private lemma p_pos : p.PosSemidef := by sorry
 
