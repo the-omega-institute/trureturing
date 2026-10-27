@@ -28,14 +28,16 @@ internal sealed class SpeziaA392131PellCirculantRatioDocument : IScribeDocumentD
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The ratio tends to one", Disp(ClaimBody()),
                 "Normalize C by P(n-1). Its diagonal is one, and an off-diagonal entry with positive modular displacement d is at most (6/5)/(12/5)^d. A cycle is reconstructed from a moved root and its displacement list. The positive displacements sum to a positive multiple of n. Counting all root and composition pairs bounds the total cycle weight by (6n/11)(11/12)^n/(1-(11/12)^n), which tends to zero. The permanent lies between one and the exponential of this weight, while the absolute determinant error is at most the permanent error. Both normalized functions tend to one; their common scalar factor cancels in the ratio.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("sp3921"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("pell-circulant-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula MatrixFormula()
     {

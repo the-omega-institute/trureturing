@@ -58,6 +58,10 @@ $$\forall epsilon \in \mathbb{R},\; (0 < epsilon) \Rightarrow (\exists N \in \ma
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permanental/SpeziaA392131PellCirculantRatio.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sp3921` (proved) by `D5/S3/Combinatorics/Permanental/SpeziaA392131PellCirculantRatio.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sp3921","declaration_gid":"D5/S3/Combinatorics/Permanental/SpeziaA392131PellCirculantRatio.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Stefano Spezia (2026). *OEIS A392131 and A392132: Pell circulant determinant and permanent*. URL: <https://oeis.org/A392131/internal>.
