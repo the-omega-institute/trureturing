@@ -5,8 +5,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
 internal sealed class EuclideanSphereJoinDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/EuclideanSphereJoin.";
-    private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Geometry/hatcher2002algebraic");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The ordinary topological join of actual Euclidean unit spheres.",
@@ -34,6 +32,6 @@ internal sealed class EuclideanSphereJoinDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
 }

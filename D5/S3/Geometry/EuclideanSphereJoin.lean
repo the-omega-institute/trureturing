@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/EuclideanSphereJoin
    mirror-E: none(waiver:classical-sphere-join)
-  anchors: [mathlib/module/Mathlib.Analysis.InnerProductSpace.PiL2]
+   anchors: [mathlib/module/Mathlib.Analysis.InnerProductSpace.PiL2]
    utility: none
    digest: The ordinary quotient sphere join has the Euclidean sphere homeomorphism. -/
 import D5.S3.Geometry.FiniteSimplicialJoin
