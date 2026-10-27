@@ -63,8 +63,19 @@ private def passPrefix {m : Nat} (S : System m) (d : Nat) : Nat → Fin m → Pa
   | 0 => fun _ => omegaPrefix d
   | n + 1 => stepPrefix S d (passPrefix S d n)
 
-/-- A finite upper bound on the number of simultaneous prefix states. -/
-def prefixBound (m d : Nat) : Nat := Fintype.card (Fin m → Pattern d)
+private def patternCount : Nat → Nat
+  | 0 => 1
+  | d + 1 => 2 + patternCount d * patternCount d
+
+/-- The number of simultaneous prefix states, computed without enumerating them. -/
+def prefixBound (m d : Nat) : Nat := patternCount d ^ m
+
+private def runPrefix {m : Nat} (S : System m) (d : Nat) :
+    Nat → (Fin m → Pattern d) → (Fin m → Pattern d)
+  | 0, v => v
+  | fuel + 1, v =>
+    let w := stepPrefix S d v
+    if w = v then v else runPrefix S d fuel w
 
 /-- Evaluate the original reconstruction after a finite number of finite-state passes.
 The depth is inclusive, so the returned pattern has cutoff depth h+1. -/
@@ -72,8 +83,38 @@ def prefixProgram {k m r : Nat} (S : FunctionalSystem k m) (mode : Fin k → Boo
     (p : Fin k → Nat) (R : Fin r → CompletionPositiveDriftRegion.Expr k m)
     (h : Nat) (i : Fin r) : Pattern (h+1) :=
   evalPrefix (h+1)
-    (passPrefix (NativeSymbolicFiniteForcing.nativeSystem S mode p) (h+1)
-      (prefixBound (m+1) (h+1))) (NativeSymbolicFiniteForcing.specialize mode p (R i))
+    (runPrefix (NativeSymbolicFiniteForcing.nativeSystem S mode p) (h+1)
+      (prefixBound (m+1) (h+1)) (fun _ => omegaPrefix (h+1))) (NativeSymbolicFiniteForcing.specialize mode p (R i))
+
+private theorem pattern_count (d : Nat) : Fintype.card (Pattern d) = patternCount d := by
+  induction d with
+  | zero => exact Fintype.card_unit
+  | succ d ih =>
+    change Fintype.card (Bool ⊕ (Pattern d × Pattern d)) = _
+    rw [Fintype.card_sum, Fintype.card_bool, Fintype.card_prod, ih]
+    rfl
+
+private theorem prefix_bound_card (m d : Nat) :
+    prefixBound m d = Fintype.card (Fin m → Pattern d) := by
+  rw [Fintype.card_pi_const, pattern_count]
+  rfl
+
+private theorem run_iterate {m : Nat} (S : System m) (d fuel : Nat)
+    (v : Fin m → Pattern d) :
+    runPrefix S d fuel v = (stepPrefix S d)^[fuel] v := by
+  induction fuel generalizing v with
+  | zero => rfl
+  | succ fuel ih =>
+    simp only [runPrefix]
+    split_ifs with eq
+    · exact (Function.iterate_fixed eq (fuel+1)).symm
+    · rw [ih, Function.iterate_succ_apply]
+
+private theorem pass_iterate {m : Nat} (S : System m) (d n : Nat) :
+    (stepPrefix S d)^[n] (fun _ => omegaPrefix d) = passPrefix S d n := by
+  induction n with
+  | zero => rfl
+  | succ n ih => rw [Function.iterate_succ_apply', ih]; rfl
 
 private theorem cutoff_leaf (d : Nat) (b : Bool) :
     cutoff d (leaf b) = leafPrefix d b := by cases d <;> rfl
@@ -218,7 +259,7 @@ private theorem pass_fixed {m : Nat} (S : System m) (d : Nat) :
     ∃ n, n ≤ prefixBound m d ∧ passPrefix S d n = passPrefix S d (n+1) := by
   let N := prefixBound m d
   obtain ⟨a, b, ne, eq⟩ := Fintype.exists_ne_map_eq_of_card_lt
-    (fun n : Fin (N+1) => passPrefix S d n.val) (by simp [N, prefixBound])
+    (fun n : Fin (N+1) => passPrefix S d n.val) (by simp [N, prefix_bound_card])
   have one {a b : Fin (N+1)} (lt : a < b)
       (eq : passPrefix S d a.val = passPrefix S d b.val) :
       ∃ n, n ≤ N ∧ passPrefix S d n = passPrefix S d (n+1) :=
@@ -270,6 +311,7 @@ theorem effective_prefix {k m r : Nat} (S : FunctionalSystem k m) (mode : Fin k 
     prefixProgram S mode p R h i = cutoff (h+1)
       (CompletionPositiveDriftRegion.value mode p (canonicalSolution S mode p) (R i)) := by
   unfold prefixProgram
+  rw [run_iterate, pass_iterate]
   have lim := funext (limit_cutoff (NativeSymbolicFiniteForcing.nativeSystem S mode p) (h+1))
   rw [lim, eval_cutoff, NativeSymbolicFiniteForcing.specialize_value mode p _
     (NativeSymbolicFiniteForcing.canonical_last S mode p)]
