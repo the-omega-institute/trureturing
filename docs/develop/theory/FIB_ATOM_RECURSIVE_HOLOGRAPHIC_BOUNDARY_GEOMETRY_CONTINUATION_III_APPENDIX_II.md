@@ -1883,3 +1883,237 @@ full $L^2$ unit ball. No physical realization follows from this
 mathematical direction.
 
 ## 追加锚（本行以下为增补区）
+
+## 121. An optimal original passive pair without simultaneous 1/3 emission
+
+**Definition 121.1 (the original family and the secondary objective).**
+Fix arbitrary $a,\eta,t,\Delta>0$ and arbitrary
+$p_{\rm N},q_{\rm N},r_{\rm N}>0$ with
+$p_{\rm N}+q_{\rm N}+r_{\rm N}<1$.
+Use exactly Definitions 117.1, 117.3, 117.4, 118.1 and 119.1, with their
+suppliers in §§115–116. More explicitly, the carrier is the original
+four-coordinate $G=H^1\times\mathbb R$ with product (115.1), source
+$e=(0,0,0,0)$, raw Haar measure $d\mu=dx\,dy\,dz\,dw$ and the original
+unit-source field $L\Gamma=\delta_e$. The source coefficients remain
+$a,\eta$ and $g_c=16\sqrt{a\eta}$. The extension is exactly
+$H=H_{\rm end}$ with $D(H)=\{u\in D(S^*):A(u)=\rho C(u)\}$,
+$Hu=S^*u$, and the coefficient-positive normalized $h$ and
+$\rho=A(h)/C(h)$ of (115.2). Retain $m=h^2\mu$, $m(G)=1$,
+$U_hv=hv$, $K=U_h^{-1}HU_h$, the entire complex form (115.15),
+including $\mathscr V=\mathscr V_0\dotplus\mathbb C1$ and
+$D(H^{1/2})=\mathcal Q_c\dotplus\mathbb Ch$, and the actual operator
+domain (115.17). The semigroup is $T_s=e^{-sK}$ in the original clock;
+$Z$ is its actual conservative diffusion started at $e$ at time zero.
+The lead-in $t$ uses that same evolution, with actual density $g_t$ of
+Theorem 117.2, rather than an invariant initial distribution.
+
+The native parameters and target retain precisely (117.10)–(117.11):
+
+$$
+\begin{gathered}
+s_{\rm N}=p_{\rm N}+q_{\rm N},\quad
+ a_{\rm N}=1-s_{\rm N},\quad b_{\rm N}=1-r_{\rm N},\quad
+ c_{\rm N}=1-s_{\rm N}-r_{\rm N},\\
+P_{\rm N}=\begin{pmatrix}
+c_{\rm N}&p_{\rm N}&0&q_{\rm N}&r_{\rm N}\\
+q_{\rm N}&a_{\rm N}&p_{\rm N}&0&0\\
+0&q_{\rm N}&a_{\rm N}&p_{\rm N}&0\\
+p_{\rm N}&0&q_{\rm N}&a_{\rm N}&0\\
+r_{\rm N}&0&0&0&b_{\rm N}
+\end{pmatrix},\qquad \pi=\tfrac15(1,1,1,1,1),\\
+\chi(0)=0,\quad\chi(1)=1,\quad\chi(3)=3,\quad
+\chi(2)=\chi(4)=B,\\
+\Pi_{\rm N}(y,z)=\frac15
+ \sum_{\substack{i:\chi(i)=y\\j:\chi(j)=z}}(P_{\rm N})_{ij}.
+\end{gathered}
+\tag{121.1}
+$$
+
+In particular both $p_{\rm N}=q_{\rm N}$ and
+$r_{\rm N}=s_{\rm N}$ remain permitted. Let $\mathcal A=\{0,1,3,B\}$
+and let $\mathcal F$ be the class of all Borel tuples
+$f_y:G\to[0,1]$ with $\sum_{y\in\mathcal A}f_y(x)=1$ at every point.
+The same tuple is read at $t$ and $t+\Delta$, using fresh read noises
+independent conditional on the entire $Z$ path, leaving the source and
+its successors unchanged and retaining all four outcomes, exactly as
+in Definitions 117.3 and 118.1. There is no retained controller, shared
+read noise, killing, postselection, reset or change of clock or extension.
+For real bounded Borel inputs use precisely the ordered bilinear form
+of Definition 120.1:
+
+$$
+\begin{gathered}
+Q(u,w)=\int_Gg_t u\,T_\Delta w\,dm,\qquad
+\nu_f(y,z)=\mathbb E_e[f_y(Z_t)f_z(Z_{t+\Delta})]=Q(f_y,f_z),\\
+d(\nu)=\frac12\sum_{y,z\in\mathcal A}|\nu(y,z)-\Pi_{\rm N}(y,z)|,
+\qquad d_f=d(\nu_f),\\
+\mathcal M=\{\nu\in\mathcal L_{\rm stoch}:d(\nu)=D_{\rm stoch}\},
+\qquad C(\nu)=\nu(1,3)+\nu(3,1).
+\end{gathered}
+\tag{121.2}
+$$
+
+Here $\mathcal L_{\rm stoch}$, $D_{\rm stoch}$ and $D_{\rm det}$ are
+exactly (119.1). The functional $C$ measures two temporal pair entries;
+it is distinct from simultaneous overlap of the two emission functions
+at a single source point.
+
+**Theorem 121.2 (existence of an overlap-free stochastic optimum).**
+For every original parameter tuple of Definition 121.1, there exists
+$f^\circ\in\mathcal F$ such that
+
+$$
+\begin{gathered}
+d_{f^\circ}=D_{\rm stoch}=D_{\rm det}\ge\delta>0,\qquad
+C(\nu_{f^\circ})=\min_{\nu\in\mathcal M}C(\nu),\\
+m\bigl(\{x:f^\circ_1(x)>0\ \text{and}\ f^\circ_3(x)>0\}\bigr)=0.
+\end{gathered}
+\tag{121.3}
+$$
+
+Thus minimizing total variation first and $C$ second yields an optimal
+Borel stochastic tuple with no positive-measure $1/3$ emission overlap.
+The constant $\delta$ is the unchanged source-dependent lower bound of
+Theorems 118.3 and 119.2.
+
+**Proof.** Theorem 119.2 gives a nonempty compact
+$\mathcal L_{\rm stoch}$ and attainment of $D_{\rm stoch}$.
+Since $d$ is continuous on the finite-dimensional pair-law simplex,
+$\mathcal M$ is nonempty and compact. The continuous linear functional
+$C$ therefore has a minimum there. Choose a minimizing law $\nu$ and
+an exact pointwise Borel simplex representative $f\in\mathcal F$ with
+$\nu_f=\nu$, as supplied by Theorem 119.2. Its representative repair
+preserves this pair law because both positive-time source marginals
+$g_t m$ and $g_{t+\Delta}m$ are absolutely continuous with respect to
+$m$. This neither changes the initial law $\delta_e$ nor prepares a
+new state at either read. No convexity of $\mathcal M$ is needed.
+
+Suppose the Borel set $E_0=\{f_1>0,\ f_3>0\}$ has positive $m$-measure.
+Since
+
+$$
+E_0=\bigcup_{k\ge1}E_k,\qquad
+E_k=\{f_1\ge1/k,\ f_3\ge1/k\},
+$$
+
+some $E_k$ has positive measure. Set $\kappa=1/k$ and apply Theorem 120.2
+to this very $f$ and $E_k$. It supplies one bounded real Borel $v$ with
+pointwise support in $E_k$, satisfying
+
+$$
+Q(v,f_z)=Q(f_z,v)=0\quad(z\in\mathcal A),\qquad q:=Q(v,v)>0.
+\tag{121.4}
+$$
+
+Both $f_1$ and $f_3$ are nonzero nonnegative $L^2(m)$ functions.
+The positivity improvement used in Theorem 117.2 gives
+$T_\Delta f_1>0$ and $T_\Delta f_3>0$ almost everywhere, and
+$g_t>0$ almost everywhere. Integrating over the positive-measure
+supports of $f_1$ and $f_3$, respectively, proves
+$\nu(1,3)=Q(f_1,f_3)>0$ and $\nu(3,1)=Q(f_3,f_1)>0$.
+Choose a finite pointwise bound $B_v>0$ for $|v|$, and then
+$\varepsilon>0$ small enough that
+
+$$
+\varepsilon B_v\le\kappa,\qquad
+0<\tau:=\varepsilon^2q<\min\{\nu(1,3),\nu(3,1)\}.
+\tag{121.5}
+$$
+
+Define $\widetilde f_1=f_1+\varepsilon v$,
+$\widetilde f_3=f_3-\varepsilon v$ and leave $f_0,f_B$ unchanged.
+On $E_k$, both altered coordinates are nonnegative by (121.5), and
+their sum remains $f_1+f_3\le1$, so each is at most one. Off $E_k$
+they are unchanged pointwise. The tuple is Borel and sums to one
+everywhere; hence $\widetilde f\in\mathcal F$.
+
+Bilinearity and all eight ordered equalities in (121.4) cancel every
+linear term. The quadratic terms change only four entries:
+
+$$
+\begin{aligned}
+\nu_{\widetilde f}(1,1)&=\nu(1,1)+\tau,&
+\nu_{\widetilde f}(3,3)&=\nu(3,3)+\tau,\\
+\nu_{\widetilde f}(1,3)&=\nu(1,3)-\tau,&
+\nu_{\widetilde f}(3,1)&=\nu(3,1)-\tau.
+\end{aligned}
+\tag{121.6}
+$$
+
+The other twelve entries are unchanged. This expansion uses neither
+symmetry of $Q$ nor global positivity of its quadratic form.
+The exact target (121.1), equivalently (119.2), has
+$\Pi_{\rm N}(1,3)=\Pi_{\rm N}(3,1)=0$.
+By (121.5), each of these two absolute residuals decreases exactly by
+$\tau$. For either diagonal residual
+$R_{ii}=\nu(i,i)-\Pi_{\rm N}(i,i)$, $i\in\{1,3\}$, the elementary
+absolute-value calculation is
+
+$$
+|r+\tau|-|r|=
+\begin{cases}
+\tau,&r\ge0,\\
+-\tau,&r\le-\tau,\\
+2r+\tau,&-\tau<r<0,
+\end{cases}
+\qquad |r+\tau|-|r|\le\tau.
+\tag{121.7}
+$$
+
+Consequently, without any differentiation,
+
+$$
+\begin{aligned}
+2(d_{\widetilde f}-D_{\rm stoch})
+ &=\bigl(|R_{11}+\tau|-|R_{11}|\bigr)
+   +\bigl(|R_{33}+\tau|-|R_{33}|\bigr)-2\tau\\
+ &\le0.
+\end{aligned}
+\tag{121.8}
+$$
+
+Primary minimality forces $d_{\widetilde f}=D_{\rm stoch}$, so
+$\nu_{\widetilde f}\in\mathcal M$. But (121.6) gives
+$C(\nu_{\widetilde f})=C(\nu)-2\tau<C(\nu)$, contradicting secondary
+minimality. In particular, when both diagonal residuals are nonnegative,
+including either or both equal to zero, each diagonal change in
+(121.7) is exactly $\tau$: the primary value stays fixed and the
+secondary value strictly decreases. Thus these residual cases are
+included in the same contradiction. It follows that $m(E_0)=0$;
+taking $f^\circ=f$ and using (119.3) proves (121.3).
+No step divides by $p_{\rm N}-q_{\rm N}$ or
+$r_{\rm N}-s_{\rm N}$, so the permitted equalities remain included.
+$\square$
+
+**Definition 121.3 (attribution and mathematical scope).**
+Theorem 121.2 is a repo-derived application and synthesis of the
+source-specific compact attainment in Theorem 119.2 and constrained
+positive direction in Theorem 120.2, using the actual entrance density
+and positivity improvement of Theorem 117.2. These analytic suppliers
+are used with their stated hypotheses and are not reproved here.
+Minimizing a continuous secondary objective on a compact set of
+primary optima and the scalar absolute-value calculation (121.7) are
+standard intermediate ingredients, not new general theorems.
+Theorem 119.2 retains its existing Banach–Alaoglu and local Rellich
+suppliers and its cited Dvoretzky–Wald–Wolfowitz atomless splitting
+and Borgs–Chayes–Lovász–Sós–Vesztergombi and Borgs–Chayes–Cohn–Zhao
+fractional-partition antecedents. Those references provide the
+intermediate correspondences specified there, not an assumed exact
+quadratic purification of this nonstationary pair law. The new
+source-specific inference is the secondary-minimum contradiction
+(121.6)–(121.8); no worldwide novelty claim is made.
+
+For the existential $1/3$ question, Theorem 121.2 resolves the
+both-nonnegative-diagonal-residual possibility left open in Definition
+120.17. It does not assert that every primary minimizer is overlap-free,
+that other label overlaps vanish, or that the selected tuple is an
+indicator partition. Equality of deterministic and stochastic infima
+continues to be (119.3); deterministic attainment remains unresolved.
+Simultaneous emission overlap of measure zero does not assert that
+the temporal cross mass $C(\nu_{f^\circ})$ vanishes. No numerical
+optimum, effective construction or sample bound is supplied.
+The result is an ordinary mathematical consequence of the inherited
+source theorems; it supplies no physical realization of the diffusion,
+readout or native record law.
+
+## 追加锚（本行以下为增补区）
