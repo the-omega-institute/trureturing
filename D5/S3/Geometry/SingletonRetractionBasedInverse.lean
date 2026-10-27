@@ -5,7 +5,7 @@
    anchors: [mathlib/module/Mathlib.Topology.Homotopy.Basic]
    utility: none
    digest: Actual singleton-cylinder retractions straighten traces and produce both based inverse homotopies. -/
-import Mathlib.Topology.Homotopy.Basic
+import Mathlib.Topology.Homotopy.Path
 import Mathlib.Topology.Piecewise
 import Mathlib.Tactic
 
@@ -59,11 +59,11 @@ private theorem geometry (q : I × I) :
   have hat := (abs_le.mp ha)
   have hrt : depth q * rhoT q + (1 - depth q) / 2 = (q.1 : ℝ) := by
     dsimp [rhoT]
-    field_simp
+    field_simp [ne_of_gt hd0]
     <;> ring
   have hrs : depth q * rhoS q + 2 * (1 - depth q) = (q.2 : ℝ) := by
     dsimp [rhoS]
-    field_simp
+    field_simp [ne_of_gt hd0]
     <;> ring
   have rt0 : 0 ≤ rhoT q := by nlinarith
   have rt1 : rhoT q ≤ 1 := by nlinarith
@@ -316,7 +316,7 @@ private def straighten [T1Space Z] (R : CylinderRetraction p)
   · rintro t z (rfl : z = p)
     change E (p, (t, 1)) = a p
     rw [hE _ (Or.inr rfl)]
-    dsimp [straightBoundary]
+    simp only [straightBoundary, one_ne_zero, if_false]
     split_ifs with ht ht
     · rfl
     · exact hb.trans ha.symm
