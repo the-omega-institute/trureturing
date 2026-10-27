@@ -207,6 +207,7 @@ private lemma star_cut_values :
 
 set_option maxRecDepth 4000 in
 set_option maxHeartbeats 800000 in
+-- The finite enumeration checks all pair flows and edge loads in one proof.
 private lemma witness_is_multiflow :
     IsMultiflow starCapacity starBoundary witnessFlow witnessThreads := by
   have hb (i : Fin 5) : starBoundary i = i.castSucc := rfl
@@ -294,6 +295,5 @@ theorem result : ¬ claim := by
     witnessFlow witnessThreads witness_max
   rw [star_min_combo, star_witness_combo] at heq
   norm_num at heq
-
 
 end D5.S3.Entropy.BitThreadIngletonMultiflowRefutation
