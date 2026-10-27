@@ -1,0 +1,16 @@
+**Theorem 47.3 (all numerical routes and image tests).** On the joint sampled image, every expression determines all the other numerical expressions and both the preparation and returned fields. All recovery routes agree. Explicit inverses to the parameter are
+
+$$
+\begin{array}{c|c}
+\text{Time}&a_i=\text{operand of pulse }2i-1\\
+\text{Boundary}&a=M^{-1}y\quad\text{by (46.2)}\\
+\text{Space}&a=L_Ux_{\rm now}\\
+\text{Memory}&a=L_Fm.
+\end{array}
+\tag{47.2}
+$$
+
+From that unique $a$, the forward maps give the pulse list, $Za$, $y=Ma$, $x_{\rm now}=Ua$ and $m=Fa$. A proposed Space field belongs to the numerical image exactly when $UL_Ux=x$; a proposed Memory block exactly when $FL_Fm=m$. Every rational $k$-list is a numerical Boundary value, since $M$ is invertible. A proposed Time is accepted exactly when it has the stated $2k$ pulse positions and each second operand is the negative of its first. These are finite exact rational tests in the fixed earned context, without a provenance or authority test.
+
+**Proof.** The Time pattern is one-to-one with $a$, Theorem 46.3 proves the Boundary inverse, and Lemma 47.1 proves both present inverses. Each inverse returns the same unique input of the actual run. Factoring any route through it proves every pairwise recovery and every cycle identity, including historical-to-current transport. The left-inverse identities give precisely the stated image tests. $\square$
+
