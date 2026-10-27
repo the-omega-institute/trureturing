@@ -113,7 +113,7 @@ private theorem canonical_satisfies {m : Nat} (S : System m) :
       cases n with
       | zero => exact (omega_no_leaf _ _ hn).elim
       | succ n => exact ⟨n, hn⟩
-    · rintro ⟨n, hn⟩; exact ⟨n+1, hn⟩
+    · rintro ⟨n, hn⟩; exact ⟨n + 1, hn⟩
   intro i E eq
   have fixed := leafLimit_unique (shift i)
     (extensionStep_limit S (fun _ => False) (fun _ => Omega) (canonical_limit S) i)
@@ -157,7 +157,7 @@ def satisfies {k m : Nat} (S : FunctionalSystem k m) (mode : Fin k → Bool)
   ∀ i E, S i = some E → v i = CompletionPositiveDriftRegion.value mode p v E
 
 private def specialize {k m : Nat} (mode : Fin k → Bool) (p : Fin k → Nat) :
-    CompletionPositiveDriftRegion.Expr k m → Expr (m+1)
+    CompletionPositiveDriftRegion.Expr k m → Expr (m + 1)
   | .ground t => .ground t
   | .token j c => if mode j then .ground (substitution^[p j + c] (.of true))
       else .var 0 (Fin.last m)
@@ -165,11 +165,11 @@ private def specialize {k m : Nat} (mode : Fin k → Bool) (p : Fin k → Nat) :
   | .pair A B => .pair (specialize mode p A) (specialize mode p B)
 
 private def nativeSystem {k m : Nat} (S : FunctionalSystem k m)
-    (mode : Fin k → Bool) (p : Fin k → Nat) : System (m+1) :=
+    (mode : Fin k → Bool) (p : Fin k → Nat) : System (m + 1) :=
   Fin.lastCases none (fun i => (S i).map (specialize mode p))
 
 private theorem specialize_value {k m : Nat} (mode : Fin k → Bool) (p : Fin k → Nat)
-    (v : Fin (m+1) → CompletionTree) (last : v (Fin.last m) = Omega)
+    (v : Fin (m + 1) → CompletionTree) (last : v (Fin.last m) = Omega)
     (E : CompletionPositiveDriftRegion.Expr k m) :
     value v (specialize mode p E) =
       CompletionPositiveDriftRegion.value mode p (fun i => v i.castSucc) E := by
@@ -228,7 +228,7 @@ private def symbolicStep {k m : Nat} (S : FunctionalSystem k m) (mode : Fin k �
 def finitePass {k m : Nat} (S : FunctionalSystem k m) (mode : Fin k → Bool) :
     Nat → Fin m → Option (FiniteExpression k)
   | 0 => fun _ => none
-  | n+1 => symbolicStep S mode (finitePass S mode n)
+  | n + 1 => symbolicStep S mode (finitePass S mode n)
 
 private def Extends {k m : Nat} (v w : Fin m → Option (FiniteExpression k)) : Prop :=
   ∀ i f, v i = some f → w i = some f
@@ -256,7 +256,7 @@ private theorem symbolic_extends {k m : Nat} (mode : Fin k → Bool)
 
 private theorem pass_extends_step {k m : Nat} (S : FunctionalSystem k m)
     (mode : Fin k → Bool) (n : Nat) :
-    Extends (finitePass S mode n) (finitePass S mode (n+1)) := by
+    Extends (finitePass S mode n) (finitePass S mode (n + 1)) := by
   induction n with
   | zero => intro i f h; cases h
   | succ n ih =>
@@ -278,48 +278,49 @@ private def passSupport {k m : Nat} (S : FunctionalSystem k m) (mode : Fin k →
     (n : Nat) : Finset (Fin m) := Finset.univ.filter fun i => (finitePass S mode n i).isSome
 
 private theorem support_mono {k m : Nat} (S : FunctionalSystem k m)
-    (mode : Fin k → Bool) (n : Nat) : passSupport S mode n ⊆ passSupport S mode (n+1) := by
+    (mode : Fin k → Bool) (n : Nat) : passSupport S mode n ⊆ passSupport S mode (n + 1) := by
   intro i hi
   obtain ⟨f, hf⟩ := Option.isSome_iff_exists.mp (Finset.mem_filter.mp hi).2
   exact Finset.mem_filter.mpr ⟨Finset.mem_univ _,
     Option.isSome_iff_exists.mpr ⟨f, pass_extends_step S mode n i f hf⟩⟩
 
 private theorem support_eq_pass {k m : Nat} (S : FunctionalSystem k m)
-    (mode : Fin k → Bool) (n : Nat) (h : passSupport S mode n = passSupport S mode (n+1)) :
-    finitePass S mode n = finitePass S mode (n+1) := by
+    (mode : Fin k → Bool) (n : Nat) (h : passSupport S mode n = passSupport S mode (n + 1)) :
+    finitePass S mode n = finitePass S mode (n + 1) := by
   funext i
   cases hi : finitePass S mode n i with
   | some f => exact (pass_extends_step S mode n i f hi).symm
   | none =>
-    cases hj : finitePass S mode (n+1) i with
+    cases hj : finitePass S mode (n + 1) i with
     | none => rfl
     | some f =>
-      have mem : i ∈ passSupport S mode (n+1) := by simp [passSupport, hj]
+      have mem : i ∈ passSupport S mode (n + 1) := by simp [passSupport, hj]
       rw [← h] at mem
       simp [passSupport, hi] at mem
 
 private theorem pass_eventually_fixed {k m : Nat} (S : FunctionalSystem k m)
-    (mode : Fin k → Bool) : ∃ n ≤ m, finitePass S mode n = finitePass S mode (n+1) := by
+    (mode : Fin k → Bool) : ∃ n ≤ m, finitePass S mode n = finitePass S mode (n + 1) := by
   classical
   by_contra h
   push Not at h
-  have grow : ∀ n, n ≤ m+1 → n ≤ (passSupport S mode n).card := by
+  have grow : ∀ n, n ≤ m + 1 → n ≤ (passSupport S mode n).card := by
     intro n hn
     induction n with
     | zero => omega
     | succ n ih =>
       have prev := ih (by omega)
-      have strict : passSupport S mode n ⊂ passSupport S mode (n+1) :=
-        (support_mono S mode n).ssubset_of_ne (fun eq => h n (by omega) (support_eq_pass S mode n eq))
+      have strict : passSupport S mode n ⊂ passSupport S mode (n + 1) :=
+        (support_mono S mode n).ssubset_of_ne
+          (fun eq => h n (by omega) (support_eq_pass S mode n eq))
       have card := Finset.card_lt_card strict
       omega
-  have large := grow (m+1) le_rfl
-  have small := Finset.card_le_card (Finset.subset_univ (passSupport S mode (m+1)))
+  have large := grow (m + 1) le_rfl
+  have small := Finset.card_le_card (Finset.subset_univ (passSupport S mode (m + 1)))
   simp only [Finset.card_univ, Fintype.card_fin] at small
   omega
 
 private theorem pass_fixed_after {k m : Nat} (S : FunctionalSystem k m)
-    (mode : Fin k → Bool) {n : Nat} (fixed : finitePass S mode n = finitePass S mode (n+1))
+    (mode : Fin k → Bool) {n : Nat} (fixed : finitePass S mode n = finitePass S mode (n + 1))
     (j : Nat) : finitePass S mode (n+j) = finitePass S mode n := by
   induction j with
   | zero => simp
@@ -374,7 +375,8 @@ private theorem symbolic_realizes {k m : Nat} (mode : Fin k → Bool) (p : Fin k
     | none =>
       simp only [symbolic, hj, Option.map_none, Realizes,
         CompletionPositiveDriftRegion.value]
-      exact fun hf => (show ¬ IsFinite (v j) from (by simpa only [hj, Realizes] using h j)) ((finite_iterate_iff a _).mp hf)
+      exact fun hf => (show ¬ IsFinite (v j) from
+        (by simpa only [hj, Realizes] using h j)) ((finite_iterate_iff a _).mp hf)
     | some f =>
       simp only [symbolic, hj, Option.map_some, Realizes,
         CompletionPositiveDriftRegion.value]
@@ -386,18 +388,20 @@ private theorem symbolic_realizes {k m : Nat} (mode : Fin k → Bool) (p : Fin k
       simp only [symbolic, hA, Option.bind_none, Realizes,
         CompletionPositiveDriftRegion.value]
       exact fun hf => (show ¬ IsFinite (CompletionPositiveDriftRegion.value mode p v A)
-        from (by simpa only [hA, Realizes] using ihA)) ((finite_node_iff _ _).mp hf).1
+        from (by simpa only [hA, Realizes, finiteValue] using ihA)) ((finite_node_iff _ _).mp hf).1
     | some f =>
       cases hB : symbolic mode q B with
       | none =>
         simp only [symbolic, hA, hB, Option.bind_some, Option.map_none, Realizes,
           CompletionPositiveDriftRegion.value]
         exact fun hf => (show ¬ IsFinite (CompletionPositiveDriftRegion.value mode p v B)
-          from (by simpa only [hB, Realizes] using ihB)) ((finite_node_iff _ _).mp hf).2
+          from (by simpa only [hB, Realizes, finiteValue] using ihB)) ((finite_node_iff _ _).mp hf).2
       | some g =>
         simp only [symbolic, hA, hB, Option.bind_some, Option.map_some, Realizes,
           CompletionPositiveDriftRegion.value]
-        exact congrArg₂ node (show _ = _ from (by simpa only [hA, Realizes] using ihA)) (show _ = _ from (by simpa only [hB, Realizes] using ihB))
+        exact congrArg₂ node
+          (by simpa only [hA, Realizes, finiteValue] using ihA)
+          (by simpa only [hB, Realizes, finiteValue] using ihB)
 
 private theorem pass_realizes {k m : Nat} (S : FunctionalSystem k m)
     (mode : Fin k → Bool) (p : Fin k → Nat) (n : Nat) (i : Fin m) :

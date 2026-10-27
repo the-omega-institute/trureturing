@@ -194,7 +194,7 @@ theorem leafAt_node_cons (l r : CompletionTree) (c : Bool) (p : Address) (b : Bo
     LeafAt (node l r) (c :: p) b ↔ LeafAt (if c then r else l) p b := by
   cases c <;> rfl
 
-theorem leafAt_root (X : CompletionTree) (b : Bool) :
+private theorem leafAt_root (X : CompletionTree) (b : Bool) :
     LeafAt X [] b ↔ X = leaf b := by
   induction X using tree_cases with
   | leaf_case c =>
@@ -216,9 +216,9 @@ theorem leafAt_root (X : CompletionTree) (b : Bool) :
 def LeafBelow (X Y : CompletionTree) : Prop :=
   ∀ p b, LeafAt X p b → LeafAt Y p b
 
-theorem leafBelow_refl (X : CompletionTree) : LeafBelow X X := fun _ _ h => h
+private theorem leafBelow_refl (X : CompletionTree) : LeafBelow X X := fun _ _ h => h
 
-theorem leafBelow_trans {X Y Z : CompletionTree}
+private theorem leafBelow_trans {X Y Z : CompletionTree}
     (h : LeafBelow X Y) (k : LeafBelow Y Z) : LeafBelow X Z :=
   fun p b hp => k p b (h p b hp)
 
@@ -233,7 +233,7 @@ theorem leafBelow_children {l r s t : CompletionTree}
   exact (leafAt_node_cons s t b p c).mp
     (h (b :: p) c ((leafAt_node_cons l r b p c).mpr hp))
 
-theorem leafBelow_ext {X Y : CompletionTree}
+private theorem leafBelow_ext {X Y : CompletionTree}
     (h : LeafBelow X Y) (k : LeafBelow Y X) : X = Y := by
   apply readout_ext
   intro p
