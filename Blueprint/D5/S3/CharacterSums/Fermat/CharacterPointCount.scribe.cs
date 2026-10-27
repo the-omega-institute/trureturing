@@ -91,9 +91,7 @@ internal sealed class CharacterPointCountDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "These are classical finite-field character-sum results, with no mathematical novelty claim. "
                         + "The library contribution connects unit-group characters and Jacobi sums to the actual affine and projective "
-                        + "carriers and their cardinalities. The exact identities take an exact-order character as input, while the final bound constructs it from divisibility. "
-                        + "Identifying a cubic Jacobi sum with a chosen primary "
-                        + "prime in an algebraic number field, are separate bridges.")),
+                        + "carriers and their cardinalities. The exact identities take an exact-order character as input, while the final bound constructs it from divisibility.")),
                     Paragraph(Text(
                         "For d = 3 the remaining exponent pairs are (1,1) and (2,2), and their Jacobi sums are complex conjugates. "
                         + "Thus the formula gives Q + 1 + 2 Re J(chi,chi) and an error at most 2 sqrt(Q). "

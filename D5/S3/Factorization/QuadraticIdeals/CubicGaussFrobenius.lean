@@ -100,7 +100,8 @@ theorem cubic_gauss_euler_comparison (χ : MulChar F K) (hχ : orderOf χ = 3)
   have hf : G ^ q = (χ (q : F))⁻¹ * G :=
     cubic_gauss_frobenius χ hc ψ q hq hqF
   have he : G ^ (q - 1) = (χ (q : F))⁻¹ := by
-    apply (mul_right_injective₀ hG)
+    apply (mul_left_injective₀ hG)
+    change G ^ (q - 1) * G = (χ (q : F))⁻¹ * G
     rw [← pow_succ, Nat.sub_add_cancel (Fact.out : q.Prime).one_le]
     exact hf
   have hq3 : 3 * ((q - 1) / 3) = q - 1 := by omega
@@ -189,6 +190,8 @@ theorem residue_character_comp_order_three
     have hu : IsCubicRoot (χ u) :=
       residueCubicValue_mem_roots P hcard hthree (u : E ⧸ P) u.ne_zero
     have hv := congrArg (fun η : MulChar (E ⧸ P) K => η u) h
+    rw [MulChar.one_apply_coe]
+    change χ (u : E ⧸ P) = 1
     apply cubic_roots_injective f h3 hu (Or.inl rfl)
     simpa only [MulChar.ringHomComp_apply, MulChar.one_apply_coe, map_one] using hv
   letI : Fact (Nat.Prime 3) := ⟨Nat.prime_three⟩
@@ -218,7 +221,7 @@ theorem three_not_mem_of_residue_prime_card
   intro h
   have H := Ideal.Quotient.eq_zero_iff_mem.mpr h
   have hne := prime_natCast_ne_zero (E ⧸ P) (p := p) (r := 3) (by omega)
-  exact hne (by simpa only [map_natCast] using H)
+  exact hne (by simpa only [map_ofNat, Nat.cast_ofNat] using H)
 
 /-- The actual P-character transported to characteristic q satisfies the Gauss
 comparison with -pπ. J=-π is consumed from the preceding normalization proof. -/
@@ -296,6 +299,7 @@ private theorem cubic_roots_mul {a b : E} (ha : IsCubicRoot a) (hb : IsCubicRoot
 /-- The §58 comparison for the actual residue characters. The finite extension
 and primitive additive character are constructed, not assumed. Norm π=p and
 J_P=-π are both imported conclusions of the companion normalization. -/
+set_option maxHeartbeats 800000 in
 theorem cubic_residue_prime_comparison
     (P Q : Ideal E) [P.IsMaximal] [Q.IsMaximal]
     [Finite (E ⧸ P)] [Finite (E ⧸ Q)]
@@ -327,14 +331,14 @@ theorem cubic_residue_prime_comparison
   have hchar : ringChar (E ⧸ Q) ≠ ringChar (E ⧸ P) := by
     rw [ringChar.eq (E ⧸ Q) q, ringChar.eq (E ⧸ P) p]
     exact hpq.symm
-  let ψ := FiniteField.primitiveChar (E ⧸ P) (E ⧸ Q) hchar
+  let ψ := AddChar.FiniteField.primitiveChar (E ⧸ P) (E ⧸ Q) hchar
   let K := CyclotomicField ψ.n (E ⧸ Q)
   let g : (E ⧸ Q) →+* K := algebraMap (E ⧸ Q) K
   let f : E →+* K := g.comp (Ideal.Quotient.mk Q)
   letI : CharP K q := charP_of_injective_ringHom g.injective q
   letI : Fact (Nat.Prime 3) := ⟨Nat.prime_three⟩
   have h3 : f 3 ≠ 0 := by
-    simpa only [map_natCast] using
+    simpa only [map_ofNat, Nat.cast_ofNat] using
       prime_natCast_ne_zero K (p := q) (r := 3) (by omega)
   have H := cubic_gauss_primary_scalar P p q hp hq hpq hPcard
     π hπ hπprimary f h3 ψ.char ψ.prim
