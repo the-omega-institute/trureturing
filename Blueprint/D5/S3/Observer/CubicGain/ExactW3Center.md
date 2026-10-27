@@ -2,15 +2,19 @@
 
 ## Abstract
 
-The exact algebraic third critical center
+An algebraic critical-root lift in original parent coordinates
 
-criticalPolynomial is the degree-67 real polynomial whose descending integer coefficient list is the pinned FC list. The rational interval (12758053/100000000,12758054/100000000) has opposite exact endpoint signs, so it contains an exact real root.
+criticalPolynomial is the degree-67 real polynomial with the descending FC integer coefficient list. It has a unique real root b3 in the open interval (12758053/100000000,12758054/100000000). criticalRoot denotes this root, not a rounded coordinate. The derivative is strictly negative throughout the closed isolating interval. Opposite endpoint signs and the intermediate value theorem give existence; strict decrease gives uniqueness.
 
-critical_root_exists records the degree and constructs a root b3 in that interval by the intermediate value theorem. The root is retained as an algebraic real selected by its defining polynomial and interval, rather than by a decimal approximation.
+A narrower exact enclosure is 127580539798972/1000000000000000 < b3 < 127580539798973/1000000000000000. Polynomial bounds are proved by Horner recurrence. At each recurrence the lower and upper endpoints bound both products with the interval endpoints; induction preserves the enclosure. All coefficient arithmetic and endpoint comparisons use exact integers and rationals.
 
-determinantalLiftDenominator and determinantalLiftNumerator are the reduced linear-subresultant coefficient polynomials from the pinned regular critical elimination. liftedR(b) is the exact quotient -c(b)/a(b), and liftedCoordinates(b) is (liftedR(b)/b,b). exactW3 is the ordinary coefficient-coordinate chartWorld at the selected root.
+determinantalLiftDenominator and determinantalLiftNumerator are explicit integer coefficient arrays for the reduced linear-subresultant lift. Set r(b)=-determinantalLiftNumerator(b)/determinantalLiftDenominator(b), and liftedCoordinates(b)=(r(b)/b,b). exactW3 is chartWorld(liftedCoordinates(b3)), expressed in ordinary cubic coefficients.
 
-exactW3_parent_of_source_certificate proves that this exact lift is an OriginalParent and that chartRead is analytic whenever the source-specific rational enclosures and nonzero denominator certificate hold. The chart is the original coefficient topology and keeps the source certificate explicit.
+The denominator is positive on the narrower interval, and the quotient satisfies 9005/10000 <= r(b3) <= 9006/10000. Also 12758/100000 <= b3 <= 12759/100000. These are proved bounds, so SourceCertificate imposes no additional assumption in exactW3_parent. The genuine independent coordinates are (t,b) with t=r/b; no bound t<1 is used.
+
+The chart reconstructs one whole gain polynomial and drift from the literal parent history. Consequently this algebraic lift is an OriginalParent. chartWorld, the original eight-coordinate chartSource, and chartRead=(originalResponse.first,futureRead at the empty common word) are analytic at its lifted coordinates. Every OriginalParent with the same r and b equals this world, including lower degree polynomials and zero samples permitted by the original model.
+
+Identification of the explicit coefficient arrays with the fixed determinant definition, and identification with the source Ck/D lift, require separate algebraic identities. The parent and analyticity conclusions here do not establish an inverse or an invertible differential for chartRead. They supply neither the remote branch nor exhaustion of the original preimage.
 
 **Theorem 1.1 (exact degree-67 critical root).**
 
@@ -22,9 +26,21 @@ Lean statement: `D5/S3/Observer/CubicGain/ExactW3Center.critical_root_exists`
 
 *Commentary.*
 
-The pinned criticalPolynomial has degree 67 and has a real root strictly between 12758053/100000000 and 12758054/100000000.
+criticalPolynomial has degree 67. There exists a real b strictly between rootLo=12758053/100000000 and rootHi=12758054/100000000 with criticalPolynomial.eval(b)=0.
 
-**Theorem 1.2 (exact W3 parent bridge).**
+**Theorem 1.2 (selected root specification).**
+
+Lean statement: `D5/S3/Observer/CubicGain/ExactW3Center.criticalRoot_spec`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/ExactW3Center.criticalRoot_spec` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The selected real criticalRoot satisfies rootLo<criticalRoot, criticalRoot<rootHi and criticalPolynomial.eval(criticalRoot)=0. No parameter or hypothesis is required.
+
+**Theorem 1.3 (parent lift from rational strip conditions).**
 
 Lean statement: `D5/S3/Observer/CubicGain/ExactW3Center.exactW3_parent_of_source_certificate`
 
@@ -34,10 +50,24 @@ Lean statement: `D5/S3/Observer/CubicGain/ExactW3Center.exactW3_parent_of_source
 
 *Commentary.*
 
-If the selected root's determinantal lift satisfies the displayed original source strip, nonzero denominator and strict-coordinate conditions, then exactW3 is an OriginalParent and chartRead is analytic at its exact lifted coordinates.
+For h:SourceCertificate, OriginalParent exactW3 and AnalyticAt Real chartRead (liftedCoordinates criticalRoot) hold. SourceCertificate is the conjunction of the two rational r bounds, the two rational b bounds and nonvanishing of the determinantalLiftDenominator at criticalRoot.
+
+**Theorem 1.4 (unconditional algebraic parent lift).**
+
+Lean statement: `D5/S3/Observer/CubicGain/ExactW3Center.exactW3_parent`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/ExactW3Center.exactW3_parent` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+With no hypotheses, SourceCertificate and OriginalParent exactW3 hold, and chartWorld, chartSource and chartRead are analytic at liftedCoordinates criticalRoot. For every real b in the original open isolating interval, criticalPolynomial.eval(b)=0 implies b=criticalRoot. For every W:OriginalWorld, OriginalParent W, W.first=liftedR criticalRoot and W.second.first=criticalRoot imply W=exactW3.
 
 ## References
 
+- Truth anchor: `D5/S3/Observer/CubicGain/ExactW3Center.criticalRoot_spec`
 - Truth anchor: `D5/S3/Observer/CubicGain/ExactW3Center.critical_root_exists`
+- Truth anchor: `D5/S3/Observer/CubicGain/ExactW3Center.exactW3_parent`
 - Truth anchor: `D5/S3/Observer/CubicGain/ExactW3Center.exactW3_parent_of_source_certificate`
 - Dependency: [D5/S3/Observer/CubicGain/RegularParentChart](RegularParentChart.md)
