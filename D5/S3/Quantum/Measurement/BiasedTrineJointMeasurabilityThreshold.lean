@@ -7,6 +7,7 @@
    digest: Biased trine qubit measurements have the conjectured triplewise threshold. -/
 
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
+import D5.S3.Quantum.QuantumChannels.HeisenbergChannelCompressionEquivalence
 
 /-! The biased trine family and its exact eight-outcome compatibility threshold. -/
 
@@ -16,7 +17,8 @@ noncomputable section
 open scoped BigOperators ComplexOrder MatrixOrder InnerProductSpace
 open Matrix
 open D5.S3.Quantum.Measurement.FourQubitParentConstruction
-open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation (IsPOVM)
+open D5.S3.Quantum.QuantumChannels.HeisenbergChannelCompressionEquivalence
+  (FamilyJointlyMeasurable)
 open D5.S3.Combinatorics.IsingUniquenessSets (sgn)
 
 namespace D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold
@@ -32,8 +34,7 @@ def trineEffect (b η : ℝ) (k : Fin 3) (x : Bool) : Matrix (Fin 2) (Fin 2) ℂ
 
 /-- A single eight-outcome POVM has all six specified binary marginals. -/
 def TriplewiseJointlyMeasurable (b η : ℝ) : Prop :=
-  ∃ g : (Fin 3 → Bool) → Matrix (Fin 2) (Fin 2) ℂ, IsPOVM g ∧
-    ∀ k x, ∑ s with s k = x, g s = trineEffect b η k x
+  FamilyJointlyMeasurable (trineEffect b η)
 
 /-- The three cases of the conjectured threshold, including both central endpoints. -/
 def trineThreshold (b : ℝ) : ℝ :=
@@ -166,7 +167,7 @@ private lemma parent_coordinates (b η : ℝ)
     exact (scalarB_posSemidef_iff _ _).mp ((he s) ▸ hg.1 s)
   · have ht : scalarB (∑ s, q s) (∑ s, r s) = scalarB 1 0 := by
       rw [← hs, scalarB_one, ← hg.2]
-      exact Finset.sum_congr rfl fun s _ => (he s).symm
+      exact Finset.sum_congr (by ext s; simp) fun s _ => (he s).symm
     exact (scalarB_injective _ _ _ _ ht).1
   · intro k
     have hx : ∀ x : Bool, (∑ s with s k = x, r s) =
@@ -175,7 +176,7 @@ private lemma parent_coordinates (b η : ℝ)
       have ht : scalarB (∑ s with s k = x, q s) (∑ s with s k = x, r s) =
           scalarB ((1 + sgn x * b) / 2) ((η * sgn x / 2) • trineDir k) := by
         rw [← hs, ← effect_coordinates, ← hm k x]
-        exact Finset.sum_congr rfl fun s _ => (he s).symm
+        exact Finset.sum_congr (by ext s; simp) fun s _ => (he s).symm
       exact (scalarB_injective _ _ _ _ ht).2
     have hp := hx true
     have hn := hx false
@@ -281,20 +282,31 @@ private lemma parent_valid (b η c d u v e f : ℝ)
       apply (scalarB_posSemidef_iff _ _).mpr <;>
       simp only [norm_smul, trine_norm, Real.norm_eq_abs, abs_neg, mul_one, norm_zero]
     all_goals assumption
-  · rw [parent_sum]
-    have hnorm : 3 * c + 3 * d + e + f = 1 := by linarith
-    rw [hnorm, scalarB_one]
+  · have hs : (∑ s : Fin 3 → Bool, parent c d u v e f s) = 1 := by
+      rw [parent_sum]
+      have hnorm : 3 * c + 3 * d + e + f = 1 := by linarith
+      rw [hnorm, scalarB_one]
+    convert hs using 1
+    apply Finset.sum_congr
+    · ext s; simp
+    · intro s _; rfl
   · intro k x
-    rw [parent_marginal, effect_coordinates]
-    unfold sgn
-    cases x <;> simp only [Bool.false_eq_true, ite_false, ite_true, hp, hn, hv,
-      mul_one, mul_neg_one]
-    · congr 1
-      · ring
+    have hm : (∑ s : Fin 3 → Bool with s k = x, parent c d u v e f s) =
+        trineEffect b η k x := by
+      rw [parent_marginal, effect_coordinates]
+      unfold sgn
+      cases x <;> simp only [Bool.false_eq_true, ite_false, ite_true, hp, hn, hv,
+        mul_one, mul_neg_one]
+      · congr 1
+        · ring
+        · congr 1
+          ring
       · congr 1
         ring
-    · congr 1
-      ring
+    convert hm using 1
+    apply Finset.sum_congr
+    · ext s; simp
+    · intro s _; rfl
 
 private lemma parent_central (b η : ℝ) (hb : -(1 / 3 : ℝ) ≤ b)
     (hb1 : b ≤ 1 / 3) (hη : 0 ≤ η) (hη1 : η ≤ 2 / 3) :
@@ -314,7 +326,7 @@ private lemma parent_central (b η : ℝ) (hb : -(1 / 3 : ℝ) ≤ b)
   · dsimp [c, d]; ring
   · dsimp [c, d]; ring
 
-private lemma parent_positive (b η : ℝ) (hb : 1 / 3 ≤ b) (_hb1 : b ≤ 1)
+private lemma parent_positive (b η : ℝ) (hb : 1 / 3 ≤ b)
     (hη : 0 ≤ η) (hη1 : η ≤ 1 - b) : TriplewiseJointlyMeasurable b η := by
   apply parent_valid b η ((1 - b) / 2) 0 (η / 2) 0 ((3 * b - 1) / 2) 0
   · rw [abs_of_nonneg (by positivity)]; linarith
@@ -325,7 +337,7 @@ private lemma parent_positive (b η : ℝ) (hb : 1 / 3 ≤ b) (_hb1 : b ≤ 1)
   · ring
   · ring
 
-private lemma parent_negative (b η : ℝ) (_hb : -1 ≤ b) (hb1 : b ≤ -(1 / 3 : ℝ))
+private lemma parent_negative (b η : ℝ) (hb1 : b ≤ -(1 / 3 : ℝ))
     (hη : 0 ≤ η) (hη1 : η ≤ 1 + b) : TriplewiseJointlyMeasurable b η := by
   apply parent_valid b η 0 ((1 + b) / 2) 0 (η / 2) 0 ((-1 - 3 * b) / 2)
   · norm_num
@@ -339,14 +351,14 @@ private lemma parent_negative (b η : ℝ) (_hb : -1 ≤ b) (hb1 : b ≤ -(1 / 3
 /-- The exact triplewise joint-measurability threshold on the source parameter domain. -/
 theorem result : ∀ b η : ℝ, -1 ≤ b → b ≤ 1 → 0 ≤ η → η ≤ 1 →
     |b| ≤ 1 - η → (TriplewiseJointlyMeasurable b η ↔ η ≤ trineThreshold b) := by
-  intro b η hb hb1 hη _ hd
+  intro b η _ _ hη _ hd
   constructor
   · exact necessity b η hd
   · intro ht
     unfold trineThreshold at ht
     split_ifs at ht with hn hp
-    · exact parent_negative b η hb (by linarith) hη ht
+    · exact parent_negative b η (by linarith) hη ht
     · exact parent_central b η (by linarith) hp hη ht
-    · exact parent_positive b η (le_of_not_ge hp) hb1 hη ht
+    · exact parent_positive b η (le_of_not_ge hp) hη ht
 
 end D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold
