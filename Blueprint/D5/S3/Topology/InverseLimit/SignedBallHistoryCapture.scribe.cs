@@ -10,7 +10,7 @@ internal sealed class SignedBallHistoryCaptureDocument : IScribeDocumentDefiniti
         "Fixed free historical ultrafilters, observable collisions and original whole signed-sequence capture.",
         H("Generic historical collisions and signed capture"),
         Blocks(
-            H("Generic historical filters and observables"),
+            new DocumentBlock.Section(H("Generic historical filters and observables"), Blocks(
             Paragraph(Text(
                 "The Historical namespace gives a reusable result for arbitrary histories J:I -> Set Nat, independent of the ordinal diagram and signed measures below. "
                 + "The pair constructor uses any nonempty I and pairwise downward directedness modulo finite differences, with two fixed disjoint reservoirs meeting every historical set infinitely. "
@@ -70,8 +70,8 @@ internal sealed class SignedBallHistoryCaptureDocument : IScribeDocumentDefiniti
                         + "No mathematical novelty, completed CH recursion, final signed-ball contradiction, full solution or official acceptance is claimed. "
                         + "The actual history, its infinite reservoir intersections, continuity and separating tests must be supplied by their own constructions. "
                         + "All declarations are general structural mathematics, so utility is none: there is no bounded enumeration, numerical certificate or certified finite instance."))),
-                DescribeRole.Theorem),
-            H("Signed history application"),
+                DescribeRole.Theorem))),
+            new DocumentBlock.Section(H("Signed history application"), Blocks(
             Paragraph(Text(
                 "In collision_of_original_birth, the generic index type I is Eligible(theta,d), J(c) is H.J(theta,d,c), and the reservoirs are H.N0(theta,d) and H.N1(theta,d). "
                 + "A proper successor of max(theta,d) supplies an eligible stage, and the maximum of two eligible stages supplies a common refinement using H.directed. "
@@ -124,5 +124,5 @@ internal sealed class SignedBallHistoryCaptureDocument : IScribeDocumentDefiniti
                 H("Historical F gives the signed collision criterion"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For every F with nonempty profinite objects, actual limit cone C, all diagram maps surjective, and RawHistory H, SignedClopenCollision holds on C.pt. Thus every admissible normalized regular signed sequence on disjoint nonempty clopen supports and every continuous ultrafilter extension of its signed functionals admit two distinct free ultrafilters with the same extension value. The ultrafilters are chosen before the final continuous scalar test, and each test factors through its own eligible proper stage. The publicization retains the unchanged proof and permits the actual CH endpoint theorem to consume it."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem))))));
 }
