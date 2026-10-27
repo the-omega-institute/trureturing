@@ -620,8 +620,12 @@ private theorem previousSmaller_spec (v : ℕ) (letters : List ℕ) :
         · have hxy : x = y := by simpa using hx
           omega
       · refine Or.inr ⟨before,after ++ [y], ?_, hp, ?_⟩
-        · rw [heq, List.append_assoc]
-          rfl
+        · calc
+            letters ++ [y] = (before ++ previousSmaller v letters :: after) ++ [y] :=
+              congrArg (fun l => l ++ [y]) heq
+            _ = before ++ previousSmaller v letters :: (after ++ [y]) := by
+              rw [List.append_assoc]
+              rfl
         · intro x hx
           rcases List.mem_append.mp hx with hx | hx
           · exact hall x hx
