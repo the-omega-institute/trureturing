@@ -1,0 +1,64 @@
+**Proposition 11.6 (A native-indistinguishable state of purity $59/75$).**
+Take $Z=1/5$, $L=2/5$, $\kappa_0=1/10$ and $\kappa=3/10$.
+The common means are $(X,Y,Z)=(2/5,2/5,1/5)$.
+Here $a=0$ and $\cos b=1/\sqrt3$, so (11.7) is
+
+$$
+\rho_\kappa=
+\begin{pmatrix}
+3/10&\sqrt3/10&\sqrt2/10&\sqrt3/10&3/10\\
+\sqrt3/10&1/10&\sqrt6/30&1/10&\sqrt3/10\\
+\sqrt2/10&\sqrt6/30&1/5&\sqrt6/30&\sqrt2/10\\
+\sqrt3/10&1/10&\sqrt6/30&1/10&\sqrt3/10\\
+3/10&\sqrt3/10&\sqrt2/10&\sqrt3/10&3/10
+\end{pmatrix}.
+\tag{11.8}
+$$
+
+Its spectrum is
+$0,0,0,(15-\sqrt{129})/30,(15+\sqrt{129})/30$ and its purity is $59/75$.
+The target projector has rank one and purity one. Both have four bottom
+native coherences $\sqrt3/10$ and reference coherence $\sqrt2/10$.
+
+Proof. Let $e=|2\rangle$ and set
+
+$$
+g=\sqrt{5/4}\,
+(\sqrt{3/10},\sqrt{1/10},0,\sqrt{1/10},\sqrt{3/10})^{\mathsf T}.
+$$
+
+Then $g,e$ are orthonormal. The two distinct pure components are
+$\psi_\pm=\sqrt{4/5}e^{\mp ib}g+\sqrt{1/5}e$.
+Their equally weighted mixture in this basis is
+
+$$
+\begin{pmatrix}4/5&2/(5\sqrt3)\\2/(5\sqrt3)&1/5\end{pmatrix},
+$$
+
+and it vanishes on the three-dimensional orthogonal complement.
+Expanding this two-by-two matrix in the original mode basis gives
+every entry of (11.8), including the unmeasured $12$ and $32$ entries
+$\sqrt6/30$. Its trace is one and its determinant is
+$4/25-4/75=8/75>0$, so its characteristic polynomial is
+$\lambda^2-\lambda+8/75$ and it has rank two.
+Thus the full characteristic polynomial is
+
+$$
+\det(\lambda I-\rho_\kappa)=
+\lambda^3(\lambda^2-\lambda+8/75).
+$$
+
+The quadratic discriminant is $43/75=129/225$, giving the stated
+eigenvalues. Its trace square is
+
+$$
+\operatorname{tr}\rho_\kappa^2
+=1-2(8/75)=59/75
+=\frac{2(225+129)}{900}.
+$$
+
+The target bottom amplitudes are the square roots of
+$1/10,3/10,3/10,1/10$ in modes $0,1,3,13$ and its reference
+probability is $1/5$. Their products give exactly the five values
+displayed for the candidate. $\square$
+
