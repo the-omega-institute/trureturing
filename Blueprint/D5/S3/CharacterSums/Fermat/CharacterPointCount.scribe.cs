@@ -91,15 +91,14 @@ internal sealed class CharacterPointCountDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "These are classical finite-field character-sum results, with no mathematical novelty claim. "
                         + "The library contribution connects unit-group characters and Jacobi sums to the actual affine and projective "
-                        + "carriers and their cardinalities. The exact identities take an exact-order character as input, while the final bound constructs it from divisibility. "
-                        + "Identifying a cubic Jacobi sum with a chosen primary "
-                        + "prime in an algebraic number field, are separate bridges.")),
+                        + "carriers and their cardinalities. The exact identities take an exact-order character as input, while the final bound constructs it from divisibility.")),
                     Paragraph(Text(
                         "For d = 3 the remaining exponent pairs are (1,1) and (2,2), and their Jacobi sums are complex conjugates. "
                         + "Thus the formula gives Q + 1 + 2 Re J(chi,chi) and an error at most 2 sqrt(Q). "
-                        + "The cubic prime-period theory may be connected to p + 1 - Tr(pi) only after separately proving J(chi,chi) = -pi "
-                        + "for the same character and complex embedding. That normalization bridge is currently unformalized. "
-                        + "Its prime-field premise p is retained; a general prime power requires an additional extension theorem."))),
+                        + "CubicJacobiNormalization proves J(chi,chi) = -pi for the Euler character at the specified Eisenstein prime. "
+                        + "CubicFermatTrace transports that same character through a concrete complex embedding to obtain "
+                        + "q + 1 - Tr(pi) for actual projective points over finite Eisenstein residue fields. "
+                        + "The prime-period theory retains its rational-prime data; other finite-field extensions require a separate Jacobi normalization theorem."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
