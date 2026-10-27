@@ -17,7 +17,7 @@ internal sealed class BiasedBoundaryConditionalLawDocument : IScribeDocumentDefi
             Def("pullbackBound", "The conditional composition bound is the real value of the reciprocal cylinder mass raised to one half."),
             Def("pullback", "The conditional pullback is a continuous linear map from the original G to itself. It composes a representative with prepend, using the normalized restricted target measure to establish square integrability and independence of representatives."),
             Def("conditionalTrace", "The conditional trace composes this bounded pullback with the original all-ell2 trace J, retaining L2(M) as its suffix codomain."),
-            Describe.Lean(DescribeId.Create("biasedboundaryconditionallaw-pullback"),
+            Describe.Lean(DescribeId.Create("biasedboundaryconditionallaw-pullbacklaw"),
                 DeclarationHandle.Create(Prefix + "conditional_pullback_law"), H("Disintegration and Bounded Pullback"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For every finite prefix, pushing the restricted measure forward by deletion gives the original law multiplied by the cylinder mass. Equivalently, prepending pushes M to its actual normalized restricted measure. This includes the empty prefix, whose conditional measure is M.")),
