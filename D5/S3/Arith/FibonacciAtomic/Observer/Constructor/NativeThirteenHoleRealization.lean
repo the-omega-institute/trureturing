@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeThirteenHoleRealization
    generality: I
-   mirror-B: D5/B/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeThirteenHoleRealization
+   mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
@@ -99,12 +99,13 @@ private theorem mass_tail (h n m : Nat) (hm : 0 < m) :
   induction n with
   | zero => exact gamma_comb m
   | succ n ih =>
+    have gt : gamma (substitution (tail (x h) n m)) = gamma (tail (x h) n m) :=
+      gamma_iterate 1 _
     rw [tail, Function.iterate_succ_apply', G]
     rw [gamma_pair _ _ (Or.inl (by rw [mass_x]; omega))]
-    rw [gamma_pair _ _ (Or.inl (by rw [gamma_iterate]; exact lt_of_lt_of_le hm (by omega)))]
-    simp only [gamma_iterate, show gamma (.of true : Source) = 0 from rfl]
-    change 1+gamma (x h)+(1+gamma (tail (x h) n m)+0) = _
-    rw [mass_x, ih]; omega
+    rw [gamma_pair _ _ (Or.inl (by rw [show gamma (substitution ((G (x h))^[n] (comb m))) = gamma (tail (x h) n m) from gt, ih]; omega))]
+    change 1+gamma (x h)+(1+gamma (substitution (tail (x h) n m))+0) = _
+    rw [gt,mass_x,ih]; omega
 
 private theorem base_distinct (h : Nat) : Function.Injective (base h) := by
   have gx : gamma (x h) = 1 := mass_x h
@@ -124,16 +125,15 @@ private theorem base_distinct (h : Nat) : Function.Injective (base h) := by
   have cw : kappa (w h) = 2+(2*(h+1)+9) := by rw [w,kappa_iterate]; rfl
   have kA : kappa (.mul (y h) (z h)) = 2+kappa (z h) := rfl
   have kB : kappa (.mul (x h) (w h)) = 2+kappa (w h) := rfl
+  have gr (t : Source) : gamma (substitution t) = gamma t := gamma_iterate 1 t
+  have kr (t : Source) : kappa (substitution t) = kappa t+1 := kappa_iterate 1 t
   intro i j eq
   have gm := congrArg gamma eq
   have ck := congrArg kappa eq
   fin_cases i <;> fin_cases j
-  all_goals simp only [base,Matrix.cons_val_zero,Matrix.cons_val_succ,
-    Matrix.cons_val_fin_one] at gm ck ⊢
-  all_goals try rfl
-  all_goals simp only [show substitution = substitution^[1] from rfl,
-    gamma_iterate,kappa_iterate,gx,gy,gz,gw,gA,gB,gv,gH,cx,cy,cz,cw,kA,kB] at gm ck
-  all_goals omega
+  all_goals norm_num [base, gr, gx, gy, gz, gw, gA, gB, gv, gH] at gm
+  all_goals norm_num [base, kr, cx, cy, cz, cw, kA, kB] at ck
+  all_goals first | rfl | omega
 
 /-- Zero-based equality classes for the complete thirteen-hole rows. -/
 def classes (side : Bool) : Fin 13 → Fin 10 :=
@@ -150,7 +150,7 @@ def Q : ActualCutPartitionRecovery.CutSet := Finset.univ.image position
 
 private theorem position_injective : Function.Injective position := by
   intro i j eq
-  exact (FiniteHereditaryPatternRealization.result.2.2.2.1 12 i j [] [] (by simpa using eq)).1
+  exact (FiniteHereditaryPatternRealization.result.2.2.2.1 12 i j [] [] (by simpa [position] using eq)).1
 
 private theorem Q_mem (i : Fin 13) : position i ∈ Q := Finset.mem_image.mpr ⟨i,Finset.mem_univ _,rfl⟩
 
@@ -208,21 +208,21 @@ private theorem child_at (side : Bool) (h : Nat) (i : Fin 13) (p : Address) :
 private theorem all_literals (side : Bool) (h : Nat) :
     NativePayloadHistoryInstallation.Holds (theta side h) literals := by
   intro r hr
-  simp only [literals,List.mem_append,List.mem_map,List.mem_cons,List.mem_singleton] at hr
+  simp only [literals,List.mem_append,List.mem_map,List.mem_cons,List.not_mem_nil,or_false] at hr
   rcases hr with ⟨j,hj,rfl⟩ | rfl | rfl | rfl | rfl | rfl
   · have small : j < 12 := List.mem_range.mp hj
     interval_cases j <;> rfl
   all_goals change readout _ (theta side h) = _
+  all_goals unfold theta
   all_goals rw [FiniteHereditaryPatternRealization.result.1]
-  all_goals simp only [position, hole_locate, show ∀ i, hole 12 i = hole 12 i ++ [] from fun _ => (List.append_nil _).symm]
   all_goals cases side <;> rfl
 
 private theorem all_positives (side : Bool) (h : Nat) :
     NativePayloadHistoryInstallation.Holds (theta side h) positives := by
-  have at (i : Fin 13) : subtree (position i) (theta side h) = some (values side h i) := epoch_at 0 side h i
+  have original (i : Fin 13) : subtree (position i) (theta side h) = some (values side h i) := epoch_at 0 side h i
   simp only [NativePayloadHistoryInstallation.Holds,positives,List.forall_mem_cons,List.forall_mem_singleton]
   simp only [NativePayloadHistoryInstallation.Record.Holds, NativeFiveHoleFiber.GuardedEqual]
-  simp only [Function.iterate_zero_apply,at,child_at,epoch_at]
+  simp only [Function.iterate_zero_apply,original,child_at,epoch_at]
   cases side <;> simp [values,classes,base,G,Function.comp_apply,subtree]
 
 private theorem endpoint_value (side : Bool) (h : Nat) (i : Fin 10) :
@@ -232,13 +232,18 @@ private theorem endpoint_value (side : Bool) (h : Nat) (i : Fin 10) :
 private theorem all_negatives (side : Bool) (h : Nat) :
     ∀ e ∈ negatives, NativeFiveHoleFiber.Negative e (theta side h) := by
   intro e he
-  obtain ⟨i,_,j,hj,rfl⟩ := List.mem_flatMap.mp he |>.imp_right (fun h => List.mem_map.mp h)
-  have ij : i < j := (List.mem_filter.mp hj).2
-  simp only [NativeFiveHoleFiber.Negative,epoch_at,Function.iterate_zero_apply,
-    endpoint_value,Option.isSome_some,true_and,ne_eq,Option.some.injEq]
+  obtain ⟨i,_,he⟩ := List.mem_flatMap.mp he
+  obtain ⟨j,hj,rfl⟩ := List.mem_map.mp he
+  have ij : i < j := of_decide_eq_true (List.mem_filter.mp hj).2
+  have ei := epoch_at 0 side h (endpoints i)
+  have ej := epoch_at 0 side h (endpoints j)
+  change subtree (position (endpoints i)) (theta side h) = some (values side h (endpoints i)) at ei
+  change subtree (position (endpoints j)) (theta side h) = some (values side h (endpoints j)) at ej
+  simp only [NativeFiveHoleFiber.Negative,Function.iterate_zero_apply]
+  rw [ei,ej,endpoint_value,endpoint_value]
+  simp only [Option.isSome_some,true_and,ne_eq,Option.some.injEq]
   intro eq
-  have bad := base_distinct h eq
-  exact (ne_of_lt ij) bad
+  exact (ne_of_lt ij) (base_distinct h eq)
 
 private theorem acquired_theta (side : Bool) (h : Nat) : Acquired (theta side h) :=
   ⟨NativeFiveHoleFiber.root_record _,all_literals side h,all_positives side h,all_negatives side h⟩
@@ -256,9 +261,9 @@ def row (side : Bool) : HoleExterior × Finset (Address × Address) :=
 
 private theorem classAt_position (side : Bool) (i : Fin 13) :
     classAt side (position i) = classes side i := by
-  unfold classAt position
-  rw [← List.append_nil (hole 12 i),hole_locate]
-  rfl
+  have loc : locate 12 (position i) = some (i,[]) :=
+    (locate_eq 12 (position i) i []).mpr (by simp [position])
+  simp only [classAt,loc,Option.getD_some]
 
 private theorem whole_exterior (X : Fin 13 → Source) :
     cutExterior Q [] (B_T 12 X) = exterior := by
@@ -280,20 +285,20 @@ private theorem whole_exterior (X : Fin 13 → Source) :
   unfold exterior
   simp only [B_T,cutExterior,List.nil_append,List.cons_append,List.singleton_append]
   all_goals simp only [List.replicate_succ,List.replicate_zero] at n0 n1 n2 n3 n4 n5 n6 n7 n8 n9 n10 n11
-  simp only [n0,n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,if_false]
-  rw [show ∀ t, cutExterior Q (hole 12 (0 : Fin 13)) t = .of (.inr (position 0)) from stop 0]
-  rw [show ∀ t, cutExterior Q (hole 12 (1 : Fin 13)) t = .of (.inr (position 1)) from stop 1]
-  rw [show ∀ t, cutExterior Q (hole 12 (2 : Fin 13)) t = .of (.inr (position 2)) from stop 2]
-  rw [show ∀ t, cutExterior Q (hole 12 (3 : Fin 13)) t = .of (.inr (position 3)) from stop 3]
-  rw [show ∀ t, cutExterior Q (hole 12 (4 : Fin 13)) t = .of (.inr (position 4)) from stop 4]
-  rw [show ∀ t, cutExterior Q (hole 12 (5 : Fin 13)) t = .of (.inr (position 5)) from stop 5]
-  rw [show ∀ t, cutExterior Q (hole 12 (6 : Fin 13)) t = .of (.inr (position 6)) from stop 6]
-  rw [show ∀ t, cutExterior Q (hole 12 (7 : Fin 13)) t = .of (.inr (position 7)) from stop 7]
-  rw [show ∀ t, cutExterior Q (hole 12 (8 : Fin 13)) t = .of (.inr (position 8)) from stop 8]
-  rw [show ∀ t, cutExterior Q (hole 12 (9 : Fin 13)) t = .of (.inr (position 9)) from stop 9]
-  rw [show ∀ t, cutExterior Q (hole 12 (10 : Fin 13)) t = .of (.inr (position 10)) from stop 10]
-  rw [show ∀ t, cutExterior Q (hole 12 (11 : Fin 13)) t = .of (.inr (position 11)) from stop 11]
-  rw [show ∀ t, cutExterior Q (hole 12 (12 : Fin 13)) t = .of (.inr (position 12)) from stop 12]
+  simp only [n0,n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,ite_false]
+  rw [show ∀ t, cutExterior Q [false] t = (.of (.inr [false]) : HoleExterior) from stop 0]
+  rw [show ∀ t, cutExterior Q [true,false] t = (.of (.inr [true,false]) : HoleExterior) from stop 1]
+  rw [show ∀ t, cutExterior Q [true,true,false] t = (.of (.inr [true,true,false]) : HoleExterior) from stop 2]
+  rw [show ∀ t, cutExterior Q [true,true,true,false] t = (.of (.inr [true,true,true,false]) : HoleExterior) from stop 3]
+  rw [show ∀ t, cutExterior Q [true,true,true,true,false] t = (.of (.inr [true,true,true,true,false]) : HoleExterior) from stop 4]
+  rw [show ∀ t, cutExterior Q [true,true,true,true,true,false] t = (.of (.inr [true,true,true,true,true,false]) : HoleExterior) from stop 5]
+  rw [show ∀ t, cutExterior Q [true,true,true,true,true,true,false] t = (.of (.inr [true,true,true,true,true,true,false]) : HoleExterior) from stop 6]
+  rw [show ∀ t, cutExterior Q [true,true,true,true,true,true,true,false] t = (.of (.inr [true,true,true,true,true,true,true,false]) : HoleExterior) from stop 7]
+  rw [show ∀ t, cutExterior Q [true,true,true,true,true,true,true,true,false] t = (.of (.inr [true,true,true,true,true,true,true,true,false]) : HoleExterior) from stop 8]
+  rw [show ∀ t, cutExterior Q [true,true,true,true,true,true,true,true,true,false] t = (.of (.inr [true,true,true,true,true,true,true,true,true,false]) : HoleExterior) from stop 9]
+  rw [show ∀ t, cutExterior Q [true,true,true,true,true,true,true,true,true,true,false] t = (.of (.inr [true,true,true,true,true,true,true,true,true,true,false]) : HoleExterior) from stop 10]
+  rw [show ∀ t, cutExterior Q [true,true,true,true,true,true,true,true,true,true,true,false] t = (.of (.inr [true,true,true,true,true,true,true,true,true,true,true,false]) : HoleExterior) from stop 11]
+  rw [show ∀ t, cutExterior Q [true,true,true,true,true,true,true,true,true,true,true,true] t = (.of (.inr [true,true,true,true,true,true,true,true,true,true,true,true]) : HoleExterior) from stop 12]
   rfl
 
 private theorem whole_holes (X : Fin 13 → Source) :
@@ -315,20 +320,20 @@ private theorem whole_holes (X : Fin 13 → Source) :
   unfold orderedHoles
   simp only [Finset.sort_toFinset,B_T,reachedHoles,List.nil_append,List.cons_append,List.singleton_append]
   all_goals simp only [List.replicate_succ,List.replicate_zero] at n0 n1 n2 n3 n4 n5 n6 n7 n8 n9 n10 n11
-  simp only [n0,n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,if_false]
-  rw [show ∀ t, reachedHoles Q (hole 12 (0 : Fin 13)) t = [position 0] from stop 0]
-  rw [show ∀ t, reachedHoles Q (hole 12 (1 : Fin 13)) t = [position 1] from stop 1]
-  rw [show ∀ t, reachedHoles Q (hole 12 (2 : Fin 13)) t = [position 2] from stop 2]
-  rw [show ∀ t, reachedHoles Q (hole 12 (3 : Fin 13)) t = [position 3] from stop 3]
-  rw [show ∀ t, reachedHoles Q (hole 12 (4 : Fin 13)) t = [position 4] from stop 4]
-  rw [show ∀ t, reachedHoles Q (hole 12 (5 : Fin 13)) t = [position 5] from stop 5]
-  rw [show ∀ t, reachedHoles Q (hole 12 (6 : Fin 13)) t = [position 6] from stop 6]
-  rw [show ∀ t, reachedHoles Q (hole 12 (7 : Fin 13)) t = [position 7] from stop 7]
-  rw [show ∀ t, reachedHoles Q (hole 12 (8 : Fin 13)) t = [position 8] from stop 8]
-  rw [show ∀ t, reachedHoles Q (hole 12 (9 : Fin 13)) t = [position 9] from stop 9]
-  rw [show ∀ t, reachedHoles Q (hole 12 (10 : Fin 13)) t = [position 10] from stop 10]
-  rw [show ∀ t, reachedHoles Q (hole 12 (11 : Fin 13)) t = [position 11] from stop 11]
-  rw [show ∀ t, reachedHoles Q (hole 12 (12 : Fin 13)) t = [position 12] from stop 12]
+  simp only [n0,n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,ite_false]
+  rw [show ∀ t, reachedHoles Q [false] t = ([[false]] : List Address) from stop 0]
+  rw [show ∀ t, reachedHoles Q [true,false] t = ([[true,false]] : List Address) from stop 1]
+  rw [show ∀ t, reachedHoles Q [true,true,false] t = ([[true,true,false]] : List Address) from stop 2]
+  rw [show ∀ t, reachedHoles Q [true,true,true,false] t = ([[true,true,true,false]] : List Address) from stop 3]
+  rw [show ∀ t, reachedHoles Q [true,true,true,true,false] t = ([[true,true,true,true,false]] : List Address) from stop 4]
+  rw [show ∀ t, reachedHoles Q [true,true,true,true,true,false] t = ([[true,true,true,true,true,false]] : List Address) from stop 5]
+  rw [show ∀ t, reachedHoles Q [true,true,true,true,true,true,false] t = ([[true,true,true,true,true,true,false]] : List Address) from stop 6]
+  rw [show ∀ t, reachedHoles Q [true,true,true,true,true,true,true,false] t = ([[true,true,true,true,true,true,true,false]] : List Address) from stop 7]
+  rw [show ∀ t, reachedHoles Q [true,true,true,true,true,true,true,true,false] t = ([[true,true,true,true,true,true,true,true,false]] : List Address) from stop 8]
+  rw [show ∀ t, reachedHoles Q [true,true,true,true,true,true,true,true,true,false] t = ([[true,true,true,true,true,true,true,true,true,false]] : List Address) from stop 9]
+  rw [show ∀ t, reachedHoles Q [true,true,true,true,true,true,true,true,true,true,false] t = ([[true,true,true,true,true,true,true,true,true,true,false]] : List Address) from stop 10]
+  rw [show ∀ t, reachedHoles Q [true,true,true,true,true,true,true,true,true,true,true,false] t = ([[true,true,true,true,true,true,true,true,true,true,true,false]] : List Address) from stop 11]
+  rw [show ∀ t, reachedHoles Q [true,true,true,true,true,true,true,true,true,true,true,true] t = ([[true,true,true,true,true,true,true,true,true,true,true,true]] : List Address) from stop 12]
   decide +kernel
 
 private theorem complete_row (side : Bool) (h : Nat) :
@@ -342,10 +347,13 @@ private theorem complete_row (side : Bool) (h : Nat) :
   · by_cases hq : q ∈ Q
     · obtain ⟨i,_,rfl⟩ := Finset.mem_image.mp hp
       obtain ⟨j,_,rfl⟩ := Finset.mem_image.mp hq
-      simp only [Q_mem,true_and,← theta,show ∀ k, subtree (position k) (theta side h) =
-        some (values side h k) from epoch_at 0 side h,Option.some.injEq,
-        classAt_position,values,Function.comp_apply]
-      exact ⟨base_distinct h,congrArg (base h)⟩
+      simp only [Q_mem,true_and,classAt_position]
+      change (subtree (position i) (theta side h) = subtree (position j) (theta side h)) ↔
+        classes side i = classes side j
+      rw [show subtree (position i) (theta side h) = some (values side h i) from epoch_at 0 side h i,
+        show subtree (position j) (theta side h) = some (values side h j) from epoch_at 0 side h j]
+      simp only [Option.some.injEq,values,Function.comp_apply]
+      exact ⟨fun e => base_distinct h e, fun e => congrArg (base h) e⟩
     · simp [hq]
   · simp [hp]
 
@@ -381,10 +389,13 @@ private theorem v_prefix (h : Nat) : cutoff (h+1) (embed (v h)) = cutoff (h+1) K
   guarded_prefix (h+1) (h+1) 4 (x h) (x_prefix h) (by omega)
 
 private theorem H_prefix (h : Nat) : cutoff (h+1) (embed (G (x h) (v h))) = cutoff (h+1) K := by
-  rw [k_law,G,embed,embed]
-  exact pair_prefix _ _ _ _ _ (x_prefix h)
-    (pair_prefix _ _ _ _ _ (by rw [← CompletionHomogeneousFixedPoints.rho_embed];
-      exact rho_prefix _ _ _ (v_prefix h)) rfl)
+  rw [k_law]
+  change cutoff (h+1) (node (embed (x h))
+    (node (embed (substitution (v h))) (leaf true))) = _
+  apply pair_prefix _ _ _ _ _ (x_prefix h)
+  apply pair_prefix _ _ _ _ _ ?_ rfl
+  rw [← CompletionHomogeneousFixedPoints.rho_embed]
+  exact rho_prefix _ _ _ (v_prefix h)
 
 /-- The same completed output for both source rows. -/
 noncomputable def Lambda : CompletionTree :=
@@ -392,17 +403,19 @@ noncomputable def Lambda : CompletionTree :=
     (node Omega (node Omega (node Omega (node Omega (node Omega
       (node K (node K K)))))))))))
 
+set_option maxHeartbeats 900000 in
+-- Elaborating both complete comb fillings retains all thirteen prefix comparisons.
 private theorem theta_prefix (side : Bool) (h : Nat) :
     cutoff (h+1) (embed (theta side h)) = cutoff (h+1) Lambda := by
   have py : cutoff (h+1) (embed (y h)) = cutoff (h+1) Omega := by
-    simpa only [y,x,← Function.iterate_add_apply] using shifted_prefix h 3
+    simpa only [y,x,← Function.iterate_add_apply,Nat.add_comm] using shifted_prefix h 3
   have pz : cutoff (h+1) (embed (z h)) = cutoff (h+1) Omega := by
-    simpa only [z,x,← Function.iterate_add_apply] using shifted_prefix h 6
+    simpa only [z,x,← Function.iterate_add_apply,Nat.add_comm] using shifted_prefix h 6
   have pw : cutoff (h+1) (embed (w h)) = cutoff (h+1) Omega := by
-    simpa only [w,x,← Function.iterate_add_apply] using shifted_prefix h 9
+    simpa only [w,x,← Function.iterate_add_apply,Nat.add_comm] using shifted_prefix h 9
   have prx : cutoff (h+1) (embed (substitution (x h))) = cutoff (h+1) Omega := shifted_prefix h 1
   have pry : cutoff (h+1) (embed (substitution (y h))) = cutoff (h+1) Omega := by
-    simpa only [Function.iterate_one] using
+    simpa only [Function.iterate_one,CompletionHomogeneousFixedPoints.rho_embed] using
       (rho_prefix (h+1) (embed (y h)) Omega py).trans
         (congrArg (cutoff (h+1)) CompletionHomogeneousFixedPoints.rho_omega)
   have pA : cutoff (h+1) (embed (.mul (y h) (z h))) = cutoff (h+1) Omega := by
@@ -415,11 +428,13 @@ private theorem theta_prefix (side : Bool) (h : Nat) :
   have pH := H_prefix h
   unfold theta Lambda
   cases side <;> simp only [B_T,values,Function.comp_apply,classes,Bool.false_eq_true,
-    Bool.true_eq_true,if_false,if_true,Matrix.cons_val_zero,Matrix.cons_val_succ,
-    Matrix.cons_val_fin_one,base,embed]
-  all_goals repeat' apply pair_prefix
-  all_goals first | exact x_prefix h | exact py | exact pz | exact pw | exact prx |
-    exact pry | exact pA | exact pB | exact pv | exact pH
+    ite_false,ite_true,Matrix.cons_val,base,embed]
+  all_goals
+    solve
+    | repeat' first
+      | assumption
+      | exact x_prefix h
+      | apply pair_prefix
 
 /-- Both originals satisfy the entire input and their distinct complete rows,
 and agree through the inclusive depth with the single Lambda. -/
