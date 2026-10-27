@@ -49,16 +49,17 @@ internal sealed class ChernFuImageDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(CDK)),
             Node("result", "The complete image characterization", "result",
                 "In the formula, entries(e,n) denotes the function on Fin n sending t to e.getD t.val 0. For every natural n >= 1 and every list e of length n satisfying 0 <= e_i <= i - 1 at all native indices, e is the fixed Pi image of an improper native partition matrix, of some dimension k with no dimension restriction, if and only if Phi(e). In every native matrix, equal adjacent columns are equivalent to i not occurring in A(Pi(P)); the preceding value b_(Pi(P))(i) is the least label in that column minus one. The two row indices agree exactly when the corresponding Pi entries agree. Proper parity becomes oddness of i - b_(Pi(P))(i), so absence of both proper row orders gives precisely Phi. Conversely, the CDK reconstruction is a valid native matrix for every inversion sequence; Phi makes this matrix improper, and its fixed Pi image is e.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(CF))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(CF),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("chern-fu-improper-partition-matrix-fixed-image"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("chernfu-image-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), declaration == "result"
                 ? StatementSource.FromAuthor(ResultFormula())
                 : StatementSource.WithoutFormula(), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula ResultFormula()
     {
         Formula n = F.Id("n"), e = F.Id("e"), k = F.Id("k"), p = F.Id("P");
