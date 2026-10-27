@@ -148,12 +148,12 @@ private theorem representative_surjective (x₀ : UnitSphere E) (y₀ : UnitSphe
   have hm : max r s = 1 := by simpa only [Prod.norm_def] using unit_norm z
   have hp : 0 < r + s := by have := le_max_iff.mp (le_of_eq hm.symm); rcases this with h | h <;> linarith
   let t : I := ⟨s / (r+s), div_nonneg hs hp.le, (div_le_one hp).mpr (by linarith)⟩
-  have hl : 1 - (t : ℝ) = r / (r+s) := by dsimp [t]; field_simp; ring
+  have hl : 1 - (t : ℝ) = r / (r+s) := by dsimp [t]; field_simp [hp.ne']; ring
   have hd : height t = 1 / (r+s) := by
     dsimp [height]
     rw [hl, max_div_div_right hp.le, hm]
-  have hw₁ : leftWeight t = r := by rw [leftWeight, hl, hd]; field_simp
-  have hw₂ : rightWeight t = s := by rw [rightWeight, hd]; dsimp [t]; field_simp
+  have hw₁ : leftWeight t = r := by rw [leftWeight, hl, hd]; field_simp [hp.ne']
+  have hw₂ : rightWeight t = s := by rw [rightWeight, hd]; dsimp [t]; field_simp [hp.ne']
   obtain ⟨x, hx⟩ := factor_of_norm x₀ z.val.1
   obtain ⟨y, hy⟩ := factor_of_norm y₀ z.val.2
   exact ⟨(x, y, t), Prod.ext (by simpa [representative, hw₁] using hx)
@@ -223,9 +223,9 @@ def coordinatePoint (n : ℕ) : StdSphere n :=
 
 private def blockEquiv (p q : ℕ) :
     (EuclideanSpace ℝ (Fin (p+1)) × EuclideanSpace ℝ (Fin (q+1))) ≃L[ℝ]
-      EuclideanSpace ℝ (Fin (p+q+1+1)) := by
-  convert (EuclideanSpace.finAddEquivProd (𝕜 := ℝ) (n := p+1) (m := q+1)).symm using 1 <;>
-    congr 2 <;> omega
+      EuclideanSpace ℝ (Fin (p+q+1+1)) :=
+  (EuclideanSpace.finAddEquivProd (𝕜 := ℝ) (n := p+1) (m := q+1)).symm.trans
+    (LinearIsometryEquiv.piLpCongrLeft 2 ℝ ℝ (finCongr (by omega))).toContinuousLinearEquiv
 
 /-- The classical homeomorphism for every pair of natural sphere dimensions.
 Its source uses the actual ordinary join quotient and its target the Euclidean norm. -/
@@ -236,7 +236,33 @@ def sphereJoinHomeomorph (p q : ℕ) :
   exact (productSphereHomeomorph (coordinatePoint p) (coordinatePoint q)).trans
     (radialHomeomorph (blockEquiv p q))
 
+private theorem blockEquiv_coordinatePoint (p q : ℕ) :
+    blockEquiv p q ((coordinatePoint p).val, 0) = (coordinatePoint (p+q+1)).val := by
+  have hs : (EuclideanSpace.sumEquivProd (𝕜 := ℝ)
+      (ι := Fin (p+1)) (κ := Fin (q+1))).symm ((coordinatePoint p).val, 0) =
+      EuclideanSpace.single (Sum.inl 0) 1 := by
+    ext i
+    cases i <;> simp [EuclideanSpace.sumEquivProd, PiLp.sumPiLpEquivProdLpPiLp,
+      coordinatePoint, EuclideanSpace.single, PiLp.single_apply]
+  simp [blockEquiv, EuclideanSpace.finAddEquivProd, ContinuousLinearEquiv.trans_symm,
+    ContinuousLinearEquiv.trans_apply, hs, coordinatePoint,
+    EuclideanSpace.single, finSumFinEquiv]
+
+/-- The chosen left endpoint is sent exactly to the first target coordinate point. -/
+theorem sphereJoinHomeomorph_coordinatePoint (p q : ℕ) (y : StdSphere q) :
+    sphereJoinHomeomorph p q (Quotient.mk _ (coordinatePoint p, y, (0 : I))) =
+      coordinatePoint (p+q+1) := by
+  apply Subtype.ext
+  change ‖blockEquiv p q (representative (coordinatePoint p, y, (0 : I)))‖⁻¹ •
+    blockEquiv p q (representative (coordinatePoint p, y, (0 : I))) = _
+  have hr : representative (coordinatePoint p, y, (0 : I)) =
+      ((coordinatePoint p).val, (0 : EuclideanSpace ℝ (Fin (q+1)))) := by
+    simp [representative, leftWeight, rightWeight, height]
+  rw [hr, blockEquiv_coordinatePoint, unit_norm]
+  simp
+
 #print axioms representative_eq_iff
 #print axioms sphereJoinHomeomorph
+#print axioms sphereJoinHomeomorph_coordinatePoint
 
 end D5.S3.Geometry.EuclideanSphereJoin
