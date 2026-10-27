@@ -248,6 +248,10 @@ Lean statement: `D5/S3/Combinatorics/PriorityLattice/TestartTraversal.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PriorityLattice/TestartTraversal.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/testart-2026-question-one-type-c-tree-bijection` (proved) by `D5/S3/Combinatorics/PriorityLattice/TestartTraversal.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"testart-2026-question-one-type-c-tree-bijection","declaration_gid":"D5/S3/Combinatorics/PriorityLattice/TestartTraversal.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Benjamin Testart (2026). *On minimal pattern-containing inversion sequences*. URL: <https://arxiv.org/abs/2602.12130v2>.
