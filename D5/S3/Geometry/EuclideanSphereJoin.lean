@@ -2,9 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/EuclideanSphereJoin
    mirror-E: none(waiver:classical-sphere-join)
-   anchors: [mathlib/module/Mathlib.Analysis.InnerProductSpace.PiL2, mathlib/module/Mathlib.Analysis.Normed.Module.Ball.RadialEquiv]
+  anchors: [mathlib/module/Mathlib.Analysis.InnerProductSpace.PiL2]
    utility: none
-   digest: The ordinary quotient join of Euclidean unit spheres is the Euclidean sphere in the sum dimension. -/
+   digest: The ordinary quotient sphere join has the Euclidean sphere homeomorphism. -/
 import D5.S3.Geometry.FiniteSimplicialJoin
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.Normed.Module.Ball.RadialEquiv
@@ -50,13 +50,13 @@ private theorem recover_parameter (t : I) :
     rightWeight t / (leftWeight t + rightWeight t) = (t : ℝ) := by
   dsimp [leftWeight, rightWeight]
   field_simp [(height_pos t).ne']
-  <;> ring
+  ring
 
 variable {E F : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   [NormedAddCommGroup F] [NormedSpace ℝ F]
 
 private theorem unit_norm {G : Type*} [NormedAddCommGroup G] (x : UnitSphere G) :
-    ‖(x : G)‖ = 1 := Metric.mem_sphere_zero_iff_norm.mp x.property
+    ‖(x : G)‖ = 1 := mem_sphere_zero_iff_norm.mp x.property
 
 /-- The normalized maximum-norm formula on actual join representatives. -/
 def representative (p : UnitSphere E × UnitSphere F × I) : E × F :=
@@ -65,12 +65,12 @@ def representative (p : UnitSphere E × UnitSphere F × I) : E × F :=
 private theorem block_norms (p : UnitSphere E × UnitSphere F × I) :
     ‖(representative p).1‖ = leftWeight p.2.2 ∧
       ‖(representative p).2‖ = rightWeight p.2.2 := by
-  simp [representative, norm_smul, unit_norm, Real.norm_eq_abs,
+  simp [representative, norm_smul, Real.norm_eq_abs,
     abs_of_nonneg (leftWeight_nonneg _), abs_of_nonneg (rightWeight_nonneg _)]
 
 private theorem representative_mem (p : UnitSphere E × UnitSphere F × I) :
     representative p ∈ UnitSphere (E × F) := by
-  rw [Metric.mem_sphere_zero_iff_norm, Prod.norm_def,
+  rw [mem_sphere_zero_iff_norm, Prod.norm_def,
     (block_norms p).1, (block_norms p).2]
   dsimp [leftWeight, rightWeight]
   rw [max_div_div_right (height_pos _).le]
@@ -135,7 +135,7 @@ private theorem factor_of_norm {G : Type*} [NormedAddCommGroup G] [NormedSpace �
   · exact ⟨x₀, by simp [hz]⟩
   · have hn : ‖z‖ ≠ 0 := norm_ne_zero_iff.mpr hz
     refine ⟨⟨‖z‖⁻¹ • z, ?_⟩, ?_⟩
-    · simp [UnitSphere, Metric.mem_sphere_zero_iff_norm, norm_smul, hn]
+    · simp [UnitSphere, norm_smul, hn]
     · simp [smul_smul, hn]
 
 private theorem representative_surjective (x₀ : UnitSphere E) (y₀ : UnitSphere F)
@@ -146,7 +146,9 @@ private theorem representative_surjective (x₀ : UnitSphere E) (y₀ : UnitSphe
   have hr : 0 ≤ r := norm_nonneg _
   have hs : 0 ≤ s := norm_nonneg _
   have hm : max r s = 1 := by simpa only [Prod.norm_def] using unit_norm z
-  have hp : 0 < r + s := by have := le_max_iff.mp (le_of_eq hm.symm); rcases this with h | h <;> linarith
+  have hp : 0 < r + s := by
+    have := le_max_iff.mp (le_of_eq hm.symm)
+    rcases this with h | h <;> linarith
   let t : I := ⟨s / (r+s), div_nonneg hs hp.le, (div_le_one hp).mpr (by linarith)⟩
   have hl : 1 - (t : ℝ) = r / (r+s) := by dsimp [t]; field_simp [hp.ne']; ring
   have hd : height t = 1 / (r+s) := by
@@ -202,7 +204,7 @@ private theorem radialMap_inverse {G H : Type*} [NormedAddCommGroup G] [NormedSp
     intro h
     exact hx (L.injective (by simpa using h)))
   apply Subtype.ext
-  simp [radialMap, map_smul, norm_smul, unit_norm, smul_smul, hl]
+  simp [radialMap, map_smul, norm_smul, smul_smul, hl]
 
 private def radialHomeomorph {G H : Type*} [NormedAddCommGroup G] [NormedSpace ℝ G]
     [NormedAddCommGroup H] [NormedSpace ℝ H] (L : G ≃L[ℝ] H) :
@@ -219,7 +221,7 @@ private def radialHomeomorph {G H : Type*} [NormedAddCommGroup G] [NormedSpace �
 /-- The first coordinate unit point of the actual standard sphere. -/
 def coordinatePoint (n : ℕ) : StdSphere n :=
   ⟨EuclideanSpace.single 0 1, by
-    simp [UnitSphere, Metric.mem_sphere_zero_iff_norm, EuclideanSpace.single, PiLp.norm_single]⟩
+    simp [EuclideanSpace.single, PiLp.norm_single]⟩
 
 private def blockEquiv (p q : ℕ) :
     (EuclideanSpace ℝ (Fin (p+1)) × EuclideanSpace ℝ (Fin (q+1))) ≃L[ℝ]
@@ -241,18 +243,41 @@ private theorem blockEquiv_coordinatePoint (p q : ℕ) :
   have hs : (EuclideanSpace.sumEquivProd (𝕜 := ℝ)
       (ι := Fin (p+1)) (κ := Fin (q+1))).symm ((coordinatePoint p).val, 0) =
       EuclideanSpace.single (Sum.inl 0) 1 := by
-    ext i
-    cases i <;> simp [EuclideanSpace.sumEquivProd, PiLp.sumPiLpEquivProdLpPiLp,
-      coordinatePoint, EuclideanSpace.single, PiLp.single_apply]
-  simp [blockEquiv, EuclideanSpace.finAddEquivProd, ContinuousLinearEquiv.symm_trans_apply,
-    ContinuousLinearEquiv.trans_apply, hs, coordinatePoint,
-    EuclideanSpace.single, finSumFinEquiv]
+    apply (EuclideanSpace.sumEquivProd (𝕜 := ℝ)).injective
+    rw [ContinuousLinearEquiv.apply_symm_apply]
+    apply Prod.ext
+    · ext i
+      change (coordinatePoint p).val i =
+        (EuclideanSpace.single (Sum.inl (0 : Fin (p+1))) 1 :
+          EuclideanSpace ℝ (Fin (p+1) ⊕ Fin (q+1))) (Sum.inl i)
+      simp [coordinatePoint, EuclideanSpace.single, PiLp.single_apply]
+    · ext i
+      change (0 : ℝ) =
+        (EuclideanSpace.single (Sum.inl (0 : Fin (p+1))) 1 :
+          EuclideanSpace ℝ (Fin (p+1) ⊕ Fin (q+1))) (Sum.inr i)
+      simp [EuclideanSpace.single]
+  simp only [blockEquiv, EuclideanSpace.finAddEquivProd,
+    ContinuousLinearEquiv.trans_apply, ContinuousLinearEquiv.symm_trans_apply,
+    ← LinearIsometryEquiv.toContinuousLinearEquiv_symm,
+    LinearIsometryEquiv.piLpCongrLeft_symm, Equiv.symm_symm,
+    LinearIsometryEquiv.coe_toContinuousLinearEquiv]
+  have hs' : (PiLp.sumPiLpEquivProdLpPiLp 2
+      (fun _ : Fin (p+1) ⊕ Fin (q+1) => ℝ)).symm
+      ((WithLp.prodContinuousLinearEquiv 2 ℝ
+        (EuclideanSpace ℝ (Fin (p+1))) (EuclideanSpace ℝ (Fin (q+1)))).symm
+          ((coordinatePoint p).val, 0)) = EuclideanSpace.single (Sum.inl 0) 1 := hs
+  rw [hs']
+  simp [coordinatePoint, EuclideanSpace.single]
+  congr 1
 
 /-- The chosen left endpoint is sent exactly to the first target coordinate point. -/
 theorem sphereJoinHomeomorph_coordinatePoint (p q : ℕ) (y : StdSphere q) :
     sphereJoinHomeomorph p q (Quotient.mk _ (coordinatePoint p, y, (0 : I))) =
       coordinatePoint (p+q+1) := by
   apply Subtype.ext
+  change (radialMap (blockEquiv p q)
+    ⟨representative (coordinatePoint p, y, (0 : I)), representative_mem _⟩).val = _
+  simp only [radialMap, homeomorphUnitSphereProd_apply_fst_coe]
   change ‖blockEquiv p q (representative (coordinatePoint p, y, (0 : I)))‖⁻¹ •
     blockEquiv p q (representative (coordinatePoint p, y, (0 : I))) = _
   have hr : representative (coordinatePoint p, y, (0 : I)) =

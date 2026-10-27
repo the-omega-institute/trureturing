@@ -7,7 +7,7 @@ open Set
 open scoped unitInterval
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Geometry.EuclideanSphereJoin
-open _root_.D5.S3.Geometry.FiniteSimplicialJoin
+open _root_.D5.S3.Geometry.FiniteSimplicialJoin (ordinaryJoinSetoid)
 
 namespace Reg.D5.S3.Geometry.EuclideanSphereJoin
 
@@ -57,10 +57,16 @@ private def testParameters : Parameters.{u,v} :=
   ⟨ULift.{u} ℝ, ULift.{v} ℝ, inferInstance, inferInstance, inferInstance, inferInstance⟩
 
 private def leftPoint : UnitSphere testParameters.{u,v}.E :=
-  ⟨⟨1⟩, by simp [UnitSphere, Metric.mem_sphere_zero_iff_norm]⟩
+  ⟨⟨1⟩, by
+    apply mem_sphere_zero_iff_norm.mpr
+    change ‖(1 : ℝ)‖ = 1
+    norm_num⟩
 
 private def rightPoint : UnitSphere testParameters.{u,v}.F :=
-  ⟨⟨1⟩, by simp [UnitSphere, Metric.mem_sphere_zero_iff_norm]⟩
+  ⟨⟨1⟩, by
+    apply mem_sphere_zero_iff_norm.mpr
+    change ‖(1 : ℝ)‖ = 1
+    norm_num⟩
 
 private def leftState : signature.{u,v}.State testParameters := (leftPoint, rightPoint, 0)
 private def rightState : signature.{u,v}.State testParameters := (leftPoint, rightPoint, 1)
