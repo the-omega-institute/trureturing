@@ -122,7 +122,10 @@ internal sealed class PostprocessedImprovementUnfaithfulDocument : IScribeDocume
                             + "for every biased prior, every positive phase dimension and every phase function, "
                             + "answering the faithfulness part of the question in Section IV (TeX line 300). "
                             + "The construction includes the endpoint priors and requires no separation between the phases."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("masini-theurer-plenio-2021-postprocessed-improvement-unfaithfulness"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula, string prose) =>
