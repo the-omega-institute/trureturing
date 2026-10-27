@@ -41,14 +41,14 @@ internal sealed class BalaA193236ModFiveSevenDocument : IScribeDocumentDefinitio
                 + "so its cube misses residue 4. Modulo seven it is supported in residues 0, 1 and 3, "
                 + "so its square misses residue 5. Frobenius transfers these missing residues "
                 + "to the reciprocal cube root. Uniqueness identifies every normalized rational solution.",
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("bala193236"), ResolutionKind.Proved))),
         [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Recurrence/Residue/BalaA193237ModFiveSeven"))]));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        AssessedProvenance provenance, string prose, DescribeRole role) =>
+        AssessedProvenance provenance, string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Rat() => Seq(Mathbb, Grp(F.Id("Q")));

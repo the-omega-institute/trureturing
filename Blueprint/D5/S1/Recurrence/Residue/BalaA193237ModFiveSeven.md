@@ -72,6 +72,10 @@ $$(\exists (A: \operatorname{PowerSeries}\left(\mathbb{Q}\right)), (\operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/BalaA193237ModFiveSeven.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bala193237` (proved) by `D5/S1/Recurrence/Residue/BalaA193237ModFiveSeven.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bala193237","declaration_gid":"D5/S1/Recurrence/Residue/BalaA193237ModFiveSeven.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala; Paul D. Hanna (2021). *OEIS A193237 and A193236, congruences for triangular reciprocal cube roots*. URL: <https://oeis.org/A193237/internal>.
