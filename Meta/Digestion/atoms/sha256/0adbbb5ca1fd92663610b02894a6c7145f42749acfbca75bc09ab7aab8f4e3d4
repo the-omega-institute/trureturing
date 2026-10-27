@@ -1,0 +1,15 @@
+**Proposition 124.2 (no finite separable path density).** There are no $N<\infty$ and integrable factors $a_j,b_j,c_j\in L^1(m)$ such that
+
+$$
+W(x_1,x_2,x_3)=\sum_{j=1}^Na_j(x_1)b_j(x_2)c_j(x_3)\quad\text{a.e.}
+\tag{124.1}
+$$
+
+**Proof.** Integrate (124.1) in $x_3$, write $d_j=\int c_j\,dm$, and apply the resulting identity to a bounded $u$:
+
+$$
+g(x)Pu(x)=\sum_{j=1}^Nd_ja_j(x)\int b_j(y)u(y)\,dm(y).
+$$
+
+Since $g>0$ almost everywhere, the range of $P$ on bounded functions lies in a finite-dimensional subspace of $L^2(m)$. Bounded functions are dense in $L^2(m)$ and $P$ is bounded, so the entire range of $P$ would be finite-dimensional, contradicting injectivity on the infinite-dimensional space $L^2(m)$. $\square$
+
