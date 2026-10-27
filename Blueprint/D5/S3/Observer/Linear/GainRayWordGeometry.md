@@ -40,9 +40,22 @@ Lean statement: `D5/S3/Observer/Linear/GainRayWordGeometry.cumulative_proportion
 
 For every word w and every real auxiliary matrix L, the number of initial-inclusive indices i whose actual cumulative matrix equals c*L for some real c is at most (length(w)+2)/2 using natural division. No two such indices are consecutive. The map from such an index to its natural value divided by two is injective, and its image lies below this ceiling. The statement includes L=0 and every pure or mixed word.
 
+**Theorem 1.4 (An M action excludes the maximal alternating matrix ray).**
+
+Lean statement: `D5/S3/Observer/Linear/GainRayWordGeometry.cumulative_proportionality_card_even`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Linear/GainRayWordGeometry.cumulative_proportionality_card_even` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural m, every legal Boolean word w of action length 2*m containing M, and every real matrix L, at most m of the 2*m+1 initial-inclusive cumulative matrices are proportional to L. Select the even-starting action pair containing an M. Its three cumulative matrices are pairwise nonproportional: only J*J among the four two-action products is scalar. Group these three positions together and pair the other adjacent positions. Each group contains at most one member of any matrix ray, giving m groups. This bound is consumed by the critical scalar-span theorem.
+
 ## References
 
 - Truth anchor: `D5/S3/Observer/Linear/GainRayWordGeometry.cumulative_not_proportional_adjacent`
 - Truth anchor: `D5/S3/Observer/Linear/GainRayWordGeometry.cumulative_proportionality_card`
+- Truth anchor: `D5/S3/Observer/Linear/GainRayWordGeometry.cumulative_proportionality_card_even`
 - Truth anchor: `D5/S3/Observer/Linear/GainRayWordGeometry.mixed_cumulative_span`
 - Dependency: [D5/S3/Observer/Linear/GainRayHistory](GainRayHistory.md)
