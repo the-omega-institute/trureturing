@@ -22,7 +22,8 @@ Revision `6a58dfa6ab98bd35d841cb2cf8fd9081f62fad03`, blob
 `e6ee7331c0c2d870b00de4feb6a866ab2c8287df`: `IsUnimodular.right_pos`,
 `IsUnimodular.left_pos`, `le_or_le_of_det`, `IsUnimodular.le_or_le`, and
 `IsUnimodular.descent` (lines 91–108 and 131–186).
-The defining equation is from `HJO/Shuffle/BraidData.lean`, line 117:
+The defining equation is from `HJO/Shuffle/BraidData.lean`, line 117, at the same
+revision, blob `537a6e4faeba5a1bba3d055cdc34fd372bcdcef4`:
 `p'.1 * p.2 = p.1 * p'.2 + 1`.
 
 Copyright (c) 2026 Axiom Math. All rights reserved. Authors: Kenny Lau.

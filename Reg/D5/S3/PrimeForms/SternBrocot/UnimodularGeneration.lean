@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.PrimeForms.SternBrocot.UnimodularGeneration
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound finite-word readouts on the full theorem telescopes. -/
+
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.PrimeForms.Crossing.ExactPropagation
@@ -61,7 +63,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (List Bool)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.PrimeForms.SternBrocot.UnimodularGeneration
     definition := none
