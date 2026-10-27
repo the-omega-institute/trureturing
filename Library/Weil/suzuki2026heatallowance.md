@@ -1,3 +1,16 @@
+---
+bibkey: suzuki2026heatallowance
+authors: trureturing project contributors
+year: 2026
+title: Quadratic heat loss and the four-fifths height allowance
+doi: null
+url: https://github.com/the-omega-institute/trureturing/blob/129cd63cce6d160a84a22180b8ffd481acf49bb0/Library/Weil/suzuki2026heatallowance.md
+claim: Project continuation of the Suzuki source account. Under the same verified-height RH premise and original sixth-moment budget, the complete signed energy has a four-fifths logarithmic height allowance. This paper-level derivation has no numerical constant evaluation or full-chain Lean certification and proves no unconditional RH statement.
+strata_touched: []
+license: citation-only
+triage: anchor
+---
+
 # Quadratic heat loss and the four-fifths height allowance
 
 This continuation uses the definitions and normalizations in [the screw-kernel source](suzuki2026screw.md), specifically W257 and W338--W371. The class $\mathcal V$, the complete energy $\mathfrak E$, the sixth-moment budget $M$, the actual source profile $g_F$, its logarithmic Fourier budget $\mathcal L$, and the minima $e_K$ retain exactly those definitions. The premise $\mathsf{RH}(T)$ states that every actual zeta zero through height $T$ is on the critical line; no condition is imposed on the remaining zeros.
