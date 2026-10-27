@@ -76,7 +76,8 @@ private theorem exponentialTest_continuous : Continuous exponentialTest := by
 
 private theorem exponentialTest_bound (x : ℝ) :
     ‖exponentialTest x‖ ≤ (1 : ℝ) * exp (-|x|) := by
-  simp [exponentialTest, Complex.norm_real, Real.norm_eq_abs, abs_of_pos (exp_pos _)]
+  simp only [exponentialTest, Complex.norm_real, Real.norm_eq_abs,
+    abs_of_pos (Real.exp_pos _), one_mul, le_refl]
 
 private def dependenceFamily (k : ℕ) : ℝ → ℂ :=
   if k = 0 then (fun _ => 0) else exponentialTest
@@ -110,7 +111,8 @@ private theorem exponential_correlation_positive (s : ℝ) :
     convert (correlation_bound (A := 1) (by norm_num)
       exponentialTest_continuous exponentialTest_bound s).1.re using 1
     ext x
-    simp [exponentialTest]
+    simp only [exponentialTest, RCLike.re_eq_complex_re, Complex.conj_ofReal,
+      ← Complex.ofReal_mul, Complex.ofReal_re]
   have heq : weilTest exponentialTest exponentialTest s =
       ((∫ x : ℝ, exp (-|x|) * exp (-|x - s|) : ℝ) : ℂ) := by
     calc
@@ -118,45 +120,63 @@ private theorem exponential_correlation_positive (s : ℝ) :
         rw [weilTest_eq]
         apply integral_congr_ae
         filter_upwards with x
-        simp [exponentialTest]
+        simp only [exponentialTest, Complex.conj_ofReal, Complex.ofReal_mul]
       _ = _ := by rw [integral_complex_ofReal]
   rw [heq, Complex.ofReal_re]
   apply integral_pos_of_integrable_nonneg_nonzero
     (by fun_prop) hi (fun x => (mul_pos (exp_pos _) (exp_pos _)).le) (x := 0)
   exact (mul_pos (exp_pos _) (exp_pos _)).ne'
 
+open private correlation_tendsto from
+  D5.S3.Weil.ZetaBridge.ExponentialPrimeCorrelationPassage
+
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨dependenceFamily, 0, 1, ?_⟩
-  intro heq
-  have hv := congrFun heq 2
-  have hlog : 0 < log (2 : ℝ) := log_pos (by norm_num)
-  have hz (s : ℝ) : weilTest (fun _ : ℝ => (0 : ℂ)) (fun _ => 0) s = 0 := by
-    simp [weilTest_eq]
-  change
-    (((ArithmeticFunction.vonMangoldt 2 / sqrt 2 : ℝ) : ℂ) *
-      (weilTest (dependenceFamily 0) (dependenceFamily 0) (log 2) +
-        weilTest (dependenceFamily 0) (dependenceFamily 0) (-log 2))) =
-    (((ArithmeticFunction.vonMangoldt 2 / sqrt 2 : ℝ) : ℂ) *
-      (weilTest (dependenceFamily 1) (dependenceFamily 1) (log 2) +
-        weilTest (dependenceFamily 1) (dependenceFamily 1) (-log 2))) at hv
-  simp only [dependenceFamily, Nat.reduceEq, ite_true, ite_false,
-    hz, zero_add, mul_zero] at hv
-  have hcoef : (((ArithmeticFunction.vonMangoldt 2 / sqrt 2 : ℝ) : ℂ)) ≠ 0 := by
+  obtain ⟨hc, hf, hlim⟩ := dependenceFamily_admitted
+  have hlog : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
+  have hcoef : (((ArithmeticFunction.vonMangoldt 2 / Real.sqrt 2 : ℝ) : ℂ)) ≠ 0 := by
     apply Complex.ofReal_ne_zero.mpr
     apply div_ne_zero
     · rw [ArithmeticFunction.vonMangoldt_apply_prime Nat.prime_two]
       exact hlog.ne'
-    · exact (sqrt_pos.2 (by norm_num : (0 : ℝ) < 2)).ne'
-  have hsum : weilTest exponentialTest exponentialTest (log 2) +
-      weilTest exponentialTest exponentialTest (-log 2) ≠ 0 := by
-    have hp : 0 < (weilTest exponentialTest exponentialTest (log 2) +
-        weilTest exponentialTest exponentialTest (-log 2)).re := by
+    · exact (Real.sqrt_pos.2 (by norm_num : (0 : ℝ) < 2)).ne'
+  have hsum : weilTest exponentialTest exponentialTest (Real.log 2) +
+      weilTest exponentialTest exponentialTest (-Real.log 2) ≠ 0 := by
+    have hp : 0 < (weilTest exponentialTest exponentialTest (Real.log 2) +
+        weilTest exponentialTest exponentialTest (-Real.log 2)).re := by
       rw [Complex.add_re]
       exact add_pos (exponential_correlation_positive _) (exponential_correlation_positive _)
     intro h
     exact hp.ne' (by simpa using congrArg Complex.re h)
-  exact (mul_ne_zero hcoef hsum) hv.symm
+  let z : ℂ := ((ArithmeticFunction.vonMangoldt 2 / Real.sqrt 2 : ℝ) : ℂ) *
+    (weilTest exponentialTest exponentialTest (Real.log 2) +
+      weilTest exponentialTest exponentialTest (-Real.log 2))
+  have hz : z ≠ 0 := mul_ne_zero hcoef hsum
+  have hsamples : Tendsto (fun k => actual.readout i dependenceFamily k 2)
+      atTop (𝓝 z) := by
+    change Tendsto (fun k =>
+      ((ArithmeticFunction.vonMangoldt 2 / Real.sqrt 2 : ℝ) : ℂ) *
+        (weilTest (dependenceFamily k) (dependenceFamily k) (Real.log 2) +
+          weilTest (dependenceFamily k) (dependenceFamily k) (-Real.log 2)))
+      atTop (𝓝 (((ArithmeticFunction.vonMangoldt 2 / Real.sqrt 2 : ℝ) : ℂ) *
+        (weilTest exponentialTest exponentialTest (Real.log 2) +
+          weilTest exponentialTest exponentialTest (-Real.log 2))))
+    exact tendsto_const_nhds.mul
+      ((correlation_tendsto (A := 1) (g := exponentialTest) (by norm_num)
+        hc hf hlim (Real.log 2)).add
+        (correlation_tendsto (A := 1) (g := exponentialTest) (by norm_num)
+          hc hf hlim (-Real.log 2)))
+  have hzero : actual.readout i dependenceFamily 0 2 = 0 := by
+    change ((ArithmeticFunction.vonMangoldt 2 / Real.sqrt 2 : ℝ) : ℂ) *
+      (weilTest (dependenceFamily 0) (dependenceFamily 0) (Real.log 2) +
+        weilTest (dependenceFamily 0) (dependenceFamily 0) (-Real.log 2)) = 0
+    simp [dependenceFamily, weilTest_eq]
+  have hnonzero : ∀ᶠ k in atTop, actual.readout i dependenceFamily k 2 ≠ 0 :=
+    hsamples.eventually (eventually_ne_nhds hz)
+  obtain ⟨k, hk⟩ := hnonzero.exists
+  refine ⟨dependenceFamily, 0, k, ?_⟩
+  intro heq
+  exact hk ((congrFun heq 2).symm.trans hzero)
 
 def evidence : Registration arena (type_of% @complete_prime_correlation_tendsto) where
   actual := actual
@@ -169,7 +189,9 @@ def evidence : Registration arena (type_of% @complete_prime_correlation_tendsto)
 def registration_1 : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@complete_prime_correlation_tendsto) (Realization signature) Unit Unit where
   unitName :=
-    `D5.S3.Weil.ZetaBridge.ExponentialPrimeCorrelationPassage.complete_prime_correlation_tendsto.__information_unit
+    Name.str
+      `D5.S3.Weil.ZetaBridge.ExponentialPrimeCorrelationPassage.complete_prime_correlation_tendsto
+      "__information_unit"
   realizationName := `Reg.D5.S3.Weil.ZetaBridge.ExponentialPrimeCorrelationPassage.evidence
   realizationSource := none
   generated := false
