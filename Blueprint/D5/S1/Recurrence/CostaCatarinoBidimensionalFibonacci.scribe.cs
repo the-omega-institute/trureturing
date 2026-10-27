@@ -38,13 +38,17 @@ internal sealed class CostaCatarinoBidimensionalFibonacciDocument : IScribeDocum
                     + "Equal signs give a nonzero sum; opposite signs cannot cancel at distinct "
                     + "indices, and equal indices have equal signs. Thus the imaginary part, "
                     + "and hence the determinant, never vanishes."),
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cc2025"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        BlockSequence prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        BlockSequence prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("costa-catarino-" + id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            prose, role);
+            prose, role, openProblemResolutionClaim: resolution);
 
     private static BlockSequence Prose(string text) => Blocks(Paragraph(Text(text)));
 
