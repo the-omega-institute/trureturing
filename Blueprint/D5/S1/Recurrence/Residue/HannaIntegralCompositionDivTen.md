@@ -36,6 +36,10 @@ $$\forall A \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \forall G \
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/HannaIntegralCompositionDivTen.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/h277403-div10` (proved) by `D5/S1/Recurrence/Residue/HannaIntegralCompositionDivTen.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"h277403-div10","declaration_gid":"D5/S1/Recurrence/Residue/HannaIntegralCompositionDivTen.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2016). *OEIS A277403 — E.g.f. satisfies: A(x - Integral A(x) dx) = x + Integral A(x) dx.*. URL: <https://oeis.org/A277403>.
