@@ -32,7 +32,7 @@ open scoped Topology ComplexConjugate FourierTransform
 
 open private convolution_inversion convolution_norm_sq_le
   weighted_zero_sampling_two_families from
-  Zeta23.WeilEF.WeightedZeroSampling
+  D5.S3.Weil.ZetaExplicit.WeightedZeroSampling
 
 private def damping (a beta x : ℝ) : ℂ :=
   Complex.exp ((-a * |x| - beta * x : ℝ) : ℂ)
@@ -71,7 +71,7 @@ private theorem cauchyKernel_bound {a : ℝ} (ha : 1 / 2 < a)
     ‖cauchyKernel a z‖ ≤ envelope a / (1 + z.re ^ 2) := by
   have ha0 : 0 < a := by linarith
   have hm := margin_pos ha
-  have hd := denominator_bound hz
+  have hd := denominator_bound (a := a) hz
   rw [cauchyKernel, norm_div, Complex.norm_real, Real.norm_eq_abs,
     abs_of_pos (div_pos ha0 Real.pi_pos)]
   calc
@@ -79,6 +79,7 @@ private theorem cauchyKernel_bound {a : ℝ} (ha : 1 / 2 < a)
       div_le_div_of_nonneg_left (by positivity) (by positivity) hd
     _ = envelope a / (1 + z.re ^ 2) := by
       dsimp only [envelope]
+      simp only [div_eq_mul_inv, mul_inv_rev]
       ring
 
 private theorem tilted_exp_fourier {a beta : ℝ} (ha : 1 / 2 < a)
@@ -143,7 +144,7 @@ private theorem tilted_exp_fourier {a beta : ℝ} (ha : 1 / 2 < a)
     linarith
   have hd : (a : ℂ) ^ 2 + ((t : ℂ) + Complex.I * (beta : ℂ)) ^ 2 ≠ 0 := by
     intro h
-    have hp := denominator_bound (z := ((t : ℂ) + Complex.I * (beta : ℂ)))
+    have hp := denominator_bound (a := a) (z := ((t : ℂ) + Complex.I * (beta : ℂ)))
       (by simpa using hb)
     rw [h, norm_zero] at hp
     have hm := margin_pos ha
@@ -166,7 +167,7 @@ private theorem integrable_cauchyKernel {a beta : ℝ} (ha : 1 / 2 < a)
     simpa using hb
   have hden (t : ℝ) :
       (a : ℂ) ^ 2 + ((t : ℂ) + Complex.I * (beta : ℂ)) ^ 2 ≠ 0 := by
-    have hbound := denominator_bound (hz t)
+    have hbound := denominator_bound (a := a) (hz t)
     have hpositive : 0 < margin a *
         (1 + ((t : ℂ) + Complex.I * (beta : ℂ)).re ^ 2) :=
       mul_pos (margin_pos ha) (by positivity)
@@ -230,7 +231,9 @@ private theorem tilted_kernel_inversion {a beta : ℝ} (ha : 1 / 2 < a)
           ((1 / (2 * Real.pi) : ℂ) * Zeta23.paperFT (damping a beta) t) *
             Complex.exp (-Complex.I * (t : ℂ) * (x : ℂ)) := by
       apply integral_congr_ae
-      exact Filter.Eventually.of_forall fun t => by rw [hscaled t]
+      exact Filter.Eventually.of_forall fun t => by
+        dsimp only
+        rw [hscaled t]
     _ = (1 / (2 * Real.pi) : ℂ) *
         ∫ t : ℝ, Zeta23.paperFT (damping a beta) t *
           Complex.exp (-Complex.I * (t : ℂ) * (x : ℂ)) := by
@@ -316,7 +319,9 @@ private theorem noncompact_strip_estimate {a : ℝ} (ha : 1 / 2 < a)
     apply ((hweight z.re).const_mul C).mono'
       (hK.aestronglyMeasurable.norm.mul (hF.norm.pow 2).aestronglyMeasurable)
     filter_upwards with s
-    rw [Real.norm_of_nonneg (by positivity)]
+    change ‖‖K s‖ * ‖Zeta23.paperFT h s‖ ^ 2‖ ≤
+      C * (‖Zeta23.paperFT h s‖ ^ 2 / (1 + (z.re - s) ^ 2))
+    rw [Real.norm_of_nonneg (mul_nonneg (norm_nonneg _) (sq_nonneg _))]
     calc
       _ ≤ (C / (1 + (z.re - s) ^ 2)) * ‖Zeta23.paperFT h s‖ ^ 2 :=
         mul_le_mul_of_nonneg_right (hKb s) (sq_nonneg _)
