@@ -30,10 +30,6 @@ open Real MeasureTheory Filter Set
 open scoped Topology ComplexConjugate Convolution
 open Zeta23.EF
 
-private theorem weilTest_eq (f g : ℝ → ℂ) (s : ℝ) :
-    weilTest f g s = ∫ x : ℝ, f x * conj (g (x - s)) := by
-  simp only [weilTest, convolution_def, ContinuousLinearMap.mul_apply', tilde, neg_sub]
-
 private def majorant (x : ℝ) : ℝ := exp (-|x| / 4)
 
 private theorem majorant_integrable : Integrable majorant := by
@@ -82,7 +78,7 @@ private theorem correlation_bound {A : ℝ} (hA : 0 ≤ A)
     (hc.mul (Complex.continuous_conj.comp
       (hc.comp (continuous_id.sub continuous_const)))).aestronglyMeasurable
   refine ⟨hm.mono' hmeas hb, ?_⟩
-  rw [weilTest_eq]
+  simp only [weilTest, convolution_def, ContinuousLinearMap.mul_apply', tilde, neg_sub]
   calc
     _ ≤ ∫ x : ℝ, (A ^ 2 * exp (-3 * |s| / 4)) * majorant x :=
       norm_integral_le_of_norm_le hm hb
@@ -94,7 +90,7 @@ private theorem correlation_tendsto {A : ℝ} (hA : 0 ≤ A)
     (hf : ∀ k x, ‖f k x‖ ≤ A * exp (-|x|))
     (hlim : ∀ x, Tendsto (fun k => f k x) atTop (𝓝 (g x))) (s : ℝ) :
     Tendsto (fun k => weilTest (f k) (f k) s) atTop (𝓝 (weilTest g g s)) := by
-  simp_rw [weilTest_eq]
+  simp_simp only [weilTest, convolution_def, ContinuousLinearMap.mul_apply', tilde, neg_sub]
   apply tendsto_integral_of_dominated_convergence
     (fun x : ℝ => (A ^ 2 * exp (-3 * |s| / 4)) * majorant x)
   · intro k

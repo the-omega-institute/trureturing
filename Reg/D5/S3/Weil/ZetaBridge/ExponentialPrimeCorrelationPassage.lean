@@ -64,10 +64,6 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     hs.tendsto_atTop_zero
   norm_num at hz
 
-private theorem weilTest_eq (f g : ℝ → ℂ) (s : ℝ) :
-    weilTest f g s = ∫ x : ℝ, f x * conj (g (x - s)) := by
-  simp only [weilTest, convolution_def, ContinuousLinearMap.mul_apply', tilde, neg_sub]
-
 private def exponentialTest (x : ℝ) : ℂ := (Real.exp (-|x|) : ℂ)
 
 private theorem exponentialTest_continuous : Continuous exponentialTest := by
@@ -117,7 +113,7 @@ private theorem exponential_correlation_positive (s : ℝ) :
       ((∫ x : ℝ, exp (-|x|) * exp (-|x - s|) : ℝ) : ℂ) := by
     calc
       _ = ∫ x : ℝ, ((exp (-|x|) * exp (-|x - s|) : ℝ) : ℂ) := by
-        rw [weilTest_eq]
+        simp only [weilTest, convolution_def, ContinuousLinearMap.mul_apply', tilde, neg_sub]
         apply integral_congr_ae
         filter_upwards with x
         simp only [exponentialTest, Complex.conj_ofReal, Complex.ofReal_mul]
@@ -170,7 +166,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
     change ((ArithmeticFunction.vonMangoldt 2 / Real.sqrt 2 : ℝ) : ℂ) *
       (weilTest (dependenceFamily 0) (dependenceFamily 0) (Real.log 2) +
         weilTest (dependenceFamily 0) (dependenceFamily 0) (-Real.log 2)) = 0
-    simp [dependenceFamily, weilTest_eq]
+    simp [dependenceFamily, weilTest, convolution_def, ContinuousLinearMap.mul_apply', tilde, neg_sub]
   have hnonzero : ∀ᶠ k in atTop, actual.readout i dependenceFamily k 2 ≠ 0 :=
     hsamples.eventually (eventually_ne_nhds hz)
   obtain ⟨k, hk⟩ := hnonzero.exists
@@ -216,7 +212,7 @@ def registration_1 : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     coordinates := #[2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "fn", "arg", "body", "arg"]
+        "fn", "arg", "body", "fn", "arg"]
       stateBinder := 8
       functionOperand := false
       stateOperand := none
