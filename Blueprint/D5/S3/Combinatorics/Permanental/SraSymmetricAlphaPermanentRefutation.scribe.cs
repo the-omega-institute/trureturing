@@ -21,11 +21,13 @@ internal sealed class SraSymmetricAlphaPermanentRefutationDocument : IScribeDocu
             Node("claim", "claim", Disp(IffTo(F.Id("claim"), ClaimBody())),
                 "Source, p. 6, §4(b): “For symmetrizable inverse M-matrices and α∉{½,1}, decide whether S↦per_α(A_S) is log-supermodular.” Alpha is positive as in equation (3.1). The formula is the universal affirmative assertion, with both distinguished positive orders excluded. Fin n index i represents source index i+1, and S,T range over finite subsets of those indices.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "result", Disp(Seq(Neg, Sp, Parenthesized(ClaimBody()))),
-                "The symmetric matrix with rows (7,2,1,2), (2,7,2,1), (1,2,7,2), (2,1,2,7) is entrywise positive and inverse M. For S={0,1,2} and T={0,2,3}, the union-intersection product minus the S,T product equals alpha²(alpha+1)(2401alpha²+1617alpha−16), which is negative throughout 0<alpha≤1/200. Taking alpha=1/200 refutes the assertion.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))), []));
+                "The symmetric matrix with rows (7,2,1,2), (2,7,2,1), (1,2,7,2), (2,1,2,7) is entrywise positive and inverse M. For S={0,1,2} and T={0,2,3}, the union-intersection product minus the S,T product equals alpha²(alpha+1)(2401alpha²+1617alpha−16), which is negative throughout 0<alpha≤1/200. Taking alpha=1/200 refutes the assertion.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("sra2609-symmetric-alpha-permanent"), ResolutionKind.Refuted))), []));
     private static DocumentBlock Node(string id, string declaration, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(declaration),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula SymmetrizableFormula() =>
         Disp(All("n", N(), All("A", MatN(), IffTo(Call("Symmetrizable", F.Id("A")), Some("delta", new Formula.TypeArrow(FinN(), R()), And(All("i", FinN(), LtTo(D(0), App(F.Id("delta"), F.Id("i")))), App(Q("Matrix", "IsSymm"), TimesOf(TimesOf(App(Q("Matrix", "diagonal"), F.Id("delta")), F.Id("A")), App(Q("Matrix", "diagonal"), LambdaOf("i", FinN(), PowOf(App(F.Id("delta"), F.Id("i")), Seq(Minus, D(1)))))))))))));
     private static Formula Instances(Formula body) => Seq(OpenBracket, Call("Fintype", F.Id("I")), CloseBracket, Sp, OpenBracket, Call("DecidableEq", F.Id("I")), CloseBracket, Sp, body);
