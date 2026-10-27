@@ -102,9 +102,14 @@ dependence, and enrolled readout binding remain missing. They are not
 The encoded example answers the stated existence question affirmatively.
 The primary version still lists the question; bounded independent search
 found no exact prior answer within its searched scope. This is not an
-exhaustive novelty or global-priority claim. The source note records
-full-text limits for Carrasco-Olivera et al. (2022) and Dastjerdi–Hosseini
-(2010), and the withdrawal of Dastjerdi–Jangjoo arXiv:1108.3242.
+exhaustive novelty or global-priority claim. The source note records the
+inspected Definition 1.5, Theorem 3 and Lemma 16 in the author-linked
+17-page manuscript of Carrasco-Olivera et al. (2022). Those passages
+provide no direct answer to Question 5.3; the printed supremum set
+distance, two-sided time and absence of a separate initial diameter bound
+prevent identifying their literal definition with Definition 2.1 here.
+The journal version and Dastjerdi–Hosseini (2010) remain unread, and
+Dastjerdi–Jangjoo arXiv:1108.3242 is withdrawn.
 Ordinary $N$-shadowing, density shadowing and entropy QFT do not replace
 the two definitions used here.
 
@@ -120,8 +125,12 @@ claimed.
 
 Source correspondence remains a source-reading judgement using the
 genuine compatible product metric, not equality with the degenerate
-printed infimum. Literature exclusions are bounded: the full texts of
-Carrasco-Olivera et al. (2022) and Dastjerdi–Hosseini (2010) remain unread.
+printed infimum. Literature exclusions are bounded: the inspected
+passages of the author-linked Carrasco-Olivera et al. manuscript do not
+supply a direct answer to Question 5.3, and their literal definition is
+not identified with Definition 2.1. Its journal version and the full text
+of Dastjerdi–Hosseini (2010) remain unread; no exhaustive full-text
+exclusion is claimed.
 The audit under issue #22664 remains unfinished; the 23 positive-law
 checks are not `declared_validated`. No exhaustive novelty, global
 priority or official acceptance is claimed.

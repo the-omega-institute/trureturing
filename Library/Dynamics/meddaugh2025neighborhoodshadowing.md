@@ -57,10 +57,23 @@ The inspected primary version lists Question 5.3 as a question. A bounded
 independent search found no exact prior answer within its searched scope;
 this does not certify exhaustive priority or novelty. Carrasco-Olivera,
 Lee, Morales and Villavicencio, *Finite-expansivity and N-shadowing*
-(2022), DOI 10.1007/s00574-021-00253-w, was available only through the
-publisher abstract, not its full text. Dastjerdi and Hosseini,
-*Sub-shadowings* (2010), DOI 10.1016/j.na.2010.01.014, had full-text access
-failures (HTTP 403/401). No full-text exclusion is claimed for either.
+(2022), DOI 10.1007/s00574-021-00253-w, has a
+[17-page author manuscript](https://drive.google.com/uc?export=download&id=1iH0yrc9TX8SG11O3yKeyDHMhT9GikHrq)
+linked from [Villavicencio's research page](https://sites.google.com/imca.edu.pe/hvillavicencio/research).
+The inspected passages are Definition 1.5 and Theorem 3 (pp. 3–4) and
+Lemma 16 (pp. 11–12). Definition 1.5 uses a fixed nonempty tracing set of
+at most $N$ points and two-sided pseudo-orbit time, without a separate
+initial diameter bound. The set-distance definition on p. 3 is printed
+as a supremum; its literal definition is not identified with Definition
+2.1 here. Theorem 3 states an $N$-shadowing hierarchy with interval and
+genus-two surface examples. Lemma 16 transfers finite-cardinality
+shadowing through the whole inverse image of a tracing set, without a
+separate initial diameter bound. These inspected statements do not give
+a direct answer to Question 5.3. This bounded comparison is not an
+exhaustive full-text exclusion or validation of the journal version,
+which remains unread. Dastjerdi and Hosseini, *Sub-shadowings* (2010),
+DOI 10.1016/j.na.2010.01.014, remains unread after full-text access
+failures (HTTP 403/401); no full-text exclusion is claimed for it.
 Dastjerdi and Jangjoo, arXiv:1108.3242, is withdrawn because of a flaw in
 Theorem 3.2 and is not used as proof.
 
