@@ -35,7 +35,7 @@ attribute [instance] Parameters.topX Parameters.topY Parameters.sepX Parameters.
 
 abbrev signature : Signature where
   Params := Parameters.{u,v}
-  State p := C(I, p.Y)
+  State p := Path (p.f p.x) p.y
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -44,27 +44,25 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u,v} :=
-  realize signature (fun _ _ η => η) (fun e => nomatch e)
+  realize signature (fun _ _ η => η.toContinuousMap) (fun e => nomatch e)
 
 def rejected : Realization signature.{u,v} :=
   realize signature (fun _ _ η => ContinuousMap.const _ (η ⟨1 / 2, by norm_num⟩)) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{u,v}
-  Law R := ∀ (p : Parameters.{u,v}) (η : C(I, p.Y)),
-    η 0 = p.f p.x → η 1 = p.y →
+  Law R := ∀ (p : Parameters.{u,v}) (η : Path (p.f p.x) p.y),
     ∃ E : BasedEquivalence p.x p.y, ∃ A : p.f.Homotopy E.forward,
       ∀ t, A (t, p.x) = R.readout () p η t
 
 private theorem bridge :
     (type_of% (@based_inverse.{u,v})) ↔ arena.{u,v}.Law actual := by
   constructor
-  · intro h p η h0 h1
-    exact h p.x p.y p.RX p.RY p.f p.g p.Hgf p.Hfg
-      { toContinuousMap := η, source' := h0, target' := h1 }
+  · intro h p η
+    exact h p.x p.y p.RX p.RY p.f p.g p.Hgf p.Hfg η
   · intro h X Y tx ty sx sy x y RX RY f g Hgf Hfg γ
     exact h ⟨X, Y, tx, ty, sx, sy, x, y, RX, RY, f, g, Hgf, Hfg⟩
-      γ.toContinuousMap γ.source γ.target
+      γ
 
 private def zeroRetraction : CylinderRetraction (⟨(0 : I)⟩ : ULift.{u} I) where
   map := by
@@ -124,13 +122,22 @@ private def excursion : C(I, ULift.{v} I) :=
       constructor <;> linarith [abs_nonneg (2 * (t : ℝ) - 1)]⟩⟩,
     by fun_prop⟩
 
+private def excursionPath : signature.State sample.{u,v} where
+  toContinuousMap := excursion
+  source' := by apply ULift.ext; apply Subtype.ext; norm_num [excursion, sample, transport]
+  target' := by apply ULift.ext; apply Subtype.ext; norm_num [excursion, sample]
+
+private def zeroPath : signature.State sample.{u,v} where
+  toContinuousMap := ContinuousMap.const _ ⟨0⟩
+  source' := rfl
+  target' := rfl
+
 private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
-  obtain ⟨E, A, hA⟩ := h sample excursion (by apply ULift.ext; apply Subtype.ext; norm_num [excursion, sample, transport])
-    (by apply ULift.ext; apply Subtype.ext; norm_num [excursion, sample])
+  obtain ⟨E, A, hA⟩ := h sample excursionPath
   have he := (A.apply_zero sample.x).symm.trans (hA 0)
   have hh := congrArg (fun z : ULift.{v} I => (z.down : ℝ)) he
-  norm_num [rejected, realize, excursion, sample, transport] at hh
+  norm_num [rejected, realize, excursionPath, excursion, sample, transport] at hh
 
 def family : Registration arena.{u,v} (type_of% (@based_inverse.{u,v})) where
   actual := actual
@@ -141,10 +148,11 @@ def family : Registration arena.{u,v} (type_of% (@based_inverse.{u,v})) where
     fun e => nomatch e⟩
   dependence := by
     intro i
-    refine ⟨sample, ContinuousMap.const _ ⟨0⟩, ContinuousMap.const _ ⟨1⟩, ?_⟩
+    refine ⟨sample, zeroPath, excursionPath, ?_⟩
     intro h
-    have hh := congrArg (fun f : C(I, ULift.{v} I) => (f 0).down) h
-    exact zero_ne_one hh
+    have hh := congrArg (fun f : C(I, ULift.{v} I) =>
+      ((f ⟨1 / 2, by norm_num⟩).down : ℝ)) h
+    norm_num [actual, realize, zeroPath, excursionPath, excursion] at hh
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@based_inverse.{u,v}) (Realization signature.{u,v}) Unit Unit where
@@ -159,7 +167,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ η => η) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ η => η.toContinuousMap) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

@@ -65,24 +65,37 @@ private theorem geometry (q : I × I) :
     dsimp [rhoS]
     field_simp [ne_of_gt hd0]
     <;> ring
-  have rt0 : 0 ≤ rhoT q := by nlinarith
-  have rt1 : rhoT q ≤ 1 := by nlinarith
-  have rs0 : 0 ≤ rhoS q := by nlinarith
-  have rs1 : rhoS q ≤ 1 := by nlinarith
+  have et : rhoT q = (depth q + 2 * (q.1 : ℝ) - 1) / (2 * depth q) := by
+    unfold rhoT
+    field_simp [ne_of_gt hd0]
+    <;> ring
+  have es : rhoS q = (2 * depth q + (q.2 : ℝ) - 2) / depth q := by
+    unfold rhoS
+    field_simp [ne_of_gt hd0]
+    <;> ring
+  have rt0 : 0 ≤ rhoT q := by rw [et]; exact div_nonneg (by linarith) (by positivity)
+  have rt1 : rhoT q ≤ 1 := by
+    rw [et]; apply (div_le_iff₀ (by positivity : 0 < 2 * depth q)).mpr; linarith
+  have rs0 : 0 ≤ rhoS q := by rw [es]; exact div_nonneg (by linarith) hd0.le
+  have rs1 : rhoS q ≤ 1 := by
+    rw [es]; apply (div_le_iff₀ hd0).mpr; linarith
   refine ⟨hd0, hd1, rt0, rt1, rs0, rs1, ?_, hrt, hrs⟩
-  rcases max_cases (1 - (q.2 : ℝ) / 2) |2 * (q.1 : ℝ) - 1| with h | h
+  by_cases h : |2 * (q.1 : ℝ) - 1| ≤ 1 - (q.2 : ℝ) / 2
   · left
-    have he : depth q = 1 - (q.2 : ℝ) / 2 := h.1
-    nlinarith
+    have he : depth q = 1 - (q.2 : ℝ) / 2 := max_eq_left h
+    have hz : depth q * rhoS q = 0 := by nlinarith
+    exact (mul_eq_zero.mp hz).resolve_left (ne_of_gt hd0)
   · right
-    have he : depth q = |2 * (q.1 : ℝ) - 1| := h.1
+    have he : depth q = |2 * (q.1 : ℝ) - 1| := max_eq_right (le_of_not_ge h)
     rcases le_total 0 (2 * (q.1 : ℝ) - 1) with ht' | ht'
     · right
       rw [abs_of_nonneg ht'] at he
-      nlinarith
+      have hz : depth q * (rhoT q - 1) = 0 := by nlinarith
+      exact sub_eq_zero.mp ((mul_eq_zero.mp hz).resolve_left (ne_of_gt hd0))
     · left
       rw [abs_of_nonpos ht'] at he
-      nlinarith
+      have hz : depth q * rhoT q = 0 := by nlinarith
+      exact (mul_eq_zero.mp hz).resolve_left (ne_of_gt hd0)
 
 private theorem depth_on_sides (q : I × I) (hq : q ∈ sides) : depth q = 1 := by
   rcases hq with h | h | h
@@ -103,10 +116,12 @@ private theorem continuous_level : Continuous level := by
   exact continuous_const.sub continuous_depth
 private theorem continuous_rhoT : Continuous rhoT := by
   unfold rhoT
-  exact continuous_const.add ((by fun_prop).div continuous_depth (fun q => ne_of_gt (geometry q).1))
+  have h : Continuous (fun q : I × I => (q.1 : ℝ) - 1 / 2) := by fun_prop
+  exact continuous_const.add (h.div continuous_depth (fun q => ne_of_gt (geometry q).1))
 private theorem continuous_rhoS : Continuous rhoS := by
   unfold rhoS
-  exact continuous_const.add ((by fun_prop).div continuous_depth (fun q => ne_of_gt (geometry q).1))
+  have h : Continuous (fun q : I × I => (q.2 : ℝ) - 2) := by fun_prop
+  exact continuous_const.add (h.div continuous_depth (fun q => ne_of_gt (geometry q).1))
 
 variable {p : Z}
 
@@ -124,8 +139,16 @@ private def squarePoint (R : CylinderRetraction p) (z : Z × (I × I)) : I × I 
   have ha := amount_bounds R z
   refine (⟨(1 - a) * rhoT z.2 + a / 2, ?_⟩,
     ⟨(1 - a) * rhoS z.2 + 2 * a, ?_⟩)
-  · constructor <;> dsimp [a] at * <;> nlinarith
-  · constructor <;> dsimp [a] at * <;> nlinarith [z.2.2.property.2]
+  · have ha1 : 0 ≤ 1 - a := by dsimp [a]; linarith
+    constructor
+    · exact add_nonneg (mul_nonneg ha1 ht0) (div_nonneg ha.1 (by norm_num))
+    · nlinarith [mul_nonneg ha1 (sub_nonneg.mpr ht1)]
+  · have ha1 : 0 ≤ 1 - a := by dsimp [a]; linarith
+    constructor
+    · exact add_nonneg (mul_nonneg ha1 hs0) (mul_nonneg (by norm_num) ha.1)
+    · have hprod := mul_nonneg (sub_nonneg.mpr ha.2)
+        (show 0 ≤ 2 - rhoS z.2 by linarith)
+      nlinarith [z.2.2.property.2]
 
 /-- The three square sides, together with the entire square over the basepoint. -/
 def SquareBoundary (p : Z) : Set (Z × (I × I)) :=
@@ -256,19 +279,27 @@ private theorem continuous_straightBoundary [T1Space Z] {a b : C(Z, W)}
   have hC : IsClosed C := isClosed_eq (by fun_prop) continuous_const
   have hD : IsClosed D := isClosed_singleton.preimage (by fun_prop)
   have hfA : ContinuousOn (straightBoundary p w P N) A := by
-    apply (P.continuous.comp (by fun_prop)).continuousOn.congr
+    have hc : Continuous (fun z : SquareBoundary p => P (z.val.2.1, z.val.1)) :=
+      P.continuous.comp (by fun_prop)
+    apply hc.continuousOn.congr
     intro z hz
     simp [straightBoundary, show z.val.2.2 = 0 from hz]
   have hfB : ContinuousOn (straightBoundary p w P N) B := by
-    apply (a.continuous.comp (by fun_prop)).continuousOn.congr
+    have hc : Continuous (fun z : SquareBoundary p => a z.val.1) :=
+      a.continuous.comp (by fun_prop)
+    apply hc.continuousOn.congr
     intro z hz
     simp [straightBoundary, show z.val.2.1 = 0 from hz]
   have hfC : ContinuousOn (straightBoundary p w P N) C := by
-    apply (b.continuous.comp (by fun_prop)).continuousOn.congr
+    have hc : Continuous (fun z : SquareBoundary p => b z.val.1) :=
+      b.continuous.comp (by fun_prop)
+    apply hc.continuousOn.congr
     intro z hz
     simp [straightBoundary, show z.val.2.1 = 1 from hz]
   have hfD : ContinuousOn (straightBoundary p w P N) D := by
-    apply (N.continuous.comp (by fun_prop)).continuousOn.congr
+    have hc : Continuous (fun z : SquareBoundary p => N z.val.2) :=
+      N.continuous.comp (by fun_prop)
+    apply hc.continuousOn.congr
     intro z hz
     have hp : z.val.1 = p := hz
     dsimp [straightBoundary]
@@ -334,8 +365,11 @@ private theorem moveMap [T1Space Z] (R : CylinderRetraction p)
 
 private def contractionParameter (b : C(I, I)) : C(I × I, I) :=
   ⟨fun q => ⟨(q.2 : ℝ) + (1 - (q.2 : ℝ)) * (b q.1 : ℝ), by
-    constructor <;> nlinarith [q.2.property.1, q.2.property.2,
-      (b q.1).property.1, (b q.1).property.2]⟩, by fun_prop⟩
+    have hs := q.2.property
+    have hb := (b q.1).property
+    constructor
+    · exact add_nonneg hs.1 (mul_nonneg (sub_nonneg.mpr hs.2) hb.1)
+    · nlinarith [mul_nonneg (sub_nonneg.mpr hs.2) (sub_nonneg.mpr hb.2)]⟩, by fun_prop⟩
 
 private def cancelTrace [T1Space Z] (R : CylinderRetraction p)
     {a b : C(Z, W)} (w : W) (P : a.Homotopy b)
