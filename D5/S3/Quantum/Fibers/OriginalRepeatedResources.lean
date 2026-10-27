@@ -146,7 +146,14 @@ private theorem support_margin (B : Band) (n : ℕ) (hn : 1 ≤ n) (e : Bool) :
     have h0 := min_le_left B.a (min (B.c-B.b) (1-2*B.c))
     have h1 := (min_le_right B.a (min (B.c-B.b) (1-2*B.c))).trans (min_le_left _ _)
     have h2 := (min_le_right B.a (min (B.c-B.b) (1-2*B.c))).trans (min_le_right _ _)
-    fin_cases i <;> norm_num [p_explicit] <;> linarith [hr.1,hr.2]
+    change min B.a (min (B.c-B.b) (1-2*B.c)) ≤ p B.c (k t) i
+    rw [p_explicit]
+    fin_cases i
+    · exact h0.trans hr.1
+    · exact h1.trans (sub_le_sub_left hr.2 B.c)
+    · exact h2
+    · exact h1.trans (sub_le_sub_left hr.2 B.c)
+    · exact h0.trans hr.1
 
 /-- Both literal early/late functions have finite partitions with continuous
 rates on each closed piece and their actual derivatives on each open piece. -/
