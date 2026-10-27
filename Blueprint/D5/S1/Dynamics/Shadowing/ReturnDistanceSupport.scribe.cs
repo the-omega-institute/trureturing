@@ -35,7 +35,7 @@ internal sealed class ReturnDistanceSupportDocument : IScribeDocumentDefinition
             All("D", SetZ), All("P", SetZ), All("h", Z), All("t", Z), All("s", Z),
             Hyp(Seq(Id("t"), Sp, InMacro, Sp, Call("gapInsertions", Id("D"), Id("P"), Id("h")))),
             Hyp(Seq(Id("s"), Sp, InMacro, Sp, Id("P"))),
-            Seq(Id("t"), Sp, Le, Sp, Id("s"), Minus, Id("h"), Sp, Or, Sp,
+            Seq(Id("t"), Sp, Le, Sp, Id("s"), Minus, Id("h"), Sp, Lor, Sp,
                 Id("s"), Plus, Id("h"), Sp, Le, Sp, Id("t"))),
             "An original point lies on or beyond one of the bracketing endpoints. Each insertion is therefore at least h away from it."),
         Thm("legal-repair", "repaired_support_legal", "The interval repair has only allowed return distances", St(

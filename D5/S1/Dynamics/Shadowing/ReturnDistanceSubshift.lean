@@ -25,6 +25,9 @@ abbrev ReturnBit := ↥(Finset.range 2)
 def returnZero : ReturnBit := ⟨0, by decide⟩
 def returnOne : ReturnBit := ⟨1, by decide⟩
 
+noncomputable instance returnConfigurationMetric : MetricSpace (ℤ → ReturnBit) :=
+  PiCountable.metricSpace
+
 @[simp] theorem return_zero_ne_one : returnZero ≠ returnOne := by decide
 
 /-- The set of one coordinates of an actual two-sided configuration. -/
@@ -129,6 +132,114 @@ def ReturnQuasiFiniteType (D : Set ℤ) : Prop :=
     ∃ z : List ReturnBit, z.length = n ∧ ReturnLanguage D z ∧
       ReturnLanguage D (u ++ z ++ v)
 
+/-- A word with a prescribed single possible one occurs in a singleton-support point. -/
+theorem singleton_word_language (D : Set ℤ) (w : List ReturnBit) (s : ℤ)
+    (hw : ∀ j : Fin w.length,
+      w[j] = if (j : ℤ) = s then returnOne else returnZero) : ReturnLanguage D w := by
+  classical
+  refine ⟨⟨supportPoint {s}, singleton_support_legal D s⟩, 0, ?_⟩
+  intro j
+  simpa [supportPoint] using (hw j).symm
+
+private theorem zero_word_language (D : Set ℤ) (n : ℕ) :
+    ReturnLanguage D (List.replicate n returnZero) := by
+  apply singleton_word_language D _ (-1)
+  intro j
+  have hj : (j : ℤ) ≠ -1 := by omega
+  simp [hj]
+
+private theorem one_zero_word_language (D : Set ℤ) (n : ℕ) :
+    ReturnLanguage D (returnOne :: List.replicate n returnZero) := by
+  apply singleton_word_language D _ 0
+  intro j
+  by_cases hj : j.val = 0
+  · simp [hj]
+  · have hjz : (j : ℤ) ≠ 0 := by omega
+    simp [List.getElem_cons, hj, hjz]
+
+private theorem zero_one_word_language (D : Set ℤ) (n : ℕ) :
+    ReturnLanguage D (List.replicate n returnZero ++ [returnOne]) := by
+  apply singleton_word_language D _ n
+  intro j
+  have hj := j.isLt
+  simp only [List.length_append, List.length_replicate, List.length_singleton] at hj
+  by_cases hjn : j.val < n
+  · have hne : (j : ℤ) ≠ n := by omega
+    simp [List.getElem_append, hjn, hne]
+  · have he : j.val = n := by omega
+    simp [List.getElem_append, he]
+
+/-- A bounded interval of forbidden first-return distances obstructs any legal point
+with a leading one, a zero block, and a terminal one. -/
+theorem forbidden_return_interval {D : Set ℤ} {x : ℤ → ReturnBit}
+    (hx : ReturnLegal D x) (t : ℤ) (H N : ℕ) (hN : 0 < N)
+    (hstart : x t = returnOne) (hend : x (t + N) = returnOne)
+    (hzero : ∀ d : ℕ, 0 < d → d ≤ H → x (t + d) ≠ returnOne)
+    (hforbid : ∀ d : ℕ, H < d → d ≤ N → (d : ℤ) ∉ D) : False := by
+  classical
+  have hex : ∃ d : ℕ, 0 < d ∧ x (t + d) = returnOne := ⟨N, hN, hend⟩
+  let d := Nat.find hex
+  have hd : 0 < d ∧ x (t + d) = returnOne := Nat.find_spec hex
+  have hdN : d ≤ N := Nat.find_min' hex ⟨hN, hend⟩
+  have hHd : H < d := by
+    by_contra! hle
+    exact hzero d hd.1 hle hd.2
+  have hadj : SupportAdjacent (oneSupport x) t (t + d) := by
+    refine ⟨hstart, hd.2, by omega, ?_⟩
+    intro s hts hsd hs
+    have hnat : ((s - t).toNat : ℤ) = s - t := by omega
+    have hlt : (s - t).toNat < d := by omega
+    have hmin := Nat.find_min hex hlt
+    apply hmin
+    refine ⟨by omega, ?_⟩
+    change x (t + (s - t).toNat) = returnOne
+    have he : t + ((s - t).toNat : ℤ) = s := by omega
+    rw [he]
+    exact hs
+  have hallowed := hx t (t + d) hadj
+  exact hforbid d hHd hdN (by simpa using hallowed)
+
+/-- Arbitrarily long forbidden intervals contradict the source's exact-length QFT
+condition on the actual language of the two-sided compact subshift. -/
+theorem forbidden_intervals_not_quasi_finite_type {D : Set ℤ}
+    (hinterval : ∀ n : ℕ, ∃ H : ℕ, ∀ d : ℕ,
+      H < d → d ≤ H + n + 1 → (d : ℤ) ∉ D) : ¬ ReturnQuasiFiniteType D := by
+  rintro ⟨M, hM⟩
+  let n := max M 1
+  obtain ⟨H, hH⟩ := hinterval n
+  let u := returnOne :: List.replicate H returnZero
+  let w := List.replicate n returnZero
+  let v := [returnOne]
+  have hu : ReturnLanguage D u := one_zero_word_language D H
+  have hv : ReturnLanguage D v := by simpa [v] using one_zero_word_language D 0
+  have hw : ReturnLanguage D w := zero_word_language D n
+  have huw : ReturnLanguage D (u ++ w) := by
+    change ReturnLanguage D
+      (returnOne :: (List.replicate H returnZero ++ List.replicate n returnZero))
+    rw [← List.replicate_add]
+    exact one_zero_word_language D (H + n)
+  have hwv : ReturnLanguage D (w ++ v) := zero_one_word_language D n
+  obtain ⟨z, hzn, _, x, t, hxt⟩ := hM n (by dsimp [n]; omega) u v hu hv
+    ⟨w, by simp [w], hw, huw, hwv⟩
+  have hlen : (u ++ z ++ v).length = H + n + 2 := by simp [u, v, hzn]; omega
+  have hstart : x.1 t = returnOne := by
+    have he := hxt ⟨0, by rw [hlen]; omega⟩
+    simpa [u, v] using he
+  have hend : x.1 (t + (H + n + 1 : ℕ)) = returnOne := by
+    have he := hxt ⟨H + n + 1, by rw [hlen]; omega⟩
+    simpa [u, v, List.getElem_append, hzn, Nat.not_lt.mpr (by omega : H + 1 + n ≤ H + n + 1)] using he
+  have hzero : ∀ d : ℕ, 0 < d → d ≤ H → x.1 (t + d) ≠ returnOne := by
+    intro d hd hdH
+    have he := hxt ⟨d, by rw [hlen]; omega⟩
+    have he0 : x.1 (t + d) = returnZero := by
+      simpa [u, v, List.getElem_append, List.getElem_cons, hd.ne',
+        show d - 1 < H by omega,
+        show d < H + 1 by omega, show d < H + 1 + n by omega] using he
+    rw [he0]
+    exact return_zero_ne_one
+  exact forbidden_return_interval x.2 t H (H + n + 1) (by omega) hstart hend hzero hH
+
+#print axioms forbidden_intervals_not_quasi_finite_type
 #print axioms return_legal_closed
 #print axioms return_shift_continuous
 

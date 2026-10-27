@@ -37,9 +37,11 @@ theorem neighborhood_two_of_pair {X : Type*} [MetricSpace X] {f : X → X}
   obtain ⟨δ, hδ, ht⟩ := h ε hε
   refine ⟨δ, hδ, fun z hz => ?_⟩
   obtain ⟨a, b, hab, ht⟩ := ht z hz
-  refine ⟨{a, b}, by simp, Finset.card_pair_le _ _, ?_, ?_⟩
+  refine ⟨{a, b}, by simp, ?_, ?_, ?_⟩
+  · exact (Finset.card_insert_le a {b}).trans (by simp)
   · simpa only [Finset.coe_pair, Metric.diam_pair] using hab
   · intro i
+    simp only [Finset.coe_pair]
     have hn : (f^[i] '' ({a, b} : Set X)).Nonempty := ⟨f^[i] a, a, by simp, rfl⟩
     apply (Metric.infDist_lt_iff hn).mpr
     rcases ht i with ha | hb
@@ -54,8 +56,11 @@ theorem finite_integer_window {S : Set ℤ} (hS : S.Finite) :
   refine ⟨u.natAbs + l.natAbs, fun j hj => ?_⟩
   have hju := hu hj
   have hlj := hl hj
-  have hau := Int.le_natAbs u
-  have hal := Int.neg_natAbs_le l
+  have hau : u ≤ u.natAbs := Int.le_natAbs
+  have hal : -(l.natAbs : ℤ) ≤ l := by
+    have ht : -l ≤ ((-l).natAbs : ℤ) := Int.le_natAbs
+    simp only [Int.natAbs_neg] at ht
+    omega
   constructor <;> omega
 
 /-- Agreement on a sufficiently large signed window implies metric closeness.
@@ -73,7 +78,7 @@ theorem return_metric_window (ε : ℝ) (hε : 0 < ε) :
   obtain ⟨S, hS, hsub⟩ := (hasBasis_iInf_principal_finite
     (fun j : ℤ => {xy : (ℤ → ReturnBit) × (ℤ → ReturnBit) | xy.1 j = xy.2 j})).mem_iff.mp he
   obtain ⟨r, hr⟩ := finite_integer_window hS
-  refine ⟨r, fun x y hxy => hsub ?_⟩
+  refine ⟨r, fun x y hxy => hsub (a := (x, y)) ?_⟩
   simp only [mem_iInter, mem_setOf_eq]
   intro j hj
   exact hxy j (hr j hj).1 (hr j hj).2
@@ -84,7 +89,8 @@ theorem return_window_control (K : ℕ) :
       ∀ j : ℤ, -(K : ℤ) ≤ j → j ≤ K → x j = y j := by
   have he (j : ℤ) : {xy : (ℤ → ReturnBit) × (ℤ → ReturnBit) | xy.1 j = xy.2 j}
       ∈ 𝓤 (ℤ → ReturnBit) :=
-    (Pi.uniformContinuous_proj j) (DiscreteUniformity.relId_mem_uniformity ReturnBit)
+    (Pi.uniformContinuous_proj (fun _ : ℤ => ReturnBit) j)
+      (DiscreteUniformity.relId_mem_uniformity ReturnBit)
   have hE := (Filter.biInter_mem (Set.finite_Icc (-(K : ℤ)) K)).mpr
     (fun j _ => he j)
   obtain ⟨δ, hδ, hsub⟩ := Metric.mem_uniformity_dist.mp hE
@@ -137,7 +143,9 @@ theorem signed_diagonal_overlap {A : Type*} {z : ℕ → ℤ → A} {K : ℕ}
     intro hjl hju
     have hh := ih (i - 1) (by omega) (by omega)
     have he := past_extension_overlap h (i - 1) (-(n : ℤ) - 1) hjl hju
-    convert hh.trans he using 1 <;> congr 1 <;> omega
+    have he' : pastExtension z (i - 1) (-(n : ℤ)) =
+        pastExtension z i (-(n : ℤ) - 1) := by simpa using he
+    convert hh.trans he' using 1 <;> congr 1 <;> omega
 
 /-- Iteration of the restricted shift reads the genuine integer coordinate. -/
 theorem return_shift_iterate (D : Set ℤ) (x : ReturnPoint D) (i : ℕ) (j : ℤ) :
@@ -145,14 +153,21 @@ theorem return_shift_iterate (D : Set ℤ) (x : ReturnPoint D) (i : ℕ) (j : �
   induction i generalizing x j with
   | zero => simp
   | succ i ih =>
-    rw [iterate_succ_apply', ih]
+    rw [iterate_succ_apply, ih]
     change x.1 (1 + ((i : ℤ) + j)) = x.1 ((↑(i + 1) : ℤ) + j)
-    congr 1
-    omega
+    have he : 1 + ((i : ℤ) + j) = ((i + 1 : ℕ) : ℤ) + j := by omega
+    rw [he]
 
 /-- Equality of the one indicators determines the binary symbol. -/
 theorem return_bit_ext {a b : ReturnBit} (h : (a = returnOne ↔ b = returnOne)) : a = b := by
-  fin_cases a <;> fin_cases b <;> simp_all [returnOne]
+  apply Subtype.ext
+  have ha := a.property
+  have hb := b.property
+  have hone (c : ReturnBit) : c = returnOne ↔ c.val = 1 := by
+    exact ⟨fun he => congrArg Subtype.val he, fun he => Subtype.ext he⟩
+  rw [hone, hone] at h
+  simp only [Finset.mem_range] at ha hb
+  omega
 
 /-- Unbounded positive allowed distances, in a form suited to finite windows. -/
 def UnboundedReturnDistances (D : Set ℤ) : Prop :=
@@ -176,7 +191,8 @@ theorem unbounded_return_neighborhood_two {D : Set ℤ} (hone : (1 : ℤ) ∈ D)
   have hedge : ∀ i : ℕ, ∀ j : ℤ, -(K : ℤ) ≤ j → j ≤ K →
       zz i (j + 1) = zz (i + 1) j := by
     intro i j hjl hju
-    exact hδK (shift 1 (z i).1) (z (i + 1)).1 (hz i) j hjl hju
+    simpa [zz, shift_apply, add_comm] using
+      hδK (shift 1 (z i).1) (z (i + 1)).1 (hz i) j hjl hju
   let c := signedDiagonal zz
   have hc (i : ℕ) (j : ℤ) (hjl : -(K : ℤ) ≤ j) (hju : j ≤ K) :
       c ((i : ℤ) + j) = (z i).1 j := by
