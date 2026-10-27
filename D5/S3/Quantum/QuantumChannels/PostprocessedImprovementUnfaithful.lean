@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/QuantumChannels/PostprocessedImprovementUnfaithful
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/QuantumChannels/PostprocessedImprovementUnfaithful
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
@@ -7,7 +7,7 @@
    digest: Biased post-processed interferometric improvements fail faithfulness. -/
 
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
-import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
+import D5.S3.Quantum.QuantumChannels.EntanglementAssistedCommunicationValue
 import D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 
 /-! Biased interferometric priors cannot detect all coherence-creating channels. -/
@@ -21,6 +21,7 @@ open scoped BigOperators ComplexOrder MatrixOrder
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 open D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics (projectiveReadout)
+open D5.S3.Quantum.QuantumChannels.EntanglementAssistedCommunicationValue (IsChannel)
 
 namespace D5.S3.Quantum.QuantumChannels.PostprocessedImprovementUnfaithful
 
@@ -33,10 +34,6 @@ def dephase {n : ℕ} : MatrixMap (Fin n) (Fin n) ℂ where
   map_smul' c a := by
     change diagonal (fun i => c * a i i) = c • diagonal (diag a)
     exact Matrix.diagonal_smul c (diag a)
-
-/-- A finite-dimensional quantum channel is completely positive and trace preserving. -/
-def IsChannel {a b : ℕ} (θ : MatrixMap (Fin a) (Fin b) ℂ) : Prop :=
-  θ.IsCompletelyPositive ∧ ∀ x, (θ x).trace = x.trace
 
 /-- Maximally incoherent operations preserve the diagonal matrices. -/
 def IsMIO {a b : ℕ} (ψ : MatrixMap (Fin a) (Fin b) ℂ) : Prop :=
@@ -178,7 +175,7 @@ private theorem qubit_positive (s : ℝ) (hs : s = 1 ∨ s = -1) :
   ext i j
   simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply]
   rcases hs with rfl | rfl <;> fin_cases i <;> fin_cases j <;>
-    norm_num [halfIdentity, halfPauli]
+    delta halfIdentity halfPauli <;> norm_num
 
 private theorem prepare_channel {a b : ℕ} (ρ : Matrix (Fin b) (Fin b) ℂ)
     (hρ : ρ.PosSemidef) (htr : ρ.trace = 1) : IsChannel (prepare (a := a) ρ) := by
@@ -220,10 +217,12 @@ private theorem postprocessing_data {m : ℕ} (ψ : MatrixMap (Fin 2) (Fin m) �
   · simpa only [hid] using (hψ.2 halfIdentity).symm
   · rw [hψ.1.2]
     rw [Matrix.trace_fin_two]
-    norm_num [halfIdentity]
+    delta halfIdentity
+    norm_num
   · rw [hψ.1.2]
     rw [Matrix.trace_fin_two]
-    norm_num [halfPauli]
+    delta halfPauli
+    norm_num
   · rw [← map_add]
     simpa only [one_smul] using hpos _ (qubit_positive 1 (Or.inl rfl))
   · rw [← map_sub]
@@ -240,9 +239,10 @@ private theorem prepared_channel (t : ℝ) (ht : 0 ≤ t) (ht1 : t ≤ 1) :
     convert h using 1
     ext i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [rho, halfIdentity, halfPauli] <;> ring
+      delta rho halfIdentity halfPauli <;> norm_num <;> ring
   · rw [Matrix.trace_fin_two]
-    norm_num [rho]
+    delta rho
+    norm_num
 
 private theorem prepared_not_mio (t : ℝ) (ht : t ≠ 0) :
     ¬ IsMIO (prepare (a := 2) (rho t)) := by
@@ -346,7 +346,7 @@ private theorem postprocessed_norm {m : ℕ} (l : ℝ) (hl : 0 ≤ l) (hl1 : l �
   have hρ (t : ℝ) : rho t = halfIdentity + t • halfPauli := by
     ext i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [rho, halfIdentity, halfPauli] <;> ring
+      delta rho halfIdentity halfPauli <;> norm_num <;> ring
   have hfix := (phase_properties φ).2.2 _ hdiag
   have he : (((((l : ℂ) • LinearMap.id - ((1 - l : ℝ) : ℂ) • phaseChannel φ).comp ψ).comp
       ((prepare (a := 2) (rho (|2 * l - 1| / 2))).comp dephase))) =
