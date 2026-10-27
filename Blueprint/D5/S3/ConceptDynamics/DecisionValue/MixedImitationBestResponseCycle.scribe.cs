@@ -95,7 +95,10 @@ internal sealed class MixedImitationBestResponseCycleDocument : IScribeDocumentD
                             + "The states at times 0 and 1 are also the first state in that list. Thus the trajectory is never at equilibrium. "
                             + "Applying the universal claim to this symmetric irreflexive network, its coordinating payoffs, initial state and persistent sequence "
                             + "would give a time when this very trajectory is at equilibrium, a contradiction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hasheminejad-ramazi-2023-mixed-imitation-best-response-nonequilibration"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
         AssessedProvenance provenance, string prose) =>
