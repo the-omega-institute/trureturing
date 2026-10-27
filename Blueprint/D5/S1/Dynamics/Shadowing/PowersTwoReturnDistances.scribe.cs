@@ -8,10 +8,6 @@ internal sealed class PowersTwoReturnDistancesDocument : IScribeDocumentDefiniti
 {
     private const string Owner = "D5/S1/Dynamics/Shadowing/PowersTwoReturnDistances.";
     private static Formula Id(string s) => F.Id(s);
-    private static Formula Z => Seq(Mathbb, Grp(Id("Z")));
-    private static Formula SetZ => Call("Set", Z);
-    private static Formula All(string s, Formula t) => Seq(Forall, Sp, Id(s), Colon, Sp, t, Comma);
-    private static Formula Hyp(Formula a) => Seq(a, Sp, Rightarrow);
     private static Formula Call(string s, params Formula[] args)
     {
         var items = new List<Formula> { Seq(Operatorname, Grp(Id(s))), Open };
@@ -32,11 +28,12 @@ internal sealed class PowersTwoReturnDistancesDocument : IScribeDocumentDefiniti
             + "The positive return distances are 2^j for natural j. Equivalently the intervening zero-run lengths are 2^j-1, including zero. "
             + "The example uses the genuine compatible countable-product metric supplied by Mathlib, rather than the degenerate printed infimum expression in the source.")),
         Thm("powers-two-example", "powers_two_return_distance_example", "The explicit return-distance example", St(
+            Seq(Call("Nonempty", Call("ReturnPoint", Call("powersTwoDistances"))), Sp, Land),
             Seq(Call("CompactSpace", Call("ReturnPoint", Call("powersTwoDistances"))), Sp, Land),
             Seq(Call("Continuous", Call("returnShift", Call("powersTwoDistances"))), Sp, Land),
             Seq(Call("NeighborhoodTwoShadowing", Call("returnShift", Call("powersTwoDistances"))), Sp, Land),
             Seq(Neg, Sp, Call("ReturnQuasiFiniteType", Call("powersTwoDistances")))),
-            "The phase space is the carrier of the bundled finite-alphabet subshift on integer coordinates. All pseudo-orbit time indices remain natural numbers. "
+            "A singleton-support configuration witnesses nonemptiness. The phase space is the carrier of the bundled finite-alphabet subshift on integer coordinates. All pseudo-orbit time indices remain natural numbers. "
             + "Distance one is allowed and powers of two are unbounded, so the generic gap-repair theorem supplies the original finite-set two-shadowing property. "
             + "For every n choose H=2^(n+2)>n+1. The interval (H,H+n+1] lies strictly between H and 2H and contains no power of two. "
             + "The generic first-return language obstruction therefore disproves the original exact-length QFT condition. "

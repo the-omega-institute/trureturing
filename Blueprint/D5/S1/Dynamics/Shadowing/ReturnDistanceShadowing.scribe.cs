@@ -11,7 +11,7 @@ internal sealed class ReturnDistanceShadowingDocument : IScribeDocumentDefinitio
     private static Formula Z => Seq(Mathbb, Grp(Id("Z")));
     private static Formula SetZ => Call("Set", Z);
     private static Formula All(string s, Formula t) => Seq(Forall, Sp, Id(s), Colon, Sp, t, Comma);
-    private static Formula Hyp(Formula a) => Seq(a, Sp, Rightarrow);
+    private static Formula Hyp(Formula a) => Seq(a, Sp, Rightarrow, Sp);
     private static Formula Call(string s, params Formula[] args)
     {
         var items = new List<Formula> { Seq(Operatorname, Grp(Id(s))), Open };
@@ -24,7 +24,6 @@ internal sealed class ReturnDistanceShadowingDocument : IScribeDocumentDefinitio
             StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
 
-    private static Formula Nat => Seq(Mathbb, Grp(Id("N")));
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Two fixed close points trace every natural-time pseudo-orbit in an unbounded return-distance subshift.",
         H("Neighborhood Two-Shadowing by Separated Gap Repair"), Blocks(

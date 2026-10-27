@@ -22,11 +22,13 @@ def powersTwoDistances : Set ℤ := {d | ∃ j : ℕ, d = (2 : ℤ) ^ j}
 /-- The actual compact binary two-sided subshift has original neighborhood two-shadowing
 and fails the original exact-length quasi-finite-type condition. -/
 theorem powers_two_return_distance_example :
+    Nonempty (ReturnPoint powersTwoDistances) ∧
     CompactSpace (ReturnPoint powersTwoDistances) ∧
     Continuous (returnShift powersTwoDistances) ∧
     NeighborhoodTwoShadowing (returnShift powersTwoDistances) ∧
     ¬ ReturnQuasiFiniteType powersTwoDistances := by
-  refine ⟨inferInstance, return_shift_continuous _, ?_, ?_⟩
+  refine ⟨⟨⟨supportPoint {0}, singleton_support_legal _ 0⟩⟩,
+    inferInstance, return_shift_continuous _, ?_, ?_⟩
   · apply unbounded_return_neighborhood_two
     · exact ⟨0, by simp⟩
     · intro N

@@ -11,7 +11,7 @@ internal sealed class ReturnDistanceSubshiftDocument : IScribeDocumentDefinition
     private static Formula Z => Seq(Mathbb, Grp(Id("Z")));
     private static Formula SetZ => Call("Set", Z);
     private static Formula All(string s, Formula t) => Seq(Forall, Sp, Id(s), Colon, Sp, t, Comma);
-    private static Formula Hyp(Formula a) => Seq(a, Sp, Rightarrow);
+    private static Formula Hyp(Formula a) => Seq(a, Sp, Rightarrow, Sp);
     private static Formula Call(string s, params Formula[] args)
     {
         var items = new List<Formula> { Seq(Operatorname, Grp(Id(s))), Open };
@@ -30,7 +30,7 @@ internal sealed class ReturnDistanceSubshiftDocument : IScribeDocumentDefinition
         H("Return-Distance Subshifts and Exact-Length QFT"), Blocks(
         Paragraph(Text("The alphabet is the two-element subtype of the natural numbers {0,1}, with the inherited discrete metric. "
             + "Configurations have all integer coordinates. ReturnLegal(D,x) requires the difference q-p to belong to D for every consecutive pair of one coordinates. "
-            + "Finite supports, singleton supports and the all-zero configuration satisfy the same rule. "
+            + "Finite supports obey the same return-distance restriction; singleton supports and the all-zero configuration are always legal. "
             + "The set is closed because the assertion that fixed p,q are consecutive ones is a finite clopen cylinder condition. "
             + "All integer shifts preserve the rule. The bundled object is Mathlib FullShift.Subshift; ReturnPoint is its carrier subtype. "
             + "Mathlib PiCountable.metricSpace supplies a metric with the product uniformity, and closedness in the compact finite-alphabet product gives compactness.")),

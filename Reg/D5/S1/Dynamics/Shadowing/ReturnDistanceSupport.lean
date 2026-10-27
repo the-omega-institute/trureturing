@@ -8,7 +8,7 @@ whole-family variation and sensitivity, observational dependence, and enrolled
 readout binding have not been supplied. These checks are neither
 Contract.Registration values nor declared_validated evidence.
 The nested natural-time and integer-coordinate domains are preserved.
-Coordination: https://github.com/the-omega-institute/trureturing/issues/5214. -/
+Unfinished audit: https://github.com/the-omega-institute/trureturing/issues/22664. -/
 
 abbrev insertion_separated_scope := type_of% (@_root_.D5.S1.Dynamics.Shadowing.insertion_separated)
 def insertion_separated_actual : insertion_separated_scope := @_root_.D5.S1.Dynamics.Shadowing.insertion_separated

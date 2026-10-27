@@ -11,7 +11,7 @@ internal sealed class ReturnDistanceSupportDocument : IScribeDocumentDefinition
     private static Formula Z => Seq(Mathbb, Grp(Id("Z")));
     private static Formula SetZ => Call("Set", Z);
     private static Formula All(string s, Formula t) => Seq(Forall, Sp, Id(s), Colon, Sp, t, Comma);
-    private static Formula Hyp(Formula a) => Seq(a, Sp, Rightarrow);
+    private static Formula Hyp(Formula a) => Seq(a, Sp, Rightarrow, Sp);
     private static Formula Call(string s, params Formula[] args)
     {
         var items = new List<Formula> { Seq(Operatorname, Grp(Id(s))), Open };
