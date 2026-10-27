@@ -244,7 +244,7 @@ private theorem blockEquiv_coordinatePoint (p q : ℕ) :
     ext i
     cases i <;> simp [EuclideanSpace.sumEquivProd, PiLp.sumPiLpEquivProdLpPiLp,
       coordinatePoint, EuclideanSpace.single, PiLp.single_apply]
-  simp [blockEquiv, EuclideanSpace.finAddEquivProd, ContinuousLinearEquiv.trans_symm,
+  simp [blockEquiv, EuclideanSpace.finAddEquivProd, ContinuousLinearEquiv.symm_trans_apply,
     ContinuousLinearEquiv.trans_apply, hs, coordinatePoint,
     EuclideanSpace.single, finSumFinEquiv]
 
