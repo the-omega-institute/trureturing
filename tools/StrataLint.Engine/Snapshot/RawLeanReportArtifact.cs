@@ -89,7 +89,12 @@ internal static partial class RawLeanReportArtifact
             .ToDictionary(static item => item.Key.Value, static item => item.Value, StringComparer.Ordinal);
         foreach (var (sourcePath, report) in selected)
             ValidateScopedImports(scope.SourceSnapshot.Files[RepoPath.CreateKnown(sourcePath)], report.Imports);
-        ValidateScopedStatementIdentities(selected);
+        var materials = StatementMaterialArchive.Open(
+            MaterialsPath(fullPath),
+            () => full.Files.Values
+                .SelectMany(static report => report.Declarations)
+                .Select(static declaration => declaration.StatementTypeAddress));
+        ValidateScopedStatementIdentities(selected, materials);
         return LeanAxiomReport.CreateScoped(selected);
     }
 
@@ -221,7 +226,7 @@ internal static partial class RawLeanReportArtifact
         if (validateMaterials)
         {
             materialArchive!.ValidateAll();
-            if (scope is not null) ValidateScopedStatementIdentities(reports);
+            if (scope is not null) ValidateScopedStatementIdentities(reports, materialArchive);
         }
         return scope is null
             ? LeanAxiomReport.Create(reports)
@@ -236,11 +241,17 @@ internal static partial class RawLeanReportArtifact
             throw new FormatException($"Scoped Lean report imports do not match source for {source.Path.Value}.");
     }
 
-    private static void ValidateScopedStatementIdentities(IEnumerable<KeyValuePair<string, LeanFileReport>> reports)
+    private static void ValidateScopedStatementIdentities(
+        IEnumerable<KeyValuePair<string, LeanFileReport>> reports,
+        StatementMaterialArchive materials)
     {
         foreach (var (path, report) in reports)
         foreach (var declaration in report.Declarations)
         {
+            // Oversized generated statements are checked strictly as UTF-8 by
+            // the archive pass below. Their producer supplied identity is
+            // retained because a .NET string cannot represent their size.
+            if (!materials.CanMaterialize(declaration.StatementTypeAddress)) continue;
             var actual = CanonicalStatementWriter.DeclarationStatementId(RepoPath.CreateKnown(path),
                 declaration with { PrecomputedStatementId = null });
             if (!string.Equals(actual, declaration.PrecomputedStatementId, StringComparison.Ordinal))
@@ -604,6 +615,13 @@ internal static partial class RawLeanReportArtifact
                 _ = ReadCore("sha256:" + name[EntryPrefix.Length..], materialize: false);
         }
 
+        internal bool CanMaterialize(string address)
+        {
+            _ = addressesValidated.Value;
+            return contents.Value.Entries.TryGetValue(EntryName(address), out var entry)
+                && entry.Length <= int.MaxValue;
+        }
+
         private string? ReadCore(string address, bool materialize)
         {
             var archive = contents.Value;
@@ -611,9 +629,22 @@ internal static partial class RawLeanReportArtifact
             {
                 throw new InvalidDataException($"Lean statement material is missing for {address}.");
             }
-            if (entry.Length > int.MaxValue)
+            if (entry.Length > int.MaxValue && materialize)
             {
                 throw new InvalidDataException($"Lean statement material is too large for {address}.");
+            }
+
+            if (entry.Length > int.MaxValue)
+            {
+                // Validate oversized materials without allocating a byte[] or
+                // string. StreamReader with strict UTF-8 preserves the same
+                // decoder-failure behavior as StrictUtf8.GetCharCount.
+                using var stream = entry.Open();
+                using var reader = new StreamReader(stream, StrictUtf8,
+                    detectEncodingFromByteOrderMarks: false, bufferSize: 64 * 1024);
+                var buffer = new char[64 * 1024];
+                while (reader.Read(buffer, 0, buffer.Length) > 0) { }
+                return null;
             }
 
             var bytes = new byte[(int)entry.Length];

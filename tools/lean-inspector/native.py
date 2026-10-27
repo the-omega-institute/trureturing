@@ -634,7 +634,13 @@ def append_compressed(archive, info, data):
     info.header_offset = archive.fp.tell()
     archive._writecheck(info)
     archive._didModify = True
-    archive.fp.write(info.FileHeader(False))
+    # The source artifact may contain a single statement material larger than
+    # ZIP32 can describe.  We already know both member sizes here, so select
+    # the ZIP64 local header before serializing it instead of letting
+    # ZipInfo.FileHeader reject the member.
+    zip64 = any(size >= zipfile.ZIP64_LIMIT for size in (
+        info.file_size, info.compress_size, info.header_offset))
+    archive.fp.write(info.FileHeader(zip64))
     archive.fp.write(data)
     archive.start_dir = archive.fp.tell()
     archive.filelist.append(info)

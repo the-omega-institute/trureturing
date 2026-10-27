@@ -394,7 +394,13 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 info.create_system = 3
                 info.external_attr = (stat.S_IFREG | 0o644) << 16
                 digest = hashlib.sha256(STATEMENT_DOMAIN)
-                with open_material(source) as reader, archive.open(info, "w") as writer:
+                # Material streams are intentionally read without a precomputed
+                # size.  A few generated statements exceed the classic ZIP32
+                # limit, so force the ZIP64 local header before the stream is
+                # written; otherwise Python 3.9 rejects the close after the
+                # size becomes known.
+                with open_material(source) as reader, archive.open(
+                        info, "w", force_zip64=True) as writer:
                     while block := reader.read(64 * 1024):
                         digest.update(block)
                         writer.write(block)
