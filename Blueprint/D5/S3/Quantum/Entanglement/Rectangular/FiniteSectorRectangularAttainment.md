@@ -6,9 +6,9 @@ Attaining orthonormal pairs for finite rectangular Ky Fan sums.
 
 **Theorem 1.1 (Attaining orthonormal pair).**
 
-Lean statement: `D5/S3/Quantum/Entanglement/FiniteSectorRectangularAttainment.exists_orthonormal_re_sum_inner_map_eq_ky_fan_sum`
+Lean statement: `D5/S3/Quantum/Entanglement/Rectangular/FiniteSectorRectangularAttainment.exists_orthonormal_re_sum_inner_map_eq_ky_fan_sum`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/FiniteSectorRectangularAttainment.exists_orthonormal_re_sum_inner_map_eq_ky_fan_sum` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Rectangular/FiniteSectorRectangularAttainment.exists_orthonormal_re_sum_inner_map_eq_ky_fan_sum` (`✓ std3`). ∎
 
 *Citation.* Jon Crall, Claude Fable 5, Claude Opus 4.8, GPT-5.6 Thinking, and GPT-5.6 High (2026). *Formal rectangular singular-value variational bounds*. URL: <https://github.com/AIQ-Kitware/aiq-dkps-formalization/tree/64e234954217f3ca907ac980c8cbde2900109a66/ForTauCeti/Analysis/InnerProductSpace>.
 
@@ -18,5 +18,5 @@ For a real or complex finite-dimensional linear map between possibly unequal dim
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Entanglement/FiniteSectorRectangularAttainment.exists_orthonormal_re_sum_inner_map_eq_ky_fan_sum`
-- Dependency: [D5/S3/Quantum/Entanglement/FiniteSectorRectangularVariational](FiniteSectorRectangularVariational.md)
+- Truth anchor: `D5/S3/Quantum/Entanglement/Rectangular/FiniteSectorRectangularAttainment.exists_orthonormal_re_sum_inner_map_eq_ky_fan_sum`
+- Dependency: [D5/S3/Quantum/Entanglement/FiniteSectorRectangularVariational](../FiniteSectorRectangularVariational.md)

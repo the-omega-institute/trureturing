@@ -102,5 +102,5 @@ These classical results adapt AIQ-Kitware/aiq-dkps-formalization revision 8924c4
 - Truth anchor: `D5/S3/HilbertOperators/Approximation/KyFanTriangle.lower_bound_of_lt_rank`
 - Truth anchor: `D5/S3/HilbertOperators/Approximation/KyFanTriangle.singular_value_le_approximation_number`
 - Dependency: [D5/S3/HilbertOperators/Approximation/MinMaxLowerBound](MinMaxLowerBound.md)
-- Dependency: [D5/S3/Quantum/Entanglement/FiniteSectorRectangularAttainment](../../Quantum/Entanglement/FiniteSectorRectangularAttainment.md)
+- Dependency: [D5/S3/Quantum/Entanglement/Rectangular/FiniteSectorRectangularAttainment](../../Quantum/Entanglement/Rectangular/FiniteSectorRectangularAttainment.md)
 - Dependency: [D5/S3/SpectralTopology/HermitianEigenvaluePerturbation](../../SpectralTopology/HermitianEigenvaluePerturbation.md)
