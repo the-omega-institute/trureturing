@@ -6,7 +6,10 @@
    utility: none
    digest: Completed coherent-frame action used by the actual two-copy swap. -/
 
-import D5.S3.Quantum.QuantumChannels.FockAttenuator.TwoCopyEnvironment
+import D5.S3.Quantum.QuantumChannels.FockAttenuator.DisplacementCovariance
+import D5.S3.Quantum.Analysis.TraceClass.ColumnSynthesis
+import D5.S3.Quantum.Analysis.TraceClass.Spectral
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.FermionicCorrelationalBound.CompletedTensorSlaterGeometry
 import D5.S3.Quantum.Analysis.TraceClass.TraceAlgebra
 import D5.S3.Quantum.Analysis.TraceClass.GeneralIdeal
@@ -17,18 +20,137 @@ open scoped TensorProduct InnerProductSpace BigOperators ENNReal NNReal ComplexO
 set_option backward.isDefEq.respectTransparency false
 open Filter Topology
 
+namespace D5.S3.Quantum.QuantumChannels.FockAttenuator.CompletedCoefficientOperator
+open BeamSplitter DisplacementCovariance HilbertSchmidt
+open private reindex_basis from D5.S3.Quantum.Analysis.TraceClass.Spectral
+
+abbrev H := lp (fun _ : ℕ => ℂ) 2
+abbrev H2 := lp (fun _ : ℕ => H) 2
+
+private def occupationBasis : HilbertBasis ℕ ℂ H := default
+
+private theorem slice_square_sum (w : H2) : HasSum (fun n => ‖w n‖ ^ 2) (‖w‖ ^ 2) := by
+  simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using
+    lp.hasSum_norm (p := (2 : ℝ≥0∞)) (by norm_num) w
+
+private theorem coefficient_data (w : H2) :
+    ∃ C : H →L[ℂ] H, IsHilbertSchmidt C ∧
+      ∀ n, C (occupationBasis n) = w n := by
+  let e : ℕ ≃ Set.range occupationBasis :=
+    Equiv.ofInjective occupationBasis occupationBasis.orthonormal.linearIndependent.injective
+  obtain ⟨b, hb⟩ := reindex_basis occupationBasis e.symm
+  have hv : Summable (fun i : Set.range occupationBasis => ‖w (e.symm i)‖ ^ 2) :=
+    e.symm.summable_iff.mpr (slice_square_sum w).summable
+  obtain ⟨C, hC, hHS, _, _⟩ :=
+    exists_hilbertSchmidt_of_square_summable_columns b (fun i => w (e.symm i)) hv
+  refine ⟨C, hHS, fun n => ?_⟩
+  simpa only [hb, Equiv.symm_apply_apply] using hC (e n)
+
+/-- Its columns are the actual completed output slices, including infinite support. -/
+def coefficientOperator (w : H2) : H →L[ℂ] H := (coefficient_data w).choose
+
+private theorem coefficient_hs (w : H2) : IsHilbertSchmidt (coefficientOperator w) :=
+  (coefficient_data w).choose_spec.1
+
+private theorem coefficient_column (w : H2) (n : ℕ) :
+    coefficientOperator w (occupationBasis n) = w n := (coefficient_data w).choose_spec.2 n
+
+/-- The operator made from actual matrix columns reproduces the existing reduced
+operator. No spectral data or analytic-purity assumption enters this equality. -/
+theorem coefficient_mul_adjoint (w : H2) :
+    coefficientOperator w * star (coefficientOperator w) = purePartialTrace w := by
+  apply ContinuousLinearMap.ext
+  intro x
+  have hc := (occupationBasis.hasSum_repr ((ContinuousLinearMap.adjoint
+      (coefficientOperator w)) x)).mapL (coefficientOperator w)
+  have hc' : HasSum (fun n => inner ℂ (w n) x • w n)
+      ((coefficientOperator w * star (coefficientOperator w)) x) := by
+    simpa only [map_smul, HilbertBasis.repr_apply_apply, coefficient_column,
+      ContinuousLinearMap.adjoint_inner_right, ContinuousLinearMap.star_eq_adjoint,
+      ContinuousLinearMap.mul_apply] using hc
+  have hs : Summable (fun n => InnerProductSpace.rankOne ℂ (w n) (w n)) := by
+    apply Summable.of_norm
+    simpa only [InnerProductSpace.norm_rankOne, ← sq] using (slice_square_sum w).summable
+  have hm := hs.hasSum.mapL (ContinuousLinearMap.apply ℂ H x)
+  have hm' : HasSum (fun n => inner ℂ (w n) x • w n) (purePartialTrace w x) := by
+    simpa only [purePartialTrace, mixture, ContinuousLinearMap.apply_apply,
+      InnerProductSpace.rankOne_apply] using hm
+  exact hc'.unique hm'
+
+/-- Positivity and trace class refer to the existing completed reduced operator. -/
+theorem partial_trace_positive_traceClass (w : H2) :
+    0 ≤ purePartialTrace w ∧ IsTraceClass (purePartialTrace w) := by
+  rw [← coefficient_mul_adjoint]
+  exact ⟨mul_star_self_nonneg _, isTraceClass_mul_star_of_isHilbertSchmidt (coefficient_hs w)⟩
+
+/-- The physical balanced two-photon output is obtained from the published
+completed beam splitter, with no support restriction on the input. -/
+def balancedFockTwoOutput (a : H) : H2 :=
+  beamSplitter (1 / 2) (by norm_num) (tensor a (lp.single 2 2 1))
+
+private theorem tensor_norm_sq (v w : H) : ‖tensor v w‖ ^ 2 = ‖v‖ ^ 2 * ‖w‖ ^ 2 := by
+  have ht := lp.norm_rpow_eq_tsum (p := (2 : ℝ≥0∞)) (by norm_num) (tensor v w)
+  simp only [ENNReal.toReal_ofNat, Real.rpow_two] at ht
+  rw [ht]
+  change (∑' n, ‖w n • v‖ ^ 2) = _
+  simp only [norm_smul, mul_pow]
+  have hw : HasSum (fun n => ‖w n‖ ^ 2) (‖w‖ ^ 2) := by
+    simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using
+      lp.hasSum_norm (p := (2 : ℝ≥0∞)) (by norm_num) w
+  rw [hw.summable.tsum_mul_right, hw.tsum_eq, mul_comm]
+
+end D5.S3.Quantum.QuantumChannels.FockAttenuator.CompletedCoefficientOperator
+
+namespace D5.S3.Quantum.QuantumChannels.FockAttenuator.TwoCopyEnvironment
+open BeamSplitter DisplacementCovariance CompletedCoefficientOperator
+
+/-- The environment state after the actual center/difference rotation. -/
+def rotatedEnvironment : H2 :=
+  beamSplitter (1 / 2) (by norm_num) (fockPair 2 2)
+
+private theorem balanced_square : Real.sqrt (1 / 2 : ℝ) ^ 2 = 1 / 2 :=
+  Real.sq_sqrt (by norm_num)
+
+private theorem sqrt_twenty_four : Real.sqrt (24 : ℝ) = 2 * Real.sqrt 6 := by
+  rw [show (24 : ℝ) = 4 * 6 by norm_num, Real.sqrt_mul (by norm_num)]
+  norm_num
+
+/-- This finite expansion is inside the completed beam-splitter space, with the
+same sign convention as `beamUnitary_fock`. -/
+theorem rotated_environment_expansion :
+    rotatedEnvironment = ((Real.sqrt 6 / 4 : ℝ) : ℂ) • fockPair 4 0 -
+      (1 / 2 : ℂ) • fockPair 2 2 +
+      ((Real.sqrt 6 / 4 : ℝ) : ℂ) • fockPair 0 4 := by
+  unfold rotatedEnvironment beamSplitter
+  rw [beamUnitary_fock]
+  norm_num [fockExpansion, Fin.sum_univ_succ, Nat.choose]
+  have h2 : (Real.sqrt (1 / 2 : ℝ) : ℂ) ^ 2 = 1 / 2 := by
+    calc
+      _ = ((Real.sqrt (1 / 2 : ℝ) ^ 2 : ℝ) : ℂ) := (Complex.ofReal_pow _ _).symm
+      _ = ((1 / 2 : ℝ) : ℂ) := congrArg Complex.ofReal balanced_square
+      _ = _ := by norm_num
+  have hf2 : (Real.sqrt (2 : ℝ) : ℂ) ^ 2 = 2 := by
+    exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
+  have hfne : (Real.sqrt (2 : ℝ) : ℂ) ≠ 0 := by
+    exact_mod_cast (Real.sqrt_pos.mpr (by norm_num : (0 : ℝ) < 2)).ne'
+  simp only [sqrt_twenty_four]
+  push_cast
+  match_scalars <;> field_simp
+  all_goals ring_nf
+  all_goals simp_all only [show (4 : ℕ) = 2 * 2 by omega, pow_mul]
+  all_goals norm_num
+
+end D5.S3.Quantum.QuantumChannels.FockAttenuator.TwoCopyEnvironment
+
 namespace D5.S3.Quantum.QuantumChannels.FockAttenuator.CompletedTwoCopySwap
 open BeamSplitter CompletedCoefficientOperator
 open D5.S3.Quantum.FermionicCorrelationalBound.OccupationHilbertContractions
 open D5.S3.Quantum.FermionicCorrelationalBound.CompletedTensorSlaterGeometry
 open HilbertSchmidt
-open private coefficient_hs coefficient_column occupationBasis tensor_norm_sq from
-  D5.S3.Quantum.QuantumChannels.FockAttenuator.CompletedCoefficientOperator
 open private reindex_basis from D5.S3.Quantum.Analysis.TraceClass.Spectral
 open private tensorHilbertBasis_repr_tmul from
   D5.S3.Quantum.FermionicCorrelationalBound.CompletedTensorSlaterGeometry
 
-abbrev PairCompletion := UniformSpace.Completion (H ⊗[ℂ] H)
 abbrev FourModes := UniformSpace.Completion (H2 ⊗[ℂ] H2)
 
 private theorem fock_pair_single (m n : ℕ) :
@@ -88,25 +210,6 @@ private theorem fock_basis_repr (w : H2) (p : ℕ × ℕ) :
   simp only [RCLike.inner_apply, map_one, one_mul, mul_one]
 
 private def oneBasis : HilbertBasis ℕ ℂ H := default
-
-/-- The completed Hilbert tensor and the published nested-l2 two-mode space
-are identified by their actual occupation coefficients. -/
-def completedPair : PairCompletion ≃ₗᵢ[ℂ] H2 :=
-  (tensorHilbertBasis oneBasis oneBasis).repr.trans fockBasis.repr.symm
-
-private theorem completed_pair_product (x y : H) :
-    completedPair ((x ⊗ₜ[ℂ] y : H ⊗[ℂ] H) : PairCompletion) = tensor x y := by
-  apply fockBasis.repr.injective
-  simp only [completedPair, LinearIsometryEquiv.trans_apply,
-    LinearIsometryEquiv.apply_symm_apply]
-  apply lp.ext
-  funext p
-  change (tensorHilbertBasis oneBasis oneBasis).repr
-    ((x ⊗ₜ[ℂ] y : H ⊗[ℂ] H) : PairCompletion) p =
-      fockBasis.repr (tensor x y) p
-  rw [tensorHilbertBasis_repr_tmul, fock_basis_repr]
-  change x p.1 * y p.2 = (y p.2 • x) p.1
-  simp [mul_comm]
 
 private def fourBasis : HilbertBasis ((ℕ × ℕ) × (ℕ × ℕ)) ℂ FourModes :=
   tensorHilbertBasis fockBasis fockBasis

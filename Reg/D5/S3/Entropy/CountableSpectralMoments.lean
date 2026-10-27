@@ -1,7 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Entropy.CountableSpectralMoments
-import D5.S3.Entropy.SpectralEnvelopeParameters
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 
@@ -10,10 +9,43 @@ open scoped BigOperators
 open D5.S3.Entropy.CountableSpectralMoments
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open private three_third three_summable three_mass three_purity from
-  D5.S3.Entropy.SpectralEnvelopeParameters
 
 namespace Reg.D5.S3.Entropy.CountableSpectralMoments
+
+def threeSpectrum (x : ℝ) : ℕ → ℝ :=
+  fun n => if n = 0 then x else if n = 1 then x else if n = 2 then 1 - 2 * x else 0
+
+private theorem three_summable (x : ℝ) : Summable (threeSpectrum x) := by
+  apply summable_of_ne_finset_zero (s := Finset.range 3)
+  intro n hn
+  have h : 3 ≤ n := by simpa using hn
+  simp [threeSpectrum, show n ≠ 0 by omega, show n ≠ 1 by omega, show n ≠ 2 by omega]
+
+private theorem three_mass (x : ℝ) : mass (threeSpectrum x) = 1 := by
+  unfold mass
+  rw [tsum_eq_sum (s := Finset.range 3) (fun n hn => by
+    have h : 3 ≤ n := by simpa using hn
+    simp [threeSpectrum, show n ≠ 0 by omega, show n ≠ 1 by omega, show n ≠ 2 by omega])]
+  norm_num [Finset.sum_range_succ, threeSpectrum]
+  ring
+
+private theorem three_purity (x : ℝ) : purity (threeSpectrum x) = 6 * x ^ 2 - 4 * x + 1 := by
+  unfold purity
+  rw [tsum_eq_sum (s := Finset.range 3) (fun n hn => by
+    have h : 3 ≤ n := by simpa using hn
+    simp [threeSpectrum, show n ≠ 0 by omega, show n ≠ 1 by omega, show n ≠ 2 by omega])]
+  norm_num [Finset.sum_range_succ, threeSpectrum]
+  ring
+
+private theorem three_third (x : ℝ) : third (threeSpectrum x) = x ^ 2 * (1 - 2 * x) := by
+  unfold third
+  rw [tsum_eq_sum (s := Finset.range 3) (fun n hn => by
+    have h : 3 ≤ n := by simpa using hn
+    simp [tripleLayer, threeSpectrum, show n ≠ 0 by omega,
+      show n ≠ 1 by omega, show n ≠ 2 by omega])]
+  norm_num [Finset.sum_range_succ, tripleLayer, threeSpectrum]
+  ring_nf <;> simp
+
 
 abbrev momentSignature : Signature where
   Params := Unit
@@ -48,9 +80,9 @@ theorem rejectedLaw : ¬ newtonArena.Law rejected := by
 theorem actualDependence : ObservationalDependence momentSignature actual := by
   intro i
   refine ⟨(), (fun _ => 0),
-    D5.S3.Entropy.SpectralEnvelopeParameters.threeSpectrum (1 / 3), ?_⟩
+    threeSpectrum (1 / 3), ?_⟩
   change third (fun _ => 0) ≠ third
-    (D5.S3.Entropy.SpectralEnvelopeParameters.threeSpectrum (1 / 3))
+    (threeSpectrum (1 / 3))
   rw [three_third]
   norm_num [third, tripleLayer]
 
@@ -111,9 +143,9 @@ def newtonRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms newtonRegistration
 
 private theorem three_nonneg {x : ℝ} (hx0 : 0 ≤ x) (hx1 : x ≤ 1 / 2) :
-    ∀ i, 0 ≤ D5.S3.Entropy.SpectralEnvelopeParameters.threeSpectrum x i := by
+    ∀ i, 0 ≤ threeSpectrum x i := by
   intro i
-  unfold D5.S3.Entropy.SpectralEnvelopeParameters.threeSpectrum
+  unfold threeSpectrum
   split_ifs <;> linarith
 
 def absoluteLaw (R : Realization momentSignature) : Prop :=
@@ -357,7 +389,7 @@ theorem halfRejected : ¬ halfLaw zeroReadout := by
   intro h
   have hz := h (three_summable (1 / 4)) (three_nonneg (by norm_num) (by norm_num))
     (three_mass _) (by rw [three_purity]; norm_num) 2
-    (by norm_num [D5.S3.Entropy.SpectralEnvelopeParameters.threeSpectrum])
+    (by norm_num [threeSpectrum])
   norm_num [zeroReadout, realize] at hz
 
 def halfFamily : Registration ⟨momentSignature, halfLaw⟩

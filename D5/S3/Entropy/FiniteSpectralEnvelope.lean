@@ -6,7 +6,8 @@
    utility: none
    digest: Three-coordinate smoothing for the trace/purity spectral moment envelope. -/
 
-import D5.S3.Entropy.SpectralEnvelopeParameters
+import D5.S3.Entropy.CountableSpectralMoments
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.Convex.StdSimplex
 import Mathlib.Algebra.Order.Chebyshev
 import Batteries.Tactic.OpenPrivate
@@ -15,11 +16,64 @@ noncomputable section
 open scoped BigOperators
 open Finset
 
+namespace D5.S3.Entropy.SpectralEnvelopeParameters
+open CountableSpectralMoments
+
+def envelope (q : ℝ) : ℝ := (10 - 18 * q - (6 * q - 2) * Real.sqrt (6 * q - 2)) / 108
+def upperCoordinate (q : ℝ) : ℝ := (2 + Real.sqrt (6 * q - 2)) / 6
+def threshold : ℝ := (17 - 5 * Real.sqrt 5) / 16
+
+private theorem coordinate_value {q : ℝ} (hq : 1 / 3 ≤ q) :
+    upperCoordinate q ^ 2 * (1 - 2 * upperCoordinate q) = envelope q := by
+  have hs := Real.sq_sqrt (show 0 ≤ 6 * q - 2 by linarith)
+  unfold upperCoordinate envelope
+  nlinarith [congrArg (fun z : ℝ => Real.sqrt (6 * q - 2) * z) hs]
+
+private theorem envelope_antitone {a b : ℝ} (ha : 1 / 3 ≤ a) (hab : a ≤ b) :
+    envelope b ≤ envelope a := by
+  have har : 0 ≤ 6 * a - 2 := by linarith
+  have hbr : 0 ≤ 6 * b - 2 := by linarith
+  have hmul : (6 * a - 2) * Real.sqrt (6 * a - 2) ≤
+      (6 * b - 2) * Real.sqrt (6 * b - 2) :=
+    mul_le_mul (by linarith) (Real.sqrt_le_sqrt (by linarith))
+      (Real.sqrt_nonneg _) hbr
+  unfold envelope
+  linarith
+
+private theorem endpoint_constants : envelope (3 / 8) = 25 / 864 ∧
+    (1 : ℝ) / 32 - 25 / 864 = 1 / 432 := by
+  have hs : Real.sqrt (1 / 4 : ℝ) = 1 / 2 := by
+    apply (Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)).mpr
+    norm_num
+  constructor
+  · norm_num [envelope, hs]
+  · norm_num
+
+private theorem threshold_bounds : 1 / 3 ≤ threshold ∧ threshold ≤ 3 / 8 := by
+  have hs0 := Real.sqrt_nonneg (5 : ℝ)
+  have hs2 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
+  unfold threshold
+  constructor <;> nlinarith
+
+private theorem threshold_value : envelope threshold = 1 / 32 := by
+  have hs0 := Real.sqrt_nonneg (5 : ℝ)
+  have hs2 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
+  have harg : 6 * threshold - 2 = ((3 * Real.sqrt 5 - 5) / 4) ^ 2 := by
+    unfold threshold
+    nlinarith
+  have hd : 0 ≤ (3 * Real.sqrt 5 - 5) / 4 := by nlinarith
+  have hs : Real.sqrt (6 * threshold - 2) = (3 * Real.sqrt 5 - 5) / 4 := by
+    rw [harg, Real.sqrt_sq hd]
+  unfold envelope
+  rw [hs]
+  unfold threshold
+  nlinarith [congrArg (fun z : ℝ => Real.sqrt (5 : ℝ) * z) hs2]
+
+end D5.S3.Entropy.SpectralEnvelopeParameters
+
 namespace D5.S3.Entropy.FiniteSpectralEnvelope
 
 open SpectralEnvelopeParameters
-open private coordinate_value envelope_antitone from
-  D5.S3.Entropy.SpectralEnvelopeParameters
 
 /-- A strictly smaller positive triple preserves its first two moments whenever
 the larger two original entries differ. No differentiability premise is used. -/

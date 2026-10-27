@@ -21,6 +21,6 @@ internal sealed class CountableSpectralMomentsDocument : IScribeDocumentDefiniti
     private static DocumentBlock Node(string name, string title, string text) => Describe.Lean(
         DescribeId.Create("countable-spectral-" + name.Replace('_', '-')),
         DeclarationHandle.Create("D5/S3/Entropy/CountableSpectralMoments." + name),
-        H(title), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+        H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
 }

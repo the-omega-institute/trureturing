@@ -16,9 +16,8 @@ open Filter Topology
 namespace D5.S3.Entropy.SpectralEnvelope
 open CountableSpectralMoments SpectralEnvelopeParameters FiniteSpectralEnvelope
 open private summable_square summable_cube from D5.S3.Entropy.CountableSpectralMoments
-open private coordinate_bounds coordinate_purity coordinate_value three_summable
-  three_mass three_purity three_third envelope_antitone endpoint_constants
-  threshold_bounds threshold_value from D5.S3.Entropy.SpectralEnvelopeParameters
+open private envelope_antitone endpoint_constants threshold_bounds threshold_value from
+  D5.S3.Entropy.FiniteSpectralEnvelope
 
 private theorem equal_tail_length {p : ℕ → ℝ} (hp : Summable p)
     (hn : ∀ i, 0 ≤ p i) (hm : mass p = 1) (n : ℕ) :
@@ -145,21 +144,6 @@ theorem countable_budget_envelope {p : ℕ → ℝ} (hp : Summable p)
         (((tendsto_const_nhds.sub hs).pow 3).div_const 3)
     simpa only [hm, sub_self, zero_div, zero_pow (by omega : 3 ≠ 0), add_zero] using h
   exact ge_of_tendsto hlim (Filter.Eventually.of_forall (finite_approximation_bound hp hn hm hq0 hq1))
-
-/-- Abstract sharpness does not assert that these spectra are Fock outputs. -/
-theorem envelope_sharp {q : ℝ} (hq0 : 1 / 3 ≤ q) (hq1 : q ≤ 3 / 8) :
-    ∃ p : ℕ → ℝ, Summable p ∧ (∀ i, 0 ≤ p i) ∧ mass p = 1 ∧
-      purity p = q ∧ third p = envelope q := by
-  let x := upperCoordinate q
-  have hx := coordinate_bounds hq0 hq1
-  refine ⟨threeSpectrum x, three_summable x, ?_, three_mass x, ?_, ?_⟩
-  · intro i
-    unfold threeSpectrum
-    split_ifs <;> nlinarith
-  · rw [three_purity]
-    exact coordinate_purity hq0
-  · rw [three_third]
-    exact coordinate_value hq0
 
 /-- The uniform constant obtained from the trace and purity constraints alone. -/
 theorem third_lower_of_purity_le_three_eighths {p : ℕ → ℝ} (hp : Summable p)

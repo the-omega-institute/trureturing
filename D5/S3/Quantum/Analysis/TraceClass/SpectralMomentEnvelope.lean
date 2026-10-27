@@ -81,13 +81,11 @@ def operatorThird (T : H →L[ℂ] H) (hTC : IsTraceClass T) : ℝ :=
 private theorem eigen_power {T : H →L[ℂ] H} (d : CountableSpectralData T)
     (n : ℕ) (i : d.index) :
     (T ^ (n + 1)) (d.basis i) = ((d.value i ^ (n + 1) : ℝ) : ℂ) • d.basis i := by
-  induction n with
-  | zero => simpa using d.eigen i
-  | succ n ih =>
-    rw [pow_succ, ContinuousLinearMap.mul_apply, d.eigen, map_smul, ih, smul_smul]
-    push_cast
-    congr 1
-    ring
+  have hv : Module.End.HasEigenvector T.toLinearMap (d.value i : ℂ) (d.basis i) :=
+    ⟨Module.End.mem_eigenspace_iff.mpr (d.eigen i),
+      d.basis.orthonormal.ne_zero i⟩
+  simpa only [← ContinuousLinearMap.toLinearMap_pow, ContinuousLinearMap.coe_coe,
+    Complex.ofReal_pow] using hv.pow_apply (n + 1)
 
 private theorem value_power_hasSum {T : H →L[ℂ] H} (d : CountableSpectralData T)
     (hTC : IsTraceClass T) (n : ℕ) :

@@ -18,6 +18,6 @@ internal sealed class SpectralMomentEnvelopeDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string name, string title, string text) => Describe.Lean(
         DescribeId.Create("trace-moment-envelope-" + name.Replace('_', '-')),
         DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/SpectralMomentEnvelope." + name),
-        H(title), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+        H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
 }

@@ -8,7 +8,7 @@ open _root_.D5.S3.Entropy.FiniteSpectralEnvelope
 open _root_.D5.S3.Entropy.SpectralEnvelopeParameters
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open private endpoint_constants from D5.S3.Entropy.SpectralEnvelopeParameters
+open private endpoint_constants from D5.S3.Entropy.FiniteSpectralEnvelope
 
 universe u
 namespace Reg.D5.S3.Entropy.FiniteSpectralEnvelope

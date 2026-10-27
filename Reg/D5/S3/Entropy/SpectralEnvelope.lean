@@ -9,9 +9,9 @@ open _root_.D5.S3.Entropy.SpectralEnvelopeParameters
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.Reg.D5.S3.Entropy.CountableSpectralMoments
 open LeanInformationAudit
-open private three_summable three_mass three_purity threshold_bounds from
-  D5.S3.Entropy.SpectralEnvelopeParameters
-open private three_nonneg from Reg.D5.S3.Entropy.CountableSpectralMoments
+open private threshold_bounds from D5.S3.Entropy.FiniteSpectralEnvelope
+open private three_summable three_mass three_purity three_nonneg from
+  Reg.D5.S3.Entropy.CountableSpectralMoments
 
 namespace Reg.D5.S3.Entropy.SpectralEnvelope
 
