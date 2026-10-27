@@ -1,0 +1,30 @@
+# RegularParentChart
+
+## Abstract
+
+An analytic lift in the original source coordinates
+
+Write Lambda for parentLambda and B(b)=6/(1+b)-2/(1+2b). On the regular parent the drift increment is e=-(24/5)(b-1/8)B(b)/Lambda(r,b). For independent coordinates x=(t,b), set r=tb and reconstruct the same whole cubic by parentGain(r,b,e). Encoding its samples as ordinary polynomial coefficients gives chartWorld(x). The eight entries of chartSource are exactly r,b,r(1-r)/b,d and the four ordinary coefficients. The two entries of chartRead are the fifth response p and the actual eighth M response of this one world, at absolute clock eight.
+
+For 9005/10000 <= r <= 9006/10000 and 12758/100000 <= b <= 12759/100000, j=b+r(1-r)/b is less than 83/100 and n=j+r is less than 1731/1000. Positive denominators then give Lambda < 0 by rational division inequalities. Thus the reconstructed drift has a nonzero denominator throughout this strip. All other denominators are positive at strict sources.
+
+The lift is analytic, includes all five literal history equations and the nonzero whole polynomial, and exhausts every original parent world with the same r and b. This is a chart of the original parent, including its ordinary coefficient topology; it is not a change of the eight coordinate norm. Recovering t=r/b gives the original independent source coordinate. Analyticity also holds for both actual read functions.
+
+The strip assertion alone identifies no algebraic center. Applying this chart at the exact critical world requires its independent algebraic definition and source enclosures. Inverting the pair (p,f_M), choosing a convex image neighborhood and proving a bound for its inverse derivative require additional results.
+
+**Theorem 1.1 (analytic original parent chart).**
+
+Lean statement: `D5/S3/Observer/CubicGain/RegularParentChart.analytic_original_parent_chart`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/RegularParentChart.analytic_original_parent_chart` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every x=(t,b) whose r=tb and b satisfy the displayed closed rational strip bounds, chartWorld(x) belongs to OriginalParent. The maps chartWorld, chartSource and chartRead are real analytic at x. Every original parent W with W.r=tb and W.b=b equals chartWorld(x). Its original fifth and sixth response pair equals response(chartCoordinates(x)), and its recovered quotient r/b is t.
+
+## References
+
+- Truth anchor: `D5/S3/Observer/CubicGain/RegularParentChart.analytic_original_parent_chart`
+- Dependency: [D5/S3/Observer/CubicGain/CommonWordSensitivity](CommonWordSensitivity.md)
