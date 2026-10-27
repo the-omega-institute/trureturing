@@ -60,6 +60,19 @@ revised statement in the searched surfaces. The revised arXiv source was
 read; the 2006 journal predecessor was not treated as the same statement.
 No claim of exhaustive literature coverage or publication priority is made.
 
+## Route
+
+The refutation fixes `a=6` and `b=1`. The threshold set has greatest element
+`3`: the inequality holds at `n=3`, while for every `n ≥ 4` the bound
+`sin²(π/n) ≤ 1/2` makes the threshold inequality fail. The Lean claim also
+requires dimension `3` to satisfy the cyclic inequality. The nonnegative
+tuple `(6,5,5)` gives an exact left-minus-right difference of `364`, so
+dimension `3` is invalid. The kernel-checked theorem `result : ¬ claim`
+combines these two facts and the least-upper-bound specification of `N` to
+contradict the asserted identity. This route refutes the literal conjecture
+only; it does not prove a corrected formula or identify the actual value of
+`N(6,1)`.
+
 ## Evidence
 
 - Source: [arXiv:2610.33653v1](https://arxiv.org/abs/2610.33653v1), Section 1,
