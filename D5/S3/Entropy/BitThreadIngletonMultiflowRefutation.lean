@@ -7,61 +7,70 @@
    digest: Star Ingleton bit-thread combination refutation on a capacitated 2-graph star. -/
 
 import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Data.Finset.Lattice.Fold
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
-/- The definitions below use `i < j` as the single representative of each
-   unordered boundary pair. -/
+/-! Pair flows are oriented from `i` to `j`, using `i < j` as the single
+representative of each unordered boundary pair. -/
 set_option autoImplicit false
 open scoped BigOperators
 
 namespace D5.S3.Entropy.BitThreadIngletonMultiflowRefutation
 
-def cutValue {V : Type} [Fintype V] [DecidableEq V]
-    (cap : V → V → ℝ) (W : Finset V) : ℝ :=
-  ∑ u : V, ∑ v : V, if u ∈ W ∧ v ∉ W then cap u v else 0
+def cutValue {vtx : Type} [Fintype vtx] [DecidableEq vtx]
+    (cap : vtx → vtx → ℝ) (w : Finset vtx) : ℝ :=
+  ∑ u : vtx, ∑ v : vtx, if u ∈ w ∧ v ∉ w then cap u v else 0
 
-def admissibleCuts {V : Type} [Fintype V] [DecidableEq V] {k : ℕ}
-    (b : Fin k ↪ V) (I : Finset (Fin k)) : Finset (Finset V) :=
-  Finset.univ.filter (fun W => ∀ i, b i ∈ W ↔ i ∈ I)
+def admissibleCuts {vtx : Type} [Fintype vtx] [DecidableEq vtx] {k : ℕ}
+    (b : Fin k ↪ vtx) (s : Finset (Fin k)) : Finset (Finset vtx) :=
+  Finset.univ.filter (fun w => ∀ i, b i ∈ w ↔ i ∈ s)
 
-noncomputable def minCut {V : Type} [Fintype V] [DecidableEq V] {k : ℕ}
-    (cap : V → V → ℝ) (b : Fin k ↪ V) (I : Finset (Fin k)) : ℝ :=
-  (admissibleCuts b I).image (cutValue cap) |>.min' (by
+noncomputable def minCut {vtx : Type} [Fintype vtx] [DecidableEq vtx] {k : ℕ}
+    (cap : vtx → vtx → ℝ) (b : Fin k ↪ vtx) (s : Finset (Fin k)) : ℝ :=
+  (admissibleCuts b s).image (cutValue cap) |>.min' (by
     classical
-    refine ⟨cutValue cap (Finset.image b I), ?_⟩
+    refine ⟨cutValue cap (Finset.image b s), ?_⟩
     apply Finset.mem_image.mpr
-    refine ⟨Finset.image b I, ?_, rfl⟩
-    simp [admissibleCuts, Finset.mem_image])
+    refine ⟨Finset.image b s, ?_, rfl⟩
+    delta admissibleCuts
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+    intro i
+    constructor
+    · intro h
+      obtain ⟨j, hj, hji⟩ := Finset.mem_image.mp h
+      have hji := b.injective hji
+      subst j
+      exact hj
+    · exact Finset.mem_image_of_mem b)
 
-def IsMultiflow {V : Type} [Fintype V] [DecidableEq V]
-    {k : ℕ} (cap : V → V → ℝ) (b : Fin k ↪ V)
-    (f : Fin k → Fin k → V → V → ℝ) (n : Fin k → Fin k → ℝ) : Prop :=
+def IsMultiflow {vtx : Type} [Fintype vtx] [DecidableEq vtx]
+    {k : ℕ} (cap : vtx → vtx → ℝ) (b : Fin k ↪ vtx)
+    (f : Fin k → Fin k → vtx → vtx → ℝ) (n : Fin k → Fin k → ℝ) : Prop :=
   (∀ i j u v, i < j → f i j u v = -f i j v u) ∧
-  (∀ i j u, i < j → u ≠ b i → u ≠ b j → ∑ v : V, f i j u v = 0) ∧
+  (∀ i j u, i < j → u ≠ b i → u ≠ b j → ∑ v : vtx, f i j u v = 0) ∧
   (∀ i j, i < j → 0 ≤ n i j ∧
-    (∑ v : V, f i j (b i) v = n i j) ∧
-    (∑ v : V, f i j (b j) v = -n i j)) ∧
+    (∑ v : vtx, f i j (b i) v = n i j) ∧
+    (∑ v : vtx, f i j (b j) v = -n i j)) ∧
   (∀ u v, (∑ i : Fin k, ∑ j : Fin k,
     if i < j then |f i j u v| else 0) ≤ cap u v)
 
-def subflow {k : ℕ} (n : Fin k → Fin k → ℝ) (I : Finset (Fin k)) : ℝ :=
-  ∑ i ∈ I, ∑ j : Fin k, if j ∉ I then if i < j then n i j else n j i else 0
+def subflow {k : ℕ} (n : Fin k → Fin k → ℝ) (s : Finset (Fin k)) : ℝ :=
+  ∑ i ∈ s, ∑ j : Fin k, if j ∉ s then if i < j then n i j else n j i else 0
 
-def IsMaxMultiflow {V : Type} [Fintype V] [DecidableEq V]
-    {k : ℕ} (cap : V → V → ℝ) (b : Fin k ↪ V)
-    (f : Fin k → Fin k → V → V → ℝ) (n : Fin k → Fin k → ℝ) : Prop :=
+def IsMaxMultiflow {vtx : Type} [Fintype vtx] [DecidableEq vtx]
+    {k : ℕ} (cap : vtx → vtx → ℝ) (b : Fin k ↪ vtx)
+    (f : Fin k → Fin k → vtx → vtx → ℝ) (n : Fin k → Fin k → ℝ) : Prop :=
   IsMultiflow cap b f n ∧ ∀ i, subflow n {i} = minCut cap b {i}
 
-def combo {k : ℕ} (α : Finset (Fin k) → ℝ) (X : Finset (Fin k) → ℝ) : ℝ :=
-  ∑ I : Finset (Fin k), α I * X I
+def combo {k : ℕ} (α : Finset (Fin k) → ℝ) (x : Finset (Fin k) → ℝ) : ℝ :=
+  ∑ s : Finset (Fin k), α s * x s
 
 def claim : Prop :=
-  ∀ (V : Type) [Fintype V] [DecidableEq V] (k : ℕ)
-    (cap : V → V → ℝ) (b : Fin k ↪ V) (α : Finset (Fin k) → ℝ),
+  ∀ (vtx : Type) [Fintype vtx] [DecidableEq vtx] (k : ℕ)
+    (cap : vtx → vtx → ℝ) (b : Fin k ↪ vtx) (α : Finset (Fin k) → ℝ),
     (∀ u v, cap u v = cap v u) →
     (∀ u, cap u u = 0) →
     (∀ u v, 0 ≤ cap u v) →
@@ -103,7 +112,7 @@ private lemma ingleton_combo (x : Finset (Fin 5) → ℝ) :
     combo ingletonCoefficient x =
       x {0, 1} + x {0, 2} + x {0, 3} + x {1, 2} + x {1, 3} -
       x {0} - x {1} - x {2, 3} - x {0, 1, 2} - x {0, 1, 3} := by
-  unfold combo ingletonCoefficient
+  delta combo ingletonCoefficient
   simp only [add_mul, sub_mul, ite_mul, one_mul, zero_mul,
     Finset.sum_add_distrib, Finset.sum_sub_distrib, Finset.sum_ite_eq',
     Finset.mem_univ, ite_true]
@@ -113,7 +122,7 @@ private lemma combo_identity :
       combo ingletonCoefficient (subflow n) = 2 * n 0 1 + 2 * n 2 3 := by
   intro n
   rw [ingleton_combo]
-  unfold subflow
+  delta subflow
   norm_num [Fin.sum_univ_succ]
   ring
 
@@ -122,7 +131,7 @@ private lemma star_weight_expand (I : Finset (Fin 5)) :
       (if 0 ∈ I then 1 else 0) + (if 1 ∈ I then 1 else 0) +
       (if 2 ∈ I then 1 else 0) + (if 3 ∈ I then 1 else 0) +
       (if 4 ∈ I then 2 else 0) := by
-  unfold starWeight
+  delta starWeight
   simp only [Fin.sum_univ_succ]
   norm_num
   ring
@@ -142,12 +151,12 @@ private lemma star_cut (I : Finset (Fin 5)) (W : Finset (Fin 6))
   change (3 : Fin 6) ∈ W ↔ (3 : Fin 5) ∈ I at h3
   change (4 : Fin 6) ∈ W ↔ (4 : Fin 5) ∈ I at h4
   rw [star_weight_expand I]
-  unfold cutValue
+  delta cutValue starCapacity
   by_cases hc : (5 : Fin 6) ∈ W
-  · simp [starCapacity, hc, h0, h1, h2, h3, h4, Fin.sum_univ_succ]
-    <;> split_ifs <;> ring
-  · simp [starCapacity, hc, h0, h1, h2, h3, h4, Fin.sum_univ_succ]
-    <;> split_ifs <;> ring
+  · simp [hc, h0, h1, h2, h3, h4, Fin.sum_univ_succ]
+    split_ifs <;> ring
+  · simp [hc, h0, h1, h2, h3, h4, Fin.sum_univ_succ]
+    split_ifs <;> ring
 
 private lemma star_cut_values :
     ∀ I : Finset (Fin 5), minCut starCapacity starBoundary I =
@@ -172,16 +181,16 @@ private lemma star_cut_values :
       starBoundary i ∈ Finset.image starBoundary I ∪ {5} ↔ i ∈ I := by
     simp only [Finset.mem_union, Finset.mem_singleton, hb i, or_false, hi]
   have ha : Finset.image starBoundary I ∈ admissibleCuts starBoundary I := by
-    unfold admissibleCuts
+    delta admissibleCuts
     exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, hi⟩
   have hao : Finset.image starBoundary I ∪ {5} ∈ admissibleCuts starBoundary I := by
-    unfold admissibleCuts
+    delta admissibleCuts
     exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, hio⟩
   have hva := star_cut I (Finset.image starBoundary I) hi
-  rw [if_neg hc] at hva
+  rw [ite_eq_right hc] at hva
   have hvao := star_cut I (Finset.image starBoundary I ∪ {5}) hio
-  rw [if_pos (Finset.mem_union_right _ (Finset.mem_singleton_self _))] at hvao
-  unfold minCut
+  rw [ite_eq_left (Finset.mem_union_right _ (Finset.mem_singleton_self _))] at hvao
+  delta minCut
   apply le_antisymm
   · apply le_min
     · rw [← hva]
@@ -202,51 +211,55 @@ set_option maxHeartbeats 800000 in
 private lemma witness_is_multiflow :
     IsMultiflow starCapacity starBoundary witnessFlow witnessThreads := by
   have hb (i : Fin 5) : starBoundary i = i.castSucc := rfl
-  unfold IsMultiflow
+  delta IsMultiflow
   refine ⟨?_, ?_, ?_, ?_⟩
   · intro i j u v hij
     fin_cases i <;> fin_cases j <;> norm_num at hij
-    all_goals norm_num [witnessFlow, witnessThreads]
-    all_goals fin_cases u <;> fin_cases v <;> norm_num [pathFlow, hb, Fin.ext_iff]
+    all_goals delta witnessFlow witnessThreads
+    all_goals norm_num
+    all_goals fin_cases u <;> fin_cases v <;> delta pathFlow
+    all_goals norm_num [hb, Fin.ext_iff]
   · intro i j u hij hui huj
     fin_cases i <;> fin_cases j <;> norm_num at hij
     all_goals fin_cases u <;> norm_num [hb, Fin.ext_iff] at hui
     all_goals norm_num [hb, Fin.ext_iff] at huj
     all_goals simp only [Fin.sum_univ_succ]
-    all_goals norm_num [witnessFlow, witnessThreads, pathFlow, hb,
-      Fin.ext_iff]
+    all_goals delta witnessFlow witnessThreads pathFlow
+    all_goals norm_num [hb, Fin.ext_iff]
   · intro i j hij
     fin_cases i <;> fin_cases j <;> norm_num at hij
     all_goals simp only [Fin.sum_univ_succ]
-    all_goals norm_num [witnessFlow, witnessThreads, pathFlow, hb,
-      Fin.ext_iff]
+    all_goals delta witnessFlow witnessThreads pathFlow
+    all_goals norm_num [hb, Fin.ext_iff]
   · intro u v
     fin_cases u <;> fin_cases v <;>
       simp only [Fin.sum_univ_succ]
-    all_goals norm_num [witnessFlow, witnessThreads, pathFlow, hb,
-      Fin.ext_iff, starCapacity]
+    all_goals delta witnessFlow witnessThreads pathFlow starCapacity
+    all_goals norm_num [hb, Fin.ext_iff]
 
 private lemma witness_max :
     IsMaxMultiflow starCapacity starBoundary witnessFlow witnessThreads := by
   refine ⟨witness_is_multiflow, ?_⟩
   intro i
   rw [star_cut_values]
-  fin_cases i <;> unfold subflow starWeight
+  fin_cases i <;> delta subflow starWeight
   all_goals simp only [Fin.sum_univ_succ]
-  all_goals norm_num [witnessThreads]
+  all_goals delta witnessThreads
+  all_goals norm_num
 
 private lemma star_min_combo :
     combo ingletonCoefficient (minCut starCapacity starBoundary) = 0 := by
   rw [ingleton_combo]
-  simp only [star_cut_values]
-  unfold starWeight
+  repeat rw [star_cut_values]
+  delta starWeight
   simp only [Fin.sum_univ_succ]
   norm_num
 
 private lemma star_witness_combo :
     combo ingletonCoefficient (subflow witnessThreads) = 2 := by
   rw [combo_identity]
-  norm_num [witnessThreads]
+  delta witnessThreads
+  norm_num
 
 private lemma star_nonnegative :
     ∀ f n, IsMultiflow starCapacity starBoundary f n →
@@ -258,15 +271,18 @@ private lemma star_nonnegative :
 
 private lemma star_symmetric : ∀ u v, starCapacity u v = starCapacity v u := by
   intro u v
-  fin_cases u <;> fin_cases v <;> norm_num [starCapacity]
+  fin_cases u <;> fin_cases v <;> delta starCapacity
+  all_goals norm_num
 
 private lemma star_loopless : ∀ u, starCapacity u u = 0 := by
   intro u
-  fin_cases u <;> norm_num [starCapacity]
+  fin_cases u <;> delta starCapacity
+  all_goals norm_num
 
 private lemma star_capacity_nonnegative : ∀ u v, 0 ≤ starCapacity u v := by
   intro u v
-  fin_cases u <;> fin_cases v <;> norm_num [starCapacity]
+  fin_cases u <;> fin_cases v <;> delta starCapacity
+  all_goals norm_num
 
 theorem result : ¬ claim := by
   intro h
@@ -279,5 +295,6 @@ theorem result : ¬ claim := by
     witnessFlow witnessThreads witness_max
   rw [star_min_combo, star_witness_combo] at heq
   norm_num at heq
+
 
 end D5.S3.Entropy.BitThreadIngletonMultiflowRefutation
