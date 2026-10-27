@@ -11,6 +11,8 @@ import Mathlib.Analysis.Convex.PathConnected
 import Mathlib.Topology.Connected.TotallyDisconnected
 import Mathlib.Topology.Order
 
+/-! # Path components of the original full retained quotient -/
+
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators Topology
@@ -46,6 +48,7 @@ private def facePoint (x : Ω) (f : Fin 4) : TruncatedPoint Ω :=
   (x, ⟨fun i => if i = f then 0 else 1/3, by
     constructor
     · intro i
+      dsimp only
       split_ifs <;> norm_num
     · fin_cases f <;> norm_num [Fin.sum_univ_succ]⟩)
 
@@ -85,10 +88,12 @@ private theorem generated_joined (u v : G) (g : G)
   induction hg using Subgroup.closure_induction with
   | mem g hg =>
     simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hg
-    rcases hg with rfl | rfl
-    · intro a b hab
+    rcases hg with hgu | hgv
+    · subst g
+      intro a b hab
       exact across_face_joined u v 0 a b (by simpa [faceWord] using hab.symm)
-    · intro a b hab
+    · subst g
+      intro a b hab
       exact across_face_joined u v 1 a b (by simpa [faceWord] using hab.symm)
   | one =>
     intro a b hab
