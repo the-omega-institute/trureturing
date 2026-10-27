@@ -507,6 +507,32 @@ internal sealed class LengthGramBodyDocument : IScribeDocumentDefinition
             Paragraph(Text("The coefficient active-support frontier from the preceding application and the native active-support frontier above give the exact equation frontier(R_j)={z in H2:e_j(z) in f(intrinsicFrontier_Real(F_j))}. Each F_j is compact and closed, and R_j is the intersection of the seven closed native support sublevel sets. In the coefficient affine span, intrinsicInterior_Real(F_j) is F_j minus its intrinsic frontier; in full H2, interior(R_j) is R_j minus its frontier. Injectivity of the same f therefore gives the exact companion equation interior(R_j)={z in H2:e_j(z) in f(intrinsicInterior_Real(F_j))}. These are transports into the actual original supporting planes.")),
             Paragraph(Text("There is also a pointwise homeomorphism h_j:F_j->R_j with e_j(h_j(v))=f(v) for every original face point v. Indeed the restriction of the same f is continuous and injective on compact F_j, and its image lies in the complete range of the isometry e_j. Composing with the continuous inverse of e_j onto its range yields a continuous bijection to R_j; compactness and the Hausdorff native H2 topology give the homeomorphism. This result uses the exact original face and map.")),
             Paragraph(Text("Apply the frontier equation to the preceding cycles T and H. For each displayed closed coefficient edge A of F_j, its H2 edge is h_j(A)={z in R_j:e_j(z) in f(A)}. The entire boundary of each native cap region R_j is the union of h_j(A) over its three displayed closed edges; the entire boundary of each native side region R_j is the union of h_j(A) over its six displayed closed edges, retaining the displayed cyclic labels. The pointwise identity e_j(h_j(v))=f(v) gives e_j(h_j(A))=f(A). The same_body_metric_segments supplier identifies this H3 image f(A) with the full ambient H3 metric-between set of its two native endpoints and supplies its isometric arclength parametrization. The pointwise homeomorphism and original injectivity preserve the distinct cycle vertices, each adjacent-edge singleton intersection and every nonadjacent-edge disjointness statement. These conclusions concern the eight named original cap and side regions and their displayed cycles.")),
+            Paragraph(Text("Application: closed disks for the eight original native faces. Keep six independently positive "
+                + "lengths and the same original coefficient body C(l). Each cap_i and side_k is a nonempty compact "
+                + "convex subset of Real4 whose affine-span direction has dimension two, as in the preceding hull and "
+                + "dimension applications. Regard such a face F in its own affine span A. Translation by one original "
+                + "face point identifies A with its direction, and a linear equivalence identifies that direction with "
+                + "Euclidean Real2. Perform this coordinate change before applying convexity: A is an affine space, "
+                + "while the resulting set K lies in the real vector space Real2. K is compact and convex. The "
+                + "intrinsic-interior theorem for nonempty finite-dimensional convex sets gives nonempty interior of K. "
+                + "Mathlib's exists_homeomorph_image_interior_closure_frontier_eq_unitBall theorem supplies a "
+                + "homeomorphism of Real2 taking the closure of K to the Euclidean closed unit disk. Compactness makes "
+                + "K closed, so restriction and the affine coordinate identification give a homeomorphism from the "
+                + "entire original F to that disk.")),
+            Paragraph(Text("Now fix any continuous injective original map f:C(l)->H3. Compactness of C(l) makes f an embedding. "
+                + "Its restriction to each of the original four cap and four side traces therefore transfers the "
+                + "coefficient-face disk to that trace's image under this same f. Apply this universal statement to the "
+                + "single f in the preceding native-plane and metric-segment construction. For every original support "
+                + "a, the full region R_a={z in H2:e_a(z) in f(F_a)} is homeomorphic to the closed Euclidean unit disk "
+                + "through the existing coefficient-face homeomorphism. All eight disks use the same original frame and "
+                + "body map as the complete native supporting-plane ranges, the Fin3 and Fin6 frontier cycles, and the "
+                + "arclength intervals between every two coefficient points. No separate existential choice of a "
+                + "realization is combined with these metric conclusions.")),
+            Paragraph(Text("The disk homeomorphisms are topological maps. Geodesic segments and the full native frontier cycles "
+                + "retain the metric identities stated above; no claim that arbitrary disk coordinates preserve angles "
+                + "or arclength is made. Interiors and frontiers continue to be taken in the original coefficient "
+                + "affine span or the full native H2 plane, respectively. This application does not classify all "
+                + "arbitrary faces of the body or supply further rigidity or gluing conclusions.")),
             Paragraph(Text("Application: recovering the actual length Gram from native supports and corners. "
                 + "Here the starting data are a given set P in the original native H3, four cap normals "
                 + "cap_i and four side normals side_i in Real4, and native points p_ij=corner(i,j) "
