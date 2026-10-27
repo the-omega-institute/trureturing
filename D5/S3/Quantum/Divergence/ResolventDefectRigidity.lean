@@ -84,7 +84,7 @@ private theorem complex_eq_zero_of_nonneg (z : ℂ) (hz : 0 ≤ z) (hre : z.re =
   Complex.ext hre (Complex.nonneg_iff.mp hz).2.symm
 
 omit [DecidableEq n] in
-private theorem contraction_saturation (V : Matrix n m ℂ) (hV : Vᴴ * V ≤ 1)
+theorem contraction_saturation (V : Matrix n m ℂ) (hV : Vᴴ * V ≤ 1)
     (b : m → ℂ)
     (hb : (star (V *ᵥ b) ⬝ᵥ (V *ᵥ b)).re = (star b ⬝ᵥ b).re) :
     Vᴴ *ᵥ (V *ᵥ b) = b := by

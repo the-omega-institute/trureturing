@@ -1,0 +1,4 @@
+**Corollary 75.3 (the same-class minimum is four Reads).** Under exactly Definitions 71.1–71.2 and 75.1's fixed graph-dependent passive, no-advice and full quaternary joint history/true-endpoint service task, the minimum number of additional literal scalar Reads is four. The attained schedule has total Tick count five; no minimum Tick count is asserted.
+
+**Proof.** Theorem 74.1 rules out every such fixed finite passive schedule with at most three Reads, allowing all earned terminals and every finite Tick offset, including Ticks after the last Read. Theorem 75.2 attains four under the same original-source and resource hypotheses. These bounds compare the same joint task and do not assert a lower bound for current-service acquisition alone. $\square$
+

@@ -1,0 +1,10 @@
+**Definition 35.2 (the reversed boundary control).** Put $r_*=I+1$ and compute, using exact rational arithmetic on the earned graph and recovered vector,
+
+$$
+g=-C A^{r_*}x_d=\begin{pmatrix}g_0\\\vdots\\g_I\end{pmatrix},
+\qquad g_j\in\mathbb Q^b.
+\tag{NLBAII.45}
+$$
+
+For $s=0,\ldots,I$ actually Tick, Add at each terminal $j$ the operand $(g_{I-s})_j$, in increasing label order, and Hold. All $b(I+1)$ Adds are executed, including zero operands. A control block is not applied before its preceding Tick. The field stays held while a block is calculated or transmitted, and retained updates follow actual operations. This is a finite use of the six installed operations, with no Reset tag, internal actuator or inverse Tick.
+

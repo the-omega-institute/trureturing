@@ -1,0 +1,123 @@
+**Theorem 75.2 (four-Read acquisition and complete true-endpoint continuation).** Under Definition 75.1's entire original-source, receiver, framing, authority, serialization and backing hypotheses, $Y$ is injective on all finite quaternary words, including empty words, all-zero words and pairs of different lengths. There is one exact decoder using only the stated context and four literal scalars that terminates on every promised image input and recovers the exact word and length. With sufficient finite backing for that decoding, full-state calculation and subsequent calls, it initializes complete original six-operation prediction at the actual advanced endpoint
+
+$$
+x_{\rm end}=A^5F_w(A)e.
+\tag{75.4}
+$$
+
+From this completed handoff it predicts and maintains every entire reply and actual successor for every finite sufficiently backed common adaptive continuation of the original six-operation service, including subsequent growth. Termination is asserted only on the promised image; no uniform history-independent time, precision, storage or physical-realization bound is assumed or concluded.
+
+**Proof.** First relate the literal samples to integer polynomial remainders. Put
+
+$$
+B=A^2,\qquad q(y)=y^3-6y^2+9y-3.
+$$
+
+The identity $Aq(A^2)=0$ is supplied by §72, (72.1)–(72.2) and Cayley–Hamilton. Therefore $Bq(B)=0$, although
+
+$$
+q(B)e=(-1,0,1,0,0,0,-1)^{\mathsf T}\ne0
+\tag{75.5}
+$$
+
+in the displayed material order. In particular no reduction using $q(B)=0$ is made. For any $P\in\mathbb Z[y]$, division by the monic $q$ gives
+
+$$
+P=qQ+(a+by+cy^2),\qquad Q\in\mathbb Z[y],\quad a,b,c\in\mathbb Z.
+$$
+
+For every $h\ge1$, the factor $Bq(B)=0$ legitimately gives
+
+$$
+B^hP(B)e=B^h(aI+bB+cB^2)e.
+\tag{75.6}
+$$
+
+Define $L_h(P)=((B^hP(B)e)_{LL},(B^hP(B)e)_{RR})^{\mathsf T}$. Multiplication in the particular adjacency (71.1) gives
+
+$$
+L_2(P)=
+\begin{pmatrix}2&5&15\\1&5&21\end{pmatrix}
+\begin{pmatrix}a\\b\\c\end{pmatrix},\qquad
+L_3(P)=
+\begin{pmatrix}5&15&51\\5&21&84\end{pmatrix}
+\begin{pmatrix}a\\b\\c\end{pmatrix}.
+\tag{75.7}
+$$
+
+Their entire integer kernels, not just rational kernel directions, are respectively
+
+$$
+\mathbb Z(30,-27,5),\qquad \mathbb Z(63,-55,10).
+\tag{75.8}
+$$
+
+Indeed the first pair of zero equations gives $a=6c$ and $5b=-27c$, hence $c=5n$, $b=-27n$, $a=30n$. The second pair gives $2b+11c=0$, so $c=2t$, $b=-11t$, and then $5a=63t$; hence $t=5n$ and $(a,b,c)=n(63,-55,10)$. Conversely these vectors annihilate the two displayed matrices, so no integer solutions have been lost.
+
+Let $\eta$ be the small root of $q$ in $(23/50,47/100)$ from (72.4). For any finite integer polynomial $P$ whose coefficients have magnitude at most three,
+
+$$
+|P(\eta)|\le 3\sum_{j=0}^{\deg P}\eta^j
+\le\frac3{1-\eta}<\frac{300}{53}<6;
+\tag{75.9}
+$$
+
+the zero polynomial satisfies the same bound directly. If $L_2(P)=0$, (75.8) and $q(\eta)=0$ imply
+
+$$
+P(\eta)=n(30-27\eta+5\eta^2),\qquad
+30-27\eta+5\eta^2>30-27\frac{47}{100}
+=\frac{1731}{100}>6.
+$$
+
+Thus the integer $n$ is zero by (75.9), and the entire remainder is zero. If $L_3(P)=0$, the corresponding calculation is
+
+$$
+P(\eta)=n(63-55\eta+10\eta^2),\qquad
+63-55\eta+10\eta^2>63-55\frac{47}{100}
+=\frac{743}{20}>6,
+$$
+
+again forcing $n=0$. Either zero sample pair therefore implies $q\mid P$ in $\mathbb Z[y]$. Now apply the already established all-degree bounded-coefficient lemma inside the proof of Theorem 72.1: no nonzero integer polynomial with every coefficient in $[-3,3]$ is divisible by $q$. Its proof uses the middle and largest roots in (72.4) and the Horner-prefix bound (72.5); it is reused here, not a new lemma. Consequently
+
+$$
+\bigl(L_2(P)=0\ \text{or}\ L_3(P)=0\bigr)
+\quad\Longrightarrow\quad P=0
+\quad\text{whenever all coefficients of }P\text{ lie in }[-3,3].
+\tag{75.10}
+$$
+
+For arbitrary finite $w,v$ with $Y(w)=Y(v)$, set
+
+$$
+D(z)=F_w(z)-F_v(z)=E(z^2)+zO(z^2).
+$$
+
+Every coefficient of $D$, and therefore of $E,O\in\mathbb Z[y]$, lies in $[-3,3]$. For equal lengths the monic terms cancel. For unequal lengths the higher leading coefficient is $1$ or $-1$; at the smaller leading degree it is a digit minus $1$, or its negative; all other differences are differences of digits or a digit and zero. This proves the same bound without assuming equal lengths or dropping zero digits.
+
+The actual bipartition, as used in Theorem 56.3 and §74, is
+
+$$
+\{LL,\varepsilon,RL,RR\}\ \sqcup\ \{L,R,RLL\}.
+$$
+
+Since $e,LL,RR$ lie in the first class, their odd-walk entries vanish. The two sample differences at time four are exactly $L_2(E)$. At time five the even component vanishes at these two terminals and the odd component is
+
+$$
+A^5 A O(B)e=A^6O(B)e=B^3O(B)e,
+$$
+
+so the two remaining differences are exactly $L_3(O)$. Equal samples and (75.10) give $E=O=0$, hence $F_w=F_v$. Monic degree gives the true length, and descending lower coefficients give the true chronological word. This includes $F_\emptyset=1$ and every $F_{0^m}=z^m$, without taking a quotient by leading zeros. The argument proves injectivity in every finite degree, rather than up to a length cutoff.
+
+For decoding enumerate lengths $m=0,1,2,\ldots$ and, within each length, all quaternary words in fixed lexicographic order. Compute (75.3) by exact integer arithmetic on the known finite graph and compare with the four received scalars. Each level is finite and each candidate calculation terminates. Every promised finite input word therefore appears after finitely many candidates; injectivity makes its match unique. This is one terminating decoder on the promised image, requiring no supplied word length, previous encoding replies, journal, field-dependent advice or accessible producer state. Outside that image the enumeration may not terminate. Finite enumeration and arithmetic for each image input do not give a uniform time or bit-width bound.
+
+Only the five actual Ticks in (75.2) change the source field, so its true endpoint is (75.4). While that source remains held, exact Horner evaluation of (75.1), followed by five applications of the known $A$, computes all seven coordinates of $x_{\rm end}$, including internal coordinates. Retain this vector together with the actual logical term, whole graph, exhaustive raw table and canonical inverse, authentic original-root reference/binding, installed parser/control and actual current/fresh grants. At this completed held cut, these data establish equality of the complete retained and actual current states. This supplies the new initialization for the proof invariant of Theorem 64.1, just as §68.2 initializes that same invariant at its own advanced endpoint; the earlier initializations listed in §64.1 are not substituted for (75.4).
+
+For completeness the one-step correspondence preserves the entire original service. An enabled $P_p$ at alpha retains every old vertex, edge and value, attaches zero $pL$, and moves the acted raw label to that new terminal. An enabled $S_p$ at beta retains old $p,pL$ and every old value and edge, adds zero $pLL,pR$, moves the acted label to $pLL$ and appends the next raw integer at $pR$. These successes return the original complete Growth$(P,p)$ and Growth$(S,p)$ packets, respectively. Record the genuine fresh bindings and grants and update the term, graph, both map directions and whole field. An absent address, a branch target and a wrong leaf type produce their distinct original identity-successor refusals; a material marker is never a logical target. An in-range Add adds its entire rational, with its full sign and denominator, at the actually bound terminal and returns the fixed Add acknowledgement. Tick replaces every coordinate by its current-neighbour sum and returns only its fixed acknowledgement. An in-range Read preserves the state and returns the entire current rational; Hold preserves it through its held interval and returns its fixed acknowledgement. Integer Add/Read labels outside the current roster return RangeRefusal with identity successor. A complete malformed packet, including the former Reset tag, returns BadFrame with identity successor. Missing rights disable a call and are not represented as a refusal.
+
+A proper incomplete frame retains the actual parser, received bytes and pending state, has no completed edit and produces no completed reply. Acquire every finite input into real backing before releasing its input latch. For each enabled complete call, forward through the authentic binding, consume the full output, End, local acknowledgement and completed return, restore navigation/dispatch position, and complete the matching retained update before admitting the next settled request. The actual parser/control, reference and current/fresh-grant lifecycle are maintained along with the mathematical state. Whole rational operands and outputs, pending requests and replies, target addresses, graph/field copies and work buffers all have their actual simultaneous finite backing. Any decoded-word or current-state export also uses its complete backed output frame, acknowledgement and return; an inner reply is not an extra uncharged communication port. Held serialization supplies time for finite local work without unrequested motion.
+
+Thus equality of entire actual and retained states is preserved at every completed cut, with the same whole reply. Induction proves the claimed full service for every finite common adaptive continuation; a next request chosen from common replies is common, and a fixed common random tape gives the same induction. Successful later growth may leave the seven-vertex history image, and arbitrary later rational Adds may leave (75.1). Prediction then relies on the maintained complete state and current adjacency, not on applying the history inverse to an out-of-image field. No inverse Tick, Reset, restoration of the old field, second specimen or hidden field channel is used. Rights, framing, sufficient finite backing and absence of other writers, revocation and crashes are service premises, not products of digit decoding; no inverse at a busy cut or backing-exhaustion behavior is included.
+
+The source-specific correspondence is (75.7)–(75.10): the two actual terminal sampling kernels at $h=2,3$ are excluded by evaluation at the contracting root, and parity then connects these literal samples to the complete history and true current service. Definitions 71.1–71.2 supply the native graph, seed, encoding and observation contract; §72 supplies the annihilator, root intervals and all-degree lemma; §§64.1 and 68.2 supply the full-state continuation invariant and its advanced-endpoint initialization method. The attributed literature supplier remains [Akiyama–Thuswaldner–Zaïmi, *Comments on the height reducing property II*, arXiv:1403.7480v1, Theorem 3 and its proof](https://arxiv.org/html/1403.7480v1): with digit bound $H=3$ and algebraic number the largest root of $q$, its bounded-digit zero-recognition and expanding-conjugate prefix bounds underlie §72. No automaton construction is needed here. That literature result supplies neither this native sampling schedule nor its service bridge; the kernel/contraction correspondence above is the source-specific synthesis. The theorem is confined to this original unit graph, specified seed, full monic quaternary image and stated service premises, rather than arbitrary fields, arbitrary graphs or recovery of an erased general journal. $\square$
+
