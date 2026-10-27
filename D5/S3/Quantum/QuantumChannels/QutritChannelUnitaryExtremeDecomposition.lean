@@ -6,7 +6,7 @@
    utility: none
    digest: Unitary and doubly extreme decomposition of the equal-modulus HMR qutrit channel. -/
 
-import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
+import D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility
 import Mathlib.Analysis.Convex.Extreme
 
 /-! The equal-modulus HMR channel and its unitary and extreme-point decomposition. -/
@@ -160,7 +160,8 @@ private lemma choi_range_lift (y : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ)
     rfl
   have hker : ∀ w, choi_matrix (krausChannel y) *ᵥ w = 0 →
       choi_matrix θ *ᵥ w = 0 := by
-    sorry
+    exact ElementaryChannelDivisibility.kernel_of_sub_psd
+      (choi_matrix (krausChannel y)) (choi_matrix θ) hbpos t ht hdom
   have hkerb : ∀ w, choi_matrix (krausChannel y) *ᵥ w = 0 → bᴴ *ᵥ w = 0 := by
     intro w hw
     apply (Matrix.self_mul_conjTranspose_mulVec_eq_zero b w).mp
@@ -168,7 +169,8 @@ private lemma choi_range_lift (y : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ)
     exact hker w hw
   have hfactor : ∃ q : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ,
       bᴴ = q * choi_matrix (krausChannel y) := by
-    sorry
+    exact ElementaryChannelDivisibility.factor_of_kernel
+      (choi_matrix (krausChannel y)) bᴴ hkerb
   obtain ⟨q, hq⟩ := hfactor
   have hcstar : (choi_matrix (krausChannel y))ᴴ = choi_matrix (krausChannel y) := by
     rw [hc, Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose]
