@@ -37,7 +37,10 @@ internal sealed class SongKwonScaraniSteadyPriorReversibilityDocument : IScribeD
                 StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(ClaimBody())))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Take S = E = Fin 3, xi = Matrix.diagonal ![1/2, 1/3, 1/6], and gamma = Matrix.diagonal ![17/44, 13/44, 14/44]. The unitary exchanges (0,0) with (1,1), (1,0) with (2,2), and (2,0) with (0,2), with coefficient −Complex.I, and fixes (0,1), (1,2), and (2,1). The prior is positive definite, has trace one, and is stationary. For every environmental matrix eta, the tabletop output at (1,1) on Matrix.single 0 0 1 and at (2,2) on Matrix.single 1 1 1 both equal eta 0 0. The corresponding Petz entries are 13/51 and 7/39. Their inequality excludes every eta, including all density matrices. Only this fixed interaction is asserted; no statement about the whole continuous Hamiltonian family is proved here."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("song-kwon-scarani-2025-steady-prior-reversibility"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, AssessedProvenance provenance) =>
         Describe.Lean(DescribeId.Create("skt-steady-prior-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),

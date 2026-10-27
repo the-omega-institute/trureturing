@@ -84,6 +84,10 @@ $$\neg (\forall S \in \operatorname{Type},\; \forall E \in \operatorname{Type},\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/SongKwonScaraniSteadyPriorReversibility.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/song-kwon-scarani-2025-steady-prior-reversibility` (refuted) by `D5/S3/Quantum/Information/SongKwonScaraniSteadyPriorReversibility.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"song-kwon-scarani-2025-steady-prior-reversibility","declaration_gid":"D5/S3/Quantum/Information/SongKwonScaraniSteadyPriorReversibility.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Song, H. Kwon and V. Scarani (2025). *Exact and approximate conditions of tabletop reversibility: when is Petz recovery cost-free?*. DOI: [10.1088/2058-9565/aea92d](https://doi.org/10.1088/2058-9565/aea92d). URL: <https://arxiv.org/abs/2510.26895v1>.
