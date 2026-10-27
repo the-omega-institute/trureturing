@@ -153,10 +153,6 @@ def position : Fin 13 → Address := hole 12
 
 def Q : ActualCutPartitionRecovery.CutSet := Finset.univ.image position
 
-private theorem position_injective : Function.Injective position := by
-  intro i j eq
-  exact (FiniteHereditaryPatternRealization.result.2.2.2.1 12 i j [] [] (by simpa [position] using eq)).1
-
 private theorem Q_mem (i : Fin 13) : position i ∈ Q := Finset.mem_image.mpr ⟨i,Finset.mem_univ _,rfl⟩
 
 private theorem Q_prefix_free : ActualCutPartitionRecovery.CutPrefixFree Q := by
