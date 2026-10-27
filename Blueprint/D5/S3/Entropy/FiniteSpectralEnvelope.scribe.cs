@@ -5,7 +5,7 @@ internal sealed class FiniteSpectralEnvelopeDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite probability moment optimization with a purity budget.",
         H("Finite spectral envelope"), Blocks(
-            Paragraph(Text("For 1/3 <= q <= 3/8, define d=sqrt(6q-2), x=(2+d)/6 and E(q)=[10-18q-(6q-2)d]/108. The parameter helpers live with the finite minimization that consumes them. Here x is the repeated larger coordinate of the minimizing three-point spectrum. The identity x^2(1-2x)=E(q) and monotonicity of E are obtained from d^2=6q-2 and d>=0.")),
+            Paragraph(Text("For 1/3 <= q <= 3/8, define d=sqrt(6q-2), x=(2+d)/6 and E(q)=[10-18q-(6q-2)d]/108. Here x is the repeated larger coordinate of the minimizing three-point spectrum. The identity x^2(1-2x)=E(q) and monotonicity of E are obtained from d^2=6q-2 and d>=0.")),
             Describe.Lean(
             DescribeId.Create("finite-probability-purity-budget-envelope"),
             DeclarationHandle.Create("D5/S3/Entropy/FiniteSpectralEnvelope.finite_budget_envelope"),

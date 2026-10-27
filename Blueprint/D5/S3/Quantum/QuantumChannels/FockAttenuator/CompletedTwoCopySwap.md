@@ -4,7 +4,7 @@
 
 Completed Fock tensor coordinates for the actual retained-mode swap.
 
-Let H be complex l2(N) and H2=l2(N,H), in the published beam-splitter convention. The occupation pairs are orthonormal and total: testing against a pair reads one actual matrix coefficient. Transporting the completed tensor Hilbert basis through this Fock basis identifies the completion of H tensor H with H2 and sends every pure tensor x tensor y to the published tensor x y: both representations have coefficient x_m y_n. The actual four-mode proof uses the tensor Hilbert basis of H2 directly. The actual one-mode occupation basis also remains in the Gram proof.
+Let H be complex l2(N) and H2=l2(N,H), in the published beam-splitter convention. The occupation pairs are orthonormal and total: testing against a pair reads one actual matrix coefficient. Transporting the completed tensor Hilbert basis through this Fock basis identifies the completion of H tensor H with H2 and sends every pure tensor x tensor y to the published tensor x y: both representations have coefficient x_m y_n. The four-mode proof uses the tensor Hilbert basis of H2 directly. The one-mode occupation basis enters the Gram proof.
 
 For arbitrary completed w in H2, the column square sum is norm(w)^2. HilbertSchmidt.exists_hilbertSchmidt_of_square_summable_columns constructs C with C e_n=w_n, including every infinite-support slice. Applying C to the occupation-basis expansion of C* x gives the absolutely convergent series inner(w_n,x) w_n, exactly the published purePartialTrace. Thus C C* is the actual reduced operator, positive and trace class by the existing Hilbert-Schmidt product and star-order suppliers.
 
@@ -30,7 +30,7 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/FockAttenuator/CompletedTwoCopySw
 
 *Commentary.*
 
-Apply the existing Hilbert-Schmidt product theorem and mul_star_self_nonneg to that equality. These are consumed joins in the actual trace-square argument.
+Apply the existing Hilbert-Schmidt product theorem and mul_star_self_nonneg to that equality. The trace-square argument uses these identities.
 
 The trace of C C* in any Hilbert basis is the square sum of C* on that basis. The existing Hilbert-Schmidt adjoint identity equates it to the column square sum, so Tr(purePartialTrace w)=norm(w)^2. For w=beamSplitter(1/2)(tensor(a,e2)), the published unitary preserves the norm and the tensor square norm is norm(a)^2 norm(e2)^2=norm(a)^2. Therefore the actual reduced output has trace norm(a)^2 for every complex l2 input, including zero. This direct normalization argument is an application of the cited synthesis and trace suppliers.
 

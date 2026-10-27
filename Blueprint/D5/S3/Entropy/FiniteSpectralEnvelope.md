@@ -4,7 +4,7 @@
 
 Finite probability moment optimization with a purity budget.
 
-For 1/3 <= q <= 3/8, define d=sqrt(6q-2), x=(2+d)/6 and E(q)=[10-18q-(6q-2)d]/108. The parameter helpers live with the finite minimization that consumes them. Here x is the repeated larger coordinate of the minimizing three-point spectrum. The identity x^2(1-2x)=E(q) and monotonicity of E are obtained from d^2=6q-2 and d>=0.
+For 1/3 <= q <= 3/8, define d=sqrt(6q-2), x=(2+d)/6 and E(q)=[10-18q-(6q-2)d]/108. Here x is the repeated larger coordinate of the minimizing three-point spectrum. The identity x^2(1-2x)=E(q) and monotonicity of E are obtained from d^2=6q-2 and d>=0.
 
 **Theorem 1.1 (The complete finite simplex).**
 

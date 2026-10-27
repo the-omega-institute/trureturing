@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Entropy/SpectralEnvelope.countable_budget_envelope`
 
 Retain the first n entries of a countable probability sequence and let T and R be the tail mass and squared mass. If R=0 then T=0. Otherwise choose a positive integer L with T^2/L <= R, and replace the tail by L equal entries T/L. The approximant has exactly unit mass and purity no greater than the original. The finite budget theorem applies. The second and third moments converge because T and R tend to zero, and the countable Newton identity passes the inequality to the limit. No mass is lost and no finite-rank minimizer is postulated for the countable problem.
 
-For every q in the full closed interval [1/3,3/8], put d=sqrt(6q-2) and x=(2+d)/6. Then 0<=d<=1/2, hence 1/3<=x<=5/12 and 1-2x>=0. The finite-support sequence x,x,1-2x,0,... is summable with unit mass. Its purity is 2x^2+(1-2x)^2=6x^2-4x+1=q, using d^2=6q-2. Its increasing-triple sum is x^2(1-2x)=E(q). This gives equality throughout the abstract interval, including both endpoints, without a separate named sharpness theorem.
+For every q in the full closed interval [1/3,3/8], put d=sqrt(6q-2) and x=(2+d)/6. Then 0<=d<=1/2, hence 1/3<=x<=5/12 and 1-2x>=0. The finite-support sequence x,x,1-2x,0,... is summable with unit mass. Its purity is 2x^2+(1-2x)^2=6x^2-4x+1=q, using d^2=6q-2. Its increasing-triple sum is x^2(1-2x)=E(q). This gives equality throughout the abstract interval, including both endpoints.
 
 **Theorem 1.2 (The uniform constant).**
 
