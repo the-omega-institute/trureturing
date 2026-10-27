@@ -9,6 +9,9 @@
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeFunctionalObstruction
 import D5.S3.Arith.FibonacciAtomic.Observer.NativeSimultaneousPrefixSeparation
 
+/-! Symbolic propagation detects exactly the finite original reconstructions of the
+joint native leaf-limit solution and forces their values in every solution. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -114,7 +117,7 @@ private theorem canonical_satisfies {m : Nat} (S : System m) :
   intro i E eq
   have fixed := leafLimit_unique (shift i)
     (extensionStep_limit S (fun _ => False) (fun _ => Omega) (canonical_limit S) i)
-  simpa only [extensionStep, if_false, eq] using fixed
+  simpa only [extensionStep, ite_false, eq] using fixed
 
 private theorem approximant_below_solution {m : Nat} {S : System m}
     {v : Fin m → CompletionTree} (sat : Satisfies S v) (n : Nat) :
@@ -125,7 +128,7 @@ private theorem approximant_below_solution {m : Nat} {S : System m}
     intro i
     change LeafBelow (extensionStep S (fun _ => False) (fun _ => Omega)
       (approximants S n) i) (v i)
-    simp only [extensionStep, if_false]
+    simp only [extensionStep, ite_false]
     cases eq : S i with
     | none => exact omega_below _
     | some E => rw [sat i E eq]; exact value_leafBelow ih E
@@ -174,9 +177,9 @@ private theorem specialize_value {k m : Nat} (mode : Fin k → Bool) (p : Fin k 
   | ground t => rfl
   | token j c =>
     cases h : mode j
-    · simp only [specialize, h, Bool.false_eq_true, if_false,
+    · simp only [specialize, h, Bool.false_eq_true, ite_false,
         value, CompletionPositiveDriftRegion.value, Function.iterate_zero_apply, last]
-    · simp only [specialize, h, if_true, value, CompletionPositiveDriftRegion.value]
+    · simp only [specialize, h, ite_true, value, CompletionPositiveDriftRegion.value]
       exact (iterate_embed (p j + c) (.of true)).symm
   | var a j => rfl
   | pair A B ihA ihB => exact congrArg₂ node ihA ihB
@@ -261,7 +264,8 @@ private theorem pass_extends_step {k m : Nat} (S : FunctionalSystem k m)
     cases eq : S i with
     | none => simp [finitePass, symbolicStep, eq] at hf
     | some E =>
-      exact symbolic_extends mode ih E f (by simpa [finitePass, symbolicStep, eq] using hf)
+      simpa [finitePass, symbolicStep, eq] using
+        symbolic_extends mode ih E f (by simpa [finitePass, symbolicStep, eq] using hf)
 
 private theorem pass_extends {k m : Nat} (S : FunctionalSystem k m)
     (mode : Fin k → Bool) {n j : Nat} (h : n ≤ j) :
@@ -335,5 +339,168 @@ private theorem pass_bounded {k m : Nat} (S : FunctionalSystem k m)
     rw [Nat.add_sub_of_le hj] at eqm
     rw [eqn, eqm]
     intro i f hf; exact hf
+
+
+
+private def Realizes {k : Nat} (p : Fin k → Nat) (X : CompletionTree) :
+    Option (FiniteExpression k) → Prop
+  | none => ¬ IsFinite X
+  | some f => X = embed (finiteValue p f)
+
+private theorem realizes_finite {k : Nat} {p : Fin k → Nat} {X : CompletionTree}
+    {q : Option (FiniteExpression k)} (h : Realizes p X q) :
+    IsFinite X ↔ q.isSome := by
+  cases q with
+  | none => exact ⟨fun hx => (h hx).elim, fun hh => by cases hh⟩
+  | some f => exact ⟨fun _ => rfl, fun _ => ⟨finiteValue p f, h.symm⟩⟩
+
+private theorem symbolic_realizes {k m : Nat} (mode : Fin k → Bool) (p : Fin k → Nat)
+    (v : Fin m → CompletionTree) (q : Fin m → Option (FiniteExpression k))
+    (h : ∀ i, Realizes p (v i) (q i)) (E : CompletionPositiveDriftRegion.Expr k m) :
+    Realizes p (CompletionPositiveDriftRegion.value mode p v E) (symbolic mode q E) := by
+  induction E with
+  | ground t => rfl
+  | token j c =>
+    cases hm : mode j
+    · simp only [symbolic, hm, Bool.false_eq_true, ite_false,
+        CompletionPositiveDriftRegion.value]
+      exact CompletionPositiveDriftRegion.omega_not_finite
+    · simp only [symbolic, hm, ite_true, CompletionPositiveDriftRegion.value]
+      change atomic (p j + c) = embed (substitution^[c] (substitution^[p j] (.of true)))
+      rw [← Function.iterate_add_apply, Nat.add_comm c]
+      exact iterate_embed (p j + c) (.of true)
+  | var a j =>
+    cases hj : q j with
+    | none =>
+      simp only [symbolic, hj, Option.map_none, Realizes,
+        CompletionPositiveDriftRegion.value]
+      exact fun hf => (show ¬ IsFinite (v j) from hj ▸ h j) ((finite_iterate_iff a _).mp hf)
+    | some f =>
+      simp only [symbolic, hj, Option.map_some, Realizes,
+        CompletionPositiveDriftRegion.value]
+      rw [show v j = embed (finiteValue p f) from hj ▸ h j, iterate_embed]
+      exact congrArg embed (NativeSimultaneousPrefixSeparation.eval_shift a _ f).symm
+  | pair A B ihA ihB =>
+    cases hA : symbolic mode q A with
+    | none =>
+      simp only [symbolic, hA, Option.bind_none, Realizes,
+        CompletionPositiveDriftRegion.value]
+      exact fun hf => (show ¬ IsFinite (CompletionPositiveDriftRegion.value mode p v A)
+        from hA ▸ ihA) ((finite_node_iff _ _).mp hf).1
+    | some f =>
+      cases hB : symbolic mode q B with
+      | none =>
+        simp only [symbolic, hA, hB, Option.bind_some, Option.map_none, Realizes,
+          CompletionPositiveDriftRegion.value]
+        exact fun hf => (show ¬ IsFinite (CompletionPositiveDriftRegion.value mode p v B)
+          from hB ▸ ihB) ((finite_node_iff _ _).mp hf).2
+      | some g =>
+        simp only [symbolic, hA, hB, Option.bind_some, Option.map_some, Realizes,
+          CompletionPositiveDriftRegion.value]
+        exact congrArg₂ node (show _ = _ from hA ▸ ihA) (show _ = _ from hB ▸ ihB)
+
+private theorem pass_realizes {k m : Nat} (S : FunctionalSystem k m)
+    (mode : Fin k → Bool) (p : Fin k → Nat) (n : Nat) (i : Fin m) :
+    Realizes p (approximants (nativeSystem S mode p) n i.castSucc)
+      (finitePass S mode n i) := by
+  induction n with
+  | zero => exact CompletionPositiveDriftRegion.omega_not_finite
+  | succ n ih =>
+    cases hi : S i with
+    | none =>
+      simp only [finitePass, symbolicStep, hi, Option.bind_none]
+      change ¬ IsFinite (extensionStep (nativeSystem S mode p) (fun _ => False)
+        (fun _ => Omega) (approximants (nativeSystem S mode p) n) i.castSucc)
+      simpa [extensionStep, nativeSystem, hi] using CompletionPositiveDriftRegion.omega_not_finite
+    | some E =>
+      simp only [finitePass, symbolicStep, hi, Option.bind_some]
+      change Realizes p (extensionStep (nativeSystem S mode p) (fun _ => False)
+        (fun _ => Omega) (approximants (nativeSystem S mode p) n) i.castSucc) _
+      simp only [extensionStep, ite_false, nativeSystem, Fin.lastCases_castSucc,
+        hi, Option.map_some]
+      rw [specialize_value mode p _ (approximants_last S mode p n) E]
+      exact symbolic_realizes mode p _ _ (fun j => pass_realizes S mode p n j) E
+
+private theorem lift_solution {k m : Nat} {S : FunctionalSystem k m}
+    {mode : Fin k → Bool} {p : Fin k → Nat} {v : Fin m → CompletionTree}
+    (sat : satisfies S mode p v) :
+    Satisfies (nativeSystem S mode p) (Fin.lastCases Omega v) := by
+  intro i
+  refine Fin.lastCases ?_ (fun j => ?_) i
+  · intro E he
+    simp [nativeSystem] at he
+  · intro E he
+    cases eq : S j with
+    | none => simp [nativeSystem, eq] at he
+    | some F =>
+      have ef : specialize mode p F = E := by simpa [nativeSystem, eq] using he
+      subst E
+      rw [specialize_value mode p _ (by simp) F]
+      simpa using sat j F eq
+
+private theorem expression_pass_value {k m : Nat} (S : FunctionalSystem k m)
+    (mode : Fin k → Bool) (p : Fin k → Nat) (E : CompletionPositiveDriftRegion.Expr k m)
+    (n : Nat) {f : FiniteExpression k} (hf : symbolic mode (finitePass S mode n) E = some f)
+    {v : Fin m → CompletionTree} (sat : satisfies S mode p v) :
+    CompletionPositiveDriftRegion.value mode p v E = embed (finiteValue p f) := by
+  have real := symbolic_realizes mode p
+    (fun j => approximants (nativeSystem S mode p) n j.castSucc)
+    (finitePass S mode n) (pass_realizes S mode p n) E
+  have eq : value (approximants (nativeSystem S mode p) n) (specialize mode p E) =
+      embed (finiteValue p f) := by
+    rw [specialize_value mode p _ (approximants_last S mode p n) E]
+    exact hf ▸ real
+  have below := value_leafBelow (approximant_below_solution (lift_solution sat) n)
+    (specialize mode p E)
+  rw [eq, specialize_value mode p _ (by simp) E] at below
+  simpa using finite_below_eq (finiteValue p f) _ below
+
+/-- Exactly the original reconstructions with successful symbolic finite evaluation. -/
+def finiteExpressions {k m r : Nat} (S : FunctionalSystem k m) (mode : Fin k → Bool)
+    (R : Fin r → CompletionPositiveDriftRegion.Expr k m) (i : Fin r) :
+    Option (FiniteExpression k) := symbolic mode (finitePass S mode m) (R i)
+
+def finiteOriginals {k m r : Nat} (S : FunctionalSystem k m) (mode : Fin k → Bool)
+    (R : Fin r → CompletionPositiveDriftRegion.Expr k m) : Finset (Fin r) :=
+  Finset.univ.filter fun i => (finiteExpressions S mode R i).isSome
+
+/-- Unbounded finite-original classification and same-parameter whole-system rigidity. -/
+theorem symbolic_finite_forcing {k m r : Nat} (S : FunctionalSystem k m)
+    (mode : Fin k → Bool) (R : Fin r → CompletionPositiveDriftRegion.Expr k m) :
+    (∀ p, satisfies S mode p (canonicalSolution S mode p)) ∧
+    ∀ (p : Fin k → Nat) (i : Fin r),
+      (IsFinite (CompletionPositiveDriftRegion.value mode p (canonicalSolution S mode p) (R i)) ↔
+        i ∈ finiteOriginals S mode R) ∧
+      ∀ f, finiteExpressions S mode R i = some f →
+        CompletionPositiveDriftRegion.value mode p (canonicalSolution S mode p) (R i) =
+          embed (finiteValue p f) ∧
+        ∀ v, satisfies S mode p v →
+          CompletionPositiveDriftRegion.value mode p v (R i) = embed (finiteValue p f) := by
+  refine ⟨solution_law S mode, ?_⟩
+  intro p i
+  refine ⟨⟨?_, ?_⟩, ?_⟩
+  · intro finite
+    have hlim := value_leafLimit (canonical_limit (nativeSystem S mode p))
+      (specialize mode p (R i))
+    rw [specialize_value mode p _ (canonical_last S mode p) (R i)] at hlim
+    obtain ⟨n, hn⟩ := (finite_limit_iff
+      (fun n j hj => value_leafBelow
+        (extensionIterate_mono (nativeSystem S mode p) _ _ n j hj)
+        (specialize mode p (R i))) hlim).mp finite
+    rw [specialize_value mode p _ (approximants_last S mode p n) (R i)] at hn
+    have real := symbolic_realizes mode p _ _ (pass_realizes S mode p n) (R i)
+    obtain ⟨f, hf⟩ := Option.isSome_iff_exists.mp ((realizes_finite real).mp hn)
+    have bounded := symbolic_extends mode (pass_bounded S mode n) (R i) f hf
+    simp only [finiteOriginals, Finset.mem_filter, Finset.mem_univ, true_and]
+    exact Option.isSome_iff_exists.mpr ⟨f, bounded⟩
+  · intro hi
+    obtain ⟨f, hf⟩ := Option.isSome_iff_exists.mp (Finset.mem_filter.mp hi).2
+    exact ⟨finiteValue p f,
+      (expression_pass_value S mode p (R i) m hf (solution_law S mode p)).symm⟩
+  · intro f hf
+    exact ⟨expression_pass_value S mode p (R i) m hf (solution_law S mode p),
+      fun v sat => expression_pass_value S mode p (R i) m hf sat⟩
+
+#print axioms symbolic_finite_forcing
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativeSymbolicFiniteForcing
