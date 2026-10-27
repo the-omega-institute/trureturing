@@ -398,8 +398,46 @@ private lemma operator_uniform_to_sot {𝕜 e α : Type} [RCLike 𝕜]
       ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop, ∀ s ∈ Set.Icc (0 : ℝ) t,
         ‖(randomProduct a n s ω -
           NormedSpace.exp (((s : ℝ) : 𝕜) • ∫ z, a 0 z ∂μ)) x‖ < ε := by
-  have hd := @deterministic_uniform.{0}
-  sorry
+  letI := NormedAlgebra.restrictScalars ℝ 𝕜 (e →L[𝕜] e)
+  letI : MeasurableSpace (e →L[𝕜] e) := borel (e →L[𝕜] e)
+  letI : BorelSpace (e →L[𝕜] e) := ⟨rfl⟩
+  intro x t ht
+  by_cases htriv : Subsingleton e
+  · letI := htriv
+    refine Filter.Eventually.of_forall fun ω ε hε => ?_
+    refine Filter.Eventually.of_forall fun n s hs => ?_
+    have hz : ∀ y : e, ‖y‖ = 0 := by
+      intro y
+      rw [Subsingleton.elim y 0, norm_zero]
+    rw [hz]
+    exact hε
+  · letI : Nontrivial e := not_subsingleton_iff_nontrivial.mp htriv
+    let b : e →L[𝕜] e := ∫ z, a 0 z ∂μ
+    have hint : Integrable (a 0) μ := Integrable.of_bound (hsm 0) m (ha 0)
+    have hm : 0 ≤ m := by
+      obtain ⟨ω, hω⟩ := (ha 0).exists
+      exact (norm_nonneg (a 0 ω)).trans hω
+    have hb : ‖b‖ ≤ m := by
+      simpa only [probReal_univ, mul_one] using norm_integral_le_of_norm_le_const (ha 0)
+    have hstrong := ProbabilityTheory.strong_law_ae a hint hind hid
+    have hbounded : ∀ᵐ ω ∂μ, ∀ i, ‖a i ω‖ ≤ m := ae_all_iff.mpr ha
+    filter_upwards [hstrong, hbounded] with ω hω hbound
+    intro ε hε
+    have hη : 0 < ε / (‖x‖ + 1) := by positivity
+    have hunif := deterministic_uniform (fun i => a i ω) b m hm hbound hb hω t ht
+      (ε / (‖x‖ + 1)) hη
+    filter_upwards [hunif] with n hn
+    intro s hs
+    change ‖((List.ofFn fun i : Fin n => NormedSpace.exp ((s / n) • a i ω)).prod -
+      NormedSpace.exp (s • b)) x‖ < ε
+    let u := (List.ofFn fun i : Fin n => NormedSpace.exp ((s / n) • a i ω)).prod -
+      NormedSpace.exp (s • b)
+    calc
+      ‖u x‖ ≤ ‖u‖ * ‖x‖ := u.le_opNorm x
+      _ ≤ ‖u‖ * (‖x‖ + 1) := by gcongr; linarith
+      _ < (ε / (‖x‖ + 1)) * (‖x‖ + 1) :=
+        mul_lt_mul_of_pos_right (hn s hs) (by positivity)
+      _ = ε := div_mul_cancel₀ _ (by positivity)
 
 theorem result : claim := by
   intro 𝕜 e α _ _ _ _ _ μ _
