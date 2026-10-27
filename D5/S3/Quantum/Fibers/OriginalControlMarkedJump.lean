@@ -78,7 +78,7 @@ private theorem source_coordinates (c a beta : ℝ) (m : ℤ) (theta : Fin 5 →
     Real.sqrt_mul (show (0:ℝ) ≤ 2 by norm_num),Complex.ofReal_mul] <;>
     field_simp [ht]
 
-private theorem source_diagonal (c a beta : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
+theorem source_diagonal (c a beta : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
     (hc : c < 1 / 2) (ha : a ∈ Ioo 0 c) (i : Fin 5) :
     Complex.normSq (source c a beta m theta i) = p c a i := by
   rw [source_coordinates,Complex.normSq_eq_norm_sq]

@@ -56,7 +56,7 @@ def lateSuffix (B : Band) : ℝ → ℝ :=
   concatenate B.wait.height (B.loop (1/4) (by norm_num)) (1/2)
 
 def halfStep (n : ℕ) : ℝ := 1/(2*(n:ℝ))
-private theorem halfStep_pos (n : ℕ) (hn : 1 ≤ n) : 0 < halfStep n := by
+theorem halfStep_pos (n : ℕ) (hn : 1 ≤ n) : 0 < halfStep n := by
   unfold halfStep
   positivity
 
@@ -91,9 +91,9 @@ private theorem leg_terminal (L : Leg) :
     (L.affine_marked_probability 0 0 0 (fun _ => 0)).2.2.2.2.2.2.1
       L.duration ⟨L.duration_pos.le,le_rfl⟩
 
-private theorem loop_zero (B : Band) (d : ℝ) (hd : 0 < d) : B.loop d hd 0=B.a := by
+theorem loop_zero (B : Band) (d : ℝ) (hd : 0 < d) : B.loop d hd 0=B.a := by
   simp [loop,concatenate,hd.le,up,Leg.height]
-private theorem loop_end (B : Band) (d : ℝ) (hd : 0 < d) : B.loop d hd (2*d)=B.a := by
+theorem loop_end (B : Band) (d : ℝ) (hd : 0 < d) : B.loop d hd (2*d)=B.a := by
   have ht : ¬ 2*d ≤ d := by linarith
   simp only [loop,concatenate,if_neg ht]
   rw [show 2*d-d=d by ring]
@@ -102,7 +102,7 @@ private theorem loop_end (B : Band) (d : ℝ) (hd : 0 < d) : B.loop d hd (2*d)=B
   rw [leg_end,leg_end]
   simp [up,down,Leg.height]
 
-private theorem loop_control (B : Band) (d chi : ℝ) (hd : 0 < d) :
+theorem loop_control (B : Band) (d chi : ℝ) (hd : 0 < d) :
     OriginalControl (B.c,B.c,1-2*B.c) (2*d) (B.loop d hd) (fun _ => chi) := by
   have h0 := ((B.up d hd).affine_marked_probability chi 0 0 (fun _ => 0)).1
   have h1 := ((B.down d hd).affine_marked_probability chi 0 0 (fun _ => 0)).1
@@ -112,7 +112,7 @@ private theorem loop_control (B : Band) (d chi : ℝ) (hd : 0 < d) :
     simp [up,down,Leg.height]
   simpa only [two_mul,loop] using append_control B d d chi _ _ h0 h1 hj
 
-private theorem loop_survival (B : Band) (d : ℝ) (hd : 0 < d) :
+theorem loop_survival (B : Band) (d : ℝ) (hd : 0 < d) :
     survival B.c (B.loop d hd) (2*d)=B.q := by
   have hj : (B.up d hd).height d=(B.down d hd).height 0 := by
     change (B.up d hd).height (B.up d hd).duration = _
@@ -134,7 +134,7 @@ private theorem loop_survival (B : Band) (d : ℝ) (hd : 0 < d) :
   have hv := leg_terminal (B.down d hd)
   simpa [up,down,B.ab.le,not_le.mpr B.ab,q] using congrArg₂ (·*·) hu hv
 
-private theorem prefix_facts (B : Band) (d chi : ℝ) (hd : 0 < d) (j : ℕ) :
+theorem prefix_facts (B : Band) (d chi : ℝ) (hd : 0 < d) (j : ℕ) :
     OriginalControl (B.c,B.c,1-2*B.c) (2*(j:ℝ)*d) (B.repeated d hd j) (fun _ => chi) ∧
     B.repeated d hd j 0=B.a ∧ B.repeated d hd j (2*(j:ℝ)*d)=B.a ∧
     survival B.c (B.repeated d hd j) (2*(j:ℝ)*d)=B.q^j := by
@@ -176,7 +176,7 @@ private theorem prefix_facts (B : Band) (d chi : ℝ) (hd : 0 < d) (j : ℕ) :
         (2*(j:ℝ)*d+2*d)=_
       rw [hs,ih.2.2.2,loop_survival,pow_succ]
 
-private theorem wait_facts (B : Band) (chi : ℝ) :
+theorem wait_facts (B : Band) (chi : ℝ) :
     OriginalControl (B.c,B.c,1-2*B.c) (1/2) B.wait.height (fun _ => chi) ∧
     B.wait.height 0=B.a ∧ B.wait.height (1/2)=B.a ∧
     survival B.c B.wait.height (1/2)=1 := by
@@ -185,7 +185,7 @@ private theorem wait_facts (B : Band) (chi : ℝ) :
   · exact leg_end B.wait
   · simpa [wait,B.a_pos.ne'] using leg_terminal B.wait
 
-private theorem suffix_facts (B : Band) (chi : ℝ) (e : Bool) :
+theorem suffix_facts (B : Band) (chi : ℝ) (e : Bool) :
     let k := if e then B.earlySuffix else B.lateSuffix
     OriginalControl (B.c,B.c,1-2*B.c) 1 k (fun _ => chi) ∧
     k 0=B.a ∧ k 1=B.a ∧ survival B.c k 1=B.q := by

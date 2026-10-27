@@ -49,7 +49,7 @@ def markedLaw (c a beta T : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
       Measure.dirac (Sum.inl ()) +
     ∑ i : Fin 5, (failureMeasure c a beta T m theta k i).map (fun t => Sum.inr (i, t))
 
-private theorem markedLaw_apply (c a beta T : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
+theorem markedLaw_apply (c a beta T : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
     (k : ℝ → ℝ) (E : Set Leg.Record) (hE : MeasurableSet E) :
     markedLaw c a beta T m theta k E = (if Sum.inl () ∈ E then ENNReal.ofReal (∑ i, Complex.normSq
         ((successfulKraus c a (k T) (survival c k T) *ᵥ source c a beta m theta) i)) else 0)+
@@ -94,7 +94,7 @@ private theorem hazard_after (c T : ℝ) (k K : ℝ → ℝ) (hj : k T = K 0)
     hazard c (concatenate k K T) t = hazard c K (t-T) := by
   simp [hazard, deriv_after k K T t ht, concatenate, not_le.mpr ht, hj]
 
-private theorem hazard_integral (c T s : ℝ) (k K : ℝ → ℝ)
+theorem hazard_integral (c T s : ℝ) (k K : ℝ → ℝ)
     (hT : 0 ≤ T) (hs : 0 ≤ s) (hj : k T = K 0)
     (hk : IntervalIntegrable (hazard c k) volume 0 T)
     (hK : IntervalIntegrable (hazard c K) volume 0 s) :
@@ -137,7 +137,7 @@ private theorem successful_compose (c a b k A B : ℝ) (hc : c < 1 / 2)
   exact_mod_cast sqrt_factor A B (p c a i) (p c b i) (p c k i) hA hB
     (p_pos c a hc ha i) (p_pos c b hc hb i) (p_pos c k hc hk i)
 
-private theorem hazard_integrable (c T chi : ℝ) (k : ℝ → ℝ)
+theorem hazard_integrable (c T chi : ℝ) (k : ℝ → ℝ)
     (hk : OriginalControl (c, c, 1-2 * c) T k (fun _ => chi)) :
     IntervalIntegrable (hazard c k) volume 0 T := by
   have hd := (original_ac _ _ _ _ hk).1.intervalIntegrable_deriv
@@ -182,7 +182,7 @@ private theorem leg_integrable (L : Leg) (t : ℝ) (ht : t ∈ Icc 0 L.duration)
   rw [leg_hazard]
   exact (L.hazard_cont.mono (Icc_subset_Icc le_rfl ht.2)).intervalIntegrable_of_Icc ht.1
 
-private theorem rate_before (c T : ℝ) (k K : ℝ → ℝ) (t : ℝ) (ht : t < T) :
+theorem rate_before (c T : ℝ) (k K : ℝ → ℝ) (t : ℝ) (ht : t < T) :
     jumpRate c (concatenate k K T) t = jumpRate c k t := by
   funext i
   rw [jumpRate, jumpRate, hazard_before c T k K t ht]
@@ -192,7 +192,7 @@ private theorem rate_before (c T : ℝ) (k K : ℝ → ℝ) (t : ℝ) (ht : t < 
   change u < T at hu
   simp [concatenate, hu.le]
 
-private theorem rate_after (c T : ℝ) (k K : ℝ → ℝ) (hj : k T = K 0)
+theorem rate_after (c T : ℝ) (k K : ℝ → ℝ) (hj : k T = K 0)
     (t : ℝ) (ht : T < t) :
     jumpRate c (concatenate k K T) t = jumpRate c K (t-T) := by
   funext i
@@ -206,7 +206,7 @@ private theorem rate_after (c T : ℝ) (k K : ℝ → ℝ) (hj : k T = K 0)
       simp [concatenate, not_le.mpr hu, hj]
     _ = _ := deriv_comp_sub_const (fun u => Real.log (p c (K u) i)) T t
 
-private theorem survival_before (c T t : ℝ) (k K : ℝ → ℝ)
+theorem survival_before (c T t : ℝ) (k K : ℝ → ℝ)
     (ht : 0 ≤ t) (htT : t ≤ T) :
     survival c (concatenate k K T) t = survival c k t := by
   rw [survival, survival]
