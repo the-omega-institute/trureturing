@@ -7,8 +7,6 @@
    digest: The Harrow channel pair has parallel Chernoff exponent at least two. -/
 
 import D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation
-import Mathlib.Analysis.SpecialFunctions.Log.ENNRealLog
-import Mathlib.Topology.Instances.EReal.Lemmas
 
 /-! The input |01⟩ yields a parallel error exponent bounded below by two. -/
 
@@ -51,7 +49,8 @@ def harrowM : MatrixMap (Fin 2 × Fin 2) (Fin 2) ℂ where
     intro r x
     ext c d
     change (if c = d then
-      (if c = 0 then (r • x) (0, 0) (0, 0) + (r • x) (1, 0) (1, 0) + (r • x) (0, 1) (0, 1) else 0) +
+      (if c = 0 then
+        (r • x) (0, 0) (0, 0) + (r • x) (1, 0) (1, 0) + (r • x) (0, 1) (0, 1) else 0) +
         (r • x) (1, 1) (1, 1) / 2
     else 0) = r * (if c = d then
       (if c = 0 then x (0, 0) (0, 0) + x (1, 0) (1, 0) + x (0, 1) (0, 1) else 0) +
@@ -75,10 +74,12 @@ def harrowMbar : MatrixMap (Fin 2 × Fin 2) (Fin 2) ℂ where
     ext c d
     change (((x + y) (0, 0) (0, 0) + (x + y) (1, 0) (1, 0)) / 2 +
     (if c = 1 ∧ d = 1 then
-      ((x + y) (0, 1) (0, 1) + (x + y) (0, 1) (1, 1) + (x + y) (1, 1) (0, 1) + (x + y) (1, 1) (1, 1)) / 2
+      ((x + y) (0, 1) (0, 1) + (x + y) (0, 1) (1, 1) + (x + y) (1, 1) (0, 1) + (x +
+      y) (1, 1) (1, 1)) / 2
     else 0) +
     (if c = d then
-      ((x + y) (0, 1) (0, 1) - (x + y) (0, 1) (1, 1) - (x + y) (1, 1) (0, 1) + (x + y) (1, 1) (1, 1)) / 4
+      ((x + y) (0, 1) (0, 1) - (x + y) (0, 1) (1, 1) - (x + y) (1, 1) (0, 1) + (x +
+      y) (1, 1) (1, 1)) / 4
     else 0)) = ((x (0, 0) (0, 0) + x (1, 0) (1, 0)) / 2 +
     (if c = 1 ∧ d = 1 then
       (x (0, 1) (0, 1) + x (0, 1) (1, 1) + x (1, 1) (0, 1) + x (1, 1) (1, 1)) / 2
@@ -99,10 +100,12 @@ def harrowMbar : MatrixMap (Fin 2 × Fin 2) (Fin 2) ℂ where
     ext c d
     change (((r • x) (0, 0) (0, 0) + (r • x) (1, 0) (1, 0)) / 2 +
     (if c = 1 ∧ d = 1 then
-      ((r • x) (0, 1) (0, 1) + (r • x) (0, 1) (1, 1) + (r • x) (1, 1) (0, 1) + (r • x) (1, 1) (1, 1)) / 2
+      ((r • x) (0, 1) (0, 1) + (r • x) (0, 1) (1, 1) + (r • x) (1, 1) (0, 1) +
+      (r • x) (1, 1) (1, 1)) / 2
     else 0) +
     (if c = d then
-      ((r • x) (0, 1) (0, 1) - (r • x) (0, 1) (1, 1) - (r • x) (1, 1) (0, 1) + (r • x) (1, 1) (1, 1)) / 4
+      ((r • x) (0, 1) (0, 1) - (r • x) (0, 1) (1, 1) - (r • x) (1, 1) (0, 1) +
+      (r • x) (1, 1) (1, 1)) / 4
     else 0)) = r * ((x (0, 0) (0, 0) + x (1, 0) (1, 0)) / 2 +
     (if c = 1 ∧ d = 1 then
       (x (0, 1) (0, 1) + x (0, 1) (1, 1) + x (1, 1) (0, 1) + x (1, 1) (1, 1)) / 2
@@ -165,22 +168,25 @@ private theorem channel_values :
     harrowM (single (0, 1) (0, 1) 1) = diagonal (fun c => if c = 0 then 1 else 0) ∧
     harrowMbar (single (0, 1) (0, 1) 1) =
       diagonal (fun c => if c = 0 then 1 / 4 else 3 / 4) := by
+  let x : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ := single (0, 1) (0, 1) 1
   constructor
   · ext c d
     change (if c = d then
-      (if c = 0 then ((single (0, 1) (0, 1) 1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) (0, 0) (0, 0) + ((single (0, 1) (0, 1) 1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) (1, 0) (1, 0) + ((single (0, 1) (0, 1) 1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) (0, 1) (0, 1) else 0) +
-        ((single (0, 1) (0, 1) 1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) (1, 1) (1, 1) / 2
+      (if c = 0 then x (0, 0) (0, 0) + x (1, 0) (1, 0) + x (0, 1) (0, 1) else 0) +
+        x (1, 1) (1, 1) / 2
     else 0) = (diagonal (fun c => if c = 0 then 1 else 0)) c d
+    dsimp only [x]
     fin_cases c <;> fin_cases d <;>
       norm_num [Matrix.single_apply, Matrix.diagonal_apply]
   · ext c d
-    change ((((single (0, 1) (0, 1) 1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) (0, 0) (0, 0) + ((single (0, 1) (0, 1) 1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) (1, 0) (1, 0)) / 2 +
+    change ((x (0, 0) (0, 0) + x (1, 0) (1, 0)) / 2 +
     (if c = 1 ∧ d = 1 then
-      (((single (0, 1) (0, 1) 1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) (0, 1) (0, 1) + ((single (0, 1) (0, 1) 1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) (0, 1) (1, 1) + ((single (0, 1) (0, 1) 1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) (1, 1) (0, 1) + ((single (0, 1) (0, 1) 1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) (1, 1) (1, 1)) / 2
+      (x (0, 1) (0, 1) + x (0, 1) (1, 1) + x (1, 1) (0, 1) + x (1, 1) (1, 1)) / 2
     else 0) +
     (if c = d then
-      (((single (0, 1) (0, 1) 1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) (0, 1) (0, 1) - ((single (0, 1) (0, 1) 1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) (0, 1) (1, 1) - ((single (0, 1) (0, 1) 1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) (1, 1) (0, 1) + ((single (0, 1) (0, 1) 1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) (1, 1) (1, 1)) / 4
+      (x (0, 1) (0, 1) - x (0, 1) (1, 1) - x (1, 1) (0, 1) + x (1, 1) (1, 1)) / 4
     else 0)) = (diagonal (fun c => if c = 0 then 1 / 4 else 3 / 4)) c d
+    dsimp only [x]
     fin_cases c <;> fin_cases d <;>
       norm_num [Matrix.single_apply, Matrix.diagonal_apply]
 
@@ -255,8 +261,8 @@ private theorem amplified_output (n : ℕ) :
   ext ⟨c, r⟩ ⟨d, s⟩
   rw [kron_def]
   simp only [LinearMap.id_apply, Matrix.single_apply, Prod.mk.injEq]
-  simp only [ite_and, mul_ite, ite_mul, mul_one, mul_zero, zero_mul,
-    Finset.sum_ite_irrel, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true,
+  simp only [ite_and, mul_ite, mul_one, mul_zero,
+    Finset.sum_ite_irrel, Finset.sum_ite_eq, Finset.mem_univ, ite_true,
     Finset.sum_const_zero]
   rw [tensor_values]
   simp only [Matrix.diagonal_apply]
@@ -326,7 +332,8 @@ private theorem error_upper (n : ℕ) : parallelError n ≤ (1 / 4 : ℝ≥0∞)
   have hs : 1 - (1 / 4 : ℝ≥0∞) ^ n ≤
       diamondNorm (tensorPow harrowM n - tensorPow harrowMbar n) / 2 := by
     apply (ENNReal.le_div_iff_mul_le (Or.inl (by norm_num)) (Or.inl (by norm_num))).2
-    simpa only [mul_comm] using hd
+    rw [mul_comm]
+    exact hd
   change (1 - _ / 2) / 2 ≤ _
   apply ENNReal.div_le_div_right
   exact (tsub_le_tsub_left hs 1).trans_eq
@@ -338,7 +345,8 @@ private theorem exponent_lower (n : ℕ) (hn : 1 ≤ n) : (2 : EReal) ≤ expone
   have hprob : parallelError n ≤ (1 / 4 : ℝ≥0∞) ^ n := by
     apply (error_upper n).trans
     simpa only [div_one] using
-      (ENNReal.div_le_div (le_refl ((1 / 4 : ℝ≥0∞) ^ n)) (show (1 : ℝ≥0∞) ≤ 2 by norm_num))
+      (ENNReal.div_le_div (le_refl ((1 / 4 : ℝ≥0∞) ^ n))
+        (show (1 : ℝ≥0∞) ≤ 2 by norm_num))
   have hquarter : (1 / 4 : ℝ≥0∞) ^ n = ENNReal.ofReal ((1 / 4 : ℝ) ^ n) := by
     rw [ENNReal.ofReal_pow (by norm_num), ENNReal.ofReal_div_of_pos (by norm_num)]
     norm_num
@@ -363,7 +371,8 @@ private theorem exponent_lower (n : ℕ) (hn : 1 ≤ n) : (2 : EReal) ≤ expone
   rw [he] at hm
   exact hm
 
-private theorem not_tendsto (h : ∀ n : ℕ, 1 ≤ n → (2 : EReal) ≤ exponent n) : ¬ claim := by
+private theorem not_tendsto
+    (h : ∀ n : ℕ, 1 ≤ n → (2 : EReal) ≤ exponent n) : ¬ claim := by
   intro hc
   have hf : ∀ᶠ n : ℕ in atTop, (2 : EReal) ≤ exponent n :=
     (eventually_ge_atTop 1).mono fun n hn => h n hn
