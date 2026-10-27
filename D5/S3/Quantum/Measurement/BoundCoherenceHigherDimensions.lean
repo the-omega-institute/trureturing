@@ -67,19 +67,27 @@ private theorem witness_diagonal {d : ℕ} (hd : 3 ≤ d) (i : Fin d) :
     witness d i i = (d : ℂ)⁻¹ := by
   have h₁ : ¬ (i.val = d - 1 ∧ i.val = 0) := by omega
   have h₂ : ¬ (i.val = 0 ∧ i.val = d - 1) := by omega
-  simp only [witness, ite_true, h₁, h₂, ite_false, add_zero, mul_one]
+  change (d : ℂ)⁻¹ * ((if i = i then 1 else 0) +
+    (if i.val = d - 1 ∧ i.val = 0 then 1 else 0) +
+    (if i.val = 0 ∧ i.val = d - 1 then 1 else 0)) = _
+  simp only [ite_true, h₁, h₂, ite_false, add_zero, mul_one]
 
 private theorem witness_endpoint {d : ℕ} (hd : 3 ≤ d) :
     witness d ⟨d - 1, by omega⟩ ⟨0, by omega⟩ = (d : ℂ)⁻¹ := by
   have hn : d - 1 ≠ 0 := by omega
-  simp only [witness, Fin.ext_iff, hn, Ne.symm hn, and_self, ite_true, ite_false,
+  change (d : ℂ)⁻¹ * ((if (⟨d - 1, by omega⟩ : Fin d) = ⟨0, by omega⟩ then 1 else 0) +
+    (if d - 1 = d - 1 ∧ (0 : ℕ) = 0 then 1 else 0) +
+    (if d - 1 = 0 ∧ 0 = d - 1 then 1 else 0)) = _
+  simp only [Fin.ext_iff, hn, Ne.symm hn, and_self, ite_true, ite_false,
     add_zero, zero_add, mul_one]
 
 private theorem total_number_diagonal (d : ℕ) :
     numberOp d ⊗ₖ 1 + 1 ⊗ₖ numberOp d =
       Matrix.diagonal (fun a : Fin d × Fin d => ((a.1.val + a.2.val : ℕ) : ℂ)) := by
+  change Matrix.diagonal (fun n : Fin d => (n.val : ℂ)) ⊗ₖ 1 +
+    1 ⊗ₖ Matrix.diagonal (fun n : Fin d => (n.val : ℂ)) = _
   ext a b
-  simp only [numberOp, Matrix.add_apply, Matrix.kroneckerMap_apply, Matrix.one_apply,
+  simp only [Matrix.add_apply, Matrix.kroneckerMap_apply, Matrix.one_apply,
     Matrix.diagonal_apply, Prod.ext_iff, Nat.cast_add]
   split_ifs <;> simp_all
 
@@ -145,7 +153,10 @@ private theorem top_gap_tensor {d : ℕ} (hd : 3 ≤ d) (k : Fin d)
     · by_cases h₃ : a.1.val = 0 ∧ b.1.val = d - 1
       · omega
       · have hz : witness d a.1 b.1 = 0 := by
-          simp only [witness, h₁, h₂, h₃, ite_false, zero_add, mul_zero]
+          change (d : ℂ)⁻¹ * ((if a.1 = b.1 then 1 else 0) +
+            (if a.1.val = d - 1 ∧ b.1.val = 0 then 1 else 0) +
+            (if a.1.val = 0 ∧ b.1.val = d - 1 then 1 else 0)) = 0
+          simp only [h₁, h₂, h₃, ite_false, zero_add, mul_zero]
         have hn₁ : ¬ (a = (l, k) ∧ b = (z, k)) := by
           rintro ⟨hea, heb⟩
           exact h₂ ⟨congrArg (fun p => p.1.val) hea, congrArg (fun p => p.1.val) heb⟩
@@ -346,7 +357,10 @@ private theorem witness_posSemidef {d : ℕ} (hd : 3 ≤ d) :
     split_ifs <;> positivity
   have he : witness d = (d : ℝ)⁻¹ • (Matrix.vecMulVec u (star u) + Matrix.diagonal f) := by
     ext r s
-    simp only [witness, Matrix.smul_apply, Matrix.add_apply, Matrix.vecMulVec_apply,
+    change (d : ℂ)⁻¹ * ((if r = s then 1 else 0) +
+      (if r.val = d - 1 ∧ s.val = 0 then 1 else 0) +
+      (if r.val = 0 ∧ s.val = d - 1 then 1 else 0)) = _
+    simp only [Matrix.smul_apply, Matrix.add_apply, Matrix.vecMulVec_apply,
       Pi.star_apply, Matrix.diagonal_apply, RCLike.real_smul_eq_coe_mul,
       u, f, Fin.ext_iff]
     split_ifs <;> simp only [map_inv₀, map_natCast, star_one, star_zero, mul_one,
@@ -368,7 +382,9 @@ private theorem witness_coherent {d : ℕ} (hd : 3 ≤ d) :
   have hx : witness d l z = (d : ℂ)⁻¹ := witness_endpoint hd
   intro h
   have he := congrFun₂ h l z
-  simp only [numberOp, Matrix.mul_diagonal, Matrix.diagonal_mul, hx] at he
+  change (witness d * Matrix.diagonal (fun n : Fin d => (n.val : ℂ))) l z =
+    (Matrix.diagonal (fun n : Fin d => (n.val : ℂ)) * witness d) l z at he
+  simp only [Matrix.mul_diagonal, Matrix.diagonal_mul, hx] at he
   dsimp only [l, z] at he
   rw [Nat.cast_zero, mul_zero] at he
   exact (mul_ne_zero (by exact_mod_cast (show d - 1 ≠ 0 by omega))
@@ -379,7 +395,10 @@ private theorem witness_not_maximal {d : ℕ} (hd : 3 ≤ d) :
   let z : Fin d := ⟨0, by omega⟩
   let o : Fin d := ⟨1, by omega⟩
   have hx : witness d z o = 0 := by
-    simp only [witness, Fin.ext_iff]
+    change (d : ℂ)⁻¹ * ((if z = o then 1 else 0) +
+      (if z.val = d - 1 ∧ o.val = 0 then 1 else 0) +
+      (if z.val = 0 ∧ o.val = d - 1 then 1 else 0)) = 0
+    simp only [Fin.ext_iff]
     dsimp [z, o]
     split_ifs <;> first | omega | ring
   rintro ⟨θ, hθ⟩
@@ -395,7 +414,13 @@ private theorem tensor_gap_zero {d : ℕ} (hd : 3 ≤ d) (a b : Fin d × Fin d)
     (hgap : a.1.val + a.2.val = b.1.val + b.2.val + j) :
     (witness d ⊗ₖ witness d) a b = 0 := by
   rw [Matrix.kroneckerMap_apply]
-  simp only [witness, Fin.ext_iff]
+  change ((d : ℂ)⁻¹ * ((if a.1 = b.1 then 1 else 0) +
+    (if a.1.val = d - 1 ∧ b.1.val = 0 then 1 else 0) +
+    (if a.1.val = 0 ∧ b.1.val = d - 1 then 1 else 0))) *
+    ((d : ℂ)⁻¹ * ((if a.2 = b.2 then 1 else 0) +
+    (if a.2.val = d - 1 ∧ b.2.val = 0 then 1 else 0) +
+    (if a.2.val = 0 ∧ b.2.val = d - 1 then 1 else 0))) = 0
+  simp only [Fin.ext_iff]
   split_ifs <;> first | omega | ring
 
 private theorem concentrated_lower_mode {d : ℕ} (hd : 3 ≤ d)
@@ -451,7 +476,8 @@ private theorem last_mode_traceNorm {d : ℕ} (hd : 3 ≤ d)
     congr 1
     simp only [RCLike.star_def, ← Complex.normSq_eq_conj_mul_self,
       Complex.normSq_eq_norm_sq, ← pow_two, Complex.ofReal_pow]
-  rw [modeCoherence, hm, traceNorm, hs, Matrix.trace_single_eq_same]
+  change traceNorm (mode (d - 1 : ℕ) x) = _
+  rw [hm, traceNorm, hs, Matrix.trace_single_eq_same]
   rfl
 
 private theorem witness_last_coherence {d : ℕ} (hd : 3 ≤ d) :
@@ -467,7 +493,8 @@ private theorem witness_no_concentration {d : ℕ} (hd : 3 ≤ d)
   · subst j
     rw [last_mode_traceNorm hd, witness_last_coherence hd]
     exact concentrated_last_entry_bound hd v hv
-  · rw [modeCoherence, concentrated_lower_mode hd v hv j hj h]
+  · change traceNorm (mode j (concentrated v (witness d))) ≤ traceNorm (mode j (witness d))
+    rw [concentrated_lower_mode hd v hv j hj h]
     have hz : traceNorm (0 : Matrix (Fin d) (Fin d) ℂ) = 0 := by
       rw [traceNorm, Matrix.conjTranspose_zero, Matrix.zero_mul, CFC.sqrt_zero,
         Matrix.trace_zero]
