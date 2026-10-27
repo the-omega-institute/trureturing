@@ -86,7 +86,7 @@ private def wedgeLift {X Y X' Y' : Type*}
     {a : X} {b : Y} {a' : X'} {b' : Y'}
     (f : X → X') (g : Y → Y') (hf : f a = a') (hg : g b = b') :
     Wedge a b → Wedge a' b' :=
-  Quotient.map (Sum.map f g) (wedge_respects f g hf hg)
+  Quotient.map' (Sum.map f g) (wedge_respects f g hf hg)
 
 private def wedgeMap {X Y X' Y' : Type*}
     [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace X'] [TopologicalSpace Y']
@@ -244,7 +244,8 @@ private theorem wedge_kernel : ∀ z w,
   · rw [P.cross_kernel]
     simp only [collapse_eq_base _ P.left_base, collapse_eq_base _ P.right_base,
       Set.mem_preimage]
-  · rw [eq_comm, P.cross_kernel]
+  · conv_rhs => rw [eq_comm]
+    rw [P.cross_kernel]
     simp only [collapse_eq_base _ P.left_base, collapse_eq_base _ P.right_base,
       Set.mem_preimage, and_comm]
   · change (_ = _ ∨ (_ ∧ _)) ↔ _
