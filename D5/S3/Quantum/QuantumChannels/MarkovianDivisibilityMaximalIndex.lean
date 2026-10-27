@@ -6,10 +6,7 @@
    utility: none
    digest: The maximal arithmetic-geometric entry index is 2d-5 for d >= 5, and 2 for d=3. -/
 
-import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Tactic.FinCases
 import D5.S3.Constants.PowerMeanKernel
 
 /-! The two mean matrices are optimized over independent sets of ordered positions. -/
