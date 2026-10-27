@@ -4,7 +4,7 @@
    mirror-E: none(waiver:finite-cone-union-wedge)
    anchors: [D5/S3/Geometry/FiniteConeCollapse, mathlib/module/Mathlib.Topology.Homeomorph.Quotient]
    utility: none
-   digest: Actual finite realizations meeting in a nonempty cone are homotopy equivalent to their quotient wedge. -/
+   digest: A finite union along a nonempty cone is equivalent to the actual quotient wedge. -/
 import D5.S3.Geometry.FiniteConeCollapse
 import Mathlib.Analysis.Convex.Topology
 import Mathlib.Topology.Homeomorph.Quotient
@@ -114,7 +114,7 @@ private def wedgeInverseHomotopy {X Y X' Y' : Type*}
         (fun z : I × Y => q (Sum.inr (K z)))) :=
       (q.continuous.comp (continuous_inl.comp H.continuous)).sumElim
         (q.continuous.comp (continuous_inr.comp K.continuous))
-    convert h.comp (Homeomorph.prodSumDistrib I X Y).continuous using 1
+    convert h.comp (Homeomorph.prodSumDistrib (X := I) (Y := X) (Z := Y)).continuous using 1
     funext z
     rcases z with ⟨t, x | y⟩ <;> rfl
   map_zero_left := by
@@ -227,28 +227,36 @@ private theorem wedge_kernel : ∀ z w,
   intro z w
   rcases z with z | z <;> rcases w with w | w
   all_goals
-    induction z using Quotient.inductionOn with
-    | h z =>
-      induction w using Quotient.inductionOn with
-      | h w =>
-        change (_ = _ ∨ (_ ∧ _)) ↔ _
-        simp only [wedgePoints, Set.mem_setOf_eq, Sum.inl.injEq, Sum.inr.injEq,
-          Sum.inl_ne_inr, Sum.inr_ne_inl, or_false, false_or]
-  · change (_ = _ ∨ (_ ∧ _)) ↔ _
+    refine Quotient.inductionOn₂ z w ?_
+    intro z w
+    change (_ = _ ∨ (_ ∧ _)) ↔ _
+    simp only [wedgePoints, Set.mem_ofPred_eq, Sum.inl.injEq, Sum.inr.injEq,
+      Sum.inl_ne_inr, Sum.inr_ne_inl, or_false, false_or]
+  · rename_i z w
+    change (_ = _ ∨ (_ ∧ _)) ↔
+      Quotient.mk (subsetSetoid C) (P.left z) = Quotient.mk (subsetSetoid C) (P.left w)
     rw [P.left_kernel]
     constructor
     · rintro (h | ⟨hz, hw⟩)
       · exact h
       · exact hz.trans hw.symm
     · exact Or.inl
-  · rw [P.cross_kernel]
-    simp only [collapse_eq_base _ P.left_base, collapse_eq_base _ P.right_base,
-      Set.mem_preimage]
-  · conv_rhs => rw [eq_comm]
+  · rename_i z w
+    change (_ ∧ _) ↔
+      Quotient.mk (subsetSetoid C) (P.left z) = Quotient.mk (subsetSetoid C) (P.right w)
     rw [P.cross_kernel]
-    simp only [collapse_eq_base _ P.left_base, collapse_eq_base _ P.right_base,
-      Set.mem_preimage, and_comm]
-  · change (_ = _ ∨ (_ ∧ _)) ↔ _
+    exact and_congr (collapse_eq_base (P.left ⁻¹' C) P.left_base z)
+      (collapse_eq_base (P.right ⁻¹' C) P.right_base w)
+  · rename_i z w
+    change (_ ∧ _) ↔
+      Quotient.mk (subsetSetoid C) (P.right z) = Quotient.mk (subsetSetoid C) (P.left w)
+    conv_rhs => rw [eq_comm]
+    rw [P.cross_kernel]
+    exact and_comm.trans (and_congr (collapse_eq_base (P.left ⁻¹' C) P.left_base w)
+      (collapse_eq_base (P.right ⁻¹' C) P.right_base z))
+  · rename_i z w
+    change (_ = _ ∨ (_ ∧ _)) ↔
+      Quotient.mk (subsetSetoid C) (P.right z) = Quotient.mk (subsetSetoid C) (P.right w)
     rw [P.right_kernel]
     constructor
     · rintro (h | ⟨hz, hw⟩)
@@ -320,7 +328,7 @@ private theorem realization_closed (M : PreAbstractSimplicialComplex V) :
   have he : realization M = ⋃ s : {s : Finset V // s ∈ M},
       convexHull ℝ ((fun v : V => Pi.single v (1 : ℝ)) '' (s.val : Set V)) := by
     ext x
-    simp only [realization, Set.mem_setOf_eq, Set.mem_iUnion]
+    simp only [realization, Set.mem_ofPred_eq, Set.mem_iUnion]
     constructor
     · rintro ⟨s, hs, hx⟩
       exact ⟨⟨s, hs⟩, hx⟩
@@ -380,10 +388,12 @@ private def closedCover :
   right := P.rightInclusion
   left_injective := by
     intro x y h
-    exact Subtype.ext (congrArg Subtype.val h)
+    apply Subtype.ext
+    exact congrArg (fun z : P.unionPair.Space => z.val) h
   right_injective := by
     intro x y h
-    exact Subtype.ext (congrArg Subtype.val h)
+    apply Subtype.ext
+    exact congrArg (fun z : P.unionPair.Space => z.val) h
   left_closed := (realization_closed P.left).isClosedMap_subtype_val.subtype_mk _
   right_closed := (realization_closed P.right).isClosedMap_subtype_val.subtype_mk _
   covers := by
