@@ -49,12 +49,15 @@ internal sealed class ManabeRestrictedAmalgamationNimDocument : IScribeDocumentD
                 + "Ordinary reductions reach both values in every smaller quotient block. A legal merger "
                 + "preserving h reverses the corrected low bit; if that bit is one, a reduction of an odd "
                 + "pile or a merger of an even disjoint pair reaches 2h. Thus mex gives the formula and "
-                + "both asserted implications."))));
+                + "both asserted implications.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("manabe-2024-restricted-amalgamation-nim-conjecture-1"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role,
-        AssessedProvenance provenance, string prose) =>
+        AssessedProvenance provenance, string prose, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("manabe-" + name), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula MoveFormula()
     {

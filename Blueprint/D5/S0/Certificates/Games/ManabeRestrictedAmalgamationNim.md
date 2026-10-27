@@ -58,6 +58,10 @@ $$\forall x \in Nat,\; \forall y \in Nat,\; \forall z \in Nat,\; \forall n \in N
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Games/ManabeRestrictedAmalgamationNim.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/manabe-2024-restricted-amalgamation-nim-conjecture-1` (proved) by `D5/S0/Certificates/Games/ManabeRestrictedAmalgamationNim.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"manabe-2024-restricted-amalgamation-nim-conjecture-1","declaration_gid":"D5/S0/Certificates/Games/ManabeRestrictedAmalgamationNim.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Hikaru Manabe (2024). *An Amalgamation Nim with Restriction*. DOI: [10.48550/arXiv.2411.14488](https://doi.org/10.48550/arXiv.2411.14488). URL: <https://arxiv.org/abs/2411.14488v1>.
