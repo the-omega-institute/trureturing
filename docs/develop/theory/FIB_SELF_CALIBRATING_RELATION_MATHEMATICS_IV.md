@@ -2390,7 +2390,7 @@ $$
 \begin{array}{c|c|c}
 \text{chronological word}&A&\operatorname{tr}(AR)\\ \hline
 JMJ&JL=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)&xy+s\\
-JMM&ML=\left(\begin{smallmatrix}1&1\\1&2\end{smallmatrix}\right)&xy+s+2\\
+JMM&ML=\left(\begin{smallmatrix}1&1\\2&1\end{smallmatrix}\right)&xy+s+x+1\\
 MJJ&JU=M& s+1\\
 MJM&MU=\left(\begin{smallmatrix}0&1\\1&2\end{smallmatrix}\right)&s+2
 \end{array}.
@@ -2585,7 +2585,7 @@ $$
 
 The initial equations $c/q=25/4$ fix a common $q$, so their
 matrix difference is (17.11). Let $A$ be this actual clock-three
-matrix, either $JL$ or $ML$. Its entry $A_{21}$ is one. Both
+matrix, either $JL$ or $ML$. Its entry $A_{21}$ is $1$ for $JL$ and $2$ for $ML$, hence positive. Both
 fourth responses on this pair agree, while $H_*(4)\ne0$;
 subtracting their $M$ and $J$ trace equations gives
 $\eta(A\Omega)_{22}=\eta A_{21}=0$, a contradiction.
