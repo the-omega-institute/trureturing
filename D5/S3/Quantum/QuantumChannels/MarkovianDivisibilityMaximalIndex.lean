@@ -10,6 +10,7 @@ import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic.FinCases
+import D5.S3.Constants.PowerMeanKernel
 
 /-! The two mean matrices are optimized over independent sets of ordered positions. -/
 
@@ -19,11 +20,11 @@ namespace D5.S3.Quantum.QuantumChannels.MarkovianDivisibilityMaximalIndex
 
 /-- The arithmetic-mean matrix of the source probability vector. -/
 def arith {d : ℕ} (p : Fin d → ℝ) (ij : Fin d × Fin d) : ℝ :=
-  (p ij.1 + p ij.2) / 2
+  D5.S3.Constants.PowerMeanKernel.meanOne (p ij.1) (p ij.2)
 
 /-- The geometric-mean matrix, counting both ordered positions. -/
 def geom {d : ℕ} (p : Fin d → ℝ) (ij : Fin d × Fin d) : ℝ :=
-  Real.sqrt (p ij.1 * p ij.2)
+  D5.S3.Constants.PowerMeanKernel.meanZero (p ij.1) (p ij.2)
 
 /-- The sum of the `m` largest entries, with multiplicity. This maximum over position
 sets equals the sorted-prefix sum for every real-valued `f`; it includes all entries
@@ -136,7 +137,7 @@ private lemma arithmetic_coefficients {d : ℕ} (s : Finset (Fin d × Fin d))
     rw [Finset.sum_comm, Finset.sum_div]
     apply Finset.sum_congr rfl
     intro ab hab
-    dsimp only [arith]
+    dsimp only [arith, D5.S3.Constants.PowerMeanKernel.meanOne]
     congr 1
     simp only [add_mul, Finset.sum_add_distrib, ite_mul, one_mul, zero_mul,
       Finset.sum_ite_eq, Finset.mem_univ, ite_true]
@@ -192,8 +193,9 @@ private lemma probability_weighted_bound {d : ℕ} {p : Fin d → ℝ}
 
 private lemma geometric_square_sum {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p) :
     (∑ ab : Fin d × Fin d, (geom p ab) ^ 2) = 1 := by
-  have hpoint (ab : Fin d × Fin d) : (geom p ab) ^ 2 = p ab.1 * p ab.2 :=
-    Real.sq_sqrt (mul_nonneg (hp.1 _) (hp.1 _))
+  have hpoint (ab : Fin d × Fin d) : (geom p ab) ^ 2 = p ab.1 * p ab.2 := by
+    dsimp only [geom, D5.S3.Constants.PowerMeanKernel.meanZero]
+    exact Real.sq_sqrt (mul_nonneg (hp.1 _) (hp.1 _))
   simp_rw [hpoint]
   rw [Fintype.sum_prod_type]
   simp_rw [← Finset.mul_sum, hp.2, mul_one]
@@ -234,8 +236,11 @@ private lemma geometric_refined_bound {d : ℕ} {p : Fin d → ℝ} (hp : IsProb
     (∑ ab ∈ s, geom p ab) ≤ p i + Real.sqrt (s.card - 1 : ℕ) *
       Real.sqrt (1 - (p i) ^ 2) := by
   classical
-  have hdiag : geom p (i, i) = p i := Real.sqrt_mul_self (hp.1 i)
+  have hdiag : geom p (i, i) = p i := by
+    dsimp only [geom, D5.S3.Constants.PowerMeanKernel.meanZero]
+    exact Real.sqrt_mul_self (hp.1 i)
   have hmax (ab : Fin d × Fin d) : geom p ab ≤ geom p (i, i) := by
+    dsimp only [geom, D5.S3.Constants.PowerMeanKernel.meanZero]
     apply Real.sqrt_le_sqrt
     exact mul_le_mul (hi ab.1) (hi ab.2) (hp.1 _) (hp.1 _)
   obtain ⟨t, ht, hai, hh⟩ := selection_with_center (geom p) s hs (i, i) hmax
@@ -421,7 +426,7 @@ private lemma failure_next {d : ℕ} (hd : 5 ≤ d) :
     omega
   have hacross (a : Fin d) (ha : a ∈ q) :
       arith p (o, a) + arith p (a, o) = (r ^ 2 + 1) / n := by
-    dsimp only [arith]
+    dsimp only [arith, D5.S3.Constants.PowerMeanKernel.meanOne]
     rw [hpo, hpq a ha]
     ring
   have hgcross (a : Fin d) (ha : a ∈ q) :
@@ -429,7 +434,7 @@ private lemma failure_next {d : ℕ} (hd : 5 ≤ d) :
     have hsqrt : Real.sqrt ((r ^ 2 / n) * (1 / n)) = r / n := by
       apply (Real.sqrt_eq_iff_eq_sq (by positivity) (by positivity)).mpr
       field_simp <;> ring
-    dsimp only [geom]
+    dsimp only [geom, D5.S3.Constants.PowerMeanKernel.meanZero]
     rw [hpo, hpq a ha, hsqrt, mul_comm (1 / n), hsqrt]
     ring
   have ha := sum_le_top_sum (arith p) (insert (o, z) c) (hcard _ hzc)
@@ -439,7 +444,7 @@ private lemma failure_next {d : ℕ} (hd : 5 ≤ d) :
     rw [Finset.sum_insert hzc, hc.2 (arith p)]
     have hh := Finset.sum_congr (s₁ := q) rfl (fun a ha => hacross a ha)
     rw [hh, Finset.sum_const, nsmul_eq_mul, hq, hk]
-    dsimp only [arith]
+    dsimp only [arith, D5.S3.Constants.PowerMeanKernel.meanOne]
     rw [hpo, hpz]
     ring
   have heg : (∑ ab ∈ insert (j, j) c, geom p ab) =
@@ -447,7 +452,7 @@ private lemma failure_next {d : ℕ} (hd : 5 ≤ d) :
     rw [Finset.sum_insert hjc, hc.2 (geom p)]
     have hh := Finset.sum_congr (s₁ := q) rfl (fun a ha => hgcross a ha)
     rw [hh, Finset.sum_const, nsmul_eq_mul, hq, hk]
-    dsimp only [geom]
+    dsimp only [geom, D5.S3.Constants.PowerMeanKernel.meanZero]
     rw [Real.sqrt_mul_self (hp.1 j), Real.sqrt_mul_self (hp.1 o), hpq j hj, hpo]
     ring
   have hidentity : r ^ 2 / (2 * n) + r ^ 2 / n + k * ((r ^ 2 + 1) / n) +
@@ -464,9 +469,11 @@ private lemma failure_next {d : ℕ} (hd : 5 ≤ d) :
 
 private lemma geom_le_arith {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p)
     (ab : Fin d × Fin d) : geom p ab ≤ arith p ab := by
+  rw [geom.eq_1, arith.eq_1]
+  unfold D5.S3.Constants.PowerMeanKernel.meanZero
+  unfold D5.S3.Constants.PowerMeanKernel.meanOne
   have hs := Real.sq_sqrt (mul_nonneg (hp.1 ab.1) (hp.1 ab.2))
   have hn := Real.sqrt_nonneg (p ab.1 * p ab.2)
-  rw [geom.eq_1, arith.eq_1]
   nlinarith [sq_nonneg (p ab.1 - p ab.2), hp.1 ab.1, hp.1 ab.2]
 
 private lemma arithmetic_two_bound {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p)
@@ -476,10 +483,10 @@ private lemma arithmetic_two_bound {d : ℕ} {p : Fin d → ℝ} (hp : IsProbabi
   obtain ⟨a, b, hab, rfl⟩ := Finset.card_eq_two.mp hs
   rw [Finset.sum_pair hab]
   have hone (ab : Fin d × Fin d) : arith p ab ≤ 1 := by
-    dsimp only [arith]
+    dsimp only [arith, D5.S3.Constants.PowerMeanKernel.meanOne]
     linarith [probability_le_one hp ab.1, probability_le_one hp ab.2]
   have hoff (ab : Fin d × Fin d) (h : ab.1 ≠ ab.2) : arith p ab ≤ 1 / 2 := by
-    dsimp only [arith]
+    dsimp only [arith, D5.S3.Constants.PowerMeanKernel.meanOne]
     linarith [probability_pair_le_one hp h]
   by_cases ha : a.1 = a.2
   · by_cases hb : b.1 = b.2
@@ -488,7 +495,7 @@ private lemma arithmetic_two_bound {d : ℕ} {p : Fin d → ℝ} (hp : IsProbabi
         apply hab
         exact Prod.ext hh (ha.symm.trans (hh.trans hb))
       have hh := probability_pair_le_one hp hij
-      dsimp only [arith]
+      dsimp only [arith, D5.S3.Constants.PowerMeanKernel.meanOne]
       rw [ha, hb] at *
       linarith
     · linarith [hone a, hoff b hb]
@@ -523,7 +530,8 @@ private lemma three_failure :
   have hs : s.card = min 3 (3 * 3) := by norm_num [s]
   have ha := sum_le_top_sum (arith p) s hs
   have hg := sum_le_top_sum (geom p) s hs
-  have hea : (∑ ab ∈ s, arith p ab) = 9 / 5 := by norm_num [s, arith, p]
+  have hea : (∑ ab ∈ s, arith p ab) = 9 / 5 := by
+    norm_num [s, arith, D5.S3.Constants.PowerMeanKernel.meanOne, p]
   have h4 : Real.sqrt (4 : ℝ) = 2 := by
     apply (Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)).mpr
     norm_num
@@ -534,7 +542,7 @@ private lemma three_failure :
     apply (Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)).mpr
     norm_num
   have heg : (∑ ab ∈ s, geom p ab) = 8 / 5 := by
-    norm_num [s, geom, p, h4, h16, h25]
+    norm_num [s, geom, D5.S3.Constants.PowerMeanKernel.meanZero, p, h4, h16, h25]
   exact ⟨p, hp, by linarith⟩
 
 private lemma greatest_of_bound_failure {d m : ℕ}
@@ -548,7 +556,7 @@ private lemma greatest_of_bound_failure {d m : ℕ}
   have hmn : m + 1 ≤ n := by omega
   obtain ⟨p, hp, hf⟩ := hf
   have ha := top_sum_mono (arith p) (fun ij => by
-    dsimp only [arith]
+    dsimp only [arith, D5.S3.Constants.PowerMeanKernel.meanOne]
     exact div_nonneg (add_nonneg (hp.1 _) (hp.1 _)) (by norm_num)) hmn
   have hg := top_sum_mono (geom p) (fun _ => Real.sqrt_nonneg _) hmn
   have hh := hn p hp
