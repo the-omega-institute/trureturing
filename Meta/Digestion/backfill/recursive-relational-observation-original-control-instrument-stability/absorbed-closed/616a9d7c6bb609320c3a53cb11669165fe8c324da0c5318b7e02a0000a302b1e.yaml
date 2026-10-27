@@ -2,7 +2,11 @@ fingerprints:
   raw_sha256: sha256:616a9d7c6bb609320c3a53cb11669165fe8c324da0c5318b7e02a0000a302b1e
   normalized_sha256: sha256:616a9d7c6bb609320c3a53cb11669165fe8c324da0c5318b7e02a0000a302b1e
 cas_ref: sha256:616a9d7c6bb609320c3a53cb11669165fe8c324da0c5318b7e02a0000a302b1e
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Fibers/OriginalControlSurvivalInstability.oscillatory_original_controls
+    target_statement_id: sha256:9604a508993ef949096a10f6044a5a3ae3542a1d404be8edc1bec5afb9c1385d
+  - gid: D5/S3/Quantum/Fibers/OriginalControlSurvivalInstability.uniform_height_survival_discontinuity
+    target_statement_id: sha256:c6a259ed3fd85fbff4be3c6fc53abbe43fc1421501e34d6b17aa248121b41d75
 receipts:
   unresolved_subitems: []
   chain_atoms:
