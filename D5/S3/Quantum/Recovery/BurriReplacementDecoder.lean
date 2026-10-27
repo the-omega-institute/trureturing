@@ -16,7 +16,7 @@ Burri's Appendix A. No assertion of a comparison in the reverse direction is mad
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-open scoped BigOperators ComplexOrder MatrixOrder
+open scoped BigOperators CStarAlgebra ComplexOrder MatrixOrder
 open Matrix
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Foundation.FiniteKrausChannel
@@ -103,9 +103,9 @@ theorem source_polar_product : M * U = (1 / (Real.sqrt 3 : ℂ)) • X := by
 theorem source_square_root :
     CStarMatrix.ofMatrix.symm (CFC.sqrt (CStarMatrix.ofMatrix X)) = X := by
   have hp := Matrix.posSemidef_vecMulVec_self_star psi
+  have hn : (star psi) ⬝ᵥ psi = (1 : ℂ) := psi_normalized
   have hsquare : X * X = X := by
-    simpa only [X, Matrix.vecMulVec_mul_vecMulVec, dotProduct,
-      psi_normalized, one_smul]
+    simp only [X, Matrix.vecMulVec_mul_vecMulVec, hn, one_smul]
   have hx : 0 ≤ CStarMatrix.ofMatrix X :=
     map_nonneg CStarMatrix.ofMatrixStarAlgEquiv hp.nonneg
   have hs : CFC.sqrt (CStarMatrix.ofMatrix X) = CStarMatrix.ofMatrix X := by
@@ -130,7 +130,7 @@ theorem source_svd :
     simpa only [Unitary.mem_iff, star_eq_conjTranspose] using source_unitary⟩
   have hspec : M * U = (H : Matrix P P ℂ) *
       Matrix.diagonal (fun i => (h.eigenvalues i : ℂ)) * (H : Matrix P P ℂ)ᴴ := by
-    simpa only [Matrix.conjStarAlgAut_apply, H, Function.comp_apply,
+    simpa only [Unitary.conjStarAlgAut_apply, H, Function.comp_apply,
       star_eq_conjTranspose] using h.spectral_theorem
   refine ⟨H, star H * star u, h.eigenvalues,
     source_polar_positive.eigenvalues_nonneg, ?_, ?_⟩
@@ -138,7 +138,8 @@ theorem source_svd :
     calc
       M = (M * U) * Uᴴ := by
         rw [Matrix.mul_assoc, source_unitary.2, Matrix.mul_one]
-      _ = _ := by rw [hspec]; simp only [Matrix.mul_assoc]
+      _ = _ := (congrArg (fun Z : Matrix P P ℂ => Z * Uᴴ) hspec).trans
+        (Matrix.mul_assoc _ _ _)
   · change U = ((H : Matrix P P ℂ)ᴴ * Uᴴ)ᴴ * (H : Matrix P P ℂ)ᴴ
     have hh : (H : Matrix P P ℂ) * (H : Matrix P P ℂ)ᴴ = 1 := by
       simpa only [star_eq_conjTranspose] using H.prop.2
@@ -161,6 +162,8 @@ theorem source_purification_identity (r : A) (e : E) (q : P) :
     fin_cases r <;> fin_cases j <;> fin_cases b <;>
       simp [sigmaVector, referenceVector, V, psi, Fin.sum_univ_two]
   rw [hsigma]
+  simp only [W, Matrix.one_apply, ite_mul, one_mul, zero_mul,
+    Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   simp [W, X, Matrix.vecMulVec_apply, Matrix.one_apply, psi]
 
 theorem noise_normalization : (∑ e : E, (noiseKraus e)ᴴ * noiseKraus e) = 1 := by

@@ -25,8 +25,8 @@ internal sealed class BurriReplacementDecoderDocument : IScribeDocumentDefinitio
                 "For X=|psi><psi| and M=(sqrt(Q) X) transposed, the product M U equals X/sqrt(3). "
                     + "This statement retains the source multiplication order.", DescribeRole.Theorem))));
 
-    private static ScribeBlock Entry(string id, string name, string title, string text, DescribeRole role) =>
+    private static DocumentBlock Entry(string id, string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromAuthor,
+            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
 }
