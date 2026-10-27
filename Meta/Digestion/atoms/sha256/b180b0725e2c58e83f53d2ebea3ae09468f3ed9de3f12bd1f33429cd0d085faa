@@ -1,0 +1,30 @@
+**Example 94.4 (both signs do not suffice; an even clock can succeed).**
+Take $u=\langle\langle\beta,\beta\rangle,
+\langle\beta,\beta\rangle\rangle$, period $L=4$, and order
+$s_0=LLL,s_1=RLL,s_2=LRL,s_3=RRL$.
+All four leaves have depth three, so
+$B_- =\{LLL,LRL\}$ and $B_+=\{RLL,RRL\}$.
+The vector with values $1,-1$ at the owners $LL,LR$, respectively,
+the same $1,-1$ at their markers $LLL,LRL$, and zero elsewhere
+belongs to $E_1\cap\ker C_{B_+}$. Indeed each owner and its marker
+have equal values, their contributions cancel at branch $L$, and
+all other neighbor sums are zero. It is nonzero, so (94.7) gives
+surviving ambiguity although both phase signs occur.
+
+For a contrasting original native source take
+$v=\langle\langle\beta,\alpha\rangle,\alpha\rangle$,
+with $N=6,b=3$, period $L=4$ and order $LLL,R,LR$.
+Here $B_-=\{LLL\}$ and $B_+=\{R,LR\}$.
+On any $E_\lambda$, $\lambda\ne0$, vanishing at $LLL$ forces
+$LL$ and then $L$ to vanish. The leaf equation at $LR$ then
+forces $LR=0$, the equation at $L$ forces the root to vanish,
+and the root equation forces $R=0$. Vanishing at both $R,LR$
+instead first forces the root and $L$ to vanish, then $LL$ and
+$LLL$ vanish. Both restricted eigenspace kernels are therefore zero.
+The edges $LL-LLL$, $L-LR$ and $\varepsilon-R$ form a perfect
+matching. The same tree determinant argument used in Theorem 95.2
+gives invertible adjacency, so its zero block is zero too.
+The even-period scan on this source is injective. These examples
+illustrate the exact criterion, not a replacement for the infinite
+family below or a minimum-cost assertion.
+

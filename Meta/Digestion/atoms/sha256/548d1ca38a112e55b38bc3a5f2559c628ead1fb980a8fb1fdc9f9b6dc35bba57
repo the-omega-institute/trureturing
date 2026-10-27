@@ -1,0 +1,40 @@
+**Theorem 80.3 (current inverse, exact measured-Time inverse and route agreement).** All four expressions in Definition 80.2 recover each other on their exact completed current-assay images. They recover precisely $(u,w)$ and its full canonical continuation kernel, with both inverse identities. They do not generally recover the original $x$; at $g=2$ they cannot recover its hidden zero-mode coefficient.
+
+**Proof.** As in Convention 75.2, Space and Boundary reconstruct the full ordered rooted $u$ from the complete material graph or metric, respectively, and Time reconstructs it from $E(u)$. The formal root supplier's $b\ge3$ hypothesis is met. Memory already contains $u$.
+
+Put
+
+$$
+F=U^\dagger A U.
+\tag{80.5}
+$$
+
+Because $AU$ lies in $\operatorname{im}U$, $AU=UF$. Since $A$ is injective on $\operatorname{im}A$, $F$ is invertible. Equations (80.3) give the forward Time inverse
+
+$$
+w=UF^H R^{-1}y.
+\tag{80.6}
+$$
+
+Conversely, a present $w\in\operatorname{im}A$ recovers exactly the numerical record of this assay by
+
+$$
+y=RF^{-H}U^\dagger w.
+\tag{80.7}
+$$
+
+Indeed $U^\dagger w=F^Hc$ at an actual assay endpoint, so (80.7) returns the actual $Rc$, not the generally different current-epoch samples $RU^\dagger w$. Negative powers here are paid local rational calculations, not inverse physical Ticks.
+
+For Boundary, select the entries of the **current** germ $G$ indexed by the same pairs as $R$. They satisfy $G_{\rm sel}=RU^\dagger w$, and therefore
+
+$$
+w=UR^{-1}G_{\rm sel}.
+\tag{80.8}
+$$
+
+This uses only the permitted restricted numerical rows. Space has the full field already and Memory directly supplies it. Proposed Boundary data are in the image exactly when the recovered $w$ is in $\operatorname{im}A$ and every supplied germ entry and structural datum re-encodes correctly; analogous structural/re-encoding conditions specify the other images.
+
+The image (80.4) is exact. Every actual endpoint lies in $\operatorname{im}A$. Conversely $A$ is bijective on this image, so every rational $w$ there has a rational $x$ with $A^{H+1}x=w$. Section 62.3's real target preparation can supply any such entry when an attained entrance is wanted. For every rational $y$, $c=R^{-1}y$ similarly has an actual preimage $Ax=Uc$. Thus neither inverse silently assumes inaccessible old-entry data.
+
+From $(u,w)$, reconstruct $E(u)$, (80.7), the metric, the restricted current germ and the predictor. Equations (80.6)–(80.8) give decoding-after-encoding identity; substituting an actual record into (80.7) gives encoding-after-decoding identity for Time, and re-encoding gives it for all other expressions. Consequently all route compositions satisfy (78.2). Convention 75.2 identifies their task equivalence with complete canonical future service on this fixed common context. The separate original-entry experiment of Theorem 80.1 is not a four-way equivalence of all original entries with a possibly kernel-losing present Space. $\square$
+
