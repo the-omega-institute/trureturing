@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeSymbolicFiniteForcing
 import Reg.Support.DependentFamily
 
+/-! Native finiteness is observed on the exact original completion domain. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -76,7 +78,8 @@ def evidence : Registration arena (type_of% (@symbolic_finite_forcing)) where
     have finite : IsFinite (embed (.of true)) := ⟨.of true, rfl⟩
     simp only [actual, realize, finite, decide_true,
       _root_.D5.S3.Arith.FibonacciAtomic.Observer.CompletionPositiveDriftRegion.omega_not_finite,
-      decide_false, ne_eq, Bool.true_ne_false, not_false_eq_true]
+      decide_false]
+    decide
 
 noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@symbolic_finite_forcing) (Realization signature) Type Unit where
