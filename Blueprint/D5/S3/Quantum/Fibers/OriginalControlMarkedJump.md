@@ -14,6 +14,8 @@ $$\begin{gathered}\forall L:Leg, chi,beta:\mathbb{R}, m:\mathbb{Z}, theta:\opera
 
 *Commentary.*
 
+For every interior preparation height a and every original phase, signed parity and mode phase vector, source_diagonal states normSq(source(c,a,beta,m,theta)(i))=p(c,a)(i). Its assumptions are c<1/2 and 0<a<c, for every one of the five modes. This equality identifies the original preparation diagonal used in native failure composition.
+
 Fix c below one half and positive heights x,y below c. A positive duration h gives the actual height k(t)=x+(y-x)*t/h. The five probabilities are (k,c-k,1-2*c,c-k,k), with the last coordinate retaining original mode13. Both directions and the stationary case are included. A constant real control phase has zero transported phase. No common duration or speed bound is imposed.
 
 In the displayed statement h, k, c, x and y are duration(L), height(L), c(L), x(L) and y(L); base(L)=(c,c,1-2*c), S(t)=survival(L,t), mu=markedLaw(L), and nu(i)=modeMeasure(L,i). A set superscript c denotes its complement. OC, AC and FC mean OriginalControl, AbsolutelyContinuousOnInterval and FiniteC1Control, with exactly the displayed arguments. Record is Unit plus Fin5 times the real line; s is Sum.inl(). Its success singleton and all five time-labelled failure components are measurable.

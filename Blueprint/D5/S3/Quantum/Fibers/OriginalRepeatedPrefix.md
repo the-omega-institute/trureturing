@@ -14,6 +14,8 @@ $$\begin{gathered}\forall B:Band,n:\mathbb{N},chi:\mathbb{R},1\leq n\Rightarrow 
 
 *Commentary.*
 
+For any positive leg duration d, loop_zero and loop_end give loop(B,d)(0)=a and loop(B,d)(2d)=a. loop_control places this actual height in OriginalControl for every constant real phase, and loop_survival gives S(c,loop(B,d),2d)=q. prefix_facts states for every nonnegative integer j that the actual repeated height on [0,2jd] is an original constant-phase control, begins and ends at a, and has terminal survival q^j. The positive halfStep(n)=1/(2n) for n>=1 makes 2n*halfStep(n)=1. wait_facts gives the constant leg on [0,1/2], its endpoint a and survival one. suffix_facts gives both actual suffixes on [0,1], their original control property for every constant phase, their endpoints a and their terminal survival q. These statements concern the existing explicit heights and native exponential survival.
+
 A Band B consists of real numbers a,b,c with 0<a<b<c<1/2. Its q is (a/b)*((c-b)/(c-a)). For d>0, up(B,d) and down(B,d) are the original affine Leg objects a to b and b to a, both of duration d. Their loop is the actual concatenate of those height functions at time d. No law or survival certificate is stored in the construction.
 
 The prefix P(B,d,0) is the constant height a. Recursively P(B,d,j+1)=concatenate(P(B,d,j),loop(B,d),2*j*d). The prefix P(B,d,j) has duration 2*j*d. For n>=1 set d=1/(2*n), so P(B,d,n) has duration one and consists of n literal a-b-a cycles.

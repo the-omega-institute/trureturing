@@ -84,6 +84,6 @@ internal sealed class OriginalRepeatedMarkedLawDocument : IScribeDocumentDefinit
         Formula band=Quant(Seq(D(1),Leq,Sp,n,Rightarrow,Sp,Quant(Seq(t,InMacro,Sp,C("Icc",D(0),D(2)),Rightarrow,Sp,C("eval",k,t),InMacro,Sp,C("Icc",C("a",b),C("b",b)),Land,Sp,C("eval",l,t),InMacro,Sp,C("Icc",C("a",b),C("b",b))),Seq(t,Colon,R()))),Seq(n,Colon,N()));
         Formula distance=Quant(Seq(D(1),Leq,Sp,n,Rightarrow,Sp,gap,Eq,C("b",b),Minus,C("a",b)),Seq(n,Colon,N()));
         Formula noModulus=Seq(Neg,Sp,Open,Quant(Seq(D(1),Leq,Sp,n,Rightarrow,Sp,gap,Leq,Sp,C("eval",o,C("TV",mu(C("true")),mu(C("false"))))),Seq(n,Colon,N())),Close);
-        return Disp(Quant(Seq(C("Tendsto",o,C("nhdsWithin",D(0),C("Ioi",D(0))),C("nhds",D(0))),Rightarrow,Sp,band,Land,Sp,distance,Land,Sp,noModulus),Seq(b,Colon,F.Id("Band")),Seq(beta,Colon,R()),Seq(m,Colon,Z()),Seq(theta,Colon,Fin(),To,Sp,R()),Seq(o,Colon,R(),To,Sp,R())));
+        return Disp(Quant(Seq(C("Tendsto",o,C("nhdsWithin",D(0),C("Ioi",D(0))),C("nhds",D(0))),Rightarrow,Sp,Open,band,Close,Land,Sp,Open,distance,Close,Land,Sp,noModulus),Seq(b,Colon,F.Id("Band")),Seq(beta,Colon,R()),Seq(m,Colon,Z()),Seq(theta,Colon,Fin(),To,Sp,R()),Seq(o,Colon,R(),To,Sp,R())));
     }
 }
