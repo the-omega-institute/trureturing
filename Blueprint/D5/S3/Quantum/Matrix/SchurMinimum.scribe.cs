@@ -114,7 +114,42 @@ internal sealed class SchurMinimumDocument : IScribeDocumentDefinition
                 + "effects in coarse-grained nonlinear systems using the Mori-Zwanzig formalism "
                 + "(arXiv:1611.06277v2, §2.1, equations (2.1)–(2.3)), with "
                 + "(A¹¹,A¹²,A²¹,A²²) = (−A,−B,−Bᵀ,−C). "
-                + "Exact energy minimization therefore does not imply exact projected trajectory closure.")))));
+                + "Exact energy minimization therefore does not imply exact projected trajectory closure.")),
+            Paragraph(Text("Uniform fast-hidden-variable approximation.")),
+            Paragraph(Text(
+                "For the same real positive definite block energy, accelerate only the hidden gradient by a factor ε⁻¹, "
+                + "with arbitrary ε > 0 and arbitrary initial state y₀ = (x₀,z₀). The full trajectory is yε(t) = exp(−t "
+                + "diag(I, ε⁻¹I)L)y₀. Its visible and hidden components satisfy xε′ = −Axε − Bzε and εzε′ = −Bᵀxε − Czε "
+                + "for every real time. The Schur trajectory is x̄(t) = exp(−tS)x₀. These are global solutions with the "
+                + "stated initial values; the exponential derivative and ODE_solution_unique_univ apply to their bounded "
+                + "linear vector fields.")),
+            Paragraph(Text(
+                "Write c = λ_min(C), m = λ_min(S), and ℓ = λ_min(L), the actual least eigenvalues of these matrices, "
+                + "all strictly positive. Use the Euclidean direct-sum norm ‖(x,z)‖² = ‖x‖² + ‖z‖² and the induced "
+                + "Euclidean operator norms, and put R₀ = sqrt(2U(x₀,z₀)/ℓ), M₀ = ‖[A B]‖R₀, D₀ = ‖C⁻¹Bᵀ‖, and w₀ = z₀ + "
+                + "C⁻¹Bᵀx₀. Along the actual accelerated trajectory, the chain rule gives U′ = −‖grad_x U‖² − ε⁻¹‖grad_z "
+                + "U‖². Hence energy is nonincreasing. The least-eigenvalue lower bound ℓ‖y‖² ≤ 2U(y) gives ‖yε(t)‖ ≤ R₀ "
+                + "and ‖xε′(t)‖ ≤ M₀ for every t ≥ 0.")),
+            Paragraph(Text(
+                "The finite-dimensional spectral theorem gives the actual lower quadratic bounds for C and S: "
+                + "Matrix.IsHermitian.spectrum_real_eq_range_eigenvalues identifies their spectra, and "
+                + "algebraMap_le_iff_le_spectrum together with Matrix.le_iff gives the least-eigenvalue bounds. Applying "
+                + "these bounds to the derivatives of the squared norms of their exponential trajectories gives "
+                + "‖exp(−uC)v‖ ≤ exp(−cu)‖v‖ and ‖exp(−uS)v‖ ≤ exp(−mu)‖v‖ for u ≥ 0, via antitone_of_hasDerivAt_nonpos "
+                + "after multiplication by the corresponding positive exponential weight. Thus the contraction estimates "
+                + "use the spectra of the same matrices in the coupled and Schur equations.")),
+            Paragraph(Text(
+                "Set w(t) = zε(t) + C⁻¹Bᵀxε(t). Then w′ = −ε⁻¹Cw + C⁻¹Bᵀxε′. The variation-of-constants argument above, "
+                + "using intervalIntegral.integral_eq_sub_of_hasDerivAt, and the actual speed bound give ‖w(t)‖ ≤ "
+                + "exp(−ct/ε)‖w₀‖ + (εD₀M₀/c)(1 − exp(−ct/ε)) for t ≥ 0. Since xε′ = −Sxε − Bw and the visible initial "
+                + "values agree, xε(t) − x̄(t) = −∫₀ᵗ exp(−S(t−s))Bw(s) ds.")),
+            Paragraph(Text(
+                "For the decaying initial term, use exp(−m(t−s)) ≤ 1 on 0 ≤ s ≤ t and ∫₀ᵗ exp(−cs/ε) ds ≤ ε/c. For the "
+                + "persistent forcing term, use 1 − exp(−cs/ε) ≤ 1 and ∫₀ᵗ exp(−m(t−s)) ds ≤ 1/m. The integral norm "
+                + "inequality therefore gives, for every ε > 0 and every t ≥ 0, ‖xε(t)−x̄(t)‖ ≤ ε‖B‖/c · (‖w₀‖ + D₀M₀/m). "
+                + "The two integrals are estimated separately, so the conclusion also covers c/ε = m and requires no "
+                + "small-ε assumption or finite time window. Zero initial data, B = 0, and w₀ = 0 remain included. This "
+                + "is an application of the existing spectral, energy and variation-of-constants results.")))));
 
     private static Formula MinimumFormula()
     {
