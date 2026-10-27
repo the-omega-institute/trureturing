@@ -6,9 +6,11 @@
    utility: none
    digest: General qubit measurements attain half the sum of coherence and Bloch length. -/
 
-import D5.S3.Quantum.Information.CorrelatedCoherenceMonogamyRefutation
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality
+import D5.S3.Divergence.CoherenceL1RelativeEntropyBound
+import D5.S3.Quantum.QuantumChannels.HiaiRuskaiRiemannianContraction
+import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
 
 /-! The optimal coherence of a qubit under arbitrary finite nonselective measurements. -/
 
@@ -22,7 +24,7 @@ open Matrix
 open D5.S3.Quantum.Information.CorrelatedCoherenceMonogamyRefutation (l1Coherence)
 open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum
-  (bloch norm_bloch_le_trace_of_posSemidef)
+  (bloch blochMatrix norm_bloch_le_trace_of_posSemidef)
 open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation (IsPOVM)
 
 namespace D5.S3.Quantum.Measurement.LudersCoherenceCreationOptimum
@@ -30,7 +32,7 @@ namespace D5.S3.Quantum.Measurement.LudersCoherenceCreationOptimum
 /-- The nonselective measurement with the positive square roots of its effects. -/
 def luders {n : ℕ} (e : Fin n → Matrix (Fin 2) (Fin 2) ℂ)
     (ρ : Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
-  ∑ i, D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality.luders (e i) ρ
+  D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) ρ
 
 /-- The length of the Bloch vector in the computational basis. -/
 def blochNorm (ρ : Matrix (Fin 2) (Fin 2) ℂ) : ℝ :=
@@ -38,19 +40,15 @@ def blochNorm (ρ : Matrix (Fin 2) (Fin 2) ℂ) : ℝ :=
 
 private theorem hermitian_entries (m : Matrix (Fin 2) (Fin 2) ℂ) (hm : m.IsHermitian) :
     (m 0 0).im = 0 ∧ (m 1 1).im = 0 ∧ m 1 0 = star (m 0 1) := by
-  have hzero (i : Fin 2) : (m i i).im = 0 := by
-    have h := congrArg Complex.im (hm.apply i i)
-    simp only [Complex.star_def, Complex.conj_im] at h
-    linarith
-  exact ⟨hzero 0, hzero 1, (hm.apply 1 0).symm⟩
+  exact ⟨D5.S3.Quantum.QuantumChannels.HiaiRuskaiRiemannianContraction.Pauli.diag_im_zero
+      m hm 0,
+    D5.S3.Quantum.QuantumChannels.HiaiRuskaiRiemannianContraction.Pauli.diag_im_zero m hm 1,
+    (hm.apply 1 0).symm⟩
 
 private theorem coherence_two (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : ρ.IsHermitian) :
     l1Coherence ρ = 2 * ‖ρ 0 1‖ := by
-  change (∑ i : Fin 2, ∑ j : Fin 2, if i = j then 0 else ‖ρ i j‖) = 2 * ‖ρ 0 1‖
-  simp only [Fin.sum_univ_two, Fin.isValue, ↓reduceIte, zero_add, add_zero,
-    Fin.zero_ne_one, (by decide : (1 : Fin 2) ≠ 0),
-    (hermitian_entries ρ hρ).2.2, norm_star]
-  ring
+  rw [D5.S3.Divergence.CoherenceL1RelativeEntropyBound.coherenceL1_eq_twice_upper ρ hρ]
+  simp [Fin.sum_univ_two, PiLp.norm_eq_of_L1]
 
 private theorem luders_decomposition {n : ℕ} (ρ : Matrix (Fin 2) (Fin 2) ℂ)
     (hρ : IsDensity ρ) (e : Fin n → Matrix (Fin 2) (Fin 2) ℂ) (he : IsPOVM e) :
@@ -150,45 +148,28 @@ private theorem luders_decomposition {n : ℕ} (ρ : Matrix (Fin 2) (Fin 2) ℂ)
       dsimp only [z]
       linear_combination (p i + q i) * (m i 0 1).im / 2 * hx
   refine ⟨k, z, v, hk, hs, ?_, ?_⟩
-  · unfold luders
-    unfold D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality.luders
+  · unfold luders D5.S3.Observer.Conditioning.unreadState
     change (∑ i, m i * ρ * m i).IsHermitian
     change (∑ i, m i * ρ * m i)ᴴ = _
     simp only [Matrix.conjTranspose_sum, Matrix.conjTranspose_mul,
       (hm _).isHermitian.eq, hρ.1.isHermitian.eq, Matrix.mul_assoc]
-  · unfold luders
-    unfold D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality.luders
+  · unfold luders D5.S3.Observer.Conditioning.unreadState
     change (∑ i, m i * ρ * m i) 0 1 = _
     simp only [Matrix.sum_apply, hf, Finset.sum_add_distrib, hcancel, add_zero]
 
-private theorem quadratic_bound (s r t v : ℝ) (hs : 0 ≤ s) :
+private theorem quadratic_bound (s r t v : ℝ) :
     s * t ^ 2 + |r| * t * v ≤
       ((s + Real.sqrt (r ^ 2 + s ^ 2)) / 2) * (t ^ 2 + v ^ 2) := by
-  let d := Real.sqrt (r ^ 2 + s ^ 2)
-  let l := (s + d) / 2
-  have hd : d ^ 2 = r ^ 2 + s ^ 2 := Real.sq_sqrt (by positivity)
-  have hds : s ≤ d := by
-    have hn : 0 ≤ d := Real.sqrt_nonneg _
-    nlinarith only [hd, hn, hs, sq_nonneg r]
-  have hl : 0 ≤ l := by dsimp only [l]; linarith
-  have hls : 0 ≤ l - s := by dsimp only [l]; linarith
-  have hdisc : 4 * l * (l - s) = r ^ 2 := by dsimp only [l]; nlinarith only [hd]
-  have ha := Real.sq_sqrt hls
-  have hb := Real.sq_sqrt hl
-  have hp : 2 * Real.sqrt (l - s) * Real.sqrt l = |r| := by
-    have he : (2 * Real.sqrt (l - s) * Real.sqrt l) ^ 2 = |r| ^ 2 := by
-      rw [mul_pow, mul_pow, ha, hb, sq_abs]
-      nlinarith only [hdisc]
-    have hn : 0 ≤ 2 * Real.sqrt (l - s) * Real.sqrt l := by positivity
-    nlinarith only [he, hn, abs_nonneg r]
-  have hid : (Real.sqrt (l - s) * t - Real.sqrt l * v) ^ 2 =
-      (l - s) * t ^ 2 + l * v ^ 2 - |r| * t * v := by
-    calc
-      _ = Real.sqrt (l - s) ^ 2 * t ^ 2 + Real.sqrt l ^ 2 * v ^ 2 -
-        (2 * Real.sqrt (l - s) * Real.sqrt l) * t * v := by ring
-      _ = _ := by rw [ha, hb, hp]
-  change _ ≤ l * (t ^ 2 + v ^ 2)
-  nlinarith only [hid, sq_nonneg (Real.sqrt (l - s) * t - Real.sqrt l * v)]
+  have h := D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral.Scalar.topRoot_quadratic_bound
+    s (|r| / 2) 0 t v
+  have hr : (s - 0) ^ 2 + 4 * (|r| / 2) ^ 2 = r ^ 2 + s ^ 2 := by
+    rw [div_pow, sq_abs]
+    ring
+  change s * t ^ 2 + 2 * (|r| / 2) * t * v + 0 * v ^ 2 ≤
+    ((s + 0 + Real.sqrt ((s - 0) ^ 2 + 4 * (|r| / 2) ^ 2)) / 2) * (t ^ 2 + v ^ 2) at h
+  rw [hr] at h
+  simp only [add_zero, zero_mul] at h
+  convert h using 1 <;> ring
 
 private theorem dephasing_bound (c z : ℂ) (v r : ℝ) :
     2 * ‖((2 * (star z * c).re + v * r : ℝ) : ℂ) * z‖ ≤
@@ -201,7 +182,7 @@ private theorem dephasing_bound (c z : ℂ) (v r : ℝ) :
       _ = 2 * |(star z * c).re| + |v| * |r| := by
         rw [abs_mul, abs_mul, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2)]
       _ ≤ _ := by linarith
-  have hq := quadratic_bound (2 * ‖c‖) r ‖z‖ |v| (by positivity)
+  have hq := quadratic_bound (2 * ‖c‖) r ‖z‖ |v|
   have hrad : r ^ 2 + (2 * ‖c‖) ^ 2 = r ^ 2 + 4 * ‖c‖ ^ 2 := by ring
   rw [hrad, sq_abs] at hq
   rw [norm_mul, Complex.norm_real, Real.norm_eq_abs]
@@ -350,30 +331,29 @@ private theorem optimal_axis (c : ℂ) (r : ℝ) :
     _ = l := by rw [ht2, mul_comm, div_mul_cancel₀ _ hdne]
 
 private def projector (z : ℂ) (v : ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
-  !![(((1 + v) / 2 : ℝ) : ℂ), z / 2; star z / 2, (((1 - v) / 2 : ℝ) : ℂ)]
+  blochMatrix 1 (WithLp.toLp 2 ![z.re, -z.im, v])
 
 private theorem projector_facts (z : ℂ) (v : ℝ) (hu : ‖z‖ ^ 2 + v ^ 2 = 1) :
-    (projector z v).IsHermitian ∧ projector z v * projector z v = projector z v := by
+    IsStarProjection (projector z v) := by
   have hz : (z.re ^ 2 + z.im ^ 2) + v ^ 2 = 1 := by
     rw [Complex.sq_norm, Complex.normSq_apply] at hu
     nlinarith only [hu]
   constructor
-  · change (projector z v)ᴴ = projector z v
-    unfold projector
-    ext i j
-    fin_cases i <;> fin_cases j <;> apply Complex.ext <;> norm_num
-  · unfold projector
+  · change projector z v * projector z v = projector z v
+    unfold projector blochMatrix
     ext i j
     fin_cases i <;> fin_cases j <;>
       simp only [Matrix.mul_apply, Fin.sum_univ_two] <;>
       apply Complex.ext <;> norm_num <;> nlinarith only [hz]
+  · exact (D5.S3.Quantum.QuantumChannels.HiaiRuskaiRiemannianContraction.Pauli.rho_hermitian
+      z.re (-z.im) v).isSelfAdjoint
 
 private theorem padded_measurement {n : ℕ} (hn : 2 ≤ n)
     (p q ρ : Matrix (Fin 2) (Fin 2) ℂ) (hp : p.PosSemidef) (hq : q.PosSemidef)
     (hpp : p * p = p) (hqq : q * q = q) (hs : p + q = 1) :
     ∃ e : Fin n → Matrix (Fin 2) (Fin 2) ℂ, IsPOVM e ∧
       luders e ρ = p * ρ * p + q * ρ * q := by
-  obtain ⟨m, rfl⟩ : ∃ m, n = m + 2 := ⟨n - 2, by omega⟩
+  obtain ⟨m, rfl⟩ : ∃ m, n = m + 2 := ⟨n - 2, (Nat.sub_add_cancel hn).symm⟩
   let e : Fin (m + 2) → Matrix (Fin 2) (Fin 2) ℂ :=
     Fin.cons p (Fin.cons q (fun _ : Fin m => 0))
   have he (i : Fin (m + 2)) : (e i).PosSemidef :=
@@ -383,8 +363,7 @@ private theorem padded_measurement {n : ℕ} (hn : 2 ≤ n)
     change p + (q + ∑ _ : Fin m, (0 : Matrix (Fin 2) (Fin 2) ℂ)) = 1
     rw [Finset.sum_const_zero, add_zero, hs]
   refine ⟨e, ⟨he, hsum⟩, ?_⟩
-  unfold luders
-  unfold D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality.luders
+  unfold luders D5.S3.Observer.Conditioning.unreadState
   rw [Fin.sum_univ_succ, Fin.sum_univ_succ]
   change CFC.sqrt p * ρ * CFC.sqrt p + (CFC.sqrt q * ρ * CFC.sqrt q +
     ∑ _ : Fin m, CFC.sqrt (0 : Matrix (Fin 2) (Fin 2) ℂ) * ρ * CFC.sqrt 0) = _
@@ -397,7 +376,7 @@ private theorem projector_output (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDens
     l1Coherence (p * ρ * p + (1 - p) * ρ * (1 - p)) =
       ‖((2 * (star z * ρ 0 1).re + v * (ρ 0 0 - ρ 1 1).re : ℝ) : ℂ) * z‖ := by
   let p := projector z v
-  have hp := (projector_facts z v hu).1
+  have hp := (projector_facts z v hu).isSelfAdjoint.isHermitian
   have hq : (1 - p).IsHermitian := Matrix.isHermitian_one.sub hp
   have hh : (p * ρ * p + (1 - p) * ρ * (1 - p)).IsHermitian := by
     have ha := Matrix.isHermitian_mul_mul_conjTranspose p hρ.1.isHermitian
@@ -412,7 +391,7 @@ private theorem projector_output (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDens
   have hf : (p * ρ * p + (1 - p) * ρ * (1 - p)) 0 1 =
       (((2 * (star z * ρ 0 1).re + v * (ρ 0 0 - ρ 1 1).re : ℝ) : ℂ) * z) / 2 := by
     dsimp only [p]
-    unfold projector
+    unfold projector blochMatrix
     simp only [Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_two, Matrix.sub_apply]
     apply Complex.ext
     · norm_num [hr.2.2, hr.1, hr.2.1]
@@ -431,19 +410,14 @@ private theorem measurement_attainment {n : ℕ} (hn : 2 ≤ n)
   obtain ⟨z, v, hu, hv⟩ := optimal_axis (ρ 0 1) (ρ 0 0 - ρ 1 1).re
   let p := projector z v
   let q := 1 - p
-  have hp := (projector_facts z v hu).1
-  have hpp : p * p = p := (projector_facts z v hu).2
-  have hq : q.IsHermitian := Matrix.isHermitian_one.sub hp
-  have hqq : q * q = q := by
+  have hproj : IsStarProjection p := projector_facts z v hu
+  have hpp : p * p = p := hproj.isIdempotentElem
+  have hqq : q * q = q := hproj.one_sub.isIdempotentElem
+  have hps : p.PosSemidef := hproj.nonneg.posSemidef
+  have hqs : q.PosSemidef := hproj.one_sub.nonneg.posSemidef
+  have hs : p + q = 1 := by
     dsimp only [q]
-    rw [sub_mul, one_mul, mul_sub, mul_one, hpp, sub_self, sub_zero]
-  have hps : p.PosSemidef := by
-    have h := Matrix.posSemidef_conjTranspose_mul_self p
-    rwa [hp.eq, hpp] at h
-  have hqs : q.PosSemidef := by
-    have h := Matrix.posSemidef_conjTranspose_mul_self q
-    rwa [hq.eq, hqq] at h
-  have hs : p + q = 1 := by dsimp only [q]; abel
+    rw [← add_sub_assoc, add_sub_cancel_left]
   obtain ⟨e, he, heq⟩ := padded_measurement hn p q ρ hps hqs hpp hqq hs
   refine ⟨e, he, ?_⟩
   rw [heq]
