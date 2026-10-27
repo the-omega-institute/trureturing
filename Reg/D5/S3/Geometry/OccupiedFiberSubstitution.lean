@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Geometry.OccupiedFiberSubstitution
 
+/-! Source-bound adjacency and face transport over their complete original telescopes. -/
+
 noncomputable section
 open Set
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -81,7 +83,7 @@ private theorem dependence : ObservationalDependence signature.{u,w} actual := b
       testParameters.{u,w}.T).Adj (vertexEquiv testParameters.{u,w}.T testParameters.{u,w}.x)
         (vertexEquiv testParameters.{u,w}.T (testPoint false)) := by
     exact fun hh => hh.ne rfl
-  exact hn (h.symm ▸ hp)
+  exact hn (Eq.mp h.symm hp)
 
 def family : Registration arena.{u,w} (type_of% (@adjacency_iff.{u,w})) where
   actual := actual
@@ -116,7 +118,8 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     owner := `D5.S3.Geometry.OccupiedFiberSubstitution
     definition := none
     coordinates := #[0, 1, 2, 3, 4, 5]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg"],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg"],
       stateBinder := 6, functionOperand := false, stateOperand := none,
       booleanPredicate := false }] }
   continuation := .unknown
@@ -159,7 +162,8 @@ def rejected : Realization signature.{u,w} :=
 abbrev arena : Arena where
   signature := signature.{u,w}
   Law R := ∀ p : Parameters.{u,w}, ∀ G : SimpleGraph p.V,
-    R.readout () p G = (independenceComplex (selectedGraph G p.H p.T)).toPreAbstractSimplicialComplex
+    R.readout () p G =
+      (independenceComplex (selectedGraph G p.H p.T)).toPreAbstractSimplicialComplex
 
 private theorem bridge :
     (type_of% (@mapped_independence_faces.{u,w})) ↔ arena.{u,w}.Law actual := by
@@ -202,8 +206,9 @@ private theorem dependence : ObservationalDependence signature.{u,w} actual := b
       (selectedGraph (⊥ : SimpleGraph testParameters.{u,w}.V)
         testParameters.H testParameters.T)).toPreAbstractSimplicialComplex := by
     refine ⟨by simp [s], ?_⟩
-    intro x hx y hy hxy
-    simp [selectedGraph, substitution, testParameters]
+    rintro x hx y hy hxy (h | ⟨v, a, b, _, _, hab⟩)
+    · exact h
+    · exact hab
   have ht : s ∉ (independenceComplex
       (selectedGraph (⊤ : SimpleGraph testParameters.{u,w}.V)
         testParameters.H testParameters.T)).toPreAbstractSimplicialComplex := by
@@ -250,7 +255,8 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     owner := `D5.S3.Geometry.OccupiedFiberSubstitution
     definition := none
     coordinates := #[0, 1, 2, 3, 5, 6]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"],
       stateBinder := 4, functionOperand := false, stateOperand := none,
       booleanPredicate := false }] }
   continuation := .unknown
