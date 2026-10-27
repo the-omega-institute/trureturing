@@ -447,6 +447,7 @@ files = [
   { pattern = "tools/lean-inspector/LeanInformationAudit/TemplateEnrollment.lean", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["Lean"], verified_by = ["lean-inspector"], artifact_id = "none", runtime_disposition = "committed-source" },
   { pattern = "tools/lean-inspector/LeanInformationAudit/TemplateWire.lean", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["Lean"], verified_by = ["lean-inspector"], artifact_id = "none", runtime_disposition = "committed-source" },
   { pattern = "tools/lean-inspector/LeanInformationAuditFibTests/**/*.lean", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["Lean"], verified_by = ["lean-inspector"], artifact_id = "none", runtime_disposition = "committed-source" },
+  # IndexDomain.lean exports compiled inputs through make search-reduction-index-domain DOMAIN_DIR=<path>.
   { pattern = "tools/lean-inspector/LeanInformationAuditRegAnalysis/**/*.lean", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["Lean"], verified_by = ["lean-inspector"], artifact_id = "none", runtime_disposition = "committed-source" },
   # ProductionNegatives.lean and its inputs use make search-reduction-production-negative CASE=<case>.
   # IsolationUnitTests.lean runs in search-reduction-test and compiled-judge-test.
@@ -608,6 +609,7 @@ files = [
   { pattern = "tools/scripts/report/runner-diagnostics.py", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["automation"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
   { pattern = "tools/scripts/scribe-release.sh", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["automation"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
   { pattern = "tools/scripts/scribe.sh", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["automation"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
+  { pattern = "tools/scripts/search-reduction-domain-inputs.py", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["automation"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
   { pattern = "tools/scripts/search-reduction-fixtures.py", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["automation"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
   { pattern = "tools/scripts/search-reduction-probe-cache-test.py", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["automation"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
   { pattern = "tools/scripts/search-reduction-probe-cache.py", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["automation"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },

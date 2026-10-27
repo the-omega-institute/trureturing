@@ -97,6 +97,7 @@ public sealed partial class MakeWorkflowTests
         "search-reduction-replay-real-negative",
         "search-reduction-replay-vocabulary",
         "search-reduction-index",
+        "search-reduction-index-domain",
         "search-reduction-index-run",
         "search-reduction-index-fixtures",
         "search-reduction-fixture-cache-test",
