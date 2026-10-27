@@ -412,7 +412,7 @@ private lemma unnormalizedGammaMeasure_mass (n : ℕ) : unnormalizedGammaMeasure
       apply lintegral_congr_ae; filter_upwards [hnonneg] with t ht; exact (ENNReal.ofReal_mul (pow_nonneg ht n)).symm
     _ = ENNReal.ofReal (∫ t : ℝ in Ioi 0, t ^ n * Real.exp (-t)) := (ofReal_integral_eq_lintegral_ofReal hi hnn).symm
     _ = _ := by rw [hI]; simp
-private lemma simplex_volume (n : ℕ) : volume (simplexCoords (n + 1)) = (n.factorial : ℝ≥0∞)⁻¹ :=
+lemma simplex_volume (n : ℕ) : volume (simplexCoords (n + 1)) = (n.factorial : ℝ≥0∞)⁻¹ :=
   by
   letI : IsFiniteMeasure (unnormalizedGammaMeasure n) := ⟨by rw [unnormalizedGammaMeasure_mass]; simp⟩
   letI := exponentialTailMeasure_probability n

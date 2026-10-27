@@ -6,13 +6,8 @@
    utility: none
    digest: Generalized Pauli channel regions have three explicit volume ratios. -/
 
-import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
+import D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.FunProp
 
 /-! Volumes of the source eigenvalue regions for generalized Pauli channels. -/
 
@@ -44,117 +39,13 @@ private def standardRegion (n : ℕ) : Set (Fin n → ℝ) :=
 private def affineSimplex (d : ℕ) (c : ℝ) : Set (Fin (d + 1) → ℝ) :=
   (fun t i => 1 + c * (t i - ∑ j, t j)) '' standardRegion (d + 1)
 
-private lemma abs_map_volume :
-    (volume : Measure ℝ).map abs = (2 : ℝ≥0∞) • volume.restrict (Ici 0) := by
-  ext s hs
-  rw [Measure.map_apply continuous_abs.measurable hs, Measure.smul_apply, Measure.restrict_apply hs]
-  have hset : abs ⁻¹' s = (s ∩ Ici 0) ∪ (fun x : ℝ => -x) ⁻¹' (s ∩ Ioi 0) := by
-    ext x
-    change |x| ∈ s ↔ (x ∈ s ∧ 0 ≤ x) ∨ (-x ∈ s ∧ 0 < -x)
-    by_cases hx0 : 0 ≤ x
-    · rw [abs_of_nonneg hx0]
-      constructor
-      · exact fun hx => Or.inl ⟨hx, hx0⟩
-      · rintro (hx | hx)
-        · exact hx.1
-        · linarith [hx.2]
-    · rw [abs_of_neg (lt_of_not_ge hx0)]
-      constructor
-      · exact fun hx => Or.inr ⟨hx, by linarith⟩
-      · rintro (hx | hx)
-        · exact (hx0 hx.2).elim
-        · exact hx.1
-  have hdis : Disjoint (s ∩ Ici (0 : ℝ)) ((fun x : ℝ => -x) ⁻¹' (s ∩ Ioi 0)) := by
-    apply Set.disjoint_left.mpr
-    intro x hx hy
-    have hx0 : 0 ≤ x := hx.2
-    have hy0 : 0 < -x := hy.2
-    linarith
-  rw [hset, measure_union hdis ((hs.inter measurableSet_Ioi).preimage measurable_neg),
-    Measure.measure_preimage_neg]
-  have heq : volume (s ∩ Ioi (0 : ℝ)) = volume (s ∩ Ici (0 : ℝ)) := by
-    have h := congrArg (fun μ : Measure ℝ => μ s)
-      (restrict_Ioi_eq_restrict_Ici (μ := (volume : Measure ℝ)) (a := 0))
-    simpa only [Measure.restrict_apply hs] using h
-  rw [heq, smul_eq_mul, two_mul]
-
-private lemma abs_pi_map_volume (n : ℕ) :
-    (volume : Measure (Fin n → ℝ)).map (fun x i => |x i|) =
-      (2 : ℝ≥0∞) ^ n • volume.restrict {x | ∀ i, 0 ≤ x i} := by
-  let μ : Measure ℝ := (2 : ℝ≥0) • volume.restrict (Ici 0)
-  have : SigmaFinite μ := by dsimp only [μ]; infer_instance
-  have hmap : (volume : Measure (Fin n → ℝ)).map (fun x i => |x i|) =
-      Measure.pi (fun _ : Fin n => μ) := by
-    apply (Measure.pi_eq _).symm
-    intro s hs
-    rw [Measure.map_apply (by fun_prop) (MeasurableSet.univ_pi hs)]
-    have hpre : (fun x i => |x i|) ⁻¹' univ.pi s =
-        univ.pi (fun i => abs ⁻¹' s i) := by
-      ext x
-      simp only [mem_preimage, mem_pi, mem_univ, forall_true_left]
-    rw [hpre, volume_pi_pi]
-    apply Finset.prod_congr rfl
-    intro i hi
-    rw [← Measure.map_apply continuous_abs.measurable (hs i), abs_map_volume]
-    simp only [μ, ENNReal.smul_def, ENNReal.coe_ofNat]
-  rw [hmap]
-  apply Measure.pi_eq
-  intro s hs
-  rw [Measure.smul_apply, Measure.restrict_apply (MeasurableSet.univ_pi hs)]
-  have hset : (univ.pi s) ∩ {x : Fin n → ℝ | ∀ i, 0 ≤ x i} =
-      univ.pi (fun i => s i ∩ Ici 0) := by
-    ext x
-    simp only [mem_inter_iff, mem_pi, mem_univ, forall_true_left, mem_ofPred_eq, mem_Ici]
-    exact ⟨fun h i => ⟨h.1 i, h.2 i⟩, fun h => ⟨fun i => (h i).1, fun i => (h i).2⟩⟩
-  rw [hset, volume_pi_pi]
-  simp only [μ, ENNReal.smul_def, Measure.smul_apply, smul_eq_mul, ENNReal.coe_ofNat,
-    Measure.restrict_apply (hs _),
-    Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
-
 private lemma standard_volume (n : ℕ) :
     volume (standardRegion n) = ENNReal.ofReal (1 / (n.factorial : ℝ)) := by
-  classical
-  by_cases hn : n = 0
-  · subst n
-    have hset : standardRegion 0 = univ := by
-      ext x
-      simp only [standardRegion, mem_ofPred_eq, Finset.univ_eq_empty, Finset.sum_empty,
-        zero_le_one, and_true, mem_univ, iff_true]
-      exact fun i => Fin.elim0 i
-    rw [hset]
-    simp only [volume_pi, Measure.pi_empty_univ, Nat.factorial_zero, Nat.cast_one,
-      div_one, ENNReal.ofReal_one]
-  haveI : NeZero n := ⟨hn⟩
-  have hball := volume_sum_rpow_le (ι := Fin n) (p := (1 : ℝ)) le_rfl (1 : ℝ)
-  have hnorm : {x : Fin n → ℝ | (∑ i, |x i| ^ (1 : ℝ)) ^ (1 / (1 : ℝ)) ≤ 1} =
-      {x : Fin n → ℝ | ∑ i, |x i| ≤ 1} := by
-    simp only [Real.rpow_one, div_one]
-  rw [hnorm] at hball
-  have hcalc : volume {x : Fin n → ℝ | ∑ i, |x i| ≤ 1} =
-      (2 : ℝ≥0∞) ^ n * volume (standardRegion n) := by
-    have hs : MeasurableSet {x : Fin n → ℝ | ∑ i, x i ≤ 1} :=
-      measurableSet_le (by fun_prop) measurable_const
-    have h := congrArg (fun μ : Measure (Fin n → ℝ) => μ {x | ∑ i, x i ≤ 1})
-      (abs_pi_map_volume n)
-    rw [Measure.map_apply (by fun_prop) hs, Measure.smul_apply,
-      Measure.restrict_apply hs] at h
-    exact h.trans (congrArg ((2 : ℝ≥0∞) ^ n * ·) (by
-      congr 1
-      ext x
-      exact and_comm))
-  rw [hcalc] at hball
-  have hg : Real.Gamma ((n : ℝ) + 1) = (n.factorial : ℝ) :=
-    Real.Gamma_nat_eq_factorial n
-  simp only [Fintype.card_fin, div_one, one_add_one_eq_two, Real.Gamma_ofNat_eq_factorial, Nat.factorial_one, Nat.cast_one,
-    mul_one, ENNReal.ofReal_one, one_pow, one_mul, hg] at hball
-  have hfactor : ENNReal.ofReal ((2 : ℝ) ^ n / (n.factorial : ℝ)) =
-      (2 : ℝ≥0∞) ^ n * ENNReal.ofReal (1 / (n.factorial : ℝ)) := by
-    rw [div_eq_mul_inv, ENNReal.ofReal_mul (by positivity),
-      ENNReal.ofReal_pow (by positivity)]
-    simp only [ENNReal.ofReal_ofNat, one_div, ENNReal.ofReal_inv_of_pos
-      (Nat.cast_pos.mpr (Nat.factorial_pos n))]
-  rw [hfactor] at hball
-  exact (ENNReal.mul_right_inj (by norm_num) (by finiteness)).mp hball
+  change volume
+    (D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.simplexCoords (n + 1)) = _
+  rw [D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.simplex_volume]
+  rw [one_div, ENNReal.ofReal_inv_of_pos (Nat.cast_pos.mpr (Nat.factorial_pos n))]
+  norm_cast
 
 private lemma affine_simplex_volume (d : ℕ) (hd : 2 ≤ d) (c : ℝ) (hc : 0 < c) :
     volume (affineSimplex d c) =
