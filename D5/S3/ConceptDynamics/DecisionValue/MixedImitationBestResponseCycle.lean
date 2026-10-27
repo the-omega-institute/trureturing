@@ -10,7 +10,6 @@ import Mathlib.Basic.Real.Basic
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
-import Lean.Elab.Tactic.Omega
 
 /-! A periodic trajectory for coordinating imitation and best-response dynamics. -/
 
