@@ -7,8 +7,6 @@
    digest: Infinitely many extreme classes for a two-dimensional D-majorization set. -/
 
 import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
-import Mathlib.Analysis.Convex.Extreme
-import Mathlib.LinearAlgebra.UnitaryGroup
 
 /-! The Gibbs-preserving image of a pure qubit has infinitely many extreme classes. -/
 
@@ -76,10 +74,15 @@ private lemma kraus_action (m : ℕ) (x : Matrix (Fin 2) (Fin 2) ℂ) :
   ext i j
   simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul,
     Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply]
+  delta kraus p
   fin_cases i <;> fin_cases j <;>
-    norm_num [kraus, p, Matrix.diagonal_apply, Matrix.one_apply] <;>
+    simp only [Fin.reduceFinMk, Fin.isValue, Fin.reduceEq, Matrix.of_apply,
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, Matrix.one_apply,
+      Matrix.diagonal_apply, star_mul, star_neg, star_zero, star_one, star_inv,
+      star_natCast, Complex.star_def, map_mul, map_neg, map_zero, map_one,
+      map_natCast, map_inv₀, Complex.conj_ofReal, zero_mul,
+      mul_zero, mul_one, one_mul, add_zero, zero_add, ↓reduceIte] <;>
     ring_nf at hr hs ⊢ <;> rw [hr, hs] <;> field_simp <;> ring
-
 
 private lemma pure_mem (m : ℕ) : p m ∈ majorizationSet d a := by
   refine ⟨MatrixMap.of_kraus (kraus m) (kraus m),
@@ -88,18 +91,20 @@ private lemma pure_mem (m : ℕ) : p m ∈ majorizationSet d a := by
     rw [kraus_action, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul]
     have hp : (p m).trace = 1 := by
       rw [Matrix.trace_fin_two]
-      dsimp [p]
+      delta p
+      dsimp only [Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one]
       field_simp
     rw [Matrix.trace_add, Matrix.trace_sub, hp]
     norm_num [Matrix.trace_fin_two]
   · rw [kraus_action]
-    norm_num [a]
+    delta a
+    norm_num
   · rw [kraus_action]
     ext i j
+    delta d p
     fin_cases i <;> fin_cases j <;>
-      norm_num [d, p, Matrix.diagonal_apply, Matrix.add_apply, Matrix.sub_apply,
+      norm_num [Matrix.diagonal_apply, Matrix.add_apply, Matrix.sub_apply,
         Matrix.smul_apply, Matrix.one_apply] <;> ring
-
 
 private lemma density (x : Matrix (Fin 2) (Fin 2) ℂ)
     (hx : x ∈ majorizationSet d a) : x.PosSemidef ∧ x.trace = 1 := by
@@ -111,7 +116,8 @@ private lemma density (x : Matrix (Fin 2) (Fin 2) ℂ)
     intro i
     fin_cases i <;> simp
   · rw [← hta, ht.2]
-    norm_num [a, Matrix.trace_fin_two]
+    delta a
+    norm_num [Matrix.trace_fin_two]
 
 private lemma pure_rigidity (m : ℕ) (x : Matrix (Fin 2) (Fin 2) ℂ)
     (hx : x.PosSemidef) (ht : x.trace = 1)
@@ -132,7 +138,11 @@ private lemma pure_rigidity (m : ℕ) (x : Matrix (Fin 2) (Fin 2) ℂ)
   have h11 : x 1 1 * ((m : ℂ)^2 + 1) = 1 := by
     linear_combination ht - h0 - (m : ℂ) * h01
   ext i j
-  fin_cases i <;> fin_cases j <;> dsimp [p] <;> apply (eq_div_iff hd).2
+  delta p
+  fin_cases i <;> fin_cases j <;>
+    dsimp only [Fin.reduceFinMk, Fin.isValue, Matrix.of_apply,
+      Matrix.cons_val_zero, Matrix.cons_val_one] <;>
+    apply (eq_div_iff hd).2
   · linear_combination ((m : ℂ)^2 + 1) * h0 +
       (m : ℂ) * ((m : ℂ)^2 + 1) * h01 + (m : ℂ)^2 * h11
   · linear_combination ((m : ℂ)^2 + 1) * h01 + (m : ℂ) * h11
@@ -151,7 +161,11 @@ private lemma pure_extreme (m : ℕ) :
     ext i
     change p m i ⬝ᵥ v = 0
     rw [Matrix.vec2_dotProduct]
-    fin_cases i <;> dsimp [p, v] <;> field_simp <;> ring
+    delta p
+    fin_cases i <;>
+      dsimp only [v, Fin.reduceFinMk, Fin.isValue, Matrix.of_apply,
+        Matrix.cons_val_zero, Matrix.cons_val_one] <;>
+      field_simp <;> ring
   have hq : r • (star v ⬝ᵥ x *ᵥ v) + s • (star v ⬝ᵥ y *ᵥ v) = 0 := by
     rw [← dotProduct_smul, ← dotProduct_smul, ← dotProduct_add,
       ← Matrix.smul_mulVec, ← Matrix.smul_mulVec, ← Matrix.add_mulVec, he, hpv]
@@ -186,7 +200,8 @@ private lemma invariant_injective :
   have ht (m : ℕ) : (diagonal (fun i => (d i : ℂ)) * p m).trace =
       ((m : ℂ)^2 + 2) / (3 * ((m : ℂ)^2 + 1)) := by
     rw [Matrix.trace_fin_two]
-    simp only [Matrix.diagonal_mul, d, p, Matrix.cons_val_zero, Matrix.cons_val_one]
+    delta d p
+    simp only [Matrix.diagonal_mul, Matrix.cons_val_zero, Matrix.cons_val_one]
     norm_num
     field_simp
   intro m k he
@@ -203,7 +218,7 @@ private lemma invariant_injective :
 /-- The two-dimensional counterexample has infinitely many extreme unitary classes. -/
 theorem result : ¬ claim := by
   intro hc
-  obtain ⟨f, hf⟩ := hc 2 d (by intro i; fin_cases i <;> norm_num [d]) a
+  obtain ⟨f, hf⟩ := hc 2 d (by intro i; delta d; fin_cases i <;> norm_num) a
   have hw (m : ℕ) := hf (p m) (pure_extreme m)
   choose y hy u hu he using hw
   have hi : Function.Injective y := by
