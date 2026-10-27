@@ -11,7 +11,7 @@ noncomputable section
 namespace Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryConditionalLaw
 
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryConditionalLaw
-open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.ActualTreeReadoutAcquisition (Address)
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address)
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace (Omega M cylinder G J)
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.FiniteSourceHardy (H)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
