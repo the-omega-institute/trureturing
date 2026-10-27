@@ -67,6 +67,7 @@ theorem actual_local_source_inverse (x : ℝ × ℝ)
       (∀ q ∈ closure (ball (chartRead x) ε),
         ‖fderiv ℝ (fun q => chartSource (e.symm q)) q‖ ≤ (L:ℝ)) ∧
       LipschitzOnWith L (fun q => chartSource (e.symm q)) (ball (chartRead x) ε) ∧
+      chartWorld x ∈ localWorlds e (ball (chartRead x) ε) ∧
       (∀ W ∈ localWorlds e (ball (chartRead x) ε),
         chartSource (e.symm (originalPM W)) = sourceCoordinates W) ∧
       (∀ W ∈ localWorlds e (ball (chartRead x) ε),
@@ -107,6 +108,14 @@ theorem actual_local_source_inverse (x : ℝ × ℝ)
       (fun q hq => (hHOn q (subset_closure hq)).differentiableAt) _ (convex_ball _ _)
     intro q hq
     exact_mod_cast hbound q (subset_closure hq)
+  have hchartcoords : sourceChart (chartWorld x) = x :=
+    Prod.ext hc.2.2.2.2.2.2 rfl
+  have hcenter : chartWorld x ∈ localWorlds e (ball (chartRead x) ε) := by
+    refine ⟨hc.1,hr,hr',hb,hb',?_,?_⟩
+    · rw [hchartcoords]
+      exact hx
+    · change chartRead x ∈ ball (chartRead x) ε
+      exact mem_ball_self hε
   have hworld : ∀ W ∈ localWorlds e (ball (chartRead x) ε), H (originalPM W) = sourceCoordinates W := by
     intro W hW
     have heW := world_chart W hW.1 hW.2.1 hW.2.2.1 hW.2.2.2.1 hW.2.2.2.2.1
@@ -117,7 +126,7 @@ theorem actual_local_source_inverse (x : ℝ × ℝ)
     rw [e.left_inv hW.2.2.2.2.2.1]
     exact hsW.symm
   refine ⟨e,ε,L,rfl,hx,hε,lt_of_lt_of_le (by norm_num : (0:ℝ)<1) (le_max_left _ _),
-    isOpen_ball,convex_ball _ _,hcompact,?_,?_,hHOn,hbound,hlip,hworld,?_⟩
+    isOpen_ball,convex_ball _ _,hcompact,?_,?_,hHOn,hbound,hlip,hcenter,hworld,?_⟩
   · intro q hq
     exact (hsub (hcl hq)).1.1
   · intro q hq

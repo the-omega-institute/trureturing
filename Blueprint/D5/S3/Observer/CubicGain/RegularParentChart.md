@@ -10,9 +10,21 @@ For 9005/10000 <= r <= 9006/10000 and 12758/100000 <= b <= 12759/100000, j=b+r(1
 
 The lift is analytic, includes all five literal history equations and the nonzero whole polynomial, and exhausts every original parent world with the same r and b. This is a chart of the original parent, including its ordinary coefficient topology; it is not a change of the eight coordinate norm. Recovering t=r/b gives the original independent source coordinate. Analyticity also holds for both actual read functions.
 
-The strip assertion alone identifies no algebraic center. Applying this chart at the exact critical world requires its independent algebraic definition and source enclosures. Inverting the pair (p,f_M), choosing a convex image neighborhood and proving a bound for its inverse derivative require additional results.
+The strip assertion alone identifies no algebraic center. Applying this chart at the exact critical world requires its independent algebraic definition and source enclosures. On this source strip, the polynomial derivative estimate and the inverse function theorem give a local inverse of (p,f_M), with a convex image neighborhood and a finite bound for the derivative of the complete source lift.
 
-**Theorem 1.1 (analytic original parent chart).**
+**Theorem 1.1 (The regular strip denominator).**
+
+Lean statement: `D5/S3/Observer/CubicGain/RegularParentChart.strip_denominator`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/RegularParentChart.strip_denominator` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real r and b with 9005/10000 <= r <= 9006/10000 and 12758/100000 <= b <= 12759/100000, parentLambda(r,b) is strictly negative.
+
+**Theorem 1.2 (analytic original parent chart).**
 
 Lean statement: `D5/S3/Observer/CubicGain/RegularParentChart.analytic_original_parent_chart`
 
@@ -27,4 +39,5 @@ For every x=(t,b) whose r=tb and b satisfy the displayed closed rational strip b
 ## References
 
 - Truth anchor: `D5/S3/Observer/CubicGain/RegularParentChart.analytic_original_parent_chart`
+- Truth anchor: `D5/S3/Observer/CubicGain/RegularParentChart.strip_denominator`
 - Dependency: [D5/S3/Observer/CubicGain/CommonWordSensitivity](CommonWordSensitivity.md)
