@@ -44,7 +44,7 @@ A unit u belongs to generators(p,a,b) exactly when its underlying residue is cen
 
 **Definition 1.4 (The complete unrestricted generation assertion).**
 
-$$claim \Leftrightarrow \left(\forall p \in \mathbb{N},\; Nat.Prime\left(p\right) \Rightarrow \left(\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \left(\forall n \in \mathbb{N},\; n < p \Rightarrow \left(\neg (p : \mathbb{Z}) \mid central\left(a, b, n\right)\right)\right) \Rightarrow Subgroup.closure\left(generators\left(p, a, b\right)\right) = \operatorname{top}\right)\right)$$
+$$claim \Leftrightarrow \left(\forall p \in \mathbb{N},\; Nat.Prime\left(p\right) \Rightarrow \left(\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \left(\forall n \in \mathbb{N},\; n < p \Rightarrow \left(\neg ((p : \mathbb{Z}) \mid central\left(a, b, n\right))\right)\right) \Rightarrow Subgroup.closure\left(generators\left(p, a, b\right)\right) = \operatorname{top}\right)\right)$$
 
 *Formalization.* `D5/S3/ArithUnits/KohenMotzkinGenerationRefutation.claim` (`✓ std3`).
 
