@@ -94,7 +94,7 @@ private theorem rejected_law : ¬ arena.{u_2}.Law rejected := by
   change 2 * (2 + 1) ≤ (0 : ℕ) at hbad
   omega
 
-private theorem dependence :
+theorem dependence :
     DependentFamily.ObservationalDependence signature.{u_2} actual := by
   intro i
   refine ⟨(), ULift.{u_2} Unit, ULift.{u_2} Bool, ?_⟩
