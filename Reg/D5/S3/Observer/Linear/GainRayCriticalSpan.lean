@@ -11,8 +11,8 @@ noncomputable section
 universe u
 
 abbrev growthSignature : Signature where
-  Params := (ι : Type u) × Fintype ι
-  State p := Submodule ℝ (p.1 → ℝ)
+  Params := Type u
+  State p := Submodule ℝ (p → ℝ)
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -32,7 +32,7 @@ def growthArena : Arena where
     (t : ι → ℝ) (_ht : Function.Injective t) (V K : Submodule ℝ (ι → ℝ))
     (a : ι → ℝ) (_ha : a ∈ V) (_hna : ∀ i, a i ≠ 0) (d : ℕ)
     (_h : ∀ v ∈ V, ∀ j ≤ d, (fun i => v i * t i ^ j) ∈ K),
-    min (Fintype.card ι) (Module.finrank ℝ V + d) ≤ R.readout () ⟨ι,fi⟩ K
+    min (Fintype.card ι) (Module.finrank ℝ V + d) ≤ R.readout () ι K
 
 theorem growthRejected_law : ¬ growthArena.{u}.Law growthRejected := by
   intro h
@@ -55,7 +55,7 @@ def growthRegistration : Registration growthArena.{u} (growthArena.Law growthAct
       exact nomatch i
   dependence := by
     intro i
-    refine ⟨⟨ULift.{u} (Fin 1), inferInstance⟩, (⊥ : Submodule ℝ (ULift.{u} (Fin 1) → ℝ)),
+    refine ⟨ULift.{u} (Fin 1), (⊥ : Submodule ℝ (ULift.{u} (Fin 1) → ℝ)),
       (⊤ : Submodule ℝ (ULift.{u} (Fin 1) → ℝ)), ?_⟩
     change Module.finrank ℝ (⊥ : Submodule ℝ (ULift.{u} (Fin 1) → ℝ)) ≠
       Module.finrank ℝ (⊤ : Submodule ℝ (ULift.{u} (Fin 1) → ℝ))
@@ -81,7 +81,7 @@ def growth : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@weighted_polynomi
   sensitivity := .absent,
   partialSensitivity := none,
   escapeFrom := none,
-  sourceSelection := some { owner := `D5.S3.Observer.Linear.GainRayCriticalSpan, definition := none, coordinates := #[0,1], readouts := #[{ path := #["body","body","body","body","body","body", "body","body","body","body","body","arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  sourceSelection := some { owner := `D5.S3.Observer.Linear.GainRayCriticalSpan, definition := none, coordinates := #[0], readouts := #[{ path := #["body","body","body","body","body","body", "body","body","body","body","body","arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
@@ -89,7 +89,7 @@ def growth : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@weighted_polynomi
 open scoped Matrix
 
 abbrev scalarSignature : Signature where
-  Params := ℕ × List Bool
+  Params := (d : ℕ) × List Bool
   State p := Readout p.1 p.2
   Role := Unit
   finiteRole := inferInstance
