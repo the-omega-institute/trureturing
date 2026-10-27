@@ -146,7 +146,7 @@ private theorem support_margin (B : Band) (n : ℕ) (hn : 1 ≤ n) (e : Bool) :
     have h0 := min_le_left B.a (min (B.c-B.b) (1-2*B.c))
     have h1 := (min_le_right B.a (min (B.c-B.b) (1-2*B.c))).trans (min_le_left _ _)
     have h2 := (min_le_right B.a (min (B.c-B.b) (1-2*B.c))).trans (min_le_right _ _)
-    fin_cases i <;> simp only [p_explicit,Matrix.cons_val_zero,Matrix.cons_val_succ] <;> linarith [hr.1,hr.2]
+    fin_cases i <;> norm_num [p_explicit] <;> linarith [hr.1,hr.2]
 
 /-- Both literal early/late functions have finite partitions with continuous
 rates on each closed piece and their actual derivatives on each open piece. -/
@@ -243,6 +243,7 @@ private theorem suffix_resource (B : Band) (F : ℝ → ℝ) (e : Bool) :
       (1/4)*(F (4*(B.b-B.a))+F (-(4*(B.b-B.a))))+(1/2)*F 0 := by
   have hl := loop_resource B (1/4) (by norm_num) F
   norm_num only at hl
+  rw [show (B.b-B.a)/(1/4)=4*(B.b-B.a) by ring] at hl
   obtain ⟨hw,he⟩ := leg_resource B.wait F
   have hs0 : B.wait.speed=0 := by simp [Band.wait,Leg.speed]
   rw [hs0] at he
