@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Matrix.LinDTIMajorizationRefutation
 import D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing
+import D5.S3.Entropy.Forgetting.CapacityMonotone
 
 /-!
 Charge-sector normalization need not preserve majorization of diagonal density matrices.
@@ -23,17 +24,14 @@ open D5.S3.Quantum.Matrix.LinDTIMajorizationRefutation (Majorizes)
 
 open D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing (desc)
 
-/-- The trace of the block on the charge-`q` eigenspace. -/
-noncomputable def sectorWeight {n : ℕ} (r : Fin n → ℝ) (charge : Fin n → ℤ)
-    (q : ℤ) : ℝ :=
-  ∑ i, if charge i = q then r i else 0
+open D5.S3.Entropy.Forgetting.CapacityMonotone (pushforward)
 
 /-- The eigenvalues of the normalized charge block, in descending order.
 Only indices in the eigenspace occur; zero eigenvalues retain their multiplicities. -/
 noncomputable def sectorSpectrum {n : ℕ} (r : Fin n → ℝ) (charge : Fin n → ℤ)
     (q : ℤ) : List ℝ :=
   (((List.finRange n).filter (fun i => decide (charge i = q))).map
-    (fun i => r i / sectorWeight r charge q)).mergeSort (fun a b => decide (b ≤ a))
+    (fun i => r i / pushforward charge r q)).mergeSort (fun a b => decide (b ≤ a))
 
 /-- Majorization of diagonal density matrices would persist in every common
 positive-weight charge sector after normalizing both blocks. -/
@@ -42,7 +40,7 @@ def claim : Prop :=
     (∀ i, 0 ≤ r i) → (∑ i, r i = 1) →
     (∀ i, 0 ≤ s i) → (∑ i, s i = 1) →
     Majorizes (desc r) (desc s) →
-    ∀ q : ℤ, 0 < sectorWeight r charge q → 0 < sectorWeight s charge q →
+    ∀ q : ℤ, 0 < pushforward charge r q → 0 < pushforward charge s q →
       Majorizes (sectorSpectrum r charge q) (sectorSpectrum s charge q)
 
 private def chargeData : Fin 4 → ℤ := ![0, 0, 1, 1]
@@ -85,12 +83,12 @@ private lemma global_majorizes : Majorizes (desc r) (desc s) := by
   · norm_num
 
 private lemma sector_weights :
-    sectorWeight r chargeData 0 = 3/5 ∧ sectorWeight s chargeData 0 = 3/5 := by
+    pushforward chargeData r 0 = 3/5 ∧ pushforward chargeData s 0 = 3/5 := by
   constructor
-  · rw [sectorWeight.eq_1]
+  · rw [pushforward]
     simp_rw [chargeData.eq_1]
     norm_num [r, Fin.sum_univ_succ]
-  · rw [sectorWeight.eq_1]
+  · rw [pushforward]
     simp_rw [chargeData.eq_1]
     norm_num [s, Fin.sum_univ_succ]
 
@@ -102,14 +100,16 @@ private lemma sector_spectra :
     rw [sector_weights.1]
     change ([(6/20 : ℝ) / (3/5), (6/20) / (3/5)].mergeSort
       (fun a b => decide (b ≤ a))) = _
-    norm_num [List.mergeSort, List.merge, List.MergeSort.Internal.splitInTwo,
-      List.splitAt_eq]
+    convert! List.mergeSort_eq_self (fun a b : ℝ => b ≤ a)
+      (l := [1/2, 1/2]) (by norm_num) using 1
+    norm_num
   · unfold sectorSpectrum
     rw [sector_weights.2]
     change ([(7/20 : ℝ) / (3/5), (5/20) / (3/5)].mergeSort
       (fun a b => decide (b ≤ a))) = _
-    norm_num [List.mergeSort, List.merge, List.MergeSort.Internal.splitInTwo,
-      List.splitAt_eq]
+    convert! List.mergeSort_eq_self (fun a b : ℝ => b ≤ a)
+      (l := [7/12, 5/12]) (by norm_num) using 1
+    norm_num
 
 private lemma sector_failure :
     ¬ Majorizes (sectorSpectrum r chargeData 0) (sectorSpectrum s chargeData 0) := by
