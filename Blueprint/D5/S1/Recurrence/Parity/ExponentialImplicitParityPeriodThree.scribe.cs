@@ -12,6 +12,24 @@ internal sealed class ExponentialImplicitParityPeriodThreeDocument : IScribeDocu
         "The implicit exponential generating function of OEIS A392208 has coefficient parity of period three.",
         H("OEIS A392208: Parity Has Period Three"),
         Blocks(
+            Node("a392208-published-egfone", "egfOne", "egfOne",
+                PublishedFormula("egfOne"), "The displayed formula gives the coefficient operation or identity with all parameters quantified.",
+                AssessedProvenance.FromRepo(), DescribeRole.Definition),
+            Node("a392208-published-egfpow-congr-at", "egfPow_congr_at", "egfPow congr at",
+                PublishedFormula("egfPow_congr_at"), "The displayed formula gives the coefficient operation or identity with all parameters quantified.",
+                AssessedProvenance.FromRepo(), DescribeRole.Theorem),
+            Node("a392208-published-egfseries-mul", "egfSeries_mul", "egfSeries mul",
+                PublishedFormula("egfSeries_mul"), "The displayed formula gives the coefficient operation or identity with all parameters quantified.",
+                AssessedProvenance.FromRepo(), DescribeRole.Theorem),
+            Node("a392208-published-egfseries-pow", "egfSeries_pow", "egfSeries pow",
+                PublishedFormula("egfSeries_pow"), "The displayed formula gives the coefficient operation or identity with all parameters quantified.",
+                AssessedProvenance.FromRepo(), DescribeRole.Theorem),
+            Node("a392208-published-egfcoeffs", "egfCoeffs", "egfCoeffs",
+                PublishedFormula("egfCoeffs"), "The displayed formula gives the coefficient operation or identity with all parameters quantified.",
+                AssessedProvenance.FromRepo(), DescribeRole.Definition),
+            Node("a392208-published-egfseries-egfcoeffs", "egfSeries_egfCoeffs", "egfSeries egfCoeffs",
+                PublishedFormula("egfSeries_egfCoeffs"), "The displayed formula gives the coefficient operation or identity with all parameters quantified.",
+                AssessedProvenance.FromRepo(), DescribeRole.Theorem),
             Paragraph(Text("OEIS A392208 (entry dated 2026-01-24) supplies the defining equation "
                 + "A'(x) = exp(A(x) A'(x)^3) and the conjecture that a(n) is even if and only if "
                 + "3 divides n for n >= 1. The entry supplies context rather than the repository's "
@@ -378,5 +396,34 @@ internal sealed class ExponentialImplicitParityPeriodThreeDocument : IScribeDocu
         for (var index = clauses.Length - 2; index >= 0; index--)
             result = new Formula.Logic(Parenthesized(clauses[index]), FormulaLogicOperator.And, result);
         return result;
+    }
+
+    private static Formula PublishedFormula(string name)
+    {
+        var r = F.Id("R"); var f = F.Id("f"); var g = F.Id("g"); var fp = F.Id("fp");
+        var n = F.Id("n"); var k = F.Id("k"); var m = F.Id("m"); var a = F.Id("A");
+        Formula All(string x, Formula t, Formula b) => new Formula.BindMany(FormulaQuantifier.ForAll,
+            [new(FormulaIdentifier.Create(x), t)], b);
+        Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
+        Formula Leq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThanOrEqual, y);
+        Formula PrefixEq(Formula x, Formula y) => All("k", Naturals(), Imp(Leq(k, n), Equal(new Formula.Apply(x, [k]), new Formula.Apply(y, [k]))));
+        Formula Generic(Formula b) => Seq(Forall, Sp, Typed(r, F.Id("Type")), Comma, Sp,
+            OpenBracket, Call("CommSemiring", r), CloseBracket, Comma, Sp, b);
+        return name switch
+        {
+            "egfOne" => Disp(Generic(All("n", Naturals(), Equal(Call("egfOne", n),
+                Parenthesized(Seq(Call("ite", Equal(n, D(0)), D(1), D(0)), Colon, Sp, r)))))),
+            "egfPow_congr_at" => Disp(Generic(All("f", Arrow(Naturals(), r), All("fp", Arrow(Naturals(), r),
+                All("m", Naturals(), All("n", Naturals(), Imp(PrefixEq(f, fp),
+                    Equal(Call("egfPow", f, m, n), Call("egfPow", fp, m, n))))))))),
+            "egfSeries_mul" => Disp(All("f", Arrow(Naturals(), Rationals()), All("g", Arrow(Naturals(), Rationals()),
+                Equal(Call("egfSeries", Call("egfMul", f, g)), Mul(Call("egfSeries", f), Call("egfSeries", g)))))),
+            "egfSeries_pow" => Disp(All("f", Arrow(Naturals(), Rationals()), All("m", Naturals(),
+                Equal(Call("egfSeries", Call("egfPow", f, m)), Pow(Call("egfSeries", f), m))))),
+            "egfCoeffs" => Disp(All("A", PowerSeriesQ(), All("n", Naturals(),
+                Equal(Call("egfCoeffs", a, n), Mul(Parenthesized(Seq(Factorial(n), Colon, Sp, Rationals())), Call("coeff", n, a)))))),
+            "egfSeries_egfCoeffs" => Disp(All("A", PowerSeriesQ(), Equal(Call("egfSeries", Call("egfCoeffs", a)), a))),
+            _ => throw new System.ArgumentException("Unknown coefficient identity", nameof(name)),
+        };
     }
 }

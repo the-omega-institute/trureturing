@@ -5,6 +5,9 @@
    anchors: []
    utility: kind=certified-instance; basis=terminal=atom:148fce9b2a685f895d65e8a92b6e15e15097f5b36b12cbd8570b32957f1bff67
    digest: The OEIS A392208 EGF equation forces coefficient parity with period three. -/
+
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21758. -/
+
 import Mathlib.LinearAlgebra.SymmetricAlgebra.Basis
 import Mathlib.RingTheory.Bialgebra.SymmetricAlgebra
 import Mathlib.RingTheory.Coalgebra.Convolution
@@ -56,7 +59,7 @@ private theorem series_ext {f g : Series} (h : ∀ n, coeff f n = coeff g n) : f
 def egfMul {R : Type*} [CommSemiring R] (f g : Nat → R) (n : Nat) : R := ∑ k ∈ Finset.range (n + 1), n.choose k * f k * g (n - k)
 private theorem coeff_mul_egf (f g : Series) (n : Nat) :
     coeff (f * g) n = egfMul (coeff f) (coeff g) n := coeff_mul f g n
-private def egfOne {R : Type*} [CommSemiring R] (n : Nat) : R := if n = 0 then 1 else 0
+def egfOne {R : Type*} [CommSemiring R] (n : Nat) : R := if n = 0 then 1 else 0
 /-- Iterated binomial convolution for the exponential generating function in OEIS A392208 (2026-01-24). -/
 def egfPow {R : Type*} [CommSemiring R] (f : Nat → R) : Nat → Nat → R
   | 0 => egfOne
@@ -66,7 +69,7 @@ private theorem egfMul_congr_at {R : Type*} [CommSemiring R] {f f' g g' : Nat �
   apply Finset.sum_congr rfl; intro k hk
   have hk' : k ≤ n := by simpa using (Finset.mem_range.mp hk)
   rw [hf k hk', hg (n - k) (Nat.sub_le n k)]
-private theorem egfPow_congr_at {R : Type*} [CommSemiring R] {f f' : Nat → R} {m n : Nat}
+theorem egfPow_congr_at {R : Type*} [CommSemiring R] {f f' : Nat → R} {m n : Nat}
     (hf : ∀ k ≤ n, f k = f' k) : egfPow f m n = egfPow f' m n := by
   induction m generalizing n with
   | zero => rfl
@@ -452,7 +455,7 @@ private theorem egfSeries_injective : Function.Injective egfSeries := by
   rw [PowerSeries.coeff_C_mul]; simp [egfSeries, mul_div_assoc]
 @[simp] private theorem egfSeries_smul_q (q : ℚ) (f : Nat → ℚ) :
     egfSeries (fun n => q * f n) = PowerSeries.C q * egfSeries f := by ext n; rw [PowerSeries.coeff_C_mul]; simp [egfSeries, mul_div_assoc]
-private theorem egfSeries_mul (f g : Nat → ℚ) : egfSeries (egfMul f g) = egfSeries f * egfSeries g := by
+theorem egfSeries_mul (f g : Nat → ℚ) : egfSeries (egfMul f g) = egfSeries f * egfSeries g := by
   ext n
   rw [coeff_egfSeries, PowerSeries.coeff_mul,
     Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
@@ -462,7 +465,7 @@ private theorem egfSeries_mul (f g : Nat → ℚ) : egfSeries (egfMul f g) = egf
   have hfac := Nat.choose_mul_factorial_mul_factorial hk_le
   have hfacQ : (n.choose k : ℚ) * (Nat.factorial k : ℚ) * (Nat.factorial (n - k) : ℚ) = (Nat.factorial n : ℚ) := by exact_mod_cast hfac
   field_simp; linear_combination (f k * g (n - k)) * hfacQ
-private theorem egfSeries_pow (f : Nat → ℚ) (m : Nat) : egfSeries (egfPow f m) = egfSeries f ^ m := by
+theorem egfSeries_pow (f : Nat → ℚ) (m : Nat) : egfSeries (egfPow f m) = egfSeries f ^ m := by
   induction m with
   | zero =>
       ext n; cases n <;> simp [egfPow, egfOne, egfSeries]
@@ -677,9 +680,9 @@ private theorem egfSeries_ode_implies_egfOde {s : Nat → ℚ}
     simpa [mul_assoc] using hrearr
   intro n
   simpa [s1, s2] using congrFun heq n
-private noncomputable def egfCoeffs (A : PowerSeries ℚ) (n : Nat) : ℚ :=
+noncomputable def egfCoeffs (A : PowerSeries ℚ) (n : Nat) : ℚ :=
   Nat.factorial n * PowerSeries.coeff n A
-private theorem egfSeries_egfCoeffs (A : PowerSeries ℚ) : egfSeries (egfCoeffs A) = A := by
+theorem egfSeries_egfCoeffs (A : PowerSeries ℚ) : egfSeries (egfCoeffs A) = A := by
   ext n
   simp only [coeff_egfSeries, egfCoeffs]
   field_simp
@@ -775,14 +778,3 @@ example : a 18 = 14621423624844610787449584876 := by decide +kernel
 -- Fidelity witnesses: the sequence domain is inhabited, and the OEIS hypothesis is satisfiable.
 example : Nat → Int := a
 end D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.initial_residues_mod_two
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.a_recurrence
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.recurrence_coefficient_period_three
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.exp_definition_implies_ode
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.exp_definition_derivative_zero
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.egfOde_unique
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.a_oeisDefines
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.oeis_defined_eq_recurrence
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.oeis_coefficient_period_three
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.parity_conjecture_of_oeisDefines
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.a392208_parity_conjecture
