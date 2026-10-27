@@ -114,6 +114,38 @@ private lemma combo_identity :
   norm_num [subflow, Fin.sum_univ_succ]
   ring
 
+private lemma star_weight_expand (I : Finset (Fin 5)) :
+    starWeight I =
+      (if 0 ∈ I then 1 else 0) + (if 1 ∈ I then 1 else 0) +
+      (if 2 ∈ I then 1 else 0) + (if 3 ∈ I then 1 else 0) +
+      (if 4 ∈ I then 2 else 0) := by
+  unfold starWeight
+  simp only [Fin.sum_univ_succ]
+  norm_num
+  ring
+
+private lemma star_cut (I : Finset (Fin 5)) (W : Finset (Fin 6))
+    (h : ∀ i, starBoundary i ∈ W ↔ i ∈ I) :
+    cutValue starCapacity W =
+      if (5 : Fin 6) ∈ W then 6 - starWeight I else starWeight I := by
+  have h0 := h 0
+  have h1 := h 1
+  have h2 := h 2
+  have h3 := h 3
+  have h4 := h 4
+  change (0 : Fin 6) ∈ W ↔ (0 : Fin 5) ∈ I at h0
+  change (1 : Fin 6) ∈ W ↔ (1 : Fin 5) ∈ I at h1
+  change (2 : Fin 6) ∈ W ↔ (2 : Fin 5) ∈ I at h2
+  change (3 : Fin 6) ∈ W ↔ (3 : Fin 5) ∈ I at h3
+  change (4 : Fin 6) ∈ W ↔ (4 : Fin 5) ∈ I at h4
+  rw [star_weight_expand I]
+  unfold cutValue
+  by_cases hc : (5 : Fin 6) ∈ W
+  · simp [starCapacity, hc, h0, h1, h2, h3, h4, Fin.sum_univ_succ]
+    <;> split_ifs <;> ring
+  · simp [starCapacity, hc, h0, h1, h2, h3, h4, Fin.sum_univ_succ]
+    <;> split_ifs <;> ring
+
 private lemma star_cut_values :
     ∀ I : Finset (Fin 5), minCut starCapacity starBoundary I =
       min (starWeight I) (6 - starWeight I) := by sorry
