@@ -22,7 +22,7 @@ open FiniteSourceHardy (H)
 open BiasedBoundaryTrace (Omega M bit cylinder G J)
 open MeasureTheory hiding cylinder
 open ProbabilityTheory
-open scoped ENNReal
+open scoped NNReal ENNReal
 
 /-- Delete the first n original coordinates. -/
 def tail (n : ℕ) (ω : Omega) : Omega := fun i => ω (i+n)
@@ -131,11 +131,17 @@ private theorem cylinder_nonzero (p : Address) : M (cylinder p) ≠ 0 := by
     · rw [ProbabilityTheory.bernoulliMeasure_apply_of_mem_of_notMem _
         (measurableSet_singleton false) (by simp) (by simp)]
       apply ENNReal.coe_ne_zero.mpr
-      exact_mod_cast ha.ne'
+      intro he
+      have he' := congrArg (fun x : ℝ≥0 => (x : ℝ)) he
+      change FiniteSourceMass.a = 0 at he'
+      exact ha.ne' he'
     · rw [ProbabilityTheory.bernoulliMeasure_apply_of_notMem_of_mem _
         (measurableSet_singleton true) (by simp) (by simp)]
       apply ENNReal.coe_ne_zero.mpr
-      exact_mod_cast (sub_pos.mpr ha1).ne'
+      intro he
+      have he' := congrArg (fun x : ℝ≥0 => (x : ℝ)) he
+      change 1-FiniteSourceMass.a = 0 at he'
+      exact (sub_pos.mpr ha1).ne' he'
   rw [M, cylinder, Measure.infinitePi_pi _ (fun _ _ => measurableSet_singleton _)]
   exact Finset.prod_ne_zero_iff.mpr (fun i _ => hbit _)
 
@@ -176,7 +182,8 @@ private def pullbackLinear (p : Address) : G →ₗ[ℝ] G where
       Lp.coeFn_add ((pullback_memLp p F).toLp _) ((pullback_memLp p K).toLp _),
       (pullback_memLp p F).coeFn_toLp, (pullback_memLp p K).coeFn_toLp,
       (prepend_quasi p).ae_eq_comp (Lp.coeFn_add F K)] with ω h1 h2 h3 h4 h5
-    exact h1.trans (h5.trans (by simpa only [Pi.add_apply, Function.comp_apply, h3, h4] using h2.symm))
+    exact h1.trans (h5.trans (by
+      simpa only [Pi.add_apply, Function.comp_apply, h3, h4] using h2.symm))
   map_smul' c F := by
     apply Lp.ext
     filter_upwards [(pullback_memLp p (c • F)).coeFn_toLp,

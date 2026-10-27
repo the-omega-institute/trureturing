@@ -2,6 +2,8 @@ import D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryConditionalLaw
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Contract.Registration
 
+/-! The actual prepend map as the readout of the complete conditional law family. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -13,7 +15,7 @@ open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.ActualTreeReadoutAcquisition (A
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace (Omega M cylinder G J)
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.FiniteSourceHardy (H)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open MeasureTheory
+open MeasureTheory hiding cylinder
 
 abbrev signature : Signature where
   Params := Address
@@ -34,10 +36,10 @@ abbrev arena : Arena where
     (∀ p : Address, (M.restrict (cylinder p)).map (tail p.length) = M (cylinder p) • M) ∧
     (∀ p : Address, MeasurePreserving (R.readout () p) M (conditional p)) ∧
     conditional [] = M ∧
-    (∀ (p : Address) (F : G), pullback p F =ᵐ[M] F ∘ R.readout () p) ∧
+    (∀ (p : Address) (F : G), pullback p F =ᵐ[M] F ∘ prepend p) ∧
     (∀ (p : Address) (F : G), ‖pullback p F‖ ≤ pullbackBound p * ‖F‖) ∧
-    (∀ (p : Address) (z : H), conditionalTrace p z =ᵐ[M] (J z) ∘ R.readout () p) ∧
-    (∀ (p : Address) (ω : Omega), tail p.length (R.readout () p ω) = ω)
+    (∀ (p : Address) (z : H), conditionalTrace p z =ᵐ[M] (J z) ∘ prepend p) ∧
+    (∀ (p : Address) (ω : Omega), tail p.length (prepend p ω) = ω)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => fun _ : ℕ => true) (fun e => nomatch e)
@@ -102,10 +104,10 @@ def registration_1 :
   escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryConditionalLaw,
-    definition := none, coordinates := #[],
+    definition := none, coordinates := #[0],
     readouts := #[{
-      path := #["arg", "arg", "arg", "arg", "arg", "arg", "arg", "body", "body", "fn", "arg", "arg"],
-      stateBinder := 1, functionOperand := false, stateOperand := none,
+      path := #["arg", "arg", "fn", "arg", "body", "fn", "fn", "arg"],
+      stateBinder := 0, functionOperand := true, stateOperand := none,
       booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
