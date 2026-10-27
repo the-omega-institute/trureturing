@@ -38,7 +38,8 @@ def faceSimplex (s : Finset V) : Set (V → ℝ) :=
 
 /-- The standard geometric realization, with the ambient real subspace topology. -/
 def realization (M : PreAbstractSimplicialComplex V) : Set (V → ℝ) :=
-  {x | ∃ s ∈ M, x ∈ faceSimplex s}
+  {x | ∃ s ∈ M,
+    x ∈ convexHull ℝ ((fun v : V => Pi.single v (1 : ℝ)) '' (s : Set V))}
 
 /-- A nonempty cone subcomplex, including the cone consisting of its apex alone. -/
 structure ConePair (V : Type*) [Fintype V] [DecidableEq V] where
@@ -92,6 +93,15 @@ theorem faceSimplex_eq_convexHull (s : Finset V) :
       have hwv : w ≠ v := fun h => hw (h.symm ▸ hv)
       simp [Pi.single_apply, hwv, Ne.symm hwv]
 
+private theorem realization_mem_iff (M : PreAbstractSimplicialComplex V) (x : V → ℝ) :
+    x ∈ realization M ↔ ∃ s ∈ M, x ∈ faceSimplex s := by
+  simp only [realization, mem_setOf_eq, faceSimplex_eq_convexHull]
+
+private theorem realization_mono {M N : PreAbstractSimplicialComplex V} (h : M ≤ N) :
+    realization M ⊆ realization N := by
+  rintro x ⟨s, hs, hx⟩
+  exact ⟨s, h hs, hx⟩
+
 namespace ConePair
 
 variable (P : ConePair V)
@@ -103,7 +113,7 @@ def coneSet : Set P.Space := {x | x.val ∈ realization P.cone}
 
 private theorem simplex_data (x : P.Space) :
     (∀ v, 0 ≤ x.val v) ∧ (∑ v, x.val v) = 1 := by
-  obtain ⟨s, _, hx⟩ := x.property
+  obtain ⟨s, _, hx⟩ := (realization_mem_iff P.ambient x.val).1 x.property
   exact ⟨hx.1, hx.2.1⟩
 
 private theorem coord_continuous (v : V) : Continuous (fun x : P.Space => x.val v) :=
@@ -120,10 +130,11 @@ private theorem apex_faceSimplex : Pi.single P.apex (1 : ℝ) ∈ faceSimplex {P
 
 /-- The coordinate vertex at the cone apex. -/
 def apexPoint : P.Space :=
-  ⟨Pi.single P.apex 1, {P.apex}, P.inclusion P.apex_face, P.apex_faceSimplex⟩
+  ⟨Pi.single P.apex 1, (realization_mem_iff _ _).2
+    ⟨{P.apex}, P.inclusion P.apex_face, P.apex_faceSimplex⟩⟩
 
 private theorem apexPoint_mem : P.apexPoint ∈ P.coneSet := by
-  exact ⟨{P.apex}, P.apex_face, P.apex_faceSimplex⟩
+  exact (realization_mem_iff _ _).2 ⟨{P.apex}, P.apex_face, P.apex_faceSimplex⟩
 
 private def faces : Finset (Finset V) := by
   classical
@@ -165,11 +176,13 @@ private theorem delta_eq_zero_iff (x : P.Space) : P.delta x = 0 ↔ x ∈ P.cone
   constructor
   · intro hd
     obtain ⟨s, hs, heq⟩ := P.delta_witness x
+    apply (realization_mem_iff P.cone x.val).2
     refine ⟨s, hs, (P.simplex_data x).1, (P.simplex_data x).2, ?_⟩
     intro v hv
     exact le_antisymm (by simpa [← heq, hd] using P.outside_coord_le x hv)
       ((P.simplex_data x).1 v)
-  · rintro ⟨s, hs, hx⟩
+  · intro hx
+    obtain ⟨s, hs, hx⟩ := (realization_mem_iff P.cone x.val).1 hx
     apply le_antisymm _ (P.delta_nonneg x)
     have hmass : P.outsideMass s x = 0 := by
       apply sum_eq_zero
@@ -231,7 +244,8 @@ private theorem deform_mem_face (s : I) (x : P.Space) {f : Finset V}
 
 private def deform (s : I) (x : P.Space) : P.Space :=
   ⟨P.deformCoords s x, by
-    obtain ⟨f, hf, hx⟩ := x.property
+    obtain ⟨f, hf, hx⟩ := (realization_mem_iff P.ambient x.val).1 x.property
+    apply (realization_mem_iff _ _).2
     exact ⟨f, hf, P.deform_mem_face s x hx⟩⟩
 
 private theorem continuous_deform : Continuous (fun z : I × P.Space => P.deform z.1 z.2) := by
@@ -268,6 +282,7 @@ private theorem deform_fixed (s : I) (x : P.Space) (hx : x ∈ P.coneSet) :
 private theorem deform_one_mem_cone (x : P.Space) (hx : P.delta x ≤ P.epsilon) :
     P.deform 1 x ∈ P.coneSet := by
   obtain ⟨f, hf, heq⟩ := P.delta_witness x
+  apply (realization_mem_iff P.cone _).2
   refine ⟨f, hf, (P.simplex_data (P.deform 1 x)).1,
     (P.simplex_data (P.deform 1 x)).2, ?_⟩
   intro v hv
@@ -308,7 +323,8 @@ private theorem coefficient_bounds (t : I) (x : P.Space) :
 private theorem cone_segment (x : P.Space) (hx : x ∈ P.coneSet) (a : ℝ)
     (ha : 0 ≤ a) (ha' : a ≤ 1) :
     (fun v => (1 - a) * x.val v + a * P.apexPoint.val v) ∈ realization P.cone := by
-  obtain ⟨f, hf, hx⟩ := hx
+  obtain ⟨f, hf, hx⟩ := (realization_mem_iff P.cone x.val).1 hx
+  apply (realization_mem_iff _ _).2
   refine ⟨insert P.apex f, P.cone_face f hf, ?_⟩
   apply convex_faceSimplex (insert P.apex f)
     (faceSimplex_mono (subset_insert _ _) hx)
@@ -341,10 +357,9 @@ private theorem homotopy_mem (t : I) (x : P.Space) :
     P.homotopyCoords t x ∈ realization P.ambient := by
   by_cases h : P.coefficient t x = 0
   · simpa [homotopyCoords, h] using (P.deform (earlyTime t) x).property
-  · obtain ⟨f, hf, hx⟩ := P.cone_segment (P.deform (earlyTime t) x)
+  · exact realization_mono P.inclusion (P.cone_segment (P.deform (earlyTime t) x)
       (P.active_deform_mem t x h) (P.coefficient t x)
-      (P.coefficient_bounds t x).1 (P.coefficient_bounds t x).2
-    exact ⟨f, P.inclusion hf, hx⟩
+      (P.coefficient_bounds t x).1 (P.coefficient_bounds t x).2)
 
 /-- The explicit ambient deformation: truncate coordinates, then contract within the cone. -/
 def controlledHomotopy (t : I) (x : P.Space) : P.Space :=
