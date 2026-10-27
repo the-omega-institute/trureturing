@@ -144,7 +144,9 @@ private lemma star_symmetric : ∀ u v, starCapacity u v = starCapacity v u := b
   intro u v
   fin_cases u <;> fin_cases v <;> norm_num [starCapacity]
 
-private lemma star_loopless : ∀ u, starCapacity u u = 0 := by sorry
+private lemma star_loopless : ∀ u, starCapacity u u = 0 := by
+  intro u
+  fin_cases u <;> norm_num [starCapacity]
 
 private lemma star_capacity_nonnegative : ∀ u v, 0 ≤ starCapacity u v := by sorry
 
