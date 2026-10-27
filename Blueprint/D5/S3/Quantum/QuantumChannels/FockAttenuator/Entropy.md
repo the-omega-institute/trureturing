@@ -383,18 +383,7 @@ t^6-6t^4 z_+z_- -2i t^3z_+^3+2i t^3z_-^3+9t^2z_+^2z_-^2+6it z_+^4z_- -6it z_+z_-
 
 normalized by 54sqrt(2). The ten rows (s,p,q; numerator coefficient; probability; cycle phase) are:
 
-| (s,p,q) | coefficient | probability | phase |
-|---|---:|---:|---:|
-| (6,0,0) | 1 | 10/81 | +1 |
-| (4,1,1) | -6 | 4/27 | +1 |
-| (3,3,0) | -2i | 2/81 | -1 |
-| (3,0,3) | 2i | 2/81 | -1 |
-| (2,2,2) | 9 | 1/9 | +1 |
-| (1,4,1) | 6i | 4/27 | -1 |
-| (1,1,4) | -6i | 4/27 | -1 |
-| (0,6,0) | -1 | 10/81 | +1 |
-| (0,0,6) | -1 | 10/81 | +1 |
-| (0,3,3) | 2 | 2/81 | +1 |
+| (s,p,q) | coefficient | probability | phase | |---|---:|---:|---:| | (6,0,0) | 1 | 10/81 | +1 | | (4,1,1) | -6 | 4/27 | +1 | | (3,3,0) | -2i | 2/81 | -1 | | (3,0,3) | 2i | 2/81 | -1 | | (2,2,2) | 9 | 1/9 | +1 | | (1,4,1) | 6i | 4/27 | -1 | | (1,1,4) | -6i | 4/27 | -1 | | (0,6,0) | -1 | 10/81 | +1 | | (0,0,6) | -1 | 10/81 | +1 | | (0,3,3) | 2 | 2/81 | +1 |
 
 The probabilities sum to one. The cycle is identity on the retained center, and circular input/environment occupations are separately conserved. Therefore an environmental matrix element contributes to this diagonal matrix element only when p=p' and q=q'. This removes off-diagonal environmental entries only for the declared |k,k> input matrix element; it does not diagonalize the environmental state for other input bra/ket pairs. The odd degree-three and degree-five rows retain their negative phases."
 
@@ -420,35 +409,35 @@ For every unit member of Vnum, the actual finite-rank output satisfies S(sigma)>
 
 ### R7 proof
 
-**Step 1: .**
+**R7 Step 1.**
 
 The balanced e2 channel is the fixed actual map sigma_a=C_a C_a*. Displacement conjugates sigma by D(alpha/sqrt(2)); scalar and number phase reduce A!=0 to e0+t eN with t>=0 for this one-number family. Degree-six homogeneity restores EVERY complex A,B,alpha. A=0, B=0 and zero are retained. No many-coefficient phase reduction is inferred.
 
-**Step 2: .**
+**R7 Step 2.**
 
 H=C_e0 has H02=H20=1/2 and H11=-1/sqrt(2); J=C_eN is real symmetric and supported on i+j=N+2. For EVERY N>=3 its low {0,1,2} compression is zero, hence HJH=0. J^2 is diagonal with beta0=(N+2)(N+1)/2^(N+3), beta1=(N+1)(N-2)^2/2^(N+3), beta2=(N^2-5N+2)^2/2^(N+4). For x=beta0+beta2, b=beta1, the three disjoint partner indices and total mass give x+b<=1/2. Preserve the accepted P8 FULL-G coefficient c_N=7/32-3x/8-b/2=7/32-P(N)/2^(N+7)>=3/128. Here P(N)=3N^4-22N^3+69N^2-42N+56; its N=3,4,5,6 bases satisfy P(N)<=25*2^N and, at N=6+j, 2P(N)-P(N+1)=3j^4+38j^3+153j^2+198j+48>0. This coefficient and induction belong to P8, not new R7 novelty.
 
-**Step 3: .**
+**R7 Step 3.**
 
 For the actual two-copy input eN tensor eN, the difference-occupation 2j probability is binom(2j,j)binom(2N-2j,N-j)/4^N. The physical swap weights give q_N=Tr J^4=A_N[3/8+N/(4(2N-1))+9N(N-1)/(16(2N-1)(2N-3))], A_N=binom(2N,N)/4^N, N>=2. A_(N+1)/A_N=(2N+1)/(2N+2)<1; N/(2N-1) decreases and the difference of N(N-1)/((2N-1)(2N-3)) at N and N+1 is 2N/((2N-1)(2N-3)(2N+1))>0. Therefore q_N<=q_3=15/64 for ALL N>=3. The exact beta1 bases are b3=1/16,b4=5/32,b5=27/128,b6=7/32; for N>=6 its decreasing recurrence is equivalent to N^3-6N^2+3N+6>=0, whose N=6+j expansion is j^3+12j^2+39j+24>0. Thus b<=7/32 and U=x+2b<=23/32<3/4. These are all-N analytical identities, not sampling or an arbitrary-spectrum substitution.
 
-**Step 4: .**
+**R7 Step 4.**
 
 Only for the lawful real representative, C=H+tJ is self-adjoint and the SAME actual output is C^2. Covariance makes the moment polynomials even. With y=t^2 and v_N=Tr J^6>=0, p2=3/8+U y+q_N y^2 and p3=5/32+W y+V y^2+v_N y^3. U=4Tr(H^2J^2)=x+2b; W=6Tr(H^4J^2)=3x/8+3b/2; V=6Tr(H^2J^4)+3Tr(HJ^2HJ^2)=3(beta0^2+beta2^2+beta0 beta2)/2+9b^2/2. The fourth-power two-J classes have multiplicities 4,2, with HJHJ vanishing. The sixth-power two-J classes have multiplicities 6,6,3 and traces H^4J^2,H^3JHJ,H^2JH^2J; HJH=0 kills the last two. The four-J classes likewise have multiplicities 6,6,3 and traces H^2J^4,HJHJ^3,HJ^2HJ^2; only the middle vanishes. H^2 has diagonal (1/4,1/2,1/4), H^4 has diagonal (1/16,1/4,1/16), and Tr(HJ^2HJ^2)=(beta0 beta2+b^2)/2 is retained and generally NONZERO. No complex-input replacement of CC* by C^2 occurs.
 
-**Step 5: .**
+**R7 Step 5.**
 
 Newton gives exactly 6G=2p3-3(1+y)p2+(13/16)(1+y)^3=kappa2*y+kappa4*y^2+kappa6*y^3, with kappa2=2W-3U+21/16=6c_N>=18/128, kappa4=2V-3(U+q_N)+39/16, kappa6=2v_N-3q_N+13/16. Since beta0 beta2<=x^2/4, V>=9x^2/8+9b^2/2>=(9/16)U^2; the latter difference is (9/16)(x-2b)^2. Hence kappa4>=(9/8)U^2-3U+111/64>=15/128 on 0<=U<=3/4. Finally kappa6>=13/16-45/64=7/64=14/128. No discarded sector or assumed middle-sector sign enters.
 
-**Step 6: .**
+**R7 Step 6.**
 
 The exact coefficient bounds and homogeneity give G(D(alpha)(A e0+B eN))>=[18|A|^4|B|^2+15|A|^2|B|^4+14|B|^6]/768 for every N>=3 and every complex amplitude/displacement, including A=0 and zero. For unit inputs w=|B|^2, this is w(18-21w+17w^2)/768>=w/128: the bracket minus 6 equals 12(1-w)^2+3w(1-w)+8w^2>=0. Thus G>0 when B!=0 and G=0 exactly on the coherent B=0 class for nonzero inputs in this family. The SAME output obeys p3>=5/32-(3/2)(3/8-q)+w(18-21w+17w^2)/256 by p3-5/32+(3/2)(3/8-q)=3G. This does not assert sharpness or equality of the lower polynomial bound. The separate prior N=1,2 T1 formulas keep their original scope.
 
-**Step 7: .**
+**R7 Step 7.**
 
 The original explicitly assigns m(a)>m0 to the w<=delta0/2 branch and G(a)>=delta0/512>0 to the w>=delta0/2 branch. P8 supplies G>=0 and strictness unless coherent only in the first branch. Lipschitz constants 6 and 2, both endpoint-inclusive ranges, the exact rhoV=delta0/3072, and an approximating-sequence argument over unbounded N and displacement give the complete closed tube without attainment, compactness, support, energy or moment assumptions. Exact quotation and the limit proof are in source_adjudication. No substantive Step 7 correction is required.
 
-**Step 8: .**
+**R7 Step 8.**
 
 For every UNIT exact family member, support before displacement is rows/columns 0,...,N+2 and covariance preserves rank<=N+3. Physical q<=3/8 gives e2=(1-q)/2>=5/16; e3=1/32+G>=1/32, strictly for B!=0. All higher elementary symmetric coefficients are nonnegative, so D_sigma(t)>=1+t+(5/16)t^2+(1/32)t^3=(1+t/2)(1+t/4)^2=D_star(t) for t>=0. Finite nonnegative eigenvalue lists allow arbitrary zero padding: a zero contributes factor one and 0 log 0=0. Equal trace makes log(D_sigma/D_star)=O(t^2) at zero, while finite rank gives O(log t) at infinity. Thus boundary terms in integration by parts vanish, equal-trace terms cancel, and integral_0^infinity log(D_sigma(t)/D_star(t))dt/t^2=-sum lambda_i log lambda_i+sum lambda_star,j log lambda_star,j=S(sigma)-(3/2)log 2. Strict e3 makes the integrand positive for EVERY t>0 when B!=0. The exact family has S>=(3/2)log 2, with coherent equality. Its repository ENNReal vonNeumannEntropy identification still requires the finite-rank unitary/basis-transport interface, preserving the infinite zero kernel. Neither infinite-rank tube entropy nor the general countable spectral bridge is claimed.
 
@@ -514,6 +503,53 @@ The scalar statement for a trace-one positive operator with q<=3/8 and largest e
 
 Native availability for these analytical packages is unassessed. No Lean/Lake/LSP/.NET invocation, numerical or symbolic experiment, cutoff scan, sampling, new axiom, source implementation, PR review vote, CI result, publication, merge, or cleanup is certified by this writeback. P1–P8, T1–T3, A1–A6 and R1–R5 retain their original quantifiers, attributions, hypotheses, and native limitations. T3 remains rank<=5; the exact-family R7 entropy argument does not rewrite it. The unrestricted same-input trace, full middle/high sectors, general entropy/ENNReal bridge, all-n/all-eta conjecture, and all-input equality classification remain open.
 
+**Definition 1.1 (finiteDiagonal).**
+
+$$\forall N : \mathbb{N}, (\forall p : \operatorname{Fin}\left(N\right) \to \mathbb{R}, (\operatorname{finiteDiagonal}\left(N, p\right) = \sum_{k:\operatorname{Fin}\left(N\right)}(\operatorname{smul}\left(\operatorname{ComplexofReal}\left(p\left(k\right)\right), \operatorname{rankOne}\left(\mathbb{C}, \operatorname{lpsingle}\left(2, \operatorname{val}\left(k\right), \operatorname{ComplexofReal}\left(1\right)\right), \operatorname{lpsingle}\left(2, \operatorname{val}\left(k\right), \operatorname{ComplexofReal}\left(1\right)\right)\right)\right))))$$
+
+*Formalization.* `D5/S3/Quantum/QuantumChannels/FockAttenuator/Entropy.finiteDiagonal` (`✓ std3`).
+
+*Citation.* Alfred Wehrl (1978). *General properties of entropy*. DOI: [10.1103/RevModPhys.50.221](https://doi.org/10.1103/RevModPhys.50.221). URL: <https://doi.org/10.1103/RevModPhys.50.221>.
+
+*Commentary.*
+
+The finite diagonal operator is the sum of p(k) times the occupation rank-one projector. Its definition allows arbitrary real entries; the entropy theorem supplies the bounds from zero to one.
+
+**Definition 1.2 (basisEntropy).**
+
+$$\forall T : \operatorname{ContinuousLinearMap}\left(\mathbb{C}, \operatorname{lp}\left(\operatorname{Functionconst}\left(\mathbb{N}, \mathbb{C}\right), 2\right), \operatorname{lp}\left(\operatorname{Functionconst}\left(\mathbb{N}, \mathbb{C}\right), 2\right)\right), (\forall b : \operatorname{HilbertBasis}\left(\mathbb{N}, \mathbb{C}, \operatorname{lp}\left(\operatorname{Functionconst}\left(\mathbb{N}, \mathbb{C}\right), 2\right)\right), (\operatorname{basisEntropy}\left(T, b\right) = \sum'_{n:\mathbb{N}}(\operatorname{ENNRealofReal}\left(\operatorname{negMulLog}\left(\operatorname{Re}\left(\operatorname{inner}\left(\mathbb{C}, b\left(n\right), T\left(b\left(n\right)\right)\right)\right)\right)\right))))$$
+
+*Formalization.* `D5/S3/Quantum/QuantumChannels/FockAttenuator/Entropy.basisEntropy` (`✓ std3`).
+
+*Citation.* Alfred Wehrl (1978). *General properties of entropy*. DOI: [10.1103/RevModPhys.50.221](https://doi.org/10.1103/RevModPhys.50.221). URL: <https://doi.org/10.1103/RevModPhys.50.221>.
+
+*Commentary.*
+
+negMulLog(x)=-x log(x), with its continuous value zero at x=0. ENNReal.ofReal embeds a nonnegative real in the extended nonnegative reals; Complex.ofReal embeds a real scalar in Complex; on a density operator every diagonal probability lies in [0,1]. Natural logarithms give nats.
+
+**Definition 1.3 (vonNeumannEntropy).**
+
+$$\forall T : \operatorname{ContinuousLinearMap}\left(\mathbb{C}, \operatorname{lp}\left(\operatorname{Functionconst}\left(\mathbb{N}, \mathbb{C}\right), 2\right), \operatorname{lp}\left(\operatorname{Functionconst}\left(\mathbb{N}, \mathbb{C}\right), 2\right)\right), (\operatorname{vonNeumannEntropy}\left(T\right) = \operatorname{iInf}\left((b:\operatorname{HilbertBasis}\left(\mathbb{N}, \mathbb{C}, \operatorname{lp}\left(\operatorname{Functionconst}\left(\mathbb{N}, \mathbb{C}\right), 2\right)\right))\mapsto(\operatorname{basisEntropy}\left(T, b\right))\right))$$
+
+*Formalization.* `D5/S3/Quantum/QuantumChannels/FockAttenuator/Entropy.vonNeumannEntropy` (`✓ std3`).
+
+*Citation.* Alfred Wehrl (1978). *General properties of entropy*. DOI: [10.1103/RevModPhys.50.221](https://doi.org/10.1103/RevModPhys.50.221). URL: <https://doi.org/10.1103/RevModPhys.50.221>.
+
+*Commentary.*
+
+The definition is the infimum over complete countable orthonormal bases of the diagonal Shannon entropy. Its equality with spectral von Neumann entropy for every density operator is literature-attested, following the eigenbasis and concavity characterization in Wehrl. The infinite-dimensional equivalence is not kernel-proved here. The kernel proves the finite diagonal spectral formula; the final refutation supplies the needed unitary invariance by transporting all Hilbert bases.
+
+**Theorem 1.4 (finiteDiagonal_entropy).**
+
+$$\forall N : \mathbb{N}, (\forall p : \operatorname{Fin}\left(N\right) \to \mathbb{R}, (((\forall j : \operatorname{Fin}\left(N\right), (0 \le p\left(j\right))) \land (\forall j : \operatorname{Fin}\left(N\right), (p\left(j\right) \le 1))) \Rightarrow (\operatorname{vonNeumannEntropy}\left(\operatorname{finiteDiagonal}\left(N, p\right)\right) = \operatorname{ENNRealofReal}\left(\operatorname{shannonEntropy}\left(\operatorname{Fin}\left(N\right), p\right)\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/FockAttenuator/Entropy.finiteDiagonal_entropy` (`✓ std3`). ∎
+
+*Citation.* Alfred Wehrl (1978). *General properties of entropy*. DOI: [10.1103/RevModPhys.50.221](https://doi.org/10.1103/RevModPhys.50.221). URL: <https://doi.org/10.1103/RevModPhys.50.221>.
+
+*Commentary.*
+
+Concavity of -x log(x), the subprobability row bound and the Parseval column sums give the lower bound in every complete basis. The occupation basis attains it. shannonEntropy is the frozen finite Shannon functional, sum_j negMulLog(p_j). The result does not require the finite entries to sum to one.
 
 ## References
 
