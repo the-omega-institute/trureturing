@@ -102,10 +102,9 @@ theorem denominatorFormula (k : ℕ) (hk : 0 < k) :
   · apply Finset.prod_dvd_of_isRelPrime
     · intro p hp q hq hpq
       apply Nat.coprime_iff_isRelPrime.mp
-      exact ((memDenominatorPrimes (by omega)).mp hp).1.coprime_iff_not_dvd.mpr
-        (fun hd => hpq ((Nat.prime_dvd_prime_iff_eq
-          ((memDenominatorPrimes (by omega)).mp hp).1
-          ((memDenominatorPrimes (by omega)).mp hq).1).mp hd))
+      exact (Nat.coprime_primes
+        ((memDenominatorPrimes (by omega)).mp hp).1
+        ((memDenominatorPrimes (by omega)).mp hq).1).mpr hpq
     · intro p hp
       obtain ⟨hprime, hd⟩ := (memDenominatorPrimes (by omega)).mp hp
       have : Fact p.Prime := ⟨hprime⟩
@@ -146,9 +145,7 @@ theorem todaReduction (n : ℕ) (hn : 0 < n) :
 
 private theorem compositeByMod {q c : ℕ} (hc : 1 < c) (hlt : c < q)
     (hmod : q % c = 0) : ¬q.Prime := by
-  intro hp
-  have := hp.eq_one_or_self_of_dvd c (Nat.dvd_of_mod_eq_zero hmod)
-  omega
+  exact Nat.not_prime_of_dvd_of_lt (Nat.dvd_of_mod_eq_zero hmod) (by omega) hlt
 
 private theorem familyCandidates {a q : ℕ} (ha : a.Prime) (ham : a % 30 = 23)
     (hp : (2 * a + 1).Prime) (hq : q.Prime) (hd : q - 1 ∣ 4 * a * (2 * a + 1)) :
