@@ -34,6 +34,10 @@ $$\forall n \in \mathbb{N},\; \exists P \in \operatorname{MvPolynomial}\left((\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/MotzkinHankel/KimStantonSimultaneousDenominator.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ks2105-2phi1denom` (proved) by `D5/S3/Combinatorics/MotzkinHankel/KimStantonSimultaneousDenominator.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ks2105-2phi1denom","declaration_gid":"D5/S3/Combinatorics/MotzkinHankel/KimStantonSimultaneousDenominator.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jang Soo Kim and Dennis Stanton (2021). *Three families of q-Lommel polynomials*. DOI: [10.48550/arXiv.2105.10096](https://doi.org/10.48550/arXiv.2105.10096). URL: <https://arxiv.org/abs/2105.10096v3>.
