@@ -19,6 +19,7 @@ import Mathlib.RingTheory.AdjoinRoot
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 
 set_option autoImplicit false
+set_option maxHeartbeats 4000000
 set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
@@ -26,8 +27,9 @@ noncomputable section
 namespace D5.S3.VertexAlgebra.Lattice.NormFourZhuAlgebra
 
 open LatticeGeneratingFieldLocality LatticeAllStateField LatticeAllStateReconstruction
-open LatticeSugawaraConformal NormFourVirasoroVector NormFourVacuumIrreducible
+open LatticeSugawaraConformal LatticeSugawaraCurrents NormFourVirasoroVector NormFourVacuumIrreducible
 open NormFourVacuumVertexAlgebra NormFourZhuFinite
+open HalfFockSpectralFiberSource
 open scoped BigOperators VertexOperator
 
 open private word wordGrade word_mem
@@ -213,7 +215,10 @@ private theorem natural_left_residue {M : Type*} [AddCommGroup M] [Module ℂ M]
     have bound : α<j := by
       have hnot := Finset.mem_range.not.mp outside
       omega
-    exact hj (by rw [Nat.choose_eq_zero_of_lt bound]; simp)
+    exact hj (by
+      change (α.choose j : ℂ) • _ = 0
+      rw [Nat.choose_eq_zero_of_lt bound]
+      simp)
   rw [left] at h
   exact h
 
@@ -247,7 +252,8 @@ private theorem star_residue_top {M : Type*} [AddCommGroup M] [Module ℂ M]
   have first : (∑ᶠ j : ℕ, firstTerm A B α ((β:ℤ)-1) (-1) x j) =
       (A[[((α:ℤ)-1)]]) ((B[[((β:ℤ)-1)]]) x) := by
     rw [finsum_eq_single _ 0]
-    · simp [firstTerm,residueWeight]
+    · simp [firstTerm, residueWeight]
+      congr 2 <;> omega
     · intro j hj
       have idx : ((β:ℤ)-1)+(j:ℤ)=(β:ℤ)+((j-1:ℕ):ℤ) := by omega
       simp only [firstTerm]
@@ -291,9 +297,8 @@ private theorem negative_actual_grade_zero (D : LatticeData)
 
 private theorem top_eigen (D : LatticeData) (hu : IsUnit D.G.det)
     (x : ActualTensor D hu) (hx : x ∈ actualGrade D hu 1) :
-    actualTensorL0 D hu x=((D.rank:ℂ)/16+(1:ℂ)/2) • x := by
-  change actualTensorL0 D hu x-
-    ((D.rank:ℂ)/16+(1:ℂ)/2) • x=0 at hx
+    actualTensorL0 D hu x=((D.rank:ℂ)/16+((1 : ℕ):ℂ)/2) • x := by
+  rw [actualGrade, LinearMap.mem_ker] at hx
   exact sub_eq_zero.mp hx
 
 -- q>=weight(u) lowers the first grade to a genuinely negative SIGNED
@@ -316,9 +321,7 @@ private theorem zero_coefficient_preserves_top (D : LatticeData)
   have shifted := correctedField_signed_output D hu (n:ℤ) 1 (-2*(n:ℤ))
     u huGrade x (top_eigen D hu x hx)
   rw [show (1:ℤ)+(-2*(n:ℤ))+2*(n:ℤ)=1 by omega] at shifted
-  change actualTensorL0 D hu ((correctedField D hu u).coeff (-2*(n:ℤ)) x)-
-    ((D.rank:ℂ)/16+(1:ℂ)/2) •
-      ((correctedField D hu u).coeff (-2*(n:ℤ)) x)=0
+  rw [actualGrade, LinearMap.mem_ker]
   exact sub_eq_zero.mpr shifted
 
 -- The general actual multiplicity equations exclude ranks zero and one,
@@ -388,18 +391,14 @@ private theorem ambient_word_eigen (D : LatticeData)
       let m : ℤ := -((k:ℤ)+1)
       have h := LinearMap.congr_fun
         ((mixed_products D H hHG hGH a ha s).2 0 m) (word D a s w)
-      change sugawaraMode D H 0 (mode D a s m (word D a s w))-
-        mode D a s m (sugawaraMode D H 0 (word D a s w)) =
-        ((0:ℂ)-(m:ℂ)) • mode D a s (0+m) (word D a s w)+
-          (if 0+m=0 then ((((0:ℂ)^3-(0:ℂ))/24) • word D a s w) else 0) at h
-      have central :
-          (if 0+m=0 then ((((0:ℂ)^3-(0:ℂ))/24) • word D a s w) else 0)=0 := by
-        split_ifs <;> norm_num
-      rw [central,add_zero,zero_add,ih,map_smul] at h
+      have hm : m ≠ 0 := by dsimp [m]; omega
+      simp only [zero_add, hm, ↓reduceIte, add_zero, LinearMap.sub_apply,
+        Module.End.mul_apply, LinearMap.smul_apply, Int.cast_zero, zero_sub] at h
+      rw [ih, map_smul] at h
       have solved := sub_eq_iff_eq_add.mp h
       change sugawaraMode D H 0 (mode D a s m (word D a s w)) = _
       rw [solved]
-      simp only [wordGrade,m,Int.cast_neg,Int.cast_add,Int.cast_natCast,
+      simp only [word,wordGrade,m,Int.cast_neg,Int.cast_add,Int.cast_natCast,
         Int.cast_one,Nat.cast_add,Nat.cast_one,zero_sub]
       module
 
@@ -681,7 +680,9 @@ private theorem weightedProduct_zero_mode (D : LatticeData)
   rw [oAmbient_homogeneous D hd a ha s hs n _ hgrade,physicalSlice_mode]
   change (correctedField D hd (mu D u.val (k+j) v.val)).coeff (-2*(n:ℤ)) x = _
   congr 2
-  omega
+  rw [nn]
+  push_cast
+  ring
 
 private theorem descendants_full_law (D : LatticeData)
     (hd : IsUnit D.G.det) (a : Charge D) (s : ℂ)
@@ -738,12 +739,14 @@ private theorem actual_star_multiplies_top (D : LatticeData)
       (physicalSlice D hd (correctedField D hd u.val) 0)[[(α:ℤ)-1]] := by
     rw [oAmbient_homogeneous D hd a ha s hs α u hu,physicalSlice_mode]
     congr 1
-    omega
+    push_cast
+    ring
   have v_mode : oAmbient D hd a ha s hs v=
       (physicalSlice D hd (correctedField D hd v.val) 0)[[(β:ℤ)-1]] := by
     rw [oAmbient_homogeneous D hd a ha s hs β v hv,physicalSlice_mode]
     congr 1
-    omega
+    push_cast
+    ring
   rw [u_mode,v_mode]
   exact star_residue_top _ _ _ (descendants_full_law D hd a s u v) α β x
     (high_physical_mode_zero D hd a ha s α u hu x hx)
@@ -774,6 +777,32 @@ private theorem actual_star_homogeneous_action (D : LatticeData)
 -- Both arguments range over the WHOLE actual vacuum algebra. Finite
 -- expansions are supplied by its proved direct word grading, rather
 -- than by a new representation or homogeneous-state assumption.
+private theorem actual_star_action_finsupp (D : LatticeData)
+    (hd : IsUnit D.G.det) (a : Charge D) (ha : bilinear D a a=4)
+    (s : ℂ) (hs : s ^ 2 = 1)
+    (f g : ℕ →₀ vacuumDescendants D a s)
+    (hf : ∀ n, f n ∈ grade D a s n)
+    (hg : ∀ n, g n ∈ grade D a s n) :
+    topAction D hd a ha s hs
+        (star D a ha s hs (assemble D a s f) (assemble D a s g)) =
+      topAction D hd a ha s hs (assemble D a s f) *
+        topAction D hd a ha s hs (assemble D a s g) := by
+  classical
+  change topAction D hd a ha s hs
+      (star D a ha s hs (∑ α ∈ f.support, f α) (∑ β ∈ g.support, g β)) =
+    topAction D hd a ha s hs (∑ α ∈ f.support, f α) *
+      topAction D hd a ha s hs (∑ β ∈ g.support, g β)
+  rw [LinearMap.map_sum₂]
+  simp only [map_sum]
+  rw [Finset.sum_mul]
+  simp_rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro α _
+  apply Finset.sum_congr rfl
+  intro β _
+  exact actual_star_homogeneous_action D hd a ha s hs α β (f α) (g β)
+    (hf α) (hg β)
+
 private theorem actual_star_action (D : LatticeData)
     (hd : IsUnit D.G.det) (a : Charge D) (ha : bilinear D a a=4)
     (s : ℂ) (hs : s ^ 2 = 1) (u v : vacuumDescendants D a s) :
@@ -782,16 +811,11 @@ private theorem actual_star_action (D : LatticeData)
   classical
   let f := chosenExpansion D a s u
   let g := chosenExpansion D a s v
-  have fu : (∑ α ∈ f.support, f α)=u := chosenExpansion_sum D a s u
-  have gv : (∑ β ∈ g.support, g β)=v := chosenExpansion_sum D a s v
-  rw [← fu,← gv,map_sum]
-  simp only [LinearMap.sum_apply,map_sum,Finset.sum_mul,Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro α _
-  apply Finset.sum_congr rfl
-  intro β _
-  exact actual_star_homogeneous_action D hd a ha s hs α β (f α) (g β)
-    (chosenExpansion_grade D a s u α) (chosenExpansion_grade D a s v β)
+  have fu : assemble D a s f=u := chosenExpansion_sum D a s u
+  have gv : assemble D a s g=v := chosenExpansion_sum D a s v
+  rw [← fu,← gv]
+  exact actual_star_action_finsupp D hd a ha s hs f g
+    (chosenExpansion_grade D a s u) (chosenExpansion_grade D a s v)
 
 private theorem actual_circle_all_right_states (D : LatticeData)
     (hd : IsUnit D.G.det) (a : Charge D) (ha : bilinear D a a=4)
@@ -881,10 +905,12 @@ private theorem axis_circle_vacuum (D : LatticeData) (a : Charge D)
   have hself := (NormFourVirasoroVector.self_products D a ha s hs).1
   have hzero := stateField_creativity D
     (NormFourVirasoroVector.vector D a s) 0 (by omega)
-  simpa [weightedProduct,axisDerivative,rawProduct,axisState,vacuumState,
-    Finset.sum_range_succ,mu,hself,← hT,hzero] using
-    (rfl : translation D (NormFourVirasoroVector.vector D a s)+
-      (2:ℂ) • NormFourVirasoroVector.vector D a s = _)
+  have hself' : ((Y D (NormFourVirasoroVector.vector D a s))[[0]])
+      (NormFourVirasoroVector.vector D a s) = translation D
+        (NormFourVirasoroVector.vector D a s) := by
+    simpa only [mu] using hself
+  simp [weightedProduct,axisDerivative,rawProduct,axisState,vacuumState,
+    Finset.sum_range_succ,mu,← hT,hzero,hself',stateField_creation]
 
 private theorem axis_star_square (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a=4) (s : ℂ) (hs : s ^ 2 = 1) :
@@ -921,12 +947,19 @@ private theorem topAction_axisSquare (D : LatticeData)
       A (axisSquare D a ha s hs) = A e*A e-
           (2:ℂ) • A (axisDerivative D a ha s hs)-(2:ℂ) • A e := by
         rw [← product_eq]
+        simp only [A,e]
         module
       _ = A e*A e+(2:ℂ) • A e := by
         have derivative : A (axisDerivative D a ha s hs)=-(2:ℂ) • A e := by
-          exact eq_neg_of_add_eq_zero_left circle_zero
+          calc
+            A (axisDerivative D a ha s hs) = -((2 : ℂ) • A e) :=
+              eq_neg_of_add_eq_zero_left circle_zero
+            _ = -(2:ℂ) • A e := by
+              exact (neg_smul (2 : ℂ) (A e)).symm
         rw [derivative]
-        module
+        rw [smul_smul, show (2 : ℂ) * -(2 : ℂ) = -(2 + 2) by norm_num,
+          neg_smul, sub_neg_eq_add, add_smul]
+        abel
   simpa only [A,e,topAction_axis] using solve
 
 private theorem small_three_scalars (D : LatticeData) (a : Charge D)
@@ -975,7 +1008,7 @@ private theorem topAction_kernel_eq_literal_O (D : LatticeData)
   have r2 : r 2=axisSquare D a ha s hs := by
     apply Subtype.ext
     simp [r,representatives,pow_succ',Module.End.mul_apply,
-      NormFourVirasoroVector.mode,axisSquare,rawProduct,axisState,
+      NormFourVirasoroVector.mode,axisSquare,rawProduct,axisState,mu,
       stateField_creation]
   apply le_antisymm
   · intro u hu
@@ -1053,6 +1086,7 @@ private theorem quotientAction_injective (D : LatticeData) (hd : IsUnit D.G.det)
   apply sub_eq_zero.mp
   rw [← map_sub]
   apply (Submodule.Quotient.mk_eq_zero (O D a s)).mpr
+  change u - v ∈ (zhuO D a s).comap (vacuumDescendants D a s).subtype
   rw [← topAction_kernel_eq_literal_O D hd a ha s hs]
   exact LinearMap.mem_ker.mpr (by rw [map_sub,he,sub_self])
 
@@ -1111,7 +1145,7 @@ private theorem rep_eq (D : LatticeData) (a : Charge D)
   · simp [rep,representatives,vacuumState]
   · simp [rep,representatives,NormFourVirasoroVector.mode,axisState,stateField_creation]
   · simp [rep,representatives,pow_succ',Module.End.mul_apply,
-      NormFourVirasoroVector.mode,axisSquare,rawProduct,axisState,stateField_creation]
+      NormFourVirasoroVector.mode,axisSquare,rawProduct,axisState,mu,stateField_creation]
 
 private theorem quotient_three_scalars (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a=4) (s : ℂ) (hs : s ^ 2 = 1) (x : Q D a s) :
@@ -1148,7 +1182,13 @@ private theorem quotient_action_comm (D : LatticeData) (hd : IsUnit D.G.det)
       c2 • topAction D hd a ha s hs (rep D a ha s hs 2)) *
     (d0 • topAction D hd a ha s hs (rep D a ha s hs 0)+
       d1 • topAction D hd a ha s hs (rep D a ha s hs 1)+
-      d2 • topAction D hd a ha s hs (rep D a ha s hs 2)) = _
+      d2 • topAction D hd a ha s hs (rep D a ha s hs 2)) =
+    (d0 • topAction D hd a ha s hs (rep D a ha s hs 0)+
+      d1 • topAction D hd a ha s hs (rep D a ha s hs 1)+
+      d2 • topAction D hd a ha s hs (rep D a ha s hs 2)) *
+    (c0 • topAction D hd a ha s hs (rep D a ha s hs 0)+
+      c1 • topAction D hd a ha s hs (rep D a ha s hs 1)+
+      c2 • topAction D hd a ha s hs (rep D a ha s hs 2))
   simp only [r0,r1,r2,topAction_vacuum,topAction_axis,topAction_axisSquare]
   simp only [add_mul,mul_add,smul_mul_assoc,mul_smul_comm,smul_smul,one_mul,mul_one,
     mul_assoc]
@@ -1164,7 +1204,14 @@ def quotientRing (D : LatticeData) (hd : IsUnit D.G.det)
   mul := fun x y => quotientProduct D hd a ha s hs x y
   one := (O D a s).mkQ (vacuumState D a s)
   mul_assoc x y z := quotientAction_injective D hd a ha s hs (by
-    simp only [quotient_action_product,mul_assoc])
+    change quotientAction D hd a ha s hs
+        (quotientProduct D hd a ha s hs
+          (quotientProduct D hd a ha s hs x y) z) =
+      quotientAction D hd a ha s hs
+        (quotientProduct D hd a ha s hs x
+          (quotientProduct D hd a ha s hs y z))
+    simp only [quotient_action_product]
+    exact mul_assoc _ _ _)
   one_mul x := by
     obtain ⟨u,rfl⟩ := (O D a s).mkQ_surjective x
     change (O D a s).mkQ (star D a ha s hs (vacuumState D a s) u)=_
@@ -1174,7 +1221,11 @@ def quotientRing (D : LatticeData) (hd : IsUnit D.G.det)
     change (O D a s).mkQ (star D a ha s hs u (vacuumState D a s))=_
     rw [star_vacuum_right]
   mul_comm x y := quotientAction_injective D hd a ha s hs (by
-    simp only [quotient_action_product]
+    change quotientAction D hd a ha s hs
+        (quotientProduct D hd a ha s hs x y) =
+      quotientAction D hd a ha s hs
+        (quotientProduct D hd a ha s hs y x)
+    rw [quotient_action_product, quotient_action_product]
     exact quotient_action_comm D hd a ha s hs x y)
   left_distrib x y z := (quotientProduct D hd a ha s hs x).map_add y z
   right_distrib x y z := congrArg (fun f : Q D a s →ₗ[ℂ] Q D a s => f z)
@@ -1229,25 +1280,46 @@ theorem actual_zhu_algebra (D : LatticeData) (hd : IsUnit D.G.det)
     apply Fintype.linearIndependent_iff.mpr
     intro c hc i
     have image := congrArg (quotientAction D hd a ha s hs) hc
-    simp only [map_sum,map_smul,map_zero,Fin.sum_univ_three] at image
-    change c 0 • topAction D hd a ha s hs (rep D a ha s hs 0)+
-      c 1 • topAction D hd a ha s hs (rep D a ha s hs 1)+
-      c 2 • topAction D hd a ha s hs (rep D a ha s hs 2)=0 at image
+    simp only [map_sum,map_add,map_smul,map_zero,Fin.sum_univ_three] at image
+    have image' : c 0 • topAction D hd a ha s hs (rep D a ha s hs 0)+
+        c 1 • topAction D hd a ha s hs (rep D a ha s hs 1)+
+        c 2 • topAction D hd a ha s hs (rep D a ha s hs 2)=0 := by
+      change c 0 • topAction D hd a ha s hs (rep D a ha s hs 0)+
+          c 1 • topAction D hd a ha s hs (rep D a ha s hs 1)+
+          c 2 • topAction D hd a ha s hs (rep D a ha s hs 2)=0 at image
+      exact image
     obtain ⟨r0,r1,r2⟩ := rep_eq D a ha s hs
-    rw [r0,r1,r2,topAction_vacuum,topAction_axis,topAction_axisSquare] at image
+    rw [r0,r1,r2,topAction_vacuum,topAction_axis,topAction_axisSquare] at image'
     obtain ⟨_,h0,h16,hh⟩ := actual_top_three_eigenspaces_positive D hd a ha s hs
     obtain ⟨hc0,hc1,hc2⟩ := actual_three_images_independent D hd a ha s
-      h0 h16 hh (c 0) (c 1) (c 2) image
+      h0 h16 hh (c 0) (c 1) (c 2) image'
     fin_cases i <;> assumption
   have lower : 3≤Module.finrank ℂ (Q D a s) := by
     simpa using independent.fintype_card_le_finrank
   refine ⟨fun _ _ => rfl,finite,Nat.le_antisymm bound lower,?_⟩
   apply quotientAction_injective D hd a ha s hs
-  change quotientRepresentation D hd a ha s hs _=quotientRepresentation D hd a ha s hs 0
-  simp only [map_mul,map_sub,AlgHom.commutes,map_zero]
+  change quotientAction D hd a ha s hs
+      (quotientProduct D hd a ha s hs
+        (quotientProduct D hd a ha s hs
+          ((O D a s).mkQ (axisState D a ha s hs))
+          ((O D a s).mkQ (axisState D a ha s hs) -
+            algebraMap ℂ (Q D a s) (1/16)))
+        ((O D a s).mkQ (axisState D a ha s hs) -
+          algebraMap ℂ (Q D a s) (1/2))) =
+    quotientAction D hd a ha s hs 0
+  rw [quotient_action_product, quotient_action_product, map_zero]
+  have scalar (c : ℂ) :
+      quotientAction D hd a ha s hs (algebraMap ℂ (Q D a s) c) =
+        c • (1 : Module.End ℂ (actualGrade D hd 1)) := by
+    rw [Algebra.algebraMap_eq_smul_one]
+    rw [map_smul]
+    congr 1
+    change topAction D hd a ha s hs (vacuumState D a s)=1
+    exact topAction_vacuum D hd a ha s hs
+  rw [map_sub, map_sub, scalar, scalar]
   change topAction D hd a ha s hs (axisState D a ha s hs) *
-    (topAction D hd a ha s hs (axisState D a ha s hs)-(1/16:ℂ) • 1) *
-    (topAction D hd a ha s hs (axisState D a ha s hs)-(1/2:ℂ) • 1)=0
+      (topAction D hd a ha s hs (axisState D a ha s hs) - (1/16:ℂ) • 1) *
+      (topAction D hd a ha s hs (axisState D a ha s hs) - (1/2:ℂ) • 1)=0
   rw [topAction_axis]
   exact actualGradeOneZeroMode_polynomial D hd a ha s hs
 
@@ -1279,7 +1351,7 @@ theorem actual_zhu_presentation (D : LatticeData) (hd : IsUnit D.G.det)
       (Polynomial.monic_X_sub_C _)
   let F : AdjoinRoot zhuPolynomial →ₐ[ℂ] Q D a s :=
     AdjoinRoot.liftAlgHom zhuPolynomial (Algebra.ofId ℂ (Q D a s)) x
-      (by simpa [zhuPolynomial] using cubic)
+      (by simpa [zhuPolynomial, x, q] using cubic)
   have root_image : F (AdjoinRoot.root zhuPolynomial)=x := by simp [F]
   let R := F.toLinearMap.range
   have axis_square : q (axisSquare D a ha s hs)=x^2+(2:ℂ) • x := by
@@ -1294,8 +1366,8 @@ theorem actual_zhu_presentation (D : LatticeData) (hd : IsUnit D.G.det)
         (axisState D a ha s hs) (vacuumState D a s)
         (axisState_grade_two D a ha s hs) v.val v.property
     rw [axis_circle_vacuum,map_add,map_smul] at circle_zero
-    have derivative : q (axisDerivative D a ha s hs)=-(2:ℂ) • x :=
-      eq_neg_of_add_eq_zero_left circle_zero
+    have derivative : q (axisDerivative D a ha s hs)=-(2:ℂ) • x := by
+      simpa [x] using eq_neg_of_add_eq_zero_left circle_zero
     have product := compatibility (axisState D a ha s hs) (axisState D a ha s hs)
     rw [axis_star_square,map_add,map_add,map_smul,map_smul,derivative] at product
     change q (axisSquare D a ha s hs)+(2:ℂ) • (-(2:ℂ) • x)+
@@ -1303,9 +1375,14 @@ theorem actual_zhu_presentation (D : LatticeData) (hd : IsUnit D.G.det)
     rw [pow_two]
     linear_combination (norm := module) product
   have one_range : (1 : Q D a s) ∈ R := LinearMap.mem_range.mpr ⟨1,map_one F⟩
-  have axis_range : x ∈ R := LinearMap.mem_range.mpr ⟨_,root_image⟩
+  have axis_range : x ∈ R := by
+    apply LinearMap.mem_range.mpr
+    refine ⟨AdjoinRoot.root zhuPolynomial, ?_⟩
+    change F (AdjoinRoot.root zhuPolynomial) = x
+    exact root_image
   have square_range : x^2+(2:ℂ) • x ∈ R := by
     exact R.add_mem (LinearMap.mem_range.mpr ⟨(AdjoinRoot.root zhuPolynomial)^2,by
+      change F ((AdjoinRoot.root zhuPolynomial)^2) = x^2
       rw [map_pow,root_image]⟩) (R.smul_mem _ axis_range)
   have surjective : Function.Surjective F := by
     intro y
@@ -1320,7 +1397,13 @@ theorem actual_zhu_presentation (D : LatticeData) (hd : IsUnit D.G.det)
   have domain_dimension : Module.finrank ℂ (AdjoinRoot zhuPolynomial)=3 := by
     change Module.finrank ℂ (Polynomial ℂ ⧸ Ideal.span {zhuPolynomial})=3
     rw [finrank_quotient_span_eq_natDegree]
-    simp [zhuPolynomial,Polynomial.natDegree_mul]
+    simp only [zhuPolynomial]
+    rw [Polynomial.natDegree_mul
+      (mul_ne_zero Polynomial.X_ne_zero (Polynomial.X_sub_C_ne_zero _))
+      (Polynomial.X_sub_C_ne_zero _),
+      Polynomial.natDegree_mul Polynomial.X_ne_zero
+        (Polynomial.X_sub_C_ne_zero _)]
+    simp only [Polynomial.natDegree_X, Polynomial.natDegree_sub_C]
   have injective : Function.Injective F :=
     (LinearMap.injective_iff_surjective_of_finrank_eq_finrank
       (f := F.toLinearMap) (domain_dimension.trans dimension.symm)).mpr surjective
