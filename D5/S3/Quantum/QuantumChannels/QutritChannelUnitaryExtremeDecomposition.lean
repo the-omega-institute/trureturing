@@ -9,7 +9,9 @@
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import Mathlib.Analysis.Convex.Extreme
 import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.FieldTheory.IsAlgClosed.Basic
+import Mathlib.Analysis.Complex.Polynomial.Basic
+
+/-! The equal-modulus HMR channel and its unitary and extreme-point decomposition. -/
 
 noncomputable section
 
@@ -71,7 +73,51 @@ private def conjugateChannel (d e : Matrix (Fin 3) (Fin 3) ℂ)
 private lemma kraus_action (y : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ)
     (ρ : Matrix (Fin 3) (Fin 3) ℂ) :
     krausChannel y ρ = ∑ i, star (y i) * ρ * y i := by
-  sorry
+  unfold krausChannel of_kraus
+  simp only [LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk,
+    Matrix.star_eq_conjTranspose, Matrix.conjTranspose_conjTranspose]
+
+private lemma choi_domination (φ θ η : MatrixMap (Fin 3) (Fin 3) ℂ)
+    (t s : ℝ) (hs : 0 ≤ s) (hη : η.IsCompletelyPositive)
+    (hseg : t • θ + s • η = φ) :
+    (choi_matrix φ - t • choi_matrix θ).PosSemidef := by
+  have heq : choi_matrix φ - t • choi_matrix θ = s • choi_matrix η := by
+    rw [← hseg]
+    ext ⟨i, j⟩ ⟨k, l⟩
+    change (t • θ + s • η) (Matrix.single j l 1) i k -
+      t • θ (Matrix.single j l 1) i k = s • η (Matrix.single j l 1) i k
+    simp only [LinearMap.add_apply, LinearMap.smul_apply, Matrix.add_apply, Matrix.smul_apply]
+    abel
+  rw [heq]
+  exact ((choi_PSD_iff_CP_map η).mp hη).smul hs
+
+private lemma coefficients_unique
+    (z : Fin 3 → Fin 3 → Matrix (Fin 3) (Fin 3) ℂ)
+    (hli : LinearIndependent ℂ (fun p : Fin 3 × Fin 3 => z p.1 p.2))
+    (hdiag : ∑ i, z i i = 1) (h : Matrix (Fin 3) (Fin 3) ℂ)
+    (hsum : ∑ i, ∑ j, h i j • z i j = 1) : h = 1 := by
+  have hzero : ∑ p : Fin 3 × Fin 3,
+      (h p.1 p.2 - (1 : Matrix (Fin 3) (Fin 3) ℂ) p.1 p.2) • z p.1 p.2 = 0 := by
+    simp only [sub_smul, Finset.sum_sub_distrib, Fintype.sum_prod_type]
+    rw [hsum]
+    simp only [Matrix.one_apply, ite_smul, one_smul, zero_smul,
+      Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+    rw [hdiag, sub_self]
+  have hc := Fintype.linearIndependent_iff.mp hli _ hzero
+  ext i j
+  exact sub_eq_zero.mp (hc (i, j))
+
+private lemma kraus_tp (y : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ)
+    (htp : ∑ i, y i * star (y i) = 1) : IsTracePreserving (krausChannel y) := by
+  intro ρ
+  rw [kraus_action, Matrix.trace_sum]
+  calc
+    ∑ i, (star (y i) * ρ * y i).trace = ∑ i, (ρ * (y i * star (y i))).trace := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      simpa only [Matrix.mul_assoc] using Matrix.trace_mul_comm (star (y i)) (ρ * y i)
+    _ = ρ.trace := by
+      rw [← Matrix.trace_sum, ← Matrix.mul_sum, htp, Matrix.mul_one]
 
 private lemma choi_range_lift (y : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ)
     (θ : MatrixMap (Fin 3) (Fin 3) ℂ) (t : ℝ) (ht : 0 < t)
@@ -79,7 +125,65 @@ private lemma choi_range_lift (y : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ)
     (hdom : (choi_matrix (krausChannel y) - t • choi_matrix θ).PosSemidef) :
     ∃ h : Matrix (Fin 3) (Fin 3) ℂ, ∀ ρ,
       θ ρ = ∑ i, ∑ j, h i j • (star (y i) * ρ * y j) := by
-  sorry
+  let v : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ :=
+    fun p i => star (y i) p.1 p.2
+  have hc : choi_matrix (krausChannel y) = v * vᴴ := by
+    unfold krausChannel
+    rw [choi_of_kraus]
+    ext p q
+    simp only [Matrix.sum_apply, Matrix.vecMulVec_apply, Matrix.mul_apply,
+      Matrix.conjTranspose_apply]
+    rfl
+  have hbpos := (choi_PSD_iff_CP_map θ).mp hθ
+  obtain ⟨k, hk⟩ := exists_kraus_of_choi_PSD (choi_matrix θ) hbpos
+  let b : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
+    fun p i => k i p.1 p.2
+  have hb : choi_matrix θ = b * bᴴ := by
+    rw [hk, choi_of_kraus]
+    ext p q
+    simp only [Matrix.sum_apply, Matrix.vecMulVec_apply, Matrix.mul_apply,
+      Matrix.conjTranspose_apply]
+    rfl
+  have hker : ∀ w, choi_matrix (krausChannel y) *ᵥ w = 0 →
+      choi_matrix θ *ᵥ w = 0 := by
+    sorry
+  have hkerb : ∀ w, choi_matrix (krausChannel y) *ᵥ w = 0 → bᴴ *ᵥ w = 0 := by
+    intro w hw
+    apply (Matrix.self_mul_conjTranspose_mulVec_eq_zero b w).mp
+    rw [← hb]
+    exact hker w hw
+  have hfactor : ∃ q : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ,
+      bᴴ = q * choi_matrix (krausChannel y) := by
+    sorry
+  obtain ⟨q, hq⟩ := hfactor
+  have hcstar : (choi_matrix (krausChannel y))ᴴ = choi_matrix (krausChannel y) := by
+    rw [hc, Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose]
+  have hbq : b = choi_matrix (krausChannel y) * qᴴ := by
+    have heq := congrArg Matrix.conjTranspose hq
+    simpa only [Matrix.conjTranspose_conjTranspose, Matrix.conjTranspose_mul, hcstar] using heq
+  let h := vᴴ * qᴴ * q * v
+  have hmatrix : choi_matrix θ = v * h * vᴴ := by
+    calc
+      choi_matrix θ = b * bᴴ := hb
+      _ = (choi_matrix (krausChannel y) * qᴴ) *
+          (q * choi_matrix (krausChannel y)) := congrArg₂ (· * ·) hbq hq
+      _ = v * h * vᴴ := by
+        rw [hc]
+        dsimp only [h]
+        simp only [Matrix.mul_assoc]
+  refine ⟨h, fun ρ => ?_⟩
+  calc
+    θ ρ = of_choi_matrix (choi_matrix θ) ρ :=
+      congrArg (fun f : MatrixMap (Fin 3) (Fin 3) ℂ => f ρ) (choi_map_inv θ).symm
+    _ = ∑ i, ∑ j, h i j • (star (y i) * ρ * y j) := by
+      rw [hmatrix]
+      change (fun a c => ∑ j, ∑ l, ρ j l * (v * h * vᴴ) (a, j) (c, l)) = _
+      ext a c
+      simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.sum_apply,
+        Matrix.smul_apply, smul_eq_mul, Matrix.add_apply, Fin.sum_univ_three]
+      dsimp only [v]
+      simp only [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply, star_star]
+      ring
 
 private lemma extreme_ucp_of_independent
     (y : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ)
@@ -88,7 +192,22 @@ private lemma extreme_ucp_of_independent
       (fun p : Fin 3 × Fin 3 => star (y p.1) * y p.2)) :
     krausChannel y ∈ Set.extremePoints ℝ
       {θ : MatrixMap (Fin 3) (Fin 3) ℂ | θ.IsCompletelyPositive ∧ IsUnital θ} := by
-  sorry
+  refine ⟨⟨of_kraus_isCompletelyPositive _, ?_⟩, ?_⟩
+  · change krausChannel y 1 = 1
+    rw [kraus_action]
+    simpa only [Matrix.mul_one] using hu
+  · intro θ hθ η hη hseg
+    obtain ⟨t, s, ht, hs, hts, hseg⟩ := hseg
+    obtain ⟨h, hh⟩ := choi_range_lift y θ t ht hθ.1
+      (choi_domination _ θ η t s hs.le hη.1 hseg)
+    have hsum : ∑ i, ∑ j, h i j • (star (y i) * y j) = 1 := by
+      simpa only [Matrix.mul_one] using (hh 1).symm.trans hθ.2
+    have hid := coefficients_unique (fun i j => star (y i) * y j) hli hu h hsum
+    apply LinearMap.ext
+    intro ρ
+    rw [hh, hid, kraus_action]
+    simp only [Matrix.one_apply, ite_smul, one_smul, zero_smul,
+      Finset.sum_ite_eq, Finset.mem_univ, ite_true]
 
 private lemma extreme_cpt_of_independent
     (y : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ)
@@ -98,20 +217,112 @@ private lemma extreme_cpt_of_independent
     krausChannel y ∈ Set.extremePoints ℝ
       {θ : MatrixMap (Fin 3) (Fin 3) ℂ |
         θ.IsCompletelyPositive ∧ IsTracePreserving θ} := by
-  sorry
+  refine ⟨⟨of_kraus_isCompletelyPositive _, kraus_tp y htp⟩, ?_⟩
+  intro θ hθ η hη hseg
+  obtain ⟨t, s, ht, hs, hts, hseg⟩ := hseg
+  obtain ⟨h, hh⟩ := choi_range_lift y θ t ht hθ.1
+    (choi_domination _ θ η t s hs.le hη.1 hseg)
+  have hsum : ∑ i, ∑ j, h i j • (y j * star (y i)) = 1 := by
+    apply Matrix.ext_iff_trace_mul_left.mpr
+    intro ρ
+    rw [Matrix.mul_one]
+    calc
+      (ρ * ∑ i, ∑ j, h i j • (y j * star (y i))).trace = (θ ρ).trace := by
+        rw [hh]
+        simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.trace_sum, Matrix.trace_smul]
+        apply Finset.sum_congr rfl
+        intro i hi
+        apply Finset.sum_congr rfl
+        intro j hj
+        congr 1
+        simpa only [Matrix.mul_assoc] using
+          (Matrix.trace_mul_comm (star (y i)) (ρ * y j)).symm
+      _ = ρ.trace := hθ.2 ρ
+  have hsumt : ∑ i, ∑ j, h j i • (y i * star (y j)) = 1 := by
+    rw [Finset.sum_comm]
+    exact hsum
+  have hid := coefficients_unique (fun i j => y i * star (y j)) hli htp hᵀ hsumt
+  have hhId : h = 1 := by
+    have := congrArg Matrix.transpose hid
+    simpa only [Matrix.transpose_transpose, Matrix.transpose_one] using this
+  apply LinearMap.ext
+  intro ρ
+  rw [hh, hhId, kraus_action]
+  simp only [Matrix.one_apply, ite_smul, one_smul, zero_smul,
+    Finset.sum_ite_eq, Finset.mem_univ, ite_true]
 
 private lemma choi_rank_of_independent
     (y : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ)
     (hli : LinearIndependent ℂ
       (fun p : Fin 3 × Fin 3 => star (y p.1) * y p.2)) :
     (choi_matrix (krausChannel y)).rank = 3 := by
-  sorry
+  have hy : LinearIndependent ℂ y := by
+    apply Fintype.linearIndependent_iff.mpr
+    intro c hc j
+    have hz : ∑ p : Fin 3 × Fin 3,
+        (if p.1 = 0 then c p.2 else 0) • (star (y p.1) * y p.2) = 0 := by
+      rw [Fintype.sum_prod_type]
+      simp only [ite_smul, zero_smul, Finset.sum_ite_irrel, Finset.sum_const_zero,
+        Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+      simp_rw [← Matrix.mul_smul]
+      rw [← Matrix.mul_sum, hc, Matrix.mul_zero]
+    have heq := Fintype.linearIndependent_iff.mp hli _ hz (0, j)
+    simpa using heq
+  have hstar : LinearIndependent ℂ (fun i => star (y i)) := by
+    apply Fintype.linearIndependent_iff.mpr
+    intro c hc j
+    have heq := congrArg star hc
+    simp only [star_sum, star_smul, star_star, star_zero] at heq
+    have hj := Fintype.linearIndependent_iff.mp hy _ heq j
+    exact star_eq_zero.mp hj
+  let v : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ := fun p i => star (y i) p.1 p.2
+  have hv : LinearIndependent ℂ vᵀ.row := by
+    apply Fintype.linearIndependent_iff.mpr
+    intro c hc j
+    have hz : ∑ i, c i • star (y i) = 0 := by
+      ext a b
+      have heq := congrFun hc (a, b)
+      change (∑ i, c i • star (y i) a b) = 0 at heq
+      change (∑ i, c i • star (y i)) a b = 0
+      simpa only [Matrix.sum_apply, Matrix.smul_apply] using heq
+    exact Fintype.linearIndependent_iff.mp hstar _ hz j
+  have hchoi : choi_matrix (krausChannel y) = v * vᴴ := by
+    unfold krausChannel
+    rw [choi_of_kraus]
+    ext p q
+    simp only [Matrix.sum_apply, Matrix.vecMulVec_apply, Matrix.mul_apply,
+      Matrix.conjTranspose_apply]
+    rfl
+  rw [hchoi, Matrix.rank_self_mul_conjTranspose, ← Matrix.rank_transpose v]
+  exact hv.rank_matrix
 
 private lemma base_unital : ∑ i, star (baseKraus i) * baseKraus i = 1 := by
-  sorry
+  have htwo : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
+    exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
+  have hthree : (Real.sqrt 3 : ℂ) ^ 2 = 3 := by
+    exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
+  have hne : (Real.sqrt 3 : ℂ) ≠ 0 := by
+    exact_mod_cast ne_of_gt (Real.sqrt_pos.mpr (by norm_num : (0 : ℝ) < 3))
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [baseKraus, Matrix.mul_apply, Fin.sum_univ_three,
+      Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply,
+      Matrix.vecMul_apply_eq_sum] <;>
+    field_simp <;> ring_nf <;> norm_num [htwo, hthree]
 
 private lemma base_trace : ∑ i, baseKraus i * star (baseKraus i) = 1 := by
-  sorry
+  have htwo : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
+    exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
+  have hthree : (Real.sqrt 3 : ℂ) ^ 2 = 3 := by
+    exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
+  have hne : (Real.sqrt 3 : ℂ) ≠ 0 := by
+    exact_mod_cast ne_of_gt (Real.sqrt_pos.mpr (by norm_num : (0 : ℝ) < 3))
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [baseKraus, Matrix.mul_apply, Fin.sum_univ_three,
+      Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply,
+      Matrix.vecMul_apply_eq_sum] <;>
+    field_simp <;> ring_nf <;> norm_num [htwo, hthree]
 
 private lemma base_left_independent : LinearIndependent ℂ
     (fun p : Fin 3 × Fin 3 => star (baseKraus p.1) * baseKraus p.2) := by
@@ -128,12 +339,69 @@ private lemma base_decomposition :
       (3 / 4 : ℂ) • krausChannel baseKraus ρ := by
   sorry
 
+private lemma phase_parameters (α β : ℂ)
+    (hα : ‖α‖ = 1 / Real.sqrt 2) (hβ : ‖β‖ = 1 / Real.sqrt 2) :
+    ∃ r s : ℂ, ‖r‖ = 1 ∧ ‖s‖ = 1 ∧
+      r * s ^ 2 = (Real.sqrt 2 : ℂ) * α ∧ r ^ 2 / s = (Real.sqrt 2 : ℂ) * β := by
+  let u := (Real.sqrt 2 : ℂ) * α
+  let v := (Real.sqrt 2 : ℂ) * β
+  have hu : ‖u‖ = 1 := by
+    dsimp only [u]
+    rw [norm_mul, hα, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_nonneg (Real.sqrt_nonneg 2)]
+    exact mul_one_div_cancel (ne_of_gt (Real.sqrt_pos.mpr (by norm_num)))
+  have hv : ‖v‖ = 1 := by
+    dsimp only [v]
+    rw [norm_mul, hβ, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_nonneg (Real.sqrt_nonneg 2)]
+    exact mul_one_div_cancel (ne_of_gt (Real.sqrt_pos.mpr (by norm_num)))
+  obtain ⟨r, hr⟩ := IsAlgClosed.exists_pow_nat_eq (u * v ^ 2) (by decide : 0 < 5)
+  have hrnorm : ‖r‖ = 1 := by
+    apply (pow_eq_one_iff_of_nonneg (norm_nonneg r) (by decide : 5 ≠ 0)).mp
+    rw [← norm_pow, hr, norm_mul, norm_pow, hu, hv]
+    norm_num
+  have hrne : r ≠ 0 := by intro hz; simp only [hz, norm_zero] at hrnorm; norm_num at hrnorm
+  have hvne : v ≠ 0 := by intro hz; simp only [hz, norm_zero] at hv; norm_num at hv
+  refine ⟨r, r ^ 2 / v, hrnorm, ?_, ?_, ?_⟩
+  · rw [norm_div, norm_pow, hrnorm, hv]
+    norm_num
+  · change r * (r ^ 2 / v) ^ 2 = u
+    field_simp
+    linear_combination hr
+  · change r ^ 2 / (r ^ 2 / v) = v
+    field_simp
+
+private lemma diagonal_unitary (r : ℂ) (hr : ‖r‖ = 1) :
+    diagonalPhase r ∈ Matrix.unitaryGroup (Fin 3) ℂ := by
+  have hstar : star r * r = 1 := by
+    change starRingEnd ℂ r * r = 1
+    rw [← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq, hr]
+    norm_num
+  have hrne : r ≠ 0 := by
+    intro hz
+    rw [hz, norm_zero] at hr
+    norm_num at hr
+  have hmem : r ∈ unitary ℂ :=
+    (isUnit_iff_ne_zero.mpr hrne).mem_unitary_of_star_mul_self hstar
+  change Matrix.diagonal ![r, 1, r⁻¹] ∈ unitary (Matrix (Fin 3) (Fin 3) ℂ)
+  rw [Matrix.diagonal_mem_unitary, Pi.mem_unitary_iff]
+  intro i
+  fin_cases i
+  · exact hmem
+  · exact (unitary ℂ).one_mem
+  · apply (isUnit_iff_ne_zero.mpr (inv_ne_zero hrne)).mem_unitary_of_star_mul_self
+    calc
+      star (r⁻¹) * r⁻¹ = (r * star r)⁻¹ := by rw [_root_.mul_inv_rev, star_inv]
+      _ = 1 := by rw [mul_comm r, hstar, inv_one]
+
 private lemma phase_reduction (α β : ℂ)
     (hα : ‖α‖ = 1 / Real.sqrt 2) (hβ : ‖β‖ = 1 / Real.sqrt 2) :
     ∃ r s : ℂ, diagonalPhase r ∈ Matrix.unitaryGroup (Fin 3) ℂ ∧
       diagonalPhase s ∈ Matrix.unitaryGroup (Fin 3) ℂ ∧
       hmrChannel α β = conjugateChannel (diagonalPhase r) (diagonalPhase s)
         (hmrChannel (1 / Real.sqrt 2) (1 / Real.sqrt 2)) := by
+  obtain ⟨r, s, hr, hs, hαphase, hβphase⟩ := phase_parameters α β hα hβ
+  refine ⟨r, s, diagonal_unitary r hr, diagonal_unitary s hs, ?_⟩
   sorry
 
 private lemma transport (d e u : Matrix (Fin 3) (Fin 3) ℂ)
@@ -179,8 +447,8 @@ theorem result : ∀ α β : ℂ, ‖α‖ = 1 / Real.sqrt 2 → ‖β‖ = 1 / 
   obtain ⟨r, s, hr, hs, hphase⟩ := phase_reduction α β hα hβ
   have hucp := extreme_ucp_of_independent baseKraus base_unital base_left_independent
   have hcpt := extreme_cpt_of_independent baseKraus base_trace base_right_independent
-  have hprops := Set.extremePoints_subset hcpt
-  have hu := (Set.extremePoints_subset hucp).2
+  have hprops := extremePoints_subset hcpt
+  have hu := (extremePoints_subset hucp).2
   obtain ⟨u, ψ, hun, hcp, hunit, htp, hrank, hue, hte, hdec⟩ :=
     transport (diagonalPhase r) (diagonalPhase s) baseUnitary
       (hmrChannel (1 / Real.sqrt 2) (1 / Real.sqrt 2)) (krausChannel baseKraus)
