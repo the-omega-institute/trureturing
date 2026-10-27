@@ -40,7 +40,9 @@ internal sealed class HannaA365771Document : IScribeDocumentDefinition
                 + "The resulting classification is used by all three congruences.", true, false),
             Node("result", "Hanna's first congruence", ClaimBody(),
                 "Multiplication by five appends a zero base-five digit. The classification "
-                + "therefore gives residue four for every positive m with digits zero or one.", true, false))));
+                + "therefore gives residue four for every positive m with digits zero or one.", true, false,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna365771-mod5"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         bool theorem, bool literature, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(

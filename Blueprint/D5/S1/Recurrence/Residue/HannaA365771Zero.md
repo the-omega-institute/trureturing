@@ -24,6 +24,10 @@ $$\forall n \in \mathbb{N},\; (0 < n) \Rightarrow ((\neg (\exists m \in \mathbb{
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/HannaA365771Zero.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna365771-mod5-zero` (proved) by `D5/S1/Recurrence/Residue/HannaA365771Zero.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna365771-mod5-zero","declaration_gid":"D5/S1/Recurrence/Residue/HannaA365771Zero.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2023). *OEIS A365771: Catalan-binomial residues modulo five*. URL: <https://oeis.org/A365771>.
