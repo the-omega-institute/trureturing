@@ -38,7 +38,7 @@ internal sealed class SemimonotoneExactOrderInverseRefutationDocument : IScribeD
     private static Formula Body => All("n", NN, All("k", NN, All("A", MatrixType,
         Imp(Leq(D(3), N), Imp(Leq(D(1), K), Imp(Lt(K, N),
             Imp(App("IsExactOrder", N, K, A), And(Lt(App("det", A), D(0)),
-                And(App("IsUnit", A), App("IsZMatrix", new Formula.Superscript(A, Seq(Minus, D(1)))))))))))));
+                And(App("IsUnit", A), App("IsZMatrix", new Formula.Power(A, Seq(Minus, D(1)))))))))))));
     private static DocumentBlock.Describe Definition(string name, Formula formula, string text) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(name), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
