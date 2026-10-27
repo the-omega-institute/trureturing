@@ -40,7 +40,7 @@ def chartSource (x : ℝ × ℝ) : Fin 8 → ℝ := sourceCoordinates (chartWorl
 def chartRead (x : ℝ × ℝ) : ℝ × ℝ :=
   ((originalResponse (chartWorld x)).1,futureRead (chartWorld x) [])
 
-private theorem strip_denominator (r b : ℝ)
+theorem strip_denominator (r b : ℝ)
     (hr : 9005/10000 ≤ r) (hr' : r ≤ 9006/10000)
     (hb : 12758/100000 ≤ b) (hb' : b ≤ 12759/100000) :
     parentLambda r b < 0 := by
