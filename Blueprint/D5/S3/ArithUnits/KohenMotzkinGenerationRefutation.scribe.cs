@@ -75,8 +75,8 @@ internal sealed class KohenMotzkinGenerationRefutationDocument : IScribeDocument
         var term = Call("central", a, b, n);
         var generatingSet = Call("generators", p, a, b);
         Formula Parameters(Formula body) => All("a", z, All("b", z, body));
-        var notDivisible = new Formula.Not(new Formula.Relation(
-            Cast(p, z), FormulaRelationOperator.Divides, term));
+        var notDivisible = new Formula.Not(Parenthesized(new Formula.Relation(
+            Cast(p, z), FormulaRelationOperator.Divides, term)));
         var assertion = All("p", naturals, Imp(Call("Nat.Prime", p), Parameters(
             Imp(All("n", naturals, Imp(Lt(n, p), notDivisible)),
                 Eq(Call("Subgroup.closure", generatingSet), Seq(Operatorname, Grp(F.Id("top"))))))));
