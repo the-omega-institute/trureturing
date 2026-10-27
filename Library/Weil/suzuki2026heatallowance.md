@@ -4,6 +4,7 @@ authors: trureturing research continuation
 year: 2026
 title: Quadratic heat loss and the four-fifths height allowance
 doi: null
+url: https://github.com/the-omega-institute/trureturing/blob/f108f1335eb9ed0a02569f5a0ef9f363d84a368e/Library/Weil/suzuki2026heatallowance.md
 claim: Internal research continuation deriving the four-fifths logarithmic heat allowance under the stated verified-height hypothesis.
 strata_touched: []
 license: repository-original
