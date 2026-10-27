@@ -3184,3 +3184,135 @@ obligations and the common internal-observer objective retain their original
 domains.
 
 ## 追加锚（本行以下为增补区）
+
+## 102. Rectangular transcript fibres for the adaptive quaternary task
+
+**Definition 102.1 (two independently variable coefficient parities).**
+Retain exactly Definition 82.1's seven-cell source, unit seed, actual
+quaternary encoding, cleared late entrance, original growth and six-operation
+service, authentic maps/rights, complete serial framing and sufficient finite
+backing. For $p\in\{0,1\}$ let $\mathcal C_p$ consist of the finite monic
+polynomials supported on exponents of parity $p$, with every lower
+coefficient in $\{0,1,2,3\}$. If $P\in\mathcal C_p$ and
+$Q\in\mathcal C_{1-p}$ with $\deg Q>\deg P$, then $P+Q$ is exactly
+one polynomial $F_w$ of (82.1). Its degree is the actual word length;
+its descending lower coefficients are the chronological digits. Distinct
+such polynomials therefore name distinct admitted words, without an
+identification of leading zero digits or a supplied length cutoff.
+
+For any frozen finite receiver path, denote a successful Read's homogeneous
+row by $\rho$ and its affine offset by $a$. Lemmas 76.1 and 82.2 give
+an effective parity $p$ for which
+
+$$
+\rho Q(A)e=0\quad(Q\in\mathcal C_{1-p}),\qquad
+\operatorname{reply}(P+Q)=a+\rho P(A)e.
+\tag{102.1}
+$$
+
+A zero row may be assigned either parity. A row and its offset are frozen
+only after the complete preceding replies have fixed the actual commands,
+growth inclusions, addresses, rational operands and number of Ticks.
+
+**Proposition 102.2 (a collision through every adaptive three-Read policy).**
+Let a deterministic causal receiver obey all the installation and
+information restrictions of Definition 82.1 and terminate on every admitted
+word. If it performs at most three successful late terminal Reads on every
+word, two distinct admitted words give the same entire receiver transcript
+and the same terminal report. Correctness of that report is not assumed.
+
+**Proof.** The one-row collision used below is valid above any finite
+prescribed degree. Indeed for a frozen $\rho$, (82.3) gives
+
+$$
+0\le\rho A^ke\le (\rho h/27)c^k,\qquad c=95/48<2.
+$$
+
+Varying $n$ digits at powers $p,p+2,\ldots,p+2(n-1)$ gives $4^n$
+polynomials but only $O_\rho(c^{2n})$ nonnegative integer row values.
+Since $c^2<4$, two collide for some finite $n$. Appending the same
+leading monomial $z^K$, with $K$ of parity $p$ above these powers and
+any prescribed bound, gives distinct members of $\mathcal C_p$ with
+the same row value. This is Lemma 82.2's construction; common rational
+affine offsets do not affect it.
+
+Before the first successful Read, all obtained replies are field-independent.
+If the receiver stops on this common path, distinct words already have the
+same report. An infinite path without a successful Read contradicts
+termination. Otherwise freeze the first Read row $\rho_1$, its offset
+and one effective parity $p$, and put $q=1-p$. Choose
+$P_0\ne P_1$ in $\mathcal C_p$ colliding under $\rho_1$.
+For every $Q\in\mathcal C_q$ above both their degrees, the inputs
+$P_i+Q$ have the same first reply. Thus this whole family shares the
+next path up to a stop or a second successful Read. A stop gives a
+collision; an infinite path without that second Read violates termination
+on any one member. Hence only the finite second-Read case needs analysis.
+
+If the second row $\rho_2$ has parity $q$, choose distinct high-degree
+$Q_0,Q_1\in\mathcal C_q$ colliding under $\rho_2$. All four genuine
+inputs $P_i+Q_j$ now have identical first and second replies: the first
+depends only on $P_i$ and the second only on $Q_j$. The next path is
+again common and finite up to a stop or a third successful Read. A stop
+already fails to separate the rectangle. Otherwise freeze that third row
+$\rho_3$. The two possible effective parities give the following explicit
+pairs:
+
+| Third parity | Common factor fixed | Distinct inputs retained | Why all three replies agree |
+| --- | --- | --- | --- |
+| $p$ | $P_0$ | $P_0+Q_0$, $P_0+Q_1$ | the first and third rows annihilate the $Q$ difference; the second is the chosen $Q$ collision |
+| $q$ | $Q_0$ | $P_0+Q_0$, $P_1+Q_0$ | the second and third rows annihilate the $P$ difference; the first is the chosen $P$ collision |
+
+In particular, when the third row sees $P$, it is $P$ that is fixed.
+The varying $Q$ has only the second row to satisfy. When the third row
+sees $Q$, it is $Q$ that is fixed and the varying $P$ has only the
+first row to satisfy. There is no requirement that the original $P$
+collision survive a second $p$ row, or that the original $Q$ collision
+survive a second $q$ row.
+
+If instead the second row has parity $p$, restrict to $P=P_0$ and
+leave all high monic $Q\in\mathcal C_q$ free. Their first two replies
+are equal. If the common path stops before a third Read, choose any two
+different such $Q$. If there is a third Read of parity $p$, the same
+two choices also have equal third replies. If its parity is $q$, apply
+the one-row collision to this now fixed $\rho_3$, choosing two monic
+$Q$ above $\deg P_0$. These have equal third replies and still equal
+first and second replies. An infinite path without the next Read or a
+stop is again excluded by pointwise termination.
+
+In every branch the selected pair follows the frozen paths in the actual
+source. This is induction on complete replies: equal receiver states choose
+the same next frames, operands, target addresses and growth. Structural
+guards, fresh-zero inclusions, raw-label updates and identity refusals agree;
+common Adds have equal affine contributions. Equal scalar values give equal
+literal widths, framing and completed returns. Missing rights and pending
+frames obey the same original context and carry no additional numerical
+channel. Thus the induction applies also when the second or third row was
+chosen adaptively after the common earlier replies. After the last of at
+most three successful Reads, the pair has the same remaining path and
+report: another successful Read would violate the assumed bound on those
+actual inputs, and an infinite remaining path would violate termination.
+The polynomials in each selected pair are distinct, so their words differ.
+No uniform time, degree, growth or Tick bound was used. $\square$
+
+**Consequence 102.3 (the original sharp bound and its exact scope).**
+The necessity in Theorem 82.3 follows on its entire original receiver class:
+an everywhere-correct receiver cannot use at most three successful late
+Reads on every word. Hence each such receiver has an admitted input using
+at least four. The fixed assay (82.4) attains four, with the actual endpoint
+$A^4F_w(A)e$, by the all-degree sampling argument of NLBAII §76.
+The minimum worst-case Read count for the original joint word/current-service
+task is therefore four. This is not a per-word lower bound.
+
+The positive assay, its acquired-image inverses and its paid selected use
+in Propositions 82.4--82.5 retain their original schedules and resource
+vectors. The lower bound concerns recovery of the concealed quaternary
+history, even when the receiver may grow the specimen; it neither asserts
+that the colliding endpoints are equal nor rules out acquiring only current
+service with a different task. The serial-clock arbitrary-current entrance
+of §§94--101 has its own kernel, retained phase, image and consumer and
+is not substituted for this history entrance. These arguments use the
+original source, isolation, rights, exact arithmetic and finite backing
+premises; they provide no new physical-conformance or Lean certification,
+uniform lifetime bound, common apparatus or universal alpha/beta minimum.
+
+## 追加锚（本行以下为增补区）

@@ -692,14 +692,26 @@ $$
 
 A nonzero degree-at-most-$d$ polynomial cannot vanish at all integers $0,\ldots,d$. Thus one of these finitely many $t$ gives distinct diagonal entries in (CM.13). For $N=1$ the empty product is one and $d=0$. The controller forms each rational $L_{z(t)}$ and tests whether its characteristic polynomial is squarefree by the polynomial gcd with its derivative. By (CM.13), the successful test is exactly the distinct-entry condition and will occur.
 
-All eigenvalues of that successful matrix are rational, because they are the actual rational coordinates of $Rz(t)$. They are found without an eigenvalue oracle: clear denominators in the characteristic polynomial, remove any zero-root factor, enumerate the finitely many signed numerator divisors of the remaining constant coefficient and positive denominator divisors of its leading coefficient, test, and divide out the found linear factors. This is the ordinary rational-root theorem, as supplied at the pinned upstream by [num_dvd_of_is_root and den_dvd_of_is_root][CMRoots]. The promised splitting and simple roots ensure that this finite calculation finds all $N$ roots, including zero when present. Solve their rational nullspaces and select a deterministic nonzero eigenvector $v_a$ on each eigenline. Equation (CM.13) implies $Rv_a=c_ae_{\pi(a)}$ for a nonzero rational $c_a$. Hence
+Write $\lambda_a$ for the eigenvalues of that successful matrix. They are rational, because they are the actual rational coordinates of $Rz(t)$; one of them is allowed to be zero. They are found without an eigenvalue oracle: clear denominators in the characteristic polynomial, record and remove a zero root if present, then enumerate the finitely many signed numerator divisors of the remaining nonzero constant coefficient and positive denominator divisors of its leading coefficient, test, and divide out the found linear factors. Stop when the remaining polynomial is constant. This is the ordinary rational-root theorem, as supplied at the pinned upstream by [num_dvd_of_is_root and den_dvd_of_is_root][CMRoots]. The promised splitting and simple roots ensure that this finite calculation finds all $N$ roots. In particular a removed zero root is retained in the root list and is not discarded from the reconstruction.
+
+For each $\lambda_a$, rational elimination on $L_{z(t)}-\lambda_a I$ gives a one-dimensional nullspace. Choose its unique vector $v_a$ whose first nonzero coordinate is one. This fixes a deterministic rational nonzero vector even for $\lambda_a=0$. By (CM.13), $Rv_a$ lies on the unique coordinate axis whose diagonal entry is $\lambda_a$. Thus
 
 $$
-F(v_a)=\mu(v_a,v_a)=c_av_a.
+Rv_a=\gamma_a e_{\pi(a)},\qquad
+\gamma_a\in\mathbb Q\setminus\{0\}.
+$$
+
+Nonvanishing of $\gamma_a$ follows from invertibility of $R$ and $v_a\ne0$. It does not follow from, or require, $\lambda_a\ne0$. The eigenvalue $\lambda_a=(Rz(t))_{\pi(a)}$ evaluates the chosen multiplier; the amplitude $\gamma_a=(Rv_a)_{\pi(a)}$ evaluates its eigenvector. Using the acquired product rather than division by an eigenvalue gives
+
+$$
+F(v_a)=\mu(v_a,v_a)
+=R^{-1}(\gamma_a^2e_{\pi(a)})=\gamma_av_a.
 \tag{CM.15}
 $$
 
-Take any nonzero coordinate of $v_a$, obtain $c_a$ by the ratio in (CM.15), and set $w_a=v_a/c_a$. Then $Rw_a=e_{\pi(a)}$. This normalization removes sign and scale; no unknown unit vector has been supplied. Order the eigenvalues increasingly, identify each port by the unique equality $D_j=w_a$, and reorder the columns with those $b$ port atoms first in their authentic order and the remaining atoms in eigenvalue order. Write $W=[w_1\ \cdots\ w_N]$. Then $RW=P$ is a permutation matrix and
+If $i_a$ is that first nonzero coordinate, compute $\gamma_a=\mu(v_a,v_a)_{i_a}/(v_a)_{i_a}$ and set $w_a=v_a/\gamma_a$. Both divisors are nonzero by the preceding argument; with the chosen normalization $(v_a)_{i_a}=1$. The calculation uses only the earned table and the computed eigenvector, not the unknown $R$ or a new source Square. Then $Rw_a=e_{\pi(a)}$. For example, with $N=2$, $B=e_1$, $T=\begin{pmatrix}0&1\\1&0\end{pmatrix}$ and $R=I$, the first candidate $z(0)=(1,0)^{\mathsf T}$ has distinct eigenvalues $1,0$. Its zero eigenline gives $v=e_2$, $\mu(v,v)=e_2$, $\gamma=1$ and $w=e_2$, so it is recovered by the same rule.
+
+This normalization removes sign and scale on every eigenline. It needs neither an invertible multiplier $L_{z(t)}$ nor an invertible source law $T$, and imposes no additional condition on NQB or QLAB-Sq. Order the eigenvalues increasingly, identify each port by the unique equality $D_j=w_a$, and reorder the columns with those $b$ port atoms first in their authentic order and the remaining atoms in eigenvalue order. Write $W=[w_1\ \cdots\ w_N]$. Then $RW=P$ is a permutation matrix and
 
 $$
 \widehat T=W^{-1}AW=P^{\mathsf T}TP,
@@ -1011,7 +1023,7 @@ O(b^2N+bNq+N^3+Nb+N^2)
 \tag{CM.37}
 $$
 
-rational data slots, in addition to framing, indices, references, code and any separate copies/exports. Gram entries can be evaluated from the moment table as required, retaining only the current selected minor rather than the entire $bN$-square candidate Gram. The selected-pulse schedule may omit dense pulse slots in its own retained word; (CM.37) is a simultaneous sufficient upper store, not a lower bound or optimized storage formula. A literal added Report retains its $bN$ scalar returns, held epoch/order data and solve scratch, and has the call increment in Proposition 15.3. Every local solve, rational reduction, characteristic-polynomial/gcd calculation, integer divisor search, nullspace solve, atom normalization and output formation is additional actual finite computation. Its algorithm and finite bounds in §13 terminate without any extra source samples. No polynomial bit-work estimate is asserted for those searches.
+rational data slots, in addition to framing, indices, references, code and any separate copies/exports. Gram entries can be evaluated from the moment table as required, retaining only the current selected minor rather than the entire $bN$-square candidate Gram. The selected-pulse schedule may omit dense pulse slots in its own retained word; (CM.37) is a simultaneous sufficient upper store, not a lower bound or optimized storage formula. A literal added Report retains its $bN$ scalar returns, held epoch/order data and solve scratch, and has the call increment in Proposition 15.3. Every local solve, rational reduction, characteristic-polynomial/gcd calculation, integer divisor search, nullspace solve, atom normalization and output formation is additional actual finite computation. Its algorithm and finite bounds in §13 terminate without any extra source samples. In particular (CM.15) evaluates the stored bilinear table on each computed eigenvector and divides by its nonzero amplitude, including on a zero eigenline. The same $d+1$ candidate bound (CM.14), $q$ actual Square trials and call vectors (CM.18) suffice; these local table evaluations do not execute additional source calls. No polynomial bit-work estimate is asserted for those searches.
 
 The two cyclic resource vectors have the same four Ticks, one Square and one Read, but different Adds/Holds and actual fields. Their observed coefficients on $a$ are $\epsilon^6$ and $\epsilon^2$, respectively. The second also pays pulses of size $\epsilon^{-2}$ and cancellation arithmetic. No noisy/quantized sensor contract was supplied, so these scales alone are not a simultaneous precision or conditioning advantage. In either case the source Square still performs $N$ products; later selected use in Construction 17.3 adds another $N$ products and all its other source/predictor work.
 
