@@ -936,6 +936,15 @@ $1/3$ emission overlap. It is an existence theorem for that
 nonstationary pair-law optimization, not deterministic attainment,
 hidden-coordinate filtering or an entire-history sign decoder.
 Its actual $g_t,T_t,h$ are precisely the inherited suppliers here.
+The public
+[Appendix II §122](https://github.com/the-omega-institute/trureturing/blob/27db8edb6c06d3ea80575cba4078f0a9ee287a57/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#122-exact-deterministic-attainment-for-the-original-passive-pair)
+further obtains a deterministic Borel partition for every attainable
+stochastic pair law and an attained deterministic minimum, using
+its source-specific analytic and negative-index argument. Its
+objects are emission laws at two fixed positive times, with the
+same readout and fresh conditional noise. They are different from
+the actual hidden sample and either sigma-field in (1.6); that
+attainment supplies neither conditional-density nor sign recovery.
 
 [Self-calibrating relation mathematics IV, Theorem 15.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md)
 proves two constant and distinct first responses for exactly four
@@ -975,8 +984,10 @@ supplies neither the singular source law nor either posterior here.
 The exact adjacent coherent reference is
 [Coherent reconstruction, §36, Proposition 36.2](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md):
 the physical five-level polar support, incompatible complete native
-readout and read-created zero-mode mass. It is not a root-resolved
-layer/quotient-count theorem and is not a premise of §§3–6.
+readout and read-created zero-mode mass. Its real polar support and
+physical complexification have different dimensions; the complete
+read distinguishes states on one polar ray. Its physical apparatus
+and effects have no supplied identification with the records in (1.6).
 These distinctions follow from their stated carriers, inputs and
 conclusions, rather than a source-search non-hit. $\square$
 
@@ -998,17 +1009,77 @@ The exact fixed-$G_{gc}$, original-$Q$, parked-consumer and
 unchanged-initialization problems keep their original scopes.
 Native legal growth/Tick completion and finite-phase-cover fixed
 Markov recovery are separate tasks, not consequences supplied by
-this hidden-coordinate continuation. The reserved serial-clock
-repair, digital dense/lattice acquisition, native multiplication
-calibration and fixed-DU selective-read outcomes are not suppliers
-used here. Public native U1–U5 and NCR/PVC/PR57/Atlas results retain
+this hidden-coordinate continuation.
+[Native Leaf Boundary Acquisition III, §§94–102](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_III.md)
+has actual rational serial samples, a period repair, and four-view
+inverses on the acquired fixed-phase $\operatorname{im}A$ image.
+Its performed sample journal and computed current germ are distinct
+records, as are our causal $\mathcal H_R$ and entire held
+$\mathcal A_I$. None of those native records is a diffusion history
+without an additional source/observation correspondence.
+[Atomic Generation Acquisition III, §§28–34](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_III.md)
+proves finite-record collisions for its dense floor-read channel and
+passive acquisition under an assured lattice and its spectral
+conditions. These are separate exact-read and autonomous-risk
+questions; their floor bins supply no conditional law for $z_R$.
+[Cyclic Leaf Boundary Ambiguity, §§11–20](RECURSIVE_RELATIONAL_OBSERVATION_CYCLIC_LEAF_BOUNDARY_AMBIGUITY.md)
+acquires an unknown controllable weighted law and its coordinate
+multiplication using Reset/Square, with a separate cyclic assay and
+conditioning boundary. That installed menu is absent from the
+autonomous source experiment (1.6).
+[Measurement-Relative Quantum Boundary Continuation I, §§4–7](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY_CONTINUATION_I.md)
+keeps one initialized fixed-DU apparatus for its selective F-read
+converse and finite exact-law certification obstruction. Its
+acceptance-conditioned quantum laws are neither our causal
+posterior nor our reflected full-path law. All four are available
+public contributions with their own paid interfaces, rather than
+missing results or extra premises for §§3–6.
+
+Public native U1–U5 and NCR/PVC/PR57/Atlas results retain
 their actual acquisition, law, authority, memory and continuation
 domains; their resource optima are not combined with this diffusion
 model. An ownership/fiber-factorization framework is reuse, not a
 standalone new theorem. The exact positive conditional service and
-consumer remain valid alongside these obstructions. Source readiness
-is an ordinary mathematical claim subject to independent review and
-repository admission; it is not new kernel verification or completion
-of the sustained four-expression objective.
+consumer remain valid alongside these obstructions; their installed
+service premises and the unrecovered quantities above remain explicit.
+
+
+## 9. Third-germ recovery and common-word response estimates
+
+**Boundary 9.1 (different observations support different inverse claims).**
+[Third Germ Retention Threshold, §§15–17](RECURSIVE_RELATIONAL_OBSERVATION_THIRD_GERM_RETENTION_THRESHOLD.md)
+contains positive recovery mathematics: its Theorem 15.2 bounds
+original complete-world distance by $B_M=(p,v,f_M)$ distance on
+the whole preimage of a suitable compact base rectangle, including
+its remote branch and every permitted stratum. Theorem 15.3 then bounds
+every common-word numerical future response on that domain.
+Section 16's actual common-record witnesses concern fixed positive
+record errors and an uncancelled growing mode. Section 17's exact
+boundary has singleton complete-world fibers and mutually consistent
+inverses on its actual image. The seven-action/eight-read record
+and its eighth-action/ninth-read extension retain their own
+observation allowances. Those exact inverses do not assert
+acquisition of every stipulated retained input or future operation.
+
+[Section 18 of that volume](RECURSIVE_RELATIONAL_OBSERVATION_THIRD_GERM_RETENTION_THRESHOLD.md)
+and its owning
+[`CommonWordSensitivity` exposition](../../../Blueprint/D5/S3/Observer/CubicGain/CommonWordSensitivity.md)
+give an explicit response bound in the original eight source
+coordinates. Both complete worlds obey one bound $H\ge1$; the
+whole polynomial, source matrix and drift of each are used along
+one common chronological $J/M$ word from clock eight. Its
+coefficient $1+1048576H$ multiplies
+$\varphi^n(1+n)^3\|\omega-\omega'\|_\infty$.
+Composing with the §15.2 inverse is justified only on that inverse's
+declared preimage; the source-coordinate declaration alone does
+not acquire its boundary.
+
+Here the target is an actual coordinate of a different source
+sample, and the observation is exactly one of the sigma-fields
+(1.6). No map from those coefficient worlds to this source, its
+source-start law or either record has been supplied. The positive
+third-germ inverses therefore coexist with Theorems 3.1 and 6.1;
+neither a common-word estimate nor a frozen-record witness is
+substituted for their separate conditional-law and reflection proofs.
 
 ## 追加锚（本行以下为增补区）

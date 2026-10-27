@@ -667,6 +667,13 @@ native pair target; it asserts neither zero temporal cross mass,
 an indicator partition, deterministic attainment nor a constructive
 sampler. It addresses emissions at two positive times with fresh
 conditional read noise, not recovery of full source transitions.
+The separately public
+[Appendix II, Theorem 122.1](https://github.com/the-omega-institute/trureturing/blob/27db8edb6c06d3ea80575cba4078f0a9ee287a57/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#122-exact-deterministic-attainment-for-the-original-passive-pair)
+does supply an indicator partition attaining the passive-pair
+minimum, and equality of its deterministic and stochastic pair-law
+sets, with its full source and analytic premises. That two-time
+emission theorem imposes no fiber-supported full-source reverse
+link or all-time intertwining (3.1), so the two conclusions coexist.
 [Self-calibrating relation IV, Theorem 15.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md)
 gives two constant and unequal first responses as a necessary
 condition for an exact four-world original-root failure. It does
@@ -686,8 +693,9 @@ bridge between the respective carriers.
 is specifically the physical $\mathbb C^5$ polar-support/full-read
 incompatibility: waiting preserves a polar complex structure, but
 the full native read separates a polar ray and can leak mass into
-the zero mode. It is not a theorem about root-resolved tree layers
-or their quotient counts. [Attractive boundary gluing §35](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GLUING.md)
+the zero mode. Its polar support is a real four-dimensional space
+inside the physical five-level apparatus; its effects have no
+supplied identification with (1.5). [Attractive boundary gluing §35](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GLUING.md)
 retains its finite compatibility correction and remaining full
 residual. These different tasks supply no common physical
 apparatus or universal minimal resource vector.
@@ -739,11 +747,29 @@ earn its source trace, selector, contact and resolvent laws as
 specified in [S, Definition 116.5]. Mere equality of the off-source
 differential expression does not earn them.
 
-The native zero-appending completion problem is a separate
-material-tree task. Native serial-clock/period repair, digital
-dense/lattice acquisition and autonomous risk, native
-multiplication/cyclic calibration, and the fixed-DU selective
-F-read converse are not suppliers or conclusions of this volume.
+The native zero-appending completion problem concerns a separate
+material tree. [Native Leaf Boundary Acquisition III, §§94–102](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_III.md)
+already proves serial sampling aliasing and period repair for a
+known rational unit adjacency, followed by fixed-phase inverses
+on $\operatorname{im}A$. Its period is the number of actual native
+Ticks between scalar samples, whereas $L_{\rm ph}$ here is a
+subgroup of the two angular period lattices. Changing that serial
+schedule does not remove the central translation in (3.8).
+[Atomic Generation Acquisition III, §§28–34](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_III.md)
+uses floor-valued reads and separates dense rational entrances from
+assured lattices under a known integral symmetric law. Neither that
+channel nor its eigenvalue conditions identify the present Borel
+source fibers. [Cyclic Leaf Boundary Ambiguity, §§11–20](RECURSIVE_RELATIONAL_OBSERVATION_CYCLIC_LEAF_BOUNDARY_AMBIGUITY.md)
+uses installed Reset/Square, unknown weighted-law controllability
+and acquired multiplication; its axis reconstruction and cyclic
+assay do not change $T_t$, $\chi$ or the source anchor in (3.1).
+[Measurement-Relative Quantum Boundary Continuation I, §§4–7](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY_CONTINUATION_I.md)
+derives an immediate-F-read selective converse and a finite exact-law
+certification obstruction on one fixed-DU initialized quantum
+source. It retains that reference/effect contract. These positive
+acquisition and converse results are public results on different
+carriers; none supplies a full-source Markov link here, and no
+resource or impossibility statement is transferred between them.
 The exact old fixed-$G_{g_c}$, original-$Q$, parked-consumer and
 unchanged-initialization problems retain their original scopes.
 No standalone ownership/factorization theorem is needed for the
@@ -754,5 +780,42 @@ and a simultaneous resource comparison remains unconstructed by
 these scoped results. This boundary preserves the conditional
 models and their positive mathematics; it does not impose the
 different demand of deriving all physical laws without premises.
+
+
+## 6. Coefficient-world inverses and the phase-cover boundary
+
+**Boundary 6.1 (positive inverses retain their source and image).**
+[Third Germ Retention Threshold, Theorems 15.2–15.3](RECURSIVE_RELATIONAL_OBSERVATION_THIRD_GERM_RETENTION_THRESHOLD.md)
+proves an inverse Lipschitz inequality from its clock-eight boundary
+$B_M=(p,v,f_M)$ to original complete-world coordinates on the full
+preimage of a suitable compact base rectangle. Its local and remote
+branches and all permitted strata are included. It then bounds all
+common finite-word responses on that domain. Sections 16–17 retain
+the actual frozen-record growing-mode witnesses and exact
+singleton-world recovery routes on the exposed image, including
+the seven-action/eight-read and eight-action/nine-read experiments.
+These inverses do not acquire their stipulated original observations
+or grant further execution.
+
+Section 18, with the owning
+[`CommonWordSensitivity` source exposition](../../../Blueprint/D5/S3/Observer/CubicGain/CommonWordSensitivity.md),
+separately gives the explicit source-coordinate estimate with
+constant $1+1048576H$, golden-exponential factor $\varphi^n$ and
+cubic factor $(1+n)^3$. It compares two worlds with common bound
+$H\ge1$, their one whole cubic and the same chronological $J/M$
+word, from the absolute clock-eight matrix
+$\left(\begin{smallmatrix}3&1\\8&3\end{smallmatrix}\right)$.
+That estimate alone does not replace source distance by boundary
+distance; the extra inverse is precisely the earlier §15.2 result
+on its declared preimage. None of these coefficient-world maps
+identifies a phase sheet or a conditional distribution on the
+Heisenberg source fibers. Theorem 3.1 therefore keeps its exact
+fixed-link, full-source and original-time hypotheses under both
+outside conventions.
+
+The coefficient-world response and the Heisenberg source in this
+volume share neither a state-space identification nor a hidden
+coordinate. No response bound from that public supplier is used as a
+conditional law or as evidence for a finite-cover recovery route.
 
 ## 追加锚（本行以下为增补区）
