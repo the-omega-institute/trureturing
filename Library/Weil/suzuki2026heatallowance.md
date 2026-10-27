@@ -1,3 +1,16 @@
+---
+bibkey: suzuki2026heatallowance
+authors: Masatoshi Suzuki
+year: 2026
+title: Weil's quadratic form via the screw function
+doi: null
+url: https://arxiv.org/abs/2606.09096v3
+claim: Repository continuation of the screw-kernel source - under RH(T) the complete energy satisfies E(F) >= -C (log T)^(-4/5) M(F) for T >= 3 and every source in the class V, with an absolute constant C; optimality of the exponent 4/5 is not claimed.
+strata_touched: []
+license: citation-only
+triage: anchor
+---
+
 # Quadratic heat loss and the four-fifths height allowance
 
 This continuation uses the definitions and normalizations in [the screw-kernel source](suzuki2026screw.md), specifically W257 and W338--W371. The class $\mathcal V$, the complete energy $\mathfrak E$, the sixth-moment budget $M$, the actual source profile $g_F$, its logarithmic Fourier budget $\mathcal L$, and the minima $e_K$ retain exactly those definitions. The premise $\mathsf{RH}(T)$ states that every actual zeta zero through height $T$ is on the critical line; no condition is imposed on the remaining zeros.
