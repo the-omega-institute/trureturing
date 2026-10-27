@@ -265,6 +265,108 @@ theorem native_geometry {k : ℕ} (hk : 3 ≤ k) (t : ℕ) (p : Fin k)
   · simpa only [← hit_phase (by ((try dsimp only [g, neg] at *); source_arith) : 0 < k)] using hxL
   · have hh := hb (hit k 2 p); ((try dsimp only [g, neg] at *); source_arith)
 
+/-- A native expanding source has no physical occurrence of Q-1.
+The proof enumerates the actual k-cycle from that value; it assumes no
+injectivity of numerical source values. -/
+theorem actual_source_ne_q_sub_one
+    (k t : ℕ) (hk : 3 ≤ k) (p : Fin k)
+    (hpositive : 0 < s k t p)
+    (hnlarge : Q k ≤ |s k t (hit k 1 p)|)
+    (hexpand : N k < 3 * |s k t p|) :
+    ∀ i : Fin k, s k t i ≠ Q k - 1 := by
+  obtain ⟨hQ, hN, hC, hNpos, _hNodd⟩ := source_geometry hk
+  change 2 ≤ Q k at hQ
+  change N k = 4 * Q k - 1 at hN
+  change C k = 2 * Q k - 1 at hC
+  change 0 < N k at hNpos
+  have geo := native_geometry hk t p hnlarge hexpand
+  have hex : N k < 3 * s k t p := by
+    simpa only [abs_of_pos hpositive] using hexpand
+  have hbudget : 2 * s k t p ≤ 3 * Q k - 1 := by
+    have hb := geo.budget
+    rw [abs_of_pos hpositive] at hb
+    omega
+  have hkfour : 4 ≤ k := by
+    by_contra h
+    have hkthree : k = 3 := by omega
+    subst k
+    norm_num [N, modulus, Q, quarter] at hbudget hex
+    omega
+  have hQfour : 4 ≤ Q k := by
+    have hp := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2)
+      (show 2 ≤ k - 2 by omega)
+    calc
+      4 = (2 : ℤ) ^ 2 := by norm_num
+      _ ≤ Q k := by simpa only [Q, quarter] using hp
+  intro i hi
+  let w : ℕ → ℤ := fun j => s k t (phase (by omega) i j)
+  have hwzero : w 0 = Q k - 1 := by simpa only [w, phase_zero] using hi
+  have hstep (j : ℕ) : w (j + 1) = doubleStep (N k) (w j) := by
+    exact phase_step hk t i j
+  have hwone : w 1 = 2 * Q k - 2 := by
+    have hs := hstep 0
+    rw [Nat.zero_add, hwzero, doubleStep, if_neg (by omega), if_neg (by omega)] at hs
+    omega
+  have hwtwo : w 2 = -3 := by
+    have hs := hstep 1
+    norm_num at hs
+    rw [hwone, doubleStep, if_pos (by omega)] at hs
+    omega
+  have htail : ∀ m : ℕ, m + 2 < k → w (m + 2) = -3 * (2 : ℤ) ^ m := by
+    intro m
+    induction m with
+    | zero =>
+        intro _
+        simpa only [Nat.zero_add, pow_zero, mul_one] using hwtwo
+    | succ m ih =>
+        intro hm
+        have hmold : m + 2 < k := by omega
+        have hiold := ih hmold
+        have hpowfour : 4 * (2 : ℤ) ^ m ≤ Q k := by
+          have hp := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2)
+            (show m + 2 ≤ k - 2 by omega)
+          have hpform : (2 : ℤ) ^ (m + 2) = 4 * (2 : ℤ) ^ m := by
+            rw [pow_add]
+            ring
+          rw [hpform] at hp
+          simpa only [Q, quarter] using hp
+        have hpowpos : 0 < (2 : ℤ) ^ m := pow_pos (by norm_num) _
+        rw [show m.succ + 2 = (m + 2) + 1 by omega, hstep, hiold,
+          doubleStep, if_neg (by nlinarith), if_neg (by nlinarith), pow_succ]
+        ring
+  -- The phase covers every physical label in fewer than k steps, even
+  -- when the numerical source has a shorter period.
+  obtain ⟨j, hj, hjp⟩ : ∃ j : ℕ, j < k ∧ phase (by omega) i j = p := by
+    by_cases hip : i.val ≤ p.val
+    · refine ⟨p.val - i.val, by omega, ?_⟩
+      apply Fin.ext
+      change (i.val + (p.val - i.val)) % k = p.val
+      have he : i.val + (p.val - i.val) = p.val := by omega
+      rw [he, Nat.mod_eq_of_lt p.isLt]
+    · refine ⟨k + p.val - i.val, by omega, ?_⟩
+      apply Fin.ext
+      change (i.val + (k + p.val - i.val)) % k = p.val
+      have he : i.val + (k + p.val - i.val) = k + p.val := by omega
+      rw [he]
+      simp only [Nat.add_mod, Nat.mod_self, zero_add, Nat.mod_eq_of_lt p.isLt]
+  have hwp : w j = s k t p := by
+    dsimp only [w]
+    rw [hjp]
+  by_cases hjzero : j = 0
+  · subst j
+    rw [hwzero] at hwp
+    omega
+  by_cases hjone : j = 1
+  · subst j
+    rw [hwone] at hwp
+    omega
+  have hjtwo : 2 ≤ j := by omega
+  have hjform : j = (j - 2) + 2 := by omega
+  have hneg := htail (j - 2) (by omega)
+  rw [← hjform, hwp] at hneg
+  have hpowpos : 0 < (2 : ℤ) ^ (j - 2) := pow_pos (by norm_num) _
+  nlinarith
+
 /-- The positive-coordinate construction allows an arbitrary initial height.
 For negative native orientation that height is C, while the ACTUAL word still starts at zero. -/
 private theorem positive_construction {α : Type*} (f : α → ℤ) (cap q h0 : ℤ)
