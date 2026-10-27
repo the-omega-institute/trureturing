@@ -6,7 +6,8 @@
    utility: none
    digest: Cubic price expansion bounds the actual-prime error on the full selected domain.
 
-UNCOMPILED CANDIDATE, 2026-10-27. No Lean process has checked this file.
+WIP CANDIDATE, 2026-10-27. Native elaboration is in progress;
+no successful build is yet asserted.
 
 Purpose: a cubic-in-price approximation of the literal selected-Euler kernel,
 with absolute centered actual-prime error at most 40 ell^(-1/10) M on the
@@ -107,21 +108,27 @@ private theorem densityD3_eq_negativeKernel {t : ℝ} (ht : 1 < t) :
 private theorem activationDensity_hasDerivAt {t : ℝ} (ht : 1 < t) :
     HasDerivAt activationDensity (densityD1 t) t := by
   have he : activationDensity =ᶠ[𝓝 t] positiveKernel 1 0 0 :=
-    (isOpen_Ioi.mem_nhds (show t ∈ Ioi (1 : ℝ) from ht)).mono fun x hx => density_eq_positiveKernel hx
+    by
+      filter_upwards [isOpen_Ioi.mem_nhds ht] with x hx
+      exact density_eq_positiveKernel hx
   exact ((hasDerivAt_positiveKernel 1 0 0 ht).congr_of_eventuallyEq he).congr_deriv
     (densityD1_eq_negativeKernel ht).symm
 
 private theorem densityD1_hasDerivAt {t : ℝ} (ht : 1 < t) :
     HasDerivAt densityD1 (densityD2 t) t := by
   have he : densityD1 =ᶠ[𝓝 t] (fun x => -positiveKernel 2 0 0 x) :=
-    (isOpen_Ioi.mem_nhds (show t ∈ Ioi (1 : ℝ) from ht)).mono fun x hx => densityD1_eq_negativeKernel hx
+    by
+      filter_upwards [isOpen_Ioi.mem_nhds ht] with x hx
+      exact densityD1_eq_negativeKernel hx
   have h := ((hasDerivAt_positiveKernel 2 0 0 ht).neg).congr_of_eventuallyEq he
   simpa only [neg_neg, ← densityD2_eq_positiveKernel ht] using h
 
 private theorem densityD2_hasDerivAt {t : ℝ} (ht : 1 < t) :
     HasDerivAt densityD2 (densityD3 t) t := by
   have he : densityD2 =ᶠ[𝓝 t] positiveKernel 3 0 0 :=
-    (isOpen_Ioi.mem_nhds (show t ∈ Ioi (1 : ℝ) from ht)).mono fun x hx => densityD2_eq_positiveKernel hx
+    by
+      filter_upwards [isOpen_Ioi.mem_nhds ht] with x hx
+      exact densityD2_eq_positiveKernel hx
   exact ((hasDerivAt_positiveKernel 3 0 0 ht).congr_of_eventuallyEq he).congr_deriv
     (densityD3_eq_negativeKernel ht).symm
 
@@ -227,7 +234,7 @@ private theorem density_quadratic_error {t H v : ℝ} (ht : 3 ≤ t) (hH : 0 ≤
     have hh := nonneg_of_deriv_nonneg hH
       (F := fun u => C*u-E₂ u) (F' := fun u => C+ densityD3 (t+u))
       (fun u hu => by
-        convert ((hasDerivAt_id u).const_mul C).sub (hE₂ u hu) using 1 <;> (try funext x) <;> dsimp [id, Function.comp_def] <;> ring)
+        convert ((hasDerivAt_id u).const_mul C).sub (hE₂ u hu) using 1 <;> (try funext x) <;> (try dsimp [id, Function.comp_def]) <;> ring)
       (by simp [E₂]) (fun u hu => by linarith [(hC u hu).2])
     intro u hu
     linarith [hh u hu]
@@ -238,7 +245,7 @@ private theorem density_quadratic_error {t H v : ℝ} (ht : 3 ≤ t) (hH : 0 ≤
       (F := fun u => C*u^2/2-E₁ u) (F' := fun u => C*u-E₂ u)
       (fun u hu => by
         convert ((((hasDerivAt_id u).pow 2).const_mul C).div_const 2).sub
-          (hE₁ u hu) using 1 <;> (try funext x) <;> dsimp [id, Function.comp_def] <;> ring)
+          (hE₁ u hu) using 1 <;> (try funext x) <;> (try dsimp [id, Function.comp_def]) <;> ring)
       (by simp [E₁]) (fun u hu => by linarith [h₂hi u hu])
     intro u hu
     linarith [hh u hu]
@@ -249,7 +256,7 @@ private theorem density_quadratic_error {t H v : ℝ} (ht : 3 ≤ t) (hH : 0 ≤
       (F := fun u => C*u^3/6-E₀ u) (F' := fun u => C*u^2/2-E₁ u)
       (fun u hu => by
         convert ((((hasDerivAt_id u).pow 3).const_mul C).div_const 6).sub
-          (hE₀ u hu) using 1 <;> (try funext x) <;> dsimp [id, Function.comp_def] <;> ring)
+          (hE₀ u hu) using 1 <;> (try funext x) <;> (try dsimp [id, Function.comp_def]) <;> ring)
       (by simp [E₀, densityQuadratic]) (fun u hu => by linarith [h₁hi u hu])
     intro u hu
     linarith [hh u hu]
@@ -298,7 +305,9 @@ private theorem integral_density_shift {t a b : ℝ} (hta : 1 < t+a) (hab : a �
       (continuousAt_const.add continuousAt_id)).continuousWithinAt
   calc
     _ = (-g (t+b)) - (-g (t+a)) :=
-      intervalIntegral.integral_eq_sub_of_hasDerivAt hd hi
+      intervalIntegral.integral_eq_sub_of_hasDerivAt
+        (a := a) (b := b) (f := fun u : ℝ => -g (t+u))
+        (f' := fun u : ℝ => activationDensity (t+u)) hd hi
     _ = _ := by ring
 
 private theorem cubic_kernel_error {t H d u : ℝ} (ht : 3 ≤ t) (hH : 0 ≤ H)
@@ -485,7 +494,7 @@ def cubicPrimeResponse (R t H d : ℝ) : ℝ :=
 
 private theorem actual_prime_centered_error {R t H d : ℝ} (ht : 3 ≤ t) (hH : 0 ≤ H)
     (hd : 0 < d)
-    (hGMmass : (∑ q ∈ actualPrimes R t H, Real.log q) ≤ 3*H) :
+    (hGMmass : (∑ q ∈ actualPrimes R t H, Real.log q) ≤ 3 * H) :
     |actualPrimeResponse R t H d - cubicPrimeResponse R t H d| ≤
       40 * H^5 / (t^3*d) := by
   have ht0 : 0 < t := by linarith
@@ -548,7 +557,7 @@ private theorem cubic_scale_identity {t : ℝ} (ht : 0 < t) :
 
 private theorem actual_prime_scaled_error {R t : ℝ} (ht : 3 ≤ t)
     (hGMmass : (∑ q ∈ actualPrimes R t (windowLength t), Real.log q) ≤
-      3*windowLength t) :
+      3 * windowLength t) :
     |actualPrimeResponse R t (windowLength t) (normalization t) -
       cubicPrimeResponse R t (windowLength t) (normalization t)| ≤
         40 * t ^ (-1 / 10 : ℝ) := by
@@ -565,7 +574,7 @@ theorem complete_selected_actual_prime_error
     (X : OriginalWindow) {ell R : ℝ} (hell : 243 ≤ ell)
     (hbounds : OriginalBounds X ell R)
     (hGMmass : ∀ t ∈ selectedDomain X,
-      (∑ q ∈ actualPrimes R t (windowLength t), Real.log q) ≤ 3*windowLength t)
+      (∑ q ∈ actualPrimes R t (windowLength t), Real.log q) ≤ 3 * windowLength t)
     (hactual : IntegrableOn (fun t =>
       canonicalActualPrimeResponse R t (windowLength t) (normalization t)) (selectedDomain X))
     (hcubic : IntegrableOn (fun t =>
@@ -579,7 +588,7 @@ theorem complete_selected_actual_prime_error
   have hmeas : MeasurableSet (selectedDomain X) := (domain_compact X).measurableSet
   have hfinite : volume (selectedDomain X) ≠ ⊤ :=
     (domain_compact X).measure_lt_top.ne
-  letI : IsFiniteMeasure (volume.restrict (selectedDomain X)) :=
+  let : IsFiniteMeasure (volume.restrict (selectedDomain X)) :=
     ⟨by simpa using lt_top_iff_ne_top.mpr hfinite⟩
   have hpoint : ∀ t ∈ selectedDomain X,
       ‖canonicalActualPrimeResponse R t (windowLength t) (normalization t) -
