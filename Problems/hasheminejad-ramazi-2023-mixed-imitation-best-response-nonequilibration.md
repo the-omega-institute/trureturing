@@ -73,9 +73,10 @@ Tier 1 question from the 2023 IEEE Control Systems Letters paper, preregistered 
 
 | declaration | proof_shape | escape_witness | admission_basis |
 | --- | --- | --- | --- |
-| `result` | bind-only | none: the four-agent witness, finite utility computations, periodicity, and non-equilibrium argument are consumed on its proof path | open-problem-resolution |
+| `result` | content | none: the four-agent witness, finite utility computations, periodicity, and non-equilibrium argument are consumed on its proof path | open-problem-resolution |
+| `trajectory_period`, `trajectory_reduce`, `never_equilibrium` (private) | content | none: inductions on time consumed on the proof path of `result` | open-problem-resolution |
 | `utility`, `hasMaximizer`, `update`, `step`, `traj`, `IsEquilibrium`, `IsPersistent`, `claim` | bind-only | none: definitions used by `result` | open-problem-resolution |
-| private witness and helper theorems | bind-only | none: consumed on the proof path of `result` | open-problem-resolution |
+| other private witness and helper declarations | bind-only | none: consumed on the proof path of `result` | open-problem-resolution |
 
 The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; the per-declaration proof shapes are listed above. There is no digestion atom.
 
