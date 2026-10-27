@@ -11,7 +11,6 @@ module
 public import Mathlib.Algebra.BigOperators.Fin
 public import Mathlib.Data.Matrix.Mul
 public import Mathlib.Basic.Real.Basic
-public import Mathlib.Data.Finset.Max
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
