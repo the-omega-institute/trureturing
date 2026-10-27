@@ -212,9 +212,171 @@ private lemma output_at_ones :
 private lemma input_bound (z : Fin 4 → ℂ) (hz : ∀ j, ‖z j‖ = 1) :
     (star z ⬝ᵥ (rho *ᵥ z)).re / (4 : ℝ) ≤ 1 / 2 - 1 / 200 := by sorry
 
-private lemma output_lower : 1 / 2 ≤ coherenceFraction (phi rho) := by sorry
+private lemma norm_defect (u w : ℂ) (hu : ‖u‖ ≤ 7 / 5) (hw : ‖w‖ = 1) :
+    (‖u‖ ^ 2 - 1) ^ 2 ≤ 144 / 25 * ‖w - u‖ ^ 2 := by
+  have hd : |‖u‖ - 1| ≤ ‖w - u‖ := by
+    simpa [hw, norm_sub_rev] using abs_norm_sub_norm_le u w
+  have hd2 : (‖u‖ - 1) ^ 2 ≤ ‖w - u‖ ^ 2 := by
+    nlinarith [sq_abs (‖u‖ - 1), sq_le_sq₀ (abs_nonneg (‖u‖ - 1))
+      (norm_nonneg (w - u)) |>.2 hd]
+  have hs : (‖u‖ + 1) ^ 2 ≤ 144 / 25 := by nlinarith [norm_nonneg u]
+  calc
+    (‖u‖ ^ 2 - 1) ^ 2 = (‖u‖ - 1) ^ 2 * (‖u‖ + 1) ^ 2 := by ring
+    _ ≤ ‖w - u‖ ^ 2 * (144 / 25) :=
+      mul_le_mul hd2 hs (sq_nonneg _) (sq_nonneg _)
+    _ = _ := by ring
 
-private lemma input_upper : coherenceFraction rho ≤ 1 / 2 - 1 / 200 := by sorry
+private lemma torus_defect (x y w t : ℂ)
+    (hx : ‖x‖ = 1) (hy : ‖y‖ = 1) (hw : ‖w‖ = 1) (ht : ‖t‖ = 1) :
+    4 / 25 ≤ ‖w - (3 * x + 4 * y) / 5‖ ^ 2 +
+      ‖t - (3 * x + 4 * Complex.I * y) / 5‖ ^ 2 := by
+  let u := (3 * x + 4 * y) / 5
+  let v := (3 * x + 4 * Complex.I * y) / 5
+  have hu : ‖u‖ ≤ 7 / 5 := by
+    calc
+      ‖u‖ = ‖3 * x + 4 * y‖ / 5 := by simp [u, norm_div]
+      _ ≤ (‖3 * x‖ + ‖4 * y‖) / 5 := div_le_div_of_nonneg_right
+        (norm_add_le _ _) (by norm_num)
+      _ = _ := by simp [norm_mul, hx, hy]; norm_num
+  have hv : ‖v‖ ≤ 7 / 5 := by
+    calc
+      ‖v‖ = ‖3 * x + 4 * Complex.I * y‖ / 5 := by simp [v, norm_div]
+      _ ≤ (‖3 * x‖ + ‖4 * Complex.I * y‖) / 5 := div_le_div_of_nonneg_right
+        (norm_add_le _ _) (by norm_num)
+      _ = _ := by simp [norm_mul, hx, hy]; norm_num
+  have hsum : (‖u‖ ^ 2 - 1) ^ 2 + (‖v‖ ^ 2 - 1) ^ 2 = 576 / 625 := by
+    have hx2 : x.re ^ 2 + x.im ^ 2 = 1 := by
+      calc
+        x.re ^ 2 + x.im ^ 2 = Complex.normSq x := by
+          simp [Complex.normSq_apply]
+          ring
+        _ = ‖x‖ ^ 2 := (Complex.sq_norm x).symm
+        _ = 1 := by rw [hx]; norm_num
+    have hy2 : y.re ^ 2 + y.im ^ 2 = 1 := by
+      calc
+        y.re ^ 2 + y.im ^ 2 = Complex.normSq y := by
+          simp [Complex.normSq_apply]
+          ring
+        _ = ‖y‖ ^ 2 := (Complex.sq_norm y).symm
+        _ = 1 := by rw [hy]; norm_num
+    have hu2 : ‖u‖ ^ 2 = 1 + 24 / 25 * (x.re * y.re + x.im * y.im) := by
+      rw [Complex.sq_norm]
+      simp [u, Complex.normSq_apply, div_eq_mul_inv]
+      ring_nf
+      nlinarith [hx2, hy2]
+    have hv2 : ‖v‖ ^ 2 = 1 + 24 / 25 * (x.im * y.re - x.re * y.im) := by
+      rw [Complex.sq_norm]
+      simp [v, Complex.normSq_apply, div_eq_mul_inv]
+      ring_nf
+      nlinarith [hx2, hy2]
+    have hxy : (x.re ^ 2 + x.im ^ 2) * (y.re ^ 2 + y.im ^ 2) = 1 := by
+      rw [hx2, hy2]
+      norm_num
+    rw [hu2, hv2]
+    nlinarith [hxy]
+  have h₁ := norm_defect u w hu hw
+  have h₂ := norm_defect v t hv ht
+  change 4 / 25 ≤ ‖w - u‖ ^ 2 + ‖t - v‖ ^ 2
+  nlinarith
+
+private lemma residual_functional_bound (a b c d : ℂ) :
+    ‖c - (3 * a + 4 * b) / 5‖ ^ 2 +
+      ‖d - (3 * a + 4 * Complex.I * b) / 5‖ ^ 2 ≤
+      4 * (‖a‖ ^ 2 + ‖b‖ ^ 2 + ‖c‖ ^ 2 + ‖d‖ ^ 2) := by
+  have h₁ : ‖c - (3 * a + 4 * b) / 5‖ ≤
+      ‖c‖ + (3 * ‖a‖ + 4 * ‖b‖) / 5 := by
+    calc
+      ‖c - (3 * a + 4 * b) / 5‖ ≤ ‖c‖ + ‖(3 * a + 4 * b) / 5‖ := norm_sub_le _ _
+      _ ≤ ‖c‖ + (3 * ‖a‖ + 4 * ‖b‖) / 5 := by
+        norm_num only [norm_div, Complex.norm_ofNat]
+        apply add_le_add_right
+        apply div_le_div_of_nonneg_right
+        · calc
+            ‖3 * a + 4 * b‖ ≤ ‖3 * a‖ + ‖4 * b‖ := norm_add_le _ _
+            _ = 3 * ‖a‖ + 4 * ‖b‖ := by simp
+        · norm_num
+  have h₂ : ‖d - (3 * a + 4 * Complex.I * b) / 5‖ ≤
+      ‖d‖ + (3 * ‖a‖ + 4 * ‖b‖) / 5 := by
+    calc
+      ‖d - (3 * a + 4 * Complex.I * b) / 5‖ ≤
+          ‖d‖ + ‖(3 * a + 4 * Complex.I * b) / 5‖ := norm_sub_le _ _
+      _ ≤ ‖d‖ + (3 * ‖a‖ + 4 * ‖b‖) / 5 := by
+        norm_num only [norm_div, Complex.norm_ofNat]
+        apply add_le_add_right
+        apply div_le_div_of_nonneg_right
+        · calc
+            ‖3 * a + 4 * Complex.I * b‖ ≤ ‖3 * a‖ + ‖4 * Complex.I * b‖ := norm_add_le _ _
+            _ = 3 * ‖a‖ + 4 * ‖b‖ := by simp
+        · norm_num
+  have h₁s : ‖c - (3 * a + 4 * b) / 5‖ ^ 2 ≤
+      (‖c‖ + (3 * ‖a‖ + 4 * ‖b‖) / 5) ^ 2 :=
+    (sq_le_sq₀ (norm_nonneg _) (by positivity)).2 h₁
+  have h₂s : ‖d - (3 * a + 4 * Complex.I * b) / 5‖ ^ 2 ≤
+      (‖d‖ + (3 * ‖a‖ + 4 * ‖b‖) / 5) ^ 2 :=
+    (sq_le_sq₀ (norm_nonneg _) (by positivity)).2 h₂
+  have h₁c : (‖c‖ + (3 * ‖a‖ + 4 * ‖b‖) / 5) ^ 2 ≤
+      2 * (‖a‖ ^ 2 + ‖b‖ ^ 2 + ‖c‖ ^ 2) := by
+    nlinarith [sq_nonneg (4 * ‖a‖ - 3 * ‖b‖),
+      sq_nonneg (5 * ‖a‖ - 3 * ‖c‖), sq_nonneg (5 * ‖b‖ - 4 * ‖c‖)]
+  have h₂c : (‖d‖ + (3 * ‖a‖ + 4 * ‖b‖) / 5) ^ 2 ≤
+      2 * (‖a‖ ^ 2 + ‖b‖ ^ 2 + ‖d‖ ^ 2) := by
+    nlinarith [sq_nonneg (4 * ‖a‖ - 3 * ‖b‖),
+      sq_nonneg (5 * ‖a‖ - 3 * ‖d‖), sq_nonneg (5 * ‖b‖ - 4 * ‖d‖)]
+  nlinarith
+
+private lemma projection_energy (z : Fin 4 → ℂ) :
+    (star z ⬝ᵥ (p *ᵥ z)).re +
+        ∑ i, ‖z i - (p *ᵥ z) i‖ ^ 2 = ∑ i, ‖z i‖ ^ 2 := by
+  simp [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, p, Complex.sq_norm,
+    Complex.normSq_apply, Pi.star_apply, Complex.star_def]
+  ring_nf
+
+private lemma p_functionals (z : Fin 4 → ℂ) :
+    ((p *ᵥ z) 2 - (3 * (p *ᵥ z) 0 + 4 * (p *ᵥ z) 1) / 5 = 0) ∧
+      ((p *ᵥ z) 3 - (3 * (p *ᵥ z) 0 + 4 * Complex.I * (p *ᵥ z) 1) / 5 = 0) := by
+  constructor <;>
+    simp [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, p, Complex.ext_iff,
+      Complex.I_sq, div_eq_mul_inv] <;>
+    norm_num <;> constructor <;> ring
+
+private lemma defect_identities (z : Fin 4 → ℂ) :
+    z 2 - (3 * z 0 + 4 * z 1) / 5 =
+      ((z - p *ᵥ z) 2 - (3 * (z - p *ᵥ z) 0 + 4 * (z - p *ᵥ z) 1) / 5) ∧
+    z 3 - (3 * z 0 + 4 * Complex.I * z 1) / 5 =
+      ((z - p *ᵥ z) 3 -
+        (3 * (z - p *ᵥ z) 0 + 4 * Complex.I * (z - p *ᵥ z) 1) / 5) := by
+  rcases p_functionals z with ⟨h₁, h₂⟩
+  constructor
+  · calc
+      z 2 - (3 * z 0 + 4 * z 1) / 5 =
+          ((z - p *ᵥ z) 2 - (3 * (z - p *ᵥ z) 0 + 4 * (z - p *ᵥ z) 1) / 5) +
+            ((p *ᵥ z) 2 - (3 * (p *ᵥ z) 0 + 4 * (p *ᵥ z) 1) / 5) := by
+              simp only [Pi.sub_apply]
+              ring
+      _ = _ := by rw [h₁, add_zero]
+  · calc
+      z 3 - (3 * z 0 + 4 * Complex.I * z 1) / 5 =
+          ((z - p *ᵥ z) 3 -
+            (3 * (z - p *ᵥ z) 0 + 4 * Complex.I * (z - p *ᵥ z) 1) / 5) +
+            ((p *ᵥ z) 3 -
+              (3 * (p *ᵥ z) 0 + 4 * Complex.I * (p *ᵥ z) 1) / 5) := by
+              simp only [Pi.sub_apply]
+              ring
+      _ = _ := by rw [h₂, add_zero]
+
+private lemma output_lower : 1 / 2 ≤ coherenceFraction (phi rho) := by
+  unfold coherenceFraction
+  apply le_csSup (coherence_bddAbove (phi rho))
+  refine ⟨ones, ?_, output_at_ones.symm⟩
+  intro j
+  simp [ones]
+
+private lemma input_upper : coherenceFraction rho ≤ 1 / 2 - 1 / 200 := by
+  unfold coherenceFraction
+  refine csSup_le ?_ ?_
+  · exact ⟨_, ones, (by simp [ones]), rfl⟩
+  rintro r ⟨z, hz, rfl⟩
+  exact input_bound z hz
 
 theorem result : ¬ claim := by
   intro h
