@@ -221,8 +221,9 @@ private lemma channel_bloch (r : EuclideanSpace ℝ (Fin 3)) :
   change (1/2 : ℂ) • blochMatrix 1 r +
     (Matrix.trace (blochMatrix 1 r) / 2) • !![(3/4 : ℂ), 0; 0, 1/4] = _
   rw [blochMatrix_trace]
+  unfold blochMatrix
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [blochMatrix] <;> ring
+  fin_cases i <;> fin_cases j <;> simp <;> ring
 
 private lemma channel_cptp : IsCPTP channel := by
   let k : Fin 5 → Matrix (Fin 2) (Fin 2) ℂ :=
