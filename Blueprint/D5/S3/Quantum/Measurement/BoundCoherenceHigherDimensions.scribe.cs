@@ -105,7 +105,10 @@ internal sealed class BoundCoherenceHigherDimensionsDocument : IScribeDocumentDe
                             + "For each smaller positive mode the output trace norm is zero and the input trace norm is nonnegative. "
                             + "These two cases cover every j from one through d minus one. Together with positivity, unit trace, coherence and nonmaximality, "
                             + "they establish the asserted existence for every d at least three."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("stratton-hsieh-skrzypczyk-2025-bound-coherence-higher-dimensions"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, string prose, AssessedProvenance provenance) =>
