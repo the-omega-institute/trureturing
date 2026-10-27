@@ -112,60 +112,6 @@ internal sealed class CommutingMidpointDocument : IScribeDocumentDefinition
                 + "recomputes pair-dependent polar references; these need not equal the transported midpoint. "
                 + "The results below concern this positive commuting-input family and the failure of "
                 + "scalar-balance necessity. They give no full classification of Good triples.")),
-            Entry("rootFidelity", "Root fidelity",
-                For(Seq(Bound("n",V("Type")), OpenBracket,Call("Fintype",V("n")),CloseBracket,
-                    OpenBracket,Call("DecidableEq",V("n")),CloseBracket,
-                    Bound("S,T",Call("Matrix",V("n"),V("n"),Seq(Mathbb,Grp(V("C")))))),
-                    Seq(U(V("S"),V("T")),Eq,ReOf(Call("tr",SqrtOf(Seq(SqrtOf(V("S")),V("T"),SqrtOf(V("S")))))))),
-                "For matrices on any finite decidable index type, U(S,T) is the real trace of "
-                + "sqrt(sqrt(S) T sqrt(S)). This is root fidelity, without a final square.", DescribeRole.Definition, true),
-            Entry("bures_eq_weighted_root_norm_sq", "The weighted-root norm identity",
-                For(Seq(Bound("n",V("Type")), OpenBracket,Call("Fintype",V("n")),CloseBracket,
-                    OpenBracket,Call("DecidableEq",V("n")),CloseBracket,
-                    Bound("S,V,T",Call("Matrix",V("n"),V("n"),Seq(Mathbb,Grp(V("C")))))),
-                    Seq(And(Call("PSD",V("S")),Call("PSD",V("V")),Call("PD",V("T"))),Rightarrow,Sp,
-                        Br(V("T"),V("S"),V("V")),Eq,Sq(Seq(Vert,Sp,Call("inv",SqrtOf(V("T"))),Open,
-                        SqrtOf(Seq(SqrtOf(V("T")),V("S"),SqrtOf(V("T")))),Minus,
-                        SqrtOf(Seq(SqrtOf(V("T")),V("V"),SqrtOf(V("T")))),Close,Vert)))),
-                "For every finite decidable index type, PSD S,V and PD T, B(T,S,V) equals the "
-                + "squared Frobenius norm displayed above. No trace normalization is required. "
-                + "Expand the norm using the Frobenius trace identity. The diagonal terms are tr(S), "
-                + "tr(V); the two cross terms have equal real parts because they are conjugate traces. "
-                + "This proves nonnegativity even for singular S or V.", literature: true),
-            Entry("qubit_root_fidelity_quotient", "The actual qubit quotient",
-                All("S,V,T", Seq(And(State(V("S")),State(V("V")),Call("PD",V("T")),
-                    Seq(Call("tr",V("T")),Eq,D(1))),Rightarrow,Sp,
-                    And(Seq(D(0),Lt,U(V("T"),V("S"))),Seq(D(0),Lt,U(V("T"),V("V"))),
-                    Seq(ReOf(Fr(V("T"),V("S"),V("V"))),Eq,Frac,
-                        Grp(Sq(U(V("T"),V("S"))),Plus,Sq(U(V("T"),V("V"))),Plus,Sq(U(V("S"),V("V"))),Minus,D(1)),
-                        Grp(D(2),U(V("T"),V("S")),U(V("T"),V("V"))))))),
-                "Put a=U(T,S), b=U(T,V), c=U(S,V). For every pair of qubit density matrices "
-                + "and every trace-one PD reference T, a and b are strictly positive and the real "
-                + "ordered fidelity is the stated quotient. The proof uses the two-dimensional "
-                + "trace recurrence for actual matrix square roots and determinants, including singular S,V.", literature: true),
-            Entry("binaryFidelity", "Binary root fidelity",
-                All("p,q", Seq(Hf(V("p"), V("q")), Eq,
-                    SqrtOf(Seq(V("p"), V("q"))), Plus,
-                    SqrtOf(Seq(Open, D(1), Minus, V("p"), Close, Open, D(1), Minus, V("q"), Close)))),
-                "H(p,q)=sqrt(pq)+sqrt((1-p)(1-q)); its probabilistic uses have p,q in [0,1].",
-                DescribeRole.Definition),
-            Entry("fidelity_sq_lower_bound_from_half_order", "A half-order lower bound",
-                All("S,T", Seq(State(V("S")), Land, Call("PSD", V("T")), Land,
-                    Call("PSD", Seq(V("T"), Minus, Half, V("S"))), Rightarrow,
-                    Half, Le, Sq(U(V("T"), V("S"))))),
-                "For every density S and PSD T with T-S/2 PSD, U(T,S) squared is at least one half. "
-                + "Congruence by sqrt(S), operator monotonicity of sqrt, and positivity of trace give "
-                + "U(S,T)>=sqrt(1/2). The actual qubit formula proves symmetry U(S,T)=U(T,S). "
-                + "There is no invertibility assumption on S and no trace-one requirement on T."),
-            Entry("classical_binary_preparation_fidelity", "Classical binary preparation",
-                All("p,q,x,y", Seq(And(Seq(D(0),Le,V("p"),Le,D(1)),Seq(D(0),Le,V("q"),Le,D(1)),
-                    Seq(D(0),Le,V("x"),Le,D(1)),Seq(D(0),Le,V("y"),Le,D(1))), Rightarrow,Sp,
-                    Hf(V("p"), V("q")), Le,
-                    Hf(Seq(V("p"), V("x"), Plus, Open, D(1), Minus, V("p"), Close, V("y")),
-                        Seq(V("q"), V("x"), Plus, Open, D(1), Minus, V("q"), Close, V("y"))))),
-                "For all p,q,x,y in the closed unit interval, preparing binary probabilities x,y "
-                + "with mixing probabilities p,q cannot decrease H. Apply Cauchy-Schwarz to each "
-                + "coordinate and add the two inequalities. Zero probabilities are included."),
             Entry("chordVector", "A full Bloch chord",
                 All("d,e,z", Seq(Call("r", V("d"), V("e"), V("z")), Eq, V("d"), Plus,
                     SqrtOf(Seq(D(1), Minus, Sq(Seq(Vert, Sp, V("d"), Vert)))),
