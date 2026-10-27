@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Quantum.Foundation.FiniteDensityPurification
-import Mathlib.LinearAlgebra.Matrix.Kronecker
 
 /-! Uniform populations with coherence between the extremal number levels. -/
 
@@ -64,13 +63,25 @@ private def witness (d : ℕ) : Matrix (Fin d) (Fin d) ℂ :=
     (if r.val = d - 1 ∧ s.val = 0 then 1 else 0) +
     (if r.val = 0 ∧ s.val = d - 1 then 1 else 0))
 
+private theorem witness_diagonal {d : ℕ} (hd : 3 ≤ d) (i : Fin d) :
+    witness d i i = (d : ℂ)⁻¹ := by
+  have h₁ : ¬ (i.val = d - 1 ∧ i.val = 0) := by omega
+  have h₂ : ¬ (i.val = 0 ∧ i.val = d - 1) := by omega
+  simp only [witness, ite_true, h₁, h₂, ite_false, add_zero, mul_one]
+
+private theorem witness_endpoint {d : ℕ} (hd : 3 ≤ d) :
+    witness d ⟨d - 1, by omega⟩ ⟨0, by omega⟩ = (d : ℂ)⁻¹ := by
+  have hn : d - 1 ≠ 0 := by omega
+  simp only [witness, Fin.ext_iff, hn, Ne.symm hn, and_self, ite_true, ite_false,
+    add_zero, zero_add, mul_one]
+
 private theorem total_number_diagonal (d : ℕ) :
     numberOp d ⊗ₖ 1 + 1 ⊗ₖ numberOp d =
       Matrix.diagonal (fun a : Fin d × Fin d => ((a.1.val + a.2.val : ℕ) : ℂ)) := by
   ext a b
   simp only [numberOp, Matrix.add_apply, Matrix.kroneckerMap_apply, Matrix.one_apply,
     Matrix.diagonal_apply, Prod.ext_iff, Nat.cast_add]
-  split_ifs <;> simp_all <;> ring
+  split_ifs <;> simp_all
 
 private theorem allowed_entry_zero {d : ℕ}
     (v : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) (hv : IsAllowedUnitary v)
@@ -106,9 +117,15 @@ private theorem top_gap_tensor {d : ℕ} (hd : 3 ≤ d) (k : Fin d)
     have hea : a = (k, l) := Prod.ext ha₁ ha₂
     have heb : b = (k, z) := Prod.ext hb₁ hb₂
     rw [hea, heb, Matrix.kroneckerMap_apply]
-    simp only [witness, Prod.mk.injEq, Fin.ext_iff]
-    dsimp only [l, z]
-    split_ifs <;> first | omega | (exfalso; tauto) | ring
+    rw [witness_diagonal hd, witness_endpoint hd]
+    have hn : ¬ ((k, l) = (l, k) ∧ (k, z) = (z, k)) := by
+      intro h
+      have h₁ := congrArg (fun p => p.1.val) h.1
+      have h₂ := congrArg (fun p => p.1.val) h.2
+      dsimp [l, z] at h₁ h₂
+      omega
+    rw [ite_eq_right hn, ite_eq_left ⟨rfl, rfl⟩]
+    ring
   · by_cases h₂ : a.1.val = d - 1 ∧ b.1.val = 0
     · have ha₁ : a.1 = l := Fin.ext h₂.1
       have hb₁ : b.1 = z := Fin.ext h₂.2
@@ -116,20 +133,26 @@ private theorem top_gap_tensor {d : ℕ} (hd : 3 ≤ d) (k : Fin d)
       have hb₂ : b.2 = k := Fin.ext (by omega)
       rw [show a = (l, k) from Prod.ext ha₁ ha₂,
         show b = (z, k) from Prod.ext hb₁ hb₂, Matrix.kroneckerMap_apply]
-      simp only [witness, Prod.mk.injEq, Fin.ext_iff]
-      dsimp only [l, z]
-      split_ifs <;> first | omega | (exfalso; tauto) | ring
+      rw [witness_endpoint hd, witness_diagonal hd]
+      have hn : ¬ ((l, k) = (k, l) ∧ (z, k) = (k, z)) := by
+        intro h
+        have h₁ := congrArg (fun p => p.1.val) h.1
+        have h₂ := congrArg (fun p => p.1.val) h.2
+        dsimp [l, z] at h₁ h₂
+        omega
+      rw [ite_eq_left ⟨rfl, rfl⟩, ite_eq_right hn]
+      ring
     · by_cases h₃ : a.1.val = 0 ∧ b.1.val = d - 1
       · omega
       · have hz : witness d a.1 b.1 = 0 := by
-          simp only [witness, h₁, h₂, h₃, if_false, zero_add, mul_zero]
+          simp only [witness, h₁, h₂, h₃, ite_false, zero_add, mul_zero]
         have hn₁ : ¬ (a = (l, k) ∧ b = (z, k)) := by
           rintro ⟨hea, heb⟩
           exact h₂ ⟨congrArg (fun p => p.1.val) hea, congrArg (fun p => p.1.val) heb⟩
         have hn₂ : ¬ (a = (k, l) ∧ b = (k, z)) := by
           rintro ⟨hea, heb⟩
           exact h₁ ((congrArg Prod.fst hea).trans (congrArg Prod.fst heb).symm)
-        rw [Matrix.kroneckerMap_apply, hz, zero_mul, if_neg hn₁, if_neg hn₂]
+        rw [Matrix.kroneckerMap_apply, hz, zero_mul, ite_eq_right hn₁, ite_eq_right hn₂]
         ring
 
 private theorem concentrated_last_entry {d : ℕ} (hd : 3 ≤ d)
@@ -163,7 +186,7 @@ private theorem concentrated_last_entry {d : ℕ} (hd : 3 ≤ d)
   simp_rw [he]
   simp only [ite_and, mul_add, add_mul, mul_ite, ite_mul, mul_one, mul_zero,
     zero_mul, Finset.sum_add_distrib, Finset.sum_ite_irrel, Finset.sum_const_zero,
-    Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+    Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   ring
 
 private theorem interior_term_bound {d : ℕ} (hd : 3 ≤ d)
@@ -219,7 +242,7 @@ private theorem endpoint_terms_bound {d : ℕ} (hd : 3 ≤ d)
       (v r (l, z) + v r (z, l))) = (2 : ℂ) := by
     simp only [star_add, add_mul, mul_add, Finset.sum_add_distrib]
     rw [hcol, hcol, hcol, hcol]
-    simp only [hzl, Ne.symm hzl, if_false, if_true]
+    simp only [hzl, Ne.symm hzl, ite_false, ite_true]
     norm_num
   have htotal : (∑ r, ‖v r (l, z) + v r (z, l)‖ ^ 2) = (2 : ℝ) := by
     simp only [RCLike.star_def, ← Complex.normSq_eq_conj_mul_self,
@@ -325,28 +348,24 @@ private theorem witness_posSemidef {d : ℕ} (hd : 3 ≤ d) :
     ext r s
     simp only [witness, Matrix.smul_apply, Matrix.add_apply, Matrix.vecMulVec_apply,
       Pi.star_apply, Matrix.diagonal_apply, RCLike.real_smul_eq_coe_mul,
-      Complex.ofReal_inv, Complex.ofReal_natCast, u, f, Fin.ext_iff]
-    split_ifs <;> first | omega | (exfalso; tauto) | ring
+      u, f, Fin.ext_iff]
+    split_ifs <;> simp only [map_inv₀, map_natCast, star_one, star_zero, mul_one,
+      mul_zero, zero_mul, zero_add, add_zero] <;> first | omega | ring
   rw [he]
   exact ((Matrix.posSemidef_vecMulVec_self_star u).add hf).smul (by positivity :
     0 ≤ (d : ℝ)⁻¹)
 
 private theorem witness_trace {d : ℕ} (hd : 3 ≤ d) : (witness d).trace = 1 := by
-  have hdiag (i : Fin d) : witness d i i = (d : ℂ)⁻¹ := by
-    simp only [witness, if_true]
-    split_ifs <;> first | omega | ring
   change (∑ i, witness d i i) = 1
-  simp only [hdiag, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+  simp only [witness_diagonal hd, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+    nsmul_eq_mul]
   exact mul_inv_cancel₀ (by exact_mod_cast (show d ≠ 0 by omega))
 
 private theorem witness_coherent {d : ℕ} (hd : 3 ≤ d) :
     witness d * numberOp d ≠ numberOp d * witness d := by
   let l : Fin d := ⟨d - 1, by omega⟩
   let z : Fin d := ⟨0, by omega⟩
-  have hx : witness d l z = (d : ℂ)⁻¹ := by
-    simp only [witness, Fin.ext_iff]
-    dsimp [l, z]
-    split_ifs <;> first | omega | ring
+  have hx : witness d l z = (d : ℂ)⁻¹ := witness_endpoint hd
   intro h
   have he := congrFun₂ h l z
   simp only [numberOp, Matrix.mul_diagonal, Matrix.diagonal_mul, hx] at he
@@ -412,12 +431,12 @@ private theorem last_mode_traceNorm {d : ℕ} (hd : 3 ≤ d)
     change (if (r.val : ℤ) - s.val = (d - 1 : ℕ) then x r s else 0) = _
     by_cases h : r = l ∧ s = z
     · obtain ⟨rfl, rfl⟩ := h
-      rw [if_pos (by dsimp [l, z]; omega), if_pos ⟨rfl, rfl⟩]
+      rw [ite_eq_left (by dsimp [l, z]; omega), ite_eq_left ⟨rfl, rfl⟩]
     · have hg : (r.val : ℤ) - s.val ≠ (d - 1 : ℕ) := by
         intro hg
         apply h
         constructor <;> apply Fin.ext <;> dsimp [l, z] <;> omega
-      rw [if_neg hg, if_neg (fun hh => h ⟨hh.1.symm, hh.2.symm⟩)]
+      rw [ite_eq_right hg, ite_eq_right (fun hh => h ⟨hh.1.symm, hh.2.symm⟩)]
   have hy : (Matrix.single z z (‖x l z‖ : ℂ)).PosSemidef := by
     rw [← Matrix.diagonal_single, Matrix.posSemidef_diagonal_iff]
     intro i
@@ -431,17 +450,14 @@ private theorem last_mode_traceNorm {d : ℕ} (hd : 3 ≤ d)
       Matrix.single_mul_single_same]
     congr 1
     simp only [RCLike.star_def, ← Complex.normSq_eq_conj_mul_self,
-      Complex.normSq_eq_norm_sq, ← Complex.ofReal_mul, ← pow_two, Complex.ofReal_pow]
+      Complex.normSq_eq_norm_sq, ← pow_two, Complex.ofReal_pow]
   rw [modeCoherence, hm, traceNorm, hs, Matrix.trace_single_eq_same]
   rfl
 
 private theorem witness_last_coherence {d : ℕ} (hd : 3 ≤ d) :
     modeCoherence (d - 1 : ℕ) (witness d) = (d : ℝ)⁻¹ := by
   rw [last_mode_traceNorm hd]
-  have hx : witness d ⟨d - 1, by omega⟩ ⟨0, by omega⟩ = (d : ℂ)⁻¹ := by
-    simp only [witness, Fin.ext_iff]
-    split_ifs <;> simp_all <;> first | omega | ring
-  rw [hx, norm_inv, Complex.norm_natCast]
+  rw [witness_endpoint hd, norm_inv, Complex.norm_natCast]
 
 private theorem witness_no_concentration {d : ℕ} (hd : 3 ≤ d)
     (v : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) (hv : IsAllowedUnitary v)
