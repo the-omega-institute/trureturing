@@ -1,13 +1,13 @@
 ---
 bibkey: suzuki2026heatallowance
-authors: The Omega Institute contributors
+authors: Masatoshi Suzuki
 year: 2026
-title: Quadratic heat loss and the four-fifths height allowance
+title: Weil's quadratic form via the screw function
 doi: null
-url: https://github.com/the-omega-institute/trureturing/blob/f108f1335eb9ed0a02569f5a0ef9f363d84a368e/Library/Weil/suzuki2026heatallowance.md
-claim: Project-authored conditional paper derivation of the four-fifths heat-height allowance under RH(T), using the stated source normalizations; this refinement is not attributed to Suzuki's original paper and is not Lean/kernel certified.
+url: https://arxiv.org/abs/2606.09096v3
+claim: Repository continuation of the screw-kernel source - under RH(T) the complete energy satisfies E(F) >= -C (log T)^(-4/5) M(F) for T >= 3 and every source in the class V, with an absolute constant C; optimality of the exponent 4/5 is not claimed.
 strata_touched: []
-license: project-internal
+license: citation-only
 triage: anchor
 ---
 
