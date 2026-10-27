@@ -1,3 +1,15 @@
+---
+bibkey: suzuki2026heatallowance
+authors: trureturing research continuation
+year: 2026
+title: Quadratic heat loss and the four-fifths height allowance
+doi: null
+claim: Internal research continuation deriving the four-fifths logarithmic heat allowance under the stated verified-height hypothesis.
+strata_touched: []
+license: repository-original
+triage: anchor
+---
+
 # Quadratic heat loss and the four-fifths height allowance
 
 This continuation uses the definitions and normalizations in [the screw-kernel source](suzuki2026screw.md), specifically W257 and W338--W371. The class $\mathcal V$, the complete energy $\mathfrak E$, the sixth-moment budget $M$, the actual source profile $g_F$, its logarithmic Fourier budget $\mathcal L$, and the minima $e_K$ retain exactly those definitions. The premise $\mathsf{RH}(T)$ states that every actual zeta zero through height $T$ is on the critical line; no condition is imposed on the remaining zeros.
