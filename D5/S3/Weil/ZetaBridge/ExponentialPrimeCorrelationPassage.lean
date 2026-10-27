@@ -13,7 +13,7 @@ import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.Tactic
 
 /-!
-Persistent candidate, not yet compiled. The full original Weil correlation,
+The full original Weil correlation,
 both signs of log n, every von Mangoldt coefficient and every prime power
 are retained. A fixed exp(-|x|) envelope gives an exp(-3|s|/4) correlation
 majorant, which puts the arithmetic series strictly inside Re(s)>1.
@@ -38,7 +38,8 @@ private def majorant (x : ℝ) : ℝ := exp (-|x| / 4)
 
 private theorem majorant_integrable : Integrable majorant := by
   have hi : Integrable (fun x : ℝ => exp (-|x| / 2)) := by
-    simpa only [Complex.ofReal_re] using integrable_exp_neg_abs_half.re
+    simpa only [RCLike.re_eq_complex_re, Complex.ofReal_re] using
+      integrable_exp_neg_abs_half.re
   have hs := hi.comp_mul_left' (by norm_num : (1 / 2 : ℝ) ≠ 0)
   convert hs using 1
   ext x
@@ -68,7 +69,7 @@ private theorem correlation_bound_pointwise {A : ℝ} (hA : 0 ≤ A)
 private def envelopeConstant (A : ℝ) : ℝ := A ^ 2 * ∫ x : ℝ, majorant x
 
 private theorem envelopeConstant_nonneg (A : ℝ) : 0 ≤ envelopeConstant A :=
-  mul_nonneg (sq_nonneg A) (integral_nonneg fun x => (exp_pos _).le)
+  mul_nonneg (sq_nonneg A) (integral_nonneg fun _ => (exp_pos _).le)
 
 private theorem correlation_bound {A : ℝ} (hA : 0 ≤ A)
     {f : ℝ → ℂ} (hc : Continuous f)
@@ -76,7 +77,9 @@ private theorem correlation_bound {A : ℝ} (hA : 0 ≤ A)
     Integrable (fun x : ℝ => f x * conj (f (x-s))) ∧
       ‖weilTest f f s‖ ≤ envelopeConstant A * exp (-3 * |s| / 4) := by
   have hm := majorant_integrable.const_mul (A ^ 2 * exp (-3 * |s| / 4))
-  have hb := Eventually.of_forall (correlation_bound_pointwise hA hf s)
+  have hb : ∀ᵐ x : ℝ ∂volume, ‖f x * conj (f (x-s))‖ ≤
+      (A ^ 2 * exp (-3 * |s| / 4)) * majorant x :=
+    Eventually.of_forall (correlation_bound_pointwise hA hf s)
   have hmeas : AEStronglyMeasurable
       (fun x : ℝ => f x * conj (f (x-s))) volume :=
     (hc.mul (Complex.continuous_conj.comp
@@ -155,7 +158,9 @@ private theorem primeTerm_bound {A : ℝ} (hA : 0 ≤ A)
           ((n : ℝ) ^ (-(1 / 2) : ℝ) * (n : ℝ) ^ (-3 / 4 : ℝ)) := by
         rw [hexp, sqrt_eq_rpow, div_eq_mul_inv, ← rpow_neg hn0.le]
         ring
-      _ = _ := by rw [hpower, rpow_neg hn0.le, div_eq_mul_inv]
+      _ = _ := by
+        rw [hpower, rpow_neg hn0.le]
+        exact (div_eq_mul_inv _ _).symm
   rw [primeTerm, norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hcoef]
   calc
     _ ≤ (ArithmeticFunction.vonMangoldt n / sqrt n) *
