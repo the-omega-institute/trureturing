@@ -272,7 +272,40 @@ private lemma centered_max_sublinear {e : Type*} [NormedAddCommGroup e]
       atTop (𝓝 b)) :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop,
       ∀ k ≤ n, ‖centeredSum a b k‖ ≤ ε * n := by
-  sorry
+  have hcenter : ∀ n : ℕ, 0 < n →
+      centeredSum a b n = (n : ℝ) • ((n : ℝ)⁻¹ • (∑ i ∈ Finset.range n, a i) - b) := by
+    intro n hn
+    unfold centeredSum
+    rw [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_range,
+      smul_sub, smul_smul, mul_inv_cancel₀ (ne_of_gt (Nat.cast_pos.mpr hn)),
+      one_smul, Nat.cast_smul_eq_nsmul]
+  intro ε hε
+  have hev : ∀ᶠ k : ℕ in atTop,
+      ‖(k : ℝ)⁻¹ • (∑ i ∈ Finset.range k, a i) - b‖ < ε := by
+    simpa only [dist_eq_norm] using (Metric.tendsto_nhds.mp hav ε hε)
+  obtain ⟨k, hk⟩ := eventually_atTop.mp hev
+  let c := ∑ i ∈ Finset.range k, ‖centeredSum a b i‖
+  have hlarge : ∀ᶠ n : ℕ in atTop, c / ε ≤ (n : ℝ) :=
+    tendsto_natCast_atTop_atTop.eventually (eventually_ge_atTop (c / ε))
+  filter_upwards [hlarge] with n hn
+  intro j hj
+  by_cases hjk : j < k
+  · have hfirst : ‖centeredSum a b j‖ ≤ c :=
+      Finset.single_le_sum (fun i _ => norm_nonneg (centeredSum a b i))
+        (Finset.mem_range.mpr hjk)
+    exact hfirst.trans ((div_le_iff₀ hε).mp hn |>.trans_eq (mul_comm _ _))
+  · by_cases hjpos : 0 < j
+    · rw [hcenter j hjpos, norm_smul, Real.norm_eq_abs,
+        abs_of_nonneg (Nat.cast_nonneg j)]
+      calc
+        _ ≤ (j : ℝ) * ε := mul_le_mul_of_nonneg_left (hk j (by omega)).le (Nat.cast_nonneg j)
+        _ ≤ ε * n := by nlinarith [show (j : ℝ) ≤ n from Nat.cast_le.mpr hj]
+    · have hjzero : j = 0 := by omega
+      subst j
+      unfold centeredSum
+      rw [Finset.sum_range_zero, norm_zero]
+      positivity
+
 
 private lemma deterministic_uniform {e : Type*} [NormedRing e] [NormedAlgebra ℝ e]
     [NormOneClass e] [CompleteSpace e] (a : ℕ → e) (b : e) (m : ℝ)
