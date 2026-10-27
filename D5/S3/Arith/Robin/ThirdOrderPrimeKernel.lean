@@ -4,8 +4,9 @@
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
-   digest: Cubic price expansion bounds the actual-prime error on the full selected domain.
+   digest: Cubic price expansion bounds the actual-prime error on the full selected domain. -/
 
+/-
 Purpose: a cubic-in-price approximation of the literal selected-Euler kernel,
 with absolute centered actual-prime error at most 40 ell^(-1/10) M on the
 UNCHANGED complete selectedDomain of OriginalFirstClockTransport.
