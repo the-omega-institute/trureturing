@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/HyperbolicSupportBoundary
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Geometry/Hyperideal/ActualRaysJointAngle.actual_rays_joint_angle]
+   anchors: [mathlib/module/Mathlib.Topology.Maps.Basic]
    utility: none
    digest: Interior and frontier of finite Lorentz support regions in a native hyperbolic plane. -/
 
