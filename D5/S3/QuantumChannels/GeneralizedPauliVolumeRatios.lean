@@ -32,16 +32,15 @@ def ebRegion (d : ℕ) : Set (Fin (d + 1) → ℝ) :=
 def channelVolume (d : ℕ) (s : Set (Fin (d + 1) → ℝ)) : ℝ :=
   (Real.sqrt ((d : ℝ) - 1) / (d : ℝ)) ^ (d + 1) * (volume s).toReal
 
-private def standardRegion (n : ℕ) : Set (Fin n → ℝ) :=
-  {t | (∀ i, 0 ≤ t i) ∧ ∑ i, t i ≤ 1}
-
 private def affineSimplex (d : ℕ) (c : ℝ) : Set (Fin (d + 1) → ℝ) :=
-  (fun t i => 1 + c * (t i - ∑ j, t j)) '' standardRegion (d + 1)
+  (fun t i => 1 + c * (t i - ∑ j, t j)) ''
+    D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.simplexCoords
+      (Nat.succ (Nat.succ d))
 
 private lemma standard_volume (n : ℕ) :
-    volume (standardRegion n) = ENNReal.ofReal (1 / (n.factorial : ℝ)) := by
-  change volume
-    (D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.simplexCoords (n + 1)) = _
+    volume
+        (D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.simplexCoords (n + 1)) =
+      ENNReal.ofReal (1 / (n.factorial : ℝ)) := by
   rw [D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.simplex_volume]
   rw [one_div, ENNReal.ofReal_inv_of_pos (Nat.cast_pos.mpr (Nat.factorial_pos n))]
   norm_cast
@@ -75,9 +74,12 @@ private lemma affine_simplex_volume (d : ℕ) (hd : 2 ≤ d) (c : ℝ) (hc : 0 <
     dsimp only [f]
     rw [LinearMap.det_toLin', Matrix.det_smul, hdet, Fintype.card_fin]
   have himage : affineSimplex d c = (fun y : Fin (d + 1) → ℝ => (fun _ => 1) + y) ''
-      (f '' standardRegion (d + 1)) := by
+      (f '' D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.simplexCoords
+        (Nat.succ (Nat.succ d))) := by
     rw [image_image]
-    apply congrArg (fun g => g '' standardRegion (d + 1))
+    apply congrArg (fun g => g ''
+      D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.simplexCoords
+        (Nat.succ (Nat.succ d)))
     funext t
     rw [hf]
     rfl
@@ -88,12 +90,11 @@ private lemma affine_simplex_volume (d : ℕ) (hd : 2 ≤ d) (c : ℝ) (hc : 0 <
   congr 1
   ring
 
-private lemma affine_sum (d : ℕ) (c : ℝ) (t : Fin (d + 1) → ℝ) :
+private lemma affine_sum (n : ℕ) (c : ℝ) (t : Fin n → ℝ) :
     (∑ i, (1 + c * (t i - ∑ j, t j))) =
-      (d : ℝ) + 1 - c * (d : ℝ) * ∑ j, t j := by
+      (n : ℝ) - c * ((n : ℝ) - 1) * ∑ j, t j := by
   rw [Finset.sum_add_distrib, ← Finset.mul_sum, Finset.sum_sub_distrib]
-  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
-    Nat.cast_add, Nat.cast_one]
+  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
   ring
 
 private lemma affine_simplex_iff (d : ℕ) (hd : 2 ≤ d) (c : ℝ) (hc : 0 < c)
@@ -105,10 +106,21 @@ private lemma affine_simplex_iff (d : ℕ) (hd : 2 ≤ d) (c : ℝ) (hc : 0 < c)
   have hden : 0 < c * (d : ℝ) := mul_pos hc hdpos
   constructor
   · rintro ⟨t, ht, rfl⟩
+    simp only [Nat.succ_sub_one] at ht ⊢
     change (∀ i, 0 ≤ t i) ∧ ∑ i, t i ≤ 1 at ht
+    change
+      (d : ℝ) + 1 - c * d ≤ ∑ i, (1 + c * (t i - ∑ j, t j)) ∧
+        ∀ j, ∑ i, (1 + c * (t i - ∑ j, t j)) ≤
+          1 + (d : ℝ) * (1 + c * (t j - ∑ k, t k))
     rw [affine_sum]
+    simp only [Nat.succ_sub_one, Nat.cast_add, Nat.cast_one]
+    have hcast : (d : ℝ) + 1 - 1 = d := by ring
+    rw [hcast]
     constructor
-    · nlinarith [mul_nonneg hden.le (sub_nonneg.mpr ht.2)]
+    · have hmul := mul_le_mul_of_nonneg_left ht.2 hden.le
+      calc
+        (d : ℝ) + 1 - c * d = (d : ℝ) + 1 - c * d * 1 := by ring
+        _ ≤ (d : ℝ) + 1 - c * d * ∑ j, t j := sub_le_sub_left hmul _
     · intro j
       nlinarith [mul_nonneg hden.le (ht.1 j)]
   · intro hx
@@ -125,8 +137,9 @@ private lemma affine_simplex_iff (d : ℕ) (hd : 2 ≤ d) (c : ℝ) (hc : 0 < c)
     refine ⟨t, ⟨?_, ?_⟩, ?_⟩
     · intro i
       exact div_nonneg (by linarith [hx.2 i]) hden.le
-    · rw [hsum]
-      exact (div_le_one hden).mpr (by linarith [hx.1])
+    · calc
+        ∑ i, t i = ((d : ℝ) + 1 - ∑ j, x j) / (c * (d : ℝ)) := hsum
+        _ ≤ 1 := (div_le_one hden).mpr (by linarith [hx.1])
     · funext i
       change 1 + c * (t i - ∑ j, t j) = x i
       rw [hsum]
@@ -147,7 +160,9 @@ private lemma cp_eq_affine (d : ℕ) (hd : 2 ≤ d) :
   rfl
 
 private lemma generator_eq_union (d : ℕ) (hd : 2 ≤ d) :
-    generatorRegion d = standardRegion (d + 1) ∪ affineSimplex d 1 := by
+    generatorRegion d =
+      D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.simplexCoords
+        (Nat.succ (Nat.succ d)) ∪ affineSimplex d 1 := by
   have hdreal : (2 : ℝ) ≤ d := by exact_mod_cast hd
   have hlo : -1 / ((d : ℝ) - 1) ≤ 0 := div_nonpos_of_nonpos_of_nonneg
     (by norm_num) (by linarith)
@@ -169,7 +184,8 @@ private lemma generator_eq_union (d : ℕ) (hd : 2 ≤ d) :
       nlinarith [hx.2 j, hx.1]
 
 private lemma simplex_overlap_null (d : ℕ) (hd : 2 ≤ d) :
-    volume (standardRegion (d + 1) ∩ affineSimplex d 1) = 0 := by
+    volume (D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.simplexCoords
+      (Nat.succ (Nat.succ d)) ∩ affineSimplex d 1) = 0 := by
   have hnull :=
     D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.simplex_sum_boundary_null
       (d + 1) 1 zero_lt_one
@@ -177,7 +193,11 @@ private lemma simplex_overlap_null (d : ℕ) (hd : 2 ≤ d) :
   intro x hx
   have hlo := ((affine_simplex_iff d hd 1 zero_lt_one x).mp hx.2).1
   change ∑ i, x i = 1
-  linarith [hx.1.2]
+  apply le_antisymm hx.1.2
+  have hlo' : (1 : ℝ) ≤ ∑ i, x i := by
+    convert hlo using 1
+    ring
+  exact hlo'
 
 private lemma generator_volume (d : ℕ) (hd : 2 ≤ d) :
     volume (generatorRegion d) =
@@ -186,7 +206,9 @@ private lemma generator_volume (d : ℕ) (hd : 2 ≤ d) :
   have hq := affine_simplex_volume d hd 1 zero_lt_one
   have hu := generator_eq_union d hd
   have hn := simplex_overlap_null d hd
-  have hmeas : MeasurableSet (standardRegion (d + 1)) := by
+  have hmeas : MeasurableSet
+      (D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.simplexCoords
+        (Nat.succ (Nat.succ d))) := by
     change MeasurableSet ({x : Fin (d + 1) → ℝ | ∀ i, 0 ≤ x i} ∩ {x | ∑ i, x i ≤ 1})
     apply MeasurableSet.inter
     · have hm (i : Fin (d + 1)) : MeasurableSet {x : Fin (d + 1) → ℝ | 0 ≤ x i} :=
@@ -202,7 +224,9 @@ private lemma generator_volume (d : ℕ) (hd : 2 ≤ d) :
   ring
 
 private lemma eb_eq_standard (d : ℕ) (hd : 2 ≤ d) :
-    ebRegion d = standardRegion (d + 1) := by
+    ebRegion d =
+      D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.simplexCoords
+        (Nat.succ (Nat.succ d)) := by
   have hdreal : (2 : ℝ) ≤ d := by exact_mod_cast hd
   have hlo : -1 / ((d : ℝ) - 1) ≤ 0 := div_nonpos_of_nonpos_of_nonneg
     (by norm_num) (by linarith)
