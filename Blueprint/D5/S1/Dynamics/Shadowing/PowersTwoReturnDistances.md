@@ -20,6 +20,10 @@ $$\begin{aligned}\operatorname{Nonempty}(\operatorname{ReturnPoint}(\operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/PowersTwoReturnDistances.powers_two_return_distance_example` (`✓ std3`). ∎
 
+*Resolves.* `Problems/meddaugh-stephens-2025-neighborhood-two-shadowing` (proved) by `D5/S1/Dynamics/Shadowing/PowersTwoReturnDistances.powers_two_return_distance_example`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"meddaugh-stephens-2025-neighborhood-two-shadowing","declaration_gid":"D5/S1/Dynamics/Shadowing/PowersTwoReturnDistances.powers_two_return_distance_example","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

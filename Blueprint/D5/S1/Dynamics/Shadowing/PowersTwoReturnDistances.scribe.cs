@@ -15,10 +15,11 @@ internal sealed class PowersTwoReturnDistancesDocument : IScribeDocumentDefiniti
         items.Add(Close); return Seq([.. items]);
     }
     private static Formula St(params Formula[] lines) => Disp(new Formula.Aligned([.. lines]));
-    private static DocumentBlock.Describe Thm(string key, string decl, string title, Formula formula, string text) =>
+    private static DocumentBlock.Describe Thm(string key, string decl, string title, Formula formula, string text,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(key), DeclarationHandle.Create(Owner + decl), H(title),
             StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+            Blocks(Paragraph(Text(text))), DescribeRole.Theorem, resolution);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An explicit binary two-sided subshift with neighborhood two-shadowing and without original exact-length quasi-finite type.",
@@ -56,7 +57,10 @@ internal sealed class PowersTwoReturnDistancesDocument : IScribeDocumentDefiniti
             + "Distance one is allowed and powers of two are unbounded, so the generic gap-repair theorem supplies the original finite-set two-shadowing property. "
             + "For every n choose H=2^(n+2)>n+1. The interval (H,H+n+1] lies strictly between H and 2H and contains no power of two. "
             + "The generic first-return language obstruction therefore disproves the original exact-length QFT condition. "
-            + "This explicit example gives an affirmative answer to the existence request of Question 5.3 with the genuine compatible product metric.")
+            + "This explicit example gives an affirmative answer to the existence request of Question 5.3 with the genuine compatible product metric.",
+            new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("meddaugh-stephens-2025-neighborhood-two-shadowing"),
+                ResolutionKind.Proved))
         )));
 
 }
