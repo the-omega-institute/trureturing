@@ -11,6 +11,7 @@ import D5.S3.SpectralTopology.ActualSpectralWhitening
 import D5.S3.Quantum.Recovery.ActualChannelAlgebra
 import D5.S3.Quantum.Recovery.PointwiseTensorRecovery
 import D5.S3.Quantum.Recovery.MatrixUnitDecoder
+import D5.S3.Quantum.Transport.MatrixUnitDyson
 import D5.S3.Geometry.ProjectionRange.ActualRangeTensor
 import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 /-! The original ST37 target on actual smooth channels. -/
@@ -991,5 +992,504 @@ theorem whole_original_ST37
       hDtrace x, hDtranspose x⟩
   · exact st37_bundle_geometry I hd N hCP hTP hLeft
       hQ hP hW hPstar hPidem hPrank hFsm hFstar hFidem hFrank
+
+end Original8340Global
+
+
+namespace Original8340Global
+open D5.S3.Quantum.Transport.MatrixUnitDyson
+open D5.S3.Quantum.Transport.MatrixUnitGenerator
+open D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
+open scoped Matrix.Norms.L2Operator
+
+/- Transient exact application of the existing results to the controlled interval
+of ST40, on the actual ST37 spectral
+representation. `D` is the velocity of the actual matrix units, with genuine ambient
+path velocity at zero when the entire interval is a singleton. No evolution, transport, decoder, or
+reference-system identity is an input. The weight transported by this evolution
+is deliberately distinguished from the preset weight of the channel family. -/
+set_option maxHeartbeats 3000000 in
+theorem st40_source2_exact_native_check
+    {E H B : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    [TopologicalSpace H] [TopologicalSpace B] [ChartedSpace H B] [CompactSpace B]
+    (I : ModelWithCorners ℝ E H) [IsManifold I ∞ B]
+    {d n k : ℕ} (hd : 0 < d)
+    (N : B → (Matrix (Fin d) (Fin d) ℂ →L[ℂ] Matrix (Fin n) (Fin n) ℂ))
+    (hN : ContMDiff I 𝓘(ℝ, Matrix (Fin d) (Fin d) ℂ →L[ℂ]
+      Matrix (Fin n) (Fin n) ℂ) ∞ N)
+    (hCP : ∀ x, MatrixMap.IsCompletelyPositive (N x).toLinearMap)
+    (hTP : ∀ x A, Matrix.trace (N x A) = Matrix.trace A)
+    (hLeft : ∀ x, ∃ R : MatrixMap (Fin n) (Fin d) ℂ,
+      R.IsCompletelyPositive ∧ (∀ X, Matrix.trace (R X) = Matrix.trace X) ∧
+      ∀ A, R (N x A) = A)
+    (hRank : ∀ x, (N x 1).rank = k * d)
+    (path : ℝ → B) (T : ℝ) (hT : 0 ≤ T)
+    (D : ℝ → Fin d → Fin d → Matrix (Fin n) (Fin n) ℂ)
+    (hpath :
+      let W := fun t => spectralInverseSqrt (N (path t) 1)
+      let F := fun t i j => W t * N (path t) (Matrix.single i j 1) * W t
+      (∀ i j, ContinuousOn (fun t => F t i j) (Icc 0 T)) ∧
+      (∀ i j, ContinuousOn (fun t => D t i j) (Icc 0 T)) ∧
+      (∀ t ∈ Icc 0 T, ∀ i j a b,
+        HasDerivWithinAt (fun u => F u i j a b) (D t i j a b) (Icc 0 T) t) ∧
+      (T = 0 → ∀ i j a b,
+        HasDerivAt (fun u => F u i j a b) (D 0 i j a b) 0))
+    (hL : ℝ → Matrix (Fin d) (Fin d) ℂ)
+    (hLc : ContinuousOn hL (Icc 0 T))
+    (hLh : ∀ t ∈ Icc 0 T, (hL t).IsHermitian)
+    (hbar Delta : ℝ) (hhbar : 0 < hbar) (hDelta : 0 < Delta) :
+    let v : Fin d := ⟨0, hd⟩
+    let Q := fun x => N x 1
+    let P := fun x => spectralSupport (Q x)
+    let W := fun x => spectralInverseSqrt (Q x)
+    let pi := fun x A => W x * N x A * W x
+    let piM := fun x => (LinearMap.mulLeftRight ℂ (W x, W x)).comp (N x).toLinearMap
+    let F := fun t i j => pi (path t) (Matrix.single i j 1)
+    let K := fun t => transportGenerator (F t) (D t)
+    let G := dysonSeries K
+    let a : ℂ := -Complex.I / (hbar : ℂ)
+    let c : ℂ := Complex.I * (hbar : ℂ)
+    let VL := dysonSeries (fun t => a • hL t)
+    let phase := fun t => Complex.exp (-Complex.I * (Delta : ℂ) * (t : ℂ) / (hbar : ℂ))
+    let Hphys := fun t => c • K t + pi (path t) (hL t) +
+      (Delta : ℂ) • (1 - P (path t))
+    let V := fun t => G t * (pi (path 0) (VL t) + phase t • (1 - P (path 0)))
+    let Kdec := fun x => Sum.elim (decoderKraus (fun i j => pi x (Matrix.single i j 1)) v)
+      (fun b => Matrix.single v b (1 : ℂ) * (1 - P x))
+    let decoder := fun x => MatrixMap.of_kraus (Kdec x) (Kdec x)
+    let encode := fun R => (LinearMap.mulLeft ℂ R).comp (piM (path 0))
+    let AdV := fun t => MatrixMap.of_kraus (fun _ : Unit => V t) (fun _ : Unit => V t)
+    let AdL := fun t => MatrixMap.of_kraus (fun _ : Unit => VL t) (fun _ : Unit => VL t)
+    (VL 0 = 1 ∧ ContinuousOn VL (Icc 0 T) ∧
+      ∀ t ∈ Icc 0 T, (VL t)ᴴ * VL t = 1 ∧ VL t * (VL t)ᴴ = 1 ∧
+        HasDerivWithinAt VL (a • (hL t * VL t)) (Icc 0 T) t ∧
+        c • (a • (hL t * VL t)) = hL t * VL t) ∧
+    (V 0 = 1 ∧ ContinuousOn V (Icc 0 T) ∧
+      ∀ t ∈ Icc 0 T, (Hphys t).IsHermitian ∧
+        (V t)ᴴ * V t = 1 ∧ V t * (V t)ᴴ = 1 ∧
+        HasDerivWithinAt V (a • (Hphys t * V t)) (Icc 0 T) t ∧
+        c • (a • (Hphys t * V t)) = Hphys t * V t) ∧
+    (∀ (R : Matrix (Fin n) (Fin n) ℂ)
+      (hcomm : ∀ i j, R * F 0 i j = F 0 i j * R)
+      (hsupport : P (path 0) * R = R)
+      (htrace : Matrix.trace (F 0 v v * R) = 1),
+      ∀ t ∈ Icc 0 T,
+        let Rt := G t * R * (G t)ᴴ
+        P (path t) * Rt = Rt ∧ Rt * P (path t) = Rt ∧
+        (∀ A, Rt * pi (path t) A = pi (path t) A * Rt) ∧
+        Matrix.trace (F t v v * Rt) = 1 ∧ Matrix.trace Rt = Matrix.trace R ∧
+        (R.PosSemidef → Rt.PosSemidef) ∧
+        (∀ A : Matrix (Fin d) (Fin d) ℂ,
+          V t * (R * pi (path 0) A) * (V t)ᴴ =
+            Rt * pi (path t) (VL t * A * (VL t)ᴴ) ∧
+          decoder (path t) (V t * (R * pi (path 0) A) * (V t)ᴴ) =
+            VL t * A * (VL t)ᴴ) ∧
+        (∀ (q : ℕ) (X : Matrix (Fin d × Fin q) (Fin d × Fin q) ℂ),
+          MatrixMap.kron (decoder (path t)) LinearMap.id
+            (MatrixMap.kron (AdV t) LinearMap.id
+              (MatrixMap.kron (encode R) LinearMap.id X)) =
+            MatrixMap.kron (AdL t) LinearMap.id X)) ∧
+    (∀ t ∈ Icc 0 T,
+      (G t * Q (path 0) * (G t)ᴴ).PosSemidef ∧
+      (∀ A : Matrix (Fin d) (Fin d) ℂ,
+        V t * N (path 0) A * (V t)ᴴ =
+          (G t * Q (path 0) * (G t)ᴴ) * pi (path t) (VL t * A * (VL t)ᴴ) ∧
+        decoder (path t) (V t * N (path 0) A * (V t)ᴴ) = VL t * A * (VL t)ᴴ) ∧
+      (∀ (q : ℕ) (X : Matrix (Fin d × Fin q) (Fin d × Fin q) ℂ),
+        MatrixMap.kron (decoder (path t)) LinearMap.id
+          (MatrixMap.kron (AdV t) LinearMap.id
+            (MatrixMap.kron (N (path 0)).toLinearMap LinearMap.id X)) =
+          MatrixMap.kron (AdL t) LinearMap.id X)) := by
+  classical
+  let v : Fin d := ⟨0, hd⟩
+  letI : Nonempty (Fin d) := ⟨v⟩
+  let Q := fun x => N x 1
+  let P := fun x => spectralSupport (Q x)
+  let W := fun x => spectralInverseSqrt (Q x)
+  let pi := fun x A => W x * N x A * W x
+  let piM := fun x => (LinearMap.mulLeftRight ℂ (W x, W x)).comp (N x).toLinearMap
+  let F := fun t i j => pi (path t) (Matrix.single i j 1)
+  let K := fun t => transportGenerator (F t) (D t)
+  let G := dysonSeries K
+  let a : ℂ := -Complex.I / (hbar : ℂ)
+  let c : ℂ := Complex.I * (hbar : ℂ)
+  let b : ℂ := -Complex.I * (Delta : ℂ) / (hbar : ℂ)
+  let VL := dysonSeries (fun t => a • hL t)
+  let phase := fun t => Complex.exp (-Complex.I * (Delta : ℂ) * (t : ℂ) / (hbar : ℂ))
+  let Hphys := fun t => c • K t + pi (path t) (hL t) + (Delta : ℂ) • (1 - P (path t))
+  let C0 : Matrix (Fin n) (Fin n) ℂ := 1 - P (path 0)
+  let bracket := fun t => pi (path 0) (VL t) + phase t • C0
+  let V := fun t => G t * bracket t
+  let Kdec := fun x => Sum.elim (decoderKraus (fun i j => pi x (Matrix.single i j 1)) v)
+    (fun b => Matrix.single v b (1 : ℂ) * (1 - P x))
+  let decoder := fun x => MatrixMap.of_kraus (Kdec x) (Kdec x)
+  let encode := fun R => (LinearMap.mulLeft ℂ R).comp (piM (path 0))
+  let AdV := fun t => MatrixMap.of_kraus (fun _ : Unit => V t) (fun _ : Unit => V t)
+  let AdL := fun t => MatrixMap.of_kraus (fun _ : Unit => VL t) (fun _ : Unit => VL t)
+  have hpiM (x) (A) : piM x A = pi x A := rfl
+  have hbar0 : (hbar : ℂ) ≠ 0 := by exact_mod_cast ne_of_gt hhbar
+  have hca : c * a = 1 := by
+    dsimp [c, a]
+    field_simp [hbar0] <;> ring_nf <;> simp [Complex.I_sq]
+  have hcb : c * b = (Delta : ℂ) := by
+    dsimp [c, b]
+    field_simp [hbar0] <;> ring_nf <;> simp [Complex.I_sq]
+  have hastar : star a = -a := by simp [a, Complex.star_def]
+  have hcstar : star c = -c := by simp [c, Complex.star_def]
+  have hbstar : star b = -b := by simp [b, Complex.star_def]
+  -- The existing whole theorem supplies this exact spectral representation and
+  -- this exact decoder. No replacement decoder is selected.
+  have h37 := whole_original_ST37 I hd N hN hCP hTP hLeft hRank
+  rcases h37 with ⟨_, _, _, _, hAlg, _, _, _, hDec, _⟩
+  have hpi1 (x) : pi x 1 = P x := (hAlg x).1
+  have hpis (x) (A) : (pi x A)ᴴ = pi x Aᴴ := (hAlg x).2.1 A
+  have hpim (x) (A B) : pi x A * pi x B = pi x (A * B) := (hAlg x).2.2.1 A B
+  have hQcomm (x) (A) : Q x * pi x A = pi x A * Q x := (hAlg x).2.2.2.1 A
+  have hNfactor (x) (A) : N x A = Q x * pi x A := (hAlg x).2.2.2.2 A
+  have hPstar (x) : (P x)ᴴ = P x := by
+    rw [← hpi1, hpis, Matrix.conjTranspose_one]
+  have hPP (x) : P x * P x = P x := by
+    rw [← hpi1, hpim, Matrix.one_mul]
+  have hPpi (x) (A) : P x * pi x A = pi x A := by
+    rw [← hpi1, hpim, Matrix.one_mul]
+  have hpiP (x) (A) : pi x A * P x = pi x A := by
+    rw [← hpi1, hpim, Matrix.mul_one]
+  have hpiC (A) : pi (path 0) A * C0 = 0 := by
+    dsimp [C0]
+    rw [Matrix.mul_sub, Matrix.mul_one, hpiP, sub_self]
+  have hCpi (A) : C0 * pi (path 0) A = 0 := by
+    dsimp [C0]
+    rw [Matrix.sub_mul, Matrix.one_mul, hPpi, sub_self]
+  have hCC : C0 * C0 = C0 := by
+    calc
+      C0 * C0 = 1 - P (path 0) - P (path 0) + P (path 0) * P (path 0) := by
+        dsimp [C0]
+        noncomm_ring
+      _ = C0 := by rw [hPP]; dsimp [C0]; noncomm_ring
+  have hCstar : C0ᴴ = C0 := by simp only [C0, Matrix.conjTranspose_sub,
+    Matrix.conjTranspose_one, hPstar]
+  have hFm (t) (i j k l : Fin d) :
+      F t i j * F t k l = if j = k then F t i l else 0 := by
+    have hh := hpim (path t) (Matrix.single i j 1) (Matrix.single k l 1)
+    by_cases hj : j = k
+    · subst k
+      simpa only [F, Matrix.single_mul_single_same, one_mul, if_pos rfl] using hh
+    · have hz : Matrix.single i j (1 : ℂ) * Matrix.single k l (1 : ℂ) = 0 :=
+        Matrix.single_mul_single_of_ne (c := (1 : ℂ)) (i := i) (j := j)
+          (k := k) (h := hj) (d := (1 : ℂ))
+      simpa only [F, pi, hz, map_zero, Matrix.mul_zero, Matrix.zero_mul, if_neg hj] using hh
+  have hFs (t) (i j : Fin d) : (F t i j)ᴴ = F t j i := by
+    simpa only [F, Matrix.conjTranspose_single, star_one] using
+      hpis (path t) (Matrix.single i j 1)
+  have hrepr (x) (A : Matrix (Fin d) (Fin d) ℂ) :
+      representedMatrix (fun i j => pi x (Matrix.single i j 1)) A = pi x A := by
+    have he : (∑ i, ∑ j, A i j • Matrix.single i j (1 : ℂ)) = A := by
+      simpa only [Matrix.smul_single, smul_eq_mul, mul_one] using Matrix.sum_sum_single A
+    calc
+      _ = piM x (∑ i, ∑ j, A i j • Matrix.single i j (1 : ℂ)) := by
+        simp only [representedMatrix, map_sum, map_smul, hpiM]
+      _ = pi x A := by rw [he, hpiM]
+  rcases hpath with ⟨hFcont, hDcont, hentry, hzeroVelocity⟩
+  have hpositive (hp : 0 < T) : wholeConclusion F D T :=
+    (constructive_transport (d := Fin d) (n := Fin n)).2
+      F D T hp hFcont hDcont hentry (fun t _ => hFm t) (fun t _ => hFs t)
+  have hKcont : ContinuousOn K (Icc 0 T) := by
+    change ContinuousOn
+      (fun t => (Fintype.card (Fin d) : ℂ)⁻¹ • (∑ i, ∑ j, D t i j * F t j i) -
+        (∑ i, F t i i) * (∑ i, D t i i)) (Icc 0 T)
+    exact ((continuousOn_finsetSum _ fun i _ =>
+      continuousOn_finsetSum _ fun j _ => (hDcont i j).mul (hFcont j i)).const_smul _).sub
+        ((continuousOn_finsetSum _ fun i _ => hFcont i i).mul
+          (continuousOn_finsetSum _ fun i _ => hDcont i i))
+  have hKskew (t) (ht : t ∈ Icc 0 T) : (K t)ᴴ = -K t := by
+    by_cases hz : T = 0
+    · have ht0 : t = 0 := le_antisymm (ht.2.trans_eq hz) ht.1
+      subst t
+      exact (generator_from_real_path F (D 0) 0 hFm hFs (hzeroVelocity hz)).1
+    · exact ((hpositive (lt_of_le_of_ne hT (Ne.symm hz))).1 t ht).1
+  obtain ⟨_, _, _, _, _, hGcont, _, hGderiv, hGzero, _⟩ :=
+    (constructive_transport (d := Fin d) (n := Fin n)).1 K T hT hKcont
+  have hGu := unitary_of_skew_evolution K G T hT hGderiv hKskew hGzero
+  have hGcancel (t) (ht : t ∈ Icc 0 T) (X : Matrix (Fin n) (Fin n) ℂ) :
+      (G t)ᴴ * (G t * X) = X := by
+    rw [← Matrix.mul_assoc, (hGu t ht).1, Matrix.one_mul]
+  have hFt : ∀ t ∈ Icc 0 T, ∀ i j, F t i j = G t * F 0 i j * (G t)ᴴ := by
+    by_cases hz : T = 0
+    · intro t ht i j
+      have ht0 : t = 0 := le_antisymm (ht.2.trans_eq hz) ht.1
+      simp only [ht0, G, hGzero, Matrix.conjTranspose_one, Matrix.one_mul, Matrix.mul_one]
+    · have hp : 0 < T := lt_of_le_of_ne hT (Ne.symm hz)
+      have hh := hpositive hp
+      rcases hh with ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, htr, _⟩
+      exact fun t ht i j => (htr t ht i j).2
+  have hpit (t) (ht : t ∈ Icc 0 T) (A : Matrix (Fin d) (Fin d) ℂ) :
+      pi (path t) A = G t * pi (path 0) A * (G t)ᴴ := by
+    rw [← hrepr (path t), ← hrepr (path 0)]
+    simp only [representedMatrix, Matrix.mul_sum, Matrix.sum_mul,
+      Matrix.mul_smul, Matrix.smul_mul]
+    apply Finset.sum_congr rfl
+    intro i hi
+    apply Finset.sum_congr rfl
+    intro j hj
+    exact congrArg (fun X => A i j • X) (hFt t ht i j)
+  have hPt (t) (ht : t ∈ Icc 0 T) : P (path t) = G t * P (path 0) * (G t)ᴴ := by
+    simpa only [hpi1] using hpit t ht (1 : Matrix (Fin d) (Fin d) ℂ)
+  obtain ⟨_, _, _, _, _, hVLcont, _, hVLderiv, hVLzero, _⟩ :=
+    (constructive_transport (d := Fin d) (n := Fin d)).1
+      (fun t => a • hL t) T hT (hLc.const_smul a)
+  have hVLskew (t) (ht : t ∈ Icc 0 T) : (a • hL t)ᴴ = -(a • hL t) := by
+    rw [Matrix.conjTranspose_smul, (hLh t ht).eq, hastar, neg_smul]
+  have hVLu := unitary_of_skew_evolution (fun t => a • hL t) VL T hT
+    hVLderiv hVLskew hVLzero
+  have hVLd (t) (ht : t ∈ Icc 0 T) :
+      HasDerivWithinAt VL (a • (hL t * VL t)) (Icc 0 T) t := by
+    simpa only [Matrix.smul_mul] using hVLderiv t ht
+  have hphaseform (t : ℝ) : phase t = Complex.exp (b * (t : ℂ)) := by
+    dsimp [phase, b]
+    congr 1
+    ring
+  have hphase0 : phase 0 = 1 := by simp [phase]
+  have hphased (t : ℝ) : HasDerivAt phase (phase t * b) t := by
+    have hh := ((Complex.ofRealCLM.hasDerivAt (x := t)).const_mul b).cexp
+    simpa only [mul_one, ← hphaseform] using hh
+  have hphaseunit (t : ℝ) : star (phase t) * phase t = 1 := by
+    rw [hphaseform]
+    change starRingEnd ℂ (Complex.exp (b * (t : ℂ))) * Complex.exp (b * (t : ℂ)) = 1
+    rw [← Complex.exp_conj, ← Complex.exp_add]
+    have hz : starRingEnd ℂ (b * (t : ℂ)) + b * (t : ℂ) = 0 := by
+      change star (b * (t : ℂ)) + b * (t : ℂ) = 0
+      rw [star_mul', hbstar]
+      simp
+    rw [hz, Complex.exp_zero]
+  have hbracketd (t) (ht : t ∈ Icc 0 T) :
+      HasDerivWithinAt bracket
+        (a • (pi (path 0) (hL t) * pi (path 0) (VL t)) +
+          (phase t * b) • C0) (Icc 0 T) t := by
+    have hh := (((piM (path 0)).toContinuousLinearMap.restrictScalars ℝ).hasFDerivAt
+      (x := VL t)).comp_hasDerivWithinAt t (hVLd t ht)
+    have hmap : piM (path 0) (a • (hL t * VL t)) =
+        a • (pi (path 0) (hL t) * pi (path 0) (VL t)) := by
+      rw [map_smul, hpiM, ← hpim]
+    change HasDerivWithinAt (fun s => pi (path 0) (VL s))
+      (piM (path 0) (a • (hL t * VL t))) (Icc 0 T) t at hh
+    rw [hmap] at hh
+    simpa only [bracket] using hh.add ((hphased t).hasDerivWithinAt.smul_const C0)
+  have hbracketcont : ContinuousOn bracket (Icc 0 T) := by
+    intro t ht
+    exact (hbracketd t ht).continuousWithinAt
+  have hbracketunit (t) (ht : t ∈ Icc 0 T) :
+      (bracket t)ᴴ * bracket t = 1 ∧ bracket t * (bracket t)ᴴ = 1 := by
+    have hcorner : pi (path 0) ((VL t)ᴴ) * pi (path 0) (VL t) = P (path 0) := by
+      rw [hpim, (hVLu t ht).1, hpi1]
+    have hleft : (bracket t)ᴴ * bracket t = 1 := by
+      simp only [bracket, Matrix.conjTranspose_add, Matrix.conjTranspose_smul,
+        hCstar, Matrix.add_mul, Matrix.mul_add, Matrix.mul_smul,
+        Matrix.smul_mul, smul_smul, hpis, hcorner, hpiC, hCpi, hCC,
+        hphaseunit, one_smul, smul_zero, zero_add, add_zero]
+      exact add_sub_cancel _ _
+    exact ⟨hleft, mul_eq_one_comm.mp hleft⟩
+  have hVzero : V 0 = 1 := by
+    simp only [V, bracket, hGzero, hVLzero, hphase0, hpi1, one_smul, Matrix.one_mul, C0]
+    exact add_sub_cancel _ _
+  have hVcont : ContinuousOn V (Icc 0 T) := hGcont.mul hbracketcont
+  have hVu (t) (ht : t ∈ Icc 0 T) : (V t)ᴴ * V t = 1 ∧ V t * (V t)ᴴ = 1 := by
+    have hh : (V t)ᴴ * V t = 1 := by
+      simp only [V, Matrix.conjTranspose_mul, Matrix.mul_assoc, hGcancel t ht, (hGu t ht).1,
+        Matrix.one_mul, (hbracketunit t ht).1]
+    exact ⟨hh, mul_eq_one_comm.mp hh⟩
+  have hHherm (t) (ht : t ∈ Icc 0 T) : (Hphys t).IsHermitian := by
+    change (Hphys t)ᴴ = Hphys t
+    simp only [Hphys, Matrix.conjTranspose_add, Matrix.conjTranspose_smul,
+      hKskew t ht, hcstar, smul_neg, neg_smul, neg_neg, hpis, (hLh t ht).eq,
+      Matrix.conjTranspose_sub, Matrix.conjTranspose_one, hPstar,
+      show star (Delta : ℂ) = (Delta : ℂ) from Complex.conj_ofReal Delta]
+  have hVd (t) (ht : t ∈ Icc 0 T) :
+      HasDerivWithinAt V (a • (Hphys t * V t)) (Icc 0 T) t := by
+    let Bdot := a • (pi (path 0) (hL t) * pi (path 0) (VL t)) + (phase t * b) • C0
+    have hp := (hGderiv t ht).mul (hbracketd t ht)
+    have hpiG : pi (path t) (hL t) * G t = G t * pi (path 0) (hL t) := by
+      rw [hpit t ht]
+      simp only [Matrix.mul_assoc, hGcancel t ht, (hGu t ht).1, Matrix.mul_one]
+    have hCG : (1 - P (path t)) * G t = G t * C0 := by
+      rw [Matrix.sub_mul, Matrix.one_mul, hPt t ht]
+      simp only [Matrix.mul_assoc, hGcancel t ht, (hGu t ht).1, Matrix.mul_one]
+      simp only [C0, Matrix.mul_sub, Matrix.mul_one]
+    have hphysical : c • ((K t * G t) * bracket t + G t * Bdot) = Hphys t * V t := by
+      have hterm1 : pi (path t) (hL t) * V t =
+          G t * (pi (path 0) (hL t) * pi (path 0) (VL t)) := by
+        dsimp [V]
+        rw [← Matrix.mul_assoc, hpiG, Matrix.mul_assoc]
+        dsimp [bracket]
+        rw [Matrix.mul_add, Matrix.mul_smul, hpiC, smul_zero, add_zero]
+      have hterm2 : (1 - P (path t)) * V t = G t * (phase t • C0) := by
+        dsimp [V]
+        rw [← Matrix.mul_assoc, hCG, Matrix.mul_assoc]
+        dsimp [bracket]
+        rw [Matrix.mul_add, Matrix.mul_smul, hCpi, hCC, zero_add]
+      rw [Hphys, Matrix.add_mul, Matrix.add_mul, Matrix.smul_mul, Matrix.smul_mul,
+        hterm1, hterm2]
+      dsimp [Bdot]
+      simp only [smul_add, Matrix.mul_add, Matrix.mul_smul, smul_smul, hca, one_smul]
+      have hphasecoef : c * (phase t * b) = (Delta : ℂ) * phase t := by
+        calc
+          _ = (c * b) * phase t := by ring
+          _ = _ := by rw [hcb]
+      rw [hphasecoef]
+      simp only [V, Matrix.mul_assoc, Matrix.mul_smul, smul_smul]
+    have htarget : (K t * G t) * bracket t + G t * Bdot = a • (Hphys t * V t) := by
+      rw [← hphysical, smul_smul, mul_comm a c, hca, one_smul]
+    change HasDerivWithinAt V ((K t * G t) * bracket t + G t * Bdot) (Icc 0 T) t at hp
+    rw [htarget] at hp
+    exact hp
+  have hDtrace (x) (X : Matrix (Fin n) (Fin n) ℂ) (i j : Fin d) :
+      decoder x X i j = Matrix.trace (pi x (Matrix.single j i 1) * X) +
+        Matrix.trace ((1 - P x) * X) * Matrix.single v v (1 : ℂ) i j :=
+    (hDec x).2.2.2.2.1 X i j
+  have hAdV (t) (X : Matrix (Fin n) (Fin n) ℂ) : AdV t X = V t * X * (V t)ᴴ := by
+    simp [AdV, MatrixMap.of_kraus]
+  have hAdL (t) (A : Matrix (Fin d) (Fin d) ℂ) : AdL t A = VL t * A * (VL t)ᴴ := by
+    simp [AdL, MatrixMap.of_kraus]
+  have hweights : ∀ (R : Matrix (Fin n) (Fin n) ℂ)
+      (hcomm : ∀ i j, R * F 0 i j = F 0 i j * R)
+      (hsupport : P (path 0) * R = R)
+      (htrace : Matrix.trace (F 0 v v * R) = 1),
+      ∀ t ∈ Icc 0 T,
+        let Rt := G t * R * (G t)ᴴ
+        P (path t) * Rt = Rt ∧ Rt * P (path t) = Rt ∧
+        (∀ A, Rt * pi (path t) A = pi (path t) A * Rt) ∧
+        Matrix.trace (F t v v * Rt) = 1 ∧ Matrix.trace Rt = Matrix.trace R ∧
+        (R.PosSemidef → Rt.PosSemidef) ∧
+        (∀ A : Matrix (Fin d) (Fin d) ℂ,
+          V t * (R * pi (path 0) A) * (V t)ᴴ =
+            Rt * pi (path t) (VL t * A * (VL t)ᴴ) ∧
+          decoder (path t) (V t * (R * pi (path 0) A) * (V t)ᴴ) = VL t * A * (VL t)ᴴ) ∧
+        (∀ (q : ℕ) (X : Matrix (Fin d × Fin q) (Fin d × Fin q) ℂ),
+          MatrixMap.kron (decoder (path t)) LinearMap.id
+            (MatrixMap.kron (AdV t) LinearMap.id
+              (MatrixMap.kron (encode R) LinearMap.id X)) =
+            MatrixMap.kron (AdL t) LinearMap.id X) := by
+    intro R hcomm hsupport htrace t ht
+    let Rt := G t * R * (G t)ᴴ
+    have hcommA (A : Matrix (Fin d) (Fin d) ℂ) : R * pi (path 0) A = pi (path 0) A * R := by
+      rw [← hrepr (path 0)]
+      simp only [representedMatrix, Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_smul, Matrix.smul_mul]
+      apply Finset.sum_congr rfl
+      intro i hi
+      apply Finset.sum_congr rfl
+      intro j hj
+      exact congrArg (fun X => A i j • X) (hcomm i j)
+    have hCR : C0 * R = 0 := by simp only [C0, Matrix.sub_mul, Matrix.one_mul, hsupport, sub_self]
+    have hRtsupport : P (path t) * Rt = Rt := by
+      rw [hPt t ht]
+      dsimp [Rt]
+      calc
+        _ = G t * (P (path 0) * R) * (G t)ᴴ := by
+          simp only [Matrix.mul_assoc, hGcancel t ht, (hGu t ht).1, Matrix.one_mul]
+        _ = _ := by rw [hsupport]
+    have hRtcomm (A) : Rt * pi (path t) A = pi (path t) A * Rt := by
+      rw [hpit t ht]
+      dsimp [Rt]
+      calc
+        _ = G t * (R * pi (path 0) A) * (G t)ᴴ := by
+          simp only [Matrix.mul_assoc, hGcancel t ht, (hGu t ht).1, Matrix.one_mul]
+        _ = G t * (pi (path 0) A * R) * (G t)ᴴ := by rw [hcommA]
+        _ = _ := by simp only [Matrix.mul_assoc, hGcancel t ht, (hGu t ht).1, Matrix.one_mul]
+    have hRtP : Rt * P (path t) = Rt := by rw [← hpi1, hRtcomm, hpi1, hRtsupport]
+    have hRttrace : Matrix.trace (F t v v * Rt) = 1 := by
+      rw [hFt t ht]
+      dsimp [Rt]
+      calc
+        _ = Matrix.trace (G t * (F 0 v v * R) * (G t)ᴴ) := by
+          simp only [Matrix.mul_assoc, hGcancel t ht, (hGu t ht).1, Matrix.one_mul]
+        _ = Matrix.trace (F 0 v v * R) := by
+          rw [Matrix.trace_mul_comm, hGcancel t ht]
+        _ = 1 := htrace
+    have hRtfulltrace : Matrix.trace Rt = Matrix.trace R := by
+      dsimp [Rt]
+      rw [Matrix.trace_mul_comm, hGcancel t ht]
+    have houtput (A : Matrix (Fin d) (Fin d) ℂ) :
+        V t * (R * pi (path 0) A) * (V t)ᴴ = Rt * pi (path t) (VL t * A * (VL t)ᴴ) := by
+      have hBR : bracket t * (R * pi (path 0) A) = R * pi (path 0) (VL t * A) := by
+        dsimp [bracket]
+        rw [Matrix.add_mul, Matrix.smul_mul]
+        have hz : C0 * (R * pi (path 0) A) = 0 := by
+          rw [← Matrix.mul_assoc, hCR, Matrix.zero_mul]
+        rw [hz, smul_zero, add_zero, ← Matrix.mul_assoc, ← hcommA,
+          Matrix.mul_assoc, hpim]
+      have hBoutput : bracket t * (R * pi (path 0) A) * (bracket t)ᴴ =
+          R * pi (path 0) (VL t * A * (VL t)ᴴ) := by
+        rw [hBR]
+        dsimp [bracket]
+        rw [Matrix.conjTranspose_add, Matrix.conjTranspose_smul, hCstar,
+          Matrix.mul_add, Matrix.mul_smul, hpis]
+        have hz : (R * pi (path 0) (VL t * A)) * C0 = 0 := by
+          rw [Matrix.mul_assoc, hpiC, Matrix.mul_zero]
+        rw [hz, smul_zero, add_zero, Matrix.mul_assoc, hpim]
+      calc
+        _ = G t * (bracket t * (R * pi (path 0) A) * (bracket t)ᴴ) * (G t)ᴴ := by
+          simp only [V, Matrix.conjTranspose_mul, Matrix.mul_assoc]
+        _ = G t * (R * pi (path 0) (VL t * A * (VL t)ᴴ)) * (G t)ᴴ := by rw [hBoutput]
+        _ = _ := by
+          rw [hpit t ht]
+          dsimp [Rt]
+          simp only [Matrix.mul_assoc, hGcancel t ht, (hGu t ht).1, Matrix.one_mul]
+    have hdecode (A : Matrix (Fin d) (Fin d) ℂ) :
+        decoder (path t) (V t * (R * pi (path 0) A) * (V t)ᴴ) = VL t * A * (VL t)ᴴ := by
+      rw [houtput]
+      have hz : (1 - P (path t)) * (Rt * pi (path t) (VL t * A * (VL t)ᴴ)) = 0 := by
+        rw [← Matrix.mul_assoc, Matrix.sub_mul, Matrix.one_mul, hRtsupport,
+          sub_self, Matrix.zero_mul]
+      ext i j
+      rw [hDtrace, hz, Matrix.trace_zero, zero_mul, add_zero]
+      change Matrix.trace (F t j i * (Rt * pi (path t) (VL t * A * (VL t)ᴴ))) = _
+      rw [← hrepr (path t)]
+      exact weighted_pairing (F t) (hFm t) v Rt
+        (fun u w => hRtcomm (Matrix.single u w 1)) hRttrace _ i j
+    refine ⟨hRtsupport, hRtP, hRtcomm, hRttrace, hRtfulltrace,
+      (fun hR => hR.mul_mul_conjTranspose_same (G t)),
+      (fun A => ⟨houtput A, hdecode A⟩), ?_⟩
+    intro q X
+    ext ⟨i,u⟩ ⟨j,w⟩
+    simpa only [kron_id_apply, hAdV, hAdL, encode, LinearMap.comp_apply,
+      LinearMap.mulLeft_apply, hpiM] using
+      congrArg (fun M : Matrix (Fin d) (Fin d) ℂ => M i j)
+        (hdecode (fun a b => X (a,u) (b,w)))
+  have hQ0support : P (path 0) * Q (path 0) = Q (path 0) := by
+    have hh : Q (path 0) = Q (path 0) * P (path 0) := by
+      simpa only [Q, hpi1] using hNfactor (path 0) (1 : Matrix (Fin d) (Fin d) ℂ)
+    rw [← hpi1, ← hQcomm, hpi1, ← hh]
+  have hQ0trace : Matrix.trace (F 0 v v * Q (path 0)) = 1 := by
+    calc
+      _ = Matrix.trace (Q (path 0) * pi (path 0) (Matrix.single v v 1)) := by
+        rw [hQcomm]
+      _ = Matrix.trace (N (path 0) (Matrix.single v v 1)) := by rw [hNfactor]
+      _ = 1 := by rw [hTP]; simp
+  have hQ0pos : (Q (path 0)).PosSemidef := by
+    obtain ⟨AA, hAA⟩ := MatrixMap.IsCompletelyPositive.exists_kraus
+      (N (path 0)).toLinearMap (hCP (path 0))
+    have he : Q (path 0) = ∑ z, AA z * (AA z)ᴴ := by
+      simpa [Q, MatrixMap.of_kraus, Matrix.mul_one] using
+        congrArg (fun f : MatrixMap (Fin d) (Fin n) ℂ => f 1) hAA
+    rw [he]
+    exact Matrix.nonneg_iff_posSemidef.mp
+      (Finset.sum_nonneg fun z _ => (Matrix.posSemidef_self_mul_conjTranspose (AA z)).nonneg)
+  have hencodeQ : encode (Q (path 0)) = (N (path 0)).toLinearMap := by
+    apply LinearMap.ext
+    intro A
+    exact (hNfactor (path 0) A).symm
+  refine ⟨⟨hVLzero, hVLcont, ?_⟩, ⟨hVzero, hVcont, ?_⟩, hweights, ?_⟩
+  · intro t ht
+    exact ⟨(hVLu t ht).1, (hVLu t ht).2, hVLd t ht, by rw [smul_smul, hca, one_smul]⟩
+  · intro t ht
+    exact ⟨hHherm t ht, (hVu t ht).1, (hVu t ht).2, hVd t ht,
+      by rw [smul_smul, hca, one_smul]⟩
+  · intro t ht
+    have hw := hweights (Q (path 0))
+      (fun i j => hQcomm (path 0) (Matrix.single i j 1)) hQ0support hQ0trace t ht
+    refine ⟨hw.2.2.2.2.2.1 hQ0pos, ?_, ?_⟩
+    · intro A
+      simpa only [← hNfactor (path 0) A] using hw.2.2.2.2.2.2.1 A
+    · intro q X
+      simpa only [hencodeQ] using hw.2.2.2.2.2.2.2 q X
 
 end Original8340Global

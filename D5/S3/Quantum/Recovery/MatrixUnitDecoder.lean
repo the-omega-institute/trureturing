@@ -148,7 +148,7 @@ theorem represented_matrix_mul (F : d → d → Matrix n n ℂ)
     _ = representedMatrix F (A * B) := by
       simp only [representedMatrix, Matrix.mul_apply, Finset.sum_smul]
 
-private theorem weighted_pairing (F : d → d → Matrix n n ℂ)
+theorem weighted_pairing (F : d → d → Matrix n n ℂ)
     (hmul : ∀ i j k l, F i j * F k l = if j = k then F i l else 0)
     (v : d) (Q : Matrix n n ℂ) (hcomm : ∀ i j, Q * F i j = F i j * Q)
     (htrace : Matrix.trace (F v v * Q) = 1) (A : Matrix d d ℂ) (i j : d) :

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:constructive-matrix-transport)
    anchors: []
    utility: none
-   digest: Ordered matrix integrals construct the unique Dyson solution and the unitary transport of the complete moving logical algebra. -/
+   digest: Ordered matrix integrals construct the unique Dyson solution; common skew-evolution conservation supplies unitary logical-algebra transport. -/
 
 import D5.S3.Quantum.Transport.MatrixUnitGenerator
 import Mathlib
@@ -89,6 +89,45 @@ def wholeConclusion (F D : ℝ → d → d → Matrix n n ℂ) (T : ℝ) : Prop 
     ContinuousOn H (Icc 0 T) →
     (∀ t ∈ Icc 0 T, H t = 1 + ∫ s in (0 : ℝ)..t, K s * H s) →
     ∀ t ∈ Icc 0 T, H t = G t)
+
+/-- Conservation of the Gram matrix for any actual skew-adjoint evolution.
+The singleton interval is handled by its initial value, without unique derivatives.
+This lemma is independent of the Dyson construction that consumes it below. -/
+theorem unitary_of_skew_evolution
+    (K U : ℝ → Matrix n n ℂ) (T : ℝ) (hT : 0 ≤ T)
+    (hderiv : ∀ t ∈ Icc 0 T,
+      HasDerivWithinAt U (K t * U t) (Icc 0 T) t)
+    (hskew : ∀ t ∈ Icc 0 T, (K t)ᴴ = -K t)
+    (hzero : U 0 = 1) :
+    ∀ t ∈ Icc 0 T, (U t)ᴴ * U t = 1 ∧ U t * (U t)ᴴ = 1 := by
+  by_cases hsingleton : T = 0
+  · intro t ht
+    have htzero : t = 0 := le_antisymm (ht.2.trans_eq hsingleton) ht.1
+    simp only [htzero, hzero, Matrix.conjTranspose_one, Matrix.one_mul, and_self]
+  · have hpositive : 0 < T := lt_of_le_of_ne hT (Ne.symm hsingleton)
+    have hd : ∀ s ∈ Icc 0 T,
+        HasDerivWithinAt (fun u => (U u)ᴴ * U u)
+          (0 : Matrix n n ℂ) (Icc 0 T) s := by
+      intro s hs
+      have hp := (hderiv s hs).star.mul (hderiv s hs)
+      change HasDerivWithinAt (fun u => (U u)ᴴ * U u)
+        ((K s * U s)ᴴ * U s + (U s)ᴴ * (K s * U s)) (Icc 0 T) s at hp
+      have hz : (K s * U s)ᴴ * U s + (U s)ᴴ * (K s * U s) = 0 := by
+        rw [Matrix.conjTranspose_mul, hskew s hs]
+        noncomm_ring
+      simpa only [hz] using hp
+    have hf : ∀ s ∈ Icc 0 T,
+        fderivWithin ℝ (fun u => (U u)ᴴ * U u) (Icc 0 T) s = 0 := by
+      intro s hs
+      simpa using (hd s hs).hasFDerivWithinAt.fderivWithin
+        (uniqueDiffOn_Icc hpositive s hs)
+    intro t ht
+    have hconst := (convex_Icc (0 : ℝ) T).is_const_of_fderivWithin_eq_zero
+      (fun s hs => (hd s hs).differentiableWithinAt) hf ht
+      (show (0 : ℝ) ∈ Icc 0 T from ⟨le_rfl, hT⟩)
+    have hleft : (U t)ᴴ * U t = 1 := by
+      simpa only [hzero, Matrix.conjTranspose_one, Matrix.one_mul] using hconst
+    exact ⟨hleft, mul_eq_one_comm.mp hleft⟩
 
 /-- The ordered integral construction and the full computed-generator transport. -/
 theorem constructive_transport : (∀ (K : ℝ → Matrix n n ℂ) (T : ℝ), 0 ≤ T →
@@ -613,29 +652,9 @@ theorem constructive_transport : (∀ (K : ℝ → Matrix n n ℂ) (T : ℝ), 0 
       supportVelocity, Fintype.sum_unique, hd, Nat.cast_one, inv_one, one_smul]
   obtain ⟨hbounded, hsimplex, hfactorial, hseries, huniform, hGcont,
     hGeq, hGderiv, hGzero, huniqueness⟩ := hactual K T hT.le hK
-  have hunitary : ∀ t ∈ Icc 0 T, (G t)ᴴ * G t = 1 ∧ G t * (G t)ᴴ = 1 := by
-    have hd : ∀ s ∈ Icc 0 T,
-        HasDerivWithinAt (fun u => (G u)ᴴ * G u)
-          (0 : Matrix n n ℂ) (Icc 0 T) s := by
-      intro s hs
-      have hp := (hGderiv s hs).star.mul (hGderiv s hs)
-      change HasDerivWithinAt (fun u => (G u)ᴴ * G u)
-        ((K s * G s)ᴴ * G s + (G s)ᴴ * (K s * G s)) (Icc 0 T) s at hp
-      have hz : (K s * G s)ᴴ * G s + (G s)ᴴ * (K s * G s) = 0 := by
-        rw [Matrix.conjTranspose_mul, (hgenerator s hs).1]
-        noncomm_ring
-      simpa only [hz] using hp
-    have hf : ∀ s ∈ Icc 0 T,
-        fderivWithin ℝ (fun u => (G u)ᴴ * G u) (Icc 0 T) s = 0 := by
-      intro s hs
-      simpa using (hd s hs).hasFDerivWithinAt.fderivWithin (uniqueDiffOn_Icc hT s hs)
-    intro t ht
-    have hconst := (convex_Icc (0 : ℝ) T).is_const_of_fderivWithin_eq_zero
-      (fun s hs => (hd s hs).differentiableWithinAt) hf ht
-      (show (0 : ℝ) ∈ Icc 0 T from ⟨le_rfl, hT.le⟩)
-    have hleft : (G t)ᴴ * G t = 1 := by
-      simpa only [G, hGzero, Matrix.conjTranspose_one, Matrix.one_mul] using hconst
-    exact ⟨hleft, mul_eq_one_comm.mp hleft⟩
+  have hunitary : ∀ t ∈ Icc 0 T, (G t)ᴴ * G t = 1 ∧ G t * (G t)ᴴ = 1 :=
+    unitary_of_skew_evolution K G T hT.le hGderiv
+      (fun t ht => (hgenerator t ht).1) hGzero
   have htransportDeriv : ∀ t ∈ Icc 0 T, ∀ i j,
       HasDerivWithinAt (fun s => (G s)ᴴ * F s i j * G s)
         (0 : Matrix n n ℂ) (Icc 0 T) t := by

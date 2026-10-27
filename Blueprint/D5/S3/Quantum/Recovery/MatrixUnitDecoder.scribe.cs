@@ -14,6 +14,7 @@ internal sealed class MatrixUnitDecoderDocument : IScribeDocumentDefinition
             "decoder_trace_pairing",
             "matrix_unit_decoder_channel",
             "represented_matrix_mul",
+            "weighted_pairing",
             "decoder_recovers_commutant_weight"
         }.Select(name => Describe.Lean(
             DescribeId.Create(name.Replace('_', '-')),
