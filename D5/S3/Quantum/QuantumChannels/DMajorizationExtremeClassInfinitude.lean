@@ -41,7 +41,6 @@ def claim : Prop :=
               x = u * y * star u
 
 private def d : Fin 2 → ℝ := ![1 / 3, 2 / 3]
-private def a : Matrix (Fin 2) (Fin 2) ℂ := diagonal ![1, 0]
 private def p (m : ℕ) : Matrix (Fin 2) (Fin 2) ℂ :=
   !![(m : ℂ)^2 / ((m : ℂ)^2 + 1), (m : ℂ) / ((m : ℂ)^2 + 1);
      (m : ℂ) / ((m : ℂ)^2 + 1), 1 / ((m : ℂ)^2 + 1)]
@@ -83,7 +82,7 @@ private lemma kraus_action (m : ℕ) (x : Matrix (Fin 2) (Fin 2) ℂ) :
     field_simp (discharger := first | exact denominator_ne m |
       simpa only [add_comm] using denominator_ne m | norm_num) <;> ring
 
-private lemma pure_mem (m : ℕ) : p m ∈ majorizationSet d a := by
+private lemma pure_mem (m : ℕ) : p m ∈ majorizationSet d (diagonal ![1, 0]) := by
   refine ⟨MatrixMap.of_kraus (kraus m) (kraus m),
     ⟨MatrixMap.of_kraus_isCompletelyPositive _, ?_⟩, ?_, ?_⟩
   · intro x
@@ -96,7 +95,6 @@ private lemma pure_mem (m : ℕ) : p m ∈ majorizationSet d a := by
     rw [Matrix.trace_add, Matrix.trace_sub, hp]
     norm_num [Matrix.trace_fin_two]
   · rw [kraus_action]
-    delta a
     norm_num
   · rw [kraus_action]
     ext i j
@@ -106,7 +104,7 @@ private lemma pure_mem (m : ℕ) : p m ∈ majorizationSet d a := by
         Matrix.smul_apply, Matrix.one_apply] <;> ring
 
 private lemma density (x : Matrix (Fin 2) (Fin 2) ℂ)
-    (hx : x ∈ majorizationSet d a) : x.PosSemidef ∧ x.trace = 1 := by
+    (hx : x ∈ majorizationSet d (diagonal ![1, 0])) : x.PosSemidef ∧ x.trace = 1 := by
   obtain ⟨t, ht, hta, _⟩ := hx
   constructor
   · rw [← hta]
@@ -115,7 +113,6 @@ private lemma density (x : Matrix (Fin 2) (Fin 2) ℂ)
     intro i
     fin_cases i <;> simp
   · rw [← hta, ht.2]
-    delta a
     norm_num [Matrix.trace_fin_two]
 
 private lemma pure_rigidity (m : ℕ) (x : Matrix (Fin 2) (Fin 2) ℂ)
@@ -149,7 +146,7 @@ private lemma pure_rigidity (m : ℕ) (x : Matrix (Fin 2) (Fin 2) ℂ)
   · exact h11
 
 private lemma pure_extreme (m : ℕ) :
-    p m ∈ Set.extremePoints ℝ (majorizationSet d a) := by
+    p m ∈ Set.extremePoints ℝ (majorizationSet d (diagonal ![1, 0])) := by
   refine ⟨pure_mem m, ?_⟩
   intro x hx y hy hp
   obtain ⟨r, s, hr, hs, _, he⟩ := hp
@@ -208,7 +205,8 @@ private lemma invariant_injective :
 /-- The two-dimensional counterexample has infinitely many extreme unitary classes. -/
 theorem result : ¬ claim := by
   intro hc
-  obtain ⟨f, hf⟩ := hc 2 d (by intro i; delta d; fin_cases i <;> norm_num) a
+  obtain ⟨f, hf⟩ := hc 2 d (by intro i; delta d; fin_cases i <;> norm_num)
+    (diagonal ![1, 0])
   have hw (m : ℕ) := hf (p m) (pure_extreme m)
   choose y hy u hu he using hw
   have hi : Function.Injective y := by
