@@ -110,7 +110,7 @@ $$\forall k \in \mathbb{N} ,\; (0 < k) \Rightarrow (\operatorname{bernDen} \left
 
 *Commentary.*
 
-Bernoulli.vonStaudt_clausen expresses B(2k) as an integer minus the prime reciprocal sum. Rat.den_sum_dvd_prod_den bounds its denominator by the prime product. Each prime in the product divides the denominator by Bernoulli.dvd_den_bernoulli. Distinct primes are relatively prime, so their product divides the denominator. Antisymmetry gives equality. This is the denominator identity in Notation 5.5, §5.1, printed p. 8.
+Bernoulli.vonStaudt_clausen expresses B(2k) as an integer minus the prime reciprocal sum. Finset.Rat.den_sum_dvd_prod_den bounds its denominator by the prime product. Each prime in the product divides the denominator by Bernoulli.dvd_den_bernoulli. Nat.coprime_primes and Finset.prod_dvd_of_isRelPrime give divisibility by their product. Antisymmetry gives equality. This is the denominator identity in Notation 5.5, §5.1, printed p. 8.
 
 **Theorem 1.10 (Coprimality removes the prime factors of n).**
 
@@ -122,7 +122,7 @@ $$\forall n \in \mathbb{N} ,\; (0 < n) \Rightarrow (\operatorname{todaPrimes} \l
 
 *Commentary.*
 
-For an odd prime p, p divides neither 4 nor p−1. The identity (p−1)(4n/(p−1))=4n therefore makes coprimality with the quotient equivalent to p not dividing n.
+Nat.not_dvd_of_pos_of_lt excludes p dividing p−1. Nat.prime_eq_prime_of_dvd_pow reduces a prime divisor of 4 to 2, which oddness excludes. Nat.mul_div_cancel' gives (p−1)(4n/(p−1))=4n; Nat.Prime.dvd_mul and Nat.Prime.coprime_iff_not_dvd then make coprimality with the quotient equivalent to p not dividing n.
 
 **Theorem 1.11 (A proper divisor proves compositeness).**
 
@@ -134,7 +134,7 @@ $$\forall q \in \mathbb{N} ,\; \forall c \in \mathbb{N} ,\; (1 < c) \Rightarrow 
 
 *Commentary.*
 
-A prime has no divisor strictly between one and itself. This excludes the unwanted divisor successors.
+Nat.not_prime_of_dvd_of_lt excludes a number with a divisor strictly between one and itself. Nat.dvd_of_mod_eq_zero supplies the divisor from the zero residue. This excludes the unwanted divisor successors.
 
 **Theorem 1.12 (Only four divisor successors can be prime).**
 
@@ -146,7 +146,7 @@ $$\forall a \in \mathbb{N} ,\; \forall q \in \mathbb{N} ,\; (\operatorname{Nat.P
 
 *Commentary.*
 
-Decomposing a divisor of 4a(2a+1) into divisors of 4, a and 2a+1 gives twelve candidates. The unwanted successors are even or divisible by 3 or 5. The residue a≡23 modulo 30 gives a≡1 modulo 2, a≡2 modulo 3 and a≡3 modulo 5.
+exists_dvd_and_dvd_of_dvd_mul decomposes a divisor of 4a(2a+1) into divisors of 4, a and 2a+1. Nat.dvd_prime_pow classifies the divisors of 4, giving twelve candidates. The unwanted successors are even or divisible by 3 or 5. The residue a≡23 modulo 30 gives a≡1 modulo 2, a≡2 modulo 3 and a≡3 modulo 5.
 
 **Theorem 1.13 (Both denominator prime sets coincide).**
 
@@ -182,7 +182,7 @@ $$\forall a \in \mathbb{N} ,\; (\operatorname{Nat.Prime} \left(a\right)) \Righta
 
 *Commentary.*
 
-The prime divisors 5 and 2a+1 of the denominator force 4 dividing k and 2a dividing k. Since a is odd, their least common multiple is 4a. Every positive such k is at least 4a.
+primeDenIff applied to 5 and 2a+1 forces 4 dividing k and 2a dividing k. Writing k=2ar, Nat.mul_dvd_mul_iff_left cancels a factor of 2 from 4 dividing k. The odd residue of a then forces r to be even. Nat.pos_of_mul_pos_left gives r>0, and Nat.le_of_dvd gives r≥2, hence k≥4a.
 
 **Theorem 1.16 (The prime family contradicting invariance).**
 
