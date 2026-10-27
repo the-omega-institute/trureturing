@@ -4218,3 +4218,41 @@ independent meanings across these installations, with its actual
 operational and resource bridges, remains unresolved.
 
 ## 追加锚（本行以下为增补区）
+
+## 34. Current-public supplier reconciliation for the digital result
+
+**Supplier correspondence 34.1 (timed release versus digital acquisition).**
+The current public [Native Free Diffusion §§24--28](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md#24-timed-entrance-and-killed-releases-from-the-original-source)
+now supplies Theorem 24.3's original-source causal release, Theorem 25.2's
+filtration containment and released-state accuracy under Assumption 25.1,
+Theorem 26.3's finite lawful prospective consumer under Assumption 26.1, and
+Theorem 27.1's same-time output/exit convergence. The service exposes exact
+real states, timestamps and nonarrival and assumes an exact-real actuation
+interface. These are genuine acquisition and consumer results for that
+analytic diffusion service, but they do not install the QN-D floor channel,
+the supplied denominator lattice, the integer native adjacency, or the
+complete current service of §§28--33. The present lattice decoder therefore
+does not claim the diffusion service, finite-bit or finite-shot realization,
+effective rate, or a native-to-diffusion identification.
+
+**Supplier correspondence 34.2 (other current public sources).** The current
+public [attractive gluing §35](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GLUING.md#35-实际慢共振输入有限相容修正与修正后的物理质量)
+constructs a finite compatibility correction and positive corrected mass for
+its analytic Friedrichs source, but leaves its full residual estimate open.
+[Coherent reconstruction §36](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md#36-同一被动等待的极分解与完整原生读取的不相容)
+proves a fixed five-mode polar-factor/readout obstruction under its own
+quantum menu. [Appendix II §120](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#120-a-positive-quadratic-direction-on-every-original-emission-overlap)
+proves a positive quadratic direction for its original emission overlap while
+leaving deterministic attainment unresolved. Their sources, clocks, effects,
+and admissible consumers are distinct from the QN-D source and are not used
+to strengthen the floor collision, lattice injectivity, or resource account.
+
+**Boundary 34.3 (retained obligations).** The digital contribution remains
+one actual QN-D installation with its supplied $D$, $h$, source map, prepared
+entrance, performed floor assay, retained predictor and paid continuation.
+It does not settle unknown-law acquisition, seed or units, physical source
+conformance, arbitrary erased histories, uniform lifetime resources, or a
+single native/path/quantum/continuous apparatus. All original fixed-model
+and common-realization obligations retain their exact scopes.
+
+## 追加锚（本行以下为增补区）

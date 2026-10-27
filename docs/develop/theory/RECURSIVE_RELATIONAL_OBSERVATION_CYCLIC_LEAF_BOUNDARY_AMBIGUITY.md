@@ -1051,3 +1051,36 @@ The four expressions have independent meanings only in the explicit acquired-ima
 [CMDiffusion]: https://github.com/the-omega-institute/trureturing/blob/bc0d5339476df8b41d58d7cde040a82266a9f416/docs/develop/theory/FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md
 
 ## 追加锚（本行以下为增补区）
+
+## 20. Current-public supplier reconciliation for calibrated multiplication
+
+**Supplier correspondence 20.1 (analytic timed service and native Square).** The current public [Native Free Diffusion §§24--28](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md#24-timed-entrance-and-killed-releases-from-the-original-source)
+provides causal original-time releases and a finite prospective consumer only
+under Assumptions 25.1 and 26.1. Its exact-real timed service, source law and
+actuation are supplied premises; it does not calibrate an unknown rational
+weighted cyclic matrix, install native Square, or provide the leaf-only
+authority profile of §§11--17. The present contribution does not claim the
+diffusion sampler or its same-time convergence.
+
+**Supplier correspondence 20.2 (analytic, quantum and passive sources).** The
+current public [attractive gluing §35](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GLUING.md#35-实际慢共振输入有限相容修正与修正后的物理质量)
+has a distinct analytic Friedrichs source and a finite compatibility
+correction with positive corrected mass, but no full residual conclusion.
+[Coherent reconstruction §36](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md#36-同一被动等待的极分解与完整原生读取的不相容)
+supplies a fixed five-mode polar factor and a complete-read effect
+obstruction; that obstruction does not cover the native Square class or
+install its calibration. [Appendix II §120](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#120-a-positive-quadratic-direction-on-every-original-emission-overlap)
+supplies a positive quadratic direction for its original passive emission
+overlap, with deterministic attainment and the remaining overlap cases open.
+These source-specific conclusions remain suppliers with their own states,
+clocks, records and consumers and cannot be merged with Definitions 11.1--17.1.
+
+**Boundary 20.3 (retained scope).** The calibrated product, two complete
+cyclic-family protocols, four-view recovery and paid selected use remain
+conditional on the actual Reset/Square/Read installation, authentic ports,
+retained records and rights stated in §§11--18. No current-public analytic or
+quantum result supplies those premises, a total-cost ordering, a physical
+native-to-quantum bridge, or the universal common apparatus. The original
+fixed-model and common-source obligations remain unchanged.
+
+## 追加锚（本行以下为增补区）

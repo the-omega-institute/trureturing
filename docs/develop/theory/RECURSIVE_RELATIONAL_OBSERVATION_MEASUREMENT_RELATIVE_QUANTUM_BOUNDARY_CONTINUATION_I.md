@@ -1767,3 +1767,41 @@ identify the separate installations as one source nor complete
 the common internal-observer objective.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Current-public supplier reconciliation for the quantum converse
+
+**Supplier correspondence 7.1 (the changed coherent-reconstruction source).** The current public [coherent reconstruction §36](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md#36-同一被动等待的极分解与完整原生读取的不相容)
+uses the fixed five-mode $D$-frame, its polar factor and the original
+complete-read menu. It proves a waiting-compatible polar structure and a
+source-specific full-read effect obstruction, including a positive
+total-variation separation for the displayed input pair. It does not provide
+a common state--effect--instrument composition, a finite positive exact-law
+certificate, or a new preparation/reference/right. The selective F-read
+converse and finite exact-certificate boundary in §§4--6 therefore retain
+their own fixed-DU hypotheses and are neither strengthened nor replaced by
+§36.
+
+**Supplier correspondence 7.2 (analytic current sources).** The current
+public [Native Free Diffusion §§24--28](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md#24-timed-entrance-and-killed-releases-from-the-original-source)
+supplies original-source causal releases, released-state accuracy and a
+prospective native consumer under the exact-real timed-service and actuation
+premises of Assumptions 25.1 and 26.1. The current public [attractive gluing
+§35](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GLUING.md#35-实际慢共振输入有限相容修正与修正后的物理质量)
+supplies a finite analytic compatibility correction and positive corrected
+mass while leaving the full residual estimate open. [Appendix II §120](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#120-a-positive-quadratic-direction-on-every-original-emission-overlap)
+supplies a positive quadratic direction for an original passive emission
+overlap, with deterministic attainment unresolved. None of these sources
+installs the fixed-DU CP/readout/reference interface, supplies a quantum
+finite-bit or finite-shot bridge, or identifies the separate installations
+with the present source.
+
+**Boundary 7.3 (remaining obligations).** The quantum contribution remains a
+fixed-DU selective adaptive F-read result with its supplied preparation,
+reference, rights, calibration, retained record and finite callable prefix.
+It does not establish physical acquisition of those interfaces, arbitrary
+unknown-state reconstruction, general-$N$ herald/archive operation, a native
+or continuous common apparatus, full four-view recovery, or unlimited-use
+bounds. The original fixed-model and common-realization obligations retain
+their exact scopes.
+
+## 追加锚（本行以下为增补区）
