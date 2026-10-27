@@ -98,26 +98,13 @@ Lean statement: `D5/S3/Geometry/FiniteSimplicialJoin.joinHomeomorph`
 
 *Commentary.*
 
-For every pair of finite vertex types and pre-abstract simplicial complexes M and N with both actual factor realizations nonempty, their ordinary topological join is homeomorphic to the actual coordinate realization of their simplicial join. For surjectivity, sum the target's right block to obtain t and normalize each positive-mass block inside its actual factor face. For a zero-mass block, use a chosen actual point in that nonempty factor. Each factor realization is a finite union of compact convex hulls. The source quotient is therefore compact and the target is Hausdorff, so the continuous bijection is a homeomorphism. This classical bridge does not establish graph substitution, sphere-join identities, finite sphere-wedge closure or the full Question 22 of Carnero Bravo. The nonempty hypotheses exclude the ordinary-join versus augmented-empty-face convention mismatch.
-
-**Theorem 1.9 (The representative formula).**
-
-Lean statement: `D5/S3/Geometry/FiniteSimplicialJoin.joinHomeomorph_apply`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteSimplicialJoin.joinHomeomorph_apply` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For all actual points x and y and all interval parameters t, the homeomorphism sends the class of (x,y,t) to the vector with left block (1-t)x and right block ty, including both endpoints.
+For every pair of finite vertex types and pre-abstract simplicial complexes M and N with both actual factor realizations nonempty, their ordinary topological join is homeomorphic to the actual coordinate realization of their simplicial join. For all actual points x and y and all interval parameters t, the homeomorphism sends the class of (x,y,t) to the vector with left block (1-t)x and right block ty, including both endpoints. For surjectivity, sum the target's right block to obtain t and normalize each positive-mass block inside its actual factor face. For a zero-mass block, use a chosen actual point in that nonempty factor. Each factor realization is a finite union of compact convex hulls. The source quotient is therefore compact and the target is Hausdorff, so the continuous bijection is a homeomorphism. This classical bridge does not establish graph substitution, sphere-join identities, finite sphere-wedge closure or the full Question 22 of Carnero Bravo. The nonempty hypotheses exclude the ordinary-join versus augmented-empty-face convention mismatch.
 
 ## References
 
 - Truth anchor: `D5/S3/Geometry/FiniteSimplicialJoin.OrdinaryJoin`
 - Truth anchor: `D5/S3/Geometry/FiniteSimplicialJoin.Space`
 - Truth anchor: `D5/S3/Geometry/FiniteSimplicialJoin.joinHomeomorph`
-- Truth anchor: `D5/S3/Geometry/FiniteSimplicialJoin.joinHomeomorph_apply`
 - Truth anchor: `D5/S3/Geometry/FiniteSimplicialJoin.ordinaryJoinSetoid`
 - Truth anchor: `D5/S3/Geometry/FiniteSimplicialJoin.realizationMap`
 - Truth anchor: `D5/S3/Geometry/FiniteSimplicialJoin.representative`
