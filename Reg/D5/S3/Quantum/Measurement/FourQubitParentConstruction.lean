@@ -974,4 +974,20 @@ noncomputable def zeroRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,
     coordinates := #[], readouts := #[⟨#["fn", "fn"], 0, true, none, false⟩] }
   continuation := .unknown, familyRecord := none, options := #[] }
 #print axioms zeroRegistration
+noncomputable def sumEqualityRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@scalarB_sum.{u}) (Realization equalitySignature) Unit Unit := {
+  unitName := `D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_sum.__information_unit
+  realizationName := ``scalarSumEvidence
+  realizationSource := none, generated := false, arena := .source ⟨scalarSumArena.{u}⟩
+  objectArena := .source ⟨scalarSumArena.{u}⟩, catalog := .anonymous, localNames := false
+  realization := .source scalarSumArena.{u} ⟨scalarSumEvidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent
+  readout := some (realize equalitySignature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction, definition := none
+    coordinates := #[], readouts := #[⟨
+      #["body", "body", "body", "body", "fn", "fn"], 0, true, none, false⟩] }
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms sumEqualityRegistration
 end Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction

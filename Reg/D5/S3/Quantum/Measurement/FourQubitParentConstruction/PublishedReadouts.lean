@@ -6,6 +6,8 @@ import Reg.Support.SingleDependentReadout
 
 namespace Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction
 
+universe u
+
 open _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open scoped BigOperators
@@ -54,6 +56,29 @@ def zeroEvidence : Registration zeroArena (type_of% @B_zero) where
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity zeroArena.Law equalityActual
     equalityRejected zeroNegative
   dependence := equalityDependence
+
+abbrev scalarSumArena : Arena where
+  signature := equalitySignature
+  Law r := ∀ {ι : Type u} (s : Finset ι) (t : ι → ℝ)
+    (a : ι → EuclideanSpace ℝ (Fin 3)),
+    r.readout () () (scalarB (∑ j ∈ s, t j) (∑ j ∈ s, a j))
+      (∑ j ∈ s, scalarB (t j) (a j))
+
+theorem scalarSumNegative : ¬ scalarSumArena.{u}.Law equalityRejected := by
+  intro h
+  have hbad := h (ι := ULift.{u} Unit) ∅ (fun _ => 0) (fun _ => 0)
+  exact hbad (scalarB_sum _ _ _)
+
+def scalarSumEvidence : Registration scalarSumArena.{u} (type_of% @scalarB_sum.{u}) where
+  actual := equalityActual
+  bridge := Iff.rfl
+  variation := ⟨@scalarB_sum, equalityRejected, scalarSumNegative⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity scalarSumArena.Law equalityActual
+    equalityRejected scalarSumNegative
+  dependence := equalityDependence
+
+#print axioms zeroEvidence
+#print axioms scalarSumEvidence
 
 end
 end Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction
