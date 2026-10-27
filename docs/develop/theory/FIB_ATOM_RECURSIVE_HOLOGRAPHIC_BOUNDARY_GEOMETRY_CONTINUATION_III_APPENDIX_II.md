@@ -2184,7 +2184,7 @@ For every Borel $E\subset G$ with $m(E)>0$, the symmetrized form
 
 $$
 Q_E^{\rm sym}(u,v)=\frac{Q(u,v)+Q(v,u)}2,
-\qquad \operatorname{supp}u,\operatorname{supp}v\subset E,
+\qquad u=v=0\quad\text{on }G\setminus E,
 \tag{122.2}
 $$
 
@@ -2551,7 +2551,7 @@ Therefore a maximizing tuple is an indicator tuple almost everywhere.
 Choose Borel representatives and assign one fixed label on the combined
 Borel null exceptional set. The two positive-time marginals have densities
 $g_t$ and $g_{t+\Delta}$ with respect to $m$, so this repair preserves
-both positive-time pair laws. Hence every attainable stochastic law has a
+the original two-time pair law. Hence every attainable stochastic law has a
 Borel partition representative, proving the first equality in (122.3).
 The second follows from the attained stochastic minimum in Theorem 119.2.
 
@@ -2577,7 +2577,7 @@ The new inference supplies exactly the previously unresolved boundary between
 (119.3), which gave only equality of stochastic and deterministic infima and
 weak-star deterministic approximation, and deterministic attainment by one
 Borel partition. It also supplies the local infinite-negative-index premise
-needed to turn the positive isotropic direction of Theorem 120.2 into an
+needed to turn the positive quadratic direction of Theorem 120.2 into an
 exact same-law perturbation. The cited analytic, heat-RKHS, density-point,
 Agler–Young, rotation, commutator and compact-fiber ingredients are used
 inside this source-specific proof; no standalone renamed literature theorem
