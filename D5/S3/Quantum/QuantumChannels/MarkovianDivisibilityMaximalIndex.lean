@@ -9,7 +9,6 @@
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.FinCases
 
 /-! The two mean matrices are optimized over independent sets of ordered positions. -/
@@ -572,3 +571,46 @@ theorem result :
     · exact three_failure
 
 end D5.S3.Quantum.QuantumChannels.MarkovianDivisibilityMaximalIndex
+
+run_elab do
+  let env ← Lean.getEnv
+  let root := `D5.S3.Quantum.QuantumChannels.MarkovianDivisibilityMaximalIndex.result
+  let mut seen : Lean.NameSet := {}
+  let mut todo : Array Lean.Name := #[root]
+  while !todo.isEmpty do
+    let current := todo.back!
+    todo := todo.pop
+    if seen.contains current then continue
+    seen := seen.insert current
+    let ci ← Lean.getConstInfo current
+    for name in ci.getUsedConstantsAsSet do
+      if (env.getModuleIdxFor? name).isNone && !seen.contains name then
+        todo := todo.push name
+  let locals := env.constants.fold (init := #[]) fun acc name _ =>
+    if (env.getModuleIdxFor? name).isNone then acc.push name else acc
+  let unused := locals.filter fun name => !seen.contains name
+  Lean.logInfo m!"AUDIT_LOCAL_COUNT {locals.size}"
+  Lean.logInfo m!"AUDIT_LOCAL_NAMES {locals}"
+  Lean.logInfo m!"AUDIT_UNUSED {unused}"
+  for name in locals do
+    let ci ← Lean.getConstInfo name
+    let deps := ci.getUsedConstantsAsSet.toArray.filter fun dep => locals.contains dep
+    Lean.logInfo m!"AUDIT_DEPENDENCIES {name} {deps}"
+  for name in unused do
+    let ci ← Lean.getConstInfo name
+    Lean.logInfo m!"AUDIT_UNUSED_TYPE {name}: {ci.type}"
+  let axioms ← Lean.collectAxioms root
+  let declarations := locals.map fun name =>
+    let ci := env.find? name |>.get!
+    let deps := ci.getUsedConstantsAsSet.toArray.filter fun dep => locals.contains dep
+    Lean.Json.mkObj [("name", Lean.toJson name.toString),
+      ("dependencies", Lean.toJson (deps.map Lean.Name.toString))]
+  let _ ← IO.FS.writeFile
+    "/Users/chronoai/.sshx/650af882ace52bec39b5f3b3/attempt-1/closure-audit.json"
+    (Lean.Json.mkObj [("locals", Lean.toJson (locals.map Lean.Name.toString)),
+      ("unused", Lean.toJson (unused.map Lean.Name.toString)),
+      ("axioms", Lean.toJson (axioms.map Lean.Name.toString)),
+      ("dependencies", Lean.Json.arr declarations)]).pretty
+  Lean.logInfo m!"AUDIT_AXIOMS {axioms}"
+  if !unused.isEmpty then
+    throwError "Local declarations outside the result closure: {unused}"
