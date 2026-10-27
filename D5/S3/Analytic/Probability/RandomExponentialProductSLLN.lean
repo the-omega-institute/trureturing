@@ -316,10 +316,72 @@ private lemma deterministic_uniform {e : Type*} [NormedRing e] [NormedAlgebra �
       ∀ s ∈ Set.Icc (0 : ℝ) t,
         ‖(List.ofFn fun i : Fin n => NormedSpace.exp ((s / n) • a i)).prod -
           NormedSpace.exp (s • b)‖ < ε := by
-  have hab := euler_abel_bound a b m
-  have hex := exponential_euler_bound a m
-  have hmax := centered_max_sublinear a b hav
-  sorry
+  intro t ht ε hε
+  let c := Real.exp (m * t)
+  let d := t * c * (1 + 2 * m * t)
+  let f := (3 / 2 : ℝ) * m ^ 2 * t ^ 2 * c
+  let δ := ε / (2 * (d + 1))
+  have hc : 0 < c := Real.exp_pos _
+  have hd : 0 ≤ d := by dsimp [d]; positivity
+  have hδ : 0 < δ := by dsimp [δ]; positivity
+  have hδeq : δ * (2 * (d + 1)) = ε := div_mul_cancel₀ _ (by positivity)
+  have hδsmall : d * δ < ε / 2 := by nlinarith
+  have hmax := centered_max_sublinear a b hav δ hδ
+  have hlarge : ∀ᶠ n : ℕ in atTop, t * m ≤ (n : ℝ) :=
+    tendsto_natCast_atTop_atTop.eventually (eventually_ge_atTop (t * m))
+  have htail : ∀ᶠ n : ℕ in atTop, f / (n : ℝ) < ε / 2 :=
+    (tendsto_const_div_atTop_nhds_zero_nat f).eventually (gt_mem_nhds (by positivity))
+  filter_upwards [hmax, eventually_gt_atTop (0 : ℕ), hlarge, htail] with n hsums hn hnm htail
+  intro s hs
+  have hs0 := hs.1
+  have hst := hs.2
+  have hnpos : (0 : ℝ) < n := Nat.cast_pos.mpr hn
+  have hh : 0 ≤ s / n := div_nonneg hs0 hnpos.le
+  have hsmall : s / n * m ≤ 1 := by
+    rw [div_mul_eq_mul_div, div_le_one hnpos]
+    exact (mul_le_mul_of_nonneg_right hst hm).trans hnm
+  let p := (List.ofFn fun i : Fin n => NormedSpace.exp ((s / n) • a i)).prod
+  let q := eulerProduct a (s / n) n
+  let v := (1 + (s / n) • b) ^ n
+  let w := NormedSpace.exp (s • b)
+  let k := (3 / 4 : ℝ) * m ^ 2 * t ^ 2 * c / n
+  have herr : (3 / 4 : ℝ) * m ^ 2 * s ^ 2 * Real.exp (m * s) / n ≤ k := by
+    dsimp [k, c]
+    gcongr
+  have hpq : ‖p - q‖ ≤ k :=
+    (exponential_euler_bound a m s n hm hs0 hn (fun i _ => ha i) hsmall).trans herr
+  have hconst := exponential_euler_bound (fun _ => b) m s n hm hs0 hn
+    (fun _ _ => hb) hsmall
+  change ‖(List.ofFn fun _ : Fin n => NormedSpace.exp ((s / n) • b)).prod -
+    (List.ofFn fun _ : Fin n => 1 + (s / n) • b).prod‖ ≤ _ at hconst
+  rw [List.ofFn_const, List.prod_replicate, List.ofFn_const, List.prod_replicate] at hconst
+  have hcancel : (n : ℝ) * (s / n) = s := by field_simp
+  have hexp : NormedSpace.exp ((s / n) • b) ^ n = w := by
+    letI := NormedAlgebra.restrictScalars ℚ ℝ e
+    rw [← NormedSpace.exp_nsmul, ← Nat.cast_smul_eq_nsmul ℝ, smul_smul, hcancel]
+  rw [hexp, norm_sub_rev] at hconst
+  have hvw : ‖v - w‖ ≤ k := hconst.trans herr
+  have habel := euler_abel_bound a b m (s / n) (δ * n) n hm hh (by positivity)
+    (fun i _ => ha i) hb hsums
+  have harg : s / n * m * n = m * s := by field_simp <;> ring
+  have hfactor : 1 + 2 * (s / n) * m * n = 1 + 2 * m * s := by field_simp <;> ring
+  have hqv : ‖q - v‖ ≤ d * δ := by
+    refine habel.trans ?_
+    calc
+      _ = δ * s * Real.exp (m * s) * (1 + 2 * m * s) := by
+        rw [harg, hfactor]
+        field_simp
+        <;> ring
+      _ ≤ δ * t * c * (1 + 2 * m * t) := by dsimp [c]; gcongr
+      _ = d * δ := by dsimp [d]; ring
+  change ‖p - w‖ < ε
+  calc
+    _ ≤ ‖p - q‖ + ‖q - w‖ := norm_sub_le_norm_sub_add_norm_sub _ _ _
+    _ ≤ ‖p - q‖ + (‖q - v‖ + ‖v - w‖) :=
+      add_le_add (le_refl _) (norm_sub_le_norm_sub_add_norm_sub _ _ _)
+    _ ≤ k + (d * δ + k) := add_le_add hpq (add_le_add hqv hvw)
+    _ = d * δ + f / n := by dsimp [k, f]; ring
+    _ < ε := by linarith
 
 private lemma operator_uniform_to_sot {𝕜 e α : Type} [RCLike 𝕜]
     [NormedAddCommGroup e] [NormedSpace 𝕜 e] [CompleteSpace e]
