@@ -121,7 +121,8 @@ def discontinuity_evidence : Registration discontinuityArena (type_of% (@uniform
     · intro i; exact nomatch i
   dependence := actual_dependence
 
-def construction_audit : Contract.Registration (@oscillatory_original_controls) (Realization signature) Type Unit := {
+def construction_audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@oscillatory_original_controls) (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Fibers.OriginalControlSurvivalInstability.construction_auditUnit
   realizationName := `Reg.D5.S3.Quantum.Fibers.OriginalControlSurvivalInstability.construction_evidence
   realizationSource := none
@@ -137,7 +138,7 @@ def construction_audit : Contract.Registration (@oscillatory_original_controls) 
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Fibers.OriginalControlSurvivalInstability
     definition := none
@@ -152,7 +153,8 @@ def construction_audit : Contract.Registration (@oscillatory_original_controls) 
   familyRecord := none
   options := #[] }
 
-def discontinuity_audit : Contract.Registration (@uniform_height_survival_discontinuity) (Realization signature) Type Unit := {
+def discontinuity_audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@uniform_height_survival_discontinuity) (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Fibers.OriginalControlSurvivalInstability.discontinuity_auditUnit
   realizationName := `Reg.D5.S3.Quantum.Fibers.OriginalControlSurvivalInstability.discontinuity_evidence
   realizationSource := none
@@ -168,7 +170,7 @@ def discontinuity_audit : Contract.Registration (@uniform_height_survival_discon
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Fibers.OriginalControlSurvivalInstability
     definition := none
