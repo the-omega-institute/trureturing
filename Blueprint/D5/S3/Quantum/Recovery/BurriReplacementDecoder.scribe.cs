@@ -22,7 +22,7 @@ internal sealed class BurriReplacementDecoderDocument : IScribeDocumentDefinitio
                 "The correlated two-dimensional block is [[5,sqrt(2)],[-sqrt(2),5]] divided by 3 sqrt(3). "
                     + "The orthogonal complement is fixed. Both adjoint products are the identity.", DescribeRole.Theorem),
             Entry("source-polar-product", "source_polar_product", "Exact ordered polar product",
-                "For X=|psi><psi| and M=(sqrt(Q) X) transposed, the product M U equals X/sqrt(3). "
+                "For X=|psi><psi| and the displayed diagonal matrix sqrtQ, set M=(sqrtQ X) transposed. The product M U equals X/sqrt(3). "
                     + "This statement retains the source multiplication order.", DescribeRole.Theorem),
             Entry("source-square-root", "source_square_root", "The actual positive square root of X",
                 "The rank-one state X is a projection. Its positive square root in the canonical CStarMatrix functional calculus is X itself.", DescribeRole.Theorem),
@@ -43,7 +43,8 @@ internal sealed class BurriReplacementDecoderDocument : IScribeDocumentDefinitio
                 "Both the composite source decoder Kraus family and the reference-root times noise-adjoint Kraus family have Gram sum equal to the identity of B.", DescribeRole.Theorem),
             Entry("actual-channels", "actual_channels", "Canonical completely positive trace-preserving maps",
                 "Each of the three specified Kraus families is realized by the repository's canonical QuantumChannel interface, with equality of its action and the finite Kraus sum on every input matrix. "
-                    + "The comparison of their canonical-purification fidelities and the identification of the reference-root family with the ordinary Petz interface require additional statements.", DescribeRole.Theorem))));
+                    + "The identification of sqrtQ with the positive root of the product of the actual marginals, the identification of the reference-root family with the ordinary Petz interface, "
+                    + "and the comparison of their canonical-purification fidelities require additional statements.", DescribeRole.Theorem))));
 
     private static DocumentBlock Entry(string id, string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name),
