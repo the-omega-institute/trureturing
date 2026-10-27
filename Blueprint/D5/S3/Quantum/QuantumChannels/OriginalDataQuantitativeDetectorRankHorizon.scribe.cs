@@ -27,6 +27,13 @@ internal sealed class OriginalDataQuantitativeDetectorRankHorizonDocument : IScr
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula AllOf(params Formula[] clauses)
+    {
+        var result = clauses[^1];
+        for (var i = clauses.Length - 2; i >= 0; --i)
+            result = And(clauses[i], result);
+        return result;
+    }
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
@@ -45,10 +52,11 @@ internal sealed class OriginalDataQuantitativeDetectorRankHorizonDocument : IScr
         var mat=Call("ComplexEuclideanMatrix",d);
         Formula Obs(Formula j) => Call("re",Call("trace",Mul(s,Call("iterate",t,j,b))));
         var early=All("k",nat,Imp(Le(k,Sub(d,r)),Le(Obs(k),eps)));
-        var hypotheses=And(Le(Num(2),d),And(Le(Num(2),r),And(Le(r,d),And(Le(Num(1),n),
-            And(Le(Call("apply",t,Num(1)),Num(1)),And(Le(Num(0),b),And(Le(b,Num(1)),
-            And(Le(Num(0),s),And(Eq(Call("trace",s),Num(1)),And(Le(Num(0),eps),
-            And(Lt(Num(0),p),And(Le(p,Num(1)),And(early,Le(p,Obs(n))))))))))))))));
+        var hypotheses=AllOf(
+            Le(Num(2),d), Le(Num(2),r), Le(r,d), Le(Num(1),n),
+            Le(Call("apply",t,Num(1)),Num(1)), Le(Num(0),b), Le(b,Num(1)),
+            Le(Num(0),s), Eq(Call("trace",s),Num(1)), Le(Num(0),eps),
+            Lt(Num(0),p), Le(p,Num(1)), early, Le(p,Obs(n)));
         var constant=Mul(Div(Mul(Num(8),d),Pow(p,Num(2))),
             Pow(Div(Mul(Mul(Num(8),n),Pow(d,Div(Num(5),Num(2)))),p),Mul(Num(2),Sub(d,r))));
         var conclusion=Le(Call("eigenvalueszero",b,Sub(r,Num(1))),Mul(constant,eps));
