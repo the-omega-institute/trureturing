@@ -1,0 +1,90 @@
+**Theorem 11.5 (The native menu on the double wall).**
+Assume $X=Y=r/2$, put $L=r/2$, and fix $0<Z<1$ and $0<\kappa_0<L$.
+Use the calibrated pure family
+
+$$
+\psi(\kappa,u,v)=
+(\sqrt\kappa e^{-iu},\sqrt{L-\kappa}e^{-iv},\sqrt Z,
+ \sqrt{L-\kappa}e^{-iv},\sqrt\kappa e^{-iu}),
+$$
+
+with known fixed preparation phases removed as in Proposition 10.4.
+Let $\pi_0$ be the projector of $\psi(\kappa_0,0,0)$.
+Among all PSD trace-one matrices with the same three means and all five
+native complex coherences equal to those of $\pi_0$, the possible heights
+are exactly
+
+$$
+\boxed{\ \kappa\in[\kappa_0,\max(\kappa_0,L-\kappa_0)]\ }.
+\tag{11.6}
+$$
+
+For every $\kappa_0\ge L/2$, including equality, the only compatible
+state is $\pi_0$. For $\kappa_0<L/2$, every height strictly greater than
+$\kappa_0$ in that interval has a mixed realization. At $\kappa=\kappa_0$
+the candidate is again uniquely $\pi_0$.
+
+Proof. The native reference gives
+$|C_{02}|^2=Z\kappa_0\le Z\kappa$, so $\kappa\ge\kappa_0$.
+A bottom edge gives
+$|C_{1,13}|^2=\kappa_0(L-\kappa_0)\le\kappa(L-\kappa)$.
+Since the target value is positive, any candidate lies in $(0,L)$.
+Subtracting the target product gives
+
+$$
+(\kappa-\kappa_0)(L-\kappa-\kappa_0)\ge0.
+$$
+
+Together with $\kappa\ge\kappa_0$, this yields exactly the interval
+in (11.6). If $\kappa_0\ge L/2$, only $\kappa=\kappa_0$ is possible.
+At that height all positive diagonals agree and all five native edges
+saturate the target products. The Gram step of §11.3 forces $\pi_0$.
+This also proves uniqueness at the lower endpoint for a lower-half target.
+
+For $\kappa_0<L/2$ and $\kappa_0\le\kappa\le L-\kappa_0$, define
+
+$$
+\alpha=\sqrt{\frac{\kappa_0(L-\kappa_0)}{\kappa(L-\kappa)}},\qquad
+\beta=\sqrt{\frac{\kappa_0}{\kappa}},\qquad
+a=\arccos\alpha,\qquad b=\arccos\beta.
+$$
+
+These square roots lie in $(0,1]$. Form the density matrix
+
+$$
+\rho_\kappa=\frac14\sum_{\varepsilon,\eta=\pm1}
+\psi(\kappa,\varepsilon b,\varepsilon b+\eta a)
+\psi(\kappa,\varepsilon b,\varepsilon b+\eta a)^\dagger.
+\tag{11.7}
+$$
+
+All four components belong to one declared current source: their means
+and fixed preparation are common, and Transport Theorem 8.2 realizes
+the entire double-wall phase torus. Their common diagonal is
+$(\kappa,L-\kappa,Z,L-\kappa,\kappa)$. Since
+$u-v=-\eta a$ and $u=\varepsilon b$,
+
+$$
+\begin{aligned}
+\mathbb E C_{01}=\mathbb E C_{03}
+ &=\sqrt{\kappa(L-\kappa)}\cos a
+   =\sqrt{\kappa_0(L-\kappa_0)},\\
+\mathbb E C_{1,13}=\mathbb E C_{3,13}
+ &=\sqrt{\kappa(L-\kappa)}\cos a,\\
+\mathbb E C_{02}
+ &=\sqrt{Z\kappa}\cos b=\sqrt{Z\kappa_0}.
+\end{aligned}
+$$
+
+Hence all five target coherences are attained, proving sufficiency.
+At $\kappa=\kappa_0$, $a=b=0$ and this is the target.
+For $\kappa>\kappa_0$, one has $0<b<\pi/2$.
+Holding $\eta$ fixed and changing $\varepsilon$ gives vectors with the
+same nonzero reference component but different nonreference phases.
+They are not collinear, so their positive mixture has rank at least two.
+At $\kappa=L-\kappa_0$, $a=0$ is allowed and $b>0$ still gives a mixed
+state when $\kappa_0<L/2$. When $\kappa_0\ge L/2$ the singleton target
+is the required realization; no reflected interval is presumed.
+The mixture means forgetting the preparation label, without assuming an
+instrument in the native command menu performs that operation. $\square$
+
