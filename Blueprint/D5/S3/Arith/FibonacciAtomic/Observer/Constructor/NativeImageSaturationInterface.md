@@ -27,4 +27,4 @@ The result is an unrestricted structural theorem over the native completion. It 
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeImageSaturationInterface.native_image_iff`
-- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeFunctionalObstruction](NativeFunctionalObstruction.md)
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/CompletionHomogeneousFixedPoints](../CompletionHomogeneousFixedPoints.md)
