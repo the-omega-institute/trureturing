@@ -82,7 +82,9 @@ private lemma kraus_action (m : ℕ) (x : Matrix (Fin 2) (Fin 2) ℂ) :
       star_natCast, Complex.star_def, map_mul, map_neg, map_zero, map_one,
       map_natCast, map_inv₀, Complex.conj_ofReal, zero_mul,
       mul_zero, mul_one, one_mul, add_zero, zero_add, ↓reduceIte] <;>
-    ring_nf at hr hs ⊢ <;> rw [hr, hs] <;> field_simp <;> ring
+    ring_nf at hr hs ⊢ <;> rw [hr, hs] <;>
+    field_simp (discharger := first | exact denominator_ne m |
+      simpa only [add_comm] using denominator_ne m | norm_num) <;> ring
 
 private lemma pure_mem (m : ℕ) : p m ∈ majorizationSet d a := by
   refine ⟨MatrixMap.of_kraus (kraus m) (kraus m),
