@@ -244,7 +244,7 @@ private lemma sumFiber_ne_top (n : ℕ) (hn : 0 < n) (t : ℝ) : sumFiber n t �
   let i : Fin n := ⟨0, hn⟩
   have hmem : Pi.single i (t + 1) ∈ sumFiber n t := by rw [htop]; trivial
   change ((∑ j : Fin n, (LinearMap.proj j : (Fin n → ℝ) →ₗ[ℝ] ℝ)) (Pi.single i (t + 1))) = t at hmem; simp [Pi.single_apply, LinearMap.sum_apply] at hmem
-private lemma simplex_sum_boundary_null (n : ℕ) (t : ℝ) (ht : 0 < t) : volume {u : Fin n → ℝ | ∑ i, u i = t} = 0 :=
+lemma simplex_sum_boundary_null (n : ℕ) (t : ℝ) (ht : 0 < t) : volume {u : Fin n → ℝ | ∑ i, u i = t} = 0 :=
   by
   rcases n with _ | n
   · simp [ht.ne]

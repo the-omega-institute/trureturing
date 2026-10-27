@@ -60,7 +60,7 @@ private lemma affine_simplex_volume (d : ℕ) (hd : 2 ≤ d) (c : ℝ) (hc : 0 <
   have hdet : Matrix.det ((1 : Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ) -
       Matrix.of (fun _ _ => 1)) = -(d : ℝ) := by
     rw [← hprod, Matrix.det_one_sub_mul_comm, Matrix.det_unique]
-    simp only [Matrix.sub_apply, Matrix.one_apply_eq, Matrix.mul_apply, a, b, Matrix.of_apply, one_mul,
+    simp only [Matrix.sub_apply, Matrix.one_apply_eq, Matrix.mul_apply, a, b, Matrix.of_apply,
       Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one,
       Nat.cast_add, Nat.cast_one]
     ring
@@ -70,8 +70,8 @@ private lemma affine_simplex_volume (d : ℕ) (hd : 2 ≤ d) (c : ℝ) (hc : 0 <
     change Matrix.toLin' _ t = _
     rw [Matrix.toLin'_apply, Matrix.smul_mulVec, Matrix.sub_mulVec, Matrix.one_mulVec]
     ext i
-    simp only [Pi.smul_apply, smul_eq_mul, Pi.sub_apply, Matrix.mulVec_apply_eq_sum, Matrix.of_apply,
-      one_mul]
+    simp only [Pi.smul_apply, smul_eq_mul, Pi.sub_apply, Matrix.mulVec_apply_eq_sum,
+      Matrix.of_apply, one_mul]
   have hdetf : LinearMap.det f = c ^ (d + 1) * -(d : ℝ) := by
     dsimp only [f]
     rw [LinearMap.det_toLin', Matrix.det_smul, hdet, Fintype.card_fin]
@@ -133,7 +133,7 @@ private lemma affine_simplex_iff (d : ℕ) (hd : 2 ≤ d) (c : ℝ) (hc : 0 < c)
       rw [hsum]
       dsimp only [t]
       field_simp
-      <;> ring
+      ring
 
 private lemma cp_eq_affine (d : ℕ) (hd : 2 ≤ d) :
     cpRegion d = affineSimplex d ((d : ℝ) / ((d : ℝ) - 1)) := by
@@ -142,7 +142,7 @@ private lemma cp_eq_affine (d : ℕ) (hd : 2 ≤ d) :
   have heq : (d : ℝ) + 1 - (d : ℝ) / ((d : ℝ) - 1) * d =
       -1 / ((d : ℝ) - 1) := by
     field_simp
-    <;> ring
+    ring
   ext x
   rw [affine_simplex_iff d hd _ (div_pos (by linarith) (by linarith)), heq]
   rfl
@@ -171,29 +171,9 @@ private lemma generator_eq_union (d : ℕ) (hd : 2 ≤ d) :
 
 private lemma simplex_overlap_null (d : ℕ) (hd : 2 ≤ d) :
     volume (standardRegion (d + 1) ∩ affineSimplex d 1) = 0 := by
-  classical
-  let f : (Fin (d + 1) → ℝ) →ₗ[ℝ] ℝ := ∑ i, LinearMap.proj i
-  have hf (x : Fin (d + 1) → ℝ) : f x = ∑ i, x i := by
-    simp only [f, LinearMap.sum_apply, LinearMap.proj_apply]
-  let a : AffineSubspace ℝ (Fin (d + 1) → ℝ) :=
-    AffineSubspace.mk' (Pi.single (0 : Fin (d + 1)) (1 : ℝ)) (LinearMap.ker f)
-  have ha : (a : Set (Fin (d + 1) → ℝ)) = {x | ∑ i, x i = 1} := by
-    ext x
-    change x ∈ AffineSubspace.mk' _ _ ↔ _
-    rw [AffineSubspace.mem_mk', LinearMap.mem_ker]
-    change f (x - Pi.single 0 1) = 0 ↔ ∑ i, x i = 1
-    rw [map_sub, hf, hf]
-    simp only [Fintype.sum_pi_single', sub_eq_zero]
-  have hproper : a ≠ ⊤ := by
-    intro h
-    have hz : (0 : Fin (d + 1) → ℝ) ∈ (a : Set (Fin (d + 1) → ℝ)) := by
-      rw [h]
-      trivial
-    rw [ha] at hz
-    simpa only [mem_ofPred_eq, Pi.zero_apply, Finset.sum_const_zero, zero_ne_one] using hz
-  have hnull : volume {x : Fin (d + 1) → ℝ | ∑ i, x i = 1} = 0 := by
-    rw [← ha]
-    exact Measure.addHaar_affineSubspace volume a hproper
+  have hnull :=
+    D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.simplex_sum_boundary_null
+      (d + 1) 1 zero_lt_one
   apply measure_mono_null _ hnull
   intro x hx
   have hlo := ((affine_simplex_iff d hd 1 zero_lt_one x).mp hx.2).1
@@ -212,7 +192,7 @@ private lemma generator_volume (d : ℕ) (hd : 2 ≤ d) :
     apply MeasurableSet.inter
     · have hm (i : Fin (d + 1)) : MeasurableSet {x : Fin (d + 1) → ℝ | 0 ≤ x i} :=
         measurableSet_le measurable_const (measurable_pi_apply i)
-      simpa only [setOf_forall] using MeasurableSet.iInter hm
+      simpa only [ofPred_forall] using MeasurableSet.iInter hm
     · exact measurableSet_le (by fun_prop) measurable_const
   have hadd := measure_union_add_inter' (μ := volume) hmeas (affineSimplex d 1)
   rw [hn, add_zero] at hadd
@@ -242,7 +222,7 @@ private lemma box_volume (d : ℕ) (hd : 2 ≤ d) :
   have hdn : (d : ℝ) - 1 ≠ 0 := by linarith
   have hwidth : 1 - -1 / ((d : ℝ) - 1) = (d : ℝ) / ((d : ℝ) - 1) := by
     field_simp [hdn]
-    <;> ring
+    ring
   have hset : boxRegion d = Icc (fun _ => -1 / ((d : ℝ) - 1)) (fun _ => 1) := by
     ext x
     exact ⟨fun h => ⟨fun i => (h i).1, fun i => (h i).2⟩,
@@ -273,7 +253,8 @@ private lemma ratios_from_volumes (d : ℕ) (hd : 2 ≤ d)
   have hlpos : (0 : ℝ) < (d : ℝ) / ((d : ℝ) - 1) := div_pos hdpos hdmpos
   have hw : (Real.sqrt ((d : ℝ) - 1) / (d : ℝ)) ^ (d + 1) ≠ 0 :=
     ne_of_gt (pow_pos (div_pos (Real.sqrt_pos.mpr hdmpos) hdpos) _)
-  simp only [channelVolume, hp, hc, hg, he,
+  delta channelVolume
+  simp only [hp, hc, hg, he,
     ENNReal.toReal_ofReal (le_of_lt (pow_pos hlpos (d + 1))),
     ENNReal.toReal_ofReal (le_of_lt (div_pos (mul_pos hdpos (pow_pos hlpos _)) hfpos)),
     ENNReal.toReal_ofReal (le_of_lt (div_pos (by linarith : (0 : ℝ) < (d : ℝ) + 1) hfpos)),
@@ -283,7 +264,7 @@ private lemma ratios_from_volumes (d : ℕ) (hd : 2 ≤ d)
   · constructor
     · simp only [div_pow, pow_succ]
       field_simp [hw, hdpos.ne', hdmpos.ne', hfpos.ne']
-      <;> ring
+      ring
     · field_simp [hw, hfpos.ne']
 
 
