@@ -613,9 +613,11 @@ private theorem lower_continuousOn (P : RawFacePairing T) (n : ℕ) (i : LowerCe
   · exact diskPartial_continuousOn (fun _ : Disk 0 => vertexPoint P v) continuous_const
       (fun _ _ _ _ => Subsingleton.elim _ _)
   · cases e with
-    | inl v => exact diskPartial_continuousOn _ (halfCharacteristic_continuous P v)
+    | inl v =>
+      exact diskPartial_continuousOn _ (halfCharacteristic_continuous P v)
         (fun _ _ _ h => halfCharacteristic_injective P v h)
-    | inr e => exact diskPartial_continuousOn _ (capCharacteristic_continuous P e)
+    | inr e =>
+      exact diskPartial_continuousOn _ (capCharacteristic_continuous P e)
         (capCharacteristic_fiber P e)
 
 private theorem lower_continuousOn_symm (P : RawFacePairing T) (n : ℕ) (i : LowerCell P n) :
@@ -624,9 +626,11 @@ private theorem lower_continuousOn_symm (P : RawFacePairing T) (n : ℕ) (i : Lo
   · exact diskPartial_continuousOn_symm (fun _ : Disk 0 => vertexPoint P v) continuous_const
       (fun _ _ _ _ => Subsingleton.elim _ _)
   · cases e with
-    | inl v => exact diskPartial_continuousOn_symm _ (halfCharacteristic_continuous P v)
+    | inl v =>
+      exact diskPartial_continuousOn_symm _ (halfCharacteristic_continuous P v)
         (fun _ _ _ h => halfCharacteristic_injective P v h)
-    | inr e => exact diskPartial_continuousOn_symm _ (capCharacteristic_continuous P e)
+    | inr e =>
+      exact diskPartial_continuousOn_symm _ (capCharacteristic_continuous P e)
         (capCharacteristic_fiber P e)
 
 private theorem lower_pairwiseDisjoint (P : RawFacePairing T) :
@@ -907,8 +911,8 @@ private theorem capPoint_mem_skeleton (P : RawFacePairing T) (c : CapOccurrence 
     right
     exact mem_iUnion.mpr ⟨.inr e,x.val,x.property,capCell_coe P e x⟩
   rcases he with he | he
-  · subst c
-    exact hinclude a ht hu hf
+  · exact hinclude a (by simpa only [← he] using ht)
+      (by simpa only [← he] using hu) (by simpa only [← he] using hf)
   · let b := truncatedMove P c.2.val.2 a
     have hab : q P a = q P b := Quotient.sound
       (s := Relation.EqvGen.setoid (TruncatedStep P)) (Relation.EqvGen.rel _ _ ⟨c.2.val.2,hf,rfl⟩)
