@@ -14,13 +14,15 @@ internal sealed class ZeckendorfGreedyPermutationDocument : IScribeDocumentDefin
     private static Formula App(Formula f, params Formula[] xs) => new Formula.Apply(f, [.. xs]);
     private static Formula Rel(Formula x, Formula token, Formula y) => Seq(x, Sp, token, Sp, y);
     private static Formula Eqn(Formula x, Formula y) => Rel(x, Eq, y);
+    private static Formula Par(Formula x) => Seq(Open, x, Close);
     private static Formula And(params Formula[] xs) => Seq([.. xs.SelectMany((x, i) =>
-        i == 0 ? new Formula[] { x } : new Formula[] { Sp, Land, Sp, x })]);
-    private static Formula All(string s, Formula type, Formula body) => Seq(
-        Forall, Sp, Id(s), Sp, InMacro, Sp, type, Comma, Sp, body);
-    private static Formula Some(string s, Formula type, Formula body) => Seq(
-        Exists, Sp, Id(s), Sp, InMacro, Sp, type, Comma, Sp, body);
-    private static Formula Imp(Formula x, Formula y) => Seq(x, Sp, Implies, Sp, y);
+        i == 0 ? new Formula[] { Par(x) } : new Formula[] { Sp, Land, Sp, Par(x) })]);
+    private static Formula All(string s, Formula type, Formula body) => Par(
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(s), type, body));
+    private static Formula Some(string s, Formula type, Formula body) => Par(
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(s), type, body));
+    private static Formula Imp(Formula x, Formula y) =>
+        new Formula.Logic(Par(x), FormulaLogicOperator.Implies, Par(y));
     private static Formula SType => Seq(N, Sp, To, Sp, N);
     private static Formula Plus(Formula n) => Call("add", n, D(1));
     private static Formula At(Formula s, Formula n) => App(s, n);
