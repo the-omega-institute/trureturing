@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import Mathlib.Analysis.Convex.Extreme
-import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Analysis.Complex.Polynomial.Basic
 
 /-! The equal-modulus HMR channel and its unitary and extreme-point decomposition. -/
@@ -535,6 +534,8 @@ private lemma diagonal_unitary (r : ℂ) (hr : ‖r‖ = 1) :
       star (r⁻¹) * r⁻¹ = (r * star r)⁻¹ := by rw [_root_.mul_inv_rev, star_inv₀]
       _ = 1 := by rw [mul_comm r, hstar, inv_one]
 
+set_option maxHeartbeats 1000000 in
+-- The phase identity expands the nine entries of two finite Kraus sums.
 private lemma phase_reduction (α β : ℂ)
     (hα : ‖α‖ = 1 / Real.sqrt 2) (hβ : ‖β‖ = 1 / Real.sqrt 2) :
     ∃ r s : ℂ, diagonalPhase r ∈ Matrix.unitaryGroup (Fin 3) ℂ ∧
@@ -623,7 +624,7 @@ private lemma conjugate_inverse (d e : Matrix (Fin 3) (Fin 3) ℂ)
   simp only [← Matrix.mul_assoc, (Matrix.mem_unitaryGroup_iff').mp hd,
     (Matrix.mem_unitaryGroup_iff).mp he, Matrix.one_mul]
   simp only [Matrix.mul_assoc, (Matrix.mem_unitaryGroup_iff').mp hd,
-    (Matrix.mem_unitaryGroup_iff).mp he, Matrix.one_mul, Matrix.mul_one]
+    (Matrix.mem_unitaryGroup_iff).mp he, Matrix.mul_one]
 
 private lemma conjugate_extreme (d e : Matrix (Fin 3) (Fin 3) ℂ)
     (hd : d ∈ Matrix.unitaryGroup (Fin 3) ℂ) (he : e ∈ Matrix.unitaryGroup (Fin 3) ℂ)
@@ -676,8 +677,9 @@ private lemma conjugate_rank_le (d e : Matrix (Fin 3) (Fin 3) ℂ)
   have hsingle (i j : Fin 3) :
       star d * Matrix.single i j 1 * d = fun a b => star (d i a) * d j b := by
     ext a b
-    simp [Matrix.mul_apply, Matrix.single_apply, Matrix.star_eq_conjTranspose,
-      Matrix.conjTranspose_apply]
+    change (∑ k : Fin 3, (∑ l : Fin 3,
+      star (d l a) * Matrix.single i j (1 : ℂ) l k) * d k b) = _
+    simp [Matrix.single_apply, ite_and]
   have hchoi : choi_matrix (conjugateChannel d e φ) = q * choi_matrix φ * qᴴ := by
     ext ⟨a, i⟩ ⟨c, j⟩
     change conjugateChannel d e φ (Matrix.single i j 1) a c = _
