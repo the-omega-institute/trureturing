@@ -118,7 +118,7 @@ private lemma zero_gMax {ι : Type*} [Fintype ι] : gMax (0 : ι → ℂ) = 0 :=
 
 private lemma star_gMax_pos : 0 < gMax (walkState 1 0 cStar) := by
   classical
-  letI : DecidableEq (Fin 2 × ZMod 1) := fun a b => Classical.propDecidable (a = b)
+  let : DecidableEq (Fin 2 × ZMod 1) := fun a b => Classical.propDecidable (a = b)
   let z : Fin 2 × ZMod 1 → Fin 2 → ℂ :=
     fun k b => if k.1 = b then 0 else 1
   have hz : unitFactors z := by
@@ -129,7 +129,11 @@ private lemma star_gMax_pos : 0 < gMax (walkState 1 0 cStar) := by
         Fin.sum_univ_two]
   have he : overlap (walkState 1 0 cStar) z = cStar 0 := by
     rw [overlap_expansion]
-    simp [z, Fintype.sum_prod_type, Fin.sum_univ_two, walkState]
+    simp only [walkState, Function.iterate_zero, id_eq, Fin.isValue, ite_mul, zero_mul,
+      one_mul, Fintype.sum_prod_type, Finset.univ_unique, Finset.sum_ite_eq',
+      Finset.mem_singleton, Finset.sum_ite_irrel, Fin.sum_univ_two, zero_ne_one,
+      ↓reduceIte, map_prod, MonoidWithZeroHom.map_ite_zero_one, map_zero, mul_zero,
+      add_zero, Finset.sum_const_zero, z]
     split_ifs with h
     · calc
         _ = cStar 0 * 1 := by
