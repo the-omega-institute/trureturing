@@ -65,9 +65,13 @@ def proof : Registration arena (type_of% (@actual_joint_realization)) where
     intro eq
     have clocks := congrArg (fun t : Source =>
       NativePrefixIdentityReflection.kappa (match t with | .of _ => t | .mul l _ => l)) eq
-    cases i <;> norm_num [actual,realize,theta,values,classes,base,x,B_T,Function.comp_apply,
-      NativePrefixIdentityReflection.kappa_iterate,NativePrefixIdentityReflection.comb,
-      NativePrefixIdentityReflection.kappa] at clocks
+    cases i <;> change NativePrefixIdentityReflection.kappa (x 0) =
+      NativePrefixIdentityReflection.kappa (x 1) at clocks
+    all_goals
+      unfold x at clocks
+      rw [NativePrefixIdentityReflection.kappa_iterate,
+        NativePrefixIdentityReflection.kappa_iterate] at clocks
+      omega
 
 noncomputable def registration : LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
     (@actual_joint_realization) (Realization signature) Type Unit where

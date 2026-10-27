@@ -130,10 +130,15 @@ private theorem base_distinct (h : Nat) : Function.Injective (base h) := by
   intro i j eq
   have gm := congrArg gamma eq
   have ck := congrArg kappa eq
+  apply Fin.ext
   fin_cases i <;> fin_cases j
-  all_goals norm_num [base, gr, gx, gy, gz, gw, gA, gB, gv, gH] at gm
-  all_goals norm_num [base, kr, cx, cy, cz, cw, kA, kB] at ck
-  all_goals first | rfl | omega
+  all_goals dsimp only
+  all_goals try rfl
+  all_goals simp only [base, Matrix.cons_val_zero', Matrix.cons_val_succ'] at gm
+  all_goals simp only [base, Matrix.cons_val_zero', Matrix.cons_val_succ'] at ck
+  all_goals try simp only [gr, gx, gy, gz, gw, gA, gB, gv, gH] at gm
+  all_goals try simp only [kr, cx, cy, cz, cw, kA, kB] at ck
+  all_goals omega
 
 /-- Zero-based equality classes for the complete thirteen-hole rows. -/
 def classes (side : Bool) : Fin 13 → Fin 10 :=
