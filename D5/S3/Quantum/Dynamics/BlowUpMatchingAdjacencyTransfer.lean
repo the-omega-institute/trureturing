@@ -7,9 +7,6 @@
    digest: Perfect matchings in every clone set induce adjacency transfer at pi/2. -/
 
 import D5.S3.Quantum.Dynamics.RationalWeightPathTransfer
-import Mathlib.Combinatorics.SimpleGraph.LapMatrix
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.LinearAlgebra.Matrix.Permutation
 
 /-! Adjacency transfer from integral eigenvalue support and uniform clone matchings. -/
 
