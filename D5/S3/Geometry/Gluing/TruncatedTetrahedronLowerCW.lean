@@ -612,14 +612,22 @@ private theorem lower_continuousOn (P : RawFacePairing T) (n : ℕ) (i : LowerCe
   rcases i with ⟨v,h⟩ | ⟨e,h⟩ <;> subst n
   · exact diskPartial_continuousOn (fun _ : Disk 0 => vertexPoint P v) continuous_const
       (fun _ _ _ _ => Subsingleton.elim _ _)
-  · cases e <;> exact diskPartial_continuousOn _ _ _
+  · cases e with
+    | inl v => exact diskPartial_continuousOn _ (halfCharacteristic_continuous P v)
+        (fun _ _ _ h => halfCharacteristic_injective P v h)
+    | inr e => exact diskPartial_continuousOn _ (capCharacteristic_continuous P e)
+        (capCharacteristic_fiber P e)
 
 private theorem lower_continuousOn_symm (P : RawFacePairing T) (n : ℕ) (i : LowerCell P n) :
     ContinuousOn (lowerMap P n i).symm (lowerMap P n i).target := by
   rcases i with ⟨v,h⟩ | ⟨e,h⟩ <;> subst n
   · exact diskPartial_continuousOn_symm (fun _ : Disk 0 => vertexPoint P v) continuous_const
       (fun _ _ _ _ => Subsingleton.elim _ _)
-  · cases e <;> exact diskPartial_continuousOn_symm _ _ _
+  · cases e with
+    | inl v => exact diskPartial_continuousOn_symm _ (halfCharacteristic_continuous P v)
+        (fun _ _ _ h => halfCharacteristic_injective P v h)
+    | inr e => exact diskPartial_continuousOn_symm _ (capCharacteristic_continuous P e)
+        (capCharacteristic_fiber P e)
 
 private theorem lower_pairwiseDisjoint (P : RawFacePairing T) :
     (univ : Set (Σ n, LowerCell P n)).PairwiseDisjoint
@@ -794,7 +802,7 @@ private theorem capPoint_surjective (c : CapOccurrence T) (a : TruncatedPoint T)
     ∃ x : Disk 1, capPoint c x = a := by
   let e := capFrame c.2
   have hs : a.2.val (e 2) + a.2.val (e 3) = 1 / 4 := by
-    have hh := (e.sum_comp a.2.val).trans a.2.property.2
+    have hh := (Equiv.sum_comp e a.2.val).trans a.2.property.2
     rw [Fin.sum_univ_four,show e 0 = c.2.val.1 from (capFrame_values c.2).1,
       show e 1 = c.2.val.2 from (capFrame_values c.2).2,hu,hf] at hh
     linarith
@@ -825,7 +833,7 @@ private theorem halfPoint_surjective (a : TruncatedPoint T) (i j : Fin 4)
   have he0 : e 0 = i := (capFrame_values ⟨(i,j),hij⟩).1
   have he1 : e 1 = j := (capFrame_values ⟨(i,j),hij⟩).2
   have hs : a.2.val (e 2) + a.2.val (e 3) = 1 := by
-    have hh := (e.sum_comp a.2.val).trans a.2.property.2
+    have hh := (Equiv.sum_comp e a.2.val).trans a.2.property.2
     rw [Fin.sum_univ_four,he0,he1,hi,hj] at hh
     linarith
   have construct (p q : Fin 4) (hpq : p ≠ q) (hpi : p ≠ i) (hpj : p ≠ j)
@@ -840,7 +848,7 @@ private theorem halfPoint_surjective (a : TruncatedPoint T) (i j : Fin 4)
       have ht : ({p,q,i,j} : Finset (Fin 4)).card = 4 := by
         simp [hpq,hpi,hpj,hqi,hqj,hij]
       have hu : ({p,q,i,j} : Finset (Fin 4)) = Finset.univ :=
-        Finset.eq_univ_of_card ht
+        Finset.eq_univ_of_card _ (by simpa using ht)
       have hm : k ∈ ({p,q,i,j} : Finset (Fin 4)) := by rw [hu]; simp
       simpa using hm
     rcases hall with rfl | rfl | rfl | rfl
@@ -892,7 +900,7 @@ private theorem capPoint_mem_skeleton (P : RawFacePairing T) (c : CapOccurrence 
     q P a ∈ edgeSkeleton P := by
   let e : CapEdge P := Quotient.mk (capSetoid P) c
   have he : c = e.out ∨ c = capMate P e.out := Quotient.exact (Quotient.out_eq e)
-  have include (b : TruncatedPoint T) (hb : b.1 = e.out.1)
+  have hinclude (b : TruncatedPoint T) (hb : b.1 = e.out.1)
       (hu : b.2.val e.out.2.val.1 = 3 / 4) (hf : b.2.val e.out.2.val.2 = 0) :
       q P b ∈ edgeSkeleton P := by
     obtain ⟨x,rfl⟩ := capPoint_surjective e.out b hb hu hf
@@ -900,14 +908,14 @@ private theorem capPoint_mem_skeleton (P : RawFacePairing T) (c : CapOccurrence 
     exact mem_iUnion.mpr ⟨.inr e,x.val,x.property,capCell_coe P e x⟩
   rcases he with he | he
   · subst c
-    exact include a ht hu hf
+    exact hinclude a ht hu hf
   · let b := truncatedMove P c.2.val.2 a
     have hab : q P a = q P b := Quotient.sound
       (s := Relation.EqvGen.setoid (TruncatedStep P)) (Relation.EqvGen.rel _ _ ⟨c.2.val.2,hf,rfl⟩)
     rw [hab]
     have hm : capMate P c = e.out := by rw [he,capMate_twice]
     have htag : (a.1,c.2.val.2) = (c.1,c.2.val.2) := congrArg (fun t => (t,c.2.val.2)) ht
-    apply include b
+    apply hinclude b
     · change (P.facePair (a.1,c.2.val.2)).1 = e.out.1
       rw [htag]
       exact congrArg Prod.fst hm
