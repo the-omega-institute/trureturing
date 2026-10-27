@@ -40,10 +40,11 @@ def blochNorm (ρ : Matrix (Fin 2) (Fin 2) ℂ) : ℝ :=
 
 private theorem hermitian_entries (m : Matrix (Fin 2) (Fin 2) ℂ) (hm : m.IsHermitian) :
     (m 0 0).im = 0 ∧ (m 1 1).im = 0 ∧ m 1 0 = star (m 0 1) := by
-  exact ⟨D5.S3.Quantum.QuantumChannels.HiaiRuskaiRiemannianContraction.Pauli.diag_im_zero
-      m hm 0,
-    D5.S3.Quantum.QuantumChannels.HiaiRuskaiRiemannianContraction.Pauli.diag_im_zero m hm 1,
-    (hm.apply 1 0).symm⟩
+  have h00 : ((m 0 0).re : ℂ) = m 0 0 := hm.coe_re_apply_self 0
+  have h11 : ((m 1 1).re : ℂ) = m 1 1 := hm.coe_re_apply_self 1
+  refine ⟨?_, ?_, (hm.apply 1 0).symm⟩
+  · simpa only [Complex.ofReal_im] using (congrArg Complex.im h00).symm
+  · simpa only [Complex.ofReal_im] using (congrArg Complex.im h11).symm
 
 private theorem coherence_two (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : ρ.IsHermitian) :
     l1Coherence ρ = 2 * ‖ρ 0 1‖ := by

@@ -34,12 +34,6 @@ internal sealed class HiaiRuskaiRiemannianContractionDocument : IScribeDocumentD
             Definition("admissible", "The non-unital channel parameters", AdmissibleDefinition(),
                 "Section 6, p. 19: \"Below we assume that α ≥ 0 and α² + τ² ≤ 1.\" The nonsingular non-unital range is 0 < |tau| < 1. There is no strict positivity condition on alpha."),
             Definition("claim", "Hiai-Ruskai Conjecture 6.3", Disp(Iff(Id("claim"), ClaimBody())), ConjectureQuote),
-            Describe.Lean(DescribeId.Create("hiai-ruskai-diagonal-imaginary-zero"),
-                DeclarationHandle.Create(Prefix + "diag_im_zero"),
-                H("Hermitian diagonal entries are real"),
-                StatementSource.FromAuthor(DiagonalImaginaryZero()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Every diagonal entry of a Hermitian complex two-by-two matrix has zero imaginary part."))),
-                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("hiai-ruskai-bloch-hermitian"),
                 DeclarationHandle.Create(Prefix + "rho_hermitian"),
                 H("Real Bloch coordinates give a Hermitian matrix"),
@@ -102,9 +96,6 @@ internal sealed class HiaiRuskaiRiemannianContractionDocument : IScribeDocumentD
     private static Formula Square(Formula x) => new Formula.Power(Parenthesized(x), D(2));
     private static Formula ToComplex(Formula x) => Parenthesized(Seq(x, Sp, Colon, Sp, Complexes()));
     private static Formula Hermitian(Formula x) => Call("Matrix.IsHermitian", x);
-    private static Formula DiagonalImaginaryZero() => Disp(All("A", QubitMatrix(),
-        Implies(Hermitian(Id("A")), All("i", Call("Fin", D(2)),
-            Eq(Call("Complex.im", Apply(Id("A"), Id("i"), Id("i"))), D(0))))));
     private static Formula BlochHermitian()
     {
         var coordinates = Seq(Bang, OpenBracket, Id("w1"), Comma, Sp,

@@ -342,7 +342,7 @@ private lemma phi_tangent_pauli (alpha tau y1 y2 y3 : ℝ) : phi alpha tau ((blo
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
     simp [qubitX,qubitZ,blochMatrix,Complex.mul_re,Complex.mul_im] <;> ring <;> simp
 namespace Pauli
-lemma diag_im_zero (A : Matrix (Fin 2) (Fin 2) ℂ) (h : A.IsHermitian) (i : Fin 2) : (A i i).im = 0 := by
+private lemma diag_im_zero (A : Matrix (Fin 2) (Fin 2) ℂ) (h : A.IsHermitian) (i : Fin 2) : (A i i).im = 0 := by
   have hi := congrArg Complex.im (h.apply i i)
   change -(A i i).im = (A i i).im at hi; linarith
 private lemma hermitian_trace_coordinates (A : Matrix (Fin 2) (Fin 2) ℂ) (h : A.IsHermitian) : A = ((Matrix.trace A).re/2 : ℂ) • (1:(Matrix (Fin 2) (Fin 2) ℂ)) + spin (A 0 1).re (-(A 0 1).im) ((A 0 0).re-(Matrix.trace A).re/2) := by
