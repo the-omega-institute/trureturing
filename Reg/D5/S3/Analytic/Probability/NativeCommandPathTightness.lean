@@ -59,7 +59,7 @@ private theorem block_zero (B : Model) (n : ℕ) :
     blockFourthExpectation B n 1 0 0 = 0 := by
   simp [blockFourthExpectation,blockFourthOscillation]
 
-private theorem witness_endpoint :
+theorem witness_endpoint :
     command NativeCommandLifetime.witnessModel 1 (fun _ => (true,true)) 1 0 = 1/16 := by
   let B := NativeCommandLifetime.witnessModel
   have hs : (1/16:ℝ) < Real.sqrt 2 := by

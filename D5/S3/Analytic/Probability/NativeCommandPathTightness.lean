@@ -19,7 +19,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Analytic.Probability.NativeCommandPathTightness
 open NativeCommandLifetime
 
-private theorem raw_coefficient_bounds (B : Model) :
+theorem raw_coefficient_bounds (B : Model) :
     ∃ M : ℝ, 0 ≤ M ∧ ∀ q : Triple, q 0 ∈ Icc B.l B.u →
       ∀ i : Fin 2, |drift B q i| ≤ M ∧ |B.A q i i| ≤ M := by
   let p := 2 * Real.pi
@@ -87,7 +87,7 @@ private theorem sigma_entry_sq_le (B : Model) (q : Triple)
   rw [←he]
   exact Finset.single_le_sum (fun k _ => sq_nonneg _) (Finset.mem_univ j)
 
-private theorem increment_sqrt_bound (B : Model) :
+theorem increment_sqrt_bound (B : Model) :
     ∃ L : ℝ, 0 ≤ L ∧ ∀ δ : ℝ, 0 < δ → δ ≤ 1 →
       ∀ z : Triple, Alive B z → ∀ e : SignPair, ∀ i : Fin 2,
         |increment B δ z e i| ≤ L * Real.sqrt δ := by
@@ -125,7 +125,7 @@ private theorem increment_sqrt_bound (B : Model) :
     (sigma B q i 0 * (if e.1 then 1 else -1) + sigma B q i 1 * (if e.2 then 1 else -1))| ≤ _
   exact hh.trans_eq (by ring)
 
-private theorem alive_height_abs (B : Model) (z : Triple) (hz : Alive B z) :
+theorem alive_height_abs (B : Model) (z : Triple) (hz : Alive B z) :
     |z 0| ≤ |B.source 0| + |B.l| + |B.u| := by
   have hl : B.l < B.source 0 + z 0 := hz.1
   have hu : B.source 0 + z 0 < B.u := hz.2
@@ -134,7 +134,7 @@ private theorem alive_height_abs (B : Model) (z : Triple) (hz : Alive B z) :
   · linarith [le_abs_self (B.source 0),neg_abs_le (B.l),abs_nonneg (B.u)]
   · linarith [neg_abs_le (B.source 0),le_abs_self (B.u),abs_nonneg (B.l)]
 
-private theorem chord_dist_bound (z : Triple) (v : Fin 2 → ℝ)
+theorem chord_dist_bound (z : Triple) (v : Fin 2 → ℝ)
     (H V : ℝ) (hH : 0 ≤ H) (hV : 0 ≤ V)
     (hz : |z 0| ≤ H) (hv : ∀ i, |v i| ≤ V)
     (θ φ : ℝ) (hθ : θ ∈ Icc (0 : ℝ) 1) (hφ : φ ∈ Icc (0 : ℝ) 1) :
