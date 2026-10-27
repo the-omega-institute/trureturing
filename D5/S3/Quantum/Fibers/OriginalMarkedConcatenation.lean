@@ -68,14 +68,14 @@ theorem markedLaw_apply (c a beta T : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
       Measure.restrict_restrict (hE.preimage (hm i)), inter_comm]
     rfl
 
-private theorem deriv_before (f g : ℝ → ℝ) (T t : ℝ) (ht : t < T) :
+theorem deriv_before (f g : ℝ → ℝ) (T t : ℝ) (ht : t < T) :
     deriv (concatenate f g T) t = deriv f t := by
   apply Filter.EventuallyEq.deriv_eq
   filter_upwards [Iio_mem_nhds ht] with u hu
   change u < T at hu
   simp [concatenate, hu.le]
 
-private theorem deriv_after (f g : ℝ → ℝ) (T t : ℝ) (ht : T < t) :
+theorem deriv_after (f g : ℝ → ℝ) (T t : ℝ) (ht : T < t) :
     deriv (concatenate f g T) t = deriv g (t-T) := by
   calc
     _ = deriv (fun u => f T + g (u-T) - g 0) t := by
