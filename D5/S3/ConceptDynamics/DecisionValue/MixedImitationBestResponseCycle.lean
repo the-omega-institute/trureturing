@@ -115,19 +115,23 @@ private theorem payoffs_coordination : ∀ i,
     max (payoffs i true false) (payoffs i false true) <
       min (payoffs i false false) (payoffs i true true) := by
   intro i
-  fin_cases i <;> norm_num [payoffs]
+  fin_cases i <;> dsimp only [payoffs] <;> norm_num
 
 private theorem activation_persistent : IsPersistent activation := by
   intro i t
   fin_cases i
   · refine ⟨4 * t + 1, by omega, ?_⟩
-    norm_num [activation, Nat.add_mod, Nat.mul_mod]
+    dsimp only [activation]
+    norm_num [Nat.add_mod, Nat.mul_mod]
   · refine ⟨4 * t + 3, by omega, ?_⟩
-    norm_num [activation, Nat.add_mod, Nat.mul_mod]
+    dsimp only [activation]
+    norm_num [Nat.add_mod, Nat.mul_mod]
   · refine ⟨4 * t, by omega, ?_⟩
-    norm_num [activation, Nat.mul_mod]
+    dsimp only [activation]
+    norm_num [Nat.mul_mod]
   · refine ⟨4 * t + 2, by omega, ?_⟩
-    norm_num [activation, Nat.add_mod, Nat.mul_mod]
+    dsimp only [activation]
+    norm_num [Nat.add_mod, Nat.mul_mod]
 
 private theorem activation_period (t : ℕ) : activation (t + 8) = activation t := by
   have hm : (t + 8) % 4 = t % 4 := by omega
@@ -141,7 +145,8 @@ private theorem utility_values (r : Fin 8) (i : Fin 4) :
           Fin 8 → Fin 4 → ℝ) r i := by
   fin_cases r <;> fin_cases i <;> unfold utility
   all_goals simp only [Finset.sum_filter, Fin.sum_univ_succ, Fin.sum_univ_zero]
-  all_goals norm_num [graph, payoffs, orbit]
+  all_goals dsimp only [graph, payoffs, orbit]
+  all_goals norm_num
 
 private theorem alternative_values (r : Fin 8) (s : Bool) :
     utility graph payoffs (Function.update (orbit r) 1 s) 1 =
@@ -149,7 +154,9 @@ private theorem alternative_values (r : Fin 8) (s : Bool) :
         else ![6, 7, 7, 8, 9, 8, 8, 7]) r := by
   fin_cases r <;> cases s <;> unfold utility
   all_goals rw [Finset.sum_filter]
-  all_goals norm_num [Fin.sum_univ_succ, Function.update_apply, graph, payoffs, orbit]
+  all_goals simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, Function.update_apply]
+  all_goals dsimp only [graph, payoffs, orbit]
+  all_goals norm_num
 
 private theorem first_two :
     step graph kinds payoffs (orbit 0) (activation 0) = orbit 0 ∧
@@ -160,9 +167,12 @@ private theorem first_two :
     unfold activation
     norm_num only
     unfold step update
-    norm_num [kinds]
-    simp only [hasMaximizer, utility_values]
-    norm_num [graph, orbit, Fin.exists_fin_succ, Fin.forall_fin_succ]
+    dsimp only [kinds]
+    norm_num
+    try dsimp only [hasMaximizer]
+    simp only [utility_values]
+    dsimp only [graph, orbit]
+    norm_num [Fin.exists_fin_succ, Fin.forall_fin_succ]
 
 private theorem cycle_steps (r : Fin 8) :
     step graph kinds payoffs (orbit r) (activation (r.val + 2)) =
@@ -173,9 +183,12 @@ private theorem cycle_steps (r : Fin 8) :
     unfold activation
     norm_num only
     unfold step update
-    norm_num [kinds]
-    simp only [hasMaximizer, utility_values, alternative_values]
-    norm_num [graph, orbit, Fin.exists_fin_succ, Fin.forall_fin_succ]
+    dsimp only [kinds]
+    norm_num
+    try dsimp only [hasMaximizer]
+    simp only [utility_values, alternative_values]
+    dsimp only [graph, orbit]
+    norm_num [Fin.exists_fin_succ, Fin.forall_fin_succ]
     funext i
     fin_cases i <;> simp
 
@@ -202,7 +215,8 @@ private theorem first_ten (t : ℕ) (ht : t ≤ 10) :
   have hcases : t = 0 ∨ t = 1 ∨ t = 2 ∨ t = 3 ∨ t = 4 ∨ t = 5 ∨ t = 6 ∨
       t = 7 ∨ t = 8 ∨ t = 9 ∨ t = 10 := by omega
   rcases hcases with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
-  all_goals norm_num [traj, hzero, hone, h0, h1, h2, h3, h4, h5, h6, h7]
+  all_goals dsimp only [traj]
+  all_goals norm_num [hzero, hone, h0, h1, h2, h3, h4, h5, h6, h7]
 
 private theorem trajectory_period (t : ℕ) (ht : 2 ≤ t) :
     traj graph kinds payoffs (orbit 0) activation (t + 8) =
@@ -219,7 +233,9 @@ private theorem trajectory_period (t : ℕ) (ht : 2 ≤ t) :
         (traj graph kinds payoffs (orbit 0) activation (t + 8)) (activation (t + 8)) =
           step graph kinds payoffs (traj graph kinds payoffs (orbit 0) activation t)
             (activation t)
-      rw [ih (by omega), activation_period]
+      rw [activation_period]
+      exact congrArg (fun x => traj._sunfold graph kinds payoffs x
+        (fun _ => activation t) 1) (ih (by omega))
 
 private theorem trajectory_reduce (t : ℕ) :
     traj graph kinds payoffs (orbit 0) activation (t + 2) =
