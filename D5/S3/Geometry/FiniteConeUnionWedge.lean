@@ -445,6 +445,13 @@ def homotopyEquiv :
     P.localWedgeEquiv.symm
 
 end ConeUnion
+
+/-- The actual coordinate inclusion induced by a finite subcomplex inclusion. -/
+def realizationInclusion {M N : PreAbstractSimplicialComplex V} (h : M ≤ N) :
+    C(↥(realization M), ↥(realization N)) :=
+  ⟨fun x => ⟨x.val, realization_mono h x.property⟩,
+    continuous_subtype_val.subtype_mk _⟩
+
 end FiniteRealizations
 
 end D5.S3.Geometry.FiniteConeUnionWedge
