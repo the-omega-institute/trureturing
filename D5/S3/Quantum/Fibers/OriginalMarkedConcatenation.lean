@@ -167,8 +167,8 @@ private theorem leg_hazard (L : Leg) : hazard L.c L.height = L.hazard := by
 
 theorem leg_survival (L : Leg) : survival L.c L.height = L.survival := by
   funext t
-  simp [survival, OriginalControlSurvivalInstability.survival,
-    OriginalControlSurvivalInstability.hazard, Leg.survival, leg_hazard]
+  simp only [OriginalControlSurvivalInstability.survival, Leg.survival]
+  rw [leg_hazard L]
 
 theorem leg_rate (L : Leg) : jumpRate L.c L.height = L.jumpRate := by
   funext t i
@@ -211,8 +211,7 @@ theorem rate_after (c T : ℝ) (k K : ℝ → ℝ) (hj : k T = K 0)
 theorem survival_before (c T t : ℝ) (k K : ℝ → ℝ)
     (ht : 0 ≤ t) (htT : t ≤ T) :
     survival c (concatenate k K T) t = survival c k t := by
-  rw [OriginalControlSurvivalInstability.survival,
-    OriginalControlSurvivalInstability.survival]
+  simp only [OriginalControlSurvivalInstability.survival]
   congr 2
   exact integral_congr_Ioo_of_le ht
     (fun u hu => hazard_before c T k K u (hu.2.trans_le htT))
@@ -226,8 +225,8 @@ private theorem joined_survival (L R : Leg) (hC : R.c = L.c) (hj : L.y = R.x)
   have hi1 : IntervalIntegrable (hazard L.c R.height) volume 0 s := by
     rw [← hC]
     exact leg_integrable R s hs
-  rw [OriginalControlSurvivalInstability.survival,
-    hazard_integral L.c L.duration s L.height R.height L.duration_pos.le
+  simp only [OriginalControlSurvivalInstability.survival]
+  rw [hazard_integral L.c L.duration s L.height R.height L.duration_pos.le
     hs.1 hjoin (leg_integrable L L.duration ⟨L.duration_pos.le, le_rfl⟩) hi1,
     neg_add, Real.exp_add]
   change survival L.c L.height L.duration * survival L.c R.height s = _
@@ -294,8 +293,8 @@ theorem native_concatenation (c T s a chi : ℝ) (k K : ℝ → ℝ)
   have hi := hazard_integrable c T chi k h0
   have hI := hazard_integrable c s chi K h1
   have hS : survival c (concatenate k K T) (T + s) = survival c k T * survival c K s := by
-    rw [OriginalControlSurvivalInstability.survival,
-      hazard_integral c T s k K hT hs hj hi hI, neg_add, Real.exp_add]
+    simp only [OriginalControlSurvivalInstability.survival]
+    rw [hazard_integral c T s k K hT hs hj hi hI, neg_add, Real.exp_add]
     rfl
   have hmat := successful_compose c a (k T) (K s) (survival c k T)
     (survival c K s) hc ha hb hk (Real.exp_pos _).le (Real.exp_pos _).le
