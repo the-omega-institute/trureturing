@@ -7,8 +7,12 @@
    digest: An incoherent operation increases the quantum coherence fraction. -/
 
 import D5.S3.Quantum.Information.SLDSpectralEnergy
-import Mathlib.LinearAlgebra.Matrix.IsDiag
-import Mathlib.Tactic
+
+/-! # Incoherent operations can increase the quantum coherence fraction
+
+The coherence fraction is optimized over all vectors with unit-modulus coordinates.
+A rank-two projection in dimension four gives a strict increase under a diagonal Kraus channel.
+-/
 
 noncomputable section
 set_option autoImplicit false
@@ -33,10 +37,6 @@ def claim : Prop := ∀ (d m : ℕ) (ρ : Matrix (Fin d) (Fin d) ℂ)
     D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity ρ →
     IsIncoherentOperation k →
     coherenceFraction (∑ i, k i * ρ * (k i)ᴴ) ≤ coherenceFraction ρ
-
-private def b : Matrix (Fin 4) (Fin 2) ℂ :=
-  ![![1, 0], ![0, 1], ![(3 : ℂ) / 5, (4 : ℂ) / 5],
-    ![(3 : ℂ) / 5, (4 : ℂ) * Complex.I / 5]]
 
 private def p : Matrix (Fin 4) (Fin 4) ℂ :=
   ![ ![(475 : ℂ) / 721, (-100 : ℂ) / 721 - (100 : ℂ) * Complex.I / 721,
@@ -66,9 +66,9 @@ private def rho : Matrix (Fin 4) (Fin 4) ℂ :=
       (-30 : ℂ) / 721 + (340 : ℂ) * Complex.I / 2163,
       (75 : ℂ) / 1442 + (200 : ℂ) * Complex.I / 2163, (913 : ℂ) / 4326]]
 
-private def k : Fin 2 → Matrix (Fin 4) (Fin 4) ℂ
-  | 0 => Matrix.diagonal ![1, 0, (3 : ℂ) / 5, (3 : ℂ) / 5]
-  | 1 => Matrix.diagonal ![0, 1, (4 : ℂ) / 5, (-4 : ℂ) * Complex.I / 5]
+private def k : Fin 2 → Matrix (Fin 4) (Fin 4) ℂ :=
+  ![Matrix.diagonal ![1, 0, (3 : ℂ) / 5, (3 : ℂ) / 5],
+    Matrix.diagonal ![0, 1, (4 : ℂ) / 5, (-4 : ℂ) * Complex.I / 5]]
 
 private def phi (ρ : Matrix (Fin 4) (Fin 4) ℂ) : Matrix (Fin 4) (Fin 4) ℂ :=
   ∑ i, k i * ρ * (k i)ᴴ
@@ -78,25 +78,19 @@ private def ones : Fin 4 → ℂ := fun _ => 1
 private lemma p_star : pᴴ = p := by
   ext i j
   change star (p j i) = p i j
-  fin_cases i <;> fin_cases j <;> simp [p, Complex.star_def] <;> ring
+  fin_cases i <;> fin_cases j <;> delta p <;> simp <;> ring
 
 private lemma p_square : p * p = p := by
   ext i j
   change (∑ t, p i t * p t j) = p i j
-  fin_cases i <;> fin_cases j <;>
-    simp [p, Fin.sum_univ_succ] <;> ring_nf <;>
+  fin_cases i <;> fin_cases j <;> delta p <;>
+    simp [Fin.sum_univ_succ] <;> ring_nf <;>
       try rw [Complex.I_sq] <;> norm_num <;> ring
 
 private lemma p_trace : trace p = 2 := by
   change ∑ i, p i i = 2
-  simp [p, Matrix.diag, Fin.sum_univ_succ] <;> norm_num <;> ring
-
-private lemma p_range : p * b = b := by
-  ext i j
-  change (∑ t, p i t * b t j) = b i j
-  fin_cases i <;> fin_cases j <;>
-    simp [p, b, Fin.sum_univ_succ] <;> ring_nf <;>
-      try rw [Complex.I_sq] <;> norm_num <;> ring
+  delta p
+  norm_num [Fin.sum_univ_succ]
 
 private lemma p_pos : p.PosSemidef := by
   have h := Matrix.PosSemidef.mul_mul_conjTranspose_same
@@ -110,8 +104,8 @@ private lemma rho_half : rho = (1 / 2 : ℝ) • p := by
     norm_num
   ext i j
   rw [hs]
-  fin_cases i <;> fin_cases j <;>
-    simp [rho, p, Complex.ext_iff, Complex.I_sq, div_eq_mul_inv] <;>
+  fin_cases i <;> fin_cases j <;> delta rho p <;>
+    simp [Complex.ext_iff, div_eq_mul_inv] <;>
     norm_num <;> ring
 
 private lemma rho_density :
@@ -124,14 +118,14 @@ private lemma rho_density :
 private lemma k_incoherent : IsIncoherentOperation k := by
   constructor
   · ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [k, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
+    fin_cases i <;> fin_cases j <;> delta k <;>
+      simp [Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
         Fin.sum_univ_two, map_inv₀, map_ofNat, Complex.I_sq] <;>
       norm_num [Complex.ext_iff, Complex.I_sq, div_eq_mul_inv] <;> ring
   · intro i σ hσ
     rw [← hσ.diagonal_diag]
-    fin_cases i <;>
-      simp [k, Matrix.diagonal_mul_diagonal, Matrix.diagonal_conjTranspose]
+    fin_cases i <;> delta k <;>
+      simp [Matrix.diagonal_mul_diagonal, Matrix.diagonal_conjTranspose]
 
 private lemma coherence_bddAbove (σ : Matrix (Fin 4) (Fin 4) ℂ) :
     BddAbove {r : ℝ | ∃ z : Fin 4 → ℂ, (∀ j, ‖z j‖ = 1) ∧
@@ -183,32 +177,29 @@ private def q : Matrix (Fin 4) (Fin 4) ℂ :=
 private lemma diag_sandwich (a b : Fin 4 → ℂ) (m : Matrix (Fin 4) (Fin 4) ℂ)
     (i j : Fin 4) :
     (Matrix.diagonal a * m * Matrix.diagonal b) i j = a i * m i j * b j := by
-  simp [Matrix.mul_apply, Matrix.diagonal, Fin.sum_univ_succ]
+  simp only [Matrix.mul_diagonal, Matrix.diagonal_mul]
 
 set_option maxHeartbeats 1000000 in
+-- Both four-dimensional diagonal sandwiches require rational normalization.
 private lemma phi_rho : phi rho = q := by
+  delta phi
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp only [phi, Fin.sum_univ_two, Matrix.add_apply, k,
+    simp only [Fin.sum_univ_two, Matrix.add_apply] <;>
+    delta k <;>
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one,
       Matrix.diagonal_conjTranspose] <;>
     simp only [diag_sandwich] <;>
-    simp [q, rho, Complex.ext_iff, Complex.I_sq, div_eq_mul_inv] <;>
+    delta q rho <;>
+    simp [Complex.ext_iff, div_eq_mul_inv] <;>
     norm_num <;> ring
 
 private lemma output_at_ones :
     (star ones ⬝ᵥ (phi rho *ᵥ ones)).re / (4 : ℝ) = 1 / 2 := by
   rw [phi_rho]
-  norm_num [q, ones, Matrix.mul_apply, Matrix.mulVec, Matrix.vecMul,
-    Matrix.smul_apply, Matrix.diagonal, Matrix.star_eq_conjTranspose, Pi.star_apply, dotProduct,
-    Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.vecHead, Matrix.vecTail,
-    Matrix.cons_val_fin_one, Matrix.cons_val_two, Fin.reduceFinMk, Matrix.of_apply,
-    Pi.smul_apply, smul_eq_mul, Algebra.smul_def,
-    Fin.sum_univ_succ, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
-    map_inv₀, map_ofNat, Complex.ext_iff, Complex.I_sq, Complex.mul_re, Complex.mul_im,
-    Complex.add_re, Complex.add_im, Complex.sub_re, Complex.sub_im, Complex.smul_re,
-    Complex.ofReal_re, Complex.ofReal_im, div_eq_mul_inv] <;>
-      simp_rw [Matrix.smul_apply, Algebra.smul_def] <;>
-      norm_num <;> ring_nf <;> norm_num
+  delta q ones
+  norm_num [Matrix.mulVec, Pi.star_apply, dotProduct, Fin.sum_univ_succ,
+    Complex.mul_re, Complex.mul_im, div_eq_mul_inv]
 
 private lemma norm_defect (u w : ℂ) (hu : ‖u‖ ≤ 7 / 5) (hw : ‖w‖ = 1) :
     (‖u‖ ^ 2 - 1) ^ 2 ≤ 144 / 25 * ‖w - u‖ ^ 2 := by
@@ -325,15 +316,17 @@ private lemma residual_functional_bound (a b c d : ℂ) :
 private lemma projection_energy (z : Fin 4 → ℂ) :
     (star z ⬝ᵥ (p *ᵥ z)).re +
         ∑ i, ‖z i - (p *ᵥ z) i‖ ^ 2 = ∑ i, ‖z i‖ ^ 2 := by
-  simp [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, p, Complex.sq_norm,
+  delta p
+  simp [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, Complex.sq_norm,
     Complex.normSq_apply, Pi.star_apply, Complex.star_def]
   ring_nf
 
 private lemma p_functionals (z : Fin 4 → ℂ) :
     ((p *ᵥ z) 2 - (3 * (p *ᵥ z) 0 + 4 * (p *ᵥ z) 1) / 5 = 0) ∧
       ((p *ᵥ z) 3 - (3 * (p *ᵥ z) 0 + 4 * Complex.I * (p *ᵥ z) 1) / 5 = 0) := by
+  delta p
   constructor <;>
-    simp [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, p, Complex.ext_iff,
+    simp [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, Complex.ext_iff,
       Complex.I_sq, div_eq_mul_inv] <;>
     norm_num <;> constructor <;> ring
 
@@ -387,12 +380,13 @@ private lemma output_lower : 1 / 2 ≤ coherenceFraction (phi rho) := by
   apply le_csSup (coherence_bddAbove (phi rho))
   refine ⟨ones, ?_, output_at_ones.symm⟩
   intro j
-  simp [ones]
+  delta ones
+  simp
 
 private lemma input_upper : coherenceFraction rho ≤ 1 / 2 - 1 / 200 := by
   unfold coherenceFraction
   refine csSup_le ?_ ?_
-  · exact ⟨_, ones, (by simp [ones]), rfl⟩
+  · exact ⟨_, ones, (by intro j; delta ones; simp), rfl⟩
   rintro r ⟨z, hz, rfl⟩
   exact input_bound z hz
 
