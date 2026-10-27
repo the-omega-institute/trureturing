@@ -52,7 +52,19 @@ private def p : Matrix (Fin 4) (Fin 4) ℂ :=
       (-60 : ℂ) / 721 + (680 : ℂ) * Complex.I / 2163,
       (75 : ℂ) / 721 + (400 : ℂ) * Complex.I / 2163, (913 : ℂ) / 2163]]
 
-private def rho : Matrix (Fin 4) (Fin 4) ℂ := (1 / 2 : ℝ) • p
+private def rho : Matrix (Fin 4) (Fin 4) ℂ :=
+  ![ ![(475 : ℂ) / 1442, (-50 : ℂ) / 721 - (50 : ℂ) * Complex.I / 721,
+      (205 : ℂ) / 1442 - (40 : ℂ) * Complex.I / 721,
+      (205 : ℂ) / 1442 + (40 : ℂ) * Complex.I / 721],
+    ![(-50 : ℂ) / 721 + (50 : ℂ) * Complex.I / 721, (1075 : ℂ) / 4326,
+      (340 : ℂ) / 2163 + (30 : ℂ) * Complex.I / 721,
+      (-30 : ℂ) / 721 - (340 : ℂ) * Complex.I / 2163],
+    ![(205 : ℂ) / 1442 + (40 : ℂ) * Complex.I / 721,
+      (340 : ℂ) / 2163 - (30 : ℂ) * Complex.I / 721, (913 : ℂ) / 4326,
+      (75 : ℂ) / 1442 - (200 : ℂ) * Complex.I / 2163],
+    ![(205 : ℂ) / 1442 - (40 : ℂ) * Complex.I / 721,
+      (-30 : ℂ) / 721 + (340 : ℂ) * Complex.I / 2163,
+      (75 : ℂ) / 1442 + (200 : ℂ) * Complex.I / 2163, (913 : ℂ) / 4326]]
 
 private def k : Fin 2 → Matrix (Fin 4) (Fin 4) ℂ
   | 0 => Matrix.diagonal ![1, 0, (3 : ℂ) / 5, (3 : ℂ) / 5]
@@ -93,9 +105,20 @@ private lemma p_pos : p.PosSemidef := by
 
 private lemma rho_density :
     D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity rho := by
+  have hs (i j : Fin 4) : ((1 / 2 : ℝ) • p) i j = (1 / 2 : ℂ) * p i j := by
+    change (1 / 2 : ℝ) • p i j = _
+    rw [Algebra.smul_def]
+    norm_num
+  have hr : rho = (1 / 2 : ℝ) • p := by
+    ext i j
+    rw [hs]
+    fin_cases i <;> fin_cases j <;>
+      simp [rho, p, Complex.ext_iff, Complex.I_sq, div_eq_mul_inv] <;>
+      norm_num <;> ring
+  rw [hr]
   constructor
-  · simpa [rho] using p_pos.smul (by norm_num : (0 : ℝ) ≤ 1 / 2)
-  · simp [rho, Matrix.trace_smul, p_trace]
+  · simpa using p_pos.smul (by norm_num : (0 : ℝ) ≤ 1 / 2)
+  · simp [Matrix.trace_smul, p_trace]
 
 private lemma k_incoherent : IsIncoherentOperation k := by
   constructor
@@ -113,8 +136,53 @@ private lemma coherence_bddAbove (σ : Matrix (Fin 4) (Fin 4) ℂ) :
     BddAbove {r : ℝ | ∃ z : Fin 4 → ℂ, (∀ j, ‖z j‖ = 1) ∧
       r = (star z ⬝ᵥ (σ *ᵥ z)).re / (4 : ℝ)} := by sorry
 
+private def q : Matrix (Fin 4) (Fin 4) ℂ :=
+  ![ ![(1 / 2 : ℂ) * (475 / 721), 0,
+      (3 / 10 : ℂ) * (205 / 721 - (80 : ℂ) * Complex.I / 721),
+      (3 / 10 : ℂ) * (205 / 721 + (80 : ℂ) * Complex.I / 721)],
+    ![0, (1 / 2 : ℂ) * (1075 / 2163),
+      (2 / 5 : ℂ) * (680 / 2163 + (60 : ℂ) * Complex.I / 721),
+      (2 / 5 : ℂ) * Complex.I * (-60 / 721 - (680 : ℂ) * Complex.I / 2163)],
+    ![(3 / 10 : ℂ) * (205 / 721 + (80 : ℂ) * Complex.I / 721),
+      (2 / 5 : ℂ) * (680 / 2163 - (60 : ℂ) * Complex.I / 721),
+      (1 / 2 : ℂ) * (913 / 2163),
+      (1 / 2 : ℂ) * ((9 / 25 : ℂ) + (16 / 25 : ℂ) * Complex.I) *
+        (75 / 721 - (400 : ℂ) * Complex.I / 2163)],
+    ![(3 / 10 : ℂ) * (205 / 721 - (80 : ℂ) * Complex.I / 721),
+      -(2 / 5 : ℂ) * Complex.I * (-60 / 721 + (680 : ℂ) * Complex.I / 2163),
+      (1 / 2 : ℂ) * ((9 / 25 : ℂ) - (16 / 25 : ℂ) * Complex.I) *
+        (75 / 721 + (400 : ℂ) * Complex.I / 2163),
+      (1 / 2 : ℂ) * (913 / 2163)]]
+
+private lemma diag_sandwich (a b : Fin 4 → ℂ) (m : Matrix (Fin 4) (Fin 4) ℂ)
+    (i j : Fin 4) :
+    (Matrix.diagonal a * m * Matrix.diagonal b) i j = a i * m i j * b j := by
+  simp [Matrix.mul_apply, Matrix.diagonal, Fin.sum_univ_succ]
+
+set_option maxHeartbeats 1000000 in
+private lemma phi_rho : phi rho = q := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp only [phi, Fin.sum_univ_two, Matrix.add_apply, k,
+      Matrix.diagonal_conjTranspose] <;>
+    simp only [diag_sandwich] <;>
+    simp [q, rho, Complex.ext_iff, Complex.I_sq, div_eq_mul_inv] <;>
+    norm_num <;> ring
+
 private lemma output_at_ones :
-    (star ones ⬝ᵥ (phi rho *ᵥ ones)).re / (4 : ℝ) = 1 / 2 := by sorry
+    (star ones ⬝ᵥ (phi rho *ᵥ ones)).re / (4 : ℝ) = 1 / 2 := by
+  rw [phi_rho]
+  norm_num [q, ones, Matrix.mul_apply, Matrix.mulVec, Matrix.vecMul,
+    Matrix.smul_apply, Matrix.diagonal, Matrix.star_eq_conjTranspose, Pi.star_apply, dotProduct,
+    Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.vecHead, Matrix.vecTail,
+    Matrix.cons_val_fin_one, Matrix.cons_val_two, Fin.reduceFinMk, Matrix.of_apply,
+    Pi.smul_apply, smul_eq_mul, Algebra.smul_def,
+    Fin.sum_univ_succ, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
+    map_inv₀, map_ofNat, Complex.ext_iff, Complex.I_sq, Complex.mul_re, Complex.mul_im,
+    Complex.add_re, Complex.add_im, Complex.sub_re, Complex.sub_im, Complex.smul_re,
+    Complex.ofReal_re, Complex.ofReal_im, div_eq_mul_inv] <;>
+      simp_rw [Matrix.smul_apply, Algebra.smul_def] <;>
+      norm_num <;> ring_nf <;> norm_num
 
 private lemma input_bound (z : Fin 4 → ℂ) (hz : ∀ j, ‖z j‖ = 1) :
     (star z ⬝ᵥ (rho *ᵥ z)).re / (4 : ℝ) ≤ 1 / 2 - 1 / 200 := by sorry
