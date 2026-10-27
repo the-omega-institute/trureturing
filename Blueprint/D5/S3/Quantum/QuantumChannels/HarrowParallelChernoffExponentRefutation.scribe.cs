@@ -55,7 +55,8 @@ internal sealed class HarrowParallelChernoffExponentRefutationDocument : IScribe
                 "The equal-prior error probability is half of one minus half the stabilized norm of "
                     + "the channel difference, as at source lines 1303-1306. The expression is evaluated "
                     + "in ENNReal, including its truncated subtraction and extended division, for every "
-                    + "natural n."),
+                    + "natural n. The named HDiv.hDiv applications denote ENNReal division on explicitly "
+                    + "typed operands. Fraction notation is reserved for complex or real field division."),
             Node("exponent", "exponent", "The base-two error exponent", ExponentFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 "Real.log and ENNReal.log use natural logarithms. Division by Real.log 2 gives the "
@@ -194,12 +195,17 @@ internal sealed class HarrowParallelChernoffExponentRefutationDocument : IScribe
             At(Qualified("sSup"), candidates)));
     }
 
-    private static Formula ParallelErrorFormula() => All("n", Naturals(),
-        Equal(Typed(LocalCall("parallelError", X("n")), Qualified("ENNReal")),
-            Divide(Subtract(Typed(D(1), Qualified("ENNReal")),
-                Divide(LocalCall("diamondNorm", Subtract(LocalCall("tensorPow", Local("harrowM"), X("n")),
-                    LocalCall("tensorPow", Local("harrowMbar"), X("n")))),
-                    Typed(D(2), Qualified("ENNReal")))), Typed(D(2), Qualified("ENNReal")))));
+    private static Formula ParallelErrorFormula()
+    {
+        Formula norm = Typed(LocalCall("diamondNorm",
+            Subtract(LocalCall("tensorPow", Local("harrowM"), X("n")),
+                LocalCall("tensorPow", Local("harrowMbar"), X("n")))), Qualified("ENNReal"));
+        Formula halfNorm = At(Qualified("HDiv", "hDiv"), norm, Typed(D(2), Qualified("ENNReal")));
+        Formula residual = Typed(Subtract(Typed(D(1), Qualified("ENNReal")), halfNorm), Qualified("ENNReal"));
+        return All("n", Naturals(),
+            Equal(Typed(LocalCall("parallelError", X("n")), Qualified("ENNReal")),
+                At(Qualified("HDiv", "hDiv"), residual, Typed(D(2), Qualified("ENNReal")))));
+    }
 
     private static Formula ExponentFormula()
     {
