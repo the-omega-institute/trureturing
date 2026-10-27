@@ -6,9 +6,9 @@
    utility: none
    digest: Biased post-processed interferometric improvements fail faithfulness. -/
 
-import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Quantum.QuantumChannels.EntanglementAssistedCommunicationValue
-import D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
+import D5.S3.Quantum.Algebra.Unitary.BalancedUnitarySum
+import D5.S3.Quantum.Schatten.TraceNorm
 
 /-! Biased interferometric priors cannot detect all coherence-creating channels. -/
 
@@ -20,20 +20,16 @@ open Matrix
 open scoped BigOperators ComplexOrder MatrixOrder
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
-open D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics (projectiveReadout)
 open D5.S3.Quantum.QuantumChannels.EntanglementAssistedCommunicationValue (IsChannel)
+open D5.S3.Quantum.Algebra.Unitary.BalancedUnitarySum (halfIdentity)
+open D5.S3.Quantum.FiniteDimensional (qubitX)
+open D5.S3.Quantum.Schatten.TraceNorm (traceNormUINorm)
 
 namespace D5.S3.Quantum.QuantumChannels.PostprocessedImprovementUnfaithful
 
 /-- Full dephasing in the coordinate basis, as a complex linear map. -/
-def dephase {n : ℕ} : MatrixMap (Fin n) (Fin n) ℂ where
-  toFun := projectiveReadout
-  map_add' a b := by
-    change diagonal (diag (a + b)) = diagonal (diag a) + diagonal (diag b)
-    exact (Matrix.diagonalAddMonoidHom (Fin n) ℂ).map_add _ _
-  map_smul' c a := by
-    change diagonal (fun i => c * a i i) = c • diagonal (diag a)
-    exact Matrix.diagonal_smul c (diag a)
+def dephase {n : ℕ} : MatrixMap (Fin n) (Fin n) ℂ :=
+  (Matrix.diagonalLinearMap (Fin n) ℂ ℂ).comp (Matrix.diagLinearMap (Fin n) ℂ ℂ)
 
 /-- Maximally incoherent operations preserve the diagonal matrices. -/
 def IsMIO {a b : ℕ} (ψ : MatrixMap (Fin a) (Fin b) ℂ) : Prop :=
@@ -43,10 +39,8 @@ private def phaseUnitary {m : ℕ} (φ : Fin m → ℝ) : Matrix (Fin m) (Fin m)
   diagonal (fun i => Complex.exp ((φ i : ℂ) * Complex.I))
 
 /-- The interferometer's fixed diagonal unitary conjugation. -/
-def phaseChannel {m : ℕ} (φ : Fin m → ℝ) : MatrixMap (Fin m) (Fin m) ℂ where
-  toFun a := phaseUnitary φ * a * (phaseUnitary φ)ᴴ
-  map_add' a b := by rw [Matrix.mul_add, Matrix.add_mul]
-  map_smul' c a := by rw [RingHom.id_apply, Matrix.mul_smul, Matrix.smul_mul]
+def phaseChannel {m : ℕ} (φ : Fin m → ℝ) : MatrixMap (Fin m) (Fin m) ℂ :=
+  MatrixMap.conj (phaseUnitary φ)
 
 /-- The induced trace norm uses the full complex matrix unit ball. -/
 def inducedTraceNorm {a b : ℕ} (f : MatrixMap (Fin a) (Fin b) ℂ) : ℝ :=
@@ -67,9 +61,7 @@ private def prepare {a b : ℕ} (ρ : Matrix (Fin b) (Fin b) ℂ) :
 private def rho (t : ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
   !![1 / 2, (t : ℂ) / 2; (t : ℂ) / 2, 1 / 2]
 
-private def halfIdentity : Matrix (Fin 2) (Fin 2) ℂ := (1 / 2 : ℝ) • 1
-
-private def halfPauli : Matrix (Fin 2) (Fin 2) ℂ := !![0, 1 / 2; 1 / 2, 0]
+private def halfPauli : Matrix (Fin 2) (Fin 2) ℂ := (1 / 2 : ℝ) • qubitX
 
 private theorem phase_properties {m : ℕ} (φ : Fin m → ℝ) :
     (∀ a, (phaseChannel φ a).trace = a.trace) ∧
@@ -169,13 +161,13 @@ private theorem biased_norm {m : ℕ} (l t : ℝ) (φ : Fin m → ℝ)
 
 private theorem qubit_positive (s : ℝ) (hs : s = 1 ∨ s = -1) :
     (halfIdentity + s • halfPauli).PosSemidef := by
+  delta halfIdentity halfPauli qubitX
   have h := (Matrix.posSemidef_vecMulVec_self_star (![1, (s : ℂ)] : Fin 2 → ℂ)).smul
     (show (0 : ℝ) ≤ 1 / 2 by norm_num)
   convert h using 1
   ext i j
   simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply]
-  rcases hs with rfl | rfl <;> fin_cases i <;> fin_cases j <;>
-    delta halfIdentity halfPauli <;> norm_num
+  rcases hs with rfl | rfl <;> fin_cases i <;> fin_cases j <;> norm_num
 
 private theorem prepare_channel {a b : ℕ} (ρ : Matrix (Fin b) (Fin b) ℂ)
     (hρ : ρ.PosSemidef) (htr : ρ.trace = 1) : IsChannel (prepare (a := a) ρ) := by
@@ -203,30 +195,34 @@ private theorem postprocessing_data {m : ℕ} (ψ : MatrixMap (Fin 2) (Fin m) �
       (ψ halfIdentity).trace = 1 ∧ (ψ halfPauli).trace = 0 ∧
       (ψ halfIdentity + ψ halfPauli).PosSemidef ∧
       (ψ halfIdentity - ψ halfPauli).PosSemidef := by
-  have hid : dephase halfIdentity = halfIdentity := by
-    change diagonal (diag ((1 / 2 : ℝ) • (1 : Matrix (Fin 2) (Fin 2) ℂ))) = _
+  have hid : dephase (halfIdentity (n := Fin 2)) = halfIdentity := by
+    change diagonal (diag ((1 / 2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ))) = _
     rw [Matrix.diag_smul, Matrix.diag_one, Matrix.diagonal_smul, Matrix.diagonal_one']
     rfl
   have hpos (a : Matrix (Fin 2) (Fin 2) ℂ) (ha : a.PosSemidef) : (ψ a).PosSemidef := by
-    obtain ⟨k, hk⟩ := MatrixMap.IsCompletelyPositive.exists_kraus ψ hψ.1.1
-    rw [hk, MatrixMap.of_kraus, LinearMap.sum_apply]
-    change (∑ i, k i * a * (k i)ᴴ).PosSemidef
-    exact Matrix.posSemidef_sum _ (fun i _ => ha.mul_mul_conjTranspose_same (k i))
-  refine ⟨?_, hpos _ (Matrix.PosSemidef.one.smul (show (0 : ℝ) ≤ 1 / 2 by norm_num)),
+    exact hψ.1.1.IsPositive ha
+  refine ⟨?_, hpos _ ?_,
     ?_, ?_, ?_, ?_⟩
-  · simpa only [hid] using (hψ.2 halfIdentity).symm
+  · exact (congrArg (fun x => dephase (ψ x)) hid).symm.trans
+      ((hψ.2 halfIdentity).symm.trans (congrArg ψ hid))
+  · exact Matrix.PosSemidef.one.smul (show (0 : ℂ) ≤ 1 / 2 by
+      norm_num [Complex.nonneg_iff])
   · rw [hψ.1.2]
     rw [Matrix.trace_fin_two]
     delta halfIdentity
     norm_num
   · rw [hψ.1.2]
     rw [Matrix.trace_fin_two]
-    delta halfPauli
+    delta halfPauli qubitX
     norm_num
   · rw [← map_add]
-    simpa only [one_smul] using hpos _ (qubit_positive 1 (Or.inl rfl))
+    have hp := qubit_positive 1 (Or.inl rfl)
+    rw [one_smul] at hp
+    exact hpos _ hp
   · rw [← map_sub]
-    simpa only [neg_one_smul, sub_eq_add_neg] using hpos _ (qubit_positive (-1) (Or.inr rfl))
+    have hn := qubit_positive (-1) (Or.inr rfl)
+    rw [neg_one_smul, ← sub_eq_add_neg] at hn
+    exact hpos _ hn
 
 private theorem prepared_channel (t : ℝ) (ht : 0 ≤ t) (ht1 : t ≤ 1) :
     IsChannel (prepare (a := 2) (rho t)) := by
@@ -237,9 +233,9 @@ private theorem prepared_channel (t : ℝ) (ht : 0 ≤ t) (ht1 : t ≤ 1) :
     have h := ((qubit_positive 1 (Or.inl rfl)).smul
       (show 0 ≤ (1 + t) / 2 by linarith)).add hn
     convert h using 1
+    delta rho halfIdentity halfPauli qubitX
     ext i j
-    fin_cases i <;> fin_cases j <;>
-      delta rho halfIdentity halfPauli <;> norm_num <;> ring
+    fin_cases i <;> fin_cases j <;> norm_num <;> ring
   · rw [Matrix.trace_fin_two]
     delta rho
     norm_num
@@ -254,7 +250,8 @@ private theorem prepared_not_mio (t : ℝ) (ht : t ≠ 0) :
     fin_cases i <;> fin_cases j <;> rfl
   rw [hdiag] at he
   change ((Matrix.single 0 0 (1 : ℂ) : Matrix (Fin 2) (Fin 2) ℂ).trace • rho t) 0 1 =
-    diagonal (diag (_)) 0 1 at he
+    diagonal (diag ((Matrix.single 0 0 (1 : ℂ) : Matrix (Fin 2) (Fin 2) ℂ).trace •
+      rho t)) (0 : Fin 2) 1 at he
   rw [Matrix.diagonal_apply_ne _ (by decide), Matrix.trace_single_eq_same, one_smul] at he
   have hz : (t : ℂ) = 0 := by
     change (t : ℂ) / 2 = 0 at he
@@ -295,11 +292,6 @@ private theorem trace_bound {a : ℕ} (x : Matrix (Fin a) (Fin a) ℂ) :
   rw [hval] at h
   exact h
 
-private theorem norm_smul {b : ℕ} (c : ℂ) (h : Matrix (Fin b) (Fin b) ℂ) :
-    traceNorm (c • h) = ‖c‖ * traceNorm h := by
-  change (CFC.abs (c • h)).trace.re = ‖c‖ * (CFC.abs h).trace.re
-  rw [CFC.abs_smul, Matrix.trace_smul, Complex.smul_re, smul_eq_mul]
-
 private theorem norm_prepare {a b : ℕ} (ha : 1 ≤ a)
     (h : Matrix (Fin b) (Fin b) ℂ) :
     inducedTraceNorm (prepare (a := a) h) = traceNorm h := by
@@ -325,10 +317,10 @@ private theorem norm_prepare {a b : ℕ} (ha : 1 ≤ a)
       traceNorm (prepare (a := a) h x) = r}, r ≤ traceNorm h := by
     rintro r ⟨x, hx, rfl⟩
     change traceNorm (x.trace • h) ≤ traceNorm h
-    rw [norm_smul]
+    rw [show traceNorm (x.trace • h) = ‖x.trace‖ * traceNorm h from
+      (traceNormUINorm b).smul_eq x.trace h]
     exact mul_le_of_le_one_left (traceNorm_nonneg h) ((trace_bound x).trans hx)
-  exact le_antisymm (csSup_le ⟨_, hattain⟩ hbound)
-    (le_csSup ⟨_, hbound⟩ hattain)
+  exact IsGreatest.csSup_eq ⟨hattain, hbound⟩
 
 private theorem postprocessed_norm {m : ℕ} (l : ℝ) (hl : 0 ≤ l) (hl1 : l ≤ 1)
     (φ : Fin m → ℝ) (ψ : MatrixMap (Fin 2) (Fin m) ℂ) (hψ : IsMIO ψ) :
@@ -344,10 +336,14 @@ private theorem postprocessed_norm {m : ℕ} (l : ℝ) (hl : 0 ≤ l) (hl1 : l �
     (|2 * l - 1| / 2) • (l • ψ halfPauli - (1 - l) • phaseChannel φ (ψ halfPauli))
   have hr := norm_prepare (a := 2) (by omega) h
   have hρ (t : ℝ) : rho t = halfIdentity + t • halfPauli := by
+    delta rho halfIdentity halfPauli qubitX
     ext i j
-    fin_cases i <;> fin_cases j <;>
-      delta rho halfIdentity halfPauli <;> norm_num <;> ring
-  have hfix := (phase_properties φ).2.2 _ hdiag
+    fin_cases i <;> fin_cases j <;> norm_num <;> ring
+  have hfix : phaseChannel φ (ψ (1 : Matrix (Fin 2) (Fin 2) ℂ)) = ψ 1 := by
+    have hf := (phase_properties φ).2.2 _ hdiag
+    change phaseChannel φ (ψ ((1 / 2 : ℂ) • 1)) = ψ ((1 / 2 : ℂ) • 1) at hf
+    simp only [map_smul] at hf
+    exact smul_right_injective _ (by norm_num : (1 / 2 : ℂ) ≠ 0) hf
   have he : (((((l : ℂ) • LinearMap.id - ((1 - l : ℝ) : ℂ) • phaseChannel φ).comp ψ).comp
       ((prepare (a := 2) (rho (|2 * l - 1| / 2))).comp dephase))) =
       prepare (a := 2) h := by
@@ -359,8 +355,9 @@ private theorem postprocessed_norm {m : ℕ} (l : ℝ) (hl : 0 ≤ l) (hl1 : l �
       rfl
     change (l : ℂ) • ψ ((dephase x).trace • rho _) -
       ((1 - l : ℝ) : ℂ) • phaseChannel φ (ψ ((dephase x).trace • rho _)) = x.trace • h
+    dsimp only [halfIdentity] at hρ
+    dsimp only [h, halfIdentity]
     simp only [htrace, map_smul, hρ, map_add, LinearMap.map_smul_of_tower, hfix]
-    dsimp only [h]
     ext i j
     simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply,
       Complex.real_smul, smul_eq_mul]

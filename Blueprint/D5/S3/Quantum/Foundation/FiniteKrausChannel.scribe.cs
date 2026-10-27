@@ -51,6 +51,22 @@ internal sealed class FiniteKrausChannelDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(AddCpFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For finite A and B and an RCLike scalar R, the sum of two completely positive matrix maps is completely positive. At every finite amplification, add_kron expresses the image as the sum of two positive semidefinite images. IptPptSquaredEquivalence.gamma_cp uses this closure to combine the four branches of the flag lift."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("finite-kraus-conjugation"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/FiniteKrausChannel.conj"),
+                H("Conjugation as a linear matrix map"),
+                StatementSource.FromAuthor(ConjFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a finite input coordinate type A and an RCLike scalar R, MatrixMap.conj y is the linear map sending x to y x y adjoint, with arbitrary output coordinate type B."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("finite-kraus-conjugation-apply"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/FiniteKrausChannel.conj_apply"),
+                H("Evaluation of matrix conjugation"),
+                StatementSource.FromAuthor(ConjFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Evaluating MatrixMap.conj y at x gives y x y adjoint for every matrix x on the finite input coordinate type."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args) =>
@@ -73,6 +89,19 @@ internal sealed class FiniteKrausChannelDocument : IScribeDocumentDefinition
     private static Formula Instance(string cls, Formula arg) =>
         Seq(OpenBracket, Call(cls, arg), CloseBracket, Sp);
     private static Formula MatrixMapOf(Formula a, Formula b, Formula r) => Call("MatrixMap", a, b, r);
+    private static Formula ConjFormula()
+    {
+        Formula a = F.Id("A"), b = F.Id("B"), r = F.Id("R");
+        Formula x = F.Id("x"), y = F.Id("y");
+        Formula statement = All([Bound("y", Call("Matrix", b, a, r)),
+            Bound("x", Call("Matrix", a, a, r))],
+            Eqn(Apply(Apply(Qualified("MatrixMap", "conj"), y), x),
+                Mul(Mul(y, x), Call("conjTranspose", y))));
+        return Disp(All([Bound("A", Named("Type")), Bound("B", Named("Type")),
+            Bound("R", Named("Type"))],
+            Seq(Instance("Fintype", a), Instance("RCLike", r), statement)));
+    }
+
     private static Formula AddKronFormula()
     {
         Formula a = F.Id("A"), b = F.Id("B"), c = F.Id("C"), d = F.Id("D"), r = F.Id("R");
