@@ -8,7 +8,7 @@
 
 import D5.S3.Quantum.Information.CorrelatedCoherenceMonogamyRefutation
 import D5.S3.Quantum.Information.SLDSpectralEnergy
-import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
+import D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality
 
 /-! The optimal coherence of a qubit under arbitrary finite nonselective measurements. -/
 
@@ -30,7 +30,7 @@ namespace D5.S3.Quantum.Measurement.LudersCoherenceCreationOptimum
 /-- The nonselective measurement with the positive square roots of its effects. -/
 def luders {n : ℕ} (e : Fin n → Matrix (Fin 2) (Fin 2) ℂ)
     (ρ : Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
-  ∑ i, CFC.sqrt (e i) * ρ * CFC.sqrt (e i)
+  ∑ i, D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality.luders (e i) ρ
 
 /-- The length of the Bloch vector in the computational basis. -/
 def blochNorm (ρ : Matrix (Fin 2) (Fin 2) ℂ) : ℝ :=
@@ -46,7 +46,7 @@ private theorem hermitian_entries (m : Matrix (Fin 2) (Fin 2) ℂ) (hm : m.IsHer
 
 private theorem coherence_two (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : ρ.IsHermitian) :
     l1Coherence ρ = 2 * ‖ρ 0 1‖ := by
-  unfold l1Coherence
+  change (∑ i : Fin 2, ∑ j : Fin 2, if i = j then 0 else ‖ρ i j‖) = 2 * ‖ρ 0 1‖
   simp only [Fin.sum_univ_two, Fin.isValue, ↓reduceIte, zero_add, add_zero,
     Fin.zero_ne_one, (by decide : (1 : Fin 2) ≠ 0),
     (hermitian_entries ρ hρ).2.2, norm_star]
@@ -151,11 +151,13 @@ private theorem luders_decomposition {n : ℕ} (ρ : Matrix (Fin 2) (Fin 2) ℂ)
       linear_combination (p i + q i) * (m i 0 1).im / 2 * hx
   refine ⟨k, z, v, hk, hs, ?_, ?_⟩
   · unfold luders
+    unfold D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality.luders
     change (∑ i, m i * ρ * m i).IsHermitian
     change (∑ i, m i * ρ * m i)ᴴ = _
     simp only [Matrix.conjTranspose_sum, Matrix.conjTranspose_mul,
       (hm _).isHermitian.eq, hρ.1.isHermitian.eq, Matrix.mul_assoc]
   · unfold luders
+    unfold D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality.luders
     change (∑ i, m i * ρ * m i) 0 1 = _
     simp only [Matrix.sum_apply, hf, Finset.sum_add_distrib, hcancel, add_zero]
 
@@ -239,7 +241,7 @@ private theorem measurement_bound {n : ℕ} (ρ : Matrix (Fin 2) (Fin 2) ℂ)
   have hc : 2 * ‖ρ 0 1‖ ≤ l := by
     have h := (radius_data ρ hρ).2.1
     rw [coherence_two ρ hρ.1.isHermitian] at h
-    dsimp only [l]
+    change 2 * ‖ρ 0 1‖ ≤ (l1Coherence ρ + blochNorm ρ) / 2
     rw [coherence_two ρ hρ.1.isHermitian]
     linarith
   have hi (i : Fin n) :
@@ -252,8 +254,10 @@ private theorem measurement_bound {n : ℕ} (ρ : Matrix (Fin 2) (Fin 2) ℂ)
     have hb := hd i
     change _ ≤ (‖z i‖ ^ 2 + v i ^ 2) * (2 * ‖ρ 0 1‖ + blochNorm ρ) at hb
     have hkc := mul_le_mul_of_nonneg_left hc (hk i)
-    dsimp only [l] at *
-    rw [coherence_two ρ hρ.1.isHermitian] at *
+    change k i * (2 * ‖ρ 0 1‖) ≤ k i * ((l1Coherence ρ + blochNorm ρ) / 2) at hkc
+    change _ ≤ (k i + 2 * (‖z i‖ ^ 2 + v i ^ 2)) *
+      ((l1Coherence ρ + blochNorm ρ) / 2)
+    rw [coherence_two ρ hρ.1.isHermitian] at hkc ⊢
     nlinarith only [ha, hb, hkc]
   rw [coherence_two (luders e ρ) hh, hf]
   calc
@@ -269,14 +273,8 @@ private theorem measurement_bound {n : ℕ} (ρ : Matrix (Fin 2) (Fin 2) ℂ)
 
 private theorem phase_exists (c : ℂ) :
     ∃ a : ℂ, ‖a‖ = 1 ∧ star a * c = (‖c‖ : ℂ) := by
-  by_cases hc : c = 0
-  · exact ⟨1, norm_one, by simp only [hc, mul_zero, norm_zero, Complex.ofReal_zero]⟩
-  have hn : ‖c‖ ≠ 0 := norm_ne_zero_iff.mpr hc
-  refine ⟨c / (‖c‖ : ℂ), ?_, ?_⟩
-  · rw [norm_div, Complex.norm_of_nonneg (norm_nonneg c), div_self hn]
-  · rw [star_div₀, Complex.star_def, Complex.conj_ofReal, div_mul_eq_mul_div,
-      ← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq, Complex.ofReal_pow]
-    field_simp
+  obtain ⟨a, ha, hc⟩ := Complex.exists_norm_eq_mul_self c
+  exact ⟨star a, (norm_star a).trans ha, by simpa only [star_star] using hc.symm⟩
 
 private theorem optimal_axis (c : ℂ) (r : ℝ) :
     ∃ (z : ℂ) (v : ℝ), ‖z‖ ^ 2 + v ^ 2 = 1 ∧
@@ -315,12 +313,12 @@ private theorem optimal_axis (c : ℂ) (r : ℝ) :
   have hv : v ^ 2 = (l - s) / d := by
     dsimp only [v]
     rw [div_pow, mul_pow, ht2, ← hdisc]
-    field_simp [hdne, hl.ne']
+    apply (div_eq_iff (pow_ne_zero 2 (mul_ne_zero (by norm_num) hl.ne'))).mpr
     ring
   have hunit : ‖z‖ ^ 2 + v ^ 2 = 1 := by
     rw [hz, ht2, hv, ← add_div]
+    apply (div_eq_iff hdne).mpr
     dsimp only [l]
-    field_simp
     ring
   have hinner : (star z * c).re = t * ‖c‖ := by
     have hh : star z * c = ((t * ‖c‖ : ℝ) : ℂ) := by
@@ -337,14 +335,19 @@ private theorem optimal_axis (c : ℂ) (r : ℝ) :
     calc
       s * t + v * r = (s + r ^ 2 / (2 * l)) * t := by dsimp only [v]; ring
       _ = (s + 4 * l * (l - s) / (2 * l)) * t := by rw [← hdisc]
-      _ = (2 * l - s) * t := by field_simp [hl.ne']; ring
+      _ = (2 * l - s) * t := by
+        have hh : 4 * l * (l - s) / (2 * l) = 2 * (l - s) := by
+          apply (div_eq_iff (mul_ne_zero (by norm_num) hl.ne')).mpr
+          ring
+        rw [hh]
+        ring
       _ = d * t := by dsimp only [l]; ring
   refine ⟨z, v, hunit, ?_⟩
   change _ = l
   rw [hdot, norm_mul, Complex.norm_of_nonneg (mul_nonneg hd0 ht), hz]
   calc
     d * t * t = d * t ^ 2 := by ring
-    _ = l := by rw [ht2]; field_simp
+    _ = l := by rw [ht2, mul_comm, div_mul_cancel₀ _ hdne]
 
 private def projector (z : ℂ) (v : ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
   !![(((1 + v) / 2 : ℝ) : ℂ), z / 2; star z / 2, (((1 - v) / 2 : ℝ) : ℂ)]
@@ -381,6 +384,7 @@ private theorem padded_measurement {n : ℕ} (hn : 2 ≤ n)
     rw [Finset.sum_const_zero, add_zero, hs]
   refine ⟨e, ⟨he, hsum⟩, ?_⟩
   unfold luders
+  unfold D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality.luders
   rw [Fin.sum_univ_succ, Fin.sum_univ_succ]
   change CFC.sqrt p * ρ * CFC.sqrt p + (CFC.sqrt q * ρ * CFC.sqrt q +
     ∑ _ : Fin m, CFC.sqrt (0 : Matrix (Fin 2) (Fin 2) ℂ) * ρ * CFC.sqrt 0) = _
@@ -511,8 +515,16 @@ private theorem maximal_gain (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity 
       · change ρ 1 1 = 1
         apply Complex.ext <;> simp only [Complex.one_re, Complex.one_im] <;> tauto
   · intro h
-    rw [coherence_two ρ hρ.1.isHermitian]
-    rcases h with rfl | rfl <;> unfold blochNorm <;> norm_num
+    rcases h with h | h
+    all_goals
+      have hc0 : l1Coherence ρ = 0 := by
+        rw [coherence_two ρ hρ.1.isHermitian, h]
+        norm_num
+      have hr1 : blochNorm ρ = 1 := by
+        rw [h]
+        unfold blochNorm
+        norm_num
+      linarith
 
 /-- The attained maximum over all finite qubit POVMs, with both extremal gain criteria. -/
 theorem result (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity ρ)
@@ -529,3 +541,4 @@ theorem result (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity ρ)
   exact measurement_bound ρ hρ f hf
 
 end D5.S3.Quantum.Measurement.LudersCoherenceCreationOptimum
+
