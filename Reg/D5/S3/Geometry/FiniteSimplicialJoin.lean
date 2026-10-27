@@ -26,7 +26,7 @@ structure Parameters where
 attribute [instance] Parameters.decV Parameters.decW Parameters.finV Parameters.finW
 
 abbrev signature : Signature where
-  Params := Parameters.{u,v}
+  Params := Parameters.{u, v}
   State p := Space p.M × Space p.N × unitInterval
   Role := Unit
   finiteRole := inferInstance
@@ -35,26 +35,26 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u,v} :=
+def actual : Realization signature.{u, v} :=
   realize signature (fun _ p s => representative p.M p.N s) (fun e => nomatch e)
 
-def rejected : Realization signature.{u,v} :=
+def rejected : Realization signature.{u, v} :=
   realize signature (fun _ _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature.{u,v}
-  Law R := ∀ p : Parameters.{u,v}, ∀ a b : signature.State p,
+  signature := signature.{u, v}
+  Law R := ∀ p : Parameters.{u, v}, ∀ a b : signature.State p,
     R.readout () p a = R.readout () p b ↔
       (ordinaryJoinSetoid (Space p.M) (Space p.N)).r a b
 
-private theorem bridge : (type_of% (@representative_eq_iff.{u,v})) ↔ arena.{u,v}.Law actual := by
+private theorem bridge : (type_of% (@representative_eq_iff.{u, v})) ↔ arena.{u, v}.Law actual := by
   constructor
   · intro h p a b
     exact h p.M p.N a b
   · intro h V W dv dw fv fw M N a b
     exact h ⟨V,W,dv,dw,fv,fw,M,N⟩ a b
 
-private abbrev testParameters : Parameters.{u,v} :=
+private abbrev testParameters : Parameters.{u, v} :=
   ⟨ULift.{u} Unit, ULift.{v} Unit, inferInstance, inferInstance,
     inferInstance, inferInstance, ⊤, ⊤⟩
 
@@ -68,36 +68,36 @@ private def testPoint (T : Type*) [Fintype T] [DecidableEq T] [Unique T] :
     · intro w hw
       exact (hw (by simp [Unique.eq_default w])).elim
 
-private def leftState : signature.{u,v}.State testParameters :=
+private def leftState : signature.{u, v}.State testParameters :=
   (testPoint _, testPoint _, 0)
 
-private def rightState : signature.{u,v}.State testParameters :=
+private def rightState : signature.{u, v}.State testParameters :=
   (testPoint _, testPoint _, 1)
 
-private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
+private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
   have hh := (h testParameters leftState rightState).mp rfl
   have ht := congrArg (fun t : unitInterval => (t : ℝ)) hh.1
   norm_num [leftState, rightState] at ht
 
-private theorem dependence : ObservationalDependence signature.{u,v} actual := by
+private theorem dependence : ObservationalDependence signature.{u, v} actual := by
   intro i
   refine ⟨testParameters, leftState, rightState, ?_⟩
   intro h
   have hc := congrFun h (Sum.inl (⟨()⟩ : ULift.{u} Unit))
   norm_num [actual, realize, representative, leftState, rightState, testPoint] at hc
 
-def family : Registration arena.{u,v} (type_of% (@representative_eq_iff.{u,v})) where
+def family : Registration arena.{u, v} (type_of% (@representative_eq_iff.{u, v})) where
   actual := actual
   bridge := bridge
-  variation := ⟨bridge.mp (@representative_eq_iff.{u,v}), rejected, rejected_law⟩
+  variation := ⟨bridge.mp (@representative_eq_iff.{u, v}), rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected,
     fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
     fun e => nomatch e⟩
   dependence := dependence
 
 def registration : LeanInformationAudit.Contract.Registration
-    (@representative_eq_iff.{u,v}) (Realization signature.{u,v}) Unit Unit where
+    (@representative_eq_iff.{u, v}) (Realization signature.{u, v}) Unit Unit where
   unitName := `Reg.D5.S3.Geometry.FiniteSimplicialJoin.__information_unit
   realizationName := `Reg.D5.S3.Geometry.FiniteSimplicialJoin.family
   realizationSource := none
@@ -138,14 +138,14 @@ def registration : LeanInformationAudit.Contract.Registration
 
 namespace Formula
 
-structure Parameters extends FiniteSimplicialJoin.Parameters.{u,v} where
+structure Parameters extends FiniteSimplicialJoin.Parameters.{u, v} where
   nonemptyM : Nonempty (Space M)
   nonemptyN : Nonempty (Space N)
   x : Space M
   y : Space N
 
 abbrev signature : Signature where
-  Params := Parameters.{u,v}
+  Params := Parameters.{u, v}
   State _ := unitInterval
   Role := Unit
   finiteRole := inferInstance
@@ -154,63 +154,65 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u,v} :=
+def actual : Realization signature.{u, v} :=
   realize signature (fun _ p s =>
     (joinHomeomorph p.M p.N p.nonemptyM p.nonemptyN (Quotient.mk _ (p.x,p.y,s))).val)
     (fun e => nomatch e)
 
-def rejected : Realization signature.{u,v} :=
+def rejected : Realization signature.{u, v} :=
   realize signature (fun _ _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature.{u,v}
-  Law R := ∀ p : Parameters.{u,v}, ∀ s : signature.State p,
+  signature := signature.{u, v}
+  Law R := ∀ p : Parameters.{u, v}, ∀ s : signature.State p,
     R.readout () p s = representative p.M p.N (p.x,p.y,s)
 
-private theorem bridge : (type_of% (@joinHomeomorph_apply.{u,v})) ↔ arena.{u,v}.Law actual := by
+private theorem bridge : (type_of% (@joinHomeomorph_apply.{u, v})) ↔ arena.{u, v}.Law actual := by
   constructor
   · intro h p s
     exact h p.M p.N p.nonemptyM p.nonemptyN p.x p.y s
   · intro h V W dv dw fv fw M N hM hN x y t
     exact h ⟨⟨V,W,dv,dw,fv,fw,M,N⟩,hM,hN,x,y⟩ t
 
-private def testParameters : Parameters.{u,v} :=
+private def testParameters : Parameters.{u, v} :=
   ⟨FiniteSimplicialJoin.testParameters, ⟨testPoint _⟩, ⟨testPoint _⟩,
     testPoint _, testPoint _⟩
 
-private def leftState : signature.{u,v}.State testParameters :=
+private def leftState : unitInterval :=
   0
 
-private def rightState : signature.{u,v}.State testParameters :=
+private def rightState : unitInterval :=
   1
 
-private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
+private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
   have hc := congrFun (h testParameters leftState)
     (Sum.inl (⟨()⟩ : ULift.{u} Unit))
-  norm_num [rejected, realize, representative, leftState, testParameters, testPoint] at hc
+  change (0 : ℝ) = (1 - (0 : ℝ)) * 1 at hc
+  norm_num at hc
 
-private theorem dependence : ObservationalDependence signature.{u,v} actual := by
+private theorem dependence : ObservationalDependence signature.{u, v} actual := by
   intro i
+  cases i
   refine ⟨testParameters, leftState, rightState, ?_⟩
   intro h
+  have ha := bridge.mp (@joinHomeomorph_apply.{u, v})
+  rw [ha testParameters leftState, ha testParameters rightState] at h
   have hc := congrFun h (Sum.inl (⟨()⟩ : ULift.{u} Unit))
-  change (joinHomeomorph _ _ _ _ (Quotient.mk _ (testParameters.x,testParameters.y,leftState))).val _ =
-    (joinHomeomorph _ _ _ _ (Quotient.mk _ (testParameters.x,testParameters.y,rightState))).val _ at hc
-  rw [joinHomeomorph_apply, joinHomeomorph_apply] at hc
-  norm_num [leftState, rightState, testParameters, testPoint] at hc
+  change (1 - (0 : ℝ)) * 1 = (1 - (1 : ℝ)) * 1 at hc
+  norm_num at hc
 
-def family : Registration arena.{u,v} (type_of% (@joinHomeomorph_apply.{u,v})) where
+def family : Registration arena.{u, v} (type_of% (@joinHomeomorph_apply.{u, v})) where
   actual := actual
   bridge := bridge
-  variation := ⟨bridge.mp (@joinHomeomorph_apply.{u,v}), rejected, rejected_law⟩
+  variation := ⟨bridge.mp (@joinHomeomorph_apply.{u, v}), rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected,
     fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
     fun e => nomatch e⟩
   dependence := dependence
 
 def registration : LeanInformationAudit.Contract.Registration
-    (@joinHomeomorph_apply.{u,v}) (Realization signature.{u,v}) Unit Unit where
+    (@joinHomeomorph_apply.{u, v}) (Realization signature.{u, v}) Unit Unit where
   unitName := `Reg.D5.S3.Geometry.FiniteSimplicialJoin.Formula.__information_unit
   realizationName := `Reg.D5.S3.Geometry.FiniteSimplicialJoin.Formula.family
   realizationSource := none
