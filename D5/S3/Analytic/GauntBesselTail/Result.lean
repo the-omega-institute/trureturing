@@ -16,8 +16,7 @@ expansion to frozen owners and pinned Mathlib; no calculus instantiation is
 claimed as independent content. The source conjecture is the admission basis.
 Frozen declaration keys (GID; full Lean name; declaration statement_id):
 B = D5/S3/Analytic/GammaGammaNBU/Result; D5.S3.Analytic.GammaGammaNBU.Result.besselK; sha256:5a3ca159aba2c04563f4a7b9beb0957d5c5ae45d4ba06ba9eaf010113202e223
-F = D5/S3/Zeros/Jensen/FactorialJensenKernelBound; D5.S3.Zeros.Jensen.FactorialJensenKernelBound.evenFactorialSum; sha256:262940885a557195dc39a65b8c64d69729b11766c1adb23ff10226ed527e1db3
-E = D5/S3/Zeros/Jensen/FactorialJensenKernelBound; D5.S3.Zeros.Jensen.FactorialJensenKernelBound.even_sum_le_cosh; sha256:d5c2bde58c99e2e549704f48f68a15c4b9dc14eff57c59e914b267cd074b8a4d
+G = D5/S3/TotalVariation/Asymptotics/GaussianCoshKernel; D5.S3.TotalVariation.Asymptotics.GaussianCoshKernel.cosh_quadratic_lower; sha256:80a491ec0d3c841ade74cee6cc8ea99c7f8c17ce9bbeed9404ffaf9c2d5f39ef
 All rows below use these exact identities, not module pins.
 Per declaration: name | proof_shape | frozen keys | escape_witness | consumers.
   alpha | bind-only (definition) | none | none | claim,result
@@ -32,44 +31,44 @@ Per declaration: name | proof_shape | frozen keys | escape_witness | consumers.
   positive_order_kernel | bind-only | none | none | strict_tail
   zero_order_kernel | bind-only | none | none | strict_tail
   parameters | bind-only | none | none | result
-  cosh_quadratic | bind-only | F,E | none | exponential_kernel_integrable,exponential_kernel_tendsto
-  exponential_kernel_integrable | bind-only | F,E | none | bessel_kernel_integrable,u_exponential_integrable
-  bessel_kernel_integrable | bind-only | F,E | none | bessel_cosh_integrable,bessel_hasDerivAt,bessel_bigO,bessel_ibp,H_integrable,J_eq,tail_identity,bessel_order_lt
-  bessel_cosh_integrable | bind-only | F,E | none | bessel_hasDerivAt,bessel_sinh_integrable,H_integrable,J_eq
-  bessel_hasDerivAt | bind-only | B,F,E | none | tail_integrable,weighted_bessel_tendsto,tail_identity
+  cosh_quadratic_lower | bind-only | G | none | exponential_kernel_integrable,exponential_kernel_tendsto
+  exponential_kernel_integrable | bind-only | G | none | bessel_kernel_integrable,u_exponential_integrable
+  bessel_kernel_integrable | bind-only | G | none | bessel_cosh_integrable,bessel_hasDerivAt,bessel_bigO,bessel_ibp,H_integrable,J_eq,tail_identity,bessel_order_lt
+  bessel_cosh_integrable | bind-only | G | none | bessel_hasDerivAt,bessel_sinh_integrable,H_integrable,J_eq
+  bessel_hasDerivAt | bind-only | B,G | none | tail_integrable,weighted_bessel_tendsto,tail_identity
   integral_decay | bind-only | none | none | bessel_bigO
-  bessel_bigO | bind-only | B,F,E | none | tail_integrable,weighted_bessel_tendsto
+  bessel_bigO | bind-only | B,G | none | tail_integrable,weighted_bessel_tendsto
   weighted_decay | bind-only | none | none | tail_integrable,weighted_bessel_tendsto
-  tail_integrable | bind-only | B,F,E | none | weighted_J_integrable,tail_identity
-  weighted_bessel_tendsto | bind-only | B,F,E | none | tail_identity
+  tail_integrable | bind-only | B,G | none | weighted_J_integrable,tail_identity
+  weighted_bessel_tendsto | bind-only | B,G | none | tail_identity
   abs_sinh_le_cosh | bind-only | none | none | bessel_sinh_integrable
-  bessel_sinh_integrable | bind-only | F,E | none | S_sinh_integrable
-  exponential_kernel_tendsto | bind-only | F,E | none | u_exponential_tendsto,S_kernel_tendsto
-  u_exponential_integrable | bind-only | F,E | none | S_sinh_integrable
-  u_exponential_tendsto | bind-only | F,E | none | S_kernel_tendsto
+  bessel_sinh_integrable | bind-only | G | none | S_sinh_integrable
+  exponential_kernel_tendsto | bind-only | G | none | u_exponential_tendsto,S_kernel_tendsto
+  u_exponential_integrable | bind-only | G | none | S_sinh_integrable
+  u_exponential_tendsto | bind-only | G | none | S_kernel_tendsto
   S | bind-only (definition) | none | none | S_deriv,S_sinh_integrable,S_kernel_tendsto,bessel_ibp,H,H_integrable,J_eq,strict_tail,H_negative_near
   S_deriv | bind-only | none | none | bessel_ibp,H_negative_near
-  S_sinh_integrable | bind-only | F,E | none | bessel_ibp,H_integrable,J_eq
-  S_kernel_tendsto | bind-only | F,E | none | bessel_ibp
-  bessel_ibp | bind-only | B,F,E | none | J_eq
+  S_sinh_integrable | bind-only | G | none | bessel_ibp,H_integrable,J_eq
+  S_kernel_tendsto | bind-only | G | none | bessel_ibp
+  bessel_ibp | bind-only | B,G | none | J_eq
   H | bind-only (definition) | none | none | J,H_integrable,J_eq,strict_tail,n_one_identity,H_negative_near,larger_order_failure
   J | bind-only (definition) | none | none | J_eq,weighted_J_integrable,tail_identity,strict_tail,n_one_identity,larger_order_failure
-  H_integrable | bind-only | F,E | none | strict_tail,larger_order_failure
-  J_eq | bind-only | B,F,E | none | weighted_J_integrable,tail_identity
-  weighted_J_integrable | bind-only | B,F,E | none | tail_identity,strict_tail,larger_order_failure
-  tail_identity | bind-only | B,F,E | none | strict_tail,n_one_identity,larger_order_failure
+  H_integrable | bind-only | G | none | strict_tail,larger_order_failure
+  J_eq | bind-only | B,G | none | weighted_J_integrable,tail_identity
+  weighted_J_integrable | bind-only | B,G | none | tail_identity,strict_tail,larger_order_failure
+  tail_identity | bind-only | B,G | none | strict_tail,n_one_identity,larger_order_failure
   integral_Ioi_pos | bind-only | none | none | strict_tail,larger_order_failure,bessel_order_lt
-  strict_tail | bind-only | B,F,E | none | result
-  n_one_identity | bind-only | B,F,E | none | result
+  strict_tail | bind-only | B,G | none | result
+  n_one_identity | bind-only | B,G | none | result
   laplace_negative | content | none | laplace_negative | larger_order_failure
   H_negative_near | bind-only | none | none | larger_order_failure
-  larger_order_failure | content | B,F,E | laplace_negative | result
-  bessel_order_lt | bind-only | B,F,E | none | result
-  result | content | B,F,E | laplace_negative | settling result
+  larger_order_failure | content | B,G | laplace_negative | result
+  bessel_order_lt | bind-only | B,G | none | result
+  result | content | B,G | laplace_negative | settling result
 -/
 
 import D5.S3.Analytic.GammaGammaNBU.Result
-import D5.S3.Zeros.Jensen.FactorialJensenKernelBound
+import D5.S3.TotalVariation.Asymptotics.GaussianCoshKernel
 import Mathlib.Analysis.SpecialFunctions.Gaussian.FourierTransform
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 
@@ -196,14 +195,6 @@ private lemma parameters {ν n : ℝ} (hn : n < 1)
   exact ⟨hdisc, by linarith, by linarith⟩
 
 
-private lemma cosh_quadratic (u : ℝ) : 1 + u ^ 2 / 2 ≤ cosh u := by
-  have h := D5.S3.Zeros.Jensen.FactorialJensenKernelBound.even_sum_le_cosh
-    2 (u ^ 2) (sq_nonneg u)
-  rw [sqrt_sq_eq_abs, cosh_abs] at h
-  norm_num [D5.S3.Zeros.Jensen.FactorialJensenKernelBound.evenFactorialSum,
-    Fin.sum_univ_two] at h
-  exact h
-
 private lemma exponential_kernel_integrable (z A : ℝ) (hz : 0 < z) :
     Integrable (fun u : ℝ => exp (-z * cosh u + A * u)) := by
   have hi := (integrable_cexp_quadratic (b := ((z / 2 : ℝ) : ℂ))
@@ -216,7 +207,8 @@ private lemma exponential_kernel_integrable (z A : ℝ) (hz : 0 < z) :
   filter_upwards with u
   rw [Real.norm_of_nonneg (exp_nonneg _)]
   apply exp_le_exp.mpr
-  have h := mul_le_mul_of_nonneg_left (cosh_quadratic u) hz.le
+  have h := mul_le_mul_of_nonneg_left
+    (D5.S3.TotalVariation.Asymptotics.GaussianCoshKernel.cosh_quadratic_lower u) hz.le
   nlinarith
 
 private lemma bessel_kernel_integrable (r z : ℝ) (hz : 0 < z) :
@@ -348,7 +340,8 @@ private lemma exponential_kernel_tendsto (z A : ℝ) (hz : 0 < z) :
   apply squeeze_zero_norm (fun u => ?_) ht
   rw [Real.norm_of_nonneg (exp_nonneg _)]
   apply exp_le_exp.mpr
-  nlinarith [mul_le_mul_of_nonneg_left (cosh_quadratic u) hz.le]
+  nlinarith [mul_le_mul_of_nonneg_left
+    (D5.S3.TotalVariation.Asymptotics.GaussianCoshKernel.cosh_quadratic_lower u) hz.le]
 
 private lemma u_exponential_integrable (z A : ℝ) (hz : 0 < z) :
     IntegrableOn (fun u : ℝ => u * exp (-z * cosh u + A * u)) (Ioi 0) := by

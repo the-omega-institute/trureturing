@@ -25,34 +25,13 @@ arXiv:1806.00524v2.
 
 ## Conjecture 2.4
 
-The following fragments are copied from the supplied text extraction:
+> “Conjecture 2.4. Let n < 1. For ν ≥ 1 − n + √(2(1 − n)), define α_{ν,n} := ν + n − √((ν + n)² − 2ν − 1). Then, for all x > 0,
+> ∫_x^∞ K_{ν+n}(t)/t^ν dt > K_{ν+n−α_{ν,n}}(x)/x^ν, ν ≥ 1 − n + √(2(1 − n)). (2.17)
+> We have equality in (2.17) when n = 1, and this equality is valid for all ν ∈ ℝ. Let α′_{ν,n} := ν + n + √((ν + n)² − 2ν − 1), so that ν + n − α′_{ν,n} = −(ν + n − α_{ν,n}) and thus K_{ν+n−α′_{ν,n}}(x) = K_{ν+n−α_{ν,n}}(x). Then, the index ν + n − α_{ν,n} (and equivalently ν + n − α′_{ν,n}) in inequality (2.17) is best possible, in the sense that, for any β ∉ {α_{ν,n}, α′_{ν,n}}, either K_{ν+n−β}(x)/x^ν < K_{ν+n−α_{ν,n}}(x)/x^ν for all x > 0, or there exists a y > 0 such that ∫_y^∞ K_{ν+n}(t)/t^ν dt < K_{ν+n−β}(y)/y^ν.”
 
-> Then, for all x > 0,
-
-> We have equality in (2.17)
-
-> in inequality (2.17) is best possible, in the sense that, for any
-
-The last fragment ends before the extracted beta symbol; the extraction
-breaks the displayed square roots and subscripts across lines. The complete
-mathematical statement, with those displays reconstructed, is as follows.
-For real $n<1$ and $\nu\ge1-n+\sqrt{2(1-n)}$, put
-
-$$p=\nu+n,\qquad
-\alpha_{\nu,n}=p-\sqrt{p^2-2\nu-1},\qquad
-\alpha'_{\nu,n}=p+\sqrt{p^2-2\nu-1}.$$
-
-For every $x>0$, the proposed strict inequality (2.17) is
-
-$$\int_x^\infty t^{-\nu}K_{\nu+n}(t)\,dt
->x^{-\nu}K_{\nu+n-\alpha_{\nu,n}}(x).$$
-
-At $n=1$ equality holds for every real $\nu$. The orders obtained from
-$\alpha$ and $\alpha'$ are negatives of one another and give the same
-Bessel function. For every other $\beta$, either
-$x^{-\nu}K_{p-\beta}(x)<x^{-\nu}K_{p-\alpha}(x)$ for every $x>0$,
-or there exists $y>0$ at which the tail is strictly smaller than
-$y^{-\nu}K_{p-\beta}(y)$.
+The quotation is the source statement. Lean uses the displayed definitions
+and formulas in the result Scribe to encode the same parameter range,
+inequality, equality case, and either/or optimality.
 
 The integral representation of $K$ is recorded separately in
 `D5/L/Asymptotics/nist2026dlmfbesselkintegral`, equation 10.32.9.

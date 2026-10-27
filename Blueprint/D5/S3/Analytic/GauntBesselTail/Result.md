@@ -52,7 +52,7 @@ $$claim = \left((\forall n \in \mathbb {R},\; \forall nu \in \mathbb {R},\; ((n 
 
 *Commentary.*
 
-Conjecture 2.4, manuscript page 7 of arXiv:1806.00524v2, contains the verbatim fragments: “Then, for all x > 0,”, “We have equality in (2.17)” and “in inequality (2.17) is best possible, in the sense that, for any”. The displayed square roots and subscripts are reconstructed in the formula above. The conjunction preserves the source parameter range, its strict inequality, the either/or optimality for every beta outside the two named shifts, and the n=1 equality for every real nu. The reused K is exactly the positive-argument integral representation in DLMF 10.32.9. The tail uses t^(−nu) on t>x>0.
+“Conjecture 2.4. Let n < 1. For ν ≥ 1 − n + √(2(1 − n)), define α_{ν,n} := ν + n − √((ν + n)² − 2ν − 1). Then, for all x > 0, ∫_x^∞ K_{ν+n}(t)/t^ν dt > K_{ν+n−α_{ν,n}}(x)/x^ν, ν ≥ 1 − n + √(2(1 − n)). (2.17) We have equality in (2.17) when n = 1, and this equality is valid for all ν ∈ ℝ. Let α′_{ν,n} := ν + n + √((ν + n)² − 2ν − 1), so that ν + n − α′_{ν,n} = −(ν + n − α_{ν,n}) and thus K_{ν+n−α′_{ν,n}}(x) = K_{ν+n−α_{ν,n}}(x). Then, the index ν + n − α_{ν,n} (and equivalently ν + n − α′_{ν,n}) in inequality (2.17) is best possible, in the sense that, for any β ∉ {α_{ν,n}, α′_{ν,n}}, either K_{ν+n−β}(x)/x^ν < K_{ν+n−α_{ν,n}}(x)/x^ν for all x > 0, or there exists a y > 0 such that ∫_y^∞ K_{ν+n}(t)/t^ν dt < K_{ν+n−β}(y)/y^ν.” Lean uses the displayed definitions and formulas above to encode this statement; the reused K is exactly the positive-argument integral representation in DLMF 10.32.9, and the tail uses t^(−ν) on t>x>0.
 
 **Theorem 1.5 (sinh gap pos).**
 
@@ -150,19 +150,7 @@ $$\forall nu \in \mathbb {R},\; \forall n \in \mathbb {R},\; (n < 1) \Rightarrow
 
 The source parameter range gives a nonnegative discriminant, q<nu and q+1<nu+n.
 
-**Theorem 1.13 (cosh quadratic).**
-
-$$\forall u \in \mathbb {R},\; 1 + \frac{(u)^{2}}{2} \le \operatorname {Real.cosh}\left(u\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/GauntBesselTail/Result.cosh_quadratic` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The even-factorial-sum bound at length two supplies the quadratic lower bound.
-
-**Theorem 1.14 (exponential kernel integrable).**
+**Theorem 1.13 (exponential kernel integrable).**
 
 $$\forall z \in \mathbb {R},\; \forall A \in \mathbb {R},\; (0 < z) \Rightarrow (\operatorname {MeasureTheory.Integrable}\left(u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-z \cdot \operatorname {Real.cosh}\left(u\right) + A \cdot u\right)\right))$$
 
@@ -174,7 +162,7 @@ $$\forall z \in \mathbb {R},\; \forall A \in \mathbb {R},\; (0 < z) \Rightarrow 
 
 A tilted integrable Gaussian dominates the exponential kernel on the whole real line.
 
-**Theorem 1.15 (bessel kernel integrable).**
+**Theorem 1.14 (bessel kernel integrable).**
 
 $$\forall r \in \mathbb {R},\; \forall z \in \mathbb {R},\; (0 < z) \Rightarrow (\operatorname {MeasureTheory.IntegrableOn}\left(u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(z \cdot \operatorname {Real.cosh}\left(u\right)\right)\right) \cdot \operatorname {Real.cosh}\left(r \cdot u\right), \operatorname {Set.Ioi}\left(0\right)\right))$$
 
@@ -186,7 +174,7 @@ $$\forall r \in \mathbb {R},\; \forall z \in \mathbb {R},\; (0 < z) \Rightarrow 
 
 Expand cosh as a sum of exponentials and apply Gaussian domination for both signs of the order.
 
-**Theorem 1.16 (bessel cosh integrable).**
+**Theorem 1.15 (bessel cosh integrable).**
 
 $$\forall r \in \mathbb {R},\; \forall z \in \mathbb {R},\; (0 < z) \Rightarrow (\operatorname {MeasureTheory.IntegrableOn}\left(u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(z \cdot \operatorname {Real.cosh}\left(u\right)\right)\right) \cdot \operatorname {Real.cosh}\left(u\right) \cdot \operatorname {Real.cosh}\left(r \cdot u\right), \operatorname {Set.Ioi}\left(0\right)\right))$$
 
@@ -198,7 +186,7 @@ $$\forall r \in \mathbb {R},\; \forall z \in \mathbb {R},\; (0 < z) \Rightarrow 
 
 The product of the two coshes is the half-sum of the adjacent-order coshes.
 
-**Theorem 1.17 (bessel hasDerivAt).**
+**Theorem 1.16 (bessel hasDerivAt).**
 
 $$\forall r \in \mathbb {R},\; \forall z \in \mathbb {R},\; (0 < z) \Rightarrow (\operatorname {HasDerivAt}\left(\operatorname {D5.S3.Analytic.GammaGammaNBU.Result.besselK}\left(r\right), -\operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}\left(\right), \operatorname {Set.Ioi}\left(0\right)\right), u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(z \cdot \operatorname {Real.cosh}\left(u\right)\right)\right) \cdot \operatorname {Real.cosh}\left(u\right) \cdot \operatorname {Real.cosh}\left(r \cdot u\right)\right), z\right))$$
 
@@ -210,7 +198,7 @@ $$\forall r \in \mathbb {R},\; \forall z \in \mathbb {R},\; (0 < z) \Rightarrow 
 
 Local domination with argument z/2 justifies differentiation under the integral.
 
-**Theorem 1.18 (integral decay).**
+**Theorem 1.17 (integral decay).**
 
 $$\forall f \in \mathbb {R} \to \mathbb {R},\; (\forall u \in \mathbb {R},\; (0 < u) \Rightarrow (0 \le \operatorname {f}\left(u\right))) \Rightarrow ((\forall z \in \mathbb {R},\; (0 < z) \Rightarrow (\operatorname {MeasureTheory.IntegrableOn}\left(u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(z \cdot \operatorname {Real.cosh}\left(u\right)\right)\right) \cdot \operatorname {f}\left(u\right), \operatorname {Set.Ioi}\left(0\right)\right))) \Rightarrow (\forall t \in \mathbb {R},\; (1 \le t) \Rightarrow (\operatorname {abs}\left(\operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}\left(\right), \operatorname {Set.Ioi}\left(0\right)\right), u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(t \cdot \operatorname {Real.cosh}\left(u\right)\right)\right) \cdot \operatorname {f}\left(u\right)\right)\right) \le \operatorname {Real.exp}\left(\frac{-t}{2}\right) \cdot \operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}\left(\right), \operatorname {Set.Ioi}\left(0\right)\right), u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(\frac{1}{2} \cdot \operatorname {Real.cosh}\left(u\right)\right)\right) \cdot \operatorname {f}\left(u\right)\right))))$$
 
@@ -222,7 +210,7 @@ $$\forall f \in \mathbb {R} \to \mathbb {R},\; (\forall u \in \mathbb {R},\; (0 
 
 For t≥1, cosh(u)≥1 splits off a uniform exp(−t/2) factor.
 
-**Theorem 1.19 (bessel bigO).**
+**Theorem 1.18 (bessel bigO).**
 
 $$\forall r \in \mathbb {R},\; \operatorname {Asymptotics.IsBigO}\left(\operatorname {Filter.atTop}\left(\right), \operatorname {D5.S3.Analytic.GammaGammaNBU.Result.besselK}\left(r\right), t: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\frac{t}{2}\right)\right)$$
 
@@ -234,7 +222,7 @@ $$\forall r \in \mathbb {R},\; \operatorname {Asymptotics.IsBigO}\left(\operator
 
 The positive Bessel kernel inherits the uniform exponential decay.
 
-**Theorem 1.20 (weighted decay).**
+**Theorem 1.19 (weighted decay).**
 
 $$\forall F \in \mathbb {R} \to \mathbb {R},\; (\operatorname {ContinuousOn}\left(F, \operatorname {Set.Ioi}\left(0\right)\right)) \Rightarrow ((\operatorname {Asymptotics.IsBigO}\left(\operatorname {Filter.atTop}\left(\right), F, t: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\frac{t}{2}\right)\right)) \Rightarrow (\forall nu \in \mathbb {R},\; \forall x \in \mathbb {R},\; (0 < x) \Rightarrow ((\operatorname {MeasureTheory.IntegrableOn}\left(t: \mathbb {R}\mapsto (t)^{-nu} \cdot \operatorname {F}\left(t\right), \operatorname {Set.Ioi}\left(x\right)\right)) \land (\operatorname {Filter.Tendsto}\left(t: \mathbb {R}\mapsto (t)^{-nu} \cdot \operatorname {F}\left(t\right), \operatorname {Filter.atTop}\left(\right), \operatorname {nhds}\left(0\right)\right)))))$$
 
@@ -246,7 +234,7 @@ $$\forall F \in \mathbb {R} \to \mathbb {R},\; (\operatorname {ContinuousOn}\lef
 
 Any real power times the exponentially decreasing function is integrable on every positive tail and tends to zero.
 
-**Theorem 1.21 (tail integrable).**
+**Theorem 1.20 (tail integrable).**
 
 $$\forall nu \in \mathbb {R},\; \forall r \in \mathbb {R},\; \forall x \in \mathbb {R},\; (0 < x) \Rightarrow (\operatorname {MeasureTheory.IntegrableOn}\left(t: \mathbb {R}\mapsto (t)^{-nu} \cdot \operatorname {D5.S3.Analytic.GammaGammaNBU.Result.besselK}\left(r, t\right), \operatorname {Set.Ioi}\left(x\right)\right))$$
 
@@ -258,7 +246,7 @@ $$\forall nu \in \mathbb {R},\; \forall r \in \mathbb {R},\; \forall x \in \math
 
 The weighted Bessel kernel satisfies the hypotheses of weighted_decay.
 
-**Theorem 1.22 (weighted bessel tendsto).**
+**Theorem 1.21 (weighted bessel tendsto).**
 
 $$\forall nu \in \mathbb {R},\; \forall r \in \mathbb {R},\; \operatorname {Filter.Tendsto}\left(t: \mathbb {R}\mapsto (t)^{-nu} \cdot \operatorname {D5.S3.Analytic.GammaGammaNBU.Result.besselK}\left(r, t\right), \operatorname {Filter.atTop}\left(\right), \operatorname {nhds}\left(0\right)\right)$$
 
@@ -270,7 +258,7 @@ $$\forall nu \in \mathbb {R},\; \forall r \in \mathbb {R},\; \operatorname {Filt
 
 The weighted Bessel function vanishes at positive infinity.
 
-**Theorem 1.23 (abs sinh le cosh).**
+**Theorem 1.22 (abs sinh le cosh).**
 
 $$\forall u \in \mathbb {R},\; \operatorname {abs}\left(\operatorname {Real.sinh}\left(u\right)\right) \le \operatorname {Real.cosh}\left(u\right)$$
 
@@ -282,7 +270,7 @@ $$\forall u \in \mathbb {R},\; \operatorname {abs}\left(\operatorname {Real.sinh
 
 Apply sinh(u)<cosh(u) at u and −u. This bounds the integration-by-parts kernel.
 
-**Theorem 1.24 (bessel sinh integrable).**
+**Theorem 1.23 (bessel sinh integrable).**
 
 $$\forall r \in \mathbb {R},\; \forall z \in \mathbb {R},\; (0 < z) \Rightarrow (\operatorname {MeasureTheory.IntegrableOn}\left(u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(z \cdot \operatorname {Real.cosh}\left(u\right)\right)\right) \cdot \operatorname {Real.sinh}\left(r \cdot u\right) \cdot \operatorname {Real.sinh}\left(u\right), \operatorname {Set.Ioi}\left(0\right)\right))$$
 
@@ -294,7 +282,7 @@ $$\forall r \in \mathbb {R},\; \forall z \in \mathbb {R},\; (0 < z) \Rightarrow 
 
 The absolute sinh product is bounded by the integrable cosh product.
 
-**Theorem 1.25 (exponential kernel tendsto).**
+**Theorem 1.24 (exponential kernel tendsto).**
 
 $$\forall z \in \mathbb {R},\; \forall A \in \mathbb {R},\; (0 < z) \Rightarrow (\operatorname {Filter.Tendsto}\left(u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-z \cdot \operatorname {Real.cosh}\left(u\right) + A \cdot u\right), \operatorname {Filter.atTop}\left(\right), \operatorname {nhds}\left(0\right)\right))$$
 
@@ -306,7 +294,7 @@ $$\forall z \in \mathbb {R},\; \forall A \in \mathbb {R},\; (0 < z) \Rightarrow 
 
 The same quadratic domination also proves pointwise decay at infinity.
 
-**Theorem 1.26 (u exponential integrable).**
+**Theorem 1.25 (u exponential integrable).**
 
 $$\forall z \in \mathbb {R},\; \forall A \in \mathbb {R},\; (0 < z) \Rightarrow (\operatorname {MeasureTheory.IntegrableOn}\left(u: \mathbb {R}\mapsto u \cdot \operatorname {Real.exp}\left(-z \cdot \operatorname {Real.cosh}\left(u\right) + A \cdot u\right), \operatorname {Set.Ioi}\left(0\right)\right))$$
 
@@ -318,7 +306,7 @@ $$\forall z \in \mathbb {R},\; \forall A \in \mathbb {R},\; (0 < z) \Rightarrow 
 
 The elementary bound u≤exp(u) absorbs the extra positive-domain factor.
 
-**Theorem 1.27 (u exponential tendsto).**
+**Theorem 1.26 (u exponential tendsto).**
 
 $$\forall z \in \mathbb {R},\; (0 < z) \Rightarrow (\operatorname {Filter.Tendsto}\left(u: \mathbb {R}\mapsto u \cdot \operatorname {Real.exp}\left(-\left(z \cdot \operatorname {Real.cosh}\left(u\right)\right)\right), \operatorname {Filter.atTop}\left(\right), \operatorname {nhds}\left(0\right)\right))$$
 
@@ -330,7 +318,7 @@ $$\forall z \in \mathbb {R},\; (0 < z) \Rightarrow (\operatorname {Filter.Tendst
 
 Absorb u into exp(u) and use the exponential-kernel limit.
 
-**Definition 1.28 (S).**
+**Definition 1.27 (S).**
 
 $$\forall r \in \mathbb {R},\; \forall u \in \mathbb {R},\; \operatorname {S}\left(r, u\right) = \operatorname {ite}\left(r = 0, u, \frac{\operatorname {Real.sinh}\left(r \cdot u\right)}{r}\right)$$
 
@@ -342,7 +330,7 @@ $$\forall r \in \mathbb {R},\; \forall u \in \mathbb {R},\; \operatorname {S}\le
 
 This continuous-order antiderivative treats r=0 separately.
 
-**Theorem 1.29 (S deriv).**
+**Theorem 1.28 (S deriv).**
 
 $$\forall r \in \mathbb {R},\; \forall u \in \mathbb {R},\; \operatorname {HasDerivAt}\left(\operatorname {S}\left(r\right), \operatorname {Real.cosh}\left(r \cdot u\right), u\right)$$
 
@@ -354,7 +342,7 @@ $$\forall r \in \mathbb {R},\; \forall u \in \mathbb {R},\; \operatorname {HasDe
 
 For every real r, the derivative in u of S_r is cosh(ru).
 
-**Theorem 1.30 (S sinh integrable).**
+**Theorem 1.29 (S sinh integrable).**
 
 $$\forall r \in \mathbb {R},\; \forall z \in \mathbb {R},\; (0 < z) \Rightarrow (\operatorname {MeasureTheory.IntegrableOn}\left(u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(z \cdot \operatorname {Real.cosh}\left(u\right)\right)\right) \cdot \operatorname {S}\left(r, u\right) \cdot \operatorname {Real.sinh}\left(u\right), \operatorname {Set.Ioi}\left(0\right)\right))$$
 
@@ -366,7 +354,7 @@ $$\forall r \in \mathbb {R},\; \forall z \in \mathbb {R},\; (0 < z) \Rightarrow 
 
 The nonzero-order case follows from the sinh-product bound; the zero-order case uses the extra-u envelope.
 
-**Theorem 1.31 (S kernel tendsto).**
+**Theorem 1.30 (S kernel tendsto).**
 
 $$\forall r \in \mathbb {R},\; \forall z \in \mathbb {R},\; (0 < z) \Rightarrow (\operatorname {Filter.Tendsto}\left(u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(z \cdot \operatorname {Real.cosh}\left(u\right)\right)\right) \cdot \operatorname {S}\left(r, u\right), \operatorname {Filter.atTop}\left(\right), \operatorname {nhds}\left(0\right)\right))$$
 
@@ -378,7 +366,7 @@ $$\forall r \in \mathbb {R},\; \forall z \in \mathbb {R},\; (0 < z) \Rightarrow 
 
 The boundary term in the hyperbolic integration by parts tends to zero.
 
-**Theorem 1.32 (bessel ibp).**
+**Theorem 1.31 (bessel ibp).**
 
 $$\forall r \in \mathbb {R},\; \forall z \in \mathbb {R},\; (0 < z) \Rightarrow (\operatorname {D5.S3.Analytic.GammaGammaNBU.Result.besselK}\left(r, z\right) = z \cdot \operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}\left(\right), \operatorname {Set.Ioi}\left(0\right)\right), u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(z \cdot \operatorname {Real.cosh}\left(u\right)\right)\right) \cdot \operatorname {S}\left(r, u\right) \cdot \operatorname {Real.sinh}\left(u\right)\right))$$
 
@@ -390,7 +378,7 @@ $$\forall r \in \mathbb {R},\; \forall z \in \mathbb {R},\; (0 < z) \Rightarrow 
 
 Differentiate exp(−z cosh u)S_r(u) and apply the fundamental theorem on the upper half-line.
 
-**Definition 1.33 (H).**
+**Definition 1.32 (H).**
 
 $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall r \in \mathbb {R},\; \forall u \in \mathbb {R},\; \operatorname {H}\left(nu, p, r, u\right) = \operatorname {Real.cosh}\left(p \cdot u\right) - \operatorname {Real.cosh}\left(r \cdot u\right) \cdot \operatorname {Real.cosh}\left(u\right) - nu \cdot \operatorname {S}\left(r, u\right) \cdot \operatorname {Real.sinh}\left(u\right)$$
 
@@ -402,7 +390,7 @@ $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall r \in \math
 
 The signed kernel measures the difference between the tail and its proposed lower expression.
 
-**Definition 1.34 (J).**
+**Definition 1.33 (J).**
 
 $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall r \in \mathbb {R},\; \forall t \in \mathbb {R},\; \operatorname {J}\left(nu, p, r, t\right) = \operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}\left(\right), \operatorname {Set.Ioi}\left(0\right)\right), u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(t \cdot \operatorname {Real.cosh}\left(u\right)\right)\right) \cdot \operatorname {H}\left(nu, p, r, u\right)\right)$$
 
@@ -414,7 +402,7 @@ $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall r \in \math
 
 J is the Laplace integral of the signed kernel.
 
-**Theorem 1.35 (H integrable).**
+**Theorem 1.34 (H integrable).**
 
 $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall r \in \mathbb {R},\; \forall t \in \mathbb {R},\; (0 < t) \Rightarrow (\operatorname {MeasureTheory.IntegrableOn}\left(u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(t \cdot \operatorname {Real.cosh}\left(u\right)\right)\right) \cdot \operatorname {H}\left(nu, p, r, u\right), \operatorname {Set.Ioi}\left(0\right)\right))$$
 
@@ -426,7 +414,7 @@ $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall r \in \math
 
 Each of the three terms is absolutely integrable.
 
-**Theorem 1.36 (J eq).**
+**Theorem 1.35 (J eq).**
 
 $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall r \in \mathbb {R},\; \forall t \in \mathbb {R},\; (0 < t) \Rightarrow (\operatorname {J}\left(nu, p, r, t\right) = \operatorname {D5.S3.Analytic.GammaGammaNBU.Result.besselK}\left(p, t\right) - \frac{\operatorname {D5.S3.Analytic.GammaGammaNBU.Result.besselK}\left(r + 1, t\right) + \operatorname {D5.S3.Analytic.GammaGammaNBU.Result.besselK}\left(r - 1, t\right)}{2} - \frac{nu}{t} \cdot \operatorname {D5.S3.Analytic.GammaGammaNBU.Result.besselK}\left(r, t\right))$$
 
@@ -438,7 +426,7 @@ $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall r \in \math
 
 The adjacent-order identity and integration by parts express J using ordinary Bessel functions.
 
-**Theorem 1.37 (weighted J integrable).**
+**Theorem 1.36 (weighted J integrable).**
 
 $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall r \in \mathbb {R},\; \forall x \in \mathbb {R},\; (0 < x) \Rightarrow (\operatorname {MeasureTheory.IntegrableOn}\left(t: \mathbb {R}\mapsto (t)^{-nu} \cdot \operatorname {J}\left(nu, p, r, t\right), \operatorname {Set.Ioi}\left(x\right)\right))$$
 
@@ -450,7 +438,7 @@ $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall r \in \math
 
 J_eq reduces this integrability to three weighted Bessel tails and one adjacent real power.
 
-**Theorem 1.38 (tail identity).**
+**Theorem 1.37 (tail identity).**
 
 $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall r \in \mathbb {R},\; \forall x \in \mathbb {R},\; (0 < x) \Rightarrow (\operatorname {tail}\left(nu, p, x\right) - (x)^{-nu} \cdot \operatorname {D5.S3.Analytic.GammaGammaNBU.Result.besselK}\left(r, x\right) = \operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}\left(\right), \operatorname {Set.Ioi}\left(x\right)\right), t: \mathbb {R}\mapsto (t)^{-nu} \cdot \operatorname {J}\left(nu, p, r, t\right)\right))$$
 
@@ -462,7 +450,7 @@ $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall r \in \math
 
 Differentiate x^(−nu)K_r(x), integrate its derivative on the positive upper half-line, and use its zero limit.
 
-**Theorem 1.39 (integral Ioi pos).**
+**Theorem 1.38 (integral Ioi pos).**
 
 $$\forall f \in \mathbb {R} \to \mathbb {R},\; \forall a \in \mathbb {R},\; (\operatorname {MeasureTheory.IntegrableOn}\left(f, \operatorname {Set.Ioi}\left(a\right)\right)) \Rightarrow ((\forall u \in \mathbb {R},\; (a < u) \Rightarrow (0 < \operatorname {f}\left(u\right))) \Rightarrow (0 < \operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}\left(\right), \operatorname {Set.Ioi}\left(a\right)\right), u: \mathbb {R}\mapsto \operatorname {f}\left(u\right)\right)))$$
 
@@ -474,7 +462,7 @@ $$\forall f \in \mathbb {R} \to \mathbb {R},\; \forall a \in \mathbb {R},\; (\op
 
 A positive integrand on an upper half-line has support of positive Lebesgue measure.
 
-**Theorem 1.40 (strict tail).**
+**Theorem 1.39 (strict tail).**
 
 $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall q \in \mathbb {R},\; \forall x \in \mathbb {R},\; (0 \le q) \Rightarrow ((q < nu) \Rightarrow (((p)^{2} = (q)^{2} + 2 \cdot nu + 1) \Rightarrow ((0 < x) \Rightarrow ((x)^{-nu} \cdot \operatorname {D5.S3.Analytic.GammaGammaNBU.Result.besselK}\left(q, x\right) < \operatorname {tail}\left(nu, p, x\right)))))$$
 
@@ -486,7 +474,7 @@ $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall q \in \math
 
 The strict scalar kernel comparison makes J positive, and tail_identity then gives the strict bound.
 
-**Theorem 1.41 (n one identity).**
+**Theorem 1.40 (n one identity).**
 
 $$\forall nu \in \mathbb {R},\; \forall x \in \mathbb {R},\; (0 < x) \Rightarrow (\operatorname {tail}\left(nu, nu + 1, x\right) = (x)^{-nu} \cdot \operatorname {D5.S3.Analytic.GammaGammaNBU.Result.besselK}\left(nu, x\right))$$
 
@@ -498,7 +486,7 @@ $$\forall nu \in \mathbb {R},\; \forall x \in \mathbb {R},\; (0 < x) \Rightarrow
 
 The addition formula makes H identically zero when p=nu+1 and r=nu, including nu=0 and negative nu.
 
-**Theorem 1.42 (laplace negative).**
+**Theorem 1.41 (laplace negative).**
 
 $$\forall f \in \mathbb {R} \to \mathbb {R},\; (\forall t \in \mathbb {R},\; (0 < t) \Rightarrow (\operatorname {MeasureTheory.IntegrableOn}\left(u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(t \cdot \operatorname {Real.cosh}\left(u\right)\right)\right) \cdot \operatorname {f}\left(u\right), \operatorname {Set.Ioi}\left(0\right)\right))) \Rightarrow (\forall delta \in \mathbb {R},\; (0 < delta) \Rightarrow ((\forall u \in \mathbb {R},\; (0 < u) \Rightarrow ((u < delta) \Rightarrow (\operatorname {f}\left(u\right) < 0))) \Rightarrow (\operatorname {Filter.Eventually}\left(t: \mathbb {R}\mapsto \operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}\left(\right), \operatorname {Set.Ioi}\left(0\right)\right), u: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(t \cdot \operatorname {Real.cosh}\left(u\right)\right)\right) \cdot \operatorname {f}\left(u\right)\right) < 0, \operatorname {Filter.atTop}\left(\right)\right))))$$
 
@@ -510,7 +498,7 @@ $$\forall f \in \mathbb {R} \to \mathbb {R},\; (\forall t \in \mathbb {R},\; (0 
 
 A negative interval next to the origin contributes at a slower exponential decay rate than the outer positive part. A fixed inner subinterval therefore forces a negative Laplace integral for every sufficiently large t.
 
-**Theorem 1.43 (H negative near).**
+**Theorem 1.42 (H negative near).**
 
 $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall q \in \mathbb {R},\; \forall r \in \mathbb {R},\; (0 \le q) \Rightarrow ((q < r) \Rightarrow (((p)^{2} = (q)^{2} + 2 \cdot nu + 1) \Rightarrow (\exists delta \in \mathbb {R},\; (0 < delta) \land (\forall u \in \mathbb {R},\; (0 < u) \Rightarrow ((u < delta) \Rightarrow (\operatorname {H}\left(nu, p, r, u\right) < 0))))))$$
 
@@ -522,7 +510,7 @@ $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall q \in \math
 
 At zero both H and its first derivative vanish, while its second derivative is q²−r²<0. The derivative test gives a negative right-hand interval.
 
-**Theorem 1.44 (larger order failure).**
+**Theorem 1.43 (larger order failure).**
 
 $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall q \in \mathbb {R},\; \forall r \in \mathbb {R},\; (0 \le q) \Rightarrow ((q < r) \Rightarrow (((p)^{2} = (q)^{2} + 2 \cdot nu + 1) \Rightarrow (\operatorname {Filter.Eventually}\left(x: \mathbb {R}\mapsto \operatorname {tail}\left(nu, p, x\right) < (x)^{-nu} \cdot \operatorname {D5.S3.Analytic.GammaGammaNBU.Result.besselK}\left(r, x\right), \operatorname {Filter.atTop}\left(\right)\right))))$$
 
@@ -534,7 +522,7 @@ $$\forall nu \in \mathbb {R},\; \forall p \in \mathbb {R},\; \forall q \in \math
 
 The local kernel sign and laplace_negative make J negative for all sufficiently large t. The tail identity proves failure at every sufficiently large x, stronger than a single positive witness.
 
-**Theorem 1.45 (bessel order lt).**
+**Theorem 1.44 (bessel order lt).**
 
 $$\forall a \in \mathbb {R},\; \forall b \in \mathbb {R},\; \forall x \in \mathbb {R},\; (\operatorname {abs}\left(a\right) < \operatorname {abs}\left(b\right)) \Rightarrow ((0 < x) \Rightarrow (\operatorname {D5.S3.Analytic.GammaGammaNBU.Result.besselK}\left(a, x\right) < \operatorname {D5.S3.Analytic.GammaGammaNBU.Result.besselK}\left(b, x\right)))$$
 
@@ -546,7 +534,7 @@ $$\forall a \in \mathbb {R},\; \forall b \in \mathbb {R},\; \forall x \in \mathb
 
 Strict increase of cosh in the absolute order and positive integration prove strict order monotonicity.
 
-**Theorem 1.46 (The sharp bound and its optimality).**
+**Theorem 1.45 (The sharp bound and its optimality).**
 
 $$claim$$
 
@@ -586,7 +574,6 @@ The strict bound follows from squared-order convexity and the exact tail identit
 - Truth anchor: `D5/S3/Analytic/GauntBesselTail/Result.bessel_order_lt`
 - Truth anchor: `D5/S3/Analytic/GauntBesselTail/Result.bessel_sinh_integrable`
 - Truth anchor: `D5/S3/Analytic/GauntBesselTail/Result.claim`
-- Truth anchor: `D5/S3/Analytic/GauntBesselTail/Result.cosh_quadratic`
 - Truth anchor: `D5/S3/Analytic/GauntBesselTail/Result.cosh_sqrt_deriv`
 - Truth anchor: `D5/S3/Analytic/GauntBesselTail/Result.cosh_sqrt_deriv2`
 - Truth anchor: `D5/S3/Analytic/GauntBesselTail/Result.cosh_sqrt_sq`
@@ -613,4 +600,4 @@ The strict bound follows from squared-order convexity and the exact tail identit
 - Truth anchor: `D5/S3/Analytic/GauntBesselTail/Result.weighted_decay`
 - Truth anchor: `D5/S3/Analytic/GauntBesselTail/Result.zero_order_kernel`
 - Dependency: [D5/S3/Analytic/GammaGammaNBU/Result](../GammaGammaNBU/Result.md)
-- Dependency: [D5/S3/Zeros/Jensen/FactorialJensenKernelBound](../../Zeros/Jensen/FactorialJensenKernelBound.md)
+- Dependency: [D5/S3/TotalVariation/Asymptotics/GaussianCoshKernel](../../TotalVariation/Asymptotics/GaussianCoshKernel.md)

@@ -15,29 +15,14 @@ url: https://arxiv.org/abs/1806.00524
 R. E. Gaunt, *Inequalities for some integrals involving modified Bessel
 functions*, Proc. Amer. Math. Soc. 147 (2019), 2937–2951,
 DOI 10.1090/proc/14433, arXiv:1806.00524v2, Conjecture 2.4,
-manuscript page 7. Verbatim fragments from the supplied text extraction:
+manuscript page 7. The source states:
 
-> Then, for all x > 0,
+> “Conjecture 2.4. Let n < 1. For ν ≥ 1 − n + √(2(1 − n)), define α_{ν,n} := ν + n − √((ν + n)² − 2ν − 1). Then, for all x > 0,
+> ∫_x^∞ K_{ν+n}(t)/t^ν dt > K_{ν+n−α_{ν,n}}(x)/x^ν, ν ≥ 1 − n + √(2(1 − n)). (2.17)
+> We have equality in (2.17) when n = 1, and this equality is valid for all ν ∈ ℝ. Let α′_{ν,n} := ν + n + √((ν + n)² − 2ν − 1), so that ν + n − α′_{ν,n} = −(ν + n − α_{ν,n}) and thus K_{ν+n−α′_{ν,n}}(x) = K_{ν+n−α_{ν,n}}(x). Then, the index ν + n − α_{ν,n} (and equivalently ν + n − α′_{ν,n}) in inequality (2.17) is best possible, in the sense that, for any β ∉ {α_{ν,n}, α′_{ν,n}}, either K_{ν+n−β}(x)/x^ν < K_{ν+n−α_{ν,n}}(x)/x^ν for all x > 0, or there exists a y > 0 such that ∫_y^∞ K_{ν+n}(t)/t^ν dt < K_{ν+n−β}(y)/y^ν.”
 
-> We have equality in (2.17)
-
-> in inequality (2.17) is best possible, in the sense that, for any
-
-The extraction splits the displayed square roots and subscripts. The
-complete mathematical statement, reconstructed outside the quotations,
-uses $n<1$, $\nu\ge1-n+\sqrt{2(1-n)}$ and
-
-$$p=\nu+n,\quad q=\sqrt{p^2-2\nu-1},\quad
-\alpha_{\nu,n}=p-q,\quad\alpha'_{\nu,n}=p+q.$$
-
-It asserts, for every $x>0$,
-
-$$T(x):=\int_x^\infty t^{-\nu}K_p(t)\,dt>x^{-\nu}K_q(x).$$
-
-For every $\beta\notin\{\alpha,\alpha'\}$, either
-$x^{-\nu}K_{p-\beta}(x)<x^{-\nu}K_q(x)$ for every positive $x$,
-or $T(y)<y^{-\nu}K_{p-\beta}(y)$ for some positive $y$.
-At $n=1$ equality holds for every real $\nu$.
+The quotation is the source statement. The Lean correspondence and its
+literal definitions are given below.
 
 ### Formal reading
 
@@ -126,7 +111,8 @@ $\nu_{\min}=1-n+\sqrt{2(1-n)}$. At
 $x\in\{0.01,0.1,0.5,1,2,5,10,20\}$ the 96 strict-bound readings
 have minimum relative gap approximately $2.324\times10^{-3}$.
 For $r=q+1$, all 48 relative gaps at $x\in\{50,100,200,400\}$
-are negative. At $n=1$, $\nu\in\{-0.7,0,0.5,3\}$ and
+were read as negative from the printed output. The script's exit code
+checks the sign only at $x=400$ for each of the 12 parameter pairs. At $n=1$, $\nu\in\{-0.7,0,0.5,3\}$ and
 $x\in\{0.3,1,4\}$, the maximum absolute residual is approximately
 $5.35\times10^{-51}$. These are finite-grid numerical results.
 
