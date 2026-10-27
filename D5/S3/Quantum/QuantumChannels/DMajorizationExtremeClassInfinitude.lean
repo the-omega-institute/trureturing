@@ -7,6 +7,7 @@
    digest: Infinitely many extreme classes for a two-dimensional D-majorization set. -/
 
 import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
+import D5.S3.QuantumBounds.CHSHWitness
 
 /-! The Gibbs-preserving image of a pure qubit has infinitely many extreme classes. -/
 
@@ -16,16 +17,13 @@ noncomputable section
 open scoped BigOperators ComplexOrder
 open Matrix
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
+open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsCPTP)
 
 namespace D5.S3.Quantum.QuantumChannels.DMajorizationExtremeClassInfinitude
 
-/-- A source quantum channel is a completely positive, trace-preserving linear map. -/
-def IsQuantumChannel {n : ℕ} (t : MatrixMap (Fin n) (Fin n) ℂ) : Prop :=
-  t.IsCompletelyPositive ∧ ∀ x, (t x).trace = x.trace
-
 /-- Matrix D-majorization by a channel fixing the positive diagonal matrix. -/
 def DMajorizedBy {n : ℕ} (d : Fin n → ℝ) (x a : Matrix (Fin n) (Fin n) ℂ) : Prop :=
-  ∃ t : MatrixMap (Fin n) (Fin n) ℂ, IsQuantumChannel t ∧ t a = x ∧
+  ∃ t : MatrixMap (Fin n) (Fin n) ℂ, IsCPTP t ∧ t a = x ∧
     t (diagonal (fun i => (d i : ℂ))) = diagonal (fun i => (d i : ℂ))
 
 /-- The set of matrices D-majorized by the specified initial matrix. -/
@@ -49,7 +47,7 @@ private def p (m : ℕ) : Matrix (Fin 2) (Fin 2) ℂ :=
      (m : ℂ) / ((m : ℂ)^2 + 1), 1 / ((m : ℂ)^2 + 1)]
 
 private lemma denominator_ne (m : ℕ) : (m : ℂ)^2 + 1 ≠ 0 := by
-  exact_mod_cast (show m^2 + 1 ≠ 0 by omega)
+  exact_mod_cast (Nat.succ_ne_zero (m^2))
 
 private def kraus (m : ℕ) : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ :=
   let r : ℂ := (Real.sqrt ((m : ℝ)^2 + 1) : ℂ)⁻¹
@@ -66,9 +64,8 @@ private lemma kraus_action (m : ℕ) (x : Matrix (Fin 2) (Fin 2) ℂ) :
     congr 1
     exact_mod_cast (Real.sq_sqrt (by positivity : 0 ≤ (m : ℝ)^2 + 1))
   have hs : ((Real.sqrt 2 : ℂ)⁻¹)^2 = (2 : ℂ)⁻¹ := by
-    rw [inv_pow]
-    congr 1
-    exact_mod_cast (Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2))
+    simpa only [pow_two] using
+      D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_inv_mul_self
   rw [MatrixMap.of_kraus]
   simp only [Fin.sum_univ_three, LinearMap.add_apply, LinearMap.coe_mk, AddHom.coe_mk]
   ext i j
@@ -172,15 +169,10 @@ private lemma pure_extreme (m : ℕ) :
     rw [← dotProduct_smul, ← dotProduct_smul, ← dotProduct_add,
       ← Matrix.smul_mulVec, ← Matrix.smul_mulVec, ← Matrix.add_mulVec, he, hpv]
     simp
-  have hxq := Complex.nonneg_iff.mp (hxpos.dotProduct_mulVec_nonneg v)
-  have hyq := Complex.nonneg_iff.mp (hypos.dotProduct_mulVec_nonneg v)
-  have hqr := congrArg Complex.re hq
-  simp only [Complex.add_re, Complex.smul_re, smul_eq_mul, Complex.zero_re] at hqr
   have hxzero : star v ⬝ᵥ x *ᵥ v = 0 := by
-    apply Complex.ext
-    · change (star v ⬝ᵥ x *ᵥ v).re = 0
-      nlinarith [mul_nonneg hs.le hyq.1]
-    · exact hxq.2.symm
+    exact (smul_eq_zero.mp ((add_eq_zero_iff_of_nonneg
+      (smul_nonneg hr.le (hxpos.dotProduct_mulVec_nonneg v))
+      (smul_nonneg hs.le (hypos.dotProduct_mulVec_nonneg v))).mp hq).1).resolve_left hr.ne'
   exact pure_rigidity m x hxpos hxtr (hxpos.dotProduct_mulVec_zero_iff.mp hxzero)
 
 private lemma invariant (y u : Matrix (Fin 2) (Fin 2) ℂ)
@@ -188,14 +180,10 @@ private lemma invariant (y u : Matrix (Fin 2) (Fin 2) ℂ)
     (hu : u * diagonal (fun i => (d i : ℂ)) = diagonal (fun i => (d i : ℂ)) * u) :
     (diagonal (fun i => (d i : ℂ)) * (u * y * star u)).trace =
       (diagonal (fun i => (d i : ℂ)) * y).trace := by
-  have hstar : star u * u = 1 := Matrix.mem_unitaryGroup_iff'.mp hunit
-  calc
-    _ = (diagonal (fun i => (d i : ℂ)) * u * y * star u).trace := by
-      simp only [Matrix.mul_assoc]
-    _ = (u * diagonal (fun i => (d i : ℂ)) * y * star u).trace := by rw [← hu]
-    _ = (star u * (u * diagonal (fun i => (d i : ℂ)) * y)).trace :=
-      Matrix.trace_mul_comm _ _
-    _ = _ := by rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hstar, Matrix.one_mul]
+  have h := Matrix.trace_units_conj (Unitary.toUnits ⟨u, hunit⟩)
+    (diagonal (fun i => (d i : ℂ)) * y)
+  change (u * (diagonal (fun i => (d i : ℂ)) * y) * star u).trace = _ at h
+  simpa only [← Matrix.mul_assoc, hu] using h
 
 private lemma invariant_injective :
     Function.Injective (fun m : ℕ => (diagonal (fun i => (d i : ℂ)) * p m).trace) := by
@@ -215,7 +203,7 @@ private lemma invariant_injective :
   have hc := (div_eq_div_iff (hd m) (hd k)).mp he
   have hs : (m : ℂ)^2 = (k : ℂ)^2 := by linear_combination -hc / 3
   have hn : m^2 = k^2 := by exact_mod_cast hs
-  nlinarith
+  exact Nat.pow_left_injective (by decide : 2 ≠ 0) hn
 
 /-- The two-dimensional counterexample has infinitely many extreme unitary classes. -/
 theorem result : ¬ claim := by
