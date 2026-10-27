@@ -1,0 +1,34 @@
+**Proposition 8.1.** The universal identities for $J^{2m-1}M$ have, up to scalar, functional $I-J$. Those for $MJ^{2m-1}$ have functional $M-JM$. Each exists. Neither word admits an all-input countable palette.
+
+**Proof.** For $J^{2m-1}M$, discard the exceptional last column. There are $m$ even and $m$ odd original clocks. Interpolate a degree-at-most-$(m-1)$ polynomial on each group. Their coefficient vectors are
+
+$$
+\beta+\delta e_0,\qquad \operatorname{tr}(JP)\beta+\delta e_0.
+$$
+
+Their difference is $(1-\operatorname{tr}(JP))\beta$, giving a fixed identity. For $MJ^{2m-1}$, discard the exceptional initial column and interpolate on the odd and even clocks in $1,\ldots,2m$. Their factors are $\operatorname{tr}(MP)$ and $\operatorname{tr}(JMP)$, giving $\operatorname{tr}((M-JM)P)\beta$.
+
+These exhaust the identities. In each case the two scalar trace functionals are independent, and the two Vandermonde blocks are invertible. A universal coefficient identity consequently forces each block map to be a scalar multiple of $I_m$. Applying drift annihilation to $e_0$ forces the two scalars to sum to zero. The exceptional column is zero and the functional lies in the remaining plane, as already proved.
+
+For $P=\left(\begin{smallmatrix}1-\theta&b\\c&\theta\end{smallmatrix}\right)$ with $bc=\theta(1-\theta)$, the first scale is $1-b-c$. Its zero set has $\{b,c\}=\{\theta,1-\theta\}$, since these are precisely the roots of $X^2-X+\theta(1-\theta)$. It is the union of the identical-row and identical-column source families. The second scale is $b-(1-\theta)$; rank one makes its zero set exactly the identical-column family. The maps succeed off these loci, but this does not imply full-domain success.
+
+For the palette obstruction use the actual legal family
+
+$$
+P(u)=\begin{pmatrix}u&u\\1-u&1-u\end{pmatrix},\qquad 0<u<1.
+\tag{8.1}
+$$
+
+On $J^{2m-1}M$ all trace factors are $1$ except the last, which is $1+u$. On $MJ^{2m-1}$ all factors are $2-u$ except clock zero, which is $1$. Thus the factor vector is $f(u)\mathbf1+(h(u)-f(u))e_r$, with $f>0$ and nonconstant $h/f$.
+
+If a fixed $C$ is collinear for every $(u,\beta,\delta)$ on this stratum, drift variation gives $C\mathbf1=0$, and its coefficient matrix is scalar for every $u$. That matrix is
+
+$$
+f(u)CV+(h(u)-f(u))(Ce_r)v_r^{\mathsf T},\qquad
+v_r^{\mathsf T}=(1,r,\ldots,r^{m-1}).
+$$
+
+Divide by $f(u)$ and compare two distinct values of $h/f$. The rank-at-most-one matrix $(Ce_r)v_r^{\mathsf T}$ must be scalar. Since $m\ge2$, it must be zero, and $Ce_r=0$. Then $CV=\lambda I_m$. But $Ve_0=\mathbf1$, so $\lambda e_0=C\mathbf1=0$ and $\lambda=0$. The output vanishes throughout the stratum.
+
+Every matrix successful anywhere on (8.1) therefore has a nonzero collinearity polynomial on the open domain $(0,1)\times(\mathbb R^m\setminus\{0\})\times\mathbb R$. The restricted covering principle of Section 3 excludes countable covering. This argument includes globally nonuniversal maps and every selector, not merely the displayed universal maps. $\square$
+
