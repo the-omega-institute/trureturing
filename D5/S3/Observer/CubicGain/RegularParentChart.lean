@@ -119,7 +119,7 @@ private theorem chart_analytic (x : ℝ × ℝ)
   apply AnalyticAt.prod (by fun_prop)
   apply AnalyticAt.pi
   intro i
-  fin_cases i <;> dsimp [Matrix.vecCons, Fin.cases]
+  fin_cases i <;> dsimp [Matrix.vecCons, Fin.cons, Fin.cases]
   all_goals fun_prop (disch := first | exact hj | exact hn | exact ht)
 
 /-- The lift contains every original parent world with the specified source.
@@ -147,13 +147,18 @@ theorem analytic_original_parent_chart (x : ℝ × ℝ)
   have wd : AnalyticAt ℝ (fun y => (chartWorld y).2.2.1) x := analyticAt_fst.comp wtail'
   have wcoeff := analyticAt_snd.comp wtail'
   have wa (i : Fin 4) : AnalyticAt ℝ (fun y => (chartWorld y).2.2.2 i) x :=
-    ((ContinuousLinearMap.proj (R := ℝ) i).analyticAt _).comp wcoeff
+    ((ContinuousLinearMap.proj (R := ℝ) (φ := fun _ : Fin 4 => ℝ) i).analyticAt _).comp
+      wcoeff
+  have wa0 := wa 0
+  have wa1 := wa 1
+  have wa2 := wa 2
+  have wa3 := wa 3
   refine ⟨encoded_parent _ (chart_parent x hr0 hr1 h0 hl),hworld,?_,?_,
     chart_unique x hl,encoded_response _,?_⟩
   · unfold chartSource sourceCoordinates
     apply AnalyticAt.pi
     intro i
-    fin_cases i <;> dsimp [Matrix.vecCons, Fin.cases]
+    fin_cases i <;> dsimp [Matrix.vecCons, Fin.cons, Fin.cases]
     all_goals fun_prop (disch := exact ne_of_gt h0)
   · unfold chartRead originalResponse originalRead originalPolynomial futureRead
     simp only [List.length_nil, Nat.cast_zero,add_zero]
