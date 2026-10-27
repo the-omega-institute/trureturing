@@ -1,0 +1,71 @@
+**Theorem 88.1 (entry acquisition, optional return and the actual bill).**
+Fix Definition 87.2's repair and deterministic rational pivot order.
+Choose $N$ independent rows of $O_FE$, ordered by epoch then allowed
+terminal. Let $R_e$ be their square matrix, with row labels $(j_i,v_i)$,
+and $H=\max_i j_i\le F$. An actual acquisition has
+
+$$
+y_i=e_{v_i}^{\mathsf T}B^{j_i}Ex,\qquad
+y=R_e x,\qquad x=R_e^{-1}y,\qquad d=B^HEx.
+\tag{88.1}
+$$
+
+It uses exactly $N$ Reads, $H$ Ticks and $H+1$ Holds, with no Add.
+It reports $x$ and installs the full predictor at $d$, its actual
+endpoint. If physical old-cell restoration is requested, a further
+$M$ allowed-terminal Adds, $L\le F$ Ticks and $L+1$ Holds end at
+$Ex$. Through restored handoff the counts are therefore
+
+$$
+(\operatorname{Read},\operatorname{Add},\operatorname{Tick},
+\operatorname{Hold})=(N,M,H+L,H+L+2),
+\tag{88.2}
+$$
+
+besides Definition 87.2's growth. No omitted label or Reset is used.
+Every exact arbitrary-entry reporter in this cleared installation needs
+at least $N$ scalar Reads on each terminating transcript, even with
+adaptive original growth and rational controls.
+
+**Proof.** Full rank of $O_F$ and injectivity of $E$ give rank $N$
+for $O_FE$. Geometry-only exact elimination therefore finds $R_e$.
+Actually Hold and Read the selected epoch-zero sites, then for each
+epoch $1,\ldots,H$ actually Tick; Hold and perform precisely its
+selected Reads. Read is nondestructive. The complete scalar replies
+are (88.1), and the plant really advances to $d$. Solve and install
+that current field while held, consuming every entire scalar and
+acknowledgement/Return transaction.
+
+For return select $M$ independent columns $B^{j_t}e_{v_t}$ from
+Theorem 87.3, form their invertible matrix $K$, and put
+
+$$
+L=\max_t j_t,\qquad c=K^{-1}(Ex-B^L d).
+\tag{88.3}
+$$
+
+At stage $a=0,\ldots,L$, actually Add every $c_t$ whose exponent
+is $j_t=L-a$, in a fixed order including zero operands; Hold; then
+Tick if $a<L$. Each injected operand undergoes exactly $j_t$ later
+Ticks. The real endpoint is
+
+$$
+B^Ld+\sum_t B^{j_t}e_{v_t}c_t=B^Ld+Kc=Ex.
+\tag{88.4}
+$$
+
+This is §84.2's existing forward-control procedure with the newly
+proved allowed set and horizon. It restores old physical values and
+puts zero on fresh cells; it undoes neither topology nor moved bindings.
+
+For scalar necessity use the frozen-affine-transcript argument of
+§§77.3,84.1 and NLBAII §61.2. On a terminating path with fewer than
+$N$ scalar replies, its homogeneous entry rows have nonzero rational
+common kernel $\eta$. Entries $x,x+\eta$ follow that same complete
+path: prior whole replies fix every next selector, operand, structural
+guard, frame and stopping decision. Adds are common translations;
+Ticks and zero-inclusions are linear. The required original reports
+differ. This is a contradiction for an exact reporter, independently
+of its final-current rank. Thus the $N$-Read coordinate is attained;
+no other optimum is inferred. $\square$
+

@@ -1,0 +1,16 @@
+**Definition 4.1 (the task actually excluded).** The two routes
+equated by (3.1) are: from a current cover point, sample a full
+source point using the same $\Lambda$ and evolve for elapsed $t$;
+or evolve the cover by $Q_t$ and apply that same $\Lambda$.
+Equality is for every bounded full-$G$ test, with the actual initial
+conditional law $\delta_e$. It is distributional recovery with
+continued Markov use, not merely output reproduction or deterministic
+selection of a representative of (2.3). The static forward maps,
+the inverse (1.6), the display-plus-sheet inverse of Proposition 2.2,
+and the lawful update square of Proposition 2.3 are positive
+correspondences on their stated images. Theorem 3.1 says that these
+correspondences cannot be completed by the stipulated full-source
+Markov reverse arrow. Its proof is direct on the native finite
+cover; failure of [N, Theorem 9.1] on the finer quotient retaining
+real $y,z$ would by itself give no implication for this coarser map.
+
