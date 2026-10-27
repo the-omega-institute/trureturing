@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Geometry.SingletonRetractionBasedInverse
 
+/-! A dependent-family audit of the complete based-inverse theorem telescope. -/
+
 noncomputable section
 
 open Set ContinuousMap
@@ -47,7 +49,8 @@ def actual : Realization signature.{u,v} :=
   realize signature (fun _ _ η => η.toContinuousMap) (fun e => nomatch e)
 
 def rejected : Realization signature.{u,v} :=
-  realize signature (fun _ _ η => ContinuousMap.const _ (η ⟨1 / 2, by norm_num⟩)) (fun e => nomatch e)
+  realize signature (fun _ _ η => ContinuousMap.const _ (η ⟨1 / 2, by norm_num⟩))
+    (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{u,v}
@@ -124,8 +127,16 @@ private def excursion : C(I, ULift.{v} I) :=
 
 private def excursionPath : signature.State sample.{u,v} where
   toContinuousMap := excursion
-  source' := by apply ULift.ext; apply Subtype.ext; norm_num [excursion, sample, transport]
-  target' := by apply ULift.ext; apply Subtype.ext; norm_num [excursion, sample]
+  source' := by
+    apply ULift.ext
+    apply Subtype.ext
+    change 1 - |2 * (0 : ℝ) - 1| = 0
+    norm_num
+  target' := by
+    apply ULift.ext
+    apply Subtype.ext
+    change 1 - |2 * (1 : ℝ) - 1| = 0
+    norm_num
 
 private def zeroPath : signature.State sample.{u,v} where
   toContinuousMap := ContinuousMap.const _ ⟨0⟩
@@ -137,7 +148,8 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   obtain ⟨E, A, hA⟩ := h sample excursionPath
   have he := (A.apply_zero sample.x).symm.trans (hA 0)
   have hh := congrArg (fun z : ULift.{v} I => (z.down : ℝ)) he
-  norm_num [rejected, realize, excursionPath, excursion, sample, transport] at hh
+  change (0 : ℝ) = 1 - |2 * (1 / 2 : ℝ) - 1| at hh
+  norm_num at hh
 
 def family : Registration arena.{u,v} (type_of% (@based_inverse.{u,v})) where
   actual := actual
@@ -152,7 +164,8 @@ def family : Registration arena.{u,v} (type_of% (@based_inverse.{u,v})) where
     intro h
     have hh := congrArg (fun f : C(I, ULift.{v} I) =>
       ((f ⟨1 / 2, by norm_num⟩).down : ℝ)) h
-    norm_num [actual, realize, zeroPath, excursionPath, excursion] at hh
+    change (0 : ℝ) = 1 - |2 * (1 / 2 : ℝ) - 1| at hh
+    norm_num at hh
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@based_inverse.{u,v}) (Realization signature.{u,v}) Unit Unit where

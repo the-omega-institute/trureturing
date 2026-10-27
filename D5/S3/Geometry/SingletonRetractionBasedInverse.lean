@@ -4,7 +4,7 @@
    mirror-E: none(waiver:singleton-retraction-based-inverse)
    anchors: [mathlib/module/Mathlib.Topology.Homotopy.Basic]
    utility: none
-   digest: Actual singleton-cylinder retractions straighten traces and produce both based inverse homotopies. -/
+   digest: Singleton-cylinder retractions construct both relative inverse homotopies. -/
 import Mathlib.Topology.Homotopy.Path
 import Mathlib.Topology.Piecewise
 import Mathlib.Tactic
@@ -48,8 +48,8 @@ private theorem geometry (q : I × I) :
     (rhoS q = 0 ∨ rhoT q = 0 ∨ rhoT q = 1) ∧
     depth q * rhoT q + (1 - depth q) / 2 = (q.1 : ℝ) ∧
     depth q * rhoS q + 2 * (1 - depth q) = (q.2 : ℝ) := by
-  have ht := q.1.property
-  have hs := q.2.property
+  obtain ⟨ht0, ht1⟩ := q.1.property
+  obtain ⟨hs0, hs1⟩ := q.2.property
   have hd : 1 / 2 ≤ depth q := (by linarith : (1 / 2 : ℝ) ≤ 1 - (q.2 : ℝ) / 2).trans
     (le_max_left _ _)
   have hd0 : 0 < depth q := by linarith
@@ -60,19 +60,19 @@ private theorem geometry (q : I × I) :
   have hrt : depth q * rhoT q + (1 - depth q) / 2 = (q.1 : ℝ) := by
     dsimp [rhoT]
     field_simp [ne_of_gt hd0]
-    <;> ring
+    ring
   have hrs : depth q * rhoS q + 2 * (1 - depth q) = (q.2 : ℝ) := by
     dsimp [rhoS]
     field_simp [ne_of_gt hd0]
-    <;> ring
+    ring
   have et : rhoT q = (depth q + 2 * (q.1 : ℝ) - 1) / (2 * depth q) := by
     unfold rhoT
     field_simp [ne_of_gt hd0]
-    <;> ring
+    ring
   have es : rhoS q = (2 * depth q + (q.2 : ℝ) - 2) / depth q := by
     unfold rhoS
     field_simp [ne_of_gt hd0]
-    <;> ring
+    ring
   have rt0 : 0 ≤ rhoT q := by rw [et]; exact div_nonneg (by linarith) (by positivity)
   have rt1 : rhoT q ≤ 1 := by
     rw [et]; apply (div_le_iff₀ (by positivity : 0 < 2 * depth q)).mpr; linarith
@@ -98,13 +98,13 @@ private theorem geometry (q : I × I) :
       exact (mul_eq_zero.mp hz).resolve_left (ne_of_gt hd0)
 
 private theorem depth_on_sides (q : I × I) (hq : q ∈ sides) : depth q = 1 := by
+  have habs : |2 * (q.1 : ℝ) - 1| ≤ 1 :=
+    abs_le.mpr ⟨by linarith [q.1.property.1], by linarith [q.1.property.2]⟩
+  have hbase : 1 - (q.2 : ℝ) / 2 ≤ 1 := by linarith [q.2.property.1]
   rcases hq with h | h | h
-  · simp [depth, h, max_eq_left (abs_le.mpr ⟨by linarith [q.1.property.1],
-      by linarith [q.1.property.2]⟩)]
-  · simp [depth, h, max_eq_right (by linarith [q.2.property.1] :
-      1 - (q.2 : ℝ) / 2 ≤ 1)]
-  · simp [depth, h, max_eq_right (by linarith [q.2.property.1] :
-      1 - (q.2 : ℝ) / 2 ≤ 1)]
+  · simpa [depth, h] using max_eq_left habs
+  · norm_num [depth, h, max_eq_right hbase]
+  · norm_num [depth, h, max_eq_right hbase]
 
 private def level (q : I × I) : I := ⟨1 - depth q, by
   obtain ⟨hd, hd1, _⟩ := geometry q
@@ -194,12 +194,15 @@ private theorem squareRaw_fixed (R : CylinderRetraction p) (z : Z × (I × I))
     have hr := R.fixed (z.1, 0) (Or.inl rfl)
     have ha : squareAmount R z = 0 := by simp [squareAmount, hl, hr]
     apply Prod.ext
-    · simpa [squareRaw, hl, hr]
+    · simp [squareRaw, hl, hr]
     · apply Prod.ext <;> apply Subtype.ext
       · simpa [squareRaw, squarePoint, ha, hd1] using hqt
       · simpa [squareRaw, squarePoint, ha, hd1] using hqs
   · have hr := R.fixed (z.1, level z.2) (Or.inr hp)
-    have ha : squareAmount R z = 1 - depth z.2 := by simp [squareAmount, hr, level]
+    have ha : squareAmount R z = 1 - depth z.2 := by
+      unfold squareAmount
+      rw [hr]
+      exact min_self _
     apply Prod.ext
     · simp [squareRaw, hr]
     · apply Prod.ext <;> apply Subtype.ext
@@ -258,7 +261,7 @@ private def extendPath [T1Space Z] (R : CylinderRetraction p)
     · simpa [ht] using hη.symm
     · rfl
 
-private def straightBoundary {a b : C(Z, W)} (p : Z) (w : W)
+private def straightBoundary {a b : C(Z, W)} (p : Z) (_w : W)
     (P : a.Homotopy b) (N : C(I × I, W)) : SquareBoundary p → W :=
   fun z => if z.val.2.2 = 0 then P (z.val.2.1, z.val.1)
     else if z.val.2.1 = 0 then a z.val.1
@@ -304,16 +307,22 @@ private theorem continuous_straightBoundary [T1Space Z] {a b : C(Z, W)}
     have hp : z.val.1 = p := hz
     dsimp [straightBoundary]
     split_ifs with hs ht ht
-    · simp [hs, hp, hN0]
-    · simp [hp, ht, hNl, ha]
-    · simp [hp, ht, hNr, hb]
+    · have he : z.val.2 = (z.val.2.1, 0) := Prod.ext rfl hs
+      rw [hp, he, hN0]
+    · have he : z.val.2 = (0, z.val.2.2) := Prod.ext ht rfl
+      rw [he, hNl, hp, ha]
+    · have he : z.val.2 = (1, z.val.2.2) := Prod.ext ht rfl
+      rw [he, hNr, hp, hb]
     · rfl
-  apply closed_pasting (A ∪ B ∪ C) D ((hA.union hB).union hC) hD
-    (by ext z; exact iff_true_intro (by rcases z.property with (h | h | h) | h
-                                     · exact Or.inl (Or.inl (Or.inl h))
-                                     · exact Or.inl (Or.inl (Or.inr h))
-                                     · exact Or.inl (Or.inr h)
-                                     · exact Or.inr h))
+  have hcover : (A ∪ B ∪ C) ∪ D = univ := by
+    ext z
+    apply iff_true_intro
+    rcases z.property with (h | h | h) | h
+    · exact Or.inl (Or.inl (Or.inl h))
+    · exact Or.inl (Or.inl (Or.inr h))
+    · exact Or.inl (Or.inr h)
+    · exact Or.inr h
+  apply closed_pasting (A ∪ B ∪ C) D ((hA.union hB).union hC) hD hcover
   · exact (hfA.union_of_isClosed hfB hA hB).union_of_isClosed hfC (hA.union hB) hC
   · exact hfD
 
@@ -344,10 +353,12 @@ private def straighten [T1Space Z] (R : CylinderRetraction p)
   · intro z
     rw [hE _ (Or.inl (Or.inr (Or.inr rfl)))]
     simp [straightBoundary]
-  · rintro t z (rfl : z = p)
+  · intro t z hz
+    have hz' : z = p := hz
+    subst z
     change E (p, (t, 1)) = a p
     rw [hE _ (Or.inr rfl)]
-    simp only [straightBoundary, one_ne_zero, if_false]
+    simp only [straightBoundary, one_ne_zero, ite_false]
     split_ifs with ht ht
     · rfl
     · exact hb.trans ha.symm
@@ -439,13 +450,14 @@ theorem based_inverse [T1Space X] [T1Space Y] (x : X) (y : Y)
     · simp only [Homotopy.symm_apply, Homotopy.compContinuousMap_apply, hF, hB]
       congr 1
       apply Subtype.ext
-      simp only [unitInterval.coe_symm_eq, backtrack, ContinuousMap.coe_mk, Subtype.coe_mk]
+      simp only [unitInterval.coe_symm_eq, backtrack, ContinuousMap.coe_mk]
       rw [abs_of_nonpos (by linarith)]
+      ring
     · change H (_, x) = H (backtrack t, x)
       congr 1
       apply Prod.ext
       · apply Subtype.ext
-        simp only [backtrack, ContinuousMap.coe_mk, Subtype.coe_mk]
+        simp only [backtrack, ContinuousMap.coe_mk]
         rw [abs_of_nonneg (by linarith)]
       · rfl
   let U : (G.comp F).HomotopyRel (ContinuousMap.id X) {x} :=
@@ -459,45 +471,46 @@ theorem based_inverse [T1Space X] [T1Space Y] (x : X) (y : Y)
   let C := F.comp G
   let J : (C.comp C).Homotopy C :=
     ((Homotopy.refl F).comp (U.toHomotopy.compContinuousMap G)).cast rfl rfl
-  let W : C.Homotopy (ContinuousMap.id Y) :=
-    ((V.compContinuousMap C).symm.cast rfl rfl |>.trans J).trans V
+  let Q : C.Homotopy (C.comp C) := (V.compContinuousMap C).symm.cast rfl rfl
+  let W : C.Homotopy (ContinuousMap.id Y) := (Q.trans J).trans V
   let δ : C(I, Y) := ⟨fun t => V (t, y), V.continuous.comp (by fun_prop)⟩
   have hC : C y = y := by simp [C, hG, hF]
-  have hδ0 : δ 0 = y := by simpa [δ] using hC
+  have hδ0 : δ 0 = y := (V.apply_zero y).trans hC
   have hδ1 : δ 1 = y := by simp [δ]
   have hJ (t : I) : J (t, y) = y := by
     change F (U (t, G y)) = y
     rw [hG, U.eq_snd t (mem_singleton x)]
     exact hF
+  have hQ (t : I) : Q (t, y) = δ (unitInterval.symm t) := by
+    change V (unitInterval.symm t, C y) = V (unitInterval.symm t, y)
+    rw [hC]
   have hW : ∀ t, W (t, y) = δ (pausedBacktrack t) := by
     intro t
-    rw [show W = ((V.compContinuousMap C).symm.cast rfl rfl |>.trans J).trans V from rfl,
-      Homotopy.trans_apply]
+    rw [show W = (Q.trans J).trans V from rfl, Homotopy.trans_apply]
     split_ifs with ht
     · rw [Homotopy.trans_apply]
       split_ifs with hu
-      · simp only [Homotopy.cast_apply, Homotopy.symm_apply,
-          Homotopy.compContinuousMap_apply, hC]
+      · rw [hQ]
         change δ _ = δ (pausedBacktrack t)
         congr 1
         apply Subtype.ext
-        simp only [unitInterval.coe_symm_eq, Subtype.coe_mk] at hu ⊢
-        simp only [pausedBacktrack, ContinuousMap.coe_mk, Subtype.coe_mk]
+        simp only [unitInterval.coe_symm_eq] at hu ⊢
+        simp only [pausedBacktrack, ContinuousMap.coe_mk]
         rw [max_eq_left (by linarith : (0 : ℝ) ≤ 1 - 4 * (t : ℝ)),
           max_eq_left (by linarith : 2 * (t : ℝ) - 1 ≤ 1 - 4 * (t : ℝ))]
         ring
       · rw [hJ]
         have he : pausedBacktrack t = 0 := by
           apply Subtype.ext
-          simp only [Subtype.coe_mk] at hu
-          simp only [pausedBacktrack, ContinuousMap.coe_mk, Subtype.coe_mk]
+          simp only [pausedBacktrack, ContinuousMap.coe_mk]
           rw [max_eq_right (by linarith : 1 - 4 * (t : ℝ) ≤ 0),
             max_eq_left (by linarith : 2 * (t : ℝ) - 1 ≤ 0)]
+          rfl
         simpa [he] using hδ0.symm
     · change δ _ = δ (pausedBacktrack t)
       congr 1
       apply Subtype.ext
-      simp only [pausedBacktrack, ContinuousMap.coe_mk, Subtype.coe_mk]
+      simp only [pausedBacktrack, ContinuousMap.coe_mk]
       rw [max_eq_right (by linarith : 1 - 4 * (t : ℝ) ≤ 0),
         max_eq_right (by linarith : (0 : ℝ) ≤ 2 * (t : ℝ) - 1)]
   let T : C.HomotopyRel (ContinuousMap.id Y) {y} :=
