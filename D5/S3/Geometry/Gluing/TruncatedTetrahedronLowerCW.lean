@@ -55,7 +55,6 @@ private theorem twoCoords_sum (ij : {ij : Fin 4 × Fin 4 // ij.1 ≠ ij.2}) (r :
   rw [he,Finset.sum_add_distrib]
   simp
 
-
 /-- The closed retained halfedge in the original four coordinates. -/
 def halfPoint (h : HalfOccurrence T) (r : Set.Icc (1 / 2 : ℝ) (3 / 4)) : TruncatedPoint T :=
   (h.1, ⟨twoCoords h.2 r.val, (by
@@ -242,7 +241,6 @@ def halfCell (P : RawFacePairing T) (v : OldVertex P) :
 private theorem halfCell_coe (P : RawFacePairing T) (v : OldVertex P) (x : Disk 1) :
     halfCell P v x.val = q P (halfPoint v.out (halfParameter x)) := diskExtend_coe _ x
 
-
 open private paired_twice from D5.S3.Geometry.Gluing.RawFaceLinkPathConnected
 
 /-- The cap corner and the original zero face determine a cap-edge occurrence. -/
@@ -426,7 +424,6 @@ def capCell (P : RawFacePairing T) (e : CapEdge P) :
 private theorem capCell_coe (P : RawFacePairing T) (e : CapEdge P) (x : Disk 1) :
     capCell P e x.val = q P (capPoint e.out x) := diskExtend_coe _ x
 
-
 def vertexPoint (P : RawFacePairing T) : Vertex P → TruncatedQuotient P
   | .inl v => Quotient.lift (fun h => q P (oldPoint h)) (fun _ _ h => h) v
   | .inr v => Quotient.lift (fun h => q P (midPoint h)) (fun _ _ h => h) v
@@ -467,7 +464,8 @@ def vertexCell (P : RawFacePairing T) (v : Vertex P) :
     (fun _ _ _ _ => Subsingleton.elim _ _)
 
 private theorem vertexCell_coe (P : RawFacePairing T) (v : Vertex P) (x : Disk 0) :
-    vertexCell P v x.val = vertexPoint P v := diskExtend_coe _ x
+    vertexCell P v x.val = vertexPoint P v :=
+  diskExtend_coe (fun _ : Disk 0 => vertexPoint P v) x
 
 private theorem vertexCell_image (P : RawFacePairing T) (v : Vertex P) :
     vertexCell P v '' closedBall 0 1 = {vertexPoint P v} := by
@@ -612,13 +610,15 @@ private theorem lower_source (P : RawFacePairing T) (n : ℕ) (i : LowerCell P n
 private theorem lower_continuousOn (P : RawFacePairing T) (n : ℕ) (i : LowerCell P n) :
     ContinuousOn (lowerMap P n i) (closedBall 0 1) := by
   rcases i with ⟨v,h⟩ | ⟨e,h⟩ <;> subst n
-  · exact diskPartial_continuousOn _ _ _
+  · exact diskPartial_continuousOn (fun _ : Disk 0 => vertexPoint P v) continuous_const
+      (fun _ _ _ _ => Subsingleton.elim _ _)
   · cases e <;> exact diskPartial_continuousOn _ _ _
 
 private theorem lower_continuousOn_symm (P : RawFacePairing T) (n : ℕ) (i : LowerCell P n) :
     ContinuousOn (lowerMap P n i).symm (lowerMap P n i).target := by
   rcases i with ⟨v,h⟩ | ⟨e,h⟩ <;> subst n
-  · exact diskPartial_continuousOn_symm _ _ _
+  · exact diskPartial_continuousOn_symm (fun _ : Disk 0 => vertexPoint P v) continuous_const
+      (fun _ _ _ _ => Subsingleton.elim _ _)
   · cases e <;> exact diskPartial_continuousOn_symm _ _ _
 
 private theorem lower_pairwiseDisjoint (P : RawFacePairing T) :
@@ -712,14 +712,14 @@ private theorem capPoint_endpoint (c : CapOccurrence T) (x : Disk 1)
     funext i
     obtain ⟨k,rfl⟩ := (capFrame c.2).surjective i
     rw [capPoint_at]
-    fin_cases k <;> simp [h,oldPoint,halfPoint,twoCoords,capCoords,hx,Equiv.apply_eq_iff_eq]
+    fin_cases k <;> norm_num [h,oldPoint,halfPoint,twoCoords,capCoords,hx,Equiv.apply_eq_iff_eq]
   · let h : HalfOccurrence T := (c.1,⟨(capFrame c.2 0,capFrame c.2 3),
       fun he => (by decide : (0 : Fin 4) ≠ 3) ((capFrame c.2).injective he)⟩)
     refine ⟨h,Prod.ext rfl (Subtype.ext ?_)⟩
     funext i
     obtain ⟨k,rfl⟩ := (capFrame c.2).surjective i
     rw [capPoint_at]
-    fin_cases k <;> simp [h,oldPoint,halfPoint,twoCoords,capCoords,hx,Equiv.apply_eq_iff_eq]
+    fin_cases k <;> norm_num [h,oldPoint,halfPoint,twoCoords,capCoords,hx,Equiv.apply_eq_iff_eq]
 
 private theorem edge_sphere (P : RawFacePairing T) (e : Edge P) :
     MapsTo (edgeCell P e) (sphere 0 1) (Set.range (vertexPoint P)) := by
@@ -759,7 +759,9 @@ private theorem lower_mapsTo (P : RawFacePairing T) (n : ℕ) (i : LowerCell P n
   rcases i with ⟨v,h⟩ | ⟨e,h⟩ <;> subst n
   · intro x hx
     have hx0 : x = 0 := Subsingleton.elim _ _
-    simpa [hx0] using hx
+    have hn : ‖x‖ = 0 := norm_eq_zero.mpr hx0
+    have hs : ‖x‖ = 1 := mem_sphere_zero_iff_norm.mp hx
+    linarith
   · intro x hx
     obtain ⟨v,hv⟩ := edge_sphere P e hx
     refine mem_iUnion.mpr ⟨0,mem_iUnion.mpr ⟨by omega,mem_iUnion.mpr ⟨.inl ⟨v,rfl⟩,?_⟩⟩⟩
@@ -781,5 +783,201 @@ private theorem lowerCW_finite (P : RawFacePairing T) :
     (lower_eventually_empty P) (lower_finite_cell P) (lower_source P)
     (lower_continuousOn P) (lower_continuousOn_symm P) (lower_pairwiseDisjoint P)
     (lower_mapsTo P) (lower_union P)
+
+/-- The full original coordinate edge locus, before applying the original quotient map. -/
+def originalEdges : Set (TruncatedPoint T) := {a |
+  (∃ i j : Fin 4, i ≠ j ∧ a.2.val i = 0 ∧ a.2.val j = 0) ∨
+  (∃ u f : Fin 4, u ≠ f ∧ a.2.val u = 3 / 4 ∧ a.2.val f = 0)}
+
+private theorem capPoint_surjective (c : CapOccurrence T) (a : TruncatedPoint T)
+    (ht : a.1 = c.1) (hu : a.2.val c.2.val.1 = 3 / 4) (hf : a.2.val c.2.val.2 = 0) :
+    ∃ x : Disk 1, capPoint c x = a := by
+  let e := capFrame c.2
+  have hs : a.2.val (e 2) + a.2.val (e 3) = 1 / 4 := by
+    have hh := (e.sum_comp a.2.val).trans a.2.property.2
+    rw [Fin.sum_univ_four,show e 0 = c.2.val.1 from (capFrame_values c.2).1,
+      show e 1 = c.2.val.2 from (capFrame_values c.2).2,hu,hf] at hh
+    linarith
+  have h2 := (a.2.property.1 (e 2)).1
+  have h3 := (a.2.property.1 (e 3)).1
+  let x : Disk 1 := ⟨fun _ => 8*a.2.val (e 2)-1, by
+    apply mem_closedBall_zero_iff.mpr
+    apply (pi_norm_le_iff_of_nonneg (by norm_num : (0 : ℝ) ≤ 1)).mpr
+    intro i
+    apply abs_le.mpr
+    constructor <;> linarith⟩
+  refine ⟨x,Prod.ext ht.symm (Subtype.ext ?_)⟩
+  funext i
+  obtain ⟨k,rfl⟩ := e.surjective i
+  rw [capPoint_at]
+  fin_cases k
+  · simpa [e,capCoords,(capFrame_values c.2).1] using hu.symm
+  · simpa [e,capCoords,(capFrame_values c.2).2] using hf.symm
+  · dsimp [capCoords,x]
+    ring
+  · dsimp [capCoords,x]
+    linarith
+
+private theorem halfPoint_surjective (a : TruncatedPoint T) (i j : Fin 4)
+    (hij : i ≠ j) (hi : a.2.val i = 0) (hj : a.2.val j = 0) :
+    ∃ (h : HalfOccurrence T) (r : Set.Icc (1 / 2 : ℝ) (3 / 4)), halfPoint h r = a := by
+  let e := capFrame ⟨(i,j),hij⟩
+  have he0 : e 0 = i := (capFrame_values ⟨(i,j),hij⟩).1
+  have he1 : e 1 = j := (capFrame_values ⟨(i,j),hij⟩).2
+  have hs : a.2.val (e 2) + a.2.val (e 3) = 1 := by
+    have hh := (e.sum_comp a.2.val).trans a.2.property.2
+    rw [Fin.sum_univ_four,he0,he1,hi,hj] at hh
+    linarith
+  have construct (p q : Fin 4) (hpq : p ≠ q) (hpi : p ≠ i) (hpj : p ≠ j)
+      (hqi : q ≠ i) (hqj : q ≠ j) (hsum : a.2.val p + a.2.val q = 1)
+      (hp : 1 / 2 ≤ a.2.val p) : ∃ (h : HalfOccurrence T)
+      (r : Set.Icc (1 / 2 : ℝ) (3 / 4)), halfPoint h r = a := by
+    let h : HalfOccurrence T := (a.1,⟨(p,q),hpq⟩)
+    let r : Set.Icc (1 / 2 : ℝ) (3 / 4) := ⟨a.2.val p,hp,(a.2.property.1 p).2⟩
+    refine ⟨h,r,Prod.ext rfl (Subtype.ext ?_)⟩
+    funext k
+    have hall : k = p ∨ k = q ∨ k = i ∨ k = j := by
+      have ht : ({p,q,i,j} : Finset (Fin 4)).card = 4 := by
+        simp [hpq,hpi,hpj,hqi,hqj,hij]
+      have hu : ({p,q,i,j} : Finset (Fin 4)) = Finset.univ :=
+        Finset.eq_univ_of_card ht
+      have hm : k ∈ ({p,q,i,j} : Finset (Fin 4)) := by rw [hu]; simp
+      simpa using hm
+    rcases hall with rfl | rfl | rfl | rfl
+    · simp [h,r,halfPoint,twoCoords]
+    · simp [h,r,halfPoint,twoCoords,Ne.symm hpq]; linarith
+    · simp [h,r,halfPoint,twoCoords,Ne.symm hpi,Ne.symm hqi,hi]
+    · simp [h,r,halfPoint,twoCoords,Ne.symm hpj,Ne.symm hqj,hj]
+  have hneq (k l : Fin 4) (h : k ≠ l) : e k ≠ e l := fun he => h (e.injective he)
+  by_cases h : 1 / 2 ≤ a.2.val (e 2)
+  · exact construct (e 2) (e 3) (hneq _ _ (by decide))
+      (he0 ▸ hneq 2 0 (by decide)) (he1 ▸ hneq 2 1 (by decide))
+      (he0 ▸ hneq 3 0 (by decide)) (he1 ▸ hneq 3 1 (by decide)) hs h
+  · exact construct (e 3) (e 2) (hneq _ _ (by decide))
+      (he0 ▸ hneq 3 0 (by decide)) (he1 ▸ hneq 3 1 (by decide))
+      (he0 ▸ hneq 2 0 (by decide)) (he1 ▸ hneq 2 1 (by decide)) (by linarith) (by linarith)
+
+private theorem halfPoint_mem_originalEdges (h : HalfOccurrence T)
+    (r : Set.Icc (1 / 2 : ℝ) (3 / 4)) : halfPoint h r ∈ originalEdges := by
+  let e := capFrame h.2
+  have hneq (k l : Fin 4) (hl : k ≠ l) : e k ≠ e l := fun he => hl (e.injective he)
+  left
+  refine ⟨e 2,e 3,hneq _ _ (by decide),?_,?_⟩
+  all_goals apply (half_zero_iff h r _).mpr
+  · exact ⟨(capFrame_values h.2).1 ▸ hneq 2 0 (by decide),
+      (capFrame_values h.2).2 ▸ hneq 2 1 (by decide)⟩
+  · exact ⟨(capFrame_values h.2).1 ▸ hneq 3 0 (by decide),
+      (capFrame_values h.2).2 ▸ hneq 3 1 (by decide)⟩
+
+private theorem halfPoint_mem_skeleton (P : RawFacePairing T) (h : HalfOccurrence T)
+    (r : Set.Icc (1 / 2 : ℝ) (3 / 4)) : q P (halfPoint h r) ∈ edgeSkeleton P := by
+  let v : OldVertex P := Quotient.mk (oldSetoid P) h
+  have hv : q P (oldPoint v.out) = q P (oldPoint h) :=
+    Quotient.exact (s := oldSetoid P) (Quotient.out_eq v)
+  let x : Disk 1 := ⟨fun _ => 8*r.val-5,by
+    apply mem_closedBall_zero_iff.mpr
+    apply (pi_norm_le_iff_of_nonneg (by norm_num : (0 : ℝ) ≤ 1)).mpr
+    intro i
+    apply abs_le.mpr
+    constructor <;> linarith [r.property.1,r.property.2]⟩
+  have hp : halfParameter x = r := Subtype.ext (by dsimp [halfParameter,x]; ring)
+  right
+  refine mem_iUnion.mpr ⟨.inl v,x.val,x.property,?_⟩
+  change halfCell P v x.val = _
+  rw [halfCell_coe,hp]
+  exact half_transport P v.out h hv r
+
+private theorem capPoint_mem_skeleton (P : RawFacePairing T) (c : CapOccurrence T) (a : TruncatedPoint T)
+    (ht : a.1 = c.1) (hu : a.2.val c.2.val.1 = 3 / 4) (hf : a.2.val c.2.val.2 = 0) :
+    q P a ∈ edgeSkeleton P := by
+  let e : CapEdge P := Quotient.mk (capSetoid P) c
+  have he : c = e.out ∨ c = capMate P e.out := Quotient.exact (Quotient.out_eq e)
+  have include (b : TruncatedPoint T) (hb : b.1 = e.out.1)
+      (hu : b.2.val e.out.2.val.1 = 3 / 4) (hf : b.2.val e.out.2.val.2 = 0) :
+      q P b ∈ edgeSkeleton P := by
+    obtain ⟨x,rfl⟩ := capPoint_surjective e.out b hb hu hf
+    right
+    exact mem_iUnion.mpr ⟨.inr e,x.val,x.property,capCell_coe P e x⟩
+  rcases he with he | he
+  · subst c
+    exact include a ht hu hf
+  · let b := truncatedMove P c.2.val.2 a
+    have hab : q P a = q P b := Quotient.sound
+      (s := Relation.EqvGen.setoid (TruncatedStep P)) (Relation.EqvGen.rel _ _ ⟨c.2.val.2,hf,rfl⟩)
+    rw [hab]
+    have hm : capMate P c = e.out := by rw [he,capMate_twice]
+    have htag : (a.1,c.2.val.2) = (c.1,c.2.val.2) := congrArg (fun t => (t,c.2.val.2)) ht
+    apply include b
+    · change (P.facePair (a.1,c.2.val.2)).1 = e.out.1
+      rw [htag]
+      exact congrArg Prod.fst hm
+    · have hu' := congrArg (fun d : CapOccurrence T => d.2.val.1) hm
+      change sigma P (c.1,c.2.val.2) c.2.val.1 = e.out.2.val.1 at hu'
+      change a.2.val ((sigma P (a.1,c.2.val.2)).symm e.out.2.val.1) = 3 / 4
+      rw [htag,← hu',Equiv.symm_apply_apply]
+      exact hu
+    · have hf' := congrArg (fun d : CapOccurrence T => d.2.val.2) hm
+      change (P.facePair (c.1,c.2.val.2)).2 = e.out.2.val.2 at hf'
+      change a.2.val ((sigma P (a.1,c.2.val.2)).symm e.out.2.val.2) = 0
+      rw [htag,← hf',← sigma_face P (c.1,c.2.val.2),Equiv.symm_apply_apply]
+      exact hf
+
+private theorem edgeSkeleton_eq_original (P : RawFacePairing T) :
+    edgeSkeleton P = q P '' originalEdges := by
+  ext z
+  constructor
+  · rintro (⟨v,rfl⟩ | hz)
+    · cases v with
+      | inl v => induction v using Quotient.inductionOn with | h v =>
+          exact ⟨oldPoint v,halfPoint_mem_originalEdges v _,rfl⟩
+      | inr v => induction v using Quotient.inductionOn with | h v =>
+          exact ⟨midPoint v,halfPoint_mem_originalEdges v _,rfl⟩
+    · obtain ⟨e,he⟩ := mem_iUnion.mp hz
+      obtain ⟨x,hx,rfl⟩ := he
+      let xd : Disk 1 := ⟨x,hx⟩
+      cases e with
+      | inl v => exact ⟨halfPoint v.out (halfParameter xd),halfPoint_mem_originalEdges _ _,
+          (halfCell_coe P v xd).symm⟩
+      | inr e => exact ⟨capPoint e.out xd,Or.inr ⟨e.out.2.val.1,e.out.2.val.2,e.out.2.property,
+          (capPoint_fixed e.out xd).1,(capPoint_fixed e.out xd).2⟩,(capCell_coe P e xd).symm⟩
+  · rintro ⟨a,ha,rfl⟩
+    rcases ha with ⟨i,j,hij,hi,hj⟩ | ⟨u,f,huf,hu,hf⟩
+    · obtain ⟨h,r,rfl⟩ := halfPoint_surjective a i j hij hi hj
+      exact halfPoint_mem_skeleton P h r
+    · exact capPoint_mem_skeleton P (a.1,⟨(u,f),huf⟩) a rfl hu hf
+
+/-- A finite CW structure on the actual edge locus, with its specified native charts. -/
+structure LowerGeometry (P : RawFacePairing T)
+    (projection : TruncatedPoint T → TruncatedQuotient P) : Prop where
+  finite_cw : ∃ C : CWComplex (edgeSkeleton P), C = lowerCW P ∧
+    (letI := C; CWComplex.Finite (edgeSkeleton P))
+  no_higher_cells : ∀ n, 2 ≤ n → IsEmpty (LowerCell P n)
+  original_locus : edgeSkeleton P = projection '' originalEdges
+  half_characteristic : ∀ (v : OldVertex P) (x : Disk 1),
+    halfCell P v x.val = projection (halfPoint v.out (halfParameter x))
+  cap_characteristic : ∀ (e : CapEdge P) (x : Disk 1),
+    capCell P e x.val = projection (capPoint e.out x)
+  vertices_injective : Function.Injective (vertexPoint P)
+  source_ball : ∀ n i, (lowerMap P n i).source = ball 0 1
+  characteristic_continuous : ∀ n i, ContinuousOn (lowerMap P n i) (closedBall 0 1)
+  inverse_continuous : ∀ n i, ContinuousOn (lowerMap P n i).symm (lowerMap P n i).target
+  open_disjoint : (univ : Set (Σ n, LowerCell P n)).PairwiseDisjoint
+    (fun ni => lowerMap P ni.1 ni.2 '' ball 0 1)
+  sphere_attaching : ∀ e, MapsTo (edgeCell P e) (sphere 0 1) (Set.range (vertexPoint P))
+
+/-- Midpoint subdivision repairs every retained-edge inversion of an arbitrary finite raw pairing.
+The resulting finite zero- and one-dimensional complex uses the original quotient topology. -/
+theorem lower_geometry (P : RawFacePairing T) : LowerGeometry P (q P) where
+  finite_cw := ⟨lowerCW P,rfl,lowerCW_finite P⟩
+  no_higher_cells n hn := ⟨by rintro (⟨v,h⟩ | ⟨e,h⟩); all_goals omega⟩
+  original_locus := edgeSkeleton_eq_original P
+  half_characteristic := halfCell_coe P
+  cap_characteristic := capCell_coe P
+  vertices_injective := vertexPoint_injective P
+  source_ball := lower_source P
+  characteristic_continuous := lower_continuousOn P
+  inverse_continuous := lower_continuousOn_symm P
+  open_disjoint := lower_pairwiseDisjoint P
+  sphere_attaching := edge_sphere P
 
 end D5.S3.Geometry.Gluing.TruncatedTetrahedronLowerCW
