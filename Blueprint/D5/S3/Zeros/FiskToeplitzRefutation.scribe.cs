@@ -72,7 +72,10 @@ internal sealed class FiskToeplitzRefutationDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(Disp(formula)),
             provenance,
             Blocks(Paragraph(DefinitionDsl.Text(prose))),
-            theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+            theorem ? DescribeRole.Theorem : DescribeRole.Definition,
+            theorem ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("fisk10-toeplitz"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula Id(string name) => F.Id(name);
     private static Formula Op(string name) => Seq(Operatorname, Grp(Id(name)));

@@ -82,6 +82,10 @@ $$\neg (\forall (f:\operatorname{Polynomial}\left(\operatorname{Polynomial}\left
 
 *Proof.* Machine-checked in Lean as `D5/S3/Zeros/FiskToeplitzRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fisk10-toeplitz` (refuted) by `D5/S3/Zeros/FiskToeplitzRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fisk10-toeplitz","declaration_gid":"D5/S3/Zeros/FiskToeplitzRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Steve Fisk (2008). *Questions about determinants and polynomials*. URL: <https://arxiv.org/abs/0808.1850v1>.
