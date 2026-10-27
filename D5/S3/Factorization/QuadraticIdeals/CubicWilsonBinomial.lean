@@ -8,6 +8,7 @@
 
 import D5.S3.CharacterSums.CubicEulerWilson
 import D5.S3.Factorization.QuadraticIdeals.CubicGaussFrobenius
+import Mathlib.Data.Nat.Factorial.NatCast
 
 /-! The imported CubicEulerWilson module supplies
 its finite-field sum and factorial-cube identities; none is reproved here.
@@ -35,9 +36,7 @@ abbrev E := EisensteinOrder
 private theorem factorial_cast_ne_zero_of_lt
     {F : Type*} [Field F] (p m : ℕ) [Fact p.Prime] [CharP F p]
     (hmp : m < p) : (m.factorial : F) ≠ 0 := by
-  intro hzero
-  have hdvd : p ∣ m.factorial := (CharP.cast_eq_zero_iff F p m.factorial).mp hzero
-  exact (not_le_of_gt hmp) ((Fact.out : p.Prime).dvd_factorial.mp hdvd)
+  exact ((IsUnit.natCast_factorial_iff_of_charP (A := F) p).2 hmp).ne_zero
 
 /-- Reduce the conjugate Jacobi sum in the original quotient E/P.
 There is no conjugate-quotient identification in this statement or proof. -/

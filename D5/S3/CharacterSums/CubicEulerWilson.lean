@@ -9,6 +9,7 @@
 import D5.S3.Arith.Wilson
 import Mathlib.Data.ZMod.Factorial
 import Mathlib.Data.Nat.Choose.Basic
+import Mathlib.Data.Nat.Factorial.NatCast
 import Mathlib.Data.Nat.Prime.Factorial
 import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.Tactic.Ring
@@ -31,9 +32,7 @@ namespace D5.S3.CharacterSums.CubicEulerWilson
 private theorem factorial_cast_ne_zero_of_lt
     {F : Type*} [Field F] (p m : ℕ) [Fact p.Prime] [CharP F p]
     (hmp : m < p) : (m.factorial : F) ≠ 0 := by
-  intro hzero
-  have hdvd : p ∣ m.factorial := (CharP.cast_eq_zero_iff F p m.factorial).mp hzero
-  exact (not_le_of_gt hmp) ((Fact.out : p.Prime).dvd_factorial.mp hdvd)
+  exact ((IsUnit.natCast_factorial_iff_of_charP (A := F) p).2 hmp).ne_zero
 
 
 private theorem neg_binomial_eq_inverse_factorial_cube_zmod
