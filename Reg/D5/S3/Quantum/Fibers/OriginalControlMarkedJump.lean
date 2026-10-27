@@ -168,7 +168,7 @@ noncomputable def registration_1 : Contract.Registration.{_, _, _, 0, 0, 0, _, _
   sourceSelection := some {
     owner := `D5.S3.Quantum.Fibers.OriginalControlMarkedJump
     definition := none
-    coordinates := #[0]
+    coordinates := #[]
     readouts := #[{
       path := #["body","body","body","body","body","arg","arg","arg","arg","arg",
         "arg","arg","fn","arg","arg"]
