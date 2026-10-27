@@ -233,6 +233,155 @@ theorem actual_channels :
     finite_kraus_quantum_channel swKraus decoder_normalizations.1,
     finite_kraus_quantum_channel petzKraus decoder_normalizations.2⟩
 
+
+/-- Density matrix of the physical RBE purification produced by V. -/
+def physicalState : Matrix (A × (B × E)) (A × (B × E)) ℂ :=
+  Matrix.vecMulVec (fun p => sigmaVector p.1 p.2.1 p.2.2)
+    (star (fun p => sigmaVector p.1 p.2.1 p.2.2))
+
+/-- The environment marginal in the literal source coordinates. -/
+def sigmaE : Matrix E E ℂ := Matrix.diagonal fun e =>
+  if e.1 = 0 then 2 / 3 else 1 / 3
+
+theorem physical_marginals :
+    (fun p q : P => ∑ b : B, physicalState (p.1, (b, p.2)) (q.1, (b, q.2))) = X ∧
+    (fun r t : A => ∑ b : B, ∑ e : E,
+      physicalState (r, (b, e)) (t, (b, e))) = rho ∧
+    (fun e f : E => ∑ r : A, ∑ b : B,
+      physicalState (r, (b, e)) (r, (b, f))) = sigmaE := by
+  obtain ⟨h2, h3, ht⟩ := sqrt_facts
+  constructor
+  · ext ⟨i, j, b⟩ ⟨k, l, c⟩
+    fin_cases i <;> fin_cases j <;> fin_cases b <;>
+      fin_cases k <;> fin_cases l <;> fin_cases c <;>
+      simp [physicalState, sigmaVector, referenceVector, V, X, psi,
+        Fin.sum_univ_two, Fin.sum_univ_one]
+  constructor
+  · ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [physicalState, sigmaVector, referenceVector, V, rho, weight,
+        Matrix.vecMulVec_apply, Matrix.diagonal_apply,
+        Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_one,
+        Complex.ext_iff, Complex.div_re, Complex.div_im]
+    all_goals field_simp <;> nlinarith
+  · ext ⟨i, b⟩ ⟨j, c⟩
+    fin_cases i <;> fin_cases b <;> fin_cases j <;> fin_cases c <;>
+      norm_num [physicalState, sigmaVector, referenceVector, V, sigmaE, weight,
+        Matrix.vecMulVec_apply, Matrix.diagonal_apply,
+        Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_one,
+        Complex.ext_iff, Complex.div_re, Complex.div_im]
+    all_goals field_simp <;> nlinarith
+
+theorem rho_positive : rho.PosSemidef := by
+  rw [rho, Matrix.posSemidef_diagonal_iff]
+  intro i
+  fin_cases i <;> norm_num [Complex.nonneg_iff]
+
+theorem rho_trace : Matrix.trace rho = 1 := by
+  norm_num [rho, Matrix.trace, Fin.sum_univ_two]
+
+/-- The fixed reference state used by the ordinary Petz construction. -/
+def referenceState : DensityState A :=
+  ⟨CStarMatrix.ofMatrix rho,
+    map_nonneg CStarMatrix.ofMatrixStarAlgEquiv rho_positive.nonneg, rho_trace⟩
+
+theorem reference_root : cfc Real.sqrt rho =
+    Matrix.diagonal (fun i => (weight i : ℂ)) := by
+  let S := Matrix.diagonal (fun i => (weight i : ℂ))
+  have hS : S.PosSemidef := by
+    apply Matrix.posSemidef_diagonal_iff.mpr
+    intro i
+    fin_cases i <;> simp [weight, Complex.nonneg_iff]
+    all_goals positivity
+  have hsquare : S * S = rho := by
+    obtain ⟨h2, h3, ht⟩ := sqrt_facts
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [S, weight, rho, Matrix.mul_apply, Matrix.diagonal_apply,
+        Fin.sum_univ_two, Complex.ext_iff, Complex.div_re, Complex.div_im]
+    all_goals field_simp <;> nlinarith
+  have hroot : CFC.sqrt rho = S := CFC.sqrt_unique hsquare hS.nonneg
+  rw [CFC.sqrt_eq_real_sqrt _ rho_positive.nonneg, cfcₙ_eq_cfc] at hroot
+  exact hroot
+
+/-- sqrtQ is the positive root of the product of the actual physical marginals. -/
+theorem product_marginal_root : CFC.sqrt (Matrix.kronecker rho sigmaE) = sqrtQ := by
+  have hQ : sqrtQ.PosSemidef := by
+    apply Matrix.posSemidef_diagonal_iff.mpr
+    intro ⟨i, j, b⟩
+    fin_cases i <;> fin_cases j <;> fin_cases b <;>
+      norm_num [Complex.nonneg_iff]
+    all_goals positivity
+  apply CFC.sqrt_unique _ hQ.nonneg
+  obtain ⟨h2, h3, ht⟩ := sqrt_facts
+  ext ⟨i, j, b⟩ ⟨k, l, c⟩
+  fin_cases i <;> fin_cases j <;> fin_cases b <;>
+    fin_cases k <;> fin_cases l <;> fin_cases c <;>
+    norm_num [sqrtQ, rho, sigmaE, Matrix.kroneckerMap_apply,
+      Matrix.diagonal_apply, Matrix.mul_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_two, Fin.sum_univ_one, Complex.ext_iff]
+  all_goals nlinarith
+
+theorem noise_action (T : Matrix A A ℂ) :
+    (∑ e : E, noiseKraus e * T * (noiseKraus e)ᴴ) = Matrix.trace T • 1 := by
+  ext b c
+  fin_cases b <;> fin_cases c <;>
+    simp [noiseKraus, V, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      Matrix.trace, Matrix.one_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_two, Fin.sum_univ_one]
+
+theorem noise_reference : (∑ e : E, noiseKraus e * rho * (noiseKraus e)ᴴ) = 1 := by
+  rw [noise_action, rho_trace, one_smul]
+
+/-- N(rho)=1 is strictly positive on the entire one-dimensional output. -/
+theorem petz_output_full_rank :
+    (∑ e : E, noiseKraus e * rho * (noiseKraus e)ᴴ).PosDef := by
+  rw [noise_reference]
+  exact Matrix.PosDef.one
+
+theorem petz_spectral_factors :
+    SpectralTransposeRecovery.spectralSupport (1 : Matrix B B ℂ) = 1 ∧
+    SpectralTransposeRecovery.spectralInverseSqrt (1 : Matrix B B ℂ) = 1 := by
+  constructor <;>
+    simp [SpectralTransposeRecovery.spectralSupport,
+      SpectralTransposeRecovery.spectralInverseSqrt, cfc_apply_one]
+
+/-- The displayed Kraus operators are exactly the ordinary Petz factors. -/
+theorem petz_kraus_identification (e : E) :
+    petzKraus e = cfc Real.sqrt rho * (noiseKraus e)ᴴ *
+      SpectralTransposeRecovery.spectralInverseSqrt
+        (∑ f : E, noiseKraus f * rho * (noiseKraus f)ᴴ) := by
+  rw [noise_reference, petz_spectral_factors.2, Matrix.mul_one, reference_root]
+  rfl
+
+/-- The canonical reference completion has identically zero defect. -/
+theorem ordinary_petz_channel : ∃ recovery : QuantumChannel B A,
+    ∀ T : Matrix B B ℂ,
+      CStarMatrix.ofMatrix.symm
+        (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+        ∑ e : E, petzKraus e * T * (petzKraus e)ᴴ := by
+  obtain ⟨recovery, haction, _⟩ :=
+    ReferencePetzChannel.completed_reference_petz_channel noiseKraus noise_normalization
+      referenceState
+  refine ⟨recovery, fun T => ?_⟩
+  have h := haction T
+  change CStarMatrix.ofMatrix.symm
+    (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =
+    (∑ e : E, cfc Real.sqrt rho * (noiseKraus e)ᴴ *
+      SpectralTransposeRecovery.spectralInverseSqrt
+        (∑ f : E, noiseKraus f * rho * (noiseKraus f)ᴴ) * T *
+      SpectralTransposeRecovery.spectralInverseSqrt
+        (∑ f : E, noiseKraus f * rho * (noiseKraus f)ᴴ) *
+      noiseKraus e * cfc Real.sqrt rho) +
+      Matrix.trace ((1 - SpectralTransposeRecovery.spectralSupport
+        (∑ f : E, noiseKraus f * rho * (noiseKraus f)ᴴ)) * T) • rho at h
+  rw [noise_reference, petz_spectral_factors.1, petz_spectral_factors.2,
+    sub_self, Matrix.zero_mul, Matrix.trace_zero, zero_smul, add_zero] at h
+  simpa only [petzKraus, reference_root, Matrix.mul_one, Matrix.conjTranspose_mul,
+    Matrix.conjTranspose_conjTranspose, Matrix.conjTranspose_diagonal,
+    Pi.star_def, Complex.conj_ofReal, Matrix.mul_assoc] using h
+
+
 #print axioms psi_normalized
 #print axioms source_isometry
 #print axioms source_unitary
