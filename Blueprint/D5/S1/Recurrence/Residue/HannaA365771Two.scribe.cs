@@ -26,7 +26,9 @@ internal sealed class HannaA365771TwoDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S1/Recurrence/Residue/HannaA365771Two.result"),
                 H("Hanna's second congruence"), StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The digits of 5*m+1 are one followed by the digits of m. The digit step therefore preserves membership in A033042, and the positive-index residue classification gives residue two."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The digits of 5*m+1 are one followed by the digits of m. The digit step therefore preserves membership in A033042, and the positive-index residue classification gives residue two."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna365771-mod5-two"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ClaimBody() => All("m", Imp(
         new Formula.Relation(D(0), FormulaRelationOperator.LessThan, F.Id("m")),

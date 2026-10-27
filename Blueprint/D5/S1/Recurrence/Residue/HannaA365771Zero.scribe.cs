@@ -26,7 +26,9 @@ internal sealed class HannaA365771ZeroDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S1/Recurrence/Residue/HannaA365771Zero.result"),
                 H("Hanna's third congruence"), StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("If every base-five digit of a positive n is zero or one, division by five gives a quotient m in A033042 and remainder zero or one. Thus n=5*m or n-1=5*m. Outside these two forms, the positive-index residue classification gives residue zero."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("If every base-five digit of a positive n is zero or one, division by five gives a quotient m in A033042 and remainder zero or one. Thus n=5*m or n-1=5*m. Outside these two forms, the positive-index residue classification gives residue zero."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna365771-mod5-zero"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ClaimBody() => All("n", Imp(
         new Formula.Relation(D(0), FormulaRelationOperator.LessThan, F.Id("n")),
