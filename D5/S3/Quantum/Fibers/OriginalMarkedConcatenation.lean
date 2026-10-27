@@ -85,12 +85,14 @@ theorem deriv_after (f g : ℝ → ℝ) (T t : ℝ) (ht : T < t) :
 
 private theorem hazard_before (c T : ℝ) (k K : ℝ → ℝ) (t : ℝ) (ht : t < T) :
     hazard c (concatenate k K T) t = hazard c k t := by
-  simp [hazard, deriv_before k K T t ht, concatenate, ht.le]
+  simp [hazard, OriginalControlSurvivalInstability.hazard,
+    deriv_before k K T t ht, concatenate, ht.le]
 
 private theorem hazard_after (c T : ℝ) (k K : ℝ → ℝ) (hj : k T = K 0)
     (t : ℝ) (ht : T < t) :
     hazard c (concatenate k K T) t = hazard c K (t-T) := by
-  simp [hazard, deriv_after k K T t ht, concatenate, not_le.mpr ht, hj]
+  simp [hazard, OriginalControlSurvivalInstability.hazard,
+    deriv_after k K T t ht, concatenate, not_le.mpr ht, hj]
 
 theorem hazard_integral (c T s : ℝ) (k K : ℝ → ℝ)
     (hT : 0 ≤ T) (hs : 0 ≤ s) (hj : k T = K 0)
@@ -160,11 +162,13 @@ theorem hazard_integrable (c T chi : ℝ) (k : ℝ → ℝ)
 
 private theorem leg_hazard (L : Leg) : hazard L.c L.height = L.hazard := by
   funext t
-  simp [hazard, Leg.hazard, (L.height_deriv t).deriv]
+  simp [hazard, OriginalControlSurvivalInstability.hazard, Leg.hazard,
+    (L.height_deriv t).deriv]
 
 theorem leg_survival (L : Leg) : survival L.c L.height = L.survival := by
   funext t
-  simp [survival, Leg.survival, leg_hazard]
+  simp [survival, OriginalControlSurvivalInstability.survival,
+    OriginalControlSurvivalInstability.hazard, Leg.survival, leg_hazard]
 
 theorem leg_rate (L : Leg) : jumpRate L.c L.height = L.jumpRate := by
   funext t i
@@ -207,7 +211,8 @@ theorem rate_after (c T : ℝ) (k K : ℝ → ℝ) (hj : k T = K 0)
 theorem survival_before (c T t : ℝ) (k K : ℝ → ℝ)
     (ht : 0 ≤ t) (htT : t ≤ T) :
     survival c (concatenate k K T) t = survival c k t := by
-  rw [survival, survival]
+  rw [OriginalControlSurvivalInstability.survival,
+    OriginalControlSurvivalInstability.survival]
   congr 2
   exact integral_congr_Ioo_of_le ht
     (fun u hu => hazard_before c T k K u (hu.2.trans_le htT))
@@ -221,7 +226,8 @@ private theorem joined_survival (L R : Leg) (hC : R.c = L.c) (hj : L.y = R.x)
   have hi1 : IntervalIntegrable (hazard L.c R.height) volume 0 s := by
     rw [← hC]
     exact leg_integrable R s hs
-  rw [survival, hazard_integral L.c L.duration s L.height R.height L.duration_pos.le
+  rw [OriginalControlSurvivalInstability.survival,
+    hazard_integral L.c L.duration s L.height R.height L.duration_pos.le
     hs.1 hjoin (leg_integrable L L.duration ⟨L.duration_pos.le, le_rfl⟩) hi1,
     neg_add, Real.exp_add]
   change survival L.c L.height L.duration * survival L.c R.height s = _
@@ -288,7 +294,8 @@ theorem native_concatenation (c T s a chi : ℝ) (k K : ℝ → ℝ)
   have hi := hazard_integrable c T chi k h0
   have hI := hazard_integrable c s chi K h1
   have hS : survival c (concatenate k K T) (T + s) = survival c k T * survival c K s := by
-    rw [survival, hazard_integral c T s k K hT hs hj hi hI, neg_add, Real.exp_add]
+    rw [OriginalControlSurvivalInstability.survival,
+      hazard_integral c T s k K hT hs hj hi hI, neg_add, Real.exp_add]
     rfl
   have hmat := successful_compose c a (k T) (K s) (survival c k T)
     (survival c K s) hc ha hb hk (Real.exp_pos _).le (Real.exp_pos _).le
