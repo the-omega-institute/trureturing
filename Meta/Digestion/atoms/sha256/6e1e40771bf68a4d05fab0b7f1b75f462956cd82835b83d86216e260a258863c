@@ -1,0 +1,43 @@
+**定义 31.2（外幂、形式与五面等距字典）。** 对定义 22.1 的抽象空间 $V$
+额外指定 $u_1,u_2,u_3$ 正交单位，定向体积取
+
+$$
+\mathrm{vol}_V=u_1\wedge u_3\wedge u_2=-u_{123}.
+\tag{31.2}
+$$
+
+将实等距同构 $I:V\to V_E$ 定义为
+$Iu_1=u,Iu_2=n,Iu_3=v$。于是 $\Lambda^3I(\mathrm{vol}_V)=u\wedge v\wedge n$。
+这个负号来自逻辑位置次序 $(u,n,v)$，不能把它默认为正向次序。
+$\Theta$ 仍是定义 22.1 的线性字典；只在此附加度量下，将其复线性延拓
+$\Theta_{\mathbb C}:\mathcal H\to S_{\mathbb C}$ 视为等距同构。
+外代数各次数正交，实外幂内积复化为 Hermitian 内积。
+复合 $\Lambda I\circ\Theta_{\mathbb C}$ 给表
+
+$$
+\begin{array}{c|ccccc}
+s&0&1&2&3&13\\\hline
+\text{项目标签}&N&[2]&[3]&[5]&[2,5]\\
+(\Lambda I\circ\Theta_{\mathbb C})e_s&1&u&n&v&u\wedge v
+\end{array}
+\tag{31.3}
+$$
+
+标量 $1\in\Lambda^0V_E$ 不是向量 $0\in V_E$。
+未经归一化的关系量则是
+$B_{13}=\|B_{13}\|(\Lambda I\circ\Theta_{\mathbb C})e_{13}$，不是位置 $a+b$。
+在本独立对上，外幂基展开还给
+$x\wedge B_{13}=0\iff x\in\operatorname{span}(a,b)$ 及
+$\|B_{13}\|^2=\|a\|^2\|b\|^2-g(a,b)^2$：前者检测垂直补分量，
+后者即 $\|a\|^2\|b_\perp\|^2$。所以关系模式保留有向面积，未保留原来的有序对。
+
+Hodge 在实余外代数上先按
+$\alpha\wedge\star_g\beta=\langle\alpha,\beta\rangle_g\mathrm{vol}_g$ 定义，
+再由度量升降指标运输到二向量等各外幂；在复化空间上取这个实算子的复线性延拓。
+因此 $\star_g(a\wedge b)=a\times b$ 是运输后的向量式，
+原来的形式式为 $\star_g(a^\flat\wedge b^\flat)=(a\times b)^\flat$。
+[Bouchard，MATH 215 定义 4.8.1、例 4.8.4](https://sites.ualberta.ca/~vbouchar/MATH215/section_hodge.html)
+的 $dx,dy,dz$ 在此对应正向标架 $(u,v,n)$ 的对偶基；
+它不对应未经处理的逻辑次序 $(u,n,v)$。
+此处为三维正定情形，不采用假设 22.4 的 Lorentzian 星号。
+
