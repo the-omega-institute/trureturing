@@ -119,7 +119,7 @@ private theorem chart_analytic (x : ℝ × ℝ)
   apply AnalyticAt.prod (by fun_prop)
   apply AnalyticAt.pi
   intro i
-  fin_cases i <;> dsimp [Matrix.vecCons, Fin.cons, Fin.cases]
+  fin_cases i <;> simp only [Matrix.cons_val_zero', Matrix.cons_val_succ']
   all_goals fun_prop (disch := first | exact hj | exact hn | exact ht)
 
 /-- The lift contains every original parent world with the specified source.
@@ -158,7 +158,7 @@ theorem analytic_original_parent_chart (x : ℝ × ℝ)
   · unfold chartSource sourceCoordinates
     apply AnalyticAt.pi
     intro i
-    fin_cases i <;> dsimp [Matrix.vecCons, Fin.cons, Fin.cases]
+    fin_cases i <;> simp only [Matrix.cons_val_zero', Matrix.cons_val_succ']
     all_goals fun_prop (disch := exact ne_of_gt h0)
   · unfold chartRead originalResponse originalRead originalPolynomial futureRead
     simp only [List.length_nil, Nat.cast_zero,add_zero]
