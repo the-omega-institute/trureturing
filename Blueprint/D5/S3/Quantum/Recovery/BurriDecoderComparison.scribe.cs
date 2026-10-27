@@ -32,9 +32,9 @@ internal sealed class BurriDecoderComparisonDocument : IScribeDocumentDefinition
                 + "Order B as (00,01,02,10,11,12). The real positive matrix Y has diagonal 3 and off-diagonal entries Y_00,10=1, Y_01,11=-1, Y_00,02=1, Y_10,12=-1, with their symmetric partners; all others vanish. "
                 + "The physical Kraus matrix indexed by e=(0,(0,a)) is K_e(b,i)=Y((i,a),b)/sqrt(31); the other nine environment labels are zero. "
                 + "The noise output is Y squared/62. BurriReversePetz proves its full-rank positive root, inverse root, support and full ordinary Petz action. "
-                + "The common amplitude equals the old channel-first maximally entangled amplitude composed with the factor swap."),
+                + "The common amplitude equals the reverse channel-first maximally entangled amplitude composed with the factor swap."),
             Entry("reverse-extension", "reverse_extension_factor_flip", "The actual channel extension also flips",
-                "For every actual QuantumChannel and every joint matrix T, extending the channel after swapping T equals swapping the old channel-first tensor extension. "
+                "For every actual QuantumChannel and every joint matrix T, extending the channel after swapping T equals swapping the reverse channel-first tensor extension. "
                 + "This equality acts on each matrix entry, including off-support inputs; it is not an assumed fidelity reduction."),
             Entry("reverse", "reverse_fidelity", "The reverse overlap is exactly the common fidelity",
                 "The amplitude equality gives the corresponding rank-one density equality. Combining it with the actual extension equality and overlap_factor_flip proves equality of the two fidelity functions for every reverse composite channel. "
@@ -54,7 +54,7 @@ internal sealed class BurriDecoderComparisonDocument : IScribeDocumentDefinition
                         "Standing is bounded. Sun Woo P. Kim, Optimal recovery for quantum error correction, arXiv:2603.06520v1, Proposition 3, Eqs. 20-22 and Corollary 4, already relates CSS/Pauli Petz posterior sampling and SW squared-posterior sampling; its optimality discussion concerns thresholds. "
                         + "Raban Iten, Joseph M. Renes and David Sutter, Pretty good measures in quantum information theory, arXiv:1608.08229v2, Section 3.3 after Eq. 54, supplies the pretty-good singlet-recovery commutator criterion. "
                         + "These are prior results, not discoveries of this formalization. The checked primary sources do not supply this exact unrestricted two-instance comparison; that bounded observation is not a global priority certificate. "
-                        + "This result neither compares the Question 2 Renyi lower bounds nor classifies all channels or all decoder performance. Independent acceptance and freeze are separate from the mathematical statement."))),
+                        + "This result neither compares the Question 2 Renyi lower bounds nor classifies all channels or all decoder performance."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("burri-2025-sw-petz-decoder-comparison"), ResolutionKind.Proved)))));

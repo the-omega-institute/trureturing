@@ -38,8 +38,8 @@ The owning [Scribe](../../Blueprint/D5/S3/Quantum/Recovery/BurriDecoderCompariso
 gives the data, normalization and exact source bridges. Its common fidelity uses
 $v(r,i)=(\sqrt\rho)_{i,r}$ and
 $F_e(\rho,C)=\langle v|(\mathrm{id}\otimes C)(|v\rangle\langle v|)|v\rangle$.
-The reference marginal is proved to be $\rho$, including for complex Hermitian
-states. A proved tensor flip transports the reverse calculation to this same
+Tracing the reference is proved to give the input state $\rho$, including for
+complex Hermitian states. A proved tensor flip transports the reverse calculation to this same
 definition.
 
 | Instance | Ordinary Petz | SW |

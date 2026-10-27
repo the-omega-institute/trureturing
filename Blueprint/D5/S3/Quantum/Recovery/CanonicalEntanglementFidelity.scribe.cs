@@ -20,7 +20,7 @@ internal sealed class CanonicalEntanglementFidelityDocument : IScribeDocumentDef
                 DescribeRole.Definition),
             Entry("purification", "canonical_purification", "A density with input marginal rho",
                 "For every finite complex positive semidefinite rho of trace one, P is positive semidefinite, has trace one, and tracing the reference factor gives rho. "
-                + "The proof identifies that partial trace with sqrt(rho) sqrt(rho)-adjoint and uses positivity and square-root uniqueness laws from pinned Mathlib. "
+                + "The proof identifies that partial trace with sqrt(rho) sqrt(rho)-adjoint and uses positivity and positive-root square laws from pinned Mathlib. "
                 + "The input index is the row of the square root; this orientation remains correct for non-real Hermitian states. "
                 + "The eigenbasis purification supplied by the separately attributed physlib port FiniteDensityPurification is not silently identified with this root vector."),
             Entry("flip", "overlap_factor_flip", "Exact tensor-factor relabeling",

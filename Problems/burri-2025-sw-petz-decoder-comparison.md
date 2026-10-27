@@ -69,8 +69,7 @@ the forward direction was previously unknown.
 
 The result supplies two opposite strict witnesses. It does not settle
 Question 2, classify all channels, or assert that every input admits both
-directions. Scoped Lean and Scribe evidence supports independent review;
-formal freezing and repository acceptance remain separate steps.
+directions.
 
 The new source-owner four-slot registrations remain unfinished in
 [issue #22675](https://github.com/the-omega-institute/trureturing/issues/22675).

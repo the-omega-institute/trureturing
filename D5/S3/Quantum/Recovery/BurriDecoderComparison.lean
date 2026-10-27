@@ -21,7 +21,6 @@ open D5.S3.Quantum.Information.PartialTraceMutualInformation
 
 namespace D5.S3.Quantum.Recovery.BurriDecoderComparison
 
-
 theorem forward_vector : CanonicalEntanglementFidelity.vector BurriReplacementDecoder.rho = BurriReplacementDecoder.referenceVector := by
   funext ⟨r, i⟩
   dsimp only [CanonicalEntanglementFidelity.vector]
@@ -36,7 +35,7 @@ theorem forward_fidelity (channel : QuantumChannel BurriReplacementDecoder.A Bur
   simp only [CanonicalEntanglementFidelity.fidelity, CanonicalEntanglementFidelity.pure, forward_vector]
   rfl
 
-/-- The old reverse amplitude is channel first. Flipping it gives exactly the
+/-- The reverse amplitude is channel first. Flipping it gives exactly the
 common positive-root amplitude, without identifying the two input states. -/
 theorem reverse_vector :
     CanonicalEntanglementFidelity.vector BurriReverseDecoder.rho = D5.S3.QuantumBounds.PeritoTsirelson.maxEntangledVector BurriReverseDecoder.A ∘ Prod.swap := by
@@ -74,6 +73,16 @@ theorem result :
       partialTraceLeft (CanonicalEntanglementFidelity.pure BurriReverseDecoder.rho) = BurriReverseDecoder.rho) ∧
     (CanonicalEntanglementFidelity.fidelity BurriReplacementDecoder.rho (BurriReplacementDecoder.petzChannel.comp BurriReplacementDecoder.noiseChannel) = 1 / 3 ∧
       CanonicalEntanglementFidelity.fidelity BurriReplacementDecoder.rho (BurriReplacementDecoder.swChannel.comp BurriReplacementDecoder.noiseChannel) = 11 / 27) ∧
+    (CanonicalEntanglementFidelity.fidelity BurriReplacementDecoder.rho
+        (BurriReplacementDecoder.petzChannel.comp BurriReplacementDecoder.noiseChannel) <
+      CanonicalEntanglementFidelity.fidelity BurriReplacementDecoder.rho
+        (BurriReplacementDecoder.swChannel.comp BurriReplacementDecoder.noiseChannel)) ∧
+    (CanonicalEntanglementFidelity.fidelity BurriReverseDecoder.rho
+        (BurriReversePetz.petzChannel.comp BurriReverseFidelity.noiseChannel) = 27 / 31 ∧
+      CanonicalEntanglementFidelity.fidelity BurriReverseDecoder.rho
+        (BurriReverseFidelity.swChannel.comp BurriReverseFidelity.noiseChannel) <
+      CanonicalEntanglementFidelity.fidelity BurriReverseDecoder.rho
+        (BurriReversePetz.petzChannel.comp BurriReverseFidelity.noiseChannel)) ∧
     (∀ Uprime : Matrix BurriReplacementDecoder.P BurriReplacementDecoder.P ℂ, Uprime * Uprimeᴴ = 1 →
       (BurriReplacementDecoder.M * Uprime).PosSemidef →
       ∃ decoder : QuantumChannel BurriReplacementDecoder.B BurriReplacementDecoder.A,
@@ -95,7 +104,13 @@ theorem result :
   refine ⟨CanonicalEntanglementFidelity.canonical_purification _ BurriReplacementDecoder.rho_positive BurriReplacementDecoder.rho_trace,
     CanonicalEntanglementFidelity.canonical_purification _ BurriReversePetz.reference_positive BurriReversePetz.reference_trace,
     ⟨(forward_fidelity _).trans BurriReplacementDecoder.actual_strict_fidelity.1,
-      (forward_fidelity _).trans BurriReplacementDecoder.actual_strict_fidelity.2.1⟩, ?_, ?_⟩
+      (forward_fidelity _).trans BurriReplacementDecoder.actual_strict_fidelity.2.1⟩,
+    ?_, ⟨?_, ?_⟩, ?_, ?_⟩
+  · simpa only [forward_fidelity] using BurriReplacementDecoder.actual_strict_fidelity.2.2.2
+  · rw [reverse_fidelity, BurriReverseFidelity.actual_entanglement_fidelity
+      BurriReversePetz.petzChannel BurriReverseDecoder.slice BurriReversePetz.petz_channel_action]
+    exact BurriReverseOverlap.slice_overlap
+  · simpa only [reverse_fidelity] using BurriReverseFidelity.actual_strict_fidelity
   · intro Uprime hu hp
     have hD : forwardCompletedKraus Uprime = BurriReplacementDecoder.swKraus := by
       funext e
