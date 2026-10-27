@@ -62,7 +62,7 @@ Copyright (c) 2026 Kitware, Inc. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jon Crall, Claude Fable 5
 -/
-private theorem finrank_span_image (b : OrthonormalBasis (Fin n) ℂ E) (s : Finset (Fin n)) :
+theorem finrank_span_image (b : OrthonormalBasis (Fin n) ℂ E) (s : Finset (Fin n)) :
     finrank ℂ (Submodule.span ℂ (b '' (s : Set (Fin n)))) = s.card := by
   have h := finrank_span_eq_card
     (b.orthonormal.linearIndependent.comp (fun i : ↥(↑s : Set (Fin n)) => (i : Fin n))
@@ -86,12 +86,12 @@ Authors: Jon Crall, Claude Fable 5, Claude Opus 4.8
 variable [FiniteDimensional ℂ E] {T S : E →ₗ[ℂ] E}
 
 omit [FiniteDimensional ℂ E] in
-private theorem sum_sq_norm_repr_eq_sq_norm (b : OrthonormalBasis (Fin n) ℂ E) (x : E) :
+theorem sum_sq_norm_repr_eq_sq_norm (b : OrthonormalBasis (Fin n) ℂ E) (x : E) :
     ∑ i : Fin n, ‖b.repr x i‖ ^ 2 = ‖x‖ ^ 2 := by
   simp_rw [b.repr_apply_apply]
   exact b.sum_sq_norm_inner_right x
 
-private theorem re_inner_apply_self_eq_sum_eigenvalues_mul_sq
+theorem re_inner_apply_self_eq_sum_eigenvalues_mul_sq
     (hT : T.IsSymmetric) (hn : finrank ℂ E = n) (x : E) :
     RCLike.re ⟪T x, x⟫_ℂ
       = ∑ i : Fin n, hT.eigenvalues hn i * ‖(hT.eigenvectorBasis hn).repr x i‖ ^ 2 := by
