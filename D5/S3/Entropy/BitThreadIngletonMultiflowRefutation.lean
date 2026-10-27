@@ -81,11 +81,11 @@ private def starWeight (I : Finset (Fin 5)) : ℝ :=
   ∑ i : Fin 5, if i ∈ I then (if i.val < 4 then 1 else 2) else 0
 
 private def ingletonCoefficient (I : Finset (Fin 5)) : ℝ :=
-  if I = {0, 1} then 1 else if I = {0, 2} then 1 else if I = {0, 3} then 1
-  else if I = {1, 2} then 1 else if I = {1, 3} then 1
-  else if I = {0} then -1 else if I = {1} then -1
-  else if I = {2, 3} then -1 else if I = {0, 1, 2} then -1
-  else if I = {0, 1, 3} then -1 else 0
+  (if I = {0, 1} then 1 else 0) + (if I = {0, 2} then 1 else 0) +
+  (if I = {0, 3} then 1 else 0) + (if I = {1, 2} then 1 else 0) +
+  (if I = {1, 3} then 1 else 0) - (if I = {0} then 1 else 0) -
+  (if I = {1} then 1 else 0) - (if I = {2, 3} then 1 else 0) -
+  (if I = {0, 1, 2} then 1 else 0) - (if I = {0, 1, 3} then 1 else 0)
 
 private def witnessThreads (i j : Fin 5) : ℝ :=
   if (i = 0 ∧ j = 1) ∨ (i = 2 ∧ j = 4) ∨ (i = 3 ∧ j = 4) then 1 else 0
@@ -101,7 +101,18 @@ private def witnessFlow (i j : Fin 5) (u v : Fin 6) : ℝ :=
 
 private lemma combo_identity :
     ∀ n : Fin 5 → Fin 5 → ℝ,
-      combo ingletonCoefficient (subflow n) = 2 * n 0 1 + 2 * n 2 3 := by sorry
+      combo ingletonCoefficient (subflow n) = 2 * n 0 1 + 2 * n 2 3 := by
+  intro n
+  unfold combo ingletonCoefficient
+  ring_nf
+  repeat rw [Finset.sum_add_distrib]
+  repeat rw [Finset.sum_sub_distrib]
+  simp only [ite_mul, one_mul, zero_mul]
+  repeat rw [Finset.sum_add_distrib]
+  repeat rw [Finset.sum_sub_distrib]
+  simp only [Fintype.sum_ite_eq', Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  norm_num [subflow, Fin.sum_univ_succ]
+  ring
 
 private lemma star_cut_values :
     ∀ I : Finset (Fin 5), minCut starCapacity starBoundary I =
