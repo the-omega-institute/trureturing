@@ -189,7 +189,7 @@ def evidence : Registration arena (type_of% @complete_prime_correlation_tendsto)
 def registration_1 : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@complete_prime_correlation_tendsto) (Realization signature) Unit Unit where
   unitName :=
-    Name.str
+    Lean.Name.str
       `D5.S3.Weil.ZetaBridge.ExponentialPrimeCorrelationPassage.complete_prime_correlation_tendsto
       "__information_unit"
   realizationName := `Reg.D5.S3.Weil.ZetaBridge.ExponentialPrimeCorrelationPassage.evidence
