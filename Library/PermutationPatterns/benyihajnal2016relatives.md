@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/1602.08684v1
 claim: "Section 3.2 Theorem 12(ii) counts permutations with strict excedance-position set [k] by C(n,k), allowing fixed points."
 strata_touched:
   - D5/S3/Combinatorics/PriorityLattice/TestartTreeCode
+  - D5/S3/Combinatorics/PriorityLattice/TestartTraversal
 license: citation-only
 triage: anchor
 ---

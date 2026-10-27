@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2602.12130v2
 claim: "Section 7 Question 1 asks for bijections from the Section 6 families IP or T to known type-C poly-Bernoulli models."
 strata_touched:
   - D5/S3/Combinatorics/PriorityLattice/TestartTreeCode
+  - D5/S3/Combinatorics/PriorityLattice/TestartTraversal
 license: citation-only
 triage: anchor
 ---

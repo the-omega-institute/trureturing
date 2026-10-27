@@ -36,7 +36,7 @@ def insertEquiv (n : ℕ) : Fin (n + 1) × Perm (Fin n) ≃ Perm (Fin (n + 1)) :
       ((Equiv.permCongr (finSuccEquivLast (n := n)).symm).trans
         (Equiv.inv (Perm (Fin (n + 1)))))
 
-private theorem insert_apply (n : ℕ) (p : Fin (n + 1)) (s : Perm (Fin n))
+theorem insert_apply (n : ℕ) (p : Fin (n + 1)) (s : Perm (Fin n))
     (v : Fin (n + 1)) :
     insertEquiv n (p,s) v = finSuccEquivLast.symm
       (s.optionCongr (Equiv.swap none (finSuccEquiv n p) (finSuccEquivLast v))) := by
@@ -127,7 +127,7 @@ private theorem code_excedance (n : ℕ) (t : ParentCode n) (v : Fin n) :
             exact hj (Fin.ext (by omega))
           simpa [hn] using ih (fun v => t v.castSucc) j
 
-private theorem native_parent_code {n : ℕ} (t : ParentCode n) (v : Fin n) :
+theorem native_parent_code {n : ℕ} (t : ParentCode n) (v : Fin n) :
     (((IntervalForestBasic.treeEquivCode n).symm t).val.parent v.succ).map Fin.val =
       some (t v).val := by
   change (if h : v.succ.val = 0 then none else
@@ -212,6 +212,27 @@ private theorem reflect_involutive (n : ℕ) (i : Fin n) :
 private theorem dual_dual {n : ℕ} (s : Perm (Fin n)) : dual (dual s) = s := by
   ext i
   simp [dual, reflect_involutive, Equiv.trans_apply, Fin.revPerm]
+
+/-- The exact positive-label position and value formulas of the sealed D map. -/
+theorem dual_formula {n : ℕ} (s : Perm (Fin n)) (i : Fin n) :
+    ((reflectPositions n i).val+1 =
+      if i.val+1 < n then n-(i.val+1) else n) ∧
+    (dual s i).val+1 = n+1-((s (reflectPositions n i)).val+1) := by
+  constructor
+  · cases n with
+    | zero => exact Fin.elim0 i
+    | succ n =>
+      refine Fin.lastCases ?_ (fun j => ?_) i
+      · simp [reflect_last]
+      · rw [reflect_castSucc]
+        simp only [Fin.val_castSucc, Fin.val_rev]
+        have := j.isLt
+        rw [ite_eq_left (by omega)]
+        omega
+  · change (s (reflectPositions n i)).rev.val+1 = _
+    simp only [Fin.val_rev]
+    have := (s (reflectPositions n i)).isLt
+    omega
 
 private theorem dual_excedance (n : ℕ) (s : Perm (Fin (n + 1))) (i : Fin n) :
     i.castSucc < dual s i.castSucc ↔ s i.rev.castSucc ≤ i.rev.castSucc := by
