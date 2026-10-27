@@ -12,6 +12,7 @@ import Mathlib.Basic.Countable.Defs
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.Arith.FibonacciAtomic.Observer.NativeFreeStateCardinality
 
@@ -40,7 +41,7 @@ private theorem streamStep_leaf (b : Bool) :
   rw [PFunctor.M.corec_def]
   apply congrArg PFunctor.M.mk
   apply Sigma.ext (by
-    simp [streamStep, PFunctor.map, PFunctor.Obj.mk, PFunctor.Obj.fst, PFunctor.Obj.snd])
+    simp [streamStep, PFunctor.map, PFunctor.Obj.mk, PFunctor.Obj.fst, PFunctor.Obj.snd] <;> rfl)
   apply heq_of_eq
   funext e
   exact e.elim
@@ -75,9 +76,9 @@ private theorem streamTree_injective : Function.Injective streamTree := by
   funext j
   have bits := congrArg (subtree (bitAddress j)) h
   rw [streamTree_subtree, streamTree_subtree] at bits
-  have labels := FreeMagma.of.inj
-    (NativeCompletionSupportClosure.embed_injective
-      (show embed (.of (!(s j))) = embed (.of (!(t j))) from Option.some.inj bits))
+  have leaves := NativeCompletionSupportClosure.embed_injective
+    (show embed (.of (!(s j))) = embed (.of (!(t j))) from Option.some.inj bits)
+  have labels : !(s j) = !(t j) := by injection leaves
   exact Bool.not_inj labels
 
 private theorem streamTree_ne_omega (s : Nat → Bool) : streamTree s ≠ Omega := by

@@ -34,7 +34,7 @@ internal sealed class NativeFreeStateCardinalityDocument : IScribeDocumentDefini
                 EqOf(Call("subtree", Call("bitAddress", j), u), Call("some", Call("leaf", negBit))))),
             Call("Injective", V("U")),
             All("s", streams, Seq(u, Sp, Neq, Sp, V("Omega"))),
-            All("A", V("Type"), Imp(Call("Countable", a),
+            All("A", V("Type"), Seq(OpenBracket, Call("Countable", a), CloseBracket, Sp,
                 All("decode", Seq(a, Sp, To, Sp, tree),
                     Seq(Neg, Par(Call("Surjective", d)))))))));
     }
@@ -44,7 +44,6 @@ internal sealed class NativeFreeStateCardinalityDocument : IScribeDocumentDefini
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
     private static Formula EqOf(Formula left, Formula right) => Seq(left, Sp, Eq, Sp, right);
-    private static Formula Imp(Formula left, Formula right) => Seq(Par(left), Sp, Implies, Sp, Par(right));
     private static Formula And(params Formula[] values) =>
         Seq(values.Select((value, index) => index == 0 ? Par(value) : Seq(Sp, Land, Sp, Par(value))).ToArray());
     private static Formula All(string name, Formula type, Formula body) =>
