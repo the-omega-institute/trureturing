@@ -75,8 +75,7 @@ private theorem coordinates_sum (t : I) (x : Space M) :
     intro w hw
     simp only [coordinates, if_neg (mem_erase.mp hw).1]
   rw [hsum]
-  simp only [coordinates, if_pos rfl]
-  ring
+  simp [coordinates]
 
 private theorem coordinates_nonneg (t : I) (x : Space M) (w : V) :
     0 ≤ coordinates M v t x w := by
@@ -149,7 +148,7 @@ private theorem horizontal_eq_vertex_of_height_ne_zero (t : I) (x : Space M)
     exact max_eq_right (by linarith : x.val w - amount M v t x ≤ 0)
   apply Subtype.ext
   funext w
-  change coordinates M v t x w = Pi.single v 1 w
+  change coordinates M v t x w = (Pi.single v (1 : ℝ) : V → ℝ) w
   by_cases hw : w = v
   · simp [coordinates, hw, sum_eq_zero hs]
   · have hsw := hs w (by simp [hw])
@@ -180,7 +179,7 @@ private theorem horizontal_vertex (t : I) :
       max_eq_right (neg_nonpos.mpr t.property.1)]
   apply Subtype.ext
   funext w
-  change coordinates M v t (vertexPoint M v hv) w = Pi.single v 1 w
+  change coordinates M v t (vertexPoint M v hv) w = (Pi.single v (1 : ℝ) : V → ℝ) w
   by_cases hw : w = v
   · simp [coordinates, hw, sum_eq_zero hs]
   · simp [coordinates, hw, hs w (by simp [hw]), Pi.single_apply, Ne.symm hw]
@@ -218,12 +217,15 @@ private theorem continuous_height :
 def Cylinder : Set (Space M × I) := {z | z.2 = 0 ∨ z.1 = vertexPoint M v hv}
 
 /-- The division-free continuous retraction into the bottom-or-vertex cylinder. -/
-def retraction : C(Space M × I, Cylinder M v hv) where
-  toFun z := ⟨(horizontal M v z.2 z.1, height M v z.2 z.1), by
+def retraction (M : PreAbstractSimplicialComplex V) (v : V)
+    (hv : ({v} : Finset V) ∈ M) : C(Space M × I, Cylinder M v hv) := by
+  refine ⟨?_, ?_⟩
+  · intro z
+    refine ⟨(horizontal M v z.2 z.1, height M v z.2 z.1), ?_⟩
     by_cases h : height M v z.2 z.1 = 0
     · exact Or.inl h
-    · exact Or.inr (horizontal_eq_vertex_of_height_ne_zero M v hv z.2 z.1 h)⟩
-  continuous_toFun := (continuous_horizontal M v |>.prodMk (continuous_height M v)).subtype_mk _
+    · exact Or.inr (horizontal_eq_vertex_of_height_ne_zero M v hv z.2 z.1 h)
+  · exact ((continuous_horizontal M v).prodMk (continuous_height M v)).subtype_mk _
 
 private theorem retraction_bottom (x : Space M) :
     (retraction M v hv (x, 0)).val = (x, 0) := by
@@ -284,7 +286,7 @@ theorem vertex_homotopy_extension (f : C(Space M, Y)) (h : C(I, Y))
   refine ⟨k.comp (retraction M v hv), ?_, ?_⟩
   · intro x
     change boundaryMap M v hv f h (retraction M v hv (x, 0)) = f x
-    simp only [boundaryMap, retraction_bottom M v hv x, if_pos rfl]
+    simp [boundaryMap, retraction_bottom M v hv x]
   · intro t
     change boundaryMap M v hv f h (retraction M v hv (vertexPoint M v hv, t)) = h t
     simp only [boundaryMap, retraction_vertex M v hv t]
