@@ -90,7 +90,7 @@ private theorem correlation_tendsto {A : ℝ} (hA : 0 ≤ A)
     (hf : ∀ k x, ‖f k x‖ ≤ A * exp (-|x|))
     (hlim : ∀ x, Tendsto (fun k => f k x) atTop (𝓝 (g x))) (s : ℝ) :
     Tendsto (fun k => weilTest (f k) (f k) s) atTop (𝓝 (weilTest g g s)) := by
-  simp_simp only [weilTest, convolution_def, ContinuousLinearMap.mul_apply', tilde, neg_sub]
+  simp only [weilTest, convolution_def, ContinuousLinearMap.mul_apply', tilde, neg_sub]
   apply tendsto_integral_of_dominated_convergence
     (fun x : ℝ => (A ^ 2 * exp (-3 * |s| / 4)) * majorant x)
   · intro k

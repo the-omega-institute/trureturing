@@ -166,7 +166,8 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
     change ((ArithmeticFunction.vonMangoldt 2 / Real.sqrt 2 : ℝ) : ℂ) *
       (weilTest (dependenceFamily 0) (dependenceFamily 0) (Real.log 2) +
         weilTest (dependenceFamily 0) (dependenceFamily 0) (-Real.log 2)) = 0
-    simp [dependenceFamily, weilTest, convolution_def, ContinuousLinearMap.mul_apply', tilde, neg_sub]
+    simp [dependenceFamily, weilTest, convolution_def,
+      ContinuousLinearMap.mul_apply', tilde, neg_sub]
   have hnonzero : ∀ᶠ k in atTop, actual.readout i dependenceFamily k 2 ≠ 0 :=
     hsamples.eventually (eventually_ne_nhds hz)
   obtain ⟨k, hk⟩ := hnonzero.exists
