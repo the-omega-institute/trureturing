@@ -148,8 +148,8 @@ theorem physical_isometry : Vᴴ * V = 1 := by
   ext i j
   have h := congrFun (congrFun noise_normalization i) j
   simp only [Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
-    noiseKraus, Fintype.sum_prod_type] at h ⊢
-  rw [Finset.sum_comm]
+    noiseKraus] at h ⊢
+  rw [Fintype.sum_prod_type, Finset.sum_comm]
   exact h
 
 /-- Appendix A.9 as a full matrix of purification amplitudes, including zeros. -/
@@ -183,7 +183,13 @@ theorem source_decoder_completion_independent (Uprime : Matrix P P ℂ)
 
 #print axioms full_source_svd
 #print axioms supported_action_unique
+#print axioms ancilla_normalized
+#print axioms source_permutation_unitary
+#print axioms physical_reference_amplitude
+#print axioms physical_pure_density
+#print axioms physical_isometry
 #print axioms source_purification_identity
+#print axioms source_recovered_amplitude
 #print axioms source_decoder_completion_independent
 
 end D5.S3.Quantum.Recovery.BurriReverseCompletion

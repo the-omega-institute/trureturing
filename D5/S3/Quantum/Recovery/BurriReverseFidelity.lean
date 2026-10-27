@@ -92,6 +92,8 @@ theorem composite_channel_action (decoder : QuantumChannel B A) (D : E → Matri
   simp only [composite, Fintype.sum_prod_type, Matrix.mul_sum, Matrix.sum_mul,
     Matrix.conjTranspose_mul, Matrix.mul_assoc]
 
+set_option maxRecDepth 4096 in
+-- The reindexed Kraus family retains all 144 pairs of physical labels.
 theorem actual_recovered_purification (decoder : QuantumChannel B A) (D : E → Matrix A B ℂ)
     (hD : ∀ T : Matrix B B ℂ, CStarMatrix.ofMatrix.symm
       (decoder.toCompletelyPositiveMap (CStarMatrix.ofMatrix T)) =

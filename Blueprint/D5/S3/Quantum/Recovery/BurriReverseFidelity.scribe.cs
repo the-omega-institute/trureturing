@@ -17,7 +17,9 @@ internal sealed class BurriReverseFidelityDocument : IScribeDocumentDefinition
             Entry("actual", "actual_recovered_purification", "The actual recovered purification",
                 "Composing the actual decoder channel with the actual physical noise channel and adjoining the identity reference gives exactly the previously calculated recovered purification, retaining all pairs of environment labels."),
             Entry("strict", "actual_strict_fidelity", "The strict reverse comparison",
-                "For this fixed explicit instance, the source-row composite has strictly smaller entanglement fidelity than the ordinary reference-completed Petz composite. The Petz value is 27/31. The strictness follows from the exact radical sum-of-squares gap. This is a single reverse instance; no joint theorem about both directions is asserted."))));
+                "For this fixed explicit instance, the source-row composite has strictly smaller entanglement fidelity than the ordinary reference-completed Petz composite. The Petz value is 27/31. The strictness follows from the exact radical sum-of-squares gap. This is a single reverse instance; no joint theorem about both directions is asserted."),
+            Entry("all", "actual_strict_fidelity_all_completions", "Every positive-polar completion loses strictly",
+                "For every full complex coisometry Uprime with M Uprime positive semidefinite, the literal prepared source Kraus rows define a channel whose entanglement fidelity is strictly below ordinary Petz. This follows from equality of the actual supported action, without fixing an arbitrary null-space rotation."))));
 
     private static DocumentBlock Entry(string id, string declaration, string title, string text) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
