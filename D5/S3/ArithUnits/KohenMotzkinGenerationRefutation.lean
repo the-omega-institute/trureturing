@@ -9,7 +9,11 @@
 import Mathlib.Algebra.Polynomial.Laurent
 import Mathlib.Algebra.Group.Subgroup.Lattice
 import Mathlib.Data.ZMod.Basic
-import Mathlib.Tactic
+import Mathlib.Tactic.IntervalCases
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+/-! # An identity-only generalized trinomial residue set -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -41,8 +45,9 @@ theorem result : ¬ claim := by
   have values : ∀ n : ℕ, n < 3 → central 3 1 n = if n = 2 then 19 else 1 := by
     intro n hn
     interval_cases n <;>
-      norm_num [central, step, pow_two, add_mul, mul_add, LaurentPolynomial.C,
-        LaurentPolynomial.T, AddMonoidAlgebra.single_mul_single,
+      simp only [central, step, ← LaurentPolynomial.single_eq_C_mul_T] <;>
+      simp only [← LaurentPolynomial.single_eq_C] <;>
+      norm_num [pow_two, add_mul, mul_add, AddMonoidAlgebra.single_mul_single,
         -LaurentPolynomial.single_eq_C_mul_T]
   have hnotdiv : ∀ n : ℕ, n < 3 → ¬ (3 : ℤ) ∣ central 3 1 n := by
     intro n hn
@@ -56,14 +61,23 @@ theorem result : ¬ claim := by
     apply Units.ext
     change (u : ZMod 3) = 1
     rw [hu, values n hn]
-    split_ifs <;> norm_num
-  letI : Fact (Nat.Prime 3) := ⟨by norm_num⟩
-  let u : (ZMod 3)ˣ := Units.mk0 2 (by norm_num)
+    split_ifs
+    · exact (ZMod.intCast_eq_intCast_iff' 19 1 3).2 (by norm_num)
+    · norm_num
+  have mul22 : (2 : ZMod 3) * 2 = 1 := by
+    calc
+      (2 : ZMod 3) * 2 = ((4 : ℕ) : ZMod 3) := by ring
+      _ = ((1 : ℕ) : ZMod 3) :=
+        (ZMod.natCast_eq_natCast_iff' 4 1 3).2 (by norm_num)
+      _ = 1 := rfl
+  let u : (ZMod 3)ˣ := ⟨2, 2, mul22, mul22⟩
   have hu : u ∈ Subgroup.closure (generators 3 3 1) := by
     rw [hgen]
     exact Subgroup.mem_top u
   have heq : u = 1 := Subgroup.mem_bot.mp (hle hu)
-  have htwo := congrArg (fun v : (ZMod 3)ˣ => (v : ZMod 3)) heq
-  norm_num [u] at htwo
+  have htwo : ((2 : ℕ) : ZMod 3) = ((1 : ℕ) : ZMod 3) :=
+    congrArg (fun v : (ZMod 3)ˣ => (v : ZMod 3)) heq
+  have hnat := (ZMod.natCast_eq_natCast_iff' 2 1 3).1 htwo
+  norm_num at hnat
 
 end D5.S3.ArithUnits.KohenMotzkinGenerationRefutation
