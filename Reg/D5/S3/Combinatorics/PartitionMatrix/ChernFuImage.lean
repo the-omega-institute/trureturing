@@ -15,7 +15,7 @@ namespace Reg.D5.S3.Combinatorics.PartitionMatrix.ChernFuImage
 
 abbrev signature : Signature where
   Params := ℕ
-  State _ := List ℕ
+  State n := Fin n → ℕ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -26,8 +26,7 @@ abbrev signature : Signature where
 noncomputable def actual : Realization signature := by
   classical
   exact realize signature
-    (fun _ n e => decide (∃ (k : ℕ) (P : NativePM n k), Improper P ∧
-      fixedPi P = fun t : Fin n => e.getD t.val 0))
+    (fun _ _ f => decide (Phi f))
     (fun e => nomatch e)
 
 def rejected : Realization signature := realize signature
@@ -37,7 +36,9 @@ abbrev arena : Arena where
   signature := signature
   Law r := ∀ (n : ℕ) (hn : 0 < n) (e : List ℕ) (hlen : e.length = n)
     (he : IsInversionSeq e),
-    r.readout () n e = true ↔ Phi (fun t : Fin n => e.getD t.val 0)
+    (∃ (k : ℕ) (P : NativePM n k), Improper P ∧
+      fixedPi P = fun t : Fin n => e.getD t.val 0) ↔
+      r.readout () n (fun t : Fin n => e.getD t.val 0) = true
 
 private theorem inv_one : IsInversionSeq [0] := by
   intro i hi
@@ -45,40 +46,26 @@ private theorem inv_one : IsInversionSeq [0] := by
   subst i
   decide
 
-private theorem inv_three_zero : IsInversionSeq [0,0,0] := by
-  intro i hi
-  have h : i = 0 ∨ i = 1 ∨ i = 2 := by
-    simp only [List.length_cons,List.length_nil] at hi
-    omega
-  rcases h with h | h | h <;> subst i <;> decide
-
-private theorem inv_three_gap : IsInversionSeq [0,0,1] := by
-  intro i hi
-  have h : i = 0 ∨ i = 1 ∨ i = 2 := by
-    simp only [List.length_cons,List.length_nil] at hi
-    omega
-  rcases h with h | h | h <;> subst i <;> decide
-
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h 1 (by decide) [0] rfl inv_one
-  have hfalse := hh.mpr (by unfold Phi; decide)
-  exact Bool.noConfusion hfalse
+  have himage := (_root_.D5.S3.Combinatorics.PartitionMatrix.ChernFuImage.result
+    1 (by decide) [0] rfl inv_one).mpr (by unfold Phi; decide)
+  exact Bool.noConfusion (hh.mp himage)
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   classical
   intro i
-  have hp : actual.readout i 3 [0,0,0] = true := by
-    apply decide_eq_true (_root_.D5.S3.Combinatorics.PartitionMatrix.ChernFuImage.result
-      3 (by decide) [0,0,0] rfl inv_three_zero |>.mpr (by unfold Phi; decide))
-  have hq : actual.readout i 3 [0,0,1] = false := by
+  have hp : actual.readout i 3 (fun _ => 0) = true := by
+    apply decide_eq_true
+    unfold Phi
+    decide
+  have hq : actual.readout i 3
+      (fun t => ([0,0,1] : List ℕ).getD t.val 0) = false := by
     apply decide_eq_false
-    intro hh
-    have := (_root_.D5.S3.Combinatorics.PartitionMatrix.ChernFuImage.result
-      3 (by decide) [0,0,1] rfl inv_three_gap).mp hh
-    exact (by unfold Phi; decide : ¬ Phi (fun t : Fin 3 =>
-      ([0,0,1] : List ℕ).getD t.val 0)) this
-  refine ⟨3,[0,0,0],[0,0,1],?_⟩
+    unfold Phi
+    decide
+  refine ⟨3,(fun _ => 0),(fun t => ([0,0,1] : List ℕ).getD t.val 0),?_⟩
   rw [hp,hq]
   intro h
   cases h
@@ -129,10 +116,10 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body","body","body","body","body","fn","arg"]
-      stateBinder := 2
+      path := #["body","body","body","body","body","arg"]
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["arg"]
       booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
