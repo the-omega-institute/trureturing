@@ -216,4 +216,77 @@ theorem cumulative_proportionality_card (w : List Bool) (L : Mat) :
 
 #print axioms cumulative_not_proportional_adjacent
 #print axioms cumulative_proportionality_card
+
+private theorem cumulative_not_proportional_pair (w : List Bool) (i : ℕ)
+    (hi : i+2 ≤ w.length) (hM : w[i] = false ∨ w[i+1] = false) (c : ℝ) :
+    acquisition (w.take (i+2)) ≠ c • acquisition (w.take i) := by
+  intro he
+  have h1 : w.take (i+1) = w.take i ++ [w[i]] := by
+    rw [List.take_add_one, List.getElem?_eq_getElem (by omega)]
+    rfl
+  have h2 : w.take (i+2) = w.take (i+1) ++ [w[i+1]] := by
+    rw [show i+2 = (i+1)+1 by omega, List.take_add_one,
+      List.getElem?_eq_getElem (by omega)]
+    rfl
+  rw [h2, h1, acquisition_append, acquisition_append, ← mul_assoc] at he
+  have hh : action w[i+1] * action w[i] = c • (1 : Mat) :=
+    (acquisition_unit (w.take i)).mul_right_cancel (by simpa [Matrix.smul_mul] using he)
+  have h00 := congrArg (fun X : Mat => X 0 0) hh
+  have h01 := congrArg (fun X : Mat => X 0 1) hh
+  have h10 := congrArg (fun X : Mat => X 1 0) hh
+  cases ha : w[i] <;> cases hb : w[i+1] <;>
+    simp_all [action_m_shape, action_j_shape, Matrix.mul_apply, Fin.sum_univ_two]
+
+/-- An even-length word containing M has no maximal alternating proportionality class. -/
+theorem cumulative_proportionality_card_even (w : List Bool) (m : ℕ)
+    (hlen : w.length = 2*m) (hM : false ∈ w) (L : Mat) :
+    (Finset.univ.filter (fun i : Fin (w.length+1) =>
+      ∃ c : ℝ, acquisition (w.take i.val) = c • L)).card ≤ m := by
+  classical
+  obtain ⟨r,hr,hrM⟩ := List.mem_iff_getElem.mp hM
+  let k := 2*(r/2)
+  have hk : k+2 ≤ w.length := by dsimp [k]; omega
+  have hMk : w[k] = false ∨ w[k+1] = false := by
+    have hrk : r = k ∨ r = k+1 := by dsimp [k]; omega
+    rcases hrk with h | h
+    · left; simpa [← h] using hrM
+    · right; simpa [← h] using hrM
+  let Q : Finset (Fin (w.length+1)) := Finset.univ.filter
+    (fun i => ∃ c : ℝ, acquisition (w.take i.val) = c • L)
+  have hsep (i j : Fin (w.length+1)) (hi : i ∈ Q) (hj : j ∈ Q) :
+      i.val+1 ≠ j.val ∧ ¬ (i.val = k ∧ j.val = k+2) := by
+    obtain ⟨c,hc⟩ := (Finset.mem_filter.mp hi).2
+    obtain ⟨b,hb⟩ := (Finset.mem_filter.mp hj).2
+    have hcn : c ≠ 0 := by
+      intro hz
+      exact (acquisition_unit (w.take i.val)).ne_zero (by simpa [hz] using hc)
+    have he : acquisition (w.take j.val) = (b/c) • acquisition (w.take i.val) := by
+      rw [hb,hc,smul_smul,div_mul_cancel₀ _ hcn]
+    constructor
+    · intro hij
+      rw [← hij] at he
+      exact cumulative_not_proportional_adjacent w i.val (by omega) (b/c) he
+    · rintro ⟨hi,hj⟩
+      rw [hi,hj] at he
+      exact cumulative_not_proportional_pair w k hk hMk (b/c) he
+  let bucket (i : Fin (w.length+1)) := if i.val ≤ k then i.val/2 else (i.val-1)/2
+  have hinj : Set.InjOn bucket (Q : Set (Fin (w.length+1))) := by
+    intro i hi j hj he
+    have h1 := hsep i j hi hj
+    have h2 := hsep j i hj hi
+    apply Fin.ext
+    dsimp [bucket] at he
+    have hke : k = 2*(r/2) := rfl
+    split_ifs at he <;> omega
+  have hsub : Q.image bucket ⊆ Finset.range m := by
+    intro b hb
+    obtain ⟨i,hi,rfl⟩ := Finset.mem_image.mp hb
+    simp only [Finset.mem_range]
+    dsimp [bucket]
+    split_ifs <;> omega
+  have hh := Finset.card_le_card hsub
+  rw [Finset.card_image_of_injOn hinj, Finset.card_range] at hh
+  exact hh
+
+#print axioms cumulative_proportionality_card_even
 end D5.S3.Observer.Linear.GainRay
