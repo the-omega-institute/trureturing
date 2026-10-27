@@ -318,9 +318,10 @@ private lemma base_unital : ∑ i, star (baseKraus i) * baseKraus i = 1 := by
     exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
   have hne : (Real.sqrt 3 : ℂ) ≠ 0 := by
     exact_mod_cast ne_of_gt (Real.sqrt_pos.mpr (by norm_num : (0 : ℝ) < 3))
+  dsimp only [baseKraus]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [baseKraus, Matrix.mul_apply, Fin.sum_univ_three,
+    norm_num [Matrix.mul_apply, Fin.sum_univ_three,
       Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply,
       Matrix.vecMul_apply_eq_sum] <;>
     field_simp <;> ring_nf <;> norm_num [map_ofNat, htwo, hthree]
@@ -332,9 +333,10 @@ private lemma base_trace : ∑ i, baseKraus i * star (baseKraus i) = 1 := by
     exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
   have hne : (Real.sqrt 3 : ℂ) ≠ 0 := by
     exact_mod_cast ne_of_gt (Real.sqrt_pos.mpr (by norm_num : (0 : ℝ) < 3))
+  dsimp only [baseKraus]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [baseKraus, Matrix.mul_apply, Fin.sum_univ_three,
+    norm_num [Matrix.mul_apply, Fin.sum_univ_three,
       Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply,
       Matrix.vecMul_apply_eq_sum] <;>
     field_simp <;> ring_nf <;> norm_num [map_ofNat, htwo, hthree]
@@ -383,9 +385,10 @@ private lemma base_left_independent : LinearIndependent ℂ
   have heq : (∑ a, ∑ b, z p.1 p.2 a b *
       (∑ q : Fin 3 × Fin 3, c q •
         (star (baseKraus q.1) * baseKraus q.2)) a b) = c p := by
+    dsimp only [baseKraus]
     rcases p with ⟨i, j⟩
     fin_cases i <;> fin_cases j <;>
-      norm_num [z, baseKraus, Fintype.sum_prod_type, Fin.sum_univ_three,
+      norm_num [z, Fintype.sum_prod_type, Fin.sum_univ_three,
         Matrix.mul_apply, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply,
         Matrix.vecMul_apply_eq_sum] <;>
       field_simp <;> ring_nf <;> norm_num [map_ofNat, htwo, hthree] <;> ring
@@ -436,9 +439,10 @@ private lemma base_right_independent : LinearIndependent ℂ
   have heq : (∑ a, ∑ b, z p.1 p.2 a b *
       (∑ q : Fin 3 × Fin 3, c q •
         (baseKraus q.1 * star (baseKraus q.2))) a b) = c p := by
+    dsimp only [baseKraus]
     rcases p with ⟨i, j⟩
     fin_cases i <;> fin_cases j <;>
-      norm_num [z, baseKraus, Fintype.sum_prod_type, Fin.sum_univ_three,
+      norm_num [z, Fintype.sum_prod_type, Fin.sum_univ_three,
         Matrix.mul_apply, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply,
         Matrix.vecMul_apply_eq_sum] <;>
       field_simp <;> ring_nf <;> norm_num [map_ofNat, htwo, hthree] <;> ring
@@ -464,20 +468,23 @@ private lemma base_decomposition :
     exact_mod_cast ne_of_gt (Real.sqrt_pos.mpr (by norm_num : (0 : ℝ) < 2))
   constructor
   · rw [Matrix.mem_unitaryGroup_iff']
+    dsimp only [baseUnitary]
     ext i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [baseUnitary, Matrix.mul_apply, Fin.sum_univ_three,
+      norm_num [Matrix.mul_apply, Fin.sum_univ_three,
         Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply,
         Matrix.vecMul_apply_eq_sum] <;>
       ring_nf <;> norm_num [map_ofNat, htwo, hfour]
   · intro ρ
     rw [hmr_action, kraus_action]
+    dsimp only [hmrKraus, baseKraus, baseUnitary]
     ext i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [hmrKraus, baseKraus, baseUnitary, Matrix.mul_apply,
+      norm_num [Matrix.mul_apply,
         Fin.sum_univ_three, Fin.sum_univ_four, Matrix.star_eq_conjTranspose,
         Matrix.conjTranspose_apply, Matrix.vecMul_apply_eq_sum] <;>
-      field_simp <;> ring_nf <;> norm_num [map_ofNat, htwo, hthree, hfour] <;> ring
+      field_simp (disch := first | assumption | norm_num) <;>
+      ring_nf <;> norm_num [map_ofNat, htwo, hthree, hfour] <;> ring
 
 private lemma phase_parameters (α β : ℂ)
     (hα : ‖α‖ = 1 / Real.sqrt 2) (hβ : ‖β‖ = 1 / Real.sqrt 2) :
@@ -573,13 +580,15 @@ private lemma phase_reduction (α β : ℂ)
   apply LinearMap.ext
   intro ρ
   rw [conjugate_action, hmr_action, hmr_action]
+  dsimp only [hmrKraus, diagonalPhase]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [hmrKraus, diagonalPhase, halpha, hbeta, Matrix.mul_apply,
+    norm_num [halpha, hbeta, Matrix.mul_apply,
       Fin.sum_univ_three, Fin.sum_univ_four, Matrix.star_eq_conjTranspose,
       Matrix.conjTranspose_apply, Matrix.vecMul_apply_eq_sum, star_mul, star_div₀,
       star_pow, hrstar, hsstar] <;>
-    field_simp <;> ring_nf <;> norm_num [map_ofNat, htwo, hfour] <;> ring
+    field_simp (disch := first | assumption | norm_num) <;>
+    ring_nf <;> norm_num [map_ofNat, htwo, hfour] <;> ring
 
 private lemma conjugate_cp (d e : Matrix (Fin 3) (Fin 3) ℂ)
     (φ : MatrixMap (Fin 3) (Fin 3) ℂ) (hφ : φ.IsCompletelyPositive) :
