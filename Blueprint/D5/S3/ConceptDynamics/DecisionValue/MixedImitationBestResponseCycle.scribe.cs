@@ -26,13 +26,13 @@ internal sealed class MixedImitationBestResponseCycleDocument : IScribeDocumentD
                     + "This expresses the maximization in the imitation rule at lines 149–155. "
                     + "Both strategies can have maximizing neighbours; with no neighbours neither strategy does."),
             Node("update", "The active agent's new strategy", UpdateFormula(),
-                AssessedProvenance.FromRepo(Source),
+                AssessedProvenance.FromLiterature(Source),
                 "An agent with imitator i equal to true copies the strategy of its highest-earning neighbours when that strategy is unique. "
                     + "If both strategies occur among those neighbours, it retains x i. "
                     + "An agent with imitator i equal to false compares its own utilities after replacing its strategy by false and by true, "
                     + "takes the strictly better strategy, and retains x i when the utilities are equal. "
                     + "These are the rules and tie convention of lines 149–167. "
-                    + "The definition also specifies a value for an imitator with no neighbours: it retains x i."),
+                    + "As a repository totalization convention, an imitator with no neighbours retains x i; the cited argmax rule leaves this case unspecified."),
             Node("step", "One asynchronous update", StepFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 "Only coordinate i changes, to the value prescribed by update. Every other coordinate remains equal to its value in x. "
