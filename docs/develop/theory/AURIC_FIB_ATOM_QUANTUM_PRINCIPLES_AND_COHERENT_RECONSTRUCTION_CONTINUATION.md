@@ -55,9 +55,13 @@ b=\sqrt{(5-\sqrt{17})/2},\quad \delta=a-b>0.
 \tag{37.4}
 $$
 
-These are the existing frequencies of [Second Order, Theorem 63.2][SO],
-[Static Compatibility, (44.1)][SC] and [Measurement Relative Boundary,
-Theorem 4.1][MR]. Choose orthonormal eigenvectors $v_+,v_-$ of $C$ for
+The Hamiltonian is [Second Order, Assumption 63.1][SO]; its Theorem 63.2
+gives the bright/dark split. The exact frequencies are those of
+[Static Compatibility, (44.1)][SC] and the proof of [Measurement Relative
+Boundary, Theorem 4.1][MR], with $a=\omega_+$ and $b=\omega_-$.
+Equivalently, the local matrix $C$ in (37.3) has characteristic polynomial
+$\lambda^2-5\lambda+2$, giving (37.4). Choose orthonormal eigenvectors
+$v_+,v_-$ of $C$ for
 $a^2,b^2$, each with positive first component. Define
 
 $$
@@ -445,6 +449,6 @@ these mathematical and empirical bridges unresolved.
 [SO]: AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md
 [SC]: AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md
 [MR]: RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md
-[BKS]: ../../../Library/Quantum/boixoknillsomma2009randomization.md
+[BKS]: ../../../Library/Fourier/boixoknillsomma2009randomization.md
 
 ## 追加锚（本行以下为增补区）

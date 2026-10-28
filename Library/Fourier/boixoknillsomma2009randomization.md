@@ -3,6 +3,7 @@ bibkey: boixoknillsomma2009randomization
 title: Quantum state preparation by phase randomization
 authors: Sergio Boixo, Emanuel Knill, Rolando D. Somma
 year: 2009
+doi: null
 url: https://arxiv.org/abs/0903.1652v2
 claim: Random evolution times multiply spectral coherences by their characteristic function; independent sums multiply those functions, and fair two-point waits cancel specified known gaps exactly.
 strata_touched: []
