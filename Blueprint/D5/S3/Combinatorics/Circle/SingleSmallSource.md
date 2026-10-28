@@ -18,9 +18,9 @@ Let k>=3, N=2^k-1, C=N div 2=2^(k-1)-1, Q=2^(k-2), and f(i)=SourceWidth.actualSo
 
 phase(a,j) is the existing forward physical label (a.val+j) mod k. Its omitted argument is a proof of 0<k. orientedPhaseSource(k,t,a,j) abbreviates orient(decide(f(a)<0), f(phase(a,j))); ite denotes the ordinary conditional. These are display abbreviations, not new Lean definitions. The profile and its strict sign clause hold for every 1<=j<=k, including the returning endpoint.
 
-Orient signs so w(0)=s=|f(a)|. The SMALL step has no wrap and w(1)=2s. Since phase(a,1) is a different physical label and LARGE, s is positive. For phases 1 through k-1, centered bounds and LARGE force a sign change at each step. A simultaneous induction proves the sign alternation and 3w(j)=(N for odd j, -N for even j)+2^(j-1)*(6s-N). The physical return w(k)=s forces k odd. Writing A=2^(k-1), closure gives 3s=N+A(6s-N), while N=2A-1 and C=A-1. Cancellation of positive N yields 3s=C and 6s-N=-1. This is the new period-closing inference.
+Orient signs so w(0)=s=|f(a)|. The SMALL step has no wrap and w(1)=2s. Since phase(a,1) is a different physical label and LARGE, s is positive. For phases 1 through k-1, centered bounds and LARGE force a sign change at each step. A simultaneous induction proves the sign alternation and 3w(j)=(N for odd j, -N for even j)+2^(j-1)*(6s-N). The physical return w(k)=s forces k odd. Writing A=2^(k-1), closure gives 3s=N+A(6s-N), while N=2A-1 and C=A-1. Cancellation of positive N yields 3s=C and 6s-N=-1.
 
-The proof reuses ExpandingSourcePath.phase_step, including its native centered_full_period seam, source_geometry and doubleStep_neg, and MixedSuffixEnergy.orient_choose. BinaryRunSource owns carry/run counting, TwoRunSource assumes a distinct least-period crossing condition, and antipodal completion assumes actual opposite values. None is used as an unproved replacement for the unique-SMALL inference. The result is a restricted native-source base case with no upper bound on the number k-1 of LARGE labels; it does not settle arbitrary-source Circle C3.1.
+The sign changes belong to the native centered doubling dynamics, including its return across the physical seam. There is no upper bound on k in the statement or on the number k-1 of LARGE labels. This restricted native-source result leaves arbitrary-source Circle C3.1 open.
 
 **Theorem 1.2 (One complete forward physical permutation at half width).**
 
@@ -38,7 +38,7 @@ For the oriented positive source g define the unsigned height v(i)=g(i)+N when g
 
 For the original source use its unsigned height u=f+N when f<0 and u=f otherwise. If f(a)>0 then u=v, so a attains the minimum. If f(a)<0 then u=N-v, since no source value is zero, so phase(a,2) attains the minimum. In both cases 0<=u(i)-u(start)<=3s=C. SourceWidth.unsigned_step, path_range and path_sum telescope each forward prefix to this height difference. A natural take uses min(n,k), covering n=0, n=k and n>k; closure gives sum zero.
 
-Physical permutation is proved using finCycle(start).map_finRange_perm. Distinct labels remain distinct occurrences even when their numerical values agree, and no numerical period quotient is used. Any shorter numerical period is handled by the same physical statement rather than excluded by a premise. The package supplies this one-defect completion only: completion for two SMALL labels, the arbitrary-source exchange, and full Circle C3.1 remain open. The family-template registration audit is unfinished under the linked issue 22063 and is not claimed validated.
+Physical permutation is proved using finCycle(start).map_finRange_perm. Distinct labels remain distinct occurrences even when their numerical values agree, and no numerical period quotient is used. Any shorter numerical period is handled by the same physical statement rather than excluded by a premise. The package supplies this one-defect completion only: completion for two SMALL labels, the arbitrary-source exchange, and full Circle C3.1 remain open.
 
 ## References
 
