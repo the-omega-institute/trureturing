@@ -1,5 +1,8 @@
 import D5.S3.ConceptDynamics.Coding.PrimitiveLifts.RootMultiplicityMonoid
 import Reg.Support.DependentFamily
+import LeanInformationAuditInterface.Contract.Registration
+
+/-! Source-bound sum observations for the mixed-exponent multiplicity criterion. -/
 
 open LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -37,7 +40,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨L, hL, _⟩ := (h 0 0 1 0 (by decide)).mpr (by norm_num)
   change 1 = 0 at hL
-  omega
+  exact Nat.one_ne_zero hL
 
 def family : Registration arena (type_of% allowed_sum_iff) where
   actual := actual
@@ -48,7 +51,7 @@ def family : Registration arena (type_of% allowed_sum_iff) where
     fun e => nomatch e⟩
   dependence := by
     intro i
-    exact ⟨(0,0,1,0), [], [1], by decide⟩
+    exact ⟨(0,0,1,0), [], [1], by change (0 : ℕ) ≠ 1; decide⟩
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@allowed_sum_iff)
