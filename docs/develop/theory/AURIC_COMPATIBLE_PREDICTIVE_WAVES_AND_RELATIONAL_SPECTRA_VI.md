@@ -3127,3 +3127,420 @@ $$
 (111.3) 的下界是整个 $\mathcal H_0$ 上算子范数亏量的下界；它给 (111.17) 的衰减上包络，不给特定原 $\rho_0$ 的误差下界或单制备所需时间下界。上包络对固定 $\delta_N>0$ 衰减，而允许安装的 $\delta_N$ 可任意趋于零，故此上包络不提供跨全部安装的统一有限费用；原制备的非统一人口结论仍限于定理 103.3 所列 $d\ne2/3$ 的条件。装置取得、标定、相干保存、档案对齐与晚测合成的费用仍是定义 105.3 的额外取得问题；上述矩阵估计不增加操作权利，也不补足那里要求的原生共同实现映射或 §§106–110 的保留／返回前提。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 114. Joint retention identification with an unknown full return completion
+
+**Definition 114.1 (Shared source and the full original probability family).**
+An allowed source $\mathfrak s$ consists of the source of §§106–108:
+fixed $0<d<1$, $\sin(2\theta)\ne0$, the installed qutrit unitary $N$
+with $[N,P_\xi]\ne0$, and nine actual weighted prefix events
+$r_i=A_{u_i}(\rho_0)$ spanning $\operatorname{Herm}_3$, as supplied by
+V §§92–93. All original preparations, operations, clocks, record bases,
+and labels are fixed by this source.
+
+An admissible hypothesis is one pair $(\gamma,\mathsf J)$, where
+$|\gamma|\le1$ and $\mathsf J$ is one fixed full ten-dimensional
+completion in Definition 106.1, with the retention, spectator and
+forward-return premises of Assumption 106.2. The same $\mathsf J$
+is used for emission and return within that hypothesis, for every
+history. Two hypotheses may have different completions $\mathsf J$
+and $\mathsf J'$, each with the same five prescribed ready columns.
+This comparison does not make either completion selectable.
+
+Write $h=B^\dagger T^\dagger\zeta$ as in (106.3). Theorem 106.3 gives
+$\|h\|\le1$, realizes every vector in this closed ball by a fixed full
+completion, and makes the terminal laws depend on the completion only
+through $h$. Define
+
+$$
+\begin{gathered}
+\mathcal P=\{(\gamma,h)\in\mathbb C\times\mathbb C^3:
+                         |\gamma|\le1,\ \|h\|\le1\},\\
+\mathcal I_{\mathfrak s}
+ =\{(i,w,b):1\le i\le9,\quad
+           w\text{ a finite actual intermediate history},\quad b\in\{0,1\}\},\\
+\mathcal O_{\mathfrak s}(\gamma,h)
+ =\bigl(p_{\gamma,h}(u_i,w,b)\bigr)_{(i,w,b)\in\mathcal I_{\mathfrak s}} .
+\end{gathered}
+\tag{114.1}
+$$
+
+Here every coordinate is the unconditioned probability in (107.2) and
+(107.4). Intermediate histories use precisely the installed menu
+$\{0,1,N\}$ with the original externally fixed schedules and actual
+labels. The family denotes laws across those contexts; it does not
+grant a selected label, a preparation lottery, an experimental
+repetition service, or a new calibration operation.
+
+The source-specific varying-completion calculation below is
+repo-derived in ordinary complex matrix mathematics. The orbit-pairing
+principle is the established intermediate of D'Alessandro,
+[*On Quantum State Observability and Measurement*, §2, Theorem 1](https://arxiv.org/html/quant-ph/0307127v1),
+also recorded in the Library notes
+[Fibonacci observable completion](../../../Library/Quantum/fibonacci2009quantumobservable2003.md)
+and [native control](../../../Library/QuantumChannels/numatayamanouchi2022nativecontrol.md).
+The actual positive-word conjugation density used here is V Theorem
+95.1. Neither that general principle nor the implementation-dependence
+background of Abbott et al.,
+[*Communication Through Coherent Control of Quantum Channels*, §§4–5 and Appendix C](https://arxiv.org/html/1810.09826v3),
+is a new assertion of this section. The latter's controlled-path
+transformation matrices use a different comparison interface; they
+do not supply the present return service or the calculation below.
+
+**Proposition 114.2 (The two diagonal blocks and the exact original effects).**
+Put $c=\cos\theta$, $s=\sin\theta$, and retain the source constants
+$D,t,b$ from (106.3). Define
+
+$$
+\begin{aligned}
+H_h&=bhh^\dagger,\qquad T_h=th^\dagger,\\
+A_h&=c^2D+s^2H_h+i sc(T_h^\dagger-T_h),\\
+B_h&=s^2D+c^2H_h+i sc(T_h-T_h^\dagger),\\
+K_h&=s^2T_h+c^2T_h^\dagger+i sc(D-H_h).
+\end{aligned}
+\tag{114.2}
+$$
+
+For a finite actual intermediate history $w$, let $Q_w=C_wV_0$ and
+$a_w=2^{-k(w)}>0$ as in Definition 107.1. Then
+
+$$
+\begin{aligned}
+E_{\gamma,h}(Q)
+ &=Q^\dagger A_hQ+WQ^\dagger B_hQW
+       +\gamma WQ^\dagger K_hQ
+       +\bar\gamma Q^\dagger K_h^\dagger QW,\\
+p_{\gamma,h}(u_i,w,1)
+ &=\frac{a_w}{2}\operatorname{Tr}
+                         [r_iE_{\gamma,h}(Q_w)],\\
+p_{\gamma,h}(u_i,w,0)
+ &=a_w\operatorname{Tr}r_i-p_{\gamma,h}(u_i,w,1).
+\end{aligned}
+\tag{114.3}
+$$
+
+In particular, equality of the two probability families is equivalent to
+$E_{\gamma,h}(Q)=E_{\gamma',h'}(Q)$ for every $Q\in U(3)$.
+
+Proof. In the original record basis (101.2),
+$g_0=cf_0-isf_1$ and $g_1=-isf_0+cf_1$. Therefore the two diagonal
+blocks and the row-$1$, column-$0$ block of (106.4) are respectively
+
+$$
+\begin{aligned}
+(c,is)\begin{pmatrix}D&T_h\\T_h^\dagger&H_h\end{pmatrix}
+                \binom{c}{-is}
+ &=c^2D+s^2H_h+i sc(T_h^\dagger-T_h),\\
+(is,c)\begin{pmatrix}D&T_h\\T_h^\dagger&H_h\end{pmatrix}
+                \binom{-is}{c}
+ &=s^2D+c^2H_h+i sc(T_h-T_h^\dagger),\\
+(is,c)\begin{pmatrix}D&T_h\\T_h^\dagger&H_h\end{pmatrix}
+                \binom{c}{-is}
+ &=s^2T_h+c^2T_h^\dagger+i sc(D-H_h).
+\end{aligned}
+\tag{114.4}
+$$
+
+Thus $K_h$ has exactly the sign convention of (107.3) and (107.6).
+Since $V_1=V_0W$ and $W=W^\dagger=W^{-1}$, the four terms of (107.2),
+paired with $F_1$, give the first two lines of (114.3).
+Their total trace is $a_w\operatorname{Tr}r_i$, independently of
+$\gamma$ and $h$, by the orthogonality of the two record columns
+before return. This gives the last line.
+
+If the probabilities agree, positivity of $a_w$ gives
+$\operatorname{Tr}[r_i(E_{\gamma,h}(Q_w)-
+E_{\gamma',h'}(Q_w))]=0$ for all nine $i$. The difference is Hermitian.
+The real span of the actual $r_i$ is $\operatorname{Herm}_3$, so its
+pairing with every Hermitian matrix vanishes; pairing with itself
+shows that it is zero. No prefix mass has been normalized.
+V Theorem 95.1 makes the conjugations by actual positive words dense
+in all projective unitary conjugations. Every occurrence of $Q$ in
+$E_{\gamma,h}(Q)$ is a conjugation $Q^\dagger M Q$ followed or
+preceded by the fixed $W$, so a scalar phase of $Q$ cancels.
+Right multiplication by the fixed $V_0$ preserves this density.
+Continuity then extends the equality from $Q_w$ to every $Q\in U(3)$.
+Conversely such a matrix equality implies all probabilities in
+(114.3) agree. This is an implication between exact laws, not an
+installation of the limit unitaries or inverse gates. $\square$
+
+**Theorem 114.3 (Retention and the complete terminal nuisance fibers).**
+For every allowed source $\mathfrak s$ and every two
+$(\gamma,h),(\gamma',h')\in\mathcal P$,
+
+$$
+\mathcal O_{\mathfrak s}(\gamma,h)
+ =\mathcal O_{\mathfrak s}(\gamma',h')
+\quad\Longrightarrow\quad \gamma=\gamma'.
+\tag{114.5}
+$$
+
+More precisely, equality holds if and only if
+
+$$
+\begin{gathered}
+\gamma=\gamma',\qquad hh^\dagger=h'h'^\dagger,\\
+h-h'=rt\text{ for some }r\in\mathbb R,\qquad \gamma r=0.
+\end{gathered}
+\tag{114.6}
+$$
+
+Equivalently, after requiring $\gamma=\gamma'$, either $h=h'$, or
+$\gamma=0$ and there are real $x\ne0,y$ such that
+
+$$
+h=(x+iy)t,\qquad h'=(-x+iy)t,\qquad
+(x^2+y^2)\|t\|^2\le1.
+\tag{114.7}
+$$
+
+Thus every nonzero retention value has singleton fibers in the
+terminal-relevant variable $h$. At zero retention the only nonsingleton
+fibers are the two reflected vectors in (114.7).
+
+Proof. Suppose the laws agree. By Proposition 114.2, set
+
+$$
+X=A_h-A_{h'},\qquad Y=B_h-B_{h'},\qquad
+L=\gamma K_h-\gamma'K_{h'}.
+$$
+
+Then $X,Y$ are Hermitian, and for all $Q\in U(3)$,
+
+$$
+Q^\dagger XQ+WQ^\dagger YQW
+       +WQ^\dagger LQ+Q^\dagger L^\dagger QW=0.
+\tag{114.8}
+$$
+
+Let $P_\pm=(I_3\pm W)/2$. Their ranges have dimensions two and one,
+respectively, since $W=I_3-2ff^\dagger$. A fixed unit vector $v_+$
+in the plus range has diagonal expectation in (114.8)
+
+$$
+\langle Qv_+,(X+Y+L+L^\dagger)Qv_+\rangle=0.
+$$
+
+As $Q$ varies, $Qv_+$ ranges over every unit vector. The Hermitian
+matrix $X+Y+L+L^\dagger$ is therefore zero. The same argument with
+a unit vector $v_-$ in the minus range gives
+$X+Y-L-L^\dagger=0$. Indeed a Hermitian matrix with every quadratic
+form zero has every eigenvalue zero. Adding and subtracting yield
+
+$$
+X+Y=0,\qquad L^\dagger=-L,\qquad
+b(hh^\dagger-h'h'^\dagger)=0.
+\tag{114.9}
+$$
+
+The last equality uses $A_h+B_h=D+bhh^\dagger$.
+The source has $b>0$, so $hh^\dagger=h'h'^\dagger$.
+The $(+,-)$ block of (114.8), using $Y=-X$ and $L^\dagger=-L$, is
+
+$$
+2P_+Q^\dagger(X+L)QP_-=0\qquad(Q\in U(3)).
+\tag{114.10}
+$$
+
+Every orthonormal pair $x,y$ is the image under some unitary $Q$
+of a fixed pair $v_+,v_-$. Hence
+$\langle x,(X+L)y\rangle=0$ whenever $x\perp y$.
+For each nonzero $y$ this says $(X+L)y$ is proportional to $y$.
+Applying this first to the members $e_j$ of an orthonormal basis,
+and then to $e_j+e_k$, shows that the proportionality constants
+are all equal. Consequently $X+L=kI_3$ for some $k\in\mathbb C$.
+Taking Hermitian and skew-Hermitian parts gives
+
+$$
+X=(\operatorname{Re}k)I_3,\qquad
+L=i(\operatorname{Im}k)I_3.
+\tag{114.11}
+$$
+
+Let $\delta=h-h'$. The outer-product equality in (114.9) reduces
+the difference in (114.2) to
+
+$$
+X=i sc(\delta t^\dagger-t\delta^\dagger).
+\tag{114.12}
+$$
+
+Its range is contained in $\operatorname{span}\{\delta,t\}$, of
+dimension at most two. A nonzero scalar matrix has rank three,
+so (114.11) forces $X=0$. Since $sc\ne0$,
+$\delta t^\dagger=t\delta^\dagger$. For
+$P_t^\perp=I_3-tt^\dagger/\|t\|^2$, multiplying this equality by
+$P_t^\perp$ on the left and by $t$ on the right gives
+$\|t\|^2P_t^\perp\delta=0$. Here $t\ne0$ by (106.3).
+Thus $\delta=\beta t$, and substitution gives
+$(\beta-\bar\beta)tt^\dagger=0$, so $\beta=r\in\mathbb R$.
+We have proved
+
+$$
+hh^\dagger=h'h'^\dagger,\qquad h-h'=rt,\quad r\in\mathbb R,
+\qquad L=i\lambda I_3,\quad\lambda\in\mathbb R.
+\tag{114.13}
+$$
+
+First suppose $r=0$. Then $h=h'$ and
+$(\gamma-\gamma')K_h=i\lambda I_3$. The source calculation of
+Theorem 108.1 says $K_h$ is never scalar. Explicitly,
+$\operatorname{Herm}(K_h)=(th^\dagger+ht^\dagger)/2$ has rank at
+most two, so if $K_h=k_0I_3$, its real scalar part is zero and
+$th^\dagger+ht^\dagger=0$. Multiplication by $P_t^\perp$ on the
+left and by $t$ on the right forces $h$ to be parallel to $t$;
+the remaining scalar equation gives $h=iyt$, $y\in\mathbb R$.
+Substitution yields
+
+$$
+K_h=i\bigl[scD+
+             (y\cos(2\theta)-scb y^2)tt^\dagger\bigr].
+\tag{114.14}
+$$
+
+The source identities are
+$D=a_+a_+^\dagger+\alpha^2ff^\dagger$,
+$a_+\perp f$, $\|a_+\|^2=5/8$, and $t=\eta\alpha f$.
+A nonzero vector orthogonal to $a_+$ and $f$ is killed by (114.14),
+so a scalar $K_h$ would have to be zero. Its value on $a_+$ is
+$i sc(5/8)a_+\ne0$, a contradiction. Therefore
+$(\gamma-\gamma')K_h=i\lambda I_3$ forces $\gamma=\gamma'$
+and then $\lambda=0$. This settles (114.6) when $r=0$.
+
+Now suppose $r\ne0$. Substitute $h'=h-rt$ into the equal outer
+products in (114.13) and divide by $r$:
+
+$$
+ht^\dagger+th^\dagger=rtt^\dagger.
+\tag{114.15}
+$$
+
+Left multiplication by $P_t^\perp$ and right multiplication by $t$
+give $\|t\|^2P_t^\perp h=0$. Thus $h=\beta t$, and (114.15) gives
+$2\operatorname{Re}\beta=r$. With $x=r/2\ne0$ and
+$y=\operatorname{Im}\beta$, this is precisely
+$h=(x+iy)t$, $h'=(-x+iy)t$. The ball condition is the last
+inequality of (114.7). Substitution into (114.2), with
+$c^2-s^2=\cos(2\theta)$, gives the complete cross blocks
+
+$$
+\begin{aligned}
+K_h&=x tt^\dagger+iZ,\qquad
+K_{h'}=-x tt^\dagger+iZ,\\
+Z&=scD+\bigl[\cos(2\theta)y-scb(x^2+y^2)\bigr]tt^\dagger.
+\end{aligned}
+\tag{114.16}
+$$
+
+Choose a nonzero $v$ orthogonal to $a_+$ and $f$. The source
+identities above imply $K_hv=K_{h'}v=0$. Applying
+$L=i\lambda I_3$ to $v$ therefore gives $\lambda=0$, so $L=0$.
+On the other hand, $tt^\dagger a_+=0$ and
+$Da_+=(5/8)a_+$, whence
+
+$$
+0=La_+=i sc(5/8)(\gamma-\gamma')a_+.
+\tag{114.17}
+$$
+
+All factors other than $\gamma-\gamma'$ are nonzero. Therefore
+$\gamma=\gamma'$. Equation (114.16) now gives
+$0=L=2x\gamma tt^\dagger$, so $\gamma=0$, because $x\ne0$
+and $t\ne0$. This proves the necessity of every condition in
+(114.6), and the reflected form (114.7) for distinct $h,h'$.
+
+Conversely, assume (114.6). The common outer product makes
+$H_h=H_{h'}$, and $\delta=rt$ gives
+$\delta t^\dagger-t\delta^\dagger=0$. Formula (114.2) then gives
+
+$$
+A_h=A_{h'},\qquad B_h=B_{h'},\qquad
+K_h-K_{h'}=rtt^\dagger.
+\tag{114.18}
+$$
+
+Since $\gamma=\gamma'$ and $\gamma r=0$, both weighted cross
+blocks in (114.3) agree. Thus $E_{\gamma,h}(Q)=
+E_{\gamma',h'}(Q)$ for every $Q$, and all probabilities agree.
+If $h=h'$, (114.6) holds with $r=0$. If (114.7) holds and
+$\gamma=\gamma'=0$, the outer products agree and $r=2x$
+satisfies (114.6). The preceding necessity proves there are
+no other distinct-vector cases. This proves both equivalences,
+including the boundary of the closed disk and closed ball.
+$\square$
+
+## 115. Exact comparison of two fixed devices and the calibration boundary
+
+**Corollary 115.1 (Cross-device retention and the exact observation quotient).**
+Fix any allowed source $\mathfrak s$. For two admissible devices
+$(\gamma,\mathsf J)$ and $(\gamma',\mathsf J')$ of Definition 114.1,
+equality of all the original unconditioned probabilities in (114.1)
+forces $\gamma=\gamma'$, without requiring $\mathsf J=\mathsf J'$.
+If $\gamma\ne\gamma'$, some one of the nine prefix events and some
+finite actual intermediate history have unequal outcome-$1$ masses.
+There is a unique map on the exact observation image
+
+$$
+\Gamma_{\mathfrak s}:
+        \mathcal O_{\mathfrak s}(\mathcal P)\longrightarrow
+        \{z\in\mathbb C:|z|\le1\},
+\qquad
+\Gamma_{\mathfrak s}(\mathcal O_{\mathfrak s}(\gamma,h))=\gamma .
+\tag{115.1}
+$$
+
+The terminal-relevant variable $h$ is also determined on the part
+of this image with $\Gamma_{\mathfrak s}\ne0$. At
+$\Gamma_{\mathfrak s}=0$ its possible ambiguity is exactly (114.7);
+in particular this part of the image need not identify $h$.
+
+Proof. Each completion supplies its $h$ in the ball by Theorem 106.3,
+so Theorem 114.3 applies to both devices. If every outcome-$1$ mass
+were equal, the last line of (114.3) would give equality of every
+outcome-$0$ mass as well, contradicting (114.5) when
+$\gamma\ne\gamma'$. The witnessing index in (114.1) already has a
+finite actual history. For each point of the observation image,
+choose any representing pair $(\gamma,h)$ and assign it $\gamma$.
+Equation (114.5) makes this assignment independent of the chosen
+representative, and its prescribed value on every representative
+proves uniqueness. The remaining claims are (114.6)–(114.7).
+To see a genuine ambiguity within the admissible ball, take
+$x=1/(2\|t\|)$ and $h=xt$, $h'=-xt$. Both have norm $1/2$,
+are distinct, and have the same laws at $\gamma=\gamma'=0$.
+Theorem 106.3 realizes each by a full fixed completion.
+$\square$
+
+**Definition 115.2 (Exact identification and the remaining quantitative task).**
+The cross-device comparison in Corollary 115.1 uses the shared source,
+preparation, clocks, operations, labels and retention/return service of
+Definition 114.1. It supplies the stronger full-family comparison
+not asserted by Definition 108.2 or the fixed-completion application
+in §110. Those fixed-completion statements retain their own scope.
+The map (115.1) is an exact function of the complete probability law.
+It does not specify how that law is acquired or estimate it from
+samples.
+
+A quantitative calibration statement would require its own specified
+history family, discrepancy or error model, and an estimate relating
+observation errors to $|\gamma-\gamma'|$ while allowing the declared
+nuisance variables to vary. Inequality (108.1) compares two parameters
+at the same $h$; it cannot be substituted as such an estimate for
+arbitrary $h,h'$. Neither a joint word-length bound, an evaluated
+modulus, a noisy-data guarantee, nor a bound uniform over
+$d,\theta,N$ is included in (114.5) or (115.1).
+The explicit ambiguity at zero retention and the reduction of
+$\mathsf J$ to $h$ also distinguish retention identification from
+identification of the whole full-input device.
+
+The closure argument in Proposition 114.2 and cancellation of the
+known positive $a_w$ are mathematical deductions from unconditioned
+laws. They add no inverse, record rotation, reset, new preparation,
+selected label or repetition to the installed menu. Each hypothesis
+still uses one fixed completion, its entire returned state remains
+ten-dimensional until the original effects-only terminal, and no
+postterminal state is prescribed. The origin and acquisition
+premises distinguished in §110, and comparisons with different
+source parameters or different leakage families, are outside this
+exact observation quotient.
+
+## 追加锚（本行以下为增补区）
