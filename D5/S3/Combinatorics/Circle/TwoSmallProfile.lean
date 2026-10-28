@@ -91,4 +91,106 @@ theorem large_gap_endpoint (Q N : ℤ) (hQ : 2 ≤ Q) (hN : N = 4 * Q - 1)
       rw [he, mul_add, ← mul_assoc, paritySign_sq, one_mul,
         ← mul_assoc, paritySign_pow]
 
+/-- Closing both physical gaps fixes both SMALL magnitudes. -/
+theorem closing_classifier (Q N C s r A B : ℤ) (hN0 : 0 < N)
+    (hN : N = 4 * Q - 1) (hC : C = 2 * Q - 1) (hAB : A * B = Q)
+    (hfirst : 3 * r = N + A * (6 * s - N))
+    (hsecond : 3 * s = N + B * (6 * r - N)) :
+    3 * s = C - B ∧ 3 * r = C - A := by
+  have hs : N * (3 * s - (C - B)) = 0 := by
+    linear_combination -2 * B * hfirst - hsecond -
+      (12 * s - 2 * N) * hAB + 3 * s * hN - N * hC
+  have hr : N * (3 * r - (C - A)) = 0 := by
+    linear_combination -2 * A * hsecond - hfirst -
+      (12 * r - 2 * N) * hAB + 3 * r * hN - N * hC
+  have hn : N ≠ 0 := ne_of_gt hN0
+  exact ⟨by rcases mul_eq_zero.mp hs with h | h <;> omega,
+    by rcases mul_eq_zero.mp hr with h | h <;> omega⟩
+
+
+/-- The period closes only with gaps of the same parity, and fixes both
+magnitudes. The two signed arc formulas are part of the conclusion. -/
+theorem cyclic_two_gap_classifier (ell m : ℕ) (Q N C : ℤ)
+    (hQ : 2 ≤ Q) (hpow : Q = (2 : ℤ) ^ (ell + m))
+    (hN : N = 4 * Q - 1) (hC : C = 2 * Q - 1)
+    (w : ℕ → ℤ)
+    (hb : ∀ j ≤ ell + m + 2, -C ≤ w j ∧ w j ≤ C)
+    (hs : 0 < w 0 ∧ w 0 < Q)
+    (hsmall : |w (ell + 1)| < Q)
+    (hlarge : ∀ j, 0 < j → j < ell + m + 2 → j ≠ ell + 1 → Q ≤ |w j|)
+    (hstep : ∀ j < ell + m + 2, w (j + 1) = doubleStep N (w j))
+    (hclose : w (ell + m + 2) = w 0) :
+    let r := paritySign ell * w (ell + 1)
+    0 < r ∧ ell % 2 = m % 2 ∧
+      3 * w 0 = C - (-2 : ℤ) ^ m ∧ 3 * r = C - (-2 : ℤ) ^ ell ∧
+      (∀ j ≤ ell, 3 * w (j + 1) =
+        paritySign j * N + (2 : ℤ) ^ j * (6 * w 0 - N)) ∧
+      (∀ j ≤ m, 3 * (paritySign ell * w (ell + 1 + (j + 1))) =
+        paritySign j * N + (2 : ℤ) ^ j * (6 * r - N)) := by
+  let r := paritySign ell * w (ell + 1)
+  have hg1 := large_gap_profile Q N hQ hN w ell
+    (fun j hj => by simpa [← hC] using hb j (by omega)) hs
+    (fun j hj => hstep j (by omega))
+    (fun j hj he => hlarge j (by omega) (by omega) (by omega))
+  obtain ⟨hr, he1⟩ := large_gap_endpoint Q N hQ hN w ell
+    (fun j hj => by simpa [← hC] using hb j (by omega)) hs
+    (fun j hj => hstep j (by omega))
+    (fun j hj he => hlarge j (by omega) (by omega) (by omega))
+  change 0 < r at hr
+  let v := fun j => paritySign ell * w (ell + 1 + j)
+  have hv0 : v 0 = r := by simp [v, r]
+  have hvb : ∀ j ≤ m + 1, -(2 * Q - 1) ≤ v j ∧ v j ≤ 2 * Q - 1 := by
+    intro j hj
+    have hh := hb (ell + 1 + j) (by omega)
+    dsimp [v]
+    unfold paritySign
+    split_ifs <;> simp only [one_mul, neg_one_mul] <;> omega
+  have hvs : 0 < v 0 ∧ v 0 < Q := by
+    rw [hv0]
+    refine ⟨hr, ?_⟩
+    dsimp [r]
+    unfold paritySign
+    split_ifs <;> simp only [one_mul, neg_one_mul] <;> omega
+  have hvstep : ∀ j ≤ m, v (j + 1) = doubleStep N (v j) := by
+    intro j hj
+    have ht := hstep (ell + 1 + j) (by omega)
+    dsimp [v]
+    rw [show ell + 1 + (j + 1) = (ell + 1 + j) + 1 by omega, ht]
+    unfold paritySign
+    split_ifs <;> simp only [one_mul, neg_one_mul]
+    exact (doubleStep_neg (by omega : 0 ≤ N)).symm
+  have hvlarge : ∀ j, 1 ≤ j → j ≤ m → Q ≤ |v j| := by
+    intro j hj he
+    have ht := hlarge (ell + 1 + j) (by omega) (by omega) (by omega)
+    dsimp [v]
+    unfold paritySign
+    split_ifs <;> simpa only [one_mul, neg_one_mul, abs_neg] using ht
+  have hg2 := large_gap_profile Q N hQ hN v m hvb hvs hvstep hvlarge
+  obtain ⟨hlast, he2⟩ := large_gap_endpoint Q N hQ hN v m hvb hvs hvstep hvlarge
+  have hpar : ell % 2 = m % 2 := by
+    have he : ell + 1 + (m + 1) = ell + m + 2 := by omega
+    dsimp [v] at hlast
+    rw [he, hclose] at hlast
+    unfold paritySign at hlast
+    split_ifs at hlast <;> nlinarith
+  have hsign : paritySign m = paritySign ell := by simp [paritySign, hpar]
+  have he2' : 3 * w 0 = N + (-2 : ℤ) ^ m * (6 * r - N) := by
+    have he : paritySign m * v (m + 1) = w 0 := by
+      dsimp [v]
+      rw [show ell + 1 + (m + 1) = ell + m + 2 by omega, hclose, hsign,
+        ← mul_assoc, paritySign_sq, one_mul]
+    rw [he, hv0] at he2
+    exact he2
+  have hAB : (-2 : ℤ) ^ ell * (-2 : ℤ) ^ m = Q := by
+    rw [← paritySign_pow, ← paritySign_pow, hsign]
+    calc
+      (paritySign ell * (2 : ℤ) ^ ell) * (paritySign ell * (2 : ℤ) ^ m) =
+        (paritySign ell * paritySign ell) * ((2 : ℤ) ^ ell * (2 : ℤ) ^ m) := by ring
+      _ = Q := by rw [paritySign_sq, one_mul, ← pow_add, ← hpow]
+  obtain ⟨hc1, hc2⟩ := closing_classifier Q N C (w 0) r
+    ((-2 : ℤ) ^ ell) ((-2 : ℤ) ^ m) (by omega) hN hC hAB he1 he2'
+  exact ⟨hr, hpar, hc1, hc2, fun j hj => (hg1 j hj).2,
+    fun j hj => by simpa only [v, hv0] using (hg2 j hj).2⟩
+
+
 end D5.S3.Combinatorics.Circle.TwoSmallProfile
