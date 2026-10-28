@@ -92,9 +92,9 @@ internal sealed class HsfBalancedSpectralCertificateDocument : IScribeDocumentDe
                 + "injectivity of A_P. No desired inequality is an input hypothesis.", DescribeRole.Theorem),
             Paragraph(Text("The exact internal identity is 6F(Z)=kappa(r)E+squareEnergy(Z+L1/2). "
                 + "It follows from the actual third-trace normalization and the independently "
-                + "proved finite Gram moments. The unshifted cubic energy is "
+                + "proved finite Gram moments. The unshifted Gram energy U_G is "
                 + "Tr A³+Tr H³+(2qv+pn)Tr(ACC*)+(2pw+qn)Tr(HC*C). "
-                + "Consequently 4Tr S³-Tr T³-3U=3kappa(r)E. The identity includes "
+                + "Consequently 4Tr S³-Tr T³-3U_G=3kappa(r)E. The identity includes "
                 + "r=1 and singular directions directly, and uses no pseudoinverse, "
                 + "Sylvester minimization, Mellin-integral premise, rank restriction, "
                 + "commutativity, spectral floor, or trace normalization.")),
