@@ -3128,6 +3128,93 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+<a id="v9-labels"></a>
+
+## 112. Actual calibrated labels and the erased-channel recovery limit
+
+Use exactly the qutrit code B, matrices U,W and orthonormal basis (xi,e,f) of (72.1). In this basis W=diag(1,1,-1); put P_-=(I_3-W)/2=ff^dagger. This section distinguishes abstract all-input channel statements from the original source's restricted preparation and control permissions.
+
+**Theorem 112.1 (Erasure loses a distinguishable pair; labels retain a random-unitary word).** The code compression of the nonselective original instrument is
+
+$$
+\mathcal T(X)=\tfrac12(UXU^\dagger+UWXWU^\dagger)
+ =U(P_+XP_++P_-XP_-)U^\dagger.
+$$
+
+For every qutrit recovery CPTP map R there is a sign s in {+,-} with
+
+$$
+D\bigl((\mathcal R\mathcal T)(\rho_s),\rho_s\bigr)\ge\tfrac12,
+\qquad
+\|\mathcal R\mathcal T-\operatorname{id}_3\|_\diamond\ge1,
+\quad
+\rho_\pm=\left|\frac{e\pm f}{\sqrt2}\right\rangle
+          \left\langle\frac{e\pm f}{\sqrt2}\right|.
+$$
+
+In contrast, the actual labelled branches of (72.6) obey
+
+$$
+\begin{aligned}
+K_0B&=BU/\sqrt2,&K_1B&=BUW/\sqrt2,\\
+A_0B&=Bg_0/\sqrt2,&A_1B&=Bg_1/\sqrt2,\\
+g_0&=Ue^{i\theta W},&g_1&=UW e^{i\theta W}=g_0W.
+\end{aligned}
+$$
+
+Each label has probability 1/2 for every encoded input, also when entangled with a reference; the conditional system-reference output is the corresponding unitary g_j on the system. Every actual length-n labelled word has probability 2^-n and tracks its calibrated product g_(j_n)...g_(j_1).
+
+Proof. The first two identities follow by multiplying the actual five-by-three columns in (72.1). Substituting them in (72.6) and using exp(i theta W)=cos(theta)I+i sin(theta)W gives the two g_j. Each is unitary, so its branch effect is I_3/2, including with an untouched reference. Summing the two branches cancels the cross terms and gives the stated dephasing channel, independently of theta. The orthogonal pure states rho_+ and rho_- both map to U(ee^dagger+ff^dagger)U^dagger/2. Any recovery has the same output sigma on them. Since D(rho_+,rho_-)=1, the triangle inequality forces max_s D(sigma,rho_s)>=1/2. The diamond supremum includes this state input and is unhalved, proving its lower bound. The word assertion follows by composition of the branch intertwiners. QED.
+
+These test states define a full-channel recovery obstruction; the theorem does not grant their preparation within the original K_d source or the sole-preparation installation of Sections 91 and 101. Retaining actual labels is distinct from erasing them. It supplies neither a deterministic choice of the next label nor conditional inverse gates. If calibrated conditional inverses were separately supplied, the labelled unitary branches would have an abstract exact recovery; this is an enlarged menu. Moreover U xi=W xi=xi, hence g_j xi=e^(i theta)xi. Every such word preserves the line C xi and its orthogonal complement, so even freely selecting those words would not yield universal qutrit control. These original qutrit branches are not the independently driven five-mode rotations of Coherent Reconstruction Section 8.
+
+<a id="v9-full-completion"></a>
+
+## 113. Every faithful full ten-dimensional completion has a total-leakage subspace
+
+Keep Definition 106.1 and its *full-five-input* ready-column condition. Use its subspace notation
+
+$$
+R=\operatorname{im}B,\quad \mathcal T=R\otimes R_{\rm env},\quad
+\mathcal C=H\otimes\operatorname{span}\{f_0\},\quad \mathcal M=\mathcal VH.
+$$
+
+Thus $\dim H=5$, $\dim R_{\rm env}=2$, $\dim\mathcal T=6$, and $\dim\mathcal C=\dim\mathcal M=5$. The subspace $\mathcal T$ is distinct from Definition 106.1's completion identification $T:H\to\mathcal M^\perp$.
+
+**Theorem 113.1 (At least two dimensions of wholly leaking code-record input for every completion).** For every unitary $\mathsf J$ on $H\otimes R_{\rm env}$ satisfying
+
+$$
+\mathsf J(x\otimes f_0)=\mathcal Vx\qquad\text{for every }x\in H,
+$$
+
+there is a subspace $L\subseteq R\otimes\operatorname{span}\{f_1\}$, of complex dimension at least two, such that
+
+$$
+\mathsf J L\subseteq\mathcal T^\perp,
+\qquad
+\|( (I_H-BB^\dagger)\otimes I_2)\mathsf J\psi\|^2=1
+\quad(\psi\in L,\ \|\psi\|=1).
+$$
+
+In particular no such completion preserves the entire six-dimensional code-record space $\mathcal T$.
+
+Proof. Both original full-domain $K_j$, and therefore both $A_j$, have ranges contained in $R$ by (72.1) and (72.6). Consequently the isometry $\mathcal V$ maps *all five* input dimensions into $\mathcal T$: $\mathcal M\subseteq\mathcal T$. Put
+
+$$
+\mathcal Q=\mathsf J^{-1}(\mathcal T^\perp).
+$$
+
+Unitarity gives $\dim\mathcal Q=\dim\mathcal T^\perp=4$. For $q\in\mathcal Q$ and $c\in\mathcal C$, the images $\mathsf Jq$ and $\mathsf Jc$ are orthogonal, since the former lies in $\mathcal T^\perp$ and the latter in $\mathcal M\subseteq\mathcal T$. Hence $\mathcal Q\subseteq\mathcal C^\perp=H\otimes\operatorname{span}\{f_1\}$, which has dimension five. In that same five-dimensional space, $R\otimes\operatorname{span}\{f_1\}$ has dimension three. The dimension formula gives
+
+$$
+\dim\bigl(\mathcal Q\cap(R\otimes\operatorname{span}\{f_1\})\bigr)
+ \ge4+3-5=2.
+$$
+
+Take this intersection as $L$. Its image lies in $\mathcal T^\perp=R^\perp\otimes R_{\rm env}$, exactly the range of the leakage projector in the theorem. The displayed probability follows by normalization. QED.
+
+For mixed states supported in $L$ the same probability is one, also with any untouched reference, because the operator identity $(BB^\dagger\otimes I_2)\mathsf J|_L=0$ tensors with every identity. This is a statement about the full interaction on that input subspace, not a claim that the original sole preparation and schedules reach every vector of L. It leaves every actual ready column, retained record, original history weight and both terminal outcomes of (107.2) and (107.7) intact. A unitary dilation specified only on the prepared three-dimensional code slice inside a six-dimensional model has a different domain and does not satisfy the all-five-input hypothesis; it cannot replace the ten-dimensional completion here. The conclusion holds for every faithful completion, not just the particular one in Section 109, and grants no inverse interaction or record control.
+
 ## 114. Joint retention identification with an unknown full return completion
 
 **Definition 114.1 (Shared source and the full original probability family).**
