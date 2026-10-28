@@ -51,6 +51,16 @@ private theorem forced_counts (a b c x y z₁ z₂ A B H₀ Gt Ht Ut : ℕ)
 private def count (r : ℕ) (W : List (Fin (4 * r))) (a : ℕ) : ℕ :=
   W.countP (fun i => exponent 4 r i = a)
 
+private theorem count_card (r : ℕ) (L : List (Fin (4 * r))) (hn : L.Nodup)
+    (a : ℕ) : (L.toFinset.filter (fun i => exponent 4 r i = a)).card = count r L a := by
+  classical
+  have he : L.toFinset.filter (fun i => exponent 4 r i = a) =
+      (L.filter (fun i => exponent 4 r i = a)).toFinset := by
+    ext i
+    simp
+  rw [he, List.toFinset_card_of_nodup (hn.filter _)]
+  rfl
+
 private theorem four_sums (r : ℕ) (W : List (Fin (4 * r))) :
     mass (scaled 4 r) W =
       (count r W 0 : ℤ) + 2 * count r W 1 + 4 * count r W 2 - 7 * count r W 3 ∧
@@ -143,10 +153,11 @@ theorem forced_mixed_of_counts (r : ℕ) (hr : 3 ≤ r)
         Finset.univ.filter (fun i : Fin (4 * r) => exponent 4 r i = 0) := by
       apply Finset.eq_of_subset_of_card_le (Finset.filter_subset_filter _ (Finset.subset_univ _))
       have hwc : (W.toFinset.filter (fun i => exponent 4 r i = 0)).card = r := by
-        rw [← List.toFinset_filter, List.toFinset_card_of_nodup (hW.1.filter _)]
+        rw [count_card r W hW.1]
         exact hc0
-      have hrc := residue_card 4 r 0 (by decide) (by decide)
-      simpa only [exponent, hrc, hwc]
+      have hrc : (Finset.univ.filter (fun i : Fin (4 * r) => exponent 4 r i = 0)).card = r :=
+        residue_card 4 r 0 (by decide) (by decide)
+      rw [hrc, hwc]
     apply List.countP_eq_zero.mpr
     intro a ha
     have hi := Finset.mem_sdiff.mp (Finset.mem_toList.mp ha)
@@ -165,9 +176,11 @@ theorem forced_mixed_of_counts (r : ℕ) (hr : 3 ≤ r)
           Finset.univ.filter (fun i : Fin (4 * r) => exponent 4 r i = 2) :=
         Finset.filter_subset_filter _ (Finset.subset_univ _)
       have hle := Finset.card_le_card hsub
-      rw [← List.toFinset_filter, List.toFinset_card_of_nodup (hn.filter _)] at hle
-      have hrc := residue_card 4 r 2 (by decide) (by decide)
-      simpa only [exponent, hrc, List.length_filter, List.countP_append, count] using hle
+      rw [count_card r (W ++ I) hn] at hle
+      have hrc : (Finset.univ.filter (fun i : Fin (4 * r) => exponent 4 r i = 2)).card = r :=
+        residue_card 4 r 2 (by decide) (by decide)
+      rw [hrc] at hle
+      simpa only [List.countP_append, count] using hle
     change count r W 2 = r - 1 at hc2
     omega
   have hbudget : count r I 2 + count r I 3 + count r I 1 ≤ 2 := by
@@ -188,6 +201,8 @@ theorem forced_mixed_of_counts (r : ℕ) (hr : 3 ≤ r)
     have hb := physical_balance (largeWeight (4 * r) (unit 4 r)) W hW.1
     change G (4 * r) (unit 4 r) W + largeUsed (4 * r) (unit 4 r) W = _ at hb
     rw [large_total 4 r (by decide) (by omega), large_used_counts 4 r (by decide) (by omega)] at hb
+    change G (4 * r) (unit 4 r) W + (count r W 2 + count r W 3) = 2 * r at hb
+    rw [show count r W 2 = r - 1 from hc2, show count r W 3 = r - 2 from hc3] at hb
     omega
   have hWU : U W = 5 := by
     have hb := physical_balance (fun _ : Fin (4 * r) => (1 : ℕ)) W hW.1
@@ -212,20 +227,26 @@ theorem forced_mixed_of_counts (r : ℕ) (hr : 3 ≤ r)
     omega
   have hstrip := ((legal_iff 4 r (by decide) (by omega) V).mp hV).2
   have hend : 0 ≤ mass (scaled 4 r) V ∧ mass (scaled 4 r) V ≤ 7 := by
-    simpa [height, top, List.take_length] using inStrip_prefix hstrip V.length
+    simpa [height, top, List.take_length, mass] using inStrip_prefix hstrip V.length
   have hsteps (a : Fin (4 * r)) : 0 < scaled 4 r a ∨ scaled 4 r a = -(7 : ℤ) := by
     by_cases h : exponent 4 r a = 3
     · right; simpa [height, top] using (scaled_reset_iff 4 r (by decide) a).mpr h
     · left; exact (scaled_positive_iff 4 r (by decide) a).mpr
-        (by have := Nat.mod_lt a.val (by decide : 0 < 4); change a.val % 4 ≠ 3 at h; omega)
+        (by have he : exponent 4 r a < 4 := Nat.mod_lt a.val (by decide : 0 < 4); omega)
   have hblock := reset_top_bound (scaled 4 r) 4 7 (by norm_num) (by norm_num) hsteps V
     (by simpa [height, top] using hstrip)
   have htop : (fun a : Fin (4 * r) => decide (scaled 4 r a = 4)) =
       (fun a => decide (exponent 4 r a = 2)) := by
-    funext a; apply congrArg decide; simpa [top] using propext (scaled_top_iff 4 r (by decide) a)
+    funext a
+    have he : scaled 4 r a = 4 ↔ exponent 4 r a = 2 := by
+      simpa [top] using scaled_top_iff 4 r (by decide) a
+    simp only [he]
   have hreset : (fun a : Fin (4 * r) => decide (scaled 4 r a = -7)) =
       (fun a => decide (exponent 4 r a = 3)) := by
-    funext a; apply congrArg decide; simpa [height, top] using propext (scaled_reset_iff 4 r (by decide) a)
+    funext a
+    have he : scaled 4 r a = -7 ↔ exponent 4 r a = 3 := by
+      simpa [height, top] using scaled_reset_iff 4 r (by decide) a
+    simp only [he]
   rw [htop, hreset] at hblock
   have hblock' : (1 : ℤ) + count r I 2 + count r R 3 ≤
       count r I 3 + count r R 2 + if 4 ≤ mass (scaled 4 r) V then 1 else 0 := by
@@ -308,7 +329,11 @@ private theorem rows_mass (r : ℕ) (L : List (Fin r)) :
   induction L with
   | nil => simp [mass]
   | cons j L ih =>
-    simpa [row, mass, List.flatMap_cons, label_value, value, height, top] using ih
+    simp only [List.flatMap_cons, mass, List.map_append, List.sum_append]
+    change mass (scaled 4 r) (row r j) + mass (scaled 4 r) (L.flatMap (row r)) = 0
+    have hj : mass (scaled 4 r) (row r j) = 0 := by
+      norm_num [row, mass, label_value, value, height, top]
+    rw [hj, ih, add_zero]
 
 private theorem rows_strip (r : ℕ) (L : List (Fin r)) :
     InStrip (scaled 4 r) 7 0 (L.flatMap (row r)) := by
@@ -320,7 +345,9 @@ private theorem rows_strip (r : ℕ) (L : List (Fin r)) :
     apply inStrip_append hj
     have hz : mass (scaled 4 r) (row r j) = 0 := by
       norm_num [row, mass, label_value, value, height, top]
-    simpa only [hz, add_zero] using ih
+    change InStrip (scaled 4 r) 7 (0 + mass (scaled 4 r) (row r j)) (L.flatMap (row r))
+    rw [hz, add_zero]
+    exact ih
 
 private theorem prior_mass (r : ℕ) : mass (scaled 4 r) (prior r) = 0 := by
   simpa [prior, List.flatMap_map, Function.comp_def] using
@@ -382,6 +409,7 @@ theorem obstructing_inventory_exists (r : ℕ) (hr : 3 ≤ r) :
     rcases hb with rfl | rfl | rfl <;> simp only [label, j, k] at hbound <;> omega
   have hstrip : InStrip (scaled 4 r) (height 4) 0 (prior r ++ T) := by
     apply inStrip_append (by simpa [height, top] using prior_strip r)
+    change InStrip (scaled 4 r) (height 4) (0 + mass (scaled 4 r) (prior r)) T
     rw [prior_mass, add_zero]
     norm_num [T, InStrip, label_value, value, height, top]
   refine ⟨prior r ++ T, (legal_iff 4 r (by decide) (by omega) _).mpr
@@ -390,8 +418,7 @@ theorem obstructing_inventory_exists (r : ℕ) (hr : 3 ≤ r) :
     simp only [List.countP_append]
     change count r (prior r) _ + _ = _
     rw [prior_counts r _ (by decide)]
-    norm_num [T, List.countP_cons, label_exp]
-    omega
+    norm_num [T, List.countP_cons, label_exp] <;> omega
 
 
 /-- The two-label bound is attained on an unbounded family, and every strict
