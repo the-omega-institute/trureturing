@@ -1,0 +1,1 @@
+WIP: exact strict Euler inventory root correction proposition retained; proof remains open at second-layer threshold, higher-layer tail, and psi-theta root limit.
