@@ -1,10 +1,10 @@
 /- GID: D5/S3/Quantum/Matrix/Toeplitz/FactorizationRefutation
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Matrix/Toeplitz/FactorizationRefutation
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Matrix/Toeplitz/FactorizationRefutation.claim; result=D5/S3/Quantum/Matrix/Toeplitz/FactorizationRefutation.result; claim=D5/S3/Quantum/Matrix/Toeplitz/FactorizationRefutation.claim
-   digest: A common field of definition obstructs uniformly short Toeplitz products up to invertible left multiplication. -/
+   digest: A common field obstructs uniformly short Toeplitz products modulo left units. -/
 
 import D5.S3.Combinatorics.Matroids.LinearRado
 import D5.S3.Weil.TestFunctions.LiCurvatureCriterion
@@ -39,7 +39,7 @@ def claim : Prop :=
         IsUnit P ∧ (∀ k, IsOrdinaryToeplitz (T k)) ∧
           M = P * (List.ofFn T).prod
 
-private lemma exists_independent (ι : Type) [Fintype ι] :
+private lemma exists_independent (ι : Type) [Finite ι] :
     ∃ x : ι → ℂ, AlgebraicIndependent ℚ x := by
   classical
   have huncount : ¬ #ℂ ≤ ℵ₀ := by
@@ -47,12 +47,12 @@ private lemma exists_independent (ι : Type) [Fintype ι] :
     exact Cardinal.aleph0_lt_continuum.not_ge
   have hna : ¬ Algebra.IsAlgebraic ℚ ℂ := by
     intro h
-    letI := h
+    let := h
     apply huncount
     exact (Algebra.IsAlgebraic.cardinalMk_le_max ℚ ℂ).trans
       (max_le Cardinal.mk_le_aleph0 le_rfl)
   obtain ⟨s, hs⟩ := exists_isTranscendenceBasis ℚ ℂ
-  haveI : Nonempty s := hs.nonempty_iff_transcendental.mpr
+  have : Nonempty s := hs.nonempty_iff_transcendental.mpr
     (Algebra.transcendental_iff_not_isAlgebraic.mpr hna)
   have hcard : ℵ₀ ≤ #s := by
     by_contra h
@@ -88,7 +88,7 @@ private lemma generated_field_trdeg {ι : Type} [Fintype ι] (g : ι → ℂ) :
       IntermediateField.mem_top, true_and]
     exact ⟨fun hx => ⟨⟨x, hx⟩, rfl⟩, fun ⟨y, hy⟩ => hy ▸ y.property⟩
   let A := Algebra.adjoin ℚ (Set.range gK)
-  letI : Algebra.IsAlgebraic A K := ⟨fun x => by
+  let : Algebra.IsAlgebraic A K := ⟨fun x => by
     let y : J := ⟨x, by rw [hJ]; trivial⟩
     exact (Algebra.IsAlgebraic.isAlgebraic (R := A) y).algHom
       (IsScalarTower.toAlgHom A J K)⟩
@@ -113,7 +113,7 @@ private lemma entry_eq_boundary {n : ℕ} (hn : 0 < n)
     | succ b =>
       have he := hT ⟨a, by omega⟩ ⟨b, by omega⟩ ha hb
       rw [← he, ih (by omega) b (by omega)]
-      split_ifs <;> congr 1 <;> apply Fin.ext <;> simp
+      simp only [Fin.val_mk, Nat.add_le_add_iff_right, Nat.add_sub_add_right]
 
 private lemma toeplitz_representation {N : ℕ}
     (T : Matrix (Fin (N + 1)) (Fin (N + 1)) ℂ) (hT : IsOrdinaryToeplitz T) :
@@ -130,7 +130,7 @@ private lemma toeplitz_representation {N : ℕ}
       (-((i.val : ℤ) - (j.val : ℤ))).toNat < N + 1 := by
     constructor <;> omega
   dsimp only [c]
-  rw [dif_pos hb, entry_eq_boundary (by omega) T hT i j]
+  rw [dite_eq_left hb, entry_eq_boundary (by omega) T hT i j]
   split_ifs <;> congr 1 <;> apply Fin.ext <;> dsimp <;> omega
 
 private lemma product_field {n C : ℕ} (hn : 0 < n)
@@ -185,12 +185,14 @@ private lemma graph_mul_blocks (r : ℕ) (X : Matrix (Fin r) (Fin r) ℂ)
   classical
   have hl (i : Fin (r + r)) (j : Fin r) :
       (Q * graphMatrix r X) i (Fin.castAdd r j) = Q i (Fin.castAdd r j) := by
-    simp [Matrix.mul_apply, Fin.sum_univ_add, graphMatrix, Matrix.submatrix_apply]
+    simp [Matrix.mul_apply, Fin.sum_univ_add, graphMatrix, Matrix.submatrix_apply,
+      Matrix.one_apply, -Fin.natAdd_eq_addNat]
   ext i j
   change (Q * graphMatrix r X) i (Fin.natAdd r j) =
     ∑ k, (Q * graphMatrix r X) i (Fin.castAdd r k) * X k j
   simp_rw [hl]
-  simp [Matrix.mul_apply, Fin.sum_univ_add, graphMatrix, Matrix.submatrix_apply]
+  simp [Matrix.mul_apply, Fin.sum_univ_add, graphMatrix, Matrix.submatrix_apply,
+      Matrix.one_apply, -Fin.natAdd_eq_addNat]
 
 private lemma graph_coordinates_mem {r : ℕ} (X : Matrix (Fin r) (Fin r) ℂ)
     (P N : Matrix (Fin (r + r)) (Fin (r + r)) ℂ) (hP : IsUnit P)
@@ -200,11 +202,13 @@ private lemma graph_coordinates_mem {r : ℕ} (X : Matrix (Fin r) (Fin r) ℂ)
   let L : Fin r → Fin (r + r) := Fin.castAdd r
   let R : Fin r → Fin (r + r) := Fin.natAdd r
   have hleft : P.submatrix L id * N.submatrix id L = 1 := by
-    rw [Matrix.submatrix_mul_equiv P N L (Equiv.refl _) L, ← hM]
+    have hm := Matrix.submatrix_mul_equiv P N L (Equiv.refl _) L
+    change P.submatrix L id * N.submatrix id L = (P * N).submatrix L L at hm
+    rw [hm, ← hM]
     ext i j
     simp [graphMatrix, L, Matrix.submatrix_apply]
   have hspan : Submodule.span ℂ (Set.range (N.submatrix id L).row) = ⊤ := by
-    rw [← Matrix.range_vecMulLinear, LinearMap.range_eq_top]
+    rw [← range_vecMulLinear, LinearMap.range_eq_top]
     intro u
     refine ⟨u ᵥ* P.submatrix L id, ?_⟩
     change (u ᵥ* P.submatrix L id) ᵥ* N.submatrix id L = u
@@ -222,13 +226,15 @@ private lemma graph_coordinates_mem {r : ℕ} (X : Matrix (Fin r) (Fin r) ℂ)
     intro hz
     apply hdet
     change (A.map φ).det = 0
-    rw [← φ.map_det, hz, map_zero]
+    have hm := φ.map_det A
+    change φ A.det = (A.map φ).det at hm
+    rw [← hm, hz, map_zero]
   have hAB : B.map φ = A.map φ * X := by
     ext i j
     exact congrFun (congrFun hgraph (f i)) j
   let Y := A⁻¹ * B
   have hY : Y.map φ = X := by
-    apply (Matrix.isUnit_iff_isUnit_det.mpr
+    apply ((Matrix.isUnit_iff_isUnit_det (A.map φ)).mpr
       (isUnit_iff_ne_zero.mpr (show (A.map φ).det ≠ 0 from hdet))).mul_left_cancel
     calc
       A.map φ * Y.map φ = (A * Y).map φ := Matrix.map_mul.symm
@@ -258,8 +264,9 @@ theorem result : ¬ claim := by
   have hi : AlgebraicIndependent ℚ xK :=
     (K.val.algebraicIndependent_iff Subtype.val_injective).mp hx
   have hlow : (r * r : Cardinal) ≤ Algebra.trdeg ℚ K := by
-    simpa only [Cardinal.mk_prod, Cardinal.mk_fin] using hi.cardinalMk_le_trdeg
+    simpa only [Cardinal.mk_prod, Cardinal.mk_fin, Cardinal.lift_id] using hi.cardinalMk_le_trdeg
   have hup := generated_field_trdeg g
+  simp only [Fintype.card_prod, Fintype.card_fin] at hup
   have hn : r * r ≤ C * (2 * (r + r) - 1) := by
     exact_mod_cast hlow.trans hup
   have he : 2 * (r + r) - 1 + 1 = 4 * r := by omega
@@ -269,5 +276,10 @@ theorem result : ¬ claim := by
       _ = C * (4 * r) := by rw [he]
       _ = r * r := by dsimp [r]; ring
   omega
+
+#check graphMatrix
+#check claim
+#check result
+#print axioms result
 
 end D5.S3.Quantum.Matrix.Toeplitz.FactorizationRefutation
