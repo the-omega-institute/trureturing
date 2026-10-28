@@ -225,7 +225,7 @@ private theorem eCoeff_cosh (n : ℕ) : eCoeff cosh n = if Even n then 1 else 0 
   simpa only [D5.S1.Recurrence.Residue.QuarticEGFFixedPoint.encode, cosh, ite_div, one_div, zero_div] using
     (D5.S1.Recurrence.Residue.QuarticEGFFixedPoint.eCoeff_encode (fun j => if Even j then (1 : ℚ) else 0) n)
 
-private theorem eCoeff_sinh (n : ℕ) : eCoeff sinh n = if Even n then 0 else 1 := by
+theorem eCoeff_sinh (n : ℕ) : eCoeff sinh n = if Even n then 0 else 1 := by
   simpa only [D5.S1.Recurrence.Residue.QuarticEGFFixedPoint.encode, sinh, ite_div, one_div, zero_div] using
     (D5.S1.Recurrence.Residue.QuarticEGFFixedPoint.eCoeff_encode (fun j => if Even j then (0 : ℚ) else 1) n)
 

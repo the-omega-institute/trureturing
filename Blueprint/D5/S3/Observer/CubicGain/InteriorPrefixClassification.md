@@ -1,0 +1,85 @@
+# Interior parameters and arithmetic first endpoints
+
+## Abstract
+
+The original chronological history supplies the primitive interior parameters.
+
+Use the original cumulative endpoints A0=I and A(i+1)=T(wi)*Ai for arbitrary finite words w0,w1,w2. The positive oriented kernel condition states that its generator is nonzero rank one, its real span is exactly the kernel of the three prefix differences, and its determinant polar is strictly positive on every strictly positive rank-one source.
+
+Primitive coordinates p=(a,b,c,d) have nonnegative integer entries, gcd(a,b)=gcd(c,d)=1 and ac+bd>0. Write f=(a,-b), ell=(c,-d), r=(d,c) and F(p)=f*ell. All four entries are nonzero exactly when a,b,c,d>0. StrictPhase(w,p,m) retains m0=0, Ai*f=f+mi*r at every original index, positivity at indices 1,2,3, and 1<=m1<m2<m3.
+
+ParameterForm(w,p,m) retains a,b,c,d>0 and asserts the existence of integers x,n,sigma with x>d, gcd(x,d)=1, m1,n>=1, sigma in {+1,-1}, a=x-m1*d, b=m1*c-d, c=x+(n*(x+d)+sigma)*d and Q=1+nd>=2. It includes A1*f=(x,d), T(w1)=[[1,1],[Q,Q+sigma]], T(w2)=[[0,1],[1,n*(x+d)+sigma]], m2=m1+1, m3=m1+1+n*(x+d)+sigma and rank of the original prefix differences equal to three. The nonnegative integral unimodular first endpoint is the actual first word matrix, so that filter is retained.
+
+ClassificationHypotheses(K,H,x,y,d,c,j,h) denotes all hypotheses in the following statement, including H*K!=2*K-I. MultiplierParameters(K,H,x,y,d,c,j,h,n,sigma) is the complete conjunction j=1, y=d, gcd(x,d)=1, n>=1, sigma=+1 or -1, h=n*(x+d)+sigma, c=x+hd, Q=1+nd>=2 and the two displayed exact matrix forms.
+
+Forward realization as an application of the existing results.
+
+For the converse choose integers x,d,m,n,sigma with d>=1, x>d, gcd(x,d)=1, m,n>=1 and sigma=+1 or -1. Set a=x-md>=1, h=n*(x+d)+sigma, c=x+hd, b=mc-d and Q=1+nd, and require gcd(a,b)=1. Choose any nonnegative integral first endpoint A1 of determinant +1 or -1 satisfying A1*(a,-b)=(x,d). Retain, independently, rank three for X mapping to (tr(A1*X)-tr(X),tr(K*A1*X)-tr(X),tr(H*K*A1*X)-tr(X)), with K=[[1,1],[Q,Q+sigma]] and H=[[0,1],[1,h]]. Neither first-endpoint admissibility nor this rank filter follows from the scalar parameters.
+
+The inequalities give h>0, c>x>d, b>0 and Q>=2; gcd(c,d)=gcd(x,d)=1 and ac+bd=cx-d^2>0. Thus the natural casts of a,b,c,d form PrimitiveKernelLattice.PrimitiveCoordinates p with signed column f=(a,-b), signed row ell=(c,-d), direction r=(d,c) and matrix N=f*ell. These are the exact parameter identifications, with no rescaling or replacement of the first endpoint.
+
+LegalMatrixMonoid.legal_matrix_monoid supplies a finite chronological native word uA for every such A1, with either determinant sign. For explicit next words, let lowerWord(q) repeat the chronological pair [J,M] q times. Since chronological concatenation reverses matrix multiplication, this pair has matrix L=M*J=[[1,0],[1,1]], while [M,J] has matrix U=J*M=[[1,1],[0,1]]. The pinned ModularGroup.coe_T_zpow gives the power formula for U; transpose, Matrix.transpose_pow and Matrix.map_pow give L^q=[[1,0],[q,1]]. The recursive lowerWord is the corresponding free-monoid power. LegalMatrixMonoid.product_append transports these powers to native products. The repository's private LegalMatrixMonoid.realize_word already implements the replacement of each Stern-Brocot L/U step by these same chronological J/M pairs; SternBrocot.UnimodularGeneration.unimodular_iff_wordMatrix supplies arbitrary determinant-one generation. The explicit shear powers use the pinned power formula rather than a new generation assertion.
+
+Choose uK=[M,J]++lowerWord(Q) when sigma=+1, and uK=[J,M,J]++lowerWord(Q-1) when sigma=-1; choose uH=[J]++lowerWord(h). All exponents are nonnegative. Their matrices are respectively L^Q*U, L^(Q-1)*U*J and L^h*J, hence exactly K and H. Use the single word triple w=(uA,uK,uH), with cumulative endpoints I,A1,A2=K*A1,A3=H*K*A1. No inverse is executed and no acquisition is added.
+
+The identity Q*(x+d)=c+(1-sigma)*d and direct multiplication give all four indexed equations jointly: A0*f=f, A1*f=(x,d)=f+m*r, A2*f=(x+d,c+d)=f+(m+1)*r and A3*f=(c+d,d+(h+1)*c)=f+(m+1+h)*r. Set the integer index vector to (0,m,m+1,m+1+h). LegalMatrixMonoid.product_append identifies the cumulative endpoints, so the retained endpoint rank filter is exactly rank(prefixDifference w)=3. Apply the converse projection PrimitiveKernelLattice.whole_class_primitive_lattice.2 to this same w,p and index vector. It gives N nonzero of rank one, the entire kernel equal to its real line, and strictly positive determinant polar on every strictly positive rank-one S. Concretely that polar is bd*S00+bc*S01+ad*S10+ac*S11>0. The same identifications assemble ParameterForm(w,p,(0,m,m+1,m+1+h)); no extra mathematical bridge is needed.
+
+Actual positive sources remain independent of the auxiliary signed kernel vectors. For every strictly positive rank-one real matrix S, det(S)=0, so S satisfies TraceFibers.FixedFiberPairModulus.positiveSource. The universal factorization component of its result gives positive columns fplus and rows ellplus with S=vecMulVec(fplus,ellplus) and tr(B*S)=ellplus dot (B*fplus) for every real matrix B. One exact available instantiation is upper=true, executed=[advance,exchange], continuation=[advance], k=1, x=1, zeta=1 and tau=0, followed by the fourth conjunction projection; its auxiliary execution parameters impose no restriction on the universally quantified S or B. PhaseRigidity.positive_sum gives positivity of T(u)*fplus for every finite native word u, including every unread prefix of this same execution. The row ellplus stays fixed. For every real gain slope k, whole constant drift delta and original index i=0,1,2,3, (1+i*k)*(ellplus dot (Ai*fplus))+delta=(1+i*k)*tr(Ai*S)+delta. Negative slopes and erased gains are included.
+
+Together with the necessity result below, these applications give the necessity and sufficiency derivation with both determinant signs and the original first-endpoint and rank filters. The conjugate correspondence uses the same four indices and restores the negative branch. This application introduces no separate mathematical declaration. It asserts neither positive multiplicity nor global recovery, a final-word rank classification, sharper read bounds, resource bounds or physical acquisition costs.
+
+Exact arithmetic first endpoints as an application of primitive integer columns.
+
+Keep every scalar tuple above, with both values of sigma. Independently choose epsilon=+1 or -1. Put v=(x,d), f=(a,-b), r0=(d,c), ell=(c,-d), w=(b,a) and t=ac+bd=cx-d^2>0. The ordered columns [f,r0] and [v,r0] both have determinant t; neither is presumed to be an integer unimodular basis. The rational dual rows of [f,r0] are ell/t and w/t. In the following four formulas entry(A,i,j) uses indices 1,2.
+
+$$
+\begin{aligned}\operatorname{entry}(A, 1, 1)=\frac{cx+\varepsilon bd+gbx}{t}\\\operatorname{entry}(A, 1, 2)=\frac{-dx+\varepsilon ad+gax}{t}\\\operatorname{entry}(A, 2, 1)=\frac{cd+\varepsilon bc+gbd}{t}\\\operatorname{entry}(A, 2, 2)=\frac{-d^{2}+\varepsilon ac+gad}{t}\end{aligned}
+$$
+
+For every integer matrix A with Af=v and det(A)=epsilon, det(v,A*r0-epsilon*r0)=0. Choose Bezout coefficients alpha*x+beta*d=1 from IsCoprime x d. For z=A*r0-epsilon*r0, the zero determinant says x*z1=d*z0, and g=alpha*z0+beta*z1 gives z=g*v by multiplication of those two identities. Thus g is an integer, not a rational parameter, and t*A=v*ell+(epsilon*r0+g*v)*w gives exactly all four displayed numerators. Since b*x>0, the first entry makes g unique. Conversely the four scaled entry identities imply Af=v and det(A)=epsilon by cancellation of the nonzero t and t squared. This uses ac+bd=cx-d^2, without assuming t=1, gcd(t,a)=1 or a primitive companion r0.
+
+The parameter g ranges over all integers. A value is an arithmetic solution exactly when t divides each of the four numerators and every numerator is nonnegative. These are four separate divisibility conditions and four separate inequalities. Since t>0, they are equivalent to the four rational entries being nonnegative integers. Given the divisibilities, choose the integer entries from their divisibility witnesses; the converse identities then prove Af=v and det(A)=epsilon. No truncated integer quotient or unchecked division is used. LegalMatrixMonoid.legal_matrix_monoid gives precisely a legal first native word for each such matrix, with either determinant sign.
+
+For existence use the pinned IsCoprime.exists_SL2_col twice, on (a,-b) and (x,d), to obtain determinant-one integer completions B=[f,u] and C=[v,z]. Set Astar=[v,epsilon*z]*B inverse. The inverse is integral because det(B)=1; this is an algebraic proof device. Direct multiplication gives Astar*f=v and det(Astar)=epsilon, for either epsilon independently of sigma. Let g0 be its unique integer parameter from the preceding argument.
+
+The entire integral solution set is Astar+L*v*w, with L ranging over all integers, and its parameter is g0+L*t. To see exhaustiveness, put D=A-Astar. Each row obeys a*D(i,0)=b*D(i,1). Bezout coefficients rho*a+tau*b=1 give D(i,0)=b*ki and D(i,1)=a*ki, where ki=tau*D(i,0)+rho*D(i,1). Equality of determinants gives x*k1=d*k0; the Bezout coefficients for (x,d) then give k=L*v with integral L. Conversely every such L preserves Af=v and the determinant, and substitution into the four numerators gives exactly g=g0+L*t. Positivity of b*x proves uniqueness of L. This also proves that the integral numerator parameters are exactly the residue class g0+t*Z, without restricting the classification to natural L.
+
+All four entries of v*w are strictly positive integers. An explicit sufficient positive natural choice is L=1+sum of the absolute values of the four entries of Astar. Every entry of Astar+L*v*w is then strictly positive. This supplies arithmetic solutions for every scalar tuple and each determinant sign. It does not certify rank three for those choices: the full rank(prefixDifference w)=3 test remains a separate condition after A2=K*A1 and A3=H*A2 are formed. Nonnegative arithmetic endpoints give legal words; the original cumulative-history and strictly positive physical-source correspondence is exactly the existing forward realization above. The signed columns, completions and their inverses introduce no executed operation, read or signed physical source. Neither arithmetic nonemptiness nor this affine classification proves a positive collision, global recovery or a sharper read bound.
+
+**Theorem 1.1 (The two multipliers and the divisibility parameter).**
+
+$$\forall K,H,x,y,d,c,j,h, \operatorname{ClassificationHypotheses}(K, H, x, y, d, c, j, h)\implies \exists n,sigma\in \mathbb{Z}, \operatorname{MultiplierParameters}(K, H, x, y, d, c, j, h, n, sigma)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/InteriorPrefixClassification.two_transition_parameters` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive primitive v=(x,y), r=(d,c), t=xc-yd>0 and x>d, retain two consecutive legal actions Kv=v+jr, H(v+jr)=v+(j+h)r with j,h>=1. Exclude H*K=2*K-I. Then j=1, y=d and there exist n>=1 and sigma=+1 or -1 with h=n*(x+d)+sigma, c=x+hd, Q=1+nd>=2, K=[[1,1],[Q,Q+sigma]] and H=[[0,1],[1,h]].
+
+Last-transition rigidity gives H and y=d. The first coordinate equation and integer nonnegativity force the first row of K to be (1,1). Its determinant sets the lower-right entry to Q+sigma. If Q=1 and sigma=-1, c>x fails. If Q=1 and sigma=1, h=1 and H*K=2*K-I, the excluded relation. Coprimality of x,d now gives d dividing Q-1 and hence n>=1. This explicit exclusion is a hypothesis of this intermediate result; the next result derives it from the original rank condition.
+
+OriginalCoordinates(w,N,p,s,m) means s>0, N=s*F(p), m0=0 and all four original lattice equations. ConjugateCoordinates means every unchanged-index endpoint identity and J*N*J=s*F(b,a,d,c). FirstEndpointFilters(w) means that its actual first endpoint has nonnegative integer entries and determinant +1 or -1. Both w and its literal conjugate satisfy that filter. The two ParameterForm alternatives below have exactly the full definition in the preceding paragraph, including the original rank-three test.
+
+**Theorem 1.2 (Every interior history has the required parameter form).**
+
+$$\forall w,N, \operatorname{OrientedKernelGenerator}(w, N)\land \operatorname{AllEntriesNonzero}(N)\implies \exists p,s,m, \operatorname{OriginalCoordinates}(w, N, p, s, m)\land \operatorname{ConjugateCoordinates}(w, N, p, s, m)\land \operatorname{FirstEndpointFilters}(w)\land \operatorname{FirstEndpointFilters}(\operatorname{conjugateHistory}(w))\land(\operatorname{ParameterForm}(w, p, m)\lor \operatorname{ParameterForm}(\operatorname{conjugateHistory}(w), \operatorname{swapCoordinates}(p), -m))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/InteriorPrefixClassification.interior_necessity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original word triple w and every arbitrary real positive oriented generator N with four nonzero entries, there exist primitive p, a positive real scale s and integer parameters m on the original four indices. They satisfy N=s*F(p), m0=0 and every original lattice equation. All conjugate endpoints satisfy Aprime_i=J*Ai*J and J*N*J=s*F(b,a,d,c). Either ParameterForm(w,p,m) holds or ParameterForm(wprime,(b,a,d,c),-m) holds.
+
+The frozen phase theorem supplies exactly these two branches. In either strict positive branch the actual second and third words give the two transitions. Rank three makes the prefix difference map surjective. A relation H*K=2*K-I would imply A3=2*A2-A1, hence the third difference equals twice the second minus the first, contradicting surjectivity. The integer transition classification therefore applies without adding a hypothesis to the original prefix.
+
+The conjugate words are [J]++wi++[J], so an empty multiplier becomes [J,J]. Matrix identity is kept distinct from literal emptiness. The signed column becomes -J*f, the signed row becomes -ell*J, and the parameters become -mi. Original read indices are unchanged. These signed vectors specify the auxiliary kernel; they are not positive physical sources.
+
+## References
+
+- Truth anchor: `D5/S3/Observer/CubicGain/InteriorPrefixClassification.interior_necessity`
+- Truth anchor: `D5/S3/Observer/CubicGain/InteriorPrefixClassification.two_transition_parameters`
+- Dependency: [D5/S3/Observer/CubicGain/InteriorNormalForm](InteriorNormalForm.md)

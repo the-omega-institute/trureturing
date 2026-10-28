@@ -571,7 +571,7 @@ theorem prepared_qubit_midpoint_fidelity
   norm_num
   linarith only [hf]
 
-private theorem bloch_commutator_gram (a b : EuclideanSpace ℝ (Fin 3)) :
+theorem bloch_commutator_gram (a b : EuclideanSpace ℝ (Fin 3)) :
     let P := blochMatrix 1 a
     let Q := blochMatrix 1 b
     (trace ((P*Q-Q*P)ᴴ*(P*Q-Q*P))).re =
