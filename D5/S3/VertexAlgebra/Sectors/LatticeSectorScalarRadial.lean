@@ -110,8 +110,9 @@ private theorem pair_power_action (N : ℕ) (F : (Fin 2 → ℤ) → ℂ) (e : F
   have harg : e - (k • Pi.single (1 : Fin 2) 1 + (N - k) • Pi.single 0 1) =
       ![e 0 - N + k, e 1 - k] := by
     ext i
-    fin_cases i <;> simp [Pi.single_apply, Nat.cast_sub hkN] <;> omega
-  simpa only [harg]
+    fin_cases i <;> simp [Nat.cast_sub hkN]
+    all_goals omega
+  simp only [harg]
 
 private theorem product_coeff (D : LatticeData) (α β γ : Charge D)
     (u v w p : Oscillator D) (e : Fin 2 → ℤ) :
@@ -125,8 +126,11 @@ private theorem product_coeff (D : LatticeData) (α β γ : Charge D)
   change readout D p (projection D (α + (β + γ))
     (((LatticeAllStateField.Y D (inclusion D α u))[[-e 0 - 1]])
       (((LatticeAllStateField.Y D (inclusion D β v))[[-e 1 - 1]]) (inclusion D γ w)))) = _
-  rw [← inclusion_canonical, ← inclusion_canonical]
-  simp [projection, inclusion, product]
+  rw [← inclusion_canonical D β γ v w (-e 1 - 1),
+    ← inclusion_canonical D α (β + γ) u (canonical D β γ v (-e 1 - 1) w) (-e 0 - 1)]
+  change readout D p (Finsupp.single (α + (β + γ))
+    (product D α β γ u v w (e 0) (e 1)) (α + (β + γ))) = _
+  rw [Finsupp.single_eq_same]
 
 private theorem reverse_coeff (D : LatticeData) (α β γ : Charge D)
     (u v w p : Oscillator D) (e : Fin 2 → ℤ) :
@@ -256,6 +260,8 @@ private theorem chamber_swap (x y : ℂ) (hx : x ≠ 0) (hy : y ≠ 0) (hlt : �
   · intro i j hij
     fin_cases i <;> fin_cases j <;> simp_all
 
+set_option maxHeartbeats 800000 in
+-- The supported-carrier comparisons elaborate two native Hahn fraction embeddings.
 /-- The literal two actual ordered scalar carriers expand one finite fraction,
 whose original scalar mode coefficients evaluate absolutely in both chambers. -/
 theorem ordinary_actual_scalar_radial_rationality
@@ -306,20 +312,28 @@ theorem ordinary_actual_scalar_radial_rationality
   intro p
   obtain ⟨R, ⟨heq, hdeg, _negative, scalar⟩, _unique⟩ := tests p
   refine ⟨R, heq, hdeg, ?_⟩
-  dsimp only
-  have hp := rational_of_clear 1 _ _ N A B R (product_coeff D α β γ u v w p)
-    (fun a b => (scalar a b).1)
-  have hr := rational_of_clear (Equiv.swap 0 1) _ _ N A B R (reverse_coeff D α β γ u v w p)
+  let C : Fin 2 → VertexOperator ℂ (Carrier D) :=
+    ![LatticeAllStateField.Y D (inclusion D α u), LatticeAllStateField.Y D (inclusion D β v)]
+  let phi := (readout D p).comp (projection D (α + (β + γ)))
+  let Sp := scalarWordCarrier 2 C (1 : Equiv.Perm (Fin 2)) (inclusion D γ w) phi
+  let Sr := scalarWordCarrier 2 C (Equiv.swap (0 : Fin 2) 1) (inclusion D γ w) phi
+  let fp := fun a b => readout D p (product D α β γ u v w a b)
+  let fr := fun a b => readout D p (reverseProduct D α β γ u v w a b)
+  have cp : ∀ e, Sp.coeff (orderExponents 2 1 e) = fp (e 0) (e 1) :=
+    product_coeff D α β γ u v w p
+  have cr : ∀ e, Sr.coeff (orderExponents 2 (Equiv.swap 0 1) e) = fr (e 0) (e 1) :=
+    reverse_coeff D α β γ u v w p
+  have hp := rational_of_clear 1 Sp fp N A B R cp (fun a b => (scalar a b).1)
+  have hr := rational_of_clear (Equiv.swap 0 1) Sr fr N A B R cr
     (fun a b => (scalar a b).2.1)
   refine ⟨hp, hr, ?_⟩
   intro x y hx hy
   constructor
   · intro hlt
-    exact absolute_of_rational 1 _ _ N A B R (product_coeff D α β γ u v w p) hp x y
-      (chamber_id x y hx hy hlt)
+    exact absolute_of_rational 1 Sp fp N A B R cp hp x y (chamber_id x y hx hy hlt)
   · intro hlt
-    exact absolute_of_rational (Equiv.swap 0 1) _ _ N A B R
-      (reverse_coeff D α β γ u v w p) hr x y (chamber_swap x y hx hy hlt)
+    exact absolute_of_rational (Equiv.swap 0 1) Sr fr N A B R cr hr x y
+      (chamber_swap x y hx hy hlt)
 
 end
 end D5.S3.VertexAlgebra.LatticeSectorScalarRadial
