@@ -1,0 +1,10 @@
+**引理 9.3（同历史单调性与二目标判据）。** Let $H$ be one literal history and $K\subseteq K'\subseteq\mathcal F(H)$, with no cardinality restriction. For every nonnegative integer $s$,
+
+$$
+L_s(K,H)\ \Longrightarrow\ L_s(K',H).                            \tag{9.3}
+$$
+
+For a two-target set after clock five, $L_2$ holds exactly when the same pair has equal readings under both sixth actions and under all four chronological sixth/seventh suffixes. For a two-target set after clock six, $L_1$ holds exactly when both possible final readings agree on the pair.
+
+Proof. For $s=0$, inclusion preserves the existence of two distinct targets. If the assertion holds for $s-1$, each losing actual child of $K$ is contained in the corresponding actual child of $K'$; apply the induction hypothesis there and then (1.1). For a two-target set, a child has at least two targets precisely when both remain in that child. Applying this observation once gives the $L_1$ criterion and twice gives the $L_2$ criterion. A deterministic early stop cannot return different complete targets on an identical history, so it does not remove either obstruction. ∎
+

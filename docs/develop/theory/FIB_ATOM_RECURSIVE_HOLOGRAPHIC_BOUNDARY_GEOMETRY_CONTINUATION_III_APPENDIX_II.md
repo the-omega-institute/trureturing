@@ -3240,3 +3240,617 @@ Finally, the source-start contradiction (122.24) applies with no new initial-law
 The reduction (127.4)–(127.5) holds for all real triples, but it does not determine their global indices. Theorem 127.3 uses the strict lower comparison $c>0$ and only the interval (127.10). It supplies no conclusion at $\gamma=-\alpha$, for stronger opposite-sign competition, or for general $\beta\ne0$ or unequal gaps beyond the results of §§122 and 126. The weighted form $\langle gv,(\alpha P+\gamma P^2)v\rangle$ is not ordered merely by the operator inequality $P^2\le P$; the multiplier argument is the additional step used here. The full mixed-time all-pencil assertion remains undetermined by these results. In particular, infinite index for this marginal pencil does not give the all-pencil hypothesis for the individual quadratic coefficients in (125.2) or (125.3). The complete three-time fiber assertion, all 64 equations, the cubic condition and the remaining native realization boundary retain exactly the additional obligations stated in §§123–126. The analytic regularity, source-start dynamics and spectral-cutoff commutator mechanism used above are those of the retained original family.
 
 ## 追加锚（本行以下为增补区）
+
+## 128. The original single-density heat pencil in every positive angular sector
+
+**Definition 128.1 (the full original telescope and the single-density pencil).** Retain Definition 127.1 in full, together with all its inherited source, endpoint, native-parameter, process and readout hypotheses from §§115–126. In particular, every original finite $a,\eta,t,d>0$ is allowed and $\Delta _1=\Delta _2=d$. The group is the original $G=H^1\times\mathbb R$ with its original product and raw Haar measure $\mu$, the unit-source field is the original $\Gamma$, the endpoint is the actual $H=H_{\rm end}$ with selector $A(u)=\rho C(u)$, and $h$ is the coefficient-positive normalized zero vector. The full form, transformed operator, source and clock remain
+
+$$
+\begin{gathered}
+m=h^2\mu,\qquad U_hv=hv,\qquad K=U_h^{-1}H_{\rm end}U_h,
+\qquad T_s=e^{-sK},\\
+D(H_{\rm end}^{1/2})=\mathcal Q_c\dotplus\mathbb Ch,
+\qquad q_{H_{\rm end}}[y+ch]=\overline q_c[y],\\
+\mathscr E[u,v]=\int_{G\setminus\{e\}}
+\left(a\sum_{j=1}^3\overline{X_ju}X_jv+
+\eta\overline{\partial_wu}\partial_wv\right)dm,\\
+P=T_d,\qquad g=g_t,\qquad g_{t+d}=Pg_t.
+\end{gathered}
+\tag{128.1}
+$$
+
+The conservative diffusion starts at the same $e$ at time zero, in the original clock. Its densities satisfy $g_s\in L^2(m)$, $g_s>0$ almost everywhere and $\int g_s\,dm=1$ for $s>0$, as in (117.2)–(117.3). These explicit objects do not replace or restrict the full inherited telescope.
+
+For real $\alpha,\beta,\gamma$ use exactly the original quadratic form
+
+$$
+\begin{aligned}
+\varphi&=\alpha g+\beta Pg,\\
+Q(v)=q_{\alpha,\beta,\gamma}(v)
+&=\int\varphi vPv\,dm+\gamma\int gvP^2v\,dm,\\
+q(v)=q_{\alpha,0,\gamma}(v)
+&=\int g v(\alpha P+\gamma P^2)v\,dm.
+\end{aligned}
+\tag{128.2}
+$$
+
+Its domain is the real bounded Borel $m$-class space $\mathcal V_G$ of Definition 127.1. For every Borel $E$ with $m(E)>0$, the spaces $\mathcal V_E$ and $\mathcal V_E^{\rm lin}=\ker\Lambda_E$ are precisely (127.3), with the original fixed pointwise Borel simplex tuple $f$, distinct labels $i,j$, signs $\sigma$, common-readout trilinear form $\mathcal C$ and exact equations $\ell_{yzw}$ of (125.2). For emission overlaps the set remains $E=\{f_i\ge\kappa,f_j\ge\kappa\}$ with $\kappa>0$. No equations are imposed on $\mathcal V_E$ itself. Negative index retains exactly the finite-dimensional strictly negative symmetric-polar-form meaning of Definition 127.1.
+
+**Theorem 128.2 (every positive angular sector for the original $\beta=0$ pencil).** Under Definition 128.1, for every $\alpha\ne0$ and every real $\gamma$, the form $q$ in (128.2) has a bounded real negative test in every positive angular-frequency subspace of $\mathcal V_G$. Tests chosen at distinct positive angular frequencies are mutually orthogonal for its real symmetric polar form. Consequently
+
+$$
+\begin{gathered}
+n_-(q|_{\mathcal V_G})=\infty,\\
+n_-(q|_{\mathcal V_E})=n_-(q|_{\mathcal V_E^{\rm lin}})=\infty
+\qquad(m(E)>0).
+\end{gathered}
+\tag{128.3}
+$$
+
+The sector assertion is global. The local conclusions in (128.3) follow from Proposition 127.2 and (127.4)–(127.5); an arbitrary $E$ need not be rotation invariant, and no sectorwise localization is asserted.
+
+In particular, with the original event's restrictions $\gamma\ne0$, $(\alpha,\beta)\ne(0,0)$ and $m\{\varphi<0,\varphi+\gamma g<0\}=0$, this settles the entire $\beta=0$ part outside Theorem 127.3's strict comparable interval. Its coefficient ranges are
+
+$$
+\alpha>0,\quad\gamma\le-\alpha;
+\qquad\text{or}\qquad
+\alpha<0,\quad\gamma\ge-\alpha.
+\tag{128.4}
+$$
+
+The theorem also allows $\gamma=0$. The high-energy comparison and the removal of a fixed low-energy projection below provide the additional source-specific argument. Spectral calculus, adjoint factorization, three-lines interpolation and Cauchy's estimate are standard ingredients; the actual local elliptic estimates, rotation action and original-source nonstationarity are inherited hypotheses and results of §§115–127. Positivity of an unweighted spectral operator will be deduced only inside the contradiction assumption of sector nonnegativity. No weighted ordering follows merely from $P^2\le P$.
+
+**Proof.** Use the Jacobian-one symmetric coordinates
+$\xi=w-xy/2$, and cylindrical coordinates $(r,\theta,z,\xi)$ on
+$\Omega=\{r>0\}$. The original rotation action fixes $g=g_t$, $h$,
+and $m$, and commutes with the actual $K$ and all its spectral
+projections, by §§120 and 122. All statements below concern that actual
+extension. Work temporarily over the complex Hilbert space $L^2(m)$.
+For a fixed positive integer $\ell$, let $\mathcal L_\ell$ be its
+angular-character subspace and $K_\ell$ the self-adjoint restriction of
+$K$. This space contains the genuine compact punctured core tests
+$$
+ u_N=e^{i\ell\theta}\chi(r,z,\xi)
+       e^{iN\zeta\cdot(r,z,\xi)},
+ \qquad \chi\in C_c^\infty((0,\infty)\times\mathbb R^2),
+$$
+with real $\chi$ and fixed nonzero $\zeta\in\mathbb R^3$.
+
+Put $R=\alpha P+\gamma P^2$, restricted to this sector when necessary.
+For bounded complex $v\in\mathcal L_\ell$, define
+$$
+ q_{\mathbb C}(v)=\operatorname{Re}\langle gv,Rv\rangle_m.
+$$
+Here and below $\langle u,v\rangle_m=\int\overline u v\,dm$.
+The operators $P,P^2,R$ preserve bounded classes; $gv\in L^2(m)$.
+Suppose, for contradiction, that $q_{\mathbb C}$ is nonnegative on all
+bounded vectors in this sector.
+
+**Step 1 (necessary spectral positivity and unbounded sector spectrum).**
+For any such bounded $v$, put $w_s=e^{-sg}v$, $s\ge0$.
+These vectors stay bounded and in the same angular sector. Since
+$g\in L^2(m)$, the curve is differentiable in $L^2(m)$ with derivative
+$-gw_s$. Bounded self-adjointness of $R$ gives
+$$
+ \frac{d}{ds}\langle w_s,Rw_s\rangle_m
+ =-2\operatorname{Re}\langle gw_s,Rw_s\rangle_m
+ =-2q_{\mathbb C}(w_s)\le0.
+$$
+The supplied strict positivity $g>0$ almost everywhere implies
+$w_s\to0$ in $L^2(m)$. Thus
+$\langle v,Rv\rangle_m\ge0$. Bounded angular vectors are dense in
+$\mathcal L_\ell$: truncate their absolute value, preserving the angular
+character. Hence $R\ge0$ as an operator on $\mathcal L_\ell$.
+
+The spectrum of $K_\ell$ is unbounded above. Indeed, take the displayed
+compact tests with $\zeta=(0,1,0)$, so the fast phase is $e^{iNz}$.
+The full original form (115.15) gives, for nonzero real $\chi$,
+$$
+ \mathscr E[u_N,u_N]
+   =aN^2\|u_N\|_2^2+O(1),
+ \qquad \|u_N\|_2\ \text{independent of }N.
+$$
+All other derivative terms are independent of $N$; the cross term in
+$|\partial_z(\chi e^{iNz})|^2$ is zero. These are actual core vectors,
+so this contradicts any finite spectral upper bound for $K_\ell$.
+If $\alpha<0$, the spectral function
+$\alpha e^{-d\lambda}+\gamma e^{-2d\lambda}$ is strictly negative for
+all sufficiently large $\lambda$. The unbounded spectrum therefore
+contradicts $R\ge0$. We may consequently assume $\alpha>0$.
+
+**Step 2 (Cayley contraction and adjoint factorization).**
+Set
+$$
+ b=\frac{g-1}{g+1}.
+$$
+This is real, bounded by one in absolute value, smooth on $\Omega$, and
+rotation invariant. Because $R\ge0$, its bounded positive square root
+exists. For bounded sector vectors $v$, the exact identity is
+$$
+ 4q_{\mathbb C}(v)
+ =\|R^{1/2}(g+1)v\|_2^2
+  -\|R^{1/2}(g-1)v\|_2^2.
+$$
+Given any bounded sector vector $w$, take $v=w/(g+1)$. This is an
+allowed bounded vector. The identity and assumed nonnegativity imply
+$$
+ \|R^{1/2}M_bw\|_2\le\|R^{1/2}w\|_2.
+ \tag{128.5}
+$$
+Density extends (128.5) to every $w\in\mathcal L_\ell$.
+Define on $\operatorname{Ran}R^{1/2}$
+$$
+ C(R^{1/2}w)=R^{1/2}M_bw.
+$$
+Inequality (128.5) makes this well-defined and contractive. Extend it to the
+closure of this range and set it equal to zero on the orthogonal
+complement. Taking adjoints of
+$CR^{1/2}=R^{1/2}M_b$ gives
+$$
+ M_bR^{1/2}=R^{1/2}C^*.
+ \tag{128.6}
+$$
+No inverse of $R$, and no assertion about its kernel or its low-energy
+range, occurs in this construction.
+
+**Step 3 (comparison above a fixed spectral cutoff).**
+Write $s=d/2$. Positivity of $R=P(\alpha I+\gamma P)$ implies
+$\alpha I+\gamma P\ge0$ on this sector: its quadratic form is
+nonnegative on the dense range of $P^{1/2}$, and it is bounded.
+Let
+$$
+ F=(\alpha I+\gamma P)^{1/2},
+ \qquad R^{1/2}=e^{-sK_\ell}F.
+$$
+Choose a finite $\Lambda>0$ so large that
+$$
+ c\le\alpha+\gamma e^{-d\lambda}\le C_0
+ \qquad(\lambda\ge\Lambda)
+ \tag{128.7}
+$$
+for some $c>0$, $C_0<\infty$; for example the lower bound
+$c=\alpha/2$ holds for a sufficiently large cutoff. Put
+$E=\mathbf1_{[\Lambda,\infty)}(K_\ell)$, let $K_E$ be the restricted
+operator, and put $b_E=EM_bE$ on $E\mathcal L_\ell$.
+The restriction $F_E$ is bounded and invertible by (128.7).
+Compressing (128.6), then multiplying by $F_E^{-1}$, gives
+$$
+ b_Ee^{-sK_E}=e^{-sK_E}B_E,
+ \qquad
+ B_E=F_E(EC^*E)F_E^{-1},
+ \qquad \|B_E\|\le\sqrt{C_0/c}.
+ \tag{128.8}
+$$
+The cutoff $\Lambda$ is fixed independently of all subsequent oscillation parameters $N$. Thus the conjugation by heat is bounded on this high-energy compression.
+This remains valid when $\gamma=-\alpha$; no lower comparison at zero
+has been used.
+
+**Step 4 (the bounded high-energy compressed commutator).**
+For $\Pi_M=\mathbf1_{[\Lambda,M]}(K_\ell)$, consider the bounded entire
+operator-valued functions
+$$
+ A_M(z)=\Pi_M e^{zK_\ell}M_b e^{-zK_\ell}\Pi_M.
+$$
+Equation (128.8) bounds their norms by $\|B_E\|$ on
+$\operatorname{Re}z=s$, uniformly in $M$ and the imaginary part.
+The same bound on $\operatorname{Re}z=-s$ follows by adjoints, since
+$b_E$ is self-adjoint. For each fixed $M$ these entire functions
+are bounded throughout the closed strip. The three-lines theorem,
+applied to scalar matrix elements, bounds them in the strip by the same
+constant. Cauchy's estimate on the circle of radius $s/2$ yields
+$$
+ \|A_M'(0)\|\le 2\|B_E\|/s=:D_0,
+ \tag{128.9}
+$$
+uniformly in $M$. For $u\in E D(K_\ell)$, pass to its spectral
+truncations in the graph norm. Since $b$ is bounded, (128.9) gives
+$$
+ \left|\langle K_\ell u,bu\rangle_m
+       -\langle bu,K_\ell u\rangle_m\right|
+ \le D_0\|u\|_2^2.
+ \tag{128.10}
+$$
+This passage uses a commutator form; it does not assert that global
+multiplication by $b$ preserves $D(K_\ell)$.
+
+**Step 5 (removing the fixed low-energy projection on compact oscillations).**
+Let $L=I-E$. For any fixed compact punctured coordinate neighborhood
+$U\Subset\Omega$ and every integer $j\ge0$, the local elliptic
+estimates and their iteration in (120.6)–(120.7) give
+$$
+ \|Lf\|_{H^j(U)}\le C_{j,U,\Lambda}\|f\|_2,
+ \qquad f\in\mathcal L_\ell.
+ \tag{128.11}
+$$
+Indeed $Lf$ lies in every spectral-power domain and
+$\|K^nLf\|_2\le\Lambda^n\|f\|_2$. Interior elliptic regularity on
+nested punctured neighborhoods therefore gives (128.11) at every order.
+All weighted and unweighted local norms are equivalent there. The projection $L$ is not asserted to have finite rank; the uniform local estimates, at the fixed $\Lambda$, are the property used below.
+
+For each fixed compact test amplitude $\chi$, fixed $\ell$, and
+nonzero $\zeta$, integration by parts in the
+$(r,z,\xi)$-direction $\zeta$, followed by (128.11) and duality, gives
+$$
+ \|Lu_N\|_2=O(N^{-j})\quad\text{for every }j.
+ \tag{128.12}
+$$
+For detail, write $\langle u_N,Lf\rangle_m$ in cylindrical coordinates,
+where the measure is $r h^2\,dr\,d\theta\,dz\,d\xi$. Move $j$
+derivatives from $e^{-iN\zeta\cdot(r,z,\xi)}$ onto the compact smooth
+amplitude, this smooth density, and $Lf$. The derivatives of $Lf$
+are bounded in local $L^2$ by (128.11), uniformly for $\|f\|_2\le1$.
+The resulting bound is $C_jN^{-j}$, which is precisely (128.12).
+
+The actual local expression also gives $\|K_\ell u_N\|_2=O(N^2)$,
+whereas $\|K_\ell Lu_N\|_2\le\Lambda\|Lu_N\|_2$. If
+$$
+ \mathcal D(u)=\langle K_\ell u,bu\rangle_m
+                 -\langle bu,K_\ell u\rangle_m,
+$$
+expansion of $u=Eu+Lu$ gives the bound
+$$
+ |\mathcal D(u)-\mathcal D(Eu)|
+ \le2\|b\|_\infty
+ \bigl(\|K_\ell Lu\|_2\|u\|_2
+       +\|K_\ell Eu\|_2\|Lu\|_2\bigr).
+$$
+Using (128.12), for example with $j=4$, and then (128.10), proves
+$$
+ |\mathcal D(u_N)|\le D_0\|u_N\|_2^2+o(1)=O(1).
+ \tag{128.13}
+$$
+No commutator estimate involving a low-energy inverse is needed.
+
+**Step 6 (local principal symbol and source nonstationarity).**
+Both $u_N$ and $bu_N$ are genuine compact punctured smooth core
+vectors. Consequently $\mathcal D(u_N)=\langle u_N,[K,M_b]u_N\rangle_m$
+can be computed from the actual local divergence-form expression
+$$
+ K=-h^{-2}\operatorname{div}(h^2\mathsf A\nabla),
+ \qquad [K,M_b]u=(Kb)u-2\langle\mathsf A\nabla b,\nabla u\rangle.
+$$
+Here $Kb$ denotes only the smooth local differential expression on the
+compact support, not an assertion that global $b$ is in $D(K)$.
+The original principal symbol is (126.4). Since $b_\theta=0$, its
+term proportional to $N$ gives
+$$
+ \mathcal D(u_N)
+ =-2iN\int |\chi|^2
+ \left[a b_r\zeta_r+a b_z\zeta_z
+       +\left(\eta+\frac{ar^2}{4}\right)b_\xi\zeta_\xi\right]dm+O(1).
+ \tag{128.14}
+$$
+All other terms have a bound independent of $N$, since their supports
+are in a fixed compact punctured patch. Equations (128.13)–(128.14) force the
+integral coefficient to vanish for every real compact $\chi$ and every
+$\zeta$. Continuity and the positive local density of $m$ force
+$$
+ b_r=b_z=b_\xi=0.
+$$
+Rotation invariance supplies $b_\theta=0$, so connectedness of
+$\Omega$ makes $b$, and hence $g_t$, constant.
+
+This contradicts the supplied original-source nonstationarity argument
+(122.24): mass one would make $g_t=1$; injectivity and conservativity
+would then give $g_u=1$ for every $0<u<t$, inconsistent with
+continuous source-start paths and a nonzero nonnegative test supported
+away from $e$. Thus the assumed sector nonnegativity is false.
+
+**Step 7 (bounded real tests and polar orthogonality).**
+For each positive $\ell$ there is therefore a bounded complex
+$v_\ell\in\mathcal L_\ell$ with $q_{\mathbb C}(v_\ell)<0$.
+The form is real and rotation invariant. Angular integration gives
+$$
+ q(\operatorname{Re}v_\ell)
+ =q(\operatorname{Im}v_\ell)
+ =\tfrac12q_{\mathbb C}(v_\ell)<0.
+$$
+The real symmetric polar form pairs distinct positive frequencies to zero.
+Indeed their products have nonzero angular frequencies
+$\ell\pm k$, and $R$ commutes with rotations while $g$ is invariant.
+Choose one real part at each of any $N$ distinct positive frequencies.
+Its polar Gram matrix is diagonal with strictly negative diagonal entries.
+These are bounded real Borel $m$-classes, hence form an allowed
+$N$-dimensional strictly negative subspace. Borel representatives can be
+chosen and changed on null sets without changing any integral.
+As $N$ is arbitrary, the global negative index is infinite.
+The localization and finite-codimension conclusions are exactly the
+already supplied (127.4)–(127.5). This proves the theorem. $\square$
+
+
+For the coefficient boundary, $g>0$ almost everywhere permits the ratio $r=Pg/g$. The simultaneous strict inequalities excluded by the original event are equivalent to $\alpha+\beta r<\min(0,-\gamma)=-\max(\gamma,0)$. Thus its sign condition is exactly
+
+$$
+m\{\varphi<0,\varphi+\gamma g<0\}=0
+\quad\Longleftrightarrow\quad
+\alpha+\beta(Pg/g)+\max(\gamma,0)\ge0
+\quad m\text{-almost everywhere}.
+\tag{128.15}
+$$
+
+For $\beta=0$, imposing this condition and removing $\alpha>0$, $\gamma>-\alpha$ gives exactly (128.4). Neither an endpoint comparison at zero nor an inverse of $R$ is required by Theorem 128.2. In particular, the positivity of $R$ and of $\alpha I+\gamma P$ in its proof is conditional on the assumed nonnegativity of $q_{\mathbb C}$ in the chosen sector; it is not asserted for arbitrary coefficients without that assumption.
+
+The remaining original mixed-time question has the full telescope of Definition 128.1 and the exact coefficient conditions
+
+$$
+\beta\ne0,\qquad\gamma\ne0,\qquad
+\alpha+\beta(Pg_t/g_t)+\max(\gamma,0)\ge0
+\quad m\text{-almost everywhere}.
+\tag{128.16}
+$$
+
+For every original $a,\eta,t,d>0$ and every such real triple, it asks whether every nonzero original form
+
+$$
+Q(v)=\int(\alpha g_t+\beta g_{t+d})vT_dv\,dm
+       +\gamma\int g_t vT_{2d}v\,dm,
+\qquad v\in\mathcal V_G,
+\tag{128.17}
+$$
+
+has infinite global negative index, or whether there is an exact original-family counterexample with a rigorous finite-index bound. No further coefficient, source-time, gap, parameter or domain restriction is imposed. This mixed-time question remains unresolved by Theorem 128.2. Its contraction identity pairs one multiplier $g_t$ with a self-adjoint spectral function of the actual $K$. When $\beta\ne0$, the additional multiplier $g_{t+d}$ prevents that identity: $M_{g_{t+d}}P$ is not supplied as a commuting spectral function or a scalar multiple of $M_{g_t}P$. Source localization and operator ordering do not supply this missing global rigidity implication. Negative tests in arbitrarily many angular sectors would suffice, but that route is not asserted to be necessary. No original-family finite-index counterexample follows here.
+
+The conditional premise boundary is the complete one in Definition 127.1 and §§115–127. In particular, §§115–117 supply the actual full extension and form, conservativity, strict positive $L^2(m)$ source densities and their original clock; §120 supplies rotation invariance of the entire actual extension and original source law, the punctured local elliptic estimates (120.6)–(120.7), and smooth positive $h$ off the source; §122 supplies the actual local expression (122.9), angular symbol, heat/density smoothness and source-start nonstationarity (122.24); Proposition 127.2 supplies the total local index and exact finite-codimension consequences. These are premises of ordinary conditional source mathematics, not conclusions re-established by the argument above. The endpoint, process, positivity, source, clock and rotation suppliers retain their inherited conditions.
+
+For the standard analytic ingredients, the spectral-cutoff three-lines/Cauchy argument is the one in (122.18)–(122.19), applied here to a fixed high-energy compression. Integration by parts and local elliptic/Sobolev estimates justify the removal of its complementary projection explicitly in Step 5. The analytic uniqueness ingredient in the inherited localization is Mityagin, [*The zero set of a real analytic function*, arXiv:1512.07276v1, Proposition 0](https://arxiv.org/html/1512.07276v1). Agler–Young, [*Functions which are almost multipliers of Hilbert function spaces*, arXiv:math/9605224v1, Theorem 2.1](https://arxiv.org/html/math/9605224v1#S2.Thmtheorem1), concerns a single multiplier under its nonsingular-kernel and two uniqueness-set hypotheses, as applied in §127. The proof of Theorem 128.2 does not invoke that theorem, assume global RKHS equivalence or use a closed finite-codimensional multiplication domain at an endpoint; it gives no extension of that theorem to two mixed-time multipliers.
+
+Infinite index for the single-density marginal pencil does not establish the all-pencil hypothesis for the individual quadratic coefficients in (125.2) or (125.3). The complete common three-time fiber assertion, all 64 coordinates and equations, the cubic condition and the remaining native realization obligations retain exactly their additional conditions in §§123–126. These mathematical and realization questions are not settled by (128.3), and the original $\beta\ne0$ event (128.16)–(128.17) remains open.
+
+## 追加锚（本行以下为增补区）
+
+## 129. Distinct bounded multipliers and the conditional original mixed-time pencil
+
+**Definition 129.1 (the original operator, source and domains).** Retain the complete original-source definitions and inherited hypotheses of §§115–127, as in Definition 128.1. In particular, every original finite $a,\eta,t,d>0$ is allowed, the equal gaps are $\Delta_1=\Delta_2=d$, and the group is the original $G=H^1\times\mathbb R$ with its original product and raw Haar measure $\mu$. The source is the same $e$ at time zero, with the original unit-source field $\Gamma$, actual endpoint selector $A(u)=\rho C(u)$ and coefficient-positive normalized zero vector $h$. Use exactly
+
+$$
+\begin{gathered}
+m=h^2\mu,\qquad U_hv=hv,\qquad
+K=U_h^{-1}H_{\rm end}U_h,\qquad T_s=e^{-sK},\qquad P=T_d,\\
+D(H_{\rm end}^{1/2})=\mathcal Q_c\dotplus\mathbb Ch,
+\qquad q_{H_{\rm end}}[y+ch]=\overline q_c[y],\\
+\mathscr E[u,v]=\int_{G\setminus\{e\}}
+\left(a\sum_{j=1}^3\overline{X_ju}X_jv+
+\eta\overline{\partial_wu}\partial_wv\right)dm.
+\end{gathered}
+$$
+
+The conservative source-start diffusion uses the original clock. Its actual densities satisfy $g_s\in L^2(m)$, $g_s>0$ almost everywhere, $\int g_s\,dm=1$ and $g_{t+d}=Pg_t$, by (117.2)–(117.3). The measure has $m(G)=1$. The rotations and their action on the entire actual extension are those of §§120 and 122. In the Jacobian-one symmetric coordinate $\xi=w-xy/2$, use cylindrical coordinates $(r,\theta,z,\xi)$ on the connected full-measure set $\Omega=\{r>0\}$. The actual compact punctured smooth core, local regularity (120.6)–(120.7), divergence expression (122.9), and principal symbol (126.4) are retained as source hypotheses and suppliers, with all their inherited conditions.
+
+Let $\mathcal V_G$ be the real bounded Borel $m$-class space of Definition 127.1. For Borel $E$ with $m(E)>0$, use exactly
+
+$$
+\mathcal V_E=\{v\in L^\infty(m;\mathbb R):v=0\text{ a.e. on }G\setminus E\},
+\qquad
+\mathcal V_E^{\rm lin}=\ker\Lambda_E,
+\qquad
+\Lambda_E(v)=(\ell_{yzw}(v))_{y,z,w\in L}.
+$$
+
+Here $\ell_{yzw}$, the original fixed pointwise Borel simplex tuple, distinct labels $i,j$, signs $\sigma$ and common-readout trilinear form $\mathcal C$ are precisely (125.2) and (127.3). The multiplier notation $f$ below is separate from that fixed simplex tuple. For emission overlaps, $E=\{f_i\ge\kappa,f_j\ge\kappa\}$ retains that tuple and $\kappa>0$. The unrestricted space $\mathcal V_E$ imposes no first-order equations. Negative index is the supremum of dimensions of finite-dimensional real subspaces on which the symmetric polar form is strictly negative definite. In the complex proof use $\langle u,v\rangle_m=\int\overline u v\,dm$; $\mathcal L_\ell$ denotes the angular-character sector $e^{i\ell\theta}$ and $K_\ell$ the self-adjoint restriction of the actual $K$.
+
+**Theorem 129.2 (distinct bounded multipliers in every positive angular sector).** Under Definition 129.1, let $f,w$ be real, globally essentially bounded, rotation-invariant functions on the original $G$. Suppose $f$ is smooth and nonconstant on the connected full-measure set $\Omega=\{x^2+y^2>0\}$. For every real $c$, the form
+$$
+q(v)=\operatorname{Re}\langle fv,Pv\rangle_m
+       +c\operatorname{Re}\langle wv,P^2v\rangle_m                         \tag{129.1}
+$$
+has a bounded real negative test in each positive angular frequency. Consequently its negative index on the required real bounded Borel classes is infinite. No sign assumption on $f,w,c$ is needed. Smoothness of $w$ is unnecessary.
+
+The two multipliers in (129.1) remain distinct throughout the proof.
+
+**Proof of Theorem 129.2.**
+
+### 129.A. Lyapunov factorization for the two distinct multipliers
+
+Fix any positive angular frequency $\ell$, and restrict operators to its complex $L^2(m)$ sector. Let $F=M_f$, $W=M_w$. They are bounded self-adjoint operators; $P=e^{-dK_\ell}$ is a positive injective contraction. Define
+$$
+T=2\int_0^\infty P e^{-sP}W P e^{-sP}\,ds.                                \tag{129.2}
+$$
+This integral converges in operator norm. Near zero the integrand is bounded, and for $s\ge1$ its norm is at most $2\|W\|/(es)^2$. Cauchy–Schwarz in $s$ and spectral calculus further give
+$$
+\begin{aligned}
+|\langle u,Tv\rangle|
+&\le 2\|W\|
+  \left(\int_0^\infty\|Pe^{-sP}u\|^2ds\right)^{1/2}
+  \left(\int_0^\infty\|Pe^{-sP}v\|^2ds\right)^{1/2}\\
+&=\|W\|\|P^{1/2}u\|\|P^{1/2}v\|.
+\end{aligned}                                                            \tag{129.3}
+$$
+The dense range of $P^{1/2}$ therefore supplies a bounded self-adjoint $D$, with $\|D\|\le\|W\|$, such that
+$$
+T=P^{1/2}DP^{1/2}.                                                        \tag{129.4}
+$$
+Differentiating $Pe^{-sP}WPe^{-sP}$, integrating, and using $\|Pe^{-sP}\|\to0$, proves
+$$
+TP+PT=2PWP.                                                              \tag{129.5}
+$$
+Set
+$$
+S=WP+PW-T,\qquad C=F+cS.
+$$
+Then $S,C$ are bounded self-adjoint, $\|S\|\le3\|W\|$, and the operator representing (129.1) is exactly
+$$
+B=\frac{FP+PF+c(WP^2+P^2W)}2=\frac{CP+PC}{2}.                              \tag{129.6}
+$$
+Indeed (129.5) gives $SP+PS=WP^2+P^2W$. No weighted inequality is inferred from $P^2\le P$.
+
+### 129.B. Sector positivity and the Cayley commutator
+
+Suppose (129.1) is nonnegative on every bounded vector in the chosen angular sector. Bounded vectors are dense there, by truncating their modulus without changing angular character. Since $B$ is bounded, $B\ge0$ on the entire sector.
+
+Also $C\ge0$. For every $u$,
+$$
+\frac{d}{ds}\langle e^{-sP}u,C e^{-sP}u\rangle
+=-2\langle e^{-sP}u,B e^{-sP}u\rangle\le0.                                 \tag{129.7}
+$$
+Injectivity of $P$ implies $e^{-sP}u\to0$. Boundedness of $C$ makes the differentiated expression tend to zero, so its initial value is nonnegative.
+
+Put $b=(C-I)(C+I)^{-1}$. This is bounded self-adjoint. The exact identity
+$$
+(C+I)P(C+I)-(C-I)P(C-I)=4B
+$$
+and substitution by $(C+I)^{-1}v$ yield
+$$
+\|P^{1/2}bv\|\le\|P^{1/2}v\|.                                             \tag{129.8}
+$$
+Define $L(P^{1/2}v)=P^{1/2}bv$ on the dense range of $P^{1/2}$. It extends to a contraction. Taking adjoints gives
+$$
+bP^{1/2}=P^{1/2}L^*.                                                      \tag{129.9}
+$$
+Thus $e^{(d/2)K_\ell}be^{-(d/2)K_\ell}$ is an actual bounded operator of norm at most one.
+
+For $\Pi_R=\mathbf1_{[0,R]}(K_\ell)$, consider
+$$
+F_R(z)=\Pi_Re^{zK_\ell}be^{-zK_\ell}\Pi_R.
+$$
+Equation (129.9) bounds these entire functions by one on $\Re z=d/2$; adjoints give the same bound on $\Re z=-d/2$. For each fixed $R$, the functions are bounded on the strip. The three-lines theorem and Cauchy's estimate on a circle of radius $d/4$ bound $F'_R(0)$ by $4/d$, uniformly in $R$. Spectral limits give a bounded commutator form $[K_\ell,b]$ on $D(K_\ell)$.
+
+This form bound also proves $bD(K_\ell)\subset D(K_\ell)$, by the self-adjoint adjoint-domain characterization. The inverse of $I-b$ has the same domain property and bounded commutator. Explicitly put
+$$
+a=(I+b)/2=C(C+I)^{-1},\qquad\|a\|<1.
+$$
+Use $(I-b)^{-1}=\frac12\sum_{n\ge0}a^n$, and
+$\|[K_\ell,a^n]\|\le n\|a\|^{n-1}\|[K_\ell,a]\|$. Both the inverse and commutator series converge. Therefore $C=2(I-b)^{-1}-I$ satisfies
+$$
+[K_\ell,C]\text{ is bounded}.                                             \tag{129.10}
+$$
+Boundedness of $C$ is material in these steps.
+
+### 129.C. Oscillatory smoothing and the correction commutator
+
+In the original symmetric cylindrical coordinates $(r,\theta,z,\xi)$, take genuine compact punctured core vectors
+$$
+u_N=e^{i\ell\theta}\chi(r,z,\xi)e^{iN\zeta\cdot(r,z,\xi)},\quad
+\chi\in C_c^\infty((0,\infty)\times\mathbb R^2;\mathbb R),\quad\zeta\ne0.
+                                                                            \tag{129.11}
+$$
+Their norms are independent of $N$, and the actual local order-two expression gives $\|Ku_N\|=O(N^2)$. For every integer $j$ and every $\tau>0$,
+$$
+\|e^{-\tau K}u_N\|+\|Ke^{-\tau K}u_N\|=O(N^{-j}).                           \tag{129.12}
+$$
+To justify the global norms in (129.12), the source's interior elliptic estimates (120.6)–(120.7), iterated at higher order, and spectral smoothing bound both $e^{-\tau K}$ and $Ke^{-\tau K}$ from the $L^2$ unit ball into every local $H^j(U)$, on a fixed punctured neighborhood of the support of $\chi$. In the pairing with $u_N$, move $j$ derivatives in the nonzero $\zeta$-direction off the oscillatory exponential. The compact amplitude and density $rh^2$ are smooth. The bound is uniform on the $L^2$ unit ball; duality and self-adjointness prove (129.12). No global Sobolev embedding is assumed.
+
+For bounded self-adjoint $A$, write
+$\mathcal D_A(u)=\langle Ku,Au\rangle-\langle Au,Ku\rangle$.
+Equations (129.4) and the definition of $S$ give
+$$
+\begin{aligned}
+|\mathcal D_S(u_N)|\le{}&
+2\|W\|\bigl(\|Ku_N\|\|Pu_N\|
+                  +\|PKu_N\|\|u_N\|\bigr)\\
+&+2\|D\|\|P^{1/2}Ku_N\|\|P^{1/2}u_N\|=o(1),                              \tag{129.13}
+\end{aligned}
+$$
+using (129.12) with $\tau=d,d/2$. Equation (129.10) consequently gives
+$$
+|\mathcal D_F(u_N)|=O(1).                                                  \tag{129.14}
+$$
+
+### 129.D. Local ellipticity and independent real angular tests
+
+Both $u_N$ and $fu_N$ are actual smooth compact punctured core vectors. The original local divergence expression (122.9) gives
+$$
+[K,M_f]u=(Kf)u-2\langle\mathsf A\nabla f,\nabla u\rangle,
+$$
+where $Kf$ is used only as a local differential expression. Rotation invariance and the original principal symbol (126.4) yield
+$$
+\mathcal D_F(u_N)=
+-2iN\int|\chi|^2\left[
+af_r\zeta_r+af_z\zeta_z+
+\left(\eta+\frac{ar^2}{4}\right)f_\xi\zeta_\xi
+\right]dm+O(1).                                                          \tag{129.15}
+$$
+Every remaining term is on one fixed compact punctured support and is bounded independently of $N$. Equations (129.14)–(129.15), for every real $\chi$ and every $\zeta$, force the integral coefficient to vanish. Continuity and positivity of the local density imply $f_r=f_z=f_\xi=0$; rotation invariance gives $f_\theta=0$. Connectedness makes $f$ constant on $\Omega$, a contradiction.
+
+Thus nonnegativity fails in the arbitrary positive sector. There is a bounded complex vector $v_\ell$ of this character with $q(v_\ell)<0$. Reality and rotation invariance imply
+$$
+q(\Re v_\ell)=q(\Im v_\ell)=\tfrac12q(v_\ell)<0.
+$$
+The real polar form pairs distinct positive angular frequencies to zero. Choose one such real test at each of any $N$ distinct positive frequencies. Their polar Gram matrix is diagonal and strictly negative. These bounded real Borel $m$-classes span an allowed $N$-dimensional negative subspace. Letting $N$ vary proves the theorem. $\square$
+
+
+### 129.E. Application to the actual original mixed-time family
+
+**Corollary 129.3 (the original pencil under actual global essential boundedness).** Under the complete source hypotheses of Definition 129.1, suppose additionally that the actual source density at the specified original time satisfies
+
+$$
+g_t\in L^\infty(G,m).
+\tag{129.16}
+$$
+
+For every real $(\alpha,\beta,\gamma)$ with $(\alpha,\beta)\ne(0,0)$, the original equal-gap mixed pencil
+
+$$
+\begin{aligned}
+\varphi&=\alpha g_t+\beta g_{t+d}
+       =\alpha g_t+\beta Pg_t,\\
+Q(v)&=\int\varphi\,vPv\,dm
+       +\gamma\int g_t\,vP^2v\,dm,
+\qquad v\in\mathcal V_G,
+\end{aligned}
+\tag{129.17}
+$$
+
+has a bounded real negative test at each positive global angular frequency, with mutually orthogonal real polar pairings between distinct positive frequencies. Moreover, for every Borel $E$ with $m(E)>0$ and every exact first-order domain above,
+
+$$
+n_-(Q|_{\mathcal V_G})
+=n_-(Q|_{\mathcal V_E})
+=n_-(Q|_{\mathcal V_E^{\rm lin}})=\infty.
+\tag{129.18}
+$$
+
+No sign restriction on the coefficients is required by this conditional corollary. The boundedness hypothesis (129.16) is an additional condition on the actual original density, not a consequence of its supplied $L^2$ integrability or local regularity.
+
+**Proof of Corollary 129.3.** Make the exact substitutions into Theorem 129.2
+
+$$
+f=\alpha g_t+\beta Pg_t,\qquad w=g_t,\qquad c=\gamma,
+\tag{129.19}
+$$
+
+without changing $K,m,P$, the extension, the source or the clock. The Markov $L^\infty$ contraction gives
+
+$$
+\|Pg_t\|_\infty\le\|g_t\|_\infty,
+\qquad
+\|f\|_\infty\le(|\alpha|+|\beta|)\|g_t\|_\infty.
+\tag{129.20}
+$$
+
+Thus both distinct multipliers are globally bounded. Source §§120 and 122 give their rotation invariance and the smoothness of $f$ on $\Omega$. Nonconstancy for every $(\alpha,\beta)\ne(0,0)$ is exactly the supplier (126.7) and its accompanying injectivity/source-start contradiction in Corollary 126.2: constancy would force $g_t-1$ to be zero or a single positive-eigenvalue vector, and injectivity toward time zero would produce an $L^2(m)$ density for $\delta_e$, contradicting $m(\{e\})=0$. This established source argument is reused with its original hypotheses. Theorem 129.2 now supplies the global negative subspaces for (129.17).
+
+For the local and constrained conclusions, apply Proposition 127.2, rather than localizing the angular tests. Equation (127.4) equates the local and global negative indices. With $r_E=\operatorname{rank}\Lambda_E\le37$, equation (127.5) says that a finite bound $k$ on the exact first-order domain would imply the global bound $k+r_E\le k+37$, contradicting the global infinite index. This proves (129.18). An arbitrary positive-measure $E$ need not preserve angular sectors, so the local conclusion is a total-index conclusion and contains no sectorwise localization assertion. $\square$
+
+**Remark 129.4 (coefficient range and applicability boundary).** Theorem 128.2 already gives the entire original $\beta=0$, $\alpha\ne0$ conclusion without (129.16); that result is used directly. For the remaining original mixed-time coefficient range, retain precisely (128.16)–(128.17):
+
+$$
+\beta\ne0,\qquad\gamma\ne0,\qquad
+\alpha+\beta\frac{Pg_t}{g_t}+\max(\gamma,0)\ge0
+\quad m\text{-a.e.},\qquad Q\ne0.
+\tag{129.21}
+$$
+
+The ratio uses the supplied $g_t>0$ almost everywhere. By (128.15), its inequality is exactly
+$m\{\varphi<0,\varphi+\gamma g_t<0\}=0$; it does not add a coefficient restriction to the original remaining question. For every original tuple satisfying the additional actual condition (129.16), Corollary 129.3 applies to every triple in (129.21). All original positive $a,\eta,t,d$, original source at time zero, unit-source $\Gamma$, selector, normalized $h$, raw measure and clock remain as in Definition 129.1.
+
+The supplied positivity, mass one, $L^2(m)$ integrability and local smoothness or analyticity of $g_t$ do not alone supply (129.16). A sufficient further assertion to extend this application to every original tuple is
+
+$$
+\text{For every original }a,\eta,t>0,
+\qquad g_t\in L^\infty(G,h^2\mu).
+\tag{129.22}
+$$
+
+Assertion (129.22) is not proved here and is not claimed necessary. Only finiteness of the essential bound for each individual tuple is required in Corollary 129.3; no uniform bound in the parameters is needed. The original-family question with all its original hypotheses does not acquire (129.16) as a premise merely from this conditional implication. In particular, the part of (129.21) with $g_t\notin L^\infty(m)$ is not decided here; no existence of an original tuple in that part is asserted, and no exact original-family counterexample with a finite-index bound is supplied.
+
+Another sufficient route would be an extension of Theorem 129.2 to the actual possibly unbounded $M_{g_t}$ and $M_{\alpha g_t+\beta Pg_t}$, including justified domains, a self-adjoint Lyapunov correction, positivity and the Cayley commutator. The bounded-operator argument (129.2)–(129.10) does not establish that extension. Nonnegativity of the original pencil does not imply nonnegativity after separately truncating its multipliers. In particular, neither a weighted ordering deduced solely from $P^2\le P$ nor an interchange of the two multipliers is used in the proof.
+
+The conclusions concern the scalar mixed marginal pencil and its exact first-order finite-codimensional restrictions. They do not imply the simultaneous all-pencil hypothesis for all 64 common three-time coordinates, the cubic cancellation condition, the full three-time relation fiber, or a physical realization; those retain their additional hypotheses and obligations in §§123–126.
+
+**Remark 129.5 (mathematical sources).** The complete mixed-multiplier composition of Theorem 129.2 and Corollary 129.3 is a repository-derived synthesis relative to the original source suppliers in §§115–127. In particular, (115.13)–(115.17), (117.2)–(117.3), (120.4)–(120.7), (122.9)–(122.11), (122.18)–(122.23), (126.4)–(126.7), and Proposition 127.2 supply the actual extension and form, rotation action, local ellipticity and regularity, source nonconstancy and localization, with their inherited conditional premises. These suppliers are not independently re-established by Theorem 129.2. Section 128 supplies the separate single-density result; the distinct-multiplier Lyapunov correction is the additional composition treated here.
+
+The Lyapunov integral, spectral calculus, three-lines interpolation and Cauchy estimate are standard intermediate tools. The integral and its endpoint limits are proved in (129.2)–(129.6), and the spectral-cutoff interpolation mechanism is explicit in the proof of (129.10), as in (122.18)–(122.19). The compact oscillatory smoothing and duality argument proving (129.12) supplies the global norms from local elliptic estimates without a global Sobolev embedding. The proof is self-contained relative to the stated original suppliers; no originality assertion is made for the composition.
+
+For bibliographic context, Marvin Rosenblum, “On the operator equation $BX-XA=Q$,” *Duke Mathematical Journal* (1956), [doi:10.1215/S0012-7094-56-02324-9](https://doi.org/10.1215/S0012-7094-56-02324-9), concerns operator equations. Bibliographic metadata alone supplies no theorem with the zero spectral endpoint needed here. No theorem from that article is invoked in place of (129.2)–(129.6).
+
+## 追加锚（本行以下为增补区）
