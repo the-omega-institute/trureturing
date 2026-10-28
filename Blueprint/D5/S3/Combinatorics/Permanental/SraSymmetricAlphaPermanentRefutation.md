@@ -58,6 +58,10 @@ $$\neg (\forall n \in \mathbb {N},\; (0 < n) \Rightarrow (\forall A \in \operato
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permanental/SraSymmetricAlphaPermanentRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sra2609-symmetric-alpha-permanent` (refuted) by `D5/S3/Combinatorics/Permanental/SraSymmetricAlphaPermanentRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sra2609-symmetric-alpha-permanent","declaration_gid":"D5/S3/Combinatorics/Permanental/SraSymmetricAlphaPermanentRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Suvrit Sra (2026). *A Koteljanskii inequality for permanents*. DOI: [10.48550/arXiv.2609.39979](https://doi.org/10.48550/arXiv.2609.39979). URL: <https://arxiv.org/abs/2609.39979v1>.

@@ -28,7 +28,8 @@ internal sealed class SraReciprocalPermanentLorentzianRefutationDocument : IScri
             Node("claim", "claim", Disp(IffTo(F.Id("claim"), ClaimBody())),
                 "Source, p. 6, §4(d): “Is f_A Lorentzian for every inverse M-matrix A?” The assertion quantifies over every n>0 and every real n×n inverse M matrix, with no symmetry hypothesis. Fin n index i is source index i+1.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "result", Disp(Seq(Neg, Sp, Parenthesized(ClaimBody()))),
-                "The 5×5 matrix of Sra's Theorem 1.2 has positive entries and an inverse with nonpositive off-diagonal entries. Differentiating in its last three variables gives a quadratic whose Hessian is positive definite on span(e₀,e₁+e₂). This property persists for sufficiently close coefficient approximations, whereas every strictly Lorentzian quadratic has only one positive eigenvalue.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))), []));
+                "The 5×5 matrix of Sra's Theorem 1.2 has positive entries and an inverse with nonpositive off-diagonal entries. Differentiating in its last three variables gives a quadratic whose Hessian is positive definite on span(e₀,e₁+e₂). This property persists for sufficiently close coefficient approximations, whereas every strictly Lorentzian quadratic has only one positive eigenvalue.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("sra2609-koteljanskii"), ResolutionKind.Refuted))), []));
 
     private static DocumentBlock Node(string id, string declaration, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance,
