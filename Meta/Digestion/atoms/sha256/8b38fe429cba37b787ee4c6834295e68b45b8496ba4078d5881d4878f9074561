@@ -1,0 +1,23 @@
+**推论 25.2（非平坦第一 J 的条件动作与充分链消费）。** For every $a,b\in\mathbb R$ with $b\ne a$, put
+
+$$
+c=a+\frac85(b-a),\qquad H^{JJ}_{a,b}=(a,J,b,J,c).
+                                                                  \tag{25.18}
+$$
+
+Then $L_5(\mathcal F(H^{JJ}_{a,b}),H^{JJ}_{a,b})$. Every deterministic complete-target decoder that succeeds on the whole original domain within eight total readings must, if it reaches $(a,J,b)$ with $b\ne a$, continue with $M$.
+
+In particular Theorem 25.1 supplies the second existential of (18.12), with $z_2=192/5$. If the first and third existentials of that sufficient chain also hold, then $L_7(\mathcal F((0)),(0))$ holds at the original initial history.
+
+Proof. Apply Lemma 9.2 with $D_0=a$ and $\lambda=(b-a)/24\ne0$ to Theorem 25.1. Its second-$J$ response becomes
+
+$$
+a+\lambda\frac{192}{5}=a+\frac85(b-a)=c.
+$$
+
+The map is a bijection of the original domain, for either sign of $\lambda$, and carries whole compatible fibers and their $L_5$ predicates to the displayed history.
+
+The reached first-$J$ history contains at least the two distinct targets of any transported terminal pair, so stopping there cannot succeed on its entire fiber. Choosing second $J$ has the actual response $c$ whose child has $L_5$. Three total reads have then been acquired, at clocks $0,1,2$, leaving exactly the five reads $3,\ldots,7$. Hence this action cannot guarantee complete-target recovery within eight total reads. The remaining legal action is $M$. This is a conditional action requirement, not a recovery assertion for that action.
+
+For the sufficient-chain assertion, retain the literal histories $H_1=(0,J,24)$ and $H_2=(H_1,M,48)$ in (18.12). If its first existential holds, Theorem 18.2 gives $L_5(\mathcal F(H_2),H_2)$. Theorem 25.1 gives the other second-action $L_5$ child at the same $H_1$. Recursion (1.1) therefore gives $L_6(\mathcal F(H_1),H_1)$, with the stopping guard supplied by either child. If the initial-$M$ existential in (18.12) holds as well, it and this first-$J$ child give $L_7$ at $(0)$ by the same recursion. No assumption about inevitability of $H_1$ is used. ∎
+

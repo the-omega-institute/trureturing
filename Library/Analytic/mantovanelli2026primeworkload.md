@@ -6,7 +6,8 @@ title: Colossally Abundant Numbers, Robin's Inequality, and an Exact Prime-Layer
 doi: null
 url: https://zenodo.org/records/22014299
 claim: The archived manuscript supplies the exact regular-return packet identity, a sharp two-moment lower bound, and a cone-envelope reduction for the actual unrestricted CA pressure; none decides the unresolved Robin sign.
-strata_touched: []
+strata_touched:
+  - D5/S3/Arith/Robin/EulerLayerRootCorrection
 license: citation-only
 triage: anchor
 ---
@@ -1337,7 +1338,21 @@ $$
 Its regular-return specialization is a subsequent consequence. The
 full-real statement is reusable without imposing self-tangency, GA1
 or GA2 at each intervening prefix. It is an archived preprint supplier,
-not a new project normal-form theorem or a Lean-verified input.
+not a new project normal-form theorem or a Lean-verified input. The
+strict-inventory consequence below has a separate Lean proof in
+`D5.S3.Arith.Robin.EulerLayerRootCorrection.strict_inventory_root_correction`:
+for every $\varepsilon>0$ there is one real $T>1$ such that, for every real
+$t\ge T$ and every positive natural $U$ with
+$U.\mathrm{factorization}(q)=\mathrm{optimalLayerCount}(1/(t\log t),q)$
+for every prime $q$,
+
+$$
+\left|\frac{\log U-\psi(t)}{\sqrt t}-(\sqrt2-1)\right|<\varepsilon.
+$$
+
+This proof uses the unconditional `MediumPNT` and includes all strict
+endpoint events and all higher layers; it adds no PNT hypothesis. It does
+not establish RH, a Robin sign, or selected-family attainment.
 
 The price and marginal correspondences above identify the primary's
 maximal prefix with $A^+$, whereas the project's strict inventory is
