@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:810b3030b7522eec0457d8f762ab9d056f60ccec0f4868d59af718591d33a48f
   normalized_sha256: sha256:810b3030b7522eec0457d8f762ab9d056f60ccec0f4868d59af718591d33a48f
 cas_ref: sha256:810b3030b7522eec0457d8f762ab9d056f60ccec0f4868d59af718591d33a48f
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/CubicGain/PrimitiveKernelLattice.whole_class_primitive_lattice
+    target_statement_id: sha256:59a263e68b0b2af67226b52be53673c145680ae8b2188ae3e3d273db925b1a50
 receipts:
   unresolved_subitems: []
