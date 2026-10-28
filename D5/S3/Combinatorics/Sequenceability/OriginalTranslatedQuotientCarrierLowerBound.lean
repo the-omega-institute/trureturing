@@ -8,6 +8,7 @@
 
 import D5.S3.Combinatorics.Sequenceability.OriginalCyclicFiveCarrierLowerBound
 import Mathlib.GroupTheory.SpecificGroups.Cyclic.Subgroup
+import Mathlib.Data.Finset.Card
 
 /-!
 In T = {0} union {±A_i}, a collision
