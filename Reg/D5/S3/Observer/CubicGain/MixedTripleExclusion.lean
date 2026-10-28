@@ -77,7 +77,8 @@ private theorem good_reads : ∀ W ∈ goodSupport,
   rcases hW with rfl | rfl | rfl
   all_goals
     norm_num [goodA,goodB,goodC,legalWorld,readAt,gain,
-      Polynomial.ofFn_eq_sum_monomial,Fin.sum_univ_four,acquisition,Raw,
+      Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
+      Polynomial.eval_monomial,Fin.sum_univ_four,acquisition,Raw,
       _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
       _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
       _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
@@ -120,7 +121,8 @@ private theorem test_root_read (W : World3) (hW : W ∈ testSupport)
   rcases hW with rfl | rfl | rfl <;> rcases hk with rfl | rfl | rfl
   all_goals
     norm_num [testA,testB,testC,legalWorld,readAt,gain,
-      Polynomial.ofFn_eq_sum_monomial,Fin.sum_univ_four]
+      Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
+      Polynomial.eval_monomial,Fin.sum_univ_four]
 
 private theorem test_third_read (E : Bool) (W : World3) (hW : W ∈ testSupport) :
     readAt W ([false,true] ++ [E]) 3 = if E then -72 else -84 := by
@@ -128,7 +130,8 @@ private theorem test_third_read (E : Bool) (W : World3) (hW : W ∈ testSupport)
   rcases hW with rfl | rfl | rfl <;> cases E
   all_goals
     norm_num [testA,testB,testC,legalWorld,readAt,gain,
-      Polynomial.ofFn_eq_sum_monomial,Fin.sum_univ_four,acquisition,Raw,
+      Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
+      Polynomial.eval_monomial,Fin.sum_univ_four,acquisition,Raw,
       _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
       _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
       _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
@@ -178,17 +181,19 @@ private theorem test_fifth (E F G : Bool) : ∃ z : ℝ,
   have hb : testB ∈ testSupport := by simp [testSupport]
   have hc : testC ∈ testSupport := by simp [testSupport]
   cases E <;> cases F <;> cases G
-  · refine ⟨46,fifth_child false false false 46 testA testB ha hb test_distinct.1 ?_ ?_⟩
-  · refine ⟨38,fifth_child false false true 38 testA testC ha hc test_distinct.2.1 ?_ ?_⟩
-  · refine ⟨16,fifth_child false true false 16 testA testB ha hb test_distinct.1 ?_ ?_⟩
-  · refine ⟨14,fifth_child false true true 14 testA testB ha hb test_distinct.1 ?_ ?_⟩
-  · refine ⟨38,fifth_child true false false 38 testB testC hb hc test_distinct.2.2 ?_ ?_⟩
-  · refine ⟨28,fifth_child true false true 28 testA testB ha hb test_distinct.1 ?_ ?_⟩
-  · refine ⟨14,fifth_child true true false 14 testA testB ha hb test_distinct.1 ?_ ?_⟩
-  · refine ⟨12,fifth_child true true true 12 testA testB ha hb test_distinct.1 ?_ ?_⟩
+  all_goals first
+    | refine ⟨46,fifth_child false false false 46 testA testB ha hb test_distinct.1 ?_ ?_⟩
+    | refine ⟨38,fifth_child false false true 38 testA testC ha hc test_distinct.2.1 ?_ ?_⟩
+    | refine ⟨16,fifth_child false true false 16 testA testB ha hb test_distinct.1 ?_ ?_⟩
+    | refine ⟨14,fifth_child false true true 14 testA testB ha hb test_distinct.1 ?_ ?_⟩
+    | refine ⟨38,fifth_child true false false 38 testB testC hb hc test_distinct.2.2 ?_ ?_⟩
+    | refine ⟨28,fifth_child true false true 28 testA testB ha hb test_distinct.1 ?_ ?_⟩
+    | refine ⟨14,fifth_child true true false 14 testA testB ha hb test_distinct.1 ?_ ?_⟩
+    | refine ⟨12,fifth_child true true true 12 testA testB ha hb test_distinct.1 ?_ ?_⟩
   all_goals
     norm_num [testA,testB,testC,legalWorld,readAt,gain,
-      Polynomial.ofFn_eq_sum_monomial,Fin.sum_univ_four,acquisition,Raw,
+      Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
+      Polynomial.eval_monomial,Fin.sum_univ_four,acquisition,Raw,
       _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
       _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
       _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
