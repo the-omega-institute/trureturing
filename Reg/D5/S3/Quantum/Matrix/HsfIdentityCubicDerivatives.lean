@@ -125,27 +125,27 @@ private theorem sensitivity : Sensitivity arena.{u} derivativeActual := by
   · intro e
     exact nomatch e
 
-def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.hasDerivAt_cfc)) where
-  actual := derivativeActual
+def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.hasDerivAt_cfc.{u})) where
+  actual := derivativeActual.{u}
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.hasDerivAt_cfc, derivativeRejected, rejected_law⟩
-  sensitivity := sensitivity
-  dependence := derivativeDependence
+  variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.hasDerivAt_cfc.{u}, derivativeRejected.{u}, rejected_law.{u}⟩
+  sensitivity := sensitivity.{u}
+  dependence := derivativeDependence.{u}
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.hasDerivAt_cfc) (Realization derivativeSignature.{u}) Type Unit where
+    (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.hasDerivAt_cfc.{u}) (Realization derivativeSignature.{u}) Type Unit where
   unitName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.CfcDerivative.unit
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.CfcDerivative.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize derivativeSignature (fun _ _ s => HasDerivAt s.1 s.2.1 s.2.2) (fun e => nomatch e))
+  readout := some (realize derivativeSignature.{u} (fun _ _ s => HasDerivAt s.1 s.2.1 s.2.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -180,27 +180,27 @@ private theorem sensitivity : Sensitivity arena.{u} derivativeActual := by
   · intro e
     exact nomatch e
 
-def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.hasDerivAt_affine_rpow)) where
-  actual := derivativeActual
+def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.hasDerivAt_affine_rpow.{u})) where
+  actual := derivativeActual.{u}
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.hasDerivAt_affine_rpow, derivativeRejected, rejected_law⟩
-  sensitivity := sensitivity
-  dependence := derivativeDependence
+  variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.hasDerivAt_affine_rpow.{u}, derivativeRejected.{u}, rejected_law.{u}⟩
+  sensitivity := sensitivity.{u}
+  dependence := derivativeDependence.{u}
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.hasDerivAt_affine_rpow) (Realization derivativeSignature.{u}) Type Unit where
+    (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.hasDerivAt_affine_rpow.{u}) (Realization derivativeSignature.{u}) Type Unit where
   unitName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.AffineDerivative.unit
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.AffineDerivative.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize derivativeSignature (fun _ _ s => HasDerivAt s.1 s.2.1 s.2.2) (fun e => nomatch e))
+  readout := some (realize derivativeSignature.{u} (fun _ _ s => HasDerivAt s.1 s.2.1 s.2.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -234,24 +234,24 @@ private theorem sensitivity : Sensitivity arena.{u} germActual := by
   · intro e
     exact nomatch e
 
-def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.sandwich_trace_germ)) where
+def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.sandwich_trace_germ.{u})) where
   actual := germActual
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.sandwich_trace_germ, germRejected, rejected_law⟩
+  variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.sandwich_trace_germ.{u}, germRejected, rejected_law⟩
   sensitivity := sensitivity
   dependence := germDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.sandwich_trace_germ) (Realization germSignature) Type Unit where
+    (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.sandwich_trace_germ.{u}) (Realization germSignature) Type Unit where
   unitName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.SandwichGerm.unit
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.SandwichGerm.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize germSignature (fun _ _ s => s.1 =ᶠ[𝓝 (0 : ℝ)] s.2) (fun e => nomatch e))
@@ -295,24 +295,24 @@ private theorem sensitivity : Sensitivity arena.{u} jetActual := by
   · intro e
     exact nomatch e
 
-def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.cubic_trace_derivatives)) where
+def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.cubic_trace_derivatives.{u})) where
   actual := jetActual
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.cubic_trace_derivatives, jetRejected, rejected_law⟩
+  variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.cubic_trace_derivatives.{u}, jetRejected, rejected_law⟩
   sensitivity := sensitivity
   dependence := jetDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.cubic_trace_derivatives) (Realization jetSignature) Type Unit where
+    (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.cubic_trace_derivatives.{u}) (Realization jetSignature) Type Unit where
   unitName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.CubicTrace.unit
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.CubicTrace.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize jetSignature (fun _ _ s => s.1 = s.2.1 ∧ s.2.2.1 = s.2.2.2) (fun e => nomatch e))
@@ -354,24 +354,24 @@ private theorem sensitivity : Sensitivity arena.{u} jetActual := by
   · intro e
     exact nomatch e
 
-def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.affine_power_cubic_derivatives)) where
+def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.affine_power_cubic_derivatives.{u})) where
   actual := jetActual
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.affine_power_cubic_derivatives, jetRejected, rejected_law⟩
+  variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.affine_power_cubic_derivatives.{u}, jetRejected, rejected_law⟩
   sensitivity := sensitivity
   dependence := jetDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.affine_power_cubic_derivatives) (Realization jetSignature) Type Unit where
+    (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.affine_power_cubic_derivatives.{u}) (Realization jetSignature) Type Unit where
   unitName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.AffineTrace.unit
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.AffineTrace.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize jetSignature (fun _ _ s => s.1 = s.2.1 ∧ s.2.2.1 = s.2.2.2) (fun e => nomatch e))
@@ -408,24 +408,24 @@ private theorem sensitivity : Sensitivity arena.{u} jetActual := by
   · intro e
     exact nomatch e
 
-def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.identity_cubic_trace_derivatives)) where
+def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.identity_cubic_trace_derivatives.{u})) where
   actual := jetActual
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.identity_cubic_trace_derivatives, jetRejected, rejected_law⟩
+  variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.identity_cubic_trace_derivatives.{u}, jetRejected, rejected_law⟩
   sensitivity := sensitivity
   dependence := jetDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.identity_cubic_trace_derivatives) (Realization jetSignature) Type Unit where
+    (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.identity_cubic_trace_derivatives.{u}) (Realization jetSignature) Type Unit where
   unitName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.IdentityTrace.unit
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.IdentityTrace.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize jetSignature (fun _ _ s => s.1 = s.2.1 ∧ s.2.2.1 = s.2.2.2) (fun e => nomatch e))
