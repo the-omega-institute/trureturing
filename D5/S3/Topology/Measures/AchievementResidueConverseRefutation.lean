@@ -11,6 +11,7 @@ import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.Constructions
 import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Data.Fin.Tuple.Basic
+import Mathlib.Data.Set.BoolIndicator
 import Mathlib.Tactic
 
 /-!
@@ -105,12 +106,8 @@ private lemma selected_summable (A : Set ℕ) :
     Summable (fun t : A => sourceTerm (by decide : 0 < 3) coefficients 6 t.val) :=
   source_summable.subtype A
 
-private noncomputable def selectedBits (A : Set ℕ) (j : ℕ) : Fin 3 → Bool := by
-  classical
-  exact fun i => decide ((Nat.divModEquiv 3).symm (j, i) ∈ A)
-
 private noncomputable def selectedDigits (A : Set ℕ) : ℕ → Fin 6 :=
-  fun j => blockDigit (selectedBits A j)
+  fun j => blockDigit (fun i => A.boolIndicator ((Nat.divModEquiv 3).symm (j, i)))
 
 private lemma selected_row (A : Set ℕ) (j : ℕ) :
     (∑' i : Fin 3,
@@ -119,13 +116,13 @@ private lemma selected_row (A : Set ℕ) (j : ℕ) :
       3 * Real.ofDigitsTerm (selectedDigits A) j := by
   classical
   simp only [tsum_fintype, Set.indicator_apply, source_block]
-  have h := block_value (selectedBits A j)
+  have h := block_value (fun i => A.boolIndicator ((Nat.divModEquiv 3).symm (j, i)))
   simp only [Real.ofDigitsTerm, selectedDigits]
   rw [← mul_assoc, ← h]
   simp only [Finset.sum_mul]
   apply Finset.sum_congr rfl
   intro i _
-  simp [selectedBits, weight, div_eq_mul_inv]
+  simp [Set.boolIndicator, weight, div_eq_mul_inv]
 
 private lemma selected_hasSum (A : Set ℕ) :
     HasSum (fun t : A => sourceTerm (by decide : 0 < 3) coefficients 6 t.val)
@@ -157,7 +154,7 @@ private lemma digitSelection_digits (d : ℕ → Fin 6) :
   rw [← digitBits_right (d j)]
   congr 1
   funext i
-  simp [selectedBits, digitSelection, Nat.divModEquiv_symm_apply,
+  simp [Set.boolIndicator, digitSelection, Nat.divModEquiv_symm_apply,
     Nat.mod_eq_of_lt i.isLt, Nat.add_comm, Nat.add_mul_div_right,
     Nat.div_eq_of_lt i.isLt]
 
