@@ -30,7 +30,7 @@ private theorem length_le_weight (w : List ℕ) : w.length ≤ weight (FreeMonoi
   | nil => simp
   | cons a w ih =>
     have hg : 1 ≤ gamma a := by unfold gamma; split_ifs <;> omega
-    simp only [weight, FreeMonoid.toList_ofList, List.map_cons, List.sum_cons] at *
+    simp only [weight, FreeMonoid.toList_ofList, List.map_cons, List.sum_cons, List.length_cons] at *
     omega
 
 private theorem index_le_weight (w : List ℕ) (a : ℕ) (ha : a ∈ w) :
@@ -66,7 +66,7 @@ theorem mem_weightWindow (N : ℕ) (w : Word) : w ∈ weightWindow N ↔ weight 
       ⟨a.1, Nat.lt_succ_of_le ((index_le_weight w.toList a.1 a.2).trans hw)⟩
     apply Finset.mem_image.mpr
     refine ⟨l, ?_, ?_⟩
-    · apply Set.Finite.mem_toFinset.mpr
+    · apply (List.finite_length_le (Fin (N + 1)) N).mem_toFinset.mpr
       change l.length ≤ N
       simpa [l] using (length_le_weight w.toList).trans hw
     · apply FreeMonoid.toList.injective
@@ -76,6 +76,7 @@ private theorem transpose_support (w : Word) (ab : Word × Word)
     (h : (starWord ab.1 ab.2).coeff w ≠ 0) :
     ab ∈ (weightWindow (weight w)) ×ˢ (weightWindow (weight w)) := by
   have he := starWord_homogeneous ab.1 ab.2 w h
+  change weight w = weight ab.1 + weight ab.2 at he
   apply Finset.mem_product.mpr
   constructor <;> apply (mem_weightWindow _ _).mpr <;> omega
 
@@ -86,47 +87,62 @@ def deltaWord (w : Word) : H ⊗[ℚ] H :=
     ((weightWindow (weight w)) ×ˢ (weightWindow (weight w)))
     (fun ab => (starWord ab.1 ab.2).coeff w) (transpose_support w))
 
-/-- The actual rational linear transpose of the original finite ari product. -/
-def delta : H →ₗ[ℚ] H ⊗[ℚ] H := wordBasis.constr ℚ deltaWord
-
-/-- The full ordinary coefficient transpose, for every pair of words, including
-pairs outside the defining finite window and either unit word. -/
-theorem delta_basis_coefficient (w A B : Word) :
-    tensorBasis.repr (delta (wordBasis w)) (A, B) = (starWord A B).coeff w := by
-  simp [delta, deltaWord]
-
 /-- Ordinary word pairing, as a bilinear map on finite rational polynomials. -/
 def pairing : H →ₗ[ℚ] H →ₗ[ℚ] ℚ :=
   wordBasis.constr ℚ fun A =>
     (Finsupp.lapply A).comp (MonoidAlgebra.coeffLinearEquiv ℚ).toLinearMap
 
-/-- The tensor pairing induced by the ordinary word pairing. -/
-def tensorPairing (P Q : H) : (H ⊗[ℚ] H) →ₗ[ℚ] ℚ :=
-  TensorProduct.lift ((pairing P).smulRight (pairing Q))
-
 private theorem pairing_basis (w : Word) (P : H) : pairing (wordBasis w) P = P.coeff w := by
   simp [pairing]
 
-/-- Coefficients at every word pair for an arbitrary finite rational input. -/
-theorem delta_coefficient (P : H) (A B : Word) :
-    tensorBasis.repr (delta P) (A, B) = pairing P (starWord A B) := by
-  have he : (Finsupp.lapply (A, B)).comp (tensorBasis.repr.toLinearMap.comp delta) =
+/-- The ordinary transpose characterization from Definition 1.20 and Remark 1.22,
+using the original primitive-unshuffle product and every pair of word coordinates. -/
+def transposeProperty (D : H →ₗ[ℚ] H ⊗[ℚ] H) : Prop :=
+  ∀ (P : H) (A B : Word),
+    tensorBasis.repr (D P) (A, B) = pairing P (star (wordBasis A) (wordBasis B))
+
+private def finiteTranspose : H →ₗ[ℚ] H ⊗[ℚ] H := wordBasis.constr ℚ deltaWord
+
+private theorem finiteTranspose_basis_coefficient (w A B : Word) :
+    tensorBasis.repr (finiteTranspose (wordBasis w)) (A, B) = (starWord A B).coeff w := by
+  simp [finiteTranspose, deltaWord]
+
+private theorem finiteTranspose_property : transposeProperty finiteTranspose := by
+  intro P A B
+  rw [star_basis]
+  have he : (Finsupp.lapply (A, B)).comp (tensorBasis.repr.toLinearMap.comp finiteTranspose) =
       (LinearMap.applyₗ (starWord A B)).comp pairing := by
     apply wordBasis.ext
     intro w
-    simpa [pairing_basis] using delta_basis_coefficient w A B
+    simpa [pairing_basis] using finiteTranspose_basis_coefficient w A B
   exact LinearMap.congr_fun he P
 
-/-- Definition 1.20 and Remark 1.22 characterize this finite ordinary transpose
-uniquely by its coefficients on the actual concatenation-word basis. -/
-theorem delta_unique (D : H →ₗ[ℚ] H ⊗[ℚ] H)
-    (hD : ∀ w A B : Word,
-      tensorBasis.repr (D (wordBasis w)) (A, B) = (starWord A B).coeff w) : D = delta := by
+private theorem exists_unique_transpose : ∃! D, transposeProperty D := by
+  refine ⟨finiteTranspose, finiteTranspose_property, ?_⟩
+  intro D hD
   apply wordBasis.ext
   intro w
   apply tensorBasis.repr.injective
   ext ab
-  exact (hD w ab.1 ab.2).trans (delta_basis_coefficient w ab.1 ab.2).symm
+  exact (hD (wordBasis w) ab.1 ab.2).trans
+    (finiteTranspose_property (wordBasis w) ab.1 ab.2).symm
+
+/-- The original ordinary ari coproduct: the unique linear transpose of `star`.
+Its existence in the algebraic tensor product is proved by the finite weight-window
+construction, without a completion or an assumed realization map. -/
+def delta : H →ₗ[ℚ] H ⊗[ℚ] H := Classical.choose exists_unique_transpose.exists
+
+/-- The defining ordinary transpose identity for arbitrary rational input and all
+word pairs, with the actual primitive-unshuffle product. -/
+theorem delta_coefficient (P : H) (A B : Word) :
+    tensorBasis.repr (delta P) (A, B) = pairing P (star (wordBasis A) (wordBasis B)) :=
+  Classical.choose_spec exists_unique_transpose.exists P A B
+
+/-- Full ordinary basis coefficients, including pairs outside the finite window
+and either unit word; there is no factorial normalization. -/
+theorem delta_basis_coefficient (w A B : Word) :
+    tensorBasis.repr (delta (wordBasis w)) (A, B) = (starWord A B).coeff w := by
+  rw [delta_coefficient, star_basis, pairing_basis]
 
 /-- The original increasing `k`-level filtration, as the actual rational span. -/
 def filtration (k r : ℕ) : Submodule ℚ H :=

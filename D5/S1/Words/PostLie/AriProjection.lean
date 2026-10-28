@@ -25,7 +25,7 @@ private theorem lift_word_coeff (k d : ℕ) (w : List ℕ) :
     ((FreeMonoid.lift (fun s => if s = k then (Polynomial.X : Polynomial ℚ) else 0))
       (FreeMonoid.ofList w)).coeff d = if w = List.replicate d k then 1 else 0 := by
   induction w generalizing d with
-  | nil => cases d <;> simp [FreeMonoid.lift_ofList]
+  | nil => cases d <;> simp [FreeMonoid.lift_ofList, Polynomial.coeff_one]
   | cons a w ih =>
     by_cases ha : a = k
     · subst a
@@ -47,15 +47,27 @@ theorem pureProjection_coeff (k d : ℕ) (p : H) :
         (MonoidAlgebra.coeffLinearEquiv ℚ).toLinearMap := by
     apply wordBasis.ext
     intro w
-    change (pureProjection k (wordBasis w)).coeff d = _
-    simpa [pureProjection, wordBasis, MonoidAlgebra.coeff_single, eq_comm] using
-      lift_word_coeff k d w.toList
+    change (pureProjection k (wordBasis w)).coeff d =
+      (MonoidAlgebra.single w (1 : ℚ)).coeff (FreeMonoid.ofList (List.replicate d k))
+    simp only [pureProjection, wordBasis, MonoidAlgebra.basis_apply,
+      MonoidAlgebra.lift_single, one_smul, MonoidAlgebra.coeff_single,
+      Finsupp.single_apply]
+    have hs := lift_word_coeff k d w.toList
+    rw [FreeMonoid.ofList_toList] at hs
+    by_cases hw : w = FreeMonoid.ofList (List.replicate d k)
+    · have hl : w.toList = List.replicate d k := by
+        simpa only [FreeMonoid.toList_ofList] using congrArg FreeMonoid.toList hw
+      simpa only [hw, hl, FreeMonoid.toList_ofList, ite_true] using hs
+    · have hl : w.toList ≠ List.replicate d k := by
+        intro he
+        exact hw (FreeMonoid.toList.injective he)
+      simpa only [hw, hl, ite_false] using hs
   exact LinearMap.congr_fun h p
 
 /-- Every ordinary commutator is annihilated by the commutative projection. -/
 theorem pureProjection_commutator (k : ℕ) (p q : H) :
     pureProjection k (commutator p q) = 0 := by
-  simp [commutator, mul_comm]
+  simp [AriWordOperations.commutator, mul_comm]
 
 private theorem nested_zero_projection (k : ℕ) (ls : List ℕ) (p : H)
     (hp : pureProjection k p = 0) : pureProjection k (nestedBracket p ls) = 0 := by
@@ -74,7 +86,7 @@ theorem letterAction_projection (k : ℕ) (A : Word) (s : ℕ) (ha : A ≠ 1) :
     pureProjection k (letterAction A s) = 0 := by
   classical
   unfold letterAction
-  rw [if_neg ha]
+  rw [ite_eq_right ha]
   split_ifs with hs
   · exact map_zero _
   rw [map_sum]
@@ -89,7 +101,7 @@ private theorem level_zero_replicate (k : ℕ) (w : Word) (hw : level k w = 0) :
     w = FreeMonoid.ofList (List.replicate w.toList.length k) := by
   apply FreeMonoid.toList.injective
   apply List.eq_replicate_length.mpr
-  have h : ∀ a ∈ w.toList, ¬a ≠ k := List.countP_eq_zero.mp hw
+  have h : ∀ a ∈ w.toList, ¬a ≠ k := by simpa only [decide_eq_true_eq, not_not] using (List.countP_eq_zero.mp hw)
   intro a ha
   exact not_not.mp (h a ha)
 
@@ -104,7 +116,7 @@ theorem letterAction_above (k : ℕ) (A : Word) (s : ℕ) :
   change level k (FreeMonoid.of s) ≤ level k w
   by_cases hs : s = k
   · simp [hs]
-  rw [level_of, if_neg hs]
+  rw [level_of, ite_eq_right hs]
   by_contra h
   have hz : level k w = 0 := by omega
   have hp := congrArg (fun p : Polynomial ℚ => p.coeff w.toList.length)

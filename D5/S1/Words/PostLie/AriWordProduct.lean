@@ -43,7 +43,9 @@ theorem primitiveUnshuffle_assignments (n : ℕ) (A : List ℕ) :
       ∑ f : Fin A.length → Fin n, MonoidAlgebra.single (fun j => slot A f j) 1 := by
   classical
   induction A with
-  | nil => simp [primitiveUnshuffle, FreeMonoid.lift_ofList, slot]
+  | nil =>
+    simp [primitiveUnshuffle, slot]
+    rfl
   | cons a A ih =>
     change primitiveUnshuffle n (FreeMonoid.of a * FreeMonoid.ofList A) = _
     rw [map_mul, ih]
@@ -51,17 +53,24 @@ theorem primitiveUnshuffle_assignments (n : ℕ) (A : List ℕ) :
         ∑ j : Fin n,
           MonoidAlgebra.single (Function.update (fun _ => 1) j (FreeMonoid.of a)) 1 := rfl
     rw [hletter, Finset.sum_mul]
-    rw [← (Fin.consEquiv (fun _ : Fin (A.length + 1) => Fin n)).sum_comp,
-      Fintype.sum_prod_type]
-    apply Finset.sum_congr rfl
-    intro j hj
-    rw [Finset.mul_sum]
-    apply Finset.sum_congr rfl
-    intro f hf
-    rw [MonoidAlgebra.single_mul_single, one_mul]
-    congr 1
-    funext i
-    simp [slot, Fin.consEquiv, Function.update_apply, eq_comm]
+    calc
+      _ = ∑ jf : Fin n × (Fin A.length → Fin n),
+          MonoidAlgebra.single (fun i => slot (a :: A) (Fin.cons jf.1 jf.2) i) 1 := by
+        rw [Fintype.sum_prod_type]
+        apply Finset.sum_congr rfl
+        intro j hj
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro f hf
+        rw [MonoidAlgebra.single_mul_single, one_mul]
+        congr 1
+        funext i
+        by_cases h : j = i
+        · subst i
+          simp [slot]
+        · simp [slot, h, Ne.symm h, Function.update_apply]
+      _ = _ := (Fin.consEquiv (fun _ : Fin (A.length + 1) => Fin n)).sum_comp
+        (fun f => MonoidAlgebra.single (fun j => slot (a :: A) f j) (1 : ℚ))
 
 /-- The concatenation product in the term for a fixed unshuffle tuple. -/
 def orderedTerm (B : Word) (S : Fin (B.toList.length + 1) → Word) : H :=
@@ -73,20 +82,29 @@ def starWord (A B : Word) : H :=
   ∑ f : Fin A.toList.length → Fin (B.toList.length + 1),
     orderedTerm B (fun j => slot A.toList f j)
 
-/-- Rational bilinear extension of the actual basis-word product. -/
-def star : H →ₗ[ℚ] H →ₗ[ℚ] H :=
-  wordBasis.constr ℚ fun A => wordBasis.constr ℚ fun B => starWord A B
-
 /-- Applying the ordered term map to the actual primitive unshuffle gives `starWord`. -/
 theorem starWord_unshuffle (A B : Word) :
     starWord A B =
       ((MonoidAlgebra.basis (Fin (B.toList.length + 1) → Word) ℚ).constr ℚ (orderedTerm B))
         (primitiveUnshuffle (B.toList.length + 1) A) := by
   classical
-  rw [primitiveUnshuffle_assignments]
+  have hu := primitiveUnshuffle_assignments (B.toList.length + 1) A.toList
+  rw [FreeMonoid.ofList_toList] at hu
+  rw [hu]
   simp only [map_sum, ← MonoidAlgebra.basis_apply,
     Module.Basis.constr_basis]
   rfl
+
+/-- Rational bilinear extension of the ordered primitive-unshuffle product. -/
+def star : H →ₗ[ℚ] H →ₗ[ℚ] H :=
+  wordBasis.constr ℚ fun A => wordBasis.constr ℚ fun B =>
+    ((MonoidAlgebra.basis (Fin (B.toList.length + 1) → Word) ℚ).constr ℚ (orderedTerm B))
+      (primitiveUnshuffle (B.toList.length + 1) A)
+
+/-- The primitive construction agrees with the literal assignment formula. -/
+theorem star_basis (A B : Word) : star (wordBasis A) (wordBasis B) = starWord A B := by
+  simp only [star, Module.Basis.constr_basis]
+  exact (starWord_unshuffle A B).symm
 
 private theorem slot_weight_sum (n : ℕ) (A : List ℕ) (f : Fin A.length → Fin n) :
     ∑ j : Fin n, weight (slot A f j) = weight (FreeMonoid.ofList A) := by
@@ -101,7 +119,9 @@ private theorem slot_weight_sum (n : ℕ) (A : List ℕ) (f : Fin A.length → F
           else slot A (fun i => f i.succ) j) =
         (if j = f 0 then gamma a else 0) + weight (slot A (fun i => f i.succ) j) := by
       intro j
-      by_cases h : f 0 = j <;> simp [h, h.symm]
+      by_cases h : f 0 = j
+      · simp only [ite_eq_left h, ite_eq_left h.symm, weight_mul, weight_of]
+      · simp only [ite_eq_right h, ite_eq_right (Ne.symm h), zero_add]
     simp_rw [he]
     rw [Finset.sum_add_distrib, Finset.sum_ite_eq', hi]
     simp [weight]
@@ -110,21 +130,25 @@ private theorem homogeneous_product (n : ℕ) (p : Fin n → H) (d : Fin n → �
     (hp : ∀ i, p i ∈ homogeneous (d i)) :
     (List.ofFn p).prod ∈ homogeneous (∑ i, d i) := by
   induction n with
-  | zero => simpa using homogeneous_basis (1 : Word)
+  | zero =>
+    change wordBasis (1 : Word) ∈ homogeneous 0
+    exact homogeneous_basis 1
   | succ n ih =>
     simpa [List.ofFn_succ, Fin.sum_univ_succ] using
-      homogeneous_mul (p 0) (List.ofFn fun i => p i.succ).prod (d 0)
-        (∑ i, d i.succ) (hp 0) (ih (fun i => p i.succ) (fun i => d i.succ) (fun i => hp i.succ))
+      homogeneous_mul (p 0) (List.ofFn fun i : Fin n => p i.succ).prod (d 0)
+        (∑ i : Fin n, d i.succ) (hp 0) (ih (fun i : Fin n => p i.succ) (fun i : Fin n => d i.succ) (fun i : Fin n => hp i.succ))
 
 private theorem above_product (k n : ℕ) (p : Fin n → H) (d : Fin n → ℕ)
     (hp : ∀ i, p i ∈ above k (d i)) :
     (List.ofFn p).prod ∈ above k (∑ i, d i) := by
   induction n with
-  | zero => simpa using above_basis k (1 : Word)
+  | zero =>
+    change wordBasis (1 : Word) ∈ above k 0
+    exact above_basis k 1
   | succ n ih =>
     simpa [List.ofFn_succ, Fin.sum_univ_succ] using
-      above_mul k (p 0) (List.ofFn fun i => p i.succ).prod (d 0)
-        (∑ i, d i.succ) (hp 0) (ih (fun i => p i.succ) (fun i => d i.succ) (fun i => hp i.succ))
+      above_mul k (p 0) (List.ofFn fun i : Fin n => p i.succ).prod (d 0)
+        (∑ i : Fin n, d i.succ) (hp 0) (ih (fun i : Fin n => p i.succ) (fun i : Fin n => d i.succ) (fun i : Fin n => hp i.succ))
 
 /-- The actual product has the sum of the two original input weights. -/
 theorem starWord_homogeneous (A B : Word) :
@@ -141,13 +165,14 @@ theorem starWord_homogeneous (A B : Word) :
   change (∑ j, weight (S j)) = weight A at hw
   rw [Fin.sum_univ_succ] at hw
   have hb : (∑ j : Fin B.toList.length, gamma (B.toList.get j)) = weight B := by
-    rw [← List.sum_ofFn, ← List.map_ofFn]
-    simp [weight]
+    simpa only [List.get_eq_getElem, weight] using
+      (Fin.sum_univ_fun_getElem B.toList gamma)
   have hh := homogeneous_mul (wordBasis (S 0))
     (List.ofFn fun j => letterAction (S j.succ) (B.toList.get j)).prod
-    (weight (S 0)) (∑ j, weight (S j.succ) + gamma (B.toList.get j))
+    (weight (S 0)) (∑ j : Fin B.toList.length, (weight (S j.succ) + gamma (B.toList.get j)))
     (homogeneous_basis _) hp
-  simpa [orderedTerm, S, Finset.sum_add_distrib, ← Nat.add_assoc, hw, hb] using hh
+  rw [Finset.sum_add_distrib, hb, ← Nat.add_assoc, hw] at hh
+  exact hh
 
 /-- A supported output word has at least the right input's `k`-level. -/
 theorem starWord_above (k : ℕ) (A B : Word) : starWord A B ∈ above k (level k B) := by
@@ -159,16 +184,28 @@ theorem starWord_above (k : ℕ) (A B : Word) : starWord A B ∈ above k (level 
     (fun j => letterAction (S j.succ) (B.toList.get j))
     (fun j => level k (FreeMonoid.of (B.toList.get j)))
     (fun j => letterAction_above _ _ _)
-  have hb : (∑ j : Fin B.toList.length, level k (FreeMonoid.of (B.toList.get j))) = level k B := by
-    simp only [level_of]
-    rw [← List.sum_ofFn, ← List.map_ofFn]
-    simp [level, FreeMonoid.countP', List.countP_eq_sum_map]
+  have hlist : ∀ l : List ℕ,
+      (l.map (fun s => level k (FreeMonoid.of s))).sum = level k (FreeMonoid.ofList l) := by
+    intro l
+    induction l with
+    | nil => rfl
+    | cons s l ih =>
+      change level k (FreeMonoid.of s) + (l.map _).sum =
+        level k (FreeMonoid.of s * FreeMonoid.ofList l)
+      rw [level_mul, ih]
+  have hb : (∑ j : Fin B.toList.length, level k (FreeMonoid.of (B.toList.get j))) =
+      level k B := by
+    calc
+      _ = (B.toList.map (fun s => level k (FreeMonoid.of s))).sum := by
+        simpa only [List.get_eq_getElem] using
+          (Fin.sum_univ_fun_getElem B.toList (fun s => level k (FreeMonoid.of s)))
+      _ = _ := hlist B.toList
   have hh := above_mul k (wordBasis (S 0))
     (List.ofFn fun j => letterAction (S j.succ) (B.toList.get j)).prod
     (level k (S 0)) (∑ j, level k (FreeMonoid.of (B.toList.get j)))
     (above_basis _ _) hp
+  rw [hb] at hh
   intro w hw
-  exact (Nat.le_add_left _ _).trans (by
-    simpa [orderedTerm, S, hb] using hh w hw)
+  exact (Nat.le_add_left (level k B) (level k (S 0))).trans (hh w hw)
 
 end D5.S1.Words.PostLie.AriWordProduct
