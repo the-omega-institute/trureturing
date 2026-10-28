@@ -116,6 +116,7 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+/-- Read equality on amplified output matrices at fixed scalar and dimensions. -/
 def actual : Realization signature :=
   realize signature (fun _ _ X Y => X = Y) (fun e => nomatch e)
 
