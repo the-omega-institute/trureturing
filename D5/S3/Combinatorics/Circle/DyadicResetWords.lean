@@ -327,4 +327,60 @@ theorem allocation_of_strip {α : Type*} [DecidableEq α]
     have hlen : P.length = Z.length := by simp [Z]
     exact hlen ▸ hal
 
+
+/-- An allocated bin below twice the top denomination contains at most one
+physical top coin; summing those bin counts counts precisely the original
+physical top inventory. -/
+theorem top_occupancy {α β : Type*} [DecidableEq α] [Fintype β]
+    (S : Finset α) (e : α → ℕ) (b : ℕ) (cap : β → ℕ)
+    (K : β → Finset α) (hKS : ∀ i, K i ⊆ S)
+    (hKD : ∀ i j, i ≠ j → Disjoint (K i) (K j))
+    (hKC : ∀ a ∈ S, ∃ i, a ∈ K i)
+    (hKb : ∀ i, ∑ a ∈ K i, 2 ^ e a = cap i)
+    (hcap : ∀ i, cap i < 2 * 2 ^ b) :
+    (S.filter (fun a => e a = b)).card =
+      ∑ i, ((K i).filter (fun a => e a = b)).card ∧
+    ∀ i, ((K i).filter (fun a => e a = b)).card ≤ 1 := by
+  classical
+  let L : β → Finset α := fun i => (K i).filter (fun a => e a = b)
+  have hLD : Set.PairwiseDisjoint (↑(Finset.univ : Finset β)) L := by
+    intro i _ j _ hij
+    exact (hKD i j hij).mono (Finset.filter_subset _ _) (Finset.filter_subset _ _)
+  have hL : Finset.univ.biUnion L = S.filter (fun a => e a = b) := by
+    ext a
+    simp only [Finset.mem_biUnion, Finset.mem_univ, true_and, L, Finset.mem_filter]
+    constructor
+    · rintro ⟨i, hi, he⟩; exact ⟨hKS i hi, he⟩
+    · rintro ⟨ha, he⟩; obtain ⟨i, hi⟩ := hKC a ha; exact ⟨i, hi, he⟩
+  constructor
+  · rw [← hL]
+    exact Finset.card_biUnion hLD
+  · intro i
+    have hsum : (∑ a ∈ L i, (2 : ℕ) ^ e a) = (L i).card * 2 ^ b := by
+      calc
+        _ = ∑ _a ∈ L i, (2 : ℕ) ^ b := Finset.sum_congr rfl (by
+          intro a ha; rw [(Finset.mem_filter.mp ha).2])
+        _ = _ := by simp
+    have hle := Finset.sum_le_sum_of_subset (f := fun a => (2 : ℕ) ^ e a)
+      (Finset.filter_subset (fun a => e a = b) (K i))
+    rw [hKb, hsum] at hle
+    have hpow : 0 < (2 : ℕ) ^ b := by positivity
+    have hi := hcap i
+    change (L i).card ≤ 1
+    nlinarith
+
+/-- A missing top coin in any of n complete bins and one tail bounds the
+whole physical top inventory by n. -/
+theorem missing_top_bound (n : ℕ) (c : Fin n ⊕ Unit → ℕ)
+    (hc : ∀ i, c i ≤ 1) (i : Fin n ⊕ Unit) (hi : c i = 0) :
+    (∑ j, c j) ≤ n := by
+  classical
+  have hs := Finset.sum_erase_add (Finset.univ : Finset (Fin n ⊕ Unit)) c (Finset.mem_univ i)
+  have hle : (∑ j ∈ Finset.univ.erase i, c j) ≤ (Finset.univ.erase i).card := by
+    calc
+      _ ≤ ∑ _j ∈ Finset.univ.erase i, (1 : ℕ) := Finset.sum_le_sum (fun j _ => hc j)
+      _ = _ := by simp
+  have hcard : (Finset.univ.erase i).card = n := by simp
+  omega
+
 end D5.S3.Combinatorics.Circle.DyadicResetWords
