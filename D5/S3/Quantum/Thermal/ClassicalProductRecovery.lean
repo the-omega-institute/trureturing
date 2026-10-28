@@ -90,7 +90,9 @@ theorem thermalLift_minimizes (ν γr : Measure X) (γh : Measure Y)
   calc
     klDiv ν γr = klDiv ν γr + 0 := by rw [add_zero]
     _ ≤ klDiv ν γr + klDiv (ν ⊗ₘ κ) (ν.prod γh) :=
-      add_le_add_left (zero_le _) _
+      by
+        have hnonneg : (0 : ℝ≥0∞) ≤ klDiv (ν ⊗ₘ κ) (ν.prod γh) := bot_le
+        simpa using add_le_add_left hnonneg (klDiv ν γr)
 
 /-- Finiteness of the marginal value is essential: infinity cannot be cancelled. -/
 theorem thermalLift_unique_minimum (ν γr : Measure X) (γh : Measure Y)
@@ -112,8 +114,7 @@ theorem klDiv_measurableEquiv {Z : Type*} [MeasurableSpace Z]
     (e : X ≃ᵐ Z) : klDiv (μ.map e) (π.map e) = klDiv μ π := by
   apply le_antisymm (klDiv_map_le μ π e.measurable)
   have h := klDiv_map_le (μ.map e) (π.map e) e.symm.measurable
-  simpa only [Measure.map_map e.symm.measurable e.measurable,
-    Function.comp_def, MeasurableEquiv.symm_apply_apply, Measure.map_id] using h
+  simpa [Measure.map_map, Function.comp_def] using h
 
 theorem klDiv_reference_preserving (μ π : Measure X)
     [IsFiniteMeasure μ] [IsFiniteMeasure π]
