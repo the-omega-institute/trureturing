@@ -108,8 +108,7 @@ private theorem book_one_polynomial : dominationPolynomial (bookGraph 1) =
   rw [book_one_eq_cycle]
   unfold dominationPolynomial
   rw [cycle_domSets]
-  norm_num [Finset.sum_insert, Finset.sum_singleton]
-  <;> ring
+  norm_num [Finset.sum_insert, Finset.sum_singleton] <;> ring
 
 /-- Literal negation of the entire closed conjecture, using its legal B1 = C4 boundary. -/
 theorem result : ¬ claim := by
