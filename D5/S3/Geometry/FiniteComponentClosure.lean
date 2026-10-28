@@ -2326,6 +2326,128 @@ def selectedVertexWedgeClosure {V W : Type*} [Fintype V] [DecidableEq V]
 
 end BouquetConcatenation
 
+section CollapsedBaseTransport
+
+/-- Transport along a collapsed basepoint trace keeps the forward map unchanged. -/
+private def collapsedRebase {X Q : Type*} [TopologicalSpace X] [T1Space X]
+    [TopologicalSpace Q] (z a : X) (o : Q)
+    (Rz : SingletonRetractionBasedInverse.CylinderRetraction z)
+    (Ra : SingletonRetractionBasedInverse.CylinderRetraction a)
+    (E : SingletonRetractionBasedInverse.BasedEquivalence a o)
+    (γ : Path z a) (hγ : ∀ t, E.forward (γ t) = o) :
+    SingletonRetractionBasedInverse.BasedEquivalence z o := by
+  let existence := SingletonRetractionBasedInverse.based_inverse z a Rz Ra
+    (ContinuousMap.id X) (ContinuousMap.id X)
+    (Homotopy.refl (ContinuousMap.id X)) (Homotopy.refl (ContinuousMap.id X)) γ
+  let U := Classical.choose existence
+  let L := Classical.choose (Classical.choose_spec existence)
+  have hL : ∀ t, L (t, z) = γ t := Classical.choose_spec (Classical.choose_spec existence)
+  let q := E.forward
+  let s := E.backward
+  let u := U.forward
+  let v := U.backward
+  have hqz : q z = o := by simpa [q] using hγ 0
+  let A₁ : ((v.comp s).comp q).HomotopyRel (((v.comp s).comp q).comp u) {z} := {
+    toHomotopy := (Homotopy.refl ((v.comp s).comp q)).comp L
+    prop' := by
+      intro t x hx
+      have hx' : x = z := Set.mem_singleton_iff.mp hx
+      subst x
+      change v (s (q (L (t, z)))) = v (s (q z))
+      rw [hL, hγ, hqz] }
+  let A₂ : (((v.comp s).comp q).comp u).HomotopyRel (v.comp u) {z} := {
+    toHomotopy := (Homotopy.refl v).comp (E.left.toHomotopy.compContinuousMap u)
+    prop' := by
+      intro t x hx
+      have hx' : x = z := Set.mem_singleton_iff.mp hx
+      subst x
+      change v (E.left (t, u z)) = v (s (q (u z)))
+      rw [show u z = a from U.forward_point, E.left.eq_fst t (by simp)] }
+  let B₁ : (q.comp (v.comp s)).HomotopyRel ((q.comp u).comp (v.comp s)) {o} := {
+    toHomotopy := (Homotopy.refl q).comp (L.compContinuousMap (v.comp s))
+    prop' := by
+      intro t y hy
+      have hy' : y = o := Set.mem_singleton_iff.mp hy
+      subst y
+      change q (L (t, v (s o))) = q (v (s o))
+      rw [show s o = a from E.backward_point, show v a = z from U.backward_point,
+        hL, hγ, hqz] }
+  let B₂ : ((q.comp u).comp (v.comp s)).HomotopyRel (q.comp s) {o} := {
+    toHomotopy := (Homotopy.refl q).comp (U.right.toHomotopy.compContinuousMap s)
+    prop' := by
+      intro t y hy
+      have hy' : y = o := Set.mem_singleton_iff.mp hy
+      subst y
+      change q (U.right (t, s o)) = q (u (v (s o)))
+      rw [show s o = a from E.backward_point, U.right.eq_fst t (by simp)] }
+  exact {
+    forward := q
+    backward := v.comp s
+    forward_point := hqz
+    backward_point := by
+      change v (s o) = z
+      rw [show s o = a from E.backward_point]
+      exact U.backward_point
+    left := (A₁.trans A₂).trans U.left
+    right := (B₁.trans B₂).trans E.right }
+
+end CollapsedBaseTransport
+
+section NativeConeBaseTransport
+
+private theorem coneVertexSegment_mem {V : Type*} [Fintype V] [DecidableEq V]
+    (P : FiniteConeCollapse.ConePair V) (z : V) (hz : ({z} : Finset V) ∈ P.cone) (t : I) :
+    (1 - (t : ℝ)) • Pi.single z (1 : ℝ) + (t : ℝ) • Pi.single P.apex (1 : ℝ) ∈
+      FiniteConeCollapse.realization P.cone := by
+  refine ⟨insert P.apex {z}, P.cone_face {z} hz, ?_⟩
+  let S := (fun v : V => Pi.single v (1 : ℝ)) '' (insert P.apex {z} : Set V)
+  have hzmem : Pi.single z (1 : ℝ) ∈ convexHull ℝ S :=
+    subset_convexHull ℝ S ⟨z, by simp, rfl⟩
+  have hamem : Pi.single P.apex (1 : ℝ) ∈ convexHull ℝ S :=
+    subset_convexHull ℝ S ⟨P.apex, by simp, rfl⟩
+  exact (convex_convexHull ℝ S) hzmem hamem
+    (sub_nonneg.mpr t.property.2) t.property.1 (by ring)
+
+private def coneVertexPath {V : Type*} [Fintype V] [DecidableEq V]
+    (P : FiniteConeCollapse.ConePair V) (z : V) (hz : ({z} : Finset V) ∈ P.cone) :
+    Path (FiniteVertexCylinder.vertexPoint P.ambient z (P.inclusion hz)) P.apexPoint where
+  toFun t := ⟨(1 - (t : ℝ)) • Pi.single z 1 + (t : ℝ) • Pi.single P.apex 1, by
+    obtain ⟨s, hs, hv⟩ := coneVertexSegment_mem P z hz t
+    exact ⟨s, P.inclusion hs, hv⟩⟩
+  continuous_toFun := by apply Continuous.subtype_mk; fun_prop
+  source' := by apply Subtype.ext; simp [FiniteVertexCylinder.vertexPoint]
+  target' := by apply Subtype.ext; simp [FiniteConeCollapse.ConePair.apexPoint]
+
+/-- The original finite-cone quotient map, rebased at any actual vertex of the cone. -/
+private def nativeConeRebasedCollapse {V : Type*} [Fintype V] [DecidableEq V]
+    (P : FiniteConeCollapse.ConePair V) (z : V) (hz : ({z} : Finset V) ∈ P.cone) :
+    SingletonRetractionBasedInverse.BasedEquivalence
+      (FiniteVertexCylinder.vertexPoint P.ambient z (P.inclusion hz))
+      (P.quotientMap P.apexPoint) := by
+  let E : SingletonRetractionBasedInverse.BasedEquivalence
+      P.apexPoint (P.quotientMap P.apexPoint) := {
+    forward := P.quotientMap
+    backward := P.collapseInverse
+    forward_point := rfl
+    backward_point := (P.basedCollapse.1.fst_eq_snd (by simp)).symm
+    left := P.basedCollapse.1.symm
+    right := P.basedCollapse.2.symm }
+  apply collapsedRebase _ _ _ (nativeCylinder P.ambient z (P.inclusion hz))
+    (nativeCylinder P.ambient P.apex (P.inclusion P.apex_face)) E (coneVertexPath P z hz)
+  intro t
+  apply Quotient.sound
+  apply Or.inr
+  constructor
+  · exact coneVertexSegment_mem P z hz t
+  · exact ⟨{P.apex}, P.apex_face, subset_convexHull ℝ _ ⟨P.apex, by simp, rfl⟩⟩
+
+private theorem nativeConeRebasedCollapse_forward {V : Type*} [Fintype V] [DecidableEq V]
+    (P : FiniteConeCollapse.ConePair V) (z : V) (hz : ({z} : Finset V) ∈ P.cone) :
+    (nativeConeRebasedCollapse P z hz).forward = P.quotientMap := rfl
+
+end NativeConeBaseTransport
+
+#print axioms nativeConeRebasedCollapse
 #print axioms selectedVertexWedgeClosure
 #print axioms normalWedgeHomeomorph
 #print axioms sphereHomeomorph
