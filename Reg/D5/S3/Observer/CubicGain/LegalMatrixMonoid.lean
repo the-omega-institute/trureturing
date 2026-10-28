@@ -109,8 +109,10 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have he := congrArg (fun A : Mat => A 0 0) (h [] [])
-  norm_num [rejected,realize,futureProduct] at he
+  have hh := h [] []
+  change (1 : Mat) = (1 : Mat) * 0 at hh
+  rw [Matrix.mul_zero] at hh
+  exact one_ne_zero hh
 
 def family : Registration arena (type_of% @product_append) where
   actual := actual

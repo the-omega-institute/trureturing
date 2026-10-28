@@ -465,7 +465,8 @@ theorem phase_rigidity (w : Fin 3 → List Bool) (N : Mat)
   have hinterior (i : Fin 3) := level_interior (prefixWord w i.succ) p
     ha hb hc hd (hne i) (hl i.succ)
   have hconj : actionJ * N * actionJ = scale • (swapCoordinates p).matrix := by
-    rw [hN]
+    rw [hN,Matrix.mul_smul,Matrix.smul_mul]
+    congr 1
     ext i j
     fin_cases i <;> fin_cases j <;>
       simp [swapCoordinates,PrimitiveCoordinates.matrix,PrimitiveCoordinates.column,
