@@ -3,8 +3,8 @@ import D5.S3.Combinatorics.Circle.ThreeNegativeExchange
 import Reg.Support.DependentFamily
 
 /-! The actual source family and candidate readout retain the complete native
-telescope. A lawful sourceSelection and whole-family variation/sensitivity for
-this existential candidate law remain unresolved under issue #22063; the
+telescope. A lawful sourceSelection, whole-family variation/sensitivity and actual
+observational dependence remain unresolved under issue #22063; the
 source reconstruction below is not a completed Contract.Registration. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

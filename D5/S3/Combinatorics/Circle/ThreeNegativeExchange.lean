@@ -139,6 +139,7 @@ private theorem upper_pair_cut {k : ℕ} (hk : 3 ≤ k) (t : ℕ) (p : Fin k)
   exact ⟨legal_of_strip inv.nodup hs, inv, Prod.Lex.toLex_lt_toLex.mpr (Or.inl hg)⟩
 
 set_option maxHeartbeats 5000000 in
+-- Three physical inventories and both positive selections share this proof budget.
 /-- The full native three-negative exchange. The prefix A is arbitrary signed,
 all labels are physical, and Legal controls every natural take. -/
 theorem actualSource_threeNegative_exchange_full
