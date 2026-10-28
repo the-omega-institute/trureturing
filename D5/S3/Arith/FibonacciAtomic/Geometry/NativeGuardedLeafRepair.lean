@@ -425,11 +425,17 @@ private theorem context_neighbors (J : OutputContext) (t : Source) (p q : Addres
   induction J with
   | hole => rfl
   | left J sibling ih =>
-      simpa [OutputContext.plug, OutputContext.holeAddress, neighbors_cons,
-        List.mem_map] using ih
+      change false :: (J.holeAddress ++ q) ∈
+        neighbors (.mul (J.plug t) sibling) (false :: (J.holeAddress ++ p)) ↔ _
+      rw [neighbors_cons]
+      by_cases hp : J.holeAddress ++ p = [] <;>
+        simpa [hp, List.mem_map] using ih
   | right sibling J ih =>
-      simpa [OutputContext.plug, OutputContext.holeAddress, neighbors_cons,
-        List.mem_map] using ih
+      change true :: (J.holeAddress ++ q) ∈
+        neighbors (.mul sibling (J.plug t)) (true :: (J.holeAddress ++ p)) ↔ _
+      rw [neighbors_cons]
+      by_cases hp : J.holeAddress ++ p = [] <;>
+        simpa [hp, List.mem_map] using ih
 
 private theorem context_cell (J : OutputContext) (t : Source) (p : Address)
     (hp : p ∈ material t) : J.holeAddress ++ p ∈ material (J.plug t) := by
@@ -875,9 +881,11 @@ private theorem contextual_preservation : ContextualPreservation := by
   · exact Prod.ext (shifted_cost h.calls J.holeAddress).1
       (shifted_cost h.calls J.holeAddress).2
   · intro hs
-    simpa only [cone_graph_eq] using hs
+    rw [cone_graph_eq]
+    exact hs
   · intro hs
-    simpa only [nonroot_cone_graph_eq] using hs
+    rw [nonroot_cone_graph_eq]
+    exact hs
   · intro p hp q hq
     exact old_edges hm p q hq
 

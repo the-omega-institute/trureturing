@@ -24,7 +24,12 @@ internal sealed class NativeGuardedLeafRepairDocument : IScribeDocumentDefinitio
                         + "beta markers, and adjacency is the native parent-child graph. "
                         + "A successful history is a finite list of guarded promote and split "
                         + "calls; its trace is the actual subtree replacement computation and "
-                        + "its final domain is the original D predicate. Minimality is componentwise undominated cost, over every finite successful history at every depth.")),
+                        + "its final domain is the original D predicate. Cost counts successful "
+                        + "promotions first and splits second. Minimality is componentwise "
+                        + "undominated cost, over every finite successful history at every depth.")),
+                    Paragraph(Text(
+                        "The exact undominated cost sets are alpha/F = {(1,0)}, "
+                        + "alpha/R = {(0,0)}, beta/F = {(0,0)} and beta/R = {(1,1)}.")),
                     Paragraph(Text(
                         "F is an actual perfect matching of every material cell. R is an "
                         + "actual matching of every nonroot material cell while the existing "
@@ -44,7 +49,10 @@ internal sealed class NativeGuardedLeafRepairDocument : IScribeDocumentDefinitio
                     Paragraph(Text(
                         "Every history lifts to an arbitrary native context by prefixing "
                         + "its actual call addresses with the hole address. The source "
-                        + "replacement identity gives its literal final context. Guarded "
+                        + "replacement identity gives its literal final context. The ambient "
+                        + "neighbor relation at the prefixed addresses agrees with the local "
+                        + "cone graph, so its perfect and root-available matchings transport "
+                        + "to the actual cone. Guarded "
                         + "growth preserves D, old material addresses and the induced old "
                         + "edges; those unchanged addresses retain their root depths. "
                         + "The native execution carries arbitrary rational values through "
