@@ -541,6 +541,32 @@ def covarianceEigenEquiv (mu : ℝ) (hmu : 0 < mu) :
   map_add' z w := by apply Subtype.ext; exact map_add C z.val w.val
   map_smul' c z := by apply Subtype.ext; exact map_smul C c z.val
 
+private theorem edge_eigen_bound (mu : ℝ)
+    (z : Module.End.eigenspace Sigma.toLinearMap mu) (hz : z.val ≠ 0) :
+    mu ≤ Real.goldenRatio := by
+  have hs : BiasedBoundaryPathSplit.S [] z.val = z.val := by ext p; rfl
+  have hb := centered_suffix_residual.2.2.2.2.2 [] z.val
+  rw [centered_suffix_residual.2.2.2.2.1,hs] at hb
+  have hze : Sigma z.val = mu • z.val := Module.End.mem_eigenspace_iff.mp z.property
+  have he := BiasedBoundaryFreeRootForm.actual_compact_covariance.2.2.2.2.2.1 z.val
+  rw [hze,inner_smul_right,real_inner_self_eq_norm_sq] at he
+  rw [← he] at hb
+  have hn : 0 < ‖z.val‖^2 := pow_pos (norm_pos_iff.mpr hz) 2
+  exact (mul_le_mul_iff_left₀ hn).mp (by simpa only [mul_comm] using hb)
+
+private theorem operator_eigen_gap (mu : ℝ) (hmu : 0 < mu)
+    (u : boundaryEigenspace mu⁻¹) (hu : u.val ≠ 0) :
+    Real.goldenRatio⁻¹ ≤ mu⁻¹ := by
+  have hz : ((covarianceEigenEquiv mu hmu).symm u).val ≠ 0 := by
+    intro h0
+    have he : (covarianceEigenEquiv mu hmu).symm u = 0 := Subtype.ext h0
+    have hu0 : u = 0 := by
+      simpa only [LinearEquiv.apply_symm_apply,map_zero] using
+        congrArg (covarianceEigenEquiv mu hmu) he
+    exact hu (congrArg Subtype.val hu0)
+  have hb := edge_eigen_bound mu ((covarianceEigenEquiv mu hmu).symm u) hz
+  simpa only [one_div] using one_div_le_one_div_of_le hmu hb
+
 /-- Positive original covariance eigenvectors lie in K. The actual trace gives
 inverse eigenvalues and preserves the full finite eigenspace multiplicities. -/
 theorem actual_covariance_eigenspaces (mu : ℝ) (hmu : 0 < mu) :
@@ -549,8 +575,10 @@ theorem actual_covariance_eigenspaces (mu : ℝ) (hmu : 0 < mu) :
       (covarianceEigenEquiv mu hmu z).val = C z.val) ∧
     (∀ u : boundaryEigenspace mu⁻¹,
       ((covarianceEigenEquiv mu hmu).symm u).val = mu⁻¹ • C.adjoint u.val) ∧
-    FiniteDimensional ℝ (boundaryEigenspace mu⁻¹) := by
-  refine ⟨?_,fun _ => rfl,fun _ => rfl,?_⟩
+    FiniteDimensional ℝ (boundaryEigenspace mu⁻¹) ∧
+    (∀ z : Module.End.eigenspace Sigma.toLinearMap mu, z.val ≠ 0 → mu ≤ Real.goldenRatio) ∧
+    (∀ u : boundaryEigenspace mu⁻¹, u.val ≠ 0 → Real.goldenRatio⁻¹ ≤ mu⁻¹) := by
+  refine ⟨?_,fun _ => rfl,fun _ => rfl,?_,edge_eigen_bound mu,operator_eigen_gap mu hmu⟩
   · intro z
     have hz : Sigma z.val = mu • z.val := Module.End.mem_eigenspace_iff.mp z.property
     have he : z.val = mu⁻¹ • C.adjoint (C z.val) := by

@@ -228,7 +228,9 @@ abbrev arena : Arena where
       (covarianceEigenEquiv mu hmu z).val = R.readout () () z.val) ∧
     (∀ u : boundaryEigenspace mu⁻¹,
       ((covarianceEigenEquiv mu hmu).symm u).val = mu⁻¹ • C.adjoint u.val) ∧
-    FiniteDimensional ℝ (boundaryEigenspace mu⁻¹)
+    FiniteDimensional ℝ (boundaryEigenspace mu⁻¹) ∧
+    (∀ z : Module.End.eigenspace Sigma.toLinearMap mu, z.val ≠ 0 → mu ≤ Real.goldenRatio) ∧
+    (∀ u : boundaryEigenspace mu⁻¹, u.val ≠ 0 → Real.goldenRatio⁻¹ ≤ mu⁻¹)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h

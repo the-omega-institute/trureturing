@@ -36,7 +36,7 @@ internal sealed class BiasedBoundaryOperatorDocument : IScribeDocumentDefinition
                 H("The Original Covariance and Operator Eigenspaces"),
                 StatementSource.FromAuthor(EigenspacesFormula()), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For positive mu, intertwining CC* with C*C sends each original covariance eigenvector z to Cz. The inverse eigenvalue equation puts this trace in the actual boundary operator domain with eigenvalue mu^(-1). Conversely an actual operator eigenvector u at that value gives CC*u=mu u; applying C* and scaling gives the edge eigenvector mu^(-1)C*u. The two maps compose to the identity on both full eigenspaces. This is an explicit linear equivalence, so multiplicities are preserved without assuming simplicity.")),
-                    Paragraph(Text("Each positive edge eigenvector is mu^(-1)C*Cz and hence lies in K, since the original adjoint range lies in K. Thus these are precisely the effective edge modes relevant to the source. The original stopping-derived compactness of Sigma and the pinned finite-eigenspace theorem make its nonzero eigenspaces finite dimensional. The explicit equivalence transfers this property to the actual operator eigenspaces.")),
+                    Paragraph(Text("Each positive edge eigenvector is mu^(-1)C*Cz and hence lies in K, since the original adjoint range lies in K. Thus these are precisely the effective edge modes relevant to the source. The original stopping-derived compactness of Sigma and the pinned finite-eigenspace theorem make its nonzero eigenspaces finite dimensional. The explicit equivalence transfers this property to the actual operator eigenspaces. At the empty prefix, the inherited suffix Hardy estimate gives the squared centered-trace norm bound with coefficient phi. On a nonzero mu eigenvector its covariance quadratic form is mu times its squared increment norm, so mu is at most phi. Consequently every nonzero actual operator eigenvector at mu^(-1) has eigenvalue at least phi^(-1). This proves the eigenvector gap; it does not define or settle the original spectral counting function.")),
                     Paragraph(Text("These results do not yet construct the polar unitary W or its range and domain identities, enumerate and exhaust the positive spectrum, establish divergence of an ordered sequence, or prove the original global counting inequalities. Source equation (2.3) in its literal W form and the full Theorem 2.1 remain unfinished."))), DescribeRole.Theorem))));
 
     private static DocumentBlock Def(string name, string prose) => Describe.Lean(
@@ -58,8 +58,10 @@ internal sealed class BiasedBoundaryOperatorDocument : IScribeDocumentDefinition
             All("z",e,Seq(z,InMacro,Sp,V("K"))),
             All("z",e,Seq(new Formula.Apply(w,[z]),Eq,Call("C",z))),
             All("u",b,Seq(new Formula.Apply(Call("inverse",w),[u]),Eq,
-                Call("inverse",m),Call("adjoint",V("C"),u))),
-            Call("FiniteDimensional",Seq(Mathbb,Grp(V("R"))),b))));
+                Call("smul",Call("inverse",m),Call("adjoint",V("C"),u)))),
+            Call("FiniteDimensional",Seq(Mathbb,Grp(V("R"))),b),
+            All("z",e,Seq(z,Neq,Sp,D(0),Implies,Sp,m,Leq,Sp,V("phi"))),
+            All("u",b,Seq(u,Neq,Sp,D(0),Implies,Sp,Call("inverse",V("phi")),Leq,Sp,Call("inverse",m))))));
     }
     private static Formula ResolventFormula()
     {
@@ -69,9 +71,9 @@ internal sealed class BiasedBoundaryOperatorDocument : IScribeDocumentDefinition
         Formula inverse=All("u",g,All("h",g,Seq(Call("pair",u,h),InMacro,Sp,graph,Iff,
             new Formula.Apply(r,[Par(Seq(u,Plus,h))]),Eq,u)));
         Formula eigen=All("lambda",Seq(Mathbb,Grp(V("R"))),Seq(D(0),Lt,l,Implies,Sp,
-            All("u",g,Seq(Call("pair",u,Seq(l,u)),InMacro,Sp,graph,Iff,And(
+            All("u",g,Seq(Call("pair",u,Call("smul",l,u)),InMacro,Sp,graph,Iff,And(
                 Seq(Call("mean",u),Eq,D(0)),
-                Seq(new Formula.Apply(a,[u]),Eq,Call("inverse",l),u))))));
+                Seq(new Formula.Apply(a,[u]),Eq,Call("smul",Call("inverse",l),u)))))));
         return And(Call("IsCompactOperator",r),inverse,eigen);
     }
     private static Formula RealizationFormula()
@@ -79,7 +81,7 @@ internal sealed class BiasedBoundaryOperatorDocument : IScribeDocumentDefinition
         Formula op=V("boundaryOperator"), g=V("G"), u=V("u"), h=V("h");
         Formula graph=Call("graph",op);
         return And(Call("DenseRange",V("J")),Call("DenseRange",V("centeredTrace")),
-            Seq(Neg,Sp,Call("FiniteDimensional",Seq(Mathbb,Grp(V("R"))),V("Gzero"))),
+            Seq(Neg,Sp,Call("FiniteDimensional",Seq(Mathbb,Grp(V("R"))),Seq(V("G"),Underscore,Grp(D(0))))),
             Call("Dense",V("D")),Call("Dense",Call("domain",op)),Call("IsSelfAdjoint",op),
             All("u",g,All("h",g,Seq(Call("pair",u,h),InMacro,Sp,graph,Iff,Call("weakGraph",u,h)))),
             All("u",g,Seq(Call("pair",u,D(0)),InMacro,Sp,graph,Iff,
