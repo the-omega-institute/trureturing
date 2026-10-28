@@ -26,7 +26,8 @@ private unsafe def testIndex (label : String) (easy : Bool) : MetaM DiskLookup.I
     let some owner := env.getModuleIdxFor? name | throwError "DPRIME missing fixture owner"
     let entry : DiskLookup.Entry := {
       module := env.header.moduleNames[owner.toNat]!.toString,
-      name := name.toString, parts := (name.toString.splitOn ".").toArray.map (fun part => (part, 0)), ordinal}
+      name := name.toString,
+      parts := (name.toString.splitOn ".").toArray.map (fun part => (part, 0)), ordinal}
     tree := tree.insertKeyValue keys entry
   pickle (directory / "primary.pickle") ({tree} : DiskLookup.PickledShard)
   -- Empty full-statement membership is explicit and complete in this test domain.
@@ -90,7 +91,8 @@ run_cmd liftTermElabM do
       result.query.price == some 0 && result.proof?.isSome do
     throwError "DPRIME_KAPPA successor kernel Hit lost: {result.detail}"
   checkLocalProof target result.proof?.get!
-  logInfo s!"DPRIME_CHAIN kappa-successor PASS version={testVersion} visited={result.lookup.visited} kappa=true kernel_hit=true price=0"
+  logInfo s!"DPRIME_CHAIN kappa-successor PASS version={testVersion} \
+    visited={result.lookup.visited} kappa=true kernel_hit=true price=0"
 
 set_option maxHeartbeats 0 in
 run_cmd liftTermElabM do
@@ -112,7 +114,9 @@ run_cmd liftTermElabM do
   unless classifyDisposition control == .bindOnly && upperIsZero control.baseline &&
       !strictDrop control.baseline control.paired do
     throwError "DPRIME_G target certificate did not erase Delta"
-  logInfo s!"DPRIME_CHAIN coverage-pool PASS version={testVersion} stops={stops.length} price=1 basis=budget budget_guard=incomplete target_pool=bind-only Delta=false"
+  logInfo s!"DPRIME_CHAIN coverage-pool PASS version={testVersion} \
+    stops={stops.length} price=1 basis=budget budget_guard=incomplete \
+    target_pool=bind-only Delta=false"
 
 set_option maxHeartbeats 0 in
 run_cmd liftTermElabM do
@@ -137,8 +141,12 @@ run_cmd liftTermElabM do
   try
     publish `DprimeReversePublication observation
       (targetHeader? := some ([], mkApp (mkConst ``Target) (mkNatLit 7)))
-  catch ex => throwError "DPRIME_REVERSE publication changed incomplete guard: {← ex.toMessageData.toString}"
+  catch ex =>
+    throwError "DPRIME_REVERSE publication changed incomplete guard: {← ex.toMessageData.toString}"
   let published ← evalConst Disposition `DprimeReversePublication.publishedDisposition
   unless published == .incomplete do
     throwError "DPRIME_REVERSE publisher ignored unfinished guard"
-  logInfo s!"DPRIME_CHAIN reverse-incomplete PASS version={testVersion} reverse_calls={reading.reverseNegativeCalls} U_B={reprStr reading.baseline.upper} U_P={reprStr reading.paired.upper} other_guards=complete stop=searchKappa disposition=incomplete blocker=target-part published=incomplete"
+  logInfo s!"DPRIME_CHAIN reverse-incomplete PASS version={testVersion} \
+    reverse_calls={reading.reverseNegativeCalls} U_B={reprStr reading.baseline.upper} \
+    U_P={reprStr reading.paired.upper} other_guards=complete stop=searchKappa \
+    disposition=incomplete blocker=target-part published=incomplete"
