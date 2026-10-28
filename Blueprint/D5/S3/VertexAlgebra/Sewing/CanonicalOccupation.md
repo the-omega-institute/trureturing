@@ -6,43 +6,7 @@ Ungrouped absolute occupation summability for the literal canonical lattice fiel
 
 The lattice data D, three integral charges, four external oscillator polynomials, and both signed offsets are arbitrary. For every complex q with norm less than one, including zero, the sum of the norms of the literal occupation terms converges. No rank, Gram positivity, growth, summability or energy-cutoff hypothesis is added.
 
-**Definition 1.1 (Internal occupations).**
-
-Lean statement: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.Occ`
-
-*Formalization.* `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.Occ` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-All finitely supported natural occupations on Fin D.rank times Nat.
-
-**Definition 1.2 (Oscillator energy).**
-
-Lean statement: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.level`
-
-*Formalization.* `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.level` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The existing positive integer oscillator energy, with frequency k+1 at index (i,k).
-
-**Definition 1.3 (Literal monomial state).**
-
-Lean statement: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.b`
-
-*Formalization.* `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.b` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The monomial with occupation d and coefficient one in the original oscillator polynomial carrier.
-
-**Definition 1.4 (Factorial coordinate form).**
+**Definition 1.1 (Factorial coordinate form).**
 
 Lean statement: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.H`
 
@@ -54,7 +18,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.H`
 
 The existing FactorialFockMetric.inner. Its monomial diagonal is the product of occupation factorials; it is used for dual-coordinate resolution. No invariant BPZ or physical unitarity property is asserted.
 
-**Definition 1.5 (Canonical scalar contraction).**
+**Definition 1.2 (Canonical scalar contraction).**
 
 Lean statement: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.A`
 
@@ -66,7 +30,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.A`
 
 The product of the actual canonical outer matrix coefficient with the actual inner coefficient divided by its factorial coordinate weight. The intermediate charge is beta+gamma and the mode shifts are r+level(d) and s-level(d).
 
-**Definition 1.6 (Radially damped occupation term).**
+**Definition 1.3 (Radially damped occupation term).**
 
 Lean statement: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.sewnTerm`
 
@@ -78,19 +42,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.sewnTerm`
 
 The exact scalar contraction A multiplied by q to the occupation energy. Every occupation is retained separately.
 
-**Definition 1.7 (Creation occupation numerator).**
-
-Lean statement: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.creationCoordinate`
-
-*Formalization.* `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.creationCoordinate` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The finite product of (alpha(i)/(k+1)) to the occupation multiplicity, obtained from the original creation exponential.
-
-**Theorem 1.8 (Absolute canonical occupation summability).**
+**Theorem 1.4 (Absolute canonical occupation summability).**
 
 Lean statement: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.canonical_sewing_summable`
 
@@ -110,14 +62,6 @@ This scalar factorial-coordinate result includes rank-one Gram [2] and keeps arb
 
 - Truth anchor: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.A`
 - Truth anchor: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.H`
-- Truth anchor: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.Occ`
-- Truth anchor: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.b`
 - Truth anchor: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.canonical_sewing_summable`
-- Truth anchor: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.creationCoordinate`
-- Truth anchor: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.level`
 - Truth anchor: `D5/S3/VertexAlgebra/Sewing/CanonicalOccupation.sewnTerm`
-- Dependency: [D5/S3/Combinatorics/Partitions/AnalyticIntegerOccupation](../../Combinatorics/Partitions/AnalyticIntegerOccupation.md)
-- Dependency: [D5/S3/VertexAlgebra/FactorialFockMetric](../FactorialFockMetric.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeActualAnnihilation](../LatticeActualAnnihilation.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticePositiveEnergy](../LatticePositiveEnergy.md)
-- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner](../Sectors/LatticeSectorIntertwiner.md)
+- Dependency: [D5/S3/VertexAlgebra/Sewing/CanonicalOccupationRow](CanonicalOccupationRow.md)
