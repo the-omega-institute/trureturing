@@ -66,12 +66,25 @@ $$\operatorname{seedBlowupRoots}\left(epsilon, k\right)$$
 
 For every positive real epsilon and every positive natural k there exist n : N, G : SimpleGraph(Fin n), and r : R with n>=2, 0<1+r<epsilon, complexPolynomial G nonzero, and every vertex of G having a neighbour. For every complex w, (1+w)^k=1+r implies that w is a root of complexPolynomial(blowupGraph G (Fin k)). The blowup polynomial is also nonzero and every blowup vertex has a neighbour; its leading coefficient at its vertex count is one. The same fixed G and r work for all these branches. The proof consumes the new right-hand seed theorem and the known actual-fibre substitution. This is an auxiliary bridge, not WholePlaneDensity: no approximation to an arbitrary target z or unbounded negative seed family is asserted.
 
+**Theorem 1.6 (A single labelled witness for every branch).**
+
+$$\operatorname{labelledSeedBlowupRoots}\left(epsilon, k\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/TotalDominationBlowup.labelled_seed_blowup_roots` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive real epsilon and positive natural k there exist m : N, H : SimpleGraph (Fin m), and r : R such that m>=2, 0<1+r<epsilon, complexPolynomial H is nonzero, every vertex of H has a neighbour, and for every complex w, (1+w)^k=1+r implies complexPolynomial H has root w. The product vertex type of the independent-fibre graph is reindexed to Fin m through Fintype.equivFin. Actual subsets, their cardinalities, adjacency, every power branch and the same polynomial are preserved. No graph is separately chosen for each branch. This theorem does not assert proximity to an arbitrary complex z.
+
 The full issue 23313 target remains WholePlaneDensity in TotalDominationSeeds. The independent-fibre identity and these power-map branches do not by themselves establish the complete complex density or authorize resolution credit.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationBlowup.blowupGraph`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationBlowup.blowup_polynomial`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationBlowup.labelled_seed_blowup_roots`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationBlowup.seed_blowup_roots`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationBlowup.subsetFamilyEquiv`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationBlowup.support`

@@ -194,7 +194,7 @@ theorem seed_blowup_roots (ε : ℝ) (hε : 0 < ε) (k : ℕ) (hk : 0 < k) :
         (complexPolynomial (blowupGraph G (Fin k))).IsRoot w := by
   classical
   obtain ⟨n, G, r, hn, hni, hnz, hc, hl, hclose⟩ := complex_seed_accumulation ε hε
-  haveI : Nonempty (Fin k) := ⟨⟨0, hk⟩⟩
+  have : Nonempty (Fin k) := ⟨⟨0, hk⟩⟩
   have hr : 1 + r < ε := by
     have he : (r : ℂ) - (-1 : ℂ) = ((1 + r : ℝ) : ℂ) := by push_cast; ring
     simpa only [he, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hl] using hclose
@@ -227,8 +227,12 @@ theorem labelled_seed_blowup_roots (ε : ℝ) (hε : 0 < ε) (k : ℕ) (hk : 0 <
       exact ⟨e u, mem_map.mpr ⟨u, hu, rfl⟩, by simpa [H] using hadj⟩
     · intro h v
       obtain ⟨u, hu, hadj⟩ := h (e v)
-      obtain ⟨u, hu, rfl⟩ := mem_map.mp hu
-      exact ⟨u, hu, hadj⟩
+      obtain ⟨u', hu', heq⟩ := mem_map.mp hu
+      refine ⟨u', hu', ?_⟩
+      change B.Adj (e v) (e u')
+      have heq' : e u' = u := heq
+      rw [heq']
+      exact hadj
   have hp : complexPolynomial H = complexPolynomial B := by
     unfold complexPolynomial
     exact Fintype.sum_equiv e.finsetCongr _ _ (fun S => by
