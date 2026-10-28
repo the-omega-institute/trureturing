@@ -749,7 +749,13 @@ private theorem bayes_pair_trace (i j : Fin 3) :
   exact ht
 
 private theorem bayesian_witness : 1 / 2 < bayesFidelity canonicalKraus rotationKraus := by
-  sorry
+  have he : bayesFidelity canonicalKraus rotationKraus = 11 / 18 := by
+    unfold bayesFidelity
+    simp_rw [bayes_pair_trace]
+    norm_num [rotationVector, Fin.sum_univ_succ, Complex.div_re,
+      Complex.div_im, Complex.normSq_apply]
+  rw [he]
+  norm_num
 
 /-- For the unital Matrix (Fin 3) (Fin 3) ℂ Werner--Holevo channel, every Markovian value is at most
 `1/2`, while the canonical/rational-rotation Kraus pair has Bayesian value above `1/2`.
