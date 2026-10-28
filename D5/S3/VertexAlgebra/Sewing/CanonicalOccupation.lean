@@ -935,9 +935,188 @@ private theorem word_row_bound (D : LatticeData) (α β : Charge D) :
     choose C hC hb using hi
     exact ⟨K + (x.2 + 3), fun e => word_row_step D α β ω x L hL K C hC hb e⟩
 
+/-- The factorial occupation envelope for the complementary column estimate. -/
+private def factorialEnvelope (D : LatticeData) (B : ℝ) (d : Occ D) : ℝ :=
+  d.prod (fun x n => (B / (x.2 + 1 : ℝ)) ^ n) /
+    (FactorialFockMetric.weight d : ℝ)
+
+private theorem factorialEnvelope_nonneg (D : LatticeData) (B : ℝ) (hB : 0 ≤ B)
+    (d : Occ D) : 0 ≤ factorialEnvelope D B d := by
+  unfold factorialEnvelope
+  apply div_nonneg
+  · exact Finset.prod_nonneg (fun _ _ => pow_nonneg (div_nonneg hB (by positivity)) _)
+  · exact Nat.cast_nonneg _
+
+private theorem factorialEnvelope_add_single (D : LatticeData) (B : ℝ)
+    (d : Occ D) (x : Index D) :
+    factorialEnvelope D B (d + Finsupp.single x 1) * (d x + 1 : ℝ) =
+      factorialEnvelope D B d * (B / (x.2 + 1 : ℝ)) := by
+  classical
+  have hw : (FactorialFockMetric.weight d : ℝ) ≠ 0 := by
+    exact_mod_cast Nat.ne_of_gt (FactorialFockMetric.weight_pos d)
+  have hn : (d x + 1 : ℝ) ≠ 0 := by positivity
+  unfold factorialEnvelope
+  rw [Finsupp.prod_add_index' (by simp) (by intros; exact pow_add _ _ _),
+    FactorialFockMetric.weight_add_single]
+  simp only [Finsupp.prod_single_index, pow_one, Nat.cast_mul, Nat.cast_add, Nat.cast_one]
+  field_simp
+
+private theorem factorialEnvelope_sub_le (D : LatticeData) (B : ℝ) (hB : 1 ≤ B)
+    (d : Occ D) (x : Index D) :
+    factorialEnvelope D B (d - Finsupp.single x 1) ≤
+      (1 + (level D d : ℝ)) * factorialEnvelope D B d := by
+  classical
+  have henv := factorialEnvelope_nonneg D B (by linarith) d
+  by_cases hx : d x = 0
+  · have heq : d - Finsupp.single x 1 = d := by
+      ext y
+      by_cases hy : y = x
+      · subst y; simp [hx]
+      · simp [hy]
+    rw [heq]
+    exact le_mul_of_one_le_left henv (by have hh := Nat.cast_nonneg (α := ℝ) (level D d); linarith)
+  · let a := d - Finsupp.single x 1
+    have hadd : a + Finsupp.single x 1 = d := Finsupp.sub_add_single_one_cancel hx
+    have hd : a x + 1 = d x := by simpa using congrArg (fun c : Occ D => c x) hadd
+    have hh := factorialEnvelope_add_single D B a x
+    rw [hadd, show (a x + 1 : ℝ) = (d x : ℝ) by exact_mod_cast hd] at hh
+    have hn : (x.2 + 1 : ℝ) ≠ 0 := by positivity
+    have hrel : factorialEnvelope D B a * B =
+        factorialEnvelope D B d * (d x : ℝ) * (x.2 + 1 : ℝ) := by
+      have ht := congrArg (fun r : ℝ => r * (x.2 + 1 : ℝ)) hh
+      field_simp at ht
+      linarith
+    have hlev : (d x : ℝ) * (x.2 + 1 : ℝ) ≤ (level D d : ℝ) := by
+      have hs := Finset.single_le_sum (s := d.support)
+        (f := fun y : Index D => d y * (y.2 + 1))
+        (fun _ _ => Nat.zero_le _) (Finsupp.mem_support_iff.mpr hx)
+      change d x * (x.2 + 1) ≤ level D d at hs
+      exact_mod_cast hs
+    calc
+      _ ≤ factorialEnvelope D B a * B :=
+        le_mul_of_one_le_right (factorialEnvelope_nonneg D B (by linarith) a) hB
+      _ = _ := hrel
+      _ ≤ (1 + (level D d : ℝ)) * factorialEnvelope D B d := by
+        nlinarith
+
+private theorem creation_factorialEnvelope (D : LatticeData) (α : Charge D)
+    (B : ℝ) (hB : 0 ≤ B) (hα : ∀ i, ‖(α i : ℂ)‖ ≤ B) (t : ℤ) (d : Occ D) :
+    ‖(creationCoeff D α t).coeff d‖ ≤ factorialEnvelope D B d := by
+  classical
+  apply (creation_coefficient_norm_le D α t d).trans
+  rw [creation_coefficient_norm]
+  unfold factorialEnvelope FactorialFockMetric.weight
+  simp only [Finsupp.prod, Nat.cast_prod]
+  rw [← Finset.prod_div_distrib]
+  apply Finset.prod_le_prod₀
+  · intro x hx; positivity
+  · intro x hx
+    gcongr
+    exact hα x.1
+
+/-- The actual translated field has the complementary factorial column envelope. -/
+private theorem ground_column_bound (D : LatticeData) (α β : Charge D) :
+    ∃ B L : ℝ, 1 ≤ B ∧ 1 ≤ L ∧ ∀ (e d : Occ D) (m : ℤ),
+      ‖wordCoeff D α β [] m d e‖ ≤
+        L ^ e.degree * (1 + (level D d : ℝ)) ^ e.degree * factorialEnvelope D B d := by
+  classical
+  let B : ℝ := 1 + ∑ i : Fin D.rank, ‖(α i : ℂ)‖
+  have hB : 1 ≤ B := by
+    dsimp [B]
+    have hh := Finset.sum_nonneg (s := Finset.univ) (fun (i : Fin D.rank) _ => norm_nonneg (α i : ℂ))
+    linarith
+  have hα (i : Fin D.rank) : ‖(α i : ℂ)‖ ≤ B := by
+    have hh := Finset.single_le_sum (fun (j : Fin D.rank) _ => norm_nonneg (α j : ℂ)) (Finset.mem_univ i)
+    dsimp [B]
+    linarith
+  let T : Fin D.rank → ℝ := fun i => ‖(bilinear D α (unitCharge D i) : ℂ)‖
+  let L : ℝ := 1 + ∑ i : Fin D.rank, T i
+  have hL : 1 ≤ L := by
+    dsimp [L, T]
+    have hh := Finset.sum_nonneg (s := Finset.univ)
+      (fun (i : Fin D.rank) _ => norm_nonneg (bilinear D α (unitCharge D i) : ℂ))
+    linarith
+  have hTx (x : Index D) : 1 + T x.1 ≤ L := by
+    have hh := Finset.single_le_sum (fun (i : Fin D.rank) _ =>
+      norm_nonneg (bilinear D α (unitCharge D i) : ℂ)) (Finset.mem_univ x.1)
+    dsimp [L, T]
+    linarith
+  have hphase : ‖epsilon D α β‖ = 1 := by
+    unfold epsilon paritySign
+    split_ifs <;> norm_num
+  have hzero (d : Occ D) (m : ℤ) :
+      ‖wordCoeff D α β [] m d 0‖ ≤ factorialEnvelope D B d := by
+    have hc : creationContract D α (-m - 1 - bilinear D α β) 1 =
+        creationCoeff D α (-m - 1 - bilinear D α β) := by
+      simpa using creationContract_monomial D α (-m - 1 - bilinear D α β) 0 (1 : Oscillator D)
+    have hh : wordCoeff D α β [] m d 0 =
+        epsilon D α β * (creationCoeff D α (-m - 1 - bilinear D α β)).coeff d := by
+      simp [wordCoeff, b, wordMap_nil, translatedPolynomial, hc]
+    rw [hh, norm_mul, hphase, one_mul]
+    exact creation_factorialEnvelope D α B (by linarith) hα _ d
+  refine ⟨B, L, hB, hL, ?_⟩
+  have haux : ∀ n : ℕ, ∀ e : Occ D, e.degree = n → ∀ (d : Occ D) (m : ℤ),
+      ‖wordCoeff D α β [] m d e‖ ≤
+        L ^ e.degree * (1 + (level D d : ℝ)) ^ e.degree * factorialEnvelope D B d := by
+    intro n
+    induction n using Nat.strong_induction_on with
+    | h n ih =>
+      intro e he d m
+      by_cases hz : e = 0
+      · subst e
+        simpa using hzero d m
+      · obtain ⟨x, hx⟩ : ∃ x : Index D, e x ≠ 0 := by
+          by_contra h
+          push Not at h
+          exact hz (Finsupp.ext h)
+        let e' := e - Finsupp.single x 1
+        have hadd : e' + Finsupp.single x 1 = e := Finsupp.sub_add_single_one_cancel hx
+        have hdeg : e'.degree + 1 = e.degree := by
+          rw [← hadd, map_add, Finsupp.degree_single]
+        have hi (d' : Occ D) (m' : ℤ) := ih e'.degree (by omega) e' rfl d' m'
+        let N : ℝ := 1 + (level D d : ℝ)
+        let V : ℝ := L ^ e'.degree * N ^ (e'.degree + 1) * factorialEnvelope D B d
+        have hN : 1 ≤ N := by dsimp [N]; have hh := Nat.cast_nonneg (α := ℝ) (level D d); linarith
+        have henv := factorialEnvelope_nonneg D B (by linarith) d
+        have hV : 0 ≤ V := by dsimp [V]; positivity
+        have hleft : ‖if x ∈ d.support then
+            wordCoeff D α β [] m (d - Finsupp.single x 1) e' else 0‖ ≤ V := by
+          split_ifs with hd
+          · calc
+              _ ≤ L ^ e'.degree * (1 + (level D (d - Finsupp.single x 1) : ℝ)) ^ e'.degree *
+                  factorialEnvelope D B (d - Finsupp.single x 1) := hi _ _
+              _ ≤ L ^ e'.degree * N ^ e'.degree * (N * factorialEnvelope D B d) := by
+                gcongr
+                · exact_mod_cast Nat.add_le_add_left (occupation_sub_bounds D d x).1 1
+                · exact factorialEnvelope_sub_le D B hB d x
+              _ = V := by dsimp [V]; rw [pow_succ]; ring
+          · simpa only [norm_zero] using hV
+        have hright : ‖wordCoeff D α β [] (m - (x.2 + 1 : ℕ)) d e'‖ ≤ V := by
+          exact (hi d _).trans (by dsimp [V]; gcongr; exact pow_le_pow_right₀ hN (Nat.le_succ _))
+        rw [← hadd, wordCoeff_nil_add_single]
+        calc
+          _ ≤ ‖if x ∈ d.support then
+              wordCoeff D α β [] m (d - Finsupp.single x 1) e' else 0‖ +
+              ‖(bilinear D α (unitCharge D x.1) : ℂ) *
+                wordCoeff D α β [] (m - (x.2 + 1 : ℕ)) d e'‖ := norm_sub_le _ _
+          _ ≤ V + T x.1 * V := by
+            rw [norm_mul]
+            exact add_le_add hleft (mul_le_mul_of_nonneg_left hright (norm_nonneg _))
+          _ = (1 + T x.1) * V := by ring
+          _ ≤ L * V := mul_le_mul_of_nonneg_right (hTx x) hV
+          _ = L ^ (e' + Finsupp.single x 1).degree *
+              (1 + (level D d : ℝ)) ^ (e' + Finsupp.single x 1).degree * factorialEnvelope D B d := by
+            rw [map_add, Finsupp.degree_single, pow_succ L]
+            dsimp [V, N]
+            ring
+          _ ≤ _ := le_rfl
+        all_goals exact le_rfl
+  exact fun e d m => haux e.degree e rfl d m
+
 #print axioms creation_coefficient_factorial
 #print axioms creation_radial_bound
 #print axioms creation_occupation_summable
+#print axioms ground_column_bound
 #print axioms word_row_bound
 #print axioms ground_row_bound
 #print axioms wordMap_nil_X
