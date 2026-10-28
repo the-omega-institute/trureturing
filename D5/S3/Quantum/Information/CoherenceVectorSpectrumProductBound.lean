@@ -73,14 +73,14 @@ private lemma column_ensemble {d : ℕ} (hd : 1 ≤ d)
     · rw [hz, zero_mul, hzero j hz i, Complex.normSq_zero]
     · have hsq : Real.sqrt (p j) * Real.sqrt (p j) = p j := Real.mul_self_sqrt (hp j)
       change p j * Complex.normSq (if p j = 0 then _ else _) = _
-      rw [if_neg hz, Complex.normSq_div, Complex.normSq_ofReal, hsq,
+      rw [ite_eq_right hz, Complex.normSq_div, Complex.normSq_ofReal, hsq,
         mul_div_cancel₀ _ hz]
   have hunit (j : Fin d) : (∑ i, Complex.normSq (ψ j i)) = 1 := by
     by_cases hz : p j = 0
     · change (∑ i, Complex.normSq (if p j = 0 then _ else _)) = 1
-      simp only [hz, if_true, Pi.single_apply, apply_ite, Complex.normSq_one,
+      simp only [hz, ite_true, Pi.single_apply, apply_ite, Complex.normSq_one,
         Complex.normSq_zero]
-      simp only [Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+      simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
     · have hs := Finset.sum_congr rfl (fun i (_ : i ∈ (Finset.univ : Finset (Fin d))) =>
         hcol i j)
       rw [← Finset.mul_sum, hnorm j] at hs
@@ -92,7 +92,7 @@ private lemma column_ensemble {d : ℕ} (hd : 1 ≤ d)
     · have hsq : (Real.sqrt (p j) : ℂ) * (Real.sqrt (p j) : ℂ) = (p j : ℂ) := by
         exact_mod_cast Real.mul_self_sqrt (hp j)
       change (p j : ℂ) * ((if p j = 0 then _ else _) * star (if p j = 0 then _ else _)) = _
-      rw [if_neg hz, if_neg hz, star_div₀, Complex.star_def, Complex.conj_ofReal,
+      rw [ite_eq_right hz, ite_eq_right hz, star_div₀, Complex.star_def, Complex.conj_ofReal,
         div_mul_div_comm, hsq, mul_div_cancel₀ _ (Complex.ofReal_ne_zero.mpr hz)]
   refine ⟨p, ψ, ⟨hp, ?_, hunit, ?_⟩, fun _ => rfl, hcol⟩
   · have ht := congrArg Complex.re hρ.2
@@ -102,8 +102,12 @@ private lemma column_ensemble {d : ℕ} (hd : 1 ≤ d)
       ρ = a * aᴴ := by rw [ha.eq, haa]
       _ = ∑ j, (p j : ℂ) • rankOneDensity (ψ j) := by
         ext i k
-        change (∑ j, a i j * star (a k j)) = ∑ j, (p j : ℂ) * (ψ j i * star (ψ j k))
-        exact Finset.sum_congr rfl (fun j _ => (houter j i k).symm)
+        rw [Matrix.mul_apply, Matrix.sum_apply]
+        apply Finset.sum_congr rfl
+        intro j _
+        rw [Matrix.conjTranspose_apply, Matrix.smul_apply, smul_eq_mul,
+          rankOneDensity, Matrix.vecMulVec_apply, Pi.star_apply]
+        exact (houter j i k).symm
 
 private lemma rearrangement_max {d : ℕ} (hd : 1 ≤ d) (x : Fin d → ℝ) (i : Fin d) :
     x i ≤ decreasingRearrangement x ⟨0, hd⟩ := by
@@ -169,7 +173,8 @@ private lemma trace_sqrt_spectral {d : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
     Unitary.coe_star_mul_self, one_mul, Matrix.trace_diagonal, Complex.re_sum]
   apply Finset.sum_congr rfl
   intro i _
-  simp only [Function.comp_apply, Complex.ofReal_re, Real.coe_sqrt,
+  simp only [Function.comp_apply, RCLike.ofReal_eq_complex_ofReal, Complex.ofReal_re,
+    Real.coe_sqrt,
     Real.coe_toNNReal _ (hρ.1.eigenvalues_nonneg i)]
 
 private lemma spectral_bound {d : ℕ} (hd : 1 ≤ d)
@@ -179,7 +184,8 @@ private lemma spectral_bound {d : ℕ} (hd : 1 ≤ d)
   have hsum : (∑ i, hρ.1.isHermitian.eigenvalues i) = 1 := by
     have h := congrArg Complex.re
       (hρ.1.isHermitian.trace_eq_sum_eigenvalues.symm.trans hρ.2)
-    simpa only [Complex.one_re, Complex.re_sum, Complex.ofReal_re] using h
+    simpa only [Complex.one_re, Complex.re_sum, RCLike.ofReal_eq_complex_ofReal,
+      Complex.ofReal_re] using h
   have hle (i : Fin d) : hρ.1.isHermitian.eigenvalues i ≤ maxEigenvalue ρ := by
     rw [maxEigenvalue, dite_eq_left hρ.1.isHermitian]
     exact le_csSup (Set.finite_range _).bddAbove ⟨i, rfl⟩
@@ -236,5 +242,6 @@ theorem result (d : ℕ) (hd : 1 ≤ d) (ρ : Matrix (Fin d) (Fin d) ℂ)
   obtain ⟨hl, ht⟩ := spectral_bound hd ρ hρ
   exact assemble_bound d hd _ _ _ _ hl ht (diagonal_cauchy_schwarz ρ)
     (first_component_bound hd ρ ν hν p ψ hdec hcol)
+
 
 end D5.S3.Quantum.Information.CoherenceVectorSpectrumProductBound
