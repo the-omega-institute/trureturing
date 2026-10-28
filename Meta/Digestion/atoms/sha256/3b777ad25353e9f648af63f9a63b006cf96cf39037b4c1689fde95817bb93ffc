@@ -1,0 +1,16 @@
+### 22.1. Nonidentity-frame examples
+
+The distinction is visible with $N=2$, $b=1$, $B=e_1$, $g=(1,1)$ and $R=[B,TB]$. Each matrix below is rational, symmetric, connected with positive off-diagonal support, full joint rank and invertible; $r=0$ and the only port-fixing native permutation is the identity. Hence $W=R^{-1}$ and the acquired-to-native decoder is $W^{-1}z$.
+
+- For $T=\begin{psmallmatrix}0&2\\2&0\end{psmallmatrix}$, $R=\operatorname{diag}(1,2)$. `Add(1,1);Tick` from zero gives native $2e_2$, acquired $e_2$, and decoded native $2e_2$. Applying $R^{-1}$ to that acquired $e_2$ would instead give $e_2/2$.
+- For $T=\begin{psmallmatrix}1&1\\1&2\end{psmallmatrix}$, $R=\begin{psmallmatrix}1&1\\0&1\end{psmallmatrix}$. The same word gives native $(1,1)$ and acquired $e_2$, decoded to $(1,1)$, whereas $R^{-1}e_2=(-1,1)$.
+- For $T=\begin{psmallmatrix}1/2&1/4\\1/4&1/2\end{psmallmatrix}$, $R=\begin{psmallmatrix}1&1/2\\0&1/4\end{psmallmatrix}$. The same word gives native $(1/2,1/4)$ and acquired $e_2$, decoded to $(1/2,1/4)$, whereas $R^{-1}e_2=(-2,4)$.
+
+The same invariant applies to dependent Report updates, rather than only direct recovery. For the second matrix, a zero Report followed by `Add(1,1)` and a new Report has native endpoint $(1,1)$, acquired endpoint $e_2$ and decoded endpoint $(1,1)$. Inserting the native endpoint directly into $W^{-1}$ would give $(2,1)$, whose next native port read would be $2$ rather than $1$; treating $(2,1)$ as acquired coordinates would give $E(2,1)=3$.
+
+For the contracting matrix $T=\frac14\begin{psmallmatrix}1&1\\1&2\end{psmallmatrix}$, $R=\begin{psmallmatrix}1&1/4\\0&1/4\end{psmallmatrix}$ and $W=\begin{psmallmatrix}1&-1\\0&4\end{psmallmatrix}$. `Add(1,-16);Tick;Add(1,12)` from zero prepares $(8,-4)$, and the first Report ends at $e_1$. `Hold` and another Report give native endpoint $(1/4,1/4)$ and acquired endpoint $e_2$, decoded to $(1/4,1/4)$. Applying $W^{-1}$ directly to the native endpoint would give $(5/16,1/16)$.
+
+For the first matrix, `Add(1,1/4);Tick` prepares $(0,1/2)$, and the first Report reads $0,1$ and ends at $e_1$. `Hold` and another Report give native $2e_2$, acquired $e_2$, decoded native $2e_2$. A subsequent actual `Tick;Read(1)` returns $4$. The double-frame expression $W^{-1}(2e_2)=4e_2$ would instead predict $8$ and would reverse the new Report to entrance $2e_1$ rather than its actual entrance $e_1$. In all these examples the valid composite is $W^{-1}R^{-1}y=P^{\mathsf T}y$ for a native $y$, and $W^{-1}z$ for an acquired $z$; the general identities prove the distinction for every allowed source and command.
+
+The hypotheses are sharp in their own directions. For the public star with $g=1$, $r=0$, and singular $T$, the vector $e_{\ell_1}-e_{\ell_2}$ can be killed by $T$; distinct first Report reads then have the same final zero, so endpoint-to-Time inversion fails although A1--A6 remain valid. Even with invertible $T$, `Reset` and `Reset;Tick` have the same current zero but different journals. Hence arbitrary chronology is not recovered. These are mathematical countermodels to stronger promotions, not defects in Theorem 22.1.
+
