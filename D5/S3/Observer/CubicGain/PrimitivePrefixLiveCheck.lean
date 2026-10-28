@@ -2,6 +2,8 @@ import D5.S3.Observer.CubicGain.PrimitivePrefix
 import Lean.Meta.Reduce
 import Lean.Elab.Command
 
+/-! Transient inspection of normalized compiled proof dependencies. -/
+
 open Lean Meta Elab Command
 
 run_cmd liftTermElabM do
@@ -23,6 +25,6 @@ run_cmd liftTermElabM do
         rows := rows.push <| Json.mkObj [
           ("declaration", toJson name.toString),
           ("normalized_direct_new_dependencies", toJson (deps.map Name.toString))]
-  let some output ← liftIO <| IO.getEnv "PRIMITIVE_PREFIX_LIVE_OUTPUT"
+  let some output ← liftM <| IO.getEnv "PRIMITIVE_PREFIX_LIVE_OUTPUT"
     | throwError "PRIMITIVE_PREFIX_LIVE_OUTPUT is required"
-  liftIO <| IO.FS.writeFile output (Json.pretty (Json.arr rows))
+  liftM <| IO.FS.writeFile output (Json.pretty (Json.arr rows))
