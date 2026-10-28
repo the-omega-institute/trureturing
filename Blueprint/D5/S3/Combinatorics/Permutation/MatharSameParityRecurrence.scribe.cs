@@ -15,21 +15,22 @@ internal sealed class MatharSameParityRecurrenceDocument : IScribeDocumentDefini
             Paragraph(Text("OEIS A152661 defines a(n) as the number of permutations of {1,...,n} "
                 + "whose first two entries have the same parity, for n at least two. "
                 + "Its first conjectural FORMULA, attributed to R. J. Mathar, is the recurrence below. "
-                + "The source is https://oeis.org/search?q=id%3AA152661&fmt=text. "
-                + "The entry's even and odd factorial-binomial formulas are prior formulas. "
+                + "The source is OEIS A152661, revision 23 (https://oeis.org/A152661). "
+                + "The entry's even and odd factorial-binomial formulas are prior formulas; the recurrence proof and its cardinality bridge are repository-derived. "
                 + "Parity here always means parity of a natural value, rather than parity in a finite ring.")),
             Describe.Lean(DescribeId.Create("mathar-same-parity-count"),
                 DeclarationHandle.Create(Prefix + "a"), H("The permutation count"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(CountDefinition()),
+                AssessedProvenance.FromLiterature("oeis2008a152661"),
                 Blocks(Paragraph(Text("A permutation p of Fin n represents the natural word with value "
                     + "p(i).val+1 in position i+1. For n at least two, a(n) is the integer cast "
                     + "of the cardinality of the permutations satisfying "
                     + "(p(0).val+1) mod 2 = (p(1).val+1) mod 2. "
-                    + "For the two indices below this domain, a(n) is defined to be zero."))),
+                    + "Here Perm(Fin(n)) is the type of bijections Fin(n) to itself, Natcard is Nat.card of the displayed subtype, val takes the natural value of a Fin(n) element, and the annotation Z casts that natural cardinality to the integers. The numerals 0 and 1 in the guarded branch are the elements of Fin(n) with those natural values; the guard supplies their bounds. For the two indices below this domain, a(n) is defined to be integer zero."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("mathar-same-parity-recurrence"),
                 DeclarationHandle.Create(Prefix + "result"), H("The integer recurrence"),
-                StatementSource.FromAuthor(Recurrence()), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(Recurrence()), AssessedProvenance.FromRepo("oeis2008a152661"),
                 Blocks(
                     Paragraph(Text("There are e natural values of one parity and o of the other. "
                         + "An ordered distinct first pair therefore has e(e-1)+o(o-1) choices. "
@@ -55,6 +56,25 @@ internal sealed class MatharSameParityRecurrenceDocument : IScribeDocumentDefini
         new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
     private static Formula Times(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
+
+    private static Formula CountDefinition()
+    {
+        Formula n = F.Id("n"), p = F.Id("p");
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula integers = Seq(Mathbb, Grp(F.Id("Z")));
+        Formula domain = Call("Perm", Call("Fin", n));
+        Formula first = Add(Call("val", new Formula.Apply(p, [D(0)])), D(1));
+        Formula second = Add(Call("val", new Formula.Apply(p, [D(1)])), D(1));
+        Formula parity = new Formula.Relation(new Formula.Modulo(Parens(first), D(2)),
+            FormulaRelationOperator.Equal, new Formula.Modulo(Parens(second), D(2)));
+        Formula subtype = Seq(OpenBrace, p, Colon, domain, Sp, Mid, Sp, parity, CloseBrace);
+        Formula castCard = Seq(Parens(Seq(Call("Natcard", subtype), Colon, integers)));
+        Formula condition = new Formula.Relation(D(2), FormulaRelationOperator.LessThanOrEqual, n);
+        Formula body = Seq(Named("if"), Sp, condition, Sp, Named("then"), Sp,
+            castCard, Sp, Named("else"), Sp, Seq(Parens(Seq(D(0), Colon, integers))));
+        return Disp(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("n"),
+            naturals, new Formula.Relation(Call("a", n), FormulaRelationOperator.Equal, body)));
+    }
 
     private static Formula Recurrence()
     {
