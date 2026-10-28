@@ -304,37 +304,4 @@ theorem jointTwistedPeriod_card
   exact twistedPeriod_card C
     (h ^ (a.gcdA b) * g ^ (a.gcdB b)) hd
 
-private theorem conjugacy_sum_invariant
-    (f : H → ℕ) (c k : H) :
-    (∑ z : H, f (z⁻¹ * (k⁻¹ * c * k) * z)) =
-      ∑ z : H, f (z⁻¹ * c * z) := by
-  let e : H ≃ H :=
-    { toFun := fun z => k * z
-      invFun := fun z => k⁻¹ * z
-      left_inv := by intro z; simp [mul_assoc]
-      right_inv := by intro z; simp [mul_assoc] }
-  apply Fintype.sum_equiv e
-  intro z
-  simp [e, mul_assoc]
-
-/-- The joint carrier count depends on the signed gcd twist only through its
-conjugacy class: any simultaneous change of representative gives the same
-coefficient sum. -/
-theorem jointTwistedPeriod_card_conjugacy_invariant
-    (C : GroupMat H n n) (h g : H) (d a b : ℕ)
-    (hd : 0 < d)
-    (hab : Nat.Coprime a b) (hc : Commute h g)
-    (hpow : h ^ b = g ^ a) (k : H) :
-    @Fintype.card (JointTwistedPeriod C h g d a b)
-      (jointTwistedPeriodFintype C h g d a b hd hab hc hpow) =
-      ∑ i : Fin n, ∑ z : H,
-        ((C^d) i i).coeff
-          (z⁻¹ * (k⁻¹ * (h ^ (a.gcdA b) * g ^ (a.gcdB b)) * k) * z) := by
-  rw [jointTwistedPeriod_card C h g d a b hd hab hc hpow]
-  apply Fintype.sum_congr
-  intro i
-  exact (conjugacy_sum_invariant
-    (fun z => ((C^d) i i).coeff z)
-    (h ^ (a.gcdA b) * g ^ (a.gcdB b)) k).symm
-
 end D5.S3.ConceptDynamics.Coding.TwistedJointPeriodicHistories
