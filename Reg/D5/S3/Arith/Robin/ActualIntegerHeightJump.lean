@@ -223,7 +223,7 @@ def divisorRejected : Realization divisorSignature :=
 theorem divisor_rejected_law : ¬ divisorArena.Law divisorRejected := by
   intro h
   have := h (n := 1) (by norm_num)
-  change Real.log (1 : ℝ) + 1 ≤ Real.log (1 : ℝ) at this
+  change Real.log ((1 : ℕ) : ℝ) + 1 ≤ Real.log ((1 : ℕ) : ℝ) at this
   linarith
 
 def divisorFamily : Registration divisorArena (type_of% @divisor_log_le_log) where
