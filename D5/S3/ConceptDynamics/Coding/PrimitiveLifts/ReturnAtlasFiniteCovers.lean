@@ -1,10 +1,10 @@
 /- GID: D5/S3/ConceptDynamics/Coding/PrimitiveLifts/ReturnAtlasFiniteCovers
    generality: G
-   mirror - B: D5/B/S3/ConceptDynamics/Coding/PrimitiveLifts/ReturnAtlasFiniteCovers
-   mirror - E: none(waiver:symbolic - structural - theorems)
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PrimitiveLifts/ReturnAtlasFiniteCovers
+   mirror-E: none(waiver:symbolic-structural-theorems)
    anchors: []
    utility: none
-   digest: Return atlas maps have explicit signed finite fibers and a holonomy - power criterion. -/
+   digest: Return atlas maps have explicit signed finite fibers and a holonomy-power criterion. -/
 
 import D5.S3.ConceptDynamics.Coding.PrimitiveLifts.TwoOrbitSquareRootCriterion
 
