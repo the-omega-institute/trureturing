@@ -42,8 +42,7 @@ def actualResultant (k : Fin 2) : Polynomial ℤ := (literalSylvester k).det
 
 private theorem source_r_degree (i : Fin 3) : (sourcePolynomial i).natDegree ≤ 15 := by
   fin_cases i <;>
-    simp only [sourcePolynomial,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val,
-      Matrix.head_cons,Matrix.tail_cons] <;>
+    simp only [sourcePolynomial,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val] <;>
     simp only [sourceE0,sourceE1,sourceE2] <;> compute_degree
 
 private theorem source_coefficient_weight (i : Fin 3) (j : ℕ)
@@ -53,8 +52,7 @@ private theorem source_coefficient_weight (i : Fin 3) (j : ℕ)
     by_contra hn
     exact hj (coeff_eq_zero_of_natDegree_lt ((source_r_degree i).trans_lt (by omega)))
   fin_cases i <;> interval_cases j <;>
-    simp only [sourcePolynomial,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val,
-      Matrix.head_cons,Matrix.tail_cons,sourceE0,sourceE1,sourceE2,coeff_add,
+    simp only [sourcePolynomial,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val,sourceE0,sourceE1,sourceE2,coeff_add,
       coeff_C_mul_X_pow] <;> norm_num <;> compute_degree
 
 private theorem shifted_coefficient_weight (i : Fin 3) (s c : ℕ)

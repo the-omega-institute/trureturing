@@ -20,8 +20,8 @@ internal sealed class LiteralLeadingCertificatesDocument : IScribeDocumentDefini
     private static Formula Call(string name, params Formula[] args) =>
         Seq(Operatorname, Grp(F.Id(name)), Open, Seq(args), Close);
     private static Formula Nonzero() => Disp(Seq(
-        Call("det", Seq(F.Id("R"), Underscore, Grp(D(1)))), Neq, Sp, D(0), Land, Sp,
-        Call("det", Seq(F.Id("R"), Underscore, Grp(D(2)))), Neq, Sp, D(0), Land, Sp,
-        Call("det", F.Id("A")), Neq, Sp, D(0), Land, Sp,
-        Call("det", F.Id("C")), Neq, Sp, D(0)));
+        Call("det", F.Id("topR1")), Neq, Sp, D(0), Land, Sp,
+        Call("det", F.Id("topR2")), Neq, Sp, D(0), Land, Sp,
+        Call("det", F.Id("topA")), Neq, Sp, D(0), Land, Sp,
+        Call("det", F.Id("topC")), Neq, Sp, D(0)));
 }
