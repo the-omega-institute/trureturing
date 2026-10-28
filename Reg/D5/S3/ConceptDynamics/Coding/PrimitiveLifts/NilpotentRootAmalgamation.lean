@@ -76,7 +76,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (type_of% (realize.{u+1,u,0,u,0} signature.{u}
       (fun _ p x => letI := p.2.1; x ^ p.2.2) (fun e => nomatch e))) (Type (u+1)) Unit where
   unitName :=
-    `Reg.D5.S3.ConceptDynamics.Coding.PrimitiveLifts.NilpotentRootAmalgamation.audit
+    `Reg.D5.S3.ConceptDynamics.Coding.PrimitiveLifts.NilpotentRootAmalgamation.unit
   realizationName := Lean.Name.str
     `Reg.D5.S3.ConceptDynamics.Coding.PrimitiveLifts.NilpotentRootAmalgamation
     "registration"
