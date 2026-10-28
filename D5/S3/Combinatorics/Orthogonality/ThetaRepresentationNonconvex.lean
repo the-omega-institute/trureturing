@@ -85,7 +85,7 @@ private theorem saturated_projection {V : Type} [Fintype V] [DecidableEq V]
     norm_num
   exact sub_eq_zero.mp ((hpos.trace_eq_zero_iff).mp hz)
 
-private theorem dot_cauchy {V : Type} [Fintype V] (v w : V → ℝ) :
+theorem dot_cauchy {V : Type} [Fintype V] (v w : V → ℝ) :
     (v ⬝ᵥ w) ^ 2 ≤ (v ⬝ᵥ v) * (w ⬝ᵥ w) := by
   simpa only [dotProduct, sq] using Finset.sum_mul_sq_le_sq_mul_sq Finset.univ v w
 

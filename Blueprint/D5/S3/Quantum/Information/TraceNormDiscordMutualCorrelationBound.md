@@ -30,7 +30,31 @@ $$\operatorname{claim} \Leftrightarrow (\forall (\rho: \operatorname{Matrix}\lef
 
 The proposition states D₁(ρ) ≤ C_M(ρ) for every positive semidefinite two-qubit matrix of trace one, including pure and mixed states. The source proves the Bell-diagonal case and conjectures the inequality for general two-qubit states.
 
-**Theorem 1.3 (The square of a real Pauli combination).**
+**Theorem 1.3 (Real Pauli combinations are Hermitian).**
+
+$$\forall (c: \operatorname{Fin}\left(3\right)\to\mathbb{R}), (\operatorname{IsHermitian}\left(\operatorname{spin}\left(c\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.spin_hermitian` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every real linear combination of the three Pauli matrices is Hermitian.
+
+**Theorem 1.4 (The Pauli anticommutator).**
+
+$$\forall (c: \operatorname{Fin}\left(3\right)\to\mathbb{R}), (\forall (d: \operatorname{Fin}\left(3\right)\to\mathbb{R}), (\operatorname{spin}\left(c\right) \cdot \operatorname{spin}\left(d\right) + \operatorname{spin}\left(d\right) \cdot \operatorname{spin}\left(c\right) = (2 \cdot \operatorname{dotProduct}\left(c, d\right))\cdot(1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.spin_anticommutator` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The anticommutator of two real Pauli combinations is twice their Euclidean inner product times the identity.
+
+**Theorem 1.5 (The square of a real Pauli combination).**
 
 Lean statement: `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.spin_square`
 
@@ -42,7 +66,7 @@ Lean statement: `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBoun
 
 For every real three-vector c, the Pauli combination c·σ squares to the squared Euclidean length of c times the identity. This follows by applying the Pauli anticommutator to c twice.
 
-**Theorem 1.4 (Maximal mutual correlation bounds trace-norm discord).**
+**Theorem 1.6 (Maximal mutual correlation bounds trace-norm discord).**
 
 $$\operatorname{claim}$$
 
@@ -79,6 +103,8 @@ For a ≠ 0, choose unit spin directions c = v′ and d = a/|a|. Their covarianc
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.rotated_spin_witness`
 - Truth anchor: `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.claim`
 - Truth anchor: `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.result`
+- Truth anchor: `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.spin_anticommutator`
+- Truth anchor: `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.spin_hermitian`
 - Truth anchor: `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.spin_square`
 - Truth anchor: `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.traceNormDiscord`
 - Dependency: [D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability](../Entanglement/ConicalDesignConcurrenceComparability.md)
