@@ -298,4 +298,117 @@ theorem complete_operational_bound (c a T : ℝ) (k chi l psi : ℝ → ℝ)
       s.rho s.positive _ (fun i => Finset.le_sup' _ (Finset.mem_univ i))
     simpa only [s.normalized,mul_one] using h
 
+theorem survival_le_one (c T : ℝ) (k chi : ℝ → ℝ)
+    (hk : OriginalControl (c,c,1-2*c) T k chi) (t : ℝ) (ht : t ∈ Icc 0 T) :
+    survival c k t ≤ 1 := by
+  apply Real.exp_le_one_iff.mpr
+  apply neg_nonpos.mpr
+  apply intervalIntegral.integral_nonneg ht.1
+  intro u hu
+  have hb := OriginalRepeatedMarkedLaw.native_bounds c T 0 k
+    (height_control c T k chi hk) u ⟨hu.1,hu.2.trans ht.2⟩
+  exact add_nonneg (div_nonneg (le_max_right _ _) hb.1.le)
+    (div_nonneg (le_max_right _ _) (sub_pos.mpr hb.2).le)
+
+theorem probability_le_one (c x : ℝ) (hc : c < 1/2)
+    (hx : x ∈ Ioo 0 c) (i : Fin 5) : p c x i ≤ 1 := by
+  rw [← p_sum c x hc hx]
+  exact Finset.single_le_sum (fun j _ => (p_pos c x hc hx j).le) (Finset.mem_univ i)
+
+theorem probability_difference (c x y : ℝ) (i : Fin 5) :
+    |p c x i-p c y i| ≤ |x-y| := by
+  rw [p_explicit,p_explicit]
+  fin_cases i <;> simp [abs_sub_comm]
+
+private theorem terminal_mass_error (c a T B delta : ℝ) (k chi l psi : ℝ → ℝ)
+    (hc : c < 1/2) (hk : OriginalControl (c,c,1-2*c) T k chi)
+    (hl : OriginalControl (c,c,1-2*c) T l psi)
+    (hS : |survival c k T-survival c l T| ≤ B) (hd : |k T-l T| ≤ delta)
+    (i : Fin 5) :
+    |survival c k T*p c (k T) i-survival c l T*p c (l T) i| ≤ B+delta := by
+  have hp := p_pos c (k T) hc (OriginalRepeatedMarkedLaw.native_bounds c T 0 k
+    (height_control c T k chi hk) T ⟨hk.1,le_rfl⟩) i
+  have hp1 := probability_le_one c (k T) hc (OriginalRepeatedMarkedLaw.native_bounds c T 0 k
+    (height_control c T k chi hk) T ⟨hk.1,le_rfl⟩) i
+  have hs0 : 0 ≤ survival c l T := (Real.exp_pos _).le
+  have hs1 := survival_le_one c T l psi hl T ⟨hl.1,le_rfl⟩
+  have hb0 := (abs_nonneg _).trans hS
+  have hd0 := (abs_nonneg _).trans hd
+  calc
+    _ = |(survival c k T-survival c l T)*p c (k T) i+
+        survival c l T*(p c (k T) i-p c (l T) i)| := by congr 1; ring
+    _ ≤ |survival c k T-survival c l T|*p c (k T) i+
+        survival c l T*|p c (k T) i-p c (l T) i| := by
+      simpa only [abs_mul,abs_of_nonneg hp.le,abs_of_nonneg hs0] using abs_add_le
+        ((survival c k T-survival c l T)*p c (k T) i)
+        (survival c l T*(p c (k T) i-p c (l T) i))
+    _ ≤ B*1+1*delta := by gcongr; exact (probability_difference c _ _ i).trans hd
+    _ = _ := by ring
+
+private theorem root_character_bound (x y : ℝ) (z w : ℂ)
+    (hy : Real.sqrt y ≤ 1) (hz : ‖z‖ = 1) :
+    ‖(Real.sqrt x : ℂ)*z-(Real.sqrt y : ℂ)*w‖ ≤
+      Real.sqrt |x-y|+‖z-w‖ := by
+  have hr : |Real.sqrt x-Real.sqrt y| ≤ Real.sqrt |x-y| :=
+    Real.abs_le_sqrt (D5.S3.TotalVariation.Hellinger.sq_sqrt_sub_sqrt_le_abs_sub x y)
+  calc
+    _ = ‖((Real.sqrt x-Real.sqrt y : ℝ) : ℂ)*z+
+        (Real.sqrt y : ℂ)*(z-w)‖ := by congr 1; push_cast; ring
+    _ ≤ ‖((Real.sqrt x-Real.sqrt y : ℝ) : ℂ)*z‖+
+        ‖(Real.sqrt y : ℂ)*(z-w)‖ := norm_add_le _ _
+    _ = |Real.sqrt x-Real.sqrt y|+Real.sqrt y*‖z-w‖ := by
+      rw [norm_mul,norm_mul,hz,mul_one,Complex.norm_real,Complex.norm_real,
+        Real.norm_eq_abs,Real.norm_eq_abs,abs_of_nonneg (Real.sqrt_nonneg _)]
+    _ ≤ Real.sqrt |x-y|+1*‖z-w‖ := by gcongr
+    _ = _ := by ring
+
+/-- IS.29 keeps the terminal phase-character certificate separate from height errors. -/
+theorem terminal_error_bound (c a T B delta : ℝ) (k chi l psi : ℝ → ℝ)
+    (hc : c < 1/2) (ha : a ∈ Ioo 0 c)
+    (hk : OriginalControl (c,c,1-2*c) T k chi)
+    (hl : OriginalControl (c,c,1-2*c) T l psi) (hk0 : k 0=a) (hl0 : l 0=a)
+    (hS : |survival c k T-survival c l T| ≤ B) (hd : |k T-l T| ≤ delta) :
+    krausError c a T k chi l psi ≤
+      (Finset.univ.sup' Finset.univ_nonempty (fun i : Fin 5 => Real.sqrt ((B+delta)/p c a i)))+
+      (Finset.univ.sup' Finset.univ_nonempty
+        (fun i : Fin 5 => ‖character c k chi T i-character c l psi T i‖)) := by
+  let C := Finset.univ.sup' Finset.univ_nonempty (fun i : Fin 5 => Real.sqrt ((B+delta)/p c a i))
+  let E := Finset.univ.sup' Finset.univ_nonempty
+    (fun i : Fin 5 => ‖character c k chi T i-character c l psi T i‖)
+  have hC : 0 ≤ C := (Real.sqrt_nonneg _).trans (Finset.le_sup' _ (Finset.mem_univ (0 : Fin 5)))
+  have hE : 0 ≤ E := (norm_nonneg _).trans (Finset.le_sup' _ (Finset.mem_univ (0 : Fin 5)))
+  change ‖diagonalAction (H := ℂ) _-diagonalAction _‖ ≤ C+E
+  rw [diagonal_sub]
+  apply diagonal_norm_le _ _ (add_nonneg hC hE)
+  intro i
+  have hd0 := (p_pos c a hc ha i).le
+  have hdpos := p_pos c a hc ha i
+  have hkm := OriginalRepeatedMarkedLaw.native_bounds c T 0 k
+    (height_control c T k chi hk) T ⟨hk.1,le_rfl⟩
+  have hlm := OriginalRepeatedMarkedLaw.native_bounds c T 0 l
+    (height_control c T l psi hl) T ⟨hl.1,le_rfl⟩
+  have hs : 0 ≤ survival c k T := (Real.exp_pos _).le
+  have ht : 0 ≤ survival c l T := (Real.exp_pos _).le
+  have hroot (q : ℝ → ℝ) :
+      (Real.sqrt (survival c q T) : ℂ)*(Real.sqrt (p c (q T) i/p c a i) : ℂ) =
+        (Real.sqrt (survival c q T*p c (q T) i/p c a i) : ℂ) := by
+    rw [← Complex.ofReal_mul,← Real.sqrt_mul (show 0 ≤ survival c q T from (Real.exp_pos _).le),
+      ← mul_div_assoc]
+  have h1 : Real.sqrt (survival c l T*p c (l T) i/p c a i) ≤ 1 :=
+    Real.sqrt_le_one.mpr ((div_le_one hdpos).mpr
+      (native_mass_le c a T l psi hc ha hl hl0 T ⟨hl.1,le_rfl⟩ i))
+  have heq : |survival c k T*p c (k T) i/p c a i-
+      survival c l T*p c (l T) i/p c a i| =
+      |survival c k T*p c (k T) i-survival c l T*p c (l T) i|/p c a i := by
+    rw [← sub_div,abs_div,abs_of_pos hdpos]
+  have hmass := terminal_mass_error c a T B delta k chi l psi hc hk hl hS hd i
+  have he : Real.sqrt |survival c k T*p c (k T) i/p c a i-
+      survival c l T*p c (l T) i/p c a i| ≤ Real.sqrt ((B+delta)/p c a i) := by
+    rw [heq]
+    exact Real.sqrt_le_sqrt (div_le_div_of_nonneg_right hmass hd0)
+  simp only [terminalDiagonal,hroot]
+  exact (root_character_bound _ _ _ _ h1 (by simp [character,Complex.norm_exp_ofReal_mul_I])).trans
+    ((add_le_add he le_rfl).trans (add_le_add
+      (Finset.le_sup' _ (Finset.mem_univ i)) (Finset.le_sup' _ (Finset.mem_univ i))))
+
 end D5.S3.Quantum.Fibers.OriginalCompleteOutputStability
