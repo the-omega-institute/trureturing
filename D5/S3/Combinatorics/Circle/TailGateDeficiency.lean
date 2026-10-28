@@ -84,7 +84,7 @@ private theorem no_large_append {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
     (by simp) (by simpa) (by simp) (by simpa using hL) (by simp)
   have hg := inv.largeBalance
   simp only [largeUsed, mass, List.map_cons, List.map_nil, List.sum_cons,
-    List.sum_nil, largeWeight, if_pos hL, add_zero] at hg
+    List.sum_nil, largeWeight, ite_eq_left hL, add_zero] at hg
   have hj : J k t (W ++ [u]) < J k t W :=
     Prod.Lex.toLex_lt_toLex.mpr (Or.inl (by omega))
   exact (not_lt_of_ge (hmin _ hv)) hj
@@ -144,9 +144,13 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
   change C k = 2 * Q k - 1 at hC
   have hpabs : |f p| = P := abs_of_pos hpositive
   have hnval : f n = -D := by
-    simpa [f, n, D, orient, show ¬ s k t p < 0 by omega] using geo.nValue
+    have hv := geo.nValue
+    change orient (decide (f p < 0)) (f n) = -D at hv
+    simpa only [orient, show ¬ f p < 0 by omega, decide_false, Bool.false_eq_true, ite_false] using hv
   have hxabs : f x = |f x| := by
-    simpa [f, x, orient, show ¬ s k t p < 0 by omega] using geo.xValue
+    have hv := geo.xValue
+    change orient (decide (f p < 0)) (f x) = |f x| at hv
+    simpa only [orient, show ¬ f p < 0 by omega, decide_false, Bool.false_eq_true, ite_false] using hv
   have hDP : D < P := by simpa [D, n, f, hpabs] using geo.strictOrder.1
   have hPr : P < r := by
     simpa only [P, r, f, x, abs_of_pos hpositive, ← hxabs] using geo.strictOrder.2
@@ -224,17 +228,17 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
       hpositive hnlarge hexpand (hw ▸ hW) (hw ▸ hpunused) (hw ▸ hnunused) hcut (by omega)
     exact (not_lt_of_ge (hminimum _ hv)) (by simpa [← hw] using hj)
   have hc1 : c1 ≤ C k := by
-    have hs := (strip_split (A ++ [x] ++ T0 ++ [y] ++ T1) ([zpen] ++ T2 ++ [z] ++ E)
+    have hs : InStrip f (C k) 0 (A ++ [x] ++ T0 ++ [y] ++ T1) := (strip_split (A ++ [x] ++ T0 ++ [y] ++ T1) ([zpen] ++ T2 ++ [z] ++ E)
       (by simpa only [oldWord, x, List.append_assoc] using hsW)).1
-    simpa [c1, mass] using (inStrip_prefix hs (A ++ [x] ++ T0 ++ [y] ++ T1).length).2
+    simpa only [List.take_length, zero_add] using (inStrip_prefix hs (A ++ [x] ++ T0 ++ [y] ++ T1).length).2
   have hc2 : c2 ≤ C k := by
-    have hs := (strip_split (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2) ([z] ++ E)
+    have hs : InStrip f (C k) 0 (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2) := (strip_split (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2) ([z] ++ E)
       (by simpa only [oldWord, x, List.append_assoc] using hsW)).1
-    simpa [c2, mass] using (inStrip_prefix hs (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2).length).2
+    simpa only [List.take_length, zero_add] using (inStrip_prefix hs (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2).length).2
   change C k - c1 + mass (fun i => -f i) (signPool (fun i => -f i) T2 (C k + f zpen + 1)) < delta ∨
     C k - c2 + mass f (signPool f T2 (C k + f z + 1)) < delta
   by_contra hnot
-  push_neg at hnot
+  push Not at hnot
   have ha1 : 0 ≤ a1 := by dsimp only [B] at hnative; omega
   have ha2 : 0 ≤ a2 := by dsimp only [B] at hnative; omega
   obtain ⟨Nm, hNm, hNmneg, hNmlo, hNmhi⟩ := select_gate (fun i => -f i) T2
@@ -279,12 +283,10 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
   have hc2eq : c2 = a1 + mass f T2 := by
     simp only [a1, c1, c2, mass, List.map_append, List.map_cons,
       List.map_nil, List.sum_append, List.sum_cons, List.sum_nil, add_zero]
-    omega
   have hm2 : a1 + delta - ns + mass f R = c2 + delta - ps := by omega
   have heq : h = a2 + mass f E := by
     simp only [h, W, oldWord, a2, c2, x, mass, List.map_append, List.map_cons,
       List.map_nil, List.sum_append, List.sum_cons, List.sum_nil, add_zero]
-    omega
   have hmend : a2 + delta - ps + mass f S2 = h + delta := by
     have hm : mass f S2 = mass f E + ps := by simp [S2, ps, mass]
     omega
@@ -314,7 +316,7 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
     omega
   have hs0 (i : Fin k) (hi : i ∈ S0) : |f i| < Q k := by
     rcases List.mem_append.mp hi with hi | hi
-    · exact hsmall i (by simp only [smallWord, List.mem_append] at hi ⊢; tauto)
+    · exact hsmall i (List.mem_append_left E (List.mem_append_left T2 hi))
     · exact h2small i (hNm.subset hi)
   have hs2 (i : Fin k) (hi : i ∈ S2) : |f i| < Q k := by
     rcases List.mem_append.mp hi with hi | hi
@@ -340,21 +342,52 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
     omega
   have hsHead : InStrip f (C k) 0 (A ++ [p, n]) :=
     inStrip_append hsA (by simpa only [a0, mass, zero_add] using hsPN)
+  have madd (X Y : List (Fin k)) : mass f (X ++ Y) = mass f X + mass f Y := by
+    simp only [mass, List.map_append, List.sum_append]
+  have mh : mass f (A ++ [p, n]) = b := by
+    simp only [madd, b, a0, mass, List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, add_zero]
+    rw [hnval]
+    change (A.map f).sum + (P + -D) = (A.map f).sum + P - D
+    omega
+  have m0 : mass f (A ++ [p, n] ++ L0) = c1 + delta - ns := by
+    rw [madd, mh, hmL0, hm1]
+  have m1 : mass f (A ++ [p, n] ++ L0 ++ [zpen]) = a1 + delta - ns := by
+    rw [madd, m0]
+    simp only [mass, List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, add_zero]
+    dsimp only [a1]
+    omega
+  have mR : mass f (A ++ [p, n] ++ L0 ++ [zpen] ++ L1) = c2 + delta - ps := by
+    rw [madd, m1, hmL1, hm2]
+  have m2 : mass f (A ++ [p, n] ++ L0 ++ [zpen] ++ L1 ++ [z]) = a2 + delta - ps := by
+    rw [madd, mR]
+    simp only [mass, List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, add_zero]
+    dsimp only [a2]
+    omega
   have hsV : InStrip f (C k) 0 V := by
-    have hs0' := inStrip_append hsHead (by
-      simpa [mass, b, a0, hnval, P, add_assoc] using hsL0)
-    have hsz1 : InStrip f (C k) (c1 + delta - ns) [zpen] := by
-      exact ⟨hgate1.1.1, hgate1.1.2, by simpa [a1, add_assoc] using hgate1.2⟩
-    have hs1' := inStrip_append hs0' (by
-      simpa [mass, b, a0, hnval, P, hmL0, hm1, add_assoc] using hsz1)
-    have hsR' := inStrip_append hs1' (by
-      simpa [mass, b, a0, hnval, P, hmL0, hm1, a1, add_assoc] using hsL1)
-    have hsz2 : InStrip f (C k) (c2 + delta - ps) [z] := by
-      exact ⟨hgate2.1.1, hgate2.1.2, by simpa [a2, add_assoc] using hgate2.2⟩
-    have hs2' := inStrip_append hsR' (by
-      simpa [mass, b, a0, hnval, P, hmL0, hm1, hmL1, hm2, a1, add_assoc] using hsz2)
-    exact inStrip_append hs2' (by
-      simpa [V, mass, b, a0, hnval, P, hmL0, hm1, hmL1, hm2, a1, a2, add_assoc] using hsL2)
+    have hs0' := inStrip_append hsHead (show InStrip f (C k)
+        (0 + ((A ++ [p, n]).map f).sum) L0 by
+      change InStrip f (C k) (mass f (A ++ [p, n])) L0
+      rw [mh]; exact hsL0)
+    have hsz1 : InStrip f (C k) (c1 + delta - ns) [zpen] :=
+      ⟨hgate1.1.1, hgate1.1.2, by simpa only [a1, add_assoc, sub_eq_add_neg, add_comm, add_left_comm] using hgate1.2⟩
+    have hs1' := inStrip_append hs0' (show InStrip f (C k)
+        (0 + ((A ++ [p, n] ++ L0).map f).sum) [zpen] by
+      change InStrip f (C k) (mass f (A ++ [p, n] ++ L0)) [zpen]
+      rw [m0]; exact hsz1)
+    have hsR' := inStrip_append hs1' (show InStrip f (C k)
+        (0 + ((A ++ [p, n] ++ L0 ++ [zpen]).map f).sum) L1 by
+      change InStrip f (C k) (mass f (A ++ [p, n] ++ L0 ++ [zpen])) L1
+      rw [m1]; exact hsL1)
+    have hsz2 : InStrip f (C k) (c2 + delta - ps) [z] :=
+      ⟨hgate2.1.1, hgate2.1.2, by simpa only [a2, add_assoc, sub_eq_add_neg, add_comm, add_left_comm] using hgate2.2⟩
+    have hs2' := inStrip_append hsR' (show InStrip f (C k)
+        (0 + ((A ++ [p, n] ++ L0 ++ [zpen] ++ L1).map f).sum) [z] by
+      change InStrip f (C k) (mass f (A ++ [p, n] ++ L0 ++ [zpen] ++ L1)) [z]
+      rw [mR]; exact hsz2)
+    exact inStrip_append hs2' (show InStrip f (C k)
+        (0 + ((A ++ [p, n] ++ L0 ++ [zpen] ++ L1 ++ [z]).map f).sum) L2 by
+      change InStrip f (C k) (mass f (A ++ [p, n] ++ L0 ++ [zpen] ++ L1 ++ [z])) L2
+      rw [m2]; exact hsL2)
   have hperm : (V ++ [x, y]).Perm (W ++ [p, n]) := by
     apply List.perm_iff_count.mpr
     intro i
