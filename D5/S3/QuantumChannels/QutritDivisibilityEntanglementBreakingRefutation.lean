@@ -393,7 +393,80 @@ private lemma pdivisibleSet_subset_nonnegativeDet :
   have hcl := hclosed.closure_subset_iff.mpr hsubset
   exact hcl hT
 
-private lemma t_det : Matrix.det (transferMatrix t) = -(1 / 4 : ℂ) ^ 8 := by sorry
+private lemma transfer_entry (i j k l : Fin 3) :
+    (transferMatrix t) (i, j) (k, l) =
+      (if i = j then if k = l then (5 / 12 : ℂ) else 0 else 0) -
+        (if j = k ∧ i = l then (1 / 4 : ℂ) else 0) := by
+  simp [transferMatrix, LinearMap.toMatrix_apply, Matrix.stdBasis, t_formula,
+    Matrix.single, Matrix.trace, Matrix.one_apply, Matrix.transpose_apply]
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    simp [Matrix.single, Fin.sum_univ_three] <;> norm_num
+
+private lemma t_det : Matrix.det (transferMatrix t) = -(1 / 4 : ℂ) ^ 8 := by
+  classical
+  let S := Fin 3 ⊕ (Fin 2 × Fin 3)
+  let q : S → (Fin 3 × Fin 3) := fun s =>
+    match s with
+    | Sum.inl i => (i, i)
+    | Sum.inr ⟨b, k⟩ =>
+        if k = 0 then if b = 0 then (0, 1) else (1, 0)
+        else if k = 1 then if b = 0 then (0, 2) else (2, 0)
+        else if b = 0 then (1, 2) else (2, 1)
+  have hq : Function.Bijective q := by
+    dsimp [q]
+    decide
+  let e : S ≃ (Fin 3 × Fin 3) := Equiv.ofBijective q hq
+  let R : Matrix S S ℂ := Matrix.reindex e.symm e.symm (transferMatrix t)
+  let A : Matrix (Fin 3) (Fin 3) ℂ := fun i j => R (Sum.inl i) (Sum.inl j)
+  let B : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ :=
+    fun p r => R (Sum.inr p) (Sum.inr r)
+  have hcross₁ : ∀ i : Fin 3, ∀ p : Fin 2 × Fin 3,
+      R (Sum.inl i) (Sum.inr p) = 0 := by
+    intro i p
+    rcases p with ⟨b, k⟩
+    fin_cases i <;> fin_cases b <;> fin_cases k <;>
+      simp [R, Matrix.reindex_apply, e, q, transfer_entry]
+  have hcross₂ : ∀ p : Fin 2 × Fin 3, ∀ i : Fin 3,
+      R (Sum.inr p) (Sum.inl i) = 0 := by
+    intro p i
+    rcases p with ⟨b, k⟩
+    fin_cases i <;> fin_cases b <;> fin_cases k <;>
+      simp [R, Matrix.reindex_apply, e, q, transfer_entry]
+  have hblock : R = Matrix.fromBlocks A 0 0 B := by
+    ext i j
+    cases i with
+    | inl i =>
+        cases j with
+        | inl j => rfl
+        | inr p => simp [hcross₁ i p]
+    | inr p =>
+        cases j with
+        | inl i => simp [hcross₂ p i]
+        | inr r => rfl
+  have hA : Matrix.det A = (1 / 16 : ℂ) := by
+    rw [Matrix.det_fin_three]
+    simp [A, R, Matrix.reindex_apply, e, q, transfer_entry]
+    ring
+  have hB : Matrix.det B = -(1 / 4 : ℂ) ^ 6 := by
+    let blocks : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ := fun k =>
+      !![0, -(1 / 4 : ℂ); -(1 / 4 : ℂ), 0]
+    have hBblock : B = Matrix.blockDiagonal blocks := by
+      ext p r
+      rcases p with ⟨b, k⟩
+      rcases r with ⟨c, l⟩
+      fin_cases b <;> fin_cases c <;> fin_cases k <;> fin_cases l <;>
+        simp [B, R, Matrix.reindex_apply, e, q, transfer_entry, blocks,
+          Matrix.blockDiagonal]
+    rw [hBblock, Matrix.det_blockDiagonal]
+    simp [blocks, Matrix.det_fin_two]
+    ring
+  calc
+    Matrix.det (transferMatrix t) = Matrix.det R := by
+      symm
+      exact Matrix.det_reindex_self e.symm (transferMatrix t)
+    _ = Matrix.det (Matrix.fromBlocks A 0 0 B) := by rw [hblock]
+    _ = Matrix.det A * Matrix.det B := Matrix.det_fromBlocks_zero₂₁ _ _ _
+    _ = -(1 / 4 : ℂ) ^ 8 := by rw [hA, hB]; norm_num
 
 private lemma t_not_pdivisible : t ∉ pDivisibleSet := by
   intro ht
