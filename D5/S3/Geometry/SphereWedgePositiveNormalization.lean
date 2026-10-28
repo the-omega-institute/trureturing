@@ -108,16 +108,13 @@ private theorem continuous_factorForward (j : J) : Continuous (factorForward n b
   · simpa only [factorForward, dif_pos hp] using
       continuous_inl.comp ((point (c n) ⟨j, hp⟩).continuous.comp (E n b j).continuous)
   · have hz : n j = 0 := Nat.eq_zero_of_not_pos hp
-    haveI : Finite (StdSphere (n j)) := hz ▸ zeroSphereFinite
+    haveI : Finite (StdSphere (n j)) := by rw [hz]; infer_instance
     exact continuous_of_discreteTopology
 
 private theorem factorForward_base (j : J) :
     factorForward n b j (b j) = Sum.inl (base (c n)) := by
   classical
-  unfold factorForward
-  split_ifs with hp
-  · rw [E_base, point_base]
-  · simp [E_base]
+  by_cases hp : 0 < n j <;> simp [factorForward, hp, E_base, point_base]
 
 private def forward : FamilyWedge b → PositiveWedge n ⊕ ZeroIndex n := by
   let raw : Unit ⊕ (Σ j, StdSphere (n j)) → PositiveWedge n ⊕ ZeroIndex n :=
@@ -178,7 +175,9 @@ private theorem inverse_forward (x : FamilyWedge b) : inverse n b (forward n b x
       · have hz : n j = 0 := Nat.eq_zero_of_not_pos hp
         have hn : E n b j x = negativePoint (n j) := by
           have poles : ∀ y : StdSphere (n j),
-              y = coordinatePoint (n j) ∨ y = negativePoint (n j) := hz ▸ zero_poles
+              y = coordinatePoint (n j) ∨ y = negativePoint (n j) := by
+            rw [hz]
+            exact zero_poles
           exact (poles _).resolve_left hx
         change point b j ((E n b j).symm (negativePoint (n j))) = point b j x
         rw [← hn, Homeomorph.symm_apply_apply]
