@@ -1,0 +1,10 @@
+# FIB-ATOM original-boundary finite-specimen access to native readout
+
+This standalone source fixes the operational cut left open by [Continuation IV,
+§§112--113](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md).
+The source is still the full finite free ordered algebra, with its actual
+substitution, INITIAL target, four-valued Read, history-dependent guard,
+complete record and absorbing Stop.  The new input is a conditional quantum
+installation of the already defined boundary value.  It is not a new source
+algebra, a new equality oracle, or a derivation of quantum principles.
+
