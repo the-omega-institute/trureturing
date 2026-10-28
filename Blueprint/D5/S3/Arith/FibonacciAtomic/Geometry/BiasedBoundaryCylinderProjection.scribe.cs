@@ -68,14 +68,15 @@ internal sealed class BiasedBoundaryCylinderProjectionDocument : IScribeDocument
         Formula commutation=All("F",Call("G"),Seq(Call("Q",a,Call("Pi",f)),Eq,Call("Pi",Call("Q",a,f))));
         Formula dimensions=Seq(Call("dim",Call("V",a)),Eq,Call("card",a),Land, Sp,
             Call("dim",Call("V0",a)),Eq,Call("card",a),Minus,D(1));
-        return Seq(Call("IsCylinderPartition",a),Implies, Sp,Par(onAtom),Land, Sp,Par(local),Land, Sp,
-            Par(disintegration),Land, Sp,Par(norm),Land, Sp,Par(constants),Land, Sp,Par(commutation),Land, Sp,Par(dimensions));
+        return All("A",Call("Finset",Call("Edge")),Seq(Call("IsCylinderPartition",a),Implies, Sp,Par(onAtom),Land, Sp,Par(local),Land, Sp,
+            Par(disintegration),Land, Sp,Par(norm),Land, Sp,Par(constants),Land, Sp,Par(commutation),Land, Sp,Par(dimensions)));
     }
-    private static Formula BoundFormula() => Seq(
+    private static Formula BoundFormula() => All("A",Call("Finset",Call("Edge")),
+        All("t",Call("Real"),All("z",Call("H"),Seq(
         Call("IsCylinderPartition",V("A")),Land, Sp,D(0),Leq, Sp,V("t"),Land, Sp,
         Par(Seq(Forall,Sp,V("p"),InMacro, Sp,V("A"),Comma,Sp,Call("mass",V("M"),Call("cylinder",V("p"))),Leq, Sp,V("t"))),Implies, Sp,
         SqNorm(Par(Seq(Call("C",V("z")),Minus,Call("Q",V("A"),Call("C",V("z")))))),Leq, Sp,
-        Call("goldenRatio"),Cdot, Sp,V("t"),Cdot, Sp,SqNorm(V("z")));
+        Call("goldenRatio"),Cdot, Sp,V("t"),Cdot, Sp,SqNorm(V("z"))))));
     private static Formula ResultFormula()
     {
         Formula p=V("p"), f=V("F"), a=V("A"), edge=Call("Edge"), g=Call("G");
@@ -83,6 +84,6 @@ internal sealed class BiasedBoundaryCylinderProjectionDocument : IScribeDocument
         Formula pullback=All("p",edge,All("F",g,Seq(Call("atomMean",p,f),Eq,Call("mean",Call("pullback",p,f)))));
         Formula projection=All("F",g,Seq(Call("Q",a,f),Eq,Call("starProjection",Call("V",a),f)));
         Formula fixedAtoms=Seq(Forall,Sp,p,InMacro, Sp,a,Comma,Sp,Call("Q",a,Call("indicator",p)),Eq,Call("indicator",p));
-        return Seq(Call("IsPrefixFree",Call("addresses",a)),Implies, Sp,Par(normalized),Land, Sp,Par(pullback),Land, Sp,Par(projection),Land, Sp,Par(fixedAtoms));
+        return All("A",Call("Finset",Call("Edge")),Seq(Call("IsPrefixFree",Call("addresses",a)),Implies, Sp,Par(normalized),Land, Sp,Par(pullback),Land, Sp,Par(projection),Land, Sp,Par(fixedAtoms)));
     }
 }

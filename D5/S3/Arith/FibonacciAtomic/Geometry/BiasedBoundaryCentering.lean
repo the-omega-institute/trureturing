@@ -61,7 +61,7 @@ private theorem Pi_formula (F : G) : Pi F = F-constG (mean F) := by
     constG_eq_smul (mean F)]
   rfl
 
-private theorem Pi_const (c : ℝ) : Pi (constG c) = 0 := by
+theorem Pi_const (c : ℝ) : Pi (constG c) = 0 := by
   rw [Pi_formula, mean_const, sub_self]
 
 private theorem pullback_const (p : Address) (c : ℝ) : pullback p (constG c) = constG c := by

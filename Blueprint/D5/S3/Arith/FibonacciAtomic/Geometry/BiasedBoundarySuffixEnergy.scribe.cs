@@ -26,12 +26,14 @@ internal sealed class BiasedBoundarySuffixEnergyDocument : IScribeDocumentDefini
     private static Formula Par(Formula x) => Seq(Open, x, Close);
     private static Formula SqNorm(Formula x) => Seq(Par(Seq(Vert, Sp, x, Vert)), Caret, Grp(D(2)));
     private static Formula SumA(Formula x) => Seq(Sum, Underscore, Grp(Seq(V("p"), InMacro, Sp, V("A"))), Sp, Par(x));
-    private static Formula EnergyFormula() => Seq(
+    private static Formula All(string s, Formula t, Formula x) => Seq(Forall, Sp, V(s), Colon, Sp, t, Comma, Sp, Par(x));
+    private static Formula EnergyFormula() => All("A",Call("Finset",Call("Address")),All("z",Call("H"),Seq(
         Call("IsPrefixFree", V("A")), Implies, Sp,
-        SumA(SqNorm(Call("S", V("p"), V("z")))), Leq, Sp, SqNorm(V("z")));
-    private static Formula WeightedFormula() => Seq(
+        SumA(SqNorm(Call("S", V("p"), V("z")))), Leq, Sp, SqNorm(V("z")))));
+    private static Formula WeightedFormula() => All("A",Call("Finset",Call("Address")),
+        All("w",Seq(Call("Address"),To,Sp,Call("Real")),All("t",Call("Real"),All("z",Call("H"),Seq(
         D(0), Leq, Sp, V("t"), Land, Sp, Call("IsPrefixFree", V("A")), Land, Sp,
         Par(Seq(Forall, Sp, V("p"), InMacro, Sp, V("A"), Comma, Sp, D(0), Leq, Sp, Call("w", V("p")), Leq, Sp, V("t"))), Implies, Sp,
         SumA(Seq(Call("w", V("p")), Cdot, Sp, SqNorm(Call("C", Call("S", V("p"), V("z")))))), Leq, Sp,
-        Call("goldenRatio"), Cdot, Sp, V("t"), Cdot, Sp, SqNorm(V("z")));
+        Call("goldenRatio"), Cdot, Sp, V("t"), Cdot, Sp, SqNorm(V("z")))))));
 }

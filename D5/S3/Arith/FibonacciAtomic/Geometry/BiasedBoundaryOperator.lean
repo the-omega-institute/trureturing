@@ -32,7 +32,7 @@ open BiasedBoundaryPathSplit (constG)
 open BiasedBoundaryStopping (G0 Threshold A Vt Vt0 actual_stopping_partition actual_stopping_residual)
 open BiasedBoundaryCentering (mean Pi C centered_suffix_residual)
 open BiasedBoundaryFreeRootForm
-  (D form weakGraph free_root_variational_graph mean_Pi Pi_const Pi_idem inner_centered
+  (D form weakGraph free_root_variational_graph mean_Pi Pi_idem inner_centered
     Sigma K adjoint_mem_K)
 open MeasureTheory hiding cylinder
 open Filter
@@ -278,13 +278,13 @@ private theorem graph_weak (u h : G) : (u,h) ∈ operatorGraph ↔ weakGraph u h
     abel
   · rintro ⟨hh,hu⟩
     refine ⟨hh,?_⟩
-    rw [hu,map_add,Pi_const,zero_add]
+    rw [hu,map_add,BiasedBoundaryCentering.Pi_const,zero_add]
     change Pi (Pi (J (C.adjoint h))) = Pi (J (C.adjoint h))
     exact Pi_idem _
 
 private theorem graph_constant (c : ℝ) : (constG c,0) ∈ operatorGraph := by
   change mean 0 = 0 ∧ Pi (constG c) = boundaryCovariance 0
-  rw [map_zero, Pi_const, map_zero]
+  rw [map_zero, BiasedBoundaryCentering.Pi_const, map_zero]
   exact ⟨rfl,rfl⟩
 
 private theorem graph_covariance (h : G) : (boundaryCovariance h,Pi h) ∈ operatorGraph := by
@@ -409,7 +409,7 @@ def boundaryResolvent : G →L[ℝ] G :=
   constG.comp mean + boundaryCovariance.comp inverseShift
 
 private theorem covariance_const (c : ℝ) : boundaryCovariance (constG c) = 0 := by
-  rw [← covariance_Pi,Pi_const,map_zero]
+  rw [← covariance_Pi,BiasedBoundaryCentering.Pi_const,map_zero]
 
 private theorem shift_resolvent (f : G) :
     shift (boundaryResolvent f) = constG (mean f) + boundaryCovariance f := by

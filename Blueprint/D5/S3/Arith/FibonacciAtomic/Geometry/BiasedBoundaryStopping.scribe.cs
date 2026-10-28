@@ -45,27 +45,55 @@ internal sealed class BiasedBoundaryStoppingDocument : IScribeDocumentDefinition
     private static Formula All(string s, Formula type, Formula x) => Seq(Forall,Sp,V(s),Colon,Sp,type,Comma,Sp,Par(x));
     private static Formula SqNorm(Formula x) => Seq(Par(Seq(Vert,Sp,x,Sp,Vert)),Caret,Grp(D(2)));
     private static Formula SumA(Formula x) => Seq(Sum,Underscore,Grp(Seq(V("p"),InMacro,Sp,Call("A",V("t")))),Sp,Par(x));
-    private static Formula PartitionFormula() => All("t",Call("Threshold"),Seq(
-        Call("IsPrefixFree",Call("A",V("t"))),Land,Sp,
-        Call("UniqueCylinderCover",Call("A",V("t")),V("M")),Land,Sp,
-        SumA(Call("mass",V("p"))),Eq,D(1),Land,Sp,
-        D(1),Slash,V("t"),Leq,Sp,Call("card",Call("A",V("t"))),Lt,Sp,
-        D(1),Slash,Par(Seq(V("b"),Cdot,Sp,V("t")))));
+    private static Formula Val(Formula x) => Call("val",x);
+    private static Formula ActualMass(Formula p) => Call("measureReal",V("M"),Call("cylinder",p));
+    private static Formula InA(Formula p) => Seq(p,InMacro,Sp,Call("A",V("t")));
+    private static Formula OnA(string name, Formula body) => All(name,Call("Edge"),
+        Seq(InA(V(name)),Implies,Sp,Par(body)));
+    private static Formula And(params Formula[] clauses) => Seq([.. clauses.SelectMany((x,i) =>
+        i == 0 ? new[] { Par(x) } : new[] { Land, Sp, Par(x) })]);
+    private static Formula PartitionFormula()
+    {
+        Formula t=V("t"), p=V("p"), at=Call("A",t), tv=Val(t), pv=Val(p);
+        Formula mass=All("p",Call("Address"),Seq(ActualMass(p),Eq,
+            Call("wordMass",Call("letterMass",V("a"),V("b")),p)));
+        Formula membership=All("p",Call("Edge"),Seq(InA(p),Iff,Sp,
+            Par(Seq(Call("mass",pv),Leq,Sp,tv,Land,Sp,tv,Lt,Sp,Call("mass",Call("dropLast",pv))))));
+        Formula depth=Seq(Exists,Sp,V("N"),Colon,Sp,Call("Nat"),Comma,Sp,
+            Par(OnA("p",Seq(Call("length",pv),Leq,Sp,V("N")))));
+        Formula prefixFree=Call("IsPrefixFree",Call("image",Call("Subtypeval"),Call("asSet",at)));
+        Formula cover=All("omega",Call("Omega"),Seq(Exists,Bang,Sp,p,Colon,Sp,Call("Edge"),Comma,Sp,
+            Par(Seq(InA(p),Land,Sp,V("omega"),InMacro,Sp,Call("cylinder",pv)))));
+        Formula total=Seq(SumA(ActualMass(pv)),Eq,D(1));
+        Formula bounds=OnA("p",Seq(V("b"),Cdot,Sp,tv,Lt,Sp,ActualMass(pv),Land,Sp,ActualMass(pv),Leq,Sp,tv));
+        Formula lower=Seq(D(1),Slash,tv,Leq,Sp,Call("realCard",at));
+        Formula upper=Seq(Call("realCard",at),Lt,Sp,D(1),Slash,Par(Seq(V("b"),Cdot,Sp,tv)));
+        return All("t",Call("Threshold"),And(mass,membership,depth,prefixFree,cover,total,bounds,lower,upper));
+    }
     private static Formula ResidualFormula()
     {
-        Formula t=V("t"), z=V("z"), p=V("p"), f=V("F");
+        Formula t=V("t"), z=V("z"), p=V("p"), f=V("F"), c=V("c"), pv=Val(p);
         Formula r=Seq(Call("C",z),Minus,Call("Qt",t,Call("C",z)));
-        Formula local=Seq(Forall,Sp,p,InMacro,Sp,Call("A",t),Comma,Sp,
-            All("z",Call("H"),Seq(Call("pullback",p,Par(r)),Eq,Call("C",Call("S",p,z)))));
-        Formula global=All("z",Call("H"),Seq(SqNorm(Par(r)),Eq,
-            SumA(Seq(Call("mass",p),Cdot,Sp,SqNorm(Call("C",Call("S",p,z))))),Leq,Sp,
-            Call("goldenRatio"),Cdot,Sp,t,Cdot,Sp,SqNorm(z)));
-        Formula dimensions=Seq(Call("dim",Call("Vt",t)),Eq,Call("card",Call("A",t)),Land,Sp,
-            Call("dim",Call("Vt0",t)),Eq,Call("card",Call("A",t)),Minus,D(1));
-        Formula range=Seq(Call("range",Call("restrict",Call("Qt",t),V("G0"))),Eq,
+        Formula normalized=All("p",Call("Edge"),All("F",Call("G"),Seq(Call("atomMean",p,f),Eq,
+            Par(Seq(ActualMass(pv),Caret,Grp(Seq(Minus,D(1))))),Cdot,Sp,
+            Call("setIntegral",V("M"),Call("cylinder",pv),f))));
+        Formula projection=All("F",Call("G"),Seq(Call("Qt",t,f),Eq,Call("starProjection",Call("Vt",t),f)));
+        Formula onAtom=OnA("p",All("F",Call("G"),Seq(Call("pullback",pv,Call("Qt",t,f)),Eq,
+            Call("constG",Call("atomMean",p,f)))));
+        Formula local=OnA("p",All("z",Call("H"),Seq(Call("pullback",pv,Par(r)),Eq,Call("C",Call("S",pv,z)))));
+        Formula disintegration=All("F",Call("G"),Seq(SqNorm(f),Eq,
+            SumA(Seq(ActualMass(pv),Cdot,Sp,SqNorm(Call("pullback",pv,f))))));
+        Formula norm=All("z",Call("H"),Seq(SqNorm(Par(r)),Eq,
+            SumA(Seq(ActualMass(pv),Cdot,Sp,SqNorm(Call("C",Call("S",pv,z)))))));
+        Formula bound=All("z",Call("H"),Seq(SqNorm(Par(r)),Leq,Sp,
+            Call("goldenRatio"),Cdot,Sp,Val(t),Cdot,Sp,SqNorm(z)));
+        Formula constants=All("c",Call("Real"),Seq(Call("Qt",t,Call("constG",c)),Eq,Call("constG",c)));
+        Formula commutation=All("F",Call("G"),Seq(Call("Qt",t,Call("Pi",f)),Eq,Call("Pi",Call("Qt",t,f))));
+        Formula dimension=Seq(Call("finrank",Call("Real"),Call("Vt",t)),Eq,Call("card",Call("A",t)));
+        Formula centeredDimension=Seq(Call("finrank",Call("Real"),Call("Vt0",t)),Eq,Call("card",Call("A",t)),Minus,D(1));
+        Formula range=Seq(Call("range",Call("compose",Call("toLinearMap",Call("Qt",t)),Call("subtype",V("G0")))),Eq,
             Call("intersection",Call("Vt",t),V("G0")));
-        return All("t",Call("Threshold"),Seq(Par(local),Land,Sp,Par(global),Land,Sp,
-            All("F",Call("G"),Seq(Call("Qt",t,f),Eq,Call("starProjection",Call("Vt",t),f))),Land,Sp,
-            Par(dimensions),Land,Sp,Par(range)));
+        return All("t",Call("Threshold"),And(normalized,projection,onAtom,local,disintegration,norm,bound,
+            constants,commutation,dimension,centeredDimension,range));
     }
 }

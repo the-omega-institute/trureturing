@@ -13,6 +13,12 @@ internal sealed class BiasedBoundaryCenteringDocument : IScribeDocumentDefinitio
             Def("mean", "The mean functional is the L2 inner product with the actual constant one. Since M is a probability measure, this constant has norm one and the functional equals the actual integral with respect to M."),
             Def("Pi", "Pi is the orthogonal projection onto the orthogonal complement of the span of the actual constant one. Its ambient formula is F minus the constant function with value mean(F)."),
             Def("C", "The centered trace is C=Pi composed with the original J. Its values are included in the original ambient G when conditional pullbacks are applied."),
+            Describe.Lean(DescribeId.Create("biasedboundarycentering-piconst"),
+                DeclarationHandle.Create(Prefix + "Pi_const"), H("Constants Are Removed by Centering"),
+                StatementSource.FromAuthor(All("c",Seq(Mathbb,Grp(V("R"))),
+                    Seq(Call("Pi",Call("constG",V("c"))),Eq,D(0)))),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every real c, the original mean of constG(c) is c. The formula for Pi subtracts that same constant and gives zero. This identity removes constants in the centered suffix, free-root form and boundary operator."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("biasedboundarycentering-suffixresidual"),
                 DeclarationHandle.Create(Prefix + "centered_suffix_residual"), H("The Actual Centered Suffix"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(

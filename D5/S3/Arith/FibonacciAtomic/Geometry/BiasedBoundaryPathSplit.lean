@@ -179,12 +179,6 @@ private theorem pullback_indicator_incomparable (p : Address) (q : Edge)
   · exact hqp (prefix_of_cylinder p q.val ω h hl)
   · exact hpq (prepend_cylinder_long p q ω (Nat.lt_of_not_ge hl) h)
 
-private theorem J_single (q : Edge) (c : ℝ) : J (lp.single 2 q c) = c • indicator q := by
-  have hs := BiasedBoundaryTrace.boundary_trace_hardy.1 (lp.single 2 q c)
-  rw [← hs.tsum_eq]
-  simp only [lp.coeFn_single, Pi.single_apply, ite_smul, zero_smul]
-  simp
-
 private theorem prefixSum_single (p : Address) (q : Edge) (c : ℝ) :
     prefixSum p (lp.single 2 q c) = if q.val.IsPrefix p then c else 0 := by
   classical
@@ -242,7 +236,7 @@ theorem boundary_path_split :
     intro c
     change pullback p (J (lp.single 2 q c)) =
       constG (prefixSum p (lp.single 2 q c)) + J (S p (lp.single 2 q c))
-    rw [J_single, map_smul, prefixSum_single]
+    rw [BiasedBoundaryTrace.J_single, map_smul, prefixSum_single]
     by_cases hqp : q.val.IsPrefix p
     · rw [if_pos hqp, suffix_single_prefix p q c hqp, map_zero, add_zero,
         pullback_indicator_prefix p q hqp]
@@ -257,7 +251,7 @@ theorem boundary_path_split :
           simp [heqp]
         let v : Edge := ⟨u, hun⟩
         have heq : q = descendant p v := Subtype.ext hu.symm
-        rw [heq, suffix_single_descendant, J_single, pullback_indicator_descendant]
+        rw [heq, suffix_single_descendant, BiasedBoundaryTrace.J_single, pullback_indicator_descendant]
       · rw [suffix_single_of_not_prefix p q c hpq, map_zero,
           pullback_indicator_incomparable p q hqp hpq, smul_zero]
   exact DFunLike.congr_fun he z

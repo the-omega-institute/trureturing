@@ -65,22 +65,6 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   simp only [rejected, realize, map_zero, zero_add] at he
   exact indicator_ne_zero he
 
-private theorem single_trace : J (lp.single 2 leftEdge (1 : ℝ)) = indicator leftEdge := by
-  let z : H := lp.single 2 leftEdge (1 : ℝ)
-  change J z = indicator leftEdge
-  have he : (fun p : Edge => z p • indicator p) =
-      (fun p : Edge => if p = leftEdge then indicator leftEdge else 0) := by
-    funext p
-    change Pi.single (M := fun _ : Edge => ℝ) leftEdge (1 : ℝ) p • indicator p = _
-    by_cases hp : p = leftEdge
-    · subst p
-      simp
-    · rw [Pi.single_eq_of_ne hp]
-      simp [hp]
-  have hs := boundary_trace_hardy.1 z
-  rw [he] at hs
-  exact hs.unique (hasSum_ite_eq leftEdge (indicator leftEdge))
-
 /-- The full all-vector convergence and Hardy family, with the actual boundary map as readout. -/
 def familyRegistration : Registration arena (type_of% boundary_trace_hardy) where
   actual := actual
@@ -96,7 +80,7 @@ def familyRegistration : Registration arena (type_of% boundary_trace_hardy) wher
     intro i
     refine ⟨(), (0 : H), lp.single 2 leftEdge (1 : ℝ), ?_⟩
     change J 0 ≠ J (lp.single 2 leftEdge (1 : ℝ))
-    rw [map_zero, single_trace]
+    rw [map_zero, J_single, one_smul]
     exact indicator_ne_zero.symm
 
 noncomputable def registration_1 :

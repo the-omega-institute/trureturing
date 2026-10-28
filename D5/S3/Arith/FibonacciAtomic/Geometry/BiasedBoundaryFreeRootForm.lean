@@ -80,9 +80,6 @@ private theorem compact_C : IsCompactOperator C := by
 theorem mean_Pi (F : G) : mean (Pi F) = 0 := by
   rw [centered_suffix_residual.2.2.1, map_sub, centered_suffix_residual.2.1, sub_self]
 
-theorem Pi_const (c : ℝ) : Pi (constG c) = 0 := by
-  rw [centered_suffix_residual.2.2.1, centered_suffix_residual.2.1, sub_self]
-
 theorem Pi_idem (F : G) : Pi (Pi F) = Pi F := by
   rw [centered_suffix_residual.2.2.1 (Pi F), mean_Pi, map_zero, sub_zero]
 
@@ -201,7 +198,7 @@ private theorem domain_centered {F : G} (hF : F ∈ D) :
     ∃ z : H, z ∈ K ∧ C z = Pi F := by
   obtain ⟨c,z,rfl⟩ := hF
   refine ⟨K.starProjection z, Submodule.starProjection_apply_mem _ _, ?_⟩
-  rw [C_project, map_add, Pi_const, zero_add]
+  rw [C_project, map_add, BiasedBoundaryCentering.Pi_const, zero_add]
   rfl
 
 /-- The unique effective lift of a trace, in the orthogonal complement of the covariance kernel. -/
@@ -223,7 +220,7 @@ private theorem lift_rep (F : D) :
 private theorem lift_project (F : D) (c : ℝ) (z : H)
     (h : F.val = constG c+J z) : lift F = K.starProjection z := by
   apply C_injective_K (lift_mem F) (Submodule.starProjection_apply_mem _ _)
-  rw [C_lift, h, map_add, Pi_const, zero_add, C_project]
+  rw [C_lift, h, map_add, BiasedBoundaryCentering.Pi_const, zero_add, C_project]
   rfl
 
 /-- The original free-root infimum is attained, uniquely in K, with the original
@@ -340,7 +337,7 @@ private theorem variational_graph_core (u h : G) :
     abel
   · rintro ⟨hh,hu⟩
     have hc : C (C.adjoint h) = Pi u := by
-      rw [hu, map_add, Pi_const, zero_add]
+      rw [hu, map_add, BiasedBoundaryCentering.Pi_const, zero_add]
       exact (Pi_idem (J (C.adjoint h))).symm
     have hd := represented_of_centered u (C.adjoint h) hc
     refine ⟨hd,?_⟩
