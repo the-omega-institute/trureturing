@@ -146,61 +146,6 @@ private theorem literal_resultant_vanishes_of_common_root (b z : ℝ) (k : Fin 2
     simpa [specializedSylvester] using hdet
   exact hmap.trans hdet'
 
-private theorem literalMatrixCoeff_eval_bridge (b : ℝ) :
-    (literalMatrixCoeff.map (evalB b)) = literalMatrix b := by
-  have h0 : sourceE0Coeff.map (evalB b) = sourceE0 b := by
-    simp [sourceE0Coeff, sourceE0, evalB]
-  have h1 : sourceE1Coeff.map (evalB b) = sourceE1 b := by
-    simp [sourceE1Coeff, sourceE1, evalB]
-  ext i j
-  by_cases hi : i.val < 14
-  · have hrow : (literalRowCoeff i).map (evalB b) = literalRow b i := by
-      simp [literalRowCoeff, literalRow, hi, h0]
-    change evalB b ((literalRowCoeff i).coeff (28 - j.val)) =
-      (literalRow b i).coeff (28 - j.val)
-    rw [← coeff_map, hrow]
-  · have hrow : (literalRowCoeff i).map (evalB b) = literalRow b i := by
-      simp [literalRowCoeff, literalRow, hi, h1]
-    change evalB b ((literalRowCoeff i).coeff (28 - j.val)) =
-      (literalRow b i).coeff (28 - j.val)
-    rw [← coeff_map, hrow]
-
-private theorem fixedMinorR_eval_bridge (b : ℝ) :
-    fixedMinorRCoeff.map (evalB b) = fixedMinorR (literalMatrix b) := by
-  ext i j
-  change evalB b (fixedMinorRCoeff i j) = fixedMinorR (literalMatrix b) i j
-  by_cases hj : j.val < 27
-  · simp only [fixedMinorRCoeff, fixedMinorR, hj]
-    exact congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i ⟨j.val, by omega⟩)
-      (literalMatrixCoeff_eval_bridge b)
-  · simp only [fixedMinorRCoeff, fixedMinorR, hj]
-    exact congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i 27)
-      (literalMatrixCoeff_eval_bridge b)
-
-private theorem fixedMinorC_eval_bridge (b : ℝ) :
-    fixedMinorCCoeff.map (evalB b) = fixedMinorC (literalMatrix b) := by
-  ext i j
-  change evalB b (fixedMinorCCoeff i j) = fixedMinorC (literalMatrix b) i j
-  by_cases hj : j.val < 27
-  · simp only [fixedMinorCCoeff, fixedMinorC, hj]
-    exact congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i ⟨j.val, by omega⟩)
-      (literalMatrixCoeff_eval_bridge b)
-  · simp only [fixedMinorCCoeff, fixedMinorC, hj]
-    exact congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i 28)
-      (literalMatrixCoeff_eval_bridge b)
-
-private theorem actualMinorA0_eval_bridge (b : ℝ) :
-    evalB b actualMinorA0 = (fixedMinorR (literalMatrix b)).det := by
-  simpa only [actualMinorA0] using
-    (RingHom.map_det (evalB b) fixedMinorRCoeff).trans
-      (congrArg Matrix.det (fixedMinorR_eval_bridge b))
-
-private theorem actualMinorC0_eval_bridge (b : ℝ) :
-    evalB b actualMinorC0 = (fixedMinorC (literalMatrix b)).det := by
-  simpa only [actualMinorC0] using
-    (RingHom.map_det (evalB b) fixedMinorCCoeff).trans
-      (congrArg Matrix.det (fixedMinorC_eval_bridge b))
-
 /- The original linear subresultant relation is transported to the actual
    integer determinant polynomials.  No leading coefficient is divided out. -/
 private theorem literal_minor_relation_of_common_root (b z : ℝ)
@@ -208,8 +153,8 @@ private theorem literal_minor_relation_of_common_root (b z : ℝ)
     (h1 : (sourceE1 b).eval z = 0) :
     z * evalB b actualMinorA0 + evalB b actualMinorC0 = 0 := by
   have h := literal_fixed_minor_relation b z h0 h1
-  rw [actualMinorA0_eval_bridge b, actualMinorC0_eval_bridge b]
-  exact h
+  simpa only [evalB, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_eq_eval_map,
+    actualMinorA0_eval, actualMinorC0_eval] using h
 
 /-- Every critical source satisfies the original literal elimination equations,
 including the entire singular branch and all specialized degree drops. -/

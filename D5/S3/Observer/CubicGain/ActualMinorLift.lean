@@ -102,14 +102,14 @@ private theorem fixedMinorCCoeff_eval (b : ℝ) :
     exact congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i 28)
       (literalMatrixCoeff_eval b)
 
-private theorem actualMinorA0_eval (b : ℝ) :
+theorem actualMinorA0_eval (b : ℝ) :
     (actualMinorA0.map (Int.castRingHom ℝ)).eval b =
       Matrix.det (fixedMinorR (literalMatrix b)) := by
   simpa only [actualMinorA0, evalB, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_eq_eval_map] using
     (RingHom.map_det (evalB b) fixedMinorRCoeff).trans
       (congrArg Matrix.det (fixedMinorRCoeff_eval b))
 
-private theorem actualMinorC0_eval (b : ℝ) :
+theorem actualMinorC0_eval (b : ℝ) :
     (actualMinorC0.map (Int.castRingHom ℝ)).eval b =
       Matrix.det (fixedMinorC (literalMatrix b)) := by
   simpa only [actualMinorC0, evalB, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_eq_eval_map] using

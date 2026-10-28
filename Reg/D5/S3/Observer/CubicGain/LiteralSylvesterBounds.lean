@@ -30,7 +30,7 @@ private theorem actual_law : arena.Law actual := by
   simpa [arena, actual, realize] using @literal_resultant_degree_bound
 def source_registration : Registration arena (type_of% @literal_resultant_degree_bound) where
   actual := actual
-  bridge := Iff.rfl
+  bridge := by simp only [arena, actual, realize]
   variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
@@ -78,7 +78,7 @@ private theorem actual_law : arena.Law actual := by
   simpa [arena, actual, realize] using @literal_minor_degree_bounds
 def source_registration : Registration arena (type_of% @literal_minor_degree_bounds) where
   actual := actual
-  bridge := Iff.rfl
+  bridge := by simp only [arena, actual, realize]
   variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
@@ -131,7 +131,7 @@ private theorem actual_law : arena.Law actual := by
   simpa [arena, actual, realize] using @literal_elimination_exact_degrees
 def source_registration : Registration arena (type_of% @literal_elimination_exact_degrees) where
   actual := actual
-  bridge := Iff.rfl
+  bridge := by simp only [arena, actual, realize]
   variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
@@ -247,7 +247,7 @@ private theorem dependence : ObservationalDependence signature actual := by
 private theorem actual_law : arena.Law actual := source_critical_literal_elimination
 def source_registration : Registration arena (type_of% @source_critical_literal_elimination) where
   actual := actual
-  bridge := Iff.rfl
+  bridge := by simp only [arena, actual, realize]
   variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
