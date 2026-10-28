@@ -77,14 +77,6 @@ theorem bridge : sourceScope ↔ arena.Law actual := by
 
 theorem actual_law : arena.Law actual := bridge.mp (@actualSource_threeNegative_exchange_full)
 
-/-- Apply the exchange to the original unrestricted all-length minimum. -/
-theorem original_minimum_impossible (q : Source) (hq : Assumptions q)
-    (hmin : ∀ V : List (Fin q.k), Legal q.k q.t V →
-      J q.k q.t (word q) ≤ J q.k q.t V) : False := by
-  obtain ⟨V, hv, hj⟩ := actual_law q hq
-  exact (not_lt_of_ge (hmin V hv)) hj
-
-#print axioms original_minimum_impossible
 #print axioms bridge
 #print axioms actual_law
 

@@ -7,7 +7,7 @@
    digest: Full native three-negative physical exchange with arbitrary signed prefix. -/
 module
 public import D5.S3.Combinatorics.Circle.TerminalSmallOwnership
-import all D5.S3.Combinatorics.Circle.OddFirstNegativePlacement
+public import D5.S3.Combinatorics.Circle.OddFirstNegativePlacement
 
 /-! Full three-negative exchange on physical labels, without an extra SMALL
 resource or a minimum assumption in the conclusion. -/

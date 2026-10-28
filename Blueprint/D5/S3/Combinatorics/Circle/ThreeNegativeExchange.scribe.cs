@@ -9,6 +9,7 @@ internal sealed class ThreeNegativeExchangeDocument : IScribeDocumentDefinition
         H("Full native three-negative physical exchange"),
         Blocks(
             Paragraph(Text("Let k,t be natural numbers with k>=3. The actual centered source is f=s(k,t) on all physical Fin(k) labels, with n=hit(k,1,p), x=hit(k,2,p), N=2^k-1, Q=2^(k-2), and C=2Q-1. Take actual p,y,zpen,z and finite physical lists A,T0,T1,T2,E. Put W=A++[x]++T0++[y]++T1++[zpen]++T2++[z]++E. Assume f(p)>0, Q<=|f(n)|, N<3|f(p)|, Legal W, p and n absent from the entire W, every entry of T0++T1++T2++E SMALL, and Q<=-f(y), Q<=-f(zpen), Q<=-f(z). A is arbitrary signed. Legal includes physical Nodup and the strip bounds 0<=mass(f,W.take(m))<=C for every natural m, including zero and takes beyond the list length.")),
+            Paragraph(Text("The proved unit is the original native three-negative configuration. Full published Circle C3.1 still needs the actual root/source/global-ordering availability bridge and remains open.")),
             Describe.Lean(DescribeId.Create("three-negative-exchange-full"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Circle/ThreeNegativeExchange.actualSource_threeNegative_exchange_full"),
                 H("A Legal strict-J competitor always exists"),
