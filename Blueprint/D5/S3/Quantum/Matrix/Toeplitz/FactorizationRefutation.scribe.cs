@@ -55,7 +55,7 @@ internal sealed class FactorizationRefutationDocument : IScribeDocumentDefinitio
                         + "Toeplitz, so allowing at most C factors gives the same assertion by padding.")),
                     Paragraph(Text(
                         "All matrix products use the usual finite entry sum, with complex "
-                        + "multiplication and addition:"), In(MatrixMultiplication()))),
+                        + "multiplication and addition:"), Math(In(MatrixMultiplication())))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("uniform-factorization-refutation"),
