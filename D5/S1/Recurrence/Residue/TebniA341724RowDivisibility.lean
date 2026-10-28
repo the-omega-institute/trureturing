@@ -8,6 +8,8 @@
 
 import D5.S1.Recurrence.Residue.TebniA364822PowerOfTwo
 
+/-! The exact column EGF has integral coefficients and prime and dyadic row divisibility. -/
+
 set_option autoImplicit false
 
 namespace D5.S1.Recurrence.Residue.TebniA341724RowDivisibility
@@ -69,7 +71,7 @@ private theorem forcing (n k : ℕ) :
   by_cases h : n = k
   · subst n
     simp [Nat.factorial_ne_zero]
-  · simp [h, Ne.symm h]
+  · simp [h]
 
 private theorem recurrence (n k : ℕ) : Tq n k = (if n = k then 1 else 0) -
     2 * ∑ j ∈ range n, (n.choose (j + 1) : ℚ) *
@@ -90,7 +92,8 @@ private theorem recurrence (n k : ℕ) : Tq n k = (if n = k then 1 else 0) -
       ring
     _ = _ := by
       rw [forcing, eCoeff_mul, sum_range_succ']
-      simp only [eCoeff_sinh, Tq, even_zero, if_true, mul_zero, zero_mul, add_zero]
+      have hs : constantCoeff sinh = 0 := by simpa using eCoeff_sinh 0
+      simp [eCoeff_sinh, Tq, hs]
 
 private theorem column_integral (k : ℕ) : Integral (column k) := by
   intro n
@@ -107,10 +110,10 @@ private theorem column_integral (k : ℕ) : Integral (column k) := by
         simp [he]
       refine ⟨-2 * ∑ j ∈ range n, (n.choose (j + 1) : ℤ) *
         (if Even (j + 1) then 0 else 1) * (Tq (n - (j + 1)) k).num, ?_⟩
-      rw [recurrence, if_neg (by omega), zero_sub]
+      rw [recurrence, ite_eq_right (by omega), zero_sub]
       simp only [Int.cast_mul, Int.cast_neg, Int.cast_ofNat, Int.cast_sum,
         Int.cast_natCast, Int.cast_ite, Int.cast_zero, Int.cast_one, neg_mul]
-      congr 1
+      congr 2
       apply sum_congr rfl
       intro j hj
       rw [hz _ (by have := mem_range.mp hj; omega)]
@@ -134,7 +137,7 @@ theorem result : claim := by
   constructor
   · intro p k hp hk hkp
     refine ⟨(Tq p k).num, num_cast p k, ?_⟩
-    rw [num_recurrence, if_neg (by omega), zero_sub]
+    rw [num_recurrence, ite_eq_right (by omega), zero_sub]
     apply dvd_neg.mpr
     apply dvd_mul_of_dvd_right
     apply Finset.dvd_sum
@@ -148,7 +151,7 @@ theorem result : claim := by
         exact dvd_mul_of_dvd_left (dvd_mul_of_dvd_left (Int.natCast_dvd_natCast.mpr hd) _) _
   · intro m k hk
     refine ⟨(Tq (2 ^ m) k).num, num_cast (2 ^ m) k, ?_⟩
-    rw [num_recurrence, if_neg (by omega), zero_sub]
+    rw [num_recurrence, ite_eq_right (by omega), zero_sub]
     apply dvd_neg.mpr
     apply dvd_mul_of_dvd_right
     apply Finset.dvd_sum
