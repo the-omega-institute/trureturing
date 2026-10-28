@@ -1555,11 +1555,7 @@ Scribes, pinned upstream definitions and the cited primary likelihood
 proof provide this bounded comparison; it establishes neither worldwide
 originality nor absence from every unrelated source.
 
-The authorship is a single external mathematical-author contribution using
-the formal-thinking-and-answer and theory-volume-template source disciplines
-under a theory-only scope. Repository priors and supplied earlier candidate
-conclusions are exposed inputs, with no sterile-context or model-diversity
-claim. All assertions here are ordinary conditional mathematical proofs;
+All assertions here are ordinary conditional mathematical proofs;
 no new Lean compilation, kernel certification, digestion or machine-state
 claim accompanies them.
 
