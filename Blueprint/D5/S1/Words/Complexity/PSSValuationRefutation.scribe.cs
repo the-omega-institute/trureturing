@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Complexity;
 internal sealed class PSSValuationRefutationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Words/Complexity/PSSValuationRefutation.";
-    private const string Note = "D5/L/Words/popolishallitstipulanti2024additive";
+    private const string Note = "D5/L/Combinatorics/popolishallitstipulanti2024additive";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A single ternary infinite word has fewer additive classes than original-symbol "
@@ -30,7 +30,7 @@ internal sealed class PSSValuationRefutationDocument : IScribeDocumentDefinition
             Definition("weightedSum", "Natural evaluation of a Parikh vector",
                 FiniteAlphabet(All("v", Valuation, All("p", Valuation,
                     Equal(Call("weightedSum", V, F.Id("p")),
-                        Seq(Sum, Sub(F.Id("a"), A), Sp,
+                        Seq(Sum, Underscore, Grp(Seq(F.Id("a"), InMacro, Sp, A)), Sp,
                             Call("v", F.Id("a")), Cdot, Call("p", F.Id("a"))))))),
                 "A valuation is any map v : A → Nat. The evaluation is the sum of v(a)p(a) "
                 + "over the finite alphabet. Induction on a list and the count-cons identity "
