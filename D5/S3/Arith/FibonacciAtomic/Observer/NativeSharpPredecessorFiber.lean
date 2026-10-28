@@ -45,7 +45,7 @@ def site (z : Source) (selected : Bool) : Source :=
 def origin (n : Nat) (z : Fin (n + 1) → Source) (a : Option (Fin (n + 1))) : Source :=
   B_T n (fun i => site (z i) (decide (a = some i)))
 
-private theorem comb_at (n : Nat) (X : Fin (n + 1) → Source) (i : Fin (n + 1)) :
+theorem comb_at (n : Nat) (X : Fin (n + 1) → Source) (i : Fin (n + 1)) :
     subtree (hole n i) (B_T n X) = some (X i) := by
   have reads (w : Address) : readout (hole n i ++ w) (B_T n X) = readout w (X i) := by
     rw [FiniteHereditaryPatternRealization.result.1, hole_locate]
