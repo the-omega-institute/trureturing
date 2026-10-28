@@ -121,11 +121,11 @@ make finite arithmetic screening itself a Lean proof.
 - **Open — nearest surviving statements:** the source separately argues for
   the weaker upper bound `N(a,b) ≤ N*(a,b)` (Theorem 1.2) and restricted cases
   of equality: `(1,1)`, the coordinate axes, and the triangle region with
-  `N*=4` (Section 7). Their independent formal verification remains open
+  `N*=4` (Section 8). Their independent formal verification remains open
   here; `result` does not prove them. Whether a strict threshold inequality
   or a further parameter restriction suffices globally is also open, as are
   a corrected formula and the actual value of `N(6,1)`.
-- **Open — effects on other source results and questions:** Section 7 uses
+- **Open — effects on other source results and questions:** Section 8 uses
   Conjecture 1.3 and the square-root triangle lemma to predict the exact
   parameter region for validity in dimension `4`. The refuted conjecture
   no longer supplies that prediction's justification; the prediction itself
