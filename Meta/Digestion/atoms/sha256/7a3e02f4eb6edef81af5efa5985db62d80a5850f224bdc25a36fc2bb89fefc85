@@ -1,0 +1,37 @@
+**定理 12.3（实际 M0 子纤维的精细第六 M 消费者）。** Fix one $y\in\mathcal I$ and put
+
+$$
+H_{M0}=(H_p(y),M,0),\qquad \beta_y=48/5-y.
+$$
+
+For every family $\mathcal A_y\subseteq K_0\subseteq\mathcal F_y^M(0)$ of arbitrary cardinality,
+
+$$
+\begin{aligned}
+L_2(K_0,H_{M0})
+\quad\Longleftrightarrow\quad
+\exists v\in\mathbb R:\quad
+L_1\bigl(K_0\cap\mathcal F((H_{M0},M,v)),(H_{M0},M,v)\bigr).
+\end{aligned}                                                     \tag{12.3}
+$$
+
+Consequently, for any real $v$ and any family
+
+$$
+\mathcal T\subseteq\mathcal F((H_p(y),M,0,M,v)),\qquad
+L_1(\mathcal T,(H_p(y),M,0,M,v)),
+                                                                  \tag{12.4}
+$$
+
+the explicitly bound union $\mathcal U_0=\mathcal A_y\cup\mathcal T$ satisfies
+
+$$
+L_2(\mathcal U_0,H_{M0}),\qquad L_3(\mathcal U_0,H_p(y)).          \tag{12.5}
+$$
+
+The $L_1$ hypothesis in (12.4) concerns both final actions on that same $\mathcal T$; their witnessing collision pairs may differ. It does not require $v=\beta_y$, and no cardinality or drift promise is imposed on $\mathcal T$.
+
+Proof. The same defined family $\mathcal A_y$ lies in the actual sixth-$J$ response-$\beta_y$ child of $H_{M0}$ and has $L_1$ there, by (11.8). Thus every $K_0$ as stated already has the sixth-$J$ clause needed in (1.1). Its sixth-$M$ clause is exactly the right-hand side of (12.3). This proves both directions.
+
+For (12.4), all elements of $\mathcal U_0$ share the entire same $H_{M0}$. Its sixth-$J$ response-$\beta_y$ child contains $\mathcal A_y$ with $L_1$, and its sixth-$M$ response-$v$ child contains $\mathcal T$ with $L_1$. Monotonicity and (1.1) give the first assertion in (12.5). At the original parent, the fifth-$M$ response-$0$ child is $\mathcal U_0$ and therefore has $L_2$; the fifth-$J$ response-$0$ child contains $\mathcal A_y$ with $L_2$. Applying (1.1) again gives the second assertion. Every inclusion uses the same fixed targets and the same literal $y$. The existential response in the $L_1$ definition can be chosen separately for each final action; hence the proof does not assume one common terminal collision pair inside $\mathcal T$. ∎
+
