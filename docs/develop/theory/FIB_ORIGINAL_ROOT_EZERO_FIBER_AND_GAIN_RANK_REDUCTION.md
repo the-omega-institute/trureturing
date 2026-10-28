@@ -1151,3 +1151,143 @@ $$
 所有新证明仅在严格正来源域内成立。它们保留零块的线性论证和构造实际世界时的非零增益过滤，不除以未证非零的读数、样本、漂移差、最高次系数或判别式。每次 $t-1$、$k$、$h-x$ 和奇异分支相关的分母都有各自已述依据。完整目标始终包含来源、非零三次或更低次且符号任意的增益和任意常漂移；所有已读祖先、采样根与重根、逐原子立即读数、两种动作及全部停止均保留。这里没有九读上界、Lean 或 kernel 核验、外部或全球优先性、经验数据、一般神经网络、噪声稳定性、可计算性、算法复杂度或资源保证的结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 13. 非坐标斜平面的秩二排除
+
+本节处理一个不落在 $α=0$ 或 $Δ=0$ 坐标平面内的完整核层。它仍使用
+IV 定义 13.1--13.2、定理 13.3 的原始 $B$、全部增益守卫和完整
+$D_w$ 守卫；只在指定的 $J^5MJ$ 叶上消费共享响应，不把该叶的局部
+计算改写成固定槽或子核的实现。
+
+**定理 13.1（斜平面 $Δ=λα$ 的完整守卫失败）。** 固定一个完整合法
+来源元组，令 $V=\ker B$，并假设
+
+$$
+
+\sigma(P_{j_0})=\sigma(P_{j_1})=s>0,\qquad s\ne1,\qquad
+E_J|_V=0,qquad \beta|_V\ne0,
+$$
+
+$$
+\operatorname{rank}(G_{j_0}|_V)=2,
+\qquad \Delta|_V=\lambda\alpha|_V
+\quad\text{for a fixed }\lambda\ne0.
+\tag{13.1}
+$$
+
+Put $w_*=J^5MJ$ and $p_e=(w_*,e)$. Then
+
+$$
+P_{p_0}=P_{p_1},qquad D_{w_*}|_V=0.
+\tag{13.2}
+$$
+
+Consequently this source tuple is outside the fully guarded source locus of
+IV 定理 13.3. Thus, within the noncoordinate family (13.1), the surviving
+locus satisfying every original guard is empty.
+
+**证明。** By 引理 7.2, the gain-image coordinates on $V$ are
+$(\alpha,\Delta,\beta)$ and have rank two. The relation in (13.1) therefore
+gives
+
+$$
+\operatorname{rank}(\alpha,\beta)|_V=2;
+$$
+
+otherwise the three coordinates would have image dimension at most one.
+In particular the two scalar maps $\alpha|_V$ and $\beta|_V$ are independent.
+The same lemma and $\beta|_V\ne0$ exclude the unit signature for both
+$p_0,p_1$. Write their legal source entries as
+
+$$
+P_{p_e}=\begin{pmatrix}a_e&b_e\\c_e&1-a_e\end{pmatrix},
+\qquad t_e=b_e+c_e>0,
+$$
+
+so $t_e\ne1$. The nonunit formula (4.11), together with the response
+formula (5.1), says that the clock-six $M$ and clock-seven $MJ$ responses
+of $p_e$ are respectively
+
+$$
+\begin{aligned}
+Z_{6,e}&=(2+b_e)\alpha-8\frac{1+b_e}{t_e}\Delta
+       +\frac{b_e}{t_e-1}\beta,\\
+Z_{7,e}&=\left[1+\frac{16}{5}(a_e+t_e)\right]\alpha
+ -\frac{35}{2}\frac{a_e+t_e}{t_e}\Delta
+ +\frac{a_e+t_e-1}{t_e-1}\beta .
+\end{aligned}
+\tag{13.3}
+$$
+
+Both are shared prefix responses for the two slots of $w_*$, hence
+$Z_{6,0}=Z_{6,1}$ and $Z_{7,0}=Z_{7,1}$ as linear maps on $V$. Substitute
+$\Delta=\lambda\alpha$. Since $\alpha|_V$ and $\beta|_V$ are independent,
+the coefficients of $\beta$ in each equality agree. Consequently
+
+$$
+\frac{b_0}{t_0-1}=\frac{b_1}{t_1-1}=:S,
+\qquad
+\frac{a_0+t_0-1}{t_0-1}
+=\frac{a_1+t_1-1}{t_1-1}.
+\tag{13.4}
+$$
+
+Set $h_e=t_e-1\ne0$ and
+
+$$
+A_e=\frac{a_e}{h_e},
+\qquad S_e=\frac{b_e}{h_e}.
+$$
+
+Equation (13.4) gives $S_0=S_1=S$ and $A_0=A_1=:A$. Hence
+$a_e=Ah_e$ and $b_e=Sh_e$. The rank-one source equation
+$b_e(t_e-b_e)=a_e(1-a_e)$ becomes, after dividing only by the already
+nonzero $h_e$,
+
+$$
+(S-A)+h_e\bigl(S(1-S)+A^2\bigr)=0.
+\tag{13.5}
+$$
+
+If $h_0\ne h_1$, subtracting the two instances of (13.5) gives
+$S(1-S)+A^2=0$, and either instance then gives $S=A$. These two equalities
+imply $S=S(1-S)+S^2=0$, contradicting $b_e=Sh_e>0$. Therefore
+$h_0=h_1$, and then $a_0=a_1$, $b_0=b_1$, $t_0=t_1$ and
+$c_0=t_0-b_0=t_1-b_1=c_1$. This proves the first equality in (13.2).
+
+With the common signature $t_0=t_1$, formula (7.4) gives the same complete
+gain coefficient map on $V$ for the two slots:
+
+$$
+p_{p_e}=\alpha u-\frac{\Delta}{t_0}v,
+\qquad
+k_{p_e}=\frac{\beta}{t_0-1}-\alpha.
+$$
+
+Thus $G_{p_0}|_V=G_{p_1}|_V$ and their constant coefficients, as well as
+all three nonconstant coefficients, agree. By Definition 13.2,
+$D_{w_*}|_V=0$. Since the two sources are equal, IV 定理 13.3 requires
+the strict $D_{w_*}$ guard there, and (2.10) gives
+$\operatorname{rank}[B;D_{w_*}]=\operatorname{rank}B$. The guard therefore
+fails. Every division above used only $t_e-1\ne0$ or $h_e\ne0$; no gain
+sample, discriminant, leading coefficient, or source difference was assumed
+nonzero. ∎
+
+Theorem 13.1 is a full-source exclusion for every fixed nonzero slope
+$\lambda$; it is not a coordinate-plane corollary. The unrestricted rank-two
+case with an oblique relation involving $\beta$ remains open. In particular,
+the theorem does not classify planes whose normal has a nonzero $\beta$
+component, and it does not alter the original eight-read problem $U$ or the
+other source strata.
+
+## 14. 增补范围
+
+The new inference is exactly the empty surviving locus in Theorem 13.1. It
+consumes the original $J^5MJ$ full-kernel gain and separation guards through
+IV 定理 13.3, while reusing 引理 7.2 and formulas (4.11), (5.1), (7.4).
+No conclusion is drawn for the remaining rank-two planes, for
+$\beta|_V=0$, for other terminal words, or for the existence of a complete
+guarded $256$-source tuple. The unrestricted $U$ and the long-term
+eight-read question remain unresolved.
+
+## 追加锚（本行以下为增补区）
