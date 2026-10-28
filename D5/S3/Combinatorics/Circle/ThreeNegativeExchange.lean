@@ -459,7 +459,8 @@ theorem actualSource_threeNegative_exchange_full
     obtain ⟨_, hv, _, _, hj⟩ := energy_cut hk t W V [p, n] Ret hW.1 hI hIW
       (by
         intro a ha
-        simp only [Ret, List.mem_append, List.mem_cons, List.not_mem_nil, or_false] at ha
+        simp only [Ret, List.mem_append, List.mem_cons, List.not_mem_nil, or_false,
+          or_assoc] at ha
         rcases ha with rfl | ha | ha | rfl | ha
         · simp [W, F, R]
         · simp [W, F, R, ha]
@@ -512,7 +513,8 @@ theorem actualSource_threeNegative_exchange_full
     obtain ⟨_, hv, _, _, hj⟩ := energy_cut hk t W V [p, n] Ret hW.1 hI hIW
       (by
         intro a ha
-        simp only [Ret, List.mem_append, List.mem_cons, List.not_mem_nil, or_false] at ha
+        simp only [Ret, List.mem_append, List.mem_cons, List.not_mem_nil, or_false,
+          or_assoc] at ha
         rcases ha with rfl | ha | ha | rfl | ha
         · simp [W, F, R]
         · simp [W, F, R, ha]
@@ -529,6 +531,7 @@ theorem actualSource_threeNegative_exchange_full
   have haBgt : B < alpha := lt_of_not_ge haB
   let T := T1 ++ T2.erase v
   let ell2 := Z - alpha
+  have hZ : Q k ≤ Z := hzlarge
   have hell2 : 0 < ell2 ∧ ell2 ≤ B := by dsimp only [ell2]; omega
   have hT (a : Fin k) (ha : a ∈ T) : |f a| < Q k := by
     rcases List.mem_append.mp ha with ha | ha
@@ -580,7 +583,11 @@ theorem actualSource_threeNegative_exchange_full
     apply inStrip_append hsPre
     simp only [zero_add]
     have he : mass f ((L ++ [n, v, zpen]) ++ Sel) = alpha + mass f Sel := by
-      simpa [mass] using congrArg (fun h => h + mass f Sel) hBaseMass
+      calc
+        mass f ((L ++ [n, v, zpen]) ++ Sel) =
+            mass f (L ++ [n, v, zpen]) + mass f Sel := by
+          simp only [mass, List.map_append, List.sum_append]
+        _ = alpha + mass f Sel := by rw [hBaseMass]
     change InStrip f (C k) (mass f ((L ++ [n, v, zpen]) ++ Sel)) [z]
     rw [he]
     change 0 ≤ alpha + mass f Sel ∧ alpha + mass f Sel ≤ C k ∧
@@ -596,7 +603,8 @@ theorem actualSource_threeNegative_exchange_full
       at he hr ⊢
     omega
   have hRet (a : Fin k) (ha : a ∈ Ret) : a ∈ W := by
-    simp only [Ret, List.mem_append, List.mem_cons, List.not_mem_nil, or_false] at ha
+    simp only [Ret, List.mem_append, List.mem_cons, List.not_mem_nil, or_false,
+      or_assoc] at ha
     rcases ha with rfl | ha | ha
     · simp [W, F, R]
     · have hm := hRest.mem_iff.mpr (List.mem_append_right Sel ha)
