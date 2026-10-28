@@ -7,8 +7,6 @@
    digest: The singleton contradicts the universal strong distance-two period bound. -/
 
 import Mathlib.Combinatorics.SimpleGraph.Metric
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Nat.Find
 import Mathlib.Tactic.NormNum
 
 set_option autoImplicit false

@@ -8,9 +8,9 @@ internal sealed class DemoStrongPeriodBoundRefutationDocument : IScribeDocumentD
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Walks/DemoStrongPeriodBoundRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/demo2026periodicity");
+        LibraryNoteRef.Create("D5/L/GraphDynamics/demo2026periodicity");
     private static readonly LibraryNoteRef FixedPoints =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/erickson2024metamour");
+        LibraryNoteRef.Create("D5/L/GraphDynamics/erickson2024metamour");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The connected singleton refutes the unrestricted strong distance-two period bound.",
