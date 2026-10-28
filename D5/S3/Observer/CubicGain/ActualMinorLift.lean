@@ -23,7 +23,7 @@ namespace D5.S3.Observer.CubicGain.ActualMinorLift
 open Polynomial
 open D5.S3.Observer.CubicGain
 open D5.S3.Observer.CubicGain.ExactW3Center
-open D5.S3.Observer.CubicGain.SourceFixedMinor
+open D5.S3.Observer.CubicGain.SelectedRootCommonZero
 
 /-! The source expressions are instantiated over `Polynomial ℤ`, so the outer
 polynomial variable is `r` and every coefficient is an actual polynomial in

@@ -43,7 +43,7 @@ noncomputable section
 
 namespace D5.S3.Observer.CubicGain.SelectedMinorNonzero
 open Polynomial
-open ExactW3Center SourceFixedMinor SelectedRootCommonZero
+open ExactW3Center SelectedRootCommonZero
 
 private def rootNumerator : ℤ := 1275805397989720295463228680851631265311
 private def rootDenominator : ℤ := 10000000000000000000000000000000000000000

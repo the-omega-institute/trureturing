@@ -6,7 +6,7 @@
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Observer/CubicGain/RegularReadInverse.actual_local_source_inverse; premises=D5/S3/Observer/CubicGain/RegularParentChart.strip_denominator
    digest: The actual fifth and eighth read pair has an invertible derivative throughout a source strip. -/
 
-import D5.S3.Observer.CubicGain.RegularResponseCircuit
+import D5.S3.Observer.CubicGain.RegularParentChart
 import Mathlib.Analysis.Calculus.FDeriv.Pow
 import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.Topology.Algebra.Module.FiniteDimension
@@ -20,7 +20,7 @@ noncomputable section
 
 namespace D5.S3.Observer.CubicGain.RegularReadJacobian
 
-open D5.S3.Observer.CubicGain RegularParentChart RegularResponseCircuit
+open D5.S3.Observer.CubicGain RegularParentChart
 open CommonWordSensitivity Module
 
 private def row (a b : ℝ) : (ℝ × ℝ) →L[ℝ] ℝ :=
