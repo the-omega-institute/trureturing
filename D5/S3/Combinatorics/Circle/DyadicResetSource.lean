@@ -72,14 +72,14 @@ theorem source_values (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
   have hbase : actualSource m 1 ⟨i.val % m, Nat.mod_lt _ hm0⟩ =
       value m (i.val % m) := by
     obtain ⟨hB, hpow, hM⟩ := power_facts m hm
-    obtain ⟨hN, hodd⟩ := TwoRunSource.modulus_positive_odd m hm0
+    obtain ⟨_, _, _, hN, hodd⟩ := source_geometry hm
     have ha : i.val % m < m := Nat.mod_lt _ hm0
     have hhalf : modulus m / 2 = height m := by
       unfold modulus
       rw [hpow, hM]
       omega
     unfold actualSource value
-    simp only [mul_one]
+    simp only [Nat.cast_one, mul_one]
     apply centered_unique hN hodd (centered_bounds hN hodd _)
     · split_ifs with h
       · rw [hhalf]; constructor <;> omega
@@ -94,7 +94,7 @@ theorem source_values (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
       split_ifs with h
       · have he : (2 : ℤ) ^ (m - 1) = 2 * top m := by
           have he : m - 1 = m - 2 + 1 := by omega
-          rw [he, pow_succ]; simp [top]
+          rw [he, pow_succ]; simp [top, mul_comm]
         rw [h, he]
         have hv : -(height m : ℤ) = 2 * top m - modulus m := by
           unfold modulus
@@ -102,7 +102,7 @@ theorem source_values (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
           ring
         rw [hv, Int.sub_emod_right]
       · rfl
-  simpa only [Fin.cast_val, Nat.mul_comm] using hrep.trans
+  simpa only [actualSource, Fin.coe_cast, Nat.mul_comm] using hrep.trans
     (congrArg (fun z : ℤ => (unit m r : ℤ) * z) hbase)
 
 /-- The native capacity has exactly the same attainable scaled heights as the
@@ -127,7 +127,7 @@ theorem capacity_bounds (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r) :
   have hrem' := Int.emod_lt_of_pos (modulus (m * r)) (by norm_num : (0 : ℤ) < 2)
   have hpz : (1 : ℤ) ≤ unit m r := by exact_mod_cast hp
   refine ⟨by omega, ?_, ?_, hmod⟩
-  all_goals unfold half; rw [hmod] at hdiv; rw [hM]; nlinarith
+  all_goals unfold half; rw [hmod, hM]; rw [hmod] at hdiv hrem hrem'; nlinarith
 
 /-- Exact LARGE classification, in terms of the original physical residue. -/
 theorem large_iff (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r) (i : Fin (m * r)) :
@@ -135,7 +135,7 @@ theorem large_iff (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r) (i : Fin (m * r)) :
   obtain ⟨hB, hpow, hM⟩ := power_facts m hm
   obtain ⟨hd, _, _, hmod⟩ := capacity_bounds m r hm hr
   have hk : 3 ≤ m * r := by nlinarith
-  obtain ⟨_, hN, _, _, _⟩ := capacity_facts (m * r) hk
+  obtain ⟨_, hN, _, _, _⟩ := source_geometry hk
   have hQ : 4 * quarter (m * r) =
       (4 * (top m : ℤ) - 1) * unit m r + 1 := by omega
   have ha : i.val % m < m := Nat.mod_lt _ (by omega)
@@ -156,7 +156,9 @@ theorem large_iff (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r) (i : Fin (m * r)) :
       rw [htop]
       constructor
       · omega
-      · intro _; have hz : (1 : ℤ) ≤ unit m r := by exact_mod_cast hd; nlinarith
+      · intro _
+        have hdz : (1 : ℤ) ≤ unit m r := by exact_mod_cast hd
+        nlinarith
     · have hsmall : (2 : ℤ) ^ (i.val % m) * 2 ≤ top m := by
         have he : i.val % m + 1 ≤ m - 2 := by omega
         have hp := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) he
