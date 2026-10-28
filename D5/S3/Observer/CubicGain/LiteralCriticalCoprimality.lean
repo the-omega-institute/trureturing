@@ -55,8 +55,10 @@ private theorem integer_bezout :
 private theorem modular_bezout :
     bezoutU*modularF+bezoutV*modularF.derivative = 1 := by
   have h := congrArg (Polynomial.map (Int.castRingHom (ZMod 101))) integer_bezout
-  simpa only [Polynomial.map_add,Polynomial.map_mul,Polynomial.map_one,Polynomial.map_C,
-    ← derivative_map,← bezoutU,← bezoutV,← modularF,Int.cast_ofNat,ZMod.natCast_self,
+  have hz : (Int.castRingHom (ZMod 101)) 101 = 0 := by decide +kernel
+  simpa only [bezoutU,bezoutV,modularF,
+    Polynomial.map_add,Polynomial.map_mul,Polynomial.map_one,Polynomial.map_C,
+    ← derivative_map,hz,
     C_0,zero_mul,add_zero] using h
 
 private theorem integer_real_bridge : integerF.map (Int.castRingHom ℝ) = criticalPolynomial :=
@@ -69,7 +71,8 @@ private theorem integer_degree : integerF.natDegree = 67 := by
   rwa [natDegree_map_eq_of_injective (Int.cast_injective (α := ℝ))] at h
 
 private theorem modular_leading : modularF.coeff 67 ≠ 0 := by
-  norm_num [modularF,coeff_map,integerF,integerDesc,coeff_add,coeff_C_mul_X_pow]
+  norm_num [modularF,coeff_map,integerF,integerDesc,coeff_add,coeff_C_mul_X_pow,coeff_X]
+    <;> decide +kernel
 
 private theorem modular_degrees :
     modularF.natDegree = 67 ∧ modularF.derivative.natDegree = 66 := by
@@ -79,7 +82,7 @@ private theorem modular_degrees :
   refine ⟨hf,natDegree_eq_of_le_of_coeff_ne_zero ?_ ?_⟩
   · simpa only [hf] using natDegree_derivative_le modularF
   · rw [coeff_derivative]
-    exact mul_ne_zero modular_leading (by norm_num)
+    exact mul_ne_zero modular_leading (by decide +kernel)
 
 private theorem rational_degrees :
     rationalF.natDegree = 67 ∧ rationalF.derivative.natDegree = 66 := by
