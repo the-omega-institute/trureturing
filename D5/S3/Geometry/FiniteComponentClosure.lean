@@ -1313,9 +1313,12 @@ private def vertexGluingHomeomorph (K : PreAbstractSimplicialComplex V)
 
 /- Public carrier for the selected-component gluing consumer.  The original
   private `vertexGluing` declaration and all of its identities stay intact. -/
+abbrev SelectedGluedVertices (a : V) (b : W) :=
+  FiniteConeUnionWedge.Wedge a b
+
 def selectedVertexGluing (K : PreAbstractSimplicialComplex V)
     (L : PreAbstractSimplicialComplex W) (a : V) (b : W) :
-    PreAbstractSimplicialComplex (GluedVertices a b) :=
+    PreAbstractSimplicialComplex (SelectedGluedVertices a b) :=
   vertexGluing K L a b
 
 end VertexGluing
