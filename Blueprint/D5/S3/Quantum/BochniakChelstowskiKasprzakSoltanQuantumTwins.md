@@ -86,6 +86,10 @@ $$\forall (B: \operatorname{Type}), ([\operatorname{Ring}\left(B\right)] [\opera
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/BochniakChelstowskiKasprzakSoltanQuantumTwins.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bochniak-chelstowski-kasprzak-soltan-2025-quantum-twin-vertices` (proved) by `D5/S3/Quantum/BochniakChelstowskiKasprzakSoltanQuantumTwins.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bochniak-chelstowski-kasprzak-soltan-2025-quantum-twin-vertices","declaration_gid":"D5/S3/Quantum/BochniakChelstowskiKasprzakSoltanQuantumTwins.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Arkadiusz Bochniak; Igor Chełstowski; Paweł Kasprzak; Piotr M. Sołtan (2025). *Quantum Mycielskians: symmetries, twin vertices and distinguishing labelings*. DOI: [10.48550/arXiv.2502.10521](https://doi.org/10.48550/arXiv.2502.10521). URL: <https://arxiv.org/abs/2502.10521v2>.

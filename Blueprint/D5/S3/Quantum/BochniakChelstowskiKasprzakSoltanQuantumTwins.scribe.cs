@@ -91,7 +91,12 @@ internal sealed class BochniakChelstowskiKasprzakSoltanQuantumTwinsDocument : IS
     private static DocumentBlock Theorem(string name, string title, Formula formula, string prose) => Describe.Lean(
         DescribeId.Create("quantum-twins-" + name.Replace("_", "-").ToLowerInvariant()),
         DeclarationHandle.Create(Module + "." + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-        AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+        AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+        openProblemResolutionClaim: name == "result"
+            ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("bochniak-chelstowski-kasprzak-soltan-2025-quantum-twin-vertices"),
+                ResolutionKind.Proved)
+            : null);
 
     private static Formula AdjacencyFormula() => GraphParameters(Equal(
         Typed(Call("adjacencyOperator", G), Call("LinearMap", Apply(Q("RingHom", "id"), C), Functions, Functions)),
