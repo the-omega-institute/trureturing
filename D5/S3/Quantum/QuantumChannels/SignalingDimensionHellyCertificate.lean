@@ -12,7 +12,7 @@ import Mathlib.Analysis.Convex.Radon
 /-! Finite shared randomness reduces simulation to intersecting convex sets indexed by inputs.
 Deleting one simplex coordinate allows Helly's theorem to bound a separating input family. -/
 
-open scoped BigOperators Classical
+open scoped BigOperators
 
 namespace D5.S3.Quantum.QuantumChannels.SignalingDimensionHellyCertificate
 
@@ -43,6 +43,7 @@ private def feasible {α : Type} {k d : ℕ} (p : α → Fin k → ℝ) (x : α)
       (∀ s, ∑ y, a s y = q s) ∧ (∀ y, ∑ s, a s y = p x y)}
 
 private lemma channel_decomposition {α β : Type} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β]
     (p : α → β → ℝ) (hp : IsChannel p) :
     (∀ f : α → β, 0 ≤ ∏ x, p x (f x)) ∧
     (∑ f : α → β, ∏ x, p x (f x)) = 1 ∧
@@ -77,6 +78,7 @@ private lemma channel_decomposition {α β : Type} [Fintype α] [Fintype β]
         exact Fintype.prod_ite_eq' x _
 
 private lemma channel_expectation {α β : Type} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β]
     (p : α → β → ℝ) (hp : IsChannel p) (x : α) (v : β → ℝ) :
     (∑ f : α → β, (∏ z, p z (f z)) * v (f x)) = ∑ y, p x y * v y := by
   classical
@@ -283,9 +285,13 @@ private lemma common_simulable {α : Type} [Fintype α] [Nonempty α] {k d : ℕ
           (if q s = 0 then _ else _)) = _
         rw [ite_eq_right hz]
         by_cases he : (e s μ).val = y
-        · rw [ite_eq_left he, one_mul]
-          field_simp
-        · rw [ite_eq_right he, zero_mul, mul_zero]
+        · simp only [ite_eq_left he, one_mul]
+          rw [div_eq_mul_inv]
+          calc
+            q s * (a x s (e s μ) * (q s)⁻¹) =
+                a x s (e s μ) * (q s * (q s)⁻¹) := by ring
+            _ = a x s (e s μ) := by rw [mul_inv_cancel₀ hz, mul_one]
+        · simp only [ite_eq_right he, zero_mul, mul_zero]
       rw [Finset.mul_sum]
       simp_rw [heach]
       rw [(e s).sum_comp (fun b : s.val => if b.val = y then a x s b else 0)]
