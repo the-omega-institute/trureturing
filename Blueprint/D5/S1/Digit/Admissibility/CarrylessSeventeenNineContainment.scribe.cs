@@ -27,7 +27,10 @@ internal sealed class CarrylessSeventeenNineContainmentDocument : IScribeDocumen
                     + "implies acceptance by the second. Binary induction transports this implication "
                     + "to every natural input. Thus the same k satisfying the condition defining "
                     + "A115809 also satisfies the condition defining A115801. No upper bound on k is imposed."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a115809-carryless-seventeen-nine-containment"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ResultFormula()
     {

@@ -12,6 +12,10 @@ $$\forall k \in Nat,\; 17 \cdot k = C\left(49, k\right) \Rightarrow 9 \cdot k = 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/Admissibility/CarrylessSeventeenNineContainment.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a115809-carryless-seventeen-nine-containment` (proved) by `D5/S1/Digit/Admissibility/CarrylessSeventeenNineContainment.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a115809-carryless-seventeen-nine-containment","declaration_gid":"D5/S1/Digit/Admissibility/CarrylessSeventeenNineContainment.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Antti Karttunen (2006). *OEIS A115809: seventeen-times binary carryless multiplier condition*. URL: <https://oeis.org/A115809>.
