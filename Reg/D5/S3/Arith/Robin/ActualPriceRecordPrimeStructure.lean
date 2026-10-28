@@ -17,7 +17,7 @@ open scoped Chebyshev
 noncomputable section
 
 abbrev supportSignature : Signature where
-  Params := ℝ
+  Params := Unit
   State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
@@ -39,7 +39,7 @@ abbrev supportArena : Arena where
       goldenResourceObjective lam n < goldenResourceObjective lam m) →
     (∀ p q : ℕ, p.Prime → q.Prime → p < q →
       m.factorization q ≤ m.factorization p) ∧
-    R.readout () lam m = Nat.primesLE (largestPrime m)
+    R.readout () () m = Nat.primesLE (largestPrime m)
 
 private theorem two_price_record :
     ∀ n : ℕ, 0 < n → n < 2 →
@@ -69,7 +69,7 @@ private theorem support_rejected : ¬ supportArena.Law supportRejected := by
 
 private theorem support_dependence : ObservationalDependence supportSignature supportActual := by
   intro i
-  refine ⟨1, 1, 2, ?_⟩
+  refine ⟨(), 1, 2, ?_⟩
   change (1 : ℕ).primeFactors ≠ (2 : ℕ).primeFactors
   rw [Nat.primeFactors_one, Nat.prime_two.primeFactors]
   exact Finset.empty_ne_singleton 2
@@ -104,7 +104,7 @@ def supportAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure
     definition := none
-    coordinates := #[2]
+    coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "arg", "fn", "arg"]
       stateBinder := 0
@@ -116,7 +116,7 @@ def supportAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 abbrev divisorSignature : Signature where
-  Params := ℝ
+  Params := Unit
   State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
@@ -136,7 +136,7 @@ abbrev divisorArena : Arena where
   Law R := ∀ {m : ℕ}, 0 < m → ∀ {lam : ℝ}, 0 < lam →
     (∀ n : ℕ, 0 < n → n < m →
       goldenResourceObjective lam n < goldenResourceObjective lam m) →
-    R.readout () lam m ∣ strictInteger lam
+    R.readout () () m ∣ strictInteger lam
 
 private theorem divisor_rejected : ¬ divisorArena.Law divisorRejected := by
   intro h
@@ -149,7 +149,7 @@ private theorem divisor_rejected : ¬ divisorArena.Law divisorRejected := by
 
 private theorem divisor_dependence : ObservationalDependence divisorSignature divisorActual := by
   intro i
-  exact ⟨1, 1, 2, by norm_num [divisorActual, realize]⟩
+  exact ⟨(), 1, 2, by norm_num [divisorActual, realize]⟩
 
 def divisorFamily : Registration divisorArena (type_of% @price_record_divides_strictInteger) where
   actual := divisorActual
@@ -181,7 +181,7 @@ def divisorAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure
     definition := none
-    coordinates := #[2]
+    coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0
