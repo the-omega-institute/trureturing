@@ -38,6 +38,10 @@ $$\forall r:\mathbb{N}, 0<r \implies \exists m:\mathbb{N}, \operatorname{IsLeast
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/ReciprocalSigmaThreshold.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a265714-positive-threshold-common-minimum` (proved) by `D5/S3/Factorization/ReciprocalSigmaThreshold.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a265714-positive-threshold-common-minimum","declaration_gid":"D5/S3/Factorization/ReciprocalSigmaThreshold.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jaroslav Krizek; Robert Israel (2015). *OEIS A265714, minima of reciprocal-sigma divisor sums*. URL: <https://oeis.org/history/view?seq=A265714&v=23>.
