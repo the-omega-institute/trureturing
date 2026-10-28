@@ -97,7 +97,10 @@ internal sealed class QutritDivisibilityEntanglementBreakingRefutationDocument :
                     Paragraph(Text(
                         "Applying the asserted implication to the channel T, its nonunitary factorization and its exclusion from the endpoint closure would make T entanglement breaking. "
                             + "The preceding negative quadratic value disproves that conclusion, and therefore negates the assertion."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("davalos-ziman-pineda-2019-qutrit-divisibility-entanglement-breaking"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, string prose, AssessedProvenance provenance) =>
