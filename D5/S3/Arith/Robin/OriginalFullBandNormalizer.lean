@@ -4,10 +4,16 @@
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
-   digest: The literal source-clock full-band mass has a positive quantitative square-root envelope. -/
+   digest: The literal source-clock full-band mass has a positive square-root envelope. -/
 
-import D5.S3.Arith.Robin.OriginalMovingCutRow
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+module
+
+public import D5.S3.Arith.Robin.OriginalMovingCutRow
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+
+/-! The literal reciprocal-log kernel has a positive source-clock full-band envelope. -/
+
+public section
 
 noncomputable section
 set_option autoImplicit false
@@ -106,7 +112,6 @@ private lemma weight_square_upper {t y : ℝ} (ht : 1 < t) (hty : t ≤ y) :
       s ^ 2 * weight s = 1 / Real.log s + 1 / Real.log s ^ 2 := by
     unfold weight
     field_simp [hs.ne', hls.ne']
-    <;> ring
   have hscaled : y ^ 2 * weight y ≤ t ^ 2 * weight t := by
     rw [hid y hy0 hly, hid t ht0 hl]
     exact add_le_add h1 h2
@@ -142,7 +147,7 @@ private lemma price_drop_sharp {t x b : ℝ} (ht : 4 ≤ t) (htx : t ≤ x) (hxb
         funext y
         simp [zpow_neg, one_div]
       _ = (b ^ (-1 : ℤ) - x ^ (-1 : ℤ)) / (-1 : ℝ) := by
-        convert intervalIntegral.integral_zpow (a := x) (b := b) (n := (-2 : ℤ))
+        convert _root_.integral_zpow (a := x) (b := b) (n := (-2 : ℤ))
           (Or.inr ⟨by norm_num, hzero⟩) using 1 <;> norm_num
       _ = _ := by norm_num; field_simp [hx0.ne', hb0.ne'] <;> ring
   calc
@@ -169,12 +174,12 @@ private lemma source_factor_antitone {a t : ℝ} (ha : 1 ≤ a) (hat : a ≤ t) 
       norm_num
     have hsum : s ^ (4 / 5 : ℝ) * (s ^ (1 / 5 : ℝ) + 1) = endpoint s := by
       rw [mul_add, ← Real.rpow_add hs]
-      norm_num [endpoint, width] <;> ring
+      norm_num [endpoint, width]
     have hnum : s ^ (9 / 10 : ℝ) = s ^ (4 / 5 : ℝ) * s ^ (1 / 10 : ℝ) := by
       rw [← Real.rpow_add hs]
       norm_num
     rw [hsq, ← hsum, hnum]
-    field_simp [(Real.rpow_pos_of_pos hs (4 / 5 : ℝ)).ne'] <;> ring
+    field_simp [(Real.rpow_pos_of_pos hs (4 / 5 : ℝ)).ne']
   have ha1 : 1 ≤ a ^ (1 / 10 : ℝ) := Real.one_le_rpow ha (by norm_num)
   have ht1 : 1 ≤ t ^ (1 / 10 : ℝ) := Real.one_le_rpow (ha.trans hat) (by norm_num)
   have haz := Real.rpow_le_rpow ha0.le hat (by norm_num : (0 : ℝ) ≤ 1 / 10)
@@ -227,7 +232,7 @@ private lemma kernel_lower {a t x : ℝ} (ha : 4 ≤ a) (hat : a ≤ t)
     (by norm_num : (-11 / 10 : ℝ) ≤ 0)
   have hbase : 0 ≤ (a / x) ^ 4 *
       (1 + (4 / 5 : ℝ) * x ^ (-1 / 5 : ℝ)) * (t - a) := by positivity
-  rw [kernel, if_pos ⟨htx, hxb⟩]
+  rw [kernel, ite_eq_left ⟨htx, hxb⟩]
   calc
     _ ≤ t ^ (-11 / 10 : ℝ) * ((a / x) ^ 4 *
         (1 + (4 / 5 : ℝ) * x ^ (-1 / 5 : ℝ)) * (t - a)) := by
@@ -236,7 +241,7 @@ private lemma kernel_lower {a t x : ℝ} (ha : 4 ≤ a) (hat : a ≤ t)
       mul_le_mul_of_nonneg_left hn (Real.rpow_nonneg ht0.le _)
     _ = _ := by
       rw [show (-11 / 10 : ℝ) = -(11 / 10 : ℝ) by norm_num, Real.rpow_neg ht0.le]
-      field_simp [hw.ne', (Real.rpow_pos_of_pos ht0 (11 / 10 : ℝ)).ne'] <;> ring
+      field_simp [hw.ne', (Real.rpow_pos_of_pos ht0 (11 / 10 : ℝ)).ne']
 
 private lemma kernel_upper {a t x : ℝ} (ha : 4 ≤ a) (hat : a ≤ t)
     (htx : t < x) (hx : x = endpoint a) :
@@ -255,7 +260,7 @@ private lemma kernel_upper {a t x : ℝ} (ha : 4 ≤ a) (hat : a ≤ t)
   have hden := mul_pos hw (Real.rpow_pos_of_pos ht0 (11 / 10 : ℝ))
   have hp := price_drop_sharp (ha.trans hat) htx.le hxb
   have hn : kernel t x ≤ (t ^ (9 / 10 : ℝ) / endpoint t) / x * (endpoint t - x) := by
-    rw [kernel, if_pos ⟨htx, hxb⟩]
+    rw [kernel, ite_eq_left ⟨htx, hxb⟩]
     apply (div_le_iff₀ hden).2
     calc
       _ ≤ (t ^ 2 * weight t) * ((endpoint t - x) / (x * endpoint t)) := hp
@@ -265,7 +270,6 @@ private lemma kernel_upper {a t x : ℝ} (ha : 4 ≤ a) (hat : a ≤ t)
           norm_num
         rw [hs']
         field_simp [hx0.ne', hb0.ne']
-        <;> ring
   have hgap : 0 ≤ endpoint t - x := sub_nonneg.mpr hxb
   have hta0 : 0 ≤ t - a := sub_nonneg.mpr hat
   have hsource := source_factor_antitone (by linarith : 1 ≤ a) hat
@@ -280,7 +284,6 @@ private lemma kernel_upper {a t x : ℝ} (ha : 4 ≤ a) (hat : a ≤ t)
       norm_num
     rw [hxp]
     field_simp [(Real.rpow_pos_of_pos hx0 (9 / 10 : ℝ)).ne', hx0.ne']
-    <;> ring
   calc
     _ ≤ (t ^ (9 / 10 : ℝ) / endpoint t) / x * (endpoint t - x) := hn
     _ ≤ (a ^ (9 / 10 : ℝ) / x) / x * (endpoint t - x) :=
@@ -440,7 +443,7 @@ theorem original_full_band_normalizer {a ell R x : ℝ}
       _ ≤ _ := hlow
   have hqneg : q ^ (28 / 5 : ℝ) = (1 + δ) ^ (-(28 / 5 : ℝ)) := by
     rw [hqeq, Real.inv_rpow (by positivity), Real.rpow_neg (by positivity)]
-  have hfirst := mul_le_mul_of_nonneg_right
+  have hfirst := mul_le_mul_of_nonneg_left
     (negative_power_lower hδ.le (by norm_num : (0 : ℝ) ≤ 28 / 5)) hA.le
   rw [← hqneg] at hfirst
   have herr : |windowMass ell R x - A| ≤ (14 / 5 : ℝ) * δ * x ^ (1 / 2 : ℝ) := by
