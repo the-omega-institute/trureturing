@@ -22,15 +22,25 @@ open D5.S3.Combinatorics.Graph.Domination.TrapezohedralMinimalDomination
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
+instance fortDecidable (G : SimpleGraph V) [DecidableRel G.Adj] :
+    DecidablePred (IsFort G) := by
+  intro S
+  unfold IsFort
+  infer_instance
+
 /-- Inclusion-minimality ranges over every subset, including the empty set. -/
 def MinimalFort (G : SimpleGraph V) [DecidableRel G.Adj] (S : Finset V) : Prop :=
   IsFort G S ∧ ∀ T ⊆ S, IsFort G T → S ⊆ T
 
+instance minimalFortDecidable (G : SimpleGraph V) [DecidableRel G.Adj] :
+    DecidablePred (MinimalFort G) := by
+  intro S
+  unfold MinimalFort
+  infer_instance
+
 /-- The entire finite family of inclusion-minimal forts. -/
-noncomputable def minimalForts (G : SimpleGraph V) [DecidableRel G.Adj] :
-    Finset (Finset V) := by
-  classical
-  exact Finset.univ.filter (MinimalFort G)
+def minimalForts (G : SimpleGraph V) [DecidableRel G.Adj] :
+    Finset (Finset V) := Finset.univ.filter (MinimalFort G)
 
 /-- The graph obtained by adding one vertex adjacent to every original vertex. -/
 def cone (G : SimpleGraph V) : SimpleGraph (Option V) where
@@ -271,5 +281,11 @@ theorem minimalFort_rootSet_iff (G : SimpleGraph V) [DecidableRel G.Adj]
 /-- The number of vertices is exactly the base order plus one. -/
 theorem cone_order (G : SimpleGraph V) :
     Fintype.card (Option V) = Fintype.card V + 1 := Fintype.card_option
+
+/-- All base subsets that become minimal forts when joined to the selected root. -/
+def rootedChoices {V : Type*} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) [DecidableRel G.Adj] : Finset (Finset V) :=
+  Finset.univ.filter (fun S => MinimalFort (cone G) (rootSet S))
+
 
 end D5.S3.Combinatorics.MinimalForts.UniversalRoot

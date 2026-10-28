@@ -32,14 +32,16 @@ private theorem ratio_irrational :
   have hm : (r.num.natAbs : ℝ) = -(r.num : ℝ) := by
     have h : (r.num.natAbs : ℤ) = -r.num := by
       rw [Int.natCast_natAbs, abs_of_nonpos hn]
-    exact_mod_cast h
+    have hreal := congrArg (fun z : ℤ => (z : ℝ)) h
+    simpa only [Int.cast_natCast, Int.cast_neg] using hreal
   have hrel : (r.den : ℝ) * Real.log (2 / 3 : ℝ) =
       (r.num : ℝ) * Real.log (4 / 3 : ℝ) := by
     rw [hnum, hr]
     field_simp
     <;> ring
   have h4 : Real.log (4 : ℝ) = 2 * Real.log 2 := by
-    simpa using Real.log_pow (2 : ℝ) 2
+    simpa only [show (2 : ℝ) ^ 2 = 4 by norm_num, Nat.cast_ofNat] using
+      Real.log_pow (2 : ℝ) 2
   have halpha : Real.log (4 / 3 : ℝ) = 2 * Real.log 2 - Real.log 3 := by
     rw [Real.log_div (by norm_num) (by norm_num), h4]
   have hbeta : Real.log (2 / 3 : ℝ) = Real.log 2 - Real.log 3 :=
@@ -51,13 +53,14 @@ private theorem ratio_irrational :
     nlinarith [hrel]
   have hp : (2 : ℝ) ^ (r.den + 2 * r.num.natAbs) =
       (3 : ℝ) ^ (r.den + r.num.natAbs) := by
-    apply Real.log_injOn_pos (by positivity) (by positivity)
+    apply Real.log_injOn_pos (Set.mem_Ioi.mpr (by positivity))
+      (Set.mem_Ioi.mpr (by positivity))
     simpa only [Real.log_pow, Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat] using he
   have hpNat : (2 : ℕ) ^ (r.den + 2 * r.num.natAbs) =
       (3 : ℕ) ^ (r.den + r.num.natAbs) := by exact_mod_cast hp
   have hexp : r.den + 2 * r.num.natAbs ≠ 0 := by have := r.pos; omega
   have hmod := congrArg (fun n : ℕ => n % 2) hpNat
-  norm_num [Nat.pow_mod, Nat.zero_pow hexp] at hmod
+  norm_num [Nat.pow_mod, Nat.zero_pow (Nat.pos_of_ne_zero hexp)] at hmod
 
 /-- The actual logarithmic increments have arbitrarily accurate uniform integer lifts. -/
 theorem block_logarithm_window :

@@ -17,6 +17,6 @@ internal sealed class RotationWindowDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string id, string title, string declaration,
         string prose, DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
 }
