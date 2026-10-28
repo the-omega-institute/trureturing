@@ -2747,3 +2747,568 @@ terminal values remain allowed. No global existence or nonexistence
 conclusion follows from (13.25).
 
 ## 追加锚（本行以下为增补区）
+
+## 14. A uniform negative-response strip and the entire first negative-J child
+
+### 14.1. Worlds, strip coordinates and the reused interfaces
+
+Retain the entire original world space (13.1), the acquired word
+$J,M,J,M,M,M$, and the readings $(0,24,147/5,24,18,p,v)$ at the
+original clocks zero through six. Thus $P=P(r,b)$ has $0<r<1$,
+$b>0$, rank one and trace one; every world has its own arbitrary
+real constant $d$ and one nonzero real polynomial $g$ of degree at
+most three. The alternative $m(W)$ is the immediately read atomic
+$M$ at clock seven, as in (12.2). Write
+
+$$
+\begin{gathered}
+w=v-\frac{46}{25}p,\\
+\mathcal S=\left\{(p,v):-534\le p\le-457,\quad
+ -\frac{1877}{50}\le w\le-\frac{3749}{100}\right\}.
+\end{gathered}
+\tag{14.1}
+$$
+
+Here $C(p,v)$ still means all complete original worlds at that base,
+and $C_{\rm reg}(p,v)$ means exactly those with $D_s\ne0$ in
+(12.5). The letter $\mathcal S$ distinguishes this strip from the
+smaller rectangle $\mathcal B$ in (12.4). In particular no bounded
+source class is part of the definition of $C$ or $C_{\rm reg}$.
+
+The necessary carrier $R$, with its exact polynomial quotients formed
+before specialization, is precisely (12.10)–(12.12). Every regular
+world satisfies $R(x,p,v)=0$ at $x=n/U>0$ by the source identity
+(12.13), even when $A=0$ or $F_0=0$. The inverse (12.8)–(12.9),
+equivalently all-response geometry, Definition 30.1 and Lemma 30.2,
+is injective on complete worlds in $(x,d)$ for every $p\ne24$.
+Its guards are $d\ne24$, $H_1\ne0$, $\chi>0$, $U>1$ and the
+original strict source inequalities; it does not assume $d\ne0$.
+Every base in (14.1) has $p\ne24$.
+
+For the selected pair, $q$, $(X,Y,K_{\rm sec})(q)$ and $W_\pm(q)$
+mean exactly IX (24.6), (25.2) and Theorems 26.1–28.1. Their whole
+polynomial and own constant drift are the lifts (12.6), with the
+same original clock. IX Theorem 28.1 supplies their existence,
+distinction, equal $J$ responses and unequal $M$ responses for every
+$0<q<q_*$. Theorem 13.1 and (13.24) exclude every singular companion
+on precisely this strict interval. These inputs do not by themselves
+count the regular companions outside the smaller $Q$ of Theorem 13.2.
+
+### 14.2. Closed-box coefficient bounds for the carrier
+
+The following notation specifies the finite rational inequalities used
+below. If $L(z)=\sum_\alpha c_\alpha z^\alpha$ is a polynomial on
+$Z=\prod_{j=1}^s[l_j,u_j]$, let $n_j=\deg_{z_j}L$ and, for
+$0\le t_j\le n_j$, set
+
+$$
+\begin{aligned}
+\beta_t(L;Z)
+ &=\sum_\alpha c_\alpha\prod_{j=1}^s
+ \left\{\sum_{k=0}^{\min(\alpha_j,t_j)}
+ \binom{\alpha_j}{k}l_j^{\alpha_j-k}(u_j-l_j)^k
+ \frac{\binom{t_j}{k}}{\binom{n_j}{k}}\right\},\\
+\mathfrak b_Z(L)&=\min_{0\le t_j\le n_j}\beta_t(L;Z),\qquad
+\mathfrak B_Z(L)=\max_{0\le t_j\le n_j}\beta_t(L;Z).
+\end{aligned}
+\tag{14.2}
+$$
+
+Include every index in this rectangular tensor, including coefficients
+that are zero. Constant polynomials have degree zero in every
+variable. Expanding $z_j=l_j+(u_j-l_j)y_j$ and then using
+
+$$
+y^k=\sum_{t=k}^n\frac{\binom tk}{\binom nk}
+                 \binom nt y^t(1-y)^{n-t}
+\quad(0\le k\le n)
+\tag{14.3}
+$$
+
+gives the Bernstein expansion with coefficients (14.2).
+Its basis functions are nonnegative and sum to one on the entire
+closed box, so $\mathfrak b_Z(L)\le L\le\mathfrak B_Z(L)$ there.
+This is the classical convex-hull bound; see Mourrain, Rouillier and
+Roy, *Bernstein's basis and real root isolation*, INRIA RR-5149,
+[Proposition 2.8](https://inria.hal.science/inria-00071434/document).
+The tensor statement follows by the same partition of unity in each
+coordinate. No generic specialization or square-free assumption is
+used in this bound.
+
+Put
+
+$$
+\widetilde R(x,p,w)=R\left(x,p,\frac{46}{25}p+w\right),\qquad
+Z_{pw}=[-534,-457]\times[-1877/50,-3749/100].
+\tag{14.4}
+$$
+
+Applying the exact sums (14.2) to (12.10)–(12.12) gives the following
+strict rational inequalities. The degree vector for each row is
+$(18,6,6)$, so each comparison includes $19\cdot7\cdot7=931$
+coefficients.
+
+| Closed $x$ interval $I$ | Sign $\epsilon$ | $\mathfrak b_{I\times Z_{pw}}(\epsilon\widetilde R)>$ |
+| --- | --- | --- |
+| $[0,343/1000]$ | $+1$ | $6\cdot10^{23}$ |
+| $[344/1000,407/1000]$ | $-1$ | $10^{24}$ |
+| $[409/1000,24/25]$ | $+1$ | $10^{24}$ |
+| $[501/500,1917/1000]$ | $+1$ | $10^{24}$ |
+| $[1927/1000,2493/1000]$ | $-1$ | $2\cdot10^{28}$ |
+| $[1259/500,27]$ | $+1$ | $3\cdot10^{29}$ |
+
+The two polynomial divisions in (12.12) have zero remainder; the
+resulting carrier has 512 nonzero monomials in $(x,p,v)$ and degree
+vector $(18,6,6)$. These facts and (14.2) specify the comparisons
+without selecting any roots. For the unbounded part, write the exact
+translation
+
+$$
+\widetilde R(34+z,p,w)=\sum_{k=0}^{18}c_k(p,w)z^k.
+\tag{14.5}
+$$
+
+For every $0\le k\le18$ the same two-variable coefficient formula
+gives $\mathfrak b_{Z_{pw}}(c_k)>10^{21}$. Thus the whole tail
+$x\ge34$ is strictly positive. Finally,
+
+$$
+\mathfrak b_{[24/25,501/500]\times Z_{pw}}
+                 (\partial_x^2\widetilde R)>264\cdot10^{26}.
+\tag{14.6}
+$$
+
+Here the degree vector is $(16,6,6)$ and all 833 tensor coefficients
+are included. Equations (14.2), (14.4), (14.5) and the displayed
+polynomial definitions are finite rational expressions for all the
+bounds; in particular (14.6) holds at the strip faces as well.
+
+It follows that every positive carrier root belongs to the union
+
+$$
+\begin{aligned}
+\mathcal I={}&[343/1000,344/1000]\cup[407/1000,409/1000]\cup I_c\\
+ &\cup[1917/1000,1927/1000]\cup[2493/1000,1259/500]
+       \cup[27,34],\\
+I_c={}&[24/25,501/500].
+\end{aligned}
+\tag{14.7}
+$$
+
+The closed complementary intervals and tail include every boundary;
+allowing those boundary points again in (14.7) only enlarges the
+possible root set. Strict positivity of the second derivative on
+$I_c$ implies at most two distinct roots there: three distinct roots
+would, by two applications of Rolle's theorem, force a zero of the
+second derivative. This argument includes repeated-root
+specializations and does not require a root to lift to a world.
+
+### 14.3. A necessary quadratic with strict-source guards
+
+For an actual world at a base in $\mathcal S$, define the following
+rational functions of the same $x,p,v$:
+
+$$
+\begin{gathered}
+\gamma=294/5,\quad
+\tau=20/x-45+36/(x+1)-10/(x+2),\\
+\tau_2=4/x-6+4/(x+1)-1/(x+2),\qquad
+s=16/x+1/(x+2),\\
+c_0=480/x-810+36p/(x+1)-10v/(x+2),\\
+c_2=96/x-108+4p/(x+1)-v/(x+2),\qquad
+e=c_0-9c_2=162-384/x-v/(x+2).
+\end{gathered}
+\tag{14.8}
+$$
+
+All three denominators $x,x+1,x+2$ are positive. Interpolation gives
+$H_0=c_0-d\tau$, $H_2=c_2-d\tau_2$ and
+$9\tau_2-\tau=s-9$. The restored identities in (12.9) therefore give
+
+$$
+\begin{aligned}
+A_U&=d(U-\tau)+c_0=0,\\
+B_U&=(U+1)(c_2-d\tau_2)-(\gamma-2d)U=0.
+\end{aligned}
+\tag{14.9}
+$$
+
+Consequently the necessary quadratic is
+
+$$
+\begin{aligned}
+\Phi(U)
+ &=(U+1)\{c_2(U-\tau)+c_0\tau_2\}
+                     -\{\gamma(U-\tau)+2c_0\}U\\
+ &=(U-\tau)B_U+\{(U+1)\tau_2-2U\}A_U=0,\\
+\Phi(U)&=\lambda_2U^2+\lambda_1U+\lambda_0,\\
+\lambda_2&=c_2-\gamma,\\
+\lambda_1&=\{c_0(s-26)+e(\tau-1)\}/9+\gamma\tau,\\
+\lambda_0&=\{c_0(s-9)+e\tau\}/9.
+\end{aligned}
+\tag{14.10}
+$$
+
+In particular the factor $U+1$ multiplies the entire first bracket.
+The undivided identity in (14.10) is valid also at $d=0$ or
+$U=\tau$; no converse from $\Phi=0$ alone is asserted.
+
+The original source identity $j=b+r(1-r)/b$, together with
+$x=(j+r)/U$ and $U=1+2b$, gives
+
+$$
+\begin{gathered}
+r^2-(b+1)r+bxU-b^2=0,\\
+\Psi(U):=(5-8x)U^2+(8x-6)U+5=4(2r-b-1)^2\ge0.
+\end{gathered}
+\tag{14.11}
+$$
+
+If $x>13/16$, then $\Psi''<0$, $\Psi'(1)=4-8x<0$ and
+$\Psi(2)=13-16x<0$. Since the source has $U>1$, monotonicity on
+$[1,\infty)$ forces $1<U<2$. This uses the actual source equation,
+without selecting either of its quadratic roots.
+
+Here are sufficient rational bounds for (14.10). They hold on each
+entire indicated closed interval and all of $Z_{pw}$.
+
+| $x$ interval | Bounds for $\tau,s$ | Bounds for $c_0,c_2,e$ |
+| --- | --- | --- |
+| $[1/3,5/12]$ | $1<\tau<40$, $s>35$ | $c_0<-5000$, $c_2<0$, $e<0$ |
+| $I_c=[24/25,501/500]$ | $-11<\tau<-9$, $s<35/2$ | $c_0<-5500$, $c_2<0$, $e<130$ |
+| $[19/10,63/25]$ | $-30<\tau<0$, $s<9$ | $c_0<-3200$, $c_2<0$, $e<280$ |
+| $[27,34]$ | $-44<\tau<-43$, $1/3<s<1$ | $-1140<c_0<0$, $c_2<0$, $e>172$ |
+
+For completeness these bounds follow from elementary endpoint
+comparisons, not from evaluations at candidate roots. Put
+
+$$
+a(x)=\frac{36}{x+1}-\frac{92}{5(x+2)},\qquad
+a_2(x)=\frac4{x+1}-\frac{46}{25(x+2)}.
+\tag{14.12}
+$$
+
+Both functions are positive and strictly decreasing for $x>0$;
+this follows directly by comparison of their two terms and their
+derivatives, since $36>92/5$, $4>46/25$ and $x+1<x+2$.
+Also $\tau'<0$ and $s'<0$: for $\tau'$ the term
+$10/(x+2)^2$ is smaller than $20/x^2$. Now
+
+$$
+\begin{gathered}
+c_0=480/x-810+pa(x)-10w/(x+2),\\
+c_2=96/x-108+pa_2(x)-w/(x+2),\qquad
+87837/100\le-v\le10201/10.
+\end{gathered}
+\tag{14.13}
+$$
+
+For $[1/3,5/12]$, endpoint substitution gives $a>17$, $a_2>2$,
+$-10w/(x+2)<161$ and $-w/(x+2)<17$. Hence
+
+$$
+\begin{gathered}
+c_0<1440-810-457\cdot17+161=-6978,\\
+c_2<288-108-457\cdot2+17=-717,\\
+e\le162-4608/5+30603/70=-22569/70<0.
+\end{gathered}
+\tag{14.14}
+$$
+
+On $I_c$, $a>59/5$, $a_2>1$, the two positive $w$ terms are
+less than $130,13$, respectively, and
+$384/x>380$, $(-v)/(x+2)<348$. Therefore
+
+$$
+c_0<500-810-457\cdot59/5+130=-27863/5<-5500,\quad
+c_2<100-108-457+13=-452,\quad e<130.
+\tag{14.15}
+$$
+
+On $[19/10,63/25]$, $a>6$, $a_2>0$ and
+
+$$
+\begin{gathered}
+480/x-10w/(x+2)
+ \le480/(19/10)+(1877/5)/(39/10)=258526/741<350,\\
+c_0<350-810-457\cdot6=-3202,\qquad
+c_2<51-108+10=-47,\qquad e<162-152+262=272<280.
+\end{gathered}
+\tag{14.16}
+$$
+
+On $[27,34]$, $0<a<33/50$, $a_2>0$ and endpoint comparison gives
+
+$$
+\begin{gathered}
+c_0>14-810-534\cdot33/50+10=-28461/25>-1140,\\
+c_0<18-810+13=-779<0,\qquad c_2<4-108+2=-102,\\
+e>162-43/3+73/3=172.
+\end{gathered}
+\tag{14.17}
+$$
+
+The bounds on $\tau,s$ in the table are their monotone endpoint
+bounds on the same intervals. Thus $\Phi''=2(c_2-\gamma)<0$
+throughout all four ranges.
+
+On $[1/3,5/12]$, (14.10) has $\lambda_0<0$ and
+$\lambda_2<0$. Moreover
+$\lambda_1<-5000+\gamma\cdot40=-2648<0$.
+Thus $\Phi(U)<0$ for every $U>0$, which excludes any actual world.
+
+For the other ranges $x>13/16$, so $1<U<2$ by (14.11).
+The endpoint and derivative formulas from (14.10) are
+
+$$
+\begin{aligned}
+\Phi(1)&=2c_0(s-17)/9-(2e/9+\gamma)(1-\tau),\\
+\Phi(2)&=c_0(s-19)/3-(e/3+2\gamma)(2-\tau),\\
+\Phi'(1)&=c_0(s-24)/9-e(3-\tau)/9+\gamma(\tau-2),\\
+\Phi'(2)&=c_0(s-22)/9-e(5-\tau)/9+\gamma(\tau-4).
+\end{aligned}
+\tag{14.18}
+$$
+
+On $[19/10,63/25]$ these give
+
+$$
+\begin{aligned}
+\Phi(1)&>51200/9-(560/9+294/5)\,31=9686/5>0,\\
+\Phi(2)&>32000/3-(280/3+588/5)\,32=19584/5>0.
+\end{aligned}
+\tag{14.19}
+$$
+
+Concavity places $\Phi$ above its positive endpoint chord on
+$[1,2]$, excluding every source there. On $[27,34]$,
+
+$$
+\begin{aligned}
+\Phi(1)&<(2280/9)(50/3)-(344/9+294/5)\,44=-2104/45<0,\\
+\Phi'(1)&<3040-172\cdot46/9-2646=-4366/9<0.
+\end{aligned}
+\tag{14.20}
+$$
+
+Concavity then makes $\Phi$ strictly decreasing and negative for
+$U\ge1$, again excluding every source.
+
+Finally on $I_c$, (14.18) gives
+
+$$
+\Phi'(2)>2750-2080/9-882=14732/9>0.
+\tag{14.21}
+$$
+
+Since $\Phi''<0$, it follows that $\Phi'(U)\ge\Phi'(2)>0$ on
+$[1,2]$. For fixed $(x,p,v)$ there is at most one admissible $U$.
+Also $U-\tau>0$ there, so (14.9) uniquely fixes
+$d=-c_0/(U-\tau)$. The injective full-world inverse consequently
+permits at most one complete world for each such $x$.
+
+### 14.4. The uniform regular inventory bound
+
+**Theorem 14.1 (At most two regular worlds on the entire closed strip).**
+For every $(p,v)\in\mathcal S$,
+
+$$
+|C_{\rm reg}(p,v)|\le2.
+\tag{14.22}
+$$
+
+Proof. Any original regular world gives $x>0$ and $R(x,p,v)=0$
+by (12.13). The coefficient bounds (14.4)–(14.7) place it in one of
+the six closed ranges of (14.7). The first two ranges are contained
+in $[1/3,5/12]$; the fourth and fifth are contained in
+$[19/10,63/25]$; the last is $[27,34]$. The necessary quadratic
+excludes actual worlds on all these exterior ranges. Thus every
+regular world has $x\in I_c$, where (14.6) allows at most two
+distinct carrier roots. Equations (14.9) and (14.21), followed by
+the faithful inverse, allow at most one complete world over each.
+This proves (14.22).
+
+Every use of a source restriction above was a consequence of that
+same world's original equations. No division by $A$, $F_0$, $d$,
+$D_s$ at a singular source, a gain sample, a leading gain coefficient
+or a root difference is used. The sole additional inverse division
+$U-\tau$ occurs after its strict positivity on $I_c$ is proved.
+Neither a carrier root nor a zero of $\Phi$ is asserted to be a
+faithful world. The count therefore retains negative gains, lower
+degrees, sampled zeros, repeated roots and arbitrary own drifts. ∎
+
+### 14.5. The exact continuation lies in the strip
+
+The simultaneous enclosure needed for the entire selected family uses
+the common parameter of the exact secant zero, rather than separate
+marginal bounds for $p,v$. Set
+
+$$
+\bar q=\frac{229545252522}{10^{14}},\qquad
+G=10^{40},\qquad \rho=10^{-12},\qquad
+q_{i,l}=i/5000,\quad q_{i,u}=\min\{(i+1)/5000,\bar q\}
+\quad(0\le i\le11).
+\tag{14.23}
+$$
+
+The rational comparison with (13.23) gives
+$11/5000<\bar q<12/5000$ and $q_*<\bar q$.
+For each cell let
+
+$$
+\ell_i=\left\lfloor\sqrt{G^2q_{i,l}}\right\rfloor,\quad
+u_i=\left\lceil\sqrt{G^2q_{i,u}}\right\rceil,\quad
+h_i(z)=\frac{\ell_i+\nu_i+(\nu_i-\ell_i)z}{2G},\quad -1\le z\le1.
+\tag{14.24}
+$$
+
+Both radicands are integers, and these definitions enclose the full
+square-root interval, including zero and all cell seams. Use the
+same predictor row $i$ of IX (25.2), including its factor $10^{-55}$,
+and substitute $q=h_i(z)^2$ before forming
+
+$$
+\widehat t_i=\widehat X_i(h_i^2)+h_i\widehat K_i(h_i^2),\qquad
+\widehat b_i=\widehat Y_i(h_i^2)+h_i.
+\tag{14.25}
+$$
+
+Compose the whole polynomial circuit (13.14) at these two
+polynomials, and denote its entries by
+$\widehat D_i,\widehat N_{p,i},\widehat N_{v,i}$. The following
+four polynomials have degree 86:
+
+$$
+\begin{aligned}
+L_{i1}&=\widehat N_{p,i}+534\widehat D_i,\\
+L_{i2}&=-457\widehat D_i-\widehat N_{p,i},\\
+L_{i3}&=\widehat N_{v,i}-\tfrac{46}{25}\widehat N_{p,i}
+                                  +\tfrac{1877}{50}\widehat D_i,\\
+L_{i4}&=-\widehat N_{v,i}+\tfrac{46}{25}\widehat N_{p,i}
+                                  -\tfrac{3749}{100}\widehat D_i.
+\end{aligned}
+\tag{14.26}
+$$
+
+All these compositions have exact rational coefficients; no rounding
+convention is needed. For the actual exact zero in the cell, use the
+full $\rho$ tube in IX Theorem 26.1. The segment from the predictor
+to the zero lies in the rectangle of (13.20). Its derivative guards,
+with the same plus-source convention as (14.25), are
+
+$$
+\Gamma(D_s)=\frac{7667254617}{20000000}<384,\quad
+\Gamma(N_p)=\frac{13033889043873}{1250000000}<10428,\quad
+\Gamma(N_v)=\frac{97107509878563}{2000000000}<48554.
+\tag{14.27}
+$$
+
+The mean value bound therefore changes the four actual numerators
+from (14.26) by at most, respectively,
+
+$$
+\begin{aligned}
+E_1&=\rho(10428+534\cdot384),\\
+E_2&=\rho(10428+457\cdot384),\\
+E_3&=\rho(48554+\tfrac{46}{25}10428+\tfrac{1877}{50}384),\\
+E_4&=\rho(48554+\tfrac{46}{25}10428+\tfrac{3749}{100}384).
+\end{aligned}
+\tag{14.28}
+$$
+
+The exact sums (14.2), now in one variable on $[-1,1]$, give
+
+$$
+\mathfrak b_{[-1,1]}(L_{ij})-E_j>10^{-9}T_{ij}>0
+\tag{14.29}
+$$
+
+with the following integer matrix. The bounds already include the
+entire predictor error; they are not values only at the predictor.
+
+| Cell $i$ | $T_{i1}$ | $T_{i2}$ | $T_{i3}$ | $T_{i4}$ |
+| --- | --- | --- | --- | --- |
+| 0 | 3845018 | 472161935 | 121273 | 193512 |
+| 1 | 54582059 | 395340711 | 78509 | 220604 |
+| 2 | 97899078 | 331027273 | 52215 | 241612 |
+| 3 | 135869861 | 274693506 | 38795 | 249333 |
+| 4 | 169277191 | 224467569 | 35761 | 238572 |
+| 5 | 198565733 | 179335539 | 35960 | 219833 |
+| 6 | 224028329 | 138666027 | 41926 | 194369 |
+| 7 | 245873927 | 102030520 | 55167 | 163375 |
+| 8 | 264259324 | 69120749 | 74311 | 127999 |
+| 9 | 279306283 | 39705479 | 98087 | 89354 |
+| 10 | 291111694 | 13605778 | 125297 | 48522 |
+| 11 | 299754035 | 2275769 | 154793 | 28572 |
+
+These finite inequalities use precisely the inherited rational arrays,
+the integer square-root brackets (14.24), the displayed source
+circuit and (14.2); all 87 coefficients in each univariate comparison
+are included. The same coefficient bound also gives
+$\mathfrak b_{[-1,1]}(\widehat D_i)-384\rho>0$ for every cell,
+in agreement with the full-tube denominator bounds (13.21).
+Thus division by the actual positive denominator turns the four
+positive numerators into
+
+$$
+-534<p(q)<-457,\qquad
+-1877/50<v(q)-(46/25)p(q)<-3749/100
+\quad(0\le q\le q_*).
+\tag{14.30}
+$$
+
+These are readings of the plus endpoint at the same exact parameter.
+The secant equalities make them the minus endpoint's readings as
+well wherever it is a strict world. IX Theorem 26.1 identifies the
+seam solutions and attaches the exact first negative-$J$ germ, so
+this enclosure covers the specified continuation throughout, rather
+than an independent selection of zeros in successive cells.
+
+### 14.6. Entire-child inventory and terminal-M injectivity
+
+**Theorem 14.2 (The entire first negative-J family).** For every
+$0<q<q_*$ of exactly the continuation specified above,
+
+$$
+\begin{gathered}
+(p(q),v(q))\in\mathcal S,\qquad
+C(p(q),v(q))=\{W_-(q),W_+(q)\},\\
+W_-(q)\ne W_+(q),\qquad a(W_-(q))=a(W_+(q)),\\
+m(W_-(q))<m(W_+(q)).
+\end{gathered}
+\tag{14.31}
+$$
+
+In particular $m$ is injective on this entire original child.
+
+Proof. The common-parameter enclosure (14.30) puts the exact base
+in $\mathcal S$. Theorem 13.1 excludes all singular original worlds
+there, and (13.24) identifies this nonsingularity with the regularity
+used in Theorem 14.1. Hence the entire child has at most two worlds.
+IX Theorem 28.1 supplies two distinct complete original worlds at
+this identical full base, with their own original whole-gain lifts
+and drifts. They exhaust the child. Its same theorem, (28.1)–(28.2),
+gives their equal $J$ readings and strict $M$ ordering. Any two
+distinct worlds in the entire child must therefore be this pair, so
+their terminal $M$ readings differ. ∎
+
+The new uniform conclusions are the regular-world count on all of
+$\mathcal S$ and the complete-child inventory on every strict
+parameter of this first continuation. The Bernstein estimate is a
+classical tool, and the existence, original-world lifts and strict
+$M$ ordering of the selected pair are the cited inputs. The deductions
+here are specific to the displayed source equations; no
+literature-priority claim is made for them.
+
+Theorem 14.1 does not assert two-world existence, singular exclusion
+or $M$ injectivity at every base of the strip. The endpoints $q=0$
+and $q=q_*$ are excluded from (14.31): the two endpoints coalesce
+at zero, whereas the minus source has $b_-=r_-=0$ at $q_*$. The
+analytic enclosure (14.30) does not turn either limit into a strict
+distinct pair. Other bases and branches, globally independent $J/M$
+incidence, the fixed48 obligation V (18.12)(i), earlier losing
+histories and their common-tree feasibility, the original rootQ,
+eight-read recovery and the nine-read question remain outside these
+conclusions. The lower bound $n_{\rm det}(3,0)\ge8$ is unchanged.
+
+## 追加锚（本行以下为增补区）
