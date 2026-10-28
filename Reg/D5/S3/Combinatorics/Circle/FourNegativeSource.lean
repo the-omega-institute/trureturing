@@ -1,7 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Circle.FourNegativeSource
 import Reg.Support.DependentFamily
-import Reg.Support.SingleDependentReadout
 
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -90,7 +89,14 @@ def source_registration : Registration arena
   actual := actual
   bridge := bridge
   variation := ⟨@permutation_doubleStep_positive_flux.{0}, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_law
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hne
+      exact False.elim (hne (Subsingleton.elim j i))
+    · intro i
+      exact nomatch i
   dependence := dependence
 
 -- The five mathematical readouts occur separately in the source conclusion.
