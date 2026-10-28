@@ -20,7 +20,30 @@ The original target is Barczy–Páles, arXiv:2510.03715v1, Remark 2.2(i),
 equation (2.1) and Definition 1.1. Admission: external open problem #23083.
 The subject is an indefinite rational quadratic form transported to the reals.
 The quadratic field, its genuine scalar action and linear splitting are upstream.
-The new content is finite norm cancellation and its full quantified application.
+The witness composition uses finite norm cancellation in the full quantified application.
+
+Per-declaration proof shape: bind-only; escape_witness: none.
+Admission_basis: open-problem-resolution (#23083); result is the full external
+question's negation. Algebraic normalization and upstream existence theorems
+are not claimed as new general mathematics. All support declarations are consumed:
+  nonsquare -> realAlgebra, projection;
+  K -> embedding, projection, omega, norm_cancellation;
+  embedding -> realAlgebra, projection_embedding, projection_scalar, embedding_omega;
+  realAlgebra -> projection, projection_embedding, projection_scalar;
+  projection -> counterFunction, projection_embedding, projection_scalar;
+  projection_embedding -> midpoint_failure;
+  projection_scalar -> all_input_identity;
+  omega -> embedding_omega, norm_cancellation, midpoint_failure;
+  embedding_omega -> all_input_identity, midpoint_failure;
+  counterFunction -> all_input_identity, midpoint_failure, result;
+  norm_cancellation -> all_input_identity;
+  counterMatrix -> matrix_stochastic, matrix_rank, all_input_identity, result;
+  sqrt_bounds -> matrix_stochastic, matrix_rank;
+  matrix_stochastic, matrix_rank, all_input_identity, midpoint_failure -> result;
+  intervalCombination -> intervalMean, intervalRow;
+  intervalMean, intervalRow -> claim, result;
+  claim -> result.
+There are no direct frozen D5 dependencies. Public inventory: claim, result.
 -/
 
 noncomputable section
