@@ -111,19 +111,12 @@ private theorem strict_height_comparison {eta X Y E delta : ℝ}
   have hxpow : 0 < X ^ eta := Real.rpow_pos_of_pos hX0 _
   nlinarith [mul_pos hxpow (sub_pos.mpr hterm), mul_nonpos_of_nonneg_of_nonpos hxpow.le hdelta]
 
-/-- A single positive threshold, independent of eta, forces every actual least
-height crossing to be a strict abundancy record on all positive predecessors,
-with abundancy above thirty and the literal divisibility 5040 | m. -/
-theorem uniform_actual_least_crossing_record_5040 :
-    ∃ T0 : ℝ, 0 < T0 ∧ ∀ eta : ℝ, 0 < eta → eta < 1 / 2 →
+/-- A fixed requested divisor-log bound is escaped uniformly through eta=1/2.
+No leastness assumption is needed for this finite exclusion. -/
+theorem uniform_actual_height_escape (R : ℝ) :
+    ∃ T0 : ℝ, 0 < T0 ∧ ∀ eta : ℝ, 0 < eta → eta ≤ 1 / 2 →
       ∀ T : ℝ, T0 ≤ T → ∀ m : ℕ, 3 ≤ m → T ≤ actualHeight eta m →
-        (∀ n : ℕ, 3 ≤ n → n < m → actualHeight eta n < T) →
-        30 < (ArithmeticFunction.sigma 1 m : ℝ) / m ∧
-        (∀ n : ℕ, 0 < n → n < m →
-          (ArithmeticFunction.sigma 1 n : ℝ) / n < (ArithmeticFunction.sigma 1 m : ℝ) / m) ∧
-        5040 ∣ m := by
-  obtain ⟨A, hA, hupper⟩ := eventual_actual_integer_envelope
-  let R := max A (max (Real.exp 2) (Real.log 30))
+        R < divisorLog m ∧ Real.exp 2 ≤ Real.log (m : ℝ) := by
   have hlog : Tendsto (fun n : ℕ => Real.log (n : ℝ)) atTop atTop :=
     Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
   have htriple := Real.tendsto_log_atTop.comp (Real.tendsto_log_atTop.comp hlog)
@@ -141,7 +134,7 @@ theorem uniform_actual_least_crossing_record_5040 :
     dsimp [T0]
     linarith [sum_nonneg (fun j (_ : j ∈ range M) => hB j)]
   refine ⟨T0, hT0, ?_⟩
-  intro eta heta hetaHalf T hT m hm hcross hleast
+  intro eta heta hetaHalf T hT m hm hcross
   have hm0 : 0 < m := by omega
   have hmR : 0 < (m : ℝ) := by exact_mod_cast hm0
   have hXm : 0 < Real.log (m : ℝ) := Real.log_pos (by exact_mod_cast (by omega : 1 < m))
@@ -157,7 +150,7 @@ theorem uniform_actual_least_crossing_record_5040 :
     have hpow : (Real.log (m : ℝ)) ^ eta ≤
         max 1 ((Real.log (m : ℝ)) ^ (1 / 2 : ℝ)) := by
       by_cases hx : 1 ≤ Real.log (m : ℝ)
-      · exact (Real.rpow_le_rpow_of_exponent_le hx hetaHalf.le).trans (le_max_right _ _)
+      · exact (Real.rpow_le_rpow_of_exponent_le hx hetaHalf).trans (le_max_right _ _)
       · exact (Real.rpow_le_one hXm.le (by linarith) heta.le).trans (le_max_left _ _)
     have hbound : actualHeight eta m ≤ B m := by
       unfold actualHeight B
@@ -171,6 +164,27 @@ theorem uniform_actual_least_crossing_record_5040 :
     change Real.eulerMascheroniConstant < divisorLog m -
       Real.log (Real.log (Real.log (m : ℝ))) at hF
     linarith [hlarge.1]
+  exact ⟨hWm, hlarge.2⟩
+
+/-- A single positive threshold, independent of eta, forces every actual least
+height crossing to be a strict abundancy record on all positive predecessors,
+with abundancy above thirty and the literal divisibility 5040 | m. -/
+theorem uniform_actual_least_crossing_record_5040 :
+    ∃ T0 : ℝ, 0 < T0 ∧ ∀ eta : ℝ, 0 < eta → eta < 1 / 2 →
+      ∀ T : ℝ, T0 ≤ T → ∀ m : ℕ, 3 ≤ m → T ≤ actualHeight eta m →
+        (∀ n : ℕ, 3 ≤ n → n < m → actualHeight eta n < T) →
+        30 < (ArithmeticFunction.sigma 1 m : ℝ) / m ∧
+        (∀ n : ℕ, 0 < n → n < m →
+          (ArithmeticFunction.sigma 1 n : ℝ) / n < (ArithmeticFunction.sigma 1 m : ℝ) / m) ∧
+        5040 ∣ m := by
+  obtain ⟨A, hA, hupper⟩ := eventual_actual_integer_envelope
+  let R := max A (max (Real.exp 2) (Real.log 30))
+  obtain ⟨T0, hT0, hescape⟩ := uniform_actual_height_escape R
+  refine ⟨T0, hT0, ?_⟩
+  intro eta heta hetaHalf T hT m hm hcross hleast
+  have hm0 : 0 < m := by omega
+  have hmR : 0 < (m : ℝ) := by exact_mod_cast hm0
+  obtain ⟨hWm, _⟩ := hescape eta heta hetaHalf.le T hT m hm hcross
   have hAm : 0 < (ArithmeticFunction.sigma 1 m : ℝ) / m :=
     div_pos (by exact_mod_cast ArithmeticFunction.sigma_pos 1 m hm0.ne') hmR
   have h30 : 30 < (ArithmeticFunction.sigma 1 m : ℝ) / m := by

@@ -129,7 +129,7 @@ private theorem delta_clock_bound {m q : ℕ} (hm : 0 < m)
     simpa only [mul_comm, one_mul] using hQL
   exact (removal_delta hm hq.1).2.2.2.trans hi
 
-private theorem divisor_log_le_log {n : ℕ} (hn : 0 < n) :
+theorem divisor_log_le_log {n : ℕ} (hn : 0 < n) :
     divisorLog n ≤ Real.log (n : ℝ) := by
   have hs : 0 < (ArithmeticFunction.sigma 1 n : ℝ) / n :=
     div_pos (by exact_mod_cast ArithmeticFunction.sigma_pos 1 n hn.ne')
