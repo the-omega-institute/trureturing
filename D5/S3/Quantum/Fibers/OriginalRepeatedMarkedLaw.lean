@@ -208,7 +208,7 @@ private theorem prefix_balance (B : Band) (d : ℝ) (hd : 0<d) (j : ℕ)
     (beta : ℝ) (m : ℤ) (theta : Fin 5 → ℝ) :
     Balance B.c B.a beta (2*(j:ℝ)*d) m theta (B.repeated d hd j) := by
   induction j with
-  | zero => simp [Balance,F,survival]
+  | zero => simp [Balance,F,OriginalControlSurvivalInstability.survival]
   | succ j ih =>
     obtain ⟨hp,hp0,hp1,hps⟩ := B.prefix_facts d 0 hd j
     have hj : B.repeated d hd j (2*(j:ℝ)*d)=B.loop d hd 0 := by rw [hp1,B.loop_zero]
@@ -402,7 +402,7 @@ private theorem wait_F (B : Band) (beta T : ℝ) (m : ℤ) (theta : Fin 5 → �
     simp [Band.wait,Leg.height,Leg.speed]
   have hd (i : Fin 5) (t : ℝ) : failureDensity B.c B.a beta m theta B.wait.height i t=0 := by
     rw [hh,failureDensity,jump_action]
-    simp [jump,live,jumpRate,hazard]
+    simp [jump,live,jumpRate,OriginalControlSurvivalInstability.hazard]
   simp [F,hd]
 
 private theorem suffix_mass (B : Band) (beta : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
