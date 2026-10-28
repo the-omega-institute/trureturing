@@ -124,7 +124,7 @@ internal sealed class FiniteKrausChannelDocument : IScribeDocumentDefinition
         Formula a = F.Id("A"), b = F.Id("B"), s = F.Id("S"), kappa = F.Id("Kappa");
         Formula m = F.Id("M"), n = F.Id("N"), k = F.Id("k");
         Formula family = new Formula.TypeArrow(kappa, Call("Matrix", b, a, s));
-        Formula completeness = Eqn(Seq(Sum, Underscore, Grp(k, InMacro, kappa), Sp,
+        Formula completeness = Eqn(Seq(Sum, Underscore, Grp(k, InMacro, Sp, kappa), Sp,
             Mul(Call("conjTranspose", Apply(n, k)), Apply(m, k))), Num(1));
         Formula preservation = Apply(Qualified("MatrixMap", "IsTracePreserving"),
             Apply(Seq(Named("MatrixMap"), Dot, Named("of"), Underscore, Grp(Named("kraus"))), m, n));
