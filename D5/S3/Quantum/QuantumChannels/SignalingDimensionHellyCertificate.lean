@@ -6,6 +6,7 @@
    utility: none
    digest: At most binomially many inputs certify classical signaling dimension. -/
 
+import D5.S3.Estimation.DecisionRisk.DescentDefectBounds
 import Mathlib.Analysis.Convex.Radon
 
 open scoped BigOperators
@@ -14,7 +15,7 @@ namespace D5.S3.Quantum.QuantumChannels.SignalingDimensionHellyCertificate
 
 /-- A channel has inputs indexing rows, with nonnegative entries and row sums one. -/
 def IsChannel {α β : Type} [Fintype β] (p : α → β → ℝ) : Prop :=
-  (∀ x y, 0 ≤ p x y) ∧ ∀ x, ∑ y, p x y = 1
+  D5.S3.Estimation.DecisionRisk.DescentDefectBounds.IsRowStochastic p
 
 /-- Source equation for classical simulation, with shared randomness indexed by some `Fin n`. -/
 def IsSimulable {α : Type} {k : ℕ} (d : ℕ) (p : α → Fin k → ℝ) : Prop :=
@@ -335,8 +336,7 @@ private lemma feasible_convex {α : Type} {k d : ℕ} (p : α → Fin k → ℝ)
     rw [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.mul_sum, has, hus]
   · intro y
     rw [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.mul_sum, hay, huy]
-    nlinarith
-
+    rw [← add_mul, hbc, one_mul]
 
 private lemma output_sets_card {k d : ℕ} : Fintype.card (outputSets k d) = k.choose d := by
   change Fintype.card {s : Finset (Fin k) // s ∈ Finset.powersetCard d Finset.univ} = _
@@ -370,7 +370,7 @@ private lemma helly_normalized {α β : Type} [Fintype α] [Fintype β] [Nonempt
     · exact hoff ⟨b, hb⟩
   have hdim : Module.finrank ℝ (v → ℝ) + 1 = Fintype.card β := by
     rw [Module.finrank_pi]
-    exact (Fintype.card_option v).symm.trans (Fintype.card_congr (Equiv.optionSubtypeNe s))
+    exact (Fintype.card_option (α := v)).symm.trans (Fintype.card_congr (Equiv.optionSubtypeNe s))
   by_contra hsmall
   have hall (i : Finset α) (hcard : i.card ≤ Fintype.card β) :
       ∃ q, ∀ x ∈ i, q ∈ f x := by
