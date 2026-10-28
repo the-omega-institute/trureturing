@@ -416,6 +416,74 @@ private theorem inner_product_re (w z : Fin 3 → ℂ) :
   rw [Complex.mul_re] at h
   simpa [Complex.ofReal_re, mul_comm] using h
 
+private theorem q_pos {z : Fin 3 → ℂ} (hz : z ≠ 0) : 0 < q z := by
+  dsimp [q]
+  have hsum : 0 ≤ ∑ i, Complex.normSq (z i) :=
+    Finset.sum_nonneg fun i _ => Complex.normSq_nonneg _
+  by_contra hn
+  have hzq : q z = 0 := le_antisymm (not_lt.mp hn) hsum
+  have hi := (Finset.sum_eq_zero_iff_of_nonneg
+    (fun i _ => Complex.normSq_nonneg (z i))).mp hzq
+  exact hz (funext fun i => Complex.normSq_eq_zero.mp (hi i (Finset.mem_univ i)))
+
+private theorem abs_pair_trace (w z : Fin 3 → ℂ) (hw : w ≠ 0) (hz : z ≠ 0) :
+    (absMat (((Real.sqrt 2)⁻¹ : ℂ) • crossProduct w) *
+        absMat (((Real.sqrt 2)⁻¹ : ℂ) • crossProduct z)).trace =
+      (1 / 2 : ℂ) *
+        ((euclideanNorm w : ℂ) * (euclideanNorm z : ℂ) +
+          ((star w ⬝ᵥ z) * (star z ⬝ᵥ w)) /
+            ((euclideanNorm w : ℂ) * (euclideanNorm z : ℂ))) := by
+  have hs : ((Real.sqrt 2 : ℂ)⁻¹) ^ 2 = (1 / 2 : ℂ) := by
+    have hn : (Real.sqrt 2 : ℂ) ≠ 0 := by norm_num
+    field_simp [hn]
+    norm_num [pow_two, Complex.ext_iff, Complex.mul_re, Complex.mul_im,
+      Complex.ofReal_re, Complex.ofReal_im, Real.sq_sqrt]
+  have hqw : (euclideanNorm w : ℂ) ^ 2 = (q w : ℂ) := by
+    exact_mod_cast (Real.sq_sqrt (show 0 ≤ q w from (q_pos hw).le))
+  have hqz : (euclideanNorm z : ℂ) ^ 2 = (q z : ℂ) := by
+    exact_mod_cast (Real.sq_sqrt (show 0 ≤ q z from (q_pos hz).le))
+  have huw : (euclideanNorm w : ℂ) ≠ 0 := by
+    exact_mod_cast (ne_of_gt (Real.sqrt_pos.2 (q_pos hw)))
+  have huz : (euclideanNorm z : ℂ) ≠ 0 := by
+    exact_mod_cast (ne_of_gt (Real.sqrt_pos.2 (q_pos hz)))
+  rw [abs_crossProduct w, abs_crossProduct z]
+  simp only [if_neg hw, if_neg hz]
+  simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Matrix.trace_smul]
+  have hs' : (Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹ = (1 / 2 : ℂ) := by
+    simpa [pow_two] using hs
+  rw [hs']
+  rw [complement_trace_product, vec_trace, vec_trace, vec_product_trace]
+  rw [← hqw, ← hqz]
+  have hcancel₁ :
+      (euclideanNorm w : ℂ) * (euclideanNorm z : ℂ) *
+          (star w ⬝ᵥ z) * (star z ⬝ᵥ w) *
+          (euclideanNorm w : ℂ)⁻¹ * (euclideanNorm z : ℂ)⁻¹ =
+        (star w ⬝ᵥ z) * (star z ⬝ᵥ w) := by
+    calc
+      _ = ((star w ⬝ᵥ z) * (star z ⬝ᵥ w)) *
+          ((euclideanNorm w : ℂ) * (euclideanNorm w : ℂ)⁻¹) *
+          ((euclideanNorm z : ℂ) * (euclideanNorm z : ℂ)⁻¹) := by ring
+      _ = _ := by rw [mul_inv_cancel₀ huw, mul_inv_cancel₀ huz]; ring
+  have hcancel₂ :
+      (euclideanNorm w : ℂ) ^ 3 * (euclideanNorm z : ℂ) ^ 3 *
+          (euclideanNorm w : ℂ)⁻¹ * (euclideanNorm z : ℂ)⁻¹ =
+        (euclideanNorm w : ℂ) ^ 2 * (euclideanNorm z : ℂ) ^ 2 := by
+    calc
+      _ = ((euclideanNorm w : ℂ) ^ 2 * (euclideanNorm z : ℂ) ^ 2) *
+          ((euclideanNorm w : ℂ) * (euclideanNorm w : ℂ)⁻¹) *
+          ((euclideanNorm z : ℂ) * (euclideanNorm z : ℂ)⁻¹) := by ring
+      _ = _ := by rw [mul_inv_cancel₀ huw, mul_inv_cancel₀ huz]; ring
+  field_simp [huw, huz]
+  change 2 * (euclideanNorm w : ℂ) * (euclideanNorm z : ℂ) *
+      ((1 / 2 : ℂ) *
+        (((euclideanNorm w : ℂ) ^ 2 * (euclideanNorm z : ℂ) ^ 2 * (3 - 1 - 1) +
+          (star w ⬝ᵥ z) * (star z ⬝ᵥ w)) /
+          ((euclideanNorm w : ℂ) * (euclideanNorm z : ℂ)))) =
+    (euclideanNorm w : ℂ) ^ 2 * (euclideanNorm z : ℂ) ^ 2 +
+      (star w ⬝ᵥ z) * (star z ⬝ᵥ w)
+  field_simp [huw, huz]
+  ring
+
 private theorem markov_bound {m₁ m₂ : ℕ} (K₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ) (K₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ)
     (h₁ : IsKrausDecomposition K₁) (h₂ : IsKrausDecomposition K₂) :
     markovFidelity K₁ K₂ ≤ 1 / 2 := by
