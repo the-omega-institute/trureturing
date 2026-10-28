@@ -1,9 +1,8 @@
 # Recursive relational observation: effective finite advice for the original calibrated qutrit stopping interface
 
-> Append-only reference input for `generic-v1`. The results below are ordinary
-> conditional mathematical proofs, without a claim of Lean verification,
-> physical installation or literature priority. Existing source statements
-> retain their original hypotheses and boundaries.
+> The results below are ordinary conditional mathematical proofs, without a
+> claim of Lean verification, physical installation or literature priority.
+> Existing source statements retain their original hypotheses and boundaries.
 
 ## 1. The effective consumer and the source contract
 
@@ -706,7 +705,7 @@ not renamed as newly discovered control or probability principles.
 | Supplier | Exact contribution and boundary |
 | --- | --- |
 | Predictive Waves V §§54, 91, 95; VI §§95–100 | Original source, sole preparation, positive-word projective density, stopping authority, complete leaf law, existence/supplied-advice result and the explicit VI 99.3 effective-synthesis gap. VI 97–100 retain their uniform-cost, ternary, calibration and common-implementation boundaries. |
-| `D5/S3/Quantum/Measurement/OriginalSingleTerminalTernaryObstruction.lean`, with `Blueprint/D5/S3/Quantum/Measurement/OriginalSingleTerminalTernaryObstruction.scribe.cs` | `fixedStoppingTree` takes a checkpoint and stop function already supplied. `complete_original_single_terminal_ternary_obstruction` supplies the general complete-tree leaf identities, code-sector equality and ternary boundary. It does not synthesize the stop function from computable model/target names. This is a source correspondence, not a fresh build or kernel check. |
+| `D5/S3/Quantum/Measurement/OriginalSingleTerminalTernaryObstruction.lean`, with `Blueprint/D5/S3/Quantum/Measurement/OriginalSingleTerminalTernaryObstruction.scribe.cs` | `fixedStoppingTree` takes a checkpoint and stop function already supplied. `complete_original_single_terminal_ternary_obstruction` supplies the general complete-tree leaf identities, code-sector equality and ternary boundary. It does not synthesize the stop function from computable model/target names. |
 | `D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.lean`, with its same-named owning Scribe | `OriginalCodeRealization` and `original_code_service_simulation` require supplied original code and its realization equation in a native service domain. They do not install this quantum stopping interface, compute its table or transfer native rights and costs to it. |
 | Predictive Waves VI §§101–106, 110–111 | Later record-retention/coherent extensions and the nonselective contraction consumer have their own additional interfaces. Their existence does not turn the present original terminal into a postmeasurement instrument or supply a model-to-advice compiler. None of those additional ports is assumed here. |
 | Atomic Generation Acquisition III §16.3; Native Leaf Boundary Acquisition IV §117; Process Geometry §§1–2 | A common apparatus must preserve preparations, legal actions, actual returns and successors, plus rights when claimed. The code-sector intertwiner above is such an exact correspondence within one quantum source, not a map from native/path/continuous processes to that source. |
@@ -731,17 +730,14 @@ domains from the source-specific application proved here.
 | Halil-Shah–Oi, [arXiv:1401.8004v1, §II](https://arxiv.org/html/1401.8004v1) | Fixed programmes, stochastic gate products and target-error stopping already occur with the paper's actual ancilla preparation and coupling. They do not by themselves give this original qutrit's target-independent timetable, retained table or complete finite-timeout error certificate. |
 | Dawson–Nielsen, [arXiv:quant-ph/0505030v2, Definition 1 and the Solovay–Kitaev algorithm](https://arxiv.org/html/quant-ph/0505030v2) | Constructive gate approximation for its finite selectable inverse-closed universal gate set. That library and its efficiency bounds are not the present uncontrolled $\mathsf J$ labels and single repeated $N$. |
 | Bouland–Giurgică-Tiron, [arXiv:2112.02040v1, introduction](https://arxiv.org/html/2112.02040v1) | Inverse-free universal compilation is an established subject; absence of installed inverses is not a generic impossibility argument. Here the reference word is only a stochastic path witness. Lawful use still requires the finite fixed schedule and stopping tree proved above. No efficiency result from this paper is imported. |
-| Pinned mathlib revision `56a005855ea17e0b0958f73ec801ae140b0a1679`, [`Mathlib/Analysis/Matrix/Normed.lean`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/Matrix/Normed.lean) and [`Mathlib/Computability/Partrec.lean`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Computability/Partrec.lean) | Frobenius norm calculus and ordinary partial-recursive search/minimization are existing tools. They do not provide an installed-source representation or the source-specific advice-to-run proof. Reading them supplies no Lean verification of this manuscript. |
+| Pinned mathlib revision `56a005855ea17e0b0958f73ec801ae140b0a1679`, [`Mathlib/Analysis/Matrix/Normed.lean`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/Matrix/Normed.lean) and [`Mathlib/Computability/Partrec.lean`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Computability/Partrec.lean) | Frobenius norm calculus and ordinary partial-recursive search/minimization are existing tools. They do not provide an installed-source representation or the source-specific advice-to-run proof. |
 
 The classification of the application in §§2–8 is `repo-derived`:
 it combines the exact source density and stopping suppliers with
 effective arithmetic and verifies the missing generation, retention
 and use bridge. No global novelty or priority assertion is made.
-The mathematical exposition uses the formal-thinking-and-answer and
-theory-volume-template workflows under a theory-only remit; its
-derivations are external Codex CLI authorship. Its evidence consists
-of the stated conditional proofs and cited suppliers, without new
-formal verification or experimental evidence.
+Its evidence consists of the stated conditional proofs and cited suppliers,
+without a claim of formal verification or experimental validation.
 
 **Remaining obligations.** The gain toward a common-process account is
 bounded: finite accurate descriptions now produce an actually retained
