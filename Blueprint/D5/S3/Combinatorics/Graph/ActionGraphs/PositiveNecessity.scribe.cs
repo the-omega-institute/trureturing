@@ -110,13 +110,14 @@ internal sealed class PositiveNecessityDocument : IScribeDocumentDefinition
         Formula descendantType = Descendants(n, v);
         Formula restricted = LambdaOf("a", descendantType,
             LambdaOf("b", descendantType, Edge(n, First(F.Id("a")), First(F.Id("b")))));
+        Formula rootEquation = Equal(Call("e", Call("root", k)),
+            Seq(Langle, Sp, v, Comma,
+                Seq(Qualified("Relation", "ReflTransGen"), Dot, Named("refl")), Rangle));
+        Formula shiftedLabels = Some("shift", Naturals(), All("w", Call("V", k),
+            Equal(Call("label", n, First(Call("e", w))), Add(Call("label", k, w), F.Id("shift")))));
         Formula subtrees = All("n", Naturals(), All("v", Call("V", n),
             Some("k", Naturals(), And(Leq(k, n),
-                Some("e", Call("RelIso", Adj(k), restricted),
-                    And(Equal(Call("e", Call("root", k)),
-                        Seq(Langle, v, Comma, Seq(Qualified("Relation", "ReflTransGen"), Dot, Named("refl")), Rangle)),
-                        Some("shift", Naturals(), All("w", Call("V", k),
-                            Equal(Call("label", n, First(Call("e", w))), Add(Call("label", k, w), F.Id("shift"))))))))));
+                Some("e", Call("RelIso", Adj(k), restricted), And(rootEquation, shiftedLabels))))));
         Formula leaves = All("n", Naturals(), All("v", Call("V", n),
             Implies(All("w", Call("V", n), new Formula.Not(Edge(n, v, w))), Equal(Call("label", n, v), n))));
         Formula body = And(trees, And(And(initial, growth), And(subtrees, leaves)));

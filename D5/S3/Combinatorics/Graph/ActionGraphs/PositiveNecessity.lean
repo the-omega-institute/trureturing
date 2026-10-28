@@ -104,41 +104,35 @@ private theorem path_family_legal :
       omega
   · intro n v
     refine ⟨n - v.val, Nat.sub_le _ _, ?_⟩
-    let f : Fin (n - v.val + 1) →
-        {w : Fin (n + 1) // ReflTransGen CovBy v w} := fun j =>
-      ⟨⟨v.val + j.val, by have := v.isLt; have := j.isLt; omega⟩,
-        le_iff_reflTransGen_covBy.mp (by change v.val ≤ v.val + j.val; omega)⟩
-    have hf : Function.Bijective f := by
-      constructor
-      · intro a b h
-        apply Fin.ext
-        have := congrArg (fun x => x.val.val) h
-        dsimp [f] at this
-        omega
-      · intro w
-        have hw : v ≤ w.val := le_iff_reflTransGen_covBy.mpr w.property
-        change v.val ≤ w.val.val at hw
-        refine ⟨⟨w.val.val - v.val, by have := w.val.isLt; omega⟩, ?_⟩
-        apply Subtype.ext
-        apply Fin.ext
-        dsimp [f]
-        omega
+    let f : Fin (n - v.val + 1) ↪ Fin (n + 1) :=
+      Fin.natAdd_castLEEmb (by omega)
+    have hf : Set.range f = {w : Fin (n + 1) | ReflTransGen CovBy v w} := by
+      rw [Fin.range_natAdd_castLEEmb]
+      ext w
+      rw [Set.mem_ofPred_eq, Set.mem_ofPred_eq, ← le_iff_reflTransGen_covBy]
+      change n + 1 - (n - v.val + 1) ≤ w.val ↔ v.val ≤ w.val
+      have := v.isLt
+      omega
     let e : CovBy (α := Fin (n - v.val + 1)) ≃r
         (fun a b : {w : Fin (n + 1) // ReflTransGen CovBy v w} =>
           a.val ⋖ b.val) :=
-      { Equiv.ofBijective f hf with
+      { (Equiv.ofInjective f f.injective).trans (Set.equivOfEq hf) with
         map_rel_iff' := by
           intro a b
-          change (f a).val ⋖ (f b).val ↔ a ⋖ b
+          change f a ⋖ f b ↔ a ⋖ b
           simp only [Fin.covBy_iff, Nat.covBy_iff_add_one_eq]
-          dsimp [f]
+          change a.val + (n + 1 - (n - v.val + 1)) + 1 =
+            b.val + (n + 1 - (n - v.val + 1)) ↔ a.val + 1 = b.val
           omega }
     refine ⟨e, ?_, v.val, ?_⟩
     · apply Subtype.ext
       apply Fin.ext
-      simp [e, f]
+      change 0 + (n + 1 - (n - v.val + 1)) = v.val
+      have := v.isLt
+      omega
     · intro w
-      change v.val + w.val = w.val + v.val
+      change w.val + (n + 1 - (n - v.val + 1)) = w.val + v.val
+      have := v.isLt
       omega
   · intro n v hv
     change (∀ w, ¬ v ⋖ w) at hv
