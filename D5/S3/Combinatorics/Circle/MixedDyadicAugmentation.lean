@@ -46,7 +46,7 @@ private theorem descent_of_perm {k t : ℕ} (W V I R : List (Fin k))
       have h4 := hR a
       simp only [List.mem_toFinset, Finset.mem_sdiff]
       tauto
-  have hmass {β : Type*} [AddCommMonoid β] (w : Fin k → β) :
+  have hmass {β : Type} [AddCommMonoid β] (w : Fin k → β) :
       mass w V + mass w R = mass w W + mass w I := by
     simpa [mass] using (hperm.map w).sum_eq
   have hRzero : largeUsed k t R = 0 := by

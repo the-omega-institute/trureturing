@@ -7,6 +7,7 @@
    digest: Every legal reset word decomposes into positive exact-height blocks. -/
 module
 public import D5.S3.Combinatorics.Circle.TwoOppositeLargeExchange
+import all D5.S3.Combinatorics.Circle.ThreeBitSource
 
 /-! Reset decomposition retains the original lists of physical occurrences. -/
 set_option autoImplicit false
@@ -26,7 +27,7 @@ def Positive {α : Type*} (f : α → ℤ) (L : List α) : Prop :=
 def Complete {α : Type*} (f : α → ℤ) (M : ℤ) (P : List (List α × α)) : Prop :=
   ∀ p ∈ P, Positive f p.1 ∧ mass f p.1 = M ∧ f p.2 = -M
 
-private theorem complete_mass {α : Type*} {f : α → ℤ} {M : ℤ}
+theorem complete_mass {α : Type*} {f : α → ℤ} {M : ℤ}
     {P : List (List α × α)} (hP : Complete f M P) : mass f (packets P) = 0 := by
   induction P with
   | nil => simp [packets, mass]
@@ -38,6 +39,28 @@ private theorem complete_mass {α : Type*} {f : α → ℤ} {M : ℤ}
       List.map_nil, List.sum_nil, add_zero]
     change mass f p.1 + f p.2 + mass f (packets P) = 0
     rw [hp, hz, ht]; ring
+
+/-- Positive monotonicity controls every interior prefix of every complete
+packet, and each actual reset returns its endpoint to zero. -/
+theorem complete_strip {α : Type*} {f : α → ℤ} {M : ℤ}
+    {P : List (List α × α)} (hM : 0 ≤ M) (hP : Complete f M P) :
+    InStrip f M 0 (packets P) := by
+  induction P with
+  | nil => simpa [packets, InStrip] using hM
+  | cons p P ih =>
+    obtain ⟨hpos, hmass, hneg⟩ := hP p (by simp)
+    have ht := ih (fun q hq => hP q (by simp [hq]))
+    have hs : InStrip f M 0 p.1 := ThreeBitSource.positive_block_strip
+      (fun a ha => le_of_lt (hpos a ha)) (le_refl 0) (by simpa [mass] using le_of_eq hmass)
+    have hsz : InStrip f M (0 + mass f p.1) [p.2] := by
+      rw [hmass]
+      simpa [InStrip, hneg] using hM
+    have hblock := inStrip_append hs hsz
+    change InStrip f M 0 ((p.1 ++ [p.2]) ++ packets P)
+    apply inStrip_append hblock
+    have hz : mass f (p.1 ++ [p.2]) = 0 := by simp [mass] at hmass ⊢; omega
+    change InStrip f M (0 + mass f (p.1 ++ [p.2])) (packets P)
+    simpa only [hz, add_zero] using ht
 
 /-- The reset height and every positive block are derived from all-prefix
 legality; no placement or arrival hypothesis is assumed. -/

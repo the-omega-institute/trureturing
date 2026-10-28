@@ -1,0 +1,207 @@
+/- GID: D5/S3/Combinatorics/Circle/DyadicResetWords
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Circle/DyadicResetWords
+   mirror-E: none(waiver:audit-open-22063)
+   anchors: [mathlib/module/Mathlib.Data.List.OfFn]
+   utility: none
+   digest: A physical dyadic allocation assembles exact reset packets and all their prefixes. -/
+module
+public import D5.S3.Combinatorics.Circle.DyadicResetBlocks
+public import D5.S3.Combinatorics.Transportation.DyadicAllocation
+import all D5.S3.Combinatorics.Circle.ThreeBitSource
+import Mathlib.Data.List.OfFn
+
+/-! Bin labels are concatenated with their actual reset occurrences. -/
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+@[expose] public section
+namespace D5.S3.Combinatorics.Circle.DyadicResetWords
+open List SourceWidth MixedSuffixEnergy DyadicResetBlocks
+open D5.S3.Combinatorics.Transportation.DyadicAllocation
+open scoped BigOperators
+
+/-- The same allocated physical coins and the same supplied reset occurrences
+form a legal word. Every bin is used once, including the zero-capacity tail. -/
+theorem word_of_allocation {α : Type*} [DecidableEq α]
+    (f : α → ℤ) (S : Finset α) (e : α → ℕ) (Z : List α) (M h : ℕ)
+    (hcap : h ≤ M) (hpos : ∀ a ∈ S, f a = (2 : ℤ) ^ e a)
+    (hneg : ∀ a ∈ Z, f a = -(M : ℤ))
+    (hal : Allocation S e (fun i : Fin Z.length ⊕ Unit =>
+      Sum.elim (fun _ => M) (fun _ => h) i)) :
+    ∃ V : List α, V.Perm (S.toList ++ Z) ∧ InStrip f M 0 V := by
+  classical
+  obtain ⟨K, hKS, hKD, hKC, hKb⟩ := hal
+  let ids : List (Fin Z.length ⊕ Unit) :=
+    (List.finRange Z.length).map Sum.inl ++ [Sum.inr ()]
+  have hids : ∀ i, i ∈ ids := by
+    intro i
+    cases i with
+    | inl i => simp [ids]
+    | inr i => cases i; simp [ids]
+  have hidsN : ids.Nodup := by
+    apply List.Nodup.append
+    · exact (List.nodup_finRange Z.length).map Sum.inl_injective
+    · simp
+    · apply List.disjoint_left.mpr
+      intro i hi hj
+      simp only [List.mem_singleton] at hj
+      subst i
+      simp at hi
+  let F := ids.flatMap (fun i => (K i).toList)
+  have hFN : F.Nodup := by
+    apply List.nodup_flatMap.mpr
+    refine ⟨fun i _ => Finset.nodup_toList _, ?_⟩
+    apply hidsN.pairwise_of_forall_ne
+    intro i _ j _ hij
+    apply List.disjoint_left.mpr
+    intro a ha hb
+    exact Finset.disjoint_left.mp (hKD i j hij)
+      (Finset.mem_toList.mp ha) (Finset.mem_toList.mp hb)
+  have hFP : F.Perm S.toList := by
+    apply (List.perm_ext_iff_of_nodup hFN (Finset.nodup_toList S)).mpr
+    intro a
+    simp only [F, List.mem_flatMap, Finset.mem_toList]
+    constructor
+    · rintro ⟨i, _, ha⟩
+      exact hKS i ha
+    · intro ha
+      obtain ⟨i, hi⟩ := hKC a ha
+      exact ⟨i, hids i, hi⟩
+  have hmass (i : Fin Z.length ⊕ Unit) :
+      mass f (K i).toList =
+        (Sum.elim (fun _ : Fin Z.length => M) (fun _ : Unit => h) i : ℕ) := by
+    calc
+      mass f (K i).toList = ∑ a ∈ K i, f a := by simp [mass]
+      _ = ∑ a ∈ K i, (2 : ℤ) ^ e a := by
+        apply Finset.sum_congr rfl
+        intro a ha
+        exact hpos a (hKS i ha)
+      _ = ((∑ a ∈ K i, (2 : ℕ) ^ e a) : ℕ) := by push_cast; rfl
+      _ = _ := by rw [hKb i]
+  have hpositive (i : Fin Z.length ⊕ Unit) : Positive f (K i).toList := by
+    intro a ha
+    rw [hpos a (hKS i (Finset.mem_toList.mp ha))]
+    positivity
+  let P : List (List α × α) := List.ofFn
+    (fun i : Fin Z.length => ((K (Sum.inl i)).toList, Z.get i))
+  let T := (K (Sum.inr ())).toList
+  have hP : Complete f M P := by
+    intro p hp
+    obtain ⟨i, rfl⟩ := List.mem_ofFn.mp hp
+    exact ⟨hpositive (Sum.inl i), hmass (Sum.inl i), hneg _ (List.get_mem Z i)⟩
+  have hsP := complete_strip (by positivity : (0 : ℤ) ≤ M) hP
+  have hsT : InStrip f M 0 T := ThreeBitSource.positive_block_strip
+    (fun a ha => le_of_lt (hpositive (Sum.inr ()) a ha)) (le_refl 0)
+    (by have ht := hmass (Sum.inr ()); dsimp [T]; simpa [mass] using ht.le.trans (by exact_mod_cast hcap))
+  have hzero := complete_mass hP
+  have hZ : P.map Prod.snd = Z := by simpa only [P, List.map_ofFn, Function.comp_def] using List.ofFn_get Z
+  have hF : P.flatMap Prod.fst ++ T = F := by
+    simp [P, T, F, ids, List.flatMap_append, List.flatMap_map,
+      List.finRange, List.flatMap, List.map_ofFn, Function.comp_def]
+  have hpack : (packets P).Perm (P.flatMap Prod.fst ++ P.map Prod.snd) := by
+    simpa [packets, ← List.map_eq_flatMap] using
+      (List.flatMap_append_perm P Prod.fst (fun p => [p.2])).symm
+  refine ⟨packets P ++ T, ?_, inStrip_append hsP (show InStrip f M (0 + mass f (packets P)) T from by simpa only [hzero, add_zero] using hsT)⟩
+  calc
+    packets P ++ T ~ (P.flatMap Prod.fst ++ P.map Prod.snd) ++ T := hpack.append_right T
+    _ ~ (P.flatMap Prod.fst ++ T) ++ P.map Prod.snd := by
+      simpa only [List.append_assoc] using
+        (List.Perm.refl (P.flatMap Prod.fst)).append (List.perm_append_comm :
+          (P.map Prod.snd ++ T).Perm (T ++ P.map Prod.snd))
+    _ ~ S.toList ++ Z := by rw [hF, hZ]; exact hFP.append_right Z
+
+/-- The positive blocks of an actual legal word give an allocation of precisely
+its positive labels. No allocation is assumed in the word decomposition. -/
+theorem allocation_of_blocks {α : Type*} [DecidableEq α]
+    (f : α → ℤ) (e : α → ℕ) (P : List (List α × α)) (T : List α) (M h : ℕ)
+    (hW : (packets P ++ T).Nodup) (hP : Complete f M P)
+    (hT : Positive f T) (htmass : mass f T = h)
+    (hval : ∀ a ∈ P.flatMap Prod.fst ++ T, f a = (2 : ℤ) ^ e a) :
+    Allocation (P.flatMap Prod.fst ++ T).toFinset e
+      (fun i : Fin P.length ⊕ Unit => Sum.elim (fun _ => M) (fun _ => h) i) := by
+  classical
+  have hpack : (packets P).Perm (P.flatMap Prod.fst ++ P.map Prod.snd) := by
+    simpa [packets, ← List.map_eq_flatMap] using
+      (List.flatMap_append_perm P Prod.fst (fun p => [p.2])).symm
+  have hperm : (packets P ++ T).Perm ((P.flatMap Prod.fst ++ T) ++ P.map Prod.snd) := by
+    exact (hpack.append_right T).trans (by
+      simpa only [List.append_assoc] using (List.Perm.refl (P.flatMap Prod.fst)).append
+        (List.perm_append_comm : (P.map Prod.snd ++ T).Perm (T ++ P.map Prod.snd)))
+  have hN : (P.flatMap Prod.fst ++ T).Nodup :=
+    (List.nodup_append.mp (hperm.nodup_iff.mp hW)).1
+  obtain ⟨hflatN, hTN, hflatT⟩ := List.nodup_append'.mp hN
+  have hmap : List.ofFn (fun i : Fin P.length => (P.get i).1) = P.map Prod.fst := by
+    simpa only [List.map_ofFn, Function.comp_def] using congrArg (List.map Prod.fst) (List.ofFn_get P)
+  have hFN : (List.ofFn (fun i : Fin P.length => (P.get i).1)).flatten.Nodup := by
+    rw [hmap]
+    simpa only [List.flatMap] using hflatN
+  obtain ⟨hbinN, hpair⟩ := List.nodup_flatten.mp hFN
+  have hpair' := List.pairwise_ofFn.mp hpair
+  let L : Fin P.length ⊕ Unit → List α :=
+    Sum.elim (fun i => (P.get i).1) (fun _ => T)
+  have hLS : ∀ i, ∀ a ∈ L i, a ∈ P.flatMap Prod.fst ++ T := by
+    intro i a ha
+    cases i with
+    | inl i =>
+      apply List.mem_append_left
+      exact List.mem_flatMap.mpr ⟨P.get i, List.get_mem P i, ha⟩
+    | inr i => exact List.mem_append_right _ ha
+  have hLN : ∀ i, (L i).Nodup := by
+    intro i
+    cases i with
+    | inl i => exact hbinN _ (List.mem_ofFn.mpr ⟨i, rfl⟩)
+    | inr i => exact hTN
+  have hLD : ∀ i j, i ≠ j → List.Disjoint (L i) (L j) := by
+    intro i j hij
+    cases i with
+    | inl i =>
+      cases j with
+      | inl j =>
+        have hne : i ≠ j := fun he => hij (congrArg Sum.inl he)
+        rcases lt_or_gt_of_ne hne with h | h
+        · exact hpair' h
+        · exact (hpair' h).symm
+      | inr j =>
+        apply List.disjoint_left.mpr
+        intro a ha hb
+        exact List.disjoint_left.mp hflatT
+          (List.mem_flatMap.mpr ⟨P.get i, List.get_mem P i, ha⟩) hb
+    | inr i =>
+      cases j with
+      | inl j =>
+        apply List.disjoint_left.mpr
+        intro a ha hb
+        exact List.disjoint_left.mp hflatT
+          (List.mem_flatMap.mpr ⟨P.get j, List.get_mem P j, hb⟩) ha
+      | inr j => exact False.elim (hij (congrArg Sum.inr (Subsingleton.elim i j)))
+  refine ⟨fun i => (L i).toFinset, ?_, ?_, ?_, ?_⟩
+  · intro i a ha
+    exact List.mem_toFinset.mpr (hLS i a (List.mem_toFinset.mp ha))
+  · intro i j hij
+    exact List.disjoint_toFinset.mpr (hLD i j hij)
+  · intro a ha
+    rcases List.mem_append.mp (List.mem_toFinset.mp ha) with ha | ha
+    · obtain ⟨p, hp, hap⟩ := List.mem_flatMap.mp ha
+      obtain ⟨i, hi⟩ := List.mem_iff_get.mp hp
+      refine ⟨Sum.inl i, List.mem_toFinset.mpr ?_⟩
+      simpa [L, hi] using hap
+    · exact ⟨Sum.inr (), List.mem_toFinset.mpr ha⟩
+  · intro i
+    have hm : mass f (L i) =
+        (Sum.elim (fun _ : Fin P.length => M) (fun _ : Unit => h) i : ℕ) := by
+      cases i with
+      | inl i => exact (hP _ (List.get_mem P i)).2.1
+      | inr i => exact htmass
+    have hs : (∑ a ∈ (L i).toFinset, (2 : ℤ) ^ e a) = mass f (L i) := by
+      rw [← List.sum_toFinset f (hLN i)]
+      apply Finset.sum_congr rfl
+      intro a ha
+      exact (hval a (hLS i a (List.mem_toFinset.mp ha))).symm
+    have hs' : ((∑ a ∈ (L i).toFinset, (2 : ℕ) ^ e a) : ℤ) =
+        (Sum.elim (fun _ : Fin P.length => M) (fun _ : Unit => h) i : ℕ) := by
+      push_cast
+      exact hs.trans hm
+    exact_mod_cast hs'
+
+end D5.S3.Combinatorics.Circle.DyadicResetWords
