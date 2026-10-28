@@ -36,51 +36,9 @@ theorem tensor_jump_intertwining (c a k S : ℝ) (g : Fin 5 → ℝ) (i : Fin 5)
 
 private theorem leg_scalar_integrable (L : Leg) (i : Fin 5) :
     IntegrableOn (fun t => L.density t i) (Ioc 0 L.duration) := by
-  obtain ⟨_,_,_,_,_,_,hS,hprob,_⟩ := L.affine_marked_probability 0 0 0 (fun _ => 0)
-  have hk : Continuous L.height := continuous_iff_continuousAt.mpr
-    (fun t => (L.height_deriv t).continuousAt)
-  have hp : Measurable (fun t => p L.c (L.height t) i) := by
-    simp only [p_explicit]
-    fin_cases i <;> fun_prop
-  have hh : Measurable L.hazard := by unfold Leg.hazard; fun_prop
-  have hr : Measurable (fun t => L.jumpRate t i) :=
-    hh.sub (measurable_deriv _)
-  have hsc : ContinuousOn L.survival (Icc 0 L.duration) := by
-    have hi : IntervalIntegrable L.hazard volume 0 L.duration :=
-      (L.hazard_cont).intervalIntegrable_of_Icc L.duration_pos.le
-    have hc := (intervalIntegral.continuousOn_primitive_interval' hi
-      (left_mem_uIcc : (0:ℝ) ∈ uIcc 0 L.duration)).neg.rexp
-    change ContinuousOn (fun t : ℝ => Real.exp (-(∫ u in (0:ℝ)..t, L.hazard u)))
-      (Icc 0 L.duration)
-    simpa only [uIcc_of_le L.duration_pos.le, Pi.neg_apply] using hc
-  have hm : AEStronglyMeasurable (fun t => L.density t i)
-      (volume.restrict (Ioc 0 L.duration)) := by
-    exact ((hr.aestronglyMeasurable.mul
-      ((hsc.mono Ioc_subset_Icc_self).aestronglyMeasurable measurableSet_Ioc)).mul
-        hp.aestronglyMeasurable)
-  have hn : 0 ≤ᵐ[volume.restrict (Ioc 0 L.duration)] (fun t => L.density t i) := by
-    filter_upwards [ae_restrict_mem measurableSet_Ioc] with t ht
-    exact mul_nonneg (mul_nonneg (L.jumpRate_nonneg t ⟨ht.1.le,ht.2⟩ i)
-      (Real.exp_pos _).le) (p_pos _ _ L.c_lt (L.height_bounds t ⟨ht.1.le,ht.2⟩) i).le
-  apply (lintegral_ofReal_ne_top_iff_integrable hm hn).mp
-  have hmode : L.modeMeasure i univ ≤ L.markedLaw univ := by
-    have he (j : Fin 5) :
-        ((L.modeMeasure j).map (fun t => (Sum.inr (j,t) : Leg.Record))) univ =
-          L.modeMeasure j univ := by
-      have hm : Measurable (fun t : ℝ => (Sum.inr (j,t) : Leg.Record)) :=
-        measurable_inr.comp (measurable_const.prodMk measurable_id)
-      rw [Measure.map_apply hm MeasurableSet.univ]
-      simp
-    simp only [Leg.markedLaw, Measure.add_apply, Measure.finsetSum_apply, he]
-    calc
-      L.modeMeasure i univ ≤ ∑ j : Fin 5, L.modeMeasure j univ :=
-        Finset.single_le_sum (f := fun j : Fin 5 => L.modeMeasure j univ)
-          (fun j _ => bot_le) (Finset.mem_univ i)
-      _ ≤ _ := le_add_of_nonneg_left bot_le
-  haveI := hprob
-  have hf : L.modeMeasure i univ ≠ ⊤ := ne_top_of_le_ne_top (by simp) hmode
-  simpa only [Leg.modeMeasure, withDensity_apply _ MeasurableSet.univ,
-    Measure.restrict_univ] using hf
+  exact (intervalIntegral.intervalIntegrable_iff_integrableOn_Ioc_of_le
+    L.duration_pos.le).mp
+      ((L.density_cont i).intervalIntegrable_of_Icc L.duration_pos.le)
 
 /-- The actual original affine-leg failure density is Bochner integrable in the
 trace norm for every reference, and every Borel subevent retains that reference. -/
