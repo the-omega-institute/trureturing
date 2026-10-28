@@ -13,6 +13,20 @@ internal sealed class SelectedRootCommonZeroDocument : IScribeDocumentDefinition
         Paragraph(Text("The exact source normalization then gives both original formal Jacobian numerators zero. The nonzero regular source denominator allows the fixed-minor relation for all twenty-eight shifted rows in columns r^28 through 1 to be applied at these coordinates. The clock-seven source read remains distinct from the absolute-clock-eight M read.")),
         Paragraph(Text("These equations do not identify the candidate A,C arrays with the actual primitive normalized fixed minors, prove that the chosen literal minor is nonzero, establish the common factor h at the selected root, or identify the full original W3 coefficient world and its response center. Those additional identities are separate conditions for the full W3 identification.")),
         Describe.Lean(
+            DescribeId.Create("cubic-gain-integer-list-value"),
+            DeclarationHandle.Create("D5/S3/Observer/CubicGain/SelectedRootCommonZero.value"),
+            H("integer coefficient evaluation"),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For an arbitrary commutative ring R, an element x of R, and an ascending integer coefficient list, value evaluates the associated polynomial by Horner recursion. The empty list has value zero; a head coefficient c and tail cs have value c+x value(x,cs)."))),
+            DescribeRole.Definition),
+        Describe.Lean(
+            DescribeId.Create("cubic-gain-integer-list-mass"),
+            DeclarationHandle.Create("D5/S3/Observer/CubicGain/SelectedRootCommonZero.mass"),
+            H("integer coefficient mass"),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The mass of an integer coefficient list is the sum of the absolute values of its entries. It bounds the absolute value of polynomial evaluation on the real unit interval."))),
+            DescribeRole.Definition),
+        Describe.Lean(
             DescribeId.Create("cubic-gain-selected-root-common-zero"),
             DeclarationHandle.Create("D5/S3/Observer/CubicGain/SelectedRootCommonZero.selected_root_common_zero"),
             H("literal selected-root equations and fixed-minor relation"),

@@ -25,7 +25,7 @@ private def cmul : List ℤ → List ℤ → List ℤ
   | [], _ => []
   | a :: p, q => cadd (q.map (a * ·)) (0 :: cmul p q)
 
-private def value {R : Type*} [CommRing R] (x : R) : List ℤ → R
+def value {R : Type*} [CommRing R] (x : R) : List ℤ → R
   | [] => 0
   | c :: cs => (c : R) + x * value x cs
 
@@ -53,7 +53,7 @@ private theorem value_mul {R : Type*} [CommRing R] (x : R) (p q : List ℤ) :
     simp only [Int.cast_zero, zero_add]
     ring
 
-private def mass : List ℤ → ℕ
+def mass : List ℤ → ℕ
   | [] => 0
   | a :: p => a.natAbs + mass p
 
