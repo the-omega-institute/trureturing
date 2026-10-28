@@ -20,10 +20,10 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
                 + "finite set discards them. All cardinalities below count output words. All scalar indices are natural numbers.")),
             Node("endpointWord", "Two endpoint ones", DescribeRole.Definition,
                 Equal(Call("endpointWord", F.Id("m")),
-                    Call("List.append",
-                        Call("List.append", Call("List.singleton", F.Id("true")),
-                            Call("List.replicate", F.Id("m"), F.Id("false"))),
-                        Call("List.singleton", F.Id("true")))),
+                    Qualified("List", "append",
+                        Qualified("List", "append", Qualified("List", "singleton", F.Id("true")),
+                            Qualified("List", "replicate", F.Id("m"), F.Id("false"))),
+                        Qualified("List", "singleton", F.Id("true")))),
                 "The word consists of an initial one, m zeros and a final one. The value m=0 is allowed."),
             Node("endpointOutput", "Words parametrized by their outer gaps", DescribeRole.Definition,
                 Equal(Call("endpointOutput", F.Id("m"), F.Id("a"), F.Id("c")),
@@ -38,12 +38,12 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
                 + "the total number of zeros is 2m; for example m=0,a=1,c=0 gives middle gap zero."),
             Node("endpointFamily", "The finite rectangle of output words", DescribeRole.Definition,
                 Equal(Call("endpointFamily", F.Id("m")),
-                    Call("Finset.image",
+                    Qualified("Finset", "image",
                         Lambda("p", PairType(F.Id("m")),
                             Call("endpointOutput", F.Id("m"),
                                 Call("val", Call("fst", F.Id("p"))),
                                 Call("val", Call("snd", F.Id("p"))))),
-                        Parenthesized(Seq(Call("Finset.univ"), Colon, Sp,
+                        Parenthesized(Seq(Qualified("Finset", "univ"), Colon, Sp,
                             Call("Finset", PairType(F.Id("m"))))))),
                 "Take the image of Fin(m+1) times Fin(m+1) under the output map. "
                 + "The map binds p in the full finite product and casts both projections with val. "
@@ -101,10 +101,10 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
                 + "is (m+1)^2. This holds for every natural m, including m=0."),
             Node("binaryWord", "Ordinary binary numerals", DescribeRole.Definition,
                 Equal(Call("binaryWord", F.Id("n")),
-                    Call("List.map",
+                    Qualified("List", "map",
                         Lambda("d", NaturalType(),
                             Call("ite", Equal(F.Id("d"), Num(1)), F.Id("true"), F.Id("false"))),
-                        Call("List.reverse", Call("Nat.digits", Num(2), F.Id("n"))))),
+                        Qualified("List", "reverse", Qualified("Nat", "digits", Num(2), F.Id("n"))))),
                 "For positive n, use its ordinary finite base-two digits, reverse the "
                 + "least-significant-first list to put the most significant digit first, and "
                 + "map each natural digit d to true exactly when d=1, and to false otherwise. "
@@ -153,6 +153,9 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
     private static Formula Lambda(string name, Formula type, Formula body) =>
         Parenthesized(Seq(Operatorname, Grp(F.Id("fun")), Sp,
             Parenthesized(Seq(F.Id(name), Colon, Sp, type)), Sp, Mapsto, Sp, body));
+
+    private static Formula Qualified(string owner, string name, params Formula[] arguments) =>
+        new Formula.Apply(Seq(Operatorname, Grp(F.Id(owner), Dot, F.Id(name))), [.. arguments]);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
