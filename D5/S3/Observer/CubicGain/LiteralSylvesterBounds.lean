@@ -347,14 +347,15 @@ private theorem certificate_top_nonzero (k : Fin 2) : (![topR1,topR2] k).det ≠
 
 private theorem resultant_top_nonzero (k : Fin 2) :
     (actualResultant k).coeff 285 ≠ 0 := by
+  change (literalSylvester k).det.coeff 285 ≠ 0
   have hc := weighted_top_coeff (literalSylvester k) sylvesterWeight
     (fun j => 29-j.val) 285 31 (by decide +kernel) (by decide +kernel)
     (sylvester_entry_weight k)
-  have hb : (actualResultant k).coeff 285 = (sylvesterTop k).det :=
-    hc.trans (congrArg Matrix.det (sylvester_top_bridge k))
-  have hd : (sylvesterTop k).det = (![topR1,topR2] k).det :=
-    congrArg Matrix.det (sylvester_top_data k)
-  exact fun hz => certificate_top_nonzero k ((hb.trans hd).symm.trans hz)
+  have hb := congrArg (fun M : Matrix (Fin 30) (Fin 30) ℤ => M.det)
+    (sylvester_top_bridge k)
+  have hd := congrArg (fun M : Matrix (Fin 30) (Fin 30) ℤ => M.det)
+    (sylvester_top_data k)
+  exact fun hz => certificate_top_nonzero k ((hc.trans (hb.trans hd)).symm.trans hz)
 
 private def minorTop (constant : Bool) : Matrix (Fin 28) (Fin 28) ℤ :=
   fun i j => topEntry (if i.val < 14 then 0 else 1)

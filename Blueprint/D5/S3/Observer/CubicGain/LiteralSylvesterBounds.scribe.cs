@@ -38,9 +38,9 @@ internal sealed class LiteralSylvesterBoundsDocument : IScribeDocumentDefinition
     private static Formula ExactDegrees() => Disp(Seq(
         Open, Forall, Sp, F.Id("k"), InMacro, Sp, Call("Fin", D(2)), Comma, Sp,
         Call("natDegree", Call("actualResultant", F.Id("k"))), Eq, Sp, D(2,8,5), Close,
-        Land, Sp, Call("natDegree", Call("actualMinorA", D(0))), Eq, Sp, D(2,5,2),
-        Land, Sp, Call("natDegree", Call("actualMinorC", D(0))), Eq, Sp, D(2,5,3)));
+        Land, Sp, Call("natDegree", Seq(F.Id("a"), Underscore, Grp(D(0)))), Eq, Sp, D(2,5,2),
+        Land, Sp, Call("natDegree", Seq(F.Id("c"), Underscore, Grp(D(0)))), Eq, Sp, D(2,5,3)));
     private static Formula MinorBounds() => Disp(Seq(
-        Call("natDegree", Call("actualMinorA", D(0))), Leq, Sp, D(2,5,2), Land, Sp,
-        Call("natDegree", Call("actualMinorC", D(0))), Leq, Sp, D(2,5,3)));
+        Call("natDegree", Seq(F.Id("a"), Underscore, Grp(D(0)))), Leq, Sp, D(2,5,2), Land, Sp,
+        Call("natDegree", Seq(F.Id("c"), Underscore, Grp(D(0)))), Leq, Sp, D(2,5,3)));
 }
