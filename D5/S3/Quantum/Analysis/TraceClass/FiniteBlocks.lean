@@ -256,7 +256,4 @@ def tensorCoordinates : (EuclideanSpace ℂ ι ⊗[ℂ] H) ≃ₗᵢ[ℂ] Blocks
     tensorCoordinates (u ⊗ₜ[ℂ] x) i = u i • x :=
   tensorLinearEquiv_tmul u x i
 
-instance tensor_completeSpace : CompleteSpace (EuclideanSpace ℂ ι ⊗[ℂ] H) :=
-  (tensorCoordinates (H := H) (ι := ι)).toIsometryEquiv.completeSpace
-
 end TraceClassFiniteBlocks
