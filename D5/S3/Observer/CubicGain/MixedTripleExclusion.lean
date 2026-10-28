@@ -300,7 +300,10 @@ private theorem norm_first (W : World3) (a₀ j m : ℝ)
     D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
     nr, Matrix.mul_apply, Matrix.trace, Matrix.diag, Fin.sum_univ_two] at hj' hm' h0'
   have h1 : nh W 1 = m-j := by linarith
-  refine ⟨h1,?_,?_⟩ <;> nlinarith
+  refine ⟨h1, ?_, ?_⟩
+  · rw [h1] at hj'
+    nlinarith only [hj', hj]
+  · nlinarith only [h0', h0]
 
 private theorem norm_injective (W Z : World3) (hx : nx W = nx Z) (hy : ny W = ny Z) :
     W.source = Z.source := by
@@ -451,7 +454,7 @@ private theorem fourth_pair_constraint (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
     have hq (he0 : a₀-W.drift ≠ 0) : nx W*ny W = nx Z*ny Z := by
       have hn : nh W 0 ≠ 0 := by
         intro he
-        exact he0 (by nlinarith [fW.2.2])
+        exact he0 (by simpa [he] using fW.2.2.symm)
       have he : (1+nx W*ny W)*nh W 0 = (1+nx Z*ny Z)*nh W 0 := by
         rw [fW.2.2,← hnh 0,fZ.2.2,← hd]
       have := mul_right_cancel₀ hn he
@@ -576,8 +579,8 @@ private theorem odd_trace_obstruction (A : Mat) (hdet : A.det = -1) (e : ℝ) (h
     (h0 : Matrix.trace (A * (e • !![0,1;-1,0])) = 0)
     (hj : Matrix.trace (action true * A * (e • !![0,1;-1,0])) = 0)
     (hm : Matrix.trace (action false * A * (e • !![0,1;-1,0])) = 0) : False := by
-  simp [action_j_shape,action_m_shape,Matrix.mul_apply,Matrix.trace,Matrix.diag,
-    Fin.sum_univ_two] at h0 hj hm
+  simp [action_j_shape,action_m_shape,Matrix.mul_apply,Matrix.vecMul,
+    dotProduct,Matrix.trace,Matrix.diag,Fin.sum_univ_two] at h0 hj hm
   have h01 : A 0 1 = 0 := by
     apply mul_left_cancel₀ he
     linear_combination hm - hj - h0
@@ -608,7 +611,7 @@ private theorem fifth_pair_nezero (a₀ j m b : ℝ) (W Z : World3)
     (by intro i; change nh W _ = nh Z _; fin_cases i <;>
       first | exact fW.1.trans fZ.1.symm | exact h3 | simp [nh_eval,h4,h7])
   have hnh (r : ℝ) : nh Z r = nh W r := by simp [nh,hc]
-  have hn0 : nh W 0 ≠ 0 := by intro he; exact hc0 (by nlinarith [fW.2.2])
+  have hn0 : nh W 0 ≠ 0 := by intro he; exact hc0 (by simpa [he] using fW.2.2.symm)
   have hp : nx W*ny W = nx Z*ny Z := by
     have eq0 : (1+nx W*ny W)*nh W 0 = (1+nx Z*ny Z)*nh W 0 := by
       rw [fW.2.2,← hnh 0,fZ.2.2,← hd]
@@ -660,8 +663,8 @@ private theorem fifth_pair_nezero (a₀ j m b : ℝ) (W Z : World3)
 
 private theorem three_quadratic (T : Finset World3) (hT : T.card = 3)
     (hP : ∀ W ∈ T, ∀ Z ∈ T, W ≠ Z → W.source ≠ Z.source)
-    (s C λ : ℝ) (hs : ∀ W ∈ T, nx W+ny W = s)
-    (hq : ∀ W ∈ T, nx W*ny W+λ*ny W = C) : False := by
+    (s C lam : ℝ) (hs : ∀ W ∈ T, nx W+ny W = s)
+    (hq : ∀ W ∈ T, nx W*ny W+lam*ny W = C) : False := by
   obtain ⟨W,Z,X,hWZ,hWX,hZX,hset⟩ := Finset.card_eq_three.mp hT
   have hW : W ∈ T := by simp [hset]
   have hZ : Z ∈ T := by simp [hset]
@@ -672,7 +675,7 @@ private theorem three_quadratic (T : Finset World3) (hT : T.card = 3)
   have hYZ := distinct W Z hW hZ hWZ
   have hYX := distinct W X hW hX hWX
   have hZX' := distinct Z X hZ hX hZX
-  let p : Polynomial ℝ := Polynomial.X^2 - Polynomial.C (s+λ)*Polynomial.X + Polynomial.C C
+  let p : Polynomial ℝ := Polynomial.X^2 - Polynomial.C (s+lam)*Polynomial.X + Polynomial.C C
   have hp (U : World3) (hU : U ∈ T) : p.eval (ny U) = 0 := by
     simp only [p,Polynomial.eval_add,Polynomial.eval_sub,Polynomial.eval_pow,
       Polynomial.eval_mul,Polynomial.eval_C,Polynomial.eval_X]
@@ -988,7 +991,9 @@ theorem mixed_prefix_three_world_exclusion (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
         · exact right_third hvU W W₀ hW hW₀
         · exact ((nh_zero W 4).mpr (all_fourth W hW)).trans ((nh_zero W₀ 4).mpr (all_fourth W₀ hW₀)).symm
         · exact ((nh_zero W 5).mpr (all_fifth W hW)).trans ((nh_zero W₀ 5).mpr (all_fifth W₀ hW₀)).symm
-      have hn0 : nh W₀ 0 ≠ 0 := by intro he; exact hc (by dsimp [c]; nlinarith [(first W₀ hW₀).2.2])
+      have hn0 : nh W₀ 0 ≠ 0 := by
+        intro he
+        exact hc (by dsimp [c]; simpa [he] using (first W₀ hW₀).2.2.symm)
       apply three_quadratic T hT hP s (nx W₀*ny W₀) 0 sum0
       intro W hW
       have eq0 : (1+nx W*ny W)*nh W₀ 0 = (1+nx W₀*ny W₀)*nh W₀ 0 := by
