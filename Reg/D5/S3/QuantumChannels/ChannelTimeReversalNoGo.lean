@@ -115,30 +115,25 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ X Y => QubitUnital.J X = Y) (fun e => nomatch e)
+  realize signature (fun _ _ X Y => X = Y) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ X Y => X ≠ Y) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ X : QubitMatrix,
-    R.readout () () X (Matrix.trace X • (1 : QubitMatrix) - X)
+    R.readout () () (QubitUnital.J X) (Matrix.trace X • (1 : QubitMatrix) - X)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h 0
+  exact h 0 (QubitUnital.J_apply 0)
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), (0 : QubitMatrix), (1 : QubitMatrix), ?_⟩
   intro he
-  have hzero : QubitUnital.J (0 : QubitMatrix) = 0 := by
-    rw [QubitUnital.J_apply]
-    simp
-  have hbad := Eq.mp (congrFun he 0) hzero
-  have hentry := congrArg (fun X : QubitMatrix => X 0 0) hbad
-  norm_num [QubitUnital.J_apply, Matrix.trace, Matrix.diag] at hentry
+  exact one_ne_zero (Eq.mp (congrFun he 0) rfl)
 
 def source_registration : Registration arena (type_of% @QubitUnital.J_apply) where
   actual := actual
@@ -165,7 +160,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some
-    (realize signature (fun _ _ X Y => QubitUnital.J X = Y) (fun e => nomatch e))
+    (realize signature (fun _ _ X Y => X = Y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -175,7 +170,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "arg", "body", "arg", "body", "fn", "arg"]
+      path := #["body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
