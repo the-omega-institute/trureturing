@@ -1,0 +1,36 @@
+**定理 37.2（NAND 真值表的全部 CPTP 扩展）。**
+按输入顺序 $\mathcal J=(00,01,10)$、$b=11$ 和输出顺序 $(0,1)$。
+全部满足
+
+$$
+\Phi(|j\rangle\langle j|)=|1\rangle\langle1|\ (j\in\mathcal J),\qquad
+\Phi(|b\rangle\langle b|)=|0\rangle\langle0|
+$$
+
+的 CPTP 映射 $M_4\to M_2$，唯一由闭单位球
+$z=(z_j)\in\mathbb C^3,\ \|z\|\le1$ 参数化为
+
+$$
+\Phi_z(X)=
+\begin{pmatrix}
+ X_{bb}&\sum_j\overline{z_j}X_{bj}\\
+ \sum_j z_jX_{jb}&\sum_jX_{jj}
+\end{pmatrix}.
+\tag{37.1}
+$$
+
+**证明。** 取一个 Stinespring 等距 $V$。纯约化输出迫使
+$V|j\rangle=|1\rangle e_j$、$V|b\rangle=|0\rangle f$，其中记录归一化。
+$V^\dagger V=I$ 给 $e_j$ 两两正交；不同系统输出已使 $b$ 列与它们正交，
+不要求 $f\perp e_j$。内积第一项共轭线性，置
+$z_j=\langle f,e_j\rangle$，Bessel 不等式给 $\sum_j|z_j|^2\le1$。
+对每个矩阵单位取环境迹，得到 (37.1)，故无其他自由参数且参数唯一。
+反之，取四个正交环境基 $e_j,e_4$ 并设
+
+$$
+f=\sum_j\overline{z_j}e_j+\sqrt{1-\|z\|^2}\,e_4.
+$$
+
+上面的 $V$ 列仍正交且归一化，故为等距；偏迹实现 (37.1)，是 CPTP。
+这也证明边界 $\|z\|=1$ 可删去未用的第四环境维。∎
+
