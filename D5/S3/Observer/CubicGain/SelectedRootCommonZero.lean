@@ -444,6 +444,73 @@ private theorem selected_denominator :
   ExactW3Center.exactW3_parent.1.2.2.2.2
 
 
-#print axioms homogeneous0
-#print axioms homogeneous1
+private theorem selected_zeros :
+    (SourceFixedMinor.sourceE0 ExactW3Center.criticalRoot).eval
+      (ExactW3Center.liftedR ExactW3Center.criticalRoot) = 0 ∧
+    (SourceFixedMinor.sourceE1 ExactW3Center.criticalRoot).eval
+      (ExactW3Center.liftedR ExactW3Center.criticalRoot) = 0 := by
+  let b := ExactW3Center.criticalRoot
+  have ha : a.eval b ≠ 0 := by rw [eval_a]; exact selected_denominator
+  have hf : f.eval b = 0 := by rw [eval_f]; exact ExactW3Center.criticalRoot_spec.2.2
+  have hr : a.eval b * ExactW3Center.liftedR b = -c.eval b := by
+    have had := ha
+    rw [eval_a] at had
+    rw [eval_a, eval_c]
+    unfold ExactW3Center.liftedR
+    field_simp [had]
+  constructor
+  · have h := homogeneous0 b
+    rw [hf, zero_mul, homogeneous_eval0 b _ hr] at h
+    exact (mul_eq_zero.mp h).resolve_left (pow_ne_zero 15 ha)
+  · have h := homogeneous1 b
+    rw [hf, zero_mul, homogeneous_eval1 b _ hr] at h
+    exact (mul_eq_zero.mp h).resolve_left (pow_ne_zero 15 ha)
+
+open SourceFixedMinor ExactW3Center
+open RegularResponseCircuit RegularParentChart
+
+/-- The selected FC root discharges both literal source equations at its exact coefficient lift. -/
+theorem selected_root_common_zero :
+    let b := criticalRoot
+    let r := liftedR b
+    let t := r / b
+    sourceD t b ≠ 0 ∧
+    (sourceE0 b).eval r = 0 ∧
+    (sourceE1 b).eval r = 0 ∧
+    sourceBt 0 t b * sourceBb 1 t b - sourceBb 0 t b * sourceBt 1 t b = 0 ∧
+    sourceBt 0 t b * sourceBb 2 t b - sourceBb 0 t b * sourceBt 2 t b = 0 ∧
+    r * Matrix.det (fixedMinorR (literalMatrix b)) +
+      Matrix.det (fixedMinorC (literalMatrix b)) = 0 := by
+  let b := criticalRoot
+  let r := liftedR b
+  let t := r / b
+  have hs := exactW3_parent.1
+  have hlo : (9005 : ℝ)/10000 ≤ r := hs.1
+  have hhi : r ≤ (9006 : ℝ)/10000 := hs.2.1
+  have hblo : (12758 : ℝ)/100000 ≤ b := hs.2.2.1
+  have hbhi : b ≤ (12759 : ℝ)/100000 := hs.2.2.2.1
+  have hb : 0 < b := by linarith
+  have hprod : t*b = r := div_mul_cancel₀ _ (ne_of_gt hb)
+  have hl := strip_denominator r b hlo hhi hblo hbhi
+  have hd : sourceD t b ≠ 0 := by
+    change circuitD (t,b) ≠ 0
+    exact (regular_whole_gain_correspondence (t,b)
+      (by change 0 < t*b; rw [hprod]; linarith)
+      (by change t*b < 1; rw [hprod]; linarith)
+      hb (by change parentLambda (t*b) b ≠ 0; rw [hprod]; exact ne_of_lt hl)).1
+  have hz := selected_zeros
+  have he0 := source_e0_normalization t b
+  have he1 := source_e1_normalization t b
+  rw [hprod, hz.1, mul_zero] at he0
+  rw [hprod, hz.2, mul_zero] at he1
+  have hj0 : sourceBt 0 t b * sourceBb 1 t b - sourceBb 0 t b * sourceBt 1 t b = 0 :=
+    (mul_eq_zero.mp he0.symm).resolve_left (pow_ne_zero 7 (ne_of_gt hb))
+  have hj1 : sourceBt 0 t b * sourceBb 2 t b - sourceBb 0 t b * sourceBt 2 t b = 0 :=
+    (mul_eq_zero.mp he1.symm).resolve_left (pow_ne_zero 7 (ne_of_gt hb))
+  refine ⟨hd, hz.1, hz.2, hj0, hj1, ?_⟩
+  have h := source_fixed_minor_relation t b hd hj0 hj1
+  simpa only [hprod] using h
+
+#print axioms selected_root_common_zero
+
 end D5.S3.Observer.CubicGain.SelectedRootCommonZero
