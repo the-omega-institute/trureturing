@@ -61,6 +61,16 @@ internal sealed class HsfIdentityCubicDerivativesDocument : IScribeDocumentDefin
                 + "is imposed on H or K. This is the alpha=3, Y=I, diagonal-X qubit "
                 + "restriction, not the arbitrary-denominator or arbitrary-dimension result.",
                 DescribeRole.Theorem),
+            Entry("qubit_posdef_cubic_compatibility", "Every positive definite qubit numerator",
+                "For every positive definite complex Hermitian two by two X, and "
+                + "Hermitian H,K satisfying X+H,X-H,I+K,I-K PSD, the same actual "
+                + "CFC sandwich trace satisfies phi''(0)>=0 and "
+                + "|phi'''(0)|<=5 phi''(0). Unitary diagonalization preserves the "
+                + "original ordered trace coefficients and transports all four PSD "
+                + "endpoints. The actual derivative bridge is applied to the original "
+                + "X,H,K. Repeated eigenvalues and singular endpoints are included. "
+                + "The denominator base point remains Y=I and the dimension is two.",
+                DescribeRole.Theorem),
             Paragraph(Text("The motivating compatibility question is due to "
                 + "He, Saunderson and Fawzi: arXiv:2502.05627v1, Conjecture 6.2; "
                 + "published DOI 10.1007/s10107-025-02314-0, Conjecture 1. "

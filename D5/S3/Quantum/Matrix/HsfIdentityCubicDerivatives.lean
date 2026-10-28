@@ -25,7 +25,10 @@ public import Mathlib.Analysis.Calculus.Deriv.Prod
 public import Mathlib.Tactic
 public import D5.S3.Quantum.Matrix.HsfQubitMixedCubic
 
-/-! Differentiation on a fixed finite spectrum, with actual CFC powers of the affine pencil. -/
+/-! Differentiation on a fixed finite spectrum, with actual CFC powers of the affine pencil.
+Information-escape audits remain unfinished; eight typed registration attempts
+compile and decode, but their source-selection bindings remain unresolved. See
+https://github.com/the-omega-institute/trureturing/issues/23103. -/
 
 @[expose] public section
 
@@ -338,5 +341,69 @@ theorem qubit_cubic_compatibility (a b : ℝ) (H K : HsfQubitCoupledCubic.Mat)
     ha hb hH hK hp hn kp kn
   rw [hd2, hd3, abs_mul, abs_of_pos (by norm_num : (0 : ℝ) < 6)]
   constructor <;> linarith
+
+/-- The identity-denominator cubic compatibility estimate for every positive definite qubit `X`.
+Unitary diagonalization transports the original ordered coefficients, leaving the CFC function
+in the statement unchanged. The four PSD endpoints may be singular. -/
+theorem qubit_posdef_cubic_compatibility (X H K : HsfQubitCoupledCubic.Mat)
+    (hX : X.PosDef) (hH : H.IsHermitian) (hK : K.IsHermitian)
+    (hp : (X+H).PosSemidef) (hn : (X-H).PosSemidef)
+    (kp : (1+K).PosSemidef) (kn : (1-K).PosSemidef) :
+    let phi := fun t : ℝ => (Matrix.trace
+      ((CFC.rpow (1+t • K) (-(1 : ℝ)/3) * (X+t • H) *
+        CFC.rpow (1+t • K) (-(1 : ℝ)/3))^3)).re
+    0 ≤ iteratedDeriv 2 phi 0 ∧
+      |iteratedDeriv 3 phi 0| ≤ 5*iteratedDeriv 2 phi 0 := by
+  dsimp only
+  let U := hX.isHermitian.eigenvectorUnitary
+  let e := Unitary.conjStarAlgAut ℂ HsfQubitCoupledCubic.Mat (star U)
+  let a := hX.isHermitian.eigenvalues 0
+  let b := hX.isHermitian.eigenvalues 1
+  have heX : e X = HsfQubitCoupledCubic.hermitian a b 0 := by
+    change Unitary.conjStarAlgAut ℂ _ (star hX.isHermitian.eigenvectorUnitary) X = _
+    rw [hX.isHermitian.conjStarAlgAut_star_eigenvectorUnitary]
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [HsfQubitCoupledCubic.hermitian, a, b, Function.comp_def]
+  have hepsd (M : HsfQubitCoupledCubic.Mat) (hM : M.PosSemidef) :
+      (e M).PosSemidef := by
+    simpa only [e, Unitary.conjStarAlgAut_star_apply, Matrix.star_eq_conjTranspose] using
+      hM.conjTranspose_mul_mul_same (U : HsfQubitCoupledCubic.Mat)
+  have heH : (e H).IsHermitian := by
+    simpa only [e, Unitary.conjStarAlgAut_star_apply, Matrix.star_eq_conjTranspose] using
+      Matrix.isHermitian_conjTranspose_mul_mul (U : HsfQubitCoupledCubic.Mat) hH
+  have heK : (e K).IsHermitian := by
+    simpa only [e, Unitary.conjStarAlgAut_star_apply, Matrix.star_eq_conjTranspose] using
+      Matrix.isHermitian_conjTranspose_mul_mul (U : HsfQubitCoupledCubic.Mat) hK
+  have hetrace (M : HsfQubitCoupledCubic.Mat) : Matrix.trace (e M) = Matrix.trace M := by
+    change Matrix.trace (Unitary.conjStarAlgAut ℂ _ (star U) M) = _
+    rw [Unitary.conjStarAlgAut_star_apply, Matrix.trace_mul_cycle,
+      ← Unitary.coe_star, Unitary.coe_mul_star_self, Matrix.one_mul]
+  have hcoeff2 (A B C : HsfQubitCoupledCubic.Mat) :
+      HsfQubitMixedCubic.coefficient2 (e A) (e B) (e C) =
+        HsfQubitMixedCubic.coefficient2 A B C := by
+    simp only [HsfQubitMixedCubic.coefficient2, HsfQubitMixedCubic.traceCoefficient2,
+      ← map_mul, hetrace]
+  have hcoeff3 (A B C : HsfQubitCoupledCubic.Mat) :
+      HsfQubitMixedCubic.coefficient3 (e A) (e B) (e C) =
+        HsfQubitMixedCubic.coefficient3 A B C := by
+    simp only [HsfQubitMixedCubic.coefficient3, HsfQubitMixedCubic.traceCoefficient3,
+      ← map_mul, hetrace]
+  have hp' : (HsfQubitCoupledCubic.hermitian a b 0+e H).PosSemidef := by
+    simpa only [map_add, heX] using hepsd (X+H) hp
+  have hn' : (HsfQubitCoupledCubic.hermitian a b 0-e H).PosSemidef := by
+    simpa only [map_sub, heX] using hepsd (X-H) hn
+  have kp' : (1+e K).PosSemidef := by
+    simpa only [map_add, map_one] using hepsd (1+K) kp
+  have kn' : (1-e K).PosSemidef := by
+    simpa only [map_sub, map_one] using hepsd (1-K) kn
+  have hcompat := qubit_cubic_compatibility a b (e H) (e K)
+    (hX.eigenvalues_pos 0) (hX.eigenvalues_pos 1) heH heK hp' hn' kp' kn'
+  obtain ⟨he2, he3⟩ := identity_cubic_trace_derivatives
+    (HsfQubitCoupledCubic.hermitian a b 0) (e H) (e K) heK
+  dsimp only at hcompat
+  rw [he2, he3, ← heX, hcoeff2, hcoeff3] at hcompat
+  obtain ⟨hd2, hd3⟩ := identity_cubic_trace_derivatives X H K hK
+  simpa only [hd2, hd3] using hcompat
 
 end D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives
