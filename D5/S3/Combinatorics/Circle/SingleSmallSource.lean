@@ -147,8 +147,11 @@ theorem single_small_rigidity {k : ℕ} (hk : 3 ≤ k) (t : ℕ) (a : Fin k)
     by_contra h
     have hz : w 0 = 0 := by omega
     rw [hz] at ht
-    simp [doubleStep, hNpos.not_gt] at ht
-    rw [ht, abs_zero] at hlarge
+    have hzstep : doubleStep (modulus k) 0 = 0 := by
+      dsimp [doubleStep]
+      split_ifs <;> omega
+    have ht0 : w 1 = 0 := by simpa only [zero_add, hzstep] using ht
+    rw [ht0, abs_zero] at hlarge
     omega
   have hc : w k = w 0 := by
     dsimp [w]
@@ -269,14 +272,14 @@ theorem single_small_forward_completion {k : ℕ} (hk : 3 ≤ k) (t : ℕ) (a : 
     by_cases hn : actualSource k t a < 0
     · have hn' : neg = true := by simp [neg, hn]
       have hstart : start = phase (by omega) a 2 := by simp [start, hn.not_gt]
-      rw [hstart, huv, huv, hn', ite_true, ite_true, hv2]
+      simp only [hstart, huv, hn', ite_true, hv2]
       constructor <;> omega
     · have hpos : 0 < actualSource k t a := by
         have he : s = actualSource k t a := abs_of_nonneg (by omega)
         omega
       have hn' : neg = false := by simp [neg, hn]
       have hstart : start = a := by simp [start, hpos]
-      rw [hstart, huv, huv, hn', ite_false, ite_false, hva]
+      simp only [hstart, huv, hn', Bool.false_eq_true, ite_false, hva]
       constructor <;> omega
   have hstep (j : ℕ) :
       actualSource k t (phase (by omega) start (j + 1)) =
@@ -320,10 +323,10 @@ theorem single_small_forward_completion {k : ℕ} (hk : 3 ≤ k) (t : ℕ) (a : 
   refine ⟨hperm, hnod, hfull, ?_, hpre, ?_⟩
   · apply strip_of_all_prefixes word
     simpa only [zero_add, mass] using hpre
-  · dsimp only [word]
-    rw [hsum]
+  · rw [hsum]
     have he : phase (by omega) start k = start := by
-      simpa only [zero_add, phase_zero] using phase_period (by omega) start 0
+      apply Fin.ext
+      simp [phase, Nat.mod_eq_of_lt start.isLt]
     rw [he, sub_self]
 
 #print axioms single_small_rigidity

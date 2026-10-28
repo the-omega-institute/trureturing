@@ -83,6 +83,6 @@ internal sealed class SingleSmallSourceDocument : IScribeDocumentDefinition
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula Neg(Formula a) => new Formula.Unary(FormulaUnaryOperator.Negate, a);
+    private static Formula Neg(Formula a) => new Formula.Negate(a);
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
 }
