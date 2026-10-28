@@ -43,7 +43,7 @@ internal sealed class HsfQubitCubicCertificateDocument : IScribeDocumentDefiniti
                 + "acceptance is claimed.")))));
 
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("hsf-qubit-cubic-certificate-" + name.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("hsf-qubit-cubic-certificate-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Module + "." + name), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
