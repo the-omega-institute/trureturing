@@ -100,7 +100,7 @@ private theorem commonShift_bound {m : Nat} (s : Fin m → Nat) (i : Fin m) :
     s i ≤ commonShift s := by
   have member : s i ∈ (List.finRange m).map s := List.mem_map.mpr ⟨i, by simp, rfl⟩
   unfold commonShift
-  generalize h : (List.finRange m).map s = l at member ⊢
+  generalize (List.finRange m).map s = l at member ⊢
   change s i ≤ l.foldr max 0
   induction l with
   | nil => cases member
@@ -157,7 +157,9 @@ private theorem equation_correspond {n k m : Nat} (I : EpochInput n k m)
     rw [transport_value s _ _ _ _ hv.2] at law
     apply (rho_injective.iterate (s i - I.headPower i))
     rw [← Function.iterate_add_apply]
-    convert law using 1 <;> congr 1 <;> omega
+    convert law using 1
+    congr 1
+    omega
 
 private theorem image_shift_iff (r t : Nat) (X : CompletionTree) :
     NativeImage (r + t) (rho^[t] X) ↔ NativeImage r X := by
@@ -358,7 +360,7 @@ private theorem canonical_original_law {n k m : Nat} (I : EpochInput n k m)
         effectiveCanonical (functionalInput I s) mode p :=
   Classical.choose_spec (canonical_image_law I s valid mode p passing).exists
 
-private theorem canonical_reconstruction_image {n k m r : Nat} (I : EpochInput n k m)
+theorem canonical_reconstruction_image {n k m r : Nat} (I : EpochInput n k m)
     (s : Fin m → Nat) (valid : Potential I s) (mode : EffectiveMode (functionalInput I s))
     (p : Fin n → Nat)
     (passing : (originalImageGuard (functionalInput I s) mode).holds (environment p))
