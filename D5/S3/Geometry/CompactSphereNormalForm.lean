@@ -217,6 +217,11 @@ def finiteCoproductHomeomorph :
     ((Homeomorph.sumCongr (positiveListsHomeomorph d) (isolatedListsHomeomorph d)).trans
       ((componentDistributeHomeomorph d).symm.trans (componentEnumerateHomeomorph d).symm))
 
+private def finiteCoproductModel : HomotopyModel (Σ a, FamilyWedge (q a)) where
+  size := Fintype.card (Component d)
+  bouquets := fun k => componentList d ((Fintype.equivFin (Component d)).symm k)
+  equivalence := (finiteCoproductHomeomorph d q).toHomotopyEquiv
+
 end FiniteCoproduct
 
 section CompactSource
@@ -229,20 +234,28 @@ def emptyModel [IsEmpty X] : HomotopyModel X where
   bouquets := Fin.elim0
   equivalence := (Homeomorph.empty : X ≃ₜ Model (Fin.elim0 : Fin 0 → _)).toHomotopyEquiv
 
+private theorem model_size_pos [Nonempty X] (M : HomotopyModel X) : 0 < M.size :=
+  Nat.zero_lt_of_lt (M.equivalence.toFun (Classical.choice inferInstance)).1.isLt
+
+private def compactSelectedModel [CompactSpace X] [Nonempty X]
+    {A : Type u} {I : A → Type v} (d : ∀ a, I a → ℕ)
+    (q : ∀ a j, StdSphere (d a j)) (e : X ≃ₕ WedgeSum q) : HomotopyModel X := by
+  let R := CompactWedgeFiniteFactor.finiteFactor q e.toFun
+  let d' := fun (a : R.outer) (j : R.inner a) => d a.val j.val
+  let q' := fun (a : R.outer) (j : R.inner a) => q a.val j.val
+  let N := finiteCoproductModel d' q'
+  exact {
+    size := N.size
+    bouquets := N.bouquets
+    equivalence := (CompactWedgeFiniteFactor.finiteFactorHomotopyEquiv q e).trans N.equivalence }
+
 /-- Compact nonempty sources with arbitrary sphere-coproduct models have actual
 finite positive-list models, with strictly positive outer size. -/
 def nonemptyCompactModel [CompactSpace X] [Nonempty X]
     {A : Type u} {I : A → Type v} (d : ∀ a, I a → ℕ)
     (q : ∀ a j, StdSphere (d a j)) (e : X ≃ₕ WedgeSum q) :
-    {M : HomotopyModel X // 0 < M.size} := by
-  let R := CompactWedgeFiniteFactor.finiteFactor q e.toFun
-  let d' := fun (a : R.outer) (j : R.inner a) => d a.val j.val
-  let q' := fun (a : R.outer) (j : R.inner a) => q a.val j.val
-  let N := finiteCoproductHomeomorph d' q'
-  let E := (CompactWedgeFiniteFactor.finiteFactorHomotopyEquiv q e).trans N.toHomotopyEquiv
-  refine ⟨⟨_, _, E⟩, ?_⟩
-  let x : X := Classical.choice inferInstance
-  exact Nat.zero_lt_of_lt (E.toFun x).1.isLt
+    {M : HomotopyModel X // 0 < M.size} :=
+  ⟨compactSelectedModel d q e, model_size_pos _⟩
 
 /-- Transport from an arbitrary sphere-coproduct source model. Neither original
 index family is assumed finite; compactness produces the finite selections. -/
