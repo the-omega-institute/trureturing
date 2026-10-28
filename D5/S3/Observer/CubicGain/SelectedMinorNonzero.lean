@@ -3,8 +3,34 @@
    mirror-B: D5/B/S3/Observer/CubicGain/SelectedMinorNonzero
    mirror-E: none(waiver:selected-minor-continuation)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Gershgorin]
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Observer/CubicGain/SelectedMinorNonzero.selected_minor_nonzero; premises=D5/S3/Observer/CubicGain/SelectedMinorNonzero.finite_residual,D5/S3/Observer/CubicGain/SelectedMinorNonzero.finite_inverse_bound,D5/S3/Observer/CubicGain/SelectedMinorNonzero.finite_slopes,D5/S3/Observer/CubicGain/SelectedMinorNonzero.scaled_values0,D5/S3/Observer/CubicGain/SelectedMinorNonzero.scaled_values1,D5/S3/Observer/CubicGain/SelectedMinorNonzero.endpoint_signs
    digest: The literal fixed leading minor is nonzero at the selected algebraic root. -/
+
+/-
+The numerical reduction answers the chosen-minor nonvanishing obligation of
+VI Lemma 12.2. Its exact premises all concern the same literal 28 by 28 matrix,
+the endpoint rootNumerator / 10^40 and the preconditioner intInverse / 2^64.
+The coefficient and preconditioner arrays are inputs to this reduction.
+finite_residual supplies the integer residual bound used by endpoint_residual;
+finite_inverse_bound supplies preconditioner_bound; finite_slopes supplies
+entry_perturbation through the general value_bound/value_lipschitz estimates.
+scaled_values0 and scaled_values1 establish the endpoint evaluations used by
+minor_at_endpoint and endpoint_residual. endpoint_signs and the existing FC
+root uniqueness supply refined_root, hence the distance bound used by
+entry_perturbation. Each of these numerical premises is proved here.
+
+Consumer direction: selected_minor_nonzero -> selected_residual ->
+endpoint_residual, preconditioner_bound and entry_perturbation -> the numerical
+premises above. The residual thresholds are 1/128 at the endpoint and for the
+perturbation, hence 1/64 at criticalRoot. The entry slope bound 2^35 holds on
+the real unit interval, the preconditioner entry bound is 2^79, and the root
+distance is at most 10^-40. The resulting 27/64 < 63/64 strict diagonal
+dominance is used to prove nonvanishing of the original selected minor.
+The certificates are consumed premises of this real-matrix reduction, not
+separate positive finite-instance results. Source encodings, index transport,
+casts and arithmetic rewrites are consumed bind-only helpers; the live
+root-isolation and perturbation argument supplies the whole-unit content.
+-/
 
 import D5.S3.Observer.CubicGain.SelectedRootCommonZero
 import Mathlib.LinearAlgebra.Matrix.Gershgorin

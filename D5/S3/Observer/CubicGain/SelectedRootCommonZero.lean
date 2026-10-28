@@ -3,8 +3,37 @@
    mirror-B: D5/B/S3/Observer/CubicGain/SelectedRootCommonZero
    mirror-E: none(waiver:selected-root-continuation)
    anchors: [mathlib/module/Mathlib.Algebra.Polynomial.Derivative]
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Observer/CubicGain/SelectedRootCommonZero.selected_root_common_zero; instance=D5/S3/Observer/CubicGain/SelectedRootCommonZero.packed0; premises=D5/S3/Observer/CubicGain/SelectedRootCommonZero.bound0,D5/S3/Observer/CubicGain/SelectedRootCommonZero.packed0,D5/S3/Observer/CubicGain/SelectedRootCommonZero.bound1,D5/S3/Observer/CubicGain/SelectedRootCommonZero.packed1
    digest: Exact selected-root common-zero certificates for the literal VI polynomials. -/
+
+/-
+The checker answers the literal sourceE0/sourceE1 common-zero obligations at
+the selected FC root. cadd, cmul, cpow, value and mass implement integer-list
+polynomial arithmetic; Circuit.coeffs, Circuit.bound and Circuit.eval extend
+it to arithmetic circuits. small_mass_zero and Circuit.zero_of_packed prove
+soundness for every commutative ring: positive base B, coefficient-mass bound
+strictly below B, and zero integer evaluation at B imply zero evaluation at
+every ring element. This is an identity checker, not sampling at a real root.
+
+The concrete inputs are identity0 = h0_0 - f*q0 and identity1 = h1_0 - f*q1,
+with the original FC, candidate A,C and sourceE coefficient arrays. At the
+same base B = 2^9000, bound0/packed0 and bound1/packed1 prove respectively
+the strict circuit bounds and exact zero integer evaluations. homogeneous0
+and homogeneous1 apply Circuit.zero_of_packed to these inputs; all numerical
+premises are discharged here. The header instance packed0 names the first
+successful check, and the second check is packed1 with bound1.
+
+Consumer direction: selected_root_common_zero -> selected_zeros ->
+homogeneous0/homogeneous1 -> Circuit.zero_of_packed and the corresponding
+bound/packed proofs. homogeneous_eval0/1 and eval_f/eval_a/eval_c connect the
+checker identities to the actual source equations; selected_denominator
+discharges the nonzero candidate-denominator premise using exactW3_parent.
+The finite certificates are consumed checker premises, not independent
+positive finite-instance results. Algebraic normalization, evaluation
+transport and the final Jacobian/minor packaging are consumed bind-only
+helpers. value and mass also have live consumers in SelectedMinorNonzero.
+No identification with primitive normalized actual minors follows here.
+-/
 
 import D5.S3.Observer.CubicGain.SourceFixedMinor
 

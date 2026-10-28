@@ -10,6 +10,8 @@ An exact FC sign calculation places criticalRoot between 12758053979897202954632
 
 On the real unit interval, every matrix entry has Lipschitz constant at most 2^35. Moving from the rational endpoint to criticalRoot changes each preconditioned entry by at most 1/128. The resulting error from the identity is at most 1/64 in each entry. Each diagonal entry therefore has absolute value at least 63/64, while the sum of the other twenty-seven absolute values is at most 27/64. Strict diagonal dominance proves that the product, and hence the chosen literal minor, has nonzero determinant.
 
+Computational utility: numeric-reduction, consumed by selected_minor_nonzero to discharge the chosen-minor nonvanishing obligation of VI Lemma 12.2. The finite_residual, finite_inverse_bound and finite_slopes proofs supply endpoint_residual, preconditioner_bound and entry_perturbation. The scaled_values0/1 proofs identify the exact endpoint entries, and endpoint_signs gives refined_root using the original FC root uniqueness. All numerical premises are proved for the same literal matrix, endpoint, preconditioner and real unit interval; selected_residual combines them before strict diagonal dominance is applied. These certificates are consumed premises of the reduction. They are not separate positive finite-instance results.
+
 This argument concerns the original algebraic root and the actual chosen matrix. It does not infer nonvanishing from uniqueness of a common root. The universal complex-root statements and the full original coefficient-world and response-center identifications require further arguments.
 
 **Theorem 1.1 (nonzero chosen minor at the selected FC root).**
