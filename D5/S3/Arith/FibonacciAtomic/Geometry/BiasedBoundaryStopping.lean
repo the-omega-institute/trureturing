@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryStopping
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [D5/S0/Computability/Coding/BiasedMassFrontier]
+   anchors: []
    utility: none
    digest: Weak mass stopping in the original biased boundary and its actual residual. -/
 

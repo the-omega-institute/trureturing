@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryStopping]
+   anchors: []
    utility: none
    digest: Compact actual covariance and the attained original free-root energy. -/
 

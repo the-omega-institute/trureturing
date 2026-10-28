@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryOperator
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm]
+   anchors: []
    utility: none
    digest: Self-adjoint realization of the actual infinite biased free-root form. -/
 
