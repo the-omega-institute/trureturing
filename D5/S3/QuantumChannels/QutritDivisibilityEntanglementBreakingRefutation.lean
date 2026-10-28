@@ -142,11 +142,25 @@ private lemma t_not_pdivisible : t ∉ pDivisibleSet := by
   rw [t_det] at hnonneg
   norm_num at hnonneg
 
-private def omega : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ := sorry
+private def omega : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
+  ((1 / 3 : ℝ) : ℂ) • Matrix.vecMulVec
+    (fun p : Fin 3 × Fin 3 => if p.1 = p.2 then 1 else 0)
+    (star (fun p : Fin 3 × Fin 3 => if p.1 = p.2 then 1 else 0))
 
-private def witnessVector : Fin 3 × Fin 3 → ℂ := sorry
+private def witnessVector : Fin 3 × Fin 3 → ℂ :=
+  ((1 / Real.sqrt 3 : ℝ) : ℂ) •
+    (fun p : Fin 3 × Fin 3 => if p.1 = p.2 then 1 else 0)
 
-private lemma omega_density : omega.PosSemidef ∧ omega.trace = 1 := by sorry
+private lemma omega_density : omega.PosSemidef ∧ omega.trace = 1 := by
+  constructor
+  · apply Matrix.PosSemidef.smul _ (Complex.zero_le_real.mpr (by norm_num))
+    exact Matrix.posSemidef_vecMulVec_self_star _
+  · have hpsi : star (fun p : Fin 3 × Fin 3 => if p.1 = p.2 then 1 else 0) ⬝ᵥ
+        (fun p : Fin 3 × Fin 3 => if p.1 = p.2 then 1 else 0) = (3 : ℂ) := by
+      simp [dotProduct, Fintype.sum_prod_type]
+    rw [omega, Matrix.trace_smul, Matrix.trace_vecMulVec]
+    rw [dotProduct_comm, hpsi]
+    norm_num
 
 private lemma separableCone_partialTranspose_posSemidef {m n : ℕ}
     {rho : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ}
