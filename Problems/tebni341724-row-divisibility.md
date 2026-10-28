@@ -85,8 +85,11 @@ standard axiom closure; no finite table is a premise.
 
 ## Triage
 
-- **Proved:** both original divisibility assertions for every prime and
-  every dyadic exponent, within their exact column ranges.
+### What the settlement shows
+
+- **Proved** (`D5/S1/Recurrence/Residue/TebniA341724RowDivisibility.result`):
+  both original divisibility assertions for every prime and every dyadic
+  exponent, within their exact column ranges.
 - **Proved internally:** integrality for all natural n,k, zero support
   for n<k, diagonal value one, and the complete delta-forced recurrence.
   These are proof ingredients of the single public result.
@@ -101,6 +104,9 @@ standard axiom closure; no finite table is a premise.
   composite rows, exact valuations, or any stronger modulus. The
   recurrence suggests further statements, but no such public theorem
   is claimed here.
+- **Open — impact on other source results and questions:** no further
+  dependence or consequence has been established in this delivery, so no
+  additional source assertion is certified by this settlement.
 - **Literature:** the source definitions are literature-attested; the
   settlement is repo-derived with status not-found-in-searched-scope.
   Global novelty and exhaustive search completeness remain unverified.
