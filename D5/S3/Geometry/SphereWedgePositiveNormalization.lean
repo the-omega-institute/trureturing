@@ -52,13 +52,13 @@ private theorem zero_poles (x : StdSphere 0) :
   · left
     apply Subtype.ext
     ext i
-    have hi : i = 0 := Subsingleton.elim _ _
+    have hi : i = 0 := Fin.eq_zero i
     subst i
     simpa [coordinatePoint, EuclideanSpace.single] using h
   · right
     apply Subtype.ext
     ext i
-    have hi : i = 0 := Subsingleton.elim _ _
+    have hi : i = 0 := Fin.eq_zero i
     subst i
     simpa [negativePoint, coordinatePoint, EuclideanSpace.single] using h
 
@@ -108,11 +108,16 @@ private def factorForward (j : J) : StdSphere (n j) → PositiveWedge n ⊕ Zero
 private theorem continuous_factorForward (j : J) : Continuous (factorForward n b j) := by
   classical
   by_cases hp : 0 < n j
-  · simp only [factorForward, dite_eq_left hp]
-    exact continuous_inl.comp
-      ((point (c n) ⟨j, hp⟩).continuous.comp (E n b j).continuous)
+  · have h : Continuous (fun x : StdSphere (n j) =>
+        (Sum.inl (point (c n) ⟨j, hp⟩ (E n b j x)) : PositiveWedge n ⊕ ZeroIndex n)) :=
+      continuous_inl.comp ((point (c n) ⟨j, hp⟩).continuous.comp (E n b j).continuous)
+    have he : factorForward n b j = fun x =>
+        (Sum.inl (point (c n) ⟨j, hp⟩ (E n b j x)) : PositiveWedge n ⊕ ZeroIndex n) := by
+      funext x
+      exact dite_eq_left hp
+    exact he.symm ▸ h
   · have hz : n j = 0 := Nat.eq_zero_of_not_pos hp
-    haveI : Finite (StdSphere (n j)) := by rw [hz]; infer_instance
+    have : Finite (StdSphere (n j)) := by rw [hz]; infer_instance
     exact continuous_of_discreteTopology
 
 private theorem factorForward_base (j : J) :
@@ -203,7 +208,7 @@ private theorem forward_inverse (x : PositiveWedge n ⊕ ZeroIndex n) :
       negative_ne, ite_false]
     exact congrArg Sum.inr (Subtype.ext rfl)
 
-/-- The actual pointed normalization, for arbitrary index families and arbitrary sphere basepoints. -/
+/-- Actual pointed normalization for arbitrary index families and sphere basepoints. -/
 def normalizationHomeomorph : FamilyWedge b ≃ₜ PositiveWedge n ⊕ ZeroIndex n where
   toFun := forward n b
   invFun := inverse n b
