@@ -12,7 +12,7 @@ $$\forall (A : \operatorname{Type}), ([\operatorname{AddCommGroup}\left(A\right)
 
 *Formalization.* `D5/S3/QuadraticForms/EvolutionAlgebras/SimpleEvolutionAutomorphismMaximum.IsSimple` (`✓ std3`).
 
-*Citation.* Ivan Kaygorodov; Cándido Martín González; Antonio Viruel (2026). *Evolution algebras: a survey of results and a list of open problems*. DOI: [10.48550/arXiv.2610.22248](https://doi.org/10.48550/arXiv.2610.22248). URL: <https://arxiv.org/abs/2610.22248v1>.
+*Citation.* Yolanda Cabrera Casado; Mercedes Siles Molina; M. Victoria Velasco (2016). *Evolution algebras of arbitrary dimension and their decompositions*. URL: <https://arxiv.org/abs/1601.01832v2>.
 
 *Commentary.*
 

@@ -30,7 +30,7 @@ The product is P_sigma applied to coordinatewise multiplication. The original co
 
 **Theorem 1.3 (The image of each coordinate basis vector).**
 
-$$\forall n \in \mathbb{N},\; \forall sigma \in \operatorname{Perm}\left(\operatorname{Fin}\left(n\right)\right),\; \forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{apply}\left(\operatorname{permutationLinear}\left(sigma\right), \operatorname{apply}\left(\operatorname{Pi}.\operatorname{basisFun}\left(Complex, \operatorname{Fin}\left(n\right)\right), i\right)\right) = \operatorname{apply}\left(\operatorname{Pi}.\operatorname{basisFun}\left(Complex, \operatorname{Fin}\left(n\right)\right), \operatorname{apply}\left(sigma, i\right)\right)$$
+$$\forall n \in \mathbb{N},\; \forall sigma \in \operatorname{Perm}\left(\operatorname{Fin}\left(n\right)\right),\; \forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{permutationLinear}\left(sigma\right)\left(\operatorname{Pi}.\operatorname{basisFun}\left(Complex, \operatorname{Fin}\left(n\right)\right)\left(i\right)\right) = \operatorname{Pi}.\operatorname{basisFun}\left(Complex, \operatorname{Fin}\left(n\right)\right)\left(sigma\left(i\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionPermutationFamily.permutationLinear_basis` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ For every n, permutation sigma and index i, permutationLinear sigma sends Pi.bas
 
 **Theorem 1.4 (Products of distinct basis vectors vanish).**
 
-$$\forall n \in \mathbb{N},\; \forall sigma \in \operatorname{Perm}\left(\operatorname{Fin}\left(n\right)\right),\; \forall i \in \operatorname{Fin}\left(n\right),\; \forall j \in \operatorname{Fin}\left(n\right),\; i \ne j \Rightarrow \operatorname{apply}\left(\operatorname{permutationProduct}\left(sigma\right), \operatorname{apply}\left(\operatorname{Pi}.\operatorname{basisFun}\left(Complex, \operatorname{Fin}\left(n\right)\right), i\right), \operatorname{apply}\left(\operatorname{Pi}.\operatorname{basisFun}\left(Complex, \operatorname{Fin}\left(n\right)\right), j\right)\right) = 0$$
+$$\forall n \in \mathbb{N},\; \forall sigma \in \operatorname{Perm}\left(\operatorname{Fin}\left(n\right)\right),\; \forall i \in \operatorname{Fin}\left(n\right),\; \forall j \in \operatorname{Fin}\left(n\right),\; i \ne j \Rightarrow \operatorname{permutationProduct}\left(sigma\right)\left(\operatorname{Pi}.\operatorname{basisFun}\left(Complex, \operatorname{Fin}\left(n\right)\right)\left(i\right), \operatorname{Pi}.\operatorname{basisFun}\left(Complex, \operatorname{Fin}\left(n\right)\right)\left(j\right)\right) = 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionPermutationFamily.permutation_mixed` (`✓ std3`). ∎
 
@@ -54,7 +54,7 @@ For every n, permutation sigma and distinct i,j in Fin n, permutationProduct sig
 
 **Theorem 1.5 (The exact support relation).**
 
-$$\forall n \in \mathbb{N},\; \forall sigma \in \operatorname{Perm}\left(\operatorname{Fin}\left(n\right)\right),\; \forall i \in \operatorname{Fin}\left(n\right),\; \forall j \in \operatorname{Fin}\left(n\right),\; \operatorname{supportRelation}\left(\operatorname{permutationProduct}\left(sigma\right), \operatorname{Pi}.\operatorname{basisFun}\left(Complex, \operatorname{Fin}\left(n\right)\right), i, j\right) \Leftrightarrow j = \operatorname{apply}\left(sigma, i\right)$$
+$$\forall n \in \mathbb{N},\; \forall sigma \in \operatorname{Perm}\left(\operatorname{Fin}\left(n\right)\right),\; \forall i \in \operatorname{Fin}\left(n\right),\; \forall j \in \operatorname{Fin}\left(n\right),\; \operatorname{supportRelation}\left(\operatorname{permutationProduct}\left(sigma\right), \operatorname{Pi}.\operatorname{basisFun}\left(Complex, \operatorname{Fin}\left(n\right)\right), i, j\right) \Leftrightarrow j = sigma\left(i\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionPermutationFamily.permutation_support` (`✓ std3`). ∎
 
