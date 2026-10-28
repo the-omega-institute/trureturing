@@ -36,7 +36,7 @@ internal sealed class MatveevaGlobalBoundednessDocument : IScribeDocumentDefinit
     private static Formula Norm(Formula f) => Seq(Vert, Sp, f, Vert, Sp);
     private static Formula Scaling => All(S, Sequence, Seq(Call("integralScaling", S), Iff, Par(
         Some(C, Ints, Seq(C, Neq, Sp, D(0), Sp, Land, Sp,
-            Par(All(N, Nats, Seq(D(1), Le, N, Implies, Sp,
+            Par(All(N, Nats, Seq(D(1), Le, Sp, N, Implies, Sp,
                 Some(K, Ints, Seq(Pow(Cast(C, Rats), N), Cdot, Sp, At(S, N), Eq, Cast(K, Rats)))))))))));
     private static Formula Radius => All(S, Sequence, Seq(Call("positiveComplexRadius", S), Iff, Par(
         Some(R, Reals, Seq(D(0), Lt, R, Sp, Land, Sp,
@@ -45,7 +45,7 @@ internal sealed class MatveevaGlobalBoundednessDocument : IScribeDocumentDefinit
                     Cast(At(S, N), Complexes), Cdot, Sp, Pow(Z, N))))))))))));
     private static Formula Bounded => All(S, Sequence, Seq(Call("globallyBounded", S), Iff,
         Par(Seq(Call("integralScaling", S), Sp, Land, Sp, Call("positiveComplexRadius", S)))));
-    private static Formula Recurrence => All(N, Nats, Seq(D(2), Le, N, Implies, Sp,
+    private static Formula Recurrence => All(N, Nats, Seq(D(2), Le, Sp, N, Implies, Sp,
         Par(Seq(Cast(N, Rats), Plus, Bzero)), Cdot, Sp, At(S, N), Plus,
         Par(Seq(Aone, Cdot, Sp, Cast(N, Rats), Plus, Bone)), Cdot, Sp, At(S, Seq(N, Minus, D(1))), Plus,
         Par(Seq(Atwo, Cdot, Sp, Cast(N, Rats), Plus, Btwo)), Cdot, Sp, At(S, Seq(N, Minus, D(2))), Eq, D(0)));
@@ -53,14 +53,14 @@ internal sealed class MatveevaGlobalBoundednessDocument : IScribeDocumentDefinit
         Aone, Cdot, Sp, Btwo, Minus, D(2), Cdot, Sp, Atwo, Cdot, Sp, Bone);
     private static Formula ClaimBody => All(Seq(Aone, Sp, Atwo, Sp, Bzero, Sp, Bone, Sp, Btwo), Rats,
         Seq(Aone, Neq, Sp, D(0), Implies, Sp, Atwo, Neq, Sp, D(0), Implies, Sp,
-            Par(All(N, Nats, Seq(D(2), Le, N, Implies, Sp, Bzero, Neq, Sp, Minus, Cast(N, Rats)))), Implies, Sp,
+            Par(All(N, Nats, Seq(D(2), Le, Sp, N, Implies, Sp, Bzero, Neq, Sp, Minus, Cast(N, Rats)))), Implies, Sp,
             All(S, Sequence, Seq(Par(Recurrence), Implies, Sp, Expression, Neq, Sp, D(0), Implies, Sp,
                 Neg, Sp, Call("globallyBounded", S)))));
     private static Formula Claim => Seq(Named("claim"), Iff, Par(ClaimBody));
     private static Formula Witness => All(N, Nats, Seq(Call("witness", N), Eq, Cast(N, Rats), Plus, D(1)));
     private static Formula Result => Seq(Neg, Sp, Named("claim"));
 
-    private static ScribeNode Description(string id, string declaration, string title, Formula formula,
+    private static DocumentBlock.Describe Description(string id, string declaration, string title, Formula formula,
         string prose, bool definition = true) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)),
