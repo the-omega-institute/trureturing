@@ -63,37 +63,67 @@ def IsEntanglementBreaking (t : MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
 def claim : Prop :=
   ∀ t, IsCPTP t → IsDivisible t → t ∉ pDivisibleSet → IsEntanglementBreaking t
 
-private def w : MatrixMap (Fin 3) (Fin 3) ℂ where
-  toFun X := (1 / 2 : ℂ) • (X.trace • (1 : Matrix (Fin 3) (Fin 3) ℂ) - X.transpose)
-  map_add' X Y := by
-    ext i j
-    simp [Matrix.trace_add, Matrix.transpose_apply]
-    ring
-  map_smul' c X := by
-    ext i j
-    simp [Matrix.trace_smul, Matrix.transpose_apply]
-    ring
+private def wk : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ := ![
+  (Real.sqrt 2 : ℂ)⁻¹ • (Matrix.single 0 1 1 - Matrix.single 1 0 1),
+  (Real.sqrt 2 : ℂ)⁻¹ • (Matrix.single 0 2 1 - Matrix.single 2 0 1),
+  (Real.sqrt 2 : ℂ)⁻¹ • (Matrix.single 1 2 1 - Matrix.single 2 1 1)]
 
-private def d : MatrixMap (Fin 3) (Fin 3) ℂ where
-  toFun X := (1 / 2 : ℂ) • X + (1 / 2 : ℂ) • (X.trace / 3) •
-    (1 : Matrix (Fin 3) (Fin 3) ℂ)
-  map_add' X Y := by
-    ext i j
-    simp [Matrix.trace_add]
-    ring
-  map_smul' c X := by
-    ext i j
-    simp [Matrix.trace_smul]
-    ring
+private def w : MatrixMap (Fin 3) (Fin 3) ℂ := MatrixMap.of_kraus wk wk
+
+private def dk : Fin 10 → Matrix (Fin 3) (Fin 3) ℂ := ![
+  (Real.sqrt 2 : ℂ)⁻¹ • (1 : Matrix (Fin 3) (Fin 3) ℂ),
+  (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single 0 0 1,
+  (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single 0 1 1,
+  (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single 0 2 1,
+  (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single 1 0 1,
+  (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single 1 1 1,
+  (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single 1 2 1,
+  (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single 2 0 1,
+  (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single 2 1 1,
+  (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single 2 2 1]
+
+private def d : MatrixMap (Fin 3) (Fin 3) ℂ := MatrixMap.of_kraus dk dk
+
+private lemma sqrt2_inv_sq : (Real.sqrt 2 : ℂ)⁻¹ ^ 2 = (1 / 2 : ℂ) := by
+  have h : (Real.sqrt 2 : ℂ) ^ 2 = (2 : ℂ) := by
+    exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+  rw [inv_pow, h]
+  norm_num
+
+private lemma sqrt2_sq : (Real.sqrt 2 : ℂ) ^ 2 = (2 : ℂ) := by
+  exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+
+private lemma sqrt6_sq : (Real.sqrt 6 : ℂ) ^ 2 = (6 : ℂ) := by
+  exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 6 by norm_num)
+
+private lemma sqrt6_inv_sq : (Real.sqrt 6 : ℂ)⁻¹ ^ 2 = (1 / 6 : ℂ) := by
+  have h : (Real.sqrt 6 : ℂ) ^ 2 = (6 : ℂ) := by
+    exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 6 by norm_num)
+  rw [inv_pow, h]
+  norm_num
 
 private def t : MatrixMap (Fin 3) (Fin 3) ℂ := d.comp w
 
 private lemma w_formula (X : Matrix (Fin 3) (Fin 3) ℂ) :
-    w X = (1 / 2 : ℂ) • (X.trace • (1 : Matrix (Fin 3) (Fin 3) ℂ) - X.transpose) := by rfl
+    w X = (1 / 2 : ℂ) • (X.trace • (1 : Matrix (Fin 3) (Fin 3) ℂ) - X.transpose) := by
+  ext i j
+  simp [w, MatrixMap.of_kraus, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    Matrix.single, wk, Fin.sum_univ_three, Matrix.trace, Matrix.transpose_apply]
+  fin_cases i <;> fin_cases j <;>
+    norm_num [Matrix.single, Matrix.one_apply, Matrix.mul_apply,
+      Matrix.conjTranspose_apply, Fin.sum_univ_three] <;>
+    ring_nf <;> simp only [sqrt2_inv_sq] <;> ring
 
 private lemma d_formula (X : Matrix (Fin 3) (Fin 3) ℂ) :
     d X = (1 / 2 : ℂ) • X + (1 / 2 : ℂ) • (X.trace / 3) •
-      (1 : Matrix (Fin 3) (Fin 3) ℂ) := by rfl
+      (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
+  ext i j
+  simp [d, MatrixMap.of_kraus, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    Matrix.single, dk, Fin.sum_univ_succ, Matrix.trace, Matrix.one_apply]
+  fin_cases i <;> fin_cases j <;>
+    norm_num [Matrix.single, Matrix.one_apply, Matrix.mul_apply,
+      Matrix.conjTranspose_apply, Fin.sum_univ_succ] <;>
+    ring_nf <;> simp only [sqrt2_inv_sq, sqrt6_inv_sq] <;> ring
 
 private lemma t_formula (X : Matrix (Fin 3) (Fin 3) ℂ) :
     t X = (5 / 12 : ℂ) • X.trace • (1 : Matrix (Fin 3) (Fin 3) ℂ) -
@@ -103,11 +133,63 @@ private lemma t_formula (X : Matrix (Fin 3) (Fin 3) ℂ) :
     Matrix.trace_transpose, Matrix.trace_one, Fintype.card_fin]
   ring
 
-private lemma w_cptp : IsCPTP w := by sorry
+private lemma kraus_trace_preserving {κ : Type*} [Fintype κ]
+    (K : κ → Matrix (Fin 3) (Fin 3) ℂ)
+    (hK : (∑ r, (K r).conjTranspose * K r) = 1) :
+    (MatrixMap.of_kraus K K).IsTracePreserving := by
+  exact MatrixMap.IsTracePreserving.of_kraus_isTracePreserving K K hK
 
-private lemma d_cptp : IsCPTP d := by sorry
+private lemma wk_complete : (∑ r, (wk r).conjTranspose * wk r) =
+    (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [wk, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.single,
+      Fin.sum_univ_three] <;> ring_nf <;> simp [sqrt2_sq] <;> norm_num
 
-private lemma t_cptp : IsCPTP t := by sorry
+private lemma dk_complete : (∑ r, (dk r).conjTranspose * dk r) =
+    (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [dk, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.single,
+      Fin.sum_univ_succ] <;> ring_nf <;>
+    simp [sqrt2_sq, sqrt6_sq] <;> norm_num
+
+private lemma w_cptp : IsCPTP w := by
+  refine ⟨?_, ?_⟩
+  · exact MatrixMap.of_kraus_isCompletelyPositive wk
+  · exact kraus_trace_preserving wk wk_complete
+
+private lemma d_cptp : IsCPTP d := by
+  refine ⟨?_, ?_⟩
+  · exact MatrixMap.of_kraus_isCompletelyPositive dk
+  · exact kraus_trace_preserving dk dk_complete
+
+private lemma of_kraus_comp {κ ι : Type*} [Fintype κ] [Fintype ι]
+    (M : κ → Matrix (Fin 3) (Fin 3) ℂ)
+    (N : ι → Matrix (Fin 3) (Fin 3) ℂ) :
+    (MatrixMap.of_kraus M M).comp (MatrixMap.of_kraus N N) =
+      MatrixMap.of_kraus (fun p : κ × ι => M p.1 * N p.2)
+        (fun p : κ × ι => M p.1 * N p.2) := by
+  ext X i j
+  simp only [MatrixMap.of_kraus, LinearMap.coe_comp, Function.comp_apply,
+    LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
+  simp_rw [Matrix.mul_sum, Finset.sum_mul]
+  simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
+  rw [Fintype.sum_prod_type]
+
+private lemma t_kraus : t =
+    MatrixMap.of_kraus (fun p : Fin 10 × Fin 3 => dk p.1 * wk p.2)
+      (fun p : Fin 10 × Fin 3 => dk p.1 * wk p.2) := by
+  change (MatrixMap.of_kraus dk dk).comp (MatrixMap.of_kraus wk wk) = _
+  exact of_kraus_comp dk wk
+
+private lemma t_cptp : IsCPTP t := by
+  refine ⟨?_, ?_⟩
+  · rw [t_kraus]
+    exact MatrixMap.of_kraus_isCompletelyPositive _
+  · intro X
+    change Matrix.trace (d (w X)) = Matrix.trace X
+    rw [d_cptp.2, w_cptp.2]
 
 private lemma w_not_unitary : ¬ IsUnitaryChannel w := by sorry
 
