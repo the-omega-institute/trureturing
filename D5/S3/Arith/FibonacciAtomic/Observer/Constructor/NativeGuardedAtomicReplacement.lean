@@ -8,6 +8,9 @@
 
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeGuardedFreeExtension
 
+/-! Bounded atomic observations are preserved by simultaneous replacement of
+the arbitrary completed boundary values of one guarded system. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -20,8 +23,12 @@ open GenealogicalFiberTransport (Source substitution)
 
 private theorem atomic_pair (n : Nat) :
     atomic (n + 2) = node (atomic (n + 1)) (atomic n) := by
-  simpa only [atomic, show leaf true = embed (.of true) from rfl, iterate_embed, embed]
-    using congrArg embed (NativeRankedEqualityCompiler.atomic_pair n)
+  unfold atomic
+  change rho^[n + 2] (embed (.of true)) =
+    node (rho^[n + 1] (embed (.of true))) (rho^[n] (embed (.of true)))
+  rw [iterate_embed, iterate_embed, iterate_embed,
+    NativeRankedEqualityCompiler.atomic_pair]
+  rfl
 
 /-- An actual power can equal a finite atomic terminal only at its exact
 nonnegative atomic predecessor. Infinite native inputs are not excluded. -/
@@ -31,7 +38,8 @@ private theorem atomic_predecessor (a j : Nat) (X : CompletionTree)
     (eq.symm ▸ CompletionPositiveDriftRegion.atomic_finite j)
   have he : substitution^[a] t = substitution^[j] (.of true) := by
     apply NativeCompletionSupportClosure.embed_injective
-    simpa only [← iterate_embed, ht, atomic] using eq
+    rw [← iterate_embed, ht]
+    exact eq
   have zero : NativePrefixIdentityReflection.gamma t = 0 := by
     have h := congrArg NativePrefixIdentityReflection.gamma he
     simpa only [NativePrefixIdentityReflection.gamma_iterate,
@@ -47,7 +55,8 @@ private theorem atomic_predecessor (a j : Nat) (X : CompletionTree)
   refine ⟨l, ?_, et⟩
   apply CompletionPositiveDriftRegion.atomic_injective
   rw [← eq, et]
-  exact Function.iterate_add_apply rho l a (leaf true)
+  simpa only [atomic, Nat.add_comm] using
+    (Function.iterate_add_apply rho a l (leaf true))
 
 private theorem pair_atomic {U V : CompletionTree} {j : Nat}
     (eq : node U V = atomic j) :
@@ -59,8 +68,10 @@ private theorem pair_atomic {U V : CompletionTree} {j : Nat}
   | succ j =>
     cases j with
     | zero =>
+      have first : atomic 1 = leaf false := rho_alpha
+      rw [first] at eq
       have h := congrArg (fun X => (PFunctor.M.dest X).1) eq
-      simp [atomic, leaf, node] at h
+      simp [leaf, node] at h
     | succ n =>
       rw [show n + 1 + 1 = n + 2 from rfl, atomic_pair] at eq
       exact ⟨n, rfl, node_inj eq⟩

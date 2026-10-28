@@ -9,6 +9,10 @@
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeGuardedAtomicReplacement
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeImageSaturationInterface
 
+/-! One actual guarded extension supplies all image filters simultaneously.
+Only the finitely many small atomic free values remain fixed; every other
+free value is replaced by the completed homogeneous tree Omega. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -48,12 +52,19 @@ private theorem image_coinduction (k : Nat) (R : CompletionTree → Prop)
     change PFunctor.M.corec coalgebra q = _
     rw [PFunctor.M.corec_def]
     cases h : pick q with
-    | inl b => simp [coalgebra, h, PFunctor.map, leaf, Function.comp_def]
+    | inl b =>
+      simp only [coalgebra, h, PFunctor.map, leaf, Function.comp_def]
+      apply congrArg PFunctor.M.mk
+      apply Sigma.ext rfl
+      apply heq_of_eq
+      funext e
+      exact e.elim
     | inr pair =>
       rcases pair with ⟨u, v⟩
       simp only [coalgebra, h, PFunctor.map, Function.comp_def]
       apply congrArg PFunctor.M.mk
-      congr 1
+      apply Sigma.ext rfl
+      apply heq_of_eq
       funext b
       cases b <;> rfl
   have prefixes : ∀ d (q : Q), cutoff d (rho^[k] (pre q)) = cutoff d q.val := by
@@ -226,8 +237,9 @@ theorem normalized_saturation {k m : Nat} (S : System k m) (p : Fin k → Nat)
     intro i hi
     rw [law.2 i hi]
     cases h : mode i with
-    | some j => rfl
+    | some j => simp only [canonicalFree, h]
     | none =>
+      simp only [canonicalFree, h]
       intro j hj eq
       exact CompletionPositiveDriftRegion.omega_not_finite
         (eq.symm ▸ CompletionPositiveDriftRegion.atomic_finite j)
@@ -240,28 +252,36 @@ theorem normalized_saturation {k m : Nat} (S : System k m) (p : Fin k → Nat)
       rw [law.2 i hi]
       have h := vm i hi
       cases eq : mode i with
-      | none => exact Or.inr rfl
-      | some j => exact Or.inl h.symm
+      | none => exact Or.inr (by simp only [canonicalFree, eq])
+      | some j =>
+        simp only [eq] at h
+        exact Or.inl (by simpa only [canonicalFree, eq] using h.symm)
     have small : ∀ i, S i = none → ∀ j, j ≤ threshold filters + 1 →
         v i = atomic j → canonical S p guarded mode i = v i := by
       intro i hi j hj eq
       have h := vm i hi
       rw [law.2 i hi]
       cases hm : mode i with
-      | none => exact (h j hj eq).elim
-      | some l => exact h.symm
-    have bounds : ∀ E t, (E, t) ∈ filters → t ≤ threshold filters := by
-      intro E t ht
-      induction filters with
-      | nil => simp at ht
+      | none =>
+        simp only [hm] at h
+        exact (h j hj eq).elim
+      | some l =>
+        simp only [hm] at h
+        simpa only [canonicalFree, hm] using h.symm
+    have all_bounds : ∀ (L : List (Filter k m)) E t, (E, t) ∈ L → t ≤ threshold L := by
+      intro L
+      induction L with
+      | nil => intro E t ht; simp at ht
       | cons f rest ih =>
+        intro E t ht
         rcases List.mem_cons.mp ht with h | h
         · cases h
           exact Nat.le_max_left _ _
-        · exact (ih h).trans (Nat.le_max_right _ _)
+        · exact (ih E t h).trans (Nat.le_max_right _ _)
+
     intro E t ht
     exact replacement_filters S p guarded _ v _ sat law.1 free small t
-      (bounds E t ht) E (pass E t ht)
+      (all_bounds filters E t ht) E (pass E t ht)
   · intro pass
     exact ⟨canonical S p guarded mode, law.1, membership, pass⟩
 

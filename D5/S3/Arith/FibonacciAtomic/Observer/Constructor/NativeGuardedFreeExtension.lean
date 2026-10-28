@@ -59,9 +59,9 @@ private theorem extension_exists {k m : Nat} (S : System k m) (p : Fin k → Nat
   have empty : ∀ i, B i → N i = none := by
     intro i
     refine Fin.lastCases ?_ (fun j => ?_) i
-    · intro _; rfl
+    · intro _; simp only [N, nativeSystem, Fin.lastCases_last]
     · intro h
-      change S j = none at h
+      have h : S j = none := by simpa only [B, Fin.lastCases_castSucc] using h
       simp only [N, nativeSystem, Fin.lastCases_castSucc, h, Option.map_none]
   obtain ⟨w, sat, same⟩ := whole_system_boundary_extension N B boundary
     (by intro i E hi eq; rw [empty i hi] at eq; cases eq)
@@ -71,17 +71,21 @@ private theorem extension_exists {k m : Nat} (S : System k m) (p : Fin k → Nat
     have law := sat i.castSucc (specialize (tokenKind k) (tokenRank p) E)
       (by simp only [N, nativeSystem, Fin.lastCases_castSucc, eq, Option.map_some])
     exact law.trans (specialize_value _ _ w
-      (by exact same (Fin.last m) trivial) E)
+      (by simpa only [boundary, Fin.lastCases_last] using
+        same (Fin.last m) (by simp only [B, Fin.lastCases_last])) E)
   · intro i hi
-    exact same i.castSucc hi
+    simpa only [boundary, Fin.lastCases_castSucc] using
+      same i.castSucc (by simpa only [B, Fin.lastCases_castSucc] using hi)
 
 private theorem evaluate_cutoff_congr {k m : Nat} (d : Nat) (p : Fin k → Nat)
     {v w : Fin m → CompletionTree} (same : ∀ i, cutoff d (v i) = cutoff d (w i))
     (E : Expression k m) : cutoff d (evaluate p v E) = cutoff d (evaluate p w E) := by
   let v' : Fin (m + 1) → CompletionTree := Fin.lastCases Omega v
   let w' : Fin (m + 1) → CompletionTree := Fin.lastCases Omega w
-  have hv := specialize_value (tokenKind k) (tokenRank p) v' rfl E
-  have hw := specialize_value (tokenKind k) (tokenRank p) w' rfl E
+  have hv := specialize_value (tokenKind k) (tokenRank p) v' (by simp [v']) E
+  have hw := specialize_value (tokenKind k) (tokenRank p) w' (by simp [w']) E
+  simp only [v', Fin.lastCases_castSucc] at hv
+  simp only [w', Fin.lastCases_castSucc] at hw
   change cutoff d (CompletionPositiveDriftRegion.value _ _ v E) =
     cutoff d (CompletionPositiveDriftRegion.value _ _ w E)
   rw [← hv, ← hw, ← NativeFunctionalEffectivePrefix.eval_cutoff,
@@ -89,8 +93,8 @@ private theorem evaluate_cutoff_congr {k m : Nat} (d : Nat) (p : Fin k → Nat)
   congr 1
   funext i
   refine Fin.lastCases ?_ (fun j => ?_) i
-  · rfl
-  · exact same j
+  · simp only [v', w', Fin.lastCases_last]
+  · simpa only [v', w', Fin.lastCases_castSucc] using same j
 
 /-- Every arbitrary assignment on the undefined states has exactly one
 simultaneous extension through the pair-guarded definitions. -/
