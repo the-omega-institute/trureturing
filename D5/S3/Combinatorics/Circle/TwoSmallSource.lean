@@ -29,24 +29,26 @@ private theorem short_gap {k : ℕ} (hk : 0 < k) (P : Fin k → Prop)
     ∃ o : Fin k, ∃ d : ℕ, 0 < d ∧ d < k ∧ d ≤ k - d ∧
       ∀ j < k, P (phase hk o j) ↔ j = 0 ∨ j = d := by
   letI : NeZero k := ⟨ne_of_gt hk⟩
-  have hchar (o z : Fin k) (ho : o ≠ z) (hp : ∀ i, P i ↔ i = o ∨ i = z) :
+  have hchar (o z : Fin k) (hp : ∀ i, P i ↔ i = o ∨ i = z) :
       ∀ j < k, P (phase hk o j) ↔ j = 0 ∨ j = (z - o).val := by
     intro j hj
     rw [hp, phase_add]
-    rw [Nat.mod_eq_of_lt hj]
+    have hcast : (⟨j % k, Nat.mod_lt _ hk⟩ : Fin k) = ⟨j, hj⟩ :=
+      Fin.ext (Nat.mod_eq_of_lt hj)
+    rw [hcast]
     constructor
     · rintro (he | he)
       · left
         have ht : (⟨j, hj⟩ : Fin k) = 0 := by
           apply add_left_cancel (a := o)
           simpa using he
-        exact congrArg Fin.val ht
+        simpa only [Fin.val_zero] using congrArg Fin.val ht
       · right
         have ht : (⟨j, hj⟩ : Fin k) = z - o := by rw [← he]; abel
         exact congrArg Fin.val ht
     · rintro (rfl | he)
       · left
-        have hz : (⟨0, hj⟩ : Fin k) = 0 := Fin.ext rfl
+        have hz : (⟨0, hj⟩ : Fin k) = 0 := Fin.ext (by simp)
         rw [hz, add_zero]
       · right
         have ht : (⟨j, hj⟩ : Fin k) = z - o := Fin.ext he
@@ -59,14 +61,12 @@ private theorem short_gap {k : ℕ} (hk : 0 < k) (P : Fin k → Prop)
     exact hab he'.symm
   have hdk : d < k := (b - a).isLt
   by_cases hd : d ≤ k - d
-  · exact ⟨a, d, hd0, hdk, hd, hchar a b hab hP⟩
+  · exact ⟨a, d, hd0, hdk, hd, hchar a b hP⟩
   · have he : (a - b).val = k - d := by
       have hn : a - b = -(b - a) := by abel
-      rw [hn, Fin.val_neg]
-      simp only [d] at *
-      split_ifs <;> omega
+      simp only [hn, Fin.val_neg, if_neg (sub_ne_zero.mpr (Ne.symm hab)), d]
     refine ⟨b, (a - b).val, by omega, (a - b).isLt, by omega, ?_⟩
-    exact hchar b a (Ne.symm hab) (fun i => by rw [hP]; tauto)
+    exact hchar b a (fun i => by rw [hP]; tauto)
 
 /-- Exactly two SMALL occurrences force a nonzero row. The zero case uses
 the existing opposite-rotation owner, rather than reproving cyclic propagation. -/
@@ -75,9 +75,12 @@ private theorem no_zero {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
       |actualSource k t i| < quarter k)).card = 2) :
     ∀ i, actualSource k t i ≠ 0 := by
   classical
+  letI : NeZero k := ⟨by omega⟩
   intro i hi
   have hall (j : Fin k) : actualSource k t j = 0 := by
-    have hh := AntipodalSourceCompletion.opposite_rotation hk t i i (by omega) j
+    have hop : actualSource k t i = -actualSource k t i := by rw [hi]; norm_num
+    have hh := AntipodalSourceCompletion.opposite_rotation hk t i i hop j
+    change actualSource k t (finCycle (i - i) j) = -actualSource k t j at hh
     simp only [sub_self, finCycle_apply, add_zero] at hh
     omega
   have hset : Finset.univ.filter (fun i : Fin k =>
@@ -131,7 +134,7 @@ theorem actual_two_gap_profile {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
     change -(half k) ≤ actualSource k t (phase (by omega) o j) ∧
       actualSource k t (phase (by omega) o j) ≤ half k at hh
     dsimp [w]
-    cases negative <;> simp only [orient, Bool.false_eq_true, if_false, if_true] <;> omega
+    cases negative <;> simp only [orient, Bool.false_eq_true, ite_false, ite_true] <;> omega
   have hws : w 0 < quarter k := by
     have hh := (hchar 0 (by omega)).mpr (Or.inl rfl)
     have he : |w 0| = |actualSource k t (phase (by omega) o 0)| := orient_abs _ _
@@ -153,7 +156,7 @@ theorem actual_two_gap_profile {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
     have hh := phase_step hk t o j
     dsimp [w]
     rw [hh]
-    cases negative <;> simp only [orient, Bool.false_eq_true, if_false, if_true]
+    cases negative <;> simp only [orient, Bool.false_eq_true, ite_false, ite_true]
     exact (doubleStep_neg (le_of_lt hN0)).symm
   have hwclose : w (ell + m + 2) = w 0 := by
     have he : phase (by omega) o (ell + m + 2) = phase (by omega) o 0 := by
@@ -172,9 +175,9 @@ theorem actual_two_gap_profile {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
 
 
 private theorem two_even (n : ℕ) : (2 : ℤ) ^ (2 * n) = (4 : ℤ) ^ n := by
-  rw [Nat.mul_comm, pow_mul]; norm_num
+  rw [pow_mul]; norm_num
 private theorem neg_two_even (n : ℕ) : (-2 : ℤ) ^ (2 * n) = (4 : ℤ) ^ n := by
-  rw [Nat.mul_comm, pow_mul]; norm_num
+  rw [pow_mul]; norm_num
 private theorem sign_even (n : ℕ) : paritySign (2 * n) = 1 := by simp [paritySign]
 private theorem sign_odd (n : ℕ) : paritySign (2 * n + 1) = -1 := by simp [paritySign]
 
@@ -278,7 +281,7 @@ private theorem normalized_placement (ell m : ℕ) (hle : ell ≤ m)
           pow_succ, two_even, h6r] at ht
         rw [show 2 * p + 2 + (2 * j + 1 + 1) = 2 * p + 4 + 2 * j by omega] at ht
         dsimp [f]; nlinarith only [ht])
-    refine ⟨word, by simpa [hell, hm, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using hperm,
+    refine ⟨word, by simpa only [show ell + m + 2 = 2 * p + 2 * q + 4 by omega] using hperm,
       unscale_strip w C 0 word hstrip, ?_⟩
     have hsum' : 3 * (word.map w).sum = 0 := by
       simpa only [f, List.sum_map_mul_left] using hsum
@@ -308,7 +311,8 @@ private theorem negate_rotation {α : Type*} (f : α → ℤ) (C : ℤ) (L : Lis
   have hj' : j ≤ w.length := by simp only [Finset.mem_range] at hj; omega
   have hminimum : ∀ n ≤ w.length, (w.take j).sum ≤ (w.take n).sum :=
     fun n hn => hmin n (Finset.mem_range.mpr (by omega))
-  have hnonneg := D5.S1.Words.Compositions.ZeroSumWordCount.nonnegative_rotate_of_minimum hw hj' hminimum
+  have hnonneg :=
+    D5.S1.Words.Compositions.ZeroSumWordCount.nonnegative_rotate_of_minimum hw hj' hminimum
   refine ⟨j, by simpa [w] using hj', ?_⟩
   intro n
   have hupper : ((w.rotate j).take n).sum ≤ C := by
@@ -362,7 +366,8 @@ theorem actualSource_two_small_full_completion {k : ℕ} (hk : 3 ≤ k) (t : ℕ
     rw [List.ofFn_eq_map, ← List.map_coe_finRange_eq_range, List.map_map]
     apply List.map_congr_left
     intro i _
-    rw [phase_add, Nat.mod_eq_of_lt i.isLt]
+    change phase (by omega) o i.val = o + i
+    apply Fin.ext
     rfl
   have hpL : L.Perm (List.ofFn (fun q : Fin k => q)) := by
     have hh := hp.map phi
@@ -381,17 +386,17 @@ theorem actualSource_two_small_full_completion {k : ℕ} (hk : 3 ≤ k) (t : ℕ
   have hcompletion : ∃ R : List (Fin k), R.Perm (List.ofFn (fun q : Fin k => q)) ∧
       InStrip (actualSource k t) (half k) 0 R ∧ mass (actualSource k t) R = 0 := by
     cases negative with
-    | false => exact ⟨L, hpL, by simpa only [orient, Bool.false_eq_true, if_false] using hstrip,
-        by simpa only [orient, Bool.false_eq_true, if_false, mass] using hsum⟩
+    | false => exact ⟨L, hpL, by simpa only [orient, Bool.false_eq_true, ite_false] using hstrip,
+        by simpa only [orient, Bool.false_eq_true, ite_false, mass] using hsum⟩
     | true =>
       obtain ⟨j, hj, hrot⟩ := negate_rotation
         (fun q => orient true (actualSource k t q)) (half k) L hstrip hsum
       have hpR := (List.rotate_perm L j).trans hpL
       have hprefixR (n : ℕ) : 0 ≤ mass (actualSource k t) ((L.rotate j).take n) ∧
           mass (actualSource k t) ((L.rotate j).take n) ≤ half k := by
-        simpa only [orient, if_true, neg_neg, mass] using hrot n
+        simpa only [orient, ite_true, neg_neg, mass] using hrot n
       have hmL : mass (actualSource k t) L = 0 := by
-        simp only [orient, if_true, sum_neg_map] at hsum
+        simp only [orient, ite_true, sum_neg_map] at hsum
         dsimp [mass]; omega
       have hmR : mass (actualSource k t) (L.rotate j) = 0 := by
         dsimp [mass]
