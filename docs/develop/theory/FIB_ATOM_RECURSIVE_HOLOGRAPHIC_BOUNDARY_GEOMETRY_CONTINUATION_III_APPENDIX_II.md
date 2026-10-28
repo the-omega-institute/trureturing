@@ -3854,3 +3854,339 @@ The Lyapunov integral, spectral calculus, three-lines interpolation and Cauchy e
 For bibliographic context, Marvin Rosenblum, “On the operator equation $BX-XA=Q$,” *Duke Mathematical Journal* (1956), [doi:10.1215/S0012-7094-56-02324-9](https://doi.org/10.1215/S0012-7094-56-02324-9), concerns operator equations. Bibliographic metadata alone supplies no theorem with the zero spectral endpoint needed here. No theorem from that article is invoked in place of (129.2)–(129.6).
 
 ## 追加锚（本行以下为增补区）
+
+## 130. Common annular Stummel control and the actual all-angle logarithmic source comparison
+
+**Definition 130.1 (the original family and its source coordinates).** Retain the original group, source $e$, raw Haar measure $d\mu=dx\,dy\,dz\,dw$, positive unit-source Green field $L\Gamma=\delta_e$, horizontal generator, central units and clock of §§115–117. Fix any original $a,\eta>0$, with $g_c=16\sqrt{a\eta}$ and $\kappa=\sqrt{\eta/a}$. The full complex punctured form, maximal operator and actual endpoint selector are exactly [(109.8), (112.1)–(112.5)](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md#109-one-source-coefficient-for-the-entire-original-maximal-zero-space). In particular use the same global vector and normalization
+
+$$
+\begin{aligned}
+C(w_*)&=1,\qquad h=\frac{w_*}{\|w_*\|_2},\qquad
+c_h=C(h)=\frac1{\|w_*\|_2}>0,\\
+\ker S^*&=\mathbb Ch,\qquad
+D(H_{\rm end})=\{v\in D(S^*):A(v)=\rho C(v)\},\qquad
+\rho=\frac{A(h)}{C(h)}.
+\end{aligned}
+\tag{130.1}
+$$
+
+Here $C$ is the coefficient map of (112.2), equal to $B_{\rm src}$ on $\ker S^*$. Theorem 115.2 supplies the real smooth strictly positive representative of $h$ on $G\setminus\{e\}$. Write $\xi=(x,y,z)$ and use exactly the unitary chart (109.1)–(109.2):
+
+$$
+\begin{aligned}
+\mathcal G(\xi,s)&=\Gamma(x,y,z,s+xy/2),\\
+f_v(\xi,t)&=\kappa^{1/2}v(x,y,z,\kappa t+xy/2),\qquad
+R=|(\xi,t)|,\\
+H_v(\tau,\omega)&=R f_v(R\omega),\qquad
+\tau=-\log R,\qquad \omega\in S^3.
+\end{aligned}
+\tag{130.2}
+$$
+
+The Jacobian of $(\xi,t)\mapsto(\xi,w)$ is $\kappa$, so $v\mapsto f_v$ preserves the original $L^2$ norm and the source. For $0<r\le1$ put
+
+$$
+\begin{aligned}
+W_r(X,u)&=r^2\mathcal G(rX,\kappa ru)\\
+ &=r^2\Gamma\!\left(rX_1,rX_2,rX_3,
+                  \kappa ru+\tfrac12r^2X_1X_2\right),\\
+F_r(X,u)&=r f_h(rX,ru),\qquad X\in\mathbb R^3,\quad u\in\mathbb R.
+\end{aligned}
+\tag{130.3}
+$$
+
+The full map from $(X,u)$ to the original group coordinates has Jacobian $\kappa r^4$. These are spatial coordinates for the same field and state; all evolution times remain those of the original clock. Retain the finite positive $B_\Gamma$ of (102.1)–(102.2). The exact marginal and homogeneous estimate of (106.8), equivalently (109.9), are
+
+$$
+\begin{aligned}
+\int_{\mathbb R}W_r(X,u)\,du
+ &=\frac1{4\pi\kappa|X|}\qquad(X\ne0),\\
+0\le W_r(X,u)
+ &\le B_\Gamma r^{1/2}
+       \bigl(r^2|X|^4+\kappa^2u^2\bigr)^{-3/4}.
+\end{aligned}
+\tag{130.4}
+$$
+
+All Euclidean balls and spheres below refer to these four spatial coordinates, and $L^2(S^3)$ uses ordinary surface measure.
+
+**Proposition 130.2 (common Stummel estimate for the original rescaled field).** For every fixed original $a,\eta>0$, set
+
+$$
+\begin{aligned}
+b&=\frac18,\qquad d=\frac{\sqrt3}{8},\\
+K_{\rm St}&=16\pi^2B_\Gamma\kappa^{-1/2}d^{-3/2}.
+\end{aligned}
+\tag{130.5}
+$$
+
+For every $0<r\le1$ and every $0<s\le1/4$,
+
+$$
+\sup_{1/2\le|z|\le2}
+ \int_{B(z,s)}\frac{16\kappa W_r(y)}{|z-y|^2}\,dy
+ \le128s+K_{\rm St}\sqrt r\,s^2
+ \le\max(128,K_{\rm St})(s+s^2).
+\tag{130.6}
+$$
+
+In particular the modulus is common to the entire original rescaled family for the fixed parameter pair.
+
+**Proof.** Write $z=(Z,v)$ and $y=(X,u)$. If $1/2\le|z|\le2$ and $y\in B(z,s)$ with $s\le1/4$, then
+$1/4<|y|<9/4<4$. Split this ball into $E_1=\{|X|\ge b\}\cap B(z,s)$ and $E_0=\{|X|<b\}\cap B(z,s)$.
+
+First the normalization in (130.4) follows without a change of source strength. For each $X\ne0$, central translation and the exact original Green marginal give
+
+$$
+\begin{aligned}
+w&=\kappa ru+\tfrac12r^2X_1X_2,\qquad dw=\kappa r\,du,\\
+\int_{\mathbb R}W_r(X,u)\,du
+ &=\frac r\kappa\int_{\mathbb R}\Gamma(rX,w)\,dw
+  =\frac r\kappa\frac1{4\pi r|X|}
+  =\frac1{4\pi\kappa|X|}.
+\end{aligned}
+\tag{130.7}
+$$
+
+This uses the raw Haar measure and the full Jacobian $\kappa r^4$ of (130.3). For the $E_1$ contribution, outside the null line $X=Z$ one has $|z-y|^{-2}\le|X-Z|^{-2}$. Positivity and Tonelli's theorem allow each central section to be extended to all of $\mathbb R$. Hence, using $|S^2|=4\pi$,
+
+$$
+\begin{aligned}
+I_1&=16\kappa\int_{E_1}\frac{W_r(X,u)}{|z-y|^2}\,dX\,du\\
+ &\le\frac4\pi
+       \int_{\substack{|X-Z|<s\\|X|\ge b}}
+           \frac{dX}{|X|\,|X-Z|^2}\\
+ &\le\frac4{\pi b}\int_{\{H\in\mathbb R^3:|H|<s\}}
+                          |H|^{-2}\,dH
+  =\frac{16}{b}s=128s.
+\end{aligned}
+\tag{130.8}
+$$
+
+On $E_0$, the lower bound on $|y|$ instead gives
+
+$$
+u^2=|y|^2-|X|^2>\frac1{16}-\frac1{64}=d^2.
+$$
+
+Thus the second line of (130.4) implies
+$W_r(X,u)\le D_0\sqrt r$, where
+$D_0=B_\Gamma\kappa^{-3/2}d^{-3/2}$. Four-dimensional polar integration, with $|S^3|=2\pi^2$, now yields
+
+$$
+\begin{aligned}
+I_0&=16\kappa\int_{E_0}\frac{W_r(y)}{|z-y|^2}\,dy\\
+ &\le16\kappa D_0\sqrt r
+       \int_{\{h'\in\mathbb R^4:|h'|<s\}}|h'|^{-2}\,dh'\\
+ &=16\pi^2\kappa D_0\sqrt r\,s^2
+  =K_{\rm St}\sqrt r\,s^2.
+\end{aligned}
+\tag{130.9}
+$$
+
+All integrands are nonnegative and measurable. Omitting the line $X=Z$ or the point $y=z$ changes no integral; the displayed polar integrals are finite. Thus neither a principal value nor prior integrability is assumed. Adding (130.8) and (130.9), taking the full center supremum, and using $\sqrt r\le1$ proves (130.6). Finiteness and positivity of $B_\Gamma$ and $\kappa$ give the stated finite parameter-dependent constants. $\square$
+
+**Theorem 130.3 (the actual ground state's all-angle logarithmic source comparison).** For every original $a,\eta>0$, retain all the original definitions and inherited hypotheses of §§109–112 and §§115–117, including the full complex form, raw measure, unit-source field, actual selector, normalized $h$ and original clock. There exist constants
+$0<R_0\le1$ and $0<c\le C<\infty$, depending on this fixed original pair, such that the actual positive smooth representative in (130.2) satisfies
+
+$$
+cR^{-1}(1+|\log R|)
+ \le f_h(R\omega)
+ \le CR^{-1}(1+|\log R|)
+ \qquad(0<R<R_0,\ \omega\in S^3).
+\tag{130.10}
+$$
+
+One threshold and one pair of constants serve every indicated radius and angle.
+
+**Proof.** The actual state belongs to $D(H_{\rm end})\subset D(S^*)$, satisfies $S^*h=0$, and has the positive representative and coefficient (130.1). To obtain a uniform angular comparison, first write the exact equation of its spatial rescalings. The four vector fields are
+
+$$
+\begin{aligned}
+Y_{1,r}&=\partial_{X_1}-\frac{rX_2}{2\kappa}\partial_u,&
+Y_{2,r}&=\partial_{X_2}+\frac{rX_1}{2\kappa}\partial_u,\\
+Y_{3,r}&=\partial_{X_3},&Y_{4,r}&=\partial_u.
+\end{aligned}
+\tag{130.11}
+$$
+
+The original complex sesquilinear form (109.8), locally tested after this rescaling and divided by $a$, is
+
+$$
+\mathfrak p_r[\phi,\psi]
+ =\int\sum_{j=1}^4\overline{Y_{j,r}\phi}\,Y_{j,r}\psi\,dX\,du
+    -16\kappa\int W_r\overline\phi\psi\,dX\,du.
+\tag{130.12}
+$$
+
+In particular the local weak equation is $\mathfrak p_r[\phi,F_r]=0$ for every compactly supported smooth complex test function away from zero. Each field in (130.11) is divergence free. Their real symmetric principal matrix $A_r$ has quadratic form
+
+$$
+A_r[(p,v),(p,v)]
+ =\left|p_1-\frac{rX_2v}{2\kappa}\right|^2
+  +\left|p_2+\frac{rX_1v}{2\kappa}\right|^2
+  +|p_3|^2+|v|^2.
+\tag{130.13}
+$$
+
+Consequently the equation, with its sign fixed, is
+
+$$
+-\operatorname{div}(A_r\nabla F_r)-16\kappa W_rF_r=0,
+\qquad
+\operatorname{div}(A_r\nabla F_r)=V_rF_r,
+\qquad V_r=-16\kappa W_r.
+\tag{130.14}
+$$
+
+There is no additional first-order or other lower term outside this divergence expression. Each $F_r$ is a positive smooth solution in $H^1_{\rm loc}$ on every punctured annulus. This uses local regularity of the actual state, without asserting global $H^1$ or Friedrichs membership of $h$.
+
+Use the single fixed domain
+
+$$
+D=\{(X,u):3/4<|(X,u)|<5/4\},\qquad
+B_0=\frac5{8\kappa},\qquad L_0=2+2B_0^2.
+\tag{130.15}
+$$
+
+On $D$ the shear vector $(-rX_2/(2\kappa),rX_1/(2\kappa),0)$ has norm at most $B_0$. The triangular map $(p,v)\mapsto(p+v\beta_r,v)$ in (130.13) and its inverse, with $\beta_r$ this shear vector, both have squared norm at most $L_0$. Therefore
+
+$$
+L_0^{-1}|(p,v)|^2
+ \le A_r[(p,v),(p,v)]
+ \le L_0|(p,v)|^2
+ \qquad((X,u)\in D,\ 0<r\le1).
+\tag{130.16}
+$$
+
+The matrices are real symmetric, bounded and measurable, in fact smooth on $D$. Extending them by the identity outside $D$ gives the same ellipticity constant $\lambda=L_0^{-1}>0$ globally. It remains to verify one potential modulus in the all-radius convention.
+
+Extend $V_r|_D$ by zero and denote the extension by $\widetilde V_r$. The exact marginal, positivity and Tonelli give
+
+$$
+\begin{aligned}
+\int_{\mathbb R^4}|\widetilde V_r(y)|\,dy
+ &=16\kappa\int_D W_r(y)\,dy\\
+ &\le\frac4\pi\int_{|X|<5/4}\frac{dX}{|X|}
+  =\frac{25}{2}.
+\end{aligned}
+\tag{130.17}
+$$
+
+For $0<s\le1/4$, a ball centered outside $\{1/2\le|z|\le2\}$ does not meet $D$. For other centers Proposition 130.2 bounds its potential integral by
+$\omega_0(s)=128s+K_{\rm St}s^2$. For $s>1/4$, split that integral at distance $1/4$ from its center. Equations (130.6) and (130.17) yield, for every center $z\in\mathbb R^4$,
+
+$$
+\begin{aligned}
+\int_{B(z,s)}\frac{|\widetilde V_r(y)|}{|z-y|^2}\,dy
+ &\le\omega_0(1/4)+16\cdot\frac{25}{2}\\
+ &=232+\frac{K_{\rm St}}{16}\qquad(s>1/4).
+\end{aligned}
+\tag{130.18}
+$$
+
+It follows that the single nondecreasing function
+
+$$
+\omega(s)=128s+(K_{\rm St}+3200)s^2\qquad(s>0)
+\tag{130.19}
+$$
+
+controls these integrals for all radii and all centers, for every $0<r\le1$, and tends to zero as $s\downarrow0$. Indeed at $s=1/4$ its value is $232+K_{\rm St}/16$, and it dominates $\omega_0$ at smaller radii. Boundaries of balls are Lebesgue null, so the same estimates hold for closed balls. This verifies a common Stummel class for the absolute values of the signed potentials in (130.14), without a bound on their derivatives.
+
+Apply the local uniform Harnack inequality of Chiarenza–Fabes–Garofalo, Theorem 2.5, with $n=4$, ellipticity $\lambda$ and modulus (130.19). Their convention is precisely $\operatorname{div}(A\nabla u)=Vu$, with $u\in H^1_{\rm loc}$ and real symmetric bounded measurable uniformly elliptic $A$. Thus there are $q_0>0$ and $C_H\ge1$ depending only on these common data. Set $q=\min(q_0,1/32)$. For every $p\in S^3$, $B(p,2q)\subset D$, and the cited inequality gives
+
+$$
+\sup_{B(p,q/2)}F_r
+ \le C_H\inf_{B(p,q/2)}F_r
+ \qquad(0<r\le1).
+\tag{130.20}
+$$
+
+Any two points of $S^3$ are joined by a great-circle arc of length at most $\pi$. Subdivide it into at most
+$N=\lceil4\pi/q\rceil+1$ links, each of length at most $q/4$. Each consecutive pair lies in a comparison ball from (130.20). Iteration gives
+
+$$
+\max_{S^3}F_r\le H_*\min_{S^3}F_r,
+\qquad H_*=C_H^N<\infty,\qquad 0<r\le1.
+\tag{130.21}
+$$
+
+The chain length, balls and constants are independent of $r$ and the points. Smooth positive representatives turn essential bounds, if used in (130.20), into bounds at every point.
+
+Next use the original maximal-domain expansion (112.2), choosing $T\ge0$ and the angular unit vector $e_0$ of (109.3):
+
+$$
+H_h(\tau)=(A(h)+\tau c_h)e_0+Z(\tau),\qquad
+\|e_0\|_{L^2(S^3)}=1,\qquad
+U(\tau)=e^{\tau/8}Z(\tau)
+ \in H^1((T,\infty)\times S^3).
+\tag{130.22}
+$$
+
+In particular $U\in H^1((T,\infty);L^2(S^3))$. Its continuous Hilbert-space-valued representative is bounded. Explicitly, choose a sequence of slices tending to infinity on which $\|U\|_2\to0$, available from its $L^2$ integrability. The fundamental theorem of calculus for $\|U\|_2^2$ and Cauchy–Schwarz give
+
+$$
+\sup_{\tau>T}\|U(\tau)\|_2^2
+ \le2\|U\|_{L^2((T,\infty);L^2)}
+       \|\partial_\tau U\|_{L^2((T,\infty);L^2)}
+ \le\|U\|_{H^1((T,\infty);L^2)}^2.
+\tag{130.23}
+$$
+
+Hence there is a finite $M\ge0$ with $\|Z(\tau)\|_2\le Me^{-\tau/8}$. The actual smooth $H_h$ and the affine term in (130.22) are continuous as $L^2(S^3)$-valued functions. Their almost-everywhere expansion consequently agrees with these continuous traces at every $\tau>T$. No pointwise angular estimate for $Z$ is assumed.
+
+Triangle and reverse-triangle inequalities now give, at every such $\tau$,
+
+$$
+c_h\tau-|A(h)|-Me^{-\tau/8}
+ \le\|H_h(\tau)\|_2
+ \le c_h\tau+|A(h)|+Me^{-\tau/8}.
+\tag{130.24}
+$$
+
+Choose one finite
+
+$$
+\tau_0\ge\max\left(T+1,1,
+                  \frac{2(|A(h)|+M)}{c_h}\right).
+$$
+
+The positive coefficient in (130.1) then gives
+
+$$
+\frac{c_h\tau}{2}\le\|H_h(\tau)\|_2
+ \le\frac{3c_h\tau}{2}\qquad(\tau\ge\tau_0).
+\tag{130.25}
+$$
+
+For $r=e^{-\tau}$, the restriction of $F_r$ to $S^3$ is exactly $H_h(\tau)$, not an average or a model profile. With $\sigma_3=|S^3|=2\pi^2$, positivity and (130.21) imply
+
+$$
+\frac{\|H_h(\tau)\|_2}{\sqrt{\sigma_3}H_*}
+ \le\min_{S^3}H_h(\tau),\qquad
+\max_{S^3}H_h(\tau)
+ \le\frac{H_*\|H_h(\tau)\|_2}{\sqrt{\sigma_3}}.
+\tag{130.26}
+$$
+
+Combining (130.25)–(130.26) and $\tau\ge1$ yields, for every $\omega\in S^3$,
+
+$$
+\frac{c_h}{4\sqrt{\sigma_3}H_*}(1+\tau)
+ \le H_h(\tau,\omega)
+ \le\frac{3H_*c_h}{2\sqrt{\sigma_3}}(1+\tau)
+ \qquad(\tau\ge\tau_0).
+\tag{130.27}
+$$
+
+Take $R_0=e^{-\tau_0}$,
+$c=c_h/(4\sqrt{\sigma_3}H_*)$ and
+$C=3H_*c_h/(2\sqrt{\sigma_3})$.
+The exact identity $f_h(R\omega)=R^{-1}H_h(-\log R,\omega)$ proves (130.10). All constants may depend on the fixed original pair and its fixed normalized state, but none depends on radius or angle. No uniformity as $a$ or $\eta$ degenerates is asserted. $\square$
+
+**Remark 130.4 (mathematical sources and scope).** Proposition 130.2 and Theorem 130.3 are original-family deductions from the exact marginal and homogeneous bound of §§102, 106 and 109, the source expansion and selector of §§109–112, and the actual positive normalized zero state of §115. Their mature Harnack input is F. Chiarenza, E. Fabes and N. Garofalo, “Harnack’s inequality for Schrödinger operators and the continuity of solutions,” *Proceedings of the American Mathematical Society* **98** (1986), no. 3, 415–425, [doi:10.1090/S0002-9939-1986-0857933-4](https://doi.org/10.1090/S0002-9939-1986-0857933-4), Introduction and Theorem 2.5. The signed-potential convention, positive local solution class, common ellipticity and all-radius Stummel modulus required there are verified in (130.11)–(130.20). Tonelli, Euclidean polar integration and the Hilbert-space-valued one-dimensional Sobolev estimate are intermediate tools in the displayed proofs. No priority assertion is attached to this composition.
+
+The conclusion is a local comparison for the actual $h$ in its original unitary coordinates. It supplies neither the global source-start assertion $g_t\in L^\infty(G,h^2\mu)$ for every original $a,\eta,t>0$, nor control at spatial infinity or a source-to-global transition estimate. It proves no new weighted Sobolev, Poincaré, heat-kernel or trace inequality on the complete ground-state form domain $\mathscr V=\mathscr V_0\dotplus\mathbb C1$ of §§115–116. Such a full-domain assertion must retain the form and its source trace; a local comparison or a punctured-core inequality alone does not provide it. In particular the possibly unbounded original multipliers and their domains in §129 still require a global boundedness supplier or another justified argument, and the complete mixed-time negative-index conclusion is not settled here. The native source, evolution, representation and readout identifications, a full common three-time relation-fiber assertion and a physical realization are not consequences of this local result.
+
+## 追加锚（本行以下为增补区）

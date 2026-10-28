@@ -27,6 +27,14 @@ internal sealed class ElementaryChannelDivisibilityDocument : IScribeDocumentDef
         "Exact Kraus-space criterion for elementary right division of finite quantum channels.",
         H("Elementary channel divisibility"), Blocks(
             Paragraph(Text("The index type I is finite. Matrices act on the complex coordinate space I → ℂ. The inner product is conjugate linear in its first argument, and tr denotes Matrix.trace. CP is the existing complete-positivity predicate, quantifying every finite amplification; CPTP also preserves the trace of every matrix. No assertion about a physical gate set, a local operations protocol, a success probability or a preparation cost follows from these statements.")),
+            Node("factorofkernel", "Matrix factorization from kernel inclusion", "factor_of_kernel",
+                FactorOfKernelFormula(),
+                "If every vector annihilated by R is also annihilated by S, then S factors as CR. The linear map induced by S on the quotient by ker R descends to the range of R and extends to the whole finite coordinate space.",
+                DescribeRole.Theorem, false),
+            Node("kernelofsubpsd", "Kernel inclusion from positive domination", "kernel_of_sub_psd",
+                KernelOfSubPsdFormula(),
+                "If B and A − tB are positive semidefinite and t > 0, every vector annihilated by A is annihilated by B. On such a vector the two positivity inequalities force the quadratic form of B to vanish, and positive semidefiniteness then forces B to annihilate the vector.",
+                DescribeRole.Theorem, false),
             Node("orthogonalunitpair", "Ordered orthogonal unit pair", "OrthogonalUnitPair",
                 Context(All("x", V, All("y", V, Iff(App("OrthogonalUnitPair", Xv, Yv),
                     And(EqTo(Inner(Xv, Xv), D(1)), EqTo(Inner(Yv, Yv), D(1)), EqTo(Inner(Xv, Yv), D(0))))))),
@@ -92,6 +100,26 @@ internal sealed class ElementaryChannelDivisibilityDocument : IScribeDocumentDef
                 "In input-first Choi coordinates let A = C(Φ) and Z = (|y⟩⟨x|)ᵀ ⊗ I. Hilbert–Schmidt orthogonality identifies the tests with ker A ⊆ ker(ZA Z*). If this inclusion holds, square roots factor as √B = C√A for B = ZA Z*. The operator norm bound gives B ≤ ‖C‖²A, and t = 1/(2(‖C‖²+1)) gives A−tB ≥ 0, including singular A. The exact Choi matrix of the residual is D(A−tB)D*, where D = Rᵀ ⊗ I and R is the inverse filter. Its congruence is invertible for 0 < t < 1.",
                 "For distinct basis vectors eᵣ,eₛ, take Φ = elementary(15/16,eᵣ,eₛ) and Q = elementary(3/4,eᵣ,eₛ). Direct Kraus algebra gives Q∘Q = Φ, hence Φ∘Q⁻¹ = Q. For any unit u, the diagonal sufficient test fails: the Hilbert–Schmidt tests Eᵣᵢ for i ≠ r force either uᵣ = 0 or all other coordinates to vanish, while a diagonal orthogonal test gives 1−|I||uᵣ|² = 0. Both alternatives contradict normalization when |I| ≥ 2. The intrinsic kernel criterion transfers this obstruction to every finite Kraus representation. These are finite-dimensional conclusions; no dimension-one pair or infinite-dimensional domination statement is included.")
         )));
+
+    private static Formula FactorOfKernelFormula()
+    {
+        Formula r = Named("R"), s = Named("S"), c = Named("C"), v = Named("v");
+        return Context(All("R", M, All("S", M,
+            Implies(All("v", V,
+                    Implies(EqTo(App("mulVec", r, v), D(0)),
+                        EqTo(App("mulVec", s, v), D(0)))),
+                Some("C", M, EqTo(s, Multiply(c, r)))))));
+    }
+
+    private static Formula KernelOfSubPsdFormula()
+    {
+        Formula a = Named("A"), b = Named("B"), v = Named("v");
+        return Context(All("A", M, All("B", M, All("t", RealType(),
+            Implies(And(App("PosSemidef", b), Seq(D(0), Lt, T),
+                    App("PosSemidef", Subtract(a, Smul(T, b)))),
+                All("v", V, Implies(EqTo(App("mulVec", a, v), D(0)),
+                    EqTo(App("mulVec", b, v), D(0)))))))));
+    }
 
     private static Formula KetbraStarFormula()
     {

@@ -14,6 +14,7 @@ strata_touched:
   - D5/S3/FiniteGroups/InducedCharacterFormula
   - D5/S3/FiniteGroups/MackeyCharacterFormula
   - D5/S3/FiniteGroups/ComplexCharacterAbelianProducts
+  - D5/S3/FiniteGroups/RegularRepresentation/RegularTrace
 license: Apache-2.0
 triage: anchor
 ---
@@ -38,6 +39,7 @@ The port retains the declarations used by the peak-group refutation from these f
 
 - [TauCeti/Algebra/Group/Subgroup/Pointwise.lean](https://github.com/TauCetiProject/TauCeti/blob/a780c7ad6beb23f60a17351a492d177878020ad5/TauCeti/Algebra/Group/Subgroup/Pointwise.lean)
 - [TauCeti/Algebra/MonoidAlgebra/Conjugation.lean](https://github.com/TauCetiProject/TauCeti/blob/a780c7ad6beb23f60a17351a492d177878020ad5/TauCeti/Algebra/MonoidAlgebra/Conjugation.lean)
+- [TauCeti/Algebra/MonoidAlgebra/Trace.lean](https://github.com/TauCetiProject/TauCeti/blob/a780c7ad6beb23f60a17351a492d177878020ad5/TauCeti/Algebra/MonoidAlgebra/Trace.lean)
 - [TauCeti/GroupTheory/Coset/Basic.lean](https://github.com/TauCetiProject/TauCeti/blob/a780c7ad6beb23f60a17351a492d177878020ad5/TauCeti/GroupTheory/Coset/Basic.lean)
 - [TauCeti/GroupTheory/DoubleCoset/Finite.lean](https://github.com/TauCetiProject/TauCeti/blob/a780c7ad6beb23f60a17351a492d177878020ad5/TauCeti/GroupTheory/DoubleCoset/Finite.lean)
 - [TauCeti/GroupTheory/DoubleCoset/Identity.lean](https://github.com/TauCetiProject/TauCeti/blob/a780c7ad6beb23f60a17351a492d177878020ad5/TauCeti/GroupTheory/DoubleCoset/Identity.lean)
@@ -89,6 +91,23 @@ The port retains the declarations used by the peak-group refutation from these f
 - [TauCeti/RingTheory/SimpleModule/Isotypic.lean](https://github.com/TauCetiProject/TauCeti/blob/a780c7ad6beb23f60a17351a492d177878020ad5/TauCeti/RingTheory/SimpleModule/Isotypic.lean)
 
 The category End/Aut homomorphism coercions and subgroup-membership proof coercions use the repository’s pinned Mathlib API. The mathematical hypotheses and conclusions are unchanged.
+
+## Regular traces
+
+The trace source proves `TauCeti.trace_leftMulMatrix_monoidAlgebra` and
+`TauCeti.MonoidAlgebra.trace_mulLeft`: left multiplication by an arbitrary
+weighted element of a finite cancellative monoid algebra has trace equal to
+the monoid cardinality times its identity coefficient. For a finite group,
+the diagonal proof is ported in `RegularRepresentation/RegularTrace` and
+combined with `map_list_prod` to give the ordered-product identity, including
+the empty list. Its coefficient ring is an arbitrary commutative ring.
+
+The immutable source uses `leanprover/lean4:v4.35.0-rc3` and Mathlib revision
+`5e0c4e5239cb0a2d86d68a884bf52cfd963fce22`; these differ from the repository's
+pinned toolchain and Mathlib revision, so a direct Lake dependency is incompatible.
+The port uses the pinned `MonoidAlgebra.basis` coefficient equivalence in place
+of the source's additional basis lemmas. The source archive has no root `NOTICE`
+file; its copyright and complete Apache 2.0 license are retained below.
 
 ## Replacement condition
 

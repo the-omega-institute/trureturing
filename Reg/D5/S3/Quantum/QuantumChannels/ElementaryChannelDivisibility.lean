@@ -2,13 +2,14 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility
 import Reg.Support.DependentFamily
 
-/-! Source-bound audit of conjugation of a rank-one operator. -/
+/-! Source-bound audits of rank-one conjugation and channel kernel identities. -/
 
 namespace Reg.D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility
 
 open _root_.D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Matrix
+open scoped ComplexOrder MatrixOrder
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -102,6 +103,196 @@ def registration :
 #print axioms registration
 
 end KetbraStar
+
+namespace FactorOfKernel
+
+abbrev signature : Signature where
+  Params := Type u_1
+  State n := Matrix n n ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ n := Matrix n n ℂ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u_1} :=
+  realize signature (fun _ _ X => Eq X) (fun e => nomatch e)
+
+def rejected : Realization signature.{u_1} :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u_1}
+  Law R := ∀ {n : Type u_1} [Fintype n] [DecidableEq n]
+    (A B : Matrix n n ℂ),
+    (∀ v, A *ᵥ v = 0 → B *ᵥ v = 0) →
+      ∃ C : Matrix n n ℂ, R.readout () n B (C * A)
+
+theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
+  intro h
+  obtain ⟨C, hC⟩ := @h (ULift.{u_1} Unit) inferInstance inferInstance
+    (1 : Matrix (ULift.{u_1} Unit) (ULift.{u_1} Unit) ℂ)
+    1 (by intro v hv; exact hv)
+  exact hC
+
+theorem dependence : ObservationalDependence signature.{u_1} actual := by
+  intro i
+  refine ⟨ULift.{u_1} Unit, 0, 1, ?_⟩
+  intro h
+  have he := congrFun h 0
+  change ((0 : Matrix (ULift.{u_1} Unit) (ULift.{u_1} Unit) ℂ) = 0) = (1 = 0) at he
+  exact one_ne_zero (Eq.mp he rfl)
+
+def source_registration :
+    Registration arena.{u_1} (type_of% (@factor_of_kernel.{u_1})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@factor_of_kernel.{u_1}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration_factor_of_kernel :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility.factor_of_kernel.{u_1})
+      (Realization signature.{u_1}) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility.FactorOfKernel.unit
+  realizationName := .str
+    `Reg.D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility.FactorOfKernel
+    "source_registration"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ X => Eq X) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body", "fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration_factor_of_kernel
+
+end FactorOfKernel
+
+namespace KernelOfSubPsd
+
+abbrev signature : Signature where
+  Params := Type u_1
+  State n := n → ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ n := (n → ℂ) → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u_1} :=
+  realize signature (fun _ _ w => Eq w) (fun e => nomatch e)
+
+def rejected : Realization signature.{u_1} :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u_1}
+  Law R := ∀ {n : Type u_1} [Fintype n] [DecidableEq n]
+    (A B : Matrix n n ℂ) (_hB : B.PosSemidef) (t : ℝ) (_ht : 0 < t)
+    (_hAB : (A - t • B).PosSemidef),
+    ∀ v, A *ᵥ v = 0 → R.readout () n (B *ᵥ v) 0
+
+theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
+  intro h
+  exact @h (ULift.{u_1} Unit) inferInstance inferInstance
+    (1 : Matrix (ULift.{u_1} Unit) (ULift.{u_1} Unit) ℂ)
+    1 Matrix.PosSemidef.one 1 (by norm_num)
+    (by rw [one_smul, sub_self]; exact Matrix.PosSemidef.zero) 0 (by simp)
+
+theorem dependence : ObservationalDependence signature.{u_1} actual := by
+  intro i
+  refine ⟨ULift.{u_1} Unit, 0, 1, ?_⟩
+  intro h
+  have he := congrFun h 0
+  change ((0 : ULift.{u_1} Unit → ℂ) = 0) = (1 = 0) at he
+  exact one_ne_zero (Eq.mp he rfl)
+
+def source_registration :
+    Registration arena.{u_1} (type_of% (@kernel_of_sub_psd.{u_1})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@kernel_of_sub_psd.{u_1}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration_kernel_of_sub_psd :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility.kernel_of_sub_psd.{u_1})
+      (Realization signature.{u_1}) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility.KernelOfSubPsd.unit
+  realizationName := .str
+    `Reg.D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility.KernelOfSubPsd
+    "source_registration"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ w => Eq w) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration_kernel_of_sub_psd
+
+end KernelOfSubPsd
+
 namespace BasisPair
 
 /-- Read the admissibility relation between the two basis indices. -/
@@ -193,6 +384,5 @@ def registration :
 #print axioms registration
 
 end BasisPair
-
 end
 end Reg.D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility

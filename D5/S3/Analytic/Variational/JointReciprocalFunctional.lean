@@ -1,0 +1,969 @@
+/- GID: D5/S3/Analytic/Variational/JointReciprocalFunctional
+   generality: G
+   mirror-B: D5/B/S3/Analytic/Variational/JointReciprocalFunctional
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Sharp attained joint reciprocal variational values on the full measurable class. -/
+
+import D5.S3.Analytic.Variational.JointReciprocalScalarCoordinate
+import D5.S3.Analytic.Variational.MeasurableJointCalibration
+import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
+import Mathlib.Analysis.Calculus.InverseFunctionTheorem.Deriv
+import Mathlib.Analysis.Calculus.ContDiff.Deriv
+import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.ContDiff
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.AbsolutelyContinuousFun
+import Mathlib.Tactic
+
+/-! # Sharp attained variational values for the joint reciprocal functional -/
+
+open Set Filter MeasureTheory
+open scoped Topology ContDiff
+
+noncomputable section
+
+namespace D5.S3.Analytic.Variational.JointReciprocalFunctional
+
+/-- The mass and cumulative mass of a competitor on the original interval. -/
+def mass (u : ℝ → ℝ) : ℝ := ∫ x in (1 : ℝ)..2, u x
+
+def primitive (u : ℝ → ℝ) (x : ℝ) : ℝ := ∫ s in (1 : ℝ)..x, u s
+
+/-- Both terms of the original functional; no competitor smoothness is imposed. -/
+def cost (b : ℝ) (u : ℝ → ℝ) : ℝ :=
+  b * (∫ x in (1 : ℝ)..2, x / u x) +
+    ∫ x in (1 : ℝ)..2, primitive u x / (u x) ^ 2
+
+/-- The full bounded positive measurable competitor class, with individual bounds. -/
+def Admissible (u : ℝ → ℝ) : Prop :=
+  AEMeasurable u (volume.restrict (Icc (1 : ℝ) 2)) ∧
+    ∃ c B : ℝ, 0 < c ∧
+    ∀ᵐ x ∂volume.restrict (Icc (1 : ℝ) 2), c ≤ u x ∧ u x ≤ B
+
+/-- The scalar equation has exactly one root in the full original open interval. -/
+theorem exists_unique_scalar_root (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    ∃! v : ℝ, 0 < v ∧ v < upperRoot b ∧ coordinate b v = Real.log 2 := by
+  obtain ⟨v, hv, heq⟩ := coordinate_surj_from b hb hb1
+    (domain_zero b hb hb1) (t := Real.log 2) (by simpa [coordinate] using
+      (Real.log_nonneg (show (1 : ℝ) ≤ 2 by norm_num)))
+  have hvpos : 0 < v := by
+    by_contra h
+    have hle := (coordinate_strictMono b hb hb1).monotoneOn hv (domain_zero b hb hb1)
+      (le_of_not_gt h)
+    have hlog : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
+    have hzero : coordinate b 0 = 0 := by simp [coordinate]
+    rw [heq, hzero] at hle
+    exact (not_le_of_gt hlog) hle
+  refine ⟨v, ⟨hvpos, hv.2, heq⟩, ?_⟩
+  intro q hq
+  apply (coordinate_strictMono b hb hb1).injOn
+    ⟨by linarith [radius_pos b hb hb1], hq.2.1⟩ hv
+  exact hq.2.2.trans heq.symm
+
+private def inverseCoordinate (b : ℝ) : ℝ → ℝ :=
+  Function.invFunOn (coordinate b) (coordinateDomain b)
+
+private lemma inverse_left (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {v : ℝ} (hv : v ∈ coordinateDomain b) :
+    inverseCoordinate b (coordinate b v) = v :=
+  (coordinate_strictMono b hb hb1).injOn.leftInvOn_invFunOn hv
+
+private lemma inverse_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {v : ℝ} (hv : v ∈ coordinateDomain b) :
+    HasDerivAt (inverseCoordinate b)
+      (((2 * b + 6 * v) / polynomial b v)⁻¹) (coordinate b v) := by
+  have hd := coordinate_hasDerivAt b hb hb1 hv
+  have hc := coordinate_contDiff b hb hb1 hv
+  have hp := domain_positive b hb hb1 hv
+  have hl : ∀ᶠ s in 𝓝 v, inverseCoordinate b (coordinate b s) = s := by
+    filter_upwards [isOpen_Ioo.mem_nhds hv] with s hs
+    exact inverse_left b hb hb1 hs
+  exact ((hc.hasStrictDerivAt' hd (by simp)).to_local_left_inverse
+    (ne_of_gt (div_pos hp.2.1 hp.1)) hl).hasDerivAt
+
+private lemma inverse_contDiff (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {v : ℝ} (hv : v ∈ coordinateDomain b) :
+    ContDiffAt ℝ ∞ (inverseCoordinate b) (coordinate b v) := by
+  have hd := coordinate_hasDerivAt b hb hb1 hv
+  have hc := coordinate_contDiff b hb hb1 hv
+  have hp := domain_positive b hb hb1 hv
+  have hne := ne_of_gt (div_pos hp.2.1 hp.1)
+  have hfd := hd.hasFDerivAt_equiv hne
+  have hl : ∀ᶠ s in 𝓝 v, inverseCoordinate b (coordinate b s) = s := by
+    filter_upwards [isOpen_Ioo.mem_nhds hv] with s hs
+    exact inverse_left b hb hb1 hs
+  have heq := (hc.hasStrictFDerivAt' hfd (by simp)).localInverse_unique hl
+  exact (hc.to_localInverse hfd (by simp)).congr_of_eventuallyEq heq
+
+private def leftLevel (b : ℝ) : ℝ := coordinate b (-radius b / 2)
+private def optimizerDomain (b : ℝ) : Set ℝ := Ioi (Real.exp (leftLevel b))
+
+private lemma left_anchor_mem (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    -radius b / 2 ∈ coordinateDomain b := by
+  have hr := radius_pos b hb hb1
+  have hn := (roots b hb hb1).1
+  constructor <;> linarith
+
+private lemma leftLevel_neg (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) : leftLevel b < 0 := by
+  have h := coordinate_strictMono b hb hb1 (left_anchor_mem b hb hb1)
+    (domain_zero b hb hb1) (by linarith [radius_pos b hb hb1])
+  simpa [leftLevel, coordinate] using h
+
+private lemma optimizerDomain_contains (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    Icc (1 : ℝ) 2 ⊆ optimizerDomain b := by
+  have h : Real.exp (leftLevel b) < 1 := by
+    simpa using Real.exp_lt_exp.mpr (leftLevel_neg b hb hb1)
+  intro x hx
+  exact h.trans_le hx.1
+
+private def curve (b x : ℝ) : ℝ := inverseCoordinate b (Real.log x)
+
+private lemma curve_spec (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {x : ℝ} (hx : x ∈ optimizerDomain b) :
+    curve b x ∈ coordinateDomain b ∧ coordinate b (curve b x) = Real.log x := by
+  have hxpos : 0 < x := (Real.exp_pos _).trans hx
+  have hlog : leftLevel b < Real.log x := (Real.lt_log_iff_exp_lt hxpos).2 hx
+  exact Function.invFunOn_pos (coordinate_surj_from b hb hb1
+    (left_anchor_mem b hb hb1) (le_of_lt hlog))
+
+private lemma curve_contDiff (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {x : ℝ} (hx : x ∈ optimizerDomain b) : ContDiffAt ℝ ∞ (curve b) x := by
+  have hs := curve_spec b hb hb1 hx
+  have hi := inverse_contDiff b hb hb1 hs.1
+  rw [hs.2] at hi
+  exact hi.comp x ((Real.contDiffAt_log).2 (ne_of_gt ((Real.exp_pos _).trans hx)))
+
+private lemma curve_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {x : ℝ} (hx : x ∈ optimizerDomain b) :
+    HasDerivAt (curve b)
+      (polynomial b (curve b x) / (x * (2 * b + 6 * curve b x))) x := by
+  have hs := curve_spec b hb hb1 hx
+  have hi := inverse_hasDerivAt b hb hb1 hs.1
+  rw [hs.2] at hi
+  have hp := domain_positive b hb hb1 hs.1
+  have hxne : x ≠ 0 := ne_of_gt ((Real.exp_pos _).trans hx)
+  convert hi.comp x (Real.hasDerivAt_log hxne) using 1
+  · rfl
+  · change polynomial b (curve b x) / (x * (2 * b + 6 * curve b x)) =
+      ((2 * b + 6 * curve b x) / polynomial b (curve b x))⁻¹ * x⁻¹
+    field_simp
+    <;> ring
+
+private lemma curve_one (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) : curve b 1 = 0 := by
+  have h := inverse_left b hb hb1 (domain_zero b hb hb1)
+  simpa [curve, coordinate] using h
+
+/-- The endpoint selected by the original integral equation. -/
+def scalarRoot (b : ℝ) : ℝ := curve b 2
+
+/-- The exact candidate value, expressed in the unique scalar root. -/
+def sharpConstant (b : ℝ) : ℝ := 8 * scalarRoot b ^ 2 * (b + 2 * scalarRoot b)
+
+private lemma scalarRoot_spec (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    0 < scalarRoot b ∧ scalarRoot b < upperRoot b ∧
+      coordinate b (scalarRoot b) = Real.log 2 := by
+  obtain ⟨v, hv, _⟩ := exists_unique_scalar_root b hb hb1
+  have hvdom : v ∈ coordinateDomain b :=
+    ⟨by linarith [radius_pos b hb hb1, hv.1], hv.2.1⟩
+  have hi := inverse_left b hb hb1 hvdom
+  rw [hv.2.2] at hi
+  change curve b 2 = v at hi
+  simpa [scalarRoot, hi] using hv
+
+/-- An algebraically specified extremal, with no normalization or ODE hypothesis. -/
+def optimizer (b x : ℝ) : ℝ :=
+  x ^ 2 * polynomial b (curve b x) /
+    (8 * scalarRoot b * polynomial b (scalarRoot b))
+
+private lemma optimizer_pos (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {x : ℝ} (hx : x ∈ optimizerDomain b) : 0 < optimizer b x := by
+  have hp := (domain_positive b hb hb1 (curve_spec b hb hb1 hx).1).1
+  have hr := scalarRoot_spec b hb hb1
+  have hpr := (domain_positive b hb hb1
+    (show scalarRoot b ∈ coordinateDomain b from
+      ⟨by linarith [radius_pos b hb hb1, hr.1], hr.2.1⟩)).1
+  dsimp [optimizer]
+  exact div_pos (mul_pos (sq_pos_of_pos ((Real.exp_pos _).trans hx)) hp)
+    (mul_pos (mul_pos (by norm_num) hr.1) hpr)
+
+private lemma optimizer_contDiff (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {x : ℝ} (hx : x ∈ optimizerDomain b) : ContDiffAt ℝ ∞ (optimizer b) x := by
+  have hcurve := curve_contDiff b hb hb1 hx
+  change ContDiffAt ℝ ∞ (fun t : ℝ =>
+    t ^ 2 * (2 * b + 3 * (1 - b) * curve b t - 6 * curve b t ^ 2) /
+      (8 * scalarRoot b * polynomial b (scalarRoot b))) x
+  fun_prop
+
+private lemma normalizer_pos (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    0 < 8 * scalarRoot b * polynomial b (scalarRoot b) := by
+  have hr := scalarRoot_spec b hb hb1
+  have hp := (domain_positive b hb hb1
+    (show scalarRoot b ∈ coordinateDomain b from
+      ⟨by linarith [radius_pos b hb hb1, hr.1], hr.2.1⟩)).1
+  exact mul_pos (mul_pos (by norm_num) hr.1) hp
+
+private lemma polynomial_hasDerivAt (b v : ℝ) :
+    HasDerivAt (polynomial b) (3 * (1 - b) - 12 * v) v := by
+  convert ((hasDerivAt_const v (2 * b)).add
+    ((hasDerivAt_id v).const_mul (3 * (1 - b)))).sub
+      ((hasDerivAt_pow 2 v).const_mul 6) using 1
+  · funext t; dsimp [polynomial] <;> ring
+  · norm_num <;> ring
+
+private lemma optimizer_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {x : ℝ} (hx : x ∈ optimizerDomain b) :
+    HasDerivAt (optimizer b)
+      ((b + 3) * optimizer b x / (x * (2 * b + 6 * curve b x))) x := by
+  have hc := curve_hasDerivAt b hb hb1 hx
+  have hp := (polynomial_hasDerivAt b (curve b x)).comp x hc
+  have hw := ((hasDerivAt_pow 2 x).mul hp).div_const
+    (8 * scalarRoot b * polynomial b (scalarRoot b))
+  have hxne : x ≠ 0 := ne_of_gt ((Real.exp_pos _).trans hx)
+  have hn := ne_of_gt (normalizer_pos b hb hb1)
+  have hd := ne_of_gt (domain_positive b hb hb1 (curve_spec b hb hb1 hx).1).2.1
+  convert hw using 1
+  · rfl
+  · have hrne := ne_of_gt (scalarRoot_spec b hb hb1).1
+    have hprne := (mul_ne_zero_iff.mp hn).2
+    dsimp only [optimizer, Function.comp_apply, Pi.mul_apply, Pi.add_apply,
+      Pi.sub_apply, Pi.pow_apply, id_eq]
+    field_simp [hrne, hprne, hd, hxne]
+    dsimp [polynomial]
+    ring_nf
+    field_simp [show b * 2 + curve b x * 6 ≠ 0 by intro he; apply hd; linarith only [he],
+      show curve b x * 6 + b * 2 ≠ 0 by intro he; apply hd; linarith only [he]]
+    <;> ring
+
+private def profilePrimitive (b x : ℝ) : ℝ := x * optimizer b x * curve b x
+
+private lemma profile_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {x : ℝ} (hx : x ∈ optimizerDomain b) :
+    HasDerivAt (profilePrimitive b) (optimizer b x) x := by
+  have hc := curve_hasDerivAt b hb hb1 hx
+  have hw := optimizer_hasDerivAt b hb hb1 hx
+  have hxne : x ≠ 0 := ne_of_gt ((Real.exp_pos _).trans hx)
+  have hd := ne_of_gt (domain_positive b hb hb1 (curve_spec b hb hb1 hx).1).2.1
+  convert ((hasDerivAt_id x).mul hw).mul hc using 1
+  · rfl
+  · dsimp only [Pi.mul_apply, Pi.add_apply, Pi.sub_apply, Pi.pow_apply, id_eq,
+      Function.comp_apply]
+    field_simp [hd, hxne]
+    dsimp [polynomial]
+    ring_nf
+    field_simp [show b * 2 + curve b x * 6 ≠ 0 by intro he; apply hd; linarith only [he],
+      show curve b x * 6 + b * 2 ≠ 0 by intro he; apply hd; linarith only [he]]
+    <;> ring
+
+private lemma primitive_eq_profile (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {x : ℝ} (hx : x ∈ optimizerDomain b) :
+    primitive (optimizer b) x = profilePrimitive b x := by
+  have h1 : (1 : ℝ) ∈ optimizerDomain b := optimizerDomain_contains b hb hb1 (by norm_num)
+  have hsub : uIcc 1 x ⊆ optimizerDomain b := ordConnected_Ioi.uIcc_subset h1 hx
+  have hi : IntervalIntegrable (optimizer b) volume 1 x :=
+    (show ContinuousOn (optimizer b) (uIcc 1 x) from
+      fun t ht => (optimizer_contDiff b hb hb1 (hsub ht)).continuousAt.continuousWithinAt).intervalIntegrable
+  have hftc := intervalIntegral.integral_eq_sub_of_hasDerivAt
+    (fun t ht => profile_hasDerivAt b hb hb1 (hsub ht)) hi
+  simpa [primitive, profilePrimitive, curve_one b hb hb1] using hftc
+
+private lemma optimizer_two (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    optimizer b 2 = 1 / (2 * scalarRoot b) := by
+  have hr := scalarRoot_spec b hb hb1
+  have hp := ne_of_gt (domain_positive b hb hb1
+    (show scalarRoot b ∈ coordinateDomain b from
+      ⟨by linarith [radius_pos b hb hb1, hr.1], hr.2.1⟩)).1
+  change 2 ^ 2 * polynomial b (scalarRoot b) /
+    (8 * scalarRoot b * polynomial b (scalarRoot b)) = 1 / (2 * scalarRoot b)
+  field_simp
+  <;> ring
+
+private lemma optimizer_mass (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    mass (optimizer b) = 1 := by
+  have h2 : (2 : ℝ) ∈ optimizerDomain b := optimizerDomain_contains b hb hb1 (by norm_num)
+  change primitive (optimizer b) 2 = 1
+  rw [primitive_eq_profile b hb hb1 h2]
+  dsimp only [profilePrimitive]
+  rw [optimizer_two b hb hb1]
+  change 2 * (1 / (2 * scalarRoot b)) * scalarRoot b = 1
+  field_simp [ne_of_gt (scalarRoot_spec b hb hb1).1]
+
+private def costPrimitive (b x : ℝ) : ℝ :=
+  x ^ 2 * (b * curve b x + 2 * curve b x ^ 2) / optimizer b x
+
+private lemma costPrimitive_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {x : ℝ} (hx : x ∈ optimizerDomain b) :
+    HasDerivAt (costPrimitive b)
+      (b * (x / optimizer b x) + profilePrimitive b x / optimizer b x ^ 2) x := by
+  have hc := curve_hasDerivAt b hb hb1 hx
+  have hw := optimizer_hasDerivAt b hb hb1 hx
+  have hwne := ne_of_gt (optimizer_pos b hb hb1 hx)
+  have hxne : x ≠ 0 := ne_of_gt ((Real.exp_pos _).trans hx)
+  have hd := ne_of_gt (domain_positive b hb hb1 (curve_spec b hb hb1 hx).1).2.1
+  have hnum := (hasDerivAt_pow 2 x).mul
+    ((hc.const_mul b).add ((hc.pow 2).const_mul 2))
+  convert hnum.div hw hwne using 1
+  · rfl
+  · dsimp only [profilePrimitive, Pi.mul_apply, Pi.add_apply, Pi.sub_apply,
+      Pi.pow_apply, id_eq, Function.comp_apply]
+    field_simp [hd, hxne, hwne]
+    dsimp [polynomial]
+    ring_nf
+    field_simp [show b * 2 + curve b x * 6 ≠ 0 by intro he; apply hd; linarith only [he],
+      show curve b x * 6 + b * 2 ≠ 0 by intro he; apply hd; linarith only [he]]
+    <;> ring
+
+private lemma admissible_integrability {u : ℝ → ℝ} (hu : Admissible u) :
+    IntervalIntegrable u volume 1 2 ∧
+    IntervalIntegrable (fun x => x / u x) volume 1 2 ∧
+    IntervalIntegrable (fun x => primitive u x / u x ^ 2) volume 1 2 :=
+  MeasurableJointCalibration.bounded_positive_integrability hu.1 hu.2
+
+private lemma optimizer_admissible (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    Admissible (optimizer b) := by
+  have hsub := optimizerDomain_contains b hb hb1
+  have hc : ContinuousOn (optimizer b) (Icc (1 : ℝ) 2) :=
+    fun x hx => (optimizer_contDiff b hb hb1 (hsub hx)).continuousAt.continuousWithinAt
+  obtain ⟨x, hx, hmin⟩ := isCompact_Icc.exists_isMinOn (show (Icc (1 : ℝ) 2).Nonempty by
+    exact ⟨1, by norm_num⟩) hc
+  obtain ⟨y, hy, hmax⟩ := isCompact_Icc.exists_isMaxOn (show (Icc (1 : ℝ) 2).Nonempty by
+    exact ⟨1, by norm_num⟩) hc
+  refine ⟨(hc.aestronglyMeasurable measurableSet_Icc).aemeasurable,
+    optimizer b x, optimizer b y, optimizer_pos b hb hb1 (hsub hx), ?_⟩
+  filter_upwards [ae_restrict_mem measurableSet_Icc] with t ht
+  exact ⟨hmin ht, hmax ht⟩
+
+private lemma optimizer_cost (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    cost b (optimizer b) = sharpConstant b := by
+  have hsub := optimizerDomain_contains b hb hb1
+  have hdata := admissible_integrability (optimizer_admissible b hb hb1)
+  have hlag := hdata.2.1
+  have hfuture : IntervalIntegrable
+      (fun x => profilePrimitive b x / optimizer b x ^ 2) volume 1 2 := by
+    apply hdata.2.2.congr
+    intro x hx
+    change primitive (optimizer b) x / optimizer b x ^ 2 =
+      profilePrimitive b x / optimizer b x ^ 2
+    rw [primitive_eq_profile b hb hb1
+      (hsub (Ioc_subset_Icc_self
+        (show x ∈ Ioc (1 : ℝ) 2 by simpa only [uIoc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx)))]
+  have hftc := intervalIntegral.integral_eq_sub_of_hasDerivAt
+    (fun x hx => costPrimitive_hasDerivAt b hb hb1
+      (hsub (by simpa only [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx)))
+    ((hlag.const_mul b).add hfuture)
+  have hcost : cost b (optimizer b) =
+      ∫ x in (1 : ℝ)..2,
+        b * (x / optimizer b x) + profilePrimitive b x / optimizer b x ^ 2 := by
+    dsimp only [cost]
+    rw [intervalIntegral.integral_add (hlag.const_mul b) hfuture,
+      intervalIntegral.integral_const_mul]
+    congr 1
+    apply intervalIntegral.integral_congr
+    intro x hx
+    change primitive (optimizer b) x / optimizer b x ^ 2 =
+      profilePrimitive b x / optimizer b x ^ 2
+    rw [primitive_eq_profile b hb hb1
+      (hsub (by simpa only [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx))]
+  rw [hcost, hftc]
+  dsimp only [costPrimitive]
+  rw [curve_one b hb hb1, optimizer_two b hb hb1]
+  dsimp only [sharpConstant, scalarRoot]
+  field_simp
+  <;> ring
+
+/-- The explicitly constructed profile is smooth, strictly increasing, normalized,
+and has the exact cost. The measurable comparison gives global minimality. -/
+theorem constructed_profile (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    0 < scalarRoot b ∧ scalarRoot b < upperRoot b ∧
+    coordinate b (scalarRoot b) = Real.log 2 ∧ 0 < sharpConstant b ∧
+    ∃ s : Set ℝ, IsOpen s ∧ Icc (1 : ℝ) 2 ⊆ s ∧
+      ContDiffOn ℝ ∞ (optimizer b) s ∧
+      (∀ x ∈ s, 0 < optimizer b x) ∧ StrictMonoOn (optimizer b) s ∧
+      Admissible (optimizer b) ∧ mass (optimizer b) = 1 ∧
+      cost b (optimizer b) = sharpConstant b := by
+  have hr := scalarRoot_spec b hb hb1
+  refine ⟨hr.1, hr.2.1, hr.2.2, ?_, optimizerDomain b, isOpen_Ioi,
+    optimizerDomain_contains b hb hb1,
+    (fun x hx => (optimizer_contDiff b hb hb1 hx).contDiffWithinAt),
+    (fun x hx => optimizer_pos b hb hb1 hx), ?_, optimizer_admissible b hb hb1,
+    optimizer_mass b hb hb1, optimizer_cost b hb hb1⟩
+  · dsimp only [sharpConstant]
+    exact mul_pos (mul_pos (by norm_num) (sq_pos_of_pos hr.1)) (by linarith [hr.1])
+  · apply strictMonoOn_of_deriv_pos (convex_Ioi _)
+    · exact fun x hx => (optimizer_contDiff b hb hb1 hx).continuousAt.continuousWithinAt
+    · intro x hx
+      have hx' := interior_subset hx
+      rw [(optimizer_hasDerivAt b hb hb1 hx').deriv]
+      exact div_pos (mul_pos (by linarith) (optimizer_pos b hb hb1 hx'))
+        (mul_pos ((Real.exp_pos _).trans hx')
+          (domain_positive b hb hb1 (curve_spec b hb hb1 hx').1).2.1)
+
+private lemma profile_contDiff (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {x : ℝ} (hx : x ∈ optimizerDomain b) :
+    ContDiffAt ℝ ∞ (profilePrimitive b) x := by
+  exact (contDiffAt_id.mul (optimizer_contDiff b hb hb1 hx)).mul
+    (curve_contDiff b hb hb1 hx)
+
+private lemma profile_strictMono (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    StrictMonoOn (profilePrimitive b) (optimizerDomain b) := by
+  apply strictMonoOn_of_deriv_pos (convex_Ioi _)
+  · exact fun x hx => (profile_contDiff b hb hb1 hx).continuousAt.continuousWithinAt
+  · intro x hx
+    rw [(profile_hasDerivAt b hb hb1 (interior_subset hx)).deriv]
+    exact optimizer_pos b hb hb1 (interior_subset hx)
+
+private def massDomain (b : ℝ) : Set ℝ := profilePrimitive b '' optimizerDomain b
+private def inverseMass (b : ℝ) : ℝ → ℝ :=
+  Function.invFunOn (profilePrimitive b) (optimizerDomain b)
+
+private lemma inverseMass_left (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {x : ℝ} (hx : x ∈ optimizerDomain b) :
+    inverseMass b (profilePrimitive b x) = x :=
+  (profile_strictMono b hb hb1).injOn.leftInvOn_invFunOn hx
+
+private lemma inverseMass_spec (b : ℝ) {r : ℝ} (hr : r ∈ massDomain b) :
+    inverseMass b r ∈ optimizerDomain b ∧ profilePrimitive b (inverseMass b r) = r :=
+  Function.invFunOn_pos hr
+
+private lemma inverseMass_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {x : ℝ} (hx : x ∈ optimizerDomain b) :
+    HasDerivAt (inverseMass b) (optimizer b x)⁻¹ (profilePrimitive b x) := by
+  have hd := profile_hasDerivAt b hb hb1 hx
+  have hc := profile_contDiff b hb hb1 hx
+  have hl : ∀ᶠ s in 𝓝 x, inverseMass b (profilePrimitive b s) = s := by
+    filter_upwards [isOpen_Ioi.mem_nhds hx] with s hs
+    exact inverseMass_left b hb hb1 hs
+  exact ((hc.hasStrictDerivAt' hd (by simp)).to_local_left_inverse
+    (ne_of_gt (optimizer_pos b hb hb1 hx)) hl).hasDerivAt
+
+private lemma inverseMass_contDiff (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {x : ℝ} (hx : x ∈ optimizerDomain b) :
+    ContDiffAt ℝ ∞ (inverseMass b) (profilePrimitive b x) := by
+  have hd := profile_hasDerivAt b hb hb1 hx
+  have hc := profile_contDiff b hb hb1 hx
+  have hfd := hd.hasFDerivAt_equiv (ne_of_gt (optimizer_pos b hb hb1 hx))
+  have hl : ∀ᶠ s in 𝓝 x, inverseMass b (profilePrimitive b s) = s := by
+    filter_upwards [isOpen_Ioi.mem_nhds hx] with s hs
+    exact inverseMass_left b hb hb1 hs
+  have heq := (hc.hasStrictFDerivAt' hfd (by simp)).localInverse_unique hl
+  exact (hc.to_localInverse hfd (by simp)).congr_of_eventuallyEq heq
+
+private lemma profile_one (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    profilePrimitive b 1 = 0 := by simp [profilePrimitive, curve_one b hb hb1]
+
+private lemma profile_two (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    profilePrimitive b 2 = 1 := by
+  rw [← primitive_eq_profile b hb hb1
+    (optimizerDomain_contains b hb hb1 (by norm_num))]
+  exact optimizer_mass b hb hb1
+
+private lemma massDomain_contains (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    Icc (0 : ℝ) 1 ⊆ massDomain b := by
+  have hc : ContinuousOn (profilePrimitive b) (Icc (1 : ℝ) 2) :=
+    fun x hx => (profile_contDiff b hb hb1
+      (optimizerDomain_contains b hb hb1 hx)).continuousAt.continuousWithinAt
+  have hi := intermediate_value_Icc (show (1 : ℝ) ≤ 2 by norm_num) hc
+  rw [profile_one b hb hb1, profile_two b hb hb1] at hi
+  intro r hr
+  obtain ⟨x, hx, heq⟩ := hi hr
+  exact ⟨x, optimizerDomain_contains b hb hb1 hx, heq⟩
+
+private def spaceCoordinate (x : ℝ) : ℝ := x * Real.sqrt x
+private def slopeCoefficient (b x : ℝ) : ℝ :=
+  4 * b * Real.sqrt x / (3 * optimizer b x) +
+    2 * profilePrimitive b x / (Real.sqrt x * optimizer b x ^ 2)
+private def valueCoefficient (b x : ℝ) : ℝ :=
+  -(profilePrimitive b x) / (x * Real.sqrt x * optimizer b x ^ 3)
+private def referenceCoordinate (b r : ℝ) : ℝ := spaceCoordinate (inverseMass b r)
+private def referenceSlope (b r : ℝ) : ℝ :=
+  3 * Real.sqrt (inverseMass b r) / (2 * optimizer b (inverseMass b r))
+private def calibrationSlope (b r : ℝ) : ℝ := slopeCoefficient b (inverseMass b r)
+private def calibrationValue (b r : ℝ) : ℝ := valueCoefficient b (inverseMass b r)
+
+/-- The original reciprocal square density relative to the calibrated profile. -/
+def energyDensity (b : ℝ) (u : ℝ → ℝ) : ℝ → ℝ :=
+  MeasurableJointCalibration.defect u (primitive u) (referenceSlope b)
+
+/-- The integrable reciprocal square defect relative to the calibrated profile. -/
+def energy (b : ℝ) (u : ℝ → ℝ) : ℝ := ∫ x in (1 : ℝ)..2, energyDensity b u x
+
+private lemma spaceCoordinate_hasDerivAt {x : ℝ} (hx : 0 < x) :
+    HasDerivAt spaceCoordinate (3 * Real.sqrt x / 2) x := by
+  have hs := Real.sq_sqrt hx.le
+  convert (hasDerivAt_id x).mul (Real.hasDerivAt_sqrt (ne_of_gt hx)) using 1
+  · rfl
+  · dsimp only [id_eq]
+    field_simp [ne_of_gt (Real.sqrt_pos.2 hx)]
+    nlinarith
+
+private lemma slopeCoefficient_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {x : ℝ} (hx : x ∈ optimizerDomain b) :
+    HasDerivAt (slopeCoefficient b)
+      (optimizer b x * valueCoefficient b x) x := by
+  have hw := optimizer_hasDerivAt b hb hb1 hx
+  have hW := profile_hasDerivAt b hb hb1 hx
+  have hxpos := (Real.exp_pos _).trans hx
+  have hs := Real.hasDerivAt_sqrt (ne_of_gt hxpos)
+  have hwne := ne_of_gt (optimizer_pos b hb hb1 hx)
+  have hsne := ne_of_gt (Real.sqrt_pos.2 hxpos)
+  have hd := ne_of_gt (domain_positive b hb hb1 (curve_spec b hb hb1 hx).1).2.1
+  have h := ((hs.const_mul (4 * b)).div (hw.const_mul 3)
+    (mul_ne_zero (by norm_num) hwne)).add
+    ((hW.const_mul 2).div (hs.mul (hw.pow 2))
+      (mul_ne_zero hsne (pow_ne_zero 2 hwne)))
+  convert h using 1
+  · rfl
+  · dsimp only [valueCoefficient, profilePrimitive, Pi.mul_apply, Pi.pow_apply]
+    norm_num only [Nat.cast_ofNat, pow_one, Nat.reduceSub]
+    field_simp [hwne, hsne, hd, ne_of_gt hxpos]
+    ring_nf
+    field_simp [show b * 2 + curve b x * 6 ≠ 0 by intro he; apply hd; linarith only [he],
+      show curve b x * 6 + b * 2 ≠ 0 by intro he; apply hd; linarith only [he]]
+    have hsq := Real.sq_sqrt hxpos.le
+    generalize Real.sqrt x = t at *
+    rw [← hsq]
+    ring
+
+private lemma calibrationSlope_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {r : ℝ} (hr : r ∈ massDomain b) :
+    HasDerivAt (calibrationSlope b) (calibrationValue b r) r := by
+  have hx := inverseMass_spec b hr
+  have hi := inverseMass_hasDerivAt b hb hb1 hx.1
+  rw [hx.2] at hi
+  convert (slopeCoefficient_hasDerivAt b hb hb1 hx.1).comp r hi using 1
+  · rfl
+  · dsimp only [calibrationValue]
+    field_simp [ne_of_gt (optimizer_pos b hb hb1 hx.1)]
+
+private lemma referenceCoordinate_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {r : ℝ} (hr : r ∈ massDomain b) :
+    HasDerivAt (referenceCoordinate b) (referenceSlope b r) r := by
+  have hx := inverseMass_spec b hr
+  have hi := inverseMass_hasDerivAt b hb hb1 hx.1
+  rw [hx.2] at hi
+  convert (spaceCoordinate_hasDerivAt ((Real.exp_pos _).trans hx.1)).comp r hi using 1
+  · rfl
+  · dsimp only [referenceSlope]
+    ring
+
+private lemma calibrationSlope_contDiff (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {r : ℝ} (hr : r ∈ massDomain b) : ContDiffAt ℝ ∞ (calibrationSlope b) r := by
+  have hx := inverseMass_spec b hr
+  have hi := inverseMass_contDiff b hb hb1 hx.1
+  rw [hx.2] at hi
+  have hs := Real.contDiffAt_sqrt (n := ∞) (ne_of_gt ((Real.exp_pos _).trans hx.1))
+  have hw := optimizer_contDiff b hb hb1 hx.1
+  have hW := profile_contDiff b hb hb1 hx.1
+  have hwne := ne_of_gt (optimizer_pos b hb hb1 hx.1)
+  have hsne := ne_of_gt (Real.sqrt_pos.2 ((Real.exp_pos _).trans hx.1))
+  have hc : ContDiffAt ℝ ∞ (slopeCoefficient b) (inverseMass b r) :=
+    ((contDiffAt_const.mul hs).div (contDiffAt_const.mul hw)
+      (mul_ne_zero (by norm_num) hwne)).add
+      ((contDiffAt_const.mul hW).div (hs.mul (hw.pow 2))
+        (mul_ne_zero hsne (pow_ne_zero 2 hwne)))
+  exact hc.comp r hi
+
+private lemma referenceCoordinate_contDiff (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {r : ℝ} (hr : r ∈ massDomain b) : ContDiffAt ℝ ∞ (referenceCoordinate b) r := by
+  have hx := inverseMass_spec b hr
+  have hi := inverseMass_contDiff b hb hb1 hx.1
+  rw [hx.2] at hi
+  exact (contDiffAt_id.mul (Real.contDiffAt_sqrt
+    (ne_of_gt ((Real.exp_pos _).trans hx.1)))).comp r hi
+
+private lemma calibration_coefficients (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {r : ℝ} (hr : r ∈ massDomain b) :
+    0 < referenceCoordinate b r ∧ 0 < referenceSlope b r ∧
+    calibrationSlope b r = 8 * b * referenceSlope b r / 9 +
+      8 * r * referenceSlope b r ^ 2 / (9 * referenceCoordinate b r) ∧
+    calibrationValue b r =
+      -8 * r * referenceSlope b r ^ 3 / (27 * referenceCoordinate b r ^ 2) := by
+  have hx := inverseMass_spec b hr
+  have hy := (Real.exp_pos _).trans hx.1
+  have hw := optimizer_pos b hb hb1 hx.1
+  have hs := Real.sqrt_pos.2 hy
+  refine ⟨mul_pos hy hs, div_pos (by positivity) (by positivity), ?_, ?_⟩
+  all_goals
+    dsimp only [calibrationSlope, slopeCoefficient, calibrationValue, valueCoefficient,
+      referenceSlope, referenceCoordinate, spaceCoordinate]
+    rw [hx.2]
+    field_simp [ne_of_gt hy, ne_of_gt hw, ne_of_gt hs]
+    have hsq := Real.sq_sqrt hy.le
+    generalize Real.sqrt (inverseMass b r) = t at *
+    rw [← hsq]
+    ring
+
+private def profileCalibration (b x : ℝ) : ℝ :=
+  slopeCoefficient b x * spaceCoordinate x / 2
+
+private lemma profileCalibration_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {x : ℝ} (hx : x ∈ optimizerDomain b) :
+    HasDerivAt (profileCalibration b)
+      (b * (x / optimizer b x) + profilePrimitive b x / optimizer b x ^ 2) x := by
+  have hy := (Real.exp_pos _).trans hx
+  have hw := optimizer_pos b hb hb1 hx
+  have hs := Real.sqrt_pos.2 hy
+  convert ((slopeCoefficient_hasDerivAt b hb hb1 hx).mul
+    (spaceCoordinate_hasDerivAt hy)).div_const 2 using 1
+  · rfl
+  · dsimp only [slopeCoefficient, valueCoefficient, spaceCoordinate]
+    field_simp [ne_of_gt hy, ne_of_gt hw, ne_of_gt hs]
+    have hsq := Real.sq_sqrt hy.le
+    generalize Real.sqrt x = t at *
+    rw [← hsq]
+    ring
+
+private lemma primitive_range {u : ℝ → ℝ} (hu : Admissible u) (hm : mass u = 1) :
+    MapsTo (primitive u) (Icc (1 : ℝ) 2) (Icc (0 : ℝ) 1) := by
+  have hi := (admissible_integrability hu).1
+  obtain ⟨c, B, hc, hbounds⟩ := hu.2
+  have hn : 0 ≤ᵐ[volume.restrict (Icc (1 : ℝ) 2)] u :=
+    hbounds.mono (fun x hx => hc.le.trans hx.1)
+  intro x hx
+  refine ⟨?_, ?_⟩
+  · exact intervalIntegral.integral_nonneg_of_ae_restrict hx.1
+      (hn.filter_mono (ae_mono (Measure.restrict_mono
+        (Icc_subset_Icc le_rfl hx.2) le_rfl)))
+  · change (∫ t in (1 : ℝ)..x, u t) ≤ 1
+    calc
+      (∫ t in (1 : ℝ)..x, u t) ≤ mass u :=
+        intervalIntegral.integral_mono_interval le_rfl hx.1 hx.2
+          (hn.filter_mono (ae_mono (Measure.restrict_mono Ioc_subset_Icc_self le_rfl))) hi
+      _ = 1 := hm
+
+private def comparison (b : ℝ) (u : ℝ → ℝ) (x : ℝ) : ℝ :=
+  calibrationSlope b (primitive u x) *
+    (spaceCoordinate x - referenceCoordinate b (primitive u x) / 2)
+
+private lemma comparison_endpoint (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {u : ℝ → ℝ} (hm : mass u = 1) :
+    comparison b u 2 - comparison b u 1 =
+      profileCalibration b 2 - profileCalibration b 1 := by
+  have h1 := inverseMass_left b hb hb1
+    (optimizerDomain_contains b hb hb1 (show (1 : ℝ) ∈ Icc 1 2 by norm_num))
+  have h2 := inverseMass_left b hb hb1
+    (optimizerDomain_contains b hb hb1 (show (2 : ℝ) ∈ Icc 1 2 by norm_num))
+  rw [profile_one b hb hb1] at h1
+  rw [profile_two b hb hb1] at h2
+  have hU1 : primitive u 1 = 0 := by simp [primitive]
+  have hU2 : primitive u 2 = 1 := hm
+  dsimp only [comparison]
+  rw [hU1, hU2]
+  dsimp only [calibrationSlope, referenceCoordinate]
+  rw [h1, h2]
+  dsimp only [profileCalibration]
+  ring
+
+private lemma calibration_endpoint_value (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    profileCalibration b 2 - profileCalibration b 1 = sharpConstant b := by
+  have hwdata := admissible_integrability (optimizer_admissible b hb hb1)
+  have hwfuture : IntervalIntegrable
+      (fun x => profilePrimitive b x / optimizer b x ^ 2) volume 1 2 := by
+    apply hwdata.2.2.congr
+    intro x hx
+    dsimp only
+    rw [primitive_eq_profile b hb hb1 (optimizerDomain_contains b hb hb1
+      (Ioc_subset_Icc_self
+        (by simpa only [uIoc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx)))]
+  have hftc := intervalIntegral.integral_eq_sub_of_hasDerivAt
+    (fun x hx => profileCalibration_hasDerivAt b hb hb1
+      (optimizerDomain_contains b hb hb1
+        (by simpa only [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx)))
+    ((hwdata.2.1.const_mul b).add hwfuture)
+  have hcost : (∫ x in (1 : ℝ)..2,
+      b * (x / optimizer b x) + profilePrimitive b x / optimizer b x ^ 2) =
+      cost b (optimizer b) := by
+    rw [intervalIntegral.integral_add (hwdata.2.1.const_mul b) hwfuture,
+      intervalIntegral.integral_const_mul]
+    dsimp only [cost]
+    congr 1
+    apply intervalIntegral.integral_congr
+    intro x hx
+    dsimp only
+    rw [primitive_eq_profile b hb hb1 (optimizerDomain_contains b hb hb1
+      (by simpa only [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx))]
+  rw [← hftc, hcost, optimizer_cost b hb hb1]
+
+private lemma normalized_calibration (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {u : ℝ → ℝ} (hu : Admissible u) (hm : mass u = 1) :
+    IntervalIntegrable
+      (MeasurableJointCalibration.defect u (primitive u) (referenceSlope b)) volume 1 2 ∧
+    0 ≤ energy b u ∧ sharpConstant b + b * energy b u ≤ cost b u ∧
+    (energy b u = 0 → (∀ᵐ x ∂volume.restrict (Icc (1 : ℝ) 2),
+      Real.sqrt x / u x = (2 / 3 : ℝ) * referenceSlope b (primitive u x)) ∧
+      ∀ x ∈ Icc (1 : ℝ) 2, referenceCoordinate b (primitive u x) = spaceCoordinate x) := by
+  have hdata := admissible_integrability hu
+  have hcal : MeasurableJointCalibration.Calibration b (referenceCoordinate b)
+      (referenceSlope b) (calibrationSlope b) (calibrationValue b) := by
+    refine ⟨(fun r hr => referenceCoordinate_contDiff b hb hb1
+      (massDomain_contains b hb hb1 hr)),
+      (fun r hr => calibrationSlope_contDiff b hb hb1 (massDomain_contains b hb hb1 hr)),
+      ?_, (fun r hr => referenceCoordinate_hasDerivAt b hb hb1
+        (massDomain_contains b hb hb1 hr)),
+      (fun r hr => calibrationSlope_hasDerivAt b hb hb1 (massDomain_contains b hb hb1 hr)),
+      (fun r hr => calibration_coefficients b hb hb1 (massDomain_contains b hb hb1 hr))⟩
+    intro r hr
+    have hx := inverseMass_spec b (massDomain_contains b hb hb1 hr)
+    have hi := inverseMass_contDiff b hb hb1 hx.1
+    rw [hx.2] at hi
+    have hs := (Real.contDiffAt_sqrt (n := ∞) (ne_of_gt ((Real.exp_pos _).trans hx.1))).comp r hi
+    have hw := (optimizer_contDiff b hb hb1 hx.1).comp r hi
+    exact (((contDiffAt_const.mul hs).div (contDiffAt_const.mul hw)
+      (mul_ne_zero (by norm_num) (ne_of_gt (optimizer_pos b hb hb1 hx.1)))).continuousAt).continuousWithinAt
+  have hdu : ∀ᵐ x ∂volume.restrict (Icc (1 : ℝ) 2), HasDerivAt (primitive u) (u x) x := by
+    filter_upwards [ae_restrict_of_ae hdata.1.ae_hasDerivAt_integral,
+      ae_restrict_mem measurableSet_Icc] with x hd hx
+    exact hd (by simpa only [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx)
+      1 left_mem_uIcc
+  have hZ0 : referenceCoordinate b 0 = 1 := by
+    have h := inverseMass_left b hb hb1 (optimizerDomain_contains b hb hb1 (by norm_num : (1 : ℝ) ∈ Icc 1 2))
+    rw [profile_one b hb hb1] at h
+    simp [referenceCoordinate, h, spaceCoordinate]
+  have h := MeasurableJointCalibration.remainder (U := primitive u) hcal hu.1 hu.2
+    (hdata.1.absolutelyContinuousOnInterval_intervalIntegral (c := 1) left_mem_uIcc)
+    (primitive_range hu hm) hdu ((hdata.2.1.const_mul b).add hdata.2.2)
+    (by simp [primitive]) hZ0
+  have he : MeasurableJointCalibration.potential (primitive u) (referenceCoordinate b)
+      (calibrationSlope b) 2 - MeasurableJointCalibration.potential (primitive u)
+      (referenceCoordinate b) (calibrationSlope b) 1 = sharpConstant b := by
+    change comparison b u 2 - comparison b u 1 = _
+    rw [comparison_endpoint b hb hb1 hm, calibration_endpoint_value b hb hb1]
+  rw [he, intervalIntegral.integral_add (hdata.2.1.const_mul b) hdata.2.2,
+    intervalIntegral.integral_const_mul] at h
+  exact h
+
+private lemma cost_congr {u v : ℝ → ℝ}
+    (h : u =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] v) : cost b u = cost b v := by
+  have hi : uIoc (1 : ℝ) 2 ⊆ Icc (1 : ℝ) 2 := by norm_num; exact Ioc_subset_Icc_self
+  dsimp only [cost]
+  congr 1
+  · congr 1
+    apply intervalIntegral.integral_congr_ae_restrict
+    exact (h.mono fun x hx => by dsimp only; rw [hx]).filter_mono (ae_mono (Measure.restrict_mono hi le_rfl))
+  · apply intervalIntegral.integral_congr_ae_restrict
+    have he : (fun x => primitive u x / u x ^ 2) =ᵐ[volume.restrict (Icc (1 : ℝ) 2)]
+        (fun x => primitive v x / v x ^ 2) := by
+      filter_upwards [h, ae_restrict_mem measurableSet_Icc] with x hx hxmem
+      rw [show primitive u x = primitive v x from MeasurableJointCalibration.primitive_congr h hxmem, hx]
+    exact he.filter_mono (ae_mono (Measure.restrict_mono hi le_rfl))
+
+/-- The global remainder and full a.e. rigidity of normalized measurable competitors. -/
+theorem normalized_stability (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {u : ℝ → ℝ} (hu : Admissible u) (hm : mass u = 1) :
+    IntervalIntegrable
+      (energyDensity b u) volume 1 2 ∧
+    0 ≤ energy b u ∧ sharpConstant b + b * energy b u ≤ cost b u ∧
+    (energy b u = 0 ↔ u =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] optimizer b) ∧
+    (cost b u = sharpConstant b ↔ u =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] optimizer b) := by
+  have hd := normalized_calibration b hb hb1 hu hm
+  have heq : energy b u = 0 ↔ u =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] optimizer b := by
+    constructor
+    · intro he
+      obtain ⟨hslope, htransport⟩ := hd.2.2.2 he
+      have hmono : StrictMonoOn spaceCoordinate (Ioi (0 : ℝ)) := by
+        apply strictMonoOn_of_deriv_pos (convex_Ioi _)
+        · intro x hx
+          exact (spaceCoordinate_hasDerivAt hx).continuousAt.continuousWithinAt
+        · intro x hx
+          rw [(spaceCoordinate_hasDerivAt (interior_subset hx)).deriv]
+          exact div_pos (mul_pos (by norm_num)
+            (Real.sqrt_pos.2 (interior_subset hx))) (by norm_num)
+      obtain ⟨c, B, hc, hbounds⟩ := hu.2
+      filter_upwards [hslope, hbounds, ae_restrict_mem measurableSet_Icc] with x hs hux hx
+      have hy := inverseMass_spec b (massDomain_contains b hb hb1 (primitive_range hu hm hx))
+      have hY : inverseMass b (primitive u x) = x := hmono.injOn
+        ((Real.exp_pos _).trans hy.1) (show 0 < x by linarith [hx.1]) (htransport x hx)
+      dsimp only [referenceSlope] at hs
+      rw [hY] at hs
+      have hw := optimizer_pos b hb hb1 (optimizerDomain_contains b hb hb1 hx)
+      have hup : 0 < u x := hc.trans_le hux.1
+      have hxpos : 0 < x := by linarith [hx.1]
+      have hspos := Real.sqrt_pos.2 hxpos
+      have hs' : Real.sqrt x / u x = Real.sqrt x / optimizer b x := by
+        convert hs using 1 <;> ring
+      field_simp [ne_of_gt hup, ne_of_gt hw] at hs'
+      nlinarith
+    · intro h
+      have he : MeasurableJointCalibration.defect u (primitive u) (referenceSlope b)
+          =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] (fun _ => (0 : ℝ)) := by
+        filter_upwards [h, ae_restrict_mem measurableSet_Icc] with x hx hxmem
+        have hp : primitive u x = profilePrimitive b x :=
+          (MeasurableJointCalibration.primitive_congr h hxmem).trans
+            (primitive_eq_profile b hb hb1 (optimizerDomain_contains b hb hb1 hxmem))
+        have hY := inverseMass_left b hb hb1 (optimizerDomain_contains b hb hb1 hxmem)
+        dsimp only [MeasurableJointCalibration.defect, referenceSlope]
+        rw [hp, hY, hx]
+        have hw := ne_of_gt (optimizer_pos b hb hb1 (optimizerDomain_contains b hb hb1 hxmem))
+        field_simp [hw]; ring
+      change (∫ x in (1 : ℝ)..2, _) = 0
+      rw [← intervalIntegral.integral_zero]
+      apply intervalIntegral.integral_congr_ae_restrict
+      exact he.filter_mono (ae_mono (Measure.restrict_mono
+        (by norm_num; exact Ioc_subset_Icc_self) le_rfl))
+  refine ⟨hd.1, hd.2.1, hd.2.2.1, heq, ?_⟩
+  constructor
+  · intro he
+    apply heq.1
+    have hle := hd.2.2.1
+    rw [he] at hle
+    nlinarith [hd.2.1]
+  · intro h
+    rw [cost_congr h, optimizer_cost b hb hb1]
+
+private lemma mass_pos {u : ℝ → ℝ} (hu : Admissible u) : 0 < mass u := by
+  obtain ⟨c, B, hc, hbounds⟩ := hu.2
+  have hle := intervalIntegral.integral_mono_ae_restrict
+    (show (1 : ℝ) ≤ 2 by norm_num) (intervalIntegrable_const :
+      IntervalIntegrable (fun _ : ℝ => c) volume 1 2)
+    (admissible_integrability hu).1 (hbounds.mono (fun x hx => hx.1))
+  have h : c ≤ mass u := by simpa only [mass, intervalIntegral.integral_const,
+    sub_self, show (2 : ℝ) - 1 = 1 by norm_num, smul_eq_mul, one_mul] using hle
+  exact hc.trans_le h
+
+private lemma admissible_scale {u : ℝ → ℝ} (hu : Admissible u)
+    {a : ℝ} (ha : 0 < a) : Admissible (fun x => a * u x) := by
+  obtain ⟨c, B, hc, hbounds⟩ := hu.2
+  refine ⟨hu.1.const_mul a, a * c, a * B, mul_pos ha hc, ?_⟩
+  filter_upwards [hbounds] with x hx
+  exact ⟨mul_le_mul_of_nonneg_left hx.1 ha.le, mul_le_mul_of_nonneg_left hx.2 ha.le⟩
+
+private lemma mass_scale (a : ℝ) (u : ℝ → ℝ) :
+    mass (fun x => a * u x) = a * mass u :=
+  intervalIntegral.integral_const_mul a u
+
+private lemma primitive_scale (a : ℝ) (u : ℝ → ℝ) (x : ℝ) :
+    primitive (fun t => a * u t) x = a * primitive u x :=
+  intervalIntegral.integral_const_mul a u
+
+private lemma cost_scale {a : ℝ} (ha : a ≠ 0) (b : ℝ) (u : ℝ → ℝ) :
+    cost b (fun x => a * u x) = cost b u / a := by
+  have h1 : (fun x => x / (a * u x)) = (fun x => (x / u x) / a) := by
+    funext x
+    field_simp
+  have h2 : (fun x => primitive (fun t => a * u t) x / (a * u x) ^ 2) =
+      (fun x => (primitive u x / u x ^ 2) / a) := by
+    funext x
+    rw [primitive_scale]
+    field_simp [ha]
+  dsimp only [cost]
+  rw [h1, h2, intervalIntegral.integral_div, intervalIntegral.integral_div]
+  ring
+
+/-- Quantitative product deficit and precisely all positive a.e. scalar optimizers. -/
+theorem global_stability (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {u : ℝ → ℝ} (hu : Admissible u) :
+    let v := fun x => (mass u)⁻¹ * u x
+    0 < mass u ∧
+    IntervalIntegrable
+      (energyDensity b v) volume 1 2 ∧
+    0 ≤ energy b v ∧ b * energy b v ≤ mass u * cost b u - sharpConstant b ∧
+    (mass u * cost b u = sharpConstant b ↔
+      u =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] (fun x => mass u * optimizer b x)) ∧
+    (mass u * cost b u = sharpConstant b ↔
+      ∃ a : ℝ, 0 < a ∧ u =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] (fun x => a * optimizer b x)) := by
+  dsimp only
+  have hp := mass_pos hu
+  have hv := admissible_scale hu (inv_pos.2 hp)
+  have hm : mass (fun x => (mass u)⁻¹ * u x) = 1 := by
+    rw [mass_scale, inv_mul_cancel₀ (ne_of_gt hp)]
+  have hd := normalized_stability b hb hb1 hv hm
+  have hcost : cost b (fun x => (mass u)⁻¹ * u x) = mass u * cost b u := by
+    rw [cost_scale (inv_ne_zero (ne_of_gt hp)), div_inv_eq_mul, mul_comm]
+  have heq : mass u * cost b u = sharpConstant b ↔
+      u =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] (fun x => mass u * optimizer b x) := by
+    rw [← hcost, hd.2.2.2.2]
+    constructor <;> intro h <;> filter_upwards [h] with x hx
+    · change (mass u)⁻¹ * u x = optimizer b x at hx
+      calc u x = mass u * ((mass u)⁻¹ * u x) := by field_simp
+           _ = mass u * optimizer b x := by rw [hx]
+    · change (mass u)⁻¹ * u x = optimizer b x
+      rw [hx, ← mul_assoc, inv_mul_cancel₀ (ne_of_gt hp), one_mul]
+  have hbound := hd.2.2.1
+  rw [hcost] at hbound
+  refine ⟨hp, hd.1, hd.2.1, by linarith, heq, ?_⟩
+  constructor
+  · intro h
+    exact ⟨mass u, hp, heq.1 h⟩
+  · rintro ⟨a, ha, h⟩
+    apply heq.2
+    have hm' : mass u = a := by
+      calc mass u = mass (fun x => a * optimizer b x) :=
+            MeasurableJointCalibration.primitive_congr h (by norm_num : (2 : ℝ) ∈ Icc 1 2)
+           _ = a := by rw [mass_scale, optimizer_mass b hb hb1, mul_one]
+    simpa only [hm'] using h
+
+private lemma product_comparison (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {u : ℝ → ℝ} (hu : Admissible u) : sharpConstant b ≤ mass u * cost b u := by
+  have hd := global_stability b hb hb1 hu
+  have hn := mul_nonneg hb.le hd.2.2.1
+  linarith [hd.2.2.2.1]
+
+/-- The exact attained variational values on the entire bounded positive measurable class.
+The scalar response is an analytic infimum; no arithmetic attainability is asserted. -/
+theorem sharp_joint_variational (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    0 < sharpConstant b ∧
+    (∀ u : ℝ → ℝ, Admissible u → sharpConstant b ≤ mass u * cost b u) ∧
+    IsLeast {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧ mass u * cost b u = y}
+      (sharpConstant b) ∧
+    sInf {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧ mass u * cost b u = y} =
+      sharpConstant b ∧
+    (∀ a : ℝ, 0 < a → Admissible (fun x => a * optimizer b x) ∧
+      mass (fun x => a * optimizer b x) * cost b (fun x => a * optimizer b x) =
+        sharpConstant b) ∧
+    ∀ d : ℝ, 0 < d →
+      IsLeast {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧
+        d / 8 * (4 * mass u + cost b u) = y} (d / 2 * Real.sqrt (sharpConstant b)) ∧
+      sInf {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧
+        d / 8 * (4 * mass u + cost b u) = y} = d / 2 * Real.sqrt (sharpConstant b) ∧
+      Admissible (fun x => Real.sqrt (sharpConstant b) / 2 * optimizer b x) ∧
+      d / 8 * (4 * mass (fun x => Real.sqrt (sharpConstant b) / 2 * optimizer b x) +
+        cost b (fun x => Real.sqrt (sharpConstant b) / 2 * optimizer b x)) =
+          d / 2 * Real.sqrt (sharpConstant b) := by
+  have hC := (constructed_profile b hb hb1).2.2.2.1
+  have hw := optimizer_admissible b hb hb1
+  have hcomp := fun u hu => product_comparison b hb hb1 (u := u) hu
+  have hprod : IsLeast
+      {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧ mass u * cost b u = y}
+      (sharpConstant b) := by
+    refine ⟨⟨optimizer b, hw, ?_⟩, ?_⟩
+    · rw [optimizer_mass b hb hb1, one_mul, optimizer_cost b hb hb1]
+    · rintro y ⟨u, hu, rfl⟩
+      exact hcomp u hu
+  refine ⟨hC, hcomp, hprod, hprod.csInf_eq, ?_, ?_⟩
+  · intro a ha
+    refine ⟨admissible_scale hw ha, ?_⟩
+    rw [mass_scale, cost_scale (ne_of_gt ha), optimizer_mass b hb hb1,
+      optimizer_cost b hb hb1]
+    field_simp
+  · intro d hd
+    have hs : 0 < Real.sqrt (sharpConstant b) := Real.sqrt_pos.2 hC
+    have hsq := Real.sq_sqrt hC.le
+    have hscaled := admissible_scale hw (div_pos hs (by norm_num : (0 : ℝ) < 2))
+    have heq : d / 8 *
+        (4 * mass (fun x => Real.sqrt (sharpConstant b) / 2 * optimizer b x) +
+          cost b (fun x => Real.sqrt (sharpConstant b) / 2 * optimizer b x)) =
+          d / 2 * Real.sqrt (sharpConstant b) := by
+      rw [mass_scale, cost_scale (ne_of_gt (div_pos hs (by norm_num))),
+        optimizer_mass b hb hb1, optimizer_cost b hb hb1]
+      field_simp [ne_of_gt hs]
+      nlinarith [hsq]
+    have hleast : IsLeast {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧
+        d / 8 * (4 * mass u + cost b u) = y}
+        (d / 2 * Real.sqrt (sharpConstant b)) := by
+      refine ⟨⟨_, hscaled, heq⟩, ?_⟩
+      rintro y ⟨u, hu, rfl⟩
+      have hp := mass_pos hu
+      have hcu := hcomp u hu
+      have ht : 0 ≤ mass u *
+          (4 * mass u + cost b u - 4 * Real.sqrt (sharpConstant b)) := by
+        nlinarith [sq_nonneg (2 * mass u - Real.sqrt (sharpConstant b)), hsq]
+      have hbound := nonneg_of_mul_nonneg_right ht hp
+      have hmul := mul_le_mul_of_nonneg_left
+        (show 4 * Real.sqrt (sharpConstant b) ≤ 4 * mass u + cost b u by linarith)
+        (show 0 ≤ d / 8 by positivity)
+      nlinarith
+    exact ⟨hleast, hleast.csInf_eq, hscaled, heq⟩
+
+end D5.S3.Analytic.Variational.JointReciprocalFunctional
