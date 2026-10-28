@@ -82,7 +82,7 @@ internal sealed class AchievementResidueConverseRefutationDocument : IScribeDocu
                 + "The original coefficients are retained, without division by their greatest common divisor.")),
             Describe.Lean(DescribeId.Create("block-sums"), DeclarationHandle.Create(Owner + "blockSums"),
                 H("Distinct indexed Boolean block sums"), StatementSource.FromAuthor(BlockSumsStatement()),
-                AssessedProvenance.FromLiterature("glabpruswisniowski2025achievement"),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Topology/glabpruswisniowski2025achievement")),
                 Blocks(Paragraph(Text(
                     "For every implicit m : ℕ and k : Fin m → ℕ, blockSums k : Finset ℕ is "
                     + "Finset.univ.image (fun b : Fin m → Bool => ∑ i, if b i then k i else 0). "
@@ -91,7 +91,7 @@ internal sealed class AchievementResidueConverseRefutationDocument : IScribeDocu
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("source-term"), DeclarationHandle.Create(Owner + "sourceTerm"),
                 H("The original infinite source sequence"), StatementSource.FromAuthor(SourceTermStatement()),
-                AssessedProvenance.FromLiterature("glabpruswisniowski2025achievement"),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Topology/glabpruswisniowski2025achievement")),
                 Blocks(Paragraph(Text(
                     "For every implicit m : ℕ, hm : 0 < m, k : Fin m → ℕ and n t : ℕ, sourceTerm hm k n t : ℝ equals "
                     + "(k ⟨t % m, Nat.mod_lt t hm⟩ : ℝ) / (n : ℝ) ^ (t / m + 1). "
@@ -101,7 +101,7 @@ internal sealed class AchievementResidueConverseRefutationDocument : IScribeDocu
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("achievement"), DeclarationHandle.Create(Owner + "achievement"),
                 H("Genuine convergent subseries"), StatementSource.FromAuthor(AchievementStatement()),
-                AssessedProvenance.FromLiterature("glabkula2025kenyon"),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Topology/glabkula2025kenyon")),
                 Blocks(Paragraph(Text(
                     "For every implicit m : ℕ, hm : 0 < m, k : Fin m → ℕ and n : ℕ, achievement hm k n : Set ℝ is exactly "
                     + "{x | ∃ A : Set ℕ, HasSum (fun t : A => sourceTerm hm k n t.val) x}. "
@@ -111,7 +111,7 @@ internal sealed class AchievementResidueConverseRefutationDocument : IScribeDocu
             Describe.Lean(DescribeId.Create("claim"), DeclarationHandle.Create(Owner + "claim"),
                 H("The full unnormalized residue implication"),
                 StatementSource.FromAuthor(Disp(Seq(V("claim"), Sp, Leftrightarrow, Sp, ClaimBody()))),
-                AssessedProvenance.FromLiterature("glabpruswisniowski2025achievement"),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Topology/glabpruswisniowski2025achievement")),
                 Blocks(Paragraph(Text("The closed definition claim : Prop has the exact body: " + FullClaim + ".")),
                     Paragraph(Text(
                         "All indices i range over Fin m. Antitone means weakly decreasing in this index order, not strictly decreasing. "
