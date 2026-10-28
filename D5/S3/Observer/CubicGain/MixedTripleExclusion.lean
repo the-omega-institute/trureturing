@@ -101,18 +101,15 @@ private theorem acquisition_two (E F : Bool) :
   have hE : acquisition [E] = action E := by simpa using acquisition_pure E 1
   change acquisition ([E] ++ [F]) = _
   rw [acquisition_append, hE]
-
 private theorem acquisition_three (E F G : Bool) :
     acquisition [E,F,G] = action G * action F * action E := by
   change acquisition ([E,F] ++ [G]) = _
   rw [acquisition_append, acquisition_two, Matrix.mul_assoc]
-
 private theorem read_concat (W : World3) (v u : List Bool) :
     readAt W (v ++ u) (v.length + u.length) =
       (gain 3 W.coeff).eval ((v.length + u.length : ℕ) : ℝ) *
         Matrix.trace (acquisition u * acquisition v * W.source) + W.drift := by
   rw [← List.length_append, readAt, List.take_length, acquisition_concat]
-
 private theorem equal_read_difference (W Z : World3) (v u : List Bool)
     (he : readAt W (v ++ u) (v.length+u.length) = readAt Z (v ++ u) (v.length+u.length)) :
     Matrix.trace (acquisition u * (acquisition v *
@@ -123,7 +120,6 @@ private theorem equal_read_difference (W Z : World3) (v u : List Bool)
   simp only [Matrix.mul_sub, Matrix.mul_smul, Matrix.trace_sub, Matrix.trace_smul,
     smul_eq_mul, ← Matrix.mul_assoc]
   linarith
-
 private theorem pair_read_difference (n : ℕ) (T : Finset World3) (v : List Bool)
     (hT : T.card = 2) (h : Losing n T v)
     (W Z : World3) (hW : W ∈ T) (hZ : Z ∈ T)
@@ -133,7 +129,6 @@ private theorem pair_read_difference (n : ℕ) (T : Finset World3) (v : List Boo
         (gain 3 Z.coeff).eval ((v.length + u.length : ℕ) : ℝ) • Z.source))) =
       Z.drift - W.drift := by
   exact equal_read_difference W Z v u ((losing_pair_suffix n T v hT h u hun).2 hu W hW Z hZ)
-
 private theorem pair_common_drift (n : ℕ) (T : Finset World3) (v : List Bool)
     (hT : T.card = 2) (h : Losing n T v) (hn : 3 ≤ n)
     (W Z : World3) (hW : W ∈ T) (hZ : Z ∈ T) : W.drift = Z.drift := by
@@ -148,7 +143,6 @@ private theorem pair_common_drift (n : ℕ) (T : Finset World3) (v : List Bool)
       pair_read_difference n T v hT h W Z hW hZ [E,F,G] (by simp) (by simpa using hn)
   have hc := (three_product_equal_trace S (Z.drift-W.drift) hh).2
   linarith
-
 private theorem weighted_sources_zero (W Z : World3) (hP : W.source ≠ Z.source)
     (a b : ℝ) (he : a • W.source = b • Z.source) : a = 0 ∧ b = 0 := by
   have ht := congrArg Matrix.trace he
@@ -450,7 +444,7 @@ private theorem fourth_pair_constraint (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
       rw [tW.2,tZ.2,← hd] at hm
       linarith
     have hc : nc W = nc Z := four_evaluations (nc W) (nc Z) ![1,3,6,7]
-      (by intro i k he; fin_cases i <;> fin_cases k <;> norm_num at *)
+      (by intro i k he <;> fin_cases i <;> fin_cases k <;> norm_num at *)
       (by intro i; change nh W _ = nh Z _; fin_cases i <;>
         first | exact fW.1.trans fZ.1.symm | exact he3 | simp [nh_eval,h6,h7])
     have hnh (r : ℝ) : nh Z r = nh W r := by simp [nh,hc]
@@ -610,7 +604,7 @@ private theorem fifth_pair_nezero (a₀ j m b : ℝ) (W Z : World3)
   have fW := norm_first W a₀ j m hW.1 hW.2.1 hW.2.2.1
   have fZ := norm_first Z a₀ j m hZ.1 hZ.2.1 hZ.2.2.1
   have hc : nc W = nc Z := four_evaluations (nc W) (nc Z) ![1,3,4,7]
-    (by intro i k he; fin_cases i <;> fin_cases k <;> norm_num at *)
+    (by intro i k he <;> fin_cases i <;> fin_cases k <;> norm_num at *)
     (by intro i; change nh W _ = nh Z _; fin_cases i <;>
       first | exact fW.1.trans fZ.1.symm | exact h3 | simp [nh_eval,h4,h7])
   have hnh (r : ℝ) : nh Z r = nh W r := by simp [nh,hc]
@@ -633,7 +627,7 @@ private theorem fifth_pair_nezero (a₀ j m b : ℝ) (W Z : World3)
   have hn (r : ℝ) (hr : r = 5 ∨ r = 6) : nh W r ≠ 0 := by
     intro he
     apply nh_four W ![r,2,4,7]
-      (by rcases hr with rfl | rfl <;> intro i k he; fin_cases i <;> fin_cases k <;> norm_num at *)
+      (by rcases hr with rfl | rfl <;> intro i k he <;> fin_cases i <;> fin_cases k <;> norm_num at *)
     intro i
     fin_cases i <;> simp [he,he2,nh_eval,h4,h7]
   have hD : nr W-nr Z = (nx W-nx Z) • (!![0,1;-1,0] : Mat) := by
@@ -675,15 +669,22 @@ private theorem three_quadratic (T : Finset World3) (hT : T.card = 3)
   have distinct (U V : World3) (hU : U ∈ T) (hV : V ∈ T) (hne : U ≠ V) : ny U ≠ ny V := by
     intro he
     exact hP U hU V hV hne (norm_injective U V (by linarith [hs U hU,hs V hV]) he)
-  have poly (U : World3) (hU : U ∈ T) : (ny U)^2-(s+λ)*ny U+C = 0 := by
+  have hYZ := distinct W Z hW hZ hWZ
+  have hYX := distinct W X hW hX hWX
+  have hZX' := distinct Z X hZ hX hZX
+  let p : Polynomial ℝ := Polynomial.X^2 - Polynomial.C (s+λ)*Polynomial.X + Polynomial.C C
+  have hp (U : World3) (hU : U ∈ T) : p.eval (ny U) = 0 := by
+    simp only [p,Polynomial.eval_add,Polynomial.eval_sub,Polynomial.eval_pow,
+      Polynomial.eval_mul,Polynomial.eval_C,Polynomial.eval_X]
     linear_combination ny U*(hs U hU) - hq U hU
-  have sum (U V : World3) (hU : U ∈ T) (hV : V ∈ T) (hne : U ≠ V) : ny U+ny V = s+λ := by
-    have he : (ny U-ny V)*(ny U+ny V-(s+λ)) = 0 := by nlinarith only [poly U hU,poly V hV]
-    have := (mul_eq_zero.mp he).resolve_left (sub_ne_zero.mpr (distinct U V hU hV hne))
-    linarith
-  have eWZ := sum W Z hW hZ hWZ
-  have eWX := sum W X hW hX hWX
-  exact distinct Z X hZ hX hZX (by linarith)
+  have hzero : p = 0 := Polynomial.eq_zero_of_degree_lt_of_eval_index_eq_zero
+    (Finset.univ : Finset (Fin 3))
+    (v := ![ny W,ny Z,ny X])
+    (by intro i _ k _ he; fin_cases i <;> fin_cases k <;> simp_all)
+    (by norm_num; dsimp [p]; compute_degree)
+    (by intro i _; fin_cases i <;> first | exact hp W hW | exact hp Z hZ | exact hp X hX)
+  have he := congrArg (fun q : Polynomial ℝ => q.coeff 2) hzero
+  norm_num [p,Polynomial.coeff_X_pow,Polynomial.coeff_C_mul_X] at he
 
 /-- Both first-response equations constrain each of the same three complete worlds.
 The recursion begins at the chosen chronological mixed word and uses clocks three to seven. -/
@@ -873,7 +874,7 @@ theorem mixed_prefix_three_world_exclusion (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
   have coef_zero_initial (hvU : v = [false,true]) (hc : c = 0)
       (W Z : World3) (hW : W ∈ T) (hZ : Z ∈ T) : nc W = nc Z := by
     apply four_evaluations (nc W) (nc Z) ![0,1,3,4]
-      (by intro i k he; fin_cases i <;> fin_cases k <;> norm_num at *)
+      (by intro i k he <;> fin_cases i <;> fin_cases k <;> norm_num at *)
     intro i
     fin_cases i
     · exact (zero_initial hc W hW).trans (zero_initial hc Z hZ).symm
@@ -923,7 +924,7 @@ theorem mixed_prefix_three_world_exclusion (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
           apply quadratic_one hvU hco
           intro he2
           apply nh_four W₀ ![2,0,4,7]
-            (by intro i k he; fin_cases i <;> fin_cases k <;> norm_num at *)
+            (by intro i k he <;> fin_cases i <;> fin_cases k <;> norm_num at *)
           intro i
           fin_cases i
           · exact he2
@@ -968,19 +969,19 @@ theorem mixed_prefix_three_world_exclusion (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
   · obtain ⟨Z,hZ,hne⟩ := Finset.exists_mem_ne (show 1 < T.card by omega) W₀
     exact hP W₀ hW₀ Z hZ hne.symm (roots_identify a₀ j m b v (Or.inl hvL) W₀ Z
       (hreads W₀ hW₀) (hreads Z hZ) (all_drift W₀ Z hW₀ hZ) ![3,4,5]
-      (by intro r hr; rcases hr with rfl | rfl | rfl <;> intro i k he; fin_cases i <;> fin_cases k <;> norm_num at *)
+      (by intro r hr; rcases hr with rfl | rfl | rfl <;> intro i k he <;> fin_cases i <;> fin_cases k <;> norm_num at *)
       (by intro i; fin_cases i <;> simp [left_root hvL W₀ hW₀,all_fourth W₀ hW₀,all_fifth W₀ hW₀])
       (by intro i; fin_cases i <;> simp [left_root hvL Z hZ,all_fourth Z hZ,all_fifth Z hZ]))
   · by_cases hc : c = 0
     · apply quadratic_one hvU (fun W hW => coef_zero_initial hvU hc W W₀ hW hW₀)
       intro he2
       apply nh_four W₀ ![2,0,4,5]
-        (by intro i k he; fin_cases i <;> fin_cases k <;> norm_num at *)
+        (by intro i k he <;> fin_cases i <;> fin_cases k <;> norm_num at *)
       intro i
       fin_cases i <;> simp [he2,zero_initial hc W₀ hW₀,nh_eval,all_fourth W₀ hW₀,all_fifth W₀ hW₀]
     · have hco (W : World3) (hW : W ∈ T) : nc W = nc W₀ := by
         apply four_evaluations (nc W) (nc W₀) ![1,3,4,5]
-          (by intro i k he; fin_cases i <;> fin_cases k <;> norm_num at *)
+          (by intro i k he <;> fin_cases i <;> fin_cases k <;> norm_num at *)
         intro i
         fin_cases i
         · exact (first W hW).1.trans (first W₀ hW₀).1.symm
