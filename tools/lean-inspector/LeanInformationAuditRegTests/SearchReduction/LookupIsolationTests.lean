@@ -1,5 +1,6 @@
 import LeanInformationAuditRegAnalysis.SearchReduction.Commands
 import LeanInformationAuditRegTests.SearchReduction.LookupBaseline
+import LeanInformationAuditRegTests.SearchReduction.ExecutionChainTests
 
 /-! Recall, nonrecursive closure and incomplete-basis regression checks. -/
 open Lean Meta Elab Command LeanInformationAudit.SearchReduction

@@ -63,6 +63,9 @@ structure LookupTable where
   /-- Speculative loaded candidates have private state and no checkpoint or
   certificate side effects. A possible hit is replayed by the owning thread. -/
   speculative : Bool := false
+  /-- Boundary charges are available only to explicitly scoped test indexes.
+  Production tables leave this absent; no allocation or candidate order changes. -/
+  boundaryTest? : Option (DiskLookup.Entry → MVarId → MetaM Unit) := none
 
 structure LookupTrace where
   visited : Nat := 0
@@ -454,6 +457,10 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
   let result ← catchLookupCandidate
     (withTheReader Core.Context (fun ctx => {ctx with
       initHeartbeats := started, maxHeartbeats := lookupCandidateBudget * 1000}) do
+      if let some boundary := table.boundaryTest? then
+        unless table.fixture && table.disk?.any (·.header.scope == "test") do
+          throwError "lookup.boundary_test_requires_test_index"
+        boundary entry goal
       let result ← action
       if result.source?.isSome && !table.speculative then
         checkedProof.set (some (← checkLookupGoal table original.core.env goal))
