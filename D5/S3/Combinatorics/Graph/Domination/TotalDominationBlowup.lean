@@ -300,21 +300,7 @@ theorem labelled_root_blowup (n : ℕ) (G : SimpleGraph (Fin n))
     rw [harg]
     exact hη
 
-/-- Arbitrarily large negative shifts and every power branch have the same lawful witnesses. -/
-theorem unbounded_seed_blowup_roots (R : ℝ) (hR : 2 < R) (k : ℕ) (hk : 0 < k) :
-    ∃ (m : ℕ) (H : SimpleGraph (Fin m)) (r : ℝ),
-      2 ≤ m ∧ r < -R ∧ complexPolynomial H ≠ 0 ∧
-      (∀ v, ∃ u, H.Adj v u) ∧
-      ∀ w : ℂ, (1 + w) ^ k = (1 + r : ℝ) → (complexPolynomial H).IsRoot w := by
-  obtain ⟨n, G, r, hn, hr, hni, _, hz⟩ := labelled_unbounded_negative_roots R hR
-  obtain ⟨m, H, hm, hnz, hniH, hroot⟩ := labelled_root_blowup n G hn hni (r : ℂ) hz k hk
-  refine ⟨m, H, r, hm, hr, hnz, hniH, ?_⟩
-  intro w hw
-  apply hroot w
-  simpa only [Complex.ofReal_add, Complex.ofReal_one] using hw
-
 #print axioms labelled_root_blowup
-#print axioms unbounded_seed_blowup_roots
 
 #print axioms labelled_seed_blowup_roots
 

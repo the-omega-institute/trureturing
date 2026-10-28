@@ -96,8 +96,8 @@ theorem roots_approximate_exp (ξ : ℂ) (ε : ℝ) (hε : 0 < ε) :
       have he : ξ' - ξ = (δ / 2 : ℝ) := by dsimp [ξ']; ring
       rw [he, Complex.norm_real, Real.norm_eq_abs, abs_of_pos (by linarith)]
       linarith
-    have heclose : ‖Complex.exp ξ' - Complex.exp ξ‖ < ε / 2 :=
-      hcont (by simpa [dist_eq_norm] using hdist)
+    have heclose : ‖Complex.exp ξ' - Complex.exp ξ‖ < ε / 2 := by
+      simpa [dist_eq_norm] using hcont (by simpa [dist_eq_norm] using hdist)
     obtain ⟨n, G, w, hn, hni, hnz, hz, hw⟩ :=
       roots_approximate_exp_nonunit ξ' hξ' (ε / 2) (by linarith)
     refine ⟨n, G, w, hn, hni, hnz, hz, ?_⟩
