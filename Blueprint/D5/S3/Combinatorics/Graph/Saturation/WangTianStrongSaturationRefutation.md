@@ -278,6 +278,10 @@ $$\neg ((\forall k \in \mathbb{N},\; \forall (hk: 1 \le k), \exists N \in \mathb
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Saturation/WangTianStrongSaturationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wang-tian-2026-strong-saturation-exact-formula` (refuted) by `D5/S3/Combinatorics/Graph/Saturation/WangTianStrongSaturationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wang-tian-2026-strong-saturation-exact-formula","declaration_gid":"D5/S3/Combinatorics/Graph/Saturation/WangTianStrongSaturationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Qinglin Wang; Yingzhi Tian (2026). *Extremal Problems for the Family of k-Strongly Connected Digraphs*. DOI: [10.48550/arXiv.2605.01269](https://doi.org/10.48550/arXiv.2605.01269). URL: <https://arxiv.org/abs/2605.01269v1>.
