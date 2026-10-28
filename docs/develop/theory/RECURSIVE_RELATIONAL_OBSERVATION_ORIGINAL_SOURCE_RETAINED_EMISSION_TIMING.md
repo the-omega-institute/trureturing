@@ -124,7 +124,7 @@ and the infimum is attained by the first-maximizer partition, with any Borel tie
 **(B8) Proposition 4.2 (two distinct spatial families).** Let $C=\{x>0\}$. The binary half-space detector
 
 $$
- f_1=\frac14+\frac12 1_C,\qquad f_0=1-f_1,qquad f_3=f_B=0
+ f_1=\frac14+\frac12 1_C,\qquad f_0=1-f_1,\qquad f_3=f_B=0
 $$
 
 has $J=3/8$ and $E=1/4$. Let $v=x/(1+|x|)$ and
@@ -259,7 +259,7 @@ $$
 C_0=Q_0,\qquad C_1=Q_1,\qquad C_3=Q_2,\qquad C_B=Q_3.
 $$
 
-Thus geometric quadrant $Q_2$ is carried by label $B$; the subscripts $0,1,3,B$ below are detector labels, not a claim that the alphabet contains label $2$. Source symmetry gives each positive-time marginal mass $1/4$. For $\varepsilon\in[0,1]$, define
+Thus geometric quadrant $Q_2$ is carried by label $3$, and $Q_3$ by label $B$; the subscripts $0,1,3,B$ below are detector labels, not a claim that the alphabet contains label $2$. Source symmetry gives each positive-time marginal mass $1/4$. For $\varepsilon\in[0,1]$, define
 
 $$
  f_i^\varepsilon=\varepsilon 1_{C_i}+\frac{1-\varepsilon}{4}\qquad(i\in\mathcal A).
@@ -337,6 +337,8 @@ The finite source-only criterion is therefore a deletion boundary: fresh detecto
 ## 9. Supplier correspondence and remaining obligations
 
 Appendix II §§115--117 supplies the unchanged self-adjoint conservative source, positive-time entrance density and nondisturbing emission contract. §§119.6--119.8 supply bounded-order smoothing and one common indicator weak-star approximation. Theorem 122.1 supplies exact deterministic attainment for each separately fixed positive pair. These are reused with their exact hypotheses. The Dvoretzky--Wald--Wolfowitz atomless finite splitting theorem supports prescribed finite masses but does not supply simultaneous nonlinear constraints, a complete process purifier, or an acquired decoder. Standard self-adjoint spectral calculus supplies Theorem 5.1.
+
+Appendix II §127 at public source revision `53571cd1a456f5c649d46ac73f818bb1fd7760e7` uses this same original $a,\eta>0$, e-start law, full form, $m$ and clock. Its notation is $P=T_d$, $A_d=T_{d/2}$, $g=g_t$, $\varphi=\alpha g_t+\beta g_{t+d}$ for $t,d>0$. Proposition 127.2 localizes the negative index of $\int\varphi vPv\,dm+\gamma\int gvP^2v\,dm$ to every positive-measure support, and accounts for the exact first-order constraint rank $r_E\leq37$. Theorem 127.3 proves infinite negative index for the restricted comparable-kernel interval $\beta=0$, $\alpha>0$, $\gamma\neq0$, $\gamma>-\alpha$. The strict comparison is $cP\leq\alpha P+\gamma P^2\leq CP$ for positive finite $c,C$. These are credited results about an equal-gap mixed pencil on the original source. They do not give a general coefficient-pencil theorem, simultaneous nonlinear three-time purification, or a complete-record replacement. The present B statements use the source, smoothing and separately fixed-pair suppliers above; their short-gap, spectral, finite-window and full-burst arguments retain their stated quantifiers and do not replace a missing bridge by the restricted §127 theorem.
 
 The new composition is the separation between the two quantifier orders, the all-lag collision inverse, complete-law criterion, one-sequence finite-window density, joint current-source optimum, spatial examples, attained minimax constants, full-burst and precompactness boundaries. No generic quotient or new harness capability is introduced.
 
