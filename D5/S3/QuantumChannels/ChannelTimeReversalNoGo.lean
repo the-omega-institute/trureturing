@@ -510,8 +510,8 @@ open Qubit
 namespace QubitUnital
 set_option maxRecDepth 4096
 set_option maxHeartbeats 2000000
-private def J : MatrixMap (Fin 2) (Fin 2) ℂ := unitaryChannel (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli 1) ∘ₗ ((Matrix.transposeLinearEquiv _ _ ℂ ℂ).toLinearMap)
-private lemma J_apply (X : QubitMatrix) : J X = Matrix.trace X • (1 : QubitMatrix) - X := by
+def J : MatrixMap (Fin 2) (Fin 2) ℂ := unitaryChannel (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli 1) ∘ₗ ((Matrix.transposeLinearEquiv _ _ ℂ ℂ).toLinearMap)
+lemma J_apply (X : QubitMatrix) : J X = Matrix.trace X • (1 : QubitMatrix) - X := by
   ext i j
   fin_cases i <;> fin_cases j <;> simp [unitaryChannel, J, Matrix.transposeLinearEquiv, LinearMap.comp_apply, LinearMap.mulRight_apply, LinearMap.mulLeft_apply, D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli, pauliMatrix, qubitX, qubitZ, Matrix.transpose, Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.vecMul, Matrix.vecHead, Matrix.vecTail, dotProduct, Matrix.conjTranspose_apply, Matrix.star_eq_conjTranspose, Fin.sum_univ_two] <;> try ring_nf <;> norm_num [Complex.I_sq] <;> ring
 private lemma spinflip_double (Phi : MatrixMap (Fin 2) (Fin 2) ℂ) : J ∘ₗ Phi ∘ₗ J = unitaryChannel (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli 1) ∘ₗ (fun {d : ℕ} (Phi : MatrixMap (Fin d) (Fin d) ℂ) => ((Matrix.transposeLinearEquiv _ _ ℂ ℂ).toLinearMap) ∘ₗ Phi ∘ₗ ((Matrix.transposeLinearEquiv _ _ ℂ ℂ).toLinearMap)) Phi ∘ₗ unitaryChannel (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli 1) := by
