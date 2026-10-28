@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:d6ba9442406a4ff3e548ca21555c47e1e8b0fb0d7e658fdd818871eaf177e503
   normalized_sha256: sha256:d6ba9442406a4ff3e548ca21555c47e1e8b0fb0d7e658fdd818871eaf177e503
 cas_ref: sha256:d6ba9442406a4ff3e548ca21555c47e1e8b0fb0d7e658fdd818871eaf177e503
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/CubicGain/JJFiveFailure.jj_five_failure
+    target_statement_id: sha256:0f5aeb8c913023367bc81fb15cd889addda36300515fba62d3f6c40ca53ed34c
 receipts:
   unresolved_subitems: []
