@@ -1,0 +1,30 @@
+**Proposition 18.2 (a simultaneous literal implementation account).** The call vectors (CM.18) or, separately, (CM.27), can be realized with the following additional source and observer work and retained stores. They make no lifetime bit bound or total-resource minimality assertion.
+
+| Resource | Account on the same chosen run |
+| --- | --- |
+| Source law and registry | one actual native $T$ store, up to $N^2$ rational words in a dense representation, native incidence/registry and authenticated port bindings |
+| Source field and destination | $N$ current rational words and a distinct $N$-word destination buffer when an out-of-place update is used |
+| Each source Tick | a dense implementation uses $N^2$ rational products, $N(N-1)$ additions and $N$ destination writes; zero coefficients may instead be handled by its explicitly chosen sparse representation |
+| Each source Square | $N$ native rational products, source reads, $N$ destination writes and one whole-field serial commit |
+| Each Reset/Add/Read | respectively $N$ zero writes, a genuine port addition, or source selection/serialization of the entire rational; every actual frame/ACK/End/Return remains charged |
+| General acquired data | $2Nb^2$ moment rationals; selected indices; $G,A,D,E$ and solve scratch; up to $N^3$ stored product coefficients; $N^2$ atom/conversion entries and native export buffers |
+| General current prediction | a separate $N$-vector and destination/scratch, plus actual local updates and full reply processing; these do not replace the source field or its work |
+| Measured chronology | all retained calibration windows, actual pulse operands/indices, call tags and framing, plus any latest Report or later journal that is exposed or retained |
+| Cyclic prediction | earned $C,S$, current $N$-vector in template coordinates, a separate destination vector and actual rotation/square arithmetic; any literal native-law copy is an extra store |
+| All contexts | code, pivot/root/phase counters, parser and pending/input/output buffers, source/port references, current grants and storage backing at each owner |
+
+For a concrete general observer representation, evaluate each $\mu(z,z)$ directly from its dense table. This uses at most $2N^3$ rational products and $N^3-N$ additions, with its own destination vector; each predictor Tick uses its own dense $A$ multiplication. This particular representation's bill accompanies either chosen source schedule. A conversion to native-atom predictor coordinates is possible but is a different explicit arithmetic representation, not a free substitution of favorable work coordinates.
+
+**Proof.** Dense matrix-vector multiplication and direct expansion of the bilinear table give the stated arithmetic counts. The native Square count follows from its specified actual implementation, not from the number of opcodes. The schedules measured $2Nb^2$ impulse scalars and $bNq$ Square-window scalars. Retaining their literal Time, pulse inputs, the learned arrays and a streaming Gram-pivot implementation uses
+
+$$
+O(b^2N+bNq+N^3+Nb+N^2)
+\tag{CM.37}
+$$
+
+rational data slots, in addition to framing, indices, references, code and any separate copies/exports. Gram entries can be evaluated from the moment table as required, retaining only the current selected minor rather than the entire $bN$-square candidate Gram. The selected-pulse schedule may omit dense pulse slots in its own retained word; (CM.37) is a simultaneous sufficient upper store, not a lower bound or optimized storage formula. A literal added Report retains its $bN$ scalar returns, held epoch/order data and solve scratch, and has the call increment in Proposition 15.3. Every local solve, rational reduction, characteristic-polynomial/gcd calculation, integer divisor search, nullspace solve, atom normalization and output formation is additional actual finite computation. Its algorithm and finite bounds in §13 terminate without any extra source samples. In particular (CM.15) evaluates the stored bilinear table on each computed eigenvector and divides by its nonzero amplitude, including on a zero eigenline. The same $d+1$ candidate bound (CM.14), $q$ actual Square trials and call vectors (CM.18) suffice; these local table evaluations do not execute additional source calls. No polynomial bit-work estimate is asserted for those searches.
+
+The two cyclic resource vectors have the same four Ticks, one Square and one Read, but different Adds/Holds and actual fields. Their observed coefficients on $a$ are $\epsilon^6$ and $\epsilon^2$, respectively. The second also pays pulses of size $\epsilon^{-2}$ and cancellation arithmetic. No noisy/quantized sensor contract was supplied, so these scales alone are not a simultaneous precision or conditioning advantage. In either case the source Square still performs $N$ products; later selected use in Construction 17.3 adds another $N$ products and all its other source/predictor work.
+
+Fixed counts of rational slots do not bound their bits. The family contains parameters of unbounded rational width at fixed $b$ by (CL.5), and (CM.35) excludes a uniform inverse-conditioning claim. There is also actual lifetime growth without any extra input: on the isolated endpoint $0<y_{\rm p}=\epsilon^2a<1$ is a nonintegral reduced rational $m/n$, $n>1$. After $r$ additional Square calls without Ticks, the source leaf value is $m^{2^r}/n^{2^r}$ in lowest terms. Its denominator bit length grows as $2^r\log_2 n$. The synchronized predictor or literal native export must represent that growth too. Arbitrarily wide legal rational Adds provide a separate width cost. Thus finite code, finite per-instance termination and fixed dimension provide no bounded lifetime memory, precision, elapsed-time, energy or finite-shot theorem. $\square$
+
