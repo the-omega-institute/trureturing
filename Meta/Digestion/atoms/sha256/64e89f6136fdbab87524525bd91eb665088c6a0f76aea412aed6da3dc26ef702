@@ -1,0 +1,69 @@
+**定义 2.1（原根源元组与响应矩阵）。** 取
+
+$$
+\mathcal S=\{(w,e):w\in\{J,M\}^7,\ e\in\{0,1\}\},
+\qquad
+\mathcal V=\bigcup_{i=1}^7\{J,M\}^i.
+\tag{2.1}
+$$
+
+共有 $256$ 个槽和 $254$ 个非空前缀。固定一个合法源元组
+
+$$
+\mathbf P=(P_q)_{q\in\mathcal S}\in\mathcal P^{\mathcal S}.
+$$
+
+允许不同槽的源重复，包括同一叶的两个源相同。对于按时间排列的前缀 $v=E_1\cdots E_i$，令
+
+$$
+A_v=E_i\cdots E_1,\qquad
+\mathcal D_v=\{(w,e):v\text{ 是 }w\text{ 的前缀}\}.
+\tag{2.2}
+$$
+
+槽按 $J<M$、$0<1$ 的字典序排列，$q_v$ 为 $\mathcal D_v$ 的首槽。定义
+
+$$
+\begin{aligned}
+t_v(P)&=\operatorname{tr}(A_vP),\\
+\ell_v(P)&=(t_v(P)-1,\ i\,t_v(P),\ i^2t_v(P),\ i^3t_v(P)).
+\end{aligned}
+\tag{2.3}
+$$
+
+四维系数块 $x_q=(x_{q0},x_{q1},x_{q2},x_{q3})^{\mathsf T}$ 对应
+
+$$
+g_q(T)=x_{q0}+x_{q1}T+x_{q2}T^2+x_{q3}T^3,
+\qquad\delta_q=-x_{q0}.
+\tag{2.4}
+$$
+
+其初读为零，在前缀 $v$ 的读数恰为 $\ell_v(P_q)x_q$。完整世界合法还须 $x_q\ne0$。这是 IV 定义 9.1 的坐标变换，保留任意增益形状和漂移。
+
+令 $x=(x_q)_q\in\mathbb R^{1024}$。唯一的联合响应矩阵 $B=B(\mathbf P)$ 每行由 $v\in\mathcal V$ 和 $q\in\mathcal D_v\setminus\{q_v\}$ 标记：
+
+$$
+(Bx)_{v,q}=\ell_v(P_q)x_q-\ell_v(P_{q_v})x_{q_v}.
+\tag{2.5}
+$$
+
+其他槽块的行系数为零。深度 $i$ 的行数是 $2^i(2^{8-i}-1)=256-2^i$，故七层行数依次为
+
+$$
+(254,252,248,240,224,192,128),\qquad
+B\in\mathbb R^{1538\times1024}.
+\tag{2.6}
+$$
+
+若 $P_q=(\begin{smallmatrix}a_q&b_q\\c_q&1-a_q\end{smallmatrix})$，则
+
+$$
+t_v(P_q)=(A_v)_{22}
++((A_v)_{11}-(A_v)_{22})a_q
++(A_v)_{21}b_q+(A_v)_{12}c_q.
+\tag{2.7}
+$$
+
+所以矩阵条目是 $768$ 个环境源坐标的整数仿射多项式。全部 $256$ 个等式 $b_qc_q=a_q(1-a_q)$ 及严格源不等式仍须保留；$768$ 是环境坐标数，不是无约束合法源空间的维数。
+
