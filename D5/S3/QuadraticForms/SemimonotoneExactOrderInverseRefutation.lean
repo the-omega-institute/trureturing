@@ -9,10 +9,6 @@
 import Mathlib.Basic.Real.Basic
 import Mathlib.LinearAlgebra.Matrix.Nondegenerate
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
 
 /-! Chauhan and Dubey, arXiv:2603.00639v1, Section 2, Definition 3.1,
 and Remark 4.1, second bullet. The claim includes actual invertibility,

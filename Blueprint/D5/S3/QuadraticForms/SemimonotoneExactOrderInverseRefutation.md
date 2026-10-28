@@ -12,7 +12,7 @@ $$(\operatorname{Semimonotone}\left(A\right)) \Leftrightarrow (\forall (x: \iota
 
 *Formalization.* `D5/S3/QuadraticForms/SemimonotoneExactOrderInverseRefutation.Semimonotone` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Bharat Pratap Chauhan; Dipti Dubey (2026). *On semimonotone matrices of exact order two*. URL: <https://arxiv.org/abs/2603.00639>.
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ $$(\operatorname{IsExactOrder}\left(n, k, A\right)) \Leftrightarrow ((k \le n) \
 
 *Formalization.* `D5/S3/QuadraticForms/SemimonotoneExactOrderInverseRefutation.IsExactOrder` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Bharat Pratap Chauhan; Dipti Dubey (2026). *On semimonotone matrices of exact order two*. URL: <https://arxiv.org/abs/2603.00639>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ $$(\operatorname{IsZMatrix}\left(A\right)) \Leftrightarrow (\forall (i: \iota), 
 
 *Formalization.* `D5/S3/QuadraticForms/SemimonotoneExactOrderInverseRefutation.IsZMatrix` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Bharat Pratap Chauhan; Dipti Dubey (2026). *On semimonotone matrices of exact order two*. URL: <https://arxiv.org/abs/2603.00639>.
 
 *Commentary.*
 
@@ -48,7 +48,7 @@ $$(claim) \Leftrightarrow (\forall (n: \mathbb{N}), (\forall (k: \mathbb{N}), (\
 
 *Formalization.* `D5/S3/QuadraticForms/SemimonotoneExactOrderInverseRefutation.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Bharat Pratap Chauhan; Dipti Dubey (2026). *On semimonotone matrices of exact order two*. URL: <https://arxiv.org/abs/2603.00639>.
 
 *Commentary.*
 
@@ -62,6 +62,8 @@ $$counterexample = \operatorname{ofRows}\left(\operatorname{row}\left(1, -5, -2,
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Bharat Pratap Chauhan; Dipti Dubey (2026). *On semimonotone matrices of exact order two*. URL: <https://arxiv.org/abs/2603.00639>.
+
 *Commentary.*
 
 The displayed four rows specify the real matrix A. Its diagonal is one; each off-diagonal entry is at most minus two. Each singleton principal block is [1] and is semimonotone. In every larger principal block and every row choose one other index: the diagonal and that off-diagonal entry sum to at most minus one, and all remaining entries are nonpositive. Thus the all-ones vector is nonzero and nonnegative, and every image coordinate is strictly negative. Every such block fails semimonotonicity. Consequently A belongs to E_{0_3}, with n=4 and k=3.
@@ -74,6 +76,8 @@ $$kernelVector = \operatorname{vector}\left(1, 1, -1, -1\right)$$
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Bharat Pratap Chauhan; Dipti Dubey (2026). *On semimonotone matrices of exact order two*. URL: <https://arxiv.org/abs/2603.00639>.
+
 *Commentary.*
 
 The real column vector (1,1,-1,-1) is nonzero and its product with A is zero. The equal-sized sign blocks cancel exactly: each row gives either 1-5+2+2 or -2-2-1+5. This proves singularity by ordinary matrix algebra, independently of testing finitely many numerical matrices.
@@ -85,6 +89,8 @@ $$\neg (\forall (n: \mathbb{N}), (\forall (k: \mathbb{N}), (\forall (A: \operato
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/SemimonotoneExactOrderInverseRefutation.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Bharat Pratap Chauhan; Dipti Dubey (2026). *On semimonotone matrices of exact order two*. URL: <https://arxiv.org/abs/2603.00639>.
 
 *Commentary.*
 
