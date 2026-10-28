@@ -3637,7 +3637,7 @@ Let $e=a_+/\sqrt{5/8}$. Choose a unit vector $v$ orthogonal to both
 $a_+$ and $t$, and set
 
 $$
-F=ee^\dagger-vv^\dagger,qquad \ell(M)=\operatorname{Tr}(FM).
+F=ee^\dagger-vv^\dagger,\qquad \ell(M)=\operatorname{Tr}(FM).
 \tag{116.6}
 $$
 
@@ -3645,7 +3645,7 @@ Then $\operatorname{Tr}F=0$, $Ft=0$, $\ell(D)=5/8$, and for every
 $\|h\|\le1$,
 
 $$
-\ell(K_h)=\mathrm i sc\,q_h,qquad
+\ell(K_h)=\mathrm i sc\,q_h,\qquad
 q_h=\frac58-\ell(H_h)\ge
 m:=\frac58-b=\frac{9-4\sqrt2}{24}>0.
 \tag{116.7}
@@ -3717,7 +3717,7 @@ finite sets of actual row indices $J_\lambda,J_\mu$ and coefficients
 $d_j\in\mathbb R$, $e_j\in\mathbb C$ such that
 
 $$
-\lambda=\sum_{j\in J_\lambda}d_jq_j,qquad
+\lambda=\sum_{j\in J_\lambda}d_jq_j,\qquad
 \mu=\sum_{j\in J_\mu}e_jq_j.
 \tag{116.12}
 $$
