@@ -29,7 +29,7 @@ private theorem real_mul (A B : PositiveMatrix) :
   fin_cases i <;> fin_cases j <;>
     simp [realMatrix, PositiveMatrix.mul, Matrix.mul_apply, Fin.sum_univ_two]
 
-private theorem product_append (u v : List Bool) :
+theorem product_append (u v : List Bool) :
     futureProduct (u ++ v) = futureProduct v * futureProduct u := by
   induction u with
   | nil => simp [futureProduct]
