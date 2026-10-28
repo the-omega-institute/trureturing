@@ -294,7 +294,7 @@ private def chosen (m : ℕ) (i : Index m) (s : Bool) : Coordinate m :=
 
 /-- Reuse the original complete-support separation and the full all-signs
 triple theorem. The two signs of the translated members are not restricted. -/
-private lemma quotient_data {G : Type*} [AddCommGroup G] [Finite G]
+lemma quotient_data {G : Type*} [AddCommGroup G] [Finite G]
     (m : ℕ) (hm : 4 ≤ m) (f : Coordinate m → G)
     (hq : addOrderOf (f (q m)) = m)
     (hzero : ∀ C : Finset (Coordinate m),
