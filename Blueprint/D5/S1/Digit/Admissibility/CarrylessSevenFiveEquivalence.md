@@ -12,6 +12,10 @@ $$\forall k \in Nat,\; 7 \cdot k = C\left(11, k\right) \Leftrightarrow 5 \cdot k
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/Admissibility/CarrylessSevenFiveEquivalence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a115770-carryless-seven-five-equivalence` (proved) by `D5/S1/Digit/Admissibility/CarrylessSevenFiveEquivalence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a115770-carryless-seven-five-equivalence","declaration_gid":"D5/S1/Digit/Admissibility/CarrylessSevenFiveEquivalence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Antti Karttunen (2025). *OEIS A115770: seven and five versus binary carryless multiplication*. URL: <https://oeis.org/A115770>.

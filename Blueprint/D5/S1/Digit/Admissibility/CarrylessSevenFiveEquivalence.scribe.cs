@@ -28,7 +28,10 @@ internal sealed class CarrylessSevenFiveEquivalenceDocument : IScribeDocumentDef
                     + "The digit-step equivalence and binary induction give the equivalence for "
                     + "every natural input. Thus the finite relation establishes an unbounded "
                     + "statement; at zero, both equations are zero equals zero."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a115770-carryless-seven-five-equivalence"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ResultFormula()
     {
