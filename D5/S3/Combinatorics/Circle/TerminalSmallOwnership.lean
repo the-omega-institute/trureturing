@@ -8,7 +8,6 @@
 module
 public import D5.S3.Combinatorics.Circle.TerminalLargeSubstitution
 public import D5.S3.Combinatorics.Circle.FirstNegativeShiftExchange
-import all D5.S3.Combinatorics.Circle.OddFirstNegativePlacement
 
 /-! Terminal SMALL ownership and the actual two-step orbit transition for an
 arbitrary physical signed source word. -/
@@ -773,119 +772,5 @@ theorem actualSource_terminal_small_ownership_transition
     have hlused : hit k 2 i ∈ W := hown _
       (by rwa [abs_of_pos hlpos]) (le_of_lt hlpos)
     exact ⟨hu2s, hlused, hlpos, hlbound, hlQ⟩
-
-/-- Select actual positive occurrences, using one sufficiently large entry or
-an owned first-crossing scan of strictly shorter entries. -/
-private theorem positive_selection {α : Type*} (f : α → ℤ) (T : List α)
-    (ell : ℤ) (hell : 0 < ell)
-    (hsupply : ell ≤ mass f (T.filter (fun a => decide (0 < f a)))) :
-    ∃ S : List α, S.Sublist T ∧ (∀ a ∈ S, 0 < f a) ∧ ell ≤ mass f S ∧
-      ((∃ v ∈ T, ell ≤ f v ∧ S = [v]) ∨ mass f S ≤ 2 * ell - 2) := by
-  classical
-  by_cases hbig : ∃ v ∈ T, ell ≤ f v
-  · obtain ⟨v, hv, hve⟩ := hbig
-    refine ⟨[v], List.singleton_sublist.mpr hv, ?_, ?_, Or.inl ⟨v, hv, hve, rfl⟩⟩
-    · intro a ha
-      have : a = v := by simpa using ha
-      subst a
-      omega
-    · simpa [mass] using hve
-  · let Pos := T.filter (fun a => decide (0 < f a))
-    have hentry (a : α) (ha : a ∈ Pos) : 0 < f a ∧ f a ≤ ell - 1 := by
-      have hmem := List.mem_filter.mp ha
-      have hp : 0 < f a := of_decide_eq_true hmem.2
-      have hn : ¬ ell ≤ f a := fun h => hbig ⟨a, hmem.1, h⟩
-      exact ⟨hp, by omega⟩
-    have hne : Pos ≠ [] := by
-      intro he
-      change ell ≤ mass f Pos at hsupply
-      simp [he, mass] at hsupply
-      omega
-    obtain ⟨v, hv⟩ := List.exists_mem_of_ne_nil Pos hne
-    have hell2 : 0 ≤ ell - 2 := by have := hentry v hv; omega
-    obtain ⟨S, hS, hlo, hhi⟩ := PositiveSmallReturnExchange.first_crossing
-      f Pos (ell - 2) hell2 ell hell
-      (fun a ha => ⟨(hentry a ha).1, by have := (hentry a ha).2; omega⟩) hsupply
-    exact ⟨S, hS.trans (List.filter_sublist),
-      fun a ha => (hentry a (hS.subset ha)).1, hlo, Or.inr (by omega)⟩
-
-/-- The physical inventory supplies G,H,U balances before the strict energy
-comparison is used. Every insertion in this helper is LARGE. -/
-private theorem energy_cut {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
-    (W V I Ret : List (Fin k))
-    (hW : W.Nodup) (hI : I.Nodup) (hfresh : ∀ a ∈ I, a ∉ W)
-    (hRet : ∀ a ∈ Ret, a ∈ W) (hIL : ∀ a ∈ I, Large k t a)
-    (hperm : (V ++ Ret).Perm (W ++ I))
-    (hsV : InStrip (s k t) (C k) 0 V)
-    (hlarge : largeUsed k t I = largeUsed k t Ret)
-    (henergy : H k t I < H k t Ret) :
-    Inventory k t W V I Ret ∧ Legal k t V ∧
-      G k t V = G k t W ∧ H k t V < H k t W ∧ J k t V < J k t W := by
-  have inv := inventory_of_perm hk t W V I Ret hW hI hfresh hRet hIL hperm
-  have hg := inv.largeBalance
-  have he := inv.energyBalance
-  have hG : G k t V = G k t W := by omega
-  have hH : H k t V < H k t W := by omega
-  exact ⟨inv, legal_of_strip inv.nodup hsV, hG, hH,
-    Prod.Lex.toLex_lt_toLex.mpr (Or.inr ⟨hG,
-      Prod.Lex.toLex_lt_toLex.mpr (Or.inl hH)⟩)⟩
-
-/-- A retained actual subword in the upper pair corridor admits the fresh
-negative-positive native pair, returning at most one LARGE occurrence. -/
-private theorem upper_pair_cut {k : ℕ} (hk : 3 ≤ k) (t : ℕ) (p : Fin k)
-    (W K Ret : List (Fin k))
-    (hpositive : 0 < s k t p)
-    (hnlarge : Q k ≤ |s k t (hit k 1 p)|)
-    (hexpand : N k < 3 * |s k t p|)
-    (hW : W.Nodup) (hp : p ∉ W) (hn : hit k 1 p ∉ W)
-    (hpart : (K ++ Ret).Perm W) (hsK : InStrip (s k t) (C k) 0 K)
-    (hlo : |s k t (hit k 1 p)| ≤ mass (s k t) K)
-    (hhi : mass (s k t) K ≤ C k - (s k t p - |s k t (hit k 1 p)|))
-    (hreturn : largeUsed k t Ret ≤ 1) :
-    Legal k t (K ++ [hit k 1 p, p]) ∧
-      Inventory k t W (K ++ [hit k 1 p, p]) [hit k 1 p, p] Ret ∧
-      J k t (K ++ [hit k 1 p, p]) < J k t W := by
-  classical
-  let n := hit k 1 p
-  let D := |s k t n|
-  have geo := native_geometry hk t p hnlarge hexpand
-  have hnval : s k t n = -D := by
-    simpa [n, D, orient, show ¬ s k t p < 0 by omega] using geo.nValue
-  have hDP : D < s k t p := by simpa [D, n, abs_of_pos hpositive] using geo.strictOrder.1
-  have hb : 0 ≤ mass (s k t) K ∧ mass (s k t) K ≤ C k := by
-    simpa [mass] using inStrip_prefix hsK K.length
-  have hs : InStrip (s k t) (C k) 0 (K ++ [n, p]) := by
-    apply inStrip_append hsK
-    change 0 ≤ mass (s k t) K ∧ mass (s k t) K ≤ C k ∧
-      0 ≤ mass (s k t) K + s k t n ∧ mass (s k t) K + s k t n ≤ C k ∧
-      0 ≤ mass (s k t) K + s k t n + s k t p ∧
-      mass (s k t) K + s k t n + s k t p ≤ C k
-    rw [hnval]
-    change D ≤ mass (s k t) K at hlo
-    change mass (s k t) K ≤ C k - (s k t p - D) at hhi
-    omega
-  have hI : ([n, p] : List (Fin k)).Nodup := by
-    have hnp : n ≠ p := by intro he; have := congrArg (s k t) he; omega
-    simp [hnp]
-  have hfresh (a : Fin k) (ha : a ∈ [n, p]) : a ∉ W := by
-    simp only [List.mem_cons, List.mem_singleton] at ha
-    rcases ha with rfl | rfl
-    · exact hn
-    · exact hp
-  have hIL (a : Fin k) (ha : a ∈ [n, p]) : Large k t a := by
-    simp only [List.mem_cons, List.mem_singleton] at ha
-    rcases ha with rfl | rfl
-    · exact geo.nLarge
-    · exact geo.pLarge
-  have hperm : ((K ++ [n, p]) ++ Ret).Perm (W ++ [n, p]) := by
-    exact (List.perm_append_left K List.perm_append_comm).trans
-      (hpart.append_right [n, p])
-  have inv := inventory_of_perm hk t W (K ++ [n, p]) [n, p] Ret hW hI hfresh
-    (fun a ha => hpart.subset (List.mem_append_right K ha)) hIL hperm
-  have hbal := inv.largeBalance
-  have hi : largeUsed k t [n, p] = 2 := by
-    simp [largeUsed, mass, largeWeight, geo.pLarge, show Large k t n from geo.nLarge]
-  have hg : G k t (K ++ [n, p]) < G k t W := by omega
-  exact ⟨legal_of_strip inv.nodup hs, inv, Prod.Lex.toLex_lt_toLex.mpr (Or.inl hg)⟩
 
 end D5.S3.Combinatorics.Circle.TerminalSmallOwnership
