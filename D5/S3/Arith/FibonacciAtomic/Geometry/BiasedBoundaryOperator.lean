@@ -11,7 +11,7 @@ import Mathlib.Analysis.InnerProductSpace.LinearPMap
 import Mathlib.Analysis.InnerProductSpace.Positive
 import Mathlib.Analysis.InnerProductSpace.Spectrum
 import Mathlib.MeasureTheory.VectorMeasure.WithDensity
-import D5.S3.Quantum.Analysis.TraceClass.Spectral
+import D5.S3.Quantum.Analysis.CompactEigenbasis
 import Mathlib.Order.Prod.Lex.Basic
 import Mathlib.Order.SuccPred.LinearLocallyFinite
 import Mathlib.Order.Interval.Finset.Basic
@@ -629,7 +629,7 @@ private theorem covariance0_basis :
     ∃ (w : Set G0) (b : HilbertBasis w ℝ G0) (mu : w → ℝ),
       (∀ i, 0 < mu i) ∧ (∀ i, covariance0 (b i) = mu i • b i) := by
   obtain ⟨w,b,mu,he⟩ :=
-    TraceClassSpectral.exists_setIndex_real_eigenbasis_rclike
+    D5.S3.Quantum.Analysis.CompactEigenbasis.exists_setIndex_real_eigenbasis_rclike
       covariance0_compact covariance0_symmetric
   refine ⟨w,b,mu,?_,he⟩
   intro i
