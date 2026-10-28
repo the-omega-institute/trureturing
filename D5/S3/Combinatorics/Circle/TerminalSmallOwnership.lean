@@ -184,7 +184,7 @@ theorem actualSource_terminal_small_ownership_prefix
     let R := E.drop m
     have hsK : InStrip f (C k) 0 K := by
       exact (strip_split K R (by simpa [K, R, W, List.append_assoc,
-        List.take_append_drop] using strip_of_legal hW)).1
+        List.take_append_drop] using (strip_of_legal hW))).1
     have hgate : 0 ≤ q m - D ∧ q m - D ≤ C k := by
       have hq := hqbound m
       exact ⟨by omega, by omega⟩
@@ -546,12 +546,13 @@ theorem actualSource_terminal_small_ownership_transition
   have hDrel : D = 2 * B + 1 := by
     have hh := geo.firstEquation
     change D = N k - 2 * |f p| at hh
-    rw [abs_of_pos hpositive, hN] at hh
-    dsimp [B, P]
+    have hpabs : |f p| = P := abs_of_pos hpositive
+    rw [hpabs, hN] at hh
+    dsimp [B]
     rw [hC]
     omega
   have hdefs : P = D + d ∧ C k = D + B + d := by
-    dsimp [d, B]; omega
+    constructor <;> dsimp [d, B] <;> ring
   have hdpos : 0 < d := by dsimp [d]; omega
   have hBd : d ≤ B := by omega
   have hdQ : 2 * d ≤ Q k - 1 := by omega
@@ -566,7 +567,7 @@ theorem actualSource_terminal_small_ownership_transition
     simp [largeUsed_append, largeUsed_cons, hE0, largeWeight, hzL]
   have hsF : InStrip f (C k) 0 F :=
     (strip_split F ([z] ++ E) (by simpa [W, List.append_assoc] using
-      strip_of_legal hW)).1
+      (strip_of_legal hW))).1
   have huBounds : 0 ≤ u ∧ u ≤ C k := by
     simpa [u, mass] using inStrip_prefix hsF F.length
   have hqend : q E.length = mass f W := by simp [q, W]
@@ -593,21 +594,27 @@ theorem actualSource_terminal_small_ownership_transition
   have hineg : f i < 0 := lt_of_not_ge (fun h => hi (hown i his h))
   have hival : f i = -σ := by dsimp [σ]; omega
   have hspos : 0 < σ := by dsimp [σ]; omega
-  have hsQ : σ < Q k := by simpa [σ, abs_of_neg hineg] using his
+  have hsQ : σ < Q k := by
+    have his' : |f i| < Q k := his
+    rw [abs_of_neg hineg] at his'
+    exact his' 
   have hiSmall : ¬ Large k t i := not_le_of_gt his
   have hip : i ≠ p := by
     intro he
-    exact hiSmall (he ▸ hpL)
+    exact hiSmall (he.symm ▸ hpL)
   have hin : i ≠ n := by
     intro he
-    exact hiSmall (he ▸ hnL)
+    exact hiSmall (he.symm ▸ hnL)
   have hsEnd : mass f W < σ := by
     by_contra hnot
     have hle : σ ≤ mass f W := le_of_not_gt hnot
     have hsWi : InStrip f (C k) 0 (W ++ [i]) := by
-      apply inStrip_append (strip_of_legal hW)
+      have hsW : InStrip f (C k) 0 W := strip_of_legal hW
+      apply inStrip_append hsW
       simp only [InStrip, List.map_cons, List.map_nil, List.sum_cons,
         List.sum_nil, add_zero, zero_add]
+      change 0 ≤ mass f W ∧ mass f W ≤ C k ∧
+        0 ≤ mass f W + f i ∧ mass f W + f i ≤ C k
       rw [hival]
       exact ⟨hend0, by omega, by omega, by omega⟩
     have hnod : (W ++ [i]).Nodup := hW.1.append (by simp)
@@ -629,13 +636,16 @@ theorem actualSource_terminal_small_ownership_transition
     let R := E.drop m
     have hsplit : K ++ R = W := by simp [K, R, W, List.append_assoc]
     have hsK : InStrip f (C k) 0 K :=
-      (strip_split K R (by simpa [hsplit] using strip_of_legal hW)).1
+      (strip_split K R (by simpa [hsplit] using (strip_of_legal hW))).1
     have hKmass : mass f K = q m := rfl
     have hqm := hq m
     have hsV : InStrip f (C k) 0 (K ++ [i, p]) := by
       apply inStrip_append hsK
       simp only [InStrip, List.map_cons, List.map_nil, List.sum_cons,
         List.sum_nil, add_zero, zero_add]
+      change 0 ≤ mass f K ∧ mass f K ≤ C k ∧
+        0 ≤ mass f K + f i ∧ mass f K + f i ≤ C k ∧
+        0 ≤ mass f K + f i + f p ∧ mass f K + f i + f p ≤ C k
       rw [hKmass, hival]
       change 0 ≤ q m ∧ q m ≤ C k ∧ 0 ≤ q m - σ ∧ q m - σ ≤ C k ∧
         0 ≤ q m - σ + P ∧ q m - σ + P ≤ C k
@@ -644,7 +654,7 @@ theorem actualSource_terminal_small_ownership_transition
     have hfresh : ∀ x ∈ ([i, p] : List (Fin k)), x ∉ K ++ R := by
       intro x hx
       rw [hsplit]
-      simp only [List.mem_cons, List.mem_singleton] at hx
+      simp only [List.mem_cons, List.mem_singleton, List.not_mem_nil, or_false] at hx
       rcases hx with rfl | rfl
       · exact hi
       · exact hpunused
@@ -672,8 +682,9 @@ theorem actualSource_terminal_small_ownership_transition
       simp [hnp, hin.symm, hip]
     have hfresh : ∀ x ∈ ([n, i, p] : List (Fin k)), x ∉ F ++ ([z] ++ E) := by
       intro x hx
-      change x ∉ W
-      simp only [List.mem_cons, List.mem_singleton] at hx
+      have hsplit : F ++ ([z] ++ E) = W := by simp [W, List.append_assoc]
+      rw [hsplit]
+      simp only [List.mem_cons, List.mem_singleton, List.not_mem_nil, or_false] at hx
       rcases hx with rfl | rfl | rfl
       · exact hnunused
       · exact hi
@@ -683,14 +694,24 @@ theorem actualSource_terminal_small_ownership_transition
     have hS2 : largeUsed k t [n, i, p] = 2 := by
       simp [largeUsed, mass, largeWeight, hnL, hiSmall, hpL]
     rw [hS2, hR1] at hbal
-    change G k t (F ++ [n, i, p]) + 2 = G k t W + 1 at hbal
+    have hsplit : F ++ ([z] ++ E) = W := by simp [W, List.append_assoc]
+    rw [hsplit] at hbal
     exact hstrict _ (legal_of_strip hVnod hsV) (by omega)
   have hstep (m : ℕ) : f (hit k (m + 1) i) =
       doubleStep (N k) (f (hit k m i)) := by
-    simpa only [f, s, hit_phase (by omega : 0 < k)] using phase_step hk t i m
+    have hh := (ZeroSumSubsets.source_cycle (by omega : 0 < k) t).2.2 (hit k m i)
+    change 2 * f (hit k m i) - f (finRotate k (hit k m i)) = N k *
+      (if N k < 4 * f (hit k m i) then 1 else
+        if 4 * f (hit k m i) < -N k then -1 else 0) at hh
+    have hnext : hit k (m + 1) i = finRotate k (hit k m i) := by
+      simp only [hit, Function.iterate_succ_apply']
+    rw [← hnext] at hh
+    unfold doubleStep
+    split_ifs at * <;> omega
   have hjval : f (hit k 1 i) = -(2 * σ) := by
     have hh := hstep 0
-    simp only [hit_zero, hival] at hh
+    change f (hit k 1 i) = doubleStep (N k) (f i) at hh
+    rw [hival] at hh
     rw [doubleStep, if_neg (by omega), if_neg (by omega)] at hh
     omega
   have hjL : Q k ≤ -f (hit k 1 i) := by rw [hjval]; omega
@@ -726,8 +747,9 @@ theorem actualSource_terminal_small_ownership_transition
       have hS : ([j, p] : List (Fin k)).Nodup := by simp [hjp]
       have hfresh : ∀ x ∈ ([j, p] : List (Fin k)), x ∉ F ++ ([z] ++ E) := by
         intro x hx
-        change x ∉ W
-        simp only [List.mem_cons, List.mem_singleton] at hx
+        have hsplit : F ++ ([z] ++ E) = W := by simp [W, List.append_assoc]
+        rw [hsplit]
+        simp only [List.mem_cons, List.mem_singleton, List.not_mem_nil, or_false] at hx
         rcases hx with rfl | rfl
         · exact hjfresh
         · exact hpunused
@@ -736,10 +758,12 @@ theorem actualSource_terminal_small_ownership_transition
       have hS2 : largeUsed k t [j, p] = 2 := by
         simp [largeUsed, mass, largeWeight, hjlarge, hpL]
       rw [hS2, hR1] at hbal
-      change G k t (F ++ [j, p]) + 2 = G k t W + 1 at hbal
+      have hsplit : F ++ ([z] ++ E) = W := by simp [W, List.append_assoc]
+      rw [hsplit] at hbal
       exact hstrict _ (legal_of_strip hVnod hsV) (by omega)
     have hlambda : f (hit k 2 i) = N k - 4 * σ := by
       have hh := hstep 1
+      change f (hit k 2 i) = doubleStep (N k) (f (hit k 1 i)) at hh
       rw [hjval, doubleStep, if_neg (by omega), if_pos (by omega)] at hh
       omega
     have hlpos : 0 < f (hit k 2 i) := by rw [hlambda]; omega
