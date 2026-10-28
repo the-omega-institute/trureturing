@@ -93,7 +93,10 @@ internal sealed class DiagonalCorrelanceNormalizationRefutationDocument : IScrib
                         + "Their difference is 2492325801/781250000000, which is strictly positive, a contradiction. "
                         + "Thus the proposed bound fails already for seven qubits. "
                         + "This does not determine the actual maximum over diagonal states."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hedemann-2020-diagonal-correlance-normalization"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ReductionProductFormula()
     {
