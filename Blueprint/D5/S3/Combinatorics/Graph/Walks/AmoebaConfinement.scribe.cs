@@ -69,7 +69,7 @@ internal sealed class AmoebaConfinementDocument : IScribeDocumentDefinition
     private static Formula Some(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessOrEqual, b);
+    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula And(Formula a, Formula b) => Logic(a, FormulaLogicOperator.And, b);
     private static Formula Imp(Formula a, Formula b) => Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Iff(Formula a, Formula b) => Logic(a, FormulaLogicOperator.Iff, b);
@@ -86,18 +86,21 @@ internal sealed class AmoebaConfinementDocument : IScribeDocumentDefinition
     private static Formula HostCopy(Formula body) => Base(All("G", Call("Host"),
         All("c", Copy(Id("H"), Graph(Id("G"))), body)));
 
-    private static Formula ExtensionFormula() => Disp(Base(
-        All("W", Call("Type"), All("G", Call("SimpleGraph", Id("W")),
-        All("c", Copy(Id("H"), Id("G")), Iff(Ext(Id("c")),
-            Some("e", Copy(Call("extensionGraph", Id("H"), Id("m"), Id("l")), Id("G")),
-                All("v", Id("V"), Eq(Call("e", Call("inl", Id("v"))), Call("c", Id("v"))))))))));
-    private static Formula GrowthFormula() => Disp(HostCopy(
-        All("S", Call("Host"), All("i", Copy(Graph(Id("G")), Graph(Id("S"))),
-            Iff(Call("MinimumGrowth", Id("m"), Id("l"), Id("c"), Id("i")),
-                And(Ext(Call("comp", Id("i"), Id("c"))),
-                    All("R", Call("Host"), All("j", Copy(Graph(Id("G")), Graph(Id("R"))),
-                        Imp(Ext(Call("comp", Id("j"), Id("c"))),
-                            Le(Call("edgeCount", Id("S")), Call("edgeCount", Id("R")))))))))));
+    private static Formula ExtensionFormula()
+    {
+        var agreement = All("v", Id("V"), Eq(Call("e", Call("inl", Id("v"))), Call("c", Id("v"))));
+        var extension = Some("e", Copy(Call("extensionGraph", Id("H"), Id("m"), Id("l")), Id("G")), agreement);
+        return Disp(Base(All("W", Call("Type"), All("G", Call("SimpleGraph", Id("W")),
+            All("c", Copy(Id("H"), Id("G")), Iff(Ext(Id("c")), extension))))));
+    }
+    private static Formula GrowthFormula()
+    {
+        var minimum = All("R", Call("Host"), All("j", Copy(Graph(Id("G")), Graph(Id("R"))),
+            Imp(Ext(Call("comp", Id("j"), Id("c"))), Le(Call("edgeCount", Id("S")), Call("edgeCount", Id("R"))))));
+        var law = Iff(Call("MinimumGrowth", Id("m"), Id("l"), Id("c"), Id("i")),
+            And(Ext(Call("comp", Id("i"), Id("c"))), minimum));
+        return Disp(HostCopy(All("S", Call("Host"), All("i", Copy(Graph(Id("G")), Graph(Id("S"))), law))));
+    }
     private static Formula DeadFormula() => Disp(HostCopy(Iff(Call("Dead", Id("m"), Id("l"), Id("c")),
         All("S", Call("Host"), All("i", Copy(Graph(Id("G")), Graph(Id("S"))),
             Imp(Call("MinimumGrowth", Id("m"), Id("l"), Id("c"), Id("i")), Call("Coincides", Id("i"))))))));
@@ -107,11 +110,15 @@ internal sealed class AmoebaConfinementDocument : IScribeDocumentDefinition
                 Call("Confining", Id("H"), Id("m"), Id("l"), Id("S")))))))));
     private static Formula DeadBridgeFormula() => Disp(HostCopy(
         Imp(Ext(Id("c")), Call("Dead", Id("m"), Id("l"), Id("c")))));
-    private static Formula SafeDegreeFormula() => Disp(All("V", Call("Type"),
-        Seq(OpenBracket, Call("Fintype", Id("V")), CloseBracket, Sp,
-        All("d", Seq(Id("V"), Sp, To, Sp, Nat), All("m", Seq(Id("V"), Sp, To, Sp, Nat),
-            Some("q", Nat, And(Le(D(2), Id("q")), And(Le(Id("q"),
-                Seq(Call("sum", Id("m")), Sp, Plus, Sp, D(2))),
-                    All("v", Id("V"), Imp(Le(Call("d", Id("v")), Id("q")),
-                        Le(Seq(Call("d", Id("v")), Sp, Plus, Sp, Call("m", Id("v"))), Id("q")))))))))));
+    private static Formula SafeDegreeFormula()
+    {
+        var capacity = All("v", Id("V"), Imp(Le(Call("d", Id("v")), Id("q")),
+            Le(Seq(Call("d", Id("v")), Sp, Plus, Sp, Call("m", Id("v"))), Id("q"))));
+        var bounds = And(Le(D(2), Id("q")),
+            And(Le(Id("q"), Seq(Call("sum", Id("m")), Sp, Plus, Sp, D(2))), capacity));
+        var degree = All("d", Seq(Id("V"), Sp, To, Sp, Nat),
+            All("m", Seq(Id("V"), Sp, To, Sp, Nat), Some("q", Nat, bounds)));
+        return Disp(All("V", Call("Type"),
+            Seq(OpenBracket, Call("Fintype", Id("V")), CloseBracket, Sp, degree)));
+    }
 }
