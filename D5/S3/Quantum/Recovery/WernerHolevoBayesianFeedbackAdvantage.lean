@@ -53,13 +53,13 @@ private def basisVector (i : Fin 3) : Fin 3 → ℂ := fun j => if j = i then 1 
 private def canonicalKraus (i : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=
   ((Real.sqrt 2)⁻¹ : ℂ) • crossProduct (basisVector i)
 
-private def omega : ℂ := (-1 + Complex.I * Real.sqrt 3) / 2
+private def rotationVector (j : Fin 3) : Fin 3 → ℂ :=
+  if j.val = 0 then ![((2 : ℂ) / 3), (2 : ℂ) / 3, (-1 : ℂ) / 3]
+  else if j.val = 1 then ![((-1 : ℂ) / 3), (2 : ℂ) / 3, (2 : ℂ) / 3]
+  else ![((2 : ℂ) / 3), (-1 : ℂ) / 3, (2 : ℂ) / 3]
 
-private def fourierVector (j : Fin 3) : Fin 3 → ℂ := fun i =>
-  ((Real.sqrt 3)⁻¹ : ℂ) * omega ^ (j.val * i.val)
-
-private def fourierKraus (j : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=
-  ((Real.sqrt 2)⁻¹ : ℂ) • crossProduct (fourierVector j)
+private def rotationKraus (j : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=
+  ((Real.sqrt 2)⁻¹ : ℂ) • crossProduct (rotationVector j)
 
 private theorem kraus_classification {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
     (hK : IsKrausDecomposition K) :
@@ -93,10 +93,27 @@ private theorem canonical_is_kraus : IsKrausDecomposition canonicalKraus := by
       Matrix.trace, Fin.sum_univ_succ] <;>
     simp only [← mul_assoc, ← pow_two, hs] <;> ring
 
-private theorem fourier_is_kraus : IsKrausDecomposition fourierKraus := by
-  sorry
+private theorem rotation_is_kraus : IsKrausDecomposition rotationKraus := by
+  have hs : ((Real.sqrt 2 : ℂ)⁻¹) ^ 2 = (1 / 2 : ℂ) := by
+    have hn : ((Real.sqrt 2 : ℂ)) ≠ 0 := by norm_num
+    field_simp [hn]
+    norm_num [pow_two, Complex.ext_iff, Complex.mul_re, Complex.mul_im,
+      Complex.ofReal_re, Complex.ofReal_im, Real.sq_sqrt]
+  have h2 : (starRingEnd ℂ) (2 : ℂ) = 2 := by
+    rw [← Complex.star_def]
+    norm_num
+  have h3 : (starRingEnd ℂ) (3 : ℂ) = 3 := by
+    rw [← Complex.star_def]
+    norm_num
+  intro X
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [rotationKraus, rotationVector, crossProduct, whChannel,
+      Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.transpose_apply,
+      Matrix.trace, Fin.sum_univ_succ, Complex.conj_ofReal, h2, h3] <;>
+    simp only [← mul_assoc, ← pow_two, hs] <;> ring
 
-private theorem bayesian_witness : 1 / 2 < bayesFidelity canonicalKraus fourierKraus := by
+private theorem bayesian_witness : 1 / 2 < bayesFidelity canonicalKraus rotationKraus := by
   sorry
 
 /-- For the unital Matrix (Fin 3) (Fin 3) ℂ Werner--Holevo channel, every Markovian value is at most
@@ -113,7 +130,7 @@ theorem result :
   constructor
   · intro m₁ m₂ K₁ K₂ h₁ h₂
     exact markov_bound K₁ K₂ h₁ h₂
-  · exact ⟨canonicalKraus, fourierKraus, canonical_is_kraus, fourier_is_kraus,
+  · exact ⟨canonicalKraus, rotationKraus, canonical_is_kraus, rotation_is_kraus,
       bayesian_witness⟩
 
 end D5.S3.Quantum.Recovery.WernerHolevoBayesianFeedbackAdvantage
