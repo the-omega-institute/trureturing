@@ -60,11 +60,13 @@ $$\forall K \in \operatorname{Set}\left(\operatorname{Finset}\left(V\right)\righ
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HereditaryFlip/Majority.majority_closed_iff_flag` (`✓ std3`). ∎
 
-*Citation.* Kassahun H Betre; Yan X Zhang; Carter Edmond (2024). *Pure Simplicial and Clique Complexes with a Fixed Number of Facets*. DOI: [10.48550/arXiv.2411.12945](https://doi.org/10.48550/arXiv.2411.12945). URL: <https://arxiv.org/html/2411.12945v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Sandi Klavzar (2013). *Structure of Fibonacci cubes: a survey*. DOI: [10.1007/s10878-011-9433-z](https://doi.org/10.1007/s10878-011-9433-z). URL: <https://users.fmf.uni-lj.si/klavzar/preprints/FibonacciCubesRevised.pdf>.
 
 *Commentary.*
 
-For a hereditary K, majority closure and flagness are equivalent. In a majority, every subset of size at most two is contained in a common supporting input: two subsets of the three input positions, each of size at least two, intersect. Heredity makes that small subset legal, and flagness makes the majority legal. Conversely, use strong induction on a support S satisfying all small constraints. The case of size at most two is immediate. Otherwise choose three distinct vertices a,b,c. The three erased supports are smaller, satisfy the same local constraints and belong to K inductively. Their majority is S. Heredity alone does not guarantee majority closure: the three edges of a triangle belong to its boundary, while their majority is the missing triangle. The finite version is classical; the statement here permits arbitrary ambient types and absent vertices.
+For a hereditary K, majority closure and flagness are equivalent. In a majority, every subset of size at most two is contained in a common supporting input: two subsets of the three input positions, each of size at least two, intersect. Heredity makes that small subset legal, and flagness makes the majority legal. Conversely, use strong induction on a support S satisfying all small constraints. The case of size at most two is immediate. Otherwise choose three distinct vertices a,b,c. The three erased supports are smaller, satisfy the same local constraints and belong to K inductively. Their majority is S. Heredity alone does not guarantee majority closure: the three edges of a triangle belong to its boundary, while their majority is the missing triangle. The finite version is classical: Kassahun H Betre, Yan X Zhang and Carter Edmond, Pure Simplicial and Clique Complexes with a Fixed Number of Facets (2024), Theorem 3.1, https://arxiv.org/html/2411.12945v1, DOI 10.48550/arXiv.2411.12945. The statement here permits arbitrary ambient types and absent vertices. The acknowledged Klavzar survey supplies the Fibonacci-cube context; the literature note distinguishes these sources.
 
 **Theorem 1.6 (Least majority-closed extension).**
 

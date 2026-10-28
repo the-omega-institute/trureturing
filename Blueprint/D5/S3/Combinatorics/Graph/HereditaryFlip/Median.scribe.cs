@@ -6,7 +6,7 @@ internal sealed class MedianDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/HereditaryFlip/Median.";
     private static readonly LibraryNoteRef Classical =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/betre2024pure");
+        LibraryNoteRef.Create("D5/L/GraphInvariants/klavzar2013structure");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Native metric medians in hereditary finite-support flip graphs are coordinate "
@@ -59,8 +59,11 @@ internal sealed class MedianDocument : IScribeDocumentDefinition
                     + "An absent singleton remains absent, so no ghost vertices are added. "
                     + "The empty family is flag but its empty graph fails connectedness; the "
                     + "family consisting only of the empty face gives a one-vertex median graph. "
-                    + "The finite complex characterization is classical, as in Xie and Xu, "
-                    + "Characterizing simplex graphs, Theorem 1.5.", DescribeRole.Theorem),
+                    + "The finite complex characterization is classical, as in Yan-Ting Xie "
+                    + "and Shou-Jun Xu, Characterizing simplex graphs (2025), Theorem 1.5, "
+                    + "https://arxiv.org/abs/2503.17160v1. The acknowledged Klavzar survey "
+                    + "supplies the Fibonacci-cube context; the literature note "
+                    + "also records the earlier Betre, Zhang and Edmond facet criterion.", DescribeRole.Theorem),
             Paragraph(Text("For any simple graph H on V, take K to consist of its finite "
                 + "independent sets, using Mathlib's H.IsIndepSet on the underlying sets. "
                 + "Independence is hereditary and the empty set is independent. If all pairs "

@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/HereditaryFlip/Median.IsMedian`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Kassahun H Betre; Yan X Zhang; Carter Edmond (2024). *Pure Simplicial and Clique Complexes with a Fixed Number of Facets*. DOI: [10.48550/arXiv.2411.12945](https://doi.org/10.48550/arXiv.2411.12945). URL: <https://arxiv.org/html/2411.12945v1>.
+*Acknowledgement.* Sandi Klavzar (2013). *Structure of Fibonacci cubes: a survey*. DOI: [10.1007/s10878-011-9433-z](https://doi.org/10.1007/s10878-011-9433-z). URL: <https://users.fmf.uni-lj.si/klavzar/preprints/FibonacciCubesRevised.pdf>.
 
 *Commentary.*
 
@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/HereditaryFlip/Median.IsMedianGraph`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Kassahun H Betre; Yan X Zhang; Carter Edmond (2024). *Pure Simplicial and Clique Complexes with a Fixed Number of Facets*. DOI: [10.48550/arXiv.2411.12945](https://doi.org/10.48550/arXiv.2411.12945). URL: <https://arxiv.org/html/2411.12945v1>.
+*Acknowledgement.* Sandi Klavzar (2013). *Structure of Fibonacci cubes: a survey*. DOI: [10.1007/s10878-011-9433-z](https://doi.org/10.1007/s10878-011-9433-z). URL: <https://users.fmf.uni-lj.si/klavzar/preprints/FibonacciCubesRevised.pdf>.
 
 *Commentary.*
 
@@ -42,7 +42,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/HereditaryFlip/Median.is_median_iff`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Kassahun H Betre; Yan X Zhang; Carter Edmond (2024). *Pure Simplicial and Clique Complexes with a Fixed Number of Facets*. DOI: [10.48550/arXiv.2411.12945](https://doi.org/10.48550/arXiv.2411.12945). URL: <https://arxiv.org/html/2411.12945v1>.
+*Acknowledgement.* Sandi Klavzar (2013). *Structure of Fibonacci cubes: a survey*. DOI: [10.1007/s10878-011-9433-z](https://doi.org/10.1007/s10878-011-9433-z). URL: <https://users.fmf.uni-lj.si/klavzar/preprints/FibonacciCubesRevised.pdf>.
 
 *Commentary.*
 
@@ -56,11 +56,11 @@ Lean statement: `D5/S3/Combinatorics/Graph/HereditaryFlip/Median.median_graph_if
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Kassahun H Betre; Yan X Zhang; Carter Edmond (2024). *Pure Simplicial and Clique Complexes with a Fixed Number of Facets*. DOI: [10.48550/arXiv.2411.12945](https://doi.org/10.48550/arXiv.2411.12945). URL: <https://arxiv.org/html/2411.12945v1>.
+*Acknowledgement.* Sandi Klavzar (2013). *Structure of Fibonacci cubes: a survey*. DOI: [10.1007/s10878-011-9433-z](https://doi.org/10.1007/s10878-011-9433-z). URL: <https://users.fmf.uni-lj.si/klavzar/preprints/FibonacciCubesRevised.pdf>.
 
 *Commentary.*
 
-For every hereditary K, IsMedianGraph (flipGraph K) is equivalent to the conjunction of empty-set membership in K and Flag K. Here Flag K says that every finite support S whose subsets of cardinality at most two belong to K also belongs to K. Empty and singleton subsets are included in this test. Starting from a median graph, a vertex supplies the empty face by heredity. The reconstructed support of each median proves majority closure; the majority/flag equivalence then proves flagness. Starting from empty-set membership and flagness, the graph is connected by deletion and insertion walks. Majority closure supplies the legal majority vertex for each triple, and reconstruction proves it is the unique median. No maximal-face or ambient-finiteness hypothesis is used. An absent singleton remains absent, so no ghost vertices are added. The empty family is flag but its empty graph fails connectedness; the family consisting only of the empty face gives a one-vertex median graph. The finite complex characterization is classical, as in Xie and Xu, Characterizing simplex graphs, Theorem 1.5.
+For every hereditary K, IsMedianGraph (flipGraph K) is equivalent to the conjunction of empty-set membership in K and Flag K. Here Flag K says that every finite support S whose subsets of cardinality at most two belong to K also belongs to K. Empty and singleton subsets are included in this test. Starting from a median graph, a vertex supplies the empty face by heredity. The reconstructed support of each median proves majority closure; the majority/flag equivalence then proves flagness. Starting from empty-set membership and flagness, the graph is connected by deletion and insertion walks. Majority closure supplies the legal majority vertex for each triple, and reconstruction proves it is the unique median. No maximal-face or ambient-finiteness hypothesis is used. An absent singleton remains absent, so no ghost vertices are added. The empty family is flag but its empty graph fails connectedness; the family consisting only of the empty face gives a one-vertex median graph. The finite complex characterization is classical, as in Yan-Ting Xie and Shou-Jun Xu, Characterizing simplex graphs (2025), Theorem 1.5, https://arxiv.org/abs/2503.17160v1. The acknowledged Klavzar survey supplies the Fibonacci-cube context; the literature note also records the earlier Betre, Zhang and Edmond facet criterion.
 
 For any simple graph H on V, take K to consist of its finite independent sets, using Mathlib's H.IsIndepSet on the underlying sets. Independence is hereditary and the empty set is independent. If all pairs inside a support S are independent, no two distinct elements of S are adjacent in H, so S is independent. This verifies Flag K and applies median_graph_iff_flag to its one-coordinate flip graph. Its native median is the coordinate majority, and Metric.dist_eq gives distance equal to the size of the symmetric difference.
 

@@ -8,7 +8,7 @@ internal sealed class MajorityDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/HereditaryFlip/Majority.";
     private static readonly LibraryNoteRef Classical =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/betre2024pure");
+        LibraryNoteRef.Create("D5/L/GraphInvariants/klavzar2013structure");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Hereditary families of finite supports are majority closed exactly when all empty, "
@@ -60,7 +60,12 @@ internal sealed class MajorityDocument : IScribeDocumentDefinition
                 + "constraints and belong to K inductively. Their majority is S. Heredity alone "
                 + "does not guarantee majority closure: the three edges of a triangle belong to "
                 + "its boundary, while their majority is the missing triangle. The finite version "
-                + "is classical; the statement here permits arbitrary ambient types and absent vertices.",
+                + "is classical: Kassahun H Betre, Yan X Zhang and Carter Edmond, Pure Simplicial "
+                + "and Clique Complexes with a Fixed Number of Facets (2024), Theorem 3.1, "
+                + "https://arxiv.org/html/2411.12945v1, DOI 10.48550/arXiv.2411.12945. "
+                + "The statement here permits arbitrary ambient types and absent vertices. "
+                + "The acknowledged Klavzar survey supplies the Fibonacci-cube context; "
+                + "the literature note distinguishes these sources.",
                 DescribeRole.Theorem, true),
             Node("least-completion", "Least majority-closed extension", "pair_closure_is_least",
                 All("K", Families(), Imp(Call("IsLowerSet", Id("K")),
@@ -80,7 +85,7 @@ internal sealed class MajorityDocument : IScribeDocumentDefinition
         string prose, DescribeRole role, bool classical) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), classical
-                ? AssessedProvenance.FromLiterature(Classical) : AssessedProvenance.FromRepo(),
+                ? AssessedProvenance.FromRepo(Classical) : AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
     private static Formula Id(string name) => F.Id(name);
     private static Formula Supports() => Call("Finset", Id("V"));
