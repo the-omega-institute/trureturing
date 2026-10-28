@@ -91,7 +91,9 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨evidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
+  readout := some (realize signature
+    (fun _ q v => @decide (Satisfies q.2.2.1 q.2.2.2 v) (Classical.propDecidable _))
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -110,4 +112,5 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+end
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeGuardedFreeExtension

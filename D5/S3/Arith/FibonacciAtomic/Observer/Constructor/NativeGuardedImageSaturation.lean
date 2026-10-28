@@ -38,13 +38,13 @@ private theorem image_coinduction (k : Nat) (R : CompletionTree → Prop)
     · exact ⟨.inl true, h⟩
     · refine ⟨.inl false, ?_⟩
       rw [h]
-      exact (by simpa only [atomic, Function.iterate_succ_apply, rho_alpha])
+      simp only [atomic, Function.iterate_succ_apply, rho_alpha]
     · exact ⟨.inr (⟨U, hU⟩, ⟨V, hV⟩), h⟩
   let pick (q : Q) := Classical.choose (split q)
   have sound (q : Q) := Classical.choose_spec (split q)
   let coalgebra (q : Q) : completionFunctor Q := match pick q with
     | .inl b => ⟨.inl b, Empty.elim⟩
-    | .inr (u, v) => ⟨.inr (), fun b => if b then v else u⟩
+    | .inr (u, v) => ⟨.inr (), fun b : Bool => if b then v else u⟩
   let pre (q : Q) : CompletionTree := PFunctor.M.corec coalgebra q
   have unfold_pre (q : Q) : pre q = match pick q with
       | .inl b => leaf b
@@ -53,17 +53,31 @@ private theorem image_coinduction (k : Nat) (R : CompletionTree → Prop)
     rw [PFunctor.M.corec_def]
     cases h : pick q with
     | inl b =>
-      simp only [coalgebra, h, PFunctor.map, leaf, Function.comp_def]
+      have cq : coalgebra q = ⟨.inl b, Empty.elim⟩ := by
+        change (show completionFunctor Q from match pick q with
+          | .inl b => ⟨.inl b, Empty.elim⟩
+          | .inr (u, v) => ⟨.inr (), fun b : Bool => if b then v else u⟩) = _
+        rw [h]
+      rw [cq]
+      simp only [PFunctor.map, leaf, Function.comp_def]
       apply congrArg PFunctor.M.mk
-      apply Sigma.ext rfl
+      simp only [PFunctor.Obj.mk, PFunctor.Obj.fst, PFunctor.Obj.snd]
+      refine Sigma.ext (by rfl) ?_
       apply heq_of_eq
       funext e
       exact e.elim
     | inr pair =>
       rcases pair with ⟨u, v⟩
-      simp only [coalgebra, h, PFunctor.map, Function.comp_def]
+      have cq : coalgebra q = ⟨.inr (), fun b : Bool => if b then v else u⟩ := by
+        change (show completionFunctor Q from match pick q with
+          | .inl b => ⟨.inl b, Empty.elim⟩
+          | .inr (u, v) => ⟨.inr (), fun b : Bool => if b then v else u⟩) = _
+        rw [h]
+      rw [cq]
+      simp only [PFunctor.map, Function.comp_def]
       apply congrArg PFunctor.M.mk
-      apply Sigma.ext rfl
+      simp only [PFunctor.Obj.mk, PFunctor.Obj.fst, PFunctor.Obj.snd]
+      refine Sigma.ext (by rfl) ?_
       apply heq_of_eq
       funext b
       cases b <;> rfl
@@ -165,8 +179,16 @@ private theorem replacement_filters {k m : Nat} (S : System k m) (p : Fin k → 
       · exact Or.inr (Or.inl ((atoms (.pair A B) (t + 1) (by omega) h).trans h))
       · have sides := node_inj eq
         refine Or.inr (Or.inr ⟨evaluate p w A, evaluate p w B, rfl, ?_, ?_⟩)
-        · exact Or.inr ⟨A, rfl, sides.1.symm ▸ hU⟩
-        · exact Or.inr ⟨B, rfl, sides.2.symm ▸ hV⟩
+        · refine Or.inr ⟨A, rfl, ?_⟩
+          change NativeImage t
+            (CompletionPositiveDriftRegion.value (tokenKind k) (tokenRank p) v A)
+          rw [sides.1]
+          exact hU
+        · refine Or.inr ⟨B, rfl, ?_⟩
+          change NativeImage t
+            (CompletionPositiveDriftRegion.value (tokenKind k) (tokenRank p) v B)
+          rw [sides.2]
+          exact hV
     have analyze : ∀ E : Expression k m, NativeImage t (evaluate p v E) →
         evaluate p w E = atomic t ∨ evaluate p w E = atomic (t + 1) ∨
         ∃ U V, evaluate p w E = node U V ∧ R U ∧ R V := by
@@ -278,7 +300,6 @@ theorem normalized_saturation {k m : Nat} (S : System k m) (p : Fin k → Nat)
         · cases h
           exact Nat.le_max_left _ _
         · exact (ih E t h).trans (Nat.le_max_right _ _)
-
     intro E t ht
     exact replacement_filters S p guarded _ v _ sat law.1 free small t
       (all_bounds filters E t ht) E (pass E t ht)
