@@ -220,7 +220,7 @@ private theorem kernel_rank (A : Fin 4 → Mat) (N : Mat)
   have hdim : Module.finrank ℝ Mat = 4 := by
     calc
       Module.finrank ℝ Mat = Fintype.card (Fin 2) * Fintype.card (Fin 2) *
-          Module.finrank ℝ ℝ := Module.finrank_matrix (Fin 2) (Fin 2)
+          Module.finrank ℝ ℝ := Module.finrank_matrix (R := ℝ) (M := ℝ) (Fin 2) (Fin 2)
       _ = 4 := by norm_num
   omega
 
@@ -624,7 +624,7 @@ private theorem levels_converse (w : Fin 3 → List Bool) (N : Mat)
   have hfour : Module.finrank ℝ Mat = 4 := by
     calc
       Module.finrank ℝ Mat = Fintype.card (Fin 2) * Fintype.card (Fin 2) *
-          Module.finrank ℝ ℝ := Module.finrank_matrix (Fin 2) (Fin 2)
+          Module.finrank ℝ ℝ := Module.finrank_matrix (R := ℝ) (M := ℝ) (Fin 2) (Fin 2)
       _ = 4 := by norm_num
   have hkerdim : Module.finrank ℝ (LinearMap.ker (prefixMap (endpoint w))) = 1 := by omega
   have hkspan := eq_span_singleton_of_mem_of_finrank_eq_one hkerdim hker hn
