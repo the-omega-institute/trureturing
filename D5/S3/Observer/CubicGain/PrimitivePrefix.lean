@@ -243,10 +243,6 @@ private def traceAugment {R : Type*} [Ring R]
     (B : Matrix (Fin 3) (Fin 4) R) : Matrix (Fin 4) (Fin 4) R :=
   Fin.cases ![1,0,0,1] B
 
-@[simp] private theorem traceAugment_zero {R : Type*} [Ring R]
-    (B : Matrix (Fin 3) (Fin 4) R) (j : Fin 4) :
-    traceAugment B 0 j = (![1,0,0,1] : Fin 4 → R) j := rfl
-
 private theorem traceAugment_det (A : Fin 4 → Mat) (N : Mat)
     (hN : OrientedKernel A N) (ht : 0 < Matrix.trace N) :
     (traceAugment (coefficients A)).det ≠ 0 := by
@@ -284,7 +280,7 @@ private theorem trace_cofactor (B : Matrix (Fin 3) (Fin 4) ℤ) :
   rw [Matrix.det_succ_row_zero]
   have hsub (j : Fin 4) :
       (traceAugment B).submatrix Fin.succ j.succAbove = B.submatrix id j.succAbove := rfl
-  simp only [hsub,traceAugment_zero]
+  simp only [hsub,traceAugment]
   norm_num [D5.S3.Arith.Lattices.CofactorKernel.cofactor,Fin.sum_univ_succ]
 
 private theorem integer_oriented_kernel (w : Fin 3 → List Bool)
