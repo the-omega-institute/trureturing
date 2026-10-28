@@ -48,6 +48,10 @@ $$\forall (T: \mathbb{N} \to \left(\mathbb{N} \to \mathbb{N}\right)), \forall (P
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/KurkovA107667WeightedBallot.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kur107667-ballot` (proved) by `D5/S1/Recurrence/Algebraic/KurkovA107667WeightedBallot.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kur107667-ballot","declaration_gid":"D5/S1/Recurrence/Algebraic/KurkovA107667WeightedBallot.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna; Mikhail Kurkov (2026). *OEIS A107667: Kurkov's weighted-ballot formula for Hanna's triangular matrix*. URL: <https://oeis.org/history/view?seq=A107667&v=25>.

@@ -55,7 +55,10 @@ internal sealed class KurkovA107667WeightedBallotDocument : IScribeDocumentDefin
                 + "the three recurrence rules; strong induction on the row-column "
                 + "difference then identifies the diagonal values with T. The proof "
                 + "does not construct a separate bijection between path sets.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kur107667-ballot"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string name, string title, Formula formula, string prose,
