@@ -4,12 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Quantitative PNT gives absolute error-tail integrability and weighted prime convergence. -/
+   digest: Absolute Chebyshev error tails and original weighted prime limits. -/
 
 import D5.S3.Weil.PrimeNumberTheorem.MediumPNT
 import D5.S3.Weil.Mertens.Estimates
 import D5.S3.Weil.Mertens.CompleteChebyshevTailIdentity
 import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+
+/-! Quantitative PNT controls the actual Chebyshev tail and original weighted sums. -/
 
 namespace D5.S3.Weil.Mertens.WeightedPrimeLimit
 
@@ -46,7 +48,9 @@ theorem chebyshev_error_kernel_integrable :
     refine ((hlog.mono_set (Ioi_subset_Ioi (by linarith : (1 : ℝ) ≤ B))).const_mul D).mono'
       hmeas.aestronglyMeasurable ?_
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
-    have hu0 : 0 < u := by linarith [hu]
+    have hu0 : 0 < u := by
+      have huB : B < u := hu
+      linarith
     have hub : A ≤ u := (le_max_left A 2).trans hu.le
     have hp : |Chebyshev.psi u - u| ≤
         D * (u * Real.exp (-c * (Real.log u) ^ ((1 : ℝ) / 10))) := by
@@ -83,7 +87,7 @@ private lemma relative_chebyshev_error_tendsto :
       atTop (𝓝 0) :=
     Real.tendsto_exp_atBot.comp
       (Filter.Tendsto.const_mul_atTop_of_neg (by linarith : -c < 0)
-        ((Real.tendsto_rpow_atTop (by norm_num : (0 : ℝ) < 1 / 10)).comp
+        ((tendsto_rpow_atTop (by norm_num : (0 : ℝ) < 1 / 10)).comp
           Real.tendsto_log_atTop))
   have hmul := hO.mul (isBigO_refl (fun x : ℝ => x⁻¹) atTop)
   have hright : Tendsto
@@ -125,8 +129,9 @@ theorem exists_E₁p_limit :
     convert ArithmeticFunction.vonMangoldt.summable_residueClass_non_primes_div
       (0 : ZMod 1) using 1
     funext n
+    have hn0 : (n : ZMod 1) = 0 := Subsingleton.elim _ _
     by_cases hn : n.Prime <;>
-      simp [f, hn, ArithmeticFunction.vonMangoldt.residueClass]
+      simp [f, hn, ArithmeticFunction.vonMangoldt.residueClass, Set.indicator, hn0]
   have hprefix : Tendsto
       (fun x : ℝ => ∑ n ∈ Finset.range (⌊x⌋₊ + 1), f n)
       atTop (𝓝 (∑' n, f n)) :=
@@ -137,7 +142,7 @@ theorem exists_E₁p_limit :
       atTop (𝓝 (∑' n, f n)) := by
     refine hprefix.congr (fun x => ?_)
     rw [_root_.Mertens.E₁Λ.sub_E₁p_eq_sum_nonprime,
-      Finset.range_succ_eq_Icc_zero,
+      Nat.range_succ_eq_Icc_zero,
       ← Finset.add_sum_Ioc_eq_sum_Icc (Nat.zero_le ⌊x⌋₊)]
     simp [f]
   refine ⟨-Real.eulerMascheroniConstant - ∑' n, f n, ?_⟩
