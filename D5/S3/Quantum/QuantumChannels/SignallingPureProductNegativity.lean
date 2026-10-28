@@ -312,9 +312,26 @@ private theorem pdm_reduction (p : QuantumChannel (α₁ × β₁) (α₂ × β�
   congr 1
   rw [add_comm]
   congr 1
-  all_goals
-    simp only [Finset.mul_sum, Finset.sum_mul]
+  · simp only [Finset.mul_sum, Finset.sum_mul]
     conv_lhs =>
+      rw [Finset.sum_comm]
+      arg 2; ext t
+      arg 2; ext i
+      rw [Finset.sum_comm]
+    conv_rhs =>
+      rw [Finset.sum_comm]
+      arg 2; ext t
+      rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro t _
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    apply Finset.sum_congr rfl
+    intro z _
+    ring
+  · conv_lhs =>
       rw [Finset.sum_comm]
       arg 2; ext t
       rw [Finset.sum_comm]
