@@ -512,7 +512,7 @@ private theorem cylindrical_dot (rho z theta phi : ℝ) :
   ring
 
 private theorem cylindrical_mem_sector (rho z theta beta : ℝ)
-    (hr : 0 ≤ rho) (hb : 0 < beta) (hbpi : beta < Real.pi)
+    (hr : 0 ≤ rho) (hbpi : beta < Real.pi)
     (htheta : theta ∈ Icc 0 beta) :
     cylindricalPoint rho z theta ∈ sector beta := by
   have hs : 0 ≤ Real.sinh rho := Real.sinh_nonneg_iff.mpr hr
@@ -565,7 +565,7 @@ private theorem strict_wall_crossing
     intro he
     rw [he] at hwallP
     linarith
-  obtain ⟨gamma, hiso, hzero, hend, hgamma, hbetween⟩ :=
+  obtain ⟨gamma, _, _, _, hgamma, hbetween⟩ :=
     D5.S3.Geometry.Hyperideal.LengthGramMetricSegments.hyperbolic_segment P Q hpq
   let D := dist P Q
   have hD : 0 < D := dist_pos.mpr hpq
@@ -696,26 +696,25 @@ private theorem short_angle_forward_run {I : Type*}
     (hrp : 0 < rp) (hrq : 0 < rq)
     (htp : tp ∈ Icc 0 (alpha i))
     (htq : tq ∈ Icc 0 (alpha (next^[m] i)))
-    (hspan0 : 0 ≤ runWidth next alpha i m + tq - tp)
     (hspanpi : runWidth next alpha i m + tq - tp < Real.pi) :
     (sectorDatum next alpha ha hapi).Chain
       ⟨i, ⟨cylindricalPoint rp z tp,
-        cylindrical_mem_sector rp z tp (alpha i) hrp.le (ha i) (hapi i) htp⟩⟩
+        cylindrical_mem_sector rp z tp (alpha i) hrp.le (hapi i) htp⟩⟩
       ⟨next^[m] i, ⟨cylindricalPoint rq w tq,
         cylindrical_mem_sector rq w tq (alpha (next^[m] i))
-          hrq.le (ha _) (hapi _) htq⟩⟩
+          hrq.le (hapi _) htq⟩⟩
       (ENNReal.ofReal (dist (cylindricalPoint rp z tp)
         (cylindricalPoint rq w (runWidth next alpha i m + tq)))) := by
   induction m generalizing i rp z tp rq w tq with
   | zero =>
       let p : sector (alpha i) :=
         ⟨cylindricalPoint rp z tp,
-          cylindrical_mem_sector rp z tp (alpha i) hrp.le (ha i) (hapi i) htp⟩
+          cylindrical_mem_sector rp z tp (alpha i) hrp.le (hapi i) htp⟩
       have hq : tq ∈ Icc 0 (alpha i) := by
         simpa only [Function.iterate_zero_apply] using htq
       let q : sector (alpha i) :=
         ⟨cylindricalPoint rq w tq,
-          cylindrical_mem_sector rq w tq (alpha i) hrq.le (ha i) (hapi i) hq⟩
+          cylindrical_mem_sector rq w tq (alpha i) hrq.le (hapi i) hq⟩
       have hpaid :=
         D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.move (G := sectorDatum next alpha ha hapi) (a := ⟨i, p⟩) p q
           (D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.nil
@@ -732,10 +731,10 @@ private theorem short_angle_forward_run {I : Type*}
         simpa only [j, Function.iterate_succ_apply] using htq
       let p : sector (alpha i) :=
         ⟨cylindricalPoint rp z tp,
-          cylindrical_mem_sector rp z tp (alpha i) hrp.le (ha i) (hapi i) htp⟩
+          cylindrical_mem_sector rp z tp (alpha i) hrp.le (hapi i) htp⟩
       let q : sector (alpha j) :=
         ⟨cylindricalPoint rq w tq,
-          cylindrical_mem_sector rq w tq (alpha j) hrq.le (ha j) (hapi j) hq⟩
+          cylindrical_mem_sector rq w tq (alpha j) hrq.le (hapi j) hq⟩
       let Q := cylindricalPoint rq w T
       have hV : 0 ≤ V := runWidth_nonneg next alpha ha (next i) m
       have hTbeta : beta ≤ T := by dsimp only [T]; linarith [hq.1]
@@ -783,7 +782,7 @@ private theorem short_angle_forward_run {I : Type*}
       obtain ⟨r, s, hr, hsplit⟩ := hcross
       let R : G.dom i :=
         ⟨⟨cylindricalPoint r s beta,
-          cylindrical_mem_sector r s beta beta hr.le (ha i) (hapi i)
+          cylindrical_mem_sector r s beta beta hr.le (hapi i)
             ⟨(ha i).le, le_rfl⟩⟩,
           by
             change Real.cos beta * lift (cylindricalPoint r s beta) 1 -
@@ -801,18 +800,17 @@ private theorem short_angle_forward_run {I : Type*}
       have hisoR : (G.iso i R).val =
           (⟨cylindricalPoint r s 0,
             cylindrical_mem_sector r s 0 (alpha (next i)) hr.le
-              (ha (next i)) (hapi (next i)) ⟨le_rfl, (ha (next i)).le⟩⟩ :
+              (hapi (next i)) ⟨le_rfl, (ha (next i)).le⟩⟩ :
                 sector (alpha (next i))) := by
         apply Subtype.ext
         change turn (-beta) (cylindricalPoint r s beta) = cylindricalPoint r s 0
         exact hrotateR
-      have htail0 : 0 ≤ V + tq - 0 := by linarith [hq.1]
       have htailpi : V + tq - 0 < Real.pi := by
         dsimp only [T] at hshort
         linarith
       have htail := ih (i := next i) (rp := r) (z := s) (tp := 0)
         (rq := rq) (w := w) (tq := tq) hr hrq
-        ⟨le_rfl, (ha (next i)).le⟩ hq htail0 htailpi
+        ⟨le_rfl, (ha (next i)).le⟩ hq htailpi
       have htailActual : G.Chain
           ⟨next i, (G.iso i R).val⟩ ⟨j, q⟩
           (ENNReal.ofReal (dist (cylindricalPoint r s 0)
@@ -1471,14 +1469,10 @@ private theorem short_forward_attaining {n : ℕ} (alpha : Fin (n + 1) → ℝ)
     change angularCoordinate q.2.val ∈ Icc 0 (alpha (cyclicTag p.1 m))
     rw [htag]
     exact sector_angle (alpha q.1) (ha q.1) q.2
-  have hspan := forwardSpan_nonneg alpha ha p.1 q.1
-    (angularCoordinate p.2.val) (angularCoordinate q.2.val)
-    (sector_angle (alpha p.1) (ha p.1) p.2) (sector_angle (alpha q.1) (ha q.1) q.2)
   have h := short_angle_forward_run (finRotate (n + 1)) alpha ha hapi m p.1
     (radialCoordinate p.2.val) (axialCoordinate p.2.val) (angularCoordinate p.2.val)
     (radialCoordinate q.2.val) (axialCoordinate q.2.val) (angularCoordinate q.2.val)
     hp hq (sector_angle (alpha p.1) (ha p.1) p.2) hqangle
-    (by simpa only [hwp, forwardSpan, m] using hspan)
     (by simpa only [hwp, forwardSpan, m] using hshort)
   have hd : dist
       (cylindricalPoint (radialCoordinate p.2.val) (axialCoordinate p.2.val)
@@ -1502,7 +1496,20 @@ private theorem short_forward_attaining {n : ℕ} (alpha : Fin (n + 1) → ℝ)
   rw [hd] at h
   change (cyclicDatum alpha ha hapi).Chain
     ⟨p.1, _⟩ ⟨cyclicTag p.1 m, _⟩ _ at h
-  rw [show cyclicTag p.1 m = q.1 from htag] at h
+  -- Transport the whole tagged endpoint so its membership proof follows the tag.
+  have hendpoint {i j : Fin (n + 1)}
+      (x : sector (alpha i)) (y : sector (alpha j))
+      (hij : i = j) (hxy : x.val = y.val) :
+      (⟨i, x⟩ : Sigma (fun k => sector (alpha k))) = ⟨j, y⟩ := by
+    subst j
+    exact congrArg (Sigma.mk i) (Subtype.ext hxy)
+  have htarget := hendpoint
+    (⟨cylindricalPoint (radialCoordinate q.2.val) (axialCoordinate q.2.val)
+        (angularCoordinate q.2.val),
+      cylindrical_mem_sector _ _ _ _ hq.le (hapi _) hqangle⟩ :
+        sector (alpha (cyclicTag p.1 m)))
+    q.2 htag (cylindrical_reconstruct q.2.val)
+  rw [htarget] at h
   simpa only [cylindrical_reconstruct] using h
 
 /-- Every pair of actual numbered cyclic-sector representatives has an original
