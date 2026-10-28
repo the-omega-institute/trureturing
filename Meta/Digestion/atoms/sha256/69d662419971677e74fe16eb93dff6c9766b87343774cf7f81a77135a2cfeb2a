@@ -1,0 +1,33 @@
+**条件性量子旁支（来源和 PSD 接口固定）。** 当前树没有
+`Blueprint/D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.md`。
+可引用的历史来源是 [固定修订
+9f20f4efdb4c90cc1e07fa7e481ffc0dc86234c3](https://github.com/the-omega-institute/trureturing/blob/9f20f4efdb4c90cc1e07fa7e481ffc0dc86234c3/Blueprint/D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.md)，
+其中的 `SCPTP`、`IsQSC`、`extensions`、`induced` 和 $e$ 采用该来源的
+复数 Choi 矩阵、规定的部分迹和复数矩阵秩。固定
+$d_1=r_1=d_2=r_2=2$，该快照给出的特定族为
+
+$$
+F_s(X)=\frac X2+\frac{I_2\otimes\operatorname{Tr}_A X}{8}
++\frac{\operatorname{Tr}(X)I_4}{16}
++\frac{s\operatorname{Tr}((Z\otimes I_2)X)(Z\otimes I_2)}{32},
+\qquad Z=\operatorname{diag}(1,-1),\quad -1\le s\le1.
+$$
+
+令 $S_s=\operatorname{choiEquiv}^{-1}\circ F_s\circ\operatorname{choiEquiv}$
+为相应全映射空间上的映射，令 $\Gamma$ 为 $S_0$ 在
+$\operatorname{SCPTP}(2,2)$ 上的限制所得的那个 QSC。仅对这个 $\Gamma$
+及该快照的接口，来源的条件性结论是
+
+$$
+\forall S\in\operatorname{extensions}(\Gamma),\quad e(S)=4;
+\qquad S_0=\tfrac12(S_{-1}+S_1),\quad S_{-1}\ne S_1,
+\quad S_{-1},S_0,S_1\in\operatorname{extensions}(\Gamma).
+$$
+
+因此 $s=0$ 的全空间扩展在该扩展集中是非极值的最小秩扩展。
+这段历史来源在当前树上未取得现行 Lean 绑定，故在本节标为
+`ASSUMED-UNVERIFIED`、只作 source-scoped corollary；它不推出任意 PSD
+模型、任意 $\Gamma$、任意维数或任意 Choi/部分迹约定下的普遍结论，
+更不推出唯一的最小秩扩展。改变来源、PSD 锥、秩定义或接口时，必须重新
+给出精确来源和证明。
+

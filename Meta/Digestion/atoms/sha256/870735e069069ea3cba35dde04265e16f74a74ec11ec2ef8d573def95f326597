@@ -1,0 +1,37 @@
+**Proposition 85.3 (sufficient alternatives and their exact tasks).**
+No completion/protection is needed for U4 current prediction alone. For
+invertible $T$, or entrances restricted to a known linear $X$ with
+$X\cap\ker T=0$, the unchanged U4 endpoint already retains that entrance;
+an adequate finite germ supplies the separate current Boundary inverse.
+For singular $T$ the existing archive condition (77.15) solves the augmented
+Space-plus-$Dx$ task, at rank at least $d$, with no added plant call. It
+does not solve the stipulated bare-current Space task by removing its archive.
+
+Full forward return is another paid sufficient alternative after acquisition:
+choose $N$ independent terminal Krylov columns $K_c=[T^{j_i}e_{\ell_i}]$,
+put $h=\max j_i\le N-b$, and solve
+$K_cc=x-T^hz$. At epochs $h-j_i$ actually inject the corresponding $c_i$,
+including zero operands, with $h$ Ticks and $h+1$ Holds. Induction gives
+$T^hz+K_cc=x$ at the final cut. This uses $N$ additional Adds, no new Read,
+and the solve/width/retention bill. It is the existing forcing/forward-control
+method with earned weighted parameters, not a new restoration theorem.
+Another singular Tick may erase its returned kernel directions.
+
+Even passive retention need not require births in a larger post-acquisition
+coding/control class. Choose nonzero rational $v\in\operatorname{im}T$,
+encode $x$ into an integer $q$, and use that same forward-control method to
+prepare $qv$. Such $v$ exists because the positive-edge tree has $T\ne0$.
+For each known $t$, $T^tv\ne0$: the image of a symmetric matrix intersects
+its kernel trivially. The current $qT^tv$ therefore recovers $q$ from a
+nonzero coordinate and hence $x$. Code width, control, phase, solves and all
+copies are paid. This comparison establishes no universal birth necessity
+outside Corollary 83.3's class.
+
+The affine held run keeps original material/prefix but uses acquired
+entry-dependent controls and has only the handoff/selected-use historical
+charts. The protective run changes material before learning and has every
+counted passive chart, with a larger subsequent assay. Archives, full return
+and packing have still other simultaneous coordinates. No total dominance,
+global optimum or universal alpha/beta minimum follows from any of these
+comparisons. $\square$
+

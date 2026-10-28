@@ -4,7 +4,19 @@
 
 Uniform moment concentration for signed two-scale exponential families, including coefficient cancellation.
 
-**Theorem 1.1 (Uniform moments relative to the same source mass).**
+**Theorem 1.1 (Every polynomial moment of a decreasing exponential).**
+
+$$\forall r \in \mathbb {R},\; \left(0 < r\right) \Rightarrow \left(\forall k \in \mathbb {N},\; \operatorname {MeasureTheory.IntegrableOn}\left(t: \mathbb {R}\mapsto \left(t\right)^{k} \cdot \operatorname {Real.exp}\left(-\left(r \cdot t\right)\right), \operatorname {Set.Ioi}\left(0\right)\right) \land \operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}, \operatorname {Set.Ioi}\left(0\right)\right), t: \mathbb {R}\mapsto \left(t\right)^{k} \cdot \operatorname {Real.exp}\left(-\left(r \cdot t\right)\right)\right) = \frac{\operatorname {Nat.factorial}\left(k\right)}{\left(r\right)^{k + 1}}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ExponentialSum/TwoScaleEndpointMoments.exponential_moment` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive real rate r and natural order k, the polynomially weighted exponential is integrable on the positive ray and its integral equals k! divided by r to the power k+1. The Gamma integral gives both assertions. The exact formula supplies the moments of each exponential term in the two-scale family.
+
+**Theorem 1.2 (Uniform moments relative to the same source mass).**
 
 Lean statement: `D5/S3/Analytic/ExponentialSum/TwoScaleEndpointMoments.two_scale_endpoint_moment_bound`
 
@@ -22,4 +34,5 @@ Nonzero coefficients therefore give positive mass. At a fixed positive endpoint,
 
 ## References
 
+- Truth anchor: `D5/S3/Analytic/ExponentialSum/TwoScaleEndpointMoments.exponential_moment`
 - Truth anchor: `D5/S3/Analytic/ExponentialSum/TwoScaleEndpointMoments.two_scale_endpoint_moment_bound`

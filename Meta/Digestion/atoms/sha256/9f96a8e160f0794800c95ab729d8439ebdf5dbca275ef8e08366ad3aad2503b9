@@ -1,0 +1,15 @@
+**Construction 97.1 (the all-native current image).**
+Return to any earned $u$ of Definition 94.1, including singular $A$.
+Choose $L=b$ for odd $b$ and $L=b+1$ for even $b$. Actually execute
+one Tick;Hold and call its field $z=Ax$. Put
+
+$$
+V_+=\operatorname{im}_{\mathbb Q}A,\qquad M=LN.
+\tag{97.1}
+$$
+
+Then execute the $N$ cycles from $z$. This primer intentionally
+forgets $\ker A$. It is not necessary for the odd scan's current-only
+endpoint decoder in Theorem 94.3. It supplies the invariant domain
+needed for the historical inverse and feedback consumer below.
+
