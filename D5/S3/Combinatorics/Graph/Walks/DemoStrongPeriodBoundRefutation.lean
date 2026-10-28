@@ -10,7 +10,6 @@ import Mathlib.Combinatorics.SimpleGraph.Metric
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Nat.Find
 import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Omega
 
 set_option autoImplicit false
 
@@ -40,7 +39,7 @@ def claim : Prop :=
   ∀ (V : Type) [Fintype V] (G : SimpleGraph V), G.Connected →
     (strongPeriod G : ℤ) ≤ (Fintype.card V : ℤ) - 3
 
-/-- The connected singleton has first positive isomorphism return one. -/
+/-- The complete universal bound fails at the connected singleton. -/
 theorem result : ¬ claim := by
   classical
   intro hclaim
@@ -59,7 +58,7 @@ theorem result : ¬ claim := by
     rw [strongPeriod, dif_pos hexists]
     have hpositive := (Nat.find_spec hexists).1
     have hupper := Nat.find_min' hexists hreturn
-    omega
+    exact Nat.le_antisymm hupper (Nat.succ_le_of_lt hpositive)
   have hbound := hclaim Unit G SimpleGraph.Connected.of_subsingleton
   rw [hperiod] at hbound
   norm_num at hbound
