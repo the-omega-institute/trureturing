@@ -215,4 +215,3 @@ theorem result : ¬ claim := by
     simp [f, intervalMean, intervalCombination, Fin.sum_univ_succ] <;> ring
 
 end BarczyPalesJensenConverse
-
