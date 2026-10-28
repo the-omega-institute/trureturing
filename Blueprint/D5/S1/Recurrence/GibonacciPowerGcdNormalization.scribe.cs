@@ -68,8 +68,8 @@ internal sealed class GibonacciPowerGcdNormalizationDocument : IScribeDocumentDe
         Seq(Forall, Sp, V(v), Colon, Sp, type, Comma, Sp, body);
     private static Formula Eqn(Formula x, Formula y) => Seq(x, Sp, Eq, Sp, y);
     private static Formula LeqTo(Formula x, Formula y) => Seq(x, Sp, Leq, Sp, y);
-    private static Formula Add(Formula x, Formula y) => new Formula.Binary(FormulaBinaryOperator.Add, x, y);
-    private static Formula Mul(Formula x, Formula y) => new Formula.Binary(FormulaBinaryOperator.Multiply, x, y);
+    private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
+    private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
     private static Formula Pow(Formula x, Formula y) => new Formula.Power(x, y);
     private static Formula Divides(Formula x, Formula y) => Seq(x, Sp, Mid, Sp, y);
     private static Formula If(Formula x, Formula y) => Seq(Par(x), Sp, Rightarrow, Sp, Par(y));
@@ -96,10 +96,13 @@ internal sealed class GibonacciPowerGcdNormalizationDocument : IScribeDocumentDe
             Seq(OpenBrace, Op("natAbs", Op("f", V("t"))), Sp, Mid, Sp,
                 V("t"), InMacro, N, CloseBrace))))));
 
-    private static Formula PowerFormula() => Disp(SeedBind(For("k", N, For("e", N,
-        Eqn(C(V("a"), V("b"), V("k"), V("e")),
-            Op("familyGcd", Seq(Open, V("t"), Colon, N, Close, Sp, Mapsto, Sp,
-                W(V("a"), V("b"), V("k"), V("e"), V("t"))))))));
+    private static Formula PowerFormula()
+    {
+        Formula family = Seq(Open, V("t"), Colon, N, Close, Sp, Mapsto, Sp,
+            W(V("a"), V("b"), V("k"), V("e"), V("t")));
+        Formula equality = Eqn(C(V("a"), V("b"), V("k"), V("e")), Op("familyGcd", family));
+        return Disp(SeedBind(For("k", N, For("e", N, equality))));
+    }
 
     private static Formula Recurrence(Formula a, Formula b) => And(
         Eqn(G(a, b, D(0)), a), Eqn(G(a, b, D(1)), b),
