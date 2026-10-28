@@ -12,7 +12,7 @@ import D5.S3.Observer.CubicGain.LiteralLeadingCertificates
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxRecDepth 30000
+set_option maxRecDepth 150000
 set_option maxHeartbeats 4000000
 noncomputable section
 
@@ -41,9 +41,19 @@ def literalSylvester (k : Fin 2) : Matrix (Fin 30) (Fin 30) (Polynomial ℤ) :=
 def actualResultant (k : Fin 2) : Polynomial ℤ := (literalSylvester k).det
 
 private theorem source_r_degree (i : Fin 3) : (sourcePolynomial i).natDegree ≤ 15 := by
-  fin_cases i <;>
-    simp only [sourcePolynomial,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val] <;>
-    simp only [sourceE0,sourceE1,sourceE2] <;> compute_degree
+  fin_cases i
+  · change (sourceE0 (X : Polynomial ℤ)).natDegree ≤ 15
+    unfold sourceE0
+    simp only [← C_pow,← C_mul]
+    compute_degree!
+  · change (sourceE1 (X : Polynomial ℤ)).natDegree ≤ 15
+    unfold sourceE1
+    simp only [← C_pow,← C_mul]
+    compute_degree!
+  · change (sourceE2 (X : Polynomial ℤ)).natDegree ≤ 15
+    unfold sourceE2
+    simp only [← C_pow,← C_mul]
+    compute_degree!
 
 private theorem source_coefficient_weight (i : Fin 3) (j : ℕ)
     (hj : (sourcePolynomial i).coeff j ≠ 0) :
@@ -54,8 +64,8 @@ private theorem source_coefficient_weight (i : Fin 3) (j : ℕ)
   have hb : ((sourcePolynomial i).coeff j).natDegree ≤ 17-j := by
     fin_cases i <;> interval_cases j <;>
       simp only [sourcePolynomial,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val,
-        sourceE0,sourceE1,sourceE2,coeff_add,coeff_C_mul_X_pow] <;>
-      norm_num <;> compute_degree
+        sourceE0,sourceE1,sourceE2,← C_pow,← C_mul,coeff_add,coeff_C_mul_X_pow,coeff_C,coeff_X] <;>
+      norm_num [← C_pow,← C_mul,coeff_mul_X_pow,coeff_C,coeff_X_pow,coeff_X] <;> compute_degree!
   omega
 
 private theorem shifted_coefficient_weight (i : Fin 3) (s c : ℕ)
@@ -151,7 +161,7 @@ private theorem weighted_top_coeff {n : Type*} [Fintype n] [DecidableEq n]
   have hl : N.det.coeff (Fintype.card n*K) = M.det.coeff B := by
     rw [hd,← hsum,add_comm _ B,coeff_X_pow_mul]
   rw [hl] at hc
-  rw [minor_c_bridge]
+  rw [hc]
   congr 1
   ext i j
   change (X^(K-alpha i)*(X^(gamma j)*M i j)).coeff K = _
@@ -173,9 +183,11 @@ private theorem sylvester_entry_weight (k : Fin 2) (i j : Fin 30)
     (literalSylvester k i j).natDegree+(29-j.val) ≤ sylvesterWeight i := by
   unfold literalSylvester sylvesterRow at h ⊢
   unfold sylvesterWeight
-  split_ifs with hi
-  · exact shifted_coefficient_weight 0 (14-i.val) (29-j.val) h
-  · exact shifted_coefficient_weight k.succ (29-i.val) (29-j.val) h
+  by_cases hi : i.val < 15
+  · simp only [ite_eq_left hi] at h ⊢
+    exact shifted_coefficient_weight 0 (14-i.val) (29-j.val) h
+  · simp only [ite_eq_right hi] at h ⊢
+    exact shifted_coefficient_weight k.succ (29-i.val) (29-j.val) h
 
 /-- The actual fixed Sylvester determinants have parameter degree at most 285. -/
 theorem literal_resultant_degree_bound (k : Fin 2) :
@@ -201,23 +213,26 @@ private theorem minor_entry_weight (constant : Bool) (i j : Fin 28)
   unfold minorMatrix minorRow at h ⊢
   unfold minorWeight
   by_cases hi : i.val < 14
-  · simp only [if_pos hi] at h ⊢
+  · simp only [ite_eq_left hi] at h ⊢
     exact shifted_coefficient_weight 0 (13-i.val) _ h
-  · simp only [if_neg hi] at h ⊢
+  · simp only [ite_eq_right hi] at h ⊢
     exact shifted_coefficient_weight 1 (27-i.val) _ h
 
 private theorem minor_a_bridge : actualMinorA0 = (minorMatrix false).det := by
-  change Matrix.det (fun i j : Fin 28 => if h : j.val < 27 then
-    (minorRow i).coeff (28-j.val) else (minorRow i).coeff 1) = _
+  unfold actualMinorA0
   congr 1
   ext i j
-  by_cases hj : j.val < 27 <;> simp [minorMatrix,hj]
+  by_cases hi : i.val < 14 <;> by_cases hj : j.val < 27 <;>
+    simp [fixedMinorRCoeff,literalMatrixCoeff,literalRowCoeff,sourceE0Coeff,
+      sourceE1Coeff,minorMatrix,minorRow,sourcePolynomial,hi,hj]
+
 private theorem minor_c_bridge : actualMinorC0 = (minorMatrix true).det := by
-  change Matrix.det (fun i j : Fin 28 => if h : j.val < 27 then
-    (minorRow i).coeff (28-j.val) else (minorRow i).coeff 0) = _
+  unfold actualMinorC0
   congr 1
   ext i j
-  by_cases hj : j.val < 27 <;> simp [minorMatrix,hj]
+  by_cases hi : i.val < 14 <;> by_cases hj : j.val < 27 <;>
+    simp [fixedMinorCCoeff,literalMatrixCoeff,literalRowCoeff,sourceE0Coeff,
+      sourceE1Coeff,minorMatrix,minorRow,sourcePolynomial,hi,hj]
 
 /-- The original r-column minor has degree at most 252 and the constant-column minor at most 253. -/
 theorem literal_minor_degree_bounds :
@@ -241,7 +256,7 @@ private theorem source_top_coeff (i : Fin 3) (j : Fin 16) :
     ((sourcePolynomial i).coeff j.val).coeff (17-j.val) = topCoefficients i j := by
   fin_cases i <;> fin_cases j <;>
     norm_num [sourcePolynomial,sourceE0,sourceE1,sourceE2,topCoefficients,
-      coeff_add,coeff_C_mul_X_pow]
+      ← C_pow,← C_mul,coeff_add,coeff_C_mul_X_pow,coeff_C,coeff_X]
 
 private def topEntry (i : Fin 3) (s c : ℕ) : ℤ :=
   if s ≤ c then if h : c-s < 16 then topCoefficients i ⟨c-s,h⟩ else 0 else 0
@@ -251,13 +266,13 @@ private theorem shifted_top_coeff (i : Fin 3) (s c : ℕ) :
       topEntry i s c := by
   rw [coeff_X_pow_mul']
   by_cases hs : s ≤ c
-  · simp only [if_pos hs,topEntry]
+  · simp only [ite_eq_left hs,topEntry]
     by_cases hj : c-s < 16
-    · rw [dif_pos hj,if_pos (show c ≤ 17+s by omega)]
+    · rw [dite_eq_left hj,ite_eq_left (show c ≤ 17+s by omega)]
       have he : 17+s-c = 17-(c-s) := by omega
       rw [he]
       exact source_top_coeff i ⟨c-s,hj⟩
-    · rw [dif_neg hj]
+    · rw [dite_eq_right hj]
       have hz : (sourcePolynomial i).coeff (c-s) = 0 :=
         coeff_eq_zero_of_natDegree_lt ((source_r_degree i).trans_lt (by omega))
       simp [hz]
@@ -274,9 +289,9 @@ private theorem sylvester_top_bridge (k : Fin 2) :
   ext i j
   unfold literalSylvester sylvesterRow sylvesterWeight sylvesterTop
   by_cases hi : i.val < 15
-  · simp only [if_pos hi]
+  · simp only [ite_eq_left hi]
     exact shifted_top_coeff 0 (14-i.val) (29-j.val)
-  · simp only [if_neg hi]
+  · simp only [ite_eq_right hi]
     exact shifted_top_coeff k.succ (29-i.val) (29-j.val)
 
 private theorem sylvester_top_data (k : Fin 2) :
@@ -288,12 +303,15 @@ private theorem resultant_top_nonzero (k : Fin 2) :
   have h := weighted_top_coeff (literalSylvester k) sylvesterWeight
     (fun j => 29-j.val) 285 31 (by decide +kernel) (by decide +kernel)
     (sylvester_entry_weight k)
-  rw [sylvester_top_bridge,sylvester_top_data] at h
-  change (actualResultant k).coeff 285 = _ at h
-  rw [h]
-  fin_cases k
-  · exact leading_determinants_ne_zero.1
-  · exact leading_determinants_ne_zero.2.1
+  have he := congrArg Matrix.det (sylvester_top_bridge k)
+  have hd := congrArg Matrix.det (sylvester_top_data k)
+  have hc : (actualResultant k).coeff 285 = (![topR1,topR2] k).det :=
+    h.trans (he.trans hd)
+  have hn : (![topR1,topR2] k).det ≠ 0 := by
+    fin_cases k
+    · exact leading_determinants_ne_zero.1
+    · exact leading_determinants_ne_zero.2.1
+  exact fun hz => hn (hc.symm.trans hz)
 
 private def minorTop (constant : Bool) : Matrix (Fin 28) (Fin 28) ℤ :=
   fun i j => topEntry (if i.val < 14 then 0 else 1)
@@ -308,9 +326,9 @@ private theorem minor_top_bridge (constant : Bool) :
   ext i j
   unfold minorMatrix minorRow minorWeight minorTop
   by_cases hi : i.val < 14
-  · simp only [if_pos hi]
+  · simp only [ite_eq_left hi]
     exact shifted_top_coeff 0 (13-i.val) _
-  · simp only [if_neg hi]
+  · simp only [ite_eq_right hi]
     exact shifted_top_coeff 1 (27-i.val) _
 
 private theorem minor_top_data (constant : Bool) :
