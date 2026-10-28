@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Fibers.OriginalReferenceKraus
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 
+/-! Tensor amplification and trace-norm integrals retain the same reference. -/
 noncomputable section
 open scoped ComplexOrder InnerProductSpace TensorProduct BigOperators Matrix
 open TraceClassFiniteBlocks MeasureTheory Set
@@ -45,14 +46,15 @@ private theorem leg_scalar_integrable (L : Leg) (i : Fin 5) :
   have hr : Measurable (fun t => L.jumpRate t i) :=
     hh.sub (measurable_deriv _)
   have hsc : ContinuousOn L.survival (Icc 0 L.duration) := by
-    have hi := (L.hazard_cont).intervalIntegrable_of_Icc L.duration_pos.le
+    have hi : IntervalIntegrable L.hazard volume 0 L.duration :=
+      (L.hazard_cont).intervalIntegrable_of_Icc L.duration_pos.le
     have hc := (intervalIntegral.continuousOn_primitive_interval' hi
       (left_mem_uIcc : (0:ℝ) ∈ uIcc 0 L.duration)).neg.exp
     simpa only [uIcc_of_le L.duration_pos.le, Leg.survival] using hc
   have hm : AEStronglyMeasurable (fun t => L.density t i)
       (volume.restrict (Ioc 0 L.duration)) := by
     exact ((hr.aestronglyMeasurable.mul
-      (hsc.mono Ioc_subset_Icc_self).aestronglyMeasurable measurableSet_Ioc).mul
+      ((hsc.mono Ioc_subset_Icc_self).aestronglyMeasurable measurableSet_Ioc)).mul
         hp.aestronglyMeasurable)
   have hn : 0 ≤ᵐ[volume.restrict (Ioc 0 L.duration)] (fun t => L.density t i) := by
     filter_upwards [ae_restrict_mem measurableSet_Ioc] with t ht
@@ -70,7 +72,7 @@ private theorem leg_scalar_integrable (L : Leg) (i : Fin 5) :
     exact le_trans (Finset.single_le_sum (fun j _ => zero_le _) (Finset.mem_univ i))
       (le_add_of_nonneg_left (zero_le _))
   haveI := hprob
-  have hf : L.modeMeasure i univ ≠ ∞ := ne_top_of_le_ne_top (by simp) hmode
+  have hf : L.modeMeasure i univ ≠ ⊤ := ne_top_of_le_ne_top (by simp) hmode
   simpa only [Leg.modeMeasure, withDensity_apply _ MeasurableSet.univ,
     Measure.restrict_univ] using hf
 
