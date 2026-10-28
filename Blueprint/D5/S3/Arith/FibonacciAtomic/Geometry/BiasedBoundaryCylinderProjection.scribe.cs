@@ -50,6 +50,11 @@ internal sealed class BiasedBoundaryCylinderProjectionDocument : IScribeDocument
     private static Formula Par(Formula x) => Seq(Open, x, Close);
     private static Formula All(string s, Formula t, Formula x) => Seq(Forall, Sp, V(s), Colon, Sp, t, Comma, Sp, Par(x));
 
+    private static Formula Val(Formula x) => Call("val",x);
+    private static Formula Partition(Formula a) => Seq(
+        Call("IsPrefixFree",Call("addresses",a)),Land,Sp,
+        All("omega",Call("Omega"),Seq(Exists,Sp,V("p"),Colon,Sp,Call("Edge"),Comma,Sp,
+            Par(Seq(V("p"),InMacro,Sp,a,Land,Sp,V("omega"),InMacro,Sp,Call("cylinder",Val(V("p"))))))));
     private static Formula SqNorm(Formula x) => Seq(Par(Seq(Vert, Sp,x,Vert)),Caret,Grp(D(2)));
     private static Formula SumA(Formula x) => Seq(Sum,Underscore,Grp(Seq(V("p"),InMacro, Sp,V("A"))),Sp,Par(x));
     private static Formula ResidualFormula()
@@ -57,31 +62,31 @@ internal sealed class BiasedBoundaryCylinderProjectionDocument : IScribeDocument
         Formula p=V("p"), f=V("F"), a=V("A"), z=V("z");
         Formula residual=Seq(Call("C",z),Minus,Call("Q",a,Call("C",z)));
         Formula onAtom=Seq(Forall,Sp,p,InMacro, Sp,a,Comma,Sp,All("F",Call("G"),
-            Seq(Call("pullback",p,Call("Q",a,f)),Eq,Call("constG",Call("atomMean",p,f)))));
+            Seq(Call("pullback",Val(p),Call("Q",a,f)),Eq,Call("constG",Call("atomMean",p,f)))));
         Formula local=Seq(Forall,Sp,p,InMacro, Sp,a,Comma,Sp,All("z",Call("H"),
-            Seq(Call("pullback",p,Par(residual)),Eq,Call("C",Call("S",p,z)))));
+            Seq(Call("pullback",Val(p),Par(residual)),Eq,Call("C",Call("S",Val(p),z)))));
         Formula disintegration=All("F",Call("G"),Seq(SqNorm(f),Eq,
-            SumA(Seq(Call("mass",V("M"),Call("cylinder",p)),Cdot, Sp,SqNorm(Call("pullback",p,f))))));
+            SumA(Seq(Call("mass",V("M"),Call("cylinder",Val(p))),Cdot, Sp,SqNorm(Call("pullback",Val(p),f))))));
         Formula norm=All("z",Call("H"),Seq(SqNorm(Par(residual)),Eq,
-            SumA(Seq(Call("mass",V("M"),Call("cylinder",p)),Cdot, Sp,SqNorm(Call("C",Call("S",p,z)))))));
+            SumA(Seq(Call("mass",V("M"),Call("cylinder",Val(p))),Cdot, Sp,SqNorm(Call("C",Call("S",Val(p),z)))))));
         Formula constants=All("c",Call("Real"),Seq(Call("Q",a,Call("constG",V("c"))),Eq,Call("constG",V("c"))));
         Formula commutation=All("F",Call("G"),Seq(Call("Q",a,Call("Pi",f)),Eq,Call("Pi",Call("Q",a,f))));
         Formula dimensions=Seq(Call("dim",Call("V",a)),Eq,Call("card",a),Land, Sp,
             Call("dim",Call("V0",a)),Eq,Call("card",a),Minus,D(1));
-        return All("A",Call("Finset",Call("Edge")),Seq(Call("IsCylinderPartition",a),Implies, Sp,Par(onAtom),Land, Sp,Par(local),Land, Sp,
+        return All("A",Call("Finset",Call("Edge")),Seq(Par(Partition(a)),Implies, Sp,Par(onAtom),Land, Sp,Par(local),Land, Sp,
             Par(disintegration),Land, Sp,Par(norm),Land, Sp,Par(constants),Land, Sp,Par(commutation),Land, Sp,Par(dimensions)));
     }
     private static Formula BoundFormula() => All("A",Call("Finset",Call("Edge")),
         All("t",Call("Real"),All("z",Call("H"),Seq(
-        Call("IsCylinderPartition",V("A")),Land, Sp,D(0),Leq, Sp,V("t"),Land, Sp,
-        Par(Seq(Forall,Sp,V("p"),InMacro, Sp,V("A"),Comma,Sp,Call("mass",V("M"),Call("cylinder",V("p"))),Leq, Sp,V("t"))),Implies, Sp,
+        Par(Partition(V("A"))),Land, Sp,D(0),Leq, Sp,V("t"),Land, Sp,
+        Par(Seq(Forall,Sp,V("p"),InMacro, Sp,V("A"),Comma,Sp,Call("mass",V("M"),Call("cylinder",Val(V("p")))),Leq, Sp,V("t"))),Implies, Sp,
         SqNorm(Par(Seq(Call("C",V("z")),Minus,Call("Q",V("A"),Call("C",V("z")))))),Leq, Sp,
         Call("goldenRatio"),Cdot, Sp,V("t"),Cdot, Sp,SqNorm(V("z"))))));
     private static Formula ResultFormula()
     {
         Formula p=V("p"), f=V("F"), a=V("A"), edge=Call("Edge"), g=Call("G");
-        Formula normalized=All("p",edge,All("F",g,Seq(Call("atomMean",p,f),Eq,Call("normalizedSetIntegral",V("M"),Call("cylinder",p),f))));
-        Formula pullback=All("p",edge,All("F",g,Seq(Call("atomMean",p,f),Eq,Call("mean",Call("pullback",p,f)))));
+        Formula normalized=All("p",edge,All("F",g,Seq(Call("atomMean",p,f),Eq,Call("normalizedSetIntegral",V("M"),Call("cylinder",Val(p)),f))));
+        Formula pullback=All("p",edge,All("F",g,Seq(Call("atomMean",p,f),Eq,Call("mean",Call("pullback",Val(p),f)))));
         Formula projection=All("F",g,Seq(Call("Q",a,f),Eq,Call("starProjection",Call("V",a),f)));
         Formula fixedAtoms=Seq(Forall,Sp,p,InMacro, Sp,a,Comma,Sp,Call("Q",a,Call("indicator",p)),Eq,Call("indicator",p));
         return All("A",Call("Finset",Call("Edge")),Seq(Call("IsPrefixFree",Call("addresses",a)),Implies, Sp,Par(normalized),Land, Sp,Par(pullback),Land, Sp,Par(projection),Land, Sp,Par(fixedAtoms)));

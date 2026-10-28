@@ -66,8 +66,8 @@ internal sealed class BiasedBoundaryStoppingDocument : IScribeDocumentDefinition
             Par(Seq(InA(p),Land,Sp,V("omega"),InMacro,Sp,Call("cylinder",pv)))));
         Formula total=Seq(SumA(ActualMass(pv)),Eq,D(1));
         Formula bounds=OnA("p",Seq(V("b"),Cdot,Sp,tv,Lt,Sp,ActualMass(pv),Land,Sp,ActualMass(pv),Leq,Sp,tv));
-        Formula lower=Seq(D(1),Slash,tv,Leq,Sp,Call("realCard",at));
-        Formula upper=Seq(Call("realCard",at),Lt,Sp,D(1),Slash,Par(Seq(V("b"),Cdot,Sp,tv)));
+        Formula lower=Seq(D(1),Slash,tv,Leq,Sp,Par(Seq(Call("card",at),Colon,Sp,Call("Real"))));
+        Formula upper=Seq(Par(Seq(Call("card",at),Colon,Sp,Call("Real"))),Lt,Sp,D(1),Slash,Par(Seq(V("b"),Cdot,Sp,tv)));
         return All("t",Call("Threshold"),And(mass,membership,depth,prefixFree,cover,total,bounds,lower,upper));
     }
     private static Formula ResidualFormula()

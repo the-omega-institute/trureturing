@@ -1,4 +1,5 @@
 import D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryCentering
+import Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryFreeRootForm
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Contract.Registration
 
@@ -100,5 +101,90 @@ def registration_1 :
   continuation := .unknown,
   familyRecord := none,
   options := #[] }
+
+namespace Constants
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := G
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := G
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ F => Pi F) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ c : ℝ, R.readout () () (constG c) = 0
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => constG 1) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := congrArg mean (h 0)
+  change mean (constG 1) = mean 0 at he
+  rw [centered_suffix_residual.2.1, map_zero] at he
+  exact one_ne_zero he
+
+def familyRegistration : Registration arena (type_of% Pi_const) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨Pi_const, rejected, rejected_law⟩
+  sensitivity := ⟨by
+    intro i
+    refine ⟨rejected, ?_, rfl, rejected_law⟩
+    intro j hji
+    exact (hji (Subsingleton.elim j i)).elim,
+    fun e => nomatch e⟩
+  dependence := by
+    intro i
+    obtain ⟨_, x, y, hxy⟩ :=
+      _root_.Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryFreeRootForm.Covariance.familyRegistration.dependence ()
+    refine ⟨(), _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace.J x,
+      _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace.J y, ?_⟩
+    intro he
+    apply hxy
+    change ‖C x‖ ^ 2 = ‖C y‖ ^ 2
+    exact congrArg (fun F : G => ‖F‖ ^ 2) he
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@Pi_const)
+    (type_of% (realize signature (fun _ _ F => Pi F) (fun e => nomatch e)))
+    Unit Unit := {
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryCentering.Constants.unit,
+  realizationName :=
+    `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryCentering.Constants.familyRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨familyRegistration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ _ F => Pi F) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryCentering,
+    definition := none, coordinates := #[],
+    readouts := #[{
+      path := #["body", "fn", "arg"],
+      stateBinder := 0, functionOperand := false, stateOperand := some #["arg"],
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+end Constants
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryCentering
