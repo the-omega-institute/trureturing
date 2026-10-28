@@ -1311,6 +1311,13 @@ private def vertexGluingHomeomorph (K : PreAbstractSimplicialComplex V)
   exact (Homeomorph.Quotient.congrRight (gluingSum_kernel K L a b ha hb)).trans
     (Topology.IsQuotientMap.homeomorph (f := gluingSum K L a b) hq)
 
+/- Public carrier for the selected-component gluing consumer.  The original
+  private `vertexGluing` declaration and all of its identities stay intact. -/
+def selectedVertexGluing (K : PreAbstractSimplicialComplex V)
+    (L : PreAbstractSimplicialComplex W) (a : V) (b : W) :
+    PreAbstractSimplicialComplex (GluedVertices a b) :=
+  vertexGluing K L a b
+
 end VertexGluing
 
 section ConeCovers
@@ -1968,6 +1975,37 @@ def selectedComponentWedgeBased {V W : Type*} [Fintype V] [DecidableEq V]
   obtain ⟨n, hn, q, j, ⟨F⟩⟩ := based_normalization L hL b hb
   exact ⟨m, hm, p, i, n, hn, q, j,
     ⟨FiniteConeUnionWedge.basedWedgeEquivalence E F⟩⟩
+
+def selectedComponentWedgeCarrier {V W : Type*} [Fintype V] [DecidableEq V]
+    [Fintype W] [DecidableEq W]
+    (K : PreAbstractSimplicialComplex V) (L : PreAbstractSimplicialComplex W)
+    (hK : WPlus K) (hL : WPlus L)
+    (a : V) (ha : ({a} : Finset V) ∈ K)
+    (b : W) (hb : ({b} : Finset W) ∈ L) :
+    ∃ m : ℕ, ∃ hm : 0 < m, ∃ p : Fin m → BouquetSpec, ∃ i : Fin m,
+      ∃ n : ℕ, ∃ hn : 0 < n, ∃ q : Fin n → BouquetSpec, ∃ j : Fin n,
+      Nonempty (SingletonRetractionBasedInverse.BasedEquivalence
+        (FiniteConeUnionWedge.Wedge
+          (FiniteVertexCylinder.vertexPoint K a ha)
+          (FiniteVertexCylinder.vertexPoint L b hb))
+        (FiniteConeUnionWedge.Wedge
+          (normalPoint m p i) (normalPoint n q j))) ∧
+      Nonempty (FiniteConeUnionWedge.Wedge
+          (normalPoint m p i) (normalPoint n q j) ≃ₜ
+        FiniteSimplicialJoin.Space
+          (selectedVertexGluing (normalComplex m p) (normalComplex n q)
+            ⟨i, none⟩ ⟨j, none⟩)) := by
+  obtain ⟨m, hm, p, i, n, hn, q, j, hE⟩ :=
+    selectedComponentWedgeBased K L hK hL a ha b hb
+  have hi : ({⟨i, none⟩} : Finset (NormalVertices m p)) ∈ normalComplex m p :=
+    normalVertex_face m p i
+  have hj : ({⟨j, none⟩} : Finset (NormalVertices n q)) ∈ normalComplex n q :=
+    normalVertex_face n q j
+  refine ⟨m, hm, p, i, n, hn, q, j, hE, ?_⟩
+  exact ⟨by
+    simpa only [selectedVertexGluing] using
+      (vertexGluingHomeomorph (normalComplex m p) (normalComplex n q)
+        ⟨i, none⟩ ⟨j, none⟩ hi hj)⟩
 
 end BouquetConcatenation
 
