@@ -545,7 +545,7 @@ private theorem prolong_path {W : Type} [Fintype W] {G : SimpleGraph W}
     have hsnd : (p.concat hy).snd = p.snd := by
       cases p with
       | nil => simp at hpos
-      | cons h p => rfl
+      | cons h p => simp [Walk.concat_cons, Walk.snd]
     obtain ⟨z, q, hq, hlen, hs⟩ := ih (p.concat hy) hpath
       (by simp only [Walk.length_concat]; omega)
       (by simp only [Walk.length_concat]; omega)
@@ -666,14 +666,17 @@ theorem hasExtension_of_buffer {V : Type} [Fintype V] {H : SimpleGraph V}
     have hex (a : R) : ∃ z, ∃ p : G.graph.Walk (c a.1) z,
         p.IsPath ∧ p.length = n + 1 ∧ p.snd = first a := by
       obtain ⟨z, p, hp, hl, hs⟩ := prolong_path G.tree level N hstep hinterior
-        (hfirstadj a).toWalk Walk.IsPath.of_adj (by simp) n (by
+        (hfirstadj a).toWalk (Walk.IsPath.of_adj (hfirstadj a)) (by simp) n (by
           have hm := hmargin a.1
           simp only [Adj.toWalk, Walk.length_cons, Walk.length_nil]
           omega)
       exact ⟨z, p, hp, by simpa [Nat.add_comm] using hl, hs⟩
     choose endpoint path hpath hlen hsnd using hex
-    have htail (a : R) (j : ℕ) : (path a).getVert (j + 1) ∈ (path a).support.tail :=
-      Walk.getVert_mem_tail_support (by intro h; cases h; simp at hlen) (by omega)
+    have htail (a : R) (j : ℕ) : (path a).getVert (j + 1) ∈ (path a).support.tail := by
+      apply Walk.getVert_mem_tail_support
+      · rw [Walk.not_nil_iff_lt_length, hlen]
+        omega
+      · omega
     let f : ExtensionVertex m (n + 1) → G.Vertex := Sum.elim c
       (fun a => (path (⟨a.1, a.2.1⟩ : R)).getVert (a.2.2.val + 1))
     have hout (a : R) (j : ℕ) : (path a).getVert (j + 1) ∉ Set.range c :=
@@ -694,7 +697,7 @@ theorem hasExtension_of_buffer {V : Type} [Fintype V] {H : SimpleGraph V}
             (path (⟨a.1, a.2.1⟩ : R)) (path (⟨b.1, b.2.1⟩ : R))
             (hpath _) (hpath _) (by rw [hsnd]; exact hfirstout _)
             (by rw [hsnd]; exact hfirstout _) (htail _ a.2.2.val)
-            (by change _ ∈ _; rw [show f (.inr a) = f (.inr b) from h]; exact htail _ b.2.2.val)
+            (by dsimp [f] at h; rw [h]; exact htail _ b.2.2.val)
           have hr : (⟨a.1, a.2.1⟩ : R) = ⟨b.1, b.2.1⟩ := hfirstinj (by simpa only [hsnd] using hab.2)
           rcases a with ⟨v, i, j⟩
           rcases b with ⟨w, i', j'⟩
@@ -702,6 +705,7 @@ theorem hasExtension_of_buffer {V : Type} [Fintype V] {H : SimpleGraph V}
           subst w
           have hi : i = i' := eq_of_heq (Sigma.mk.inj hr).2
           subst i'
+          dsimp [f] at h
           have hj := (hpath (⟨v, i⟩ : R)).getVert_injOn
             (by simp only [Set.mem_setOf_eq, hlen]; omega)
             (by simp only [Set.mem_setOf_eq, hlen]; omega) h
@@ -718,17 +722,19 @@ theorem hasExtension_of_buffer {V : Type} [Fintype V] {H : SimpleGraph V}
         rcases h with ⟨rfl, hj⟩
         change G.graph.Adj (c a.1) ((path (⟨a.1, a.2.1⟩ : R)).getVert (a.2.2.val + 1))
         rw [hj]
-        simpa only [Walk.snd] using (hfirstadj (⟨a.1, a.2.1⟩ : R))
+        exact Walk.adj_snd (by rw [Walk.not_nil_iff_lt_length, hlen]; omega)
     | inr a =>
       cases y with
       | inl v =>
         rcases h with ⟨rfl, hj⟩
         change G.graph.Adj ((path (⟨a.1, a.2.1⟩ : R)).getVert (a.2.2.val + 1)) (c a.1)
         rw [hj]
-        simpa only [Walk.snd] using (hfirstadj (⟨a.1, a.2.1⟩ : R)).symm
+        exact (Walk.adj_snd (by rw [Walk.not_nil_iff_lt_length, hlen]; omega)).symm
       | inr b =>
         rcases a with ⟨v, i, j⟩
         rcases b with ⟨w, i', j'⟩
+        change v = w ∧ i.val = i'.val ∧
+          (j.val + 1 = j'.val ∨ j'.val + 1 = j.val) at h
         rcases h with ⟨hv, hi, hj⟩
         subst w
         have hi' : i = i' := Fin.ext hi
@@ -736,9 +742,13 @@ theorem hasExtension_of_buffer {V : Type} [Fintype V] {H : SimpleGraph V}
         change G.graph.Adj ((path (⟨v, i⟩ : R)).getVert (j.val + 1))
           ((path (⟨v, i⟩ : R)).getVert (j'.val + 1))
         rcases hj with hj | hj
-        · convert (path (⟨v, i⟩ : R)).adj_getVert_succ (i := j.val + 1) (by rw [hlen]; omega) using 1 <;> omega
+        · have ha := (path (⟨v, i⟩ : R)).adj_getVert_succ (i := j.val + 1)
+            (by rw [hlen]; omega)
+          simpa only [show j.val + 1 + 1 = j'.val + 1 by omega] using ha
         · apply Adj.symm
-          convert (path (⟨v, i⟩ : R)).adj_getVert_succ (i := j'.val + 1) (by rw [hlen]; omega) using 1 <;> omega
+          have ha := (path (⟨v, i⟩ : R)).adj_getVert_succ (i := j'.val + 1)
+            (by rw [hlen]; omega)
+          simpa only [show j'.val + 1 + 1 = j.val + 1 by omega] using ha
 
 /-- Gurvich–Krnc–Vyalyi ordinary-amoeba Conjecture 1 in its finite tree domain. -/
 theorem total_confinement : conjecture := by
