@@ -107,9 +107,13 @@ internal sealed class ZeckendorfGreedyPermutationDocument : IScribeDocumentDefin
                 + "but not r; targets containing r are already covered. Hence s is a hub. "
                 + "For an arbitrary positive target, choose a hub s beyond its entire support and the first hub, and choose an occupied target index k. "
                 + "Fresh triples {s,k,t} are visited and intersect that target in exactly {k}. Unbounded-neighbor coverage finishes the proof. "
-                + "The argument uses all stages of the actual history-dependent minimum rule; no finite enumeration is a premise.", DescribeRole.Theorem))));
+                + "The argument uses all stages of the actual history-dependent minimum rule; no finite enumeration is a premise.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a370630-zeckendorf-greedy-permutation"),
+                    ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("a370630-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role, claim);
 }
