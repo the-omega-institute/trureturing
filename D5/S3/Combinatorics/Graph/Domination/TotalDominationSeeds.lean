@@ -464,6 +464,174 @@ theorem complex_seed_accumulation (ε : ℝ) (hε : 0 < ε) :
     rw [he, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hl]
     exact hr
 
+
+/-- The base consists of m+1 disjoint actual edges. -/
+def EdgeBase : ℕ → Type
+  | 0 => Fin 2
+  | m + 1 => Fin 2 ⊕ EdgeBase m
+
+instance edgeBaseFintype : (m : ℕ) → Fintype (EdgeBase m)
+  | 0 => inferInstanceAs (Fintype (Fin 2))
+  | m + 1 => @instFintypeSum (Fin 2) (EdgeBase m) _ (edgeBaseFintype m)
+
+instance edgeBaseNonempty (m : ℕ) : Nonempty (EdgeBase m) := by
+  cases m with
+  | zero => exact inferInstanceAs (Nonempty (Fin 2))
+  | succ m => exact ⟨Sum.inl 0⟩
+
+/-- A disjoint matching, whose cone is the friendship graph. -/
+def edgeBaseGraph : (m : ℕ) → SimpleGraph (EdgeBase m)
+  | 0 => ⊤
+  | m + 1 => unionGraph (⊤ : SimpleGraph (Fin 2)) (edgeBaseGraph m)
+
+/-- Each triangle has the same hub and a separate pair of outer vertices. -/
+def friendshipGraph (m : ℕ) : SimpleGraph (Unit ⊕ EdgeBase m) :=
+  coneGraph (edgeBaseGraph m)
+
+private theorem edge_polynomial : totalPolynomial (⊤ : SimpleGraph (Fin 2)) = X ^ 2 := by
+  have ht : ∀ S : Finset (Fin 2), IsTotal (⊤ : SimpleGraph (Fin 2)) S ↔ S = univ := by
+    decide +kernel
+  classical
+  unfold totalPolynomial
+  simp_rw [ht]
+  simp
+
+private theorem edge_base_card (m : ℕ) : Fintype.card (EdgeBase m) = 2 * (m + 1) := by
+  induction m with
+  | zero => change Fintype.card (Fin 2) = _; simp
+  | succ m ih =>
+    change Fintype.card (Fin 2 ⊕ EdgeBase m) = _
+    rw [Fintype.card_sum, ih]
+    simp
+    omega
+
+private theorem edge_base_polynomial (m : ℕ) :
+    totalPolynomial (edgeBaseGraph m) = X ^ (2 * (m + 1)) := by
+  induction m with
+  | zero => convert edge_polynomial using 1
+  | succ m ih =>
+    change totalPolynomial (unionGraph (⊤ : SimpleGraph (Fin 2)) (edgeBaseGraph m)) = _
+    rw [union_polynomial, edge_polynomial, ih, ← pow_add]
+    congr 1
+    omega
+
+/-- The known friendship formula, used here to construct unbounded actual roots. -/
+noncomputable def friendshipPolynomial (m : ℕ) : ℝ[X] :=
+  X * ((1 + X) ^ (2 * (m + 1)) - 1) + X ^ (2 * (m + 1))
+
+private theorem friendship_graph_polynomial (m : ℕ) :
+    totalPolynomial (friendshipGraph m) = friendshipPolynomial m := by
+  rw [friendshipGraph, cone_polynomial, edge_base_card, edge_base_polynomial]
+  rfl
+
+private theorem friendship_eval_negative (m : ℕ) (q : ℝ) :
+    (friendshipPolynomial m).eval (-q) =
+      q ^ (2 * (m + 1)) + q - q * (q - 1) ^ (2 * (m + 1)) := by
+  simp only [friendshipPolynomial, eval_add, eval_mul, eval_sub, eval_pow, eval_X,
+    eval_one]
+  have he : Even (2 * (m + 1)) := even_two_mul _
+  have hn : 1 + -q = -(q - 1) := by ring
+  rw [hn, he.neg_pow, he.neg_pow]
+  ring
+
+private theorem friendship_far_negative (m : ℕ) :
+    (friendshipPolynomial m).eval (-(2 * (m + 1) + 2 : ℝ)) < 0 := by
+  let e : ℕ := 2 * (m + 1)
+  let q : ℝ := e + 2
+  have he : 2 ≤ e := by dsimp [e]; omega
+  have heR : (2 : ℝ) ≤ e := by exact_mod_cast he
+  have hq : 4 ≤ q := by dsimp [q]; linarith
+  have hqp : 0 < q := by linarith
+  have hi : 0 < 1 / q := one_div_pos.mpr hqp
+  have hi1 : 1 / q ≤ 1 := (div_le_one hqp).mpr (by linarith)
+  have hb := one_add_mul_le_pow (show (-2 : ℝ) ≤ -(1 / q) by linarith) e
+  have hnorm : (q - 1) ^ e = q ^ e * (1 - 1 / q) ^ e := by
+    rw [← mul_pow]
+    congr 1
+    field_simp
+    ring
+  have hB : 2 ≤ q * (1 - 1 / q) ^ e := by
+    have hmul := mul_le_mul_of_nonneg_left hb hqp.le
+    have heq : q * (1 + (e : ℝ) * -(1 / q)) = 2 := by
+      dsimp [q]
+      field_simp
+      ring
+    simpa only [heq, sub_eq_add_neg] using hmul
+  have hpow : q < q ^ e := by
+    have hh : q ^ 2 ≤ q ^ e := pow_le_pow_right₀ (by linarith : 1 ≤ q) he
+    nlinarith
+  have hmul := mul_le_mul_of_nonneg_left hB (pow_nonneg hqp.le e)
+  have hval := friendship_eval_negative m q
+  change (friendshipPolynomial m).eval (-q) < 0
+  rw [hval]
+  change q ^ e + q - q * (q - 1) ^ e < 0
+  rw [hnorm]
+  nlinarith
+
+/-- An actual friendship root lies to the left of any prescribed negative bound. -/
+theorem friendship_root_unbounded (R : ℝ) (hR : 2 < R) :
+    ∃ (m : ℕ) (r : ℝ), r < -R ∧
+      (totalPolynomial (friendshipGraph m)).IsRoot r ∧
+      totalPolynomial (friendshipGraph m) ≠ 0 ∧
+      (∀ v, ∃ u, (friendshipGraph m).Adj v u) := by
+  have hRp : 0 < R := by linarith
+  let a : ℝ := (1 - 1 / R) ^ 2
+  have hi : 0 < 1 / R := one_div_pos.mpr hRp
+  have hi1 : 1 / R < 1 := (div_lt_one hRp).mpr (by linarith)
+  have ha : 0 ≤ a := sq_nonneg _
+  have ha1 : a < 1 := by dsimp [a]; nlinarith
+  obtain ⟨m, hm⟩ := exists_pow_lt_of_lt_one (one_div_pos.mpr hRp) ha1
+  have hmp : a ^ (m + 1) < 1 / R :=
+    lt_of_le_of_lt (pow_le_pow_of_le_one ha ha1.le (by omega : m ≤ m + 1)) hm
+  have hval : 0 < (friendshipPolynomial m).eval (-R) := by
+    rw [friendship_eval_negative]
+    have hnorm : (R - 1) ^ (2 * (m + 1)) =
+        R ^ (2 * (m + 1)) * a ^ (m + 1) := by
+      dsimp [a]
+      rw [← pow_mul, ← mul_pow]
+      have heq : R * (1 - 1 / R) = R - 1 := by field_simp; ring
+      rw [heq]
+    rw [hnorm]
+    have hlt : R * a ^ (m + 1) < 1 := (lt_div_iff₀ hRp).mp hmp
+    have hpos := mul_pos (pow_pos hRp (2 * (m + 1))) (sub_pos.mpr hlt)
+    nlinarith
+  have hfar := friendship_far_negative m
+  have horder : -(2 * (m + 1) + 2 : ℝ) ≤ -R := by
+    by_contra h
+    have hRlarge : (2 * (m + 1) + 2 : ℝ) < R := by linarith
+    have he : 1 ≤ (m + 1 : ℕ) := by omega
+    have hb := one_add_mul_le_pow (show (-2 : ℝ) ≤ -(1 / R) by linarith) (2 * (m + 1))
+    have hnorm : (1 - 1 / R) ^ (2 * (m + 1)) = a ^ (m + 1) := by
+      dsimp [a]; rw [pow_mul]
+    rw [show 1 + -(1 / R) = 1 - 1 / R by ring, hnorm] at hb
+    have hmul := mul_le_mul_of_nonneg_left hb hRp.le
+    have hcancel : R * (1 + (2 * (m + 1) : ℕ) * -(1 / R)) = R - 2 * (m + 1) := by
+      push_cast
+      field_simp
+      ring
+    rw [hcancel] at hmul
+    have hlt : R * a ^ (m + 1) < 1 := (lt_div_iff₀ hRp).mp hmp
+    push_cast at hmul
+    linarith
+  obtain ⟨r, hr, hz⟩ := intermediate_value_Ioo horder
+    (friendshipPolynomial m).continuous.continuousOn
+    (show (0 : ℝ) ∈ Set.Ioo
+      ((friendshipPolynomial m).eval (-(2 * (m + 1) + 2 : ℝ)))
+      ((friendshipPolynomial m).eval (-R)) from ⟨hfar, hval⟩)
+  refine ⟨m, r, hr.2, ?_, ?_, ?_⟩
+  · simpa [friendship_graph_polynomial] using hz
+  · intro hzero
+    rw [← friendship_graph_polynomial, hzero] at hval
+    simpa using hval
+  · intro v
+    cases v with
+    | inl v =>
+      obtain ⟨u⟩ := edgeBaseNonempty m
+      exact ⟨.inr u, trivial⟩
+    | inr v => exact ⟨.inl (), trivial⟩
+
+#print axioms friendship_root_unbounded
+
 #print axioms complex_seed_accumulation
 
 #print axioms arbitrarily_small_positive_shift
