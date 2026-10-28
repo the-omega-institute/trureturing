@@ -277,7 +277,7 @@ private theorem endpoint_injective (w : Fin 3 → List Bool) (N : Mat)
   simp [hne,Ne.symm hne] at hi hj
   linarith
 
-private theorem prefix_step (w : Fin 3 → List Bool) (i : Fin 3) :
+theorem prefix_step (w : Fin 3 → List Bool) (i : Fin 3) :
     prefixMatrix w i.succ = futureProduct (w i) * prefixMatrix w i.castSucc := by
   fin_cases i <;>
     simp [prefixMatrix,prefixWord,List.ofFn_succ,product_append,futureProduct,Matrix.mul_assoc]
