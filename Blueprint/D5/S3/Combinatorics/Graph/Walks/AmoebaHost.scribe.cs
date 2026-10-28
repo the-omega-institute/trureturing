@@ -9,14 +9,15 @@ internal sealed class AmoebaHostDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/Graph/Walks/AmoebaHost.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A finite layered supertree preserves any initial tree and supplies degree budgets for every ordinary amoeba copy. Joint leaf attachment realizes every first arm edge.",
+        "A finite layered supertree preserves every initial tree, realizes all arm paths simultaneously for every copy, and is confining under total-edge minimization.",
         H("Finite Buffered Hosts for Ordinary Amoebas"),
         Blocks(
             Paragraph(Text(
                 "Host, extensionGraph and HasExtension have the meanings given in AmoebaConfinement. "
                 + "The source target is Gurvich–Krnc–Vyalyi Conjecture 1, arXiv:2401.07484v1/v2 and DOI 10.1007/s00025-025-02421-6. "
-                + "The construction below supplies a finite host for every initial finite tree, and controls all copies. "
-                + "It does not by itself realize the simultaneous paths of every length or settle that conjecture.")),
+                + "The construction supplies a finite host for every initial finite tree and controls all copies and all multiplicity placements. "
+                + "All nonnegative extension lengths and multiplicities are retained. The final assertion uses the finite source convention; "
+                + "it makes no claim about infinite hosts with cardinal edge minimization.")),
             Paragraph(Text(
                 "sprout(P,p) has vertex type V disjoint union L. It retains P on V and makes each a in L a new leaf adjacent only to p(a). "
                 + "A Layered(T,M,q,N) consists of a finite tree S, a core copy of T, and a natural-valued level function. "
@@ -45,7 +46,20 @@ internal sealed class AmoebaHostDocument : IScribeDocumentDefinition
                 "Apply the joint leaf-attachment theorem to the root-occurrence type consisting of pairs (v,a) with a below m(v). "
                 + "Its parent fiber over v has exactly m(v) elements. Forgetting the unique Fin(1) coordinate identifies these leaves "
                 + "with the explicit length-one extension graph. Thus every first arm edge is realized simultaneously. "
-                + "This lemma is an initial step; the arbitrary-length continuation remains a separate mathematical obligation.")),
+                + "These edges initialize the paths in the following continuation lemma."),
+            Node("hasExtension_of_buffer", "Simultaneous arms of every finite length", ArmsFormula(),
+                "For zero length the extension is the existing copy. For positive length, start with the jointly fresh first edges. "
+                + "Continue each arm by choosing a neighbor other than its predecessor. The level buffer keeps every endpoint below the outer leaves. "
+                + "Acyclicity makes every such continuation a path. A path whose first edge leaves the connected copy cannot return to it: "
+                + "a return would give two distinct paths between copy vertices. Likewise, two off-copy arm tails can meet only if their "
+                + "roots and first edges agree. The first-edge injection then identifies their root occurrences. Path simplicity identifies "
+                + "their position indices. The resulting injective homomorphism realizes the entire explicit extension graph."),
+            Node("total_confinement", "The full ordinary-amoeba total-confinement assertion", TotalFormula(),
+                "For any finite tree H and nonnegative multiplicities, assume its maximum degree exceeds the multiplicity sum plus two. "
+                + "Given an arbitrary finite initial T containing H, use its buffered layered host S. Every copy has the root degree budgets "
+                + "and the full path-length margin, so the simultaneous extension lemma applies to every copy, with its own transported multiplicities. "
+                + "The minimum-total-edge bridge makes every one of these copies dead for every minimizing growth. Composing the preserved core "
+                + "embedding with the initial copy also proves that S admits a copy. Thus S is confining and contains the arbitrary T.")),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) => Describe.Lean(
@@ -119,5 +133,33 @@ internal sealed class AmoebaHostDocument : IScribeDocumentDefinition
         var result = Imp(budget, Call("HasExtension", Id("m"), D(1), Id("c")));
         return Disp(Finite("V", All("H", Call("SimpleGraph", Id("V")), Imp(Call("IsTree", Id("H")),
             All("m", Fn(Id("V"), Nat), All("G", Call("Host"), All("c", Copy(Id("H"), Graph(Id("G"))), result)))))));
+    }
+    private static Formula ArmsFormula()
+    {
+        var vertex = Call("Vertex", Id("G"));
+        var step = All("x", vertex, All("y", vertex,
+            Imp(Call("Adj", Graph(Id("G")), Id("x"), Id("y")),
+                Le(Call("level", Id("x")), Add(Call("level", Id("y")), D(1))))));
+        var interior = All("x", vertex, Imp(Lt(Call("level", Id("x")), Id("N")),
+            Le(D(2), At(Graph(Id("G")), Id("x")))));
+        var budget = All("v", Id("V"), Le(Demand, At(Graph(Id("G")), Image(Id("v")))));
+        var margin = All("v", Id("V"), Lt(Add(Call("level", Image(Id("v"))), Id("l")), Id("N")));
+        var body = Imp(step, Imp(interior, Imp(budget, Imp(margin,
+            Call("HasExtension", Id("m"), Id("l"), Id("c"))))));
+        var parameters = All("m", Fn(Id("V"), Nat), All("l", Nat, All("G", Call("Host"),
+            All("c", Copy(Id("H"), Graph(Id("G"))), All("level", Fn(vertex, Nat), All("N", Nat, body))))));
+        return Disp(Finite("V", All("H", Call("SimpleGraph", Id("V")), Imp(Call("IsTree", Id("H")), parameters))));
+    }
+    private static Formula TotalFormula()
+    {
+        var dead = All("c", Copy(Id("H"), Graph(Id("S"))),
+            Call("Dead", Id("m"), Id("l"), Id("c")));
+        var confining = And(Call("Nonempty", Copy(Id("H"), Graph(Id("S")))), dead);
+        var result = Ex("S", Call("Host"),
+            And(Call("Nonempty", Copy(Graph(Id("T")), Graph(Id("S")))), confining));
+        var total = All("T", Call("Host"), Imp(Call("Nonempty", Copy(Id("H"), Graph(Id("T")))), result));
+        var degree = Lt(Add(Call("sum", Id("m")), D(2)), Call("maxDegree", Id("H")));
+        return Disp(Finite("V", All("H", Call("SimpleGraph", Id("V")), Imp(Call("IsTree", Id("H")),
+            All("m", Fn(Id("V"), Nat), All("l", Nat, Imp(degree, total)))))));
     }
 }

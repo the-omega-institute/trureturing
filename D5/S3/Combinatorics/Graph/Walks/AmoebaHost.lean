@@ -483,7 +483,7 @@ private def oneExtensionCopy {V : Type} (H : SimpleGraph V) (m : V → ℕ) :
     have hj : j = 0 := Subsingleton.elim _ _
     subst j
     rfl
-  refine ⟨⟨Sum.map id f, ?_⟩, Sum.map_injective Function.injective_id hleft.injective⟩
+  refine ⟨⟨Sum.map id f, ?_⟩, Sum.map_injective.mpr ⟨Function.injective_id, hleft.injective⟩⟩
   intro x y h
   cases x with
   | inl v =>
@@ -514,6 +514,247 @@ theorem hasExtension_one {V : Type} [Fintype V] {H : SimpleGraph V} (hH : H.IsTr
   refine ⟨e.comp (oneExtensionCopy H m), ?_⟩
   intro v
   exact he v
+
+private theorem neighbor_other {W : Type} [Fintype W] {G : SimpleGraph W}
+    (v previous : W) (hv : 2 ≤ G.degree v) : ∃ w, G.Adj v w ∧ w ≠ previous := by
+  by_contra h
+  push_neg at h
+  have hs : (G.neighborSet v).Subsingleton := by
+    intro a ha b hb
+    exact (h a ha).trans (h b hb).symm
+  have hc : G.degree v ≤ 1 := by
+    rw [← ncard_neighborSet]
+    exact Set.ncard_le_one_iff_subsingleton.mpr hs
+  omega
+
+private theorem prolong_path {W : Type} [Fintype W] {G : SimpleGraph W}
+    (hG : G.IsTree) (level : W → ℕ) (N : ℕ)
+    (hstep : ∀ x y, G.Adj x y → level x ≤ level y + 1)
+    (hinterior : ∀ x, level x < N → 2 ≤ G.degree x)
+    {a b : W} (p : G.Walk a b) (hp : p.IsPath) (hpos : 0 < p.length) (n : ℕ)
+    (hbuffer : level a + p.length + n < N) :
+    ∃ z, ∃ q : G.Walk a z, q.IsPath ∧ q.length = p.length + n ∧ q.snd = p.snd := by
+  induction n generalizing b p with
+  | zero => exact ⟨b, p, hp, by simp, rfl⟩
+  | succ n ih =>
+    have hl := walk_level_bound level hstep p
+    obtain ⟨y, hy, hne⟩ := neighbor_other b p.penultimate (hinterior b (by omega))
+    have hpath : (p.concat hy).IsPath := hp.concat (by
+      intro hymem
+      exact hne (hG.isAcyclic.eq_penultimate_of_adj_end hp hy hymem)) hy
+    have hsnd : (p.concat hy).snd = p.snd := by
+      cases p with
+      | nil => simp at hpos
+      | cons h p => rfl
+    obtain ⟨z, q, hq, hlen, hs⟩ := ih (p.concat hy) hpath
+      (by simp only [Walk.length_concat]; omega)
+      (by simp only [Walk.length_concat]; omega)
+    refine ⟨z, q, hq, ?_, hs.trans hsnd⟩
+    simp only [Walk.length_concat] at hlen
+    omega
+
+private theorem path_tail_outside {V W : Type} {H : SimpleGraph V} {G : SimpleGraph W}
+    (hH : H.Connected) (hG : G.IsAcyclic) (c : Copy H G)
+    {v : V} {z : W} (p : G.Walk (c v) z) (hp : p.IsPath)
+    (hfirst : p.snd ∉ Set.range c) : ∀ y ∈ p.support.tail, y ∉ Set.range c := by
+  rintro y hy ⟨w, rfl⟩
+  have hne : c w ≠ c v := by
+    intro he
+    cases p with
+    | nil => simp at hy
+    | cons h p =>
+      exact (List.nodup_cons.mp hp.support_nodup).1 (he ▸ hy)
+  have hym : c w ∈ p.support := List.mem_of_mem_tail hy
+  obtain ⟨s, hs⟩ := hH.exists_isPath v w
+  have he := (hG.subsingleton_path (c v) (c w)).elim
+    (⟨p.takeUntil (c w) hym, hp.takeUntil hym⟩ : G.Path (c v) (c w))
+    ⟨s.map c.toHom, hs.map c.injective⟩
+  have he' := congrArg (fun r : G.Path (c v) (c w) => r.val.snd) he
+  rw [Walk.snd_takeUntil hne] at he'
+  have hsnd : (s.map c.toHom).snd = c s.snd := by cases s <;> simp [Walk.snd]
+  exact hfirst ⟨s.snd, hsnd.symm.trans he'.symm⟩
+
+private theorem paths_meet_only_same_arm {V W : Type} {H : SimpleGraph V}
+    {G : SimpleGraph W} (hH : H.Connected) (hG : G.IsAcyclic) (c : Copy H G)
+    {v w : V} {x y z : W} (p : G.Walk (c v) x) (q : G.Walk (c w) y)
+    (hp : p.IsPath) (hq : q.IsPath) (hfp : p.snd ∉ Set.range c)
+    (hfq : q.snd ∉ Set.range c) (hzp : z ∈ p.support.tail) (hzq : z ∈ q.support.tail) :
+    v = w ∧ p.snd = q.snd := by
+  have hout := path_tail_outside hH hG c p hp hfp z hzp
+  have hzp' := List.mem_of_mem_tail hzp
+  have hzq' := List.mem_of_mem_tail hzq
+  have hzne v : z ≠ c v := fun h => hout ⟨v, h.symm⟩
+  have hps := Walk.snd_takeUntil (hzne v) p hzp'
+  have hqs := Walk.snd_takeUntil (hzne w) q hzq'
+  by_cases hvw : v = w
+  · subst w
+    have he := (hG.subsingleton_path (c v) z).elim
+      (⟨p.takeUntil z hzp', hp.takeUntil hzp'⟩ : G.Path (c v) z)
+      ⟨q.takeUntil z hzq', hq.takeUntil hzq'⟩
+    refine ⟨rfl, ?_⟩
+    have hh := congrArg (fun r : G.Path (c v) z => r.val.snd) he
+    simpa only [hps, hqs] using hh
+  · obtain ⟨s, hs⟩ := hH.exists_isPath v w
+    let r := q.takeUntil z hzq'
+    have hr : r.IsPath := hq.takeUntil hzq'
+    have hrf : r.snd ∉ Set.range c := by simpa only [r, hqs] using hfq
+    have hdis : (s.map c.toHom).support.Disjoint r.support.tail := by
+      intro u hu hur
+      have hu' : u ∈ Set.range c := by
+        simp only [Walk.support_map, List.mem_map] at hu
+        obtain ⟨a, _, ha⟩ := hu
+        exact ⟨a, ha⟩
+      exact path_tail_outside hH hG c r hr hrf u hur hu'
+    have hpath : ((s.map c.toHom).append r).IsPath :=
+      (Walk.isPath_append _ _).mpr ⟨hs.map c.injective, hr.tail, hdis⟩
+    have he := (hG.subsingleton_path (c v) z).elim
+      (⟨p.takeUntil z hzp', hp.takeUntil hzp'⟩ : G.Path (c v) z)
+      ⟨(s.map c.toHom).append r, hpath⟩
+    have hh := congrArg (fun t : G.Path (c v) z => t.val.snd) he
+    rw [hps] at hh
+    cases s with
+    | nil => exact (hvw rfl).elim
+    | @cons a b d h s =>
+      exact (hfp ⟨b, by simpa [Walk.snd] using hh.symm⟩).elim
+
+/-- Root degree budgets and a leaf-free layer buffer realize every arm of any
+finite length simultaneously, with all off-copy vertices jointly distinct. -/
+theorem hasExtension_of_buffer {V : Type} [Fintype V] {H : SimpleGraph V}
+    (hH : H.IsTree) (m : V → ℕ) (l : ℕ) {G : Host} (c : Copy H G.graph)
+    (level : G.Vertex → ℕ) (N : ℕ)
+    (hstep : ∀ x y, G.graph.Adj x y → level x ≤ level y + 1)
+    (hinterior : ∀ x, level x < N → 2 ≤ G.graph.degree x)
+    (hbudget : ∀ v, H.degree v + m v ≤ G.graph.degree (c v))
+    (hmargin : ∀ v, level (c v) + l < N) : HasExtension m l c := by
+  cases l with
+  | zero =>
+    let e : Copy (extensionGraph H m 0) G.graph := {
+      toHom := {
+        toFun := Sum.elim c (fun a => Fin.elim0 a.2.2)
+        map_rel' := by
+          intro x y h
+          cases x with
+          | inl v =>
+            cases y with
+            | inl w => exact c.toHom.map_adj h
+            | inr a => exact Fin.elim0 a.2.2
+          | inr a => exact Fin.elim0 a.2.2 }
+      injective' := by
+        intro x y h
+        cases x with
+        | inl v =>
+          cases y with
+          | inl w => exact congrArg Sum.inl (c.injective h)
+          | inr a => exact Fin.elim0 a.2.2
+        | inr a => exact Fin.elim0 a.2.2 }
+    exact ⟨e, fun _ => rfl⟩
+  | succ n =>
+    obtain ⟨e, he⟩ := hasExtension_one hH m c hbudget
+    let R := Σ v, Fin (m v)
+    let first (a : R) := e (.inr ⟨a.1, (a.2, 0)⟩)
+    have hfirstadj (a : R) : G.graph.Adj (c a.1) (first a) := by
+      rw [← he]
+      exact e.toHom.map_adj (show (extensionGraph H m 1).Adj (.inl a.1) (.inr ⟨a.1, (a.2, 0)⟩) from ⟨rfl, rfl⟩)
+    have hfirstout (a : R) : first a ∉ Set.range c := by
+      rintro ⟨v, hv⟩
+      have hh := e.injective ((he v).trans hv)
+      cases hh
+    have hfirstinj : Function.Injective first := by
+      intro a b hab
+      have hh := Sum.inr.inj (e.injective hab)
+      exact congrArg (fun t : Σ v, Fin (m v) × Fin 1 => (⟨t.1, t.2.1⟩ : R)) hh
+    have hex (a : R) : ∃ z, ∃ p : G.graph.Walk (c a.1) z,
+        p.IsPath ∧ p.length = n + 1 ∧ p.snd = first a := by
+      obtain ⟨z, p, hp, hl, hs⟩ := prolong_path G.tree level N hstep hinterior
+        (hfirstadj a).toWalk Walk.IsPath.of_adj (by simp) n (by
+          have hm := hmargin a.1
+          simp only [Adj.toWalk, Walk.length_cons, Walk.length_nil]
+          omega)
+      exact ⟨z, p, hp, by simpa [Nat.add_comm] using hl, hs⟩
+    choose endpoint path hpath hlen hsnd using hex
+    have htail (a : R) (j : ℕ) : (path a).getVert (j + 1) ∈ (path a).support.tail :=
+      Walk.getVert_mem_tail_support (by intro h; cases h; simp at hlen) (by omega)
+    let f : ExtensionVertex m (n + 1) → G.Vertex := Sum.elim c
+      (fun a => (path (⟨a.1, a.2.1⟩ : R)).getVert (a.2.2.val + 1))
+    have hout (a : R) (j : ℕ) : (path a).getVert (j + 1) ∉ Set.range c :=
+      path_tail_outside hH.connected G.tree.isAcyclic c (path a) (hpath a)
+        (by rw [hsnd]; exact hfirstout a) _ (htail a j)
+    have hinj : Function.Injective f := by
+      intro x y h
+      cases x with
+      | inl v =>
+        cases y with
+        | inl w => exact congrArg Sum.inl (c.injective h)
+        | inr b => exact (hout ⟨b.1, b.2.1⟩ b.2.2.val ⟨v, h⟩).elim
+      | inr a =>
+        cases y with
+        | inl w => exact (hout ⟨a.1, a.2.1⟩ a.2.2.val ⟨w, h.symm⟩).elim
+        | inr b =>
+          have hab := paths_meet_only_same_arm hH.connected G.tree.isAcyclic c
+            (path (⟨a.1, a.2.1⟩ : R)) (path (⟨b.1, b.2.1⟩ : R))
+            (hpath _) (hpath _) (by rw [hsnd]; exact hfirstout _)
+            (by rw [hsnd]; exact hfirstout _) (htail _ a.2.2.val)
+            (by change _ ∈ _; rw [show f (.inr a) = f (.inr b) from h]; exact htail _ b.2.2.val)
+          have hr : (⟨a.1, a.2.1⟩ : R) = ⟨b.1, b.2.1⟩ := hfirstinj (by simpa only [hsnd] using hab.2)
+          rcases a with ⟨v, i, j⟩
+          rcases b with ⟨w, i', j'⟩
+          have hv : v = w := congrArg Sigma.fst hr
+          subst w
+          have hi : i = i' := eq_of_heq (Sigma.mk.inj hr).2
+          subst i'
+          have hj := (hpath (⟨v, i⟩ : R)).getVert_injOn
+            (by simp only [Set.mem_setOf_eq, hlen]; omega)
+            (by simp only [Set.mem_setOf_eq, hlen]; omega) h
+          have hj' : j = j' := Fin.ext (by omega)
+          subst j'
+          rfl
+    refine ⟨⟨⟨f, ?_⟩, hinj⟩, fun _ => rfl⟩
+    intro x y h
+    cases x with
+    | inl v =>
+      cases y with
+      | inl w => exact c.toHom.map_adj h
+      | inr a =>
+        rcases h with ⟨rfl, hj⟩
+        change G.graph.Adj (c a.1) ((path (⟨a.1, a.2.1⟩ : R)).getVert (a.2.2.val + 1))
+        rw [hj]
+        simpa only [Walk.snd] using (hfirstadj (⟨a.1, a.2.1⟩ : R))
+    | inr a =>
+      cases y with
+      | inl v =>
+        rcases h with ⟨rfl, hj⟩
+        change G.graph.Adj ((path (⟨a.1, a.2.1⟩ : R)).getVert (a.2.2.val + 1)) (c a.1)
+        rw [hj]
+        simpa only [Walk.snd] using (hfirstadj (⟨a.1, a.2.1⟩ : R)).symm
+      | inr b =>
+        rcases a with ⟨v, i, j⟩
+        rcases b with ⟨w, i', j'⟩
+        rcases h with ⟨hv, hi, hj⟩
+        subst w
+        have hi' : i = i' := Fin.ext hi
+        subst i'
+        change G.graph.Adj ((path (⟨v, i⟩ : R)).getVert (j.val + 1))
+          ((path (⟨v, i⟩ : R)).getVert (j'.val + 1))
+        rcases hj with hj | hj
+        · convert (path (⟨v, i⟩ : R)).adj_getVert_succ (i := j.val + 1) (by rw [hlen]; omega) using 1 <;> omega
+        · apply Adj.symm
+          convert (path (⟨v, i⟩ : R)).adj_getVert_succ (i := j'.val + 1) (by rw [hlen]; omega) using 1 <;> omega
+
+/-- Gurvich–Krnc–Vyalyi ordinary-amoeba Conjecture 1 in its finite tree domain. -/
+theorem total_confinement : conjecture := by
+  intro V _ H hH m l hdegree T hcopy
+  obtain ⟨q, M, A, _, _, _, _, hlevel, hbudget, hinterior⟩ :=
+    exists_buffered_host hH m l hdegree T
+  refine ⟨A.host, ⟨A.core⟩, ?_, ?_⟩
+  · obtain ⟨c⟩ := hcopy
+    exact ⟨A.core.comp c⟩
+  · intro c
+    apply dead_of_hasExtension m l c
+    apply hasExtension_of_buffer hH m l c A.level (Fintype.card V + l + 1)
+      A.level_step hinterior (hbudget c)
+    intro v
+    have := hlevel c v
+    omega
 
 end
 end D5.S3.Combinatorics.Graph.Walks.AmoebaConfinement
