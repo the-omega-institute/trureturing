@@ -6,7 +6,7 @@ Distinct prefix-free stopping addresses have disjoint strict-descendant coordina
 
 **Theorem 1.1 (Disjoint Original Edge Coordinates).**
 
-$$\operatorname{IsPrefixFree}\left(A\right)\implies \sum_{p\in A} ((\Vert \operatorname{S}\left(p, z\right)\Vert)^{2})\leq (\Vert z\Vert)^{2}$$
+$$\forall A: \operatorname{Finset}\left(\operatorname{Address}\left(\right)\right), (\forall z: \operatorname{H}\left(\right), (\operatorname{IsPrefixFree}\left(A\right)\implies \sum_{p\in A} ((\Vert \operatorname{S}\left(p, z\right)\Vert)^{2})\leq (\Vert z\Vert)^{2}))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundarySuffixEnergy.prefix_free_suffix_energy` (`✓ std3`). ∎
 
@@ -20,7 +20,7 @@ The map sending a pair consisting of p in A and a nonempty suffix u to the origi
 
 **Theorem 1.2 (Weighted Actual Centered Suffixes).**
 
-$$0\leq t\land \operatorname{IsPrefixFree}\left(A\right)\land (\forall p\in A, 0\leq \operatorname{w}\left(p\right)\leq t)\implies \sum_{p\in A} (\operatorname{w}\left(p\right)\cdot (\Vert \operatorname{C}\left(\operatorname{S}\left(p, z\right)\right)\Vert)^{2})\leq \operatorname{goldenRatio}\left(\right)\cdot t\cdot (\Vert z\Vert)^{2}$$
+$$\forall A: \operatorname{Finset}\left(\operatorname{Address}\left(\right)\right), (\forall w: \operatorname{Address}\left(\right)\to \operatorname{Real}\left(\right), (\forall t: \operatorname{Real}\left(\right), (\forall z: \operatorname{H}\left(\right), (0\leq t\land \operatorname{IsPrefixFree}\left(A\right)\land (\forall p\in A, 0\leq \operatorname{w}\left(p\right)\leq t)\implies \sum_{p\in A} (\operatorname{w}\left(p\right)\cdot (\Vert \operatorname{C}\left(\operatorname{S}\left(p, z\right)\right)\Vert)^{2})\leq \operatorname{goldenRatio}\left(\right)\cdot t\cdot (\Vert z\Vert)^{2}))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundarySuffixEnergy.weighted_centered_suffix_energy` (`✓ std3`). ∎
 
