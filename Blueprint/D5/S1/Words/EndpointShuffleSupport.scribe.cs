@@ -113,7 +113,7 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
             Node("distinctSelfShuffleCount", "Distinct output count", DescribeRole.Definition,
                 Equal(Call("distinctSelfShuffleCount", F.Id("n")), Call("card", Call("toFinset", Call("ordinaryShuffles", Call("binaryWord", F.Id("n")), Call("binaryWord", F.Id("n")))))),
                 "This is a(n): arbitrary order-preserving interleavings of two identical "
-                + "ordinary binary numerals, counting each output word once.", Source),
+                + "ordinary binary numerals, counting each output word once.", AssessedProvenance.FromLiterature(Source)),
             Node("binaryWord_pow_add_one", "Binary bridge at every positive exponent", DescribeRole.Theorem,
                 Seq(Forall, Sp, F.Id("k"), Comma, Sp, AtMost(Num(1), F.Id("k")), Implies, Sp,
                     Equal(Call("binaryWord", Add(Power(Num(2), F.Id("k")), Num(1))), Call("endpointWord", Subtract(F.Id("k"), Num(1))))),
@@ -127,7 +127,7 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
                 "All variables are natural numbers. Choose K=1. For every k at least K, "
                 + "substitute m=k-1 into the exact support cardinality and use the ordinary "
                 + "binary bridge. Then (m+1)^2=k^2. This preserves the eventual quantifier "
-                + "and supplies a threshold valid uniformly for all subsequent exponents.", Source),
+                + "and supplies a threshold valid uniformly for all subsequent exponents.", AssessedProvenance.FromRepo(Source)),
             Paragraph(Text("The selected source assertion is the standalone eventual identity "
                 + "a(2^k+1)=k^2 with its sufficiently-large lower-bound caveat. The proof here "
                 + "establishes the exact threshold K=1 in the formal model. The other identities "
@@ -166,10 +166,10 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
 
     private static DocumentBlock.Describe Node(string declaration, string title,
         DescribeRole role, Formula statement, string prose,
-        LibraryNoteRef? source = null) =>
+        AssessedProvenance? provenance = null) =>
         Describe.Lean(DescribeId.Create("endpoint-shuffle-" + declaration.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(CloseDefinition(declaration, role, statement))),
-            source is null ? AssessedProvenance.FromRepo() : AssessedProvenance.FromRepo(source),
+            provenance ?? AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
 }

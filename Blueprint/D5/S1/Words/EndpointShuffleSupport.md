@@ -132,9 +132,7 @@ $$\forall (n: \mathbb{N}), \operatorname{distinctSelfShuffleCount}\left(n\right)
 
 *Formalization.* `D5/S1/Words/EndpointShuffleSupport.distinctSelfShuffleCount` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* John W. Layman (2011). *OEIS A193020, distinct binary self-shuffles*. URL: <https://oeis.org/A193020>.
+*Citation.* John W. Layman (2011). *OEIS A193020, distinct binary self-shuffles*. URL: <https://oeis.org/A193020>.
 
 *Commentary.*
 
