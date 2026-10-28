@@ -159,4 +159,174 @@ theorem single_small_rigidity {k : ℕ} (hk : 3 ≤ k) (t : ℕ) (a : Fin k)
     hQ hN hC rfl w hb hs (by simpa [hw0, abs_abs] using ha) hl hpos hc
   simpa only [w, neg, hw0] using ht
 
+
+private theorem phase_surj {k : ℕ} (hk : 0 < k) (a x : Fin k) :
+    ∃ j < k, phase hk a j = x := by
+  obtain ⟨i, hi⟩ := (finCycle a).surjective x
+  refine ⟨i.val, i.isLt, ?_⟩
+  have he : phase hk a i.val = finCycle a i := by
+    apply Fin.ext
+    simp [phase, finCycle_apply, Fin.val_add, Nat.add_comm]
+  exact he.trans hi
+
+/-- The full forward physical cycle, with its start forced by the sign of the
+unique SMALL. In particular no reversal or permutation of the LARGE cycle occurs. -/
+theorem single_small_forward_completion {k : ℕ} (hk : 3 ≤ k) (t : ℕ) (a : Fin k)
+    (ha : |actualSource k t a| < quarter k)
+    (hL : ∀ i : Fin k, i ≠ a → Large k t i) :
+    let start := if 0 < actualSource k t a then a else phase (by omega) a 2
+    let word := path (by omega) start k
+    word.Perm (List.finRange k) ∧ word.Nodup ∧ word.toFinset = Finset.univ ∧
+      InStrip (actualSource k t) (half k) 0 word ∧
+      (∀ n : ℕ, 0 ≤ ((word.take n).map (actualSource k t)).sum ∧
+        ((word.take n).map (actualSource k t)).sum ≤ half k) ∧
+      (word.map (actualSource k t)).sum = 0 := by
+  classical
+  obtain ⟨hQ, hN, hC, hNpos, hodd⟩ := source_geometry hk
+  obtain ⟨_, hamp, hprofile⟩ := single_small_rigidity hk t a ha hL
+  let s := |actualSource k t a|
+  let neg := decide (actualSource k t a < 0)
+  let g := fun i : Fin k => orient neg (actualSource k t i)
+  let v := fun i : Fin k => g i + if g i < 0 then modulus k else 0
+  have hs : 3 * s = half k := hamp
+  have hspos : 0 < s := by omega
+  have hNs : modulus k = 6 * s + 1 := by omega
+  have hpower : (2 : ℤ) ^ (k - 1) = half k + 1 := by
+    have hp : (2 : ℤ) ^ k = 2 * (2 : ℤ) ^ (k - 1) := by
+      conv_lhs => rw [show k = (k - 1) + 1 by omega, pow_succ]
+      ring
+    have hn : modulus k = (2 : ℤ) ^ k - 1 := rfl
+    omega
+  have hga : g a = s := orient_choose _
+  have hva : v a = s := by simp [v, hga, hspos.not_gt]
+  have hvphase : ∀ j < k,
+      s ≤ v (phase (by omega) a j) ∧ v (phase (by omega) a j) ≤ 4 * s := by
+    intro j hj
+    by_cases hz : j = 0
+    · subst j
+      simp only [phase_zero, hva]
+      constructor <;> omega
+    · have ht := hprofile j (by omega) (by omega)
+      change (if j % 2 = 1 then 0 < g (phase (by omega) a j)
+        else g (phase (by omega) a j) < 0) ∧
+        3 * g (phase (by omega) a j) =
+          (if j % 2 = 1 then modulus k else -modulus k) - (2 : ℤ) ^ (j - 1) at ht
+      have hpmax := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2)
+        (show j - 1 ≤ k - 1 by omega)
+      rw [hpower] at hpmax
+      have hpmin : 1 ≤ (2 : ℤ) ^ (j - 1) := one_le_pow₀ (by norm_num)
+      dsimp only [v]
+      by_cases he : j % 2 = 1
+      · simp only [he, ite_true] at ht
+        rw [ite_eq_right ht.1.not_gt]
+        constructor <;> nlinarith [ht.2]
+      · simp only [he, ite_false] at ht
+        rw [ite_eq_left ht.1]
+        have hptwo : (2 : ℤ) ≤ (2 : ℤ) ^ (j - 1) := by
+          simpa only [pow_one] using pow_le_pow_right₀
+            (by norm_num : (1 : ℤ) ≤ 2) (show 1 ≤ j - 1 by omega)
+        constructor <;> nlinarith [ht.2]
+  have hv : ∀ i, s ≤ v i ∧ v i ≤ 4 * s := by
+    intro i
+    obtain ⟨j, hj, rfl⟩ := phase_surj (by omega) a i
+    exact hvphase j hj
+  have hv2 : v (phase (by omega) a 2) = 4 * s := by
+    have ht := hprofile 2 (by omega) (by omega)
+    change (if 2 % 2 = 1 then 0 < g (phase (by omega) a 2)
+      else g (phase (by omega) a 2) < 0) ∧
+      3 * g (phase (by omega) a 2) =
+        (if 2 % 2 = 1 then modulus k else -modulus k) - (2 : ℤ) ^ (2 - 1) at ht
+    norm_num only [Nat.reduceMod, Nat.reduceSub, pow_one, ite_false] at ht
+    dsimp only [v]
+    rw [ite_eq_left ht.1]
+    nlinarith [ht.2]
+  have hgnz : ∀ i, g i ≠ 0 := by
+    intro i
+    obtain ⟨j, hj, rfl⟩ := phase_surj (by omega) a i
+    by_cases hz : j = 0
+    · subst j
+      simpa only [phase_zero, hga] using ne_of_gt hspos
+    · have ht := (hprofile j (by omega) (by omega)).1
+      change (if j % 2 = 1 then 0 < g (phase (by omega) a j)
+        else g (phase (by omega) a j) < 0) at ht
+      split_ifs at ht
+      · exact ne_of_gt ht
+      · exact ne_of_lt ht
+  let u := fun i : Fin k => actualSource k t i +
+    if actualSource k t i < 0 then modulus k else 0
+  have huv (i : Fin k) : u i = if neg then modulus k - v i else v i := by
+    have hz := hgnz i
+    cases hn : neg
+    · simp [u, v, g, hn, orient]
+    · dsimp only [u, v, g] at *
+      simp only [hn, orient, ite_true] at *
+      split_ifs <;> omega
+  let start := if 0 < actualSource k t a then a else phase (by omega) a 2
+  let word := path (by omega) start k
+  have hheight : ∀ i, 0 ≤ u i - u start ∧ u i - u start ≤ half k := by
+    intro i
+    have ht := hv i
+    by_cases hn : actualSource k t a < 0
+    · have hn' : neg = true := by simp [neg, hn]
+      have hstart : start = phase (by omega) a 2 := by simp [start, hn.not_gt]
+      rw [hstart, huv, huv, hn', ite_true, ite_true, hv2]
+      constructor <;> omega
+    · have hpos : 0 < actualSource k t a := by
+        have he : s = actualSource k t a := abs_of_nonneg (by omega)
+        omega
+      have hn' : neg = false := by simp [neg, hn]
+      have hstart : start = a := by simp [start, hpos]
+      rw [hstart, huv, huv, hn', ite_false, ite_false, hva]
+      constructor <;> omega
+  have hstep (j : ℕ) :
+      actualSource k t (phase (by omega) start (j + 1)) =
+        doubleStep (modulus k) (actualSource k t (phase (by omega) start j)) :=
+    phase_step hk t start j
+  have hpot (j : ℕ) :
+      u (phase (by omega) start (j + 1)) - u (phase (by omega) start j) =
+        actualSource k t (phase (by omega) start j) := by
+    dsimp only [u]
+    rw [hstep]
+    exact unsigned_step hNpos hodd (centered_bounds hNpos hodd _)
+  have hsum (m : ℕ) :
+      ((path (by omega) start m).map (actualSource k t)).sum =
+        u (phase (by omega) start m) - u start := by
+    have hp := path_range (phase (by omega) start) m
+      (fun j _ => hpot j) (fun j _ => hstep j)
+    simpa only [path, phase_zero] using path_sum hp
+  have hpre : ∀ n : ℕ, 0 ≤ ((word.take n).map (actualSource k t)).sum ∧
+      ((word.take n).map (actualSource k t)).sum ≤ half k := by
+    intro n
+    have ht : word.take n = path (by omega) start (min n k) := by
+      dsimp only [word, path]
+      rw [← List.map_take, List.take_range]
+    rw [ht, hsum]
+    exact hheight _
+  have hword : word = (List.finRange k).map (finCycle start) := by
+    apply List.ext_getElem
+    · simp [word]
+    · intro i hi hi'
+      simp only [word, path, List.getElem_map, List.getElem_range, List.getElem_finRange]
+      apply Fin.ext
+      simp [phase, finCycle_apply, Fin.val_add, Nat.add_comm]
+  have hperm : word.Perm (List.finRange k) := by
+    rw [hword]
+    exact (finCycle start).map_finRange_perm
+  have hnod : word.Nodup := hperm.nodup_iff.mpr (List.nodup_finRange k)
+  have hfull : word.toFinset = Finset.univ := by
+    apply Finset.eq_univ_of_forall
+    intro i
+    exact List.mem_toFinset.mpr (hperm.mem_iff.mpr (List.mem_finRange i))
+  refine ⟨hperm, hnod, hfull, ?_, hpre, ?_⟩
+  · apply strip_of_all_prefixes word
+    simpa only [zero_add, mass] using hpre
+  · dsimp only [word]
+    rw [hsum]
+    have he : phase (by omega) start k = start := by
+      simpa only [zero_add, phase_zero] using phase_period (by omega) start 0
+    rw [he, sub_self]
+
+#print axioms single_small_rigidity
+#print axioms single_small_forward_completion
+
 end D5.S3.Combinatorics.Circle.SingleSmallSource
