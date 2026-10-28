@@ -1,0 +1,75 @@
+**定理 4.2（整个未知签名纤维）。** 对任意 $E=0$ 的 (3.7)，其纤维为空，除非 $O=0$。当 $E=O=0$ 时，它可达，整个纤维恰由下列两个穷尽分支构成。
+
+对每个未知的 $t>0$、$t\ne1$，以及每个 $P\in\mathcal P$、$b+c=t$，令
+
+$$
+k=-\alpha+\frac\beta{t-1},\qquad
+p=\alpha u-\frac\Delta t v,\qquad
+(P,g,\delta)=(P,k+p,-k).
+\tag{4.3}
+$$
+
+只保留 $g\ne0$ 的候选。这里 $t$ 在整个纤维上可变，不是从 $O/E$ 得到的标签。
+
+单位分支 $t=1$ 存在恰当 $\beta=0$。此时保留每个 $P\in\mathcal P$、$b+c=1$ 和每个 $k\in\mathbb R$，令
+
+$$
+g=k+\alpha u-\Delta v,\qquad\delta=-k,
+\tag{4.4}
+$$
+
+同样只以 $g\ne0$ 过滤。两分支没有其他历史条件。若在线性推理中允许零增益，同一等价去掉该过滤即可。
+
+**证明，必要性。** 任意兼容世界写成 $g=k+p$、$p(0)=0$、$\delta=-k$，来源签名 $t=b+c>0$。累计矩阵在偶数时钟为 $I$，奇数时钟为 $J$，故
+
+$$
+r_2=p(2),\quad r_4=p(4),\qquad
+r_i=(t-1)k+t p(i)\quad(i=1,3,5).
+\tag{4.5}
+$$
+
+由 (3.8) 得 $O=tE$，所以 $E=0$ 必有 $O=0$。又 $p(2)=6\alpha/5$、$p(4)=4\alpha/5$，因此 $p-\alpha u$ 有三个不同根 $0,2,4$、次数至多三，恰为 $\lambda T(T-2)(T-4)$，包含 $\lambda=0$。奇数差给
+
+$$
+\Delta=t[p(3)-p(1)]=-6t\lambda,
+\tag{4.6}
+$$
+
+严格正性已经给 $t>0$，所以 $p=\alpha u-(\Delta/t)v$。奇数第一、第三读数取平均，再减去 $\alpha$，得到
+
+$$
+\beta=(t-1)(k+\alpha).
+\tag{4.7}
+$$
+
+$t\ne1$ 给 (4.3) 的 $k$；$t=1$ 则要求 $\beta=0$，$k$ 自由。这些代数对零块也成立，没有除以增益样本。
+
+**证明，充分性与所有祖先。** 两分支均由 (4.2) 的表给出初读零、偶数读数 $6\alpha/5,4\alpha/5$，奇数读数依次为
+
+$$
+\alpha+\beta-\Delta/2,\qquad
+\alpha+\beta+\Delta/2,\qquad
+\alpha+\beta-5\Delta/2.
+\tag{4.8}
+$$
+
+它们由 (4.1)、$E=0$、$O=0$ 恰为原 $r_1,r_2,r_3,r_4,r_5$。同一个固定候选实现全部已读祖先，无须逐终端拟合。
+
+**证明，可达性。** 每个 $t>0$ 都有合法来源。取
+
+$$
+0<\rho<\min(1/4,t^2/4),\quad
+a_\pm=\frac{1\pm\sqrt{1-4\rho}}2,\quad
+b_\pm=\frac{t\pm\sqrt{t^2-4\rho}}2,
+\tag{4.9}
+$$
+
+并任取 $P_{\epsilon\nu}=\left(\begin{smallmatrix}a_\epsilon&b_\nu\\t-b_\nu&1-a_\epsilon\end{smallmatrix}\right)$。两个判别式严格正，平方根分别小于 $1,t$，所以全部元素严格正。又
+
+$$
+a_\epsilon(1-a_\epsilon)=\rho=b_\nu(t-b_\nu),
+\tag{4.10}
+$$
+
+故迹一、行列式零、秩一；两个 $a$ 和两个 $b$ 分别不同，得到四个不同来源。若 $(\alpha,\Delta)\ne(0,0)$，由 $u,v$ 无关，任一非单位 $t$ 都给非零非常数增益。若 $\alpha=\Delta=0,\beta\ne0$，任一非单位 $t$ 给非零常数；若三个参数全零，取 $t=1,k\ne0$。故 $E=O=0$ 对可达性也充分。(4.9) 仅证明来源存在，不是对整个纤维附加判别式承诺。∎
+

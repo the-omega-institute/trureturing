@@ -1,0 +1,31 @@
+**Lemma 125.3 (a conditional full-fiber criterion).** Let $V$ be a real vector space, let $d\geq1$, and let $q_1,\ldots,q_d$ be a linearly independent basis of a finite-dimensional family of quadratic forms. Suppose every nonzero pencil $\sum_j\lambda_jq_j$ has infinite negative index, meaning that it is negative definite on finite-dimensional subspaces of arbitrarily large dimension. After any finitely many homogeneous linear constraints on $V$, there is a two-dimensional subspace on which every $q_j$ vanishes identically. Every homogeneous cubic form consequently has a nonzero zero on that plane.
+
+**Proof.** Intersecting a sufficiently large negative-definite subspace with finitely many linear kernels preserves infinite negative index. For $\lambda\in S^{d-1}$ choose a finite-dimensional subspace on which $q_\lambda=\sum_j\lambda_jq_j$ has at least $d+2$ negative dimensions. Negative definiteness on a fixed finite-dimensional subspace is open in $\lambda$, so a finite cover of $S^{d-1}$ and the span of the selected subspaces give a finite-dimensional $F$ on which every $q_\lambda$ has at least $d+2$ negative dimensions.
+
+On the unit sphere of $F$, minimize $H(x)=\sum_jq_j(x)^2$. If the minimum at $x$ were positive, put $\lambda_j=q_j(x)$. The subspace satisfying $b_j(x,w)=0$ for all symmetric polar forms $b_j$ has codimension at most $d$; after the sphere constraint it still contains a nonzero $w$ with $q_\lambda(w)<0$. For
+
+$$
+x(s)=\frac{x+sw}{\sqrt{1+s^2\|w\|^2}},
+$$
+
+the first derivatives of all $q_j(x(s))$ vanish and
+
+$$
+\left.\frac{d^2}{ds^2}H(x(s))\right|_{s=0}
+=4\bigl(q_\lambda(w)-H(x)\|w\|^2\bigr)<0,
+$$
+
+contradicting minimality. Thus there is a nonzero simultaneous zero $v_1$. Impose the additional equations $b_j(v_1,v)=0$ and one linear equation that is nonzero at $v_1$, and repeat the argument to obtain an independent simultaneous zero $v_2$. Polarization makes every $q_j$ vanish on $\operatorname{span}\{v_1,v_2\}$. A homogeneous cubic is odd on this plane, so it has a nonzero zero there. $\square$
+
+For the actual perturbation, take $V_E$ to be the real $L^\infty(m)$ classes supported in $E$ and satisfying $\ell_{yzw}(v)=0$ for all labels. Since $m$ is nonatomic and $m(E)>0$, arbitrarily many disjoint positive-measure subsets of $E$ give independent indicators. Thus $L^\infty(E,m)$ is infinite-dimensional, and $V_E$ remains infinite-dimensional after these at most 37 linear constraints. The restricted span of the actual quadratic forms $q_{yzw}$ has dimension at most ten. If that dimension is positive and every nonzero pencil has infinite negative index on $V_E$, Lemma 125.3 supplies a common zero plane. If the restricted span is zero, take any two-dimensional subspace of $V_E$ directly; no pencil argument is needed. In either case the odd cubic $\mathcal C(v,v,v)$ has a nonzero zero on the plane. Choose bounded Borel representatives and repair their null exceptional sets inside $E$, obtaining $v$ nonzero as an $L^\infty(m)$ class, with all first- and second-order coefficients and the cubic zero. Taking $0<|s|\leq\kappa/\|v\|_\infty$ preserves the simplex, and (125.1) preserves all 64 coordinates for both signs. This is a sufficient criterion; the individual index statements for the three sums in (125.6) do not imply it.
+
+If this criterion holds on some positive-measure overlap of every non-indicator tuple, then every compact fiber of $\Phi _3$ contains an indicator tuple. Indeed, maximize on a fiber the continuous strictly convex separator
+
+$$
+J(f)=\sum_{n\geq1}2^{-n}\sum_{y\in L}
+\left(\int_G\psi_nf_y\,dm\right)^2,
+\tag{125.7}
+$$
+
+where $(\psi_n)$ is a countable separating family in the real $L^1(m)$ unit ball. A maximizer with positive-measure overlap would be the midpoint of two distinct points of the same fiber by the criterion, contradicting strict convexity and maximality. It is therefore an indicator tuple almost everywhere; the common Borel null-set repair from Proposition 123.2 gives a pointwise Borel partition. This conditional implication is the full-fiber bridge, and its all-pencil hypothesis for the actual forms remains an additional premise.
+

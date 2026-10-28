@@ -1,0 +1,27 @@
+**命题 24.2（同位 Pauli 辅助读出及符号）。** 对同一个量子位采用
+
+$$
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+U=e^{-i\pi Y/4}=\frac1{\sqrt2}\begin{pmatrix}1&-1\\1&1\end{pmatrix}.
+$$
+
+若许可主动态更新 $\rho\mapsto U\rho U^\dagger$ 及原有 $X$ 读口，则
+它们复合读出原态的 $Z$ 期望，符号为正。当前仅有 $X,Y$ 期望时，
+$\rho_\pm=(I\pm hZ)/2$、$0<h\le1$ 是被此辅助读出区分的同记录双点。
+
+证明。直接相乘给
+
+$$
+U^\dagger XU=Z,\qquad
+\operatorname{tr}(XU\rho U^\dagger)=\operatorname{tr}(Z\rho).
+$$
+
+$\rho_\pm$ 的特征值为 $(1\pm h)/2$，均为合法态；两者的 $X,Y$ 期望
+皆零，$Z$ 期望为 $\pm h$。在 $h=0$ 时双点合一；$h=1$ 时仍合法。
+这里是同一量子位的矩阵、标准 $Y$ 与主动共轭约定，不能把主动/被动更新
+或 $Y$ 的负号互换后沿用同一公式。一次破坏性测量一般不给精确期望；
+比较这些期望需要所声明的同源态制备/重复读出条件，并支付样本与精度成本。
+也不要求在同一个单次量子历史上同时取得互不相容的三个确定读数。$\square$
+

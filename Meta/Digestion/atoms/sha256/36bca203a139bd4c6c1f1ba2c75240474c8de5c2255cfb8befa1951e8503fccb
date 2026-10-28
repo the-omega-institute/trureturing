@@ -1,0 +1,49 @@
+**Definition 1.1 (full endpoint and actual initialization).** For every
+original $a,\eta>0$ retain exactly [F, (7.1)–(7.2)]:
+
+$$
+\begin{gathered}
+G=H^1\times\mathbb R,\quad e=(0,0,0,0),\\
+(x,y,z,w)(x',y',z',w')
+ =(x+x',y+y',z+z',w+w'+xy'),\\
+d\mu=dx\,dy\,dz\,dw,\quad
+X_1=\partial_x,\quad X_2=\partial_y+x\partial_w,\quad
+X_3=\partial_z,\quad L=-\sum_{j=1}^3X_j^2,\\
+L\Gamma=\delta_e,\quad g_c=16\sqrt{a\eta},\quad
+S_{\min}=(aL-\eta\partial_w^2-g_c\Gamma)
+             |_{C_c^\infty(G\setminus\{e\};\mathbb C)}.
+\end{gathered}
+\tag{1.1}
+$$
+
+$\Gamma$ is the original positive degree-$-3$ unit-source Green
+field. Use the entire maximal-domain coefficient maps of
+[E, Theorem 112.2], its actual selector and its coefficient-positive
+normalized zero state:
+
+$$
+\begin{gathered}
+C(h)=c_h>0,\quad \|h\|_{L^2(\mu)}=1,\quad
+\rho_*=A(h)/C(h),\quad
+D(H)=\{u\in D(S_{\min}^*):A(u)=\rho_*C(u)\},\quad
+Hu=S_{\min}^*u,\\
+m=h^2\mu,\quad J_hv=hv,\quad
+K=J_h^{-1}HJ_h,\quad T_t=e^{-tK},\\
+\mathscr V=\mathscr V_0\dotplus\mathbb C1,\quad
+\mathscr E(f,g)=\int_{G\setminus\{e\}}
+ \left(a\sum_j\overline{X_jf}X_jg
+       +\eta\overline{\partial_wf}\partial_wg\right)dm.
+\end{gathered}
+\tag{1.2}
+$$
+
+Here $\mathscr V_0$ and the full operator domain are exactly
+[S, (115.14)–(115.17)]. The conservative continuous diffusion
+$\mathbf Z_t=(x_t,y_t,z_t,w_t)$ has its legitimate law $\mathbb P_e$
+started at $e$ at original time zero, as in [S, §§116–117]. In
+particular $h$ is smooth and positive off $e$, $m(G)=1$ and
+$m(\{e\})=0$. No value $h(e)$, stationary initialization, source
+replacement or Friedrichs replacement for $H$ is used. The Friedrichs
+operator $F$ below has only its already supplied source-killed and
+spectral roles.
+
