@@ -8,7 +8,6 @@
 
 import D5.S3.VertexAlgebra.CollisionAnalytic.AbsoluteEvaluation
 import Mathlib.Topology.Algebra.InfiniteSum.TsumUniformlyOn
-import Mathlib.Topology.Algebra.InfiniteSum.ContinuousEval
 import Mathlib.Topology.ContinuousMap.Compact
 import Mathlib.Topology.MetricSpace.Pseudo.Pi
 import Mathlib.Tactic.Linarith
@@ -27,18 +26,20 @@ open Set
 namespace D5.S3.VertexAlgebra.CollisionNormalConvergence
 open CollisionAbsoluteEvaluation.Labelled
 open CollisionRationalExpansions.OrderedRationalExpansion
-open SupportedFieldWords.FiniteConvolution
+open SupportedFieldWords.FiniteConvolution UniformGradedLocalCorrelator
 
 private def radiusDomain {n : ℕ} (sigma : Equiv.Perm (Fin n)) : Set (Fin n → ℝ) :=
   {r | (∀ i, 0 < r i) ∧ ∀ i j, i < j → r (sigma j) < r (sigma i)}
 
 private lemma radiusDomain_open {n : ℕ} (sigma : Equiv.Perm (Fin n)) :
     IsOpen (radiusDomain sigma) := by
-  apply IsOpen.inter
-  · exact isOpen_setOf_forall fun i => isOpen_lt continuous_const (continuous_apply i)
-  · exact isOpen_setOf_forall fun i => isOpen_setOf_forall fun j =>
-      isOpen_setOf_forall fun (_ : i < j) =>
-        isOpen_lt (continuous_apply (sigma j)) (continuous_apply (sigma i))
+  change IsOpen ({r : Fin n → ℝ | ∀ i, 0 < r i} ∩
+    {r | ∀ i j, i < j → r (sigma j) < r (sigma i)})
+  simp only [ofPred_forall]
+  exact (isOpen_iInter_of_finite fun i => isOpen_lt continuous_const (continuous_apply i)).inter
+    (isOpen_iInter_of_finite fun i => isOpen_iInter_of_finite fun j =>
+      isOpen_iInter_of_finite fun (_ : i < j) =>
+        isOpen_lt (continuous_apply (sigma j)) (continuous_apply (sigma i)))
 
 private def vertex {n : ℕ} (a b : Fin n → ℝ) (s : Fin n → Bool) : Fin n → ℂ :=
   fun i => ((if s i then b i else a i : ℝ) : ℂ)
@@ -60,7 +61,7 @@ private lemma annular_vertices {n : ℕ} (sigma : Equiv.Perm (Fin n))
       (by linarith : ε / 2 < ε)
     intro i
     dsimp [a, b]
-    cases s i <;> simp [Real.dist_eq, abs_of_nonneg hε.le, abs_of_nonneg (by linarith : 0 ≤ ε / 2)]
+    cases s i <;> simp [abs_of_nonneg hε.le]
   refine ⟨a, b, ?_, ?_⟩
   · intro i
     have ha := (hv (fun _ => false)).1 i
@@ -92,10 +93,11 @@ private lemma annular_term_bound {n : ℕ} (a b : Fin n → ℝ)
   have hvertex : ‖c * monomial w e‖ ≤ ‖c * monomial (vertex a b s) e‖ := by
     simp only [norm_mul, monomial, norm_prod, norm_zpow]
     apply mul_le_mul_of_nonneg_left _ (norm_nonneg c)
-    apply Finset.prod_le_prod (fun i _ => zpow_nonneg (norm_nonneg _) _)
+    apply Finset.prod_le_prod₀ (fun i _ => zpow_nonneg (norm_nonneg _) _)
     intro i _
     simpa only [vertex, Complex.norm_real, Real.norm_eq_abs, abs_of_pos (hv i)] using hp i
-  exact hvertex.trans (Finset.single_le_sum (fun t _ => norm_nonneg _) (Finset.mem_univ s))
+  exact hvertex.trans (Finset.single_le_sum
+    (fun t _ => norm_nonneg (c * monomial (vertex a b t) e)) (Finset.mem_univ s))
 
 private lemma chamber_local_majorant {n : ℕ} (sigma : Equiv.Perm (Fin n))
     (c : (Fin n → ℤ) → ℂ)
@@ -110,7 +112,9 @@ private lemma chamber_local_majorant {n : ℕ} (sigma : Equiv.Perm (Fin n))
   let U : Set (Fin n → ℂ) := {w | ∀ i, a i < ‖w i‖ ∧ ‖w i‖ < b i}
   let u := fun e => ∑ s : Fin n → Bool, ‖c e * monomial (vertex a b s) e‖
   refine ⟨U, u, ?_, ?_, ?_, ?_, ?_⟩
-  · exact isOpen_setOf_forall fun i =>
+  · dsimp [U]
+    simp only [ofPred_forall]
+    exact isOpen_iInter_of_finite fun i =>
       (isOpen_lt continuous_const (continuous_apply i).norm).inter
         (isOpen_lt (continuous_apply i).norm continuous_const)
   · exact fun i => ⟨(hab i).2.1, (hab i).2.2⟩
@@ -179,7 +183,7 @@ theorem collision_normal_evaluation {n : ℕ}
     (fun z hz => (heval z hz).2.1) K K.isCompact hKU
   let T : (Fin n → ℤ) → C(K, ℂ) := fun e =>
     ⟨fun z => c e * monomial (z : Fin n → ℂ) e, continuous_const.mul
-      (continuous_finset_prod _ fun i _ =>
+      (continuous_finsetProd _ fun i _ =>
         ((continuous_apply i).comp continuous_subtype_val).zpow₀ (e i)
           (fun z => Or.inl ((hKU z.property).1 i)))⟩
   have hnorm : Summable (fun e => ‖T e‖) :=
@@ -187,7 +191,7 @@ theorem collision_normal_evaluation {n : ℕ}
       ((T e).norm_le (hu0 e)).mpr (fun z => hub e z z.property))
   have hsum : HasSum T (∑' e, T e) := hnorm.of_norm.hasSum
   have hvalue (z : K) : (∑' e, T e) z = value z :=
-    (hasSum_apply hsum z).unique ((heval z (hKU z.property)).2.2.1)
+    (hsum.map (ContinuousMap.evalCLM ℂ z).toAddMonoidHom (ContinuousMap.evalCLM ℂ z).continuous).unique ((heval z (hKU z.property)).2.2.1)
   refine ⟨T, ∑' e, T e, fun _ _ => rfl, hvalue, hnorm, hsum, ?_⟩
   exact (HasSumUniformlyOn.of_norm_le_summable hu hub).congr_right
     (fun z hz => ((heval z (hKU hz)).2.2.1).tsum_eq)

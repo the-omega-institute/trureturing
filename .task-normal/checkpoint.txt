@@ -1,3 +1,0 @@
-WIP: compact annular vertex majorant and native collision normal evaluation
-
-Construct the local signed Laurent vertex estimate and finite compact cover; elaboration pending.
