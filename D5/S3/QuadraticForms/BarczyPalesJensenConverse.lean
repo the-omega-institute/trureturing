@@ -1,9 +1,9 @@
 /- GID: D5/S3/QuadraticForms/BarczyPalesJensenConverse
-   generality: S
+   generality: I
    mirror-B: D5/B/S3/QuadraticForms/BarczyPalesJensenConverse
-   mirror-E: none(waiver:probe-only)
+   mirror-E: none(waiver:noncomputable-witness)
    anchors: []
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/QuadraticForms/BarczyPalesJensenConverse.claim; result=D5/S3/QuadraticForms/BarczyPalesJensenConverse.result; claim=D5/S3/QuadraticForms/BarczyPalesJensenConverse.claim
    digest: A signed quadratic norm counterexample to the rank-only Jensen converse. -/
 
 import Mathlib.Algebra.QuadraticAlgebra.Basic
@@ -15,7 +15,7 @@ import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Data.Rat.Lemmas
 import Mathlib.Tactic
 
-/-
+/-!
 The original target is Barczy–Páles, arXiv:2510.03715v1, Remark 2.2(i),
 equation (2.1) and Definition 1.1. Admission: external open problem #23083.
 The subject is an indefinite rational quadratic form transported to the reals.
@@ -47,21 +47,21 @@ There are no direct frozen D5 dependencies. Public inventory: claim, result.
 -/
 
 noncomputable section
-open scoped BigOperators
+open scoped BigOperators QuadraticAlgebra
 open Matrix
 
 namespace BarczyPalesJensenConverse
 
 private instance nonsquare : Fact (¬ IsSquare (3 : ℚ)) := by
-  constructor
-  rw [Rat.isSquare_natCast_iff]
-  norm_num
+  refine ⟨?_⟩
+  intro h
+  exact Nat.prime_three.not_isSquare ((Rat.isSquare_natCast_iff (n := 3)).mp h)
 
 private abbrev K := QuadraticAlgebra ℚ 3 0
 
 private def embedding : K →ₐ[ℚ] ℝ :=
   QuadraticAlgebra.lift ⟨Real.sqrt 3, by
-    simpa [Algebra.smul_def, pow_two] using Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 3)⟩
+    simp [Algebra.smul_def, pow_two]⟩
 
 private instance realAlgebra : Algebra K ℝ := embedding.toRingHom.toAlgebra
 
@@ -133,13 +133,13 @@ private theorem all_input_identity (x : Fin 3 → ℝ) :
     fin_cases i <;> simp [counterMatrix, Matrix.mulVec, dotProduct,
       Fin.sum_univ_succ, m, t] <;> ring
   have htwo : embedding (omega - 2) = Real.sqrt 3 - 2 := by
-    simp [embedding_omega]
+    simp [embedding_omega, map_ofNat]
   have hthree : embedding (1 - omega) = 1 - Real.sqrt 3 := by
-    simp [embedding_omega]
+    simp [embedding_omega, map_ofNat]
   change (∑ i, counterFunction ((counterMatrix *ᵥ x) i)) = 3 * counterFunction m
   rw [hrow]
   simp only [Fin.sum_univ_three, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val_two, counterFunction, map_add]
+    Matrix.cons_val_two, Matrix.tail_cons, Matrix.head_cons, counterFunction, map_add]
   rw [← htwo, ← hthree, projection_scalar, projection_scalar]
   have hc := congrArg (fun q : ℚ => (q : ℝ))
     (norm_cancellation (projection m) (projection t))
@@ -191,10 +191,10 @@ def claim : Prop :=
 
 theorem result : ¬ claim := by
   intro h
-  let f : (Set.univ : Set ℝ) → ℝ := fun x => counterFunction x
+  let f : ↥(Set.univ : Set ℝ) → ℝ := fun x => counterFunction x
   have hj := h 3 (by norm_num) Set.univ Set.univ_nonempty isOpen_univ
     convex_univ f counterMatrix matrix_stochastic matrix_rank
-  have hi : ∀ x : Fin 3 → (Set.univ : Set ℝ),
+  have hi : ∀ x : Fin 3 → ↥(Set.univ : Set ℝ),
       f (intervalMean convex_univ (by norm_num : 0 < 3) x) ≤
         (∑ i, f (intervalRow convex_univ counterMatrix matrix_stochastic x i)) / 3 := by
     intro x
