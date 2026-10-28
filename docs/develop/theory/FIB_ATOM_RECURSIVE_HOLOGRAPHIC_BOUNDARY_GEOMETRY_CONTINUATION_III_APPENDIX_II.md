@@ -3737,12 +3737,12 @@ $$
 |\mathcal D_S(u_N)|\le{}&
 2\|W\|\bigl(\|Ku_N\|\|Pu_N\|
                   +\|PKu_N\|\|u_N\|\bigr)\\
-&+2\|D\|\|P^{1/2}Ku_N\|\|P^{1/2}u_N\|=o(129.1),                              \tag{129.13}
+&+2\|D\|\|P^{1/2}Ku_N\|\|P^{1/2}u_N\|=o(1),                              \tag{129.13}
 \end{aligned}
 $$
 using (129.12) with $\tau=d,d/2$. Equation (129.10) consequently gives
 $$
-|\mathcal D_F(u_N)|=O(129.1).                                                  \tag{129.14}
+|\mathcal D_F(u_N)|=O(1).                                                  \tag{129.14}
 $$
 
 ### 129.D. Local ellipticity and independent real angular tests
@@ -3757,7 +3757,7 @@ $$
 -2iN\int|\chi|^2\left[
 af_r\zeta_r+af_z\zeta_z+
 \left(\eta+\frac{ar^2}{4}\right)f_\xi\zeta_\xi
-\right]dm+O(129.1).                                                          \tag{129.15}
+\right]dm+O(1).                                                          \tag{129.15}
 $$
 Every remaining term is on one fixed compact punctured support and is bounded independently of $N$. Equations (129.14)–(129.15), for every real $\chi$ and every $\zeta$, force the integral coefficient to vanish. Continuity and positivity of the local density imply $f_r=f_z=f_\xi=0$; rotation invariance gives $f_\theta=0$. Connectedness makes $f$ constant on $\Omega$, a contradiction.
 
