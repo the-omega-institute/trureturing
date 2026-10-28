@@ -12,7 +12,6 @@ import D5.S3.Combinatorics.Circle.ZeroSumSubsets
 import D5.S1.Words.AssociatedMersenne.CircularWords
 import Mathlib.Combinatorics.Colex
 import Mathlib.Data.Fin.Rev
-import Mathlib.Tactic
 
 /-! # Physical cyclic binary runs for the centered doubling source
 
@@ -346,7 +345,6 @@ private theorem cycle_rev_succ {k : ℕ} (hk : 0 < k) (a i : Fin k) :
   by_cases hk1 : k = 1
   · subst k
     exact Subsingleton.elim _ _
-  have hk2 : 2 ≤ k := by omega
   apply Fin.ext
   simp only [finCycle_apply, finRotate_apply, finRotate_symm_apply, Fin.val_add,
     Fin.val_rev, Fin.val_sub]
@@ -429,8 +427,6 @@ theorem binaryRunTops_separated {e : ℕ} {a b : ℕ}
     a + 1 < b := by
   by_contra h
   have hba : b = a + 1 := by omega
-  have hbitA : e.testBit a = true := Nat.mem_bitIndices.mp (by
-    exact List.mem_toFinset.mp (Finset.mem_filter.mp ha).1)
   have hzeroA : e.testBit (a + 1) = false := (Finset.mem_filter.mp ha).2
   have hbitB : e.testBit b = true := Nat.mem_bitIndices.mp (by
     exact List.mem_toFinset.mp (Finset.mem_filter.mp hb).1)
@@ -446,8 +442,7 @@ theorem separated_run_bound (e : ℕ) :
   · change 4 ^ m ≤ 3 * e + 1
     rw [hm]
     norm_num
-  · have hmpos : 0 < m := Nat.pos_of_ne_zero hm
-    let emb : Fin m ↪o ℕ := s.orderEmbOfFin (by rfl)
+  · let emb : Fin m ↪o ℕ := s.orderEmbOfFin (by rfl)
     let b : Fin m → ℕ := emb
     have hbmem (i : Fin m) : b i ∈ s := by
       exact s.orderEmbOfFin_mem _ _
@@ -518,7 +513,6 @@ theorem separated_run_bound (e : ℕ) :
 
 theorem cyclic_binary_run_bound {k : ℕ} (hk : 2 ≤ k)
     (u : Fin k → ℕ) (c : Fin k → Bool)
-    (hu : ∀ i, u i < 2 ^ k - 1)
     (hrec : ∀ i, (u (finRotate k i) : ℤ) =
       2 * (u i : ℤ) - ((2 ^ k - 1 : ℕ) : ℤ) * (c i).toNat)
     (a : Fin k) (e : ℕ) (ha : u a = 4 * e + 1)
@@ -543,13 +537,50 @@ def nativeUnsigned (k t : ℕ) (i : Fin k) : ℕ :=
 def nativeCarry (k t : ℕ) (i : Fin k) : Bool :=
   decide (0 < actualSource k t i)
 
+private theorem actualSource_rotate {k : ℕ} (hk : 3 ≤ k) (t : ℕ) (i : Fin k) :
+    actualSource k t (finRotate k i) =
+      doubleStep (modulus k) (actualSource k t i) := by
+  have he : phase (by omega) i 1 = finRotate k i := by
+    apply Fin.ext
+    simp only [phase, finRotate_apply, Fin.val_add]
+    norm_num
+  have hs := phase_step hk t i 0
+  rw [show 0 + 1 = 1 by omega, he, phase_zero] at hs
+  exact hs
+
+/-- Every physical negative LARGE label is exactly a false-to-true carry edge. -/
+theorem actualSource_falseTrueEdge_iff {k t : ℕ} (hk : 3 ≤ k) (i : Fin k) :
+    falseTrueEdge (nativeCarry k t) i ↔ actualSource k t i ≤ -quarter k := by
+  obtain ⟨hQ, hN, hhalf, hNpos, hodd⟩ := source_geometry hk
+  have hb := centered_bounds hNpos hodd ((2 : ℤ) ^ i.val * (t : ℤ))
+  change -half k ≤ actualSource k t i ∧ actualSource k t i ≤ half k at hb
+  rw [hhalf] at hb
+  simp only [falseTrueEdge, nativeCarry, decide_eq_false_iff_not, decide_eq_true_eq]
+  rw [actualSource_rotate hk t i]
+  unfold doubleStep
+  split_ifs <;> omega
+
+/-- Count all physical labels with source at most minus the quarter threshold. -/
+def actualNegativeLargeCount (k t : ℕ) : ℕ :=
+  (Finset.univ.filter (fun i : Fin k => actualSource k t i ≤ -quarter k)).card
+
+/-- No quotient by values or by a shorter numerical period is taken. -/
+theorem actualSource_runCount_eq {k t : ℕ} (hk : 3 ≤ k) :
+    physicalRunCount (nativeCarry k t) = actualNegativeLargeCount k t := by
+  classical
+  unfold physicalRunCount actualNegativeLargeCount
+  congr 1
+  ext i
+  simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+  exact actualSource_falseTrueEdge_iff hk i
+
 theorem actualSource_binary_run_bound {k t : ℕ} (hk : 3 ≤ k)
     (a : Fin k) (e : ℕ)
     (ha : actualSource k t a = -(4 * e + 1))
     (hstrict : 3 * e + 1 < quarter k) :
-    physicalRunCount (nativeCarry k t) = binaryRunCount e + 1 ∧
-      4 ^ (physicalRunCount (nativeCarry k t) - 1) ≤ 3 * e + 1 := by
-  obtain ⟨hQ, hN, hhalf, hNpos, hodd⟩ := source_geometry hk
+    actualNegativeLargeCount k t = binaryRunCount e + 1 ∧
+      4 ^ (actualNegativeLargeCount k t - 1) ≤ 3 * e + 1 := by
+  obtain ⟨_, _, _, hNpos, hodd⟩ := source_geometry hk
   let g : Fin k → ℤ := fun i => -actualSource k t i
   let U : Fin k → ℤ := fun i => g i + if g i < 0 then modulus k else 0
   have hg (i : Fin k) : -(modulus k / 2) ≤ g i ∧ g i ≤ modulus k / 2 := by
@@ -558,27 +589,16 @@ theorem actualSource_binary_run_bound {k t : ℕ} (hk : 3 ≤ k)
       actualSource k t i ≤ modulus k / 2 at hf
     dsimp [g]
     omega
-  have hU (i : Fin k) : 0 ≤ U i ∧ U i < modulus k := by
+  have hU (i : Fin k) : 0 ≤ U i := by
     have hgi := hg i
     dsimp [U]
     split_ifs <;> omega
   have hto (i : Fin k) : (nativeUnsigned k t i : ℤ) = U i := by
-    rw [nativeUnsigned, Int.toNat_of_nonneg (hU i).1]
-  have hstep (i : Fin k) :
-      actualSource k t (finRotate k i) = doubleStep (modulus k) (actualSource k t i) := by
-    have he : phase (by omega) i 1 = finRotate k i := by
-      apply Fin.ext
-      simp only [phase, finRotate_apply, Fin.val_add]
-      norm_num
-    have hs := phase_step hk t i 0
-    rw [show 0 + 1 = 1 by omega, he] at hs
-    have hzero : phase (by omega) i 0 = i := phase_zero (by omega) i
-    rw [hzero] at hs
-    exact hs
+    rw [nativeUnsigned, Int.toNat_of_nonneg (hU i)]
   have hUstep (i : Fin k) : U (finRotate k i) - U i = g i := by
     have hgstep : g (finRotate k i) = doubleStep (modulus k) (g i) := by
       dsimp [g]
-      rw [hstep, doubleStep_neg (le_of_lt hNpos)]
+      rw [actualSource_rotate hk t i, doubleStep_neg (le_of_lt hNpos)]
     have hu := unsigned_step hNpos hodd (by
       have := hg i
       exact this)
@@ -617,28 +637,9 @@ theorem actualSource_binary_run_bound {k t : ℕ} (hk : 3 ≤ k)
     have he' : (4 * e + 1 : ℤ) < (2 : ℤ) ^ (k - 1) := by omega
     have heNat : 4 * e + 1 < 2 ^ (k - 1) := by exact_mod_cast he'
     simpa [haU] using heNat
-  apply cyclic_binary_run_bound (by omega) (nativeUnsigned k t) (nativeCarry k t)
-    (fun i => by
-      have hi := hU i
-      have hiN : (nativeUnsigned k t i : ℤ) < ((2 ^ k - 1 : ℕ) : ℤ) := by
-        rw [hto i, ← show modulus k = ((2 ^ k - 1 : ℕ) : ℤ) by
-        dsimp [modulus]; norm_num]
-        exact hi.2
-      exact_mod_cast hiN) hrec a e haU hhalfNat
+  rw [← actualSource_runCount_eq hk]
+  exact cyclic_binary_run_bound (by omega) (nativeUnsigned k t) (nativeCarry k t)
+    hrec a e haU hhalfNat
 
-
-def BinaryRunProfile (k : ℕ) (c : Fin k → Bool) (a : Fin k) (e : ℕ) : Prop :=
-  wordValue c a = 4 * e + 1 ∧
-  physicalRunCount c = binaryRunCount e + 1 ∧
-  4 * e + 1 < 2 ^ (k - 1)
-
-theorem binary_run_profile_bound {k : ℕ} {c : Fin k → Bool} {a : Fin k} {e : ℕ}
-    (h : BinaryRunProfile k c a e) :
-    physicalRunCount c = binaryRunCount e + 1 ∧
-      4 ^ (physicalRunCount c - 1) ≤ 3 * e + 1 := by
-  rcases h with ⟨_, hr, hs⟩
-  refine ⟨hr, ?_⟩
-  rw [hr]
-  simpa [Nat.add_sub_cancel] using separated_run_bound e
 
 end D5.S3.Combinatorics.Circle.BinaryRunSource
