@@ -1,0 +1,20 @@
+**命题 5.2（所有 beta 的非空性）。** 定理 5.1 的每个纤维都含合法目标。
+
+**证明。** 若 $\beta\ne0$，取
+
+$$
+P=\begin{pmatrix}1/2&1\\1/4&1/2\end{pmatrix},\qquad
+k=4\beta,\qquad\delta=-4\beta.
+\tag{5.5}
+$$
+
+其正性、迹一、$1(1/4)=(1/2)(1/2)$ 给出合法来源，且 $\sigma=5/4$、$k(\sigma-1)=\beta$、$k\ne0$。若 $\beta=0$，取
+
+$$
+P_* =\begin{pmatrix}1/2&1/2\\1/2&1/2\end{pmatrix},\qquad
+k=1,\qquad\delta=-1.
+\tag{5.6}
+$$
+
+其来源合法且 $\sigma=1$，故满足 (5.2)。这里零 beta 是真实合法分支；由 (5.2) 反过来也知该分支的每个合法世界均有 $\sigma=1$。∎
+
