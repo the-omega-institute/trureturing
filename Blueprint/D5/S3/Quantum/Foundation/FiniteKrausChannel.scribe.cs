@@ -41,7 +41,7 @@ internal sealed class FiniteKrausChannelDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/FiniteKrausChannel.IsTracePreserving"),
                 H("Trace preservation on every matrix"),
                 StatementSource.FromAuthor(TracePreservingFormula()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumChannels/meiburg2025physlibdual")),
                 Blocks(Paragraph(Text("A matrix map is trace preserving when its output has the same trace as its input for every matrix over the semiring."))),
                 DescribeRole.Definition),
             Describe.Lean(
@@ -49,7 +49,7 @@ internal sealed class FiniteKrausChannelDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/FiniteKrausChannel.of_kraus_isTracePreserving"),
                 H("Kraus completeness gives trace preservation"),
                 StatementSource.FromAuthor(KrausTracePreservingFormula()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumChannels/meiburg2025physlibdual")),
                 Blocks(Paragraph(Text("Over a commutative semiring with a star operation, the completeness identity for two finite Kraus families makes their matrix map preserve the trace of every input."))),
                 DescribeRole.Theorem),
             Describe.Lean(

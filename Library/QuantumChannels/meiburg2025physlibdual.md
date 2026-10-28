@@ -5,9 +5,10 @@ year: 2025
 title: "Physlib QuantumInfo: unbundled channels, channel duals and Hermitian-matrix order"
 doi: null
 url: https://github.com/leanprover-community/physlib/tree/6a09b2d1761a0d4430083045a247eb121d8da260
-claim: "A completely positive matrix map is positive; the trace dual of a positive map is positive and satisfies tr(M(A) B) = tr(A M*(B)); positive semidefinite matrices have a nonnegative trace product; the kernel of a sum of positive semidefinite matrices is the intersection of their kernels."
+claim: "A completely positive matrix map is positive; the trace dual of a positive map is positive and satisfies tr(M(A) B) = tr(A M*(B)); positive semidefinite matrices have a nonnegative trace product; the kernel of a sum of positive semidefinite matrices is the intersection of their kernels; trace preservation means tr(M(X)) = tr(X) for every X, and a Kraus family with $\\sum_i K_i^\\dagger K_i=I$ gives a trace-preserving map."
 strata_touched:
   - D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation
+  - D5/S3/Quantum/Foundation/FiniteKrausChannel
 license: Apache-2.0
 triage: anchor
 ---
@@ -31,6 +32,11 @@ upstream files. The adaptations are namespaces and explicit section binders; in
 Mathlib's continuous-functional-calculus parts and the `selfAdjoint` subtype; in
 `HermitianMat.ker_sum` the upstream `HermitianMat`, `mat` and `ker` are expanded to
 `selfAdjoint`, `Subtype.val` and the kernel of `Matrix.toEuclideanLin`.
+
+The trace-preservation predicate `IsTracePreserving` and theorem
+`of_kraus_isTracePreserving` are also retained from
+`QuantumInfo/Channels/Unbundled.lean`; the latter is locally nested in
+`MatrixMap.IsTracePreserving`.
 
 Retirement condition: when this repository's own adopted Mathlib pin provides
 equivalent declarations, consumers should use those declarations directly.
@@ -64,6 +70,8 @@ Upstream names are in `MatrixMap` unless stated otherwise; local names are in
 
 | Declaration | Original source lines |
 | --- | --- |
+| `IsTracePreserving` | `QuantumInfo/Channels/Unbundled.lean:37-38` |
+| `of_kraus_isTracePreserving` | `QuantumInfo/Channels/Unbundled.lean:166-176` |
 | `IsHermitianPreserving` | `QuantumInfo/Channels/Unbundled.lean:222-224` |
 | `IsPositive.IsHermitianPreserving` | `QuantumInfo/Channels/Unbundled.lean:253-263` |
 | `IsCompletelyPositive.IsPositive` | `QuantumInfo/Channels/Unbundled.lean:321-345` |
