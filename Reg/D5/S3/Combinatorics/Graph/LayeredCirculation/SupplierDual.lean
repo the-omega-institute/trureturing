@@ -124,20 +124,20 @@ def pruningEvidence : Registration pruningArena.{uK,uV,uE}
     omega
 
 def pruningRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@exists_nodup_visited_walkWeight_le.{uV,uE,uK})
-    (Realization pruningSignature.{uK,uV,uE}) (Nat → Type) Unit where
+    (@exists_nodup_visited_walkWeight_le.{0,0,0})
+    (Realization pruningSignature.{0,0,0}) (Nat → Type) Unit where
   unitName := `Maths.MaxPlusPotential.exists_nodup_visited_walkWeight_le.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.LayeredCirculation.SupplierDual.pruningEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨pruningArena⟩
-  objectArena := .source ⟨pruningArena⟩
+  arena := .source ⟨pruningArena.{0,0,0}⟩
+  objectArena := .source ⟨pruningArena.{0,0,0}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source pruningArena ⟨pruningEvidence⟩
+  realization := .source pruningArena.{0,0,0} ⟨pruningEvidence.{0,0,0}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize pruningSignature
+  readout := some (realize pruningSignature.{0,0,0}
     (fun _ q walk => walkWeight q.weight walk) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
