@@ -1,6 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
-using static StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Domination.TotalDominationFormulas;
 using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Domination;
@@ -23,4 +22,30 @@ internal sealed class TotalDominationDensityDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string selector, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("td-density-" + selector.Replace("_", "-").ToLowerInvariant()), DeclarationHandle.Create(Prefix + selector),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Combinatorics/shao2026connectedroots")), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+    private static Formula V(string s) => F.Id(s);
+    private static Formula Nat => Seq(Mathbb, Grp(V("N")));
+    private static Formula Real => Seq(Mathbb, Grp(V("R")));
+    private static Formula Complex => Seq(Mathbb, Grp(V("C")));
+    private static Formula Call(string s, params Formula[] xs) => new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. xs]);
+    private static Formula Par(Formula x) => Seq(Open,x,Close);
+    private static Formula Cast(Formula x, Formula t) => Par(Seq(x,Colon,t));
+    private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x,FormulaBinaryOperator.Subtract,y);
+    private static Formula Ne(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.NotEqual,y);
+    private static Formula Lt(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.LessThan,y);
+    private static Formula Leq(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.LessThanOrEqual,y);
+    private static Formula And(params Formula[] xs) => xs.Length==1 ? xs[0] : new Formula.Logic(Par(xs[0]),FormulaLogicOperator.And,Par(And(xs[1..])));
+    private static Formula Imp(Formula x, Formula y) => new Formula.Logic(Par(x),FormulaLogicOperator.Implies,Par(y));
+    private static Formula All(string s, Formula t, Formula b) => Seq(Forall,Sp,Par(Seq(V(s),Colon,t)),Comma,Sp,b);
+    private static Formula Some(string s, Formula t, Formula b) => Seq(Exists,Sp,Par(Seq(V(s),Colon,t)),Comma,Sp,b);
+    private static Formula Graph(Formula t) => Call("SimpleGraph",t);
+    private static Formula Fin(Formula n) => Call("Fin",n);
+    private static Formula Adj(Formula g, Formula v, Formula u) => Call("Adj",g,v,u);
+    private static Formula Poly(Formula g, bool complex=true) => Call(complex?"complexPolynomial":"totalPolynomial",g);
+    private static Formula Root(Formula p, Formula w) => Call("IsRoot",p,w);
+    private static Formula Norm(Formula x) => Seq(Vert,Sp,x,Vert);
+    private static Formula NoIso(Formula g, Formula t) => All("v",t,Some("u",t,Adj(g,V("v"),V("u"))));
+    private static Formula Witness(Formula target) => Some("n",Nat,Some("G",Graph(Fin(V("n"))),Some("w",Complex,And(Leq(D(2),V("n")),NoIso(V("G"),Fin(V("n"))),Ne(Poly(V("G")),D(0)),Root(Poly(V("G")),V("w")),Lt(Norm(Sub(V("w"),target)),V("epsilon"))))));
+    private static Formula Whole() => All("z",Complex,All("epsilon",Real,Imp(Lt(D(0),V("epsilon")),Witness(V("z")))));
+    private static Formula Density(bool nonunit) => All("xi",Complex,nonunit?Imp(Ne(Call("re",V("xi")),D(0)),DensityEpsilon()):DensityEpsilon());
+    private static Formula DensityEpsilon() => All("epsilon",Real,Imp(Lt(D(0),V("epsilon")),Witness(Sub(Call("exp",V("xi")),Cast(D(1),Complex)))));
 }

@@ -1,6 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
-using static StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Domination.TotalDominationFormulas;
 using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Domination;
@@ -12,7 +11,7 @@ internal sealed class TotalDominationSeedsDocument : IScribeDocumentDefinition
         "Actual total-domination roots approach minus one from the right and are unbounded to the left.",
         H("Small-shift and unbounded total-domination roots"), Blocks(
             Paragraph(Text("A total dominating set S is an actual finite subset of the graph vertices. Every vertex v, including every selected vertex, must have a neighbour u in S. No independence, minimality, ordinary closed-neighbourhood domination, or connectedness restriction on S is substituted. The polynomial coefficients count exactly these subsets.")),
-            Node("IsTotal", "Total domination", All("V",Type,All("G",Graph(V("V")),All("S",Set(V("V")),IffTo(Total(V("G"),V("S")),All("v",V("V"),Some("u",V("V"),And(Member(V("u"),V("S")),Adj(V("G"),V("v"),V("u")))))))),
+            Node("IsTotal", "Total domination", All("V",Type,All("G",Graph(V("V")),All("S",Set(V("V")),IffTo(Total(V("G"),V("S")),All("v",V("V"),Some("u",V("V"),And(Member(V("u"),V("S")),Adj(V("G"),V("v"),V("u"))))))))),
                 "For every actual graph G : SimpleGraph V and S : Finset V, IsTotal G S is the displayed proposition. V is implicit and has universe Type. The relation is the existing symmetric, loopless SimpleGraph adjacency.", DescribeRole.Definition),
             Node("totalPolynomial", "The actual subset polynomial", SubsetPolynomial(false),
                 "For every finite V with a Fintype instance and every SimpleGraph G on V, totalPolynomial G lies in the real polynomial ring. The displayed sum ranges over all S : Finset V of X raised to S.card when IsTotal G S holds, and zero otherwise. There is no supplied polynomial hypothesis.", DescribeRole.Definition),
@@ -20,7 +19,7 @@ internal sealed class TotalDominationSeedsDocument : IScribeDocumentDefinition
                 "G : SimpleGraph V and H : SimpleGraph W give a graph on V sum W. Two left vertices use G adjacency, two right vertices use H adjacency, and vertices on opposite sides are not adjacent. The private subset equivalence union_total and sum bijection union_polynomial prove multiplicativity.", DescribeRole.Definition),
             Node("coneGraph", "A genuine universal vertex", All("V",Type,All("G",Graph(V("V")),And(All("a",Call("Unit"),All("b",Call("Unit"),IffTo(Adj(Call("coneGraph",V("G")),Call("inl",V("a")),Call("inl",V("b"))),Call("False")))),All("a",Call("Unit"),All("v",V("V"),IffTo(Adj(Call("coneGraph",V("G")),Call("inl",V("a")),Call("inr",V("v"))),Call("True")))),All("v",V("V"),All("a",Call("Unit"),IffTo(Adj(Call("coneGraph",V("G")),Call("inr",V("v")),Call("inl",V("a"))),Call("True")))),All("v",V("V"),All("u",V("V"),IffTo(Adj(Call("coneGraph",V("G")),Call("inr",V("v")),Call("inr",V("u"))),Adj(V("G"),V("v"),V("u")))))))),
                 "The vertex type is Unit sum V. The sole left vertex is adjacent to every right vertex; two right vertices use G adjacency; no left-left adjacency is allowed. For nonempty finite V, splitting subsets by hub membership proves T_cone(x)=x((1+x)^card(V)-1)+T_G(x). The selected hub itself requires a selected old vertex, which explains the subtraction of one.", DescribeRole.Definition),
-            Node("totalDecidable", "Decidability of actual total domination", All("V",Type,Inst(Call("Fintype",V("V")),All("G",Graph(V("V")),Inst(Call("DecidableRel",Call("Adj",V("G"))),All("S",Set(V("V")),Cast(Call("totalDecidable",V("G"),V("S")),Call("Decidable",Total(V("G"),V("S")))))))),
+            Node("totalDecidable", "Decidability of actual total domination", All("V",Type,Inst(Call("Fintype",V("V")),All("G",Graph(V("V")),Inst(Call("DecidableRel",Call("Adj",V("G"))),All("S",Set(V("V")),Cast(Call("totalDecidable",V("G"),V("S")),Call("Decidable",Total(V("G"),V("S"))))))))),
                 "The public instance has exactly the displayed dependent type. Unfolding IsTotal reduces it to finite decidable universal and existential quantification over adjacency and membership.", DescribeRole.Definition),
             Node("seedBaseFintype", "SeedBase finite enumeration", Instance("seedBaseFintype","SeedBase",false),
                 "For every natural m this is the displayed instance. At zero use the canonical Fin instance; at a successor use instFintypeSum with the recursively supplied instance.", DescribeRole.Definition),
@@ -74,72 +73,64 @@ internal sealed class TotalDominationSeedsDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("td-seed-" + selector.Replace("_", "-").ToLowerInvariant()), DeclarationHandle.Create(Prefix + selector),
             H(title), StatementSource.FromAuthor(Disp(formula)), Provenance(selector),
             Blocks(Paragraph(Text(prose))), role);
-}
-
-internal static class TotalDominationFormulas
-{
-    internal static Formula V(string s) => F.Id(s);
-    internal static Formula Nat => Seq(Mathbb, Grp(V("N")));
-    internal static Formula Real => Seq(Mathbb, Grp(V("R")));
-    internal static Formula Complex => Seq(Mathbb, Grp(V("C")));
-    internal static Formula Type => Call("Type");
-    internal static Formula Call(string s, params Formula[] xs) => new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. xs]);
-    internal static Formula Par(Formula x) => Seq(Open,x,Close);
-    internal static Formula Cast(Formula x, Formula t) => Par(Seq(x,Colon,t));
-    internal static Formula Pow(Formula x, Formula n) => Seq(Par(x),Caret,Grp(n));
-    internal static Formula Add(Formula x, Formula y) => new Formula.Binary(x,FormulaBinaryOperator.Add,y);
-    internal static Formula Sub(Formula x, Formula y) => new Formula.Binary(x,FormulaBinaryOperator.Subtract,y);
-    internal static Formula Mul(Formula x, Formula y) => new Formula.Binary(x,FormulaBinaryOperator.Multiply,y);
-    internal static Formula Eq(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.Equal,y);
-    internal static Formula Ne(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.NotEqual,y);
-    internal static Formula Lt(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.LessThan,y);
-    internal static Formula Leq(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.LessThanOrEqual,y);
-    internal static Formula Member(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.MemberOf,y);
-    internal static Formula And(params Formula[] xs) => xs.Length==1 ? xs[0] : new Formula.Logic(Par(xs[0]),FormulaLogicOperator.And,Par(And(xs[1..])));
-    internal static Formula Imp(Formula x, Formula y) => new Formula.Logic(Par(x),FormulaLogicOperator.Implies,Par(y));
-    internal static Formula IffTo(Formula x, Formula y) => new Formula.Logic(Par(x),FormulaLogicOperator.Iff,Par(y));
-    internal static Formula All(string s, Formula t, Formula b) => Seq(Forall,Sp,Par(Seq(V(s),Colon,t)),Comma,Sp,b);
-    internal static Formula Some(string s, Formula t, Formula b) => Seq(Exists,Sp,Par(Seq(V(s),Colon,t)),Comma,Sp,b);
-    internal static Formula Inst(Formula t, Formula b) => Seq(OpenBracket,t,CloseBracket,Comma,Sp,b);
-    internal static Formula Graph(Formula t) => Call("SimpleGraph",t);
-    internal static Formula Fin(Formula n) => Call("Fin",n);
-    internal static Formula Set(Formula t) => Call("Finset",t);
-    internal static Formula SumType(Formula x, Formula y) => Call("Sum",x,y);
-    internal static Formula ProdType(Formula x, Formula y) => Seq(x,Times,Sp,y);
-    internal static Formula Adj(Formula g, Formula v, Formula u) => Call("Adj",g,v,u);
-    internal static Formula Total(Formula g, Formula s) => Call("IsTotal",g,s);
-    internal static Formula Poly(Formula g, bool complex=true) => Call(complex?"complexPolynomial":"totalPolynomial",g);
-    internal static Formula Root(Formula p, Formula w) => Call("IsRoot",p,w);
-    internal static Formula Norm(Formula x) => Seq(Vert,Sp,x,Vert);
-    internal static Formula NoIso(Formula g, Formula t) => All("v",t,Some("u",t,Adj(g,V("v"),V("u"))));
-    internal static Formula FiniteGraph(Formula b) => All("V",Type,Inst(Call("Fintype",V("V")),All("G",Graph(V("V")),b)));
-    internal static Formula BothTypes(Formula b, bool finite=false) => All("V",Type,All("W",Type,finite?Inst(Call("Fintype",V("V")),Inst(Call("Fintype",V("W")),b)):b));
-    internal static Formula PolynomialType(Formula t) => Seq(t,OpenBracket,V("X"),CloseBracket);
-    internal static Formula SubsetPolynomial(bool complex) => FiniteGraph(Eq(Poly(V("G"),complex),Seq(Sum,Underscore,Grp(Seq(V("S"),Colon,Set(V("V")))),Sp,Call("ite",Total(V("G"),V("S")),Pow(Cast(V("X"),PolynomialType(complex?Complex:Real)),Call("card",V("S"))),D(0)))));
-    internal static Formula Witness(Formula target) => Some("n",Nat,Some("G",Graph(Fin(V("n"))),Some("w",Complex,And(Leq(D(2),V("n")),NoIso(V("G"),Fin(V("n"))),Ne(Poly(V("G")),D(0)),Root(Poly(V("G")),V("w")),Lt(Norm(Sub(V("w"),target)),V("epsilon"))))));
-    internal static Formula Whole() => All("z",Complex,All("epsilon",Real,Imp(Lt(D(0),V("epsilon")),Witness(V("z")))));
-    internal static Formula SeedRoot(bool actual) {
+    private static Formula V(string s) => F.Id(s);
+    private static Formula Nat => Seq(Mathbb, Grp(V("N")));
+    private static Formula Real => Seq(Mathbb, Grp(V("R")));
+    private static Formula Complex => Seq(Mathbb, Grp(V("C")));
+    private static Formula Type => Call("Type");
+    private static Formula Call(string s, params Formula[] xs) => new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. xs]);
+    private static Formula Par(Formula x) => Seq(Open,x,Close);
+    private static Formula Cast(Formula x, Formula t) => Par(Seq(x,Colon,t));
+    private static Formula Pow(Formula x, Formula n) => Seq(Par(x),Caret,Grp(n));
+    private static Formula Add(Formula x, Formula y) => new Formula.Binary(x,FormulaBinaryOperator.Add,y);
+    private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x,FormulaBinaryOperator.Subtract,y);
+    private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x,FormulaBinaryOperator.Multiply,y);
+    private static Formula Eq(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.Equal,y);
+    private static Formula Ne(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.NotEqual,y);
+    private static Formula Lt(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.LessThan,y);
+    private static Formula Leq(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.LessThanOrEqual,y);
+    private static Formula Member(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.MemberOf,y);
+    private static Formula And(params Formula[] xs) => xs.Length==1 ? xs[0] : new Formula.Logic(Par(xs[0]),FormulaLogicOperator.And,Par(And(xs[1..])));
+    private static Formula Imp(Formula x, Formula y) => new Formula.Logic(Par(x),FormulaLogicOperator.Implies,Par(y));
+    private static Formula IffTo(Formula x, Formula y) => new Formula.Logic(Par(x),FormulaLogicOperator.Iff,Par(y));
+    private static Formula All(string s, Formula t, Formula b) => Seq(Forall,Sp,Par(Seq(V(s),Colon,t)),Comma,Sp,b);
+    private static Formula Some(string s, Formula t, Formula b) => Seq(Exists,Sp,Par(Seq(V(s),Colon,t)),Comma,Sp,b);
+    private static Formula Inst(Formula t, Formula b) => Seq(OpenBracket,t,CloseBracket,Comma,Sp,b);
+    private static Formula Graph(Formula t) => Call("SimpleGraph",t);
+    private static Formula Fin(Formula n) => Call("Fin",n);
+    private static Formula Set(Formula t) => Call("Finset",t);
+    private static Formula SumType(Formula x, Formula y) => Call("Sum",x,y);
+    private static Formula Adj(Formula g, Formula v, Formula u) => Call("Adj",g,v,u);
+    private static Formula Total(Formula g, Formula s) => Call("IsTotal",g,s);
+    private static Formula Poly(Formula g, bool complex=true) => Call(complex?"complexPolynomial":"totalPolynomial",g);
+    private static Formula Root(Formula p, Formula w) => Call("IsRoot",p,w);
+    private static Formula Norm(Formula x) => Seq(Vert,Sp,x,Vert);
+    private static Formula NoIso(Formula g, Formula t) => All("v",t,Some("u",t,Adj(g,V("v"),V("u"))));
+    private static Formula FiniteGraph(Formula b) => All("V",Type,Inst(Call("Fintype",V("V")),All("G",Graph(V("V")),b)));
+    private static Formula BothTypes(Formula b, bool finite=false) => All("V",Type,All("W",Type,finite?Inst(Call("Fintype",V("V")),Inst(Call("Fintype",V("W")),b)):b));
+    private static Formula PolynomialType(Formula t) => Seq(t,OpenBracket,V("X"),CloseBracket);
+    private static Formula SubsetPolynomial(bool complex) => FiniteGraph(Eq(Poly(V("G"),complex),Seq(Sum,Underscore,Grp(Seq(V("S"),Colon,Set(V("V")))),Sp,Call("ite",Total(V("G"),V("S")),Pow(Cast(V("X"),PolynomialType(complex?Complex:Real)),Call("card",V("S"))),D(0)))));
+    private static Formula Witness(Formula target) => Some("n",Nat,Some("G",Graph(Fin(V("n"))),Some("w",Complex,And(Leq(D(2),V("n")),NoIso(V("G"),Fin(V("n"))),Ne(Poly(V("G")),D(0)),Root(Poly(V("G")),V("w")),Lt(Norm(Sub(V("w"),target)),V("epsilon"))))));
+    private static Formula Whole() => All("z",Complex,All("epsilon",Real,Imp(Lt(D(0),V("epsilon")),Witness(V("z")))));
+    private static Formula SeedRoot(bool actual) {
         var s=V("s");var r=V("r");var g=Call("seedGraph",Pow(s,D(2)));var p=actual?Poly(g,false):Call("seedPolynomial",Pow(s,D(2)));
         var b=And(Lt(Seq(Minus,D(1)),r),Lt(r,Add(Seq(Minus,D(1)),new Formula.Fraction(D(1),Cast(s,Real)))),Root(p,r));
         if(actual)b=And(Lt(Seq(Minus,D(1)),r),Lt(r,Add(Seq(Minus,D(1)),new Formula.Fraction(D(1),Cast(s,Real)))),Root(p,r),Ne(p,D(0)),NoIso(g,SumType(Call("Unit"),Call("SeedBase",Pow(s,D(2))))));
         return All("s",Nat,Imp(Leq(D(3),s),Imp(Call("Odd",s),Some("r",Real,b))));
     }
-    internal static Formula LabelledSeed() => All("s",Nat,Imp(Leq(D(3),V("s")),Imp(Call("Odd",V("s")),Some("n",Nat,Some("G",Graph(Fin(V("n"))),Some("r",Real,And(Eq(V("n"),Add(Mul(D(5),Pow(V("s"),D(2))),D(4))),Leq(D(2),V("n")),Lt(Seq(Minus,D(1)),V("r")),Lt(V("r"),Add(Seq(Minus,D(1)),new Formula.Fraction(D(1),Cast(V("s"),Real)))),Root(Poly(V("G"),false),V("r")),Ne(Poly(V("G"),false),D(0)),NoIso(V("G"),Fin(V("n"))))))))));
-    internal static Formula SmallShift(bool complex) {
+    private static Formula LabelledSeed() => All("s",Nat,Imp(Leq(D(3),V("s")),Imp(Call("Odd",V("s")),Some("n",Nat,Some("G",Graph(Fin(V("n"))),Some("r",Real,And(Eq(V("n"),Add(Mul(D(5),Pow(V("s"),D(2))),D(4))),Leq(D(2),V("n")),Lt(Seq(Minus,D(1)),V("r")),Lt(V("r"),Add(Seq(Minus,D(1)),new Formula.Fraction(D(1),Cast(V("s"),Real)))),Root(Poly(V("G"),false),V("r")),Ne(Poly(V("G"),false),D(0)),NoIso(V("G"),Fin(V("n"))))))))));
+    private static Formula SmallShift(bool complex) {
         var g=V("G");var r=V("r");var shift=Add(D(1),r);
         var body=complex?And(Leq(D(2),V("n")),NoIso(g,Fin(V("n"))),Ne(Poly(g),D(0)),Root(Poly(g),Cast(r,Complex)),Lt(D(0),shift),Lt(Norm(Sub(Cast(r,Complex),Cast(Seq(Minus,D(1)),Complex))),V("epsilon"))):And(Leq(D(2),V("n")),Lt(D(0),shift),Lt(shift,V("epsilon")),Root(Poly(g,false),r),Ne(Poly(g,false),D(0)),NoIso(g,Fin(V("n"))));
         return All("epsilon",Real,Imp(Lt(D(0),V("epsilon")),Some("n",Nat,Some("G",Graph(Fin(V("n"))),Some("r",Real,body)))));
     }
-    internal static Formula RecursiveType(string s, byte size) => And(Eq(Call(s,D(0)),Fin(D(size))),All("m",Nat,Eq(Call(s,Add(V("m"),D(1))),SumType(Fin(D(s=="SeedBase"?(byte)5:(byte)2)),Call(s,V("m"))))));
-    internal static Formula RecursiveGraph(bool seed) => And(Eq(Call(seed?"seedBaseGraph":"edgeBaseGraph",D(0)),Cast(Call("top"),Graph(Fin(D(seed?(byte)3:(byte)2))))),All("m",Nat,Eq(Call(seed?"seedBaseGraph":"edgeBaseGraph",Add(V("m"),D(1))),Call("unionGraph",seed?Call("cycleGraph",D(5)):Cast(Call("top"),Graph(Fin(D(2)))),Call(seed?"seedBaseGraph":"edgeBaseGraph",V("m"))))));
-    internal static Formula Instance(string s, string baseName, bool nonempty) => All("m",Nat,Cast(Call(s,V("m")),Call(nonempty?"Nonempty":"Fintype",Call(baseName,V("m")))));
-    internal static Formula Friendship(bool labelled) {
+    private static Formula RecursiveType(string s, byte size) => And(Eq(Call(s,D(0)),Fin(D(size))),All("m",Nat,Eq(Call(s,Add(V("m"),D(1))),SumType(Fin(D(s=="SeedBase"?(byte)5:(byte)2)),Call(s,V("m"))))));
+    private static Formula RecursiveGraph(bool seed) => And(Eq(Call(seed?"seedBaseGraph":"edgeBaseGraph",D(0)),Cast(Call("top"),Graph(Fin(D(seed?(byte)3:(byte)2))))),All("m",Nat,Eq(Call(seed?"seedBaseGraph":"edgeBaseGraph",Add(V("m"),D(1))),Call("unionGraph",seed?Call("cycleGraph",D(5)):Cast(Call("top"),Graph(Fin(D(2)))),Call(seed?"seedBaseGraph":"edgeBaseGraph",V("m"))))));
+    private static Formula Instance(string s, string baseName, bool nonempty) => All("m",Nat,Cast(Call(s,V("m")),Call(nonempty?"Nonempty":"Fintype",Call(baseName,V("m")))));
+    private static Formula Friendship(bool labelled) {
         var r=V("r");var g=labelled?V("G"):Call("friendshipGraph",V("m"));var t=labelled?Fin(V("n")):SumType(Call("Unit"),Call("EdgeBase",V("m")));
         var body=labelled?And(Leq(D(2),V("n")),Lt(r,Seq(Minus,V("R"))),NoIso(g,t),Ne(Poly(g),D(0)),Root(Poly(g),Cast(r,Complex))):And(Lt(r,Seq(Minus,V("R"))),Root(Poly(g,false),r),Ne(Poly(g,false),D(0)),NoIso(g,t));
         var ex=labelled?Some("n",Nat,Some("G",Graph(t),Some("r",Real,body))):Some("m",Nat,Some("r",Real,body));
         return All("R",Real,Imp(Lt(D(2),V("R")),ex));
     }
-    internal static Formula Density(bool nonunit) => All("xi",Complex,nonunit?Imp(Ne(Call("re",V("xi")),D(0)),DensityEpsilon()):DensityEpsilon());
-    private static Formula DensityEpsilon() => All("epsilon",Real,Imp(Lt(D(0),V("epsilon")),Witness(Sub(Call("exp",V("xi")),Cast(D(1),Complex)))));
-    internal static Formula Approximation() => All("xi",Complex,Imp(Ne(Call("re",V("xi")),D(0)),All("epsilon",Real,Imp(Lt(D(0),V("epsilon")),Some("N",Nat,All("t",Real,All("alpha",Real,Imp(Lt(Add(Cast(V("N"),Real),D(2)),new Formula.Fraction(V("t"),Call("re",V("xi")))),Some("k",Nat,Some("w",Complex,And(Lt(D(0),V("k")),Eq(Pow(V("w"),V("k")),Call("exp",Add(Cast(V("t"),Complex),Mul(Cast(V("alpha"),Complex),Call("I"))))),Lt(Norm(Sub(V("w"),Call("exp",V("xi")))),V("epsilon"))))))))))));
 }

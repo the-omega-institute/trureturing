@@ -1,6 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
-using static StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Domination.TotalDominationFormulas;
 using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Domination;
@@ -12,7 +11,7 @@ internal sealed class TotalDominationBlowupDocument : IScribeDocumentDefinition
         "Independent fibres retain actual total-domination subsets and give the known polynomial substitution.",
         H("Independent-fibre substitution on actual subsets"), Blocks(
             Paragraph(Text("V and W are actual finite vertex types, with Fintype instances. G is an arbitrary SimpleGraph on V. For the total-domination identity W is nonempty. Each v is replaced by the independent fibre consisting of all (v,i) with i in W. Vertices in two fibres are adjacent exactly when their original vertices are adjacent. An occupied fibre contributes a nonempty actual subset, not one selected representative.")),
-            Node("blowupGraph", "The actual independent-fibre graph", All("V",Type,All("G",Graph(V("V")),All("W",Type,All("a",ProdType(V("V"),V("W")),All("b",ProdType(V("V"),V("W")),IffTo(Adj(Call("blowupGraph",V("G"),V("W")),V("a"),V("b")),Adj(V("G"),Call("fst",V("a")),Call("fst",V("b")))))))),
+            Node("blowupGraph", "The actual independent-fibre graph", All("V",Type,All("G",Graph(V("V")),All("W",Type,All("a",ProdType(V("V"),V("W")),All("b",ProdType(V("V"),V("W")),IffTo(Adj(Call("blowupGraph",V("G"),V("W")),V("a"),V("b")),Adj(V("G"),Call("fst",V("a")),Call("fst",V("b"))))))))),
                 "The result has vertex type V times W and adjacency G.Adj(a.fst,b.fst). There are no internal edges in a fibre. This is SimpleGraph.comap Prod.fst, so symmetry and looplessness are inherited. It is the edgeless-fibre lexicographic blowup, not a clique blowup.", DescribeRole.Definition),
             Node("subsetFamilyEquiv", "Actual subset-to-fibre equivalence", BothTypes(And(All("S",Set(ProdType(V("V"),V("W"))),All("v",V("V"),All("i",V("W"),IffTo(Member(V("i"),Call("subsetFamilyEquiv",V("S"),V("v"))),Member(Par(Seq(V("v"),Comma,V("i"))),V("S")))))),All("f",Seq(V("V"),To,Sp,Set(V("W"))),All("v",V("V"),All("i",V("W"),IffTo(Member(Par(Seq(V("v"),Comma,V("i"))),Call("symm",Call("subsetFamilyEquiv"),V("f"))),Member(V("i"),Call("f",V("v")))))))),true),
                 "For finite V and W this is an equivalence between Finset(V times W) and V -> Finset W. A global subset S maps at v to all i in W with (v,i) in S. The inverse maps f to all (v,i) with i in f(v). Extensional membership proves the inverse laws. The private cardinal theorem says the inverse subset cardinality equals sum_v card(f(v)).", DescribeRole.Definition),
@@ -27,4 +26,35 @@ internal sealed class TotalDominationBlowupDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string selector, string title, Formula formula, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("td-blowup-" + selector.Replace("_", "-").ToLowerInvariant()), DeclarationHandle.Create(Prefix + selector),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+    private static Formula V(string s) => F.Id(s);
+    private static Formula Nat => Seq(Mathbb, Grp(V("N")));
+    private static Formula Complex => Seq(Mathbb, Grp(V("C")));
+    private static Formula Type => Call("Type");
+    private static Formula Call(string s, params Formula[] xs) => new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. xs]);
+    private static Formula Par(Formula x) => Seq(Open,x,Close);
+    private static Formula Cast(Formula x, Formula t) => Par(Seq(x,Colon,t));
+    private static Formula Pow(Formula x, Formula n) => Seq(Par(x),Caret,Grp(n));
+    private static Formula Add(Formula x, Formula y) => new Formula.Binary(x,FormulaBinaryOperator.Add,y);
+    private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x,FormulaBinaryOperator.Subtract,y);
+    private static Formula Eq(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.Equal,y);
+    private static Formula Ne(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.NotEqual,y);
+    private static Formula Lt(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.LessThan,y);
+    private static Formula Leq(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.LessThanOrEqual,y);
+    private static Formula Member(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.MemberOf,y);
+    private static Formula And(params Formula[] xs) => xs.Length==1 ? xs[0] : new Formula.Logic(Par(xs[0]),FormulaLogicOperator.And,Par(And(xs[1..])));
+    private static Formula Imp(Formula x, Formula y) => new Formula.Logic(Par(x),FormulaLogicOperator.Implies,Par(y));
+    private static Formula IffTo(Formula x, Formula y) => new Formula.Logic(Par(x),FormulaLogicOperator.Iff,Par(y));
+    private static Formula All(string s, Formula t, Formula b) => Seq(Forall,Sp,Par(Seq(V(s),Colon,t)),Comma,Sp,b);
+    private static Formula Some(string s, Formula t, Formula b) => Seq(Exists,Sp,Par(Seq(V(s),Colon,t)),Comma,Sp,b);
+    private static Formula Inst(Formula t, Formula b) => Seq(OpenBracket,t,CloseBracket,Comma,Sp,b);
+    private static Formula Graph(Formula t) => Call("SimpleGraph",t);
+    private static Formula Fin(Formula n) => Call("Fin",n);
+    private static Formula Set(Formula t) => Call("Finset",t);
+    private static Formula ProdType(Formula x, Formula y) => Seq(x,Times,Sp,y);
+    private static Formula Adj(Formula g, Formula v, Formula u) => Call("Adj",g,v,u);
+    private static Formula Poly(Formula g, bool complex=true) => Call(complex?"complexPolynomial":"totalPolynomial",g);
+    private static Formula Root(Formula p, Formula w) => Call("IsRoot",p,w);
+    private static Formula NoIso(Formula g, Formula t) => All("v",t,Some("u",t,Adj(g,V("v"),V("u"))));
+    private static Formula BothTypes(Formula b, bool finite=false) => All("V",Type,All("W",Type,finite?Inst(Call("Fintype",V("V")),Inst(Call("Fintype",V("W")),b)):b));
+    private static Formula PolynomialType(Formula t) => Seq(t,OpenBracket,V("X"),CloseBracket);
 }

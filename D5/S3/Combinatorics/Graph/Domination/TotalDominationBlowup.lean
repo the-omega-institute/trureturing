@@ -233,9 +233,7 @@ theorem labelled_root_blowup (n : ℕ) (G : SimpleGraph (Fin n))
 
 #print axioms labelled_root_blowup
 
-#print axioms labelled_seed_blowup_roots
 
-#print axioms seed_blowup_roots
 
 #print axioms blowup_polynomial
 
