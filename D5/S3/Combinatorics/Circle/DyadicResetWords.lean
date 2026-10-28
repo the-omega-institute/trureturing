@@ -179,13 +179,18 @@ theorem allocation_of_blocks {α : Type*} [DecidableEq α]
   · intro i a ha
     exact List.mem_toFinset.mpr (hLS i a (List.mem_toFinset.mp ha))
   · intro i j hij
-    exact List.disjoint_toFinset.mpr (hLD i j hij)
+    apply Finset.disjoint_left.mpr
+    intro a ha hb
+    exact List.disjoint_left.mp (hLD i j hij)
+      (List.mem_toFinset.mp ha) (List.mem_toFinset.mp hb)
   · intro a ha
     rcases List.mem_append.mp (List.mem_toFinset.mp ha) with ha | ha
     · obtain ⟨p, hp, hap⟩ := List.mem_flatMap.mp ha
       obtain ⟨i, hi⟩ := List.mem_iff_get.mp hp
       refine ⟨Sum.inl i, List.mem_toFinset.mpr ?_⟩
-      simpa [L, hi] using hap
+      change a ∈ (P.get i).1
+      rw [hi]
+      exact hap
     · exact ⟨Sum.inr (), List.mem_toFinset.mpr ha⟩
   · intro i
     have hm : mass f (L i) =
@@ -194,6 +199,7 @@ theorem allocation_of_blocks {α : Type*} [DecidableEq α]
       | inl i => exact (hP _ (List.get_mem P i)).2.1
       | inr i => exact htmass
     have hs : (∑ a ∈ (L i).toFinset, (2 : ℤ) ^ e a) = mass f (L i) := by
+      unfold mass
       rw [← List.sum_toFinset f (hLN i)]
       apply Finset.sum_congr rfl
       intro a ha
