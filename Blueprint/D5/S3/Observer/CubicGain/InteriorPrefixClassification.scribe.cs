@@ -28,7 +28,15 @@ internal sealed class InteriorPrefixClassificationDocument : IScribeDocumentDefi
                     Paragraph(Text("For every original word triple w and every arbitrary real positive oriented generator N with four nonzero entries, there exist primitive p, a positive real scale s and integer parameters m on the original four indices. They satisfy N=s*F(p), m0=0 and every original lattice equation. All conjugate endpoints satisfy Aprime_i=J*Ai*J and J*N*J=s*F(b,a,d,c). Either ParameterForm(w,p,m) holds or ParameterForm(wprime,(b,a,d,c),-m) holds.")),
                     Paragraph(Text("The frozen phase theorem supplies exactly these two branches. In either strict positive branch the actual second and third words give the two transitions. Rank three makes the prefix difference map surjective. A relation H*K=2*K-I would imply A3=2*A2-A1, hence the third difference equals twice the second minus the first, contradicting surjectivity. The integer transition classification therefore applies without adding a hypothesis to the original prefix.")),
                     Paragraph(Text("The conjugate words are [J]++wi++[J], so an empty multiplier becomes [J,J]. Matrix identity is kept distinct from literal emptiness. The signed column becomes -J*f, the signed row becomes -ell*J, and the parameters become -mi. Original read indices are unchanged. These signed vectors specify the auxiliary kernel; they are not positive physical sources.")))))));
-    private static Formula C(string name, params Formula[] args) =>
-        Seq(Operatorname, Grp(F.Id(name)), Open, Seq(args), Close);
+    private static Formula C(string name, params Formula[] args)
+    {
+        var parts = new System.Collections.Generic.List<Formula>();
+        foreach (var arg in args)
+        {
+            if (parts.Count > 0) { parts.Add(Comma); parts.Add(Sp); }
+            parts.Add(arg);
+        }
+        return Seq(Operatorname, Grp(F.Id(name)), Open, Seq(parts.ToArray()), Close);
+    }
 
 }

@@ -14,7 +14,7 @@ ClassificationHypotheses(K,H,x,y,d,c,j,h) denotes all hypotheses in the followin
 
 **Theorem 1.1 (The two multipliers and the divisibility parameter).**
 
-$$\forall K,H,x,y,d,c,j,h, \operatorname{ClassificationHypotheses}(KHxydcjh)\implies \exists n,sigma\in \mathbb{Z}, \operatorname{MultiplierParameters}(KHxydcjhnsigma)$$
+$$\forall K,H,x,y,d,c,j,h, \operatorname{ClassificationHypotheses}(K, H, x, y, d, c, j, h)\implies \exists n,sigma\in \mathbb{Z}, \operatorname{MultiplierParameters}(K, H, x, y, d, c, j, h, n, sigma)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/InteriorPrefixClassification.two_transition_parameters` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ OriginalCoordinates(w,N,p,s,m) means s>0, N=s*F(p), m0=0 and all four original l
 
 **Theorem 1.2 (Every interior history has the required parameter form).**
 
-$$\forall w,N, \operatorname{OrientedKernelGenerator}(wN)\land \operatorname{AllEntriesNonzero}(N)\implies \exists p,s,m, \operatorname{OriginalCoordinates}(wNpsm)\land \operatorname{ConjugateCoordinates}(wNpsm)\land \operatorname{FirstEndpointFilters}(w)\land \operatorname{FirstEndpointFilters}(\operatorname{conjugateHistory}(w))\land(\operatorname{ParameterForm}(wpm)\lor \operatorname{ParameterForm}(\operatorname{conjugateHistory}(w)\operatorname{swapCoordinates}(p)-m))$$
+$$\forall w,N, \operatorname{OrientedKernelGenerator}(w, N)\land \operatorname{AllEntriesNonzero}(N)\implies \exists p,s,m, \operatorname{OriginalCoordinates}(w, N, p, s, m)\land \operatorname{ConjugateCoordinates}(w, N, p, s, m)\land \operatorname{FirstEndpointFilters}(w)\land \operatorname{FirstEndpointFilters}(\operatorname{conjugateHistory}(w))\land(\operatorname{ParameterForm}(w, p, m)\lor \operatorname{ParameterForm}(\operatorname{conjugateHistory}(w), \operatorname{swapCoordinates}(p), -m))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/InteriorPrefixClassification.interior_necessity` (`✓ std3`). ∎
 

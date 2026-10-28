@@ -12,7 +12,7 @@ For every integer matrix A and integer x,y,d,c,j, TransitionHypotheses means pre
 
 **Theorem 1.1 (The integral transition coefficient and both rational bounds).**
 
-$$\forall A,x,y,d,c,j, \operatorname{TransitionHypotheses}(Axydcj)\implies \exists l\in \mathbb{Z}, \operatorname{TransitionCertificate}(Axydcjl)$$
+$$\forall A,x,y,d,c,j, \operatorname{TransitionHypotheses}(A, x, y, d, c, j)\implies \exists l\in \mathbb{Z}, \operatorname{TransitionCertificate}(A, x, y, d, c, j, l)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/InteriorNormalForm.transition_certificate` (`✓ std3`). ∎
 
@@ -20,7 +20,7 @@ $$\forall A,x,y,d,c,j, \operatorname{TransitionHypotheses}(Axydcj)\implies \exis
 
 *Commentary.*
 
-For every nonnegative integral A of either unimodular sign satisfying Av=vprime, an integer lambda>=1 satisfies Ar=epsilon*r+lambda*vprime. The lower-left and upper-left identities are t*A10=c*(y+jc-epsilon*y)-lambda*y*(y+jc) and t*A00=c*(x+jd)-epsilon*d*y-lambda*y*(x+jd). If epsilon=1, lambda<=j*c^2/(y*(y+jc)) and y<c. If epsilon=-1, lambda<=c*(1/y+1/(y+jc)). For both signs y<2c. The displayed Lean statement includes every positivity, primitivity and action hypothesis.
+For every nonnegative integral A of either unimodular sign satisfying Av=vprime, an integer lambda>=1 satisfies Ar=epsilon*r+lambda*vprime. The lower-left and upper-left identities are t*A10=c*(y+jc-epsilon*y)-lambda*y*(y+jc) and t*A00=c*(x+jd)-epsilon*d*y-lambda*y*(x+jd). If epsilon=1, lambda<=j*c^2/(y*(y+jc)) and y<c. If epsilon=-1, lambda<=c*(1/y+1/(y+jc)). For both signs y<2c. The hypotheses retain every positivity, primitivity and action condition.
 
 The given forward word preserves primitivity, so Bezout coefficients of vprime recover an integer multiplier from the integer vector Ar-epsilon*r parallel to vprime. In the negative-determinant branch positivity gives lambda>0. In the positive-determinant branch the strict increase of the coordinate sum on v excludes both identity and J; the same word must strictly increase the sum on the positive column r. Nonnegativity of the lower-left entry then gives both rational bounds and their consequences.
 
@@ -28,7 +28,7 @@ TwoTransitionHypotheses(K,H,x,y,d,c,j,h) means exactly the positivity, primitivi
 
 **Theorem 1.2 (Two consecutive increments force the last matrix).**
 
-$$\forall K,H,x,y,d,c,j,h, \operatorname{TwoTransitionHypotheses}(KHxydcjh)\implies j=1\land y=d\land c=x+hd\land \operatorname{H}(00)=0\land \operatorname{H}(01)=1\land \operatorname{H}(10)=1\land \operatorname{H}(11)=h$$
+$$\forall K,H,x,y,d,c,j,h, \operatorname{TwoTransitionHypotheses}(K, H, x, y, d, c, j, h)\implies j=1\land y=d\land c=x+hd\land \operatorname{H}(0, 0)=0\land \operatorname{H}(0, 1)=1\land \operatorname{H}(1, 0)=1\land \operatorname{H}(1, 1)=h$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/InteriorNormalForm.last_transition_rigidity` (`✓ std3`). ∎
 

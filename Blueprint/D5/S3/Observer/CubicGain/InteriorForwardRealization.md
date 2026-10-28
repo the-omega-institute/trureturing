@@ -14,7 +14,7 @@ AdmittedTuple(x,d,m,n,sigma,A) is precisely the integer, positivity, coprimality
 
 **Theorem 1.1 (Admitted tuples give the original kernel and actual source runs).**
 
-$$\forall x,d,m,n,sigma,A, \operatorname{AdmittedTuple}(xdmnsigmaA)\implies \exists w,p, \operatorname{Realizes}(wpxdmnsigmaA)\land(\forall S,\operatorname{PositiveRankOne}(S)\implies \exists f,ell,\operatorname{PhysicalRun}(wSfell))$$
+$$\forall x,d,m,n,sigma,A, \operatorname{AdmittedTuple}(x, d, m, n, sigma, A)\implies \exists w,p, \operatorname{Realizes}(w, p, x, d, m, n, sigma, A)\land(\forall S,\operatorname{PositiveRankOne}(S)\implies \exists f,ell,\operatorname{PhysicalRun}(w, S, f, ell))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/InteriorForwardRealization.admitted_parameters_realize` (`✓ std3`). ∎
 

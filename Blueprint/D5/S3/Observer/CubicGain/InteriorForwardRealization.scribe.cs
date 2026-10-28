@@ -22,7 +22,15 @@ internal sealed class InteriorForwardRealizationDocument : IScribeDocumentDefini
                     Paragraph(Text("A word for A comes from the legal monoid theorem. Append the explicit words for K,H without adding readings. The three displayed signed images have the same ell level. The primitive-lattice converse uses the retained rank-three filter to identify the entire kernel line and its fixed positive polar sign.")),
                     Paragraph(Text("For every strictly positive rank-one real source S on these very words, positive factors fplus and ellplus satisfy S=fplus*ellplus. The row ellplus remains fixed. Every finite forward word, hence every unread prefix of this cumulative execution, keeps the column strictly positive. At every unchanged recorded index i and for every real slope k and whole constant drift delta, (1+i*k)*ellplus*Ai*fplus+delta=(1+i*k)*tr(Ai*S)+delta. Negative slopes and erased gains are included. The positive factorization is reused from the existing full common-source factorization result; the signed kernel column is not used as a physical source.")),
                     Paragraph(Text("The arithmetic classification of all first endpoints and the final-word rank classification are separate questions. No universal positive intersection, source multiplicity or sharper read bound follows from this construction.")))))));
-    private static Formula C(string name, params Formula[] args) =>
-        Seq(Operatorname, Grp(F.Id(name)), Open, Seq(args), Close);
+    private static Formula C(string name, params Formula[] args)
+    {
+        var parts = new System.Collections.Generic.List<Formula>();
+        foreach (var arg in args)
+        {
+            if (parts.Count > 0) { parts.Add(Comma); parts.Add(Sp); }
+            parts.Add(arg);
+        }
+        return Seq(Operatorname, Grp(F.Id(name)), Open, Seq(parts.ToArray()), Close);
+    }
 
 }
