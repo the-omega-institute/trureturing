@@ -113,7 +113,8 @@ theorem genuine_occurrences_even
     · intro d z hdz
       have hocc := congrArg Subtype.val hdz
       dsimp only [project] at hocc
-      have ht : d.1.1 = z.1.1 := congrArg Prod.fst hocc
+      have ht : d.1.1 = z.1.1 :=
+        congrArg (fun i : Occurrence T => i.1) hocc
       have hj : faceEdge d.1.2.1 d.1.2.2 = faceEdge z.1.2.1 z.1.2.2 :=
         congrArg Prod.snd hocc
       obtain ⟨q, hq, huniq⟩ :=
