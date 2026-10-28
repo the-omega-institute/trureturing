@@ -144,7 +144,7 @@ private def evidence : Registration arena (type_of% root_degree_spectrum) where
       exact nomatch e
   dependence := by
     intro i
-    exact ⟨1, 1, h, by decide⟩
+    exact ⟨1, 1, h, by change (1 : H) ≠ h; decide⟩
 
 def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     root_degree_spectrum (Realization signature) Unit Unit := {
