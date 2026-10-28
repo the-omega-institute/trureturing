@@ -9,7 +9,10 @@
 import D5.S3.Estimation.DecisionRisk.DescentDefectBounds
 import Mathlib.Analysis.Convex.Radon
 
-open scoped BigOperators
+/-! Finite shared randomness reduces simulation to intersecting convex sets indexed by inputs.
+Deleting one simplex coordinate allows Helly's theorem to bound a separating input family. -/
+
+open scoped BigOperators Classical
 
 namespace D5.S3.Quantum.QuantumChannels.SignalingDimensionHellyCertificate
 
@@ -60,16 +63,17 @@ private lemma channel_decomposition {α β : Type} [Fintype α] [Fintype β]
         exact (Fintype.prod_ite_eq' x _).symm
       _ = ∏ z, ∑ b, p z b *
           (if z = x then (if b = y then 1 else 0) else 1) :=
-        (Fintype.prod_sum _).symm
+        (Fintype.prod_sum (fun z b => p z b *
+          (if z = x then (if b = y then 1 else 0) else 1))).symm
       _ = p x y := by
         have hz (z : α) : (∑ b, p z b *
             (if z = x then (if b = y then 1 else 0) else 1)) =
             if z = x then p x y else 1 := by
           by_cases hzx : z = x
           · subst z
-            simp only [if_pos rfl, mul_ite, mul_one, mul_zero,
-              Finset.sum_ite_eq', Finset.mem_univ, if_true]
-          · simp only [if_neg hzx, mul_one, hs, if_false]
+            simp only [ite_eq_left rfl, mul_ite, mul_one, mul_zero,
+              Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+          · simp only [ite_eq_right hzx, mul_one, hs, ite_false]
         simp_rw [hz]
         exact Fintype.prod_ite_eq' x _
 
@@ -84,12 +88,13 @@ private lemma channel_expectation {α β : Type} [Fintype α] [Fintype β]
       apply Finset.sum_congr rfl
       intro f _
       simp only [mul_ite, mul_one, mul_zero, ite_mul, zero_mul,
-        Finset.sum_ite_eq, Finset.mem_univ, if_true]
+        Finset.sum_ite_eq, Finset.mem_univ, ite_true]
     _ = ∑ y, (∑ f : α → β, (∏ z, p z (f z)) *
         (if f x = y then 1 else 0)) * v y := by
       rw [Finset.sum_comm]
       simp only [Finset.sum_mul]
-    _ = _ := by simp only [hm]
+    _ = _ := Finset.sum_congr rfl
+      (fun y _ => congrArg (fun z => z * v y) (hm y))
 
 private lemma mixture_common {α ι : Type} [Fintype α] [Fintype ι] {k d : ℕ}
     (hk : d < k) (p : α → Fin k → ℝ) (w : ι → ℝ) (v : ι → α → Fin k)
@@ -108,17 +113,23 @@ private lemma mixture_common {α ι : Type} [Fintype α] [Fintype ι] {k d : ℕ
   let q : outputSets k d → ℝ := fun t => ∑ j, if s j = t then w j else 0
   refine ⟨q, fun x => ⟨?_, ?_, ?_⟩⟩
   · intro t
-    exact Finset.sum_nonneg (fun j _ => by split; exact hw j; exact le_rfl)
+    exact Finset.sum_nonneg (fun j _ => by
+      split
+      · exact hw j
+      · exact le_rfl)
   · change (∑ t, ∑ j, if s j = t then w j else 0) = 1
     rw [Finset.sum_comm]
-    simpa only [Finset.sum_ite_eq, Finset.mem_univ, if_true] using hs
+    simpa only [Finset.sum_ite_eq, Finset.mem_univ, ite_true] using hs
   · refine ⟨fun t y => ∑ j, if s j = t ∧ v j x = y then w j else 0, ?_, ?_, ?_, ?_⟩
     · intro t y
-      exact Finset.sum_nonneg (fun j _ => by split; exact hw j; exact le_rfl)
+      exact Finset.sum_nonneg (fun j _ => by
+        split
+        · exact hw j
+        · exact le_rfl)
     · intro t y hy
       apply Finset.sum_eq_zero
       intro j _
-      rw [if_neg]
+      rw [ite_eq_right]
       rintro ⟨rfl, rfl⟩
       exact hy (hsupport j x)
     · intro t
@@ -146,7 +157,7 @@ private lemma simulable_common {α : Type} [Fintype α] {k d : ℕ}
     exact mul_nonneg (mul_nonneg (hq j.1)
       ((channel_decomposition (t j.1) (ht j.1)).1 j.2.1))
       ((channel_decomposition (r j.1) (hr j.1)).1 j.2.2)
-  · change (∑ j, q j.1 * (∏ x, t j.1 x (j.2.1 x)) *
+  · change (∑ j : Fin n × (α → Fin d) × (Fin d → Fin k), q j.1 * (∏ x, t j.1 x (j.2.1 x)) *
         ∏ μ, r j.1 μ (j.2.2 μ)) = 1
     simp only [Fintype.sum_prod_type]
     simp_rw [← Finset.mul_sum, (channel_decomposition _ (hr _)).2.1, mul_one]
@@ -164,7 +175,8 @@ private lemma simulable_common {α : Type} [Fintype α] {k d : ℕ}
   · intro x y
     rw [hp]
     change (∑ l, q l * ∑ μ, r l μ y * t l x μ) =
-      ∑ j, (q j.1 * (∏ z, t j.1 z (j.2.1 z)) *
+      ∑ j : Fin n × (α → Fin d) × (Fin d → Fin k),
+        (q j.1 * (∏ z, t j.1 z (j.2.1 z)) *
         ∏ μ, r j.1 μ (j.2.2 μ)) * if j.2.2 (j.2.1 x) = y then 1 else 0
     simp only [Fintype.sum_prod_type]
     apply Finset.sum_congr rfl
@@ -232,8 +244,8 @@ private lemma common_simulable {α : Type} [Fintype α] [Nonempty α] {k d : ℕ
     · intro x
       change (∑ μ, if q s = 0 then (if μ = z then 1 else 0) else _) = 1
       by_cases hz : q s = 0
-      · simp only [if_pos hz]; simp
-      · simp only [if_neg hz]
+      · simp only [ite_eq_left hz]; simp
+      · simp only [ite_eq_right hz]
         rw [← Finset.sum_div, heSum, div_self hz]
   let r : outputSets k d → Fin d → Fin k → ℝ :=
     fun s μ y => if (e s μ).val = y then 1 else 0
@@ -253,22 +265,22 @@ private lemma common_simulable {α : Type} [Fintype α] [Nonempty α] {k d : ℕ
           if (e s μ).val = y then a x s (e s μ) else 0 := by
         change q s * ((if (e s μ).val = y then 1 else 0) *
           (if q s = 0 then _ else _)) = _
-        rw [if_neg hz]
-        split <;> simp_all only [one_mul, zero_mul]
+        rw [ite_eq_right hz]
+        split <;> simp_all only [one_mul, zero_mul, mul_zero]
         field_simp
       rw [Finset.mul_sum]
       simp_rw [heach]
       rw [(e s).sum_comp (fun b : s.val => if b.val = y then a x s b else 0)]
       by_cases hy : y ∈ s.val
-      · simpa only [if_pos rfl] using
+      · simpa only [ite_eq_left rfl, ite_true] using
           (Finset.sum_eq_single (⟨y, hy⟩ : s.val)
-            (by intro b _ hb; rw [if_neg]; intro hh; exact hb (Subtype.ext hh))
+            (by intro b _ hb; rw [ite_eq_right]; intro hh; exact hb (Subtype.ext hh))
             (by simp) :
             (∑ b : s.val, if b.val = y then a x s b else 0) = _)
       · rw [haz x s y hy]
         apply Finset.sum_eq_zero
         intro b _
-        rw [if_neg]
+        rw [ite_eq_right]
         intro hb
         exact hy (hb ▸ b.property)
   let w : (outputSets k d × (α → Fin d)) → ℝ :=
@@ -278,7 +290,7 @@ private lemma common_simulable {α : Type} [Fintype α] [Nonempty α] {k d : ℕ
   apply finite_simulation p w t (fun j => r j.1)
   · intro j
     exact mul_nonneg (hqn j.1) ((channel_decomposition _ (hc j.1)).1 j.2)
-  · change (∑ j, q j.1 * ∏ x, c j.1 x (j.2 x)) = 1
+  · change (∑ j : outputSets k d × (α → Fin d), q j.1 * ∏ x, c j.1 x (j.2 x)) = 1
     rw [Fintype.sum_prod_type]
     simp_rw [← Finset.mul_sum, (channel_decomposition _ (hc _)).2.1, mul_one]
     exact hqs
@@ -292,12 +304,12 @@ private lemma common_simulable {α : Type} [Fintype α] [Nonempty α] {k d : ℕ
       simp
   · exact fun j => hr j.1
   · intro x y
-    change p x y = ∑ j, (q j.1 * ∏ z, c j.1 z (j.2 z)) *
+    change p x y = ∑ j : outputSets k d × (α → Fin d), (q j.1 * ∏ z, c j.1 z (j.2 z)) *
       ∑ μ, r j.1 μ y * (if j.2 x = μ then 1 else 0)
     rw [Fintype.sum_prod_type, ← hay x y]
     apply Finset.sum_congr rfl
     intro s _
-    simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
     simp_rw [mul_assoc]
     rw [← Finset.mul_sum, channel_expectation (c s) (hc s)]
     simpa only [mul_comm] using (hrec s x y).symm
@@ -313,7 +325,13 @@ private lemma empty_inputs_simulable {α : Type} [IsEmpty α] {k d : ℕ}
   · intro l
     exact ⟨fun x => isEmptyElim x, fun x => isEmptyElim x⟩
   · intro l
-    exact ⟨fun _ _ => by split <;> norm_num, fun _ => by simp⟩
+    constructor
+    · intro μ b
+      change 0 ≤ if y = b then (1 : ℝ) else 0
+      split <;> norm_num
+    · intro μ
+      change (∑ b, if y = b then (1 : ℝ) else 0) = 1
+      simp
   · intro x
     exact isEmptyElim x
 
@@ -326,23 +344,25 @@ private lemma feasible_convex {α : Type} {k d : ℕ} (p : α → Fin k → ℝ)
   refine ⟨?_, ?_, fun s y => b * a s y + c * u s y, ?_, ?_, ?_, ?_⟩
   · intro s
     exact add_nonneg (mul_nonneg hb (hqn s)) (mul_nonneg hc (hvn s))
-  · change (∑ s, b * q s + c * v s) = 1
+  · change (∑ s, (b * q s + c * v s)) = 1
     rw [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.mul_sum, hqs, hvs]
     simpa only [mul_one] using hbc
   · intro s y
     exact add_nonneg (mul_nonneg hb (han s y)) (mul_nonneg hc (hun s y))
   · intro s y hy
+    change b * a s y + c * u s y = 0
     rw [haz s y hy, huz s y hy, mul_zero, mul_zero, add_zero]
   · intro s
-    change (∑ y, b * a s y + c * u s y) = b * q s + c * v s
+    change (∑ y, (b * a s y + c * u s y)) = b * q s + c * v s
     rw [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.mul_sum, has, hus]
   · intro y
+    change (∑ s, (b * a s y + c * u s y)) = p x y
     rw [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.mul_sum, hay, huy]
     rw [← add_mul, hbc, one_mul]
 
 private lemma output_sets_card {k d : ℕ} : Fintype.card (outputSets k d) = k.choose d := by
-  change Fintype.card {s : Finset (Fin k) // s ∈ Finset.powersetCard d Finset.univ} = _
-  rw [Fintype.card_coe, Finset.card_powersetCard]
+  rw [Fintype.card_of_subtype (Finset.powersetCard d (Finset.univ : Finset (Fin k)))
+    (fun _ => Iff.rfl), Finset.card_powersetCard]
   simp only [Finset.card_univ, Fintype.card_fin]
 
 private lemma helly_normalized {α β : Type} [Fintype α] [Fintype β] [Nonempty β]
