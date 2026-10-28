@@ -88,6 +88,6 @@ internal sealed class MedianDocument : IScribeDocumentDefinition
     private static DocumentBlock Entry(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
             DescribeId.Create("hereditary-flip-" + id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Classical),
+            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Classical),
             Blocks(Paragraph(Text(prose))), role);
 }
