@@ -140,10 +140,8 @@ private theorem w_hggp : (Matrix.trace (H*(G*(G*(P))))).re = (Matrix.trace (G*(G
         (congrArg Complex.re (Matrix.trace_mul_comm (H*(G*(G))) (P)))
     _ = (Matrix.trace (G*(G*(H*(P))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(H*(G*(G))))ᴴ = G*(G*(H*(P))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(H*(G*(G)))))).symm
 
 include hH hG hP hPP in
 private theorem w_hghp : (Matrix.trace (H*(G*(H*(P))))).re = (Matrix.trace (G*(H*(P*(H))))).re := by
@@ -167,10 +165,8 @@ private theorem w_hgph : (Matrix.trace (H*(G*(P*(H))))).re = (Matrix.trace (G*(H
         (congrArg Complex.re (Matrix.trace_mul_comm (H*(G)) (P*(H))))
     _ = (Matrix.trace (G*(H*(H*(P))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(H*(H*(G))))ᴴ = G*(H*(H*(P))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(H*(H*(G)))))).symm
 
 include hH hG hP hPP in
 private theorem w_hhgp : (Matrix.trace (H*(H*(G*(P))))).re = (Matrix.trace (G*(H*(H*(P))))).re := by
@@ -180,10 +176,8 @@ private theorem w_hhgp : (Matrix.trace (H*(H*(G*(P))))).re = (Matrix.trace (G*(H
         (congrArg Complex.re (Matrix.trace_mul_comm (H*(H*(G))) (P)))
     _ = (Matrix.trace (G*(H*(H*(P))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(H*(H*(G))))ᴴ = G*(H*(H*(P))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(H*(H*(G)))))).symm
 
 include hH hG hP hPP in
 private theorem w_hhpg : (Matrix.trace (H*(H*(P*(G))))).re = (Matrix.trace (G*(H*(H*(P))))).re := by
@@ -260,10 +254,8 @@ private theorem w_phgg : (Matrix.trace (P*(H*(G*(G))))).re = (Matrix.trace (G*(G
   calc
     (Matrix.trace (P*(H*(G*(G))))).re = (Matrix.trace (G*(G*(H*(P))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(H*(G*(G))))ᴴ = G*(G*(H*(P))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(H*(G*(G)))))).symm
 
 include hH hG hP hPP in
 private theorem w_phgh : (Matrix.trace (P*(H*(G*(H))))).re = (Matrix.trace (G*(H*(P*(H))))).re := by
@@ -277,10 +269,8 @@ private theorem w_phhg : (Matrix.trace (P*(H*(H*(G))))).re = (Matrix.trace (G*(H
   calc
     (Matrix.trace (P*(H*(H*(G))))).re = (Matrix.trace (G*(H*(H*(P))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(H*(H*(G))))ᴴ = G*(H*(H*(P))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(H*(H*(G)))))).symm
 
 include hH hG hP hPP in
 private theorem w_phhh : (Matrix.trace (P*(H*(H*(H))))).re = (Matrix.trace (H*(H*(H*(P))))).re := by
@@ -304,10 +294,8 @@ private theorem w_gpgph : (Matrix.trace (G*(P*(G*(P*(H)))))).re = (Matrix.trace 
         (congrArg Complex.re (Matrix.trace_mul_comm (G) (P*(G*(P*(H))))))
     _ = (Matrix.trace (G*(H*(P*(G*(P)))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(G*(P*(H*(G)))))ᴴ = G*(H*(P*(G*(P)))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(G*(P*(H*(G))))))).symm
 
 include hH hG hP hPP in
 private theorem w_gphpg : (Matrix.trace (G*(P*(H*(P*(G)))))).re = (Matrix.trace (G*(G*(P*(H*(P)))))).re := by
@@ -324,10 +312,8 @@ private theorem w_gphph : (Matrix.trace (G*(P*(H*(P*(H)))))).re = (Matrix.trace 
         (congrArg Complex.re (Matrix.trace_mul_comm (G) (P*(H*(P*(H))))))
     _ = (Matrix.trace (G*(H*(P*(H*(P)))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(H*(P*(H*(G)))))ᴴ = G*(H*(P*(H*(P)))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(H*(P*(H*(G))))))).symm
 
 include hH hG hP hPP in
 private theorem w_hggpp : (Matrix.trace (H*(G*(G*(P*(P)))))).re = (Matrix.trace (G*(G*(H*(P))))).re := by
@@ -337,10 +323,8 @@ private theorem w_hggpp : (Matrix.trace (H*(G*(G*(P*(P)))))).re = (Matrix.trace 
         (congrArg Complex.re (Matrix.trace_mul_comm (H*(G*(G))) (P*(P))))
     _ = (Matrix.trace (G*(G*(H*(P*(P)))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(P*(H*(G*(G)))))ᴴ = G*(G*(H*(P*(P)))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(P*(H*(G*(G))))))).symm
     _ = (Matrix.trace (G*(G*(H*(P))))).re := by
       simp only [projection_mul_assoc P _ hPP, hPP, Matrix.mul_assoc]
 
@@ -361,10 +345,8 @@ private theorem w_hgpgp : (Matrix.trace (H*(G*(P*(G*(P)))))).re = (Matrix.trace 
         (congrArg Complex.re (Matrix.trace_mul_comm (H*(G)) (P*(G*(P)))))
     _ = (Matrix.trace (G*(H*(P*(G*(P)))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(G*(P*(H*(G)))))ᴴ = G*(H*(P*(G*(P)))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(G*(P*(H*(G))))))).symm
 
 include hH hG hP hPP in
 private theorem w_hgphp : (Matrix.trace (H*(G*(P*(H*(P)))))).re = (Matrix.trace (G*(H*(P*(H*(P)))))).re := by
@@ -374,10 +356,8 @@ private theorem w_hgphp : (Matrix.trace (H*(G*(P*(H*(P)))))).re = (Matrix.trace 
         (congrArg Complex.re (Matrix.trace_mul_comm (H*(G)) (P*(H*(P)))))
     _ = (Matrix.trace (G*(H*(P*(H*(P)))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(H*(P*(H*(G)))))ᴴ = G*(H*(P*(H*(P)))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(H*(P*(H*(G))))))).symm
 
 include hH hG hP hPP in
 private theorem w_hgppg : (Matrix.trace (H*(G*(P*(P*(G)))))).re = (Matrix.trace (G*(H*(G*(P))))).re := by
@@ -396,10 +376,8 @@ private theorem w_hgpph : (Matrix.trace (H*(G*(P*(P*(H)))))).re = (Matrix.trace 
         (congrArg Complex.re (Matrix.trace_mul_comm (H*(G)) (P*(P*(H)))))
     _ = (Matrix.trace (G*(H*(H*(P*(P)))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(P*(H*(H*(G)))))ᴴ = G*(H*(H*(P*(P)))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(P*(H*(H*(G))))))).symm
     _ = (Matrix.trace (G*(H*(H*(P))))).re := by
       simp only [projection_mul_assoc P _ hPP, hPP, Matrix.mul_assoc]
 
@@ -411,10 +389,8 @@ private theorem w_hhgpp : (Matrix.trace (H*(H*(G*(P*(P)))))).re = (Matrix.trace 
         (congrArg Complex.re (Matrix.trace_mul_comm (H*(H*(G))) (P*(P))))
     _ = (Matrix.trace (G*(H*(H*(P*(P)))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(P*(H*(H*(G)))))ᴴ = G*(H*(H*(P*(P)))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(P*(H*(H*(G))))))).symm
     _ = (Matrix.trace (G*(H*(H*(P))))).re := by
       simp only [projection_mul_assoc P _ hPP, hPP, Matrix.mul_assoc]
 
@@ -485,10 +461,8 @@ private theorem w_hphgp : (Matrix.trace (H*(P*(H*(G*(P)))))).re = (Matrix.trace 
         (congrArg Complex.re (Matrix.trace_mul_comm (H*(P*(H*(G)))) (P)))
     _ = (Matrix.trace (G*(H*(P*(H*(P)))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(H*(P*(H*(G)))))ᴴ = G*(H*(P*(H*(P)))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(H*(P*(H*(G))))))).symm
 
 include hH hG hP hPP in
 private theorem w_hphhp : (Matrix.trace (H*(P*(H*(H*(P)))))).re = (Matrix.trace (H*(H*(P*(H*(P)))))).re := by
@@ -594,10 +568,8 @@ private theorem w_pgphg : (Matrix.trace (P*(G*(P*(H*(G)))))).re = (Matrix.trace 
   calc
     (Matrix.trace (P*(G*(P*(H*(G)))))).re = (Matrix.trace (G*(H*(P*(G*(P)))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(G*(P*(H*(G)))))ᴴ = G*(H*(P*(G*(P)))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(G*(P*(H*(G))))))).symm
 
 include hH hG hP hPP in
 private theorem w_pgphh : (Matrix.trace (P*(G*(P*(H*(H)))))).re = (Matrix.trace (G*(P*(H*(H*(P)))))).re := by
@@ -614,10 +586,8 @@ private theorem w_phgpg : (Matrix.trace (P*(H*(G*(P*(G)))))).re = (Matrix.trace 
         (congrArg Complex.re (Matrix.trace_mul_comm (P*(H*(G))) (P*(G))))
     _ = (Matrix.trace (G*(H*(P*(G*(P)))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(G*(P*(H*(G)))))ᴴ = G*(H*(P*(G*(P)))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(G*(P*(H*(G))))))).symm
 
 include hH hG hP hPP in
 private theorem w_phgph : (Matrix.trace (P*(H*(G*(P*(H)))))).re = (Matrix.trace (G*(H*(P*(H*(P)))))).re := by
@@ -627,10 +597,8 @@ private theorem w_phgph : (Matrix.trace (P*(H*(G*(P*(H)))))).re = (Matrix.trace 
         (congrArg Complex.re (Matrix.trace_mul_comm (P*(H*(G))) (P*(H))))
     _ = (Matrix.trace (G*(H*(P*(H*(P)))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(H*(P*(H*(G)))))ᴴ = G*(H*(P*(H*(P)))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(H*(P*(H*(G))))))).symm
 
 include hH hG hP hPP in
 private theorem w_phhpg : (Matrix.trace (P*(H*(H*(P*(G)))))).re = (Matrix.trace (G*(P*(H*(H*(P)))))).re := by
@@ -665,10 +633,8 @@ private theorem w_phphg : (Matrix.trace (P*(H*(P*(H*(G)))))).re = (Matrix.trace 
   calc
     (Matrix.trace (P*(H*(P*(H*(G)))))).re = (Matrix.trace (G*(H*(P*(H*(P)))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(H*(P*(H*(G)))))ᴴ = G*(H*(P*(H*(P)))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(H*(P*(H*(G))))))).symm
 
 include hH hG hP hPP in
 private theorem w_phphh : (Matrix.trace (P*(H*(P*(H*(H)))))).re = (Matrix.trace (H*(H*(P*(H*(P)))))).re := by
@@ -718,10 +684,8 @@ private theorem w_pphgg : (Matrix.trace (P*(P*(H*(G*(G)))))).re = (Matrix.trace 
   calc
     (Matrix.trace (P*(P*(H*(G*(G)))))).re = (Matrix.trace (G*(G*(H*(P*(P)))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(P*(H*(G*(G)))))ᴴ = G*(G*(H*(P*(P)))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(P*(H*(G*(G))))))).symm
     _ = (Matrix.trace (G*(G*(H*(P))))).re := by
       simp only [projection_mul_assoc P _ hPP, hPP, Matrix.mul_assoc]
 
@@ -739,10 +703,8 @@ private theorem w_pphhg : (Matrix.trace (P*(P*(H*(H*(G)))))).re = (Matrix.trace 
   calc
     (Matrix.trace (P*(P*(H*(H*(G)))))).re = (Matrix.trace (G*(H*(H*(P*(P)))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(P*(H*(H*(G)))))ᴴ = G*(H*(H*(P*(P)))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(P*(H*(H*(G))))))).symm
     _ = (Matrix.trace (G*(H*(H*(P))))).re := by
       simp only [projection_mul_assoc P _ hPP, hPP, Matrix.mul_assoc]
 
@@ -870,10 +832,8 @@ private theorem w_ppgphg : (Matrix.trace (P*(P*(G*(P*(H*(G))))))).re = (Matrix.t
   calc
     (Matrix.trace (P*(P*(G*(P*(H*(G))))))).re = (Matrix.trace (G*(H*(P*(G*(P*(P))))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(P*(G*(P*(H*(G))))))ᴴ = G*(H*(P*(G*(P*(P))))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(P*(G*(P*(H*(G)))))))).symm
     _ = (Matrix.trace (G*(H*(P*(G*(P)))))).re := by
       simp only [projection_mul_assoc P _ hPP, hPP, Matrix.mul_assoc]
 
@@ -894,10 +854,8 @@ private theorem w_pphgpg : (Matrix.trace (P*(P*(H*(G*(P*(G))))))).re = (Matrix.t
         (congrArg Complex.re (Matrix.trace_mul_comm (P*(P*(H*(G)))) (P*(G))))
     _ = (Matrix.trace (G*(H*(P*(P*(G*(P))))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(G*(P*(P*(H*(G))))))ᴴ = G*(H*(P*(P*(G*(P))))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(G*(P*(P*(H*(G)))))))).symm
     _ = (Matrix.trace (G*(H*(P*(G*(P)))))).re := by
       simp only [projection_mul_assoc P _ hPP, hPP, Matrix.mul_assoc]
 
@@ -909,10 +867,8 @@ private theorem w_pphgph : (Matrix.trace (P*(P*(H*(G*(P*(H))))))).re = (Matrix.t
         (congrArg Complex.re (Matrix.trace_mul_comm (P*(P*(H*(G)))) (P*(H))))
     _ = (Matrix.trace (G*(H*(P*(P*(H*(P))))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(H*(P*(P*(H*(G))))))ᴴ = G*(H*(P*(P*(H*(P))))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(H*(P*(P*(H*(G)))))))).symm
     _ = (Matrix.trace (G*(H*(P*(H*(P)))))).re := by
       simp only [projection_mul_assoc P _ hPP, hPP, Matrix.mul_assoc]
 
@@ -957,10 +913,8 @@ private theorem w_pphphg : (Matrix.trace (P*(P*(H*(P*(H*(G))))))).re = (Matrix.t
   calc
     (Matrix.trace (P*(P*(H*(P*(H*(G))))))).re = (Matrix.trace (G*(H*(P*(H*(P*(P))))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(P*(H*(P*(H*(G))))))ᴴ = G*(H*(P*(H*(P*(P))))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(P*(H*(P*(H*(G)))))))).symm
     _ = (Matrix.trace (G*(H*(P*(H*(P)))))).re := by
       simp only [projection_mul_assoc P _ hPP, hPP, Matrix.mul_assoc]
 
@@ -1022,10 +976,8 @@ private theorem w_ppphgg : (Matrix.trace (P*(P*(P*(H*(G*(G))))))).re = (Matrix.t
   calc
     (Matrix.trace (P*(P*(P*(H*(G*(G))))))).re = (Matrix.trace (G*(G*(H*(P*(P*(P))))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(P*(P*(H*(G*(G))))))ᴴ = G*(G*(H*(P*(P*(P))))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(P*(P*(H*(G*(G)))))))).symm
     _ = (Matrix.trace (G*(G*(H*(P*(P)))))).re := by
       simp only [projection_mul_assoc P _ hPP, hPP, Matrix.mul_assoc]
     _ = (Matrix.trace (G*(G*(H*(P))))).re := by
@@ -1047,10 +999,8 @@ private theorem w_ppphhg : (Matrix.trace (P*(P*(P*(H*(H*(G))))))).re = (Matrix.t
   calc
     (Matrix.trace (P*(P*(P*(H*(H*(G))))))).re = (Matrix.trace (G*(H*(H*(P*(P*(P))))))).re := by
       simpa only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq,
-        Matrix.trace_conjTranspose, Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
-        (congrArg (fun M : Matrix n n ℂ => (Matrix.trace M).re)
-          (show (P*(P*(P*(H*(H*(G))))))ᴴ = G*(H*(H*(P*(P*(P))))) from by
-            simp only [Matrix.conjTranspose_mul, hH.eq, hG.eq, hP.eq, Matrix.mul_assoc]))
+        Complex.star_def, Complex.conj_re, Matrix.mul_assoc] using
+        (congrArg Complex.re (Matrix.trace_conjTranspose (P*(P*(P*(H*(H*(G)))))))).symm
     _ = (Matrix.trace (G*(H*(H*(P*(P)))))).re := by
       simp only [projection_mul_assoc P _ hPP, hPP, Matrix.mul_assoc]
     _ = (Matrix.trace (G*(H*(H*(P))))).re := by
@@ -1071,6 +1021,7 @@ end Words
 
 /-- Exact equality with the actual ordered second and third coefficients.
 Only Hermitian adjoint reversal, cyclic trace and `P*P=P` are used. -/
+set_option maxHeartbeats 1000000 in
 theorem projection_certificate (H G P : Matrix n n ℂ)
     (hH : H.IsHermitian) (hG : G.IsHermitian)
     (hP : P.IsHermitian) (hPP : P*P = P) :
@@ -1084,7 +1035,8 @@ theorem projection_certificate (H G P : Matrix n n ℂ)
     Matrix.smul_mul, Matrix.mul_smul, Matrix.one_mul, Matrix.mul_one,
     Matrix.trace_add, Matrix.trace_sub, Matrix.trace_smul, Complex.add_re,
     Complex.sub_re, Complex.real_smul, Complex.mul_re, Complex.div_re,
-    Complex.ofNat_re, Complex.ofNat_im, zero_mul, mul_zero, sub_zero, add_zero,
+    Complex.re_ofNat, Complex.im_ofNat, Complex.normSq_ofNat,
+    Complex.ofReal_re, Complex.ofReal_im, zero_mul, mul_zero, sub_zero, add_zero,
     Matrix.mul_assoc]
   simp only [
     w_hgh H G P hH hG hP hPP,
@@ -1193,5 +1145,160 @@ theorem projection_certificate (H G P : Matrix n n ℂ)
     w_ppphhg H G P hH hG hP hPP,
     w_ppphhh H G P hH hG hP hPP]
   ring
+
+private theorem projection_coefficient_gap (X H P : Matrix n n ℂ)
+    (hH : H.PosSemidef) (hG : (X-H).PosSemidef)
+    (hP : P.IsHermitian) (hPP : P*P = P) :
+    0 ≤ coefficient2 X H P - 3*coefficient3 X H P := by
+  have hc := projection_certificate H (X-H) P hH.isHermitian hG.isHermitian hP hPP
+  have hs := projection_sos_nonneg hH hG hP hPP
+  have hx : H+(X-H) = X := by abel
+  rw [hx] at hc
+  linarith
+
+/-- The actual alpha-three sandwich trace has third derivative at most second derivative
+for an orthogonal projection denominator direction, in every finite dimension.
+The PSD numerator endpoints can be singular. No matrices are required to commute. -/
+theorem projection_cubic_compatibility (X H P : Matrix n n ℂ)
+    (hH : H.PosSemidef) (hG : (X-H).PosSemidef)
+    (hP : P.IsHermitian) (hPP : P*P = P) :
+    let g := fun t : ℝ => (Matrix.trace
+      ((CFC.rpow (1+t • P) (-(1 : ℝ)/3) * (X+t • H) *
+        CFC.rpow (1+t • P) (-(1 : ℝ)/3))^3)).re
+    iteratedDeriv 3 g 0 ≤ iteratedDeriv 2 g 0 := by
+  dsimp only
+  obtain ⟨hd2, hd3⟩ := HsfIdentityCubicDerivatives.identity_cubic_trace_derivatives X H P hP
+  rw [hd2, hd3]
+  have hg := projection_coefficient_gap X H P hH hG hP hPP
+  linarith
+
+private theorem signed_coefficient_identities (X H P : Matrix n n ℂ) :
+    coefficient2 X ((2 : ℝ) • H-X) ((2 : ℝ) • P-1) = 4*coefficient2 X H P ∧
+    coefficient3 X ((2 : ℝ) • H-X) ((2 : ℝ) • P-1) =
+      4*coefficient2 X H P + 8*coefficient3 X H P := by
+  have s_hxh : (Matrix.trace (H*(X*(H)))).re = (Matrix.trace (H*(H*(X)))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (H*(X)) (H)))
+  have s_xhh : (Matrix.trace (X*(H*(H)))).re = (Matrix.trace (H*(H*(X)))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (H*(H))))
+  have s_xhx : (Matrix.trace (X*(H*(X)))).re = (Matrix.trace (H*(X*(X)))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (H*(X))))
+  have s_xxh : (Matrix.trace (X*(X*(H)))).re = (Matrix.trace (H*(X*(X)))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*(X)) (H)))
+  have s_xhpx : (Matrix.trace (X*(H*(P*(X))))).re = (Matrix.trace (H*(P*(X*(X))))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (H*(P*(X)))))
+  have s_xhxp : (Matrix.trace (X*(H*(X*(P))))).re = (Matrix.trace (H*(X*(P*(X))))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (H*(X*(P)))))
+  have s_xphx : (Matrix.trace (X*(P*(H*(X))))).re = (Matrix.trace (H*(X*(X*(P))))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*(P)) (H*(X))))
+  have s_xpxx : (Matrix.trace (X*(P*(X*(X))))).re = (Matrix.trace (P*(X*(X*(X))))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (P*(X*(X)))))
+  have s_xxpx : (Matrix.trace (X*(X*(P*(X))))).re = (Matrix.trace (P*(X*(X*(X))))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*(X)) (P*(X))))
+  have s_xxxp : (Matrix.trace (X*(X*(X*(P))))).re = (Matrix.trace (P*(X*(X*(X))))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*(X*(X))) (P)))
+  have s_pxxpx : (Matrix.trace (P*(X*(X*(P*(X)))))).re = (Matrix.trace (P*(X*(P*(X*(X)))))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (P*(X*(X))) (P*(X))))
+  have s_xppxx : (Matrix.trace (X*(P*(P*(X*(X)))))).re = (Matrix.trace (P*(P*(X*(X*(X)))))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (P*(P*(X*(X))))))
+  have s_xpxpx : (Matrix.trace (X*(P*(X*(P*(X)))))).re = (Matrix.trace (P*(X*(P*(X*(X)))))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (P*(X*(P*(X))))))
+  have s_xpxxp : (Matrix.trace (X*(P*(X*(X*(P)))))).re = (Matrix.trace (P*(X*(P*(X*(X)))))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*(P*(X*(X)))) (P)))
+  have s_xxppx : (Matrix.trace (X*(X*(P*(P*(X)))))).re = (Matrix.trace (P*(P*(X*(X*(X)))))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*(X)) (P*(P*(X)))))
+  have s_xxpxp : (Matrix.trace (X*(X*(P*(X*(P)))))).re = (Matrix.trace (P*(X*(P*(X*(X)))))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*(X)) (P*(X*(P)))))
+  have s_xxxpp : (Matrix.trace (X*(X*(X*(P*(P)))))).re = (Matrix.trace (P*(P*(X*(X*(X)))))).re := by
+    exact congrArg Complex.re (by simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*(X*(X))) (P*(P))))
+  constructor
+  all_goals simp only [coefficient2, coefficient3, traceCoefficient2, traceCoefficient3,
+    Matrix.add_mul, Matrix.mul_add, Matrix.sub_mul, Matrix.mul_sub,
+    Matrix.smul_mul, Matrix.mul_smul, Matrix.one_mul, Matrix.mul_one,
+    Matrix.trace_add, Matrix.trace_sub, Matrix.trace_smul, Complex.add_re,
+    Complex.sub_re, Complex.real_smul, Complex.mul_re, Complex.div_re,
+    Complex.re_ofNat, Complex.im_ofNat, Complex.normSq_ofNat,
+    Complex.ofReal_re, Complex.ofReal_im, zero_mul, mul_zero, sub_zero, add_zero,
+    Matrix.mul_assoc]
+  all_goals simp only [s_hxh, s_xhh, s_xhx, s_xxh, s_xhpx, s_xhxp, s_xphx, s_xpxx, s_xxpx, s_xxxp, s_pxxpx, s_xppxx, s_xpxpx, s_xpxxp, s_xxppx, s_xxpxp, s_xxxpp]
+  all_goals ring
+
+private theorem signed_coefficient_parity (X A J : Matrix n n ℂ) :
+    coefficient2 X (-A) (-J) = coefficient2 X A J ∧
+    coefficient3 X (-A) (-J) = -coefficient3 X A J := by
+  constructor <;>
+    simp [coefficient2, coefficient3, traceCoefficient2, traceCoefficient3,
+      Matrix.neg_mul, Matrix.mul_neg]
+
+private theorem involution_coefficient_upper (X A J : Matrix n n ℂ)
+    (hp : (X+A).PosSemidef) (hm : (X-A).PosSemidef)
+    (hJ : J.IsHermitian) (hJJ : J*J = 1) :
+    6*coefficient3 X A J ≤ 10*coefficient2 X A J := by
+  let H := (1/2 : ℝ) • (X+A)
+  let P := (1/2 : ℝ) • (1+J)
+  have hH : H.PosSemidef := hp.smul (by norm_num : (0 : ℝ) ≤ 1/2)
+  have hg : (X-H).PosSemidef := by
+    have he : X-H = (1/2 : ℝ) • (X-A) := by dsimp [H]; module
+    rw [he]
+    exact hm.smul (by norm_num : (0 : ℝ) ≤ 1/2)
+  have hP : P.IsHermitian :=
+    (Matrix.isHermitian_one.add hJ).smul (by simp : IsSelfAdjoint (1/2 : ℝ))
+  have hPP : P*P = P := by
+    have he : (1+J)*(1+J) = (2 : ℝ) • (1+J) := by
+      rw [two_smul ℝ]
+      noncomm_ring [hJJ]
+    dsimp [P]
+    simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul, he]
+    module
+  have hc := projection_coefficient_gap X H P hH hg hP hPP
+  have hi := signed_coefficient_identities X H P
+  have ha : (2 : ℝ) • H-X = A := by dsimp [H]; module
+  have hj : (2 : ℝ) • P-1 = J := by dsimp [P]; module
+  rw [ha, hj] at hi
+  linarith [hi.1, hi.2]
+
+/-- The actual cubic sandwiched trace satisfies the signed constant-five estimate
+for every Hermitian involution denominator direction and arbitrary finite index type.
+Both numerator endpoints may be singular; no pairwise commutation is assumed. -/
+theorem involution_cubic_compatibility (X A J : Matrix n n ℂ)
+    (hp : (X+A).PosSemidef) (hm : (X-A).PosSemidef)
+    (hJ : J.IsHermitian) (hJJ : J*J = 1) :
+    let f := fun t : ℝ => (Matrix.trace
+      ((CFC.rpow (1+t • J) (-(1 : ℝ)/3) * (X+t • A) *
+        CFC.rpow (1+t • J) (-(1 : ℝ)/3))^3)).re
+    0 ≤ iteratedDeriv 2 f 0 ∧ |iteratedDeriv 3 f 0| ≤ 5*iteratedDeriv 2 f 0 := by
+  dsimp only
+  obtain ⟨hd2, hd3⟩ := HsfIdentityCubicDerivatives.identity_cubic_trace_derivatives X A J hJ
+  rw [hd2, hd3]
+  have hu := involution_coefficient_upper X A J hp hm hJ hJJ
+  have hr := involution_coefficient_upper X (-A) (-J)
+    (by simpa only [add_neg_eq_sub] using hm)
+    (by simpa only [sub_neg_eq_add] using hp) hJ.neg
+    (by simpa only [neg_mul_neg] using hJJ)
+  obtain ⟨he2, he3⟩ := signed_coefficient_parity X A J
+  rw [he2, he3] at hr
+  constructor
+  · linarith
+  · exact abs_le.mpr ⟨by linarith, by linarith⟩
+
+#print axioms projection_certificate
+#print axioms projection_cubic_compatibility
+#print axioms involution_cubic_compatibility
 
 end D5.S3.Quantum.Matrix.HsfProjectionCubic
