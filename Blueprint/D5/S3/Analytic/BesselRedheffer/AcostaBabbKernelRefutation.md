@@ -58,6 +58,10 @@ $$\neg (\forall (\alpha: \mathbb{R}), (0 \le \alpha) \Rightarrow ((\alpha \le \f
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/BesselRedheffer/AcostaBabbKernelRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ab2410` (refuted) by `D5/S3/Analytic/BesselRedheffer/AcostaBabbKernelRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ab2410","declaration_gid":"D5/S3/Analytic/BesselRedheffer/AcostaBabbKernelRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ryan L. Acosta Babb (2024). *A partial converse to the Riemann–Lebesgue lemma for Bessel–Fourier series of order zero*. DOI: [10.48550/arXiv.2410.17681](https://doi.org/10.48550/arXiv.2410.17681). URL: <https://arxiv.org/abs/2410.17681v1>.
