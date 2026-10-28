@@ -1,5 +1,3 @@
-import D5.S3.VertexAlgebra.Lattice.NormFourZhuAlgebra.Core
-
 /- GID: D5/S3/VertexAlgebra/Lattice/NormFourZhuAlgebra
    generality: I
    mirror-B: D5/B/S3/VertexAlgebra/Lattice/NormFourZhuAlgebra
@@ -8,6 +6,7 @@ import D5.S3.VertexAlgebra.Lattice.NormFourZhuAlgebra.Core
    utility: none
    digest: Actual star algebra and polynomial presentation of the literal norm-four Zhu quotient. -/
 
+import D5.S3.VertexAlgebra.Lattice.NormFourZhuAlgebra.Core
 import D5.S3.VertexAlgebra.Lattice.NormFourZhuFinite
 import Batteries.Tactic.OpenPrivate
 import D5.S3.VertexAlgebra.GroundRightCurrentTransport.FirstSourceClosure
