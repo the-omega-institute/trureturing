@@ -10,7 +10,7 @@ Fibonacci weights use F(0)=0, F(1)=1 and the usual additive recurrence. Only ind
 
 **Definition 1.1 (Canonical Fibonacci support).**
 
-$$\forall m \in \mathbb{N}, \operatorname{support}\left(m\right) = \operatorname{toFinset}\left(\operatorname{wdigits}\left(m\right)\right)$$
+$$(\forall m \in \mathbb{N},\; \operatorname{support}\left(m\right) = \operatorname{toFinset}\left(\operatorname{wdigits}\left(m\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.support` (`✓ std3`).
 
@@ -22,7 +22,7 @@ The existing canonical W-digit equivalence supplies existence and uniqueness. Th
 
 **Definition 1.2 (Exactly one shared canonical term).**
 
-$$\forall x \in \mathbb{N}, \forall y \in \mathbb{N}, \operatorname{Adjacent}\left(x, y\right) \iff \operatorname{card}\left(\operatorname{inter}\left(\operatorname{support}\left(x\right), \operatorname{support}\left(y\right)\right)\right) = 1$$
+$$(\forall x \in \mathbb{N},\; (\forall y \in \mathbb{N},\; \operatorname{Adjacent}\left(x, y\right) \iff \operatorname{card}\left(\operatorname{inter}\left(\operatorname{support}\left(x\right), \operatorname{support}\left(y\right)\right)\right) = 1))$$
 
 *Formalization.* `D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.Adjacent` (`✓ std3`).
 
@@ -34,7 +34,7 @@ The finite-set intersection counts common Fibonacci terms in the unique nonadjac
 
 **Definition 1.3 (The actual one-based sequence).**
 
-$$\forall n \in \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{v}\left(\operatorname{sub}\left(n, 1\right)\right)$$
+$$(\forall n \in \mathbb{N},\; \operatorname{a}\left(n\right) = \operatorname{v}\left(\operatorname{sub}\left(n, 1\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.a` (`✓ std3`).
 
@@ -46,7 +46,7 @@ Subtraction on natural indices is truncated. Internally v(n) is the current valu
 
 **Definition 1.4 (The exact unused-successor predicate).**
 
-$$\forall s \in \mathbb{N} \to \mathbb{N}, \forall n \in \mathbb{N}, \forall m \in \mathbb{N}, \operatorname{Eligible}\left(s, n, m\right) \iff 0 < m \land \forall k \in \mathbb{N}, 1 \le k \land k \le n \implies s\left(k\right) \neq m \land \operatorname{Adjacent}\left(s\left(n\right), m\right)$$
+$$(\forall s \in \mathbb{N} \to \mathbb{N},\; (\forall n \in \mathbb{N},\; (\forall m \in \mathbb{N},\; \operatorname{Eligible}\left(s, n, m\right) \iff (0 < m) \land ((\forall k \in \mathbb{N},\; ((1 \le k) \land (k \le n)) \Rightarrow (s\left(k\right) \neq m))) \land (\operatorname{Adjacent}\left(s\left(n\right), m\right)))))$$
 
 *Formalization.* `D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.Eligible` (`✓ std3`).
 
@@ -58,7 +58,7 @@ Every positive index from one through the current index belongs to the excluded 
 
 **Definition 1.5 (Whole totality and permutation).**
 
-$$\forall s \in \mathbb{N} \to \mathbb{N}, \operatorname{IsGreedyPermutation}\left(s\right) \iff s\left(1\right) = 1 \land \forall n \in \mathbb{N}, 1 \le n \implies 0 < s\left(n\right) \land \forall n \in \mathbb{N}, 1 \le n \implies \operatorname{Eligible}\left(s, n, s\left(\operatorname{add}\left(n, 1\right)\right)\right) \land \forall m \in \mathbb{N}, \operatorname{Eligible}\left(s, n, m\right) \implies s\left(\operatorname{add}\left(n, 1\right)\right) \le m \land \forall i \in \mathbb{N}, \forall j \in \mathbb{N}, 1 \le i \land 1 \le j \land s\left(i\right) = s\left(j\right) \implies i = j \land \forall m \in \mathbb{N}, 1 \le m \implies \exists n \in \mathbb{N}, 1 \le n \land s\left(n\right) = m$$
+$$(\forall s \in \mathbb{N} \to \mathbb{N},\; \operatorname{IsGreedyPermutation}\left(s\right) \iff (s\left(1\right) = 1) \land ((\forall n \in \mathbb{N},\; (1 \le n) \Rightarrow (0 < s\left(n\right)))) \land ((\forall n \in \mathbb{N},\; (1 \le n) \Rightarrow ((\operatorname{Eligible}\left(s, n, s\left(\operatorname{add}\left(n, 1\right)\right)\right)) \land ((\forall m \in \mathbb{N},\; (\operatorname{Eligible}\left(s, n, m\right)) \Rightarrow (s\left(\operatorname{add}\left(n, 1\right)\right) \le m)))))) \land ((\forall i \in \mathbb{N},\; (\forall j \in \mathbb{N},\; ((1 \le i) \land (1 \le j) \land (s\left(i\right) = s\left(j\right))) \Rightarrow (i = j)))) \land ((\forall m \in \mathbb{N},\; (1 \le m) \Rightarrow ((\exists n \in \mathbb{N},\; (1 \le n) \land (s\left(n\right) = m))))))$$
 
 *Formalization.* `D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.IsGreedyPermutation` (`✓ std3`).
 
@@ -70,7 +70,7 @@ The predicate includes the initial term, positivity, an eligible actual successo
 
 **Theorem 1.6 (A370630 is a positive-integer permutation).**
 
-$$\operatorname{a}\left(1\right) = 1 \land \forall n \in \mathbb{N}, 1 \le n \implies 0 < \operatorname{a}\left(n\right) \land \forall n \in \mathbb{N}, 1 \le n \implies \operatorname{Eligible}\left(\operatorname{a}, n, \operatorname{a}\left(\operatorname{add}\left(n, 1\right)\right)\right) \land \forall m \in \mathbb{N}, \operatorname{Eligible}\left(\operatorname{a}, n, m\right) \implies \operatorname{a}\left(\operatorname{add}\left(n, 1\right)\right) \le m \land \forall i \in \mathbb{N}, \forall j \in \mathbb{N}, 1 \le i \land 1 \le j \land \operatorname{a}\left(i\right) = \operatorname{a}\left(j\right) \implies i = j \land \forall m \in \mathbb{N}, 1 \le m \implies \exists n \in \mathbb{N}, 1 \le n \land \operatorname{a}\left(n\right) = m$$
+$$(\operatorname{a}\left(1\right) = 1) \land ((\forall n \in \mathbb{N},\; (1 \le n) \Rightarrow (0 < \operatorname{a}\left(n\right)))) \land ((\forall n \in \mathbb{N},\; (1 \le n) \Rightarrow ((\operatorname{Eligible}\left(\operatorname{a}, n, \operatorname{a}\left(\operatorname{add}\left(n, 1\right)\right)\right)) \land ((\forall m \in \mathbb{N},\; (\operatorname{Eligible}\left(\operatorname{a}, n, m\right)) \Rightarrow (\operatorname{a}\left(\operatorname{add}\left(n, 1\right)\right) \le m)))))) \land ((\forall i \in \mathbb{N},\; (\forall j \in \mathbb{N},\; ((1 \le i) \land (1 \le j) \land (\operatorname{a}\left(i\right) = \operatorname{a}\left(j\right))) \Rightarrow (i = j)))) \land ((\forall m \in \mathbb{N},\; (1 \le m) \Rightarrow ((\exists n \in \mathbb{N},\; (1 \le n) \land (\operatorname{a}\left(n\right) = m)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.result` (`✓ std3`). ∎
 
