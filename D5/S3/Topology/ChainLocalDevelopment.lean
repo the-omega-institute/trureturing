@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Topology/ChainLocalDevelopment
    mirror-E: none(waiver:local-chain-development)
-   anchors: [mathlib/module/Mathlib.Topology.EMetricSpace.Defs]
+   anchors: [mathlib/module/Mathlib.Topology.MetricSpace.Isometry]
    utility: none
    digest: Local short developments across guarded faces bound the complete original chain distance. -/
 
