@@ -1,8 +1,0 @@
-**定义 2.1（五窗指标任务）。** Use the low-to-high convention of [the FIB ML volume, Definition 2.1](FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md):
-
-$$
-\Sigma=(a,b,c,d,e)=(000,100,010,101,001).
-$$
-
-The labels are respectively $\mathrm{null},2,3,2\,5,5$. Set $Y_i=\mathbf1_{\{C=i\}}$, $p_i=\Pr(C=i)$, $m_i=\min(p_i,1-p_i)$ and $r_i=e_i(A)$. The same definitions apply to any explicitly supplied binary derived task, with its own prior.
-

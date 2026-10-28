@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:50855ce675ca802e31eafefeeb5856c25cda14dfe1a568dbaf7c62d0322a7bb8
-  normalized_sha256: sha256:50855ce675ca802e31eafefeeb5856c25cda14dfe1a568dbaf7c62d0322a7bb8
-cas_ref: sha256:50855ce675ca802e31eafefeeb5856c25cda14dfe1a568dbaf7c62d0322a7bb8
-coverage_gids:
-  - gid: D5/S3/Observer/WindowRegister.windowRoot_isPrimitiveRoot
-    target_statement_id: sha256:4a5694e3ba62d66afbc3733205d04a2c0a2e110293dc41101bdf987ecd6eb206
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a014104c116f934431577abd7f88bca28b07e802a0f5664ba507ea1eec0c64fc
-  normalized_sha256: sha256:a014104c116f934431577abd7f88bca28b07e802a0f5664ba507ea1eec0c64fc
-cas_ref: sha256:a014104c116f934431577abd7f88bca28b07e802a0f5664ba507ea1eec0c64fc
-coverage_gids:
-  - gid: D5/S3/Observer/MetricGeometry/ArithmeticHorizon.finite_predictor_horizon
-    target_statement_id: sha256:1338bf4564a8000df3f0231277c073fd037266cf15a7e6da39da161d26da0456
-receipts:
-  unresolved_subitems: []

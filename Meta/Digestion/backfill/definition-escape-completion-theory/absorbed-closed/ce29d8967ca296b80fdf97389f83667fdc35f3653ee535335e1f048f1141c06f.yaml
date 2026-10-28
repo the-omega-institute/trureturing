@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ce29d8967ca296b80fdf97389f83667fdc35f3653ee535335e1f048f1141c06f
-  normalized_sha256: sha256:ce29d8967ca296b80fdf97389f83667fdc35f3653ee535335e1f048f1141c06f
-cas_ref: sha256:ce29d8967ca296b80fdf97389f83667fdc35f3653ee535335e1f048f1141c06f
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.pareto_weak_reflexive_transitive
-    target_statement_id: sha256:57f54dd66f8944b9f51c64a24eccba18d2cd7118ed38d48962098a346143f367
-receipts:
-  unresolved_subitems: []

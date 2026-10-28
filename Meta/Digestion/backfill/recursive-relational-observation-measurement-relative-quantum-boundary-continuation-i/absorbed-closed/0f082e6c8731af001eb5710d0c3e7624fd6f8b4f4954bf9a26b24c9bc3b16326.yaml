@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0f082e6c8731af001eb5710d0c3e7624fd6f8b4f4954bf9a26b24c9bc3b16326
-  normalized_sha256: sha256:0f082e6c8731af001eb5710d0c3e7624fd6f8b4f4954bf9a26b24c9bc3b16326
-cas_ref: sha256:0f082e6c8731af001eb5710d0c3e7624fd6f8b4f4954bf9a26b24c9bc3b16326
-coverage_gids:
-  - gid: D5/S3/Quantum/QuantumChannels/OriginalQutritWash.explicit_wash_bound
-    target_statement_id: sha256:c04b6077c9a813b5c504bfdfb549a00de0a9cb602db8f2fe9b8dfe1fb70657de
-receipts:
-  unresolved_subitems: []

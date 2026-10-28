@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:da161f63fbc285257518d4c643eecb11a10ffc28b5500664842422c0b8fe1bc5
-  normalized_sha256: sha256:da161f63fbc285257518d4c643eecb11a10ffc28b5500664842422c0b8fe1bc5
-cas_ref: sha256:da161f63fbc285257518d4c643eecb11a10ffc28b5500664842422c0b8fe1bc5
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Dialectics/FiniteWindowStabilityIsDescent.finite_window_stability_congruence_descent_tfae
-    target_statement_id: sha256:43c60655335d36be083a61b65e02cfc84110e1334db18060a8bb75bacda4ca91
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:38d25df1afdc73ad55801971b481b5203a0b428e547adb8b81752560bf226382
-  normalized_sha256: sha256:38d25df1afdc73ad55801971b481b5203a0b428e547adb8b81752560bf226382
-cas_ref: sha256:38d25df1afdc73ad55801971b481b5203a0b428e547adb8b81752560bf226382
-coverage_gids:
-  - gid: D5/S3/Observer/Conditioning/TargetVisibilityMinimumVariance.target_visibility_minimum_variance
-    target_statement_id: sha256:117afe0a0f9924823a3756881b3703b406b9a592768a67110581b54f5e7f4a85
-receipts:
-  unresolved_subitems: []

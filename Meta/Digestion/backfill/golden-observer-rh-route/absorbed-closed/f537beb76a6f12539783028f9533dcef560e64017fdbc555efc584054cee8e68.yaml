@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f537beb76a6f12539783028f9533dcef560e64017fdbc555efc584054cee8e68
-  normalized_sha256: sha256:f537beb76a6f12539783028f9533dcef560e64017fdbc555efc584054cee8e68
-cas_ref: sha256:f537beb76a6f12539783028f9533dcef560e64017fdbc555efc584054cee8e68
-coverage_gids:
-  - gid: D5/S3/Analytic/Toroidal/ProjectiveJetScaleInvariance.projective_toroidal_jet_scale_invariance
-    target_statement_id: sha256:327494f210231395a6934a222e9f2f4a4abee267f43910b118c46e28f3ccd296
-receipts:
-  unresolved_subitems: []

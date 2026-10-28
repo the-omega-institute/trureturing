@@ -1,6 +1,0 @@
-## 6. 隐藏二次关系的表示论分裂
-
-令 $V_5=\mathbb R^5$ 带标准度量和定向，$\mathfrak g=\mathfrak{so}(5)\simeq\Lambda^2V_5$，
-并记 $W_{14}=\operatorname{Sym}^2_0V_5$。反对称矩阵 $A$ 对应二形式
-$a_A=\sum_{i<j}A_{ij}e_i\wedge e_j$。
-

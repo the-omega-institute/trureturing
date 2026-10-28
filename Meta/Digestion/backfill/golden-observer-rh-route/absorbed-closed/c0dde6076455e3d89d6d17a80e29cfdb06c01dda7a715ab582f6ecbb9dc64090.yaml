@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c0dde6076455e3d89d6d17a80e29cfdb06c01dda7a715ab582f6ecbb9dc64090
-  normalized_sha256: sha256:c0dde6076455e3d89d6d17a80e29cfdb06c01dda7a715ab582f6ecbb9dc64090
-cas_ref: sha256:c0dde6076455e3d89d6d17a80e29cfdb06c01dda7a715ab582f6ecbb9dc64090
-coverage_gids:
-  - gid: D5/S3/Weil/Convention.criticalAbscissa
-    target_statement_id: sha256:f7fd7ae0e1480da98229e1ae875f653956fa56679e73b320d49a926898c7b11b
-receipts:
-  unresolved_subitems: []

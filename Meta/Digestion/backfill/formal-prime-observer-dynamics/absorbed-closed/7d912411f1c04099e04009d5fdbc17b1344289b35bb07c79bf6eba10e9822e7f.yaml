@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7d912411f1c04099e04009d5fdbc17b1344289b35bb07c79bf6eba10e9822e7f
-  normalized_sha256: sha256:7d912411f1c04099e04009d5fdbc17b1344289b35bb07c79bf6eba10e9822e7f
-cas_ref: sha256:7d912411f1c04099e04009d5fdbc17b1344289b35bb07c79bf6eba10e9822e7f
-coverage_gids:
-  - gid: D5/S3/Factorization/Galois/GeneralPowerCharacterLayer.power_character_joint_kernel_eq_power_subgroup
-    target_statement_id: sha256:a44c069339fb942aeedd8004d17cea829b5f604b3117cfda0c19d67d75fa4f92
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-反之若 RH 假：
-
-- 由 functional equation 与共轭对称，可选一个非平凡零点 $\rho$ 满足 $\Re\rho>1/2$；
-- 令 $s=\rho/\phi^2$，则 $w=\rho$ 位于 O-5 的严格窗口；
-- $\zeta(w)=0$；
-- 因 $\Re(2\rho)>1$，Euler product 区域给出 $\zeta(2\rho)\ne0$，所以分母不能消去该零；
-- $e^{H_2}$ 不为零；
-- $\zeta(\phi\rho)$ 在该点没有极点。
-

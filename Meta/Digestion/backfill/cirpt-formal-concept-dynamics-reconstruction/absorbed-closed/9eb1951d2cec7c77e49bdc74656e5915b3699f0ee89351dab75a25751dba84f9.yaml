@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9eb1951d2cec7c77e49bdc74656e5915b3699f0ee89351dab75a25751dba84f9
-  normalized_sha256: sha256:9eb1951d2cec7c77e49bdc74656e5915b3699f0ee89351dab75a25751dba84f9
-cas_ref: sha256:9eb1951d2cec7c77e49bdc74656e5915b3699f0ee89351dab75a25751dba84f9
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Audits/DomainImmunizationAudit.domain_immunization_audit
-    target_statement_id: sha256:a0a4573842ba681c85e5690842970f447b1ad52af51130712f5937747091cb87
-receipts:
-  unresolved_subitems: []

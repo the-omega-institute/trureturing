@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3dc76d86d0775bd06d8f35c73bc94eb661547b9f0803d551f2ac370ba36c678a
-  normalized_sha256: sha256:3dc76d86d0775bd06d8f35c73bc94eb661547b9f0803d551f2ac370ba36c678a
-cas_ref: sha256:3dc76d86d0775bd06d8f35c73bc94eb661547b9f0803d551f2ac370ba36c678a
-coverage_gids:
-  - gid: D5/S3/Weil/TestFunctions/CayleyLaguerreMomentTomography.laguerre_moment_tomography
-    target_statement_id: sha256:ffa75080a5e2a7242a5c2aca5acd706d8444cd521e49222da7b99ddb18659a94
-receipts:
-  unresolved_subitems: []

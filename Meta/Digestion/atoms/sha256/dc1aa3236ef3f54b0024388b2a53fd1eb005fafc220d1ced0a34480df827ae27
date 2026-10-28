@@ -1,3 +1,0 @@
-**定义 2.1(三层真)**。对命题 $P$:
-
-- **模型真**:$\mathrm{True}_{\mathfrak M}(P)\iff\mathfrak M\models P$(FCD 定义 19.1「锚点真理」的模型形;母仓第 2.2 条之「真」);

@@ -1,8 +1,0 @@
-**定义 100.2（相邻取得结果的源／动作／记录对应域）。** 下列比较只比较已声明合同，不给不同场律一个未经证明的共同实现映射。
-
-| 钉版相邻来源 | 实际源、动作及记录 | 与本源的缺失对应 |
-| --- | --- | --- |
-| [Atomic Generation Acquisition III，§§1–16，尤其定义 2.2–2.4、8.1、边界 16.1–16.3](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_III.md) | 持久有序原生材料和有理场 $T_t=(4I+A_t)/8$；A 的原始 Tick／精确读口及分离间隔，C 的生长后时钟和数字 Read$(j,p)=\lfloor2^px_{\ell_j}\rfloor+\zeta$。其已知 alpha 上的 Reset、Add、验证读及实际权利属于已供准备，C 的滋扰选择是无概率的集合值合同。 | $\zeta$ 不是这里的公平量子标签；原生读口、重置、已取得几何及费用不映成 $A_j,N,E$ 的可调用操作。该卷 16.3 仍要求共同装置保实际准备、操作、后继、完整返回及权利。 |
-| [Recovery Geometry III，§§112–120，尤其 (112.1)–(112.2)、定义 112.4、定理 113.4、命题 114.2、117.3](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY_III.md) | 地址标定窗和边权 $\ell_p/100$ 的持久对称有理矩阵；任意未知旧场经实际 split sweep 保零延伸，再由已挣得几何的根窗口取得推进后的预测器。根 Add／Tick 脉冲准备是另供的实际历史合同；原始 Tick 可离开该历史像。 | 根 Read、脉冲控制、标定循环性和未知场取得没有与本源唯一纯准备、公平仪器和一次二元终端的同源映射；其可逆坐标或恢复值不提供本源逆门或历史回退。 |
-| [Moving Trace Recovery，§§30–36，尤其定义 30.1、定理 30.2、31.2、32.1 与命题 34.1、35.1](FIB_MOVING_TRACE_RECOVERY_AND_SHARP_CALIBRATED_CONTINUATIONS.md) | 同一逐项严格正的实秩一迹一矩阵 $P$、整段共同多项式 $H,D$、固定原时钟和已取得向量 $Z(W)_i=H(i)\operatorname{tr}(A_iP)+D(i)$；严格逃逸距离 $e(y)>\rho$ 给兼容完整世界的界，接触 $e(y)=\rho$ 有相反实例。这里的实矩阵未被假定 Hermitian PSD。 | 有界误差读口、共同增益／偏置和该记录几何不提供 qutrit Born 标定或本源噪声证书；分别的取得与最优量不能拼成一台共同装置的同时实现。 |
-

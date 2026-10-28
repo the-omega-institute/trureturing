@@ -1,4 +1,0 @@
-## 45. 实际互补 contexts 的交叉 pinching 与联合 affinity 缺口
-
-第 31 节已经排除了 order-three symmetry 在两个互补 contexts 中的非平凡饱和分裂；第 32 节进一步给出近饱和定量界。本节保留实际互补基的等模重叠，改进其中的交叉项估计，得到更强的联合约束。这里不主张常数最优，也不假设单个 residual completion 的 affinity 下界。
-

@@ -1,7 +1,0 @@
-该模块固定：
-
-- 本仓 Fourier 采用 angular-frequency 规范；
-- 与 mathlib 频率变量的换算含 $2\pi$；
-- `criticalAbscissa := 1/2`；
-- `classicalZeta := riemannZeta`。
-

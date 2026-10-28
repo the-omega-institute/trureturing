@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:85b6876fd71f172734dbf42b3efe7db7064cec99174ea923d5ac025fd3262e5a
-  normalized_sha256: sha256:85b6876fd71f172734dbf42b3efe7db7064cec99174ea923d5ac025fd3262e5a
-cas_ref: sha256:85b6876fd71f172734dbf42b3efe7db7064cec99174ea923d5ac025fd3262e5a
-coverage_gids:
-  - gid: D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy.finiteHolonomyEnergy
-    target_statement_id: sha256:bfd0a7643938493b5b5a33d6782ab08a68a79198afac6a4f22bfb988e962b00c
-receipts:
-  unresolved_subitems: []

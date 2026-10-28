@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a429d7b8e0654d1968d6b59f4792e3c9541341d049a81c9f0b3a0edb4af00ef5
-  normalized_sha256: sha256:a429d7b8e0654d1968d6b59f4792e3c9541341d049a81c9f0b3a0edb4af00ef5
-cas_ref: sha256:a429d7b8e0654d1968d6b59f4792e3c9541341d049a81c9f0b3a0edb4af00ef5
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Fibers/FourRoleIndependence.four_role_independence
-    target_statement_id: sha256:00263be77073495b6bf4e0fb73fa56452bb3504d119c6de27839dc9ef8312b91
-receipts:
-  unresolved_subitems: []

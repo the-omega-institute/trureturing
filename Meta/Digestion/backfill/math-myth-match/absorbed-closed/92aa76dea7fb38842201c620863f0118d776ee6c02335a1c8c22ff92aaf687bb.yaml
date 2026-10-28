@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:92aa76dea7fb38842201c620863f0118d776ee6c02335a1c8c22ff92aaf687bb
-  normalized_sha256: sha256:92aa76dea7fb38842201c620863f0118d776ee6c02335a1c8c22ff92aaf687bb
-cas_ref: sha256:92aa76dea7fb38842201c620863f0118d776ee6c02335a1c8c22ff92aaf687bb
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/ContextUpdates/PredictiveStateUnifilarUpdate.unifilar_predictive_update
-    target_statement_id: sha256:fc8bae68291371f36221485521acc620ee04dd2d29e3ad0d9ccec19d5237b22f
-receipts:
-  unresolved_subitems: []

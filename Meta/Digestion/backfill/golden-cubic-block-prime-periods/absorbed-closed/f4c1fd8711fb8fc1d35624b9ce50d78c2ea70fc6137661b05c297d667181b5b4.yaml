@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f4c1fd8711fb8fc1d35624b9ce50d78c2ea70fc6137661b05c297d667181b5b4
-  normalized_sha256: sha256:f4c1fd8711fb8fc1d35624b9ce50d78c2ea70fc6137661b05c297d667181b5b4
-cas_ref: sha256:f4c1fd8711fb8fc1d35624b9ce50d78c2ea70fc6137661b05c297d667181b5b4
-coverage_gids:
-  - gid: D5/S3/Factorization/QuadraticIdeals/CubicJacobiNormalization.cubicJacobiSum_eq_primary_generator
-    target_statement_id: sha256:90c75bb698b6d88e79a2df4d9a86e5f47eab83de375641b44ee655bbf7ca4ea8
-receipts:
-  unresolved_subitems: []

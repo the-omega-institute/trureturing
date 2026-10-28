@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:bb0a21745e9e71bf92377eade98eae38aa39a102ea9e7235421bc19f71cc277b
-  normalized_sha256: sha256:bb0a21745e9e71bf92377eade98eae38aa39a102ea9e7235421bc19f71cc277b
-cas_ref: sha256:bb0a21745e9e71bf92377eade98eae38aa39a102ea9e7235421bc19f71cc277b
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Identity/MultilayerIdentityInsufficiency.CompatibleFamily
-    target_statement_id: sha256:87f9103060286d4d89e28f587be3c9f24c01db9c5a06dca16ed8bca2f31c9844
-receipts:
-  unresolved_subitems: []

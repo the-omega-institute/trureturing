@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2d8e9219eea3775f8f20c63462037b3bc7d09c2eff7d60fb0bab629cd8be5727
-  normalized_sha256: sha256:2d8e9219eea3775f8f20c63462037b3bc7d09c2eff7d60fb0bab629cd8be5727
-cas_ref: sha256:2d8e9219eea3775f8f20c63462037b3bc7d09c2eff7d60fb0bab629cd8be5727
-coverage_gids:
-  - gid: D5/S3/Observer/Refinement/DoubleExtensionalEvaluationDescent.double_extensional_evaluation_descent
-    target_statement_id: sha256:bae5486602649880e1f8a8ca6d2f2deb936205bcf049c6a821233f7f24d9145d
-receipts:
-  unresolved_subitems: []

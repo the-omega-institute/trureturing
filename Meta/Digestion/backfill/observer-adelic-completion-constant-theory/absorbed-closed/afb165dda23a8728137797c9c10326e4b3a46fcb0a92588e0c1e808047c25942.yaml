@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:afb165dda23a8728137797c9c10326e4b3a46fcb0a92588e0c1e808047c25942
-  normalized_sha256: sha256:afb165dda23a8728137797c9c10326e4b3a46fcb0a92588e0c1e808047c25942
-cas_ref: sha256:afb165dda23a8728137797c9c10326e4b3a46fcb0a92588e0c1e808047c25942
-coverage_gids:
-  - gid: D5/S3/Observer/LinearMemory/ReflectionUnitMemoryResidual.reflection_unit_memory_residual
-    target_statement_id: sha256:a1871a57e49bce1dfad9b752bdae6bf005d36b8e946b5cdcea6e4437fc122fcc
-receipts:
-  unresolved_subitems: []

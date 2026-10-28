@@ -1,6 +1,0 @@
-**命题 104.2（整体符号成为可读相对符号的条件）。** 对单独系统，$\operatorname{Ad}_{-I}$ 是恒等通道；若实际允许在同一控制量子位的两支中相干比较 $I$ 与上述 $-I$，则输入 $|+\rangle\otimes|\psi\rangle$ 输出 $|-\rangle\otimes|\psi\rangle$，控制的 $X$ 测量可与两支都是 $I$ 的情形确定区分。
-
-证明（104.2）。密度算子的左右负号相消，故单系统不读整体相位。所供受控矩阵为 $|0\rangle\langle0|\otimes I+|1\rangle\langle1|\otimes(-I)$，逐支作用给 $(|0\rangle-|1\rangle)|\psi\rangle/\sqrt2$。$|+\rangle,|-\rangle$ 的控制 $X$ 本征值相反。$\square$
-
-普通通道名称没有规定其受控相位。角色返回、正交有向基架返回、相干过程返回依次保留不同信息。第78.3条已经给局部共轭相同而跨块相位不同的例子；此处复用其边界区分，不把局部三周期当成全部过程周期。[《Fibonacci相干运输边界》，版本cda923132d98ab62379ad5bd2434c747e44c6a74，命题2.3](https://github.com/the-omega-institute/trureturing/blob/cda923132d98ab62379ad5bd2434c747e44c6a74/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md) 限定计算基置换和实际对角 Kraus 分支；该原菜单不自动包含这里的相干控制比较。
-

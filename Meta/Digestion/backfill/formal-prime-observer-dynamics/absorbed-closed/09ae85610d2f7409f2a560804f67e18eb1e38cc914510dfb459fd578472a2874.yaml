@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:09ae85610d2f7409f2a560804f67e18eb1e38cc914510dfb459fd578472a2874
-  normalized_sha256: sha256:09ae85610d2f7409f2a560804f67e18eb1e38cc914510dfb459fd578472a2874
-cas_ref: sha256:09ae85610d2f7409f2a560804f67e18eb1e38cc914510dfb459fd578472a2874
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/LinearSufficiency/BinaryRoleMinimumCardinality.binary_role_minimum_cardinality
-    target_statement_id: sha256:eebee30d2114af9e724426d7cb8d88e067482559936025914c8aaf3ca012690e
-receipts:
-  unresolved_subitems: []

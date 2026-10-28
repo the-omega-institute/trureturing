@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e3ab415bd2a6208596f190ea841a6d543b1ba238eb7433ec4250590158cc831c
-  normalized_sha256: sha256:e3ab415bd2a6208596f190ea841a6d543b1ba238eb7433ec4250590158cc831c
-cas_ref: sha256:e3ab415bd2a6208596f190ea841a6d543b1ba238eb7433ec4250590158cc831c
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.finite_literal_synthesis
-    target_statement_id: sha256:dba1351bd528c0c9d5a1bf6438adb423ff3d89ab193636571ae64d44bc82a37d
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:36745efaefd4347d3a58547f1df1e4428801f4918423a51f57d7fe37b499d0ae
-  normalized_sha256: sha256:36745efaefd4347d3a58547f1df1e4428801f4918423a51f57d7fe37b499d0ae
-cas_ref: sha256:36745efaefd4347d3a58547f1df1e4428801f4918423a51f57d7fe37b499d0ae
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Reversibility/LeftInvertibleRecoversAllTargets.left_invertible_recovers_all_targets
-    target_statement_id: sha256:f09ff3c72eaf8312e3e650b29f554e54d88500e3a8ef3e1ecadeffc2441c510b
-receipts:
-  unresolved_subitems: []

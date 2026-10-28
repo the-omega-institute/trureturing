@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:894101006cc3a864ec7362fc63f5425587dddcc533cea43b296e48180388be8a
-  normalized_sha256: sha256:894101006cc3a864ec7362fc63f5425587dddcc533cea43b296e48180388be8a
-cas_ref: sha256:894101006cc3a864ec7362fc63f5425587dddcc533cea43b296e48180388be8a
-coverage_gids:
-  - gid: D5/S3/Analytic/ZetaCompletionFlow/ShiftedZeroWorldlineVelocity.shifted_zero_worldline_universal_velocity
-    target_statement_id: sha256:b59717f0772f6712927d4d84065858215988a6565d073773f87cae74b637c247
-receipts:
-  unresolved_subitems: []

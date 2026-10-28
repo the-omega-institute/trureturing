@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:455ed5bc10180cfdea20cb383cd940b1917b6cbf479bdc084f5b9a7c2d957b65
-  normalized_sha256: sha256:455ed5bc10180cfdea20cb383cd940b1917b6cbf479bdc084f5b9a7c2d957b65
-cas_ref: sha256:455ed5bc10180cfdea20cb383cd940b1917b6cbf479bdc084f5b9a7c2d957b65
-coverage_gids:
-  - gid: D5/S3/Observer/Budget/ActualDyadicDeadlineRepairMinimum.original_operational_minimum
-    target_statement_id: sha256:b51ef7bb33bc40670f8dc0435b1f7efd84c0cfcd6e90580c76e2eb79bccae2b4
-receipts:
-  unresolved_subitems: []

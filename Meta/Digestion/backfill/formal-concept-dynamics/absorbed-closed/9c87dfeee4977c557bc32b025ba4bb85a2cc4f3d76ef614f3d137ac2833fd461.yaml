@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9c87dfeee4977c557bc32b025ba4bb85a2cc4f3d76ef614f3d137ac2833fd461
-  normalized_sha256: sha256:9c87dfeee4977c557bc32b025ba4bb85a2cc4f3d76ef614f3d137ac2833fd461
-cas_ref: sha256:9c87dfeee4977c557bc32b025ba4bb85a2cc4f3d76ef614f3d137ac2833fd461
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/OperationalOntology/ActionExpansionIndistinguishabilityLaw.action_expansion_indistinguishability_law
-    target_statement_id: sha256:2358d976e4344730316c25292cf9e8b7c8cf76b85e64932061cfa1d6c8568852
-receipts:
-  unresolved_subitems: []

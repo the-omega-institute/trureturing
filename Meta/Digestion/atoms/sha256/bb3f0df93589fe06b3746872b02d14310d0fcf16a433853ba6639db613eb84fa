@@ -1,7 +1,0 @@
-**Remark 2.4 (Meaning of elimination).** Every original joint base is a real
-zero of every polynomial in $\Delta_{\rm raw}$. This necessary-condition
-statement is sound. It does not say that every zero of the elimination
-ideal has a real, strict or even pointwise complex lift. The next two
-results compute obstructions to obtaining a raw unit ideal or a finite
-base list, without refuting the original real model.
-

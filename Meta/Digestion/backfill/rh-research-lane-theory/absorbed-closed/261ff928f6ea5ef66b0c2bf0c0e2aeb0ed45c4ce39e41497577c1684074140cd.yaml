@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:261ff928f6ea5ef66b0c2bf0c0e2aeb0ed45c4ce39e41497577c1684074140cd
-  normalized_sha256: sha256:261ff928f6ea5ef66b0c2bf0c0e2aeb0ed45c4ce39e41497577c1684074140cd
-cas_ref: sha256:261ff928f6ea5ef66b0c2bf0c0e2aeb0ed45c4ce39e41497577c1684074140cd
-coverage_gids:
-  - gid: D5/S3/Weil/BurnolGram/MultiOrbitBurnolUniformRemainder.finite_multiOrbit_full_weil_negative_family
-    target_statement_id: sha256:6295d478877f8046c67f20f92055192c4f49757b1bd24cb29120ae4c41dbeca2
-receipts:
-  unresolved_subitems: []

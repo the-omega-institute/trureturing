@@ -1,5 +1,0 @@
-source_id = "fib-atom-multi-task-information-ledger"
-path = "docs/develop/theory/FIB_ATOM_MULTI_TASK_INFORMATION_LEDGER.md"
-atomizer = "generic-v1"
-genre_registry_check = "no-registry"
-unregistered_genres = []

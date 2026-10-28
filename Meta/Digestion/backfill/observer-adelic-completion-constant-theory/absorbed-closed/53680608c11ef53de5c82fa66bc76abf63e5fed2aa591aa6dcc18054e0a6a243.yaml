@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:53680608c11ef53de5c82fa66bc76abf63e5fed2aa591aa6dcc18054e0a6a243
-  normalized_sha256: sha256:53680608c11ef53de5c82fa66bc76abf63e5fed2aa591aa6dcc18054e0a6a243
-cas_ref: sha256:53680608c11ef53de5c82fa66bc76abf63e5fed2aa591aa6dcc18054e0a6a243
-coverage_gids:
-  - gid: D5/S3/Weil/TestFunctions/ToeplitzContactSupport.toeplitz_contact_support
-    target_statement_id: sha256:5c8c57af382b78dd1a56636fb9d3366e45b79cab8037377e17029e31d861f1cc
-receipts:
-  unresolved_subitems: []

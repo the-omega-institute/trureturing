@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:73ba65acd83334de8f6494ec605eb865d1abc863ef9f79a8f3b83c36768a035a
-  normalized_sha256: sha256:73ba65acd83334de8f6494ec605eb865d1abc863ef9f79a8f3b83c36768a035a
-cas_ref: sha256:73ba65acd83334de8f6494ec605eb865d1abc863ef9f79a8f3b83c36768a035a
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Trajectories/CompletionKernelIntersection.completion_kernel_eq_iterated_pullback_intersection
-    target_statement_id: sha256:001f545539c28bf715386d5a3499b8811f62ac348e46d1c57efd605bb42a87b8
-receipts:
-  unresolved_subitems: []

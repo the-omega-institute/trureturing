@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ddbf59a0a280d680e6f8b738d45723be7da86f85ef36ce6d5df31e574c0b98d7
-  normalized_sha256: sha256:ddbf59a0a280d680e6f8b738d45723be7da86f85ef36ce6d5df31e574c0b98d7
-cas_ref: sha256:ddbf59a0a280d680e6f8b738d45723be7da86f85ef36ce6d5df31e574c0b98d7
-coverage_gids:
-  - gid: D5/S3/Quantum/QuantumChannels/OriginalQutritGap.original_two_sided
-    target_statement_id: sha256:0269112e07cf90c0fadab0bb91e165efff72c758d17a50755b6273924d629c87
-receipts:
-  unresolved_subitems: []

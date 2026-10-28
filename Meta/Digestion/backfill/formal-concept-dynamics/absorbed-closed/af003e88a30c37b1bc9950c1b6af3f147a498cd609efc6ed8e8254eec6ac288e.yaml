@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:af003e88a30c37b1bc9950c1b6af3f147a498cd609efc6ed8e8254eec6ac288e
-  normalized_sha256: sha256:af003e88a30c37b1bc9950c1b6af3f147a498cd609efc6ed8e8254eec6ac288e
-cas_ref: sha256:af003e88a30c37b1bc9950c1b6af3f147a498cd609efc6ed8e8254eec6ac288e
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Information/SharedSourceObservationDependence.shared_source_observations_are_not_independent
-    target_statement_id: sha256:c14405766d6b6738c4a460a38c763cdae93c953b27792e764e4e1048306fccec
-receipts:
-  unresolved_subitems: []

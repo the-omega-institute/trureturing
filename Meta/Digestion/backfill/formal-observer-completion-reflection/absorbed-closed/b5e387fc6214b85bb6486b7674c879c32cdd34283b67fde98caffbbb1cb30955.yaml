@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b5e387fc6214b85bb6486b7674c879c32cdd34283b67fde98caffbbb1cb30955
-  normalized_sha256: sha256:b5e387fc6214b85bb6486b7674c879c32cdd34283b67fde98caffbbb1cb30955
-cas_ref: sha256:b5e387fc6214b85bb6486b7674c879c32cdd34283b67fde98caffbbb1cb30955
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/PredictionFactors/PositiveConditioningPredictionStability.predictive_equivalence_preserved_by_positive_conditioning
-    target_statement_id: sha256:ae433a59985916cde38a45b5418445ea1080c0ca8edbec12d3a4a7f857cc7bd0
-receipts:
-  unresolved_subitems: []

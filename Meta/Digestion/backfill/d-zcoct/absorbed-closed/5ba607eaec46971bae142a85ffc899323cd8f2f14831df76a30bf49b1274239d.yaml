@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5ba607eaec46971bae142a85ffc899323cd8f2f14831df76a30bf49b1274239d
-  normalized_sha256: sha256:5ba607eaec46971bae142a85ffc899323cd8f2f14831df76a30bf49b1274239d
-cas_ref: sha256:5ba607eaec46971bae142a85ffc899323cd8f2f14831df76a30bf49b1274239d
-coverage_gids:
-  - gid: D5/S3/Arith/Congruence/DenseGapMirrorParity.dense_gap_mirror_parity
-    target_statement_id: sha256:c5076b6b70aeae1b905a1288b95ed95a41a98bd286fe38cedfb8caa11c45fd25
-receipts:
-  unresolved_subitems: []

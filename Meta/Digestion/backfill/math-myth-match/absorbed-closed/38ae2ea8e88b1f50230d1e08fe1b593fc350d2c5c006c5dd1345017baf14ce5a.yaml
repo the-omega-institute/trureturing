@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:38ae2ea8e88b1f50230d1e08fe1b593fc350d2c5c006c5dd1345017baf14ce5a
-  normalized_sha256: sha256:38ae2ea8e88b1f50230d1e08fe1b593fc350d2c5c006c5dd1345017baf14ce5a
-cas_ref: sha256:38ae2ea8e88b1f50230d1e08fe1b593fc350d2c5c006c5dd1345017baf14ce5a
-coverage_gids:
-  - gid: D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.strong_lumpability_descent_tfae
-    target_statement_id: sha256:fcfc67479009562be0ae165000297b1cfc012c40356d50c5d0f9c9adb114c18a
-receipts:
-  unresolved_subitems: []

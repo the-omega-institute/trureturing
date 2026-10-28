@@ -1,6 +1,0 @@
-**引理 5.2（路的谱与互素条件）。** 对 $\ell\ge1$,$J_\ell$ 的本征值是 $2\cos(\pi k/(\ell+1))$,$k=1,\dots,\ell$,两两不同。对 $\ell,\ell'\ge1$,$J_\ell$ 与 $J_{\ell'}$ 没有公共本征值,当且仅当 $\gcd(\ell+1,\ell'+1)=1$。
-
-**证明。** 对 $1\le k\le\ell$ 令 $\varphi_i=\sin(\pi ki/(\ell+1))$,$i=0,\dots,\ell+1$,则 $\varphi_0=\varphi_{\ell+1}=0$,$\varphi_1\ne0$,且由和角公式 $\varphi_{i-1}+\varphi_{i+1}=2\cos(\pi k/(\ell+1))\varphi_i$。故 $(\varphi_1,\dots,\varphi_\ell)$ 是 $J_\ell$ 对 $2\cos(\pi k/(\ell+1))$ 的本征向量。余弦在 $(0,\pi)$ 上单射,这 $\ell$ 个值两两不同,因而是 $J_\ell$ 的全部本征值。
-
-两组本征值相交,当且仅当存在 $1\le k\le\ell$、$1\le k'\le\ell'$ 使 $k/(\ell+1)=k'/(\ell'+1)$。若 $g=\gcd(\ell+1,\ell'+1)\ge2$,取 $k=(\ell+1)/g$、$k'=(\ell'+1)/g$,则 $1\le k\le(\ell+1)/2\le\ell$,同理 $1\le k'\le\ell'$,两组相交。若 $g=1$,由 $k(\ell'+1)=k'(\ell+1)$ 得 $(\ell+1)\mid k$,与 $1\le k\le\ell$ 矛盾。∎
-

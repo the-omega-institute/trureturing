@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:bad69bbbfb3be13b4e03ecd18b111b9b3a2b45643f6eedfa56e0f20c5e005fcb
-  normalized_sha256: sha256:bad69bbbfb3be13b4e03ecd18b111b9b3a2b45643f6eedfa56e0f20c5e005fcb
-cas_ref: sha256:bad69bbbfb3be13b4e03ecd18b111b9b3a2b45643f6eedfa56e0f20c5e005fcb
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Restoration/RestorationImpliesCompensation.identity_restoration_implies_value_compensation
-    target_statement_id: sha256:cd01a36ea2fdc2a573852fd7724b881a28fbe99b6d215bd652578445615c7759
-receipts:
-  unresolved_subitems: []

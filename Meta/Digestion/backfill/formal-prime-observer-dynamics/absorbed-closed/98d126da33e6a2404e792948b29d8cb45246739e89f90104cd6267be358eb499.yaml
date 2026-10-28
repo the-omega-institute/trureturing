@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:98d126da33e6a2404e792948b29d8cb45246739e89f90104cd6267be358eb499
-  normalized_sha256: sha256:98d126da33e6a2404e792948b29d8cb45246739e89f90104cd6267be358eb499
-cas_ref: sha256:98d126da33e6a2404e792948b29d8cb45246739e89f90104cd6267be358eb499
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/InterventionsExchange/FactualInterventionConsistency.factual_intervention_consistency
-    target_statement_id: sha256:50d21afcf2a75d8e4ab447a8568b95a61c9f12a7bb6958bd4fe70504d2b1255f
-receipts:
-  unresolved_subitems: []

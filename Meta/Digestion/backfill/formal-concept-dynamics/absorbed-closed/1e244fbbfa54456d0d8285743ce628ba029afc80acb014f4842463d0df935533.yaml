@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1e244fbbfa54456d0d8285743ce628ba029afc80acb014f4842463d0df935533
-  normalized_sha256: sha256:1e244fbbfa54456d0d8285743ce628ba029afc80acb014f4842463d0df935533
-cas_ref: sha256:1e244fbbfa54456d0d8285743ce628ba029afc80acb014f4842463d0df935533
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Dialectics/MinimalDialecticalRepair.minimal_dialectical_repair
-    target_statement_id: sha256:3e2a0ac27518fae7d7a3d7d2bc69b4efe969294739e3ad95ab4d3d895fdc502a
-receipts:
-  unresolved_subitems: []

@@ -1,4 +1,0 @@
-对有界连续终点泛函 \(F\)，弱控制表示为
-\[
--\varepsilon\log\mathbb E e^{-F(X^\varepsilon)/\varepsilon}
-=

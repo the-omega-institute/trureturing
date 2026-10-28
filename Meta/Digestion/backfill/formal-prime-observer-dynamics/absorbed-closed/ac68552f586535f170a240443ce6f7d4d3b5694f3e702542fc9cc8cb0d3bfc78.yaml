@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ac68552f586535f170a240443ce6f7d4d3b5694f3e702542fc9cc8cb0d3bfc78
-  normalized_sha256: sha256:ac68552f586535f170a240443ce6f7d4d3b5694f3e702542fc9cc8cb0d3bfc78
-cas_ref: sha256:ac68552f586535f170a240443ce6f7d4d3b5694f3e702542fc9cc8cb0d3bfc78
-coverage_gids:
-  - gid: D5/S3/Arith/Coding/ResidueCodeErrorDetection.detects_up_to_min_distance_minus_one
-    target_statement_id: sha256:6000794290d7bc4ef3fe3696f556046a1999b631deca91ad42a6c4de9e72ee39
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4fccce4d946b3e2df523afe7dcd99526dfa7b2479a8e3911aef46db97665eed6
-  normalized_sha256: sha256:4fccce4d946b3e2df523afe7dcd99526dfa7b2479a8e3911aef46db97665eed6
-cas_ref: sha256:4fccce4d946b3e2df523afe7dcd99526dfa7b2479a8e3911aef46db97665eed6
-coverage_gids:
-  - gid: D5/S3/Analytic/PrimeProducts/DistinctPrimeFactorCountBound.distinct_prime_factor_count_bound
-    target_statement_id: sha256:54910541fa3ba546530e061db8e1b036b6ce09dc64bc51b0e977ef3347de3361
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:61d7bdc092aff35ff695652e8ed901bcb45893db6e2104b0a5fd89c8f7911d2d
-  normalized_sha256: sha256:61d7bdc092aff35ff695652e8ed901bcb45893db6e2104b0a5fd89c8f7911d2d
-cas_ref: sha256:61d7bdc092aff35ff695652e8ed901bcb45893db6e2104b0a5fd89c8f7911d2d
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Governance/SoundnessLivenessShapeOnlyIndependence.soundness_liveness_independent_of_shape_only_tests
-    target_statement_id: sha256:6822055c6d13f9eb11390367733358eafa93ecf0bc7f6bfa103042999e20d37c
-receipts:
-  unresolved_subitems: []

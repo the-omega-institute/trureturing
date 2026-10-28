@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:44bff2eec27af076f6cf9a1010657d32d0f9794af6449d8a338f48a7ecaeea3d
-  normalized_sha256: sha256:44bff2eec27af076f6cf9a1010657d32d0f9794af6449d8a338f48a7ecaeea3d
-cas_ref: sha256:44bff2eec27af076f6cf9a1010657d32d0f9794af6449d8a338f48a7ecaeea3d
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Trust/TypedTrustComposition.typed_trust_composes_iff_interfaces_align
-    target_statement_id: sha256:278a521dca40b5e59ba4e3347239286e70b51b241a11f10c46563a2c82694e9d
-receipts:
-  unresolved_subitems: []

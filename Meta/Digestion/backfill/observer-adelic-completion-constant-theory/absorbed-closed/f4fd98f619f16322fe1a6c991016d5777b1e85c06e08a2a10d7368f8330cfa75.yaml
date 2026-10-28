@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f4fd98f619f16322fe1a6c991016d5777b1e85c06e08a2a10d7368f8330cfa75
-  normalized_sha256: sha256:f4fd98f619f16322fe1a6c991016d5777b1e85c06e08a2a10d7368f8330cfa75
-cas_ref: sha256:f4fd98f619f16322fe1a6c991016d5777b1e85c06e08a2a10d7368f8330cfa75
-coverage_gids:
-  - gid: D5/S3/Observer/GoldenCoding/GoldenSamplingDiskAtom.golden_sampling_disk_atom
-    target_statement_id: sha256:50bdbded17136b896492a4c273f001ff5a19f1f57c1e5c0c04df396a7933eafe
-receipts:
-  unresolved_subitems: []

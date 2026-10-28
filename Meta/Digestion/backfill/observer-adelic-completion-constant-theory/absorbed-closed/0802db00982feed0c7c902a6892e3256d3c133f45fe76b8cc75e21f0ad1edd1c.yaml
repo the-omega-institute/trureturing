@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0802db00982feed0c7c902a6892e3256d3c133f45fe76b8cc75e21f0ad1edd1c
-  normalized_sha256: sha256:0802db00982feed0c7c902a6892e3256d3c133f45fe76b8cc75e21f0ad1edd1c
-cas_ref: sha256:0802db00982feed0c7c902a6892e3256d3c133f45fe76b8cc75e21f0ad1edd1c
-coverage_gids:
-  - gid: D5/S3/Analytic/Adelic/PrimeObserverCasimirCompleteMonotonicity.prime_observer_casimir_complete_monotonicity
-    target_statement_id: sha256:b0c035539b8c27832aa282f413abb83bda454ffff279b324d53f2e88dfabac0c
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0df9556a069b63062374b1926a796b18454aed50004cffb9d93bc5e516f2a6d9
-  normalized_sha256: sha256:0df9556a069b63062374b1926a796b18454aed50004cffb9d93bc5e516f2a6d9
-cas_ref: sha256:0df9556a069b63062374b1926a796b18454aed50004cffb9d93bc5e516f2a6d9
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/RefinementFactorization/InterventionTargetFactorization.intervention_target_factorization
-    target_statement_id: sha256:37e99730a361135c6e1d4aca808ce0eae59e0aa571813aa1c017097bc0e2234f
-receipts:
-  unresolved_subitems: []

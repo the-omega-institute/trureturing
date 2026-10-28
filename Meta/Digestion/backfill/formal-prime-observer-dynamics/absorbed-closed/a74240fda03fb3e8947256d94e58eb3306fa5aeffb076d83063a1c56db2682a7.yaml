@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a74240fda03fb3e8947256d94e58eb3306fa5aeffb076d83063a1c56db2682a7
-  normalized_sha256: sha256:a74240fda03fb3e8947256d94e58eb3306fa5aeffb076d83063a1c56db2682a7
-cas_ref: sha256:a74240fda03fb3e8947256d94e58eb3306fa5aeffb076d83063a1c56db2682a7
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/InterventionsExchange/CanonicalHarmedProbabilityBounds.canonical_harmed_probability_frechet_bound
-    target_statement_id: sha256:bfc1cd4877596e08e7fc02595e68da1290f87b539da64b04e4953f34317859ab
-receipts:
-  unresolved_subitems: []

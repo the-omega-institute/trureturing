@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3997e15bf913ef4179a5b74938818be26ecd9b6369828098c68f284af9d38c58
-  normalized_sha256: sha256:3997e15bf913ef4179a5b74938818be26ecd9b6369828098c68f284af9d38c58
-cas_ref: sha256:3997e15bf913ef4179a5b74938818be26ecd9b6369828098c68f284af9d38c58
-coverage_gids:
-  - gid: D5/S3/Geometry/Hyperideal/FaceSignaturePropagation.lowPairCount_eq_of_reachable
-    target_statement_id: sha256:b73489d6414ca40a763f9eef0a293024251e712341a95477f614e47124016067
-receipts:
-  unresolved_subitems: []

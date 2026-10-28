@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:80f02017c1fa400f9406e2dd4640a7b5afb1c869dab3edd465f9754c95091b72
-  normalized_sha256: sha256:80f02017c1fa400f9406e2dd4640a7b5afb1c869dab3edd465f9754c95091b72
-cas_ref: sha256:80f02017c1fa400f9406e2dd4640a7b5afb1c869dab3edd465f9754c95091b72
-coverage_gids:
-  - gid: D5/S3/Observer/MetricGeometryLaws/DualSupremumPseudometricKernels.dual_supremum_pseudometric_kernels
-    target_statement_id: sha256:aa6afebd6cc1c0871158fd7973022e8bc1c0cb2f12073a199a4cad80cb762b90
-receipts:
-  unresolved_subitems: []

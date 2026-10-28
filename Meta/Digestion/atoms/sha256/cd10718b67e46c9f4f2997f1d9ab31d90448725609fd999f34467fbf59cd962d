@@ -1,6 +1,0 @@
-**定理 72.2（单个有限实际轨道的排除半径与短链模型）。** 在定义 72.1 的数据下，固定 $a\in Y$ 并假设 $O(a)$ 有限；本定理不要求 $I$ 有限。存在 $0<\rho<+\infty$，同时满足：
-
-1. 对每个 $j$，若 $(s(j),c)\in O(a)$ 而 $c\notin D_j$，则对全部 $x\in D_j$ 有 $\rho\le d_{s(j)}(c,x)$；若 $(t(j),c)\in O(a)$ 而 $c\notin E_j$，则对全部 $x\in E_j$ 有 $\rho\le d_{t(j)}(c,x)$。
-2. 对任意 $b=(i,y)\in Y$ 和任意 $T\in[0,+\infty]$，若 $C(a,b,T)$ 且 $T<\rho$，则存在 $c\in X_i$，使 $(i,c)\in O(a)$ 且 $d_i(c,y)\le T$。
-3. 对任意 $b=(i,y)$ 和 $0<r<\rho$，有精确的局部球公式
-

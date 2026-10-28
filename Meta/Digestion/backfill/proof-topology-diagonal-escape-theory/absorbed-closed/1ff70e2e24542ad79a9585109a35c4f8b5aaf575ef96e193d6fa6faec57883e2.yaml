@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1ff70e2e24542ad79a9585109a35c4f8b5aaf575ef96e193d6fa6faec57883e2
-  normalized_sha256: sha256:1ff70e2e24542ad79a9585109a35c4f8b5aaf575ef96e193d6fa6faec57883e2
-cas_ref: sha256:1ff70e2e24542ad79a9585109a35c4f8b5aaf575ef96e193d6fa6faec57883e2
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.jointKernel_definitionClosure
-    target_statement_id: sha256:ccc85bc143f6c531bfece20f718c509f5358d1c8796853e52bcaf49edb31ecac
-receipts:
-  unresolved_subitems: []

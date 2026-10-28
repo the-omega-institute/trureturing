@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:dcd3420d63865a5392d4294349d9a505241c4d63a7aebb70b42a091889cefaa2
-  normalized_sha256: sha256:dcd3420d63865a5392d4294349d9a505241c4d63a7aebb70b42a091889cefaa2
-cas_ref: sha256:dcd3420d63865a5392d4294349d9a505241c4d63a7aebb70b42a091889cefaa2
-coverage_gids:
-  - gid: D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.orderedPhaseProduct
-    target_statement_id: sha256:a4cf98669940f567246b4afc0498bda7f3fc15af946f78595a1ea8bc42d9b656
-receipts:
-  unresolved_subitems: []

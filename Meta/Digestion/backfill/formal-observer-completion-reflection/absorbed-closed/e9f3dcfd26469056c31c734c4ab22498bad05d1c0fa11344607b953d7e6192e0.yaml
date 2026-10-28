@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e9f3dcfd26469056c31c734c4ab22498bad05d1c0fa11344607b953d7e6192e0
-  normalized_sha256: sha256:e9f3dcfd26469056c31c734c4ab22498bad05d1c0fa11344607b953d7e6192e0
-cas_ref: sha256:e9f3dcfd26469056c31c734c4ab22498bad05d1c0fa11344607b953d7e6192e0
-coverage_gids:
-  - gid: D5/S3/PrimeForms/Splitting/QuadraticCharacterQuantumPostprocessing.quadratic_character_quantum_postprocessing_no_go
-    target_statement_id: sha256:f57d7a2cf3f6336a2b425f52cdcd5ea4dd7e0d814dae2a6bad5687f721395743
-receipts:
-  unresolved_subitems: []

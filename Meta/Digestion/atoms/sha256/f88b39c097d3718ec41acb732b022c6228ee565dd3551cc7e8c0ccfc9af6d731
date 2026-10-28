@@ -1,9 +1,0 @@
-\[
-R_p(G)
-=
-\bigcap_{
-N\trianglelefteq G,
-[G:N]=p^k
-}N.
-\]
-

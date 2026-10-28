@@ -1,8 +1,0 @@
-## 7. Edge-$J$ words and their obstruction
-
-**Proposition 7.1.** Neither $M^{2m-1}J$ nor $JM^{2m-1}$ has a nonzero universal identity.
-
-**Proof.** The exceptional column is zero by Theorems 5.1 and 6.2. For $M^{2m-1}J$, deleting it leaves $2m$ consecutive pure-$M$ reads, excluded by the pure-$M$ obstruction proved in Section 12.
-
-For $JM^{2m-1}$, deleting clock zero leaves original clocks $1,\ldots,2m$ with matrices $M^{i-1}J$. In the auxiliary identity put $S'=JS$, an invertible substitution, and express $g(s+1)$ in the monomial basis in $s$. Translation is an invertible fixed change of the full coefficient space: its inverse is translation by $-1$. Multiplying the output by that basis-change matrix would turn the asserted identity into a nonzero $2m$-read pure-$M$ identity, again impossible by Section 12. This change of variables analyzes an identity; it does not renumber any acquired clock or restrict the degree space. $\square$
-

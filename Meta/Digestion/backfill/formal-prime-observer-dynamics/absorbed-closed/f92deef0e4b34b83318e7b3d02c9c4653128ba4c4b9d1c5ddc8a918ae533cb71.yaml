@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f92deef0e4b34b83318e7b3d02c9c4653128ba4c4b9d1c5ddc8a918ae533cb71
-  normalized_sha256: sha256:f92deef0e4b34b83318e7b3d02c9c4653128ba4c4b9d1c5ddc8a918ae533cb71
-cas_ref: sha256:f92deef0e4b34b83318e7b3d02c9c4653128ba4c4b9d1c5ddc8a918ae533cb71
-coverage_gids:
-  - gid: D5/S3/Factorization/PrimePowers/AlternatingFiveResidualSeparation.alternating_five_residual_separation
-    target_statement_id: sha256:91f11e69e1be25280bd7ee994550f8d7b542ec29cb447988eb9c2fcfa2f1aba3
-receipts:
-  unresolved_subitems: []

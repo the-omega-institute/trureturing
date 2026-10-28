@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ab5bdfb93efb563863a7f11c52a06ab31fafa20844c6ccd3d6416a36bb02acf6
-  normalized_sha256: sha256:ab5bdfb93efb563863a7f11c52a06ab31fafa20844c6ccd3d6416a36bb02acf6
-cas_ref: sha256:ab5bdfb93efb563863a7f11c52a06ab31fafa20844c6ccd3d6416a36bb02acf6
-coverage_gids:
-  - gid: D5/S3/Observer/LinearMemory/HankelGramianSingularValues.hankel_gramian_singular_values
-    target_statement_id: sha256:4a4f07c03f6fae714755a2008826777427b8bfb082fd5f58fd2d360b2cc70a4e
-receipts:
-  unresolved_subitems: []

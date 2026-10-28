@@ -1,5 +1,0 @@
-source_id = "fib-atom-whitebox-certificate-hypergraph"
-path = "docs/develop/theory/FIB_ATOM_WHITEBOX_CERTIFICATE_HYPERGRAPH.md"
-atomizer = "generic-v1"
-genre_registry_check = "no-registry"
-unregistered_genres = []

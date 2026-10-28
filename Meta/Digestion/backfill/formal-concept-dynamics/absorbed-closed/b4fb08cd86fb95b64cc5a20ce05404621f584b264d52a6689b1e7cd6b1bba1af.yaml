@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b4fb08cd86fb95b64cc5a20ce05404621f584b264d52a6689b1e7cd6b1bba1af
-  normalized_sha256: sha256:b4fb08cd86fb95b64cc5a20ce05404621f584b264d52a6689b1e7cd6b1bba1af
-cas_ref: sha256:b4fb08cd86fb95b64cc5a20ce05404621f584b264d52a6689b1e7cd6b1bba1af
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Experiment/MultipleTestingFalsePositive.at_least_one_false_positive
-    target_statement_id: sha256:3c585207b602338735baa122ff973b497c7a4c83b1a5f949a18ba5ec10740e83
-receipts:
-  unresolved_subitems: []

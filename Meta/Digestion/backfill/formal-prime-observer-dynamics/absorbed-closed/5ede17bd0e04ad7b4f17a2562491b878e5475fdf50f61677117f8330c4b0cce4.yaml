@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5ede17bd0e04ad7b4f17a2562491b878e5475fdf50f61677117f8330c4b0cce4
-  normalized_sha256: sha256:5ede17bd0e04ad7b4f17a2562491b878e5475fdf50f61677117f8330c4b0cce4
-cas_ref: sha256:5ede17bd0e04ad7b4f17a2562491b878e5475fdf50f61677117f8330c4b0cce4
-coverage_gids:
-  - gid: D5/S1/Solenoid/ExactSequence.congruence_solenoid_short_exact
-    target_statement_id: sha256:0a9bf8bcb0b7e0f35a9126b6880ab8524982944507b03c62e61f70a756fd897e
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f27d920cead2be3027016d11e06c5a142d58a83f5f1a5838f418588a3538656e
-  normalized_sha256: sha256:f27d920cead2be3027016d11e06c5a142d58a83f5f1a5838f418588a3538656e
-cas_ref: sha256:f27d920cead2be3027016d11e06c5a142d58a83f5f1a5838f418588a3538656e
-coverage_gids:
-  - gid: D5/S3/Factorization/QuadraticIdeals/CubicGaussFrobenius.cubic_reciprocity_primary
-    target_statement_id: sha256:522da70330d1d481a3bfedc5feff259e80186bd76d9700084e35866c3603222b
-receipts:
-  unresolved_subitems: []

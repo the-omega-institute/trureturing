@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:39155f3f129325bc3d62b60100a0e6a3936ea6e65b49cd6f5e39eb375323aebd
-  normalized_sha256: sha256:39155f3f129325bc3d62b60100a0e6a3936ea6e65b49cd6f5e39eb375323aebd
-cas_ref: sha256:39155f3f129325bc3d62b60100a0e6a3936ea6e65b49cd6f5e39eb375323aebd
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Decision/NonuniqueOptimalActionSelector.determined_optimal_set_can_be_nonunique
-    target_statement_id: sha256:c911c7abb8a16c9254b341d3a28106051942b1df3c6794fbe57f8d3ee6fbf896
-receipts:
-  unresolved_subitems: []

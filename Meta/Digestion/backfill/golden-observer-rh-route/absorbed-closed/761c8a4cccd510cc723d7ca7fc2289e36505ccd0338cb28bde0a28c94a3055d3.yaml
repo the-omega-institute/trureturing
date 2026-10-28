@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:761c8a4cccd510cc723d7ca7fc2289e36505ccd0338cb28bde0a28c94a3055d3
-  normalized_sha256: sha256:761c8a4cccd510cc723d7ca7fc2289e36505ccd0338cb28bde0a28c94a3055d3
-cas_ref: sha256:761c8a4cccd510cc723d7ca7fc2289e36505ccd0338cb28bde0a28c94a3055d3
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaBridge/PrimeArchimedeanEnergyIdentity.prime_archimedean_energy_identity
-    target_statement_id: sha256:1fe6c8f5cb6a937df99a3e273695a8734677a218ead6eb080135be70f5dcb1ba
-receipts:
-  unresolved_subitems: []

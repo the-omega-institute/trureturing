@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7d18dacb022fe24e81495de1b4669359692b8221b1d57baf6a057e5aefb03e6e
-  normalized_sha256: sha256:7d18dacb022fe24e81495de1b4669359692b8221b1d57baf6a057e5aefb03e6e
-cas_ref: sha256:7d18dacb022fe24e81495de1b4669359692b8221b1d57baf6a057e5aefb03e6e
-coverage_gids:
-  - gid: D5/S3/Factorization/Galois/GaloisFusion.frobenius_fusion_compatible
-    target_statement_id: sha256:004014000c1b26b9684fcf3efb13495a16cd08626d02448a9c7e4e90f7cdec9c
-receipts:
-  unresolved_subitems: []

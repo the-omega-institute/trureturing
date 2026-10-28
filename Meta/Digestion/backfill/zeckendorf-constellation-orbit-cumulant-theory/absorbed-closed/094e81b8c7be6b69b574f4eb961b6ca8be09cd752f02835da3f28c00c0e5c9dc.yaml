@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:094e81b8c7be6b69b574f4eb961b6ca8be09cd752f02835da3f28c00c0e5c9dc
-  normalized_sha256: sha256:094e81b8c7be6b69b574f4eb961b6ca8be09cd752f02835da3f28c00c0e5c9dc
-cas_ref: sha256:094e81b8c7be6b69b574f4eb961b6ca8be09cd752f02835da3f28c00c0e5c9dc
-coverage_gids:
-  - gid: D5/S3/Weil/Separator/WeilSquarePositivityCriterion.weilSquarePositivity_implies_rh
-    target_statement_id: sha256:13d89b4d228d1dcae54973b4ab6277c748691408a4147632e36eecfa18179c8b
-receipts:
-  unresolved_subitems: []

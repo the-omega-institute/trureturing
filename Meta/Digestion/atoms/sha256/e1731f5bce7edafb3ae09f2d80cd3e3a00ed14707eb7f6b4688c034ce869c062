@@ -1,3 +1,0 @@
-**范围。** 本卷是纯理论 Markdown 正文，只新增一个理论来源文件，不新增 `.tex`、PDF、Lean、Blueprint、消化记录或实验材料。普通线性代数、表示论和变分论证在文中给出证明；Tannaka、Riemann–Hilbert、几何 Satake 和几何朗兰兹的使用位置明确标为外部输入。本卷没有声称整卷已经通过 Lean 编译。
->
-> 

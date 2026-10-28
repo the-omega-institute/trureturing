@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:556742a3c728a79033ed62866d50162bcc813e466ba2892468f159abc394be9f
-  normalized_sha256: sha256:556742a3c728a79033ed62866d50162bcc813e466ba2892468f159abc394be9f
-cas_ref: sha256:556742a3c728a79033ed62866d50162bcc813e466ba2892468f159abc394be9f
-coverage_gids:
-  - gid: D5/S3/Weil/Budget/MultiscaleLoewnerConstraint.multiscale_loewner_constraint
-    target_statement_id: sha256:1fd6ff553c5d35c01648c208854b365e565411ebd7f3faac734fc7bec59d25a4
-receipts:
-  unresolved_subitems: []

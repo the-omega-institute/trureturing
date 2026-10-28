@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3ea5f6d1849f3b42a32f92f09da62ec85a4dcbd6b66ed23c48c6e9c091f50b15
-  normalized_sha256: sha256:3ea5f6d1849f3b42a32f92f09da62ec85a4dcbd6b66ed23c48c6e9c091f50b15
-cas_ref: sha256:3ea5f6d1849f3b42a32f92f09da62ec85a4dcbd6b66ed23c48c6e9c091f50b15
-coverage_gids:
-  - gid: D5/S3/Observer/Completion/ResidualProgressMeasure.target_residual_measures_antitone
-    target_statement_id: sha256:83e4df6f13fcc7246bbbffb302dc131647bdc4f4d0d4d7f269474251d3f361d8
-receipts:
-  unresolved_subitems: []

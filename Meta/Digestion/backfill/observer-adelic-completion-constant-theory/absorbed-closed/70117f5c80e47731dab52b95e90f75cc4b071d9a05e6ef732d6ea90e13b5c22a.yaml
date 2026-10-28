@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:70117f5c80e47731dab52b95e90f75cc4b071d9a05e6ef732d6ea90e13b5c22a
-  normalized_sha256: sha256:70117f5c80e47731dab52b95e90f75cc4b071d9a05e6ef732d6ea90e13b5c22a
-cas_ref: sha256:70117f5c80e47731dab52b95e90f75cc4b071d9a05e6ef732d6ea90e13b5c22a
-coverage_gids:
-  - gid: D5/S3/QuantumBounds/GramRealizability.gram_realizability
-    target_statement_id: sha256:6554416dc945829550d1b987aed543d790f8a831d817e272bd8f0fe8c8ca6d0e
-receipts:
-  unresolved_subitems: []

@@ -1,7 +1,0 @@
-## 115. Parent-copy form transport and the generator obstruction
-
-The first failure in §114 does not mean that every transport across a birth
-step is impossible. It separates two requirements that are often conflated:
-preserving the edge-energy form and intertwining the node generator. The
-block identities of §112 give an exact finite test of this distinction.
-

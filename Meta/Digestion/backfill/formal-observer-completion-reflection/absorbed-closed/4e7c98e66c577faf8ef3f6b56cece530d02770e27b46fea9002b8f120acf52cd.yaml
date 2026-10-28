@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4e7c98e66c577faf8ef3f6b56cece530d02770e27b46fea9002b8f120acf52cd
-  normalized_sha256: sha256:4e7c98e66c577faf8ef3f6b56cece530d02770e27b46fea9002b8f120acf52cd
-cas_ref: sha256:4e7c98e66c577faf8ef3f6b56cece530d02770e27b46fea9002b8f120acf52cd
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Decision/ArbitraryPredictionOppositeOptima.arbitrary_prediction_opposite_unique_optima
-    target_statement_id: sha256:2e9426fbcd96066baa40def7ab76f5d322fb31815c8b40b01d5a1411ef4aa6bc
-receipts:
-  unresolved_subitems: []

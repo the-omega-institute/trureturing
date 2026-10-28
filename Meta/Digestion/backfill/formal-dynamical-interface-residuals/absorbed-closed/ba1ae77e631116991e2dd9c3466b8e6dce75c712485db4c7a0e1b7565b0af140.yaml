@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ba1ae77e631116991e2dd9c3466b8e6dce75c712485db4c7a0e1b7565b0af140
-  normalized_sha256: sha256:ba1ae77e631116991e2dd9c3466b8e6dce75c712485db4c7a0e1b7565b0af140
-cas_ref: sha256:ba1ae77e631116991e2dd9c3466b8e6dce75c712485db4c7a0e1b7565b0af140
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Prediction/PredictiveMemoryEntropyLowerBound.IsExactPredictiveMemory
-    target_statement_id: sha256:5482736008a2a871a86bff15af66c3365c693898d2552a18a9b7a10a0b2e72f7
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d95ad513649d32d95e3aba0d5cd6c04fca04dbfcef2da1cf347e31cf99e06946
-  normalized_sha256: sha256:d95ad513649d32d95e3aba0d5cd6c04fca04dbfcef2da1cf347e31cf99e06946
-cas_ref: sha256:d95ad513649d32d95e3aba0d5cd6c04fca04dbfcef2da1cf347e31cf99e06946
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Discussion/FiniteDiscussionStability.finite_discussion_stability
-    target_statement_id: sha256:8340e4eeff1e3ebcd51f8cdf837d9089167813a94312e5399665ceedf2069916
-receipts:
-  unresolved_subitems: []

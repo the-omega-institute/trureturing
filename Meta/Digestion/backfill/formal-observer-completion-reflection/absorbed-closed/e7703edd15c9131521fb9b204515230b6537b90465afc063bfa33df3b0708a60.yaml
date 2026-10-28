@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e7703edd15c9131521fb9b204515230b6537b90465afc063bfa33df3b0708a60
-  normalized_sha256: sha256:e7703edd15c9131521fb9b204515230b6537b90465afc063bfa33df3b0708a60
-cas_ref: sha256:e7703edd15c9131521fb9b204515230b6537b90465afc063bfa33df3b0708a60
-coverage_gids:
-  - gid: D5/S3/Quantum/PredictionDepth/FiniteTimeObserverMonotonicity.finite_time_observer_monotonicity
-    target_statement_id: sha256:3b0f8c5408c5e243367211a801dd42a9fe37b38f160a258e9d77600c5182f7e2
-receipts:
-  unresolved_subitems: []

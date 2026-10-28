@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:53b1509375befc2d70c66b34645473d95415ce289690bb38a11bac68604f1fe6
-  normalized_sha256: sha256:53b1509375befc2d70c66b34645473d95415ce289690bb38a11bac68604f1fe6
-cas_ref: sha256:53b1509375befc2d70c66b34645473d95415ce289690bb38a11bac68604f1fe6
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Answering/InformationRefinementShrinksAnswers.answer_set_antitone_in_information
-    target_statement_id: sha256:bc1e42d506246acb06f9a7a65d92c51d4d85e14fa57cf31f757e4966129e87df
-receipts:
-  unresolved_subitems: []

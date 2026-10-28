@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:bcf09fc0e332637666f9c3cccff39166d92947a15f3990500530cd39d40779d0
-  normalized_sha256: sha256:bcf09fc0e332637666f9c3cccff39166d92947a15f3990500530cd39d40779d0
-cas_ref: sha256:bcf09fc0e332637666f9c3cccff39166d92947a15f3990500530cd39d40779d0
-coverage_gids:
-  - gid: D5/S3/Observer/Budget/DyadicPrefixDelayRange.arbitrary_prefix_delay_table
-    target_statement_id: sha256:42f7992a37a70267b3397b9d4cc572a49e50232369502b7459fd15e55f91a74c
-receipts:
-  unresolved_subitems: []

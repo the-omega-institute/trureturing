@@ -1,4 +1,0 @@
-- Every post-handoff read is a new call even if the producer queried the same address during full acquisition. A lower bound on phase-distinct addresses is not a lower bound on lifetime-new addresses.
-
-The equality producer owns the exterior, the complete partition and all declared handoff fields. The named root-depth task owns either the later paid reacquisition in Theorem 5.1 or the optional extra code in Theorem 6.2. No obligation to retain every class $Q$, every descendant depth, a full tree, or every future response is inferred.
-

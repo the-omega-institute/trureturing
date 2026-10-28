@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:90bb763280869f06af77075c09a2afc8a00ee8d621c101f0e04212079e2c83d8
-  normalized_sha256: sha256:90bb763280869f06af77075c09a2afc8a00ee8d621c101f0e04212079e2c83d8
-cas_ref: sha256:90bb763280869f06af77075c09a2afc8a00ee8d621c101f0e04212079e2c83d8
-coverage_gids:
-  - gid: D5/S3/PrimeForms/Splitting/ThreeRingProfileFibers.tri_ring_image_surjective_with_fibers_of_card_two
-    target_statement_id: sha256:e0f02c68f73288658935894d00037ad4b4c9ed57eb32f7808eb7d2effd1f5184
-receipts:
-  unresolved_subitems: []

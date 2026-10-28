@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:38de1faf880d7b05c3e3ae342550f9f162c3b21bebbedf7f1f255ecf4080673b
-  normalized_sha256: sha256:38de1faf880d7b05c3e3ae342550f9f162c3b21bebbedf7f1f255ecf4080673b
-cas_ref: sha256:38de1faf880d7b05c3e3ae342550f9f162c3b21bebbedf7f1f255ecf4080673b
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Governance/TwoStateLocalityIncrementalPreservation.two_state_locality_yields_incremental_preservation
-    target_statement_id: sha256:0bf4b5dc734899e20f12b599683b93cf798b05d4372cd005ebd14f5bc964041f
-receipts:
-  unresolved_subitems: []

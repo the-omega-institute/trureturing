@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5364e2667948d6393f1c4d2674156a89432cfa305ea28087064a41fd7cc74fd9
-  normalized_sha256: sha256:5364e2667948d6393f1c4d2674156a89432cfa305ea28087064a41fd7cc74fd9
-cas_ref: sha256:5364e2667948d6393f1c4d2674156a89432cfa305ea28087064a41fd7cc74fd9
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObservableEventAlgebraRepresentation.observable_event_algebra_representation
-    target_statement_id: sha256:93409f59467017a78bf9c58abd3f07be5bbf2a95b22811eab3dfc3511f873648
-receipts:
-  unresolved_subitems: []

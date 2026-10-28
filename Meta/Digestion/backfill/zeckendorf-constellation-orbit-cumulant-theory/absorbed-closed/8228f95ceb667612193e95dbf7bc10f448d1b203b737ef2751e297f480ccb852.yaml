@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8228f95ceb667612193e95dbf7bc10f448d1b203b737ef2751e297f480ccb852
-  normalized_sha256: sha256:8228f95ceb667612193e95dbf7bc10f448d1b203b737ef2751e297f480ccb852
-cas_ref: sha256:8228f95ceb667612193e95dbf7bc10f448d1b203b737ef2751e297f480ccb852
-coverage_gids:
-  - gid: D5/S3/Observer/Completion/InfiniteParityContinuityObstruction.finite_support_parity_has_no_continuous_completion
-    target_statement_id: sha256:4ef1ca9014c41d0d7b74fa60eafabb783b157e5b656f54f8fed5d21bfa36a2bd
-receipts:
-  unresolved_subitems: []

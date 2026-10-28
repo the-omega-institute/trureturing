@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b82eb15008b1350bcfad9dcfa1ad0713b54cb9e55dbf08287da4db12915592c2
-  normalized_sha256: sha256:b82eb15008b1350bcfad9dcfa1ad0713b54cb9e55dbf08287da4db12915592c2
-cas_ref: sha256:b82eb15008b1350bcfad9dcfa1ad0713b54cb9e55dbf08287da4db12915592c2
-coverage_gids:
-  - gid: D5/S3/Quantum/Measurement/StaticEffectSequentialSeparation.same_effects_different_two_step_joint_law
-    target_statement_id: sha256:99d6da6e12fd161b217044af31c5768e53bef2a23305a2b98fc082a2cbd3cbb1
-receipts:
-  unresolved_subitems: []

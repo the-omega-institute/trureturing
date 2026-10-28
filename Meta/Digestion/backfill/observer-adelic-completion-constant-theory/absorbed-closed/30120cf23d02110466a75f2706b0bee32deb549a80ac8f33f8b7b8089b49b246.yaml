@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:30120cf23d02110466a75f2706b0bee32deb549a80ac8f33f8b7b8089b49b246
-  normalized_sha256: sha256:30120cf23d02110466a75f2706b0bee32deb549a80ac8f33f8b7b8089b49b246
-cas_ref: sha256:30120cf23d02110466a75f2706b0bee32deb549a80ac8f33f8b7b8089b49b246
-coverage_gids:
-  - gid: D5/S3/Analytic/Characterizations/GoldenInverseBranchFixedPoint.golden_inverse_branch_positive_fixed_point_iff
-    target_statement_id: sha256:c90833237857f6cbf1a5611f63bec39f9a37a511f0849a8bd7d39e1de6a9db93
-receipts:
-  unresolved_subitems: []

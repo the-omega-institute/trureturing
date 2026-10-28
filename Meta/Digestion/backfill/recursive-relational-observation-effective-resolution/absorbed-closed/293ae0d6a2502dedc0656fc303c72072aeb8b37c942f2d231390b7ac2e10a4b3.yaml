@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:293ae0d6a2502dedc0656fc303c72072aeb8b37c942f2d231390b7ac2e10a4b3
-  normalized_sha256: sha256:293ae0d6a2502dedc0656fc303c72072aeb8b37c942f2d231390b7ac2e10a4b3
-cas_ref: sha256:293ae0d6a2502dedc0656fc303c72072aeb8b37c942f2d231390b7ac2e10a4b3
-coverage_gids:
-  - gid: D5/S1/FixedPoints/KleeneStageLimit.inductive_definition_is_supremum_of_stages
-    target_statement_id: sha256:607af35898f9c3c798eed2bb530aefa73431817477cbe4207b7feb8490a8053f
-receipts:
-  unresolved_subitems: []

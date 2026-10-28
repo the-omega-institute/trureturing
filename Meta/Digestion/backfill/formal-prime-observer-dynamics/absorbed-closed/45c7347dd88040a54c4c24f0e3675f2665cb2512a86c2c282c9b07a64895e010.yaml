@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:45c7347dd88040a54c4c24f0e3675f2665cb2512a86c2c282c9b07a64895e010
-  normalized_sha256: sha256:45c7347dd88040a54c4c24f0e3675f2665cb2512a86c2c282c9b07a64895e010
-cas_ref: sha256:45c7347dd88040a54c4c24f0e3675f2665cb2512a86c2c282c9b07a64895e010
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Experiment/FiniteExperimentCoverCriterion.finite_experiment_cover_criterion
-    target_statement_id: sha256:e6a9520d222568ab5b23413706d5ae4c5e992435ffe79fdcff46f949ccc51b32
-receipts:
-  unresolved_subitems: []

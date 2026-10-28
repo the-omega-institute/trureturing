@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d5a6908a00eb306077bce0cbc61e6c859138a5397c7f8529941a31d9226fddcf
-  normalized_sha256: sha256:d5a6908a00eb306077bce0cbc61e6c859138a5397c7f8529941a31d9226fddcf
-cas_ref: sha256:d5a6908a00eb306077bce0cbc61e6c859138a5397c7f8529941a31d9226fddcf
-coverage_gids:
-  - gid: D5/S3/Factorization/PrimePowers/SamePrimeScaleRedundancy.adjacent_joint_same_fiber
-    target_statement_id: sha256:b15d0ac719970f9059517638a3717de65975227b9291746a19c50360ad8bfb6b
-receipts:
-  unresolved_subitems: []

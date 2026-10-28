@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0f6eddd6b3e8adea55fe3cdcbdd393bf3726e5f5c1e3f65dcc6336cbdff9c20f
-  normalized_sha256: sha256:0f6eddd6b3e8adea55fe3cdcbdd393bf3726e5f5c1e3f65dcc6336cbdff9c20f
-cas_ref: sha256:0f6eddd6b3e8adea55fe3cdcbdd393bf3726e5f5c1e3f65dcc6336cbdff9c20f
-coverage_gids:
-  - gid: D5/S3/Analytic/Adelic/GoldenObserverLightSpectralZeta.golden_observer_light_spectral_zeta
-    target_statement_id: sha256:362203ccae15fab0ba1e0cb808ad16a0a126edfa091e500b9f23195ff7d53d98
-receipts:
-  unresolved_subitems: []
