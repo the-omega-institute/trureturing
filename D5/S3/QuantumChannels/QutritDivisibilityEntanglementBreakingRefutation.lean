@@ -72,7 +72,7 @@ private def w : MatrixMap (Fin 3) (Fin 3) ℂ := MatrixMap.of_kraus wk wk
 
 private def dk : Fin 10 → Matrix (Fin 3) (Fin 3) ℂ := ![
   (Real.sqrt 2 : ℂ)⁻¹ • (1 : Matrix (Fin 3) (Fin 3) ℂ),
-  (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single 0 0 1,
+  (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single (0 : Fin 3) (0 : Fin 3) 1,
   (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single 0 1 1,
   (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single 0 2 1,
   (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single 1 0 1,
@@ -191,9 +191,70 @@ private lemma t_cptp : IsCPTP t := by
     change Matrix.trace (d (w X)) = Matrix.trace X
     rw [d_cptp.2, w_cptp.2]
 
-private lemma w_not_unitary : ¬ IsUnitaryChannel w := by sorry
+private lemma unitary_purity (U : Matrix.unitaryGroup (Fin 3) ℂ) :
+    Matrix.trace (((U : Matrix (Fin 3) (Fin 3) ℂ) * Matrix.single (0 : Fin 3) (0 : Fin 3) 1 *
+      (U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose) *
+      ((U : Matrix (Fin 3) (Fin 3) ℂ) * Matrix.single (0 : Fin 3) (0 : Fin 3) 1 *
+      (U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose)) = 1 := by
+  have hu : (U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose * (U : Matrix (Fin 3) (Fin 3) ℂ) = 1 :=
+    Matrix.mem_unitaryGroup_iff'.mp U.property
+  have he : Matrix.single (0 : Fin 3) (0 : Fin 3) (1 : ℂ) *
+      Matrix.single (0 : Fin 3) (0 : Fin 3) 1 =
+      Matrix.single (0 : Fin 3) (0 : Fin 3) 1 := by
+    ext i j
+    simp [Matrix.mul_apply, Matrix.single, Fin.sum_univ_three] <;>
+      split_ifs <;> simp_all <;> omega
+  have hid :
+      ((U : Matrix (Fin 3) (Fin 3) ℂ) * Matrix.single (0 : Fin 3) (0 : Fin 3) 1 *
+        (U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose) *
+        ((U : Matrix (Fin 3) (Fin 3) ℂ) * Matrix.single (0 : Fin 3) (0 : Fin 3) 1 *
+        (U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose) =
+      (U : Matrix (Fin 3) (Fin 3) ℂ) * Matrix.single (0 : Fin 3) (0 : Fin 3) 1 *
+        (U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose := by
+    calc
+      _ = (U : Matrix (Fin 3) (Fin 3) ℂ) * Matrix.single (0 : Fin 3) (0 : Fin 3) 1 *
+          (U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose *
+          (U : Matrix (Fin 3) (Fin 3) ℂ) * Matrix.single (0 : Fin 3) (0 : Fin 3) 1 *
+          (U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose := by
+            simp only [Matrix.mul_assoc]
+      _ = (U : Matrix (Fin 3) (Fin 3) ℂ) * Matrix.single (0 : Fin 3) (0 : Fin 3) 1 *
+          ((U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose *
+            (U : Matrix (Fin 3) (Fin 3) ℂ)) * Matrix.single (0 : Fin 3) (0 : Fin 3) 1 *
+          (U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose := by
+            noncomm_ring
+      _ = (U : Matrix (Fin 3) (Fin 3) ℂ) * Matrix.single (0 : Fin 3) (0 : Fin 3) 1 *
+          Matrix.single (0 : Fin 3) (0 : Fin 3) 1 * (U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose := by
+            rw [hu, Matrix.mul_one]
+      _ = (U : Matrix (Fin 3) (Fin 3) ℂ) *
+          (Matrix.single (0 : Fin 3) (0 : Fin 3) 1 *
+            Matrix.single (0 : Fin 3) (0 : Fin 3) 1) *
+          (U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose := by
+            noncomm_ring
+      _ = _ := by rw [he]
+  rw [hid, Matrix.trace_mul_cycle (U : Matrix (Fin 3) (Fin 3) ℂ)
+    (Matrix.single (0 : Fin 3) (0 : Fin 3) 1) (U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose]
+  rw [hu, Matrix.one_mul]
+  simp [Matrix.trace, Matrix.single]
 
-private lemma d_not_unitary : ¬ IsUnitaryChannel d := by sorry
+private lemma w_not_unitary : ¬ IsUnitaryChannel w := by
+  rintro ⟨U, hU⟩
+  have hp := unitary_purity U
+  have hw := congrArg (fun Z => Matrix.trace (Z * Z)) (hU (Matrix.single (0 : Fin 3) (0 : Fin 3) 1))
+  have hw' : Matrix.trace (w (Matrix.single (0 : Fin 3) (0 : Fin 3) 1) *
+      w (Matrix.single (0 : Fin 3) (0 : Fin 3) 1)) = 1 := hw.trans hp
+  rw [w_formula] at hw'
+  norm_num [Matrix.trace, Matrix.mul_apply, Matrix.transpose_apply,
+    Matrix.single, Matrix.one_apply, Fin.sum_univ_three] at hw'
+
+private lemma d_not_unitary : ¬ IsUnitaryChannel d := by
+  rintro ⟨U, hU⟩
+  have hp := unitary_purity U
+  have hw := congrArg (fun Z => Matrix.trace (Z * Z)) (hU (Matrix.single (0 : Fin 3) (0 : Fin 3) 1))
+  have hw' : Matrix.trace (d (Matrix.single (0 : Fin 3) (0 : Fin 3) 1) *
+      d (Matrix.single (0 : Fin 3) (0 : Fin 3) 1)) = 1 := hw.trans hp
+  rw [d_formula] at hw'
+  norm_num [Matrix.trace, Matrix.mul_apply, Matrix.single, Matrix.one_apply,
+    Fin.sum_univ_three] at hw'
 
 private lemma t_divisible : IsDivisible t := by
   exact ⟨d, w, d_cptp, w_cptp, rfl, d_not_unitary, w_not_unitary⟩
