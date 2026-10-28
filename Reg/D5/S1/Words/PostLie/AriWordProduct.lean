@@ -21,7 +21,7 @@ def productRejected : Realization productSignature :=
   realize productSignature (fun _ _ _ => 0) (fun e => nomatch e)
 def productWeightRejected : Realization productSignature :=
   realize productSignature (fun _ _ _ => wordBasis (1 : Word)) (fun e => nomatch e)
-private theorem starWord_one_one : starWord (1 : Word) 1 = wordBasis 1 := by
+theorem starWord_one_one : starWord (1 : Word) 1 = wordBasis 1 := by
   change (∑ f : Fin 0 → Fin 1, orderedTerm 1 (fun j => slot [] f j)) = wordBasis 1
   rw [Fintype.sum_unique]
   simp [orderedTerm, slot]

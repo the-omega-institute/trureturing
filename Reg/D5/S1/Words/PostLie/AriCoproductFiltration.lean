@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Words.PostLie.AriCoproductFiltration
 import Reg.Support.SingleDependentReadout
+import Reg.D5.S1.Words.PostLie.AriWordProduct
 
 /-! Source-bound observations of the full ordinary ari transpose and its filtration. -/
 set_option autoImplicit false
@@ -83,10 +84,6 @@ def transposeActual : Realization transposeSignature :=
   realize transposeSignature (fun _ _ P => delta P) (fun e => nomatch e)
 def transposeRejected : Realization transposeSignature :=
   realize transposeSignature (fun _ _ _ => 0) (fun e => nomatch e)
-private theorem starWord_one_one : starWord (1 : Word) 1 = wordBasis 1 := by
-  change (∑ f : Fin 0 → Fin 1, orderedTerm 1 (fun j => slot [] f j)) = wordBasis 1
-  rw [Fintype.sum_unique]
-  simp [orderedTerm, slot]
 
 def fullTransposeArena : Arena where
   signature := transposeSignature
@@ -96,7 +93,7 @@ private theorem fullTranspose_rejected : ¬ fullTransposeArena.Law transposeReje
   intro h
   have hc := h (wordBasis 1) (wordBasis 1) (wordBasis 1)
   change tensorPairing (wordBasis 1) (wordBasis 1) 0 = pairing (wordBasis 1) (star (wordBasis 1) (wordBasis 1)) at hc
-  rw [map_zero, star_basis, starWord_one_one] at hc
+  rw [map_zero, star_basis, _root_.Reg.D5.S1.Words.PostLie.AriWordProduct.starWord_one_one] at hc
   rw [pairing_basis] at hc
   simp [wordBasis] at hc
 
@@ -113,7 +110,7 @@ def fullTransposeFamily : Registration fullTransposeArena (∀ P Q R : H, tensor
     intro he
     have hc := congrArg (fun T : H ⊗[ℚ] H => tensorBasis.repr T (1, 1)) he
     simp only [map_zero, Finsupp.zero_apply] at hc
-    rw [delta_basis_coefficient, starWord_one_one] at hc
+    rw [delta_basis_coefficient, _root_.Reg.D5.S1.Words.PostLie.AriWordProduct.starWord_one_one] at hc
     simp [wordBasis] at hc
 
 def fullTransposeAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -156,7 +153,7 @@ private theorem transposeCoefficient_rejected : ¬ transposeCoefficientArena.Law
   intro h
   have hc := h (wordBasis 1) 1 1
   change tensorBasis.repr 0 (1, 1) = pairing (wordBasis 1) (star (wordBasis 1) (wordBasis 1)) at hc
-  rw [map_zero, Finsupp.zero_apply, star_basis, starWord_one_one] at hc
+  rw [map_zero, Finsupp.zero_apply, star_basis, _root_.Reg.D5.S1.Words.PostLie.AriWordProduct.starWord_one_one] at hc
   rw [pairing_basis] at hc
   simp [wordBasis] at hc
 
@@ -173,7 +170,7 @@ def transposeCoefficientFamily : Registration transposeCoefficientArena (∀ (P 
     intro he
     have hc := congrArg (fun T : H ⊗[ℚ] H => tensorBasis.repr T (1, 1)) he
     simp only [map_zero, Finsupp.zero_apply] at hc
-    rw [delta_basis_coefficient, starWord_one_one] at hc
+    rw [delta_basis_coefficient, _root_.Reg.D5.S1.Words.PostLie.AriWordProduct.starWord_one_one] at hc
     simp [wordBasis] at hc
 
 def transposeCoefficientAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -216,7 +213,7 @@ private theorem transposeBasisCoefficient_rejected : ¬ transposeBasisCoefficien
   intro h
   have hc := h 1 1 1
   change tensorBasis.repr 0 (1, 1) = (starWord 1 1).coeff 1 at hc
-  rw [map_zero, Finsupp.zero_apply, starWord_one_one] at hc
+  rw [map_zero, Finsupp.zero_apply, _root_.Reg.D5.S1.Words.PostLie.AriWordProduct.starWord_one_one] at hc
   simp [wordBasis] at hc
 
 def transposeBasisCoefficientFamily : Registration transposeBasisCoefficientArena (∀ w A B : Word, tensorBasis.repr (delta (wordBasis w)) (A, B) = (starWord A B).coeff w) where
@@ -232,7 +229,7 @@ def transposeBasisCoefficientFamily : Registration transposeBasisCoefficientAren
     intro he
     have hc := congrArg (fun T : H ⊗[ℚ] H => tensorBasis.repr T (1, 1)) he
     simp only [map_zero, Finsupp.zero_apply] at hc
-    rw [delta_basis_coefficient, starWord_one_one] at hc
+    rw [delta_basis_coefficient, _root_.Reg.D5.S1.Words.PostLie.AriWordProduct.starWord_one_one] at hc
     simp [wordBasis] at hc
 
 def transposeBasisCoefficientAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -326,7 +323,7 @@ def filtrationResultFamily : Registration filtrationResultArena (claim) where
     intro he
     have hc := congrArg (fun T : H ⊗[ℚ] H => tensorBasis.repr T (1, 1)) he
     simp only [map_zero, Finsupp.zero_apply] at hc
-    rw [delta_basis_coefficient, starWord_one_one] at hc
+    rw [delta_basis_coefficient, _root_.Reg.D5.S1.Words.PostLie.AriWordProduct.starWord_one_one] at hc
     simp [wordBasis] at hc
 
 def filtrationResultAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}

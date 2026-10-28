@@ -56,7 +56,7 @@ decomposition. The resolution is **Proved** by
 | Membership in the actual right-factor tensor image | `rightFiltrationImage k r = LinearMap.range (TensorProduct.map id (filtration k r).subtype)` and `result` |
 
 The source operations and locators are documented in
-[the source note](../Library/Words/burmesterkuhn2025postlie.md).
+[the source note](../Library/LieTheory/burmesterkuhn2025postlie.md).
 The claim is the entire target preregistered in
 [#23147](https://github.com/the-omega-institute/trureturing/issues/23147).
 
