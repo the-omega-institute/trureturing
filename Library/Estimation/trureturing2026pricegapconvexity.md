@@ -6,7 +6,8 @@ title: Actual Robin price gaps, forced-core tail records and the selected-sign b
 doi: null
 url: https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md
 claim: Under the original source-window hypotheses, the complete selected response retains actual price-gap costs; every inactive-forced-prime core is a strict all-integer right-tail record with original-exponent own-size excess. A synthetic positive-reference model excludes height-and-envelope plus numerical full-Q reasoning alone. A cited unrefereed density theorem extends the original high-frequency range and complete compensated clock transport. Exact total-clock pressure raises the pure-future joint margin throughout the original range. Actual favorable slack and RH remain unproved.
-strata_touched: []
+strata_touched:
+  - D5/S3/Analytic/Variational/JointReciprocalFunctional
 license: Apache-2.0
 triage: anchor
 ---
@@ -16,8 +17,14 @@ triage: anchor
 Assume the qualifying original window in
 [N1--N2 and PT1--PT11](../ArithSums/trureturing2026extrawindowpairing.md).
 These sources belong to the supplied RH-failure route. This is a
-supplier-relative paper application, with no Lean verification,
-literature priority claim or proof of RH. The existing source construction,
+supplier-relative paper application, with no literature priority claim or
+proof of RH. The scalar-root existence and uniqueness, explicit smooth
+normalized profile, and sharp attained JVM1--JVM2 analytic variational
+values are formalized in
+`D5/S3/Analytic/Variational/JointReciprocalFunctional.lean` for every
+$0<b\le1$, over the full bounded positive almost everywhere measurable
+class. This formalization does not verify the remaining source-window,
+arithmetic, strict-gain or RH claims in this note. The existing source construction,
 finite pressure identity, full-Q estimates and quadrature are reused.
 The classical convex-order hinge characterization is reused inside the
 application. The added interface is its correspondence with the actual
