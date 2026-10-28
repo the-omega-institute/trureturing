@@ -76,7 +76,10 @@ internal sealed class LevelOneQAOAGenuineSuperpositionDocument : IScribeDocument
                             + "The amplitude formula therefore proves that the output is a genuine superposition of T. "
                             + "Since 2 < 4 < 2³, applying the exclusion to these energies, angles and target set "
                             + "contradicts that genuine superposition."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("streif-leib-2020-level-one-qaoa-genuine-superposition"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance) =>
