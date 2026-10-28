@@ -22,7 +22,7 @@ Arc n is the subtype of Fin n x Fin n with unequal coordinates. Each ordered pai
 
 **Definition 1.2 (Subdigraph records).**
 
-$$\forall n \in \mathbb{N},\; \mathrm{Digraph}\left(n\right) := \{vertices: \mathrm{Finset}\left(\mathrm{Fin}\left(n\right)\right); arcs: \mathrm{Finset}\left(\mathrm{Arc}\left(n\right)\right); endpoints: \forall e \in \mathrm{Arc}\left(n\right),\; (e \in arcs) \Rightarrow ((\mathrm{fst}\left(e\right) \in vertices) \land (\mathrm{snd}\left(e\right) \in vertices))\}$$
+$$\forall n \in \mathbb{N},\; \mathrm{Digraph}\left(n\right) := \{vertices: \mathrm{Finset}\left(\mathrm{Fin}\left(n\right)\right); arcs: \mathrm{Finset}\left(\mathrm{Arc}\left(n\right)\right); endpoints: \forall e \in \mathrm{Arc}\left(n\right),\; (e \in arcs) \Rightarrow ((\mathrm{fst}\left(\mathrm{val}\left(e\right)\right) \in vertices) \land (\mathrm{snd}\left(\mathrm{val}\left(e\right)\right) \in vertices))\}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Saturation/WangTianStrongSaturationRefutation.Digraph` (`✓ std3`).
 
@@ -64,7 +64,7 @@ The arc field is a finite set of permissible directed arcs whose endpoints satis
 
 **Definition 1.5 (The endpoint proof field).**
 
-$$\forall n \in \mathbb{N},\; \forall H \in \mathrm{Digraph}\left(n\right),\; \forall e \in \mathrm{Arc}\left(n\right),\; (e \in \mathrm{arcs}\left(H\right)) \Rightarrow ((\mathrm{fst}\left(e\right) \in \mathrm{vertices}\left(H\right)) \land (\mathrm{snd}\left(e\right) \in \mathrm{vertices}\left(H\right)))$$
+$$\forall n \in \mathbb{N},\; \forall H \in \mathrm{Digraph}\left(n\right),\; \forall e \in \mathrm{Arc}\left(n\right),\; (e \in \mathrm{arcs}\left(H\right)) \Rightarrow ((\mathrm{fst}\left(\mathrm{val}\left(e\right)\right) \in \mathrm{vertices}\left(H\right)) \land (\mathrm{snd}\left(\mathrm{val}\left(e\right)\right) \in \mathrm{vertices}\left(H\right)))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Saturation/WangTianStrongSaturationRefutation.endpoints` (`✓ std3`).
 
@@ -120,7 +120,7 @@ Quantifying ordered distinct endpoints requires paths in both directions. The pr
 
 **Definition 1.9 (Vertex deletion).**
 
-$$\forall n \in \mathbb{N},\; \forall H \in \mathrm{Digraph}\left(n\right),\; \forall S \in \mathrm{Finset}\left(\mathrm{Fin}\left(n\right)\right),\; (\mathrm{vertices}\left(\mathrm{delete}\left(H, S\right)\right) = \mathrm{vertices}\left(H\right) \setminus S) \land (\mathrm{arcs}\left(\mathrm{delete}\left(H, S\right)\right) = \{e: \mathrm{Arc}\left(n\right) | (e \in \mathrm{arcs}\left(H\right)) \land ((\neg (\mathrm{fst}\left(e\right) \in S)) \land (\neg (\mathrm{snd}\left(e\right) \in S)))\})$$
+$$\forall n \in \mathbb{N},\; \forall H \in \mathrm{Digraph}\left(n\right),\; \forall S \in \mathrm{Finset}\left(\mathrm{Fin}\left(n\right)\right),\; (\mathrm{vertices}\left(\mathrm{delete}\left(H, S\right)\right) = \mathrm{vertices}\left(H\right) \setminus S) \land (\mathrm{arcs}\left(\mathrm{delete}\left(H, S\right)\right) = \{e: \mathrm{Arc}\left(n\right) | (e \in \mathrm{arcs}\left(H\right)) \land ((\neg (\mathrm{fst}\left(\mathrm{val}\left(e\right)\right) \in S)) \land (\neg (\mathrm{snd}\left(\mathrm{val}\left(e\right)\right) \in S)))\})$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Saturation/WangTianStrongSaturationRefutation.delete` (`✓ std3`).
 
@@ -274,7 +274,7 @@ This is the complete positive-k reading of Conjecture 1 in Section 4, printed PD
 
 **Theorem 1.20 (No threshold satisfies the full exact formula).**
 
-$$\neg (claim)$$
+$$\neg ((\forall k \in \mathbb{N},\; \forall (hk: 1 \le k), \exists N \in \mathbb{N},\; \forall n \in \mathbb{N},\; (N \le n) \Rightarrow ((\mathrm{val}\left(\mathrm{extremum}\left(k, n, hk\right)\right): \mathbb{Q}) = \frac{3}{2} \cdot ((k: \mathbb{Q}) - \frac{4}{3}) \cdot ((n: \mathbb{Q}) - (k: \mathbb{Q}) + 1) + (\mathrm{choose}\left(n, 2\right): \mathbb{Q}))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Saturation/WangTianStrongSaturationRefutation.result` (`✓ std3`). ∎
 
