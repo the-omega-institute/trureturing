@@ -309,7 +309,10 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     let workspace ← getWorkspace
     let env := workspace.augmentedEnvVars
     let file := root / ".lake/build/lean-inspector" / "modules" / s!"{mod.name}.zip"
-    (deps.add (Job.mixArray exports) |>.add projection |>.add inspector).mapM fun _ => do
+    -- Schedule the format input before the callback. Waiting on a freshly
+    -- created job inside every callback makes the runtime spawn spare workers.
+    let format ← inputBinFile (root / ".lake/build/lean-inspector" / "report-format")
+    (deps.add (Job.mixArray exports) |>.add projection |>.add inspector |>.add format).mapM fun _ => do
       observePhase "lake-report-programs-callback" "start"
       -- The compiler reader consumes transitive private values, also
       -- through public imports. Lake's legacy trace follows that same closure;
@@ -318,8 +321,6 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
       for exportJob in exports do
         let info ← exportJob.await
         addTrace (info.allArtsTrace.mix info.legacyTransTrace)
-      let format ← inputBinFile (root / ".lake/build/lean-inspector" / "report-format")
-      discard <| format.await
       addTrace format.getTrace
       let executable ← inspector.await
       observePhase "lake-report-inspector" "ready"

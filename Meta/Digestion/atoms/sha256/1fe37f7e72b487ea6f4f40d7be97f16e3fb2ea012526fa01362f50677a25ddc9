@@ -1,0 +1,23 @@
+## 5. Countable same-path refinement
+
+Let $(\varepsilon_n,\delta_n)$ satisfy $\varepsilon_n\vee\delta_n\downarrow0$, and install the canonical services on the same $Z$. Let $V^n$ be their held last-released path.
+
+**(C5b) Theorem 5.1 (uniform refinement and raw-path field).** For every finite $T$,
+
+$$
+\sup_{s\leq T}|V_s^n-Z_s|
+\leq\Omega_T(Z;\varepsilon_n\vee\delta_n)\longrightarrow0
+\quad\text{almost surely}.
+\tag{5.1}
+$$
+
+Moreover, after completion,
+
+$$
+\sigma\bigl(\text{all canonical prefixes through }T\bigr)
+=\sigma(Z_s:0\leq s\leq T).
+\tag{5.2}
+$$
+
+**Proof.** The supplied same-path modulus bound gives (5.1) for each $n$. Intersect the corresponding probability-one events over the countable family. Continuity of $Z$ on $[0,T]$ makes the modulus tend to zero. Hence every rational-time coordinate $Z_q$ is measurable with respect to the union of all prefixes as the limit of $V_q^n$; continuity then gives every real-time coordinate and the forward inclusion in (5.2). Conversely, each timer, type and announced mark is a causal Borel path functional through $T$, except on the countable tie and version null sets. This gives the reverse inclusion after completion. The limit uses countably many installed services and exact marks; it is not a finite terminating acquisition, a finite-bit theorem, or an enlarged source-filtration identity. ∎
+
