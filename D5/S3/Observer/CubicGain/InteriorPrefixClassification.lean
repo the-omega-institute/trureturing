@@ -120,7 +120,7 @@ theorem two_transition_parameters (K H : ZMat) (x y d c j h : ℤ)
   have heh : h = n*(x+d)+K.det := by
     have hd0 : d ≠ 0 := ne_of_gt hd
     apply mul_right_cancel₀ hd0
-    nlinarith only [hn,hQ]
+    linear_combination -hQ-hcx+(x+d)*hn
   refine ⟨rfl,rfl,hxy,n,K.det,hnpos,hdK,heh,hcx,?_,?_,hHeq⟩
   · nlinarith only [hn,hQtwo]
   · ext i k
@@ -130,19 +130,19 @@ private theorem integer_word (u : List Bool) : ∃ A : ZMat,
     (∀ i j, 0 ≤ A i j) ∧ (A.det = 1 ∨ A.det = -1) ∧ real A = futureProduct u := by
   obtain ⟨he,hd⟩ := (legal_matrix_monoid (futureProduct u)).mp ⟨u,rfl⟩
   choose A hA using fun i j => (he i j).2
-  have hreal : real A = futureProduct u := by
+  let B : ZMat := A
+  have hreal : real B = futureProduct u := by
     ext i j
     exact (hA i j).symm
-  refine ⟨A,fun i j => ?_,?_,hreal⟩
+  refine ⟨B,fun i j => ?_,?_,hreal⟩
   · have hh := (he i j).1
     rw [hA i j] at hh
     exact_mod_cast hh
-  · rw [←hreal] at hd
+  · have hmap : (B.det:ℝ) = (real B).det := (Int.castRingHom ℝ).map_det B
+    rw [←hreal,←hmap] at hd
     rcases hd with hd | hd
-    · left; exact_mod_cast (show ((A 0 0:ℝ)*A 1 1-(A 0 1:ℝ)*A 1 0) = 1 by
-        simpa [real,Matrix.det_fin_two] using hd)
-    · right; exact_mod_cast (show ((A 0 0:ℝ)*A 1 1-(A 0 1:ℝ)*A 1 0) = -1 by
-        simpa [real,Matrix.det_fin_two] using hd)
+    · left; exact_mod_cast hd
+    · right; exact_mod_cast hd
 
 /-- Parameters of the positive branch, with the original words, primitive
 coordinates, first-endpoint equation and rank filter all retained. -/
@@ -199,7 +199,7 @@ private theorem positive_phase_parameters (w : Fin 3 → List Bool) (p : Primiti
     fin_cases i <;>
       simp [real,Matrix.mulVec,dotProduct,Fin.sum_univ_two,
         PrimitiveCoordinates.column,PrimitiveCoordinates.direction] at he' ⊢ <;>
-      dsimp [x,y,j] <;> exact_mod_cast (by linear_combination he')
+      norm_cast at he' <;> dsimp [x,y,j] at he' ⊢ <;> nlinarith only [he']
   have hvH : H *ᵥ ![x+j*p.d,y+j*p.c] =
       ![x+(j+h)*p.d,y+(j+h)*p.c] := by
     have he := hm 3
@@ -211,14 +211,15 @@ private theorem positive_phase_parameters (w : Fin 3 → List Bool) (p : Primiti
     fin_cases i <;>
       simp [real,Matrix.mulVec,dotProduct,Fin.sum_univ_two,
         PrimitiveCoordinates.column,PrimitiveCoordinates.direction] at he' ⊢ <;>
-      dsimp [x,y,j,h] <;> exact_mod_cast (by linear_combination he')
+      norm_cast at he' <;> dsimp [x,y,j,h] at he' ⊢ <;> nlinarith only [he']
   have hind : H*K ≠ (2:ℤ) • K-1 := by
     intro he
     have heR : real H * real K = (2:ℝ) • real K-1 := by
       ext i k
       have he' := congrFun (congrFun he i) k
-      simp [real,Matrix.mul_apply,Fin.sum_univ_two,Matrix.one_apply] at he' ⊢
-      exact_mod_cast he'
+      fin_cases i <;> fin_cases k <;>
+        norm_num [real,Matrix.mul_apply,Fin.sum_univ_two,Matrix.one_apply,Matrix.ofNat_apply] at he' ⊢ <;>
+        exact_mod_cast he'
     have hs1 := prefix_step w 1
     have hs2 := prefix_step w 2
     change prefixMatrix w 2 = futureProduct (w 1)*prefixMatrix w 1 at hs1
@@ -275,7 +276,9 @@ private theorem rank_of_trace_surjective (w : Fin 3 → List Bool)
     ext i
     have h0 := congrFun hX 0
     have hi := congrFun hX i.succ
-    change Matrix.trace X = 0 at h0
+    have hzero : prefixMatrix w 0 = 1 := by simp [prefixMatrix,prefixWord,futureProduct]
+    change Matrix.trace (prefixMatrix w 0*X) = 0 at h0
+    rw [hzero,Matrix.one_mul] at h0
     change Matrix.trace (prefixMatrix w i.succ*X) = _ at hi
     change Matrix.trace (prefixMatrix w i.succ*X)-Matrix.trace X = z i
     rw [h0,sub_zero,hi]
@@ -309,7 +312,8 @@ theorem interior_necessity (w : Fin 3 → List Bool) (N : Mat)
     rw [hconj]
     have he : Matrix.trace ((actionJ*prefixMatrix w i*actionJ)*(actionJ*X*actionJ)) =
         Matrix.trace (prefixMatrix w i*X) := by
-      simp [actionJ,Matrix.trace,Matrix.diag,Matrix.mul_apply,Fin.sum_univ_two]
+      simp [actionJ,Matrix.trace,Matrix.diag,Matrix.mul_apply,Matrix.vecMul,
+        dotProduct,Fin.sum_univ_two]
       ring
     rw [he]
     exact congrFun hX i
