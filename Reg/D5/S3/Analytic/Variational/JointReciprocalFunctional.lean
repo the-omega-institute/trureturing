@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.Variational.JointReciprocalFunctional
 import Reg.Support.SingleDependentReadout
 
