@@ -68,7 +68,7 @@ private lemma actual_dependence : ObservationalDependence signature actual := by
   rw [hz]
   exact ne_of_lt hp
 
-/-- The source law is definitionally the complete original theorem, with no normalizer hypothesis. -/
+/-- The source law is the complete original theorem, with no normalizer hypothesis. -/
 def family : Registration arena (type_of% (@original_full_band_normalizer)) where
   actual := actual
   bridge := Iff.rfl
