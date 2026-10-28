@@ -12,6 +12,7 @@ noncomputable section
 
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Combinatorics.Circle.MixedSuffixEnergy
 open _root_.D5.S3.Combinatorics.Circle.TwoOppositeLargeExchange
 open _root_.D5.S3.Combinatorics.Circle.ThreeNegativeExchange
 
@@ -56,11 +57,11 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun q _ V => candidate q V) (fun e => nomatch e)
+  realize signature (fun _ q V => candidate q V) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ q : Source, Assumptions q → ∃ V, R.readout q () V
+  Law R := ∀ q : Source, Assumptions q → ∃ V, R.readout () q V
 
 abbrev sourceScope := type_of% (@actualSource_threeNegative_exchange_full)
 
