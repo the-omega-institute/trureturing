@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Observer/CubicGain/PhaseRigidity
    mirror-E: none(waiver:actual-chronological-interior-phase-rigidity)
-   anchors: []
+   anchors: [mathlib/module/Mathlib.RingTheory.Coprime.Lemmas]
    utility: none
    digest: Interior signed kernel levels force one strict phase on actual chronological prefixes. -/
 
@@ -344,10 +344,6 @@ def swapCoordinates (p : PrimitiveCoordinates) : PrimitiveCoordinates where
   column_primitive := p.column_primitive.symm
   row_primitive := p.row_primitive.symm
   trace_pos := by simpa [add_comm] using p.trace_pos
-
-private theorem conjugate_product (u : List Bool) :
-    futureProduct ([true] ++ u ++ [true]) = actionJ * futureProduct u * actionJ := by
-  simp [product_append,futureProduct,Matrix.mul_assoc]
 
 private theorem conjugate_prefix (w : Fin 3 → List Bool) (i : Fin 4) :
     prefixMatrix (conjugateHistory w) i = actionJ * prefixMatrix w i * actionJ := by
