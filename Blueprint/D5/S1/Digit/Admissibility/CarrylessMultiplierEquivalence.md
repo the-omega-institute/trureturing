@@ -24,6 +24,10 @@ $$\forall k \in Nat,\; 9 \cdot k = C\left(25, k\right) \Leftrightarrow 15 \cdot 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/Admissibility/CarrylessMultiplierEquivalence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a115801-carryless-multiplier-equivalence` (proved) by `D5/S1/Digit/Admissibility/CarrylessMultiplierEquivalence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a115801-carryless-multiplier-equivalence","declaration_gid":"D5/S1/Digit/Admissibility/CarrylessMultiplierEquivalence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* OEIS Foundation (2026). *OEIS A115801: ordinary and binary carryless multiplier conditions*. URL: <https://oeis.org/A115801>.

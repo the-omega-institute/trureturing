@@ -31,7 +31,10 @@ internal sealed class CarrylessMultiplierEquivalenceDocument : IScribeDocumentDe
                     + "states has matching terminal conditions and is closed under both input digits. "
                     + "Binary induction therefore establishes both implications for every natural number. "
                     + "There is no upper bound on the input; at zero both equalities read zero equals zero."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a115801-carryless-multiplier-equivalence"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ConvolutionFormula()
     {
