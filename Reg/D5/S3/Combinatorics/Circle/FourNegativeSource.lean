@@ -99,32 +99,9 @@ def source_registration : Registration arena
       exact nomatch i
   dependence := dependence
 
--- The five mathematical readouts occur separately in the source conclusion.
--- No sourceSelection is asserted for a synthetic tuple absent from that source.
-def audit : Contract.Registration
-    (@permutation_doubleStep_positive_flux.{0})
-    (type_of% (realize signature (fun r p f => actual.readout r p f) (fun e => nomatch e)))
-    Nat Unit := {
-  unitName := `D5.S3.Combinatorics.Circle.FourNegativeSource.permutation_doubleStep_positive_flux.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Circle.FourNegativeSource.flux.source_registration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨source_registration⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun r p f => actual.readout r p f) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := none
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
+-- The Type-valued carrier is retained in Parameters. The Contract envelope
+-- has no accepted rigid-universe source binding for this family (#22063).
+-- The exact bridge and all dependent-family proof obligations above are kept.
 #print axioms source_registration
 end flux
 
