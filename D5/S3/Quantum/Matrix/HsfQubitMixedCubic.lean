@@ -58,6 +58,246 @@ def coefficient2 (X H K : Matrix n n ℂ) : ℝ := (traceCoefficient2 X H K).re
 /-- The real third coefficient, to be matched with one sixth of the third derivative. -/
 def coefficient3 (X H K : Matrix n n ℂ) : ℝ := (traceCoefficient3 X H K).re
 
+
+/-- The exact second trace jet is twice the original ordered coefficient.
+This is a cyclic trace identity in arbitrary finite dimension. -/
+theorem trace_jet_coefficient2 (X H K : Matrix n n ℂ) :
+    let L := H-(2/3 : ℝ) • (X*K)
+    let M := -(4/3 : ℝ) • (H*K)+(10/9 : ℝ) • (X*K^2)
+    Matrix.trace ((3 : ℝ) • (M*X*X)+(6 : ℝ) • (L*L*X)) =
+      2*traceCoefficient2 X H K := by
+  dsimp only
+  have h_hxh : Matrix.trace (H*(X*(H))) = Matrix.trace (H*(H*(X))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (H*X) (H))
+  have h_xhh : Matrix.trace (X*(H*(H))) = Matrix.trace (H*(H*(X))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (H*H))
+  have h_kxxh : Matrix.trace (K*(X*(X*(H)))) = Matrix.trace (H*(K*(X*(X)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X*X) (H))
+  have h_xxhk : Matrix.trace (X*(X*(H*(K)))) = Matrix.trace (H*(K*(X*(X)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*X) (H*K))
+  have h_xhkx : Matrix.trace (X*(H*(K*(X)))) = Matrix.trace (H*(K*(X*(X)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (H*K*X))
+  have h_xkxh : Matrix.trace (X*(K*(X*(H)))) = Matrix.trace (H*(X*(K*(X)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*K*X) (H))
+  have h_kxhx : Matrix.trace (K*(X*(H*(X)))) = Matrix.trace (H*(X*(K*(X)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X) (H*X))
+  have h_xhxk : Matrix.trace (X*(H*(X*(K)))) = Matrix.trace (H*(X*(K*(X)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (H*X*K))
+  have h_xxkh : Matrix.trace (X*(X*(K*(H)))) = Matrix.trace (H*(X*(X*(K)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*X*K) (H))
+  have h_xkhx : Matrix.trace (X*(K*(H*(X)))) = Matrix.trace (H*(X*(X*(K)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*K) (H*X))
+  have h_khxx : Matrix.trace (K*(H*(X*(X)))) = Matrix.trace (H*(X*(X*(K)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K) (H*X*X))
+  have h_kxxxk : Matrix.trace (K*(X*(X*(X*(K))))) = Matrix.trace (K*(K*(X*(X*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X*X*X) (K))
+  have h_xxxkk : Matrix.trace (X*(X*(X*(K*(K))))) = Matrix.trace (K*(K*(X*(X*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*X*X) (K*K))
+  have h_xxkkx : Matrix.trace (X*(X*(K*(K*(X))))) = Matrix.trace (K*(K*(X*(X*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*X) (K*K*X))
+  have h_xkkxx : Matrix.trace (X*(K*(K*(X*(X))))) = Matrix.trace (K*(K*(X*(X*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (K*K*X*X))
+  have h_xkxxk : Matrix.trace (X*(K*(X*(X*(K))))) = Matrix.trace (K*(X*(K*(X*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*K*X*X) (K))
+  have h_kxxkx : Matrix.trace (K*(X*(X*(K*(X))))) = Matrix.trace (K*(X*(K*(X*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X*X) (K*X))
+  have h_xxkxk : Matrix.trace (X*(X*(K*(X*(K))))) = Matrix.trace (K*(X*(K*(X*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*X) (K*X*K))
+  have h_xkxkx : Matrix.trace (X*(K*(X*(K*(X))))) = Matrix.trace (K*(X*(K*(X*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (K*X*K*X))
+  simp only [traceCoefficient2, Matrix.add_mul, Matrix.sub_mul, Matrix.mul_add,
+    Matrix.mul_sub, Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add,
+    Matrix.trace_sub, Matrix.trace_smul, Complex.real_smul, pow_succ, pow_zero,
+    Matrix.mul_one, Matrix.one_mul, Matrix.mul_assoc]
+  simp only [h_hxh, h_xhh, h_kxxh, h_xxhk, h_xhkx, h_xkxh, h_kxhx, h_xhxk, h_xxkh, h_xkhx, h_khxx, h_kxxxk, h_xxxkk, h_xxkkx, h_xkkxx, h_xkxxk, h_kxxkx, h_xxkxk, h_xkxkx]
+  push_cast
+  ring
+
+/-- The exact third trace jet is six times the original ordered coefficient.
+The proof keeps every noncommuting word until applying trace cyclicity. -/
+theorem trace_jet_coefficient3 (X H K : Matrix n n ℂ) :
+    let L := H-(2/3 : ℝ) • (X*K)
+    let M := -(4/3 : ℝ) • (H*K)+(10/9 : ℝ) • (X*K^2)
+    let N := (10/3 : ℝ) • (H*K^2)-(80/27 : ℝ) • (X*K^3)
+    Matrix.trace ((3 : ℝ) • (N*X*X)+(9 : ℝ) • (M*L*X)+
+      (9 : ℝ) • (M*X*L)+(6 : ℝ) • (L*L*L)) =
+      6*traceCoefficient3 X H K := by
+  dsimp only
+  have h_hkxh : Matrix.trace (H*(K*(X*(H)))) = Matrix.trace (H*(H*(K*(X)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (H*K*X) (H))
+  have h_kxhh : Matrix.trace (K*(X*(H*(H)))) = Matrix.trace (H*(H*(K*(X)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X) (H*H))
+  have h_xhhk : Matrix.trace (X*(H*(H*(K)))) = Matrix.trace (H*(H*(K*(X)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (H*H*K))
+  have h_hxkh : Matrix.trace (H*(X*(K*(H)))) = Matrix.trace (H*(H*(X*(K)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (H*X*K) (H))
+  have h_xkhh : Matrix.trace (X*(K*(H*(H)))) = Matrix.trace (H*(H*(X*(K)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*K) (H*H))
+  have h_khhx : Matrix.trace (K*(H*(H*(X)))) = Matrix.trace (H*(H*(X*(K)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K) (H*H*X))
+  have h_khxh : Matrix.trace (K*(H*(X*(H)))) = Matrix.trace (H*(K*(H*(X)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*H*X) (H))
+  have h_hxhk : Matrix.trace (H*(X*(H*(K)))) = Matrix.trace (H*(K*(H*(X)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (H*X) (H*K))
+  have h_xhkh : Matrix.trace (X*(H*(K*(H)))) = Matrix.trace (H*(K*(H*(X)))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (H*K*H))
+  have h_kkxxh : Matrix.trace (K*(K*(X*(X*(H))))) = Matrix.trace (H*(K*(K*(X*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*K*X*X) (H))
+  have h_kxxhk : Matrix.trace (K*(X*(X*(H*(K))))) = Matrix.trace (H*(K*(K*(X*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X*X) (H*K))
+  have h_xxhkk : Matrix.trace (X*(X*(H*(K*(K))))) = Matrix.trace (H*(K*(K*(X*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*X) (H*K*K))
+  have h_xhkkx : Matrix.trace (X*(H*(K*(K*(X))))) = Matrix.trace (H*(K*(K*(X*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (H*K*K*X))
+  have h_kxkxh : Matrix.trace (K*(X*(K*(X*(H))))) = Matrix.trace (H*(K*(X*(K*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X*K*X) (H))
+  have h_xkxhk : Matrix.trace (X*(K*(X*(H*(K))))) = Matrix.trace (H*(K*(X*(K*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*K*X) (H*K))
+  have h_kxhkx : Matrix.trace (K*(X*(H*(K*(X))))) = Matrix.trace (H*(K*(X*(K*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X) (H*K*X))
+  have h_xhkxk : Matrix.trace (X*(H*(K*(X*(K))))) = Matrix.trace (H*(K*(X*(K*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (H*K*X*K))
+  have h_kxxkh : Matrix.trace (K*(X*(X*(K*(H))))) = Matrix.trace (H*(K*(X*(X*(K))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X*X*K) (H))
+  have h_xxkhk : Matrix.trace (X*(X*(K*(H*(K))))) = Matrix.trace (H*(K*(X*(X*(K))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*X*K) (H*K))
+  have h_xkhkx : Matrix.trace (X*(K*(H*(K*(X))))) = Matrix.trace (H*(K*(X*(X*(K))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*K) (H*K*X))
+  have h_khkxx : Matrix.trace (K*(H*(K*(X*(X))))) = Matrix.trace (H*(K*(X*(X*(K))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K) (H*K*X*X))
+  have h_xkkxh : Matrix.trace (X*(K*(K*(X*(H))))) = Matrix.trace (H*(X*(K*(K*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*K*K*X) (H))
+  have h_kkxhx : Matrix.trace (K*(K*(X*(H*(X))))) = Matrix.trace (H*(X*(K*(K*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*K*X) (H*X))
+  have h_kxhxk : Matrix.trace (K*(X*(H*(X*(K))))) = Matrix.trace (H*(X*(K*(K*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X) (H*X*K))
+  have h_xhxkk : Matrix.trace (X*(H*(X*(K*(K))))) = Matrix.trace (H*(X*(K*(K*(X))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (H*X*K*K))
+  have h_xkxkh : Matrix.trace (X*(K*(X*(K*(H))))) = Matrix.trace (H*(X*(K*(X*(K))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*K*X*K) (H))
+  have h_kxkhx : Matrix.trace (K*(X*(K*(H*(X))))) = Matrix.trace (H*(X*(K*(X*(K))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X*K) (H*X))
+  have h_xkhxk : Matrix.trace (X*(K*(H*(X*(K))))) = Matrix.trace (H*(X*(K*(X*(K))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*K) (H*X*K))
+  have h_khxkx : Matrix.trace (K*(H*(X*(K*(X))))) = Matrix.trace (H*(X*(K*(X*(K))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K) (H*X*K*X))
+  have h_xxkkh : Matrix.trace (X*(X*(K*(K*(H))))) = Matrix.trace (H*(X*(X*(K*(K))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*X*K*K) (H))
+  have h_xkkhx : Matrix.trace (X*(K*(K*(H*(X))))) = Matrix.trace (H*(X*(X*(K*(K))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*K*K) (H*X))
+  have h_kkhxx : Matrix.trace (K*(K*(H*(X*(X))))) = Matrix.trace (H*(X*(X*(K*(K))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*K) (H*X*X))
+  have h_khxxk : Matrix.trace (K*(H*(X*(X*(K))))) = Matrix.trace (H*(X*(X*(K*(K))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K) (H*X*X*K))
+  have h_kkxxxk : Matrix.trace (K*(K*(X*(X*(X*(K)))))) = Matrix.trace (K*(K*(K*(X*(X*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*K*X*X*X) (K))
+  have h_kxxxkk : Matrix.trace (K*(X*(X*(X*(K*(K)))))) = Matrix.trace (K*(K*(K*(X*(X*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X*X*X) (K*K))
+  have h_xxxkkk : Matrix.trace (X*(X*(X*(K*(K*(K)))))) = Matrix.trace (K*(K*(K*(X*(X*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*X*X) (K*K*K))
+  have h_xxkkkx : Matrix.trace (X*(X*(K*(K*(K*(X)))))) = Matrix.trace (K*(K*(K*(X*(X*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*X) (K*K*K*X))
+  have h_xkkkxx : Matrix.trace (X*(K*(K*(K*(X*(X)))))) = Matrix.trace (K*(K*(K*(X*(X*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (K*K*K*X*X))
+  have h_kxkxxk : Matrix.trace (K*(X*(K*(X*(X*(K)))))) = Matrix.trace (K*(K*(X*(K*(X*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X*K*X*X) (K))
+  have h_xkxxkk : Matrix.trace (X*(K*(X*(X*(K*(K)))))) = Matrix.trace (K*(K*(X*(K*(X*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*K*X*X) (K*K))
+  have h_kxxkkx : Matrix.trace (K*(X*(X*(K*(K*(X)))))) = Matrix.trace (K*(K*(X*(K*(X*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X*X) (K*K*X))
+  have h_xxkkxk : Matrix.trace (X*(X*(K*(K*(X*(K)))))) = Matrix.trace (K*(K*(X*(K*(X*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*X) (K*K*X*K))
+  have h_xkkxkx : Matrix.trace (X*(K*(K*(X*(K*(X)))))) = Matrix.trace (K*(K*(X*(K*(X*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (K*K*X*K*X))
+  have h_kxxkxk : Matrix.trace (K*(X*(X*(K*(X*(K)))))) = Matrix.trace (K*(K*(X*(X*(K*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X*X*K*X) (K))
+  have h_xxkxkk : Matrix.trace (X*(X*(K*(X*(K*(K)))))) = Matrix.trace (K*(K*(X*(X*(K*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*X*K*X) (K*K))
+  have h_xkxkkx : Matrix.trace (X*(K*(X*(K*(K*(X)))))) = Matrix.trace (K*(K*(X*(X*(K*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X*K*X) (K*K*X))
+  have h_kxkkxx : Matrix.trace (K*(X*(K*(K*(X*(X)))))) = Matrix.trace (K*(K*(X*(X*(K*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (K*X) (K*K*X*X))
+  have h_xkkxxk : Matrix.trace (X*(K*(K*(X*(X*(K)))))) = Matrix.trace (K*(K*(X*(X*(K*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (K*K*X*X*K))
+  have h_xkxkxk : Matrix.trace (X*(K*(X*(K*(X*(K)))))) = Matrix.trace (K*(X*(K*(X*(K*(X)))))) := by
+    simpa only [Matrix.mul_assoc] using
+      (Matrix.trace_mul_comm (X) (K*X*K*X*K))
+  simp only [traceCoefficient3, Matrix.add_mul, Matrix.sub_mul, Matrix.mul_add,
+    Matrix.mul_sub, Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add,
+    Matrix.trace_sub, Matrix.trace_smul, Complex.real_smul, pow_succ, pow_zero,
+    Matrix.mul_one, Matrix.one_mul, Matrix.mul_assoc]
+  simp only [h_hkxh, h_kxhh, h_xhhk, h_hxkh, h_xkhh, h_khhx, h_khxh, h_hxhk, h_xhkh, h_kkxxh, h_kxxhk, h_xxhkk, h_xhkkx, h_kxkxh, h_xkxhk, h_kxhkx, h_xhkxk, h_kxxkh, h_xxkhk, h_xkhkx, h_khkxx, h_xkkxh, h_kkxhx, h_kxhxk, h_xhxkk, h_xkxkh, h_kxkhx, h_xkhxk, h_khxkx, h_xxkkh, h_xkkhx, h_kkhxx, h_khxxk, h_kkxxxk, h_kxxxkk, h_xxxkkk, h_xxkkkx, h_xkkkxx, h_kxkxxk, h_xkxxkk, h_kxxkkx, h_xxkkxk, h_xkkxkx, h_kxxkxk, h_xxkxkk, h_xkxkkx, h_kxkkxx, h_xkkxxk, h_xkxkxk]
+  push_cast
+  ring
+
+
 end Coefficients
 
 /- The spectral argument is copied from

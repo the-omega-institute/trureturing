@@ -27,6 +27,17 @@ internal sealed class HsfQubitMixedCubicDocument : IScribeDocumentDefinition
                 "The real part of traceCoefficient3. Its identification with one sixth "
                 + "of the physical third derivative is a separate analytic obligation.",
                 DescribeRole.Definition),
+            Entry("trace_jet_coefficient2", "The second matrix trace jet",
+                "In arbitrary finite dimension, set L=H-(2/3)XK and "
+                + "M=-(4/3)HK+(10/9)XK^2. Then Tr(3MXX+6LLX)=2p2. "
+                + "The exact identity uses trace cyclicity, with no Hermitian premise.",
+                DescribeRole.Theorem),
+            Entry("trace_jet_coefficient3", "The third matrix trace jet",
+                "For the same L,M and N=(10/3)HK^2-(80/27)XK^3, "
+                + "Tr(3NXX+9MLX+9MXL+6LLL)=6p3 in arbitrary finite dimension. "
+                + "Every ordered word is retained until trace cyclicity is applied. "
+                + "The actual function derivative supplier consumes this identity.",
+                DescribeRole.Theorem),
             Entry("f", "The first row coefficient",
                 "The real rational weight 2(a+2b)/(3(a+b)) in the first Gram row.",
                 DescribeRole.Definition),
