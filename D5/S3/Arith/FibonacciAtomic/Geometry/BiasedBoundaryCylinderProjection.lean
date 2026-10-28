@@ -46,7 +46,7 @@ def V (A : Finset Edge) : Submodule ℝ G :=
 def V0 (A : Finset Edge) : Submodule ℝ (V A) :=
   LinearMap.ker (mean.toLinearMap.comp (V A).subtype)
 
-private theorem cylinder_ray (p : Address) (ω : Omega) :
+theorem cylinder_ray (p : Address) (ω : Omega) :
     ω ∈ cylinder p ↔ p = rayPrefix ω p.length := by
   constructor
   · intro h

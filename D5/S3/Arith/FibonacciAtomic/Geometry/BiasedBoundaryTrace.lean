@@ -27,13 +27,13 @@ open FiniteSourceMass (a)
 open MeasureTheory Filter
 open scoped BigOperators ENNReal Topology
 
-private theorem a_pos : 0 < a := inv_pos.mpr Real.goldenRatio_pos
-private theorem a_lt_one : a < 1 := inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio
+theorem a_pos : 0 < a := inv_pos.mpr Real.goldenRatio_pos
+theorem a_lt_one : a < 1 := inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio
 
 /-- The right-child probability, with false denoting L and true denoting R. -/
 abbrev b : ℝ := a ^ 2
 
-private theorem sum_weights : a + b = 1 := by
+theorem sum_weights : a + b = 1 := by
   change Real.goldenRatio⁻¹ + (Real.goldenRatio⁻¹)^2 = 1
   rw [Real.inv_goldenRatio]
   nlinarith [Real.goldenConj_sq]
@@ -97,7 +97,7 @@ private theorem bit_singleton (c : Bool) :
     change bit.real {true} = 1-a at he
     linarith [sum_weights]
 
-private theorem cylinder_mass (p : Address) : (M (cylinder p)).toReal = mass p := by
+theorem cylinder_mass (p : Address) : (M (cylinder p)).toReal = mass p := by
   rw [M, cylinder, Measure.infinitePi_pi _ (fun _ _ => measurableSet_singleton _),
     ENNReal.toReal_prod]
   simp only [bit_singleton]

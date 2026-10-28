@@ -14,6 +14,14 @@ internal sealed class BiasedBoundaryCylinderProjectionDocument : IScribeDocument
             Def("Q", "For a finite set A of original nonempty addresses, Q(A) is the sum over p in A of the actual cylinder indicator multiplied by atomMean(p). The operator is constructed as a finite sum of continuous linear maps."),
             Def("V", "V(A) is the real linear span in the original L2(M) of the actual indicators of the cylinders with addresses in A."),
             Def("V0", "V0(A) is the kernel of the actual mean restricted to V(A). Its elements are exactly the vectors in the actual cylinder span whose original M mean is zero."),
+            Describe.Lean(DescribeId.Create("biasedboundarycylinderprojection-ray"),
+                DeclarationHandle.Create(Prefix + "cylinder_ray"), H("Original Cylinders and Ray Prefixes"),
+                StatementSource.FromAuthor(All("p",Call("Address"),All("omega",Call("Omega"),
+                    Seq(Call("InCylinder",V("omega"),V("p")),Iff,Sp,
+                        V("p"),Eq,Call("rayPrefix",V("omega"),Call("length",V("p"))))))),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every original address p and ray omega, omega lies in the actual cylinder of p precisely when p is the prefix of omega of length length(p). This includes the empty address. The cylinder prescribes the same initial coordinates as the list constructed by rayPrefix, so equality follows by comparing every list entry.")),
+                    Paragraph(Text("This correspondence converts a unique prefix on each ray into a unique actual cylinder containing that ray. In particular it identifies the product-tree mass frontier with a covering of the original Bernoulli boundary."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("biasedboundarycylinderprojection-average"),
                 DeclarationHandle.Create(Prefix + "cylinder_average_projection"), H("Normalized Means and Orthogonal Projection"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(

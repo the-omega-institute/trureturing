@@ -20,6 +20,25 @@ internal sealed class BiasedBoundaryTraceDocument : IScribeDocumentDefinition
             Def("mass", "The cylinder mass is the product of the biased letter probabilities along its finite address."),
             Def("indicator", "A unit increment at a nonempty address is the L2 indicator of its cylinder."),
             Def("J", "J is the continuous linear extension of the actual cylinder indicator sum on finitely supported increments. Its domain is the original real edge ell2 H."),
+            Describe.Lean(DescribeId.Create("biasedboundarytrace-a-pos"),
+                DeclarationHandle.Create(Prefix + "a_pos"), H("Positive Left Probability"),
+                StatementSource.FromAuthor(Seq(D(0),Lt,Sp,V("a"))), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("The reciprocal golden ratio a is strictly positive because the golden ratio is positive."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("biasedboundarytrace-a-lt-one"),
+                DeclarationHandle.Create(Prefix + "a_lt_one"), H("Strict Contraction of Mass"),
+                StatementSource.FromAuthor(Seq(V("a"),Lt,Sp,D(1))), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("The left probability a is strictly smaller than one because the golden ratio exceeds one. Hence powers of a decay to zero, giving a common finite depth for every positive mass threshold."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("biasedboundarytrace-sum-weights"),
+                DeclarationHandle.Create(Prefix + "sum_weights"), H("Conservation of Probability"),
+                StatementSource.FromAuthor(Seq(V("a"),Plus,V("b"),Eq,D(1))), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("The golden conjugate equation gives a plus its square equal to one. Thus the two child probabilities a and b sum to one at every vertex."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("biasedboundarytrace-cylinder-mass"),
+                DeclarationHandle.Create(Prefix + "cylinder_mass"), H("Actual Cylinder Mass"),
+                StatementSource.FromAuthor(All("p",Call("Address"),
+                    Seq(Call("toReal",Call("M",Call("cylinder",V("p")))),Eq,Call("mass",V("p"))))),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every original finite address p, including the empty address, the real mass of its cylinder under the infinite Bernoulli product M is exactly the product of its letter probabilities: a for false and b for true.")),
+                    Paragraph(Text("The finite-coordinate product formula for M reduces the cylinder measure to singleton probabilities. Appending one letter multiplies both that measure and mass(p) by the same probability. The empty address has mass one. Consequently this is the actual cylinder mass used by the mass-crossing frontier."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("biasedboundarytrace-hardy"),
                 DeclarationHandle.Create(Prefix + "boundary_trace_hardy"), H("Convergence and Hardy Tail"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(
