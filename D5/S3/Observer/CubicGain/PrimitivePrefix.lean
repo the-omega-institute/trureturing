@@ -262,7 +262,9 @@ private theorem traceAugment_det (A : Fin 4 → Mat) (N : Mat)
   obtain ⟨v,hv⟩ := (hN.2.2.1 _).mp hp
   have htr : Matrix.trace (unflatten z) = 0 := by
     have he := congrFun hz 0
-    simpa [Matrix.mulVec,dotProduct,Fin.sum_univ_succ,traceAugment,Fin.cases_zero,
+    have hrow (j : Fin 4) : traceAugment (coefficients A) 0 j =
+        (![1,0,0,1] : Fin 4 → ℝ) j := rfl
+    simpa [Matrix.mulVec,dotProduct,Fin.sum_univ_succ,hrow,
       unflatten,Matrix.trace,Matrix.diag,Fin.sum_univ_two] using he
   rw [hv,Matrix.trace_smul,smul_eq_mul] at htr
   have hv0 : v = 0 := (mul_eq_zero.mp htr).resolve_right (ne_of_gt ht)
@@ -280,7 +282,8 @@ private theorem trace_cofactor (B : Matrix (Fin 3) (Fin 4) ℤ) :
   rw [Matrix.det_succ_row_zero]
   have hsub (j : Fin 4) :
       (traceAugment B).submatrix Fin.succ j.succAbove = B.submatrix id j.succAbove := rfl
-  simp only [hsub,traceAugment,Fin.cases_zero]
+  have hrow (j : Fin 4) : traceAugment B 0 j = (![1,0,0,1] : Fin 4 → ℤ) j := rfl
+  simp only [hsub,hrow]
   norm_num [D5.S3.Arith.Lattices.CofactorKernel.cofactor,Fin.sum_univ_succ]
 
 private theorem integer_oriented_kernel (w : Fin 3 → List Bool)
