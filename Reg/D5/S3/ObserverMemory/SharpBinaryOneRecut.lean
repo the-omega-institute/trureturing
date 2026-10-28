@@ -105,7 +105,7 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{0,0
     coordinates := #[1],
     readouts := #[{
       path := #["fn","arg","body","body","body","body","body","body","body",
-        "arg","arg","fn","arg","body","domain","arg"],
+        "arg","arg","fn","arg","body","domain","fn","arg"],
       stateBinder := 4,
       functionOperand := false,
       stateOperand := none,

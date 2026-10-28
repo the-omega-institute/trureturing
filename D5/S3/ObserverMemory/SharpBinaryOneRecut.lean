@@ -525,7 +525,7 @@ private theorem attainment (N : Nat) (hN : 1 ≤ N) (full : Bool) : Attains N fu
   · rintro w ⟨q,rfl⟩; exact code_length q
   · intro h; subst full; exact full_branching N
 
-/-- Sharp binary one - symbol recut bounds on one actual relation, and simultaneous
+/-- Sharp binary one-symbol recut bounds on one actual relation, and simultaneous
 attainment at every positive forward width in both branching regimes. -/
 theorem sharp_binary_one_recut :
     (∀ (n : Nat) (C : Set (List Bool)), (∀ w ∈ C, w.length = n) → C.Nonempty →
@@ -562,4 +562,3 @@ theorem sharp_binary_one_recut :
   · intro N hN; exact ⟨attainment N hN false,attainment N hN true⟩
 
 end D5.S3.ObserverMemory.SharpBinaryOneRecut
-
