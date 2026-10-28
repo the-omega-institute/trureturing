@@ -10,6 +10,57 @@ internal sealed class HsfQubitMixedCubicDocument : IScribeDocumentDefinition
         "The original ordered trace coefficients and a positive six-row mixed cubic certificate.",
         H("Complex qubit mixed cubic compatibility"),
         Blocks(
+            MatrixEntry("hermitian", "Hermitian coordinates",
+                "The two by two matrix with real diagonal a,b and upper off-diagonal z; "
+                + "the lower off-diagonal is the complex conjugate of z.", DescribeRole.Definition),
+            MatrixEntry("hermitian_isHermitian", "Hermitian coordinate construction",
+                "The coordinate matrix is Hermitian for every pair of real diagonal "
+                + "entries and every complex off-diagonal entry.", DescribeRole.Theorem),
+            MatrixEntry("hermitian_eq", "All Hermitian qubit matrices",
+                "Every complex Hermitian two by two matrix equals the coordinate "
+                + "matrix formed from its two real diagonal entries and its upper entry.",
+                DescribeRole.Theorem),
+            MatrixEntry("weightedImage", "A symmetric two point kernel",
+                "For real a,b,m, weightedImage multiplies K00 by a, K11 by b, "
+                + "and both off-diagonal entries by m.", DescribeRole.Definition),
+            MatrixEntry("weightedImage_hermitian", "The kernel in Hermitian coordinates",
+                "The kernel action sends the Hermitian coordinates r,s,z to "
+                + "ar,bs,mz, for arbitrary real a,b,m.", DescribeRole.Theorem),
+            MatrixEntry("endpoint_coupling", "The joint endpoint estimate",
+                "For nonnegative a,b, let X-H with diagonal a-h,b-k and upper entry -z "
+                + "and I+K with diagonal 1+r,1+s and upper entry w both be PSD. Then "
+                + "|z|+sqrt(ab)|w| is at most sqrt((a-h+a(1+r))(b-k+b(1+s))). "
+                + "The PSD determinant bounds and the two term Cauchy inequality "
+                + "retain the original coupling; no inverse or strict endpoint is needed.",
+                DescribeRole.Theorem),
+            MatrixEntry("contraction_row", "The contraction row estimate",
+                "For every complex Hermitian two by two K with both I+K and I-K PSD, "
+                + "the squared modulus of K01 is at most 1-K00^2. Both determinant "
+                + "constraints are used, and singular endpoints are allowed.", DescribeRole.Theorem),
+            MatrixEntry("displacement_coupling", "The actual displacement entry",
+                "If m>=sqrt(ab), the same coupled endpoints give "
+                + "|z-mw|<=sqrt((2a-(h-ar))(2b-(k-bs)))+(m-sqrt(ab))|w|. "
+                + "The argument uses the complex triangle inequality and the joint "
+                + "endpoint estimate, with arbitrary complex phases.", DescribeRole.Theorem),
+            MatrixEntry("displacement_row", "The weighted row estimate",
+                "For a>0, h<=a and the two contraction endpoints of K, "
+                + "|K01|^2<=2(2a-(h-aK00))/a. This also covers K01=0.",
+                DescribeRole.Theorem),
+            MatrixEntry("trace_weighted_square", "Exact weighted quadratic trace",
+                "For the diagonal matrix X=diag(a,b) and Hermitian L with diagonal "
+                + "u,v and upper entry z, Re Tr(XL^2)=a(u^2+|z|^2)+b(v^2+|z|^2). "
+                + "All variables are arbitrary, and no positivity is assumed.",
+                DescribeRole.Theorem),
+            MatrixEntry("coupled_cubic_compatibility", "The complete qubit pure cubic estimate",
+                "For every a,b>0 and complex Hermitian two by two H,K, assume "
+                + "X+H,X-H,I+K,I-K are PSD, where X=diag(a,b). Put "
+                + "m=2(a^2+ab+b^2)/(3(a+b)), M=weightedImage(a,b,m,K), "
+                + "L=H-M and B=(a-b)^2(a^2+3ab+b^2)|K01|^2/(3(a+b)). "
+                + "Then |Re Tr(L^3)|<=2 Re Tr(XL^2)+2B/3. There is no trace "
+                + "restriction, no restriction on the complex off-diagonal phases, "
+                + "and no assumption that an endpoint is invertible. The exact "
+                + "coupled scalar estimate applies after a simultaneous sign reversal "
+                + "and a coordinate exchange when required.", DescribeRole.Theorem),
             Entry("traceCoefficient2", "The original second trace coefficient",
                 "For arbitrary square complex matrices indexed by a finite type, this is "
                 + "the ordered trace-word polynomial p2 at alpha=3 and Y=I. It is defined "
@@ -54,11 +105,11 @@ internal sealed class HsfQubitMixedCubicDocument : IScribeDocumentDefinition
                 "The weight (a-b)^2(a+2b)(7a^2+14ab+4b^2)/(36(a+b)^2).",
                 DescribeRole.Definition),
             Entry("rowGram", "A complex row Gram matrix",
-                "The two by two rank-one positive form R*R associated with R=(x,y).",
+                "The two by two positive form R*R of rank at most one associated with R=(x,y).",
                 DescribeRole.Definition),
             Entry("mixedMatrix", "Six weighted row-Gram forms",
                 "For arbitrary real diagonal displacement entries and complex upper "
-                + "entries w,z, mixedMatrix is a sum of six rank-one row-Gram matrices. "
+                + "entries w,z, mixedMatrix is a sum of six row-Gram matrices of rank at most one. "
                 + "Its rational coefficients have denominators that are powers of a+b; "
                 + "the definition therefore does not divide by the spectral gap a-b.",
                 DescribeRole.Definition),
@@ -104,6 +155,12 @@ internal sealed class HsfQubitMixedCubicDocument : IScribeDocumentDefinition
                 + "DOI 10.1007/s10107-025-02314-0. Identification with derivatives of "
                 + "the matrix power function is not asserted here. The unrestricted "
                 + "HSF conjecture and literature priority remain unclaimed.")))));
+
+    private static DocumentBlock MatrixEntry(string name, string title, string text, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create("hsf-qubit-coupled-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Module + "." + name), H(title),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(text))), role);
 
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("hsf-qubit-mixed-" + name.Replace('_', '-').ToLowerInvariant()),
