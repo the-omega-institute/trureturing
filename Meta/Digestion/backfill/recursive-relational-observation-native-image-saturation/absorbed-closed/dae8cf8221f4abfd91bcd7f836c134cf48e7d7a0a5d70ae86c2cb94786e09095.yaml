@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:dae8cf8221f4abfd91bcd7f836c134cf48e7d7a0a5d70ae86c2cb94786e09095
   normalized_sha256: sha256:dae8cf8221f4abfd91bcd7f836c134cf48e7d7a0a5d70ae86c2cb94786e09095
 cas_ref: sha256:dae8cf8221f4abfd91bcd7f836c134cf48e7d7a0a5d70ae86c2cb94786e09095
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeAffineImageSaturation.affine_original_saturation
+    target_statement_id: sha256:5b952fcc0987ae3e1710eed759109e2a8988f19215a27d7ee686d7f8a340691c
 receipts:
   unresolved_subitems: []
