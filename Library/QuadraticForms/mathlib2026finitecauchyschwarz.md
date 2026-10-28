@@ -8,7 +8,7 @@ url: https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f
 claim: For functions f and g over a finset s in a linearly ordered commutative semiring with IsStrictOrderedRing and ExistsAddOfLE, the finite Cauchy-Schwarz inequality $(\sum_{i \in s} f_i g_i)^2 \le (\sum_{i \in s} f_i^2)(\sum_{i \in s} g_i^2)$ holds.
 strata_touched:
   - D5/S3/Combinatorics/Orthogonality/ThetaRepresentationNonconvex
-license: Apache-2.0
+license: citation-only
 triage: anchor
 ---
 
