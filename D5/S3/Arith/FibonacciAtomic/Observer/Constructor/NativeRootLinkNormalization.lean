@@ -70,9 +70,6 @@ private theorem substitute_value {k m : Nat} (p : Fin k → Nat)
 
 def identity {k m : Nat} : Fin m → Expression k m := fun i => .var 0 i
 
-private theorem map_identity {k m : Nat} (p : Fin k → Nat) (v : Fin m → CompletionTree) :
-    mapValues p identity v = v := rfl
-
 private theorem map_compose {k m : Nat} (p : Fin k → Nat)
     (R P : Fin m → Expression k m) (v : Fin m → CompletionTree) :
     mapValues p (fun i => substitute R (P i)) v =
@@ -204,7 +201,7 @@ private theorem linkStep_correct {k m : Nat} (S : System k m) (i : Fin m) (a : N
       rfl
     · simp only [ti, ite_false, Option.map_eq_some_iff] at defn
       obtain ⟨F, sf, rfl⟩ := defn
-      rw [project, if_neg ti, substitute_value, back]
+      rw [project, ite_eq_right ti, substitute_value, back]
       exact sat t F sf
   · intro w sat
     have dummy : w i = leaf true := sat i (.ground (.of true)) (by simp only [ite_true])
@@ -224,8 +221,8 @@ private theorem linkStep_correct {k m : Nat} (S : System k m) (i : Fin m) (a : N
         rho^[a] (mapValues p (linkRecon i a j) w j)
       rw [recon, recon]
       simp only [ite_true, ji, ite_false]
-    · rw [recon, if_neg ti, ← substitute_value]
-      exact sat t _ (by simp only [linkStep, ti, ite_false, defn, Option.map_some])
+    · rw [recon, ite_eq_right ti, ← substitute_value]
+      exact sat t _ (by simp only [ti, ite_false, defn, Option.map_some])
 
 private noncomputable def roots {k m : Nat} (S : System k m) : Finset (Fin m) := by
   classical
@@ -340,5 +337,116 @@ theorem root_link_normalization {k m : Nat} (S : System k m) :
           (linkStep S i a j).equations rfl
         exact ⟨compose (linkStep S i a j) U, gu,
           compose_correct S _ _ (linkStep_correct S i a j ji eq) cu⟩
+
+open NativeGuardedImageSaturation
+
+/-- The presentation is selected from the proved normalization construction. -/
+noncomputable def normalForm {k m : Nat} (S : System k m) : Presentation k m :=
+  Classical.choose (root_link_normalization S)
+
+private theorem normalForm_guarded {k m : Nat} (S : System k m) :
+    Guarded (normalForm S).equations := (Classical.choose_spec (root_link_normalization S)).1
+
+private theorem normalForm_correct {k m : Nat} (S : System k m) :
+    Correct S (normalForm S) := (Classical.choose_spec (root_link_normalization S)).2
+
+/-- Transform every filter occurrence through its original reconstruction;
+the list order, repetitions and thresholds are retained. -/
+def transformedFilters {k m : Nat} (T : Presentation k m) (filters : List (Filter k m)) :
+    List (Filter k m) := filters.map fun f => (substitute T.reconstruct f.1, f.2)
+
+private theorem filters_threshold {k m : Nat} (T : Presentation k m)
+    (filters : List (Filter k m)) :
+    threshold (transformedFilters T filters) = threshold filters := by
+  simp only [threshold, transformedFilters, List.map_map, Function.comp_def]
+
+private theorem filters_correspond {k m : Nat} (T : Presentation k m)
+    (p : Fin k → Nat) (w : Fin m → CompletionTree) (filters : List (Filter k m)) :
+    Passes p w (transformedFilters T filters) ↔
+      Passes p (mapValues p T.reconstruct w) filters := by
+  constructor
+  · intro pass E t ht
+    have accepted := pass (substitute T.reconstruct E) t (List.mem_map.mpr ⟨(E, t), ht, rfl⟩)
+    rwa [substitute_value] at accepted
+  · intro pass E t ht
+    obtain ⟨⟨F, u⟩, hf, eq⟩ := List.mem_map.mp ht
+    cases eq
+    rw [substitute_value]
+    exact pass F u hf
+
+/-- Modes are indexed only by the actual undefined normalized states.
+Fixed ground slots introduced by elimination do not belong to this list. -/
+abbrev FreeMode {k m : Nat} (S : System k m) (s : Nat) :=
+  {i : Fin m // (normalForm S).equations i = none} → Option (Fin (s + 2))
+
+noncomputable def totalMode {k m s : Nat} (S : System k m) (mode : FreeMode S s) :
+    Mode s m := fun i => if h : (normalForm S).equations i = none then mode ⟨i, h⟩ else none
+
+/-- The original mode is read on the exact projected normalized free list. -/
+def OriginalInMode {k m s : Nat} (S : System k m) (p : Fin k → Nat)
+    (mode : FreeMode S s) (v : Fin m → CompletionTree) : Prop :=
+  InMode (normalForm S).equations s (totalMode S mode)
+    (mapValues p (normalForm S).project v)
+
+private noncomputable def filterMode {k m : Nat} (S : System k m)
+    (filters : List (Filter k m)) (mode : FreeMode S (threshold filters)) :
+    Mode (threshold (transformedFilters (normalForm S) filters)) m :=
+  cast (congrArg (fun s => Mode s m) (filters_threshold (normalForm S) filters).symm)
+    (totalMode S mode)
+
+/-- Reconstruct all original names from the canonical normalized extension. -/
+noncomputable def originalCanonical {k m : Nat} (S : System k m) (p : Fin k → Nat)
+    (filters : List (Filter k m)) (mode : FreeMode S (threshold filters)) :
+    Fin m → CompletionTree :=
+  mapValues p (normalForm S).reconstruct
+    (canonical (normalForm S).equations p (normalForm_guarded S) (filterMode S filters mode))
+
+/-- NIS.15 on arbitrary original optional-definition systems: both solution
+directions, all original names and every retained actual-image filter. -/
+theorem original_saturation {k m : Nat} (S : System k m) (p : Fin k → Nat)
+    (filters : List (Filter k m)) (mode : FreeMode S (threshold filters)) :
+    Satisfies S p (originalCanonical S p filters mode) ∧
+    OriginalInMode S p mode (originalCanonical S p filters mode) ∧
+    ((∃ v, Satisfies S p v ∧ OriginalInMode S p mode v ∧ Passes p v filters) ↔
+      Passes p (originalCanonical S p filters mode) filters) := by
+  let T := normalForm S
+  let K := canonical T.equations p (normalForm_guarded S) (filterMode S filters mode)
+  have law := normalized_saturation T.equations p (normalForm_guarded S)
+    (transformedFilters T filters) (filterMode S filters mode)
+  have corr := normalForm_correct S p
+  have back := corr.2 K law.1
+  have mode_match (w : Fin m → CompletionTree) :
+      InMode T.equations (threshold (transformedFilters T filters))
+        (filterMode S filters mode) w ↔
+      InMode T.equations (threshold filters) (totalMode S mode) w := by
+    have transport (s t : Nat) (h : s = t) (md : Mode t m) :
+        InMode T.equations s (cast (congrArg (fun a => Mode a m) h.symm) md) w ↔
+          InMode T.equations t md w := by
+      cases h
+      rfl
+    exact transport _ _ (filters_threshold T filters) (totalMode S mode)
+  have km : InMode T.equations (threshold filters) (totalMode S mode) K :=
+    (mode_match K).mp law.2.1
+  refine ⟨back.1, ?_, ?_⟩
+  · change InMode T.equations (threshold filters) (totalMode S mode)
+      (mapValues p T.project (mapValues p T.reconstruct K))
+    rw [back.2]
+    exact km
+  · constructor
+    · rintro ⟨v, sat, vm, passes⟩
+      have forward := corr.1 v sat
+      have transformed : Passes p (mapValues p T.project v) (transformedFilters T filters) := by
+        apply (filters_correspond T p _ filters).mpr
+        rw [forward.2]
+        exact passes
+      have accepted := law.2.2.mp ⟨mapValues p T.project v, forward.1,
+        (mode_match _).mpr vm, transformed⟩
+      exact (filters_correspond T p K filters).mp accepted
+    · intro passes
+      refine ⟨originalCanonical S p filters mode, back.1, ?_, passes⟩
+      change InMode T.equations (threshold filters) (totalMode S mode)
+        (mapValues p T.project (mapValues p T.reconstruct K))
+      rw [back.2]
+      exact km
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativeRootLinkNormalization
