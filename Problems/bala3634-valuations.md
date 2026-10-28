@@ -107,7 +107,7 @@ Thus the scalar-two assertion cannot include $p=2$.
 
 | Item | Status | Evidence |
 | --- | --- | --- |
-| The scalar-two inert-block hint needs an odd-prime restriction; the $p=2$ block is $(1,1)$ modulo 2, while the type-one proof handles 2 with a finite witness. | proved | Proved in prose by the explicit three-factor calculation above; BalaA363411TypeOne.result handles the type-one conclusion. |
+| The scalar-two inert-block hint needs an odd-prime restriction; the $p=2$ block is $(1,1)$ modulo 2, while the type-one proof handles 2 with a finite witness. | computed | The explicit three-factor calculation above establishes the finite $p=2$ block; the type-one conclusion is separately kernel-checked by `BalaA363411TypeOne.result`. No standalone Lean declaration is claimed for this prose calculation. |
 | The 5-adic valuation is exactly one in indices congruent to two modulo five and zero otherwise. | proved | Kernel-checked BalaA363411.real_mod_five, real_not_dvd_twentyfive and result. |
 | The twelve listed primes, and only those primes up to 101, divide no real term; the conclusion quantifies over all term indices. | proved | Kernel-checked BalaA363411TypeOne.result, with nonzero_of_block and finite certificates on its proof path. |
 | The coefficient recurrence admits scalar monodromy over every commutative ring when the coefficient block closes to a scalar. | proved | Kernel-checked BalaA363411.seq_shift and seq_period. |

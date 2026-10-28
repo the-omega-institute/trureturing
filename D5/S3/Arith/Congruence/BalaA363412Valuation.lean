@@ -18,6 +18,7 @@ proof_shape: result: content; escape_witness: D5.S3.Arith.Congruence.BalaA363412
 The product and sequence definitions retain the source expressions.
 -/
 
+import D5.S3.Arith.Congruence.BalaA363411
 import D5.S3.Arith.Congruence.BalaA363412
 
 set_option autoImplicit false
