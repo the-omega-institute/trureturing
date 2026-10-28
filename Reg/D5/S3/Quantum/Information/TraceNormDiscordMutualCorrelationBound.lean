@@ -19,6 +19,8 @@ open _root_.D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (p
 open _root_.D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
 open _root_.D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics (unitaryEvolution)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Quantum.Entanglement.LocalMarginalCorrelationBlindSpot
+  (local_marginal_correlation_blind_spot)
 open Matrix
 open scoped Kronecker ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 
@@ -56,11 +58,11 @@ private abbrev correlatedState : TwoQubit :=
   _root_.D5.S3.Quantum.Entanglement.LocalMarginalCorrelationBlindSpot.classicalCorrelatedDensity
 
 private theorem correlatedState_positive : correlatedState.PosSemidef :=
-  (_root_.D5.S3.Quantum.Entanglement.LocalMarginalCorrelationBlindSpot.local_marginal_correlation_blind_spot
+  (local_marginal_correlation_blind_spot
     2 2 (by omega) (by omega) (by omega)).2.2.2.2.2.2.2.2.1
 
 private theorem correlatedState_trace : trace correlatedState = 1 :=
-  (_root_.D5.S3.Quantum.Entanglement.LocalMarginalCorrelationBlindSpot.local_marginal_correlation_blind_spot
+  (local_marginal_correlation_blind_spot
     2 2 (by omega) (by omega) (by omega)).2.2.2.2.2.2.2.2.2.1
 
 private theorem discord_nonneg (ρ : TwoQubit) : 0 ≤ traceNormDiscord ρ := by
@@ -156,8 +158,10 @@ def source_registration : Registration arena (type_of% @spin_square) where
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@spin_square) (Realization signature) Unit Unit := {
-  unitName := `D5.S3.Quantum.Information.TraceNormDiscordMutualCorrelationBound.spin_square.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Information.TraceNormDiscordMutualCorrelationBound.SpinSquare.source_registration
+  unitName := .str
+    `D5.S3.Quantum.Information.TraceNormDiscordMutualCorrelationBound.spin_square
+    "__information_unit"
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -194,10 +198,13 @@ abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Qubit) (fun _ => Bool)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ X => @decide X.IsHermitian (Classical.propDecidable _)) (fun e => nomatch e)
+  realize signature
+    (fun _ _ X => @decide X.IsHermitian (Classical.propDecidable _)) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ X => @decide (¬ X.IsHermitian) (Classical.propDecidable _)) (fun e => nomatch e)
+  realize signature
+    (fun _ _ X => @decide (¬ X.IsHermitian) (Classical.propDecidable _))
+    (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
@@ -205,7 +212,7 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact (of_decide_eq_true (h 0)) (spin_hermitian 0)
+  exact (@of_decide_eq_true _ (Classical.propDecidable _) (h 0)) (spin_hermitian 0)
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -221,12 +228,12 @@ def source_registration : Registration arena (type_of% @spin_hermitian) where
   bridge := by
     constructor
     · intro h c
-      exact decide_eq_true (h c)
+      exact @decide_eq_true _ (Classical.propDecidable _) (h c)
     · intro h c
-      exact of_decide_eq_true (h c)
+      exact @of_decide_eq_true _ (Classical.propDecidable _) (h c)
   variation := ⟨by
     intro c
-    exact decide_eq_true (spin_hermitian c), rejected, rejected_law⟩
+    exact @decide_eq_true _ (Classical.propDecidable _) (spin_hermitian c), rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := dependence
@@ -234,8 +241,10 @@ def source_registration : Registration arena (type_of% @spin_hermitian) where
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@spin_hermitian) (Realization signature) Unit Unit := {
-  unitName := `D5.S3.Quantum.Information.TraceNormDiscordMutualCorrelationBound.spin_hermitian.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Information.TraceNormDiscordMutualCorrelationBound.SpinHermitian.source_registration
+  unitName := .str
+    `D5.S3.Quantum.Information.TraceNormDiscordMutualCorrelationBound.spin_hermitian
+    "__information_unit"
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -245,7 +254,8 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ X => @decide X.IsHermitian (Classical.propDecidable _)) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ _ X => @decide X.IsHermitian (Classical.propDecidable _)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -268,6 +278,76 @@ def registration :
 #print axioms registration
 
 end SpinHermitian
+
+namespace SpinAnticommutator
+open _root_.D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (spin)
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => Qubit) (fun _ => Qubit → Prop)
+def actual : Realization signature :=
+  realize signature (fun _ _ X Y => X = Y) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ X Y => X ≠ Y) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ c d : Fin 3 → ℝ,
+    R.readout () () (spin c * spin d + spin d * spin c)
+      ((2 * (c ⬝ᵥ d) : ℝ) • (1 : Qubit))
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h 0 0 (spin_anticommutator 0 0)
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  exact one_ne_zero (Eq.mp (congrFun h 0) rfl)
+def source_registration : Registration arena (type_of% @spin_anticommutator) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@spin_anticommutator, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@spin_anticommutator) (Realization signature) Unit Unit := {
+  unitName := .str
+    `D5.S3.Quantum.Information.TraceNormDiscordMutualCorrelationBound.spin_anticommutator
+    "__information_unit"
+  realizationName := ``source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ X Y => X = Y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Information.TraceNormDiscordMutualCorrelationBound
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+#print axioms source_registration
+#print axioms registration
+
+end SpinAnticommutator
 
 #print axioms source_registration
 #print axioms registration

@@ -159,7 +159,7 @@ def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@ampl_kron) (Realization signature) Unit Unit := {
   unitName := `D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence.ampl_kron.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence.AmplKron.source_registration
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩

@@ -54,7 +54,7 @@ def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@hermitian_spectral_sum) (Realization signature) Unit Unit := {
   unitName := `D5.S3.Quantum.Matrix.CartesianVariance.hermitian_spectral_sum.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Matrix.CartesianVariance.HermitianSpectralSum.source_registration
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
