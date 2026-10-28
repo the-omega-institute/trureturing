@@ -20,6 +20,7 @@ import Mathlib.Order.Interval.Finset.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
 namespace D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryOperator
@@ -604,6 +605,8 @@ private instance : CompleteSpace K :=
 private def covariance0 : G0 →L[ℝ] G0 :=
   (boundaryCovariance.comp G0.subtypeL).codRestrict G0 (fun u => covariance_centered u)
 
+private theorem covariance0_coe (u : G0) : (covariance0 u).val = boundaryCovariance u.val := rfl
+
 private theorem covariance0_compact : IsCompactOperator covariance0 := by
   exact (BiasedBoundaryFreeRootForm.actual_compact_covariance.2.1.comp_clm C.adjoint
     |>.comp_clm G0.subtypeL).codRestrict (fun u => covariance_centered u)
@@ -626,7 +629,7 @@ private theorem covariance0_basis :
     ∃ (w : Set G0) (b : HilbertBasis w ℝ G0) (mu : w → ℝ),
       (∀ i, 0 < mu i) ∧ (∀ i, covariance0 (b i) = mu i • b i) := by
   obtain ⟨w,b,mu,he⟩ :=
-    TraceClassSpectral.exists_setIndex_real_eigenbasis_of_compact_isSymmetric
+    TraceClassSpectral.exists_setIndex_real_eigenbasis_rclike
       covariance0_compact covariance0_symmetric
   refine ⟨w,b,mu,?_,he⟩
   intro i
@@ -707,7 +710,7 @@ private theorem ordered_covariance_indices {ι : Type} [Infinite ι]
     have hfin := (covariance_basis_finite_above b mu he eps heps).preimage
       e.injective.injOn
     have hco : ∀ᶠ n : ℕ in cofinite, ¬ eps ≤ mu (e n) :=
-      Filter.eventually_cofinite.mpr (by simpa only [not_not] using hfin)
+      Filter.eventually_cofinite.mpr (by simpa only [not_not,Set.preimage_setOf_eq] using hfin)
     change ∀ᶠ n : ℕ in atTop, mu (e n) < eps
     simpa only [Nat.cofinite_eq_atTop,not_le] using hco
 
@@ -749,11 +752,12 @@ private theorem covariance0_eigenspace_span (b : HilbertBasis ℕ ℝ G0) (mu : 
     have hu' : covariance0 u = a • u := Module.End.mem_eigenspace_iff.mp hu
     have hcoeff (i : ℕ) (hi : mu i ≠ a) : b.repr u i = 0 := by
       have hh := covariance0_symmetric (b i) u
+      change inner ℝ (covariance0 (b i)) u = inner ℝ (b i) (covariance0 u) at hh
       rw [he,hu',real_inner_smul_left,real_inner_smul_right] at hh
       rw [← b.repr_apply_apply] at hh
       exact (mul_eq_zero.mp (by nlinarith [hh] : (mu i-a)*b.repr u i = 0)).resolve_left
         (sub_ne_zero.mpr hi)
-    apply V.isClosed.mem_of_tendsto (b.hasSum_repr u)
+    apply V.closed_of_finiteDimensional.mem_of_tendsto (b.hasSum_repr u)
     apply Eventually.of_forall
     intro t
     apply Submodule.sum_mem
@@ -765,6 +769,7 @@ private theorem covariance0_eigenspace_span (b : HilbertBasis ℕ ℝ G0) (mu : 
   · apply Submodule.span_le.mpr
     rintro _ ⟨i,hi,rfl⟩
     apply Module.End.mem_eigenspace_iff.mpr
+    change covariance0 (b i) = a • b i
     rw [he,hi]
 
 private def covariance0EigenEquiv (a : ℝ) (ha : 0 < a) :
@@ -772,11 +777,12 @@ private def covariance0EigenEquiv (a : ℝ) (ha : 0 < a) :
   toFun u := ⟨u.val.val,by
     apply (inverse_eigenvalue a⁻¹ (inv_pos.mpr ha) u.val.val).mpr
     refine ⟨u.val.property,?_⟩
-    simpa only [inv_inv] using congrArg Subtype.val
-      (Module.End.mem_eigenspace_iff.mp u.property)⟩
+    have hh : covariance0 u.val = a • u.val := Module.End.mem_eigenspace_iff.mp u.property
+    simpa only [inv_inv,covariance0_coe,Submodule.coe_smul] using congrArg Subtype.val hh⟩
   invFun v := ⟨⟨v.val,((inverse_eigenvalue a⁻¹ (inv_pos.mpr ha) v.val).mp v.property).1⟩,by
     apply Module.End.mem_eigenspace_iff.mpr
     apply Subtype.ext
+    change boundaryCovariance v.val = a • v.val
     simpa only [inv_inv] using
       ((inverse_eigenvalue a⁻¹ (inv_pos.mpr ha) v.val).mp v.property).2⟩
   left_inv _ := by rfl
@@ -799,8 +805,12 @@ private theorem spectral_multiplicity (b : HilbertBasis ℕ ℝ G0) (mu : ℕ �
     · rintro ⟨i,rfl⟩; exact ⟨i.val,i.property,rfl⟩
     · rintro ⟨i,hi,rfl⟩; exact ⟨⟨i,hi⟩,rfl⟩
   rw [← (covariance0EigenEquiv a ha).finrank_eq,covariance0_eigenspace_span b mu he a ha,← hr]
-  rw [finrank_span_eq_card (b.orthonormal.linearIndependent.comp _ Subtype.val_injective)]
-  exact (Nat.card_eq_fintype_card).symm
+  calc
+    _ = Fintype.card S := by
+      simpa only [Function.comp_def] using
+        (finrank_span_eq_card (b.orthonormal.linearIndependent.comp
+          (fun i : S => i.val) Subtype.val_injective))
+    _ = Nat.card {i // mu i = a} := Nat.card_eq_fintype_card.symm
 
 private theorem paired_edge_basis (b : HilbertBasis ℕ ℝ G0) (mu : ℕ → ℝ)
     (hp : ∀ i, 0 < mu i) (he : ∀ i, covariance0 (b i) = mu i • b i) :
@@ -820,7 +830,7 @@ private theorem paired_edge_basis (b : HilbertBasis ℕ ℝ G0) (mu : ℕ → �
     change (Real.sqrt (mu i))⁻¹ • boundaryCovariance (b i).val = _
     rw [hev,smul_smul]
     congr 1
-    apply (inv_mul_eq_iff₀ (hs i)).mpr
+    apply (inv_mul_eq_iff_eq_mul₀ (hs i)).mpr
     exact (Real.sq_sqrt (hp i).le).symm.trans (pow_two _)
   have ho : Orthonormal ℝ z := by
     rw [orthonormal_iff_ite]
@@ -836,9 +846,8 @@ private theorem paired_edge_basis (b : HilbertBasis ℕ ℝ G0) (mu : ℕ → �
         rw [real_inner_self_eq_norm_sq,b.orthonormal.1]
         norm_num
       simp only [hnorm,ite_true,mul_one]
-      apply (inv_mul_eq_iff₀ (hs i)).mpr
-      rw [← mul_assoc,inv_mul_cancel₀ (hs i),one_mul]
-      exact (Real.sq_sqrt (hp i).le).symm.trans (pow_two _)
+      have hsq := Real.sq_sqrt (hp i).le
+      field_simp [hs i] <;> nlinarith [hsq]
     · have hz : inner ℝ (b i).val (b j).val = 0 := b.orthonormal.2 hij
       simp only [hz,mul_zero,ite_false,hij]
   have htotal : (Submodule.span ℝ (Set.range z))ᗮ = ⊥ := by
@@ -875,7 +884,7 @@ private theorem paired_edge_basis (b : HilbertBasis ℕ ℝ G0) (mu : ℕ → �
     mu i • ((Real.sqrt (mu i))⁻¹ • C.adjoint (b i).val)
   rw [smul_smul]
   congr 1
-  apply (eq_mul_inv_iff₀ (hs i)).mpr
+  apply (eq_mul_inv_iff_mul_eq₀ (hs i)).mpr
   exact (pow_two _).symm.trans (Real.sq_sqrt (hp i).le)
 
 /-- Complete ordered positive modes of the original free-root boundary operator.
@@ -902,12 +911,11 @@ theorem actual_positive_spectral_exhaustion :
   · exact tendsto_inv_nhdsGT_zero.comp
       (tendsto_nhdsWithin_iff.mpr ⟨ht,Eventually.of_forall hp⟩)
   · intro i
-    exact congrArg Subtype.val (he i)
+    simpa only [covariance0_coe,Submodule.coe_smul] using congrArg Subtype.val (he i)
   · intro i
     apply (inverse_eigenvalue (mu i)⁻¹ (inv_pos.mpr (hp i)) (b i).val).mpr
-    exact ⟨(b i).property,by simpa only [inv_inv,covariance0,ContinuousLinearMap.codRestrict_apply,
-      ContinuousLinearMap.comp_apply,Submodule.subtypeL_apply,Submodule.coe_smul] using
-        congrArg Subtype.val (he i)⟩
+    refine ⟨(b i).property,?_⟩
+    simpa only [inv_inv,covariance0_coe,Submodule.coe_smul] using congrArg Subtype.val (he i)
   · intro a ha
     exact (actual_covariance_eigenspaces a ha).2.2.2.1
   · exact covariance_basis_finite_above b mu he

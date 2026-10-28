@@ -33,7 +33,7 @@ variable {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [Complete
 /-- Assemble a complete real eigenbasis of the actual compact symmetric operator.
 Every eigenspace is a fiber, including eigenvalue zero, over either real or complex
 scalars. The resulting carrier is a subset of the original Hilbert space. -/
-theorem exists_setIndex_real_eigenbasis_of_compact_isSymmetric
+theorem exists_setIndex_real_eigenbasis_rclike
     {𝕜 : Type} [RCLike 𝕜] {E : Type u} [NormedAddCommGroup E]
     [InnerProductSpace 𝕜 E] [CompleteSpace E] {T : E →L[𝕜] E} (hTc : IsCompactOperator T) (hTs : T.IsSymmetric) :
     ∃ (w : Set E) (b : HilbertBasis w 𝕜 E) (s : w → ℝ),
@@ -124,6 +124,12 @@ theorem exists_setIndex_real_eigenbasis_of_compact_isSymmetric
   intro i
   have hCE : C i = B (e.symm i) := (hC i).trans (heback i).symm
   simpa only [hCE, sW] using heigenReal (e.symm i)
+
+private theorem exists_setIndex_real_eigenbasis_of_compact_isSymmetric
+    {T : H →L[ℂ] H} (hTc : IsCompactOperator T) (hTs : T.IsSymmetric) :
+    ∃ (w : Set H) (b : HilbertBasis w ℂ H) (s : w → ℝ),
+      ∀ i, T (b i) = (s i : ℂ) • b i :=
+  exists_setIndex_real_eigenbasis_rclike hTc hTs
 
 /-- Nonnegativity uses the genuine nonnegative quadratic form and a nonzero eigenvector;
 it never invokes the impossible strict-positive-at-zero API. -/

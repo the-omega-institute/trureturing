@@ -7,7 +7,7 @@ internal sealed class SpectralDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Complete spectral representation of the original positive trace-class operator.",
         H("Full spectrum and faithful finite or Nat reference bases"), Blocks(
-            Item("exists_setIndex_real_eigenbasis_of_compact_isSymmetric", "Compact symmetric eigenbasis over real or complex scalars", CompactBasis(),
+            Item("exists_setIndex_real_eigenbasis_rclike", "Compact symmetric eigenbasis over real or complex scalars", CompactBasis(),
                 "For either real or complex scalars, a compact symmetric operator on a complete Hilbert space has a full Hilbert basis indexed by a subset of that original space, with real eigenvalues. Each complete eigenspace contributes a Hilbert basis, including the zero eigenspace. Orthogonality of distinct eigenspaces and the compact symmetric spectral theorem prove completeness. No positivity, trace-class, separability or finite-dimensional hypothesis is imposed. The trace-class results below use the complex specialization."),
             Item("exists_nonneg_trace_spectral_data", "Full nonnegative trace spectrum", General(),
                 "H is an arbitrary complete complex Hilbert space, T is its actual bounded complex-linear operator, and trace is the analytic trace with its genuine IsTraceClass proof. The conclusion constructs w as a set of vectors in H, a full Hilbert basis b indexed by w, and real eigenvalues s. Every eigenspace is retained, including zero. The real eigenvalues are summable, have sum Re(trace T), and their complex casts have sum trace T. For each x, the weighted terms are (b.repr x i * (s i : Complex)) smul b i and have actual sum T(x). No basis, compactness, spectral carrier, separability or countability assumption is an input."),
@@ -52,12 +52,14 @@ internal sealed class SpectralDocument : IScribeDocumentDefinition
     private static Formula CompactBasis()
     {
         Formula k=F.Id("k"), e=F.Id("E");
+        Formula eigen=All("i", W,
+            Equal(At(T, At(B,I)), Call("smul", Call("scalarCast", k, At(S,I)), At(B,I))));
+        Formula basis=Exists("w", Call("Set", e),
+            Exists("b", Call("HilbertBasis", W, k, e),
+                Exists("s", Call("Function", W, Call("Real")), eigen)));
         return All("k", Call("RCLikeScalar"), All("E", Call("CompleteHilbertSpace", k),
             All("T", Call("ContinuousLinearEnd", k, e), Imp(
-                And(Call("IsCompactOperator", T), Call("IsSymmetric", T)),
-                Exists("w", Call("Set", e), Exists("b", Call("HilbertBasis", W, k, e),
-                    Exists("s", Call("Function", W, Call("Real")), All("i", W,
-                        Equal(At(T, At(B,I)), Call("smul", Call("scalarCast", k, At(S,I)), At(B,I))))))))));
+                And(Call("IsCompactOperator", T), Call("IsSymmetric", T)), basis))));
     }
     private static Formula General() => Operator(Exists("w", Call("Set", Hh), Basis(W, Spectrum(W, false))), false);
     private static Formula Faithful() => Operator(Exists("w", Call("Set", Hh), Basis(W, And(Spectrum(W, true), Call("Countable", W)))), true);

@@ -358,8 +358,9 @@ def registration :
     owner := `D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryOperator,
     definition := none, coordinates := #[],
     readouts := #[{
-      path := #["body","body","body","arg","arg","arg","arg","arg","arg","arg","fn"],
-      stateBinder := 0, functionOperand := false, stateOperand := none,
+      path := #["arg","body","arg","body","arg","body",
+        "arg","arg","arg","arg","arg","arg","fn","arg","body"],
+      stateBinder := 0, functionOperand := false, stateOperand := some #["arg"],
       booleanPredicate := true }] },
   continuation := .unknown, familyRecord := none, options := #[] }
 end Exhaustion

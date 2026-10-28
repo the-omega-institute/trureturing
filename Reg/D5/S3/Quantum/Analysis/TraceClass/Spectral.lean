@@ -332,11 +332,15 @@ structure Carrier where
   [normed : NormedAddCommGroup E]
   [inner : InnerProductSpace scalar E]
   [complete : CompleteSpace E]
-attribute [instance] Carrier.rclike Carrier.normed Carrier.inner Carrier.complete
+attribute [instance] Carrier.normed Carrier.inner Carrier.complete
+
+abbrev Operator (p : Carrier.{u}) :=
+  letI := p.rclike
+  p.E →L[p.scalar] p.E
 
 abbrev signature : Signature where
   Params := Carrier.{u}
-  State p := p.E →L[p.scalar] p.E
+  State p := Operator p
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -344,7 +348,8 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def predicate (p : Carrier.{u}) (T : p.E →L[p.scalar] p.E) : Prop :=
+def predicate (p : Carrier.{u}) (T : Operator p) : Prop :=
+  letI := p.rclike
   ∃ (w : Set p.E) (b : HilbertBasis w p.scalar p.E) (s : w → ℝ),
     ∀ i, T (b i) = (s i : p.scalar) • b i
 
@@ -353,12 +358,15 @@ def rejected := realize signature.{u} (fun _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{u}
-  Law R := ∀ (p : Carrier.{u}) (T : p.E →L[p.scalar] p.E),
+  Law R := ∀ (p : Carrier.{u}) (T : Operator p),
+    letI := p.rclike
     IsCompactOperator T → T.IsSymmetric → R.readout () p T
 
 private theorem actual_law : arena.{u}.Law actual := by
-  intro p T hc hs
-  exact exists_setIndex_real_eigenbasis_of_compact_isSymmetric hc hs
+  intro p T
+  letI := p.rclike
+  intro hc hs
+  exact exists_setIndex_real_eigenbasis_rclike hc hs
 
 abbrev sample : Carrier.{u} := ⟨ℂ,K⟩
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
@@ -381,17 +389,18 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
     have him := congrArg Complex.im heq
     simp at him⟩
   have hz (x : K) : x = 0 := by
-    have hh := b.hasSum_repr x
-    simpa only [hasSum_empty] using hh
+    exact (b.hasSum_repr x).unique hasSum_empty
   have hf := congrArg (fun v : K => v ⟨()⟩) (hz (WithLp.toLp 2 (fun _ => 1)))
   simpa using hf
 
 def familyRegistration : Registration arena
-    (type_of% (@exists_setIndex_real_eigenbasis_of_compact_isSymmetric.{u})) where
+    (type_of% (@exists_setIndex_real_eigenbasis_rclike.{u})) where
   actual := actual
   bridge := by
     constructor
-    · intro h p T hc hs
+    · intro h p T
+      letI := p.rclike
+      intro hc hs
       exact h hc hs
     · intro h scalar _ E _ _ _ T hc hs
       exact h ⟨scalar,E⟩ T hc hs
@@ -405,7 +414,7 @@ def familyRegistration : Registration arena
   dependence := dependence
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@TraceClassSpectral.exists_setIndex_real_eigenbasis_of_compact_isSymmetric.{u})
+    (@TraceClassSpectral.exists_setIndex_real_eigenbasis_rclike.{u})
     (type_of% (realize signature.{u} (fun _ p T => predicate p T) (fun e => nomatch e))) Unit Unit where
   unitName := `Reg.D5.S3.Quantum.Analysis.TraceClass.Spectral.compactBasisUnit
   realizationName := `Reg.D5.S3.Quantum.Analysis.TraceClass.Spectral.CompactBasis.familyRegistration
@@ -429,7 +438,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[]
     readouts := #[{
       path := #["body","body","body","body","body","body","body","body","body"]
-      stateBinder := 7
+      stateBinder := 6
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
