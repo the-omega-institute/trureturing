@@ -33,12 +33,12 @@ def flagRejected : Realization flagSignature.{u} :=
 
 def flagArena : Arena where
   signature := flagSignature.{u}
-  Law R := ∀ (V : Type u) (inst : DecidableEq V) (K : Set (Finset V)),
+  Law R := ∀ {V : Type u} [inst : DecidableEq V] {K : Set (Finset V)},
     IsLowerSet K → (@MajorityClosed V inst K ↔ R.readout () V K)
 
 private theorem flagRejected_law : ¬ flagArena.{u}.Law flagRejected.{u} := by
   intro h
-  have ht := h (ULift.{u} Unit) inferInstance Set.univ (fun _ _ _ _ => trivial)
+  have ht := @h (ULift.{u} Unit) inferInstance Set.univ (fun _ _ _ _ => trivial)
   exact ht.mp (by intro A hA B hB C hC; trivial)
 
 private theorem triangle_not_flag :
@@ -86,13 +86,13 @@ def closureRejected : Realization closureSignature.{u} :=
 
 def closureArena : Arena where
   signature := closureSignature.{u}
-  Law R := ∀ (V : Type u) (inst : DecidableEq V) (K : Set (Finset V)),
+  Law R := ∀ {V : Type u} [inst : DecidableEq V] {K : Set (Finset V)},
     IsLowerSet K → IsLeast {L : Set (Finset V) | K ⊆ L ∧ @MajorityClosed V inst L}
       (R.readout () V K)
 
 private theorem closureRejected_law : ¬ closureArena.{u}.Law closureRejected.{u} := by
   intro h
-  have ht := h (ULift.{u} Unit) inferInstance Set.univ (fun _ _ _ _ => trivial)
+  have ht := @h (ULift.{u} Unit) inferInstance Set.univ (fun _ _ _ _ => trivial)
   exact ht.1.1 (show (∅ : Finset (ULift.{u} Unit)) ∈ Set.univ from trivial)
 
 def closureFamily : Registration closureArena.{u} (type_of% (@pair_closure_is_least.{u})) where
