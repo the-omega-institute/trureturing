@@ -138,7 +138,10 @@ internal sealed class QutritChannelUnitaryExtremeDecompositionDocument : IScribe
                         + "nonnegative weights are 1/4 and 3/4, and their sum is one. "
                         + "The phase identity identifies the transported channel with Φα,β, "
                         + "giving the stated equality on every ρ."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("haagerup-musat-ruskai-2021-qutrit-channel-unitary-extreme-decomposition"),
+                    ResolutionKind.Proved)))));
 
     private static Formula KrausFormula()
     {
