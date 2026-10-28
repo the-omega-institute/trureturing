@@ -55,13 +55,14 @@ internal sealed class HughesIterationDepthNoGapDocument : IScribeDocumentDefinit
                     + "At closedSourceZero this is extensionally equal to the published spectrum.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("result", "No gaps in the arbitrary-language spectrum", ResultFormula(),
-                "For every finite alphabet and arbitrary languages A and B, any attained depth r "
+                "For every alphabet and arbitrary languages A and B, any attained depth r "
                     + "forces every q at most r to be attained. From a minimum-depth successor "
                     + "word, the proof extracts its predecessor. If that predecessor appeared too "
                     + "early at degree j, both histories lift to max(k,j) by padding with empty "
                     + "factor pairs, producing the original word too early. Induction then descends "
                     + "through every smaller depth. The argument includes empty languages, "
-                    + "epsilon-only languages, and empty alphabets.", DescribeRole.Theorem,
+                    + "epsilon-only languages, and empty alphabets. No finiteness, countability, "
+                    + "or decidable equality assumption on the alphabet is needed.", DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("hughes-iteration-depth-no-gap"),
@@ -186,9 +187,9 @@ internal sealed class HughesIterationDepthNoGapDocument : IScribeDocumentDefinit
         Formula r = F.Id("r"), q = F.Id("q");
         Formula spectrum = Call("iterationDepthSpectrumAt", F.Id("closedSourceZero"), source, basis);
         Formula closure = All("q", Naturals(), Implies(AtMost(q, r), Member(q, spectrum)));
-        return Disp(All("alpha", Type(), Implies(Call("Finite", alpha),
+        return Disp(All("alpha", Type(),
             All("A", Call("Language", alpha), All("B", Call("Language", alpha),
-                All("r", Naturals(), Implies(Member(r, spectrum), closure)))))));
+                All("r", Naturals(), Implies(Member(r, spectrum), closure))))));
     }
 
     private static Formula Type() => Seq(Operatorname, Grp(F.Id("Type")));
