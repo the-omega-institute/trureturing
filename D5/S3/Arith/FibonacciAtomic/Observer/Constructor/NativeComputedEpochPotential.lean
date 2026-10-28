@@ -194,122 +194,162 @@ private theorem graph_shiftLegal {n k m : Nat} (I : EpochInput n k m)
   intro o ho
   exact graph_occurrence_bound I hgraph he ho
 
-private theorem graph_potential_occurrence {n k m : Nat} (I : EpochInput n k m)
-    {s : Fin m → Nat}
-    (headBound : ∀ i, I.headPower i ≤ s i)
-    (hgraph : IsPotential (occurrenceGraph I) (occurrenceWeight I)
-      (fun i => (s i : Int))) : Potential I s := by
-  intro i E he
-  refine ⟨headBound i, ?_⟩
-  exact graph_shiftLegal I hgraph i E he
+/-! The zero-round value is exactly the source lower bound: head power at
+an equation head and zero at an undefined state. Each further round takes
+the maximum over one more incoming occurrence edge in the reversed graph. -/
+private def lowerBound {n k m : Nat} (I : EpochInput n k m) (i : Fin m) : Int :=
+  match I.base.equations i with
+  | some _ => I.headPower i
+  | none => 0
 
-private theorem floor_graph {n k m : Nat} (I : EpochInput n k m)
-    {φ : Fin m → ℝ}
-    (hφ : IsPotential (occurrenceGraph I)
-      (fun e => (occurrenceWeight I e : ℝ)) φ) :
-    IsPotential (occurrenceGraph I) (occurrenceWeight I)
-      (fun i => (⌊φ i⌋ : Int)) := by
+private def relaxation {n k m : Nat} (I : EpochInput n k m) : Nat → Fin m → Int
+  | 0, i => lowerBound I i
+  | t + 1, i =>
+      ((List.finRange (occurrenceList I).length).map fun e =>
+        if (occurrenceGraph I).target e = i then
+          relaxation I t ((occurrenceGraph I).source e) + occurrenceWeight I e
+        else lowerBound I i).foldr max (lowerBound I i)
+
+/-- A terminating integer tuple computed solely from the input equations and
+head powers, using exactly `m` finite max-plus relaxation rounds. -/
+def computedSignedPotential {n k m : Nat} (I : EpochInput n k m) : Fin m → Int :=
+  relaxation I m
+
+/-- The natural tuple used for native functionalization. No potential witness,
+parameter assignment, prefix depth or real-number oracle is an input. -/
+def computedPotential {n k m : Nat} (I : EpochInput n k m) (i : Fin m) : Nat :=
+  (computedSignedPotential I i).toNat
+
+private theorem base_le_fold_max (l : List Int) (b : Int) : b ≤ l.foldr max b := by
+  induction l with
+  | nil => exact le_rfl
+  | cons a l ih => exact ih.trans (le_max_right _ _)
+
+private theorem fold_max_property {P : Int → Prop} (l : List Int) (b : Int)
+    (hb : P b) (hl : ∀ a ∈ l, P a) : P (l.foldr max b) := by
+  induction l with
+  | nil => exact hb
+  | cons a l ih =>
+      simp only [List.foldr_cons]
+      rcases le_total a (l.foldr max b) with h | h
+      · rw [max_eq_right h]
+        exact ih (fun x hx => hl x (List.mem_cons_of_mem a hx))
+      · rw [max_eq_left h]
+        exact hl a (List.mem_cons_self)
+
+private theorem lower_le_relaxation {n k m : Nat} (I : EpochInput n k m)
+    (t : Nat) (i : Fin m) : lowerBound I i ≤ relaxation I t i := by
+  cases t with
+  | zero => exact le_rfl
+  | succ t => exact base_le_fold_max _ _
+
+private theorem relaxation_edge {n k m : Nat} (I : EpochInput n k m)
+    (t : Nat) (e : Fin (occurrenceList I).length) :
+    relaxation I t ((occurrenceGraph I).source e) + occurrenceWeight I e ≤
+      relaxation I (t + 1) ((occurrenceGraph I).target e) := by
+  apply List.le_max_of_le' (lowerBound I ((occurrenceGraph I).target e))
+  · exact List.mem_map.mpr ⟨e, List.mem_finRange e, rfl⟩
+  · simp only [ite_true]
+    exact le_rfl
+
+private theorem walk_le_relaxation {n k m : Nat} (I : EpochInput n k m)
+    (t : Nat) {start finish : Fin m} (walk : (occurrenceGraph I).Walk start finish)
+    (hlen : walk.length ≤ t) :
+    walkWeight (occurrenceWeight I) walk + lowerBound I start ≤ relaxation I t finish := by
+  induction t generalizing start finish with
+  | zero =>
+      cases walk with
+      | nil => simp [walkWeight, EdgeGraph.Walk.edges, relaxation]
+      | concat walk edge legal => simp at hlen
+  | succ t ih =>
+      cases walk with
+      | nil => simpa [walkWeight, EdgeGraph.Walk.edges] using lower_le_relaxation I (t + 1) start
+      | @concat finish walk edge legal =>
+          have hprev := ih walk (by simpa using Nat.le_of_succ_le_succ hlen)
+          have hedge := relaxation_edge I t edge
+          rw [legal] at hedge
+          rw [walkWeight_concat]
+          omega
+
+private theorem relaxation_attained {n k m : Nat} (I : EpochInput n k m)
+    (t : Nat) (i : Fin m) :
+    ∃ (start : Fin m) (walk : (occurrenceGraph I).Walk start i),
+      walk.length ≤ t ∧ relaxation I t i = walkWeight (occurrenceWeight I) walk + lowerBound I start := by
+  induction t generalizing i with
+  | zero => exact ⟨i, .nil, le_rfl, by simp [relaxation, walkWeight, EdgeGraph.Walk.edges]⟩
+  | succ t ih =>
+      apply fold_max_property
+        (P := fun z => ∃ (start : Fin m) (walk : (occurrenceGraph I).Walk start i),
+          walk.length ≤ t + 1 ∧ z = walkWeight (occurrenceWeight I) walk + lowerBound I start)
+      · exact ⟨i, .nil, Nat.zero_le _, by simp [walkWeight, EdgeGraph.Walk.edges]⟩
+      · intro z hz
+        obtain ⟨e, _, rfl⟩ := List.mem_map.mp hz
+        by_cases he : (occurrenceGraph I).target e = i
+        · simp only [if_pos he]
+          obtain ⟨start, walk, hlen, hvalue⟩ := ih ((occurrenceGraph I).source e)
+          refine ⟨start, (walk.concat e rfl).castFinish he, ?_, ?_⟩
+          · simpa using Nat.add_le_add_right hlen 1
+          · rw [walkWeight_castFinish, walkWeight_concat, hvalue]
+            omega
+        · simp only [if_neg he]
+          exact ⟨i, .nil, Nat.zero_le _, by simp [walkWeight, EdgeGraph.Walk.edges]⟩
+
+private theorem computed_graph {n k m : Nat} (I : EpochInput n k m)
+    (hcycle : CycleCondition I) :
+    IsPotential (occurrenceGraph I) (occurrenceWeight I) (computedSignedPotential I) := by
   intro e
-  have h := hφ e
-  have hf := Int.floor_mono h
-  simpa only [Int.floor_add_intCast, Int.cast_zero, add_zero] using hf
-
-noncomputable def floorDeficit {n k m : Nat} (I : EpochInput n k m) (φ : Fin m → ℝ)
-    (i : Fin m) : Int := (I.headPower i : Int) - ⌊φ i⌋
-
-noncomputable def floorOffset {n k m : Nat} (I : EpochInput n k m) (φ : Fin m → ℝ) : Int :=
-  ((List.finRange _).map (floorDeficit I φ)).foldr max 0
-
-noncomputable def computedSignedPotential {n k m : Nat} (I : EpochInput n k m) (φ : Fin m → ℝ)
-    (i : Fin m) : Int := ⌊φ i⌋ + floorOffset I φ
-
-noncomputable def computedPotential {n k m : Nat} (I : EpochInput n k m) (φ : Fin m → ℝ)
-    (i : Fin m) : Nat := (computedSignedPotential I φ i).toNat
-
-private theorem floorOffset_bound {n k m : Nat} (I : EpochInput n k m) (φ : Fin m → ℝ)
-    (i : Fin m) : floorDeficit I φ i ≤ floorOffset I φ := by
-  have mem : floorDeficit I φ i ∈ (List.finRange m).map (floorDeficit I φ) :=
-    List.mem_map.mpr ⟨i, by simp, rfl⟩
-  exact List.le_max_of_le' 0 mem le_rfl
-
-private theorem computed_nonneg {n k m : Nat} (I : EpochInput n k m) (φ : Fin m → ℝ)
-    (i : Fin m) : 0 ≤ computedSignedPotential I φ i := by
-  have h := floorOffset_bound I φ i
-  unfold computedSignedPotential floorDeficit at *
+  obtain ⟨start, walk, _, hvalue⟩ := relaxation_attained I m ((occurrenceGraph I).source e)
+  obtain ⟨pruned, hnodup, hweight⟩ :=
+    exists_nodup_visited_walkWeight_le hcycle (walk.concat e rfl).length (walk.concat e rfl) le_rfl
+  have hcard : pruned.length + 1 ≤ m := by
+    simpa only [EdgeGraph.Walk.length_visited, Fintype.card_fin] using hnodup.length_le_card
+  have hbound := walk_le_relaxation I m pruned (by omega)
+  rw [walkWeight_concat] at hweight
+  change relaxation I m ((occurrenceGraph I).source e) + occurrenceWeight I e ≤
+    relaxation I m ((occurrenceGraph I).target e)
   omega
 
-private theorem computed_head {n k m : Nat} (I : EpochInput n k m) (φ : Fin m → ℝ)
-    (i : Fin m) : I.headPower i ≤ computedPotential I φ i := by
-  have hdef := floorOffset_bound I φ i
-  have hn := computed_nonneg I φ i
-  have hcast : (computedPotential I φ i : Int) = computedSignedPotential I φ i := by
-    simpa [computedPotential] using Int.toNat_of_nonneg hn
-  unfold floorDeficit at hdef
-  have hInt : (I.headPower i : Int) ≤ computedSignedPotential I φ i := by
-    unfold computedSignedPotential
-    omega
-  have hInt' : (I.headPower i : Int) ≤ (computedPotential I φ i : Int) := by
-    simpa [hcast] using hInt
-  exact_mod_cast hInt'
+private theorem computed_nonneg {n k m : Nat} (I : EpochInput n k m)
+    (i : Fin m) : 0 ≤ computedSignedPotential I i := by
+  have h := lower_le_relaxation I m i
+  have hl : 0 ≤ lowerBound I i := by
+    unfold lowerBound
+    cases I.base.equations i <;> simp
+  exact hl.trans h
 
-private theorem computed_graph {n k m : Nat} (I : EpochInput n k m) (φ : Fin m → ℝ)
-    (hφ : IsPotential (occurrenceGraph I)
-      (fun e => (occurrenceWeight I e : ℝ)) φ) :
-    IsPotential (occurrenceGraph I) (occurrenceWeight I)
-      (fun i => ((computedPotential I φ i : Nat) : Int)) := by
-  have hraw := floor_graph I hφ
+private theorem computed_valid {n k m : Nat} (I : EpochInput n k m)
+    (hcycle : CycleCondition I) : Potential I (computedPotential I) := by
+  have hcast (i : Fin m) : (computedPotential I i : Int) = computedSignedPotential I i :=
+    Int.toNat_of_nonneg (computed_nonneg I i)
+  have hgraph := computed_graph I hcycle
+  intro i E he
+  have hhead := lower_le_relaxation I m i
+  have hhead' : I.headPower i ≤ computedPotential I i := by
+    rw [← hcast] at hhead
+    simpa [lowerBound, he] using hhead
+  refine ⟨hhead', graph_shiftLegal I ?_ i E he⟩
   intro e
-  have hbase := hraw e
-  have hs : ∀ i, (⌊φ i⌋ : Int) + floorOffset I φ = computedSignedPotential I φ i :=
-    fun i => rfl
-  have hn : ∀ i, 0 ≤ computedSignedPotential I φ i := computed_nonneg I φ
-  have hcast : ∀ i, ((computedPotential I φ i : Nat) : Int) = computedSignedPotential I φ i := by
-    intro i
-    simpa [computedPotential] using Int.toNat_of_nonneg (hn i)
-  change ((computedPotential I φ ((occurrenceGraph I).source e) : Int) + occurrenceWeight I e ≤
-    (computedPotential I φ ((occurrenceGraph I).target e) : Int))
-  rw [hcast, hcast]
-  have := add_le_add_right hbase (floorOffset I φ)
-  simpa [computedSignedPotential, add_assoc, add_left_comm, add_comm] using this
+  simpa only [hcast] using hgraph e
 
-private theorem walkWeight_cast {n k m : Nat} (I : EpochInput n k m)
-    {start finish : Fin m} (walk : (occurrenceGraph I).Walk start finish) :
-    walkWeight (fun e => (occurrenceWeight I e : ℝ)) walk =
-      ((walkWeight (𝕜 := Int) (occurrenceWeight I) walk : Int) : ℝ) := by
-  induction walk with
-  | nil => simp [walkWeight]
-  | concat walk edge legal ih =>
-      simp only [walkWeight_concat, ih, Int.cast_add]
+/-- The executable tuple together with its correctness proof. The cycle proof
+is erased at runtime; the tuple itself is `computedPotential I`. -/
+def constructPotential {n k m : Nat} (I : EpochInput n k m) (hcycle : CycleCondition I) :
+    {s : Fin m → Nat // Potential I s} :=
+  ⟨computedPotential I, computed_valid I hcycle⟩
 
 theorem cycleCondition_iff_potential {n k m : Nat} (I : EpochInput n k m) :
     CycleCondition I ↔ ∃ s : Fin m → Nat, Potential I s := by
   constructor
   · intro hcycle
-    have hreal := (Maths.AdditiveTransport.worstDirectedResidualAtMost_iff_closedWalk_le
-      (occurrenceGraph I) (fun e => (occurrenceWeight I e : ℝ)) 0).mpr (by
-        intro vertex cycle
-        have hc : walkWeight (fun e => (occurrenceWeight I e : ℝ)) cycle ≤ 0 := by
-          rw [walkWeight_cast I cycle]
-          exact_mod_cast hcycle vertex cycle
-        simpa using hc)
-    rcases hreal with ⟨φ, hφ⟩
-    have hφ' : IsPotential (occurrenceGraph I)
-        (fun e => (occurrenceWeight I e : ℝ)) φ := by
-      intro e
-      have h := hφ e
-      simp only [MaxPlusPotential.defect] at h
-      linarith
-    refine ⟨computedPotential I φ, ?_⟩
-    exact graph_potential_occurrence I (fun i => computed_head I φ i) (computed_graph I φ hφ')
+    exact ⟨(constructPotential I hcycle).val, (constructPotential I hcycle).property⟩
   · rintro ⟨s, hs⟩
     have hpot := potential_graph I hs
     intro vertex cycle
     have h := hpot.walkWeight_add_le cycle
     omega
 
-/-! This is the source-facing consumer: the cycle criterion supplies the
-potential used by the already proved exact equation/filter/reconstruction
-correspondence. -/
+/-! This is the source-facing consumer: the finite computed tuple is the
+potential used by the exact equation/filter/reconstruction correspondence. -/
 theorem cycleCondition_gives_epoch_transport {n k m : Nat} (I : EpochInput n k m)
     (hcycle : CycleCondition I) :
     ∃ s : Fin m → Nat, Potential I s ∧
@@ -317,9 +357,9 @@ theorem cycleCondition_gives_epoch_transport {n k m : Nat} (I : EpochInput n k m
         (Legal (functionalInput I s) p ∧ SourceSatisfies (functionalInput I s) p w ∧
           SourcePasses (functionalInput I s) p w) ↔
         ∃! v, OriginalAdmissible I p v ∧ imageValues s v = w := by
-  obtain ⟨s, hs⟩ := cycleCondition_iff_potential I |>.mp hcycle
-  refine ⟨s, hs, ?_⟩
+  let result := constructPotential I hcycle
+  refine ⟨result.val, result.property, ?_⟩
   intro p w
-  exact epoch_solution_correspondence I s hs p w
+  exact epoch_solution_correspondence I result.val result.property p w
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativeComputedEpochPotential
