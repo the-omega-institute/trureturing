@@ -1,5 +1,5 @@
 /- GID: D5/S3/Observer/CubicGain/JJFiveFailure
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Observer/CubicGain/JJFiveFailure
    mirror-E: none(waiver:exact-complete-world-five-read-obstruction)
    anchors: []
@@ -209,6 +209,15 @@ def world (u : List Bool) (e : Bool) : World 3 :=
     ⟨bSource e, bSource_legal e, bCoeff, bCoeff_ne, 252 / 5⟩
   else ⟨aSource e, aSource_legal e, aCoeff, aCoeff_ne, 1344 / 25⟩
 
+private theorem world_degree (u : List Bool) (e : Bool) :
+    (gain 3 (world u e).coeff).natDegree = 3 := by
+  have hd (c : Coeff 3) : (gain 3 c).natDegree ≤ 3 := by
+    have hh := Polynomial.ofFn_natDegree_lt (by omega : 1 ≤ 4) c
+    exact Nat.le_of_lt_succ hh
+  apply Polynomial.natDegree_eq_of_le_of_coeff_ne_zero (hd _)
+  unfold world
+  split_ifs <;> norm_num [gain, cCoeff, aCoeff, bCoeff]
+
 private theorem world_distinct (u : List Bool) : world u false ≠ world u true := by
   intro h
   have hs := congrArg World.source h
@@ -233,7 +242,7 @@ def response (v : List Bool) : ℝ :=
     else 252 / 5
   else if v.length = 2 then 25207 / 500 else 1344 / 25
 
-private def fullResponse (v : List Bool) : ℝ :=
+def fullResponse (v : List Bool) : ℝ :=
   if v.length = 0 then 0 else if v.length = 1 then 24 else response (v.drop 2)
 
 private theorem acquisition_zero : acquisition [] = 1 := by
@@ -303,7 +312,7 @@ private theorem world_reads (u : List Bool) (hu : u.length = 5) (e : Bool) (i : 
       have hm := (a_traces e).2.1
       have hmm := (a_traces e).2.2
       have htr := (aSource_legal e).2.2
-      fin_cases i <;>
+      fin_cases i <;> norm_num at hcs has hbs <;>
         norm_num [readAt, world, terminalWord, fullResponse, response,
           acquisition_zero, acquisition_j, acquisition_jj, acquisition_third,
           acquisition_fourth, hj, hm, hmm, htr, hcs, has, hbs,
@@ -313,7 +322,7 @@ private theorem world_reads (u : List Bool) (hu : u.length = 5) (e : Bool) (i : 
       have hjm := (b_traces e).2.2.1
       have hmm := (b_traces e).2.2.2
       have htr := (bSource_legal e).2.2
-      cases c <;> fin_cases i <;>
+      cases c <;> fin_cases i <;> norm_num at hcs has hbs <;>
         norm_num [readAt, world, terminalWord, fullResponse, response,
           acquisition_zero, acquisition_j, acquisition_jj, acquisition_third,
           acquisition_fourth, acquisition_fifth, hj, hm, hjm, hmm, htr,
@@ -327,12 +336,13 @@ private theorem world_reads (u : List Bool) (hu : u.length = 5) (e : Bool) (i : 
       cases e
       · rfl
       · exact (qSource_collision _).symm
-    fin_cases i <;>
+    simp only [terminalWord, List.cons_append, List.nil_append] at hj htr hlast
+    fin_cases i <;> norm_num at hcs has hbs <;>
       norm_num [readAt, world, terminalWord, fullResponse, response,
         acquisition_zero, acquisition_j, acquisition_jj, acquisition_third,
-        hj, htr, hlast, hcs, has, hbs]
+        hj, htr, hlast, hcs, has, hbs] <;> ring
 
-private def suffixes : ℕ → Finset (List Bool)
+def suffixes : ℕ → Finset (List Bool)
   | 0 => {[]}
   | n + 1 => (suffixes n).image (false :: ·) ∪ (suffixes n).image (true :: ·)
 
@@ -409,9 +419,37 @@ private theorem support_loses (n : ℕ) (v : List Bool) (hlen : v.length + n = 5
 /-- The original initial-inclusive history. -/
 def jjHistory : History [true, true] := ![0, 24, 192 / 5]
 
+/-- All 64 labelled slots are retained, including repeated complete worlds. -/
+def labels : Finset (List Bool × Bool) := (suffixes 5).product Finset.univ
+
+private theorem label_counts :
+    labels.card = 64 ∧ (suffixes 5).card = 32 ∧
+    (labels.filter (fun l => l.1.getD 0 false = true)).card = 32 ∧
+    (labels.filter (fun l => l.1.getD 0 false = false ∧ l.1.getD 1 false = false)).card = 16 ∧
+    (labels.filter (fun l => l.1.getD 0 false = false ∧ l.1.getD 1 false = true)).card = 16 := by
+  decide
+
 /-- Cross-leaf repetitions are retained as labelled slots, then deduplicated
 only when taking the actual finite family of complete worlds. -/
 def family : Finset (World 3) := support [] 5
+
+private theorem family_image : family = labels.image (fun l => world l.1 l.2) := by
+  ext W
+  constructor
+  · intro h
+    obtain ⟨u, hu, hWu⟩ := Finset.mem_biUnion.mp h
+    simp only [List.nil_append, Finset.mem_insert, Finset.mem_singleton] at hWu
+    rcases hWu with h | h
+    · exact Finset.mem_image.mpr ⟨(u, false), Finset.mem_product.mpr
+        ⟨hu, Finset.mem_univ _⟩, h.symm⟩
+    · exact Finset.mem_image.mpr ⟨(u, true), Finset.mem_product.mpr
+        ⟨hu, Finset.mem_univ _⟩, h.symm⟩
+  · intro h
+    obtain ⟨⟨u, e⟩, hu, rfl⟩ := Finset.mem_image.mp h
+    have hul := (Finset.mem_product.mp hu).1
+    apply Finset.mem_biUnion.mpr
+    refine ⟨u, hul, ?_⟩
+    cases e <;> simp
 
 private theorem family_compatible : (family : Set (World 3)) ⊆ wholeSet [true, true] jjHistory := by
   intro W hW
@@ -420,10 +458,16 @@ private theorem family_compatible : (family : Set (World 3)) ⊆ wholeSet [true,
   have hp (e : Bool) : world u e ∈ wholeSet [true, true] jjHistory := by
     change readings (world u e) [true, true] = jjHistory
     ext i
-    have hi : i.val < 8 := by have := i.isLt; simp at this; omega
+    have hi : i.val < 8 := by
+      have hib := i.isLt
+      change i.val < 3 at hib
+      omega
     have hh := world_reads u hul e ⟨i.val, hi⟩
     have hread := read_prefix (world u e) [true, true] u i.val (by
-      have := i.isLt; simp at this; simp; omega)
+      have hib := i.isLt
+      change i.val < 3 at hib
+      change i.val ≤ 2
+      omega)
     change readAt (world u e) [true, true] i.val = _
     rw [← hread]
     change readAt (world u e) (terminalWord u) i.val = _
@@ -436,11 +480,17 @@ private theorem family_compatible : (family : Set (World 3)) ⊆ wholeSet [true,
 
 /-- The exact source-domain bridge and both actual five-level failures. -/
 theorem jj_five_failure :
+    (labels.card = 64 ∧ (suffixes 5).card = 32 ∧
+      (labels.filter (fun l => l.1.getD 0 false = true)).card = 32 ∧
+      (labels.filter (fun l => l.1.getD 0 false = false ∧ l.1.getD 1 false = false)).card = 16 ∧
+      (labels.filter (fun l => l.1.getD 0 false = false ∧ l.1.getD 1 false = true)).card = 16) ∧
+    family = labels.image (fun l => world l.1 l.2) ∧
     (∀ (P : Mat) (p : Polynomial ℝ) (δ : ℝ),
       (∃ W : World 3, W.source = P ∧ gain 3 W.coeff = p ∧ W.drift = δ) ↔
         (∀ i j, 0 < P i j) ∧ P.det = 0 ∧ Matrix.trace P = 1 ∧
           p ≠ 0 ∧ p.natDegree ≤ 3) ∧
     (∀ u : List Bool, u.length = 5 → world u false ≠ world u true ∧
+      (∀ e : Bool, (gain 3 (world u e).coeff).natDegree = 3) ∧
       ∀ (e : Bool) (i : Fin 8),
         readAt (world u e) (terminalWord u) i.val =
           fullResponse ((terminalWord u).take i.val)) ∧
@@ -449,7 +499,8 @@ theorem jj_five_failure :
     Loses 5 (wholeSet [true, true] jjHistory : Set (World 3)) [true, true] := by
   have hl : Loses 5 (family : Set (World 3)) [true, true] := by
     simpa [family, terminalWord] using support_loses 5 [] (by simp)
-  exact ⟨whole_domain 3, fun u hu => ⟨world_distinct u, world_reads u hu⟩,
+  exact ⟨label_counts, family_image, whole_domain 3,
+    fun u hu => ⟨world_distinct u, world_degree u, world_reads u hu⟩,
     family_compatible, (finite_losing_iff ..).mp hl, loses_mono hl family_compatible⟩
 
 /-- An unrestricted deterministic complete-target recovery policy on the actual
@@ -459,6 +510,6 @@ def five_read_recovery_claim : Prop :=
 
 theorem result : ¬ five_read_recovery_claim := by
   rintro ⟨P, hP⟩
-  exact loses_excludes_policy _ _ jjHistory (fun _ h => h) jj_five_failure.2.2.2.2 P hP
+  exact loses_excludes_policy _ _ jjHistory (fun _ h => h) jj_five_failure.2.2.2.2.2.2 P hP
 
 end D5.S3.Observer.CubicGain.JJFiveFailure
