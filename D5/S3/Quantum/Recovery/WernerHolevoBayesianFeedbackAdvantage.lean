@@ -484,6 +484,100 @@ private theorem abs_pair_trace (w z : Fin 3 → ℂ) (hw : w ≠ 0) (hz : z ≠ 
   field_simp [huw, huz]
   ring
 
+private theorem div_real_re (c : ℂ) (x y : ℝ) (hx : x ≠ 0) (hy : y ≠ 0) :
+    (c / ((x : ℂ) * (y : ℂ))).re = c.re / (x * y) := by
+  simp [Complex.div_re, Complex.mul_re, Complex.mul_im, Complex.normSq_apply]
+  field_simp [hx, hy]
+  
+
+private theorem inner_cauchy (w z : Fin 3 → ℂ) :
+    Complex.normSq (star w ⬝ᵥ z) ≤ q w * q z := by
+  let ew : EuclideanSpace ℂ (Fin 3) := (EuclideanSpace.equiv (Fin 3) ℂ).symm w
+  let ez : EuclideanSpace ℂ (Fin 3) := (EuclideanSpace.equiv (Fin 3) ℂ).symm z
+  have h := @inner_mul_inner_self_le ℂ (EuclideanSpace ℂ (Fin 3)) _ _ _ ew ez
+  rw [EuclideanSpace.inner_eq_star_dotProduct, EuclideanSpace.inner_eq_star_dotProduct] at h
+  simp [ew, ez] at h
+  have hc : z ⬝ᵥ star w = star w ⬝ᵥ z := dotProduct_comm _ _
+  have hd : w ⬝ᵥ star z = star z ⬝ᵥ w := dotProduct_comm _ _
+  rw [hc, hd] at h
+  have hs : star (star w ⬝ᵥ z) = star z ⬝ᵥ w := by rw [star_dotProduct]; simp
+  rw [← hs, norm_star] at h
+  have hnormw : (↑‖WithLp.toLp 2 w‖ ^ 2 : ℂ).re = ∑ i, Complex.normSq (w i) := by
+    rw [pow_two, Complex.mul_re]
+    simp only [Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+    rw [← pow_two, EuclideanSpace.norm_sq_eq]
+    simp only [Complex.sq_norm]
+  have hnormz : (↑‖WithLp.toLp 2 z‖ ^ 2 : ℂ).re = ∑ i, Complex.normSq (z i) := by
+    rw [pow_two, Complex.mul_re]
+    simp only [Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+    rw [← pow_two, EuclideanSpace.norm_sq_eq]
+    simp only [Complex.sq_norm]
+  rw [Complex.normSq_eq_norm_sq]
+  rw [hnormw, hnormz] at h
+  simpa [q, pow_two] using h
+
+private theorem abs_pair_bound (w z : Fin 3 → ℂ) :
+    (((absMat (((Real.sqrt 2)⁻¹ : ℂ) • crossProduct w) *
+        absMat (((Real.sqrt 2)⁻¹ : ℂ) • crossProduct z)).trace).re) ^ 2 ≤
+      (q w * q z + 3 * Complex.normSq (star w ⬝ᵥ z)) / 4 := by
+  by_cases hw : w = 0
+  · subst w
+    have hzero : ((Real.sqrt 2)⁻¹ : ℂ) • crossProduct (0 : Fin 3 → ℂ) = 0 := by
+      ext i j
+      fin_cases i <;> fin_cases j <;> simp [crossProduct]
+    rw [hzero]
+    simp [absMat, q]
+  by_cases hz : z = 0
+  · subst z
+    have hzero : ((Real.sqrt 2)⁻¹ : ℂ) • crossProduct (0 : Fin 3 → ℂ) = 0 := by
+      ext i j
+      fin_cases i <;> fin_cases j <;> simp [crossProduct]
+    rw [hzero]
+    simp [absMat, q]
+  have htrace := abs_pair_trace w z hw hz
+  rw [htrace]
+  simp only [Complex.mul_re, Complex.div_re]
+  norm_num [Complex.normSq_apply]
+  have hdiv := div_real_re (star w ⬝ᵥ z * star z ⬝ᵥ w)
+    (euclideanNorm w) (euclideanNorm z)
+    (ne_of_gt (Real.sqrt_pos.2 (q_pos hw)))
+    (ne_of_gt (Real.sqrt_pos.2 (q_pos hz)))
+  rw [hdiv, inner_product_re]
+  rw [← Complex.normSq_apply]
+  have hu : 0 < euclideanNorm w := Real.sqrt_pos.2 (q_pos hw)
+  have hv : 0 < euclideanNorm z := Real.sqrt_pos.2 (q_pos hz)
+  have hqw : q w = euclideanNorm w ^ 2 := by
+    exact (Real.sq_sqrt (q_pos hw).le).symm
+  have hqz : q z = euclideanNorm z ^ 2 := by
+    exact (Real.sq_sqrt (q_pos hz).le).symm
+  have hc : Complex.normSq (star w ⬝ᵥ z) ≤
+      euclideanNorm w ^ 2 * euclideanNorm z ^ 2 := by
+    simpa [hqw, hqz] using inner_cauchy w z
+  have huv : 0 < euclideanNorm w * euclideanNorm z := mul_pos hu hv
+  have hcy : Complex.normSq (star w ⬝ᵥ z) /
+      (euclideanNorm w * euclideanNorm z) ≤
+      euclideanNorm w * euclideanNorm z := by
+    apply (div_le_iff₀ huv).2
+    nlinarith [hc]
+  have hcn : 0 ≤ Complex.normSq (star w ⬝ᵥ z) /
+      (euclideanNorm w * euclideanNorm z) :=
+    div_nonneg (Complex.normSq_nonneg _) huv.le
+  have hrel : (euclideanNorm w * euclideanNorm z) *
+      (Complex.normSq (star w ⬝ᵥ z) /
+        (euclideanNorm w * euclideanNorm z)) =
+      Complex.normSq (star w ⬝ᵥ z) := by
+    field_simp [ne_of_gt huv]
+  have hsquare :
+      (euclideanNorm w * euclideanNorm z +
+        Complex.normSq (star w ⬝ᵥ z) /
+          (euclideanNorm w * euclideanNorm z)) ^ 2 ≤
+      (euclideanNorm w * euclideanNorm z) ^ 2 +
+        3 * Complex.normSq (star w ⬝ᵥ z) := by
+    nlinarith [sq_nonneg (euclideanNorm w * euclideanNorm z -
+      Complex.normSq (star w ⬝ᵥ z) /
+        (euclideanNorm w * euclideanNorm z)), hrel]
+  nlinarith [hsquare]
+
 private theorem markov_bound {m₁ m₂ : ℕ} (K₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ) (K₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ)
     (h₁ : IsKrausDecomposition K₁) (h₂ : IsKrausDecomposition K₂) :
     markovFidelity K₁ K₂ ≤ 1 / 2 := by
