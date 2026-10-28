@@ -52,6 +52,7 @@ private theorem actual_law : arena.Law actual := by
   simpa only [arena, actual, realize, decide_eq_true_eq] using (@normalized_saturation)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
+  classical
   intro law
   let S : System 0 1 := fun _ => none
   let p : Fin 0 → Nat := Fin.elim0
@@ -68,13 +69,14 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     intro i
     exact _root_.D5.S3.Arith.FibonacciAtomic.Observer.CompletionPositiveDriftRegion.atomic_finite 2
   have accepted : rejected.readout () ⟨0, 1, p, []⟩ v = true := by
-    exact decide_eq_true finite
+    exact @decide_eq_true (∀ i : Fin 1, IsFinite (v i)) (Classical.propDecidable _) finite
   have bad := ((law S p guarded [] mode).2.2).mp ⟨v, sat, vm, accepted⟩
   have cf := (Classical.choose_spec
     (guarded_extension S p guarded (canonicalFree mode)).exists).2 (0 : Fin 1) rfl
   change canonical S p guarded mode 0 = Omega at cf
   have allFinite : ∀ i, IsFinite (canonical S p guarded mode i) :=
-    of_decide_eq_true bad
+    @of_decide_eq_true (∀ i : Fin 1, IsFinite (canonical S p guarded mode i))
+      (Classical.propDecidable _) bad
   exact _root_.D5.S3.Arith.FibonacciAtomic.Observer.CompletionPositiveDriftRegion.omega_not_finite
     (cf ▸ allFinite 0)
 
@@ -96,7 +98,8 @@ private theorem readout_depends : ObservationalDependence signature actual := by
     rcases h with h | h | ⟨U, V, h, _⟩
     · have first : atomic 1 = leaf false := rho_alpha
       rw [first] at h
-      cases leaf_inj h
+      have tag := congrArg (fun X => (PFunctor.M.dest X).1) h
+      cases tag
     · have second : atomic 2 = node (leaf false) (leaf true) := by
         change rho (rho (leaf true)) = _
         rw [rho_alpha, rho_beta]
@@ -111,7 +114,7 @@ private theorem readout_depends : ObservationalDependence signature actual := by
 
 def evidence : Registration arena (type_of% (@normalized_saturation)) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  bridge := by simp only [actual, realize, decide_eq_true_eq]
   variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected,
     fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
@@ -143,7 +146,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0, 1, 3, 5]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "arg", "body", "arg", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg",
+        "fn", "arg", "arg", "body", "arg", "arg"]
       stateBinder := 7
       functionOperand := false
       stateOperand := some #["fn", "arg"]

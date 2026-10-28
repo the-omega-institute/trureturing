@@ -53,14 +53,14 @@ private theorem rejected_law : ¬ arena.Law rejected := by
       Fin.elim0 Fin.elim0 (by intro i; exact Fin.elim0 i)
       (by intro i; exact Fin.elim0 i) 0 (by intro i; exact Fin.elim0 i)
       (.ground (.of true)) 0 le_rfl rfl
-  have tag := leaf_inj bad
+  have tag := congrArg (fun X => (PFunctor.M.dest X).1) bad
   cases tag
 
 private theorem readout_depends : ObservationalDependence signature actual := by
   intro role
   refine ⟨⟨0, 1, Fin.elim0, .var 0 0⟩, (fun _ => leaf true), (fun _ => leaf false), ?_⟩
   intro eq
-  have tag := leaf_inj eq
+  have tag := congrArg (fun X => (PFunctor.M.dest X).1) eq
   cases tag
 
 def evidence : Registration arena (type_of% (@atomic_replacement)) where
@@ -96,7 +96,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0, 1, 3, 11]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 6
       functionOperand := false
       stateOperand := some #["fn", "arg"]
