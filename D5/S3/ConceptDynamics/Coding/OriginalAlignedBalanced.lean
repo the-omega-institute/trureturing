@@ -59,7 +59,7 @@ private theorem word_concatenate {n : ℕ} {A : CountMat n n}
     (IncomingLiftAmbiguityCriterion.concatenate_paths (identityLift A) p q)).1
 
 /- Equal words with fixed start and length recover the dependent endpoint. -/
-private theorem word_endpoint_injective {n : ℕ} {A : CountMat n n} :
+theorem word_endpoint_injective {n : ℕ} {A : CountMat n n} :
     ∀ {d : ℕ} {i j j' : Fin n}
       (p : FinitePath A d i j) (q : FinitePath A d i j'),
       pathWord p = pathWord q →

@@ -24,6 +24,11 @@ internal sealed class TebniA364822Document : IScribeDocumentDefinition
             Node("sinh", "The odd Taylor series", Equal(Call("sinh"), Taylor(false)),
                 "OEIS A364822, Name (unpaginated): \"Expansion of e.g.f. cosh(x) / (1 - 2*sinh(x)).\" The series sinh has coefficient 1/n! at odd indices and zero at even indices.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source())),
+            Node("eCoeff_sinh", "The normalized odd Taylor coefficients", All("n", Nat(),
+                Equal(App(Qualified("IntegralEGFComposition", "eCoeff"), Call("sinh"), N()),
+                    If(Call("Even", N()), D(0), D(1)))),
+                "Factorial normalization cancels the Taylor denominator. Every even index gives zero and every odd index gives one; this coefficient identity also determines the sign of sinh under substitution of -X.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("a", "Factorial-scaled coefficients", All("n", Nat(), Equal(A(N()),
                 Mul(Cast(App(Qualified("Nat", "factorial"), N()), Rat()), App(Qualified("PowerSeries", "coeff"), N(),
                     Mul(Call("cosh"), Inv(Sub(D(1), Mul(D(2), Call("sinh"))))))))),
@@ -49,7 +54,7 @@ internal sealed class TebniA364822Document : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? claim = null) =>
-        Describe.Lean(DescribeId.Create("tebni364822-" + name.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("tebni364822-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             provenance, Blocks(Paragraph(Text(prose))), role, claim);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
