@@ -202,6 +202,111 @@ theorem strict_inventory_third_layer_vanishing :
   have hT' := hT t ((le_max_left T 2).trans ht)
   exact hratio.trans_lt (hT'.2.trans_lt hT'.1)
 
+private theorem prime_number_limits :
+    Tendsto (fun t : ℝ => ψ t / t) atTop (𝓝 1) ∧
+      Tendsto (fun t : ℝ => θ t / t) atTop (𝓝 1) := by
+  obtain ⟨c, hc, hpnt⟩ := MediumPNT
+  have hexp : Tendsto (fun t : ℝ => Real.exp (-c * Real.log t ^ (1 / 10 : ℝ)))
+      atTop (𝓝 0) :=
+    Real.tendsto_exp_atBot.comp ((tendsto_const_mul_atBot_of_neg (neg_neg_of_pos hc)).mpr
+      ((tendsto_rpow_atTop (by norm_num : (0 : ℝ) < 1 / 10)).comp
+        Real.tendsto_log_atTop))
+  have hsmall : (fun t : ℝ => t * Real.exp (-c * Real.log t ^ (1 / 10 : ℝ)))
+      =o[atTop] (fun t => t) := by
+    simpa using (isBigO_refl (fun t : ℝ => t) atTop).mul_isLittleO
+      ((isLittleO_one_iff ℝ).mpr hexp)
+  have hpsi := (hpnt.trans_isLittleO hsmall).tendsto_div_nhds_zero
+  have hsqrt : Tendsto (fun t : ℝ => Real.sqrt t / t) atTop (𝓝 0) := by
+    simpa only [Real.sqrt_div_self, Function.comp_def] using
+      (tendsto_inv_atTop_zero.comp Real.tendsto_sqrt_atTop)
+  have hsqrto : Real.sqrt =o[atTop] (fun t : ℝ => t) :=
+    isLittleO_of_tendsto (fun t ht => by simp [ht]) hsqrt
+  have htail := (Chebyshev.isBigO_psi_sub_theta_sqrt.trans_isLittleO hsqrto).tendsto_div_nhds_zero
+  have hp : Tendsto (fun t : ℝ => ψ t / t) atTop (𝓝 1) := by
+    have h := hpsi.add_const 1
+    simp only [zero_add] at h
+    apply h.congr'
+    filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
+    simp only [Pi.sub_apply, id_eq]
+    field_simp
+    <;> ring
+  refine ⟨hp, ?_⟩
+  have h := hp.sub htail
+  simp only [sub_zero] at h
+  apply h.congr'
+  filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
+  simp only [Pi.sub_apply]
+  ring
+
+private theorem theta_sqrt_scale {c : ℝ} (hc : 0 < c) :
+    Tendsto (fun t : ℝ => θ (c * Real.sqrt t) / Real.sqrt t) atTop (𝓝 c) := by
+  have h := (prime_number_limits.2.comp
+    (Real.tendsto_sqrt_atTop.const_mul_atTop hc)).mul_const c
+  simp only [one_mul] at h
+  apply h.congr'
+  filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
+  field_simp
+
+private theorem psi_small_power {r : ℝ} (hr : 0 < r) (hr2 : r < 1 / 2) :
+    Tendsto (fun t : ℝ => ψ (t ^ r) / Real.sqrt t) atTop (𝓝 0) := by
+  have h := (prime_number_limits.1.comp (tendsto_rpow_atTop hr)).mul
+    (tendsto_rpow_neg_atTop (sub_pos.mpr hr2))
+  simp only [mul_zero] at h
+  apply h.congr'
+  filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
+  rw [Real.sqrt_eq_rpow, neg_sub, Real.rpow_sub ht]
+  field_simp
+
+private theorem psi_theta_root_limit :
+    Tendsto (fun t : ℝ => (ψ t - θ t) / Real.sqrt t) atTop (𝓝 1) := by
+  have hroot : Tendsto (fun t : ℝ => ψ (t ^ (2 : ℝ)⁻¹) / Real.sqrt t)
+      atTop (𝓝 1) := by
+    simpa [Real.sqrt_eq_rpow, one_div] using
+      prime_number_limits.1.comp Real.tendsto_sqrt_atTop
+  have h3 := psi_small_power (r := (3 : ℝ)⁻¹) (by norm_num) (by norm_num)
+  have h5 := psi_small_power (r := (5 : ℝ)⁻¹) (by norm_num) (by norm_num)
+  have h7 := psi_small_power (r := (7 : ℝ)⁻¹) (by norm_num) (by norm_num)
+  apply tendsto_of_tendsto_of_tendsto_of_le_of_le'
+    (by simpa using (hroot.add h3).add h7)
+    (by simpa using (hroot.add h3).add h5)
+  · filter_upwards [eventually_ge_atTop (0 : ℝ)] with t ht
+    simpa [add_div] using div_le_div_of_nonneg_right
+      (Chebyshev.psi_sub_theta_ge_psi_add_psi_add_psi ht) (Real.sqrt_nonneg t)
+  · filter_upwards [] with t
+    simpa [add_div] using div_le_div_of_nonneg_right
+      (Chebyshev.psi_sub_theta_le_psi_add_psi_add_psi t) (Real.sqrt_nonneg t)
+
+private theorem second_cutoff_scale {c : ℝ} (hc : 0 < c) :
+    Tendsto (fun t : ℝ =>
+      (((c * Real.sqrt t) ^ 2 + c * Real.sqrt t + 1) / t) *
+        (Real.log (c * Real.sqrt t) / Real.log t)) atTop (𝓝 (c ^ 2 / 2)) := by
+  have hsqrt : Tendsto (fun t : ℝ => Real.sqrt t / t) atTop (𝓝 0) := by
+    simpa only [Real.sqrt_div_self, Function.comp_def] using
+      (tendsto_inv_atTop_zero.comp Real.tendsto_sqrt_atTop)
+  have hinv : Tendsto (fun t : ℝ => 1 / t) atTop (𝓝 0) := by
+    simpa [one_div] using (tendsto_inv_atTop_zero : Tendsto (fun t : ℝ => t⁻¹) atTop (𝓝 0))
+  have hpoly : Tendsto (fun t : ℝ => ((c * Real.sqrt t) ^ 2 + c * Real.sqrt t + 1) / t)
+      atTop (𝓝 (c ^ 2)) := by
+    have h := ((tendsto_const_nhds (x := c ^ 2)).add (hsqrt.const_mul c)).add hinv
+    simp only [add_zero] at h
+    apply h.congr'
+    filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
+    have hs := Real.sq_sqrt ht.le
+    field_simp
+    nlinarith
+  have hlog : Tendsto (fun t : ℝ => Real.log (c * Real.sqrt t) / Real.log t)
+      atTop (𝓝 (1 / 2 : ℝ)) := by
+    have h := (tendsto_const_nhds (x := Real.log c)).div_atTop Real.tendsto_log_atTop
+    have h := h.add_const (1 / 2 : ℝ)
+    simp only [zero_add] at h
+    apply h.congr'
+    filter_upwards [eventually_gt_atTop (1 : ℝ)] with t ht
+    rw [Real.log_mul (ne_of_gt hc) (ne_of_gt (Real.sqrt_pos.2 (by linarith))),
+      Real.log_sqrt (by linarith)]
+    field_simp
+    <;> ring
+  simpa [div_eq_mul_inv] using hpoly.mul hlog
+
 /-!
 The paper/theory target is retained verbatim as a proposition. No theorem is
 claimed here: the missing proof must establish the uniform second-layer cutoff
