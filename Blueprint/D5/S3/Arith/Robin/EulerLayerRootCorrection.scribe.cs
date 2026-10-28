@@ -7,12 +7,12 @@ internal sealed class EulerLayerRootCorrectionDocument : IScribeDocumentDefiniti
     private const string Prefix = "D5/S3/Arith/Robin/EulerLayerRootCorrection.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The exact strict Euler inventory root correction is retained as an open proposition.",
+        "The strict Euler inventory has uniform root correction sqrt(2)-1.",
         H("Strict Euler Inventory Root Correction"),
         Blocks(
             Paragraph(Text(
-                "For every positive epsilon, the target asks for one real threshold T>1 "
-                + "that works for every real t>=T and every positive natural U satisfying "
+                "For every positive epsilon, one real threshold T>1 "
+                + "works for every real t>=T and every positive natural U satisfying "
                 + "the literal strict prime factorization law, with "
                 + "|(log U-psi(t))/sqrt(t)-(sqrt(2)-1)|<epsilon. Equality layers remain excluded.")),
             Describe.Lean(
@@ -46,19 +46,49 @@ internal sealed class EulerLayerRootCorrectionDocument : IScribeDocumentDefiniti
                         + "240*t^(-7/60) envelope proves the uniform limit."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("strict-inventory-second-layer-limit"),
+                DeclarationHandle.Create(Prefix + "strict_inventory_second_layer_limit"),
+                H("Uniform second-layer mass coefficient"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The literal sum of log(q) over prime factors with exponent at least "
+                    + "two, divided by sqrt(t), tends uniformly to sqrt(2). For every "
+                    + "0<c<sqrt(2), all primes q<=c*sqrt(t) are strictly active beyond "
+                    + "one common threshold: the logarithmic marginal is bounded below "
+                    + "using 1/(q^2+q+1). Actual active squares satisfy q^2<2*t. "
+                    + "Unconditional PNT squeezes the weighted mass between the two "
+                    + "theta functions. Equality events are included in t and excluded "
+                    + "from the active layers."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("strict-inventory-root-correction-statement"),
                 DeclarationHandle.Create(Prefix + "strict_inventory_root_correction_statement"),
-                H("Exact root-scale target proposition"),
+                H("Exact root-scale statement"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "This proposition is retained without a proof or freeze. The missing "
-                        + "content is the uniform sqrt(2) second-layer cutoff, its weighted "
-                        + "prime-mass asymptotic, and the root-scale psi-theta limit. The "
-                        + "third-and-higher tail is now supplied separately by the two "
-                        + "consumed declarations above."))),
+                        "The statement keeps all real parameters, all prime factorization "
+                        + "equalities and all positive natural inventory integers. The "
+                        + "following theorem proves this exact proposition."))),
                 DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("strict-inventory-root-correction"),
+                DeclarationHandle.Create(Prefix + "strict_inventory_root_correction"),
+                H("Uniform strict inventory root correction"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The proof splits log(U) into first, second and all remaining "
+                    + "layers. The first-layer error is bounded by log(t), the second "
+                    + "layer contributes sqrt(2)*sqrt(t), and the entire higher tail "
+                    + "is o(sqrt(t)). Costa-Pereira bounds and the existing unconditional "
+                    + "MediumPNT give (psi(t)-theta(t))/sqrt(t)->1. Combining the four "
+                    + "errors gives the exact uniform coefficient sqrt(2)-1. This is "
+                    + "an arithmetic supplier for the Robin/5040 program, and does "
+                    + "not prove RH or a signed-tail or attainment statement."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "The paper and theory attribution is the existing ZECKENDORF_EULER_5040 "
                 + "Definition 7.1, Theorem 8.1 and equations (19)--(24), as cross-referenced "

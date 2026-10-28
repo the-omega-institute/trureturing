@@ -4,9 +4,11 @@
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
-   digest: Third-layer vanishing is proved; the exact strict Euler inventory root-scale correction remains open. -/
+   digest: The complete strict Euler inventory has uniform root correction sqrt(2)-1. -/
 
 import D5.S3.Arith.Robin.EulerLayerInventoryGrowth
+
+/-! The full-real strict prime-layer correction from the Euler workload normal form. -/
 
 namespace D5.S3.Arith.Robin.EulerLayerRootCorrection
 
@@ -242,16 +244,16 @@ private theorem theta_sqrt_scale {c : ℝ} (hc : 0 < c) :
     Tendsto (fun t : ℝ => θ (c * Real.sqrt t) / Real.sqrt t) atTop (𝓝 c) := by
   have h := (prime_number_limits.2.comp
     (Real.tendsto_sqrt_atTop.const_mul_atTop hc)).mul_const c
-  simp only [one_mul] at h
+  simp only [one_mul, Function.comp_def] at h
   apply h.congr'
   filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
-  field_simp
+  field_simp [ne_of_gt hc, ne_of_gt (Real.sqrt_pos.2 ht)]
 
 private theorem psi_small_power {r : ℝ} (hr : 0 < r) (hr2 : r < 1 / 2) :
     Tendsto (fun t : ℝ => ψ (t ^ r) / Real.sqrt t) atTop (𝓝 0) := by
   have h := (prime_number_limits.1.comp (tendsto_rpow_atTop hr)).mul
     (tendsto_rpow_neg_atTop (sub_pos.mpr hr2))
-  simp only [mul_zero] at h
+  simp only [mul_zero, Function.comp_def] at h
   apply h.congr'
   filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
   rw [Real.sqrt_eq_rpow, neg_sub, Real.rpow_sub ht]
@@ -261,7 +263,7 @@ private theorem psi_theta_root_limit :
     Tendsto (fun t : ℝ => (ψ t - θ t) / Real.sqrt t) atTop (𝓝 1) := by
   have hroot : Tendsto (fun t : ℝ => ψ (t ^ (2 : ℝ)⁻¹) / Real.sqrt t)
       atTop (𝓝 1) := by
-    simpa [Real.sqrt_eq_rpow, one_div] using
+    simpa [Real.sqrt_eq_rpow, one_div, Function.comp_def] using
       prime_number_limits.1.comp Real.tendsto_sqrt_atTop
   have h3 := psi_small_power (r := (3 : ℝ)⁻¹) (by norm_num) (by norm_num)
   have h5 := psi_small_power (r := (5 : ℝ)⁻¹) (by norm_num) (by norm_num)
@@ -288,12 +290,11 @@ private theorem second_cutoff_scale {c : ℝ} (hc : 0 < c) :
   have hpoly : Tendsto (fun t : ℝ => ((c * Real.sqrt t) ^ 2 + c * Real.sqrt t + 1) / t)
       atTop (𝓝 (c ^ 2)) := by
     have h := ((tendsto_const_nhds (x := c ^ 2)).add (hsqrt.const_mul c)).add hinv
-    simp only [add_zero] at h
+    simp only [add_zero, mul_zero] at h
     apply h.congr'
     filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
-    have hs := Real.sq_sqrt ht.le
+    rw [mul_pow, Real.sq_sqrt ht.le]
     field_simp
-    nlinarith
   have hlog : Tendsto (fun t : ℝ => Real.log (c * Real.sqrt t) / Real.log t)
       atTop (𝓝 (1 / 2 : ℝ)) := by
     have h := (tendsto_const_nhds (x := Real.log c)).div_atTop Real.tendsto_log_atTop
@@ -303,17 +304,169 @@ private theorem second_cutoff_scale {c : ℝ} (hc : 0 < c) :
     filter_upwards [eventually_gt_atTop (1 : ℝ)] with t ht
     rw [Real.log_mul (ne_of_gt hc) (ne_of_gt (Real.sqrt_pos.2 (by linarith))),
       Real.log_sqrt (by linarith)]
-    field_simp
-    <;> ring
+    field_simp [ne_of_gt (Real.log_pos ht)]
   simpa [div_eq_mul_inv] using hpoly.mul hlog
 
-/-!
-The paper/theory target is retained verbatim as a proposition. No theorem is
-claimed here: the missing proof must establish the uniform second-layer cutoff
-at `sqrt 2 * sqrt t` and the root-scale Costa--Pereira limit for `psi - theta`.
-The complete actual layers at least three are supplied by the preceding
-vanishing theorem.
--/
+def strict_inventory_second_layer_mass (U : ℕ) : ℝ :=
+  ∑ q ∈ U.primeFactors.filter (fun q => 2 ≤ U.factorization q), Real.log q
+
+private theorem second_layer_lower_cutoff {c : ℝ} (hc : 0 < c) (hc2 : c ^ 2 < 2) :
+    ∀ᶠ t : ℝ in atTop, ∀ U : ℕ,
+      (∀ q : ℕ, q.Prime →
+        U.factorization q = optimalLayerCount (1 / (t * Real.log t)) q) →
+      ∀ q : ℕ, q.Prime → (q : ℝ) ≤ c * Real.sqrt t → 2 ≤ U.factorization q := by
+  have hevent := (second_cutoff_scale hc).eventually_lt_const
+    (show c ^ 2 / 2 < 1 by linarith)
+  filter_upwards [hevent, eventually_gt_atTop (1 : ℝ)] with t ht ht1
+  intro U hstrict q hq hqx
+  have ht0 : 0 < t := by linarith
+  have hlogt : 0 < Real.log t := Real.log_pos ht1
+  have hq0 : (0 : ℝ) < q := by exact_mod_cast hq.pos
+  have hq1 : (1 : ℝ) < q := by exact_mod_cast hq.one_lt
+  have hlogq : 0 < Real.log (q : ℝ) := Real.log_pos hq1
+  have hx : 0 < c * Real.sqrt t := mul_pos hc (Real.sqrt_pos.2 ht0)
+  have hscalar : ((c * Real.sqrt t) ^ 2 + c * Real.sqrt t + 1) *
+      Real.log (c * Real.sqrt t) < t * Real.log t := by
+    rw [div_mul_div_comm] at ht
+    exact (div_lt_one (mul_pos ht0 hlogt)).mp ht
+  have hpoly : (q : ℝ) ^ 2 + q + 1 ≤
+      (c * Real.sqrt t) ^ 2 + c * Real.sqrt t + 1 := by
+    nlinarith [sq_le_sq₀ hq0.le hx.le |>.mpr hqx]
+  have hmul : ((q : ℝ) ^ 2 + q + 1) * Real.log q < t * Real.log t :=
+    (mul_le_mul hpoly (Real.log_le_log hq0 hqx) hlogq.le (by positivity)).trans_lt hscalar
+  have hden : 0 < (q : ℝ) ^ 2 + q := by positivity
+  have hlog : 1 / ((q : ℝ) ^ 2 + q + 1) ≤
+      Real.log (1 + 1 / ((q : ℝ) ^ 2 + q)) := by
+    convert Real.one_sub_inv_le_log_of_pos
+      (show 0 < 1 + 1 / ((q : ℝ) ^ 2 + q) by positivity) using 1
+    field_simp
+    <;> ring
+  have hratio : (1 - (q : ℝ)⁻¹ ^ (2 + 1)) / (1 - (q : ℝ)⁻¹ ^ 2) =
+      1 + 1 / ((q : ℝ) ^ 2 + q) := by
+    have hqi : (q : ℝ)⁻¹ < 1 := (inv_lt_one₀ hq0).mpr hq1
+    have hqd : 1 - (q : ℝ)⁻¹ ^ 2 ≠ 0 := ne_of_gt
+      (sub_pos.mpr (pow_lt_one₀ (inv_pos.mpr hq0).le hqi (by norm_num)))
+    apply (div_eq_iff hqd).mpr
+    norm_num only [Nat.reduceAdd]
+    field_simp [ne_of_gt hq0, ne_of_gt hden]
+    <;> ring
+  have hgain : 1 / (t * Real.log t) <
+      D5.S3.Arith.GoldenResourceOptimalInteger.goldenLayerMarginal q 2 := by
+    unfold D5.S3.Arith.GoldenResourceOptimalInteger.goldenLayerMarginal
+    rw [hratio]
+    calc
+      _ < 1 / (((q : ℝ) ^ 2 + q + 1) * Real.log q) :=
+        one_div_lt_one_div_of_lt (mul_pos (by positivity) hlogq) hmul
+      _ = (1 / ((q : ℝ) ^ 2 + q + 1)) / Real.log q := by
+        simp [div_eq_mul_inv, mul_comm]
+      _ ≤ _ := div_le_div_of_nonneg_right hlog hlogq.le
+  have hmem : 2 ∈ Set.Icc 1 (optimalLayerCount (1 / (t * Real.log t)) q) := by
+    rw [← positive_layers_eq_count_interval (one_div_pos.mpr (mul_pos ht0 hlogt)) hq]
+    exact ⟨by norm_num, hq, hgain⟩
+  rw [hstrict q hq]
+  exact hmem.2
+
+private theorem second_layer_bounds {c : ℝ} (hc : 0 < c) (hc2 : c ^ 2 < 2) :
+    ∀ᶠ t : ℝ in atTop, ∀ U : ℕ, 0 < U →
+      (∀ q : ℕ, q.Prime →
+        U.factorization q = optimalLayerCount (1 / (t * Real.log t)) q) →
+      θ (c * Real.sqrt t) ≤ strict_inventory_second_layer_mass U ∧
+        strict_inventory_second_layer_mass U ≤ θ (Real.sqrt 2 * Real.sqrt t) := by
+  classical
+  filter_upwards [second_layer_lower_cutoff hc hc2, eventually_ge_atTop (2 : ℝ)]
+    with t hlower ht U hU hstrict
+  let S := U.primeFactors.filter (fun q => 2 ≤ U.factorization q)
+  have hsubL : Nat.primesLE ⌊c * Real.sqrt t⌋₊ ⊆ S := by
+    intro q hq
+    obtain ⟨hqt, hq⟩ := Nat.mem_primesLE.mp hq
+    have hqbound : (q : ℝ) ≤ c * Real.sqrt t :=
+      (Nat.le_floor_iff (by positivity)).mp hqt
+    have he := hlower U hstrict q hq hqbound
+    refine mem_filter.mpr ⟨?_, he⟩
+    apply hq.mem_primeFactors
+    · exact (hq.dvd_iff_one_le_factorization (by omega)).mpr (by omega)
+    · omega
+  have hsubU : S ⊆ Nat.primesLE ⌊Real.sqrt 2 * Real.sqrt t⌋₊ := by
+    intro q hqS
+    obtain ⟨hqU, he⟩ := mem_filter.mp hqS
+    have hq := Nat.prime_of_mem_primeFactors hqU
+    have hb := EulerLayerInventoryGrowth.active_power_linear_cutoff ht hstrict hq
+      (k := 2) (by norm_num) he
+    have hs : (Real.sqrt 2 * Real.sqrt t) ^ 2 = 2 * t := by
+      rw [mul_pow, Real.sq_sqrt (by norm_num), Real.sq_sqrt (by linarith)]
+    have hqbound : (q : ℝ) ≤ Real.sqrt 2 * Real.sqrt t := by
+      have hpos : 0 ≤ Real.sqrt 2 * Real.sqrt t := by positivity
+      have hqpos : (0 : ℝ) ≤ q := by positivity
+      norm_num at hb
+      nlinarith
+    exact Nat.mem_primesLE.mpr
+      ⟨(Nat.le_floor_iff (by positivity)).mpr hqbound, hq⟩
+  constructor
+  · rw [Chebyshev.theta_eq_sum_primesLE]
+    exact sum_le_sum_of_subset_of_nonneg hsubL (fun q _ _ => Real.log_natCast_nonneg q)
+  · rw [Chebyshev.theta_eq_sum_primesLE]
+    exact sum_le_sum_of_subset_of_nonneg hsubU (fun q _ _ => Real.log_natCast_nonneg q)
+
+theorem strict_inventory_second_layer_limit :
+    ∀ ε : ℝ, 0 < ε → ∃ T : ℝ, 1 < T ∧ ∀ t : ℝ, T ≤ t → ∀ U : ℕ, 0 < U →
+      (∀ q : ℕ, q.Prime →
+        U.factorization q = optimalLayerCount (1 / (t * Real.log t)) q) →
+      |strict_inventory_second_layer_mass U / Real.sqrt t - Real.sqrt 2| < ε := by
+  intro ε hε
+  have hs : 0 < Real.sqrt 2 := Real.sqrt_pos.2 (by norm_num)
+  have hs2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  let d := min (Real.sqrt 2 / 2) (ε / 4)
+  let c := Real.sqrt 2 - d
+  have hd : 0 < d := lt_min (by positivity) (by positivity)
+  have hd1 : d ≤ Real.sqrt 2 / 2 := min_le_left _ _
+  have hd2 : d ≤ ε / 4 := min_le_right _ _
+  have hc : 0 < c := by dsimp [c]; linarith
+  have hc2 : c ^ 2 < 2 := by
+    have hcs : c < Real.sqrt 2 := by dsimp [c]; linarith
+    nlinarith
+  have hlow := (theta_sqrt_scale hc).eventually_const_lt
+    (show c - ε / 4 < c by linarith)
+  have hupp := (theta_sqrt_scale hs).eventually_lt_const
+    (show Real.sqrt 2 < Real.sqrt 2 + ε by linarith)
+  obtain ⟨T, hT⟩ := eventually_atTop.mp
+    ((second_layer_bounds hc hc2).and (hlow.and hupp))
+  refine ⟨max T 2, lt_of_lt_of_le (by norm_num) (le_max_right _ _), ?_⟩
+  intro t ht U hU hstrict
+  have ht2 : 2 ≤ t := (le_max_right T 2).trans ht
+  have hr : 0 < Real.sqrt t := Real.sqrt_pos.2 (by linarith)
+  obtain ⟨hb, hlo, hup⟩ := hT t ((le_max_left T 2).trans ht)
+  obtain ⟨hl, hu⟩ := hb U hU hstrict
+  have hl' := div_le_div_of_nonneg_right hl hr.le
+  have hu' := div_le_div_of_nonneg_right hu hr.le
+  apply abs_lt.mpr
+  dsimp [c] at hlo
+  constructor <;> linarith
+
+private theorem log_inventory_split {U : ℕ} (hU : 0 < U) :
+    Real.log U = (∑ q ∈ U.primeFactors, Real.log q) +
+      strict_inventory_second_layer_mass U + strict_inventory_third_layer_mass U := by
+  classical
+  rw [Real.log_nat_eq_sum_factorization, Finsupp.sum, Nat.support_factorization]
+  simp only [strict_inventory_second_layer_mass, strict_inventory_third_layer_mass,
+    Finset.sum_filter, ← Finset.sum_add_distrib]
+  apply sum_congr rfl
+  intro q hq
+  have he : 1 ≤ U.factorization q :=
+    (Nat.prime_of_mem_primeFactors hq).factorization_pos_of_dvd (by omega)
+      (Nat.dvd_of_mem_primeFactors hq)
+  by_cases h3 : 3 ≤ U.factorization q
+  · have h2 : 2 ≤ U.factorization q := by omega
+    simp only [ite_eq_left h3, ite_eq_left h2, Nat.cast_sub h2]
+    push_cast
+    ring
+  · by_cases h2 : 2 ≤ U.factorization q
+    · have he2 : U.factorization q = 2 := by omega
+      simp [he2]
+      <;> ring
+    · have he1 : U.factorization q = 1 := by omega
+      simp [he1]
+
+/- The original all-real, all-prime and all-positive-inventory telescope. -/
 def strict_inventory_root_correction_statement : Prop :=
   ∀ ε : ℝ, 0 < ε → ∃ T : ℝ, 1 < T ∧ ∀ t : ℝ, T ≤ t → ∀ U : ℕ, 0 < U →
     (∀ q : ℕ, q.Prime →
@@ -321,6 +474,50 @@ def strict_inventory_root_correction_statement : Prop :=
         D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount.optimalLayerCount
           (1 / (t * Real.log t)) q) →
     |(Real.log U - Chebyshev.psi t) / Real.sqrt t - (Real.sqrt 2 - 1)| < ε
+
+/-- The complete strict arithmetic inventory has the uniform full-real root correction.
+The price law excludes equality layers, including at event parameters. -/
+theorem strict_inventory_root_correction : strict_inventory_root_correction_statement := by
+  intro ε hε
+  have hη : 0 < ε / 4 := by linarith
+  obtain ⟨T2, hT2, hsecond⟩ := strict_inventory_second_layer_limit (ε / 4) hη
+  obtain ⟨T3, hT3, hthird⟩ := strict_inventory_third_layer_vanishing (ε / 4) hη
+  have hlog : Tendsto (fun t : ℝ => Real.log t / Real.sqrt t) atTop (𝓝 0) := by
+    simpa only [Real.sqrt_eq_rpow] using
+      (isLittleO_log_rpow_atTop (by norm_num : (0 : ℝ) < 1 / 2)).tendsto_div_nhds_zero
+  have hpsi : Tendsto (fun t : ℝ => |(ψ t - θ t) / Real.sqrt t - 1|)
+      atTop (𝓝 0) := by
+    simpa using (psi_theta_root_limit.sub_const 1).abs
+  obtain ⟨Ta, hTa⟩ := eventually_atTop.mp
+    ((hlog.eventually_lt_const hη).and (hpsi.eventually_lt_const hη))
+  let T := max (max T2 T3) (max Ta 2)
+  have hT2' : T2 ≤ T := (le_max_left T2 T3).trans (le_max_left _ _)
+  have hT3' : T3 ≤ T := (le_max_right T2 T3).trans (le_max_left _ _)
+  have hTa' : Ta ≤ T := (le_max_left Ta 2).trans (le_max_right _ _)
+  have hTtwo : 2 ≤ T := (le_max_right Ta 2).trans (le_max_right _ _)
+  refine ⟨T, hT2.trans_le hT2', ?_⟩
+  intro t ht U hU hstrict
+  have ht2 : 2 ≤ t := hTtwo.trans ht
+  have hr : 0 < Real.sqrt t := Real.sqrt_pos.2 (by linarith)
+  obtain ⟨hslo, hshi⟩ := abs_lt.mp (hsecond t (hT2'.trans ht) U hU hstrict)
+  have hthird' := hthird t (hT3'.trans ht) U hU hstrict
+  have hthird0 : 0 ≤ strict_inventory_third_layer_mass U / Real.sqrt t := by
+    apply div_nonneg ?_ hr.le
+    exact sum_nonneg fun q _ => mul_nonneg (Nat.cast_nonneg _) (Real.log_natCast_nonneg q)
+  obtain ⟨hlog', hpsi'⟩ := hTa t (hTa'.trans ht)
+  obtain ⟨hplo, hphi⟩ := abs_lt.mp hpsi'
+  obtain ⟨hflo, hfhi⟩ := EulerLayerInventoryGrowth.first_layer_comparison ht2 hU hstrict
+  have hflo' := div_le_div_of_nonneg_right hflo hr.le
+  have hfhi' := div_le_div_of_nonneg_right hfhi hr.le
+  rw [sub_div] at hflo'
+  have hsplit := congrArg (fun x : ℝ => x / Real.sqrt t) (log_inventory_split hU)
+  simp only [add_div] at hsplit
+  rw [sub_div] at hplo hphi ⊢
+  apply abs_lt.mpr
+  constructor <;> linarith
+
+#print axioms strict_inventory_second_layer_limit
+#print axioms strict_inventory_root_correction
 
 end
 
