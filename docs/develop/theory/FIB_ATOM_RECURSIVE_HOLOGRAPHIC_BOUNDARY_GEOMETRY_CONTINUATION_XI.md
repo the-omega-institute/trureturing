@@ -690,3 +690,309 @@ a physical realization and physical time remain open obligations of
 the full quantum-origin programme.
 
 ## 追加锚（本行以下为增补区）
+
+## 273. The complete translation spectrum over the same history law
+
+**Definition 273.1 (path translation and the common time-zero embedding).**
+Let $\mathscr P_{\mathbb C}=L^2(\mathcal W,\mathbb P;\mathbb C)$ be the
+complexification of the path space in Definition 271.1, and write
+
+$$
+(I_0F)(\omega)=F(X_0(\omega)),\qquad
+(\mathcal R_tG)(\omega)=G(\omega(\,\cdot+t)),\quad t\in\mathbb R.
+\tag{273.1}
+$$
+
+Stationarity makes $(\mathcal R_t)_{t\in\mathbb R}$ a unitary group.  Its
+strong continuity follows first on bounded finite-coordinate cylinders from
+the continuity of the supplied $T(s)$ and the Markov cylinder formula, and
+then on $\mathscr P_{\mathbb C}$ by density.  Let $K$ be its self-adjoint
+generator, so that $\mathcal R_t=e^{-itK}$.  The map $I_0$ is the same
+time-zero map that appears in the reflection quotient: in the notation of
+(271.2),
+
+$$
+q(I_0F)\ \xmapsto{\ \mathcal U\ }\ F.
+\tag{273.2}
+$$
+
+Thus $K$ acts on the complete reversible history carrier, whereas $H$ acts
+on the reflection quotient of that carrier.
+
+**Theorem 273.2 (the source-specific Cauchy spectral bridge).**
+For all $F,G\in L^2(M;\mathbb C)$ and $t\in\mathbb R$,
+
+$$
+\langle I_0F,\mathcal R_t I_0G\rangle_{\mathscr P_{\mathbb C}}
+ =\langle F,T(|t|)G\rangle_{\mathscr G_{\mathbb C}}.
+\tag{273.3}
+$$
+
+Let $E_H$ and $E_K$ be the spectral resolutions of $H_{\mathbb C}$ and
+$K$.  Define finite complex measures
+
+$$
+\nu_{F,G}(B)=\langle F,E_H(B)G\rangle,\qquad
+\rho_{F,G}(B)=\langle I_0F,E_K(B)I_0G\rangle.
+\tag{273.4}
+$$
+
+Then
+
+$$
+\rho_{F,G}
+ =\nu_{F,G}(\{0\})\,\delta_0
+ +\int_{(0,\infty)}
+     \frac{\lambda}{\pi(\lambda^2+\xi^2)}\,d\xi\,d\nu_{F,G}(\lambda).
+\tag{273.5}
+$$
+
+Equivalently,
+
+$$
+\int_{\mathbb R}e^{-it\xi}\,d\rho_{F,G}(\xi)
+ =\int_{[0,\infty)}e^{-|t|\lambda}\,d\nu_{F,G}(\lambda).
+\tag{273.6}
+$$
+
+The zero frequency in (273.5) is exactly the zero mode of $H$: since its
+kernel is $\mathbb C\mathbf1$, it is the mass of the constant component and
+there are no additional contributions from $\ker\Sigma$.  Formulae
+(273.3)--(273.6) hold for complex inputs without a form or operator-domain
+assumption.
+
+*Proof.*  The stationary reversible Markov law of Theorem 270.4 gives
+
+$$
+\mathbb E_{\mathbb P}\bigl[\overline{F(X_0)}G(X_t)\bigr]
+ =\langle F,T(|t|)G\rangle_M,
+\tag{273.7}
+$$
+
+including negative $t$ by reversibility.  The spectral theorem for $H$ writes
+the right side as the Laplace integral in (273.6).  For every $\lambda>0$,
+
+$$
+\int_{\mathbb R}e^{-it\xi}
+   \frac{\lambda}{\pi(\lambda^2+\xi^2)}\,d\xi=e^{-\lambda|t|},
+\tag{273.8}
+$$
+
+while $\lambda=0$ gives the Fourier transform of $\delta_0$.  The finite
+variation of the cross spectral measures and the fact that each density in
+(273.8) has mass one permit Fubini.  Hence the measure on the right side of
+(273.5) has the same Fourier transform as $\rho_{F,G}$; uniqueness of the
+Fourier transform of finite complex Borel measures proves (273.5).
+The Cauchy-mixture dilation (273.8) is the mature reflection-positive
+intermediate of Neeb--Olafsson, *Reflection positive one-parameter groups
+and dilations*, arXiv:1312.6161v2, Example 3.4 and §4
+([primary text](https://arxiv.org/html/1312.6161v2)); the Markov and
+reflection quotient realization is the corresponding application of
+Jorgensen--Neeb--Ólafsson, arXiv:1510.07445v3, Lemma 3.16 and Theorem 3.22.
+Their general dilation statements are not being substituted for the
+source-derived law: (273.7) identifies the measures using the same
+$\mathbb P$, $M$, and $I_0$ fixed above.  The identification (273.2) then
+gives the asserted relation to the already supplied quotient generator
+$H$. $\square$
+
+**Corollary 273.3 (the first-cylinder cusp and the domain distinction).**
+For $F,G\in\mathcal D_{\mathbb C}$, where
+$\mathcal D_{\mathbb C}=\mathcal D+i\mathcal D$ is the form domain of
+$H_{\mathbb C}$,
+
+$$
+\langle I_0F,\mathcal R_tI_0G\rangle
+ =\langle F,G\rangle-|t|\,\mathcal E_{\mathbb C}(F,G)+o(|t|)
+ \qquad(t\to0).
+\tag{273.9}
+$$
+
+In particular, with the first cylinders of (272.1),
+
+$$
+\begin{aligned}
+\langle I_0F_R,\mathcal R_tI_0F_L\rangle&=\frac{|t|}{4}+o(|t|),\\
+\langle I_0F_L,\mathcal R_tI_0F_L\rangle&=a-\frac{|t|}{4}+o(|t|).
+\end{aligned}
+\tag{273.10}
+$$
+
+Consequently $I_0F_L\notin\operatorname{Dom}(K)$: its coefficient in
+(273.10) has unequal one-sided derivatives at zero.  This does not conflict
+with $F_L\in\operatorname{Dom}(H^{1/2})$; the two generators act on
+different carriers and have different domains.
+
+*Proof.*  The form spectral measure has an integrable first moment for
+$F,G\in\mathcal D_{\mathbb C}$.  Dominated convergence in
+$(1-e^{-s\lambda})/s$ and polarization give
+$\langle F,T(s)G\rangle=\langle F,G\rangle-s\mathcal E_{\mathbb C}(F,G)+o(s)$.
+Substitute $s=|t|$ in (273.3).  Equations (273.10) use (111.17)--(111.19).
+If a vector belongs to $\operatorname{Dom}(K)$, the matrix coefficient of
+the strongly continuous unitary group is differentiable at zero; the cusp
+in (273.10) rules this out. $\square$
+
+The path translation in (273.1) therefore supplies a reversible unitary
+carrier whose time-zero correlations reproduce the heat histories, but it
+is not the optional same-carrier group $e^{-itH_{\mathbb C}}$ of
+Definition 271.3.  The latter still has the $o(|t|)$ disjoint-cylinder
+transition of Theorem 272.2, whereas (273.10) has a nonzero $|t|/4$ term.
+The earlier exclusion is consequently unchanged: the full path dilation
+uses an enlarged history carrier and the generator $K$, and does not install
+the state preparation, Born rule, coherent control, instrument, reference,
+or native-operation permissions excluded in Definition 272.3.
+
+## 274. The first-layer labels retain predictive memory
+
+**Definition 274.1 (the first-layer label process).**
+On the same law $\mathbb P$, put
+
+$$
+Y_t=\mathbf1_{[L]}(X_t),\qquad A=F_L=\mathbf1_{[L]},\qquad B=F_{LL}.
+\tag{274.1}
+$$
+
+The question whether the labels close as a stationary two-state Markov
+process is a question about the finite-dimensional law of $Y$, not about a
+new deterministic source or a quantum operation.
+
+**Proposition 274.2 (a depth-two energy witness).**
+For the original biased free-root form,
+
+$$
+\mathcal E(B,A)=\frac18.
+\tag{274.2}
+$$
+
+*Proof.*  Write $q_u=2^{-|u|}$ for the equal-split flow of Theorem 99.1.
+The least-energy extension of $A$ has root values
+
+$$
+u_A(\varnothing)=\frac12,\qquad u_A(L)=\frac34,\qquad u_A(R)=\frac14,
+\tag{274.3}
+$$
+
+and increments
+
+$$
+z^A_L=\frac14,\quad z^A_R=-\frac14,\quad
+z^A_{Lu}=\frac14q_u,\quad z^A_{Ru}=-\frac14q_u
+\quad(u\ne\varnothing).
+\tag{274.4}
+$$
+
+For $B$, the corresponding junction values are
+
+$$
+u_B(\varnothing)=\frac14,\quad
+u_B(L)=\frac38,\quad u_B(R)=\frac18,
+\tag{274.5}
+$$
+
+$$
+u_B(LL)=\frac{11}{16},\quad u_B(LR)=\frac{3}{16},\quad
+u_B(RL)=u_B(RR)=\frac1{16},
+\tag{274.6}
+$$
+
+and the strict-descendant increments are
+
+$$
+\begin{gathered}
+z^B_L=\frac18,\quad z^B_R=-\frac18,\quad
+z^B_{LL}=\frac5{16},\quad z^B_{LR}=-\frac3{16},\quad
+z^B_{RL}=z^B_{RR}=-\frac1{16},\\
+z^B_{LLu}=\frac5{16}q_u,\quad z^B_{LRu}=-\frac3{16}q_u,\quad
+z^B_{RLu}=z^B_{RRu}=-\frac1{16}q_u
+\quad(u\ne\varnothing).
+\end{gathered}
+\tag{274.7}
+$$
+
+Each displayed flow has the declared cylinder trace, and completing squares
+at the root, the two first junctions, and each constant-trace descendant
+subtree shows that it is the unique least-energy extension from (111.2).
+Equivalently, the descendant pieces are the equal-split minimizers from
+Theorem 99.1 and the finite junction values solve their three-edge Euler
+equations.  The inner product of (274.4) and (274.7) is computed by
+splitting at the root.  The root edges contribute $1/16$.  Below $L$,
+$\langle q,z^B|_L\rangle$ is the fair-flow mean of the increment trace,
+$1/2-u_B(L)=1/8$, so the contribution is $1/32$; below $R$ it is
+$0-u_B(R)=-1/8$, and the contribution is again $1/32$.  Hence
+$\mathcal E(B,A)=1/16+1/32+1/32=1/8$. $\square$
+
+**Theorem 274.3 (the first-layer process is not a stationary two-state
+Markov process on the supplied clock).**
+The process $(Y_t)_{t\in\mathbb R}$ does not have the finite-dimensional
+law of any stationary, stochastically continuous two-state Markov process
+with stationary masses $(a,b)=(\varphi^{-1},\varphi^{-2})$ on the clock $s$.
+
+*Proof.* Put $q(s)=\langle A,T(s)A\rangle$.  Since
+$F_R=\mathbf1-A$, (111.18)--(111.19) give
+
+$$
+q(s)=a-\frac{s}{4}+o(s),\qquad
+q(s)-a^2=ab-\frac{s}{4}+o(s).
+\tag{274.8}
+$$
+
+Any Markov process having these finite-dimensional distributions inherits
+this continuity at the origin from (274.8), so the stochastic-continuity
+qualification introduces no extra model restriction.
+
+A stationary stochastically continuous two-state Markov process has a
+two-dimensional transition semigroup.  Reversibility with stationary
+masses $(a,b)$ forces its centered covariance to be
+
+$$
+q(s)-a^2=ab\,e^{-\gamma s}
+\tag{274.9}
+$$
+
+for some $\gamma\ge0$.  The right derivative in (274.8) forces
+$\gamma=1/(4ab)>0$.  If (274.9) held for the source law, uniqueness of
+Laplace transforms would make the $H_{\mathbb C}$ spectral measure of
+$A-a\mathbf1$ equal to $ab\,\delta_\gamma$, hence
+
+$$
+H(A-a\mathbf1)=\gamma(A-a\mathbf1).
+\tag{274.10}
+$$
+
+The form identity for (274.10), first with $A$ and then with $B$, would
+give
+
+$$
+\mathcal E(A,A)=\gamma\langle A,A-a\mathbf1\rangle=\gamma ab=\frac14,
+\qquad
+\mathcal E(B,A)=\gamma\langle B,A-a\mathbf1\rangle
+=\gamma a^2b=\frac a4.
+\tag{274.11}
+$$
+
+The first-cylinder energy in (111.17) and Proposition 274.2 instead give
+$\mathcal E(B,A)=1/8$.  Since $a=\varphi^{-1}\ne1/2$, this contradicts
+(274.11).  Thus the first-layer labels retain hidden predictive memory
+and do not close as the requested two-state Markov process. $\square$
+
+The full coordinate process $X_t$ remains the stationary reversible Markov
+state supplied by Theorem 270.4, and the complete addressed history is a
+closed stochastic memory.  The failure in Theorem 274.3 concerns only the
+two-label coarse graining: matching its first short-time transfer does not
+remove the deeper-cylinder memory.  It is therefore neither a deterministic
+two-state update nor evidence of quantum coherence.  The unitary path
+translation of §273 is a reversible mathematical dilation of this classical
+law; Born probabilities, coherent preparations, instruments and the native
+operation contract remain separate obligations.
+
+If one used only the first derivative in (274.8), the putative two-state
+rates would be
+
+$$
+r_{L\to R}=\frac{1}{4a}=\frac{\varphi}{4},\qquad
+r_{R\to L}=\frac{1}{4b}=\frac{\varphi^2}{4},\qquad
+r_{L\to R}+r_{R\to L}=\frac{\varphi^3}{4}.
+\tag{274.12}
+$$
+
+The depth-two identity (274.2), rather than the first derivative, is what
+rejects this otherwise uniquely determined candidate.
