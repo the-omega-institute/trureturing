@@ -22,8 +22,8 @@ internal sealed class BonettoSignatureDocument : IScribeDocumentDefinition
                     Mul(u, App(Qualified("SimpleGraph", "adjMatrix"), h, C("Real")))))));
         Formula roots = App(Qualified("Polynomial", "roots"),
             App(Qualified("Matrix", "charpoly"), q));
-        Formula positive = Seq(LambdaLower, Sp, V("x"), Mapsto, Lt(D(0), V("x")));
-        Formula negative = Seq(LambdaLower, Sp, V("x"), Mapsto, Lt(V("x"), D(0)));
+        Formula positive = Seq(LambdaLower, Sp, V("x"), Sp, Mapsto, Sp, Lt(D(0), V("x")));
+        Formula negative = Seq(LambdaLower, Sp, V("x"), Sp, Mapsto, Sp, Lt(V("x"), D(0)));
         Formula signature = Carrier(All("Q", Call("Matrix", V("V"), V("V"), C("Real")),
             Eqn(Call("signature", q), Sub(
                 IntegerCast(Call("card", Call("filter", Parenthesized(positive), roots))),
