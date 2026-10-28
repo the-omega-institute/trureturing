@@ -7,7 +7,7 @@ import Reg.Support.SingleDependentReadout
 namespace Reg.D5.S3.Quantum.Matrix.CartesianVariance
 open _root_.D5.S3.Quantum.Matrix.CartesianVariance
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open Matrix
+open _root_.Matrix
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -19,6 +19,7 @@ abbrev signature : Signature :=
     (fun n => Matrix (Fin n) (Fin n) ℂ)
     (fun n => Matrix (Fin n) (Fin n) ℂ → Prop)
 
+/-- Read equality with the spectral sum at each matrix dimension. -/
 def actual : Realization signature :=
   realize signature (fun _ _ X Y => X = Y) (fun e => nomatch e)
 
