@@ -648,7 +648,7 @@ Released under Apache 2.0 license as described in the repository LICENSE.
 SPDX-License-Identifier: Apache-2.0
 That source is a legacy non-module, so this consumed local bridge keeps the
 present public module importable by the analytic derivative supplier. -/
-private theorem trace_mul_nonneg_of_posSemidef
+theorem trace_mul_nonneg_of_posSemidef
     {n : Type*} [Fintype n] [DecidableEq n] {𝕜 : Type*} [RCLike 𝕜]
     {A B : Matrix n n 𝕜}
     (hA : A.PosSemidef) (hB : B.PosSemidef) :
