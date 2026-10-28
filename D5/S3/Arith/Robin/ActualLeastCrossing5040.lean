@@ -185,9 +185,7 @@ theorem uniform_actual_least_crossing_record_5040 :
     by_contra h
     have hW : divisorLog m ≤ divisorLog n := Real.log_le_log hAm (le_of_not_gt h)
     have hWn : divisorLog n ≤ Real.log (n : ℝ) := by
-      apply Real.log_le_log hAn
-      apply (div_le_iff₀ hnR).mpr
-      exact_mod_cast (by simpa [pow_two] using ArithmeticFunction.sigma_le_pow_succ 1 n)
+      exact divisor_log_le_log hn
     have hRA : A < Real.log (n : ℝ) := (le_max_left A _).trans_lt (hWm.trans_le (hW.trans hWn))
     have hYexp : Real.exp 2 < Real.log (n : ℝ) :=
       ((le_max_left (Real.exp 2) (Real.log 30)).trans (le_max_right A _)).trans_lt
