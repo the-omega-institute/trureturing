@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:41801515ada8917a534c961ee7219361ea6c4d52634af602d05f001cdbe8745c
+  normalized_sha256: sha256:41801515ada8917a534c961ee7219361ea6c4d52634af602d05f001cdbe8745c
+cas_ref: sha256:41801515ada8917a534c961ee7219361ea6c4d52634af602d05f001cdbe8745c
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundarySpectralForm.actual_spectral_form_energy
+    target_statement_id: sha256:e9238ff72e3651d20531ea2ff148b20619859de515f8493dc74378119d10bdc8
+receipts:
+  unresolved_subitems: []
