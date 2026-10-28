@@ -8,6 +8,7 @@
 
 import D5.S3.Observer.CubicGain.LiteralElimination
 import Mathlib.LinearAlgebra.Matrix.Polynomial
+import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
 import D5.S3.Observer.CubicGain.LiteralLeadingCertificates
 
 set_option autoImplicit false
@@ -22,6 +23,7 @@ open Polynomial
 open scoped BigOperators
 open D5.S3.Observer.CubicGain.SelectedRootCommonZero
 open D5.S3.Observer.CubicGain.ActualMinorLift
+open D5.S3.Observer.CubicGain.ExactW3Center
 open D5.S3.Observer.CubicGain.LiteralElimination
 open D5.S3.Observer.CubicGain.LiteralLeadingCertificates
 
@@ -39,6 +41,175 @@ def literalSylvester (k : Fin 2) : Matrix (Fin 30) (Fin 30) (Polynomial ℤ) :=
   fun i j => (sylvesterRow k i).coeff (29-j.val)
 
 def actualResultant (k : Fin 2) : Polynomial ℤ := (literalSylvester k).det
+
+private def resultantEvalB (b : ℝ) : Polynomial ℤ →+* ℝ :=
+  Polynomial.eval₂RingHom (Int.castRingHom ℝ) b
+
+private def sourcePolynomialReal (b : ℝ) (i : Fin 3) : Polynomial ℝ :=
+  ![sourceE0 b,sourceE1 b,sourceE2 b] i
+
+private def specializedSylvester (b : ℝ) (k : Fin 2) : Matrix (Fin 30) (Fin 30) ℝ :=
+  (literalSylvester k).map (resultantEvalB b)
+
+private theorem specialized_entry (b : ℝ) (k : Fin 2) (i j : Fin 30) :
+    specializedSylvester b k i j =
+      ((if i.val < 15 then X^(14-i.val) * sourceE0 b
+        else X^(29-i.val) * sourcePolynomialReal b k.succ) : Polynomial ℝ).coeff (29-j.val) := by
+  unfold specializedSylvester
+  rw [Matrix.map_apply]
+  unfold literalSylvester sylvesterRow sourcePolynomialReal
+  by_cases hi : i.val < 15
+  · simp only [ite_eq_left hi]
+    change resultantEvalB b
+        ((X^(14-i.val) * sourcePolynomial 0).coeff (29-j.val)) = _
+    rw [← coeff_map]
+    have hmap : (sourcePolynomial 0).map (resultantEvalB b) = sourceE0 b := by
+      simp [sourcePolynomial, sourceE0, resultantEvalB]
+    rw [Polynomial.map_mul, hmap]
+    simp [resultantEvalB]
+  · simp only [ite_eq_right hi]
+    change resultantEvalB b
+        ((X^(29-i.val) * sourcePolynomial k.succ).coeff (29-j.val)) = _
+    rw [← coeff_map]
+    have hmap : (sourcePolynomial k.succ).map (resultantEvalB b) =
+        sourcePolynomialReal b k.succ := by
+      fin_cases k <;>
+        simp [sourcePolynomial, sourcePolynomialReal, sourceE1, sourceE2, resultantEvalB]
+    rw [Polynomial.map_mul, hmap]
+    fin_cases k <;> simp [resultantEvalB, sourcePolynomialReal]
+
+private def rootVector (z : ℝ) : Fin 30 → ℝ := fun j => z^(29-j.val)
+
+private theorem shifted_row_eval (p : Polynomial ℝ) (s : ℕ) (z : ℝ)
+    (hp : p.natDegree ≤ 15) (hs : s ≤ 14) :
+    (∑ j : Fin 30, (X^s*p).coeff (29-j.val) * z^(29-j.val)) =
+      z^s * p.eval z := by
+  have hdeg : (X^s*p).natDegree < 30 := by
+    have h := natDegree_mul_le (p := (X^s : Polynomial ℝ)) (q := p)
+    simp only [natDegree_X_pow] at h
+    omega
+  have hsum : (∑ j : Fin 30, (X^s*p).coeff (29-j.val) * z^(29-j.val)) =
+      ∑ j : Fin 30, (X^s*p).coeff j.val * z^j.val := by
+    calc
+      _ = ∑ j : Fin 30, (X^s*p).coeff j.rev.val * z^j.rev.val := by
+        apply Finset.sum_congr rfl
+        intro j hj
+        rw [Fin.val_rev]
+        have h : 30 - (j.val + 1) = 29 - j.val := by omega
+        rw [h]
+      _ = _ := by
+        exact Equiv.sum_comp (Fin.revPerm : Equiv.Perm (Fin 30))
+          (fun j : Fin 30 => (X^s*p).coeff j.val * z^j.val)
+  calc
+    _ = ∑ j ∈ Finset.range 30, (X^s*p).coeff j * z^j :=
+      hsum.trans (Fin.sum_univ_eq_sum_range (fun j => (X^s*p).coeff j*z^j) 30)
+    _ = z^s * p.eval z := by
+      rw [← eval_eq_sum_range' hdeg z, eval_mul, eval_pow, eval_X]
+
+private theorem specialized_mulVec_zero (b z : ℝ) (k : Fin 2)
+    (h0 : (sourceE0 b).eval z = 0)
+    (hk : (sourcePolynomialReal b k.succ).eval z = 0) :
+    Matrix.mulVec (specializedSylvester b k) (rootVector z) = 0 := by
+  funext i
+  change (∑ j : Fin 30,
+    specializedSylvester b k i j * rootVector z j) = 0
+  simp only [rootVector, specialized_entry]
+  by_cases hi : i.val < 15
+  · simp only [ite_eq_left hi]
+    have hs := shifted_row_eval (sourceE0 b) (14-i.val) z
+      (by unfold sourceE0; compute_degree) (by omega)
+    rw [hs, h0, mul_zero]
+  · simp only [ite_eq_right hi]
+    have hs := shifted_row_eval (sourcePolynomialReal b k.succ) (29-i.val) z (by
+      fin_cases k <;> simp [sourcePolynomialReal, sourceE1, sourceE2] <;>
+        compute_degree) (by omega)
+    rw [hs, hk, mul_zero]
+
+/- The fixed-size determinant remains meaningful when specialization drops a
+   leading coefficient: a common zero still supplies a nonzero kernel vector. -/
+theorem literal_resultant_vanishes_of_common_root (b z : ℝ) (k : Fin 2)
+    (h0 : (sourceE0 b).eval z = 0)
+    (hk : (![sourceE1 b, sourceE2 b] k).eval z = 0) :
+    (actualResultant k).eval₂ (Int.castRingHom ℝ) b = 0 := by
+  have hk' : (sourcePolynomialReal b k.succ).eval z = 0 := by
+    fin_cases k <;> simpa [sourcePolynomialReal] using hk
+  have hv : rootVector z ≠ 0 := by
+    intro hz
+    have hlast := congrFun hz ⟨29, by decide⟩
+    simpa [rootVector] using hlast
+  have hdet : (specializedSylvester b k).det = 0 :=
+    (Matrix.exists_mulVec_eq_zero_iff (M := specializedSylvester b k)).mp
+      ⟨rootVector z, And.intro hv (specialized_mulVec_zero b z k h0 hk')⟩
+  have hmap := RingHom.map_det (resultantEvalB b) (literalSylvester k)
+  change resultantEvalB b ((literalSylvester k).det) = 0
+  have hdet' : ((literalSylvester k).map (resultantEvalB b)).det = 0 := by
+    simpa [specializedSylvester] using hdet
+  exact hmap.trans hdet'
+
+private theorem literalMatrixCoeff_eval_bridge (b : ℝ) :
+    (literalMatrixCoeff.map (evalB b)) = literalMatrix b := by
+  have h0 : sourceE0Coeff.map (evalB b) = sourceE0 b := by
+    simp [sourceE0Coeff, sourceE0, evalB]
+  have h1 : sourceE1Coeff.map (evalB b) = sourceE1 b := by
+    simp [sourceE1Coeff, sourceE1, evalB]
+  ext i j
+  by_cases hi : i.val < 14
+  · have hrow : (literalRowCoeff i).map (evalB b) = literalRow b i := by
+      simp [literalRowCoeff, literalRow, hi, h0]
+    change evalB b ((literalRowCoeff i).coeff (28 - j.val)) =
+      (literalRow b i).coeff (28 - j.val)
+    rw [← coeff_map, hrow]
+  · have hrow : (literalRowCoeff i).map (evalB b) = literalRow b i := by
+      simp [literalRowCoeff, literalRow, hi, h1]
+    change evalB b ((literalRowCoeff i).coeff (28 - j.val)) =
+      (literalRow b i).coeff (28 - j.val)
+    rw [← coeff_map, hrow]
+
+private theorem fixedMinorR_eval_bridge (b : ℝ) :
+    fixedMinorRCoeff.map (evalB b) = fixedMinorR (literalMatrix b) := by
+  ext i j
+  change evalB b (fixedMinorRCoeff i j) = fixedMinorR (literalMatrix b) i j
+  by_cases hj : j.val < 27
+  · simp only [fixedMinorRCoeff, fixedMinorR, hj]
+    exact congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i ⟨j.val, by omega⟩)
+      (literalMatrixCoeff_eval_bridge b)
+  · simp only [fixedMinorRCoeff, fixedMinorR, hj]
+    exact congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i 27)
+      (literalMatrixCoeff_eval_bridge b)
+
+private theorem fixedMinorC_eval_bridge (b : ℝ) :
+    fixedMinorCCoeff.map (evalB b) = fixedMinorC (literalMatrix b) := by
+  ext i j
+  change evalB b (fixedMinorCCoeff i j) = fixedMinorC (literalMatrix b) i j
+  by_cases hj : j.val < 27
+  · simp only [fixedMinorCCoeff, fixedMinorC, hj]
+    exact congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i ⟨j.val, by omega⟩)
+      (literalMatrixCoeff_eval_bridge b)
+  · simp only [fixedMinorCCoeff, fixedMinorC, hj]
+    exact congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i 28)
+      (literalMatrixCoeff_eval_bridge b)
+
+private theorem actualMinorA0_eval_bridge (b : ℝ) :
+    evalB b actualMinorA0 = (fixedMinorR (literalMatrix b)).det := by
+  simpa only [actualMinorA0] using
+    (RingHom.map_det (evalB b) fixedMinorRCoeff).trans
+      (congrArg Matrix.det (fixedMinorR_eval_bridge b))
+
+private theorem actualMinorC0_eval_bridge (b : ℝ) :
+    evalB b actualMinorC0 = (fixedMinorC (literalMatrix b)).det := by
+  simpa only [actualMinorC0] using
+    (RingHom.map_det (evalB b) fixedMinorCCoeff).trans
+      (congrArg Matrix.det (fixedMinorC_eval_bridge b))
+
+/- The original linear subresultant relation is transported to the actual
+   integer determinant polynomials.  No leading coefficient is divided out. -/
+theorem literal_minor_relation_of_common_root (b z : ℝ)
+    (h0 : (sourceE0 b).eval z = 0)
+    (h1 : (sourceE1 b).eval z = 0) :
+    z * evalB b actualMinorA0 + evalB b actualMinorC0 = 0 := by
+  have h := literal_fixed_minor_relation b z h0 h1
+  rw [actualMinorA0_eval_bridge b, actualMinorC0_eval_bridge b]
+  exact h
 
 private theorem source_r_degree (i : Fin 3) : (sourcePolynomial i).natDegree ≤ 15 := by
   fin_cases i

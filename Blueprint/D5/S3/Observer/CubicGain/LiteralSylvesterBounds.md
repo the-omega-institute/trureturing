@@ -46,12 +46,38 @@ $$(\forall k\in \operatorname{Fin}(2), \operatorname{natDegree}(\operatorname{ac
 
 Both original fixed Sylvester determinants have natural degree 285; the original r-column and constant-column minors have natural degrees 252 and 253 respectively. For each entry the proof extracts the coefficient at row weight minus column exponent. Scaling rows and columns by powers of X identifies the determinant coefficient with the determinant of this integer leading matrix. The exact full-matrix certificates in LiteralLeadingCertificates prove that all four leading determinants are nonzero. Every coefficient array is checked against sourcePolynomial, and every matrix entry is connected to the original fixed rows and columns.
 
+**Theorem 1.4 (A literal fixed-degree resultant vanishes at every common source root).**
+
+$$\forall b, z, k\in \operatorname{Fin}(2), {\operatorname{eval}(z\operatorname{sourceE0}(b))}= 0\land {\operatorname{eval}(z\operatorname{sourcePair}(bk))}= 0\implies \operatorname{resultantEvaluation}(b\operatorname{actualResultant}(k))= 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/LiteralSylvesterBounds.literal_resultant_vanishes_of_common_root` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For either original pair, a common real source root supplies the nonzero vector (z^29,...,1) to the exact thirty-row fixed Sylvester matrix. The determinant therefore vanishes after evaluating the parameter b, even when a specialized leading coefficient drops. The theorem uses the original E0/E1/E2 coefficient arrays and does not select a root or divide by a leading coefficient.
+
+**Theorem 1.5 (The literal fixed linear minors obey the common-root relation).**
+
+$$\forall b, z, {\operatorname{eval}(z\operatorname{sourceE0}(b))}= 0\land {\operatorname{eval}(z\operatorname{sourceE1}(b))}= 0\implies z \operatorname{evalB}(b\operatorname{actualMinorA0}())+ \operatorname{evalB}(b\operatorname{actualMinorC0}())= 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/LiteralSylvesterBounds.literal_minor_relation_of_common_root` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A common real root of the original E0 and E1 rows gives z times the evaluated r-column determinant plus the evaluated constant-column determinant equal to zero. The proof transports the existing 28-row fixed-minor relation through the integer coefficient determinants, retaining every row and column and dividing by no leading coefficient.
+
 These are polynomial bounds and exact degrees before specialization. All rows, columns and zero padding remain fixed even when specialization lowers a leading degree. These results do not prove exact resultant or minor factorizations, the displayed common factors, primitive positive normalization, coprimality, or any root or world exhaustion.
 
 ## References
 
 - Truth anchor: `D5/S3/Observer/CubicGain/LiteralSylvesterBounds.literal_elimination_exact_degrees`
 - Truth anchor: `D5/S3/Observer/CubicGain/LiteralSylvesterBounds.literal_minor_degree_bounds`
+- Truth anchor: `D5/S3/Observer/CubicGain/LiteralSylvesterBounds.literal_minor_relation_of_common_root`
 - Truth anchor: `D5/S3/Observer/CubicGain/LiteralSylvesterBounds.literal_resultant_degree_bound`
+- Truth anchor: `D5/S3/Observer/CubicGain/LiteralSylvesterBounds.literal_resultant_vanishes_of_common_root`
 - Dependency: [D5/S3/Observer/CubicGain/LiteralElimination](LiteralElimination.md)
 - Dependency: [D5/S3/Observer/CubicGain/LiteralLeadingCertificates](LiteralLeadingCertificates.md)
