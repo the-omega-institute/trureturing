@@ -8,7 +8,7 @@ internal sealed class GibonacciPowerGcdNormalizationDocument : IScribeDocumentDe
 {
     private const string Prefix = "D5/S1/Recurrence/GibonacciPowerGcdNormalization.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/ArithUnits/mbirikaspilker2022gibonaccipowers");
+        LibraryNoteRef.Create("D5/L/Recurrence/mbirikaspilker2022gibonaccipowers");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Integer seed content scales the gcd of all shifted power windows by its exponent.",
