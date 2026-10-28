@@ -1,1 +1,1 @@
-WIP checkpoint: arbitrary-index root criterion implementation is present in the owning D5 module and Blueprint Scribe. The finite theorem type is preserved; scoped Lean build is next, followed by report, bounded Reg audit, transient exact scenarios, and runner evidence.
+Checkpoint: arbitrary-index root criterion implementation is complete in the owning D5 module and Blueprint Scribe. Core and scoped report checks pass; transient scenario checks pass; the bounded faithful Reg attempt remains unresolved and is preserved in the runner attempt artifacts.
