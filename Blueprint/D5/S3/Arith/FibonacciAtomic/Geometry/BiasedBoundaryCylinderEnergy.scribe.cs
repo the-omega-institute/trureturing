@@ -24,7 +24,7 @@ internal sealed class BiasedBoundaryCylinderEnergyDocument : IScribeDocumentDefi
             Describe.Lean(DescribeId.Create("mixed-cylinder-energy"),
                 DeclarationHandle.Create(Prefix + "mixed_cylinder_energy"), H("The Mixed Cylinder Energy"),
                 StatementSource.FromAuthor(Seq(Call("form",Call("cylinderD",Call("descendant",ListOf(V("false")),Call("rootEdge",V("false")))),
-                    Call("cylinderD",Call("rootEdge",V("false")))),Eq,Frac(D(1),D(8)))),
+                    Call("cylinderD",Call("rootEdge",V("false")))),Eq,Seq(Frac,Grp(D(1)),Grp(D(8))))),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("A is the actual indicator of [L] and B is the actual indicator of [LL]. The form pairs their unique effective least-increment lifts in the original free-root domain, with the root coefficient optimized freely.")),
                     Paragraph(Text("For A, the root coefficient is one half, its two root increments are one quarter and minus one quarter, and its strict suffixes are these same multiples of the constant-one minimum. For B, the root coefficient is one quarter and the two root increments are one eighth and minus one eighth. At the next level the increments are five sixteenths, minus three sixteenths, minus one sixteenth and minus one sixteenth; each corresponding strict suffix is that increment times the constant-one minimum.")),
@@ -49,8 +49,8 @@ internal sealed class BiasedBoundaryCylinderEnergyDocument : IScribeDocumentDefi
         Formula pair=All("c",Seq(Mathbb,Grp(V("R"))),All("z",V("H"),
             Seq(Call("J",z),Eq,Call("constG",c),Implies,Sp,Call("inner",q,z),Eq,c)));
         Formula split=All("c",Call("Bool"),And(
-            Seq(Call("eval",q,Call("rootEdge",c)),Eq,Frac(D(1),D(2))),
-            Seq(Call("S",ListOf(c),q),Eq,Frac(D(1),D(2)),Cdot,Sp,q)));
+            Seq(Call("eval",q,Call("rootEdge",c)),Eq,Seq(Frac,Grp(D(1)),Grp(D(2)))),
+            Seq(Call("S",ListOf(c),q),Eq,Seq(Frac,Grp(D(1)),Grp(D(2))),Cdot,Sp,q)));
         return Seq(Exists,Sp,q,Colon,Sp,V("H"),Comma,Sp,Par(And(
             Seq(Call("J",q),Eq,Call("constG",D(1))),Seq(NormSq(q),Eq,D(1)),pair,split)));
     }
