@@ -165,5 +165,95 @@ def registration :
 
 end Unitary
 
+namespace TwiceUpper
+
+open _root_.D5.S3.Quantum.Information.CorrelatedCoherenceMonogamyRefutation (l1Coherence)
+open scoped BigOperators
+
+/-- Observe equality of the total coherence and the upper-triangular norm sum. -/
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ left right => left = right) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ left right => left ≠ right) (fun e => nomatch e)
+
+/-- Preserve every dimension, matrix and Hermitian hypothesis. -/
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ) (_hρ : ρ.IsHermitian),
+    r.readout () () (l1Coherence ρ)
+      (2 * ∑ k, ‖WithLp.toLp 1 (fun j : Fin n => if k < j then ρ k j else 0)‖)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (n := 1) 0 Matrix.isHermitian_zero
+    (coherenceL1_eq_twice_upper 0 Matrix.isHermitian_zero)
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  change (fun right : ℝ => 0 = right) = (fun right : ℝ => 1 = right) at h
+  have hfalse : (1 : ℝ) = 0 := (congrFun h 0).mp rfl
+  exact one_ne_zero hfalse
+
+def source_registration : Registration arena (type_of% @coherenceL1_eq_twice_upper) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨coherenceL1_eq_twice_upper, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@coherenceL1_eq_twice_upper) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Divergence.CoherenceL1RelativeEntropyBound.TwiceUpper.unit
+  realizationName :=
+    `Reg.D5.S3.Divergence.CoherenceL1RelativeEntropyBound.TwiceUpper.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ _ left right => left = right) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Divergence.CoherenceL1RelativeEntropyBound
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end TwiceUpper
+
 end
 end Reg.D5.S3.Divergence.CoherenceL1RelativeEntropyBound

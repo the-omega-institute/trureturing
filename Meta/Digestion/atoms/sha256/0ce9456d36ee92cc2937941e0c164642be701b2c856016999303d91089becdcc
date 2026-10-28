@@ -1,0 +1,38 @@
+ Other canonical original coordinates are
+infinite and have computable prefixes for every supplied $\mathbf p,h$.
+
+Proof. Extend [FJC, Theorem 3.1][FJC] by treating finite parameter atoms as
+finite terminals without expanding or bounding them. Normalize defining
+roots to finite terminals, $\Omega$, pairs or root links $\rho^aX_j$.
+The root-link graph has outdegree at most one. Follow its finite paths,
+accumulating weights. A zero-weight cycle is free aliases; a positive
+cycle forces $\Omega$ by (SFS.6). Substitute paths ending at grounds,
+pairs or free states and keep every reconstruction expression.
+
+Remaining defined states have explicit pair roots and all their state
+occurrences lie below a pair. Assign arbitrary completed free-state values.
+Simultaneous evaluation gains one prefix depth: any two $n$-fold iterates
+agree through $n-1$, and successive iterates have that agreement. Completeness
+and continuity give a fixed point; the same estimate proves uniqueness for
+the assigned free values. Set free states to $\Omega$ for the canonical
+solution. Reconstruct root links to obtain a solution of the original
+system; restricting any solution gives the normalized system, proving
+both representation directions.
+
+A state is canonically finite precisely when its reachable occurrence graph
+is acyclic and reaches neither a free state nor $\Omega$. Reverse-order
+evaluation gives a finite expression in terminals, forced in every solution.
+A reachable infinite terminal makes its predecessors canonically infinite
+because powers and pairs preserve an infinite branch. A pair-guarded cycle
+cannot have finite values by strict leaf-count decrease around that cycle;
+its predecessors are infinite. Apply this test to each original-coordinate
+reconstruction. Graph finiteness is independent of parameter values, even
+when finite atoms coincide or an explicit pair becomes atomic. The finite
+reconstruction is the same in every solution.
+
+Compute infinite-coordinate prefixes by finitely many guarded iterations
+and their reconstruction expressions. Terminals at chosen parameters are
+actual computable finite trees. A canonically infinite coordinate depending
+on a free state can be finite in a different solution; rigidity is claimed
+only for canonically finite coordinates. No sign is assigned to the limit.
+

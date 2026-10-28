@@ -1,0 +1,27 @@
+**Definition 1.3 (auxiliary operators and the class $\mathscr G$).** On full real $2\times2$ matrices put
+$$
+\mathsf B_{\rm pre}X=
+\bigl(\operatorname{tr}(A_iX)-\operatorname{tr}X\bigr)_{i=1}^3,
+$$
+$$
+\mathsf BX=\bigl(\operatorname{tr}(A_iX)-\operatorname{tr}X\bigr)_{i=1}^4,
+\qquad
+\mathsf CX=\bigl(i\operatorname{tr}(A_iX)\bigr)_{i=1}^4,
+\qquad \mathsf T_k=\mathsf B+k\mathsf C.
+\tag{1.4}
+$$
+The determinant polar is
+$$
+\mathfrak b(X,Y)=\det(X+Y)-\det X-\det Y.
+$$
+For $X=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$ and $Y=(\begin{smallmatrix}P&Q\\R&T\end{smallmatrix})$, expansion gives
+$$
+\mathfrak b(X,Y)=sP+pT-rQ-qR,
+\qquad
+\det(X+vY)=\det X+v\mathfrak b(X,Y)+v^2\det Y.
+\tag{1.5}
+$$
+In particular the polar is symmetric bilinear.
+
+The class $\mathscr G$ consists of legal prefixes $I,A_1,A_2,A_3$ for which $\ker\mathsf B_{\rm pre}=\mathbb RN$, where $N\ne0$ has rank one and $\mathfrak b(S,N)$ has one strict fixed sign on every strictly positive rank-one $S$. Orient $N$ so that this sign is positive. Thus $\operatorname{rank}\mathsf B_{\rm pre}=3$. The kernel matrices and signed columns used below are auxiliary proof objects; they are not actual positive sources or additional acquisitions.
+

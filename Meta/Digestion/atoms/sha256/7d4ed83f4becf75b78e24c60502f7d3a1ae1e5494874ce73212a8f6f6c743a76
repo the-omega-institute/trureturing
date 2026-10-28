@@ -1,0 +1,93 @@
+**Theorem 6.1 (deterministic and random time domains).** Under all
+parameters of §1, for every fixed original time $t>0$,
+
+$$
+\mathbb P_e(z_t=0)=0,\qquad
+\mathbb P_e(z_t>0\mid\mathcal A_I)
+ =\mathbb P_e(z_t<0\mid\mathcal A_I)=\tfrac12.
+\tag{6.1}
+$$
+
+Every $\mathcal A_I$-measurable binary decision for the sign has
+error exactly $1/2$, also conditional on any positive-probability
+event of $\mathcal A_I$. For every real $\mathcal A_I$-measurable
+estimate $\widehat z$, every $d>0$ and every
+$B\in\mathcal A_I$,
+
+$$
+\mathbb P_e\bigl(B,\ |\widehat z-z_t|\ge d,\ |z_t|\ge d\bigr)
+ \ \ge\ \tfrac12\mathbb P_e\bigl(B,\ |z_t|\ge d\bigr).
+\tag{6.2}
+$$
+
+For $B$ the whole space, its right-hand side is strictly positive
+for every $d>0$. In particular exact full source-state recovery at
+that fixed time is impossible from this record.
+
+For every finite nonnegative $\mathcal A_I$-measurable random time
+$S$, which need not be a stopping time, the exact assertion is
+
+$$
+\mathbb P_e(z_S>0\mid\mathcal A_I)
+ =\mathbb P_e(z_S<0\mid\mathcal A_I)
+ =\tfrac12\mathbb P_e(z_S\ne0\mid\mathcal A_I).
+\tag{6.3}
+$$
+
+The analogue of (6.2) holds with $t$ replaced by $S$, without a
+claim that its right-hand side is positive. At a genuine observed
+source contact before $\theta_I$, $z_S=0$ on that contact event.
+At $S=0$ it is zero identically. The deterministic-time target $z_t$
+in (6.1)–(6.2) belongs to the unheld original source, also when
+$t>\theta_I$; it is not silently replaced by $z_{t\wedge\theta_I}$.
+
+Proof. On canonical path space reflect the source path and leave $U$
+fixed. Independence of $U$ and Theorem 5.1 make this a
+measure-preserving involution. Its observed whole history is fixed,
+so each bounded $\mathcal A_I$-measurable test is invariant, up to
+the usual null modification. Reflection interchanges $z_t>0$ with
+$z_t<0$; their integrals against every such test agree. The
+deterministic-time law $g_tm$ of [S, Theorem 117.2] gives zero mass
+to the raw-Haar-null hyperplane $z=0$, since $m=h^2\mu$.
+The two conditional probabilities therefore sum to one and are
+each $1/2$. A decision partitions the record into its positive
+and negative choices; integrating (6.1) on that partition proves
+the exact error, including after conditioning on any observed event.
+This includes any randomized causal observer dominated by the record.
+
+For (6.2), fix a reflected pair with $|z_t|\ge d$. Its two target
+values are $z_t$ and $-z_t$, separated by at least $2d$, while $B$
+and the estimate agree on the pair. The estimate cannot have
+distance strictly less than $d$ from both targets. Consequently
+
+$$
+\mathbf1_{\{|\widehat z-z_t|\ge d\}}
+ +\mathbf1_{\{|\widehat z+z_t|\ge d\}}\ge1
+                   \quad\hbox{on }\{|z_t|\ge d\}.
+\tag{6.4}
+$$
+
+Multiply by the invariant indicator of $B\cap\{|z_t|\ge d\}$
+and integrate. The two integrals on the left are equal by reflection,
+which proves (6.2), including the equality boundary $|z_t|=d$.
+Strict positivity for the whole space follows because $g_t>0$
+$m$-almost everywhere, $h>0$ off $e$, and the set $|z|\ge d$
+has positive Haar measure. No moment or uniform density bound is
+needed.
+
+If $S$ is $\mathcal A_I$-measurable, it is invariant under the
+same involution. Evaluating the continuous path at $S$ is measurable;
+reflection therefore interchanges the positive and negative events
+at $S$ as well. Their sum is now the event $z_S\ne0$, giving
+(6.3); the same pair argument gives the stated error inequality.
+The all-time identity (2.4) and [F, Theorem 12.2] identify genuine
+observed contacts with $e$. There is no deterministic-time density
+argument at a random contact. $\square$
+
+Theorem 3.1 does not prove (6.1): a Lebesgue-equivalent conditional
+density can favor one sign. Conversely (6.3) permits symmetric atoms
+and does not prove (3.1). Their distinct causal-prefix and
+entire-held-history records, contact branches and proofs are essential.
+Neither statement alone addresses a fixed time-homogeneous Markov
+recovery link or its full-source continuation tests.
+
