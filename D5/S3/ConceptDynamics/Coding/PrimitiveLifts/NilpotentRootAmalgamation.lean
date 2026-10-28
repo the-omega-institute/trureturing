@@ -49,7 +49,7 @@ private theorem bezout_word {G : Type u} [Group G] (z : G) {m n : ℕ}
 
 /-- Equal coprime natural powers amalgamate uniquely in an arbitrary nilpotent group,
 including zero exponents and groups with torsion. -/
-theorem pow_eq_pow_iff_existsUnique {G : Type u} [Group G] [Group.IsNilpotent G]
+theorem pow_eq_pow_iff_exists_unique {G : Type u} [Group G] [Group.IsNilpotent G]
     (x y : G) (m n : ℕ) (hmn : m.Coprime n) :
     x ^ m = y ^ n ↔ ∃! z : G, x = z ^ n ∧ y = z ^ m := by
   constructor
