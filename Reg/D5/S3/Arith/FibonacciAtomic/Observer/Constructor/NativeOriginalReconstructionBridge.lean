@@ -254,7 +254,7 @@ noncomputable def canonicalRegistration : Contract.Registration.{_,_,_,0,0,0,_,_
 
 
 abbrev transportSignature : Signature where
-  Params := Σ k : Nat, Σ m : Nat, (Fin m → Nat) × (Fin k → Nat) × Expression k m
+  Params := Σ k : Nat, Σ m : Nat, Σ _s : Fin m → Nat, Σ _p : Fin k → Nat, Expression k m
   State q := Fin q.2.1 → CompletionTree
   Role := Unit
   finiteRole := inferInstance
