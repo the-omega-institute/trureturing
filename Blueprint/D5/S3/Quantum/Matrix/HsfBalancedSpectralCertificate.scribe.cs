@@ -104,9 +104,9 @@ internal sealed class HsfBalancedSpectralCertificateDocument : IScribeDocumentDe
                 + "Cubic-series multiplication, cyclic trace, and PSD congruence are classical. "
                 + "This repository certificate is not attributed to that paper, and no "
                 + "literature novelty is asserted. The theorem has an explicit algebraic "
-                + "coefficient-recurrence interface. Identification with actual CFC derivatives, "
-                + "unitary spectral coordinates and common-scale normalization is a separate "
-                + "bridge. Triangle-free spectra with more than two levels are not formalized "
+                + "coefficient-recurrence interface. The actual CFC derivative consumer, finite reindexing, "
+                + "unitary coordinates and common-scale normalization are supplied by "
+                + "HsfBalancedCfcBridge. Triangle-free spectra with more than two levels are not formalized "
                 + "here. Three-distinct-level interactions, independent X,Y, all alpha>2 and "
                 + "the complete continuing HSF conjecture remain open.")),
             Paragraph(Text("The corresponding Reg mirror supplies the typed whole-telescope "
