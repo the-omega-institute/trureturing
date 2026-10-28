@@ -355,6 +355,41 @@ private theorem abs_crossProduct (z : Fin 3 → ℂ) :
     ext i j
     simp [Complex.real_smul]
 
+private theorem vec_trace (z : Fin 3 → ℂ) :
+    (Matrix.vecMulVec z (star z)).trace = (q z : ℂ) := by
+  rw [Matrix.trace_vecMulVec]
+  simp only [q, Complex.normSq_eq_conj_mul_self, Complex.star_def, Complex.ofReal_sum]
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [Pi.star_apply, starRingEnd_apply]
+  ring
+
+private theorem vec_product_trace (w z : Fin 3 → ℂ) :
+    (Matrix.vecMulVec w (star w) * Matrix.vecMulVec z (star z)).trace =
+      (star w ⬝ᵥ z) * (star z ⬝ᵥ w) := by
+  rw [Matrix.vecMulVec_mul_vecMulVec, Matrix.trace_vecMulVec]
+  change (∑ x, w x * ((∑ y, (starRingEnd ℂ) (w y) * z y) *
+      (starRingEnd ℂ) (z x))) =
+    (∑ y, (starRingEnd ℂ) (w y) * z y) *
+      ∑ x, (starRingEnd ℂ) (z x) * w x
+  let s : ℂ := ∑ y, (starRingEnd ℂ) (w y) * z y
+  have hs : ∑ x, w x * (s * (starRingEnd ℂ) (z x)) =
+      s * ∑ x, (starRingEnd ℂ) (z x) * w x := by
+    calc
+      ∑ x, w x * (s * (starRingEnd ℂ) (z x)) =
+          ∑ x, s * (w x * (starRingEnd ℂ) (z x)) := by
+            apply Finset.sum_congr rfl
+            intro x hx
+            ring
+      _ = s * ∑ x, w x * (starRingEnd ℂ) (z x) := by
+        rw [Finset.mul_sum]
+      _ = s * ∑ x, (starRingEnd ℂ) (z x) * w x := by
+        congr 1
+        apply Finset.sum_congr rfl
+        intro x hx
+        ring
+  simpa [s] using hs
+
 private theorem markov_bound {m₁ m₂ : ℕ} (K₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ) (K₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ)
     (h₁ : IsKrausDecomposition K₁) (h₂ : IsKrausDecomposition K₂) :
     markovFidelity K₁ K₂ ≤ 1 / 2 := by
