@@ -255,5 +255,92 @@ def registration :
 
 end TwiceUpper
 
+namespace VectorDotStar
+
+open scoped BigOperators
+
+/-- Observe equality between the complex dot product and the real norm sum. -/
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ left right => left = right) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ left right => left ≠ right) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} (v : Fin n → ℂ),
+    R.readout () () (v ⬝ᵥ star v) (((∑ j, ‖v j‖ ^ 2 : ℝ) : ℂ))
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact (h (n := 1) (![1] : Fin 1 → ℂ))
+    (D5.S3.Divergence.CoherenceL1RelativeEntropyBound.vector_dot_star
+      (![1] : Fin 1 → ℂ))
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have hfalse : (1 : ℂ) = 0 := (congrFun h 0).mp rfl
+  exact one_ne_zero hfalse
+
+def source_registration : Registration arena (type_of% @vector_dot_star) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨vector_dot_star, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@vector_dot_star) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Divergence.CoherenceL1RelativeEntropyBound.VectorDotStar.unit
+  realizationName :=
+    `Reg.D5.S3.Divergence.CoherenceL1RelativeEntropyBound.VectorDotStar.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ left right => left = right)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Divergence.CoherenceL1RelativeEntropyBound
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end VectorDotStar
+
 end
 end Reg.D5.S3.Divergence.CoherenceL1RelativeEntropyBound
