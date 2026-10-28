@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.IndecomposableInversio
 internal sealed class FranklinInversionBasicDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/IndecomposableInversion/FranklinInversionBasic.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/franklin2024inversions");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/franklin2024inversions");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Stars and five-block permutations describe the forms of indecomposable permutations avoiding 321 and 1342.",

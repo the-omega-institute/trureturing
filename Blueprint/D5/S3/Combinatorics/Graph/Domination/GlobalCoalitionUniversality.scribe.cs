@@ -8,7 +8,7 @@ internal sealed class GlobalCoalitionUniversalityDocument : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Domination/GlobalCoalitionUniversality.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Domination/anholcer2025globalcoalitions");
+        LibraryNoteRef.Create("D5/L/Combinatorics/anholcer2025globalcoalitions");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The edgeless two-vertex graph has no global coalition realization, because every partition block has an actual coalition partner.",
