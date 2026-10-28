@@ -93,7 +93,10 @@ internal sealed class GeneralizedPauliVolumeRatiosDocument : IScribeDocumentDefi
                             + "expanding m = d + 1 and L = d/(d − 1) gives "
                             + "((d² − 1)/d²)((d − 1)/d)ᵈ. "
                             + "The last quotient is (1/m!)/((d + 1)/m!) = 1/(d + 1)."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("siudzinska-2020-generalized-pauli-volume-ratios"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration), H(title),
