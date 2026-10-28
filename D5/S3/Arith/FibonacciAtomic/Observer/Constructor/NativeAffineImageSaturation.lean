@@ -56,18 +56,85 @@ noncomputable def sourceCanonical {n k m : Nat} (I : Input n k m) (p : Fin n →
     (mode : FreeMode I.equations (threshold I.filters)) : Fin m → CompletionTree :=
   originalCanonical I.equations (ranks I p) I.filters mode
 
+private theorem free_modes_partition {k m : Nat} (S : System k m) (p : Fin k → Nat)
+    (s : Nat) (v : Fin m → CompletionTree) :
+    ∃! mode : FreeMode S s, OriginalInMode S p mode v := by
+  classical
+  let w := mapValues p (normalForm S).project v
+  let mode : FreeMode S s := fun i =>
+    if h : ∃ j : Fin (s + 2), w i.val = CompletionHomogeneousFixedPoints.atomic j.val
+    then some (Classical.choose h) else none
+  have membership : OriginalInMode S p mode v := by
+    intro i hi
+    simp only [totalMode, dite_eq_left hi]
+    change (match mode ⟨i, hi⟩ with
+      | some j => w i = CompletionHomogeneousFixedPoints.atomic j.val
+      | none => ∀ j, j ≤ s + 1 → w i ≠ CompletionHomogeneousFixedPoints.atomic j)
+    by_cases h : ∃ j : Fin (s + 2), w i = CompletionHomogeneousFixedPoints.atomic j.val
+    · simp only [mode, dite_eq_left h]
+      exact Classical.choose_spec h
+    · simp only [mode, dite_eq_right h]
+      intro j hj eq
+      exact (h ⟨⟨j, by omega⟩, eq⟩).elim
+  refine ⟨mode, membership, ?_⟩
+  intro other other_membership
+  funext i
+  have original := membership i.val i.property
+  have candidate := other_membership i.val i.property
+  simp only [totalMode, dite_eq_left i.property] at original candidate
+  change (match mode i with
+    | some j => w i.val = CompletionHomogeneousFixedPoints.atomic j.val
+    | none => ∀ j, j ≤ s + 1 → w i.val ≠ CompletionHomogeneousFixedPoints.atomic j) at original
+  change (match other i with
+    | some j => w i.val = CompletionHomogeneousFixedPoints.atomic j.val
+    | none => ∀ j, j ≤ s + 1 → w i.val ≠ CompletionHomogeneousFixedPoints.atomic j) at candidate
+  cases ho : other i with
+  | none =>
+    cases hm : mode i with
+    | none => rfl
+    | some j =>
+      simp only [ho] at candidate
+      simp only [hm] at original
+      exact (candidate j.val (by omega) original).elim
+  | some j =>
+    cases hm : mode i with
+    | none =>
+      simp only [ho] at candidate
+      simp only [hm] at original
+      exact (original j.val (by omega) candidate).elim
+    | some l =>
+      simp only [ho] at candidate
+      simp only [hm] at original
+      have same := CompletionPositiveDriftRegion.atomic_injective (candidate.symm.trans original)
+      exact congrArg some (Fin.ext same)
+
 /-- Finite-exception completeness at every fixed legal original parameter.
-The affine-to-natural equality makes the complete parameter correspondence
-explicit, including negative coefficients under their original guards. -/
+The exact affine map, unique free-mode partition and finite family of canonical
+existence tests all refer to the same unrestricted original solution relation. -/
 theorem affine_original_saturation {n k m : Nat} (I : Input n k m) (p : Fin n → Nat)
     (legal : Legal I p) (mode : FreeMode I.equations (threshold I.filters)) :
     (∀ j, (ranks I p j : Int) = (I.indices j).eval (environment p)) ∧
+    (∀ v, ∃! md : FreeMode I.equations (threshold I.filters), SourceInMode I p md v) ∧
     SourceSatisfies I p (sourceCanonical I p mode) ∧
     SourceInMode I p mode (sourceCanonical I p mode) ∧
     ((∃ v, SourceSatisfies I p v ∧ SourceInMode I p mode v ∧ SourcePasses I p v) ↔
-      SourcePasses I p (sourceCanonical I p mode)) := by
-  refine ⟨?_, original_saturation I.equations (ranks I p) I.filters mode⟩
-  intro j
-  exact Int.toNat_of_nonneg (legal.2 j)
+      SourcePasses I p (sourceCanonical I p mode)) ∧
+    ((∃ v, SourceSatisfies I p v ∧ SourcePasses I p v) ↔
+      ∃ md : FreeMode I.equations (threshold I.filters),
+        SourcePasses I p (sourceCanonical I p md)) := by
+  have by_mode := original_saturation I.equations (ranks I p) I.filters mode
+  have partition := free_modes_partition I.equations (ranks I p) (threshold I.filters)
+  refine ⟨?_, partition, by_mode.1, by_mode.2.1, by_mode.2.2, ?_⟩
+  · intro j
+    exact Int.toNat_of_nonneg (legal.2 j)
+  · constructor
+    · rintro ⟨v, sat, passes⟩
+      obtain ⟨md, vm, _⟩ := partition v
+      refine ⟨md, ?_⟩
+      exact (original_saturation I.equations (ranks I p) I.filters md).2.2.mp
+        ⟨v, sat, vm, passes⟩
+    · rintro ⟨md, passes⟩
+      exact ⟨sourceCanonical I p md,
+        (original_saturation I.equations (ranks I p) I.filters md).1, passes⟩
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativeAffineImageSaturation

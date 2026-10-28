@@ -44,10 +44,14 @@ abbrev arena : Arena where
   Law R := ∀ {n k m : Nat} (I : Input n k m) (p : Fin n → Nat)
     (legal : Legal I p) (mode : FreeMode I.equations (threshold I.filters)),
     (∀ j, (ranks I p j : Int) = (I.indices j).eval (environment p)) ∧
+    (∀ v, ∃! md : FreeMode I.equations (threshold I.filters), SourceInMode I p md v) ∧
     SourceSatisfies I p (observed R (sourceCanonical I p mode)) ∧
     SourceInMode I p mode (observed R (sourceCanonical I p mode)) ∧
     ((∃ v, SourceSatisfies I p v ∧ SourceInMode I p mode v ∧ SourcePasses I p v) ↔
-      SourcePasses I p (observed R (sourceCanonical I p mode)))
+      SourcePasses I p (observed R (sourceCanonical I p mode))) ∧
+    ((∃ v, SourceSatisfies I p v ∧ SourcePasses I p v) ↔
+      ∃ md : FreeMode I.equations (threshold I.filters),
+        SourcePasses I p (observed R (sourceCanonical I p md)))
 
 private theorem actual_law : arena.Law actual := by
   exact @affine_original_saturation
@@ -62,7 +66,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   let p : Fin 0 → Nat := Fin.elim0
   have legal : Legal I p := ⟨rfl, fun j => Fin.elim0 j⟩
   let mode : FreeMode I.equations (threshold I.filters) := fun _ => none
-  have sat := (law I p legal mode).2.1
+  have sat := (law I p legal mode).2.2.1
   have eq : leaf true = leaf false := sat 0 (.ground (.of false)) rfl
   have tags := congrArg (fun X => (PFunctor.M.dest X).1) eq
   cases tags
