@@ -59,11 +59,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   rintro ⟨b,k,mu,_,_,_,_,_,_,_,_,_,_,hsupport⟩
   let f : D := ⟨0,D.zero_mem⟩
   have hz : ‖lift f‖^2 ≤ 0 := by
-    simpa using ((free_root_least_energy f).2.2.2.2.1 0 0 (by simp)).2
+    simpa using ((free_root_least_energy f).2.2.2.2.1 0 0
+      (by change (0 : G) = _; simp)).2
   have he : energy f.val = 0 := by
     rw [(free_root_least_energy f).2.2.2.1]
     exact le_antisymm hz (sq_nonneg _)
-  have h := hsupport 1 f (by intro i hi; simp [f])
+  have h := hsupport 1 f (by intro i hi; change b.repr 0 i = 0; simp)
   change 1 * 1 ≤ energy f.val at h
   rw [he] at h
   norm_num at h
@@ -93,7 +94,8 @@ def registration :
     (type_of% (realize signature (fun _ _ F => ‖F‖ ^ 2) (fun e => nomatch e)))
     Unit Unit := {
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundarySpectralForm.unit,
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundarySpectralForm.familyRegistration,
+  realizationName :=
+    `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundarySpectralForm.familyRegistration,
   realizationSource := none,
   generated := false,
   arena := .source ⟨arena⟩,
