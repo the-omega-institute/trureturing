@@ -1945,6 +1945,30 @@ private def bouquetAppendHomeomorph (ds es : BouquetSpec) :
       (middle.trans ((anchorCollapseHomeomorph (Sum.inl PUnit.unit) B).trans
         (bouquetQuotientHomeomorph (ds ++ es)))))
 
+/- The first consumed selected-component step.  The two native based packets
+  choose the actual normal-form components containing the supplied vertices;
+  basedWedgeEquivalence then performs the quotient wedge replacement on the
+  live carrier.  The normal spaces remain finite coproduct realizations, so
+  every unselected component (including point components) stays present. -/
+def selectedComponentWedgeBased {V W : Type*} [Fintype V] [DecidableEq V]
+    [Fintype W] [DecidableEq W]
+    (K : PreAbstractSimplicialComplex V) (L : PreAbstractSimplicialComplex W)
+    (hK : WPlus K) (hL : WPlus L)
+    (a : V) (ha : ({a} : Finset V) ∈ K)
+    (b : W) (hb : ({b} : Finset W) ∈ L) :
+    ∃ m : ℕ, ∃ hm : 0 < m, ∃ p : Fin m → BouquetSpec, ∃ i : Fin m,
+      ∃ n : ℕ, ∃ hn : 0 < n, ∃ q : Fin n → BouquetSpec, ∃ j : Fin n,
+      Nonempty (SingletonRetractionBasedInverse.BasedEquivalence
+        (FiniteConeUnionWedge.Wedge
+          (FiniteVertexCylinder.vertexPoint K a ha)
+          (FiniteVertexCylinder.vertexPoint L b hb))
+        (FiniteConeUnionWedge.Wedge
+          (normalPoint m p i) (normalPoint n q j))) := by
+  obtain ⟨m, hm, p, i, ⟨E⟩⟩ := based_normalization K hK a ha
+  obtain ⟨n, hn, q, j, ⟨F⟩⟩ := based_normalization L hL b hb
+  exact ⟨m, hm, p, i, n, hn, q, j,
+    ⟨FiniteConeUnionWedge.basedWedgeEquivalence E F⟩⟩
+
 end BouquetConcatenation
 
 #print axioms sphereHomeomorph
