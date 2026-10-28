@@ -6,19 +6,23 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/QuantumChannels/DequantumnessPowerStrictGap.claim; result=D5/S3/QuantumChannels/DequantumnessPowerStrictGap.result; claim=D5/S3/QuantumChannels/DequantumnessPowerStrictGap.claim
    digest: A translated qubit contraction has strictly greater unrestricted dequantumness power. -/
 
-import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
-import D5.S3.Quantum.Information.ActualPureQubitGeometry
+import D5.S3.Combinatorics.Orthogonality.ThetaRepresentationNonconvex
+import D5.S3.QuantumChannels.PurelyNonUnitalEternalNonMarkovianity
+import D5.S3.Quantum.Measurement.AdaptiveQueryQubitFourStateRefutation
 
 /-! Two-state ensemble quantumness for a translated qubit contraction. -/
 
 set_option autoImplicit false
 set_option linter.style.longLine false
 
-open scoped BigOperators Matrix ComplexOrder
+open scoped BigOperators Matrix ComplexOrder MatrixOrder
 open Matrix
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsDensity IsCPTP)
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum
+open D5.S3.Combinatorics.Orthogonality.ThetaRepresentationNonconvex (dot_cauchy)
+open D5.S3.QuantumChannels.PurelyNonUnitalEternalNonMarkovianity (affine)
+open D5.S3.Quantum.Measurement.AdaptiveQueryQubitFourStateRefutation (IsEnsemble)
 
 noncomputable section
 namespace D5.S3.QuantumChannels.DequantumnessPowerStrictGap
@@ -29,43 +33,45 @@ def quantumness (p : ℝ) (ρ σ : Matrix (Fin 2) (Fin 2) ℂ) : ℝ :=
     (![p, 1-p] i * ![p, 1-p] j) *
       (Matrix.trace ((![ρ, σ] i * ![ρ, σ] j - ![ρ, σ] j * ![ρ, σ] i)^2)).re)
 
-/-- All two-state qubit ensembles, including zero weights. -/
-def TwoStateEnsemble (p : ℝ) (ρ σ : Matrix (Fin 2) (Fin 2) ℂ) : Prop :=
-  0 ≤ p ∧ p ≤ 1 ∧ IsDensity ρ ∧ IsDensity σ
-
 /-- The source's unrestricted two-ingredient dequantumness power. -/
 def dequantumnessPower (φ : MatrixMap (Fin 2) (Fin 2) ℂ) : ℝ :=
-  sSup {x | ∃ p ρ σ, TwoStateEnsemble p ρ σ ∧
+  sSup {x | ∃ p ρ σ, IsEnsemble ![p, 1-p] ![ρ, σ] ∧
     x = quantumness p ρ σ - quantumness p (φ ρ) (φ σ)}
 
 /-- The supremum of Equation (1) over all two-state qubit ensembles. -/
 def maxQuantumness : ℝ :=
-  sSup {x | ∃ p ρ σ, TwoStateEnsemble p ρ σ ∧ x = quantumness p ρ σ}
+  sSup {x | ∃ p ρ σ, IsEnsemble ![p, 1-p] ![ρ, σ] ∧ x = quantumness p ρ σ}
 
 /-- The source's restriction to ensembles attaining maximal initial quantumness. -/
 def restrictedDequantumnessPower (φ : MatrixMap (Fin 2) (Fin 2) ℂ) : ℝ :=
-  sSup {x | ∃ p ρ σ, TwoStateEnsemble p ρ σ ∧ quantumness p ρ σ = maxQuantumness ∧
+  sSup {x | ∃ p ρ σ, IsEnsemble ![p, 1-p] ![ρ, σ] ∧ quantumness p ρ σ = maxQuantumness ∧
     x = quantumness p ρ σ - quantumness p (φ ρ) (φ σ)}
 
 /-- Universal equality of the two source notions for qubit channels. -/
 def claim : Prop := ∀ φ : MatrixMap (Fin 2) (Fin 2) ℂ,
   IsCPTP φ → dequantumnessPower φ = restrictedDequantumnessPower φ
 
-private def channel : MatrixMap (Fin 2) (Fin 2) ℂ where
-  toFun x := (1/2 : ℂ) • x + (Matrix.trace x / 2) • !![(3/4 : ℂ), 0; 0, 1/4]
-  map_add' x y := by simp only [Matrix.trace_add, add_div, add_smul, smul_add]; abel
-  map_smul' c x := by
-    simp only [Matrix.trace_smul, smul_add, smul_smul, RingHom.id_apply]
-    congr 1 <;> congr 1 <;> ring
+private lemma two_state_ensemble_iff (p : ℝ) (ρ σ : Matrix (Fin 2) (Fin 2) ℂ) :
+    IsEnsemble ![p, 1-p] ![ρ, σ] ↔ 0 ≤ p ∧ p ≤ 1 ∧ IsDensity ρ ∧ IsDensity σ := by
+  constructor
+  · rintro ⟨hp, _, hρ⟩
+    exact ⟨hp 0, sub_nonneg.mp (hp 1), hρ 0, hρ 1⟩
+  · rintro ⟨hp, hp1, hρ, hσ⟩
+    refine ⟨?_, ?_, ?_⟩
+    · intro i
+      fin_cases i
+      · exact hp
+      · exact sub_nonneg.mpr hp1
+    · rw [Fin.sum_univ_two]
+      change p + (1-p) = 1
+      ring
+    · intro i
+      fin_cases i
+      · exact hρ
+      · exact hσ
 
-private lemma dot_nonneg (r : Fin 3 → ℝ) : 0 ≤ r ⬝ᵥ r := by
-  change 0 ≤ ∑ i, r i * r i
-  exact Finset.sum_nonneg (fun i _ => mul_self_nonneg (r i))
-
-private lemma dot_cauchy (r s : Fin 3 → ℝ) :
-    (r ⬝ᵥ s)^2 ≤ (r ⬝ᵥ r) * (s ⬝ᵥ s) := by
-  change (∑ i, r i * s i)^2 ≤ (∑ i, r i * r i) * (∑ i, s i * s i)
-  simpa only [pow_two] using Finset.sum_mul_sq_le_sq_mul_sq Finset.univ r s
+private def channel : MatrixMap (Fin 2) (Fin 2) ℂ :=
+  affine (1/2 : ℂ) ((1/2 : ℂ) • !![(3/4 : ℂ), 0; 0, 1/4])
 
 private lemma orthonormal_cross_lower (r s : Fin 3 → ℝ)
     (hr : r ⬝ᵥ r = 1) (hs : s ⬝ᵥ s = 1) (hrs : r ⬝ᵥ s = 0) :
@@ -126,22 +132,21 @@ private lemma quantumness_bloch (p : ℝ) (r s : EuclideanSpace ℝ (Fin 3)) :
 private lemma cross_bounds (r s : Fin 3 → ℝ)
     (hr : r ⬝ᵥ r ≤ 1) (hs : s ⬝ᵥ s ≤ 1) :
     0 ≤ (r ⨯₃ s) ⬝ᵥ (r ⨯₃ s) ∧ (r ⨯₃ s) ⬝ᵥ (r ⨯₃ s) ≤ 1 := by
-  refine ⟨dot_nonneg _, ?_⟩
+  refine ⟨dotProduct_star_self_nonneg _, ?_⟩
   rw [cross_dot_cross, dotProduct_comm s r]
   have hm : (r ⬝ᵥ r) * (s ⬝ᵥ s) ≤ 1 := by
     calc
-      _ ≤ 1 * (s ⬝ᵥ s) := mul_le_mul_of_nonneg_right hr (dot_nonneg s)
+      _ ≤ 1 * (s ⬝ᵥ s) := mul_le_mul_of_nonneg_right hr (dotProduct_star_self_nonneg s)
       _ ≤ 1 := by simpa only [one_mul] using hs
   nlinarith [sq_nonneg (r ⬝ᵥ s)]
 
 private lemma projection_density (ρ : Matrix (Fin 2) (Fin 2) ℂ)
     (hh : ρ.IsHermitian) (hp : ρ * ρ = ρ) (ht : ρ.trace = 1) : IsDensity ρ := by
-  refine ⟨?_, ht⟩
-  have h := Matrix.posSemidef_self_mul_conjTranspose ρ
-  rwa [hh.eq, hp] at h
+  exact ⟨(IsStarProjection.nonneg ⟨hp, hh⟩).posSemidef, ht⟩
 
 private lemma quantumness_bounds {p : ℝ} {ρ σ : Matrix (Fin 2) (Fin 2) ℂ}
-    (h : TwoStateEnsemble p ρ σ) : 0 ≤ quantumness p ρ σ ∧ quantumness p ρ σ ≤ 1/4 := by
+    (h : IsEnsemble ![p, 1-p] ![ρ, σ]) : 0 ≤ quantumness p ρ σ ∧ quantumness p ρ σ ≤ 1/4 := by
+  have h := (two_state_ensemble_iff p ρ σ).mp h
   obtain ⟨r, rfl, hr⟩ := density_bloch ρ h.2.2.1
   obtain ⟨s, rfl, hs⟩ := density_bloch σ h.2.2.2
   rw [quantumness_bloch]
@@ -151,7 +156,7 @@ private lemma quantumness_bounds {p : ℝ} {ρ σ : Matrix (Fin 2) (Fin 2) ℂ}
   exact ⟨mul_nonneg hp hn.1, by nlinarith [mul_nonneg hp (sub_nonneg.mpr hn.2)]⟩
 
 private lemma maximizing_ensemble :
-    ∃ p ρ σ, TwoStateEnsemble p ρ σ ∧ quantumness p ρ σ = 1/4 := by
+    ∃ p ρ σ, IsEnsemble ![p, 1-p] ![ρ, σ] ∧ quantumness p ρ σ = 1/4 := by
   let ρ : Matrix (Fin 2) (Fin 2) ℂ := !![1, 0; 0, 0]
   let σ : Matrix (Fin 2) (Fin 2) ℂ := !![1/2, 1/2; 1/2, 1/2]
   have hρ : IsDensity ρ := by
@@ -170,13 +175,13 @@ private lemma maximizing_ensemble :
     · ext i j
       fin_cases i <;> fin_cases j <;> norm_num [σ, Matrix.mul_apply, Fin.sum_univ_two]
     · norm_num [σ, Matrix.trace_fin_two]
-  refine ⟨1/2, ρ, σ, ⟨by norm_num, by norm_num, hρ, hσ⟩, ?_⟩
+  refine ⟨1/2, ρ, σ, (two_state_ensemble_iff _ _ _).mpr ⟨by norm_num, by norm_num, hρ, hσ⟩, ?_⟩
   unfold quantumness
   norm_num [ρ, σ, Fin.sum_univ_two, Matrix.trace_fin_two, pow_two, Matrix.mul_apply]
 
 private lemma max_quantumness : maxQuantumness = 1/4 := by
   obtain ⟨p, ρ, σ, h, hq⟩ := maximizing_ensemble
-  have hb : BddAbove {x | ∃ p ρ σ, TwoStateEnsemble p ρ σ ∧ x = quantumness p ρ σ} := by
+  have hb : BddAbove {x | ∃ p ρ σ, IsEnsemble ![p, 1-p] ![ρ, σ] ∧ x = quantumness p ρ σ} := by
     refine ⟨1/4, ?_⟩
     rintro x ⟨p, ρ, σ, h, rfl⟩
     exact (quantumness_bounds h).2
@@ -188,10 +193,11 @@ private lemma max_quantumness : maxQuantumness = 1/4 := by
   · exact le_csSup hb ⟨p, ρ, σ, h, hq.symm⟩
 
 private lemma maximal_bloch {p : ℝ} {ρ σ : Matrix (Fin 2) (Fin 2) ℂ}
-    (h : TwoStateEnsemble p ρ σ) (hq : quantumness p ρ σ = maxQuantumness) :
+    (h : IsEnsemble ![p, 1-p] ![ρ, σ]) (hq : quantumness p ρ σ = maxQuantumness) :
     ∃ r s : EuclideanSpace ℝ (Fin 3), ρ = blochMatrix 1 r ∧ σ = blochMatrix 1 s ∧
       p = 1/2 ∧ r.ofLp ⬝ᵥ r.ofLp = 1 ∧ s.ofLp ⬝ᵥ s.ofLp = 1 ∧
       r.ofLp ⬝ᵥ s.ofLp = 0 := by
+  have h := (two_state_ensemble_iff p ρ σ).mp h
   obtain ⟨r, hrho, hr⟩ := density_bloch ρ h.2.2.1
   obtain ⟨s, hsigma, hs⟩ := density_bloch σ h.2.2.2
   refine ⟨r, s, hrho, hsigma, ?_⟩
@@ -207,19 +213,21 @@ private lemma maximal_bloch {p : ℝ} {ρ σ : Matrix (Fin 2) (Fin 2) ℂ}
   rw [cross_dot_cross, dotProduct_comm s.ofLp r.ofLp] at hn1
   have hm : (r.ofLp ⬝ᵥ r.ofLp) * (s.ofLp ⬝ᵥ s.ofLp) ≤ 1 := by
     calc
-      _ ≤ 1 * (s.ofLp ⬝ᵥ s.ofLp) := mul_le_mul_of_nonneg_right hr (dot_nonneg s.ofLp)
+      _ ≤ 1 * (s.ofLp ⬝ᵥ s.ofLp) := mul_le_mul_of_nonneg_right hr (dotProduct_star_self_nonneg s.ofLp)
       _ ≤ 1 := by simpa only [one_mul] using hs
   have hrs : r.ofLp ⬝ᵥ s.ofLp = 0 := by nlinarith [sq_nonneg (r.ofLp ⬝ᵥ s.ofLp)]
   refine ⟨?_, ?_, hrs⟩
-  · nlinarith [mul_nonneg (dot_nonneg r.ofLp) (sub_nonneg.mpr hs)]
-  · nlinarith [mul_nonneg (dot_nonneg s.ofLp) (sub_nonneg.mpr hr)]
+  · nlinarith [mul_nonneg
+      (show 0 ≤ r.ofLp ⬝ᵥ r.ofLp from dotProduct_star_self_nonneg r.ofLp) (sub_nonneg.mpr hs)]
+  · nlinarith [mul_nonneg
+      (show 0 ≤ s.ofLp ⬝ᵥ s.ofLp from dotProduct_star_self_nonneg s.ofLp) (sub_nonneg.mpr hr)]
 
 private lemma channel_bloch (r : EuclideanSpace ℝ (Fin 3)) :
     channel (blochMatrix 1 r) =
       blochMatrix 1 (WithLp.toLp 2 ((1/2 : ℝ) • r.ofLp + (1/4 : ℝ) • ![0, 0, 1])) := by
   rw [channel.eq_1]
   change (1/2 : ℂ) • blochMatrix 1 r +
-    (Matrix.trace (blochMatrix 1 r) / 2) • !![(3/4 : ℂ), 0; 0, 1/4] = _
+    Matrix.trace (blochMatrix 1 r) • ((1/2 : ℂ) • !![(3/4 : ℂ), 0; 0, 1/4]) = _
   rw [blochMatrix_trace]
   unfold blochMatrix
   ext i j
@@ -240,18 +248,18 @@ private lemma channel_cptp : IsCPTP channel := by
     simp only [Fin.sum_univ_succ, Matrix.add_apply, Matrix.mul_apply,
       Matrix.conjTranspose_apply]
     fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-      simp [k, channel, Matrix.trace_fin_two] <;>
+      simp [k, channel, affine, Matrix.trace_fin_two] <;>
       ring_nf <;> simp only [h2, h6] <;> ring
   refine ⟨he ▸ MatrixMap.of_kraus_isCompletelyPositive k, ?_⟩
   intro x
   change Matrix.trace ((1/2 : ℂ) • x +
-    (Matrix.trace x / 2) • !![(3/4 : ℂ), 0; 0, 1/4]) = Matrix.trace x
+    Matrix.trace x • ((1/2 : ℂ) • !![(3/4 : ℂ), 0; 0, 1/4])) = Matrix.trace x
   rw [Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul, Matrix.trace_fin_two]
   norm_num
   ring
 
 private lemma witness_loss :
-    ∃ p ρ σ, TwoStateEnsemble p ρ σ ∧
+    ∃ p ρ σ, IsEnsemble ![p, 1-p] ![ρ, σ] ∧
       quantumness p ρ σ - quantumness p (channel ρ) (channel σ) = 1329215/5345344 := by
   let q : ℝ := Real.sqrt 145
   have hq : q^2 = 145 := Real.sq_sqrt (by norm_num)
@@ -275,13 +283,13 @@ private lemma witness_loss :
       fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
         simp [σ, Matrix.mul_apply, Fin.sum_univ_two] <;> nlinarith
     · norm_num [σ, Matrix.trace_fin_two]
-  refine ⟨1/2, ρ, σ, ⟨by norm_num, by norm_num, hρ, hσ⟩, ?_⟩
+  refine ⟨1/2, ρ, σ, (two_state_ensemble_iff _ _ _).mpr ⟨by norm_num, by norm_num, hρ, hσ⟩, ?_⟩
   unfold quantumness
-  simp [ρ, σ, channel, Fin.sum_univ_two, Matrix.trace_fin_two, pow_two, Matrix.mul_apply]
+  simp [ρ, σ, channel, affine, Fin.sum_univ_two, Matrix.trace_fin_two, pow_two, Matrix.mul_apply]
   nlinarith [sq_nonneg (q^2-145)]
 
 private lemma restricted_loss {p : ℝ} {ρ σ : Matrix (Fin 2) (Fin 2) ℂ}
-    (h : TwoStateEnsemble p ρ σ) (hq : quantumness p ρ σ = maxQuantumness) :
+    (h : IsEnsemble ![p, 1-p] ![ρ, σ]) (hq : quantumness p ρ σ = maxQuantumness) :
     quantumness p ρ σ - quantumness p (channel ρ) (channel σ) ≤
       (29 + 2 * Real.sqrt 2) / 128 := by
   obtain ⟨r, s, rfl, rfl, rfl, hr, hs, hrs⟩ := maximal_bloch h hq
@@ -299,11 +307,12 @@ private lemma power_lower : (1329215/5345344 : ℝ) ≤ dequantumnessPower chann
   · refine ⟨1/4, ?_⟩
     rintro x ⟨p, ρ, σ, h, rfl⟩
     have hi := (quantumness_bounds h).2
+    have h := (two_state_ensemble_iff p ρ σ).mp h
     obtain ⟨r, hr, _⟩ := density_bloch ρ h.2.2.1
     obtain ⟨s, hs, _⟩ := density_bloch σ h.2.2.2
     have ho : 0 ≤ quantumness p (channel ρ) (channel σ) := by
       rw [hr, hs, channel_bloch, channel_bloch, quantumness_bloch]
-      exact mul_nonneg (mul_nonneg h.1 (sub_nonneg.mpr h.2.1)) (dot_nonneg _)
+      exact mul_nonneg (mul_nonneg h.1 (sub_nonneg.mpr h.2.1)) (dotProduct_star_self_nonneg _)
     linarith
   · obtain ⟨p, ρ, σ, h, he⟩ := witness_loss
     exact ⟨p, ρ, σ, h, he.symm⟩
