@@ -12,7 +12,8 @@ import D5.S3.VertexAlgebra.LatticePositiveEnergy
 import D5.S3.VertexAlgebra.LatticeActualAnnihilation
 import D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation
 
-/-! Literal factorial-coordinate sewing and occupation coefficients of the original lattice fields. -/
+/-! Literal factorial-coordinate sewing and occupation coefficients
+of the original lattice fields. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -61,7 +62,12 @@ private theorem creation_partial (D : LatticeData) (α : Charge D) (x : Index D)
       pderiv x (∑ j : Fin D.rank, (α j : ℂ) • (X (j,n) : Oscillator D)) =
         if x.2 = n then (α x.1 : ℂ) • (1 : Oscillator D) else 0 := by
     rcases x with ⟨i,k⟩
-    simp [map_sum, Derivation.map_smul, pderiv_X, Pi.single_apply, Prod.mk.injEq, eq_comm]
+    by_cases h : k = n
+    · subst n
+      simp [map_sum, Derivation.map_smul, pderiv_X, Pi.single_apply, Prod.mk.injEq,
+        eq_comm]
+    · simp [map_sum, Derivation.map_smul, pderiv_X, Pi.single_apply, Prod.mk.injEq,
+        h, Ne.symm h]
   have hlog : seriesDerivation D (pderiv x) (creationSeries D α) =
       PowerSeries.C (((α x.1 : ℂ) / (x.2 + 1 : ℂ)) • (1 : Oscillator D)) *
         PowerSeries.X ^ (x.2 + 1) := by
@@ -99,11 +105,10 @@ private theorem creation_partial (D : LatticeData) (α : Charge D) (x : Index D)
         show (t - (x.2 + 1 : ℕ)).toNat = t.toNat - (x.2 + 1) by omega]
     · rw [ite_eq_right hx, creationCoeff, dite_eq_left (by omega), smul_zero]
 
+set_option maxHeartbeats 2000000 in
 /-- Exact occupation coefficient of the original creation exponential.
 The factorial is supplied by the original polynomial derivations, not postulated. -/
-set_option maxHeartbeats 2000000 in
--- Strong induction removes one actual occupation quantum at a time.
-theorem creation_coefficient_factorial (D : LatticeData) (α : Charge D)
+private theorem creation_coefficient_factorial (D : LatticeData) (α : Charge D)
     (d : Occ D) :
     (creationCoeff D α (level D d)).coeff d * (FactorialFockMetric.weight d : ℂ) =
       creationCoordinate D α d := by
@@ -160,7 +165,76 @@ theorem creation_coefficient_factorial (D : LatticeData) (α : Charge D)
         rw [← hed, hstep, hi, hprod]
   exact haux (level D d) d rfl
 
+private theorem creation_coefficient_norm (D : LatticeData) (α : Charge D)
+    (d : Occ D) :
+    ‖(creationCoeff D α (level D d)).coeff d‖ =
+      d.prod (fun x n => (‖(α x.1 : ℂ)‖ / (x.2 + 1 : ℝ)) ^ n / (n.factorial : ℝ)) := by
+  classical
+  have hw : (FactorialFockMetric.weight d : ℝ) ≠ 0 :=
+    Nat.cast_ne_zero.mpr (Nat.ne_of_gt (FactorialFockMetric.weight_pos d))
+  have h := congrArg norm (creation_coefficient_factorial D α d)
+  simp only [norm_mul, Complex.norm_natCast] at h
+  calc
+    _ = ‖creationCoordinate D α d‖ / (FactorialFockMetric.weight d : ℝ) :=
+      (eq_div_iff hw).mpr h
+    _ = _ := by
+      simp [creationCoordinate, FactorialFockMetric.weight, Finsupp.prod,
+        norm_prod, norm_div, norm_pow, Finset.prod_div_distrib]
+
+/-- A radial estimate for every literal creation occupation, with no energy cutoff.
+The arbitrary descendant field estimate needed for scalar sewing is separate. -/
+private theorem creation_radial_bound (D : LatticeData) (α : Charge D)
+    (M ρ : ℝ) (hM : 0 ≤ M) (hα : ∀ i, ‖(α i : ℂ)‖ ≤ M)
+    (hρ0 : 0 ≤ ρ) (hρ1 : ρ < 1) (d : Occ D) :
+    ‖(creationCoeff D α (level D d)).coeff d‖ * ρ ^ level D d ≤
+      Real.exp ((D.rank : ℝ) * M / (1 - ρ)) := by
+  classical
+  have hpow : ρ ^ level D d = d.prod (fun x n => (ρ ^ (x.2 + 1)) ^ n) := by
+    simp only [level, LatticePositiveEnergy.oscillatorEnergy, Finsupp.weight_apply,
+      Finsupp.sum, Finsupp.prod, nsmul_eq_mul, ← pow_mul,
+      Finset.prod_pow_eq_pow_sum]
+    congr 1
+    exact Finset.sum_congr rfl (fun x hx => Nat.mul_comm _ _)
+  let f : Index D → ℝ := fun x =>
+    ‖(α x.1 : ℂ)‖ / (x.2 + 1 : ℝ) * ρ ^ (x.2 + 1)
+  have hf (x : Index D) : 0 ≤ f x := by dsimp [f]; positivity
+  have hprod : ‖(creationCoeff D α (level D d)).coeff d‖ * ρ ^ level D d ≤
+      Real.exp (∑ x ∈ d.support, f x) := by
+    rw [creation_coefficient_norm, hpow]
+    change (∏ x ∈ d.support,
+        (‖(α x.1 : ℂ)‖ / (x.2 + 1 : ℝ)) ^ d x / ((d x).factorial : ℝ)) *
+      (∏ x ∈ d.support, (ρ ^ (x.2 + 1)) ^ d x) ≤ _
+    rw [← Finset.prod_mul_distrib, Real.exp_sum]
+    apply Finset.prod_le_prod
+    · intro x hx
+      positivity
+    · intro x hx
+      convert Real.pow_div_factorial_le_exp (hf x) (d x) using 1 <;>
+        simp [f, mul_pow, div_mul_eq_mul_div]
+  have hgeo := summable_geometric_of_lt_one hρ0 hρ1
+  have hs : Summable (fun x : Index D => M * ρ ^ x.2) := by
+    exact (summable_prod_of_nonneg (fun x : Index D => mul_nonneg hM (pow_nonneg hρ0 _))).2
+      ⟨fun _ => hgeo.mul_left M, Summable.of_finite⟩
+  have hdom (x : Index D) : f x ≤ M * ρ ^ x.2 := by
+    have hd : (1 : ℝ) ≤ x.2 + 1 := by positivity
+    have hdiv : ‖(α x.1 : ℂ)‖ / (x.2 + 1 : ℝ) ≤ M :=
+      (div_le_self (norm_nonneg _) hd).trans (hα x.1)
+    have hp : ρ ^ (x.2 + 1) ≤ ρ ^ x.2 :=
+      pow_le_pow_of_le_one hρ0 hρ1.le (by omega)
+    exact mul_le_mul hdiv hp (pow_nonneg hρ0 _) hM
+  have hsum : (∑ x ∈ d.support, f x) ≤ (D.rank : ℝ) * M / (1 - ρ) := by
+    calc
+      _ ≤ ∑ x ∈ d.support, M * ρ ^ x.2 := Finset.sum_le_sum (fun x hx => hdom x)
+      _ ≤ ∑' x : Index D, M * ρ ^ x.2 :=
+        hs.sum_le_tsum d.support (fun x hx => mul_nonneg hM (pow_nonneg hρ0 _))
+      _ = _ := by
+        rw [tsum_prod' hs]
+        simp [tsum_mul_left, tsum_geometric_of_lt_one hρ0 hρ1, mul_div_assoc,
+          div_eq_mul_inv, mul_assoc, mul_comm, mul_left_comm]
+  exact hprod.trans (Real.exp_le_exp.mpr hsum)
+
 #print axioms creation_coefficient_factorial
+#print axioms creation_radial_bound
 
 end
 end D5.S3.VertexAlgebra.CanonicalOccupationSewing
