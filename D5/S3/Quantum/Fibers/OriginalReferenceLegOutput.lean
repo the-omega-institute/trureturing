@@ -36,7 +36,7 @@ theorem tensor_jump_intertwining (c a k S : ℝ) (g : Fin 5 → ℝ) (i : Fin 5)
 
 private theorem leg_scalar_integrable (L : Leg) (i : Fin 5) :
     IntegrableOn (fun t => L.density t i) (Ioc 0 L.duration) := by
-  exact (intervalIntegral.intervalIntegrable_iff_integrableOn_Ioc_of_le
+  exact (intervalIntegrable_iff_integrableOn_Ioc_of_le
     L.duration_pos.le).mp
       ((L.density_cont i).intervalIntegrable_of_Icc L.duration_pos.le)
 
