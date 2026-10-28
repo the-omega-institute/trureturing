@@ -22,7 +22,9 @@ internal sealed class SunAbsoluteDifferenceCongruencesDocument : IScribeDocument
                     Paragraph(Text("Nat.Prime and Odd express exactly an odd prime. Matrix.permanent uses the sum of column-indexed permutation products, equal to the source's row-indexed sum by inversion of the permutation. Since 2 is invertible modulo an odd prime, the two integer divisibilities are precisely (4.3) and (4.4). The same p serves both conjuncts.")))),
             Node("result", "result", ClaimBody(), DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source), Blocks(
-                    Paragraph(Text("Alternating row and column signs give circulants without changing their permanents. A prime-order fixed-point count on the permutation-weight fibers leaves only translations in characteristic p. Fermat's identity and a telescoping alternating sum then evaluate both permanents. The prime circulant ingredient is the Brualdi–Newman congruence; the two absolute-difference reductions yield the stated divisibilities."))))), []));
+                    Paragraph(Text("Alternating row and column signs give circulants without changing their permanents. A prime-order fixed-point count on the permutation-weight fibers leaves only translations in characteristic p. Fermat's identity and a telescoping alternating sum then evaluate both permanents. The prime circulant ingredient is the Brualdi–Newman congruence; the two absolute-difference reductions yield the stated divisibilities."))),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sun210842"), ResolutionKind.Proved))), []));
 
     private static Formula MatrixBody()
     {
@@ -50,9 +52,11 @@ internal sealed class SunAbsoluteDifferenceCongruencesDocument : IScribeDocument
     }
 
     private static DocumentBlock Node(string id, string declaration, Formula formula,
-        DescribeRole role, AssessedProvenance provenance, BlockSequence prose) =>
+        DescribeRole role, AssessedProvenance provenance, BlockSequence prose,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(declaration), StatementSource.FromAuthor(Disp(formula)), provenance, prose, role);
+            H(declaration), StatementSource.FromAuthor(Disp(formula)), provenance, prose, role,
+            resolution);
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
