@@ -23,13 +23,17 @@ internal sealed class PositiveNecessityDocument : IScribeDocumentDefinition
                 "Section 4 asks: “Another open question is whether the hypotheses of Theorem 1.1 are in fact necessary conditions for generalized action graphs to exist.” The displayed proposition quantifies every positive integer sequence and the existence of an entire family satisfying Definition 1.1. The conclusion includes s(0)=1 and a strictly positive coefficient z(i) for every i at least one. The unused value z(0) has no restriction and occurs in no sum. All graph stages and all convolution equations are quantified."),
             Node("result", "Refutation by the entire directed-path family", Disp(new Formula.Not(Par(ClaimBody()))),
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
-                "Set s(n)=1 for every natural n. At stage n take Fin(n+1), root zero, labels equal to vertex values and the directed covering relation: an edge goes from i to i+1. Forgetting orientation gives Mathlib's pathGraph(n+1), which is a tree. Reachability is the order relation, and nonempty directed reachability is strict order, so directed cycles do not occur. Fin.castSuccEmb retains the previous graph and adds just its new last vertex. For any vertex i, translation j ↦ i+j is a bijection from Fin(n−i+1) to its actual descendant subtype, preserving directed edges and its root and shifting every label by i. The only leaf is n. These statements include n=0 and i=n. If strictly positive z satisfied the convolution, the equations at one and two would give z(1)=1 and 1=z(1)+z(2), forcing z(2)=0. The strictly positive necessity proposition is therefore false. No conclusion about the nonnegative-coefficient variant follows.")),
+                "Set s(n)=1 for every natural n. At stage n take Fin(n+1), root zero, labels equal to vertex values and the directed covering relation: an edge goes from i to i+1. Forgetting orientation gives Mathlib's pathGraph(n+1), which is a tree. Reachability is the order relation, and nonempty directed reachability is strict order, so directed cycles do not occur. Fin.castSuccEmb retains the previous graph and adds just its new last vertex. For any vertex i, translation j ↦ i+j is a bijection from Fin(n−i+1) to its actual descendant subtype, preserving directed edges and its root and shifting every label by i. The only leaf is n. These statements include n=0 and i=n. If strictly positive z satisfied the convolution, the equations at one and two would give z(1)=1 and 1=z(1)+z(2), forcing z(2)=0. The strictly positive necessity proposition is therefore false. No conclusion about the nonnegative-coefficient variant follows.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("klanderman-2026-positive-action-graph-necessity"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula,
-        string declaration, DescribeRole role, AssessedProvenance provenance, string prose) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance, string prose,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("kmt-positive-" + id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));

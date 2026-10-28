@@ -34,6 +34,10 @@ $$\neg (\forall s \in \mathbb{N} \to \mathbb{N},\; (\forall n \in \mathbb{N},\; 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ActionGraphs/PositiveNecessity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/klanderman-2026-positive-action-graph-necessity` (refuted) by `D5/S3/Combinatorics/Graph/ActionGraphs/PositiveNecessity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"klanderman-2026-positive-action-graph-necessity","declaration_gid":"D5/S3/Combinatorics/Graph/ActionGraphs/PositiveNecessity.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* S. Klanderman, K. McDicken, A. Tebbe (2026). *Conditions for Building Generalized Action Graphs From Sequences*. DOI: [10.46787/pump.v9i.6304](https://doi.org/10.46787/pump.v9i.6304). URL: <https://journals.calstate.edu/pump/article/view/6304>.
