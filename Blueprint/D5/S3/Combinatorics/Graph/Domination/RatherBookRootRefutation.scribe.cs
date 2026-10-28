@@ -24,23 +24,23 @@ internal sealed class RatherBookRootRefutationDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(Source),
                 "The instance unfolds pageForward and uses infer_instance: natural equalities, conjunctions and disjunctions are decidable, and the existential page index ranges over Fin n. This supplies the decisions used by the adjacency instance and the finite comparison with cycleGraph 4."),
             Node("book", "The undirected loopless book", "bookGraph", DescribeRole.Definition,
-                All("n", Nat(), And(Typed(Call("bookGraph", X("n")), Call("SimpleGraph", VertexType())),
-                    All("u", VertexType(), All("v", VertexType(),
-                        Eq(Adj(), P(Or(Call("pageForward", X("n"), X("u"), X("v")),
-                            Call("pageForward", X("n"), X("v"), X("u"))))))))),
+                All("n", Nat(), Eq(
+                    App(Q("SimpleGraph", "Adj"), Typed(Call("bookGraph", X("n")), Call("SimpleGraph", VertexType()))),
+                    P(Seq(LambdaLower, Sp, Typed(X("u"), VertexType()), Sp, Mapsto, Sp,
+                        LambdaLower, Sp, Typed(X("v"), VertexType()), Sp, Mapsto, Sp,
+                        Or(Call("pageForward", X("n"), X("u"), X("v")),
+                            Call("pageForward", X("n"), X("v"), X("u"))))))),
                 AssessedProvenance.FromLiterature(Source),
-                "Section 2 defines the simple undirected shared-edge book. The defining Adj field is exactly the displayed symmetrization. The symm field is the proof fun u v h => h.symm, packaged as Symmetric. For loopless, both disjuncts reduce to pageForward n v v: the shared-edge equalities force 0=1; each page alternative forces either 1=2*i.val+2, consecutive naturals equal, or 2*i.val+3=0. The source proves all cases with omega and combines the two exclusions by h.elim. Thus the structure has no loops and no additional edges."),
+                "Section 2 defines the simple undirected shared-edge book. The defining Adj field is exactly the displayed symmetrization. The symm field is the proof fun u v h => h.symm, packaged as Std.Symm. The loopless field has type Std.Irrefl for this adjacency. For loopless, both disjuncts reduce to pageForward n v v: the shared-edge equalities force 0=1; each page alternative forces either 1=2*i.val+2, consecutive naturals equal, or 2*i.val+3=0. The source proves all cases with omega and combines the two exclusions by h.elim. Thus the structure has no loops and no additional edges."),
             Node("adjacency-decision", "Deciding book adjacency", "instDecidableRelFinHAddNatHMulOfNatAdjBookGraph", DescribeRole.Definition,
-                All("n", Nat(), And(
-                    Typed(Call("instDecidableRelFinHAddNatHMulOfNatAdjBookGraph", X("n")),
-                        Call("DecidableRel", App(Q("SimpleGraph", "Adj"), Call("bookGraph", X("n"))))),
-                    All("u", VertexType(), All("v", VertexType(), Eq(
-                        Call("instDecidableRelFinHAddNatHMulOfNatAdjBookGraph", X("n"), X("u"), X("v")),
-                        Call("inferInstanceAs", P(Call("Decidable", P(Or(
-                            Call("pageForward", X("n"), X("u"), X("v")),
-                            Call("pageForward", X("n"), X("v"), X("u")))))))))))),
+                All("n", Nat(), All("u", VertexType(), All("v", VertexType(), Eq(
+                    App(Typed(Call("instDecidableRelFinHAddNatHMulOfNatAdjBookGraph", X("n")),
+                        Call("DecidableRel", App(Q("SimpleGraph", "Adj"), Call("bookGraph", X("n"))))), X("u"), X("v")),
+                    Call("inferInstanceAs", P(Call("Decidable", P(Or(
+                        Call("pageForward", X("n"), X("u"), X("v")),
+                        Call("pageForward", X("n"), X("v"), X("u"))))))))))),
                 AssessedProvenance.FromRepo(Source),
-                "The defining method is fun u v => inferInstanceAs (Decidable (pageForward n u v or pageForward n v u)). The two previously defined directed-edge decisions supply the decidable disjunction. The compiled public instance is a definition; its compiler-generated proof companion is a separate declaration."),
+                "The defining method is fun u v => inferInstanceAs (Decidable (pageForward n u v or pageForward n v u)). The two previously defined directed-edge decisions supply the decidable disjunction. This is a decision procedure for precisely the displayed adjacency relation."),
             Node("polynomial", "Ordinary domination polynomial", "dominationPolynomial", DescribeRole.Definition,
                 All("V", X("Type"), All("instF", Call("Fintype", X("V")),
                     All("instD", Call("DecidableEq", X("V")), All("G", Call("SimpleGraph", X("V")),
@@ -93,7 +93,6 @@ internal sealed class RatherBookRootRefutationDocument : IScribeDocumentDefiniti
     private static Formula Val(string name) => App(Q("Fin", "val"), X(name));
     private static Formula VertexType() => Call("Fin", P(Add(Mul(D(2), X("n")), D(2))));
     private static Formula Vertices(Formula body) => All("n", Nat(), All("u", VertexType(), All("v", VertexType(), body)));
-    private static Formula Adj() => App(Q("SimpleGraph", "Adj"), Call("bookGraph", X("n")), X("u"), X("v"));
     private static Formula PageBody() => Or(And(Eq(Val("u"), D(0)), Eq(Val("v"), D(1))),
         Some("i", Call("Fin", X("n")), Or(And(Eq(Val("u"), D(1)), Eq(Val("v"), Add(Mul(D(2), Val("i")), D(2)))),
             Or(And(Eq(Val("u"), Add(Mul(D(2), Val("i")), D(2))), Eq(Val("v"), Add(Mul(D(2), Val("i")), D(3)))),
@@ -104,7 +103,7 @@ internal sealed class RatherBookRootRefutationDocument : IScribeDocumentDefiniti
         And(Root(D(0)), And(Root(X("a")), And(Root(X("b")), And(Eq(Multiplicity(D(0)), D(2)),
         And(Eq(Multiplicity(X("a")), D(1)), And(Eq(Multiplicity(X("b")), D(1)),
             All("r", Real(), new Formula.Logic(Root(X("r")), FormulaLogicOperator.Iff,
-                P(Or(Eq(X("r"), D(0)), Or(Eq(X("r"), X("a")), Eq(X("r"), X("b"))))))))))))));
+                P(Or(Eq(X("r"), D(0)), Or(Eq(X("r"), X("a")), Eq(X("r"), X("b"))))))))))))))));
     private static Formula HalfNegative() => new Formula.Negate(new Formula.Fraction(Typed(D(1), Real()), Typed(D(2), Real())));
     private static Formula FourAtBook() => Call("FourRealRoots", Call("dominationPolynomial", Call("bookGraph", X("n"))), X("a"), X("b"));
     private static Formula ClaimBody() => All("n", Nat(), Imp(Rel(D(1), FormulaRelationOperator.LessThanOrEqual, X("n")),
