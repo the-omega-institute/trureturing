@@ -138,7 +138,7 @@ private theorem upper_pair_cut {k : ℕ} (hk : 3 ≤ k) (t : ℕ) (p : Fin k)
   have hg : G k t (K ++ [n, p]) < G k t W := by omega
   exact ⟨legal_of_strip inv.nodup hs, inv, Prod.Lex.toLex_lt_toLex.mpr (Or.inl hg)⟩
 
-set_option maxHeartbeats 1800000 in
+set_option maxHeartbeats 5000000 in
 /-- The full native three-negative exchange. The prefix A is arbitrary signed,
 all labels are physical, and Legal controls every natural take. -/
 theorem actualSource_threeNegative_exchange_full
@@ -277,7 +277,7 @@ theorem actualSource_threeNegative_exchange_full
       simp [w, R, Zpen, mass]
       ring
     have hb' : mass f (L ++ [y] ++ T1) ≤ C k := by
-      simpa only [List.take_length, zero_add] using hb
+      simpa only [mass, List.take_length, zero_add] using hb
     rwa [he] at hb'
   have hwQ : w < Q k := by change Q k ≤ Zpen at hzpenlarge; omega
   have hwB : B < w := by
@@ -457,9 +457,15 @@ theorem actualSource_threeNegative_exchange_full
       simp only [V, Ret, W, F, R, List.count_append, List.count_cons, List.count_nil]
       omega
     obtain ⟨_, hv, _, _, hj⟩ := energy_cut hk t W V [p, n] Ret hW.1 hI hIW
-      (by intro a ha; simp only [Ret, List.mem_append, List.mem_cons, List.not_mem_nil,
-        or_false] at ha; simp only [W, F, R, List.mem_append, List.mem_cons,
-        List.not_mem_nil, or_false]; tauto) hIL hp hsV
+      (by
+        intro a ha
+        simp only [Ret, List.mem_append, List.mem_cons, List.not_mem_nil, or_false] at ha
+        rcases ha with rfl | ha | ha | rfl | ha
+        · simp [W, F, R]
+        · simp [W, F, R, ha]
+        · simp [W, F, ha]
+        · simp [W]
+        · simp [W, ha]) hIL hp hsV
       (by simp [Ret, largeUsed_append, largeUsed_cons, largeWeight, hyL, hzL,
         hT10.1, hT20.1, hE0.1, hILcount])
       (by simpa [Ret, H, mass, energyWeight, hyL, hzL, geo.pLarge,
@@ -501,15 +507,19 @@ theorem actualSource_threeNegative_exchange_full
       apply List.perm_iff_count.mpr
       intro a
       have hh := hT2perm.count_eq a
-      simp only [V, Ret, W, F, R, List.count_append, List.count_cons, List.count_nil] at *
+      simp only [V, Ret, W, F, R, List.count_append, List.count_cons, List.count_nil] at hh ⊢
       omega
     obtain ⟨_, hv, _, _, hj⟩ := energy_cut hk t W V [p, n] Ret hW.1 hI hIW
       (by
         intro a ha
-        have hm : a ∈ T2.erase v → a ∈ T2 := fun he => List.mem_of_mem_erase he
         simp only [Ret, List.mem_append, List.mem_cons, List.not_mem_nil, or_false] at ha
-        simp only [W, F, R, List.mem_append, List.mem_cons, List.not_mem_nil, or_false]
-        tauto) hIL hp hsV
+        rcases ha with rfl | ha | ha | rfl | ha
+        · simp [W, F, R]
+        · simp [W, F, R, ha]
+        · have hm : a ∈ T2 := List.mem_of_mem_erase ha
+          simp [W, F, hm]
+        · simp [W]
+        · simp [W, ha]) hIL hp hsV
       (by simp [Ret, largeUsed_append, largeUsed_cons, largeWeight, hyL, hzL,
         hT10.1, hT2erase0.1, hE0.1, hILcount])
       (by simpa [Ret, H, mass, energyWeight, hyL, hzL, geo.pLarge,
@@ -563,7 +573,10 @@ theorem actualSource_threeNegative_exchange_full
   let Ret := [y] ++ Rest ++ E
   have hsV : InStrip f (C k) 0 V := by
     have hsPre : InStrip f (C k) 0 ((L ++ [n, v, zpen]) ++ Sel) :=
-      inStrip_append hsBase (by simpa [mass, hBaseMass] using hsSel)
+      inStrip_append hsBase (by
+        change InStrip f (C k) (0 + mass f (L ++ [n, v, zpen])) Sel
+        rw [zero_add, hBaseMass]
+        exact hsSel)
     apply inStrip_append hsPre
     simp only [zero_add]
     have he : mass f ((L ++ [n, v, zpen]) ++ Sel) = alpha + mass f Sel := by
@@ -579,23 +592,20 @@ theorem actualSource_threeNegative_exchange_full
     intro a
     have he := hT2perm.count_eq a
     have hr := hRest.count_eq a
-    simp only [V, Ret, W, F, R, T, List.count_append, List.count_cons, List.count_nil] at *
+    simp only [V, Ret, W, F, R, T, List.count_append, List.count_cons, List.count_nil]
+      at he hr ⊢
     omega
   have hRet (a : Fin k) (ha : a ∈ Ret) : a ∈ W := by
-    have hRestT : ∀ a ∈ Rest, a ∈ T := fun a ha =>
-      hRest.mem_iff.mpr (List.mem_append_right Sel ha)
-    have he : ∀ a ∈ T2.erase v, a ∈ T2 := fun a ha => List.mem_of_mem_erase ha
     simp only [Ret, List.mem_append, List.mem_cons, List.not_mem_nil, or_false] at ha
-    simp only [W, F, R, List.mem_append, List.mem_cons, List.not_mem_nil, or_false]
-    rcases ha with ha | ha | ha
-    · tauto
-    · have hm := hRestT a ha
-      simp only [T, List.mem_append] at hm
-      rcases hm with hm | hm
-      · tauto
-      · have hm' := he a hm
-        tauto
-    · tauto
+    rcases ha with rfl | ha | ha
+    · simp [W, F, R]
+    · have hm := hRest.mem_iff.mpr (List.mem_append_right Sel ha)
+      change a ∈ T1 ++ T2.erase v at hm
+      rcases List.mem_append.mp hm with hm | hm
+      · simp [W, F, R, hm]
+      · have hm' : a ∈ T2 := List.mem_of_mem_erase hm
+        simp [W, F, hm']
+    · simp [W, ha]
   have hny : (3 : ℕ) ^ (f n).natAbs < 3 ^ (f y).natAbs := by
     have he : (f n).natAbs < (f y).natAbs := by
       exact_mod_cast (show ((f n).natAbs : ℤ) < ((f y).natAbs : ℤ) by
