@@ -28,13 +28,15 @@ abbrev Mat := _root_.Matrix (Fin 2) (Fin 2) ℂ
 /-- The Hermitian matrix with prescribed real diagonal and complex upper entry. -/
 def hermitian (a b : ℝ) (z : ℂ) : Mat := !![(a : ℂ), z; star z, (b : ℂ)]
 
-private theorem hermitian_isHermitian (a b : ℝ) (z : ℂ) :
+/-- Real diagonal coordinates and conjugate off-diagonal entries give a Hermitian matrix. -/
+theorem hermitian_isHermitian (a b : ℝ) (z : ℂ) :
     (hermitian a b z).IsHermitian := by
   apply Matrix.IsHermitian.ext
   intro i j
   fin_cases i <;> fin_cases j <;> simp [hermitian]
 
-private theorem hermitian_eq (H : Mat) (hH : H.IsHermitian) :
+/-- Every complex Hermitian two by two matrix has these coordinates. -/
+theorem hermitian_eq (H : Mat) (hH : H.IsHermitian) :
     H = hermitian (H 0 0).re (H 1 1).re (H 0 1) := by
   have hd (i : Fin 2) : (H i i).im = 0 := by
     have h := congrArg Complex.im (hH.apply i i)
@@ -161,7 +163,8 @@ private theorem trace_cube (u v : ℝ) (z : ℂ) :
   simp [hermitian, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two,
     pow_succ] <;> ring_nf <;> simp
 
-private theorem trace_weighted_square (a b u v : ℝ) (z : ℂ) :
+/-- The weighted quadratic trace in exact complex Hermitian coordinates. -/
+theorem trace_weighted_square (a b u v : ℝ) (z : ℂ) :
     (Matrix.trace (hermitian a b 0 * hermitian u v z ^ 2)).re =
       a*(u^2+‖z‖^2)+b*(v^2+‖z‖^2) := by
   rw [Complex.sq_norm, Complex.normSq_apply]
@@ -252,6 +255,29 @@ private theorem hermitian_swap_psd (a b : ℝ) (z : ℂ)
   ext i j
   fin_cases i <;> fin_cases j <;> simp [hermitian, Matrix.submatrix]
 
+private theorem scalar_absolute_trace_swapped (a b m p h k r s : ℝ) (z w : ℂ)
+    (ha : 0 < a) (hb : 0 < b) (hm : Real.sqrt (a*b) ≤ m)
+    (hscalar : ScalarBound b a m p)
+    (hp : (hermitian (a+h) (b+k) z).PosSemidef)
+    (hn : (hermitian (a-h) (b-k) (-z)).PosSemidef)
+    (kp : (hermitian (1+r) (1+s) w).PosSemidef)
+    (kn : (hermitian (1-r) (1-s) (-w)).PosSemidef) :
+    |((h-a*r)+(k-b*s))*((h-a*r)^2-(h-a*r)*(k-b*s)+(k-b*s)^2+
+      3*‖z-(m : ℂ)*w‖^2)| ≤
+      2*(a*((h-a*r)^2+‖z-(m : ℂ)*w‖^2)+
+        b*((k-b*s)^2+‖z-(m : ℂ)*w‖^2))+p*‖w‖^2 := by
+  have hp' := hermitian_swap_psd _ _ _ hp
+  have hn' := hermitian_swap_psd _ _ _ hn
+  have kp' := hermitian_swap_psd _ _ _ kp
+  have kn' := hermitian_swap_psd _ _ _ kn
+  simp only [star_neg] at hn' kn'
+  have hbound := scalar_absolute_trace b a m p k h s r (star z) (star w)
+    hb ha (by simpa only [mul_comm] using hm) hscalar hp' hn' kp' kn'
+  have hz : star z-(m : ℂ)*star w = star (z-(m : ℂ)*w) := by
+    simp [star_sub, star_mul, mul_comm]
+  rw [hz, norm_star, norm_star] at hbound
+  convert hbound using 1 <;> ring
+
 /-- Multiplication by a real symmetric two point kernel, with its diagonal weights explicit. -/
 def weightedImage (a b m : ℝ) (K : Mat) : Mat :=
   !![(a : ℂ)*K 0 0, (m : ℂ)*K 0 1; (m : ℂ)*K 1 0, (b : ℂ)*K 1 1]
@@ -264,7 +290,7 @@ private theorem weightedImage_hermitian (a b m r s : ℝ) (z : ℂ) :
 
 private theorem matrix_bound_of_scalar (a b m p : ℝ) (H K : Mat)
     (ha : 0 < a) (hb : 0 < b) (hm : Real.sqrt (a*b) ≤ m)
-    (hscalar : ScalarBound a b m p)
+    (hscalar : ScalarBound a b m p ∨ ScalarBound b a m p)
     (hH : H.IsHermitian) (hK : K.IsHermitian)
     (hp : (hermitian a b 0 + H).PosSemidef)
     (hn : (hermitian a b 0 - H).PosSemidef)
@@ -282,11 +308,14 @@ private theorem matrix_bound_of_scalar (a b m p : ℝ) (H K : Mat)
   simp only [zero_add] at kp
   rw [← hermitian_one, hKrep, hermitian_sub] at kn
   simp only [zero_sub] at kn
-  have hbound := scalar_absolute_trace a b m p (H 0 0).re (H 1 1).re
-    (K 0 0).re (K 1 1).re (H 0 1) (K 0 1) ha hb hm hscalar hp hn kp kn
   rw [hHrep, hKrep, weightedImage_hermitian, hermitian_sub, trace_cube,
     trace_weighted_square]
-  simpa [hermitian] using hbound
+  simp only [hermitian, Matrix.cons_val_zero, Matrix.cons_val_one]
+  rcases hscalar with hscalar | hscalar
+  · exact scalar_absolute_trace a b m p (H 0 0).re (H 1 1).re
+      (K 0 0).re (K 1 1).re (H 0 1) (K 0 1) ha hb hm hscalar hp hn kp kn
+  · exact scalar_absolute_trace_swapped a b m p (H 0 0).re (H 1 1).re
+      (K 0 0).re (K 1 1).re (H 0 1) (K 0 1) ha hb hm hscalar hp hn kp kn
 
 #print axioms endpoint_coupling
 #print axioms contraction_row
