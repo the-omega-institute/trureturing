@@ -1,0 +1,32 @@
+**Lemma 2.1 (the native entries).** Set $A=QA_0Q^{\mathsf T}$. Its only possibly nonzero diagonal entries are
+
+$$
+A_{dd}=-2CS,\qquad A_{ee}=2CS.
+\tag{CL.7}
+$$
+
+Its undirected nonzero off-diagonal entries, apart from a possibly zero $ce$ entry, are
+
+$$
+\begin{aligned}
+A_{\ell_jc}&=1,&
+A_{cd}&=C,& A_{ce}&=S,\\
+A_{de}&=C^2-S^2,&
+A_{df}&=2C-S,& A_{ef}&=2S+C.
+\end{aligned}
+\tag{CL.8}
+$$
+
+All other off-diagonal entries vanish.
+
+**Proof.** The leaves, $c$ and $f$ are fixed by $Q$. The old $c$-to-$(d,e)$ column is $(1,0)^{\mathsf T}$, which rotates to $(C,S)^{\mathsf T}$; the old $f$ column is $(2,1)^{\mathsf T}$, which rotates to $(2C-S,2S+C)^{\mathsf T}$. On the $(d,e)$ block the multiplication is
+
+$$
+\begin{pmatrix}C&-S\\S&C\end{pmatrix}
+\begin{pmatrix}0&1\\1&0\end{pmatrix}
+\begin{pmatrix}C&S\\-S&C\end{pmatrix}
+=\begin{pmatrix}-2CS&C^2-S^2\\C^2-S^2&2CS\end{pmatrix}.
+$$
+
+These blocks exhaust the original nonzero entries, giving the claim. $\square$
+
