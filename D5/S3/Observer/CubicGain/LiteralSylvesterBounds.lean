@@ -345,9 +345,11 @@ private theorem certificate_top_nonzero (k : Fin 2) : (![topR1,topR2] k).det ≠
   · change topR2.det ≠ 0
     exact leading_determinants_ne_zero.2.1
 
+attribute [local irreducible] Matrix.det Polynomial.coeff
+
 private theorem resultant_top_nonzero (k : Fin 2) :
     (actualResultant k).coeff 285 ≠ 0 := by
-  change (literalSylvester k).det.coeff 285 ≠ 0
+  unfold actualResultant
   have hc := weighted_top_coeff (literalSylvester k) sylvesterWeight
     (fun j => 29-j.val) 285 31 (by decide +kernel) (by decide +kernel)
     (sylvester_entry_weight k)
