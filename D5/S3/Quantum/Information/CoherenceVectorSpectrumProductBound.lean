@@ -53,7 +53,7 @@ private lemma column_ensemble {d : ℕ} (hd : 1 ≤ d)
   let a := CFC.sqrt ρ
   let p : Fin d → ℝ := fun j => (ρ j j).re
   let ψ : Fin d → Fin d → ℂ := fun j i =>
-    if p j = 0 then Pi.single (⟨0, hd⟩ : Fin d) 1 i else a i j / (Real.sqrt (p j) : ℂ)
+    if p j = 0 then (Pi.single (⟨0, hd⟩ : Fin d) (1 : ℂ) : Fin d → ℂ) i else a i j / (Real.sqrt (p j) : ℂ)
   have ha : a.IsHermitian := (CFC.sqrt_nonneg ρ).posSemidef.isHermitian
   have haa : a * a = ρ := CFC.sqrt_mul_sqrt_self ρ hρ.1.nonneg
   have hp (j : Fin d) : 0 ≤ p j := (Complex.nonneg_iff.mp hρ.1.diag_nonneg).1
@@ -80,7 +80,7 @@ private lemma column_ensemble {d : ℕ} (hd : 1 ≤ d)
     · change (∑ i, Complex.normSq (if p j = 0 then _ else _)) = 1
       simp only [hz, if_true, Pi.single_apply, apply_ite, Complex.normSq_one,
         Complex.normSq_zero]
-      simp only [Finset.sum_ite_eq, Finset.mem_univ, if_true]
+      simp only [Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     · have hs := Finset.sum_congr rfl (fun i (_ : i ∈ (Finset.univ : Finset (Fin d))) =>
         hcol i j)
       rw [← Finset.mul_sum, hnorm j] at hs
@@ -96,7 +96,8 @@ private lemma column_ensemble {d : ℕ} (hd : 1 ≤ d)
         div_mul_div_comm, hsq, mul_div_cancel₀ _ (Complex.ofReal_ne_zero.mpr hz)]
   refine ⟨p, ψ, ⟨hp, ?_, hunit, ?_⟩, fun _ => rfl, hcol⟩
   · have ht := congrArg Complex.re hρ.2
-    simpa only [Matrix.trace, Matrix.diag, Complex.re_sum, Complex.one_re] using ht
+    change (∑ j, ρ j j).re = (1 : ℂ).re at ht
+    simpa only [Complex.re_sum, Complex.one_re] using ht
   · calc
       ρ = a * aᴴ := by rw [ha.eq, haa]
       _ = ∑ j, (p j : ℂ) • rankOneDensity (ψ j) := by
@@ -108,7 +109,7 @@ private lemma rearrangement_max {d : ℕ} (hd : 1 ≤ d) (x : Fin d → ℝ) (i 
     x i ≤ decreasingRearrangement x ⟨0, hd⟩ := by
   rw [decreasingRearrangement]
   have h := Tuple.monotone_sort (α := ℝᵒᵈ) x
-    (show (⟨0, hd⟩ : Fin d) ≤ (Tuple.sort (α := ℝᵒᵈ) x).symm i from Fin.zero_le _)
+    (show (⟨0, hd⟩ : Fin d) ≤ (Tuple.sort (α := ℝᵒᵈ) x).symm i from Nat.zero_le _)
   change x (Tuple.sort (α := ℝᵒᵈ) x ((Tuple.sort (α := ℝᵒᵈ) x).symm i)) ≤ _ at h
   rwa [Equiv.apply_symm_apply] at h
 
@@ -131,6 +132,7 @@ private lemma first_component_bound {d : ℕ} (hd : 1 ≤ d)
     | succ n =>
       simp only [List.ofFn_succ, List.take_succ_cons, List.take_zero,
         List.sum_cons, List.sum_nil, add_zero]
+      rfl
   have hmaj := hν.2.2.2 u hu
   have hfirst := hmaj.1 1 (by omega) (by simpa only [List.length_ofFn] using hd)
   rw [htake, htake] at hfirst
@@ -167,7 +169,7 @@ private lemma trace_sqrt_spectral {d : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
     Unitary.coe_star_mul_self, one_mul, Matrix.trace_diagonal, Complex.re_sum]
   apply Finset.sum_congr rfl
   intro i _
-  simp only [Function.comp_apply, RCLike.ofReal_re, NNReal.coe_sqrt,
+  simp only [Function.comp_apply, Complex.ofReal_re, Real.coe_sqrt,
     Real.coe_toNNReal _ (hρ.1.eigenvalues_nonneg i)]
 
 private lemma spectral_bound {d : ℕ} (hd : 1 ≤ d)
@@ -175,11 +177,11 @@ private lemma spectral_bound {d : ℕ} (hd : 1 ≤ d)
     0 < maxEigenvalue ρ ∧ 1 / Real.sqrt (maxEigenvalue ρ) ≤ (CFC.sqrt ρ).trace.re := by
   classical
   have hsum : (∑ i, hρ.1.isHermitian.eigenvalues i) = 1 := by
-    have h := congrArg Complex.re hρ.1.isHermitian.trace_eq_sum_eigenvalues
-    rw [hρ.2] at h
-    simpa only [Complex.one_re, Complex.re_sum, Complex.ofReal_re] using h.symm
+    have h := congrArg Complex.re
+      (hρ.1.isHermitian.trace_eq_sum_eigenvalues.symm.trans hρ.2)
+    simpa only [Complex.one_re, Complex.re_sum, Complex.ofReal_re] using h
   have hle (i : Fin d) : hρ.1.isHermitian.eigenvalues i ≤ maxEigenvalue ρ := by
-    rw [maxEigenvalue, dif_pos hρ.1.isHermitian]
+    rw [maxEigenvalue, dite_eq_left hρ.1.isHermitian]
     exact le_csSup (Set.finite_range _).bddAbove ⟨i, rfl⟩
   have hl : 0 < maxEigenvalue ρ := by
     by_contra hn
