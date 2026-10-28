@@ -32,5 +32,5 @@ internal sealed class HereditaryLexicographicProductDocument : IScribeDocumentDe
         DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
+            Blocks(Paragraph(Text(prose.Replace("\n\n", " ")))), role, openProblemResolutionClaim: resolution);
 }
