@@ -93,26 +93,19 @@ def familyRegistration : Registration arena (type_of% actual_spectral_counting) 
     fun e => nomatch e⟩
   dependence := by
     intro i
-    let mu : ℕ → ℝ := fun n => ((n : ℝ)+1)⁻¹
-    refine ⟨mu,0,1,?_⟩
-    change positiveCount mu 0 ≠ positiveCount mu 1
-    have h0 : {n : ℕ | (mu n)⁻¹ ≤ 0} = ∅ := by
+    classical
+    obtain ⟨_,e,k,mu,_,_,_,_,_,_,_,_,hcut,hzero,_⟩ := actual_spectral_counting
+    refine ⟨mu,0,(mu 0)⁻¹,?_⟩
+    change positiveCount mu 0 ≠ positiveCount mu (mu 0)⁻¹
+    rw [hzero]
+    obtain ⟨s,q,hs,_⟩ := hcut (mu 0)⁻¹
+    have hset : {n : ℕ | (mu n)⁻¹ ≤ (mu 0)⁻¹} = (s : Set ℕ) := by
       ext n
-      simp only [mu,inv_inv,Set.mem_setOf_eq,Set.mem_empty_iff_false,iff_false]
-      have hn : (0 : ℝ) ≤ n := Nat.cast_nonneg n
-      linarith
-    have h1 : {n : ℕ | (mu n)⁻¹ ≤ 1} = {0} := by
-      ext n
-      simp only [mu,inv_inv,Set.mem_setOf_eq,Set.mem_singleton_iff]
-      constructor
-      · intro h
-        have : (n : ℝ) ≤ 0 := by linarith
-        have : (n : ℝ) = 0 := le_antisymm this (Nat.cast_nonneg n)
-        exact_mod_cast this
-      · rintro rfl
-        norm_num
-    simp only [positiveCount,h0,h1,Set.ncard_empty,Set.ncard_singleton]
-    norm_num
+      exact (hs n).symm
+    have hpos : 0 < s.card := Finset.card_pos.mpr ⟨0,(hs 0).mpr le_rfl⟩
+    have hcount : 0 < positiveCount mu (mu 0)⁻¹ := by
+      simpa [positiveCount,hset] using hpos
+    exact ne_of_lt hcount
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
