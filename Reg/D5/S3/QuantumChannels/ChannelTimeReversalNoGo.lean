@@ -33,7 +33,7 @@ def actual : Realization signature :=
   realize signature (fun _ _ X Y => X = Y) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ X Y => X ≠ Y) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
@@ -44,7 +44,7 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h 0
+  exact h 0 (Qubit.pauli_expansion 0)
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -88,7 +88,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg", "body", "arg", "body", "fn", "fn"]
+      path := #["body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
