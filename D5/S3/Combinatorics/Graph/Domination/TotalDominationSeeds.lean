@@ -508,7 +508,9 @@ private theorem edge_base_card (m : ℕ) : Fintype.card (EdgeBase m) = 2 * (m + 
 private theorem edge_base_polynomial (m : ℕ) :
     totalPolynomial (edgeBaseGraph m) = X ^ (2 * (m + 1)) := by
   induction m with
-  | zero => convert edge_polynomial using 1
+  | zero =>
+    convert edge_polynomial using 1
+    rfl
   | succ m ih =>
     change totalPolynomial (unionGraph (⊤ : SimpleGraph (Fin 2)) (edgeBaseGraph m)) = _
     rw [union_polynomial, edge_polynomial, ih, ← pow_add]
@@ -549,7 +551,6 @@ private theorem friendship_far_negative (m : ℕ) :
     rw [← mul_pow]
     congr 1
     field_simp
-    ring
   have hB : 2 ≤ q * (1 - 1 / q) ^ e := by
     have hmul := mul_le_mul_of_nonneg_left hb hqp.le
     have heq : q * (1 + (e : ℝ) * -(1 / q)) = 2 := by
@@ -562,8 +563,8 @@ private theorem friendship_far_negative (m : ℕ) :
     nlinarith
   have hmul := mul_le_mul_of_nonneg_left hB (pow_nonneg hqp.le e)
   have hval := friendship_eval_negative m q
-  change (friendshipPolynomial m).eval (-q) < 0
-  rw [hval]
+  have hqdef : (2 * ((m : ℝ) + 1) + 2) = q := by dsimp [q, e]; push_cast; ring
+  rw [hqdef, hval]
   change q ^ e + q - q * (q - 1) ^ e < 0
   rw [hnorm]
   nlinarith
@@ -589,10 +590,10 @@ theorem friendship_root_unbounded (R : ℝ) (hR : 2 < R) :
         R ^ (2 * (m + 1)) * a ^ (m + 1) := by
       dsimp [a]
       rw [← pow_mul, ← mul_pow]
-      have heq : R * (1 - 1 / R) = R - 1 := by field_simp; ring
+      have heq : R * (1 - 1 / R) = R - 1 := by field_simp
       rw [heq]
     rw [hnorm]
-    have hlt : R * a ^ (m + 1) < 1 := (lt_div_iff₀ hRp).mp hmp
+    have hlt : R * a ^ (m + 1) < 1 := by simpa [mul_comm] using (lt_div_iff₀ hRp).mp hmp
     have hpos := mul_pos (pow_pos hRp (2 * (m + 1))) (sub_pos.mpr hlt)
     nlinarith
   have hfar := friendship_far_negative m
@@ -610,7 +611,7 @@ theorem friendship_root_unbounded (R : ℝ) (hR : 2 < R) :
       field_simp
       ring
     rw [hcancel] at hmul
-    have hlt : R * a ^ (m + 1) < 1 := (lt_div_iff₀ hRp).mp hmp
+    have hlt : R * a ^ (m + 1) < 1 := by simpa [mul_comm] using (lt_div_iff₀ hRp).mp hmp
     push_cast at hmul
     linarith
   obtain ⟨r, hr, hz⟩ := intermediate_value_Ioo horder
@@ -629,6 +630,36 @@ theorem friendship_root_unbounded (R : ℝ) (hR : 2 < R) :
       obtain ⟨u⟩ := edgeBaseNonempty m
       exact ⟨.inr u, trivial⟩
     | inr v => exact ⟨.inl (), trivial⟩
+
+
+/-- The unbounded negative roots have the exact finite labels of the original target. -/
+theorem labelled_unbounded_negative_roots (R : ℝ) (hR : 2 < R) :
+    ∃ (n : ℕ) (G : SimpleGraph (Fin n)) (r : ℝ),
+      2 ≤ n ∧ r < -R ∧ (∀ v, ∃ u, G.Adj v u) ∧
+      complexPolynomial G ≠ 0 ∧ (complexPolynomial G).IsRoot (r : ℂ) := by
+  classical
+  obtain ⟨m, r, hr, hz, hnz, hni⟩ := friendship_root_unbounded R hR
+  let V := Unit ⊕ EdgeBase m
+  let n := Fintype.card V
+  let e : Fin n ≃ V := (Fintype.equivFin V).symm
+  let G := (friendshipGraph m).comap e
+  have hp : totalPolynomial G = totalPolynomial (friendshipGraph m) :=
+    polynomial_equiv _ e
+  have hn : 2 ≤ n := by
+    dsimp [n, V]
+    rw [Fintype.card_sum, edge_base_card]
+    simp
+    omega
+  refine ⟨n, G, r, hn, hr, ?_, ?_, ?_⟩
+  · intro v
+    obtain ⟨u, hu⟩ := hni (e v)
+    exact ⟨e.symm u, by simpa [G] using hu⟩
+  · rw [complex_polynomial_map, hp]
+    exact (Polynomial.map_ne_zero_iff Complex.ofReal_injective).mpr hnz
+  · rw [complex_polynomial_map, hp]
+    exact hz.map
+
+#print axioms labelled_unbounded_negative_roots
 
 #print axioms friendship_root_unbounded
 

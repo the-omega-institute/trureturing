@@ -250,6 +250,71 @@ theorem labelled_seed_blowup_roots (ε : ℝ) (hε : 0 < ε) (k : ℕ) (hk : 0 <
     rw [hp]
     exact hroots w hw
 
+
+/-- Every actual root, including an unbounded negative seed, has a common labelled pullback. -/
+theorem labelled_root_blowup (n : ℕ) (G : SimpleGraph (Fin n))
+    (hn : 2 ≤ n) (hni : ∀ v, ∃ u, G.Adj v u)
+    (η : ℂ) (hη : (complexPolynomial G).IsRoot η) (k : ℕ) (hk : 0 < k) :
+    ∃ (m : ℕ) (H : SimpleGraph (Fin m)),
+      2 ≤ m ∧ complexPolynomial H ≠ 0 ∧ (∀ v, ∃ u, H.Adj v u) ∧
+      ∀ w : ℂ, (1 + w) ^ k = 1 + η → (complexPolynomial H).IsRoot w := by
+  classical
+  have : Nonempty (Fin k) := ⟨⟨0, hk⟩⟩
+  let B := blowupGraph G (Fin k)
+  have hniB : ∀ v, ∃ u, B.Adj v u := blowup_no_isolates G hni
+  let m := Fintype.card (Fin n × Fin k)
+  let e : Fin m ≃ Fin n × Fin k := (Fintype.equivFin _).symm
+  let H := B.comap e
+  have htotal (S : Finset (Fin m)) : IsTotal H S ↔ IsTotal B (S.map e.toEmbedding) := by
+    constructor
+    · intro h v
+      obtain ⟨u, hu, hadj⟩ := h (e.symm v)
+      exact ⟨e u, mem_map.mpr ⟨u, hu, rfl⟩, by simpa [H] using hadj⟩
+    · intro h v
+      obtain ⟨u, hu, hadj⟩ := h (e v)
+      obtain ⟨u', hu', heq⟩ := mem_map.mp hu
+      refine ⟨u', hu', ?_⟩
+      change B.Adj (e v) (e u')
+      rw [heq]
+      exact hadj
+  have hp : complexPolynomial H = complexPolynomial B := by
+    unfold complexPolynomial
+    exact Fintype.sum_equiv e.finsetCongr _ _ (fun S => by
+      simp [Equiv.finsetCongr_apply, htotal S])
+  have hm : 2 ≤ m := by
+    dsimp [m]
+    simp only [Fintype.card_prod, Fintype.card_fin]
+    nlinarith
+  refine ⟨m, H, hm, ?_, ?_, ?_⟩
+  · rw [hp]
+    exact polynomial_nonzero B hniB
+  · intro v
+    obtain ⟨u, hu⟩ := hniB (e v)
+    exact ⟨e.symm u, by simpa [H] using hu⟩
+  · intro w hw
+    rw [hp, blowup_polynomial]
+    simp only [Polynomial.IsRoot, Polynomial.eval_comp, Fintype.card_fin,
+      eval_sub, eval_pow, eval_add, eval_one, eval_X]
+    have harg : (1 + w) ^ k - 1 = η := by rw [hw]; ring
+    rw [harg]
+    exact hη
+
+/-- Arbitrarily large negative shifts and every power branch have the same lawful witnesses. -/
+theorem unbounded_seed_blowup_roots (R : ℝ) (hR : 2 < R) (k : ℕ) (hk : 0 < k) :
+    ∃ (m : ℕ) (H : SimpleGraph (Fin m)) (r : ℝ),
+      2 ≤ m ∧ r < -R ∧ complexPolynomial H ≠ 0 ∧
+      (∀ v, ∃ u, H.Adj v u) ∧
+      ∀ w : ℂ, (1 + w) ^ k = (1 + r : ℝ) → (complexPolynomial H).IsRoot w := by
+  obtain ⟨n, G, r, hn, hr, hni, _, hz⟩ := labelled_unbounded_negative_roots R hR
+  obtain ⟨m, H, hm, hnz, hniH, hroot⟩ := labelled_root_blowup n G hn hni (r : ℂ) hz k hk
+  refine ⟨m, H, r, hm, hr, hnz, hniH, ?_⟩
+  intro w hw
+  apply hroot w
+  simpa only [Complex.ofReal_add, Complex.ofReal_one] using hw
+
+#print axioms labelled_root_blowup
+#print axioms unbounded_seed_blowup_roots
+
 #print axioms labelled_seed_blowup_roots
 
 #print axioms seed_blowup_roots
