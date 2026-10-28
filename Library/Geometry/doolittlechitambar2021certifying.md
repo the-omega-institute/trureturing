@@ -5,7 +5,7 @@ year: 2021
 title: "Certifying the classical simulation cost of a quantum channel"
 doi: 10.1103/PhysRevResearch.3.043073
 url: https://arxiv.org/abs/2102.12543v1
-claim: "A classical channel from n inputs to n' outputs is d-simulable when it is a shared-randomness mixture of encoders into d messages followed by decoders; these channels form the signaling polytope, and the signaling dimension is the least such d. The paper characterizes the signaling polytope for two-bit simulation of four-output channels, shows that six inputs suffice there to certify that one bit is not enough, and conjectures that binom(n', d) inputs always suffice to certify signaling dimension larger than d."
+claim: "A classical channel from n inputs to n' outputs is d-simulable when it is a shared-randomness mixture of encoders into d messages followed by decoders; these channels form the signaling polytope, and the signaling dimension is the least such d. The paper characterizes the signaling polytope for two-message (one-bit) simulation of four-output channels, shows that six inputs suffice there to certify that one bit is not enough, and conjectures that binom(n', d) inputs always suffice to certify signaling dimension larger than d."
 strata_touched:
   - D5/S3/Quantum/QuantumChannels/SignalingDimensionHellyCertificate
 license: citation-only
