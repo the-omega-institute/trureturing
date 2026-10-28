@@ -110,6 +110,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/PSSValuationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/popoli-shallit-stipulanti-2024-valuation-question-31` (refuted) by `D5/S1/Words/Complexity/PSSValuationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"popoli-shallit-stipulanti-2024-valuation-question-31","declaration_gid":"D5/S1/Words/Complexity/PSSValuationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Pierre Popoli and Jeffrey Shallit and Manon Stipulanti (2024). *Additive word complexity and Walnut*. DOI: [10.4230/LIPIcs.FSTTCS.2024.32](https://doi.org/10.4230/LIPIcs.FSTTCS.2024.32). URL: <https://arxiv.org/abs/2410.02409v1>.
