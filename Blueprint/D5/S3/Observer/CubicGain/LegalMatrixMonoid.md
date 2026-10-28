@@ -6,7 +6,19 @@ Native forward words coincide with all nonnegative integral matrices of determin
 
 Mat is the full real 2 by 2 matrix space, and i,j range over Fin 2, displayed as {0,1}. A Boolean word u is a finite chronological list: false selects M=[[0,1],[1,1]], true selects J=[[0,1],[1,0]], and its head acts first. Write T(u)=futureProduct(u). The existing recursion is T([])=I and T(e::u)=T(u)E(e). In particular chronological M,J has matrix JM=U=[[1,1],[0,1]], while chronological J,M has matrix MJ=L=[[1,0],[1,1]].
 
-**Theorem 1.1 (Exact forward-word characterization).**
+**Lemma 1.1 (Concatenation executes the earlier word first).**
+
+$$\forall u,v, \operatorname{T}(u++v)= \operatorname{T}(v)\operatorname{T}(u)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/LegalMatrixMonoid.product_append` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary finite words u,v, including empty words, chronological concatenation gives T(u++v)=T(v)T(u). Induction on u follows the existing product recursion and matrix associativity. This identity relates the actual cumulative endpoints and also cancels the adjacent J pairs when every multiplier is conjugated.
+
+**Theorem 1.2 (Exact forward-word characterization).**
 
 $$\forall H\in \mathbb{R}^{2\times2}, (\exists u\in \{0,1\}^{*}, \operatorname{T}(u)= H)\iff (\forall i,j\in \{0,1\}, (0\leq H_{ij}\land \exists z\in \mathbb{Z}, H_{ij}= z))\land (\operatorname{det}(H)= 1\lor \operatorname{det}(H)= -1)$$
 
@@ -27,5 +39,6 @@ The characterization supplies the monoid step used by exact cumulative continuat
 ## References
 
 - Truth anchor: `D5/S3/Observer/CubicGain/LegalMatrixMonoid.legal_matrix_monoid`
+- Truth anchor: `D5/S3/Observer/CubicGain/LegalMatrixMonoid.product_append`
 - Dependency: [D5/S3/Observer/CubicGain/CommonWordSensitivity](CommonWordSensitivity.md)
 - Dependency: [D5/S3/PrimeForms/SternBrocot/UnimodularGeneration](../../PrimeForms/SternBrocot/UnimodularGeneration.md)
