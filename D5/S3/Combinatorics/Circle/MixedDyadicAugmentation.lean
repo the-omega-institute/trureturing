@@ -143,7 +143,7 @@ private theorem heads_allocation {α : Type*} [DecidableEq α]
         rcases Finset.mem_insert.mp hy with rfl | hy
         · exact hnot j _ hx
         · exact Finset.disjoint_left.mp (hKD _ _ hij) hx hy
-      | inr v => exact False.elim (hij (by congr; exact Subsingleton.elim u v))
+      | inr v => exact False.elim (hij (congrArg Sum.inr (Subsingleton.elim u v)))
   · intro x hx
     rcases Finset.mem_union.mp hx with hx | hx
     · obtain ⟨i, hi⟩ := hKC x hx
@@ -167,6 +167,7 @@ private theorem heads_allocation {α : Type*} [DecidableEq α]
 /-- The coupled allocation is realized with the original physical top and reset
 labels. Its hypotheses are the arithmetic residue budgets used by the all-word
 reduction; no intermediate append is required to be legal. -/
+set_option maxHeartbeats 800000 in
 private theorem coupled_exchange (m r p j g : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
     (W : List (Fin (m * r))) (hW : Legal (m * r) (unit m r) W)
     (S : Finset (Fin (m * r))) (A : Fin p → Fin (m * r))
@@ -192,7 +193,7 @@ private theorem coupled_exchange (m r p j g : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
       V.toFinset \ W.toFinset = {a, z} ∧ W.toFinset \ V.toFinset = ∅ := by
   classical
   have hmem (x : Fin (m * r)) : x ∈ W ↔ x ∈ S ∨ (∃ i, A i = x) ∨ x ∈ Z := by
-    simpa only [List.mem_append, Finset.mem_toList, List.mem_ofFn] using hperm.mem_iff (a := x)
+    simpa only [List.mem_append, Finset.mem_toList, List.mem_ofFn, or_assoc] using hperm.mem_iff (a := x)
   have haS : a ∉ S := fun h => haW ((hmem a).mpr (Or.inl h))
   have hne : a ≠ z := by intro h; subst z; omega
   have hAS (i : Fin p) : A i ∉ insert a S := by
@@ -209,7 +210,7 @@ private theorem coupled_exchange (m r p j g : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
   have hlen : Z'.length = p := by simp only [Z', List.length_append, List.length_singleton]; exact hAZ
   have hal : D5.S3.Combinatorics.Transportation.DyadicAllocation.Allocation P (exponent m r)
       (fun i : Fin Z'.length ⊕ Unit => Sum.elim (fun _ => height m) (fun _ => 2 ^ j - g) i) := by
-    simpa [D5.S3.Combinatorics.Transportation.DyadicAllocation.Allocation, P, height, top, hlen] using hfull
+    exact hlen.symm ▸ hfull
   have hpos (x : Fin (m * r)) (hx : x ∈ P) :
       scaled m r x = (2 : ℤ) ^ exponent m r x := by
     have hlt : exponent m r x < m - 1 := by
@@ -225,14 +226,15 @@ private theorem coupled_exchange (m r p j g : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
     apply (scaled_reset_iff m r hm x).mpr
     rcases List.mem_append.mp hx with hx | hx
     · exact hZe x hx
-    · simpa only [List.mem_singleton] using hx ▸ hz
+    · have hx' := List.mem_singleton.mp hx
+      simpa only [hx'] using hz
   have hcap : 2 ^ j - g ≤ height m := by
     have hpw := pow_le_pow_right₀ (by decide : 1 ≤ (2 : ℕ)) (by omega : j ≤ m - 2)
     have hB : 0 < (2 : ℕ) ^ (m - 2) := by positivity
     dsimp [height, top]; omega
   obtain ⟨V, hVP, hVs⟩ := word_of_allocation (scaled m r) P (exponent m r) Z' (height m)
     (2 ^ j - g) hcap hpos hneg hal
-  have hZN : Z.Nodup := (List.nodup_append.mp (hperm.nodup_iff.mp hW.1)).2
+  have hZN : Z.Nodup := (List.nodup_append'.mp (hperm.nodup_iff.mp hW.1)).2.1
   have hzZ : z ∉ Z := fun h => hzW ((hmem z).mpr (Or.inr (Or.inr h)))
   have hZ'N : Z'.Nodup := hZN.append (by simp) (List.disjoint_left.mpr (by
     intro x hx hi; have h := List.mem_singleton.mp hi; subst x; exact hzZ hx))
@@ -247,7 +249,7 @@ private theorem coupled_exchange (m r p j g : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
     omega
   have hWI : (W ++ [a, z]).Nodup := hW.1.append (by simp [hne])
     (List.disjoint_left.mpr (by
-      intro x hx hi; simp only [List.mem_cons, List.mem_singleton] at hi
+      intro x hx hi; simp only [List.mem_cons, List.not_mem_nil, or_false] at hi
       rcases hi with rfl | rfl
       · exact haW hx
       · exact hzW hx))
@@ -257,7 +259,7 @@ private theorem coupled_exchange (m r p j g : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
     have hw := hmem x
     simp only [P, Z', List.mem_append, Finset.mem_toList, Finset.mem_union,
       Finset.mem_insert, Finset.mem_image, Finset.mem_univ, true_and,
-      List.mem_cons, List.mem_singleton]
+      List.mem_cons, List.not_mem_nil, or_false]
     tauto
   have hVI : (V ++ []).Perm (W ++ [a, z]) := by simpa using hVP.trans hPP
   have hgain : 0 < largeUsed (m * r) (unit m r) [a, z] := by
@@ -265,7 +267,7 @@ private theorem coupled_exchange (m r p j g : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
       (large_iff m r hm hr z).mpr (by change m - 2 ≤ exponent m r z; omega)
     simp [largeUsed, mass, largeWeight, hL]
   obtain ⟨hVN, hJ, hI, hR⟩ := descent_of_perm W V [a, z] [] hW.1 (by simp [hne])
-    (by intro x hx; simp only [List.mem_cons, List.mem_singleton] at hx
+    (by intro x hx; simp only [List.mem_cons, List.not_mem_nil, or_false] at hx
         rcases hx with rfl | rfl; exact haW; exact hzW)
     (by simp) (by simp) hVI (Or.inl hgain)
   exact ⟨V, (legal_iff m r hm hr V).mpr ⟨hVN, hVs⟩, hJ,

@@ -383,4 +383,31 @@ theorem missing_top_bound (n : ℕ) (c : Fin n ⊕ Unit → ℕ)
   have hcard : (Finset.univ.erase i).card = n := by simp
   omega
 
+
+/-- Returning a subcollection and adding one fresh label gives an exact
+permutation before the reset list is restored. -/
+theorem replacement_perm {α : Type*} [DecidableEq α]
+    (S R : Finset α) (a : α) (hR : R ⊆ S) (ha : a ∉ S) :
+    ((insert a (S \ R)).toList ++ R.toList).Perm (S.toList ++ [a]) := by
+  classical
+  have hleft : ((insert a (S \ R)).toList ++ R.toList).Nodup := by
+    apply (Finset.nodup_toList _).append (Finset.nodup_toList _)
+    apply List.disjoint_left.mpr
+    intro x hx hy
+    have hx' := Finset.mem_insert.mp (Finset.mem_toList.mp hx)
+    have hy' := Finset.mem_toList.mp hy
+    rcases hx' with rfl | hx'
+    · exact ha (hR hy')
+    · exact (Finset.mem_sdiff.mp hx').2 hy'
+  have hright : (S.toList ++ [a]).Nodup :=
+    (Finset.nodup_toList S).append (by simp) (List.disjoint_left.mpr (by
+      intro x hx hy; have h := List.mem_singleton.mp hy; subst x
+      exact ha (Finset.mem_toList.mp hx)))
+  apply (List.perm_ext_iff_of_nodup hleft hright).mpr
+  intro x
+  have hr : x ∈ R → x ∈ S := fun h => hR h
+  simp only [List.mem_append, Finset.mem_toList, Finset.mem_insert,
+    Finset.mem_sdiff, List.mem_singleton]
+  tauto
+
 end D5.S3.Combinatorics.Circle.DyadicResetWords

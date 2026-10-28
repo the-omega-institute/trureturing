@@ -146,4 +146,55 @@ theorem coupled_allocation {α : Type*} [DecidableEq α]
     rw [htotal, hcap]
     omega
 
+
+/-- Exact mass is conserved by a physical allocation. -/
+theorem allocation_total {α β : Type*} [DecidableEq α] [Fintype β]
+    (S : Finset α) (e : α → ℕ) (cap : β → ℕ) (hal : Allocation S e cap) :
+    (∑ a ∈ S, 2 ^ e a) = ∑ i, cap i := by
+  classical
+  obtain ⟨K, hKS, hKD, hKC, hKb⟩ := hal
+  have hD : Set.PairwiseDisjoint (↑(Finset.univ : Finset β)) K := by
+    intro i _ j _ hij; exact hKD i j hij
+  have hU : Finset.univ.biUnion K = S := by
+    ext a
+    simp only [Finset.mem_biUnion, Finset.mem_univ, true_and]
+    exact ⟨fun ⟨i, hi⟩ => hKS i hi, hKC a⟩
+  rw [← hU, Finset.sum_biUnion hD]
+  simp_rw [hKb]
+
+/-- Original positive bins provide every residue budget above the least fresh
+SMALL denomination. This is derived from their actual physical allocation. -/
+theorem old_bins_residues {α : Type*} [DecidableEq α]
+    (S : Finset α) (e : α → ℕ) (b j n h g : ℕ)
+    (hgap : h + g = 2 ^ (b + 1) - 1) (hgs : g < 2 ^ j)
+    (hal : Allocation S e (fun i : Fin n ⊕ Unit =>
+      Sum.elim (fun _ => 2 ^ (b + 1) - 1) (fun _ => h) i)) :
+    ∀ q, j < q → q ≤ b →
+      (n + 1) * (2 ^ q - 1) - g ≤
+        ∑ x ∈ (S.filter (fun x => e x < b)).filter (fun x => e x < q), 2 ^ e x := by
+  classical
+  intro q hjq hqb
+  have htotal := allocation_total S e _ hal
+  have hr := (allocation_iff_residues S e _ htotal).mp hal q
+  simp only [Fintype.sum_sum_type, Finset.sum_const, Finset.card_univ,
+    Fintype.card_fin, nsmul_eq_mul, Fintype.sum_unique] at hr
+  rw [dyadic_pred_mod (b + 1) q (by omega)] at hr
+  have hF : 0 < (2 : ℕ) ^ q := by positivity
+  have hlt : g < 2 ^ q := lt_of_lt_of_le hgs
+    (pow_le_pow_right₀ (by decide) (by omega))
+  have hm : h % 2 ^ q = 2 ^ q - (g + 1) := by
+    apply (Nat.mod_eq_sub_iff (by omega : 0 < g + 1) (by omega : g + 1 ≤ 2 ^ q)).mpr
+    have hp : 0 < (2 : ℕ) ^ (b + 1) := by positivity
+    have heq : h + (g + 1) = 2 ^ (b + 1) := by omega
+    rw [heq]
+    exact pow_dvd_pow 2 (by omega)
+  rw [hm] at hr
+  have hf : (S.filter (fun x => e x < b)).filter (fun x => e x < q) =
+      S.filter (fun x => e x < q) := by
+    ext x
+    simp only [Finset.mem_filter]
+    omega
+  rw [hf]
+  omega
+
 end D5.S3.Combinatorics.Circle.DyadicResetAllocation
