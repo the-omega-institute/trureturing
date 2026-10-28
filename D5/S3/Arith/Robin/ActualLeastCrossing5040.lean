@@ -8,7 +8,6 @@
 
 import D5.S3.Arith.Robin.ActualIntegerHeightJump
 import D5.S3.Arith.ExponentExchange.AbundancyRecord5040
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
 
 /-! One positive threshold works simultaneously for every original 0 < eta < 1/2.
 The statement applies to every actual least crossing. It does not construct a crossing
@@ -37,7 +36,7 @@ private theorem strict_scalar {l beta eta : ℝ} (hl : 2 ≤ l) (hb : 0 < beta)
       ((hasDerivAt_id u).neg.div_const 2)
     convert (hlog.sub_const (Real.log l)).sub
       (((hasDerivAt_const u 1).sub hexp).const_mul (2 / l)) using 1 <;>
-      dsimp [G] <;> ring
+      (try funext x) <;> dsimp [G] <;> ring
   have hmono : StrictMonoOn G (Set.Ici 0) := by
     apply strictMonoOn_of_deriv_pos (convex_Ici 0)
     · intro u hu
@@ -98,7 +97,7 @@ private theorem strict_height_comparison {eta X Y E delta : ℝ}
     congr 1
     dsimp [beta]
     field_simp
-    <;> ring
+    ring
   have hterm : E * (1 - r) < Real.log (Real.log X) - Real.log (Real.log Y) := by
     calc
       _ ≤ (2 / Real.log Y) * (1 - r) :=

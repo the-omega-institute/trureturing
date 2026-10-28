@@ -133,7 +133,10 @@ private theorem large_prime_of_abundancy {m : ℕ} (hm : 0 < m)
       have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast (mem_Icc.mp hp).1
       exact (one_le_div (by linarith)).mpr (by linarith)
   have htel : (∏ p ∈ Icc (2 : ℕ) 30, (p : ℝ) / (p - 1)) = 30 := by
-    norm_num [show Icc (2 : ℕ) 30 = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30} by decide]
+    have hset : Icc (2 : ℕ) 30 =
+        {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+          17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30} := by decide
+    norm_num [hset]
   rw [htel] at hpad
   linarith [hb.trans hpad]
 
