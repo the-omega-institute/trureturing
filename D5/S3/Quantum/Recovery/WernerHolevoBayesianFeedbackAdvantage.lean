@@ -64,6 +64,10 @@ private def rotationKraus (j : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=
 private def quad (K : Matrix (Fin 3) (Fin 3) ℂ) (x : Fin 3 → ℂ) : ℂ :=
   dotProduct x (K *ᵥ x)
 
+private def q (z : Fin 3 → ℂ) : ℝ := ∑ i, Complex.normSq (z i)
+
+private def euclideanNorm (z : Fin 3 → ℂ) : ℝ := Real.sqrt (q z)
+
 private theorem quad_identity (K : Matrix (Fin 3) (Fin 3) ℂ) (x : Fin 3 → ℂ) :
     star (star x) ⬝ᵥ ((K * Matrix.vecMulVec x (star x) * Kᴴ) *ᵥ (star x)) =
       quad K x * star (quad K x) := by
@@ -243,8 +247,10 @@ private theorem kraus_classification {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fi
 
 private theorem abs_crossProduct (z : Fin 3 → ℂ) :
     absMat (((Real.sqrt 2)⁻¹ : ℂ) • crossProduct z) =
-      ((‖z‖ / Real.sqrt 2 : ℝ) : ℂ) •
-        ((1 : Matrix (Fin 3) (Fin 3) ℂ) - Matrix.of fun i j => z i * star (z j) / ‖z‖ ^ 2) := by
+      if z = 0 then 0 else
+        ((Real.sqrt 2)⁻¹ : ℂ) •
+          ((euclideanNorm z : ℂ) • (1 : Matrix (Fin 3) (Fin 3) ℂ) -
+            ((euclideanNorm z)⁻¹ : ℂ) • Matrix.vecMulVec z (star z)) := by
   sorry
 
 private theorem markov_bound {m₁ m₂ : ℕ} (K₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ) (K₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ)
