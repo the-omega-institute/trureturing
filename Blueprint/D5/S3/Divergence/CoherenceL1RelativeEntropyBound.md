@@ -108,7 +108,7 @@ For a Hermitian matrix, the l1 coherence equals twice the sum of the l1 norms of
 
 **Theorem 1.9 (Squared norm as a dot product).**
 
-$$\forall (n: \mathbb{N}), \forall (v: \operatorname{Fin}\left(n\right) \Rightarrow \mathbb{C}), \operatorname{dotProduct}\left(v, \operatorname{star}\left(v\right)\right) = \operatorname{ofReal}\left(\sum_{j: \operatorname{Fin}\left(n\right)} (\operatorname{norm}\left(v (j)\right)^{2})\right)$$
+$$\forall (n: \mathbb{N}), \forall (v: \operatorname{Fin}\left(n\right) \to \mathbb{C}), \operatorname{dotProduct}\left(v, \operatorname{star}\left(v\right)\right) = \operatorname{ofReal}\left(\sum_{j: \operatorname{Fin}\left(n\right)} (\operatorname{norm}\left(v (j)\right)^{2})\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.vector_dot_star` (`✓ std3`). ∎
 
