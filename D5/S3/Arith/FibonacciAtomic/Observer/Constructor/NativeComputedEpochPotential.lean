@@ -285,13 +285,13 @@ private theorem relaxation_attained {n k m : Nat} (I : EpochInput n k m)
       · intro z hz
         obtain ⟨e, _, rfl⟩ := List.mem_map.mp hz
         by_cases he : (occurrenceGraph I).target e = i
-        · simp only [if_pos he]
+        · simp only [ite_eq_left he]
           obtain ⟨start, walk, hlen, hvalue⟩ := ih ((occurrenceGraph I).source e)
           refine ⟨start, (walk.concat e rfl).castFinish he, ?_, ?_⟩
           · simpa using Nat.add_le_add_right hlen 1
           · rw [walkWeight_castFinish, walkWeight_concat, hvalue]
             omega
-        · simp only [if_neg he]
+        · simp only [ite_eq_right he]
           exact ⟨i, .nil, Nat.zero_le _, by simp [walkWeight, EdgeGraph.Walk.edges]⟩
 
 private theorem computed_graph {n k m : Nat} (I : EpochInput n k m)
@@ -325,7 +325,8 @@ private theorem computed_valid {n k m : Nat} (I : EpochInput n k m)
   intro i E he
   have hhead := lower_le_relaxation I m i
   have hhead' : I.headPower i ≤ computedPotential I i := by
-    rw [← hcast] at hhead
+    change lowerBound I i ≤ computedSignedPotential I i at hhead
+    rw [← hcast i] at hhead
     simpa [lowerBound, he] using hhead
   refine ⟨hhead', graph_shiftLegal I ?_ i E he⟩
   intro e
