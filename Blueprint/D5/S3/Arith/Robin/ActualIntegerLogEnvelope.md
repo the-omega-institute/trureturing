@@ -1,0 +1,30 @@
+# Actual Integer Logarithmic Envelope
+
+## Abstract
+
+A fixed-price integer comparator removes the large-prime split error in the actual Robin objective.
+
+**Theorem 1.1 (An unconditional coefficient-two bound for every sufficiently large integer).**
+
+Lean statement: `D5/S3/Arith/Robin/ActualIntegerLogEnvelope.eventual_actual_integer_envelope`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualIntegerLogEnvelope.eventual_actual_integer_envelope` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+There is a real A>=286 such that every positive natural integer n with A<=log(n) satisfies originalObjective(n)-gamma<=2/log(log(n)). Here originalObjective(n)=log(sigma(1,n)/n)-log(log(log(n))) and gamma is the Euler-Mascheroni constant. The integer n is arbitrary; no smoothness or optimality assumption is imposed on it.
+
+Put X=log(n) and lambda=1/(X*log(X)). The actual positive integer U from GoldenResourceOptimalLayerCount.optimal_layer_count_spec has the strict exponent counts at lambda and maximizes W(k)-lambda*log(k) over all positive natural integers k, where W(k)=log(sigma(1,k)/k). EulerLayerInventoryGrowth.active_power_bound, at the first layer, implies every prime factor of U is less than X. Only this comparator uses the support bound. The full finite geometric Euler factors, padded by GronwallUpperEnvelope.small_prime_product_le, then give sigma(1,U)/U at most the reciprocal prime product up to X.
+
+MertensExplicitEnvelope.prime_product_upper_effective supplies W(U)<=gamma+log(log(X))+19/(10*log(X)). The uniform strict-inventory growth theorem with epsilon=1/10 gives 1-log(U)/X<=1/10. Global fixed-price comparison transfers the bound to n and adds at most 1/(10*log(X)), yielding coefficient two. All prime powers in U are retained. This is a repository-derived application of these existing arithmetic inputs, present together at immutable revision 16c3ea75a9347e03a4401e66b911cef405ba17df; it makes no literature priority claim. The consumer is ActualIntegerHeightJump: the new bound is applied at the actual divisor m/q, after proving its size.
+
+The estimate is unconditional and uses the existing unconditional MediumPNT through strict-inventory growth. It proves neither Robin's inequality nor RH, and supplies no signed upper bound or bounded-height cofinal envelope.
+
+## References
+
+- Truth anchor: `D5/S3/Arith/Robin/ActualIntegerLogEnvelope.eventual_actual_integer_envelope`
+- Dependency: [D5/S3/Arith/Robin/EulerLayerInventoryGrowth](EulerLayerInventoryGrowth.md)
+- Dependency: [D5/S3/Arith/Robin/MertensExplicitEnvelope](MertensExplicitEnvelope.md)
+- Dependency: [D5/S3/Arith/Robin/OriginalFirstClockTransport](OriginalFirstClockTransport.md)

@@ -46,7 +46,21 @@ $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintyp
 
 The two vectors are separately normalized and orthogonal in the displayed order.
 
-**Definition 1.4 (Rank one operator).**
+**Theorem 1.4 (Distinct coordinate vectors form an orthogonal unit pair).**
+
+$$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{I}))][(\operatorname{DecidableEq}(\operatorname{I}))], \forall (\operatorname{r}:\operatorname{I}), \forall (\operatorname{s}:\operatorname{I}), ((\operatorname{r}\neq\operatorname{s})\to((\operatorname{OrthogonalUnitPair}((\operatorname{Pi}.\operatorname{single}(\operatorname{r},1)),(\operatorname{Pi}.\operatorname{single}(\operatorname{s},1))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/ElementaryChannelDivisibility.basis_pair` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Frederik vom Ende (2024). *A Sufficient Criterion for Divisibility of Quantum Channels*. DOI: [10.1063/5.0231812](https://doi.org/10.1063/5.0231812). URL: <https://arxiv.org/html/2407.17103v3>.
+
+*Commentary.*
+
+Two distinct coordinate vectors have unit norm and zero ordered inner product.
+
+**Definition 1.5 (Rank one operator).**
 
 $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{I}))][(\operatorname{DecidableEq}(\operatorname{I}))], \forall (\operatorname{u}:(\operatorname{I}\to\mathbb{C})), \forall (\operatorname{v}:(\operatorname{I}\to\mathbb{C})), (\operatorname{ketbra}(\operatorname{u},\operatorname{v}))=(\operatorname{vecMulVec}(\operatorname{u},(\operatorname{star}(\operatorname{v}))))$$
 
@@ -58,7 +72,7 @@ $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintyp
 
 The operator ketbra(u,v) sends z to u⟨v,z⟩.
 
-**Theorem 1.5 (Adjoint of a rank one operator).**
+**Theorem 1.6 (Adjoint of a rank one operator).**
 
 $$\forall (\operatorname{n}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{n}))][(\operatorname{DecidableEq}(\operatorname{n}))], \forall (\operatorname{u}:(\operatorname{n}\to\mathbb{C})), \forall (\operatorname{w}:(\operatorname{n}\to\mathbb{C})), ((\operatorname{ketbra}(\operatorname{u},\operatorname{w})))^{*}=(\operatorname{ketbra}(\operatorname{w},\operatorname{u}))$$
 
@@ -72,7 +86,7 @@ $$\forall (\operatorname{n}:\operatorname{Type}), \forall [(\operatorname{Fintyp
 
 Taking the adjoint exchanges the two vectors of the rank one operator.
 
-**Definition 1.6 (First elementary Kraus operator).**
+**Definition 1.7 (First elementary Kraus operator).**
 
 $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{I}))][(\operatorname{DecidableEq}(\operatorname{I}))], \forall (\operatorname{t}:\mathbb{R}), \forall (\operatorname{x}:(\operatorname{I}\to\mathbb{C})), (\operatorname{elementaryK}(\operatorname{t},\operatorname{x}))=(1+(((\sqrt{(1-\operatorname{t})}-1))\cdot((\operatorname{ketbra}(\operatorname{x},\operatorname{x})))))$$
 
@@ -84,7 +98,7 @@ $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintyp
 
 This is Kₜ = I − (1 − √(1−t))|x⟩⟨x| from Definition 1. The real square root is embedded in ℂ.
 
-**Definition 1.7 (Second elementary Kraus operator).**
+**Definition 1.8 (Second elementary Kraus operator).**
 
 $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{I}))][(\operatorname{DecidableEq}(\operatorname{I}))], \forall (\operatorname{t}:\mathbb{R}), \forall (\operatorname{x}:(\operatorname{I}\to\mathbb{C})), \forall (\operatorname{y}:(\operatorname{I}\to\mathbb{C})), (\operatorname{elementaryL}(\operatorname{t},\operatorname{x},\operatorname{y}))=((\sqrt{\operatorname{t}})\cdot((\operatorname{ketbra}(\operatorname{y},\operatorname{x}))))$$
 
@@ -96,7 +110,7 @@ $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintyp
 
 This is Lₜ = √t |y⟩⟨x| from Definition 1, with the real coefficient embedded in ℂ.
 
-**Definition 1.8 (Elementary channel).**
+**Definition 1.9 (Elementary channel).**
 
 $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{I}))][(\operatorname{DecidableEq}(\operatorname{I}))], \forall (\operatorname{t}:\mathbb{R}), \forall (\operatorname{x}:(\operatorname{I}\to\mathbb{C})), \forall (\operatorname{y}:(\operatorname{I}\to\mathbb{C})), \forall (\operatorname{X}:(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))), ((\operatorname{elementary}(\operatorname{t},\operatorname{x},\operatorname{y}))(\operatorname{X}))=((((\operatorname{elementaryK}(\operatorname{t},\operatorname{x})) \operatorname{X}) ((\operatorname{elementaryK}(\operatorname{t},\operatorname{x})))^{*})+(((\operatorname{elementaryL}(\operatorname{t},\operatorname{x},\operatorname{y})) \operatorname{X}) ((\operatorname{elementaryL}(\operatorname{t},\operatorname{x},\operatorname{y})))^{*}))$$
 
@@ -108,7 +122,7 @@ $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintyp
 
 The map is precisely the sum of conjugations by the two source Kraus operators. For an orthogonal unit pair and 0 < t < 1 it is an actual trace-preserving completely positive map.
 
-**Definition 1.9 (Exact elementary inverse).**
+**Definition 1.10 (Exact elementary inverse).**
 
 $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{I}))][(\operatorname{DecidableEq}(\operatorname{I}))], \forall (\operatorname{t}:\mathbb{R}), \forall (\operatorname{x}:(\operatorname{I}\to\mathbb{C})), \forall (\operatorname{y}:(\operatorname{I}\to\mathbb{C})), \forall (\operatorname{X}:(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))), ((\operatorname{elementaryInverse}(\operatorname{t},\operatorname{x},\operatorname{y}))(\operatorname{X}))=((((1+((((\sqrt{(1-\operatorname{t})})^{-1}-1))\cdot((\operatorname{ketbra}(\operatorname{x},\operatorname{x}))))) \operatorname{X}) ((1+((((\sqrt{(1-\operatorname{t})})^{-1}-1))\cdot((\operatorname{ketbra}(\operatorname{x},\operatorname{x}))))))^{*})-((\frac{\operatorname{t}}{(1-\operatorname{t})})\cdot((((\operatorname{ketbra}(\operatorname{y},\operatorname{x})) \operatorname{X}) ((\operatorname{ketbra}(\operatorname{y},\operatorname{x})))^{*}))))$$
 
@@ -120,7 +134,7 @@ $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintyp
 
 Equation (2) defines this linear map. The theorem below proves both inverse identities in its stated range, together with trace preservation on every matrix.
 
-**Definition 1.10 (Actual quantum channel).**
+**Definition 1.11 (Actual quantum channel).**
 
 $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{I}))][(\operatorname{DecidableEq}(\operatorname{I}))], \forall (\phi:((\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))\to_{l[\mathbb{C}]}(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C})))), (((\operatorname{CPTP}(\phi)))\Leftrightarrow((((\operatorname{CP}(\phi)))\land(\forall (\operatorname{X}:(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))), (\operatorname{tr}((\phi(\operatorname{X}))))=(\operatorname{tr}(\operatorname{X}))))))$$
 
@@ -134,7 +148,7 @@ $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintyp
 
 CP is PhyslibLeaf.MatrixMap.IsCompletelyPositive, rather than positivity only on states or at a bounded amplification. The second conjunct is all-matrix trace preservation.
 
-**Definition 1.11 (Elementary right division).**
+**Definition 1.12 (Elementary right division).**
 
 $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{I}))][(\operatorname{DecidableEq}(\operatorname{I}))], \forall (\phi:((\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))\to_{l[\mathbb{C}]}(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C})))), \forall (\operatorname{x}:(\operatorname{I}\to\mathbb{C})), \forall (\operatorname{y}:(\operatorname{I}\to\mathbb{C})), (((\operatorname{Divides}(\phi,\operatorname{x},\operatorname{y})))\Leftrightarrow(\exists (\operatorname{t}:\mathbb{R}), ((((0<\operatorname{t})\land(\operatorname{t}<1)))\land((\operatorname{CP}((\phi\circ(\operatorname{elementaryInverse}(\operatorname{t},\operatorname{x},\operatorname{y})))))))))$$
 
@@ -146,7 +160,7 @@ $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintyp
 
 The elementary channel is on the right of the composition. The same ordered pair is retained. The inverse formula is justified by the theorem when the pair is orthogonal and normalized.
 
-**Definition 1.12 (Necessary Kraus-space criterion).**
+**Definition 1.13 (Necessary Kraus-space criterion).**
 
 $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{I}))][(\operatorname{DecidableEq}(\operatorname{I}))], \forall (\operatorname{J}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{J}))], \forall (\operatorname{K}:(\operatorname{J}\to(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C})))), \forall (\operatorname{x}:(\operatorname{I}\to\mathbb{C})), \forall (\operatorname{y}:(\operatorname{I}\to\mathbb{C})), (((\operatorname{Necessary}(\operatorname{K},\operatorname{x},\operatorname{y})))\Leftrightarrow(\forall (\operatorname{G}:(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))), ((\forall (\operatorname{H}:(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))), ((\operatorname{H}\in(\operatorname{span}(\mathbb{C},(\operatorname{range}(\operatorname{K})))))\to((\operatorname{tr}(((\operatorname{H})^{*} \operatorname{G})))=0)))\to(\forall (\operatorname{j}:\operatorname{J}), \langle\operatorname{y},((((\operatorname{K}(\operatorname{j})))^{*} \operatorname{G})(\operatorname{x}))\rangle=0))))$$
 
@@ -158,7 +172,7 @@ $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintyp
 
 Orthogonality is to the complex linear span of the Kraus family. Span induction equates this with tr(Kⱼ*G) = 0 for every Kraus index. The tests range over all complex matrices G and all Kraus indices j. This is Proposition 1's condition.
 
-**Definition 1.13 (Sufficient Kraus-space criterion).**
+**Definition 1.14 (Sufficient Kraus-space criterion).**
 
 $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{I}))][(\operatorname{DecidableEq}(\operatorname{I}))], \forall (\operatorname{J}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{J}))], \forall (\operatorname{K}:(\operatorname{J}\to(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C})))), \forall (\operatorname{x}:(\operatorname{I}\to\mathbb{C})), \forall (\operatorname{y}:(\operatorname{I}\to\mathbb{C})), (((\operatorname{Sufficient}(\operatorname{K},\operatorname{x},\operatorname{y})))\Leftrightarrow((((\operatorname{Necessary}(\operatorname{K},\operatorname{x},\operatorname{y})))\land(\forall (\operatorname{G}:(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))), ((\forall (\operatorname{H}:(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))), ((\operatorname{H}\in(\operatorname{span}(\mathbb{C},(\operatorname{range}(\operatorname{K})))))\to((\operatorname{tr}(((\operatorname{H})^{*} \operatorname{G})))=0)))\to(\forall (\operatorname{j}:\operatorname{J}), \langle\operatorname{x},((((\operatorname{K}(\operatorname{j})))^{*} \operatorname{G})(\operatorname{x}))\rangle=0))))))$$
 
@@ -170,7 +184,7 @@ $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintyp
 
 Theorem 1 adds the diagonal test ⟨x,Kⱼ*Gx⟩ = 0 to the necessary criterion. Its separate rank-reduction conclusion is not asserted here.
 
-**Theorem 1.14 (The exact criterion and failure of the stronger converse).**
+**Theorem 1.15 (The exact criterion and failure of the stronger converse).**
 
 $$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{I}))][(\operatorname{DecidableEq}(\operatorname{I}))], ((2\leq(\operatorname{card}(\operatorname{I})))\to(((\forall (\phi:((\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))\to_{l[\mathbb{C}]}(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C})))), (((\operatorname{CPTP}(\phi)))\to(\exists (\operatorname{K}:((\operatorname{I}\times\operatorname{I})\to(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C})))), \sum_{\operatorname{j}\in(\operatorname{I}\times\operatorname{I})} (fun (\operatorname{X}:(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))) \mapsto (((\operatorname{K}(\operatorname{j})) \operatorname{X}) ((\operatorname{K}(\operatorname{j})))^{*}))=\phi)))\land(\forall (\operatorname{J}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{J}))], \forall (\operatorname{K}:(\operatorname{J}\to(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C})))), \forall (\phi:((\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))\to_{l[\mathbb{C}]}(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C})))), (((((\operatorname{CPTP}(\phi)))\land(\sum_{\operatorname{j}\in\operatorname{J}} (fun (\operatorname{X}:(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))) \mapsto (((\operatorname{K}(\operatorname{j})) \operatorname{X}) ((\operatorname{K}(\operatorname{j})))^{*}))=\phi)))\to(\forall (\operatorname{x}:(\operatorname{I}\to\mathbb{C})), \forall (\operatorname{y}:(\operatorname{I}\to\mathbb{C})), (((\operatorname{OrthogonalUnitPair}(\operatorname{x},\operatorname{y})))\to((((\operatorname{Necessary}(\operatorname{K},\operatorname{x},\operatorname{y})))\Leftrightarrow((\operatorname{Divides}(\phi,\operatorname{x},\operatorname{y})))))))))\land(\forall (\operatorname{J}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{J}))], \forall (\operatorname{K}:(\operatorname{J}\to(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C})))), \forall (\phi:((\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))\to_{l[\mathbb{C}]}(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C})))), (((((\operatorname{CPTP}(\phi)))\land(\sum_{\operatorname{j}\in\operatorname{J}} (fun (\operatorname{X}:(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))) \mapsto (((\operatorname{K}(\operatorname{j})) \operatorname{X}) ((\operatorname{K}(\operatorname{j})))^{*}))=\phi)))\to(((\exists (\operatorname{x}:(\operatorname{I}\to\mathbb{C})), \exists (\operatorname{y}:(\operatorname{I}\to\mathbb{C})), (((\operatorname{OrthogonalUnitPair}(\operatorname{x},\operatorname{y})))\land((\operatorname{Necessary}(\operatorname{K},\operatorname{x},\operatorname{y})))))\Leftrightarrow(\exists (\operatorname{x}:(\operatorname{I}\to\mathbb{C})), \exists (\operatorname{y}:(\operatorname{I}\to\mathbb{C})), (((\operatorname{OrthogonalUnitPair}(\operatorname{x},\operatorname{y})))\land((\operatorname{Divides}(\phi,\operatorname{x},\operatorname{y})))))))))\land(\forall (\operatorname{t}:\mathbb{R}), ((((0<\operatorname{t})\land(\operatorname{t}<1)))\to(\forall (\operatorname{x}:(\operatorname{I}\to\mathbb{C})), \forall (\operatorname{y}:(\operatorname{I}\to\mathbb{C})), (((\operatorname{OrthogonalUnitPair}(\operatorname{x},\operatorname{y})))\to((((\operatorname{CPTP}((\operatorname{elementary}(\operatorname{t},\operatorname{x},\operatorname{y})))))\land(((\operatorname{elementary}(\operatorname{t},\operatorname{x},\operatorname{y}))\circ(\operatorname{elementaryInverse}(\operatorname{t},\operatorname{x},\operatorname{y})))=\operatorname{id})\land(((\operatorname{elementaryInverse}(\operatorname{t},\operatorname{x},\operatorname{y}))\circ(\operatorname{elementary}(\operatorname{t},\operatorname{x},\operatorname{y})))=\operatorname{id})\land(\forall (\operatorname{X}:(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))), (\operatorname{tr}(((\operatorname{elementaryInverse}(\operatorname{t},\operatorname{x},\operatorname{y}))(\operatorname{X}))))=(\operatorname{tr}(\operatorname{X})))\land(\forall (\phi:((\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))\to_{l[\mathbb{C}]}(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C})))), (((((\operatorname{CPTP}(\phi)))\land((\operatorname{CP}((\phi\circ(\operatorname{elementaryInverse}(\operatorname{t},\operatorname{x},\operatorname{y}))))))))\to((((\operatorname{CPTP}((\phi\circ(\operatorname{elementaryInverse}(\operatorname{t},\operatorname{x},\operatorname{y}))))))\land(((\phi\circ(\operatorname{elementaryInverse}(\operatorname{t},\operatorname{x},\operatorname{y})))\circ(\operatorname{elementary}(\operatorname{t},\operatorname{x},\operatorname{y})))=\phi)))))))))))\land(\exists (\phi:((\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))\to_{l[\mathbb{C}]}(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C})))), (((\operatorname{CPTP}(\phi)))\land(\exists (\operatorname{x}:(\operatorname{I}\to\mathbb{C})), \exists (\operatorname{y}:(\operatorname{I}\to\mathbb{C})), (((\operatorname{OrthogonalUnitPair}(\operatorname{x},\operatorname{y})))\land((\operatorname{Divides}(\phi,\operatorname{x},\operatorname{y})))))\land(\forall (\operatorname{J}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{J}))], \forall (\operatorname{K}:(\operatorname{J}\to(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C})))), ((\sum_{\operatorname{j}\in\operatorname{J}} (fun (\operatorname{X}:(\operatorname{Matrix}(\operatorname{I},\operatorname{I},\mathbb{C}))) \mapsto (((\operatorname{K}(\operatorname{j})) \operatorname{X}) ((\operatorname{K}(\operatorname{j})))^{*}))=\phi)\to(\forall (\operatorname{u}:(\operatorname{I}\to\mathbb{C})), \forall (\operatorname{v}:(\operatorname{I}\to\mathbb{C})), (((\operatorname{OrthogonalUnitPair}(\operatorname{u},\operatorname{v})))\to(\neg(\operatorname{Sufficient}(\operatorname{K},\operatorname{u},\operatorname{v}))))))))))))$$
 
@@ -199,6 +213,7 @@ For distinct basis vectors eᵣ,eₛ, take Φ = elementary(15/16,eᵣ,eₛ) and 
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/ElementaryChannelDivisibility.Necessary`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/ElementaryChannelDivisibility.OrthogonalUnitPair`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/ElementaryChannelDivisibility.Sufficient`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/ElementaryChannelDivisibility.basis_pair`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/ElementaryChannelDivisibility.elementary`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/ElementaryChannelDivisibility.elementaryInverse`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/ElementaryChannelDivisibility.elementaryK`

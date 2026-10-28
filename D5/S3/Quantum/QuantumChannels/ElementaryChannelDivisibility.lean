@@ -543,7 +543,7 @@ private theorem fixed_pair_iff {ι : Type*} [Fintype ι]
     exact kernel_of_sub_psd A (Z * A * Zᴴ) hB t ht
       ((residual_cp_iff K t ht ht1 x y hxy.1).mp hcp)
 
-private theorem basis_pair (r s : n) (hrs : r ≠ s) :
+theorem basis_pair (r s : n) (hrs : r ≠ s) :
     OrthogonalUnitPair (Pi.single r 1) (Pi.single s 1 : n → ℂ) := by
   simp [OrthogonalUnitPair, Pi.star_single, single_dotProduct, hrs, hrs.symm]
 
