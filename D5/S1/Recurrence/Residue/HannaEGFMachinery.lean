@@ -10,7 +10,7 @@
 admission_basis: escape-witness
 residual_transfer: proof_shape: content; escape_witness: modular_transfer
 integral_derivative: proof_shape: bind-only; escape_witness: none; consumer: HannaA232696Congruences.residual2, residual4
-integral_pow: proof_shape: content; escape_witness: integral_pow
+integral_pow: proof_shape: bind-only; escape_witness: none; consumer: HannaA232696Congruences.residual2, residual4
 integral_X_mul: proof_shape: bind-only; escape_witness: none; consumer: HannaA232696Congruences.residual2, residual4
 integral_inv: proof_shape: content; escape_witness: seqInv_map
 integral_sub: proof_shape: bind-only; escape_witness: none; consumer: HannaA232696Congruences.residual2, residual4
