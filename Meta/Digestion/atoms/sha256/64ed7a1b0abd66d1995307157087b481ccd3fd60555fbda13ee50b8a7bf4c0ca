@@ -1,0 +1,27 @@
+**Definition 16.1 (the changed family menu).** Retain precisely the rational family $\mathcal P$, $b\ge3$, $N=b+4$, $\epsilon=1/(4N)$, $T=QT_0Q^{\mathsf T}$, native correspondence and actual zero entrance of Definition 1.1. Retain the original leaf service of Definition 1.2 and Assumption 1.3. Install native Square under Assumption 11.2, but do not install Read$_e$. Theorems 2.2 and 3.1 already give connected positive support, exactly these true leaves, invertibility and full joint rank. This is an infinite subclass of QLAB-Sq. The old full-service equivalence in Theorem 4.2 and the sufficient interior-port repair in §6 retain their respective original menus.
+
+Write $\sigma=\mathrm n$ for the following natural pulse word:
+
+$$
+\operatorname{Add}(1,1);\ \operatorname{Tick};\ \operatorname{Tick};\
+\operatorname{Square};\ \operatorname{Tick};\ \operatorname{Tick};\
+\operatorname{Read}(1);\ \operatorname{Hold}.
+\tag{CM.23}
+$$
+
+Write $\sigma=\mathrm p$ for the isolated-signal word, with $a_0=\epsilon^{-2}$:
+
+$$
+\begin{gathered}
+\operatorname{Add}(1,a_0);\ \operatorname{Tick};\ \operatorname{Hold};\
+\operatorname{Add}(1,-a_0);\ \operatorname{Tick};\ \operatorname{Hold};\\
+\operatorname{Add}(1,a_0/4-1);\
+\operatorname{Add}(2,-1);\cdots;\operatorname{Add}(b,-1);\ \operatorname{Hold};\\
+\operatorname{Square};\ \operatorname{Tick};\ \operatorname{Tick};\
+\operatorname{Read}(1);\ \operatorname{Hold}.
+\end{gathered}
+\tag{CM.24}
+$$
+
+Both act on the installed zero specimen without Reset. They are different full preparations, not two ways of labelling one endpoint.
+

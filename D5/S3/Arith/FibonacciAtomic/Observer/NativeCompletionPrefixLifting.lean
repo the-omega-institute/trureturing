@@ -99,7 +99,7 @@ theorem cutoff_embed (d : Nat) (t : Source) :
           Sum.inr ((decompose d l).1, (decompose d r).1)
         rw [ih, ih]
 
-private theorem cutoff_readout (d : Nat) (S T : CompletionTree) :
+theorem cutoff_readout (d : Nat) (S T : CompletionTree) :
     cutoff d S = cutoff d T ↔
       ∀ a : Address, a.length < d → completionReadout a S = completionReadout a T := by
   induction d generalizing S T with
