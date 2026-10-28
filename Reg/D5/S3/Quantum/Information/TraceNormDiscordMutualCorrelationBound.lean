@@ -286,6 +286,7 @@ open _root_.D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (spi
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit
     (fun _ => Qubit) (fun _ => Qubit → Prop)
+/-- Read the equality relation on the anticommutator identity. -/
 def actual : Realization signature :=
   realize signature (fun _ _ X Y => X = Y) (fun e => nomatch e)
 def rejected : Realization signature :=
