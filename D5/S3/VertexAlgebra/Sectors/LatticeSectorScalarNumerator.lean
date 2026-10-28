@@ -253,13 +253,13 @@ theorem scalar_numerator_support (D : LatticeData)
     push_cast at h
     omega), smul_zero]
 
-private theorem polynomial_of_degree_support {n : ℕ} (Q : MvPowerSeries (Fin n) ℂ) (K : ℤ)
+private theorem polynomial_of_degree_support (Q : MvPowerSeries (Fin 2) ℂ) (K : ℤ)
     (support : ∀ d, MvPowerSeries.coeff d Q ≠ 0 → (d.degree : ℤ) ≤ K) :
-    ∃ R : MvPolynomial (Fin n) ℂ,
-      (R : MvPowerSeries (Fin n) ℂ) = Q ∧ R.totalDegree ≤ K.toNat ∧
+    ∃ R : MvPolynomial (Fin 2) ℂ,
+      (R : MvPowerSeries (Fin 2) ℂ) = Q ∧ R.totalDegree ≤ K.toNat ∧
       (K < 0 → Q = 0 ∧ R = 0) := by
   let R := MvPowerSeries.truncTotal (K.toNat + 1) Q
-  have heq : (R : MvPowerSeries (Fin n) ℂ) = Q := by
+  have heq : (R : MvPowerSeries (Fin 2) ℂ) = Q := by
     apply MvPowerSeries.ext
     intro d
     rw [MvPolynomial.coeff_coe]
@@ -283,7 +283,7 @@ private theorem polynomial_of_degree_support {n : ℕ} (Q : MvPowerSeries (Fin n
       have := support d hn
       omega
     refine ⟨hQ, ?_⟩
-    apply MvPolynomial.coe_injective (Fin n) ℂ
+    apply MvPolynomial.coe_injective (Fin 2) ℂ
     rw [heq, hQ, MvPolynomial.coe_zero]
 
 /-- One finite scalar polynomial gives the original three cleared channels.
@@ -342,6 +342,39 @@ open UniformGradedLocalCorrelator (word coefficientDistribution clearingPolynomi
   totalExponent labelledPairs polynomialAction difference)
 open UngradedLocalWordSeries
 open private total_shift from D5.S3.VertexAlgebra.UniformGradedLocalCorrelator
+
+private theorem word_polynomial_of_degree_support {n : ℕ} (Q : MvPowerSeries (Fin n) ℂ) (K : ℤ)
+    (support : ∀ d, MvPowerSeries.coeff d Q ≠ 0 → (d.degree : ℤ) ≤ K) :
+    ∃ R : MvPolynomial (Fin n) ℂ,
+      (R : MvPowerSeries (Fin n) ℂ) = Q ∧ R.totalDegree ≤ K.toNat ∧
+      (K < 0 → Q = 0 ∧ R = 0) := by
+  let R := MvPowerSeries.truncTotal (K.toNat + 1) Q
+  have heq : (R : MvPowerSeries (Fin n) ℂ) = Q := by
+    apply MvPowerSeries.ext
+    intro d
+    rw [MvPolynomial.coeff_coe]
+    change (MvPowerSeries.truncTotal (K.toNat + 1) Q).coeff d = _
+    rw [MvPowerSeries.coeff_truncTotal_eq_ite]
+    split_ifs with hd
+    · rfl
+    · symm
+      by_contra hn
+      have := support d hn
+      omega
+  refine ⟨R, heq, ?_, ?_⟩
+  · exact Nat.le_of_lt_succ
+      (MvPowerSeries.totalDegree_truncTotal_lt Q (by omega : K.toNat + 1 ≠ 0))
+  · intro hK
+    have hQ : Q = 0 := by
+      apply MvPowerSeries.ext
+      intro d
+      change MvPowerSeries.coeff d Q = 0
+      by_contra hn
+      have := support d hn
+      omega
+    refine ⟨hQ, ?_⟩
+    apply MvPolynomial.coe_injective (Fin n) ℂ
+    rw [heq, hQ, MvPolynomial.coe_zero]
 
 /-- Integer cutoff for the same cleared n-word vector series, before any
 polynomial extraction. Every labelled pair contributes k to the clearing degree. -/
@@ -506,7 +539,7 @@ theorem ordinary_actual_word_finite_scalar_numerator
   have support : ∀ d, S d ≠ 0 → (d.degree : ℤ) ≤ wordDegreeBound D c δ k a p :=
     actual_word_scalar_numerator_support D J hJG hGJ n c s δ w k a P
       (common order (List.Perm.refl _)) p
-  obtain ⟨R, heq, hdeg, hneg⟩ := polynomial_of_degree_support S
+  obtain ⟨R, heq, hdeg, hneg⟩ := word_polynomial_of_degree_support S
     (wordDegreeBound D c δ k a p) support
   refine ⟨support, R, ⟨heq, hdeg, hneg, ?_⟩, ?_⟩
   · intro other hp e

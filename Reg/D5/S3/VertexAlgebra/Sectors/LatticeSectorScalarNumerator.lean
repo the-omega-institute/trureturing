@@ -359,8 +359,8 @@ private theorem bad : ¬ arena.Law IntegerBound.rejected := by
   intro h
   apply h D0 0 inverse_left inverse_right 0 (fun i => Fin.elim0 i)
     (fun i => Fin.elim0 i) 0 1 [] (fun i => Fin.elim0 i) 0 0
-  change (1 : Oscillator D0).coeff 0 ≠ 0
-  simp
+  change ((word _ [] _ (inclusion D0 0 1)) 0).coeff 0 ≠ 0
+  simp [word, inclusion]
 
 def family : Registration arena (type_of% (@actual_word_coefficient_energy_le)) where
   actual := IntegerBound.actual
@@ -411,10 +411,12 @@ private theorem bad : ¬ arena.Law IntegerBound.rejected := by
       signedExtend, positive, P]
   apply h D0 0 inverse_left inverse_right 0 (fun i => Fin.elim0 i)
     (fun i => Fin.elim0 i) 0 1 0 (fun i => Fin.elim0 i) P common 1 0
-  change FactorialFockMetric.inner (1 : Oscillator D0) 1 ≠ 0
-  have hmon : (1 : Oscillator D0) = MvPolynomial.monomial 0 1 := by simp
-  rw [hmon, FactorialFockMetric.inner_monomial_left]
-  simp [FactorialFockMetric.weight]
+  have hread : readout D0 (1 : Oscillator D0) 1 ≠ 0 := by
+    change FactorialFockMetric.inner (1 : Oscillator D0) 1 ≠ 0
+    have hmon : (1 : Oscillator D0) = MvPolynomial.monomial 0 1 := by simp
+    rw [hmon, FactorialFockMetric.inner_monomial_left]
+    simp [FactorialFockMetric.weight]
+  simpa [LinearMap.comp_apply, P, projection, inclusion] using hread
 
 def family : Registration arena (type_of% (@actual_word_scalar_numerator_support)) where
   actual := IntegerBound.actual
@@ -438,7 +440,7 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output n _ := MvPowerSeries (Fin n) ℂ → Prop
+  Output _ n := MvPowerSeries (Fin n) ℂ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
@@ -474,7 +476,7 @@ abbrev arena : Arena where
           let S : MvPowerSeries (Fin n) ℂ := fun d => φ (P d)
           (∀ d, S d ≠ 0 → (d.degree : ℤ) ≤ wordDegreeBound D c δ k a p) ∧
           ∃! R : MvPolynomial (Fin n) ℂ,
-            obs.readout n () (R : MvPowerSeries (Fin n) ℂ) S ∧
+            obs.readout () n (R : MvPowerSeries (Fin n) ℂ) S ∧
             R.totalDegree ≤ (wordDegreeBound D c δ k a p).toNat ∧
             (wordDegreeBound D c δ k a p < 0 → S = 0 ∧ R = 0) ∧
             ∀ other : List (Fin n), order.Perm other → ∀ e : Fin n → ℤ,
@@ -528,7 +530,10 @@ def wordEnergyAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      path := #["body",
+        "body", "body", "body", "body",
+        "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -560,7 +565,10 @@ def wordSupportAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      path := #["body",
+        "body", "body", "body", "body",
+        "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -592,7 +600,11 @@ def wordNumeratorAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "body", "body", "body", "arg", "arg", "body", "fn", "arg", "fn", "fn"]
+      path := #["body",
+        "body", "body", "body", "body",
+        "body", "body", "body", "body",
+        "arg", "body", "arg", "body", "body",
+        "arg", "body", "arg", "body", "arg", "arg", "body", "body", "body", "arg", "arg", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
