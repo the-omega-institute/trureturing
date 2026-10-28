@@ -29,7 +29,7 @@ source enters with the root branch record of the authentic entry.  The
 singleton ambient sources $\alpha$ and $\beta$ remain in $\mathcal T$ with
 their own leaf-root replies and no reached $L/R$ holes; they are not silently
 treated as branch entries and are handled only in the explicitly qualified
-singleton cases below.  For $u\in\mathcal B$, the full INITIAL target at
+$\ell=1$ leaf cases below.  For $u\in\mathcal B$, the full INITIAL target at
 $Q=(L,R)$ is the required output of Definitions 112.1 and 112.2, not a
 supplied source-dependent tag: it retains the two numbered holes, the
 complete exterior and the partition of holes by equality of their original
@@ -400,22 +400,25 @@ K_{a,b}=|D_{a,b}|
 \tag{5.2}
 $$
 
-An exact complete service for a nondegenerate fiber ($\ell\ge2$) is one
-common CPTP/instrument family that, from (1.3), returns every requested
-original four-valued Read and continues with the same actual guard, Apply
-rule, chronological records and absorbing Stop.  It must therefore support
-the finite epoch-zero traversal that reads the root and every reached node.
-The traversal's replies encode the ordered source uniquely; it is the same
-paid acquisition supplier used in Theorem 112.10, not a free source index.
-For $\ell=1$, the fibers are the singleton cases
-$D_{1,0}=\{\alpha\}$ and $D_{0,1}=\{\beta\}$, with $K_{a,b}=1$; their
-authentic entries are the leaf-root services just stated, and no $Q=(L,R)$
-branch target is asserted for them.
+For every fiber with $\ell\ge2$, an exact complete service is one common
+CPTP/instrument family that, from (1.3), returns every requested original
+four-valued Read and continues with the same actual guard, Apply rule,
+chronological records and absorbing Stop.  It must therefore support the
+finite epoch-zero traversal that reads the root and every reached node.  The
+traversal's replies encode the ordered source uniquely; it is the same paid
+acquisition supplier used in Theorem 112.10, not a free source index.  The
+$\ell=1$ fibers are the singleton leaf cases
+$D_{1,0}=\{\alpha\}$ and $D_{0,1}=\{\beta\}$.  The other cardinality-one
+fibers are the pure branch cases
+$D_{2,0}=\{\langle\alpha,\alpha\rangle\}$ and
+$D_{0,2}=\{\langle\beta,\beta\rangle\}$; they are authentic branch entries
+with reached $L/R$ holes and use the branch contract, not a leaf-root
+contract.
 
 ### 5.2 Orthogonality forced by complete native reading
 
 **Theorem 5.2 (source-dependent orthogonal side record is necessary).**
-For a nondegenerate fiber $\ell\ge2$, assume the finite-specimen input on
+For a fiber with $\ell\ge2$, assume the finite-specimen input on
 $D_{a,b}$ has the form
 
 $$
@@ -466,14 +469,22 @@ $K_{a,b}$ nonzero side supports are pairwise orthogonal, so their dimensions
 sum to at least $K_{a,b}$ and $\dim E\ge K_{a,b}$.  The common factor $\tau$
 cannot alter this conclusion. $\square$
 
-**Corollary 5.3 (the no-side-record and degenerate cases).** If
+**Corollary 5.3 (the no-side-record and cardinality-one cases).** If
 $K_{a,b}>1$, the bare boundary specimens with only source-independent
 apparatus ($\dim E=1$) cannot implement exact complete native reading,
-regardless of the number of finite copies.  If $K_{a,b}=1$, the bound is
-vacuous: these are exactly the singleton fibers $D_{1,0}=\{\alpha\}$ and
-$D_{0,1}=\{\beta\}$, whose leaf-root reply already identifies the sole
-source and which have no $L/R$ branch ambiguity.  Thus the blanket statement
-that every fiber with $\ell\ge2$ fails at $d=1$ requires this $K_{a,b}>1$
+regardless of the number of finite copies.  If $K_{a,b}=1$, the dimension
+bound is vacuous.  By (5.2), this occurs exactly for
+
+$$
+D_{1,0}=\{\alpha\},\quad D_{0,1}=\{\beta\},\quad
+D_{2,0}=\{\langle\alpha,\alpha\rangle\},\quad
+D_{0,2}=\{\langle\beta,\beta\rangle\}.
+$$
+
+The first two are leaf-root services.  The latter two are authentic branch
+entries with reached $L/R$ holes, so $K_{a,b}=1$ is a cardinality statement,
+not a leaf-root syntactic classification.  Thus the blanket statement that
+every fiber with $\ell\ge2$ fails at $d=1$ requires the $K_{a,b}>1$
 qualification.  In the witness family, $K_{2n+2,2}>1$, so the qualification
 is always active.
 
@@ -490,8 +501,9 @@ $$
 
 attains the dimension bound mathematically: measure the label, restore the
 ordered source description, and run the corresponding native
-Read/Apply/guard/Stop contract (the branch-entry contract for $\ell\ge2$ and
-the leaf-root contract for the singleton fibers).  This construction assumes
+Read/Apply/guard/Stop contract (the branch-entry contract for every
+$\ell\ge2$ fiber, including the pure $\ell=2$ cardinality-one fibers, and
+the leaf-root contract for the $\ell=1$ fibers).  This construction assumes
 the label's preparation, storage,
 protection and control and says nothing about their physical availability,
 runtime, energy, clock conversion or total acquisition price.  It is a
@@ -513,13 +525,15 @@ encoding has the following precise status.
    finite-copy error (4.1), and the fixed-$m$ error is nonuniform over this
    source family.  Therefore finite bare specimens cannot provide the exact
    native Read on that promise, with its original zero-error event and bill.
-3. Exact complete reading on an entire nondegenerate fixed-composition fiber
-   ($\ell\ge2$) requires a source-dependent orthogonal side record of
-   dimension at least (5.2).  For the singleton fibers $D_{1,0}$ and
-   $D_{0,1}$, $K_{a,b}=1$ and the bound is vacuous; their native leaf-root
-   service has no $L/R$ branch target.  Supplying such a record changes the
-   input cut; it does not prove that the bare boundary marginal is
-   insufficient for every possible quantum model.
+3. Exact complete reading on an entire fixed-composition fiber with
+   $K_{a,b}>1$ requires a source-dependent orthogonal side record of
+   dimension at least (5.2).  The bound is vacuous on exactly the four
+   cardinality-one fibers listed in Corollary 5.3: the two $\ell=1$ fibers
+   have leaf-root services, while the pure $\ell=2$ fibers are branch entries
+   with reached $L/R$ holes.  Supplying such a record changes the input cut;
+   the vacuous bound by itself does not prove that a bare boundary marginal
+   supplies the corresponding service, nor that it is insufficient for every
+   possible quantum model.
 4. A coherent quantum instrument, a purification carrying the source, an
    exact equality register, or a full-history dilation must be stated as an
    additional source-bearing resource.  None is silently identified with the
