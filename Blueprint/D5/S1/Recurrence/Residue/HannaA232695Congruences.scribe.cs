@@ -25,7 +25,7 @@ internal sealed class HannaA232695CongruencesDocument : IScribeDocumentDefinitio
                 + "The finite polynomial residual has divisible exponential coefficients in every degree. "
                 + "The exponential approximate solution supplies the constant residue where used.",
                 AssessedProvenance.FromRepo(Source()), DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hefg-egfcongruences"), ResolutionKind.Proved)))));
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hefg-a232695"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance, DescribeRole role,

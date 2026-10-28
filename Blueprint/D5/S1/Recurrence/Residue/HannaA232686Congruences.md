@@ -34,9 +34,9 @@ $$\forall A \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \operatorna
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/HannaA232686Congruences.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/hefg-egfcongruences` (proved) by `D5/S1/Recurrence/Residue/HannaA232686Congruences.result`.
+*Resolves.* `Problems/hefg-a232686` (proved) by `D5/S1/Recurrence/Residue/HannaA232686Congruences.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hefg-egfcongruences","declaration_gid":"D5/S1/Recurrence/Residue/HannaA232686Congruences.result","resolution_kind":"proved"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hefg-a232686","declaration_gid":"D5/S1/Recurrence/Residue/HannaA232686Congruences.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 

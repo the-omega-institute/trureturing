@@ -26,7 +26,7 @@ internal sealed class HannaA232696CongruencesDocument : IScribeDocumentDefinitio
                 + "Its exponential coefficients are divisible by two or four, respectively. "
                 + "Cancellation of the integral series with constant coefficient one gives the two divisibility tails.",
                 AssessedProvenance.FromRepo(Source()), DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hefg-egfcongruences"), ResolutionKind.Proved)))));
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hefg-a232696"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance, DescribeRole role,
