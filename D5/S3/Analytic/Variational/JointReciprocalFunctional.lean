@@ -888,6 +888,267 @@ private lemma profileCalibration_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 
     rw [← hsq]
     ring
 
+private lemma primitive_range {u : ℝ → ℝ} (hu : Admissible u) (hm : mass u = 1) :
+    MapsTo (primitive u) (Icc (1 : ℝ) 2) (Icc (0 : ℝ) 1) := by
+  have hi := (admissible_integrability hu).1
+  obtain ⟨c, B, hc, hbounds⟩ := hu.2
+  have hn : 0 ≤ᵐ[volume.restrict (Icc (1 : ℝ) 2)] u :=
+    hbounds.mono (fun x hx => hc.le.trans hx.1)
+  intro x hx
+  refine ⟨?_, ?_⟩
+  · exact intervalIntegral.integral_nonneg_of_ae_restrict hx.1
+      (hn.filter_mono (ae_mono (Measure.restrict_mono
+        (Icc_subset_Icc le_rfl hx.2) le_rfl)))
+  · change (∫ t in (1 : ℝ)..x, u t) ≤ 1
+    calc
+      (∫ t in (1 : ℝ)..x, u t) ≤ mass u :=
+        intervalIntegral.integral_mono_interval le_rfl hx.1 hx.2
+          (hn.filter_mono (ae_mono (Measure.restrict_mono Ioc_subset_Icc_self le_rfl))) hi
+      _ = 1 := hm
+
+private def comparison (b : ℝ) (u : ℝ → ℝ) (x : ℝ) : ℝ :=
+  calibrationSlope b (primitive u x) *
+    (spaceCoordinate x - referenceCoordinate b (primitive u x) / 2)
+
+private lemma comparison_ac (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {u : ℝ → ℝ} (hu : Admissible u) (hm : mass u = 1) :
+    AbsolutelyContinuousOnInterval (comparison b u) 1 2 := by
+  have hi := (admissible_integrability hu).1
+  have hU := hi.absolutelyContinuousOnInterval_intervalIntegral (c := 1) left_mem_uIcc
+  have hmap : MapsTo (primitive u) (uIcc (1 : ℝ) 2) (Icc (0 : ℝ) 1) := by
+    simpa only [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using primitive_range hu hm
+  have hMc : ContDiffOn ℝ ∞ (calibrationSlope b) (Icc (0 : ℝ) 1) :=
+    fun r hr => (calibrationSlope_contDiff b hb hb1
+      (massDomain_contains b hb hb1 hr)).contDiffWithinAt
+  have hZc : ContDiffOn ℝ ∞ (referenceCoordinate b) (Icc (0 : ℝ) 1) :=
+    fun r hr => (referenceCoordinate_contDiff b hb hb1
+      (massDomain_contains b hb hb1 hr)).contDiffWithinAt
+  obtain ⟨K, hK⟩ := hMc.exists_lipschitzOnWith (by simp) (convex_Icc _ _) isCompact_Icc
+  obtain ⟨L, hL⟩ := hZc.exists_lipschitzOnWith (by simp) (convex_Icc _ _) isCompact_Icc
+  have hM := hK.comp_absolutelyContinuousOnInterval hmap hU
+  have hZ := hL.comp_absolutelyContinuousOnInterval hmap hU
+  have hz : AbsolutelyContinuousOnInterval spaceCoordinate 1 2 := by
+    apply ContDiffOn.absolutelyContinuousOnInterval
+    intro x hx
+    have hxpos : 0 < x := by
+      rw [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] at hx
+      linarith [hx.1]
+    exact (contDiffAt_id.mul (Real.contDiffAt_sqrt (ne_of_gt hxpos))).contDiffWithinAt
+  convert hM.mul (hz.sub (hZ.const_mul (1 / 2))) using 1
+  funext x
+  dsimp only [comparison, Function.comp_apply, Pi.mul_apply, Pi.sub_apply]
+  ring
+
+private lemma comparison_deriv_le (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {u : ℝ → ℝ} (hu : Admissible u) (hm : mass u = 1) :
+    ∀ᵐ x ∂volume.restrict (Icc (1 : ℝ) 2),
+      deriv (comparison b u) x ≤ b * (x / u x) + primitive u x / u x ^ 2 := by
+  have hi := (admissible_integrability hu).1
+  obtain ⟨c, B, hc, hbounds⟩ := hu.2
+  filter_upwards [hbounds, ae_restrict_mem measurableSet_Icc,
+    ae_restrict_of_ae hi.ae_hasDerivAt_integral] with x hux hx hdU
+  have hup : 0 < u x := hc.trans_le hux.1
+  have hxpos : 0 < x := by linarith [hx.1]
+  have hr := primitive_range hu hm hx
+  have hrd := massDomain_contains b hb hb1 hr
+  have hU : HasDerivAt (primitive u) (u x) x :=
+    hdU (by simpa only [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx)
+      1 left_mem_uIcc
+  have hM := (calibrationSlope_hasDerivAt b hb hb1 hrd).comp x hU
+  have hZ := (referenceCoordinate_hasDerivAt b hb hb1 hrd).comp x hU
+  have hV := hM.mul ((spaceCoordinate_hasDerivAt hxpos).sub (hZ.div_const 2))
+  change HasDerivAt (comparison b u) _ x at hV
+  rw [hV.deriv]
+  obtain ⟨hZpos, hQpos, hMeq, hNeq⟩ := calibration_coefficients b hb hb1 hrd
+  have hs := functional_support hb.le hr.1 (mul_pos hxpos (Real.sqrt_pos.2 hxpos))
+    (show 0 ≤ 3 * Real.sqrt x / (2 * u x) by positivity) hZpos hQpos
+  rw [← hMeq, ← hNeq] at hs
+  have hle := mul_le_mul_of_nonneg_left hs hup.le
+  convert hle using 1
+  · dsimp only [Pi.sub_apply, Function.comp_apply, spaceCoordinate]
+    field_simp [ne_of_gt hup]
+    ring
+  · field_simp [ne_of_gt hup, ne_of_gt hxpos, ne_of_gt (Real.sqrt_pos.2 hxpos)]
+    have hsq := Real.sq_sqrt hxpos.le
+    generalize Real.sqrt x = t at *
+    rw [← hsq]
+    ring
+
+private lemma comparison_endpoint (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {u : ℝ → ℝ} (hm : mass u = 1) :
+    comparison b u 2 - comparison b u 1 =
+      profileCalibration b 2 - profileCalibration b 1 := by
+  have h1 := inverseMass_left b hb hb1
+    (optimizerDomain_contains b hb hb1 (show (1 : ℝ) ∈ Icc 1 2 by norm_num))
+  have h2 := inverseMass_left b hb hb1
+    (optimizerDomain_contains b hb hb1 (show (2 : ℝ) ∈ Icc 1 2 by norm_num))
+  rw [profile_one b hb hb1] at h1
+  rw [profile_two b hb hb1] at h2
+  have hU1 : primitive u 1 = 0 := by simp [primitive]
+  have hU2 : primitive u 2 = 1 := hm
+  dsimp only [comparison]
+  rw [hU1, hU2]
+  dsimp only [calibrationSlope, referenceCoordinate]
+  rw [h1, h2]
+  dsimp only [profileCalibration]
+  ring
+
+private lemma normalized_comparison (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {u : ℝ → ℝ} (hu : Admissible u) (hm : mass u = 1) : sharpConstant b ≤ cost b u := by
+  have hdata := admissible_integrability hu
+  have hVac := comparison_ac b hb hb1 hu hm
+  have hle := intervalIntegral.integral_mono_ae_restrict
+    (show (1 : ℝ) ≤ 2 by norm_num) hVac.intervalIntegrable_deriv
+    ((hdata.2.1.const_mul b).add hdata.2.2) (comparison_deriv_le b hb hb1 hu hm)
+  rw [hVac.integral_deriv_eq_sub, comparison_endpoint b hb hb1 hm,
+    intervalIntegral.integral_add (hdata.2.1.const_mul b) hdata.2.2,
+    intervalIntegral.integral_const_mul] at hle
+  have hwdata := admissible_integrability (optimizer_admissible b hb hb1)
+  have hwfuture : IntervalIntegrable
+      (fun x => profilePrimitive b x / optimizer b x ^ 2) volume 1 2 := by
+    apply hwdata.2.2.congr
+    intro x hx
+    dsimp only
+    rw [primitive_eq_profile b hb hb1 (optimizerDomain_contains b hb hb1
+      (Ioc_subset_Icc_self
+        (by simpa only [uIoc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx)))]
+  have hftc := intervalIntegral.integral_eq_sub_of_hasDerivAt
+    (fun x hx => profileCalibration_hasDerivAt b hb hb1
+      (optimizerDomain_contains b hb hb1
+        (by simpa only [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx)))
+    ((hwdata.2.1.const_mul b).add hwfuture)
+  have hcost : (∫ x in (1 : ℝ)..2,
+      b * (x / optimizer b x) + profilePrimitive b x / optimizer b x ^ 2) =
+      cost b (optimizer b) := by
+    rw [intervalIntegral.integral_add (hwdata.2.1.const_mul b) hwfuture,
+      intervalIntegral.integral_const_mul]
+    dsimp only [cost]
+    congr 1
+    apply intervalIntegral.integral_congr
+    intro x hx
+    dsimp only
+    rw [primitive_eq_profile b hb hb1 (optimizerDomain_contains b hb hb1
+      (by simpa only [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx))]
+  rw [← hftc, hcost, optimizer_cost b hb hb1] at hle
+  exact hle
+
+private lemma mass_pos {u : ℝ → ℝ} (hu : Admissible u) : 0 < mass u := by
+  obtain ⟨c, B, hc, hbounds⟩ := hu.2
+  have hle := intervalIntegral.integral_mono_ae_restrict
+    (show (1 : ℝ) ≤ 2 by norm_num) (intervalIntegrable_const :
+      IntervalIntegrable (fun _ : ℝ => c) volume 1 2)
+    (admissible_integrability hu).1 (hbounds.mono (fun x hx => hx.1))
+  have h : c ≤ mass u := by simpa only [intervalIntegral.integral_const,
+    sub_self, show (2 : ℝ) - 1 = 1 by norm_num, smul_eq_mul, one_mul] using hle
+  exact hc.trans_le h
+
+private lemma admissible_scale {u : ℝ → ℝ} (hu : Admissible u)
+    {a : ℝ} (ha : 0 < a) : Admissible (fun x => a * u x) := by
+  obtain ⟨c, B, hc, hbounds⟩ := hu.2
+  refine ⟨hu.1.const_mul a, a * c, a * B, mul_pos ha hc, ?_⟩
+  filter_upwards [hbounds] with x hx
+  exact ⟨mul_le_mul_of_nonneg_left hx.1 ha.le, mul_le_mul_of_nonneg_left hx.2 ha.le⟩
+
+private lemma mass_scale (a : ℝ) (u : ℝ → ℝ) :
+    mass (fun x => a * u x) = a * mass u :=
+  intervalIntegral.integral_const_mul a u
+
+private lemma primitive_scale (a : ℝ) (u : ℝ → ℝ) (x : ℝ) :
+    primitive (fun t => a * u t) x = a * primitive u x :=
+  intervalIntegral.integral_const_mul a u
+
+private lemma cost_scale {a : ℝ} (ha : a ≠ 0) (b : ℝ) (u : ℝ → ℝ) :
+    cost b (fun x => a * u x) = cost b u / a := by
+  have h1 : (fun x => x / (a * u x)) = (fun x => (x / u x) / a) := by
+    funext x
+    field_simp
+    ring
+  have h2 : (fun x => primitive (fun t => a * u t) x / (a * u x) ^ 2) =
+      (fun x => (primitive u x / u x ^ 2) / a) := by
+    funext x
+    rw [primitive_scale]
+    field_simp [ha]
+    ring
+  dsimp only [cost]
+  rw [h1, h2, intervalIntegral.integral_div, intervalIntegral.integral_div]
+  ring
+
+private lemma product_comparison (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
+    {u : ℝ → ℝ} (hu : Admissible u) : sharpConstant b ≤ mass u * cost b u := by
+  have hp := mass_pos hu
+  have hn := normalized_comparison b hb hb1
+    (admissible_scale hu (inv_pos.2 hp))
+    (show mass (fun x => (mass u)⁻¹ * u x) = 1 by
+      rw [mass_scale, inv_mul_cancel₀ (ne_of_gt hp)])
+  rw [cost_scale (inv_ne_zero (ne_of_gt hp)), div_inv_eq_mul, mul_comm] at hn
+  exact hn
+
+/-- The exact attained variational values on the entire bounded positive measurable class.
+The scalar response is an analytic infimum; no arithmetic attainability is asserted. -/
+theorem sharp_joint_variational (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    0 < sharpConstant b ∧
+    (∀ u : ℝ → ℝ, Admissible u → sharpConstant b ≤ mass u * cost b u) ∧
+    IsLeast {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧ mass u * cost b u = y}
+      (sharpConstant b) ∧
+    sInf {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧ mass u * cost b u = y} =
+      sharpConstant b ∧
+    (∀ a : ℝ, 0 < a → Admissible (fun x => a * optimizer b x) ∧
+      mass (fun x => a * optimizer b x) * cost b (fun x => a * optimizer b x) =
+        sharpConstant b) ∧
+    ∀ d : ℝ, 0 < d →
+      IsLeast {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧
+        d / 8 * (4 * mass u + cost b u) = y} (d / 2 * Real.sqrt (sharpConstant b)) ∧
+      sInf {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧
+        d / 8 * (4 * mass u + cost b u) = y} = d / 2 * Real.sqrt (sharpConstant b) ∧
+      Admissible (fun x => Real.sqrt (sharpConstant b) / 2 * optimizer b x) ∧
+      d / 8 * (4 * mass (fun x => Real.sqrt (sharpConstant b) / 2 * optimizer b x) +
+        cost b (fun x => Real.sqrt (sharpConstant b) / 2 * optimizer b x)) =
+          d / 2 * Real.sqrt (sharpConstant b) := by
+  have hC := (constructed_profile b hb hb1).2.2.2.1
+  have hw := optimizer_admissible b hb hb1
+  have hcomp := fun u hu => product_comparison b hb hb1 (u := u) hu
+  have hprod : IsLeast
+      {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧ mass u * cost b u = y}
+      (sharpConstant b) := by
+    refine ⟨⟨optimizer b, hw, ?_⟩, ?_⟩
+    · rw [optimizer_mass b hb hb1, one_mul, optimizer_cost b hb hb1]
+    · rintro y ⟨u, hu, rfl⟩
+      exact hcomp u hu
+  refine ⟨hC, hcomp, hprod, hprod.csInf_eq, ?_, ?_⟩
+  · intro a ha
+    refine ⟨admissible_scale hw ha, ?_⟩
+    rw [mass_scale, cost_scale (ne_of_gt ha), optimizer_mass b hb hb1,
+      optimizer_cost b hb hb1]
+    field_simp
+  · intro d hd
+    have hs : 0 < Real.sqrt (sharpConstant b) := Real.sqrt_pos.2 hC
+    have hsq := Real.sq_sqrt hC.le
+    have hscaled := admissible_scale hw (div_pos hs (by norm_num : (0 : ℝ) < 2))
+    have heq : d / 8 *
+        (4 * mass (fun x => Real.sqrt (sharpConstant b) / 2 * optimizer b x) +
+          cost b (fun x => Real.sqrt (sharpConstant b) / 2 * optimizer b x)) =
+          d / 2 * Real.sqrt (sharpConstant b) := by
+      rw [mass_scale, cost_scale (ne_of_gt (div_pos hs (by norm_num))),
+        optimizer_mass b hb hb1, optimizer_cost b hb hb1]
+      field_simp [ne_of_gt hs]
+      nlinarith [hsq]
+    have hleast : IsLeast {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧
+        d / 8 * (4 * mass u + cost b u) = y}
+        (d / 2 * Real.sqrt (sharpConstant b)) := by
+      refine ⟨⟨_, hscaled, heq⟩, ?_⟩
+      rintro y ⟨u, hu, rfl⟩
+      have hp := mass_pos hu
+      have hcu := hcomp u hu
+      have ht : 0 ≤ mass u *
+          (4 * mass u + cost b u - 4 * Real.sqrt (sharpConstant b)) := by
+        nlinarith [sq_nonneg (2 * mass u - Real.sqrt (sharpConstant b)), hsq]
+      have hbound := nonneg_of_mul_nonneg_left ht hp
+      have hmul := mul_le_mul_of_nonneg_left
+        (show 4 * Real.sqrt (sharpConstant b) ≤ 4 * mass u + cost b u by linarith)
+        (show 0 ≤ d / 8 by positivity)
+      nlinarith
+    exact ⟨hleast, hleast.csInf_eq, hscaled, heq⟩
+
 end D5.S3.Analytic.Variational.JointReciprocalFunctional
 
 
