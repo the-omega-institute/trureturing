@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:f7bb56604b1208a8287b8479c6fa78eafe989c6fa2d4bf0712d13aa82322cb1a
   normalized_sha256: sha256:f7bb56604b1208a8287b8479c6fa78eafe989c6fa2d4bf0712d13aa82322cb1a
 cas_ref: sha256:f7bb56604b1208a8287b8479c6fa78eafe989c6fa2d4bf0712d13aa82322cb1a
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeTwoMomentRecovery.same_prior_two_moments_posterior_unique
+    target_statement_id: sha256:e35381bb53fb522e7c088e63ae59861791135189ece362fb68aaf3b70c9e3b2c
 receipts:
   unresolved_subitems: []
