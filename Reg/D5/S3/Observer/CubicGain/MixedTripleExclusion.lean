@@ -182,23 +182,70 @@ private theorem test_fifth (E F G : Bool) : ∃ z : ℝ,
   have hb : testB ∈ testSupport := by simp [testSupport]
   have hc : testC ∈ testSupport := by simp [testSupport]
   cases E <;> cases F <;> cases G
-  all_goals first
-    | refine ⟨46,fifth_child false false false 46 testA testB ha hb test_distinct.1 ?_ ?_⟩
-    | refine ⟨38,fifth_child false false true 38 testA testC ha hc test_distinct.2.1 ?_ ?_⟩
-    | refine ⟨16,fifth_child false true false 16 testA testB ha hb test_distinct.1 ?_ ?_⟩
-    | refine ⟨14,fifth_child false true true 14 testA testB ha hb test_distinct.1 ?_ ?_⟩
-    | refine ⟨38,fifth_child true false false 38 testB testC hb hc test_distinct.2.2 ?_ ?_⟩
-    | refine ⟨28,fifth_child true false true 28 testA testB ha hb test_distinct.1 ?_ ?_⟩
-    | refine ⟨14,fifth_child true true false 14 testA testB ha hb test_distinct.1 ?_ ?_⟩
-    | refine ⟨12,fifth_child true true true 12 testA testB ha hb test_distinct.1 ?_ ?_⟩
-  all_goals
-    norm_num [testA,testB,testC,legalWorld,readAt,gain,
-      Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
-      Polynomial.eval_monomial,Fin.sum_univ_succ,acquisition,Raw,
-      _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
-      _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
-      _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
-      sourceChart,Matrix.mul_apply,Matrix.trace,Fin.sum_univ_two]
+  · refine ⟨46,fifth_child false false false 46 testA testB ha hb test_distinct.1 ?_ ?_⟩ <;>
+      norm_num [testA,testB,testC,legalWorld,readAt,gain,
+        Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
+        Polynomial.eval_monomial,Fin.sum_univ_succ,acquisition,Raw,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
+        _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
+        sourceChart,Matrix.mul_apply,Matrix.trace,Fin.sum_univ_two]
+  · refine ⟨38,fifth_child false false true 38 testA testC ha hc test_distinct.2.1 ?_ ?_⟩ <;>
+      norm_num [testA,testB,testC,legalWorld,readAt,gain,
+        Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
+        Polynomial.eval_monomial,Fin.sum_univ_succ,acquisition,Raw,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
+        _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
+        sourceChart,Matrix.mul_apply,Matrix.trace,Fin.sum_univ_two]
+  · refine ⟨16,fifth_child false true false 16 testA testB ha hb test_distinct.1 ?_ ?_⟩ <;>
+      norm_num [testA,testB,testC,legalWorld,readAt,gain,
+        Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
+        Polynomial.eval_monomial,Fin.sum_univ_succ,acquisition,Raw,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
+        _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
+        sourceChart,Matrix.mul_apply,Matrix.trace,Fin.sum_univ_two]
+  · refine ⟨14,fifth_child false true true 14 testA testB ha hb test_distinct.1 ?_ ?_⟩ <;>
+      norm_num [testA,testB,testC,legalWorld,readAt,gain,
+        Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
+        Polynomial.eval_monomial,Fin.sum_univ_succ,acquisition,Raw,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
+        _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
+        sourceChart,Matrix.mul_apply,Matrix.trace,Fin.sum_univ_two]
+  · refine ⟨38,fifth_child true false false 38 testB testC hb hc test_distinct.2.2 ?_ ?_⟩ <;>
+      norm_num [testA,testB,testC,legalWorld,readAt,gain,
+        Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
+        Polynomial.eval_monomial,Fin.sum_univ_succ,acquisition,Raw,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
+        _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
+        sourceChart,Matrix.mul_apply,Matrix.trace,Fin.sum_univ_two]
+  · refine ⟨28,fifth_child true false true 28 testA testB ha hb test_distinct.1 ?_ ?_⟩ <;>
+      norm_num [testA,testB,testC,legalWorld,readAt,gain,
+        Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
+        Polynomial.eval_monomial,Fin.sum_univ_succ,acquisition,Raw,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
+        _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
+        sourceChart,Matrix.mul_apply,Matrix.trace,Fin.sum_univ_two]
+  · refine ⟨14,fifth_child true true false 14 testA testB ha hb test_distinct.1 ?_ ?_⟩ <;>
+      norm_num [testA,testB,testC,legalWorld,readAt,gain,
+        Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
+        Polynomial.eval_monomial,Fin.sum_univ_succ,acquisition,Raw,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
+        _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
+        sourceChart,Matrix.mul_apply,Matrix.trace,Fin.sum_univ_two]
+  · refine ⟨12,fifth_child true true true 12 testA testB ha hb test_distinct.1 ?_ ?_⟩ <;>
+      norm_num [testA,testB,testC,legalWorld,readAt,gain,
+        Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
+        Polynomial.eval_monomial,Fin.sum_univ_succ,acquisition,Raw,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
+        _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
+        _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
+        sourceChart,Matrix.mul_apply,Matrix.trace,Fin.sum_univ_two]
 
 private theorem test_losing : Losing 5 testSupport [false,true] := by
   have hcard : 2 ≤ testSupport.card := by rw [test_card]; norm_num
