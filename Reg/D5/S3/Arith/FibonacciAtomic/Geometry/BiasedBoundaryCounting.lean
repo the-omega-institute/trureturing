@@ -35,7 +35,7 @@ def actual : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law obs := 
+  Law obs :=
     B = 2 * Real.goldenRatio^3 ∧
     ∃ (e : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K) (mu : ℕ → ℝ),
       (∀ i, 0 < mu i) ∧ Antitone mu ∧ Tendsto mu atTop (nhds 0) ∧

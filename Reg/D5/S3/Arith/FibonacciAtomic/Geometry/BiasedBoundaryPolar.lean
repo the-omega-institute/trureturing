@@ -35,7 +35,7 @@ def actual : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law obs := 
+  Law obs :=
     ∃ (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K) (mu : ℕ → ℝ)
       (W : K ≃ₗᵢ[ℝ] G0) (S T R : K →L[ℝ] K),
       (∀ i, 0 < mu i) ∧
