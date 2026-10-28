@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Permutation;
 
 internal sealed class MatharSameParityRecurrenceDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/oeis2008a152661");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/oeis2008a152661");
     private const string Prefix = "D5/S3/Combinatorics/Permutation/MatharSameParityRecurrence.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
