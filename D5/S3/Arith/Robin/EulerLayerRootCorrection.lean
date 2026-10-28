@@ -4,7 +4,7 @@
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
-   digest: Exact target statement for the strict Euler inventory root-scale correction; proof open. -/
+   digest: Third-layer vanishing is proved; the exact strict Euler inventory root-scale correction remains open. -/
 
 import D5.S3.Arith.Robin.EulerLayerInventoryGrowth
 
@@ -205,8 +205,9 @@ theorem strict_inventory_third_layer_vanishing :
 /-!
 The paper/theory target is retained verbatim as a proposition. No theorem is
 claimed here: the missing proof must establish the uniform second-layer cutoff
-at `sqrt 2 * sqrt t`, the vanishing of all actual layers at least three, and
-the root-scale Costa--Pereira limit for `psi - theta`.
+at `sqrt 2 * sqrt t` and the root-scale Costa--Pereira limit for `psi - theta`.
+The complete actual layers at least three are supplied by the preceding
+vanishing theorem.
 -/
 def strict_inventory_root_correction_statement : Prop :=
   ∀ ε : ℝ, 0 < ε → ∃ T : ℝ, 1 < T ∧ ∀ t : ℝ, T ≤ t → ∀ U : ℕ, 0 < U →
