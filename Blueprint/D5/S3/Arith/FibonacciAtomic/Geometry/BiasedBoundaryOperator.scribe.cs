@@ -37,7 +37,15 @@ internal sealed class BiasedBoundaryOperatorDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(EigenspacesFormula()), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For positive mu, intertwining CC* with C*C sends each original covariance eigenvector z to Cz. The inverse eigenvalue equation puts this trace in the actual boundary operator domain with eigenvalue mu^(-1). Conversely an actual operator eigenvector u at that value gives CC*u=mu u; applying C* and scaling gives the edge eigenvector mu^(-1)C*u. The two maps compose to the identity on both full eigenspaces. This is an explicit linear equivalence, so multiplicities are preserved without assuming simplicity.")),
                     Paragraph(Text("Each positive edge eigenvector is mu^(-1)C*Cz and hence lies in K, since the original adjoint range lies in K. Thus these are precisely the effective edge modes relevant to the source. The original stopping-derived compactness of Sigma and the pinned finite-eigenspace theorem make its nonzero eigenspaces finite dimensional. The explicit equivalence transfers this property to the actual operator eigenspaces. At the empty prefix, the inherited suffix Hardy estimate gives the squared centered-trace norm bound with coefficient phi. On a nonzero mu eigenvector its covariance quadratic form is mu times its squared increment norm, so mu is at most phi. Consequently every nonzero actual operator eigenvector at mu^(-1) has eigenvalue at least phi^(-1). This proves the eigenvector gap; it does not define or settle the original spectral counting function.")),
-                    Paragraph(Text("These results do not yet construct the polar unitary W or its range and domain identities, enumerate and exhaust the positive spectrum, establish divergence of an ordered sequence, or prove the original global counting inequalities. Source equation (2.3) in its literal W form and the full Theorem 2.1 remain unfinished."))), DescribeRole.Theorem))));
+                    Paragraph(Text("The following theorem constructs complete ordered positive modes. The polar range and domain identities, source equation (2.3) in its literal W form and the global counting inequalities require further results."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("biasedboundaryoperator-exhaustion"),
+                DeclarationHandle.Create(Prefix + "actual_positive_spectral_exhaustion"),
+                H("Complete Ordered Positive Spectral Modes"),
+                StatementSource.FromAuthor(SpectralFormula()), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Restrict the actual boundary covariance CC* to the closed mean-zero space G0. Its quadratic form is the squared norm of C*u, strictly positive for nonzero u by density of the original trace. Compactness is inherited from the actual centered trace. The compact symmetric Hilbert-basis theorem assembles all its eigenspaces, so no basis or spectral exhaustion is assumed.")),
+                    Paragraph(Text("For each positive epsilon, only finitely many basis indices can have covariance weight at least epsilon. Otherwise their images under the actual compact covariance admit a convergent subsequence, while orthogonality makes the squared distance of any distinct pair the sum of the two squared weights, at least twice epsilon squared. Order the full index by decreasing weight, resolving ties with a fixed linear order. Every initial interval is finite, so the infinite index is order-isomorphic to Nat. This lists every basis vector once, including every repeated eigenvalue. The weights decrease to zero and their reciprocals increase to infinity.")),
+                    Paragraph(Text("Normalize C* applied to each boundary basis vector by the reciprocal square root of its covariance weight. These vectors lie in the original K, are orthonormal and have dense span: a vector orthogonal to all of them has trace orthogonal to the entire boundary basis, hence zero trace and zero effective increment. They therefore form a full Hilbert basis of K, with Sigma eigenvalue mu and trace equal to sqrt(mu) times the boundary basis vector. The exact inverse eigenvalue graph equation puts each boundary mode in the original operator domain with eigenvalue 1/mu.")),
+                    Paragraph(Text("For any positive a, symmetry forces a covariance eigenvector's coordinates to vanish outside the indices with weight a. This full eigenspace is exactly the span of those basis vectors. The coordinate family is independent, so its cardinality equals the finite dimension of the full actual H eigenspace at 1/a. Thus the enumeration preserves finite multiplicities without a simplicity assumption. The global counting estimates, trial-space inequality, polar domain and range identities and literal polar resolvent formula are separate conclusions."))), DescribeRole.Theorem))));
 
     private static DocumentBlock Def(string name, string prose) => Describe.Lean(
         DescribeId.Create("biasedboundaryoperator-" + name.ToLowerInvariant()),
@@ -48,6 +56,26 @@ internal sealed class BiasedBoundaryOperatorDocument : IScribeDocumentDefinition
     private static Formula Call(string s, params Formula[] xs) => new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. xs]);
     private static Formula All(string s, Formula t, Formula x) => Seq(Forall,Sp,V(s),Colon,Sp,t,Comma,Sp,Par(x));
     private static Formula And(params Formula[] xs) => Seq([.. xs.SelectMany((x,i) => i==0 ? new[] { Par(x) } : new[] { Land,Par(x) })]);
+    private static Formula SpectralFormula()
+    {
+        Formula b=V("b"), k=V("k"), m=V("mu"), i=V("i"), a=V("a"), e=V("epsilon");
+        Formula n=Call("Nat"), r=Call("Real"), g=Call("Gzero");
+        Formula bi=new Formula.Apply(b,[i]), ki=new Formula.Apply(k,[i]), mi=new Formula.Apply(m,[i]);
+        Formula inv=Call("reciprocalFamily",m), h=Call("boundaryEigenspace",Call("inverse",a));
+        Formula body=And(
+            All("i",n,Seq(D(0),Lt,mi)),Call("Antitone",m),Call("TendstoZero",m),
+            Call("Monotone",inv),Call("TendstoInfinity",inv),
+            All("i",n,Seq(Call("boundaryCovariance",bi),Eq,Call("smul",mi,bi))),
+            All("i",n,Seq(Call("pair",bi,Call("smul",Call("inverse",mi),bi)),InMacro,Sp,Call("graph",V("boundaryOperator")))),
+            All("i",n,Seq(Call("Sigma",ki),Eq,Call("smul",mi,ki))),
+            All("i",n,Seq(Call("C",ki),Eq,Call("smul",Call("sqrt",mi),bi))),
+            All("a",r,Seq(D(0),Lt,a,Implies,Sp,Call("FiniteDimensional",r,h))),
+            All("a",r,Seq(D(0),Lt,a,Implies,Sp,Call("finrank",r,h),Eq,Call("cardinality",Call("fiber",m,a)))),
+            All("epsilon",r,Seq(D(0),Lt,e,Implies,Sp,Call("Finite",Call("superlevel",m,e)))));
+        return Seq(Exists,Sp,b,Colon,Sp,Call("HilbertBasis",n,r,g),Comma,Sp,
+            Exists,Sp,k,Colon,Sp,Call("HilbertBasis",n,r,V("K")),Comma,Sp,
+            Exists,Sp,m,Colon,Sp,Call("Function",n,r),Comma,Sp,body);
+    }
     private static Formula EigenspacesFormula()
     {
         Formula m=V("mu"), z=V("z"), u=V("u");

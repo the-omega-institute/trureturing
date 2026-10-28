@@ -11,6 +11,10 @@ import Mathlib.Analysis.InnerProductSpace.LinearPMap
 import Mathlib.Analysis.InnerProductSpace.Positive
 import Mathlib.Analysis.InnerProductSpace.Spectrum
 import Mathlib.MeasureTheory.VectorMeasure.WithDensity
+import D5.S3.Quantum.Analysis.TraceClass.Spectral
+import Mathlib.Order.Prod.Lex.Basic
+import Mathlib.Order.SuccPred.LinearLocallyFinite
+import Mathlib.Order.Interval.Finset.Basic
 
 /-! The original form is realized on the actual infinite biased boundary. -/
 
@@ -591,8 +595,326 @@ theorem actual_covariance_eigenspaces (mu : ℝ) (hmu : 0 < mu) :
         BiasedBoundaryFreeRootForm.actual_compact_covariance.2.2.1 mu (ne_of_gt hmu)
     exact (covarianceEigenEquiv mu hmu).finiteDimensional
 
+private instance : CompleteSpace G0 :=
+  (ContinuousLinearMap.isClosed_ker mean).completeSpace_coe
+
+private instance : CompleteSpace K :=
+  (Submodule.isClosed_orthogonal Sigma.ker).completeSpace_coe
+
+private def covariance0 : G0 →L[ℝ] G0 :=
+  (boundaryCovariance.comp G0.subtypeL).codRestrict G0 (fun u => covariance_centered u)
+
+private theorem covariance0_compact : IsCompactOperator covariance0 := by
+  exact (BiasedBoundaryFreeRootForm.actual_compact_covariance.2.1.comp_clm C.adjoint
+    |>.comp_clm G0.subtypeL).codRestrict (fun u => covariance_centered u)
+      (ContinuousLinearMap.isClosed_ker mean)
+
+private theorem covariance0_symmetric : covariance0.IsSymmetric := by
+  intro u v
+  exact covariance_symmetric u.val v.val
+
+private theorem covariance0_positive (u : G0) (hu : u ≠ 0) :
+    0 < inner ℝ u (covariance0 u) := by
+  have hn : C.adjoint u.val ≠ 0 := by
+    intro he
+    exact hu (Subtype.ext (C_adjoint_zero u.property he))
+  change 0 < inner ℝ u.val (boundaryCovariance u.val)
+  rw [real_inner_comm, covariance_inner, real_inner_self_eq_norm_sq]
+  exact pow_pos (norm_pos_iff.mpr hn) 2
+
+private theorem covariance0_basis :
+    ∃ (w : Set G0) (b : HilbertBasis w ℝ G0) (mu : w → ℝ),
+      (∀ i, 0 < mu i) ∧ (∀ i, covariance0 (b i) = mu i • b i) := by
+  obtain ⟨w,b,mu,he⟩ :=
+    TraceClassSpectral.exists_setIndex_real_eigenbasis_of_compact_isSymmetric
+      covariance0_compact covariance0_symmetric
+  refine ⟨w,b,mu,?_,he⟩
+  intro i
+  exact eigenvalue_pos_of_pos
+    (Module.End.hasEigenvalue_of_hasEigenvector
+      ⟨Module.End.mem_eigenspace_iff.mpr (he i),b.orthonormal.ne_zero i⟩)
+    covariance0_positive
+
+private theorem covariance_basis_finite_above {ι : Type} (b : HilbertBasis ι ℝ G0)
+    (mu : ι → ℝ) (he : ∀ i, covariance0 (b i) = mu i • b i)
+    (eps : ℝ) (heps : 0 < eps) : {i | eps ≤ mu i}.Finite := by
+  classical
+  by_contra hf
+  letI : Infinite {i // eps ≤ mu i} := Set.infinite_coe_iff.mpr hf
+  let k := Infinite.natEmbedding {i // eps ≤ mu i}
+  let f : ℕ → G0 := fun n => covariance0 (b (k n).val)
+  obtain ⟨L,hL,hsub⟩ := covariance0_compact.image_closedBall_subset_compact 1
+  have hfL (n : ℕ) : f n ∈ L := by
+    apply hsub
+    exact ⟨b (k n).val,by simp [Metric.mem_closedBall,b.orthonormal.1],rfl⟩
+  obtain ⟨x,_,phi,hphi,hlim⟩ := hL.tendsto_subseq hfL
+  obtain ⟨N,hN⟩ := Metric.cauchySeq_iff.mp hlim.cauchySeq eps heps
+  have hd := hN N le_rfl (N+1) (Nat.le_succ N)
+  have hne : (k (phi N)).val ≠ (k (phi (N+1))).val := by
+    intro heq
+    have hh := k.injective (Subtype.ext heq)
+    exact (ne_of_lt (hphi (Nat.lt_succ_self N))) hh
+  have hn : ‖f (phi N)-f (phi (N+1))‖^2 =
+      (mu (k (phi N)).val)^2 + (mu (k (phi (N+1))).val)^2 := by
+    dsimp only [f]
+    rw [he,he,norm_sub_sq_real,norm_smul,norm_smul,
+      real_inner_smul_left,real_inner_smul_right,b.orthonormal.2 hne,
+      b.orthonormal.1,b.orthonormal.1]
+    simp [Real.norm_eq_abs,sq_abs]
+  have ha := (k (phi N)).property
+  have hb := (k (phi (N+1))).property
+  change dist (f (phi N)) (f (phi (N+1))) < eps at hd
+  rw [dist_eq_norm] at hd
+  nlinarith [norm_nonneg (f (phi N)-f (phi (N+1)))]
+
+private theorem ordered_covariance_indices {ι : Type} [Infinite ι]
+    (b : HilbertBasis ι ℝ G0) (mu : ι → ℝ) (hp : ∀ i, 0 < mu i)
+    (he : ∀ i, covariance0 (b i) = mu i • b i) :
+    ∃ e : ℕ ≃ ι, Antitone (mu ∘ e) ∧ Tendsto (mu ∘ e) atTop (nhds 0) := by
+  classical
+  let baseOrder : LinearOrder ι := linearOrderOfSTO WellOrderingRel
+  letI : LinearOrder ι := baseOrder
+  let key : ι → ℝᵒᵈ ×ₗ ι := fun i => toLex (mu i,i)
+  have hkey : Function.Injective key := by
+    intro i j h
+    exact congrArg (fun x : ℝᵒᵈ ×ₗ ι => (ofLex x).2) h
+  letI : LinearOrder ι := LinearOrder.lift' key hkey
+  have hm (i j : ι) (hij : i ≤ j) : mu j ≤ mu i :=
+    @Prod.Lex.monotone_fst ℝᵒᵈ ι inferInstance baseOrder.toLE (key i) (key j) hij
+  have hf (i : ι) : (Set.Iic i).Finite := by
+    apply (covariance_basis_finite_above b mu he (mu i) (hp i)).subset
+    intro j hj
+    exact hm j i hj
+  letI : LocallyFiniteOrderBot ι := LocallyFiniteOrderBot.ofIic ι
+    (fun i => (hf i).toFinset) (fun i j => by simp)
+  letI : OrderBot ι := WellFoundedLT.toOrderBot ι
+  letI : LocallyFiniteOrder ι := LocallyFiniteOrder.ofFiniteIcc
+    (fun _ j => (hf j).subset (fun _ h => h.2))
+  letI : SuccOrder ι := LinearLocallyFiniteOrder.succOrder ι
+  letI : PredOrder ι := LinearLocallyFiniteOrder.predOrder ι
+  letI : NoMaxOrder ι := ⟨fun i => by
+    by_contra h
+    push_neg at h
+    have hall : (Set.univ : Set ι).Finite := (hf i).subset (fun j _ => h j)
+    exact Set.infinite_univ hall⟩
+  let e : ℕ ≃o ι := (orderIsoNatOfLinearSuccPredArch).symm
+  refine ⟨e.toEquiv,fun i j hij => hm _ _ (e.monotone hij),?_⟩
+  apply tendsto_order.mpr
+  constructor
+  · intro a ha
+    exact Eventually.of_forall (fun n => ha.trans (hp (e n)))
+  · intro eps heps
+    have hfin := (covariance_basis_finite_above b mu he eps heps).preimage
+      e.injective.injOn
+    have hco : ∀ᶠ n : ℕ in cofinite, ¬ eps ≤ mu (e n) :=
+      Filter.eventually_cofinite.mpr (by simpa only [not_not] using hfin)
+    change ∀ᶠ n : ℕ in atTop, mu (e n) < eps
+    simpa only [Nat.cofinite_eq_atTop,not_le] using hco
+
+private theorem ordered_boundary_basis :
+    ∃ (b : HilbertBasis ℕ ℝ G0) (mu : ℕ → ℝ),
+      (∀ i, 0 < mu i) ∧ Antitone mu ∧ Tendsto mu atTop (nhds 0) ∧
+      (∀ i, covariance0 (b i) = mu i • b i) := by
+  classical
+  obtain ⟨w,b,mu,hp,he⟩ := covariance0_basis
+  haveI : Infinite w := by
+    by_contra h
+    haveI : Finite w := not_infinite_iff_finite.mp h
+    letI := Fintype.ofFinite w
+    exact G0_infinite b.toOrthonormalBasis.toBasis.finiteDimensional_of_finite
+  obtain ⟨e,hm,ht⟩ := ordered_covariance_indices b mu hp he
+  let f : ℕ → G0 := fun i => b (e i)
+  have ho : Orthonormal ℝ f := b.orthonormal.comp e e.injective
+  have hd : ⊤ ≤ (Submodule.span ℝ (Set.range f)).topologicalClosure := by
+    rw [show Set.range f = Set.range b from e.surjective.range_comp b]
+    exact b.dense_span.ge
+  let B := HilbertBasis.mk ho hd
+  have hB (i : ℕ) : B i = b (e i) := congrFun (HilbertBasis.coe_mk ho hd) i
+  refine ⟨B,mu ∘ e,fun i => hp (e i),hm,ht,?_⟩
+  intro i
+  simpa only [hB,Function.comp_apply] using he (e i)
+
+private theorem covariance0_eigenspace_span (b : HilbertBasis ℕ ℝ G0) (mu : ℕ → ℝ)
+    (he : ∀ i, covariance0 (b i) = mu i • b i) (a : ℝ) (ha : 0 < a) :
+    Module.End.eigenspace covariance0.toLinearMap a =
+      Submodule.span ℝ (b '' {i | mu i = a}) := by
+  classical
+  let S : Set ℕ := {i | mu i = a}
+  have hS : S.Finite := (covariance_basis_finite_above b mu he a ha).subset
+    (fun i hi => le_of_eq hi.symm)
+  let V := Submodule.span ℝ (b '' S)
+  haveI : FiniteDimensional ℝ V := FiniteDimensional.span_of_finite ℝ (hS.image b)
+  apply le_antisymm
+  · intro u hu
+    have hu' : covariance0 u = a • u := Module.End.mem_eigenspace_iff.mp hu
+    have hcoeff (i : ℕ) (hi : mu i ≠ a) : b.repr u i = 0 := by
+      have hh := covariance0_symmetric (b i) u
+      rw [he,hu',real_inner_smul_left,real_inner_smul_right] at hh
+      rw [← b.repr_apply_apply] at hh
+      exact (mul_eq_zero.mp (by nlinarith [hh] : (mu i-a)*b.repr u i = 0)).resolve_left
+        (sub_ne_zero.mpr hi)
+    apply V.isClosed.mem_of_tendsto (b.hasSum_repr u)
+    apply Eventually.of_forall
+    intro t
+    apply Submodule.sum_mem
+    intro i hi
+    by_cases hm : mu i = a
+    · exact V.smul_mem _ (Submodule.subset_span ⟨i,hm,rfl⟩)
+    · rw [hcoeff i hm,zero_smul]
+      exact V.zero_mem
+  · apply Submodule.span_le.mpr
+    rintro _ ⟨i,hi,rfl⟩
+    apply Module.End.mem_eigenspace_iff.mpr
+    rw [he,hi]
+
+private def covariance0EigenEquiv (a : ℝ) (ha : 0 < a) :
+    Module.End.eigenspace covariance0.toLinearMap a ≃ₗ[ℝ] boundaryEigenspace a⁻¹ where
+  toFun u := ⟨u.val.val,by
+    apply (inverse_eigenvalue a⁻¹ (inv_pos.mpr ha) u.val.val).mpr
+    refine ⟨u.val.property,?_⟩
+    simpa only [inv_inv] using congrArg Subtype.val
+      (Module.End.mem_eigenspace_iff.mp u.property)⟩
+  invFun v := ⟨⟨v.val,((inverse_eigenvalue a⁻¹ (inv_pos.mpr ha) v.val).mp v.property).1⟩,by
+    apply Module.End.mem_eigenspace_iff.mpr
+    apply Subtype.ext
+    simpa only [inv_inv] using
+      ((inverse_eigenvalue a⁻¹ (inv_pos.mpr ha) v.val).mp v.property).2⟩
+  left_inv _ := by rfl
+  right_inv _ := by rfl
+  map_add' _ _ := by rfl
+  map_smul' _ _ := by rfl
+
+private theorem spectral_multiplicity (b : HilbertBasis ℕ ℝ G0) (mu : ℕ → ℝ)
+    (he : ∀ i, covariance0 (b i) = mu i • b i) (a : ℝ) (ha : 0 < a) :
+    Module.finrank ℝ (boundaryEigenspace a⁻¹) = Nat.card {i // mu i = a} := by
+  classical
+  let S : Set ℕ := {i | mu i = a}
+  have hS : S.Finite := (covariance_basis_finite_above b mu he a ha).subset
+    (fun i hi => le_of_eq hi.symm)
+  letI := hS.fintype
+  have hr : Set.range (fun i : S => b i.val) = b '' S := by
+    ext u
+    simp only [Set.mem_range,Set.mem_image]
+    constructor
+    · rintro ⟨i,rfl⟩; exact ⟨i.val,i.property,rfl⟩
+    · rintro ⟨i,hi,rfl⟩; exact ⟨⟨i,hi⟩,rfl⟩
+  rw [← (covariance0EigenEquiv a ha).finrank_eq,covariance0_eigenspace_span b mu he a ha,← hr]
+  rw [finrank_span_eq_card (b.orthonormal.linearIndependent.comp _ Subtype.val_injective)]
+  exact (Nat.card_eq_fintype_card).symm
+
+private theorem paired_edge_basis (b : HilbertBasis ℕ ℝ G0) (mu : ℕ → ℝ)
+    (hp : ∀ i, 0 < mu i) (he : ∀ i, covariance0 (b i) = mu i • b i) :
+    ∃ k : HilbertBasis ℕ ℝ K,
+      (∀ i, Sigma (k i).val = mu i • (k i).val) ∧
+      (∀ i, C (k i).val = Real.sqrt (mu i) • (b i).val) := by
+  classical
+  let z : ℕ → K := fun i =>
+    ⟨(Real.sqrt (mu i))⁻¹ • C.adjoint (b i).val,
+      K.smul_mem _ (adjoint_mem_K _)⟩
+  have hs (i : ℕ) : Real.sqrt (mu i) ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (hp i))
+  have hev (i : ℕ) : boundaryCovariance (b i).val = mu i • (b i).val :=
+    congrArg Subtype.val (he i)
+  have hC (i : ℕ) : C (z i).val = Real.sqrt (mu i) • (b i).val := by
+    change C ((Real.sqrt (mu i))⁻¹ • C.adjoint (b i).val) = _
+    rw [map_smul]
+    change (Real.sqrt (mu i))⁻¹ • boundaryCovariance (b i).val = _
+    rw [hev,smul_smul]
+    congr 1
+    apply (inv_mul_eq_iff₀ (hs i)).mpr
+    exact (Real.sq_sqrt (hp i).le).symm.trans (pow_two _)
+  have ho : Orthonormal ℝ z := by
+    rw [orthonormal_iff_ite]
+    intro i j
+    change inner ℝ ((Real.sqrt (mu i))⁻¹ • C.adjoint (b i).val)
+      ((Real.sqrt (mu j))⁻¹ • C.adjoint (b j).val) = _
+    rw [real_inner_smul_left,real_inner_smul_right,← covariance_inner,hev,
+      real_inner_smul_left]
+    by_cases hij : i = j
+    · subst j
+      have hnorm : inner ℝ (b i).val (b i).val = 1 := by
+        change inner ℝ (b i) (b i) = 1
+        rw [real_inner_self_eq_norm_sq,b.orthonormal.1]
+        norm_num
+      simp only [hnorm,ite_true,mul_one]
+      apply (inv_mul_eq_iff₀ (hs i)).mpr
+      rw [← mul_assoc,inv_mul_cancel₀ (hs i),one_mul]
+      exact (Real.sq_sqrt (hp i).le).symm.trans (pow_two _)
+    · have hz : inner ℝ (b i).val (b j).val = 0 := b.orthonormal.2 hij
+      simp only [hz,mul_zero,ite_false,hij]
+  have htotal : (Submodule.span ℝ (Set.range z))ᗮ = ⊥ := by
+    apply le_antisymm ?_ bot_le
+    intro x hx
+    have hz (i : ℕ) : inner ℝ x.val (C.adjoint (b i).val) = 0 := by
+      have hi := (Submodule.mem_orthogonal' _ x).mp hx (z i)
+        (Submodule.subset_span (Set.mem_range_self i))
+      change inner ℝ x.val ((Real.sqrt (mu i))⁻¹ • C.adjoint (b i).val) = 0 at hi
+      rw [real_inner_smul_right,mul_eq_zero] at hi
+      exact hi.resolve_left (inv_ne_zero (hs i))
+    have hzero : centeredTrace x.val = 0 := by
+      apply b.repr.injective
+      ext i
+      rw [map_zero,lp.coeFn_zero,Pi.zero_apply,b.repr_apply_apply]
+      change inner ℝ (b i).val (C x.val) = 0
+      rw [real_inner_comm,← C.adjoint_inner_right]
+      exact hz i
+    have hc : C x.val = 0 := congrArg Subtype.val hzero
+    have hk : x.val ∈ Sigma.ker := by
+      change C.adjoint (C x.val) = 0
+      rw [hc,map_zero]
+    have hxzero : x.val = 0 :=
+      (inner_self_eq_zero (𝕜 := ℝ)).mp (x.property x.val hk)
+    exact Subtype.ext hxzero
+  let B := HilbertBasis.mkOfOrthogonalEqBot ho htotal
+  have hB (i : ℕ) : B i = z i := congrFun (HilbertBasis.coe_mkOfOrthogonalEqBot ho htotal) i
+  refine ⟨B,?_,fun i => by rw [hB]; exact hC i⟩
+  intro i
+  rw [hB]
+  change C.adjoint (C (z i).val) = mu i • (z i).val
+  rw [hC,map_smul]
+  change Real.sqrt (mu i) • C.adjoint (b i).val =
+    mu i • ((Real.sqrt (mu i))⁻¹ • C.adjoint (b i).val)
+  rw [smul_smul]
+  congr 1
+  apply (eq_mul_inv_iff₀ (hs i)).mpr
+  exact (pow_two _).symm.trans (Real.sq_sqrt (hp i).le)
+
+/-- Complete ordered positive modes of the original free-root boundary operator.
+The Hilbert basis is constructed on the actual mean-zero space, and the graph
+condition includes the original, unaltered operator domain. -/
+theorem actual_positive_spectral_exhaustion :
+    ∃ (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K) (mu : ℕ → ℝ),
+      (∀ i, 0 < mu i) ∧ Antitone mu ∧ Tendsto mu atTop (nhds 0) ∧
+      Monotone (fun i => (mu i)⁻¹) ∧
+      Tendsto (fun i => (mu i)⁻¹) atTop atTop ∧
+      (∀ i, boundaryCovariance (b i).val = mu i • (b i).val) ∧
+      (∀ i, ((b i).val,(mu i)⁻¹ • (b i).val) ∈ boundaryOperator.graph) ∧
+      (∀ i, Sigma (k i).val = mu i • (k i).val) ∧
+      (∀ i, C (k i).val = Real.sqrt (mu i) • (b i).val) ∧
+      (∀ a : ℝ, 0 < a → FiniteDimensional ℝ (boundaryEigenspace a⁻¹)) ∧
+      (∀ a : ℝ, 0 < a → Module.finrank ℝ (boundaryEigenspace a⁻¹) =
+        Nat.card {i // mu i = a}) ∧
+      (∀ eps : ℝ, 0 < eps → {i | eps ≤ mu i}.Finite) := by
+  obtain ⟨b,mu,hp,hm,ht,he⟩ := ordered_boundary_basis
+  obtain ⟨k,hk,hC⟩ := paired_edge_basis b mu hp he
+  refine ⟨b,k,mu,hp,hm,ht,?_,?_,?_,?_,hk,hC,?_,spectral_multiplicity b mu he,?_⟩
+  · intro i j hij
+    exact inv_anti₀ (hp j) (hm hij)
+  · exact tendsto_inv_nhdsGT_zero.comp
+      (tendsto_nhdsWithin_iff.mpr ⟨ht,Eventually.of_forall hp⟩)
+  · intro i
+    exact congrArg Subtype.val (he i)
+  · intro i
+    apply (inverse_eigenvalue (mu i)⁻¹ (inv_pos.mpr (hp i)) (b i).val).mpr
+    exact ⟨(b i).property,by simpa only [inv_inv,covariance0,ContinuousLinearMap.codRestrict_apply,
+      ContinuousLinearMap.comp_apply,Submodule.subtypeL_apply,Submodule.coe_smul] using
+        congrArg Subtype.val (he i)⟩
+  · intro a ha
+    exact (actual_covariance_eigenspaces a ha).2.2.2.1
+  · exact covariance_basis_finite_above b mu he
+
 #print axioms actual_self_adjoint_realization
 #print axioms actual_compact_resolvent
 #print axioms actual_covariance_eigenspaces
+#print axioms actual_positive_spectral_exhaustion
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryOperator

@@ -16,7 +16,7 @@ open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryOperator
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace (G J)
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryStopping (G0)
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryPathSplit (constG)
-open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryFreeRootForm (D weakGraph)
+open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryFreeRootForm (D weakGraph Sigma K)
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryCentering
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open scoped Topology
@@ -282,6 +282,87 @@ def registration :
       booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
 end Eigenspaces
+
+namespace Exhaustion
+abbrev signature : Signature where
+  Params := Unit
+  State _ := G × G
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => decide (x ∈ boundaryOperator.graph)) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∃ (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K) (mu : ℕ → ℝ),
+    (∀ i, 0 < mu i) ∧ Antitone mu ∧ Filter.Tendsto mu Filter.atTop (nhds 0) ∧
+    Monotone (fun i => (mu i)⁻¹) ∧
+    Filter.Tendsto (fun i => (mu i)⁻¹) Filter.atTop Filter.atTop ∧
+    (∀ i, boundaryCovariance (b i).val = mu i • (b i).val) ∧
+    (∀ i, R.readout () () ((b i).val,(mu i)⁻¹ • (b i).val) = true) ∧
+    (∀ i, Sigma (k i).val = mu i • (k i).val) ∧
+    (∀ i, C (k i).val = Real.sqrt (mu i) • (b i).val) ∧
+    (∀ a : ℝ, 0 < a → FiniteDimensional ℝ (boundaryEigenspace a⁻¹)) ∧
+    (∀ a : ℝ, 0 < a → Module.finrank ℝ (boundaryEigenspace a⁻¹) =
+      Nat.card {i // mu i = a}) ∧
+    (∀ eps : ℝ, 0 < eps → {i | eps ≤ mu i}.Finite)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  rintro ⟨b,k,mu,hp,hm,ht,hi,hti,hcov,hgraph,hrest⟩
+  exact Bool.false_ne_true (hgraph 0)
+
+def familyRegistration : Registration arena (type_of% actual_positive_spectral_exhaustion) where
+  actual := actual
+  bridge := by simp only [arena,actual,realize,decide_eq_true_eq]
+  variation := ⟨by simpa only [arena,actual,realize,decide_eq_true_eq] using
+    actual_positive_spectral_exhaustion,rejected,rejected_law⟩
+  sensitivity := ⟨by
+    intro i
+    refine ⟨rejected,?_,rfl,rejected_law⟩
+    intro j hji
+    exact (hji (Subsingleton.elim j i)).elim,
+    fun e => nomatch e⟩
+  dependence := by
+    intro i
+    refine ⟨(),(0,0),(0,constG 1),?_⟩
+    change decide (((0 : G),0) ∈ boundaryOperator.graph) ≠
+      decide (((0 : G),constG 1) ∈ boundaryOperator.graph)
+    simp only [decide_eq_true graph_zero,decide_eq_false graph_bad]
+    decide
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@actual_positive_spectral_exhaustion)
+    (type_of% (realize signature (fun _ _ x => decide (x ∈ boundaryOperator.graph))
+      (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryOperator.actual_positive_spectral_exhaustion.information_unit,
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryOperator.Exhaustion.familyRegistration,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨familyRegistration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ _ x => decide (x ∈ boundaryOperator.graph))
+    (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryOperator,
+    definition := none, coordinates := #[],
+    readouts := #[{
+      path := #["body","body","body","arg","arg","arg","arg","arg","arg","arg","fn"],
+      stateBinder := 0, functionOperand := false, stateOperand := none,
+      booleanPredicate := true }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+end Exhaustion
 
 #print axioms Resolvent.familyRegistration
 #print axioms Eigenspaces.familyRegistration

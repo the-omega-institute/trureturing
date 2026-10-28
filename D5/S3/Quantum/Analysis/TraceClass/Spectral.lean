@@ -31,46 +31,47 @@ universe u
 variable {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
 
 /-- Assemble a complete real eigenbasis of the actual compact symmetric operator.
-Every complex eigenspace is a fiber, including eigenvalue zero. The resulting carrier
-is a Set H, so adopted trace-class interfaces can consume it directly. -/
-private theorem exists_setIndex_real_eigenbasis_of_compact_isSymmetric
-    {T : H →L[ℂ] H} (hTc : IsCompactOperator T) (hTs : T.IsSymmetric) :
-    ∃ (w : Set H) (b : HilbertBasis w ℂ H) (s : w → ℝ),
-      ∀ i, T (b i) = (s i : ℂ) • b i := by
+Every eigenspace is a fiber, including eigenvalue zero, over either real or complex
+scalars. The resulting carrier is a subset of the original Hilbert space. -/
+theorem exists_setIndex_real_eigenbasis_of_compact_isSymmetric
+    {𝕜 : Type} [RCLike 𝕜] {E : Type u} [NormedAddCommGroup E]
+    [InnerProductSpace 𝕜 E] [CompleteSpace E] {T : E →L[𝕜] E} (hTc : IsCompactOperator T) (hTs : T.IsSymmetric) :
+    ∃ (w : Set E) (b : HilbertBasis w 𝕜 E) (s : w → ℝ),
+      ∀ i, T (b i) = (s i : 𝕜) • b i := by
   classical
-  let K : ℂ → Submodule ℂ H := fun μ => Module.End.eigenspace T.toLinearMap μ
-  letI (μ : ℂ) : IsClosed (K μ : Set H) := by
+  let K : 𝕜 → Submodule 𝕜 E := fun μ => Module.End.eigenspace T.toLinearMap μ
+  letI (μ : 𝕜) : IsClosed (K μ : Set E) := by
     dsimp only [K]
     exact ContinuousLinearMap.isClosed_eigenspace T μ
-  letI (μ : ℂ) : CompleteSpace (K μ) := inferInstance
-  have hfiber (μ : ℂ) :
-      ∃ (w : Set (K μ)) (b : HilbertBasis w ℂ (K μ)), ⇑b = ((↑) : w → K μ) :=
-    exists_hilbertBasis ℂ (K μ)
+  letI (μ : 𝕜) : CompleteSpace (K μ) := inferInstance
+  have hfiber (μ : 𝕜) :
+      ∃ (w : Set (K μ)) (b : HilbertBasis w 𝕜 (K μ)), ⇑b = ((↑) : w → K μ) :=
+    exists_hilbertBasis 𝕜 (K μ)
   choose w b hb using hfiber
-  let I : Type u := Σ μ : ℂ, w μ
-  let v : I → H := fun i => (b i.1 i.2 : H)
-  have hfamily : OrthogonalFamily ℂ (fun μ => K μ) (fun μ => (K μ).subtypeₗᵢ) := by
+  let I : Type u := Σ μ : 𝕜, w μ
+  let v : I → E := fun i => (b i.1 i.2 : E)
+  have hfamily : OrthogonalFamily 𝕜 (fun μ => K μ) (fun μ => (K μ).subtypeₗᵢ) := by
     simpa only [K] using hTs.orthogonalFamily_eigenspaces
-  have hv : Orthonormal ℂ v :=
+  have hv : Orthonormal 𝕜 v :=
     hfamily.orthonormal_sigma_orthonormal (fun μ => (b μ).orthonormal)
 
   -- Full Hilbert-space completeness, not algebraic internality of a direct sum.
-  have horth : (Submodule.span ℂ (Set.range v))ᗮ = ⊥ := by
+  have horth : (Submodule.span 𝕜 (Set.range v))ᗮ = ⊥ := by
     apply le_antisymm ?_ bot_le
     intro x hx
-    have hfiberOrth (μ : ℂ) : x ∈ (K μ)ᗮ := by
-      let f : K μ →L[ℂ] ℂ := (innerSL ℂ x).comp (K μ).subtypeL
-      have hdense : Dense (Submodule.span ℂ (Set.range (b μ)) : Set (K μ)) :=
+    have hfiberOrth (μ : 𝕜) : x ∈ (K μ)ᗮ := by
+      let f : K μ →L[𝕜] 𝕜 := (innerSL 𝕜 x).comp (K μ).subtypeL
+      have hdense : Dense (Submodule.span 𝕜 (Set.range (b μ)) : Set (K μ)) :=
         Submodule.dense_iff_topologicalClosure_eq_top.mpr (b μ).dense_span
       have hfzero : f = 0 := ContinuousLinearMap.ext_on hdense (by
         rintro _ ⟨i, rfl⟩
-        change ⟪x, (b μ i : H)⟫_ℂ = 0
-        exact (Submodule.mem_orthogonal' (Submodule.span ℂ (Set.range v)) x).mp hx
-          (b μ i : H) (Submodule.subset_span ⟨⟨μ, i⟩, rfl⟩))
+        change ⟪x, (b μ i : E)⟫_𝕜 = 0
+        exact (Submodule.mem_orthogonal' (Submodule.span 𝕜 (Set.range v)) x).mp hx
+          (b μ i : E) (Submodule.subset_span ⟨⟨μ, i⟩, rfl⟩))
       apply (Submodule.mem_orthogonal' (K μ) x).mpr
       intro y hy
-      have hfy := congrArg (fun g : K μ →L[ℂ] ℂ => g ⟨y, hy⟩) hfzero
-      change ⟪x, y⟫_ℂ = 0 at hfy
+      have hfy := congrArg (fun g : K μ →L[𝕜] 𝕜 => g ⟨y, hy⟩) hfzero
+      change ⟪x, y⟫_𝕜 = 0 at hfy
       exact hfy
     have hxall : x ∈ (⨆ μ, K μ)ᗮ := by
       rw [← Submodule.iInf_orthogonal]
@@ -81,42 +82,42 @@ private theorem exists_setIndex_real_eigenbasis_of_compact_isSymmetric
     rw [hspec] at hxall
     exact hxall
 
-  let B : HilbertBasis I ℂ H := HilbertBasis.mkOfOrthogonalEqBot hv horth
+  let B : HilbertBasis I 𝕜 E := HilbertBasis.mkOfOrthogonalEqBot hv horth
   have hB (i : I) : B i = v i :=
     congrFun (HilbertBasis.coe_mkOfOrthogonalEqBot hv horth) i
   have heigen (i : I) : T (B i) = i.1 • B i := by
     rw [hB]
     exact Module.End.mem_eigenspace_iff.mp (b i.1 i.2).property
-  have hreal (i : I) : (i.1.re : ℂ) = i.1 := by
+  have hreal (i : I) : (RCLike.re i.1 : 𝕜) = i.1 := by
     apply RCLike.conj_eq_iff_re.mp
     apply hTs.conj_eigenvalue_eq_self
     exact Module.End.hasEigenvalue_of_hasEigenvector
       ⟨Module.End.mem_eigenspace_iff.mpr (heigen i), B.orthonormal.ne_zero i⟩
-  let sI : I → ℝ := fun i => i.1.re
-  have heigenReal (i : I) : T (B i) = (sI i : ℂ) • B i := by
-    change T (B i) = (i.1.re : ℂ) • B i
+  let sI : I → ℝ := fun i => RCLike.re i.1
+  have heigenReal (i : I) : T (B i) = (sI i : 𝕜) • B i := by
+    change T (B i) = (RCLike.re i.1 : 𝕜) • B i
     rw [hreal i]
     exact heigen i
 
   -- Actual range carrier bridge: no invented HilbertBasis.reindex interface.
-  let W : Set H := Set.range B
+  let W : Set E := Set.range B
   have hBinj : Function.Injective B := B.orthonormal.linearIndependent.injective
   let e : I ≃ W := Equiv.ofInjective B hBinj
-  have hWortho : Orthonormal ℂ ((↑) : W → H) := B.orthonormal.toSubtypeRange
-  have hWrange : Set.range ((↑) : W → H) = Set.range B := by
+  have hWortho : Orthonormal 𝕜 ((↑) : W → E) := B.orthonormal.toSubtypeRange
+  have hWrange : Set.range ((↑) : W → E) = Set.range B := by
     ext x
     constructor
     · rintro ⟨i, rfl⟩
       exact i.property
     · intro hx
       exact ⟨⟨x, hx⟩, rfl⟩
-  have hWspan : ⊤ ≤ (Submodule.span ℂ (Set.range ((↑) : W → H))).topologicalClosure := by
+  have hWspan : ⊤ ≤ (Submodule.span 𝕜 (Set.range ((↑) : W → E))).topologicalClosure := by
     rw [hWrange]
     exact B.dense_span.ge
-  let C : HilbertBasis W ℂ H := HilbertBasis.mk hWortho hWspan
-  have hC (i : W) : C i = (i : H) :=
+  let C : HilbertBasis W 𝕜 E := HilbertBasis.mk hWortho hWspan
+  have hC (i : W) : C i = (i : E) :=
     congrFun (HilbertBasis.coe_mk hWortho hWspan) i
-  have heback (i : W) : B (e.symm i) = (i : H) :=
+  have heback (i : W) : B (e.symm i) = (i : E) :=
     Equiv.apply_ofInjective_symm hBinj i
   let sW : W → ℝ := fun i => sI (e.symm i)
   refine ⟨W, C, sW, ?_⟩
