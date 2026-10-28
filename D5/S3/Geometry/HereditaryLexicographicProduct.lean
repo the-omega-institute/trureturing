@@ -8,6 +8,7 @@
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Geometry.CompactSphereNormalForm
 import D5.S3.Geometry.OccupiedFiberSubstitution
+import D5.S3.Geometry.FiniteGraphVertexSubstitution.Hereditary
 
 /-!
 Carnero Bravo, arXiv:2505.06457v2, Question 22. SP means contractible
@@ -32,9 +33,11 @@ open EuclideanSphereJoin (StdSphere coordinatePoint)
 
 -- Coordinate-gluing transport uses the original native carrier map.
 open private FiniteGraphVertexSubstitution.substitution_same
-  FiniteGraphVertexSubstitution.substitution_ne
-  FiniteGraphVertexSubstitution.hereditarySubstitutionCore from
+  FiniteGraphVertexSubstitution.substitution_ne from
   D5.S3.Geometry.FiniteGraphVertexSubstitution
+
+open private FiniteGraphVertexSubstitution.hereditarySubstitutionCore from
+  D5.S3.Geometry.FiniteGraphVertexSubstitution.Hereditary
 
 open private FiniteComponentClosure.vertexGluingHomeomorph from
   D5.S3.Geometry.FiniteComponentClosure.Models
