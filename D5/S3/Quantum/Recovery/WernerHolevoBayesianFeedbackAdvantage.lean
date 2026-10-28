@@ -682,6 +682,24 @@ private theorem rotation_is_kraus : IsKrausDecomposition rotationKraus := by
       Matrix.trace, Fin.sum_univ_succ, Complex.conj_ofReal, h2, h3] <;>
     simp only [← mul_assoc, ← pow_two, hs] <;> ring
 
+private theorem abs_canonical (i : Fin 3) :
+    absMat (canonicalKraus i) = ((Real.sqrt 2)⁻¹ : ℂ) •
+      ((1 : Matrix (Fin 3) (Fin 3) ℂ) - Matrix.single i i 1) := by
+  have hb : basisVector i ≠ 0 := by
+    intro h
+    have hi := congrFun h i
+    simp [basisVector] at hi
+  have hn : euclideanNorm (basisVector i) = 1 := by
+    fin_cases i <;> norm_num [euclideanNorm, q, basisVector, Fin.sum_univ_succ]
+  have hv : Matrix.vecMulVec (basisVector i) (star (basisVector i)) =
+      Matrix.single i i 1 := by
+    ext a b
+    fin_cases i <;> fin_cases a <;> fin_cases b <;>
+      norm_num [basisVector, Matrix.vecMulVec_apply, Matrix.single_apply]
+  unfold canonicalKraus
+  rw [abs_crossProduct]
+  simp only [if_neg hb, hn, Complex.ofReal_one, inv_one, one_smul, hv]
+
 private theorem bayesian_witness : 1 / 2 < bayesFidelity canonicalKraus rotationKraus := by
   sorry
 
