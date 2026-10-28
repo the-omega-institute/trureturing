@@ -34,32 +34,7 @@ omit [Fintype Node] [DecidableEq Node] [DecidableRel T.Adj] in
 private theorem child_component_lt [Finite Node] (hT : T.IsTree) (e : T.Dart)
     (w : Node) (hw : T.Adj w e.fst) (hwp : w ≠ e.snd) :
     (edgeLeft T ⟨(w, e.fst), hw⟩).ncard < (edgeLeft T e).ncard := by
-  classical
-  let c : T.Dart := ⟨(w, e.fst), hw⟩
-  have hc := edge_cut_components T hT c
-  have he := edge_cut_components T hT e
-  have hwE : w ∈ edgeLeft T e := by
-    have hedge : s(e.fst, w) ≠ e.edge := by
-      intro h
-      rcases Sym2.eq_iff.mp h with h | h
-      · exact hwp h.2
-      · exact e.fst_ne_snd h.1
-    exact (show (T.deleteEdges {e.edge}).Adj e.fst w by
-      simpa using And.intro hw.symm hedge).reachable
-  have sub : edgeLeft T c ⊆ edgeLeft T e := by
-    intro n hn
-    obtain ⟨p⟩ := hn
-    let q := p.map (Hom.ofLE (T.deleteEdges_le {c.edge}))
-    have hv : e.fst ∉ p.support := by
-      intro hv
-      exact hc.2.1 (p.takeUntil e.fst hv).reachable
-    have hedge : e.edge ∉ q.edges := by
-      intro h
-      have hs := q.fst_mem_support_of_mem_edges h
-      apply hv
-      simpa only [q, Walk.support_map, Hom.coe_ofLE, List.map_id_fun, id_eq] using hs
-    exact hwE.trans (reachable_deleteEdges_iff_exists_walk.mpr ⟨q, hedge⟩)
-  exact Set.ncard_lt_ncard ⟨sub, fun back => hc.2.1 (back he.1)⟩ (Set.toFinite _)
+  exact separatorMessages._proof_2 T hT e w hw hwp
 
 /-- Compute an inward table by testing every nonparent neighbor and projecting
 the surviving input rows. Only finite equality, adjacency and membership are tested. -/

@@ -45,7 +45,10 @@ internal sealed class ExecutableCapacityJoinDocument : IScribeDocumentDefinition
                         + "product. Thus it counts precisely active capacity, rather than the "
                         + "capacity of all possible prefixes. The first equality identifies this "
                         + "finite table with CapacitySensitiveSupport.sourceCost on every original "
-                        + "node and every illegal-cell assignment.")),
+                        + "node and every illegal-cell assignment. This equality transports "
+                        + "cardinality between the finite image of response functions and the "
+                        + "subtype of the same reached responses; it preserves the original "
+                        + "response count.")),
                     Paragraph(Text(
                         "Finite pairs of assignments decide sensitive coordinates. localTable "
                         + "then enumerates local rows and checks the original universal-extension "
@@ -89,7 +92,8 @@ internal sealed class ExecutableCapacityJoinDocument : IScribeDocumentDefinition
                     + "tree. answer is the executable sourceSolve success flag for these exact "
                     + "inputs. Kernel evaluation gives false at zero and true at one; the general "
                     + "source_solver_spec then identifies the original counted-root minimum "
-                    + "peak as one. The computation includes no illegal cells or separators."))),
+                    + "peak as one, as already given by the original constant-task model. "
+                    + "The computation includes no illegal cells or separators."))),
                 DescribeRole.Theorem))));
 
     private static Formula SourceStatement()

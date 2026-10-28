@@ -33,7 +33,8 @@ internal sealed class FiniteRunningIntersectionDocument : IScribeDocumentDefinit
                     + "is separatorMessages for the set underlying each input table. messageTable "
                     + "filters each local row against every adjacent nonparent message and then "
                     + "projects surviving rows to the separator. The genuine deleted-edge child "
-                    + "component strictly decreases, proving termination for every finite degree. "
+                    + "component strictly decreases by the termination argument of "
+                    + "separatorMessages, also giving termination for every finite degree. "
                     + "The actual output table is a subset of the original assignment carrier, "
                     + "including the single empty assignment when the separator is empty."))),
                 DescribeRole.Theorem),
@@ -51,8 +52,11 @@ internal sealed class FiniteRunningIntersectionDocument : IScribeDocumentDefinit
                     + "every complete edge separator. The selected family, rather than the original "
                     + "relations, is consistent. decode scans the supplied finite node list for "
                     + "an occurrence of each coordinate in the union and reads the corresponding "
-                    + "certificate value. Existing logical tree gluing proves that all such reads "
-                    + "reproduce every selected local row. The certificate consists of a root row "
+                    + "certificate value. Applying local_row_extends_raw_join to the singleton "
+                    + "relation containing each selected row gives one common assignment. Its "
+                    + "restriction equalities and function extensionality identify every finite "
+                    + "occurrence read with that assignment, reproducing each selected local row. "
+                    + "The certificate consists of a root row "
                     + "and one local separator witness for each other node."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("finite-join-solver"),
