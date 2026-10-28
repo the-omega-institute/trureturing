@@ -29,25 +29,25 @@ open D5.S3.Observer.CubicGain.SourceFixedMinor
 polynomial variable is `r` and every coefficient is an actual polynomial in
 the source parameter `b`. -/
 
-def sourceE0Coeff : Polynomial (Polynomial ℤ) :=
+private def sourceE0Coeff : Polynomial (Polynomial ℤ) :=
   sourceE0 (R := Polynomial ℤ) (Polynomial.X : Polynomial ℤ)
 
-def sourceE1Coeff : Polynomial (Polynomial ℤ) :=
+private def sourceE1Coeff : Polynomial (Polynomial ℤ) :=
   sourceE1 (R := Polynomial ℤ) (Polynomial.X : Polynomial ℤ)
 
-def literalRowCoeff (i : Fin 28) : Polynomial (Polynomial ℤ) :=
+private def literalRowCoeff (i : Fin 28) : Polynomial (Polynomial ℤ) :=
   if i.val < 14 then Polynomial.X ^ (13 - i.val) * sourceE0Coeff
   else Polynomial.X ^ (27 - i.val) * sourceE1Coeff
 
-def literalMatrixCoeff : Matrix (Fin 28) (Fin 29) (Polynomial ℤ) :=
+private def literalMatrixCoeff : Matrix (Fin 28) (Fin 29) (Polynomial ℤ) :=
   fun i j => (literalRowCoeff i).coeff (28 - j.val)
 
-def fixedMinorRCoeff : Matrix (Fin 28) (Fin 28) (Polynomial ℤ) :=
+private def fixedMinorRCoeff : Matrix (Fin 28) (Fin 28) (Polynomial ℤ) :=
   fun i j =>
     if h : j.val < 27 then literalMatrixCoeff i ⟨j.val, by omega⟩
     else literalMatrixCoeff i ⟨27, by omega⟩
 
-def fixedMinorCCoeff : Matrix (Fin 28) (Fin 28) (Polynomial ℤ) :=
+private def fixedMinorCCoeff : Matrix (Fin 28) (Fin 28) (Polynomial ℤ) :=
   fun i j =>
     if h : j.val < 27 then literalMatrixCoeff i ⟨j.val, by omega⟩
     else literalMatrixCoeff i ⟨28, by omega⟩
@@ -81,44 +81,38 @@ private theorem literalMatrixCoeff_eval (b : ℝ) :
 private theorem fixedMinorRCoeff_eval (b : ℝ) :
     fixedMinorRCoeff.map (evalB b) = fixedMinorR (literalMatrix b) := by
   ext i j
-  change evalB b (fixedMinorRCoeff i j) = _
+  change evalB b (fixedMinorRCoeff i j) = fixedMinorR (literalMatrix b) i j
   by_cases hj : j.val < 27
-  · simp only [fixedMinorRCoeff, hj, dif_pos]
-    have h := congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i ⟨j.val, by omega⟩)
+  · simp only [fixedMinorRCoeff, fixedMinorR, hj]
+    exact congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i ⟨j.val, by omega⟩)
       (literalMatrixCoeff_eval b)
-    simpa only [fixedMinorR, hj, dif_pos] using h
-  · have hj' : j.val = 27 := by omega
-    simp only [fixedMinorRCoeff, hj, dif_neg]
-    have h := congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i 27)
+  · simp only [fixedMinorRCoeff, fixedMinorR, hj]
+    exact congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i 27)
       (literalMatrixCoeff_eval b)
-    simpa only [fixedMinorR, hj', show ¬ (27 : ℕ) < 27 by omega, dif_neg] using h
 
 private theorem fixedMinorCCoeff_eval (b : ℝ) :
     fixedMinorCCoeff.map (evalB b) = fixedMinorC (literalMatrix b) := by
   ext i j
-  change evalB b (fixedMinorCCoeff i j) = _
+  change evalB b (fixedMinorCCoeff i j) = fixedMinorC (literalMatrix b) i j
   by_cases hj : j.val < 27
-  · simp only [fixedMinorCCoeff, hj, dif_pos]
-    have h := congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i ⟨j.val, by omega⟩)
+  · simp only [fixedMinorCCoeff, fixedMinorC, hj]
+    exact congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i ⟨j.val, by omega⟩)
       (literalMatrixCoeff_eval b)
-    simpa only [fixedMinorC, hj, dif_pos] using h
-  · have hj' : j.val = 27 := by omega
-    simp only [fixedMinorCCoeff, hj, dif_neg]
-    have h := congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i 28)
+  · simp only [fixedMinorCCoeff, fixedMinorC, hj]
+    exact congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i 28)
       (literalMatrixCoeff_eval b)
-    simpa only [fixedMinorC, hj', show ¬ (27 : ℕ) < 27 by omega, dif_neg] using h
 
 private theorem actualMinorA0_eval (b : ℝ) :
     (actualMinorA0.map (Int.castRingHom ℝ)).eval b =
       Matrix.det (fixedMinorR (literalMatrix b)) := by
-  simpa only [actualMinorA0, evalB, Polynomial.eval₂_eq_eval_map] using
+  simpa only [actualMinorA0, evalB, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_eq_eval_map] using
     (RingHom.map_det (evalB b) fixedMinorRCoeff).trans
       (congrArg Matrix.det (fixedMinorRCoeff_eval b))
 
 private theorem actualMinorC0_eval (b : ℝ) :
     (actualMinorC0.map (Int.castRingHom ℝ)).eval b =
       Matrix.det (fixedMinorC (literalMatrix b)) := by
-  simpa only [actualMinorC0, evalB, Polynomial.eval₂_eq_eval_map] using
+  simpa only [actualMinorC0, evalB, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_eq_eval_map] using
     (RingHom.map_det (evalB b) fixedMinorCCoeff).trans
       (congrArg Matrix.det (fixedMinorCCoeff_eval b))
 
@@ -201,7 +195,7 @@ private theorem eval_cast_tower (p : ℤ[X]) (b : ℝ) :
   have hc : (Rat.castHom ℝ).comp (Int.castRingHom ℚ) = Int.castRingHom ℝ :=
     Subsingleton.elim _ _
   rw [Polynomial.map_map, hc]
-  exact (Polynomial.eval₂_eq_eval_map).symm
+  exact (Polynomial.eval₂_eq_eval_map (Int.castRingHom ℝ)).symm
 
 private theorem factor_ratio {p q h A C : ℤ[X]} (hp : p = h * A) (hq : q = h * C)
     (b r : ℝ) (hn : evalB b p ≠ 0) (hr : r * evalB b p + evalB b q = 0) :
@@ -249,7 +243,7 @@ theorem selected_source_normalized_lift :
       liftedR criticalRoot = -((actualReducedC.map (Rat.castHom ℝ)).eval criticalRoot) /
         ((actualReducedA.map (Rat.castHom ℝ)).eval criticalRoot) := by
   have hp_eval : evalB criticalRoot actualMinorA0 ≠ 0 := by
-    rw [evalB, Polynomial.eval₂_eq_eval_map, actualMinorA0_eval]
+    rw [evalB, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_eq_eval_map, actualMinorA0_eval]
     exact SelectedMinorNonzero.selected_minor_nonzero
   have hp : actualMinorA0 ≠ 0 := by
     intro hz
@@ -274,7 +268,7 @@ theorem selected_source_normalized_lift :
   rw [hnorm] at hA hC
   have hrel : liftedR criticalRoot * evalB criticalRoot actualMinorA0 +
       evalB criticalRoot actualMinorC0 = 0 := by
-    simpa only [evalB, Polynomial.eval₂_eq_eval_map, actualMinorA0_eval, actualMinorC0_eval]
+    simpa only [evalB, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_eq_eval_map, actualMinorA0_eval, actualMinorC0_eval]
       using SelectedRootCommonZero.selected_root_common_zero.2.2.2.2.2
   obtain ⟨hh_eval, hA_eval, hratio⟩ := factor_ratio hA hC criticalRoot
     (liftedR criticalRoot) hp_eval hrel
