@@ -9,6 +9,7 @@
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorChannelTransport
 import D5.S3.VertexAlgebra.LatticeActualLZeroGrading
 import D5.S3.VertexAlgebra.Sewing.CanonicalOccupation
+import D5.S3.VertexAlgebra.FormalSeries.UngradedLocalWordSeries
 import Mathlib.RingTheory.MvPowerSeries.Trunc
 
 /-!
@@ -97,6 +98,91 @@ theorem actual_product_coefficient_energy_le (D : LatticeData)
   by_contra h
   exact hne (double_coefficient_zero_below_charge D J hJG hGJ α β γ u v w m n T
     (lt_of_not_ge h))
+
+private theorem energy_le_of_mem_stateEnergies (D : LatticeData) (v : Carrier D)
+    (B : ℤ) (hv : ∀ t, carrierCoeffEquiv D v t ≠ 0 → B ≤ energy D t)
+    (m : ℤ) (hm : m ∈ stateEnergies D v) : B ≤ m := by
+  classical
+  obtain ⟨t, ht, rfl⟩ := Finset.mem_image.mp hm
+  exact hv t (Finsupp.mem_support_iff.mp ht)
+
+private theorem inclusion_energy_lower (D : LatticeData) (δ : Charge D)
+    (w : Oscillator D) (t : Label D)
+    (ht : carrierCoeffEquiv D (inclusion D δ w) t ≠ 0) :
+    chargeEnergy D δ ≤ energy D t := by
+  have hδ : δ = t.1 := by
+    by_contra h
+    apply ht
+    change ((inclusion D δ w) t.1).coeff t.2 = 0
+    simp [inclusion, h]
+  simp only [energy, ← hδ]
+  omega
+
+private theorem mode_energy_lower (D : LatticeData)
+    (J : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hJG : J * gramComplex D = 1) (hGJ : gramComplex D * J = 1)
+    (a b : Carrier D) (B C q : ℤ)
+    (ha : ∀ t, carrierCoeffEquiv D a t ≠ 0 → B ≤ energy D t)
+    (hb : ∀ t, carrierCoeffEquiv D b t ≠ 0 → C ≤ energy D t)
+    (t : Label D) (ht : carrierCoeffEquiv D (((LatticeAllStateField.Y D a)[[q]]) b) t ≠ 0) :
+    B + C - q - 1 ≤ energy D t := by
+  classical
+  by_contra low
+  apply ht
+  have vanish (m : ℤ) (hm : m ∈ stateEnergies D a)
+      (n : ℤ) (hn : n ∈ stateEnergies D b) :
+      carrierCoeffEquiv D
+        (((LatticeAllStateField.Y D (gradeProjection D m a))[[q]])
+          (gradeProjection D n b)) t = 0 := by
+    have hB := energy_le_of_mem_stateEnergies D a B ha m hm
+    have hC := energy_le_of_mem_stateEnergies D b C hb n hn
+    have hg := actual_mode_grade D J hJG hGJ m n q _ _
+      (gradeProjection_mem D m a) (gradeProjection_mem D n b)
+    exact (mem_grade_iff D _ _).mp hg t (by omega)
+  have expand := congrArg
+    (fun x => carrierCoeffEquiv D (((LatticeAllStateField.Y D x)[[q]]) b) t)
+    (sum_gradeProjections D a)
+  rw [← expand]
+  simp only [map_sum, VertexOperator.ncoeff_sum, LinearMap.sum_apply,
+    Finsupp.finset_sum_apply]
+  apply Finset.sum_eq_zero
+  intro m hm
+  have expandB := congrArg
+    (fun x => carrierCoeffEquiv D
+      (((LatticeAllStateField.Y D (gradeProjection D m a))[[q]]) x) t)
+    (sum_gradeProjections D b)
+  rw [← expandB]
+  simp only [map_sum, Finsupp.finset_sum_apply]
+  exact Finset.sum_eq_zero (fun n hn => vanish m hm n hn)
+
+/-- Every surviving coefficient of an arbitrary actual lattice word retains
+all signed mode and charge energies of its entire suffix. -/
+theorem actual_word_coefficient_energy_le (D : LatticeData)
+    (J : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hJG : J * gramComplex D = 1) (hGJ : gramComplex D * J = 1)
+    (n : ℕ) (c : Fin n → Charge D) (s : Fin n → Oscillator D)
+    (δ : Charge D) (w : Sector D δ) (l : List (Fin n)) (e : Fin n → ℤ)
+    (ρ : Charge D) (T : Exponent D)
+    (hne : carrierCoeffEquiv D
+      (UniformGradedLocalCorrelator.word
+        (fun i => LatticeAllStateField.Y D (inclusion D (c i) (s i))) l e
+        (inclusion D δ w)) (ρ, T) ≠ 0) :
+    chargeEnergy D δ + (l.map (fun i => chargeEnergy D (c i) + e i)).sum ≤
+      chargeEnergy D ρ + oscillatorEnergy T := by
+  induction l with
+  | nil => exact inclusion_energy_lower D δ w (ρ, T) hne
+  | cons i l ih =>
+    have bound := mode_energy_lower D J hJG hGJ
+      (inclusion D (c i) (s i))
+      (UniformGradedLocalCorrelator.word
+        (fun j => LatticeAllStateField.Y D (inclusion D (c j) (s j))) l e
+        (inclusion D δ w))
+      (chargeEnergy D (c i))
+      (chargeEnergy D δ + (l.map (fun j => chargeEnergy D (c j) + e j)).sum)
+      (-e i - 1) (inclusion_energy_lower D (c i) (s i))
+      (fun t ht => ih t.1 t.2 ht) (ρ, T) hne
+    simp only [List.map_cons, List.sum_cons, energy] at bound ⊢
+    omega
 
 /-- The actual factorial test functional, complex-linear in the tested state. -/
 def readout (D : LatticeData) (p : Oscillator D) : Oscillator D →ₗ[ℂ] ℂ :=
