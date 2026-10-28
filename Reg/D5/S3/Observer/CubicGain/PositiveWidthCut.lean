@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.CubicGain.PositiveWidthCut
 import Reg.Support.SingleDependentReadout
 
-/-! The strict comparison varies over the entire native and original parent families. -/
+/-! The native width comparison varies while the complete source proposition is retained. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -26,7 +26,7 @@ abbrev arena : Arena where
     (0 < β ∧ β^3-8*β-4=0 ∧
       ∀ x : ℝ, 0 < x → x^3-8*x-4=0 → x=β) ∧
     (∀ C : Coordinates, StrictParent C → 0 < fifthResponse C → R.readout () () C.2.1 β) ∧
-    (∀ W : OriginalWorld, OriginalParent W → 0 < originalRead W 5 → R.readout () () W.2.1 β)
+    (∀ W : OriginalWorld, OriginalParent W → 0 < originalRead W 5 → W.2.1 < β)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   rintro ⟨β,hβ,hnative,_⟩
@@ -73,11 +73,6 @@ def registration :
     coordinates := #[]
     readouts := #[{
       path := #["arg","body","arg","fn","arg","body","body","body","fn","fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["arg","body","arg","arg","body","body","body","fn","fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
