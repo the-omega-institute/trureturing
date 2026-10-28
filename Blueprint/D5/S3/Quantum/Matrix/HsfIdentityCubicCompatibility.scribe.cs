@@ -5,6 +5,7 @@ internal sealed class HsfIdentityCubicCompatibilityDocument : IScribeDocumentDef
     private const string Module = "D5/S3/Quantum/Matrix/HsfIdentityCubicCompatibility";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual cubic HSF compatibility at identity in arbitrary finite complex dimension",
+        H("Actual endpoint derivatives"),
         Blocks(
             Entry("positive_direction_bound", "Actual positive-direction inequality",
                 "For arbitrary finite complex U,H,K with H,U-H,K,I-K PSD, the original CFC sandwich curve has actual third derivative at zero at most its actual second derivative. This consumes both the four-Gram polynomial certificate and the dimension-free CFC derivative supplier."),
@@ -17,7 +18,7 @@ internal sealed class HsfIdentityCubicCompatibilityDocument : IScribeDocumentDef
 
             Paragraph(Text("The target is He, Saunderson and Fawzi, arXiv:2502.05627v1 Conjecture 6.2, journal DOI 10.1007/s10107-025-02314-0 Conjecture 1. The formal result has alpha=3 and Y=I; no full-general-Y or literature-priority claim is made.")))));
     private static DocumentBlock Entry(string name, string title, string text) =>
-        Describe.Lean(DescribeId.Create("hsf-identity-compatibility-" + name.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("hsf-identity-compatibility-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Module + "." + name), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
