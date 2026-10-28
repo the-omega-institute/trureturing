@@ -1,0 +1,34 @@
+**Definition 10.1 (kernel coordinates and positive domains).** Use the primitive representative of Theorem 3.2 and put
+$$
+f_K=\binom a{-b},\qquad \ell_K=(c,-d),\qquad N=f_K\ell_K,
+\qquad r_K=\binom d c=r_0,\qquad l_K=(b,a),
+$$
+$$
+a,b,c,d\ge0,\qquad \gcd(a,b)=\gcd(c,d)=1,\qquad
+ t=ac+bd>0,
+$$
+$$
+P=[f_K,r_K]=\begin{pmatrix}a&d\\-b&c\end{pmatrix},\qquad
+P^{-1}=\frac1t\begin{pmatrix}c&-d\\b&a\end{pmatrix}.
+\tag{10.1}
+$$
+Here $\ell_K$ is the signed kernel row and $l_K$ is its nonnegative left-null row; they are different rows. The kernel vectors are auxiliary, whereas the positive factors of Proposition 1.2 realize actual sources. Define
+$$
+\mathcal P=\{X\in\mathbb R^{2\times2}:X_{ij}>0\},\qquad
+\mathcal A=\{S\in\mathcal P:\det S=0\},
+$$
+$$
+h(X)=l_KXr_K=\mathfrak b(X,N).
+\tag{10.2}
+$$
+For $X=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$, the last equality follows from
+$$
+h(X)=bd\,p+bc\,q+ad\,r+ac\,s.
+$$
+Both $r_K$ and $l_K$ are nonzero and nonnegative. Thus $Xr_K$ and $l_KX$ are strictly positive for $X\in\mathcal P$, and $h(X)>0$. Direct multiplication also gives
+$$
+Nr_K=0,\qquad l_KN=0,\qquad
+P^{-1}NP=tE_{11},\qquad l_KP=(0,t).
+\tag{10.3}
+$$
+
