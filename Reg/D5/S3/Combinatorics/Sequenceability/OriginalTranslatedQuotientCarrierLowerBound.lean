@@ -1,3 +1,4 @@
+import D5.S3.Combinatorics.Sequenceability.OriginalSignedCyclicQuotientSharpness
 import Reg.D5.S3.Combinatorics.Sequenceability.OriginalSharpnessCarrierLowerBound
 import D5.S3.Combinatorics.Sequenceability.OriginalTranslatedQuotientCarrierLowerBound
 import Mathlib.Algebra.Group.ULift
@@ -234,3 +235,173 @@ def registration :
 end Odd
 
 end Reg.D5.S3.Combinatorics.Sequenceability.OriginalTranslatedQuotientCarrierLowerBound
+
+namespace Reg.D5.S3.Combinatorics.Sequenceability.OriginalTranslatedQuotientCarrierLowerBound.QuotientData
+
+open LeanInformationAudit
+open _root_.D5.S3.ConceptDynamics.InformationEscape
+open _root_.D5.S3.Combinatorics.Sequenceability.OriginalFiniteOrderSharpness
+  (Index Coordinate q p a triple)
+open _root_.D5.S3.Combinatorics.Sequenceability.OriginalSignedCyclicQuotientSharpness
+  (WitnessGroup label modulus sharpness)
+open _root_.D5.S3.Combinatorics.Sequenceability.OriginalTranslatedQuotientCarrierLowerBound
+  (quotient_data)
+open scoped Classical BigOperators
+
+-- The only intervention is the occurrence of f in the value defining A.
+-- H, the exact-order hypothesis, and the complete support classification retain f.
+abbrev Parameters := Σ G : Type u, Σ m : ℕ, Coordinate m → G
+
+abbrev signature : DependentFamily.Signature where
+  Params := Parameters.{u}
+  State p := Coordinate p.2.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := p.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : DependentFamily.Realization signature.{u} :=
+  DependentFamily.realize signature.{u} (fun _ p => p.2.2) (fun e => nomatch e)
+
+def rejected : DependentFamily.Realization signature.{u} :=
+  DependentFamily.realize signature.{u}
+    (fun _ p _ => p.2.2 (q p.2.1)) (fun e => nomatch e)
+
+abbrev arena : DependentFamily.Arena where
+  signature := signature.{u}
+  Law R := ∀ {G : Type u} [AddCommGroup G] [Finite G]
+    (m : ℕ) (_hm : 4 ≤ m) (f : Coordinate m → G)
+    (_hq : addOrderOf (f (q m)) = m)
+    (_hzero : ∀ C : Finset (Coordinate m),
+      (C.Nonempty ∧ (∑ x ∈ C, f x) = 0) ↔ ∃ i : Index m, C = triple m i),
+    let H := AddSubgroup.zmultiples (f (q m))
+    let A : Index m → G ⧸ H := fun i =>
+      (R.readout () ⟨G, m, f⟩ (a m i) : G ⧸ H)
+    (∀ i, A i ≠ 0) ∧ Function.Injective A ∧
+    (∀ i j, i ≠ j → A i ≠ -A j) ∧
+    (∀ i j k, i ≠ j → i ≠ k → j ≠ k → ∀ s t u : Bool,
+      (if s then -A i else A i) + (if t then -A j else A j) +
+        (if u then -A k else A k) ≠ 0)
+
+abbrev sourceScope := type_of% (@quotient_data.{u})
+
+private theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law actual.{u} := Iff.rfl
+
+private theorem actual_positive : arena.{u}.Law actual.{u} := @quotient_data.{u}
+
+private abbrev Fixture := ULift.{u} (WitnessGroup 3 0)
+
+private def fixtureLabel (x : Coordinate 7) : Fixture.{u} :=
+  (AddEquiv.ulift : Fixture.{u} ≃+ WitnessGroup 3 0).symm (label 3 0 x)
+
+private theorem fixture_properties :
+    addOrderOf (fixtureLabel.{u} (q 7)) = 7 ∧
+    (∀ C : Finset (Coordinate 7),
+      (C.Nonempty ∧ (∑ x ∈ C, fixtureLabel.{u} x) = 0) ↔
+        ∃ j : Index 7, C = triple 7 j) := by
+  have h := sharpness 0 3 (by decide)
+  have horder : addOrderOf (label 3 0 (q 7)) = 7 := h.2.2.1
+  have hclass : ∀ C : Finset (Coordinate 7),
+      (C.Nonempty ∧ (∑ x ∈ C, label 3 0 x) = 0) ↔
+        ∃ j : Index 7, C = triple 7 j := h.2.2.2.2
+  constructor
+  · simpa only [fixtureLabel, AddEquiv.addOrderOf_eq] using horder
+  · intro C
+    let e : Fixture.{u} ≃+ WitnessGroup 3 0 := AddEquiv.ulift
+    have hsum : e (∑ x ∈ C, fixtureLabel.{u} x) = ∑ x ∈ C, label 3 0 x := by
+      simp only [map_sum, fixtureLabel, e, AddEquiv.apply_symm_apply]
+    have htransport :
+        (C.Nonempty ∧ (∑ x ∈ C, fixtureLabel.{u} x) = 0) ↔
+          (C.Nonempty ∧ (∑ x ∈ C, label 3 0 x) = 0) := by
+      constructor
+      · rintro ⟨hn, hz⟩
+        refine ⟨hn, ?_⟩
+        rw [← hsum, hz, map_zero]
+      · rintro ⟨hn, hz⟩
+        refine ⟨hn, e.injective ?_⟩
+        rw [hsum, hz, map_zero]
+    exact htransport.trans (hclass C)
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
+  intro h
+  have hs := sharpness 0 3 (by decide)
+  letI : Finite (WitnessGroup 3 0) := hs.1
+  have hf := fixture_properties.{u}
+  have hb := h (G := Fixture.{u}) 7 (by decide) fixtureLabel.{u} hf.1 hf.2
+  have hn :
+      (fixtureLabel.{u} (q 7) :
+        Fixture.{u} ⧸ AddSubgroup.zmultiples (fixtureLabel.{u} (q 7))) ≠ 0 :=
+    hb.1 (0 : Index 7)
+  apply hn
+  apply QuotientAddGroup.eq_iff_sub_mem.mpr
+  simpa only [sub_zero] using AddSubgroup.mem_zmultiples (fixtureLabel.{u} (q 7))
+
+private theorem actual_dependence :
+    DependentFamily.ObservationalDependence signature.{u} actual.{u} := by
+  intro i
+  let G := ULift.{u} Bool
+  let f : Coordinate 1 → G := fun x =>
+    match x with
+    | Sum.inl _ => ⟨false⟩
+    | Sum.inr _ => ⟨true⟩
+  refine ⟨⟨G, 1, f⟩, q 1, p 1, ?_⟩
+  intro he
+  have hbool : false = true := congrArg ULift.down he
+  cases hbool
+
+def familyRegistration : DependentFamily.Registration arena.{u} sourceScope.{u} where
+  actual := actual.{u}
+  bridge := source_bridge.{u}
+  variation := ⟨actual_positive.{u}, rejected.{u}, rejected_law.{u}⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected.{u}, ?_, rfl, rejected_law.{u}⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence.{u}
+
+-- Source-only draft. The following path comes from the author's accepted
+-- complete-minimum probe, QUOTIENT_A_VALUE_RAW, not a guessed source traversal.
+-- Native binding and all proof terms still require the author's real compile.
+def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@quotient_data.{u}) (DependentFamily.Realization signature.{u}) Unit Unit where
+  unitName := `D5.S3.Combinatorics.Sequenceability.OriginalTranslatedQuotientCarrierLowerBound.quotient_data.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Sequenceability.OriginalTranslatedQuotientCarrierLowerBound.QuotientData.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨familyRegistration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence
+    ⟨(show Nonempty (DependentFamily.Realization signature.{u}) from ⟨actual.{u}⟩)⟩ trivial
+  readout := some (DependentFamily.realize signature.{u}
+    (fun _ p => p.2.2) (fun e => nomatch e))
+  variation := .evidence ⟨(familyRegistration.{u}).variation⟩ trivial
+  sensitivity := .evidence ⟨(familyRegistration.{u}).sensitivity⟩ trivial
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Sequenceability.OriginalTranslatedQuotientCarrierLowerBound
+    definition := none
+    coordinates := #[0, 3, 5]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "value", "body", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Reg.D5.S3.Combinatorics.Sequenceability.OriginalTranslatedQuotientCarrierLowerBound.QuotientData
