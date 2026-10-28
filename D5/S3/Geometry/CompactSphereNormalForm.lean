@@ -5,14 +5,16 @@
    anchors: [mathlib/module/Mathlib.Topology.Homeomorph.Quotient]
    utility: none
    digest: Compact sphere coproduct models transport to finite positive bouquet lists. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Geometry.SphereWedgePositiveNormalization
+import D5.S3.Geometry.FiniteComponentClosure
 import Mathlib.Data.List.OfFn
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Topology.Homotopy.Contractible
 
 /-! Source adapters for the unsuspended hereditary W route of Carnero Bravo
-Question 22. These are actual sphere quotient models, not native finite
-simplicial models or a proof of the graph composition conclusion. -/
+Question 22. Actual source sphere quotient models are identified with native
+finite component carriers for consumption by the graph composition proof. -/
 
 noncomputable section
 open Set Topology
@@ -223,6 +225,84 @@ private def finiteCoproductModel : HomotopyModel (Σ a, FamilyWedge (q a)) where
   equivalence := (finiteCoproductHomeomorph d q).toHomotopyEquiv
 
 end FiniteCoproduct
+
+open private SphereWedgePositiveNormalization.spherePointHomeomorph from
+  D5.S3.Geometry.SphereWedgePositiveNormalization
+
+section NativeCarrier
+
+private theorem basePoints_factor {J : Type*} {Z : J → Type*} (q : ∀ j, Z j)
+    (j : J) (x : Z j) :
+    Sum.inr (Sigma.mk j x) ∈ basePoints q ↔ x = q j := by
+  constructor
+  · rintro (h | ⟨k, h⟩)
+    · cases h
+    · have hk : j = k := congrArg Sigma.fst (Sum.inr.inj h)
+      subst k
+      exact sigma_mk_injective (Sum.inr.inj h)
+  · rintro rfl
+    exact Or.inr ⟨j, rfl⟩
+
+private def nativeSphereRebase (b : List PositiveDimension) (i : Fin b.length) :=
+  SphereWedgePositiveNormalization.spherePointHomeomorph (b.get i).val
+    (FiniteComponentClosure.standardSphereBase (b.get i).val)
+
+private def nativeSphereFamily (b : List PositiveDimension) :
+    (Σ i : Fin b.length, StdSphere (b.get i).val) ≃ₜ
+      (Σ i : Fin b.length, StdSphere (b.get i).val) where
+  toEquiv := Equiv.sigmaCongrRight (fun i => (nativeSphereRebase b i).val.toEquiv)
+  continuous_toFun := continuous_sigma (fun i =>
+    continuous_sigmaMk.comp (nativeSphereRebase b i).val.continuous)
+  continuous_invFun := continuous_sigma (fun i =>
+    continuous_sigmaMk.comp (nativeSphereRebase b i).val.symm.continuous)
+
+private def standardCoordinateBouquetHomeomorph (b : List PositiveDimension) :
+    FiniteComponentClosure.StandardBouquet b ≃ₜ Bouquet b := by
+  let raw := (Homeomorph.refl Unit).sumCongr (nativeSphereFamily b)
+  apply Homeomorph.Quotient.congr raw
+  have hb (z : FiniteComponentClosure.StandardBouquetSource b) :
+      Sum.elim (fun _ => True)
+        (fun x => x.2 = FiniteComponentClosure.standardSphereBase (b.get x.1).val) z ↔
+      raw z ∈ basePoints (fun i : Fin b.length => coordinatePoint (b.get i).val) := by
+    rcases z with z | ⟨i, x⟩
+    · cases z
+      exact ⟨fun _ => Or.inl rfl, fun _ => trivial⟩
+    · change x = FiniteComponentClosure.standardSphereBase (b.get i).val ↔
+        Sum.inr (Sigma.mk i ((nativeSphereRebase b i).val x)) ∈
+          basePoints (fun i : Fin b.length => coordinatePoint (b.get i).val)
+      rw [basePoints_factor]
+      constructor
+      · intro h
+        exact (congrArg (nativeSphereRebase b i).val h).trans (nativeSphereRebase b i).property
+      · intro h
+        exact (nativeSphereRebase b i).val.injective
+          (h.trans (nativeSphereRebase b i).property.symm)
+  intro z w
+  change (z = w ∨ (_ ∧ _)) ↔ (raw z = raw w ∨ (_ ∧ _))
+  rw [raw.injective.eq_iff, ← hb z, ← hb w]
+  rfl
+
+/-- Actual native finite bouquet to coordinate-based sphere quotient transport.
+The native sphere basepoints are moved by the original sphere reflection. -/
+def nativeBouquetHomeomorph (b : List PositiveDimension) :
+    FiniteSimplicialJoin.Space (FiniteComponentClosure.bouquetComplex b) ≃ₜ Bouquet b :=
+  (FiniteComponentClosure.standardBouquetHomeomorph b).trans
+    (standardCoordinateBouquetHomeomorph b)
+
+/-- The finite native component carrier is the actual finite outer sphere model. -/
+def nativeModelHomeomorph (m : ℕ) (b : Fin m → List PositiveDimension) :
+    FiniteSimplicialJoin.Space (FiniteComponentClosure.normalComplex m b) ≃ₜ Model b :=
+  (FiniteComponentClosure.normalHomeomorph m b).trans {
+    toEquiv := Equiv.sigmaCongrRight (fun i => (nativeBouquetHomeomorph (b i)).toEquiv)
+    continuous_toFun := continuous_sigma (fun i =>
+      continuous_sigmaMk.comp (nativeBouquetHomeomorph (b i)).continuous)
+    continuous_invFun := continuous_sigma (fun i =>
+      continuous_sigmaMk.comp (nativeBouquetHomeomorph (b i)).symm.continuous) }
+
+#print axioms nativeBouquetHomeomorph
+#print axioms nativeModelHomeomorph
+
+end NativeCarrier
 
 section CompactSource
 
