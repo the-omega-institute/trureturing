@@ -87,9 +87,9 @@ theorem source_e2_normalization (t b : ℝ) :
     ring
   simp only [partial_Nt1,partial_Nt2,partial_Nb1,partial_Nb2,partial_Dt,partial_Db] at hf
   rw [expanded_D,expanded_N1,expanded_N2,pair20,pair11,pair01] at hf
-  rw [hf]
+  rw [hf,expanded_D]
   calc
-    _ = sourceD t b*(45*(sourceE2 b).eval (t*b)) := by ring
+    _ = vD t b*(45*(sourceE2 b).eval (t*b)) := by ring
     _ = _ := by rw [quotient_e2]; ring
 
 end D5.S3.Observer.CubicGain.LiteralElimination
