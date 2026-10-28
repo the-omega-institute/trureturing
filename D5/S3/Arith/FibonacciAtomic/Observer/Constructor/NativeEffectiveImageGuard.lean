@@ -7,6 +7,7 @@
    digest: Finite Presburger synthesis for simultaneous canonical native image filters. -/
 
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeEffectiveAtomicGuard
+import Mathlib.Data.List.Pi
 
 /-! Finite syntax tests and post-fixed Boolean obligation graphs for original
 affine native systems and their unrestricted completed canonical outputs. -/
@@ -126,29 +127,22 @@ def stateImage {n k m s : Nat} (I : Input n k m) (mode : Mode s m)
     | none => constant true
     | some j => constant (decide (t.val ≤ j.val))
 
-/-- A concrete enumeration of all Boolean labelings of a finite list of keys. -/
-def configurations {K : Type} [DecidableEq K] : List K → List (K → Bool)
-  | [] => [fun _ => false]
-  | i :: is => (configurations is).flatMap fun f =>
-      [Function.update f i false, Function.update f i true]
+/-- The pinned finite Cartesian-product constructor supplies all Boolean labels.
+Outside the finite key list the extension has the fixed false default. -/
+def configurations {K : Type} [DecidableEq K] (l : List K) : List (K → Bool) :=
+  (List.pi l (fun _ => [false,true])).map fun f i =>
+    if h : i ∈ l then f i h else false
 
 private theorem configurations_complete {K : Type} [DecidableEq K] (l : List K)
     (f : K → Bool) : ∃ g ∈ configurations l, ∀ i ∈ l, g i = f i := by
-  induction l with
-  | nil => exact ⟨fun _ => false, by simp [configurations], by simp⟩
-  | cons i is ih =>
-    obtain ⟨g, hg, same⟩ := ih
-    refine ⟨Function.update g i (f i), ?_, ?_⟩
-    · apply List.mem_flatMap.mpr
-      refine ⟨g, hg, ?_⟩
-      cases h : f i <;> simp
-    · intro j hj
-      rcases List.mem_cons.mp hj with eq | hj
-      · subst j; exact Function.update_self _ _ _
-      · by_cases eq : j = i
-        · subst j; exact Function.update_self _ _ _
-        · rw [Function.update_of_ne eq]
-          exact same j hj
+  let g : ∀ i ∈ l, Bool := fun i _ => f i
+  have hg : g ∈ List.pi l (fun _ => [false,true]) := by
+    apply (List.mem_pi _ g).mpr
+    intro i hi
+    cases h : f i <;> simp [g,h]
+  refine ⟨_,List.mem_map.mpr ⟨g,hg,rfl⟩,?_⟩
+  intro i hi
+  exact dite_eq_left hi
 
 def keys (m s : Nat) : List (Fin m × Fin (s + 1)) :=
   (List.finRange m).flatMap fun i => (List.finRange (s + 1)).map fun t => (i, t)
@@ -249,7 +243,10 @@ private theorem expressionImage_exact {n k m s : Nat} (I : Input n k m)
     · rintro (h | h | ⟨U, V, eq, ha, hb⟩)
       · exact Or.inl h
       · exact Or.inr (Or.inl h)
-      · have sides := node_inj eq
+      · have sides :
+            evaluate (ranks I p) (canonical I.equations (ranks I p) guarded mode) A = U ∧
+            evaluate (ranks I p) (canonical I.equations (ranks I p) guarded mode) B = V :=
+          node_inj eq
         exact Or.inr (Or.inr ⟨sides.1.symm ▸ ha, sides.2.symm ▸ hb⟩)
 
 private theorem closedConfiguration_sound {n k m s : Nat} (I : Input n k m)
@@ -523,20 +520,29 @@ def normalizedInput {n k m : Nat} (I : Input n k m) : Input n k m where
   guard := I.guard
 
 abbrev EffectiveMode {n k m : Nat} (I : Input n k m) :=
-  Mode (threshold (normalizedInput I).filters) m
+  {i : Fin m // (normalizedInput I).equations i = none} →
+    Option (Fin (threshold (normalizedInput I).filters + 2))
+
+/-- Extend the mode on the actual free list by inert entries at defined names. -/
+def effectiveTotalMode {n k m : Nat} (I : Input n k m) (mode : EffectiveMode I) :
+    Mode (threshold (normalizedInput I).filters) m := fun i =>
+  match h : (normalizedInput I).equations i with
+  | none => mode ⟨i,h⟩
+  | some _ => none
 
 def originalImageGuard {n k m : Nat} (I : Input n k m) (mode : EffectiveMode I) : Formula :=
-  imageGuard (normalizedInput I) mode
+  imageGuard (normalizedInput I) (effectiveTotalMode I mode)
 
 noncomputable def effectiveCanonical {n k m : Nat} (I : Input n k m)
     (mode : EffectiveMode I) (p : Fin n → Nat) : Fin m → CompletionTree :=
   mapValues (ranks I p) (effectiveNormalForm I.equations).reconstruct
     (canonical (normalizedInput I).equations (ranks I p)
-      (effectiveNormalForm_law I.equations).1 mode)
+      (effectiveNormalForm_law I.equations).1 (effectiveTotalMode I mode))
 
 def EffectiveInMode {n k m : Nat} (I : Input n k m) (mode : EffectiveMode I)
     (p : Fin n → Nat) (v : Fin m → CompletionTree) : Prop :=
-  InMode (normalizedInput I).equations (threshold (normalizedInput I).filters) mode
+  InMode (normalizedInput I).equations (threshold (normalizedInput I).filters)
+    (effectiveTotalMode I mode)
     (mapValues (ranks I p) (effectiveNormalForm I.equations).project v)
 
 /-- Effective acceptance and simultaneous existence in the entire original
@@ -552,9 +558,10 @@ theorem original_effective_image_guard {n k m : Nat} (I : Input n k m)
   let J := normalizedInput I
   have guard : Guarded T.equations := (effectiveNormalForm_law I.equations).1
   have corr := (effectiveNormalForm_law I.equations).2 (ranks I p)
-  let K := canonical T.equations (ranks I p) guard mode
-  have sat := normalized_saturation T.equations (ranks I p) guard J.filters mode
-  have accepted := effective_image_guard J guard mode p
+  let md := effectiveTotalMode I mode
+  let K := canonical T.equations (ranks I p) guard md
+  have sat := normalized_saturation T.equations (ranks I p) guard J.filters md
+  have accepted := effective_image_guard J guard md p
   have filters := filters_correspond T (ranks I p) K I.filters
   have canonicalTest : (originalImageGuard I mode).holds (environment p) ↔
       Legal I p ∧ SourcePasses I p (effectiveCanonical I mode p) := by
@@ -566,7 +573,7 @@ theorem original_effective_image_guard {n k m : Nat} (I : Input n k m)
   · intro passes
     have back := corr.2 K sat.1
     refine ⟨mapValues (ranks I p) T.reconstruct K,back.1,?_,passes⟩
-    change InMode T.equations (threshold J.filters) mode
+    change InMode T.equations (threshold J.filters) md
       (mapValues (ranks I p) T.project (mapValues (ranks I p) T.reconstruct K))
     rw [back.2]
     exact sat.2.1

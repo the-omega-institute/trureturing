@@ -1,6 +1,9 @@
 import Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeEffectiveAtomicGuard
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeEffectiveImageGuard
 
+/-! Observe the computed finite syntax while retaining the complete original
+source theorem and its unrestricted semantic telescope. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -42,7 +45,10 @@ private theorem actual_law : arena.Law actual := @effective_image_guard
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
-  let I : Input 0 0 0 := { equations := Fin.elim0, filters := [], indices := Fin.elim0,
+  let I : Input 0 0 0 := {
+    equations := Fin.elim0
+    filters := []
+    indices := Fin.elim0
     guard := .qf .truth }
   let p : Fin 0 → Nat := Fin.elim0
   have guarded : Guarded I.equations := fun i => Fin.elim0 i
@@ -62,7 +68,7 @@ def evidence : Registration arena (type_of% (@effective_image_guard)) where
   dependence := dependence
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@effective_image_guard) (Realization signature) (Nat → Type) Unit where
+    (@effective_image_guard) (Realization signature) Type Unit where
   unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeEffectiveImageGuard.effective_image_guard.__information_unit
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeEffectiveImageGuard.Normalized.evidence
   realizationSource := none
@@ -100,11 +106,14 @@ private theorem actual_law : arena.Law actual := @original_effective_image_guard
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
-  let I : Input 0 0 0 := { equations := Fin.elim0, filters := [], indices := Fin.elim0,
+  let I : Input 0 0 0 := {
+    equations := Fin.elim0
+    filters := []
+    indices := Fin.elim0
     guard := .qf .truth }
   let p : Fin 0 → Nat := Fin.elim0
   have legal : Legal I p := ⟨rfl,fun i => Fin.elim0 i⟩
-  let mode : EffectiveMode I := Fin.elim0
+  let mode : EffectiveMode I := fun i => Fin.elim0 i.val
   have passes : SourcePasses I p (effectiveCanonical I mode p) :=
     fun E t h => False.elim (List.not_mem_nil h)
   have impossible := (law I mode p).1.mpr ⟨legal,passes⟩
@@ -119,7 +128,7 @@ def evidence : Registration arena (type_of% (@original_effective_image_guard)) w
   dependence := dependence
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@original_effective_image_guard) (Realization signature) (Nat → Type) Unit where
+    (@original_effective_image_guard) (Realization signature) Type Unit where
   unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeEffectiveImageGuard.original_effective_image_guard.__information_unit
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeEffectiveImageGuard.Original.evidence
   realizationSource := none

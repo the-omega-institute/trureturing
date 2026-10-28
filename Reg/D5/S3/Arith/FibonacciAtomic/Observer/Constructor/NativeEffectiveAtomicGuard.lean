@@ -2,6 +2,9 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeEffectiveAtomicGuard
 import Reg.Support.DependentFamily
 
+/-! Observe the computed finite syntax while retaining the complete original
+source theorem and its unrestricted semantic telescope. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -52,7 +55,10 @@ private theorem actual_law : arena.Law actual := by exact @atomic_guard_correct
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
-  let I : Input 0 0 0 := { equations := Fin.elim0, filters := [], indices := Fin.elim0,
+  let I : Input 0 0 0 := {
+    equations := Fin.elim0
+    filters := []
+    indices := Fin.elim0
     guard := .qf .truth }
   let p : Fin 0 → Nat := Fin.elim0
   have guarded : Guarded I.equations := fun i => Fin.elim0 i
@@ -70,7 +76,7 @@ def evidence : Registration arena (type_of% (@atomic_guard_correct)) where
   dependence := dependence
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@atomic_guard_correct) (Realization signature) (Nat → Type) Unit where
+    (@atomic_guard_correct) (Realization signature) Type Unit where
   unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeEffectiveAtomicGuard.atomic_guard_correct.__information_unit
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeEffectiveAtomicGuard.Atomic.evidence
   realizationSource := none
@@ -117,7 +123,7 @@ def evidence : Registration arena (type_of% (constant_holds)) where
   dependence := dependence
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (constant_holds) (Realization signature) (Nat → Type) Unit where
+    (constant_holds) (Realization signature) Type Unit where
   unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeEffectiveAtomicGuard.constant_holds.__information_unit
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeEffectiveAtomicGuard.Constant.evidence
   realizationSource := none
