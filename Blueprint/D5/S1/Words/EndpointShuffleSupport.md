@@ -8,7 +8,7 @@ Represent zero by false and one by true. Ordinary shuffles may take the next sym
 
 **Definition 1.1 (Two endpoint ones).**
 
-$$\forall (m:\mathbb{N}), \operatorname{endpointWord}\left(m\right) = \operatorname{concat}\left(one, \operatorname{zeros}\left(m\right), one\right)$$
+$$\forall (m: \mathbb{N}), \operatorname{endpointWord}\left(m\right) = \operatorname{List.append}\left(\operatorname{List.append}\left(\operatorname{List.singleton}\left(true\right), \operatorname{List.replicate}\left(m, false\right)\right), \operatorname{List.singleton}\left(true\right)\right)$$
 
 *Formalization.* `D5/S1/Words/EndpointShuffleSupport.endpointWord` (`✓ std3`).
 
@@ -20,7 +20,7 @@ The word consists of an initial one, m zeros and a final one. The value m=0 is a
 
 **Definition 1.2 (Words parametrized by their outer gaps).**
 
-$$\forall (m:\mathbb{N}),(a:\mathbb{N}),(c:\mathbb{N}), \operatorname{endpointOutput}\left(m, a, c\right) = \operatorname{gap}\left(zero, \operatorname{list}\left(1, 1, 1, 1\right), \operatorname{list}\left(0, a, (m - a) + (m - c), c, 0\right)\right)$$
+$$\forall (m: \mathbb{N}),(a: \mathbb{N}),(c: \mathbb{N}), \operatorname{endpointOutput}\left(m, a, c\right) = \operatorname{gap}\left(false, \operatorname{list}\left(1, 1, 1, 1\right), \operatorname{list}\left(0, a, (m - a) + (m - c), c, 0\right)\right)$$
 
 *Formalization.* `D5/S1/Words/EndpointShuffleSupport.endpointOutput` (`✓ std3`).
 
@@ -28,11 +28,11 @@ $$\forall (m:\mathbb{N}),(a:\mathbb{N}),(c:\mathbb{N}), \operatorname{endpointOu
 
 *Commentary.*
 
-The five zero gaps around four ones are 0, a, (m-a)+(m-c), c and 0. When a and c are at most m, the total number of zeros is 2m.
+The five zero gaps around four ones are 0, a, (m-a)+(m-c), c and 0. Natural subtraction is truncated: u-v means max(u-v,0), so this total definition is unambiguous for arbitrary natural a and c. When a and c are at most m, the total number of zeros is 2m; for example m=0,a=1,c=0 gives middle gap zero.
 
 **Definition 1.3 (The finite rectangle of output words).**
 
-$$\forall (m:\mathbb{N}), \operatorname{endpointFamily}\left(m\right) = \operatorname{image}\left((a,c) \mapsto \operatorname{endpointOutput}\left(m, a, c\right), \operatorname{square}\left(\operatorname{Fin}\left(m + 1\right)\right)\right)$$
+$$\forall (m: \mathbb{N}), \operatorname{endpointFamily}\left(m\right) = \operatorname{Finset.image}\left((\operatorname{fun} (p: (\operatorname{Fin}\left(m + 1\right) \times \operatorname{Fin}\left(m + 1\right))) \mapsto \operatorname{endpointOutput}\left(m, \operatorname{val}\left(\operatorname{fst}\left(p\right)\right), \operatorname{val}\left(\operatorname{snd}\left(p\right)\right)\right)), (\operatorname{Finset.univ}\left(\right): \operatorname{Finset}\left((\operatorname{Fin}\left(m + 1\right) \times \operatorname{Fin}\left(m + 1\right))\right))\right)$$
 
 *Formalization.* `D5/S1/Words/EndpointShuffleSupport.endpointFamily` (`✓ std3`).
 
@@ -40,7 +40,7 @@ $$\forall (m:\mathbb{N}), \operatorname{endpointFamily}\left(m\right) = \operato
 
 *Commentary.*
 
-Take the image of Fin(m+1) times Fin(m+1) under the output map. Here a and c are the natural values of the two finite coordinates. The image is a finite set of words, rather than a set of schedules.
+Take the image of Fin(m+1) times Fin(m+1) under the output map. The map binds p in the full finite product and casts both projections with val. The universal finite product includes every pair, including when m=0. The image is a finite set of words, rather than a set of schedules.
 
 **Theorem 1.4 (Constructing every outer-gap pair).**
 
@@ -116,7 +116,7 @@ The support equals the injectively parametrized rectangle, whose cardinality is 
 
 **Definition 1.10 (Ordinary binary numerals).**
 
-$$\forall (n:\mathbb{N}), \operatorname{binaryWord}\left(n\right) = \operatorname{mapDigitEqualsOne}\left(\operatorname{reverse}\left(\operatorname{digits}\left(2, n\right)\right)\right)$$
+$$\forall (n: \mathbb{N}), \operatorname{binaryWord}\left(n\right) = \operatorname{List.map}\left((\operatorname{fun} (d: \mathbb{N}) \mapsto \operatorname{ite}\left(d = 1, true, false\right)), \operatorname{List.reverse}\left(\operatorname{Nat.digits}\left(2, n\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/EndpointShuffleSupport.binaryWord` (`✓ std3`).
 
@@ -124,15 +124,17 @@ $$\forall (n:\mathbb{N}), \operatorname{binaryWord}\left(n\right) = \operatornam
 
 *Commentary.*
 
-For positive n, use its ordinary finite base-two digits, reverse the least-significant-first list to put the most significant digit first, and map 0 to false and 1 to true. The standard digits operation introduces no leading zeros. The definition extends to n=0 by the empty list.
+For positive n, use its ordinary finite base-two digits, reverse the least-significant-first list to put the most significant digit first, and map each natural digit d to true exactly when d=1, and to false otherwise. The standard digits operation introduces no leading zeros. The definition extends to n=0 by the empty list.
 
 **Definition 1.11 (Distinct output count).**
 
-$$\forall (n:\mathbb{N}), \operatorname{distinctSelfShuffleCount}\left(n\right) = \operatorname{card}\left(\operatorname{toFinset}\left(\operatorname{ordinaryShuffles}\left(\operatorname{binaryWord}\left(n\right), \operatorname{binaryWord}\left(n\right)\right)\right)\right)$$
+$$\forall (n: \mathbb{N}), \operatorname{distinctSelfShuffleCount}\left(n\right) = \operatorname{card}\left(\operatorname{toFinset}\left(\operatorname{ordinaryShuffles}\left(\operatorname{binaryWord}\left(n\right), \operatorname{binaryWord}\left(n\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/EndpointShuffleSupport.distinctSelfShuffleCount` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* John W. Layman (2011). *OEIS A193020, distinct binary self-shuffles*. URL: <https://oeis.org/A193020>.
 
 *Commentary.*
 
@@ -158,11 +160,13 @@ $$\exists K, 1 \le K\land \forall k, K \le k\implies \operatorname{distinctSelfS
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* John W. Layman (2011). *OEIS A193020, distinct binary self-shuffles*. URL: <https://oeis.org/A193020>.
+
 *Commentary.*
 
 All variables are natural numbers. Choose K=1. For every k at least K, substitute m=k-1 into the exact support cardinality and use the ordinary binary bridge. Then (m+1)^2=k^2. This preserves the eventual quantifier and supplies a threshold valid uniformly for all subsequent exponents.
 
-The selected source assertion is the standalone eventual identity a(2^k+1)=k^2 in OEIS A193020, introduced by John W. Layman and retained in revision 13 under the stated caveat that k must exceed a lower bound. Source: https://oeis.org/A193020, OEIS content licensed CC-BY-SA-4.0. The other identities listed there are separate assertions.
+The selected source assertion is the standalone eventual identity a(2^k+1)=k^2 with its sufficiently-large lower-bound caveat. The proof here establishes the exact threshold K=1 in the formal model. The other identities listed by the source are separate assertions.
 
 ## References
 
