@@ -8,7 +8,7 @@ internal sealed class PeriodicGridSectorDistanceDocument : IScribeDocumentDefini
 {
     private const string Prefix = "D5/S3/Fourier/CharacterSelection/PeriodicGridSectorDistance.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Quantum/dennis2002topological");
+        LibraryNoteRef.Create("D5/L/Topology/dennis2002topological");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every flat rectangular periodic binary edge label has an exact Hamming distance to each prescribed holonomy sector.",
