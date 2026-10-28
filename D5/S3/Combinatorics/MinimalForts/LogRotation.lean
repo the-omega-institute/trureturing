@@ -16,7 +16,8 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.MinimalForts.LogRotation
 
-private theorem ratio_irrational :
+/-- Multiplicative independence of the two actual block increments. -/
+theorem ratio_irrational :
     Irrational (Real.log (2 / 3 : ℝ) / Real.log (4 / 3 : ℝ)) := by
   rintro ⟨r, hr⟩
   have ha : 0 < Real.log (4 / 3 : ℝ) := Real.log_pos (by norm_num)
@@ -62,11 +63,5 @@ private theorem ratio_irrational :
   have hmod := congrArg (fun n : ℕ => n % 2) hpNat
   norm_num [Nat.pow_mod, Nat.zero_pow (Nat.pos_of_ne_zero hexp)] at hmod
 
-/-- The actual logarithmic increments have arbitrarily accurate uniform integer lifts. -/
-theorem block_logarithm_window :
-    ∀ ε : ℝ, 0 < ε → ∃ M : ℕ, ∀ N : ℕ, M ≤ N → ∀ T : ℝ,
-      ∃ x z : ℤ, (N : ℤ) ≤ x ∧ x ≤ 3 * (N : ℤ) ∧
-        |(x : ℝ) * Real.log (2 / 3 : ℝ) + (z : ℝ) * Real.log (4 / 3 : ℝ) - T| < ε := by
-  exact RotationWindow.uniform_real_window _ _ (Real.log_pos (by norm_num)) ratio_irrational
 
 end D5.S3.Combinatorics.MinimalForts.LogRotation

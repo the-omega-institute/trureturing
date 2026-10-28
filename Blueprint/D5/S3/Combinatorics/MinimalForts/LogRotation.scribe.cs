@@ -12,7 +12,7 @@ internal sealed class LogRotationDocument : IScribeDocumentDefinition
         "The logarithmic block rotation.",
         H("The logarithmic block rotation"),
         Blocks(
-            Node("block-logarithm-window", "Uniform approximation for the block increments", "block_logarithm_window", "The increment is the natural logarithm of two thirds and the positive period is the natural logarithm of four thirds. Their ratio is irrational: a rational ratio would force equal positive integer powers of two and three, contradicted by reduction modulo two. Consequently every positive error tolerance has one threshold for all larger positive integer windows and every real target. The conclusion gives actual integers x and z and the real error bound, without assuming any graph count.", DescribeRole.Theorem)), []));
+            Node("ratio-irrational", "Irrational logarithmic ratio", "ratio_irrational", "The ratio log(2/3) divided by log(4/3) is irrational. A rational equality would force equal positive integer powers of two and three, contradicted modulo two. Both logarithms are the actual real natural logarithms. This supplies the irrationality hypothesis for feasible multiplicity approximation.", DescribeRole.Theorem)), []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
         string prose, DescribeRole role) => Describe.Lean(
