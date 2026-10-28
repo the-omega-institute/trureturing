@@ -3,6 +3,7 @@ import Mathlib.Tactic
 open D5.S3.Observer.CubicGain
 open D5.S3.Observer.CubicGain.CommonWordSensitivity
 open D5.S3.Observer.CubicGain.PrimitivePrefix
+open D5.S3.Observer.CubicGain.LegalMatrixMonoid
 open scoped Matrix
 
 private def zeroWords : Fin 3 → List Bool :=
@@ -138,7 +139,8 @@ example (A B : Mat)
   constructor
   · rintro ⟨u,hu⟩
     have he : B*A⁻¹ = futureProduct u := by
-      rw [← hu,Matrix.mul_nonsing_inv_cancel_right _ hunit]
+      rw [← hu]
+      exact Matrix.mul_nonsing_inv_cancel_right A (futureProduct u) hunit
     rw [he]
     exact fun i j => ((legal_matrix_monoid _).mp ⟨u,rfl⟩).1 i j |>.1
   · intro hnonneg
@@ -156,9 +158,9 @@ example (A B : Mat)
         fin_cases i <;> fin_cases j <;>
           simp [Matrix.inv_def,h,Ring.inverse_eq_inv,Matrix.adjugate_fin_two,hZ]
     obtain ⟨K,hK⟩ := hi
-    have hYr : B = Y.map (Int.castRingHom ℝ) := by ext i j; exact hY i j
-    have he : B*A⁻¹ = ((Y : Matrix (Fin 2) (Fin 2) ℤ)*K).map (Int.castRingHom ℝ) := by
-      rw [hYr,hK,Matrix.map_mul]
+    have hentry (i j : Fin 2) : (B*A⁻¹) i j =
+        ((∑ k, Y i k * K k j : ℤ) : ℝ) := by
+      simp [Matrix.mul_apply,hK,hY]
     have hd : (B*A⁻¹).det=1 ∨ (B*A⁻¹).det = -1 := by
       rw [Matrix.det_mul,Matrix.det_nonsing_inv,Ring.inverse_eq_inv]
       rcases hAd with ha | ha <;> rcases hBd with hb | hb <;> simp [ha,hb]
@@ -167,7 +169,8 @@ example (A B : Mat)
         ((B*A⁻¹).det=1 ∨ (B*A⁻¹).det = -1) := by
       refine ⟨?_,hd⟩
       intro i j
-      exact ⟨hnonneg i j,((Y : Matrix (Fin 2) (Fin 2) ℤ)*K) i j,by rw [he]; rfl⟩
+      exact ⟨hnonneg i j,∑ k, Y i k * K k j,hentry i j⟩
     obtain ⟨u,hu⟩ := (legal_matrix_monoid _).mpr hwhole
     refine ⟨u,?_⟩
-    rw [hu,Matrix.nonsing_inv_mul_cancel_right _ hunit]
+    rw [hu]
+    exact Matrix.nonsing_inv_mul_cancel_right A B hunit
