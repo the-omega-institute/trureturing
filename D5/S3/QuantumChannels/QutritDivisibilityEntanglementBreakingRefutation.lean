@@ -104,8 +104,9 @@ private lemma wernerHolevo_one_eq_kraus :
     rw [inv_pow, complex_sqrt_two_sq]; norm_num
   symm
   ext X i j
+  dsimp only [wk]
   simp [MatrixMap.of_kraus, Matrix.mul_apply, Matrix.conjTranspose_apply,
-    Matrix.single, wk, Fin.sum_univ_three, Matrix.trace,
+    Matrix.single, Fin.sum_univ_three, Matrix.trace,
     wernerHolevo, Matrix.transposeLinearEquiv, Matrix.traceLinearMap,
     Matrix.one_apply, Matrix.transpose_apply]
   fin_cases i <;> fin_cases j <;>
@@ -120,8 +121,9 @@ private lemma depolarized_one_eq_kraus :
     rw [inv_pow, complex_sqrt_two_sq]; norm_num
   symm
   ext X i j
+  dsimp only [dk]
   simp [MatrixMap.of_kraus, Matrix.mul_apply, Matrix.conjTranspose_apply,
-    Matrix.single, dk, Fin.sum_univ_succ, Matrix.trace,
+    Matrix.single, Fin.sum_univ_succ, Matrix.trace,
     depolarized, Matrix.traceLinearMap, Matrix.one_apply]
   fin_cases i <;> fin_cases j <;>
     norm_num [Matrix.single, Matrix.one_apply, Matrix.mul_apply,
@@ -161,18 +163,20 @@ private lemma t_formula (X : Matrix (Fin 3) (Fin 3) ℂ) :
 
 private lemma wk_complete : (∑ r, (wk r).conjTranspose * wk r) =
     (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
+  dsimp only [wk]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [wk, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.single,
+    simp [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.single,
       Fin.sum_univ_three] <;> ring_nf <;> simp [complex_sqrt_two_sq] <;> norm_num
 
 private lemma dk_complete : (∑ r, (dk r).conjTranspose * dk r) =
     (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
   have h6Sq : (Real.sqrt 6 : ℂ) ^ 2 = (6 : ℂ) := by
     exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 6 by norm_num)
+  dsimp only [dk]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [dk, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.single,
+    simp [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.single,
       Fin.sum_univ_succ] <;> ring_nf <;>
     simp [complex_sqrt_two_sq, h6Sq] <;> norm_num
 
@@ -281,29 +285,15 @@ private lemma hermiticity_preserving_det_real (T : MatrixMap (Fin 3) (Fin 3) ℂ
   have hmap : (starRingEnd ℂ).mapMatrix (transferMatrix T) =
       Matrix.reindex e e (transferMatrix T) := by
     ext ⟨a, b⟩ ⟨c, d⟩
-    simp [transferMatrix, LinearMap.toMatrix_apply, Matrix.stdBasis,
-      Matrix.map_apply, e, Matrix.reindex_apply,
-      ← Matrix.single_eq_of_single_single, Matrix.single,
-      Pi.single_apply, ite_and]
-    have hcd :
-        (fun i' j' : Fin 3 => if c = i' ∧ d = j' then (1 : ℂ) else 0) =
-          (fun i' j' : Fin 3 => if c = i' then if d = j' then 1 else 0 else 0) := by
-      funext i' j'
-      by_cases hc : c = i' <;> by_cases hd : d = j' <;> simp [hc, hd]
-    have hdc :
-        (fun i' j' : Fin 3 => if d = i' ∧ c = j' then (1 : ℂ) else 0) =
-          (fun i' j' : Fin 3 => if d = i' then if c = j' then 1 else 0 else 0) := by
-      funext i' j'
-      by_cases hd : d = i' <;> by_cases hc : c = j' <;> simp [hc, hd]
-    have htrans :
-        (Matrix.of (fun i' j' : Fin 3 => if c = i' then if d = j' then (1 : ℂ) else 0 else 0)).conjTranspose =
-          Matrix.of (fun i' j' : Fin 3 => if d = i' then if c = j' then (1 : ℂ) else 0 else 0) := by
-      ext i' j'
-      by_cases hd : d = i' <;> by_cases hc : c = j' <;>
-        simp [Matrix.conjTranspose_apply, eq_comm, hd, hc]
+    dsimp only [transferMatrix]
+    simp [LinearMap.toMatrix_apply, Matrix.stdBasis,
+      Matrix.map_apply, e, Matrix.reindex_apply]
+    rw [← Matrix.single_eq_of_single_single,
+      ← Matrix.single_eq_of_single_single]
     have hh := congrArg (fun Z : Matrix (Fin 3) (Fin 3) ℂ => Z b a)
       (hT (Matrix.single (c : Fin 3) d 1))
-    simpa [Matrix.single, Matrix.conjTranspose_apply, hcd, hdc, htrans] using hh.symm
+    simpa only [Matrix.conjTranspose_single, star_one, starRingEnd_apply,
+      Matrix.conjTranspose_apply] using hh.symm
   have hstar : star (Matrix.det (transferMatrix T)) =
       Matrix.det (transferMatrix T) := by
     calc
@@ -341,7 +331,8 @@ private lemma pdivisible_endpoint_det_nonneg {E : ℝ → MatrixMap (Fin 3) (Fin
   have hfzero : f 0 = 1 := by
     dsimp [f]
     rw [hE.1]
-    simp [transferMatrix]
+    dsimp only [transferMatrix]
+    simp
   have hzero_mem : (0 : ℝ) ∈ Set.Icc (f u) (f 0) := by
     constructor
     · exact le_of_lt (by simpa [f] using hlt)
@@ -409,7 +400,8 @@ private lemma transfer_entry (i j k l : Fin 3) :
     (transferMatrix t) (i, j) (k, l) =
       (if i = j then if k = l then (5 / 12 : ℂ) else 0 else 0) -
         (if j = k ∧ i = l then (1 / 4 : ℂ) else 0) := by
-  simp [transferMatrix, LinearMap.toMatrix_apply, Matrix.stdBasis, t_formula,
+  dsimp only [transferMatrix]
+  simp [LinearMap.toMatrix_apply, Matrix.stdBasis, t_formula,
     Matrix.single, Matrix.trace, Matrix.one_apply, Matrix.transpose_apply]
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
     simp [Matrix.single, Fin.sum_univ_three] <;> norm_num
@@ -417,13 +409,10 @@ private lemma transfer_entry (i j k l : Fin 3) :
 private lemma t_det : Matrix.det (transferMatrix t) = -(1 / 4 : ℂ) ^ 8 := by
   classical
   let S := Fin 3 ⊕ (Fin 2 × Fin 3)
-  let q : S → (Fin 3 × Fin 3) := fun s =>
-    match s with
-    | Sum.inl i => (i, i)
-    | Sum.inr ⟨b, k⟩ =>
-        if k = 0 then if b = 0 then (0, 1) else (1, 0)
-        else if k = 1 then if b = 0 then (0, 2) else (2, 0)
-        else if b = 0 then (1, 2) else (2, 1)
+  let q : S → (Fin 3 × Fin 3) := Sum.elim (fun i => (i, i)) (fun p =>
+    if p.2 = 0 then if p.1 = 0 then (0, 1) else (1, 0)
+    else if p.2 = 1 then if p.1 = 0 then (0, 2) else (2, 0)
+    else if p.1 = 0 then (1, 2) else (2, 1))
   have hq : Function.Bijective q := by
     dsimp [q]
     decide
