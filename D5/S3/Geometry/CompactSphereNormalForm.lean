@@ -80,47 +80,68 @@ private theorem list_dimension {J : Type u} [Fintype J]
   rw [Equiv.apply_symm_apply]
   exact Fin.ext hv
 
+private abbrev familyBase {J : Type u} (n : J → PositiveDimension) :=
+  fun j => coordinatePoint (n j).val
+
+private abbrev listBase {J : Type u} [Fintype J] (n : J → PositiveDimension) :=
+  fun i : Fin (dimensionList n).length => coordinatePoint ((dimensionList n).get i).val
+
+private def listSphere {J : Type u} [Fintype J] (n : J → PositiveDimension) (j : J) :
+    StdSphere (n j).val ≃ₜ StdSphere ((dimensionList n).get (listIndex n j)).val :=
+  sphereCast (list_dimension n j).symm
+
+private theorem listSphere_base {J : Type u} [Fintype J]
+    (n : J → PositiveDimension) (j : J) :
+    listSphere n j (familyBase n j) = listBase n (listIndex n j) := sphereCast_base _
+
+private def listSigma {J : Type u} [Fintype J] (n : J → PositiveDimension) :
+    (Σ j, StdSphere (n j).val) ≃ₜ
+      (Σ i : Fin (dimensionList n).length, StdSphere ((dimensionList n).get i).val) :=
+  (Equiv.sigmaCongr (listIndex n) (fun j => (listSphere n j).toEquiv))
+    |>.toHomeomorphOfContinuousOpen
+      (continuous_sigma_iff.mpr (fun j => by
+        change Continuous (fun x => (@Sigma.mk (Fin (dimensionList n).length)
+          (fun i => StdSphere ((dimensionList n).get i).val) (listIndex n j))
+            (listSphere n j x))
+        exact continuous_sigmaMk.comp (listSphere n j).continuous))
+      (isOpenMap_sigma.mpr (fun j => by
+        change IsOpenMap (fun x => (@Sigma.mk (Fin (dimensionList n).length)
+          (fun i => StdSphere ((dimensionList n).get i).val) (listIndex n j))
+            (listSphere n j x))
+        exact isOpenMap_sigmaMk.comp (listSphere n j).isOpenMap))
+
+private def listRaw {J : Type u} [Fintype J] (n : J → PositiveDimension) :=
+  Homeomorph.sumCongr (Homeomorph.refl Unit) (listSigma n)
+
+private theorem listRaw_bases {J : Type u} [Fintype J] (n : J → PositiveDimension)
+    (x : Unit ⊕ (Σ j, StdSphere (n j).val)) :
+    x ∈ basePoints (familyBase n) ↔ listRaw n x ∈ basePoints (listBase n) := by
+  constructor
+  · rintro (rfl | ⟨j, rfl⟩)
+    · exact Or.inl rfl
+    · exact Or.inr ⟨listIndex n j,
+        congrArg Sum.inr (congrArg (Sigma.mk (listIndex n j)) (listSphere_base n j))⟩
+  · rintro (hx | ⟨i, hx⟩)
+    · left
+      exact (listRaw n).injective hx
+    · obtain ⟨j, rfl⟩ := (listIndex n).surjective i
+      right
+      refine ⟨j, (listRaw n).injective ?_⟩
+      exact hx.trans (congrArg Sum.inr
+        (congrArg (Sigma.mk (listIndex n j)) (listSphere_base n j))).symm
+
 /-- Actual pointed quotient reindexing from a finite positive family to its list.
 The dimension casts carry coordinate points to coordinate points. -/
 def positiveListHomeomorph {J : Type u} [Fintype J] (n : J → PositiveDimension) :
     {e : FamilyWedge (fun j => coordinatePoint (n j).val) ≃ₜ Bouquet (dimensionList n) //
       e (base _) = base _} := by
-  let c := fun j => coordinatePoint (n j).val
-  let c' := fun i : Fin (dimensionList n).length =>
-    coordinatePoint ((dimensionList n).get i).val
-  let E := listIndex n
-  let h := fun j => sphereCast (list_dimension n j).symm
-  let S : (Σ j, StdSphere (n j).val) ≃ₜ
-      (Σ i : Fin (dimensionList n).length, StdSphere ((dimensionList n).get i).val) :=
-    (Equiv.sigmaCongr E (fun j => (h j).toEquiv)).toHomeomorphOfContinuousOpen
-      (continuous_sigma_iff.mpr (fun j => by
-        change Continuous (fun x => (@Sigma.mk (Fin (dimensionList n).length)
-          (fun i => StdSphere ((dimensionList n).get i).val) (E j)) (h j x))
-        exact continuous_sigmaMk.comp (h j).continuous))
-      (isOpenMap_sigma.mpr (fun j => by
-        change IsOpenMap (fun x => (@Sigma.mk (Fin (dimensionList n).length)
-          (fun i => StdSphere ((dimensionList n).get i).val) (E j)) (h j x))
-        exact isOpenMap_sigmaMk.comp (h j).isOpenMap))
-  let R := Homeomorph.sumCongr (Homeomorph.refl Unit) S
-  have hb : ∀ j, h j (c j) = c' (E j) := fun j => sphereCast_base _
-  have bases : ∀ x, x ∈ basePoints c ↔ R x ∈ basePoints c' := by
-    intro x
-    constructor
-    · rintro (rfl | ⟨j, rfl⟩)
-      · exact Or.inl rfl
-      · exact Or.inr ⟨E j, congrArg Sum.inr (congrArg (Sigma.mk (E j)) (hb j))⟩
-    · rintro (hx | ⟨i, hx⟩)
-      · left
-        exact R.injective hx
-      · obtain ⟨j, rfl⟩ := E.surjective i
-        right
-        refine ⟨j, R.injective ?_⟩
-        exact hx.trans (congrArg Sum.inr (congrArg (Sigma.mk (E j)) (hb j))).symm
-  let Q : FamilyWedge c ≃ₜ FamilyWedge c' := Homeomorph.Quotient.congr R (by
-    intro x y
-    change (x = y ∨ (x ∈ basePoints c ∧ y ∈ basePoints c)) ↔
-      (R x = R y ∨ (R x ∈ basePoints c' ∧ R y ∈ basePoints c'))
-    rw [R.injective.eq_iff, ← bases x, ← bases y])
+  let Q : FamilyWedge (familyBase n) ≃ₜ FamilyWedge (listBase n) :=
+    Homeomorph.Quotient.congr (listRaw n) (by
+      intro x y
+      change (x = y ∨ (x ∈ basePoints (familyBase n) ∧ y ∈ basePoints (familyBase n))) ↔
+        (listRaw n x = listRaw n y ∨
+          (listRaw n x ∈ basePoints (listBase n) ∧ listRaw n y ∈ basePoints (listBase n)))
+      rw [(listRaw n).injective.eq_iff, ← listRaw_bases n x, ← listRaw_bases n y])
   exact ⟨Q, rfl⟩
 
 section FiniteCoproduct
@@ -137,57 +158,64 @@ private def componentList : Component d → List PositiveDimension :=
   Sum.elim (fun a => dimensionList (fun j : PositiveIndex (d a) => ⟨d a j.val, j.property⟩))
     (fun _ => [])
 
+private def positiveListsHomeomorph : (Σ a, PositiveWedge (d a)) ≃ₜ
+    (Σ a, Bouquet (componentList d (Sum.inl a))) :=
+  (Equiv.sigmaCongrRight (fun a =>
+    (positiveListHomeomorph (fun j : PositiveIndex (d a) =>
+      ⟨d a j.val, j.property⟩)).val.toEquiv)).toHomeomorphOfContinuousOpen
+    (continuous_sigma_iff.mpr (fun a =>
+      continuous_sigmaMk.comp
+        (positiveListHomeomorph (fun j : PositiveIndex (d a) =>
+          ⟨d a j.val, j.property⟩)).val.continuous))
+    (isOpenMap_sigma.mpr (fun a =>
+      isOpenMap_sigmaMk.comp
+        (positiveListHomeomorph (fun j : PositiveIndex (d a) =>
+          ⟨d a j.val, j.property⟩)).val.isOpenMap))
+
+private def isolatedListsHomeomorph : (Σ a, ZeroIndex (d a)) ≃ₜ
+    (Σ z : (Σ a, ZeroIndex (d a)), Bouquet (componentList d (Sum.inr z))) :=
+  (Equiv.sigmaUnique _ (fun _ => Bouquet [])).symm.toHomeomorphOfDiscrete
+
+private def componentDistributeHomeomorph : (Σ c : Component d, Bouquet (componentList d c)) ≃ₜ
+    (Σ a, Bouquet (componentList d (Sum.inl a))) ⊕
+      (Σ z : (Σ a, ZeroIndex (d a)), Bouquet (componentList d (Sum.inr z))) where
+  toEquiv := Equiv.sumSigmaDistrib (fun c : Component d => Bouquet (componentList d c))
+  continuous_toFun := continuous_sigma_iff.mpr (by
+    rintro (a | z)
+    · exact continuous_inl.comp continuous_sigmaMk
+    · exact continuous_inr.comp continuous_sigmaMk)
+  continuous_invFun := Continuous.sumElim
+    (continuous_sigma_iff.mpr (fun a => by
+      change Continuous (@Sigma.mk (Component d) (fun c => Bouquet (componentList d c)) (Sum.inl a))
+      exact continuous_sigmaMk))
+    (continuous_sigma_iff.mpr (fun z => by
+      change Continuous (@Sigma.mk (Component d) (fun c => Bouquet (componentList d c)) (Sum.inr z))
+      exact continuous_sigmaMk))
+
+private def componentEnumerateHomeomorph :
+    (Σ k : Fin (Fintype.card (Component d)),
+      Bouquet (componentList d ((Fintype.equivFin (Component d)).symm k))) ≃ₜ
+      (Σ c : Component d, Bouquet (componentList d c)) :=
+  (Equiv.sigmaCongrLeft (β := fun c : Component d => Bouquet (componentList d c))
+    (Fintype.equivFin (Component d)).symm).toHomeomorphOfContinuousOpen
+    (continuous_sigma_iff.mpr (fun k => by
+      change Continuous (@Sigma.mk (Component d) (fun c => Bouquet (componentList d c))
+        ((Fintype.equivFin (Component d)).symm k))
+      exact continuous_sigmaMk))
+    (isOpenMap_sigma.mpr (fun k => by
+      change IsOpenMap (@Sigma.mk (Component d) (fun c => Bouquet (componentList d c))
+        ((Fintype.equivFin (Component d)).symm k))
+      exact isOpenMap_sigmaMk))
+
 /-- Reassemble the normalized positive bouquets and all isolated S0 poles into
 one dependent finite coproduct, then enumerate that coproduct by Fin. -/
 def finiteCoproductHomeomorph :
     (Σ a, FamilyWedge (q a)) ≃ₜ
       Model (fun k : Fin (Fintype.card (Component d)) =>
-        componentList d ((Fintype.equivFin (Component d)).symm k)) := by
-  let C := Component d
-  let l := componentList d
-  let positive : (Σ a, PositiveWedge (d a)) ≃ₜ
-      (Σ a, Bouquet (l (Sum.inl a))) :=
-    (Equiv.sigmaCongrRight (fun a =>
-      (positiveListHomeomorph (fun j : PositiveIndex (d a) =>
-        ⟨d a j.val, j.property⟩)).val.toEquiv)).toHomeomorphOfContinuousOpen
-      (continuous_sigma_iff.mpr (fun a =>
-        continuous_sigmaMk.comp
-          (positiveListHomeomorph (fun j : PositiveIndex (d a) =>
-            ⟨d a j.val, j.property⟩)).val.continuous))
-      (isOpenMap_sigma.mpr (fun a =>
-        isOpenMap_sigmaMk.comp
-          (positiveListHomeomorph (fun j : PositiveIndex (d a) =>
-            ⟨d a j.val, j.property⟩)).val.isOpenMap))
-  let isolated : (Σ a, ZeroIndex (d a)) ≃ₜ
-      (Σ z : (Σ a, ZeroIndex (d a)), Bouquet (l (Sum.inr z))) :=
-    (Equiv.sigmaUnique _ (fun _ => Bouquet [])).symm.toHomeomorphOfDiscrete
-  let distribute : (Σ c : C, Bouquet (l c)) ≃ₜ
-      (Σ a, Bouquet (l (Sum.inl a))) ⊕
-        (Σ z : (Σ a, ZeroIndex (d a)), Bouquet (l (Sum.inr z))) := {
-    toEquiv := Equiv.sumSigmaDistrib (fun c : C => Bouquet (l c))
-    continuous_toFun := continuous_sigma_iff.mpr (by
-      rintro (a | z)
-      · exact continuous_inl.comp continuous_sigmaMk
-      · exact continuous_inr.comp continuous_sigmaMk)
-    continuous_invFun := Continuous.sumElim
-      (continuous_sigma_iff.mpr (fun a => by
-        change Continuous (@Sigma.mk C (fun c => Bouquet (l c)) (Sum.inl a))
-        exact continuous_sigmaMk))
-      (continuous_sigma_iff.mpr (fun z => by
-        change Continuous (@Sigma.mk C (fun c => Bouquet (l c)) (Sum.inr z))
-        exact continuous_sigmaMk)) }
-  let E := Fintype.equivFin C
-  let enumerate : (Σ k : Fin (Fintype.card C), Bouquet (l (E.symm k))) ≃ₜ
-      (Σ c : C, Bouquet (l c)) :=
-    (Equiv.sigmaCongrLeft (β := fun c : C => Bouquet (l c)) E.symm).toHomeomorphOfContinuousOpen
-      (continuous_sigma_iff.mpr (fun k => by
-        change Continuous (@Sigma.mk C (fun c => Bouquet (l c)) (E.symm k))
-        exact continuous_sigmaMk))
-      (isOpenMap_sigma.mpr (fun k => by
-        change IsOpenMap (@Sigma.mk C (fun c => Bouquet (l c)) (E.symm k))
-        exact isOpenMap_sigmaMk))
-  exact (SphereWedgePositiveNormalization.coproductNormalizationHomeomorph d q).val.trans
-    ((Homeomorph.sumCongr positive isolated).trans (distribute.symm.trans enumerate.symm))
+        componentList d ((Fintype.equivFin (Component d)).symm k)) :=
+  (SphereWedgePositiveNormalization.coproductNormalizationHomeomorph d q).val.trans
+    ((Homeomorph.sumCongr (positiveListsHomeomorph d) (isolatedListsHomeomorph d)).trans
+      ((componentDistributeHomeomorph d).symm.trans (componentEnumerateHomeomorph d).symm))
 
 end FiniteCoproduct
 
