@@ -64,7 +64,7 @@ private def evidence : Registration arena (type_of% finite72_obstruction) where
       sixth_readout_nonconstant⟩
 
 def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
-    finite72_obstruction (Realization signature) Type Unit := {
+    finite72_obstruction (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.PrimitiveLifts.FiniteCoprimeRootObstruction.unit
   realizationName := ``evidence
   realizationSource := none
@@ -80,7 +80,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some H
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.Coding.PrimitiveLifts.FiniteCoprimeRootObstruction
     definition := none
