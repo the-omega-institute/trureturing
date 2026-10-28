@@ -23,7 +23,7 @@ internal sealed class KurkovLowerBitRecurrenceDocument : IScribeDocumentDefiniti
                 H("The full lower-bit identity and initial data"),
                 StatementSource.FromAuthor(ResultFormula()),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Digit/karttunen2017a284005")),
+                    LibraryNoteRef.Create("D5/L/Digit/kurkov2019a284005")),
                 Blocks(Paragraph(Text("For an arbitrary depth L and m<2^L define "
                     + "P(L,c,m) as the product, for i<L, of c+wt(div(m,2^i)). "
                     + "The native recurrence gives a(m)=P(L,1,m) and "
@@ -38,7 +38,7 @@ internal sealed class KurkovLowerBitRecurrenceDocument : IScribeDocumentDefiniti
                     + "the displayed whole sum. The original domain includes n=2 and "
                     + "every power of two; no identity at n=0 or n=1 is asserted. "
                     + "The initial values and defining recurrence are included separately. "
-                    + "This identity differs from the two-parameter binomial identity."))),
+                    + "The source supplies the question; the native proof is a repository result. Importing the sequence from KurkovWeightProductBinomial does not use its two-parameter binomial theorem. No literature proof, global openness or priority is asserted."))),
                 DescribeRole.Theorem))));
 
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
