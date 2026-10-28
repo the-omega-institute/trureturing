@@ -73,10 +73,14 @@ private lemma source_block (p : ℕ × Fin 3) :
     sourceTerm (by decide : 0 < 3) coefficients 6 ((Nat.divModEquiv 3).symm p) =
       weight p := by
   rcases p with ⟨j, i⟩
-  simp only [Nat.divModEquiv_symm_apply, sourceTerm, weight]
-  rw [Nat.mul_add_mod_of_lt i.isLt]
-  congr 2
-  omega
+  have hi : (⟨(j * 3 + i.val) % 3, Nat.mod_lt _ (by decide)⟩ : Fin 3) = i := by
+    apply Fin.ext
+    exact Nat.mul_add_mod_of_lt i.isLt
+  have hj : (j * 3 + i.val) / 3 = j := by omega
+  change (coefficients ⟨(j * 3 + i.val) % 3, _⟩ : ℝ) /
+      (6 : ℝ) ^ ((j * 3 + i.val) / 3 + 1) =
+    (coefficients i : ℝ) / (6 : ℝ) ^ (j + 1)
+  rw [hi, hj]
 
 private lemma weight_nonneg (p : ℕ × Fin 3) : 0 ≤ weight p := by
   unfold weight
@@ -84,7 +88,7 @@ private lemma weight_nonneg (p : ℕ × Fin 3) : 0 ≤ weight p := by
 
 private lemma weight_summable : Summable weight := by
   apply (summable_prod_of_nonneg weight_nonneg).2
-  refine ⟨fun _ => summable_fintype _, ?_⟩
+  refine ⟨fun _ => (hasSum_fintype _).summable, ?_⟩
   have h := (Real.summable_ofDigitsTerm (digits := fun _ => (5 : Fin 6))).mul_left 3
   convert h using 1
   funext j
@@ -101,8 +105,9 @@ private lemma selected_summable (A : Set ℕ) :
     Summable (fun t : A => sourceTerm (by decide : 0 < 3) coefficients 6 t.val) :=
   source_summable.subtype A
 
-private noncomputable def selectedBits (A : Set ℕ) (j : ℕ) : Fin 3 → Bool :=
-  fun i => decide ((Nat.divModEquiv 3).symm (j, i) ∈ A)
+private noncomputable def selectedBits (A : Set ℕ) (j : ℕ) : Fin 3 → Bool := by
+  classical
+  exact fun i => decide ((Nat.divModEquiv 3).symm (j, i) ∈ A)
 
 private noncomputable def selectedDigits (A : Set ℕ) : ℕ → Fin 6 :=
   fun j => blockDigit (selectedBits A j)
@@ -113,15 +118,14 @@ private lemma selected_row (A : Set ℕ) (j : ℕ) :
         ((Nat.divModEquiv 3).symm (j, i))) =
       3 * Real.ofDigitsTerm (selectedDigits A) j := by
   classical
-  simp only [tsum_fintype, source_block]
+  simp only [tsum_fintype, Set.indicator_apply, source_block]
   have h := block_value (selectedBits A j)
-  simp only [selectedBits, Bool.decide_coe] at h
-  simp only [Set.indicator_apply, weight, Real.ofDigitsTerm, selectedDigits]
+  simp only [Real.ofDigitsTerm, selectedDigits]
   rw [← mul_assoc, ← h]
   simp only [Finset.sum_mul]
   apply Finset.sum_congr rfl
   intro i _
-  split_ifs <;> simp_all [div_eq_mul_inv]
+  simp [selectedBits, weight, div_eq_mul_inv]
 
 private lemma selected_hasSum (A : Set ℕ) :
     HasSum (fun t : A => sourceTerm (by decide : 0 < 3) coefficients 6 t.val)
@@ -154,7 +158,7 @@ private lemma digitSelection_digits (d : ℕ → Fin 6) :
   congr 1
   funext i
   simp [selectedBits, digitSelection, Nat.divModEquiv_symm_apply,
-    Nat.mul_add_mod_of_lt i.isLt, Nat.add_comm, Nat.add_mul_div_right,
+    Nat.mod_eq_of_lt i.isLt, Nat.add_comm, Nat.add_mul_div_right,
     Nat.div_eq_of_lt i.isLt]
 
 private lemma achievement_interval :
@@ -165,7 +169,7 @@ private lemma achievement_interval :
     have hx := hA.unique (selected_hasSum A)
     rw [hx]
     constructor
-    · positivity
+    · exact mul_nonneg (by norm_num) (Real.ofDigits_nonneg _)
     · have := Real.ofDigits_le_one (selectedDigits A)
       linarith
   · intro hx
@@ -175,7 +179,7 @@ private lemma achievement_interval :
     refine ⟨digitSelection d, ?_⟩
     have h := selected_hasSum (digitSelection d)
     rw [digitSelection_digits, hd] at h
-    convert h using 1 <;> ring
+    convert h using 1; ring
 
 /-- The public result is the designated refutation result (`basis=refutes`)
 and is exempt from four-slot escape registration. -/
