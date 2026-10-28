@@ -4,8 +4,7 @@ import D5.S3.VertexAlgebra.Lattice.NormFourZhuAlgebra
 
 set_option autoImplicit false
 
-open private star
-  from D5.S3.VertexAlgebra.Lattice.NormFourZhuAlgebra
+open D5.S3.VertexAlgebra.Lattice.NormFourZhuAlgebra.Core (star)
 open private axisState
   from D5.S3.VertexAlgebra.Lattice.NormFourVacuumVertexAlgebra
 
