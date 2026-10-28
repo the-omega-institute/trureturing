@@ -12,6 +12,10 @@ $$(\operatorname{a}\left(0\right) = 1) \land (\operatorname{a}\left(1\right) = 2
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/KurkovLowerBitRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a284005-kurkov-lower-bit-recurrence` (proved) by `D5/S1/Digit/KurkovLowerBitRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a284005-kurkov-lower-bit-recurrence","declaration_gid":"D5/S1/Digit/KurkovLowerBitRecurrence.result","resolution_kind":"proved"} -->
+
 *Citation.* Mikhail Kurkov; Antti Karttunen; OEIS contributors (2019). *OEIS A284005: Kurkov's full lower-bit recurrence*. URL: <https://oeis.org/A284005>.
 
 *Commentary.*

@@ -39,7 +39,10 @@ internal sealed class KurkovLowerBitRecurrenceDocument : IScribeDocumentDefiniti
                     + "every power of two; no identity at n=0 or n=1 is asserted. "
                     + "The initial values and defining recurrence are included separately. "
                     + "The source supplies the question; the native proof is a repository result. Importing the sequence from KurkovWeightProductBinomial does not use its two-parameter binomial theorem. No literature proof, global openness or priority is asserted."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a284005-kurkov-lower-bit-recurrence"),
+                    ResolutionKind.Proved)))));
 
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Call(string name, params Formula[] arguments) =>
