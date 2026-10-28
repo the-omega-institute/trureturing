@@ -4,7 +4,19 @@
 
 Actual maximal occupied prime powers control Robin height jumps and genuine least-crossing overshoot.
 
-**Definition 1.1 (The actual divisor-sum logarithm).**
+**Theorem 1.1 (An elementary upper bound for the actual divisor logarithm).**
+
+Lean statement: `D5/S3/Arith/Robin/ActualIntegerHeightJump.divisor_log_le_log`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualIntegerHeightJump.divisor_log_le_log` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every positive actual integer n satisfies W(n)<=log(n), where W(n)=log(sigma(1,n)/n). The bound sigma(1,n)<=n^2 and monotonicity of log prove this. In the positive-price comparison it puts a hypothetical rival in the established envelope range before that envelope is applied.
+
+**Definition 1.2 (The actual divisor-sum logarithm).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualIntegerHeightJump.divisorLog`
 
@@ -16,7 +28,7 @@ Lean statement: `D5/S3/Arith/Robin/ActualIntegerHeightJump.divisorLog`
 
 For every natural n, divisorLog(n)=log(sigma(1,n)/n). The expression is totalized by Lean at zero; arithmetic applications below prove positivity of n.
 
-**Definition 1.2 (The original scaled excess).**
+**Definition 1.3 (The original scaled excess).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualIntegerHeightJump.actualHeight`
 
@@ -28,7 +40,7 @@ Lean statement: `D5/S3/Arith/Robin/ActualIntegerHeightJump.actualHeight`
 
 For every real eta and natural n, actualHeight(eta,n)=(log(n))^eta times (originalObjective(n)-gamma), using real powers and the literal sigma/log objective. First crossings are restricted to n>=3.
 
-**Definition 1.3 (All maximizing prime-power choices).**
+**Definition 1.4 (All maximizing prime-power choices).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualIntegerHeightJump.MaximalPrimePower`
 
@@ -40,7 +52,7 @@ Lean statement: `D5/S3/Arith/Robin/ActualIntegerHeightJump.MaximalPrimePower`
 
 For natural m,q, MaximalPrimePower(m,q) means q belongs to the actual prime-factor set of m and p^(m.factorization(p))<=q^(m.factorization(q)) for every p in that set. All ties remain included.
 
-**Theorem 1.4 (Uniform control for every maximal occupied prime power).**
+**Theorem 1.5 (Uniform control for every maximal occupied prime power).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualIntegerHeightJump.eventual_actual_height_jump`
 
@@ -56,7 +68,7 @@ With Q=q^(m.factorization(q)), the actual factorization and the cardinality of i
 
 Write L=log(X), l=log(Y), E=originalObjective(n)-gamma. The new integer envelope gives E<=2/l, while positivity at m gives log(L/l)<2/l+delta. Consequently 2*eta*L<=l eventually for each original eta<1/2. With beta=log(X)-log(Y) and r=(Y/X)^eta, the exponential tangent gives 0<=1-r<=eta*beta and the logarithmic tangent gives beta/L<=log(L)-log(l). Therefore E*(1-r)<=log(L)-log(l), including negative E. Substitution into the exact height difference proves the asserted bound. No assumption that Y/X tends to one, stronger Robin envelope, RH, or special choice among ties is used.
 
-**Theorem 1.5 (Cofinal least crossings have vanishing overshoot).**
+**Theorem 1.6 (Cofinal least crossings have vanishing overshoot).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualIntegerHeightJump.first_crossing_calibration`
 
@@ -77,6 +89,7 @@ These are repository-derived arithmetic connections to the existing fixed-price,
 - Truth anchor: `D5/S3/Arith/Robin/ActualIntegerHeightJump.MaximalPrimePower`
 - Truth anchor: `D5/S3/Arith/Robin/ActualIntegerHeightJump.actualHeight`
 - Truth anchor: `D5/S3/Arith/Robin/ActualIntegerHeightJump.divisorLog`
+- Truth anchor: `D5/S3/Arith/Robin/ActualIntegerHeightJump.divisor_log_le_log`
 - Truth anchor: `D5/S3/Arith/Robin/ActualIntegerHeightJump.eventual_actual_height_jump`
 - Truth anchor: `D5/S3/Arith/Robin/ActualIntegerHeightJump.first_crossing_calibration`
 - Dependency: [D5/S3/Arith/GoldenResource/GoldenResourcePriceInterval](../GoldenResource/GoldenResourcePriceInterval.md)
