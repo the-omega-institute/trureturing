@@ -78,7 +78,7 @@ private theorem good_reads : ∀ W ∈ goodSupport,
   all_goals
     norm_num [goodA,goodB,goodC,legalWorld,readAt,gain,
       Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
-      Polynomial.eval_monomial,Fin.sum_univ_four,acquisition,Raw,
+      Polynomial.eval_monomial,Fin.sum_univ_succ,acquisition,Raw,
       _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
       _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
       _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
@@ -122,7 +122,7 @@ private theorem test_root_read (W : World3) (hW : W ∈ testSupport)
   all_goals
     norm_num [testA,testB,testC,legalWorld,readAt,gain,
       Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
-      Polynomial.eval_monomial,Fin.sum_univ_four]
+      Polynomial.eval_monomial,Fin.sum_univ_succ]
 
 private theorem test_third_read (E : Bool) (W : World3) (hW : W ∈ testSupport) :
     readAt W ([false,true] ++ [E]) 3 = if E then -72 else -84 := by
@@ -131,7 +131,7 @@ private theorem test_third_read (E : Bool) (W : World3) (hW : W ∈ testSupport)
   all_goals
     norm_num [testA,testB,testC,legalWorld,readAt,gain,
       Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
-      Polynomial.eval_monomial,Fin.sum_univ_four,acquisition,Raw,
+      Polynomial.eval_monomial,Fin.sum_univ_succ,acquisition,Raw,
       _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
       _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
       _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
@@ -174,6 +174,7 @@ private theorem fifth_child (E F G : Bool) (z : ℝ)
     exact Finset.mem_filter.mpr ⟨hZ,by simpa using hrZ⟩
   exact Finset.one_lt_card.mpr ⟨W,hW',Z,hZ',hne⟩
 
+set_option maxHeartbeats 800000 in
 private theorem test_fifth (E F G : Bool) : ∃ z : ℝ,
     Losing 2 (responseSlice testSupport ([false,true] ++ [E] ++ [F]) G z)
       ([false,true] ++ [E] ++ [F] ++ [G]) := by
@@ -193,7 +194,7 @@ private theorem test_fifth (E F G : Bool) : ∃ z : ℝ,
   all_goals
     norm_num [testA,testB,testC,legalWorld,readAt,gain,
       Polynomial.ofFn_eq_sum_monomial,Polynomial.eval_finsetSum,
-      Polynomial.eval_monomial,Fin.sum_univ_four,acquisition,Raw,
+      Polynomial.eval_monomial,Fin.sum_univ_succ,acquisition,Raw,
       _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
       _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
       _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
