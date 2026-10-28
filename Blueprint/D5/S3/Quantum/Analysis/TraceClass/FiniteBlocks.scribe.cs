@@ -35,7 +35,7 @@ internal sealed class FiniteBlocksDocument : IScribeDocumentDefinition
     private static Formula Joint(Formula body)=>All([V("H",F.Id("CompleteComplexHilbertSpace")),V("I",F.Id("FiniteDecidableType")),V("T",C("End",C("B",I,Hh))),V("i",I)],body);
     private static Formula Reference(Formula body)=>All([V("H",F.Id("CompleteComplexHilbertSpace")),V("I",F.Id("FiniteDecidableType")),V("A",C("End",Hh)),V("i",I)],body);
     private static DocumentBlock Item(string name,string title,Formula f,string text)=>Describe.Lean(
-        DescribeId.Create(name),DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/FiniteBlocks."+name),
+        DescribeId.Create(name.Replace('_','-').ToLowerInvariant()),DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/FiniteBlocks."+name),
         H(title),StatementSource.FromAuthor(Disp(f)),AssessedProvenance.FromRepo(),Blocks(Paragraph(Text(text))),DescribeRole.Theorem);
     private static Formula All(Formula.BoundVariable[] xs,Formula f)=>new Formula.BindMany(FormulaQuantifier.ForAll,[..xs],f);
     private static Formula Equal(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.Equal,b);

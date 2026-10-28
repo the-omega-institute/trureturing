@@ -49,8 +49,10 @@ private theorem leg_scalar_integrable (L : Leg) (i : Fin 5) :
     have hi : IntervalIntegrable L.hazard volume 0 L.duration :=
       (L.hazard_cont).intervalIntegrable_of_Icc L.duration_pos.le
     have hc := (intervalIntegral.continuousOn_primitive_interval' hi
-      (left_mem_uIcc : (0:ℝ) ∈ uIcc 0 L.duration)).neg.exp
-    simpa only [uIcc_of_le L.duration_pos.le, Leg.survival] using hc
+      (left_mem_uIcc : (0:ℝ) ∈ uIcc 0 L.duration)).neg.rexp
+    change ContinuousOn (fun t : ℝ => Real.exp (-(∫ u in (0:ℝ)..t, L.hazard u)))
+      (Icc 0 L.duration)
+    simpa only [uIcc_of_le L.duration_pos.le, Pi.neg_apply] using hc
   have hm : AEStronglyMeasurable (fun t => L.density t i)
       (volume.restrict (Ioc 0 L.duration)) := by
     exact ((hr.aestronglyMeasurable.mul
@@ -60,17 +62,21 @@ private theorem leg_scalar_integrable (L : Leg) (i : Fin 5) :
     filter_upwards [ae_restrict_mem measurableSet_Ioc] with t ht
     exact mul_nonneg (mul_nonneg (L.jumpRate_nonneg t ⟨ht.1.le,ht.2⟩ i)
       (Real.exp_pos _).le) (p_pos _ _ L.c_lt (L.height_bounds t ⟨ht.1.le,ht.2⟩) i).le
-  apply (ENNReal.lintegral_ofReal_ne_top_iff_integrable hm hn).mp
+  apply (lintegral_ofReal_ne_top_iff_integrable hm hn).mp
   have hmode : L.modeMeasure i univ ≤ L.markedLaw univ := by
     have he (j : Fin 5) :
         ((L.modeMeasure j).map (fun t => (Sum.inr (j,t) : Leg.Record))) univ =
           L.modeMeasure j univ := by
-      rw [Measure.map_apply (measurable_inr.comp (measurable_const.prodMk measurable_id))
-        MeasurableSet.univ]
+      have hm : Measurable (fun t : ℝ => (Sum.inr (j,t) : Leg.Record)) :=
+        measurable_inr.comp (measurable_const.prodMk measurable_id)
+      rw [Measure.map_apply hm MeasurableSet.univ]
       simp
     simp only [Leg.markedLaw, Measure.add_apply, Measure.finsetSum_apply, he]
-    exact le_trans (Finset.single_le_sum (fun j _ => zero_le _) (Finset.mem_univ i))
-      (le_add_of_nonneg_left (zero_le _))
+    calc
+      L.modeMeasure i univ ≤ ∑ j : Fin 5, L.modeMeasure j univ :=
+        Finset.single_le_sum (f := fun j : Fin 5 => L.modeMeasure j univ)
+          (fun j _ => bot_le) (Finset.mem_univ i)
+      _ ≤ _ := le_add_of_nonneg_left bot_le
   haveI := hprob
   have hf : L.modeMeasure i univ ≠ ⊤ := ne_top_of_le_ne_top (by simp) hmode
   simpa only [Leg.modeMeasure, withDensity_apply _ MeasurableSet.univ,
