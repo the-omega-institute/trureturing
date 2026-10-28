@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Information/DiagonalCorrelanceNormalizationRefutation
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/DiagonalCorrelanceNormalizationRefutation; result=D5/S3/Quantum/Information/DiagonalCorrelanceNormalizationRefutation.result; claim=D5/S3/Quantum/Information/DiagonalCorrelanceNormalizationRefutation.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/DiagonalCorrelanceNormalizationRefutation.claim; result=D5/S3/Quantum/Information/DiagonalCorrelanceNormalizationRefutation.result; claim=D5/S3/Quantum/Information/DiagonalCorrelanceNormalizationRefutation.claim
    digest: Seven-qubit diagonal correlance exceeds Hedemann's normalization bound. -/
 
 import D5.S0.Computability.Coding.BiasedMassFrontier
