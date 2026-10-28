@@ -16,7 +16,7 @@ triage: anchor
 
 # Fibonacci cubes, legal supports and majority geometry
 
-## Fibonacci-cube source and locator
+## Verified locator
 
 DOI: 10.1007/s10878-011-9433-z
 
