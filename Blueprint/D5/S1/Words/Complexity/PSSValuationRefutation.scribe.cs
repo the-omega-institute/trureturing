@@ -123,7 +123,10 @@ internal sealed class PSSValuationRefutationDocument : IScribeDocumentDefinition
                         + "unbounded factor counts; it imposes no additional restriction on "
                         + "the question and does not contradict the source's positive results "
                         + "for explicitly balanced or specially structured words."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("popoli-shallit-stipulanti-2024-valuation-question-31"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string text) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
