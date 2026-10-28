@@ -62,7 +62,7 @@ theorem dependence.{u, s} :
 def source_registration.{u, v, k, s} :
     Registration arena.{u, v, k, s}
       (type_of% (@MatrixMap.IsTracePreserving.of_kraus_isTracePreserving.{u, v, k, s})) where
-  actual := actual
+  actual := realize signature.{u, s} (fun _ _ X => Eq X) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@MatrixMap.IsTracePreserving.of_kraus_isTracePreserving.{u, v, k, s},
     rejected, rejected_law⟩
@@ -89,7 +89,7 @@ def registration.{u, v, k, s} :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ X => Eq X) (fun e => nomatch e))
+  readout := some (realize signature.{u, s} (fun _ _ X => Eq X) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
