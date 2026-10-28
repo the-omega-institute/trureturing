@@ -12,9 +12,13 @@ $$\forall k \in Nat,\; 13 \cdot k = C\left(29, k\right) \Rightarrow 11 \cdot k =
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/Admissibility/CarrylessThirteenElevenContainment.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a115803-carryless-thirteen-eleven-containment` (proved) by `D5/S1/Digit/Admissibility/CarrylessThirteenElevenContainment.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a115803-carryless-thirteen-eleven-containment","declaration_gid":"D5/S1/Digit/Admissibility/CarrylessThirteenElevenContainment.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
-*Acknowledgement.* OEIS Foundation (2026). *OEIS A115803 and A115805: carryless multiplier containment*. URL: <https://oeis.org/A115805>.
+*Acknowledgement.* OEIS Foundation (2026). *OEIS A115803 and A115805: carryless multiplier containment*. URL: <https://oeis.org/A115803>.
 
 *Commentary.*
 
