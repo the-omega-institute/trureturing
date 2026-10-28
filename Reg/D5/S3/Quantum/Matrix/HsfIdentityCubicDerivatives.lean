@@ -501,5 +501,64 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end QubitCompatibility
 
+namespace QubitPosdefCompatibility
+private abbrev arena : Arena where
+  signature := boundSignature
+  Law R := ∀ (X H K : Mat), X.PosDef → H.IsHermitian → K.IsHermitian →
+    (X+H).PosSemidef → (X-H).PosSemidef →
+    (1+K).PosSemidef → (1-K).PosSemidef →
+    let phi := fun t : ℝ => (Matrix.trace ((CFC.rpow (1+t • K) (-(1 : ℝ)/3)*(X+t • H)*
+      CFC.rpow (1+t • K) (-(1 : ℝ)/3))^3)).re
+    R.readout () () (iteratedDeriv 2 phi 0, iteratedDeriv 3 phi 0)
+private theorem rejected_law : ¬ arena.Law boundRejected := by
+  intro h
+  exact h 1 0 0 Matrix.PosDef.one
+    (by simp : (0 : Mat).IsHermitian) (by simp : (0 : Mat).IsHermitian)
+    (by simpa using Matrix.PosSemidef.one (n := Fin 2) (R := ℂ))
+    (by simpa using Matrix.PosSemidef.one (n := Fin 2) (R := ℂ))
+    (by simpa using Matrix.PosSemidef.one (n := Fin 2) (R := ℂ))
+    (by simpa using Matrix.PosSemidef.one (n := Fin 2) (R := ℂ))
+private theorem sensitivity : Sensitivity arena boundActual := by
+  constructor
+  · intro i
+    refine ⟨boundRejected, ?_, ?_, rejected_law⟩
+    · intro j hji
+      exact (hji (Subsingleton.elim _ _)).elim
+    · funext e
+      exact nomatch e
+  · intro e
+    exact nomatch e
+
+def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.qubit_posdef_cubic_compatibility)) where
+  actual := boundActual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.qubit_posdef_cubic_compatibility, boundRejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := boundDependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.qubit_posdef_cubic_compatibility) (Realization boundSignature) Type Unit where
+  unitName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.QubitPosdefCompatibility.unit
+  realizationName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives.QubitPosdefCompatibility.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize boundSignature (fun _ _ s => 0 ≤ s.1 ∧ |s.2| ≤ 5*s.1) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end QubitPosdefCompatibility
+
 end
 end Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives
