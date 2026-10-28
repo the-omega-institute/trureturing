@@ -4,10 +4,13 @@
    mirror-E: none(waiver:general-theorem-no-numerical-experiment)
    anchors: []
    utility: none
-   digest: Full positive-price predecessor records uniformly bound every smaller prime's missing-layer Euler tail. -/
+   digest: Full positive-price records bound smaller primes' missing-layer Euler tails. -/
 
 import D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
 import D5.S3.Arith.GoldenLayerMarginalDecay
+
+/-! An actual integer exchange at a full predecessor record controls both its next-layer
+gain and its logarithmic Euler truncation, including zero valuations at the smaller prime. -/
 
 namespace D5.S3.Arith.ExponentExchange.PriceRecordMissingLayer
 
@@ -18,7 +21,7 @@ open D5.S3.Arith.GoldenLayerMarginalDecay
 noncomputable section
 
 /-- A square comparison controls the entire logarithmic tail by one layer. -/
-private theorem log_tail_le_twice_gain {x r : ℝ} (hx : 0 ≤ x) (hxhalf : x ≤ 1 / 2)
+private theorem log_tail_le_twice_gain {x r : ℝ} (hxhalf : x ≤ 1 / 2)
     (hr : 0 ≤ r) (hrlt : r < 1) :
     -Real.log (1 - r) ≤ 2 * Real.log ((1 - r * x) / (1 - r)) := by
   have hd : 0 < 1 - r := sub_pos.mpr hrlt
@@ -109,14 +112,17 @@ theorem price_record_missing_layer {m P q : ℕ} {lambda : ℝ}
     simpa only [pow_one] using pow_le_pow_of_le_one hx.le hxlt.le
       (by omega : 1 ≤ m.factorization q + 1)
   have hrl : r < 1 := hrle.trans_lt hxlt
-  have htail := log_tail_le_twice_gain hx.le hxhalf hr.le hrl
+  have htail := log_tail_le_twice_gain hxhalf hr.le hrl
   have hgain_eq : goldenLayerMarginal q (m.factorization q + 1) * Real.log q =
       Real.log ((1 - r * (q : ℝ)⁻¹) / (1 - r)) := by
     unfold goldenLayerMarginal
     rw [div_mul_cancel₀ _ hlogq.ne', pow_succ]
   have htailbound : -Real.log (1 - r) < 2 / (P : ℝ) := by
     rw [← hgain_eq] at htail
-    linarith
+    calc
+      _ ≤ 2 * (goldenLayerMarginal q (m.factorization q + 1) * Real.log q) := htail
+      _ < 2 * (1 / (P : ℝ)) := mul_lt_mul_of_pos_left hgain (by norm_num)
+      _ = 2 / (P : ℝ) := by ring
   exact ⟨hn, hnm, huP, hvP, hvq, hexchange, hlast, hgain,
     hr, by simpa only [one_div] using hrle, by simpa only [one_div] using hxhalf,
     htailbound⟩
