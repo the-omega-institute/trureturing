@@ -1,0 +1,31 @@
+# Original image saturation with guarded affine atomic indices
+
+## Abstract
+
+NativeAffineImageSaturation
+
+**Theorem 1.1 (The exact original parameter map and joint canonical test).**
+
+$$\forall n: Nat, (\forall k: Nat, (\forall m: Nat, (\forall I: \operatorname{Input}\left(n, k, m\right), (\forall p: \operatorname{Fin}\left(n\right) \to Nat, (\forall legal: \operatorname{Legal}\left(I, p\right), (\forall mode: \operatorname{FreeMode}\left(\operatorname{equations}\left(I\right), \operatorname{threshold}\left(\operatorname{filters}\left(I\right)\right)\right), ((\forall j: \operatorname{Fin}\left(k\right), (\operatorname{IntOfNat}\left(\operatorname{ranks}\left(I, p, j\right)\right) = \operatorname{affineEval}\left(\operatorname{indices}\left(I, j\right), \operatorname{environment}\left(p\right)\right))) \land ((\forall v: \operatorname{Fin}\left(m\right) \to CompletionTree, (\exists tau: \operatorname{FreeMode}\left(\operatorname{equations}\left(I\right), \operatorname{threshold}\left(\operatorname{filters}\left(I\right)\right)\right), ((\operatorname{SourceInMode}\left(I, p, tau, v\right)) \land (\forall tau2: \operatorname{FreeMode}\left(\operatorname{equations}\left(I\right), \operatorname{threshold}\left(\operatorname{filters}\left(I\right)\right)\right), ((\operatorname{SourceInMode}\left(I, p, tau2, v\right)) \implies (tau2 = tau)))))) \land ((\operatorname{SourceSatisfies}\left(I, p, \operatorname{sourceCanonical}\left(I, p, mode\right)\right)) \land ((\operatorname{SourceInMode}\left(I, p, mode, \operatorname{sourceCanonical}\left(I, p, mode\right)\right)) \land (((\exists v: \operatorname{Fin}\left(m\right) \to CompletionTree, ((\operatorname{SourceSatisfies}\left(I, p, v\right)) \land ((\operatorname{SourceInMode}\left(I, p, mode, v\right)) \land (\operatorname{SourcePasses}\left(I, p, v\right))))) \iff (\operatorname{SourcePasses}\left(I, p, \operatorname{sourceCanonical}\left(I, p, mode\right)\right))) \land ((\exists v: \operatorname{Fin}\left(m\right) \to CompletionTree, ((\operatorname{SourceSatisfies}\left(I, p, v\right)) \land (\operatorname{SourcePasses}\left(I, p, v\right)))) \iff (\exists tau: \operatorname{FreeMode}\left(\operatorname{equations}\left(I\right), \operatorname{threshold}\left(\operatorname{filters}\left(I\right)\right)\right), (\operatorname{SourcePasses}\left(I, p, \operatorname{sourceCanonical}\left(I, p, tau\right)\right)))))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeAffineImageSaturation.affine_original_saturation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+An input has n original natural parameters, k finite symbolic atomic terminals and m original state names. It contains an arbitrary optional-definition system and its full list of actual-image filters, a list q of integer affine expressions for the finite terminal indices, and an original Presburger formula Gamma. Affine expressions use the existing constant and coefficient-list syntax; negative coefficients and constants are permitted. Missing coefficients evaluate to zero. The original parameter tuple p is embedded, in order, into the integer valuation list. In the displayed formula IntOfNat denotes the natural-to-integer embedding and affineEval denotes evaluation of the stored affine expression.
+
+Legal means that Gamma holds on this same valuation and every listed terminal index q(j)(p) is nonnegative. These are the original syntactic parameter guards. The derived terminal-rank map is r(j) = toNat(q(j)(p)). The theorem proves int(r(j)) = q(j)(p) for every j using the nonnegativity guard. Thus no clipping occurs on a legal input, and the terminal ranks are functions of the original p rather than additional independent variables. A token with fixed natural offset c denotes exactly the finite atom T(r(j)+c); an arbitrary affine index can be listed with offset zero. Repeated uses of a terminal name share the same affine value, and coincident affine values remain permitted.
+
+SourceSatisfies, SourcePasses and SourceInMode specialize the original equations, actual-image filters and normalized free-list mode at this exact rank map. The last expression token denotes the actual infinite Omega and has no affine rank. Finite grounds, fixed state powers, ordered pairs, original names and all repeated filter occurrences remain unchanged. No parameter value is enumerated, and the guard is not replaced by an assumed normalization property.
+
+Every original completed assignment has exactly one mode on the projected normalized free list. Choose its unique small atomic rank when it equals an atom through s+1, and the live alternative otherwise. Injectivity of the actual atomic sequence proves uniqueness of each fixed alternative, and the live exclusion rules out overlap. This includes all non-rational free values. The free list is a subtype of the original finite state index set, so its functions into the finite set of alternatives form a finite family of modes. The theorem also removes the specified-mode condition: an original solution passes all filters if and only if at least one of these canonical mode tests passes.
+
+Apply the constructed two-sided original-system normalization and its simultaneous saturation theorem at r. The resulting sourceCanonical satisfies every original equation and the specified mode. There is an original solution in that mode passing every original image filter if and only if sourceCanonical passes every one of them. This establishes the NIS.15 existence equivalence at every fixed legal p, while retaining the exact affine-to-natural correspondence. Arbitrarily infinite and non-rational completed state values remain in scope; this conclusion does not assert uniqueness among live original solutions or compute the separate Presburger acceptance predicate of NIS.16.
+
+## References
+
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeAffineImageSaturation.affine_original_saturation`
+- Dependency: [D5/S0/Computability/PresburgerSyntax](../../../../../S0/Computability/PresburgerSyntax.md)
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeRootLinkNormalization](NativeRootLinkNormalization.md)
