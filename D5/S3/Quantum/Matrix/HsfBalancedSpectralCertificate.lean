@@ -93,8 +93,6 @@ private theorem tr_sub {ι : Type*} [Fintype ι] (M N : Matrix ι ι ℂ) :
     tr (M-N) = tr M-tr N := by simp [tr, Matrix.trace_sub]
 private theorem tr_neg {ι : Type*} [Fintype ι] (M : Matrix ι ι ℂ) :
     tr (-M) = -tr M := by simp [tr, Matrix.trace_neg]
-private theorem tr_zero {ι : Type*} [Fintype ι] : tr (0 : Matrix ι ι ℂ) = 0 := by
-  simp [tr]
 private theorem tr_smul {ι : Type*} [Fintype ι] (a : ℝ) (M : Matrix ι ι ℂ) :
     tr (a • M) = a*tr M := by simp [tr, Matrix.trace_smul]
 private theorem tr_blocks (A : Matrix m m ℂ) (C : Matrix m n ℂ)
@@ -312,24 +310,6 @@ def third (r : ℝ) (A : Matrix m m ℂ) (C : Matrix m n ℂ) (H : Matrix n n �
   let U := rootThird r A C H
   D*(P*U+U*P+R*Q+Q*R)*D
 
-private theorem solve_root_identity (r : ℝ) (hr : 0 < r)
-    (M : Matrix (m ⊕ n) (m ⊕ n) ℂ) :
-    let P := baseRoot (m := m) (n := n) r
-    P*P*solveRoot r M+P*solveRoot r M*P+solveRoot r M*P*P = M := by
-  have hd : den r ≠ 0 := ne_of_gt (by unfold den; positivity)
-  dsimp only
-  conv_rhs => rw [← M.fromBlocks_toBlocks]
-  simp only [baseRoot, gramDiag, solveRoot, fromBlocks_multiply,
-    Matrix.smul_mul, Matrix.mul_smul, Matrix.add_mul, Matrix.mul_add,
-    Matrix.one_mul, Matrix.mul_one, Matrix.zero_mul, Matrix.mul_zero,
-    zero_add, add_zero, smul_zero, one_smul, smul_smul, fromBlocks_add]
-  apply fromBlocks_inj.mpr
-  repeat' constructor
-  all_goals match_scalars
-  all_goals field_simp [hd, ne_of_gt hr]
-  all_goals try dsimp [den]
-  all_goals ring
-
 private theorem root_second_identity (r : ℝ) (hr : 0 < r)
     (A : Matrix m m ℂ) (C : Matrix m n ℂ) (H : Matrix n n ℂ) :
     let P := baseRoot (m := m) (n := n) r
@@ -369,7 +349,7 @@ private theorem third_trace_normalization (r : ℝ) (hr : 0 < r)
     Matrix.sub_mul, Matrix.mul_sub, Matrix.smul_mul, Matrix.mul_smul,
     Matrix.one_mul, Matrix.mul_one, Matrix.zero_mul, Matrix.mul_zero,
     zero_add, add_zero, smul_zero, one_smul, smul_smul,
-    smul_add, smul_sub, smul_neg, tr_blocks, tr_add, tr_sub, tr_smul, tr_neg, tr_zero, sub_zero, zero_sub, neg_zero]
+    smul_add, smul_sub, smul_neg, tr_blocks, tr_add, tr_sub, tr_smul, tr_neg, sub_zero, zero_sub, neg_zero]
   simp only [← Matrix.mul_assoc]
   simp only [tr_cycle C Cᴴ A, tr_cycle Cᴴ A C, tr_cycle Cᴴ C H, tr_cycle C H Cᴴ]
   dsimp only [tau]
@@ -422,6 +402,227 @@ private theorem second_from_root (r : ℝ) (hr : 0 < r)
   all_goals ring_nf
   all_goals simp only [hs]
   all_goals ring
+
+
+/-- The sum of the two repeated-index cyclic trace words. -/
+def pairEnergy (A : Matrix m m ℂ) (C : Matrix m n ℂ) (H : Matrix n n ℂ) : ℝ :=
+  tr (A*C*Cᴴ)+tr (H*Cᴴ*C)
+
+/-- The all-Z cubic supplier formed from the actual finite coefficient recurrence. -/
+def supplier (r : ℝ) (A : Matrix m m ℂ) (C : Matrix m n ℂ) (H : Matrix n n ℂ)
+    (Z : Matrix (m ⊕ n) (m ⊕ n) ℂ) : ℝ :=
+  tr (third r A C H)+2*tr (Z*second r A C H)+tr (first r A C H*Z*Z)-
+    (5/48 : ℝ)*tr ((first r A C H)^3)
+
+private theorem energy_expansion (r : ℝ) (hr : 0 < r)
+    (A : Matrix m m ℂ) (C : Matrix m n ℂ) (H : Matrix n n ℂ)
+    (hA : A.IsHermitian) (hH : H.IsHermitian)
+    (W : Matrix (m ⊕ n) (m ⊕ n) ℂ) (hW : W.IsHermitian) :
+    squareEnergy r A C H W =
+      tr (A*A*A)+tr (H*H*H)+(2*qv r+pn r)*tr (A*C*Cᴴ)+
+        (2*pw r+qn r)*tr (H*Cᴴ*C)-4*tr (balancedQuadratic r A C H*W)+
+        4*tr (transport r A C H*(W*W)) := by
+  obtain ⟨h0,h1,h2,h3,h4,h5,h6⟩ := scalar_gram r hr
+  have hc := congrArg (fun M => tr (M*W)) (cross_moment r hr A C H hA hH)
+  have hd := congrArg (fun M => tr (M*(W*W))) (diagonal_moment r hr A C H)
+  simp only [Matrix.add_mul, Matrix.smul_mul, tr_add, tr_smul] at hc hd
+  dsimp only [squareEnergy]
+  rw [square_trace _ _ _ _ hW, square_trace _ _ _ _ hW]
+  simp only [row_energy A C H hA hH, Matrix.add_mul, tr_add]
+  linear_combination -2*hc+4*hd+(tr (H*H*H))*h0+
+    (tr (A*C*Cᴴ))*h3+(tr (H*Cᴴ*C))*h4+2*(tr (H*Cᴴ*C))*h1
+
+private theorem shifted_supplier (r : ℝ) (hr : 0 < r)
+    (A : Matrix m m ℂ) (C : Matrix m n ℂ) (H : Matrix n n ℂ)
+    (Z : Matrix (m ⊕ n) (m ⊕ n) ℂ) :
+    let L := first r A C H
+    let W := Z+(1/2 : ℝ) • L
+    18*supplier r A C H Z =
+      4*tr ((direction A C H)^3)-tr ((transport r A C H)^3)-
+      12*tr (balancedQuadratic r A C H*W)+12*tr (transport r A C H*(W*W)) := by
+  have h3 := third_trace_normalization r hr A C H
+  have hT : transport r A C H = (3/2 : ℝ) • first r A C H := by
+    dsimp [transport, first]
+    module
+  dsimp only
+  rw [hT]
+  simp only [supplier, balancedQuadratic, h3, pow_succ, pow_zero, Matrix.one_mul,
+    Matrix.smul_mul, Matrix.mul_smul, Matrix.add_mul, Matrix.mul_add,
+    smul_smul, tr_smul, tr_add]
+  simp only [← Matrix.mul_assoc]
+  have hc1 := tr_cycle Z (first r A C H) (first r A C H)
+  have hc2 := tr_cycle (first r A C H) Z (first r A C H)
+  have hc3 := tr_comm (second r A C H) Z
+  have hc4 := tr_comm (second r A C H) (first r A C H)
+  simp only [hc1, hc2, hc3, hc4]
+  ring
+
+private theorem certificate_identity (r : ℝ) (hr : 0 < r)
+    (A : Matrix m m ℂ) (C : Matrix m n ℂ) (H : Matrix n n ℂ)
+    (hA : A.IsHermitian) (hH : H.IsHermitian)
+    (Z : Matrix (m ⊕ n) (m ⊕ n) ℂ) (hZ : Z.IsHermitian) :
+    6*supplier r A C H Z = kappa r*pairEnergy A C H+
+      squareEnergy r A C H (Z+(1/2 : ℝ) • first r A C H) := by
+  have hL : (first r A C H).IsHermitian := by
+    exact (hA.fromBlocks (by simp) hH).smul (IsSelfAdjoint.of_nonneg (by norm_num : (0 : ℝ) ≤ 2/3))
+  have hW := hZ.add (hL.smul (IsSelfAdjoint.of_nonneg (by norm_num : (0 : ℝ) ≤ 1/2)))
+  have he := energy_expansion r hr A C H hA hH _ hW
+  have hf := shifted_supplier r hr A C H Z
+  have hs := trace_cube_blocks A C Cᴴ H 1
+  have ht := trace_cube_blocks A C Cᴴ H (tau r)
+  simp only [one_smul, one_pow, mul_one] at hs
+  change tr ((direction A C H)^3) = _ at hs
+  change tr ((transport r A C H)^3) = _ at ht
+  obtain ⟨h0,h1,h2,h3,h4,h5,h6⟩ := scalar_gram r hr
+  dsimp only [pairEnergy]
+  linear_combination (1/3 : ℝ)*hf-(1 : ℝ)*he+(4/3 : ℝ)*hs-(1/3 : ℝ)*ht+
+    (tr (A*C*Cᴴ))*h5+(tr (H*Cᴴ*C))*h6
+
+
+private theorem square_energy_nonneg (r : ℝ) (hr : 0 < r)
+    (A : Matrix m m ℂ) (C : Matrix m n ℂ) (H : Matrix n n ℂ)
+    (hS : (direction A C H).PosSemidef) (W : Matrix (m ⊕ n) (m ⊕ n) ℂ) :
+    0 ≤ squareEnergy r A C H W := by
+  have hg : 0 ≤ gap r := by unfold gap aux den; positivity
+  have he : 0 ≤ gramGap r := by unfold gramGap aux den; positivity
+  have hq (M : Matrix (m ⊕ n) (m ⊕ n) ℂ) : 0 ≤ tr (Mᴴ*direction A C H*M) :=
+    (Complex.nonneg_iff.mp (hS.conjTranspose_mul_mul_same M).trace_nonneg).1
+  dsimp only [squareEnergy]
+  exact add_nonneg (add_nonneg (add_nonneg (hq _) (mul_nonneg hg (hq _)))
+    (mul_nonneg he (hq _))) (mul_nonneg he (hq _))
+
+private theorem pair_energy_nonneg (A : Matrix m m ℂ) (C : Matrix m n ℂ)
+    (H : Matrix n n ℂ) (hS : (direction A C H).PosSemidef) : 0 ≤ pairEnergy A C H := by
+  have hA : A.PosSemidef := by
+    have he : (direction A C H).submatrix Sum.inl Sum.inl = A := by ext i j; rfl
+    exact he ▸ hS.submatrix Sum.inl
+  have hH : H.PosSemidef := by
+    have he : (direction A C H).submatrix Sum.inr Sum.inr = H := by ext i j; rfl
+    exact he ▸ hS.submatrix Sum.inr
+  have hp : 0 ≤ tr (Cᴴ*A*C) :=
+    (Complex.nonneg_iff.mp (hA.conjTranspose_mul_mul_same C).trace_nonneg).1
+  have hq : 0 ≤ tr (C*H*Cᴴ) :=
+    (Complex.nonneg_iff.mp (hH.mul_mul_conjTranspose_same C).trace_nonneg).1
+  rw [tr_cycle Cᴴ A C] at hp
+  rw [tr_cycle C H Cᴴ] at hq
+  exact add_nonneg hp hq
+
+private theorem kappa_nonneg (r : ℝ) (hr : 0 < r) : 0 ≤ kappa r := by
+  have hf : 0 ≤ r^2-r+1 := by nlinarith [sq_nonneg (r-1/2)]
+  unfold kappa den
+  positivity
+
+private theorem finite_supplier (r : ℝ) (hr : 0 < r)
+    (A : Matrix m m ℂ) (C : Matrix m n ℂ) (H : Matrix n n ℂ)
+    (hS : (direction A C H).PosSemidef)
+    (Z : Matrix (m ⊕ n) (m ⊕ n) ℂ) (hZ : Z.IsHermitian) :
+    0 ≤ kappa r/6*pairEnergy A C H ∧
+      kappa r/6*pairEnergy A C H ≤ supplier r A C H Z := by
+  have hA : A.PosSemidef := by
+    have he : (direction A C H).submatrix Sum.inl Sum.inl = A := by ext i j; rfl
+    exact he ▸ hS.submatrix Sum.inl
+  have hH : H.PosSemidef := by
+    have he : (direction A C H).submatrix Sum.inr Sum.inr = H := by ext i j; rfl
+    exact he ▸ hS.submatrix Sum.inr
+  have he := certificate_identity r hr A C H hA.isHermitian hH.isHermitian Z hZ
+  have hs := square_energy_nonneg r hr A C H hS (Z+(1/2 : ℝ) • first r A C H)
+  exact ⟨mul_nonneg (div_nonneg (kappa_nonneg r hr) (by norm_num))
+    (pair_energy_nonneg A C H hS), by linarith⟩
+
+/-- Linear coefficient of the cube of P+tR+…, with P=diag(I,rI). -/
+def cubeLinear (r : ℝ) (R : Matrix (m ⊕ n) (m ⊕ n) ℂ) :
+    Matrix (m ⊕ n) (m ⊕ n) ℂ :=
+  let P := baseRoot (m := m) (n := n) r
+  P*P*R+P*R*P+R*P*P
+
+/-- Quadratic cross terms in the cube-root recurrence. -/
+def cubeQuadratic (r : ℝ) (R : Matrix (m ⊕ n) (m ⊕ n) ℂ) :
+    Matrix (m ⊕ n) (m ⊕ n) ℂ :=
+  let P := baseRoot (m := m) (n := n) r
+  P*R*R+R*P*R+R*R*P
+
+/-- Ordered cubic cross terms; no pair of matrix factors is commuted. -/
+def cubeCubic (r : ℝ) (R Q : Matrix (m ⊕ n) (m ⊕ n) ℂ) :
+    Matrix (m ⊕ n) (m ⊕ n) ℂ :=
+  let P := baseRoot (m := m) (n := n) r
+  P*(R*Q+Q*R)+R*P*Q+Q*P*R+(R*Q+Q*R)*P+R*R*R
+
+/-- K=Y^(1/2) S Y^(1/2), for the normalized base Y=diag(I,r³I). -/
+def baseDirection (r : ℝ) (A : Matrix m m ℂ) (C : Matrix m n ℂ) (H : Matrix n n ℂ) :
+    Matrix (m ⊕ n) (m ⊕ n) ℂ :=
+  fromBlocks A ((r*Real.sqrt r) • C) ((r*Real.sqrt r) • Cᴴ) (r^3 • H)
+
+private theorem solve_left (r : ℝ) (hr : 0 < r)
+    (M : Matrix (m ⊕ n) (m ⊕ n) ℂ) : solveRoot r (cubeLinear r M) = M := by
+  have hd : den r ≠ 0 := ne_of_gt (by unfold den; positivity)
+  conv_lhs => rw [← M.fromBlocks_toBlocks]
+  conv_rhs => rw [← M.fromBlocks_toBlocks]
+  simp only [cubeLinear, baseRoot, gramDiag, solveRoot, fromBlocks_multiply,
+    Matrix.smul_mul, Matrix.mul_smul, Matrix.add_mul, Matrix.mul_add,
+    Matrix.one_mul, Matrix.mul_one, Matrix.zero_mul, Matrix.mul_zero,
+    zero_add, add_zero, smul_zero, one_smul, smul_smul, fromBlocks_add,
+    toBlocks_fromBlocks₁₁, toBlocks_fromBlocks₁₂, toBlocks_fromBlocks₂₁, toBlocks_fromBlocks₂₂]
+  apply fromBlocks_inj.mpr
+  repeat' constructor
+  all_goals match_scalars
+  all_goals field_simp [hd, ne_of_gt hr]
+  all_goals try dsimp only [den]
+  all_goals ring
+
+private theorem root_first_identity (r : ℝ) (hr : 0 < r)
+    (A : Matrix m m ℂ) (C : Matrix m n ℂ) (H : Matrix n n ℂ) :
+    cubeLinear r (rootFirst r A C H) = baseDirection r A C H := by
+  have hd : den r ≠ 0 := ne_of_gt (by unfold den; positivity)
+  simp only [cubeLinear, baseRoot, gramDiag, rootFirst, baseDirection, fromBlocks_multiply,
+    Matrix.smul_mul, Matrix.mul_smul, Matrix.add_mul, Matrix.mul_add,
+    Matrix.one_mul, Matrix.mul_one, Matrix.zero_mul, Matrix.mul_zero,
+    zero_add, add_zero, smul_zero, one_smul, smul_smul, fromBlocks_add]
+  apply fromBlocks_inj.mpr
+  repeat' constructor
+  all_goals match_scalars
+  all_goals field_simp [hd]
+  all_goals try dsimp only [den]
+  all_goals ring
+
+/-- Arbitrary finite complex blocks satisfy the pointwise two-level balanced
+supplier whenever R,Q,U obey the actual ordered cube-root coefficient equations.
+No positivity of the first coefficient, inverse direction, spectral separation,
+trace normalization, or nonsingularity of S is assumed. The CFC differentiation
+bridge and the full HSF conjecture remain separate obligations. -/
+theorem supplier_of_cubic_recurrence (r : ℝ) (hr : 0 < r)
+    (A : Matrix m m ℂ) (C : Matrix m n ℂ) (H : Matrix n n ℂ)
+    (hS : (direction A C H).PosSemidef)
+    (R Q U Z : Matrix (m ⊕ n) (m ⊕ n) ℂ) (hZ : Z.IsHermitian)
+    (h1 : cubeLinear r R = baseDirection r A C H)
+    (h2 : cubeLinear r Q+cubeQuadratic r R = 0)
+    (h3 : cubeLinear r U+cubeCubic r R Q = 0) :
+    let P := baseRoot (m := m) (n := n) r
+    let D := inverseRoot (m := m) (n := n) r
+    let L1 := D*(P*R+R*P)*D
+    let L2 := D*(P*Q+Q*P+R*R)*D
+    let L3 := D*(P*U+U*P+R*Q+Q*R)*D
+    0 ≤ kappa r/6*pairEnergy A C H ∧
+      kappa r/6*pairEnergy A C H ≤
+        tr L3+2*tr (Z*L2)+tr (L1*Z*Z)-(5/48 : ℝ)*tr (L1^3) := by
+  have hR : R = rootFirst r A C H := by
+    rw [← solve_left r hr R, ← solve_left r hr (rootFirst r A C H),
+      h1, root_first_identity r hr]
+  subst R
+  have hQ : Q = rootSecond r A C H := by
+    have hq : cubeLinear r (rootSecond r A C H)+cubeQuadratic r (rootFirst r A C H) = 0 := by
+      simpa only [cubeLinear, cubeQuadratic, add_assoc] using root_second_identity r hr A C H
+    have he := add_right_cancel (h2.trans hq.symm)
+    rw [← solve_left r hr Q, ← solve_left r hr (rootSecond r A C H), he]
+  subst Q
+  have hU : U = rootThird r A C H := by
+    rw [← solve_left r hr U, eq_neg_of_add_eq_zero_left h3]
+    rfl
+  subst U
+  dsimp only
+  rw [first_from_root r hr, second_from_root r hr]
+  exact finite_supplier r hr A C H hS Z hZ
+
+#print axioms supplier_of_cubic_recurrence
 
 
 end D5.S3.Quantum.Matrix.HsfBalancedSpectralCertificate
