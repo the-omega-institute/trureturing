@@ -79,8 +79,8 @@ private theorem survival_after (c T U chi : ℝ) (k K : ℝ → ℝ)
   have hi := hazard_integrable c T chi k h0
   have hI := (hazard_integrable c U chi K h1).mono_set
     (by rw [uIcc_of_le hs.1,uIcc_of_le hU]; exact Icc_subset_Icc le_rfl hs.2)
-  rw [survival,hazard_integral c T s k K hT hs.1 hj hi hI,neg_add,Real.exp_add]
-  rfl
+  simp only [OriginalControlSurvivalInstability.survival]
+  rw [hazard_integral c T s k K hT hs.1 hj hi hI,neg_add,Real.exp_add]
 
 /-- The actual native failure measure composes with its unnormalized survival
 weight and the translated second clock. No density identity is a premise. -/

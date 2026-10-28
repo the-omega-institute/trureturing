@@ -144,7 +144,8 @@ theorem prefix_facts (B : Band) (d chi : ℝ) (hd : 0 < d) (j : ℕ) :
       (a:=0) (b:=0)
     have hc := (LipschitzWith.const chi).lipschitzOnWith.absolutelyContinuousOnInterval
       (a:=0) (b:=0)
-    refine ⟨?_,by simp [repeated],by simp [repeated],by simp [survival]⟩
+    refine ⟨?_,by simp [repeated],by simp [repeated],
+      by simp [OriginalControlSurvivalInstability.survival]⟩
     simp only [Nat.cast_zero,mul_zero,zero_mul,repeated]
     change OriginalControl (B.c,B.c,1-2*B.c) 0 (fun _ => B.a) (fun _ => chi)
     refine ⟨by simp,continuousOn_const,continuousOn_const,?_,hc.boundedVariationOn,
