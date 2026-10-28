@@ -2622,6 +2622,615 @@ private def auxiliaryBasedQuotientSplit
 
 end BasedAuxiliarySplit
 
+section NativeSuspensionPresentation
+
+private def boolTwoPointHomeomorph : Bool ≃ₜ FiniteSimplicialJoin.Space twoPoints := by
+  apply Continuous.homeoOfEquivCompactToT2
+    (f := Equiv.ofBijective twoPoint ⟨?_, ?_⟩) continuous_of_discreteTopology
+  · intro x y h
+    by_contra hxy
+    have hv := congrArg (fun z : FiniteSimplicialJoin.Space twoPoints => z.val x) h
+    simpa [twoPoint, FiniteVertexCylinder.vertexPoint, Pi.single_apply, hxy, Ne.symm hxy] using hv
+  · intro x
+    rcases twoPoints_exhaust x with h | h
+    · exact ⟨true, h.symm⟩
+    · exact ⟨false, h.symm⟩
+
+private def nativeSuspensionComplex {W : Type*} [DecidableEq W]
+    (Z : PreAbstractSimplicialComplex W) :=
+  FiniteSimplicialJoin.simplicialJoin Z twoPoints
+
+private def nativeSuspensionPoint {W : Type*} [Fintype W] [DecidableEq W]
+    (Z : PreAbstractSimplicialComplex W) :
+    FiniteSimplicialJoin.Space (nativeSuspensionComplex Z) :=
+  FiniteVertexCylinder.vertexPoint _ (Sum.inr true)
+    (join_right_vertex Z twoPoints true (twoPoints_singleton true))
+
+private def nativeConeSuspensionHomeomorph {V W : Type*}
+    [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
+    (Z : PreAbstractSimplicialComplex W) (d : V) (b : W)
+    (hb : ({b} : Finset W) ∈ Z) :
+    collapseOf (FiniteSimplicialJoin.simplicialJoin (vertexComplex d) Z)
+      (FiniteSimplicialJoin.simplicialJoin (⊥ : PreAbstractSimplicialComplex V) Z) ≃ₜ
+      FiniteSimplicialJoin.Space (nativeSuspensionComplex Z) :=
+  ((nativeConeBaseHomeomorph Z d (FiniteVertexCylinder.vertexPoint Z b hb)).trans
+    (joinHomeomorph (Homeomorph.refl _) boolTwoPointHomeomorph)).trans
+    (FiniteSimplicialJoin.joinHomeomorph Z twoPoints
+      ⟨FiniteVertexCylinder.vertexPoint Z b hb⟩ ⟨twoPoint true⟩)
+
+private theorem nativeConeSuspension_base {V W : Type*}
+    [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
+    (Z : PreAbstractSimplicialComplex W) (d : V) (b : W)
+    (hb : ({b} : Finset W) ∈ Z) :
+    nativeConeSuspensionHomeomorph Z d b hb
+      (collapseVertex (FiniteSimplicialJoin.simplicialJoin (vertexComplex d) Z)
+        (FiniteSimplicialJoin.simplicialJoin (⊥ : PreAbstractSimplicialComplex V) Z)
+        (Sum.inr b) (join_right_vertex (vertexComplex d) Z b hb)) =
+      nativeSuspensionPoint Z := by
+  let z := FiniteVertexCylinder.vertexPoint Z b hb
+  let x := FiniteVertexCylinder.vertexPoint
+    (FiniteSimplicialJoin.simplicialJoin (vertexComplex d) Z) (Sum.inr b)
+    (join_right_vertex (vertexComplex d) Z b hb)
+  have hx : coneHeight (nativeConeHomeomorph Z d z x) = 1 :=
+    (nativeCone_base Z d z x).mp
+      (FiniteVertexCylinder.vertexPoint
+        (FiniteSimplicialJoin.simplicialJoin (⊥ : PreAbstractSimplicialComplex V) Z)
+        (Sum.inr b) (join_right_vertex ⊥ Z b hb)).property
+  have hn := coneBase_north (nativeConeHomeomorph Z d z x) hx z
+  change (FiniteSimplicialJoin.joinHomeomorph Z twoPoints ⟨z⟩ ⟨twoPoint true⟩)
+    ((joinHomeomorph (Homeomorph.refl _) boolTwoPointHomeomorph)
+      (coneBaseSuspensionHomeomorph (Quotient.mk _ (nativeConeHomeomorph Z d z x)))) = _
+  rw [hn]
+  apply Subtype.ext
+  change FiniteSimplicialJoin.representative Z twoPoints (z, twoPoint true, (1 : I)) =
+    Pi.single (Sum.inr true) 1
+  ext w
+  cases w <;>
+    simp [FiniteSimplicialJoin.representative, twoPoint, FiniteVertexCylinder.vertexPoint,
+      Pi.single_apply]
+
+private def nativeConeCollapseAtVertex {V : Type*} [Fintype V] [DecidableEq V]
+    (P : FiniteConeCollapse.ConePair V) (z : V) (hz : ({z} : Finset V) ∈ P.cone) :
+    SingletonRetractionBasedInverse.BasedEquivalence
+      (FiniteVertexCylinder.vertexPoint P.ambient z (P.inclusion hz))
+      (collapseVertex P.ambient P.cone z (P.inclusion hz)) := by
+  exact basedTrans (nativeConeRebasedCollapse P z hz)
+    (basedHomeomorphism (Homeomorph.refl _) (P.quotientMap P.apexPoint) _
+      (Quotient.sound (Or.inr ⟨(FiniteVertexCylinder.vertexPoint P.cone P.apex
+        P.apex_face).property, (FiniteVertexCylinder.vertexPoint P.cone z hz).property⟩)))
+
+end NativeSuspensionPresentation
+
+section BasedDisjointJoin
+
+variable {V W : Type*} [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
+
+/-- The actual two-component join split, with all three native factors based at vertices. -/
+private def twoComponentJoinBased
+    (M N : PreAbstractSimplicialComplex V) (Z : PreAbstractSimplicialComplex W)
+    (hMN : M ⊓ N = ⊥) (a : V) (ha : ({a} : Finset V) ∈ M)
+    (v : V) (hv : ({v} : Finset V) ∈ N)
+    (b : W) (hb : ({b} : Finset W) ∈ Z) :
+    SingletonRetractionBasedInverse.BasedEquivalence
+      (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin (M ⊔ N) Z)
+        (Sum.inr b) (join_right_vertex (M ⊔ N) Z b hb))
+      (wedgePoint
+        (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin M Z)
+          (Sum.inr b) (join_right_vertex M Z b hb))
+        (wedgePoint
+          (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin N Z)
+            (Sum.inr b) (join_right_vertex N Z b hb))
+          (nativeSuspensionPoint Z))) := by
+  let X := FiniteSimplicialJoin.simplicialJoin M Z
+  let Y := FiniteSimplicialJoin.simplicialJoin N Z
+  let C := FiniteSimplicialJoin.simplicialJoin (vertexComplex a) Z
+  let D := FiniteSimplicialJoin.simplicialJoin (vertexComplex v) Z
+  let B := FiniteSimplicialJoin.simplicialJoin (⊥ : PreAbstractSimplicialComplex V) Z
+  have hNa : N ⊓ vertexComplex a = ⊥ := by
+    apply le_antisymm _ bot_le
+    intro s hs
+    have h : s ∈ M ⊓ N := ⟨vertexComplex_le M a ha hs.2, hs.1⟩
+    exact hMN ▸ h
+  have hYC : Y ⊓ C = B := disjoint_join_overlap N (vertexComplex a) Z hNa
+  have hCX : C ≤ X := join_mono_left (vertexComplex_le M a ha) Z
+  let hzX := join_right_vertex M Z b hb
+  let hzY := join_right_vertex N Z b hb
+  let hzC := join_right_vertex (vertexComplex a) Z b hb
+  let hzD := join_right_vertex (vertexComplex v) Z b hb
+  let PM : FiniteConeCollapse.ConePair (V ⊕ W) :=
+    ⟨X, C, hCX, Sum.inl a, join_left_vertex (vertexComplex a) Z a rfl, join_vertex_cone Z a⟩
+  let PN : FiniteConeCollapse.ConePair (V ⊕ W) :=
+    ⟨Y, D, join_mono_left (vertexComplex_le N v hv) Z, Sum.inl v,
+      join_left_vertex (vertexComplex v) Z v rfl, join_vertex_cone Z v⟩
+  let eY : collapseOf Y C ≃ₜ collapseOf Y B :=
+    Homeomorph.Quotient.congrRight (by
+      intro x y
+      have h := realization_pullback_intersection Y C B hYC
+      change (x = y ∨ (_ ∧ _)) ↔ (x = y ∨ (_ ∧ _))
+      rw [h])
+  let S := basedHomeomorphism (nativeConeSuspensionHomeomorph Z a b hb)
+    (collapseVertex C B (Sum.inr b) hzC) (nativeSuspensionPoint Z)
+    (nativeConeSuspension_base Z a b hb)
+  let NY := basedTrans
+    (basedHomeomorphism eY (collapseVertex Y C (Sum.inr b) hzY)
+      (collapseVertex Y B (Sum.inr b) hzY) rfl)
+    (basedTrans (auxiliaryBasedQuotientSplit N Z a hNa v hv b hb)
+      (FiniteConeUnionWedge.basedWedgeEquivalence
+        (basedSymm (nativeConeCollapseAtVertex PN (Sum.inr b) hzD)) S))
+  let F := coneCoverBased X Y C (Sum.inl a) (Sum.inr b) hzX hzY
+    (join_left_vertex (vertexComplex a) Z a rfl) hzC (hCX.trans le_sup_left)
+    (by rw [disjoint_join_overlap M N Z hMN]; exact join_mono_left bot_le Z)
+    (join_vertex_cone Z a)
+  let pre := basedHomeomorphism
+    (Homeomorph.setCongr (congrArg FiniteConeCollapse.realization (join_union M N Z)))
+    (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin (M ⊔ N) Z)
+      (Sum.inr b) (join_right_vertex (M ⊔ N) Z b hb))
+    (FiniteVertexCylinder.vertexPoint (X ⊔ Y) (Sum.inr b) (Or.inl hzX))
+    (Subtype.ext rfl)
+  exact basedTrans pre (basedTrans F (FiniteConeUnionWedge.basedWedgeEquivalence
+    (basedSymm (nativeConeCollapseAtVertex PM (Sum.inr b) hzC)) NY))
+
+end BasedDisjointJoin
+
+section BasedVertexJoinDistribution
+
+variable {V W : Type*} [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
+
+/-- Join distribution over a native union at one vertex, with relative inverse homotopies. -/
+private def vertexUnionJoinBased
+    (M N : PreAbstractSimplicialComplex V) (Z : PreAbstractSimplicialComplex W)
+    (a : V) (haM : ({a} : Finset V) ∈ M) (haN : ({a} : Finset V) ∈ N)
+    (hMN : M ⊓ N = vertexComplex a) :
+    SingletonRetractionBasedInverse.BasedEquivalence
+      (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin (M ⊔ N) Z)
+        (Sum.inl a) (join_left_vertex (M ⊔ N) Z a (Or.inl haM)))
+      (wedgePoint
+        (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin M Z)
+          (Sum.inl a) (join_left_vertex M Z a haM))
+        (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin N Z)
+          (Sum.inl a) (join_left_vertex N Z a haN))) := by
+  let X := FiniteSimplicialJoin.simplicialJoin M Z
+  let Y := FiniteSimplicialJoin.simplicialJoin N Z
+  let C := FiniteSimplicialJoin.simplicialJoin (vertexComplex a) Z
+  let hCX := join_mono_left (vertexComplex_le M a haM) Z
+  let hCY := join_mono_left (vertexComplex_le N a haN) Z
+  let haX := join_left_vertex M Z a haM
+  let haY := join_left_vertex N Z a haN
+  let haC := join_left_vertex (vertexComplex a) Z a rfl
+  let PM : FiniteConeCollapse.ConePair (V ⊕ W) :=
+    ⟨X, C, hCX, Sum.inl a, haC, join_vertex_cone Z a⟩
+  let PN : FiniteConeCollapse.ConePair (V ⊕ W) :=
+    ⟨Y, C, hCY, Sum.inl a, haC, join_vertex_cone Z a⟩
+  let F := coneCoverBased X Y C (Sum.inl a) (Sum.inl a) haX haY haC haC
+    (hCX.trans le_sup_left) (by rw [join_intersection, hMN]) (join_vertex_cone Z a)
+  let pre := basedHomeomorphism
+    (Homeomorph.setCongr (congrArg FiniteConeCollapse.realization (join_union M N Z)))
+    (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin (M ⊔ N) Z)
+      (Sum.inl a) (join_left_vertex (M ⊔ N) Z a (Or.inl haM)))
+    (FiniteVertexCylinder.vertexPoint (X ⊔ Y) (Sum.inl a) (Or.inl haX))
+    (Subtype.ext rfl)
+  exact basedTrans pre (basedTrans F (FiniteConeUnionWedge.basedWedgeEquivalence
+    (basedSymm (nativeConeCollapseAtVertex PM (Sum.inl a) haC))
+    (basedSymm (nativeConeCollapseAtVertex PN (Sum.inl a) haC))))
+
+end BasedVertexJoinDistribution
+
+section NativeBasedNormalization
+
+private def basedOrdinary {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
+    {x : X} {y : Y} (E : SingletonRetractionBasedInverse.BasedEquivalence x y) : X ≃ₕ Y where
+  toFun := E.forward
+  invFun := E.backward
+  left_inv := ⟨E.left.toHomotopy⟩
+  right_inv := ⟨E.right.toHomotopy⟩
+
+private def nativeBouquetNormalization {V : Type*} [Fintype V] [DecidableEq V]
+    (K : PreAbstractSimplicialComplex V) (a : V) (ha : ({a} : Finset V) ∈ K)
+    (ds : BouquetSpec)
+    (e : FiniteSimplicialJoin.Space K ≃ₕ FiniteSimplicialJoin.Space (bouquetComplex ds)) :
+    SingletonRetractionBasedInverse.BasedEquivalence
+      (FiniteVertexCylinder.vertexPoint K a ha) (bouquetPoint ds) :=
+  Classical.choose (SingletonRetractionBasedInverse.based_inverse _ _
+    (nativeCylinder K a ha) (nativeCylinder (bouquetComplex ds) none (bouquetVertex_face ds))
+    e.toFun e.invFun e.left_inv.some e.right_inv.some
+    (bouquetPath ds (e.toFun (FiniteVertexCylinder.vertexPoint K a ha))))
+
+/-- Normalize through a native presentation; no cylinder on the presented space is used. -/
+private def normalizeViaNativePresentation {V X : Type*}
+    [Fintype V] [DecidableEq V] [TopologicalSpace X]
+    (K : PreAbstractSimplicialComplex V) (a : V) (ha : ({a} : Finset V) ∈ K)
+    (x : X) (E : SingletonRetractionBasedInverse.BasedEquivalence
+      (FiniteVertexCylinder.vertexPoint K a ha) x)
+    (ds : BouquetSpec) (e : X ≃ₕ FiniteSimplicialJoin.Space (bouquetComplex ds)) :
+    SingletonRetractionBasedInverse.BasedEquivalence x (bouquetPoint ds) :=
+  basedTrans (basedSymm E)
+    (nativeBouquetNormalization K a ha ds ((basedOrdinary E).trans e))
+
+private def nativeWedgePresentation {V W : Type*}
+    [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
+    (K : PreAbstractSimplicialComplex V) (L : PreAbstractSimplicialComplex W)
+    (a : V) (ha : ({a} : Finset V) ∈ K) (b : W) (hb : ({b} : Finset W) ∈ L) :
+    SingletonRetractionBasedInverse.BasedEquivalence
+      (vertexWedgePoint K L a b ha)
+      (wedgePoint (FiniteVertexCylinder.vertexPoint K a ha)
+        (FiniteVertexCylinder.vertexPoint L b hb)) := by
+  let e := vertexGluingHomeomorph K L a b ha hb
+  have he : e (wedgePoint (FiniteVertexCylinder.vertexPoint K a ha)
+      (FiniteVertexCylinder.vertexPoint L b hb)) = vertexWedgePoint K L a b ha := by
+    apply Subtype.ext
+    exact coordinateLinear_single (glueLeft a b) a
+  exact basedSymm (basedHomeomorphism e _ _ he)
+
+private def basedBouquetAppend (ds es : BouquetSpec) :
+    SingletonRetractionBasedInverse.BasedEquivalence
+      (wedgePoint (bouquetPoint ds) (bouquetPoint es)) (bouquetPoint (ds ++ es)) :=
+  normalizeViaNativePresentation
+    (vertexWedgeComplex (bouquetComplex ds) (bouquetComplex es) none none)
+    (Quotient.mk _ (Sum.inl none))
+    (vertexWedge_vertex (bouquetComplex ds) (bouquetComplex es) none none (bouquetVertex_face ds))
+    _ (nativeWedgePresentation (bouquetComplex ds) (bouquetComplex es)
+      none (bouquetVertex_face ds) none (bouquetVertex_face es))
+    (ds ++ es) (bouquetAppendHomeomorph ds es).toHomotopyEquiv
+
+end NativeBasedNormalization
+
+section FiniteFamilyJoinAssembly
+
+variable {V W : Type*} [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
+
+private structure NormalizedJoinPiece (Z : PreAbstractSimplicialComplex W)
+    (b : W) (hb : ({b} : Finset W) ∈ Z) where
+  complex : PreAbstractSimplicialComplex V
+  vertex : V
+  vertex_face : ({vertex} : Finset V) ∈ complex
+  spec : BouquetSpec
+  normalization : SingletonRetractionBasedInverse.BasedEquivalence
+    (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin complex Z)
+      (Sum.inr b) (join_right_vertex complex Z b hb)) (bouquetPoint spec)
+
+private def unionList (ps : List (PreAbstractSimplicialComplex V)) :
+    PreAbstractSimplicialComplex V := ps.foldr (· ⊔ ·) ⊥
+
+private theorem mem_unionList (ps : List (PreAbstractSimplicialComplex V)) (s : Finset V) :
+    s ∈ unionList ps ↔ ∃ P ∈ ps, s ∈ P := by
+  induction ps with
+  | nil =>
+    constructor
+    · intro h; exact False.elim h
+    · rintro ⟨P, hP, _⟩; cases hP
+  | cons P ps ih =>
+    change (s ∈ P ∨ s ∈ unionList ps) ↔ _
+    simp only [ih, List.mem_cons, exists_eq_or_imp]
+
+private def familyJoinSpec (es : BouquetSpec) {Z : PreAbstractSimplicialComplex W}
+    {b : W} {hb : ({b} : Finset W) ∈ Z} : List (NormalizedJoinPiece (V := V) Z b hb) → BouquetSpec
+  | [] => []
+  | [P] => P.spec
+  | P :: Q :: ps => P.spec ++ (familyJoinSpec es (Q :: ps) ++ es)
+
+/-- Assemble finitely many disjoint native components, retaining one suspension per extra component. -/
+private def familyJoinBased (Z : PreAbstractSimplicialComplex W) (b : W)
+    (hb : ({b} : Finset W) ∈ Z) (es : BouquetSpec)
+    (S : SingletonRetractionBasedInverse.BasedEquivalence
+      (nativeSuspensionPoint Z) (bouquetPoint es))
+    (ps : List (NormalizedJoinPiece (V := V) Z b hb)) :
+    (hne : ps ≠ []) →
+    (hd : ps.Pairwise (fun P Q => P.complex ⊓ Q.complex = ⊥)) →
+    SingletonRetractionBasedInverse.BasedEquivalence
+      (FiniteVertexCylinder.vertexPoint
+        (FiniteSimplicialJoin.simplicialJoin (unionList (ps.map (·.complex))) Z)
+        (Sum.inr b) (join_right_vertex _ Z b hb)) (bouquetPoint (familyJoinSpec es ps)) := by
+  induction ps with
+  | nil => intro hne; exact False.elim (hne rfl)
+  | cons P ps ih =>
+    intro hne hd
+    cases ps with
+    | nil =>
+      let e := Homeomorph.setCongr (congrArg FiniteConeCollapse.realization
+        (show FiniteSimplicialJoin.simplicialJoin
+          (unionList ([P].map (·.complex))) Z =
+          FiniteSimplicialJoin.simplicialJoin P.complex Z by simp [unionList]))
+      exact basedTrans (basedHomeomorphism e _
+        (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin P.complex Z)
+          (Sum.inr b) (join_right_vertex P.complex Z b hb)) (Subtype.ext rfl)) P.normalization
+    | cons Q qs =>
+      let tail := Q :: qs
+      let N := unionList (tail.map (·.complex))
+      have hN : ({Q.vertex} : Finset V) ∈ N := by
+        apply (mem_unionList _ _).mpr
+        exact ⟨Q.complex, by simp [tail], Q.vertex_face⟩
+      have hPN : P.complex ⊓ N = ⊥ := by
+        apply le_antisymm _ bot_le
+        rintro s ⟨hs, ht⟩
+        obtain ⟨J, hJ, hJs⟩ := (mem_unionList _ s).mp ht
+        obtain ⟨R, hR, rfl⟩ := List.mem_map.mp hJ
+        exact ((List.pairwise_cons.mp hd).1 R hR) ▸ ⟨hs, hJs⟩
+      let F := twoComponentJoinBased P.complex N Z hPN P.vertex P.vertex_face
+        Q.vertex hN b hb
+      let T := basedTrans
+        (FiniteConeUnionWedge.basedWedgeEquivalence
+          (ih (by simp) (List.pairwise_cons.mp hd).2) S)
+        (basedBouquetAppend (familyJoinSpec es tail) es)
+      exact basedTrans F (basedTrans
+        (FiniteConeUnionWedge.basedWedgeEquivalence P.normalization T)
+        (basedBouquetAppend P.spec (familyJoinSpec es tail ++ es)))
+
+end FiniteFamilyJoinAssembly
+
+section NativeJoinModels
+
+private def joinSymmetry {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y] :
+    FiniteSimplicialJoin.OrdinaryJoin X Y ≃ₜ FiniteSimplicialJoin.OrdinaryJoin Y X := by
+  let e : (X × Y × I) ≃ₜ (Y × X × I) := {
+    toFun := fun p => (p.2.1, p.1, unitInterval.symm p.2.2)
+    invFun := fun p => (p.2.1, p.1, unitInterval.symm p.2.2)
+    left_inv := fun p => by simp
+    right_inv := fun p => by simp
+    continuous_toFun := by fun_prop
+    continuous_invFun := by fun_prop }
+  apply Homeomorph.Quotient.congr e
+  intro p q
+  change (p.2.2 = q.2.2 ∧ (p.2.2 = 1 ∨ p.1 = q.1) ∧
+    (p.2.2 = 0 ∨ p.2.1 = q.2.1)) ↔
+    (unitInterval.symm p.2.2 = unitInterval.symm q.2.2 ∧
+      (unitInterval.symm p.2.2 = 1 ∨ p.2.1 = q.2.1) ∧
+      (unitInterval.symm p.2.2 = 0 ∨ p.1 = q.1))
+  rw [unitInterval.symm_inj, unitInterval.symm_eq_one,
+    unitInterval.symm_eq_zero]
+  tauto
+
+private def nativeJoinCongr {V W V' W' : Type*}
+    [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
+    [Fintype V'] [DecidableEq V'] [Fintype W'] [DecidableEq W']
+    (K : PreAbstractSimplicialComplex V) (L : PreAbstractSimplicialComplex W)
+    (K' : PreAbstractSimplicialComplex V') (L' : PreAbstractSimplicialComplex W')
+    (hK : Nonempty (FiniteSimplicialJoin.Space K)) (hL : Nonempty (FiniteSimplicialJoin.Space L))
+    (hK' : Nonempty (FiniteSimplicialJoin.Space K')) (hL' : Nonempty (FiniteSimplicialJoin.Space L'))
+    (e : FiniteSimplicialJoin.Space K ≃ₕ FiniteSimplicialJoin.Space K')
+    (d : FiniteSimplicialJoin.Space L ≃ₕ FiniteSimplicialJoin.Space L') :
+    FiniteSimplicialJoin.Space (FiniteSimplicialJoin.simplicialJoin K L) ≃ₕ
+      FiniteSimplicialJoin.Space (FiniteSimplicialJoin.simplicialJoin K' L') :=
+  ((FiniteSimplicialJoin.joinHomeomorph K L hK hL).symm.toHomotopyEquiv.trans
+    (joinCongr e d)).trans (FiniteSimplicialJoin.joinHomeomorph K' L' hK' hL').toHomotopyEquiv
+
+private def nativeJoinSymmetry {V W : Type*}
+    [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
+    (K : PreAbstractSimplicialComplex V) (L : PreAbstractSimplicialComplex W)
+    (hK : Nonempty (FiniteSimplicialJoin.Space K)) (hL : Nonempty (FiniteSimplicialJoin.Space L)) :
+    FiniteSimplicialJoin.Space (FiniteSimplicialJoin.simplicialJoin K L) ≃ₜ
+      FiniteSimplicialJoin.Space (FiniteSimplicialJoin.simplicialJoin L K) :=
+  ((FiniteSimplicialJoin.joinHomeomorph K L hK hL).symm.trans joinSymmetry).trans
+    (FiniteSimplicialJoin.joinHomeomorph L K hL hK)
+
+private theorem singletonBouquetComplex (d : {n : ℕ // 0 < n}) :
+    bouquetComplex [d] = (sphereComplex d.val).map (bouquetInclusion [d] ⟨0, by simp⟩) := by
+  apply SetLike.ext
+  intro s
+  rw [mem_bouquetComplex]
+  constructor
+  · rintro (rfl | ⟨i, hs⟩)
+    · exact ⟨{sphereVertex d.val}, sphereVertex_face d.val,
+        by
+          change ({sphereVertex d.val} : Finset (SphereVertices d.val)).image
+            (bouquetInclusion [d] ⟨0, by simp⟩) = {none}
+          exact (Finset.image_singleton _ _).trans
+            (congrArg (fun v : BouquetVertices [d] => ({v} : Finset (BouquetVertices [d])))
+              (bouquetInclusion_base [d] ⟨0, by simp⟩))⟩
+    · have hi : i = ⟨0, by simp⟩ := by
+        apply Fin.ext
+        change i.val = 0
+        have hi : i.val < 1 := by simpa only [List.length_singleton] using i.isLt
+        omega
+      subst i
+      exact hs
+  · intro hs
+    exact Or.inr ⟨⟨0, by simp⟩, hs⟩
+
+private def sphereSingletonBouquetHomeomorph (d : {n : ℕ // 0 < n}) :
+    FiniteSimplicialJoin.Space (sphereComplex d.val) ≃ₜ
+      FiniteSimplicialJoin.Space (bouquetComplex [d]) :=
+  (coordinateHomeomorph (sphereComplex d.val) (bouquetInclusion [d] ⟨0, by simp⟩)).trans
+    (Homeomorph.setCongr (congrArg FiniteConeCollapse.realization (singletonBouquetComplex d).symm))
+
+private def spherePairJoinNormalization (p q : ℕ) :
+    FiniteSimplicialJoin.Space
+      (FiniteSimplicialJoin.simplicialJoin (sphereComplex p) (sphereComplex q)) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex [⟨p + q + 1, by omega⟩]) :=
+  (((((FiniteSimplicialJoin.joinHomeomorph (sphereComplex p) (sphereComplex q)
+    ⟨spherePoint p⟩ ⟨spherePoint q⟩).symm.trans
+      (joinHomeomorph (sphereHomeomorph p) (sphereHomeomorph q))).trans
+      (EuclideanSphereJoin.sphereJoinHomeomorph p q)).trans
+      (sphereHomeomorph (p + q + 1)).symm).trans
+      (sphereSingletonBouquetHomeomorph ⟨p + q + 1, by omega⟩)).toHomotopyEquiv
+
+end NativeJoinModels
+
+section FiniteVertexFamilyAssembly
+
+variable {V W : Type*} [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
+
+private def unitEmptyBouquetHomeomorph : Unit ≃ₜ FiniteSimplicialJoin.Space (bouquetComplex []) where
+  toFun _ := bouquetPoint []
+  invFun _ := ()
+  left_inv _ := rfl
+  right_inv x := (emptyBouquet_point x).symm
+  continuous_toFun := continuous_const
+  continuous_invFun := continuous_const
+
+private def vertexJoinNormalization (a : V) (Z : PreAbstractSimplicialComplex W)
+    (z : FiniteSimplicialJoin.Space Z) :
+    FiniteSimplicialJoin.Space (FiniteSimplicialJoin.simplicialJoin (vertexComplex a) Z) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex []) :=
+  ((nativeConeHomeomorph Z a z).trans
+    (joinHomeomorph unitEmptyBouquetHomeomorph (Homeomorph.refl _))).toHomotopyEquiv.trans
+    (emptyBouquetJoinEquiv z)
+
+private structure NormalizedVertexJoinPiece (Z : PreAbstractSimplicialComplex W) (a : V) where
+  complex : PreAbstractSimplicialComplex V
+  vertex_face : ({a} : Finset V) ∈ complex
+  spec : BouquetSpec
+  normalization : SingletonRetractionBasedInverse.BasedEquivalence
+    (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin complex Z)
+      (Sum.inl a) (join_left_vertex complex Z a vertex_face)) (bouquetPoint spec)
+
+private def vertexFamilyComplex (a : V) {Z : PreAbstractSimplicialComplex W}
+    (ps : List (NormalizedVertexJoinPiece Z a)) : PreAbstractSimplicialComplex V :=
+  vertexComplex a ⊔ unionList (ps.map (·.complex))
+
+private def vertexFamilyJoinBased (Z : PreAbstractSimplicialComplex W)
+    (z : FiniteSimplicialJoin.Space Z) (a : V)
+    (ps : List (NormalizedVertexJoinPiece Z a)) :
+    (hd : ps.Pairwise (fun P Q => P.complex ⊓ Q.complex = vertexComplex a)) →
+    SingletonRetractionBasedInverse.BasedEquivalence
+      (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin (vertexFamilyComplex a ps) Z)
+        (Sum.inl a) (join_left_vertex _ Z a (Or.inl rfl)))
+      (bouquetPoint (ps.flatMap (·.spec))) := by
+  induction ps with
+  | nil =>
+    intro hd
+    let e := Homeomorph.setCongr (congrArg FiniteConeCollapse.realization
+      (show FiniteSimplicialJoin.simplicialJoin (vertexFamilyComplex (Z := Z) a []) Z =
+        FiniteSimplicialJoin.simplicialJoin (vertexComplex a) Z by simp [vertexFamilyComplex, unionList]))
+    exact nativeBouquetNormalization _ _ _ []
+      (e.toHomotopyEquiv.trans (vertexJoinNormalization a Z z))
+  | cons P ps ih =>
+    intro hd
+    let N := vertexFamilyComplex a ps
+    have hN : ({a} : Finset V) ∈ N := Or.inl rfl
+    have hPN : P.complex ⊓ N = vertexComplex a := by
+      apply le_antisymm
+      · rintro s ⟨hs, ht⟩
+        rcases ht with ht | ht
+        · exact ht
+        · obtain ⟨J, hJ, hJs⟩ := (mem_unionList _ s).mp ht
+          obtain ⟨Q, hQ, rfl⟩ := List.mem_map.mp hJ
+          exact ((List.pairwise_cons.mp hd).1 Q hQ) ▸ ⟨hs, hJs⟩
+      · exact le_inf (vertexComplex_le P.complex a P.vertex_face) le_sup_left
+    let F := vertexUnionJoinBased P.complex N Z a P.vertex_face hN hPN
+    let e := Homeomorph.setCongr (congrArg FiniteConeCollapse.realization
+      (show FiniteSimplicialJoin.simplicialJoin (vertexFamilyComplex a (P :: ps)) Z =
+        FiniteSimplicialJoin.simplicialJoin (P.complex ⊔ N) Z by
+        congr 1
+        change vertexComplex a ⊔ (P.complex ⊔ unionList (ps.map (·.complex))) =
+          P.complex ⊔ (vertexComplex a ⊔ unionList (ps.map (·.complex)))
+        ac_rfl))
+    let pre := basedHomeomorphism e
+      (FiniteVertexCylinder.vertexPoint
+        (FiniteSimplicialJoin.simplicialJoin (vertexFamilyComplex a (P :: ps)) Z)
+        (Sum.inl a) (join_left_vertex _ Z a (Or.inl rfl)))
+      (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin (P.complex ⊔ N) Z)
+        (Sum.inl a) (join_left_vertex _ Z a (Or.inl P.vertex_face))) (Subtype.ext rfl)
+    simpa only [List.flatMap_cons] using
+      basedTrans pre (basedTrans F (basedTrans
+        (FiniteConeUnionWedge.basedWedgeEquivalence P.normalization
+          (ih (List.pairwise_cons.mp hd).2))
+        (basedBouquetAppend P.spec
+          (ps.flatMap (fun R : NormalizedVertexJoinPiece Z a => R.spec)))))
+
+end FiniteVertexFamilyAssembly
+
+section BouquetJoinAssembly
+
+private theorem mappedVertexFace {V U : Type*} [DecidableEq V] [DecidableEq U]
+    (K : PreAbstractSimplicialComplex V) (e : V ↪ U) (a : V)
+    (ha : ({a} : Finset V) ∈ K) : ({e a} : Finset U) ∈ K.map e :=
+  ⟨{a}, ha, Finset.image_singleton e a⟩
+
+private theorem bouquetMappedVertex (ds : BouquetSpec) (i : Fin ds.length) :
+    ({none} : Finset (BouquetVertices ds)) ∈
+      (sphereComplex (ds.get i).val).map (bouquetInclusion ds i) := by
+  simpa only [bouquetInclusion_base] using
+    mappedVertexFace (sphereComplex (ds.get i).val) (bouquetInclusion ds i)
+      (sphereVertex (ds.get i).val) (sphereVertex_face _)
+
+private theorem bouquetMappedIntersection (ds : BouquetSpec) (i j : Fin ds.length)
+    (hij : i ≠ j) :
+    (sphereComplex (ds.get i).val).map (bouquetInclusion ds i) ⊓
+      (sphereComplex (ds.get j).val).map (bouquetInclusion ds j) = vertexComplex none := by
+  apply le_antisymm
+  · intro s hs
+    have hn := (((sphereComplex (ds.get i).val).map (bouquetInclusion ds i)).isRelLowerSet_faces hs.1).1
+    change s = {none}
+    apply Finset.eq_singleton_iff_nonempty_unique_mem.mpr
+    refine ⟨hn, ?_⟩
+    intro u hu
+    obtain ⟨A, hA, hAi⟩ := hs.1
+    obtain ⟨B, hB, hBj⟩ := hs.2
+    obtain ⟨v, hv, hvi⟩ := Finset.mem_image.mp (hAi.symm ▸ hu)
+    obtain ⟨w, hw, hwj⟩ := Finset.mem_image.mp (hBj.symm ▸ hu)
+    exact hvi.symm.trans (bouquetInclusion_intersection ds i j hij v w (hvi.trans hwj.symm))
+  · exact le_inf
+      (vertexComplex_le _ none (bouquetMappedVertex ds i))
+      (vertexComplex_le _ none (bouquetMappedVertex ds j))
+
+private def bouquetJoinPieces {W : Type*} [Fintype W] [DecidableEq W]
+    (ds : BouquetSpec) (Z : PreAbstractSimplicialComplex W) (z : FiniteSimplicialJoin.Space Z)
+    (spec : Fin ds.length → BouquetSpec)
+    (E : ∀ i, FiniteSimplicialJoin.Space
+      (FiniteSimplicialJoin.simplicialJoin (sphereComplex (ds.get i).val) Z) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex (spec i)))
+    (i : Fin ds.length) : NormalizedVertexJoinPiece Z (none : BouquetVertices ds) where
+  complex := (sphereComplex (ds.get i).val).map (bouquetInclusion ds i)
+  vertex_face := bouquetMappedVertex ds i
+  spec := spec i
+  normalization := nativeBouquetNormalization _ _ _ (spec i)
+    ((nativeJoinCongr _ Z (sphereComplex (ds.get i).val) Z
+      ⟨FiniteVertexCylinder.vertexPoint _ none (bouquetMappedVertex ds i)⟩ ⟨z⟩
+      ⟨spherePoint (ds.get i).val⟩ ⟨z⟩
+      (coordinateHomeomorph (sphereComplex (ds.get i).val) (bouquetInclusion ds i)).symm.toHomotopyEquiv
+      (HomotopyEquiv.refl _)).trans (E i))
+
+private theorem bouquetJoinFamilyComplex {W : Type*} [Fintype W] [DecidableEq W]
+    (ds : BouquetSpec) (Z : PreAbstractSimplicialComplex W) (z : FiniteSimplicialJoin.Space Z)
+    (spec : Fin ds.length → BouquetSpec)
+    (E : ∀ i, FiniteSimplicialJoin.Space
+      (FiniteSimplicialJoin.simplicialJoin (sphereComplex (ds.get i).val) Z) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex (spec i))) :
+    vertexFamilyComplex none (List.ofFn (bouquetJoinPieces ds Z z spec E)) = bouquetComplex ds := by
+  apply SetLike.ext
+  intro s
+  rw [mem_bouquetComplex]
+  change (s ∈ vertexComplex none ∨ s ∈ unionList _) ↔ _
+  rw [mem_unionList]
+  apply or_congr Iff.rfl
+  constructor
+  · rintro ⟨J, hJ, hs⟩
+    obtain ⟨P, hP, rfl⟩ := List.mem_map.mp hJ
+    obtain ⟨i, rfl⟩ := List.mem_ofFn.mp hP
+    exact ⟨i, hs⟩
+  · rintro ⟨i, hs⟩
+    exact ⟨_, List.mem_map.mpr ⟨_, List.mem_ofFn.mpr ⟨i, rfl⟩, rfl⟩, hs⟩
+
+private def bouquetFamilyJoinNormalization {W : Type*} [Fintype W] [DecidableEq W]
+    (ds : BouquetSpec) (Z : PreAbstractSimplicialComplex W) (z : FiniteSimplicialJoin.Space Z)
+    (spec : Fin ds.length → BouquetSpec)
+    (E : ∀ i, FiniteSimplicialJoin.Space
+      (FiniteSimplicialJoin.simplicialJoin (sphereComplex (ds.get i).val) Z) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex (spec i))) :
+    FiniteSimplicialJoin.Space (FiniteSimplicialJoin.simplicialJoin (bouquetComplex ds) Z) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex ((List.ofFn spec).flatten)) := by
+  let ps := List.ofFn (bouquetJoinPieces ds Z z spec E)
+  have hd : ps.Pairwise (fun P Q => P.complex ⊓ Q.complex = vertexComplex none) :=
+    List.pairwise_ofFn.mpr (fun i j hij => bouquetMappedIntersection ds i j (ne_of_lt hij))
+  let F := vertexFamilyJoinBased Z z (none : BouquetVertices ds) ps hd
+  let e := Homeomorph.setCongr (congrArg
+    (fun K => FiniteConeCollapse.realization (FiniteSimplicialJoin.simplicialJoin K Z))
+    (bouquetJoinFamilyComplex ds Z z spec E).symm)
+  have hs : ps.flatMap (·.spec) = (List.ofFn spec).flatten := by
+    simp only [ps, List.flatMap_def, List.map_ofFn, bouquetJoinPieces]
+  exact e.toHomotopyEquiv.trans ((basedOrdinary F).trans (bouquetListCast hs).toHomotopyEquiv)
+
+end BouquetJoinAssembly
+
+#print axioms bouquetFamilyJoinNormalization
+#print axioms vertexFamilyJoinBased
+#print axioms spherePairJoinNormalization
+#print axioms familyJoinBased
+#print axioms basedBouquetAppend
+#print axioms vertexUnionJoinBased
+#print axioms twoComponentJoinBased
+#print axioms nativeConeSuspensionHomeomorph
+#print axioms nativeConeSuspension_base
 #print axioms auxiliaryBasedQuotientSplit
 #print axioms unionConeCollapseBased
 #print axioms nativeConeRebasedCollapse
