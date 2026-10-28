@@ -4,7 +4,7 @@
    mirror-E: none(waiver:audit-open-22063)
    anchors: [mathlib/module/Mathlib.Data.Nat.ModEq]
    utility: none
-   digest: A unique physical SMALL forces odd period, exact amplitude, and forward half-width completion. -/
+   digest: A unique physical SMALL forces odd period, exact amplitude, and forward completion. -/
 module
 public import D5.S3.Combinatorics.Circle.MixedSuffixEnergy
 
@@ -44,8 +44,8 @@ private theorem closing_profile (k : ℕ) (hk : 3 ≤ k) (Q N C : ℤ)
   have hfirst : w 1 = 2 * w 0 := by
     have ht := hs 0 (by omega)
     have ha' : w 0 < Q := by simpa [abs_of_pos hpos] using hsmall
-    simpa only [zero_add, doubleStep, if_neg (show ¬ N < 4 * w 0 by omega),
-      if_neg (show ¬ 4 * w 0 < -N by omega)] using ht
+    simpa only [zero_add, doubleStep, ite_eq_right (show ¬ N < 4 * w 0 by omega),
+      ite_eq_right (show ¬ 4 * w 0 < -N by omega)] using ht
   let d := 6 * w 0 - N
   have hform : ∀ j, 1 ≤ j → j ≤ k →
       (if j % 2 = 1 then 0 < w j else w j < 0) ∧
@@ -71,15 +71,15 @@ private theorem closing_profile (k : ℕ) (hk : 3 ≤ k) (Q N C : ℤ)
         · have he' : (j + 1) % 2 ≠ 1 := by omega
           simp only [he, ite_true] at hsgn heq
           rw [abs_of_pos hsgn] at hl
-          rw [doubleStep, if_pos (show N < 4 * w j by omega)] at ht
-          simp only [Nat.succ_eq_add_one, he', ite_false, hp]
+          rw [doubleStep, ite_eq_left (show N < 4 * w j by omega)] at ht
+          simp only [he', ite_false, hp]
           constructor <;> nlinarith
         · have he' : (j + 1) % 2 = 1 := by omega
           simp only [he, ite_false] at hsgn heq
           rw [abs_of_neg hsgn] at hl
-          rw [doubleStep, if_neg (show ¬ N < 4 * w j by omega),
-            if_pos (show 4 * w j < -N by omega)] at ht
-          simp only [Nat.succ_eq_add_one, he', ite_true, hp]
+          rw [doubleStep, ite_eq_right (show ¬ N < 4 * w j by omega),
+            ite_eq_left (show 4 * w j < -N by omega)] at ht
+          simp only [he', ite_true, hp]
           constructor <;> nlinarith
   have hkodd : k % 2 = 1 := by
     have ht := (hform k (by omega) (by omega)).1
@@ -88,7 +88,7 @@ private theorem closing_profile (k : ℕ) (hk : 3 ≤ k) (Q N C : ℤ)
   have hlast := (hform k (by omega) (by omega)).2
   simp only [hkodd, ite_true, hclose] at hlast
   have hp : (2 : ℤ) ^ k = 2 * (2 : ℤ) ^ (k - 1) := by
-    rw [show k = (k - 1) + 1 by omega, pow_succ]
+    conv_lhs => rw [show k = (k - 1) + 1 by omega, pow_succ]
     ring
   have hNpos : 0 < N := by omega
   have hcancel : N * (3 * w 0 - C) = 0 := by dsimp [d] at hlast; nlinarith
@@ -147,12 +147,14 @@ theorem single_small_rigidity {k : ℕ} (hk : 3 ≤ k) (t : ℕ) (a : Fin k)
     by_contra h
     have hz : w 0 = 0 := by omega
     rw [hz] at ht
-    simp [doubleStep, hNpos.not_gt, show ¬ (0 : ℤ) < -modulus k by omega] at ht
-    rw [show 0 + 1 = 1 by omega, ht, abs_zero] at hlarge
+    simp [doubleStep, hNpos.not_gt] at ht
+    rw [ht, abs_zero] at hlarge
     omega
   have hc : w k = w 0 := by
     dsimp [w]
-    rw [show k = 0 + k by omega, phase_period]
+    have he : phase (by omega) a k = phase (by omega) a 0 := by
+      simpa only [zero_add] using phase_period (by omega) a 0
+    rw [he]
   have ht := closing_profile k hk (quarter k) (modulus k) (half k)
     hQ hN hC rfl w hb hs (by simpa [hw0, abs_abs] using ha) hl hpos hc
   simpa only [w, neg, hw0] using ht
