@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.CubicGain.PrimitivePrefix
 import Reg.Support.SingleDependentReadout
 
+/-! Full-source word-history registration with a fractional-endpoint intervention. -/
+
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Observer.CubicGain
@@ -88,8 +90,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have ha1 : a=1 := by
     rw [hb0] at hab
     have hh : a.natAbs=1 := by simpa using hab
-    have hh' : |a|=1 := by exact_mod_cast hh
-    rwa [abs_of_nonneg ha] at hh'
+    have hh' : (a.natAbs : ℤ)=1 := by exact_mod_cast hh
+    simpa [Int.natCast_natAbs,abs_of_nonneg ha] using hh'
   have hlevel := congrFun (hlev.2 (2 : Fin 4)) 1
   change (fractionalEndpoints 2 *ᵥ (![(a:ℝ),-(b:ℝ)] : Fin 2 → ℝ)) 1 =
     (![(a:ℝ),-(b:ℝ)] + (m 2:ℝ) • ![(d:ℝ),(c:ℝ)]) 1 at hlevel
@@ -110,7 +112,7 @@ def family : Registration arena (type_of% @whole_word_primitive_representation) 
     intro h
     have he := congrArg (fun A : Fin 4 → Mat => A 1 0 0) h
     norm_num [actual,realize,endpoint,
-      CommonWordSensitivity.futureProduct,CommonWordSensitivity.actionM] at he
+      CommonWordSensitivity.futureProduct,_root_.D5.S3.Observer.CubicGain.actionM] at he
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@whole_word_primitive_representation) (Realization signature) Unit Unit := {
