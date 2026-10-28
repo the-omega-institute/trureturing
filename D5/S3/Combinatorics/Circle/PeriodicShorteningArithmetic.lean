@@ -40,7 +40,7 @@ def charge (d w : ℕ) (i : Fin d) : ℤ :=
   z / 2 + z % 2
 
 set_option maxHeartbeats 2000000 in
-private theorem digit_data (d w : ℕ) (hd : 2 ≤ d)
+theorem digit_data (d w : ℕ) (hd : 2 ≤ d)
     (hw : w ≤ 2 ^ (d - 1) - 1) (i : Fin d) :
     0 ≤ charge d w i ∧
     actualSource d w i = (2 : ℤ) ^ i.val * w - ((2 : ℤ) ^ d - 1) * charge d w i ∧
@@ -120,6 +120,34 @@ private theorem digit_data (d w : ℕ) (hd : 2 ≤ d)
   · rw [haeq, hyeq, he]; dsimp [a, y]; ring
 
 
+/-- Total charge in the native old-source phase. -/
+theorem charge_sum (d w : ℕ) (hd : 2 ≤ d)
+    (hw : w ≤ 2 ^ (d - 1) - 1) :
+    (∑ i : Fin d, charge d w i) = (w : ℤ) := by
+  let q : ℤ := 2 ^ d
+  let a := actualSource d w
+  let e := charge d w
+  have hq : 4 ≤ q := by
+    have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hd
+    norm_num at this; exact this
+  have hdigit := digit_data d w hd hw
+  have hasum : (∑ i : Fin d, a i) = 0 :=
+    (ZeroSumSubsets.source_cycle (by omega : 0 < d) w).2.1
+  have hpow : (∑ i : Fin d, (2 : ℤ) ^ i.val) = q - 1 := by
+    rw [Fin.sum_univ_eq_sum_range]
+    have h := geom_sum_mul (2 : ℤ) d
+    norm_num at h
+    exact h
+  have heq : (∑ i : Fin d, a i) =
+      (∑ i : Fin d, (2 : ℤ) ^ i.val) * w - (q - 1) * ∑ i : Fin d, e i := by
+    calc
+      _ = ∑ i : Fin d, ((2 : ℤ) ^ i.val * w - (q - 1) * e i) :=
+        Finset.sum_congr rfl (fun i _ => (hdigit i).2.1)
+      _ = _ := by rw [Finset.sum_sub_distrib, ← Finset.sum_mul, ← Finset.mul_sum]
+  rw [hasum, hpow] at heq
+  nlinarith
+
+
 theorem geom_mono (d : ℕ) (hd : 1 ≤ d) {r m : ℕ} (hr : r ≤ m) :
     (geom d r : ℤ) ≤ (geom d m : ℤ) := by
   have hq : (2 : ℤ) ≤ 2 ^ d := by
@@ -189,21 +217,12 @@ theorem periodic_source_equations
       exact_mod_cast (show w + 1 ≤ 2 ^ (d - 1) by have := Nat.one_le_two_pow (n := d - 1); omega)
     omega
   have hdigit := digit_data d w hd hw
-  have hasum : (∑ i : Fin d, a i) = 0 := (ZeroSumSubsets.source_cycle (by omega : 0 < d) w).2.1
   have hpow : (∑ i : Fin d, (2 : ℤ) ^ i.val) = q - 1 := by
     rw [Fin.sum_univ_eq_sum_range]
     have h := geom_sum_mul (2 : ℤ) d
     norm_num at h
     exact h
-  have hesum : (∑ i : Fin d, e i) = (w : ℤ) := by
-    have heq : (∑ i : Fin d, a i) =
-        (∑ i : Fin d, (2 : ℤ) ^ i.val) * w - (q - 1) * ∑ i : Fin d, e i := by
-      calc
-        _ = ∑ i : Fin d, ((2 : ℤ) ^ i.val * w - (q - 1) * e i) :=
-          Finset.sum_congr rfl (fun i _ => (hdigit i).2.1)
-        _ = _ := by rw [Finset.sum_sub_distrib, ← Finset.sum_mul, ← Finset.mul_sum]
-    rw [hasum, hpow] at heq
-    nlinarith
+  have hesum : (∑ i : Fin d, e i) = (w : ℤ) := charge_sum d w hd hw
   have hfsum (r : ℕ) : (∑ i : Fin d, f r i) = (w : ℤ) * q ^ r := by
     dsimp [f]
     rw [Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul, hpow, hesum]
