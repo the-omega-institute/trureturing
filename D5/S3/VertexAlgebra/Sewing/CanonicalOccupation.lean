@@ -756,7 +756,7 @@ private theorem rowWeight_sub_le (D : LatticeData) (L : ℝ) (hL : 1 ≤ L)
   have hb := occupation_sub_bounds D d x
   dsimp [rowWeight]
   apply mul_le_mul
-  · exact pow_le_pow_left₀ (by positivity) (by exact_mod_cast Nat.add_le_add_left hb.1 1)
+  · exact pow_le_pow_left₀ (by positivity) (by exact_mod_cast Nat.add_le_add_left hb.1 1) K
   · exact pow_le_pow_right₀ hL hb.2
   · positivity
   · positivity
@@ -764,7 +764,7 @@ private theorem rowWeight_sub_le (D : LatticeData) (L : ℝ) (hL : 1 ≤ L)
 private theorem rowWeight_grow (D : LatticeData) (L : ℝ) (hL : 1 ≤ L)
     (K t : ℕ) (d : Occ D) : rowWeight D L K d ≤ rowWeight D L (K + t) d := by
   dsimp [rowWeight]
-  exact mul_le_mul_of_nonneg_right (pow_le_pow_right₀ (by positivity) (Nat.le_add_right _ _))
+  exact mul_le_mul_of_nonneg_right (pow_le_pow_right₀ (by have hn := Nat.cast_nonneg (α := ℝ) (level D d); linarith) (Nat.le_add_right _ _))
     (pow_nonneg (by linarith) _)
 
 /-- One actual normal-product insertion preserves the polynomial row envelope. -/
@@ -787,14 +787,18 @@ private theorem word_row_step (D : LatticeData) (α β : Charge D)
   have hG : 0 ≤ G := Finset.sum_nonneg (fun _ _ => norm_nonneg _)
   have hP : 0 ≤ P := by dsimp [P]; positivity
   have hF : 0 ≤ F := by
+    dsimp [F]
     apply Finset.sum_nonneg
     intro j hj
     apply mul_nonneg (Nat.cast_nonneg _)
-    split_ifs <;> positivity
+    split_ifs
+    · exact hC _
+    · exact le_rfl
+  have hCe : 0 ≤ C e := hC e
   refine ⟨F + (x.2 + 1 : ℝ) * P * (Z + G) * C e, by positivity, ?_⟩
   intro d m
   let N : ℝ := 1 + (level D d : ℝ)
-  have hN : 1 ≤ N := by dsimp [N]; positivity
+  have hN : 1 ≤ N := by dsimp [N]; have hn := Nat.cast_nonneg (α := ℝ) (level D d); linarith
   have hN0 : 0 ≤ N := le_trans zero_le_one hN
   have hW := rowWeight_nonneg D L hL K d
   have hb (a : Fin D.rank) (n : ℕ) (m' : ℤ) :
@@ -806,10 +810,10 @@ private theorem word_row_step (D : LatticeData) (α β : Charge D)
     have hjN : (j : ℝ) ≤ (x.2 + 1 : ℝ) * N := by
       have hj' : (j : ℝ) ≤ (x.2 : ℝ) + level D d := by exact_mod_cast (show j ≤ x.2 + level D d by omega)
       dsimp [N]
-      nlinarith [Nat.cast_nonneg (level D d)]
+      nlinarith [Nat.cast_nonneg (α := ℝ) (level D d), Nat.cast_nonneg (α := ℝ) x.2]
     calc
       _ ≤ (j : ℝ) ^ x.2 := by exact_mod_cast Nat.choose_le_pow j x.2
-      _ ≤ ((x.2 + 1 : ℝ) * N) ^ x.2 := pow_le_pow_left₀ (Nat.cast_nonneg _) hjN
+      _ ≤ ((x.2 + 1 : ℝ) * N) ^ x.2 := pow_le_pow_left₀ (Nat.cast_nonneg _) hjN x.2
       _ = _ := mul_pow _ _ _
   have hpos (j : ℕ) (hj : j < x.2 + level D d + 1) :
       ‖(-1 : ℂ) ^ x.2 * (j.choose x.2 : ℂ) *
@@ -832,10 +836,14 @@ private theorem word_row_step (D : LatticeData) (α β : Charge D)
         have hsq : 1 ≤ N ^ 2 := one_le_pow₀ hN
         calc
           _ ≤ Z * (C e * rowWeight D L K d) := mul_le_mul_of_nonneg_left (hrow e d _) hZ
-          _ ≤ (Z + G) * N ^ 2 * (C e * rowWeight D L K d) := by gcongr; nlinarith
+          _ ≤ (Z + G) * N ^ 2 * (C e * rowWeight D L K d) := by
+            apply mul_le_mul_of_nonneg_right _ (mul_nonneg hCe hW)
+            exact (le_add_of_nonneg_right hG).trans
+              (le_mul_of_one_le_right (add_nonneg hZ hG) hsq)
       · have hm : 0 ≤ (j : ℤ) - x.2 := by omega
         have hjN : ‖((j : ℤ) - x.2 : ℂ)‖ ≤ N := by
-          rw [Complex.norm_intCast, Int.norm_eq_abs, abs_of_nonneg hm]
+          simp only [Int.cast_natCast]
+          rw [← Nat.cast_sub (show x.2 ≤ j by omega), Complex.norm_natCast]
           dsimp [N]
           exact_mod_cast (show j - x.2 ≤ 1 + level D d by omega)
         have hdN (a : Fin D.rank) : (d (a, j - x.2 - 1) : ℝ) ≤ N := by
@@ -859,7 +867,10 @@ private theorem word_row_step (D : LatticeData) (α β : Charge D)
           _ = G * N ^ 2 * (C e * rowWeight D L K d) := by
             simp only [G, ← Finset.sum_mul]
             ring
-          _ ≤ (Z + G) * N ^ 2 * (C e * rowWeight D L K d) := by gcongr; positivity
+          _ ≤ (Z + G) * N ^ 2 * (C e * rowWeight D L K d) :=
+            mul_le_mul_of_nonneg_right
+              (mul_le_mul_of_nonneg_right (le_add_of_nonneg_left hZ) (pow_nonneg hN0 _))
+              (mul_nonneg hCe hW)
     simp only [norm_mul, norm_pow, norm_neg, norm_one, one_pow, one_mul,
       Complex.norm_natCast]
     calc
@@ -888,7 +899,8 @@ private theorem word_row_step (D : LatticeData) (α β : Charge D)
         intro j hj
         rw [norm_mul, Complex.norm_natCast]
         split_ifs with he
-        · exact mul_le_mul_of_nonneg_left (hrow _ _ _) (Nat.cast_nonneg _)
+        · simpa only [mul_assoc] using mul_le_mul_of_nonneg_left
+            (hrow _ _ _) (Nat.cast_nonneg ((j + x.2).choose x.2) : (0 : ℝ) ≤ _)
         · simp
       · exact (Finset.sum_le_sum (fun j hj => hpos j (Finset.mem_range.mp hj))).trans (by simp)
     _ ≤ F * rowWeight D L (K + (x.2 + 3)) d +
@@ -898,7 +910,7 @@ private theorem word_row_step (D : LatticeData) (α β : Charge D)
       · gcongr
         dsimp [N]
         push_cast
-        nlinarith [Nat.cast_nonneg (level D d)]
+        nlinarith [Nat.cast_nonneg (α := ℝ) (level D d), Nat.cast_nonneg (α := ℝ) x.2]
     _ = _ := by
       dsimp [rowWeight, N]
       rw [pow_add, pow_succ (1 + (level D d : ℝ)) (x.2 + 2)]
