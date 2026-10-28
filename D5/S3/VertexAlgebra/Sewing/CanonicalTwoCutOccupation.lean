@@ -10,9 +10,8 @@ import D5.S3.VertexAlgebra.Sewing.CanonicalOccupation
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorIntertwiner
 import Batteries.Tactic.OpenPrivate
 
-/-! The literal two-cut occupation envelope and its analytic comparison bridge.
-The coefficient recurrence and the summability of the overlap majorant remain
-separate obligations of the owning sewing development. -/
+/-! Uniform control of both occupations for the literal canonical word recurrence.
+The finite positive overlap retains the shared occupation and exact factorials. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -396,20 +395,130 @@ private theorem mixedEnvelope_input_removal (D : LatticeData) (A T : ℝ)
   apply (le_div_iff₀ hT).mpr
   nlinarith
 
-/- The live analytic interface for the new sewing unit.  The hypothesis is the
-   exact closed mixed descendant estimate supplied by the coefficient induction;
-   keeping it explicit here makes the summability proof independently reusable
-   while the literal recurrence proof is completed in the owner module. -/
-def MixedControl (D : LatticeData) (a b : Charge D) (ω : List (Index D))
-    (A T : ℝ) : Prop :=
-  1 ≤ A ∧ 1 ≤ T ∧
-    (∀ i : Fin D.rank, ‖(a i : ℂ)‖ ≤ A) ∧
-    (∀ i : Fin D.rank,
-      ‖(bilinear D a (unitCharge D i) : ℂ)‖ ≤ T) ∧
-    (∀ (m : ℤ) (d e : Occ D),
-      ‖wordCoeff D a b ω m d e‖ ≤
-        mixedConstant D a b A T ω * mixedEnergy D d e ^ mixedRadius D ω *
-          mixedEnvelope D A T d e)
+private theorem translationEnvelope_nonneg (D : LatticeData) (T : ℝ) (hT : 0 ≤ T)
+    (e u : Occ D) : 0 ≤ translationEnvelope D T e u := by
+  unfold translationEnvelope chooseKernel Finsupp.prod
+  positivity
+
+private theorem mixedEnvelope_output_removal (D : LatticeData) (A T : ℝ)
+    (hA : 0 < A) (hT : 0 ≤ T) (d e : Occ D) (x : Index D) (hx : d x ≠ 0) :
+    mixedEnvelope D A T (d - Finsupp.single x 1) e ≤
+      (x.2 + 1 : ℝ) * (d x : ℝ) * mixedEnvelope D A T d e / A := by
+  classical
+  have hn : (x.2 + 1 : ℝ) ≠ 0 := by positivity
+  have hF (u : Occ D) (hu : u ≤ d - Finsupp.single x 1) :
+      A * factorialEnvelope D A (d - Finsupp.single x 1 - u) ≤
+        (x.2 + 1 : ℝ) * (d x : ℝ) * factorialEnvelope D A (d - u) := by
+    let v := d - Finsupp.single x 1 - u
+    have hv : v + Finsupp.single x 1 = d - u := by
+      ext y
+      have hh := hu y
+      simp only [Finsupp.tsub_apply] at hh
+      dsimp only [v]
+      simp only [Finsupp.add_apply, Finsupp.tsub_apply]
+      by_cases hy : x = y
+      · subst y; simp only [Finsupp.single_eq_same] at hh ⊢; omega
+      · simp [Finsupp.single_apply, hy]
+    have hvx : (v x + 1 : ℝ) ≤ (d x : ℝ) := by
+      have hh := hu x
+      dsimp only [v]
+      simp only [Finsupp.tsub_apply, Finsupp.single_eq_same] at hh ⊢
+      exact_mod_cast (show d x - 1 - u x + 1 ≤ d x by omega)
+    have hrec := factorialEnvelope_add_single D A v x
+    rw [hv] at hrec
+    have heq : A * factorialEnvelope D A v =
+        (x.2 + 1 : ℝ) * (v x + 1 : ℝ) * factorialEnvelope D A (d - u) := by
+      field_simp at hrec
+      nlinarith
+    rw [heq]
+    exact mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hvx (by positivity))
+      (factorialEnvelope_nonneg D A hA.le _)
+  have hsub : Finset.Iic (d - Finsupp.single x 1) ⊆ Finset.Iic d := by
+    intro u hu
+    exact Finset.mem_Iic.mpr ((Finset.mem_Iic.mp hu).trans tsub_le_self)
+  apply (le_div_iff₀ hA).mpr
+  rw [mixedEnvelope_eq_sum, mixedEnvelope_eq_sum]
+  calc
+    _ = ∑ u ∈ Finset.Iic (d - Finsupp.single x 1),
+        translationEnvelope D T e u *
+          (A * factorialEnvelope D A (d - Finsupp.single x 1 - u)) := by
+      rw [Finset.sum_mul]
+      apply Finset.sum_congr rfl
+      intro u hu; ring
+    _ ≤ ∑ u ∈ Finset.Iic (d - Finsupp.single x 1),
+        translationEnvelope D T e u *
+          ((x.2 + 1 : ℝ) * (d x : ℝ) * factorialEnvelope D A (d - u)) := by
+      apply Finset.sum_le_sum
+      intro u hu
+      exact mul_le_mul_of_nonneg_left (hF u (Finset.mem_Iic.mp hu))
+        (translationEnvelope_nonneg D T hT _ _)
+    _ ≤ ∑ u ∈ Finset.Iic d, translationEnvelope D T e u *
+        ((x.2 + 1 : ℝ) * (d x : ℝ) * factorialEnvelope D A (d - u)) := by
+      apply Finset.sum_le_sum_of_subset_of_nonneg hsub
+      intro u hu hnot
+      exact mul_nonneg (translationEnvelope_nonneg D T hT _ _) (by
+        exact mul_nonneg (by positivity) (factorialEnvelope_nonneg D A hA.le _))
+    _ = _ := by
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro u hu; ring
+
+private theorem occupation_partial_moment (D : LatticeData) (d : Occ D)
+    (S : Finset (Index D)) :
+    (∑ x ∈ S, (x.2 + 1 : ℝ) * (d x : ℝ)) ≤ (level D d : ℝ) := by
+  classical
+  have heq : (∑ x ∈ S, (x.2 + 1 : ℝ) * (d x : ℝ)) =
+      ∑ x ∈ S ∩ d.support, (x.2 + 1 : ℝ) * (d x : ℝ) := by
+    apply (Finset.sum_subset Finset.inter_subset_left _).symm
+    intro x hx hn
+    have hz : d x = 0 := by
+      by_contra hh
+      exact hn (Finset.mem_inter.mpr ⟨hx, Finsupp.mem_support_iff.mpr hh⟩)
+    simp [hz]
+  rw [heq]
+  calc
+    _ ≤ ∑ x ∈ d.support, (x.2 + 1 : ℝ) * (d x : ℝ) :=
+      Finset.sum_le_sum_of_subset_of_nonneg Finset.inter_subset_right (by intros; positivity)
+    _ = _ := by
+      simp [level, LatticePositiveEnergy.oscillatorEnergy, Finsupp.weight_apply,
+        Finsupp.sum, Nat.cast_sum, Nat.cast_mul, mul_comm]
+
+private theorem occupation_negative_moment (D : LatticeData) (d : Occ D)
+    (i : Fin D.rank) (k n : ℕ) :
+    (∑ j ∈ Finset.range n, (j + k + 1 : ℝ) * (d (i,j+k) : ℝ)) ≤ (level D d : ℝ) := by
+  classical
+  have hi : Set.InjOn (fun j : ℕ => (i,j+k)) (Finset.range n) := by
+    intro j hj l hl h
+    have hh := congrArg Prod.snd h
+    dsimp only at hh
+    omega
+  have hh := occupation_partial_moment D d ((Finset.range n).image (fun j => (i,j+k)))
+  rw [Finset.sum_image hi] at hh
+  simpa [Nat.cast_add, Nat.cast_one] using hh
+
+private theorem occupation_positive_moment (D : LatticeData) (e : Occ D)
+    (i : Fin D.rank) (k n : ℕ) :
+    (∑ j ∈ (Finset.range n).filter (fun j => k < j),
+      ((j : ℝ) - k) * (e (i,j-k-1) : ℝ)) ≤ (level D e : ℝ) := by
+  classical
+  have hi : Set.InjOn (fun j : ℕ => (i,j-k-1))
+      ((Finset.range n).filter (fun j => k < j)) := by
+    intro j hj l hl h
+    have hjk := (Finset.mem_filter.mp hj).2
+    have hlk := (Finset.mem_filter.mp hl).2
+    have hh := congrArg Prod.snd h
+    dsimp only at hh
+    omega
+  have hh := occupation_partial_moment D e
+    (((Finset.range n).filter (fun j => k < j)).image (fun j => (i,j-k-1)))
+  rw [Finset.sum_image hi] at hh
+  apply le_trans (le_of_eq _) hh
+  apply Finset.sum_congr rfl
+  intro j hj
+  have hjk := (Finset.mem_filter.mp hj).2
+  congr 1
+  rw [← Nat.cast_sub (show k ≤ j by omega)]
+  exact_mod_cast (show j - k = j - k - 1 + 1 by omega)
 
 private theorem mixedConstant_nonneg (D : LatticeData) (a b : Charge D)
     (ω : List (Index D)) (A T : ℝ) (hA : 1 ≤ A) (hT : 1 ≤ T) :
@@ -423,62 +532,234 @@ private theorem mixedConstant_nonneg (D : LatticeData) (a b : Charge D)
         have hA0 : 0 ≤ A := by linarith
         positivity)
 
-theorem mixed_pair_summable_of_control
-    (D : LatticeData) (a b : Charge D) (ω : List (Index D)) (s : ℤ)
-    (L B : ℝ) (hL : 1 ≤ L) (hB : 1 ≤ B) (K1 K2 : ℕ)
-    (q1 q2 : ℂ) (hq1 : ‖q1‖ < 1) (hq2 : ‖q2‖ < 1)
-    (A T : ℝ) (hcontrol : MixedControl D a b ω A T)
-    (hmajor : Summable (fun z : Occ D × Occ D =>
-      ‖q1‖ ^ level D z.1 * ‖q2‖ ^ level D z.2 *
-        rowWeight D L K1 z.1 *
-        (mixedConstant D a b A T ω * mixedEnergy D z.1 z.2 ^ mixedRadius D ω *
-          mixedEnvelope D A T z.1 z.2) *
-        columnWeight D B K2 z.2)) :
-    Summable (fun z : Occ D × Occ D =>
-      ‖q1‖ ^ level D z.1 * ‖q2‖ ^ level D z.2 *
-        rowWeight D L K1 z.1 *
-        ‖wordCoeff D a b ω
-          (s + (level D z.2 : ℤ) - (level D z.1 : ℤ)) z.1 z.2‖ *
-        columnWeight D B K2 z.2) := by
+private theorem occupation_colored_moment (D : LatticeData) (e : Occ D)
+    (i : Fin D.rank) (k n : ℕ) :
+    (∑ j ∈ (Finset.range n).filter (fun j => k < j),
+      ((j : ℝ) - k) * ∑ a : Fin D.rank,
+        ‖(D.G i a : ℂ)‖ * (e (a,j-k-1) : ℝ)) ≤
+      (∑ a : Fin D.rank, ‖(D.G i a : ℂ)‖) * (level D e : ℝ) := by
   classical
-  rcases hcontrol with ⟨hA, hT, ha, ht, hcoeff⟩
-  have hC : 0 ≤ mixedConstant D a b A T ω :=
-    mixedConstant_nonneg D a b ω A T hA hT
-  have hrow (d : Occ D) : 0 ≤ rowWeight D L K1 d :=
-    rowWeight_nonneg D L hL K1 d
-  have hcol (e : Occ D) : 0 ≤ columnWeight D B K2 e :=
-    columnWeight_nonneg D B hB K2 e
-  refine hmajor.of_nonneg_of_le (fun z => by
-    have hrowz := hrow z.1
-    have hcolz := hcol z.2
-    have hq1z : 0 ≤ ‖q1‖ ^ level D z.1 := by positivity
-    have hq2z : 0 ≤ ‖q2‖ ^ level D z.2 := by positivity
-    exact mul_nonneg
-      (mul_nonneg
-        (mul_nonneg
-          (mul_nonneg hq1z hq2z) hrowz)
-        (norm_nonneg _)) hcolz) ?_
-  intro z
-  have hb := hcoeff (s + (level D z.2 : ℤ) - (level D z.1 : ℤ)) z.1 z.2
-  have hq10 : 0 ≤ ‖q1‖ ^ level D z.1 := by positivity
-  have hq20 : 0 ≤ ‖q2‖ ^ level D z.2 := by positivity
-  have hw : 0 ≤ ‖q1‖ ^ level D z.1 * ‖q2‖ ^ level D z.2 *
-      rowWeight D L K1 z.1 := by
-    exact mul_nonneg (mul_nonneg (by positivity) (by positivity)) (hrow z.1)
-  have he : 0 ≤ mixedEnvelope D A T z.1 z.2 :=
-    mixedEnvelope_nonneg D A T (by linarith) (by linarith) _ _
-  have hm : 0 ≤ mixedEnergy D z.1 z.2 ^ mixedRadius D ω := by
-    dsimp [mixedEnergy]
-    positivity
   calc
-    ‖q1‖ ^ level D z.1 * ‖q2‖ ^ level D z.2 * rowWeight D L K1 z.1 *
-        ‖wordCoeff D a b ω (s + (level D z.2 : ℤ) - (level D z.1 : ℤ)) z.1 z.2‖ *
-        columnWeight D B K2 z.2
-        ≤ ‖q1‖ ^ level D z.1 * ‖q2‖ ^ level D z.2 * rowWeight D L K1 z.1 *
-          (mixedConstant D a b A T ω * mixedEnergy D z.1 z.2 ^ mixedRadius D ω *
-            mixedEnvelope D A T z.1 z.2) * columnWeight D B K2 z.2 := by
-      exact mul_le_mul_of_nonneg_right
-        (mul_le_mul_of_nonneg_left hb hw) (hcol z.2)
+    _ = ∑ a : Fin D.rank, ‖(D.G i a : ℂ)‖ *
+        ∑ j ∈ (Finset.range n).filter (fun j => k < j),
+          ((j : ℝ) - k) * (e (a,j-k-1) : ℝ) := by
+      simp_rw [Finset.mul_sum]
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro a ha
+      apply Finset.sum_congr rfl
+      intro j hj
+      ring
+    _ ≤ ∑ a : Fin D.rank, ‖(D.G i a : ℂ)‖ * (level D e : ℝ) := by
+      apply Finset.sum_le_sum
+      intro a ha
+      exact mul_le_mul_of_nonneg_left (occupation_positive_moment D e a k n) (norm_nonneg _)
+    _ = _ := (Finset.sum_mul ..).symm
+
+private theorem mixed_descendant_bound (D : LatticeData) (a b : Charge D)
+    (A T : ℝ) (hA : 1 ≤ A) (hT : 1 ≤ T)
+    (ha : ∀ i, ‖(a i : ℂ)‖ ≤ A)
+    (ht : ∀ i, ‖(bilinear D a (unitCharge D i) : ℂ)‖ ≤ T)
+    (ω : List (Index D)) (m : ℤ) (d e : Occ D) :
+    ‖wordCoeff D a b ω m d e‖ ≤
+      mixedConstant D a b A T ω * mixedEnergy D d e ^ mixedRadius D ω *
+        mixedEnvelope D A T d e := by
+  classical
+  have hA0 : 0 < A := by linarith
+  have hT0 : 0 < T := by linarith
+  induction ω generalizing m d e with
+  | nil => simpa [mixedConstant, mixedRadius] using ground_mixed_bound D a b A T hA hT ha ht m d e
+  | cons x ω ih =>
+    let C := mixedConstant D a b A T ω
+    let R := mixedRadius D ω
+    let N := mixedEnergy D d e
+    let M := mixedEnvelope D A T d e
+    let V := C * N ^ R * M
+    let P : ℝ := (x.2 + 1 : ℝ) ^ x.2
+    let Z : ℝ := ‖(bilinear D (unitCharge D x.1) b : ℂ)‖
+    let G : ℝ := ∑ a : Fin D.rank, ‖(D.G x.1 a : ℂ)‖
+    have hC : 0 ≤ C := mixedConstant_nonneg D a b ω A T hA hT
+    have hN : 1 ≤ N := by
+      dsimp [N, mixedEnergy]
+      have hd0 := Nat.cast_nonneg (α := ℝ) (level D d)
+      have he0 := Nat.cast_nonneg (α := ℝ) (level D e)
+      linarith
+    have hM : 0 ≤ M := mixedEnvelope_nonneg D A T hA0.le hT0.le d e
+    have hV : 0 ≤ V := by dsimp [V]; positivity
+    have hP : 0 ≤ P := by dsimp [P]; positivity
+    have hG : 0 ≤ G := Finset.sum_nonneg (fun _ _ => norm_nonneg _)
+    have hde : (level D d : ℝ) ≤ N := by
+      dsimp [N, mixedEnergy]
+      have he0 := Nat.cast_nonneg (α := ℝ) (level D e)
+      linarith
+    have hee : (level D e : ℝ) ≤ N := by
+      dsimp [N, mixedEnergy]
+      have hd0 := Nat.cast_nonneg (α := ℝ) (level D d)
+      linarith
+    have htail (m' : ℤ) : ‖wordCoeff D a b ω m' d e‖ ≤ V := ih m' d e
+    have hout (y : Index D) (hy : d y ≠ 0) (m' : ℤ) :
+        ‖wordCoeff D a b ω m' (d - Finsupp.single y 1) e‖ ≤
+          V * ((y.2 + 1 : ℝ) * (d y : ℝ) / A) := by
+      have henergy : mixedEnergy D (d - Finsupp.single y 1) e ≤ N := by
+        dsimp [mixedEnergy, N]
+        have hh : (level D (d-Finsupp.single y 1) : ℝ) ≤ level D d :=
+          Nat.cast_le.mpr (occupation_sub_bounds D d y).1
+        linarith
+      calc
+        _ ≤ C * N ^ R * mixedEnvelope D A T (d - Finsupp.single y 1) e := by
+          apply (ih m' _ e).trans
+          exact mul_le_mul_of_nonneg_right
+            (mul_le_mul_of_nonneg_left
+              (pow_le_pow_left₀ (by dsimp [mixedEnergy]; positivity) henergy R) hC)
+            (mixedEnvelope_nonneg D A T hA0.le hT0.le _ _)
+        _ ≤ C * N ^ R * ((y.2 + 1 : ℝ) * (d y : ℝ) * M / A) :=
+          mul_le_mul_of_nonneg_left
+            (mixedEnvelope_output_removal D A T hA0 hT0.le d e y hy) (by positivity)
+        _ = _ := by dsimp [V]; ring
+    have hin (y : Index D) (hy : e y ≠ 0) (m' : ℤ) :
+        ‖wordCoeff D a b ω m' d (e - Finsupp.single y 1)‖ ≤ V / T := by
+      have henergy : mixedEnergy D d (e - Finsupp.single y 1) ≤ N := by
+        dsimp [mixedEnergy, N]
+        have hh : (level D (e-Finsupp.single y 1) : ℝ) ≤ level D e :=
+          Nat.cast_le.mpr (occupation_sub_bounds D e y).1
+        linarith
+      calc
+        _ ≤ C * N ^ R * mixedEnvelope D A T d (e - Finsupp.single y 1) := by
+          apply (ih m' d _).trans
+          exact mul_le_mul_of_nonneg_right
+            (mul_le_mul_of_nonneg_left
+              (pow_le_pow_left₀ (by dsimp [mixedEnergy]; positivity) henergy R) hC)
+            (mixedEnvelope_nonneg D A T hA0.le hT0.le _ _)
+        _ ≤ C * N ^ R * (M / T) := mul_le_mul_of_nonneg_left
+          (mixedEnvelope_input_removal D A T hA0.le hT0 d e y hy) (by positivity)
+        _ = _ := by dsimp [V]; ring
+    have hnegpoint (j : ℕ) (hj : j ∈ Finset.range (level D d)) :
+        ‖((j + x.2).choose x.2 : ℂ) *
+          if (x.1,j+x.2) ∈ d.support then
+            wordCoeff D a b ω (m+j) (d - Finsupp.single (x.1,j+x.2) 1) e else 0‖ ≤
+          (V * N ^ x.2 / A) * ((j+x.2+1 : ℝ) * (d (x.1,j+x.2) : ℝ)) := by
+      have hchoose : ((j + x.2).choose x.2 : ℝ) ≤ N ^ x.2 := by
+        calc
+          _ ≤ (j+1 : ℝ) ^ x.2 := by exact_mod_cast Nat.choose_add_le_add_one_pow j x.2
+          _ ≤ N ^ x.2 := pow_le_pow_left₀ (by positivity) (by
+            have hh : j+1 ≤ level D d := by simpa using Finset.mem_range.mp hj
+            exact (by exact_mod_cast hh : (j+1 : ℝ) ≤ (level D d : ℝ)).trans hde) _
+      rw [norm_mul, Complex.norm_natCast]
+      split_ifs with hd
+      · have hb := hout (x.1,j+x.2) (Finsupp.mem_support_iff.mp hd) (m+j)
+        have hb' := hb
+        simp only [Nat.cast_add, Nat.cast_one] at hb'
+        calc
+          _ ≤ N ^ x.2 * (V * ((j+x.2+1 : ℝ) * (d (x.1,j+x.2) : ℝ) / A)) :=
+            mul_le_mul hchoose hb' (norm_nonneg _) (by positivity)
+          _ = _ := by push_cast; ring
+      · have hz := Finsupp.notMem_support_iff.mp hd
+        simp [hz]
+    have hneg : ‖∑ j ∈ Finset.range (level D d),
+        ((j+x.2).choose x.2 : ℂ) *
+          if (x.1,j+x.2) ∈ d.support then
+            wordCoeff D a b ω (m+j) (d-Finsupp.single (x.1,j+x.2) 1) e else 0‖ ≤
+        V * N ^ (x.2+1) / A := by
+      calc
+        _ ≤ ∑ j ∈ Finset.range (level D d),
+            (V*N^x.2/A) * ((j+x.2+1 : ℝ) * (d (x.1,j+x.2) : ℝ)) :=
+          (norm_sum_le _ _).trans (Finset.sum_le_sum hnegpoint)
+        _ = (V*N^x.2/A) * ∑ j ∈ Finset.range (level D d),
+            (j+x.2+1 : ℝ) * (d (x.1,j+x.2) : ℝ) := (Finset.mul_sum ..).symm
+        _ ≤ (V*N^x.2/A) * N := mul_le_mul_of_nonneg_left
+          ((occupation_negative_moment D d x.1 x.2 _).trans hde) (by positivity)
+        _ = _ := by rw [pow_succ]; ring
+    have hchoose (j : ℕ) (hj : j ∈ Finset.range (x.2 + level D e + 1)) :
+        (j.choose x.2 : ℝ) ≤ P * N ^ x.2 := by
+      have hjN : (j : ℝ) ≤ (x.2 + 1 : ℝ) * N := by
+        have hh : (j : ℝ) ≤ x.2 + (level D e : ℝ) := by
+          exact_mod_cast (show j ≤ x.2 + level D e by simpa using Finset.mem_range.mp hj)
+        nlinarith [Nat.cast_nonneg (α := ℝ) x.2]
+      calc
+        _ ≤ (j : ℝ) ^ x.2 := by exact_mod_cast Nat.choose_le_pow j x.2
+        _ ≤ ((x.2+1 : ℝ)*N)^x.2 := pow_le_pow_left₀ (by positivity) hjN _
+        _ = _ := mul_pow _ _ _
+    let pos := fun j : ℕ => (-1 : ℂ)^x.2 * (j.choose x.2 : ℂ) *
+      (if j < x.2 then 0 else if j = x.2 then
+        (bilinear D (unitCharge D x.1) b : ℂ) * wordCoeff D a b ω (m-j-1) d e
+      else ((j : ℤ)-x.2 : ℂ) * ∑ a' : Fin D.rank,
+        (D.G x.1 a' : ℂ) * (e (a',j-x.2-1) : ℂ) *
+          wordCoeff D a b ω (m-j-1) d (e-Finsupp.single (a',j-x.2-1) 1))
+    have hpospoint (j : ℕ) (hj : j ∈ Finset.range (x.2 + level D e + 1)) :
+        ‖pos j‖ ≤ (if j = x.2 then Z*V else 0) +
+          (P*N^x.2*V/T) * (if x.2 < j then
+            ((j : ℝ)-x.2) * ∑ a' : Fin D.rank,
+              ‖(D.G x.1 a' : ℂ)‖ * (e (a',j-x.2-1) : ℝ) else 0) := by
+      dsimp only [pos]
+      by_cases hjlt : j < x.2
+      · simp [hjlt, show j ≠ x.2 by omega, show ¬ x.2 < j by omega]
+      · by_cases hjeq : j = x.2
+        · subst j
+          simpa [Z, norm_mul, Complex.norm_natCast] using
+            mul_le_mul_of_nonneg_left (htail (m-x.2-1)) (norm_nonneg
+              (bilinear D (unitCharge D x.1) b : ℂ))
+        · have hjgt : x.2 < j := by omega
+          simp only [hjlt, hjeq, hjgt, ite_false, ite_true, zero_add,
+            norm_mul, norm_pow, norm_neg, norm_one, one_pow, one_mul,
+            Complex.norm_natCast]
+          have hnorm : ‖((j : ℤ)-x.2 : ℂ)‖ = (j : ℝ)-x.2 := by
+            simp only [Int.cast_natCast]
+            rw [← Nat.cast_sub (show x.2 ≤ j by omega), Complex.norm_natCast,
+              Nat.cast_sub (show x.2 ≤ j by omega)]
+          rw [hnorm]
+          have hinner : ‖∑ a' : Fin D.rank,
+              (D.G x.1 a' : ℂ) * (e (a',j-x.2-1) : ℂ) *
+                wordCoeff D a b ω (m-j-1) d (e-Finsupp.single (a',j-x.2-1) 1)‖ ≤
+              (∑ a' : Fin D.rank, ‖(D.G x.1 a' : ℂ)‖ *
+                (e (a',j-x.2-1) : ℝ)) * (V/T) := by
+            apply (norm_sum_le _ _).trans
+            rw [Finset.sum_mul]
+            apply Finset.sum_le_sum
+            intro a' ha'
+            rw [norm_mul, norm_mul, Complex.norm_natCast]
+            by_cases hz : e (a',j-x.2-1) = 0
+            · simp [hz]
+            · exact mul_le_mul_of_nonneg_left (hin _ hz _) (by positivity)
+          calc
+            _ ≤ (P*N^x.2) * (((j : ℝ)-x.2) *
+                ((∑ a' : Fin D.rank, ‖(D.G x.1 a' : ℂ)‖ * (e (a',j-x.2-1) : ℝ)) * (V/T))) :=
+              mul_le_mul (hchoose j hj)
+                (mul_le_mul_of_nonneg_left hinner (sub_nonneg.mpr (Nat.cast_le.mpr (Nat.le_of_lt hjgt))))
+                (mul_nonneg (sub_nonneg.mpr (Nat.cast_le.mpr (Nat.le_of_lt hjgt)))
+                  (norm_nonneg _)) (by positivity)
+            _ = _ := by ring
+    have hpos : ‖∑ j ∈ Finset.range (x.2 + level D e + 1), pos j‖ ≤
+        Z*V + P*G*V*N^(x.2+1)/T := by
+      calc
+        _ ≤ ∑ j ∈ Finset.range (x.2 + level D e + 1),
+            ((if j = x.2 then Z*V else 0) + (P*N^x.2*V/T) *
+              (if x.2 < j then ((j : ℝ)-x.2) * ∑ a' : Fin D.rank,
+                ‖(D.G x.1 a' : ℂ)‖ * (e (a',j-x.2-1) : ℝ) else 0)) :=
+          (norm_sum_le _ _).trans (Finset.sum_le_sum hpospoint)
+        _ = Z*V + (P*N^x.2*V/T) *
+            ∑ j ∈ (Finset.range (x.2 + level D e + 1)).filter (fun j => x.2 < j),
+              ((j : ℝ)-x.2) * ∑ a' : Fin D.rank,
+                ‖(D.G x.1 a' : ℂ)‖ * (e (a',j-x.2-1) : ℝ) := by
+          have hcharge : (∑ j ∈ Finset.range (x.2+level D e+1),
+              if j = x.2 then Z*V else 0) = Z*V := by simp
+          rw [Finset.sum_add_distrib, hcharge, ← Finset.mul_sum, Finset.sum_filter]
+        _ ≤ Z*V + (P*N^x.2*V/T) * (G*N) := by
+          gcongr
+          exact (occupation_colored_moment D e x.1 x.2 _).trans
+            (mul_le_mul_of_nonneg_left hee hG)
+        _ = _ := by rw [pow_succ]; ring
+    rw [wordCoeff_cons]
+    calc
+      _ ≤ V*N^(x.2+1)/A + (Z*V + P*G*V*N^(x.2+1)/T) :=
+        (norm_add_le _ _).trans (add_le_add hneg hpos)
+      _ ≤ V*N^(x.2+1)/A + (Z*(V*N^(x.2+1)) + P*G*V*N^(x.2+1)/T) := by
+        gcongr
+        exact le_mul_of_one_le_right hV (one_le_pow₀ hN)
+      _ = _ := by
+        dsimp [V, C, R, N, M, P, Z, G, mixedConstant, mixedRadius]
+        rw [pow_add, pow_succ]
+        push_cast
+        ring
 
 end
 end D5.S3.VertexAlgebra.CanonicalTwoCutOccupation
