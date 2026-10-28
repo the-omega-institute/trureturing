@@ -66,7 +66,8 @@ def registration :
   unitName :=
     `Reg.D5.S3.Combinatorics.Orthogonality.ThetaRepresentationNonconvex.DotCauchy.unit
   realizationName :=
-    `Reg.D5.S3.Combinatorics.Orthogonality.ThetaRepresentationNonconvex.DotCauchy.source_registration
+    .str `Reg.D5.S3.Combinatorics.Orthogonality.ThetaRepresentationNonconvex.DotCauchy
+      "source_registration"
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
