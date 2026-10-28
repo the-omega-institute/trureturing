@@ -6,14 +6,10 @@
    utility: none
    digest: The literal source-clock full-band mass has a positive square-root envelope. -/
 
-module
-
-public import D5.S3.Arith.Robin.OriginalMovingCutRow
-public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import D5.S3.Arith.Robin.OriginalMovingCutRow
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
 /-! The literal reciprocal-log kernel has a positive source-clock full-band envelope. -/
-
-public section
 
 noncomputable section
 set_option autoImplicit false

@@ -1,11 +1,7 @@
-module
-
-public import D5.S3.Arith.Robin.OriginalFullBandNormalizer
-public import Reg.Support.DependentFamily
+import D5.S3.Arith.Robin.OriginalFullBandNormalizer
+import Reg.Support.DependentFamily
 
 /-! The full original source telescope and actual-integral family evidence. -/
-
-public section
 
 noncomputable section
 set_option autoImplicit false
