@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:539c7ce6ab5c2b21a8fb300eca11b88e3639aa0ce0c36d4deaffe9942e9a0f79
   normalized_sha256: sha256:539c7ce6ab5c2b21a8fb300eca11b88e3639aa0ce0c36d4deaffe9942e9a0f79
 cas_ref: sha256:539c7ce6ab5c2b21a8fb300eca11b88e3639aa0ce0c36d4deaffe9942e9a0f79
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/SharpBinaryOneRecut.sharp_binary_one_recut
+    target_statement_id: sha256:a7d3231ea64baae618b17d017d7ff2d6fb713abdfa208c4df59b1b8e8cefa399
 receipts:
   unresolved_subitems: []
