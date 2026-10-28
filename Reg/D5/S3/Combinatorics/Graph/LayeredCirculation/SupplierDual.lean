@@ -1,6 +1,5 @@
-import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Graph.LayeredCirculation.SupplierDual
-import Reg.Support.DependentFamily
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 /-! The full generic cycle-deletion statement is observed through the weight
 of its returned walk, with its endpoints and all scalar structures retained. -/
@@ -10,7 +9,6 @@ set_option relaxedAutoImplicit false
 
 open Maths Maths.MaxPlusPotential
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open LeanInformationAudit
 
 namespace Reg.D5.S3.Combinatorics.Graph.LayeredCirculation.SupplierDual
 noncomputable section
@@ -122,41 +120,6 @@ def pruningEvidence : Registration pruningArena.{uK,uV,uE}
     have eqDown := congrArg (fun x : ULift.{uK} Int => x.down) eq
     change (0 : Int) = 1 at eqDown
     omega
-
-def pruningRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@exists_nodup_visited_walkWeight_le.{0,0,0})
-    (Realization pruningSignature.{0,0,0}) (Nat → Type) Unit where
-  unitName := `Maths.MaxPlusPotential.exists_nodup_visited_walkWeight_le.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.LayeredCirculation.SupplierDual.pruningEvidence
-  realizationSource := none
-  generated := false
-  arena := .source ⟨pruningArena.{0,0,0}⟩
-  objectArena := .source ⟨pruningArena.{0,0,0}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source pruningArena.{0,0,0} ⟨pruningEvidence.{0,0,0}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize pruningSignature.{0,0,0}
-    (fun _ q walk => walkWeight q.weight walk) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Graph.LayeredCirculation.SupplierDual
-    definition := none
-    coordinates := #[0, 1, 2, 3, 4, 5, 6, 7, 10, 11]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 
 #print axioms pruningEvidence
 end
