@@ -110,7 +110,6 @@ end
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeGuardedAtomicReplacement
 
 open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeGuardedAtomicReplacement
-open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeImageSaturationInterface
 open _root_.D5.S3.Arith.FibonacciAtomic.Observer.CompletionPositiveDriftRegion (atomic_finite omega_not_finite)
 
 namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeGuardedAtomicReplacement.ExposedSuppliers
@@ -190,6 +189,7 @@ private theorem actual_law : arena.Law actual := @atomic_predecessor
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
   obtain ⟨l,rank,eq⟩ := law 0 0 (leaf true) rfl
+  change Omega = atomic l at eq
   exact omega_not_finite (eq.symm ▸ atomic_finite l)
 
 def evidence : Registration arena (type_of% (@atomic_predecessor)) where
@@ -234,6 +234,7 @@ private theorem actual_law : arena.Law actual := @pair_atomic
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
   obtain ⟨n,rank,eq,left⟩ := law (atomic_pair 0).symm
+  change Omega = atomic (n+1) at eq
   exact omega_not_finite (eq.symm ▸ atomic_finite (n+1))
 
 def evidence : Registration arena (type_of% (@pair_atomic)) where

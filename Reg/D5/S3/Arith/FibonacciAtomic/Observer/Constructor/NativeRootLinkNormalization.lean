@@ -278,7 +278,6 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     · have e : E = .var 0 1 := Option.some.inj eq.symm
       subst E
       rfl
-    · cases eq
   have eq := congrFun (((law S 0 0 1 (by decide) (by simp [S])) p).1 v sat).2 (0 : Fin 2)
   exact different_leaves eq
 
@@ -384,7 +383,9 @@ abbrev countRejected : Realization countSignature :=
 def countObserved (R : Realization countSignature) (x : Nat) := R.readout () () x
 private theorem countDependence : ObservationalDependence countSignature countActual := by
   intro role
-  exact ⟨(),0,1,by decide⟩
+  refine ⟨(),0,1,?_⟩
+  change (0 : Nat) ≠ 1
+  omega
 
 namespace SelfDecrease
 
@@ -518,6 +519,7 @@ def setObserved (R : Realization setSignature) {m : Nat} (x : Finset (Fin m)) :=
 private theorem setDependence : ObservationalDependence setSignature setActual := by
   intro role
   refine ⟨1,∅,{0},?_⟩
+  change (∅ : Finset (Fin 1)) ≠ {0}
   simp
 
 namespace Membership
@@ -531,7 +533,8 @@ private theorem rejected_law : ¬ arena.Law setRejected := by
   intro law
   let S : System 0 1 := fun _ => some (.var 0 0)
   have bad := (law S 0).mpr ⟨0,0,rfl⟩
-  exact Finset.not_mem_empty _ bad
+  change (0 : Fin 1) ∈ (∅ : Finset (Fin 1)) at bad
+  simpa using bad
 
 def evidence : Registration arena (type_of% (@mem_roots)) where
   actual := setActual
@@ -568,6 +571,7 @@ end Membership
 
 
 namespace Filters
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeImageSaturationInterface
 open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeGuardedImageSaturation
 open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeGuardedAtomicReplacement
 abbrev arena : Arena where
@@ -585,11 +589,16 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have passes : Passes p w (transformedFilters T filters) := by
     intro E t ht
     have eq : (E,t) = (.var 0 0,1) := by
-      simpa [transformedFilters,T,identity,substitute,filters] using ht
+      simpa [transformedFilters,T,identity,substitute,shift,filters] using ht
     have a := congrArg Prod.fst eq
     have b := congrArg Prod.snd eq
+    change E = .var 0 0 at a
+    change t = 1 at b
     subst E t
-    exact ⟨leaf true,rfl⟩
+    refine ⟨leaf true,?_⟩
+    change _root_.D5.S3.Arith.FibonacciAtomic.Observer.CompletionHomogeneousFixedPoints.rho
+      (leaf true) = leaf false
+    exact _root_.D5.S3.Arith.FibonacciAtomic.Observer.CompletionHomogeneousFixedPoints.rho_alpha
   have bad := ((law T p w filters).mp passes) (.var 0 0) 1 (by simp [filters])
   change NativeImage 1 (leaf true) at bad
   obtain ⟨X,eq⟩ := bad

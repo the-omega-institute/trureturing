@@ -34,10 +34,18 @@ internal sealed class NativeEffectiveAtomicGuardDocument : IScribeDocumentDefini
         var canonical=Call("canonical",Call("equations",input),Call("ranks",input,p),V("guarded"),mode);
         var body=IffOf(Call("holds",Call("atomicGuard",input,mode,e,j),Call("environment",p)),
             EqOf(Call("evaluate",Call("ranks",input,p),canonical,e),Call("atomic",j)));
-        return StatementSource.FromAuthor(Disp(All("n",V("Nat"),All("k",V("Nat"),All("m",V("Nat"),All("s",V("Nat"),
-            All("I",Call("Input",n,k,m),All("guarded",Call("Guarded",Call("equations",input)),
-            All("mode",Call("Mode",s,m),All("p",Arr(Call("Fin",n),V("Nat")),
-            Imp(Call("Legal",input,p),All("E",Call("Expression",k,m),All("j",V("Nat"),body))))))))))));
+        var statement=All("j",V("Nat"),body);
+        statement=All("E",Call("Expression",k,m),statement);
+        statement=Imp(Call("Legal",input,p),statement);
+        statement=All("p",Arr(Call("Fin",n),V("Nat")),statement);
+        statement=All("mode",Call("Mode",s,m),statement);
+        statement=All("guarded",Call("Guarded",Call("equations",input)),statement);
+        statement=All("I",Call("Input",n,k,m),statement);
+        statement=All("s",V("Nat"),statement);
+        statement=All("m",V("Nat"),statement);
+        statement=All("k",V("Nat"),statement);
+        statement=All("n",V("Nat"),statement);
+        return StatementSource.FromAuthor(Disp(statement));
     }
     private static Formula V(string n)=>F.Id(n);
     private static Formula Par(Formula f)=>Seq(Open,f,Close);

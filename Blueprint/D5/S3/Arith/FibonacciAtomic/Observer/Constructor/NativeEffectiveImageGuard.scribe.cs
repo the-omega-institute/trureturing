@@ -35,10 +35,14 @@ internal sealed class NativeEffectiveImageGuardDocument : IScribeDocumentDefinit
         var canonical=Call("canonical",Call("equations",input),Call("ranks",input,p),V("guarded"),mode);
         var body=IffOf(Call("holds",Call("imageGuard",input,mode),Call("environment",p)),
             And(Call("Legal",input,p),Call("Passes",Call("ranks",input,p),canonical,Call("filters",input))));
-        return StatementSource.FromAuthor(Disp(All("n",V("Nat"),All("k",V("Nat"),All("m",V("Nat"),
-            All("I",Call("Input",n,k,m),All("guarded",Call("Guarded",Call("equations",input)),
-            All("mode",Call("Mode",Call("threshold",Call("filters",input)),m),
-            All("p",Arr(Call("Fin",n),V("Nat")),body)))))))));
+        var statement=All("p",Arr(Call("Fin",n),V("Nat")),body);
+        statement=All("mode",Call("Mode",Call("threshold",Call("filters",input)),m),statement);
+        statement=All("guarded",Call("Guarded",Call("equations",input)),statement);
+        statement=All("I",Call("Input",n,k,m),statement);
+        statement=All("m",V("Nat"),statement);
+        statement=All("k",V("Nat"),statement);
+        statement=All("n",V("Nat"),statement);
+        return StatementSource.FromAuthor(Disp(statement));
     }
     private static StatementSource OriginalStatement()
     {
@@ -49,9 +53,13 @@ internal sealed class NativeEffectiveImageGuardDocument : IScribeDocumentDefinit
             And(Call("SourceSatisfies",input,p,v),And(Call("EffectiveInMode",input,mode,p,v),Call("SourcePasses",input,p,v))));
         var body=And(IffOf(acceptance,And(Call("Legal",input,p),Call("SourcePasses",input,p,canonical))),
             IffOf(acceptance,And(Call("Legal",input,p),existence)));
-        return StatementSource.FromAuthor(Disp(All("n",V("Nat"),All("k",V("Nat"),All("m",V("Nat"),
-            All("I",Call("Input",n,k,m),All("mode",Call("EffectiveMode",input),
-            All("p",Arr(Call("Fin",n),V("Nat")),body))))))));
+        var statement=All("p",Arr(Call("Fin",n),V("Nat")),body);
+        statement=All("mode",Call("EffectiveMode",input),statement);
+        statement=All("I",Call("Input",n,k,m),statement);
+        statement=All("m",V("Nat"),statement);
+        statement=All("k",V("Nat"),statement);
+        statement=All("n",V("Nat"),statement);
+        return StatementSource.FromAuthor(Disp(statement));
     }
     private static Formula V(string n)=>F.Id(n);
     private static Formula Par(Formula f)=>Seq(Open,f,Close);
