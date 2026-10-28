@@ -35,12 +35,12 @@ internal sealed class BiasedBoundaryTrialEnergyDocument : IScribeDocumentDefinit
         Formula SumA(Formula x) => Seq(Sum,Underscore,Grp(Seq(p,InMacro,Sp,Call("A",t))),Sp,Par(x));
         Formula bt=Par(Seq(V("b"),Cdot,Sp,tv));
         Formula bound=Seq(bt,Caret,Grp(Seq(Minus,D(1))),Cdot,Sp,SqNorm(fv));
-        Formula strict=Seq(fv,Neq,D(0),Implies,Sp,Par(And(
+        Formula strict=Seq(fv,Neq,Sp,D(0),Implies,Sp,Par(And(
             Seq(bt,Cdot,Sp,SqNorm(z),Lt,Sp,SqNorm(fv)),
             Seq(SqNorm(z),Lt,Sp,bound),
             Seq(Call("energy",fv),Lt,Sp,bound))));
         Formula body=And(
-            Seq(z,Eq,SumA(Call("lp.single",D(2),p,coeff))),
+            Seq(z,Eq,SumA(Call("single",D(2),p,coeff))),
             Seq(Call("J",z),Eq,fv),
             Seq(SqNorm(z),Eq,SumA(Sq(coeff))),
             Seq(fv,InMacro,Sp,V("D")),

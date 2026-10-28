@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Actual paired Hilbert coefficients represent the original free-root form on its whole domain. -/
+   digest: Actual paired coefficients represent the original free-root form on its whole domain. -/
 
 import D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryOperator
 
@@ -39,7 +39,7 @@ theorem actual_spectral_form_energy :
       (∀ F : D,
         HasSum (fun i => (b.repr ⟨Pi F.val,mean_Pi F.val⟩ i)^2 / mu i)
           (energy F.val)) ∧
-      (∀ (lam : ℝ), 0 ≤ lam → ∀ F : D,
+      (∀ (lam : ℝ) (F : D),
         (∀ i, (mu i)⁻¹ < lam → b.repr ⟨Pi F.val,mean_Pi F.val⟩ i = 0) →
         lam * ‖Pi F.val‖^2 ≤ energy F.val) := by
   obtain ⟨b,k,mu,hp,hm,ht,hmi,hti,_,hgraph,hk,hC,_,_,hfinite⟩ :=
@@ -67,24 +67,28 @@ theorem actual_spectral_form_energy :
       (b.repr ⟨Pi F.val,mean_Pi F.val⟩ i)^2 / mu i =
         (k.repr ⟨lift F,(free_root_least_energy F).1⟩ i)^2 := by
     rw [hcoeff,mul_pow,Real.sq_sqrt (hp i).le]
-    field_simp
+    field_simp [(hp i).ne']
   have hparseval (F : D) :
       HasSum (fun i => (k.repr ⟨lift F,(free_root_least_energy F).1⟩ i)^2)
         (energy F.val) := by
     have h := lp.hasSum_norm (by norm_num : (0 : ℝ) < (2 : ℝ≥0∞).toReal)
       (k.repr ⟨lift F,(free_root_least_energy F).1⟩)
-    simpa only [ENNReal.toReal_ofNat,Real.rpow_two,Real.norm_eq_abs,sq_abs,
-      k.repr.norm_map,Submodule.norm_coe,(free_root_least_energy F).2.2.2.1] using h
+    simp only [ENNReal.toReal_ofNat,Real.rpow_two,Real.norm_eq_abs,sq_abs,
+      k.repr.norm_map] at h
+    change HasSum _ (‖lift F‖^2) at h
+    simpa only [← (free_root_least_energy F).2.2.2.1] using h
   refine ⟨b,k,mu,hp,hm,ht,hmi,hti,hgraph,hk,hC,hfinite,?_,?_⟩
   · intro F
     simpa only [hquot] using hparseval F
-  · intro lam hlam F hsupport
+  · intro lam F hsupport
     have hb : HasSum (fun i => (b.repr ⟨Pi F.val,mean_Pi F.val⟩ i)^2)
-        ‖Pi F.val‖^2 := by
+        (‖Pi F.val‖^2) := by
       have h := lp.hasSum_norm (by norm_num : (0 : ℝ) < (2 : ℝ≥0∞).toReal)
         (b.repr ⟨Pi F.val,mean_Pi F.val⟩)
-      simpa only [ENNReal.toReal_ofNat,Real.rpow_two,Real.norm_eq_abs,sq_abs,
-        b.repr.norm_map,Submodule.norm_coe] using h
+      simp only [ENNReal.toReal_ofNat,Real.rpow_two,Real.norm_eq_abs,sq_abs,
+        b.repr.norm_map] at h
+      change HasSum _ (‖Pi F.val‖^2) at h
+      exact h
     apply hasSum_le _ (hb.mul_left lam) (hparseval F)
     intro i
     rw [← hquot]
