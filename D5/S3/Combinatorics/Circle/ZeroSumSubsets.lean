@@ -29,7 +29,7 @@ open scoped BigOperators
 private def zeroSubsets (k t : ℕ) : Finset (Finset (Fin k)) :=
   Finset.univ.filter (fun A => ∑ p ∈ A, actualSource k t p = 0)
 
-private def mask {k : ℕ} (A : Finset (Fin k)) : ℕ := ∑ p ∈ A, 2 ^ p.val
+def mask {k : ℕ} (A : Finset (Fin k)) : ℕ := ∑ p ∈ A, 2 ^ p.val
 
 private theorem mask_as_geom {k : ℕ} (A : Finset (Fin k)) :
     mask A = ∑ i ∈ A.image Fin.val, 2 ^ i := by
@@ -194,7 +194,7 @@ private theorem carry_injective (k : ℕ) :
   dsimp [d] at this
   linarith
 
-private theorem carry_weight {k : ℕ} (hk : 0 < k)
+theorem carry_weight {k : ℕ} (hk : 0 < k)
     (n m : Fin k → ℕ) (A : Finset (Fin k))
     (h : ∀ i, (n i : ℤ) = (if i ∈ A then (1 : ℤ) else 0) +
       2 * (m i : ℤ) - (m ((finRotate k).symm i) : ℤ)) :

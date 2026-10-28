@@ -1,0 +1,26 @@
+**Remark 129.4 (coefficient range and applicability boundary).** Theorem 128.2 already gives the entire original $\beta=0$, $\alpha\ne0$ conclusion without (129.16); that result is used directly. For the remaining original mixed-time coefficient range, retain precisely (128.16)–(128.17):
+
+$$
+\beta\ne0,\qquad\gamma\ne0,\qquad
+\alpha+\beta\frac{Pg_t}{g_t}+\max(\gamma,0)\ge0
+\quad m\text{-a.e.},\qquad Q\ne0.
+\tag{129.21}
+$$
+
+The ratio uses the supplied $g_t>0$ almost everywhere. By (128.15), its inequality is exactly
+$m\{\varphi<0,\varphi+\gamma g_t<0\}=0$; it does not add a coefficient restriction to the original remaining question. For every original tuple satisfying the additional actual condition (129.16), Corollary 129.3 applies to every triple in (129.21). All original positive $a,\eta,t,d$, original source at time zero, unit-source $\Gamma$, selector, normalized $h$, raw measure and clock remain as in Definition 129.1.
+
+The supplied positivity, mass one, $L^2(m)$ integrability and local smoothness or analyticity of $g_t$ do not alone supply (129.16). A sufficient further assertion to extend this application to every original tuple is
+
+$$
+\text{For every original }a,\eta,t>0,
+\qquad g_t\in L^\infty(G,h^2\mu).
+\tag{129.22}
+$$
+
+Assertion (129.22) is not proved here and is not claimed necessary. Only finiteness of the essential bound for each individual tuple is required in Corollary 129.3; no uniform bound in the parameters is needed. The original-family question with all its original hypotheses does not acquire (129.16) as a premise merely from this conditional implication. In particular, the part of (129.21) with $g_t\notin L^\infty(m)$ is not decided here; no existence of an original tuple in that part is asserted, and no exact original-family counterexample with a finite-index bound is supplied.
+
+Another sufficient route would be an extension of Theorem 129.2 to the actual possibly unbounded $M_{g_t}$ and $M_{\alpha g_t+\beta Pg_t}$, including justified domains, a self-adjoint Lyapunov correction, positivity and the Cayley commutator. The bounded-operator argument (129.2)–(129.10) does not establish that extension. Nonnegativity of the original pencil does not imply nonnegativity after separately truncating its multipliers. In particular, neither a weighted ordering deduced solely from $P^2\le P$ nor an interchange of the two multipliers is used in the proof.
+
+The conclusions concern the scalar mixed marginal pencil and its exact first-order finite-codimensional restrictions. They do not imply the simultaneous all-pencil hypothesis for all 64 common three-time coordinates, the cubic cancellation condition, the full three-time relation fiber, or a physical realization; those retain their additional hypotheses and obligations in §§123–126.
+

@@ -1,0 +1,55 @@
+**Theorem 98.2 (all inverses, route agreement and the current-task kernel).**
+On precisely Definition 98.1's joint image, each expression effectively
+recovers the other three numerical expressions. Every route agrees.
+For two entries at the same retained context and phase, equality of
+any one expression is equivalent to equality of their complete current
+canonical service under all finite common sufficiently backed original
+continuations. This statement does not identify different bindings,
+authorities, busy parser cuts or unrelated archives.
+
+**Proof.** The geometric suppliers have their exact native parameters.
+NLBA Theorem 11.1 recovers the original root and ordered term from
+Space's actual unit subdivision tree and complete linear terminal
+order, since $u\in\mathcal D$ and $b\ge3$. NLBA Lemma 2.3 recovers
+that entire subdivision tree from Boundary's ordered terminal metric,
+after which the same root theorem applies. AA Theorem 17.2 recovers
+$u$ from the actual labelled $E(u)$ and conversely gives exactly that
+partial order from $u$. Memory already retains $u$. None of these
+steps recovers an old serial extension or supplies an access right.
+
+Time contains the actual scan $y$; (97.2) recovers its unique
+$z\in V_+$. Space and Memory directly supply $w_k$, and (97.5)
+then gives that same $z$. Boundary supplies $\mathcal G(w_k)$.
+The first $I+1$ blocks, $I=N-b<N$, together with the forcing
+matrix of Convention 75.2, recover
+
+$$
+w_k=C^{\mathsf T}
+ \begin{pmatrix}J^{\mathsf T}w_k\\\vdots\\J^{\mathsf T}A^Iw_k\end{pmatrix}.
+\tag{98.1}
+$$
+
+It therefore recovers $z$ by (97.5) as well. This invokes finite
+observability of a **present germ**, without claiming those additional
+observations already occurred.
+
+Conversely, from the recovered $u,z$ and the fixed retained context,
+(94.1) computes every actually received scan value from this run.
+The primer contributes its fixed ACKs, not the forgotten $x$.
+Compute $w_0=A^Mz$ and, successively, $q_j=(w_j)_s$,
+Read reply $2q_j$, and $w_{j+1}=H_sw_j$ for $0\le j<k$.
+These are exactly the performed operands, replies and completed fields
+by Definition 97.3. The fixed codecs and completion convention give
+the same complete finite numerical command/reply word, including zero
+operands, ACKs and framing. Computing it does not repeat its historical
+occurrence. From $u,w_k$ compute the metric, present germ and current
+predictor. Thus every encoder followed by its decoder is the identity
+on its stated image, and all routes factor through the same $z$.
+
+Both $A|_{V_+}$ and $H_s|_{V_+}$ are bijective, so distinct $z$
+give distinct $w_k$. All-leaf forcing then supplies a finite legal
+future Read continuation separating them. Equal $w_k$, graph and
+common callable context give equal entire replies and successors by
+NLBAII Theorem 64.1 and Proposition 64.2. This proves the exact
+current-task-kernel statement. $\square$
+

@@ -1,0 +1,9 @@
+This finite-set minimax value is attained by
+   $f_*(R)=\frac{\sqrt3-1}{\sqrt3+1}q_R(R)$.
+   Thus (12.9) also bounds below the worst-input error on the entire
+   variable-height source. The same lower bound applies to the Euclidean
+   error of any affine predictor of the original $02$ pair or all ten
+   original outputs, by selecting their $q_I$ coordinate.
+
+4. For every common CPTP implementation in Definition 12.1,
+

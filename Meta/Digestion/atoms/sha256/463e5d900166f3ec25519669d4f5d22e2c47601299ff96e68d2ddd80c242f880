@@ -1,0 +1,23 @@
+### 5.1. Injectivity is a hypothesis, not a universal obstruction
+
+The injective positive-time operator in Theorem 5.1 is an actual hypothesis of that original-source argument. It cannot be deleted from a generalized claim. To see this, use the separate discrete-time source
+
+$$
+X_0,X_1,\ldots\ \text{iid with law }\operatorname{Unif}[0,1],\qquad
+(Qu)(x)=\int_0^1u(y)\,dy.
+$$
+
+The source is initialized uniformly and is refreshed independently at every integer time. The Markov operator $Q$ is noninjective: for example, $u=1_{[0,1/2)}-1_{[1/2,1]}$ is nonzero but $Qu=0$. Let
+
+$$
+I_0=[0,1/4),\quad I_1=[1/4,1/2),\quad I_2=[1/2,3/4),\quad I_3=[3/4,1],
+$$
+
+and define the deterministic label $Y_n=r$ when $X_n\in I_r$. In the same source, let a stochastic detector emit each of four labels with probability $1/4$ at every read, using fresh independent detector randomness. In both cases the labels are iid uniform on four symbols, so for every $n$ and every word $(y_0,\ldots,y_{n-1})$,
+
+$$
+\Pr(Y_0=y_0,\ldots,Y_{n-1}=y_{n-1})=4^{-n}.
+$$
+
+Thus the deterministic equal-quarter partition and the fresh stochastic detector have the same entire finite-word and infinite-record law, despite the noninjective source operator and the stochastic detector's $J=3/4$. This is a separate countermodel to deleting injectivity from a generalized deterministic-readout obstruction. It neither replaces the original e-start diffusion nor refutes Theorems 5.1--5.2 on their declared source.
+
