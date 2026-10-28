@@ -198,14 +198,20 @@ private theorem terminal_match_cutoff (t : Source) (d : Nat) (X : CompletionTree
       | succ d =>
           cases X using tree_cases with
           | leaf_case c =>
-              cases b <;> cases c <;>
-                simp [terminalMatch, cutoff, leaf, embed]
+              change (b == c) = true ↔ leaf c = leaf b
+              rw [beq_iff_eq]
+              constructor
+              · intro eq; rw [eq]
+              · intro eq
+                have root := congrArg (completionReadout []) eq
+                cases b <;> cases c <;> simp [completionReadout, leaf] at root ⊢
           | node_case l r =>
               have ne : node l r ≠ embed (.of b) := by
                 intro eq
                 have root := congrArg (completionReadout []) eq
                 cases b <;> simp [completionReadout, embed, leaf, node] at root
-              simp [terminalMatch, cutoff, node, ne]
+              change false = true ↔ node l r = embed (.of b)
+              simpa only [Bool.false_eq_true, false_iff] using ne
   | mul l r ihl ihr =>
       cases d with
       | zero => omega
@@ -218,7 +224,8 @@ private theorem terminal_match_cutoff (t : Source) (d : Nat) (X : CompletionTree
                 intro eq
                 have root := congrArg (completionReadout []) eq
                 cases b <;> simp [completionReadout, embed, leaf, node] at root
-              simp [terminalMatch, cutoff, leaf, ne]
+              change false = true ↔ leaf b = embed (.mul l r)
+              simpa only [Bool.false_eq_true, false_iff] using ne
           | node_case x y =>
               change (terminalMatch d l (cutoff d x) &&
                 terminalMatch d r (cutoff d y)) = true ↔
@@ -227,8 +234,8 @@ private theorem terminal_match_cutoff (t : Source) (d : Nat) (X : CompletionTree
               exact ⟨fun h => congrArg₂ node h.1 h.2, fun h => node_inj h⟩
 
 private theorem image_terminal_match (s d : Nat) (b : Bool) (X : CompletionTree) :
-    terminalMatch (terminalHeight s + d + 1) (substitution^[s] (.of b))
-      (cutoff (terminalHeight s + d + 1) (rho^[s] X)) = true ↔ X = leaf b := by
+    terminalMatch (terminalHeight s + (d + 1)) (substitution^[s] (.of b))
+      (cutoff (terminalHeight s + (d + 1)) (rho^[s] X)) = true ↔ X = leaf b := by
   have bound : height (substitution^[s] (.of b)) ≤ terminalHeight s := by
     cases b with
     | false => exact Nat.le_max_right _ _
@@ -244,9 +251,9 @@ correctness is asserted only for prefixes of actual native images. -/
 def decodePrefix (s : Nat) : (d : Nat) → Pattern (terminalHeight s + d) → Pattern d
   | 0, _ => ()
   | d + 1, P =>
-      if terminalMatch (terminalHeight s + d + 1) (substitution^[s] (.of true)) P then
+      if terminalMatch (terminalHeight s + (d + 1)) (substitution^[s] (.of true)) P then
         .inl true
-      else if terminalMatch (terminalHeight s + d + 1) (substitution^[s] (.of false)) P then
+      else if terminalMatch (terminalHeight s + (d + 1)) (substitution^[s] (.of false)) P then
         .inl false
       else match P with
         | .inl b => .inl b
@@ -264,9 +271,9 @@ theorem decode_prefix_correct (s d : Nat) (X : CompletionTree) :
           cases b with
           | false =>
               have yes := (image_terminal_match s d false (leaf false)).mpr rfl
-              have no : terminalMatch (terminalHeight s + d + 1)
+              have no : terminalMatch (terminalHeight s + (d + 1))
                   (substitution^[s] (.of true))
-                  (cutoff (terminalHeight s + d + 1) (rho^[s] (leaf false))) = false := by
+                  (cutoff (terminalHeight s + (d + 1)) (rho^[s] (leaf false))) = false := by
                 cases hm : terminalMatch _ _ _ with
                 | false => rfl
                 | true =>
@@ -280,9 +287,9 @@ theorem decode_prefix_correct (s d : Nat) (X : CompletionTree) :
               simp only [decodePrefix, yes, ↓reduceIte]
               rfl
       | node_case l r =>
-          have no (b : Bool) : terminalMatch (terminalHeight s + d + 1)
+          have no (b : Bool) : terminalMatch (terminalHeight s + (d + 1))
               (substitution^[s] (.of b))
-              (cutoff (terminalHeight s + d + 1) (rho^[s] (node l r))) = false := by
+              (cutoff (terminalHeight s + (d + 1)) (rho^[s] (node l r))) = false := by
             cases hm : terminalMatch _ _ _ with
             | false => rfl
             | true =>
