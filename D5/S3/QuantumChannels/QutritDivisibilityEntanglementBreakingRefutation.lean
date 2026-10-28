@@ -6,10 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/QuantumChannels/QutritDivisibilityEntanglementBreakingRefutation.claim; result=D5/S3/QuantumChannels/QutritDivisibilityEntanglementBreakingRefutation.result; claim=D5/S3/QuantumChannels/QutritDivisibilityEntanglementBreakingRefutation.claim
    digest: A divisible qutrit channel outside P-divisibility is not entanglement breaking. -/
 
-import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
-import D5.S3.Resource.CompositeCones
-import D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite
 import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 import D5.S3.Quantum.QuantumChannels.NoisyWernerHolevoLindbladEmbedding
 import D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound
