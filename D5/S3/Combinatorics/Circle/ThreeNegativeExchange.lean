@@ -245,6 +245,7 @@ theorem actualSource_threeNegative_exchange_full
   have hT10 := small_weights t T1 hT1
   have hT20 := small_weights t T2 hT2
   have hE0 := small_weights t E hE
+  simp only [H, mass] at hT10 hT20 hE0
   have hsW : InStrip f (C k) 0 W := strip_of_legal hW
   have hsF : InStrip f (C k) 0 F :=
     (strip_split F ([z] ++ E) (by simpa [W, List.append_assoc] using hsW)).1
@@ -275,7 +276,9 @@ theorem actualSource_threeNegative_exchange_full
     have he : mass f (L ++ [y] ++ T1) = w + Zpen := by
       simp [w, R, Zpen, mass]
       ring
-    simpa [mass, he] using hb
+    have hb' : mass f (L ++ [y] ++ T1) ≤ C k := by
+      simpa only [List.take_length, zero_add] using hb
+    rwa [he] at hb'
   have hwQ : w < Q k := by change Q k ≤ Zpen at hzpenlarge; omega
   have hwB : B < w := by
     by_contra hn
@@ -342,7 +345,7 @@ theorem actualSource_threeNegative_exchange_full
       by_cases hh : w + f v ≤ C k - d
       · exact False.elim (hforbid [v] (List.singleton_sublist.mpr hv) hsRv
           (by simp only [mass, List.map_cons, List.map_nil, List.sum_cons,
-            List.sum_nil, add_zero]; dsimp only [ell] at hvlo; omega) hh)
+            List.sum_nil, add_zero]; dsimp only [ell] at hvlo; omega) (by simpa [mass] using hh))
       · exact ⟨v, hv, hvpos, lt_of_not_ge hh⟩
     · have hsRS : InStrip f (C k) 0 (R ++ S) := by
         apply inStrip_append hsR
@@ -378,8 +381,8 @@ theorem actualSource_threeNegative_exchange_full
       change 0 ≤ u - D + mass f (E.take m) ∧ u - D + mass f (E.take m) ≤ C k
       omega
     have hsV : InStrip f (C k) 0 V := by
+      simp only [V, List.append_assoc, List.cons_append, List.nil_append]
       apply inStrip_append hsF
-      simp only [List.cons_append, List.nil_append]
       change InStrip f (C k) (0 + mass f F) (n :: E)
       simp only [InStrip, zero_add]
       refine ⟨hub.1, hub.2, ?_⟩
@@ -396,9 +399,21 @@ theorem actualSource_threeNegative_exchange_full
           simpa only [Int.natCast_natAbs] using hmag)
       exact pow_lt_pow_right₀ (by decide : 1 < (3 : ℕ)) hne
     obtain ⟨_, hv, _, _, hj⟩ := energy_cut hk t W V [n] [z] hW.1 (by simp)
-      (by intro a ha; have : a = n := by simpa using ha; subst a; exact hnunused)
-      (by intro a ha; have : a = z := by simpa using ha; subst a; simp [W])
-      (by intro a ha; have : a = n := by simpa using ha; subst a; exact geo.nLarge) hp hsV
+      (by
+        intro a ha
+        have he : a = n := List.mem_singleton.mp ha
+        subst a
+        exact hnunused)
+      (by
+        intro a ha
+        have he : a = z := List.mem_singleton.mp ha
+        subst a
+        simp [W])
+      (by
+        intro a ha
+        have he : a = n := List.mem_singleton.mp ha
+        subst a
+        exact geo.nLarge) hp hsV
       (by simp [largeUsed, mass, largeWeight, hzL, show Large k t n from geo.nLarge])
       (by simpa [H, mass, energyWeight, hzL, show Large k t n from geo.nLarge] using hpow)
     exact (not_lt_of_ge (hmin _ hv)) hj
@@ -469,6 +484,7 @@ theorem actualSource_threeNegative_exchange_full
   have hT2erase (a : Fin k) (ha : a ∈ T2.erase v) : |f a| < Q k :=
     hT2 a (List.mem_of_mem_erase ha)
   have hT2erase0 := small_weights t (T2.erase v) hT2erase
+  simp only [H, mass] at hT2erase0
   -- Case 2: the moved positive v repairs the n,zpen packet before p.
   by_cases haB : alpha ≤ B
   · let V := L ++ [n, v, zpen] ++ [p]
@@ -488,7 +504,9 @@ theorem actualSource_threeNegative_exchange_full
       simp only [V, Ret, W, F, R, List.count_append, List.count_cons, List.count_nil] at *
       omega
     obtain ⟨_, hv, _, _, hj⟩ := energy_cut hk t W V [p, n] Ret hW.1 hI hIW
-      (by intro a ha; have hm := List.mem_of_mem_erase (a := a) (l := T2)
+      (by
+        intro a ha
+        have hm : a ∈ T2.erase v → a ∈ T2 := fun he => List.mem_of_mem_erase he
         simp only [Ret, List.mem_append, List.mem_cons, List.not_mem_nil, or_false] at ha
         simp only [W, F, R, List.mem_append, List.mem_cons, List.not_mem_nil, or_false]
         tauto) hIL hp hsV
@@ -540,6 +558,7 @@ theorem actualSource_threeNegative_exchange_full
   have hRestSmall (a : Fin k) (ha : a ∈ Rest) : |f a| < Q k :=
     hT a (hRest.mem_iff.mpr (List.mem_append_right Sel ha))
   have hRest0 := small_weights t Rest hRestSmall
+  simp only [H, mass] at hRest0
   let V := (L ++ [n, v, zpen]) ++ Sel ++ [z]
   let Ret := [y] ++ Rest ++ E
   have hsV : InStrip f (C k) 0 V := by
@@ -585,8 +604,16 @@ theorem actualSource_threeNegative_exchange_full
         omega)
     exact pow_lt_pow_right₀ (by decide : 1 < (3 : ℕ)) he
   obtain ⟨_, hv, _, _, hj⟩ := energy_cut hk t W V [n] Ret hW.1 (by simp)
-    (by intro a ha; have : a = n := by simpa using ha; subst a; exact hnunused)
-    hRet (by intro a ha; have : a = n := by simpa using ha; subst a; exact geo.nLarge)
+    (by
+        intro a ha
+        have he : a = n := List.mem_singleton.mp ha
+        subst a
+        exact hnunused)
+    hRet (by
+        intro a ha
+        have he : a = n := List.mem_singleton.mp ha
+        subst a
+        exact geo.nLarge)
     hp hsV
     (by simp [Ret, largeUsed_append, largeUsed_cons, largeWeight, hyL,
       show Large k t n from geo.nLarge, hRest0.1, hE0.1])
