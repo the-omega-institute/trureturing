@@ -15,7 +15,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Geometry.Hyperideal.CyclicHyperbolicSectorMetric
 
 abbrev sourceScope := type_of%
-  (@_root_.D5.S3.Geometry.Hyperideal.CyclicHyperbolicSectorMetric.cyclic_sector_distance_lower_bound)
+  (@_root_.D5.S3.Geometry.Hyperideal.CyclicHyperbolicSectorMetric.cyclic_sector_metric)
 
 structure Inputs where
   n : ℕ
@@ -45,7 +45,9 @@ def actual : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (P : Inputs) (endpoints : points P × points P),
-    R.readout 0 P endpoints ≤ R.readout 1 P endpoints
+    (cyclicDatum P.alpha P.positive P.small).Chain endpoints.1 endpoints.2
+      (R.readout 0 P endpoints) ∧
+      R.readout 1 P endpoints = R.readout 0 P endpoints
 
 theorem source_bridge : sourceScope ↔ arena.Law actual := by
   constructor
@@ -56,7 +58,7 @@ theorem source_bridge : sourceScope ↔ arena.Law actual := by
 
 theorem actual_positive : arena.Law actual :=
   source_bridge.mp
-    (@_root_.D5.S3.Geometry.Hyperideal.CyclicHyperbolicSectorMetric.cyclic_sector_distance_lower_bound)
+    (@_root_.D5.S3.Geometry.Hyperideal.CyclicHyperbolicSectorMetric.cyclic_sector_metric)
 
 #print axioms source_bridge
 #print axioms actual_positive

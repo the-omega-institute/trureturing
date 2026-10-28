@@ -137,7 +137,7 @@ private theorem interpolation_pair (X Y : Fin 4 → ℝ) (D s t : ℝ)
   linear_combination (Real.sinh s * Real.sinh t) * (Real.cosh_sq_sub_sinh_sq D)
 
 
-private def interpolate (X Y : Fin 4 → ℝ) (D t : ℝ) : Fin 4 → ℝ :=
+def interpolate (X Y : Fin 4 → ℝ) (D t : ℝ) : Fin 4 → ℝ :=
   (Real.sinh (D-t)/Real.sinh D) • X + (Real.sinh t/Real.sinh D) • Y
 
 private theorem interpolate_zero (X Y : Fin 4 → ℝ) (D : ℝ) (hD : Real.sinh D ≠ 0) :
@@ -224,7 +224,7 @@ private theorem interpolate_future (X Y : Fin 4 → ℝ) (D t : ℝ)
   · subst t
     simpa [hsD.ne'] using hY
 
-private theorem hyperbolic_segment (p q : HyperbolicThreeSpace) (hpq : p ≠ q) :
+theorem hyperbolic_segment (p q : HyperbolicThreeSpace) (hpq : p ≠ q) :
     ∃ gamma : Icc (0 : ℝ) (dist p q) → HyperbolicThreeSpace,
       Isometry gamma ∧
       gamma ⟨0, by exact ⟨le_rfl, dist_nonneg⟩⟩ = p ∧
