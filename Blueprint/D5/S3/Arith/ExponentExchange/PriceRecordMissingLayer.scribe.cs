@@ -14,7 +14,7 @@ internal sealed class PriceRecordMissingLayerDocument : IScribeDocumentDefinitio
                 "D5/S3/Arith/ExponentExchange/PriceRecordMissingLayer.price_record_missing_layer"),
             H("A strict exchange bound and a uniform logarithmic Euler tail"),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.RepoDerived(),
+            AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
                     "Let m be a positive natural number and lambda a positive real number. Assume "
