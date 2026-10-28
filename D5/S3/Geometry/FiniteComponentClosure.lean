@@ -1952,6 +1952,16 @@ private def bouquetAppendHomeomorph (ds es : BouquetSpec) :
       (middle.trans ((anchorCollapseHomeomorph (Sum.inl PUnit.unit) B).trans
         (bouquetQuotientHomeomorph (ds ++ es)))))
 
+/- The connected selected-component carrier is now consumed by the actual
+  vertex-gluing quotient and the actual bouquet concatenation quotient. -/
+def connectedVertexGluingHomeomorph (ds es : BouquetSpec) :
+    FiniteSimplicialJoin.Space
+        (selectedVertexGluing (bouquetComplex ds) (bouquetComplex es) none none) ≃ₜ
+      FiniteSimplicialJoin.Space (bouquetComplex (ds ++ es)) := by
+  exact (vertexGluingHomeomorph (bouquetComplex ds) (bouquetComplex es)
+      none none (bouquetVertex_face ds) (bouquetVertex_face es)).symm.trans
+    (bouquetAppendHomeomorph ds es)
+
 /- The first consumed selected-component step.  The two native based packets
   choose the actual normal-form components containing the supplied vertices;
   basedWedgeEquivalence then performs the quotient wedge replacement on the
