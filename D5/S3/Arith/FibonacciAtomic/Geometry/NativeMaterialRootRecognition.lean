@@ -66,7 +66,7 @@ structure OrderedIso (t s : Source) where
     ((neighbors t p).map forward).Perm (neighbors s (forward p))
   forward_terminals : (terminals t).map forward = terminals s
 
-private theorem root_mem (t : Source) : [] ∈ material t := by
+theorem root_mem (t : Source) : [] ∈ material t := by
   cases t with
   | of b => cases b <;> simp [material]
   | mul l r => simp [material]
@@ -605,7 +605,7 @@ theorem original_rigidity (t s : Source) (ht : D t) (hs : D s)
     (fun p _ => (readouts_from_support t s hm p).symm)).symm
 
 
-private theorem material_nodup (t : Source) : (material t).Nodup := by
+theorem material_nodup (t : Source) : (material t).Nodup := by
   induction t with
   | of b => cases b <;> simp [material]
   | mul l r il ir =>

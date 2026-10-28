@@ -20,7 +20,7 @@ namespace D5.S3.Arith.FibonacciAtomic.Geometry.NativeGuardedLeafRepair
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition (Address Reply readout)
 open ActualLeafHistoryRigidity (subtree)
-open NativeMaterialRootRecognition (D material neighbors children)
+open NativeMaterialRootRecognition (D material neighbors children root_mem material_nodup)
 open ActualImageAddressCertificate (replace)
 
 abbrev Cell (t : Source) := {p : Address // p ∈ (material t).toFinset}
@@ -87,24 +87,9 @@ def dominates (x y : ℕ × ℕ) : Prop := x.1 ≤ y.1 ∧ x.2 ≤ y.2
 def frontier (root : Source) (X : History root → Prop) : Set (ℕ × ℕ) :=
   {c | ∃ h, X h ∧ pairCost h = c ∧ ∀ h', X h' → dominates c (pairCost h')}
 
-private theorem material_nodup' (t : Source) : (material t).Nodup := by
-  induction t with
-  | of b => cases b <;> simp [material]
-  | mul l r il ir =>
-    simp only [material, List.nodup_cons, List.mem_append, List.mem_map]
-    constructor
-    · simp
-    · rw [List.nodup_append]
-      refine ⟨il.map (fun _ _ he => (List.cons.inj he).2),
-        ir.map (fun _ _ he => (List.cons.inj he).2), ?_⟩
-      intro x hx y hy he
-      obtain ⟨a, ha, rfl⟩ := List.mem_map.mp hx
-      obtain ⟨b, hb, rfl⟩ := List.mem_map.mp hy
-      cases he
-
 theorem material_card (t : Source) :
     (material t).toFinset.card = (material t).length := by
-  exact List.toFinset_card_of_nodup (material_nodup' t)
+  exact List.toFinset_card_of_nodup (material_nodup t)
 
 private theorem promote_card (t : Source) (p : Address)
     (h : subtree p t = some (.of true)) :
@@ -318,9 +303,7 @@ private theorem rootless_even {t : Source} (h : StateR t) :
   simpa using hM.even_card
 
 private theorem root_mem_finset (t : Source) : [] ∈ (material t).toFinset := by
-  induction t with
-  | of b => cases b <;> simp [material]
-  | mul l r il ir => simp [material]
+  exact List.mem_toFinset.mpr (root_mem t)
 
 private theorem rootless_card (t : Source) :
     ((material t).toFinset.erase []).card = (material t).toFinset.card - 1 := by
