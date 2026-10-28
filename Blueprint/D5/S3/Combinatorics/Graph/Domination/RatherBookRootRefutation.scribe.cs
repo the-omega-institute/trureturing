@@ -98,7 +98,7 @@ internal sealed class RatherBookRootRefutationDocument : IScribeDocumentDefiniti
             Or(And(Eq(Val("u"), Add(Mul(D(2), Val("i")), D(2))), Eq(Val("v"), Add(Mul(D(2), Val("i")), D(3)))),
                 And(Eq(Val("u"), Add(Mul(D(2), Val("i")), D(3))), Eq(Val("v"), D(0)))))));
     private static Formula Root(Formula r) => App(Q("Polynomial", "IsRoot"), X("p"), r);
-    private static Formula Multiplicity(Formula r) => App(Q("Polynomial", "rootMultiplicity"), X("p"), r);
+    private static Formula Multiplicity(Formula r) => App(Q("Polynomial", "rootMultiplicity"), r, X("p"));
     private static Formula FourRootsBody() => And(Ne(X("a"), D(0)), And(Ne(X("b"), D(0)), And(Ne(X("a"), X("b")),
         And(Root(D(0)), And(Root(X("a")), And(Root(X("b")), And(Eq(Multiplicity(D(0)), D(2)),
         And(Eq(Multiplicity(X("a")), D(1)), And(Eq(Multiplicity(X("b")), D(1)),
