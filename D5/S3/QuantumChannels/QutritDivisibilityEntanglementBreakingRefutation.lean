@@ -524,8 +524,6 @@ private lemma witness_partial_transpose_negative :
         (MatrixMap.kron (LinearMap.id : MatrixMap (Fin 3) (Fin 3) ℂ) t omega))
         witnessVector)) = -1 / 9 := by
   classical
-  have hsqrt : (Real.sqrt 3 : ℂ) ^ 2 = (3 : ℂ) := by
-    exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 3 by norm_num)
   have hsqrtR : (Real.sqrt 3) ^ 2 = (3 : ℝ) :=
     Real.sq_sqrt (show (0 : ℝ) ≤ 3 by norm_num)
   have hc0 : (Finset.univ.filter (fun x : Fin 3 => (0 : Fin 3) = x)).card = 1 := by
