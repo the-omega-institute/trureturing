@@ -275,7 +275,8 @@ theorem labelled_root_blowup (n : ℕ) (G : SimpleGraph (Fin n))
       obtain ⟨u', hu', heq⟩ := mem_map.mp hu
       refine ⟨u', hu', ?_⟩
       change B.Adj (e v) (e u')
-      rw [heq]
+      have heq' : e u' = u := heq
+      rw [heq']
       exact hadj
   have hp : complexPolynomial H = complexPolynomial B := by
     unfold complexPolynomial
