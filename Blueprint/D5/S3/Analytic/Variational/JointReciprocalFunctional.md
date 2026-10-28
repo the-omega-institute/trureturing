@@ -4,63 +4,9 @@
 
 The joint reciprocal functional has an explicit smooth increasing minimizer and exact attained infima over the full bounded positive measurable class.
 
-**Definition 1.1 (The scalar denominator).**
+The cited supplier-relative paper supplies the original analytic construction and JVM1--JVM2 target. This formalization proves only scalar-coordinate existence, the explicit normalized profile and the full measurable-class variational values. It does not verify the paper's source-window, arithmetic, strict-gain, Robin or RH claims. The scalar-coordinate support retains the original Lean constant names so the three public theorem statements remain identical.
 
-Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.polynomial`
-
-*Formalization.* `D5/S3/Analytic/Variational/JointReciprocalFunctional.polynomial` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
-
-*Commentary.*
-
-For real b and v, polynomial(b,v) is 2*b+3*(1-b)*v-6*v^2.
-
-**Definition 1.2 (The positive denominator root).**
-
-Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.upperRoot`
-
-*Formalization.* `D5/S3/Analytic/Variational/JointReciprocalFunctional.upperRoot` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
-
-*Commentary.*
-
-For real b, upperRoot(b) is [3(1-b)+sqrt(9(1-b) squared+48b)]/12.
-
-**Definition 1.3 (The negative root magnitude).**
-
-Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.lowerRoot`
-
-*Formalization.* `D5/S3/Analytic/Variational/JointReciprocalFunctional.lowerRoot` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
-
-*Commentary.*
-
-For real b, lowerRoot(b) is [sqrt(9(1-b) squared+48b)-3(1-b)]/12.
-
-**Definition 1.4 (The original integral coordinate).**
-
-Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.coordinate`
-
-*Formalization.* `D5/S3/Analytic/Variational/JointReciprocalFunctional.coordinate` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
-
-*Commentary.*
-
-For real b and v, coordinate(b,v) is the oriented Lebesgue integral from 0 to v of (2b+6s)/polynomial(b,s).
-
-**Definition 1.5 (Competitor mass).**
+**Definition 1.1 (Competitor mass).**
 
 Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.mass`
 
@@ -68,13 +14,13 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.mass`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
 
 *Commentary.*
 
 For every real function u on the real line, mass(u) is its oriented Lebesgue integral from 1 to 2.
 
-**Definition 1.6 (Cumulative competitor mass).**
+**Definition 1.2 (Cumulative competitor mass).**
 
 Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.primitive`
 
@@ -82,13 +28,13 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.primitive`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
 
 *Commentary.*
 
 For every real function u and every real x, primitive(u,x) is the oriented Lebesgue integral of u from 1 to x.
 
-**Definition 1.7 (The joint reciprocal cost).**
+**Definition 1.3 (The joint reciprocal cost).**
 
 Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.cost`
 
@@ -96,13 +42,13 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.cost`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
 
 *Commentary.*
 
 For every real b and real function u, cost(b,u) is b times the integral of x/u(x) from 1 to 2 plus the integral of primitive(u,x)/(u(x)^2) over the same interval.
 
-**Definition 1.8 (The full bounded positive measurable class).**
+**Definition 1.4 (The full bounded positive measurable class).**
 
 Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.Admissible`
 
@@ -110,13 +56,13 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.Admissible
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
 
 *Commentary.*
 
 A real function u is admissible when it is almost everywhere measurable for Lebesgue measure restricted to [1,2], and there exist real c and B with c>0 and c<=u(x)<=B almost everywhere there. The bounds belong to u; no fixed common bounds or smoothness condition is imposed. This includes every Lebesgue measurable function in the stated class and all modifications on null sets.
 
-**Definition 1.9 (The selected scalar endpoint).**
+**Definition 1.5 (The selected scalar endpoint).**
 
 Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.scalarRoot`
 
@@ -124,13 +70,13 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.scalarRoot
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
 
 *Commentary.*
 
 For every real b, scalarRoot(b) is the inverse integral coordinate at log(2). The inverse is chosen on (-epsilon,upperRoot(b)), where epsilon is the minimum of lowerRoot(b)/2 and b/6. For 0<b<=1 the coordinate is injective on this open interval and the chosen inverse is its actual inverse at every attained value.
 
-**Definition 1.10 (The sharp variational value).**
+**Definition 1.6 (The sharp variational value).**
 
 Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.sharpConstant`
 
@@ -138,13 +84,13 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.sharpConst
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
 
 *Commentary.*
 
 For every real b, sharpConstant(b) is 8 times scalarRoot(b) squared times [b+2 scalarRoot(b)].
 
-**Definition 1.11 (The explicit normalized profile).**
+**Definition 1.7 (The explicit normalized profile).**
 
 Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.optimizer`
 
@@ -152,13 +98,13 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.optimizer`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
 
 *Commentary.*
 
 For real b and x, let v(x) be the same inverse integral coordinate applied to log(x), and let vb=scalarRoot(b). The profile optimizer(b,x) is x squared times polynomial(b,v(x)), divided by 8 vb polynomial(b,vb). Its existence uses no differential equation solution or normalization hypothesis.
 
-**Theorem 1.12 (Existence and uniqueness of the original scalar root).**
+**Theorem 1.8 (Existence and uniqueness of the original scalar root).**
 
 Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.exists_unique_scalar_root`
 
@@ -166,13 +112,13 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.exists_uni
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
 
 *Commentary.*
 
 For every real b with 0<b<=1, there is exactly one real v with 0<v<upperRoot(b) and coordinate(b,v)=log(2). The proof factors the denominator as 6[upperRoot(b)-v][v+lowerRoot(b)], identifies a logarithmic antiderivative, proves its divergence at the positive root, and uses strict monotonicity and the intermediate value theorem. The endpoint b=1 remains in scope.
 
-**Theorem 1.13 (Smooth construction, normalization and exact cost).**
+**Theorem 1.9 (Smooth construction, normalization and exact cost).**
 
 Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.constructed_profile`
 
@@ -180,13 +126,13 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.constructe
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
 
 *Commentary.*
 
 For every real b with 0<b<=1, scalarRoot(b) is positive, is less than upperRoot(b), solves the original integral equation, and sharpConstant(b)>0. There is an open subset s of the real line containing [1,2] on which optimizer(b) is infinitely continuously differentiable, positive and strictly increasing. This profile is admissible, has mass one, and has cost exactly sharpConstant(b). To obtain smoothness, local inverse uniqueness identifies the chosen inverse with the smooth local inverses. Direct differentiation of x optimizer(b,x) v(x) gives optimizer(b,x), proving normalization. Direct differentiation of x squared times [b v(x)+2v(x) squared] divided by optimizer(b,x) gives the full cost density, and its endpoint difference is the exact value. For every admissible function u, the individual upper and positive lower bounds imply integrability of u and x/u. The cumulative mass is continuous on [1,2], and its boundedness together with the positive lower bound gives integrability of primitive(u,x)/(u(x)^2). These integral facts are used in the cost calculation. The sharp variational theorem compares this profile with every admissible measurable competitor.
 
-**Theorem 1.14 (Sharp attained variational values on the full measurable class).**
+**Theorem 1.10 (Sharp attained variational values on the full measurable class).**
 
 Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.sharp_joint_variational`
 
@@ -194,7 +140,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.sharp_join
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
 
 *Commentary.*
 
@@ -210,15 +156,12 @@ The comparison function V(x)=M(U(x)) times [x sqrt(x)-Z(U(x))/2] is absolutely c
 
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.Admissible`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.constructed_profile`
-- Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.coordinate`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.cost`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.exists_unique_scalar_root`
-- Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.lowerRoot`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.mass`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.optimizer`
-- Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.polynomial`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.primitive`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.scalarRoot`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.sharpConstant`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.sharp_joint_variational`
-- Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.upperRoot`
+- Dependency: [D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate](JointReciprocalScalarCoordinate.md)
