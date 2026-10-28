@@ -33,7 +33,7 @@ internal sealed class NativeOriginalCoordinatePrefixDocument : IScribeDocumentDe
     private static Formula Equal(Formula x, Formula y) => Seq(x,Sp,Eq,Sp,y);
     private static Formula Add(Formula x, Formula y) => Seq(x,Plus,y);
     private static Formula ReplyAgreement(Formula u, Formula v, Formula depth) =>
-        All("p",V("Address"),Seq(Call("length",V("p")),Le,depth,Sp,Implies,Sp,
+        All("p",V("Address"),Seq(Call("length",V("p")),Le,Sp,depth,Sp,Implies,Sp,
             Equal(Call("reply",V("p"),u),Call("reply",V("p"),v))));
     private static Formula Agreement() => All("s",V("Nat"),All("h",V("Nat"),
         All("U",V("CompletionTree"),All("V",V("CompletionTree"),Seq(
