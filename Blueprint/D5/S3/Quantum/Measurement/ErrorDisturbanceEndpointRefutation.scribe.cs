@@ -115,7 +115,10 @@ internal sealed class ErrorDisturbanceEndpointRefutationDocument : IScribeDocume
                             + "also exceeds r. Thus the minimum of the two endpoint quantities is strictly greater "
                             + "than 57/200, whereas overallError a C B ≤ 71/250 < 57/200. Applying the proposed "
                             + "inequality at d = 3 to a, C and B gives a contradiction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhou-wu-chau-2016-error-disturbance-endpoint-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title, Formula formula,
         string prose, bool literature) => Describe.Lean(
