@@ -61,12 +61,185 @@ private def rotationVector (j : Fin 3) : Fin 3 → ℂ :=
 private def rotationKraus (j : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=
   ((Real.sqrt 2)⁻¹ : ℂ) • crossProduct (rotationVector j)
 
+private def quad (K : Matrix (Fin 3) (Fin 3) ℂ) (x : Fin 3 → ℂ) : ℂ :=
+  dotProduct x (K *ᵥ x)
+
+private theorem quad_identity (K : Matrix (Fin 3) (Fin 3) ℂ) (x : Fin 3 → ℂ) :
+    star (star x) ⬝ᵥ ((K * Matrix.vecMulVec x (star x) * Kᴴ) *ᵥ (star x)) =
+      quad K x * star (quad K x) := by
+  simp [quad, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul,
+    Matrix.vecMulVec_mulVec, dotProduct, Matrix.mulVec, Matrix.vecMul,
+    Matrix.vecMulVec_apply, Matrix.conjTranspose_apply, Finset.mul_sum,
+    Finset.sum_mul, star_mul, star_sum, star_star, Fin.sum_univ_succ]
+  ring
+
+private theorem quad_sum_zero {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
+    (hK : IsKrausDecomposition K) (x : Fin 3 → ℂ) : ∑ a, ‖quad (K a) x‖ ^ 2 = 0 := by
+  have he := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ =>
+      star (star x) ⬝ᵥ (M *ᵥ (star x)))
+    (hK (Matrix.vecMulVec x (star x)))
+  have hleft : star (star x) ⬝ᵥ ((∑ a, K a * Matrix.vecMulVec x (star x) * (K a)ᴴ) *ᵥ (star x)) =
+      ∑ a, quad (K a) x * star (quad (K a) x) := by
+    rw [Matrix.sum_mulVec, dotProduct_sum]
+    apply Finset.sum_congr rfl
+    intro a ha
+    exact quad_identity (K a) x
+  rw [hleft] at he
+  have hright : star (star x) ⬝ᵥ (whChannel (Matrix.vecMulVec x (star x)) *ᵥ (star x)) = 0 := by
+    simp [whChannel, Matrix.vecMulVec_apply, dotProduct, Matrix.mulVec,
+      Matrix.trace, Matrix.transpose_apply, Fin.sum_univ_succ, Complex.star_def,
+      Complex.conj_ofReal]
+    ring
+  rw [hright] at he
+  calc
+    ∑ a, ‖quad (K a) x‖ ^ 2 = ∑ a, (quad (K a) x * star (quad (K a) x)).re := by
+      apply Finset.sum_congr rfl
+      intro a ha
+      rw [Complex.sq_norm, Complex.normSq_apply]
+      simp [Complex.mul_re]
+    _ = (∑ a, quad (K a) x * star (quad (K a) x)).re := by
+      simpa using (map_sum (Complex.re : ℂ → ℝ)
+        (fun a => quad (K a) x * star (quad (K a) x)) Finset.univ).symm
+    _ = 0 := by rw [he]; norm_num
+
+private theorem quad_zero {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
+    (hK : IsKrausDecomposition K) (x : Fin 3 → ℂ) (a : Fin m) : quad (K a) x = 0 := by
+  have hs := quad_sum_zero K hK x
+  have hz := (Fintype.sum_eq_zero_iff_of_nonneg (fun b =>
+    sq_nonneg (‖quad (K b) x‖))).mp hs
+  exact norm_eq_zero.mp (sq_eq_zero_iff.mp (congrFun hz a))
+
+private theorem diag_zero {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
+    (hK : IsKrausDecomposition K) (a : Fin m) (i : Fin 3) : K a i i = 0 := by
+  have hh := quad_zero K hK (basisVector i) a
+  simpa [quad, basisVector, dotProduct, Matrix.mulVec, Fin.sum_univ_succ] using hh
+
+private theorem offdiag_zero {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
+    (hK : IsKrausDecomposition K) (a : Fin m) (i j : Fin 3) (hij : i ≠ j) :
+    K a i j + K a j i = 0 := by
+  have hh := quad_zero K hK (fun k => basisVector i k + basisVector j k) a
+  fin_cases i <;> fin_cases j <;>
+    simp_all [quad, basisVector, dotProduct, Matrix.mulVec, Fin.sum_univ_succ,
+      diag_zero K hK a] <;> simpa [add_comm] using hh
+
+private theorem tp {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
+    (hK : IsKrausDecomposition K) : ∑ a, (K a)ᴴ * K a =
+      (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
+  ext i j
+  have he := congrArg Matrix.trace (hK (Matrix.single j i 1))
+  fin_cases i <;> fin_cases j <;>
+    simp [whChannel, Matrix.trace, Matrix.sum_apply, Matrix.mul_apply,
+      Matrix.conjTranspose_apply, Matrix.single_apply, Fin.sum_univ_succ,
+      diag_zero K hK] at he ⊢ <;>
+    convert he using 1 <;>
+      try simp only [mul_comm, Finset.sum_add_distrib, add_assoc]
+  all_goals norm_num
+
+private theorem reprK {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
+    (hK : IsKrausDecomposition K) : ∃ z : Fin m → Fin 3 → ℂ,
+      ∀ a, K a = ((Real.sqrt 2)⁻¹ : ℂ) • crossProduct (z a) := by
+  let z : Fin m → Fin 3 → ℂ := fun a => (Real.sqrt 2 : ℂ) •
+    ![K a 2 1, K a 0 2, K a 1 0]
+  have hs : ((Real.sqrt 2 : ℂ)⁻¹) * (Real.sqrt 2 : ℂ) = 1 := by
+    field_simp
+  refine ⟨z, ?_⟩
+  intro a
+  ext i j
+  have hd := diag_zero K hK a
+  have h01 := offdiag_zero K hK a (0 : Fin 3) 1 (by decide)
+  have h02 := offdiag_zero K hK a (0 : Fin 3) 2 (by decide)
+  have h12 := offdiag_zero K hK a (1 : Fin 3) 2 (by decide)
+  have h01' := eq_neg_of_add_eq_zero_left h01
+  have h02' := eq_neg_of_add_eq_zero_left h02
+  have h12' := eq_neg_of_add_eq_zero_left h12
+  fin_cases i <;> fin_cases j <;>
+    simp [z, crossProduct, hs, hd, h01, h02, h12, h01', h02', h12']
+
+private theorem frameK {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
+    (hK : IsKrausDecomposition K) (z : Fin m → Fin 3 → ℂ)
+    (hr : ∀ a, K a = ((Real.sqrt 2)⁻¹ : ℂ) • crossProduct (z a)) :
+    (∑ a, (Matrix.of fun i j => z a i * star (z a j))) =
+      (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
+  have htp := tp K hK
+  simp_rw [hr] at htp
+  have hs : ((Real.sqrt 2 : ℂ)⁻¹) ^ 2 = (1 / 2 : ℂ) := by
+    have hn : ((Real.sqrt 2 : ℂ)) ≠ 0 := by norm_num
+    field_simp [hn]
+    norm_num [pow_two, Complex.ext_iff, Complex.mul_re, Complex.mul_im,
+      Complex.ofReal_re, Complex.ofReal_im, Real.sq_sqrt]
+  have h00 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 0) htp
+  have h11 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 1 1) htp
+  have h22 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 2 2) htp
+  have h01 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 1) htp
+  have h02 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 2) htp
+  have h12 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 1 2) htp
+  simp [crossProduct, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    Matrix.sum_apply, Matrix.one_apply, Fin.sum_univ_succ,
+    Complex.star_def] at h00 h11 h22 h01 h02 h12
+  simp only [← mul_assoc] at h00 h11 h22 h01 h02 h12
+  have hs' : ((Real.sqrt 2 : ℂ)⁻¹) * ((Real.sqrt 2 : ℂ)⁻¹) = (1 / 2 : ℂ) := by
+    simpa [pow_two] using hs
+  simp [hs'] at h00 h11 h22 h01 h02 h12
+  simp only [mul_add] at h00 h11 h22
+  rw [Finset.sum_add_distrib, ← Finset.mul_sum] at h00
+  rw [Finset.sum_add_distrib, ← Finset.mul_sum] at h11
+  rw [Finset.sum_add_distrib, ← Finset.mul_sum] at h22
+  simp_rw [← Finset.mul_sum] at h00 h11 h22
+  simp_rw [mul_assoc] at h01 h02 h12
+  rw [← Finset.mul_sum] at h01 h02 h12
+  have hz0' : ∑ x, (starRingEnd ℂ) (z x 0) * z x 0 = 1 := by
+    linear_combination h11 + h22 - h00
+  have hz1' : ∑ x, (starRingEnd ℂ) (z x 1) * z x 1 = 1 := by
+    linear_combination h00 + h22 - h11
+  have hz2' : ∑ x, (starRingEnd ℂ) (z x 2) * z x 2 = 1 := by
+    linear_combination h00 + h11 - h22
+  have hz01' : ∑ x, (starRingEnd ℂ) (z x 1) * z x 0 = 0 := by
+    linear_combination (2 : ℂ) * h01
+  have hz02' : ∑ x, (starRingEnd ℂ) (z x 2) * z x 0 = 0 := by
+    linear_combination (2 : ℂ) * h02
+  have hz12' : ∑ x, (starRingEnd ℂ) (z x 2) * z x 1 = 0 := by
+    linear_combination (2 : ℂ) * h12
+  have hz0 : ∑ x, z x 0 * (starRingEnd ℂ) (z x 0) = 1 := by
+    simpa [mul_comm] using hz0'
+  have hz1 : ∑ x, z x 1 * (starRingEnd ℂ) (z x 1) = 1 := by
+    simpa [mul_comm] using hz1'
+  have hz2 : ∑ x, z x 2 * (starRingEnd ℂ) (z x 2) = 1 := by
+    simpa [mul_comm] using hz2'
+  have hz01 : ∑ x, z x 0 * (starRingEnd ℂ) (z x 1) = 0 := by
+    simpa [mul_comm] using hz01'
+  have hz02 : ∑ x, z x 0 * (starRingEnd ℂ) (z x 2) = 0 := by
+    simpa [mul_comm] using hz02'
+  have hz12 : ∑ x, z x 1 * (starRingEnd ℂ) (z x 2) = 0 := by
+    simpa [mul_comm] using hz12'
+  have hz10 : ∑ x, z x 1 * (starRingEnd ℂ) (z x 0) = 0 := by
+    have h := congrArg star hz01
+    simpa [star_sum, star_mul, star_star, mul_comm] using h
+  have hz20 : ∑ x, z x 2 * (starRingEnd ℂ) (z x 0) = 0 := by
+    have h := congrArg star hz02
+    simpa [star_sum, star_mul, star_star, mul_comm] using h
+  have hz21 : ∑ x, z x 2 * (starRingEnd ℂ) (z x 1) = 0 := by
+    have h := congrArg star hz12
+    simpa [star_sum, star_mul, star_star, mul_comm] using h
+  ext i j
+  fin_cases i <;> fin_cases j
+  · simpa [Matrix.sum_apply] using hz0
+  · simpa [Matrix.sum_apply] using hz01
+  · simpa [Matrix.sum_apply] using hz02
+  · simpa [Matrix.sum_apply] using hz10
+  · simpa [Matrix.sum_apply] using hz1
+  · simpa [Matrix.sum_apply] using hz12
+  · simpa [Matrix.sum_apply] using hz20
+  · simpa [Matrix.sum_apply] using hz21
+  · simpa [Matrix.sum_apply] using hz2
+
 private theorem kraus_classification {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
     (hK : IsKrausDecomposition K) :
     ∃ z : Fin m → Fin 3 → ℂ,
       (∀ a, K a = ((Real.sqrt 2)⁻¹ : ℂ) • crossProduct (z a)) ∧
-        (∑ a, Matrix.of fun i j => z a i * star (z a j)) = (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
-  sorry
+        (∑ a, Matrix.of fun i j => z a i * star (z a j)) =
+          (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
+  obtain ⟨z, hz⟩ := reprK K hK
+  exact ⟨z, hz, frameK K hK z hz⟩
 
 private theorem abs_crossProduct (z : Fin 3 → ℂ) :
     absMat (((Real.sqrt 2)⁻¹ : ℂ) • crossProduct z) =
