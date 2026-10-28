@@ -33,14 +33,12 @@ internal sealed class MarkovianDivisibilityMaximalIndexDocument : IScribeDocumen
                     + "For every real function f, this is the sum of its largest min(m,d*d) entries, with repeated values retained at their distinct positions. "
                     + "The value is zero at m = 0 and is the full sum when m is at least d*d, including in dimension zero. "
                     + "Applied separately to arith p and geom p, it expresses the two independently sorted sums in arXiv v3 TeX lines 733–735."),
-            Node("IsProbability", "Nonnegative coordinates of total mass one", ProbabilityFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                "A probability vector has every coordinate nonnegative and its finite sum equal to one. "
-                    + "These are precisely the assumptions on p in arXiv v3 TeX line 729. The predicate is false in dimension zero."),
             Node("admissibleIndices", "Indices satisfying the universal inequality", AdmissibleFormula(),
                 AssessedProvenance.FromRepo(Source),
                 "The set consists of natural indices m for which every probability vector in dimension d satisfies "
                     + "topSum(arith p,m) + topSum(geom p,m) at most the real image of d. "
+                    + "D5.S3.TotalVariation.CycleSingleCutMinimax.Probability requires nonnegative coordinates with finite sum one, "
+                    + "precisely the assumptions on p in arXiv v3 TeX line 729; it is false in dimension zero. "
                     + "The two maxima may use different sets of positions. This specifies the universal inequality underlying the maximal integer in arXiv v3 TeX line 737, "
                     + "with sums saturated at d*d positions."),
             Describe.Lean(
@@ -157,24 +155,22 @@ internal sealed class MarkovianDivisibilityMaximalIndexDocument : IScribeDocumen
             Equal(LocalCall("topSum", X("f"), X("m")), maximum))));
     }
 
-    private static Formula ProbabilityFormula() => VectorBinders(Equivalence(
-        LocalCall("IsProbability", X("p")), Conjunction(
-            All("i", FinOf(X("d")), LE(Typed(D(0), Reals()), At(X("p"), X("i")))),
-            Equal(SumOver("i", FinOf(X("d")), At(X("p"), X("i"))), Typed(D(1), Reals())))));
-
     private static Formula AdmissibleFormula() => All("d", Naturals(), Equal(
-        LocalCall("admissibleIndices", X("d")),
+        LocalCall("admissibleIndices", X("d")), AdmissibleSet(X("d"))));
+
+    private static Formula AdmissibleSet(Formula dimension) =>
         Seq(OpenBrace, Typed(X("m"), Naturals()), Sp, Mid, Sp,
-            All("p", Arrow(FinOf(X("d")), Reals()), Arrow(LocalCall("IsProbability", X("p")),
+            All("p", Arrow(FinOf(dimension), Reals()), Arrow(
+                At(Qualified("D5", "S3", "TotalVariation", "CycleSingleCutMinimax", "Probability"), X("p")),
                 LE(Add(LocalCall("topSum", LocalCall("arith", X("p")), X("m")),
                         LocalCall("topSum", LocalCall("geom", X("p")), X("m"))),
-                    Typed(At(Qualified("Nat", "cast"), X("d")), Reals())))), CloseBrace)));
+                    Typed(At(Qualified("Nat", "cast"), dimension), Reals())))), CloseBrace);
 
     private static Formula ResultFormula() => Conjunction(
         All("d", Naturals(), Arrow(LE(D(5), X("d")), At(Qualified("IsGreatest"),
-            LocalCall("admissibleIndices", X("d")),
+            AdmissibleSet(X("d")),
             Typed(Subtract(Multiply(D(2), X("d")), D(5)), Naturals())))),
-        At(Qualified("IsGreatest"), LocalCall("admissibleIndices", Typed(D(3), Naturals())),
+        At(Qualified("IsGreatest"), AdmissibleSet(Typed(D(3), Naturals())),
             Typed(D(2), Naturals())));
 
     private static Formula VectorBinders(Formula body) => All("d", Naturals(),
@@ -207,10 +203,6 @@ internal sealed class MarkovianDivisibilityMaximalIndexDocument : IScribeDocumen
         new Formula.Binary(Parenthesized(left), FormulaBinaryOperator.Multiply, Parenthesized(right));
     private static Formula Conjunction(Formula left, Formula right) =>
         new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
-    private static Formula Equivalence(Formula left, Formula right) =>
-        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Iff, Parenthesized(right));
-    private static Formula SumOver(string name, Formula type, Formula body) =>
-        Seq(new Formula.Subscript(Sum, Typed(X(name), type)), Sp, Parenthesized(body));
     private static Formula SumIn(string name, Formula set, Formula body) =>
         Seq(new Formula.Subscript(Sum, Member(X(name), set)), Sp, Parenthesized(body));
     private static Formula Qualified(params string[] parts)

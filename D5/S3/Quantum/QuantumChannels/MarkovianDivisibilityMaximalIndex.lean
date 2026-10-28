@@ -8,11 +8,13 @@
 
 import Mathlib.Algebra.BigOperators.Field
 import D5.S3.Constants.PowerMeanKernel
+import D5.S3.TotalVariation.CycleSingleCutMinimax
 
 /-! The two mean matrices are optimized over independent sets of ordered positions. -/
 
 noncomputable section
 open scoped BigOperators
+open D5.S3.TotalVariation.CycleSingleCutMinimax (Probability)
 namespace D5.S3.Quantum.QuantumChannels.MarkovianDivisibilityMaximalIndex
 
 /-- The arithmetic-mean matrix of the source probability vector. -/
@@ -31,13 +33,9 @@ def topSum {d : ℕ} (f : Fin d × Fin d → ℝ) (m : ℕ) : ℝ :=
     (Finset.powersetCard_nonempty.mpr (by simpa using Nat.min_le_right m (d * d)))
     (fun s => ∑ ij ∈ s, f ij)
 
-/-- Nonnegativity and unit total mass. -/
-def IsProbability {d : ℕ} (p : Fin d → ℝ) : Prop :=
-  (∀ i, 0 ≤ p i) ∧ ∑ i, p i = 1
-
 /-- Indices for which the source inequality holds for every probability vector. -/
 def admissibleIndices (d : ℕ) : Set ℕ :=
-  {m | ∀ p : Fin d → ℝ, IsProbability p → topSum (arith p) m + topSum (geom p) m ≤ d}
+  {m | ∀ p : Fin d → ℝ, Probability p → topSum (arith p) m + topSum (geom p) m ≤ d}
 
 private lemma top_sum_le {d m : ℕ} (f : Fin d × Fin d → ℝ) (a : ℝ)
     (h : ∀ s : Finset (Fin d × Fin d), s.card = min m (d * d) →
@@ -80,14 +78,14 @@ private lemma top_sum_mono {d : ℕ} (f : Fin d × Fin d → ℝ) (hf : ∀ ij, 
   exact (Finset.sum_le_sum_of_subset_of_nonneg hst (fun ij _ _ => hf ij)).trans
     (sum_le_top_sum f t ht)
 
-private lemma probability_le_one {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p)
+private lemma probability_le_one {d : ℕ} {p : Fin d → ℝ} (hp : Probability p)
     (i : Fin d) : p i ≤ 1 := by
   have h := Finset.single_le_sum (fun j (_ : j ∈ (Finset.univ : Finset (Fin d))) =>
     hp.1 j) (Finset.mem_univ i)
   exact h.trans_eq hp.2
 
 private lemma probability_pair_le_one {d : ℕ} {p : Fin d → ℝ}
-    (hp : IsProbability p) {i j : Fin d} (hij : i ≠ j) : p i + p j ≤ 1 := by
+    (hp : Probability p) {i j : Fin d} (hij : i ≠ j) : p i + p j ≤ 1 := by
   classical
   have h := Finset.sum_le_sum_of_subset_of_nonneg
     (Finset.subset_univ ({i, j} : Finset (Fin d))) (fun a _ _ => hp.1 a)
@@ -160,7 +158,7 @@ private lemma arithmetic_coefficients {d : ℕ} (s : Finset (Fin d × Fin d))
     linarith
 
 private lemma probability_weighted_bound {d : ℕ} {p : Fin d → ℝ}
-    (hp : IsProbability p) (c : Fin d → ℝ) (u v t : ℝ)
+    (hp : Probability p) (c : Fin d → ℝ) (u v t : ℝ)
     (hu : ∀ i, c i ≤ u) (hv : ∀ i j, i ≠ j → c i + c j ≤ v)
     (ht : 1 / 2 ≤ t) (hmax : ∀ i, p i ≤ t) (hvu : v ≤ 2 * u) :
     (∑ i, c i * p i) ≤ (2 * t - 1) * u + (1 - t) * v := by
@@ -188,7 +186,7 @@ private lemma probability_weighted_bound {d : ℕ} {p : Fin d → ℝ}
     have htu := mul_le_mul_of_nonneg_left (hu j) (by linarith : 0 ≤ 2 * t - 1)
     nlinarith
 
-private lemma geometric_square_sum {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p) :
+private lemma geometric_square_sum {d : ℕ} {p : Fin d → ℝ} (hp : Probability p) :
     (∑ ab : Fin d × Fin d, (geom p ab) ^ 2) = 1 := by
   have hpoint (ab : Fin d × Fin d) : (geom p ab) ^ 2 = p ab.1 * p ab.2 := by
     dsimp only [geom, D5.S3.Constants.PowerMeanKernel.meanZero]
@@ -198,7 +196,7 @@ private lemma geometric_square_sum {d : ℕ} {p : Fin d → ℝ} (hp : IsProbabi
   simp_rw [← Finset.mul_sum, hp.2, mul_one]
   exact hp.2
 
-private lemma geometric_coarse_bound {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p)
+private lemma geometric_coarse_bound {d : ℕ} {p : Fin d → ℝ} (hp : Probability p)
     (s : Finset (Fin d × Fin d)) : (∑ ab ∈ s, geom p ab) ≤ Real.sqrt s.card := by
   have hcs := Real.sum_mul_le_sqrt_mul_sqrt s (fun _ => 1) (geom p)
   simp only [one_mul, one_pow, Finset.sum_const, nsmul_eq_mul, mul_one] at hcs
@@ -227,7 +225,7 @@ private lemma selection_with_center {d : ℕ} (g : Fin d × Fin d → ℝ)
     have hh := Finset.sum_erase_add s g hb
     linarith [hmax b]
 
-private lemma geometric_refined_bound {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p)
+private lemma geometric_refined_bound {d : ℕ} {p : Fin d → ℝ} (hp : Probability p)
     (i : Fin d) (hi : ∀ j, p j ≤ p i) (s : Finset (Fin d × Fin d))
     (hs : s.Nonempty) :
     (∑ ab ∈ s, geom p ab) ≤ p i + Real.sqrt (s.card - 1 : ℕ) *
@@ -260,7 +258,7 @@ private lemma geometric_refined_bound {d : ℕ} {p : Fin d → ℝ} (hp : IsProb
   linarith
 
 private lemma selected_mean_bound {d : ℕ} (hd : 5 ≤ d) (p : Fin d → ℝ)
-    (hp : IsProbability p) (s t : Finset (Fin d × Fin d))
+    (hp : Probability p) (s t : Finset (Fin d × Fin d))
     (hs : s.card = 2 * d - 5) (ht : t.card = 2 * d - 5) :
     (∑ ab ∈ s, arith p ab) + (∑ ab ∈ t, geom p ab) ≤ d := by
   classical
@@ -314,7 +312,7 @@ private lemma selected_mean_bound {d : ℕ} (hd : 5 ≤ d) (p : Fin d → ℝ)
     linarith
 
 private lemma main_bound {d : ℕ} (hd : 5 ≤ d) (p : Fin d → ℝ)
-    (hp : IsProbability p) :
+    (hp : Probability p) :
     topSum (arith p) (2 * d - 5) + topSum (geom p) (2 * d - 5) ≤ d := by
   obtain ⟨s, hs, he⟩ := top_sum_attained (arith p) (m := 2 * d - 5)
   obtain ⟨t, ht, hf⟩ := top_sum_attained (geom p) (m := 2 * d - 5)
@@ -352,7 +350,7 @@ private lemma star_card_sum {d : ℕ} (j : Finset (Fin d)) (o : Fin d) (ho : o �
     rw [Finset.sum_add_distrib]
 
 private lemma failure_next {d : ℕ} (hd : 5 ≤ d) :
-    ∃ p : Fin d → ℝ, IsProbability p ∧
+    ∃ p : Fin d → ℝ, Probability p ∧
       (d : ℝ) < topSum (arith p) (2 * d - 4) + topSum (geom p) (2 * d - 4) := by
   classical
   let o : Fin d := ⟨0, by omega⟩
@@ -394,7 +392,7 @@ private lemma failure_next {d : ℕ} (hd : 5 ≤ d) :
     have hao : a ≠ o := by intro h; exact ho (h ▸ ha)
     simp only [p, ite_eq_right hao, ite_eq_left ha, zero_add]
   have hpz : p z = 0 := by simp only [p, ite_eq_right hzo, ite_eq_right hz, add_zero]
-  have hp : IsProbability p := by
+  have hp : Probability p := by
     constructor
     · intro a
       dsimp only [p]
@@ -464,7 +462,7 @@ private lemma failure_next {d : ℕ} (hd : 5 ≤ d) :
     div_pos (sq_pos_of_pos (by linarith)) (by positivity)
   exact ⟨p, hp, by linarith⟩
 
-private lemma geom_le_arith {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p)
+private lemma geom_le_arith {d : ℕ} {p : Fin d → ℝ} (hp : Probability p)
     (ab : Fin d × Fin d) : geom p ab ≤ arith p ab := by
   rw [geom.eq_1, arith.eq_1]
   unfold D5.S3.Constants.PowerMeanKernel.meanZero
@@ -473,7 +471,7 @@ private lemma geom_le_arith {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p)
   have hn := Real.sqrt_nonneg (p ab.1 * p ab.2)
   nlinarith [sq_nonneg (p ab.1 - p ab.2), hp.1 ab.1, hp.1 ab.2]
 
-private lemma arithmetic_two_bound {d : ℕ} {p : Fin d → ℝ} (hp : IsProbability p)
+private lemma arithmetic_two_bound {d : ℕ} {p : Fin d → ℝ} (hp : Probability p)
     (s : Finset (Fin d × Fin d)) (hs : s.card = 2) :
     (∑ ab ∈ s, arith p ab) ≤ 3 / 2 := by
   classical
@@ -498,7 +496,7 @@ private lemma arithmetic_two_bound {d : ℕ} {p : Fin d → ℝ} (hp : IsProbabi
     · linarith [hone a, hoff b hb]
   · linarith [hoff a ha, hone b]
 
-private lemma three_bound (p : Fin 3 → ℝ) (hp : IsProbability p) :
+private lemma three_bound (p : Fin 3 → ℝ) (hp : Probability p) :
     topSum (arith p) 2 + topSum (geom p) 2 ≤ 3 := by
   have ha : topSum (arith p) 2 ≤ 3 / 2 := by
     apply top_sum_le
@@ -515,12 +513,12 @@ private lemma three_bound (p : Fin 3 → ℝ) (hp : IsProbability p) :
   linarith
 
 private lemma three_failure :
-    ∃ p : Fin 3 → ℝ, IsProbability p ∧
+    ∃ p : Fin 3 → ℝ, Probability p ∧
       3 < topSum (arith p) 3 + topSum (geom p) 3 := by
   classical
   let p : Fin 3 → ℝ := ![4 / 5, 1 / 5, 0]
   let s : Finset (Fin 3 × Fin 3) := {(0, 0), (0, 1), (1, 0)}
-  have hp : IsProbability p := by
+  have hp : Probability p := by
     constructor
     · intro i; fin_cases i <;> norm_num [p]
     · norm_num [p, Fin.sum_univ_succ]
@@ -544,7 +542,7 @@ private lemma three_failure :
 
 private lemma greatest_of_bound_failure {d m : ℕ}
     (hb : m ∈ admissibleIndices d)
-    (hf : ∃ p : Fin d → ℝ, IsProbability p ∧
+    (hf : ∃ p : Fin d → ℝ, Probability p ∧
       (d : ℝ) < topSum (arith p) (m + 1) + topSum (geom p) (m + 1)) :
     IsGreatest (admissibleIndices d) m := by
   refine ⟨hb, ?_⟩
