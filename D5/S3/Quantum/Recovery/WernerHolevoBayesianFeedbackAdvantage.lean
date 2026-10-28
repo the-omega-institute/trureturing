@@ -82,7 +82,18 @@ private theorem markov_bound {m₁ m₂ : ℕ} (K₁ : Fin m₁ → qutrit) (K�
   sorry
 
 private theorem canonical_is_kraus : IsKrausDecomposition canonicalKraus := by
-  sorry
+  have hs : ((Real.sqrt 2 : ℂ)⁻¹) ^ 2 = (1 / 2 : ℂ) := by
+    have hn : (Real.sqrt 2 : ℂ) ≠ 0 := by norm_num
+    field_simp [hn]
+    norm_num [pow_two, Complex.ext_iff, Complex.mul_re, Complex.mul_im,
+      Complex.ofReal_re, Complex.ofReal_im, Real.sq_sqrt]
+  intro X
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [canonicalKraus, crossProduct, basisVector, whChannel,
+      Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.transpose_apply,
+      Matrix.trace, Fin.sum_univ_succ] <;>
+    simp only [← mul_assoc, ← pow_two, hs] <;> ring
 
 private theorem fourier_is_kraus : IsKrausDecomposition fourierKraus := by
   sorry
