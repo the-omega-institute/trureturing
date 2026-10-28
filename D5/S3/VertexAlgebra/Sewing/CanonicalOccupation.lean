@@ -13,7 +13,16 @@ import D5.S3.VertexAlgebra.LatticeActualAnnihilation
 import D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation
 
 /-! Literal factorial-coordinate sewing and occupation coefficients
-of the original lattice fields. -/
+of the original lattice fields.
+
+proof_shape: canonical_sewing_summable: content
+admission_basis: escape-witness
+escape_witness: The actual finite word-field recurrence preserves complementary
+row and factorial column bounds for arbitrary descendant words and signed modes.
+Their product gives an ungrouped occupation majorant, before any cancellation
+or energy-fibre grouping. Every private estimate is consumed by this theorem.
+The factorial pairing is used only for coordinate resolution, not BPZ invariance.
+-/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
