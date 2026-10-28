@@ -46,6 +46,20 @@ private theorem referenceJump_factor (c a k S : ℝ) (g : Fin 5 → ℝ) (i : Fi
     referenceJump (H := H) c a k S g i = amplitude c a k S g i • coordinate i := by
   simp [referenceJump, row_factor, ite_smul]
 
+/-- The squared amplitude gives the literal Kraus conjugation even at times
+where the totalized derivative has not been identified with a rate formula. -/
+theorem actual_raw_jump_operator (c a k S : ℝ) (g : Fin 5 → ℝ) (i : Fin 5)
+    (rho : Blocks (Fin 5) H →L[ℂ] Blocks (Fin 5) H) :
+    (referenceJump c a k S g i).comp (rho.comp (referenceJump c a k S g i).adjoint) =
+      (Complex.normSq (amplitude c a k S g i) : ℂ) • compression rho i := by
+  rw [referenceJump_factor, map_smulₛₗ]
+  ext x
+  simp only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.smul_apply,
+    map_smul, smul_smul, compression]
+  change (star (amplitude c a k S g i) * amplitude c a k S g i) • _ = _
+  rw [mul_comm, Complex.star_def, Complex.mul_conj]
+  rfl
+
 private theorem amplitude_square (c a k S : ℝ) (g : Fin 5 → ℝ) (i : Fin 5)
     (hc : c < 1/2) (ha : a ∈ Ioo 0 c) (hk : k ∈ Ioo 0 c)
     (hS : 0 ≤ S) (hg : 0 ≤ g i) :

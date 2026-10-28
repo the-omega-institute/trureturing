@@ -7,6 +7,10 @@ internal sealed class OriginalReferenceKrausDocument : IScribeDocumentDefinition
     public DocumentDefinition Create()=>DocumentDefinition.Create(ScribeNode.Create(
         "Original absorbing Kraus rows retain arbitrary reference correlations.",
         H("Original jump outputs with a reference"),Blocks(
+            Item("actual_raw_jump_operator","The literal amplitude includes every time value",
+                All([V("H",F.Id("CompleteComplexHilbertSpace")),V("c",R),V("a",R),V("k",R),V("S",R),V("g",C("Functions",C("Fin",D(5)),R)),V("i",C("Fin",D(5))),V("rho",C("End",C("B",C("Fin",D(5)),F.Id("H"))))],
+                    Equal(C("conjugate",J(),Rho),C("smul",C("normSq",C("amplitude",F.Id("c"),F.Id("a"),F.Id("k"),F.Id("S"),F.Id("g"),I)),C("compression",Rho,I)))),
+                "The literal absorbing row is alpha_i times coordinate i for every real parameter value. Its conjugation is normSq(alpha_i) times the same input compression, without a sign or differentiability assumption. This includes the totalized derivative values at finitely many control corners. On the nonnegative-rate domain the following theorem identifies the squared amplitude with the original rate coefficient. The repeated-control Bochner theorem consumes this exact operator identity, so it does not assume a desired output law or omit endpoint values."),
             Item("actual_jump_operator","The actual row selects the same input block",
                 All([V("H",F.Id("CompleteComplexHilbertSpace")),V("c",R),V("a",R),V("k",R),V("S",R),V("g",C("Functions",C("Fin",D(5)),R)),V("i",C("Fin",D(5))),V("rho",C("End",C("B",C("Fin",D(5)),F.Id("H"))))],
                     Imp(Hyp(),Equal(C("conjugate",J(),Rho),C("smul",Coeff(),C("compression",Rho,I))))),
