@@ -17,12 +17,12 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryFreeRootForm
 
-open FiniteSourceHardy (H)
-open BiasedBoundaryTrace (G J)
+open FiniteSourceHardy (H Edge)
+open BiasedBoundaryTrace (G J M cylinder indicator J_single)
 open BiasedBoundaryPathSplit (constG)
 open BiasedBoundaryCentering (mean Pi C centered_suffix_residual)
 open BiasedBoundaryStopping (Threshold Qt Vt actual_stopping_residual)
-open InnerProductSpace Filter
+open InnerProductSpace Filter MeasureTheory
 open scoped Topology
 
 /-- The actual adjoint trace of the constant one. -/
@@ -112,6 +112,28 @@ private theorem covariance_formula :
     inner ℝ (J w) (J z) - inner ℝ (constG 1) (J z)*inner ℝ (J w) (constG 1)
   rfl
 
+private theorem mean_indicator (p : Edge) : mean (indicator p) = M.real (cylinder p.val) := by
+  rw [centered_suffix_residual.1]
+  change (∫ ω, indicatorConstLp 2 _ _ (1 : ℝ) ω ∂M) = _
+  rw [integral_indicatorConstLp]
+  simp
+
+private theorem covariance_entry (p q : Edge) :
+    inner ℝ (lp.single 2 p (1 : ℝ)) (Sigma (lp.single 2 q (1 : ℝ))) =
+      M.real (cylinder p.val ∩ cylinder q.val)-
+        M.real (cylinder p.val)*M.real (cylinder q.val) := by
+  rw [covariance_formula, ContinuousLinearMap.sub_apply, inner_sub_right,
+    ContinuousLinearMap.comp_apply, ContinuousLinearMap.adjoint_inner_right,
+    J_single, J_single, one_smul, one_smul, rankOne_apply, inner_smul_right]
+  have hv (r : Edge) : inner ℝ (lp.single 2 r (1 : ℝ)) v = M.real (cylinder r.val) := by
+    rw [v, ContinuousLinearMap.adjoint_inner_right, J_single, one_smul, real_inner_comm]
+    exact mean_indicator r
+  have hv' (r : Edge) : inner ℝ v (lp.single 2 r (1 : ℝ)) = M.real (cylinder r.val) :=
+    (real_inner_comm _ _).trans (hv r)
+  rw [hv', hv, mul_comm (M.real (cylinder q.val))]
+  congr 1
+  exact L2.real_inner_indicatorConstLp_one_indicatorConstLp_one _ _
+
 /-- Stopping averages approximate the actual centered trace in operator norm.
 The uncentered trace and its actual covariance are compact, and the covariance
 has the original rank-one correction and all-vector quadratic form. -/
@@ -120,7 +142,11 @@ theorem actual_compact_covariance :
     Sigma = J.adjoint.comp J - rankOne ℝ v v ∧
     (∀ z w : H, inner ℝ z (Sigma w) = inner ℝ (C z) (C w)) ∧
     (∀ z : H, inner ℝ z (Sigma z) = ‖C z‖^2) ∧
-    Sigma.ker = C.ker := by
+    Sigma.ker = C.ker ∧
+    (∀ p q : Edge,
+      inner ℝ (lp.single 2 p (1 : ℝ)) (Sigma (lp.single 2 q (1 : ℝ))) =
+        M.real (cylinder p.val ∩ cylinder q.val)-
+          M.real (cylinder p.val)*M.real (cylinder q.val)) := by
   have hr : IsCompactOperator (constG.comp (mean.comp J)) := by
     exact (isCompactOperator_of_locallyCompactSpace_rng constG).comp_clm (mean.comp J)
   have hJ : J = C + constG.comp (mean.comp J) := by
@@ -129,7 +155,7 @@ theorem actual_compact_covariance :
     change J z = Pi (J z)+constG (mean (J z))
     rw [centered_suffix_residual.2.2.1, sub_add_cancel]
   refine ⟨?_, compact_C, compact_C.clm_comp C.adjoint, covariance_formula,
-    Sigma_pair, ?_, ker_Sigma⟩
+    Sigma_pair, ?_, ker_Sigma, covariance_entry⟩
   · rw [hJ]
     exact compact_C.add hr
   · intro z
@@ -225,6 +251,24 @@ theorem free_root_least_energy (F : D) :
 /-- The polarized original energy, using its attained least-norm increments. -/
 def form (F T : D) : ℝ := inner ℝ (lift F) (lift T)
 
+private theorem lift_add (F T : D) : lift (F+T) = lift F+lift T := by
+  apply C_injective_K (lift_mem (F+T)) (K.add_mem (lift_mem F) (lift_mem T))
+  rw [map_add,C_lift,C_lift,C_lift]
+  exact Pi.map_add F.val T.val
+
+private theorem lift_sub (F T : D) : lift (F-T) = lift F-lift T := by
+  apply C_injective_K (lift_mem (F-T)) (K.sub_mem (lift_mem F) (lift_mem T))
+  rw [map_sub,C_lift,C_lift,C_lift]
+  exact Pi.map_sub F.val T.val
+
+private theorem energy_polarization (F T : D) :
+    form F T = (energy (F+T).val-energy (F-T).val)/4 := by
+  rw [(free_root_least_energy (F+T)).2.2.2.1,
+    (free_root_least_energy (F-T)).2.2.2.1,lift_add,lift_sub,
+    norm_add_sq_real,norm_sub_sq_real]
+  unfold form
+  ring
+
 /-- The weak variational graph of the original free-root form. -/
 def weakGraph (u h : G) : Prop :=
   ∃ hu : u ∈ D, ∀ F : D, form ⟨u,hu⟩ F = inner ℝ h F.val
@@ -307,16 +351,93 @@ private theorem variational_graph_core (u h : G) :
     rw [form, hl, ContinuousLinearMap.adjoint_inner_left, C_lift]
     exact inner_centered h F.val hh
 
+private theorem lift_graph_eq : {x : G × H | ∃ F : D, x = (F.val,lift F)} =
+      {x : G × H | x.2 ∈ K ∧ C x.2 = Pi x.1} := by
+    ext x
+    constructor
+    · rintro ⟨F,rfl⟩
+      exact ⟨lift_mem F,C_lift F⟩
+    · rintro ⟨hk,hc⟩
+      have hd := represented_of_centered x.1 x.2 hc
+      refine ⟨⟨x.1,hd⟩,?_⟩
+      apply Prod.ext
+      · rfl
+      · exact (free_root_least_energy ⟨x.1,hd⟩).2.2.2.2.2 x.2 hk hc
+
+private theorem closed_lift_graph :
+    IsClosed {x : G × H | ∃ F : D, x = (F.val,lift F)} := by
+  rw [lift_graph_eq]
+  have hk : IsClosed {x : G × H | x.2 ∈ K} := by
+    exact Sigma.ker.isClosed_orthogonal.preimage continuous_snd
+  exact hk.inter (isClosed_eq (C.continuous.comp continuous_snd)
+    (Pi.continuous.comp continuous_fst))
+
+/-- The original form domain in its complete least-increment graph norm. -/
+def formSpace : Submodule ℝ (G × H) where
+  carrier := {x | x.2 ∈ K ∧ C x.2 = Pi x.1}
+  zero_mem' := ⟨K.zero_mem,by simp⟩
+  add_mem' := by
+    intro x y hx hy
+    change x.2+y.2 ∈ K ∧ C (x.2+y.2) = Pi (x.1+y.1)
+    exact ⟨K.add_mem hx.1 hy.1,by rw [map_add,map_add,hx.2,hy.2]⟩
+  smul_mem' := by
+    intro c x hx
+    change c • x.2 ∈ K ∧ C (c • x.2) = Pi (c • x.1)
+    exact ⟨K.smul_mem c hx.1,by rw [map_smul,map_smul,hx.2]⟩
+
+instance : CompleteSpace formSpace := by
+  have hc : IsClosed (formSpace : Set (G × H)) := by
+    change IsClosed {x : G × H | x.2 ∈ K ∧ C x.2 = Pi x.1}
+    rw [← lift_graph_eq]
+    exact closed_lift_graph
+  exact hc.completeSpace_coe
+
+/-- The actual inclusion into G of the original energy domain, in graph coordinates. -/
+def formInclusion : formSpace →L[ℝ] G :=
+  (ContinuousLinearMap.fst ℝ G H).comp formSpace.subtypeL
+
+private def incrementInclusion : formSpace →L[ℝ] H :=
+  (ContinuousLinearMap.snd ℝ G H).comp formSpace.subtypeL
+
+private theorem form_space_identification (x : formSpace) :
+    ∃ F : D, x.val = (F.val,lift F) ∧ energy F.val = ‖x.val.2‖^2 := by
+  have hx : x.val ∈ {y : G × H | y.2 ∈ K ∧ C y.2 = Pi y.1} := x.property
+  rw [← lift_graph_eq] at hx
+  obtain ⟨F,hF⟩ := hx
+  refine ⟨F,hF,?_⟩
+  have hz := congrArg Prod.snd hF
+  rw [hz]
+  exact (free_root_least_energy F).2.2.2.1
+
+private theorem compact_form_inclusion : IsCompactOperator formInclusion := by
+  have he : formInclusion = constG.comp (mean.comp formInclusion)+C.comp incrementInclusion := by
+    apply ContinuousLinearMap.ext
+    intro x
+    have hx := x.property.2
+    change C x.val.2 = Pi x.val.1 at hx
+    change x.val.1 = constG (mean x.val.1)+C x.val.2
+    rw [hx,centered_suffix_residual.2.2.1]
+    abel
+  rw [he]
+  exact ((isCompactOperator_of_locallyCompactSpace_rng constG).comp_clm
+    (mean.comp formInclusion)).add
+    (actual_compact_covariance.2.1.comp_clm incrementInclusion)
+
 /-- The least-norm pairing has exactly the original infimum on its diagonal,
 and its entire weak variational graph is the actual covariance graph. -/
 theorem free_root_variational_graph :
     (∀ F : D, form F F = energy F.val) ∧
+    (∀ F T : D, form F T = (energy (F+T).val-energy (F-T).val)/4) ∧
+    IsClosed {x : G × H | ∃ F : D, x = (F.val,lift F)} ∧
+    (∀ x : formSpace, ∃ F : D,
+      x.val = (F.val,lift F) ∧ energy F.val = ‖x.val.2‖^2) ∧
+    IsCompactOperator formInclusion ∧
     (∀ u h : G, weakGraph u h ↔ mean h = 0 ∧
       u = constG (mean u)+C (C.adjoint h)) := by
   constructor
   · intro F
     rw [form, real_inner_self_eq_norm_sq, (free_root_least_energy F).2.2.2.1]
-  · exact variational_graph_core
+  · exact ⟨energy_polarization,closed_lift_graph,form_space_identification,compact_form_inclusion,variational_graph_core⟩
 
 #print axioms actual_compact_covariance
 #print axioms free_root_least_energy

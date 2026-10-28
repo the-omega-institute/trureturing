@@ -330,7 +330,7 @@ def J : H →L[ℝ] G := finiteJ.extendOfNorm finiteInclusion
 private theorem J_finiteInclusion (f : Edge →₀ ℝ) : J (finiteInclusion f) = finiteJ f :=
   LinearMap.extendOfNorm_eq finiteInclusion_dense ⟨_, finiteJ_bound⟩ f
 
-private theorem J_single (p : Edge) (c : ℝ) : J (lp.single 2 p c) = c • indicator p := by
+theorem J_single (p : Edge) (c : ℝ) : J (lp.single 2 p c) = c • indicator p := by
   have he : finiteInclusion (Finsupp.single p c) = lp.single 2 p c := by
     simp [finiteInclusion, Finsupp.linearCombination_single, ← lp.single_smul]
   rw [← he, J_finiteInclusion]

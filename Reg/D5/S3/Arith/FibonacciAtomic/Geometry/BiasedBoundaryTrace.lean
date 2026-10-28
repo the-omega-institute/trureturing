@@ -132,4 +132,79 @@ noncomputable def registration_1 :
   familyRecord := none,
   options := #[] }
 
+namespace Single
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature (fun _ _ c => c) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (p : Edge) (c : ℝ), J (lp.single 2 p c) = R.readout () () c • indicator p
+
+def rejected : Realization signature := realize signature (fun _ _ _ => (0 : ℝ)) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h leftEdge 1
+  change J (lp.single 2 leftEdge 1) = 0 • indicator leftEdge at he
+  rw [J_single,one_smul,zero_smul] at he
+  exact indicator_ne_zero he
+
+def familyRegistration : Registration arena (type_of% J_single) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨J_single,rejected,rejected_law⟩
+  sensitivity := ⟨by
+    intro i
+    refine ⟨rejected,?_,rfl,rejected_law⟩
+    intro j hji
+    exact (hji (Subsingleton.elim j i)).elim,
+    fun e => nomatch e⟩
+  dependence := by
+    intro i
+    exact ⟨(),0,1,by norm_num [actual,realize]⟩
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@J_single)
+    (type_of% (realize signature (fun _ _ c => c) (fun e => nomatch e)))
+    Unit Unit := {
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace.Single.unit,
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace.Single.familyRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨familyRegistration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ _ c => c) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace,
+    definition := none, coordinates := #[],
+    readouts := #[{
+      path := #["body","body","arg","fn","arg"],
+      stateBinder := 1, functionOperand := false, stateOperand := none,
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+end Single
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace

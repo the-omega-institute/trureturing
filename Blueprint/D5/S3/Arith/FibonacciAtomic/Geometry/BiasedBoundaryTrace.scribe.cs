@@ -39,6 +39,12 @@ internal sealed class BiasedBoundaryTraceDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For every original finite address p, including the empty address, the real mass of its cylinder under the infinite Bernoulli product M is exactly the product of its letter probabilities: a for false and b for true.")),
                     Paragraph(Text("The finite-coordinate product formula for M reduces the cylinder measure to singleton probabilities. Appending one letter multiplies both that measure and mass(p) by the same probability. The empty address has mass one. Consequently this is the actual cylinder mass used by the mass-crossing frontier."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("biasedboundarytrace-single"),
+                DeclarationHandle.Create(Prefix + "J_single"), H("An Actual Single Increment"),
+                StatementSource.FromAuthor(All("p",Call("Edge"),All("c",Seq(Mathbb,Grp(V("R"))),
+                    Seq(Call("J",Call("single",D(2),V("p"),V("c"))),Eq,Mul(V("c"),Call("indicator",V("p"))))))),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every original nonempty edge p and real increment c, J sends the square-summable single-coordinate vector to c times the actual biased cylinder indicator. This identifies the coordinate covariance with the intersection probabilities of the same measure M."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("biasedboundarytrace-hardy"),
                 DeclarationHandle.Create(Prefix + "boundary_trace_hardy"), H("Convergence and Hardy Tail"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(
