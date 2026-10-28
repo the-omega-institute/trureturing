@@ -683,8 +683,18 @@ private theorem three_quadratic (T : Finset World3) (hT : T.card = 3)
   have hzero : p = 0 := Polynomial.eq_zero_of_degree_lt_of_eval_index_eq_zero
     (Finset.univ : Finset (Fin 3))
     (v := ![ny W,ny Z,ny X])
-    (by intro i _ k _ he; fin_cases i <;> fin_cases k <;> simp_all)
-    (by norm_num; dsimp [p]; compute_degree)
+    (by
+      intro i _ k _ he
+      fin_cases i <;> fin_cases k <;> simp at he
+      all_goals first
+        | rfl
+        | exact (hYZ he).elim
+        | exact (hYZ he.symm).elim
+        | exact (hYX he).elim
+        | exact (hYX he.symm).elim
+        | exact (hZX' he).elim
+        | exact (hZX' he.symm).elim)
+    (by norm_num; dsimp [p]; compute_degree; norm_num)
     (by intro i _; fin_cases i <;> first | exact hp W hW | exact hp Z hZ | exact hp X hX)
   have he := congrArg (fun q : Polynomial ℝ => q.coeff 2) hzero
   norm_num [p,Polynomial.coeff_X_pow,Polynomial.coeff_C_mul_X] at he
@@ -998,7 +1008,8 @@ theorem mixed_prefix_three_world_exclusion (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
       intro W hW
       have eq0 : (1+nx W*ny W)*nh W₀ 0 = (1+nx W₀*ny W₀)*nh W₀ 0 := by
         have he := (first W hW).2.2
-        simpa [nh,hco W hW,all_drift W W₀ hW hW₀] using he.trans (first W₀ hW₀).2.2.symm
+        rw [all_drift W W₀ hW hW₀] at he
+        simpa [nh,hco W hW] using he.trans (first W₀ hW₀).2.2.symm
       have := mul_right_cancel₀ hn0 eq0
       linarith
 
