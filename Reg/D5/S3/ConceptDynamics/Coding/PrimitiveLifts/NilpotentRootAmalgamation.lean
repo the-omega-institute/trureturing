@@ -1,6 +1,9 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.PrimitiveLifts.NilpotentRootAmalgamation
 import Reg.Support.DependentFamily
+import Mathlib.Algebra.Group.ULift
+
+/-! Source-bound audit of the actual power observation in the full group telescope. -/
 
 namespace Reg.D5.S3.ConceptDynamics.Coding.PrimitiveLifts.NilpotentRootAmalgamation
 
@@ -63,15 +66,20 @@ noncomputable def registration : Registration arena.{u}
     let G := Multiplicative (ULift.{u} ℤ)
     refine ⟨⟨G,inferInstance,1⟩,1,Multiplicative.ofAdd ⟨1⟩,?_⟩
     intro he
+    change (1 : G) ^ 1 = (Multiplicative.ofAdd ⟨1⟩ : G) ^ 1 at he
+    simp only [pow_one] at he
     have down := congrArg (fun a : G => a.toAdd.down) he
-    norm_num [actual, realize] at down
+    exact (show (0 : ℤ) ≠ 1 by decide) down
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@pow_eq_pow_iff_exists_unique.{u})
     (type_of% (realize.{u+1,u,0,u,0} signature.{u}
       (fun _ p x => letI := p.2.1; x ^ p.2.2) (fun e => nomatch e))) (Type (u+1)) Unit where
-  unitName := `D5.S3.ConceptDynamics.Coding.PrimitiveLifts.NilpotentRootAmalgamation.pow_eq_pow_iff_exists_unique.audit
-  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.PrimitiveLifts.NilpotentRootAmalgamation.registration
+  unitName :=
+    `Reg.D5.S3.ConceptDynamics.Coding.PrimitiveLifts.NilpotentRootAmalgamation.audit
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.ConceptDynamics.Coding.PrimitiveLifts.NilpotentRootAmalgamation
+    "registration"
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
