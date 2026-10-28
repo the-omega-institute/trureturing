@@ -135,3 +135,120 @@ def registration :
   options := #[]
 
 end Reg.D5.S3.Combinatorics.Sequenceability.OriginalCyclicFiveCarrierLowerBound
+
+namespace Reg.D5.S3.Combinatorics.Sequenceability.OriginalCyclicFiveCarrierLowerBound.Normalization
+
+universe v
+open LeanInformationAudit
+open _root_.D5.S3.ConceptDynamics.InformationEscape
+open _root_.Reg.D5.S3.Combinatorics.Sequenceability.OriginalSharpnessCarrierLowerBound
+  (signature actual dependence)
+open _root_.D5.S3.Combinatorics.Sequenceability.OriginalCyclicFiveCarrierLowerBound
+  (normalized_signed_classes)
+
+/-- Only the returned half-modulus bound varies; the positivity premise and the
+forbidden total sum retain their original cardinalities. -/
+abbrev arena : DependentFamily.Arena where
+  signature := signature.{v}
+  Law R := ∀ {K : Type v} [AddCommGroup K] [Finite K] [IsAddCyclic K]
+    (t : ℕ) (_hn : 0 < Nat.card K) (A : Fin t → K)
+    (_hA0 : ∀ i, A i ≠ 0) (_hAA : Function.Injective A)
+    (_hAN : ∀ i j, i ≠ j → A i ≠ -A j)
+    (_htriple : ∀ i j k, i ≠ j → i ≠ k → j ≠ k → ∀ s t u : Bool,
+      (if s then -A i else A i) + (if t then -A j else A j) +
+        (if u then -A k else A k) ≠ 0),
+    ∃ r : Fin t → ℕ,
+      (∀ i, 0 < r i) ∧ (∀ i, 2 * r i ≤ R.readout () () K) ∧ Function.Injective r ∧
+      (∀ i j k, i ≠ j → i ≠ k → j ≠ k → r i + r j ≠ r k) ∧
+      (∀ i j k, i ≠ j → i ≠ k → j ≠ k → r i + r j + r k ≠ Nat.card K)
+
+abbrev sourceScope := type_of% (@normalized_signed_classes.{v})
+private theorem source_bridge : sourceScope.{v} ↔ arena.{v}.Law actual.{v} := Iff.rfl
+private theorem actual_positive : arena.{v}.Law actual.{v} := @normalized_signed_classes.{v}
+
+def rejected1 : DependentFamily.Realization signature.{v} :=
+  DependentFamily.realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+private abbrev Fixture := ULift.{v} (ZMod 2)
+private def fixtureA (_ : Fin 1) : Fixture.{v} := ⟨1⟩
+
+private theorem rejected_law : ¬ arena.{v}.Law rejected1.{v} := by
+  intro h
+  let e : ZMod 2 ≃+ Fixture.{v} :=
+    (AddEquiv.ulift : Fixture.{v} ≃+ ZMod 2).symm
+  letI : IsAddCyclic Fixture.{v} := isAddCyclic_of_surjective e e.surjective
+  have hA0 (i : Fin 1) : fixtureA.{v} i ≠ 0 := by
+    intro he
+    have hz := congrArg ULift.down he
+    change (1 : ZMod 2) = 0 at hz
+    norm_num at hz
+  have hAA : Function.Injective fixtureA.{v} := fun i j _ => Subsingleton.elim i j
+  have hAN (i j : Fin 1) (hij : i ≠ j) : fixtureA.{v} i ≠ -fixtureA.{v} j :=
+    (hij (Subsingleton.elim i j)).elim
+  have htriple (i j k : Fin 1) (hij : i ≠ j) (_hik : i ≠ k) (_hjk : j ≠ k)
+      (s t u : Bool) :
+      (if s then -fixtureA.{v} i else fixtureA.{v} i) +
+        (if t then -fixtureA.{v} j else fixtureA.{v} j) +
+        (if u then -fixtureA.{v} k else fixtureA.{v} k) ≠ 0 :=
+    (hij (Subsingleton.elim i j)).elim
+  have hn : 0 < Nat.card Fixture.{v} := by
+    simp only [Fixture, Nat.card_ulift, Nat.card_zmod]
+    decide
+  obtain ⟨r, hpos, hbound, _, _, _⟩ :=
+    h (K := Fixture.{v}) 1 hn fixtureA.{v} hA0 hAA hAN htriple
+  have hp := hpos 0
+  have hb := hbound 0
+  change 2 * r 0 ≤ 1 at hb
+  omega
+
+def familyRegistration : DependentFamily.Registration arena.{v} sourceScope.{v} where
+  actual := actual.{v}
+  bridge := source_bridge.{v}
+  variation := ⟨actual_positive.{v}, rejected1.{v}, rejected_law.{v}⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected1.{v}, ?_, rfl, rejected_law.{v}⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence.{v}
+
+def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@normalized_signed_classes.{v})
+      (DependentFamily.Realization signature.{v}) Unit Unit where
+  unitName := `D5.S3.Combinatorics.Sequenceability.OriginalCyclicFiveCarrierLowerBound.normalized_signed_classes.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Sequenceability.OriginalCyclicFiveCarrierLowerBound.Normalization.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{v}⟩
+  objectArena := .source ⟨arena.{v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{v} ⟨familyRegistration.{v}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence
+    ⟨(show Nonempty (DependentFamily.Realization signature.{v}) from ⟨actual.{v}⟩)⟩ trivial
+  readout := some (DependentFamily.realize signature.{v}
+    (fun _ _ G => Nat.card G) (fun e => nomatch e))
+  variation := .evidence ⟨(familyRegistration.{v}).variation⟩ trivial
+  sensitivity := .evidence ⟨(familyRegistration.{v}).sensitivity⟩ trivial
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Sequenceability.OriginalCyclicFiveCarrierLowerBound
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "fn", "arg", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Reg.D5.S3.Combinatorics.Sequenceability.OriginalCyclicFiveCarrierLowerBound.Normalization
