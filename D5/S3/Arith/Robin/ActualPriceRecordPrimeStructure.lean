@@ -214,7 +214,85 @@ theorem price_record_prime_confinement :
   · intro p k hp hk hkm
     convert hcut p k hp hk hkm using 1 <;> ring
 
+/-- For each tolerance one log-size threshold works for every integer with the
+same full positive-price predecessor record. Only the higher mass has a specified
+square-root error; the prime-number contribution is qualitative. -/
+theorem price_record_largest_prime_localization :
+    ∀ epsilon : ℝ, 0 < epsilon → ∃ A : ℝ, 0 < A ∧
+      ∀ m : ℕ, 3 ≤ m → A ≤ Real.log (m : ℝ) →
+      (∀ n : ℕ, 0 < n → n < m →
+        goldenResourceObjective (1 / (40 * Real.log m * Real.log (Real.log m))) n <
+          goldenResourceObjective (1 / (40 * Real.log m * Real.log (Real.log m))) m) →
+      |(largestPrime m : ℝ) / Real.log m - 1| < epsilon := by
+  obtain ⟨K, hK, hfinite⟩ := price_record_prime_confinement
+  intro epsilon hepsilon
+  let d := min (epsilon / 8) (1 / 8)
+  have hd : 0 < d := lt_min (by positivity) (by norm_num)
+  have hde : d ≤ epsilon / 8 := min_le_left _ _
+  have hd8 : d ≤ 1 / 8 := min_le_right _ _
+  have htheta := EulerLayerRootCorrection.prime_number_limits.2
+  obtain ⟨Y, hY⟩ := (eventually_atTop.1
+    (htheta.eventually (Metric.ball_mem_nhds (1 : ℝ) hd)))
+  have herr : Tendsto (fun x : ℝ => K / Real.sqrt x) atTop (𝓝 0) :=
+    tendsto_const_nhds.div_atTop Real.tendsto_sqrt_atTop
+  obtain ⟨Z, hZ⟩ := (eventually_atTop.1 (herr.eventually (eventually_lt_nhds hd)))
+  let A := max 1 (max (4 * K ^ 2) (max (2 * Real.log 4 * max Y 1) Z))
+  have hlog4 : 0 < Real.log 4 := Real.log_pos (by norm_num)
+  refine ⟨A, lt_of_lt_of_le (by norm_num) (le_max_left _ _), ?_⟩
+  intro m hm hAm hrecord
+  let X := Real.log (m : ℝ)
+  let P := (largestPrime m : ℝ)
+  have hX : 0 < X := Real.log_pos (by exact_mod_cast (by omega : 1 < m))
+  have hX1 : 1 ≤ X := (le_max_left _ _).trans hAm
+  have hAK : 4 * K ^ 2 ≤ X :=
+    ((le_max_left _ _).trans (le_max_right _ _)).trans hAm
+  have hAY : 2 * Real.log 4 * max Y 1 ≤ X :=
+    ((le_max_left _ _).trans ((le_max_right _ _).trans (le_max_right _ _))).trans hAm
+  have hAZ : Z ≤ X :=
+    ((le_max_right _ _).trans ((le_max_right _ _).trans (le_max_right _ _))).trans hAm
+  obtain ⟨_, hsupport, hsplit, hnonneg, hmass, hbound, hlower, hupper, _, _⟩ :=
+    hfinite m hm hrecord
+  have hroot : 0 ≤ Real.sqrt X := Real.sqrt_nonneg _
+  have hrootSq : (Real.sqrt X) ^ 2 = X := Real.sq_sqrt hX.le
+  have hhalf : K * Real.sqrt X ≤ X / 2 := by
+    have hks : 2 * K ≤ Real.sqrt X := by nlinarith
+    nlinarith [mul_nonneg hroot (sub_nonneg.mpr hks)]
+  have hcheb : θ P ≤ Real.log 4 * P :=
+    Chebyshev.theta_le_log4_mul_x (Nat.cast_nonneg _)
+  have hPlower : X / 2 ≤ Real.log 4 * P := by
+    change X - K * Real.sqrt X ≤ θ P at hlower
+    linarith
+  have hPY : max Y 1 ≤ P := by nlinarith
+  have hP : 0 < P := lt_of_lt_of_le (by norm_num) ((le_max_right Y 1).trans hPY)
+  have hrel := hY P ((le_max_left Y 1).trans hPY)
+  rw [Metric.mem_ball, Real.dist_eq] at hrel
+  have hrelLo := (abs_lt.mp hrel).1
+  have hrelHi := (abs_lt.mp hrel).2
+  have hthetaLo : (1 - d) * P < θ P := by
+    have hh := (lt_div_iff₀ hP).mp (show 1 - d < θ P / P by linarith)
+    nlinarith
+  have hthetaHi : θ P < (1 + d) * P := by
+    have hh := (div_lt_iff₀ hP).mp (show θ P / P < 1 + d by linarith)
+    nlinarith
+  have hPupper : P ≤ 2 * X := by
+    change θ P ≤ X at hupper
+    nlinarith [mul_nonneg hP.le (show 0 ≤ 1 / 2 - d by linarith)]
+  have hsmall : K * Real.sqrt X < d * X := by
+    have hh := (div_lt_iff₀ (Real.sqrt_pos.mpr hX)).mp (hZ X hAZ)
+    nlinarith [mul_pos (Real.sqrt_pos.mpr hX)
+      (sub_pos.mpr hh)]
+  have hQsmall := hmass.trans hbound
+  change X = θ P + _ at hsplit
+  have hdP : d * P ≤ 2 * d * X := by nlinarith
+  apply abs_lt.mpr
+  constructor
+  · apply (lt_div_iff₀ hX).mpr
+    nlinarith
+  · apply (div_lt_iff₀ hX).mpr
+    nlinarith
+
 #print axioms price_record_divides_strictInteger
 #print axioms price_record_prime_confinement
+#print axioms price_record_largest_prime_localization
 
 end D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure
