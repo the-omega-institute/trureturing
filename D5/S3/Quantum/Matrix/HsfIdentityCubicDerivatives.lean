@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/HsfIdentityCubicDerivatives
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.Matrix.HermitianFunctionalCalculus]
+   anchors: [mathlib/module/Mathlib.Analysis.Matrix.Order]
    utility: none
    digest: Actual derivatives of affine Hermitian matrix powers at the identity. -/
 
