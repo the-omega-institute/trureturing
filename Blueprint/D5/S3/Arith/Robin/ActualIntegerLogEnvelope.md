@@ -50,9 +50,9 @@ The estimate is unconditional and uses the existing unconditional MediumPNT thro
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/ActualIntegerLogEnvelope.supported_sigma_bound`
 - Truth anchor: `D5/S3/Arith/Robin/ActualIntegerLogEnvelope.eventual_actual_integer_envelope`
 - Truth anchor: `D5/S3/Arith/Robin/ActualIntegerLogEnvelope.eventual_actual_integer_envelope_epsilon`
+- Truth anchor: `D5/S3/Arith/Robin/ActualIntegerLogEnvelope.supported_sigma_bound`
 - Dependency: [D5/S3/Arith/Robin/EulerLayerInventoryGrowth](EulerLayerInventoryGrowth.md)
 - Dependency: [D5/S3/Arith/Robin/MertensExplicitEnvelope](MertensExplicitEnvelope.md)
 - Dependency: [D5/S3/Arith/Robin/OriginalFirstClockTransport](OriginalFirstClockTransport.md)
