@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:a0ed21f36bb68035a66ef15bed5dd39f415bfac1eab265c9921b7caea72e2b27
   normalized_sha256: sha256:a0ed21f36bb68035a66ef15bed5dd39f415bfac1eab265c9921b7caea72e2b27
 cas_ref: sha256:a0ed21f36bb68035a66ef15bed5dd39f415bfac1eab265c9921b7caea72e2b27
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Topology/FiniteOrbitChainMidpoint.original_chain_cut
+    target_statement_id: sha256:978325f6467d97e03f4b5f4eb37010bd1cfaf77bff3894ba4b94e6f97546f030
 receipts:
   unresolved_subitems: []
