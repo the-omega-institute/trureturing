@@ -4,12 +4,14 @@
    mirror-E: none(waiver:symbolic-finite-relation-family)
    anchors: []
    utility: none
-   digest: Binary one-symbol recuts have sharp actual-image bounds at every positive forward width. -/
+   digest: Binary recut fibers attain sharp bounds at every positive forward width. -/
 
 import D5.S3.ObserverMemory.StrictAnchoredBoundary
 import Mathlib.Data.List.OfFn
 import Mathlib.Data.Fintype.Option
 import Mathlib.Data.Fintype.BigOperators
+
+/-! Actual binary recut bounds and exhaustive optional-index realizations. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -22,11 +24,11 @@ abbrev Boundary := Set (List Bool) × List Bool
 def derivative (S : Set (List Bool)) (b : Bool) : Set (List Bool) := {f | b :: f ∈ S}
 def recut (z : Boundary) : Set (List Bool) := {f | z.2 ++ f ∈ z.1}
 def currentFiber (C : Set (List Bool)) (k : Nat) (E : Set (List Bool)) : Set Boundary :=
-  {z | z ∈ image C (k,1) ∧ recut z = E}
+  {z | z ∈ image C (k, 1) ∧ recut z = E}
 def fixedBitFiber (C : Set (List Bool)) (k : Nat) (E : Set (List Bool)) (b : Bool) : Set Boundary :=
   {z | z ∈ currentFiber C k E ∧ z.2 = [b]}
 def FullBranching (C : Set (List Bool)) (k : Nat) : Prop :=
-  ∀ v : List Bool, v.length = k-1 → (∃ f, v ++ f ∈ C) →
+  ∀ v : List Bool, v.length = k - 1 → (∃ f, v ++ f ∈ C) →
     ∀ b : Bool, ∃ f, (v ++ [b]) ++ f ∈ C
 
 private theorem residual_finite (C : Set (List Bool)) (k : Nat) : (residualSet C k).Finite := by
@@ -52,7 +54,7 @@ private theorem shift (C : Set (List Bool)) (v : List Bool) (b : Bool) :
   ext f; simp [StrictAnchoredBoundary.residual,derivative,List.append_assoc]
 
 private theorem derivative_member {C : Set (List Bool)} {k : Nat} (hk : 1 ≤ k)
-    {S : Set (List Bool)} (hS : S ∈ residualSet C (k-1)) (b : Bool) :
+    {S : Set (List Bool)} (hS : S ∈ residualSet C (k - 1)) (b : Bool) :
     derivative S b = ∅ ∨ derivative S b ∈ residualSet C k := by
   by_cases he : derivative S b = ∅
   · exact Or.inl he
@@ -63,7 +65,7 @@ private theorem derivative_member {C : Set (List Bool)} {k : Nat} (hk : 1 ≤ k)
     · exact ⟨f,by simpa [derivative,StrictAnchoredBoundary.residual,List.append_assoc] using hf⟩
 
 private theorem derivative_full {C : Set (List Bool)} {k : Nat} (hk : 1 ≤ k)
-    (hb : FullBranching C k) {S : Set (List Bool)} (hS : S ∈ residualSet C (k-1)) (b : Bool) :
+    (hb : FullBranching C k) {S : Set (List Bool)} (hS : S ∈ residualSet C (k - 1)) (b : Bool) :
     derivative S b ∈ residualSet C k := by
   obtain ⟨v,hv,hvC,rfl⟩ := hS
   refine ⟨v ++ [b],?_,hb v hv hvC b,shift C v b⟩
@@ -71,8 +73,8 @@ private theorem derivative_full {C : Set (List Bool)} {k : Nat} (hk : 1 ≤ k)
 
 private theorem image_data (n : Nat) (C : Set (List Bool))
     (hl : ∀ w ∈ C, w.length = n) (hc : C.Nonempty) (k : Nat) (hk : 1 ≤ k) (hkn : k ≤ n)
-    {z : Boundary} (hz : z ∈ image C (k,1)) :
-    z.1 ∈ residualSet C (k-1) ∧ z.2 = [z.2.headD false] ∧ recut z ∈ residualSet C k := by
+    {z : Boundary} (hz : z ∈ image C (k, 1)) :
+    z.1 ∈ residualSet C (k - 1) ∧ z.2 = [z.2.headD false] ∧ recut z ∈ residualSet C k := by
   have hi := (strict_anchored_specialization n C hl hc k 1 hk hkn).2.2.1
   rw [hi] at hz
   rcases hz with ⟨hS,ht,⟨f,hf⟩⟩
@@ -94,7 +96,7 @@ private theorem image_data (n : Nat) (C : Set (List Bool))
 
 private theorem previous_no_nil {n k : Nat} {C : Set (List Bool)}
     (hl : ∀ w ∈ C, w.length = n) (hk : 1 ≤ k) (hkn : k ≤ n)
-    {S : Set (List Bool)} (hS : S ∈ residualSet C (k-1)) : [] ∉ S := by
+    {S : Set (List Bool)} (hS : S ∈ residualSet C (k - 1)) : [] ∉ S := by
   obtain ⟨v,hv,_,rfl⟩ := hS
   intro h
   have he := hl _ h
@@ -113,7 +115,7 @@ private theorem derivative_ext {S T : Set (List Bool)} (hS : [] ∉ S) (hT : [] 
 
 private theorem image_injective (n : Nat) (C : Set (List Bool))
     (hl : ∀ w ∈ C, w.length = n) (hc : C.Nonempty) (k : Nat) (hk : 1 ≤ k) (hkn : k ≤ n)
-    {z w : Boundary} (hz : z ∈ image C (k,1)) (hw : w ∈ image C (k,1))
+    {z w : Boundary} (hz : z ∈ image C (k, 1)) (hw : w ∈ image C (k, 1))
     (hr : recut z = recut w) (hb : z.2.headD false = w.2.headD false)
     (ho : derivative z.1 (!z.2.headD false) = derivative w.1 (!w.2.headD false)) : z = w := by
   obtain ⟨hzS,hzt,_⟩ := image_data n C hl hc k hk hkn hz
@@ -133,16 +135,16 @@ private theorem image_injective (n : Nat) (C : Set (List Bool))
 private theorem bounds_with (n : Nat) (C : Set (List Bool))
     (hl : ∀ w ∈ C, w.length = n) (hc : C.Nonempty) (k : Nat) (hk : 1 ≤ k) (hkn : k ≤ n)
     (B : Set (Set (List Bool))) (hB : B.Finite)
-    (hder : ∀ S ∈ residualSet C (k-1), ∀ b, derivative S b ∈ B) :
+    (hder : ∀ S ∈ residualSet C (k - 1), ∀ b, derivative S b ∈ B) :
     (∀ E, Nat.card (currentFiber C k E) ≤ 2 * Nat.card B ∧
       ∀ b, Nat.card (fixedBitFiber C k E b) ≤ Nat.card B) ∧
-    Nat.card (image C (k,1)) ≤ 2 * Nat.card (residualSet C k) * Nat.card B := by
+    Nat.card (image C (k, 1)) ≤ 2 * Nat.card (residualSet C k) * Nat.card B := by
   letI := hB.fintype
   letI := (residual_finite C k).fintype
-  let opposite : image C (k,1) → B := fun z =>
+  let opposite : image C (k, 1) → B := fun z =>
     ⟨derivative z.val.1 (!z.val.2.headD false),
       hder _ (image_data n C hl hc k hk hkn z.property).1 _⟩
-  have inj : Function.Injective (fun z : image C (k,1) =>
+  have inj : Function.Injective (fun z : image C (k, 1) =>
       ((⟨recut z.val,(image_data n C hl hc k hk hkn z.property).2.2⟩ : residualSet C k),
         z.val.2.headD false,opposite z)) := by
     intro z w he
@@ -270,12 +272,12 @@ private theorem point_of_indices {N : Nat} {full : Bool} {i j : Option (Fin N)}
 private theorem point_admissible {N : Nat} {full : Bool} (p : Point N full) :
     Admissible full (indices p).1 (indices p).2 := by
   rcases p with ⟨s,b,t⟩; cases b <;> simpa [indices,Admissible] using t.property
-private theorem anchor_length {N : Nat} (i j : Option (Fin N)) : (anchor i j).length = 2*N := by
+private theorem anchor_length {N : Nat} (i j : Option (Fin N)) : (anchor i j).length = 2 * N := by
   simp [anchor,word_length]; omega
 private theorem prefix_length {N : Nat} {full : Bool} (p : Point N full) :
-    (selectorPrefix p).length = 2*N+1 := by simp [selectorPrefix,anchor_length]
+    (selectorPrefix p).length = 2 * N + 1 := by simp [selectorPrefix,anchor_length]
 private theorem code_length {N : Nat} {full : Bool} (p : Point N full) :
-    (code p).length = 3*N+1 := by simp [code,prefix_length,word_length]; omega
+    (code p).length = 3 * N + 1 := by simp [code,prefix_length,word_length]; omega
 
 private theorem original_words (N : Nat) (full : Bool) (w : List Bool) :
     w ∈ relation N full ↔ ∃ i j : Option (Fin N), ∃ b : Bool, ∃ s : Fin N,
@@ -326,7 +328,7 @@ private theorem anchor_realized {N : Nat} {full : Bool} {i j : Option (Fin N)}
   exact ⟨f,(Set.ext_iff.mp (residual_anchor N full i j ha) f).mpr hf⟩
 
 private theorem previous_prefix_complete {N : Nat} {full : Bool} {u : List Bool}
-    (hu : u.length = 2*N) : (∃ f, u ++ f ∈ relation N full) ↔
+    (hu : u.length = 2 * N) : (∃ f, u ++ f ∈ relation N full) ↔
       ∃ i j : Option (Fin N), Admissible full i j ∧ u = anchor i j := by
   constructor
   · rintro ⟨f,p,hp⟩
@@ -337,7 +339,7 @@ private theorem previous_prefix_complete {N : Nat} {full : Bool} {u : List Bool}
   · rintro ⟨i,j,ha,rfl⟩; exact anchor_realized ha
 
 private theorem current_prefix_complete {N : Nat} {full : Bool} {u : List Bool}
-    (hu : u.length = 2*N+1) : (∃ f, u ++ f ∈ relation N full) ↔
+    (hu : u.length = 2 * N + 1) : (∃ f, u ++ f ∈ relation N full) ↔
       ∃ p : Point N full, u = selectorPrefix p := by
   constructor
   · rintro ⟨f,p,hp⟩
@@ -351,15 +353,15 @@ private theorem residual_prefix {N : Nat} {full : Bool} (p : Point N full) :
   ext f; simp [payload]
 
 private theorem actual_image (N : Nat) (full : Bool) :
-    image (relation N full) (2*N+1,1) = Set.range (@fine N full) := by
+    image (relation N full) (2 * N + 1, 1) = Set.range (@fine N full) := by
   ext z
   constructor
   · rintro ⟨s,rfl⟩
     have ht := congrArg Prod.snd s.property.1
     have hu := congrArg Prod.fst s.property.1
     change s.val.2.length = 1 at ht
-    change s.val.1.length + s.val.2.length = 2*N+1 at hu
-    have hp : (s.val.1 ++ s.val.2).length = 2*N+1 := by simp [hu]
+    change s.val.1.length + s.val.2.length = 2 * N + 1 at hu
+    have hp : (s.val.1 ++ s.val.2).length = 2 * N + 1 := by simp [hu]
     obtain ⟨p,he⟩ := (current_prefix_complete hp).mp s.property.2
     have hlen : s.val.1.length = (anchor (indices p).1 (indices p).2).length := by
       rw [anchor_length]; omega
@@ -369,7 +371,7 @@ private theorem actual_image (N : Nat) (full : Bool) :
       (residual (relation N full) s.val.1,s.val.2)
     rw [hs.1,hs.2,residual_anchor N full _ _ (point_admissible p)]
   · rintro ⟨p,rfl⟩
-    let s : typedState (relation N full) (2*N+1,1) :=
+    let s : typedState (relation N full) (2 * N + 1, 1) :=
       ⟨(anchor (indices p).1 (indices p).2,[p.2.1]),
         by simp [publicType,anchor_length],⟨word (some p.1),p,rfl⟩⟩
     refine ⟨s,?_⟩
@@ -377,7 +379,7 @@ private theorem actual_image (N : Nat) (full : Bool) :
     rw [residual_anchor N full _ _ (point_admissible p)]; rfl
 
 private theorem previous_residuals (N : Nat) (full : Bool) :
-    residualSet (relation N full) (2*N) =
+    residualSet (relation N full) (2 * N) =
       {S | ∃ i j : Option (Fin N), Admissible full i j ∧ predecessor i j = S} := by
   ext S
   constructor
@@ -388,7 +390,7 @@ private theorem previous_residuals (N : Nat) (full : Bool) :
     exact ⟨anchor i j,anchor_length i j,anchor_realized ha,residual_anchor N full i j ha⟩
 
 private theorem current_residuals (N : Nat) (full : Bool) :
-    residualSet (relation N full) (2*N+1) =
+    residualSet (relation N full) (2 * N + 1) =
       Set.range (fun s : Fin N => ({word (some s)} : Set (List Bool))) := by
   ext S
   constructor
@@ -399,10 +401,10 @@ private theorem current_residuals (N : Nat) (full : Bool) :
     let p : Point N full := (s,false,⟨some s,by simp⟩)
     exact ⟨selectorPrefix p,prefix_length p,⟨word (some s),p,rfl⟩,residual_prefix p⟩
 
-private theorem full_branching (N : Nat) : FullBranching (relation N true) (2*N+1) := by
+private theorem full_branching (N : Nat) : FullBranching (relation N true) (2 * N + 1) := by
   intro v hv hC b
-  have hv' : v.length = 2*N := by omega
-  have hS : residual (relation N true) v ∈ residualSet (relation N true) (2*N) :=
+  have hv' : v.length = 2 * N := by omega
+  have hS : residual (relation N true) v ∈ residualSet (relation N true) (2 * N) :=
     ⟨v,hv',hC,rfl⟩
   rw [previous_residuals] at hS
   obtain ⟨i,j,ha,hij⟩ := hS
@@ -429,7 +431,7 @@ private theorem singleton_injective (N : Nat) :
   exact Option.some.inj (word_injective N (Set.singleton_injective h))
 
 private theorem current_fiber_range {N : Nat} (full : Bool) (s : Fin N) :
-    currentFiber (relation N full) (2*N+1) {word (some s)} =
+    currentFiber (relation N full) (2 * N + 1) {word (some s)} =
       Set.range (fun bt : Bool × Spare N full => fine (s,bt)) := by
   ext z
   constructor
@@ -443,7 +445,7 @@ private theorem current_fiber_range {N : Nat} (full : Bool) (s : Fin N) :
     exact ⟨by rw [actual_image]; exact ⟨(s,bt),rfl⟩,recut_fine (s,bt)⟩
 
 private theorem fixed_fiber_range {N : Nat} (full : Bool) (s : Fin N) (b : Bool) :
-    fixedBitFiber (relation N full) (2*N+1) {word (some s)} b =
+    fixedBitFiber (relation N full) (2 * N + 1) {word (some s)} b =
       Set.range (fun t : Spare N full => fine (s,b,t)) := by
   ext z
   constructor
@@ -476,11 +478,11 @@ private theorem spare_card (N : Nat) (full : Bool) :
     simp
 
 private theorem attained_counts (N : Nat) (full : Bool) :
-    Nat.card (residualSet (relation N full) (2*N+1)) = N ∧
-    Nat.card (image (relation N full) (2*N+1,1)) = 2*N*(N + if full then 0 else 1) ∧
-    ∀ E ∈ residualSet (relation N full) (2*N+1),
-      Nat.card (currentFiber (relation N full) (2*N+1) E) = 2*(N + if full then 0 else 1) ∧
-      ∀ b, Nat.card (fixedBitFiber (relation N full) (2*N+1) E b) = N + if full then 0 else 1 := by
+    Nat.card (residualSet (relation N full) (2 * N + 1)) = N ∧
+    Nat.card (image (relation N full) (2 * N + 1, 1)) = 2 * N*(N + if full then 0 else 1) ∧
+    ∀ E ∈ residualSet (relation N full) (2 * N + 1),
+      Nat.card (currentFiber (relation N full) (2 * N + 1) E) = 2*(N + if full then 0 else 1) ∧
+      ∀ b, Nat.card (fixedBitFiber (relation N full) (2 * N + 1) E b) = N + if full then 0 else 1 := by
   refine ⟨?_,?_,?_⟩
   · rw [current_residuals,Nat.card_range_of_injective (singleton_injective N)]
     simp
@@ -501,20 +503,20 @@ private theorem attained_counts (N : Nat) (full : Bool) :
       exact congrArg (fun p : Point N full => p.2.2) (fine_injective N full he)
 
 def Bounds (C : Set (List Bool)) (k : Nat) (q : Nat) : Prop :=
-  (∀ E ∈ residualSet C k, Nat.card (currentFiber C k E) ≤ 2*q ∧
+  (∀ E ∈ residualSet C k, Nat.card (currentFiber C k E) ≤ 2 * q ∧
     ∀ b, Nat.card (fixedBitFiber C k E b) ≤ q) ∧
-  Nat.card (image C (k,1)) ≤ 2 * Nat.card (residualSet C k) * q
+  Nat.card (image C (k, 1)) ≤ 2 * Nat.card (residualSet C k) * q
 
 def Attains (N : Nat) (full : Bool) : Prop :=
   let C := relation N full
-  C.Nonempty ∧ (∀ w ∈ C, w.length = 3*N+1) ∧
-  1 ≤ 2*N+1 ∧ 2*N+1 ≤ 3*N+1 ∧
-  (full = true → FullBranching C (2*N+1)) ∧
-  Nat.card (residualSet C (2*N+1)) = N ∧
-  Nat.card (image C (2*N+1,1)) = 2*N*(N + if full then 0 else 1) ∧
-  ∀ E ∈ residualSet C (2*N+1),
-    Nat.card (currentFiber C (2*N+1) E) = 2*(N + if full then 0 else 1) ∧
-    ∀ b, Nat.card (fixedBitFiber C (2*N+1) E b) = N + if full then 0 else 1
+  C.Nonempty ∧ (∀ w ∈ C, w.length = 3 * N + 1) ∧
+  1 ≤ 2 * N + 1 ∧ 2 * N + 1 ≤ 3 * N + 1 ∧
+  (full = true → FullBranching C (2 * N + 1)) ∧
+  Nat.card (residualSet C (2 * N + 1)) = N ∧
+  Nat.card (image C (2 * N + 1, 1)) = 2 * N*(N + if full then 0 else 1) ∧
+  ∀ E ∈ residualSet C (2 * N + 1),
+    Nat.card (currentFiber C (2 * N + 1) E) = 2*(N + if full then 0 else 1) ∧
+    ∀ b, Nat.card (fixedBitFiber C (2 * N + 1) E b) = N + if full then 0 else 1
 
 private theorem attainment (N : Nat) (hN : 1 ≤ N) (full : Bool) : Attains N full := by
   let s : Fin N := ⟨0,by omega⟩
@@ -523,13 +525,13 @@ private theorem attainment (N : Nat) (hN : 1 ≤ N) (full : Bool) : Attains N fu
   · rintro w ⟨q,rfl⟩; exact code_length q
   · intro h; subst full; exact full_branching N
 
-/-- Sharp binary one-symbol recut bounds on one actual relation, and simultaneous
+/-- Sharp binary one - symbol recut bounds on one actual relation, and simultaneous
 attainment at every positive forward width in both branching regimes. -/
 theorem sharp_binary_one_recut :
     (∀ (n : Nat) (C : Set (List Bool)), (∀ w ∈ C, w.length = n) → C.Nonempty →
       ∀ k : Nat, 1 ≤ k → k ≤ n →
       (residualSet C k).Finite ∧ 0 < Nat.card (residualSet C k) ∧
-      (∀ z ∈ image C (k,1), recut z ∈ residualSet C k) ∧
+      (∀ z ∈ image C (k, 1), recut z ∈ residualSet C k) ∧
       Bounds C k (Nat.card (residualSet C k)+1) ∧
       (FullBranching C k → Bounds C k (Nat.card (residualSet C k)))) ∧
     (∀ N : Nat, 1 ≤ N → Attains N false ∧ Attains N true) := by
