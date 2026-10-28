@@ -81,7 +81,10 @@ internal sealed class BoyerKuenzelLylePellicoConjectureTwoRefutationDocument : I
                     "connectedness and the Mathlib independence predicate. A finite set annotated " +
                     "with Set V denotes its coercion to the underlying vertex set. Colorings on " +
                     "different sets or extensions are existentially chosen independently."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("boyer-kuenzel-lyle-pellico-2025-conjecture-two"),
+                    ResolutionKind.Refuted))), []));
 
     private static Formula WholeClaim()
     {
