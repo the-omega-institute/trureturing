@@ -39,7 +39,7 @@ internal sealed class PSSValuationRefutationDocument : IScribeDocumentDefinition
                 + "of v is required."),
             Definition("parikhSet", "Actual factor Parikh vectors",
                 WordLength(Equal(Call("parikhSet", W, N),
-                    Call("image", Seq(F.Id("parikh"), Circ, F.Id("ofFn")), Factors))),
+                    Call("image", Seq(F.Id("parikh"), Circ, Sp, F.Id("ofFn")), Factors))),
                 "The image of the finite factor set under parikh ∘ List.ofFn is a Finset. "
                 + "Every member is the Parikh vector of an actual length-n factor, and every "
                 + "such vector is included. Equal vectors are counted once."),
