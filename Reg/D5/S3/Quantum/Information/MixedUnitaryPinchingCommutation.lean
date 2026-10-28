@@ -146,8 +146,8 @@ private theorem badChannel_nonisotropic : ¬ IsIsotropic badChannel := by
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (φ : QubitMatrix → QubitMatrix) (hφ : IsMixedUnitary φ)
-    (hi : ¬ IsIsotropic φ),
+  Law R := ∀ (φ : QubitMatrix → QubitMatrix) (_hφ : IsMixedUnitary φ)
+    (_hi : ¬ IsIsotropic φ),
     ∃ ρ : TwoQubit,
       ρ.PosSemidef ∧ R.readout () () ρ = 1 ∧
       IsNondegenerate (partialTraceRight ρ) ∧
@@ -179,7 +179,8 @@ def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@result) (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.unit
-  realizationName := `Reg.D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.source_registration
+  realizationName :=
+    `Reg.D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
