@@ -197,6 +197,7 @@ open _root_.D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (spi
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Qubit) (fun _ => Bool)
 
+/-- Read the Hermitian predicate at the observed qubit matrix. -/
 def actual : Realization signature :=
   realize signature
     (fun _ _ X => @decide X.IsHermitian (Classical.propDecidable _)) (fun e => nomatch e)
