@@ -821,7 +821,7 @@ private theorem short_angle_forward_run {I : Type*}
         simpa only [G, j, q, V] using htail
       have hpaid : G.Chain (⟨i, p⟩ : Sigma (fun k => sector (alpha k)))
           ⟨i, R.val⟩ (ENNReal.ofReal (dist p.val R.val.val)) := by
-        simpa only [zero_add, edist_dist, Subtype.dist_eq] using
+        simpa only [G, sectorDatum, zero_add, edist_dist, Subtype.dist_eq] using
           D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.move (G := G) (a := ⟨i, p⟩) p R.val
             (D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.nil
               (G := G) (a := ⟨i, p⟩))
@@ -1045,7 +1045,7 @@ private theorem cyclicWidth_period {n : ℕ} (alpha : Fin (n + 1) → ℝ)
   rw [cyclicTag_period] at hp
   have hw : cyclicWrap i (n + 1) = 1 := by
     apply Nat.eq_of_mul_eq_mul_left (Nat.succ_pos n)
-    omega
+    simpa only [Nat.mul_one] using Nat.add_left_cancel hp
   rw [cyclicWidth_lift, cyclicTag_period, hw]
   simp
 
@@ -1274,7 +1274,10 @@ private theorem axis_walk {I : Type*} (next : I → I) (alpha : I → ℝ)
         exact turn_axis (-alpha j) z
       have h := D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.forward (G := G) j x ih
       rw [hx] at h
-      simpa only [G, sectorDatum, j, Function.iterate_succ_apply'] using h
+      change G.Chain ⟨i, axisPoint (alpha i) z⟩
+        ⟨next^[m + 1] i, axisPoint (alpha (next^[m + 1] i)) z⟩ 0
+      rw [Function.iterate_succ_apply']
+      exact h
 
 private theorem axis_change_tag {n : ℕ} (alpha : Fin (n + 1) → ℝ)
     (ha : ∀ i, 0 < alpha i) (hapi : ∀ i, alpha i < Real.pi)
@@ -1285,7 +1288,8 @@ private theorem axis_change_tag {n : ℕ} (alpha : Fin (n + 1) → ℝ)
   have h := axis_walk (finRotate (n + 1)) alpha ha hapi i (j - i).val z
   change (cyclicDatum alpha ha hapi).Chain _
     ⟨cyclicTag i (j - i).val, axisPoint (alpha (cyclicTag i (j - i).val)) z⟩ 0 at h
-  simpa only [cyclicTag_difference] using h
+  rw [cyclicTag_difference] at h
+  exact h
 
 private theorem chain_via_axis {n : ℕ} (alpha : Fin (n + 1) → ℝ)
     (ha : ∀ i, 0 < alpha i) (hapi : ∀ i, alpha i < Real.pi)
@@ -1361,7 +1365,8 @@ private theorem opposite_axis_split (rho z sigma w : ℝ) (hr : 0 < rho) (hs : 0
   have hb : dist p (gamma t) + dist (gamma t) q = dist p q :=
     (show gamma t ∈ {r | dist p r + dist r q = dist p q} from
       hbetween ▸ Set.mem_range_self t)
-  simpa only [he] using hb
+  rw [← he]
+  exact hb
 
 private theorem opposite_attaining_chain {n : ℕ} (alpha : Fin (n + 1) → ℝ)
     (ha : ∀ i, 0 < alpha i) (hapi : ∀ i, alpha i < Real.pi)
@@ -1497,7 +1502,8 @@ private theorem short_forward_attaining {n : ℕ} (alpha : Fin (n + 1) → ℝ)
   rw [hd] at h
   change (cyclicDatum alpha ha hapi).Chain
     ⟨p.1, _⟩ ⟨cyclicTag p.1 m, _⟩ _ at h
-  simpa only [m, htag, cylindrical_reconstruct] using h
+  rw [show cyclicTag p.1 m = q.1 from htag] at h
+  simpa only [cylindrical_reconstruct] using h
 
 /-- Every pair of actual numbered cyclic-sector representatives has an original
 finite chain attaining the capped angular distance, which equals the original
