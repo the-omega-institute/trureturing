@@ -133,11 +133,11 @@ private theorem trace_one (P : Mat) (hP : LegalSource P) :
     P 0 0 + P 1 1 = 1 := by
   simpa [Matrix.trace, Fin.sum_univ_two] using hP.2.2
 
-private theorem normalized_eval (w : List Bool) (P : Mat) (b : Coeff 3) :
+theorem normalized_eval (w : List Bool) (P : Mat) (b : Coeff 3) :
     normalized w P b = Matrix.trace (acquisition w * P) *
       (b 0 + (w.length : ℝ) * b 1 + (w.length : ℝ)^2 * b 2 +
         (w.length : ℝ)^3 * b 3) - b 0 := by
-  simp [normalized, responseMatrix, Matrix.mulVecLin_apply, Matrix.mulVec,
+  simp [normalized, responseMatrix, Matrix.mulVec,
     dotProduct, Fin.sum_univ_succ, List.take_length]
   ring
 
@@ -229,9 +229,9 @@ private theorem history_coefficients (P : Slot → Mat) (delta : Delta P = 0) (x
   norm_num at hd
   ext i
   fin_cases i
-  · simp [H, block, sample_expand, Pi.single_apply]
+  · simp [H, block, sample_expand]
   all_goals
-    simp [H, block, Pi.single_apply]
+    simp [H, block]
     linarith [h.1, h.2.1]
 
 private theorem independent_history_forms (P : Slot → Mat) (delta : Delta P = 0)
@@ -298,7 +298,7 @@ private theorem native_fifth (P : Slot → Mat) (legal : ∀ q, LegalSource (P q
     Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two] at hh
   rw [hc.2.2.1] at hh
   dsimp [s, t, d]
-  nlinarith [hh]
+  linear_combination hh
 
 private theorem native_sixth_j (P : Slot → Mat) (legal : ∀ q, LegalSource (P q))
     (unit : t P 0 = 1) (delta : Delta P = 0) (q : Slot) (hlo : 8 ≤ q.val)
@@ -319,10 +319,10 @@ private theorem native_sixth_j (P : Slot → Mat) (legal : ∀ q, LegalSource (P
     D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
     Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two] at hh
   rw [hc.2.2.2.1] at hh
-  have htr : P q 0 0 + (P q 1 0 + P q 1 1) = 1 + c P q := by dsimp [c]; linarith
-  have htr8 : P 8 0 0 + (P 8 1 0 + P 8 1 1) = 1 + c P 8 := by dsimp [c]; linarith
+  have htr : P q 0 0 + P q 1 0 + P q 1 1 = 1 + c P q := by dsimp [c]; linarith
+  have htr8 : P 8 0 0 + P 8 1 0 + P 8 1 1 = 1 + c P 8 := by dsimp [c]; linarith
   rw [htr, htr8] at hh
-  nlinarith [hh]
+  linear_combination hh
 
 private theorem native_sixth_m (P : Slot → Mat) (legal : ∀ q, LegalSource (P q))
     (unit : t P 0 = 1) (delta : Delta P = 0) (q : Slot) (hlo : 12 ≤ q.val)
@@ -343,8 +343,12 @@ private theorem native_sixth_m (P : Slot → Mat) (legal : ∀ q, LegalSource (P
     D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
     Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two] at hh
   rw [hc.2.2.2.1] at hh
-  dsimp [s, t, d]
-  nlinarith [hh]
+  have htr : P q 0 0 + P q 1 0 + (P q 0 1 + 2 * P q 1 1) = 1 + s P q := by
+    dsimp [s, t, d]; linarith
+  have htr12 : P 12 0 0 + P 12 1 0 + (P 12 0 1 + 2 * P 12 1 1) = 1 + s P 12 := by
+    dsimp [s, t, d]; linarith
+  rw [htr, htr12] at hh
+  linear_combination hh
 
 private theorem fixed_leaf_algebra {X : Type} (f e : X → ℝ)
     (k : Slot → X → ℝ) (t d c s : Slot → ℝ)
@@ -416,6 +420,7 @@ private theorem fixed_leaf_algebra {X : Type} (f e : X → ℝ)
         rw [const_nonunit q hhi hu x, k8 x] at h5
         have h8 := hs 8
         rw [units.1] at h8
+        rw [h8] at h5
         nlinarith)).1
       have hp := hd 8
       linarith
@@ -429,6 +434,7 @@ private theorem fixed_leaf_algebra {X : Type} (f e : X → ℝ)
       rw [all_unit q hlo hhi] at hq
       have h8 := hs 8
       rw [units.1] at h8
+      rw [hq, h8] at h5
       nlinarith
     have km (x : X) : (k 12 x - k 13 x) + (d 12 - d 13) * (f x + e x / 4) = 0 := by
       have hm := sixthM 13 (by decide) (by decide) x
@@ -438,6 +444,9 @@ private theorem fixed_leaf_algebra {X : Type} (f e : X → ℝ)
       have h13 := hs 13
       rw [u12] at h12
       rw [u13] at h13
+      rw [h12, h13] at hm
+      rw [h12] at h5a
+      rw [h13] at h5b
       nlinarith
     have dd : d 12 = d 13 := by
       have hzero := (indep ((d 12 - d 13) * (d 12 * d 13 + d 8))
@@ -446,7 +455,7 @@ private theorem fixed_leaf_algebra {X : Type} (f e : X → ℝ)
           have h13 := kr 13 (by decide) (by decide) x
           have hm := km x
           linear_combination d 12 * d 13 * hm - d 13 * h12 + d 12 * h13)).1
-      have hp : 0 < d 12 * d 13 + d 8 := by positivity
+      have hp : 0 < d 12 * d 13 + d 8 := add_pos (mul_pos (hd 12) (hd 13)) (hd 8)
       have hn := (mul_eq_zero.mp hzero).resolve_right (ne_of_gt hp)
       exact sub_eq_zero.mp hn
     have kk (x : X) : k 12 x = k 13 x := by
@@ -485,6 +494,7 @@ private theorem fixed_leaf_algebra {X : Type} (f e : X → ℝ)
           rw [base x] at h
           have hq := hs q
           rw [hu] at hq
+          rw [hq] at h
           nlinarith
         have h6 (x : X) : c q * (k q x + (2 * f x + e x / 4)) =
             c 8 * (f x + 5/4 * e x) := by
@@ -569,8 +579,16 @@ private theorem native_seventh (P : Slot → Mat) (legal : ∀ q, LegalSource (P
     D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
     Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two] at ha hb hc
   rw [hp] at ha hb hc
+  have htr12 : P 12 0 0 + 2 * P 12 1 0 + (P 12 0 1 + P 12 1 1) =
+      1 + t P 12 + c P 12 := by dsimp [t, c]; linarith
+  have htr13 : P 13 0 0 + 2 * P 13 1 0 + (P 13 0 1 + P 13 1 1) =
+      1 + t P 13 + c P 13 := by dsimp [t, c]; linarith
+  rw [htr12, htr13] at hb
+  have hb' : (t P 13 + c P 13) * x.val 13 0 + (1 + t P 13 + c P 13) * (21/5 * F P x) =
+      (t P 12 + c P 12) * x.val 12 0 + (1 + t P 12 + c P 12) * (21/5 * F P x) := by
+    linear_combination hb
   dsimp [s, t, c, d]
-  refine ⟨by nlinarith [ha], by nlinarith [hb], by nlinarith [hc]⟩
+  refine ⟨by linear_combination ha, by simpa only [t, c] using hb', by linear_combination hc⟩
 
 /-- One original fixed leaf, with the equality of the entire coefficient block on V. -/
 theorem fixed_original_leaf (P : Slot → Mat) (legal : ∀ q, LegalSource (P q))
