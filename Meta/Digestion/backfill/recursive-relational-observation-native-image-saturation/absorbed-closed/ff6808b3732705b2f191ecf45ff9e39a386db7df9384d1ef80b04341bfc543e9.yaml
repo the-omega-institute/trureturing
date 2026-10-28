@@ -5,5 +5,7 @@ cas_ref: sha256:ff6808b3732705b2f191ecf45ff9e39a386db7df9384d1ef80b04341bfc543e9
 coverage_gids:
   - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeOriginalCoordinatePrefix.decode_prefix_correct
     target_statement_id: sha256:a64067eea515aaadccac4f83152bdea717d133caf65cc9af3dcf436b69d7b233
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeOriginalCoordinatePrefix.inverse_prefix_agreement
+    target_statement_id: sha256:f5fad831b43d2eb989b19be5fe878562b9748a9c9cf78aef5ea25696fb17c348
 receipts:
   unresolved_subitems: []
