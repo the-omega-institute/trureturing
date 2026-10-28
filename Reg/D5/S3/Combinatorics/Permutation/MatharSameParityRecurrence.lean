@@ -62,11 +62,16 @@ def evidence : Registration arena (type_of% (@result)) where
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨(), 0, 4, ?_⟩
-    change a 0 ≠ a 4
-    have hz : a 0 = 0 := by simp [a]
-    rw [hz]
-    exact ne_of_lt count_four_pos
+    refine ⟨(), 4, 5, ?_⟩
+    change a 4 ≠ a 5
+    have hthree : 0 ≤ a 3 := by
+      simp only [a, show (2 : ℕ) ≤ 3 from by decide, dite_true]
+      exact Int.natCast_nonneg _
+    have ht := result 5 (by decide)
+    norm_num at ht
+    intro he
+    have hp := count_four_pos
+    linarith
 
 def result_registration :
     Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}

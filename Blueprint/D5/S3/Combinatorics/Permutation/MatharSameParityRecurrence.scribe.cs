@@ -6,6 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Permutation;
 
 internal sealed class MatharSameParityRecurrenceDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/oeis2008a152661");
     private const string Prefix = "D5/S3/Combinatorics/Permutation/MatharSameParityRecurrence.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -21,7 +22,7 @@ internal sealed class MatharSameParityRecurrenceDocument : IScribeDocumentDefini
             Describe.Lean(DescribeId.Create("mathar-same-parity-count"),
                 DeclarationHandle.Create(Prefix + "a"), H("The permutation count"),
                 StatementSource.FromAuthor(CountDefinition()),
-                AssessedProvenance.FromLiterature("oeis2008a152661"),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("A permutation p of Fin n represents the natural word with value "
                     + "p(i).val+1 in position i+1. For n at least two, a(n) is the integer cast "
                     + "of the cardinality of the permutations satisfying "
@@ -30,7 +31,7 @@ internal sealed class MatharSameParityRecurrenceDocument : IScribeDocumentDefini
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("mathar-same-parity-recurrence"),
                 DeclarationHandle.Create(Prefix + "result"), H("The integer recurrence"),
-                StatementSource.FromAuthor(Recurrence()), AssessedProvenance.FromRepo("oeis2008a152661"),
+                StatementSource.FromAuthor(Recurrence()), AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text("There are e natural values of one parity and o of the other. "
                         + "An ordered distinct first pair therefore has e(e-1)+o(o-1) choices. "

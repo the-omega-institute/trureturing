@@ -8,7 +8,6 @@
 
 import D5.S3.Combinatorics.EdgeLabeling.CubicARGraphCounting
 import Mathlib.Data.Int.CardIntervalMod
-import Mathlib.Data.Fintype.BigOperators
 
 /-! # Permutations with equal parity in their first two natural values -/
 
