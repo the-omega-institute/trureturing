@@ -64,7 +64,13 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have he : energy f.val = 0 := by
     rw [(free_root_least_energy f).2.2.2.1]
     exact le_antisymm hz (sq_nonneg _)
-  have h := hsupport 1 f (by intro i hi; change b.repr 0 i = 0; simp)
+  have h := hsupport 1 f (by
+    intro i hi
+    have hzero : (⟨Pi f.val,mean_Pi f.val⟩ : G0) = 0 := by
+      apply Subtype.ext
+      exact Pi.map_zero
+    rw [hzero]
+    simp)
   change 1 * 1 ≤ energy f.val at h
   rw [he] at h
   norm_num at h
