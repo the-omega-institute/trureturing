@@ -1,0 +1,72 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Geometry;
+
+internal sealed class BiasedBoundaryFreeRootFormDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.";
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The infinite path trace on the fixed biased boundary has compact covariance. The original free-root energy infimum is attained in the effective increment space, and its weak variational graph is determined by the actual covariance.",
+        H("Actual Covariance and the Free-Root Form"), Blocks(
+            Def("v", "The vector v is the adjoint of the actual bounded path trace J applied to the constant one in G=L2(M). The biased product measure and the infinite square-summable increment space are fixed throughout."),
+            Def("Sigma", "Sigma=C* C acts on the original infinite increment space H, where C=Pi J is included in the original ambient G. Taking this ambient adjoint is the same as extending the adjoint from the mean-zero boundary subspace by zero on constants."),
+            Def("K", "K is the orthogonal complement of the kernel of Sigma. Vectors in the edge kernel are excluded from this effective increment space."),
+            Result("actual_compact_covariance", "Compact Trace and Actual Covariance", CompactFormula(),
+                "For every positive epsilon, choose a stopping threshold at most both one half and epsilon squared divided by four times the golden ratio. The all-vector stopping residual bounds the operator norm of C minus Qt C by epsilon over two. The actual stopping range is finite dimensional, so norm closure of compact operators gives compactness of C. The difference J-C factors through the one-dimensional constant space; consequently J is compact too, and composing C with its bounded adjoint makes Sigma compact.",
+                "Self-adjoint centering and its idempotence give Sigma=J* J-v tensor v. For all z,w in H the bilinear covariance equals the inner product of their actual centered traces. In particular its quadratic form is the squared centered trace norm, and its kernel is exactly the kernel of C."),
+            Def("D", "The domain D is exactly the subspace of all F=c times the constant one plus Jz, with arbitrary real root value c and arbitrary z in the original infinite H. No finite-level restriction or replacement measure enters this domain."),
+            Def("energy", "For an ambient F in G, energy(F) is the real infimum of the set of squared increment norms over all original representations F=constG(c)+Jz. Its asserted energy interpretation is restricted to F in D, where the set is nonempty and the infimum is attained."),
+            Def("lift", "For each F in D, lift(F) is the unique z in K such that Cz=Pi F. Orthogonal projection onto K removes exactly the redundant edge kernel."),
+            Result("free_root_least_energy", "Attainment of the Original Energy", EnergyFormula(),
+                "For any representation F=constG(c)+Jz, the least increment is the orthogonal projection of z onto K. Projection leaves its centered trace unchanged and decreases its norm. Injectivity of C on K makes this increment independent of the chosen representation and unique in K.",
+                "The root coefficient is restored as mean(F)-mean(J lift(F)). This is an actual original representation and attains the infimum, so energy(F)=the squared norm of lift(F). Every other representation is included in the comparison."),
+            Def("form", "The form pairing of F and T in D is the real inner product of their least increments. Its diagonal is the original infimum energy."),
+            Def("weakGraph", "The pair (u,h) lies in the weak graph when u belongs to the original D and the form pairing of u with every F in D equals the G inner product of h with F."),
+            Result("free_root_variational_graph", "The Entire Weak Variational Graph", GraphFormula(),
+                "The form diagonal equals the original free-root energy on every element of D. The weak equation holds for all original traces exactly when mean(h)=0 and u=constG(mean(u))+CC*h. Testing constants forces mean(h)=0; testing every Jz identifies the least increment of u with C*h. Conversely C*h belongs to K, and the stated covariance representation satisfies the equation against every F in D.",
+                "This characterizes the entire weak graph without assuming an operator realization. A self-adjoint operator identification still requires density and closedness of this original form. The compact spectral basis, the unitary polar map, its two range-domain identities, compact resolvent, and eigenvalue counting require additional arguments."))));
+
+    private static DocumentBlock Def(string name, string prose) => Describe.Lean(
+        DescribeId.Create("biasedboundaryfreerootform-" + name.ToLowerInvariant()),
+        DeclarationHandle.Create(Prefix + name), H(name), StatementSource.WithoutFormula(),
+        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+    private static DocumentBlock Result(string name, string title, Formula formula, string first, string second) => Describe.Lean(
+        DescribeId.Create("biasedboundaryfreerootform-" + name.Replace("_", "")),
+        DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
+        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(first)), Paragraph(Text(second))), DescribeRole.Theorem);
+    private static Formula V(string s) => F.Id(s);
+    private static Formula Par(Formula x) => Seq(Open, x, Close);
+    private static Formula Call(string s, params Formula[] xs) => new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. xs]);
+    private static Formula All(string s, Formula t, Formula x) => Seq(Forall, Sp, V(s), Colon, Sp, t, Comma, Sp, Par(x));
+    private static Formula NormSq(Formula x) => Seq(Par(Seq(Vert, x, Vert)), Caret, Grp(D(2)));
+    private static Formula And(params Formula[] xs) => Seq([.. xs.SelectMany((x, i) => i == 0 ? new[] { Par(x) } : new[] { Land, Par(x) })]);
+    private static Formula CompactFormula()
+    {
+        Formula z=V("z"), w=V("w"), sigma=V("Sigma"), c=V("C"), j=V("J"), h=V("H");
+        return And(Call("IsCompactOperator",j), Call("IsCompactOperator",c), Call("IsCompactOperator",sigma),
+            Seq(sigma,Eq,Call("compose",Call("adjoint",j),j),Minus,Call("rankOne",V("v"),V("v"))),
+            All("z",h,All("w",h,Seq(Call("inner",z,Call("Sigma",w)),Eq,Call("inner",Call("C",z),Call("C",w))))),
+            All("z",h,Seq(Call("inner",z,Call("Sigma",z)),Eq,NormSq(Call("C",z)))),
+            Seq(Call("ker",sigma),Eq,Call("ker",c)));
+    }
+    private static Formula EnergyFormula()
+    {
+        Formula f=V("F"), z=V("z"), c=V("c"), l=Call("lift",f), h=V("H"), k=V("K");
+        Formula rep=Seq(f,Eq,Call("constG",c),Plus,Call("J",z));
+        Formula original=Seq(f,Eq,Call("constG",Seq(Call("mean",f),Minus,Call("mean",Call("J",l)))),Plus,Call("J",l));
+        return All("F",V("D"),And(Seq(l,InMacro,k),Seq(Call("C",l),Eq,Call("Pi",f)),original,
+            Seq(Call("energy",f),Eq,NormSq(l)),
+            All("c",Seq(Mathbb,Grp(V("R"))),All("z",h,Seq(rep,Implies,Par(And(
+                Seq(l,Eq,Call("starProjection",k,z)),Seq(NormSq(l),Leq,NormSq(z))))))),
+            All("z",h,Seq(And(Seq(z,InMacro,k),Seq(Call("C",z),Eq,Call("Pi",f))),Implies,Seq(z,Eq,l)))));
+    }
+    private static Formula GraphFormula()
+    {
+        Formula f=V("F"), u=V("u"), h=V("h"), g=V("G");
+        Formula rhs=And(Seq(Call("mean",h),Eq,D(0)),Seq(u,Eq,Call("constG",Call("mean",u)),Plus,Call("C",Call("adjointC",h))));
+        return And(All("F",V("D"),Seq(Call("form",f,f),Eq,Call("energy",f))),
+            All("u",g,All("h",g,Seq(Call("weakGraph",u,h),Iff,rhs))));
+    }
+}
