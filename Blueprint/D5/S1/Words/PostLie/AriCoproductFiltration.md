@@ -222,6 +222,10 @@ $$\forall k:N,\forall r:N,\forall P:H,(P \in \operatorname{filtration}\left(k, r
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/PostLie/AriCoproductFiltration.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/burmester-kuhn-2025-conjecture-4-29-ari-coproduct-filtration` (proved) by `D5/S1/Words/PostLie/AriCoproductFiltration.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"burmester-kuhn-2025-conjecture-4-29-ari-coproduct-filtration","declaration_gid":"D5/S1/Words/PostLie/AriCoproductFiltration.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
