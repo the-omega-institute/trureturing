@@ -43,12 +43,10 @@ open private Model Model.bulk
   bulkHomeomorph
   bulkRealize_strict_iff
   faceBall
-  faceBall_symm_interior_iff
   faceRealize
   faceRealize_fixed
   faceRealize_injective
   faceHomeomorph
-  faceRealize_strict_iff
   capRealize_interior
   hexRealize_faceInterior
   from D5.S3.Geometry.Gluing.TruncatedTetrahedronCellGeometry

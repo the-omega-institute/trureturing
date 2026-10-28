@@ -759,3 +759,73 @@ $$
 - **[P] 实际物理端点**：[Tile5Existence](https://github.com/jconorgrogan/palomar-chair-verification/blob/5f5ceedee770b76c21e8f1105e5e4e3b84b8d676/SparseMonotiles/Tile5Existence.lean)、[T5Monotile](https://github.com/jconorgrogan/palomar-chair-verification/blob/5f5ceedee770b76c21e8f1105e5e4e3b84b8d676/SparseMonotiles/T5Monotile.lean)、[T5Aperiodicity](https://github.com/jconorgrogan/palomar-chair-verification/blob/5f5ceedee770b76c21e8f1105e5e4e3b84b8d676/SparseMonotiles/T5Aperiodicity.lean)、[PhysicalT5PeriodComposition](https://github.com/jconorgrogan/palomar-chair-verification/blob/5f5ceedee770b76c21e8f1105e5e4e3b84b8d676/SparseMonotiles/PhysicalT5PeriodComposition.lean)、[FiniteSymmetry](https://github.com/jconorgrogan/palomar-chair-verification/blob/5f5ceedee770b76c21e8f1105e5e4e3b84b8d676/SparseMonotiles/FiniteSymmetry.lean)。注册及 carrier 世界不因此获得本文未绑定的符号与有效接口。
 - **经典概率与消元**：Martin J. Wainwright、Michael I. Jordan，*Graphical Models, Exponential Families, and Variational Inference*，[作者原文](https://people.eecs.berkeley.edu/~jordan/papers/wainwright-jordan-fnt.pdf)，§2.5.2、式 (2.12)、命题 2.1，印刷页 32–33；互信息式 (4.13)、KL 式 (5.9)。Rina Dechter，*Bucket Elimination: A Unifying Framework for Probabilistic Inference*，[原文](https://arxiv.org/pdf/1302.3572)，§2 及后续 width-dependent inference；本文精确 frontier、位成本和计数版本采用表 1 的仓内文献注，不把树袋宽度直接等同于原文某固定消元序的 induced width。
 - **复杂度原料**：Richard M. Karp，*Reducibility Among Combinatorial Problems*，[含作者引言的原文重印](https://www.cs.umd.edu/~gasarch/BLOGPAPERS/Karp.pdf)，原文 §4、印刷页 93–94，定义 5、Main Theorem、第 5 项 NODE COVER，以及印刷页 98 的 CLIQUE 到 NODE COVER 补图归约。本文只借用该完全性，独立集取顶点补集及 FIB 编码见命题 11.3。
+## 追加锚（本行以下为增补区）
+
+## 14. 数量目标的原顶点参数计数与最优完成
+
+**约定 14.1（应用的供应与完整输入）。** 本节在命题 11.3 的共享 FIB 编码上，使用[选择项演算引文 27.2、定理 27.3](AURIC_FIB_ATOM_SELECTION_CALCULUS.md) 的条件计数供应。外部来源固定为 OpenAI, [*The Exponential Time Hypothesis is False*，修订版 Theorem 1.1、Corollary 1.3](https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/preprints/The-Exponential-Time-Hypothesis-is-False-October-25-2026/paper.pdf)；独立集的二 CNF 保计数编码已经由 Corollary 1.3 给出，自归约和 counting-to-generation 也为既有供应。本节的 `repo-derived` 项目应用是：在 (11.3) 的实际 FIB 端口上消去已知边钉值，加入确定性线性辅助结构，保持**原顶点**参数、完整计数和最优终端解码；不是重新发现一般图计数算法。
+
+输入为显式有限简单图 $G=(V,E)$、声明的不同顶点全集 $V$、有符号二进制整数阈值 $k$，可另有显式顶点钉值。令 $v=|V|,e=|E|$，全部名称、边、顶点次序、钉值及阈值编码计入 $N$；孤立顶点保留。重复边可去重且不改变解数；按简单图语法，环、自称非顶点的端点、重复顶点声明或坏整数编码拒绝。合法但矛盾的钉值则给零解。有限小输入和 $v=0$ 在同一合同内，不从二进制整数的数值大小取得免费资源。下面以 $\rho$ 表示选择卷 (58) 的正则化尺度。
+
+**定理 14.2（保计数、原参数及数量完成）。** 在引文 27.2 的固定三 CNF 精确计数供应前提下，存在一个统一确定性编译，将 (11.3) 及其顶点钉值、数量阈值编译为三 CNF $F_{G,k}$，满足：
+
+1. 新声明变量数 $n'\le C(v+1)$，非平凡 $v\ge1$ 时为 $O(v)$；子句数 $O(v+e+\text{钉值条数}+1)$，规范编码及构造位成本为 $\operatorname{poly}(N)$。
+2. 满足 $F_{G,k}$ 的**完整赋值**与满足原 FIB 网络和数量阈值的完整赋值双射；每个符合阈值及钉值的独立集恰贡献一，不另乘辅助线的取值数。
+3. 阈值计数、判定，以及有解时原 FIB 的完整解码，在
+
+   $$
+   \operatorname{poly}(N)\,2^{O(\rho(v))}
+   \tag{14.1}
+   $$
+
+   位时间、$\operatorname{poly}(N)$ 空间内完成。对未钉图，最大独立集大小、最优集数及一组最优完成也在该界内；有顶点钉值时，先判是否有相容独立集，有则同样求其约束最优值。
+
+证明。**已知边变量先代入。** (11.3) 对每条边有 $z_e=0$，三个物理端口为 $(x_u,x_w,z_e)$。五模式在第三槽固定零时仅有 $000,100,010$，故它等价于
+
+$$
+\neg x_u\lor\neg x_w.
+\tag{14.2}
+$$
+
+每个原顶点赋值的边辅助扩展都唯一为全零。编译前将这些已知位代入并删去 $e$ 个边变量，是双射的消元；解码时填回全零。不可把物理中槽固定零：那会允许 $101$，得不到 (14.2)。每条边直接输出一条二子句，不为整个边合取另建一个逐边门电路。于是即使 $e=\Theta(v^2)$，边只增加输入和子句量，不增加计数器的变量参数。
+
+**数量比较的实际门数。** 先在读入后比较有符号 $k$ 与 $0,v$，成本按其全部位长计入 $N$。$k\le0$ 时删掉恒真阈值，仍保留所有边和顶点钉值；$k>v$ 时加入空子句使计数为零。余下仅需处理 $1\le k\le v$，常数的有效位长为 $O(\log(v+2))$。
+
+为使 $\sum_{i=1}^v x_i\ge k$ 使用 $O(v)$ 个至多二输入确定门，采用标准 carry-save 全加器作为中间构造。把每个 $x_i$ 放在权重一的列中；只要某列有三信号 $a,b,c$，替换为该列的 $s$ 及下一列的 $t$，其中
+
+$$
+u=a\mathbin{\mathrm{xor}}b,\quad
+s=u\mathbin{\mathrm{xor}}c,\quad
+ t=(a\land b)\lor(u\land c),\qquad
+ a+b+c=s+2t.
+\tag{14.3}
+$$
+
+$x_i$ 的每次使用仍引用其同一个变量，门输出则各取一个新名字。式 (14.3) 使用两个 XOR、两个 AND、一个 OR 共五个二输入门。恒等式由 $a=b$ 与 $a\ne b$ 两种情形立即给出，因而逐赋值保持加权总和。活跃信号总数每次从三变二，故替换次数少于 $v$。更强的纯结构不变量为所有活跃信号的**权重之和**恒为 $v$：$3\cdot2^j=2^j+2^{j+1}$，所以不依赖信号取值也不可能产生权重大于 $v$ 的列。终态每列至多两信号，最高列 $O(\log(v+2))$；把它们分成两个二进制数，补零后用 ripple-carry 加法及与 $k$ 的逐位比较，再花 $O(\log(v+2))$ 门。输出为所需阈值位，总门数 $O(v)$。$v=1$ 直接比较一位；$v=0$ 已在边界分支决定。
+
+该构造是被当前数量消费者使用的标准布尔算术，不单列为新的一般阈值电路定理。这里选择它的作用在于控制辅助变量数；例如逐项累加若给出 $O(v\log v)$ 门的实现，就不能直接声称已经得到本条的 $O(v)$ 参数。
+
+**完整门关系和唯一扩展。** 对每个至多二输入门 $c=g(a,b)$ 使用选择卷 (61) 的禁止模式子句编译完整双向关系，作用域至多三个变量、每门至多八子句；非门亦可如此处理，常数用钉值。按门的构造次序归纳，每个原顶点赋值给所有门输出唯一值，反过来任何满足这些双向门约束的赋值必为该唯一求值。最后把阈值输出钉为一。因此正确顶点赋值有且仅有一个门扩展，错误者没有；只编码单向蕴含会失去这个结论。顶点钉值继续作单位子句，不增加变量。已消去的 $z_e$ 亦唯一填回，给两种完整解之间的双射，包含其投影多重性结论。编译只加 $O(v)$ 个门变量和常数位，给第 1 项。空子句、空边集和空顶点集无须伪造一个指数大的编码。
+
+外部计数调用以 $n'$ 为变量数，全部声明变量都保留，故孤立顶点和未使用的输入位也被计数。选择卷 (59) 给规范长度 $L'=\operatorname{poly}(N)$。当 $v$ 无界时 $n'\le Cv$，有 $\rho(n')=O(\rho(v))$；有界的 $v$ 由常数代价吸收。因此一次调用给 (14.1)，空间多项式。若用每边一个门或保留所有固定 $z_e$ 再直接以 $v+e$ 调用，只能先得到以 $v+e$ 为指数参数的较弱界；这不是这里所用的消元与编译。
+
+**最优值与终端取得。** 写 $Z_k(G)$ 为符合顶点钉值且大小至少 $k$ 的独立集数。它关于整数 $k$ 单调不增。对未钉图，$Z_0>0,Z_{v+1}=0$，在 $[0,v]$ 二分搜索至多 $O(\log(v+2))$ 次计数便得最大可行值 $\alpha$。有钉值先检查 $Z_0$，为零则报告不存在相容完成；正时使用同一搜索。最优集数恰为 $Z_\alpha$，因为 $Z_{\alpha+1}=0$；更一般地，准确大小为 $k$ 的集数为 $Z_k-Z_{k+1}$。
+
+恢复一组最优解时固定阈值为 $\alpha$，只在**原顶点**次序上增长：数当前前缀再加下一位零的实例，正则选零，否则选一。这些都是原顶点单位子句，门数和 $n'$ 界不变。选择卷 (63)–(64) 的非空保持给至多 $v+1$ 次调用；不需要逐门、逐边反复查计数。终端已选顶点集 $S$ 满足全部边、钉值且 $|S|=\alpha$。确定求值门线并给所有 $z_e$ 填零，直接验证原 (11.3) 及阈值；这正是选择卷 (56) 要求的成功解码。若请求整个原网络赋值，$v+e$ 个输出位、辅助门位及原验证费用均为 $\operatorname{poly}(N)$，已经收费；只请求顶点集时输出 $v$ 位。对 $v=0$，$k\le0$ 时唯一空解的计数为一，$k>0$ 为零，未钉最优值为零、最优集数为一。各计数至多 $2^v$，数的输出与相减使用 $O(v+1)$ 位。
+
+二分、增长与最终解码累计只乘一个固定多项式因子，所有外部调用顺序执行并复用空间，故仍有第 3 项。∎
+
+**推论 14.3（已给树袋与一般计数供应的并行适用域）。** 定理 14.2 不替命题 11.2、11.4 取得一个好分解，也不削弱推论 11.5 的编译条件。对同一个显式数量任务，若原局部约束已有收费取得的宽 $w$ 树袋及字母表 $a$，一次计分的 max-sum 仍给相应 $\operatorname{poly}(N)a^{w+1}$ 上界；它可以直接求最优值，无须先把数量电路的线加入原袋。
+
+证明。命题 11.4 把每个顶点仅归属一个袋，分数加法不重不漏；标准先例为 [Dechter 文献注 §6](../../../Library/ConceptDynamics/dechter1996bucket.md)，其原文 [§2 的 ordered graph 和 induced width](https://arxiv.org/pdf/1302.3572) 只供应经典消元背景，不将此处具体袋宽与任意消元序的 induced width 混同。在同样的完整 separator 上，令 $V_j$ 为子树袋的变量并集，$S_j$ 为父 separator；计数消息 $M_j(s)$ 只数 $V_j\setminus S_j$ 的赋值。若 $A_j(t)$ 是满足本袋归属约束的指示函数，则
+
+$$
+M_j(s)=\sum_{\substack{t:C_j\to\{0,1\}\\t|_{S_j}=s}} A_j(t)\prod_{h\text{ 子袋}}M_h(t|_{S_h}).
+\tag{14.4}
+$$
+
+根取 $S_j=\varnothing$。运行交集性质使 $V_h\cap C_j=S_h$，不同子树在父袋外没有共同变量，故各乘子只数不交的内部选择；$C_j\setminus S_j$ 在本层恰计一次。这逐项证明消息数完整延拓而非边界行数，包含空 separator、未出现于边的顶点和零消息。每个计数至多 $2^v$，其位长、乘加、查表及分解表示仍须收费。这个计数版本是经典 sum-product 消元的应用，不将布尔存在消息的行数直接冒充完整解数。
+
+定理 14.2 走的是外部固定宽度计数器路线，既不使用也不证明小宽度。若任意实例都有统一多项式取得、常数字母表、对数宽度、局部测试及解码均多项式的编译器，推论 11.5 的条件性 $P=NP$ 结论仍立；当前亚指数供应并不构造它。同理，选择卷命题 27.7 的全输入严格误差预测器若能统一多项式取得，才给该命题的单向后果。∎
+
+## 追加锚（本行以下为增补区）
