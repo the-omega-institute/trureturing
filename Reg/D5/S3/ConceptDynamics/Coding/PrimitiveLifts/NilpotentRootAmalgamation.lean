@@ -94,7 +94,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (Type u)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.Coding.PrimitiveLifts.NilpotentRootAmalgamation
     definition := none
