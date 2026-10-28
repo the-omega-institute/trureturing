@@ -101,4 +101,5 @@ For all finite vertex types V,U in any common universe, simple graphs G,H with t
 - Truth anchor: `D5/S3/Geometry/HereditaryLexicographicProduct.sourceSW`
 - Truth anchor: `D5/S3/Geometry/HereditaryLexicographicProduct.sourceW`
 - Dependency: [D5/S3/Geometry/CompactSphereNormalForm](CompactSphereNormalForm.md)
+- Dependency: [D5/S3/Geometry/FiniteGraphVertexSubstitution/Hereditary](FiniteGraphVertexSubstitution/Hereditary.md)
 - Dependency: [D5/S3/Geometry/OccupiedFiberSubstitution](OccupiedFiberSubstitution.md)
