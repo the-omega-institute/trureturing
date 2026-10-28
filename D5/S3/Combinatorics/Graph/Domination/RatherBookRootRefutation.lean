@@ -8,8 +8,6 @@
 
 import D5.S3.Combinatorics.Graph.DominatingSetAverage
 import Mathlib.Combinatorics.SimpleGraph.CycleGraph
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Basic.Real.Basic
 
 /-!
 Bilal Ahmad Rather, arXiv:2604.08998v1/v2, Section 5, Conjecture 5.4:
