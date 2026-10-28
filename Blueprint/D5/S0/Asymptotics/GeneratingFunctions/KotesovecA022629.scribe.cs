@@ -23,7 +23,13 @@ internal sealed class KotesovecA022629Document : IScribeDocumentDefinition
             Node("result", "The proved logarithmic limit", ClaimBody(), false, false,
                 "A distinct partition whose parts are almost the first M positive integers contributes at least the r-th power of M factorial, where M is the largest index with M(M+1)/2 at most n. Every individual partition has controlled product, and the logarithm of the number of distinct partitions is at most twice the square root of n. The resulting two-sided estimates differ from r times the square root of 2n times (the logarithm of that square root minus one) by at most a constant depending on r times the square root of n. Dividing by the displayed denominator proves the ratio limit. This does not identify an additive second term or a coefficient prefactor.",
                 resolution: new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("kotdp-weighteddistinct"), ResolutionKind.Proved)))));
+                    ProblemSlugRef.Create("kotdp-weighteddistinct"), ResolutionKind.Proved,
+                    [
+                        DeclarationHandle.Create("D5/S0/Asymptotics/GeneratingFunctions/KotesovecA092484.result"),
+                        DeclarationHandle.Create("D5/S0/Asymptotics/GeneratingFunctions/KotesovecA265840.result"),
+                        DeclarationHandle.Create("D5/S0/Asymptotics/GeneratingFunctions/KotesovecA265841.result"),
+                        DeclarationHandle.Create("D5/S0/Asymptotics/GeneratingFunctions/KotesovecA265842.result")
+                    ])))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         bool definition, bool literature, string prose,
