@@ -56,7 +56,7 @@ private theorem modular_g_degree : modularG.natDegree = 6 := by
   simp only [modularG, factorBase, Polynomial.map_mul, Polynomial.map_add,
     Polynomial.map_sub, Polynomial.map_pow, map_X, Polynomial.map_one,
     Polynomial.map_ofNat]
-  compute_degree
+  compute_degree <;> norm_num <;> decide +kernel
 
 private def rationalG : Polynomial ℚ :=
   (factorBase : Polynomial ℤ).map (Int.castRingHom ℚ)
@@ -65,7 +65,7 @@ private theorem rational_g_degree : rationalG.natDegree = 6 := by
   simp only [rationalG, factorBase, Polynomial.map_mul, Polynomial.map_add,
     Polynomial.map_sub, Polynomial.map_pow, map_X, Polynomial.map_one,
     Polynomial.map_ofNat]
-  compute_degree
+  compute_degree <;> norm_num
 
 private theorem base_coprime : IsCoprime criticalPolynomial (factorBase : Polynomial ℝ) := by
   have hm : resultant modularF modularG 67 6 ≠ 0 := by
@@ -98,7 +98,7 @@ theorem displayed_exceptional_factor_coprime :
       IsCoprime criticalPolynomial (exceptionalFactor : Polynomial ℝ) := by
   constructor
   · unfold exceptionalFactor
-    compute_degree
+    compute_degree <;> norm_num
   · have h := base_coprime
     simp only [factorBase, IsCoprime.mul_right_iff] at h
     rcases h with ⟨⟨⟨⟨h0, h1⟩, h2⟩, h3⟩, h4⟩

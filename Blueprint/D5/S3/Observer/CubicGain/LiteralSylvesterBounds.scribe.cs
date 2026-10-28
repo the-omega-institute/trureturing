@@ -28,16 +28,7 @@ internal sealed class LiteralSylvesterBoundsDocument : IScribeDocumentDefinition
                 H("Exact degrees of the original fixed determinants"),
                 StatementSource.FromAuthor(ExactDegrees()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Both original fixed Sylvester determinants have natural degree 285; the original r-column and constant-column minors have natural degrees 252 and 253 respectively. For each entry the proof extracts the coefficient at row weight minus column exponent. Scaling rows and columns by powers of X identifies the determinant coefficient with the determinant of this integer leading matrix. The exact full-matrix certificates in LiteralLeadingCertificates prove that all four leading determinants are nonzero. Every coefficient array is checked against sourcePolynomial, and every matrix entry is connected to the original fixed rows and columns."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("literal-resultant-common-root-cover"),
-                DeclarationHandle.Create("D5/S3/Observer/CubicGain/LiteralSylvesterBounds.literal_resultant_vanishes_of_common_root"),
-                H("A literal fixed-degree resultant vanishes at every common source root"),
-                StatementSource.FromAuthor(CommonRootCover()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For either original pair, a common real source root supplies the nonzero vector (z^29,...,1) to the exact thirty-row fixed Sylvester matrix. The determinant therefore vanishes after evaluating the parameter b, even when a specialized leading coefficient drops. The theorem uses the original E0/E1/E2 coefficient arrays and does not select a root or divide by a leading coefficient."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("literal-minor-common-root-relation"),
-                DeclarationHandle.Create("D5/S3/Observer/CubicGain/LiteralSylvesterBounds.literal_minor_relation_of_common_root"),
-                H("The literal fixed linear minors obey the common-root relation"),
-                StatementSource.FromAuthor(MinorRelation()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("A common real root of the original E0 and E1 rows gives z times the evaluated r-column determinant plus the evaluated constant-column determinant equal to zero. The proof transports the existing 28-row fixed-minor relation through the integer coefficient determinants, retaining every row and column and dividing by no leading coefficient."))), DescribeRole.Theorem),
+            Paragraph(Text("A common real root z supplies the nonzero vector (z^29,...,1) to each corresponding thirty-row matrix. Its determinant therefore vanishes, including at specialized degree drops. For the twenty-eight original rows, the fixed-minor relation transports through coefficient evaluation to the actual integer determinant polynomials. These two implications give the following source-level result.")),
             Describe.Lean(DescribeId.Create("source-critical-literal-elimination"),
                 DeclarationHandle.Create("D5/S3/Observer/CubicGain/LiteralSylvesterBounds.source_critical_literal_elimination"),
                 H("Critical sources satisfy the original elimination equations"),
@@ -66,22 +57,6 @@ internal sealed class LiteralSylvesterBoundsDocument : IScribeDocumentDefinition
     private static Formula MinorBounds() => Disp(Seq(
         Call("natDegree", Seq(F.Id("a"), Underscore, Grp(D(0)))), Leq, Sp, D(2,5,2), Land, Sp,
         Call("natDegree", Seq(F.Id("c"), Underscore, Grp(D(0)))), Leq, Sp, D(2,5,3)));
-    private static Formula CommonRootCover() => Disp(Seq(
-        Forall, Sp, F.Id("b"), Comma, Sp, F.Id("z"), InMacro, Sp,
-        Mathbb, Grp(F.Id("R")), Comma, Sp, Forall, Sp, F.Id("k"), InMacro, Sp,
-        Call("Fin", D(2)), Comma, Sp,
-        Grp(Call("eval", F.Id("z"), Call("sourceE0", F.Id("b")))), Eq, Sp, D(0), Land, Sp,
-        Grp(Call("eval", F.Id("z"), Call("sourcePair", F.Id("b"), F.Id("k")))), Eq, Sp, D(0),
-        Implies, Sp,
-        Call("resultantEvaluation", F.Id("b"), Call("actualResultant", F.Id("k"))), Eq, Sp, D(0)));
-    private static Formula MinorRelation() => Disp(Seq(
-        Forall, Sp, F.Id("b"), Comma, Sp, F.Id("z"), InMacro, Sp,
-        Mathbb, Grp(F.Id("R")), Comma, Sp,
-        Grp(Call("eval", F.Id("z"), Call("sourceE0", F.Id("b")))), Eq, Sp, D(0), Land, Sp,
-        Grp(Call("eval", F.Id("z"), Call("sourceE1", F.Id("b")))), Eq, Sp, D(0),
-        Implies, Sp,
-        F.Id("z"), Sp, Call("evalB", F.Id("b"), Call("actualMinorA0")), Plus, Sp,
-        Call("evalB", F.Id("b"), Call("actualMinorC0")), Eq, Sp, D(0)));
     private static Formula SourceElimination()
     {
         var t = F.Id("t"); var b = F.Id("b"); var k = F.Id("k");

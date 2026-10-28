@@ -127,7 +127,7 @@ private theorem specialized_mulVec_zero (b z : ℝ) (k : Fin 2)
 
 /- The fixed-size determinant remains meaningful when specialization drops a
    leading coefficient: a common zero still supplies a nonzero kernel vector. -/
-theorem literal_resultant_vanishes_of_common_root (b z : ℝ) (k : Fin 2)
+private theorem literal_resultant_vanishes_of_common_root (b z : ℝ) (k : Fin 2)
     (h0 : (sourceE0 b).eval z = 0)
     (hk : (![sourceE1 b, sourceE2 b] k).eval z = 0) :
     (actualResultant k).eval₂ (Int.castRingHom ℝ) b = 0 := by
@@ -203,7 +203,7 @@ private theorem actualMinorC0_eval_bridge (b : ℝ) :
 
 /- The original linear subresultant relation is transported to the actual
    integer determinant polynomials.  No leading coefficient is divided out. -/
-theorem literal_minor_relation_of_common_root (b z : ℝ)
+private theorem literal_minor_relation_of_common_root (b z : ℝ)
     (h0 : (sourceE0 b).eval z = 0)
     (h1 : (sourceE1 b).eval z = 0) :
     z * evalB b actualMinorA0 + evalB b actualMinorC0 = 0 := by
