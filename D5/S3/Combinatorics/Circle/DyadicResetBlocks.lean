@@ -119,12 +119,12 @@ theorem reset_top_bound {α : Type*} (f : α → ℤ) (B M : ℤ)
       · have hlow : mass f W < B := by omega
         simp only [hb, hn, decide_true, decide_false, ite_true, ite_false,
           Nat.cast_one, Nat.cast_zero, add_zero]
-        split_ifs at h ⊢ <;> omega
+        split_ifs at h ⊢ <;> simp_all <;> omega
       · simp only [hb, hn, decide_false, ite_false, Nat.cast_zero, add_zero]
-        split_ifs at h ⊢ <;> omega
+        split_ifs at h ⊢ <;> simp_all <;> omega
     · have hb : f a ≠ B := by omega
-      simp only [ha, hb, decide_true, decide_false, ite_true, ite_false,
+      simp only [ha, hb, hBM, Ne.symm hBM, decide_true, decide_false, ite_true, ite_false,
         Nat.cast_one, Nat.cast_zero, add_zero]
-      split_ifs at h ⊢ <;> omega
+      split_ifs at h ⊢ <;> simp_all <;> omega
 
 end D5.S3.Combinatorics.Circle.DyadicResetBlocks

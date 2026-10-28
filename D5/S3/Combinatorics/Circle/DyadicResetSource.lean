@@ -102,7 +102,7 @@ theorem source_values (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
           ring
         rw [hv, Int.sub_emod_right]
       · rfl
-  simpa only [actualSource, Fin.coe_cast, Nat.mul_comm] using hrep.trans
+  simpa only [actualSource, Fin.val_cast, Nat.mul_comm] using hrep.trans
     (congrArg (fun z : ℤ => (unit m r : ℤ) * z) hbase)
 
 /-- The native capacity has exactly the same attainable scaled heights as the
@@ -167,5 +167,75 @@ theorem large_iff (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r) (i : Fin (m * r)) :
       constructor
       · intro h; nlinarith
       · omega
+
+/-- The scaled word still has all original physical labels. -/
+def scaled (m r : ℕ) (i : Fin (m * r)) : ℤ := value m (i.val % m)
+
+theorem scaled_mass (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
+    (W : List (Fin (m * r))) :
+    mass (actualSource (m * r) (unit m r)) W =
+      (unit m r : ℤ) * mass (scaled m r) W := by
+  have h := scaled_sum (scaled m r) (actualSource (m * r) (unit m r))
+    id (unit m r) W (fun i _ => source_values m r hm hr i)
+  simpa [mass] using h
+
+/-- Native legality is equivalent to the exact integral reset strip. The
+forward implication uses divisibility of every attainable prefix height. -/
+theorem legal_iff (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
+    (W : List (Fin (m * r))) :
+    TwoOppositeLargeExchange.Legal (m * r) (unit m r) W ↔
+      W.Nodup ∧ InStrip (scaled m r) (height m) 0 W := by
+  obtain ⟨hd, hlo, hhi, _⟩ := capacity_bounds m r hm hr
+  have hdz : (0 : ℤ) < unit m r := by exact_mod_cast hd
+  constructor
+  · intro hW
+    refine ⟨hW.1, strip_of_all_prefixes W ?_⟩
+    intro n
+    have h := hW.2 n
+    change 0 ≤ mass (actualSource (m * r) (unit m r)) (W.take n) ∧
+      mass (actualSource (m * r) (unit m r)) (W.take n) ≤ half (m * r) at h
+    rw [scaled_mass m r hm hr] at h
+    have hp0 : 0 ≤ mass (scaled m r) (W.take n) := by nlinarith [h.1]
+    have hp1 : mass (scaled m r) (W.take n) ≤ height m := by
+      by_contra hn
+      have hn' : (height m : ℤ) + 1 ≤ mass (scaled m r) (W.take n) := by omega
+      nlinarith [h.2]
+    simpa using And.intro hp0 hp1
+  · rintro ⟨hn, hs⟩
+    apply TwoOppositeLargeExchange.legal_of_strip hn
+    have h := scale_strip (scaled m r) (actualSource (m * r) (unit m r))
+      id (unit m r) (height m) (half (m * r)) 0 (le_of_lt hdz)
+      (by nlinarith : (unit m r : ℤ) * height m ≤ half (m * r)) W
+      (fun i _ => source_values m r hm hr i) hs
+    simpa using h
+
+/-- Exactly r distinct physical occurrences have each residue. -/
+theorem residue_card (m r a : ℕ) (hm : 0 < m) (ha : a < m) :
+    (Finset.univ.filter (fun i : Fin (m * r) => i.val % m = a)).card = r := by
+  classical
+  let θ : Fin r × Fin m ≃ Fin (m * r) :=
+    finProdFinEquiv.trans (finCongr (Nat.mul_comm r m))
+  have hθ (j : Fin r) (b : Fin m) : (θ (j, b)).val % m = b.val := by
+    simp [θ, finProdFinEquiv, finCongr, Nat.add_mod, Nat.mod_eq_of_lt b.isLt]
+  let f : Fin r → Fin (m * r) := fun j => θ (j, ⟨a, ha⟩)
+  have hinj : Function.Injective f := by
+    intro j k h
+    have := θ.injective h
+    exact congrArg Prod.fst this
+  have he : Finset.univ.filter (fun i : Fin (m * r) => i.val % m = a) =
+      Finset.univ.image f := by
+    ext i
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_image]
+    constructor
+    · intro hi
+      rcases hsplit : θ.symm i with ⟨j, b⟩
+      have hback : θ (j, b) = i := by
+        simpa only [hsplit] using θ.apply_symm_apply i
+      have hb : b = ⟨a, ha⟩ := Fin.ext (by rw [← hθ j b, hback]; exact hi)
+      exact ⟨j, by simpa [f, hb] using hback⟩
+    · rintro ⟨j, rfl⟩
+      exact hθ j ⟨a, ha⟩
+  rw [he, Finset.card_image_of_injective _ hinj]
+  simp
 
 end D5.S3.Combinatorics.Circle.DyadicResetSource

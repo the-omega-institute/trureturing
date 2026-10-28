@@ -8,6 +8,7 @@
 module
 public import D5.S3.Combinatorics.Transportation.DyadicAllocation
 public import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Tactic
 
 /-! Exact coin selection and coupled reset-bin allocation use the same criterion. -/
 set_option autoImplicit false
