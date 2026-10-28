@@ -10,6 +10,7 @@ import D5.S3.VertexAlgebra.Characters.LatticeThetaCharacter
 import D5.S3.VertexAlgebra.LatticeActualConformalState
 import D5.S3.VertexAlgebra.Lattice.InvolutionRootlessLowGrades
 import Mathlib.LinearAlgebra.Trace
+import Mathlib.Data.Nat.Dist
 
 /-! Ordinary monomial currents on the original all-charge energy grades.
 The current normalization is the lattice construction of Bakalov--Kac,
@@ -103,15 +104,13 @@ private def markedEquiv (D : LatticeData) (a : ℕ) (x : Index D) :
     have he : z.1.1 - Finsupp.single x z.2.1 + Finsupp.single x z.2.1 = z.1.1 :=
       tsub_add_cancel_of_le (Finsupp.single_le_iff.mpr hk)
     apply Sigma.ext (Subtype.ext he)
-    apply heq_of_eq
-    apply Fin.ext
-    rfl
+    exact (Fin.heq_ext_iff (congrArg (fun d : Exponent D => d x + 1) he)).mpr rfl
   right_inv z := by
     classical
-    apply Sigma.ext (Fin.ext rfl)
-    apply heq_of_eq
-    apply Subtype.ext
-    exact add_tsub_cancel_right _ _
+    apply Sigma.ext
+    · apply Fin.ext; rfl
+    · apply heq_of_eq
+      exact Subtype.ext (add_tsub_cancel_right _ _)
 
 private theorem marked_count (D : LatticeData) (a : ℕ) (x : Index D) :
     (∑ w : IntegerFiber D a, (w.1 x + 1 : ℕ)) =
@@ -124,7 +123,9 @@ private theorem marked_count (D : LatticeData) (a : ℕ) (x : Index D) :
   calc
     _ = ∑ k : Fin (a / (x.2 + 1) + 1),
         Fintype.card (IntegerFiber D (a - k.1 * (x.2 + 1))) := h
-    _ = _ := Fin.sum_univ_eq_sum_range _ _
+    _ = _ := Fin.sum_univ_eq_sum_range
+      (fun k => Fintype.card (IntegerFiber D (a - k * (x.2 + 1))))
+      (a / (x.2 + 1) + 1)
 
 private theorem projection_basis (D : LatticeData) (n : ℤ) (a : Label D)
     (ha : energy D a = n) : gradeProjection D n (carrierBasis D a) = carrierBasis D a := by
@@ -207,7 +208,10 @@ private theorem cycle_diag_upper (D : LatticeData) (i j : Fin D.rank)
             (gradeBasis D (n : ℤ) a))))) a.1 = _
   rw [basis_value, hb, projection_basis D _ _ he, gradeProjection_coeff, if_pos a.2,
     current_state_field, neutralField_ncoeff, carrierBasis_apply, neutralMode_single]
-  change (neutralPolynomialMode D i a.1.1 _ (monomial _ 1)).coeff a.1.2 = _
+  change ((Finsupp.single a.1.1
+    (neutralPolynomialMode D i a.1.1 (((n + (r + 1) : ℕ) : ℤ) - (n : ℤ))
+      (monomial (Finsupp.single (j,r) 1 + a.1.2) 1))) a.1.1).coeff a.1.2 = _
+  rw [Finsupp.single_eq_same]
   rw [show ((n + (r + 1) : ℕ) : ℤ) - (n : ℤ) = (r : ℤ) + 1 by omega]
   have hm : monomial (Finsupp.single (j,r) 1 + a.1.2) (1 : ℂ) =
       X (j,r) * monomial a.1.2 1 := by simp [X, monomial_mul_monomial]
@@ -227,7 +231,8 @@ private def fullFiberEquiv (D : LatticeData)
     · simp only [positiveChargeCutoff, Set.Finite.mem_toFinset, Set.mem_setOf_eq,
         Int.toNat_natCast]
       omega
-    · omega
+    · change oscillatorEnergy a.1.2 = n - (chargeEnergy D a.1.1).toNat
+      omega
   invFun a := by
     have hb := a.1.2
     simp only [positiveChargeCutoff, Set.Finite.mem_toFinset, Set.mem_setOf_eq,
@@ -254,9 +259,14 @@ private theorem sum_fullFiber (D : LatticeData)
   classical
   letI := energyFiber_finite D hD (n : ℤ)
   letI := Fintype.ofFinite (EnergyFiber D (n : ℤ))
-  rw [← Finset.sum_coe_sort]
-  rw [← Fintype.sum_sigma]
-  exact Fintype.sum_equiv (fullFiberEquiv D hD n) _ _ (fun _ => rfl)
+  calc
+    _ = ∑ a : (Σ β : positiveChargeCutoff D hD (n : ℤ),
+        IntegerFiber D (n - (chargeEnergy D β.1).toNat)), f a.1.1 a.2.1 :=
+      Fintype.sum_equiv (fullFiberEquiv D hD n) _ _ (fun _ => rfl)
+    _ = _ := by
+      rw [Fintype.sum_sigma]
+      exact Finset.sum_coe_sort (positiveChargeCutoff D hD (n : ℤ))
+        (fun β : Charge D => ∑ w : IntegerFiber D (n - (chargeEnergy D β).toNat), f β w.1)
 
 private theorem trace_upper (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
@@ -273,12 +283,13 @@ private theorem trace_upper (D : LatticeData)
   rw [actualCurrentCycleTrace, LinearMap.trace_eq_matrix_trace ℂ (gradeBasis D (n : ℤ))]
   simp only [Matrix.trace, Matrix.diag, LinearMap.toMatrix_apply, cycle_diag_upper]
   simp_rw [← Finset.mul_sum]
-  rw [sum_fullFiber D hD n]
+  rw [sum_fullFiber D hD n (fun _ d => ((d (j,r) + 1 : ℕ) : ℂ))]
   congr 1
   apply Finset.sum_congr rfl
   intro β hβ
   have hc := marked_count D (n - (chargeEnergy D β).toNat) (j,r)
   dsimp only at hc
+  simp only [occupationMultiplicity]
   exact_mod_cast hc
 
 private theorem block_zero_basis (D : LatticeData) (i : Fin D.rank) (n : ℕ)
@@ -319,7 +330,8 @@ private theorem trace_equal (D : LatticeData)
   letI := Fintype.ofFinite (EnergyFiber D (n : ℤ))
   rw [actualCurrentCycleTrace, LinearMap.trace_eq_matrix_trace ℂ (gradeBasis D (n : ℤ))]
   simp only [Matrix.trace, Matrix.diag, LinearMap.toMatrix_apply, cycle_diag_equal]
-  rw [sum_fullFiber D hD n]
+  rw [sum_fullFiber D hD n (fun β _ =>
+    (bilinear D (unitCharge D i) β : ℂ) * (bilinear D (unitCharge D j) β : ℂ))]
   simp [occupationMultiplicity, Nat.card_eq_fintype_card, mul_comm]
 
 private theorem trace_exchange (D : LatticeData)
@@ -357,12 +369,12 @@ theorem actual_two_current_grade_trace (D : LatticeData)
       have hm : m = n + (r + 1) := by dsimp [r]; omega
       have hd : Nat.dist n m = r + 1 := by rw [Nat.dist_eq_sub_of_le h.le]; omega
       rw [Nat.min_eq_left h.le, hd, hm]
-      exact trace_upper D hD i j n r
+      simpa only [Nat.cast_add, Nat.cast_one] using trace_upper D hD i j n r
     · let r := n - m - 1
       have hn : n = m + (r + 1) := by dsimp [r]; omega
       have hd : Nat.dist n m = r + 1 := by rw [Nat.dist_eq_sub_of_le_right h.le]; omega
       rw [Nat.min_eq_right h.le, hd, trace_exchange, hn, ← D.symmetric j i]
-      exact trace_upper D hD j i m r
+      simpa only [Nat.cast_add, Nat.cast_one] using trace_upper D hD j i m r
 
 #print axioms actual_two_current_grade_trace
 

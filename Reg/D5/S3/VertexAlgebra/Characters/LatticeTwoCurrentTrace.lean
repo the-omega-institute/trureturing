@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.VertexAlgebra.Characters.LatticeTwoCurrentTrace
 
+/-! The actual finite current cycle is observed over the complete source parameter family. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
@@ -49,7 +51,7 @@ abbrev arena : Arena where
 
 private theorem bridge : (type_of% (@actual_two_current_grade_trace)) ↔ arena.Law actual := Iff.rfl
 
-private def probe : LatticeData where
+private abbrev probe : LatticeData where
   rank := 1
   G := Matrix.diagonal (fun _ => 2)
   symmetric := by intro i j; fin_cases i; fin_cases j; rfl
@@ -75,9 +77,9 @@ private theorem cutoff_zero (D : LatticeData)
     simp
 
 private theorem multiplicity_zero (D : LatticeData) : occupationMultiplicity D 0 = 1 := by
-  letI : Unique (IntegerFiber D 0) where
+  letI : Unique (IntegerFiber D 0) := {
     default := ⟨0, by simp [oscillatorEnergy]⟩
-    uniq a := Subtype.ext ((oscillatorEnergy_eq_zero_iff D a.1).mp a.2)
+    uniq := fun a => Subtype.ext ((oscillatorEnergy_eq_zero_iff D a.1).mp a.2) }
   simp [occupationMultiplicity, Nat.card_unique]
 
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -94,7 +96,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   change actualCurrentCycleTrace probe probePositive 0 0 0 0 ≠
     actualCurrentCycleTrace probe probePositive 0 0 0 1
   rw [actual_two_current_grade_trace, actual_two_current_grade_trace]
-  norm_num [cutoff_zero, multiplicity_zero, bilinear, probe, chargeEnergy,
+  norm_num [cutoff_zero, multiplicity_zero, bilinear, probe, chargeEnergy, Nat.dist,
     LatticePositiveEnergy.chargeEnergy_zero]
 
 def family : Registration arena (type_of% (@actual_two_current_grade_trace)) where
