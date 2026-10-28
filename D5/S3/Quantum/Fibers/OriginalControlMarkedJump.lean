@@ -313,7 +313,7 @@ private theorem survival_cont (L : Leg) : ContinuousOn L.survival (Icc 0 L.durat
         (fun t ht => (sub_pos.mpr (L.height_bounds t ht).2).ne')
   exact hr.congr (fun t ht => L.survival_formula t ht)
 
-private theorem density_cont (L : Leg) (i : Fin 5) :
+theorem density_cont (L : Leg) (i : Fin 5) :
     ContinuousOn (fun t => L.density t i) (Icc 0 L.duration) := by
   have hp : Continuous (fun t => p L.c (L.height t) i) :=
     continuous_iff_continuousAt.mpr (fun t => (L.probability_deriv t i).continuousAt)

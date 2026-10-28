@@ -1,0 +1,10 @@
+For an image in $L_s$, set
+$H_s=\max(\operatorname{ht}(T_s),\operatorname{ht}(T_{s+1}))$.
+An original reply at depth at most $h$ is determined by the image replies
+through $h+H_s$. At each reached original node, its image subtree is either
+one of the two finite isolated terminals, giving the corresponding leaf,
+or the recursive pair case. A terminal comparison needs at most $H_s$
+further levels. Original pair ancestors have the same addresses in the
+image, so the deepest such request is at most $h+H_s$; lookahead does not
+accumulate once per ancestor. The recursive parse also determines absence
+below recovered leaves. 
