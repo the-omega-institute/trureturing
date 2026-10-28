@@ -2860,11 +2860,9 @@ coefficients.
 The two polynomial divisions in (12.12) have zero remainder; the
 resulting carrier has 512 nonzero monomials in $(x,p,v)$ and degree
 vector $(18,6,6)$. These facts and (14.2) specify the comparisons
-without selecting any roots. The attempted translated-tail certificate
-is not used: the finite data above do not establish a uniform sign on
-the unbounded tail. We therefore use the source equation itself for
-$x\ge34$; the exact exclusion is proved in Section 14.3 below. No
-assertion about the sign of $R$ on that tail is needed. Finally,
+without selecting any roots. For $x\ge34$, the source-equation
+exclusion in Section 14.3 below applies directly to actual worlds.
+Finally,
 
 $$
 \mathfrak b_{[24/25,501/500]\times Z_{pw}}
@@ -3104,11 +3102,12 @@ Here $a$ is decreasing and $a(x)<18/x$ follows by cross
 multiplication; also $-v\ge87837/100$ on the strip. Explicitly,
 
 $$
-c_0>-810-\frac{9132}{x}+\frac{1877}{5(x+2)}>-1070,
+c_0>-810-\frac{9132}{x}+\frac{3749}{10(x+2)}>-1070,
 $$
 
-because the last difference from $-1070$ is increasing for $x\ge34$
-and equals $5629/3060$ at $x=34$. Further,
+because the last difference from $-1070$ equals $11173/6120$ at
+$x=34$ and has derivative
+$9132/x^2-3749/[10(x+2)^2]>0$ throughout the half-line. Further,
 
 $$
 e\ge162-\frac{384}{x}+\frac{87837}{100(x+2)}>162,
@@ -3128,9 +3127,7 @@ $$
 
 Together with $\Phi''=2(c_2-\gamma)<0$, this makes $\Phi$ negative
 for every $U\ge1$. The source identity (14.11) gives $1<U<2$ for
-$x\ge34$, so no actual source occurs on the tail. This argument uses
-the source equation and does not claim that every tail carrier root is
-positive or that a carrier root lifts to a world.
+$x\ge34$, so no actual source occurs on the tail.
 
 Finally on $I_c$, (14.18) gives
 
