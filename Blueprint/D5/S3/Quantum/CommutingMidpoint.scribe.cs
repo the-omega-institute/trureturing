@@ -31,6 +31,9 @@ internal sealed class CommutingMidpointDocument : IScribeDocumentDefinition
     private static Formula Bound(string names, Formula type) => Seq(Open, Names(names), Colon, type, Close);
     private static Formula For(Formula binders, Formula body) => Seq(Forall, Sp, binders, Comma, Quad, body);
     private static Formula Par(Formula body) => Seq(Open, body, Close);
+    private static Formula BlochCommutator => Par(Seq(
+        Call("blochMatrix", D(1), V("a")), Call("blochMatrix", D(1), V("b")), Minus,
+        Call("blochMatrix", D(1), V("b")), Call("blochMatrix", D(1), V("a"))));
     private static Formula Implies(Formula premise, Formula conclusion) =>
         Seq(Par(premise), Rightarrow, Sp, Par(conclusion));
     private static Formula All(string names, Formula conclusion) => For(Seq(System.Linq.Enumerable.ToArray(
@@ -124,6 +127,14 @@ internal sealed class CommutingMidpointDocument : IScribeDocumentDefinition
                 "X(z) is blochMatrix(1,r(z)), the canonical complex qubit matrix. "
                 + "On the full physical chord it is PSD with trace one; interior parameters give PD states.",
                 DescribeRole.Definition),
+            Entry("bloch_commutator_gram", "The Bloch commutator Gram identity",
+                For(Bound("a,b", VectorType), Seq(
+                    ReOf(Call("tr", Seq(Call("conjTranspose", BlochCommutator), BlochCommutator))),
+                    Eq, Half, Par(Seq(Sq(Call("norm", V("a"))), Sq(Call("norm", V("b"))), Minus,
+                        Sq(Call("inner", V("a"), V("b"))))))),
+                "For arbitrary real Euclidean three-vectors a,b, the real trace of C conjugate-transpose times C, "
+                + "where C=blochMatrix(1,a)blochMatrix(1,b)-blochMatrix(1,b)blochMatrix(1,a), "
+                + "equals (||a|| squared ||b|| squared-inner(a,b) squared)/2."),
             Entry("qubit_chord_factorization", "The sign-sensitive chord factorization",
                 All("d,e,r,s,t", Seq(ChordData, Rightarrow, Sp, ChordReadouts(Seq(
                     D(0), Lt, V("a"), Land, D(0), Lt, V("b"), Land,

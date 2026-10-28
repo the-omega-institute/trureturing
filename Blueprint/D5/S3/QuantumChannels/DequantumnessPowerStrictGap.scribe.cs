@@ -21,7 +21,7 @@ internal sealed class DequantumnessPowerStrictGapDocument : IScribeDocumentDefin
                 StatementSource.FromAuthor(Disp(QuantumnessFormula())),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
-                    "Equation (1) of Song and Li, Section 2 (XML lines 427-480), measures ensemble quantumness by the negative weighted sum of traces of squared commutators. "
+                    "Equation (1) of Song and Li, Section 2, measures ensemble quantumness by the negative weighted sum of traces of squared commutators. "
                     + "Here the weights are p and 1-p and the matrices are ρ and σ. Matrix products and squares are over the complex numbers, and Complex.re takes the real part after the trace. "
                     + "The expression is defined for every real p and every pair of complex two-by-two matrices; density and probability conditions enter through IsEnsemble below."))),
                 DescribeRole.Definition),
@@ -32,7 +32,7 @@ internal sealed class DequantumnessPowerStrictGapDocument : IScribeDocumentDefin
                 StatementSource.FromAuthor(Disp(PowerFormula())),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
-                    "This is D₂ from Section 3 (XML lines 1518-1558 and 2060-2098): take the real supremum of the decrease of quantumness over all two-state qubit ensembles. "
+                    "This is D₂ from the definition of D in Section 3: take the real supremum of the decrease of quantumness over all two-state qubit ensembles. "
                     + "IsEnsemble requires nonnegative weights summing to one and positive semidefinite matrices of trace one, equivalently 0 ≤ p ≤ 1 with both ρ and σ density matrices. "
                     + "MatrixMap denotes a complex-linear map on the matrix space. This definition accepts every such map; complete positivity and trace preservation are imposed in the equality question."))),
                 DescribeRole.Definition),
@@ -44,7 +44,7 @@ internal sealed class DequantumnessPowerStrictGapDocument : IScribeDocumentDefin
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "The maximal initial quantumness is the real supremum over all two-state qubit ensembles. "
-                    + "This specializes the maximal-quantumness condition in Section 3 (XML lines 1559-1700) to two ingredients. Its value is one quarter, attained by equal weights and orthogonal unit Bloch vectors."))),
+                    + "This specializes the maximal-quantumness condition in the definition of D' in Section 3 to two ingredients. Its value is one quarter, attained by equal weights and orthogonal unit Bloch vectors."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("restricted-dequantumness-power"),
@@ -53,7 +53,7 @@ internal sealed class DequantumnessPowerStrictGapDocument : IScribeDocumentDefin
                 StatementSource.FromAuthor(Disp(RestrictedFormula())),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
-                    "This is the two-state restriction D₂′ of Section 3 (XML lines 1559-1688). The same loss is optimized only over input ensembles whose quantumness equals maxQuantumness. "
+                    "This is the two-state restriction D₂′ from the definition of D' in Section 3. The same loss is optimized only over input ensembles whose quantumness equals maxQuantumness. "
                     + "Both the ensemble condition and the equality to that supremum are required. The supremum is taken in the real numbers."))),
                 DescribeRole.Definition),
             Describe.Lean(
@@ -64,7 +64,7 @@ internal sealed class DequantumnessPowerStrictGapDocument : IScribeDocumentDefin
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The assertion is that every completely positive trace-preserving complex-linear qubit map has equal unrestricted and restricted two-state dequantumness powers. "
-                    + "At the end of Section 3 (XML lines 4393-4460), Song and Li conjecture that this equality can fail and ask for a strict separation. Thus negating the displayed universal equality establishes the failure they seek."))),
+                    + "In the conjecture at the end of Section 3, Song and Li state that this equality can fail and ask for a strict separation. Thus negating the displayed universal equality establishes the failure they seek."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("result"),
@@ -83,7 +83,7 @@ internal sealed class DequantumnessPowerStrictGapDocument : IScribeDocumentDefin
                         + "‖f(r) × f(s)‖² ≥ (1/4)(1/2−√2/4)².")),
                     Paragraph(Text(
                         "Every qubit density matrix has the form B(r) = (I+r₀σₓ+r₁σᵧ+r₂σ_z)/2 for a real Bloch vector r of norm at most one, where σₓ, σᵧ and σ_z are the Pauli matrices. "
-                        + "Expanding the commutators gives Q = p(1-p)‖r × s‖². Lagrange's identity shows 0 ≤ ‖r × s‖² ≤ 1 whenever r and s lie in the unit ball. "
+                        + "The Bloch commutator Gram identity gives Q = p(1-p)‖r × s‖². Lagrange's identity shows 0 ≤ ‖r × s‖² ≤ 1 whenever r and s lie in the unit ball. "
                         + "A Hermitian idempotent of trace one is a density matrix. Since 0 ≤ p(1-p) ≤ 1/4, every valid two-state ensemble satisfies 0 ≤ Q ≤ 1/4.")),
                     Paragraph(Text(
                         "Equal weights with ρ = diag(1,0) and σ = (1/2)[[1,1],[1,1]] attain Q = 1/4; these matrices are Hermitian idempotents of trace one. "

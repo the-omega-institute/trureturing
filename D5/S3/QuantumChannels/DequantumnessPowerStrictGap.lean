@@ -7,6 +7,7 @@
    digest: A translated qubit contraction has strictly greater unrestricted dequantumness power. -/
 
 import D5.S3.Combinatorics.Orthogonality.ThetaRepresentationNonconvex
+import D5.S3.Quantum.CommutingMidpoint
 import D5.S3.QuantumChannels.PurelyNonUnitalEternalNonMarkovianity
 import D5.S3.Quantum.Measurement.AdaptiveQueryQubitFourStateRefutation
 
@@ -15,7 +16,7 @@ import D5.S3.Quantum.Measurement.AdaptiveQueryQubitFourStateRefutation
 set_option autoImplicit false
 set_option linter.style.longLine false
 
-open scoped BigOperators Matrix ComplexOrder MatrixOrder
+open scoped BigOperators Matrix ComplexOrder MatrixOrder InnerProductSpace
 open Matrix
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsDensity IsCPTP)
@@ -124,9 +125,30 @@ private lemma density_bloch (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsDensity �
 private lemma quantumness_bloch (p : ℝ) (r s : EuclideanSpace ℝ (Fin 3)) :
     quantumness p (blochMatrix 1 r) (blochMatrix 1 s) =
       p * (1-p) * ((r.ofLp ⨯₃ s.ofLp) ⬝ᵥ (r.ofLp ⨯₃ s.ofLp)) := by
-  unfold quantumness blochMatrix
-  simp [Fin.sum_univ_two, pow_two, Matrix.trace_fin_two, Matrix.mul_apply,
-    cross_apply]
+  have herm (a : EuclideanSpace ℝ (Fin 3)) : (blochMatrix 1 a)ᴴ = blochMatrix 1 a := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [blochMatrix, Matrix.conjTranspose_apply, sub_eq_add_neg]
+  have hgram := D5.S3.Quantum.CommutingMidpoint.bloch_commutator_gram r s
+  dsimp only at hgram
+  simp only [conjTranspose_sub, conjTranspose_mul, herm] at hgram
+  rw [← neg_sub, neg_mul, ← pow_two, trace_neg, Complex.neg_re] at hgram
+  have hcross : (r.ofLp ⨯₃ s.ofLp) ⬝ᵥ (r.ofLp ⨯₃ s.ofLp) =
+      ‖r‖^2 * ‖s‖^2 - ⟪r,s⟫_ℝ^2 := by
+    rw [cross_dot_cross, dotProduct_comm s.ofLp r.ofLp]
+    rw [← real_inner_self_eq_norm_sq r, ← real_inner_self_eq_norm_sq s]
+    simp only [EuclideanSpace.inner_eq_star_dotProduct,
+      star_trivial, dotProduct_comm s.ofLp r.ofLp, pow_two]
+  have hrev : (blochMatrix 1 s * blochMatrix 1 r - blochMatrix 1 r * blochMatrix 1 s)^2 =
+      (blochMatrix 1 r * blochMatrix 1 s - blochMatrix 1 s * blochMatrix 1 r)^2 := by
+    rw [← neg_sub, neg_sq]
+  rw [← hcross] at hgram
+  have htrace : (trace ((blochMatrix 1 r * blochMatrix 1 s -
+      blochMatrix 1 s * blochMatrix 1 r)^2)).re =
+      -((r.ofLp ⨯₃ s.ofLp) ⬝ᵥ (r.ofLp ⨯₃ s.ofLp)) / 2 := by
+    linarith only [hgram]
+  simp only [quantumness, Fin.sum_univ_two, cons_val_zero, cons_val_one,
+    sub_self, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow,
+    trace_zero, Complex.zero_re, mul_zero, zero_add, add_zero, hrev, htrace]
   ring
 
 private lemma cross_bounds (r s : Fin 3 → ℝ)
