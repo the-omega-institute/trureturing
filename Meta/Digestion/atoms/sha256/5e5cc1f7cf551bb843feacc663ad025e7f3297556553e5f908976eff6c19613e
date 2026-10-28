@@ -1,0 +1,72 @@
+**Theorem 83.2 (earned prelude, exact entry-kernel criterion).**
+Construction 83.1 terminates on every admitted original source, earns its
+syntax and exhaustive current binding, and has actual endpoint
+
+$$
+ u_+=\rho(u),\quad \rho(\alpha)=\beta,\quad
+ \rho(\beta)=\langle\beta,\alpha\rangle,\quad
+ \rho(\langle l,r\rangle)=\langle\rho(l),\rho(r)\rangle,
+ \qquad x_+=Ex.                                 \tag{83.1}
+$$
+
+Here $E$ is the persistent inclusion of the old $N$ cells. The actual new
+law, in old/fresh block order, is
+
+$$
+ B=\begin{pmatrix}T&K_{\rm new}\\
+ K_{\rm new}^{\mathsf T}&D\end{pmatrix},\qquad
+ E^{\mathsf T}BE=T,\qquad
+ M=3b+2c-1,\quad s=b+c.                          \tag{83.2}
+$$
+
+The columns of $K_{\rm new}$ index fresh cells. More generally, for every fixed field-independent symmetric
+fresh-zero extension with these blocks, every $h\ge1$ satisfies
+
+$$
+ \ker(B^hE)=\ker T\cap\ker K_{\rm new}^{\mathsf T}.\tag{83.3}
+$$
+
+For any rational linear entrance subspace $X$, passive propagation $B^hE$
+is injective on $X$ exactly when its intersection with the right side of
+(83.3) is zero. The actual prelude (83.1) makes that right side zero for
+every admitted unknown $T$. Hence $B^hE$ has column rank $N$ for every
+$h\ge0$, without asserting that $B$ is invertible on all grown fields.
+
+Proof. The original leaf cones are prefix-incomparable. An edit at a visited
+leaf changes none of the not-yet-visited original nodes, addresses or
+constructors. The structural induction of §18.4 therefore applies to the
+guard visits alone: exactly the $2b-1$ original logical nodes are visited,
+with $b-1$ branch refusals, $a$ successful P replies, and $c$ wrong-type P
+replies followed by $c$ successful S calls. No new descendant is visited.
+Unlike §18's arbitrary raw permutation, initial raw order is supplied here:
+the $j$th original leaf encountered has original label $j$. An unvisited
+leaf has not moved. Recording each move/append earns all bindings without
+marking a field. These disjoint local updates exhaust the final terminals;
+§19.3's translator is therefore a real callable canonical adapter.
+
+The existing old-frontier macro gives $\rho(u)$, and the fresh-zero rule
+gives $Ex$ with every old value untouched. It allocates $a+2c=b+c$ cells
+and appends $c$ labels, giving $M=N+b+c=3b+2c-1$ and $s=b+c$.
+Every alpha created by $\rho$ is the right child in its beta block, so
+$\rho(u)\in\mathcal D$; also $s\ge b\ge3$. Thus the native geometry/root
+suppliers remain applicable. Coefficient persistence proves compression
+in (83.2); in this particular prelude $D=0$, since each fresh vertex
+is attached directly to an old one.
+
+For any symmetric $B$, the same symmetric-kernel fact as in Theorem 81.1
+gives $\ker B^h=\ker B$ for $h\ge1$. Since
+$BE\eta=(T\eta,K_{\rm new}^{\mathsf T}\eta)$, (83.3) follows, including
+both implications and every such positive exponent. Restricting this kernel
+to $X$ gives the exact criterion. At $h=0$, $E$ itself is injective.
+
+For the actual prelude, an old alpha terminal $p$ gets fresh neighbour
+$pL$. An old beta terminal $pL$ gets fresh neighbour $pLL$; its old owner
+also gets fresh $pR$. Each such fresh vertex has exactly its indicated old
+neighbour, with unit link, in this prelude. Thus
+$K_{\rm new}^{\mathsf T}\eta=0$ implies that every old terminal coordinate
+vanishes. If also $T\eta=0$, all-leaf forcing on the old tree, with nonzero
+edges and arbitrary diagonal, forces $\eta=0$. The first grown Tick already
+separates every old direction, and symmetry prevents later passive loss.
+This proof does not require knowing a single old coefficient before growth.
+$\square$
+
