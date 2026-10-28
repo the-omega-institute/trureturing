@@ -43,7 +43,7 @@ def assemble (D : LatticeData) (a : Charge D) (s : ℂ) :
   Finsupp.lsum ℂ (fun _ : ℕ =>
     (LinearMap.id : Module.End ℂ (vacuumDescendants D a s)))
 
-def expansion_unique (D : LatticeData) (a : Charge D)
+theorem expansion_unique (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1)
     (f g : ℕ →₀ vacuumDescendants D a s)
     (hf : ∀ n, f n ∈ grade D a s n) (hg : ∀ n, g n ∈ grade D a s n)
@@ -58,11 +58,11 @@ def chosenExpansion (D : LatticeData) (a : Charge D) (s : ℂ)
     (u : vacuumDescendants D a s) : ℕ →₀ vacuumDescendants D a s :=
   Classical.choose (finite_decomposition D a s u)
 
-def chosenExpansion_sum (D : LatticeData) (a : Charge D) (s : ℂ)
+theorem chosenExpansion_sum (D : LatticeData) (a : Charge D) (s : ℂ)
     (u : vacuumDescendants D a s) : assemble D a s (chosenExpansion D a s u)=u :=
   (Classical.choose_spec (finite_decomposition D a s u)).1
 
-def chosenExpansion_grade (D : LatticeData) (a : Charge D) (s : ℂ)
+theorem chosenExpansion_grade (D : LatticeData) (a : Charge D) (s : ℂ)
     (u : vacuumDescendants D a s) (n : ℕ) :
     chosenExpansion D a s u n ∈ grade D a s n :=
   (Classical.choose_spec (finite_decomposition D a s u)).2 n
@@ -84,7 +84,7 @@ def expansion (D : LatticeData) (a : Charge D)
       rw [map_smul,chosenExpansion_sum,chosenExpansion_sum]
       rfl)
 
-def expansion_single (D : LatticeData) (a : Charge D)
+theorem expansion_single (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1)
     (n : ℕ) (u : vacuumDescendants D a s) (hu : u ∈ grade D a s n) :
     expansion D a ha s hs u=Finsupp.single n u := by
@@ -137,7 +137,7 @@ def star (D : LatticeData) (a : Charge D)
   (Finsupp.lsum ℂ (fun n : ℕ => binomialProduct D a ha s hs n)).comp
     (expansion D a ha s hs)
 
-def star_homogeneous (D : LatticeData) (a : Charge D)
+theorem star_homogeneous (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1)
     (n : ℕ) (u v : vacuumDescendants D a s) (hu : u ∈ grade D a s n) :
     star D a ha s hs u v=binomialProduct D a ha s hs n u v := by
@@ -148,7 +148,7 @@ def star_homogeneous (D : LatticeData) (a : Charge D)
 def vacuumState (D : LatticeData) (a : Charge D) (s : ℂ) :
     vacuumDescendants D a s := ⟨vacuum D,word_mem D a s []⟩
 
-def binomialProduct_vacuum (D : LatticeData) (a : Charge D)
+theorem binomialProduct_vacuum (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1)
     (n : ℕ) (u : vacuumDescendants D a s) :
     binomialProduct D a ha s hs n u (vacuumState D a s)=u := by
@@ -168,7 +168,7 @@ def binomialProduct_vacuum (D : LatticeData) (a : Charge D)
   · intro h
     exact (h (by simp)).elim
 
-def star_vacuum_right (D : LatticeData) (a : Charge D)
+theorem star_vacuum_right (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1)
     (u : vacuumDescendants D a s) : star D a ha s hs u (vacuumState D a s)=u := by
   simp only [star, LinearMap.comp_apply, Finsupp.lsum_apply, Finsupp.sum,
@@ -179,7 +179,7 @@ def star_vacuum_right (D : LatticeData) (a : Charge D)
   simp_rw [binomialProduct_vacuum]
   exact chosenExpansion_sum D a s u
 
-def star_vacuum_left (D : LatticeData) (a : Charge D)
+theorem star_vacuum_left (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1)
     (u : vacuumDescendants D a s) : star D a ha s hs (vacuumState D a s) u=u := by
   rw [star_homogeneous D a ha s hs 0 _ u
@@ -195,7 +195,7 @@ open LatticeHalfFockGroundRightCurrentTransport.Calculus
 open scoped BigOperators VertexOperator
 
 
-def natural_left_residue {M : Type*} [AddCommGroup M] [Module ℂ M]
+theorem natural_left_residue {M : Type*} [AddCommGroup M] [Module ℂ M]
     (A B : VertexOperator ℂ M) (U : ℤ → VertexOperator ℂ M)
     (law : fullLaw A B U 0) (α : ℕ) (q r : ℤ) (x : M) :
     (∑ j ∈ Finset.range (α+1), (α.choose j:ℂ) •
@@ -224,7 +224,7 @@ def natural_left_residue {M : Type*} [AddCommGroup M] [Module ℂ M]
 
 -- In the circle residue BOTH entire ordered families vanish on top.
 -- No iterate tail is discarded and no O-annihilation premise is supplied.
-def circle_residue_top {M : Type*} [AddCommGroup M] [Module ℂ M]
+theorem circle_residue_top {M : Type*} [AddCommGroup M] [Module ℂ M]
     (A B : VertexOperator ℂ M) (U : ℤ → VertexOperator ℂ M)
     (law : fullLaw A B U 0) (α β : ℕ) (x : M)
     (ha : ∀ j : ℕ, (A[[((α:ℤ)+j)]]) x=0)
@@ -239,7 +239,7 @@ def circle_residue_top {M : Type*} [AddCommGroup M] [Module ℂ M]
   simpa only [first,second,sub_self] using h
 
 -- For star only first j=0 survives; the entire second family vanishes.
-def star_residue_top {M : Type*} [AddCommGroup M] [Module ℂ M]
+theorem star_residue_top {M : Type*} [AddCommGroup M] [Module ℂ M]
     (A B : VertexOperator ℂ M) (U : ℤ → VertexOperator ℂ M)
     (law : fullLaw A B U 0) (α β : ℕ) (x : M)
     (ha : ∀ j : ℕ, (A[[((α:ℤ)+j)]]) x=0)
@@ -269,7 +269,7 @@ open HalfFock.ActualEnergyCovariance
 open HalfFock.NormFourLowestGrades HalfFock.NormFourFirstGradeSpectrum
 
 
-def negative_actual_grade_zero (D : LatticeData)
+theorem negative_actual_grade_zero (D : LatticeData)
     (hu : IsUnit D.G.det) (M : ℤ) (hM : M<0) (x : ActualTensor D hu)
     (hx : actualTensorL0 D hu x=
       ((D.rank:ℂ)/16+(M:ℂ)/2) • x) : x=0 := by
@@ -295,7 +295,7 @@ def negative_actual_grade_zero (D : LatticeData)
     rw [sub_mul,coord,sub_self]
   exact (mul_eq_zero.mp product).resolve_left coefficient_ne
 
-def top_eigen (D : LatticeData) (hu : IsUnit D.G.det)
+theorem top_eigen (D : LatticeData) (hu : IsUnit D.G.det)
     (x : ActualTensor D hu) (hx : x ∈ actualGrade D hu 1) :
     actualTensorL0 D hu x=((D.rank:ℂ)/16+((1 : ℕ):ℂ)/2) • x := by
   rw [actualGrade, LinearMap.mem_ker] at hx
@@ -303,7 +303,7 @@ def top_eigen (D : LatticeData) (hu : IsUnit D.G.det)
 
 -- q>=weight(u) lowers the first grade to a genuinely negative SIGNED
 -- oscillator grade. It is never truncated with Int.toNat.
-def high_coefficient_zero (D : LatticeData) (hu : IsUnit D.G.det)
+theorem high_coefficient_zero (D : LatticeData) (hu : IsUnit D.G.det)
     (n : ℕ) (u : Carrier D) (huGrade : u ∈ LatticePositiveEnergy.grade D (n:ℤ))
     (x : ActualTensor D hu) (hx : x ∈ actualGrade D hu 1)
     (q : ℤ) (hq : (n:ℤ)≤q) :
@@ -313,7 +313,7 @@ def high_coefficient_zero (D : LatticeData) (hu : IsUnit D.G.det)
   exact negative_actual_grade_zero D hu (1+(-2*q-2)+2*(n:ℤ))
     (by omega) _ shifted
 
-def zero_coefficient_preserves_top (D : LatticeData)
+theorem zero_coefficient_preserves_top (D : LatticeData)
     (hu : IsUnit D.G.det) (n : ℕ) (u : Carrier D)
     (huGrade : u ∈ LatticePositiveEnergy.grade D (n:ℤ))
     (x : ActualTensor D hu) (hx : x ∈ actualGrade D hu 1) :
@@ -326,7 +326,7 @@ def zero_coefficient_preserves_top (D : LatticeData)
 
 -- The general actual multiplicity equations exclude ranks zero and one,
 -- and make all three spectral fibers positive in this telescope.
-def actual_top_three_eigenspaces_positive (D : LatticeData)
+theorem actual_top_three_eigenspaces_positive (D : LatticeData)
     (hu : IsUnit D.G.det) (a : Charge D) (ha : bilinear D a a=4)
     (s : ℂ) (hs : s ^ 2 = 1) :
     2≤D.rank ∧
@@ -360,7 +360,7 @@ open private word wordGrade gradeSpace eigen_in_grade
   from D5.S3.VertexAlgebra.Lattice.NormFourVacuumIrreducible
 
 
-def word_fixed (D : LatticeData) (a : Charge D) (s : ℂ)
+theorem word_fixed (D : LatticeData) (a : Charge D) (s : ℂ)
     (w : List ℕ) : word D a s w ∈ fixedSpace D := by
   induction w with
   | nil => exact (mem_fixedSpace D _).mpr (theta_vacuum D)
@@ -369,13 +369,13 @@ def word_fixed (D : LatticeData) (a : Charge D) (s : ℂ)
         (word D a s w) ∈ fixedSpace D
       exact fixed_mode_closed D _ _ (normFourFixedSource D a s).property ih _
 
-def descendants_fixed (D : LatticeData) (a : Charge D) (s : ℂ) :
+theorem descendants_fixed (D : LatticeData) (a : Charge D) (s : ℂ) :
     vacuumDescendants D a s ≤ fixedSpace D := by
   apply Submodule.span_le.mpr
   rintro v ⟨w,rfl⟩
   exact word_fixed D a s w
 
-def ambient_word_eigen (D : LatticeData)
+theorem ambient_word_eigen (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H*gramComplex D=1) (hGH : gramComplex D*H=1)
     (a : Charge D) (ha : bilinear D a a=4) (s : ℂ) (w : List ℕ) :
@@ -402,7 +402,7 @@ def ambient_word_eigen (D : LatticeData)
         Int.cast_one,Nat.cast_add,Nat.cast_one,zero_sub]
       module
 
-def axis_grade_ambient (D : LatticeData)
+theorem axis_grade_ambient (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H*gramComplex D=1) (hGH : gramComplex D*H=1)
     (a : Charge D) (ha : bilinear D a a=4) (s : ℂ)
@@ -418,7 +418,7 @@ def axis_grade_ambient (D : LatticeData)
 -- Literal O permits any source with the stated actual axis eigenvalue.
 -- Recover grade membership from the already accepted eigen_in_grade;
 -- do not replace the literal O definition by a smaller graded O-space.
-def axis_eigen_mem_grade (D : LatticeData) (a : Charge D)
+theorem axis_eigen_mem_grade (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a=4) (s : ℂ) (hs : s ^ 2 = 1)
     (n : ℕ) (u : vacuumDescendants D a s)
     (he : mode D a s 0 u.val=(n:ℂ) • u.val) :
@@ -440,7 +440,7 @@ open HalfFock.NormFourLowestGrades HalfFock.NormFourFirstGradeSpectrum
 
 -- Consume with the actual nonzero spectral vectors; there is no assumed
 -- three-dimensional representation, basis, or independent-class premise.
-def quadratic_eigen_readout
+theorem quadratic_eigen_readout
     {M : Type*} [AddCommGroup M] [Module ℂ M]
     (L : Module.End ℂ M) (lam c0 c1 c2 : ℂ) (v : M)
     (hv : v ≠ 0) (he : L v = lam • v)
@@ -454,7 +454,7 @@ def quadratic_eigen_readout
   have scalar := (smul_eq_zero.mp row).resolve_right hv
   linear_combination scalar
 
-def actual_three_images_independent
+theorem actual_three_images_independent
     (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ)
     (h0 : 0 < Module.finrank ℂ
@@ -527,7 +527,7 @@ def oAmbient (D : LatticeData) (hu : IsUnit D.G.det)
   (Finsupp.lsum ℂ (fun n : ℕ => nativeZero D hu a s n)).comp
     (expansion D a ha s hs)
 
-def oAmbient_homogeneous (D : LatticeData)
+theorem oAmbient_homogeneous (D : LatticeData)
     (hu : IsUnit D.G.det) (a : Charge D) (ha : bilinear D a a=4)
     (s : ℂ) (hs : s ^ 2 = 1) (n : ℕ) (u : vacuumDescendants D a s)
     (hgrade : u ∈ grade D a s n) :
@@ -538,7 +538,7 @@ def oAmbient_homogeneous (D : LatticeData)
   rw [expansion_single D a ha s hs n u hgrade,Finsupp.lsum_single]
   rfl
 
-def nativeZero_preserves_top (D : LatticeData)
+theorem nativeZero_preserves_top (D : LatticeData)
     (hu : IsUnit D.G.det) (a : Charge D) (ha : bilinear D a a=4)
     (s : ℂ) (n : ℕ) (u : vacuumDescendants D a s)
     (hgrade : u ∈ grade D a s n) (x : ActualTensor D hu)
@@ -551,7 +551,7 @@ def nativeZero_preserves_top (D : LatticeData)
 
 -- Preserve the full first grade by the actual finite homogeneous sum;
 -- never project an arbitrary ambient vector back into a chosen subspace.
-def oAmbient_preserves_top (D : LatticeData)
+theorem oAmbient_preserves_top (D : LatticeData)
     (hu : IsUnit D.G.det) (a : Charge D) (ha : bilinear D a a=4)
     (s : ℂ) (hs : s ^ 2 = 1) (u : vacuumDescendants D a s)
     (x : ActualTensor D hu) (hx : x ∈ actualGrade D hu 1) :
@@ -580,7 +580,7 @@ def topAction (D : LatticeData) (hu : IsUnit D.G.det)
     apply Subtype.ext
     exact LinearMap.congr_fun ((oAmbient D hu a ha s hs).map_smul c u) x.val
 
-def topAction_vacuum (D : LatticeData)
+theorem topAction_vacuum (D : LatticeData)
     (hu : IsUnit D.G.det) (a : Charge D) (ha : bilinear D a a=4)
     (s : ℂ) (hs : s ^ 2 = 1) :
     topAction D hu a ha s hs (vacuumState D a s)=1 := by
@@ -593,7 +593,7 @@ def topAction_vacuum (D : LatticeData)
   rw [oAmbient_homogeneous D hu a ha s hs 0 _ hg]
   simpa [vacuumState] using vacuum_coeff D hu 0 x.val
 
-def axisState_grade_two (D : LatticeData) (a : Charge D)
+theorem axisState_grade_two (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a=4) (s : ℂ) (hs : s ^ 2 = 1) :
     axisState D a ha s hs ∈ grade D a s 2 := by
   change NormFourVirasoroVector.vector D a s ∈ gradeSpace D a s 2
@@ -604,7 +604,7 @@ def axisState_grade_two (D : LatticeData) (a : Charge D)
   rw [← word_axis]
   exact Submodule.subset_span ⟨[1],rfl,rfl⟩
 
-def topAction_axis (D : LatticeData)
+theorem topAction_axis (D : LatticeData)
     (hu : IsUnit D.G.det) (a : Charge D) (ha : bilinear D a a=4)
     (s : ℂ) (hs : s ^ 2 = 1) :
     topAction D hu a ha s hs (axisState D a ha s hs)=
@@ -650,7 +650,7 @@ def weightedProduct (D : LatticeData) (a : Charge D)
 
 -- k=-2 is circle, k=-1 is star. Every result grade is nonnegative;
 -- Int.toNat below is used only AFTER that inequality is proved.
-def weightedProduct_zero_mode (D : LatticeData)
+theorem weightedProduct_zero_mode (D : LatticeData)
     (hd : IsUnit D.G.det) (a : Charge D) (ha : bilinear D a a=4)
     (s : ℂ) (hs : s ^ 2 = 1) (α β : ℕ) (k : ℤ) (hk : k≤-1)
     (u v : vacuumDescendants D a s) (hu : u ∈ grade D a s α)
@@ -684,7 +684,7 @@ def weightedProduct_zero_mode (D : LatticeData)
   push_cast
   ring
 
-def descendants_full_law (D : LatticeData)
+theorem descendants_full_law (D : LatticeData)
     (hd : IsUnit D.G.det) (a : Charge D) (s : ℂ)
     (u v : vacuumDescendants D a s) :
     fullLaw (physicalSlice D hd (correctedField D hd u.val) 0)
@@ -697,7 +697,7 @@ def descendants_full_law (D : LatticeData)
   simpa only [OriginalCompatible,zero_add] using
     first_eigen_arbitrary_second D hd u.val 0 he v.val 0
 
-def high_physical_mode_zero (D : LatticeData)
+theorem high_physical_mode_zero (D : LatticeData)
     (hd : IsUnit D.G.det) (a : Charge D) (ha : bilinear D a a=4)
     (s : ℂ) (α : ℕ) (u : vacuumDescendants D a s)
     (hu : u ∈ grade D a s α) (x : ActualTensor D hd)
@@ -710,7 +710,7 @@ def high_physical_mode_zero (D : LatticeData)
       (actualInverse_left_local D hd) (actualInverse_right_local D hd)
       a ha s α u hu) x hx ((α:ℤ)+j) (by omega)
 
-def actual_circle_annihilates_top (D : LatticeData)
+theorem actual_circle_annihilates_top (D : LatticeData)
     (hd : IsUnit D.G.det) (a : Charge D) (ha : bilinear D a a=4)
     (s : ℂ) (hs : s ^ 2 = 1) (α β : ℕ)
     (u v : vacuumDescendants D a s) (hu : u ∈ grade D a s α)
@@ -724,7 +724,7 @@ def actual_circle_annihilates_top (D : LatticeData)
     (high_physical_mode_zero D hd a ha s α u hu x hx)
     (high_physical_mode_zero D hd a ha s β v hv x hx)
 
-def actual_star_multiplies_top (D : LatticeData)
+theorem actual_star_multiplies_top (D : LatticeData)
     (hd : IsUnit D.G.det) (a : Charge D) (ha : bilinear D a a=4)
     (s : ℂ) (hs : s ^ 2 = 1) (α β : ℕ)
     (u v : vacuumDescendants D a s) (hu : u ∈ grade D a s α)
@@ -752,7 +752,7 @@ def actual_star_multiplies_top (D : LatticeData)
     (high_physical_mode_zero D hd a ha s α u hu x hx)
     (high_physical_mode_zero D hd a ha s β v hv x hx)
 
-def actual_star_homogeneous_action (D : LatticeData)
+theorem actual_star_homogeneous_action (D : LatticeData)
     (hd : IsUnit D.G.det) (a : Charge D) (ha : bilinear D a a=4)
     (s : ℂ) (hs : s ^ 2 = 1) (α β : ℕ)
     (u v : vacuumDescendants D a s) (hu : u ∈ grade D a s α)
