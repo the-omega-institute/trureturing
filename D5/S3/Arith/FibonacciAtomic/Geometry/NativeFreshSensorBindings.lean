@@ -134,16 +134,73 @@ private theorem inherited_table (t : Source) (p q : Address) (hq : q ∈ termina
           (by simpa [table, List.append_assoc, hf] using hs)
         simpa [inherited, List.append_assoc] using hr
 
-/-- All original integer labels below the next fresh integer follow their actual native moves. -/
-theorem inherited_bindings {t u : Source} {labels labels' : RawMap} {next next' : ℤ}
+private theorem table_next (t : Source) (p : Address) (s : RawMap × ℤ) :
+    (table t p s).2 = s.2 + (fresh t).length := by
+  induction t generalizing p s with
+  | of b => cases b <;> simp [table, calls, tableStep, Call.shift, fresh] <;> omega
+  | mul l r il ir =>
+      rw [table_mul, ir, il]
+      simp [fresh, Nat.cast_add, add_assoc]
+
+private theorem fresh_table (t : Source) (p : Address) (s : RawMap × ℤ)
+    (j : ℕ) (hj : j < (fresh t).length) :
+    (table t p s).1 (s.2 + j) = p ++ (fresh t)[j] := by
+  induction t generalizing p s j with
+  | of b =>
+      cases b
+      · have hcases : j = 0 ∨ j = 1 := by
+          have hh : j < 2 := by simpa [fresh] using hj
+          omega
+        rcases hcases with rfl | rfl <;>
+          simp [table, calls, tableStep, Call.shift, splitMap, fresh, List.append_assoc]
+      · have he : j = 0 := by
+          have hh : j < 1 := by simpa [fresh] using hj
+          omega
+        subst j
+        simp [table, calls, tableStep, Call.shift, promotedMap, splitMap, fresh]
+  | mul l r il ir =>
+      rw [table_mul]
+      have hn := table_next l (p ++ [false]) s
+      by_cases hl : j < (fresh l).length
+      · have hb := il (p ++ [false]) s j hl
+        have hlt : s.2 + (j : ℤ) < (table l (p ++ [false]) s).2 := by
+          rw [hn]
+          have hh : (j : ℤ) < ((fresh l).length : ℤ) := by exact_mod_cast hl
+          omega
+        have hf := frame (calls r) p (fresh l)[j] true
+          (table l (p ++ [false]) s) (s.2 + j) hlt
+          (by simpa [List.append_assoc] using hb)
+        apply hf.trans
+        simpa [fresh, List.getElem_append_left, hl, List.append_assoc] using hb
+      · have hj' : j - (fresh l).length < (fresh r).length := by
+          simp only [fresh, List.length_append, List.length_map] at hj
+          omega
+        have hi : (table l (p ++ [false]) s).2 + ((j - (fresh l).length : ℕ) : ℤ) =
+            s.2 + j := by rw [hn]; omega
+        have hr := ir (p ++ [true]) (table l (p ++ [false]) s) (j - (fresh l).length) hj'
+        rw [hi] at hr
+        have hge : ((fresh l).map (false :: ·)).length ≤ j := by simpa using Nat.le_of_not_gt hl
+        simpa only [fresh, List.getElem_append_right hge, List.getElem_map,
+          List.length_map, List.append_assoc, List.singleton_append] using hr
+
+private theorem table_actual {t u : Source} {labels labels' : RawMap} {next next' : ℤ}
     {x y : Value} (h : nativeRun t labels next x (calls t) = some (u,labels',next',y)) :
-    ∀ i, i < next → labels i ∈ terminals t → labels' i = inherited t (labels i) := by
-  intro i hi hm
-  have hp := projection h
-  have ht : table t [] (labels,next) = (labels',next') := by
-    have hs : Call.shift [] = id := by funext c; cases c <;> rfl
-    simpa only [table, hs, List.map_id] using hp
-  have hh := inherited_table t [] (labels i) hm (labels,next) i hi (by simp)
-  simpa [ht] using hh
+    table t [] (labels,next) = (labels',next') := by
+  have hs : Call.shift [] = id := by funext c; cases c <;> rfl
+  simpa only [table, hs, List.map_id] using projection h
+
+/-- Exact inherited and allocated label destinations of the same successful native execution. -/
+theorem raw_bindings {t u : Source} {labels labels' : RawMap} {next next' : ℤ}
+    {x y : Value} (h : nativeRun t labels next x (calls t) = some (u,labels',next',y)) :
+    next' = next + (fresh t).length ∧
+    (∀ i, i < next → labels i ∈ terminals t → labels' i = inherited t (labels i)) ∧
+    (∀ j (hj : j < (fresh t).length), labels' (next + j) = (fresh t)[j]) := by
+  have ht := table_actual h
+  refine ⟨?_, ?_, ?_⟩
+  · simpa [ht] using table_next t [] (labels,next)
+  · intro i hi hm
+    simpa [ht] using inherited_table t [] (labels i) hm (labels,next) i hi (by simp)
+  · intro j hj
+    simpa [ht] using fresh_table t [] (labels,next) j hj
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorBindings

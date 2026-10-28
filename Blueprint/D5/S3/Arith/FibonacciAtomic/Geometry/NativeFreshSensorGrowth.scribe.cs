@@ -10,7 +10,8 @@ internal sealed class NativeFreshSensorGrowthDocument : IScribeDocumentDefinitio
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Fixed original-leaf growth is a successful guarded native execution with fresh-zero rational values.", H("Native fresh sensor growth"), Blocks(
         R("executes", "Execution on every finite native source", Exec(), "Source is the original Bool free magma, with true denoting alpha and false beta. The function grown replaces alpha by (beta,alpha) and beta by ((beta,alpha),alpha). The calls traverse the original leaves from left to right. At alpha they promote then split its owner; at beta they split its owner then its left child. Only guarded structural calls occur. Successful traces lift through the existing native runner in arbitrary output contexts."),
-        R("actual_values", "Actual execution and fresh-zero inclusion", Values(), "The raw table and next integer are the actual nativeRun arguments and outputs. Every old material address keeps its original rational value and every new material address receives zero. This is the old-cell inclusion E on the same actual attained source. The installation still presumes authentic exhaustive raw bindings, current and fresh rights, complete exclusive framing, exact arithmetic, Hold and sufficient backing. Physical conformance and record isolation remain installation premises. This statement gives no acquisition of those premises and no explicit global destination formula for the final raw table."),
+        R("actual_values", "Actual execution and fresh-zero inclusion", Values(), "The raw table and next integer are the actual nativeRun arguments and outputs. Every old material address keeps its original rational value and every new material address receives zero. This is the old-cell inclusion E on the same actual attained source. The installation still presumes authentic exhaustive raw bindings, current and fresh rights, complete exclusive framing, exact arithmetic, Hold and sufficient backing. Physical conformance and record isolation remain installation premises. The separate raw_bindings theorem characterizes every inherited and freshly allocated label on this same run; none of these claims acquires an installation premise."),
+        R("inventory", "Full material, terminal and designated counts", Inventory(), "If a and c are the original composition counts, grown(t) has 5a+7c-1 actual material cells and 2a+3c current terminals. There is exactly one designated sensor per original logical leaf, and every such sensor is an actual current terminal. Counts include beta material markers and all nondesignated fresh terminals."),
         R("update_lift", "Ambient parent cancellation for a zero root", LiftLaw(), "The update sums the native neighbors at each material address and is zero outside material. Lift prefixes one edge and assigns zero at every exterior address. The attached root must have value zero; its contribution to the external parent then vanishes. The equation covers every address, including the exterior, and uses no assumed matrix actions."))));
     private static DocumentBlock R(string n, string title, Formula f, string text) =>
         Describe.Lean(DescribeId.Create("nativefreshsensorgrowth-"+n.Replace("_","")), DeclarationHandle.Create(Prefix+n),
@@ -39,6 +40,11 @@ internal sealed class NativeFreshSensorGrowthDocument : IScribeDocumentDefinitio
     private static Formula Zed => Seq(Mathbb, Grp(V("Z")));
     private static Formula G(Formula t) => C("grown",t);
 
+    private static Formula Inventory() { var t=V("t");var a=C("fst",C("composition",t));var c=C("snd",C("composition",t));var p=V("p");
+        return Q("t",Source,Ands(Eqn(Add(C("length",C("material",G(t))),D(1)),Add(Scale(5,a),Scale(7,c))),
+            Eqn(C("length",C("terminals",G(t))),Add(Scale(2,a),Scale(3,c))),
+            Eqn(C("length",C("sensors",t)),C("length",C("leaves",t))),
+            Q("p",Addr,Im(In(p,C("sensors",t)),In(p,C("terminals",G(t))))))); }
     private static Formula Exec() { var t=V("t"); return Q("t",Source,Eqn(C("run",t,C("calls",t)),C("some",G(t)))); }
     private static Formula Values() {
         var t=V("t");var l=V("l");var n=V("n");var x=V("x");var m=V("m");var j=V("j");var y=V("y");var p=V("p");

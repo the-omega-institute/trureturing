@@ -97,7 +97,7 @@ private theorem tail_embed (p : Address) :
       | nil => simp [vector, basis, embed, lift]
       | cons c q => cases b <;> cases c <;> simp_all [vector, basis, embed, lift]
 
-private theorem support (t : Source) (p : Address)
+theorem designated_support (t : Source) (p : Address)
     (hp : subtree p t = some (.mul (.of false) (.of false))) :
     (∀ q ∈ terminals (grown t), half p q = 0) ∧
     (∀ q ∈ sensors t, half p q = 0) ∧
@@ -178,11 +178,11 @@ theorem persistent_family {t : Source} {k : ℕ} (ch : Cherries t k) :
   have hz (theta : Fin k → ℚ) : ∀ q ∈ sensors t, H ch theta q = 0 := by
     intro q hq
     simp only [H, Finset.sum_apply, Pi.smul_apply]
-    exact Finset.sum_eq_zero (fun i _ => by rw [(support t _ (ch.native i)).2.1 q hq]; simp)
+    exact Finset.sum_eq_zero (fun i _ => by rw [(designated_support t _ (ch.native i)).2.1 q hq]; simp)
   have hb (theta : Fin k → ℚ) : ∀ q ∈ sensors t, adjacency (grown t) (H ch theta) q = 0 := by
     intro q hq
     simp only [H, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply]
-    exact Finset.sum_eq_zero (fun i _ => by rw [(support t _ (ch.native i)).2.2 q hq]; simp)
+    exact Finset.sum_eq_zero (fun i _ => by rw [(designated_support t _ (ch.native i)).2.2 q hq]; simp)
   refine ⟨?_, hperiod, ?_, ?_⟩
   · intro theta eta he
     funext i
@@ -201,6 +201,6 @@ theorem persistent_family {t : Source} {k : ℕ} (ch : Cherries t k) :
         exact ih
   · intro theta q hq
     simp only [H, Finset.sum_apply, Pi.smul_apply]
-    exact Finset.sum_eq_zero (fun i _ => by rw [(support t _ (ch.native i)).1 q hq]; simp)
+    exact Finset.sum_eq_zero (fun i _ => by rw [(designated_support t _ (ch.native i)).1 q hq]; simp)
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorFamily

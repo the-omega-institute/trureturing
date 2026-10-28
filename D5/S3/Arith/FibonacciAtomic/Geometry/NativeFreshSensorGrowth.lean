@@ -115,14 +115,6 @@ private theorem material_cons (l r : Source) (b : Bool) (p : Address) :
     b :: p ∈ material (.mul l r) ↔ p ∈ material (if b then r else l) := by
   cases b <;> simp [material, List.mem_map]
 
-private theorem sum_lift (b : Bool) (x : Value) (ps : List Address) :
-    ((ps.map (b :: ·)).map (lift b x)).sum = (ps.map x).sum := by
-  simp [List.map_map, Function.comp_def, lift]
-
-private theorem sum_other (b : Bool) (x : Value) (ps : List Address) :
-    ((ps.map ((!b) :: ·)).map (lift b x)).sum = 0 := by
-  cases b <;> simp [List.map_map, Function.comp_def, lift]
-
 /-- Zero at the attached root is exactly what removes the exterior parent charge. -/
 theorem update_lift (l r : Source) (b : Bool) (x : Value) (hx : x [] = 0) :
     update (.mul l r) (lift b x) = lift b (update (if b then r else l) x) := by
@@ -135,5 +127,34 @@ theorem update_lift (l r : Source) (b : Bool) (x : Value) (hx : x [] = 0) :
       rw [NativeMaterialRootRecognition.neighbors_cons]
       cases b <;> cases c <;> cases p <;>
         simp [lift, update, List.map_append, List.sum_append, List.map_map, Function.comp_def]
+
+/-- Complete grown inventory and the actual designated subset of the terminal roster. -/
+theorem inventory (t : Source) :
+    (material (grown t)).length + 1 =
+      5 * (GenealogicalFiberTransport.composition t).1 +
+        7 * (GenealogicalFiberTransport.composition t).2 ∧
+    (terminals (grown t)).length =
+      2 * (GenealogicalFiberTransport.composition t).1 +
+        3 * (GenealogicalFiberTransport.composition t).2 ∧
+    (sensors t).length = (leaves t).length ∧
+    (∀ p ∈ sensors t, p ∈ terminals (grown t)) := by
+  have counts : ∀ s : Source,
+      (material (grown s)).length + 1 =
+        5 * (GenealogicalFiberTransport.composition s).1 +
+          7 * (GenealogicalFiberTransport.composition s).2 ∧
+      (terminals (grown s)).length =
+        2 * (GenealogicalFiberTransport.composition s).1 +
+          3 * (GenealogicalFiberTransport.composition s).2 ∧
+      (sensors s).length = (leaves s).length := by
+    intro s
+    induction s with
+    | of b => cases b <;> norm_num [grown, cone, material, terminals, sensors, leaves,
+        GenealogicalFiberTransport.composition]
+    | mul l r il ir =>
+        simp only [grown, material, terminals, sensors, leaves,
+          GenealogicalFiberTransport.composition, Prod.fst_add, Prod.snd_add,
+          List.length_cons, List.length_append, List.length_map]
+        omega
+  exact ⟨(counts t).1, (counts t).2.1, (counts t).2.2, sensor_terminal t⟩
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth
