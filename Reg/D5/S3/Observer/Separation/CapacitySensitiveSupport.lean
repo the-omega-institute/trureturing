@@ -91,7 +91,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u,v,w} ⟨evidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u,v,w} (fun _ p h => p.2.2.2 h) (fun e => nomatch e))
+  readout := some (realize signature.{u,v,w} actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -123,16 +123,17 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
 noncomputable def actual : Realization signature :=
   realize signature (fun _ p k =>
-    minimumPeak p.2.2.2.2.1 p.2.2.2.2.2.1 p.2.2.2.2.2.2 ≤ k) (fun e => nomatch e)
+    decide (minimumPeak p.2.2.2.2.1 p.2.2.2.2.2.1 p.2.2.2.2.2.2 ≤ k))
+    (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
@@ -142,8 +143,11 @@ def arena : Arena where
     (D : Set (∀ i, X i)) (_hD : D.Nonempty) (f : D → O),
     (∀ (v : Nodes t) (S : Set ↥(Dᶜ)),
       DependsOn (sourceCost t D f v) S ↔ sensitive (sourceCost t D f v) ⊆ S) ∧
-    (∀ k : ℕ, R.readout () ⟨I, V, O, X, t, D, f⟩ k ↔
+    (∀ k : ℕ, R.readout () ⟨I, V, O, X, t, D, f⟩ k = true ↔
       (sensitiveJoin (sourceCost t D f) k).Nonempty)
+
+private theorem actual_law : arena.Law actual := by
+  simpa only [arena, actual, realize, decide_eq_true_eq] using @source_result
 
 def emptyTree : Tree Empty Unit := .node () 0 Fin.elim0
 
@@ -169,10 +173,11 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have source := source_result emptyTree empty_full empty_all
     emptyDomain empty_nonempty emptyTask
   have join := (source.2 (minimumPeak emptyTree emptyDomain emptyTask)).mp le_rfl
-  exact ((@law Empty Unit Unit inferInstance (fun _ => Unit)
+  have impossible := ((@law Empty Unit Unit inferInstance (fun _ => Unit)
     (fun _ => inferInstance) (fun _ => inferInstance)
     emptyTree empty_full empty_all emptyDomain empty_nonempty emptyTask).2
       (minimumPeak emptyTree emptyDomain emptyTask)).mpr join
+  exact Bool.noConfusion impossible
 
 private theorem empty_one : ProtocolBudget emptyTree emptyDomain emptyTask 1 := by
   classical
@@ -197,24 +202,18 @@ private theorem empty_positive : 1 ≤ minimumPeak emptyTree emptyDomain emptyTa
       (minimumPeak emptyTree emptyDomain emptyTask) from Nat.sInf_mem (s := {k | ProtocolBudget emptyTree emptyDomain emptyTask k})
         ⟨1, empty_one⟩)
   let v : Nodes emptyTree := ⟨emptyTree, by simp [emptyTree, subtrees]⟩
-  letI : Nonempty emptyDomain := ⟨⟨(fun i => nomatch i), Set.mem_univ _⟩⟩
-  have one : reachable m emptyDomain emptyTree = 1 := by
+  have positive : 0 < reachable m emptyDomain emptyTree := by
     unfold reachable
-    have same : (fun x : emptyDomain => evaluate m emptyTree x.val) =
-        fun _ : emptyDomain => m.combine () 0 Fin.elim0 (fun j => Fin.elim0 j) := by
-      funext x
-      change m.combine () 0 Fin.elim0 _ = _
-      congr 1
-      funext j
-      exact Fin.elim0 j
-    rw [same, Set.range_const]
-    simp
-  simpa only [v, one] using bound v
+    let x : emptyDomain := ⟨(fun i => nomatch i), Set.mem_univ _⟩
+    letI : Nonempty (Set.range (fun x : emptyDomain => evaluate m emptyTree x.val)) :=
+      ⟨⟨evaluate m emptyTree x.val, x, rfl⟩⟩
+    exact Nat.card_pos
+  exact positive.trans_le (bound v)
 
 noncomputable def evidence : Registration arena (type_of% @source_result) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@source_result, rejected, rejected_law⟩
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro role
@@ -228,13 +227,13 @@ noncomputable def evidence : Registration arena (type_of% @source_result) where
     let p : signature.Params :=
       ⟨Empty, Unit, Unit, (fun _ => Unit), emptyTree, emptyDomain, emptyTask⟩
     refine ⟨p, (0 : ℕ), (1 : ℕ), ?_⟩
-    have yes : actual.readout role p 1 := Nat.sInf_le empty_one
-    have no : ¬ actual.readout role p 0 := by
-      change ¬ minimumPeak emptyTree emptyDomain emptyTask ≤ 0
+    have yes : minimumPeak emptyTree emptyDomain emptyTask ≤ 1 := Nat.sInf_le empty_one
+    have no : ¬ minimumPeak emptyTree emptyDomain emptyTask ≤ 0 := by
       have positive := empty_positive
       omega
-    intro he
-    exact no (Eq.mpr he yes)
+    change decide (minimumPeak emptyTree emptyDomain emptyTask ≤ 0) ≠
+      decide (minimumPeak emptyTree emptyDomain emptyTask ≤ 1)
+    simp [yes, no]
 
 noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@source_result) (Realization signature) Unit Unit where
@@ -249,8 +248,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨evidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p k =>
-    minimumPeak p.2.2.2.2.1 p.2.2.2.2.2.1 p.2.2.2.2.2.2 ≤ k) (fun e => nomatch e))
+  readout := some (realize signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -262,10 +260,10 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "arg", "body", "fn", "arg"]
-      stateBinder := 13
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
