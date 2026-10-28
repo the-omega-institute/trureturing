@@ -58,6 +58,10 @@ $$(\exists f \in (\mathbb{N} \to \left(\mathbb{N} \to \mathbb{C}\right)),\; \ope
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/CostaCatarinoBidimensionalFibonacci.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cc2025` (proved) by `D5/S1/Recurrence/CostaCatarinoBidimensionalFibonacci.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cc2025","declaration_gid":"D5/S1/Recurrence/CostaCatarinoBidimensionalFibonacci.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Eudes Antonio Costa; Paula M.M.C. Catarino (2026). *On Matrices with Bidimensional Fibonacci Numbers*. DOI: [10.2478/amsil-2025-0014](https://doi.org/10.2478/amsil-2025-0014). URL: <https://journals.us.edu.pl/index.php/AMSIL/article/download/22306/18885>.
