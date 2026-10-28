@@ -74,6 +74,10 @@ $$(\operatorname{a}\left(1\right) = 1) \land ((\forall n \in \mathbb{N},\; (1 \l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a370630-zeckendorf-greedy-permutation` (proved) by `D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a370630-zeckendorf-greedy-permutation","declaration_gid":"D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
