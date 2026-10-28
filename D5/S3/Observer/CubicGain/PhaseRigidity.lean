@@ -24,12 +24,6 @@ open D5.S3.Observer.CubicGain.PrefixKernelSigns
 open D5.S3.Observer.CubicGain.PrimitiveKernelLattice
 open scoped Matrix
 
-private theorem product_append (u v : List Bool) :
-    futureProduct (u ++ v) = futureProduct v * futureProduct u := by
-  induction u with
-  | nil => simp [futureProduct]
-  | cons e u ih => simp only [List.cons_append, futureProduct, ih, Matrix.mul_assoc]
-
 private theorem atom_j (v : Fin 2 → ℝ) : actionJ *ᵥ v = ![v 1,v 0] := by
   ext i
   fin_cases i <;> simp [actionJ,Matrix.mulVec,dotProduct,Fin.sum_univ_two]
@@ -43,7 +37,7 @@ private theorem j_square : actionJ * actionJ = 1 := by
   fin_cases i <;> fin_cases j <;>
     norm_num [actionJ,Matrix.mul_apply,Fin.sum_univ_two]
 
-private def Positive (v : Fin 2 → ℝ) : Prop := 0 < v 0 ∧ 0 < v 1
+def Positive (v : Fin 2 → ℝ) : Prop := 0 < v 0 ∧ 0 < v 1
 private def Negative (v : Fin 2 → ℝ) : Prop := v 0 < 0 ∧ v 1 < 0
 def Mixed (v : Fin 2 → ℝ) : Prop :=
   (0 < v 0 ∧ v 1 < 0) ∨ (v 0 < 0 ∧ 0 < v 1)
@@ -101,8 +95,12 @@ private theorem mixed_bounds (u : List Bool) (a b : ℝ)
               · simp only [Matrix.cons_val_one,Matrix.cons_val_zero]
                 rcases hm 0 with ⟨h00,h01⟩
                 rcases hm 1 with ⟨h10,h11⟩
-                constructor <;> rcases le_total (v 0) 0 with h | h <;>
-                  rcases le_total (v 1) 0 with h' | h' <;> first | linarith | exact (hp ⟨h,h'⟩).elim | exact (hn ⟨h,h'⟩).elim
+                by_cases hx : 0 ≤ v 0
+                · have hy : v 1 < 0 := lt_of_not_ge (fun hy => hp ⟨hx,hy⟩)
+                  constructor <;> linarith
+                · have hx' : v 0 < 0 := lt_of_not_ge hx
+                  have hy : 0 < v 1 := lt_of_not_ge (fun hy => hn ⟨hx'.le,hy⟩)
+                  constructor <;> linarith
       · simp only [↓reduceIte,atom_j]
         rcases hv with hp | hn | hm
         · left; intro i; fin_cases i <;> simpa using hp _
@@ -160,7 +158,7 @@ private theorem word_primitive (u : List Bool) (v : Fin 2 → ℝ) (hv : Primiti
     · simp only [Bool.false_eq_true,↓reduceIte,atom_m]
       refine ⟨y,x+y,by simpa using hy,?_,?_⟩
       · simp [hx,hy]
-      · simpa using hcop.symm.mul_add_left_right 1
+      · simpa [add_comm] using hcop.symm.mul_add_left_right 1
     · simp only [↓reduceIte,atom_j]
       exact ⟨y,x,hy,hx,hcop.symm⟩
 
@@ -241,26 +239,26 @@ private theorem positive_sum (u : List Bool) (v : Fin 2 → ℝ) (hv : Positive 
     · have hw : Positive (actionM *ᵥ v) := by
         rw [atom_m]; exact ⟨hv.2,add_pos hv.1 hv.2⟩
       obtain ⟨hp,hs,he⟩ := ih _ hw
+      have hsum : (actionM *ᵥ v) 0+(actionM *ᵥ v) 1 = v 0+2*v 1 := by
+        rw [atom_m]; simp; ring
+      rw [hsum] at hs
       simp only [futureProduct,Bool.false_eq_true,↓reduceIte,← Matrix.mulVec_mulVec]
       refine ⟨hp,?_,?_⟩
-      · rw [atom_m] at hs
-        dsimp at hs
-        linarith [hv.2]
+      · linarith [hv.2]
       · intro h
-        rw [atom_m] at hs
-        dsimp at hs
         linarith [hv.2]
     · have hw : Positive (actionJ *ᵥ v) := by rw [atom_j]; exact ⟨hv.2,hv.1⟩
       obtain ⟨hp,hs,he⟩ := ih _ hw
+      have hsum : (actionJ *ᵥ v) 0+(actionJ *ᵥ v) 1 = v 0+v 1 := by
+        rw [atom_j]; simp; ring
+      rw [hsum] at hs
       simp only [futureProduct,↓reduceIte,← Matrix.mulVec_mulVec]
       refine ⟨hp,?_,?_⟩
-      · rw [atom_j] at hs
-        dsimp at hs
-        linarith
+      · exact hs
       · intro h
         have heq : (actionJ *ᵥ v) 0+(actionJ *ᵥ v) 1 =
             (futureProduct u *ᵥ actionJ *ᵥ v) 0+(futureProduct u *ᵥ actionJ *ᵥ v) 1 := by
-          rw [atom_j]; dsimp; linarith
+          rw [hsum]; exact h
         rcases he heq with hu | hu
         · right; rw [hu,Matrix.one_mul]
         · left; rw [hu,j_square]
@@ -282,7 +280,7 @@ private theorem endpoint_injective (w : Fin 3 → List Bool) (N : Mat)
 private theorem prefix_step (w : Fin 3 → List Bool) (i : Fin 3) :
     prefixMatrix w i.succ = futureProduct (w i) * prefixMatrix w i.castSucc := by
   fin_cases i <;>
-    simp [prefixMatrix,prefixWord,List.ofFn_succ,product_append,futureProduct]
+    simp [prefixMatrix,prefixWord,List.ofFn_succ,product_append,futureProduct,Matrix.mul_assoc]
 
 private theorem level_of_parameter (p : PrimitiveCoordinates) (A : Mat) (m : ℤ)
     (hm : A *ᵥ p.column = p.column+(m:ℝ) • p.direction) :
@@ -291,5 +289,215 @@ private theorem level_of_parameter (p : PrimitiveCoordinates) (A : Mat) (m : ℤ
   rw [hm]
   simp [PrimitiveCoordinates.column,PrimitiveCoordinates.direction]
   ring
+
+private theorem parameter_increases (u : List Bool) (p : PrimitiveCoordinates)
+    (A B : Mat) (m n : ℤ)
+    (ha : 0 < p.a) (hb : 0 < p.b) (hc : 0 < p.c) (hd : 0 < p.d)
+    (hp : Positive (A *ᵥ p.column)) (hprim : Primitive (A *ᵥ p.column))
+    (hA : A *ᵥ p.column = p.column+(m:ℝ) • p.direction)
+    (hB : B *ᵥ p.column = p.column+(n:ℝ) • p.direction)
+    (hstep : B = futureProduct u * A) (hne : B ≠ A) : m < n := by
+  obtain ⟨-,hs,he⟩ := positive_sum u (A *ᵥ p.column) hp
+  have hprod : futureProduct u *ᵥ A *ᵥ p.column = B *ᵥ p.column := by
+    rw [Matrix.mulVec_mulVec,←hstep]
+  rw [hprod] at hs he
+  have hc' : (0:ℝ) < p.c := by exact_mod_cast hc
+  have hd' : (0:ℝ) < p.d := by exact_mod_cast hd
+  have hmn : m ≤ n := by
+    rw [hA,hB] at hs
+    simp [PrimitiveCoordinates.column,PrimitiveCoordinates.direction] at hs
+    have hh : (m:ℝ) ≤ (n:ℝ) := by nlinarith
+    exact_mod_cast hh
+  apply lt_of_le_of_ne hmn
+  intro hsame
+  have himg : A *ᵥ p.column = B *ᵥ p.column := by rw [hA,hB,hsame]
+  have hsum : (A *ᵥ p.column) 0+(A *ᵥ p.column) 1 =
+      (B *ᵥ p.column) 0+(B *ᵥ p.column) 1 := by rw [himg]
+  rcases he hsum with hu | hu
+  · apply hne
+    rw [hstep,hu,Matrix.one_mul]
+  · have hfix : actionJ *ᵥ A *ᵥ p.column = A *ᵥ p.column := by
+      rw [←hu,hprod,←himg]
+    have hdiag : (A *ᵥ p.column) 0 = (A *ᵥ p.column) 1 := by
+      have hh := congrFun hfix 0
+      rw [atom_j] at hh
+      exact hh.symm
+    have hunit := (unit_coordinate _ hprim).2.2 hdiag
+    have hl := level_of_parameter p A m hA
+    obtain ⟨htc,htd⟩ := level_large p ha hb hc hd
+    rw [←hdiag] at hl
+    rcases hunit with hh | hh <;> rw [hh] at hl <;> nlinarith
+
+/-- Conjugate each actual multiplier by a literal pair of J atoms. -/
+def conjugateHistory (w : Fin 3 → List Bool) : Fin 3 → List Bool :=
+  fun i => [true] ++ w i ++ [true]
+
+/-- The primitive coordinates of the positively oriented conjugate generator. -/
+def swapCoordinates (p : PrimitiveCoordinates) : PrimitiveCoordinates where
+  a := p.b
+  b := p.a
+  c := p.d
+  d := p.c
+  column_primitive := p.column_primitive.symm
+  row_primitive := p.row_primitive.symm
+  trace_pos := by simpa [add_comm] using p.trace_pos
+
+private theorem conjugate_product (u : List Bool) :
+    futureProduct ([true] ++ u ++ [true]) = actionJ * futureProduct u * actionJ := by
+  simp [product_append,futureProduct,Matrix.mul_assoc]
+
+private theorem conjugate_prefix (w : Fin 3 → List Bool) (i : Fin 4) :
+    prefixMatrix (conjugateHistory w) i = actionJ * prefixMatrix w i * actionJ := by
+  fin_cases i <;>
+    simp [prefixMatrix,prefixWord,conjugateHistory,List.ofFn_succ,product_append,
+      futureProduct,Matrix.mul_assoc,←Matrix.mul_assoc,j_square]
+
+private theorem conjugate_column (w : Fin 3 → List Bool) (p : PrimitiveCoordinates)
+    (i : Fin 4) :
+    prefixMatrix (conjugateHistory w) i *ᵥ (swapCoordinates p).column =
+      -(actionJ *ᵥ prefixMatrix w i *ᵥ p.column) := by
+  rw [conjugate_prefix]
+  have hf : (swapCoordinates p).column = -(actionJ *ᵥ p.column) := by
+    rw [atom_j]
+    ext k; fin_cases k <;> simp [swapCoordinates,PrimitiveCoordinates.column]
+  rw [hf,Matrix.mulVec_neg]
+  congr 1
+  rw [←Matrix.mulVec_mulVec,←Matrix.mulVec_mulVec,Matrix.mulVec_mulVec,j_square,
+    Matrix.one_mulVec]
+
+private theorem conjugate_lattice (w : Fin 3 → List Bool) (p : PrimitiveCoordinates)
+    (m : Fin 4 → ℤ)
+    (hm : ∀ i, prefixMatrix w i *ᵥ p.column = p.column+(m i:ℝ) • p.direction) :
+    ∀ i, prefixMatrix (conjugateHistory w) i *ᵥ (swapCoordinates p).column =
+      (swapCoordinates p).column+(-m i:ℝ) • (swapCoordinates p).direction := by
+  intro i
+  rw [conjugate_column,hm i,atom_j]
+  ext k
+  fin_cases k <;> simp [swapCoordinates,PrimitiveCoordinates.column,
+    PrimitiveCoordinates.direction] <;> ring
+
+private theorem conjugate_injective (w : Fin 3 → List Bool)
+    (hinj : Function.Injective (prefixMatrix w)) :
+    Function.Injective (prefixMatrix (conjugateHistory w)) := by
+  intro i j hij
+  apply hinj
+  rw [conjugate_prefix,conjugate_prefix] at hij
+  have hh := congrArg (fun A : Mat => actionJ * A * actionJ) hij
+  simpa only [Matrix.mul_assoc,←Matrix.mul_assoc actionJ actionJ,j_square,
+    Matrix.one_mul,Matrix.mul_one] using hh
+
+/-- All original endpoint equations and strict positivity at indices 1,2,3,
+with the ordered integer parameters. -/
+def StrictPhase (w : Fin 3 → List Bool) (p : PrimitiveCoordinates) (m : Fin 4 → ℤ) : Prop :=
+  m 0 = 0 ∧
+    (∀ i, prefixMatrix w i *ᵥ p.column = p.column+(m i:ℝ) • p.direction) ∧
+    (∀ i : Fin 3, Positive (prefixMatrix w i.succ *ᵥ p.column)) ∧
+    1 ≤ m 1 ∧ m 1 < m 2 ∧ m 2 < m 3
+
+private theorem positive_phase (w : Fin 3 → List Bool) (p : PrimitiveCoordinates)
+    (m : Fin 4 → ℤ) (ha : 0 < p.a) (hb : 0 < p.b) (hc : 0 < p.c) (hd : 0 < p.d)
+    (hm0 : m 0 = 0)
+    (hm : ∀ i, prefixMatrix w i *ᵥ p.column = p.column+(m i:ℝ) • p.direction)
+    (hinj : Function.Injective (prefixMatrix w))
+    (hp : ∀ i : Fin 3, Positive (prefixMatrix w i.succ *ᵥ p.column)) :
+    StrictPhase w p m := by
+  have hfirst : 1 ≤ m 1 := by
+    have hh := (hp 0).2
+    rw [hm 1] at hh
+    simp [PrimitiveCoordinates.column,PrimitiveCoordinates.direction] at hh
+    have hc' : (0:ℝ) < p.c := by exact_mod_cast hc
+    have hb' : (0:ℝ) < p.b := by exact_mod_cast hb
+    have hpos : (0:ℝ) < (m 1:ℝ) := by nlinarith
+    have hpos' : (0:ℤ) < m 1 := by exact_mod_cast hpos
+    omega
+  have step (i : Fin 3) (hi : i ≠ 0)
+      (hp' : Positive (prefixMatrix w i.castSucc *ᵥ p.column)) :
+      m i.castSucc < m i.succ := by
+    apply parameter_increases (w i) p _ _ _ _ ha hb hc hd hp'
+      (word_primitive (prefixWord w i.castSucc) p.column (column_primitive p))
+      (hm i.castSucc) (hm i.succ) (prefix_step w i)
+    intro heq
+    have hh := hinj heq
+    have hval := congrArg Fin.val hh
+    simp at hval
+  exact ⟨hm0,hm,hp,hfirst,step 1 (by decide) (hp 0),step 2 (by decide) (hp 1)⟩
+
+private theorem negative_word (u : List Bool) (v : Fin 2 → ℝ) (hv : Negative v) :
+    Negative (futureProduct u *ᵥ v) := by
+  have hp : Positive (-v) := ⟨neg_pos.mpr hv.1,neg_pos.mpr hv.2⟩
+  have hh := (positive_sum u (-v) hp).1
+  simpa only [Positive,Negative,Matrix.mulVec_neg,Pi.neg_apply,neg_pos] using hh
+
+/-- The whole original four-nonzero-entry class has a strict positive phase,
+either literally or after conjugating every actual chronological multiplier by J. -/
+theorem phase_rigidity (w : Fin 3 → List Bool) (N : Mat)
+    (h : OrientedKernelGenerator w N) (hn : ∀ i j, N i j ≠ 0) :
+    ∃ (p : PrimitiveCoordinates) (scale : ℝ) (m : Fin 4 → ℤ),
+      0 < scale ∧ N = scale • p.matrix ∧
+      (0 < p.a ∧ 0 < p.b ∧ 0 < p.c ∧ 0 < p.d) ∧
+      m 0 = 0 ∧
+      (∀ i, prefixMatrix w i *ᵥ p.column = p.column+(m i:ℝ) • p.direction) ∧
+      (∀ i, prefixMatrix (conjugateHistory w) i = actionJ * prefixMatrix w i * actionJ) ∧
+      (StrictPhase w p m ∨
+        StrictPhase (conjugateHistory w) (swapCoordinates p) (fun i => -m i)) := by
+  obtain ⟨p,scale,hs,hN,hker,m,hm0,hm⟩ := whole_class_primitive_lattice.1 w N h
+  have hcoords : 0 < p.a ∧ 0 < p.b ∧ 0 < p.c ∧ 0 < p.d := by
+    have h00 := hn 0 0
+    have h11 := hn 1 1
+    rw [hN] at h00 h11
+    simp only [Pi.smul_apply,smul_eq_mul,PrimitiveCoordinates.matrix,
+      PrimitiveCoordinates.column,PrimitiveCoordinates.row,Matrix.vecMulVec,
+      Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_fin_one] at h00 h11
+    have ha : p.a ≠ 0 := by intro hh; simp [hh] at h00
+    have hb : p.b ≠ 0 := by intro hh; simp [hh] at h11
+    have hc : p.c ≠ 0 := by intro hh; simp [hh] at h00
+    have hd : p.d ≠ 0 := by intro hh; simp [hh] at h11
+    exact ⟨Nat.pos_of_ne_zero ha,Nat.pos_of_ne_zero hb,Nat.pos_of_ne_zero hc,Nat.pos_of_ne_zero hd⟩
+  obtain ⟨ha,hb,hc,hd⟩ := hcoords
+  have hinj := endpoint_injective w N h
+  have hne (i : Fin 3) : prefixMatrix w i.succ ≠ 1 := by
+    intro hz
+    have hh : prefixMatrix w i.succ = prefixMatrix w 0 := by
+      simpa [prefixMatrix,prefixWord,futureProduct] using hz
+    have hi := congrArg Fin.val (hinj hh)
+    simp at hi
+  have hl (i : Fin 4) := level_of_parameter p _ _ (hm i)
+  have hinterior (i : Fin 3) := level_interior (prefixWord w i.succ) p
+    ha hb hc hd (hne i) (hl i.succ)
+  refine ⟨p,scale,m,hs,hN,⟨ha,hb,hc,hd⟩,hm0,hm,conjugate_prefix w,?_⟩
+  rcases hinterior 0 with hp1 | hn1
+  · left
+    have hp2 : Positive (prefixMatrix w 2 *ᵥ p.column) := by
+      rw [prefix_step w 1,←Matrix.mulVec_mulVec]
+      exact (positive_sum (w 1) _ hp1).1
+    have hp3 : Positive (prefixMatrix w 3 *ᵥ p.column) := by
+      rw [prefix_step w 2,←Matrix.mulVec_mulVec]
+      exact (positive_sum (w 2) _ hp2).1
+    apply positive_phase w p m ha hb hc hd hm0 hm hinj
+    intro i; fin_cases i
+    · exact hp1
+    · exact hp2
+    · exact hp3
+  · right
+    have hn2 : Negative (prefixMatrix w 2 *ᵥ p.column) := by
+      rw [prefix_step w 1,←Matrix.mulVec_mulVec]
+      exact negative_word (w 1) _ hn1
+    have hn3 : Negative (prefixMatrix w 3 *ᵥ p.column) := by
+      rw [prefix_step w 2,←Matrix.mulVec_mulVec]
+      exact negative_word (w 2) _ hn2
+    have hneg (i : Fin 3) : Negative (prefixMatrix w i.succ *ᵥ p.column) := by
+      fin_cases i
+      · exact hn1
+      · exact hn2
+      · exact hn3
+    apply positive_phase (conjugateHistory w) (swapCoordinates p) (fun i => -m i)
+      hb ha hd hc (by simp [hm0]) (conjugate_lattice w p m hm)
+      (conjugate_injective w hinj)
+    intro i
+    rw [conjugate_column,atom_j]
+    exact ⟨neg_pos.mpr (hneg i).2,neg_pos.mpr (hneg i).1⟩
+
+#print axioms mixed_level_identity
+#print axioms phase_rigidity
 
 end D5.S3.Observer.CubicGain.PhaseRigidity
