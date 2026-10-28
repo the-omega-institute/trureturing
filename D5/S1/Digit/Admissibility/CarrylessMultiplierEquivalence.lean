@@ -17,7 +17,7 @@ namespace D5.S1.Digit.Admissibility.CarrylessMultiplierEquivalence
 
 /-- Binary polynomial multiplication: adjoining a low zero shifts the product,
 and adjoining a low one also adds the other factor by exclusive OR. -/
-private def binaryProduct (u k : ℕ) : ℕ :=
+def binaryProduct (u k : ℕ) : ℕ :=
   k.evenOddRec 0 (fun _ r => 2 * r) (fun _ r => (2 * r) ^^^ u)
 
 private theorem binaryProduct_zero (u : ℕ) : binaryProduct u 0 = 0 := rfl
@@ -106,7 +106,7 @@ noncomputable def carryless (u k : ℕ) : ℕ :=
   Classical.choose (show ∃ z : ℕ, ∀ t, (z.testBit t).toNat = convolutionDigit u k t from
     ⟨binaryProduct u k, binaryProduct_spec u k⟩)
 
-private theorem carryless_eq (u k : ℕ) : carryless u k = binaryProduct u k := by
+theorem carryless_eq (u k : ℕ) : carryless u k = binaryProduct u k := by
   apply Nat.eq_of_testBit_eq
   intro t
   have h : ((carryless u k).testBit t).toNat = convolutionDigit u k t :=
@@ -116,19 +116,19 @@ private theorem carryless_eq (u k : ℕ) : carryless u k = binaryProduct u k := 
   cases ha : (carryless u k).testBit t <;> cases hb : (binaryProduct u k).testBit t <;>
     simp_all <;> omega
 
-private abbrev State := Option (ℕ × ℕ)
+abbrev State := Option (ℕ × ℕ)
 
-private def holds (u m : ℕ) (s : State) (k : ℕ) : Prop :=
+def holds (u m : ℕ) (s : State) (k : ℕ) : Prop :=
   match s with
   | none => False
   | some (c,d) => m*k+c = binaryProduct u k ^^^ d
 
-private instance (u m : ℕ) (s : State) (k : ℕ) : Decidable (holds u m s k) := by
+instance (u m : ℕ) (s : State) (k : ℕ) : Decidable (holds u m s k) := by
   cases s with
   | none => exact isFalse id
   | some p => exact inferInstanceAs (Decidable (m*k+p.1 = binaryProduct u k ^^^ p.2))
 
-private def step (u m : ℕ) (s : State) (b : Bool) : State :=
+def step (u m : ℕ) (s : State) (b : Bool) : State :=
   match s with
   | none => none
   | some (c,d) =>
@@ -146,7 +146,7 @@ private theorem split_eq (x y c e : ℕ) :
     omega
   omega
 
-private theorem holds_step (u m : ℕ) (s : State) (b : Bool) (n : ℕ) :
+theorem holds_step (u m : ℕ) (s : State) (b : Bool) (n : ℕ) :
     holds u m s (2*n+b.toNat) ↔ holds u m (step u m s b) n := by
   cases s with
   | none => simp [holds, step]
