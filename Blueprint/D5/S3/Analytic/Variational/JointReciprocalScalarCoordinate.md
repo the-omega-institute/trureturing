@@ -4,6 +4,8 @@
 
 Scalar integral coordinates, their smooth positive derivative and endpoint surjectivity support the exact joint reciprocal variational construction.
 
+The precise source excerpt is Library/Estimation/trureturing2026jointreciprocalvariational.md. Its Locator binds the complete JVM1--JVM6 formulas to the original long note, Actual Robin price gaps, forced-core tail records and the selected-sign boundary, pinned at https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin. The original JVM1--JVM2 source scope is 0<b<1; the endpoint b=1 is a separate formal extension in this Lean development. No RH or literature-priority claim is made.
+
 **Definition 1.1 (The scalar denominator).**
 
 Lean statement: `D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.polynomial`
@@ -12,7 +14,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.poly
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Joint reciprocal variational construction and exact measurable-class values*. URL: <https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin>.
 
 *Commentary.*
 
@@ -26,7 +28,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.uppe
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Joint reciprocal variational construction and exact measurable-class values*. URL: <https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin>.
 
 *Commentary.*
 
@@ -40,7 +42,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.lowe
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Joint reciprocal variational construction and exact measurable-class values*. URL: <https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin>.
 
 *Commentary.*
 
@@ -54,7 +56,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.coor
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Joint reciprocal variational construction and exact measurable-class values*. URL: <https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin>.
 
 *Commentary.*
 
@@ -68,7 +70,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.radi
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Joint reciprocal variational construction and exact measurable-class values*. URL: <https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin>.
 
 *Commentary.*
 
@@ -82,7 +84,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.coor
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Joint reciprocal variational construction and exact measurable-class values*. URL: <https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin>.
 
 *Commentary.*
 
@@ -96,7 +98,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.root
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Joint reciprocal variational construction and exact measurable-class values*. URL: <https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin>.
 
 *Commentary.*
 
@@ -110,7 +112,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.radi
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Joint reciprocal variational construction and exact measurable-class values*. URL: <https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin>.
 
 *Commentary.*
 
@@ -124,7 +126,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.doma
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Joint reciprocal variational construction and exact measurable-class values*. URL: <https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin>.
 
 *Commentary.*
 
@@ -138,7 +140,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.doma
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Joint reciprocal variational construction and exact measurable-class values*. URL: <https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin>.
 
 *Commentary.*
 
@@ -152,7 +154,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.coor
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Joint reciprocal variational construction and exact measurable-class values*. URL: <https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin>.
 
 *Commentary.*
 
@@ -166,7 +168,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.coor
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Joint reciprocal variational construction and exact measurable-class values*. URL: <https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin>.
 
 *Commentary.*
 
@@ -180,7 +182,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.coor
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Joint reciprocal variational construction and exact measurable-class values*. URL: <https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin>.
 
 *Commentary.*
 
@@ -194,7 +196,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.coor
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Joint reciprocal variational construction and exact measurable-class values*. URL: <https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin>.
 
 *Commentary.*
 
