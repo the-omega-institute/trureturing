@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac5b27e22b44d84d89cf91b70135dbbac43c8b1e60fd333448eb68b2bbbc3f39
+  normalized_sha256: sha256:ac5b27e22b44d84d89cf91b70135dbbac43c8b1e60fd333448eb68b2bbbc3f39
+cas_ref: sha256:ac5b27e22b44d84d89cf91b70135dbbac43c8b1e60fd333448eb68b2bbbc3f39
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 阶段更新中过程或干预模型一轴的语义说明。
+    previous_atom_id: 8b5702d9239f72db02007668a552a03cfc753cf03febc4f7befc891b5808858b
+    next_atom_id: 26217e8e2a29011931e48bac012c786fe1896ac6122f3b78c2df9604da272ed2

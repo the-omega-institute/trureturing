@@ -1,0 +1,150 @@
+**Theorem 25.1 (all-start finite-time correspondence).** Suppose the records
+of Theorem 24.2 have been lawfully acquired for a source satisfying
+Assumption 24.1. At every actual execution start
+$\zeta=(q,h,k)\in S$, with arbitrary hidden records, compare with the
+three-dimensional process starting at that same $q$ and using the same
+actual controls, setting and original elapsed clock. For deterministic
+execution include the same common drift convention as (24.8). If
+$Y_t=q+\widehat c t e_2+\sum_a U_a(t)e_a$, then for every finite $T$
+
+$$
+\sup_{t\le T}|\Pi Z_t-Y_t|
+\le CT+A\min\left(2,\int_0^T|u_1(s)|ds\right)
+\le D_T:=CT+2A.
+\tag{25.1}
+$$
+
+This is an estimate for the full-space continuations, and therefore for
+their live paths. It uses exactly $d_D(\zeta,\zeta')=|\Pi\zeta-\Pi\zeta'|$
+when comparing source task distances. The complete original deaths are
+identical: both are the first time $q_3+U_3$ reaches zero.
+
+For each $Q\in\mathcal Q$, on the same $Q$-Brownian motion the full-space
+source is a unique nonexplosive strong solution at every start, with
+
+$$
+\begin{aligned}
+h_t&=h+W_t^1,&k_t&=k+t+W_t^2,\\
+q_1(t)&=q_1+W_t^1,&q_3(t)&=q_3+W_t^3,\\
+q_2(t)&=q_2+ct+W_t^2+a\{\cos h-\cos(h+W_t^1)\}.
+\end{aligned}
+\tag{25.2}
+$$
+
+The comparison $Y_t=q+\widehat c\,t e_2+W_t$ satisfies
+$\sup_{t\le T}|\Pi Z_t-Y_t|\le D_T$ pathwise.
+Both killed processes use exactly
+
+$$
+\tau=\inf\{t\ge0:q_3+W_t^3\le0\},\qquad
+p_Q(t,q_3)=\mathbb P(t<\tau)
+=2\Phi\left(\frac{q_3}{\sqrt{Q_{33}t}}\right)-1
+\quad(t>0).
+\tag{25.3}
+$$
+
+In particular killing is nontrivial: $0<p_Q(t,q_3)<1$ at every interior
+start and every $t>0$. Give the cemetery value zero. For every bounded
+$L$-Lipschitz $\varphi$ on $K$,
+
+$$
+\left|\mathbb E_\zeta[\varphi(\Pi Z_t)\mathbf1_{t<\tau}]
+ -\mathbb E_q[\varphi(Y_t)\mathbf1_{t<\tau}]\right|
+\le L D_t p_Q(t,q_3).
+\tag{25.4}
+$$
+
+There is also a bound for every bounded Borel observable, with no
+continuity assumption. Put $I=\{1,3\}$ and
+
+$$
+\nu_Q=Q_{22}-Q_{2I}Q_{II}^{-1}Q_{I2}>0.
+$$
+
+If $|\varphi|\le M$, then
+
+$$
+\left|\mathbb E_\zeta[\varphi(\Pi Z_t)\mathbf1_{t<\tau}]
+ -\mathbb E_q[\varphi(Y_t)\mathbf1_{t<\tau}]\right|
+\le M p_Q(t,q_3)
+ \min\left(2,\sqrt{\frac2\pi}\frac{D_t}{\sqrt{\nu_Qt}}\right).
+\tag{25.5}
+$$
+
+These assertions hold for each start, uniformly in its hidden records;
+they do not assert one null set valid for all uncountably many starts.
+The source remains five-dimensional and evolves both hidden records.
+Its projected response is not asserted to be an exact base Markov
+semigroup when $a\ne0$; (25.4)–(25.5) compare it with the indicated base
+semigroup at the same original lifetime.
+
+Proof. Subtract $Y$ from (24.8). Only the second coordinate differs.
+The primitive difference is bounded both by $2$ and by $|U_1(t)|$,
+giving (25.1). The third coordinate of each continuation is exactly
+$q_3+U_3$, and all source states with positive third coordinate are
+allowed irrespective of $h,k$. Thus the original lifetime equality is
+proved from the full source solution, not assumed from a local generator.
+
+Apply the ordinary Stratonovich chain rule to $\cos(h+W^1)$ to verify
+(25.2) directly, for correlated as well as independent components.
+These formulas are finite and continuous on each finite interval.
+Smooth coefficients and local uniqueness identify them with the actual
+solutions; no explosion or hidden exit can occur. Subtraction gives the
+pathwise bound $D_T$. Their third coordinates are equal, establishing
+(25.3) before any expectation is taken. Reflection and Brownian scaling
+give its probability formula. The same indicator multiplies both
+observables, so Lipschitz continuity proves (25.4).
+
+For (25.5), the SPD Schur complement permits the Gaussian decomposition
+
+$$
+W_t^2=Q_{2I}Q_{II}^{-1}(W_t^1,W_t^3)^{\mathsf T}
+ +\sqrt{\nu_Q}\,\beta_t,
+$$
+
+where $\beta$ is a standard Brownian motion independent of the entire
+$(W^1,W^3)$ path. This follows directly by subtracting the displayed
+linear combination: its cross-covariances at every pair of times vanish;
+joint Gaussianity gives independence, and its covariance is $\nu_Q\min(s,t)$.
+Condition on those two paths through $t$. Their common survival indicator,
+first and third coordinates, and the second-coordinate shift
+
+$$
+\Delta_t=(c-\widehat c)t+a\{\cos h-\cos(h+W_t^1)\}
+$$
+
+are then fixed. Only the independent second-coordinate Gaussian remains,
+with variance $\nu_Qt$, and $|\Delta_t|\le D_t$.
+If $g_\sigma$ is the centered Gaussian density with standard deviation
+$\sigma$, the fundamental theorem of calculus and Fubini give
+
+$$
+\int|g_\sigma(x-\Delta)-g_\sigma(x)|dx
+\le |\Delta|\int|g_\sigma'(x)|dx
+=\sqrt{2/\pi}\,|\Delta|/\sigma;
+$$
+
+its left side is also at most $2$. Integrating $\varphi$ against these
+conditional densities and then the common survival indicator proves
+(25.5). This elementary Gaussian smoothing estimate is only an
+intermediate step of this source-specific killed-response calculation.
+For a fixed finite menu the minimum of its $\nu_Q$ is positive, so the
+bound can be made uniform over the menu. At $t=0$ both responses agree
+exactly; (25.5) is stated only for $t>0$.
+
+For $a\ne0$, the two starts $(q,\pi/2,k)$ and $(q,-\pi/2,k)$ have
+actual labelled $X_1$ values differing by $2a e_2$; their $Q=I_3$
+projected covariance entry $(1,2)$ also differs by $2a$. Thus an exact
+all-fibre labelled or diffusion quotient is absent in this inhabited
+source. When $\widehat c=c$, the lawful deterministic pulse with
+$U_1(T)=\pi$, $U_2=U_3=0$ and $h=0$ attains error $2|a|$ while the
+original guard stays alive. The term $2A$ in a uniform bound for this
+control class therefore measures real omitted information.
+
+The Brownian strong Markov supplier is Mörters–Peres, Theorem 2.14,
+page 48 of the cited draft. It permits the same argument after an almost
+surely finite nonanticipating acquisition completion time, conditional on
+the retained source state and records, provided the original execution
+contract supplies the corresponding fresh Brownian increments. It does
+not permit an anticipatory selection of the execution noise. QED.
+

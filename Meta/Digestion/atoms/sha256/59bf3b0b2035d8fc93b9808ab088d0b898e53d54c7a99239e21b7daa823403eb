@@ -1,0 +1,21 @@
+**Proposition 25.3 (bounded sources do not cure arbitrarily small gains).** Even on two fixed bounded strictly positive normalized sources, with $D=0$ and a common positive constant gain permitted to approach zero, no family of finite-cap deterministic protocols is uniformly consistent. The cap may grow arbitrarily as $\delta\downarrow0$, provided it is finite at each positive $\delta$.
+
+**Proof.** Take
+
+$$
+ P^{(0)}=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},
+ \qquad P^{(1)}=\frac15\begin{pmatrix}1&2\\2&4\end{pmatrix}.
+ \tag{25.7}
+$$
+
+Their maximum distance is $3/10$. For a cap $n=n(\delta)$ put
+
+$$
+ V_n=\max\left\{1,\max_{A\in\mathcal W_n}
+              |\operatorname{tr}(A(P^{(0)}-P^{(1)}))|\right\},
+ \qquad h_\delta=\min\{\delta,\,2\delta/V_n\}>0.
+ \tag{25.8}
+$$
+
+Use the same whole constant $H=h_\delta$ in both worlds. Their reports differ by at most $2\delta$ at every possible read through the cap. The midpoint-history argument in Theorem 25.2 gives worst loss at least $3/20$. Every world still has nonzero gain; choosing harder allowed worlds separately for different $\delta$ is precisely the uniform-risk quantifier. $\square$
+

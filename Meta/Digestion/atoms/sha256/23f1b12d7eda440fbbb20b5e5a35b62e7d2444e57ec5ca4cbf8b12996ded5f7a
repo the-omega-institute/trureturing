@@ -1,0 +1,67 @@
+**Proposition 4.3 (Forward equations and the retained $F_0$ branch).**
+For a source in $X\setminus E$, set $x=n/U$ and $H=Ug$.
+Then $D\ne0$, $d\ne0$, $e\ne0$, and this is precisely the
+interpolant (4.2). It satisfies $f=K=0$. Let
+
+$$
+S_F(p,v)=\operatorname{Res}_x(F_0,\alpha).
+\tag{4.9}
+$$
+
+At any base with $S_F\ne0$, such a source has $R(x,p,v)=0$.
+Thus the $F_0$ factor in (4.7) does not supply an additional generic
+nonzero-drift source branch. More explicitly, the closure of the
+acquired image of the entire source subset $F_0(n/U,p,v)=0$ is
+contained in $Z_E\cup V(S_F)$ and has dimension at most one.
+
+Proof. The conditions defining $X\setminus E$ give $U,n,n+U,n+2U\ne0$,
+so $x,x+1,x+2$ are nonzero. The actual clocks three through six,
+with the traces (2.1), give exactly (4.2). Put
+
+$$
+B_0=294/5-2d-H_2.
+\tag{4.10}
+$$
+
+Clocks zero and two imply $dU=-H_0$ and $B_0U=H_2$.
+Consequently $dH_2+H_0B_0=0$, which is $f=0$ after
+multiplication by $5D^2$. Clock one gives
+$H_1=U(24-d)/j\ne0$.
+
+The rank-one source relation in these coordinates is
+
+$$
+r^2-(1+b)r+b(n-b)=0.
+\tag{4.11}
+$$
+
+With $Z=xH_1-(24-d)$, the actual source has
+$U=-H_0/d$, $b=(U-1)/2$, and $r=UZ/H_1$.
+Substitution in (4.11) and multiplication by $4d^2H_1^2$
+gives
+
+$$
+\begin{aligned}
+4H_0^2Z^2+2H_0(d-H_0)ZH_1
+-(H_0+d)\bigl(d+(1-2x)H_0\bigr)H_1^2=0.
+\end{aligned}
+\tag{4.12}
+$$
+
+Its $D^4$ multiple is $K=0$. The resultant now implies $F_0R=0$.
+
+If $F_0=0$ and $S_F\ne0$, then $\alpha\ne0$ at that $x$.
+By (4.8), $d=0$ is a common root of $f,K$ there and $\beta=0$.
+Every common root satisfies $\alpha d+\beta=0$ by (4.6), so
+$d=0$ is the only common root. It cannot represent the source under
+consideration, for which $d\ne0$. Therefore $R=0$.
+
+Every source with $F_0=0$ is either in $E$, whose image is in
+$Z_E$, or is covered by this argument and has base in $V(S_F)$.
+Equation (5.8) below proves that $S_F$ is a nonzero polynomial.
+Both closed image bounds therefore have dimension at most one.
+
+This argument uses $S_F\ne0$ only on a base open. On $S_F=0$,
+or on the source subset $d=0$, the $F_0$ branch is retained. No
+global saturation by $F_0$ or by drift has occurred. ∎
+

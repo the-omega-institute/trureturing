@@ -29,7 +29,7 @@ namespace D5.S3.Analytic.Asymptotics.FiniteCountertermMellinContinuation
 
 noncomputable section
 
-private theorem hasMellin_finset_sum
+theorem hasMellin_finset_sum
     {ι : Type*} {u : Finset ι} {f : ι → ℝ → ℂ} {value : ι → ℂ} {s : ℂ}
     (h : ∀ i ∈ u, HasMellin (f i) s (value i)) :
     HasMellin (fun t => ∑ i ∈ u, f i t) s (∑ i ∈ u, value i) := by
@@ -130,7 +130,7 @@ theorem finite_counterterm_mellin_continuation
     (hmellinDiff.analyticOnNhd hU).meromorphicOn
   have hpoleMeromorphic : MeromorphicOn poleSum U := by
     apply MeromorphicOn.fun_sum
-    intro j
+    intro j _
     change MeromorphicOn (fun s : ℂ => a j / (s - (alpha j.castSucc : ℂ))) U
     intro z _
     exact (MeromorphicAt.const (a j) z).div

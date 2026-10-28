@@ -3319,3 +3319,692 @@ conditional parameter application of existing theorems, not a new RH
 criterion, an unconditional bound for (I117)'s retained near sector,
 a mathematical-priority claim or Lean certification. The complete
 signed Robin objective and RH remain unresolved.
+
+
+## A sharper fixed fourth-moment input for the same functional
+
+The [classical polynomial-evaluation application](../Analytic/verjovsky2026mobiussmoothing.md#classical-polynomial-evaluation-sharpens-the-fixed-moment-input)
+gives a stronger interface than the first-derivative moment estimate
+used above. Keep the original family (I59), the actual functional
+(I91), and one fixed $c>0$. Assume, as an additional deterministic
+input, that
+$\mathcal M_{4,c}(N)\ll N^\nu$ for every sufficiently large integer
+$N$, with one fixed $0\le\nu<1/8$. The source's same local arc and
+Möbius coefficients are retained.
+
+The cited application supplies
+$$
+|M(N)|\ll_c\sqrt{\log(2N)}
+\left(\sqrt N\,\mathcal M_{4,c}(N)+1\right).
+$$
+Consequently, with $\theta=1/2+\nu$, for every fixed $\delta>0$,
+$$
+M(x)\ll_{c,\nu,\delta}x^{\theta+\delta}.
+\tag{I120}
+$$
+The implied constants also retain the assumed moment-bound constant.
+To use the required prime error, take any $\Re s>\theta$, choose
+$0<\delta<\Re s-\theta$, and apply the already used
+partial-summation continuation of $1/\zeta$ with (I120). This excludes
+zeros throughout $\Re s>\theta$. Choose a fixed
+$\theta<\beta<5/8$ and reuse (I60) for both $M(x)$ and
+$\psi(x)-x$ at exponent $\beta$; there is no same-exponent
+prime-error assertion obtained from bandwise Abel summation alone.
+
+Apply (I118)--(I119) with this $\beta$. For every fixed $\eta>0$,
+choose $\beta-\theta$ sufficiently small and absorb the original
+$e^{\lambda\Omega}$ and logarithmic factors into the remaining
+$N^\eta$ allowance. The result is
+$$
+|\mathcal A_{N,H}|=|\mathscr J_N(R_N)|
+\ll_{c,\nu,\eta}N^{2\nu-1/4+\eta}.
+\tag{I121}
+$$
+All original fixed parameters may also enter the constant. Taking
+$0<\eta<1/4-2\nu$ gives $o(1)$ on every sufficiently large original
+integer $N$. This reuses the complete functional, including
+$e_{N,H}=B/(2N+1)-A/2$ and $m=2N$, with the same strict lower band
+cutoff and half-integer convention. It supplies no uniform
+$\nu=1/8$ endpoint or estimate for a moment hypothesis given only
+on a subsequence.
+
+Using the exact correlation identity in the same source application,
+another sufficient input is
+$\mathfrak C_{4,c}(N)\ll N^{5/2-\xi}$ for a fixed $0<\xi\le1/2$.
+It gives $\nu=1/8-\xi/4$ and hence
+$|\mathscr J_N(R_N)|\ll_\eta N^{-\xi/2+\eta}$, with decay when
+$0<\eta<\xi/2$. This weakens the previously recorded
+$N^{17/8-\xi}$ sufficient correlation input; it does not prove either
+bound or replace the signed fourfold sum by a diagonal.
+
+The new parameter range is a repository application of classical
+polynomial evaluation, Taylor approximation and the already owned
+analytic interfaces, without a mathematical-priority claim or Lean
+certification. The deterministic moment or correlation bound remains
+unpaid. The complete signed Robin estimate and RH remain unresolved.
+
+
+## A single actual endpoint already obstructs a uniform response supplier
+
+Keep (I59), the complete mean $d_N$ from (I17), and the cutoffs
+of (I105) and (I117). The following is a repository-derived analytic
+application, without a mathematical-priority claim or Lean certification.
+Its finite-height input is the already cited Platt--Trudgian theorem;
+no zero computation is repeated.
+
+For $q>N/2$, the original alias sum has exactly $j=1$, so
+$b_{N,q}=\mu(q)\log(N/q)/L$. Define only the first pair of its actual
+harmonics, together with the unchanged original mean:
+$$
+\begin{aligned}
+P_q^{(1)}(m)
+ &=-\frac1q\left[\frac{e(m/q)}{1-e(-1/q)}
+                  +\frac{e(-m/q)}{1-e(1/q)}\right],\\
+R_N^{(1)}(m)
+ &=d_N+\sum_{N/2<q\le N-W_N^\circ}
+       \frac{\mu(q)\log(N/q)}L P_q^{(1)}(m).
+\end{aligned}
+\tag{I122}
+$$
+Eventually $D_N^\circ<N/2<N-W_N^\circ$ and $V_N<N/2$.
+Both numerators $1,q-1$ therefore remain in (I117)'s near sector.
+This selects actual terms of that response; it does not replace the
+Möbius coefficients or assert that separately bounding this selection
+is necessary to bound their signed total.
+
+For any fixed $1/2\le\alpha<1$, the additional hypothesis
+$$
+L|R_N^{(1)}(2N)|\ll_\eta N^{\alpha+\eta}
+\quad\text{for every fixed }\eta>0
+\text{ and every sufficiently large original integer }N
+\tag{I123}
+$$
+implies $\zeta(s)\ne0$ on $\Re s>\alpha$. In particular its
+$\alpha=1/2$ case implies RH. The estimate (I123) remains unproved.
+
+### Transferring the original endpoint without deleting its top cutoff
+
+Pairing the two Fourier terms gives exactly
+$$
+P_q^{(1)}(m)=-\frac1q\left[\cos(2\pi m/q)
+                     +\cot(\pi/q)\sin(2\pi m/q)\right].
+$$
+Since $q^{-1}\cot(\pi/q)=\pi^{-1}+O(q^{-2})$, at $m=2N$
+this is $-\pi^{-1}\sin(4\pi N/q)+O(N^{-1})$ for $q>N/2$.
+The accumulated error after multiplying $R_N^{(1)}$ by $L$ is $O(1)$.
+For real $y>1$, put
+$$
+\begin{aligned}
+F(y)={}&\log y
+ +\frac12\sum_{n\le y}\mu(n)\log(y/n)(1-1/n)\\
+ &-\frac1\pi\sum_{y/2<n\le y}
+          \mu(n)\log(y/n)\sin(4\pi y/n).
+\end{aligned}
+\tag{I124}
+$$
+Its first two terms at $y=N$ are exactly $Ld_N$.
+If $W=W_N^\circ$ and $w=N-q<W$, then
+$\log(N/q)\le2w/N$ and
+$|\sin(4\pi N/q)|=|\sin(4\pi w/q)|\le8\pi w/N$ eventually.
+Both vanish at the actual top endpoint. Hence
+$$
+LR_N^{(1)}(2N)
+ =F(N)+O(1+W^3/N^2),\qquad W^3/N^2=N^{1/4+o(1)}.
+\tag{I125}
+$$
+This pays the original top cutoff using absolute values and requires
+no extra condition $3\lambda<c_\star$. For $N\le y<N+1$, the common
+terms in the first sum change by $O(N^{-1})$ each. The derivative of
+each common summand in the second sum is
+$$
+\frac1y\sin(4\pi y/n)
+ +\frac{4\pi}{n}\log(y/n)\cos(4\pi y/n)=O(N^{-1})
+ \quad(n\asymp N).
+$$
+Only a bounded number of bounded terms enter or leave at its moving
+limits. Thus $F(y)-F(N)=O(1)$. Together with (I123)--(I125), this
+gives $F(y)\ll_\eta y^{\alpha+\eta}$ for every fixed $\eta>0$.
+
+### A Mellin kernel with no high-height cancellation
+
+Consequently $\widehat F(s)=\int_1^\infty F(y)y^{-s-1}\,dy$ is
+holomorphic on $\Re s>\alpha$. Initially for $\Re s>1$, absolute
+convergence and the classical Möbius Dirichlet series give
+$$
+\begin{aligned}
+\widehat F(s)&=\frac1{s^2}-\frac1{2s^2\zeta(s+1)}
+                         +\frac{K(s)}{\zeta(s)},\\
+K(s)&=\frac1{2s^2}
+ -\frac1\pi\int_1^2\log v\sin(4\pi v)v^{-s-1}\,dv.
+\end{aligned}
+\tag{I126}
+$$
+The term $1/(2s^2)$ in $K$ comes from the original mean and must
+remain. Since $1/\zeta(s+1)$ is holomorphic on this larger half-plane,
+the identity theorem continues the holomorphic identity
+$$
+(s-1)\zeta(s)\left[\widehat F(s)-\frac1{s^2}
+                         +\frac1{2s^2\zeta(s+1)}\right]
+ =(s-1)K(s)
+\tag{I127}
+$$
+to $\Re s>\alpha$. A zero $\rho$ there, of any multiplicity
+$m_\rho$, would force $\operatorname{ord}_\rho K\ge m_\rho$.
+Neither zero simplicity nor a reciprocal-derivative moment is used.
+
+Here the necessary cancellation can be ruled out at every high height:
+$$
+|K(s)|\ge |s|^{-2}
+\qquad(1/2\le\Re s\le1,\ |\Im s|\ge2^{16}).
+\tag{I128}
+$$
+To prove this quantitative bound, set $a=\log2$ and
+$f(u)=u\sin(4\pi e^u)$. Then
+$f(0)=f(a)=f'(0)=0$ and $f'(a)=8\pi a$.
+Three integrations by parts in (I126) give
+$$
+\begin{aligned}
+K(s)&=\frac{1/2+8a\,2^{-s}}{s^2}
+                         -\frac{\mathcal B(s)}{\pi s^3},\\
+\mathcal B(s)&=f''(0)-f''(a)2^{-s}
+                      +\int_0^af'''(u)e^{-su}\,du.
+\end{aligned}
+$$
+For $z=4\pi e^u$ the derivatives are
+$$
+\begin{aligned}
+f''(u)&=(u+2)z\cos z-uz^2\sin z,\\
+f'''(u)&=(u+3)z\cos z-(3u+3)z^2\sin z-uz^3\cos z.
+\end{aligned}
+$$
+Using $0\le u\le a<1$, $z<32$ and $3<\pi<4$ yields
+$|f''(0)|<32$, $|f''(a)|<96$ and
+$\int_0^a|f'''(u)|\,du<4\cdot32+6\cdot32^2+32^3$.
+Thus $|\mathcal B(s)|<39168<2^{16}$ for $\Re s\ge0$.
+On $1/2\le\Re s\le1$,
+$|1/2+8a2^{-s}|\ge4\log2-1/2>3/2$.
+For $|s|\ge2^{16}$ the remainder in $s^2K(s)$ is less than
+$1/\pi<1/3$, proving (I128).
+
+For the remaining finite heights, directly reuse
+[Platt--Trudgian, Theorem 1, printed p.2](https://arxiv.org/abs/2004.09765v1),
+as already recorded in the
+[finite-height source application](../Analytic/polak2026finiterobinca.md#finite-height-residual-bounds-at-the-actual-critical-clock).
+Its verified height $3000175332800$ exceeds $2^{16}$.
+Conjugation covers negative heights, and the classical absence of real
+zeros in $(0,1)$ covers height zero. Thus there are no low-height zeros
+with real part greater than $\alpha\ge1/2$; this does not assert
+low-height nonvanishing of $K$. Every higher possible zero contradicts
+(I127)--(I128). The standard zero-free region $\Re s\ge1$ completes
+the stated half-plane conclusion. At $\alpha=1/2$, functional-equation
+symmetry gives RH.
+
+### The method boundary concerns the response supplier, not signed cancellation
+
+The original coefficient budget in (I91) gives only
+$$
+|\mathscr J_N(f)|\ll\frac{h^2\epsilon_N}{L}\|f\|_\infty,
+\qquad h^2\epsilon_N\asymp N^{-1/2}e^{-\Delta_\star\Omega},
+$$
+where the supremum is over the original integer grid $N\le m\le2N$.
+A sufficient response bound through this budget alone would be
+$$
+\|R_N^{(1)}\|_\infty
+ =o\!\left(L\sqrt N\,e^{\Delta_\star\Omega}\right).
+\tag{I129}
+$$
+Since $L^2e^{\Delta_\star\Omega}=N^{o(1)}$, (I129) already implies
+(I123) at $\alpha=1/2$, hence RH. The obstruction is specific to
+one actual endpoint and a specified actual harmonic pair plus mean;
+unlike the compact kernel discussion around (I68), its high-height
+nonvanishing is quantitative.
+
+This does not show that $\mathscr J_N(R_N^{(1)})=o(1)$ or
+$\mathscr J_N(R_{N,\kappa}^\sharp)=o(1)$ implies RH. Their actual
+signed weights can use joint relations or inter-sector cancellation
+without supplying (I129). In particular the total endpoint coefficient
+is $(k_{N,2N}+e_{N,H})/L=O(h^3\epsilon_N/L)$, which is smaller
+than the budget used above; paying that contribution does not require
+a square-root bound on the response itself. Nor does this invalidate
+(I118)--(I119), which also improve the band coefficients under their
+additional hypothesis. No new bound for the signed functional,
+complete Robin inequality or RH follows from this method obstruction.
+
+
+## An absolute contour estimate cannot relax the fixed half-plane threshold
+
+Keep the original family (I59), its exact coupled kernel (I65), and the
+additional fixed zero-free-half-plane premise of (I60):
+$1/2\le b<1$ and no zero of $\zeta$ in $\Re s>b$.
+Choose any fixed $b<\sigma,\tau<1$. There is a fixed compact real
+interval $I$ of positive length such that, for every sufficiently large
+original integer $N$, the finite absolute majorant satisfies
+$$
+\begin{aligned}
+\mathfrak B_N(\sigma,\tau;I)
+ &:={1\over L^2}\int_{1/(4h)}^{1/(2h)}\int_I
+ \left|\frac{N^{\sigma+\tau-1+i(t+y)}
+  \mathcal K_N(\sigma+it,\tau+iy)}
+ {\zeta(\sigma+it)\zeta(\tau+iy)}\right|\,dy\,dt\\
+ &\gg_{b,\sigma,\tau}{hN^{\sigma+\tau-1}\over L^2}.
+\end{aligned}
+\tag{I130}
+$$
+The interval and lower-bound constant depend only on fixed parameters.
+This measures the cost of taking absolute values inside the two contour
+integrals. It gives no lower bound on the signed functional. The
+application below reuses (I60), (I64), (I70) and the already owned
+expansion of $H_q$ at zero; no new classical mean-value theorem,
+mathematical-priority claim or Lean certification is asserted.
+
+### A nonzero part of the exact kernel survives at height comparable to 1/h
+
+Use $\Phi$ from (I67). The integral defining $H_q$ is holomorphic on
+$\Re v>0$. The expansion after (I88), uniform for $1\le q\le2$
+by (I70), gives
+$$
+\Phi(v)={\log2-3/4\over2v^2}+O(1)\qquad(v\longrightarrow0).
+\tag{I131}
+$$
+Here $\log2<3/4$, for example by the strict trapezoidal upper bound
+for the convex function $1/x$ on $[1,2]$. Thus $\Phi$ is not
+identically zero. The identity theorem implies that it cannot vanish
+on the entire line $\tau+i\mathbb R$. Choose $I$ about a nonzero point
+so that $|\Phi(\tau+iy)|$ is bounded below on $I$. The actual
+$|1/\zeta(\tau+iy)|$ also has a positive minimum there: the segment
+is compact, zero-free, and avoids the pole at one.
+
+Put $G(z)=\int_0^1r e^{-izr}\,dr$. For $u=\sigma+it$ with
+$1/4\le ht\le1/2$, substitute $x=1-hr$ into the original $W_a$.
+Uniformly on this growing-height rectangle,
+$-\log(1-hr)=hr+O(h^2)$,
+$(1-hr)^{\sigma-1}=1+O_\sigma(h)$ and
+$e^{it\log(1-hr)}=e^{-ihtr}(1+O(h))$. Consequently
+$$
+\begin{aligned}
+W_a(u)&=h^2G(ht)+O_\sigma(h^3),\\
+W_a(u-1)-W_a(u)
+ &=\int_a^1x^{u-2}(1-x)\log(1/x)\,dx=O_\sigma(h^3).
+\end{aligned}
+$$
+The second estimate holds for every real $t$. Reuse the fixed-compact
+relations from (I64)--(I67),
+$p_N(v)=O(1)$ and $p_N(v)-Nq_N(v)=\Phi(v)+O(1/N)$, to obtain
+$$
+\begin{aligned}
+\mathcal K_N(u,v)
+ &=W_a(u)[p_N(v)-Nq_N(v)]
+    +[W_a(u-1)-W_a(u)]p_N(v)\\
+ &=h^2G(ht)\Phi(v)+O(h^3+h^2/N).
+\end{aligned}
+\tag{I132}
+$$
+This calculation is uniform for $v=\tau+iy$, $y\in I$.
+It does not extend the compact-$u$ error term of (I67) to this height.
+Since $\Re G(z)\ge\cos(1/2)/2>0$ on $1/4\le z\le1/2$,
+(I132) gives $|\mathcal K_N(u,v)|\gg h^2$ throughout the rectangle
+for all sufficiently large $N$. Both original endpoint contributions
+remain in $p_N,q_N$.
+
+### Actual reciprocal-zeta mass supplies the full width of the rectangle
+
+The reciprocal growth bound in (I60), with exponent allowance $1/2$,
+is uniform for $\sigma\le\Re s\le2$ at large heights. The reciprocal
+is holomorphic on $\Re s>b$, with a removable zero at the pole of
+$\zeta$. Cauchy's theorem between the lines $\sigma$ and $2$ gives
+$$
+\int_T^{2T}{dt\over\zeta(\sigma+it)}
+ =\int_T^{2T}{dt\over\zeta(2+it)}+O_{b,\sigma}(T^{1/2})
+ =T+O_{b,\sigma}(T^{1/2}).
+\tag{I133}
+$$
+For the final equality directly apply the absolutely convergent
+Möbius Dirichlet series underlying (I62). Its $n=1$ term contributes
+$T$; the remaining integral is at most
+$2\sum_{n\ge2}n^{-2}/\log n<\infty$ in modulus. Thus
+$\int_T^{2T}|1/\zeta(\sigma+it)|\,dt\ge T/2$ eventually.
+Take $T=1/(4h)$. Combine this actual mass, the fixed-$v$ reciprocal
+minimum and (I132). Since the modulus of the outer $N$-power is
+$N^{\sigma+\tau-1}$, this proves (I130) for each sufficiently large
+original integer, without an average over $N$ or zero-residue assumptions.
+
+### The paid two-scale smoothing preserves the obstruction
+
+The same lower bound holds with the complete smoothed kernel
+$\widetilde{\mathcal K}_N$ of (I89) in place of $\mathcal K_N$:
+$$
+\widetilde{\mathfrak B}_N(\sigma,\tau;I)
+ \gg_{b,\sigma,\tau}{hN^{\sigma+\tau-1}\over L^2}.
+\tag{I134}
+$$
+Use exactly the already paid scales $\eta=H^{-1}$ and
+$\nu=N^{-1/2}$. Their bump multipliers satisfy
+$|F_\ell(s)-1|\le e^{\ell|s|}-1$ by positivity and unit mass of
+$\phi$. On this rectangle $\eta|u|=O(\eta/h)\to0$,
+$\eta|u-1|\to0$, and $\nu|v|\to0$, since
+$\eta/h=1/(Hh)\asymp N/H^2\to0$. Hence all three multipliers in
+(I89) tend uniformly to one here. The fixed-compact bounds also give
+$Nq_N(v)=O(1)$, so its exact formula and (I132) imply
+$\widetilde{\mathcal K}_N(u,v)-\mathcal K_N(u,v)=o(h^2)$
+uniformly. The same positive lower bound therefore survives.
+This uses the original smoothing scales and retains its actual scalar
+and endpoint accounting; it introduces no new contour-shift claim.
+
+### The limitation concerns taking absolute values on fixed lines
+
+At the original bandwidth, the lower-bound scale is
+$$
+{hN^{\sigma+\tau-1}\over L^2}
+ \asymp{N^{\sigma+\tau-5/4}e^{\lambda\Omega}\over L^2}.
+\tag{I135}
+$$
+For $\sigma+\tau\ge5/4$ this tends to infinity, including equality,
+because $\lambda>0$ and $\Omega/\log L\to\infty$. If $b\ge5/8$,
+every pair of fixed lines $b<\sigma,\tau<1$ has this problem;
+unequal fixed lines do not remove it. On equal lines the displayed
+power is the same as the allowance in (I119).
+
+Thus improving only an absolute bound for the growing-height coupled
+kernel cannot relax that fixed-line threshold, even after the already
+paid smoothing. An improved bound needs information beyond this absolute
+majorant, such as signed oscillation in $N^{i(t+y)}$ or cancellation
+with other parts of the exact functional. No necessity of $b<5/8$ for
+the signed functional is proved,
+and no conclusion about estimates on $N$-dependent lines is asserted.
+The original same-source joint upper bound, complete signed Robin
+estimate and RH remain unresolved.
+
+
+### One same-source product remains under a fixed half-plane below 3/4
+
+Retain the original family (I59), the exact functional (I91), and all
+its integer-grid observations. Suppose, as an additional premise, that
+$1/2\le b<3/4$ and $\zeta$ has no zeros in $\Re s>b$. Fix
+$b<\beta<3/4$. The Abel argument in (I118) uses $\beta<1$ for its
+coefficient estimates; the restriction $\beta<5/8$ enters only at
+the final vanishing of (I119). Apply that same argument and the residual
+estimate after (I60), without a new Mertens or prime-error theorem:
+$$
+|B|\ll_\beta hN^\beta,\qquad
+|\delta_{N,H}|\ll_\beta h^2N^{\beta-1},\qquad
+\max_{N\le m\le2N}|LR_N(m)|\ll_\beta N^\beta.
+$$
+
+Write $S_N(m)=LR_N(m)$ and, for $N\le m<2N$, put
+$$
+u_{N,m}=\frac{m+\tfrac12-\tfrac32N}{m(m+1)},\qquad
+p_{N,m}=\frac{m+\tfrac12}{m(m+1)},\qquad
+\mathscr T_N(f)=\sum_{m=N}^{2N-1}u_{N,m}f(m).
+$$
+The identity
+$A=B/N+\delta_{N,H}$ in the original coefficients gives exactly
+$$
+\begin{aligned}
+L^2\mathscr J_N(R_N)
+={}&\frac BN\mathscr T_N(S_N)
+ +\delta_{N,H}\sum_{m=N}^{2N-1}p_{N,m}S_N(m)\\
+&+(k_{N,2N}+e_{N,H})S_N(2N).
+\end{aligned}
+\tag{I136}
+$$
+This is the full response, including its actual mean and every Fourier
+alias. The endpoint is retained in its combined original coefficient.
+Since $\sum_{m=N}^{2N-1}p_{N,m}\ll1$, and the exact coefficients of (I91) and (I75) give
+$|k_{N,2N}+e_{N,H}|\ll|\delta_{N,H}|+|B|/N^2$, the last two
+terms divided by $L^2$ have total bound
+$$
+\begin{aligned}
+\left|\mathscr J_N(R_N)-\frac B{NL^2}\mathscr T_N(S_N)\right|
+ &\ll_\beta\frac{h^2N^{2\beta-1}+hN^{2\beta-2}}{L^2}\\
+ &\ll_\beta
+ \frac{N^{2\beta-3/2}e^{2\lambda\Omega}
+       +N^{2\beta-9/4}e^{\lambda\Omega}}{L^2}=o(1).
+\end{aligned}
+\tag{I137}
+$$
+Both fixed negative powers absorb their exponential-log factors when $\beta<3/4$.
+
+Consequently, under this additional fixed-half-plane premise, the
+original all-integer target $\mathscr J_N(R_N)=o(1)$ is equivalent to
+$B\mathscr T_N(S_N)=o(NL^2)$ for those same integers and the specified
+bandwidth. The coefficients and response in this product cannot be
+chosen or optimized independently. This pays the secondary and endpoint
+contributions over a wider range than (I119), but proves no new bound for
+the remaining signed product and does not improve its $5/8$ sufficient
+threshold. It is an application of the owned analytic estimates, not a
+new cancellation theorem or a Lean-certified statement. The complete
+signed Robin estimate and RH remain unresolved.
+
+
+## A zero-density contour for the actual band coefficient
+
+Keep the original integers, bandwidth and endpoint conventions of
+(I59), (I62), (I83) and (I136). Suppose additionally that
+$1/2\le b<\beta<3/4$ and $\zeta$ has no zeros in $\Re s>b$.
+This section reuses the local disk argument already transported to
+ordinary $\zeta$ in (I60), Inoue's owned good heights, and the published
+Ingham estimate recorded in
+[the finite Robin source note](../Analytic/polak2026finiterobinca.md#reuse-the-published-ingham-estimate-at-its-tabulated-endpoint).
+The additional result is their application to the actual coefficient
+$B$ and the complete same-integer functional, not a new disk theorem,
+zero-density estimate, zero-free half-plane or mathematical-priority
+claim. No Lean certification is asserted.
+
+Write
+$$
+Z(\sigma,U)=\#\{\rho:\zeta(\rho)=0,\ \Re\rho\ge\sigma,
+                         \ 0<\Im\rho\le U\},\qquad
+\mathfrak d(\sigma)=\frac{3(1-\sigma)}{2-\sigma},
+$$
+counting multiplicities. Chourasiya--Simonič,
+[arXiv:2507.15184v2](https://arxiv.org/html/2507.15184v2),
+Corollary 1 and Table 1, cover $1/2\le\sigma\le1$ by closed
+subintervals and imply, uniformly on the fixed substrip used here,
+$Z(\sigma,U)\ll U^{\mathfrak d(\sigma)}\log^3(2U)$.
+Their stated lower height is $3\cdot10^{12}$; the bounded lower
+heights are included by increasing the implicit constant. This is
+the published input, reused without reproof.
+
+For every fixed $\xi>0$, the band coefficient satisfies
+$$
+|B|\ll_{b,\beta,\xi}
+ N^\xi\bigl(hN^{1/2}+h^{2-\mathfrak d(\beta)}N^\beta\bigr)+1.
+\tag{I138}
+$$
+The proof keeps the complete high-frequency decay of the actual
+weight and charges the rightward contour excursions to zeros.
+
+### The local reciprocal input and the original smoothing
+
+Use exactly $\eta=H^{-1}$, $a=1-h$ and the multiplier of (I83),
+(I86). Those formulas already give
+$B=\widetilde B+O(1)$ and
+$\widetilde B=(2\pi i)^{-1}\int_{(2)}
+N^sW_a(s)F_\eta(s)/\zeta(s)\,ds$.
+On a fixed real strip,
+$$
+|W_a(\sigma+it)|\ll h\min\{h,(1+|t|)^{-1}\}.
+$$
+Indeed, with $\ell=\log(1/a)\asymp h$, its exact expression is
+$\int_0^\ell x e^{-\sigma x}e^{-itx}\,dx$.
+The direct integral bounds it by $O(h^2)$; one integration by parts
+bounds it by $O(h/|t|)$ because both the terminal value and total
+variation of $xe^{-\sigma x}$ are $O(h)$.
+
+Take the already supplied good height
+$T\in[N^4,N^4+N^{4/3}]$ and write $Y=\log T$.
+Choose a fixed sufficiently small $d>0$ with
+$b+3d<\beta$, $1/2+3d<\beta$ and $d<10^{-3}$.
+The local form of the disk argument used in (I60) supplies
+$|1/\zeta(\sigma+it)|\ll_{d,\epsilon}(3+|t|)^\epsilon$
+whenever $\sigma\ge1/2+2d$, $\sigma\le\beta$ and the rectangle
+$\Re z>\sigma-d$, $|\Im z-t|\le Y$ is zero free, for $Y>2$.
+Here is the parameter correspondence needed for that reuse.
+In its cited `lem:logarithmic-control` disk proof, put
+$a_0=\sigma-d$ and $e_0=d/8$.
+The outer radius $2-a_0-2e_0=2-\sigma+3d/4$ about $2+it$
+lies inside this rectangle; the control radius
+$2-a_0-6e_0=2-\sigma+d/4$ contains the point $\sigma+it$.
+Use the ordinary regularized function
+$(s-1)\zeta(s)/(s+1)$, its classical polynomial strip growth and
+bounded Euler logarithm, exactly as in (I60).
+The printed Hecke/Dedekind statement is not being quoted as literally
+an ordinary-$\zeta$ theorem. Only its already documented ordinary disk
+argument is used, and that argument needs nonvanishing on the disk,
+not a global zero-free half-plane with boundary $\sigma-d$.
+
+### Count every excursion, including its horizontal joins
+
+Put $g_d(x)=1/2+d\lceil(x-1/2)/d\rceil$. At
+$4Y\le|t|\le T$, define
+$$
+c_T(t)=\max\left\{\frac12+2d,\quad
+ g_d(\Re\rho)+2d:
+ \Re\rho>\frac12,\ |\Im\rho-t|\le2Y\right\}.
+\tag{I139}
+$$
+Ignore an empty zero set in the maximum. The fixed-half-plane
+hypothesis implies $1/2+2d\le c_T(t)\le b+3d<\beta$.
+Use the vertical pieces at $\Re s=c_T(t)$, joining their jumps
+horizontally. For $|t|\le4Y$ use $\Re s=\beta$, with horizontal
+connectors at $t=\pm4Y$; call the resulting contour $\Gamma$.
+Every nontrivial zero inside the truncated rectangle lies strictly
+to its left, so the shift from $\Re s=2$ crosses no poles of
+$1/\zeta$. Its zero at one causes no residue.
+
+The required local rectangle is zero free at every high-height
+vertical piece. At a jump, zeros within distance $Y$ of that height
+are present on both sides of the jump; the entering or leaving zeros
+are at distance $2Y$. Thus the rectangle is zero free even at the
+smaller real endpoint, and hence along the entire horizontal join.
+The same reasoning applies to each connector from $c_T(\pm4Y)$
+to $\beta$. Their reciprocal bound is local; these connectors need
+not lie in $\Re s>b$. The low-height $\beta$ line instead uses the
+global reciprocal bound already established in (I60).
+Consequently $|1/\zeta(s)|\le N^{o_d(1)}$ on $\Gamma$.
+The low-height line and its two connectors contribute
+$\ll h^2N^\beta N^{o_d(1)}$.
+
+Let $\Gamma^{\rm hi}$ contain only the high vertical pieces and their
+jump joins, excluding the low-height line and both transition
+connectors just paid. In a dyadic block
+$U\le|t|\le2U$, $U\ge4Y$, separate the
+baseline pieces, whose real parts are at most $1/2+4d$.
+Their length is $O_d(U\log T)$, including horizontal joins:
+the vertical length is $O(U)$ and there are $O(U\log U)$ possible
+zero-window endpoints. For any remaining real strip
+$\sigma\le\Re s<\sigma+d$, its total contour length satisfies
+$$
+\operatorname{length}(\Gamma^{\rm hi}_{\sigma,U})
+ \ll_d Y Z(\sigma-3d,4U).
+\tag{I140}
+$$
+For vertical pieces, a zero forcing the maximum into that strip
+has $\Re\rho\ge\sigma-3d$, and each such zero influences at most
+$4Y$ of vertical length. Each horizontal jump occurs at an endpoint
+of a zero's influence interval. A zero responsible for raising or
+lowering the maximum across the strip also has
+$\Re\rho\ge\sigma-3d$; each zero supplies at most two such
+endpoints and at most length $d$ in the strip per endpoint.
+Positive and negative zeros are handled together by conjugation.
+Since $U\ge4Y$, all responsible heights have absolute value below
+$4U$. These charges prove (I140) for the complete contour pieces.
+
+Use $|F_\eta|\ll1$ on this strip. The density bound, (I140), and
+$\mathfrak d(\sigma-3d)=\mathfrak d(\sigma)+O(d)$ give the
+following block bound, for a finite real mesh $\mathcal G_d$:
+$$
+\begin{aligned}
+\int_{\Gamma^{\rm hi}\cap\{U\le|\Im s|\le2U\}}
+ \left|\frac{N^sW_a(s)F_\eta(s)}{\zeta(s)}\right|\,|ds|
+\ll_d{}&N^{O(d)+o_d(1)}h\min\{h,U^{-1}\}\\
+ &\cdot\left(N^{1/2}U+
+       \sum_{\sigma\in\mathcal G_d}
+                   N^\sigma U^{\mathfrak d(\sigma)}\right).
+\end{aligned}
+\tag{I141}
+$$
+Here the nonbaseline mesh has $\sigma>1/2+3d$ and
+$\sigma\le\beta$; the real-width cost $N^d$ and logarithms
+are included in the displayed loss. With $U\le T\asymp N^4$,
+the density-exponent displacement also costs only $N^{O(d)}$.
+
+For the baseline, dyadic summation gives
+$\sum_{U\le T}h\min(h,U^{-1})U\ll h\log T$.
+For each fixed $\sigma>1/2$, $0<\mathfrak d(\sigma)<1$, and
+splitting at $U=h^{-1}$ gives
+$\sum_{U\le T}h\min(h,U^{-1})U^{\mathfrak d(\sigma)}
+\ll_\sigma h^{2-\mathfrak d(\sigma)}$.
+The original bandwidth has
+$\log(1/h)/\log N=1/4+o(1)$. Moreover,
+$$
+\frac{d}{d\sigma}\log\bigl(N^\sigma h^{-\mathfrak d(\sigma)}\bigr)
+ =\log N-\frac{3\log(1/h)}{(2-\sigma)^2}>0
+ \qquad(1/2\le\sigma\le\beta<3/4)
+$$
+for all sufficiently large $N$.
+Thus every nonbaseline term is bounded by the one at $\beta$.
+The low-height allowance $h^2N^\beta N^{o_d(1)}$ is absorbed too.
+
+The top and bottom edges use the owned good-height reciprocal bound
+and the original multiplier's decay. For fixed $K=20$ they cost
+$\ll_\epsilon N^2(h/T)T^\epsilon(T/H)^{-20}$.
+The tails on the original line cost
+$\ll N^2h(T/H)^{-20}$, since $1/\zeta(2+it)$ is bounded.
+Both are $O(N^{-10})$ at the specified $T$ and $H$.
+Choose $d$ small enough in terms of $b,\beta,\xi$, then take $N$
+large enough to absorb all remaining logarithms and $N^{o_d(1)}$
+into $N^\xi$. Finally (I83) restores the original integer-band
+coefficient at cost $O(1)$. This proves (I138) for every sufficiently
+large original integer, without an average over cutoffs.
+
+### Apply the coefficient gain to the complete original functional
+
+The existing (I136)--(I137) decomposition and
+$|\mathscr T_N(S_N)|\ll_\beta N^\beta$ give
+$$
+\begin{aligned}
+|\mathscr J_N(R_N)|\ll_{b,\beta,\xi}{}&
+ \frac{N^\xi}{L^2}
+ \left(hN^{\beta-1/2}
+       +h^{2-\mathfrak d(\beta)}N^{2\beta-1}\right)\\
+ &+\frac{h^2N^{2\beta-1}+hN^{2\beta-2}+N^{\beta-1}}{L^2}.
+\end{aligned}
+\tag{I142}
+$$
+The final $N^{\beta-1}/L^2$ is the cost of restoring the unsmoothed
+$B$, acting on the actual response. The secondary coefficient and
+the combined original endpoint retain their paid (I137) allowance.
+The response, its mean and every alias remain unchanged.
+
+Compared with (I119), the controlling term has gained
+$h^{1-\mathfrak d(\beta)}=N^{-\gamma(\beta)+o(1)}$, where
+$\gamma(\beta)=(2\beta-1)/(4(2-\beta))$.
+The strict condition
+$\gamma(\beta)>2\beta-5/4$ is equivalent, in the present range, to
+$$
+\beta<\beta_{\rm c}:=\frac{19-\sqrt{73}}{16}
+ =0.653499765\ldots.
+\tag{I143}
+$$
+Thus the additional zero-free-half-plane premise with $b<\beta_{\rm c}$
+is sufficient for the complete same-integer target
+$\mathscr J_N(R_N)=o(1)$, improving this application's previous
+$5/8$ sufficient boundary. A convenient fixed value is $\beta=13/20$:
+$\mathfrak d(\beta)=7/9$, and the controlling scale is
+$$
+\frac{h^{11/9}N^{3/10}}{L^2}
+ \asymp\frac{N^{-1/180}e^{11\lambda\Omega/9}}{L^2}.
+\tag{I144}
+$$
+Since $\Omega=o(\log N)$, under $b<13/20$ this gives
+$|\mathscr J_N(R_N)|\ll_{b,\xi}N^{-1/180+\xi}$ for every fixed
+$\xi>0$. The other powers at this checkpoint are
+$-1/10$, $-1/5$, $-19/20$ and $-7/20$, all strictly smaller.
+
+The gain comes from the length of the rightward excursions on a
+variable contour, not from a smaller fixed-line double absolute
+majorant. It therefore does not contradict (I130)--(I135).
+It does not provide the zero-free-half-plane premise required here,
+a new unconditional Robin bound, or a proof of RH. For larger $b$
+the complete original signed estimate remains unresolved.

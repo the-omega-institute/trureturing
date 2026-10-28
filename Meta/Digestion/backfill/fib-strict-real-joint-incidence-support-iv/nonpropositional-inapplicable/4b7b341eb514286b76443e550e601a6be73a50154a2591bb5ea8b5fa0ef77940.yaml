@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b7b341eb514286b76443e550e601a6be73a50154a2591bb5ea8b5fa0ef77940
+  normalized_sha256: sha256:4b7b341eb514286b76443e550e601a6be73a50154a2591bb5ea8b5fa0ef77940
+cas_ref: sha256:4b7b341eb514286b76443e550e601a6be73a50154a2591bb5ea8b5fa0ef77940
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional statement of an unresolved global incidence question and the scope of earlier results; no existence or exclusion claim is made.
+    previous_atom_id: 8db3dd0217b24e58db578f2bddf183a80864d80e5ba02e10ad7b43cd4d2f419c
+    next_atom_id: 756f0e4a235b5ec9d543f6e6c3bd138c26671444cef9bfff1963ece032dedb69

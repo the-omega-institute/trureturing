@@ -1,0 +1,19 @@
+**Definition 17.1 (An entire gain direction).** For a nonzero real polynomial $h$ of degree at most three, its direction is
+$[h]=\{\lambda h:\lambda\in\mathbb R\setminus\{0\}\}$.
+Fix a literal $H_{5J}^A$ as in (16.1), and put
+
+$$
+\mathcal S_h=\{(P,g,d)\in\mathcal F(H_{5J}^A):g\in[h]\},\qquad
+u_J(W)=d+g(6)(1+2b).
+\tag{17.1}
+$$
+
+For $\mathcal K\subseteq\mathcal S_h$ let $\mathcal K_u=\{W\in\mathcal K:u_J(W)=u\}$. Both signs of the nonzero proportionality factor are initially allowed. The symbol $[g]$ is an external mathematical label, not an acquired observation. Set
+
+$$
+F_0=14C+35Y-48z,\qquad F_1=35Y-42C+16A.
+\tag{17.2}
+$$
+
+The second residual agrees with (10.16); neither residual is the source-chart denominator $D$.
+

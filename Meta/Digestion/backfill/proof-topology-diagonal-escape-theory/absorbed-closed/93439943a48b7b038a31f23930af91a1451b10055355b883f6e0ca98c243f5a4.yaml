@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:93439943a48b7b038a31f23930af91a1451b10055355b883f6e0ca98c243f5a4
+  normalized_sha256: sha256:93439943a48b7b038a31f23930af91a1451b10055355b883f6e0ca98c243f5a4
+cas_ref: sha256:93439943a48b7b038a31f23930af91a1451b10055355b883f6e0ca98c243f5a4
+coverage_gids:
+  - gid: D5/S0/Carrier/Ring.a_intCast
+    target_statement_id: sha256:e37ce53b3e135cf6b2549d56e45857af5f70e8b6d6f870f3d49ee02e645dd06c
+  - gid: D5/S0/Carrier/Ring.b_intCast
+    target_statement_id: sha256:ae6d04c679c4b9959951330249b052edf1440a5ed95b2d3c0877617fa3569256
+  - gid: D5/S0/Carrier/Ring.b_mul
+    target_statement_id: sha256:d322359ede8e45bbf7393d26e660b5e4d82234cf871b723136633dde1f108ff1
+  - gid: D5/S1/Deficit/DoubleFaceLength.betaDigits_b
+    target_statement_id: sha256:5fe7578538fe46ae2d32d8d1178759387d6bf53fb9c5698e7f431f9bb6def308
+  - gid: D5/S1/Deficit/ModelSet/GoldenModelSetSelfSimilar.beta_digits_shift
+    target_statement_id: sha256:850da14229fbfdd5039274639d486469214a57030e00b0836653a225874cf878
+  - gid: D5/S1/Scale/Fibonacci.golden_phi_pow_b_eq_fib
+    target_statement_id: sha256:80df62e1f97914effd86050b313a723a8239a25cf2a300db6cfd42e277df95d5
+receipts:
+  unresolved_subitems: []

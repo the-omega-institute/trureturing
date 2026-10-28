@@ -138,7 +138,7 @@ theorem duality_insufficiency
   · intro hmetric
     apply hdelta
     exact
-      ((positive_invariant_metric_selection delta gamma period hperiod).out 2 0).mp
+      ((positive_invariant_metric_selection delta gamma period hperiod).out 3 1).mp
         (by simpa [exponent, forward, backward, monodromy] using hmetric)
 
 #print axioms duality_insufficiency

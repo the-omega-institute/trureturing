@@ -1,0 +1,45 @@
+### 14.1 共同来源与观察合同
+
+物理空间取
+
+$$
+H=L^2((0,\infty),dx),\qquad
+(\mathcal F\xi)(x)=2\int_0^\infty\cos(2\pi xy)\xi(y)\,dy.
+$$
+
+它是源文献中偶物理函数空间的半轴写法。定义 $Q=\mathbf1_{(0,1)}$、$W=I-Q$，以及
+
+$$
+V=\{\xi\in H:Q\xi=Q\mathcal F\xi=0\}.
+$$
+
+记 $P$ 为到 $V$ 的正交投影。[Burnol 的投影公式](../../../Library/Weil/burnol2002sonine.md)在此使用 cutoff $1$；不把物理向量与积分伸缩作用的测试函数混为同一对象。
+
+对 $f\in C_c^\infty(\mathbb R)$，取
+
+$$
+g(u)=f(\log u),\quad h=g*g^*,\quad
+H_f(t)=h(e^t),\quad A_f=\rho(h).
+$$
+
+其中 $g^*(u)=\overline{g(u^{-1})}$，$d^*u=du/u$，物理伸缩为
+
+$$
+(\rho(u)\xi)(x)=u^{-1/2}\xi(u^{-1}x).
+$$
+
+于是其积分核写作
+
+$$
+A_f(x,y)=(xy)^{-1/2}H_f(\log x-\log y).
+$$
+
+采用固定的三个 Fourier 零约束 $\widehat f(0)=\widehat f(i/2)=\widehat f(-i/2)=0$，其中 $\widehat f(t)=\int f(x)e^{-itx}\,dx$。若完整算术项只有素数 $2$ 的一次幂，则
+
+$$
+\mathcal A_2(f)=\sqrt2\log2\,\operatorname{Re}H_f(\log2),
+\qquad Q_{\rm full}(f)=W_\infty(h)-\mathcal A_2(f).
+$$
+
+高次幂与其他素数只有在同一实际测试的支撑确实使其配对为零时才可去掉。一般支撑下仍使用完整的 prime-power 和 pole 约定。
+

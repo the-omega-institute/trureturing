@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:65eb5595b923d9bb2c3c8a10d09854274ad5671a704e6750fe709d8977fba811
+  normalized_sha256: sha256:65eb5595b923d9bb2c3c8a10d09854274ad5671a704e6750fe709d8977fba811
+cas_ref: sha256:65eb5595b923d9bb2c3c8a10d09854274ad5671a704e6750fe709d8977fba811
+coverage_gids:
+  - gid: D5/S0/Tower/Champions/GoldenPermanentSurvivors.golden_threshold_point_permanent
+    target_statement_id: sha256:2a373488ed442fae5e4983e2f77c8580190411db2d863b4972080cdfe672adf5
+  - gid: D5/S0/Tower/Champions/GoldenSurvivorClassification.golden_backward_limit_core_eq_four_points
+    target_statement_id: sha256:979670abf0c53f7a20bcd2f4b67bf6cbdebb7382113ff62b085c31ea6f83f86b
+  - gid: D5/S0/Tower/Champions/GoldenSurvivorTubes.golden_threshold_eq
+    target_statement_id: sha256:7456edc917106b3b8b1dd457af22d48ad421cb2861de8f137cf58be64413714b
+receipts:
+  unresolved_subitems: []

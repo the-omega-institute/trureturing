@@ -1,0 +1,214 @@
+**定理 33.3（源特定物理尾部矩与完整扇区余核展开）。** 在定义 33.1--33.2 的条件下，对每个充分小的 $E$，有
+
+$$
+U_E\in D(\mathscr A)\cap H_d,\qquad
+(\mathscr A+E)U_E=C_E,\qquad E\|U_E\|_2^2\le C.
+\tag{33.7}
+$$
+
+存在固定 $\alpha,a>0$，令 $r_E=e^{T+a}$，则
+
+$$
+E\int_{R\ge2r_E}
+ e^{2\alpha\sqrt E(R-2r_E)}|F_E|^2\,d\xi\le C.
+\tag{33.8}
+$$
+
+相应指数加权的三个原场能量也有限。更具体地，存在固定 $\alpha_1,a_1>0$，使下列界对全部充分小 $E$ 一致成立：
+
+$$
+\begin{aligned}
+\int_{x\ge a_1}e^{2x}e^{2\alpha_1e^x}
+ \bigl(\|w_E(T+x)\|_2^2+\|W(x)\|_2^2\bigr)\,dx&\le C,\\
+\int_{b_0-T}^{\infty}e^{(4-2d)x}\|w_E(T+x)\|_2^2\,dx&\le C.
+\end{aligned}
+\tag{33.9}
+$$
+
+对每个 $z\in Z$，物理质量配对绝对收敛，且
+
+$$
+\langle C_E,z\rangle=E\langle U_E,z\rangle.
+\tag{33.10}
+$$
+
+对整个 $K$ 的 $H_d$ 单位球一致地，以及对任意固定 $0<d'<d$，有
+
+$$
+\begin{aligned}
+|\langle C_E,v\rangle|&\le C e^{-dT}\|v\|_{H_d}
+                                           &&(v\in K),\\
+\langle C_E,f_0\rangle
+ &=-s\operatorname{Im}(\overline\beta b e^{isT})+O(e^{-d'T}).
+\end{aligned}
+\tag{33.11}
+$$
+
+第一式包括不属于物理 $L^2$ 的所有允许零能共振。严格采用 (31.11) 的固定 $D_{\rm align}$ 与 $E_j=D_{\rm align}e^{-j/L_{n,g}}$，则对每个充分大的整数 $j$，
+
+$$
+\begin{aligned}
+|\langle C_{E_j},f_0\rangle|&=O(E_j^{d'/2}),\\
+\sup_{v\in K,\ \|v\|_{H_d}\le1}|\langle C_{E_j},v\rangle|
+ &=O(E_j^{d/2}),\\
+\|\langle C_{E_j},\cdot\rangle|_Z\|_{Z^*}&=O(E_j^{d'/2}).
+\end{aligned}
+\tag{33.12}
+$$
+
+这是对整个扇区余核的对偶配对展开，不是物理 $L^2$ 正交投影，也不包含全算子余核的穷尽断言。
+
+证明。先使用 (33.4) 控制原物理质量。在左半线，$A$ 控制无权角 $L^2$，且 $1-d>0$，所以
+
+$$
+\int_{b_0-T}^{-2}e^{2x}\|r_T\|_2^2\,dx
+ =\int_{b_0-T}^{-2}e^{2(1-d)x}\|Y_T\|_2^2\,dx
+ \le C e^{-2dT}.
+$$
+
+右侧 $\sigma^{-1}$ 有界，$X_T$ 又包含 $e^{2x}$ 质量，故合得
+
+$$
+\int_{b_0-T}^{\infty}e^{2x}\|r_T\|_2^2\,dx\le C e^{-2dT}.
+\tag{33.13}
+$$
+
+$G$ (28.4) 给出 $W$ 左端有界，(28.5) 给出右端物理质量可积。由 (33.5) 得 $E\|U_E\|_2^2\le C$；固定内截断的有限过渡环带也满足此界，因为 $G$ (30.14) 在每个固定 $\ell$ 环带给出一致有界的值迹。
+
+接着直接在原 Cartesian 弱方程中作截断指数能量试验。原尾界 $P\le C_PR^{-2}$，原 gauge 在 $R\ge1$ 上满足 $\sum_{X\in\mathcal X}|XR|^2\le C_R$；后者由原场、光滑性及齐次度给出，不对角端点分部积分。选固定 $a$ 足够大，使 $R\ge r_E=e^{T+a}$ 时 $gP\le E/4$。取 $\chi_E$ 在 $R\le r_E$ 为零、$R\ge2r_E$ 为一，且 $\sum|X\chi_E|^2\le CE$。令
+
+$$
+\phi_N=\min\{\alpha\sqrt E(R-2r_E)_+,N\},
+\qquad \sum_{X\in\mathcal X}|X\phi_N|^2\le E/8,
+\tag{33.14}
+$$
+
+其中固定 $\alpha>0$ 足够小。$\phi_N$ 在 $\chi_E$ 的过渡支撑上恒为零。以 $\chi_E^2e^{2\phi_N}F_E$ 测试原弱方程，取实部并展开原场乘法规则，得到
+
+$$
+\begin{aligned}
+&\sum_{X\in\mathcal X}\|X(e^{\phi_N}\chi_EF_E)\|_2^2\\
+&\quad+\int\left(E-gP-\sum_{X\in\mathcal X}|X\phi_N|^2\right)
+                         e^{2\phi_N}\chi_E^2|F_E|^2\,d\xi\\
+&=\int e^{2\phi_N}\sum_{X\in\mathcal X}|X\chi_E|^2|F_E|^2\,d\xi
+ \le C.
+\end{aligned}
+\tag{33.15}
+$$
+
+右端由刚证的一致 $E$ 质量界控制。对固定 $N$，权重及其原场导数有界；$G$ 第 30 节给出实际外尾的自由域成员身份，原 form core 的稠密性允许先作紧截断再通过极限使用该测试。局部 Lipschitz 权重由光滑逼近处理，不增加极点或角端点条件。左端势项与梯度损失分别由 $E/4$、$E/8$ 吸收。令 $N\to\infty$，以单调收敛和弱下半连续性得到 (33.8)，乘法规则同时给出相应指数加权原场能量。这是 Agmon 截断权重方法在原方程上的具体应用；方法参见 Agmon，*Lectures on Exponential Decay of Solutions of Second-Order Elliptic Equations*，DOI [10.1515/9781400853076](https://doi.org/10.1515/9781400853076)，这里的原场与质量估计由 (33.13)--(33.15) 给出。
+
+这些界控制任意固定多项式尾权，故 $U_E\in H_d$。另一方面，$U_E\in\mathcal H_1$ 已由第 30 节的同一物理尾部结论给出。(33.6) 的原场乘法规则产生紧环带 $L^2$ 右端；原紧光滑 core 上有 $q(U_E,\phi)=\langle C_E-EU_E,\phi\rangle$，再由原 form 连续性和 core 稠密性延拓至整个 $\mathcal H_1$。(31.3) 因而给出 (33.7) 的原算子域身份，无须假设 $PF_E\in L^2$。这与定理 31.4 使用同一表示定理步骤；该标准中间步骤见 Kato，*Perturbation Theory for Linear Operators*，Chapter VI，Section 2。
+
+对比较 wall $W$，在其实际 $p_*$ 方程上作同样的右侧能量试验，取
+
+$$
+\phi_N(x)=\min\{\alpha(e^x-e^{a+1})_+,N\}.
+$$
+
+在固定充分大的 $x\ge a$ 上，$e^{2x}$ 无权质量吸收 $kQ_n$ 和梯度损失，且
+$C[\phi_N'W]\le\alpha^2e^{2x}\|W\|_2^2$，$A$ 的正项保留。(28.5) 提供初始尾部可积性。令截断趋于无穷，得到 $W$ 的对应指数质量界。将 (33.8) 换到 $x$ 坐标并与此合并，缩小固定指数常数即可得 (33.9) 第一式。
+
+再证尾部矩 (33.9) 第二式。左侧 $W$ 有界，而 $r_T$ 的权重为
+
+$$
+e^{(4-2d)x}\|r_T\|_2^2=e^{(4-4d)x}\|Y_T\|_2^2
+\qquad(x\le-2).
+$$
+
+因 $d<1/2$，此系数在左半线有界；$A[Y_T]$ 控制其角质量。右侧的任意固定幂由 (33.9) 第一式控制。这同时说明所有下述物理配对的尾部收敛性。
+
+对任意 $v\in K$，加权空间定义及 $A\ge\lambda_0\|\cdot\|_2^2$ 给出
+
+$$
+\int_{b_0}^{\infty}e^{2d\ell}\|w_v(\ell)\|_2^2\,d\ell
+ \le C\|v\|_{H_d}^2.
+$$
+
+以 (33.5)、Cauchy--Schwarz 不等式和刚证的尾部矩估计，得到
+
+$$
+\begin{aligned}
+E|\langle U_E,v\rangle|
+ &\le C\|v\|_{H_d}
+   \left(E^2\int_{b_0}^{\infty}
+      e^{(4-2d)\ell}\|w_E(\ell)\|_2^2\,d\ell\right)^{1/2}
+       +O(E)\|v\|_{H_d}\\
+ &\le C e^{-dT}\|v\|_{H_d}.
+\end{aligned}
+\tag{33.16}
+$$
+
+最后一步的缩放因子是 $E e^{(2-d)T}=e^{-dT}$；固定有限环带项为 $O(E)\|v\|_{H_d}$，可吸收。此估计使用整个 $K$，不以辅助 $C$ 正交性删掉原物理交叉质量。
+
+由 $U_E\in H_d$ 和 $Z$ 的定义，$q(U_E,z)=0$。将 (33.7) 的弱等式用截断的 $z$ 测试，再移去远端截断。指数原场尾界、$z\in H_{-d}$ 和原加权 form 连续性保证极限合法；质量配对绝对收敛。因此得到 (33.10)，与 (33.16) 合得 (33.11) 第一式。这一配对过程不要求 $z$ 或 $v$ 属于物理 $L^2$。
+
+为计算剩余标量分量，先在比较 wall 上取任意 $\zeta\in\mathbb C$，定义弱通量
+
+$$
+\mathcal F_\zeta(x)=C(W,G_\zeta')-C(W',G_\zeta).
+$$
+
+$G_\zeta$ 解无质量的齐次柱面方程。$p_*$ 方程和 $h(\psi,u)=-s^2C(\psi,u)$ 的弱本征式给出
+
+$$
+\mathcal F_\zeta'(x)
+ =-e^{2x}\langle W(x),G_\zeta(x)\rangle_{L^2(da)}.
+\tag{33.17}
+$$
+
+指数质量界及右端能量给出一个趋向 $+\infty$ 的序列，其上 $\mathcal F_\zeta\to0$；(33.17) 右端绝对可积，所以整个右端通量极限为零。由 $G$ (28.4) 的两个强迹和 $C[\psi]=1$，左端为
+
+$$
+\mathcal F_\zeta(-\infty)
+ =C(G_\beta,G_\zeta')-C(G_\beta',G_\zeta)
+ =-4s\operatorname{Im}(\overline\beta\zeta).
+$$
+
+积分 (33.17)，得
+
+$$
+\int_{\mathbb R}e^{2x}
+       \langle W(x),G_\zeta(x)\rangle_{L^2(da)}\,dx
+ =-4s\operatorname{Im}(\overline\beta\zeta).
+\tag{33.18}
+$$
+
+此处仅以 $\psi$ 的弱本征式处理 $h$ 配对，没有把 $W$ 投影为标量；$e^{2x}$ 质量始终使用无权 $da$，包含所有更高偶角分量的质量贡献。
+
+回到原物理配对，令 $\zeta_T=be^{isT}$。由 (33.3)，
+$w_0(T+x)=G_{\zeta_T}(x)+r_0(T+x)$。尾部矩与 $r_0$ 的加权可积性，按 (33.16) 的 Cauchy--Schwarz 估计，给出 $r_0$ 项 $O(e^{-dT})$。对 $r_T$ 项，固定 $0<d'<d$，以 $R_T=(d-d')T$ 分割：在 $x\le R_T$ 上，(33.13) 和 $G_{\zeta_T}$ 的一致有界性给出
+
+$$
+\left|\int_{b_0-T}^{R_T}e^{2x}
+             \langle r_T,G_{\zeta_T}\rangle\,dx\right|
+ \le C e^{R_T}e^{-dT}=C e^{-d'T}.
+$$
+
+在 $x\ge R_T$ 上，用 (33.9) 第一式及 Cauchy--Schwarz，误差至多
+
+$$
+C(1+e^{R_T})^{1/2}e^{-\alpha_1e^{R_T}}
+ =O(e^{-d'T}).
+$$
+
+省略的左端 $x<b_0-T$ 及固定 $\eta$ 过渡区均为 $O(e^{-2T})$。因此，包含精确物理因子，
+
+$$
+E\langle U_E,f_0\rangle
+ =\frac14\int_{\mathbb R}e^{2x}
+            \langle W(x),G_{\zeta_T}(x)\rangle_{L^2(da)}\,dx
+       +O(e^{-d'T}).
+\tag{33.19}
+$$
+
+这些估计逐项控制余项及极限；不需关于 $E$ 的连续性，也没有选能量子列。将 (33.18) 代入 (33.19)，并用 (33.10)，恰得 (33.11) 的负号和系数 $-s$。
+
+最后，(31.11) 对每个充分大 $j$ 都精确给出
+
+$$
+be^{isT_j}=c_j\beta,\qquad c_j=(-1)^j|b|\in\mathbb R.
+$$
+
+所以正弦主项逐层为零，得到 (33.12) 前两式；由 $Z=K\oplus\mathbb C f_0$ 和所定义的有限维范数得到第三式。整个计算只确定同一实际残差在扇区余核上的限制。$\square$
+

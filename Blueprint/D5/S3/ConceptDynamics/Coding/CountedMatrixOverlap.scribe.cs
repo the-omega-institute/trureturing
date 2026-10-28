@@ -14,9 +14,9 @@ internal sealed class CountedMatrixOverlapDocument : IScribeDocumentDefinition
     private static Formula UV => Call("product", U, V);
     private static Formula All(Formula body, params Formula.BoundVariable[] extra) =>
         new Formula.BindMany(FormulaQuantifier.ForAll,
-            [B("n", F.Id("Nat")), B("m", F.Id("Nat")),
+            [B("n", F.Id("Nat")), B("m", F.Id("Nat")), B("p", F.Id("Nat")),
              B("U", Call("CountMat", F.Id("n"), F.Id("m"))),
-             B("V", Call("CountMat", F.Id("m"), F.Id("n"))), .. extra], body);
+             B("V", Call("CountMat", F.Id("m"), F.Id("p"))), .. extra], body);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A nonnegative matrix records numbered parallel edges. Lexicographic fiber ranks split and reassemble each product edge.",

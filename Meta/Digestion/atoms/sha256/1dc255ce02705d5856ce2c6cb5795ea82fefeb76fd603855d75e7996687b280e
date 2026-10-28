@@ -1,0 +1,14 @@
+**Definition 3.1 (Norms and the output-first Choi convention).** Fix the basis of Section 1, put $E_{ij}=|e_i\rangle\langle e_j|$, and use
+
+$$
+\begin{aligned}
+J(\Lambda)&=\sum_{i,j=0}^{D-1}\Lambda(E_{ij})\otimes E_{ij},\\
+|A\rangle\!\rangle&=\sum_{i,j=0}^{D-1}A_{ij}e_i\otimes e_j,\\
+J(X\mapsto AXA^\dagger)&=|A\rangle\!\rangle\langle\!\langle A|.
+\end{aligned} \tag{3.1}
+$$
+
+The output factor comes first, with no division by $D$. Coordinate conjugation and transpose ${}^{\mathsf T}$ refer to this basis. Interchanging the tensor factors converts the input-first convention mentioned in O, Theorem 2.1 to this one. The reset map $X\mapsto\tau\operatorname{Tr}(FX)$ therefore has Choi matrix $\tau\otimes F^{\mathsf T}$.
+
+The norms $\|\cdot\|_1,\|\cdot\|_2,\|\cdot\|_\infty$ denote trace norm, Hilbert–Schmidt norm and operator norm. Eigenvalues of $B\ge0$ are numbered $\lambda_1(B)\ge\cdots\ge\lambda_D(B)\ge0$. A CP map $T$ is subunital if $T(I)\le I$. The following results concern arbitrary complex maps; the real Gramian constructions in O are not assumed. The full-map metric is separate from the scalar-output and actual-history results in Sections 2.4–2.5.
+

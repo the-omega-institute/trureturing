@@ -37,6 +37,30 @@ internal sealed class ResetHistoryKernelDocument : IScribeDocumentDefinition
         "Finite alternating subgroups and their simultaneous finite-support product in the original Reset kernel.",
         H("Original dynamics and cyclic arithmetic"),
         Blocks(
+            Entry("rho_time", "Original full-rho commutation",
+                new Formula.BindMany(FormulaQuantifier.ForAll,
+                    [B("q", I("Nat")), B("hq", Lt(Num(0), I("q"))),
+                     B("h", Call("ResetFullAut", I("q"))), B("x", Call("Native", I("q")))],
+                    Equal(Call("rho", I("q"), I("hq"), I("h"), Call("resetTheta", I("q"), I("x"))),
+                        Call("resetTheta", I("q"), Call("rho", I("q"), I("hq"), I("h"), I("x"))))),
+                "This existing owning argument applies the actual representation to the literal "
+                + "fullAutSubgroup shift-commutation law and uses rho_unitShift. It is public for "
+                + "ResetNativeUnitNormalForm's complete original-rho consumer.", DescribeRole.Theorem),
+            Entry("centralizingMap_scalar", "The consumed general scalar argument",
+                new Formula.BindMany(FormulaQuantifier.ForAll,
+                    [B("q", I("Nat")), B("hq", Lt(Num(0), I("q"))),
+                     B("A", Call("IntLinearEnd", Call("Native", I("q")))),
+                     B("ht", Call("commutesWithForwardTime", I("q"), I("A"))),
+                     B("b", Call("QF", I("q")))],
+                    Equal(Call("centralizingMap", I("q"), I("hq"), I("A"), I("ht"), I("b")),
+                        Call("multiply", I("b"),
+                            Call("centralizingMap", I("q"), I("hq"), I("A"), I("ht"), Num(1))))),
+                "commutesWithForwardTime(q,A) means forall x, A(resetTheta(q,x))=resetTheta(q,A(x)). "
+                + "centralizingMap transports A by nativeIntEquiv and promotes it to Int[X]-linearity "
+                + "with LinearMap.ofAEval. Polynomial-quotient surjectivity gives the scalar law. "
+                + "The original chartMap and chartMap_scalar specialize this same owning argument "
+                + "to actual rho. ResetNativeUnitNormalForm consumes it for both A and its inverse. "
+                + "This generalized helper supplies no new component-unit classification.", DescribeRole.Theorem),
             Paragraph(Text(
                 "The original rho acts on DimensionGroup(resetMatrix q) by actual beam "
                 + "pushforward. Every full history automorphism commutes with UNIT shift; "

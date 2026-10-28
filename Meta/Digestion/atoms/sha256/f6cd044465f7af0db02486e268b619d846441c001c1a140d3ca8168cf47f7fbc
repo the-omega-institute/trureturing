@@ -1,0 +1,36 @@
+**定理 34.2（两个原始五点轮筛的整格共轭）。** 对上述两个 $H$，映射
+$$
+\begin{aligned}
+\operatorname{enc}(y)&=(-y_2-y_3,\ y_0,\ y_2,\ y_1+y_3),\\
+\operatorname{dec}(c)&=(c_1,\ c_0+c_2+c_3,\ c_2,\ -c_0-c_2,\ -c_1-c_2-c_3)
+\end{aligned}
+\tag{34.3}
+$$
+是 $L_5$ 与 $\mathbb Z^4$ 之间的互逆整数线性同构，并且
+$$
+\operatorname{enc} A_5^H\operatorname{dec}=F\oplus F,\qquad
+\operatorname{enc} G_5^H\operatorname{dec}=F^2\oplus F^2.
+\tag{34.4}
+$$
+因此这个共轭覆盖整个零和整格，而非有限指数的子格。
+
+证明。$H_A$、$H_B$ 模五的实际合法集分别为 $\{1,2\}$、$\{2,3\}$。
+若 $Ue_j=e_{j+1}$，相应卷积分别为 $U+U^2$、$U^2+U^3$。因为 $U$ 是
+酉循环移位，两者的实际 Gram 都是 $2I+U+U^{-1}$，所以两者的
+$A_5^H$ 都等于 $I+U+U^{-1}$。
+
+对任意 $c\in\mathbb Z^4$，式(34.3)中五个解码坐标的和为零，直接代入编码
+给 $\operatorname{enc}(\operatorname{dec}(c))=c$。对任意 $y\in L_5$，
+前四个解码坐标分别恢复 $y_0,y_1,y_2,y_3$；第五个坐标由
+$y_4=-y_0-y_1-y_2-y_3$ 恢复。因此另一侧也互逆。
+
+将 $I+U+U^{-1}$ 作用到式(34.3)的解码向量，逐坐标相加得到
+$$
+A_5^H\operatorname{dec}(c)
+=\operatorname{dec}(c_0+c_1,c_0,c_2+c_3,c_2).
+\tag{34.5}
+$$
+这就是两个实际 Fibonacci 块。第33节在零和空间上的
+$G_5^H=(A_5^H)^2$ 给出第二个等式。全部坐标变换及其逆都是整数映射，
+完成整格共轭的证明。这个坐标变换不要求正交。∎
+

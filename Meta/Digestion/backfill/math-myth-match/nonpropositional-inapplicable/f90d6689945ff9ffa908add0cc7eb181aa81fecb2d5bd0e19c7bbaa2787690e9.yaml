@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f90d6689945ff9ffa908add0cc7eb181aa81fecb2d5bd0e19c7bbaa2787690e9
+  normalized_sha256: sha256:f90d6689945ff9ffa908add0cc7eb181aa81fecb2d5bd0e19c7bbaa2787690e9
+cas_ref: sha256:f90d6689945ff9ffa908add0cc7eb181aa81fecb2d5bd0e19c7bbaa2787690e9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 转述鸯掘摩罗承受后果的经文及其跨传统解释限制，不作概率或因果数学断言。
+    previous_atom_id: 2bdb27ea9327fd3202615631d42f710fd2d81c142065ec1b4037e058285499f3
+    next_atom_id: 086c99254ee6eb29af61fbd8136da62789007c5d2d2e473c1b6fd22a3cd08acc

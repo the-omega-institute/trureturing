@@ -1,0 +1,64 @@
+## 186. FIB 路径测度上的外加最优输运、梯度流与扩散
+
+FIB 给出离散状态和允许接续关系，但不确定路径概率、输运代价、连续时间、熵泛函和边界交换。给定外加度量 \(d\)，经典离散 Wasserstein 距离为
+$$
+W_{2,d}^2(\mu,\nu)
+=\min_{\gamma\in\Pi(\mu,\nu)}
+\sum_{x,y}d(x,y)^2\gamma(x,y).
+\tag{186.1}
+$$
+固定有限集合上的这一距离不自动带来连续时间梯度流；需要另选图上的活动边、跃迁率和通量结构。
+
+在无向活动边 \(E\) 上选择正参考概率 \(\pi\)、可逆速率 \(q_{xy}\) 和
+$$
+c_{xy}=\pi_xq_{xy},
+\qquad
+\pi_xq_{xy}=\pi_yq_{yx}.
+$$
+令 \(\rho_x=\mu_x/\pi_x\)，并用对数平均
+$$
+\theta(a,b)=\frac{a-b}{\log a-\log b}
+$$
+定义通量 \(j_{xy}=-j_{yx}\) 与连续性方程
+$$
+\dot\mu_x+\sum_yj_{xy}=0.
+$$
+动态输运作用量为
+$$
+\mathcal A(\mu,j)
+=\frac12\sum_{x,y}
+\frac{j_{xy}^2}{c_{xy}\theta(\rho_x,\rho_y)}.
+\tag{186.2}
+$$
+在该外加图输运结构下，熵
+$$
+\mathcal H(\mu\mid\pi)
+=\sum_x\mu_x\log\frac{\mu_x}{\pi_x}
+$$
+的梯度流恰好为可逆 Markov 链的前向方程
+$$
+\dot\mu_x=\sum_y(\mu_yq_{yx}-\mu_xq_{xy}).
+\tag{186.3}
+$$
+沿演化，
+$$
+\frac d{dt}\mathcal H(\mu_t\mid\pi)
+=-\frac12\sum_{x,y}
+c_{xy}(\rho_x-\rho_y)
+(\log\rho_x-\log\rho_y)\le0.
+\tag{186.4}
+$$
+
+因此，在明确的可逆速率和迁移率下，图热方程是相对熵的梯度流；改变边速率会改变扩散时间尺度，即使 FIB 可行路径完全相同。图不连通时，各连通分量的质量分别守恒，不能宣称全局唯一平衡。
+
+加入外加势 \(V\) 和参考测度 \(m\)，自由能可写为
+$$
+\mathcal F(\mu)
+=\sum_x\mu_x\log\frac{\mu_x}{m_x}
++\sum_xV_x\mu_x.
+\tag{186.5}
+$$
+相应梯度流可导向带漂移的离散 Fokker–Planck 方程。若速率不满足详细平衡，熵流包含非平衡驱动项，梯度流结构和单调性需重新证明。连续 Wasserstein 极限还需给出嵌入、尺度缩放、紧性和边界通量。
+
+本节结论是：FIB 提供离散状态与接缝；最优输运距离、熵梯度流、热方程和 Fokker–Planck 演化由代价度量、迁移率、参考测度、势能及边界决定。
+

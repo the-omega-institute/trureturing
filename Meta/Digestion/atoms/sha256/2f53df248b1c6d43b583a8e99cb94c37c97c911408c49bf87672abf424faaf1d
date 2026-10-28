@@ -1,0 +1,62 @@
+**定义 415.2（同源原函数与经典尾项的对应）。** 复用 §413 的 $k,h$，并令
+
+$$
+K_\varepsilon(\tau)=
+\frac{\mathscr G_\varepsilon^\circ(1-\varepsilon/2+i\tau)}
+{\varepsilon/2-i\tau},\qquad
+P_\varepsilon(u)=e^{-\varepsilon u/2}
+\frac1{2\pi}\int_{\mathbb R}K_\varepsilon(\tau)e^{i\tau u}d\tau.
+\tag{415.2}
+$$
+
+§411 已支付的共同局部界、紧环带界及原始高频供应器，直接给 $K_\varepsilon\to k$ 于 $L^1(\mathbb R)$。局部的 $|z-1|$ 精确抵消 $|1-z|$；高频仍由（411.12）同型的可积包络控制。标准 Fourier 范数估计遂给未乘指数的逆变换在整个实轴一致收敛。由于 $h\in C_0(\mathbb R)$，对每个固定 $u_0>0$，
+
+$$
+\sup_{u\ge u_0}|P_\varepsilon(u)-h(u)|\longrightarrow0.
+\tag{415.3}
+$$
+
+乘指数后的统一性不由点态极限单独取得：在有限 $[u_0,R]$ 上用指数的一致极限，在 $[R,\infty)$ 上用 $h$ 的小尾及 $0<e^{-\varepsilon u/2}\le1$。
+
+§92.3 已使用经典 Chebyshev 平滑尾项
+
+$$
+H(u)=J(e^u)=\int_{e^u}^\infty\frac{\psi(t)-t}{t^2}dt,
+\qquad u\ge0.
+\tag{415.4}
+$$
+
+这里 $\psi$ 是累计全部素数幂的 Chebyshev 函数。直接复用 [既有有效 PNT 来源](../../../Library/Weil/primenumbertheoremand2026medium.md)，$E(u)=e^{-u}\psi(e^u)-1$ 和 $H$ 可积，且 $H\in C_0([0,\infty))$。本节只核对它与 §413 的实际 Fourier 读数是否相同。
+
+对同一 $I_\psi(e^\ell)=\int_\ell^\infty E(u)v(u)du$ 使用经典分部积分，有
+
+$$
+I_\psi(e^\ell)=v(\ell)H(\ell)
++\int_\ell^\infty v'(u)H(u)du,
+\qquad v(u)=\frac1u+\frac1{u^2}.
+\tag{415.5}
+$$
+
+与（413.3）相比，$d=h-H$ 满足 $v(\ell)d(\ell)+\int_\ell^\infty v'd=0$。积分项可微，故此式先使连续的 $d$ 可微，再给 $v d'=0$。两者在无穷远都趋零，常数 $d$ 因而为零。因此经典尾项直接识别当前来源：
+
+$$
+\boxed{h(u)=H(u)\quad(u>0).}
+\tag{415.6}
+$$
+
+这不是新的 Chebyshev 显式公式或 RH 判据。数值归一化直接复用 [Lay，arXiv:1505.03589v1，Lemma 4 证明中的未编号身份和常数计算，printed p.6](../../../Library/Analytic/lay2015mertenssignchanges.md)：令 $\psi_r(x)=\sum_{n\le x}\Lambda(n)/n$，采用与 $\psi$ 相同的端点约定，则
+
+$$
+H(u)=u-(1+\gamma)+e^{-u}\psi(e^u)-\psi_r(e^u),
+\qquad H(0)=-(1+\gamma).
+\tag{415.7}
+$$
+
+这是原文已给出的无条件原函数身份，不以含误差项的原文式（9）替代精确公式，也不重复推导其 Laurent 常数。在 $0<u<\log2$ 上两个计数都为零；结合（415.6）和既有 Fourier 连续性，得到
+
+$$
+\boxed{h(u)=u-(1+\gamma)\quad(0<u<\log2),
+\qquad h(0)=-(1+\gamma).}
+\tag{415.8}
+$$
+

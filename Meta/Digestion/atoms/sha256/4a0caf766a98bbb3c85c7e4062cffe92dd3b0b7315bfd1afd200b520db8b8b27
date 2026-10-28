@@ -1,0 +1,182 @@
+**Theorem 119.2 (attained stochastic minimum and equal deterministic infimum).**
+For each fixed parameter tuple of Definition 119.1,
+$\mathcal L_{\rm stoch}$ is compact and
+
+$$
+\mathcal L_{\rm stoch}=\overline{\mathcal L_{\rm det}},\qquad
+\min_{f\in\mathcal F}d_f=D_{\rm stoch}=D_{\rm det}\ge\delta>0,
+\tag{119.3}
+$$
+
+where $\delta$ is any fixed choice supplied by Definition 118.2 and
+Theorem 118.3 for these source parameters and times. Every stochastic pair
+law is a limit of pair laws obtained by using one deterministic Borel
+partition at both epochs. The conclusion asserts neither an attaining
+partition nor a computed optimum value. Whether such a partition exists
+for every permitted tuple, and hence whether stochastic attainment,
+equality of infima and deterministic attainment all hold together,
+remains unresolved.
+
+**Proof.** Write $\mathscr E[v]=\mathscr E[v,v]$ for the full form (115.15).
+We first prove the continuity needed for the actual nonstationary law.
+Suppose $0\le u_n\le1$ and $u_n\to u$ weak-star in $L^\infty(m)$.
+The limit lies in the same order interval. Since $m(G)=1$, every $L^2(m)$
+test lies in $L^1(m)$, so this convergence also holds weakly in $L^2(m)$.
+Put $v_n=T_\Delta u_n$. The Markov contraction of Theorem 115.3 and
+spectral calculus for the actual nonnegative self-adjoint $K$ give
+
+$$
+0\le v_n\le1,\qquad v_n\in\mathscr V,\qquad
+\mathscr E[v_n]
+ \le\sup_{\lambda\ge0}\lambda e^{-2\Delta\lambda}\|u_n\|_2^2
+ \le\frac1{2\mathrm e\Delta}.
+\tag{119.4}
+$$
+
+Here $\mathrm e$ is the exponential constant. This bound uses the entire
+form, including its source summand, rather than a killed or punctured-core
+substitute. On any bounded smooth annulus $D$ with $\overline D\subset M$,
+Theorem 115.2 bounds $h$ and $h^{-1}$. Formula (115.15) bounds the weak
+derivatives $X_1v_n,X_2v_n,X_3v_n,\partial_wv_n$ there. In the original
+coordinates, $\partial_x=X_1$, $\partial_z=X_3$ and
+$\partial_y=X_2-x\partial_w$; boundedness of $x$ on $D$ and $a,\eta>0$
+therefore give a uniform ordinary $H^1(D)$ bound, exactly the local
+ellipticity of (115.10) and (118.9)–(118.10).
+
+Classical local Rellich compactness gives precompactness in $L^2(D)$,
+hence locally in $L^2(m)$ by the bounds on $h$. Exhaust $M$ by compact
+annuli $C_R=\{1/R\le|x|\le R\}$, each contained in a slightly larger
+smooth punctured annulus. A diagonal subsequence has a local $L^2(m)$
+limit $v$, with $0\le v\le1$ by a further almost-everywhere subsequence.
+Because $m$ is finite and $m(\{e\})=0$,
+
+$$
+m(G\setminus C_R)\longrightarrow0,\qquad
+\int_{G\setminus C_R}|v_n-v|^2\,dm\le m(G\setminus C_R).
+\tag{119.5}
+$$
+
+The tails here include both the shrinking source neighborhood and the
+large-radius region. Local convergence and (119.5) give global strong
+$L^2(m)$ convergence along this subsequence. Bounded linearity of
+$T_\Delta$ already gives $v_n\rightharpoonup T_\Delta u$ in $L^2(m)$,
+so the strong limit is $T_\Delta u$. Every subsequence admits such a
+strongly convergent further subsequence, and every strong cluster limit
+has this same value. If the whole sequence failed to converge strongly,
+a subsequence at a fixed positive distance from that value would
+contradict this property. Thus
+
+$$
+u_n\overset{w^*}{\longrightarrow}u,\quad 0\le u_n\le1
+\quad\Longrightarrow\quad
+T_\Delta u_n\longrightarrow T_\Delta u\quad\hbox{in }L^2(m).
+\tag{119.6}
+$$
+
+This is compactness on the bounded emission order interval. It asserts
+no compactness of $T_\Delta$ on the full $L^2$ unit ball and uses no global
+heat-kernel premise.
+
+For coordinatewise weak-star convergence $f_n\to f$ in the emission
+simplex, split the actual pair-coordinate difference as
+
+$$
+\begin{aligned}
+\nu_{f_n}(y,z)-\nu_f(y,z)
+ &=\int_G g_t f_{n,y}\,T_\Delta(f_{n,z}-f_z)\,dm\\
+ &\quad+\int_G g_t(f_{n,y}-f_y)\,T_\Delta f_z\,dm.
+\end{aligned}
+\tag{119.7}
+$$
+
+The first term is bounded in absolute value by
+$\|g_t\|_2\|T_\Delta(f_{n,z}-f_z)\|_2$, which tends to zero by (119.6).
+Here $g_t\in L^2(m)$ is precisely the actual source density of (117.2).
+The second term tends to zero against the fixed $L^1(m)$ test
+$g_tT_\Delta f_z$, since $0\le T_\Delta f_z\le1$.
+Thus the pair map and the finite sum $d_f$ are continuous for this
+convergence; two merely weak-star limits have not been multiplied.
+
+Consider now the simplex $\mathcal S$ of four $L^\infty(m)$ classes with
+$0\le f_y\le1$ and $\sum_y f_y=1$ almost everywhere. Positivity and the
+sum constraint are weak-star closed, as seen by testing against $L^1(m)$
+functions. Classical Banach–Alaoglu makes $\mathcal S$ compact in the
+finite product weak-star topology. The finite Borel measure $m$ on
+$\mathbb R^4$ has separable $L^1(m)$, so this compact space is metrizable.
+Consequently the sequential continuity just proved is continuity on
+$\mathcal S$, and its pair-law image is compact.
+
+Every class tuple in $\mathcal S$ has Borel representatives. Combine
+their exceptional Borel $m$-null sets, including the failures of the
+bounds and sum constraint, into one set and assign a fixed label there.
+The resulting tuple belongs to the exact pointwise class $\mathcal F$.
+Both positive-time marginals are absolutely continuous with respect to
+$m$, with densities $g_t,g_{t+\Delta}$ by Theorem 117.2. The probability
+that either sampled state lies in this null set is zero, so this repair
+preserves the pair law. It asserts nothing about repairing the time-zero
+law $\delta_e$. Hence the image is exactly $\mathcal L_{\rm stoch}$.
+Its compactness and continuity of total variation give a minimum in
+$\mathcal F$ (equivalently, apply (119.7) to a convergent subsequence of
+a minimizing sequence).
+
+It remains to approximate every $f\in\mathcal F$ by partitions with the
+same law limit. Choose increasing finite Borel partitions $\mathcal P_n$
+generating the Borel sigma algebra, for example those generated by the
+first $n$ members of a countable Borel generator of $\mathbb R^4$.
+On each cell $C$, split it into four Borel pieces $C_y$ with
+$m(C_y)=\int_C f_y\,dm$. To justify the splitting directly, every Borel
+remainder $E$ has continuous cumulative mass
+$s\mapsto m(E\cap\{x_1\le s\})$, since $m=h^2\mu$ is absolutely
+continuous with respect to Lebesgue measure and coordinate hyperplanes
+have zero mass. Its endpoint limits are zero and $m(E)$, so it attains
+each intermediate mass. Remove the required pieces successively, using
+an empty or full remainder at the endpoints. The sum constraint supplies
+exactly the remaining mass for the last piece.
+
+Let $A_{n,y}$ be the union of the $y$-pieces over the finitely many cells.
+These form a Borel partition of all $G$. For every $\mathcal P_n$-simple
+test $\psi$, the prescribed cell integrals give
+$\int\psi(\mathbf1_{A_{n,y}}-f_y)\,dm=0$. For any $\phi\in L^1(m)$,
+choose $\mathcal P_n$-simple $\psi_n$ with $\|\phi-\psi_n\|_1\to0$.
+Such approximants exist because the partitions refine and generate the
+sigma algebra: their simple functions are $L^1$ dense. Then
+
+$$
+\left|\int_G\phi(\mathbf1_{A_{n,y}}-f_y)\,dm\right|
+ \le\|\phi-\psi_n\|_1\longrightarrow0.
+\tag{119.8}
+$$
+
+Thus the indicator tuples converge coordinatewise weak-star to $f$.
+Use this same partition at both epochs. Formula (119.7) gives entrywise
+$\nu_{\mathbf1_{A_n}}\to\nu_f$ and $d_{\mathbf1_{A_n}}\to d_f$.
+It follows that $\mathcal L_{\rm stoch}\subset\overline{\mathcal L_{\rm det}}$;
+the reverse inclusion follows from inclusion of deterministic tuples and
+the compactness, hence closedness, of $\mathcal L_{\rm stoch}$.
+Equivalently, $D_{\rm det}\le d_f$ for every $f\in\mathcal F$, while
+$D_{\rm stoch}\le D_{\rm det}$ follows from inclusion. This proves the
+equality in (119.3). The lower bound is exactly Theorem 118.3, unchanged.
+
+The splitting used here is classical atomless splitting; finite-linear
+background is [Dvoretzky–Wald–Wolfowitz, §3, Theorem 4 and Lemma 2](https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf).
+It preserves the displayed cell integrals, not the quadratic pair law
+exactly. Fractional-partition antecedents are
+[Borgs–Chayes–Lovász–Sós–Vesztergombi, §4.1.2, Lemmas 4.2–4.3 and Example 4.4](https://annals.math.princeton.edu/wp-content/uploads/annals-v176-n1-p02-p.pdf)
+and [Borgs–Chayes–Cohn–Zhao, §5.3, Proposition 5.5 and Lemmas 5.7–5.8](https://arxiv.org/pdf/1408.0744v1).
+Their fractional labels, ordinary partitions and two-point integrals
+correspond to $f$, $\mathbf1_A$ and $\nu_f$ here, but their symmetric
+graphon settings do not replace the nonstationary weighting by the
+actual $g_t$ or the full-form smoothing bridge (119.4)–(119.7).
+Banach–Alaoglu, local Rellich and splitting are credited intermediate
+methods in this source-specific deduction, not new general compactness
+or exact quadratic purification theorems.
+
+Finally the indicator tuples are not weak-star closed: applying the
+same splitting construction to $f_0=f_1=1/2$, $f_3=f_B=0$ gives partitions
+converging to a non-indicator tuple. Compactness of the stochastic image
+and the approximation above therefore do not establish that a minimizing
+law has an indicator representative. Nonclosedness alone also does not
+exclude such a representative for the exact target (119.2). Deterministic
+attainment, and the universal conjunction containing it, remain unresolved.
+$\square$
+

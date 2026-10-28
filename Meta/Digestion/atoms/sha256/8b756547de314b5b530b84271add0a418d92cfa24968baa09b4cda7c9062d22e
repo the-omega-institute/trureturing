@@ -1,0 +1,51 @@
+**命题 6.5（同一分支概率不决定相干提升）。**
+即使全部普通输出分支相同，保留相干记录的总过程仍可能不同。
+
+证明。
+取一维输入，两个普通分支均为 $X\mapsto X/2$。
+两种记录等距为
+$V_+z=z|+\rangle$ 与 $V_-z=z|-\rangle$。
+它们在记录基 $|0\rangle,|1\rangle$ 上给相同概率，
+但若允许同一个后续 $|+\rangle\langle +|$ 效果，概率分别为一和零。
+普通分支只固定记录密度矩阵的对角块，没有固定交叉块。
+证毕。
+
+一般粗输出仪器为
+
+$$
+\mathcal I_o(X)=\sum_{\alpha}K_{o\alpha}XK_{o\alpha}^\dagger,
+\qquad \sum_{o,\alpha}K_{o\alpha}^\dagger K_{o\alpha}=I.
+$$
+
+一个结果 $o$ 可以需要多个 Kraus 算子。定理 6.2 的单算子分支形式可用于细分记录 $(o,\alpha)$，
+随后按实际仪器遗忘细分指标；不能直接断言每个粗结果都有一个 $M_o$。
+细分的数学表示不授权读取或相干操纵环境指标。
+若输出保留相干记录 $R$，必须另供共同 CPTP 提升 $\Lambda$，满足
+
+$$
+\Lambda_{oo'}(X)
+=(I\otimes\langle o|)\Lambda(X)(I\otimes|o'\rangle),
+\qquad\Lambda_{oo}=\mathcal I_o.
+$$
+
+普通分支只固定对角块。甚至单 Kraus 情形的
+$V_\vartheta\psi=\sum_o e^{i\vartheta_o}M_o\psi\otimes|o\rangle$
+也使交叉块乘上 $e^{i(\vartheta_o-\vartheta_{o'})}$ 而不改变任何普通分支。
+对供应的两个提升及摘要 $\mathcal E$，完整接续须逐块满足
+$\mathcal E_{t+1}\Lambda_{oo'}=\widehat\Lambda_{oo'}\mathcal E_t$；
+只检查 $o=o'$ 不足。这是 [memory](#ref-memory) §14 的直接应用，
+由记录矩阵单位的独立性逐块比较即得；若后继只访问经典记录，交叉块不参与该受限任务。
+
+这也解释了为什么静态图的同一终点可能需要保留不同路径的相位。
+若可相干选择路径 $p,q$ 并重合控制，则
+
+$$
+p_+=\frac{1+\Re\langle U_p\psi,U_q\psi\rangle}{2}.
+$$
+
+即使 $U_q\psi=e^{\mathrm{i}\phi}U_p\psi$，终态射线相同，
+仍有 $p_+=(1+\cos\phi)/2$。
+控制与相位参考的存在是该任务的前提。
+
+<a id="thm:interference"></a>
+

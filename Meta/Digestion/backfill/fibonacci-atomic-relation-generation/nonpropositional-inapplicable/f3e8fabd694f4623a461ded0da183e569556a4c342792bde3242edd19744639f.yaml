@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:f3e8fabd694f4623a461ded0da183e569556a4c342792bde3242edd19744639f
+  normalized_sha256: sha256:f3e8fabd694f4623a461ded0da183e569556a4c342792bde3242edd19744639f
+cas_ref: sha256:f3e8fabd694f4623a461ded0da183e569556a4c342792bde3242edd19744639f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条由第101节标题与导航组成；两条子项已先行按非命题结算，不含额外数学断言。
+    previous_atom_id: 205c7ccda61dc4dd27059d17f856d8c8dcbc29a858a68f621b6f6e6a9d47702b
+    next_atom_id: f4a77ef1e54fcc951243e7601b768936adb82a1d85402888b24ecbe2bb1c3df3
+  chain_atoms:
+    - 8227553a0e29a30a304fe97896c29614c8efc735f08aaed1fe3a8366fe4368a5
+    - e64d5f459481321205146523411bdbbf804cba532eb2c6563c0381975b5c6296

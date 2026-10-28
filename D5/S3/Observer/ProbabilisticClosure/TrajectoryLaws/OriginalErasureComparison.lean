@@ -47,7 +47,7 @@ def bitPredictor {Ω E : Type*} [MeasurableSpace Ω] [MeasurableSpace E]
     (μ : Measure Ω) [IsProbabilityMeasure μ] (x : Ω → Bool) (o : Ω → E) : E → ℝ :=
   fun e => (condDistrib x o μ e).real {true}
 
-private theorem bitPredictor_condExp {Ω E : Type*} [MeasurableSpace Ω] [MeasurableSpace E]
+theorem bitPredictor_condExp {Ω E : Type*} [MeasurableSpace Ω] [MeasurableSpace E]
     (μ : Measure Ω) [IsProbabilityMeasure μ] (x : Ω → Bool) (o : Ω → E)
     (hx : Measurable x) (ho : Measurable o) :
     (fun ω => bitPredictor μ x o (o ω)) =ᵐ[μ]
@@ -80,7 +80,7 @@ def rightRisk (θ : Presentation H) (r : ℕ) : ℝ :=
 def erasureTail (θ : Presentation H) (R : ℕ) : ℝ≥0∞ :=
   ∑' n : ℕ, (ENNReal.ofReal (leftRisk θ (R+n)) + ENNReal.ofReal (rightRisk θ (R+n)))
 
-private theorem visible_conditional_pullback (θ : Presentation H)
+theorem visible_conditional_pullback (θ : Presentation H)
     {E : Type*} [MeasurableSpace E] (o : (ℤ → Bool) → E) (ho : Measurable o) :
     (fun z : PathSpace H => bitPredictor (visibleLaw θ : Measure _) (fun z => z 0) o (o z.2)) =ᵐ[(jointLaw θ : Measure (PathSpace H))]
       (jointLaw θ : Measure (PathSpace H))[fun z => erasedBit z.2 |
@@ -117,14 +117,14 @@ private theorem maximizers_nonempty {Q : Type*} [Fintype Q] [Nonempty Q]
 
 /-- A fixed finite ordering selects the first maximizing class for every word.
 The rule is total even on a zero-mass word. -/
-private def mapClassifier {Ω Q W : Type*} [MeasurableSpace Ω] [MeasurableSpace Q]
+def mapClassifier {Ω Q W : Type*} [MeasurableSpace Ω] [MeasurableSpace Q]
     [MeasurableSpace W] [Fintype Q] [Nonempty Q]
     (μ : Measure Ω) (q : Ω → Q) (w : Ω → W) : W → Q := fun b =>
   letI : LinearOrder Q := LinearOrder.lift' (Fintype.equivFin Q) (Fintype.equivFin Q).injective
   (Finset.univ.filter (fun a => ∀ j, cellMass μ q w b j ≤ cellMass μ q w b a)).min'
     (maximizers_nonempty (cellMass μ q w b))
 
-private theorem mapClassifier_max {Ω Q W : Type*} [MeasurableSpace Ω] [MeasurableSpace Q]
+theorem mapClassifier_max {Ω Q W : Type*} [MeasurableSpace Ω] [MeasurableSpace Q]
     [MeasurableSpace W] [Fintype Q] [Nonempty Q]
     (μ : Measure Ω) (q : Ω → Q) (w : Ω → W) (b : W) (a : Q) :
     cellMass μ q w b a ≤ cellMass μ q w b (mapClassifier μ q w b) := by
@@ -246,14 +246,13 @@ private theorem projection_square_bound {Ω A B : Type*} [MeasurableSpace Ω]
     have hc := integral_norm_condExp_rpow_le (μ := μ) (m := MeasurableSpace.comap a inferInstance)
       (p := (2 : ℝ)) (by norm_num)
       (by simpa only [Real.rpow_two] using
-        ((memLp_two_iff_integrable_sq_norm (hf.sub hp).1).mp (hf.sub hp)))
+        ((memLp_two_iff_integrable_sq_norm (hf.sub hp).aestronglyMeasurable).mp (hf.sub hp)))
     simp only [Real.rpow_two,Real.norm_eq_abs,sq_abs] at hc
     convert hc using 1
     · apply integral_congr_ae
       filter_upwards [he] with ω hω
       rw [hω]
       rfl
-    · rfl
   have hmin := D5.S3.ConceptDynamics.Prediction.ConditionalExpectationOptimality.conditional_expectation_minimizes_mean_square_error μ b f h hb hf hh hhLp
   have hproj : (↑(condExpL2 ℝ ℝ hb.comap_le (hf.toLp f)) : Lp ℝ 2 μ) = hp.toLp p := by
     apply Lp.ext
@@ -332,7 +331,7 @@ private theorem screened_comparison
       nlinarith [sq_nonneg (g (q ω,v ω)+g (h (b ω),vb (b ω))),
         mul_nonneg hbnd.1 hbnd'.1]
   have hi : Integrable (fun ω => (f ω-k (b ω))^2) μ :=
-    (memLp_two_iff_integrable_sq (hfLp.sub hkLp).1).mp (hfLp.sub hkLp)
+    (memLp_two_iff_integrable_sq (hfLp.sub hkLp).aestronglyMeasurable).mp (hfLp.sub hkLp)
   have hbound := integral_mono hi ((integrable_const (1 : ℝ)).indicator hs) hdom
   rw [integral_indicator_const 1 hs,smul_eq_mul,mul_one] at hbound
   exact (ENNReal.ofReal_le_ofReal (hp.trans hbound)).trans_eq
@@ -393,7 +392,7 @@ private theorem right_exterior_factor (r : ℕ) (z : PathSpace H) :
     push_cast
     omega
 
-private theorem bitPredictor_measurable {Ω E : Type*}
+theorem bitPredictor_measurable {Ω E : Type*}
     [MeasurableSpace Ω] [MeasurableSpace E]
     (μ : Measure Ω) [IsProbabilityMeasure μ] (x : Ω → Bool) (o : Ω → E) :
     Measurable (bitPredictor μ x o) :=

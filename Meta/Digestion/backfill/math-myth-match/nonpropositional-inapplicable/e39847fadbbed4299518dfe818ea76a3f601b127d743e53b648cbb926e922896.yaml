@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e39847fadbbed4299518dfe818ea76a3f601b127d743e53b648cbb926e922896
+  normalized_sha256: sha256:e39847fadbbed4299518dfe818ea76a3f601b127d743e53b648cbb926e922896
+cas_ref: sha256:e39847fadbbed4299518dfe818ea76a3f601b127d743e53b648cbb926e922896
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Augustine on memory, sound and referent. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: d3b32fe02d0a60b9fc33ca806eabe107c90c4b6b71c111d7badfface2ff692c6
+    next_atom_id: 965b0130a94c5d75a061e3ef199d643e4eb75711f2b003abd7a138ec3fe2edc7

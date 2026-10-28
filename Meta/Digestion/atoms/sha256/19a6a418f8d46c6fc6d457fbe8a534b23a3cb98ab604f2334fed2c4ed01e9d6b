@@ -1,0 +1,24 @@
+### 定理 389.2（并行乘积误差的参数范围）
+
+定理 251.2 的乘积界需要
+
+$$
+0\le\varepsilon_A\le1,
+\qquad
+0\le\varepsilon_B\le1.
+$$
+
+更一般地，对任意非负误差上界，应先令
+
+$$
+\varepsilon_i^{\mathrm{clip}}=\min\{1,\varepsilon_i\},
+$$
+
+再使用
+
+$$
+D_{\mathrm{TV}}(P_A\otimes P_B,\bar P_A\otimes\bar P_B)
+\le
+1-(1-\varepsilon_A^{\mathrm{clip}})(1-\varepsilon_B^{\mathrm{clip}}).
+$$
+

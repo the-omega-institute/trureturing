@@ -1,0 +1,6 @@
+下一步应补入黄金子移位的唯一遍历性，并研究该 cocycle 的：
+
+* top Lyapunov exponent 是否与起点无关；
+* projective stationary direction 是否依赖起点；
+* odd holonomy Casimir 是否能进入 Weil 标量通道。
+

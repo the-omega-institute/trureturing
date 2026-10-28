@@ -9,6 +9,7 @@
 import Mathlib.Algebra.Polynomial.Inductions
 import Mathlib.Data.Nat.Digits.Defs
 import Mathlib.Data.Nat.MaxPowDiv
+import Mathlib.Data.Nat.PadicValNat
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -120,16 +121,16 @@ private theorem natDegree_D_le (P : Polynomial Int) : (D P).natDegree <= P.natDe
 
 def wt (n : Nat) : Nat := (Nat.digits 2 n).sum
 
-private theorem wt_zero : wt 0 = 0 := by simp [wt]
+theorem wt_zero : wt 0 = 0 := by simp [wt]
 
-private theorem wt_even (n : Nat) : wt (2 * n) = wt n := by
+theorem wt_even (n : Nat) : wt (2 * n) = wt n := by
   by_cases hn : n = 0
   · simp [hn]
   · unfold wt
     rw [Nat.digits_base_mul (by decide) (Nat.pos_of_ne_zero hn)]
     simp
 
-private theorem wt_odd (n : Nat) : wt (2 * n + 1) = wt n + 1 := by
+theorem wt_odd (n : Nat) : wt (2 * n + 1) = wt n + 1 := by
   unfold wt
   rw [Nat.add_comm (2 * n), Nat.digits_add 2 (by decide) 1 n (by decide) (by simp)]
   simp [Nat.add_comm]

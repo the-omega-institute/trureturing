@@ -6,6 +6,7 @@
    utility: none
    digest: Legal windows partition the signed value range into closed affine intervals with exact circle cuts and oriented endpoint fibres. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Digit.Infinite.WindowSuccessorGraph
 
 set_option autoImplicit false

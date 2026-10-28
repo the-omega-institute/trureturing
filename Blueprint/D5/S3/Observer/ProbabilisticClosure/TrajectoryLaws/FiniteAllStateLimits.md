@@ -1,0 +1,36 @@
+# All-state periodic limits of the original matrix
+
+## Abstract
+
+FiniteAllStateLimits
+
+Let P be any finite real row-stochastic matrix. For each actual closed communicating class C, choose the genuine period p_C and phase map phi_C supplied by ClassPeriods, and its unique stationary probability row pi_C supplied by ClassLimit. For every positive natural d divisible by every p_C, every natural i, and all ambient states x,y, the original entries P^(d*t+i)(x,y) converge as t tends to infinity. The residue i is unrestricted; it need not be less than d. No nonempty ambient or transient type is assumed.
+
+At a transient start x and a closed-class target y in C, the limit is p_C*pi_C(y)*psiTransient_C(x,phi_C(y)-i). Explicitly, psiTransient_C(x,j) is the sum over z in C and n>=0 of e_C(n,x,z) when phi_C(z)-(n+1)=j modulo p_C, and zero otherwise. The first-entry weight e_C(n,x,z)=sum over v in T of Q^n(x,v)P(v,z) enters at the physical time n+1. Thus the compatible post-entry phase is phi_C(z)+i-(n+1)=phi_C(y), with no lost one-step shift.
+
+The proof keeps the entrance index n fixed. For horizon d*t+i it sets the summand to zero when n is outside that horizon and otherwise uses e_C(n,x,z)R_C^(d*t+i-(n+1))(z,y). For each fixed n,z, the existing class-start theorem applies after an eventual natural time shift, with d still a positive multiple of the genuine period. Every class-power entry is between zero and one, so the summand norm is bounded by the summable nonnegative first-entry mass. Pinned Mathlib Tannery then commutes the limit with this fixed-index series; the finite sum over z identifies the answer with the existing psiTransient series.
+
+EntranceLaw provides the exact finite convolution used to recover the original matrix entry, entrywise HasSum, total first-entry probability one, and its exact late-entry tail. The mass after cutoff M equals the transient survival s_M(x) and tends to zero. Its bound on late contributions is uniform in the horizon and closed target. This supplies the tail control behind the summable domination; no uniform class convergence over moving entry times is assumed, and the matrix is never replaced by P^d.
+
+For a start in C and a target y in C, the retained ClassLimit gives p_C*pi_C(y) exactly when phi_C(x)+i=phi_C(y) modulo p_C, and zero otherwise. A start in another closed class has zero entry at every time, by class closure. A transient target has limit zero for every ambient start: transient starts use the actual killed-power decay, and recurrent starts cannot leave their closed class. These cases are assembled in periodicEntry using the actual class/transient partition.
+
+If the ambient state type is empty, all-state convergence is vacuous and the actual class family is empty. If the transient type is empty, the transient-start clauses are vacuous while class-start convergence remains quantified over every state, positive period multiple and natural residue. The all-state interface retains the full EntranceLaw for later arithmetic use.
+
+This result establishes the analytic all-state convergence and exact first-entry formula, including finite rational stochastic matrices as a specialization. It does not establish a simultaneous positive integer denominator or the bound (2L)^(N^3)*((N+1)L)^(N^2). Those arithmetic obligations remain part of the full PH38.2 endpoint and must use denominators of the original P.
+
+**Theorem 1.1 (Actual all-state periodic limits).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteAllStateLimits.actual_all_state_limits`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteAllStateLimits.actual_all_state_limits` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+AllStateLimits contains actual genuine class periods, retained ClassLimit rows and class-start convergence, EntranceLaw with its exact first-entry mass and tail facts, the transient-to-class psiTransient formula, zero limits at transient targets, exact no-exit entries, and original-matrix convergence at every pair of states.
+
+## References
+
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteAllStateLimits.actual_all_state_limits`
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteEntranceDecomposition](FiniteEntranceDecomposition.md)

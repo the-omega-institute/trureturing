@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:16c48c8f245705de6b80a70d08b5680de35e4951eeeea7db8d7a3007a8a4f833
+  normalized_sha256: sha256:16c48c8f245705de6b80a70d08b5680de35e4951eeeea7db8d7a3007a8a4f833
+cas_ref: sha256:16c48c8f245705de6b80a70d08b5680de35e4951eeeea7db8d7a3007a8a4f833
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 期望的正因果完成规格列表中的 minimum-phase scattering；没有最小相位性质或存在性的定理。
+    previous_atom_id: fff7b0ad1f5ee21a6053ac0d2b2eb86b0d549e45a505196721185e6d2d463526
+    next_atom_id: d0d4356cdb4e36ca7575530f049cc5b91b3c001cd426d02c4dcc6ce943bf08a9

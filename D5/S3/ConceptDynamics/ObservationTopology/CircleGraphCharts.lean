@@ -524,7 +524,7 @@ private theorem ambientSensor_fderiv_injective [Nonempty ι]
     have hcoord (j : Fin 2) :
         ContDiff ℝ ⊤ (fun v : EuclideanSpace ℝ (ι × Fin 2) => (v (i, j) : ℂ)) :=
       Complex.ofRealCLM.contDiff.comp
-        ((contDiff_apply ℝ ℝ (i, j)).comp PiLp.contDiff_ofLp)
+        (contDiff_piLp_apply (𝕜 := ℝ) (p := 2) (i := (i, j)))
     exact (hcoord 0).add ((hcoord 1).mul contDiff_const)
   have hQP : Q ∘ ambientSensor k a = fun w : ℂ => (a i : ℂ) * w ^ k i := by
     funext w
@@ -573,7 +573,6 @@ private theorem intrinsicSensor_mvfderiv_injective [Nonempty ι]
     rw [((contMDiff_coe_sphere (E := ℂ) (n := 1) (m := ⊤) z).mdifferentiableAt
       (by simp)).mvfderiv] at hinj
     simp only [writtenInExtChartAt, mfld_simps, fderivWithin_univ] at hinj
-    rw [chartAt_self_eq (H := ℂ)] at hinj
     change Function.Injective (fderiv ℝ g q) at hinj
     exact hinj
   have h := ((intrinsicSensor_contMDiff k a) z).mdifferentiableAt (by simp)

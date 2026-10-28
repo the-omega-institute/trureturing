@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fdbcc5715eda90dd15f13f3a067e1a785039d7899a4f59b4b3dcadc002779169
+  normalized_sha256: sha256:fdbcc5715eda90dd15f13f3a067e1a785039d7899a4f59b4b3dcadc002779169
+cas_ref: sha256:fdbcc5715eda90dd15f13f3a067e1a785039d7899a4f59b4b3dcadc002779169
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 模型参数选项：测量哪些输出，不断言概率律或核关系。
+    previous_atom_id: da8aac883a31867a5cf35120a701b8936f3bcfb71010ca8bbf394e20bc8e3659
+    next_atom_id: cecee97c64173844940126b78c3ad8cdc94533e5b8cb91b9674f6e8ab1b98283

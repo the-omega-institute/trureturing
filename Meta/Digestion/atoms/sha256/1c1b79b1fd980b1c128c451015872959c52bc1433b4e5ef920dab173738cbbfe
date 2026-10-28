@@ -1,0 +1,13 @@
+### 159.5 Scope
+
+Sections 159.1--159.4 are exact statements for the full binary boundary,
+the native Fibonacci cylinder weights, and the finite-source measures of
+Definition 113.3. They do not prove a physical three-dimensional
+realization, do not solve the strict four-source \(J\)-\(M\) joint-lift
+problem, and do not establish the open quantitative gap in §11.11 of the
+strict-real incidence continuation. They also do not contradict §158:
+§158 varies compatible successor metrics for a fixed comparison operator,
+whereas this section identifies the native metric and the task information
+that a scale-free quotient omits. The Lipschitz dimension obstruction and
+the snowflake calculation have not been formalized in Lean.
+

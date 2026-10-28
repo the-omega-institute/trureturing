@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:d99d5ab9110b3b1dd7de7ade1cc81913f128aaeb601e5590d8f52344521d8683
+  normalized_sha256: sha256:d99d5ab9110b3b1dd7de7ade1cc81913f128aaeb601e5590d8f52344521d8683
+cas_ref: sha256:d99d5ab9110b3b1dd7de7ade1cc81913f128aaeb601e5590d8f52344521d8683
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 钉版 Mathlib 修订 56a005855ea17e0b0958f73ec801ae140b0a1679；证书由 flight 6ad528bc39edccf1d16d5743 编译，binding-certificate.lean full-certificate-build exit 0，certificate-comparison 87/87 definitionally equal；公理仅 propext、Classical.choice、Quot.sound；仓内无 GID，零新增 Lean。实际上游声明包括 Function.Semiconj.iterate_right、Order.succ_iterate、Function.iterate_succ_apply'、LinearMap.adjoint_inner_right、LinearMap.ker_adjoint_comp_self、LinearMap.range_adjoint_comp_self、LinearMap.finrank_range_adjoint、LinearMap.isPositive_linearIsometryEquiv_conj_iff、LinearMap.exists_rightInverse_of_surjective、Submodule.span_le、Submodule.map_top、LinearMap.finrank_range_add_finrank_ker、Finset.sum_comm 及 ring/module/omega 规范化。 父项由 137.2 statement 与 proof 子项覆盖；chain_atoms 552dc4…、e59d90… 由 writer 复核闭合。
+    previous_atom_id: cef7b9e6ba13ebe1819b95e86b09fa64de232a7eda74498c787f0599624f0ee7
+    next_atom_id: e453e98a04a0a5203b695dfacbe40f39d0c99aff130ed09074d22aae0054cae5
+  chain_atoms:
+    - 552dc4acbe4ddbdf232ee19a7e4819877dd6b63f9fdfd350633d148d06d45dd5
+    - e59d903e05106ca856e52dc904c8e6056c0d2a307144f2b5e35f3f3a02bbdfac

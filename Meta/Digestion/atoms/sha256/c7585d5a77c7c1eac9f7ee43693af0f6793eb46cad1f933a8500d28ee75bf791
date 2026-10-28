@@ -1,0 +1,21 @@
+**推论 482.3（平衡尺度及尚存的完整投影成本）。** 在同一条件下，取 $U\asymp K$、$D=N=\sqrt K$、$L=K^\ell$，其中固定 $0<\ell<1/6$ 且 G7 范围成立，则
+
+$$
+Q_{\rho,L}(b)\ll_\varepsilon\mathcal C^2K^\varepsilon
+ \left(K^{15/8+2\ell/3}+K^{5/3+2\ell}\right).
+\tag{482.21}
+$$
+
+记 $\eta_\ell=\min\{1/8-2\ell/3,\ 1/3-2\ell\}>0$。若共同成本满足 $\mathcal C=K^{o(1)}$，则 $Q_{\rho,L}(b)\ll K^{2-\eta_\ell+\varepsilon+o(1)}=o(K^2)$，其中最终 $\varepsilon<\eta_\ell$。若另使用 §460 所引 primitive-mean v2 的同一个 unrestricted adjoint，则完整投影仍只有
+
+$$
+\|P_LAb\|_2^2\ll_\varepsilon\mathcal C^2(UKL)^\varepsilon
+ \left\{U^{1/3}\left(K^{5/3}D^{-1/4}L^{2/3}
+       +K^{2/3}D^{4/3}L^2\right)+K^2L^{3/2}\right\}.
+\tag{482.22}
+$$
+
+证明。前式直接代入 (482.15)，两个幂次均严格小于 $2$。后式复用 (460.14)–(460.15) 的同一个 $A^*V_L=\mathsf W_L+E_L$；本节不改变 $\|E_L\|_{\mathrm{HS}}^2\ll(UKL)^\varepsilon KL^{3/2}$，也不改变原 $\|b\|_2^2\ll\mathcal C^2K^{1+\varepsilon}$，故残留 $K^2L^{3/2}$。证毕。
+
+(482.15) 加强 (460.3) 的留数项；对相同平衡尺度，(482.22) 将 (460.16) 的投影预算从 $K^{2+5\ell/3+\varepsilon}$ 改为 $K^{2+3\ell/2+\varepsilon}$。它仍不提供 $o(K^2)$ 的完整投影，更不提供同一完整补空间的估计。引理的固定形式条件、共同成本合同和实际 Gram 范围不可删除；其他长度、高度及 signed Robin restoration 不由上述估计推出。所有结果均为在明列解析输入下的纸面推导，未作 Lean 核验；RH 与每个 $n>5040$ 的严格 Robin 不等式仍未证明。
+

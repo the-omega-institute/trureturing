@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f01afe547f3d7457e20e6c109f6304e216a7eb004b033cd7aa78b9de6e873ac0
+  normalized_sha256: sha256:f01afe547f3d7457e20e6c109f6304e216a7eb004b033cd7aa78b9de6e873ac0
+cas_ref: sha256:f01afe547f3d7457e20e6c109f6304e216a7eb004b033cd7aa78b9de6e873ac0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 具体 branch multiplicity 作为所选模型的输入名称；没有计数公式。
+    previous_atom_id: 08c9d1bdf9f2a55964e21f5245a6a321bf6d34e0df21cfafd94730cf966d8c8d
+    next_atom_id: 868d0f6afc35e4fce89da383a3342733a1bbc6cf37222decca478b55360e9ad4

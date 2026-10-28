@@ -1,0 +1,113 @@
+**定理 36.2（任意槽数的实际同组成来源与全部子集复形）。** 对每个整数 $k\ge1$，定义 36.1 的全部原型均有唯一完整前像，分别记为 $Q_0,Q_j^U,Q_j^V$，并且
+
+$$
+\begin{gathered}
+F_k\subseteq\mathcal I_3(n_k),\qquad |F_k|=2k+1,\\
+c(Q_0)=c(Q_j^U)=c(Q_j^V)=\begin{pmatrix}2\\k+1\end{pmatrix},\qquad
+c(P_0)=c(U_j)=c(V_j)=\begin{pmatrix}2k+4\\3k+7\end{pmatrix}
+\quad(1\le j\le k),\\
+\forall P,Q\in F_k,\ P\ne Q\Longrightarrow\operatorname{NC}(P,Q),\qquad
+K(F_k)=K_\circ(F_k).
+\end{gathered}
+\tag{36.4}
+$$
+
+最后一个等式逐一确定每个 $S\subseteq F_k$ 的共同个体最优取得性。
+
+**证明。** [母卷定义 3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的实际替换保留二叉构造及左右次序。式（36.1）所用六个三步像块的完整字面前像依次是
+
+$$
+\begin{array}{c|c}
+\text{像块}&\text{三步前像}\\ \hline
+A&\alpha\\
+C&\beta\\
+B&\langle\beta,\alpha\rangle\\
+T&\langle\alpha,\beta\rangle\\
+W_1&\langle\langle\beta,\alpha\rangle,\beta\rangle\\
+K_T&\langle\langle\alpha,\beta\rangle,\alpha\rangle
+\end{array}
+\tag{36.5}
+$$
+
+把这些前像放入同一个 $B_{k+1}$，得到全部完整树，而不是只给组成点：
+
+$$
+\begin{aligned}
+Q_0&=B_{k+1}(\underbrace{\beta,\ldots,\beta}_{k\text{ 个}},
+                     \langle\langle\alpha,\beta\rangle,\alpha\rangle),\\
+Q_j^U&=B_{k+1}(\underbrace{\beta,\ldots,\beta}_{j-1\text{ 个}},
+                \langle\alpha,\beta\rangle,
+                \underbrace{\beta,\ldots,\beta}_{k-j\text{ 个}},
+                \langle\beta,\alpha\rangle),\\
+Q_j^V&=B_{k+1}(\underbrace{\beta,\ldots,\beta}_{j-1\text{ 个}},
+                \langle\langle\beta,\alpha\rangle,\beta\rangle,
+                \underbrace{\beta,\ldots,\beta}_{k-j\text{ 个}},\alpha).
+\end{aligned}
+\tag{36.6}
+$$
+
+二叉同态作用逐槽给 $\rho^3(Q_0)=P_0$、$\rho^3(Q_j^U)=U_j$、$\rho^3(Q_j^V)=V_j$。[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的树替换单射性复合三次，供应每个前像的唯一性。$P_0$ 的活动槽全为五叶 $C$，$U_j$ 的唯一异常活动槽为八叶 $T$，$V_j$ 的唯一异常活动槽为十三叶 $W_1$；异常槽位置与类型都由完整描述确定。因此这 $2k+1$ 棵树两两不同，前像也两两不同。这包括 $k=1$ 的两个槽根 $\mathtt L,\mathtt R$。
+
+由母卷定义 3.3 的组成加法，三类前像的组成分别为
+
+$$
+\begin{aligned}
+c(Q_0)&=k\binom01+\binom21,\\
+c(Q_j^U)&=(k-1)\binom01+\binom11+\binom11,\\
+c(Q_j^V)&=(k-1)\binom01+\binom12+\binom10,
+\end{aligned}
+\qquad\text{均为 }\binom{2}{k+1}.
+\tag{36.7}
+$$
+
+母卷定理 3.4 的实际组成运输于是给
+
+$$
+c(\rho^3(Q))=
+\begin{pmatrix}1&2\\2&3\end{pmatrix}\binom{2}{k+1}
+=\binom{2k+4}{3k+7},\qquad n(\rho^3(Q))=5k+11
+\quad(Q\in\{Q_0,Q_j^U,Q_j^V:1\le j\le k\}).
+\tag{36.8}
+$$
+
+这些是已指定完整来源的组成，不是未知输入的免费报告。
+
+为核对所有共享叶的标签，先将既有局部块的完整带标签前沿代入：
+
+$$
+\begin{aligned}
+\mathcal F(E)&=\{(\mathtt L,\beta),(\mathtt R,\alpha)\},\\
+\mathcal F(A)&=\{(\mathtt{LL},\beta),(\mathtt{LR},\alpha),(\mathtt R,\beta)\},\\
+\mathcal F(C)&=\mathtt L\mathcal F(A)\sqcup\mathtt R\mathcal F(E),\\
+\mathcal F(B)&=\mathtt L\mathcal F(C)\sqcup\mathtt R\mathcal F(A),\\
+\mathcal F(T)&=\mathtt L\mathcal F(A)\sqcup\mathtt R\mathcal F(C),\\
+\mathcal F(W_1)&=\mathtt L\mathcal F(B)\sqcup\mathtt R\mathcal F(C),\\
+\mathcal F(K_T)&=\mathtt{LL}\mathcal F(A)\sqcup
+                 \mathtt{LR}\mathcal F(C)\sqcup\mathtt R\mathcal F(A).
+\end{aligned}
+\tag{36.9}
+$$
+
+下表每行同时给地址交集 $H=L(X)\cap L(Y)$ 及其全部标签；第三列表示完整等式 $\mathcal F(X)|_H=\mathcal F(Y)|_H$，不只是相同标签叶的部分集合：
+
+$$
+\begin{array}{c|c|c}
+(X,Y)&H&\mathcal F(X)|_H=\mathcal F(Y)|_H\\ \hline
+(E,C)&\varnothing&\varnothing\\
+(A,B)&\varnothing&\varnothing\\
+(A,K_T)&\varnothing&\varnothing\\
+(C,T)&\mathtt L L(A)&\mathtt L\mathcal F(A)\\
+(T,W_1)&\mathtt R L(C)&\mathtt R\mathcal F(C)\\
+(C,W_1)&\varnothing&\varnothing\\
+(B,K_T)&\mathtt{LL}L(A)\sqcup\mathtt R L(A)&
+         \mathtt{LL}\mathcal F(A)\sqcup\mathtt R\mathcal F(A)
+\end{array}
+\tag{36.10}
+$$
+
+确实，$E$ 的两个叶地址 $\mathtt L,\mathtt R$ 在 $C$ 中都为分支；$A$ 的三个叶地址 $\mathtt{LL},\mathtt{LR},\mathtt R$ 在 $B$ 与 $K_T$ 中也都为分支，给前三行的完整空交集。$C,T$ 的左孩子相同为 $A$，右孩子 $E,C$ 没有共同叶，给第四行。$T,W_1$ 的左孩子 $A,B$ 没有共同叶，右孩子相同为 $C$，给第五行。$C,W_1$ 的左右孩子分别是刚核对的 $A,B$ 与 $E,C$，给第六行。$B,K_T$ 的左孩子分别为 $C,T$，第四行给再加一层 $\mathtt L$ 的共同 $A$ 前沿；右孩子都为 $A$，给最后一行。式（36.9）保留每片 $\alpha/\beta$ 标签，所以每个非空交集的限制确实等于表中带标签前沿。这同时证明活动槽的 $C,T,W_1$ 两两非冲突，以及末槽的 $K_T,B,A$ 两两非冲突；相同块的共同前沿当然也带相同标签。
+
+式（26.5）的全孔路径分解直接沿用[引理 26.2 证明首段](#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数)：槽根前缀自由，上下文没有孔以外的字面叶，每个原型叶都在唯一一个 $p_i$ 下。因此原型间一个共享叶在两边都属于同一个槽，不能在不同槽间重合。该路径分解只依赖全孔上下文，当前所填块仍为完整树。对式（36.3）的任意两棵原型，前 $k$ 槽从 $C,T,W_1$ 取块，末槽从 $K_T,B,A$ 取块；式（36.10）逐槽穷尽全部共享叶并保持标签，故所有不同原型都满足 $\operatorname{NC}$。
+
+最后任取 $S\subseteq F_k$。若 $|S|\ge2$，取其中两个不同成员 $P,Q$。已核对的全部共享叶标签一致，故 $\Delta(\{P,Q\})=\varnothing$。由于 $\{P,Q\}\subseteq S$，[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)对 $S$ 的遗传条件在这个二元素子集处失败，得到 $S\notin K(F_k)$。空集及单元素子集的同一遗传条件为空约束，原定理供应它们的相容性。因而所有子集恰按 $K_\circ(F_k)$ 分类，得到式（36.4）。证毕。
+

@@ -4,7 +4,43 @@
 
 The source-faithful signed first-clock transport
 
-**Theorem 1.1 (Closed first-clock exclusion from the actual upper integer).**
+**Theorem 1.1 (The canonical source is the least full-class maximizer when attained).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalFirstClockTransport.canonical_source_spec`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalFirstClockTransport.canonical_source_spec` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any natural label p, assume some N satisfies originalMaximizes(p,N). Then canonicalSource(p) maximizes the original nonlinear objective over all positive integers divisible by 5040*p, and is no larger than any other maximizer in that full class. OriginalInventoryNormalizerLoss uses the maximality projection for every label of its complete enumeration, both in source-order classification and in charging each omitted inventory-changing interval. Attainment remains an explicit premise; no cofinal source family is asserted.
+
+**Theorem 1.2 (The canonical first clock has the exact first-layer price).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalFirstClockTransport.first_clock_spec`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalFirstClockTransport.first_clock_spec` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every prime q, q<firstClock(q)<q+1 and g(firstClock(q))=goldenLayerMarginal(q,1). The source is the actual reciprocal-log price and the original first layer. OriginalPrimeSourceOrder uses the strict lower location to exclude large forcing labels from complete strict inventories.
+
+**Theorem 1.3 (A first-clock contact is absent from the complete strict inventory).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalFirstClockTransport.first_absent`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalFirstClockTransport.first_absent` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let U>0, q prime, t>1 and t<=firstClock(q). If every natural factorization coordinate of U equals optimalLayerCount(g(t),q) at the same clock, then q does not divide U. Equality at the actual first clock is included because the inventory uses strict marginals. This existing supplier is consumed by OriginalPrimeSourceOrder.
+
+**Theorem 1.4 (Closed first-clock exclusion from the actual upper integer).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalFirstClockTransport.original_upper_first_clock_exclusion`
 
@@ -20,7 +56,7 @@ The actual first clock lies strictly between q and q+1 and solves lambda(firstCl
 
 Contact implies q>t-1>=242, log(q)>3, and log(q)<=log(t)<=t/10. The literal weight w(x)=(1+log(x))/(x^2*log(x)^2) satisfies w(t+log(q))>(2/3)*w(t), giving log(q)*w(t+log(q))>2*w(t). The consumed delayed-atom theorem therefore excludes both contact endpoints. No fixed-price optimality or maximizer at real center t is used.
 
-**Theorem 1.2 (Every prime is excluded on the complete original edge union).**
+**Theorem 1.5 (Every prime is excluded on the complete original edge union).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalFirstClockTransport.complete_original_first_clock_exclusion`
 
@@ -34,7 +70,25 @@ OriginalWindow requires its labels to be exactly all primes in [exp(labelStart),
 
 goodEdges includes every consecutive-label pair satisfying the original source conditions: N_p=p*U, N_r=r*U, U>0, 5040 divides U, A<C, and the literal strict inventory throughout the closed edge [A,C]. This finite set and selectedDomain, its full interval union, are independent of ell and R. OriginalBounds requires ell<=A<C<=R and p,r>2*R for every edge in that fixed complete set; bounds never select or remove an edge. The theorem excludes [q,firstClock(q)] for every prime q on this entire domain. It selects the actual edge containing a contact and applies the actual upper integer theorem. No favorable subset is chosen; the lower canonical endpoint and least attainment remain in the source data.
 
-**Theorem 1.3 (The literal uniform error decreases to zero).**
+**Theorem 1.6 (A prime buffer around the unchanged original good edge).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalFirstClockTransport.good_edge_prime_buffer`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalFirstClockTransport.good_edge_prime_buffer` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let X be the original complete-label window, with ell>=243 and OriginalBounds(X,ell,R), and let (p,r) be an unchanged GoodEdge. Put a=log(canonicalSource(p)) and b=log(canonicalSource(r)). If a>=256, every prime q lies outside the closed interval [a-2,b+1]. Both original canonical integers p*U and r*U, the common positive 5040-divisible U, and its exact strict inventory at every point of [a,b] remain hypotheses. The original bounds apply to all good edges and do not select a favorable subset.
+
+For a prime q in [a-2,a), the actual inventory gives q dividing U. Here q>16, so q does not divide 5040. Writing U=5040*q*v gives the legal deletion competitor M=p*5040*v, with 5040*p dividing M and M*q=p*U. The exact next Euler marginal is bounded by the first marginal, retaining arbitrary multiplicity of q. For a prime q in (b,b+1], the actual upper inventory excludes q from U, and the original label bounds give q different from r. Thus q does not divide r*U, and the original legal integer insertion comparison applies. Complete first-clock exclusion covers the central closed interval [a,b], including its endpoints.
+
+For h=log(q) and the relevant endpoint x>=256, one has 5<h<=x/20. The literal Robin density satisfies (81/100)*w(x-h)<=w(x) and (81/100)*w(x)<w(x+h). The price integral is exactly the log-log difference. Its backward and forward quadratic bounds, obtained from the original curve slopes, contradict the corresponding integer comparison because (5/2)*(81/100)>2. No real-center or fixed-price maximizer replaces the original nonlinear integer objective.
+
+The range 243<=a<256 is not included. This excludes primes only: proper prime powers and their von Mangoldt contributions remain. The affine correction gamma in the separate residual accounting is unchanged, with no sign or cancellation supplied here. The theorem gives neither good-edge existence nor cofinality, a PC cutoff identification, a prescribed residual sign, strict Robin for all integers above 5040, or RH.
+
+**Theorem 1.7 (The literal uniform error decreases to zero).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalFirstClockTransport.first_error_decay`
 
@@ -48,7 +102,7 @@ E(t)=t^(-3/10)*log(2*t) is strictly decreasing on [243,infinity) and tends to ze
 
 Its derivative is t^(-13/10)*(1-(3/10)*log(2*t)), strictly negative on the stated range. The logarithm grows more slowly than t^(3/10). This error supplier is consumed by the uniform complete-domain bound.
 
-**Theorem 1.4 (The source-faithful signed first-clock transport).**
+**Theorem 1.8 (The source-faithful signed first-clock transport).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalFirstClockTransport.complete_original_first_clock_transport`
 
@@ -86,9 +140,13 @@ This is an application of the existing source stack and the forced fixed-price i
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/OriginalFirstClockTransport.canonical_source_spec`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalFirstClockTransport.complete_original_first_clock_exclusion`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalFirstClockTransport.complete_original_first_clock_transport`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalFirstClockTransport.first_absent`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalFirstClockTransport.first_clock_spec`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalFirstClockTransport.first_error_decay`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalFirstClockTransport.good_edge_prime_buffer`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalFirstClockTransport.original_upper_first_clock_exclusion`
 - Dependency: [D5/S3/Arith/GoldenResource/FirstLayerMarginalAntitone](../GoldenResource/FirstLayerMarginalAntitone.md)
 - Dependency: [D5/S3/Arith/GoldenResource/GoldenResource5040EndpointComparison](../GoldenResource/GoldenResource5040EndpointComparison.md)
@@ -99,3 +157,4 @@ This is an application of the existing source stack and the forced fixed-price i
 - Dependency: [D5/S3/Arith/Robin/FinitePulseKernelTransport](FinitePulseKernelTransport.md)
 - Dependency: [D5/S3/Arith/Robin/GA2ForcedPrimeSource](GA2ForcedPrimeSource.md)
 - Dependency: [D5/S3/Arith/Robin/MellinWeightedVariation](MellinWeightedVariation.md)
+- Dependency: [D5/S3/Arith/Robin/OriginalFirstClockBufferEstimates](OriginalFirstClockBufferEstimates.md)

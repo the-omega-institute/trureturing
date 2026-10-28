@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d0371b97aff65f1bbc9addccb78a3783b657f85fc39eeb8178792b5804fb0788
+  normalized_sha256: sha256:d0371b97aff65f1bbc9addccb78a3783b657f85fc39eeb8178792b5804fb0788
+cas_ref: sha256:d0371b97aff65f1bbc9addccb78a3783b657f85fc39eeb8178792b5804fb0788
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只列出未来 prime-power 权重与 log n 频率匹配的研究义务，未给出已经成立的匹配等式。
+    previous_atom_id: 59f22a187cd728250c89a40e5208aefa19066119c0a1de128b847ab277ca19b8
+    next_atom_id: ad7c35c7723f662a4e5b5f9190b547aa430cff47da2040092bdaad9b93ca3ddf

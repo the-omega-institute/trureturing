@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6f98e83bc5788f917b672772f475ead704d80d9bace99d02b521cdd1c73da7a1
+  normalized_sha256: sha256:6f98e83bc5788f917b672772f475ead704d80d9bace99d02b521cdd1c73da7a1
+cas_ref: sha256:6f98e83bc5788f917b672772f475ead704d80d9bace99d02b521cdd1c73da7a1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原始哲学模型定义的标题和引句，字段列表在相邻 atom。
+    previous_atom_id: 97b0c98b4786f2027d14b46adca970fd9da0950bacfa6f5f261d4e48e2f1a062
+    next_atom_id: dd180bf3174c6434e2eae94a7958bb1c79d3e09436de0f78b92320ea8392f40a

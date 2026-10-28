@@ -1,0 +1,5 @@
+**定义 415.1（逐尺度有理扣除合同）。** 令 $\ell=\log x$、$\varepsilon_x>0$，满足（411.1），并置 $\alpha_x=\varepsilon_x/2$、$\sigma_x=1-\alpha_x$。每个充分大的 $x$ 可独立选择一个有限有理函数 $T_x$，要求：
+
+1. $T_x(z)=O(1/z)$（$z\to\infty$），常数不要求对 $x$ 一致；
+2. 全部极点严格位于实际直线的右侧：$\Re p>\sigma_x$。
+

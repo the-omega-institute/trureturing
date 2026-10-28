@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d2205c391060d23b5c0550bbfe11ac206eef8fbfc84d12929c7e981a3ae3683b
+  normalized_sha256: sha256:d2205c391060d23b5c0550bbfe11ac206eef8fbfc84d12929c7e981a3ae3683b
+cas_ref: sha256:d2205c391060d23b5c0550bbfe11ac206eef8fbfc84d12929c7e981a3ae3683b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：登记《Āptamīmāṃsā》的电子版本、偈号及多面论释读范围；不交付数学断言。
+    previous_atom_id: 7bae296250d5cf9c1b4394829b19812bfc698367fd86405e3902e6e18bb300c8
+    next_atom_id: 38e22c05e62a35e96f6930a97a181a7ff4c3bc8441ca41e4fa4a5c10a21113ce

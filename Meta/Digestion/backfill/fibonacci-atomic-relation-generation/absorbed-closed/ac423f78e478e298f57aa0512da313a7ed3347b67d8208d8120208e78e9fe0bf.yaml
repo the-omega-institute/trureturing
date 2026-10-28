@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:ac423f78e478e298f57aa0512da313a7ed3347b67d8208d8120208e78e9fe0bf
+  normalized_sha256: sha256:ac423f78e478e298f57aa0512da313a7ed3347b67d8208d8120208e78e9fe0bf
+cas_ref: sha256:ac423f78e478e298f57aa0512da313a7ed3347b67d8208d8120208e78e9fe0bf
+coverage_gids:
+  - gid: D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec
+    target_statement_id: sha256:0e81205eafa3a4d98a159d801495a10ac105bdb297ec80b4d21fbe31f0c625ae
+  - gid: D5/S0/Carrier/Conj.add_conj_eq_trace
+    target_statement_id: sha256:c0440126e7b1c37e2f57e66c8a531410c7fc61381fdbc863eb681b46b62ee424
+  - gid: D5/S0/Carrier/Conj.conj_a
+    target_statement_id: sha256:45bc09b053def6daebd6f9c1953e8f3fd04677e57cfe57cc6d56912b41b141ee
+  - gid: D5/S0/Carrier/Conj.conj_b
+    target_statement_id: sha256:028823651b19ca278350a5900d223941de4f83798aeaa8d75e51e3de6da7ac6d
+  - gid: D5/S0/Carrier/Norm.norm_eq_mul_conj
+    target_statement_id: sha256:0735beb3e0aea5b31b2b5eaaba6a1b5b1a64dee6c8674fe83f8f22510cc2e23d
+  - gid: D5/S0/Carrier/Ring.a_mul
+    target_statement_id: sha256:a334ddbd657361efd0baa751094d63e52dc42a31a566090775da7579491ff5d6
+  - gid: D5/S0/Carrier/Ring.b_mul
+    target_statement_id: sha256:d322359ede8e45bbf7393d26e660b5e4d82234cf871b723136633dde1f108ff1
+receipts:
+  unresolved_subitems: []

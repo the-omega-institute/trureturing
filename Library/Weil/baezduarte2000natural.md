@@ -5,7 +5,7 @@ year: 2000
 title: Arithmetical Aspects of Beurling's Real Variable Reformulation of the Riemann Hypothesis
 doi: null
 url: https://arxiv.org/abs/math/0011254v1
-claim: "Proposition 4.4 excludes full-sequence L2 convergence of the unbalanced natural Möbius prefixes on the half-line. It does not exclude every subsequence or freely chosen coefficients in the Nyman–Beurling criterion."
+claim: "Proposition 4.4 excludes full-sequence L2 convergence of natural Möbius prefixes. The published Order Lemma and classical Mellin–Fourier tools also yield a paper-level obstruction for continuous fixed-shape smoothing with the stated power bounds; arbitrary coefficients and RH remain separate."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -18,8 +18,9 @@ submitted 2000-11-29. The [21-page PDF](https://arxiv.org/pdf/math/0011254v1)
 has SHA256 `951ecc56eaae5b80eb8128ab4f98b5184d06ed97da608a130d65940daea8e94c`.
 The inspected [author TeX](https://arxiv.org/src/math/0011254v1)
 has SHA256 `32453b451c900c7c557fc7da5eb8b93987d9d2addca4d31d293b9f844e84801d`.
-The selected definitions, Proposition 4.4 and its proof, and the subsequent
-scope distinctions were read. This is source reuse, not a new proof or a
+The selected definitions, the Order Lemma in §2, the unitary formulas
+in §4, Proposition 4.4 and its proof, and the subsequent scope distinctions
+were read. This is source reuse, not a new proof or a
 Lean verification of the paper.
 
 ## Space, coefficients and cutoff
@@ -205,3 +206,252 @@ approximation rate or signed Robin estimate, and have not been Lean
 compiled. The cited source statements and parameter correspondence were
 inspected; no independent recertification of their full proofs or
 originality claim is made.
+
+## Fixed-shape smoothing and the same published Order Lemma
+
+The source's §2 Order Lemma, original TeX label `orderlemma`, applies
+to complete smoothed nets as well as natural prefixes. Combine it with
+the classical fractional-part Mellin formula and Fourier uniqueness.
+The following application excludes an entire fixed-shape family; the
+exponential net is one instance. It does not reprove those published
+tools, infer smoothing failure from prefix divergence, or claim literature
+priority. The analytic application has not been completely formalized
+in Lean.
+
+Let $w:(0,\infty)\to\mathbb C$ be continuous and not identically zero.
+Assume that some $C>0$ and real $a,b$ satisfy
+
+$$
+a<\tfrac12<b,\qquad
+|w(u)|\le Cu^{-a}\ (0<u\le1),\qquad
+|w(u)|\le Cu^{-b}\ (u\ge1).
+\tag{A1}
+$$
+
+For $t>0$ define the **complete unbalanced** net
+
+$$
+S_t^w(x)=\sum_{n\ge1}\mu(n)w(nt)\rho_n(x),
+\qquad \rho_n(x)=\{1/(nx)\}.
+\tag{A2}
+$$
+
+Each series converges absolutely in $L^2(0,\infty)$: use
+$\|\rho_n\|_2=n^{-1/2}\|\rho_1\|_2$ and $b>1/2$ for its tail.
+The conclusion is
+
+$$
+\boxed{\quad S_t^w\text{ has no strong limit in }L^2(0,1)
+\text{ as }t\downarrow0.\quad}
+\tag{A3}
+$$
+
+Restriction then excludes a strong limit on the half-line. No value
+$w(0)$, positivity, zero simplicity, RH or cutoff schedule is assumed.
+
+### Strong convergence would cancel every moving interval test
+
+Fix $0<\alpha<\beta<\infty$. For small enough $t$, the real test
+$g_t=t^{-1/2}\mathbf1_{(\alpha t,\beta t)}$ is supported in $(0,1)$
+and has norm $\sqrt{\beta-\alpha}$. If $S_t^w\to F$ strongly there,
+Cauchy--Schwarz gives
+
+$$
+\left|\int_0^1 S_t^w(x)g_t(x)\,dx\right|
+\le\sqrt{\beta-\alpha}\left(
+\|S_t^w-F\|_2+
+\|F\mathbf1_{(\alpha t,\beta t)}\|_2\right)\longrightarrow0.
+\tag{A4}
+$$
+
+Define
+
+$$
+\begin{aligned}
+K_{\alpha,\beta}(u)
+ &=w(u)\int_\alpha^\beta\{1/(uy)\}\,dy,\\
+A_{\alpha,\beta}(t)
+ &=\sum_{n\ge1}\mu(n)K_{\alpha,\beta}(nt).
+\end{aligned}
+\tag{A5}
+$$
+
+Termwise pairing is justified by the absolute Hilbert convergence
+above. Substitution $x=ty$ identifies the left side of (A4) with
+$|\sqrt t\,A_{\alpha,\beta}(t)|$. Consequently strong convergence
+would force $A_{\alpha,\beta}(t)=o(t^{-1/2})$ for **every** such interval.
+The argument uses shrinking $L^2$ mass of any proposed limit $F$,
+without substituting pointwise convergence or the special target $-\chi$.
+
+### Apply the Order Lemma with the actual Mellin domains
+
+Abbreviate the kernel and sum in (A5) by $K,A$. Their bounds are
+
+$$
+K(u)=O(u^{-a})\ (u\downarrow0),\qquad
+K(u)=O(u^{-b-1})\ (u\to\infty),
+\tag{A6}
+$$
+
+because $\{1/(uy)\}\le1$ and $\{1/(uy)\}\le1/(u\alpha)$.
+Thus $\widehat K(s)=\int_0^\infty K(u)u^{s-1}\,du$ is holomorphic
+on $a<\Re s<b+1$. Absolute summation gives
+
+$$
+\int_0^\infty A(t)t^{s-1}\,dt
+=\frac{\widehat K(s)}{\zeta(s)},\qquad
+1<\Re s<b+1.
+\tag{A7}
+$$
+
+For this interchange, the sum of absolute integrals is bounded by
+$\sum n^{-\sigma}\int_0^\infty |K(u)|u^{\sigma-1}\,du$,
+where $\sigma=\Re s$. Splitting the sum at $n=1/t$ also gives
+$A(t)=O(t^{-1})$ near zero, since $a<1$, and
+$A(t)=O(t^{-b-1})$ at infinity. The function $A$ is locally bounded;
+the continuous kernel and its locally uniform summable tail even give
+continuity.
+
+Set $Q(X)=A(1/X)$ for $X\ge1$. Its Mellin integral is holomorphic
+for $\Re s>1$, and on the nonempty overlap $1<\Re s<b+1$ it equals
+
+$$
+\int_1^\infty Q(X)X^{-s-1}\,dX
+=\frac{\widehat K(s)}{\zeta(s)}
+ -\int_1^\infty A(t)t^{s-1}\,dt.
+\tag{A8}
+$$
+
+The last integral is holomorphic for $\Re s<b+1$, not asserted entire.
+The right side is meromorphic on the strip $a<\Re s<b+1$.
+Glue it with the original $Q$ transform on $\Re s>1$ to obtain
+the meromorphic half-plane $\Re s>a$ required by the Order Lemma.
+
+Fix one known critical-line zero $\rho=1/2+i\gamma$ of $\zeta$.
+If $\widehat K(\rho)\ne0$, (A8) has a genuine pole there.
+In this branch $Q=O(X)$ has finite convergence abscissa: it is at most
+one, and the pole prevents it from being below $1/2$.
+The Order Lemma then gives $Q(X)\ne o(X^{1/2})$.
+This contradicts (A4). Therefore the assumed strong convergence implies
+
+$$
+\widehat K_{\alpha,\beta}(\rho)=0
+\qquad\text{for every }0<\alpha<\beta<\infty.
+\tag{A9}
+$$
+
+The finite-abscissa assertion is only needed in the nonzero-numerator
+branch; a kernel yielding $A=0$ need not have finite abscissa.
+
+### All the interval cancellations would force the profile to vanish
+
+Put
+
+$$
+H_\rho(y)=\int_0^\infty
+w(u)u^{\rho-1}\{1/(uy)\}\,du,\qquad y>0.
+\tag{A10}
+$$
+
+The majorant $|w(u)|u^{-1/2}$ is integrable at both ends by (A1).
+Fubini identifies (A9) with $\int_\alpha^\beta H_\rho(y)\,dy=0$.
+Dominated convergence makes $H_\rho$ continuous: for each limiting
+$y>0$, fractional-part discontinuities occur at only countably many $u$.
+Hence $H_\rho=0$ everywhere.
+
+To use classical Fourier uniqueness, choose
+$\max(a,0)<r<1/2$ and put $\kappa=1/2-r\in(0,1)$. Define
+
+$$
+f(v)=w(e^v)e^{(r+i\gamma)v},\qquad
+k_\kappa(z)=e^{\kappa z}\{e^{-z}\},\qquad
+\check f(v)=f(-v).
+\tag{A11}
+$$
+
+Both functions are in $L^1(\mathbb R)$:
+$\|f\|_1=\int_0^\infty|w(u)|u^{r-1}\,du<\infty$,
+while $k_\kappa$ decays as $e^{\kappa z}$ at $-\infty$ and
+$e^{(\kappa-1)z}$ at $+\infty$. Substitution $u=e^v$ gives
+
+$$
+e^{\kappa z}H_\rho(e^z)=(\check f*k_\kappa)(z)=0.
+\tag{A12}
+$$
+
+Use the Fourier convention $\widehat h(\tau)=\int h(z)e^{-i\tau z}\,dz$.
+The classical fractional-part Mellin formula gives
+
+$$
+\widehat k_\kappa(\tau)
+=-\frac{\zeta(\kappa-i\tau)}{\kappa-i\tau}.
+\tag{A13}
+$$
+
+This is the proto-Müntz formula in Báez-Duarte,
+[*A general strong Nyman--Beurling criterion*, arXiv:math/0505453v1](https://arxiv.org/abs/math/0505453v1),
+§3, original TeX label `rhomuntz`, after the change $u=e^{-z}$.
+Its multiplier is nonzero on a dense set: zeros of the nonzero holomorphic
+$\zeta$ in $0<\Re s<1$ are isolated. The convolution theorem in (A12)
+therefore forces the continuous Fourier transform of $\check f$ to
+vanish everywhere. Classical $L^1$ Fourier injectivity, for example
+[Tao, *245C Notes 2*, Exercise 56(e)](https://terrytao.wordpress.com/2009/04/06/the-fourier-transform/),
+gives $f=0$ almost everywhere. Its continuity gives $f=0$ everywhere,
+and therefore $w=0$, contrary to (A1). This proves (A3) as a paper
+application of the cited tools.
+
+The extra logarithmic weight $e^{rv}$ in (A11) is essential to this
+argument: $w(e^v)$ need not be integrable as $v\to-\infty$.
+Nor do bare integral Mellin bounds suffice for the discrete sampling
+in (A2); the pointwise bounds in (A1) supply that control.
+
+### What the general obstruction adds, and what remains open
+
+It is insufficient to check only $\widehat w(\rho)$. The classical
+Müntz profile
+$w_*(u)=2(1/u-1/(e^u-1))$ satisfies (A1) with $a=0,b=1$ and
+$\widehat w_*(s)=-2\Gamma(s)\zeta(s)$ for $0<\Re s<1$.
+This formula is the same cited source's `muntzdef` and `mellinmuntz`
+with input $e^{-u}$. Thus its Mellin transform vanishes at every
+critical zero. It is still excluded by (A3), since the argument retains
+all interval kernels $K_{\alpha,\beta}$ rather than one scalar Mellin
+value. The profile and its classical identity are reused examples,
+not additional new results.
+
+In particular $w(u)=e^{-u}$ satisfies (A1), so
+
+$$
+\|\chi+S_t^{\exp}\|_{L^2(0,1)}\not\longrightarrow0,
+\qquad
+\|\chi+S_t^{\exp}\|_{L^2(0,\infty)}\not\longrightarrow0.
+\tag{A14}
+$$
+
+[Alvarez Cruz--Alvarez Gutierrez v3](alvarezcruz2026colombeau.md),
+Conjecture 6.2 uses exactly this complete net with $t=\varepsilon^2$.
+Equation (A14) excludes its convergence conclusion without assuming
+RH. It is not the literal negation of $\mathrm{RH}\Rightarrow P$:
+that logical negation would additionally require RH. Subtracting a
+balancing correction converging to zero in the same Hilbert norm also
+cannot repair this particular exponential net; the existing classical
+Abel limit $\sum\mu(n)e^{-nt}/n\to0$ supplies such a correction when
+it multiplies $\rho_1$.
+
+The conclusion concerns complete nets with one fixed profile satisfying
+(A1), as $t\downarrow0$. It does not exclude every subsequence,
+every separately chosen cutoff, profiles changing with $t$, arbitrary
+balanced families, or freely optimized coefficients. A cutoff inherits
+the obstruction only if its complete Hilbert tail tends to zero.
+The published $n^{-\delta}$ approximation and its order of limits in
+the [natural-dilation criterion](baezduarte2002nyman.md) are different
+families. The actual FIB coefficient transport, critical FIB growth,
+the signed Robin remainder and RH remain separate problems.
+
+The nearby scalar obstruction in Báez-Duarte,
+[*Möbius convolutions and the Riemann hypothesis*, arXiv:math/0504402v1](https://arxiv.org/abs/math/0504402v1),
+§4, original TeX label `lpvariantthm`, assumes nonvanishing of the
+profile's Mellin transform on its relevant boundary line. That scalar
+convolution theorem does not state (A3); (A9)--(A13) supply the joint
+interval argument without the scalar nonvanishing hypothesis.
+The distinction is one of hypotheses and approximation families,
+without an originality or exhaustive-search claim.

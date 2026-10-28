@@ -1,0 +1,129 @@
+**Theorem 12.1 (Two complete worlds with separated terminal-M values).**
+For every real $p\in K$ and $v\in[125,126]$, the entire
+$\mathcal C(p,v)$ has exactly two complete legal worlds.
+In increasing order of $r$, call them $W_0,W_1$. Then
+
+$$
+522<f_{MM}(W_0)<530,\qquad
+535<f_{MM}(W_1)<545,\qquad
+f_{MM}(W_1)-f_{MM}(W_0)>5.
+\tag{12.1}
+$$
+
+Consequently $\mathcal J(v)$ of (9.1) is false for every
+$v\in[125,126]$ at the original $p_J$.
+
+Proof. First fix any $p\in\mathcal P$, $v\in I$ for the
+polynomial argument. Lemma 11.4 makes the Bernstein signs
+
+$$
+(-,-,?,+,+,?,-,-,-,-,-,-,-,?,+,+,-,-,-).
+\tag{12.2}
+$$
+
+Each question mark stands alone between opposite fixed signs.
+Replacing it by either sign, or by zero and omitting it, gives
+one variation across those two fixed signs. There are three such
+transitions and one further transition from index $15$ to $16$.
+Thus the number of variations is always four. The identity
+
+$$
+(1+x)^{18}R\!\left(\frac{x}{1+x},p,v\right)
+ =\sum_{i=0}^{18}\binom{18}{i}\beta_i(p,v)x^i
+\tag{12.3}
+$$
+
+and Descartes' rule give at most four roots in $0<r<1$, counted
+with multiplicity. This is the standard Bernstein/Descartes method
+cited in Section 10, applied to this different coefficient table.
+The first and last Bernstein coefficients are nonzero, so $R$ is
+not the zero polynomial. The change $r=x/(1+x)$ preserves the
+multiplicity of every root with $0<r<1$; no specialized degree
+assumption has been made.
+
+For each $i$, fix $e=p-p_0$ and $t=v-v_c$. The map
+
+$$
+y\longmapsto y-\mathcal P_i(y,e,t)
+\tag{12.4}
+$$
+
+has Lipschitz constant at most $q_i<\bar q_i<1$ on the closed
+radius-$\rho_*$ ball in $\mathbb R^2$. Its norm there is at most
+$\eta_i+q_i\rho_*<\rho_*$. This is a self-map of a nonempty
+complete metric space, so Banach contraction gives one fixed point
+in its interior. The invertible $C_i$ makes that point exactly a
+zero of the original $F_s$. Also
+$\|I-\partial_y\mathcal P_i\|_\infty\le q_i<1$, so the source
+Jacobian is invertible. The coordinate and denominator guards of
+Lemma 11.4 give four distinct real projections in $(0,1)$,
+with $D_m\ne0$, two positive and two negative $b$ values.
+Banach's theorem here is the standard intermediate result of
+Lebl, [Basic Analysis, Theorem 7.6.2](https://www.jirka.org/ra/html/sec_metpicard.html).
+
+We apply the local multiplicity comparison from the proof of $F$,
+Theorem 10.2, not just its bound eighteen. At a real projection
+$\alpha\in(0,1)$, let $n_\alpha$ be the number of distinct
+finite complex $b$ roots with $\mathsf A=\mathsf B=0$ and
+$D_m\ne0$. The coefficient $[b^7]\mathsf A=5p+216$ is nonzero
+on $\mathcal P$, so this number is finite, at most seven.
+Their evaluation vectors in the fixed $14$ by $14$ matrix $S$
+are independent. The determinant has order at least $n_\alpha$.
+If $E(\alpha)=0$, Lemma 4.2 supplies one further common $b$
+root with $D=0$, distinct from those counted by $n_\alpha$.
+The corank is then at least $n_\alpha+1$. Since $E$ has a
+simple zero there, (4.2) gives in both cases
+
+$$
+n_\alpha\le\operatorname{ord}_{r=\alpha}R(r,p,v).
+\tag{12.5}
+$$
+
+This is precisely the base-factor compensation in $F$ (10.5)–(10.6).
+It holds for the fixed matrices under degree drops and requires
+neither a simple projected root nor $\mathcal L_1\ne0$.
+
+Summing (12.5) over real $\alpha\in(0,1)$ gives a budget of at
+most four regular complex lifts over these real projections.
+The four tube points attain the budget. Therefore they are every
+such point; each projection is simple and has exactly one regular
+lift. In particular a negative-$b$ point consumes its projected
+multiplicity and admits no hidden positive-$b$ companion, including
+at a base projection. This exhausts every strict regular source
+without imposing an upper bound on positive $b$ or on $r(1-r)/b$.
+
+Now take $p\in K$. By $O$, Theorem 29.2, every legal singular
+world at this fifth response has actual sixth-M response
+$s_-(p)$ or $s_+(p)$. By $S$, Lemma 2.4, on the whole of $K$
+these lie respectively in the rational boxes $V_-$ and $V_+$ of
+$S$ (2.1), contained in $(119,120)$ and $(138,139)$.
+Both are disjoint from $I$. Thus there is no singular world in
+the child being classified.
+
+Every remaining world has one regular source, and Lemma 3.3
+identifies it with a zero of $F_s$. Conversely the two positive
+tube points have unique complete legal lifts by that lemma.
+The two negative points are auxiliary polynomial solutions only.
+This proves exactly two worlds in the entire actual child.
+The lift uses the unique entire interpolant (3.3) and its fixed
+drift; its gain is nonzero since the first two readings are $0,24$.
+No gain sample, gain leading coefficient, root difference or drift
+has been divided out. Lower degrees, sampled zeros, repeated gain
+roots and zero drift remain included, and the gains and drifts of
+the two worlds need not agree.
+
+On these worlds $f_{MM}=N_m/D_m$ by Lemma 3.3. The exact identity
+$N_m/D_m=c+(N_m-cD_m)/D_m$ and (11.10) give, respectively,
+
+$$
+f_{MM}(W_0)\in(52213/100,52979/100),\qquad
+f_{MM}(W_1)\in(53509/100,108999/200).
+\tag{12.6}
+$$
+
+These imply (12.1). There is no distinct terminal-M pair in this
+entire child. That excludes (9.1) irrespective of overlap between
+its terminal-J and terminal-M labels, and uses no terminal-J
+injectivity assertion. Proposition 2.2 permits the specialization
+to the original exact $p_J$. ∎
+

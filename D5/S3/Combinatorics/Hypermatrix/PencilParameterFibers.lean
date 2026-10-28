@@ -10,6 +10,7 @@ import D5.S3.Combinatorics.Hypermatrix.MaskedFacesDefs
 import D5.S3.Observer.Hankel.HankelRankMinimality
 
 set_option autoImplicit false
+set_option synthInstance.maxHeartbeats 100000
 open scoped BigOperators
 open D5.S3.Combinatorics.Hypermatrix.MaskedFacesDefs
 

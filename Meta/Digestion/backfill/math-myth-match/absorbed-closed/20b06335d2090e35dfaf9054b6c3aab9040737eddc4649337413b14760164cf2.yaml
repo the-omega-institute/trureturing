@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:20b06335d2090e35dfaf9054b6c3aab9040737eddc4649337413b14760164cf2
+  normalized_sha256: sha256:20b06335d2090e35dfaf9054b6c3aab9040737eddc4649337413b14760164cf2
+cas_ref: sha256:20b06335d2090e35dfaf9054b6c3aab9040737eddc4649337413b14760164cf2
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/VisibleLoopHolonomy.strategy_factorization_makes_visible_loops_invisible
+    target_statement_id: sha256:01f2835651ce990d9dc9f98a89650cf9e7f287d6392047c3359e6581beceef7a
+  - gid: D5/S3/Observer/AgencyHolonomy/VisibleLoopHolonomy.visible_loop_policy_change_implies_nontrivial_transport
+    target_statement_id: sha256:e0a5ea7c03964e8b5931cf1f63ec3ad091b9ecb14062c97badeb0a09822429ce
+receipts:
+  unresolved_subitems: []

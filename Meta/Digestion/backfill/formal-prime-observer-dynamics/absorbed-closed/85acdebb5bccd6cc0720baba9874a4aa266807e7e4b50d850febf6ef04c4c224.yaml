@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:85acdebb5bccd6cc0720baba9874a4aa266807e7e4b50d850febf6ef04c4c224
+  normalized_sha256: sha256:85acdebb5bccd6cc0720baba9874a4aa266807e7e4b50d850febf6ef04c4c224
+cas_ref: sha256:85acdebb5bccd6cc0720baba9874a4aa266807e7e4b50d850febf6ef04c4c224
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/FiniteVersusPrimePowerResidual.order_factorization_does_not_force_residual_equality
+    target_statement_id: sha256:ca71e7f30cb63cd86f016528e9161968e8d36651cd4bf66f8c59cc1e3454c459
+  - gid: D5/S3/Factorization/PrimePowers/SimpleToPGroupTrivial.alternating_five_hom_to_pgroup_trivial
+    target_statement_id: sha256:c5edfaed6ff0795c0242e9e5e672fa3b439c099a7f7a6dd729a8a7ebff964766
+receipts:
+  unresolved_subitems: []

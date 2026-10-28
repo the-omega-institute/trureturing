@@ -1,0 +1,13 @@
+**Proposition 39.4 (route agreement and passive Tick).** On the domain of Definition 39.1 every composition of the recovery procedures between these four expressions gives the direct result. Their transported Tick updates agree with the actual successor $(T,k+1,Tx)$. Explicitly, Time appends $m_{k+1}$, Boundary keeps $F_T$ and replaces its current value by $m_{k+1}$, Space replaces $x$ by $Tx$, and Memory keeps $(q,\mu)$ and updates
+
+$$
+w'_j=w_{j+1}\quad(0\le j<N-1),\qquad
+w'_{N-1}=-\sum_{j<N}q_jw_j.
+$$
+
+For $N=1$ only the last formula is present.
+
+**Proof.** Proposition 39.3 recovers the unique native $T$ and, by strict passive phase separation, the unique $k$ and $x$. Every route factors through those same data, proving route agreement. For the update, $w'_j=e_0^{\mathsf T}T^{j+1}x$. The first $N-1$ entries shift and the last is given by $q(T)=0$. The remaining updates are their actual definitions at epoch $k+1$, which remains in the passive domain. $\square$
+
+This is a recovery statement about one rooted digital process. It does not obtain physical space from an abstract law, nor identify the path's cells with another source's states merely because that source also has moment notation.
+

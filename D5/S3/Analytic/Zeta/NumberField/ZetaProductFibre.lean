@@ -28,6 +28,96 @@ open UniqueFactorizationMonoid
 
 section GapBAssembly
 
+/-- Original per-prime cyclotomic Frobenius formula, factored from
+`autToPow_frobeniusIdeal`; the same proof remains at this owner. -/
+theorem autToPow_frobeniusClass
+    (K L : Type*) [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
+    [IsGalois K L] [FiniteDimensional K L] [IsMulCommutative Gal(L/K)]
+    (m : ℕ) [NeZero m] [IsCyclotomicExtension {m} K L]
+    {ζ : L} (hζ : IsPrimitiveRoot ζ m) (𝔭 : Ideal (𝓞 K)) [𝔭.IsPrime]
+    (hunr : UnramifiedIn K L 𝔭) (hcop : (Ideal.absNorm 𝔭).Coprime m) :
+    hζ.autToPow K ((frobeniusClass K L 𝔭).out : L ≃ₐ[K] L) =
+      ZMod.unitOfCoprime (Ideal.absNorm 𝔭) hcop := by
+  classical
+  obtain ⟨𝔓, h𝔓prime, hcomap⟩ :=
+    Ideal.exists_ideal_over_prime_of_isIntegral_of_isDomain (S := 𝓞 L) 𝔭 (by
+      rw [(RingHom.injective_iff_ker_eq_bot _).mp
+        (FaithfulSMul.algebraMap_injective (𝓞 K) (𝓞 L))]
+      exact bot_le)
+  have h𝔓lo : 𝔓.LiesOver 𝔭 := ⟨hcomap.symm⟩
+  haveI := h𝔓prime
+  haveI := h𝔓lo
+  haveI : Finite (𝓞 L ⧸ 𝔓) := Ideal.finiteQuotientOfFreeOfNeBot 𝔓
+    (Ideal.ne_bot_of_liesOver_of_ne_bot hunr.1 𝔓)
+  set φ : L ≃ₐ[K] L := arithFrobAt (𝓞 K) Gal(L/K) 𝔓
+  have hclass : frobeniusClass K L 𝔭 = ConjClasses.mk φ := by
+    let e : ∃ 𝔓₀ : Ideal (𝓞 L), 𝔓₀.IsPrime ∧ 𝔓₀.LiesOver 𝔭 := by
+      obtain ⟨𝔓₀, hp₀, hcomap₀⟩ :=
+        Ideal.exists_ideal_over_prime_of_isIntegral_of_isDomain (S := 𝓞 L) 𝔭 (by
+          rw [(RingHom.injective_iff_ker_eq_bot _).mp
+            (FaithfulSMul.algebraMap_injective (𝓞 K) (𝓞 L))]
+          exact bot_le)
+      exact ⟨𝔓₀, hp₀, ⟨hcomap₀.symm⟩⟩
+    let 𝔓₀ := Classical.choose e
+    haveI : 𝔓₀.IsPrime := (Classical.choose_spec e).1
+    have hlo₀ : 𝔓₀.LiesOver 𝔭 := (Classical.choose_spec e).2
+    haveI : Finite (𝓞 L ⧸ 𝔓₀) := Ideal.finiteQuotientOfFreeOfNeBot 𝔓₀
+      (Ideal.ne_bot_of_liesOver_of_ne_bot hunr.1 𝔓₀)
+    rw [frobeniusClass, dif_pos ⟨‹𝔭.IsPrime›, hunr⟩]
+    change ConjClasses.mk (arithFrobAt (𝓞 K) Gal(L/K) 𝔓₀) = ConjClasses.mk φ
+    exact ConjClasses.mk_eq_mk_iff_isConj.mpr <|
+      isConj_arithFrobAt (𝓞 K) Gal(L/K) 𝔓₀ 𝔓 (hlo₀.over.symm.trans h𝔓lo.over)
+  have hconj : IsConj ((frobeniusClass K L 𝔭).out) φ := by
+    rw [← ConjClasses.mk_eq_mk_iff_isConj, ← hclass]
+    change (⟦(frobeniusClass K L 𝔭 : Quotient (IsConj.setoid Gal(L/K))).out⟧ :
+      Quotient (IsConj.setoid Gal(L/K))) = frobeniusClass K L 𝔭
+    exact Quotient.out_eq _
+  rw [isConj_iff_eq.mp ((hζ.autToPow K).map_isConj hconj)]
+  have hact : φ ζ = ζ ^ Ideal.absNorm 𝔭 :=
+    (show ∀
+        (m : ℕ) [NeZero m] [IsCyclotomicExtension {m} K L] (𝔭 : Ideal (𝓞 K))
+        [𝔭.IsPrime] (hunr : UnramifiedIn K L 𝔭) (hcop : (Ideal.absNorm 𝔭).Coprime m)
+        (𝔓 : Ideal (𝓞 L)) [𝔓.IsPrime] (hP : 𝔓.LiesOver 𝔭), (haveI : Finite (𝓞 L ⧸ 𝔓) := Ideal.finiteQuotientOfFreeOfNeBot 𝔓 (Ideal.ne_bot_of_liesOver_of_ne_bot hunr.1 𝔓); ∀ ζ : L, ζ ∈ primitiveRoots m L → arithFrobAt (𝓞 K) Gal(L/K) 𝔓 ζ = ζ ^ Ideal.absNorm 𝔭) from by
+      intro m cnrInstance0 cnrInstance1 𝔭 cnrInstance2 hunr hcop 𝔓 cnrInstance3 hP
+      haveI : Finite (𝓞 L ⧸ 𝔓) := Ideal.finiteQuotientOfFreeOfNeBot 𝔓
+        (Ideal.ne_bot_of_liesOver_of_ne_bot hunr.1 𝔓)
+      intro ζ hζmem
+      set φ := arithFrobAt (𝓞 K) Gal(L/K) 𝔓
+      have hζ : IsPrimitiveRoot ζ m := (mem_primitiveRoots (NeZero.pos m)).mp hζmem
+      set z : 𝓞 L := hζ.toInteger
+      have hzc : (algebraMap (𝓞 L) L) z = ζ := rfl
+      have hzpow : z ^ m = 1 := hζ.toInteger_isPrimitiveRoot.pow_eq_one
+      set q := Ideal.absNorm 𝔭
+      have h𝔭ne : 𝔭 ≠ ⊥ := (hunr).1
+      have hcopP : (Ideal.absNorm 𝔓).Coprime m := by
+        rw [Ideal.absNorm_eq_pow_inertiaDeg'_of_liesOver 𝔓 𝔭 ‹𝔭.IsPrime› h𝔭ne]
+        exact Nat.Coprime.pow_left _ hcop
+      have hN1 : Ideal.absNorm 𝔓 ≠ 1 := fun h ↦ ‹𝔓.IsPrime›.ne_top (Ideal.absNorm_eq_one_iff.mp h)
+      have hmnotmem : (m : 𝓞 L) ∉ 𝔓 := by
+        intro hmem
+        have hd := Ideal.absNorm_dvd_absNorm_of_le ((Ideal.span_singleton_le_iff_mem _).mpr hmem)
+        rw [Ideal.absNorm_span_singleton, show ((m : ℕ) : 𝓞 L) = algebraMap ℤ (𝓞 L) (m : ℤ) by
+            push_cast; rfl, Algebra.norm_algebraMap, Int.natAbs_pow, Int.natAbs_natCast] at hd
+        exact hN1 ((hcopP.pow_right _).eq_one_of_dvd hd)
+      have hqcard : q = Nat.card (𝓞 K ⧸ 𝔓.under (𝓞 K)) := by
+        change Ideal.absNorm 𝔭 = Nat.card (𝓞 K ⧸ 𝔓.under (𝓞 K))
+        rw [show 𝔭 = 𝔓.under (𝓞 K) from Ideal.LiesOver.over (p := 𝔭) (P := 𝔓),
+          Ideal.absNorm_apply, Submodule.cardQuot_apply]
+      have key := (IsArithFrobAt.arithFrobAt (𝓞 K) Gal(L/K) 𝔓).apply_of_pow_eq_one hzpow hmnotmem
+      rw [← hqcard] at key
+      have hmap := congrArg (algebraMap (𝓞 L) L) key
+      rwa [map_pow,
+        show (algebraMap (𝓞 L) L) ((MulSemiringAction.toAlgHom (𝓞 K) (𝓞 L) φ) z) = φ ζ from rfl,
+        hzc] at hmap) m 𝔭 hunr hcop 𝔓 h𝔓lo ζ
+      ((mem_primitiveRoots (NeZero.pos m)).mpr hζ)
+  have hspec := hζ.autToPow_spec K φ
+  rw [hact] at hspec
+  apply Units.ext
+  rw [ZMod.coe_unitOfCoprime, ← ZMod.natCast_zmod_val ((hζ.autToPow K φ : (ZMod m)ˣ) : ZMod m)]
+  have hmod := (hζ.isOfFinOrder (NeZero.ne m)).pow_eq_pow_iff_modEq.mp hspec
+  exact (ZMod.natCast_eq_natCast_iff _ _ _).mpr
+    (by simpa only [← hζ.eq_orderOf] using hmod)
+
 /-- The cyclotomic character sends `frobeniusIdeal` of a coprime-norm ideal to its norm
 residue: multiplicative extension of the per-prime native cyclotomic character formula over the
 normalized factors. -/
@@ -77,89 +167,7 @@ private theorem autToPow_frobeniusIdeal
           rw [frobeniusIdeal, UniqueFactorizationMonoid.normalizedFactors_irreducible
             (Ideal.prime_of_isPrime h𝔭 ‹_›).irreducible, normalize_eq, Multiset.map_singleton,
             Multiset.prod_singleton]) p hp',
-        (show ∀      
-            (m : ℕ) [NeZero m] [IsCyclotomicExtension {m} K L]
-            {ζ : L} (hζ : IsPrimitiveRoot ζ m) (𝔭 : Ideal (𝓞 K)) [𝔭.IsPrime]
-            (hunr : UnramifiedIn K L 𝔭) (hcop : (Ideal.absNorm 𝔭).Coprime m), (hζ.autToPow K ((frobeniusClass K L 𝔭).out : L ≃ₐ[K] L) = ZMod.unitOfCoprime (Ideal.absNorm 𝔭) hcop) from by
-          intro m cnrInstance0 cnrInstance1 ζ hζ 𝔭 cnrInstance2 hunr hcop
-          obtain ⟨𝔓, h𝔓prime, hcomap⟩ :=
-            Ideal.exists_ideal_over_prime_of_isIntegral_of_isDomain (S := 𝓞 L) 𝔭 (by
-              rw [(RingHom.injective_iff_ker_eq_bot _).mp
-                (FaithfulSMul.algebraMap_injective (𝓞 K) (𝓞 L))]
-              exact bot_le)
-          have h𝔓lo : 𝔓.LiesOver 𝔭 := ⟨hcomap.symm⟩
-          haveI := h𝔓prime
-          haveI := h𝔓lo
-          haveI : Finite (𝓞 L ⧸ 𝔓) := Ideal.finiteQuotientOfFreeOfNeBot 𝔓
-            (Ideal.ne_bot_of_liesOver_of_ne_bot hunr.1 𝔓)
-          set φ : L ≃ₐ[K] L := arithFrobAt (𝓞 K) Gal(L/K) 𝔓
-          have hclass : frobeniusClass K L 𝔭 = ConjClasses.mk φ := by
-            let e : ∃ 𝔓₀ : Ideal (𝓞 L), 𝔓₀.IsPrime ∧ 𝔓₀.LiesOver 𝔭 := by
-              obtain ⟨𝔓₀, hp₀, hcomap₀⟩ :=
-                Ideal.exists_ideal_over_prime_of_isIntegral_of_isDomain (S := 𝓞 L) 𝔭 (by
-                  rw [(RingHom.injective_iff_ker_eq_bot _).mp
-                    (FaithfulSMul.algebraMap_injective (𝓞 K) (𝓞 L))]
-                  exact bot_le)
-              exact ⟨𝔓₀, hp₀, ⟨hcomap₀.symm⟩⟩
-            let 𝔓₀ := Classical.choose e
-            haveI : 𝔓₀.IsPrime := (Classical.choose_spec e).1
-            have hlo₀ : 𝔓₀.LiesOver 𝔭 := (Classical.choose_spec e).2
-            haveI : Finite (𝓞 L ⧸ 𝔓₀) := Ideal.finiteQuotientOfFreeOfNeBot 𝔓₀
-              (Ideal.ne_bot_of_liesOver_of_ne_bot hunr.1 𝔓₀)
-            rw [frobeniusClass, dif_pos ⟨‹𝔭.IsPrime›, hunr⟩]
-            change ConjClasses.mk (arithFrobAt (𝓞 K) Gal(L/K) 𝔓₀) = ConjClasses.mk φ
-            exact ConjClasses.mk_eq_mk_iff_isConj.mpr <|
-              isConj_arithFrobAt (𝓞 K) Gal(L/K) 𝔓₀ 𝔓 (hlo₀.over.symm.trans h𝔓lo.over)
-          have hconj : IsConj ((frobeniusClass K L 𝔭).out) φ := by
-            rw [← ConjClasses.mk_eq_mk_iff_isConj, ← hclass]
-            change (⟦(frobeniusClass K L 𝔭 : Quotient (IsConj.setoid Gal(L/K))).out⟧ :
-              Quotient (IsConj.setoid Gal(L/K))) = frobeniusClass K L 𝔭
-            exact Quotient.out_eq _
-          rw [isConj_iff_eq.mp ((hζ.autToPow K).map_isConj hconj)]
-          have hact : φ ζ = ζ ^ Ideal.absNorm 𝔭 :=
-            (show ∀      
-                (m : ℕ) [NeZero m] [IsCyclotomicExtension {m} K L] (𝔭 : Ideal (𝓞 K))
-                [𝔭.IsPrime] (hunr : UnramifiedIn K L 𝔭) (hcop : (Ideal.absNorm 𝔭).Coprime m)
-                (𝔓 : Ideal (𝓞 L)) [𝔓.IsPrime] (hP : 𝔓.LiesOver 𝔭), (haveI : Finite (𝓞 L ⧸ 𝔓) := Ideal.finiteQuotientOfFreeOfNeBot 𝔓 (Ideal.ne_bot_of_liesOver_of_ne_bot hunr.1 𝔓); ∀ ζ : L, ζ ∈ primitiveRoots m L → arithFrobAt (𝓞 K) Gal(L/K) 𝔓 ζ = ζ ^ Ideal.absNorm 𝔭) from by
-              intro m cnrInstance0 cnrInstance1 𝔭 cnrInstance2 hunr hcop 𝔓 cnrInstance3 hP
-              haveI : Finite (𝓞 L ⧸ 𝔓) := Ideal.finiteQuotientOfFreeOfNeBot 𝔓
-                (Ideal.ne_bot_of_liesOver_of_ne_bot hunr.1 𝔓)
-              intro ζ hζmem
-              set φ := arithFrobAt (𝓞 K) Gal(L/K) 𝔓
-              have hζ : IsPrimitiveRoot ζ m := (mem_primitiveRoots (NeZero.pos m)).mp hζmem
-              set z : 𝓞 L := hζ.toInteger
-              have hzc : (algebraMap (𝓞 L) L) z = ζ := rfl
-              have hzpow : z ^ m = 1 := hζ.toInteger_isPrimitiveRoot.pow_eq_one
-              set q := Ideal.absNorm 𝔭
-              have h𝔭ne : 𝔭 ≠ ⊥ := (hunr).1
-              have hcopP : (Ideal.absNorm 𝔓).Coprime m := by
-                rw [Ideal.absNorm_eq_pow_inertiaDeg'_of_liesOver 𝔓 𝔭 ‹𝔭.IsPrime› h𝔭ne]
-                exact Nat.Coprime.pow_left _ hcop
-              have hN1 : Ideal.absNorm 𝔓 ≠ 1 := fun h ↦ ‹𝔓.IsPrime›.ne_top (Ideal.absNorm_eq_one_iff.mp h)
-              have hmnotmem : (m : 𝓞 L) ∉ 𝔓 := by
-                intro hmem
-                have hd := Ideal.absNorm_dvd_absNorm_of_le ((Ideal.span_singleton_le_iff_mem _).mpr hmem)
-                rw [Ideal.absNorm_span_singleton, show ((m : ℕ) : 𝓞 L) = algebraMap ℤ (𝓞 L) (m : ℤ) by
-                    push_cast; rfl, Algebra.norm_algebraMap, Int.natAbs_pow, Int.natAbs_natCast] at hd
-                exact hN1 ((hcopP.pow_right _).eq_one_of_dvd hd)
-              have hqcard : q = Nat.card (𝓞 K ⧸ 𝔓.under (𝓞 K)) := by
-                change Ideal.absNorm 𝔭 = Nat.card (𝓞 K ⧸ 𝔓.under (𝓞 K))
-                rw [show 𝔭 = 𝔓.under (𝓞 K) from Ideal.LiesOver.over (p := 𝔭) (P := 𝔓),
-                  Ideal.absNorm_apply, Submodule.cardQuot_apply]
-              have key := (IsArithFrobAt.arithFrobAt (𝓞 K) Gal(L/K) 𝔓).apply_of_pow_eq_one hzpow hmnotmem
-              rw [← hqcard] at key
-              have hmap := congrArg (algebraMap (𝓞 L) L) key
-              rwa [map_pow,
-                show (algebraMap (𝓞 L) L) ((MulSemiringAction.toAlgHom (𝓞 K) (𝓞 L) φ) z) = φ ζ from rfl,
-                hzc] at hmap) m 𝔭 hunr hcop 𝔓 h𝔓lo ζ
-              ((mem_primitiveRoots (NeZero.pos m)).mpr hζ)
-          have hspec := hζ.autToPow_spec K φ
-          rw [hact] at hspec
-          apply Units.ext
-          rw [ZMod.coe_unitOfCoprime, ← ZMod.natCast_zmod_val ((hζ.autToPow K φ : (ZMod m)ˣ) : ZMod m)]
-          have hmod := (hζ.isOfFinOrder (NeZero.ne m)).pow_eq_pow_iff_modEq.mp hspec
-          exact (ZMod.natCast_eq_natCast_iff _ _ _).mpr
-            (by simpa only [← hζ.eq_orderOf] using hmod)) m hζ p
+        (autToPow_frobeniusClass K L) m hζ p
           (unramifiedIn_of_coprime_absNorm K L m p hp' hcp) hcp,
         ih ha' hca]
       exact Units.ext (by push_cast [ZMod.coe_unitOfCoprime, hsplit]; ring)

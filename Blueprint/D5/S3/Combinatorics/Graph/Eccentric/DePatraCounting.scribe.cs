@@ -1,0 +1,96 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Eccentric;
+
+internal sealed class DePatraCountingDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Combinatorics/Graph/Eccentric/DePatraCounting.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Actual connected vertex-and-edge subgraphs give the bridge and pendant counting "
+            + "identities. Every non-endpoint eccentricity strictly increases under the bridge shift, "
+            + "including comparison against the fresh-leaf target.",
+        H("Native Bridge and Pendant Counting"),
+        Blocks(
+            Paragraph(Text("These are independently proved counting ingredients for Conjecture 2.9 "
+                + "of Akash De and Kamal Lochan Patra, On the sum of eccentric subgraph numbers of "
+                + "the vertices of a connected graph, arXiv:2610.19694v1, "
+                + "https://arxiv.org/html/2610.19694v1. All subgraphs are native SimpleGraph.Subgraph "
+                + "values, retaining their vertex sets and independently chosen edge sets. "
+                + "Singletons and non-induced connected subgraphs are included.")),
+            Node("pendant-bijection", "Separate the singleton pendant vertex", "pendantRootEquiv",
+                "Suppose l is outside a side S, r belongs to S, l is adjacent to r, l has no "
+                + "other neighbor in the extended side, and only r can be an exit from S. "
+                + "Connected subgraphs supported in insert(l,S) and containing l are in bijection "
+                + "with Unit plus the connected subgraphs supported in S and containing r. "
+                + "The Unit case is the singleton l. In every other case a path from l to another "
+                + "vertex forces the edge lr. Restriction removes l and that edge; union with "
+                + "the one-edge subgraph reconstructs every selected vertex and edge."),
+            Node("pendant-targets", "A target on the base side forces the pendant edge", "pendantTargetsEquiv",
+                "For any nonempty target set s contained in S, connected subgraphs supported in "
+                + "insert(l,S) containing l and s correspond bijectively to rooted connected "
+                + "subgraphs on S containing r and s. The singleton l cannot occur because "
+                + "a vertex of s lies in S. The restriction and reconstruction are exact on edges."),
+            Node("pendant-base", "Two choices at the base root", "pendant_base_count",
+                "For targets s contained in S, the rooted count at r in the pendant extension "
+                + "equals twice the rooted count on S. Partition by whether l is present. "
+                + "Omitting l leaves precisely a subgraph on S, while including l forces its "
+                + "unique edge and is in bijection with the same rooted choices on S."),
+            Node("component-correspondence", "Supported subgraphs and induced ambient graphs", "withinInduceEquiv",
+                "For targets s contained in a side S, connected subgraphs of G supported in S "
+                + "correspond bijectively to connected subgraphs of the ambient induced graph "
+                + "G.induce(S) containing the corresponding targets. This does not require the "
+                + "subgraphs themselves to be induced. Mapping and pulling back preserve "
+                + "connectivity, vertex choices, and every independently selected edge."),
+            Node("component-minimum", "Positive attained local minima", "local_root_minimum",
+                "If the induced graph on S is finite and connected, r belongs to S, and a "
+                + "non-root vertex exists, there is a positive minimum p of the local rooted "
+                + "pair counts to non-root vertices. This minimum is attained, is strictly "
+                + "below the rooted count a, and a is at least two. Transport to the native "
+                + "induced graph applies the singleton-exclusion and attainment results."),
+            Node("same-side-before", "Same-side counts before contraction", "bridge_same_side_count",
+                "Write A and B for the two actual deletion components rooted at u and v, "
+                + "and b for the rooted count on B. For any nonempty target set s in A, let "
+                + "L be the number of local rootless subgraphs containing s and Q the number "
+                + "of local rooted ones containing s. The count in G is L+(1+b)Q. "
+                + "The extended second side is a pendant extension of B and has rooted "
+                + "count 1+b at u, including the singleton u."),
+            Node("same-side-after", "Same-side counts after contraction", "shift_same_side_count",
+                "With the same actual targets and local counts, the shifted graph has count "
+                + "L+2bQ. Its first component retains exactly its original adjacency. On the "
+                + "extended second side the shift is the original graph with u and v swapped. "
+                + "At the base root of this pendant side there are two edge-preserving choices "
+                + "for each rooted subgraph of B."),
+            Node("cross-before", "Cross-bridge product", "bridge_pair_cross",
+                "For every x in A and y in B, the original pair count is the product of the "
+                + "local rooted pair counts from u to x and from v to y. Connectivity forces "
+                + "the exit root, and the rooted gluing and pendant bijections prove the formula "
+                + "for actual subgraphs, without a counting-identity assumption."),
+            Node("cross-after", "Cross-component counts after contraction", "shift_pair_cross",
+                "For x in A and y in B different from v, the shifted pair count is twice "
+                + "the product of those same local rooted pair counts. The factor two is "
+                + "the independent choice of whether to include the new pendant edge."),
+            Node("leaf-target", "The fresh leaf has one pendant-edge choice", "shift_pair_leaf",
+                "For x in A, the shifted pair count to the fresh leaf v is the local rooted "
+                + "pair count from u to x times the rooted count b on B. The new pendant "
+                + "edge is forced, so no factor two appears. The formula includes x=u."),
+            Node("all-targets", "Every possible target is checked", "shift_left_all_targets",
+                "For x in A different from u, the old eccentricity is strictly below every "
+                + "shifted pair count from x. A target in A uses the increase from "
+                + "L+(1+b)Q to L+2bQ, with Q positive and b at least two. A non-root target "
+                + "in B uses the doubled positive product. For the fresh-leaf target, choose "
+                + "a non-root vertex of B attaining q<b: its old pair count is Uq, "
+                + "strictly below the shifted leaf count Ub. Self and the identified root "
+                + "are included in the first case."),
+            Node("non-endpoints", "All non-endpoint eccentricities improve", "shift_nonendpoint_strict",
+                "For every qualifying bridge and every vertex different from both endpoints, "
+                + "the old eccentricity is strictly smaller than the shifted eccentricity. "
+                + "Choose an attained minimizing target in the shifted graph. The first-side "
+                + "all-target result applies directly, and swapping endpoint names transports "
+                + "the same result to the second component.")), []));
+
+    private static DocumentBlock Node(string id, string title, string declaration, string prose) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
+            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+}

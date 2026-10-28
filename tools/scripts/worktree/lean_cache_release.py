@@ -32,23 +32,30 @@ REPO = os.environ.get("STRATALINT_CACHE_REPO", "the-omega-institute/trureturing"
 # Issue #6194, run 34119746844: Release assets must be strictly below 2 GiB.
 # Keep dev's 1.5 GiB headroom and two-digit, at-most-100-part inventory.
 CHUNK_BYTES = 1610612736
-# Optional transport policy (#5985): a thirty-minute operation ceiling,
-# configurable downward, leaves headroom over measured multipart Release fetches
+# Optional transport policy (#5985): a thirty-minute default operation ceiling,
+# with an explicitly selected finite extension for large multipart Release fetches
 # of the 4 GB seed on a developer host (5m08s, #2634; 7m09s for one fetch, and
 # over ten minutes when two fetches share the link). This is a policy choice,
 # not a throughput derivation or a copy of the C# ArchiveBudget.
 # Fetch includes all snapshot attempts; publish starts only after the current report succeeds.
 RELEASE_OPERATION_TIMEOUT_SECONDS = 1800
+RELEASE_OPERATION_TIMEOUT_MAX_SECONDS = 21600
 
 
 def operation_deadline():
     variable = "STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS"
-    try:
-        seconds = int(os.environ.get(variable, str(RELEASE_OPERATION_TIMEOUT_SECONDS)))
-        if not 0 < seconds <= RELEASE_OPERATION_TIMEOUT_SECONDS:
-            raise ValueError()
-    except ValueError:
-        raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_SECONDS}") from None
+    raw = os.environ.get(variable)
+    if raw is None:
+        seconds = RELEASE_OPERATION_TIMEOUT_SECONDS
+    elif not re.fullmatch(r"[0-9]+", raw):
+        raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_MAX_SECONDS}")
+    else:
+        try:
+            seconds = int(raw)
+        except ValueError:
+            raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_MAX_SECONDS}") from None
+        if not 0 < seconds <= RELEASE_OPERATION_TIMEOUT_MAX_SECONDS:
+            raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_MAX_SECONDS}")
     return time.monotonic() + seconds
 
 
@@ -282,6 +289,22 @@ def verification_identity(root, source_ref, source_commit, deadline):
             "workflow_run_attempt": attempt, "source_ref": source_ref}
 
 
+def candidate_identity(root, source_commit, deadline):
+    """Bind an explicitly published local seed to a clean, remotely available commit."""
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        raise ValueError("candidate publication requires a local caller")
+    if not re.fullmatch(r"[0-9a-f]{40}", source_commit) or source_commit == "0" * 40:
+        raise ValueError("candidate source must be a nonzero immutable commit")
+    head = checked_run(["git", "-C", str(root), "rev-parse", "--verify", "HEAD"], deadline).stdout.strip()
+    dirty = checked_run(["git", "-C", str(root), "status", "--porcelain"], deadline).stdout
+    if head != source_commit or dirty:
+        raise ValueError("candidate publication requires the clean fixed source checkout")
+    source = json.loads(gh(deadline, "api", f"repos/{REPO}/commits/{source_commit}"))
+    if not isinstance(source, dict) or source.get("sha") != source_commit:
+        raise ValueError("candidate source is not available in this repository")
+    return {"producer_commit_sha": source_commit}
+
+
 def publication_identity(root, deadline, verification=None):
     """Bind the snapshot to clean protected-branch content; suffixes only disambiguate writes."""
     commit = checked_run(["git", "-C", str(root), "rev-parse", "--verify", "HEAD"], deadline).stdout.strip()
@@ -294,7 +317,7 @@ def publication_identity(root, deadline, verification=None):
     elif commit != verification['producer_commit_sha']:
         raise ValueError("verification source changed during the build")
     identity = dict(producer_commit_sha=commit)
-    if verification is not None or os.environ.get("GITHUB_ACTIONS") == "true":
+    if (verification is not None and "workflow_run_id" in verification) or os.environ.get("GITHUB_ACTIONS") == "true":
         run, attempt = (os.environ.get(field, "") for field in ("GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT"))
         if not all(re.fullmatch(r"[1-9][0-9]*", value) for value in (run, attempt)):
             raise ValueError("CI snapshot suffix requires a run ID and attempt")
@@ -508,15 +531,16 @@ def fetch_staging_cleanup(root, *, now):
     return results
 
 
-def publish(root, partition, verification=None):
+def publish(root, partition, verification=None, *, build_report=True):
     # Build/content failures remain failures. Production transport is optional;
     # explicit verification succeeds only after the uploaded bytes restore.
     # A caller's LEAN_REPORT override must not move publication outside buildDir.
-    build = subprocess.run(["make", "lean-report",
-        "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build",
-        "LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], cwd=root)
-    if build.returncode:
-        return build.returncode
+    if build_report:
+        build = subprocess.run(["make", "lean-report",
+            "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build",
+            "LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], cwd=root)
+        if build.returncode:
+            return build.returncode
     report = root / ".lake/build/stratalint/raw-lean-report.json"
     content_validated = False
     try:
@@ -566,6 +590,10 @@ def publish(root, partition, verification=None):
                str(stage / MANIFEST), "--repo", REPO)
             gh(deadline, "release", "edit", tag, "--repo", REPO, "--draft=false")
             if verification is not None:
+                # Uploaded transport copies must not share the empty restore
+                # target's disk budget with the independently downloaded bytes.
+                for name in {ASSET, *(part["name"] for part in metadata["parts"])}:
+                    (stage / name).unlink(missing_ok=True)
                 # Verify this exact inventory through restore into an empty target.
                 target, downloaded = stage / "verified-target", stage / "downloaded"
                 target.mkdir()
@@ -641,15 +669,50 @@ def snapshot_manifest(partition, tag, stage, deadline, expected=None, verificati
     return metadata, manifest, parts
 
 
+def clone_local_parts(local_assets, stage, parts, deadline):
+    """Clone regular files from an explicit source into the private fetch stage."""
+    if sys.platform != "darwin":
+        raise ValueError("local assets require macOS native clonefile")
+    import ctypes
+    clone = getattr(ctypes.CDLL(None, use_errno=True), "fclonefileat", None)
+    if clone is None:
+        raise ValueError("native fclonefileat is unavailable")
+    clone.argtypes = [ctypes.c_int, ctypes.c_int, ctypes.c_char_p, ctypes.c_uint]
+    clone.restype = ctypes.c_int
+    # Pin the directory and each regular source; never follow a supplied symlink
+    # or block opening a FIFO. fclonefileat cannot fall back to an ordinary copy.
+    with contextlib.ExitStack() as opened:
+        source_dir = os.open(local_assets, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        opened.callback(os.close, source_dir)
+        target_dir = os.open(stage, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        opened.callback(os.close, target_dir)
+        for part in parts:
+            remaining(deadline)
+            source = os.open(part["name"], os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=source_dir)
+            try:
+                if not stat.S_ISREG(os.fstat(source).st_mode):
+                    raise ValueError("local asset is not a regular file: " + part["name"])
+                if clone(source, target_dir, os.fsencode(part["name"]), 0) != 0:
+                    error = ctypes.get_errno()
+                    raise OSError(error, "local asset clonefile failed: " + os.strerror(error), part["name"])
+            finally:
+                os.close(source)
+            remaining(deadline)
+
+
 def restore_snapshot(root, partition, tag, stage, deadline, verification=None, refresh_stale=False, *,
-                     cache_key, approved_producer=None):
+                     cache_key, approved_producer=None, require_compatible_seed=False, on_installed=None,
+                     local_assets=None):
     metadata, manifest, parts = snapshot_manifest(partition, tag, stage, deadline,
         expected=verification if approved_producer is None else {"producer_commit_sha": approved_producer},
         verification=verification is not None, cache_key=cache_key)
     assets = metadata["assets"]
     commit = manifest["producer_commit_sha"]
-    gh(deadline, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
-       *(argument for part in parts for argument in ("--pattern", part["name"])))
+    if local_assets is None:
+        gh(deadline, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
+           *(argument for part in parts for argument in ("--pattern", part["name"])))
+    else:
+        clone_local_parts(local_assets, stage, parts, deadline)
     for part in parts:
         path = stage / part["name"]
         if part["sha256"] != sha(path) or part["bytes"] != path.stat().st_size:
@@ -698,7 +761,7 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
                 source = unpacked / "build"
                 if not source.is_dir():
                     raise ValueError("archive has no project build")
-                if approved_producer is not None:
+                if approved_producer is not None or require_compatible_seed:
                     checked = report_reuse.seed_format(source / "stratalint/raw-lean-report.json")
                     if not checked["compatible"]:
                         raise ValueError("staged report seed is incompatible: " + checked["report_format"])
@@ -720,6 +783,8 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
                         report_reuse.invalidate_seed_base(root)
                         if approved_producer is not None:
                             raise ValueError("approved snapshot base could not be recorded")
+                    if on_installed is not None:
+                        on_installed()
     except BaseException as install_error:
         if backup is not None:
             # Keep both trees if rollback itself fails; never clean that backup.
@@ -774,7 +839,50 @@ def fetch_verification(root, partition, identity):
         return 1
 
 
-def fetch(root, partition, writer_owned=False, refresh_stale=False, approved_tag=None, approved_producer=None):
+def fetch_candidate(root, partition, tag, producer):
+    """Restore one explicit local publication before a validated long producer builds."""
+    if not re.fullmatch(r"[0-9a-f]{40}", producer) or producer == "0" * 40:
+        raise ValueError("candidate fetch requires the immutable producer commit")
+    deadline = operation_deadline()
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        from lean_actions import manual_source_is_valid, preparation_source_is_valid
+        head = checked_run(["git", "-C", str(root), "rev-parse", "--verify", "HEAD"], deadline).stdout.strip()
+        if (not (manual_source_is_valid() or preparation_source_is_valid())
+                or head != os.environ.get("STRATALINT_CACHE_CHECKED_OUT_SHA")):
+            raise ValueError("candidate fetch in CI requires a validated long producer source")
+    cache_key = release_key(root)
+    source = next((part for part in seed_partitions(root)
+        if tag.startswith(prefix(part, cache_key, True))), None)
+    suffix = "" if source is None else tag.removeprefix(prefix(source, cache_key, True))
+    if (not valid_publication_id(suffix) or not suffix.startswith("local-" + producer[:12] + "-")):
+        raise ValueError("candidate tag is outside the compatible partition or producer")
+    def notify_installed():
+        if os.environ.get("GITHUB_ACTIONS") == "true":
+            for variable, content in (("GITHUB_ENV", "STRATALINT_RELEASE_CACHE_SEEDED=1\n"),
+                                      ("GITHUB_OUTPUT", "restored=true\n")):
+                if os.environ.get(variable):
+                    with open(os.environ[variable], "a", encoding="utf-8") as output:
+                        output.write(content)
+    try:
+        with cache_guard(root), tempfile.TemporaryDirectory(prefix="lean-fetch-candidate-") as temporary:
+            fetch_staging_cleanup(root, now=time.time())
+            installed = restore_snapshot(root, source, tag, pathlib.Path(temporary), deadline,
+                {"producer_commit_sha": producer}, refresh_stale=True, cache_key=cache_key,
+                require_compatible_seed=True, on_installed=notify_installed)
+            if not installed:
+                raise ValueError("candidate snapshot was not installed")
+        return 0
+    except RollbackFailed as error:
+        receipt("fetch", "rollback-failed", mode="candidate", reason=str(error), backup=error.backup)
+        return 2
+    except (OSError, EOFError, ImportError, ValueError, KeyError, TypeError,
+            subprocess.SubprocessError, tarfile.TarError) as error:
+        receipt("fetch", "miss", mode="candidate", reason=str(error), resolved=tag, partition=partition)
+        return 1
+
+
+def fetch(root, partition, writer_owned=False, refresh_stale=False, approved_tag=None, approved_producer=None,
+          local_assets=None):
     if os.environ.get("GITHUB_ACTIONS") == "true":
         receipt("fetch", "skipped", reason="CI does not consume Release seeds")
         return 0
@@ -793,7 +901,7 @@ def fetch(root, partition, writer_owned=False, refresh_stale=False, approved_tag
     try:
         deadline = operation_deadline()
         with contextlib.nullcontext() if writer_owned else cache_guard(root):
-            return fetch_locked(root, partition, deadline, refresh_stale, approved_tag, approved_producer)
+            return fetch_locked(root, partition, deadline, refresh_stale, approved_tag, approved_producer, local_assets)
     except (OSError, ImportError, ValueError) as error:
         receipt("fetch", "miss", reason=str(error), partition=partition)
         return 1
@@ -817,7 +925,10 @@ def snapshot_candidates(root, partition, deadline, cache_key):
             yield source, tag
 
 
-def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=None, approved_producer=None):
+def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=None, approved_producer=None,
+                 local_assets=None):
+    if local_assets is not None and (not approved_tag or not approved_producer or not refresh_stale):
+        raise ValueError("local assets require an approved production refresh")
     fetch_staging_cleanup(root, now=time.time())
     reason = "no published snapshot in this partition"
     cache_key = release_key(root)
@@ -835,7 +946,8 @@ def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=No
                 temporary = tempfile.TemporaryDirectory(prefix="lean-fetch-")
                 try:
                     restore_snapshot(root, source, tag, pathlib.Path(temporary.name), deadline,
-                        refresh_stale=refresh_stale, cache_key=cache_key, approved_producer=approved_producer)
+                        refresh_stale=refresh_stale, cache_key=cache_key, approved_producer=approved_producer,
+                        local_assets=local_assets)
                 finally:
                     try:
                         temporary.cleanup()
@@ -872,17 +984,26 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("address", "publish", "fetch"))
     parser.add_argument("--repository", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[3])
-    parser.add_argument("--mode", choices=("production", "verification"), default="production")
+    parser.add_argument("--mode", choices=("production", "verification", "candidate"), default="production")
     parser.add_argument("--source-ref", default="")
     parser.add_argument("--source-commit", default="")
+    parser.add_argument("--tag", default="", help="exact local candidate Release to restore")
+    parser.add_argument("--no-build", action="store_true", help="publish only an already valid complete report/build")
     # Internal handoff from LeanArchiveFetch after its typed guard assertion.
     parser.add_argument("--writer-owned", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--approved-tag", help=argparse.SUPPRESS)
     parser.add_argument("--approved-producer", help=argparse.SUPPRESS)
+    parser.add_argument("--local-assets", type=pathlib.Path,
+                        help="native-clone standard part filenames for an approved production refresh")
     parser.add_argument("--refresh-stale", action="store_true",
                         help="replace an expired private project build after validating the complete snapshot")
     args = parser.parse_args()
     try:
+        args.repository = args.repository.resolve()
+        if args.no_build and args.command != "publish":
+            raise ValueError("--no-build requires publish")
+        if args.tag and (args.mode != "candidate" or args.command != "fetch"):
+            raise ValueError("--tag requires candidate fetch")
         if args.refresh_stale and (args.command != "fetch" or args.mode != "production"):
             raise ValueError("--refresh-stale requires production fetch")
         if args.approved_tag is not None or args.approved_producer is not None:
@@ -890,6 +1011,9 @@ def main():
                     or not re.fullmatch(r"[0-9a-f]{40}", args.approved_producer)
                     or not args.refresh_stale):
                 raise ValueError("approved snapshot requires a tag, producer and production refresh")
+        if args.local_assets is not None and (args.command != "fetch" or args.mode != "production"
+                                              or not args.approved_tag):
+            raise ValueError("local assets require an approved production refresh")
         if args.mode == "production" and (args.source_ref or args.source_commit):
             raise ValueError("explicit source parameters require verification mode")
         verification = None
@@ -897,6 +1021,13 @@ def main():
             if args.command == "address" or args.writer_owned:
                 raise ValueError("verification requires publish/fetch with its own private cache guard")
             verification = verification_identity(args.repository, args.source_ref, args.source_commit, operation_deadline())
+        if args.mode == "candidate":
+            if args.source_ref or args.writer_owned or args.approved_tag or args.command == "address":
+                raise ValueError("candidate mode requires an explicit local publication or exact fetch")
+            partition = partition_path(args.repository)
+            if args.command == "fetch":
+                return fetch_candidate(args.repository, partition, args.tag, args.source_commit)
+            verification = candidate_identity(args.repository, args.source_commit, operation_deadline())
         partition = partition_path(args.repository)
         if args.command == "address":
             cache_key = release_key(args.repository)
@@ -907,8 +1038,8 @@ def main():
             if verification is not None:
                 return fetch_verification(args.repository, partition, verification)
             return fetch(args.repository, partition, args.writer_owned, args.refresh_stale,
-                         args.approved_tag, args.approved_producer)
-        return publish(args.repository, partition, verification)
+                         args.approved_tag, args.approved_producer, args.local_assets)
+        return publish(args.repository, partition, verification, build_report=not args.no_build)
     except RollbackFailed as error:
         receipt(args.command, "rollback-failed", reason=str(error), backup=error.backup)
         return 2

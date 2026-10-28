@@ -142,15 +142,17 @@ def emitter (T : Parameters) : InstalledEmitter (observer T) where
 def streamLaw (T : Parameters) (z : Config) : Measure Stream :=
   (markedLaw (observer T) (emitter T) (z, none)).map rawFrom
 
-instance (T : Parameters) (z : Config) : IsProbabilityMeasure (streamLaw T z) :=
-  Measure.isProbabilityMeasure_map measurable_raw.aemeasurable
+instance (T : Parameters) (z : Config) : IsProbabilityMeasure (streamLaw T z) := by
+  unfold streamLaw
+  infer_instance
 
 def wordLaw (T : Parameters) (s : ActivePhase) (z : Config) : Measure RawTail :=
   (streamLaw T z).map (stoppedReadWord s)
 
 instance (T : Parameters) (s : ActivePhase) (z : Config) :
-    IsProbabilityMeasure (wordLaw T s z) :=
-  Measure.isProbabilityMeasure_map (measurable_stopped_read_word s).aemeasurable
+    IsProbabilityMeasure (wordLaw T s z) := by
+  unfold wordLaw
+  infer_instance
 
 def cylinderMass (T : Parameters) (z : Config) (w : List Letter) : ℝ≥0∞ :=
   streamLaw T z (prefixCylinder w)
@@ -161,7 +163,7 @@ private theorem initial_mark_irrelevance (T : Parameters) (z : Config) (a : Opti
     marked_regenerate (observer T) (emitter T) (z,none),
     Measure.map_finset_sum' measurable_raw.aemeasurable,
     Measure.map_finset_sum' measurable_raw.aemeasurable]
-  simp only [Measure.map_smul]
+  simp only [Measure.map_smul _ measurable_raw.aemeasurable]
   apply Finset.sum_congr rfl
   intro y _
   rw [Measure.map_map measurable_raw (measurable_prefix _),
@@ -211,7 +213,7 @@ private theorem cylinder_recursion (T : Parameters) (z : Config) (s : ActivePhas
         cylinderMass T (successor (.read b) z) w := by
   rw [cylinderMass, streamLaw, marked_regenerate (observer T) (emitter T) (z,none),
     Measure.map_finset_sum' measurable_raw.aemeasurable]
-  simp only [Measure.coe_finsetSum, Finset.sum_apply, Measure.map_smul,
+  simp only [Measure.coe_finsetSum, Finset.sum_apply, Measure.map_smul _ measurable_raw.aemeasurable,
     Measure.smul_apply, smul_eq_mul,
     Measure.map_map measurable_raw (measurable_prefix _)]
   rw [row_active T z s hc]
@@ -617,7 +619,7 @@ theorem all_indices (T : Parameters) (hr : Rates T) (hs : Seeds T) :
       · exact mul_le_mul (by have hh := (period_bounds T hr i).2; norm_num at hh ⊢; exact hh) hprev.2
           (native_nonneg T s m b i) (by norm_num)
 
-private theorem geometric_rate_bound {x y A B : ℝ} (hy : 0 < y) (hA : 0 < A)
+theorem geometric_rate_bound {x y A B : ℝ} (hy : 0 < y) (hA : 0 < A)
     (hb : ∀ n : ℕ, A*x^n ≤ B*y^n) : x ≤ y := by
   by_contra h
   have hxy : y < x := lt_of_not_ge h

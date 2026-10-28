@@ -1,0 +1,14 @@
+**Theorem 47.1 (exponential equal-endpoint histories).** Suppose $H\ge a$, and let $U\ne V$ be any equal-endpoint pulse pair of common length $\ell$. For each integer $m\ge0$, the actual source admits $2^m$ distinct legal pulse histories of length $m\ell$ with identical current native fields, law, origin, length and retained rights. If no distinguishing past information is retained, every common future source operation sequence, including a finite adaptive one, has identical complete outputs and successors on those histories. Consequently those present data, even supplemented with all common future source behavior, cannot recover the pulse word on the full declared domain.
+
+Proof. A fixed block $W$ acts on every starting field by
+
+$$
+F_W(x)=T^\ell x+E_\ell(W).
+$$
+
+The block collision says $E_\ell(U)=E_\ell(V)$, so $F_U=F_V$ as maps on every current field. Choose independently $U$ or $V$ in each of the $m$ block positions. Starting from the same actual $x_*$, all block-boundary fields, in particular the final field, agree. The $2^m$ concatenated words are distinct because their equal-length blocks have fixed boundaries and $U\ne V$. All of them are permitted drives of this original acquired installation; no extra source is used to enact a block within a run.
+
+From an equal field and the same $T$, Read and Hold give equal outputs without changing the field, Tick gives the same updated field and root output, and any common Add input gives the same acknowledgement and updated field. Thus the present-state equality is a congruence for the entire installed menu. Induction gives the assertion for common finite sequences. An adaptive policy depending only on the shared current data and later replies makes identical choices at each step; a shared random tape gives the same conclusion pathwise. Equality for all finite prefixes also gives equality of any common infinite response stream where that stream is defined.
+
+The theorem concerns erased past information. A controller state, external reference or input supplier that still distinguishes the earlier words is additional retained information and cannot be omitted from its premise. Past emissions are likewise not equated by endpoint equality. $\square$
+

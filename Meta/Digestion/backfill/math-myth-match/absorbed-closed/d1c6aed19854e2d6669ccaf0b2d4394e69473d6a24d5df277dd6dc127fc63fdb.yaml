@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d1c6aed19854e2d6669ccaf0b2d4394e69473d6a24d5df277dd6dc127fc63fdb
+  normalized_sha256: sha256:d1c6aed19854e2d6669ccaf0b2d4394e69473d6a24d5df277dd6dc127fc63fdb
+cas_ref: sha256:d1c6aed19854e2d6669ccaf0b2d4394e69473d6a24d5df277dd6dc127fc63fdb
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/ExperimentStatePosteriorDecisionSeparation.experiment_state_and_posterior_decision_separation
+    target_statement_id: sha256:f946793a6ee4af207cffd7bdabf1fd480a23d39ff682b0e49bc6be6fa3234bbc
+receipts:
+  unresolved_subitems: []

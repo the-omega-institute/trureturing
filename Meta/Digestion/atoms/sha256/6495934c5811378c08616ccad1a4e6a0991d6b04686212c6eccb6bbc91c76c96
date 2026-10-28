@@ -1,0 +1,9 @@
+**Lemma 78.1 (the first departure on the actual tree).** There is a first
+integer $r\ge1$ for which $h_r\ne1$. Exactly the following cases occur.
+
+1. If $\Gamma$ is a path and $o$ is an endpoint, then $r=N$ and $h_r=0$.
+2. If $\deg(o)\in\{2,3\}$, then $r=1$ and $h_r=\deg(o)$.
+3. Otherwise, if the first case does not hold, $o$ is a leaf. Follow its
+   unique chain until the first degree-three vertex, at distance $d$.
+   Then $r=d+1$ and $h_r=2$.
+

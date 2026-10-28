@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Cancelled differential residual for the complete original primal theta tail. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Zeros.Jensen.OriginalPrimalTailProjection
 import D5.S3.Zeros.Jensen.SourceJensenIntegralExtension
 import D5.S3.Analytic.Fourier.XiThetaTransform

@@ -1,0 +1,21 @@
+**Definition 11.1 (a record-controlled extension of Definition 1.3).**
+At stage $t$, let $c$ contain the actually retained gate word, finitely encoded parameters, record and optimizer memory.
+Use a finite-dimensional classical–quantum space $\mathcal H_t=\bigoplus_{c\in C_t}\mathcal H_{t,c}$ with states block diagonal in $c$.
+The sets $C_t$ are finite at each declared resource cut; this does not bound their growth uniformly in $t$.
+Allowed actions depend on retained records and state-dependent guards.
+For each legal action $a$, the actual branches $\mathcal I_{t,a,y}$ are completely positive and trace nonincreasing,
+and their sum is trace preserving. Classical control and memory updates are included in those branches.
+
+A predictive carrier $\widehat{\mathcal H}_t$ has branches $\mathcal J_{t,a,y}$ with the same instrument conditions.
+A supplied summary $\mathcal E_t$ is CPTP on the declared block algebras and satisfies, on every reachable unnormalized state,
+
+$$
+\mathcal E_{t+1}\mathcal I_{t,a,y}
+=\mathcal J_{t,a,y}\mathcal E_t,\qquad
+\widehat\sigma_\emptyset=\mathcal E_0(\sigma_\emptyset).
+$$
+
+The summary preserves action legality: every relevant guard factors through the summary with the same answer.
+The policy in the two descriptions uses the same retained record and corresponding guards.
+These requirements define a supplied exact predictive interface, not its acquisition algorithm.
+

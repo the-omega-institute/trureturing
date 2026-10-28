@@ -6,6 +6,7 @@
    utility: none
    digest: The unchanged all-mode source has a fixed-window signed derivative margin and an arbitrary-multiplicity retained-disk polynomial count. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Zeros.Jensen.JensenHermiteScaling
 import D5.S3.Zeros.Jensen.JensenSimpleRealStability
 import Mathlib.Topology.DiscreteSubset

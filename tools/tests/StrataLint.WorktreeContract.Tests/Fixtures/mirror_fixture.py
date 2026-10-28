@@ -40,7 +40,9 @@ class MirrorCases:
         self.run_protocol("prepare-mirror", "--path", mirror, "--branch", "mirror/conflict/11", "--base", base,
                           "--merge", feature, "--message", "mirror: conflict", expect=73)
         self.assertTrue(self.g(mirror, "ls-files", "--unmerged"))
-        self.run_protocol("remove", "--names", mirror.name, expect=68)
+        blocked = json.loads(self.run_protocol("remove", "--names", mirror.name, expect=74).stdout)
+        self.assertEqual("checkpoint_failed", blocked["items"][0]["outcome"])
+        self.assertEqual("unmerged_index", blocked["items"][0]["error"])
         failed = self.root / "mirror-rejected"
         branch = "mirror/rejected/11"
         hook = self.remote / "hooks/pre-receive"
@@ -49,16 +51,21 @@ class MirrorCases:
         result = self.run_protocol("prepare-mirror", "--path", failed, "--branch", branch, "--base", self.base,
                           "--merge", feature, "--message", "mirror: rejected", expect=73)
         self.assertIn("publication-rejected", result.stderr)
+        receipt = json.loads(next(line[len("WORKTREE_FAILED "):] for line in result.stderr.splitlines()
+                                  if line.startswith("WORKTREE_FAILED ")))
+        self.assertEqual("publication", receipt["stage"])
+        self.assertEqual(str(failed), receipt["target"])
+        self.assertIn("reclaim", receipt["recovery_action"])
         self.assertEqual("feature\n", (failed / "owned").read_text())
         head = self.g(failed, "rev-parse", "HEAD").strip()
         self.assertEqual([self.base], self.g(failed, "show", "-s", "--format=%P", head).split())
         self.assertEqual(head, self.g(self.main, "rev-parse", "refs/heads/" + branch).strip())
         self.assertEqual("", self.g(self.remote, "for-each-ref", "refs/heads/" + branch))
-        self.run_protocol("remove", "--names", failed.name, expect=68)
         hook.unlink()
         published = self.run_protocol("publish", "--path", failed, "--branch", branch)
         self.assertEqual("confirmed", json.loads(published.stdout)["status"])
         self.assertEqual(head, self.g(self.remote, "rev-parse", "refs/heads/" + branch).strip())
+        self.run_protocol("remove", "--names", failed.name)
 
     def mirror_missing_endpoint_refused_before_creation(self):
         failed = self.root / "mirror-offline"

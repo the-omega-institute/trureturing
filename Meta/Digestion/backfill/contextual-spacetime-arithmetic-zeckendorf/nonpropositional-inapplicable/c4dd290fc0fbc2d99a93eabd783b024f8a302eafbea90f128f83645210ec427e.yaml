@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c4dd290fc0fbc2d99a93eabd783b024f8a302eafbea90f128f83645210ec427e
+  normalized_sha256: sha256:c4dd290fc0fbc2d99a93eabd783b024f8a302eafbea90f128f83645210ec427e
+cas_ref: sha256:c4dd290fc0fbc2d99a93eabd783b024f8a302eafbea90f128f83645210ec427e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 167 specifies the lattice automorphism set, its scalar-preserving subset and the notation m_r. The classification and rigidity claims belong to Theorem 168.
+    previous_atom_id: 73ef8146ea3880455bb78fd1e0492e0fbf8ca162295867b163fa4bef56ab7c8d
+    next_atom_id: dc9d652388db0b1733a8181dd4f773185f3efd339202772b7af5fcd684eed78c

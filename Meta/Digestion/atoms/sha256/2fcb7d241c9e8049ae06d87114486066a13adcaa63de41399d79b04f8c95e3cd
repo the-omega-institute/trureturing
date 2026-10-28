@@ -1,0 +1,74 @@
+**定理 143.4（关系位密度及其半差）。** 对每个有限 $k\ge2$，
+$$
+\boxed{\rho_k:=\mu_k(r_0=1)
+=\frac{\lambda_k^k-k}{\lambda_k^{k+1}-k}},
+\qquad
+\boxed{\frac12-\rho_k
+=\frac{k-1}{2(\lambda_k^{k+1}-k)}>0}.
+\tag{143.12}
+$$
+特别地 $0<\rho_k<1/2$，并且
+$$
+\rho_2=\frac{5-\sqrt5}{10},\qquad
+\lim_{k\to\infty}\rho_k=\frac12.
+\tag{143.13}
+$$
+对公平绝对提升 $\nu_k$（定义139.9、命题142.4），每个固定位置却满足 $\nu_k(x_i=1)=1/2$。
+
+**证明。** 对（143.10）的双重和按 $t=j+a$ 汇总，每个 $1\le t\le k$ 有恰好 $t$ 对指标，故
+$$
+S=\sum_{t=1}^k t p^t.
+\tag{143.14}
+$$
+每次关系零恰好使下一后缀状态为零，而读一不会进入零状态。因此平稳性给
+$$
+\mu_k(r_0=0)=\pi_0=\frac1S,\qquad
+\rho_k=1-\frac1S.
+\tag{143.15}
+$$
+也可直接将（143.11）的零边权相加，得到
+$\sum_j\pi_jP(j,0)=S^{-1}\sum_{j=0}^{k-1}p^{j+1}=S^{-1}$。
+
+有限和相减，利用 $\sum_{t=1}^kp^t=1$，得
+$$
+(1-p)S
+=\sum_{t=1}^kp^t-kp^{k+1}
+=1-kp^{k+1}.
+$$
+所以
+$$
+S=\frac{\lambda_k^{k+1}-k}
+        {\lambda_k^{k+1}-\lambda_k^k},
+\qquad
+\lambda_k^{k+1}-k
+=S\lambda_k^k(\lambda_k-1)>0.
+\tag{143.16}
+$$
+将此式代入（143.15）即得密度公式。根方程还给
+$$
+\lambda_k^{k+1}-2\lambda_k^k+1=0.
+\tag{143.17}
+$$
+将两倍密度从一中减去，分子为
+$\lambda_k^{k+1}-2\lambda_k^k+k=k-1$，得到严格半差。又（143.14）比 $\sum_{t=1}^kp^t$ 严格大，因为 $k\ge2$ 且高于一次的项有正质量；故 $S>1$，密度严格正。
+
+$k=2$ 时 $\lambda_2=\varphi$，由 $S=p+2p^2=1+p^2$ 得
+$$
+\rho_2=\frac{p^2}{1+p^2}
+=\frac{5-\sqrt5}{10}.
+$$
+这与定理66.11在其黄金均值参数下的关系位均值一致，未改变其概率来源。
+
+根的单调性及 $\lambda_k\uparrow2$ 已由[有效分辨率卷§1.2.13](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md)式（TM.416）给出。为得到此处的密度极限，写成
+$$
+\frac12-\rho_k
+=\frac{(k-1)\lambda_k^{-(k+1)}}
+       {2\bigl(1-k\lambda_k^{-(k+1)}\bigr)}.
+$$
+由于 $\lambda_k\ge\varphi>1$，有
+$k\lambda_k^{-(k+1)}\le k\varphi^{-(k+1)}\to0$，故半差趋零。
+
+公平绝对提升的状态质量为 $\widehat\pi(a,j)=\pi_j/2$，对 $j$ 求和即得每个位置的绝对一概率为一半。
+
+上述半差是每个有限 $k$ 的严格差值；只在 $k\to\infty$ 的极限中，关系位密度趋于一半。绝对单点公平与关系位偏向翻转并不冲突。证毕。
+

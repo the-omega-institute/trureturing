@@ -1,0 +1,14 @@
+**Proposition 41.5 (later use is not bounded-width use).** Every later actual call, predictor update, input transfer, phase enumeration and materialized Time expression pays its own cost and width. Finite $N$ and a finite law description do not imply bounded total memory or bounded literal output width, even with no controls.
+
+**Proof.** At passive epoch $k$, denominators of native state coordinates divide $D^k$ and their reduced widths are at most $O(kB+1)$. A literal Tick return must serialize its actual reduced fraction. The case $N=1$, $T=(1/2)$ already has
+
+$$
+m_k=2^{-k},
+$$
+
+whose reduced denominator has $k+1$ binary digits. No bounded-width canonical rational output store can hold all these outputs. A complete separately materialized Time list through $k$ can require $\Theta(k^2)$ bits in this example. Holding only a current predictive state and streaming outputs has different storage behavior and does not materialize Time for free.
+
+In the retained predictive implementation, Read uses the existing $w_0$ and pays literal output traffic; Add uses $N$ products $u\mu_j$ and $N$ additions for $w$, and its input width is not bounded by $B$; Tick uses $N$ recurrence products, $N-1$ additions and a shift/copy, all at current widths. If the redundant native vector is also kept, its actual native update work is added, including the direct Tick count of Proposition 41.2. The fixed-law moments needed for Add are retained $\mu$, without extra source queries. A policy may keep an arbitrarily long command/output journal; that is additional storage.
+
+Lemma 39.2's enumeration performs as many local prediction steps and exact comparisons as the actual recovered phase requires, storing the current candidate and a growing index. There is no phase-independent bound in $N$ alone. If Space or Boundary is recovered from an already late epoch, this work is not part of the $2N$ acquisition horizon and cannot be charged as zero. Predictive-state arithmetic and optional journal generation use their own growing widths. $\square$
+

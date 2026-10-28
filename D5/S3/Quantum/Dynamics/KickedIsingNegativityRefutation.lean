@@ -29,6 +29,7 @@ Direct frozen dependencies:
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 
+import D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtCorner
 import D5.S3.Quantum.Entanglement.FourQubitResidualSumMonotoneRefutation
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
@@ -102,10 +103,6 @@ noncomputable def reducedAB {L : ℕ} (A B : Finset (Fin L))
       ψ (joinParts A B p.1.1 p.1.2 p.2))
     (star (fun p : ((A → Fin 2) × (B → Fin 2)) × (Outside (A ∪ B) → Fin 2) =>
       ψ (joinParts A B p.1.1 p.1.2 p.2))))
-
-/-- Partial transposition on the B factor, allowing unequal factor dimensions. -/
-def partialTranspose {A B : Type*} (ρ : Matrix (A × B) (A × B) ℂ) :
-    Matrix (A × B) (A × B) ℂ := fun p q => ρ (p.1,q.2) (q.1,p.2)
 
 /-- The state after integer Floquet time t. -/
 noncomputable def evolved {L : ℕ} (h θ φ : Fin L → ℝ) (t : ℤ) :
@@ -224,6 +221,33 @@ theorem trace_local_right {a b : Type} [Fintype a] [Fintype b]
         (((1 : Matrix a a ℂ) ⊗ₖ V) * ρ * ((1 : Matrix a a ℂ) ⊗ₖ V)ᴴ) *
           (U ⊗ₖ (1 : Matrix b b ℂ))ᴴ := by simp only [Matrix.mul_assoc]
   rw [he,trace_conjugate_left,trace_conjugate_right ρ V hV]
+
+-- The decidable instances are part of this interface.
+set_option linter.unusedDecidableInType false in
+theorem trace_local_left {a b : Type} [Fintype a] [Fintype b]
+    [DecidableEq a] [DecidableEq b]
+    (ρ : Matrix (a × b) (a × b) ℂ) (U : Matrix a a ℂ) (V : Matrix b b ℂ)
+    (hU : Uᴴ * U = 1) :
+    partialTraceLeft ((U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ) =
+      V * partialTraceLeft ρ * Vᴴ := by
+  let F := Matrix.reindexAlgEquiv ℂ ℂ (Equiv.prodComm a b)
+  have hp (M : Matrix (a × b) (a × b) ℂ) :
+      partialTraceLeft M = partialTraceRight (F M) := by ext i j; rfl
+  have hv : F (U ⊗ₖ V) = V ⊗ₖ U := by
+    ext ⟨i,j⟩ ⟨k,l⟩
+    change U j l * V i k = V i k * U j l
+    ring
+  have hs (M : Matrix (a × b) (a × b) ℂ) : F Mᴴ = (F M)ᴴ := rfl
+  rw [hp,map_mul,map_mul,hs,hv,trace_local_right _ V U hU,← hp]
+
+theorem partialTransposeB_kronecker_conj (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
+    (U V : Matrix (Fin 2) (Fin 2) ℂ) :
+    partialTransposeB ((U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ) =
+      (U ⊗ₖ V.map star) * partialTransposeB ρ * (U ⊗ₖ V.map star)ᴴ := by
+  ext ⟨a,b⟩ ⟨c,d⟩
+  simp [partialTransposeB, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    Fintype.sum_prod_type, Fin.sum_univ_two]
+  ring
 
 set_option maxHeartbeats 4000000 in
 -- The four-site spectral certificates expand finite matrix products and exponentials.
@@ -692,14 +716,6 @@ theorem result : ¬ claim := by
       traceNorm (V * A * Vᴴ) = traceNorm A := by
     rw [traceNorm_spectrum _ (Matrix.isHermitian_mul_mul_conjTranspose V hA),
       traceNorm_spectrum A hA, spectrum_conjugate A V hA hV]
-  have pt_local (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
-      (U V : Matrix (Fin 2) (Fin 2) ℂ) :
-      partialTransposeB ((U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ) =
-        (U ⊗ₖ V.map star) * partialTransposeB ρ * (U ⊗ₖ V.map star)ᴴ := by
-    ext ⟨a,b⟩ ⟨c,d⟩
-    simp [partialTransposeB, Matrix.mul_apply, Matrix.conjTranspose_apply,
-      Fintype.sum_prod_type, Fin.sum_univ_two]
-    ring
   have conjugate_unitary {n : Type} [Fintype n] [DecidableEq n]
       (U : Matrix n n ℂ) (hU : Uᴴ * U = 1) :
       (U.map star)ᴴ * U.map star = 1 := by
@@ -716,21 +732,6 @@ theorem result : ¬ claim := by
       (U ⊗ₖ V)ᴴ * (U ⊗ₖ V) = 1 := by
     rw [Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul, hU, hV,
       Matrix.one_kronecker_one]
-  have trace_local_left {a b : Type} [Fintype a] [Fintype b]
-      [DecidableEq a] [DecidableEq b]
-      (ρ : Matrix (a × b) (a × b) ℂ) (U : Matrix a a ℂ) (V : Matrix b b ℂ)
-      (hU : Uᴴ * U = 1) :
-      partialTraceLeft ((U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ) =
-        V * partialTraceLeft ρ * Vᴴ := by
-    let F := Matrix.reindexAlgEquiv ℂ ℂ (Equiv.prodComm a b)
-    have hp (M : Matrix (a × b) (a × b) ℂ) :
-        partialTraceLeft M = partialTraceRight (F M) := by ext i j; rfl
-    have hv : F (U ⊗ₖ V) = V ⊗ₖ U := by
-      ext ⟨i,j⟩ ⟨k,l⟩
-      change U j l * V i k = V i k * U j l
-      ring
-    have hs (M : Matrix (a × b) (a × b) ℂ) : F Mᴴ = (F M)ᴴ := rfl
-    rw [hp,map_mul,map_mul,hs,hv,trace_local_right _ V U hU,← hp]
   have local_invariance (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
       (U V : Matrix (Fin 2) (Fin 2) ℂ) (hρ : ρ.IsHermitian)
       (hU : Uᴴ * U = 1) (hV : Vᴴ * V = 1) :
@@ -757,7 +758,7 @@ theorem result : ¬ claim := by
       intro i _
       exact hρ.apply (i,a) (i,b)
     refine ⟨?_,?_,?_,?_⟩
-    · rw [pt_local]
+    · rw [partialTransposeB_kronecker_conj]
       exact norm_conjugate _ _ hpt (tensor_pair_unitary U (V.map star) hU
         (conjugate_unitary V hV))
     · exact renyi_conjugate ρ _ hρ (tensor_pair_unitary U V hU hV)

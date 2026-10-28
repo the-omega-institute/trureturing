@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9da59f841b4a4081f6e969f83f4eda155d181e5685e2f9a677d25131c660ac02
+  normalized_sha256: sha256:9da59f841b4a4081f6e969f83f4eda155d181e5685e2f9a677d25131c660ac02
+cas_ref: sha256:9da59f841b4a4081f6e969f83f4eda155d181e5685e2f9a677d25131c660ac02
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第8899号来源第3至4节到第6章的迁移项，只有来源编号及地址。
+    previous_atom_id: 8264977c54089409dadfd3f3de3fbc8fb944ee9c7c391264da58022a981189c5
+    next_atom_id: 66769d6f67293ff156e3f2f5e9b7053a02e1f0b3cae6b658044b37af33488de2

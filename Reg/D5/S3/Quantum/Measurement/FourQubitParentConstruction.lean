@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
 import Reg.Support.DependentFamily
+import Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction.PublishedReadouts
 
 open _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -37,8 +38,6 @@ theorem vectorDependence : ObservationalDependence vectorSignature vectorActual 
   intro h
   have hh := congrArg (fun A : Mat => A 0 0) h
   norm_num [vectorActual, realize, B_formula, Matrix.cons_val_succ, Matrix.cons_val_zero] at hh
-  change (0 : ℂ) = 1 at hh
-  norm_num at hh
 
 @[reducible] def formulaArena : Arena where
   signature := vectorSignature
@@ -836,8 +835,6 @@ theorem scalarDependence : ObservationalDependence scalarSignature scalarActual 
   have hh := congrArg (fun A : Mat => A 0 0) h
   norm_num [scalarActual, realize, scalarB, B_formula, Matrix.cons_val_succ,
     Matrix.cons_val_zero] at hh
-  change (0 : ℂ) = 1 at hh
-  norm_num at hh
 @[reducible] def hermitianArena : Arena :=
   ⟨scalarSignature, fun R => ∀ (t : ℝ) (a : Vec), (R.readout () t a).IsHermitian⟩
 theorem hermitianNegative : ¬ hermitianArena.Law scalarRejected := by
@@ -962,4 +959,35 @@ noncomputable def complementRegistration : Contract.Registration.{_,_,_,0,0,0,_,
     coordinates := #[0], readouts := #[⟨
       #["body", "body", "arg", "arg", "arg"], 1, false, none, false⟩] }, continuation := .unknown
   partialSensitivity := none, escapeFrom := none, familyRecord := none, options := #[] }
+noncomputable def zeroRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@B_zero) (Realization equalitySignature) Unit Unit := {
+  unitName := `D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_zero.__information_unit
+  realizationName := ``zeroEvidence
+  realizationSource := none, generated := false, arena := .source ⟨zeroArena⟩
+  objectArena := .source ⟨zeroArena⟩, catalog := .anonymous, localNames := false
+  realization := .source zeroArena ⟨zeroEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent
+  readout := some (realize equalitySignature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction, definition := none
+    coordinates := #[], readouts := #[⟨#["fn", "fn"], 0, true, none, false⟩] }
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms zeroRegistration
+noncomputable def sumEqualityRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@scalarB_sum.{u}) (Realization equalitySignature) Unit Unit := {
+  unitName := `D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_sum.__information_unit
+  realizationName := ``scalarSumEvidence
+  realizationSource := none, generated := false, arena := .source ⟨scalarSumArena.{u}⟩
+  objectArena := .source ⟨scalarSumArena.{u}⟩, catalog := .anonymous, localNames := false
+  realization := .source scalarSumArena.{u} ⟨scalarSumEvidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent
+  readout := some (realize equalitySignature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction, definition := none
+    coordinates := #[], readouts := #[⟨
+      #["body", "body", "body", "body", "fn", "fn"], 0, true, none, false⟩] }
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms sumEqualityRegistration
 end Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction

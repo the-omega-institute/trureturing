@@ -1,0 +1,908 @@
+/- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ActualPSDMoment
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ActualPSDMoment
+   mirror-E: none(waiver:noncomputational)
+   anchors: []
+   utility: none
+   digest: Joint moment of ordered real defects under the literal positive semidefinite constraint. -/
+import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.DefectScalarBounds
+import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone
+import Mathlib.Analysis.Matrix.PosDef
+
+/-! Joint moments of ordered real defects under the literal PSD constraint. -/
+
+set_option autoImplicit false
+namespace D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound
+open scoped BigOperators Matrix
+open Finset Matrix
+noncomputable section
+
+private theorem z_matrix_psd_mono {n : Type*} [Finite n]
+    {M N : Matrix n n ℝ} (hM : M.PosSemidef) (hN : N.IsHermitian)
+    (hZ : ∀ i j, i ≠ j → N i j ≤ 0) (hMN : ∀ i j, M i j ≤ N i j) :
+    N.PosSemidef := by
+  classical
+  letI := Fintype.ofFinite n
+  apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg hN
+  intro x
+  have h0 := hM.dotProduct_mulVec_nonneg (fun i => |x i|)
+  simp only [dotProduct, mulVec, star_trivial, Pi.star_apply,
+    Finset.mul_sum] at h0 ⊢
+  calc
+    0 ≤ ∑ i, ∑ j, |x i| * (M i j * |x j|) := h0
+    _ ≤ ∑ i, ∑ j, |x i| * (N i j * |x j|) := by
+      apply sum_le_sum; intro i _
+      apply sum_le_sum; intro j _
+      exact mul_le_mul_of_nonneg_left
+        (mul_le_mul_of_nonneg_right (hMN i j) (abs_nonneg _)) (abs_nonneg _)
+    _ ≤ ∑ i, ∑ j, x i * (N i j * x j) := by
+      apply sum_le_sum; intro i _
+      apply sum_le_sum; intro j _
+      by_cases hij : i = j
+      · subst j
+        apply le_of_eq
+        calc
+          |x i| * (N i i * |x i|) = N i i * |x i| ^ 2 := by ring
+          _ = N i i * (x i) ^ 2 := by rw [sq_abs]
+          _ = x i * (N i i * x i) := by ring
+      · have hc := mul_le_mul_of_nonpos_left (le_abs_self (x i * x j)) (hZ i j hij)
+        rw [abs_mul] at hc
+        nlinarith only [hc]
+
+private def actualK (h : Fin 5 → ℝ) (d : Fin 9 → ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
+  !![2 * (1 - d 8), -(h 0 + d 7), -(h 1 + d 5);
+     -(h 0 + d 7), 2 * (1 - d 6), -(h 2 + d 4);
+     -(h 1 + d 5), -(h 2 + d 4), 2 * (1 - d 3)]
+
+private theorem actualK_form (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (x : Fin 3 → ℝ) :
+    star x ⬝ᵥ (actualK h d *ᵥ x) =
+      2 * (1 - d 8) * (x 0) ^ 2 + 2 * (1 - d 6) * (x 1) ^ 2 + 2 * (1 - d 3) * (x 2) ^ 2 -
+      2 * (h 0 + d 7) * x 0 * x 1 - 2 * (h 1 + d 5) * x 0 * x 2 - 2 * (h 2 + d 4) * x 1 * x 2 := by
+  simp [actualK, dotProduct, mulVec, Fin.sum_univ_succ]
+  ring
+
+-- Half of the full plus/minus congruence; no invertibility premise is needed.
+private def actualP (h : Fin 5 → ℝ) (d : Fin 9 → ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
+  !![2 - h 0 - (d 6 + d 7 + d 8), -(d 8 - d 6), -(h 1 + h 2 + d 4 + d 5) / 2;
+     -(d 8 - d 6), 2 + h 0 + d 7 - d 6 - d 8, -(h 1 - h 2 + d 5 - d 4) / 2;
+     -(h 1 + h 2 + d 4 + d 5) / 2, -(h 1 - h 2 + d 5 - d 4) / 2, 1 - d 3]
+
+private theorem actualK_hermitian (h : Fin 5 → ℝ) (d : Fin 9 → ℝ) :
+    (actualK h d).IsHermitian := by
+  change (actualK h d)ᴴ = actualK h d
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [actualK, Matrix.conjTranspose]
+
+private theorem actualP_hermitian (h : Fin 5 → ℝ) (d : Fin 9 → ℝ) :
+    (actualP h d).IsHermitian := by
+  change (actualP h d)ᴴ = actualP h d
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [actualP, Matrix.conjTranspose]
+
+private theorem actualP_psd (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (hK : (actualK h d).PosSemidef) : (actualP h d).PosSemidef := by
+  apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg (actualP_hermitian h d)
+  intro x
+  have hid : star x ⬝ᵥ (actualP h d *ᵥ x) =
+      (star (![x 0 + x 1, x 0 - x 1, x 2] : Fin 3 → ℝ) ⬝ᵥ
+        (actualK h d *ᵥ ![x 0 + x 1, x 0 - x 1, x 2])) / 2 := by
+    simp [actualP, actualK, dotProduct, mulVec, Fin.sum_univ_succ]
+    ring
+  rw [hid]
+  exact div_nonneg (hK.dotProduct_mulVec_nonneg _) (by norm_num)
+
+private theorem actualK_psd_of_actualP (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (hP : (actualP h d).PosSemidef) : (actualK h d).PosSemidef := by
+  apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg (actualK_hermitian h d)
+  intro x
+  have hid : star x ⬝ᵥ (actualK h d *ᵥ x) =
+      2 * (star (![(x 0 + x 1) / 2, (x 0 - x 1) / 2, x 2] : Fin 3 → ℝ) ⬝ᵥ
+        (actualP h d *ᵥ ![(x 0 + x 1) / 2, (x 0 - x 1) / 2, x 2])) := by
+    simp [actualP, actualK, dotProduct, mulVec, Fin.sum_univ_succ]
+    ring
+  rw [hid]
+  exact mul_nonneg (by norm_num) (hP.dotProduct_mulVec_nonneg _)
+
+private theorem delete_head_psd (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (hn : ∀ i, 0 ≤ h i) (dn : ∀ i, 0 ≤ d i)
+    (hK : (actualK h d).PosSemidef) : (actualK 0 d).PosSemidef := by
+  apply z_matrix_psd_mono hK (actualK_hermitian 0 d)
+  · intro i j hij
+    fin_cases i <;> fin_cases j <;>
+      norm_num at hij <;> norm_num [actualK] <;> linarith [dn 4, dn 5, dn 7]
+  · intro i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [actualK] <;> linarith [hn 0, hn 1, hn 2]
+
+-- The original ordered-block supplier, with its original proof, pays D2 ≤ r².
+private theorem ordered_tail_bounds (d : Fin 9 → ℝ)
+    (dn : ∀ i, 0 ≤ d i) (dord : Monotone d) :
+    (∑ i, (d i) ^ 2) ≤ (d 6 + d 7 + d 8) ^ 2 ∧
+      d 6 + d 7 + d 8 ≤ ∑ i, d i ∧ (∑ i, d i) ≤ 3 * (d 6 + d 7 + d 8) := by
+  have he := ordered_block_energy
+    (fun i : Fin 3 => (![d 6, d 7, d 8] : Fin 3 → ℝ) i)
+    (fun i : Fin 6 => (![d 0, d 1, d 2, d 3, d 4, d 5] : Fin 6 → ℝ) i) (d 6)
+    (dn 6)
+    (by intro i; fin_cases i <;> exact dord (by decide))
+    (by intro i; fin_cases i <;> exact dn _)
+    (by intro i; fin_cases i <;> exact dord (by decide))
+    (by norm_num) (by norm_num)
+  simp only [Fin.sum_univ_succ, Matrix.cons_val,
+    Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero] at he ⊢
+  refine ⟨by nlinarith only [he], ?_, ?_⟩
+  · linarith [dn 0, dn 1, dn 2, dn 3, dn 4, dn 5]
+  · linarith [dord (show (0 : Fin 9) ≤ 6 by decide),
+      dord (show (1 : Fin 9) ≤ 7 by decide), dord (show (2 : Fin 9) ≤ 8 by decide),
+      dord (show (3 : Fin 9) ≤ 6 by decide), dord (show (4 : Fin 9) ≤ 7 by decide),
+      dord (show (5 : Fin 9) ≤ 8 by decide)]
+
+private theorem tail_variance_bound (d : Fin 9 → ℝ)
+    (dn : ∀ i, 0 ≤ d i) (dord : Monotone d) :
+    (∑ i, (d i) ^ 2) ≤ (d 6 + d 7 + d 8) ^ 2 / 3 +
+      (2 / 3) * (d 8 - d 6) ^ 2 + (d 4 + d 5) ^ 2 + 2 * (d 3) ^ 2 := by
+  have hs (i : Fin 9) (hi : i ≤ 3) : (d i) ^ 2 ≤ (d 3) ^ 2 := by
+    have h := dord hi
+    nlinarith [mul_nonneg (sub_nonneg.mpr h) (add_nonneg (dn 3) (dn i))]
+  have huv : (d 3) ^ 2 ≤ d 4 * d 5 := by
+    have h34 := dord (show (3 : Fin 9) ≤ 4 by decide)
+    have h35 := dord (show (3 : Fin 9) ≤ 5 by decide)
+    nlinarith [mul_nonneg (sub_nonneg.mpr h34) (dn 5),
+      mul_nonneg (dn 3) (sub_nonneg.mpr h35)]
+  have hpq := dord (show (6 : Fin 9) ≤ 7 by decide)
+  have hqt := dord (show (7 : Fin 9) ≤ 8 by decide)
+  have hlast := mul_nonneg (sub_nonneg.mpr hpq) (sub_nonneg.mpr hqt)
+  simp only [Fin.sum_univ_succ, Fin.reduceSucc,
+    Finset.univ_eq_empty, Finset.sum_empty, add_zero]
+  nlinarith only [hs 0 (by decide), hs 1 (by decide), hs 2 (by decide), huv, hlast]
+
+-- Scalar combination of the two envelopes, with rational polynomial factors.
+private theorem sharp_tail_envelopes (r u T : ℝ)
+    (hr0 : 0 ≤ r) (hr2 : r ≤ 2) (hu0 : 0 ≤ u) (hu2 : u ≤ 1 / 2)
+    (hsq : T ≤ r ^ 2)
+    (hf : T ≤ r ^ 2 / 3 + 4 * (2 - r) * (1 - u) + 2 * u ^ 2)
+    (hg : 3 / 2 ≤ r → T ≤ 7 * r ^ 2 / 9 + 2 * u ^ 2) : T ≤ 9 / 4 := by
+  by_cases hr : r ≤ 3 / 2
+  · nlinarith [mul_nonneg (by linarith : 0 ≤ 3 / 2 - r) (by linarith : 0 ≤ 3 / 2 + r)]
+  · have hr' : 3 / 2 ≤ r := le_of_lt (lt_of_not_ge hr)
+    by_cases hR : r ≤ 27 / 16
+    · let u0 : ℝ := 7 / 2 - 2 * r
+      have hu00 : 0 ≤ u0 := by dsimp [u0]; linarith
+      by_cases hu : u ≤ u0
+      · have husq : u ^ 2 ≤ u0 ^ 2 := by
+          nlinarith [mul_nonneg (sub_nonneg.mpr hu) (add_nonneg hu00 hu0)]
+        have hp := mul_nonneg (by linarith : 0 ≤ 2 * r - 3)
+          (by linarith : 0 ≤ 267 - 158 * r)
+        have hh := hg hr'
+        dsimp [u0] at husq
+        nlinarith only [hh, husq, hp]
+      · have hu' : u0 ≤ u := le_of_lt (lt_of_not_ge hu)
+        have hp := mul_nonpos_of_nonneg_of_nonpos (sub_nonneg.mpr hu')
+          (by linarith : u - 1 / 2 ≤ 0)
+        have hq := mul_nonneg (by linarith : 0 ≤ 2 * r - 3)
+          (by linarith : 0 ≤ 9 - 2 * r)
+        dsimp [u0] at hp
+        nlinarith only [hf, hp, hq]
+    · have hR' : 27 / 16 ≤ r := le_of_lt (lt_of_not_ge hR)
+      have hp := mul_nonpos_of_nonneg_of_nonpos (sub_nonneg.mpr hR')
+        (by linarith : (r + 27 / 16) / 3 - 4 + 4 * u ≤ 0)
+      have hq := mul_nonpos_of_nonneg_of_nonpos hu0 (by linarith : u - 5 / 8 ≤ 0)
+      nlinarith only [hf, hp, hq]
+
+private theorem sharp_tail_square (d : Fin 9 → ℝ)
+    (dn : ∀ i, 0 ≤ d i) (dord : Monotone d) (du : ∀ i, d i ≤ 1)
+    (hK : (actualK 0 d).PosSemidef) : (∑ i, (d i) ^ 2) ≤ 9 / 4 := by
+  let r := d 6 + d 7 + d 8
+  let u := d 3
+  let δ := d 8 - d 6
+  let B := d 4 + d 5
+  let C := 1 - u
+  let Am := 2 + d 7 - d 6 - d 8
+  let L := d 5 - d 4
+  have h110 := hK.dotProduct_mulVec_nonneg (![1, 1, 0] : Fin 3 → ℝ)
+  have h111 := hK.dotProduct_mulVec_nonneg (![1, 1, 1] : Fin 3 → ℝ)
+  rw [actualK_form] at h110 h111
+  norm_num at h110 h111
+  have hr0 : 0 ≤ r := by dsimp [r]; linarith [dn 6, dn 7, dn 8]
+  have hr2 : r ≤ 2 := by dsimp [r]; linarith only [h110]
+  have hu0 : 0 ≤ u := dn 3
+  have h3u : 3 * u ≤ r := by
+    dsimp [r, u]
+    linarith [dord (show (3 : Fin 9) ≤ 6 by decide),
+      dord (show (3 : Fin 9) ≤ 7 by decide), dord (show (3 : Fin 9) ≤ 8 by decide)]
+  have h3ur : 3 * u + r ≤ 3 := by
+    dsimp [r, u]
+    linarith [h111, dord (show (3 : Fin 9) ≤ 4 by decide),
+      dord (show (3 : Fin 9) ≤ 5 by decide)]
+  have hu2 : u ≤ 1 / 2 := by linarith
+  have hC : 0 < C := by dsimp [C]; linarith
+  have hδ : 0 ≤ δ := sub_nonneg.mpr (dord (by decide))
+  have hδ1 : δ ≤ 1 := by dsimp [δ]; linarith [du 8, dn 6]
+  have hB : 0 ≤ B := add_nonneg (dn 4) (dn 5)
+  have hL : 0 ≤ L := sub_nonneg.mpr (dord (by decide))
+  have hAm3 : Am ≤ 3 := by dsimp [Am]; linarith only [du 7, dn 6, dn 8]
+  have hC6 : 3 ≤ 6 * C := by dsimp [C]; linarith only [hu2]
+  have hAm : Am ≤ 6 * C := hAm3.trans hC6
+  have hP := actualP_psd 0 d hK
+  have htest := hP.dotProduct_mulVec_nonneg (![6 * C, δ, 3 * B] : Fin 3 → ℝ)
+  have hform : star (![6 * C, δ, 3 * B] : Fin 3 → ℝ) ⬝ᵥ
+      (actualP 0 d *ᵥ ![6 * C, δ, 3 * B]) =
+      36 * C ^ 2 * (2 - r) + (Am - 12 * C) * δ ^ 2 - 9 * C * B ^ 2 - 3 * L * δ * B := by
+    dsimp [C, u, δ, B, r, Am, L]
+    simp [actualP, dotProduct, mulVec, Fin.sum_univ_succ]
+    ring
+  rw [hform] at htest
+  have hcharge := mul_nonneg (sub_nonneg.mpr hAm) (sq_nonneg δ)
+  have hcross := mul_nonneg (mul_nonneg hL hδ) hB
+  have hbudget : (2 / 3) * δ ^ 2 + B ^ 2 ≤ 4 * C * (2 - r) := by
+    have hp : 0 ≤ C * (12 * C * (2 - r) - 2 * δ ^ 2 - 3 * B ^ 2) := by
+      nlinarith only [htest, hcharge, hcross]
+    have hi : 0 ≤ 12 * C * (2 - r) - 2 * δ ^ 2 - 3 * B ^ 2 := by
+      by_contra h
+      have hneg := mul_neg_of_pos_of_neg hC (lt_of_not_ge h)
+      linarith only [hp, hneg]
+    linarith only [hi]
+  have hvar : (∑ i, (d i) ^ 2) ≤ r ^ 2 / 3 + (2 / 3) * δ ^ 2 + B ^ 2 + 2 * u ^ 2 :=
+    tail_variance_bound d dn dord
+  have hf : (∑ i, (d i) ^ 2) ≤ r ^ 2 / 3 + 4 * (2 - r) * (1 - u) + 2 * u ^ 2 := by
+    dsimp [C] at hbudget
+    nlinarith only [hvar, hbudget]
+  apply sharp_tail_envelopes r u _ hr0 hr2 hu0 hu2
+    (ordered_tail_bounds d dn dord).1 hf
+  intro hr
+  have hBupper : B ≤ 2 * (r - δ) / 3 := by
+    dsimp [B, r, δ]
+    linarith [dord (show (4 : Fin 9) ≤ 6 by decide),
+      dord (show (5 : Fin 9) ≤ 6 by decide), dord (show (6 : Fin 9) ≤ 7 by decide)]
+  have hBsquare : B ^ 2 ≤ 4 * (r - δ) ^ 2 / 9 := by
+    have hpos : 0 ≤ 2 * (r - δ) / 3 + B := by linarith
+    nlinarith [mul_nonneg (sub_nonneg.mpr hBupper) hpos]
+  have hp := mul_nonpos_of_nonneg_of_nonpos hδ (by linarith : 5 * δ - 4 * r ≤ 0)
+  nlinarith only [hvar, hBsquare, hp]
+
+private def flatFormula (c z e : ℝ) : ℝ :=
+  z ^ 2 + 2 * e ^ 2 - c * (z + 2 * e) + max (e - c) 0 * min (2 * e) (4 - z - 2 * e)
+
+private theorem flat_lower_endpoint (e : ℝ) (he0 : 0 ≤ e) (he1 : e ≤ 1) :
+    flatFormula (1 / 4) e e ≤ 7 / 2 := by
+  by_cases he : e ≤ 1 / 4
+  · simp only [flatFormula, max_eq_right (by linarith : e - 1 / 4 ≤ 0), zero_mul, add_zero]
+    nlinarith [mul_nonneg he0 (by linarith : 0 ≤ 1 / 4 - e)]
+  · have he' : 1 / 4 ≤ e := le_of_lt (lt_of_not_ge he)
+    unfold flatFormula
+    rw [max_eq_left (by linarith : 0 ≤ e - 1 / 4)]
+    by_cases h4 : e ≤ 4 / 5
+    · rw [min_eq_left (by linarith : 2 * e ≤ 4 - e - 2 * e)]
+      have hp := mul_nonneg (by linarith : 0 ≤ 4 / 5 - e)
+        (by linarith : 0 ≤ 5 * e + 11 / 4)
+      nlinarith only [hp]
+    · rw [min_eq_right (by linarith : 4 - e - 2 * e ≤ 2 * e)]
+      nlinarith only [he1]
+
+private theorem flat_upper_endpoint (e : ℝ) (he0 : 0 ≤ e) (he1 : e ≤ 1) :
+    flatFormula (1 / 4) (2 - e ^ 2) e ≤ 7 / 2 := by
+  have hesq : e ^ 2 ≤ e := by nlinarith [mul_nonneg he0 (sub_nonneg.mpr he1)]
+  by_cases he : e ≤ 1 / 4
+  · simp only [flatFormula, max_eq_right (by linarith : e - 1 / 4 ≤ 0), zero_mul, add_zero]
+    have hp := mul_nonneg (sq_nonneg e) (by nlinarith : 0 ≤ 7 / 4 - e ^ 2)
+    nlinarith only [hp, he0]
+  · unfold flatFormula
+    rw [max_eq_left (by linarith : 0 ≤ e - 1 / 4)]
+    by_cases hc : 2 * e ≤ 4 - (2 - e ^ 2) - 2 * e
+    · rw [min_eq_left hc]
+      have he2 : e ≤ 2 / 3 := by nlinarith only [hesq, hc]
+      have hcube : e ^ 3 ≤ 8 / 27 := by
+        have hp := mul_nonneg (by linarith : 0 ≤ 2 / 3 - e)
+          (by nlinarith [sq_nonneg e] : 0 ≤ e ^ 2 + (2 / 3) * e + 4 / 9)
+        nlinarith only [hp]
+      have hp := mul_nonneg he0 (by linarith : 0 ≤ 1 - e ^ 3 - e / 4)
+      nlinarith only [hp]
+    · rw [min_eq_right (by linarith : 4 - (2 - e ^ 2) - 2 * e ≤ 2 * e)]
+      have hp := mul_nonneg (mul_nonneg (sq_nonneg e) (sub_nonneg.mpr he1))
+        (by linarith : 0 ≤ e + 2)
+      nlinarith only [hp, sq_nonneg (2 * e - 1)]
+
+private theorem flat_kink (e : ℝ)
+    (hl : e ≤ 4 - 4 * e) (hu : 4 - 4 * e ≤ 2 - e ^ 2) :
+    flatFormula (1 / 4) (4 - 4 * e) e ≤ 7 / 2 := by
+  have he9 : 9 / 16 ≤ e := by
+    by_contra h
+    have hp := mul_nonneg_of_nonpos_of_nonpos
+      (by linarith : e - 9 / 16 ≤ 0) (by linarith : e - 55 / 16 ≤ 0)
+    nlinarith only [hp, hu]
+  have hp := mul_nonpos_of_nonneg_of_nonpos (by linarith : 0 ≤ e - 9 / 16)
+    (by linarith : 20 * e - 83 / 4 ≤ 0)
+  unfold flatFormula
+  rw [max_eq_left (by linarith : 0 ≤ e - 1 / 4),
+    min_eq_left (by linarith : 2 * e ≤ 4 - (4 - 4 * e) - 2 * e)]
+  nlinarith only [hp]
+
+-- Each side of the kink uses the original quadratic interval supplier.
+private theorem flat_interval_bound (c z e : ℝ) (he0 : 0 ≤ e) (he1 : e ≤ 1)
+    (hleft : flatFormula c e e ≤ 4 - 2 * c)
+    (hright : flatFormula c (2 - e ^ 2) e ≤ 4 - 2 * c)
+    (hkink : ∀ t, t ≤ 4 - 4 * t → 4 - 4 * t ≤ 2 - t ^ 2 → flatFormula c (4 - 4 * t) t ≤ 4 - 2 * c)
+    (hz0 : e ≤ z) (hzA : z ≤ 2 - e ^ 2) : flatFormula c z e ≤ 4 - 2 * c := by
+  let A := 2 - e ^ 2
+  let k := max (e - c) 0
+  let t := 4 - 4 * e
+  let qL : ℝ → ℝ := fun y => y ^ 2 + (-c) * y + (2 * e ^ 2 - 2 * c * e + k * (2 * e))
+  let qR : ℝ → ℝ := fun y => y ^ 2 + (-c - k) * y + (2 * e ^ 2 - 2 * c * e + k * (4 - 2 * e))
+  have hL (y : ℝ) (hy : y ≤ t) : flatFormula c y e = qL y := by
+    dsimp [flatFormula, qL, k]
+    rw [min_eq_left (by dsimp [t] at hy; linarith : 2 * e ≤ 4 - y - 2 * e)]
+    ring
+  have hR (y : ℝ) (hy : t ≤ y) : flatFormula c y e = qR y := by
+    dsimp [flatFormula, qR, k]
+    rw [min_eq_right (by dsimp [t] at hy; linarith : 4 - y - 2 * e ≤ 2 * e)]
+    ring
+  by_cases hzt : z ≤ t
+  · rw [hL z hzt]
+    by_cases hAt : A ≤ t
+    · apply quadratic_interval_le_fun qL 1 (-c) (2 * e ^ 2 - 2 * c * e + k * (2 * e))
+        e A z (4 - 2 * c) (by intro y; dsimp [qL]; ring) (by norm_num) hz0 hzA
+      · rw [← hL e (by linarith)]; exact hleft
+      · rw [← hL A hAt]; exact hright
+    · have htA : t ≤ A := le_of_lt (lt_of_not_ge hAt)
+      apply quadratic_interval_le_fun qL 1 (-c) (2 * e ^ 2 - 2 * c * e + k * (2 * e))
+        e t z (4 - 2 * c) (by intro y; dsimp [qL]; ring) (by norm_num) hz0 hzt
+      · rw [← hL e (by linarith)]; exact hleft
+      · rw [← hL t le_rfl]
+        exact hkink e (by linarith) htA
+  · have htz : t ≤ z := le_of_lt (lt_of_not_ge hzt)
+    rw [hR z htz]
+    by_cases hte : t ≤ e
+    · apply quadratic_interval_le_fun qR 1 (-c - k) (2 * e ^ 2 - 2 * c * e + k * (4 - 2 * e))
+        e A z (4 - 2 * c) (by intro y; dsimp [qR]; ring) (by norm_num) hz0 hzA
+      · rw [← hR e hte]; exact hleft
+      · rw [← hR A (by linarith)]; exact hright
+    · have het : e ≤ t := le_of_lt (lt_of_not_ge hte)
+      apply quadratic_interval_le_fun qR 1 (-c - k) (2 * e ^ 2 - 2 * c * e + k * (4 - 2 * e))
+        t A z (4 - 2 * c) (by intro y; dsimp [qR]; ring) (by norm_num) htz hzA
+      · rw [← hR t le_rfl]
+        exact hkink e het (by linarith)
+      · rw [← hR A (by linarith)]; exact hright
+
+private theorem flat_five_moment (c a b e x y : ℝ) (hc0 : 0 ≤ c)
+    (hinterval : ∀ z e, 0 ≤ e → e ≤ 1 → e ≤ z → z ≤ 2 - e ^ 2 →
+      flatFormula c z e ≤ 4 - 2 * c)
+    (hab : b ≤ a) (hbe : e ≤ b) (hex : x ≤ e) (hxy : y ≤ x) (hy0 : 0 ≤ y)
+    (hmass : a + b + e + x + y ≤ 4) (hdet : a ^ 2 + b ^ 2 + e ^ 2 + a * b * e ≤ 4) :
+    a ^ 2 + b ^ 2 + e ^ 2 + x ^ 2 + y ^ 2 - c * (a + b + e + x + y) ≤ 4 - 2 * c := by
+  have hx0 : 0 ≤ x := by linarith
+  have he0 : 0 ≤ e := by linarith
+  have hae : e ≤ a := le_trans hbe hab
+  have he1 := flat_third_head_le_one a b e hab hbe he0 hdet
+  let k := max (e - c) 0
+  have hk : 0 ≤ k := le_max_right _ _
+  have hc : (x ^ 2 - c * x) + (y ^ 2 - c * y) ≤ k * min (2 * e) (4 - (a + b) - e) := by
+    by_cases he : e ≤ c
+    · have hk0 : k = 0 := max_eq_right (by linarith)
+      rw [hk0, zero_mul]
+      nlinarith [mul_nonneg hx0 (by linarith : 0 ≤ c - x),
+        mul_nonneg hy0 (by linarith : 0 ≤ c - y)]
+    · have hkval : k = e - c := max_eq_left (by linarith)
+      have hmin : x + y ≤ min (2 * e) (4 - (a + b) - e) := le_min (by linarith) (by linarith)
+      have hm := mul_le_mul_of_nonneg_left hmin hk
+      rw [hkval] at hm ⊢
+      nlinarith [mul_nonneg hx0 (sub_nonneg.mpr hex),
+        mul_nonneg hy0 (by linarith : 0 ≤ e - y)]
+  let A := 2 - e ^ 2
+  have hAe : e ≤ A := flat_endpoint_ge_third e he0 he1
+  by_cases hs : a + b ≤ A + e
+  · have hz0 : e ≤ a + b - e := by linarith
+    have hzA : a + b - e ≤ 2 - e ^ 2 := by dsimp [A] at hs; linarith
+    have hF := hinterval (a + b - e) e he0 he1 hz0 hzA
+    have hq := flat_pair_square_le_low a b e hae hbe
+    have hmin : 4 - (a + b) - e = 4 - (a + b - e) - 2 * e := by ring
+    rw [hmin] at hc
+    dsimp [flatFormula] at hF
+    dsimp [k] at hc
+    nlinarith only [hF, hc, hq]
+  · have hs' : A + e ≤ a + b := le_of_lt (lt_of_not_ge hs)
+    have hq := flat_pair_square_le_high a b e he0 he1 hdet hs'
+    have hm : min (2 * e) (4 - (a + b) - e) ≤ min (2 * e) (4 - A - 2 * e) :=
+      min_le_min le_rfl (by linarith)
+    have hcmp := mul_le_mul_of_nonneg_left hm hk
+    have hF := hinterval A e he0 he1 hAe le_rfl
+    dsimp [flatFormula, A, k] at hF hc hcmp hq hs'
+    have hcharge := mul_le_mul_of_nonneg_left hs' hc0
+    nlinarith only [hF, hc, hcmp, hq, hcharge]
+
+private theorem flat_head_determinant (h : Fin 5 → ℝ)
+    (hK : (actualK h 0).PosSemidef) :
+    (h 0) ^ 2 + (h 1) ^ 2 + (h 2) ^ 2 + h 0 * h 1 * h 2 ≤ 4 := by
+  have hd := hK.det_nonneg
+  norm_num [actualK, Matrix.det_fin_three] at hd
+  nlinarith only [hd]
+
+private theorem flat_head_moment (c : ℝ) (hc0 : 0 ≤ c)
+    (hinterval : ∀ z e, 0 ≤ e → e ≤ 1 → e ≤ z → z ≤ 2 - e ^ 2 →
+      flatFormula c z e ≤ 4 - 2 * c) (h : Fin 5 → ℝ)
+    (hn : ∀ i, 0 ≤ h i) (ho : Antitone h) (hH : (∑ i, h i) ≤ 4)
+    (hK : (actualK h 0).PosSemidef) :
+    (∑ i, (h i) ^ 2) - c * (∑ i, h i) ≤ 4 - 2 * c := by
+  have hd' := flat_head_determinant h hK
+  have hh := flat_five_moment c (h 0) (h 1) (h 2) (h 3) (h 4) hc0 hinterval
+    (ho (by decide)) (ho (by decide)) (ho (by decide)) (ho (by decide)) (hn 4)
+    (by simpa [Fin.sum_univ_succ, add_assoc] using hH) hd'
+  simpa [Fin.sum_univ_succ, add_assoc] using hh
+
+private def flatHead (h : Fin 5 → ℝ) (d : Fin 9 → ℝ) : Fin 5 → ℝ :=
+  ![h 0 + (d 6 + d 7 + d 8), h 1, h 2, h 3, h 4]
+
+-- Entrywise monotonicity is used in the full congruent Z-matrix, not in K.
+private theorem tail_to_head_psd (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (hn : ∀ i, 0 ≤ h i) (ho : Antitone h)
+    (dn : ∀ i, 0 ≤ d i) (dord : Monotone d)
+    (hK : (actualK h d).PosSemidef) : (actualK (flatHead h d) 0).PosSemidef := by
+  apply actualK_psd_of_actualP
+  apply z_matrix_psd_mono (actualP_psd h d hK) (actualP_hermitian (flatHead h d) 0)
+  · intro i j hij
+    fin_cases i <;> fin_cases j <;>
+      norm_num at hij <;> norm_num [actualP, flatHead] <;>
+      linarith [hn 1, hn 2, ho (show (1 : Fin 5) ≤ 2 by decide)]
+  · intro i j
+    fin_cases i <;> fin_cases j <;> norm_num [actualP, flatHead] <;>
+      linarith [dn 3, dn 4, dn 5, dn 6, dn 8,
+        dord (show (4 : Fin 9) ≤ 5 by decide), dord (show (6 : Fin 9) ≤ 8 by decide)]
+
+-- Shared original flatHead bookkeeping, extracted from large_head_moment.
+-- Both that proof and the w-dependent transfer below consume it.
+private theorem flatHead_facts (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (hn : ∀ i, 0 ≤ h i) (ho : Antitone h)
+    (dn : ∀ i, 0 ≤ d i) (dord : Monotone d) :
+    (∑ i, flatHead h d i) = (∑ i, h i) + (d 6 + d 7 + d 8) ∧
+    (∑ i, (flatHead h d i) ^ 2) =
+      (∑ i, (h i) ^ 2) + 2 * h 0 * (d 6 + d 7 + d 8) + (d 6 + d 7 + d 8) ^ 2 ∧
+    (∀ i, 0 ≤ flatHead h d i) ∧ Antitone (flatHead h d) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · simp [flatHead, Fin.sum_univ_succ] <;> ring
+  · simp [flatHead, Fin.sum_univ_succ] <;> ring
+  · intro i
+    fin_cases i <;> simp [flatHead] <;>
+      linarith [hn 0, hn 1, hn 2, hn 3, hn 4, dn 6, dn 7, dn 8]
+  · intro i j hij
+    fin_cases i <;> fin_cases j <;> norm_num at hij <;> norm_num [flatHead] <;>
+      linarith [ho (show (0 : Fin 5) ≤ 1 by decide), ho (show (1 : Fin 5) ≤ 2 by decide),
+        ho (show (2 : Fin 5) ≤ 3 by decide), ho (show (3 : Fin 5) ≤ 4 by decide),
+        dn 6, dn 7, dn 8]
+
+private theorem large_head_moment (c : ℝ) (hc0 : 0 ≤ c)
+    (hinterval : ∀ z e, 0 ≤ e → e ≤ 1 → e ≤ z → z ≤ 2 - e ^ 2 →
+      flatFormula c z e ≤ 4 - 2 * c) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (hn : ∀ i, 0 ≤ h i) (ho : Antitone h)
+    (dn : ∀ i, 0 ≤ d i) (dord : Monotone d)
+    (hL4 : (∑ i, h i) + (∑ i, d i) ≤ 4)
+    (hK : (actualK h d).PosSemidef) (hlarge : 2 * c ≤ h 0) :
+    (∑ i, (h i) ^ 2) + (∑ i, (d i) ^ 2) - c * ((∑ i, h i) - (∑ i, d i)) ≤ 4 - 2 * c := by
+  let r := d 6 + d 7 + d 8
+  have hr : 0 ≤ r := by dsimp [r]; linarith [dn 6, dn 7, dn 8]
+  obtain ⟨hD2, hrD, hD⟩ := ordered_tail_bounds d dn dord
+  obtain ⟨hsum, hsum2, hflat_nonneg, hflat_order⟩ := flatHead_facts h d hn ho dn dord
+  change (∑ i, flatHead h d i) = (∑ i, h i) + r at hsum
+  change (∑ i, (flatHead h d i) ^ 2) = (∑ i, (h i) ^ 2) + 2 * h 0 * r + r ^ 2 at hsum2
+  have hflat_mass : (∑ i, flatHead h d i) ≤ 4 := by
+    rw [hsum]
+    change r ≤ ∑ i, d i at hrD
+    linarith only [hrD, hL4]
+  have hflat := flat_head_moment c hc0 hinterval (flatHead h d) hflat_nonneg hflat_order hflat_mass
+    (tail_to_head_psd h d hn ho dn dord hK)
+  have htransfer :
+      (∑ i, (h i) ^ 2) + (∑ i, (d i) ^ 2) - c * ((∑ i, h i) - (∑ i, d i)) ≤
+      (∑ i, (flatHead h d i) ^ 2) - c * (∑ i, flatHead h d i) := by
+    rw [hsum2, hsum]
+    have hp := mul_nonneg hr (by linarith : 0 ≤ h 0 - 2 * c)
+    change (∑ i, (d i) ^ 2) ≤ r ^ 2 at hD2
+    change (∑ i, d i) ≤ 3 * r at hD
+    have hDc := mul_le_mul_of_nonneg_left hD hc0
+    nlinarith only [hD2, hDc, hp]
+  exact htransfer.trans hflat
+
+/-- The dimension-independent zero-middle-jump moment bound for all five
+ordered nonnegative head defects and all nine ordered tail defects in [0,1].
+The positive-semidefinite premise is the literal actual defect matrix. -/
+theorem actual_psd_zero_jump_moment (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (ho : Antitone h) (hn : ∀ i, 0 ≤ h i)
+    (dord : Monotone d) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 1)
+    (hL4 : (∑ i, h i) + (∑ i, d i) ≤ 4)
+    (hK : (!![2 * (1 - d 8), -(h 0 + d 7), -(h 1 + d 5);
+                -(h 0 + d 7), 2 * (1 - d 6), -(h 2 + d 4);
+                -(h 1 + d 5), -(h 2 + d 4), 2 * (1 - d 3)] : Matrix (Fin 3) (Fin 3) ℝ).PosSemidef) :
+    (∑ i, (h i) ^ 2) + (∑ i, (d i) ^ 2) - ((∑ i, h i) - (∑ i, d i)) / 4 ≤ (7 / 2 : ℝ) := by
+  change (actualK h d).PosSemidef at hK
+  have dn : ∀ i, 0 ≤ d i := fun i => (hd i).1
+  by_cases hsmall : h 0 ≤ 1 / 2
+  · have htail := sharp_tail_square d dn dord (fun i => (hd i).2)
+      (delete_head_psd h d hn dn hK)
+    have hh : (∑ i, (h i) ^ 2) ≤ (∑ i, h i) / 2 := by
+      calc
+        _ ≤ ∑ i, h i / 2 := by
+          apply sum_le_sum
+          intro i _
+          have hi : h i ≤ 1 / 2 := (ho (show (0 : Fin 5) ≤ i from Fin.zero_le i)).trans hsmall
+          nlinarith [mul_nonneg (hn i) (by linarith : 0 ≤ 1 / 2 - h i)]
+        _ = _ := by rw [Finset.sum_div]
+    have hsmall_bound :
+        (∑ i, (h i) ^ 2) + (∑ i, (d i) ^ 2) - ((∑ i, h i) - (∑ i, d i)) / 4 ≤ (13 / 4 : ℝ) := by
+      linarith only [hh, htail, hL4]
+    linarith only [hsmall_bound]
+  · have hbound (z e : ℝ) (he0 : 0 ≤ e) (he1 : e ≤ 1)
+        (hz : e ≤ z) (hzA : z ≤ 2 - e ^ 2) : flatFormula (1 / 4) z e ≤ 4 - 2 * (1 / 4) := by
+      apply flat_interval_bound (1 / 4) z e he0 he1
+        (by convert flat_lower_endpoint e he0 he1 using 1 <;> norm_num)
+        (by convert flat_upper_endpoint e he0 he1 using 1 <;> norm_num)
+        (by intro t hl hu; convert flat_kink t hl hu using 1 <;> norm_num) hz hzA
+    convert large_head_moment (1 / 4) (by norm_num) hbound h d hn ho dn dord hL4 hK (by linarith) using 1 <;> norm_num <;> ring_nf
+
+
+private theorem sharp_flat_upper_small (e : ℝ) (hl : 0 ≤ e) (hr : e ≤ (2 / 9)) :
+    0 ≤ 4 / 9 + (16 / 9) * e - e ^ 3 := by
+  have elo : 0 ≤ e - 0 := by linarith
+  have ehi : 0 ≤ (2 / 9) - e := by linarith
+  calc
+    4 / 9 + (16 / 9) * e - e ^ 3 = (81 / 2) * ((2 / 9) - e) ^ 3 +
+      (315 / 2) * (e - 0) ^ 1 * ((2 / 9) - e) ^ 2 +
+      (387 / 2) * (e - 0) ^ 2 * ((2 / 9) - e) ^ 1 +
+      (151 / 2) * (e - 0) ^ 3 := by ring
+    _ ≥ 0 := by positivity
+
+private theorem sharp_flat_upper_full (e : ℝ) (hl : (2 / 9) ≤ e) (hr : e ≤ (4 / 5)) :
+    0 ≤ 8 / 9 - (2 / 9) * e - e ^ 3 := by
+  have elo : 0 ≤ e - (2 / 9) := by linarith
+  have ehi : 0 ≤ (4 / 5) - e := by linarith
+  calc
+    8 / 9 - (2 / 9) * e - e ^ 3 = (18875 / 4394) * ((4 / 5) - e) ^ 3 +
+      (25875 / 2197) * (e - (2 / 9)) ^ 1 * ((4 / 5) - e) ^ 2 +
+      (41805 / 4394) * (e - (2 / 9)) ^ 2 * ((4 / 5) - e) ^ 1 +
+      (2268 / 2197) * (e - (2 / 9)) ^ 3 := by ring
+    _ ≥ 0 := by positivity
+
+private theorem sharp_flat_upper_trunc (e : ℝ) (hl : (4 / 5) ≤ e) (hr : e ≤ 1) :
+    0 ≤ 4 / 9 - e ^ 4 - e ^ 3 + 4 * e ^ 2 - 2 * e := by
+  have elo : 0 ≤ e - (4 / 5) := by linarith
+  have ehi : 0 ≤ 1 - e := by linarith
+  calc
+    4 / 9 - e ^ 4 - e ^ 3 + 4 * e ^ 2 - 2 * e = (2716 / 9) * (1 - e) ^ 4 +
+      (11350 / 9) * (e - (4 / 5)) ^ 1 * (1 - e) ^ 3 +
+      (5750 / 3) * (e - (4 / 5)) ^ 2 * (1 - e) ^ 2 +
+      (11125 / 9) * (e - (4 / 5)) ^ 3 * (1 - e) ^ 1 +
+      (2500 / 9) * (e - (4 / 5)) ^ 4 := by ring
+    _ ≥ 0 := by positivity
+
+private theorem sharp_flat_kink_gap (e : ℝ) (hl : (9 / 16) ≤ e) (hr : e ≤ (4 / 5)) :
+    0 ≤ 2 * (2 / 9 - 10 * e ^ 2 + 16 * e - 6) := by
+  have elo : 0 ≤ e - (9 / 16) := by linarith
+  have ehi : 0 ≤ (4 / 5) - e := by linarith
+  calc
+    2 * (2 / 9 - 10 * e ^ 2 + 16 * e - 6) = (6700 / 3249) * ((4 / 5) - e) ^ 2 +
+      (143360 / 3249) * (e - (9 / 16)) ^ 1 * ((4 / 5) - e) ^ 1 +
+      (71680 / 3249) * (e - (9 / 16)) ^ 2 := by ring
+    _ ≥ 0 := by positivity
+
+private theorem sharp_flat_lower_endpoint (e : ℝ) (he0 : 0 ≤ e) (he1 : e ≤ 1) :
+    flatFormula (2 / 9) e e ≤ 32 / 9 := by
+  unfold flatFormula
+  by_cases he : e ≤ 2 / 9
+  · rw [max_eq_right (by linarith : e - 2 / 9 ≤ 0)]
+    nlinarith [mul_nonneg he0 (by linarith : 0 ≤ 2 / 9 - e)]
+  · rw [max_eq_left (by linarith : 0 ≤ e - 2 / 9)]
+    by_cases h4 : e ≤ 4 / 5
+    · rw [min_eq_left (by linarith : 2 * e ≤ 4 - e - 2 * e)]
+      nlinarith [mul_nonneg (by linarith : 0 ≤ 4 / 5 - e) (by linarith : 0 ≤ 5 * e + 26 / 9)]
+    · rw [min_eq_right (by linarith : 4 - e - 2 * e ≤ 2 * e)]
+      nlinarith only [he1]
+
+private theorem sharp_flat_upper_endpoint (e : ℝ) (he0 : 0 ≤ e) (he1 : e ≤ 1) :
+    flatFormula (2 / 9) (2 - e ^ 2) e ≤ 32 / 9 := by
+  unfold flatFormula
+  by_cases he : e ≤ 2 / 9
+  · rw [max_eq_right (by linarith : e - 2 / 9 ≤ 0)]
+    have hp := mul_nonneg he0 (sharp_flat_upper_small e he0 he)
+    nlinarith only [hp]
+  · rw [max_eq_left (by linarith : 0 ≤ e - 2 / 9)]
+    by_cases he4 : e ≤ 4 / 5
+    · have hm := mul_le_mul_of_nonneg_left (min_le_left (2 * e) (4 - (2 - e ^ 2) - 2 * e))
+        (by linarith : 0 ≤ e - 2 / 9)
+      have hp := mul_nonneg he0 (sharp_flat_upper_full e (by linarith) he4)
+      nlinarith only [hp, hm]
+    · have hm := mul_le_mul_of_nonneg_left (min_le_right (2 * e) (4 - (2 - e ^ 2) - 2 * e))
+        (by linarith : 0 ≤ e - 2 / 9)
+      have hp := sharp_flat_upper_trunc e (by linarith) he1
+      nlinarith only [hp, hm]
+
+private theorem sharp_flat_kink (e : ℝ)
+    (hl : e ≤ 4 - 4 * e) (hu : 4 - 4 * e ≤ 2 - e ^ 2) :
+    flatFormula (2 / 9) (4 - 4 * e) e ≤ 32 / 9 := by
+  have he9 : 9 / 16 ≤ e := by
+    by_contra h
+    have hp := mul_nonneg_of_nonpos_of_nonpos
+      (by linarith : e - 9 / 16 ≤ 0) (by linarith : e - 55 / 16 ≤ 0)
+    nlinarith only [hp, hu]
+  have hp := sharp_flat_kink_gap e he9 (by linarith)
+  unfold flatFormula
+  rw [max_eq_left (by linarith : 0 ≤ e - 2 / 9),
+    min_eq_left (by linarith : 2 * e ≤ 4 - (4 - 4 * e) - 2 * e)]
+  nlinarith only [hp]
+
+/-- The sharp 2/9 joint moment for the literal actual PSD defect matrix. -/
+theorem actual_psd_zero_jump_two_ninths_moment (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (ho : Antitone h) (hn : ∀ i, 0 ≤ h i)
+    (dord : Monotone d) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 1)
+    (hL4 : (∑ i, h i) + (∑ i, d i) ≤ 4)
+    (hK : (!![2 * (1 - d 8), -(h 0 + d 7), -(h 1 + d 5);
+                -(h 0 + d 7), 2 * (1 - d 6), -(h 2 + d 4);
+                -(h 1 + d 5), -(h 2 + d 4), 2 * (1 - d 3)] : Matrix (Fin 3) (Fin 3) ℝ).PosSemidef) :
+    (∑ i, (h i) ^ 2) + (∑ i, (d i) ^ 2) - ((∑ i, h i) - (∑ i, d i)) * (2 / 9) ≤ (32 / 9 : ℝ) := by
+  change (actualK h d).PosSemidef at hK
+  have dn : ∀ i, 0 ≤ d i := fun i => (hd i).1
+  by_cases hsmall : h 0 ≤ 4 / 9
+  · have htail := sharp_tail_square d dn dord (fun i => (hd i).2)
+      (delete_head_psd h d hn dn hK)
+    have hh : (∑ i, (h i) ^ 2) ≤ (4 / 9) * (∑ i, h i) := by
+      calc
+        _ ≤ ∑ i, (4 / 9) * h i := by
+          apply sum_le_sum
+          intro i _
+          have hi : h i ≤ 4 / 9 := (ho (show (0 : Fin 5) ≤ i from Fin.zero_le i)).trans hsmall
+          nlinarith [mul_nonneg (hn i) (by linarith : 0 ≤ 4 / 9 - h i)]
+        _ = _ := by rw [Finset.mul_sum]
+    have hsmall_bound :
+        (∑ i, (h i) ^ 2) + (∑ i, (d i) ^ 2) - ((∑ i, h i) - (∑ i, d i)) * (2 / 9) ≤ (113 / 36 : ℝ) := by
+      linarith only [hh, htail, hL4]
+    linarith only [hsmall_bound]
+  · have hbound (z e : ℝ) (he0 : 0 ≤ e) (he1 : e ≤ 1)
+        (hz : e ≤ z) (hzA : z ≤ 2 - e ^ 2) : flatFormula (2 / 9) z e ≤ 4 - 2 * (2 / 9) := by
+      apply flat_interval_bound (2 / 9) z e he0 he1
+        (by convert sharp_flat_lower_endpoint e he0 he1 using 1 <;> norm_num)
+        (by convert sharp_flat_upper_endpoint e he0 he1 using 1 <;> norm_num)
+        (by intro t hl hu; convert sharp_flat_kink t hl hu using 1 <;> norm_num) hz hzA
+    convert large_head_moment (2 / 9) (by norm_num) hbound h d hn ho dn dord hL4 hK (by linarith) using 1 <;> norm_num <;> ring_nf
+
+/-- Dimension-independent middle energy for all ordered nonnegative real heads.
+The sole matrix hypothesis is the literal flat-tail PSD matrix, including singular
+matrices. Determinant, reduced-head caps and the tail chord are derived in the proof. -/
+private theorem flat_tail_middle_energy_two_ninths (w : ℝ) (h : Fin 5 → ℝ)
+    (ho : Antitone h) (hn : ∀ i, 0 ≤ h i)
+    (hH : (∑ i, h i) ≤ 4 - 6 * w) (hlarge : 1 ≤ h 0)
+    (hw : 2 / 9 ≤ w) (hw1 : w ≤ 1 / 2)
+    (hK : (!![2, -(w + h 0), -(w + h 1);
+                -(w + h 0), 2, -(w + h 2);
+                -(w + h 1), -(w + h 2), 2] : Matrix (Fin 3) (Fin 3) ℝ).PosSemidef) :
+    w * (∑ i, h i) + (∑ i, (h i) ^ 2) ≤
+      4 - 2 * w - 4 * w ^ 2 + w ^ 3 + w ^ 4 := by
+  let g : Fin 5 → ℝ := fun i => w + h i
+  have hgK : (actualK g 0).PosSemidef := by
+    simpa [actualK, g] using hK
+  have hd := flat_head_determinant g hgK
+  have hbudget : g 0 + g 1 + g 2 + g 3 + g 4 ≤ 4 - w := by
+    have hH' := hH
+    simp only [Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc,
+      Finset.univ_eq_empty, Finset.sum_empty, add_zero] at hH'
+    dsimp [g]
+    linarith only [hH']
+  have hb := flat_five_middle_energy w (g 0) (g 1) (g 2) (g 3) (g 4)
+    (by linarith only [hw]) hw1 (by dsimp [g]; linarith only [hlarge])
+    (by dsimp [g]; linarith only [ho (show (0 : Fin 5) ≤ 1 by decide)])
+    (by dsimp [g]; linarith only [ho (show (1 : Fin 5) ≤ 2 by decide)])
+    (by dsimp [g]; linarith only [ho (show (2 : Fin 5) ≤ 3 by decide)])
+    (by dsimp [g]; linarith only [ho (show (3 : Fin 5) ≤ 4 by decide)])
+    (by dsimp [g]; linarith only [hn 4]) hbudget hd
+  dsimp [g] at hb
+  simp only [Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc,
+    Finset.univ_eq_empty, Finset.sum_empty, add_zero]
+  nlinarith only [hb]
+
+theorem actual_psd_flat_tail_middle_energy (w : ℝ) (h : Fin 5 → ℝ)
+    (ho : Antitone h) (hn : ∀ i, 0 ≤ h i)
+    (hH : (∑ i, h i) ≤ 4 - 6 * w) (hlarge : 1 ≤ h 0)
+    (hw : 1 / 4 ≤ w) (hrho : w ≤ (5 - Real.sqrt 17) / 2)
+    (hK : (!![2, -(w + h 0), -(w + h 1);
+                -(w + h 0), 2, -(w + h 2);
+                -(w + h 1), -(w + h 2), 2] : Matrix (Fin 3) (Fin 3) ℝ).PosSemidef) :
+    w * (∑ i, h i) + (∑ i, (h i) ^ 2) ≤
+      4 - 2 * w - 4 * w ^ 2 + w ^ 3 + w ^ 4 := by
+  have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 17 by norm_num)
+  have hs0 := Real.sqrt_nonneg (17 : ℝ)
+  have hs4 : 4 ≤ Real.sqrt 17 := by nlinarith
+  exact flat_tail_middle_energy_two_ninths w h ho hn hH hlarge (by linarith) (by linarith) hK
+
+-- K_w(h,d) is exactly actualK (fun i => w + h i) d.
+-- Its two original row budgets are derived, never added as PSD premises.
+private theorem shifted_actual_defects (w : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (ho : Antitone h) (hn : ∀ i, 0 ≤ h i)
+    (dord : Monotone d) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 1)
+    (hL4 : H h + D d ≤ 4 - 6 * w)
+    (hK : (actualK (fun i => w + h i) d).PosSemidef) :
+    DefectData 1 w h d := by
+  have h111 := hK.dotProduct_mulVec_nonneg (![1, 1, 1] : Fin 3 → ℝ)
+  have h110 := hK.dotProduct_mulVec_nonneg (![1, 1, 0] : Fin 3 → ℝ)
+  rw [actualK_form] at h111 h110
+  norm_num at h111 h110
+  refine ⟨hn, ho, fun i => (hd i).1, dord, fun i => (hd i).2, ?_, ?_, ?_⟩
+  · dsimp [H3, D6]
+    linarith only [h111]
+  · simpa only [mul_one] using hL4
+  · dsimp [D3]
+    linarith only [h110]
+
+-- The w term charges D-r, not D.  The two original ordered-tail
+-- conclusions pay it when w ≤ h0.  No compensation hypothesis is used.
+private theorem shifted_flatHead_energy (w : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (hw : 0 ≤ w) (hn : ∀ i, 0 ≤ h i) (ho : Antitone h)
+    (dn : ∀ i, 0 ≤ d i) (dord : Monotone d) (hlarge : w ≤ h 0)
+    (hK : (actualK (fun i => w + h i) d).PosSemidef) :
+    (actualK (fun i => w + flatHead h d i) 0).PosSemidef ∧
+    E w h d ≤ w * (∑ i, flatHead h d i) + (∑ i, (flatHead h d i) ^ 2) := by
+  have hg_nonneg : ∀ i, 0 ≤ w + h i := fun i => add_nonneg hw (hn i)
+  have hg_order : Antitone (fun i => w + h i) :=
+    fun i j hij => by simpa only [add_comm] using add_le_add_left (ho hij) w
+  have hflatK := tail_to_head_psd (fun i => w + h i) d
+    hg_nonneg hg_order dn dord hK
+  have hid : flatHead (fun i => w + h i) d = fun i => w + flatHead h d i := by
+    ext i
+    fin_cases i <;> simp [flatHead] <;> ring
+  rw [hid] at hflatK
+  refine ⟨hflatK, ?_⟩
+  obtain ⟨hsum, hsum2, _, _⟩ := flatHead_facts h d hn ho dn dord
+  obtain ⟨hD2, _, hD⟩ := ordered_tail_bounds d dn dord
+  let r := d 6 + d 7 + d 8
+  have hr : 0 ≤ r := by dsimp [r]; linarith [dn 6, dn 7, dn 8]
+  have hmass_charge := mul_le_mul_of_nonneg_left hD hw
+  have hhead_charge := mul_nonneg hr (sub_nonneg.mpr hlarge)
+  change (∑ i, (d i) ^ 2) ≤ r ^ 2 at hD2
+  change (∑ i, d i) ≤ 3 * r at hD
+  change w * (∑ i, d i) ≤ w * (3 * r) at hmass_charge
+  change (∑ i, flatHead h d i) = (∑ i, h i) + r at hsum
+  change (∑ i, (flatHead h d i) ^ 2) =
+    (∑ i, (h i) ^ 2) + 2 * h 0 * r + r ^ 2 at hsum2
+  rw [hsum, hsum2]
+  dsimp [E, H, D, H2, D2]
+  nlinarith only [hD2, hmass_charge, hhead_charge]
+
+/-- Actual nonflat middle energy throughout the closed interval [2/9,1/2]. -/
+theorem actual_psd_nonflat_middle_energy_two_ninths (w : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (ho : Antitone h) (hn : ∀ i, 0 ≤ h i)
+    (dord : Monotone d) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 1)
+    (hL4 : (∑ i, h i) + (∑ i, d i) ≤ 4 - 6 * w)
+    (hw : 2 / 9 ≤ w) (hw1 : w ≤ 1 / 2)
+    (hK : (!![2 * (1 - d 8), -(w + h 0 + d 7), -(w + h 1 + d 5);
+            -(w + h 0 + d 7), 2 * (1 - d 6), -(w + h 2 + d 4);
+            -(w + h 1 + d 5), -(w + h 2 + d 4), 2 * (1 - d 3)] :
+    Matrix (Fin 3) (Fin 3) ℝ).PosSemidef) :
+    w * ((∑ i, h i) + (∑ i, d i)) + (∑ i, (h i) ^ 2) + (∑ i, (d i) ^ 2) ≤
+    4 - 2 * w - 4 * w ^ 2 + w ^ 3 + w ^ 4 := by
+  change (actualK (fun i => w + h i) d).PosSemidef at hK
+  have hw0 : 0 ≤ w := by linarith
+  have hdata := shifted_actual_defects w h d ho hn dord hd hL4 hK
+  change E w h d ≤ _
+  by_cases hsmall : h 0 ≤ 1
+  · have he := small_head_energy hdata hw0 hsmall
+    have hp : 0 ≤ w ^ 2 * (2 + w + w ^ 2) :=
+      mul_nonneg (sq_nonneg _) (by nlinarith only [hw0, sq_nonneg w])
+    nlinarith only [he, hp]
+  · have hlarge : 1 ≤ h 0 := le_of_lt (lt_of_not_ge hsmall)
+    obtain ⟨hflatK, henergy⟩ := shifted_flatHead_energy w h d hw0 hn ho
+      (fun i => (hd i).1) dord (by linarith) hK
+    obtain ⟨hsum, _, hflat_nonneg, hflat_order⟩ :=
+      flatHead_facts h d hn ho (fun i => (hd i).1) dord
+    have hrD := (ordered_tail_bounds d (fun i => (hd i).1) dord).2.1
+    have hflat_mass : (∑ i, flatHead h d i) ≤ 4 - 6 * w := by
+      rw [hsum]
+      linarith only [hrD, hL4]
+    have hflat_large : 1 ≤ flatHead h d 0 := by
+      simp only [flatHead, Matrix.cons_val_zero]
+      linarith [hlarge, (hd 6).1, (hd 7).1, (hd 8).1]
+    have he := flat_tail_middle_energy_two_ninths w (flatHead h d)
+      hflat_order hflat_nonneg hflat_mass hflat_large hw hw1
+      (by simpa only [actualK, Pi.zero_apply, sub_zero, mul_one, add_zero] using hflatK)
+    exact henergy.trans he
+
+/-- Nonflat-tail energy on the original middle interval.  All fourteen
+defects remain arbitrary reals with the original ordering, caps, L4 budget,
+and literal shifted PSD matrix.  The small-head and upper-interval branches
+consume the original StructuralCone estimates. -/
+theorem actual_psd_nonflat_middle_energy (w : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (ho : Antitone h) (hn : ∀ i, 0 ≤ h i)
+    (dord : Monotone d) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 1)
+    (hL4 : (∑ i, h i) + (∑ i, d i) ≤ 4 - 6 * w)
+    (hw : 1 / 4 ≤ w) (hw1 : w ≤ 1 / 2)
+    (hK : (!![2 * (1 - d 8), -(w + h 0 + d 7), -(w + h 1 + d 5);
+                -(w + h 0 + d 7), 2 * (1 - d 6), -(w + h 2 + d 4);
+                -(w + h 1 + d 5), -(w + h 2 + d 4), 2 * (1 - d 3)] :
+      Matrix (Fin 3) (Fin 3) ℝ).PosSemidef) :
+    w * ((∑ i, h i) + (∑ i, d i)) + (∑ i, (h i) ^ 2) + (∑ i, (d i) ^ 2) ≤
+      if w ≤ (5 - Real.sqrt 17) / 2 then
+        4 - 2 * w - 4 * w ^ 2 + w ^ 3 + w ^ 4
+      else (4 - 6 * w) * (4 - 5 * w) := by
+  split_ifs with hrho
+  · exact actual_psd_nonflat_middle_energy_two_ninths w h d ho hn dord hd hL4
+      (by linarith) hw1 hK
+  · have hdata := shifted_actual_defects w h d ho hn dord hd hL4
+      (by simpa only [actualK] using hK)
+    simpa only [E, H, D, H2, D2, mul_one] using
+      total_energy_estimate (u := 1) hdata (by linarith : 0 ≤ w)
+
+-- Shift ALL FIVE heads.  Their added 5w mass is paid by 4-6w.
+-- This is the live use of the proved 7/2 moment, with no reproof of it.
+private theorem shifted_zero_jump_energy (w : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (hw : 0 ≤ w) (ho : Antitone h) (hn : ∀ i, 0 ≤ h i)
+    (dord : Monotone d) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 1)
+    (hL4 : H h + D d ≤ 4 - 6 * w)
+    (hK : (actualK (fun i => w + h i) d).PosSemidef) :
+    E w h d ≤ 7 / 2 + (1 / 4 - w) * (H h - D d) + 5 * w / 4 - 5 * w ^ 2 := by
+  have hsum : (∑ i : Fin 5, (w + h i)) = 5 * w + H h := by
+    simp [H, Fin.sum_univ_succ] <;> ring
+  have hsum2 : (∑ i : Fin 5, (w + h i) ^ 2) = H2 h + 2 * w * H h + 5 * w ^ 2 := by
+    simp [H, H2, Fin.sum_univ_succ] <;> ring
+  have hmass : (∑ i : Fin 5, (w + h i)) + (∑ i, d i) ≤ 4 := by
+    rw [hsum]
+    change 5 * w + H h + D d ≤ 4
+    linarith only [hL4, hw]
+  have hm := actual_psd_zero_jump_moment (fun i => w + h i) d
+    (fun i j hij => by simpa only [add_comm] using add_le_add_left (ho hij) w)
+    (fun i => add_nonneg hw (hn i)) dord hd hmass
+    (by simpa only [actualK] using hK)
+  rw [hsum, hsum2] at hm
+  change H2 h + 2 * w * H h + 5 * w ^ 2 + D2 d - (5 * w + H h - D d) / 4 ≤ 7 / 2 at hm
+  dsimp [E]
+  nlinarith only [hm]
+
+/-- The exact small-jump normalized mass/square inequality with the original
+natural rounding, for every N ≥ 56.  The sole PSD premise is literal K_w.
+The proof consumes the existing 7/2 zero-jump theorem through the five-head
+shift, then the original square-completion and rounding suppliers. -/
+theorem actual_psd_small_jump_defect_bound (N : ℕ) (hN : 56 ≤ N) (j w : ℝ)
+    (hj : 6 ≤ j) (hw : 0 ≤ w) (hw1 : w ≤ 1 / 4)
+    (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (ho : Antitone h) (hn : ∀ i, 0 ≤ h i)
+    (dord : Monotone d) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 1)
+    (hL4 : (∑ i, h i) + (∑ i, d i) ≤ 4 - 6 * w)
+    (hK : (!![2 * (1 - d 8), -(w + h 0 + d 7), -(w + h 1 + d 5);
+                -(w + h 0 + d 7), 2 * (1 - d 6), -(w + h 2 + d 4);
+                -(w + h 1 + d 5), -(w + h 2 + d 4), 2 * (1 - d 3)] :
+      Matrix (Fin 3) (Fin 3) ℝ).PosSemidef) :
+    (2 + w) * ((N : ℝ) + w * j + (∑ i, h i) - (∑ i, d i)) - (1 + w) * N +
+      (w * ((∑ i, h i) + (∑ i, d i)) + (∑ i, (h i) ^ 2) + (∑ i, (d i) ^ 2)) ≤
+      target N * ((N : ℝ) + w * j + (∑ i, h i) - (∑ i, d i)) ^ 2 := by
+  change (actualK (fun i => w + h i) d).PosSemidef at hK
+  have hm := shifted_zero_jump_energy w h d hw ho hn dord hd hL4 hK
+  let S : ℝ := (N : ℝ) + w * j + H h - D d
+  let theta : ℝ := commonEnvelope (N : ℝ)
+  have hNr : (56 : ℝ) ≤ N := by exact_mod_cast hN
+  have hB : 0 < 15 * (N : ℝ) - 4 := by linarith
+  have hden : 0 < 80 * (N : ℝ) - 224 := by linarith
+  have ht : 0 < theta := by
+    dsimp [theta, commonEnvelope]
+    exact div_pos (by linarith) (sq_pos_of_pos hB)
+  have hlo : 81 / (80 * (N : ℝ) - 224) ≤ theta := by
+    dsimp [theta, commonEnvelope]
+    apply (div_le_div_iff₀ hden (sq_pos_of_pos hB)).2
+    apply sub_nonneg.mp
+    have hshift : 0 ≤ (N : ℝ) - 56 := by linarith
+    calc
+      _ = 975 * ((N : ℝ) - 56) ^ 2 + 54920 * ((N : ℝ) - 56) + 45296 := by ring
+      _ ≥ 0 := by positivity
+  have hdisc : (9 / 4 : ℝ) ^ 2 ≤ 4 * theta * (5 * (N : ℝ) / 4 - 7 / 2) := by
+    have hh := (div_le_iff₀ hden).mp hlo
+    nlinarith only [hh]
+  have hp : 0 ≤ w * (1 / 4 - w) := mul_nonneg hw (by linarith)
+  have hjp := mul_nonneg hp (sub_nonneg.mpr hj)
+  have hcoarse : (2 + w) * S - (1 + w) * (N : ℝ) + E w h d ≤
+      (9 / 4) * S - (5 * (N : ℝ) / 4 - 7 / 2) := by
+    dsimp [S]
+    nlinarith only [hm, hp, hjp]
+  have hs := square_completion theta (9 / 4) (5 * (N : ℝ) / 4 - 7 / 2) S ht hdisc
+  have hcommon : theta ≤ target N := by
+    simpa only [theta, target, bulkValue, bulkIndex] using
+      common_le_integer_bulk N hN
+  have hfinal := hcoarse.trans (hs.trans
+    (mul_le_mul_of_nonneg_right hcommon (sq_nonneg S)))
+  change (2 + w) * S - (1 + w) * (N : ℝ) + E w h d ≤ target N * S ^ 2
+  exact hfinal
+
+#print axioms actual_psd_zero_jump_two_ninths_moment
+#print axioms actual_psd_nonflat_middle_energy_two_ninths
+
+end
+end D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound

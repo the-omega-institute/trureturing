@@ -1,0 +1,17 @@
+**Definition 33.1 (Four exact projections and their whole gains).**
+For $i\in\{1,2,3,4\}$ let $p_i$ be defined by Theorem 30.3,
+$v_i=v_J(p_i)$ and $x_i=x_H(p_i)$. For $s=H,L$ evaluate the original
+source functions at $z_J(p_i)$ and set
+
+$$
+W_{s,i}=(P(t_sb_s,b_s),g_s,d_s),\qquad
+ d_s=-\frac{C_0}{\mathcal D},\qquad
+ g_s(q)=\frac1{\mathcal D}\sum_{k=0}^3C_k
+ \prod_{\substack{0\le l\le3\\l\ne k}}\frac{q-l}{k-l}.
+\tag{33.1}
+$$
+
+These formulas specify a whole fixed polynomial and drift on each
+world. Their evaluation uses the actual source coordinates, specified
+by (32.12), throughout.
+

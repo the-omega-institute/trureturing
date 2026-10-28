@@ -41,6 +41,9 @@ internal sealed class ExponentialSquareWeightCatalanParityDocument : IScribeDocu
             Node("a", "The coefficient sequence", AFormula(),
                 "The constant coefficient is one. Every positive-index coefficient is "
                 + "n times the integral normalized coefficient d(n).", DescribeRole.Definition),
+            Node("binary", "The two binary residues", Disp(Seq(Bound("x", Call("ZMod", D(2))),
+                    Equal(F.Id("x"), D(0)), Sp, Lor, Sp, Equal(F.Id("x"), D(1)))),
+                "Every residue modulo two is either zero or one."),
             Node("d_recurrence", "The integral convolution recurrence", RecurrenceFormula(),
                 "Removing the guards restricts the convolution to 2<=j<n. The coefficient "
                 + "of d(n) is one, so the recurrence determines integers without division."),

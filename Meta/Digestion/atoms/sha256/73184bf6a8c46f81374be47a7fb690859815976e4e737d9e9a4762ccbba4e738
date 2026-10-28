@@ -1,0 +1,22 @@
+# 130. 全局 zeta 熵的 Euler 分解
+
+仓库已证明：
+
+\[
+H(N)
+=
+s\,\mathbb E_s[\log N]
++
+\log\zeta(s).
+\]
+
+素指数独立与：
+
+\[
+\log N
+=
+\sum_pV_p(N)\log p
+\]
+
+进一步给出纸面分解：
+

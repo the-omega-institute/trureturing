@@ -278,7 +278,7 @@ private lemma integrable_product_coefficient {Ω : Type*} [MeasurableSpace Ω]
   rw [norm_mul, Real.norm_eq_abs, Real.norm_eq_abs, abs_prod]
   calc
     _ ≤ 1 * ∏ _i ∈ s, b := mul_le_mul (hfb ω)
-      (prod_le_prod (fun i hi => abs_nonneg _) (fun i hi => hvb i ω))
+      (Finset.prod_le_prod₀ (fun i hi => abs_nonneg _) (fun i hi => hvb i ω))
       (prod_nonneg (fun i hi => abs_nonneg _)) (by norm_num)
     _ = _ := by simp
 

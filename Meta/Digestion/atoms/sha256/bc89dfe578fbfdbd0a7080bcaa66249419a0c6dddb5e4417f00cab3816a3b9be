@@ -1,0 +1,7 @@
+adds the calibrated first frequency `phi^2 log p` and proves:
+
+- equality of first frequencies forces equality of prime channels;
+- first frequency plus Zeckendorf address faithfully recovers `(p,v)`;
+- a prime relabeling preserving all first frequencies is the identity;
+- the first-frequency family is linearly independent over the rationals, by rational independence of prime logarithms.
+

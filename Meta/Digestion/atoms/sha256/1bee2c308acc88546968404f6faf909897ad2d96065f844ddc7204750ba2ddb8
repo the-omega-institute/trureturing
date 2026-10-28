@@ -1,0 +1,22 @@
+**Definition 8.1 (polynomial calibrated continuation).** Fix integers $k,d\ge0$. In Sections 8–12 the source, atoms, cumulative matrices, original consecutive integer clocks, and mandatory immediate reads are those of (1.2), but the observation and complete target are
+
+$$
+z_i=H(i)\operatorname{tr}(A_iP)+D(i),\qquad
+(P,H,D),\qquad
+0\ne H\in\mathbb R[t],\quad \deg H\le k,\quad D\in\Pi_d.
+\tag{8.1}
+$$
+
+Here $\Pi_d$ is the space of real polynomials of degree at most $d$, including the zero polynomial; $P$ is entrywise strictly positive of rank one and trace one, and $s=\deg H$. There is no bound on the legal coefficients and no restriction on gain signs, degree drops, initial or later roots, or root multiplicities. An unnormalized positive rank-one $R$ with gain $G$ represents this target by $P=R/\operatorname{tr}R$ and $H=(\operatorname{tr}R)G$. Every atom in $\{M,J\}$ has its own next read; the initial read is counted. Resets, copies, empty actions, skipped reads, unread composite actions, and side sensors are unavailable.
+
+At a calibrated state following the actual pure-$M$ prefix through clock $T\ge2$, the exact polynomials $H,D$ and the scalar $b=\operatorname{tr}(MP)>0$ are known. The compatible sources are the entire set
+
+$$
+\mathcal F_b=\{P\in\operatorname{Mat}_2(\mathbb R):
+P_{ab}>0,\ \operatorname{rank}P=1,\ \operatorname{tr}P=1,
+\ \operatorname{tr}(MP)=b\}.
+\tag{8.2}
+$$
+
+No choice of a representative or further promise about $P$ is supplied. Uniform recovery means correctness for every source in this set, with arbitrary deterministic history-dependent actions, stopping, and nonlinear answers. Additional reads start at $T+1$; the existing read at $T$ is not repeated.
+

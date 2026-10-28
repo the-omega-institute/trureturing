@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7ce68d69deebb2c17e7f5de7965215c2e5d385ac406b0743842a16248c479f7d
+  normalized_sha256: sha256:7ce68d69deebb2c17e7f5de7965215c2e5d385ac406b0743842a16248c479f7d
+cas_ref: sha256:7ce68d69deebb2c17e7f5de7965215c2e5d385ac406b0743842a16248c479f7d
+coverage_gids:
+  - gid: D5/S1/Phase/ThreeGap/Returns.fract_add_fract_eq
+    target_statement_id: sha256:bea4f8feec65daf1fdc9d991cbefb91ff9b903f2837199e6e363f6cd3b467c15
+  - gid: D5/S1/Words/Mechanical/FloorFractShift.floor_add_sub_floor
+    target_statement_id: sha256:7a4f8559ae3b5ca28625632937d3e0502fb7b528c492ed6eb8a6e0c0706ef317
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:01fef208d1e5e8732cc19ffd993e1c43693bacb9c6d972e3b736c50c33a685f7
+  normalized_sha256: sha256:01fef208d1e5e8732cc19ffd993e1c43693bacb9c6d972e3b736c50c33a685f7
+cas_ref: sha256:01fef208d1e5e8732cc19ffd993e1c43693bacb9c6d972e3b736c50c33a685f7
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Identity/ConceptRelativeIdentity.ConceptIdentity
+    target_statement_id: sha256:9693fa80f0f323078b998b40bf8eccd659fcd33739e3df19477b711d43e76069
+  - gid: D5/S3/ConceptDynamics/Identity/ConceptRelativeIdentity.concept_identity_equivalence
+    target_statement_id: sha256:195e50dada7a8da6137ed9c38d8988ff04a078198f8a4819f74a207bf117ecc6
+  - gid: D5/S3/ConceptDynamics/Identity/ConceptRelativeIdentity.concept_identity_strictly_coarser_than_equality
+    target_statement_id: sha256:16d117e417ef4247b2d608df6f9ebf81e3e8ee8f54ce348dfebf985b07a7cdc1
+receipts:
+  unresolved_subitems: []

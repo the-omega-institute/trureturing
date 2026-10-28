@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ea4e6f3697bcfe3473b6e806e2994679825e1713643e920986d99a143d11befc
+  normalized_sha256: sha256:ea4e6f3697bcfe3473b6e806e2994679825e1713643e920986d99a143d11befc
+cas_ref: sha256:ea4e6f3697bcfe3473b6e806e2994679825e1713643e920986d99a143d11befc
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Control/NoGuaranteedRemedyOutsideWinningRegion.no_guaranteed_remedy_outside_winning_region
+    target_statement_id: sha256:065aed7fd5f4b4840511257f225c1e7949788f6c3498e71f7557fb85a469d611
+receipts:
+  unresolved_subitems: []

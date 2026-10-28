@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b278b7b0ef1858ba0b4bcfcdc907c101f0c7345c63f758b32002cfa5efda2230
+  normalized_sha256: sha256:b278b7b0ef1858ba0b4bcfcdc907c101f0c7345c63f758b32002cfa5efda2230
+cas_ref: sha256:b278b7b0ef1858ba0b4bcfcdc907c101f0c7345c63f758b32002cfa5efda2230
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本片只有政策能力的章节引言、读数与行动类型参数，冒号后的政策断言不在本 atom。
+    previous_atom_id: 2ec45727d8664c1ede5e7a935c121c0037577d20a0eb3a0e3ac48c7377e1ec80
+    next_atom_id: 2521cb1fc75b452ed827f35d3cbc965b1d54e234e98303f0c520cd049c78dcd4

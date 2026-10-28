@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2917aa81013eb1338ce6ef04e24b50adb34937bd156448b481362b0cdd04c2d0
+  normalized_sha256: sha256:2917aa81013eb1338ce6ef04e24b50adb34937bd156448b481362b0cdd04c2d0
+cas_ref: sha256:2917aa81013eb1338ce6ef04e24b50adb34937bd156448b481362b0cdd04c2d0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 巴哈伊不加诸不欲及履约语境；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: dfd772ad15429b4cb687ae7797dd6d92850fc13c3fd4c705c3b13d3ff4c2d845
+    next_atom_id: ac3ee3c12319b45e9cc0b196e889823e7e3dc9b8abdbca182619903b0f9aef4d

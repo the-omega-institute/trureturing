@@ -25,6 +25,24 @@ internal sealed class NymanFractionalMellinDocument : IScribeDocumentDefinition
                 H("Integrability for every real parameter"), StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Theta, InMacro, Mathbb, Grp(F.Id("R")), Comma, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, D(0), Lt, Re, Sp, F.Id("s"), Rightarrow, Operatorname, Grp(F.Id("IntegrableOn")), Open, Open, F.Id("x"), Mapsto, Operatorname, Grp(F.Id("fract")), Open, Theta, Slash, F.Id("x"), Close, F.Id("x"), Caret, Grp(F.Id("s"), Minus, D(1)), Close, Comma, Open, D(0), Comma, D(1), Close, Comma, Operatorname, Grp(F.Id("volume")), Close))),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("For every real theta and real part of s greater than zero, the actual integrand is integrable on Ioo zero one. Bounded measurable fractional part is dominated by an integrable complex power; there is no restriction on theta."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fractional-mellin-pointwise-tail"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaPntBounds/NymanFractionalMellin.fractionalMellin_tail_integrand_eq_cpow"),
+                H("Shared pointwise reciprocal-tail reduction"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("s"), InMacro,
+                    Mathbb, Grp(F.Id("C")), Comma, Sp, F.Id("u"), InMacro,
+                    Mathbb, Grp(F.Id("R")), Comma, D(1), Lt, F.Id("u"), Rightarrow,
+                    Operatorname, Grp(F.Id("fract")), Open, Frac, Grp(D(1)),
+                    Grp(F.Id("u")), Close, F.Id("u"), Caret, Grp(F.Id("s"), Minus, D(1)),
+                    Eq, F.Id("u"), Caret, Grp(F.Id("s"), Minus, D(2))))),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("This exposes the pointwise identity already proved inside "
+                    + "mellin_tail_real. For every real u greater than one, fract(1/u)=1/u; "
+                    + "combining complex powers gives u^(s-2) for every complex s. "
+                    + "The original finite-tail proof now calls this shared helper, as does the "
+                    + "whole-positive-line tail in NymanWeightedFractionalInjectivity. "
+                    + "No real-part restriction or exclusion of s=1 is needed for this pointwise "
+                    + "identity. This is source extraction and reuse of the existing argument, "
+                    + "not a newly claimed mathematical result."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("real-fractional-mellin-scaling"),
                 DeclarationHandle.Create("D5/S3/Weil/ZetaPntBounds/NymanFractionalMellin.fractionalMellin_scaling"),
                 H("Real-parameter scaling"), StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Theta, InMacro, Mathbb, Grp(F.Id("R")), Comma, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, D(0), Lt, Theta, Le, D(1), Land, D(0), Lt, Re, Sp, F.Id("s"), Land, Sp, F.Id("s"), Neq, D(1), Rightarrow, Mellin(Theta), Eq, Theta, Caret, Grp(F.Id("s")), Mellin(D(1)), Plus, Frac, Grp(Theta, Minus, Theta, Caret, Grp(F.Id("s"))), Grp(F.Id("s"), Minus, D(1))))),

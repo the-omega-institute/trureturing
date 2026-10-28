@@ -1,0 +1,40 @@
+## 1.4 联合概念
+
+定义
+
+\[
+q\vee d:X\to Q\times D,
+\qquad
+(q\vee d)(x)=(q(x),d(x)).
+\]
+
+立即有
+
+\[
+\boxed{
+\ker(q\vee d)=\ker q\cap\ker d.
+}
+\]
+
+对有限定义集 \(S\subseteq\Gamma\)，记
+
+\[
+q\vee S
+=
+\left(x\mapsto
+\bigl(q(x),(d_\gamma(x))_{\gamma\in S}\bigr)
+\right),
+\]
+
+则
+
+\[
+\ker(q\vee S)
+=
+\ker q\cap\bigcap_{\gamma\in S}\ker d_\gamma.
+\]
+
+联合定义满足交换、结合与幂等，只在概念等价而不一定在字面类型相同的意义下成立。这与母文强调的“概念级幂等而非载体级字面幂等”一致。
+
+---
+

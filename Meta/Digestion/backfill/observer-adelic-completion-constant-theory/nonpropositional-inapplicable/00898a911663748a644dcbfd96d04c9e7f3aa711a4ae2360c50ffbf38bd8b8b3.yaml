@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:00898a911663748a644dcbfd96d04c9e7f3aa711a4ae2360c50ffbf38bd8b8b3
+  normalized_sha256: sha256:00898a911663748a644dcbfd96d04c9e7f3aa711a4ae2360c50ffbf38bd8b8b3
+cas_ref: sha256:00898a911663748a644dcbfd96d04c9e7f3aa711a4ae2360c50ffbf38bd8b8b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 比较 moment 图表所采用的观察资源：固定坐标、增加多项式阶数；该片段没有收敛或最优性断言。
+    previous_atom_id: e5d778561d89d2148b9a38f58e92661414299ccca88027cb690e8c52a2452d27
+    next_atom_id: 872d821fddccfc6ae9d45c762e56cd72afb9251d31605dc29c4f169ca8731825

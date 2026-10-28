@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5f6fe2dc468e55365c4ed37af962eb3e339746634fe80fc6eb314f42c4611806
+  normalized_sha256: sha256:5f6fe2dc468e55365c4ed37af962eb3e339746634fe80fc6eb314f42c4611806
+cas_ref: sha256:5f6fe2dc468e55365c4ed37af962eb3e339746634fe80fc6eb314f42c4611806
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非主张列表中不把 extraction depth 认作物理时间，只限定模型解释边界。
+    previous_atom_id: 8284fcc285fa879d8d0e6878bb3a509c58b6980158df51738fb6c6b5f311cb2f
+    next_atom_id: 481e9ddadc27e2dc6815fca68d724b637776601d53d8888eda99c522ecd3387a

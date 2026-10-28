@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:770eff09d9e25818c1cfb2d4e4f4e4740f492a331aefaf696680a30d9e4fb10e
+  normalized_sha256: sha256:770eff09d9e25818c1cfb2d4e4f4e4740f492a331aefaf696680a30d9e4fb10e
+cas_ref: sha256:770eff09d9e25818c1cfb2d4e4f4e4740f492a331aefaf696680a30d9e4fb10e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅界定原典中原子事实独立性、图像真假的哲学语义，不把它们断言为概率定理。
+    previous_atom_id: 949f9b2eb7187a35d1fad7ac7931f9a593a673b95f1e7b2fdf8f19e282232d99
+    next_atom_id: 71513b9505e671e58e5117380ff2a7f5260908b8bcb6cc102e6ac00d57cd4a68

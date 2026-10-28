@@ -1,0 +1,8 @@
+Deng 式操作应为：
+
+1. 将同一 prime 的全部重复先收缩为 \(\mathsf P_{r_p}\)；
+2. 将联合相干 prime set 组织为 cluster；
+3. 提取 cluster 的有效低秩 transfer block；
+4. 计算其对 Archimedean barrier 的最大消耗；
+5. 对 residual prime network 再做尺度分解。
+

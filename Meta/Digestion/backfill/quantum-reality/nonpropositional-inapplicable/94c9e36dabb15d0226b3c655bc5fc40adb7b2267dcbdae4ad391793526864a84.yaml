@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:94c9e36dabb15d0226b3c655bc5fc40adb7b2267dcbdae4ad391793526864a84
+  normalized_sha256: sha256:94c9e36dabb15d0226b3c655bc5fc40adb7b2267dcbdae4ad391793526864a84
+cas_ref: sha256:94c9e36dabb15d0226b3c655bc5fc40adb7b2267dcbdae4ad391793526864a84
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段陈述有限实验、全称证明和物理相变认证的证据边界，不新增关于阈值或谱的数学命题。
+    previous_atom_id: ddffb039366eacb716f73b1e0be41cccab04a67c0fa3783ace39df3047952ed1
+    next_atom_id: 86bf3df978fb055d726231de6f155dae0f5ad908eaa0e7d8bc1cd929bf904a39

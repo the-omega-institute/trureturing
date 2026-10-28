@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7f60022c2025a4c1f499a2cb035b2e68b3892cfa79e522a5e47bdaae7721a2cc
+  normalized_sha256: sha256:7f60022c2025a4c1f499a2cb035b2e68b3892cfa79e522a5e47bdaae7721a2cc
+cas_ref: sha256:7f60022c2025a4c1f499a2cb035b2e68b3892cfa79e522a5e47bdaae7721a2cc
+coverage_gids:
+  - gid: D5/S3/Entropy/Submodularity/CanonicalConditionalInformationSubmodularity.canonical_conditional_information_submodular
+    target_statement_id: sha256:8e4637909b22d2d79de80b5a83fb7bc3492a53e7646e6bf36b229a523b67ba17
+receipts:
+  unresolved_subitems: []

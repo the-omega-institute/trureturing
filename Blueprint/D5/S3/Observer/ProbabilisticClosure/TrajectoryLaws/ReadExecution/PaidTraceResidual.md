@@ -1,0 +1,62 @@
+# Paid Read receipts and derived residual simulation
+
+## Abstract
+
+PaidTraceResidual
+
+The source target is PH1.2 and PH37.1's original alpha/beta Read on every allowed complete ready configuration, including private phases. PH1.2 defines the partial C0 update delta0 and ordered original events. The existing FiniteFields, finiteRead and NativeFullResidual.eventBlock represent that transaction specification, with seed rejection and acceptance, all four payload phases, write before the third latch, held records, completion and pending/delivered Stop. ReadUpdate.body removes only the acquired letter delivered at the provider boundary. It does not perform Stop or reconstruct earlier sends from a returned endpoint.
+
+PH30.2 fixes the sequential-bit primitives: current-bit read/write, one-cell move, fixed Boolean branch, fresh independent fair bit, single paid buffer write and actual send. Architecture supplies their enabled nativeEdge, selected result and local_effect on the same S. This is independent of Protocol, Tracks, probability rows and denominator laws. nativeTick consumes a bit only for an enabled freshBit action. A deterministic edge uses no fresh coordinate. Coincident fair successor states retain the different consumed-bit receipts. Disabled states have no physical receipt; analytical stutters neither request bits nor send symbols.
+
+PH37.2 supplies the complete paid injection and literal resident/layout/installation inventory, including all addresses, heads, stacks, modes, buffers, event cursors, private phases and computing providers. The graph's internal states are exactly S, without a product with a parser, call history, receipt archive or residual word. Native ready labels are complete snapshot subtypes. Receipt stores a paid prestate plus the actual successor/receipt as a proof coordinate. Prefix and Complete are relations over enabled native edges; they are not runtime data and contain no graph instruction function.
+
+ReturnCut observes the paid prestate and actual edge receipt and yields a complete ready label whose underlying snapshot is proved to equal the actual successor. sourceTrace stops at that observation and accumulates actual receipts. It does not prescribe saved frames, reset private phases or impose total termination. instruction derives an absorbing analysis graph on the unchanged S. The currentReturn saved-depth/caller-PC detector in OriginalNativeServiceBridge is a proved special case of this interface. Its old nativeUntil, and this specialization's sourceTrace state, agree. A caller must still prove that the supplied cut denotes the actual current outer operation. Arbitrary choices of ReturnCut do not establish that fact, and a call history that is not determined by the paid state cannot silently be introduced as its parameter.
+
+paid_receipt_execution proves both directions between enabled finite returning receipt paths and finite fresh-bit executions, graph-state correspondence, and strictly positive mass for every realized finite receipt trace. Its cylinder fixes at most the first n fair coordinates for n primitive ticks. This is a proof restriction, not n actual requests: deterministic steps still leave the unused suffix unchanged. After an actual a.s. return, the existing actual_return_restart supplier proves independence of the unused fresh suffix. Infinite exceptional nonreturn executions remain in the sample space; the theorem never asserts return on every tape.
+
+PH25.1 pays for the C0 numbering, T0 legality/successor/event slots, event count and symbol widths, and R0 current-configuration rendering dictionary. PH30.2 also pays the single-symbol buffer and finite event cursor. events reads only PrimitiveReceipt.sent at its paid sending prestate; buffer writes, internal reads, random bits and endpoint fields cannot create events. The decode argument S times sent Symbol to Option OriginalEvent is adequate only if this installed original rendering factors through those coordinates and a send commits at most one original event. No theorem here establishes that factorization for all allowed encodings. In particular OriginalEvent's completed index is an unrestricted natural number in its existing semantic type, while an installed PH alphabet uses only its actual finite indices; it cannot simply be declared to be every OriginalEvent.
+
+Native operation events and observer report-buffer sends are distinct observations. PH25.1 and PH26.1 require the actual updater to execute the original delta on actual registers; they separately require the report consumer to render future operations. An actual updater can be silent while its returned original fields and native operation block are correct. In that case events is empty for every decoder and cannot equal a nonempty original Read body. This limits the send-correctness premise used by paid_read_residual; it does not refute the original digital class or its denominator conclusion. NativeOperationRead denotes a proposed native-only route using returned complete fields and the original native relation; this delivery supplies no theorem or implementation of that route, whose realization remains open. Report rendering through the installed T0/R0 remains a separate consumer obligation, with all computing cursors and buffers paid in S.
+
+PH30.3 and PH37.2 distinguish the actual source/provider receipt from observer work. The supplied arrival must be the real provider port/layout, with exact original legal menu. offered must recover that delivered letter at the boundary; all off-input-site paid bits and original fields must remain unchanged. Copying, seeking, dispatch, frame construction and table work belong to subsequent paid primitives. The application takes these representation premises explicitly, including its actual inputSite and offered observations; it does not choose all bits as an input site or turn historic f,x into unencoded runtime input. The source prose does not specify an arbitrary installation's concrete port locations, symbol interpretation or calling convention, and this module does not fabricate them.
+
+Correct is the stronger completed-operation specification that additionally renders the ordered eventBlock/T0 word through actual report sends. It is conditional on that rendering convention, rather than the universal native update contract. Its telescope contains no desired row equality, rationality, matrix inversion, normalization, transience or final law. Given correctness almost everywhere for finite completed prefixes, finite_good fixes the same physical receipts on a positive raw fair cylinder. Thus no incorrect positive finite return can belong solely to a null exceptional set. paid_read_residual derives correctness for every finite tape execution, including immediate cases at n zero. Source class membership is not defined as existence of Protocol, and Correct remains a named original operational premise with the event/cut interpretation gap explicit.
+
+Tracks existentially records an actual delivered entrance z,a and a nonreturning receipt prefix p, with the original body equal to events(p) followed by todo. Start uses the empty enabled prefix. A returning edge cancels the actual earlier event prefix from completed correctness. For a nonreturning edge, positive edge mass propagates Reachable; normalized_reachable_exits supplies one finite completion from that reachable state. Prepending the actual prefix gives the unique original body, and list cancellation derives a new residual. Only existence of one completion is needed. Exceptional infinite paths can remain nonreturning forever with an unfinished residual; no total-return premise or runtime residual storage is added.
+
+The application constructs the existing ReadUpdate.Protocol for the saved-frame specialization. It derives Tracks, start and step by paid_read_residual, and transports literal nativeNever through paid_receipt_execution. It forwards fields, decode, arrival, menu, real inputSite, offered and boundary unchanged. The existing original_read_update_rows then supplies completed original event/update support, normalized native rows and each letter's common denominator. This is an exact connected application once those source representation data are furnished, not universal SOURCE-to-Protocol adequacy. There is no extra conditional denominator wrapper retained.
+
+The general current-cut interface and enabled trace theorem retain stale/nested returns as ordinary internal steps whenever the actual cut says none. Only the saved-frame specialization uses depth zero and saved PC. Arbitrary persistent ready work remains in full ready labels. Empty carriers/menus are vacuous, immediate returned entrances are tested at time zero, and illegal Read is represented by absent arrival, never a fabricated service. The original boundary plus a genuine Read successor still rules out skipping an update at immediate delivery. Reducible, zero and transient states are retained; a positively reached disabled dead end contradicts allowed-entry a.s. return, whereas an unreachable trap has no such obligation.
+
+Remaining original-class obligations are universal interpretation of the fixed installed sequential source, returned native fields and separate T0/R0 report rendering, real provider-delivery observation and current outer cut with both directions on all original entrance configurations. Next-letter q extraction, first-letter/full-return marginal equality, synthetic virtual-ready continuation, four-service certificate assembly and full native law with the same K remain separate. The original H equals qP and positive-history residual compatibility clauses in PH1.5/PH37.1 are independent and are not derived from fair bits, completed Read correctness or this residual proof.
+
+**Theorem 1.1 (paid_receipt_execution).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/PaidTraceResidual.paid_receipt_execution`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/PaidTraceResidual.paid_receipt_execution` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The exact compiled telescope retains the supplied complete paid architecture and current-cut interpretation. Almost-sure return and original finite operation correctness are operational premises; residual closure and positive finite trace consequences are derived. This does not assert class-wide source interpretation or full PH38.1 completion.
+
+**Theorem 1.2 (paid_read_residual).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/PaidTraceResidual.paid_read_residual`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/PaidTraceResidual.paid_read_residual` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The exact compiled telescope retains the supplied complete paid architecture and current-cut interpretation. Almost-sure return and original finite operation correctness are operational premises; residual closure and positive finite trace consequences are derived. This does not assert class-wide source interpretation or full PH38.1 completion.
+
+## References
+
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/PaidTraceResidual.paid_read_residual`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/PaidTraceResidual.paid_receipt_execution`
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteFairBitReturnRestart](../FiniteFairBitReturnRestart.md)
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalNativeServiceBridge](../OriginalNativeServiceBridge.md)

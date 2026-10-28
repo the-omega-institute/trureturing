@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:a526a6aba30f0ad8d73f489909fa284e90a842223172d4b1a27876b30cb5616d
+  normalized_sha256: sha256:a526a6aba30f0ad8d73f489909fa284e90a842223172d4b1a27876b30cb5616d
+cas_ref: sha256:a526a6aba30f0ad8d73f489909fa284e90a842223172d4b1a27876b30cb5616d
+coverage_gids:
+  - gid: D5/S0/Conventions/WDigits.wValue_add_two
+    target_statement_id: sha256:bbc15c135e228bce4e68e42e08289f696b0fcaae1983de303468271a9ff9c1e5
+  - gid: D5/S0/Conventions/WDigits.wValue_one
+    target_statement_id: sha256:027020f066fe99e34e39510a648eee969bb5e0c7bfbed0f24768b88731ad9760
+  - gid: D5/S0/Conventions/WDigits.wValue_zero
+    target_statement_id: sha256:e19ad2d942bd85e9fd27c6cb0dfa867d7b540d653578f33058b6834986a6198a
+  - gid: D5/S0/Tower/GoldenNames.golden_name_card
+    target_statement_id: sha256:aa66dc68642e208670a0a93e6aaa0d6ef78791885e2736ad9d35f1de20ab6297
+receipts:
+  unresolved_subitems: []

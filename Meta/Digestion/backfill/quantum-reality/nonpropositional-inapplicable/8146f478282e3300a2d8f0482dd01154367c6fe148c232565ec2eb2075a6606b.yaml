@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8146f478282e3300a2d8f0482dd01154367c6fe148c232565ec2eb2075a6606b
+  normalized_sha256: sha256:8146f478282e3300a2d8f0482dd01154367c6fe148c232565ec2eb2075a6606b
+cas_ref: sha256:8146f478282e3300a2d8f0482dd01154367c6fe148c232565ec2eb2075a6606b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此句规定物理空间的操作性解释，不提出关于某个已定义数学对象的定理。
+    previous_atom_id: 250fabff8cf690576694bb512e12035f62146fe319b0418f33301b1af548180f
+    next_atom_id: e41f86f9eaa7962b50e5cac4b5604c1961877b546845dfa2ec29317b8c32ff94

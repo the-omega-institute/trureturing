@@ -1,0 +1,100 @@
+**Theorem 13.3 (Unique designated crossing and original candidate).**
+For every real $p\in K$ there is exactly one $v_\diamond(p)\in I$
+such that $r_0(p,v_\diamond(p))=r_-$. It satisfies
+
+$$
+\frac{12521}{100}<v_\diamond(p)<\frac{6261}{50},\qquad
+Q(p,v_\diamond(p))=0.
+\tag{13.5}
+$$
+
+At the unchanged exact $p_J$, $v_\diamond=v_\diamond(p_J)$ is
+real algebraic. Its entire child consists of the two separated
+worlds of Theorem 12.1, so it has no distinct terminal-M pair.
+It differs from both singular responses and lies outside
+$[142,150]$. Uniqueness in this statement concerns the designated
+branch crossing, not all roots of $Q$ in the bracket (13.5).
+
+Proof. At every tube fixed point the source Jacobian is invertible
+by (11.8). The polynomial equations are continuously differentiable
+on an open ambient space. The implicit function theorem therefore
+gives local continuously differentiable branches. Their fixed
+points lie strictly inside the $y$ ball, so the local branches
+remain in that tube for nearby parameters. Contraction uniqueness
+makes these branches agree wherever they overlap. This gives a
+continuously differentiable $z_0(p,v)$ on the strip, with local
+extensions at its closed boundaries. These are the hypotheses of
+the standard implicit function theorem cited in Section 10;
+see also Lebl, [Theorem 8.5.6](https://www.jirka.org/ra/html/sec_svinvfuncthm.html).
+
+Fix $p$ and write $z_0=m_0+L_0t+y(p,t)$, with $t=v-v_c$.
+Differentiating $\mathcal P_0(y(p,t),p-p_0,t)=0$ gives
+
+$$
+\partial_t y=-(\partial_y\mathcal P_0)^{-1}
+ \partial_t\mathcal P_0,\qquad
+\|\partial_t y\|_\infty
+ <\frac{1/5000}{1-74/1000}<\frac1{1000}.
+\tag{13.6}
+$$
+
+The inverse bound is the Neumann series for
+$\|I-\partial_y\mathcal P_0\|_\infty<74/1000$.
+Here $dt/dv=1$, so (13.2) implies
+$\partial_v r_0>7/1000$ throughout $I$.
+
+At a fixed $t$, the fixed-point equation also gives
+$\|y(p,t)\|_\infty\le E(t)+q_0\|y(p,t)\|_\infty$.
+Thus (13.4) bounds this displacement by $15/10^6$ at
+$t=-29/100$ and by $14/10^6$ at $t=-28/100$.
+Together with (13.1), the other two comparisons in (13.4) give
+
+$$
+r_0(p,12521/100)<r_-<r_0(p,6261/50).
+\tag{13.7}
+$$
+
+Continuity gives a crossing strictly between these endpoints.
+Strict increase gives exactly one on the entire $I$.
+Its source has $b\in(185/1000,187/1000)$ and $D_m\ne0$,
+so it is regular and its $b$ differs from $1/8$.
+
+Put $\alpha=r_-$ and $v=v_\diamond(p)$. The actual positive
+$b=b_0(p,v)$ is a common root of the original $\mathsf A,\mathsf B$.
+At the same $\alpha,p,v$, Lemma 4.2 supplies the distinct
+common root $b=1/8$ with $D=0$, since $\Phi(\alpha)=0$.
+Equation (12.5), or Lemma 4.3, gives $R(\alpha,p,v)=0$.
+The base point is used as an algebraic root; its legal singular
+lift has actual response $s_-(p)$, outside $I$, and is not an
+additional world in this child.
+
+In the original $12$ by $13$ matrix $S_1$ of (4.3), both vectors
+$(b^{12},b^{11},\ldots,1)^{\mathsf T}$ for these two distinct
+$b$ roots lie in the kernel. They are independent: their last
+coordinates are $1$ and their penultimate coordinates differ.
+Hence the rank is at most eleven. All $12$ by $12$ minors vanish,
+in particular the original ordered $\Delta_1,\Delta_0$.
+Since $\alpha\notin\{0,1\}$, the exact divisor
+$72900\alpha^6(\alpha-1)^4$ is nonzero. The same quotient
+polynomial of (4.3) therefore satisfies
+$\mathcal L_1(\alpha,p,v)=0$.
+
+The original $R$ and $\mathcal L_1$ have a finite common $r$ root.
+Its evaluation vector annihilates the fixed padded Sylvester
+matrix for $E_1=\operatorname{Res}^{18,26}_r(R,\mathcal L_1)$
+in (8.2), so $E_1(p,v)=0$ and the unchanged
+$Q=aE_1E_2E_3E_4$ vanishes. The fixed padding includes every
+specialized degree drop. No quotient by $\mathcal L_1$, different
+minor normalization, or expanded replacement for $Q$ is used.
+
+Finally specialize to $p=p_J$. Proposition 2.2 and (13.1) make
+$p_J,\alpha$ algebraic. The polynomial
+$\mathsf A(\alpha,b,p_J)$ has leading coefficient $5p_J+216>0$
+in degree seven, so its crossing $b$ is algebraic. Since $D_m$
+is nonzero there, its actual acquired response $N_u/D_m$ is
+algebraic. This proves algebraicity at the exact $p_J$, without
+asserting it for arbitrary real $p$. The bracket (13.5) is inside
+$I$ and disjoint from both singular-response boxes and from
+$[142,150]$. Theorem 12.1 supplies the claimed entire-child
+exclusion. ∎
+

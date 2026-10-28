@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:36f8b2d604b832a26b877f0b5ea85f4cb8f6c26bc34f70ce6eee5f05a8147a7e
+  normalized_sha256: sha256:36f8b2d604b832a26b877f0b5ea85f4cb8f6c26bc34f70ce6eee5f05a8147a7e
+cas_ref: sha256:36f8b2d604b832a26b877f0b5ea85f4cb8f6c26bc34f70ce6eee5f05a8147a7e
+coverage_gids:
+  - gid: D5/S0/Carrier/Norm.norm_def
+    target_statement_id: sha256:cf1c8f2c1811684c837e1e85b9156c251a1bf2889140eb0c847a4f88b8071072
+  - gid: D5/S0/Carrier/Ring.a_add
+    target_statement_id: sha256:ec692aaf94431111424403d2cd48a869e1debb980bef266cd3b5030fb12d15a1
+  - gid: D5/S0/Carrier/Ring.a_natCast
+    target_statement_id: sha256:85929ade9580be15ca9e4211778325f0bcc432db283cd947de1011f1b5527b63
+  - gid: D5/S0/Carrier/Ring.b_add
+    target_statement_id: sha256:4fc1800c150bb5c87d2adf505c1df6f7d9f49beb3c0e2dad2ecdc5e06679ccbe
+  - gid: D5/S0/Carrier/Ring.b_natCast
+    target_statement_id: sha256:dccef3d134a43239a4fffa34030fe4a83d92ec0a2e222d3a21b91a3e8856bdef
+  - gid: D5/S0/Carrier/Ring.phi_a
+    target_statement_id: sha256:693816cee6b766079f062eb99e1c2c39120d4bdc45bd0ae7788278a2e47c6d12
+  - gid: D5/S0/Carrier/Ring.phi_b
+    target_statement_id: sha256:67ae8ff2b3cd3fc37528ee9db287bdd83a7d513a0ae12227dc27112e2306b897
+  - gid: D5/S0/Carrier/Ring.phi_sq
+    target_statement_id: sha256:a6efadb03b5785f7f097131ab07662f03e2a7282d2716cb6b535cf1099df4449
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:980dc44c9ba0d6dd96efa85d9ebc77bd255602a1d88f63143f6542b71fcd1f02
+  normalized_sha256: sha256:980dc44c9ba0d6dd96efa85d9ebc77bd255602a1d88f63143f6542b71fcd1f02
+cas_ref: sha256:980dc44c9ba0d6dd96efa85d9ebc77bd255602a1d88f63143f6542b71fcd1f02
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: G-a 的预期依赖、公理验收和工具缺失时 open 出口；不另给零集断言。
+    previous_atom_id: ca93be919a43e1d8a9a087ea284c2bebe0f4f2eb4300902d737616dbb0f7ed41
+    next_atom_id: 00445dec8c173ae851ac1269b7db9504b6d6266fee95132178233b63e511d1d3

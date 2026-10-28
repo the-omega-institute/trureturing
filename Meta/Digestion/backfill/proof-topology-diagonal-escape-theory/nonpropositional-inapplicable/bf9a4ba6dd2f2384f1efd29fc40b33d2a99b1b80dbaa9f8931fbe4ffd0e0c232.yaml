@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bf9a4ba6dd2f2384f1efd29fc40b33d2a99b1b80dbaa9f8931fbe4ffd0e0c232
+  normalized_sha256: sha256:bf9a4ba6dd2f2384f1efd29fc40b33d2a99b1b80dbaa9f8931fbe4ffd0e0c232
+cas_ref: sha256:bf9a4ba6dd2f2384f1efd29fc40b33d2a99b1b80dbaa9f8931fbe4ffd0e0c232
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只在正概率观察历史上命名条件律 ν_h；没有断言下一观察律公式。
+    previous_atom_id: 1f7f798972e4a357da75403d5342fd7e2aa98e1bd9f8cd3674b49d09d2d96756
+    next_atom_id: f7c4c5c03ea6751fc08ab6115315d051542a9849795ac349473f834129849155

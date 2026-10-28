@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:903d6061ffd70af33badcde5a2f2678e7f32a0cf438448f88d7759d1731e2c2a
+  normalized_sha256: sha256:903d6061ffd70af33badcde5a2f2678e7f32a0cf438448f88d7759d1731e2c2a
+cas_ref: sha256:903d6061ffd70af33badcde5a2f2678e7f32a0cf438448f88d7759d1731e2c2a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Work-order instruction to establish a finite Fourier identity before discussing integer-window error; no identity or error estimate is asserted.
+    previous_atom_id: 3657911d4e6dc4bffbab41135211bd898232c65179f856e72a93b3816fb9548f
+    next_atom_id: 78b35699c2cee6ea29a1759b083010714f9f2dbe59f3f08c8552345a59b0c697

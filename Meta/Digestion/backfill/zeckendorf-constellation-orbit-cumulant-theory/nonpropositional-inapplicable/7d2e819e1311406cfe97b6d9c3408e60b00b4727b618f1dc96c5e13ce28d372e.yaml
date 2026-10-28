@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7d2e819e1311406cfe97b6d9c3408e60b00b4727b618f1dc96c5e13ce28d372e
+  normalized_sha256: sha256:7d2e819e1311406cfe97b6d9c3408e60b00b4727b618f1dc96c5e13ce28d372e
+cas_ref: sha256:7d2e819e1311406cfe97b6d9c3408e60b00b4727b618f1dc96c5e13ce28d372e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本句仅列出坐标 chart 的选择，不断言所选 chart 可逆、覆盖全局或可粘合。
+    previous_atom_id: 8ea12575d5f85bcda3fca0543d6aec11640df7eaa834a7e6f1d68194e10ecc6b
+    next_atom_id: 1f3a36245bba4b3f19d743e0a562180655f1c63d19e62fd49d6dbd9581597516

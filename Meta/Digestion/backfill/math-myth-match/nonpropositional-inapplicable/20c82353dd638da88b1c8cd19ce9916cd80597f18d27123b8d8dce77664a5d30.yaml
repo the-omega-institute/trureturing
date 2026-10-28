@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:20c82353dd638da88b1c8cd19ce9916cd80597f18d27123b8d8dce77664a5d30
+  normalized_sha256: sha256:20c82353dd638da88b1c8cd19ce9916cd80597f18d27123b8d8dce77664a5d30
+cas_ref: sha256:20c82353dd638da88b1c8cd19ce9916cd80597f18d27123b8d8dce77664a5d30
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 概述 Udāna 6.4 的盲人摸象叙事与经文批评对象，没有数学断言。
+    previous_atom_id: 7c5c10489871baf1ca0825f7e5f2226d972405cdc48f905b90397a381a190acd
+    next_atom_id: 45dc44ae36dc96d4cb4f4f47905ebe54f817124965f399f69207e9a6f9a11e98

@@ -1,0 +1,53 @@
+**定理 410.2（完整 $C_*$ 的显式上界）。** 式（403.2）由全部实际 $H_m$ 定义的同一非负常数满足
+
+$$
+\boxed{C_*<\overline C:=3\cdot10^{22}.}
+\tag{410.3}
+$$
+
+证明。对 $p>1$ 置 $S_p=\sum_{k\ge2}1/[k(\log k)^p]$。递减正项比较与 $\log2>2/3$ 给
+
+$$
+S_p\le\frac1{2(\log2)^p}
++\frac1{(p-1)(\log2)^{p-1}}
+<\overline S_p:=\frac1{2(2/3)^p}
++\frac1{(p-1)(2/3)^{p-1}}.
+\tag{410.4}
+$$
+
+同时，对 $1<p\le2$、$r\in\{1,2\}$，令 $U_r(p)=\sum_{k\ge2}(\log k)^r/k^p$。在 $t\in[k,k+1]$ 上有 $t/k\le3/2$ 与 $\log t\ge\log k$，所以
+
+$$
+U_r(p)\le\frac94\int_1^\infty\frac{(\log t)^r}{t^p}dt
+=\frac94\frac{r!}{(p-1)^{r+1}}.
+\tag{410.5}
+$$
+
+$r=0$ 时使用更小的递减比较 $U_0(p)\le1/(p-1)$。由（410.2）得
+
+$$
+\begin{aligned}
+\sum_{k\ge2}q_k
+&\le66\frac92+212\frac94+248=1022,\\
+\sum_{k\ge2}q_k\sqrt k
+&\le66\cdot36+212\cdot9+248\cdot2=4780.
+\end{aligned}
+\tag{410.6}
+$$
+
+直接消费（403.7）与 $C_6=10^{17}$，完整来源账的四份上界为
+
+$$
+\begin{aligned}
+C_*\le{}&C_6(66\overline S_3+212\overline S_4+248\overline S_5)
++\frac25\cdot1022\\
+&+\frac{C_6}{(2/3)^6}\cdot4780
++64C_6(66\overline S_4+212\overline S_5+248\overline S_6)\\
+={}&255297.0375\cdot10^{17}+408.8
+<3\cdot10^{22}.
+\end{aligned}
+\tag{410.7}
+$$
+
+第一项覆盖 $q_k|H_k|\log k$，第二项保留 $H_1$，后两项分别覆盖（403.7）的低段与高段；没有删除任意实际前缀或窗外补集。等号是有限有理数计算，结合（410.4）–（410.6）即得（410.3）。$\square$
+

@@ -20,7 +20,7 @@ class ComputeBudgetTests(unittest.TestCase):
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)
         self.path = Path(temporary.name) / "compute"
-        compute.initialize(self.path, 30)
+        compute.initialize(self.path, 120)
         environment = mock.patch.dict(os.environ, {compute.BUDGET: str(self.path), compute.ACTIVE: "0"})
         environment.start()
         self.addCleanup(environment.stop)
@@ -30,18 +30,49 @@ class ComputeBudgetTests(unittest.TestCase):
                 mock.patch.object(compute.subprocess, "call", side_effect=[0, 23]) as execute:
             self.assertEqual(0, compute.run(["compile"]))
             self.assertEqual(23, compute.run(["audit"]))
-        self.assertEqual(500, float(self.path.read_text()))
-        self.assertEqual("1800.0s", execute.call_args_list[0].args[0][2])
-        self.assertEqual("700.0s", execute.call_args_list[1].args[0][2])
+        self.assertEqual(5900, float(self.path.read_text()))
+        self.assertEqual("7200.0s", execute.call_args_list[0].args[0][2])
+        self.assertEqual("6100.0s", execute.call_args_list[1].args[0][2])
 
     def test_exhaustion_refuses_later_phases_and_cannot_be_reset(self):
-        with mock.patch.object(compute.time, "monotonic", side_effect=[0, 1800]), \
+        with mock.patch.object(compute.time, "monotonic", side_effect=[0, 7200]), \
                 mock.patch.object(compute.subprocess, "call", return_value=124) as execute:
             self.assertEqual(124, compute.run(["compile"]))
             self.assertEqual(124, compute.run(["audit"]))
             execute.assert_called_once()
         with self.assertRaises(FileExistsError):
-            compute.initialize(self.path, 30)
+            compute.initialize(self.path, 120)
+
+    def test_split_current_transfers_only_the_measured_remainder(self):
+        with mock.patch.object(compute.time, "monotonic", side_effect=[0, 1100]), \
+                mock.patch.object(compute.subprocess, "call", return_value=0):
+            self.assertEqual(0, compute.run(["judge-and-source"]))
+        transferred = compute.export_current(self.path)
+        resumed = self.path.with_name("continuation")
+        compute.resume_current(resumed, transferred)
+        self.assertEqual(6100, float(resumed.read_text()))
+        with mock.patch.dict(os.environ, {compute.BUDGET: str(resumed)}), \
+                mock.patch.object(compute.time, "monotonic", side_effect=[9000, 9200]), \
+                mock.patch.object(compute.subprocess, "call", return_value=23) as execute:
+            self.assertEqual(23, compute.run(["validator"]))
+        self.assertEqual("6100.0s", execute.call_args.args[0][2])
+        self.assertEqual(5900, float(resumed.read_text()))
+        with self.assertRaises(FileExistsError):
+            compute.resume_current(resumed, "7200")
+        for invalid in ("", "nan", "inf", "-1", "7200.001", "21600"):
+            with self.subTest(invalid=invalid), self.assertRaises(ValueError):
+                compute.resume_current(self.path.with_name("invalid"), invalid)
+        self.path.write_text("7201")
+        with self.assertRaises(ValueError):
+            compute.export_current(self.path)
+
+    def test_zero_transferred_remainder_starts_no_new_compute(self):
+        resumed = self.path.with_name("exhausted")
+        compute.resume_current(resumed, "0")
+        with mock.patch.dict(os.environ, {compute.BUDGET: str(resumed)}), \
+                mock.patch.object(compute.subprocess, "call") as execute:
+            self.assertEqual(124, compute.run(["validator"]))
+        execute.assert_not_called()
 
     def test_interrupted_owner_leaves_no_reusable_allowance(self):
         with mock.patch.object(compute.subprocess, "call", side_effect=OSError("interrupted")):
@@ -76,7 +107,7 @@ class ComputeBudgetTests(unittest.TestCase):
                 mock.patch.object(compute.subprocess, "call", return_value=19) as execute:
             self.assertEqual(19, compute.run(["test-program", "argument"]))
             execute.assert_called_once_with(["test-program", "argument"])
-        self.assertEqual(1800, float(self.path.read_text()))
+        self.assertEqual(7200, float(self.path.read_text()))
 
     @unittest.skipUnless(shutil.which("timeout"), "GNU timeout is required")
     def test_real_timeout_stops_a_hung_command(self):

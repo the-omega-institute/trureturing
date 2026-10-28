@@ -1,0 +1,18 @@
+**Theorem 7.1 (Necessary and sufficient logarithmic budget growth).**
+Let $M(s)$ be any finite integer-valued budget function on
+$(0,\bar s)$, with $M(s)\ge2$ and no monotonicity or regularity hypothesis.
+The following three conditions are equivalent:
+
+1. There exist $0<C_T<\infty$ and $s_1>0$ such that for every
+   $0<s<s_1$ one can select a common compliant
+   $\mathcal A_s\in\mathfrak A_{M(s)}(e^{-s},\alpha)$ with
+   $\max_i\mathbb E_i^{\mathcal A_s}T
+    \le C_Ts^{-(2r+1)}/\log(e/s)$.
+2. There exist one fixed $i_\star\in\{0,1\}$, $0<C_T<\infty$ and
+   $s_1>0$ such that for every $0<s<s_1$ one can select a common
+   compliant $\mathcal A_s$ at that budget with
+   $\mathbb E_{i_\star}^{\mathcal A_s}T
+    \le C_Ts^{-(2r+1)}/\log(e/s)$.
+3. There exist $\varepsilon>0$ and $s_2>0$ such that
+   $\log(1+M(s))\ge\varepsilon\log(1/s)$ for every $0<s<s_2$.
+

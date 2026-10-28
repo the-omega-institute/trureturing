@@ -1,0 +1,13 @@
+**Proposition 53.2 (every field has a paid original preparation).** If an actual known-zero original tree $t$ has been built with its earned roster, every $q\in\mathbb Q^N$ can be prepared using only original terminal Adds and Ticks, without Reset or an interior actuator. Choose a rational right inverse $C$ of $K$ in (51.5), partition
+
+$$
+Cq=(g_0,\ldots,g_I),\qquad g_j\in\mathbb Q^L.
+$$
+
+Add the $L$ coordinates of $g_I$ at their actual terminals. Then repeat Tick followed by all $L$ Adds of the next block, in descending block order through $g_0$. The actual endpoint is $q$, with exactly $I$ Ticks and $L(I+1)$ Adds, including zeros.
+
+**Proof.** The successive fields are the finite Horner recurrence. At the end they equal
+$Jg_0+AJg_1+\cdots+A^IJg_I=KCq=q$. All actuators are earned original terminals and every scalar operand is owned by this producer. Their ACKs, input acquisition, exact rational solves and literal widths are paid. The existence and rational construction of $C$ follow from the already supplied full row rank, by finite pivot selection/elimination. This is reachability with owned target input, not observation of an unknown current field. $\square$
+
+If this producer is used, count its actual seed construction and input reception as well. A term with $b$ beta leaves and $L$ total logical leaves has a legal successful original preparation with $b$ promotions and $L-1$ splits, material size $2L-1+b=N$ and fresh allocation $N-1$ beyond the seed. Its particular addressed word and each full completion remain in the bill. Proposition 53.2 then adds its own $L(I+1)+I$ fixed field acknowledgements. Neither this optional owned-target producer nor the distinct concrete witness of §52 is an extra free stage of every pair experiment.
+

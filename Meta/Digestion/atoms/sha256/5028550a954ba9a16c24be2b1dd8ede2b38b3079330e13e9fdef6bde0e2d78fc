@@ -1,0 +1,6 @@
+若：
+
+* 完整候选空间 \(X\) 是紧空间；
+* 每个 \(\mathcal E_N\) 是闭集；
+* \(\mathcal E_{N+1}\subseteq\mathcal E_N\)；
+

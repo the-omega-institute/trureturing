@@ -17,6 +17,15 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
             Entry("sign-representative", "complex_sign_val", "The sign of the binary representative", SignRepresentative(),
                 "The complexSign value is −1 raised to the natural representative of a binary residue.",
                 DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Entry("symplectic-form", "spForm", "The binary symplectic bilinear form", SymplecticForm(),
+                "The binary symplectic form pairs the translation coordinates of either vector with the phase coordinates of the other.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Entry("symplectic-alternating", "sp_alt", "Alternation of the binary symplectic form", SymplecticProperty("IsAlt"),
+                "Every binary vector has zero symplectic pairing with itself.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Entry("symplectic-nondegenerate", "sp_nondegenerate", "Nondegeneracy of the binary symplectic form", SymplecticProperty("Nondegenerate"),
+                "A vector that pairs to zero with every binary vector is the zero vector.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Entry("amplitude", "graphAmp", "The binary graph amplitude", Amplitude(),
                 "Each edge contributes its binary quadratic monomial. The ordered upper-triangular sum is normalExponent; graphAmp is the complexSign value of that exponent, equivalently −1 raised to its natural representative. This definition accepts every binary matrix, without a symmetry or diagonal hypothesis.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(GraphStates)),
@@ -28,6 +37,9 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
                 DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Entry("tensor-scalar", "tensor_smul", "Scalars in tensor products", TensorScalar(),
                 "Scaling each single-qubit factor scales the tensor product by the product of those scalars.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Entry("tensor-weyl", "tensor_weyl", "The tensor action of binary Weyl factors", TensorWeyl(),
+                "Each single-qubit matrix translates the binary coordinate by v.fst(i) and multiplies it by the sign of v.snd(i) times the input coordinate. The displayed matrix entries and translated function write out both sides of the tensor action. Fin 2 and ZMod 2 have the same binary representatives; id leaves these representatives unchanged.",
                 DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Entry("gate", "gate", "Binary choices of Hadamard and phase gates", GateDefinition(),
                 "The binary phase choice multiplies the optional Hadamard gate on the left. Zero phase selects the identity and nonzero phase selects the diagonal matrix with entries 1 and i.",
@@ -42,6 +54,17 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
     private static Formula SignRepresentative() => All(V("a"), Binary,
         Equal(Call("complexSign", V("a")),
             Pow(Typed(Seq(Minus, D(1)), Complex), Property(V("a"), "val"))));
+
+    private static Formula BinaryPhaseSpace => Parenthesized(Seq(
+        Arrow(Fin(V("N")), Binary), Sp, Times, Sp, Arrow(Fin(V("N")), Binary)));
+
+    private static Formula SymplecticForm() => All(V("N"), Nat,
+        All(V("u"), BinaryPhaseSpace, All(V("v"), BinaryPhaseSpace,
+            Equal(Apply(Call("spForm", V("N")), V("u"), V("v")),
+                Qualified("BinaryLagrangianGraphForm", "sp", V("u"), V("v"))))));
+
+    private static Formula SymplecticProperty(string property) => All(V("N"), Nat,
+        Property(Call("spForm", V("N")), property));
 
     private static Formula Amplitude() => All(V("N"), Nat,
         All(Gamma, Matrix(Fin(V("N")), Binary), All(V("x"), Arrow(Fin(V("N")), Fin(D(2))),
@@ -73,6 +96,30 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
             All(V("A"), Arrow(Fin(V("N")), Matrix(Fin(D(2)), Complex)),
                 Equal(TensorOperator(factors),
                     Qualified("SMul", "smul", coefficient, TensorOperator(V("A")))))));
+    }
+
+    private static Formula TensorWeyl()
+    {
+        Formula bitVector = Arrow(Fin(V("N")), Binary);
+        Formula pair = Parenthesized(Seq(bitVector, Sp, Times, Sp, bitVector));
+        Formula LambdaOf(string name, Formula type, Formula body) =>
+            Seq(LambdaLower, Sp, Typed(V(name), type), Sp, Mapsto, Sp, body);
+        Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+        Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+        Formula x = Apply(Property(V("v"), "fst"), V("i"));
+        Formula z = Apply(Property(V("v"), "snd"), V("i"));
+        Formula s = Call("id", Typed(V("s"), Binary)), t = Call("id", Typed(V("t"), Binary));
+        Formula entry = Parenthesized(Seq(V("if"), Sp, Equal(s, Add(t, x)), Sp, V("then"), Sp,
+            Call("complexSign", Mul(z, s)), Sp, V("else"), Sp, D(0)));
+        Formula factors = LambdaOf("i", Fin(V("N")), Qualified("Matrix", "of",
+            LambdaOf("t", Fin(D(2)), LambdaOf("s", Fin(D(2)), entry))));
+        Formula exponent = Seq(Sum, Underscore, Grp(V("i"), Colon, Sp, Fin(V("N"))), Sp,
+            Parenthesized(Mul(z, Parenthesized(Add(Apply(V("t"), V("i")), x)))));
+        Formula translated = LambdaOf("t", bitVector,
+            Mul(Call("complexSign", exponent), Apply(V("f"), Add(V("t"), Property(V("v"), "fst")))));
+        return All(V("N"), Nat, All(V("v"), pair, All(V("f"), Arrow(bitVector, Complex),
+            Equal(Qualified("Matrix", "mulVec", TensorOperator(factors), V("f")),
+                translated))));
     }
 
     private static Formula GateDefinition() => All(V("h"), V("Bool"), All(V("d"), Binary,
@@ -131,6 +178,6 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula Qualified(string owner, string name, params Formula[] args) => Seq(V(owner), Dot, Call(name, args));
-    private static Formula Apply(Formula f, params Formula[] args) => Seq(f, Open, Arguments(args), Close);
+    private static Formula Apply(Formula f, params Formula[] args) => Seq(f, Parenthesized(Arguments(args)));
     private static Formula Arguments(Formula[] args) => Seq([.. args.SelectMany((x, i) => i == 0 ? new[] { x } : new[] { Comma, Sp, x })]);
 }

@@ -1,0 +1,67 @@
+**定理 87.3（任意可测经典载体不能满足原有限隐藏闭合）。** 对定义 87.1 的每个源、每个允许的原混合控制 $N$，不存在同时满足 (87.3) 和假设 87.2 的经典模型。因此，即使一个任意记忆的经典随机仪器精确匹配全部原记录，它也必违反至少一条 (87.4)。
+
+证明。强闭合所给的线性接口沿用定理 84.2，直接在隐藏空间而非零观察商中取
+
+$$
+T=XR^{-1}:Q\longrightarrow\mathcal M(\Omega),\qquad Q=\operatorname{Herm}_3.
+\tag{87.5}
+$$
+
+具体地，$K_a=R^{-1}A_aR$ 和 (87.4) 给 $B_aT=TA_a$；$CT=\mathcal L$ 使 $T$ 单射。质量行、空后缀是行及空前缀列分别给
+
+$$
+u T=\operatorname{Tr},\qquad
+eT=\operatorname{Tr}(E\,\cdot),\qquad
+T\rho_0=\mu,\qquad
+T(G_w\rho_0)=\alpha_w^{-1}B_w\mu.
+\tag{87.6}
+$$
+
+最后一个等式只是固定映射的代数复合；右侧为非负、质量一的测度。它未把标签变成控制，也未对任意隐藏输入赋予归一化后缀响应界。
+
+关键的新步骤是把这个接口的正性延至全部 $Q_+$。由于 $Q$ 有限维且每个 $x_i$ 的总变差有限，
+
+$$
+\|TY\|_{\rm TV}
+\le\sum_{i=1}^9|(R^{-1}Y)_i|\,\|x_i\|_{\rm TV},
+\tag{87.7}
+$$
+
+故 $T$ 对总变差范数连续。V 定理 95.1 对任意所给混合 $N$ 给出的正词闭包，使 $G_w\rho_0$ 稠密于所有纯 qutrit 投影。由 (87.6)，这些点的像都是非负测度；非负有限测度锥在总变差范数下闭，故每个纯投影的像也非负。Hermitian 谱分解再给 $T(Y)\ge0$ 对每个 $Y\succeq0$ 成立。极限只在这个已强制为有限维的隐藏像中进行，不对 $\Omega$ 假设紧性，不对物理控制添加极限门。
+
+现用原终端效果的尖锐性，而不假定 $f$ 尖锐。对每个隐藏事件 $S\in\Sigma$，由有限维迹对偶定义三个 Hermitian 矩阵：
+
+$$
+\begin{aligned}
+\operatorname{Tr}(M(S)Y)&=(TY)(S),\\
+\operatorname{Tr}(M_1(S)Y)&=\int_S f\,d(TY),\\
+\operatorname{Tr}(M_0(S)Y)&=\int_S(1-f)\,d(TY).
+\end{aligned}
+\tag{87.8}
+$$
+
+刚证得的正性以及 (87.6) 使
+
+$$
+\begin{gathered}
+M=M_1+M_0,\qquad M(\Omega)=I_3,\\
+0\preceq M_1(S)\preceq E,\qquad
+0\preceq M_0(S)\preceq I_3-E.
+\end{gathered}
+\tag{87.9}
+$$
+
+这些矩阵按事件可数可加：在任意固定 Hermitian 基上，其坐标都是 (87.8) 的有限符号测度。因而 $M$ 是一个 POVM，$M_1,M_0$ 是它与原尖锐二元效果的共同细化。这里的 POVM 是反证中由隐藏表示导出的数学对象，不是另行取得的测量。
+
+所用成熟中间事实是 Heinosaari–Reitzner–Stano，[arXiv:0811.0783v2](https://arxiv.org/html/0811.0783v2)，附录命题 8 的尖锐相容性：一个共同可测效果若为投影，另一边的效果必须与它交换。本处也可直接验证所需的一步。若 $0\preceq D\preceq P$ 且 $P$ 是投影，则对 $v\in\ker P$ 有 $\langle v,Dv\rangle=0$，正性给 $Dv=0$，所以 $D=PDP$。对 (87.9) 分别应用，得到
+
+$$
+M(S)=EM_1(S)E+(I_3-E)M_0(S)(I_3-E),
+\qquad [M(S),E]=0.
+\tag{87.10}
+$$
+
+取任意单位 $v\perp q$，令 $Y=qv^\dagger+vq^\dagger\ne0$。由 (87.10)，$\operatorname{Tr}(M(S)Y)=0$ 对每个 $S$ 成立，因此 $TY$ 是零测度。这与 $T$ 单射矛盾。等价地，事件效果全落在 $E$ 的 $1\oplus2$ 块对角子空间，其实维数只有五，不能分离原九维 $Q$。
+
+证明仅用了原九列／九行的满秩、每个混合 $N$ 的正词闭包、经典测度正性和一个原尖锐效果。它既未要求整个隐藏正锥等于量子锥，也未调用 V §§100–110 的载体维数或紧基前提。∎
+

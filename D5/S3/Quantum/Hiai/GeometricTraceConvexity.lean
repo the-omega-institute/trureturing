@@ -6,6 +6,7 @@
    utility: none
    digest: Joint convexity of Hiai's original CFC geometric trace on supported PSD pairs. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Hiai.InverseGeometricIdentification
 import D5.S3.Quantum.Hiai.CarlenLiebConvexity
 import D5.S3.Quantum.Recovery.SpectralTransposeRecovery
@@ -151,7 +152,7 @@ private lemma support_pair_mix
   have htpos : 0 < t := lt_of_le_of_ne ht₀ (Ne.symm ht)
   have hlt : 0 < 1 - t := sub_pos.mpr (lt_of_le_of_ne ht₁ ht')
   have hq : star x ⬝ᵥ (((1 - t) • A₀ + t • A₁) *ᵥ x) = 0 :=
-    (hA.dotProduct_mulVec_zero_iff x).mpr hx
+    (hA.dotProduct_mulVec_zero_iff (x := x)).mpr hx
   have hq' : (1 - t) * RCLike.re (star x ⬝ᵥ (A₀ *ᵥ x)) +
       t * RCLike.re (star x ⬝ᵥ (A₁ *ᵥ x)) = 0 := by
     have := congrArg RCLike.re hq
@@ -164,11 +165,11 @@ private lemma support_pair_mix
     have h₀ := hA₀.re_dotProduct_nonneg x
     have h₁ := hA₁.re_dotProduct_nonneg x
     nlinarith
-  have hA₀x : A₀ *ᵥ x = 0 := (hA₀.dotProduct_mulVec_zero_iff x).mp (by
+  have hA₀x : A₀ *ᵥ x = 0 := (hA₀.dotProduct_mulVec_zero_iff (x := x)).mp (by
     apply RCLike.ext
     · exact hq₀
     · exact hA₀.isHermitian.im_star_dotProduct_mulVec_self x)
-  have hA₁x : A₁ *ᵥ x = 0 := (hA₁.dotProduct_mulVec_zero_iff x).mp (by
+  have hA₁x : A₁ *ᵥ x = 0 := (hA₁.dotProduct_mulVec_zero_iff (x := x)).mp (by
     apply RCLike.ext
     · exact hq₁
     · exact hA₁.isHermitian.im_star_dotProduct_mulVec_self x)

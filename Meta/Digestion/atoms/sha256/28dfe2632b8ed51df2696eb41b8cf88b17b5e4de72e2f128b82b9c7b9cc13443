@@ -1,0 +1,6 @@
+**Proposition 58.3 (the distinctions that must survive calibration).** For fixed $t,\lambda_0$ and fixed $x|_W$, changing only $x|_{T_0}$ leaves the entire marked field $m$ and subsequent observation $Y$ unchanged, but changes the required restoration target. Consequently this particular marking-and-restoration schedule must retain those old-terminal distinctions in $z$ or equivalent surviving records.
+
+**Proof.** Equation (58.1) sets every coordinate outside $W$ to one independently of its old value. Equations (58.3)–(58.4) then give the same $Y,d$. But (58.2) restricts to the original arbitrary values on $T_0$. A deterministic controller with identical surviving data cannot select two different owed targets. If each of the $L$ old terminal values is chosen independently from a fixed set of $2^h$ rationals, the surviving data must distinguish $2^{Lh}$ cases, requiring at least $Lh$ bits in any exact finite binary representation. $\square$
+
+This necessity concerns information overwritten by this schedule. It is not a universal lower bound of $L$ unrestricted rational registers or a lower bound for every different acquisition algorithm. Here $|W|=L+c-1=b-1$; that smaller dimension alone is not an executed replacement for the full-window protocol. No sparse-row alternative or total-cost comparison is claimed.
+

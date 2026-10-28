@@ -1,0 +1,98 @@
+**Theorem 4.1 (retained entanglement and all failure regimes).** For the
+complete state of Theorem 3.1, set $r=|\kappa|z^2$. Its ordinary
+occupation-tensor partial-transpose negativity, with local flags included,
+is
+
+$$
+\mathcal N(F)=\frac{\|F^{T_B}\|_1-1}{2}
+=\max(0,r-ad).
+\tag{QSSR.15}
+$$
+
+The output is separable if and only if $r\le ad$, and is NPT otherwise.
+Equivalently, its exact entanglement condition is
+
+$$
+|\kappa|(1-t)^2p(1-p)>t.
+\tag{QSSR.16}
+$$
+
+For the base source, or any common phase with $\phi_1=\phi_2$ almost surely,
+$\kappa=1$. Then $P=w_{11}=2(2ad+z^2)$ and the normalized central block is
+
+$$
+\frac{B_{11}}P=(1-s)\frac{I_4}{4}
+ +s|\psi_-\rangle\langle\psi_-|,\quad
+s=\frac{z^2}{2ad+z^2},\quad
+|\psi_-\rangle=(|0_L1_L\rangle-|1_L0_L\rangle)/\sqrt2.
+\tag{QSSR.17}
+$$
+
+Thus the base retained resource is entangled precisely on the VI144.2
+ordinary NPT temperature domain, now within a locally fixed-charge usable
+sector. At $\theta=\log7$, model $b$ has
+$P=11/64$, $s=4/11$, $\mathcal N(F)=1/256$. Model $a$ has zero negativity
+and is separable. With the phase variation, model $b$ at this temperature
+is entangled exactly when $|\kappa|>7/8$.
+
+Proof. Direct expansion of (QSSR.7) gives
+
+$$
+bc-ad=\frac{(1-t)^2p(1-p)}{D^2}=z^2.
+\tag{QSSR.18}
+$$
+
+The eight blocks (QSSR.11) are separable products of positive local
+matrices. A local diagonal unitary on the A charge-one space changes
+$\kappa$ to $|\kappa|$ in (QSSR.12); this is a mathematical local change
+of basis irrespective of whether its angle has been learned by a consumer.
+The partial transpose of that block has two singleton eigenvalues $bc$
+and a corner with eigenvalues $ad+r$ and $ad-r$. Therefore $r>ad$ gives
+a negative eigenvalue, which no separable state can have: transposition
+preserves positivity on each factor of a product-state decomposition.
+
+For sufficiency of separability, no higher-dimensional PPT criterion is
+needed. In the two logical qubits let
+
+$$
+W_{1/3}=\frac16\sum_{k\in\{x,y,z\}}\sum_{\epsilon=\pm1}
+ |\epsilon k\rangle\langle\epsilon k|
+ \otimes|-\epsilon k\rangle\langle-\epsilon k|.
+\tag{QSSR.19}
+$$
+
+Expanding the Pauli eigenprojectors gives
+$W_{1/3}=I_4/4-(X\otimes X+Y\otimes Y+Z\otimes Z)/12$.
+Its diagonals are $(1,2,2,1)/6$ and its two central off-diagonals are
+$-1/6$. If $r\le ad$, the phase-adjusted $B_{11}$ is
+
+$$
+6rW_{1/3}
+ +\operatorname{diag}(ad-r,\ bc-2r,\ bc-2r,\ ad-r).
+\tag{QSSR.20}
+$$
+
+Every displayed diagonal remainder is nonnegative: $ad\ge r$ and
+$bc=ad+z^2$ with $z^2\ge r$. Each diagonal ray is a product ray.
+Undoing the local phase proves separability, including equality. Local
+orthogonal flags make the partial transpose a direct sum of unnormalized
+block partial transposes. The only possible negative eigenvalue is $ad-r$,
+so trace-norm additivity gives (QSSR.15) and (QSSR.16).
+
+When $\kappa=1$, (QSSR.18) converts (QSSR.12) into (QSSR.17). Its partial
+transpose has eigenvalues $(1-3s)/4$ and $(1+s)/4$ three times, consistently
+with the unnormalized calculation. At $t=1/7$, model $b$ has
+
+$$
+a=7/16,\quad b=5/16,\quad c=3/16,\quad d=1/16,\quad
+z=2\sqrt2/16,\quad ad=7/256,\quad z^2=8/256.
+\tag{QSSR.21}
+$$
+
+This gives all asserted values and the phase threshold $7/8$. For model $a$,
+$ad=7623/528^2$ and $z^2=7301/528^2$, so $z^2-ad=-322/528^2<0$;
+all $|\kappa|\le1$ are separable. At $\theta=0$, $z=0$ and every output
+is separable. For $\kappa=1$, division of (QSSR.16) by $t>0$ recovers
+$4\sinh^2(\theta/2)p(1-p)>1$, with the two VI144.3 thresholds and their
+separable equality cases unchanged. No zero-temperature endpoint was used. ∎
+

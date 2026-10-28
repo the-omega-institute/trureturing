@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:87bf29d647d542c33b024a9e7740a530ee7601413cf47c4bf1daddeca529301a
-  normalized_sha256: sha256:87bf29d647d542c33b024a9e7740a530ee7601413cf47c4bf1daddeca529301a
-cas_ref: sha256:87bf29d647d542c33b024a9e7740a530ee7601413cf47c4bf1daddeca529301a
-coverage_gids:
-  - gid: D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction.card_of_invariant_under_mul_two
-    target_statement_id: sha256:359f15539d9363ed5e4335ad14637fba10f5850effb9d59de17b0ccbda2a96b1
-receipts:
-  unresolved_subitems: []

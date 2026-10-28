@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ddaf0ded52999d58b01cc4f2f43c12836530f700b6debca3c47c32cad55a2676
+  normalized_sha256: sha256:ddaf0ded52999d58b01cc4f2f43c12836530f700b6debca3c47c32cad55a2676
+cas_ref: sha256:ddaf0ded52999d58b01cc4f2f43c12836530f700b6debca3c47c32cad55a2676
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：只指定全部测量标签集合 M。
+    previous_atom_id: 8f4d98d6fd76bb7e00a8d1e1e50265348ef22a10a8f222dff4337c01bf64cf64
+    next_atom_id: 7b85ba2c56800f8702b46ae03e59cc7844dbac065609b95717dff569d981a61e

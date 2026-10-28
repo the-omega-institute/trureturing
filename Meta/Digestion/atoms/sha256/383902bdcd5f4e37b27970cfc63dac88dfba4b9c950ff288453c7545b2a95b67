@@ -1,0 +1,41 @@
+### Keep the signed conductance and the actual core
+
+Write $d\nu=2\Phi(x)\cosh(x/2)dx$, with $\nu(\mathbb R)=1$, and
+$D(h)=\tfrac12\iint|h(y)-h(x)|^2J(dx,dy)$ on the actual minimal even
+form domain $\mathcal F$. Every prime power remains in $J_p$, and
+$J_\Gamma=\Phi(x)\Phi(y)\psi_\Gamma(|x-y|)dxdy$, where
+$\psi_\Gamma(t)=e^{-t/2}/(1-e^{-2t})$ for $t>0$.
+
+On $X=\{(x,y):x\ne y\}$ the half-slack
+$q(h)=D(h)-\operatorname{Var}_\nu(h)/2$ has signed conductance
+$J-(\nu\otimes\nu)/2$. Its positive and negative parts are
+
+$$
+\begin{aligned}
+K_+={}&J_p+\Phi(x)\Phi(y)
+ [\psi_\Gamma(|x-y|)-2\cosh(x/2)\cosh(y/2)]_+dxdy,\\
+K_-={}&\Phi(x)\Phi(y)
+ [2\cosh(x/2)\cosh(y/2)-\psi_\Gamma(|x-y|)]_+dxdy.
+\end{aligned} \tag{S1}
+$$
+
+The prime graphs are singular to $dxdy$, so all remain in $K_+$.
+Both edge measures are $\sigma$-finite. In particular, $K_+$ is not
+finite: $\psi_\Gamma(t)\sim1/(2t)$ at zero gives logarithmically
+infinite mass near the diagonal. The increment cancels this singularity
+in the form, and Schur's test below uses $\sigma$-finite spaces.
+Set $\mathscr E_\pm=L^2(K_\pm)$ and
+$C_\pm h(x,y)=(h(y)-h(x))/\sqrt2$. Ordinary variance accounting gives
+
+$$
+q(h)=\|C_+h\|^2-\|C_-h\|^2,\qquad
+\|C_+h\|^2\le D(h),\qquad
+\|C_-h\|^2\le\tfrac12\operatorname{Var}_\nu(h). \tag{S2}
+$$
+
+These are the same original form and mean term, not a new energy model.
+Both maps are continuous for its form norm. For
+$v_k=\Phi^{(2k)}/\Phi-4^{-k}$, the existing critical-family result gives
+$v_k\in\mathcal F$ and
+$\|C_+v_k\|=\|C_-v_k\|$ for every $k\ge1$.
+

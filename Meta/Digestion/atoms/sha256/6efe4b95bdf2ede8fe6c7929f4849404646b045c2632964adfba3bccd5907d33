@@ -1,0 +1,10 @@
+**Attribution 7.2 (actual Lean supplier interfaces).** The source
+declarations below supply the named definitions and mathematical
+interfaces. They do not constitute a Lean implementation of Theorem 2.1.
+
+| Source declarations | Correspondence |
+| --- | --- |
+| [`ActualTreeReadoutAcquisition.Address`, `Reply`, `readout`][LEAN-READ] | Address `false/true` means $L/R$; source `.of true/.of false` means $\alpha/\beta$. Thus the numerical bit $x_i$ here corresponds to source Boolean $x_i=0$, not to the same Boolean convention. `readout` includes absent strict extensions of leaves. Its original passive policy is not an Update policy. |
+| [`DelayedOriginalReadout.right_clock_iterate`, `right_clock_readout`, `address_clock_bounds`][LEAN-DELAY] | $N=t$, `rights k` is $R^k$, and the clock of an original selected leaf is $x_i$. These supply the delayed right-spine intervals, original-node persistence and the witness that Update changes the source. |
+| `DelayedOriginalReadout.original_presence_guard`, `original_decoder_correct`, `original_decoder_service` | General original-node recovery has a supplied epoch and its own parent guard and probe list. It is broader than the promised-leaf readout, and does not supply an external epoch to this controller. |
+| [`GuardedPhaseExecution.run_transport_iff`, `GuardedPhaseExecution.run_halt_unique`][LEAN-RUN] | These declarations are in `NativeExecutionTransport.lean`. Use the equivalence from vertices to installed image words, the identity address map, and for each fixed original $x$ the observation $\operatorname{obs}_x(t,p)=r_{\rho^t u_x}(p)$. Instruction and observation compatibility must hold; the epoch is a run-semantics coordinate, not an instruction input. The generic halt carries no full target label: output correctness is supplied separately by $C_{Z_x}$ and the word's fixed Halt row. |

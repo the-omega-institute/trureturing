@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2b791b5033f664348e4b458ecab534d869ee16e965558f1a5507a7a98700cdf9
+  normalized_sha256: sha256:2b791b5033f664348e4b458ecab534d869ee16e965558f1a5507a7a98700cdf9
+cas_ref: sha256:2b791b5033f664348e4b458ecab534d869ee16e965558f1a5507a7a98700cdf9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Procedural atlas specification: enumerate bounded configurations, quotient them and store specified readings; it claims no enumeration result.'
+    previous_atom_id: 63a7cf3395ec7de7ecbdd107b6420a8fa5dffce6cdaec515330505cf63f62530
+    next_atom_id: 1d12c13895783dbbb25f8c3441b6097416875089eee2504bd5b8a02f5aaaf272

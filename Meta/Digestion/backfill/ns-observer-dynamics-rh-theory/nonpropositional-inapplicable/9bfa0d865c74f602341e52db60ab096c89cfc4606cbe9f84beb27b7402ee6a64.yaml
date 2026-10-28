@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9bfa0d865c74f602341e52db60ab096c89cfc4606cbe9f84beb27b7402ee6a64
+  normalized_sha256: sha256:9bfa0d865c74f602341e52db60ab096c89cfc4606cbe9f84beb27b7402ee6a64
+cas_ref: sha256:9bfa0d865c74f602341e52db60ab096c89cfc4606cbe9f84beb27b7402ee6a64
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 明确把零均值与Poincare不等式加入前提，未声称这些性质由此前条件推出。
+    previous_atom_id: b3a3f2b5ec7e3429198865830dd2ac9c9b91ccaa9fc739684b5da3b7ce58d7aa
+    next_atom_id: 2ebd15a61e1853deb2118dcfd290b1ee5a746ebd412a82c7acec144ed35b8523

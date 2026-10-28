@@ -39,7 +39,7 @@ internal static partial class SettleAtomCommand
             var paths = entries.SelectMany(static entry => entry.CoverageGids
                     .Select(static gid => Gid.TryParse(gid, out var parsed) ? parsed.Path.Value : null)
                     .Append(entry.Receipts.TailAuthorization?.Path)
-                    .Append(entry.SourcePath))
+                    )
                 .OfType<string>()
                 .Concat(entries.Any(static entry => !entry.Coverage.IsEmpty)
                     ? ["D5", "Reg", "Trureturing.lean", "Golden/Frozen/state"] : Array.Empty<string>())

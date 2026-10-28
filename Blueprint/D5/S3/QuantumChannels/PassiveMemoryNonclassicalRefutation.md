@@ -207,6 +207,7 @@ For a system of dimension 3 and a memory of dimension 2, take the memory state t
 - Truth anchor: `D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.implemented`
 - Truth anchor: `D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.result`
 - Truth anchor: `D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.stateMatrix`
+- Dependency: [D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction](../Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.md)
 - Dependency: [D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation](../Quantum/Entanglement/StructuredNegativityCoincidenceRefutation.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausRepresentation](../Quantum/Foundation/FiniteKrausRepresentation.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Quantum/Information/PartialTraceMutualInformation.md)

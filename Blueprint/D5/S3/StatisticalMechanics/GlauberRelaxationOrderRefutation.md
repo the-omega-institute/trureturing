@@ -66,7 +66,21 @@ $$(\forall (N: \mathbb{N}), (\forall (p: (\operatorname{Fin}\left(N\right) \to \
 
 D5.S3.TotalVariation.CycleSingleCutMinimax.Probability requires nonnegative entries with total mass one, as required for the states in Eq. (30). Every time slice is a probability vector. The initial vector is the Gibbs distribution at beta(0), and Eq. (30) updates p(t) using the transition matrix at beta(t + 1). Matrix.mulVec multiplies a matrix by a column vector: its i-th coordinate is the sum of the matrix entries in row i times the corresponding vector entries. The recursion holds at every natural time.
 
-**Definition 1.6 (Mean energy).**
+**Theorem 1.6 (Column-stochastic matrices preserve probability).**
+
+$$\forall (N: \mathbb{N}), (\forall (P: \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(N\right), \mathbb{R}\right)), (\forall (p: (\operatorname{Fin}\left(N\right) \to \mathbb{R})), ((\forall (i: \operatorname{Fin}\left(N\right)), (\forall (j: \operatorname{Fin}\left(N\right)), (0 \le P\left(i\right)\left(j\right)))) \Rightarrow ((\forall (j: \operatorname{Fin}\left(N\right)), (\sum_{(i: \operatorname{Fin}\left(N\right))} (P\left(i\right)\left(j\right)) = 1)) \Rightarrow ((\operatorname{D5.S3.TotalVariation.CycleSingleCutMinimax.Probability}\left(p\right)) \Rightarrow (\operatorname{D5.S3.TotalVariation.CycleSingleCutMinimax.Probability}\left(\operatorname{Matrix.mulVec}\left(P, p\right)\right)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.probability_mulVec` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Yutong Luo; Yi-Zheng Zhen; Xiangjing Liu; Daniel Ebler; Oscar Dahlsten (2023). *Bound on annealing performance from stochastic thermodynamics, with application to simulated annealing*. DOI: [10.1103/PhysRevE.108.054119](https://doi.org/10.1103/PhysRevE.108.054119). URL: <https://arxiv.org/abs/2311.10424v1>.
+
+*Commentary.*
+
+A real matrix with nonnegative entries and every column summing to one sends a probability vector to another probability vector under Matrix.mulVec.
+
+**Definition 1.7 (Mean energy).**
 
 $$\forall (N: \mathbb{N}), (\forall (E: (\operatorname{Fin}\left(N\right) \to \mathbb{R})), (\forall (p: (\operatorname{Fin}\left(N\right) \to \mathbb{R})), (\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.meanEnergy}\left(E, p\right) = \sum_{(i: \operatorname{Fin}\left(N\right))} ((E\left(i\right)) \cdot (p\left(i\right))))))$$
 
@@ -78,7 +92,7 @@ $$\forall (N: \mathbb{N}), (\forall (E: (\operatorname{Fin}\left(N\right) \to \m
 
 Mean energy is the sum of each energy level times its probability, as in Eqs. (44) and (46). The expression is defined for any real-valued vector p.
 
-**Definition 1.7 (The energy relaxation rate).**
+**Definition 1.8 (The energy relaxation rate).**
 
 $$\forall (N: \mathbb{N}), (\forall (E: (\operatorname{Fin}\left(N\right) \to \mathbb{R})), (\forall (beta: (\mathbb{N} \to \mathbb{R})), (\forall (p: (\mathbb{N} \to (\operatorname{Fin}\left(N\right) \to \mathbb{R}))), (\forall (k: \mathbb{N}), (\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.energyRate}\left(E, beta, p, k\right) = \frac{(\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.meanEnergy}\left(E, p\left((k) + (1)\right)\right)) - (\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.meanEnergy}\left(E, p\left(k\right)\right))}{(\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.meanEnergy}\left(E, \operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.gibbs}\left(E, beta\left((k) + (1)\right)\right)\right)) - (\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.meanEnergy}\left(E, p\left(k\right)\right))})))))$$
 
@@ -90,7 +104,7 @@ $$\forall (N: \mathbb{N}), (\forall (E: (\operatorname{Fin}\left(N\right) \to \m
 
 Equation (46) divides the actual energy change at step k by the change needed to reach the Gibbs energy at the next inverse temperature. The conjecture below assumes that this denominator is nonzero.
 
-**Definition 1.8 (The second characteristic root in descending order).**
+**Definition 1.9 (The second characteristic root in descending order).**
 
 $$\forall (N: \mathbb{N}), (\forall (P: \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(N\right), \mathbb{R}\right)), (\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.lambda2}\left(P\right) = \operatorname{List.getD}\left(\operatorname{Multiset.sort}\left(\operatorname{Polynomial.roots}\left(\operatorname{Matrix.charpoly}\left(P\right)\right), \lambda (x: \mathbb{R}) \mapsto (\lambda (y: \mathbb{R}) \mapsto (y \le x))\right), 1, (0: \mathbb{R})\right)))$$
 
@@ -102,7 +116,7 @@ $$\forall (N: \mathbb{N}), (\forall (P: \operatorname{Matrix}\left(\operatorname
 
 Matrix.charpoly P is the characteristic polynomial det(X I - P). Polynomial.roots is its multiset of real roots, with algebraic multiplicity. Multiset.sort lists these roots using the relation y <= x, hence in descending order. List.getD takes the entry at zero-based index 1 and returns the real number zero if that entry is absent. When the characteristic polynomial splits over the reals and N is at least two, this is the second largest eigenvalue counted with multiplicity, as in Eq. (50).
 
-**Definition 1.9 (The relaxation-order conjecture).**
+**Definition 1.10 (The relaxation-order conjecture).**
 
 $$(\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.claim}) \Leftrightarrow (\forall (N: \mathbb{N}), (\forall (n: \mathbb{N}), (\forall (A: (\operatorname{Fin}\left(N\right) \to \left(\operatorname{Fin}\left(N\right) \to \operatorname{Prop}\right))), ([\operatorname{DecidableRel}\left(A\right)] (\forall (E: (\operatorname{Fin}\left(N\right) \to \mathbb{R})), (\forall (beta: (\mathbb{N} \to \mathbb{R})), (\forall (p: (\mathbb{N} \to (\operatorname{Fin}\left(N\right) \to \mathbb{R}))), (\forall (k: \mathbb{N}), (\forall (m: \mathbb{R}), ((2 \le N) \Rightarrow ((\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.regularNeighborhood}\left(n, A\right)) \Rightarrow ((\forall (t: \mathbb{N}), (0 < beta\left(t\right))) \Rightarrow ((\operatorname{StrictMono}\left(beta\right)) \Rightarrow ((\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.isSARun}\left(n, A, E, beta, p\right)) \Rightarrow ((\operatorname{Polynomial.Splits}\left(\operatorname{Matrix.charpoly}\left(\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.glauber}\left(n, A, E, beta\left((k) + (1)\right)\right)\right)\right)) \Rightarrow ((0 < m) \Rightarrow ((m \le 1) \Rightarrow ((\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.meanEnergy}\left(E, p\left((k) + (1)\right)\right) \le \operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.meanEnergy}\left(E, p\left(k\right)\right)) \Rightarrow ((\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.meanEnergy}\left(E, \operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.gibbs}\left(E, beta\left(k\right)\right)\right) \le \operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.meanEnergy}\left(E, p\left(k\right)\right)) \Rightarrow ((\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.meanEnergy}\left(E, \operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.gibbs}\left(E, beta\left((k) + (1)\right)\right)\right) \le \operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.meanEnergy}\left(E, \operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.gibbs}\left(E, beta\left(k\right)\right)\right)) \Rightarrow ((\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.meanEnergy}\left(E, \operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.gibbs}\left(E, beta\left((k) + (1)\right)\right)\right) \ne \operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.meanEnergy}\left(E, p\left(k\right)\right)) \Rightarrow ((m \le (1) - (\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.lambda2}\left(\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.glauber}\left(n, A, E, beta\left((k) + (1)\right)\right)\right))) \Rightarrow (m \le \operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.energyRate}\left(E, beta, p, k\right))))))))))))))))))))))))$$
 
@@ -114,7 +128,7 @@ $$(\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.cla
 
 Equation (50) asserts that a relaxation time no greater than that of a partial swap process implies an energy relaxation rate at least as large. Here StrictMono beta means that beta(t) < beta(u) whenever t < u. Polynomial.Splits says that the displayed characteristic polynomial splits into linear factors over the reals. The hypotheses require at least two states, a regular neighbourhood, positive strictly increasing inverse temperatures, the entire annealing run, real splitting, and a partial swap rate 0 < m <= 1. They also require nonincreasing actual energy, actual energy at least the current Gibbs energy, nonincreasing Gibbs energy, and a nonzero energy denominator, in that order. Proposition 2 gives partial swap relaxation time 1/m. With m positive, the final spectral-gap hypothesis ensures that the Glauber relaxation time is finite and at most 1/m. The conclusion is the energy-rate comparison of Eq. (50).
 
-**Theorem 1.10 (A four-state cycle reverses the proposed order).**
+**Theorem 1.11 (A four-state cycle reverses the proposed order).**
 
 $$\neg (\operatorname{D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation.claim})$$
 
@@ -142,6 +156,7 @@ Take the cycle 0-1-2-3-0 with energies (0, 1, 1, 2) and two neighbours per state
 - Truth anchor: `D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.isSARun`
 - Truth anchor: `D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.lambda2`
 - Truth anchor: `D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.meanEnergy`
+- Truth anchor: `D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.probability_mulVec`
 - Truth anchor: `D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.regularNeighborhood`
 - Truth anchor: `D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.result`
 - Dependency: [D5/S3/TotalVariation/CycleSingleCutMinimax](../TotalVariation/CycleSingleCutMinimax.md)

@@ -160,8 +160,8 @@ private lemma affine_real_extrema {s : Set ℂ} (hs : s.Finite) (hne : s.Nonempt
     simp only [← Set.image_comp, Function.comp_def, Complex.add_re, Complex.mul_re,
       Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
   rw [hset]
-  exact ⟨((hs.image Complex.re).map_sInf_of_monotone hmono (hne.image Complex.re)).symm,
-    ((hs.image Complex.re).map_sSup_of_monotone hmono (hne.image Complex.re)).symm⟩
+  exact ⟨((hs.image Complex.re).map_sInf_of_monotone (hne.image Complex.re) hmono).symm,
+    ((hs.image Complex.re).map_sSup_of_monotone (hne.image Complex.re) hmono).symm⟩
 end
 section
 variable {d : ℕ}

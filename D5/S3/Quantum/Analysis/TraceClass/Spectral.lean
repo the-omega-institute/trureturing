@@ -7,6 +7,7 @@
    digest: Complete positive trace-class spectra retain the kernel and yield actual trace and vector sums with faithful finite or Nat bases. -/
 
 import D5.S3.Quantum.Analysis.TraceClass.Compact
+import D5.S3.Quantum.Analysis.CompactEigenbasis
 import Mathlib.Analysis.InnerProductSpace.Spectrum
 import Mathlib.Analysis.InnerProductSpace.l2Space
 import Mathlib.Analysis.InnerProductSpace.Subspace
@@ -15,7 +16,7 @@ import Mathlib.LinearAlgebra.Eigenspace.ContinuousLinearMap
 import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Restrict
 import Mathlib.Topology.Algebra.InfiniteSum.Group
 import Mathlib.Data.Set.Countable
-import Mathlib.Logic.Denumerable
+import Mathlib.Basic.Denumerable
 import Mathlib.Logic.Equiv.Set
 import Mathlib.Tactic
 
@@ -30,99 +31,11 @@ namespace TraceClassSpectral
 universe u
 variable {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
 
-/-- Assemble a complete real eigenbasis of the actual compact symmetric operator.
-Every complex eigenspace is a fiber, including eigenvalue zero. The resulting carrier
-is a Set H, so adopted trace-class interfaces can consume it directly. -/
 private theorem exists_setIndex_real_eigenbasis_of_compact_isSymmetric
     {T : H →L[ℂ] H} (hTc : IsCompactOperator T) (hTs : T.IsSymmetric) :
     ∃ (w : Set H) (b : HilbertBasis w ℂ H) (s : w → ℝ),
-      ∀ i, T (b i) = (s i : ℂ) • b i := by
-  classical
-  let K : ℂ → Submodule ℂ H := fun μ => Module.End.eigenspace T.toLinearMap μ
-  letI (μ : ℂ) : IsClosed (K μ : Set H) := by
-    dsimp only [K]
-    exact ContinuousLinearMap.isClosed_eigenspace T μ
-  letI (μ : ℂ) : CompleteSpace (K μ) := inferInstance
-  have hfiber (μ : ℂ) :
-      ∃ (w : Set (K μ)) (b : HilbertBasis w ℂ (K μ)), ⇑b = ((↑) : w → K μ) :=
-    exists_hilbertBasis ℂ (K μ)
-  choose w b hb using hfiber
-  let I : Type u := Σ μ : ℂ, w μ
-  let v : I → H := fun i => (b i.1 i.2 : H)
-  have hfamily : OrthogonalFamily ℂ (fun μ => K μ) (fun μ => (K μ).subtypeₗᵢ) := by
-    simpa only [K] using hTs.orthogonalFamily_eigenspaces
-  have hv : Orthonormal ℂ v :=
-    hfamily.orthonormal_sigma_orthonormal (fun μ => (b μ).orthonormal)
-
-  -- Full Hilbert-space completeness, not algebraic internality of a direct sum.
-  have horth : (Submodule.span ℂ (Set.range v))ᗮ = ⊥ := by
-    apply le_antisymm ?_ bot_le
-    intro x hx
-    have hfiberOrth (μ : ℂ) : x ∈ (K μ)ᗮ := by
-      let f : K μ →L[ℂ] ℂ := (innerSL ℂ x).comp (K μ).subtypeL
-      have hdense : Dense (Submodule.span ℂ (Set.range (b μ)) : Set (K μ)) :=
-        Submodule.dense_iff_topologicalClosure_eq_top.mpr (b μ).dense_span
-      have hfzero : f = 0 := ContinuousLinearMap.ext_on hdense (by
-        rintro _ ⟨i, rfl⟩
-        change ⟪x, (b μ i : H)⟫_ℂ = 0
-        exact (Submodule.mem_orthogonal' (Submodule.span ℂ (Set.range v)) x).mp hx
-          (b μ i : H) (Submodule.subset_span ⟨⟨μ, i⟩, rfl⟩))
-      apply (Submodule.mem_orthogonal' (K μ) x).mpr
-      intro y hy
-      have hfy := congrArg (fun g : K μ →L[ℂ] ℂ => g ⟨y, hy⟩) hfzero
-      change ⟪x, y⟫_ℂ = 0 at hfy
-      exact hfy
-    have hxall : x ∈ (⨆ μ, K μ)ᗮ := by
-      rw [← Submodule.iInf_orthogonal]
-      exact (Submodule.mem_iInf (fun μ => (K μ)ᗮ)).mpr hfiberOrth
-    have hspec : (⨆ μ, K μ)ᗮ = ⊥ := by
-      simpa only [K] using
-        ContinuousLinearMap.orthogonalComplement_iSup_eigenspaces_eq_bot hTc hTs
-    rw [hspec] at hxall
-    exact hxall
-
-  let B : HilbertBasis I ℂ H := HilbertBasis.mkOfOrthogonalEqBot hv horth
-  have hB (i : I) : B i = v i :=
-    congrFun (HilbertBasis.coe_mkOfOrthogonalEqBot hv horth) i
-  have heigen (i : I) : T (B i) = i.1 • B i := by
-    rw [hB]
-    exact Module.End.mem_eigenspace_iff.mp (b i.1 i.2).property
-  have hreal (i : I) : (i.1.re : ℂ) = i.1 := by
-    apply RCLike.conj_eq_iff_re.mp
-    apply hTs.conj_eigenvalue_eq_self
-    exact Module.End.hasEigenvalue_of_hasEigenvector
-      ⟨Module.End.mem_eigenspace_iff.mpr (heigen i), B.orthonormal.ne_zero i⟩
-  let sI : I → ℝ := fun i => i.1.re
-  have heigenReal (i : I) : T (B i) = (sI i : ℂ) • B i := by
-    change T (B i) = (i.1.re : ℂ) • B i
-    rw [hreal i]
-    exact heigen i
-
-  -- Actual range carrier bridge: no invented HilbertBasis.reindex interface.
-  let W : Set H := Set.range B
-  have hBinj : Function.Injective B := B.orthonormal.linearIndependent.injective
-  let e : I ≃ W := Equiv.ofInjective B hBinj
-  have hWortho : Orthonormal ℂ ((↑) : W → H) := B.orthonormal.toSubtypeRange
-  have hWrange : Set.range ((↑) : W → H) = Set.range B := by
-    ext x
-    constructor
-    · rintro ⟨i, rfl⟩
-      exact i.property
-    · intro hx
-      exact ⟨⟨x, hx⟩, rfl⟩
-  have hWspan : ⊤ ≤ (Submodule.span ℂ (Set.range ((↑) : W → H))).topologicalClosure := by
-    rw [hWrange]
-    exact B.dense_span.ge
-  let C : HilbertBasis W ℂ H := HilbertBasis.mk hWortho hWspan
-  have hC (i : W) : C i = (i : H) :=
-    congrFun (HilbertBasis.coe_mk hWortho hWspan) i
-  have heback (i : W) : B (e.symm i) = (i : H) :=
-    Equiv.apply_ofInjective_symm hBinj i
-  let sW : W → ℝ := fun i => sI (e.symm i)
-  refine ⟨W, C, sW, ?_⟩
-  intro i
-  have hCE : C i = B (e.symm i) := (hC i).trans (heback i).symm
-  simpa only [hCE, sW] using heigenReal (e.symm i)
+      ∀ i, T (b i) = (s i : ℂ) • b i :=
+  D5.S3.Quantum.Analysis.CompactEigenbasis.exists_setIndex_real_eigenbasis_rclike hTc hTs
 
 /-- Nonnegativity uses the genuine nonnegative quadratic form and a nonzero eigenvector;
 it never invokes the impossible strict-positive-at-zero API. -/
@@ -130,7 +43,7 @@ private theorem exists_setIndex_nonneg_eigenbasis_of_compact
     {T : H →L[ℂ] H} (hTc : IsCompactOperator T) (hTpos : 0 ≤ T) :
     ∃ (w : Set H) (b : HilbertBasis w ℂ H) (s : w → ℝ),
       (∀ i, 0 ≤ s i) ∧ (∀ i, T (b i) = (s i : ℂ) • b i) := by
-  have hTp : T.IsPositive := (ContinuousLinearMap.nonneg_iff_isPositive T).mp hTpos
+  have hTp : T.IsPositive := (ContinuousLinearMap.nonneg_iff_isPositive).mp hTpos
   obtain ⟨w, b, s, heigen⟩ :=
     exists_setIndex_real_eigenbasis_of_compact_isSymmetric hTc hTp.isSymmetric
   refine ⟨w, b, s, ?_, heigen⟩

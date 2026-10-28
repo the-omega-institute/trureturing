@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b52f2eef276137426f71b37cc474fd3da96a1394977c54bc40a332194d71f28e
+  normalized_sha256: sha256:b52f2eef276137426f71b37cc474fd3da96a1394977c54bc40a332194d71f28e
+cas_ref: sha256:b52f2eef276137426f71b37cc474fd3da96a1394977c54bc40a332194d71f28e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅说明 Oman 译本的页码范围、校勘限制及哲学桥接归属。
+    previous_atom_id: 9692c3acccf8f9b06a6fea06ae61b768ec0e59dd6e015653faa74e1e71bd237e
+    next_atom_id: 993beb2d8972f31940e43919e90f25feae8acc704b9a473edd7c90bb5452a212

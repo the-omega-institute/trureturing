@@ -1,0 +1,183 @@
+**Theorem 8.2 (An exact mixed pair in an entire three-world child).**
+There is an exact off-$24$ base $(p^*,v^*)$ with exactly three legal
+complete worlds. Its only unordered terminal-$M$ pair has one singular
+endpoint and one endpoint in $\mathcal O$; terminal $J$ is injective on
+the entire child. At this base $E$ contains only the singular world.
+For orientation,
+
+$$
+p^*=7.2823451540532278139\ldots,\qquad
+v^*=61.4934953917523253198\ldots,
+$$
+
+and the common terminal-$M$ response is
+$m^*=351.0576359569134177504\ldots$.
+The equations and rational boxes below, rather than these decimal
+approximations, define the base.
+
+**Proof.** With variables $(\theta,r,b)$, take the singular coefficients
+at $(\theta,1/8)$ and unmarked coefficients at $(r,b)$. Define
+
+$$
+\begin{aligned}
+G_1&=\Phi(\theta)/438272,\\
+G_2&=\bigl[A_{5s}(K_6-K_{6s})-A_{6s}K_5\bigr]\Lambda
+       +(A_{5s}A_6-A_{6s}A_5)\eta,\\
+G_3&=\bigl[A_{5s}(K_7-K_{7s})-A_{7s}K_5\bigr]\Lambda
+       +(A_{5s}A_7-A_{7s}A_5)\eta.
+\end{aligned}
+$$
+
+Let $c$ have denominator $10^{85}$ and the three numerators
+
+$$
+\begin{gathered}
+9024496817720562653778726512965428561862764994432208970726704110135602304768272095382,\\
+8985464128804579764286285320828605861673266756916615038908975788924147409061131296493,\\
+1301798836735591939924473343635928978897675040498100650126547073337701243975722117295.
+\end{gathered}
+$$
+
+On $\|z-c\|_\infty\le10^{-75}$ use the rational preconditioner
+
+$$
+C=10^{-40}\begin{pmatrix}
+-71105499762546593473552397909319503571166&0&0\\
+22360556060954053941609340724224372062533570&-59932155240287489180860203660942459253512&4031350216683226377423322750781880119095\\
+-29566949626909647713285426071704597647970119&80120803565884476282185112079016968485479&-5495580101268134824028947065907322164286
+\end{pmatrix}.
+$$
+
+Rational interval forward differentiation, rounding every elementary
+endpoint outward to a multiple of $10^{-125}$, gives
+
+$$
+\|I-CDG\|_\infty<10^{-34},\qquad
+\|CG(c)\|_\infty<10^{-77},\qquad \det C\ne0.
+$$
+
+The determinant lies in $(-0.453,-0.452)$. The self-map inequality is
+$10^{-77}+10^{-34}10^{-75}<10^{-75}$, so the contraction theorem gives
+one exact zero in the box. Throughout it
+
+$$
+0.9024<\theta<0.9025,\quad0.8985<r<0.8986,\quad
+0.1301<b<0.1303,\quad -0.028<\Lambda(r,b)<-0.027,
+$$
+
+and $A_{5s}\ne0$. All $j,n,T,U$ are positive.
+The identity $\Lambda(\theta,1/8)=\Phi(\theta)/(960j_sn_s)$ makes
+the first source singular without dividing by its $\Lambda$.
+At the zero put
+
+$$
+e_o=\eta/\Lambda,\quad p^*=24+K_5+A_5e_o,\quad
+e_s=(p^*-24)/A_{5s}.
+$$
+
+Both sources satisfy the full parent equation. The second and third
+$G$ equations, divided only by $A_{5s}\Lambda\ne0$, say that their
+$v$ and $m$ values agree exactly. O's parent converse constructs their
+whole gains from the four original samples; each is nonzero, has degree
+at most three, and uses the fixed drift $24+e_o$ or $24+e_s$ at every
+clock. The distinct $b$ intervals prove that the worlds differ.
+
+For full-child exhaustion, let the rational base centre $(p_c,v_c)$ have
+denominator $10^{80}$ and numerators
+
+$$
+\begin{gathered}
+728234515405322781392427523687852059030337027619922865813481904138164333636754569,\\
+6149349539175232531978929063777956431989050342640124712781972803899406961927385838.
+\end{gathered}
+$$
+
+The whole source box projects strictly inside
+$\mathcal B=\{|p-p_c|\le10^{-65},|v-v_c|\le10^{-65}\}$;
+the coordinate displacements are $<7.74\,10^{-71}$ and
+$<2.93\,10^{-70}$. In particular the rectangle is off $24$.
+Let $\bar R_0$ be the monic $R$ at its rational centre. The following
+Gaussian-rational seeds are exact terminating decimals:
+
+$$
+\begin{gathered}
+(-1.803568,0),(-1.654159,0),(-1.651605,0),(-1.454960,0),\\
+(-1.363921,0),(-1.309482,0),(-0.367939,0),(0.332638,0),\\
+(0.554906,0),(0.679556,-0.091281),(0.679556,0.091281),\\
+(0.995981,0),(1.056543,0),(1.124004,0),(1.371826,0),\\
+(1.385379,0),(1.807744,0),(3.613687,0).
+\end{gathered}
+$$
+
+From each seed perform eight exact Gaussian-rational Newton steps for
+$\bar R_0$, rounding each real and imaginary component after each step by
+$\operatorname{Round}_{60}(u)=10^{-60}\lfloor10^{60}u+1/2\rfloor$.
+Call the centres $c_i$ and put $\gamma_i=1/\bar R_0'(c_i)$.
+On each complex rectangle of component radius $10^{-48}$, uniformly
+for all bases in $\mathcal B$, rational interval evaluation gives
+
+$$
+|\Re(1-\gamma_i\bar R')|+|\Im(1-\gamma_i\bar R')|<10^{-30},
+$$
+
+$$
+\max(|\Re(\gamma_i\bar R(c_i))|,|\Im(\gamma_i\bar R(c_i))|)<10^{-55}.
+$$
+
+Here coefficients are evaluated in increasing $(x,p,v)$ monomial order,
+univariate evaluations use Horner's rule, and interval endpoints are
+rounded outward to $10^{-125}$. The first displayed bound is the
+operator norm for the real-imaginary sup norm. Thus each map
+$z\mapsto z-\gamma_i\bar R(z)$ contracts its rectangle strictly into
+itself. The rectangles are disjoint and the leading coefficient stays
+nonzero, so they exhaust all eighteen roots. Conjugation and uniqueness
+give seven negative roots, nine positive roots and a nonreal conjugate
+pair throughout $\mathcal B$.
+
+On every positive-root box, the quadratic coefficient $a_f$ of $f$,
+$\alpha,D,d,H_1,U,C_0$ and $d-24$ exclude zero, with
+$d=-\beta/\alpha$. Use these exact rational functions and the robust
+formulas of Definition 1.1 for the guard evaluations. The fixed Sylvester
+identity, $R=0$ and $a_f\ne0$ ensure a finite common $f,K$ root:
+the fixed degree-$(2,4)$ resultant is zero, while the full quadratic
+degree of $f$ excludes a common root at infinity. The pseudo-remainder fixes its
+unique drift. Since $d\ne0$, $f=0$ restores the two clock equations with
+$U=-H_0/d$, and $K=0$ restores the rank-one source equation. The robust
+$U$ expression agrees with this one. The filtering is
+
+| root near | strict guard outcome |
+|---|---|
+| $0.332638$ | $r>4.30$ |
+| $0.554906$ | $b<0$ |
+| $0.995981$ | $b>0,0<r<1$ |
+| $1.056543$ | $b<0$ |
+| $1.124004$ | $b<0$ |
+| $1.371826$ | $b>0,0<r<1$ |
+| $1.385379$ | $b>0,0<r<1$ |
+| $1.807744$ | $b<0$ |
+| $3.613687$ | $b<0$ |
+
+All three retained boxes satisfy every equality and strict guard of
+Definition 1.1. Theorem 4.1 ensures that no zero-drift, $F_0=0$ or
+singular world lies outside this enumeration. Thus every child over
+$\mathcal B$ has exactly three worlds, with terminal-$J$ intervals
+separated as in the following table. At the constructed base their
+identification and exceptional membership are
+
+| world | root near | $r$ | $b$ | $d$ | $f_{MJ}$ | $f_{MM}$ |
+|---|---|---|---|---|---|---|
+| $Q$ | $0.995981$ | $(0.0484,0.0486)$ | $(0.0464,0.0465)$ | $(35.52,35.54)$ | $(220.96,220.98)$ | $(340.21,340.22)$ |
+| $O_1$ | $1.371826$ | $(0.8985,0.8986)$ | $(0.1301,0.1303)$ | $(27.32,27.33)$ | $(312.87,312.88)$ | $m^*$ |
+| $S_1$ | $1.385379$ | $\theta$ | $1/8$ | $(27.20,27.21)$ | $(314.23,314.25)$ | $m^*$ |
+
+For $Q$, $\Lambda\in(0.127,0.129)$ and $F_0\in(1197,1198)$;
+for $O_1$, $\Lambda\in(-0.028,-0.027)$ and $F_0\in(2917,2919)$;
+for $S_1$, $\Lambda=0$ and $F_0\in(2994,2995)$.
+The two prescribed sources identify $O_1,S_1$; the remaining root
+and $d=-\beta/\alpha$, followed by $g=H/U$, define $Q$ exactly.
+Thus $E(p^*,v^*)=\{S_1\}$. The $M$ equality is asserted at this exact
+base. The uniform rectangle conclusions are the root count, source
+guards and $J$ separation; they do not assert the $M$ equality throughout
+the rectangle. The table proves both uniqueness of the unordered $M$
+pair and whole-child $J$ injectivity. ∎
+

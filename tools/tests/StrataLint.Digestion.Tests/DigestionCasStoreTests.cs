@@ -112,14 +112,14 @@ public sealed class DigestionCasStoreTests
             new DigestionLedgerSource(
                 "synthetic-source",
                 "docs/source.md",
-                AtomizerRegistry.NoAtomizerId,
+                AtomizerRegistry.GenericId,
                 [],
                 GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
                 [
                     new DigestionLedgerEntry(
                         "synthetic-source",
                         "docs/source.md",
-                        AtomizerRegistry.NoAtomizerId,
+                        AtomizerRegistry.GenericId,
                         "synthetic-atom",
                         new DigestionFingerprints(rawSha256 ?? casRef, casRef),
                         [],

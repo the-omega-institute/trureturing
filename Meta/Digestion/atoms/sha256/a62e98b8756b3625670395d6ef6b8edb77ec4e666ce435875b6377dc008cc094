@@ -1,0 +1,17 @@
+**Theorem 18.2 (the fresh-zero inverse for one original edit).** For every current source of §17 at an armed cut, and every enabled edit at a logical leaf whose terminal has unknown old raw label $j$, the assay of Definition 18.1 returns
+
+$$
+\operatorname{Read}_{\rm after}(k)=
+\begin{cases}0,&k=j,\\1,&1\le k\le n,\ k\ne j.
+\end{cases}
+\tag{NLBAII.5}
+$$
+
+Consequently the actual acted old label is acquired by a finite scan, independently of terminal order, topology, internal field values or a source-dependent selector. The rearming calls make every current terminal one again, with all field values still in $\{0,1\}$ if that was true before the edit.
+
+Proof. At $P_p$, the old terminal at $p$ becomes internal and keeps its value one. Its new marker at $pL$ is fresh zero and inherits exactly its label $j$. No other old terminal or binding changes. Thus every scanned terminal except $j$ remains one, while $j$ reads zero.
+
+At $S_p$, the old marker at $pL$ becomes an internal logical root and retains its value one. The fresh marker at $pLL$ is zero and inherits $j$. The fresh right terminal at $pR$ is also zero but carries the appended label $n+1$, which is not scanned. Every other old label still binds its previous one-valued terminal. This again proves (NLBAII.5). Hold and the absence of Ticks prevent any propagation of internal values into these readings.
+
+Add$(j,1)$ changes a zero terminal to one; after a split the additional Add does the same to the only other new terminal. All unchanged terminals were one already. Old values persist and fresh values were zero, so no cell has left $\{0,1\}$ when the incoming full field was binary. The scan and its zero test use only actual finite replies and the known old roster length. $\square$
+

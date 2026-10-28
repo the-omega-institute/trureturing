@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:640cdfbd0e688123dcae6e0efa794adee4151f96b3f2ca8ff67d3eff8a03040d
+  normalized_sha256: sha256:640cdfbd0e688123dcae6e0efa794adee4151f96b3f2ca8ff67d3eff8a03040d
+cas_ref: sha256:640cdfbd0e688123dcae6e0efa794adee4151f96b3f2ca8ff67d3eff8a03040d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 有限注意、语言和共同生活的后续研究边界，未承诺一般交流收敛。
+    previous_atom_id: 4147c11ff09bcff883187b55f92b3187cb3d3b73415dee70ade02e94de43ab8f
+    next_atom_id: 8bb49eeab51bfeada1b5e2bf8acb8de5ebfdd4108295a254b11f3824160f652a

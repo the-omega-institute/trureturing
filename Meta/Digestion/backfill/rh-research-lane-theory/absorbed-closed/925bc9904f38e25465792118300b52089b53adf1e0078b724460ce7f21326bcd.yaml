@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:925bc9904f38e25465792118300b52089b53adf1e0078b724460ce7f21326bcd
+  normalized_sha256: sha256:925bc9904f38e25465792118300b52089b53adf1e0078b724460ce7f21326bcd
+cas_ref: sha256:925bc9904f38e25465792118300b52089b53adf1e0078b724460ce7f21326bcd
+coverage_gids:
+  - gid: D5/S3/Weil/BurnolGram/FiniteReflectionCompatibleWeilInterpolation.even_weil_interpolation_on_finite_indices
+    target_statement_id: sha256:1378edb5a294a2bc57af8ef439e100a1a6ec26badf10efe2ad2eea4a4297bc4f
+  - gid: D5/S3/Weil/BurnolGram/FiniteReflectionCompatibleWeilInterpolation.exists_even_weil_finite_unit_peak
+    target_statement_id: sha256:5e39c5935d77c1c41668297bb9347cdccda451d7e452feea1bc5280a187a4c42
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 91dd737b831f3a9e3dd0fe6ea7ddbc2b694fb9ee35fb6afa4a96f68e545ecd6f
+    - ff097df1ca4af4ac671f7f13610786f5854f3a2637a626dd4043250808037141

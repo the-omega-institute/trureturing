@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1165731c3f4c4afb58034d3ef2be35fd935496cd69dcbf202d7066b3626eb3e0
+  normalized_sha256: sha256:1165731c3f4c4afb58034d3ef2be35fd935496cd69dcbf202d7066b3626eb3e0
+cas_ref: sha256:1165731c3f4c4afb58034d3ef2be35fd935496cd69dcbf202d7066b3626eb3e0
+coverage_gids:
+  - gid: D5/S3/Observer/BlockStructure/ExactCommonSpectrumFloor.exact_common_spectrum_floor
+    target_statement_id: sha256:42bd86ad2999078eee972d50265e3236ec2ead4ccc152b9cab339f273e8422b6
+receipts:
+  unresolved_subitems: []

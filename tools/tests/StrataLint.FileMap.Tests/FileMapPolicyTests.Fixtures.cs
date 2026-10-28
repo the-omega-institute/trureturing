@@ -252,7 +252,7 @@ public sealed partial class FileMapPolicyTests
 
     private static PolicyLoadOutcome.Accepted SyntheticPolicy(string? governanceDocument = null)
     {
-        var patterns = new[] { ".codex/skills/**", "Meta/Digestion/atomizers.toml",
+        var patterns = new[] { ".codex/skills/**", "Meta/Digestion/backfill/probe/source.toml",
             "README.md", "docs/develop/spec/*.md", "docs/develop/theory/**", "skills/**" }
             .Append(governanceDocument).OfType<string>().Order(StringComparer.Ordinal);
         var manifest = Parse(patterns.Select(path => Entry(path, "program", "none", "reader", "repository-policy")).ToArray());

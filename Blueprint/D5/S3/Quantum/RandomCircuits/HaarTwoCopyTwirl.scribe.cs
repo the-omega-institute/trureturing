@@ -22,6 +22,7 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
         "The normalized two-copy Haar average is Hermitian and idempotent. Its action on two-site identity/swap vectors has coefficient q/(q squared + 1).",
         H("The two-copy Haar moment and its local rule"),
         Blocks(
+            Node("permutation-unitary","A permutation as a unitary matrix",PermutationUnitary(),"For a finite type with decidable equality, permutationUnitary sends a permutation e to the unitary matrix whose underlying matrix is e.permMatrix over the complex numbers. The commutant argument uses these matrices to transport entries along permutations.","permutationUnitary",DescribeRole.Definition,AssessedProvenance.FromRepo()),
             Describe.Lean(DescribeId.Create("haar-hadamard"),DeclarationHandle.Create(Prefix+"hadamard"),H("A two-coordinate Hadamard matrix"),
                 StatementSource.FromAuthor(Disp(HadamardDefinition())),AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(DefinitionDsl.Text("The matrix equals the identity off the selected coordinates and has entries t, t, t, and minus t on their two-by-two block when the coordinates are distinct."))),DescribeRole.Definition),
@@ -42,6 +43,7 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
             Node("vectorize","The literal action on vectorized matrices",Vectorize(),"Column vectorization intertwines the four-replica literal action with conjugation by the two-copy unitary.","literalMoment_vectorize",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("globalidentity","The full identity vector is fixed",GenericIdentity(),"The full identity matrix is invariant under two-copy unitary conjugation.","haarAverage_identity_fixed",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("globalswap","The full swap vector is fixed",GenericSwap(),"Exchanging the two copies commutes with the tensor square of every unitary.","haarAverage_swap_fixed",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
+            Node("swapcommutes","Replica swap commutes with a tensor square",ReplicaSwapCommutes(),"The replica swap commutes with the tensor square of every complex matrix.","replicaSwap_commutes",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("imagespan","The image is in the identity/swap span",ImageSpan(),"Two distinct coordinates suffice for the commutant argument. Each averaged vector is a linear combination of the vectorized identity and replica swap.","haarAverage_image_span",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("fixedpairing","Pairing against a Hermitian fixed vector",FixedPairing(),"Moving a Hermitian matrix to the other side of the pairing preserves every fixed vector.","hermitian_fixed_pairing",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("replicaswap","Entries of the replica swap",ReplicaSwapEntry(),"The permutation matrix has entry one exactly when the row with its coordinates exchanged equals the column.","D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Commutant.replicaSwap_apply",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
@@ -50,6 +52,14 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
             Node("swap","The swap vector is fixed",Fixed(D(1)),"The replica swap commutes with the two-copy unitary action, so the Haar expectation fixes it.","local_swap_fixed",DescribeRole.Theorem),
             Node("mixed","The exact mixed local rule",Mixed(),"Quarter phases force the two-copy commutant to have only identity and swap support. Permutations make its coefficients uniform; a two-coordinate Hadamard forces the remaining diagonal coefficient to be their sum. Haar invariance puts the image in this span. Hermitian pairing with the two fixed vectors then yields q/(q squared + 1) for each mixed input.","gate_mixed_rule",DescribeRole.Theorem)
         ),[]));
+    private static Formula PermutationUnitary()
+    {
+        Formula n=F.Id("n"),e=F.Id("e");
+        Formula matrix=At(Seq(Operatorname,Grp(F.Id("Equiv"),Dot,F.Id("Perm"),Dot,F.Id("permMatrix"))),Complex(),e);
+        return Generic(All("e",QCall("Equiv","Perm",n),
+            And(Seq(Call("permutationUnitary",e),Colon,Sp,Unit(n)),
+                Eqn(Call("val",Call("permutationUnitary",e)),matrix))));
+    }
     private static Formula HadamardDefinition()
     {
         Formula n=F.Id("n"),a=F.Id("a"),b=F.Id("b"),t=F.Id("t");
@@ -108,6 +118,12 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
     {
         Formula n=F.Id("n"), v=QCall("Matrix","vec",ReplicaSwap(n));
         return Generic(Eqn(MulVec(Call("haarAverage",n),v),v));
+    }
+    private static Formula ReplicaSwapCommutes()
+    {
+        Formula n=F.Id("n"),u=F.Id("U");
+        Formula s=ReplicaSwap(n);
+        return Generic(All("U",MatrixOf(n),Eqn(Mul(s,Kron(u,u)),Mul(Kron(u,u),s))));
     }
     private static Formula ImageSpan()
     {

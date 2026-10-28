@@ -1,0 +1,5 @@
+source_id = "fib-native-finite-table-complexity-classification"
+path = "docs/develop/theory/FIB_NATIVE_FINITE_TABLE_COMPLEXITY_CLASSIFICATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

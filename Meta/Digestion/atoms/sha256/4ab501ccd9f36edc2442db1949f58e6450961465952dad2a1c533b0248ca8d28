@@ -1,0 +1,76 @@
+### 78.4 统一包络与严格凸包包含
+
+证明定理78.3.1。设全部给定合同、实际合法性和准入成立。命题63.2供应两条原返回及全部非退化整个承载片；定理31.4及64.4供应同基点任意返回拼接的联合来源。全部命名顶点与共同基点双向可达，故位于同一个原 SCC。这里不预设 gcd、顶点互异或外部不返程。
+
+定义仅用于估计的相对区间
+
+$$
+\mathcal J=[a_*,b_*],\qquad
+a_*=-\frac{M+qL}{1-q^2},\qquad b_*=\frac{L+qM}{1-q^2}.
+\tag{78.20}
+$$
+
+$a_*<0<b_*$，且 $a_*=-M-qb_*$、$b_*=L-qa_*$。因此 $\Phi_+(\mathcal J)$ 的左端为 $a_*$，$\Phi_-(\mathcal J)$ 的右端为 $b_*$；三种偏移 $-M,0,L$ 均在两个极端之间，所以三映射全部把 $\mathcal J$ 映入自身。其宽度为
+
+$$
+|\mathcal J|=\frac{L+M}{1-q}.
+$$
+
+由于奇 $p>1$ 即 $p\ge3$，$q\le g^3$。使用(78.15)而不添加比例假设，有
+
+$$
+q(L+2M)\le M(g^2+2g^3)<M,
+\qquad q|\mathcal J|<M<L.
+\tag{78.21}
+$$
+
+严格性可直接由 $0<g<1/4$ 得 $g^2+2g^3<3/32<1$；第二项等价于 $q(L+M)<(1-q)M$。$\mathcal J$ 只是标量包络，不是新来源、原片、图或可调用路径。
+
+$\Phi_\Pi$ 的斜率为 $-q^{m-1}$，两完整返回的斜率为 $q^m\in(0,1)$，各自都保留 $\mathcal J$。因而其固定点 $r_-<r_+$ 位于 $\mathcal J$。严格次序来自同一负斜率前缀作用于末块偏移 $L>-M$：$U$ 的平移量小于 $W$ 的平移量。令
+
+$$
+\widehat H_0=H_0-z=[r_-,r_+].
+$$
+
+这里的 $\widehat H_0$ 是 $H_0$ 的相对凸包，与实际坐标集合 $K_0$ 分开记号。两个正斜率返回分别固定左、右端点，并将这个区间映入自身，故
+
+$$
+\widehat H_0=\operatorname{conv}\bigl(\Phi_U(\widehat H_0)\cup\Phi_W(\widehat H_0)\bigr).
+$$
+
+用同一个可逆前缀 $\Phi_\Pi$ 运输，得共同链位置 $j_*=(m-1)p$ 的凸包
+
+$$
+\begin{aligned}
+K_*:=H_{j_*}-z
+&=\Phi_\Pi^{-1}(\widehat H_0)
+=\operatorname{conv}\bigl(\Phi_-(\widehat H_0)\cup\Phi_+(\widehat H_0)\bigr)\\
+&=[-M-qr_+,\ L-qr_-]\subseteq\mathcal J.
+\end{aligned}
+\tag{78.22}
+$$
+
+对于 $j=0,\ldots,m-2$，同源前缀关系给
+
+$$
+H_{jp}-z=\Phi_{C_j}(H_{(j+1)p}-z).
+$$
+
+从(78.22)向前递推，所有网格位置凸包都在 $\mathcal J$ 内。若 $C_i=A$，则
+
+$$
+H_{ip}-z\subseteq\Phi_A(\mathcal J)=[-qb_*,-qa_*].
+$$
+
+该小区间严格落在 $K_*$ 内，因为其左右间距分别满足
+
+$$
+\begin{aligned}
+(-qb_*)-(-M-qr_+)&=M-q(b_*-r_+)\ge M-q|\mathcal J|>0,\\
+(L-qr_-)-(-qa_*)&=L-q(r_--a_*)\ge L-q|\mathcal J|>0.
+\end{aligned}
+\tag{78.23}
+$$
+
+于是得到(78.17)的严格凸包包含。$p\ge3$ 也给 $j_*\le h-3$，包括 $p=3$ 的等号边界；$ip$ 与 $ip+1$ 都在共同链内。全部凸包非退化，亦可由原(63.5)、(63.7)的正宽度直接确认。
+

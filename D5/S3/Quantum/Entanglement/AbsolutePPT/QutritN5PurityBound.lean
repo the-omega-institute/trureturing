@@ -17,8 +17,6 @@ Direct frozen dependencies:
   statement_id: sha256:2373e14505428583f492752adc05d104ae8b1567265ff8182e03646de824c089
   D5/S3/Weil/ZetaLinear/RankTrace.trace_mul_nonneg_of_posSemidef
   statement_id: sha256:fefc8a0805a2b6dd7fcf96418c2412c83986c84d51c5d1731ed8d1cea0a88ca3
-Information-escape registration is paused under CLAUDE.md section 3.9.
-
 certificate_bound; proof_shape: bind-only; escape_witness: none; consumer: purity_bound
 -/
 
@@ -36,7 +34,7 @@ open QutritSpectralReduction
 
 private def Nq : Matrix (Fin 15) (Fin 15) ℚ := !![0, 3, 15, 28, 49, 79, 116, 153, 190, 276, 348, 183, 248, 70, 0; 3, 3, 181, 268, 348, 423, 495, 562, 626, 633, 579, 463, 340, 157, 4; 15, 181, 66, 295, 415, 523, 621, 711, 796, 772, 684, 527, 360, 165, 17; 28, 268, 295, 74, 312, 440, 559, 671, 777, 730, 632, 477, 317, 150, 21; 49, 348, 415, 312, 79, 342, 480, 614, 742, 684, 590, 444, 293, 147, 25; 79, 423, 523, 440, 342, 97, 396, 550, 699, 645, 565, 430, 289, 156, 32; 116, 495, 621, 559, 480, 396, 125, 480, 649, 610, 549, 430, 299, 174, 35; 153, 562, 711, 671, 614, 550, 480, 167, 597, 575, 536, 432, 313, 194, 41; 190, 626, 796, 777, 742, 699, 649, 597, 225, 542, 527, 440, 332, 219, 51; 276, 633, 772, 730, 684, 645, 610, 575, 542, 155, 430, 392, 324, 205, 47; 348, 579, 684, 632, 590, 565, 549, 536, 527, 430, 122, 321, 312, 219, 44; 183, 463, 527, 477, 444, 430, 430, 432, 440, 392, 321, 106, 222, 183, 41; 248, 340, 360, 317, 293, 289, 299, 313, 332, 324, 312, 222, 60, 174, 36; 70, 157, 165, 150, 147, 156, 174, 194, 219, 205, 219, 183, 174, 35, 35; 0, 4, 17, 21, 25, 32, 35, 41, 51, 47, 44, 41, 36, 35, 0]
 
-private theorem certificate_bound (l : Fin 15 → ℝ) (horder : Antitone l)
+theorem certificate_bound (l : Fin 15 → ℝ) (horder : Antitone l)
     (hnonneg : 0 ≤ l 14) (htrace : ∑ i, l i=1)
     (h1 : (QutritSpectralReduction.K1 (QutritSpectralReduction.boundaryValues 2 l)).PosSemidef) (h2 : (QutritSpectralReduction.K2 (QutritSpectralReduction.boundaryValues 2 l)).PosSemidef) :
     ∑ i, (l i)^2 ≤ (23 : ℝ)/(17)^2  := by

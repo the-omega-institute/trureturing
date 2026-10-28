@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a1eba6e77c3072114c6d12b0e47cf3237962f0ba47f92b2b78fb9c06138c50f1
+  normalized_sha256: sha256:a1eba6e77c3072114c6d12b0e47cf3237962f0ba47f92b2b78fb9c06138c50f1
+cas_ref: sha256:a1eba6e77c3072114c6d12b0e47cf3237962f0ba47f92b2b78fb9c06138c50f1
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.joint_faithfulness_tfae
+    target_statement_id: sha256:a20f50b5081e5521ee1aed73df16bddf829d17cbb008210ed887bb5599bf6b5e
+  - gid: D5/S3/ConceptDynamics/Transport/TargetRelativeBiinterpretation.target_relative_biinterpretation_transports_answerability
+    target_statement_id: sha256:76a8cadbe749c31b81c25e3ef6d31cc36783aa84e7963ecae2a27cef4ecb7edf
+receipts:
+  unresolved_subitems: []

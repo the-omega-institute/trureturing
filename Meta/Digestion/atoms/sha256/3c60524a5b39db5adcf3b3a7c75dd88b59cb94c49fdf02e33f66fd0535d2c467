@@ -1,0 +1,57 @@
+**Proposition 122.1 (full five-node matrix witness).** For the original
+source $u=\langle\alpha,\beta\rangle$, order old occurrences as
+$(\varepsilon,L,R)$ and born children as $(RL,RR)$. Put $G=I_3$,
+$q=0$ and $K=I_2$. The actual successor form and compatible state
+metric are
+
+$$
+L'=\begin{pmatrix}
+2&-1&-1&0&0\\-1&1&0&0&0\\-1&0&3&-1&-1\\
+0&0&-1&1&0\\0&0&-1&0&1
+\end{pmatrix},\qquad
+\mathsf M=\begin{pmatrix}
+1&0&0&0&0\\0&1&0&0&0\\0&0&3&-1&-1\\
+0&0&-1&1&0\\0&0&-1&0&1
+\end{pmatrix}.
+\tag{122.1}
+$$
+
+With $L$ and $P$ from Corollary 119.2, $T=(I_3,P^{\mathsf T})^{\mathsf T}$
+satisfies all three identities (120.2), and
+
+$$
+\mathcal A=\mathsf M^{-1}L'
+=\begin{pmatrix}
+2&-1&-1&0&0\\-1&1&0&0&0\\-1&0&1&0&0\\
+-1&0&0&1&0\\-1&0&0&0&1
+\end{pmatrix}.
+\tag{122.2}
+$$
+
+The generator $Q=-\mathcal A$ is conservative Markov, is reducible,
+and has the two forced transitions $RL\to\varepsilon$ and
+$RR\to\varepsilon$, each of rate one. Neither is an edge of the
+original successor tree. For an arbitrary fixed old diagonal norm
+$\operatorname{diag}(g_\varepsilon,g_L,g_R)$, all compatible Markov
+metrics on this same five-node source are exactly (121.2), with the
+single block $K_R$ of (121.1); no additional metrics are omitted.
+
+**Proof.** For $f\in\mathbb R^3$ and $y\in\mathbb R^2$,
+
+$$
+\begin{pmatrix}f\\y\end{pmatrix}^{\mathsf T}\mathsf M
+\begin{pmatrix}f\\y\end{pmatrix}
+=f_\varepsilon^2+f_L^2+f_R^2
+ +(y_{RL}-f_R)^2+(y_{RR}-f_R)^2.
+\tag{122.3}
+$$
+
+This proves positive definiteness and $T^{\mathsf T}\mathsf M T=I_3$.
+The actual four edges give $L'$ in (122.1), hence the form identity
+in (120.1). Direct multiplication gives $\mathsf M\mathcal A=L'$
+for the matrix (122.2) and $\mathcal A T=TL$. Its rows sum to zero
+and every off-diagonal entry is nonpositive. Its old states are
+closed, while both child rows jump directly to $\varepsilon$.
+The all-metric assertion for general $G$ is Theorem 121.2 on this
+specific original source. $\square$
+

@@ -1,0 +1,284 @@
+**定理 19.2（任意积的齐次定量界及全部等号情形）。** 在定义 19.1 下，若 $m(B)>0$，则
+
+$$
+d=7,\qquad j(B)\ge3m(B). \tag{19.3}
+$$
+
+等号 $j(B)=3m(B)$ 成立，当且仅当存在正交同构
+$U:\operatorname{Im}\mathbb H\oplus\mathbb H\to V$，使对全部 $u,v\in V$ 有
+
+$$
+B(u,v)=\sqrt{m(B)}\,U C(U^{-1}u,U^{-1}v). \tag{19.4}
+$$
+
+**证明。** 记 $m=m(B)>0$、$\sigma=\sqrt m$。完全交错性和内积非退化性给出
+
+$$
+B(u,v)=-B(v,u),\qquad B(u,v)\perp u,v,
+\qquad L_u^*=-L_u,\quad L_uv=B(u,v). \tag{19.5}
+$$
+
+先说明维数供应者的适用性。若 $a,b$ 线性无关，置
+$b_\perp=b-\langle b,a\rangle a/\|a\|^2$。则 $b_\perp\ne0$，且
+
+$$
+B(a,b)=B(a,b_\perp),\qquad
+\|B(a,b)\|\ge\sigma\|a\|\|b_\perp\|>0. \tag{19.6}
+$$
+
+Draisma–Shaw, *Some noteworthy alternating trilinear forms*,
+[arXiv:1102.4768v1](https://arxiv.org/html/1102.4768v1)，定义 (2) 与 Theorem 2，说明在实维数 $d>2$ 且 $d\notin\{3,7\}$ 时，每个交错三形式都有奇异射影直线；其确切含义是存在独立 $a,b$，使 $T(a,b,x)=0$ 对全部 $x$ 成立。在本题给定的同一非退化内积中，这等价于 $B(a,b)=0$，与 (19.6) 矛盾。因此 $d\ge4$ 的全部可行情形均有 $d=7$。这里只复用该经典维数排除结论；尚未对 $B$ 增加精确范数恒等式。
+
+（一）极小对导出的不变三平面。取达到 $m$ 的正交单位对 $u,v$，置 $c_*=B(u,v)$。对任意 $h\perp u,v$，以
+$u(t)=(u+th)/\sqrt{1+t^2\|h\|^2}$ 变分，极小性给
+
+$$
+0=\langle B(h,v),c_*\rangle
+ =\langle B(v,c_*),h\rangle.
+$$
+
+故 $B(v,c_*)\in\operatorname{span}\{u,v\}$。由交错性，其 $v$ 系数为零，而
+$\langle B(v,c_*),u\rangle=T(v,c_*,u)=\|c_*\|^2=m$。
+对 $v$ 作同样的受约束变分，则
+$\langle B(u,h),c_*\rangle=\langle B(c_*,u),h\rangle=0$，从而
+
+$$
+B(v,c_*)=mu,\qquad B(c_*,u)=mv. \tag{19.7}
+$$
+
+于是 $e_1=u,e_2=v,e_3=c_*/\sigma$ 是某个三平面 $E$ 的定向正交单位基，且
+
+$$
+B(a,b)=\sigma\,a\times_E b\quad(a,b\in E). \tag{19.8}
+$$
+
+令 $W=E^\perp$，则 $\dim W=4$。对 $a\in E,x\in W,b\in E$，有
+$\langle B(a,x),b\rangle=-\langle x,B(a,b)\rangle=0$。
+因此 $A_ax=B(a,x)$ 将 $W$ 保持在自身内，且为斜伴随算子。由 $a\perp x$ 和 $m$ 的定义，齐次性给出
+
+$$
+\|A_ax\|\ge\sigma\|a\|\|x\|\qquad(a\in E,\ x\in W). \tag{19.9}
+$$
+
+三平面及此一致下界均由极小性导出。
+
+（二）四维斜算子的两项分解。将 $W$ 等距识别为 $\mathbb H$。对虚四元数 $p,q$，记
+$L_px=px$、$R_qx=xq$。两类算子均斜伴随，各成三维线性子空间，且交为零：若 $L_p=R_q$，代入 $1$ 得 $p=q$，再代入任意 $x$ 得 $p$ 与所有四元数对易，故虚部 $p=0$。由于 $\dim\mathfrak{so}(4)=6$，存在唯一线性映射
+$P,Q:E\to\operatorname{Im}\mathbb H$，使
+
+$$
+A_a=L_{Pa}+R_{Qa}. \tag{19.10}
+$$
+
+当 $\|x\|=1$ 时，右乘 $x^{-1}$ 保范，故
+$\|px+xq\|=|p+xqx^{-1}|$。单位四元数共轭在给定半径的虚球面上传递作用：虚单位 $n,m$ 且 $m\ne-n$ 时，非零的 $r=1-mn$ 满足 $rn=mr$；若 $m=-n$，可取与 $n$ 正交的虚单位 $r$。将 $r$ 单位化即得所需共轭。因此三角界的两个端点都可取到，包括某一虚部为零的情形，且
+
+$$
+\min_{\|x\|=1}\|(L_p+R_q)x\|=\bigl||p|-|q|\bigr|,
+\qquad
+\|L_p+R_q\|_{\rm op}=|p|+|q|. \tag{19.11}
+$$
+
+(19.9) 给 $\bigl||Pa|-|Qa|\bigr|\ge\sigma\|a\|$。
+在 $E$ 的单位球面上连续函数 $|Pa|-|Qa|$ 不为零，球面连通使其符号恒定。若符号为负，以 $x\mapsto\bar x$ 改换 $W$ 的等距识别，则
+$\overline{p\bar x+\bar xq}=-qx-xp$，将两项交换并变号。因此可以且以下固定为
+
+$$
+|Pa|-|Qa|\ge\sigma\|a\|\qquad(a\in E). \tag{19.12}
+$$
+
+特别地，$P$ 的每个奇异值至少为 $\sigma$。
+
+（三）由非奇异性确定定向。在上述定向基中，记 $e^r$ 为 $E$ 的对偶基，$e^{123}=e^1\wedge e^2\wedge e^3$，令
+$\omega_r(x,y)=\langle A_{e_r}x,y\rangle$。由于 $T(E,E,W)=0$，完整的三形式恰有分解
+
+$$
+T=\sigma e^{123}+\sum_{r=1}^3e^r\wedge\omega_r+\rho,
+\qquad \rho\in\Lambda^3W^*. \tag{19.13}
+$$
+
+这里 $\rho$ 任意，并未删除 $W$ 上的三次项。设 $(\theta^0,\theta^1,\theta^2,\theta^3)$ 为 $(1,i,j,k)$ 的对偶基，固定
+
+$$
+\operatorname{vol}=e^{123}\wedge\theta^0\wedge\theta^1\wedge\theta^2\wedge\theta^3,
+\qquad
+\chi(z)\operatorname{vol}=\frac16(\iota_zT)\wedge(\iota_zT)\wedge T. \tag{19.14}
+$$
+
+对任意 $z\ne0$，$\omega=\iota_zT$ 在 $z^\perp$ 上非退化。事实上，若 $y\in z^\perp$ 且 $\omega(y,x)=0$ 对全部 $x\in z^\perp$ 成立，则 $B(z,y)$ 与 $z^\perp$ 正交，又由 (19.5) 与 $z$ 正交，所以 $B(z,y)=0$；(19.6) 或其正交齐次界迫使 $y=0$。令
+$\eta=\langle z,\cdot\rangle/\|z\|^2$，则 $\eta(z)=1$，并可写
+$T=\eta\wedge\omega+\rho_z$，其中 $\iota_z\rho_z=0$。在六维 $z^\perp$ 上，非退化性给 $\omega^3\ne0$，而水平七形式为零，故
+
+$$
+(\iota_zT)^2\wedge T=\eta\wedge\omega^3\ne0. \tag{19.15}
+$$
+
+上标表示楔幂。于是二次函数 $\chi$ 在连通的 $V\setminus\{0\}$ 上处处不为零且同号。
+
+为确定该符号及 $P$ 的定向，写出 $L_i,L_j,L_k$ 对应的二形式：
+
+$$
+\theta^0\wedge\theta^1+\theta^2\wedge\theta^3,\qquad
+\theta^0\wedge\theta^2-\theta^1\wedge\theta^3,\qquad
+\theta^0\wedge\theta^3+\theta^1\wedge\theta^2.
+$$
+
+$R_i,R_j,R_k$ 的二形式分别将每式的第二项变号。这六个式子直接给出 $L_p+R_q$ 对应的二形式 $\omega_{p,q}$ 满足
+
+$$
+\omega_{p,q}^2=2(|p|^2-|q|^2)
+\theta^0\wedge\theta^1\wedge\theta^2\wedge\theta^3. \tag{19.16}
+$$
+
+由 $\iota_{e_1}T=\sigma e^2\wedge e^3+\omega_1$，(19.13) 的展开中仅留下
+$3\sigma e^{123}\wedge\omega_1^2$，所以
+
+$$
+\chi(e_1)=\sigma(|Pe_1|^2-|Qe_1|^2)>0. \tag{19.17}
+$$
+
+再在 $1\in W$ 处求值。将虚四元数向量 $Pe_r+Qe_r$ 的欧氏对偶记为 $d_r$。在 $1^\perp=E\oplus\operatorname{Im}\mathbb H$ 上有
+
+$$
+\iota_1T=-\sum_{r=1}^3e^r\wedge d_r+\iota_1\rho,
+\qquad
+(\iota_1T)^3=6\det(P+Q)e^{123}\wedge\theta^1\wedge\theta^2\wedge\theta^3. \tag{19.18}
+$$
+
+含 $\iota_1\rho$ 的项至少含四个 $\operatorname{Im}\mathbb H$ 方向，故全为零；其余三项的重排符号给上式的正号。用 $\eta=\theta^0$ 代入 (19.15)，再把 $\theta^0$ 移过三个 $E$ 协向量，得到
+
+$$
+\chi(1)=-\det(P+Q)>0. \tag{19.19}
+$$
+
+因此 $\det(P+Q)<0$。对 $0\le t\le1$，(19.12) 给
+$|(P+tQ)a|\ge|Pa|-t|Qa|\ge\sigma\|a\|$，故这些映射全部可逆，行列式符号不变，最终得
+
+$$
+\det P<0. \tag{19.20}
+$$
+
+这个符号来自给定度量下的非奇异性；(19.14) 没有以三形式诱导的新度量替换原内积。
+
+
+（四）Jacobi 的定量下界。由 (19.20)，可以选 $E$ 的定向正交奇异基 $a_1,a_2,a_3$，以及 $\operatorname{Im}\mathbb H$ 的定向正交基 $f_1,f_2,f_3$，使
+
+$$
+Pa_1=\lambda_1f_1,\quad Pa_2=\lambda_2f_2,\quad
+Pa_3=-\lambda_3f_3,\qquad
+\lambda_1,\lambda_2,\lambda_3\ge\sigma,\quad f_1\times f_2=f_3.
+$$
+
+左乘与右乘彼此对易，且四元数结合律给
+
+$$
+[L_p,L_r]=2L_{p\times r},\qquad
+[R_q,R_t]=-2R_{q\times t}. \tag{19.21}
+$$
+
+右乘的负号来自 $R_qR_tx=x(tq)$。由于 $B(a_1,a_2)=\sigma a_3$，对 $x\in W$，Jacobi 三项按原次序相加恰为
+
+$$
+\begin{aligned}
+\mathcal J_B(a_1,a_2,x)
+&=([A_{a_1},A_{a_2}]-\sigma A_{a_3})x\\
+&=\bigl(L_{(2\lambda_1\lambda_2+\sigma\lambda_3)f_3}
+ +R_{-2(Qa_1\times Qa_2)-\sigma Qa_3}\bigr)x.
+\end{aligned} \tag{19.22}
+$$
+
+对单位 $x\in W$ 取最大值，(19.11) 给出左右两项的算子范数之和，因而
+
+$$
+j(B)\ge2\lambda_1\lambda_2+\sigma\lambda_3
+\ge3\sigma^2=3m. \tag{19.23}
+$$
+
+所有基变换均为原欧氏内积的等距变换。
+
+（五）等号迫使全部剩余结构消失。若 $j(B)=3m$，(19.23) 和 $\lambda_r\ge\sigma$ 迫使
+$\lambda_1=\lambda_2=\lambda_3=\sigma$。所以 $P/\sigma$ 为反定向等距映射，(19.12) 随即给 $Q=0$。以定向等距映射 $-P/\sigma$ 将 $E$ 识别为 $\operatorname{Im}\mathbb H$，便有
+
+$$
+B(p,q)=\sigma(p\times q),\qquad
+B(p,x)=-\sigma px\quad(p,q\in E,\ x\in W). \tag{19.24}
+$$
+
+于是任意单位 $p\in E,x\in W$ 都是 $\|B(p,x)\|^2=m$ 的极小正交对。取任意 $y\in W\cap x^\perp$，以
+$p(t)=(p+ty)/\sqrt{1+t^2\|y\|^2}$ 变分，得到
+
+$$
+0=\langle B(y,x),B(p,x)\rangle
+=-\sigma\rho(y,x,px). \tag{19.25}
+$$
+
+对固定单位 $x$，映射 $p\mapsto px$ 将 $\operatorname{Im}\mathbb H$ 等距映到 $W\cap x^\perp$，故
+$\rho(y,x,z)=0$ 对全部 $y,z\perp x$ 成立。任意 $y,z$ 可减去各自沿 $x$ 的分量，交错性使值不变，遂得 $\rho=0$。这也覆盖任意非零 $x$ 的齐次倍数，$x=0$ 时当然为零。
+
+剩下的 $B(x,y)$ 属于 $E$，由交错性及 (19.24)，对任意虚四元数 $p$ 有
+
+$$
+\langle B(x,y),p\rangle
+=\langle B(p,x),y\rangle
+=-\sigma\operatorname{Re}(px\bar y)
+=\sigma\langle p,\operatorname{Im}(x\bar y)\rangle.
+$$
+
+因此 $B(x,y)=\sigma\operatorname{Im}(x\bar y)$，连同 (19.24) 即为 (19.4)。等号分类的必要性由任意 $B$ 推出。
+
+（六）模型恒等式及等号的反向。式 (19.2) 是经典虚八元数半交换子的一个正交表示；半交换子归一化参见 Baez, *The Octonions*, [§4.1](https://math.ucr.edu/home/baez/octonions/node14.html)。以下在本式的四元数约定中直接核对所需恒等式。$C$ 的三形式在 $E^3$ 上为普通体积，在 $E^2W$ 和 $W^3$ 上为零；混合分量满足
+
+$$
+\langle C(p,x),y\rangle=-\operatorname{Re}(px\bar y)
+=\langle p,\operatorname{Im}(x\bar y)\rangle
+=\langle p,C(x,y)\rangle.
+$$
+
+因 $\operatorname{Im}(y\bar x)=-\operatorname{Im}(x\bar y)$，这些分量精确完全交错。
+
+置 $t=x\bar y$、$r=\operatorname{Re}t$、$a_0=p\mathbin{\cdot}q$。由
+$pq=-a_0+p\times q$，有
+
+$$
+2\langle p\times q,\operatorname{Im}t\rangle
+=-2\operatorname{Re}(pqt)-2a_0r.
+$$
+
+第二分量的平方为
+
+$$
+|-py+qx|^2=|p|^2|y|^2+|q|^2|x|^2
++2\operatorname{Re}(py\bar xq).
+$$
+
+实部的循环不变性和共轭不变性给
+$\operatorname{Re}(py\bar xq)=\operatorname{Re}(qx\bar yp)=\operatorname{Re}(pqt)$。
+这两个混合项相加恰为 $-2a_0r$。又
+$|p\times q|^2=|p|^2|q|^2-a_0^2$，
+$|\operatorname{Im}t|^2=|x|^2|y|^2-r^2$，所以对全部 $U=(p,x),V=(q,y)$ 有
+
+$$
+\begin{aligned}
+\|C(U,V)\|^2
+&=(|p|^2+|x|^2)(|q|^2+|y|^2)-(a_0+r)^2\\
+&=\|U\|^2\|V\|^2-\langle U,V\rangle^2=A(U,V).
+\end{aligned} \tag{19.26}
+$$
+
+因此 $m(C)=1$，且 $\|C(U,V)\|\le\|U\|\|V\|$。每个嵌套 Jacobi 项的范数至多为三个输入范数之积，故 $j(C)\le3$。对明确的单位三元组
+
+$$
+U=(i,0),\qquad V=(j,0),\qquad X=(0,1),
+$$
+
+内层积依次为 $C(V,X)=(0,-j)$、$C(X,U)=(0,i)$、$C(U,V)=(k,0)$，外层三项分别为
+
+$$
+C(U,C(V,X))=(0,k),\quad
+C(V,C(X,U))=(0,k),\quad
+C(X,C(U,V))=(0,k). \tag{19.27}
+$$
+
+故 $j(C)=3$。正交运输不改两个极值，正标量 $\sigma$ 则给
+$m(\sigma C)=\sigma^2$、$\mathcal J_{\sigma C}=\sigma^2\mathcal J_C$、$j(\sigma C)=3\sigma^2$，证明等号分类的充分性。证毕。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:810516b7019b5f7690984137624257f8e888612b947bc62e193c8a77f10c0b40
+  normalized_sha256: sha256:810516b7019b5f7690984137624257f8e888612b947bc62e193c8a77f10c0b40
+cas_ref: sha256:810516b7019b5f7690984137624257f8e888612b947bc62e193c8a77f10c0b40
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This decomposed fragment lists an analytic proof obligation (convergence, local uniformity, nonvanishing or holomorphy); it does not assert that the property has been proved for a factor family.
+    previous_atom_id: 8e84ffbefcc67c6398bf4a8d0f4db91df16e68b2600ba70dadc411c68f5e03cf
+    next_atom_id: bb78fe0a96abd02545211796a8bd0b480a6563ade23a93913fb492e61ea9c252

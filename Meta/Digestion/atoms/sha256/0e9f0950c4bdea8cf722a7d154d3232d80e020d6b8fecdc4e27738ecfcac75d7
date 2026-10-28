@@ -1,0 +1,42 @@
+**Theorem 78.3 (rational symmetric endpoint compatibility).** For every
+source and port of Definition 77.1,
+
+$$
+\begin{aligned}
+&\text{there is a rational symmetric endpoint competitor satisfying (77.2)}\\
+&\hspace{15mm}\Longleftrightarrow\quad
+  \Gamma\text{ is a path and }o\text{ is an endpoint}.
+\end{aligned}
+\tag{78.5}
+$$
+
+If the condition fails, the finite moments $m_0,\ldots,m_{2r}$ already
+exclude every such competitor, of every order. If the condition holds,
+these moments uniquely specify its order $N=r$ and matrix
+
+$$
+J_N=aI_N+cA_{P_N}.
+\tag{78.6}
+$$
+
+**Proof.** In the negative case $h_r=b\in\{2,3\}$. Lemma 78.2 excludes a
+shorter or terminating competitor, and otherwise forces
+$(\gamma_{r-1}/c)^2=b$. No positive rational has square two or three.
+Indeed write it as $u/v$ in relatively prime positive integers. From
+$u^2=bv^2$, the prime $b$ divides $u$, and substituting $u=bw$ makes $b$
+divide $v$, a contradiction. Hence even this finite prefix cannot match
+a rational symmetric positive-link competitor.
+
+In the positive case enumerate the actual path vertices by their distance
+$0,\ldots,N-1$ from $o$. The associated permutation $U$ satisfies
+
+$$
+Ue_o=e_0,\qquad UT=J_NU.
+\tag{78.7}
+$$
+
+It gives (77.2) and rational positive links $c$. Lemma 78.2 with $h_N=0$
+forces every matching competitor to have order $N$, every diagonal $a$
+and every link $c$, proving the finite-prefix uniqueness assertion.
+The singleton uses the same argument, with no adjacent links. $\square$
+

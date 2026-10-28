@@ -6,7 +6,31 @@ The identity plus twice a normalized bipartite rank-one projector is a finite su
 
 Write R_x = xx* and let the separable cone consist of finite sums of Kronecker products of positive semidefinite matrices. For every complex vector on Fin m times Fin n with sum of squared coordinate norms one, the matrix I + 2 R_x belongs to this cone. The conclusion includes all finite dimensions; the normalization cannot hold when either index set is empty.
 
-**Theorem 1.1 (A normalized rank-one ray).**
+**Lemma 1.1 (The squared coordinate norm).**
+
+$$\forall (J:Type), [Fintype\left(J\right)], \forall (x:J \to \mathbb{C}), dotProduct\left(star\left(x\right), x\right) = ((\sum_{j: J} \left\lVert x\left(j\right) \right\rVert^{2}: \mathbb{R}): \mathbb{C})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.dot_star_self` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite index type and every complex vector, the dot product of its conjugate with itself is the complex coercion of the sum of squared coordinate norms.
+
+**Lemma 1.2 (The squared Cauchy-Schwarz bound).**
+
+$$\forall (J:Type), [Fintype\left(J\right)], \forall (d:J \to \mathbb{C}), \forall (x:J \to \mathbb{C}), \left\lVert dotProduct\left(star\left(d\right), x\right) \right\rVert^{2} \le (\sum_{j: J} \left\lVert d\left(j\right) \right\rVert^{2}) \cdot (\sum_{j: J} \left\lVert x\left(j\right) \right\rVert^{2})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.cs_sq` (`✓ std3`). ∎
+
+*Citation.* Sheldon Axler (2024). *Linear Algebra Done Right, fourth edition*. URL: <https://linear.axler.net/>.
+
+*Commentary.*
+
+For two complex vectors on a finite index type, the squared modulus of their conjugate dot product is bounded by the product of their squared coordinate norms.
+
+**Theorem 1.3 (A normalized rank-one ray).**
 
 $$\forall (m:\mathbb{N}), \forall (n:\mathbb{N}), \forall (psi:(Fin\left(m\right)\times Fin\left(n\right))\to \mathbb{C}), (\sum_{ij\in Fin\left(m\right)\times Fin\left(n\right)} \left\lVert psi\left(ij\right) \right\rVert^{2}=1)\Rightarrow separableCone\left(I+2\cdot R\left(psi\right)\right)$$
 
@@ -28,6 +52,8 @@ Every averaged vector is a product vector. The proof uses finite moments and com
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.cs_sq`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.dot_star_self`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.separableCone_one_add_two_rankOne`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRaysAverages](LowRankRaysAverages.md)
 - Dependency: [D5/S3/Resource/SeparableConeResidualWitness](../../../Resource/SeparableConeResidualWitness.md)

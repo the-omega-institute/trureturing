@@ -4,17 +4,18 @@ authors: Arash Atashpendar, David Mestel, A. W. Roscoe, and Peter Y. A. Ryan
 year: 2018
 title: A Proof of Entropy Minimization for Outputs in Deletion Channels via Hidden Word Statistics
 doi: null
-url: https://arxiv.org/abs/1807.11609
-claim: "Section V asks whether positional autocorrelation determines the entropy ordering of finite binary deletion-channel outputs; Section IV-E.3 and Table I specify the proposed order."
+url: https://arxiv.org/abs/1807.11609v1
+claim: "Conjecture IV.4 proposes alternating words as autocorrelation minimizers; Section V asks whether positional autocorrelation determines finite deletion-channel entropy ordering."
 strata_touched:
   - D5/S3/Entropy/DeletionChannelEntropyOrdering
+  - D5/S3/Combinatorics/Hamming/AtashpendarKappaAlternatingRefutation
 license: citation-only
 triage: anchor
 ---
 
 ## Verified locator
 
-Source: https://arxiv.org/abs/1807.11609
+Source: https://arxiv.org/abs/1807.11609v1
 
 The statements below are from arXiv:1807.11609v1, printed pages 3, 4, 7 and 10.
 
@@ -46,3 +47,17 @@ Equation (1), page 4, defines μn,m = C(n,m)·2^{n−m}. Equation (3), page 4, d
 Binary strings are represented by functions Fin k → Bool, false for 0 and true for 1. List.ofFn reads their positions in increasing order. List.sublists keeps one entry per index subset, including repeated equal subwords. Filtering for x and taking the length therefore counts masks, rather than distinct subword values. Lean indices start at zero: the two binomial factors become C(r+s,r) and C(2m−2−r−s,m−1−r). Incompatible words have zero mass and contribute zero entropy. Dividing the finite natural-logarithm Shannon sum by Real.log 2 gives bits.
 
 The finite ordering question is separate from the paper's asymptotic entropy minimization theorem as n tends to infinity with m fixed.
+
+## Alternating autocorrelation minimization
+
+Conjecture IV.4, arXiv:1807.11609v1, printed page 7, states:
+
+> The alternating subsequence of length m, i.e., x = 1010..., minimizes the autocorrelation coefficient κ².
+
+Equation (11) on the same page is the double sum displayed above. The conjecture
+means that for every positive length m and every binary word x of length m,
+κ²(1010...) ≤ κ²(x). The alternating word has symbol 1 at even zero-based
+positions. In the refutation, the claim contains these sums and the alternating
+word explicitly; its proof uses the existing `DeletionChannelEntropyOrdering.kappa2`.
+The word (011001)^58 of length 348 has strictly smaller coefficient. The exact
+comparison concerns this coefficient and does not assert an entropy ordering.

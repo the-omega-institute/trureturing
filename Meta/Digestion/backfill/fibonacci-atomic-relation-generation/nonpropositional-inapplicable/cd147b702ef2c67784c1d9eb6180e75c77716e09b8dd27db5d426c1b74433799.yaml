@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cd147b702ef2c67784c1d9eb6180e75c77716e09b8dd27db5d426c1b74433799
+  normalized_sha256: sha256:cd147b702ef2c67784c1d9eb6180e75c77716e09b8dd27db5d426c1b74433799
+cas_ref: sha256:cd147b702ef2c67784c1d9eb6180e75c77716e09b8dd27db5d426c1b74433799
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 严格限定全息角色的物理含义，列明未证桥梁与本节验证状态，没有将任何物理映射或规律断言为已证。
+    previous_atom_id: b46fc1306e7577118b1e6fd8989939fa28acfd2485b0947ffc04a2f9c2109982
+    next_atom_id: 8fc4cb32d4deea31e3629f0a944ea570347acd0e7c0121943fe7207739c00c2f

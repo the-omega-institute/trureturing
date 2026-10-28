@@ -6,6 +6,8 @@
    utility: none
    digest: First differences and a geometric solution modulo three prove Hanna A396102. -/
 
+/- Escape audit unfinished for subst_coeff: https://github.com/the-omega-institute/trureturing/issues/19849 -/
+
 import D5.S1.Recurrence.Invariants.CompositionalIterateCongruence
 
 open PowerSeries
@@ -57,7 +59,7 @@ private theorem agree_subst {n : ℕ} {f g u v : PowerSeries R}
   · rw [pow_low hu (by omega : k < e), pow_low hv (by omega : k < e),
       smul_zero, smul_zero]
 
-private theorem subst_coeff (f u : PowerSeries R) (hu : constantCoeff u = 0) (n : ℕ) :
+theorem subst_coeff (f u : PowerSeries R) (hu : constantCoeff u = 0) (n : ℕ) :
     coeff n (f.subst u) = ∑ k ∈ Finset.range (n + 1), coeff k f * coeff n (u ^ k) := by
   rw [coeff_subst' (.of_constantCoeff_zero hu)]
   simp only [smul_eq_mul]
@@ -314,9 +316,5 @@ theorem hanna_conjecture (n : ℕ) (hn : 1 ≤ n) : a n % 3 = 1 := by
     simpa [coeff_map, generatingSeries, hb, hom] using congrArg (coeff n) he
   exact (ZMod.intCast_eq_intCast_iff' (a n) 1 3).mp hc
 
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms mod_three_fixed
-#print axioms hanna_conjecture
 
 end D5.S1.Recurrence.Invariants.TripleIterateShiftModThree

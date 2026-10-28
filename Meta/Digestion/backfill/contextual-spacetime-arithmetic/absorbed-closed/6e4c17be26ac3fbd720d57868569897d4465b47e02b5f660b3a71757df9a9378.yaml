@@ -1,0 +1,36 @@
+fingerprints:
+  raw_sha256: sha256:6e4c17be26ac3fbd720d57868569897d4465b47e02b5f660b3a71757df9a9378
+  normalized_sha256: sha256:6e4c17be26ac3fbd720d57868569897d4465b47e02b5f660b3a71757df9a9378
+cas_ref: sha256:6e4c17be26ac3fbd720d57868569897d4465b47e02b5f660b3a71757df9a9378
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.mask
+    target_statement_id: sha256:23ae1a4a25606b03f91a329aa499920f9fa89a3ce1448ccf188ad0366d0a04b4
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.normalize_word
+    target_statement_id: sha256:e2ec890e80760e5e2b16c7650e2de36b225513114841448f6f34bc7b540b2709
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.reify_temporal_free
+    target_statement_id: sha256:06b2136b6ed13330cea712b45dc967c0d9d615c3399fa18a640ede8558430726
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.saturated_runSteps
+    target_statement_id: sha256:d6438d74c10c41a37408729cc877daef648b334ff7f1f7307fe295ede1255467
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.starAttributes
+    target_statement_id: sha256:5e4a7716081b6526cc098e7c56f1c8521f8f2b05e727606fc42fe86de37675cd
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.starCode
+    target_statement_id: sha256:b33462f6dbf9501f0cbc16593464ff6174d76bc54a797aef75b1b242aaf6eac4
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.starExceptional
+    target_statement_id: sha256:eeb5bd5f4482df5499b1fc7972a71846ba871db74ab45b5128d51fb0de883eb3
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.starInput
+    target_statement_id: sha256:bcd16876bb56cfae87664babbfbd65d3b8362e4cb2aa39bf4dc4824e3a3352ab
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.starPoint
+    target_statement_id: sha256:042f510ec6d196365c3cfb95441f3c369a9e661bbce466ffd275eb3e6bed6704
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.star_attributes_eq
+    target_statement_id: sha256:477f60fd2a426effe1c12b41391fbf6a1eab67055e3b64652c63216d96866713
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.star_current_variant
+    target_statement_id: sha256:f64d1a106a3edf2543056773bc55d31f53bdc8297cad73ae158df7c04e865307
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.star_hit
+    target_statement_id: sha256:bb882f23692d8f72216fea59bd8129238e4a020a303296e73099ac8b00fc4a6a
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.star_pair
+    target_statement_id: sha256:90d0a0e2217196a26c43b14a9c51239bbe801b9bf2fcae2ae6dfb34306f6535e
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - ecaa0faa4abcfa39c9da8b5a89d3be2e13bb22235795d7514f4473bf8c95a703
+    - 98708f447932931195020ba382e9c0caa28f709587937fb9e5a614b5195ef9f8

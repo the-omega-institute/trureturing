@@ -1,4 +1,4 @@
-"""Charge serial CI computation to one job-local allowance; preparation stays outside."""
+"""Charge CI computation to its allowance, carrying current across its source boundary."""
 import argparse
 import fcntl
 import math
@@ -10,6 +10,28 @@ import time
 
 BUDGET = "STRATALINT_CI_COMPUTE_BUDGET"
 ACTIVE = "STRATALINT_CI_COMPUTE_ACTIVE"
+
+
+def current_remainder(value):
+    seconds = float(value)
+    if not math.isfinite(seconds) or not 0 <= seconds <= 7200:
+        raise ValueError("current remainder must be finite and in [0, 7200]")
+    return seconds
+
+
+def resume_current(path, value):
+    # Only the existing current allowance crosses the native job boundary.
+    # Missing/invalid output cannot grant a fresh 120 minutes; an existing file
+    # cannot be reset. Preparation/transport between jobs is not computation.
+    seconds = current_remainder(value)
+    with path.open("x") as stream:
+        stream.write(str(seconds))
+
+
+def export_current(path):
+    with path.open() as stream:
+        fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        return str(current_remainder(stream.read()))
 
 
 def initialize(path, minutes):
@@ -62,13 +84,21 @@ def run(command):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("operation", choices=("init", "run"))
+    parser.add_argument("operation", choices=("init", "run", "resume-current", "export-current"))
     parser.add_argument("arguments", nargs=argparse.REMAINDER)
     args = parser.parse_args()
     try:
         if args.operation == "init":
             path, minutes = args.arguments
             initialize(Path(path), minutes)
+            return 0
+        if args.operation == "resume-current":
+            path, remaining = args.arguments
+            resume_current(Path(path), remaining)
+            return 0
+        if args.operation == "export-current":
+            path, = args.arguments
+            print("compute_remaining=" + export_current(Path(path)))
             return 0
         command = args.arguments
         if command[:1] == ["--"]:

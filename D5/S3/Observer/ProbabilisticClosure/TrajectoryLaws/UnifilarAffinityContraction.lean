@@ -31,7 +31,7 @@ theorem word_nonneg (p : S → Bool → ℝ) (δ : S → Bool → S)
   | zero => exact zero_le_one
   | succ n ih => exact mul_nonneg (hp _ _) (ih _ _)
 
-private theorem word_total (p : S → Bool → ℝ) (δ : S → Bool → S)
+theorem word_total (p : S → Bool → ℝ) (δ : S → Bool → S)
     (hs : ∀ a, ∑ x, p a x = 1) (n : ℕ) (a : S) :
     ∑ w : Fin n → Bool, wordMass p δ n a w = 1 := by
   induction n generalizing a with
@@ -116,7 +116,7 @@ private theorem affinity_strict {W : Type*} [Fintype W] (p q : W → ℝ)
   have ht : D5.S3.TotalVariation.Pinsker.totalVariation p q = 0 := by nlinarith
   exact hne (hz.mp ht)
 
-private theorem matrix_block {A : Type*} [Fintype A]
+theorem matrix_block {A : Type*} [Fintype A]
     [DecidableEq A] (B : Matrix A A ℝ) (hn : ∀ i j, 0 ≤ B i j)
     (hs : ∀ i, ∑ j, B i j ≤ 1) (ell : ℕ) (he : 0 < ell)
     (rho : ℝ) (hr : 0 ≤ rho) (hb : ∀ i, ∑ j, (B^ell) i j ≤ rho) :

@@ -1,0 +1,77 @@
+import LeanInformationAuditInterface.Contract.Registration
+import D5.S3.Analytic.ExpRatioCM.Result
+import Reg.D5.S3.Analytic.ExpRatioCM.Extraction
+
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Analytic.ExpRatioCM.Defs
+open _root_.D5.S3.Analytic.ExpRatioCM.Result
+open LeanInformationAudit
+
+noncomputable section
+namespace Reg.D5.S3.Analytic.ExpRatioCM.Result
+
+abbrev signature := _root_.Reg.D5.S3.Analytic.ExpRatioCM.Series.momentSignature
+abbrev actual := _root_.Reg.D5.S3.Analytic.ExpRatioCM.Series.ratioActual
+abbrev rejectedFamily := _root_.Reg.D5.S3.Analytic.ExpRatioCM.Series.zeroMoment
+
+namespace EveryTail
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (i : ℕ), 3 ≤ i → ∀ T : ℝ,
+    ∃ (k : ℕ) (t : ℝ), T < t ∧ 0 < t ∧
+      (-1 : ℝ) ^ k * iteratedDeriv k (R.readout () i) t < 0 ∧
+      (-1 : ℝ) ^ k * iteratedDeriv k (ratioG i) t < 0
+
+private theorem rejected : ¬ arena.Law rejectedFamily := by
+  intro h
+  obtain ⟨k, t, _, _, hf, _⟩ := h 3 (by norm_num) 0
+  simpa [rejectedFamily, _root_.Reg.D5.S3.Analytic.ExpRatioCM.Series.zeroMoment,
+    realize] using hf
+
+def family : Registration arena (type_of% @failure_on_every_tail) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@failure_on_every_tail, rejectedFamily, rejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejectedFamily rejected
+  dependence := _root_.Reg.D5.S3.Analytic.ExpRatioCM.Series.RatioExpansion.family.dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@failure_on_every_tail) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.ExpRatioCM.Result.EveryTail.unit
+  realizationName := `Reg.D5.S3.Analytic.ExpRatioCM.Result.EveryTail.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ i t => ratioF i t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.ExpRatioCM.Result
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "fn", "arg", "fn", "arg", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+end EveryTail
+
+
+end Reg.D5.S3.Analytic.ExpRatioCM.Result
+end

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6a916c9b1e89c1c3346518aa424d6f31657051da7afb7588a33335583cdeee6c
+  normalized_sha256: sha256:6a916c9b1e89c1c3346518aa424d6f31657051da7afb7588a33335583cdeee6c
+cas_ref: sha256:6a916c9b1e89c1c3346518aa424d6f31657051da7afb7588a33335583cdeee6c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: James on seeking truth, avoiding error and scientific caution. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: 7c343b4efacca8d9795b0950be03058e55c127b584f8facf72866ca98246a5b5
+    next_atom_id: 21900c6ed50cfaab4c9a28f6a2513d1eb34e115c9d2837f28780d7531bcf162a

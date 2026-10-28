@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0dfbadd22ca5dd7c1f9f7b347e18cf9b8da3dbc7b72a01cd93b7653b268d6e95
+  normalized_sha256: sha256:0dfbadd22ca5dd7c1f9f7b347e18cf9b8da3dbc7b72a01cd93b7653b268d6e95
+cas_ref: sha256:0dfbadd22ca5dd7c1f9f7b347e18cf9b8da3dbc7b72a01cd93b7653b268d6e95
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'In context this is a missing-result list item: a determinant for every H is explicitly not supplied, rather than claimed to exist.'
+    previous_atom_id: dfb103b68f1813c7c3ea0eb505566d2c9bcb27986ae1d3770409ff1d07c2deb9
+    next_atom_id: 359235d7e1066eccf7bb547c4e33ca53f80ca5db88d357dce9d8f96b59034069

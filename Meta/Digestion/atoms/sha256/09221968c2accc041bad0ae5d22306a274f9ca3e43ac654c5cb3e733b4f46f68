@@ -1,0 +1,14 @@
+### C4 divisor-side expansion
+
+在不穿过极点的局部区域：
+
+\[
+\partial_s\log\Xi_H
+=
+E_H(s;\varepsilon)
++
+\sum_{\rho(\varepsilon)}
+\frac{m_\rho(\varepsilon)}
+{s-\rho(\varepsilon)}.
+\]
+

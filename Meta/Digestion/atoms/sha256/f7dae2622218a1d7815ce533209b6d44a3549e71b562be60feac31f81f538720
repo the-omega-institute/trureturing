@@ -1,0 +1,25 @@
+## 22. Exact coefficient circuit and its original-world interpretation
+
+For this rectangle reuse the coordinates of F, Lemma 30.2, and Section
+12: $x=n/U$, $H=Ug$, with the original drift $d$ unchanged. At arbitrary
+$x>0$ and real $d$ put
+
+$$
+\begin{gathered}
+h_3=(24-d)/x,\quad h_4=18-d,\quad
+h_5=(p-d)/(x+1),\quad h_6=(v-d)/(x+2),\\
+H(s)=\sum_{i=3}^6h_i
+\prod_{\substack{3\le l\le6\\l\ne i}}\frac{s-l}{i-l},\\
+H_0=20h_3-45h_4+36h_5-10h_6,\\
+H_1=10h_3-20h_4+15h_5-4h_6,\\
+H_2=4h_3-6h_4+4h_5-h_6,\qquad
+H_7=-h_3+4h_4-6h_5+4h_6,\\
+B_0=294/5-2d-H_2.
+\end{gathered}
+\tag{22.1}
+$$
+
+These are four samples and four extrapolations of a single entire
+polynomial. Distinct interpolation nodes suffice at every permitted
+gain degree and every pattern of sample zeros.
+

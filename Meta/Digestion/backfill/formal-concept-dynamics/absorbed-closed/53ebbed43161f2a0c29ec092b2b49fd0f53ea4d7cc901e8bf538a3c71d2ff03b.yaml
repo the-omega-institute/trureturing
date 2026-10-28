@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:53ebbed43161f2a0c29ec092b2b49fd0f53ea4d7cc901e8bf538a3c71d2ff03b
+  normalized_sha256: sha256:53ebbed43161f2a0c29ec092b2b49fd0f53ea4d7cc901e8bf538a3c71d2ff03b
+cas_ref: sha256:53ebbed43161f2a0c29ec092b2b49fd0f53ea4d7cc901e8bf538a3c71d2ff03b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Faithfulness/FaithfulObservationCommutationCriterion.faithful_observation_commutation_criterion
+    target_statement_id: sha256:dca31af04f1e4dc888b1f0ef7779772cf448912af543f839e6900709732243b0
+receipts:
+  unresolved_subitems: []

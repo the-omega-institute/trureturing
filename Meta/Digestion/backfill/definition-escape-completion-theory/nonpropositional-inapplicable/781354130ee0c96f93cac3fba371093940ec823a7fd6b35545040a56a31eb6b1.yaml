@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:781354130ee0c96f93cac3fba371093940ec823a7fd6b35545040a56a31eb6b1
+  normalized_sha256: sha256:781354130ee0c96f93cac3fba371093940ec823a7fd6b35545040a56a31eb6b1
+cas_ref: sha256:781354130ee0c96f93cac3fba371093940ec823a7fd6b35545040a56a31eb6b1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 系统数据 r 的函数类型和角色说明。
+    previous_atom_id: 47591a338f14facdb38e9c3d15a0b555b1024e920e666e988bad177b82735b1a
+    next_atom_id: 9c86b2ea9fe07b96ffbbe093ce13d2894b377fc4b7602b767e5ebc3d42c8527e

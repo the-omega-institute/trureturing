@@ -1,0 +1,72 @@
+**Theorem 123.1 (all singleton-beta metrics and Markov boundaries).**
+Let the old source be $\beta$, so $n=1$, $G=(g_0)$ with $g_0>0$,
+$L=0$, $P=(1,1)^{\mathsf T}$, and the successor is the three-node
+star $\langle\beta,\alpha\rangle$. All compatible metrics are still
+(120.3), now with arbitrary $q\in\mathbb R^2$ and symmetric
+$K=\left(\begin{smallmatrix}u&w\\w&v\end{smallmatrix}\right)\succ0$.
+Write $a=Kq=(a_1,a_2)^{\mathsf T}$ and $t=a_1+a_2$. Such a metric
+gives a conservative Markov generator exactly when
+
+$$
+a_1,a_2\ge0,\qquad w\le\min(a_1,a_2),\qquad
+u+w\ge t,\quad v+w\ge t.
+\tag{123.1}
+$$
+
+In this case the full rate matrix is
+
+$$
+Q=\begin{pmatrix}
+-t&a_1&a_2\\
+u+w-t&-u+a_1&a_2-w\\
+v+w-t&a_1-w&-v+a_2
+\end{pmatrix}.
+\tag{123.2}
+$$
+
+It is irreducible if and only if
+$q_1>0$, $q_2>0$ and $q_1+q_2<1$.
+It has original-star-edge support if and only if
+
+$$
+a_1=a_2=w=c\ge0,\qquad u\ge c,\quad v\ge c,
+\qquad uv>c^2,
+\tag{123.3}
+$$
+
+where positive definiteness also retains $u,v>0$. Within this local
+class it is irreducible if and only if $c>0$, $u>c$ and $v>c$.
+Thus local irreducible compatible metrics exist at this boundary.
+
+**Proof.** Theorem 120.2 applies also when the old form is zero.
+Substituting $P$ into (120.4) gives (123.2), and its six
+off-diagonal signs are exactly (123.1). Its zero row sums follow
+directly. The successor form has rank two, hence so does
+$\mathcal A=\mathsf M^{-1}L'$. A finite conservative Markov matrix
+has one independent stationary probability for each closed
+communicating class: on each finite closed class existence follows
+by taking an accumulation point of Cesaro averages of a row of
+$e^{tQ}$, and the maximum principle makes the right kernel on that
+class constant; transient classes contribute no stationary mass.
+Here the rank gives one closed class. A stationary vector of sum one
+is, from (120.3),
+
+$$
+g_0^{-1}\mathsf M\mathbf1_3
+=(1-q_1-q_2,q_1,q_2)^{\mathsf T},
+\qquad \mathbf1_3^{\mathsf T}\mathsf M Q=0.
+\tag{123.4}
+$$
+
+Indeed $\mathsf M Q=-L'$ and the norm condition gives
+$\mathbf1_3^{\mathsf T}\mathsf M\mathbf1_3=g_0$.
+The unique stationary probability is strictly positive on every
+state exactly when that unique closed class is the whole set. This
+proves the irreducibility criterion, including its necessity.
+Original-edge support requires both sibling rates $a_2-w$ and
+$a_1-w$ to vanish, giving (123.3) with precisely the remaining
+Markov signs and positive-definiteness conditions. Its only
+off-diagonal rates are $Q_{0i}=c$ and
+$Q_{10}=u-c$, $Q_{20}=v-c$, which gives the last criterion.
+$\square$
+

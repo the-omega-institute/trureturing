@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4bc30a90790ea6becde0ef0fbe7238803e62d3a862bbbf246b87aa6b69d31a31
+  normalized_sha256: sha256:4bc30a90790ea6becde0ef0fbe7238803e62d3a862bbbf246b87aa6b69d31a31
+cas_ref: sha256:4bc30a90790ea6becde0ef0fbe7238803e62d3a862bbbf246b87aa6b69d31a31
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 未证桥梁中的研究对象清单：共同跨尺度态、纠错码和物理边界理论；没有给出这些对象存在的断言。
+    previous_atom_id: 6ee205ce395ea881d5abf6149ebc3add6239b91ac15bb59ac7e999f64de443c4
+    next_atom_id: ac21c400ff8d804e07c3e0e76f796e7e3286f83815a6e5224a92433e402e17d7

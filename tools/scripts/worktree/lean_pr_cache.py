@@ -65,8 +65,13 @@ def checkout_identity(root, identity):
 
 def source_identity(root):
     event = json.loads(pathlib.Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
-    require(os.environ["GITHUB_EVENT_NAME"] == "pull_request" and event.get("action") == "labeled"
-            and event.get("label", {}).get("name") == "lean-cache-produce", "not a labelled PR dispatch")
+    action = event.get("action")
+    require(os.environ["GITHUB_EVENT_NAME"] == "pull_request"
+            and action in ("opened", "reopened", "synchronize", "labeled")
+            and (action != "labeled" or event.get("label", {}).get("name") == "lean-cache-produce"),
+            "not a PR preparation event")
+    require(any(label.get("name") == "lean-cache-produce"
+                for label in event["pull_request"].get("labels", [])), "PR is not opted-in for preparation")
     pr = event["pull_request"]
     identity = validate_identity(dict(repository=os.environ["GITHUB_REPOSITORY"], pr=str(event["number"]),
         head=pr["head"]["sha"], merge=os.environ["GITHUB_SHA"],
@@ -77,7 +82,7 @@ def source_identity(root):
     return identity
 
 
-def validate_remote(identity, *, allow_merged=False):
+def validate_remote(identity, *, allow_merged=False, require_opt_in=False):
     validate_identity(identity)
     repository = identity["repository"]
     require(repository == os.environ["GITHUB_REPOSITORY"], "foreign source repository")
@@ -93,6 +98,9 @@ def validate_remote(identity, *, allow_merged=False):
             and pr["head"]["sha"] == identity["head"]
             and pr["base"]["ref"] == branch and pr["base"]["repo"]["full_name"] == repository,
             "PR head or target changed, or PR is no longer open")
+    if require_opt_in:
+        require(any(label.get("name") == "lean-cache-produce" for label in pr.get("labels", [])),
+                "PR is no longer opted-in for preparation")
     run = api(repository, "actions/runs/" + identity["source_run"] + "/attempts/" + identity["source_attempt"])
     # run.pull_requests can be reassociated with a same-head Draft. The event
     # identity captured by the dispatch, not that mutable association, is used.
@@ -110,11 +118,13 @@ def receipt(status, identity, **fields):
 
 def dispatch(root):
     identity = source_identity(root)
-    validate_remote(identity)
+    validate_remote(identity, require_opt_in=True)
+    inputs = dict(operation="pr", source_ref=identity["target_ref"], source_sha=identity["merge"],
+                  pr_source=json.dumps(identity, separators=(",", ":")))
+    if os.environ.get("STRATALINT_RUNNER_DIAGNOSTICS") == "true":
+        inputs["runner_diagnostics"] = "true"
     response = api(identity["repository"], "actions/workflows/" + WORKFLOW + "/dispatches", dict(
-        ref=identity["target_ref"], return_run_details=True, inputs=dict(operation="pr",
-        source_ref=identity["target_ref"], source_sha=identity["merge"],
-        pr_source=json.dumps(identity, separators=(",", ":")))))
+        ref=identity["target_ref"], return_run_details=True, inputs=inputs))
     run = response.get("workflow_run_id")
     require(type(run) is int and run > 0, "dispatch returned no exact producer run id")
     actions.output({"producer_run": run})
@@ -133,7 +143,7 @@ def producer_context(root, identity, *, allow_merged=False):
             + "@" + identity["target_ref"] and os.environ["GITHUB_WORKFLOW_SHA"] == runtime_sha,
             "workflow is not the pinned target runtime")
     checkout_identity(root, identity)
-    validate_remote(identity, allow_merged=allow_merged)
+    validate_remote(identity, allow_merged=allow_merged, require_opt_in=not allow_merged)
     comparison = api(identity["repository"], "compare/" + runtime_sha + "..." +
                      quote(identity["target_ref"].removeprefix("refs/heads/"), safe=""))
     require(comparison["merge_base_commit"]["sha"] == runtime_sha, "workflow runtime is outside target history")
@@ -266,8 +276,11 @@ def validate_preparation(root, value, context, artifact):
     identity, runtime = validate_identity(value["source"]), value["runtime"]
     require(all(identity[key] == context[key] for key in ("repository", "pr", "head", "target_ref")),
             "preparation PR/head/target mismatch")
-    require(value["partition"] == actions.partition_path(root) and value["elan_key"] == actions.elan_key(root),
-            "preparation native partition or toolchain mismatch")
+    require(isinstance(value["partition"], str) and
+            re.fullmatch(r"[0-9a-f]{40}/[a-z0-9_]+-[a-z0-9_]+", value["partition"]) and
+            isinstance(value["elan_key"], str) and
+            re.fullmatch(r"elan-pinned-[a-z0-9_]+-[a-z0-9_]+-[0-9a-f]{64}", value["elan_key"]),
+            "invalid preparation native identity")
     require(isinstance(runtime, dict) and set(runtime) == {"ref", "sha", "workflow_ref", "workflow_sha", "run", "attempt"}
             and runtime["ref"] == identity["target_ref"] and runtime["sha"] == runtime["workflow_sha"]
             and re.fullmatch(r"[0-9a-f]{40}", runtime["sha"])
@@ -294,6 +307,12 @@ def validate_preparation(root, value, context, artifact):
             [identity["base"], identity["head"]], "prepared M parents are not B,H")
     comparison = api(repository, "compare/" + runtime["sha"] + "..." + quote(identity["target_ref"].removeprefix("refs/heads/"), safe=""))
     require(comparison["merge_base_commit"]["sha"] == runtime["sha"], "producer runtime is outside target history")
+    current = dict(partition=actions.partition_path(root), elan_key=actions.elan_key(root))
+    prepared = {key: value[key] for key in current}
+    if prepared != current:
+        receipt("incompatible", identity, runtime=runtime, artifact=artifact["id"],
+                reason="preparation native partition or toolchain mismatch", prepared=prepared, current=current)
+        return None
     return identity, runtime
 
 

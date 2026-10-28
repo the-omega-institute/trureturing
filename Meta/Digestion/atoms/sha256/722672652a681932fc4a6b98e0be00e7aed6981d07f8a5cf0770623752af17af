@@ -1,0 +1,115 @@
+**定理 11.2（严格鲁棒阈值）。** 在定义 11.1 的条件下，若
+
+$$
+5\alpha+\beta<1, \tag{11.3}
+$$
+
+则 $d=3$。更具体地，若 $d\ge4$ 且 $0\le\alpha<1$，则存在正交单位向量 $u,v,z$ 使得
+
+$$
+\|\mathcal J_B(u,v,z)\|_K\ge 1-5\alpha. \tag{11.4}
+$$
+
+所以任何满足 (11.1) 的 $d\ge4$ 载体都必须有
+
+$$
+\beta\ge 1-5\alpha. \tag{11.5}
+$$
+
+当 $\alpha<1/5$ 时，右端是明确的正缺陷下界。阈值外不作三维结论：若 $\alpha<1$，这些假设仍只无条件给出 $d\ge3$；若 $\alpha\ge1$，由这些预算本身不能排除 $d=2$。
+
+**证明。** 记 $L_x y=B(x,y)$，并记面积残差为
+
+$$
+D(x,y)=\|B(x,y)\|_K^2-\bigl(\|x\|_K^2\|y\|_K^2-\langle x,y\rangle_K^2\bigr).
+$$
+
+完全交错性给 $L_x^*=-L_x$，并给 $B(x,y)\perp x,y$。取正交单位 $u,v$，置 $c=B(u,v)$。由 (11.1)，
+
+$$
+1-\alpha\le\|c\|_K^2\le1+\alpha. \tag{11.6}
+$$
+
+当 $\alpha<1$ 时 $c\ne0$；若 $d\ge4$，可取正交单位 $z$ 垂直于 $u,v,c$。
+
+先估计反对易项。对单位向量 $w$，四次有限差分的双线性展开给出
+
+$$
+\begin{aligned}
+&Q(u+v,z+w)-Q(u+v,z-w)\\
+&\quad-Q(u-v,z+w)+Q(u-v,z-w)\\
+&=8\bigl(\langle B(u,z),B(v,w)\rangle_K
+       +\langle B(u,w),B(v,z)\rangle_K\bigr),
+\end{aligned} \tag{11.7}
+$$
+
+其中 $Q(x,y)=\|B(x,y)\|_K^2$。把 $Q$ 换成面积式
+$A(x,y)=\|x\|^2\|y\|^2-\langle x,y\rangle^2$，同一差分为零：这是直接展开，使用 $u,v,z$ 两两正交；$w$ 不需要再与它们正交。因此 (11.7)、(11.1) 以及
+$\|u+v\|^2=\|u-v\|^2=2$ 给出
+
+$$
+\left|\langle B(u,z),B(v,w)\rangle_K
++\langle B(u,w),B(v,z)\rangle_K\right|
+\le\frac{\alpha}{8}
+\bigl(\|u+v\|^2+\|u-v\|^2\bigr)\cdot
+\bigl(\|z+w\|^2+\|z-w\|^2\bigr)
+=2\alpha. \tag{11.8}
+$$
+
+而
+
+$$
+R=(L_uL_v+L_vL_u)z
+$$
+
+满足
+
+$$
+\langle R,w\rangle_K
+=-\langle B(v,z),B(u,w)\rangle_K
+ -\langle B(u,z),B(v,w)\rangle_K.
+$$
+
+对所有单位 $w$ 使用 (11.8)，得到
+
+$$
+\|R\|_K\le2\alpha. \tag{11.9}
+$$
+
+令 $x=L_vz$. 交错性和 $z\perp c$ 给
+
+$$
+\langle x,v\rangle=\langle x,z\rangle=0,\qquad
+\langle x,u\rangle=T(v,z,u)=T(u,v,z)=\langle c,z\rangle=0. \tag{11.10}
+$$
+
+两次使用 (11.1)，并注意 $\alpha<1$，便有
+
+$$
+\|x\|^2\ge1-\alpha,\qquad
+\|L_ux\|^2\ge(1-\alpha)\|x\|^2\ge(1-\alpha)^2,
+$$
+
+从而
+
+$$
+\|L_uL_vz\|\ge1-\alpha. \tag{11.11}
+$$
+
+同理，$c\perp z$，故由 (11.6) 和 (11.1)
+
+$$
+\|L_cz\|^2\le(1+\alpha)\|c\|^2\le(1+\alpha)^2,\qquad
+\|L_cz\|\le1+\alpha. \tag{11.12}
+$$
+
+最后，交错性把 Jacobi 和写成
+
+$$
+\mathcal J_B(u,v,z)=L_uL_vz-L_vL_uz-L_cz
+=2L_uL_vz-L_cz-R. \tag{11.13}
+$$
+
+反三角不等式、(11.9)、(11.11)、(11.12) 给出 (11.4)。若 (11.2) 成立，单位三元组又给
+$\beta\ge\|\mathcal J_B(u,v,z)\|\ge1-5\alpha$，即 (11.5)。在 (11.3) 下 $\alpha<1/5<1$，故 $d\ge4$ 不可能。另一方面，(11.6) 在 $\alpha<1$ 时排除 $d=2$：非零的 $c$ 同时垂直于两个正交单位向量，必须提供第三方向。因此 $d=3$。证毕。
+

@@ -98,11 +98,11 @@ private theorem complex_sqrt_two_sq : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
   rw [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
   norm_num
 
-private theorem complex_sqrt_two_inv_mul_self :
+theorem complex_sqrt_two_inv_mul_self :
     (Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹ = (2 : ℂ)⁻¹ := by
   rw [← mul_inv, ← pow_two, complex_sqrt_two_sq]
 
-private theorem complex_sqrt_two_ne_zero : (Real.sqrt 2 : ℂ) ≠ 0 := by
+theorem complex_sqrt_two_ne_zero : (Real.sqrt 2 : ℂ) ≠ 0 := by
   exact_mod_cast Real.sqrt_ne_zero'.mpr (by norm_num : (0 : ℝ) < 2)
 
 private theorem four_mul_inv_sqrt_two :

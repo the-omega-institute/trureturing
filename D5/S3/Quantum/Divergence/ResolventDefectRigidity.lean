@@ -84,7 +84,7 @@ private theorem complex_eq_zero_of_nonneg (z : ℂ) (hz : 0 ≤ z) (hre : z.re =
   Complex.ext hre (Complex.nonneg_iff.mp hz).2.symm
 
 omit [DecidableEq n] in
-private theorem contraction_saturation (V : Matrix n m ℂ) (hV : Vᴴ * V ≤ 1)
+theorem contraction_saturation (V : Matrix n m ℂ) (hV : Vᴴ * V ≤ 1)
     (b : m → ℂ)
     (hb : (star (V *ᵥ b) ⬝ᵥ (V *ᵥ b)).re = (star b ⬝ᵥ b).re) :
     Vᴴ *ᵥ (V *ᵥ b) = b := by
@@ -92,7 +92,7 @@ private theorem contraction_saturation (V : Matrix n m ℂ) (hV : Vᴴ * V ≤ 1
   have hq : (star b ⬝ᵥ ((1 - Vᴴ * V) *ᵥ b)).re = 0 := by
     rw [Matrix.sub_mulVec, Matrix.one_mulVec, dotProduct_sub, Complex.sub_re,
       ← Matrix.mulVec_mulVec, ← adjoint_pair, hb, sub_self]
-  have hz := (hD.dotProduct_mulVec_zero_iff b).mp
+  have hz := (hD.dotProduct_mulVec_zero_iff (x := b)).mp
     (complex_eq_zero_of_nonneg _ (hD.dotProduct_mulVec_nonneg b) hq)
   have heq : b - Vᴴ *ᵥ (V *ᵥ b) = 0 := by
     simpa only [Matrix.sub_mulVec, Matrix.one_mulVec,
@@ -178,7 +178,7 @@ theorem resolvent_defect_identity_and_bound
     have hqy0 : (star y ⬝ᵥ (C *ᵥ y)).re = 0 := by
       simpa only [hw, star_zero, Matrix.mulVec_zero, dotProduct_zero,
         Complex.zero_re, zero_add] using hidentity.symm.trans hg
-    exact ⟨hw, (hC.dotProduct_mulVec_zero_iff y).mp
+    exact ⟨hw, (hC.dotProduct_mulVec_zero_iff (x := y)).mp
       (complex_eq_zero_of_nonneg _ (hC.dotProduct_mulVec_nonneg y) hqy0)⟩
   · rintro ⟨hw, hCy⟩
     rw [hidentity, hw, hCy]

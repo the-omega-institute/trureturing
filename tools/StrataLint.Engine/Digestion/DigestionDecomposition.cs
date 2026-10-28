@@ -15,25 +15,29 @@ internal static class DigestionDecomposition
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     internal static DigestionClausePlan Plan(DigestionLedgerEntry parent, ImmutableArray<byte> bytes,
-        TheoryAtomizer atomizer, TheoryAtomizerRules rules, RepositorySnapshot? snapshot = null,
+        TheoryAtomizer atomizer, RepositorySnapshot? snapshot = null,
         ImmutableArray<int> splitAt = default)
     {
+        _ = AtomizerRegistry.Require(parent.Atomizer);
         var frozen = DigestionAtom.FromFrozenCas(bytes);
         if (parent.CasRef != frozen.Fingerprints.RawSha256
             || parent.AtomId != frozen.Fingerprints.RawSha256[7..]
             || parent.Fingerprints != frozen.Fingerprints)
             throw new FormatException($"CAS_MISMATCH atom_id={parent.AtomId}");
 
-        // Whole-source validators can require chapter context absent from frozen CAS.
-        // Consume emitted plans where registered; other adapters use the same CAS grammar.
-        ImmutableArray<DigestionClausePlan> plans = [];
-        if (AtomizerRegistry.EmitsClausePlans(parent.Atomizer))
+        // Stored direct children own history. Fresh grammar is never substituted for
+        // an ordinary read of a materialized parent.
+        if (!parent.Receipts.ChainAtoms.IsEmpty && snapshot is null)
+            throw new FormatException("CHILD_CAS_MISSING stored chain requires its CAS snapshot");
+        var persisted = PersistedPlan(parent, frozen, snapshot);
+        if (persisted is not null)
         {
-            var document = atomizer(bytes.AsSpan(), rules);
-            if (!document.UnregisteredGenres.IsEmpty)
-                throw new FormatException("UNREGISTERED_GENRE " + string.Join(',', document.UnregisteredGenres));
-            plans = document.ClausePlans;
+            RequireValid(persisted);
+            if (splitAt.IsDefaultOrEmpty) return persisted;
         }
+
+        var document = atomizer(bytes.AsSpan());
+        var plans = document.ClausePlans;
         foreach (var emitted in plans)
             RequireValid(emitted);
         var matching = plans.Where(p => p.Parent.Fingerprints == frozen.Fingerprints).ToArray();
@@ -45,7 +49,7 @@ internal static class DigestionDecomposition
             && !canonical.Children.Select(static child => child.Fingerprints)
                 .SequenceEqual(explicitPlan.Children.Select(static child => child.Fingerprints)))
             throw new FormatException("PLAN_CONFLICT split points differ from canonical clause plan");
-        var plan = canonical ?? explicitPlan ?? PersistedPlan(parent, frozen, snapshot)
+        var plan = explicitPlan ?? persisted ?? canonical
             ?? throw new FormatException("parent CAS blob has no clause plan (NO_CLAUSE_PLAN)");
         RequireValid(plan);
         return plan;
@@ -84,7 +88,7 @@ internal static class DigestionDecomposition
         DigestionAtom parent, RepositorySnapshot? snapshot)
     {
         if (entry.Receipts.ChainAtoms.IsEmpty || snapshot is null) return null;
-        var segments = ImmutableArray.CreateBuilder<DigestionSegment>(entry.Receipts.ChainAtoms.Length);
+        var segments = ImmutableArray.CreateBuilder<DigestionSegment>();
         var start = parent.StartByte;
         foreach (var childId in entry.Receipts.ChainAtoms)
         {
@@ -98,48 +102,104 @@ internal static class DigestionDecomposition
             var child = DigestionAtom.FromFrozenCas(blob.RawBytes);
             if (child.Fingerprints.RawSha256 != "sha256:" + childId)
                 throw new FormatException($"CHILD_CAS_MISMATCH atom_id={childId}");
-            if (child.RawBytes.Length > parent.EndByte - start)
+            if (child.RawBytes.Length > parent.RawBytes.Length)
                 throw new FormatException("clause plan children exceed parent bytes");
-            child = child with { StartByte = start, EndByte = start + child.RawBytes.Length, Context = parent.Context };
+            // Stored children retain their unique raw positions, including structural
+            // gaps that have no ledger identity. No current grammar chooses the chain.
+            var offset = UniqueSubspanStart(parent.RawBytes.AsSpan(), child.RawBytes.AsSpan());
+            if (offset < 0)
+            {
+                if (parent.RawBytes.AsSpan().IndexOf(child.RawBytes.AsSpan()) < 0)
+                    throw new FormatException($"clause plan segment at byte {start} differs from its parent span");
+                throw new FormatException("AMBIGUOUS clause plan child is not a unique parent sub-span");
+            }
+            var childStart = parent.StartByte + offset;
+            if (childStart < start)
+                throw new FormatException($"clause plan segment at byte {start} differs from its parent span");
+            if (childStart > start)
+                segments.Add(new DigestionSegment(DigestionSegmentKind.Structural,
+                    Slice(parent, start - parent.StartByte, offset)));
+            child = child with { StartByte = childStart, EndByte = childStart + child.RawBytes.Length, Context = parent.Context };
             segments.Add(new DigestionSegment(DigestionSegmentKind.Claim, child));
             start = child.EndByte;
         }
-        return new DigestionClausePlan(parent, segments.MoveToImmutable()) { IsExplicit = true };
+        if (entry.Receipts.ChainAtoms.Length < 2)
+            throw new FormatException("clause plan has no proper claim decomposition");
+        if (start < parent.EndByte)
+            segments.Add(new DigestionSegment(DigestionSegmentKind.Structural,
+                Slice(parent, start - parent.StartByte, parent.RawBytes.Length)));
+        var gaps = segments.Where(static segment => segment.Kind == DigestionSegmentKind.Structural).ToArray();
+        if (gaps.Length > 0)
+        {
+            // Only whole canonical structural spans may be absent from chain_atoms.
+            // Truncated or omitted claims must not become structural by subtraction.
+            var structural = PlanClauses(parent)?.Segments
+                .Where(static segment => segment.Kind == DigestionSegmentKind.Structural).ToArray() ?? [];
+            if (gaps.Any(gap => !structural.Any(segment =>
+                segment.Atom.StartByte == gap.Atom.StartByte && segment.Atom.EndByte == gap.Atom.EndByte)))
+                throw new FormatException("clause plan segments do not tile parent with structural gaps");
+        }
+        return new DigestionClausePlan(parent, segments.ToImmutable()) { IsExplicit = true };
     }
 
     internal static DigestionClausePlan? PlanClauses(DigestionAtom parent)
     {
         var text = StrictUtf8.GetString(parent.RawBytes.AsSpan());
-        var lines = Lines(text).ToArray();
-        var bold = lines.Skip(1).Where(static line => line.Text.StartsWith("**", StringComparison.Ordinal)).ToArray();
-        int[] boundaries;
-        if (bold.Length > 0)
+        var document = GenericAtomizer.AtomizeStructure(parent.RawBytes.AsSpan());
+        if (document.Claims.Length > 1)
         {
-            boundaries = [0, .. bold.Select(static line => line.Start)];
-        }
-        else
-        {
-            var items = lines.Where(static line => line.Text.StartsWith("- ", StringComparison.Ordinal)
-                || line.Text.StartsWith("* ", StringComparison.Ordinal)).ToArray();
-            if (items.Length < 2) return null;
-            boundaries = [0, .. items.Skip(1).Select(static line => line.Start)];
+            var segments = ImmutableArray.CreateBuilder<DigestionSegment>();
+            var cursor = 0;
+            foreach (var atom in document.Claims)
+            {
+                if (atom.StartByte > cursor) Add(cursor, atom.StartByte, DigestionSegmentKind.Structural);
+                Add(atom.StartByte, atom.EndByte, DigestionSegmentKind.Claim);
+                cursor = atom.EndByte;
+            }
+            if (cursor < parent.RawBytes.Length) Add(cursor, parent.RawBytes.Length, DigestionSegmentKind.Structural);
+            return new DigestionClausePlan(parent, segments.ToImmutable());
+
+            void Add(int start, int end, DigestionSegmentKind kind) =>
+                segments.Add(new DigestionSegment(kind, Slice(parent, start, end)));
         }
 
-        // Persisted chains define the grammar: every span is a child, including
-        // preamble, closing prose, and markers at any indentation or inside code.
-        var segments = ImmutableArray.CreateBuilder<DigestionSegment>(boundaries.Length);
-        for (var index = 0; index < boundaries.Length; index++)
-        {
-            var start = MarkdownAstAtomizer.ByteOffset(text, boundaries[index]);
-            var end = index + 1 == boundaries.Length ? parent.RawBytes.Length
-                : MarkdownAstAtomizer.ByteOffset(text, boundaries[index + 1]);
-            var raw = parent.RawBytes[start..end];
-            segments.Add(new DigestionSegment(DigestionSegmentKind.Claim, new DigestionAtom(
-                parent.StartByte + start, parent.StartByte + end, raw,
-                DigestionFingerprint.Compute(raw.AsSpan()), parent.Context,
-                DigestionAtomStatusMarker.Parse(raw.AsSpan()))));
-        }
-        return new DigestionClausePlan(parent, segments.MoveToImmutable());
+        var blocks = MarkdigBlockAst.ParseOwned(text);
+        var bold = blocks.OfType<MarkdownParagraph>()
+            .SelectMany(block => Lines(block.Text).Select(line => line with { Start = block.Start + line.Start }))
+            .Where(line => IsIndependentBoldLead(line.Text))
+            .Select(static line => line.Start).Where(static start => start > 0).ToArray();
+        // Internal proof headings stay in the numbered claim's scope. Tables and
+        // governed lists are opaque to paragraph-lead and list-item discovery.
+        var boundaries = bold.Length > 0
+            ? new[] { 0 }.Concat(bold).Distinct().Order().ToArray()
+            : new[] { 0 }.Concat(MarkdigBlockAst.IndependentListStarts(text).Skip(1)).Distinct().Order().ToArray();
+        if (boundaries.Length < 2) return null;
+        return new DigestionClausePlan(parent, [.. boundaries.Select((start, index) =>
+            new DigestionSegment(DigestionSegmentKind.Claim, Slice(parent,
+                MarkdownAstAtomizer.ByteOffset(text, start),
+                index + 1 == boundaries.Length ? parent.RawBytes.Length
+                    : MarkdownAstAtomizer.ByteOffset(text, boundaries[index + 1]))))]);
+    }
+
+    private static bool IsIndependentBoldLead(string text)
+    {
+        if (!text.StartsWith("**", StringComparison.Ordinal)) return false;
+        var close = text.IndexOf("**", 2, StringComparison.Ordinal);
+        if (close <= 2) return false;
+        var label = text[2..close].Trim();
+        if (label.EndsWith(':') || label.EndsWith('：')
+            || label.StartsWith("证明", StringComparison.Ordinal)
+            || label.StartsWith("Proof", StringComparison.OrdinalIgnoreCase))
+            return false;
+        return !string.IsNullOrWhiteSpace(text[(close + 2)..]);
+    }
+
+    private static DigestionAtom Slice(DigestionAtom parent, int start, int end)
+    {
+        var raw = parent.RawBytes[start..end];
+        return new DigestionAtom(parent.StartByte + start, parent.StartByte + end, raw,
+            DigestionFingerprint.Compute(raw.AsSpan()), parent.Context,
+            DigestionAtomStatusMarker.Parse(raw.AsSpan()));
     }
 
     internal static string? IntegrityFailure(DigestionClausePlan plan)
@@ -176,8 +236,7 @@ internal static class DigestionDecomposition
 
     internal static DigestionDecompositionWriteSet Materialize(DigestionLedgerEntry parent,
         DigestionClausePlan plan, IReadOnlyDictionary<string, DigestionLedgerEntry> globalEntries,
-        bool reconcileExistingChain = false, RepositorySnapshot? snapshot = null,
-        TheoryAtomizerRules? rules = null)
+        bool reconcileExistingChain = false, RepositorySnapshot? snapshot = null)
     {
         RequireValid(plan);
         if (parent.Fingerprints != plan.Parent.Fingerprints || parent.CasRef != plan.Parent.Fingerprints.RawSha256)
@@ -213,12 +272,11 @@ internal static class DigestionDecomposition
                 || parent.Receipts.Nonpropositional is not null)
                 throw new FormatException("CHAIN_RECONCILE_LIVE_OBLIGATIONS");
             ArgumentNullException.ThrowIfNull(snapshot);
-            ArgumentNullException.ThrowIfNull(rules);
             // The old direct chain must itself be a lossless, identity-valid partition.
             // Reuse the same persisted-plan and nested-plan authority as ordinary decomposition.
             RequireValid(PersistedPlan(parent, plan.Parent, snapshot)!);
-            _ = ValidatedClosure(parent.Receipts.ChainAtoms, globalEntries, snapshot, rules);
-            var retained = ValidatedClosure(chain.Where(globalEntries.ContainsKey), globalEntries, snapshot, rules);
+            _ = ValidatedClosure(parent.Receipts.ChainAtoms, globalEntries, snapshot);
+            var retained = ValidatedClosure(chain.Where(globalEntries.ContainsKey), globalEntries, snapshot);
             retained.UnionWith(chain);
             foreach (var oldChild in parent.Receipts.ChainAtoms)
                 if (!retained.Contains(oldChild))
@@ -235,7 +293,7 @@ internal static class DigestionDecomposition
 
     internal static HashSet<string> ValidatedClosure(IEnumerable<string> roots,
         IReadOnlyDictionary<string, DigestionLedgerEntry> entries,
-        RepositorySnapshot snapshot, TheoryAtomizerRules rules)
+        RepositorySnapshot snapshot)
     {
         var seen = new HashSet<string>(StringComparer.Ordinal);
         var pending = new Stack<string>(roots);
@@ -251,8 +309,7 @@ internal static class DigestionDecomposition
                 || entry.CasRef != fingerprint.RawSha256 || entry.Fingerprints != fingerprint)
                 throw new FormatException($"CHILD_IDENTITY_CONFLICT atom_id={id}");
             if (entry.Receipts.ChainAtoms.IsEmpty) continue;
-            var nested = Plan(entry, blob.RawBytes, AtomizerRegistry.Require(entry.Atomizer).Atomize,
-                rules, snapshot);
+            var nested = Plan(entry, blob.RawBytes, AtomizerRegistry.Require(entry.Atomizer).Atomize, snapshot);
             var materialized = Materialize(entry, nested, entries);
             if (!materialized.NewEntries.IsEmpty)
                 throw new FormatException($"CHILD_MISSING parent={id}");

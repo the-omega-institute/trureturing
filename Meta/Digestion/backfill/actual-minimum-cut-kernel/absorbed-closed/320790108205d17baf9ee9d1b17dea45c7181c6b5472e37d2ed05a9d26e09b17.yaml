@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:320790108205d17baf9ee9d1b17dea45c7181c6b5472e37d2ed05a9d26e09b17
+  normalized_sha256: sha256:320790108205d17baf9ee9d1b17dea45c7181c6b5472e37d2ed05a9d26e09b17
+cas_ref: sha256:320790108205d17baf9ee9d1b17dea45c7181c6b5472e37d2ed05a9d26e09b17
+coverage_gids:
+  - gid: D5/S1/Words/Patterns/Separable/EndpointHistoryKernel.endpoint_history_count_kernel
+    target_statement_id: sha256:1008921784035de0d21c4adb973cec412b32e62c579160939daa55034d6e46e9
+  - gid: D5/S1/Words/Patterns/Separable/StableEndpointCodes.stable_code_transport
+    target_statement_id: sha256:2e79d6ed4ef20eace9e496a6500a77fc44b0acf2840bfa6ad90c1595698360c4
+  - gid: D5/S1/Words/Patterns/Separable/StableEndpointCodes.stable_finite_mass_sums
+    target_statement_id: sha256:05a62cf6c796c2d685500ca5add0f9a646dce19e8e5aa73c30b483b3981f81ba
+  - gid: D5/S1/Words/Patterns/Separable/StableEndpointCodes.stable_success_fibers
+    target_statement_id: sha256:09ae4c2b6b21c5dd066a194b0ebca641ab88874b7ae708758860cb67f7b2e71c
+receipts:
+  unresolved_subitems: []

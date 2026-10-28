@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:71a05d846724624fc2509a0d0ee0788d1a8c7e6e8ea74d4962068f729bbed9d5
+  normalized_sha256: sha256:71a05d846724624fc2509a0d0ee0788d1a8c7e6e8ea74d4962068f729bbed9d5
+cas_ref: sha256:71a05d846724624fc2509a0d0ee0788d1a8c7e6e8ea74d4962068f729bbed9d5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Γ_finitePSD 是有限窗口、Galerkin、尾项和 PSD 路线的命名项。
+    previous_atom_id: 1c6b890407ad7bb9d421cb90d0b3793bf1606ba5950a1a554bc80240d4ba6d5e
+    next_atom_id: 148552fa919f90223dc6e75f7c1786d9c09c14aa1c6222374c460e53f41ae18f

@@ -1,0 +1,16 @@
+## 434. 连续 primorial 有符号核轮廓的正源指数扩展与临界筛尺度
+
+沿用上一节同一实际阶乘余核、有限连续 primorial 过滤器及完整相邻块。记
+
+\[
+L=\log z,\quad P_z=\prod_{p\le z}p,\quad
+E_z(s)=\prod_{p\le z}(1-p^{-s}),\quad E_{z,0}=E_z(1),
+\]
+
+\[
+\eta_z(y)=\sum_{d\mid P_z}\mu(d)\eta(y/d),\qquad
+J_x^{\eta_z}(n)=P_x^{\eta_z}(n)-P_x^{\eta_z}(n+1).
+\]
+
+这里补足全 Laplace 参数的统一 Euler 包络，使源指数可取任意先固定的 \(\sigma>0\)，特别是同一筛尺度 \(x=z\)。经典第一、第三 Mertens 供应、阶乘夹逼及上一节的精确有符号密度均直接复用；下述新增承重关系是全 \(v\) 的 Abel 付款及其在实际核上的参数一致运输。
+

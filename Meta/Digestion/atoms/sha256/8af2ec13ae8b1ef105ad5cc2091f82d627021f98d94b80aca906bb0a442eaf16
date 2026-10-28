@@ -1,0 +1,35 @@
+**Theorem 113.2 (common determinant and exact root formulas).** Under the hypotheses of Theorem 113.1 and $\tau=0$, set $h=a+b$ and
+
+$$
+f=\sqrt{1-tpq/m+2ab\eta},\qquad
+\Delta=\sqrt{(1-tm)^2-4pq\eta^2}.
+$$
+
+Then
+
+$$
+N=\frac{h+f}{4\sqrt2},\qquad R=\frac{1+tm+\Delta}{2}.
+\tag{U.31}
+$$
+
+Proof. Use the copy rotation just proved. The full four-dimensional code Gram splits as $A\oplus P$, where
+
+$$
+A=P-\frac{tpq}{m}Juu^TJ^T,\qquad
+B=\sqrt P(I_2-tuu^T)\sqrt P.
+\tag{U.32}
+$$
+
+Indeed $\sqrt P J\sqrt P=\sqrt{pq}J$. Both are PSD by their original contraction-Gram expressions. Their traces and determinants are
+
+$$
+\operatorname{Tr}A=1-tpq/m,\quad
+\operatorname{Tr}B=1-tm,\quad
+\det A=\det B=pq\eta^2.
+\tag{U.33}
+$$
+
+For the determinant of $A$, the rank-one determinant identity gives $\det A=pq[1-(tpq/m)(Ju)^TP^{-1}(Ju)]$ and $(Ju)^TP^{-1}(Ju)=m/(pq)$. For $B$ it gives $\det B=pq\det(I_2-tuu^T)=pq(1-t)$. Here $q,m>0$ justify these inverses; no inverse of a residual is used.
+
+For any $2\times2$ PSD matrix with eigenvalues $x,y\geq0$, $(\operatorname{Tr}\sqrt C)^2=(\sqrt x+\sqrt y)^2=\operatorname{Tr}C+2\sqrt{\det C}$. Apply this elementary identity to $A$, and $\operatorname{Tr}\sqrt P=h$, to obtain $N$. The smaller eigenvalue of $B$ is $(1-tm-\Delta)/2$. Since $\tau=0$, subtracting it from one yields $R$. Positivity of $A,B$ proves that all roots used are real. Both expressions retain the same $m$ and the same determinant; these parameters cannot be optimized separately. $\square$
+

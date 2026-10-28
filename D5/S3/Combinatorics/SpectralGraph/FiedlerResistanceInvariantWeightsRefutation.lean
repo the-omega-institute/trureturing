@@ -101,11 +101,11 @@ def claim : Prop :=
       ∀ w', Feasible G w' → lambda2 G w' ≤ lambda2 G w
 
 
-private def K23 : SimpleGraph (Fin 5) :=
+def K23 : SimpleGraph (Fin 5) :=
   (completeBipartiteGraph (Fin 2) (Fin 3)).comap
     (finSumFinEquiv (m := 2) (n := 3)).symm
 
-private instance K23_dec : DecidableRel K23.Adj := by
+instance K23_dec : DecidableRel K23.Adj := by
   unfold K23 SimpleGraph.comap completeBipartiteGraph; infer_instance
 
 private def weights (a b : Real) : Sym2 (Fin 5) → Real :=
@@ -317,7 +317,7 @@ private lemma lap_congr {n : Nat} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
   ext i j
   by_cases hij : i = j
   · subst j
-    simp only [wLap, if_pos rfl]
+    simp only [wLap, if_pos rfl, if_true]
     apply Finset.sum_congr rfl
     intro k hk
     exact hw _ (by simpa only [SimpleGraph.mem_edgeSet] using (Finset.mem_filter.mp hk).2)
@@ -433,7 +433,7 @@ private lemma candidate_lambda2 : lambda2 K23 candidate = 48/23 := by
   norm_num [candidate] at h ⊢
   exact h
 
-private lemma K23_connected : K23.Connected := by
+lemma K23_connected : K23.Connected := by
   apply (SimpleGraph.connected_iff_exists_forall_reachable K23).mpr
   refine ⟨2,?_⟩
   intro i

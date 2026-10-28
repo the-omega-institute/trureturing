@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8bb49eeab51bfeada1b5e2bf8acb8de5ebfdd4108295a254b11f3824160f652a
+  normalized_sha256: sha256:8bb49eeab51bfeada1b5e2bf8acb8de5ebfdd4108295a254b11f3824160f652a
+cas_ref: sha256:8bb49eeab51bfeada1b5e2bf8acb8de5ebfdd4108295a254b11f3824160f652a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 352节导航和宗教哲学问题定位，不断言不同传统已具有同一数学谓词。
+    previous_atom_id: 640cdfbd0e688123dcae6e0efa794adee4151f96b3f2ca8ff67d3eff8a03040d
+    next_atom_id: e4f30ce6c5e9994507cffdb12e87e9f2f06a4906c8585d79d49b643c4cbb1970

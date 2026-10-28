@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f446c09b8da517b9d0edcfcd4e6d8cbe36ad982dd32104da5ec05c7740362413
+  normalized_sha256: sha256:f446c09b8da517b9d0edcfcd4e6d8cbe36ad982dd32104da5ec05c7740362413
+cas_ref: sha256:f446c09b8da517b9d0edcfcd4e6d8cbe36ad982dd32104da5ec05c7740362413
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 待证明的充分性条件列表项，不断言 uniform retention gap 成立。
+    previous_atom_id: 1dc86622d1c787b896a16f9fb480c394f15d0afea0d0583d8f66cff94751116b
+    next_atom_id: ce213eb65396c0b7579dda3fcc7245e35e0e8f8c1d3d17d282a727e29064c036

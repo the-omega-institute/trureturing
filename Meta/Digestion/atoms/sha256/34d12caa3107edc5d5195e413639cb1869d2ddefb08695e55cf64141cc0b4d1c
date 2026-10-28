@@ -1,0 +1,92 @@
+**Lemma 116.3 (a relative bilinear mass estimate).** Put
+$c=\varphi^{-1}$, $\Delta_n=2F_{n+1}-1$, and, for $n\ge2$, set
+
+$$
+\begin{aligned}
+e_n&=\frac{c+2c^{n+1}}{\Delta_n},&
+\xi_n&=c\,2^{-\lfloor n/2\rfloor}+2c^{n+1}+e_n,\\
+\vartheta_n&=3\sqrt{\frac3{2\Delta_n}}+\xi_n.
+\end{aligned}
+\tag{116.7}
+$$
+
+These numbers depend only on $n$ and tend to zero. On every original
+source and every accepted pair,
+
+$$
+|\langle (W-I)f,g\rangle_\mu|
+ \le\vartheta_n\|f\|_1\|g\|_1
+\qquad(f,g\in H).
+\tag{116.8}
+$$
+
+This is a form estimate. No small operator norm of $W-I$ on $H$ is
+asserted.
+
+Proof. Reuse the exact beta-charge corrector in IV (108.10)--(108.12)
+on the actual $s_n$, including its full original skeleton. Those
+identities supply an actual potential $h$ such that
+
+$$
+2\mathbf1_{\mathcal B}-c=L_nh+c\delta_{\mathrm{root}}+\epsilon,
+\qquad
+|\nabla h|\le2,\qquad
+\|\epsilon\|_\infty\le2c^{n+1}.
+\tag{116.9}
+$$
+
+They also supply $N\ge\Delta_n$ and $|r-\varphi|\le e_n$ uniformly
+over all originals. Their hypotheses are precisely the finite ordered
+source, literal rho blocks and closed unit-edge operator retained here.
+For $j=\lfloor n/2\rfloor$, the actual tree contains every binary level
+through $j$. The root-spreading potential of IV (108.15),
+$b_j(x)=2^{-\min(|x|,j)}$, obeys
+
+$$
+L_nb_j=\delta_{\mathrm{root}}
+       -2^{-j}\mathbf1_{\{|x|=j\}}.
+\tag{116.10}
+$$
+
+Consequently, using $m-r=2\mathbf1_{\mathcal B}-c-(r-\varphi)$,
+the potential $v=h+cb_j$ satisfies
+
+$$
+m-r=L_nv+\eta,\qquad
+|\nabla v|\le3,\qquad
+\|\eta\|_\infty\le\xi_n.
+\tag{116.11}
+$$
+
+The root is included, rather than removed from the carrier.
+
+Counting integration by parts applied to the pointwise product $fg$
+now bounds its flux term by
+
+$$
+\begin{aligned}
+\left|\frac1{rN}\sum_x (L_nv)(x)f(x)g(x)\right|
+&\le\frac3{2rN}\sum_{\{x,y\}\in \mathcal E}
+ \bigl(|f(x)-f(y)|\,|g(x)+g(y)|\\
+&\hspace{42mm}
+       +|g(x)-g(y)|\,|f(x)+f(y)|\bigr)\\
+&\le\frac3r\sqrt{\frac3{2N}}\,
+ \bigl(\sqrt{\mathfrak a(f,f)}\,\|g\|_\mu
+       +\|f\|_\mu\sqrt{\mathfrak a(g,g)}\bigr)\\
+&\le3\sqrt{\frac3{2\Delta_n}}\|f\|_1\|g\|_1.
+\end{aligned}
+\tag{116.12}
+$$
+
+Here the exact maximum degree is at most three, so
+$\sum_{\{x,y\}}(g(x)+g(y))^2\le6N\|g\|_\mu^2$, and likewise for $f$.
+The last line uses Cauchy--Schwarz in the two coordinates
+$(\sqrt{\mathfrak a(f,f)},\|f\|_\mu)$ and
+$(\|g\|_\mu,\sqrt{\mathfrak a(g,g)})$, and $r\ge1$.
+The remainder in (116.11) is at most
+$\xi_n\|f\|_\mu\|g\|_\mu/r$. Since
+$\langle(W-I)f,g\rangle_\mu=(rN)^{-1}\sum_x(m(x)-r)f(x)g(x)$,
+this proves (116.8). The exponential growth of $\Delta_n$ and the
+displayed vanishing terms prove $\vartheta_n\to0$.
+No bound on original depth, balance or size has been used. $\square$
+

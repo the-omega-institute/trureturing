@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:51fd0155a3c4d2dbb558bc7c3f221e556d23a2ed01616fae660d31e6220fd5db
+  normalized_sha256: sha256:51fd0155a3c4d2dbb558bc7c3f221e556d23a2ed01616fae660d31e6220fd5db
+cas_ref: sha256:51fd0155a3c4d2dbb558bc7c3f221e556d23a2ed01616fae660d31e6220fd5db
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 选取相应部22.59的无我论证片段，并排除将其直接等同于空集的解释。
+    previous_atom_id: c1bb5de5c2bdd8ee573c9b1e20a73e7dac85bd78b3f689d23fff91ebb7d33a5d
+    next_atom_id: 9d0adf16b952f8ae450621749ea796ab739a7741fb4074cc7f8db81371d33c84

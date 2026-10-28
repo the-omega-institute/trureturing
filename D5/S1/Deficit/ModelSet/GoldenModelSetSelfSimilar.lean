@@ -59,7 +59,7 @@ noncomputable def phiSquaredBranch : Set GoldenInt :=
 
 @[simp] private theorem shift_digits_apply (offset i : Nat) (r : RawDigits) :
     shiftDigits offset r (offset + i) = r i := by
-  apply Finsupp.mapDomain_apply
+  apply Finsupp.mapDomain_apply_of_injective
   exact fun _ _ equality ↦ Nat.add_left_cancel equality
 
 private theorem shift_digits_eq_zero_of_lt {offset i : Nat} (r : RawDigits)
@@ -103,7 +103,7 @@ private theorem beta_digits_add (r s : RawDigits) :
   classical
   rw [betaDigits, Finsupp.sum_single_index (by simp)]
 
-private theorem beta_digits_shift (offset : Nat) (r : RawDigits) :
+theorem beta_digits_shift (offset : Nat) (r : RawDigits) :
     betaDigits (shiftDigits offset r) = phi ^ offset * betaDigits r := by
   classical
   rw [betaDigits, shiftDigits]

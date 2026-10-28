@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e3343c432d7a48625dca777bc65a35c0a2c57ffe9a42481bb98235bde3bf6900
+  normalized_sha256: sha256:e3343c432d7a48625dca777bc65a35c0a2c57ffe9a42481bb98235bde3bf6900
+cas_ref: sha256:e3343c432d7a48625dca777bc65a35c0a2c57ffe9a42481bb98235bde3bf6900
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 继续非主张列表并列举开放接口、状态和机器真源边界；不提供现实全息模型存在性的命题。
+    previous_atom_id: 41ce86c5b600204dea8e5430692130d7e3ab80e7ab11c8181787addc274647f1
+    next_atom_id: 5059ed1f7c1f380067fdacd548aa6e1c8c2879ab5b282cfc5369f7e86901bd58

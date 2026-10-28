@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8777c25f31dc72996cec482d01303227752e9aa8043202f9bc2f6ffff1d8d384
+  normalized_sha256: sha256:8777c25f31dc72996cec482d01303227752e9aa8043202f9bc2f6ffff1d8d384
+cas_ref: sha256:8777c25f31dc72996cec482d01303227752e9aa8043202f9bc2f6ffff1d8d384
+coverage_gids:
+  - gid: D5/S3/Arith/DivisorGibbs/HiddenArithmeticWeightFormula.mass_pos
+    target_statement_id: sha256:8a9d50fdaf20227e130d87494aee3d651b8b7bd4fb36a64934310a503787eb1e
+  - gid: D5/S3/Arith/DivisorGibbs/HiddenArithmeticWeightFormula.mass_total
+    target_statement_id: sha256:faf2b32aa33dd0351ddc2741044057200522cb00ad5fb03636d835b1939fe76a
+receipts:
+  unresolved_subitems: []

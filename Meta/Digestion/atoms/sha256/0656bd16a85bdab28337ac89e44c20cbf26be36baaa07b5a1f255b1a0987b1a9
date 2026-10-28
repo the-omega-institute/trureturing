@@ -1,0 +1,12 @@
+**定义 15.31（平方保真度和命名切口）。** 固定定义 15.26 的目标
+$|\Psi_G\rangle$、其指定左右二分及 $r=\operatorname{rank}_{\mathbb F_2}G$。
+对同一全张量空间中的归一化纯态 $|\Phi\rangle$，
+使用平方重叠
+
+$$
+F_{\rm sq}(\Phi,\Psi_G)=|\langle\Phi|\Psi_G\rangle|^2.
+$$
+
+以下 $D\in\mathbb Z_{\ge1}$ 只限制 $|\Phi\rangle$ 在这个命名切口的
+Schmidt rank；它不自动限制其他切口，也不要求 $\Phi$ 具有相同经典概率。
+

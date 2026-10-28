@@ -1,0 +1,19 @@
+**定义 284.1（加权修复合同）。** 观察约束索引为有限集 $I$，记录给出纤维 $F_i(r_i)$，每条约束有正权重 $w_i>0$。对保留集 $J\subseteq I$，定义
+
+$$
+F_J=\bigcap_{i\in J}F_i(r_i),
+\qquad
+\operatorname{cost}(J)=\sum_{i\in I\setminus J}w_i.
+$$
+
+称 $J$ 为可行修复若 $F_J\ne\varnothing$；最小修复成本为
+
+$$
+\boxed{
+ c^*=\min\{\operatorname{cost}(J):J\subseteq I,\ F_J\ne\varnothing\}.
+}
+\tag{284.1}
+$$
+
+修复输出还必须包含一个见证状态 $x\in F_J$，否则“可行”只有一张没有来源的标签。
+

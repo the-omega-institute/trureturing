@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:cf4c36d4def20dbfe93ee1b409974ad55ae876770a20544ec928727a09fdcc35
+  normalized_sha256: sha256:cf4c36d4def20dbfe93ee1b409974ad55ae876770a20544ec928727a09fdcc35
+cas_ref: sha256:cf4c36d4def20dbfe93ee1b409974ad55ae876770a20544ec928727a09fdcc35
+coverage_gids:
+  - gid: D5/S3/Weil/PrimeOnly/PrimeOnlyNoGap.prime_only_no_gap
+    target_statement_id: sha256:3880f7f8ed6d4746d988979a6a7bef44c830c0e1fc889038d3cf1276e07c8d18
+  - gid: D5/S3/Weil/Probability/CanonicalLiNonnegativeConverse.canonical_li_nonnegative_implies_rh
+    target_statement_id: sha256:d5a630bbf7945069a2595ef412653a28476a0f0941c5fb578b9b27c5fd4c8773
+  - gid: D5/S3/Weil/Separator/PrimeArchimedeanPoincareCriterion.rh_iff_primeArchimedeanPoincare
+    target_statement_id: sha256:ef79a335eab326aa6c8c5d66102cf0ac6b7bddb5248d2105d051fb8c71373dd2
+  - gid: D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.zetaZeroData_closed_chain
+    target_statement_id: sha256:2bd7d30b3747269892f3debd1ee0d19a7621571969cebe6ddccc8bb1598755ae
+receipts:
+  unresolved_subitems: []

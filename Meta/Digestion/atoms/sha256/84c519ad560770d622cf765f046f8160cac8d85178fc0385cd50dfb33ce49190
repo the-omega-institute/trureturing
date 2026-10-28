@@ -1,0 +1,40 @@
+**Theorem 25.1 (the fixed-mask iff, both maps and the actual endpoint).** For each fixed $t$ and $B$ of §24, the batch schedule admits a decoder returning the required exact entry and current raw maps for every attachment permutation if and only if the $L$ columns of $B$ are pairwise distinct. When they are distinct, one finite table-comparison decoder suffices, and the complete acquisition terminates for every promised entry. Its actual endpoint is $u_B$ with full field zero, where the original branches are retained and original leaf $i$ is replaced by
+
+$$
+B_{k_i},\qquad B_0=\beta,\qquad B_{s+1}=\langle B_s,\alpha\rangle.
+\tag{NLBAII.22}
+$$
+
+For the decoded initial label $j_i$, the reports are exactly
+
+$$
+\lambda_0(j_i)=e_i,
+\qquad \lambda_B(j_i)=p_iL^{k_i+1}.
+\tag{NLBAII.23}
+$$
+
+If the $s$th split in cone $i$ occurs at $(r,i)$, its appended label is
+
+$$
+\ell(r,i)=L+\sum_{v<r}\sum_{m=1}^{L}b_{vm}+\sum_{m\le i}b_{rm},
+\qquad \lambda_B(\ell(r,i))=p_iL^{s-1}R.
+\tag{NLBAII.24}
+$$
+
+These inherited and appended assignments exhaust the actual current roster. The iff is restricted to the fixed schedule of Definition 24.2 and all its permitted transcript decoders, including use of its entry code and known appended records. It is not an impossibility theorem for other raw-port experiments.
+
+Proof. At the start of a round the initial label $j_i$ is bound to the marker of the leftmost $\beta$ in its original leaf cone, at $p_iL^{h_i(r-1)+1}$, with value one. That cone is disjoint from every other original leaf cone. When selected, its target $p_iL^{h_i(r-1)}$ is therefore an enabled logical $\beta$, even after repeated earlier selections. The split retains its root and old marker as internal vertices, preserving their fields, and moves $j_i$ to the fresh zero marker one edge farther left. Its new right terminal receives the new label and zero field. With no Tick, growth in another cone and Add at another labelled terminal cannot change these values. Consequently the round's actual readings satisfy
+
+$$
+\operatorname{Read}_r(j_i)=1-b_{ri},\qquad z_{rj_i}=b_{ri}.
+\tag{NLBAII.25}
+$$
+
+There is one zero original-label reading for each selected cone. Adding one at precisely these zeros restores all original-label terminals to one. Appended terminals stay zero. Starting with the actual initial arming proves this invariant by induction for all rounds; every source cell remains binary, including old cells that have become internal. This establishes the joint response law on the actual specimen, without an internal field read or a supplied decoder.
+
+For distinct columns, compare the observed finite column $(z_{rj})_{r=1}^{q}$ with the $L$ public columns. There is exactly one match, and (NLBAII.25) says that it is the actual original leaf carrying $j$. This finite comparison earns (NLBAII.23), including the entry distinction between an $\alpha$ vertex and a $\beta$ marker. The old-label marker moves once per selection. On its $s$th selection the new right terminal is $p_iL^{s-1}R$; later selected targets lie strictly in its left cone and never act on this appended terminal. The fixed order of successful splits gives exactly the preceding-count formula (NLBAII.24). Distinct original leaf cones do not intersect, all appended indices are different, and $B_{k_i}$ has exactly one inherited terminal and $k_i$ appended terminals. Thus these formulas form a bijection onto all $L+K$ current terminals. Induction on the same splits gives (NLBAII.22). Final Reset zeros every internal and terminal cell, and Hold preserves this actual endpoint while its retained records are constructed.
+
+For necessity suppose columns $i$ and $i'$ coincide. Attach two different original labels to these two original terminals and swap only those labels in a second permitted installation of the same $t$. Normalization has the same guard transcript in both. Every round selects these cones together or leaves both alone. Equation (NLBAII.25) therefore gives the same literal reading at each original label in both installations, and the resulting rearming commands are identical. All addressed operations, Growth words, roster lengths, appended-label records, acknowledgements and final Reset/Hold outputs are also identical. This is an induction on exposed outputs and round boundaries; it does not assert that unobserved fields between individual rearming Adds have identical material coordinates. The decoder receives the same whole transcript, but the required entry maps and inherited current maps differ. No such decoder can be correct for both.
+
+The hidden distinction also affects the complete raw continuation task. From either final zero cut arm the original labels $1,\ldots,L$, split the final leftmost $\beta$ in cone $i$, and Read one of the swapped labels. The fresh-zero rule makes that reading zero in the installation where this label belongs to $i$ and one in the other. Thus duplicate columns merge different required raw behaviors, rather than merely different private encodings. Sufficiency and necessity follow. All loops are finite, all called addresses are earned and enabled, and finite backing supplies the complete calls; no size cap is used for stopping. $\square$
+

@@ -1,0 +1,19 @@
+**Proposition 3.3 (exact correspondence to ARC's importer).** ARC3.1's
+quantifier remains $i\in\{26,28,29\}$. Its Save/Scan/Reverse/Home proof
+has exactly the following correspondence to Theorem 3.2: fixed source
+$i$ becomes74; its ordinary symbol length becomes $e+1$; its saved
+head distance becomes this $h$; its read token becomes the actual
+$R_{74}$; and its untouched-source condition is Lemma 2.4. Compiler
+ports64–68, symbol triples, distance register and restoration invariant
+are the same. ARC3.2 itself is not broadened.
+
+Proof. Each source operation in the table in Definition 3.1 names74
+literally. Every intervening assignment has the same disjoint footprint
+and copies all unchanged fields. The four decreasing quantities in the
+preceding proof are the finite Save distance, remaining Scan cells,
+Reverse cursor and restore counter, with no dependency on the numerical
+name of that disjoint source. All branch and delimiter cases were proved
+there for74. The added parser fixes its binary/F grammar instead of
+using ARC's CAP-descriptor grammar. Thus it supplies the missing instance
+and its parser join, rather than deriving one from ownership alone. ∎
+

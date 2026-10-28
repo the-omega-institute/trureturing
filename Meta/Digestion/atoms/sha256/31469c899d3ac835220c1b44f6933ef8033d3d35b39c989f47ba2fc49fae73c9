@@ -1,0 +1,36 @@
+**定理 18.3（全阶累积量与路径非单调性）。** 对互异探针 $0\le u_1<\cdots<u_r<1$，令
+
+$$
+C_{ab}=\kappa(\max(u_a,u_b)).
+$$
+
+则对 $r\ge2$，
+
+$$
+\operatorname{cum}\bigl(\Lambda(u_1),\ldots,\Lambda(u_r)\bigr)
+=
+\frac1r\sum_{\sigma\in S_r}
+\prod_{q=1}^r C_{\sigma(q),\sigma(q+1)},
+\qquad \sigma(r+1)=\sigma(1).
+$$
+
+等价地，求和可按循环旋转类进行，每个无向重复的有向循环分别计一次。所有因子均为正，所以每个 $r\ge2$ 的累积量严格为正；$r=2$ 给出 $C_{12}^2$，$r=3$ 给出第 16 节的 $2\kappa(u_2)\kappa(u_3)^2$。
+
+虽然 $\mathbb E Y(s)=s/D$ 随 $s$ 线性增加，但 $Y$ 的样本路径不具有必然的逐样本单调性：对任意 $y>0$ 与允许的 $h>0$，二维布朗增量把当前半径移入更小半径开集的概率为正，故 $\Pr_y(Y(s+h)<y)>0$。因此不能把平均密度梯度解释为逐样本的单向输运或热流方向。
+
+**证明。** 在 $t_1,\ldots,t_r$ 充分接近零、使谱半径 $\rho(C\operatorname{diag}(t_a))<1$ 的邻域内，展开第 16 节的联合变换：
+
+$$
+\log\mathbb E
+\exp\!\left(\sum_{a=1}^r t_a\Lambda(u_a)\right)
+=
+-\log\det\!\left(I-C\operatorname{diag}(t_a)\right)
+=
+\sum_{n\ge1}\frac1n
+\operatorname{tr}\!\left((C\operatorname{diag}(t_a))^n\right).
+$$
+
+取互异变量的 $r$ 阶混合导数时，只有 $n=r$ 项保留；按循环旋转合并 $r$ 次重复，得到所列公式。正性来自 $u_r<1$ 时所有 $C_{ab}>0$。平方贝塞尔扩散的非单调性也可由其非退化扩散系数看出：从任意 $y>0$ 出发，在足够小的向内开集中有正概率到达更小的值；条件方差公式给出同一结论。$\square$
+
+本节的平方贝塞尔与 Feller 名称只描述极限随机场的统计等价结构。它依赖固定单位速度、给定阻抗与时钟、左反射右吸收、初态 $0$ 及同一随机历史；不延伸为 FIB 递归内生的物理定律，也不覆盖第 11、14 节速度权重扩展、路径过程收敛或经验普适性。
+

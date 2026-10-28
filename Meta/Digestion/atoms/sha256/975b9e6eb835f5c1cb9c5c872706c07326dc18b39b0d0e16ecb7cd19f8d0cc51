@@ -1,0 +1,19 @@
+**Convention 9.2 (mature mathematical machinery).**
+
+| Source or method | Exact use and limit |
+| --- | --- |
+| [COK][COK], Definitions 1.3–2.5, Theorems 3.1–4.2 and Definition 4.3 | Original finite carrier, exact support tests, full conditional arrays and all-size soundness. This volume proves the additional weight optimization and epigraph claims. |
+| [GDB][GDB], §§1–2, 4–8 and 11 | Native observation and weight boundaries; specified analytic and individual-pressure obstructions. No global completion premise is imported. |
+| [SCP][SCP], Proposition 5.2 and §6 | Credited support-preserving rational approximation; the separate positive-model verifier obligation is retained. |
+| [Sion][Sion], Theorem 3.4 | Compact convex minimax for the regularized finite domains of Theorem 2.1. No arbitrary-network extremum is exchanged. |
+| Finite entropy, relative entropy and Gibbs variational identities, as used in COK | One local law per objective and one actual global law in Theorem 2.3. No independent marginal substitutions. |
+| [Basu][Basu], Theorem 2.1 and §2.1.1; real closed fields and algebraic root isolation | Effective finite polynomial projection, endpoint determination and algebraic sampling in §§5–6. No complexity or native all-size decision follows. |
+
+The mathematical evidence consists of the displayed ordinary deductions and the canonical COK/GDB/SCP reference bodies. Literature citations identify mature machinery through those bodies; no further literature search or worldwide originality assertion is implied. The conclusions are finite-relaxation theorems, not kernel-certified declarations, numerical experiments or empirical findings.
+
+[COK]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONDITIONAL_OWNER_KERNELS.md
+[GDB]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[SCP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SOFT_CONSTRAINT_PRESSURE.md
+[Sion]: https://msp.org/pjm/1958/8-1/pjm-v8-n1-p14-s.pdf
+[Basu]: https://arxiv.org/html/1409.1534v1
+

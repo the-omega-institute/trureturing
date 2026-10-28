@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:86a711ad897e415b829aa08c8200a8a08a5ff89af816a2ca108bebce4defa53e
+  normalized_sha256: sha256:86a711ad897e415b829aa08c8200a8a08a5ff89af816a2ca108bebce4defa53e
+cas_ref: sha256:86a711ad897e415b829aa08c8200a8a08a5ff89af816a2ca108bebce4defa53e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: L09 的 Lagarias 论文与主定理定位，未在本条声称任意整数满足不等式。'
+    previous_atom_id: 5cbc59266814911c3b1674287fde3a04f2655e5191ddf44d7c7c84e6ef555200
+    next_atom_id: ac6b35c03bd38894c6299d7239ee32410ba0e2614dc90b3166cd929e282fffa2

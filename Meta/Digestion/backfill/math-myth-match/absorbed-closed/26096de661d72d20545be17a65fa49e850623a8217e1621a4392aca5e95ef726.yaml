@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:26096de661d72d20545be17a65fa49e850623a8217e1621a4392aca5e95ef726
+  normalized_sha256: sha256:26096de661d72d20545be17a65fa49e850623a8217e1621a4392aca5e95ef726
+cas_ref: sha256:26096de661d72d20545be17a65fa49e850623a8217e1621a4392aca5e95ef726
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscape/QuestionAlgebraDuality.target_inadequate_iff_effective_new_question
+    target_statement_id: sha256:afe9eb5b6b6435a61cd63b37ef42958d449ed29c41a15d3a6c72d93b29f8e4d5
+receipts:
+  unresolved_subitems: []

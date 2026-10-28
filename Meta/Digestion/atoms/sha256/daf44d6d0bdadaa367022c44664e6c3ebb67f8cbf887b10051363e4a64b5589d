@@ -1,0 +1,40 @@
+**Definition 12.2 (Relative target and boundary lifts).** Let $X$ be the
+complete $H_4$ worlds with $p\ne24$, with their usual topology in
+source entries, four padded gain coefficients and drift. Put
+
+$$
+Y=\{(p,v)\in\mathbb R^2:p\ne24\},\qquad
+\pi:X\longrightarrow Y,\quad\pi(W)=(p(W),v(W)).
+$$
+
+A nonproper value is a limit in $Y$ of bases of a sequence escaping
+every compact subset of $X$. For a nonnegative boundary source with
+$j,n>0$, retain $j=b+c,n=j+r,T=1+b,U=1+2b$ and define its auxiliary
+gain by the four samples in Definition 7.1. The four rational face lifts
+are specified completely by
+
+| Source $(r,b,c)$ | Parameter guard | $e=d-24$ |
+|---|---|---|
+| $(0,t,0)$ | $t>0$, $t^3-8t-4\ne0$ | $-\dfrac{24t(t-1/8)(2+5t)}{5(t^3-8t-4)}$ |
+| $(1,t,0)$ | $t>0$, $t^3-4t-2\ne0$ | $-\dfrac{24t(t-1/8)(2+5t)}{5(t^3-4t-2)}$ |
+| $(0,0,t)$ | $t>0$, $t\ne1$ | $\dfrac{3t}{10(t-1)}$ |
+| $(1,0,t)$ | $t>0$, $2t^2\ne1$ | $\dfrac{3t(t+1)}{5(2t^2-1)}$ |
+
+The auxiliary response vector is obtained from that one interpolant by
+
+$$
+(p,v,a,m)=\bigl(d+(U+n)g(5),\ d+(2U+n)g(6),\
+d+(T+2j+4r)g(7),\ d+(3U+2n)g(7)\bigr).
+$$
+
+This is an explicit rational parametrization, not a declaration that
+the boundary source is legal. The two corner limits are
+
+| Source limit | $d$ | $(g(0),g(1),g(2),g(3))$ | $(p,v,a,m)$ |
+|---|---|---|---|
+| $(0,0,0)$ | $24$ | $(-24,3/10,27/5,3/10)$ | $(39/2,258/5,819/10,1977/10)$ |
+| $(1,0,0)$ | $24$ | $(-24,3/5,27/5,0)$ | $(18,399/5,366,366)$ |
+
+Let $\mathcal B_\partial\subset Y$ be the union of the four face
+images and these two corner bases, retaining only $p\ne24$.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:00bde75bed8cc58de7a72b51089be974e12cea2a7c8196e952639e61353a0971
+  normalized_sha256: sha256:00bde75bed8cc58de7a72b51089be974e12cea2a7c8196e952639e61353a0971
+cas_ref: sha256:00bde75bed8cc58de7a72b51089be974e12cea2a7c8196e952639e61353a0971
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 记录保留与新表达联合生成的章节目标介绍，未展开后文误差公式。
+    previous_atom_id: 8502387dddae414a79021bd4f409987c65b6746657fb9eca877fe219ed32584f
+    next_atom_id: 59362528492d5c0b05075b38e9831635b161d15788fcf9da045cca7c41f4da3f

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:79f573725b24c3f0ad20a3c2c13667eaa92b2ab67be529c48f748edbcdee1f5d
+  normalized_sha256: sha256:79f573725b24c3f0ad20a3c2c13667eaa92b2ab67be529c48f748edbcdee1f5d
+cas_ref: sha256:79f573725b24c3f0ad20a3c2c13667eaa92b2ab67be529c48f748edbcdee1f5d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: KL 公式仅左端的排版片段，后续等式不在该 atom 中。
+    previous_atom_id: ccfe5f3b0c72a2ac328cca0c4294eae54d3f2984a6a114520f76de6c731286cb
+    next_atom_id: eef8cc99d8857c7c0a73635b950a74c03e12d68699df8b403e54c4cfa9024c19

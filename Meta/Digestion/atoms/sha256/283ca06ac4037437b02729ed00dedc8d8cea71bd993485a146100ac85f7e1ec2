@@ -1,0 +1,22 @@
+**Theorem 5.3 (effective support-disjunctive semialgebraicity).** The entire set
+
+$$
+\operatorname{Epi}(\Omega_d)
+=\{(w,C):w\ge0,\ C\ge\Omega_d(w)\}
+\tag{NWO.21}
+$$
+
+is effectively semialgebraic over $\mathbb Q$ for each finite input $d$.
+
+Proof. For each nonempty $F\subseteq S_d$, construct the exact finite relations using local reconstruction and one simultaneous search over $u\in F$ per external group. Conjoin the closed-kernel system (NWO.20) with
+
+$$
+w_x>0\ (x\in F),\qquad w_x=0\ (x\notin F),\qquad C>0,
+$$
+
+and existentially quantify its kernel variables. Theorem 5.1 identifies this branch with the epigraph on exactly that support. Take the finite disjunction over all nonempty supports and add $w=0,C\ge0$. These are rational polynomial formulas; effective real quantifier elimination gives a semialgebraic description of their projection.
+
+For completeness of effectiveness, the finite input $d$ generates $S_d$ recursively, $W_d$ by bounded words, and all attained factor/reply tables by (NWO.1)–(NWO.2). The bounded domain, port, group and table data in Definition 1.5 generate the entire list. Every seed assignment has a finite reconstruction test against the complete factor vectors. Each group test checks all its owner equations on the same candidate $u$. Thus the defining formula has an effective finite construction, without an oracle about global completion or an arbitrary-size cutoff. This is a terminating algorithm specification, not an execution or efficiency assertion. $\square$
+
+The support disjunction is essential. Substituting the full-support relation at a boundary would change the object, as the native construction in §4 demonstrates.
+

@@ -1,0 +1,356 @@
+**Theorem 25.2 (actual energy, state and resources at $\lambda_Z$).**
+For every fixed model and fixed admissible $b$, the finite part exists,
+$Q_{\rm ang}>0$, $B_3>0$, and
+
+$$
+E_{\epsilon,\lambda_Z}-E_*
+ =-\frac{\lambda_ZS_b}{L^2}-\frac{B_3}{L^3}+o(L^{-3}).
+\tag{25.2}
+$$
+
+This is an absolute remainder for that fixed model and $b$; it is not
+a differentiated expansion. There is a positive normalized matched
+$v_L\in\mathcal F_A$ such that, for a fixed sufficiently large $\beta$,
+
+$$
+\|f_{\epsilon,\lambda_Z}-v_L\|_{a_\epsilon}=O(L^{-2}),
+\quad a_\epsilon=q_{\epsilon,\lambda_Z}+\beta\|\cdot\|_2^2,
+\qquad \|f_{\epsilon,\lambda_Z}-f_*\|_2=O(L^{-2}).
+\tag{25.3}
+$$
+
+No $a_\epsilon$ norm of $f_*$ is taken: $f_*\notin\mathcal F_A$.
+For these actual states,
+
+$$
+\begin{aligned}
+g_{\mathrm c}V_{\rm cap}&=\mathsf D L/2+S_b+o(1),\\
+g_{\mathrm c}V_{\rm raw}&=\mathsf D L/2+S_b+o(1),\\
+T_A&=\mathsf D L/2+S_b+E_*+o(1),\\
+L^2(V_{\rm raw}-V_{\rm cap})
+ &\longrightarrow\frac{a_*^2\nu^2I}{2\pi}.
+\end{aligned}
+\tag{25.4}
+$$
+
+The reference rule is
+$S_{b'}=S_b-\mathsf D\log(b'/b)$. Hence
+$b_{\rm bal}=b\exp(S_b/\mathsf D)$ is reference-independent, but need
+not lie in the admissible chart interval. If the fixed admissible
+$b\ne b_{\rm bal}$, then
+
+$$
+E_{\epsilon,\lambda_Z}-E_*
+ \sim\frac{\lambda_Z\mathsf D\log(b/b_{\rm bal})}{L^2}.
+\tag{25.5}
+$$
+
+If $b=b_{\rm bal}$ is admissible, the equivalent is $-B_3/L^3$.
+There is no further cancellation at this order. Even in that case
+$\mathsf D>0$ and the separate resources in (25.4) diverge linearly.
+The higher-order statements have fixed-model, fixed-$b$ scope only.
+
+Proof. We establish quantitative form control before transferring the
+Rayleigh expansion to the actual spectral minimum.
+For $f=f_*u\in\mathcal F_A$, let $d\nu_*=f_*^2d\mu$ and define
+
+$$
+\begin{aligned}
+B_\epsilon[u]&=\mathscr A[u]+\int D_\epsilon|u|^2d\nu_*,\\
+\mathcal W_\epsilon[u]&=g_{\mathrm c}\int\Gamma_\epsilon|u|^2d\nu_*.
+\end{aligned}
+\tag{25.6}
+$$
+
+The exact identity, valid with finite terms on this original domain, is
+
+$$
+q_{\epsilon,\lambda}[f]-E_*\|f\|_2^2
+            =B_\epsilon[u]-\lambda\mathcal W_\epsilon[u]/L^2.
+\tag{25.7}
+$$
+
+The accepted source trace and its derivatives give
+$f_*^2mC=a_*^2m_0h^2(I+O(R^\gamma))$.
+The signed difference between
+$g_{\mathrm c}\Gamma f_*^2d\mu$ and
+$a_*^2m_0\lambda_0R^{-2}h^2dq$ is bounded by
+$C_1R^\gamma\phi^2dt\,da\,d\theta$.
+Its integral converges at zero, proving existence of $R_b$ and its
+reference rule. This error is also bounded in the critical form dual:
+for every $p_1>0$, integration by parts as in (12.11) gives
+$\int e^{p_1t}F^2\le4b^{p_1}p_1^{-2}\int|F_t|^2$ for locally
+supported tests. Combine this with (12.9)–(12.10) and a fixed cutoff to
+obtain, for arbitrary angular $u$,
+
+$$
+\int_{R<b}R^\gamma\phi^2|u|^2dt\,da\,d\theta
+          \le C_2(\mathscr A[u]+\|f_*u\|_2^2).
+\tag{25.8}
+$$
+
+The literal cap-interface errors are confined to
+$R=\epsilon(1+O(\epsilon))$ and are negligible at the polynomial orders
+below.
+
+We need a uniform actual spectral gap near $\lambda_Z$.
+Let $p(t)$ be the $c\phi^2$ mean of $u$, and $w=u-p$.
+The positive deficit on $R<\epsilon/2$, adjacent fixed-width collars,
+(17.9) and (17.10) give
+$|p(\log\epsilon)|^2\le C_3B_\epsilon[u]$ and
+$\mathcal W_\epsilon[u;R<\epsilon]\le C_3B_\epsilon[u]$.
+At a fixed small $d$, its outer trace is bounded by
+$C_d(\mathscr A[u]+\|f\|^2)$. On an interval of length $\ell$, subtract
+the affine endpoint interpolant and apply Dirichlet Poincaré:
+
+$$
+\int|p|^2\le(1+\eta)\frac{\ell^2}{\pi^2}\int|p'|^2
+      +C_\eta\ell(|p(\mathrm{left})|^2+|p(\mathrm{right})|^2).
+\tag{25.9}
+$$
+
+The full angular remainder is controlled by summed (17.10).
+The ratio of the leading potential and derivative coefficients is
+$\mathsf D/\mathsf K=\alpha$. Split first at a fixed $d$, then reduce
+$d$ to control the coefficient error. Terms $CLB_\epsilon$ are absorbed
+in $\eta L^2B_\epsilon$. This proves, for every $\eta>0$,
+
+$$
+\mathcal W_\epsilon[u]
+ \le(\alpha/\pi^2+\eta)L^2B_\epsilon[u]
+                           +C_\eta L\|f\|_2^2.
+\tag{25.10}
+$$
+
+Thus, on any fixed compact $\lambda$ set strictly below $\lambda_D$,
+(25.7) is bounded below by
+$c_1B_\epsilon[u]-C_1L^{-1}\|f\|^2$.
+The shifted form near $\lambda_Z=\lambda_D/4$ is consequently uniformly
+equivalent to $B_\epsilon+\|f\|^2$. Its bounded sublevels are bounded
+in the accepted compact critical completion.
+Pairings against every fixed punctured-core test converge to the
+critical pairing: its cap defect is zero and its detuning tends to zero
+as a bounded multiplier on that support. For the lower form inequality,
+apply positivity of the shifted form to $f-z$, pass to the limit for
+every fixed core $z$, and take the supremum over that dense core.
+The supremum is exactly the shifted completed critical form.
+Diagonal core approximation gives recovery. Compact min-max therefore
+gives convergence of the first two actual eigenvalues to those of $F$.
+Simplicity from (15.6) gives a uniformly positive first gap near
+$\lambda_Z$. The same estimates and gap argument are uniform on fixed
+compact subthreshold parameter sets; no equality gap is asserted.
+
+For the angular curvature, analytic perturbation from §20 gives
+
+$$
+\dot\phi_0=-(S-\lambda_0)^{-1}_{\phi^\perp}(c-\bar c)\phi,
+\qquad \Lambda''(0)=-2Q_{\rm ang}/M<0.
+\tag{25.11}
+$$
+
+Strictness holds because $c$ is nonconstant, $\phi>0$, and the reduced
+inverse is strictly positive. The regular endpoint branch stays smooth.
+For $\lambda=\lambda_Z$ the root $q=q_L$ therefore has expansion
+
+$$
+q=\nu/L+\frac{Q_{\rm ang}\nu^3}{2CL^3}+O(L^{-5}).
+\tag{25.12}
+$$
+
+We use the exponential core tail proved in Theorem 22.1. More explicitly,
+let $z_{\rm cap}=Z/h$ and $y=\log R$. For $y>0$ its exact mean is
+$y+\kappa_{\rm cap}$; write its zero-mean remainder as $w$.
+It is rotationally invariant. The weighted Poincaré inequality
+$\int c\phi^2w^2\le C_4\int c\phi^2w_a^2$ follows by integrating the
+resistance bound for $|w(a)-w(b)|^2$ against both weights; its logarithmic
+endpoint singularities are integrable. Hence for
+$H_w=\int c\phi^2w^2$ the equation gives
+$H_w''=2\int c\phi^2w_y^2+8\int c\phi^2w_a^2\ge\sigma_0^2H_w$.
+Its polynomial growth excludes the growing solution, so $H_w$ and
+$-H_w'$ decay exponentially. Annular estimates give all rescaled smooth
+derivatives. With
+$B_0[v]=\mathcal E_0[v]+\int\lambda_0(R^{-2}-1)_+h^2|v|^2dq$,
+the exact core flux is
+
+$$
+B_0[z_{\rm cap};R<e^T]
+ =k(T+\kappa_{\rm cap})+\frac\pi2\int c\phi^2w(T)w_y(T)da
+ =k(T+\kappa_{\rm cap})+O(e^{-\sigma T}).
+\tag{25.13}
+$$
+
+Source regularity makes the inner flux zero. Its capped attraction
+through $e^T$ is $O((1+T)^3)$. These are quantitative growing-annulus
+bounds, stronger than a bare finite part.
+
+Set $\theta_L=q(L+\kappa_{\rm cap})$,
+$c_L=q/\sin\theta_L$ and
+$P_L(y)=\sin(q(y+\kappa_{\rm cap}))/\sin\theta_L$.
+Take $T=A_0\log L$ with $A_0>4/\sigma$, and
+$r_L=\epsilon e^{T+1}$. Define a quotient $u_L$ in the original chart
+by $c_Lz_{\rm cap}(\delta_{1/\epsilon}q_{\rm chart})$ below
+$R=\epsilon e^T$, by $(\phi_{q^2}/\phi)P_L(\log(R/\epsilon))$ above
+$R=\epsilon e^{T+1}$ and below $b$, and join them with a fixed smooth
+cutoff of $y-T$. Extend a fixed distance past $b$ and cut the quotient
+smoothly to one. At the inner join the discrepancy, including fixed
+annular derivatives, is
+
+$$
+O(qe^{-\sigma T}+q^3(1+T)^3).
+\tag{25.14}
+$$
+
+At the outer collar it is $O(q^2)$ from one, with derivatives.
+On the middle annulus, $x=\log(b/R)$ gives
+$|P_L-1|\le Cq^2(1+x)^2$,
+$|P_L'|\le Cq^2(1+x)$, and
+$\phi_{q^2}/\phi-1=O(q^2)$ with angular derivatives.
+Near zero the actual product $t_L=f_*u_L$ is
+$c_L\epsilon^{-1}(f_*/h)Z(\delta_{1/\epsilon}q_{\rm chart})$.
+Its original horizontal energy is finite because $Z$ is source-smooth
+and $|X(f_*/h)|\le CR^{\gamma-1}$. Free zero-capacity cutoffs remove
+the point; localization retains the actual height killing. Thus
+$t_L\in\mathcal F_A$. Since $d\nu_*=O(RdR\,da\,d\theta)$,
+
+$$
+\|t_L-f_*\|_2=O(q^2),\quad \|t_L\|_2^2=1+O(q^2).
+\tag{25.15}
+$$
+
+Let $v_L=t_L/\|t_L\|_2$, positive for large $L$.
+
+The frozen tail solves the zero-energy differential equation exactly:
+for $R^{-1}\phi_{q^2}P$ its expression is
+$R^{-3}\{-c\phi_{q^2}P''+(S-\gamma)\phi_{q^2}P\}$, which is zero
+when $P''=-q^2P$. In the transformed numerator (25.7), its quadratic
+part is a boundary term. Put
+$\mathsf K_z=a_*^2m_0(\pi/2)\int c\phi_z^2da=\mathsf K+O(q^2)$.
+The lower boundary of
+$\mathsf K_z\int(P_L'^2-q^2P_L^2)dy=\mathsf K_z[P_LP_L']$
+is canceled by the core flux (25.13) times $a_*^2m_0c_L^2$.
+Core detuning costs $O(L^{-2}q^2(1+T)^3)$.
+The actual kinetic errors cost $O(q^4)$, by integrating the derivative
+bounds against $R^\gamma$. Signed actual-minus-frozen attraction and the
+unchanged exterior contribute $R_b+O(q^2)$ plus an exponentially small
+tail; multiplication by $-\lambda_Z/L^2$ gives
+$-\lambda_ZR_b/L^2+o(L^{-3})$.
+
+For explicit control, the inner splice, flux and coefficient errors
+are bounded by
+
+$$
+C_5\{q^4(1+T)^8+q^2(1+T)^8e^{-\sigma T}
+                         +r_L^\gamma q^2(1+T)^8\},
+\tag{25.16}
+$$
+
+besides fixed-annulus $O(q^4)$ terms. The fixed-width product rule,
+(25.14) and the $O(T^3)$ core attraction give this bound whenever
+$q(1+T)\le1/10$. For the chosen $T$ it is $o(L^{-3})$.
+Normalization changes this $O(L^{-2})$ numerator only by $O(L^{-4})$.
+Thus the Rayleigh value $r(v_L)$ satisfies
+
+$$
+r(v_L)-E_*=\mathsf K_zq\cot\theta_L-\lambda_ZR_b/L^2+o(L^{-3}).
+\tag{25.17}
+$$
+
+Expansion (25.12) gives
+$q\cot\theta_L=-\nu^2\kappa_{\rm cap}/L^2
+-Q_{\rm ang}\nu^4/(2CL^3)+O(L^{-4})$.
+Since $\mathsf K\nu^2=\lambda_Z\mathsf D$, the trial expression is
+exactly the right side of (25.2). A trial expression alone does not
+identify the actual energy; the following residual closes that direction.
+
+For an arbitrary angular test $f=f_*v\in\mathcal F_A$ put
+$\|f\|_{\mathcal N}^2=B_\epsilon[v]+\|f\|_2^2$.
+The core trace estimate and (17.10) give
+
+$$
+\begin{aligned}
+\int_{T-1}^{T+2}\int\phi^2|v|^2&\le C_6(1+T)\|f\|_{\mathcal N}^2,\\
+\int_0^{T+2}\int\phi^2|v|^2&\le C_6(1+T)^2\|f\|_{\mathcal N}^2.
+\end{aligned}
+\tag{25.18}
+$$
+
+These follow by integrating the mean derivative from its controlled core
+trace, retaining the full angular remainder on enlarged annuli.
+The deep-core capped multiplier is also controlled by $B_\epsilon[v]$.
+The frozen tail residual is zero. Core detuning costs at most
+$Cq^3(1+T)^4\|f\|_{\mathcal N}$; splice commutators are bounded by
+(25.14) times a fixed additional polynomial in $1+T$ using (25.18).
+Weighted Cauchy–Schwarz bounds the actual kinetic error by
+$Cq^2\|f\|_{\mathcal N}$: on the tail,
+$\int R^{2\gamma}h^2|\nabla_Hu_L|^2dq=O(q^4)$ and the core errors
+are exponentially small. Equation (25.8) bounds the signed attraction
+error by the same order. On $R<\epsilon/2$,
+$|D_\epsilon-D_{0,\epsilon}|\le CR^{-1}\le C\epsilon R^{-2}$ is
+absorbed by the core defect; on the cap collar use (25.18).
+Here $D_{0,\epsilon}=\lambda_0(R^{-2}-\epsilon^{-2})_+$.
+Relative core coefficient errors are $O(r_L^\gamma)$ and the fixed
+outer cutoff costs $O(q^2)$. The ordinary mass pairing from
+$r(v_L)-E_*=O(q^2)$ has that same order. Consequently
+
+$$
+\begin{aligned}
+\mathcal R_L(f)&=q_{\epsilon,\lambda_Z}(v_L,f)
+                                      -r(v_L)\langle v_L,f\rangle,\\
+\|\mathcal R_L\|_{\mathcal N'}
+ &\le C_7\{q^2+q^3(1+T)^8+q(1+T)^8e^{-\sigma T}
+                          +r_L^{\gamma/2}q(1+T)^8\}=O(L^{-2}).
+\end{aligned}
+\tag{25.19}
+$$
+
+The norm equivalence following (25.10) makes this also the bound in
+$a_\epsilon'$ uniformly in $L$. These are form and first-derivative
+estimates for all tests, not a singular pointwise $L^2$ residual.
+
+Let $e_j$ be the actual eigenvalues and $v_j$ the coefficients of $v_L$
+in their orthonormal eigenbasis. The spectral theorem gives
+
+$$
+\|\mathcal R_L\|_{a_\epsilon'}^2
+             =\sum_j\frac{|e_j-r(v_L)|^2|v_j|^2}{e_j+\beta}.
+\tag{25.20}
+$$
+
+The uniform first gap and $r(v_L)\to E_*$ imply, for $j\ge2$,
+$e_j-e_1\le C_8(e_j-r(v_L))^2/(e_j+\beta)$, also at arbitrarily large
+$e_j$. Thus
+$0\le r(v_L)-e_1\le C_8\|\mathcal R_L\|_{a_\epsilon'}^2=O(L^{-4})$.
+The analogous inequality with $e_j+\beta$ controls the higher spectral
+component in $a_\epsilon$ norm by $O(L^{-2})$. Positivity fixes the
+first coefficient's sign and its normalization correction is $O(L^{-4})$.
+This proves (25.2)–(25.3) for the actual unrestricted minimum, including
+the negative third term if the second cancels.
+
+For resources, $\langle\phi_z,\phi\rangle=M$ implies
+$\int\phi_z^2=M+O(q^4)$. Direct sine integration gives
+$\int_0^LP_L(y)^2dy=L/2+\kappa_{\rm cap}+O(L^{-1})$.
+Replacing the elementary profile below $T$ by its exact core changes
+attraction by $O(q^2(1+T)^3)=o(1)$.
+The signed density and unchanged exterior give $R_b+o(1)$;
+normalization costs $O(Lq^2)=o(1)$. Hence
+$\mathcal W_\epsilon[v_L/f_*]=\mathsf D L/2+S_b+o(1)$.
+For $h_L=f_{\epsilon,\lambda_Z}-v_L$, (25.3) gives
+$B_\epsilon[h_L/f_*]+\|h_L\|^2=O(L^{-4})$, and (25.10) gives
+$\mathcal W_\epsilon[h_L/f_*]=O(L^{-2})$.
+Positive-multiplier Cauchy–Schwarz transfers the finite part with error
+$O(L^{-1/2})=o(1)$.
+
+Direct core dilation of $v_L$ gives
+$L^2\int D_\epsilon|v_L|^2d\mu\to
+ a_*^2m_0\lambda_0\nu^2 I$.
+The defect is a summand of $B_\epsilon$; the actual-state cross error
+is $O(L^{-3})$ before multiplication by $L^2$. Dividing by
+$g_{\mathrm c}$ proves the last line of (25.4). The difference is
+$o(1)$, so raw and capped finite parts agree. The exact finite-domain
+identity $T_A=E_{\epsilon,\lambda_Z}+
+ g_{\mathrm c}(1+\lambda_Z/L^2)V_{\rm cap}$ gives the kinetic finite
+part. No differentiation of (25.2) is used. Finally the reference rule
+in (25.1) gives $S_b=\mathsf D\log(b_{\rm bal}/b)$ and all asserted
+cancellation alternatives. $B_3>0$ excludes any further cancellation at
+this order. $\square$
+

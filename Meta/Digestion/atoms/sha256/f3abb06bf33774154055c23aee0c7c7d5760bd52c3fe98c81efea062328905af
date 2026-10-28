@@ -1,0 +1,56 @@
+**Proposition 5.1 (the averaged form is not a projected evolution).** For
+every $\rho,A$ in Definition 2.1, (2.9) is the closed restriction of the
+full form to basic functions, with the exact domain in (3.9). Nevertheless
+the operators
+
+$$
+C_t=K_\rho H_tU
+\tag{5.1}
+$$
+
+need not form a semigroup or equal $S_t^{\rm av}$. In this reversible
+contract they form a semigroup for all $t\ge0$ if and only if the
+equivalent conditions of Theorem 3.1 hold.
+
+Proof. The domain and form assertions were proved using (3.7)--(3.9),
+without symmetry. For core $f,g$, integration by parts shows
+
+$$
+K_\rho\mathscr GUf=-\mathcal L_{\rm av}f.
+\tag{5.2}
+$$
+
+One may alternatively integrate (2.4) over the periodic hidden circle;
+the $\beta$ divergence integrates to zero. Thus even agreement of the
+compressed generator with the averaged differential operator holds in
+the entire class. It is weaker than a semigroup identity.
+
+Indeed selfadjointness of $H_t$ and $K_\rho=U^*$ give the exact bounded
+operator identity
+
+$$
+C_{2t}-C_t^2
+=U^*H_t(1-\Pi)H_tU
+=[(1-\Pi)H_tU]^*[(1-\Pi)H_tU].
+\tag{5.3}
+$$
+
+If $(C_t)$ is a semigroup, the right side is zero, so
+$H_t\mathcal H\subset\mathcal H$ for every $t$. Theorem 3.1 applies.
+The converse follows from (3.2). For the test and $W$ in (4.4),
+strong differentiation at zero gives the more explicit discrepancy
+
+$$
+\langle f,(C_{2t}-C_t^2)f\rangle_\nu
+=t^2\|W\|_\mu^2+o(t^2)>0
+\quad\text{for all sufficiently small }t>0.
+\tag{5.4}
+$$
+
+In (4.7), $m=\int e^{\eta\sin\beta}d\beta$ is a positive constant
+and $A_{\rm av}=I_2$. The restricted averaged generator is therefore
+$\partial_k^2+\tfrac14\partial_\alpha^2$, exactly as for the constant
+case [N, (10.24)]. Equations (4.8), (4.5) and (5.4) show why that average
+does not make the original diffusion sufficient for every representative.
+$\square$
+

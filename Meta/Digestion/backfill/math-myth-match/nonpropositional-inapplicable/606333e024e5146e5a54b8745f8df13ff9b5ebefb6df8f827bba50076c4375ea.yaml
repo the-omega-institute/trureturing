@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:606333e024e5146e5a54b8745f8df13ff9b5ebefb6df8f827bba50076c4375ea
+  normalized_sha256: sha256:606333e024e5146e5a54b8745f8df13ff9b5ebefb6df8f827bba50076c4375ea
+cas_ref: sha256:606333e024e5146e5a54b8745f8df13ff9b5ebefb6df8f827bba50076c4375ea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 圈占、契约及历史估算的来源与解释限制。
+    previous_atom_id: 7144947ec1eba960b37ce2c13e8faa2168851523e34bf3927db344ae1c34084e
+    next_atom_id: 27174f3697249f9c7ceb494c6cf917336f2dc2bf35d48c04b6eeb77aa887699e

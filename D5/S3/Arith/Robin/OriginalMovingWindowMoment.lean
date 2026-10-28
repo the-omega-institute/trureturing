@@ -7,7 +7,7 @@
    digest: The original reciprocal-logarithmic moving window has explicit decaying moment bounds. -/
 
 import D5.S3.Arith.Robin.MellinWeightedVariation
-import D5.S3.Arith.Robin.ActualRobinClockCovariance
+import D5.S3.Arith.Robin.LogarithmBounds
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
@@ -40,17 +40,6 @@ lemma weight_pos {x : ℝ} (hx : 1 < x) : 0 < weight x := by
   unfold weight
   positivity [Real.log_pos hx]
 
-private lemma weight_continuous {a b : ℝ} (ha : 1 < a) :
-    ContinuousOn weight (Icc a b) := by
-  intro x hx
-  have hx1 := ha.trans_le hx.1
-  have hx0 : 0 < x := by linarith
-  have hl := Real.log_pos hx1
-  exact ((Real.continuousAt_log hx0.ne').add continuousAt_const).div
-    ((continuousAt_id.pow 2).mul ((Real.continuousAt_log hx0.ne').pow 2))
-    (mul_ne_zero (pow_ne_zero 2 hx0.ne') (pow_ne_zero 2 hl.ne'))
-    |>.continuousWithinAt
-
 lemma log_large {x : ℝ} (hx : 4 ≤ x) : 1 ≤ Real.log x := by
   have h := Real.log_pow (2 : ℝ) 2
   norm_num at h
@@ -58,7 +47,7 @@ lemma log_large {x : ℝ} (hx : 4 ≤ x) : 1 ≤ Real.log x := by
   have h4 : 1 ≤ Real.log (4 : ℝ) := by linarith
   exact h4.trans (Real.log_le_log (by norm_num) hx)
 
-private lemma weight_antitone {t y : ℝ} (ht : 1 < t) (hty : t ≤ y) :
+lemma weight_antitone {t y : ℝ} (ht : 1 < t) (hty : t ≤ y) :
     weight y ≤ weight t := by
   have ht0 : 0 < t := by linarith
   have hscaled := MellinWeightedVariation.scaleWeight_antitone
@@ -69,7 +58,7 @@ private lemma weight_antitone {t y : ℝ} (ht : 1 < t) (hty : t ≤ y) :
     (weight_pos (ht.trans_le hty)).le
   exact (mul_le_mul_iff_right₀ ht0).mp (hnormalize.trans hscaled)
 
-private lemma weight_ratio_lower {t y : ℝ} (ht : 4 ≤ t) (hty : t ≤ y) :
+lemma weight_ratio_lower {t y : ℝ} (ht : 4 ≤ t) (hty : t ≤ y) :
     (t / y) ^ 4 * weight t ≤ weight y := by
   have ht0 : 0 < t := by linarith
   have hy0 : 0 < y := ht0.trans_le hty
@@ -127,7 +116,7 @@ private lemma body_continuous {t b β : ℝ} (ht : 4 ≤ t) :
     ((continuousOn_id.sub continuousOn_const).rpow_const
       (fun x hx => Or.inl (by linarith [hx.1] : x - 2 ≠ 0)))
 
-private lemma triangle_integral (t b C : ℝ) :
+lemma triangle_integral (t b C : ℝ) :
     (∫ x in t..b, C * (b - x)) = C * (b - t) ^ 2 / 2 := by
   have hi : (∫ x in t..b, b - x) = (b - t) * b - (b ^ 2 - t ^ 2) / 2 := by
     simpa only [Pi.sub_apply, id_eq, intervalIntegral.integral_const, integral_id, smul_eq_mul]
@@ -220,7 +209,7 @@ private theorem endpoint_moment_bounds {t β : ℝ} (ht : 4 ≤ t) (hβ : 0 ≤ 
     convert hu using 1 <;> first | rfl |
       (field_simp [(Real.rpow_pos_of_pos ht0 (11 / 10 : ℝ)).ne'] <;> ring)
 
-private lemma negative_power_lower {δ c : ℝ} (hδ : 0 ≤ δ) (hc : 0 ≤ c) :
+lemma negative_power_lower {δ c : ℝ} (hδ : 0 ≤ δ) (hc : 0 ≤ c) :
     1 - c * δ ≤ (1 + δ) ^ (-c) := by
   have hd : ∀ x ∈ Icc (1 : ℝ) (1 + δ), HasDerivAt
       (fun y : ℝ => y ^ (-c) + c * y)
@@ -274,7 +263,7 @@ private lemma negative_power_upper {z c : ℝ} (hz : (1 / 2 : ℝ) ≤ z)
   dsimp [C] at h
   nlinarith
 
-private lemma width_scale {t : ℝ} (ht : 0 < t) :
+lemma width_scale {t : ℝ} (ht : 0 < t) :
     width t ^ 2 / t ^ (11 / 10 : ℝ) = t ^ (1 / 2 : ℝ) := by
   unfold width
   rw [← Real.rpow_natCast, ← Real.rpow_mul ht.le, ← Real.rpow_sub ht]

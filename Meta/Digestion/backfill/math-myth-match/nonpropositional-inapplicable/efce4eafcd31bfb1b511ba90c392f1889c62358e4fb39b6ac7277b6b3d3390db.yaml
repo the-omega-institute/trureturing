@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:efce4eafcd31bfb1b511ba90c392f1889c62358e4fb39b6ac7277b6b3d3390db
+  normalized_sha256: sha256:efce4eafcd31bfb1b511ba90c392f1889c62358e4fb39b6ac7277b6b3d3390db
+cas_ref: sha256:efce4eafcd31bfb1b511ba90c392f1889c62358e4fb39b6ac7277b6b3d3390db
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 自我相续批次的哲学方向、文献范围及未验证边界；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: 718718ee0fb81402de4b0c86f3dd16ae9a263b1c4a330fda652acb6cdf567415
+    next_atom_id: 282f3bf12d5a16df410ea57da0a539b6daeb7e60d8055f727f3d722622c17f0c

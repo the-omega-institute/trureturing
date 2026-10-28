@@ -5,9 +5,11 @@ year: 2007
 title: "Positive partial transpose from spectra"
 doi: 10.1103/PhysRevA.76.052325
 url: https://arxiv.org/abs/quant-ph/0502170
-claim: "For 3-by-n dimensions, absolute PPT is equivalent to two explicitly displayed 3-by-3 spectral linear matrix inequalities."
+claim: "At fixed total dimension, APPT for a factorization with larger minimum local dimension implies APPT for one with smaller minimum local dimension; in 3-by-n dimensions APPT is equivalent to two explicit spectral LMIs."
 strata_touched:
   - D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction
+  - D5/S3/Quantum/Entanglement/AbsolutePPT/FiniteBellCorner
+  - D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitQuintitMaximumPurity
 license: citation-only
 triage: anchor
 ---
@@ -48,3 +50,28 @@ eigenvalues of $A$ in decreasing order. Then $A$ is PPT with respect to any deco
 $H_3 \otimes H_n$ if and only if linear matrix inequalities (5) hold.
 
 The delivery uses the necessary direction only. The Lean nine-coordinate boundary vector contains the top three eigenvalues followed by the bottom six, all in decreasing order; source indices start at one and Lean Fin indices start at zero.
+
+
+## Fixed-total-dimension monotonicity
+
+Theorem 2, PDF page 5, states: let $N=n_1m_1=n_2m_2$ with
+$p_1=\min(n_1,m_1)\geq p_2=\min(n_2,m_2)$. A self-adjoint positive
+semidefinite operator on $H_N$ that is PPT with respect to every
+decomposition $H_N=H_{n_1}\otimes H_{m_1}$ is also PPT with respect to
+every decomposition $H_N=H_{n_2}\otimes H_{m_2}$.
+
+Thus APPT for $4\times6$ implies APPT for $3\times8$, since both total
+dimensions are 24 and $4\geq3$. The tensor identification is unitary;
+trace and purity are unchanged. Combining this implication with the
+established qutrit dimension-24 maximum $32/26^2=8/169$ gives the same
+upper bound for $4\times6$. The known ray $(I+2|\psi\rangle\langle\psi|)/26$
+is APPT in $4\times6$ and attains the bound. This scalar application is
+therefore a consequence of existing mathematics, not an independent
+open-problem resolution. The generic product Bell-corner construction is
+a direct formal route to the necessary LMIs; it does not assume that
+arbitrary global coordinate packings commute with partial transpose.
+
+Theorem 2 preserves total dimension. It gives no transfer from dimension
+20 to dimensions 18 or 21, no result for dimension 28 by the
+$3\times8$ bound, no classification of maximizers, and no equivalence
+between APPT and absolute separability.

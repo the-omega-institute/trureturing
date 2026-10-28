@@ -1,0 +1,34 @@
+**Definition 107.1 (Original histories around a retained emission).**
+Take a fixed original prefix schedule, with actual history $u$, and an
+original intermediate schedule, with actual history $w$, between the
+retained emission and its one return. Both schedules are externally fixed;
+no label selects a gate or changes the schedule. Write
+$r_u=A_u(\rho_0)$, $C_w=U_w$, $a_w=2^{-k(w)}$, and
+$\widetilde C_w=BC_wB^\dagger+(I_5-BB^\dagger)$.
+Define two maps $L_{wj}:\mathbb C^3\to\mathcal H$ by
+
+$$
+L_{wj}x=\mathsf J(BC_wV_jx\otimes g_j),\qquad j=0,1.
+\tag{107.1}
+$$
+
+For an arbitrary complex input $X$ on the code, define the full
+unnormalized returned operator
+
+$$
+\begin{aligned}
+\mathcal R_{\gamma,w}(X)=\frac{a_w}{2}\big(&L_{w0}XL_{w0}^\dagger
+ +L_{w1}XL_{w1}^\dagger\\
+ &+\gamma L_{w0}XL_{w1}^\dagger
+ +\bar\gamma L_{w1}XL_{w0}^\dagger\big).
+\end{aligned}
+\tag{107.2}
+$$
+
+All four terms are operators on the full ten-dimensional $\mathcal H$.
+The actual state on the archive event $(u,w)$ is
+$\mathcal R_{\gamma,w}(r_u)$, without dividing by its mass. The marked
+emission has no classical $g$ label in this context; its actual carrier
+is retained. All original labels before it and during retention are
+present in $(u,w)$.
+

@@ -4328,3 +4328,417 @@ $$
 对任何包含低层代数并正向共轭不变的含幺星子代数 $R$，沿实际树从叶向根归纳，仪器节点只用 $R$ 中的有限和、乘积与伴随，得到每个 $E_e\in R$，即 $S_W\subseteq R$。将此论证用于刚构造的 $D$，得 $S_W\subseteq D$，与前一包含合成 $D=S_W$；对一般 $R$ 同时给最小性。最后，$\alpha|_{S_W}$ 的满射与 $\alpha$ 的单射给 $X\in D\Longleftrightarrow\alpha(X)\in D$。这里的逆映射只用于有限维线性论证，未出现在事件树的原语中。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 40. 有限 Fibonacci 进位历史的必要边界
+
+### 40.1 定义与精确来源对应
+
+令
+
+$$
+
+F_0=0,\qquad F_1=1,\qquad F_{m+2}=F_{m+1}+F_m,
+\qquad
+\varphi=\frac{1+\sqrt5}{2}.
+
+$$
+
+对 $d\ge2$，令 $A_d=(\mathbb Z/d\mathbb Z)^2$，
+
+$$
+
+f_d(a,b)=(b,a+b\bmod d),\qquad
+k_d(a,b)=\left\lfloor\frac{\operatorname{val}(a)+\operatorname{val}(b)}d\right\rfloor ,
+
+$$
+
+其中 $\operatorname{val}$ 是 $0,\ldots,d-1$ 的标准代表。沿用定义 4.1 的记号，令
+
+$$
+
+s_{d,N}(a)=\bigl(k_d(a),k_d(f_d(a)),\ldots,k_d(f_d^{N-1}(a))\bigr)
+
+$$
+
+为长度 $N$ 的完整移动前缀；$N=0$ 时这是唯一的空词。这里逐时
+记录实际进位，而不是只取累计进位的终点余数。
+
+令 $\mathbb T^2=\mathbb R^2/\mathbb Z^2$，每个点取
+$[0,1)^2$ 中的标准代表，记 $\{t\}=t-\lfloor t\rfloor$。归一化
+
+$$
+
+(a,b)\longmapsto z=\left(\frac{\operatorname{val}(a)}d,
+\frac{\operatorname{val}(b)}d\right)
+
+$$
+
+把 $f_d$ 送到
+
+$$
+
+T(x,y)=(y,\{x+y\}).
+
+$$
+
+定义整数向量
+
+$$
+
+v_0=(1,0),\qquad v_1=(0,1),\qquad v_{m+2}=v_m+v_{m+1},
+
+$$
+
+以及
+
+$$
+
+u_m(z)=v_m\mathbin{\cdot}z.
+
+$$
+
+于是 $v_m=(F_{m-1},F_m)$（$m\ge1$）。
+
+**引理 40.1（整数层的历史恒等式）。** 对 $j\ge0$，从 $z$ 出发的第 $j$ 个标准代表恰为
+
+$$
+
+\bigl(\{u_j(z)\},\{u_{j+1}(z)\}\bigr),
+
+$$
+
+并且第 $j$ 个实际进位为
+
+$$
+
+\begin{aligned}
+k_j(z)
+&=\left\lfloor\{u_j(z)\}+\{u_{j+1}(z)\}\right\rfloor\\
+&=\lfloor u_{j+2}(z)\rfloor-\lfloor u_j(z)\rfloor-\lfloor u_{j+1}(z)\rfloor .
+\end{aligned}
+
+$$
+
+证明。$j=0$ 时 $u_0=x,u_1=y$。若第 $j$ 步成立，则
+
+$$
+
+\{u_j\}+\{u_{j+1}\}
+=u_j+u_{j+1}-\lfloor u_j\rfloor-\lfloor u_{j+1}\rfloor
+
+$$
+
+的分数部分是 $\{u_{j+2}\}$，因为 $v_{j+2}=v_j+v_{j+1}$；这给出下一步
+$(\{u_{j+1}\},\{u_{j+2}\})$。同一整数恒等式给出第二式。它在
+$u_m\in\mathbb Z$ 的边界上也成立，因为分数部分取值于
+$[0,1)$。$\square$
+
+定义环面上的长度 $N$ 进位词
+
+$$
+
+s_N(z)=\bigl(k_j(z)\bigr)_{0\le j<N}.
+
+$$
+
+在归一化网格上，$s_N$ 的限制经上述归一化对应恰为 $s_{d,N}$；
+$N=0$ 时二者都是空词。因此长度 $N$ 的历史只会在
+
+$$
+
+K_m=\{z\in\mathbb T^2:u_m(z)\in\mathbb Z\},
+\qquad 0\le m\le N+1,
+
+$$
+
+这些整数层圆上改变；这里恰好包含每个
+$0\le j<N$ 所需的 $u_j,u_{j+1},u_{j+2}$。
+
+### 40.2 Fibonacci 整数层的圆排列
+
+每个 $v_m$ 都是 primitive 向量。对 $v_0,v_1$ 这是显然的；对
+$m\ge1$，相邻 Fibonacci 数满足
+$\gcd(F_{m-1},F_m)=1$，由 Euclid 算法归纳得到。因此 $K_m$ 是
+字符
+
+$$
+
+\mathbb T^2\longrightarrow\mathbb R/\mathbb Z,\qquad
+z\longmapsto v_m\mathbin{\cdot}z
+
+$$
+
+的核，是一个嵌入圆。
+
+**引理 40.2（交点重数）。** 若 $0\le i<j$，则
+
+$$
+
+\det(v_i,v_j)=(-1)^iF_{j-i},
+
+$$
+
+并且 $K_i\cap K_j$ 有恰好 $F_{j-i}$ 个点。
+
+证明。固定 $i$，行列式关于第二指标满足 Fibonacci 递推；初值为
+
+$$
+
+\det(v_i,v_i)=0,\qquad
+\det(v_i,v_{i+1})=(-1)^i.
+
+$$
+
+故得到所示公式。两条字符的交是行向量为 $v_i,v_j$ 的整数矩阵
+$\mathbb T^2\to\mathbb T^2$ 的核。其核的基数等于相应子格在
+$\mathbb Z^2$ 中的指数，即行列式绝对值；这是标准的二维格点指数公式。
+所以交点数为 $|\det(v_i,v_j)|=F_{j-i}$。所有 $K_m$ 都经过原点，
+而非平行性又保证两圆不共享弧段。 $\square$
+
+取 $n=N+2$，只排列 $K_0,\ldots,K_{n-1}$。把所有两两交点作为
+顶点，把每个圆去掉顶点后的连通开弧作为边，把补集的连通分支作为面。
+
+**引理 40.3（细胞性与各层上的历史不变性）。** 上述排列是有限的细胞
+排列；每个面是开圆盘，并且每个面、每条开边和每个顶点上
+$s_N$ 都是常值。
+
+证明。$K_0$ 与 $K_1$ 是坐标圆，去掉它们后得到一个开单位方形。
+在该方形内，$K_m$ 是有限条直线段
+$v_m\cdot(x,y)\in\mathbb Z$ 的并。对每一个 $m$，指定
+$\lfloor u_m\rfloor$ 就是在两个相邻整数层之间取一个开条带；因此
+一个补集分支正是开方形与这些开条带的交。这个交是凸的开多边形，
+故是开圆盘，且每个 $\lfloor u_m\rfloor$ 在其上恒定。
+
+非坐标的开边位于某个 $K_m$ 内。在它所属的单一方形图中，
+$u_m$ 恒等于一个整数；任意另一个 $u_\ell$ 若在该边上穿过整数层，
+交点就属于已删去的顶点，所以其 floor 在整条开边上恒定。坐标边上，
+例如 $x=0$ 且 $0<y<1$，同样把其余 $u_m$ 看作 $y$ 的整数层；
+所有穿越点仍是顶点。顶点是单点。引理 40.1 遂说明完整进位词在每个
+面、边和顶点上都恒定。 $\square$
+
+### 40.3 精确有限历史计数
+
+**定理 40.4（全点历史像的 Fibonacci 界）。** 对所有 $d\ge2$ 和
+$N\ge0$，
+
+$$
+
+\boxed{\;
+\left|\operatorname{im}s_{d,N}\right|
+\le 4\bigl(F_{N+5}-N-4\bigr)
+\le 4\varphi^{\,N+4}.
+\;}
+
+$$
+
+证明。令
+
+$$
+
+S_n=\sum_{0\le i<j<n}F_{j-i}.
+
+$$
+
+若 $p$ 是顶点，记经过 $p$ 的圆数为 $r_p$。由引理 40.2 作交点的
+重数计数，
+
+$$
+
+S_n=\sum_p\binom{r_p}{2}.
+
+$$
+
+每个圆至少经过原点；若第 $i$ 个圆上有 $t_i$ 个不同顶点，
+则删去这些点后恰有 $t_i$ 条开边，即使 $t_i=1$ 也如此。因此
+
+$$
+
+E=\sum_i t_i=\sum_p r_p\le
+2\sum_p\binom{r_p}{2}=2S_n.
+
+$$
+
+所有圆共有原点，故排列图连通。引理 40.3 给出圆盘面，故有限细胞
+分解的 Euler 公式在环面上为
+
+$$
+
+V-E+H=0.
+
+$$
+
+全体面、边、顶点的总数于是为
+
+$$
+
+V+E+H=2E\le4S_n.
+
+$$
+
+引理 40.1 和 40.3 表明 $s_N$ 在每个 stratum 上至多取一个值；
+网格
+
+$$
+
+\left\{\left(\frac a d,\frac b d\right):0\le a,b<d\right\}
+\subset\mathbb T^2
+
+$$
+
+只是环面上的子集，故其像的基数不超过 $4S_n$。
+
+按差值 $r=j-i$ 重排，并使用标准的 Fibonacci 部分和恒等式
+
+$$
+
+\sum_{r=1}^{t}F_r=F_{t+2}-1,\qquad
+\sum_{r=1}^{t}rF_r=tF_{t+2}-F_{t+3}+2
+
+$$
+
+（第二式由第一式和递推归纳得到），得
+
+$$
+
+S_n=\sum_{r=1}^{n-1}(n-r)F_r
+=F_{n+3}-n-2
+=F_{N+5}-N-4.
+
+$$
+
+当 $N=0$ 时这是 $S_2=F_5-4=1$；排列只有两个坐标圆，
+$V=1,E=2,H=1$，同一 Euler 计数仍给出四个 strata，而空词实际只有
+一个值。最后，$F_m\le\varphi^{m-1}$（$m\ge1$）由
+$F_1=F_2=1$ 和 $\varphi^2=\varphi+1$ 归纳得到，所以
+
+$$
+
+4(F_{N+5}-N-4)\le4F_{N+5}\le4\varphi^{N+4}.
+
+$$
+
+$\square$
+
+**推论 40.5（必要分离界与常数）。** 若 $s_{d,N}$ 注入
+$A_d$，则
+
+$$
+
+d^2=\left|\operatorname{im}s_{d,N}\right|
+\le4(F_{N+5}-N-4)\le4\varphi^{N+4}.
+
+$$
+
+因而对所有 $d\ge2,N\ge0$，
+
+$$
+
+\boxed{\quad d^2\le C_{\mathrm{nec}}\varphi^N,\qquad
+C_{\mathrm{nec}}=4\varphi^4.\quad}
+
+$$
+
+这里 $C_{\mathrm{nec}}>0$ 与 $d,N$ 无关；该结论是必要条件，不给出
+最佳常数或最短前缀的精确值。
+
+由既有定理 4.3 的充分阈值
+
+$$
+
+N_d=\left\lfloor3+2\log_\varphi(d-1)\right\rfloor+1
+
+$$
+
+定义最小分离时刻
+
+$$
+
+h(d)=\min\{N\ge0:s_{d,N}\text{ 注入}\}.
+
+$$
+
+该集合由既有充分阈值非空。推论 40.5 给出
+
+$$
+
+h(d)\ge2\log_\varphi d-4-\log_\varphi4,
+
+$$
+
+而 $h(d)\le N_d\le2\log_\varphi(d-1)+4\le2\log_\varphi d+4$。
+所以这里只得到与 $2\log_\varphi d$ 相差统一加法常数的上下界；它是
+已有充分阈值与本必要界的直接匹配，不是最优性断言。
+
+### 40.4 对完整移动前缀代数的必要结论
+
+固定 $d,e\ge2$，取既有定义 4.1–4.2 的
+$\mathcal H_A=\mathbb C^{A_d}$、$\mathcal H_H=\mathbb C^{A_e}$、联合
+Fibonacci 置换 $U$，以及移动低层算子
+$B_t=U_d^tBU_d^{-t}$。令 $\mathcal S_N(d,e)$ 为**完整移动前缀**
+代数：它由所有满足
+
+$$
+
+(U^t)^\dagger(B_t\otimes I_H)U^t
+\in\mathcal B(\mathcal H_A)\otimes I_H
+\qquad(1\le t\le N)
+
+$$
+
+的低层矩阵 $B$ 组成；$N=0$ 时条件为空。这正是已有定理
+4.2 使用的每个正移动时刻的全前缀，而不是只检查一个终点。
+
+**命题 40.6（支持定理给出的等价性）。** 对 $d,e\ge2$ 和 $N\ge0$，
+
+$$
+
+\mathcal S_N(d,e)
+=\{B:B_{aa'}=0\text{ whenever }s_{d,N}(a)\ne s_{d,N}(a')\},
+
+$$
+
+从而
+
+$$
+
+\boxed{\qquad \mathcal S_N(d,e)=\Delta_A
+\quad\Longleftrightarrow\quad
+s_{d,N}\text{ 注入}.\qquad}
+
+$$
+
+证明。前一个等式就是既有完整前缀支持定理：移动时间
+$1,\ldots,N$ 的共同高层支撑恰好要求矩阵元只连接相同的完整进位词。
+若 $s_{d,N}$ 不注入，取 $a\ne a'$ 而
+$s_{d,N}(a)=s_{d,N}(a')$。来源矩阵单位 $E_{aa'}$ 只有这一枚非对角
+矩阵元，满足该支持条件，故 $E_{aa'}\in\mathcal S_N(d,e)$，而
+$E_{aa'}\notin\Delta_A$。反之若 $s_{d,N}$ 注入，支持条件只允许
+$a=a'$，所以 $\mathcal S_N(d,e)\subseteq\Delta_A$；每个对角矩阵
+本来都满足条件，故反向包含成立。$N=0$ 时空词在所有标签上相同，
+同一非对角矩阵单位说明两边均不相等。 $\square$
+
+因此在现有 $d,e\ge2$ 的完整复前缀代数中，若它达到
+$\Delta_A$，必有推论 40.5 的同一必要界。这个结论只使用实际
+$s_{d,N}$ 的支持关系和矩阵单位，不引入额外的
+标签、终点累计进位或操作实现假设；它也不涉及高标签的区分、单终点
+代数的回归或其它物理解释。
+
+### 40.5 标准输入与文献范围
+
+引理 40.2 使用 primitive 整数字符的环面核为嵌入圆、整数矩阵核的格点
+指数等标准事实；定理 40.4 使用环面 Euler 特征和 Fibonacci 部分和。
+这些事实只作为中间数学输入。Sidorov–Vershik,
+[*Bijective arithmetic codings of hyperbolic automorphisms of the 2-torus,
+and binary quadratic forms*](https://arxiv.org/abs/math/9810085v1)，讨论
+双向符号空间到二维环面的 arithmetic codings 及其几乎处处性质；
+Sidorov, [*Bijective and general arithmetic codings for Pisot automorphisms
+of the torus*](https://arxiv.org/abs/math/0006159v1)，在 Pisot 条件下讨论
+双向 $\beta$-compactum 并区分其单向限制；Kenyon–Vershik,
+[*Arithmetic construction of sofic partitions of hyperbolic toral
+automorphisms*](https://doi.org/10.1017/S0143385798100445)，构造
+sofic 系统到双曲环面自同构的有界多对一连续半共轭。本节的对象是给定
+Fibonacci 网格上的**单向、全点、有限**进位历史；上述编码结果不被当作
+该有限历史界的供应者，且本节不作世界范围的原创性断言。
+
+
+## 追加锚（本行以下为增补区）

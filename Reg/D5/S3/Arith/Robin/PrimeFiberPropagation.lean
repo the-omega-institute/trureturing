@@ -430,6 +430,67 @@ def replaceAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@robinAt_pri
 #print axioms fibreRegistration
 #print axioms robinFibreRegistration
 
+abbrev positivityArena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ}, n ≠ 0 → 0 < R.readout () () n
+
+def positivityRejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+private theorem positivity_rejected_law : ¬ positivityArena.Law positivityRejected := by
+  intro h
+  have hbad := h (n := 1) (by norm_num)
+  norm_num [positivityRejected, realize] at hbad
+
+def positivityFamily : Registration positivityArena (type_of% (@divisorRatio_pos)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@divisorRatio_pos, positivityRejected, positivity_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨positivityRejected, ?_, rfl, positivity_rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+def positivityAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@divisorRatio_pos)
+    (type_of% (realize signature (fun _ _ n => divisorRatio n) (fun e => nomatch e))) Unit Unit where
+  unitName := `D5.S3.Arith.Robin.PrimeFiberPropagation.divisorRatio_pos.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.PrimeFiberPropagation.positivityFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨positivityArena⟩
+  objectArena := .source ⟨positivityArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source positivityArena ⟨positivityFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ n => divisorRatio n) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.PrimeFiberPropagation
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms positivityFamily
+
 end
 
 end Reg.D5.S3.Arith.Robin.PrimeFiberPropagation

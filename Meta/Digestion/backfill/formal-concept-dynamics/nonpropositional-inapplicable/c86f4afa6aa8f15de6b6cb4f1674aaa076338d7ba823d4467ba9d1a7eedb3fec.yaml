@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c86f4afa6aa8f15de6b6cb4f1674aaa076338d7ba823d4467ba9d1a7eedb3fec
+  normalized_sha256: sha256:c86f4afa6aa8f15de6b6cb4f1674aaa076338d7ba823d4467ba9d1a7eedb3fec
+cas_ref: sha256:c86f4afa6aa8f15de6b6cb4f1674aaa076338d7ba823d4467ba9d1a7eedb3fec
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅声明过程 F 和目标后置条件 Q 的类型；wp 定义在另一个 atom。
+    previous_atom_id: 76be34d7576648df0364554417219191b86662ef5d98238de24a131c0c459196
+    next_atom_id: e2d1c6be334083d1b1d46b9450cf4c47a3be9699e4209cb0881ad0537d383fca

@@ -927,3 +927,717 @@ whose physical realization and broader recovery questions remain
 open as well.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. One common temporal query versus a supplied target and count
+
+**Convention 9.1 (source and evidence boundary).** Sections 9–14 use
+public repository suppliers at revision
+`17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b`. Their results below are
+ordinary mathematics, without new Lean certification. The source,
+substitution, four-reply literal port, paid complete handoff and
+source-independent request family are exactly Definitions 1.2–1.4.
+In particular, one actual initial source remains stationary; the
+expressions involving its substituted versions are predictions, not
+additional observations or updates of that source.
+
+Write $\Gamma_q=G_q$ for the credited factor in Convention 2.1.
+Its all-count decoder and the equivalence of factors and trajectories
+are reused from [AAR, Definition 12.2, Theorem 12.3 and Proposition
+13.3][CombAAR]. The canonical normalization and paid boundary scan
+below are reused from [FMR, Definition 2.1, Lemma 2.2 and Theorems
+2.3–2.5][CombFMR] and [RRN, §7][CombRRN].
+
+**Definition 9.2 (two query/output contracts).** Call the original
+contract of Definition 1.4 $\mathsf U$. For each complete attained
+code $e$ and later public target $p$, it selects zero Reads or one
+word $w(e,D,p)$ before receiving any count. After that observation
+it must answer every subsequently supplied authentic $k\ge0$.
+
+Define a relaxed comparison task $\mathsf P$ with exactly the same
+source, preparation, handoff and code accounting. After export it
+receives the pair $(p,k)$, with $p\in\mathcal P_D$ and authentic
+$k\ge0$. It selects zero Reads or one word $w(e,D,p,k)$ and need
+output only $r_{\rho^k t}(p)$ for that supplied count. It need not
+leave a predictor correct at other counts. Both tasks require one
+common preparation, independent of both $p$ and $k$, correct for
+every $t\in\mathcal F_D$ and every allowed later input. Neither
+permits access to the preparation transcript.
+
+For a fixed fiber and target, the relevant distinction is
+
+$$
+\begin{aligned}
+\mathsf U &: \quad \exists w\ \forall k\ge0\ \exists\delta_k
+ \ \forall t\text{ in the fiber},\quad
+ \delta_k(r_t(w))=r_{\rho^k t}(p),\\
+\mathsf P &: \quad \forall k\ge0\ \exists w_k\ \exists\delta_k
+ \ \forall t\text{ in the fiber},\quad
+ \delta_k(r_t(w_k))=r_{\rho^k t}(p).
+\end{aligned}
+\tag{LTR.24}
+$$
+
+Here a constant experiment represents zero Reads. In $\mathsf U$
+the decoder family has the effective factor realization (LTR.4);
+the query itself cannot depend on $k$. Revealing a count early while
+still requiring the resulting predictor to work for all counts does
+not change the common-query requirement.
+
+**Definition 9.3 (canonical states and prescribed refinement).** Set
+$C_0=\langle\alpha,\alpha\rangle$ and use the credited canonical
+sets and their attained sizes
+
+$$
+S_1=\{\alpha,\beta,C_0\},\qquad
+S_{a+1}=\{\alpha,\beta\}\sqcup(S_a\times S_a),\qquad
+s_a=|S_a|,\quad s_1=3,\quad s_{a+1}=2+s_a^2.
+\tag{LTR.25}
+$$
+
+A pair in this disjoint union means its actual ordered constructor.
+For a right subtree $v$ of height at most $D$, $\pi_D(v)$ keeps
+all reached constructors through depth $D-1$ and replaces each
+branch at that depth by $C_0$. It fixes $S_D$ and preserves
+$r_v(q)$ and $\Gamma_q(v)$ for all $|q|\le D-1$.
+
+For two complete acquired exports $E,E^\circ$ on the whole
+$\mathcal F_D$, say that $E$ **refines** $E^\circ$ if a public
+finite map $g$ satisfies $E^\circ=g\circ E$ on every source.
+Thus a refinement may split an old fiber but cannot merge two old
+names. This is a restriction on the assembly mechanism, not on the
+definition of $M_1(D)$.
+
+**Definition 9.4 (even combs on an actual public scaffold).** Define
+
+$$
+T_0=\alpha,\qquad T_{j+1}=\langle T_j,\alpha\rangle.
+$$
+
+Fix integers $m\ge1$ and $h\ge0$, and put
+
+$$
+d=6m-2,\qquad n=2^h,\qquad D=h+d,\qquad
+\mathcal C_m=\{T_{2r}:0\le r<3m\}\subseteq S_d.
+\tag{LTR.26}
+$$
+
+The heights of these $3m$ distinct trees are $0,2,\ldots,d$;
+all their leaves are alpha. Let $\operatorname{Sc}_0(x)=x$ and
+recursively pair the first and second halves to form the perfect
+ordered height-$h$ scaffold $\operatorname{Sc}_h$. Its public
+frontier words $a_1,\ldots,a_n$ all have length $h$. Put
+
+$$
+\begin{aligned}
+G_{m,h}&=\operatorname{Sc}_h(\mathcal C_m^n)\subseteq S_D,\\
+X_{m,h}&=\{\langle\alpha,u\rangle:u\in G_{m,h}\}
+                  \subseteq\mathcal F_D.
+\end{aligned}
+\tag{LTR.27}
+$$
+
+The scaffold map is injective: its ordered, actually present frontier
+subtrees recover its entries. Consequently $|G_{m,h}|=(3m)^n$.
+This recovery is a mathematical identification, not a supplied subtree
+or source-identity port. At every actual occurrence, homomorphic
+substitution gives
+
+$$
+r_{\rho^k\langle\alpha,\operatorname{Sc}_h(u_1,\ldots,u_n)\rangle}
+ (Ra_iq)=r_{\rho^k u_i}(q).
+\tag{LTR.28}
+$$
+
+Every operational use of the right-hand side below submits the entire
+original-root word on the left. The presence premise is exactly that
+of `NativeDepthPatterns.original_present_transport`; it is never
+asserted at an absent occurrence.
+
+## 10. All-target pointwise recovery with a single slice name
+
+**Lemma 10.1 (even-comb pointwise query).** For every $m\ge1$,
+$d=6m-2$, word $q$ with $|q|\le d-1$, and integer $k\ge0$,
+there is a zero-Read constant or a literal $L^a$, $0\le a\le d-1$,
+whose reply on $T_j$, $j\in\{0,2,\ldots,d\}$, determines
+$r_{\rho^k T_j}(q)$. The choice and decoder are effective functions
+of $m,q,k$, independent of $j$.
+
+**Proof.** First let $q=L^\ell$, including $\ell=0$. The credited
+factor formula gives
+
+$$
+\Gamma_{L^\ell}(T_j)=
+\begin{cases}
+(0,0),&j>\ell,\\
+(2,1),&j=\ell,\\
+(\ell-j+2,0),&j<\ell.
+\end{cases}
+\tag{LTR.29}
+$$
+
+At $k=0$, query $L^\ell$ and return its actual reply. At $k\ge1$
+put $a=\ell+1-k$. If $a<0$, (LTR.29) and (LTR.4) make every
+answer branch. If $a\ge0$, query $L^a$ and decode
+
+$$
+\mathsf{absent}\mapsto\mathsf{absent},\qquad
+\alpha\mapsto\beta,\qquad
+\mathsf{branch}\mapsto\mathsf{branch}.
+\tag{LTR.30}
+$$
+
+Indeed these replies mean respectively $j<a,j=a,j>a$. In the
+first case $k<\ell-j+1$ and the predicted reply is absent. In the
+second $k=\ell-j+1$, giving beta, including $j=\ell,k=1$.
+In the third it is branch; if $j=\ell$ then $k\ge2$, and if
+$j>\ell$ it was a branch already. Also $a\le\ell\le d-1$.
+
+Otherwise write uniquely $q=L^rRu$. Define
+
+$$
+B=\#L(u)+2\#R(u)+2,\qquad
+c=\mathbf1_{q\text{ ends in }R}.
+$$
+
+The first alpha reached is at $L^j$ when $j\le r$, and at
+$L^rR$ when $j>r$. Hence, including $u=\varepsilon$,
+
+$$
+\Gamma_q(T_j)=
+\begin{cases}
+(B+r+2-j,c),&j\le r,\\
+(B,c),&j>r.
+\end{cases}
+\tag{LTR.31}
+$$
+
+As the allowed even $j$ increase, the distinct first coordinates
+$b$ strictly decrease in gaps of at least two, followed by the
+possible final plateau $b=B$. The gap immediately before that
+plateau is two or three. For fixed $k$, (LTR.4) gives branch at
+$b\le k$, beta at $b=k+1$, alpha at $b=k+2$ if $c=1$, and
+absent at the remaining larger $b$. Two distinct exceptional levels
+would differ by one, which the gap excludes. Thus the outputs, in
+increasing $j$ order, consist of an initial absent interval, at most
+one exceptional alpha-or-beta level, and a final branch interval.
+An interval may be empty; an exceptional plateau can have several
+$j$ but only one $b$ and one output.
+
+If the exceptional level is a nonplateau even $j_*$, query
+$L^{j_*}$. Its absent, alpha and branch replies correspond exactly
+to $j<j_*,j=j_*,j>j_*$. Decode them as absent, the exceptional
+output, and branch. Here $j_*\le r\le d-2$. If the exception is
+the final plateau $j>r$, query $L^r$: absent or alpha means
+$j\le r$ and has output absent, whereas branch means the plateau
+and has its exceptional output. This query also has $r\le d-2$.
+
+If there is no exceptional level and both output intervals are
+nonempty, take an odd $a$ strictly between the last absent even
+length and the first branch even length. Its possible replies are
+absent and branch, with exactly those outputs. One can take one
+more than the last absent length, so $a\le d-1$. A constant
+output uses zero Reads. These alternatives exhaust all cases and
+are effective finite comparisons. Every $b\le2d$, so $k\ge2d$
+is constant branch; a finite installed table for $k<2d$ suffices.
+The proof covers every word $q$, including initially absent targets,
+rather than just the pure-left test targets. $\square$
+
+**Corollary 10.2 (pointwise recovery on the whole scaffold slice).**
+Under the explicit promise $t\in X_{m,h}$, the constant export
+with no preparation Reads serves $\mathsf P$ for every original
+target and count, with at most one actual Read of length at most
+$D$.
+
+**Proof.** Write $p=Rq$. If $|q|<h$, it ends at a scaffold branch
+which remains branch. Otherwise $q=a_iq'$ for a unique $i$, with
+$|q'|\le d-1$. Apply Lemma 10.1 to $q',k$ and implement its
+query as $Ra_iL^a$. Its length is $1+h+a\le D$, and (LTR.28)
+gives its required prediction. Only this one local response is
+acquired. The promise in this corollary is not supplied for free in
+the full-family construction below. $\square$
+
+## 11. All-count slice complexity against arbitrary original queries
+
+**Theorem 11.1 (exact attained names on the slice).** Every preparation
+and reader correct for $\mathsf U$ on the full $\mathcal F_D$ has
+at least $m^n$ distinct complete attained names on $X_{m,h}$.
+The lower bound also holds for procedures promised only this slice.
+It permits arbitrary correlated code fibers, different off-target
+queries for different requests, and every finite original-root word.
+There is an attaining $m^n$-name reader on the slice which extends
+to a lawful reader on all of $\mathcal F_D$.
+
+**Proof of the lower bound.** Every initial source in $X_{m,h}$
+has only alpha leaves. Therefore every finite original-root word,
+including a wrapper word, an off-target word or an overlong word,
+has at most the three replies absent, alpha and branch across this
+slice. This assertion concerns the actual stationary source, not
+its later substituted version.
+
+For coordinate $i$ take the permitted target
+$p_i=Ra_iL^{d-1}$, of length exactly $D$. Its local factors are
+
+$$
+\Gamma_{L^{d-1}}(T_j)=
+\begin{cases}
+(d+1-j,0),&j\in\{0,2,\ldots,d-2\},\\
+(0,0),&j=d.
+\end{cases}
+\tag{LTR.32}
+$$
+
+These $3m$ factors are pairwise distinct. By the credited
+factor/trajectory equivalence they demand different complete
+trajectories, not merely different descriptors of the source.
+
+Let $B$ be the set of slice tuples receiving one complete name.
+At $p_i$ the decision to stop or the one literal query is fixed
+throughout $B$ before every count. Equal replies must give the
+same entire trajectory, and hence the same $j_i$. There are at
+most three replies, so its coordinate projection has size at most
+three; a zero-Read branch has size at most one. It follows that
+
+$$
+|B|\le\prod_{i=1}^n|\operatorname{pr}_i B|\le3^n.
+\tag{LTR.33}
+$$
+
+Only containment of a relation in the product of its projections is
+used here. No projection is assumed to be an admissible fiber, no
+independence is inferred, and no donor is moved into the requested
+coordinate. Partitioning $(3m)^n$ actual sources into fibers of
+size at most $3^n$ requires at least $m^n$ names.
+
+**Proof of attainment.** Write each local even height uniquely as
+$j_i=6g_i+2z_i$, with $0\le g_i<m$ and $z_i\in\{0,1,2\}$.
+Export the vector $(g_1,\ldots,g_n)$. If $p$ stops above the
+frontier it is constant branch. Otherwise let $p=Ra_iq'$ and
+query the single original-root word
+
+$$
+Ra_iL^{6g_i+2}.
+\tag{LTR.34}
+$$
+
+For the three possible heights $6g_i,6g_i+2,6g_i+4$, its replies
+are respectively absent, alpha and branch. Thus it identifies the
+local height and its full $\Gamma_{q'}$ from the installed table.
+Use (LTR.4) for every later authentic count. Its length is at most
+$1+h+6(m-1)+2=D-1$. All $m^n$ vectors are attained. Section 12
+gives the paid extension to every actual source. The three-height
+median query itself is the credited ingredient of [COK, Proposition
+23.3][CombCOK]; the reply-range projection argument is also used in
+[RCE, Theorem 8.2][CombRCE]. The new conclusion here is their exact
+all-target quantifier separation and prescribed full-family refinement
+cost. $\square$
+
+## 12. Exact full-family refinement premium and paid acquisition
+
+**Definition 12.1 (the prescribed pointwise export).** Use disjoint
+names $\star$ and $[u]$ for $u\in S_D\setminus G_{m,h}$.
+On every actual $t=\langle\alpha,v\rangle\in\mathcal F_D$ set
+
+$$
+E^\circ(t)=
+\begin{cases}
+\star,&\pi_D(v)\in G_{m,h},\\
+[\pi_D(v)],&\pi_D(v)\notin G_{m,h}.
+\end{cases}
+\tag{LTR.35}
+$$
+
+A name $[u]$ fixes one canonical state, not necessarily one actual
+source. Its full inverse image may contain different terminal labels
+and shapes hidden below the queried boundary. They have the same
+requested factors by canonicalization.
+
+**Theorem 12.2 (full-family exact refinement).** For every $m\ge1$
+and $h\ge0$, at $D=h+6m-2$ the prescribed complete export
+$E^\circ$ is lawfully acquired and correct for $\mathsf P$ on the
+entire original $\mathcal F_D$, with exactly
+
+$$
+N_{\mathsf P}=s_D-(3m)^n+1
+\tag{LTR.36}
+$$
+
+attained names. Among all preparations and readers correct for the
+original $\mathsf U$ on that full family and refining this same
+$E^\circ$, the exact minimum attained alphabet is
+
+$$
+N_{\mathsf U\mid E^\circ}=s_D-(3m)^n+m^n.
+\tag{LTR.37}
+$$
+
+Thus the exact additional-name premium for this prescribed refinement
+is $m^n-1$. Both attaining constructions use, on every actual source,
+exactly
+
+$$
+T_{\rm prep}=2^D-1,\qquad
+Q_{\rm prep}=D,\qquad
+A_{\rm prep}=(D-1)2^D+1
+\tag{LTR.38}
+$$
+
+charged preparation Reads, maximum submitted length, and submitted
+address letters. Their later readers use at most one original-root
+Read: length at most $D$ for $\mathsf P$ and at most $D-1$ for
+$\mathsf U$. These are attaining sufficient costs, not preparation
+optima.
+
+**Proof.** First, each $u\in S_D$ is an actual right subtree in
+the family and is fixed by $\pi_D$. Hence all names in (LTR.35)
+are attained, giving (LTR.36).
+
+For the original reader, replace $\star$ by the $m^n$ vector
+names of Theorem 11.1 on its canonical scaffold image and retain
+each name $[u]$ elsewhere. Explicitly, when $\pi_D(v)\in G_{m,h}$,
+its unique ordered comb entries determine $(g_i)$ as in that theorem.
+This defines a refinement $E^*$: map every vector name to $\star$
+and every other name to itself. Its range has exactly (LTR.37)
+elements.
+
+Conversely, any full-family $\mathsf U$ refinement $E$ must have
+at least $m^n$ distinct names on the actual subset $X_{m,h}$ by
+Theorem 11.1. Each of the other $s_D-(3m)^n$ canonical states
+has its own distinct attained $E^\circ$ name and therefore demands
+at least one disjoint $E$ name. These names cannot be shared with
+$X_{m,h}$. This proves the lower bound (LTR.37) even if the
+refinement splits noncanonical inverse images in arbitrary ways.
+
+Here is an actual preparation for each displayed export. Before
+receiving $p$ or $k$, submit all words $Rw$ with $|w|\le D-1$
+in a fixed public order, including words returning absent. This is
+the credited full boundary scan. Its acquired constructor array
+determines $\pi_D(v)$: stop at every reached labelled leaf, recurse
+through earlier branches, and put $C_0$ at each branch at cutoff
+depth $D-1$. A finite common table computes either $E^\circ$ or
+$E^*$ from this acquired state. Membership in the scaffold and the
+comb heights are computed from this array, never obtained from an
+identity, equality or subtree port. Every comparison is a local
+comparison of already acquired finite descriptions.
+
+The table can be generated effectively by enumerating the finite
+$S_D$, the fixed ordered scaffold and its comb tuples. For each
+fixed installed integer $m$, one procedure works for every public
+$D\ge6m-2$ by taking $h=D-(6m-2)$. At smaller depths the same
+procedure may use one name for each canonical state. It depends on
+public $D$ and fixed installed code, never on a later target or count.
+All its loops and tables are finite, so it terminates on every actual
+source. This specifies an effective acquisition, rather than assigning
+free colors to an unknown source.
+
+A later name $[u]$ fixes every requested factor, so both readers
+use zero Reads there. On $\star$, use Corollary 10.2's pointwise
+reader. On a vector name, use (LTR.34)'s count-blind reader and
+then the all-count factor decoder. For $q$ stopping above the
+frontier, both output constant branch. Every other original target
+enters one unique actual scaffold occurrence. These cases exhaust
+all $p\in\mathcal P_D$.
+
+To check correctness beyond the canonical sources, let
+$u=\pi_D(v)\in G_{m,h}$. Canonicalization preserves all constructors
+through relative depth $D-1$. The scaffold roots at depth $h$ are
+therefore actually present in $v$, and every selected relative query
+has length at most $D-1$. Its reply on $v$ equals its reply on $u$.
+The requested $\Gamma_q$ also agrees, including when $q$ is
+initially absent and including any terminal labels not retained by
+$\pi_D$. Thus exactly the same installed query and decoder work
+on the entire actual inverse image of the canonical name. Transport
+at a scaffold root is lawful because that root is present; no absent
+address is treated as a supplied subtree. On a name $[u]$, factor
+preservation alone proves correctness with zero Reads. This proves
+both whole-family attainments with the same stationary actual source.
+
+There are $\sum_{l=0}^{D-1}2^l=2^D-1$ scan words. They include
+length-$D$ original-root words, whether present or absent, and their
+length sum is
+
+$$
+\sum_{l=0}^{D-1}(l+1)2^l=(D-1)2^D+1.
+$$
+
+This proves every equality in (LTR.38). The late length bounds were
+proved in Corollary 10.2 and Theorem 11.1.
+
+Finally export only a fixed-width encoding of the displayed complete
+name. Use public allocation, the fixed scan schedule and padded finite
+table selection. The separately paid handoff and access-isolation
+services of Assumption 1.3 make all arrays, acquired shape information,
+selectors, operands, buffers, lengths, transcripts, control, allocation
+and accessible timing inaccessible except for functions of this name
+and public inputs. If any additional acquired distinction survives,
+it belongs in the alphabet and these counts would no longer describe
+that export. The services are declared premises, not inferred physical
+erasure or entry operations. This completes the paid complete-code
+construction. $\square$
+
+**Corollary 12.3 (an unbounded prescribed-code premium).** For fixed
+$m=2$, $d=10$ and every $h\ge0$, the one special name of $E^\circ$
+requires exactly $2^{2^h}$ names in an original-task refinement.
+The full-family attained alphabets are respectively
+
+$$
+s_{h+10}-6^{2^h}+1,\qquad
+s_{h+10}-6^{2^h}+2^{2^h},
+\tag{LTR.39}
+$$
+
+and their exact additive difference is $2^{2^h}-1$.
+
+**Proof.** Substitute $m=2,n=2^h$ in Theorem 12.2. $\square$
+
+This difference counts additional attained names in the full alphabet.
+It is not a multiplicative ratio or a bit premium for that whole
+alphabet. The original-task lower on $X_{m,h}$ quantifies over all
+competitors; adding the outside-state names requires precisely the
+refinement hypothesis. A globally recolored full-family export may
+merge those old outside names, so (LTR.37) is not a lower bound for
+unrestricted $M_1(D)$ and determines no new optimum or rate endpoint.
+
+## 13. The failed assembly mechanism and exact supplier correspondence
+
+**Proposition 13.1 (pointwise witnesses do not assemble on the same
+export).** Consider the proposed mechanism which, on a prescribed
+paid complete export, verifies a one-query solution separately for
+every $(p,k)$ and then asserts a query-before-count solution for the
+same export without splitting names. This mechanism is false on
+actual full-family native sources. More generally, for the export
+$E^\circ$ at fixed $m\ge2$, any repair limited to refinements
+must pay the exact additional alphabet (LTR.37).
+
+**Proof.** Theorem 12.2 establishes every pointwise premise on the
+full family for $E^\circ$, including all original targets, all
+counts, paid acquisition and the same stationary source. Its original
+all-count refinements require $m^n>1$ names over the one special
+fiber, with the stated exact full-family premium. This refutes the
+asserted assembly on unchanged fibers and proves the refinement
+claim. $\square$
+
+The consumer of this obstruction is a transfer based on separately
+synthesized count-specific controllers or separately chosen task
+extensions. Such a transfer must instead exhibit one common literal
+witness determining the whole temporal factor on each attained fiber,
+as in Lemma 2.2, or count a lawful refinement or recoloring. This is
+a necessary operational distinction, not an assertion that either of
+the following suppliers made the rejected claim.
+
+**Source correspondence 13.2 (fixed-tree and finite-controller
+suppliers).** The following table states their exact input/output
+correspondence at the pinned revision. Reading declarations and their
+owning narratives supplies no new compiled application.
+
+| Supplier | Verified interface and transfer boundary |
+| --- | --- |
+| [FixedTreeCommonExtension][CombFT], with its [owning Scribe][CombFTB] | A fixed finite `Full` tree has disjoint sibling coordinate sets, finite nonempty alphabets, nonempty joint promise and one joint task $f$. Local leaf implementations receive coordinate values; internal implementations receive full child-message tuples. Common-total-extension capacity vectors and reachable-message vectors have the same upward closure and attained minima for coordinatewise monotone costs. Its canonical extension uses noncomputable representative choice. The root `read` is a decoder, not a charged literal query. Actual comb coordinates here must be acquired, and separate tasks $f_{p,k}$ do not supply a single count-blind literal or preserve a shared export. Applying it to the joint trajectory task keeps that operational obligation. |
+| [NativeLiteralMoore][CombMoore], `NativeLiteralFeasible` and `finite_literal_synthesis`, with its [owning Scribe][CombMooreB] | Fix a prefix-free cut $P$, $C=\operatorname{canonicalRow}P(\operatorname{substitution}u_0)$ and budgets $r,K\ge1,q,\ell$. Feasibility supplies `code : ImageValues C → Q ⊕ H` on the entire actual predecessor fiber; execution queries the stationary actual `substitution u`, and outputs the whole predecessor row `canonicalRow P u`. Budgets count attained initial code names, installed states, actual calls and the same trace's literal letters. The finite synthesis equivalence may reselect the encoder/controller. Acquisition of the actual `ImageValues`, paid export/isolation and authenticated one-update continuity remain supplied premises. This does not supply the original late $p$, all-authentic-$k$ output or a universal one-call bridge. No claim that these combs are that predecessor fiber is used. |
+
+In both cases a finite source-independent installed table is permissible;
+an unknown actual coordinate assignment, image source or chosen
+representative is not thereby acquired for free. All original targets
+here refer to one actual source and one shared acquired export.
+No separate optimization at different cuts or counts can discard that
+common realization requirement.
+
+**Convention 13.3 (resource coordinates and recovery scope).** The
+complete retained alphabet in (LTR.36) or (LTR.37) includes its
+special-versus-other selector and every surviving acquired source
+distinction. Fixed-width naming uses $\lceil\log_2 N\rceil$ bits
+for its respective attained alphabet $N$; unused bit patterns do not
+add attained names. The scan computes shape and group indices, but
+only the counted name survives.
+
+Installed table generation and size, preparation computation/control
+and temporary storage, submitted-address construction, post-request
+workspace, final predictor size, count representation, entry,
+authentication, source continuity, handoff/isolation and physical time
+are separate resources. The original reader can keep the factor
+$(b,c)$ with $0\le b\le2D$, using at most
+$\lceil\log_2(2D+1)\rceil+1$ bits separately from the retained
+name. No small installation, preparation-work or total-efficiency
+bound is asserted. The preparation Reads and literal lengths are
+exactly those specified, not a preservation of an arbitrary rival's
+acquisition cost.
+
+What the boundary observer recovers is the complete selected temporal
+trajectory via one actually obtained native reply and the retained
+relation. The relaxed reader instead recovers just the supplied-count
+answer. Neither reader acquires a substituted source, an unknown age,
+a hidden history or physical space and time. Source continuity and
+authentic count input remain separately supplied services.
+
+## 14. Attribution, bounded checks and the unchanged global obligation
+
+**Convention 14.1 (attribution of ingredients and result).** The
+even-comb quantifier separation, exact prescribed refinement count
+and its paid full-family realization in §§9–13 are `repo-derived`
+ordinary deductions. The temporal factor, canonicalization, paid scan,
+reply-range projection argument and median-comb query are credited
+suppliers, as identified above. In particular the range argument of
+RCE Theorem 8.2 and the triple identification of COK Proposition 23.3
+are not asserted as new general methods.
+
+Kowshik and Kumar, *Optimal Function Computation in Directed and
+Undirected Graphs*, [arXiv:1105.0240v2, §III-B, Lemma 2 and
+Example 1][CombKK], give a `literature-attested` zero-error comparison.
+For arbitrary joint support, their cut condition separates two
+assignments in $S$ whenever the same complementary assignment makes
+both positive-probability and their function values different.
+Example 1 on diagonal support explicitly couples the encoders;
+separate average-description minimization is stated with full-support
+probabilities. These support-sensitive feasibility distinctions do
+not implement a paid literal acquisition or exchange the count/query
+quantifiers in (LTR.24).
+
+Garg, He, Li, Papakonstantinou and Yang, *Systematic Data Structure
+Lower Bounds via the Query-with-Sketch Model*, [arXiv:2609.18024v1,
+Definition 2.1][CombQWS], give a `literature-attested` comparison in
+which an input-dependent sketch precedes probes chosen from the
+transcript, and repeated probes count with multiplicity. Our export
+has that sketch role, but must itself be acquired through paid native
+Reads; a native reply is a constrained constructor observation, not
+an arbitrary stored value. No min-entropy lifting theorem or general
+data-structure lower bound is imported. These inspected sources
+supply neither the specific theorem here nor an effective original
+all-size cap. Their scope is bounded documentary comparison, without
+an exhaustive literature or worldwide-originality assertion.
+
+**Proposition 14.2 (bounded exact corroboration).** Direct recursive
+actual-substitution readout on the combs gives the following finite
+checks of Lemma 10.1. All listed target words have length at most
+$d-1$, and counts range from zero through $2d$, inclusive.
+
+| $m$ | $d$ | Target/count tables | Nonconstant tables | Actual readout/factor comparisons |
+| --- | --- | --- | --- | --- |
+| $1$ | $4$ | $135$ | $59$ | $405$ |
+| $2$ | $10$ | $21483$ | $4583$ | $128898$ |
+
+Every table factors through the specified zero-Read constant or one
+literal $L^a$, $0\le a<d$. At $d=10$, the deepest-target factors
+in increasing comb height are exactly
+
+$$
+(11,0),(9,0),(7,0),(5,0),(3,0),(0,0).
+\tag{LTR.40}
+$$
+
+For $m=2,h=1,D=11$, all $36$ actual two-comb rows and all
+$2047$ original targets give $73656$ factor comparisons at targets
+entering a frontier block. The original triple-code reader's factor
+agrees with direct (LTR.3) evaluation in every case; the remaining
+$36$ root-location cases have constant factor $(0,0)$. Separately,
+the pointwise reader at counts $0,1,2,5,22$ gives $368280$ output
+comparisons, all agreeing with actual original-root substitution
+readout.
+
+**Verification scope.** The actual readout computation recursively
+replaces an alpha by beta and a beta by $\langle\beta,\alpha\rangle$
+when a positive substitution count reaches a leaf, and otherwise
+traverses the original ordered branch. It does not use the factor
+formula to compute the actual reply. Separately compute (LTR.3) and
+(LTR.4), and check equality and the selected literal's reply partition
+on each finite list above. The scaffold checks use the actual wrapper
+and full root-prefixed literal addresses. These are bounded exact
+checks only; the universal assertions for every $m,h,q,k$ and every
+competing fiber rest on the ordinary proofs, not extrapolation or an
+empirical convergence claim.
+
+**Convention 14.3 (credited native frontier).** With the existing
+normalization $\lambda=\lim_{D\to\infty}2^{-D}\log_2M_1(D)$,
+[FMR][CombFMR] supplies existence of this limit. [NCE, §§13–19,
+in particular Theorems 17.1–17.2][CombNCE] supplies the credited
+positive asymmetric depth-three law with exact pressure
+$3038031/7792603$, and hence
+
+$$
+M_1(D)\ge
+\left\lceil(7792603/3038031)^{2^{D-3}}\right\rceil
+\quad(D\ge3),\qquad
+\frac{\log_2(7792603/3038031)}8\le\lambda<\frac3{16}.
+\tag{LTR.41}
+$$
+
+The upper endpoint and $M_1(3)=4$ are credited to [D3, Theorems
+2.3 and 4.1][CombD3]; the same NCE result gives $M_1(6)\ge1874$.
+These credited results answer the existence and depth-three subquestions
+in Open problem 8.4. Its displayed alternative normalization is $4\lambda$.
+The sharp rate and general exact memory question remain open. No new
+endpoint, fixed-law pressure result or optimized recoloring bound is
+provided by (LTR.37).
+
+The conditional-owner, component and forest results of [COK,
+§§18–25][CombCOK], [OCC, §§10–17][CombOCC] and [GDB,
+§§20–25][CombGDB] retain their declared matching-population,
+augmented-descriptor and specified-certificate scopes. None is an
+unrestricted optimizer-cofinality obstruction. [NPC][CombNPC],
+[CBN][CombCBN] and [RRN][CombRRN] retain actual common sources,
+shared coordinates, guards and each full joint block potential once;
+their semantic completeness and exact representations give no
+uniform finite-length cutoff.
+
+**Open problem 14.4 (unchanged effective all-size bridge).** For
+fixed $d$, let $S_d$, complete native donor templates $\Theta$,
+their solution sets $C_\Theta\subseteq S_d^N$, joint cover counts
+$K_d(N)$ and pressure rate $\sigma_d$ be exactly those of
+[NPC, §§1–8][CombNPC] and FMR. Construct a total computable
+verifier $V(d,\mu,C,\pi)$ on rational probability laws $\mu$ on
+the full $S_d$, rational $C>0$ and finite certificates $\pi$,
+whose acceptance implies
+
+$$
+\forall N\ge1\ \forall\Theta,\qquad
+\sum_{x\in C_\Theta}\prod_{i=1}^N\mu(x_i)\le C^N,
+\tag{LTR.42}
+$$
+
+and prove optimizer-cofinality: for every $d$ and rational
+$\epsilon>0$, some accepted rational label has
+$-\log_2C>\sigma_d-\epsilon$. Equivalently useful here would
+be a proved uniform effective length error
+$\eta_d(N)\to0$, with computable evaluation and a computable
+convergence modulus in $d$ and the requested accuracy, satisfying
+
+$$
+\sigma_d\ge\frac{\log_2K_d(N)}N-\eta_d(N).
+\tag{LTR.43}
+$$
+
+Together with the credited depth-tail bound either route would give
+the required terminating two-sided approximation of the same original
+$\lambda$. Neither route is established here. In particular the
+general equality between the optimized conditional-owner envelope
+$a_d$ and $b_d=\min_\mu\beta_d(\mu)=2^{-\sigma_d}$, or a different
+sound cofinal mechanism, remains unproved; rationalization alone
+is already supplied by [NWO][CombNWO]. Shared-realization completion
+and positive global-defect control near arbitrary correlated native
+extremizers remain obligations. The exact obstruction above changes
+one operational prerequisite for a controller/extension transfer:
+it must preserve a common all-count witness, not only its separate
+count-specific answers. It excludes neither lawful global recoloring
+nor a different all-size certificate method. General exact $M_1(D)$,
+sharp $\lambda$, effective all-size certification and the full
+minimal-relations/internal-observer/mutual-recovery programme remain
+unresolved.
+
+[CombAAR]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[CombFMR]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[CombRRN]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[CombCOK]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONDITIONAL_OWNER_KERNELS.md
+[CombRCE]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURSIVE_CERTIFICATE_ESCAPE.md
+[CombFT]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/D5/S3/Observer/Separation/FixedTreeCommonExtension.lean
+[CombFTB]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/Blueprint/D5/S3/Observer/Separation/FixedTreeCommonExtension.scribe.cs
+[CombMoore]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.lean
+[CombMooreB]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.scribe.cs
+[CombKK]: https://arxiv.org/html/1105.0240v2
+[CombQWS]: https://arxiv.org/html/2609.18024v1
+[CombNCE]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[CombD3]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[CombOCC]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OWNER_COMPONENT_COMPLETION.md
+[CombGDB]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[CombNPC]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[CombCBN]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[CombNWO]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHT_OPTIMIZATION.md
+
+## 追加锚（本行以下为增补区）

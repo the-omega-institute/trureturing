@@ -231,6 +231,7 @@ defaultFacets = ["static"]
                      'tools/scripts/worktree/lean_cache_release.py',
                      'lean-toolchain', 'Makefile',
                      'tools/scripts/worktree/lean-cache-ensure.sh', 'tools/scripts/worktree/lean-cache-run.sh',
+                     'tools/scripts/worktree/lean-git/git',
                      'tools/scripts/report/lean-report.sh', 'tools/scripts/report/report-supervisor.sh',
                      'tools/scripts/lib/resource-observation-lib.sh',
                      'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs']:
@@ -521,7 +522,7 @@ defaultFacets = ["static"]
         shutil.copyfile(ROOT / name, target)
         if name == "tools/lean-inspector/Inspector.lean":
             target.write_text(transport_inspector(target.read_text()))
-        target.chmod(0o755 if name.endswith('.sh') else 0o644)
+        shutil.copymode(ROOT / name, target)
     def write(self, name, value):
         target = self.root / name
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -691,7 +692,7 @@ class NativeArtifactTestSupport(NativeSharedTestSupport):
 
 
 def stage_compiler(output):
-    """Build the declared compiler target once; Lake owns its staged materials."""
+    """Build the report and input-discovery compilers; Lake owns their stage."""
     registration = json.loads((ROOT / 'tools/tests/StrataLint.Lean.Tests/Fixtures/native-compiler.json').read_text())
     if set(registration) != {'package_directory', 'target'}:
         raise ValueError('invalid native compiler fixture registration')
@@ -706,7 +707,7 @@ def stage_compiler(output):
         fixture.compiler_seed = None
         mappings = fixture.root / 'compiler-outputs.jsonl'
         fixture.run_lake('-d', registration['package_directory'], 'build',
-                         '-o', str(mappings), registration['target'])
+                         '-o', str(mappings), registration['target'], 'inputDiscovery')
         fixture.run_lake('cache', 'stage', str(mappings), str(output))
         # Access permissions apply to the directory produced by Lake stage;
         # they do not select or discover build inputs or reusable materials.

@@ -15,8 +15,18 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
         "A rank-two mixture of two nonorthogonal product states remains outside the full convex stabilizer hull under every local unitary.",
         H("Separable states outside every local-unitary stabilizer frame"),
         Blocks(
+            Node("unitary_preserves_overlap", "Unitary matrices preserve overlaps", UnitaryPreservesOverlapFormula(),
+                "A complex matrix whose adjoint is a left inverse preserves the overlap of every pair of vectors on its finite index type.", DescribeRole.Theorem, true),
+            Node("pauli_square", "Pauli matrices square to the identity", PauliSquare(),
+                "Each Pauli matrix, including the identity, has square equal to the identity.", DescribeRole.Theorem, true),
+            Node("pauli_projector_trace", "Nonidentity Pauli eigenprojectors have trace one", PauliProjectorTrace(),
+                "For a nonidentity Pauli label, either of its two spectral projectors has trace one.", DescribeRole.Theorem, true),
             Node("unitVector", "Normalized pure vectors", UnitFormula(),
                 "A pure vector has squared norm one. star is componentwise complex conjugation and dotProduct sums over the finite index type n. The Fintype argument is an instance, rather than a named mathematical variable.", DescribeRole.Definition),
+            Node("unit_e0", "The first qubit basis vector is normalized",
+                Disp(Unit(Seq(Bang, OpenBracket, D(1), Comma, D(0), CloseBracket))),
+                "The complex qubit vector with coordinates one and zero has squared norm one.",
+                DescribeRole.Theorem, true),
             Node("IsHermitianPauli", "Signed Hermitian two-qubit Paulis", PauliFormula(),
                 "The Pauli labels and literal matrices are those of StabilizerPairLocalUnitaryInequivalence: I, X, Y = i X Z, and Z. Only the real signs plus and minus are allowed, so these operators are Hermitian. The Kronecker product acts on the same two computational indices.", DescribeRole.Definition),
             Node("PureStabilizer", "Two independent commuting generators", PureFormula(),
@@ -38,14 +48,39 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
                     Mul(Call("Matrix.of", Call("Function.curry", F.Id("psi"))),
                         Call("conjTranspose", Call("Matrix.of", Call("Function.curry", F.Id("psi")))))))),
                 "For a two-qubit vector, curry arranges its amplitudes into a two-by-two matrix. Tracing the right subsystem of its rank-one projector gives that matrix times its adjoint.", DescribeRole.Theorem, true),
+            Node("trace_projector_overlap", "Trace overlap of rank-one projectors", TraceProjectorOverlapFormula(),
+                "For any two complex vectors on a finite type n, the trace of the product of their rank-one projectors is the complex coercion of their squared overlap. Taking the real part gives the squared norm used in the Tiles product-overlap estimate.", DescribeRole.Theorem, true),
             Node("ensemble_kernel", "Zero quadratic form constrains every positive-weight vector", EnsembleKernelFormula(),
                 "Let psi be a finite family of complex vectors with nonnegative real weights w. If the quadratic form of their weighted rank-one projector sum vanishes at z, then every positive-weight vector is orthogonal to z. Positivity of the weighted squared overlaps prevents cancellation.", DescribeRole.Theorem, true),
-            Node("result", "An infinite family proves the conjecture", Disp(Named("claim")),
+            Node("quadratic_projector", "A rank-one quadratic form is a squared overlap", QuadraticProjectorFormula(),
+                "For any two complex vectors on a finite index type, the quadratic form of rankOneDensity psi at z equals the complex coercion of the squared norm of their overlap.", DescribeRole.Theorem, true),
+            Node("result", "An infinite family proves the conjecture", Disp(ClaimBody()),
                 "For every real p,c,s with 0 < p < 1, c > 0, s > 0, c² + s² = 1 and c² ≠ 1/2, put b = (c,s) and rho = p |00⟩⟨00| + (1-p) |bb⟩⟨bb|. This is a density matrix and an explicit convex mixture of product pure states, yet no local-unitary conjugate belongs to STAB. Choose p = 1/2, c = 3/5 and s = 4/5 for the existential conclusion. Every positive-weight vector in any pulled-back stabilizer ensemble lies in span{u,v}, where u = |00⟩ and v = |bb⟩. Its only product rays are u and v; its only maximally entangled ray has coefficients alpha = -beta, namely (v-u)/(sqrt(2)s) after normalization. Stabilizer classification and positivity eliminate that entangled ray from the ensemble, forcing both product rays to occur. Their common local unitary preserves the single-qubit squared overlap c², whereas Pauli eigenprojectors have overlap spectrum {0,1/2,1}. The stated parameter conditions exclude all three values. This argument uses product-vector and maximal-entanglement invariance under local unitaries; the Pauli restriction enters after stabilizer classification.", DescribeRole.Theorem, true,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("qian-wang-2025-separable-states-stab-local-unitaries"),
                     ResolutionKind.Proved))),
         []));
+
+    private static Formula UnitaryPreservesOverlapFormula()
+    {
+        Formula n = F.Id("n"), a = F.Id("A"), x = F.Id("x"), y = F.Id("y");
+        Formula matrix = Call("Matrix", n, n, Complexes), vector = Arrow(n, Complexes);
+        Formula overlap(Formula u, Formula v) => Call("dotProduct", Call("star", u), v);
+        return Disp(All("n", Named("Type"), Seq(
+            OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", n), CloseBracket, Sp,
+            All("A", matrix, Logic(EqTo(Mul(Call("conjTranspose", a), a), D(1)),
+                FormulaLogicOperator.Implies, All("x", vector, All("y", vector,
+                    EqTo(overlap(Call("Matrix.mulVec", a, x), Call("Matrix.mulVec", a, y)),
+                        overlap(x, y)))))))));
+    }
+
+    private static Formula PauliSquare() => Disp(All("p", Named("Pauli"),
+        EqTo(Mul(Call("pauliMatrix", F.Id("p")), Call("pauliMatrix", F.Id("p"))), D(1))));
+    private static Formula PauliProjectorTrace() => Disp(All("p", Named("Pauli"),
+        Logic(NeTo(F.Id("p"), Named("Pauli.I")), FormulaLogicOperator.Implies, All("ep", Named("Bool"),
+            EqTo(Call("Matrix.trace", Call("spectral", F.Id("p"),
+                Call("ite", EqTo(F.Id("ep"), Named("true")), D(1), D(0)))), D(1))))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, bool derived = false, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
@@ -100,12 +135,34 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
     private static Formula RankOne(Formula p) => Call("rankOneDensity", p);
     private static Formula Unit(Formula p) => Call("unitVector", p);
 
+    private static Formula TraceProjectorOverlapFormula()
+    {
+        Formula n = F.Id("n"), a = F.Id("a"), b = F.Id("b");
+        Formula rank(Formula x) => Call("D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity", x);
+        Formula overlap = Call("Complex.normSq", Call("dotProduct", Call("star", a), b));
+        return Disp(All("n", Named("Type"), Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+            All("a", Arrow(n, Complexes), All("b", Arrow(n, Complexes),
+                EqTo(Call("Matrix.trace", Mul(rank(a), rank(b))), Parenthesized(Seq(overlap, Colon, Sp, Complexes))))))));
+    }
+
     private static Formula UnitFormula()
     {
         Formula n = F.Id("n"), x = F.Id("x");
         return Disp(All("n", Named("Type"), Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
             All("x", Arrow(n, Complexes), IffTo(Unit(x), EqTo(Call("dotProduct", Call("star", x), x), D(1)))))));
     }
+    private static Formula QuadraticProjectorFormula()
+    {
+        Formula n = F.Id("n"), z = F.Id("z"), psi = F.Id("psi");
+        Formula vector = Arrow(n, Complexes);
+        Formula dot = Call("dotProduct", Call("star", z), psi);
+        Formula rhs = Parenthesized(Seq(Call("Complex.normSq", dot), Colon, Complexes));
+        return Disp(TypedAll("n", Named("Type"), Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+            TypedAll("z", vector, TypedAll("psi", vector,
+                EqTo(Call("dotProduct", Call("star", z), Call("Matrix.mulVec", RankOne(psi), z)), rhs))))));
+    }
+    private static Formula TypedAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id(name), Colon, type)), Comma, Sp, Parenthesized(body));
     private static Formula PauliFormula()
     {
         Formula p = F.Id("P"), a = F.Id("a"), b = F.Id("b");
@@ -168,11 +225,13 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
                     All("z", Arrow(n, Complexes), Seq(assumptions, Longrightarrow, Sp, conclusion))))))));
     }
     private static Formula ClaimFormula()
+        => Disp(IffTo(Named("claim"), ClaimBody()));
+    private static Formula ClaimBody()
     {
         Formula rho = F.Id("rho"), ua = F.Id("UA"), ub = F.Id("UB");
         Formula excluded = new Formula.Not(Parenthesized(InTo(Call("localAction", ua, ub, rho), Named("STAB"))));
-        return Disp(IffTo(Named("claim"), Some("rho", Mat,
+        return Seq(Exists, Sp, Parenthesized(Seq(rho, Colon, Mat)), Comma, Sp, Parenthesized(
             And(Call("IsDensity", rho), Call("Separable", rho),
-                All("UA", Unitary, All("UB", Unitary, excluded))))));
+                TypedAll("UA", Unitary, TypedAll("UB", Unitary, excluded)))));
     }
 }

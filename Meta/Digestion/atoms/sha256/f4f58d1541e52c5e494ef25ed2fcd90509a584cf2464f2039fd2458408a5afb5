@@ -1,0 +1,16 @@
+### 20.3 证明供应与文献适用范围
+
+定理 18.3 与 19.3 的新内容是指定实际源上的参数化反例及其动作对应，归为
+`repo-derived` 普通数学；推论 18.5、命题 19.4 是它们的明确必要条件。
+已有树语法、像核、cherry 条件、组成演化、生产器和付费服务继续由原来源承担。
+正文给出源特定证明，没有新 Lean 证明、执行证书、编译或 CI 结论。
+
+| 供应或文献 | 在数学条目中的精确作用及边界 |
+| --- | --- |
+| 本卷定理 12.1、12.3、命题 12.4 与 NESK | 两步像上的真实形状逆及认证偶滞后的半径核。NESK 私有 root_reflection、erased_reflection、erased_support、labeled_iterates 支撑其公开定理；[Reg 镜像](../../../Reg/D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/NativeErasedSupportKernels.lean) 的 actual_two_step/actual_even_epoch 是该参数族的实际应用，不是 CAP/G_gc 当前访问或原始响应桥。 |
+| ActualTreeReadoutAcquisition 的 source_foundation 及 Scribe | 两步像的 terminal-cherry 必要条件用于 (ABT.60) 后的非成员证明；不采用其第三步 positive 决策任务、无价计算或可查询所有叶的权限模型。 |
+| GenealogicalFiberTransport 及 [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.scribe.cs)；IntrinsicSubstitutionCoordinates 的 intrinsic_coordinates、pair_image | 原始带标签自由树、配对同态和组成演化支撑 (ABT.64)、(ABT.66)、(ABT.68)；内在祖先坐标不等于 graft 后仍累计的全局 Rho counter。未引用 fiber 概率运输作为 actor 服务。 |
+| 钉版 mathlib [`Mathlib/Algebra/Free.lean`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Algebra/Free.lean) | FreeMagma.of/mul 和 lift/lift_of 的自由非结合代数接口与实际 substitution 对应；构造子不同及配对单射性用于命题 19.4。它不提供原始装置 authority、guard 或付费实现。 |
+| Berthé–Steiner–Thuswaldner–Yassawi，[Recognizability for sequences of morphisms](https://arxiv.org/abs/1705.00167) | `literature-attested` 的识别性问题针对自由幺半群态射、双向词 tiling、aperiodic/subshift 或 growing bounded-alphabet S-adic 条件。它不是有限有根自由树上的当前像域认证，也不供应 CAP 的权限或费用；定理 18.3 未从该文献迁移结论。 |
+| Lynch–Vaandrager，[Forward and Backward Simulations, Part I: Untimed Systems](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf)，§3.2 | `literature-attested` 的 forward simulation 要求初始关联覆盖和逐步匹配执行片段；观察相同本身不供应这些义务。定理 18.3 用实际原始输出，定理 19.3 用具体 guard 分支，检验必要匹配条件；不把通用 trace inclusion 当作完整原始收据、成本或后继相等。 |
+| Foster–Greenwald–Moore–Pierce–Schmitt，[Combinators for Bi-Directional Tree Transformations: A Linguistic Approach to the View Update Problem](https://www.cis.upenn.edu/~bcpierce/papers/lenses-toplas-final.pdf)，§3、定义 3.3 | `literature-attested` 的 GetPut/PutGet 定律与 totality 是分开的要求。其抽象 get/putback 模型不提供真实源 admission、当前读写权、整候选守卫或安装消费者；定理 19.3 不由 lens 定律推出，而由两个真实源响应直接证明。 |

@@ -28,7 +28,19 @@ $$\forall \theta\in\mathbb{R},s\in\mathbb{C},0<\Re s\Rightarrow\operatorname{Int
 
 For every real theta and real part of s greater than zero, the actual integrand is integrable on Ioo zero one. Bounded measurable fractional part is dominated by an integrable complex power; there is no restriction on theta.
 
-**Theorem 1.3 (Real-parameter scaling).**
+**Theorem 1.3 (Shared pointwise reciprocal-tail reduction).**
+
+$$\forall s\in\mathbb{C}, u\in\mathbb{R},1<u\Rightarrow\operatorname{fract}(\frac{1}{u})u^{s-1}=u^{s-2}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaPntBounds/NymanFractionalMellin.fractionalMellin_tail_integrand_eq_cpow` (`✓ std3`). ∎
+
+*Citation.* Jason Robert Gochanour (2026). *Prime Cathedral fractional-part Mellin identities*. URL: <https://github.com/jrgochan/prime/tree/ed0e4caa6c0fc0330c466d1103d88d1df8dbd4c2/proofs/Cathedral>.
+
+*Commentary.*
+
+This exposes the pointwise identity already proved inside mellin_tail_real. For every real u greater than one, fract(1/u)=1/u; combining complex powers gives u^(s-2) for every complex s. The original finite-tail proof now calls this shared helper, as does the whole-positive-line tail in NymanWeightedFractionalInjectivity. No real-part restriction or exclusion of s=1 is needed for this pointwise identity. This is source extraction and reuse of the existing argument, not a newly claimed mathematical result.
+
+**Theorem 1.4 (Real-parameter scaling).**
 
 $$\forall \theta\in\mathbb{R},s\in\mathbb{C},0<\theta\le1\land0<\Re s\land s\neq1\Rightarrow\int_{0}^{1}\operatorname{fract}(\frac{\theta}{x})x^{s-1}\,dx=\theta^{s}\int_{0}^{1}\operatorname{fract}(\frac{1}{x})x^{s-1}\,dx+\frac{\theta-\theta^{s}}{s-1}$$
 
@@ -40,7 +52,7 @@ $$\forall \theta\in\mathbb{R},s\in\mathbb{C},0<\theta\le1\land0<\Re s\land s\neq
 
 For zero less than theta at most one, real part of s positive, and s different from one, substitute the real scale one over theta, split the integral at one, and integrate the tail using fract of one over u equals one over u for u greater than one. The case theta equals one and null endpoints are included.
 
-**Theorem 1.4 (Literal E9).**
+**Theorem 1.5 (Literal E9).**
 
 $$\forall \theta\in\mathbb{R},s\in\mathbb{C},0<\theta\le1\land0<\Re s<1\Rightarrow\int_{0}^{1}\operatorname{fract}(\frac{\theta}{x})x^{s-1}\,dx=\frac{\theta}{s-1}-\frac{\theta^{s}\zeta(s)}{s}$$
 
@@ -58,4 +70,5 @@ For every real theta with zero less than theta at most one, and every complex s 
 - Truth anchor: `D5/S3/Weil/ZetaPntBounds/NymanFractionalMellin.fractionalMellin_eq_zeta`
 - Truth anchor: `D5/S3/Weil/ZetaPntBounds/NymanFractionalMellin.fractionalMellin_integrableOn`
 - Truth anchor: `D5/S3/Weil/ZetaPntBounds/NymanFractionalMellin.fractionalMellin_scaling`
+- Truth anchor: `D5/S3/Weil/ZetaPntBounds/NymanFractionalMellin.fractionalMellin_tail_integrand_eq_cpow`
 - Dependency: [D5/S3/Weil/ZetaPntBounds/NymanMellinFloorSeries](NymanMellinFloorSeries.md)

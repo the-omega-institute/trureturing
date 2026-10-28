@@ -1,0 +1,50 @@
+## 429. 线性边界误差与闭积球上一致收敛
+
+沿用第421、426节以及定理428.1–428.2的操作、坐标和效果树约定。置
+
+$$
+D=\{a\in\mathbb R^3:|a|\le1\},\qquad
+\rho(a)=\frac{I+a\cdot\sigma}{2},\qquad
+h=3-2\sqrt2,
+$$
+
+并令 $V_n$ 和 $F=V_\infty=\sup_nV_n$ 为第421节在 $r=1$ 的函数。保留第426节的十二个互异方向 $X$、对合 $\pi$ 和终端集合
+
+$$
+K=\{(x,\pi(x)):x\in X\},
+$$
+
+所以 $V_0=h$ 于 $K$，并在其余点为零。这里的 $\rho(a),\rho(b)$ 是归一化的累计输入效果；树权是累计效果的迹权重。根的物理输入因子是第421节的 $4$，不把下列归一化报酬与物理输入概率混同。
+
+记
+
+$$
+\mathcal U=\operatorname{int}(D)\times\operatorname{int}(D),\qquad
+\partial(D^2)=\{(a,b):\max(|a|,|b|)=1\},\qquad
+\delta(a,b)=1-\max(|a|,|b|),
+$$
+
+以及
+
+$$
+\gamma=\min_{\substack{x,x'\in X\\x\ne x'}}(1-x\cdot x'),\qquad
+\beta=1-\sqrt{1-\gamma/2}.
+$$
+
+有限集合 $X$ 给出 $0<\gamma\le2$ 及 $0<\beta\le1$。对 $y\in\mathbb S^2$ 定义第426节的提取系数
+
+$$
+\ell(a;y)=\max\{t\ge0:\rho(a)-t\rho(y)\succeq0\},
+$$
+
+包括其全部奇异支撑值
+
+$$
+\ell(a;y)=
+\begin{cases}
+\displaystyle\frac{1-|a|^2}{2(1-a\cdot y)},&|a|<1,\\[6pt]
+1,&|a|=1\text{ 且 }a=y,\\
+0,&|a|=1\text{ 且 }a\ne y.
+\end{cases}
+$$
+

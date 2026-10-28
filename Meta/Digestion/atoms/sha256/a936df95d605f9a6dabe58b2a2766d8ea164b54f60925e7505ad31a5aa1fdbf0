@@ -1,0 +1,95 @@
+**Proposition 20.4 (existence, source coupling and finite primitive counts).**
+Equations (20.3)--(20.5) define a normalized Borel probability law
+on a countable disjoint union of finite-dimensional spaces.
+Under a proof coupling with the original Poisson source of §16,
+the $V_i,\mathbf P_i$ are exactly its evaluations on the atoms
+with $\ell\le\Lambda$, $\zeta>\epsilon$, and
+
+$$
+ U_i=\sum_{\ell_i<\ell<\ell_{i+1},\,\zeta\le\epsilon}\zeta,
+ \qquad
+ C_\Lambda:=\sum_{i=0}^{\mathsf N}U_i+
+                     \sum_{i=1}^{\mathsf N}V_i=\tau_\Lambda.
+\tag{20.6}
+$$
+
+Endpoints at the listed labels cause no ambiguity: the small-atom
+process has no atom at any of these independent labels. Almost surely
+every listed random variable is finite, and
+
+$$
+\begin{gathered}
+ \mathbb E C_\Lambda=\Lambda,\qquad
+ \mathbb E\sum_{i=0}^{\mathsf N}U_i=\Lambda\beta_\epsilon,
+ \qquad \beta_\epsilon\downarrow0\quad(\epsilon\downarrow0),\\
+ \mathbb P(C_\Lambda<T)
+       \le\min(1,e^{\lambda T-\Lambda\varphi(\lambda)})
+                  \quad(\lambda>0).
+\end{gathered}
+\tag{20.7}
+$$
+
+Counting one call for the count, one per uniform label, one per tuple
+(20.3), and one per scalar (20.5), the number of calls is
+$3\mathsf N+2$, with expectation $3\Lambda\kappa(\epsilon)+2$.
+Counting instead all supplied real coordinate entries and the one
+integer count gives the upper bound
+
+$$
+ 2+(3+4M_\delta)\mathsf N,
+ \qquad
+ \mathbb E[\text{entries}]
+       \le2+(3+4M_\delta)\Lambda\kappa(\epsilon).
+\tag{20.8}
+$$
+
+These count exact samples and entries, not bits, shots, computational
+operations or native physical resources. The count is finite almost
+surely, not bounded deterministically. For example
+$\mathbb P(\mathsf N>B)\le\Lambda\kappa(\epsilon)/B$ for $B>0$.
+
+**Proof.** Since $\mathbf n[\zeta]=1$, the measure
+$\mathbf1_{(0,\epsilon]}(v)\mathfrak d(v)dv$ has finite first
+moment $\beta_\epsilon\le1$. Its drift-zero subordinator increment
+of parameter $d\ge0$ exists, with Laplace transform
+$e^{-d\chi_\epsilon(\lambda)}$. One elementary construction of
+this scalar law is the monotone limit of compound Poisson sums
+restricted to $b<v\le\epsilon$ as $b\downarrow0$; their means
+are bounded by $d\beta_\epsilon$, so the limit is finite almost
+surely. The Laplace transforms pass by bounded convergence.
+Uniqueness of Laplace transforms identifies (20.5). Dependence of
+the law on $d$ is Borel; for instance the associated increments are
+continuous in probability since their expected difference over
+an increment of length $c$ is $c\beta_\epsilon$.
+This construction proves existence of a scalar distribution. It
+places no infinite list in the sampling interface.
+
+The Poisson restriction to $\zeta>\epsilon$ has finite rate
+$\kappa(\epsilon)$. The marking and restriction properties of a
+Poisson measure give exactly the count, ordered labels and tuple
+law above; its restriction to $\zeta\le\epsilon$ is independent.
+Its duration sums on disjoint label intervals have (20.5).
+This proves the asserted joint law and the coupling. These are
+standard Poisson properties, here with the intensity (15.3), not
+an additional construction of a complete-mark source.
+
+Compensation gives both expectations in (20.7), and dominated
+convergence of $\int_0^\epsilon v\mathfrak d(v)dv$ gives its limit.
+The Laplace transform of (20.6) is
+
+$$
+ \mathbb E e^{-\lambda C_\Lambda}
+ =\exp\left[-\Lambda\left(\chi_\epsilon(\lambda)
+       +\int_\epsilon^\infty(1-e^{-\lambda v})
+                                       \mathfrak d(v)dv\right)\right]
+ =e^{-\Lambda\varphi(\lambda)}.
+\tag{20.9}
+$$
+
+Markov's inequality applied to $e^{-\lambda C_\Lambda}$ gives
+the coverage bound. Counting the one integer, $\mathsf N$ labels,
+$\mathsf N$ durations, $\mathsf N+1$ scalar totals and at most
+$4M_\delta\mathsf N$ coordinate entries proves (20.8).
+The preceding normalization and Borel kernels prove the remaining
+measurability assertions. $\square$
+

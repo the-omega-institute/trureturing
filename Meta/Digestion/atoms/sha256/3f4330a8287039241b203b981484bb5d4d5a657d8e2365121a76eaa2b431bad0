@@ -1,0 +1,11 @@
+取任意当前来源律 $q\in\Delta_A$ 与真实可行目标 $y\in M(\Delta_A)$，记目标纤维 $F_y=\{p\in\Delta_A:Mp=y\}$，剩余量 $\delta(q,y)=\max_{e\in E}\operatorname{TV}(M_eq,y_e)$。式(TM.67)取 $R=\Delta_A$、$C=M$、$x=q$、$d=y$，直接给出
+$$
+\boxed{
+\min_{p\in\Delta_A,\,Mp=y}\operatorname{TV}(p,q)
+\le H_A\max_{e\in E}\operatorname{TV}(M_eq,y_e),
+\qquad q\in\Delta_A,\ y\in M(\Delta_A),
+}
+\qquad H_A=\widetilde H(M\mid\Delta_A)<\infty.
+\tag{TM.70}
+$$
+

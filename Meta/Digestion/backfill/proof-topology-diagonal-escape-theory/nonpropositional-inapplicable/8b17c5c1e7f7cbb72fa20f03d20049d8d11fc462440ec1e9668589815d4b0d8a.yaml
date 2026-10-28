@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8b17c5c1e7f7cbb72fa20f03d20049d8d11fc462440ec1e9668589815d4b0d8a
+  normalized_sha256: sha256:8b17c5c1e7f7cbb72fa20f03d20049d8d11fc462440ec1e9668589815d4b0d8a
+cas_ref: sha256:8b17c5c1e7f7cbb72fa20f03d20049d8d11fc462440ec1e9668589815d4b0d8a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有语义闭包节标题及“定义”引导词，定义公式属于另一 atom。
+    previous_atom_id: 2798f2133fe0a7aa838876005d68907fcec0d59f6d1a450488cb2a212bbd9035
+    next_atom_id: 658f20ea9de73ceccae339dabbdb97b75e62e814c718509bfa7dfff75392bf8d

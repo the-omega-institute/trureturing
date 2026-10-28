@@ -1,0 +1,72 @@
+### 14.4 精确保留算术尺度上的集中项
+
+令 $\widetilde Q$ 为到 $T^{-1}QH$ 的正交投影。候选关系为 $\mathcal F_2Q\mathcal F_2=\mathcal F\widetilde Q\mathcal F$。在长度 $\ell$ 的 logarithmic fibre 中，$Q$ 保留指标 $n\le0$；$T^{-1}QH$ 在 $n\ge0$ 的尾部由 $v_n=q^n$ 生成。在尾部指标上，投影差写成
+
+$$
+\widetilde Q-Q=(1-q^2)|v\rangle\langle v|-|e_0\rangle\langle e_0|.
+$$
+
+上述 Fourier 关系可在子空间层核对：$T$ 正规、$\mathcal FT=T^*\mathcal F$，且 $T^*QH=QH$。故 $\mathcal F_2QH=\mathcal FT^*T^{-1}QH=\mathcal FT^{-1}QH$；两侧正交投影分别是 $\mathcal F_2Q\mathcal F_2$ 与 $\mathcal F\widetilde Q\mathcal F$。
+
+fibre 上还含恒等作用，故不能把它说成整个物理空间上的有限秩或紧算子。对同一个伸缩平滑核，待核对的精确配对为
+
+$$
+\operatorname{Tr}\bigl(A_f(\widetilde Q-Q)\bigr)
+=\ell\sum_{k\ne0}q^{|k|}H_f(k\ell).
+$$
+
+零阶系数由 $(1-q^2)\sum_{n\ge0}q^{2n}-1=0$ 消去。这个推导必须在 trace-class 的差上完成，不能相减两个未定义的无限迹。[局部散射的源合同](../../../Library/Weil/burnol1999scattering.md)也要求保留完整 local factor 的符号与恒等修正。
+
+下面给出用于这一交换的局部块估计。取 logarithmic cell $I=(-\ell,0)$，$E_{mn}$ 将第 $n$ 个 cell 的 fibre 坐标复制到第 $m$ 个 cell，并在其余坐标取零。上述 fibre 公式对应
+
+$$
+\widetilde Q-Q=(1-q^2)\sum_{m,n\ge0}q^{m+n}E_{mn}-E_{00}.
+$$
+
+在 logarithmic 坐标中，设 $X_f$ 为卷积 $f$，则 $A_f=X_fX_f^*$。若 $\operatorname{supp}f\subset[-L,L]$ 且 $M=\|f\|_2^2$，令 $I_L=I+[-L,L]$。因 $X_f^*\mathbf1_I$ 的值域支撑于 $I_L$，有
+
+$$
+\begin{aligned}
+A_f\mathbf1_I&=X_f\mathbf1_{I_L}X_f^*\mathbf1_I,\\
+\|A_f\mathbf1_I\|_1
+&\le\|X_f\mathbf1_{I_L}\|_2\|X_f^*\mathbf1_I\|_2
+=M\sqrt{\ell(\ell+2L)}.
+\end{aligned}
+$$
+
+这里右侧的 $\|\cdot\|_2$ 是 Hilbert–Schmidt 范数。平移不变性给出每个 $A_fE_{mn}$ 的同一迹范数界，因此
+
+$$
+\|A_f(\widetilde Q-Q)\|_1
+\le\frac{2M}{1-q}\sqrt{\ell(\ell+2L)}.
+$$
+
+该界在 $2L\le r_*$、$M$ 固定时统一成立。各块的迹为 $\ell H_f((n-m)\ell)$；绝对迹范数可和性使有限块求和与取迹可交换，得到前述算术配对。它不要求 $\widetilde Q-Q$ 本身紧。
+
+在只激活 $2^1$ 的真实测试上，上式就是 $\mathcal A_2(f)$。设 $J_2=W-\mathcal F_2Q\mathcal F_2$；由[源 archimedean 迹约定](../../../Library/Weil/connesconsani2021archimedean.md)运输而来的待核对等式为
+
+$$
+Q_{\rm full}(f)=\operatorname{Tr}(A_fJ_2).
+$$
+
+本章两个 Sonin 迹还需独立的迹类供应。设 $J_0=W-\mathcal FQ\mathcal F$。archimedean 源 Proposition 1.5(iii)–(iv) 给出 $A_fJ_0\in\mathfrak S_1$ 及 $W_\infty(h)=\operatorname{Tr}(A_fJ_0)$；源中 cutoff 投影的字母 $P$ 对应这里的 $W$，不能与这里的 Sonin 投影 $P$ 混用。设
+
+$$
+Z=W\mathcal FW\mathcal FW.
+$$
+
+源 Proposition 2.2(iii) 的证明给出 $A_fZ\in\mathfrak S_1$；式 (81)、(90) 的谱分解给出
+
+$$
+Z=P+S_0,\qquad
+S_0=\sum_n\lambda_n^2|\zeta_n\rangle\langle\zeta_n|\in\mathfrak S_1.
+$$
+
+这里 $Q\mathcal FQ$ 是 Hilbert–Schmidt，故 $\sum_n\lambda_n^2<\infty$。于是 $A_fP=A_fZ-A_fS_0\in\mathfrak S_1$。再由 $[A_f,T]=0$ 得
+
+$$
+A_fP_2=T(A_fP)K^{-1}PT^*\in\mathfrak S_1.
+$$
+
+对实偶 $H_f$，$[A_f,\mathcal F]=0$；上述算术差的迹类估计同时给出 $A_fJ_2\in\mathfrak S_1$。因此以下投影差额由真实有限迹组成，不是只知 $PA_fP$ 迹类后对更强结论作替换。源 Theorem 4.7 的迹恒等式适用于紧支撑光滑 $h$；它与后续只覆盖小支撑的有符号估计范围不同。
+

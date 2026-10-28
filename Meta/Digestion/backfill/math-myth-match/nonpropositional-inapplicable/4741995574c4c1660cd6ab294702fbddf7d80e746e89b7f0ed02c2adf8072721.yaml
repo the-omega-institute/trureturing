@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4741995574c4c1660cd6ab294702fbddf7d80e746e89b7f0ed02c2adf8072721
+  normalized_sha256: sha256:4741995574c4c1660cd6ab294702fbddf7d80e746e89b7f0ed02c2adf8072721
+cas_ref: sha256:4741995574c4c1660cd6ab294702fbddf7d80e746e89b7f0ed02c2adf8072721
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列出道德经与王弼本的命名片段，并限定文本所能支持的解释。
+    previous_atom_id: c83672135c2c15363cf0292f1e8425ce61dcfa93d56211bad980435a6827d6a0
+    next_atom_id: 3e5f111f419822b68dcbaed85b6d24375af1e5de7e55219926a16c5d0dfbfbf7

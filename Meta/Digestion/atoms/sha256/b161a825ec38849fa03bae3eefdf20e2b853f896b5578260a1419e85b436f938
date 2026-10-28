@@ -1,0 +1,16 @@
+**Definition 8.3 (total three-reading rule).** Let $\Gamma^o$ have
+the source-independent fair seed space $\{13,23\}$ with its
+power-set sigma-algebra. For every real history use
+$f_{13}(r_0)=1$, $f_{23}(r_0)=2$, and
+$g_j(u,r_0,r_u)=3$ for both seeds and both legal values of $u$.
+For either seed, on terminal pair $(1,3)$ output $d^o_{13}$ from
+(8.5) using only $(r_0,r_1,r_3)$; on pair $(2,3)$ output
+$d^o_{23}$ using only $(r_0,r_2,r_3)$. On pair $(1,2)$ output
+the midpoint of $C_{12}$ if nonempty, and $z$ otherwise.
+The rules include every legal real history, including unreachable
+ones. All constants depend only on the public $m,c,E$.
+
+The chronological acquisition order is that of
+[Three-Index Design, Definition 23.1](FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN.md),
+with the complete worlds and parameters of Definitions 1.1--1.2.
+

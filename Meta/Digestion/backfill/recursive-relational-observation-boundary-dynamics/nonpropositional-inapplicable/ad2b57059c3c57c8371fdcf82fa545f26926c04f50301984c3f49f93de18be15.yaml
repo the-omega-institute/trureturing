@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ad2b57059c3c57c8371fdcf82fa545f26926c04f50301984c3f49f93de18be15
+  normalized_sha256: sha256:ad2b57059c3c57c8371fdcf82fa545f26926c04f50301984c3f49f93de18be15
+cas_ref: sha256:ad2b57059c3c57c8371fdcf82fa545f26926c04f50301984c3f49f93de18be15
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只说明边界表达这一术语所指的记录类型，没有增加未来等价或边界响应的性质。
+    previous_atom_id: 9a98e1b0cb4054fdd594ac9005222e9d99707f76ff74c8fe1865d43d982a6955
+    next_atom_id: d4347907c9ffa3856e807491ec7c3e22601832859f7702645fdb49be9d4ed1d5

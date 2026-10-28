@@ -153,11 +153,9 @@ internal static partial class RepositoryRules
     internal const int DirectoryToleranceLimit = 192;
 
     // SL-003 current/audit capacity exclusions: theory inputs, the Lake manifest, the backfill
-    // inventory, atomizer dialect registry, canonical CAS blobs, and generated Blueprint
-    // Markdown projections are not artifacts the capacity pressure rule bounds. Machine
-    // inventories grow one entry per
-    // admitted unit and are never navigated as content buckets; the atomizer registry
-    // is one canonical strict-loader input, not a content artifact to split. A
+    // inventory, canonical CAS blobs, and generated Blueprint Markdown projections are
+    // not artifacts the capacity pressure rule bounds. Machine inventories grow one entry
+    // per admitted unit and are never navigated as content buckets. A
     // Blueprint document's structural slot is its .scribe.cs source. The .md is a FILEMAP
     // generated projection at the same stem, so counting both paths would cap a lawful
     // limit-sized Lean bucket at half that many blueprinted modules. This exclusion concerns
@@ -168,7 +166,6 @@ internal static partial class RepositoryRules
         || string.Equals(path, "lake-manifest.json", StringComparison.Ordinal)
         || string.Equals(path, BackfillInventoryLoader.RelativePath, StringComparison.Ordinal)
         || path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
-        || string.Equals(path, TheoryAtomizerDataLoader.DataPath, StringComparison.Ordinal)
         || DigestionCasStore.IsCanonicalPath(path)
         || FrozenStatePath.IsUnderRoot(path)
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
@@ -220,45 +217,23 @@ internal static partial class RepositoryRules
         return directories;
     }
 
-    private static ImmutableArray<RuleFinding> Capacity(DeltaRuleContext context)
+    private static ImmutableArray<RuleFinding> Capacity(DeltaRuleContext context) =>
+        Capacity(context.Current, context.Baseline, context.Changes);
+
+    internal static ImmutableArray<RuleFinding> Capacity(
+        RepositorySnapshot current, RepositorySnapshot baseline, RawChangeSet changes)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        findings.AddRange(TheoryCapacity(context));
-        findings.AddRange(LibraryCapacity(context));
-        var directories = CapacityPathsByDirectory(context.Current.Files.Keys);
-        var baselineDirectories = CapacityPathsByDirectory(context.Baseline.Files.Keys);
+        findings.AddRange(TheoryCapacity(current, changes));
+        findings.AddRange(LibraryCapacity(current, changes));
+        var directories = CapacityPathsByDirectory(current.Files.Keys);
+        var baselineDirectories = CapacityPathsByDirectory(baseline.Files.Keys);
 
-        // Occupancy is counted over the whole tree so the number reported is the real one, but
-        // only buckets this change touches are reported. DirectoryToleranceLimit above was added
-        // so that a union of two independently-admitted PRs would not end up "blocking every
-        // unrelated PR until someone splits" - and it was wired into the repository-wide net
-        // alone, leaving this rule scanning every directory and blocking them anyway. On
-        // 2026-08-13 that is exactly what happened: merge-base aa2deeb held eleven members in
-        // D5/S3/Constants, deposits f2296a0 and eb759dc each saw twelve and admitted, and union
-        // 0ba924d held thirteen and stopped dev and every unrelated branch. Every member of that
-        // bucket is frozen, so moving one out is not an available split. Admission therefore
-        // compares capacity-counted path membership with the protected baseline: an overfull
-        // candidate blocks if any current path is absent there, and otherwise emits a non-blocking
-        // Observe.
-        //
-        // Closure: for each admitted overfull candidate C relative to protected baseline B,
-        // Added_C(d) = C(d) \ B(d) is empty because CurrentPaths_C(d) is a subset of
-        // BaselinePaths_C(d). A git three-way merge can introduce only paths in Added_C(d), so
-        // every such merge is non-growing in d.
-        //
-        // Residual: candidates at or below DirectoryFileLimit are not constrained by this
-        // predicate. The 2026-08-13 union mechanism in that regime is unchanged by this change;
-        // the repository-wide DirectoryToleranceLimit net is its detection layer.
-        //
-        // Known cost: a same-directory rename arrives as Deleted(old)+Added(new). Honoring that
-        // pair as non-growing would break band closure: branch A can rename x to a while branch B
-        // renames x to b, making their union contain one more path. The gateway asks git to detect
-        // renames and copies, but ParseChanges intentionally discards the old/new pairing when it
-        // builds RawChangeSet. Retaining that choice is deliberate, so the new path still blocks.
-        // Observe remains a structured, non-blocking finding; the current CLI does not render
-        // Observe findings on the admit path. That is an existing property of the Observe channel,
-        // not a visibility regression introduced here.
-        var touched = context.Changes.Paths
+        // Count the whole candidate but report only touched directories. An overfull
+        // bucket blocks exactly when its current membership is not a subset of the
+        // protected baseline. Non-growing overfull buckets retain Observe diagnostics.
+        // Rename destinations are new membership even when total occupancy is unchanged.
+        var touched = changes.Paths
             .Select(static path => DirectoryOf(path.Value))
             .ToHashSet(StringComparer.Ordinal);
         foreach (var item in directories.Where(item => item.Value.Count > DirectoryFileLimit

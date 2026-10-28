@@ -1,0 +1,35 @@
+**定义 50.1（普遍精确记录任务）。** 固定公开整数 $H\ge1$、非空实际初始族 $\mathcal F\subseteq\mathcal T_H$ 和与来源无关的公共初始化。来源、替换、Clifford 当前 Read 及受守卫的正左／右拼接严格取 §30：来源是非空有序 $\alpha/\beta$ 二叉树；$\rho(\alpha)=\beta$、$\rho(\beta)=\langle\beta,\alpha\rangle$；整个候选叶数 $\le H$ 才接受。拒绝保持当前树，不返回候选读数。允许的上下文必须是命名的实际非空树，宏不可拆成部分接受的叶动作。没有隐藏组成、未来窗、原树导航、重置、复制、解接、来源逆操作、时钟或费用读出。这里不供应来源依赖的初始标签；若写标签，其值恒为一。
+
+令 $\mathscr R(H,\mathcal F)$ 为这个初始化下全部实际可达到的有限完整记录。记录包含每个命名动作的身份、真实接受／拒绝以及实际 Read 返回值；至少一个 $t\in\mathcal F$ 本身沿该记录执行才称为可达到。允许在这些记录上量化所有有限脚本及只依赖已取得记录的自适应控制，不要求记录属于同一个预选成功策略。对 $\omega\in\mathscr R(H,\mathcal F)$，定义
+
+$$
+\begin{aligned}
+\mathcal A_\omega&=\{t\in\mathcal F:t\text{ 实际产生整个 }\omega\},\\
+\tau(t)&=q_H(t),\\
+\mathcal P_\omega&=\{(q_H(s_\omega(t)),\tau(t)):t\in\mathcal A_\omega\},\\
+\mathcal Z_\omega&=\{\tau(t):t\in\mathcal A_\omega\}.
+\end{aligned}
+\tag{TM.5001}
+$$
+
+$s_\omega(t)$ 是该初始来源沿同一记录得到的实际当前树。$\tau$ 始终取初始值，$q_H(s_\omega(t))$ 则取当前值；$q_H$ 是定理 30.2 的固定合同精确行为商。$\mathcal P_\omega$ 保留当前行为与本人原始目标的关联，不按当前行为删掉不同原始目标。
+
+一个容量为 $b$ 的表示是编码 $C:\mathscr R(H,\mathcal F)\to\{0,1\}^b$ 和固定解码器 $D_{H,\mathcal F}$，满足
+
+$$
+\forall\omega\in\mathscr R(H,\mathcal F),\qquad
+D_{H,\mathcal F}(C(\omega))=\mathcal P_\omega.
+\tag{TM.5002}
+$$
+
+解码器的静态输入是 $H$、已声明初始族的完整实际描述／表、同一公共初始化、固定的 §30 运算规则及精确数值表示约定。它们全部在历史之前固定并另行计费。解码器不另收当前树或当前行为、不查询未知初始行，也不新发 Read。全部可访问的历史依赖内容必须计入 $C$：包括旧动作流、宏长度、读数、辅助记录、控制状态、历史特定程序或其地址、表选择指针及外置存储的索引。一个包含所有可能历史的固定字典可以是静态输入，但选择其当前条目的地址不能免费。随机种子若依赖历史且参与精确解码，也在此计费。允许从完整记录离线编码；§45 已另给可逐事件更新的充分表示。
+
+记 $b(H,\mathcal F)$ 为满足 (TM.5002) 的最小最坏固定宽度位数，$b_{\rm full}(H)=b(H,\mathcal T_H)$，并置
+
+$$
+B_{\rm rel}(H)=\max_{\varnothing\ne\mathcal F\subseteq\mathcal T_H}b(H,\mathcal F).
+\tag{TM.5003}
+$$
+
+固定 $H$ 的非空有序树域有限；当前及原始行为都在有限 $Q_H$ 中，故可能关系有限，最小值和最大值存在。这个任务的普遍性是对全部可达到记录要求完整关系，不是要求一项策略访问全部记录。
+

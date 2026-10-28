@@ -52,7 +52,49 @@ $$\operatorname{claim}\left(\right) = \left(\forall d \in \mathbb{N},\; \forall 
 
 Appendix B, Conjecture 1, page 32: "it is conjectured that such a hierarchy holds for all concatenations k, orders t, and dimensions d,d_E. Further, it is conjectured that the cHaar norm is monotonically non-increasing with environment dimension and concatenations," followed by the displayed concatenation inequality for every k′ ≥ k. Here d,d_E are d,e; the order is t; k and j are positive concatenation counts with k ≤ j. Page 3: "The choice of norm ∥·∥ is task-dependent, and unless noted, we use the Hilbert-Schmidt norm as it is overall the simplest to compute." The squared Hilbert-Schmidt norm of the Liouville matrix is the existing RHLinalg.frobSq, equal to the double sum of Complex.normSq. The environment-dimension clause is a separate assertion.
 
-**Theorem 1.5 (The concatenation assertion is false).**
+**Theorem 1.5 (The coordinate swap is Hermitian).**
+
+$$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \operatorname{Matrix.IsHermitian}\left(\operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.swapHermitian` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Matthew Duschenes, Diego García-Martín, Zoë Holmes, and M. Cerezo (2026). *Moments of Quantum Channel Ensembles*. DOI: [10.1103/grdp-jph9](https://doi.org/10.1103/grdp-jph9). URL: <https://arxiv.org/abs/2511.12700v2>.
+
+*Commentary.*
+
+The permutation matrix of the coordinate swap equals its conjugate transpose.
+
+**Theorem 1.6 (The coordinate swap is an involution).**
+
+$$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right) \cdot \operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right) = (1: \operatorname{Matrix}\left((n \times n), (n \times n), \mathbb{C}\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.swapSquare` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Matthew Duschenes, Diego García-Martín, Zoë Holmes, and M. Cerezo (2026). *Moments of Quantum Channel Ensembles*. DOI: [10.1103/grdp-jph9](https://doi.org/10.1103/grdp-jph9). URL: <https://arxiv.org/abs/2511.12700v2>.
+
+*Commentary.*
+
+Applying the coordinate swap twice gives the identity matrix.
+
+**Theorem 1.7 (The trace of the coordinate swap).**
+
+$$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \operatorname{Matrix.trace}\left(\operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)\right) = (\operatorname{Nat.cast}\left(\operatorname{Fintype.card}\left(n\right)\right): \mathbb{C})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.traceSwap` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Matthew Duschenes, Diego García-Martín, Zoë Holmes, and M. Cerezo (2026). *Moments of Quantum Channel Ensembles*. DOI: [10.1103/grdp-jph9](https://doi.org/10.1103/grdp-jph9). URL: <https://arxiv.org/abs/2511.12700v2>.
+
+*Commentary.*
+
+A diagonal entry of the coordinate swap is one exactly when its two coordinates coincide, and zero otherwise. Summing these entries gives the cardinality of n, explicitly cast from the natural numbers to the complex numbers.
+
+**Theorem 1.8 (The concatenation assertion is false).**
 
 $$\neg \operatorname{claim}\left(\right)$$
 
@@ -77,6 +119,9 @@ At d = e = t = 2 the fourth power has squared norm 1213852/1171875, and the fift
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.hsNormSq`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.momentOp`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.result`
+- Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.swapHermitian`
+- Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.swapSquare`
+- Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.traceSwap`
 - Dependency: [D5/S3/Quantum/GNSMatrix](../GNSMatrix.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl](HaarTwoCopyTwirl.md)

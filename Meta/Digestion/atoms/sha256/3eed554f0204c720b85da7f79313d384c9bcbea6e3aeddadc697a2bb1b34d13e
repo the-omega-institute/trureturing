@@ -1,0 +1,21 @@
+**Theorem 46.2 (same-specimen acquisition and exact word recovery).** Suppose $H<a$. After any actual length-$L$ pulse word, there is a terminating procedure that recovers that word using exactly $N$ new scalar root replies and $N-1$ new Ticks on the same specimen, then finite local calculation. It recovers the native field at the pulse endpoint and leaves a predictive record synchronized with the actual current field after those observation Ticks.
+
+Proof. Read the present root value $z_0$ and then execute $N-1$ Ticks, retaining their scalar returns $z_1,\ldots,z_{N-1}$. No Add occurs during this observation window. Its exact semantics are
+
+$$
+z_j=b^{\mathsf T}T^jx_L,\qquad
+z=\mathcal O_Nx_L.
+$$
+
+Invertibility of $\mathcal O_N=K^{\mathsf T}$ is already earned by Lemma 37.1. Apply the finite observability inverse of Proposition 39.3 to obtain $x_L=\mathcal O_N^{-1}z$. This is the supplied observability algebra with state space $\mathbb R^N$, evolution $T$, scalar readout $b^{\mathsf T}$ and horizon $N$, not another law-identification experiment. It also matches `finite_observability_equivalence` in [FiniteObservabilityEquivalence](../../../D5/S3/Observer/Linear/FiniteObservabilityEquivalence.lean) and its [owning Scribe](../../../Blueprint/D5/S3/Observer/Linear/FiniteObservabilityEquivalence.scribe.cs): its stacked map uses times $0,\ldots,N-1$, and $K$ supplies its full-rank hypothesis here. The infinite-family law and authentic origin were earned before these calls.
+
+Compute $d=x_L-T^Lx_*$. Among the finite $(H+1)^L$ menu words, compare $E_L$ with $d$ by exact local rational calculation. Existence of a match follows from the actual run, and Theorem 45.2 supplies uniqueness. At $L=0$ the sole candidate is the empty word and the same observation procedure is still permitted. No new calls are used in this finite decoding.
+
+During the window the actual specimen has advanced to $x_{\rm now}=T^{N-1}x_L$. Hold it while setting
+
+$$
+\widehat x=x_{\rm now},\qquad w_{\rm now}=\mathcal O_Nx_{\rm now}.
+$$
+
+The new record therefore represents the true current field. If $N=1$, the window has one Read and no Tick, so the two fields coincide. In general the procedure keeps the recovered historical endpoint $x_L$ distinct from $x_{\rm now}$; it performs no rollback or Reset. The $N-1$ diagnostic Ticks are retained as such, not silently reinterpreted as pulse actions or erased from the source's actual chronology. $\square$
+

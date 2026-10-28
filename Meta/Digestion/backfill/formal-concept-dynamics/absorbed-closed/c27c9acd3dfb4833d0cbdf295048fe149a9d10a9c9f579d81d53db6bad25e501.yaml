@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c27c9acd3dfb4833d0cbdf295048fe149a9d10a9c9f579d81d53db6bad25e501
+  normalized_sha256: sha256:c27c9acd3dfb4833d0cbdf295048fe149a9d10a9c9f579d81d53db6bad25e501
+cas_ref: sha256:c27c9acd3dfb4833d0cbdf295048fe149a9d10a9c9f579d81d53db6bad25e501
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Identifiability/BinaryIdentificationRepairDepthEquality.unconstrained_binary_identification_depth_equals_repair_bits
+    target_statement_id: sha256:1d1f97e29f6075075c41d00ab9429d69118d73ed48cdd8cf55f3dbae17f46915
+receipts:
+  unresolved_subitems: []

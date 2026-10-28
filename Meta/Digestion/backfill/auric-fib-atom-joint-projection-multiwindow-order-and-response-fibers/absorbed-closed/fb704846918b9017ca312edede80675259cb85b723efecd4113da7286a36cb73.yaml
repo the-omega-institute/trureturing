@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fb704846918b9017ca312edede80675259cb85b723efecd4113da7286a36cb73
+  normalized_sha256: sha256:fb704846918b9017ca312edede80675259cb85b723efecd4113da7286a36cb73
+cas_ref: sha256:fb704846918b9017ca312edede80675259cb85b723efecd4113da7286a36cb73
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.native_probability_separation
+    target_statement_id: sha256:d35d19e006ada8ca765adce787d5508c36edd6d10951c70f6feb3dc036b81d3c
+receipts:
+  unresolved_subitems: []

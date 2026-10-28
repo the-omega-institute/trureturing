@@ -24,6 +24,8 @@ internal sealed class MatchingCliqueCycleDocument : IScribeDocumentDefinition
                 "Within a fiber all distinct vertices are adjacent. Between fibers the only edges are the specified matchings and their reverse orientations."),
             Node("spectrum", "The maximal-independent-set spectrum", "spectrum", DescribeRole.Definition,
                 "The spectrum records cardinalities of actual finite independent vertex sets that dominate every omitted vertex. It uses the existing maximal-independent-set predicate."),
+            Node("cycle-distance", "Distance in the base cycle", "cycle_distance", DescribeRole.Lemma,
+                "The distance between two cycle vertices is the smaller of their two circular separations."),
             Node("distance-bounds", "Projection and matching lifts bound distances", "distance_bounds", DescribeRole.Theorem,
                 "Projecting a walk discards internal fiber steps. Conversely, a shortest cycle walk transports a vertex along its matchings; at most one final step inside the destination clique reaches the desired endpoint."),
             Node("projection", "Maximal independent sets project", "maximal_projection", DescribeRole.Theorem,
@@ -49,6 +51,9 @@ internal sealed class MatchingCliqueCycleDocument : IScribeDocumentDefinition
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), type, body);
     private static Formula Ex(string x, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(x), type, body);
+    private static Formula TypedAll(string x, Formula type, Formula body) =>
+        Seq(Forall, Sp, Parenthesized(Seq(Id(x), Sp, Colon, Sp, type)), Comma, Sp, body);
+    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
     private static Formula Eq(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Ne(Formula a, Formula b) =>
@@ -111,6 +116,10 @@ internal sealed class MatchingCliqueCycleDocument : IScribeDocumentDefinition
             "graph" => Family(All("x", V, All("y", V, adjacency))),
             "spectrum" => All("V", Type(), Instance(Call("Fintype", Id("V")),
                 Instance(Call("DecidableEq", Id("V")), graphBinder))),
+            "cycle_distance" => TypedAll("m", Nat(), TypedAll("i", B, TypedAll("j", B,
+                Eq(Call("dist", C, Id("i"), Id("j")),
+                    new Formula.Apply(Seq(Operatorname, Grp(Seq(Id("WellCoveredPowerCliqueProduct"), Dot, Id("cycleMetric")))),
+                        [Add(m, D(3)), Id("i"), Id("j")]))))),
             "distance_bounds" => Family(All("x", V, All("y", V, sandwich))),
             "maximal_projection" => Family(All("d", Nat(), All("I", Call("Finset", V),
                 Imp(And(positive, Call("IsMaximalIndep", GP, I)), projected)))),

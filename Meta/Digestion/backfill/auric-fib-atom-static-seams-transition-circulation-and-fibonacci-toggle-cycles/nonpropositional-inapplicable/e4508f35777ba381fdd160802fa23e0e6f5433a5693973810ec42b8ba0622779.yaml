@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e4508f35777ba381fdd160802fa23e0e6f5433a5693973810ec42b8ba0622779
+  normalized_sha256: sha256:e4508f35777ba381fdd160802fa23e0e6f5433a5693973810ec42b8ba0622779
+cas_ref: sha256:e4508f35777ba381fdd160802fa23e0e6f5433a5693973810ec42b8ba0622779
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This atom is a single Markdown heading, '6.7. 源、动作、时间及黄金供应的对应边界'. It is a section label only and contains no mathematical assertion or truth-valued predicate; the adjacent boundary paragraph is a separate atom. The exact probe build succeeded and no frozen declaration is applicable.
+    previous_atom_id: 988c242353176ce2802bcd79a8ee39851ff31ab3a3e3901cba749c7c8a190673
+    next_atom_id: c96f8ce174e857f5196783329b958fc5f9a274e102f2204cd9a7796ea969cea9

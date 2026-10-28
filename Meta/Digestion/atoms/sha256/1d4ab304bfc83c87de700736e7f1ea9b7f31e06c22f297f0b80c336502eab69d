@@ -1,0 +1,104 @@
+## 等待读出递归 1. 同一仪器的边缘稳定、完整历史与持续变标
+
+**定义 WR1.1（固定来源、固定等待与读后指标）。** 保留[原卷假设 1.1](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#1-五模式来源实际仪器与共同端口) 的同一个五维来源和[原卷定义 1.2](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#1-五模式来源实际仪器与共同端口) 的实际仪器，写 $P_i=\Pi_i$、$U_t=U(t)$。固定一个已标定的 $t\ge0$，每轮都执行同一个分支族
+
+$$
+\mathcal I_i^{(t)}(X)=P_iU_tXU_t^\dagger P_i,
+\qquad \Phi_t=\sum_{i\in\mathsf S}\mathcal I_i^{(t)}.
+\tag{WR1.1}
+$$
+
+一次运行从固定的 $\rho$ 开始；$\pi_{t,n}$ 是执行 $n$ 轮、完整保留所有读数、再 Stop 的确定策略。比较 $\rho,\sigma$ 时，$t$、仪器、控制、记录和停止规则全部相同。不在两轮间换来源、复位、补充新副本或按未取得的信息改选动作。每个有限 $n$ 都是[原卷定义 1.2](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#1-五模式来源实际仪器与共同端口) 的原有协议。
+
+令 $I_k$ 为第 $k$ 次实际读数，$\rho_n=\Phi_t^n(\rho)$。这里 $\rho_n$ 对全部既有读数取边缘；在正概率历史上，实际条件窗口态是 $P_{I_n}$。任意初态的首读分布是
+
+$$
+p_1(i)=\operatorname{tr}(P_iU_t\rho U_t^\dagger),\qquad
+M_{ij}(t)=|\langle e_i,U_te_j\rangle|^2,
+\quad u=\mathbf1/5,\quad J=\mathbf1\mathbf1^{\mathsf T}/5.
+\tag{WR1.2}
+$$
+
+$M_{ij}$ 的列 $j$ 是读后状态 $P_j$ 的下一读数律。因此任意初态从首读之后才有 $p_n=M^{n-1}p_1$、$n\ge1$；若 $\rho=\sum_jp_0(j)P_j$ 已对角，则从 $n=0$ 起有 $p_n=M^np_0$。原量子态的相干项不在首读之前被假定消失。
+
+此处直接消费 [Static Fiber §15 的定义 35.1 与命题 37](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)：取其 $d=5$、$v_j(t)=U_t^\dagger e_j$，等价地在[原卷约定 1.4](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#1-五模式来源实际仪器与共同端口) 的被动实帧中取 $v_j(t)=O(t)^{\mathsf T}e_j$，则
+
+$$
+B_{ij}(t)=|U_{t,ji}|^2,\qquad M(t)=B(t)^{\mathsf T},\qquad
+\kappa(t)=\|M(t)-J\|_{2\to2}=\|B(t)-J\|_{2\to2}.
+\tag{WR1.3}
+$$
+
+相位坐标变换 $D$ 不改模方。这里的经典转移解释来自每轮实际执行的秩一读出；没有把不经读出的酉演化当成 $M$。谱证书及其有理计算沿用来源，不重新证明。距离约定为
+
+$$
+D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1,\qquad
+\operatorname{TV}(p,q)=\tfrac12\sum_i|p_i-q_i|
+=\sup_A|p(A)-q(A)|.
+$$
+
+**命题 WR1.2（同一重复协议的三种结论）。** 若固定的 $t$ 满足 $\kappa=\kappa(t)<1$，则边缘窗口满足
+
+$$
+\begin{aligned}
+\rho\text{ 已对角}:\quad&D(\Phi_t^n(\rho),I_5/5)\le\kappa^n
+&& (n\ge0),\\
+\rho\text{ 任意}:\quad&D(\Phi_t^n(\rho),I_5/5)\le\kappa^{n-1}
+&& (n\ge1).
+\end{aligned}
+\tag{WR1.4}
+$$
+
+对任意两个初态及每个 $n\ge1$，同一策略的完整记录仍满足
+
+$$
+\operatorname{TV}(P_\rho^{\pi_{t,n}},P_\sigma^{\pi_{t,n}})
+=\operatorname{TV}(p_1^\rho,p_1^\sigma).
+\tag{WR1.5}
+$$
+
+固定 $\rho,t$ 的相容无限读数律下，标签最终恒定的事件满足
+
+$$
+\Pr_\rho\{\exists m\ge1\ \exists i\in\mathsf S\ \forall k\ge m:I_k=i\}=0.
+\tag{WR1.6}
+$$
+
+证明。酉性使 $M$ 双随机，所以 $MJ=JM=J$。对任意概率向量 $p$，$\|p-u\|_2^2=\sum_ip_i^2-1/5\le4/5$。对角初态因而有
+
+$$
+\begin{aligned}
+p_n-u&=(M-J)^n(p_0-u),\\
+D(\rho_n,I_5/5)&=\tfrac12\|p_n-u\|_1
+\le\tfrac{\sqrt5}{2}\kappa^n\|p_0-u\|_2\le\kappa^n.
+\end{aligned}
+$$
+
+任意初态经过第一轮后对角，再应用 $n-1$ 轮的界。式 (WR1.5) 直接使用[原卷定理 2.1](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#2-秩一首读与全部有限历史的相同量度) 证明中的固定策略首读恒等式，其后缀核在本处取
+
+$$
+L_i(i_2,\ldots,i_n)=\prod_{k=2}^nM_{i_k,i_{k-1}},\qquad
+P_\rho^{\pi_{t,n}}(i_1,\ldots,i_n)=p_1^\rho(i_1)L_{i_1}(i_2,\ldots,i_n).
+$$
+
+首结果保留，后缀核归一且与原输入无关，恰满足该既有恒等式的条件；这里不另立首读定理。
+
+这些有限律在删除末读数下相容，在有限字母表的柱集上由标准概率扩张唯一给出无限路径律。若 $M_{ii}=1$，则 $Me_i=e_i$，于是 $(M-J)(e_i-u)=e_i-u\ne0$，与 $\kappa<1$ 矛盾。因此每个 $M_{ii}<1$，并且
+
+$$
+\Pr\{I_m=I_{m+1}=\cdots=i\}
+=p_m(i)\lim_{r\to\infty}M_{ii}^{\,r}=0.
+$$
+
+对五个 $i$ 和可数个 $m$ 取并即得 (WR1.6)，无需把各读数假设为独立。$\square$
+
+**推论 WR1.3（既有两个设置及退化边界）。** 命题 37 的同一证书给
+
+$$
+\kappa(2/3)<2/3,\qquad \kappa(1)<23/50.
+$$
+
+故 (WR1.4) 对角起点的两上界可分别换成 $(2/3)^n$、$(23/50)^n$，任意起点在 $n\ge1$ 时换成相应的 $n-1$ 次幂；(WR1.5)–(WR1.6) 同时适用。证明只需代入 (WR1.4)。若 $\kappa=0$，约定 $\kappa^0=1$，对角起点一步后均匀，任意起点至迟两步后均匀。若 $t=0$，则 $M=I$、$\kappa=1$，第一轮后窗口保持其对角分布，后续标签恒定；这不满足 (WR1.6) 的严格假设。
+
+该结论将谱收缩用于取边缘后的窗口。完整历史的初态区别按 (WR1.5) 保持，单条路径的标签按 (WR1.6) 不会最终定格。无限律是理想相容模型；每个实际前缀只执行有限 $n$，含 $n$ 次等待和 $n$ 次读，等待时长合计 $nt$，另须承担读出、保存与控制的资源。无限记录不由某个有限存储或有限执行自动实现。
+

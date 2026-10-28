@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f701905487cbde24ffe63cebf5dc5e9439d26fb836c519458e1c4d253623053d
+  normalized_sha256: sha256:f701905487cbde24ffe63cebf5dc5e9439d26fb836c519458e1c4d253623053d
+cas_ref: sha256:f701905487cbde24ffe63cebf5dc5e9439d26fb836c519458e1c4d253623053d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 动态概念核的目标类型声明及定义引言。
+    previous_atom_id: f6f5477e2c8ee80bf648cbc0c3e1b62a27930840f1abdade8a8bf86fd9f835d4
+    next_atom_id: fc7dd6e72e28382b50d8478d53289368bad40aecc69742c4cdea95debf88c85c

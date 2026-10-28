@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:53f906b535d6f87d2677c84cdb5474bd06f696275841c522a12d48a6d83edf91
+  normalized_sha256: sha256:53f906b535d6f87d2677c84cdb5474bd06f696275841c522a12d48a6d83edf91
+cas_ref: sha256:53f906b535d6f87d2677c84cdb5474bd06f696275841c522a12d48a6d83edf91
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在给定内部参数范围内规定 lambda、u、v 的坐标及条件概率记号；范围作为定义的适用条件，不另提出极值或恢复结论。
+    previous_atom_id: dbe60a5cb56a404a25ab53428d6e50b86ff58d6054134d102c5c1daa1a458a22
+    next_atom_id: f4711114a5de64ade469987af0603e9dd06aaf82e792104ed514826e9789d395

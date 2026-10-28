@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ccb85c74771adae7d1b944ae6a826b0c54be92ef0a9209b11560005e9a7aff92
+  normalized_sha256: sha256:ccb85c74771adae7d1b944ae6a826b0c54be92ef0a9209b11560005e9a7aff92
+cas_ref: sha256:ccb85c74771adae7d1b944ae6a826b0c54be92ef0a9209b11560005e9a7aff92
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 有限实践形式、转化及本批来源和未验证边界；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: 1084f2970d9ad4847a22a85d795c2d494f17677de83a1717587795ca699fc9a2
+    next_atom_id: 3a91981f62695b1c904b487a0fae13592934a06032bc9915a0ecea4ebe26f2e4

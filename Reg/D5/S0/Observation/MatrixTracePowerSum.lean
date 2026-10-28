@@ -106,5 +106,69 @@ def registration :
 #print axioms source_registration
 #print axioms registration
 
+
+abbrev powArena : Arena where
+  signature := signature.{u}
+  Law r := ∀ {R : Type u} [CommRing R] (M : Matrix (Fin 2) (Fin 2) R) (n : ℕ),
+    (r.readout () R M) ^ (n + 2) =
+      Matrix.trace M • M ^ (n + 1) - Matrix.det M • M ^ n
+
+private theorem powRejected : ¬ powArena.{u}.Law rejected := by
+  intro h
+  apply rejected_law
+  intro R inst M n
+  have he := congrArg Matrix.trace (@h R inst M n)
+  simpa only [Matrix.trace_sub,Matrix.trace_smul,smul_eq_mul] using he
+
+def powSource : Registration powArena.{u} (type_of% @pow_add_two.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨pow_add_two,rejected,powRejected⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected,?_,rfl,powRejected⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def powRegistration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@pow_add_two.{u}) (Realization signature.{u}) Unit Unit := {
+  unitName := `Reg.D5.S0.Observation.MatrixTracePowerSum.powUnit
+  realizationName := `Reg.D5.S0.Observation.MatrixTracePowerSum.powSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨powArena.{u}⟩
+  objectArena := .source ⟨powArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source powArena.{u} ⟨powSource.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u} (fun _ _ M => M) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S0.Observation.MatrixTracePowerSum
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body","body","body","body","fn","arg","fn","arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms powSource
+#print axioms powRegistration
+
 end
 end Reg.D5.S0.Observation.MatrixTracePowerSum

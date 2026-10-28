@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5eb6759a55921c50bd9ccf03154eed35e03308eb75be6cc716f966c1b980ba1a
+  normalized_sha256: sha256:5eb6759a55921c50bd9ccf03154eed35e03308eb75be6cc716f966c1b980ba1a
+cas_ref: sha256:5eb6759a55921c50bd9ccf03154eed35e03308eb75be6cc716f966c1b980ba1a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: ST1.2列出低能研究窗口、应检查的小参数与不得删除模式的方法要求；不声称误差界或局域近似已成立。
+    previous_atom_id: 7d33abba0fbcbcd71d6f2782b27f83cd342d0e6a59c32695dcc433ddd8de8fce
+    next_atom_id: a81bdce8097e0a6e5701dd23eb79f1c3127a9f472d0cb92bd3cee5d7b2529efa

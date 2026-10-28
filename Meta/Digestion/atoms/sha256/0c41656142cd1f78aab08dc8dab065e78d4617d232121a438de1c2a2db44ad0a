@@ -1,0 +1,62 @@
+### 46.2 实参数恒等式与非零循环位移
+
+写 `p+q=-1+ih`，并令 `P=p-1`、`Q=q-1`。由 `p,q` 均在开第二象限，其辐角之差的绝对值小于 `pi/2`；故 `|p+q|²>2`，即 `h>1`。又 `|p+q|<=2`，所以 `h<=sqrt(3)`。直接由两个单位模条件及实部之和得到：
+
+```math
+pq=\frac{1-ih}{1+ih},\qquad
+ a^2=\frac{h^2(3-h^2)}{1+h^2},\qquad
+\operatorname{Re}(Q^2-P^2)=4a,
+\qquad I_0:=\operatorname{Im}(P^2+Q^2)=-\frac{4h^3}{1+h^2}.
+```
+
+因此有严格不等式：
+
+```math
+I_0^2-4a^2
+=\frac{4h^2(h^2-1)(5h^2+3)}{(1+h^2)^2}>0.
+\tag{46.2}
+```
+
+`A,B` 未归一化的 mode 特征值分别为：
+
+```math
+a_0=2+p,\quad a_k=P\omega^k\ (k=1,2),\qquad
+b_0=2+q,\quad b_k=Q\omega^k\ (k=1,2).
+```
+
+固定式 (46.1) 的 `m`，令：
+
+```math
+K_k=a_k+\gamma\omega^{mk}b_k,\qquad
+L_k=\overline{b_k}-\gamma\omega^{mk}\overline{a_k}.
+```
+
+输出的两个 Fourier channel 为 `K_k u_k/sqrt(6)` 和 `L_k u_k/sqrt(6)`。它们与 `x` 的 constant-modulus 条件共同给出：
+
+```math
+\sum_kc_k=
+\sum_k\overline{K_k}K_{k+1}c_k=
+\sum_k\overline{L_k}L_{k+1}c_k=0.
+```
+
+由于 `c` 非零，三个方程的系数行列式必须为零。但对 `m=1,2`，其确切展开为：
+
+```math
+\det\begin{pmatrix}
+1&1&1\\
+\overline{K_0}K_1&\overline{K_1}K_2&\overline{K_2}K_0\\
+\overline{L_0}L_1&\overline{L_1}L_2&\overline{L_2}L_0
+\end{pmatrix}
+=18\omega^m\left(a\frac pq\gamma^{-2}-iI_0-a\frac qp\gamma^2\right).
+\tag{46.3}
+```
+
+式 (46.3) 可逐个 Laurent 系数展开得到：以 `conjugate(p)=1/p`、`conjugate(q)=1/q`、`conjugate(omega)=omega²` 代入，乘以 `p²q²gamma²` 后使用：
+
+```math
+\omega^2+\omega+1=0,\qquad
+p^2q+pq^2+2pq+p+q=0.
+```
+
+其中两个奇次系数为零，其余三个系数即为式 (46.3) 右侧。由于 `p/q` 和 `gamma` 都有模一，若右侧为零，三角不等式就给出 `|I_0|<=2|a|`，与式 (46.2) 矛盾。两个非零循环位移均被排除。
+

@@ -1,0 +1,4 @@
+**Convention 11.3 (different inputs and retained edge cases).** Fixed-serving-table validation in §§7–8 still varies the arbitrarily large explicit preparer $A$ and binary $P$. Literally fixed-table acquired selection in Theorem 11.1 varies only $L$. Consequently the latter P result does not weaken the former DP-completeness result for fixed $T_{10}$. The variable-table acquired-selector reduction of §10 has its own scope.
+
+Initial Halts, final-call Halts, empty CNFs, empty clauses, empty suffix menus, unused states and duplicate records retain their exact meanings in every construction. All cap fields are original binary upper budgets. No proof iterates through an exponentially large numeric cap for membership. Sourcewise no-revisit neither removes unused records nor makes the union of all source paths acyclic. A bound on certificate nodes is not an imposed bound on actual sources.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:97f879bdfac09c737116ab69fd9472060fb5fa9d9c3aad87ef740b677251f986
+  normalized_sha256: sha256:97f879bdfac09c737116ab69fd9472060fb5fa9d9c3aad87ef740b677251f986
+cas_ref: sha256:97f879bdfac09c737116ab69fd9472060fb5fa9d9c3aad87ef740b677251f986
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 市场策略公开后有效是引用的适用场景例子，未断言存在这样的有效策略。
+    previous_atom_id: df7f02dd3f7ab1c2ce323aab2470acbe1a73ddbfe3f1872da1200abc751e2500
+    next_atom_id: e80fe92b4b11f004935c7dfea271442aece01aa42af8766287331b95eff5f4e5

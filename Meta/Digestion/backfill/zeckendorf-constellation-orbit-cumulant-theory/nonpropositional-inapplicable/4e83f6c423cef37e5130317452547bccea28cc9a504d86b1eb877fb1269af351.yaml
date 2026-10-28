@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4e83f6c423cef37e5130317452547bccea28cc9a504d86b1eb877fb1269af351
+  normalized_sha256: sha256:4e83f6c423cef37e5130317452547bccea28cc9a504d86b1eb877fb1269af351
+cas_ref: sha256:4e83f6c423cef37e5130317452547bccea28cc9a504d86b1eb877fb1269af351
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 约定以 (n,k) 标记 Hausdorff 约束，并把 n 命名为 inverse-Casimir moment depth，没有给出矩的取值、正性或充分性断言。
+    previous_atom_id: 28e064a2d3fba136cd6a0748c6f549c1e3128963c389e189d38e974a24ccf321
+    next_atom_id: 2c4201a7ab2dbdd937fbc0f412cce4b6223345f4d6a0264f8452e37cb441c38a

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a5f290ae9ef5d641eda147423f3e36648c111b52a8fbe554ed0439e3047d9c55
+  normalized_sha256: sha256:a5f290ae9ef5d641eda147423f3e36648c111b52a8fbe554ed0439e3047d9c55
+cas_ref: sha256:a5f290ae9ef5d641eda147423f3e36648c111b52a8fbe554ed0439e3047d9c55
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: W-B1/W-B2 节标题、席位载体、产地和强度披露；没有曲率或亏损等式。
+    previous_atom_id: 609ee994528821e6e0ac5d1ff8fcb103b94a85aa17df893b534bb6d5d85a303d
+    next_atom_id: e9016856a60ca435f7b1f64003588c30d5b5a6e8b875b27d79c490f080104995

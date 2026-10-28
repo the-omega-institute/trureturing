@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b34af1df56c569d2986fb22f4b153b9ddd8e99c0533b647161103dc1213f1977
+  normalized_sha256: sha256:b34af1df56c569d2986fb22f4b153b9ddd8e99c0533b647161103dc1213f1977
+cas_ref: sha256:b34af1df56c569d2986fb22f4b153b9ddd8e99c0533b647161103dc1213f1977
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: C0.1 已有工具清单中的 semantic closure 只命名一个已采用概念，没有断言特定 readout 属于或不属于其闭包。
+    previous_atom_id: 829525c12cbc575d8b54b5aee76eee379b67739626741f82c1db94600bf02ea0
+    next_atom_id: 47c3d6343751492dcf06a38891bad0f4660d19365048af4574fdab9b27a70e26

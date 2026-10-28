@@ -117,6 +117,7 @@ result (theorem): proof_shape: content; escape_witness: none; consumers: none.
 Module admission_basis: open-problem-resolution (#16204; Proved).
 Direct frozen dependencies: none (pinned Mathlib only).
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16351.
+Escape audit for cyclicHom_int unfinished: https://github.com/the-omega-institute/trureturing/issues/19215.
 The utility is none: this is a uniform structural theorem, not a finite computation.
 The cyclic and product maps use ZMod.lift, zmultiplesHom, noncommCoprod and
 noncommPiCoprod; homomorphism extensionality uses the upstream generator theorem.
@@ -150,7 +151,7 @@ noncomputable def cyclicHom {H : Type*} [Group H] (n : ℕ) (a : H) (ha : a ^ n 
       change a ^ (n : ℤ) = 1
       simpa only [zpow_natCast] using ha⟩)
 
-@[simp] private theorem cyclicHom_int {H : Type*} [Group H] (n : ℕ) (a : H) (ha)
+@[simp] theorem cyclicHom_int {H : Type*} [Group H] (n : ℕ) (a : H) (ha)
     (i : ℤ) : cyclicHom n a ha (ofAdd (i : ZMod n)) = a ^ i := by
   unfold cyclicHom
   change Additive.toMul ((ZMod.lift n _) (i : ZMod n)) = _
@@ -599,12 +600,12 @@ private theorem delta_commute (n : ℕ) (hn : 2 ≤ n) (i j : ℤ) :
 private def kgens (n : ℕ) : Set (G n) := if 2 ≤ n then Set.range (delta n) else {1}
 private instance K_isMulCommutative (n : ℕ) : IsMulCommutative ((Subgroup.closure (kgens n))) := by
   apply Subgroup.isMulCommutative_closure
-  intro a ha b hb
+  intro a ha b hb _
   by_cases hn : 2 ≤ n
   · simp only [kgens, if_pos hn, Set.mem_range] at ha hb
     obtain ⟨i, rfl⟩ := ha
     obtain ⟨j, rfl⟩ := hb
-    exact (delta_commute n hn i j).eq
+    exact delta_commute n hn i j
   · simp only [kgens, if_neg hn, Set.mem_singleton_iff] at ha hb
     simp [ha, hb]
 open scoped IsMulCommutative

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1561658d94160e65eefb25fe95bd21dbde5b9a234df154aed59061b0b42ef5c0
+  normalized_sha256: sha256:1561658d94160e65eefb25fe95bd21dbde5b9a234df154aed59061b0b42ef5c0
+cas_ref: sha256:1561658d94160e65eefb25fe95bd21dbde5b9a234df154aed59061b0b42ef5c0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 工具价值与认识价值两个轴是评价分类及定义导语，不包含二者独立性的证明。
+    previous_atom_id: 17c6b859b60befeb336c4f1d15a6f81b21aa88c002dbc0652cee1514cca2cf73
+    next_atom_id: 6796b1c7f95e6be7aae16f66ef14ec24a0b310010b65afee6d1a677cb04bccf9

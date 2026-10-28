@@ -109,7 +109,7 @@ public static class FrozenContentAddress
             CanonicalStatementWriter.DeclarationStatementIds(path, report));
     }
 
-    private static StatementId ComputeModuleStatementId(
+    internal static StatementId ComputeModuleStatementId(
         RepoPath path,
         ImmutableArray<FrozenDeclarationStatement> declarations) =>
         StatementId.Create(FrozenContentHash.Compute(

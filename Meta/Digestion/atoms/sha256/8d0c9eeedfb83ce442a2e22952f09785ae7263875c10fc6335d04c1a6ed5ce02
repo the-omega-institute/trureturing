@@ -1,0 +1,22 @@
+## 8. 本批的来源、范围与产地
+
+文献表态：紧致性、紧致因子的闭投影、有限非空共滤极限与滤余极限的共同细化判据均属已有数学。第 7 节是基于这些构件和本卷观察塔定义的纸面推导（repo-derived）；未查证全球首创。以下固定源码仅锚定所列构件，不表示第 7 节整体交换判据已有 Lean 形式化。
+
+项目源码固定于 `43aad93d4245edaa7cf8421a0de8a84392125107`，mathlib 固定于 `db584cd6d46c92f209a44c0f1c829460d327499d`：
+
+| 固定源码 | 声明名 | 引用范围 |
+| --- | --- | --- |
+| [CompactLocalRealization](https://github.com/the-omega-institute/trureturing/blob/43aad93d4245edaa7cf8421a0de8a84392125107/D5/S3/Observer/Completion/CompactLocalRealization.lean) | `compact_local_realization` | 紧致空间中的有限局部实现 |
+| [FiniteCofilteredLimit](https://github.com/the-omega-institute/trureturing/blob/43aad93d4245edaa7cf8421a0de8a84392125107/D5/S3/ObserverMemory/InverseLimits/FiniteCofilteredLimit.lean) | `finite_cofiltered_limit_nonempty` | 有限非空共滤系统的相容截面 |
+| [IndependentDescentCriterion](https://github.com/the-omega-institute/trureturing/blob/43aad93d4245edaa7cf8421a0de8a84392125107/D5/S3/ObserverMemory/InverseLimitMorphisms/IndependentDescentCriterion.lean) | `inverse_limit_descent_and_independent_converse` | 坐标下降及满投影下的反推 |
+| [GeneralHomFormula](https://github.com/the-omega-institute/trureturing/blob/43aad93d4245edaa7cf8421a0de8a84392125107/D5/S3/ObserverMemory/ProObjects/GeneralHomFormula.lean) | `pro_category_hom_formula`、`pro_hom_has_stage_representatives`、`pro_hom_stage_classes_compatible`、`singleStageDiagram` | pro-Hom、阶段代表类与单点呈示 |
+| [StrictOneHoleContexts](https://github.com/the-omega-institute/trureturing/blob/43aad93d4245edaa7cf8421a0de8a84392125107/D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean) | `contextual_equivalence_is_greatest`、`signature_extension_refines` | 单载体上下文最大强同余与签名扩展 |
+| [CompatibleResidueJointImage](https://github.com/the-omega-institute/trureturing/blob/43aad93d4245edaa7cf8421a0de8a84392125107/D5/S3/Factorization/PrimePowers/CompatibleResidueJointImage.lean) | `joint_residue_image_eq_compatible_pairs`、`residue_realization_independent_iff_coprime` | 含零模的联合余数像与互素判据 |
+| [Mathlib/Topology/Maps/Proper/Basic.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Maps/Proper/Basic.lean) | `isClosedMap_fst_of_compactSpace` | 紧致因子的投影为闭映射 |
+| [Mathlib/Topology/Compactness/Compact.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Compactness/Compact.lean) | `IsCompact.nonempty_iInter_of_sequence_nonempty_isCompact_isClosed` | 非空递减闭集的紧致性交 |
+| [Mathlib/CategoryTheory/Limits/Types/ColimitTypeFiltered.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/CategoryTheory/Limits/Types/ColimitTypeFiltered.lean) | `Functor.ιColimitType_eq_iff_of_isFiltered` | 滤余极限类相等的共同细化判据 |
+
+产地：追加结构采用 theory-volume-template。主数学推理由 ChatGPT Pro 完成，条件核对与 TeX 规范化由 Codex 完成。
+
+范围：本批为纸面陈述与证明，未新增或运行 Lean 验证。单载体源码锚不覆盖第 6 节的多种类推广；第 7 节只处理支撑关系及共同中间元素，不恢复同一三元组的多条历史或证明档案。本文不声明消化或冻结机器状态。
+

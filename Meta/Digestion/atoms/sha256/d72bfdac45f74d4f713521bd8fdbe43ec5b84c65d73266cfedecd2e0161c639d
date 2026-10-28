@@ -1,0 +1,32 @@
+**Definition 3.1 (Primitive integer F and G).** Let $N=3L$ and
+$B=5q\phi$. Apply the four rows of (2.5) to
+
+$$
+\big((24B-N)(x+1)(x+2),\ (18B-N)D,\
+(p_n\phi-N)x(x+2),\ (v_n\phi-N)x(x+1)\big)
+$$
+
+and call the outputs $\bar a_0,\bar a_1,\bar a_2,\bar a_7$.
+They equal $Ba_i$ after substituting $d=N/B$. Define
+
+$$
+\begin{aligned}
+Z&=x\bar a_1-D(24B-N),\\
+B_s&=(294B-10N)D-5\bar a_2,\\
+\bar A&=4Z^2-2Z\bar a_1+(2x-1)\bar a_1^2,\\
+\bar E&=-2Z\bar a_1+2(1-x)\bar a_1^2,\\
+F&=-{5ND\bar a_2+\bar a_0B_s\over90D^2h},\\
+G&={\bar A\bar a_0^2-\bar E\bar a_0ND-\bar a_1^2N^2D^2
+\over324D^4h}.
+\end{aligned}
+\tag{3.1}
+$$
+
+Both displayed polynomial divisions have remainder zero in
+$\mathbb Z[x,t]$. The quotients have integer content $1$, coordinate
+degrees $(\deg_x,\deg_t)=(6,5),(13,11)$, and leading coefficients in
+lexicographic order $(x,t)$ equal to $3100856$ and
+$191397636974083200$, respectively. Thus (3.1), including its signs
+and scalar divisors, specifies every coefficient without a coefficient
+file. In the branch $q\phi Dh\ne0$, (2.9) implies $F=G=0$.
+

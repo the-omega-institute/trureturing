@@ -1,0 +1,67 @@
+**定义 72.1（原空间及忠实来源）。** 本卷接续[第一卷](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md) §35、[第二卷](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_II.md) §§39–42 及[第五卷](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_V.md) §§54–57。以下复述供应对象以固定参数对应；原通道约化、严格点及其提升不是本卷新增结果。全部向量为列，$\dagger$ 为共轭转置，正性指全部复 Hermitian 矩阵的正性。
+
+物理空间为 $H=\mathbb C^5$，标准基为 $e_0,\ldots,e_4$。令
+
+$$
+\begin{gathered}
+u_H=(e_0+e_3)/\sqrt2,\quad v_H=(e_1+e_4)/\sqrt2,\quad z_H=e_2,
+\qquad B=(u_H,v_H,z_H),\\
+K_0=u_He_0^\dagger+v_He_2^\dagger/\sqrt2+z_He_4^\dagger,
+\qquad K_1=u_He_1^\dagger+v_He_2^\dagger/\sqrt2+z_He_3^\dagger,\\
+U=\begin{pmatrix}1&0&0\\0&0&1\\0&1&0\end{pmatrix},\quad
+W=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},\quad P_+=(I_3+W)/2,\\
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\quad e=(1,1,-2)^{\mathsf T}/\sqrt6,
+\quad f=(1,-1,0)^{\mathsf T}/\sqrt2,\\
+q=(\xi+e)/\sqrt2,\quad r=(\xi-e)/\sqrt2,\quad E=qq^\dagger,
+\quad P=BEB^\dagger,\\
+a=Uq,\quad h_{\rm out}=Ur,\quad g=Uf,\quad
+C=(a+h_{\rm out})(a+h_{\rm out})^\dagger=2\xi\xi^\dagger,\\
+\ell=(0,1,0)^{\mathsf T},\quad N_\ell=\ell^\perp,\quad
+\tau=3-2\sqrt2,\quad c_\ell=(2+\sqrt2)/\sqrt{12},\quad
+\ell=c_\ell(h_{\rm out}-\tau a).
+\end{gathered}
+\tag{72.1}
+$$
+
+Fix $0<d<1$, and write $\beta=1-d$, $e_d=(6-5d)/16$. The source is the full complex set
+
+$$
+\mathcal K_d=\left\{\rho=A+D:
+\begin{array}{l}
+ A,D\succeq0,\quad D\ell=0,\quad\operatorname{Tr}\rho=1,\\
+ a^\dagger Aa=d,\quad\operatorname{Tr}(C\rho)=d,\quad
+ \operatorname{Tr}(E\rho)=e_d
+\end{array}\right\}.
+\tag{72.2}
+$$
+
+The matrices $A,D$ are existential decomposition variables. They are not additional preparation permissions. First-volume Theorem 35.4 supplies the equivalent characterization by the same trace and two moments together with
+
+$$
+\rho\succeq0,\qquad s=\rho_{aa}-d\ge0,\qquad
+B_d(\rho)=\begin{pmatrix}d&a^\dagger\rho\ell\\
+\ell^\dagger\rho a&\ell^\dagger\rho\ell\end{pmatrix}\succeq0.
+\tag{72.3}
+$$
+
+The original channel domain is $M_3(\mathbb C)\to M_5(\mathbb C)$, with unrestricted output support and Kraus rank. Put $\mathcal G(Y)=\sum_jK_jYK_j^\dagger$, $J_j=(\mathcal G^\dagger)^j(P)$. In the input basis $(q,r,f)$ its original fiber $\mathcal F_{\sqrt d}$ consists of CPTP maps with $T^\dagger(J_j)=Y_j$ at every $j\ge0$, where
+
+$$
+\begin{gathered}
+Y_0=\operatorname{diag}(1,0,d),\qquad
+Y_1=\frac1{16}\begin{pmatrix}1&3&0\\3&9&0\\0&0&6-5d\end{pmatrix},\\
+Y_2=\frac1{32}\begin{pmatrix}17&3&0\\3&9&0\\0&0&6+11d\end{pmatrix},\qquad
+Y_{j+2}=(Y_j+Y_{j+1})/2\quad(j\ge1).
+\end{gathered}
+\tag{72.4}
+$$
+
+The supplied successor is
+
+$$
+S_\rho(X)=B[UP_+XP_+U^\dagger+(f^\dagger Xf)\rho]B^\dagger.
+\tag{72.5}
+$$
+
+Every $\rho\in\mathcal K_d$ has a lift $T\in\mathcal F_{\sqrt d}$ with $\mathcal GT=S_\rho$. In particular $S_\rho(ff^\dagger)=B\rho B^\dagger$. The parameter $\sqrt d$ indexing this fiber is distinct from the perturbation amplitude $t$ below.
+

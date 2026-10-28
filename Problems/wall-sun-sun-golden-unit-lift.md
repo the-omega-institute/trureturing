@@ -73,7 +73,7 @@ existence question is not a routine finite-period exercise.
 
 ## Gap
 
-- No frozen `pisanoPeriod` or recurrence-period API.
+- `GoelPisanoRatioRefutation` already defines the frozen `pisanoPeriod` and proves the internal pair-period helpers. The new `PisanoMatrixBridge` theorem exposes the missing public bridge to the Fibonacci matrix order for every modulus `n > 1`.
 - `GoldenApparition` works modulo a prime; there is no golden algebra modulo
   `p^2` and no Hensel or p-adic order-lift theorem.
 - There is no `p`-rational field or p-adic logarithm machinery.
@@ -82,17 +82,16 @@ existence question is not a routine finite-period exercise.
 
 ## Route
 
-1. Define the Fibonacci matrix `A = [[0,1],[1,1]]` over `ZMod m`; prove that
-   `pi(m)` is its multiplicative order by tracking `(F_n, F_{n+1})`.
-2. Define the reduction of `GoldenInt` over `ZMod m` and identify multiplication
-   by `phi` with `A`.
-3. For `r = pi(p)`, write the first lift as `A^r = I + pB (mod p^2)`. Prove
+1. Use the public bridge `PisanoMatrixBridge.pisanoPeriod_eq_matrix_order` to identify
+   `pi(m)` with the order of `[[1,1],[1,0]]` over `ZMod m`; its proof tracks
+   `(F_n, F_{n+1})` through the reduced golden unit.
+2. For `r = pi(p)`, write the first lift as `A^r = I + pB (mod p^2)`. Prove
    `pi(p^2) = pi(p)` if and only if `B = 0 (mod p)`, and that otherwise the
    period acquires the expected factor `p`.
-4. Use the frozen split/inert and apparition results to reduce the required
+3. Use the frozen split/inert and apparition results to reduce the required
    congruence to a Fibonacci/Lucas quotient modulo `p`, separately in the two
    Legendre-symbol cases.
-5. Only after those bridge theorems exist should a theorist choose between a
+4. Only after those bridge theorems exist should a theorist choose between a
    conditional nonexistence theorem for a prime class, a density heuristic, or
    the global Wall question. Do not jump from a finite scan to existence.
 

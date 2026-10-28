@@ -1,0 +1,4 @@
+**(C5) Theorem 4.2 (finite common-path bank).** Suppose $J<\infty$ fixed-scale copies of the service are explicitly installed on the same actual path $Z$. The full joint acquired prefix through any fixed deterministic $T>0$ still has an $m$-absolutely-continuous posterior for $Z_T$.
+
+**Proof.** Merge the finitely many genuine stopping lists and coalesce ties. The merged list is locally finite and has no deterministic arrival by Lemma 2.2. Conditional on the full source past at the $n$th merged release, the remaining positive horizon has a density by Lemma 2.1. Restricting this joint future law to all-channel nonarrival through $T$ preserves domination by the past law times $m$. Measurable disintegration over the actual joint prefix and summation over $n$ gives the result. The argument permits dependent timers and overlapping services; separate marginal samplers on separate paths do not establish it. ∎
+

@@ -1,0 +1,15 @@
+**定理 81.1（有限前缀闭域的可逆完成）。** 设 $D\subseteq\{0,1,N\}^*$ 有限、包含空词且前缀闭。存在一个总状态数 $|D|$ 的定义 80.2 比较器，同时精确匹配所有 $w\in D$ 的两个终端质量；它的一个制备、一个效果和三个全局置换在整个 $D$ 上共同使用。
+
+证明。取 $\Omega=D$、$\mu=\delta_\varnothing$、$f(w)=q_w$。对每个字母 $b$，只在
+
+$$
+D_b=\{w\in D:wb\in D\}
+\tag{81.1}
+$$
+
+上规定 $I_b(w)=wb$。这是同一有限集合中的部分单射。将 $D\setminus D_b$ 与 $D\setminus I_b(D_b)$ 配成任意双射，就把 $I_b$ 补为全局置换 $P_b$。这一有限单射延拓正是 [FIB_SOURCE_COMPLETION_DYNAMICS §15.1、定理 15.2](FIB_SOURCE_COMPLETION_DYNAMICS.md#151-驱动合同与实际可达容量) 中已用的补集配对机制；这里不借用该窗口问题的最小容量结论。
+
+等价的已知上游供应是钉版 mathlib `56a005855ea17e0b0958f73ec801ae140b0a1679` 的 [Mathlib/Logic/Equiv/Fintype.lean，Equiv.Perm.exists_extending_pair](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Logic/Equiv/Fintype.lean)：其有限索引类型取 $D_b$，两条单射分别为包含和 $w\mapsto wb$，共同余域取 $D$。该声明供应全域置换在这些点上的延拓，不供应此源的概率、状态数最优性或实验资源。
+
+前缀闭性使逐字归纳给 $P_w\delta_\varnothing=\delta_w$ 对所有 $w\in D$ 成立。因此 $f^{\mathsf T}P_w\mu=q_w$；再乘 (80.3) 的原生质量，即得两个终端等式。每个固定仪器时序的所有结果史都在相应完整词域内时，所得就是该时序的完整联合分布，而非逐词各选一个模型。三个补置换在边界之外的行为无需匹配。它们对 $D$ 内任意概率分布仍保持谱与熵；沿实际已知历史，归一化分布为点质量，熵恒为零。∎
+

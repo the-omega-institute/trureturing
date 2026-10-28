@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5a4e9f9fc49735bd75bd667e38474fa4250e605c381399099daad5032fb0c98a
+  normalized_sha256: sha256:5a4e9f9fc49735bd75bd667e38474fa4250e605c381399099daad5032fb0c98a
+cas_ref: sha256:5a4e9f9fc49735bd75bd667e38474fa4250e605c381399099daad5032fb0c98a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 论语的恕、成人与指定译本范围；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: adb59726bc2d88a6007f49b1637f26b16ff4a6ccbb576e71375350fdda391b28
+    next_atom_id: c9ca059bc4a943c75cc0fb40692a56426473bd5cdcc3cd9c91a20d04e5328a34

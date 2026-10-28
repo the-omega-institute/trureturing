@@ -36,7 +36,7 @@ def fullPattern : (d : Nat) → Pattern d
   | 0 => ()
   | d + 1 => .inr (fullPattern d, fullPattern d)
 
-private theorem full_frontier_card (d : Nat) :
+theorem full_frontier_card (d : Nat) :
     Fintype.card (Frontier (fullPattern d)) = 2 ^ d := by
   induction d with
   | zero => rfl

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a21987cdaf36a435088806193c45bf3238c81a58ff13f0c4b658d089ca17fb01
+  normalized_sha256: sha256:a21987cdaf36a435088806193c45bf3238c81a58ff13f0c4b658d089ca17fb01
+cas_ref: sha256:a21987cdaf36a435088806193c45bf3238c81a58ff13f0c4b658d089ca17fb01
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯章节标题“MF.5 无限记忆核与有限阶状态实现”，不包含定义、量词或数学断言。
+    previous_atom_id: fa2c44de23ae96890fefb75966c5163b8cfbda25f0cf4e31e9e7e5ac17290e6f
+    next_atom_id: 6dee44bc927616aa06b160bec10bfd35e54cef25c4e95e063a514c3188d137a3

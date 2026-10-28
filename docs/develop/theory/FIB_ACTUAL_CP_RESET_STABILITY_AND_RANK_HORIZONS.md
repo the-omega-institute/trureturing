@@ -1021,3 +1021,131 @@ Theorem 5.1 establishes square-root sharpness at fixed dimension and nonvanishin
 The metric throughout is the unnormalized output-first Choi trace norm (4.3), with the ordinary-input implications (4.23)–(4.24). There is no diamond-norm claim, empirical machine-learning transfer, finite-bit or physical implementation claim, or new original-monomial hidden-memory minimum. These are ordinary mathematical proofs about finite homogeneous complex CP instruments and actual conditional probabilities, without a kernel-verification or worldwide novelty claim. Quantitative optimization and the separate implementation and interpretation questions remain unresolved.
 
 ## 追加锚（本行以下为增补区）
+
+## 6. Coherent compression and density observations
+
+**Theorem 6.1 (Coherent compression and trace transfer).** Let $D\in\mathbb N$, including $D=0$, and equip $M_D(\mathbb C)$ with the operator norm on complex Euclidean space. The order $U\le V$ means that $V-U$ is positive semidefinite. Let $T:M_D(\mathbb C)\to M_D(\mathbb C)$ be any complex-linear completely positive map satisfying $T(I)\le I$. Let $P,X,\sigma\in M_D(\mathbb C)$ satisfy
+
+$$
+P^\dagger=P,\qquad P^2=P,\qquad X\le P,
+\qquad \sigma\ge0,\qquad \operatorname{Tr}\sigma=1.
+$$
+
+Thus $P$ is an actual orthogonal projection; no positivity assumption is imposed on $X$. Define
+
+$$
+Q=I-P,\qquad
+\alpha=\sqrt{\|QT(P)Q\|_\infty}.
+\tag{6.1}
+$$
+
+Then, for every $n\in\mathbb N$, including $n=0$, both inequalities hold:
+
+$$
+\begin{aligned}
+T^n(X)&\le P+2n\alpha I,\\
+\operatorname{Re}\operatorname{Tr}\bigl[\sigma T^n(X)\bigr]
+&\le \operatorname{Re}\operatorname{Tr}(\sigma P)+2n\alpha.
+\end{aligned}
+\tag{6.2}
+$$
+
+Here $T^0$ is the identity map. The projection determining the corner defect in (6.1) is the same projection in both comparisons in (6.2).
+
+Proof. First take a positive input $0\le Y\le P$ and put $Z=T(Y)$. Positivity, monotonicity and subunitality give
+
+$$
+0\le Z\le T(P),\qquad Z\le T(I)\le I,
+\qquad 0\le PZP\le P.
+\tag{6.3}
+$$
+
+Let $S=Z^{1/2}$ be the positive square root, so $S^\dagger=S$ and $S^2=Z$. The $C^*$-norm identities and the positive-contraction bound give
+
+$$
+\|S\|_\infty^2=\|Z\|_\infty\le1.
+\tag{6.4}
+$$
+
+Conjugating $Z\le T(P)$ by the self-adjoint projection $Q$ gives $0\le QZQ\le QT(P)Q$. Monotonicity of the norm on positive matrices therefore yields
+
+$$
+\|QS\|_\infty^2
+=\|(QS)(QS)^\dagger\|_\infty
+=\|QZQ\|_\infty
+\le\|QT(P)Q\|_\infty=\alpha^2.
+\tag{6.5}
+$$
+
+Since $\alpha\ge0$, it follows that $\|QS\|_\infty\le\alpha$. Factoring $QZ=(QS)S$ and using (6.4) gives $\|QZ\|_\infty\le\alpha$. Taking adjoints gives $\|ZQ\|_\infty\le\alpha$. Now $\|P\|_\infty\le1$ and
+
+$$
+Z-PZP=QZ+PZQ,
+\qquad
+\|Z-PZP\|_\infty\le2\alpha.
+\tag{6.6}
+$$
+
+This identity includes the off-diagonal blocks, as well as the complementary diagonal block. The matrix $Z-PZP$ is self-adjoint, so its norm bound implies
+
+$$
+T(Y)=Z\le PZP+2\alpha I\le P+2\alpha I.
+\tag{6.7}
+$$
+
+In particular, applying this argument to $Y=P$ gives $T(P)\le P+2\alpha I$.
+
+For the orbit comparison, the case $n=0$ is exactly $X\le P$. Suppose $T^n(X)\le P+c_n I$, where $c_n=2n\alpha\ge0$. Order preservation and linearity of $T$, followed by subunitality, give
+
+$$
+\begin{aligned}
+T^{n+1}(X)
+&\le T(P)+c_nT(I)\\
+&\le P+2\alpha I+c_nI
+=P+2(n+1)\alpha I.
+\end{aligned}
+\tag{6.8}
+$$
+
+This induction uses no lower bound on $X$. It proves the first inequality in (6.2).
+
+For $U\le V$, the two matrices $\sigma$ and $V-U$ are positive semidefinite. Positivity of their trace pairing gives
+
+$$
+0\le\operatorname{Re}\operatorname{Tr}\bigl[\sigma(V-U)\bigr],
+\qquad
+\operatorname{Re}\operatorname{Tr}(\sigma U)
+\le\operatorname{Re}\operatorname{Tr}(\sigma V).
+\tag{6.9}
+$$
+
+Apply this to the first inequality in (6.2). Linearity of trace and $\operatorname{Tr}\sigma=1$ give
+
+$$
+\operatorname{Re}\operatorname{Tr}\bigl[\sigma(P+2n\alpha I)\bigr]
+=\operatorname{Re}\operatorname{Tr}(\sigma P)+2n\alpha,
+$$
+
+which is the second inequality. $\square$
+
+In the notation of Theorem 3.3, its spectral cutoff part $B_+$ satisfies $0\le B_+\le P$. Substitution of $X=B_+$ in (6.2) supplies the scalar comparison used in (3.18):
+
+$$
+\operatorname{Re}\operatorname{Tr}\bigl[\sigma T^n(B_+)\bigr]
+\le\operatorname{Tr}(\sigma P)+2n\alpha.
+\tag{6.10}
+$$
+
+The trace on the right is real by positivity of the trace pairing. To obtain the coefficient in (3.7), the frame projection must additionally connect the residual estimates (3.10) to the actual corner estimate
+
+$$
+\sqrt{\|(I-P)T(P)(I-P)\|_\infty}
+\le D^{3/2}\delta=\frac{p}{8n}.
+\tag{6.11}
+$$
+
+The short-word expansions must supply the coefficient bound $C=(D/\delta)^{D-r}$ and the observation estimate $\operatorname{Tr}(\sigma P)\le DC^2\epsilon/t$ of (3.13). The cutoff must supply $B=B_++B_-$ with $0\le B_+\le P$ and $0\le B_-\le tI$, using $t=p\lambda_r(B)/4$ in the positive-eigenvalue branch. These are separate frame-to-corner, coefficient and cutoff requirements: (6.2) alone gives neither the eigenvalue estimate of Theorem 3.3 nor its rank-horizon and reset-stability consequences. The norm estimate (6.6) is used only for $Z=T(Y)$ with $0\le Y\le P$; the conclusion for the general input $X\le P$ is the order and trace comparison (6.2).
+
+The coherent-compression and density-observation synthesis is the repository-derived result `coherent_compression_trace_transfer`. Its positive square root, $C^*$-norm identities, positive-order norm monotonicity, self-adjoint norm-to-order bound and positive-semidefinite trace pairing are classical finite-dimensional $C^*$-algebra and matrix tools. The operator-norm and CP conventions agree with Lemma 3.2.
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4f5cdb03b218df2a87a9317dfb6d69365b08ecd5a53945813f6c6b4386c974e9
+  normalized_sha256: sha256:4f5cdb03b218df2a87a9317dfb6d69365b08ecd5a53945813f6c6b4386c974e9
+cas_ref: sha256:4f5cdb03b218df2a87a9317dfb6d69365b08ecd5a53945813f6c6b4386c974e9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 178 specifies window sets, state images and density ratios. It does not assert window cardinalities or compute the densities.
+    previous_atom_id: e7bb50993bfcdc704478251485d2b23081c5b0ec5e96d70fc2e8a3db8be13e64
+    next_atom_id: 5a5b7d1a46386495b7098cf5dc527b60030e3a7abbffb3efaff80b61a39c6dd6

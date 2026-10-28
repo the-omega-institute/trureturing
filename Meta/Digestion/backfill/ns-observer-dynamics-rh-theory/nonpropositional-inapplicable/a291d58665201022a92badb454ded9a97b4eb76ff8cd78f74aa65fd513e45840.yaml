@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a291d58665201022a92badb454ded9a97b4eb76ff8cd78f74aa65fd513e45840
+  normalized_sha256: sha256:a291d58665201022a92badb454ded9a97b4eb76ff8cd78f74aa65fd513e45840
+cas_ref: sha256:a291d58665201022a92badb454ded9a97b4eb76ff8cd78f74aa65fd513e45840
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 指定Hilbert空间、轨迹正则性与w'=Aw+r作为模型假设，没有断言任意轨迹满足该式。
+    previous_atom_id: 7ded79066a016f163e42b5519c7ed31d5068d49472958bc72b61911937bd3445
+    next_atom_id: 986555677f9384b0e74d8282ff1512740acb6204e894928cf5473ac3051c880a

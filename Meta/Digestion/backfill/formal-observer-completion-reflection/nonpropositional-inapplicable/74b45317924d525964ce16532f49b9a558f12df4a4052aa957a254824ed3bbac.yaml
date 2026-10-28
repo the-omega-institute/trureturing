@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:74b45317924d525964ce16532f49b9a558f12df4a4052aa957a254824ed3bbac
+  normalized_sha256: sha256:74b45317924d525964ce16532f49b9a558f12df4a4052aa957a254824ed3bbac
+cas_ref: sha256:74b45317924d525964ce16532f49b9a558f12df4a4052aa957a254824ed3bbac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: IdRes 的差集等式是identity residual的定义，没有宣称差集空或非空。'
+    previous_atom_id: e4bb8d6d787b8fd7dafcc67f97fcd150ba5de466ecae579a203c747d7918de5b
+    next_atom_id: ceb48f9367157b3e927fe9b02637f0f492c9a95b2d49cd05e8575d0b043e0df6

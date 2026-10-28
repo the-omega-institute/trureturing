@@ -45,9 +45,9 @@ class LeanBuildLockTests(unittest.TestCase):
 
     @staticmethod
     def copy_sources(root):
-        (root / WRAPPER).parent.mkdir(parents=True)
-        for name in ("Makefile", WRAPPER):
-            shutil.copyfile(REPO / name, root / name)
+        for name in ("Makefile", WRAPPER, "tools/scripts/worktree/lean-git/git"):
+            (root / name).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(REPO / name, root / name)
         (root / "Reg").mkdir()
         (root / "Reg/lakefile.toml").touch()
 

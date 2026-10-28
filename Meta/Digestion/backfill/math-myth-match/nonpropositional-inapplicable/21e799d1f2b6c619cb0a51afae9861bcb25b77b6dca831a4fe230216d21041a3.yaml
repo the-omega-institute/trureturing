@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:21e799d1f2b6c619cb0a51afae9861bcb25b77b6dca831a4fe230216d21041a3
+  normalized_sha256: sha256:21e799d1f2b6c619cb0a51afae9861bcb25b77b6dca831a4fe230216d21041a3
+cas_ref: sha256:21e799d1f2b6c619cb0a51afae9861bcb25b77b6dca831a4fe230216d21041a3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 阿奎那q.88誓愿结构及神学受词；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: e2be5a542e27e3e4546620a320383bab7b17e14db7239d37d3b41b2db99e5439
+    next_atom_id: a87ab67bab59a3d45ed041a1c768ab7b9e8502c1eb9e541d9930c22172421e79

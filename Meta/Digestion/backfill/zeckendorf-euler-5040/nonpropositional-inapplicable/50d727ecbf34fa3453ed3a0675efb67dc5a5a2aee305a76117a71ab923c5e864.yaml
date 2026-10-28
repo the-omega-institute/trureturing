@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:50d727ecbf34fa3453ed3a0675efb67dc5a5a2aee305a76117a71ab923c5e864
+  normalized_sha256: sha256:50d727ecbf34fa3453ed3a0675efb67dc5a5a2aee305a76117a71ab923c5e864
+cas_ref: sha256:50d727ecbf34fa3453ed3a0675efb67dc5a5a2aee305a76117a71ab923c5e864
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section-heading introduction choosing whole integer configurations as vertices; it specifies a modeling level and asserts no graph property or Robin inequality.
+    previous_atom_id: 5e5642ae05f5d4a808031af78e8937a4b963fd202c0a8a34310ce0610a9d2441
+    next_atom_id: 1c918c1919ddcdebbaf1d750699920a2adc0789a5ecc816151351eab89ef5ccb

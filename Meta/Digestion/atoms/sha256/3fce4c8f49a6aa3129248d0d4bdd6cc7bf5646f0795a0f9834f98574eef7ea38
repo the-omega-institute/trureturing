@@ -1,0 +1,22 @@
+**Definition 1.4 (Hard total cap and full law).** Let $\tau$ be the return time, with $\tau=\infty$ on every nonreturn, and let $N$ count all actual reads. They are separate quantities. A pathwise hard total cap $k\in\mathbb N_0$ requires $N\le k$ on every execution, including nonreturns and exceptional source/seed paths. Put
+
+$$
+D=\mathbf1_{\{\tau<\infty\}},\qquad
+O=\begin{cases}A&D=1,\\\bot&D=0,\end{cases}
+\qquad Z=(H_j,O,D,N),\qquad\bot\notin\mathcal A.
+\tag{1.4}
+$$
+
+The finite alphabet of $Z$ under the cap is
+
+$$
+\mathcal Z_k=\{(h,o,d,n):h\in\mathcal A,\space
+o\in\mathcal A\cup\{\bot\},\space
+d=\mathbf1_{\{o\ne\bot\}},\ 0\le n\le k\}.
+\tag{1.5}
+$$
+
+A representative preserves exactly the joint law of $(u,H_j,O,D,N)$ on the original source/seed product. It must therefore preserve correlations with every measurable seed event. A nonreturn at depth $n$ keeps its $n$ paid calls and means internal continuation forever, not a return with an omitted output. A cap only on returning paths is insufficient: a rule making $k+1$ repeated reads and then never returning satisfies every return-only cap but has an $N$-law impossible under total cap $k$.
+
+Literal records, address names, ordered tree shape, potential replies at unvisited nodes, and whole-tree signatures are not preserved statistics. Nor is numerical return time, or equality of original and replacement outputs on each realized source sample, required. Preserving a risk or return marginal alone would be weaker than the required full joint law.
+

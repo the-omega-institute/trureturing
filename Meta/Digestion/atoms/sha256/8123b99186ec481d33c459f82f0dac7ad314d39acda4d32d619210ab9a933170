@@ -1,0 +1,8 @@
+**Definition 36.3 (passive moments and acquired time).** In a passive run only Tick advances the prepared state; Read and Hold may be interspersed, and Add is unused. For $j\ge0$ put
+
+$$
+x_j=T^j e_0,\qquad m_j=e_0^{\mathsf T}T^j e_0.
+$$
+
+Here $m_0=1$. The finite Time expression at passive epoch $k$ is the ordered list of the actual readouts $(m_0,\ldots,m_k)$: one initial Read and the return of each of the $k$ paid Ticks. The epoch counts source Ticks from the authentic preparation, not observer instructions, wall time, Hold duration or an arbitrary control journal.
+

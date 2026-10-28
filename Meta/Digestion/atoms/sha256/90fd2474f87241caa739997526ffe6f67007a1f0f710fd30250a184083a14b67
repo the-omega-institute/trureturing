@@ -1,0 +1,75 @@
+## 33. Acquired-image separation on the complete zero-base arcs
+
+A world is the complete triple
+
+$$
+ W=(P(r,b),g,d),\qquad
+ P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+ \quad 0<r<1,\quad b>0,\quad d\in\mathbb R,
+ \quad 0\ne g\in\mathbb R[s],\quad\deg g\le3.
+$$
+
+The chronological acquired word is literally $J,M,J,M,M,M$, where
+$J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ and
+$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$.
+Products act on the left, $Q_0=I$, $Q_i=E_iQ_{i-1}$, and the
+reading at clock $i$ is $d+g(i)\operatorname{tr}(Q_iP)$.
+The acquired readings at clocks zero through six are
+$0,24,147/5,24,18,0,v$. The terminal alternatives occur at clock
+seven and are denoted by $a(W),m(W)$. There is one fixed entire gain
+and one fixed drift in each world.
+
+We use the complete zero-base classification and zero-safe lift of
+Theorem 25.1 and its proof in Sections 25–31. In particular, all complete worlds
+through clock five in this sector are exactly the two analytic arcs
+$W_-(r),W_+(r)$, $0<r<1$, with
+
+$$
+ 0<b_-(r)<r(1-r)/2<b_+(r)<1/2.
+ \tag{33.1}
+$$
+
+They are the two simple positive roots of the source polynomial $F$
+recorded below. The labeling is one-to-one on complete worlds. Their
+unique zero-safe lifts include both singular parent sources on the upper
+arc. On both complete arcs the reused theorem gives $e=d-24>0$.
+These are the classification and lift conclusions of Theorem 25.1;
+the response and sign conclusions below use them as premises.
+
+For exact correspondence with the common-parent notation in Section 12,
+put
+
+$$
+ T=1+b,\quad U=1+2b,\quad j=b+r(1-r)/b,\quad n=j+r,
+ \quad\mathcal J=bj,\quad\mathcal N=bn.
+$$
+
+That source's $(X,N,V,N_4,\mathsf S_0,K_5)$ are respectively
+
+$$
+ (\mathcal J,\mathcal N,U+n,2D/5,6F,p_c-24),
+$$
+
+where
+
+$$
+\begin{split}
+ D&=5\{(b^2+8b+4)\mathcal J\mathcal N
+                  -2TUb(\mathcal J+\mathcal N)\},\\
+ \Lambda&=1+6/T+1/U-4/j-4/n,\\
+ R&=-6(8b-1)(2+5b)/(5TU),\\
+ q_5&=4-15/j+20/T-10/n,\quad A_5=1+(U+n)q_5,\\
+ p_c&=24+(U+n)(96-108/T).
+\end{split}\tag{33.2}
+$$
+
+In particular its lift at fifth response zero is exactly
+
+$$
+ Z=\Lambda^2+A_5^2>0,\qquad
+ e=(R\Lambda-p_cA_5)/Z,\qquad d=24+e.
+ \tag{33.3}
+$$
+
+It satisfies $e\Lambda=R$ and $eA_5=-p_c$. This is the zero-safe whole-world lift of Theorem 25.1.
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:1e9457bb0d7ec74d26ad44ac43abe68a902159f8d3f178bf9774e2db3a1610d4
+  normalized_sha256: sha256:1e9457bb0d7ec74d26ad44ac43abe68a902159f8d3f178bf9774e2db3a1610d4
+cas_ref: sha256:1e9457bb0d7ec74d26ad44ac43abe68a902159f8d3f178bf9774e2db3a1610d4
+coverage_gids:
+  - gid: D5/S3/Observer/Dynamics/ControllabilityGramianReachableRange.controllability_gramian_range_eq_reachable
+    target_statement_id: sha256:35576123b41776024ae356efdc5de37b06f58a2af7d00408b605953e20f955a6
+  - gid: D5/S3/Observer/LinearMemory/ObservabilityGramianKernelEnergy.observability_gramian_kernel_energy
+    target_statement_id: sha256:0bf622040e34b221b5933b359af59f7cbca06947c76cf4eb7a5cf4a7dc4f0076
+  - gid: D5/S3/ObserverMemory/Dynamics/InfiniteObservabilityOrthogonalDuality.infinite_unobservable_eq_observable_orthogonal
+    target_statement_id: sha256:ec4fd5add142f3b7397d2c450c8b50084c2844db4af10e919f7d8ff9ef18c8d6
+receipts:
+  unresolved_subitems: []

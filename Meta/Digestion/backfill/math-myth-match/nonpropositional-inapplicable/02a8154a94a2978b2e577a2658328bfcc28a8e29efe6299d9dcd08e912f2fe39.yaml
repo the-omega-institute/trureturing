@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:02a8154a94a2978b2e577a2658328bfcc28a8e29efe6299d9dcd08e912f2fe39
+  normalized_sha256: sha256:02a8154a94a2978b2e577a2658328bfcc28a8e29efe6299d9dcd08e912f2fe39
+cas_ref: sha256:02a8154a94a2978b2e577a2658328bfcc28a8e29efe6299d9dcd08e912f2fe39
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 《形而上学》IX.6 的活动、运动及关系类比说明；不构成数学定理。
+    previous_atom_id: 39be529cb4ed3a14cf88bb25b44914d55ac9e0d0af3471c5468793465d987281
+    next_atom_id: 51e2b3bfa7899ae4d89217b9c94fefb6860e471603922ab26d5ac1acfba3c588

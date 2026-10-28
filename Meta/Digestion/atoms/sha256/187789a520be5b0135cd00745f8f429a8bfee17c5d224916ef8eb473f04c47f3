@@ -1,0 +1,27 @@
+**Proposition 57.4 (coexisting source, producer, observer and retained material).** A single layout attaining the preceding claims may retain all of the following simultaneously. Let $P_{\rm live}$ be the actual producer/input-provider store, $A_{\rm past}$ the actual retained pulse-input/reply archive beyond the separately listed stores, and $A_{\rm io}$ the actual extra simultaneous I/O and delivery copies. None is a decoder input.
+
+| Coexisting component | Charge in this layout |
+| --- | --- |
+| Original source | $N$ cells, $N-1$ links, its $B$-bit coefficient store, and two state buffers of $O(NV_L)$ bits. |
+| Earned observer data | The actual $2N+1$-value acquisition record of $O(N^2B+N)$ bits and the fixed $F$-bit law/matrix data. |
+| Historical endpoint, current predictor and acquired window | A constant number of $N$-vectors, including distinct $x_{\rm hist}$ and $x_{\rm now}$, and $O(NV_L)$ bits. |
+| Matrix/elimination and exact-arithmetic scratch | A conservative $O(N^2V_L)$ bits, sufficient also for acquisition scratch. |
+| Local search and its result | One candidate, one evaluated vector, search length/cursors and one recovered output word, using $O(NV_L+L(d_H+1)+\log_2(L+2)+1)$ bits. |
+| Producer/input provider | Its actual $P_{\rm live}$ bits and retained backing, even if it keeps the original input list or its own event count. |
+| Additional archives and serialization copies | $A_{\rm past}+A_{\rm io}$ actual bits; distinct copies are added. |
+| Installed access and control | Actual source reference, authentic preparation/class/root assurance, Read/Tick/Hold/Add rights, exclusive serial control, finite programs and their storage/service backing. |
+
+The numerical/data stores have the simultaneous sufficient allowance
+
+$$
+O\bigl(F+N^2B+N^2V_L+L(d_H+1)+\log_2(L+2)
+ +P_{\rm live}+A_{\rm past}+A_{\rm io}+1\bigr),
+\tag{57.4}
+$$
+
+with the actual installed-access/control/backing charges added. A shared object is counted once only when it is actually shared; a retained second copy is additional.
+
+Proof. Allocate the displayed finite stores on the same run and add their sizes. The decoder reads only its stated inputs, so a producer's retained list, a pulse-reply archive or a separate counter can coexist without being used to prove recovery. For a concrete attained producer, supply the actual finite word as its paid list, retain that list and its cursor, and issue its original pulses in order. Its list/cursor store is $O(L(d_H+1)+\log_2(L+2)+1)$ bits and is charged even after completion if retained. Reading its inputs, issuing its calls and retaining its data have their actual work costs. The decoder does not inspect this list or its cursor. Other producers have their own $P_{\rm live}$ and work charges. A decision to begin acquisition is invocation at an already completed pulse cut, not a new marker command or an algorithm inferring that a still-active producer has finished.
+
+The source, producer, acquired records, predictor, scratch, old emissions, output and access installation coexist; selecting one component's peak from a different run cannot remove any of them. Proposition 57.3 and the width bound of §41 make the scratch allowance sufficient. Optional archives add their actual writing and retention costs. Later calls add their actual source arithmetic, predictor updates, input/output and retained-data costs as in Proposition 41.5 and Theorem 56.3. For arbitrary later rational Adds, use their actual new numerator/denominator widths; (57.1) is an integer-menu envelope for the stated run, not for all rational continuations. $\square$
+

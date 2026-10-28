@@ -50,7 +50,7 @@ private theorem block_series (rho : ℝ) (hr0 : 0 ≤ rho) (hr1 : rho < 1)
     _ = (ell : ℝ) * ∑' n : ℕ, rho^n := by simp [tsum_mul_left]
     _ = (ell : ℝ)/(1-rho) := by rw [tsum_geometric_of_lt_one hr0 hr1]; rfl
 
-private theorem tail_series (D rho : ℝ) (hD : 0 ≤ D) (hr0 : 0 ≤ rho) (hr1 : rho < 1)
+theorem tail_series (D rho : ℝ) (hD : 0 ≤ D) (hr0 : 0 ≤ rho) (hr1 : rho < 1)
     (ell : ℕ) (he : 0 < ell) (R : ℕ) :
     Summable (fun n : ℕ => D*rho^((R+n)/ell)) ∧
       (∑' n : ℕ, D*rho^((R+n)/ell)) ≤ D*(ell : ℝ)/(1-rho)*rho^(R/ell) := by

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cdccecb4dc0b4443b58cd4d2e7c951eefb20390a8775c4d118553f94aae31593
+  normalized_sha256: sha256:cdccecb4dc0b4443b58cd4d2e7c951eefb20390a8775c4d118553f94aae31593
+cas_ref: sha256:cdccecb4dc0b4443b58cd4d2e7c951eefb20390a8775c4d118553f94aae31593
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: SEP同侪分歧与调和论的认识规范综述，非共同先验定理的新陈述。
+    previous_atom_id: 9f21d17479c4043102403c8f73eb6223ab4b8109c5b2d1521500ffefee97dc94
+    next_atom_id: 11ce70d33e95eb49f58039df40a6c8e442ee9774bda02fb24c4e5f98b1bef5b5

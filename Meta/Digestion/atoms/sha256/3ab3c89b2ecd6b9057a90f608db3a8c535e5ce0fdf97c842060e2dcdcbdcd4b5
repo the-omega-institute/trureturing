@@ -1,0 +1,26 @@
+### 14.3 归一化谱带问题的精确双原子归约
+
+**定理。** 固定 $0\leq r<R$、$0\leq m\leq1$、时间集合 $S\subseteq[0,\infty)$ 及任意上包络 $U$。以下条件等价：存在概率测度 $\mu$，满足
+
+\[
+M_\mu(R)=1,\qquad M_\mu(r)=m,\qquad C_\mu(t)\leq U(t)\quad(t\in S);
+\]
+
+以及
+
+\[
+m e^{-rt}+(1-m)e^{-Rt}\leq U(t)\quad(t\in S).
+\tag{14.2}
+\]
+
+**证明。** 正向对式 (14.1) 使用 $M_\mu(R)=1$。反向取实际概率测度
+
+\[
+\mu_m=m\delta_r+(1-m)\delta_R.
+\tag{14.3}
+\]
+
+由于 $r<R$，其低带质量为 $m$，较大带质量为一，Laplace 积分就是式 (14.2) 左端。Lean 直接复用 Mathlib 的 `bernoulliMeasure`、概率实例、原子质量和积分公式。[14-B]
+
+对应声明为 `normalized_band_feasible_iff_two_atoms`。它处理任意观察时间集合，包括离散采样，并不从有限采样暗中获得全时间信息。给定总质量后，原第 13 节的单原子极值分布通常不再可行；式 (14.3) 明确保留了剩余质量。
+

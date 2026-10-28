@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d14a29e97719a2f3e4ff653b537e78718238b6357c9e0b0ae5d1e766e1d21fab
+  normalized_sha256: sha256:d14a29e97719a2f3e4ff653b537e78718238b6357c9e0b0ae5d1e766e1d21fab
+cas_ref: sha256:d14a29e97719a2f3e4ff653b537e78718238b6357c9e0b0ae5d1e766e1d21fab
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：把给定零点的重数指定为 A6(m)，没有求出或证明其重数。
+    previous_atom_id: 1029baf3292c195a40420ac3afbbab1b6dadf92147c32bf72695950a5890f25f
+    next_atom_id: 376b2b53d33f0e5e1e6969d0bbf7be58b2157ba05dcc5e8fabf3e7989604149f

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7b923a2bc3ece9486e488979bebc3d00735955b50cc82d2fd9e231feedc387ab
+  normalized_sha256: sha256:7b923a2bc3ece9486e488979bebc3d00735955b50cc82d2fd9e231feedc387ab
+cas_ref: sha256:7b923a2bc3ece9486e488979bebc3d00735955b50cc82d2fd9e231feedc387ab
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This bookkeeping paragraph reports historical ledger counts, frozen result names and cover responsibilities; no mathematical proposition is restated or inferred from ledger state.
+    previous_atom_id: 2e3d8c7b6ffb35e0c717e95f02a1594be38aceafdd41faca7abeedc9a8914431
+    next_atom_id: null

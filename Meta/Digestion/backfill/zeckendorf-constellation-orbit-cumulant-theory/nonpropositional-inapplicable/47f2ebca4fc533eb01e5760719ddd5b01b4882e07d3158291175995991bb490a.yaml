@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:47f2ebca4fc533eb01e5760719ddd5b01b4882e07d3158291175995991bb490a
+  normalized_sha256: sha256:47f2ebca4fc533eb01e5760719ddd5b01b4882e07d3158291175995991bb490a
+cas_ref: sha256:47f2ebca4fc533eb01e5760719ddd5b01b4882e07d3158291175995991bb490a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在模数塔的术语清单中命名模 8 层；没有附加关于同构、极限或地址唯一性的命题。
+    previous_atom_id: 711c2ef33da7be062fb6dd356e7b5c471f73b66d90cb6dd3c27a48127763801c
+    next_atom_id: 8b57493482837f05c03548dc7394bc8b57190c5b8609e89c30e5474551359c5b

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8b22509a83657cc80ad12038a4370faeb28b95c87541aa0f4e1d232a3819351c
+  normalized_sha256: sha256:8b22509a83657cc80ad12038a4370faeb28b95c87541aa0f4e1d232a3819351c
+cas_ref: sha256:8b22509a83657cc80ad12038a4370faeb28b95c87541aa0f4e1d232a3819351c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 医治、旁观者意向与规范解释的文本边界。
+    previous_atom_id: f9668ce9e4226d8b81b0019814e35e455239e9d29d62fb60a7678e1b21c9654d
+    next_atom_id: 3ec2deab71390a7f8a6a2d967e89fa000f2406332287c5292ee5b1639140d9b7

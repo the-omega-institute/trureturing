@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0fcfe0b7fefbc84af4d9aa6a6a6c621bed5d60fec2897558d77fa1cf2a7ad5aa
+  normalized_sha256: sha256:0fcfe0b7fefbc84af4d9aa6a6a6c621bed5d60fec2897558d77fa1cf2a7ad5aa
+cas_ref: sha256:0fcfe0b7fefbc84af4d9aa6a6a6c621bed5d60fec2897558d77fa1cf2a7ad5aa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项只重述命题183.1所用 N_g=gF_r 与 r=j(g)+3 的对象约定，说明后续允许任意 g 而无额外支撑假设；没有给出尾界。
+    previous_atom_id: 479cfb369615ef6c2204f1f0771a79a4fa857271d60d5dd0f7a1b94319f18692
+    next_atom_id: 44d5e83963d9522f8fd3d0eb7741c44f436d9cbc4d1253690a894a7a085a8762

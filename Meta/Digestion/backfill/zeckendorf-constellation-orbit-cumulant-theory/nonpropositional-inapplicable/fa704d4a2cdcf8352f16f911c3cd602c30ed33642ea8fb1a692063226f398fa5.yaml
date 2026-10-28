@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fa704d4a2cdcf8352f16f911c3cd602c30ed33642ea8fb1a692063226f398fa5
+  normalized_sha256: sha256:fa704d4a2cdcf8352f16f911c3cd602c30ed33642ea8fb1a692063226f398fa5
+cas_ref: sha256:fa704d4a2cdcf8352f16f911c3cd602c30ed33642ea8fb1a692063226f398fa5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条说明有限不可分辨这一拟采用的判据：要求坐标变化小于精度；没有声称某个偏移已经满足该要求或给出存在性。
+    previous_atom_id: f56821c102bcfc16f5d1f08890a94f43e94bb4a8c6e668db33f104df52170036
+    next_atom_id: 90d38eba4a8bd3a244b0fa0dd2f0071f245bb9dd4b4501e71e6cd4dabe06c16c

@@ -1,0 +1,6 @@
+### 95.3 单次联合核与既有声明的范围
+
+第31.2节固定协议的读出语义，仅将协议族从 $\mathscr P_0$ 扩大到 $\mathscr P_1$；其运算是单次 $J$，因此仍有 $K_{\mathscr P_1}\subseteq K_{\mathscr P_0}$。这与关系闭包 $J\Pi$ 的单调性分别对应式(95.2)第二行和式(95.3)，不可混用。协议扩展的严格性仍须有新增读出分开旧核中的一对状态，幂等性也不代替无限协议族的实际来源或取得条件。
+
+第31.4节末段中的“反单调闭包”应读作“单调的关系闭包”。其关系侧三律直接复用既有 `ProtocolRelationClosureLaws.protocol_relation_closure_laws` 的声明，源码为 `D5/S3/ConceptDynamics/Closure/ProtocolRelationClosureLaws.lean`；其中关系包含蕴含的正是式(95.3)方向。本节纠正的是理论表述，不新增 Lean 声明，不将协议扩展的严格性或无限联合的实际来源条件交由这条闭包定理承担。
+

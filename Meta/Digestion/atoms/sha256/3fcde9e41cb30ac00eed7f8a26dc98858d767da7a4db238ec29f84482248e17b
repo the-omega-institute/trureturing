@@ -1,0 +1,40 @@
+**Proposition 21.1 (same preparation, aligned live records, two heights).**
+Use $Z=1/2$, $c=1/4$, a fixed positive preparation at $a=1/8$, fixed
+calibrated $\theta$ and auxiliary height $u=1/16$. For every
+$\beta\in\mathbb R$ and every signed $m\in\mathbb Z$, prepend the
+unit fixed-height phase leg $2\pi m$, then the supplied four-unit
+rectangle at $u$ with phase height
+
+$$
+B=8\beta-4\pi m.
+\tag{OC.71}
+$$
+
+Append a unit zero-phase horizontal leg either to $x_1=1/8$ (waiting)
+or to $x_2=3/16$. These are actual six-unit original histories from the
+same preparation, in both regularity classes, with exact real residual
+$(\beta,\beta-\pi m,0,\beta-\pi m,\beta)$ and support at least $1/16$.
+Under the canonical instrument their live probabilities are $1/3$ and
+$2/9$, respectively, positive for every $\beta,m$.
+
+At a live cut let the sole acquired history-bearing classical record be
+the no-failure flag, aligned time six and their common source/preparation,
+reference and permission metadata. No generator identity, waveform log,
+height reading, parity helper or other correlated assistance is supplied
+to the next operation. The visible live records coincide; the live
+specimens are the distinct unknown families $\Psi_{x_j,\beta,m}$.
+This asserts neither equality of these specimens nor equality of the
+unconditional prior stopped laws. Every prior failure keeps its actual
+first event and absorbing $f$.
+
+Proof. Formula (OC.10a) at $a,u$ gives (OC.71) and its exact real lift.
+The common down/up rectangle has survival $(2/3)(1/2)=1/3$.
+Its phase legs contribute no survival charge. The final waiting leg
+contributes one, and the upward leg to $3/16$ contributes
+$(1/8)/(3/16)=2/3$. This proves the two live probabilities. The
+probability band is $[1/16,3/16]$ throughout. The phase variation is
+$2\pi|m|+2|8\beta-4\pi m|$, finite for each history; no uniform
+full-family variation bound is imposed. The horizontal tail has zero
+transported increment. The supplied chronological composition preserves
+the old prefix and all real lifts. $\square$
+

@@ -1,0 +1,41 @@
+## 19. Exact containment and exhaustion at the given J seed
+
+Use the exact fixed point $z_*$ of Theorem 9.1 and the
+$\bar z,Y,\eta_0,q_0$ of (9.4)–(9.7). The contraction estimate gives
+
+$$
+\|z_*-\bar z\|_\infty\le\eta_0/(1-q_0)<2\cdot10^{-24}.
+\tag{19.1}
+$$
+
+This is the fixed point of Theorem 9.1. Evaluate (9.2), (2.5)–(2.7) on the full
+radius-$2\cdot10^{-24}$ cube about its four-coordinate centre. Exact
+outward arithmetic gives for both worlds
+
+$$
+\frac{-8215077071983784}{10^{15}}<v_*<
+\frac{-8215077071983783}{10^{15}}.
+\tag{19.2}
+$$
+
+These bounds are strictly inside $[v_c-10^{-5},v_c+10^{-5}]$, while
+$p=-11$ exactly by (9.3). The same source evaluation puts $x(W_0)$
+strictly in domain $15$ and $x(W_1)$ strictly in domain $13$. Both
+sources retain $b>0$, $0<r<1$ and $D\ne0$. The full actual lifts and
+distinctness are those of Theorem 9.1, with the separated values
+
+$$
+102.260466<m(W_0)<102.260467,\qquad
+107.408353<m(W_1)<107.408354.
+$$
+
+Theorem 14.1 gives at most two actual worlds at this exact common base.
+The two supplied distinct actual worlds give at least two, so exhaust
+the entire child. This proves Corollary 14.2. ∎
+
+Every independently selected distinct $M$ pair in this child is therefore
+excluded. The conclusion does not cover the whole analytic $J$ branch of
+Theorem 9.1. The original global question (1.2) remains open outside this
+local exclusion: there is no global negative-branch or global
+nonexistence conclusion here.
+

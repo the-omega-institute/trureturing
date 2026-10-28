@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:af2d4219fc956f0553306b0d0c4f91f9925db2accab1e496852612548704b82c
+  normalized_sha256: sha256:af2d4219fc956f0553306b0d0c4f91f9925db2accab1e496852612548704b82c
+cas_ref: sha256:af2d4219fc956f0553306b0d0c4f91f9925db2accab1e496852612548704b82c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只记录席位、模块、依赖次序与结账安排；未提出需要证明的数学断言。文本定位：## 三 预算与结算 一席位轮(codex-cli,独立 worktree,`D5/S3/Weil/Separator/` 第二个模块;须在 la141(增订十九模块)合入后开工以绑定 M3-f-6;同 PR deposit(绑 W-2 atom)+ 两条 cover)。预计 ≤ 40 分钟。 后续
+    previous_atom_id: 50efe63faadc8d63ac20917b713e0f057a8924d12d7a213aa81e88f2a06eb4d0
+    next_atom_id: null

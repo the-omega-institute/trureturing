@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ceacef0a033d128dc730ad7f955c4946456b8999b170ecc9516dbb09d8a66274
+  normalized_sha256: sha256:ceacef0a033d128dc730ad7f955c4946456b8999b170ecc9516dbb09d8a66274
+cas_ref: sha256:ceacef0a033d128dc730ad7f955c4946456b8999b170ecc9516dbb09d8a66274
+coverage_gids:
+  - gid: D5/S3/Analytic/ZetaObservation/GlobalCodeLengthAdditivity.global_code_length_additive
+    target_statement_id: sha256:a6bb8e7f5edf27f08c8846ed286f9f592af0aff83bac2485dc686e2eb1e4e0f0
+receipts:
+  unresolved_subitems: []

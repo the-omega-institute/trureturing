@@ -1,0 +1,8 @@
+**Theorem 15.3 (the ordered converse and the directed boundary).** For every
+$q\ge2$ and $H=q-1$, the following are equivalent:
+
+1. $\mathcal M$ is $q$-wise intersecting.
+2. There is a map $f:A_H\to\{0,\ldots,H\}$ that is strictly increasing on
+   every $\to_+$ edge.
+3. There is such a map that is strictly increasing on every $\to_<$ edge.
+

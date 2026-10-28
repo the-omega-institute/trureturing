@@ -1,0 +1,48 @@
+**定理 1162.1（有限参数的充分判据）。** 设 $N\ge3$、$0<\kappa<1$，令
+
+$$
+L=\log\frac{1-2\kappa}{2\kappa},
+\qquad b_N=\frac{25}{2}(N+1).
+$$
+
+若
+
+$$
+\kappa\le\min\left\{\frac1{48N},\frac1{2(M_N+1)}\right\},
+\qquad L>b_ND_N,
+$$
+
+则 $G_N(\kappa)=U_N(\kappa)$，且来源熵最优者只有公平权重 $1-\kappa$ 与各奇偶点权重 $\kappa/M_N$，允许标签重命名。
+
+**证明。** 这些条件给 $2\kappa<1/2$、$L>D_N$。二元熵的导数递减，所以
+
+$$
+h_2(2\kappa)-h_2(\kappa)\ge\kappa L\ge\kappa D_N.
+$$
+
+故 $G_N\le U_N\le h_2(2\kappa)<\log2$。任取熵最优来源，若其所有权重均不超过 $1/2$，最小熵界将给 $H(Z)\ge\log2$，矛盾。因此有唯一主权重 $1-\delta>1/2$。第 1104 节的单一来源权重界给 $\delta\ge\kappa$；另一方面，分组熵满足 $h_2(\delta)\le G_N\le h_2(2\kappa)$，故 $\delta\le2\kappa$。
+
+写 $d=\delta-\kappa$、$\vartheta=d/\delta$。零的一阶观察矩给
+
+$$
+A=\sum_i|m_i|\le\frac{N\delta}{1-\delta}
+\le4N\kappa\le\frac1{12}.
+$$
+
+第 1144–1145 节的统一界适用。由 $h_2(\delta)-h_2(\kappa)\le\kappa D_N$ 及区间上的导数至少为 $L$，得 $dL\le\kappa D_N$，从而 $\vartheta\le D_N/L$。余量 $R$ 的每个正奇偶峰超额至少为 $(1-\tau)/M_N$，其中 $\tau=b_N\vartheta\le b_ND_N/L<1$。
+
+使用第 1161 节的线性界并重新分组，
+
+$$
+\begin{aligned}
+G_N(\kappa)
+&\ge h_2(\delta)+\delta(1-\tau)D_N\\
+&=U_N(\kappa)+h_2(\delta)-h_2(\kappa)+dD_N-b_NdD_N\\
+&\ge U_N(\kappa)+d(L+D_N-b_ND_N).
+\end{aligned}
+$$
+
+括号严格为正，故与明确生成器上界相容只能有 $d=0$。权重缺口引理给主通道公平，余量为均匀奇偶面；支撑与标签合并论证如第 1147 节，确定准确值和全部最优者。证毕。
+
+这是一项充分判据，未宣称条件必要，也没有把未通过这些不等式的参数判成非最优。
+

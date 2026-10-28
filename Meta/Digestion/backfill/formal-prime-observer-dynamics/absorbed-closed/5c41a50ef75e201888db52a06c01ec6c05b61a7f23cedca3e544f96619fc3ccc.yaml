@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5c41a50ef75e201888db52a06c01ec6c05b61a7f23cedca3e544f96619fc3ccc
+  normalized_sha256: sha256:5c41a50ef75e201888db52a06c01ec6c05b61a7f23cedca3e544f96619fc3ccc
+cas_ref: sha256:5c41a50ef75e201888db52a06c01ec6c05b61a7f23cedca3e544f96619fc3ccc
+coverage_gids:
+  - gid: D5/S3/Estimation/ExperimentCost/StaticAdaptiveSubmodularitySeparation.adaptive_submodular_implies_static_submodular
+    target_statement_id: sha256:ee693725d30a0fe51979cd655b4a7ccd912afc2ea013acefe73ff09a39821850
+  - gid: D5/S3/Estimation/ExperimentCost/StaticAdaptiveSubmodularitySeparation.fpod_principle_246_1
+    target_statement_id: sha256:5bb7c2e1e761ee7cae59a21d26293d2e445344d54b041dc9cf83f8c850bd9b9b
+receipts:
+  unresolved_subitems: []

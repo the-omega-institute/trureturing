@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:744d54af8b56150bc840fe01fcc235775af23f486656b0a8e37c347ef73dd1ed
+  normalized_sha256: sha256:744d54af8b56150bc840fe01fcc235775af23f486656b0a8e37c347ef73dd1ed
+cas_ref: sha256:744d54af8b56150bc840fe01fcc235775af23f486656b0a8e37c347ef73dd1ed
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：索引§220—225数学材料的来源与原创性归属，不重新陈述这些定理作为本条证明义务。
+    previous_atom_id: 29b28b0b8a37f725ea3465042d1301df5102bcb6524adfe77b046029dcbbc89e
+    next_atom_id: 38193d2838ebc4e6728945e88192ef72bd3d183cdf64053a8643cea493366494

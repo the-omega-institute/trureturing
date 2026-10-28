@@ -1,0 +1,16 @@
+**定义 81.5（成对合同 B）。** 合同 B 保留 A 的全部动作，并新增生产者原语 $\mathrm{PairRead}$。若当前树有 $N\ge2$ 个叶出现，则在 $N(N-1)$ 个有序且互异的叶出现对中均匀选一个，只报告两叶类型。输出的顺序是抽取顺序，不是树的空间顺序。两个叶来自同一当前树；本次宏动作内不放回，宏动作结束前两叶均恢复，树保持不变。不同宏调用使用新随机性。若 $N<2$，返回固定拒绝 $\mathtt{reject}$ 并保持树不变；拒绝及其附加记录不提供其他来源信息。
+
+这项权限要求生产者在一次调用内排除同一叶出现，控制器既不能读取叶 ID，也不能用两个旧的独立 $\mathrm{Read}$ 来实施它。对当前计数 $(x,y)$、$N=x+y\ge2$，四个按抽取次序排列的输出律为
+
+$$
+\begin{aligned}
+\Pr(\alpha,\alpha)&=\frac{x(x-1)}{N(N-1)},&
+\Pr(\alpha,\beta)&=\frac{xy}{N(N-1)},\\
+\Pr(\beta,\alpha)&=\frac{xy}{N(N-1)},&
+\Pr(\beta,\beta)&=\frac{y(y-1)}{N(N-1)}.
+\end{aligned}
+\tag{81.6}
+$$
+
+这些条件概率是有限总体无放回抽样的经典计算：首叶有 $N$ 个等可能选择，次叶在剩下 $N-1$ 个出现中选择。[Random Services 的超几何抽样说明](https://www.randomservices.org/random/urn/Hypergeometric.html)和 [R 的超几何分布手册](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Hypergeometric.html)提供相应有限总体背景；此处保留抽取次序，而非仅报告两抽中某类叶的总数。
+

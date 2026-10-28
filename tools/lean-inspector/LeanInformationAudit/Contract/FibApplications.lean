@@ -235,6 +235,15 @@ unsafe def extract (owner : Name) (constants : Array ConstantInfo)
       ("request", input), ("unavailable_reason", toJson reason), ("reading", Json.null)]
   if (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1" then
     (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE fib_extract_ns={(← IO.monoNanosNow) - start} module={owner} applications={rows.size} dependency_digests={(← digests.get).size}"
+  -- Direct invocation-local observations are never replayed from a Lake log.
+  if let some path ← IO.getEnv "STRATALINT_INSPECTOR_PHASES" then
+    try
+      let elapsed ← IO.monoNanosNow
+      IO.FS.withFile path .append fun out => out.putStrLn <| (Json.mkObj [
+        ("phase", toJson "fib-extract"), ("boundary", toJson "duration"),
+        ("elapsed_ns", toJson (elapsed - start)),
+        ("module", toJson owner.toString)]).compress
+    catch _ => pure ()
   return Json.mkObj [("applications", Json.arr rows)]
 
 end LeanInformationAudit.FibApplications

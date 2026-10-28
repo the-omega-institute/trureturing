@@ -1,0 +1,85 @@
+**Lemma 80.3 (a fractional estimate for this entire source shear).** Let $B\ge I$ represent $b_{\rm in}$, and put
+
+$$
+\vartheta=\tfrac18,\qquad
+H_a=1+10^4(1+a),\qquad d_\delta=H_a^7\delta^{3/8}.
+\tag{80.11}
+$$
+
+The following compositions have bounded extensions on the entire completed input space:
+
+$$
+\|B^\vartheta N B^{-\vartheta}\|\le d_\delta,\qquad
+\|B^\vartheta N^* B^{-\vartheta}\|\le d_\delta.
+\tag{80.12}
+$$
+
+The constants are uniform over every field-number block and every auxiliary Hilbert space.
+
+Proof. This is a source estimate on the displayed intervals, rectangles and triangles. Normalize the Hilbert measure on a stratum of dimension $q$ by multiplying its function by $\delta^{q/2}$. Atomic components, including the reference, have $q=0$. The kinetic-to-Hilbert weight ratio on every positive-dimensional stratum is then $1/\delta$, not one. In a total-field-number block $j\ge0$, write $\tau=1+\Omega j$ and let $\Lambda$ be the direct sum of Dirichlet Laplacians on the independent intervals and cells, zero on atomic and reference components. Define
+
+$$
+D_j=\tau I+(a/\delta)\Lambda.
+\tag{80.13}
+$$
+
+This is a comparison operator on all independent strata, not a replacement for $B_j=\tau I+aK_j$, where $K_j$ represents the actual $k_-\oplus k_Z$ in this block and these normalized coordinates. The triangular lifting $\mathcal T=I+R$ of(80.7)–(80.8) maps the complete form domain of $D_j$ onto that of $B_j$.
+
+Here are uniform quantitative bounds for that lifting and for $N$. In normalized coordinates each dimension-raising term has coefficient $\delta^{(q-p)/2}$, $q>p$. Its underlying map is multiplication of a scalar by $\theta_i$ or by a product of two $\theta_i$'s, the lift $g\mapsto\theta_i\otimes g$ or its coordinate exchange, or the restriction of an antisymmetric pair of these lifts to one triangle. Triangle atomic lifts are antisymmetric products. These descriptions apply to(80.3) as well. Their Hilbert adjoints are the corresponding integral contractions. There are at most $512$ such terms in $R$, and fewer in $N$: the full ordered collection has $42$ intervals, $30$ different-cable rectangles and $12$ triangles, besides $9$ atomic coordinates and the reference. The old-plus-new partition only removes boundary terms. Even counting the two terms of each antisymmetric expression separately gives at most $84+120+120+48+24=396$ terms in $R$.
+
+For completeness, the bounds on these particular elementary maps can be checked directly in sine series. The normalized interval functions $s_n(x)=\sqrt2\sin(n\pi x)$ diagonalize $\Lambda$; both $\theta_i$ have coefficients of absolute value $\sqrt2/(\pi n)$. At $\vartheta=1/8$,
+
+$$
+\sum_{n\ge1}\frac{2(1+n^2)^{1/4}}{\pi^2 n^2}<4,
+\qquad
+\sum_{n\ge1}\frac{2(\pi^2 n^2)^{1/4}}{\pi^2 n^2}<4,
+\tag{80.14}
+$$
+
+using $\sum n^{-3/2}\le3$. On a square, for a slice frequency $m\ge1$ and $c=a/\delta$,
+
+$$
+\frac{(\tau+c\pi^2(n^2+m^2))^\vartheta}
+     {(\tau+c\pi^2m^2)^\vartheta}
+\le(1+n^2)^\vartheta.
+\tag{80.15}
+$$
+
+Equations(80.14)–(80.15) bound the conjugated tensor lift by two. For its adjoint contraction the reversed spectral ratio is at most one, so Cauchy–Schwarz bounds it by $\|\theta_i\|$. The Dirichlet Laplacian on a right triangle is unitarily equivalent, by antisymmetric reflection and normalization, to the antisymmetric part of the square Dirichlet Laplacian. Its eigenfunctions are the antisymmetric pairs $s_n(x)s_m(y)-s_m(x)s_n(y)$, $n\ne m$. Thus the same bounds apply to the antisymmetric lifts and their actual adjoints, with an additional factor at most two.
+
+For an atomic-to-interval term use $(\tau+c\lambda)^\vartheta\le\tau^\vartheta+c^\vartheta\lambda^\vartheta$ and(80.14). Its conjugated norm, including its $\sqrt\delta$ coefficient, is at most $3(1+a)\delta^{1/2-\vartheta}$. Atomic-to-square or triangle terms have coefficient $\delta$; splitting $(\lambda_n+\lambda_m)^\vartheta\le\lambda_n^\vartheta+\lambda_m^\vartheta$ gives the same upper bound with constant $16$ and the weaker exponent $1/2-\vartheta$. The reverse atomic contractions have spectral ratio at most one. It follows that every elementary term, or antisymmetric pair treated together, has conjugated norm at most $16(1+a)\delta^{3/8}$. This includes both directions needed for $N^*$; no assertion that $N^*$ preserves a full trace domain is made. Summing at most $512$ terms yields
+
+$$
+\begin{aligned}
+\|D_j^\vartheta R D_j^{-\vartheta}\|&\le(H_a-1)\delta^{3/8},\\
+\max\{\|D_j^\vartheta N D_j^{-\vartheta}\|,
+       \|D_j^\vartheta N^* D_j^{-\vartheta}\|\}
+ &\le(H_a-1)\delta^{3/8}.
+\end{aligned}
+\tag{80.16}
+$$
+
+The same elementary formulas have Hilbert norm at most $16(1+a)$ and raw form-norm bound at most $16(1+a)$. For example, for a normalized slice lift $\sqrt\delta\,\theta_i\otimes g$, its squared raw $\tau+c|\nabla|^2$ norm is at most $\delta\|g\|_{D_j^{1/2}}^2+a\|g\|^2\le(1+a)\|g\|_{D_j^{1/2}}^2$. Atomic lifts and antisymmetric pairs obey the stated larger bound by differentiation of their displayed polynomials. Therefore $\mathcal T$ has Hilbert and form-map norms at most $H_a$, and $\mathcal T^{-1}=I-R+R^2$ has the corresponding norms at most $H_a^2$. Interpolation of these Hilbert and form bounds gives
+
+$$
+\|B_j^\vartheta\mathcal T D_j^{-\vartheta}\|\le H_a,
+\qquad
+\|D_j^\vartheta\mathcal T^{-1}B_j^{-\vartheta}\|\le H_a^2.
+\tag{80.17}
+$$
+
+This use of Hilbert-scale interpolation follows by applying the three-lines theorem to the matrix elements of $B_j^{z/2}\mathcal T D_j^{-z/2}$ and its inverse map, initially with spectral cutoffs and then by closure. The endpoint at $\operatorname{Re}z=1$ is exactly the proved complete form-map bound; it is not an assumed domain identification.
+
+Equation(80.16) and $R^3=0$ also give
+$\|D_j^\vartheta\mathcal T D_j^{-\vartheta}\|\le H_a$ and
+$\|D_j^\vartheta\mathcal T^{-1}D_j^{-\vartheta}\|\le H_a^2$.
+Combining with(80.17) proves
+
+$$
+\|B_j^\vartheta D_j^{-\vartheta}\|\le H_a^3,
+\qquad \|D_j^\vartheta B_j^{-\vartheta}\|\le H_a^3.
+\tag{80.18}
+$$
+
+Sandwich(80.16) between these two bounded maps to obtain(80.12). These estimates hold for every $\tau\ge1$, independently of its size. Finite sine sums are used only to establish bounded operators by density; all sine frequencies remain. Taking the orthogonal sum over all $j$, and tensoring each block with its full multiplicity and auxiliary space, gives the asserted complete operators. Exchange symmetry is a reducing subspace of the source forms and maps, so restriction preserves the bounds. $\square$
+

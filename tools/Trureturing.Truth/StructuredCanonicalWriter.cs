@@ -23,10 +23,18 @@ public static class StructuredCanonicalWriter
 
     public static ImmutableArray<byte> WriteJson(JsonElement element)
     {
-        var builder = new StringBuilder();
-        WriteJsonValue(builder, element);
-        builder.Append('\n');
-        return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
+        using var output = new MemoryStream();
+        WriteJsonValue(output, element);
+        output.Write("\n"u8);
+        return ImmutableArray.Create(output.GetBuffer(), 0, checked((int)output.Length));
+    }
+
+    public static ImmutableArray<byte> WriteJson(IReadOnlyDictionary<string, string?> properties)
+    {
+        using var output = new MemoryStream();
+        WriteJsonObject(output, properties, WriteJsonString);
+        output.Write("\n"u8);
+        return ImmutableArray.Create(output.GetBuffer(), 0, checked((int)output.Length));
     }
 
     public static ImmutableArray<byte> WriteYaml(string text)
@@ -51,63 +59,88 @@ public static class StructuredCanonicalWriter
         return JsonElement.DeepEquals(leftElement, rightElement);
     }
 
-    private static void WriteJsonValue(StringBuilder builder, JsonElement element)
+    private static void WriteJsonValue(Stream output, JsonElement element)
     {
         switch (element.ValueKind)
         {
             case JsonValueKind.Object:
-                WriteJsonObject(builder, element);
+                WriteJsonObject(output, element.EnumerateObject()
+                    .Select(static property => KeyValuePair.Create(property.Name, property.Value)), WriteJsonValue);
                 break;
             case JsonValueKind.Array:
-                builder.Append('[');
+                output.Write("["u8);
                 var index = 0;
                 foreach (var child in element.EnumerateArray())
                 {
-                    if (index++ > 0) builder.Append(", ");
-                    WriteJsonValue(builder, child);
+                    if (index++ > 0) output.Write(", "u8);
+                    WriteJsonValue(output, child);
                 }
 
-                builder.Append(']');
+                output.Write("]"u8);
                 break;
             case JsonValueKind.String:
-                builder.Append(JsonSerializer.Serialize(element.GetString(), StringOptions));
+                WriteJsonString(output, element.GetString());
                 break;
             case JsonValueKind.Number:
-                builder.Append(CanonicalNumber(element));
+                output.Write(StrictUtf8.GetBytes(CanonicalNumber(element)));
                 break;
             case JsonValueKind.True:
-                builder.Append("true");
+                output.Write("true"u8);
                 break;
             case JsonValueKind.False:
-                builder.Append("false");
+                output.Write("false"u8);
                 break;
             case JsonValueKind.Null:
-                builder.Append("null");
+                output.Write("null"u8);
                 break;
             default:
                 throw new FormatException("JSON contains an unsupported value kind.");
         }
     }
 
-    private static void WriteJsonObject(StringBuilder builder, JsonElement element)
+    private static void WriteJsonObject<T>(Stream output,
+        IEnumerable<KeyValuePair<string, T>> properties, Action<Stream, T> writeValue)
     {
-        var properties = element.EnumerateObject().ToArray();
-        if (properties.Select(static property => property.Name).Distinct(StringComparer.Ordinal).Count()
-            != properties.Length)
+        var entries = properties.OrderBy(static property => property.Key, StringComparer.Ordinal).ToArray();
+        if (entries.Select(static property => property.Key).Distinct(StringComparer.Ordinal).Count()
+            != entries.Length)
         {
             throw new FormatException("JSON object contains duplicate keys.");
         }
 
-        builder.Append('{');
+        output.Write("{"u8);
         var index = 0;
-        foreach (var property in properties.OrderBy(static property => property.Name, StringComparer.Ordinal))
+        foreach (var property in entries)
         {
-            if (index++ > 0) builder.Append(", ");
-            builder.Append(JsonSerializer.Serialize(property.Name, StringOptions)).Append(": ");
-            WriteJsonValue(builder, property.Value);
+            if (index++ > 0) output.Write(", "u8);
+            WriteJsonString(output, property.Key);
+            output.Write(": "u8);
+            writeValue(output, property.Value);
         }
 
-        builder.Append('}');
+        output.Write("}"u8);
+    }
+
+    private static void WriteJsonString(Stream output, string? value)
+    {
+        if (value is null)
+        {
+            output.Write("null"u8);
+            return;
+        }
+
+        output.Write("\""u8);
+        for (var offset = 0; offset < value.Length;)
+        {
+            // Keep serializer tokens bounded without splitting a UTF-16 scalar.
+            var length = Math.Min(16 * 1024, value.Length - offset);
+            if (length < value.Length - offset && char.IsHighSurrogate(value[offset + length - 1])
+                && char.IsLowSurrogate(value[offset + length])) length--;
+            var encoded = JsonSerializer.SerializeToUtf8Bytes(value.Substring(offset, length), StringOptions);
+            output.Write(encoded.AsSpan(1, encoded.Length - 2));
+            offset += length;
+        }
+        output.Write("\""u8);
     }
 
     private static string CanonicalNumber(JsonElement element)

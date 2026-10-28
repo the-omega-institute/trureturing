@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d0a499dc84371c0c49139bf67d652687cbc266252ee72df58b995600096c5684
+  normalized_sha256: sha256:d0a499dc84371c0c49139bf67d652687cbc266252ee72df58b995600096c5684
+cas_ref: sha256:d0a499dc84371c0c49139bf67d652687cbc266252ee72df58b995600096c5684
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 阅读导航表的表头与栏目名，不包含答案或数学断言。
+    previous_atom_id: 4d4292b30e85925aa45455cba73c4f80255f502ad7b1aa9693eff870ab5acab7
+    next_atom_id: 7e1ebb7699557c73b4ecf4bf4cb7d38cac927e0bda95c9d9518e7cd1f46ec4c5

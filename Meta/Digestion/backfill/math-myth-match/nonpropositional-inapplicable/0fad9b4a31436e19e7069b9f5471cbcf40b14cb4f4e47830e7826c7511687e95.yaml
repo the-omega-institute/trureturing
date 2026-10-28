@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0fad9b4a31436e19e7069b9f5471cbcf40b14cb4f4e47830e7826c7511687e95
+  normalized_sha256: sha256:0fad9b4a31436e19e7069b9f5471cbcf40b14cb4f4e47830e7826c7511687e95
+cas_ref: sha256:0fad9b4a31436e19e7069b9f5471cbcf40b14cb4f4e47830e7826c7511687e95
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 转述人际过犯的赔还、请求宽恕程序与老师特例，数字是律例程序而非数学定理。
+    previous_atom_id: b9d8cc0f42291793bd81f7f94ccb86ec3c7f32877845d61a11a8950e520b5209
+    next_atom_id: 337ecd075118158e5cc5b7345b1e44b685843a24cdf293bd1e5c7a6c5ae08924

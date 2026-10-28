@@ -22,6 +22,7 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
     [Theory]
     [InlineData("lean-report-inputs.json", "LeanReportSelection")]
     [InlineData("Meta/ci-cache-paths.json", "NativeArchivePaths")]
+    [InlineData("Meta/ci-units.json", "CiUnitContract")]
     public void RuntimeManifestIsAdmittedWithItsRuntimeVerifier(string path, string verifier)
     {
         var root = TestRepositoryLayout.FindRoot();
@@ -118,6 +119,29 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
             fixture.Findings,
             finding => finding.Path == pattern);
         Assert.DoesNotContain(fixture.Findings, finding => finding.Code == "FILEMAP-PATTERN-EMPTY");
+    }
+
+    [Fact]
+    public void ArchivedTheoryDocumentsHaveReaderOnlyCanonicalOwnership()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var policy = Assert.IsType<PolicyLoadOutcome.Accepted>(RepositoryPolicyLoader.LoadRepository(root)).Policy;
+        var archive = Directory.GetFiles(Path.Combine(root, "docs/develop/archive/theory"));
+        Assert.NotEmpty(archive);
+        Assert.Equal(
+            policy.Manifest.Entries
+                .Where(entry => entry.Pattern.StartsWith("docs/develop/archive/theory/", StringComparison.Ordinal))
+                .Select(entry => entry.Pattern).Order(StringComparer.Ordinal),
+            archive.Select(file => Path.GetRelativePath(root, file).Replace('\\', '/')).Order(StringComparer.Ordinal));
+        foreach (var file in archive)
+        {
+            var path = RepoPath.CreateKnown(Path.GetRelativePath(root, file).Replace('\\', '/'));
+            var entry = Assert.Single(policy.Manifest.Match(path.Value));
+            Assert.Equal(FileMapKind.Data, entry.Kind);
+            Assert.Equal(new[] { "reader" }, entry.ConsumedBy.ToArray());
+            Assert.False(policy.IsDigestionSource(path));
+            Assert.Null(RepositoryPathPolicy.Validate(path, policy));
+        }
     }
 
     [Fact]

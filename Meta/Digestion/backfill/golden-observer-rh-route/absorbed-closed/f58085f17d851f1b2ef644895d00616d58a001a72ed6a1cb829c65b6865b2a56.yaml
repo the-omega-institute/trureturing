@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f58085f17d851f1b2ef644895d00616d58a001a72ed6a1cb829c65b6865b2a56
+  normalized_sha256: sha256:f58085f17d851f1b2ef644895d00616d58a001a72ed6a1cb829c65b6865b2a56
+cas_ref: sha256:f58085f17d851f1b2ef644895d00616d58a001a72ed6a1cb829c65b6865b2a56
+coverage_gids:
+  - gid: D5/S1/Deficit/Beatty/GoldenObserverRoute.phi
+    target_statement_id: sha256:79f284780ae7d5df0d90c2a5bf26678dbd3f417778134aed9560a296e6d7deb0
+  - gid: D5/S1/Deficit/Beatty/GoldenSpectralCoordinate.goldenNaturalScale
+    target_statement_id: sha256:b5d145e90f6993638b371deed07ea432c53fcde8f756a67aaabbbc4e5227f29d
+receipts:
+  unresolved_subitems: []

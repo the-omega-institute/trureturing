@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2ccf84bfceb77e9e8b3cf7140c93f5c0ac5612a34f43be24400832c9b865e0be
+  normalized_sha256: sha256:2ccf84bfceb77e9e8b3cf7140c93f5c0ac5612a34f43be24400832c9b865e0be
+cas_ref: sha256:2ccf84bfceb77e9e8b3cf7140c93f5c0ac5612a34f43be24400832c9b865e0be
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Emptiness cannot be substituted for a probabilistic hidden parameter. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: d46843b39ec5645a679f37a4a5d86270a2a87f6682d38885742110f5b94d7f0c
+    next_atom_id: 8eccb4712557a7a9ff259517674d8ed8a82bd854e2478b9e3228cd3d562c6a86

@@ -46,6 +46,22 @@ internal sealed class ResetSignIntegerCyclicDocument : IScribeDocumentDefinition
         "Literal integral Sign elimination preserves forward time and both inverse maps.",
         H("The literal Sign ring quotient"),
         Blocks(
+            Describe.Lean(DescribeId.Create("geometric"), DeclarationHandle.Create(
+                "D5/S3/ConceptDynamics/Coding/ResetSignIntegerCyclic.geometric"),
+                H("The consumed geometric certificate"), StatementSource.FromAuthor(Disp(All(
+                    Equal(Call("sub", Call("power", I("X"), I("q")),
+                        Call("multiply", Call("sub", I("X"), Num(1)), Call("S", I("q")))), Num(1)),
+                    B("q", I("Nat"))))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("This existing all-natural-q certificate is public for "
+                    + "ResetIntegralGluing's actual ideal and coefficient-half reconstruction. "
+                    + "The proof is reused unchanged and is a consumed helper."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("sign-square"), DeclarationHandle.Create(
+                "D5/S3/ConceptDynamics/Coding/ResetSignIntegerCyclic.sign_square"),
+                H("The consumed integral sign involution"), StatementSource.FromAuthor(Disp(All(
+                    Equal(Call("multiply", FP(Call("W", I("q"))), FP(Call("W", I("q")))), Num(1)),
+                    B("q", I("Nat"))))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original sign certificate supplies the inverse of "
+                    + "wUnit in ResetIntegralUnits. Its proof and scope are unchanged."))), DescribeRole.Theorem),
             Paragraph(Text("Sign is Multiplicative Bool, oddTau is ofAdd true, and the coefficient "
                 + "ring R is literally MonoidAlgebra Int Sign. Its resetLabel is single oddTau 1 "
                 + "from ResetNativeOddObstruction. Put S(q)=sum over k<q of X^k, "

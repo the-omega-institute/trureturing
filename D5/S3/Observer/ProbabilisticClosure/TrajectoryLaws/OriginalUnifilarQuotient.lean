@@ -159,7 +159,7 @@ def classMatrix (M : Bool → Matrix H H ℝ) : Bool →
   classical
   exact fun x a b => if b = quotientSuccessor M a x then quotientMass M a x else 0
 
-private theorem word_class (θ : Presentation H) (hu : RowUnifilar θ.matrix)
+theorem word_class (θ : Presentation H) (hu : RowUnifilar θ.matrix)
     (n : ℕ) (i : H) (w : Fin n → Bool) :
     wordMass (quotientMass θ.matrix) (quotientSuccessor θ.matrix) n (classOf θ.matrix i) w =
       futureMass θ.matrix i n w := by
@@ -176,11 +176,11 @@ private theorem word_class (θ : Presentation H) (hu : RowUnifilar θ.matrix)
       simpa only [Fin.cons_self_tail] using
         (future_step θ.matrix θ.matrix_nonneg hu i (w 0) n (Fin.tail w)).symm
 
-private theorem q_nonneg (θ : Presentation H) (a : FutureClass θ.matrix) (x : Bool) :
+theorem q_nonneg (θ : Presentation H) (a : FutureClass θ.matrix) (x : Bool) :
     0 ≤ quotientMass θ.matrix a x :=
   Finset.sum_nonneg (fun _ _ => θ.matrix_nonneg _ _ _)
 
-private theorem q_total (θ : Presentation H) (a : FutureClass θ.matrix) :
+theorem q_total (θ : Presentation H) (a : FutureClass θ.matrix) :
     ∑ x, quotientMass θ.matrix a x = 1 := by
   simpa [quotientMass,symbolMass,Fintype.sum_bool,Finset.sum_add_distrib,add_comm]
     using θ.stochastic a.out
@@ -208,7 +208,7 @@ private theorem weight_total (θ : Presentation H) :
   simpa [classWeight] using (fiber_sum (classOf θ.matrix) θ.initial (fun _ => 1)).symm.trans
     (by simpa using θ.initial_sum)
 
-private theorem row_group (θ : Presentation H) (hu : RowUnifilar θ.matrix)
+theorem row_group (θ : Presentation H) (hu : RowUnifilar θ.matrix)
     (i : H) (x : Bool) (b : FutureClass θ.matrix) :
     (∑ j, if classOf θ.matrix j = b then θ.matrix x i j else 0) =
       classMatrix θ.matrix x (classOf θ.matrix i) b := by
@@ -383,7 +383,7 @@ private theorem actual_class_cylinder (θ : Presentation H) (hu : RowUnifilar θ
     · exact cylinder_measurable t n h w
     · exact MeasurableSet.empty
   rw [measureReal_def,Measure.map_apply (by
-    exact (measurable_pi_lambda _ fun t => (measurable_of_finite (classOf θ.matrix)).comp
+    exact (Measurable.of_eval fun t => (measurable_of_finite (classOf θ.matrix)).comp
       ((measurable_pi_apply t).comp measurable_fst)).prodMk measurable_snd)
     (cylinder_measurable t n q w),he]
   change J.real (⋃ h, f h) = _
@@ -424,7 +424,7 @@ theorem actual_marked_quotient [MeasurableSpace H] [MeasurableSingletonClass H]
   let F : PathSpace H → PathSpace (FutureClass (trim θ).matrix) :=
     fun z => (fun t => originalClass θ t z,z.2)
   have hF : Measurable F :=
-    (measurable_pi_lambda _ fun t => originalClass_measurable θ t).prodMk measurable_snd
+    (Measurable.of_eval (fun t => originalClass_measurable θ t)).prodMk measurable_snd
   have hmap : markedLaw θ = (retainedLaw θ : Measure _).map (classPath (trim θ).matrix) := by
     change ((retainedLaw θ : Measure _).map (includePath θ)).map F = _
     rw [Measure.map_map hF (inclusion_measurable θ)]
@@ -502,7 +502,7 @@ private theorem actual_cell (θ : Presentation H) (hu : RowUnifilar (trim θ).ma
     (fun i => if endpoint (quotientSuccessor (trim θ).matrix) r i w = a then
       wordMass (quotientMass (trim θ).matrix) (quotientSuccessor (trim θ).matrix) r i w else 0)
 
-private theorem error_real_cells {Ω Q W : Type*} [MeasurableSpace Ω] [MeasurableSpace Q]
+theorem error_real_cells {Ω Q W : Type*} [MeasurableSpace Ω] [MeasurableSpace Q]
     [MeasurableSpace W] [MeasurableSingletonClass Q] [MeasurableSingletonClass W]
     [Fintype Q] [Fintype W] (μ : Measure Ω) [IsProbabilityMeasure μ]
     (q : Ω → Q) (w : Ω → W) (hq : Measurable q) (hw : Measurable w) (m : W → Q) :
@@ -539,7 +539,7 @@ private theorem error_real_cells {Ω Q W : Type*} [MeasurableSpace Ω] [Measurab
     ENNReal.toReal_sub_of_le hsel' ENNReal.one_ne_top,ENNReal.toReal_one,
     hsreal,Finset.sum_sub_distrib,htotal]
 
-private theorem actual_map_pairs (θ : Presentation H) (hu : RowUnifilar (trim θ).matrix)
+theorem actual_map_pairs (θ : Presentation H) (hu : RowUnifilar (trim θ).matrix)
     [MeasurableSpace H] [MeasurableSingletonClass H] (r : ℕ) :
     letI := Fintype.ofFinite (FutureClass (trim θ).matrix)
     (classError θ r).toReal ≤

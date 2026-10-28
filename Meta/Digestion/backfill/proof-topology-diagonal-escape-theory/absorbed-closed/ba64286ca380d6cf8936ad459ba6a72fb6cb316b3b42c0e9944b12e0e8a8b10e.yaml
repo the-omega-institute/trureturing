@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ba64286ca380d6cf8936ad459ba6a72fb6cb316b3b42c0e9944b12e0e8a8b10e
+  normalized_sha256: sha256:ba64286ca380d6cf8936ad459ba6a72fb6cb316b3b42c0e9944b12e0e8a8b10e
+cas_ref: sha256:ba64286ca380d6cf8936ad459ba6a72fb6cb316b3b42c0e9944b12e0e8a8b10e
+coverage_gids:
+  - gid: D5/S1/Words/Mechanical/MechanicalFactorComplexity.lower_mechanical_factor_complexity
+    target_statement_id: sha256:af6611f6a34c732f8503f0af532c210ec99b957011dfeeb60469ef9f31c601d4
+  - gid: D5/S3/ConceptDynamics/Experiment/FiniteIdentificationCapacityBound.finite_identification_capacity_bound
+    target_statement_id: sha256:ad0a8f2796b88e225ea9fd63645a037514dbffbcbb0310e582620742b420957a
+receipts:
+  unresolved_subitems: []

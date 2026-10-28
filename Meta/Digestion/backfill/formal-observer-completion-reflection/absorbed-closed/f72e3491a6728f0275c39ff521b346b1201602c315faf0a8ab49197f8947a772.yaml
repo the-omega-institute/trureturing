@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:f72e3491a6728f0275c39ff521b346b1201602c315faf0a8ab49197f8947a772
+  normalized_sha256: sha256:f72e3491a6728f0275c39ff521b346b1201602c315faf0a8ab49197f8947a772
+cas_ref: sha256:f72e3491a6728f0275c39ff521b346b1201602c315faf0a8ab49197f8947a772
+coverage_gids:
+  - gid: D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product
+    target_statement_id: sha256:0d54c32903e14d268173a993a963a82faee352eeb70f0ca1a56573c397a5eeb0
+  - gid: D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector
+    target_statement_id: sha256:6e6fcfc94702f4ebb38861156063b503c837f95b840869c6ac74082e079ee19c
+  - gid: D5/S3/Quantum/QubitWitnesses.phaseDampingIterate_apply
+    target_statement_id: sha256:5f4625fb281550a0efee74adf3a6dc137824b8ac26e6287a30c2276a87e773c2
+receipts:
+  unresolved_subitems: []

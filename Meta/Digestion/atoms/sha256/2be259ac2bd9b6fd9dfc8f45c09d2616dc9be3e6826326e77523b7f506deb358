@@ -1,0 +1,11 @@
+**Definition 46.2 (the polynomial-size escape test).** Use the bivariate family in (46.3) in place of the raw determinant family in Definition 39.1. Include $x,s-x$, all vertical contents and coefficient projections, and the self and pairwise resultants as there. Use one resultant per unordered pair, since reversing its order changes only a constant sign. Define $\zeta,\varepsilon,s_*$ and the root/sector sample set $\mathscr T$ by (39.4)–(39.6) for this family. Put
+
+$$
+ \widehat{\mathsf{Pass}}_\nu(y,\delta)
+    =\bigvee_{x_*\in\mathscr T}
+       \bigvee_{I,T}\Xi_{\nu,I,T}(x_*,s_*-x_*).
+ \tag{46.5}
+$$
+
+The hat distinguishes this data family and its possibly different $\varepsilon$ from the original family. Both tests concern the same original radius.
+

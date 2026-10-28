@@ -141,7 +141,8 @@ internal static partial class LeanCacheEnsureCommand
         bool continueOnCacheGetFailure,
         ILeanCacheStateProbe stateProbe,
         out CacheState? cacheState,
-        string? donorRepository)
+        string? donorRepository,
+        bool refreshWarmArchive = true)
     {
         cacheState = null;
         var archive = LeanArchiveAttempt.Skipped("not reached");
@@ -217,7 +218,10 @@ internal static partial class LeanCacheEnsureCommand
                         root,
                         projectWarmth,
                         stateProbe,
-                        out cacheState, writerGuard, runner);
+                        out cacheState, writerGuard, runner,
+                        // A wrapped build can use Lake's dependency traces to update a
+                        // matching warm cache; age alone does not require an archive.
+                        refreshWarmArchive: refreshWarmArchive);
                 }
 
                 if (stamp.State == LeanCacheStampState.Mismatch)
@@ -774,12 +778,17 @@ internal static partial class LeanCacheEnsureCommand
         ILeanCacheStateProbe stateProbe,
         out CacheState? cacheState,
         LeanCacheWriterGuard writerGuard,
-        IWorktreeProcessRunner runner)
+        IWorktreeProcessRunner runner,
+        bool refreshWarmArchive = true)
     {
         // Every successful donor/provision path meets here while holding the
         // writer lock, including a warm donor that bypassed cold-cache fallback.
         const string prefix = "LEAN_CACHE ";
         var payload = JsonNode.Parse(result.Output[prefix.Length..])!.AsObject();
+        // Wrapped warm-cache reuse and its receipt share one observation.
+        // Other ensure/provision paths retain their post-installation probe.
+        var mathlibWarmth = refreshWarmArchive
+            ? null : stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake")));
         var location = GitWorktreeInventory.Locate(root, runner);
         if (location.IsLinked)
         {
@@ -791,7 +800,8 @@ internal static partial class LeanCacheEnsureCommand
             payload["archive_workflow_run_id"] = null;
             result = result with { Output = prefix + payload.ToJsonString() + "\n" };
         }
-        else if (projectWarmth.IsWarm && payload["archive_status"]?.GetValue<string>() == "not_attempted")
+        else if ((refreshWarmArchive || !mathlibWarmth!.IsWarm) && projectWarmth.IsWarm
+            && payload["archive_status"]?.GetValue<string>() == "not_attempted")
         {
             try
             {
@@ -806,7 +816,10 @@ internal static partial class LeanCacheEnsureCommand
                     payload["archive_producer_commit_sha"] = refresh.ProducerCommitSha;
                     payload["archive_workflow_run_id"] = refresh.WorkflowRunId;
                     if (refresh.Outcome == LeanArchiveOutcome.Unpacked)
+                    {
                         projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(Path.Combine(root, ".lake")));
+                        mathlibWarmth = null;
+                    }
                 }
             }
             catch (Exception error) when (error is IOException or UnauthorizedAccessException)
@@ -818,7 +831,7 @@ internal static partial class LeanCacheEnsureCommand
         if (RetireRootJudgeOutputs(root, writerGuard))
             projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(Path.Combine(root, ".lake")));
         cacheState = new CacheState(
-            stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake"))),
+            mathlibWarmth ?? stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake"))),
             projectWarmth);
         return result with { Output = RecordCacheState(result.Output, cacheState) };
     }
@@ -827,10 +840,35 @@ internal static partial class LeanCacheEnsureCommand
     /// Bounds Release archive retrieval so the main-checkout producer retains time to finish.
     /// Linked-worktree ensure paths never consume this budget because archive retrieval is disabled.
     /// </summary>
-    private static TimeSpan ArchiveBudget =>
-        TimeSpan.FromMinutes(
-            LeanCacheBudgetPolicy.LeanInspectJobBudgetMinutes
-                - LeanCacheBudgetPolicy.PostArchiveReserveMinutes);
+    private const string ReleaseTransportTimeoutVariable =
+        "STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS";
+    private const int ReleaseTransportTimeoutMaximumSeconds = 21600;
+    private const int ReleaseEnclosingHeadroomSeconds = 120;
+
+    /// <summary>
+    /// Resolve the optional Release transport policy only inside the archive fetch
+    /// failure boundary. The default remains 45 minutes minus its two-minute
+    /// post-archive reserve; an explicit transport extension receives bounded
+    /// headroom so the enclosing process does not cut it off first.
+    /// </summary>
+    private static TimeSpan ArchiveBudget()
+    {
+        var defaultSeconds = (LeanCacheBudgetPolicy.LeanInspectJobBudgetMinutes
+            - LeanCacheBudgetPolicy.PostArchiveReserveMinutes) * 60;
+        var raw = Environment.GetEnvironmentVariable(ReleaseTransportTimeoutVariable);
+        if (raw is null) return TimeSpan.FromSeconds(defaultSeconds);
+        if (!int.TryParse(raw, System.Globalization.NumberStyles.None,
+                System.Globalization.CultureInfo.InvariantCulture, out var configured)
+            || configured < 1 || configured > ReleaseTransportTimeoutMaximumSeconds)
+        {
+            throw new InvalidOperationException(
+                $"{ReleaseTransportTimeoutVariable} must be 1..{ReleaseTransportTimeoutMaximumSeconds}");
+        }
+
+        return TimeSpan.FromSeconds(Math.Max(
+            defaultSeconds,
+            configured + ReleaseEnclosingHeadroomSeconds));
+    }
 
     private static string RecordColdBuildConsent(string receipt)
     {

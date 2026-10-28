@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cae82f39341f4c37167f9e1edb3c5e4a050a72480a31f7fdd929059de8686761
+  normalized_sha256: sha256:cae82f39341f4c37167f9e1edb3c5e4a050a72480a31f7fdd929059de8686761
+cas_ref: sha256:cae82f39341f4c37167f9e1edb3c5e4a050a72480a31f7fdd929059de8686761
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题。研究问题：询问哪些状态是 exact，没有断言分类结果。
+    previous_atom_id: 38de8dc1836ac546505675f09e4f24164a2e21abbf51035ae18711d7a58d0955
+    next_atom_id: 08bb08ca5420f987bbe1ff4a05d73b56b9f1055842161b08cf7c9cf05794a754

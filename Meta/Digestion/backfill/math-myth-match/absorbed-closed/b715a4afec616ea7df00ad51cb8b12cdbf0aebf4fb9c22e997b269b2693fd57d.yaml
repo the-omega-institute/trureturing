@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:b715a4afec616ea7df00ad51cb8b12cdbf0aebf4fb9c22e997b269b2693fd57d
+  normalized_sha256: sha256:b715a4afec616ea7df00ad51cb8b12cdbf0aebf4fb9c22e997b269b2693fd57d
+cas_ref: sha256:b715a4afec616ea7df00ad51cb8b12cdbf0aebf4fb9c22e997b269b2693fd57d
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Information/SharedSourceObservationDependence.shared_source_observations_are_not_independent
+    target_statement_id: sha256:c14405766d6b6738c4a460a38c763cdae93c953b27792e764e4e1048306fccec
+  - gid: D5/S3/ConceptDynamics/Interventions/ObservationInterventionSeparation.Int
+    target_statement_id: sha256:f4936a27add61e9b8c5a8a3b08f496219a7e579b17ec323d259ceddd5a70d909
+  - gid: D5/S3/ConceptDynamics/Interventions/ObservationInterventionSeparation.Obs
+    target_statement_id: sha256:a86eec2f4f6e13a19e58c966a94c42784e749e846a949191c0fa0caeb0aeda66
+  - gid: D5/S3/ConceptDynamics/Interventions/ObservationInterventionSeparation.observation_strictly_weaker_than_intervention
+    target_statement_id: sha256:ec3946cafcde3b8d9c45ef02b49468e9b99fd74ce2d53b49699c560a41cbeee2
+receipts:
+  unresolved_subitems: []

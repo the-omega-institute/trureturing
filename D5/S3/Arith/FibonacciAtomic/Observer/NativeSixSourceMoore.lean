@@ -49,7 +49,7 @@ private theorem run_agree {Q : Type u} {H : Type v} (M : Controller Q H)
       rw [← agree s List.mem_cons_self]
       exact ih (fun p hp => agree p (List.mem_cons_of_mem _ hp))
 
-private theorem run_terminal {Q : Type u} {H : Type v} (M : Controller Q H)
+theorem run_terminal {Q : Type u} {H : Type v} (M : Controller Q H)
     {t : Source} {k : Q ⊕ H} {tr tr' : List Q} {h h' : H}
     (a : Run M t k tr h) (b : Run M t k tr' h') : h = h' := by
   induction a generalizing tr' h' with

@@ -83,7 +83,7 @@ F10: owner GID: D5/S3/Weil/ZetaLinear/Sylvester; declaration: RHLinalg.hermForm
 Definition rows classify unfolding; they assert no proposition and supply no escape witness.
 Utility: none; finite-dimensional symbolic mathematics for arbitrary parameters.
 The Gram construction is Matrix.gram; state columns have no forwarding definition.
-Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730; https://github.com/the-omega-institute/trureturing/issues/19372 names `psd_summand_kills_kernel`.
 DTR reading: DTR-Unregistered for the public theorem targets in this module.
 Registration gap: exact dependent source-family reconstruction, lawful template readout,
 selection coordinates, whole-family variation, slot sensitivity and observational dependence
@@ -92,6 +92,7 @@ are not all established by the retained registration evidence.
 
 import Mathlib.Analysis.InnerProductSpace.GramMatrix
 import D5.S3.Observer.Hilbert.FiniteMoorePenroseInverse
+import D5.S3.Weil.ZetaLinear.PosIndex
 import D5.S3.Weil.ZetaLinear.Sylvester
 
 open Matrix Finset Filter Unitary
@@ -139,7 +140,7 @@ end
 section
 variable {n d : ℕ}
 
-private theorem psd_summand_kills_kernel (F : Fin n → Matrix (Fin n) (Fin n) ℂ)
+theorem psd_summand_kills_kernel (F : Fin n → Matrix (Fin n) (Fin n) ℂ)
     (hF : ∀ i, (F i).PosSemidef) (x : Fin n → ℂ)
     (hx : (∑ i, F i) *ᵥ x = 0) (i : Fin n) : F i *ᵥ x = 0 := by
   have hs : (∑ j, (star x ⬝ᵥ (F j *ᵥ x)).re) = 0 := by
@@ -151,7 +152,7 @@ private theorem psd_summand_kills_kernel (F : Fin n → Matrix (Fin n) (Fin n) �
     exact (hF j).re_dotProduct_nonneg x
   have hri := (Finset.sum_eq_zero_iff_of_nonneg hn).mp hs i (mem_univ i)
   have him := (Complex.nonneg_iff.mp ((hF i).dotProduct_mulVec_nonneg x)).2
-  apply (hF i).dotProduct_mulVec_zero_iff x |>.mp
+  apply (hF i).dotProduct_mulVec_zero_iff |>.mp
   exact Complex.ext hri him.symm
 
 end
@@ -159,7 +160,7 @@ end
 section
 variable {n d : ℕ}
 
-private theorem hermitian_projection_complement_psd (P : Matrix (Fin d) (Fin d) ℂ)
+theorem hermitian_projection_complement_psd (P : Matrix (Fin d) (Fin d) ℂ)
     (hP : P.IsHermitian) (hPP : P*P=P) : (1-P).PosSemidef := by
   have he : (1-P)*(1-P)ᴴ = 1-P := by
     rw [(Matrix.isHermitian_one.sub hP).eq]
@@ -173,7 +174,7 @@ end
 section
 variable {n d : ℕ}
 
-private theorem matrix_penrose_exists (A : Matrix (Fin d) (Fin n) ℂ) :
+theorem matrix_penrose_exists (A : Matrix (Fin d) (Fin n) ℂ) :
     ∃ B : Matrix (Fin n) (Fin d) ℂ,
       A*B*A=A ∧ B*A*B=B ∧ (A*B).IsHermitian ∧ (B*A).IsHermitian := by
   let a := A.toEuclideanLin
@@ -281,7 +282,7 @@ end
 section
 variable {n d : ℕ}
 
-private theorem psd_summand_projection (F : Fin n → Matrix (Fin n) (Fin n) ℂ)
+theorem psd_summand_projection (F : Fin n → Matrix (Fin n) (Fin n) ℂ)
     (hF : ∀ i, (F i).PosSemidef) (Q : Matrix (Fin n) (Fin n) ℂ)
     (hQ : Q.IsHermitian) (hGQ : (∑ i, F i)*Q = ∑ i, F i) (i : Fin n) :
     Q * F i * Q = F i := by

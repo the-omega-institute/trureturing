@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:02910b56662d29b282af440e2ae921d09cd071b01359f970a2f376ba4885c3ae
+  normalized_sha256: sha256:02910b56662d29b282af440e2ae921d09cd071b01359f970a2f376ba4885c3ae
+cas_ref: sha256:02910b56662d29b282af440e2ae921d09cd071b01359f970a2f376ba4885c3ae
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 仅说明相对论惯性与完整静止能量位置耦合是独立物理桥梁，限定热平衡结论的解释范围，无新增数学断言。'
+    previous_atom_id: c070a3c9b62e512ea28afec9804692a71e6cb8e08e5c03ba9b9f198c32de745e
+    next_atom_id: 2cc974635562389dc6e11ae695adffd3b2c6e25dd097874d6b63f414c774997c

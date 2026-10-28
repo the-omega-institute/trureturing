@@ -43,7 +43,7 @@ def DeepValues (C : LiteralRow) (L : Nat) (v : Classes C → Source) : Prop :=
   ∀ d, rootType (v d) = none → ∀ a : Address,
     a.length ≤ L → readout a (v d) = .branch
 
-private def pad : Nat → Source → Source
+def pad : Nat → Source → Source
   | 0, t => t
   | n+1, t => .mul (pad n t) (pad n t)
 

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:973ef7bb866e9216f05cde9e36bf077cd01c29f54f66df38e95652d082d8eb43
+  normalized_sha256: sha256:973ef7bb866e9216f05cde9e36bf077cd01c29f54f66df38e95652d082d8eb43
+cas_ref: sha256:973ef7bb866e9216f05cde9e36bf077cd01c29f54f66df38e95652d082d8eb43
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Specifies a history-plasticity requirement and its interpretive use.
+    previous_atom_id: 6c1649c9cde9ae9c23958d5ba3a3b9198c2156d8fb76b04fd705357bcf8bc82b
+    next_atom_id: 14a55dfee02ac393f409b65b39aa9d597558b67bca9284b6a40f4e24057efef6

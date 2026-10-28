@@ -1,0 +1,17 @@
+**Definition 14.1 (concrete records).** For a chart supplied by the complete
+native correspondence of [PDC, Theorem 5.2][PDC] and the joint signed support
+of [NAC, Definition 5.1 and Theorem 6.1][NAC], a record $d$ contains exactly:
+
+1. For each scalar coordinate, either an exact label $\overline n=q$ with
+   $q\in\mathbb N$ or an infinity label $\overline n=\infty$. The labels
+   denote $T_q$ and $\Omega$, respectively.
+2. A partition of residual coordinates into $F$ and $I$, an exact finite
+   native tree $f_t$ for every $t\in F$, and a finite nullary pair-guarded
+   system plus one output expression $O_t$ for every $t\in I$. Every such
+   expression satisfies Definition 13.1. An $I$ output contains $\Omega$ or
+   reaches a directed cycle in its defining dependency graph; this is the
+   supplied witness that its completed value is genuinely infinite.
+3. Shared systems occur once and are combined with independent systems only
+   after disjoint renaming. Repeated chart names keep one value. No record
+   asserts a point merely by naming an arbitrary completed tree.
+

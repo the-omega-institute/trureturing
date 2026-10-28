@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:8736299c8a54a3e794214802d9d0856c0836dc0452272816c2f9661df7e049d7
+  normalized_sha256: sha256:8736299c8a54a3e794214802d9d0856c0836dc0452272816c2f9661df7e049d7
+cas_ref: sha256:8736299c8a54a3e794214802d9d0856c0836dc0452272816c2f9661df7e049d7
+coverage_gids:
+  - gid: D5/S3/Weil/Separator/OffLineZeroNegativeWeilSquare.zeroData_im_ne_zero
+    target_statement_id: sha256:e7127528fcd262929b36ad5089405e93e5b96270cd7625006df791e82339bd63
+  - gid: D5/S3/Zeros/Symmetry/ZeroOrbitCardinality.zero_orbit_card_four_of_off_line
+    target_statement_id: sha256:f6bc15c85196e4e2dfdaaf5bfa463ddbcf5a39ab506a272b6086092882232273
+  - gid: D5/S3/Zeros/Symmetry/ZeroOrbitDegeneracy.zero_orbit_card_two_of_critical
+    target_statement_id: sha256:8b0245871fdc5586f45fdaf3a8fbc6c5f612029ef8d67c4f5261f0d3e26651c1
+  - gid: D5/S3/Zeros/Symmetry/ZeroSymmetryAction.mirror_index_fixed_iff_critical
+    target_statement_id: sha256:d9f4b412977b0258facd4f591c69999a5cb70f4eedede0acc4f1fed64fc1940e
+  - gid: D5/S3/Zeros/Symmetry/ZeroSymmetryAction.zero_symmetries_commute
+    target_statement_id: sha256:3c1ffefe6f9c73f8b4f7f3e9ba1edc024c55e01edf6e24b97526f505402bf069
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 7d6a4950318b6613ee288acaa8c5a1299f1384f43949088dc444549a9dbbde83
+    - 1ee133cb35de9a0081d5c3941b5c90dd88cf86fae84b10041f59a5cb1e3aea3b
+    - 66ae4d46ec1e5c366bc39bf69666104ca654dbd116d6af43b0dd2b9191554b62

@@ -1,0 +1,21 @@
+**反例 1647.1（变化通道集合的边界不连续）。** 取 $X=\{1,2,3\}$、$P=(1/2,1/2,0)$，对 $0<\varepsilon<1/3$ 令
+
+$$
+q_\varepsilon=((1-\varepsilon)/2,(1-\varepsilon)/2,\varepsilon),
+\qquad
+\mathcal C_\varepsilon=\{\delta_1,\delta_2,\delta_3,q_\varepsilon\}.
+$$
+
+极限集合 $\mathcal C_0$ 含 $q_0=P$，且 $h(\mathcal C_\varepsilon,\mathcal C_0)=\varepsilon$。然而，对全部 $0\le\alpha\le\infty$，
+
+$$
+F_\alpha(P,0;\mathcal C_\varepsilon)=\log2,
+\qquad F_\alpha(P,0;\mathcal C_0)=0.
+$$
+
+**证明。** 准确目标的第三格为零，非负混合中任何正权重的 $q_\varepsilon$ 或 $\delta_3$ 都会给第三格正质量，所以它们不能出现。剩下两类点来源各需总质量 $1/2$。合并同通道标签不会增加任何所列阶的熵，故最低成本由两个权重 $1/2$ 取得。极限集合直接使用单一通道 $P$ 即得零成本。
+
+$q_\varepsilon$ 到 $P$ 的总变差为 $\varepsilon$，到两端点的距离为 $(1+\varepsilon)/2>\varepsilon$，因此集合距离确为 $\varepsilon$。它也是到单来源集合的准确距离，因为 $P$ 到三个点质量的距离分别为 $1/2,1/2,1$。证毕。
+
+所以 $F_\alpha(P,\varepsilon;\mathcal C_\varepsilon)=0$，而将同一个小误差预算改为严格零就得到 $\log2$。这项差别来自非负性与零格，既不是模型名称的差别，也不是观察精度已经足够时仍强行制造神秘性。它给“任意接近”与“准确满足同一条件”一个可以逐项检查的边界。
+

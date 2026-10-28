@@ -1,0 +1,195 @@
+**Theorem 36.1 (uniform native ground band and all-phase local limit).**
+Define from the original coefficients, before taking any scaling limit,
+
+$$
+M_\kappa=\int_I c_\kappa(k)c_\kappa(k)^{\mathsf T}\phi(k)^2\,dk
+=\begin{pmatrix}
+\langle A_\kappa^2\rangle&\langle A_\kappa B_\kappa\rangle&\langle A_\kappa b_\kappa\rangle\\
+\langle A_\kappa B_\kappa\rangle&\langle B_\kappa^2\rangle&\langle B_\kappa b_\kappa\rangle\\
+\langle A_\kappa b_\kappa\rangle&\langle B_\kappa b_\kappa\rangle&\langle b_\kappa^2\rangle
+\end{pmatrix},\qquad
+\langle f\rangle=\int_I f\phi^2\,dk.
+\tag{36.1}
+$$
+
+There are constants $0<m\le M<\infty$ such that
+$m\,\mathrm{Id}\le M_\kappa\le M\,\mathrm{Id}$ for every
+$\kappa\in\mathcal K$, including zero. Put
+
+$$
+\Gamma_{\kappa,s}(z)=
+\frac{\exp[-z^{\mathsf T}M_\kappa^{-1}z/(4s)]}
+     {(4\pi s)^{3/2}\sqrt{\det M_\kappa}},\qquad
+\Gamma_\kappa=\Gamma_{\kappa,1}.
+\tag{36.2}
+$$
+
+This is the probability density of a centered Gaussian of covariance
+$2sM_\kappa$. For any compact $E\Subset I\times I$,
+$B\subset\mathbb R^3$ and $[a,b]\Subset(0,\infty)$,
+
+$$
+\sup_{\substack{\kappa\in\mathcal K,\ (k,k')\in E\\
+                         z\in B,\ a\le s\le b}}
+\left|T^{3/2}e^{\lambda Ts}
+g_\kappa^I(Ts;k,k';\sqrt Tz)
+-\phi(k)\phi(k')\Gamma_{\kappa,s}(z)\right|
+\longrightarrow0\qquad(T\to\infty).
+\tag{36.3}
+$$
+
+In particular this gives the stated $t^{3/2}$ limit at $s=1$.
+There is no relation required between $T$ and $\kappa$: arbitrary
+$\kappa(T)\in\mathcal K$, including arbitrary approaches to zero
+through both signs, satisfy (36.3). In fact the absolute estimate
+holds uniformly for $z\in\mathbb R^3$ and $k,k'\in I$.
+If $\Lambda_\kappa(\eta)$ is the lowest eigenvalue of G (26.5), then
+
+$$
+\Lambda_\kappa(\eta)=\lambda+
+\eta^{\mathsf T}M_\kappa\eta+O(|\eta|^4),\qquad
+\nabla_\eta^2\Lambda_\kappa(0)=2M_\kappa,
+\tag{36.4}
+$$
+
+with uniform remainder near $\eta=0$.
+
+Proof. First (36.1) is not a fitted tensor. If a vector $e$ has
+$e^{\mathsf T}M_\kappa e=0$, positivity of $\phi$ makes
+$e\cdot c_\kappa$ identically zero on $I$. Its first two derivatives
+also vanish. G (32.2) says
+$\det(c_\kappa,c_\kappa',c_\kappa'')\ne0$ throughout the fixed
+parameter-height rectangle, so $e=0$. Continuity in $\kappa$ and
+compactness of $\mathcal K$ and the unit sphere give the uniform
+positive lower bound. Bounded coefficients give the upper bound.
+
+The exact Fourier transform convention is
+
+$$
+\widehat f(k,\eta)=\int_{\mathbb R^3}e^{-i\eta\cdot q}f(k,q)\,dq,
+\qquad
+g_\kappa^I(t;k,k';r)=\frac1{(2\pi)^3}
+\int_{\mathbb R^3}e^{i\eta\cdot r}
+K_{\kappa,\eta}(t;k,k')\,d\eta.
+\tag{36.5}
+$$
+
+The fibre is precisely
+$H_{\kappa,\eta}=-\varepsilon^2\partial_k^2+
+|\eta\cdot c_\kappa(k)|^2$ with form domain $H_0^1(I)$ and operator
+domain $H^2(I)\cap H_0^1(I)$. Plancherel on the smooth core followed
+by closure identifies this direct integral with the entire free
+operator, not a restricted sector. G (26.12), which is valid for every
+real $\eta$ and both height endpoints, makes (36.5) absolutely
+convergent for all sufficiently large times. Its same endpoint-splitting
+proof, with the fixed splitting time chosen below half any given
+positive time, gives absolute convergence at that time too.
+It identifies the kernel pointwise
+by Fourier inversion and interior continuity. Thus no trace has been
+substituted for a point kernel.
+
+Here is a useful boundary-strengthened version of that supplier. For
+$\phi_n(k)=\sqrt{2/(u-l)}\sin(n\pi(k-l)/(u-l))$, one has
+$|\phi_n(k)|\le n\phi(k)$. The height sine series therefore gives
+$h_I(2\delta;k,k)\le C_\delta\phi(k)^2$ for fixed $\delta>0$.
+Splitting a fibre semigroup at $\delta,t-2\delta,\delta$, using
+nonnegative-potential domination and Cauchy--Schwarz for its endpoint
+evaluation vectors, gives, for $t\ge1$ after choosing $\delta=1/4$,
+
+$$
+|e^{\lambda t}K_{\kappa,\eta}(t;k,k')|
+\le C\phi(k)\phi(k')\exp[-ct\Psi(|\eta|)],\qquad
+\Psi(r)=\begin{cases}r^2&r\le1,\\r^{2/3}&r\ge1.\end{cases}
+\tag{36.6}
+$$
+
+Indeed the endpoint evaluation norms squared are
+$K_{\kappa,\eta}(2\delta;k,k)\le h_I(2\delta;k,k)$, while the
+middle operator norm is at most
+$e^{-(t-2\delta)(\lambda+c\Psi(|\eta|))}$. Absorbing the fixed
+$2\delta\lambda$ and using $t-2\delta\ge t/2$ proves (36.6).
+This controls every height level, including limits towards the faces.
+
+For completeness the multivariate version of C (32.4) follows on the
+same fixed scalar domain. Write $V_\eta=|\eta\cdot c_\kappa|^2$;
+$\|V_\eta\|_\infty\le C|\eta|^2$ uniformly. Min-max gives
+$\lambda\le\Lambda_\kappa(\eta)\le\lambda+C|\eta|^2$, and the second
+eigenvalue is at least $4\lambda$. For a fixed small radius the first
+eigenvalue lies below $2\lambda$. The first normalized eigenfunction
+$v_{\kappa,\eta}$ is positive and simple by the scalar Dirichlet
+equation and its Wronskian. Decompose it as $z\phi+h$, with
+$h\perp\phi$ and $z>0$. Its projected equation is
+
+$$
+(H_I-\Lambda_\kappa(\eta))h
+=-(1-|\phi\rangle\langle\phi|)V_\eta(z\phi+h).
+\tag{36.7}
+$$
+
+The inverse on $\phi^\perp$ is uniformly bounded from $L^2$ to
+$H^2\cap H_0^1$, since its unperturbed spectrum starts at $4\lambda$.
+Consequently $\|h\|_{H^2}\le C|\eta|^2$ and
+$z=1+O(|\eta|^4)$. Projecting onto $\phi$ gives
+$\Lambda-\lambda=\langle V_\eta\phi,\phi\rangle+O(|\eta|^4)$,
+which is (36.4). The Hessian exists, for example by expanding the
+resolvent of $H_I+V_\eta$ on a fixed circle around $\lambda$ as the
+uniformly convergent bounded-perturbation Neumann series; its Riesz
+projection and simple eigenvalue are analytic in the real components
+of $\eta$. This is the elementary bounded-perturbation argument
+underlying the classical min-max and perturbation tools cited in
+C Definition 31.1; no native limit is supplied by those tools.
+
+The $H^2$ bound also bounds the first derivative of $h$. Since $h$
+vanishes at both faces and $\phi$ is comparable to distance from the
+boundary, it follows that
+$v_{\kappa,\eta}(k)/\phi(k)=1+O(|\eta|^2)$ uniformly for $k\in I$.
+The complementary spectral subspace has spectrum at least $4\lambda$.
+The same fixed-time endpoint splitting used above therefore gives
+
+$$
+K_{\kappa,\eta}(t;k,k')
+=e^{-t\Lambda_\kappa(\eta)}
+ v_{\kappa,\eta}(k)v_{\kappa,\eta}(k')
++R_{\kappa,\eta}(t;k,k'),\qquad
+|R_{\kappa,\eta}|\le C\phi(k)\phi(k')e^{-4\lambda t}
+\tag{36.8}
+$$
+
+for $t\ge1$ and that small fixed frequency ball. In obtaining the
+remainder, insert the orthogonal complementary projection in the
+middle semigroup; the endpoint evaluation norms are bounded by the
+full dominated semigroup. This justifies the bound without an
+uncontrolled sum over excited eigenfunctions.
+
+Change variables $\eta=\xi/\sqrt T$ in (36.5). On every bounded
+$\xi$ set, (36.4), (36.8) give, uniformly in the stated parameters,
+
+$$
+e^{\lambda Ts}K_{\kappa,\xi/\sqrt T}(Ts;k,k')
+\longrightarrow
+\phi(k)\phi(k')e^{-s\xi^{\mathsf T}M_\kappa\xi}.
+\tag{36.9}
+$$
+
+All frequencies have an actual integrable majorant. For $T\ge1$,
+
+$$
+T\Psi(|\xi|/\sqrt T)=
+\begin{cases}|\xi|^2&|\xi|\le\sqrt T,\\
+T^{2/3}|\xi|^{2/3}&|\xi|>\sqrt T,
+\end{cases}
+\quad\ge\min(|\xi|^2,|\xi|^{2/3}).
+\tag{36.10}
+$$
+
+Equations (36.6) and $s\ge a$ bound the transformed integrand by
+$C\phi(k)\phi(k')\exp[-ca\min(|\xi|^2,|\xi|^{2/3})]$, integrable
+on $\mathbb R^3$. The limiting integrand has the uniform Gaussian
+majorant from $M_\kappa\ge m\,\mathrm{Id}$. First integrate the
+uniform error on a bounded frequency ball, then send its radius to
+infinity using these two majorants. This proves convergence in
+$L^1(d\xi)$ uniformly in $\kappa,s,k,k'$. The factor
+$e^{i\xi\cdot z}$ has modulus one, giving the stronger spatial
+uniformity. The Gaussian Fourier integral with exactly $(2\pi)^{-3}$
+is (36.2); its covariance is $2sM_\kappa$. This proves (36.3). $\square$
+

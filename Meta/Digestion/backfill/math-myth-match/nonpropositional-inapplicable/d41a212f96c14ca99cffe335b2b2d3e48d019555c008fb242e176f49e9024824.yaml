@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d41a212f96c14ca99cffe335b2b2d3e48d019555c008fb242e176f49e9024824
+  normalized_sha256: sha256:d41a212f96c14ca99cffe335b2b2d3e48d019555c008fb242e176f49e9024824
+cas_ref: sha256:d41a212f96c14ca99cffe335b2b2d3e48d019555c008fb242e176f49e9024824
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 区分神圣同源与文献传承的前提，要求补足生成解释，不把它们当统计独立性事实。
+    previous_atom_id: 498274dae06599745e072c4eddf2224763a65eea3a7f914ec5600150b42d3520
+    next_atom_id: 3a7a09512cabf38a3d4aff04c61aa72d71bedcf0bd4fe733511448daa347a2b6

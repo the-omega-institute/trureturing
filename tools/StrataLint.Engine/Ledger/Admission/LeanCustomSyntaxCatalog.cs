@@ -49,16 +49,17 @@ internal sealed class LeanCustomSyntaxCatalog(
         for (var index = 0; index < commandStarts.Length; index++)
         {
             var start = commandStarts[index];
-            if (tokens[start].Text is not ("macro" or "syntax" or "notation" or "local" or "scoped"))
+            var end = index + 1 < commandStarts.Length ? commandStarts[index + 1] : tokens.Length;
+            var head = LeanSourceCatalog.FindCommandHead(tokens, start, end, out var localModifier);
+            if (head < 0 || tokens[head].Text is not ("macro" or "syntax" or "notation" or "local" or "scoped"))
             {
                 continue;
             }
-            if (!includeLocal && tokens[start].Text == "local")
+            if (!includeLocal && localModifier)
             {
                 continue;
             }
 
-            var end = index + 1 < commandStarts.Length ? commandStarts[index + 1] : tokens.Length;
             foreach (var token in tokens[start..end])
             {
                 var literal = NormalizeLiteral(token.Text);

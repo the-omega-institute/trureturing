@@ -13,14 +13,18 @@ internal interface ICliEnvironment
 
     ExplicitCommandResult CheckDelta(IReadOnlyList<string> arguments);
 
+    ExplicitCommandResult CheckSource(IReadOnlyList<string> arguments);
+
     AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments);
 
     CommandResult Coverage(IReadOnlyList<string> arguments);
 
     CommandResult SearchAtoms(IReadOnlyList<string> arguments);
+    CommandResult SourceDispatch(IReadOnlyList<string> arguments);
 
     CommandResult ShowAtom(IReadOnlyList<string> arguments);
     CommandResult AtomContext(IReadOnlyList<string> arguments);
+    CommandResult MigrateAtomContext(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments);
 
@@ -107,6 +111,8 @@ internal static class CliApplication
                 RenderExplicit(environment.CheckCurrent(tail), console),
             ["check-delta"] = static (environment, tail, console) =>
                 RenderExplicit(environment.CheckDelta(tail), console, allowProtectedAnnotation: true),
+            ["check-source"] = static (environment, tail, console) =>
+                RenderExplicit(environment.CheckSource(tail), console),
             ["compile-proof"] = static (_, tail, console) =>
                 RenderTestEvidence("compile-proof", tail, console),
             ["clean-lanes"] = static (environment, tail, console) =>
@@ -129,6 +135,10 @@ internal static class CliApplication
                 RenderExplicit(environment.DepositHeaderCheck(tail), console),
             ["lean-utility-input"] = static (environment, tail, console) =>
                 RenderExplicit(environment.LeanUtilityInput(tail), console),
+            ["migrate-atom-context"] = static (environment, tail, console) =>
+                RenderCommand(environment.MigrateAtomContext(tail), console),
+            ["source-dispatch"] = static (environment, tail, console) =>
+                RenderCommand(environment.SourceDispatch(tail), console),
             ["search-atoms"] = static (environment, tail, console) =>
                 RenderCommand(environment.SearchAtoms(tail), console),
             ["gate-authority"] = static (environment, tail, console) =>

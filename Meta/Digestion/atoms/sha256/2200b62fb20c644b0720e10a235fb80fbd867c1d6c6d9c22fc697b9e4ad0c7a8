@@ -1,0 +1,16 @@
+## 183. Exact failures of the earlier sufficient residual certificate
+
+The separate-coherence product construction in §173 leaves the two
+operators on Bob's one-particle plane
+
+$$
+K_0=tI_2+\frac{st}{t+sx}uu^*-s^2y\,hh^*,\qquad
+K_1=tI_2-s^2x\,uu^*-\frac{ts}{1-sy}hh^*.
+\tag{183.1}
+$$
+
+Their joint positivity is sufficient for the decomposition in that
+construction to be a separable one. It is not a necessary condition for
+the state itself to be separable. The following examples prove this
+failure with exact entries.
+

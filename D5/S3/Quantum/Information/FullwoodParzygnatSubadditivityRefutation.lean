@@ -156,7 +156,7 @@ private theorem density : ρ.PosSemidef ∧ trace ρ = 1 := by
   · exact Matrix.PosSemidef.one.smul (by norm_num : (0 : ℝ) ≤ 1 / 5)
   · norm_num [Matrix.trace, Fin.sum_univ_succ]
 
-private theorem projection_cfc {n : Type} [Fintype n] [DecidableEq n]
+theorem projection_cfc {n : Type} [Fintype n] [DecidableEq n]
     (Q : Matrix n n ℂ) (hQ : Q.IsHermitian) (hQQ : Q * Q = Q)
     (f : ℝ → ℝ) (a b : ℝ) :
     cfc f (a • (1 : Matrix n n ℂ) + b • Q) =

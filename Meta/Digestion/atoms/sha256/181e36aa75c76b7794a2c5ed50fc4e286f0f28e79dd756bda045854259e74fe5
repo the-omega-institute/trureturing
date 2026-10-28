@@ -1,0 +1,7 @@
+## 5. 来源、文献状态与核验边界
+
+| 来源 | 精确范围与使用边界 |
+| --- | --- |
+| 仓内 pinned Mathlib | `repo-derived`：主子式系数恒等式、Hermitian characteristic polynomial、canonical `eigenvalues₀` 的排序和正定性 API；只用于定理 3.1 的已编译证明。 |
+| 原始 PR8899 理论上下文 | `literature-attested`：物理 Gramian 的动机和后续桥接目标；不替代本卷抽象定理的 Lean 证明，也不提供其完整 telescope。 |
+| 本卷抽象推导 | `repo-derived`：定理 3.1 的统一主子式幂界、canonical spectrum 前缀夹逼和相邻比值链。 |

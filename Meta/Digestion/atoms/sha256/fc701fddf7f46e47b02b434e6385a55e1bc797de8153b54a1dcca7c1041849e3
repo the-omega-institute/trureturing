@@ -1,0 +1,41 @@
+**定理 251.2（因子化并行的响应与误差）。** 在因子化合同下，
+
+$$
+\boxed{
+P_M(y_A,y_B)
+=
+P^A_M(y_A)P^B_M(y_B),
+}
+\tag{251.1}
+$$
+
+其中 $P^A_M=\lambda^A_M\star K^A_M$，$P^B_M=\lambda^B_M\star K^B_M$。若真实与名义局部终端分布满足
+
+$$
+D_{\mathrm{TV}}(P^A_M,\bar P^A_M)\le\varepsilon_A,
+\qquad
+D_{\mathrm{TV}}(P^B_M,\bar P^B_M)\le\varepsilon_B,
+$$
+
+则
+
+$$
+\boxed{
+D_{\mathrm{TV}}(P^A_M\otimes P^B_M,
+\bar P^A_M\otimes\bar P^B_M)
+\le
+1-(1-\varepsilon_A)(1-\varepsilon_B)
+\le
+\varepsilon_A+\varepsilon_B.
+}
+\tag{251.2}
+$$
+
+### 证明
+
+在因子化合同下，双重求和拆成两个独立和，得到（251.1）。
+
+分别取实现两个局部全变差距离的最大耦合，使两对局部变量分别以至少 $1-\varepsilon_A$ 与 $1-\varepsilon_B$ 的概率相等。令两对耦合独立，则两个并行输出同时相等的概率至少为 $(1-\varepsilon_A)(1-\varepsilon_B)$。耦合表征给出全变差距离不超过其不同概率，即得第一项；展开乘积得到第二项。证毕。
+
+若来源只具有给定边缘而不具有因子化合同，则（251.1）不成立；这时整体误差要按联合 $\Gamma_M$ 的距离结算。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bec4680c7eeafcc7bdb1ec2e06352f57d7b30eb50ef789f935c6e61e62f4b367
+  normalized_sha256: sha256:bec4680c7eeafcc7bdb1ec2e06352f57d7b30eb50ef789f935c6e61e62f4b367
+cas_ref: sha256:bec4680c7eeafcc7bdb1ec2e06352f57d7b30eb50ef789f935c6e61e62f4b367
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 建议的历史建模工具名称，不断言已构造路径表示。
+    previous_atom_id: e25c9e84a4a7f1fe2f96bf55064b42370e22952b201b0428eb3a6f6349e03130
+    next_atom_id: 81ac4596dc5a36b9db02ac3b5a24e4d37793235f4d768e9357edac8076bec37a

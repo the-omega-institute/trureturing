@@ -7,6 +7,14 @@ internal sealed class UnifilarAffinityContractionDocument : IScribeDocumentDefin
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "One distinguishing length and killed-pair contraction", H("One distinguishing length and killed-pair contraction"),
         Blocks(
+            Describe.Lean(DescribeId.Create("word-total"),
+                DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/UnifilarAffinityContraction.word_total"),
+                H("Normalization of every finite unifilar word law"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any finite state type, real Boolean symbol masses p summing to one at each state, arbitrary successor map delta, natural length n and initial state a, the sum of wordMass(p,delta,n,a,w) over every word w is one. No positivity premise is needed for this algebraic identity. TwelveStatePresentation consumes the unchanged original inductive supplier in its actual length-two affinity proof."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("matrix-block"),
+                DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/UnifilarAffinityContraction.matrix_block"),
+                H("A specified strict block bound controls all powers"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any finite matrix B with nonnegative entries and row sums at most one, positive natural block length ell, nonnegative real rho, and every ell-th power row sum at most rho, the n-th power row sum at every row is at most rho^(n/ell), for every natural n. This is the unchanged original supplier used by finite_distinguishing_contraction and by TwelveStateTail at ell=2 with the explicit actual affinity constant."))), DescribeRole.Theorem),
             Paragraph(Text("Let S be any finite state set. The nonnegative real symbol masses p(a,x) sum to one over both Boolean symbols at every a. The same successor map delta:S times Bool to S generates wordMass and endpoint from UnifilarPairSurvival. No stationarity, communication, positivity of symbols, aperiodicity or synchronization assumption is present. An empty pair set is allowed.")),
             Paragraph(Text("The finite distinguishing hypothesis says that for every distinct a,b there exists a natural length n at which their entire wordMass functions differ. This module proves the common finite-length consequence; OriginalUnifilarQuotient discharges that hypothesis for the actual complete-future-law quotient of the selected original presentation. It is an intermediate supplier, not an independently selected probability model.")),
             Describe.Lean(DescribeId.Create("word-nonneg"),

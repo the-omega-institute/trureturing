@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eb3b87e5e98327173b2fbb1b09938af399b1a996bd7cca7190a62719f3a04134
+  normalized_sha256: sha256:eb3b87e5e98327173b2fbb1b09938af399b1a996bd7cca7190a62719f3a04134
+cas_ref: sha256:eb3b87e5e98327173b2fbb1b09938af399b1a996bd7cca7190a62719f3a04134
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 关于低分辨率接口的研究要求及参考文献，末尾分隔符不增加数学断言。
+    previous_atom_id: 1cb2ee05a646b44cf0d69820ea22779eac933069b9c51510f4e3f6fc0f45b750
+    next_atom_id: 424516904ff70e2403f3b2ef1a14d69485b0c91a42b2d08dcd544d57721398ed

@@ -1,0 +1,13 @@
+**定义 90.1（源特定推导与成熟中间供应）。** 定理 87.3、命题 88.1 和命题 89.3 的归属为 `repo-derived` 源特定推导，不赋予文献优先权。所用既有结果及其在本源的对应如下；文献结论只承担推导中的中间步骤。
+
+| 供应 | 在本源实际承担的内容 |
+| --- | --- |
+| V §§91–95、98–99；本卷 §§80–86 | 原五维来源、单纯制备、原尖锐效果、原带权四表、九列／九行及任意原混合 $N$ 的正词闭包；§84 已有强闭合与预测商闭合的区分，§85 已有两个全词经典模型。新增测度障碍不重复这些线性闭合或模型存在结论。 |
+| V §82 与 §§100–110 | 前者的整个 $\mathcal K_d$ 上共同仿射制备合同与后者的整个有序载体维数／闭紧基合同是不同前提。本节不援用其分类结论；它把原有限隐藏等式作为新增结构原则，在任意测度载体上导出正仿射接口并反证。 |
+| Spekkens，[Contextuality for preparations, transformations and unsharp measurements，quant-ph/0406166v3](https://arxiv.org/html/quant-ph/0406166v3)，§§II–IV、VIII | 操作等价、混合语义及制备非上下文性的成熟区分；允许随机隐藏响应。其成套制备操作不是这里一个原制备的既有权限。定理 87.3 不把结果确定性作为输入。 |
+| Heinosaari–Reitzner–Stano，[0811.0783v2](https://arxiv.org/html/0811.0783v2)，附录命题 8 | (87.8)–(87.10) 中共同细化与尖锐效果迫使交换的成熟中间机制；实际尖锐边是原 $E$，另一边是由 $T$ 导出的隐藏事件 POVM，并非自由控制 qutrit 的替代场景。 |
+| Schmid–Spekkens–Wolfe，[1710.08434](https://arxiv.org/html/1710.08434)，§§II–III，尤其式 (10)–(11) | 给定有限制备混合等价时，相应隐藏分布须满足相同线性关系的已知框架。本文的槽来自原加权历史，需 (89.3) 保留失败和全部记录；该文不替原生事件取得或共同边界作保证，也不把有限表自动升级为操作等价。 |
+| Selby 等，[2112.04521v3](https://arxiv.org/html/2112.04521v3)，§§I、III–IV | 可取得片段容许次归一化状态而未必容许其归一化状态，及标记凸化须保留结果的成熟区分。这里不从该文的片段／锥等价推出整个标记档案相等，具体差异由 (89.5)–(89.6) 计算。 |
+| Gitton–Woods，[System loophole of generalized noncontextuality，DOI:10.1103/PhysRevResearch.6.043289](https://doi.org/10.1103/PhysRevResearch.6.043289)，§§II–III | 不可区分性须指定操作参考和系统范围；本处严格区分只接系统端口的后缀与可读取保留档案的较大参考。 |
+| [相干重建 §§25、34](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md#25-关系谱作为共同预测对象谱值切面与有向组合)；[原生叶边界取得 II，Boundary 66.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md#66-supplier-subtraction-and-the-remaining-realization-boundary) | 类型、方向、共同来源、完整结果及参考接口的已有要求；各自条件模型不能仅因矩阵、秩或数值对应就拼成共同原生／路径／量子实现。 |
+

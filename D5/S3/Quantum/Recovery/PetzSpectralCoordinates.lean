@@ -6,6 +6,8 @@
    utility: none
    digest: Actual supported relative-modular coordinates reconstruct the Petz matrix. -/
 
+/- Escape audit unfinished for newly public cfc_spectral_sum: https://github.com/the-omega-institute/trureturing/issues/19210. -/
+
 import D5.S3.Quantum.Divergence.CanonicalChannelDPI
 import D5.S3.Quantum.Recovery.ReferencePetzChannel
 
@@ -21,7 +23,7 @@ open D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 
 namespace D5.S3.Quantum.Recovery.PetzSpectralCoordinates
 
-private theorem cfc_spectral_sum {n : Type*} [Fintype n] [DecidableEq n]
+theorem cfc_spectral_sum {n : Type*} [Fintype n] [DecidableEq n]
     (H : Matrix n n ℂ) (hH : H.IsHermitian) (f : ℝ → ℝ) :
     cfc f H = ∑ i : n, (f (hH.eigenvalues i) : ℂ) •
       Matrix.vecMulVec (fun x => hH.eigenvectorBasis i x)
@@ -41,7 +43,7 @@ private theorem cfc_spectral_sum {n : Type*} [Fintype n] [DecidableEq n]
   intro i hi
   ring
 
-private theorem cfc_supported_sum {n : Type*} [Fintype n] [DecidableEq n]
+theorem cfc_supported_sum {n : Type*} [Fintype n] [DecidableEq n]
     (H : Matrix n n ℂ) (hH : H.PosSemidef) (f : ℝ → ℝ) (hf : f 0 = 0) :
     cfc f H = ∑ i : {i : n // 0 < hH.1.eigenvalues i},
       (f (hH.1.eigenvalues i.1) : ℂ) •
@@ -197,8 +199,5 @@ theorem petz_input_support_columns (M : SupportedRelativeModularModel Φ ρ σ)
   apply Finset.sum_congr rfl
   intro i hi
   rw [Matrix.mul_vecMulVec, hcolumns, Matrix.smul_vecMulVec]
-
-#print axioms spectral_petz_coordinate_matrix
-#print axioms petz_input_support_columns
 
 end D5.S3.Quantum.Recovery.PetzSpectralCoordinates

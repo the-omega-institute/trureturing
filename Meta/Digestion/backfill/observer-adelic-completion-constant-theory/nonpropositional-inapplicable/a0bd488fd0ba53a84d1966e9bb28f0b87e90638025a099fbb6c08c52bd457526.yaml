@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a0bd488fd0ba53a84d1966e9bb28f0b87e90638025a099fbb6c08c52bd457526
+  normalized_sha256: sha256:a0bd488fd0ba53a84d1966e9bb28f0b87e90638025a099fbb6c08c52bd457526
+cas_ref: sha256:a0bd488fd0ba53a84d1966e9bb28f0b87e90638025a099fbb6c08c52bd457526
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: isolated list label for Hankel rank flow; no standalone proposition
+    previous_atom_id: f2075a1cdcaa0d78e5ee20c2d8bcda34818aed41be76d381296f04546ae23306
+    next_atom_id: 85c2b97511433ed255ffa5385add0a2cb0a628ea4da95e418369c4b5719168d9

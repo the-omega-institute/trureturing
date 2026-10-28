@@ -6,7 +6,21 @@ Actual odd Mobius coefficients give exact finite dyadic reconstruction and clipp
 
 Use the actual arithmetic Mobius function mu, the full positive prefix M(N)=sum from 1 to N of mu(n), and its odd restriction O(N). Every kernel P is a real-valued function on the actual integer inputs, with J(n)=P(n)-P(n+1).
 
-**Theorem 1.1 (The exact odd pairing and terminal remainder).**
+**Theorem 1.1 (The full-prefix Abel identity).**
+
+Lean statement: `D5/S3/Arith/Robin/ActualOddMobiusFinitePairing.prefix_abel`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualOddMobiusFinitePairing.prefix_abel` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real sequence P on the natural numbers and every natural cutoff N, sum(1<=n<=N,M(n)*(P(n)-P(n+1)))=sum(1<=m<=N,mu(m)*P(m))-M(N)*P(N+1). At N=0 both sums and M(0) are zero. Every positive Mobius index through N and the exact N+1 boundary are retained.
+
+This is the original supplier used by the clipped pairing below. OriginalResidualFiniteTransfer also consumes it directly for its full-prefix identity and low-prefix bound. Public visibility exposes that existing proof for reuse; it adds no new mathematical or literature claim.
+
+**Theorem 1.2 (The exact odd pairing and terminal remainder).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualOddMobiusFinitePairing.result`
 
@@ -28,4 +42,5 @@ These are finite identities that specialize directly to the original factorial-t
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/ActualOddMobiusFinitePairing.prefix_abel`
 - Truth anchor: `D5/S3/Arith/Robin/ActualOddMobiusFinitePairing.result`

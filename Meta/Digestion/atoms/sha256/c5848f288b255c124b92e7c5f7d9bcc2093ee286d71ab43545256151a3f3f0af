@@ -1,0 +1,83 @@
+**Lemma 20.2 (joint duration and finite entrance/killed samples).**
+For any deterministic $0<t_1<\cdots<t_j<v$, define a finite measure
+on $M^j$ by
+
+$$
+\begin{aligned}
+ \mathcal C_v^{t_1,\ldots,t_j}(dp_1\cdots dp_j)
+  ={}&q_{t_1}(p_1)m(dp_1)
+       P^0_{t_2-t_1}(p_1,dp_2)\cdots\\
+    &\hspace{12mm}P^0_{t_j-t_{j-1}}(p_{j-1},dp_j)
+                          q_{v-t_j}(p_j).
+\end{aligned}
+\tag{20.2}
+$$
+
+For $j=1$ there is no transition factor. For $j=0$, the measure on
+the singleton empty tuple has mass $\mathfrak d(v)$. In every case
+the total mass in (20.2) is $\mathfrak d(v)$, a finite strictly
+positive number. Integrating out any evaluation gives the same
+formula with that evaluation deleted. Jointly measurable versions
+can be used, and versions on null sets do not affect these measures.
+
+Consequently the following is a probability law on finite tuples:
+
+$$
+ \mathbb P\bigl(V\in dv,\ (P_t)_{t\in\mathcal D_{\delta,T},\,t<v}
+                              \in d\mathbf p\bigr)
+  =\frac{\mathbf1_{\{v>\epsilon\}}}{\kappa(\epsilon)}
+       \mathcal C_v^{\mathcal D_{\delta,T}\cap(0,v)}
+                              (d\mathbf p)\,dv.
+\tag{20.3}
+$$
+
+The tuple includes precisely the listed evaluations at times strictly
+less than $V$. The values at zero and at a finite completed duration
+are $e$, deterministically. If $V>T$, the tuple includes the evaluation
+at $T$. This is exactly the finite evaluation-and-duration marginal
+of $\mathbf n(\,\cdot\mid\zeta>\epsilon)$, with no full mark required
+as an input.
+
+**Proof.** Spectral calculus and (15.4) give
+$0<\mathfrak d(v)<\infty$ and
+$\int_\epsilon^\infty\mathfrak d(v)dv=\kappa(\epsilon)$.
+The nonnegative jointly measurable densities $q_t$ may be chosen as
+in Theorem 15.2. The transition kernel is the original part-process
+kernel. At every node its distributions are absolutely continuous
+with respect to $m$: symmetry of $P_t^0$ preserves this property
+under transition, and multiplication by a bounded cylinder test
+preserves it as well. Properly exceptional sets and changes of
+$d m$-versions therefore do not affect the expressions.
+
+The identities $P_s^0q_t=q_{s+t}$ and symmetry show that the integral
+of (20.2), for $j\ge1$, is
+
+$$
+ \langle q_{t_1},q_{v-t_1}\rangle_{L^2(m)}
+   =\langle Fe^{-t_1F}h,Fe^{-(v-t_1)F}h\rangle_{L^2(\mu)}
+   =\mathfrak d(v).
+\tag{20.4}
+$$
+
+Integrating an interior node uses Chapman--Kolmogorov. Integrating
+the first uses the entrance identity; integrating the last uses
+$P_s^0q_t=q_{s+t}$. These prove finite consistency, including the
+empty tuple. Products of Borel kernels give joint measurability
+on each region $v>t_j$.
+
+To check that the terminal factor specifies the original duration,
+not just a normalized candidate, use (15.4):
+$-\partial_s P_s^0 1=q_s$ in $L^2(m)$ for $s>0$.
+Its integrated nonnegative version says that the remaining killed
+lifetime at $p$ has density $q_s(p)ds$, for $m$-almost every $p$.
+Indeed integrate the $L^2$ identity over any positive compact time
+interval, then use monotonicity of survival and Fubini. Insert this
+density after the last node of (15.3). It gives (20.2) times $dv$
+as the joint measure of the evaluations and $\zeta\in dv$.
+There is no infinite-lifetime atom by (15.4). Partitioning the
+$v$-axis at the finitely many times of $\mathcal D_{\delta,T}$
+then gives (20.3). Its normalization is the preceding integral of
+$\mathfrak d$. This proof uses only the established excursion
+cylinders and killed survival, not a bridge conditioned to hit an
+exceptional point at a fixed time. $\square$
+

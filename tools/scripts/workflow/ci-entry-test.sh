@@ -21,6 +21,7 @@ new_repo() {
   local repo="$WORK/$1"
   mkdir -p "$repo/tools/scripts/workflow" "$repo/docs"
   cp "$SUBJECT" "$repo/tools/scripts/workflow/ci-entry.sh"
+  cp "$(dirname "$SUBJECT")"/ci_contract.py "$(dirname "$SUBJECT")"/ci_detect.py "$repo/tools/scripts/workflow/"
   (
     cd "$repo"
     export GIT_AUTHOR_NAME=t GIT_AUTHOR_EMAIL=t@t GIT_COMMITTER_NAME=t GIT_COMMITTER_EMAIL=t@t
@@ -88,7 +89,7 @@ run_entry() {
 expect_hit() {
   local want="$1"
   [[ $RC -eq 0 ]] || { fail "exit $RC, want 0; log: $LOG"; return; }
-  [[ "$OUT" == "hit=$want" ]] || { fail "GITHUB_OUTPUT '$OUT', want hit=$want"; return; }
+  [[ "$OUT" == "hit=$want"$'\nbase='* ]] || { fail "GITHUB_OUTPUT '$OUT', want hit=$want and explicit base"; return; }
   [[ -z "$("$REAL_GIT" -C "$REPO" remote)" ]] || { fail "remote left behind"; return; }
   [[ -z "$("$REAL_GIT" -C "$REPO" for-each-ref refs/remotes)" ]] || { fail "remote ref left behind"; return; }
   passed=$((passed + 1)); echo "PASS $case_name"

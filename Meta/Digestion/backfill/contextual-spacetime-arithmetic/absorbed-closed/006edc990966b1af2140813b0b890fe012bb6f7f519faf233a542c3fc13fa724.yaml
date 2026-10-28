@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:006edc990966b1af2140813b0b890fe012bb6f7f519faf233a542c3fc13fa724
+  normalized_sha256: sha256:006edc990966b1af2140813b0b890fe012bb6f7f519faf233a542c3fc13fa724
+cas_ref: sha256:006edc990966b1af2140813b0b890fe012bb6f7f519faf233a542c3fc13fa724
+coverage_gids:
+  - gid: D5/S0/Rewriting/Expressions/GuardedArithmeticTerms.allLegal_div
+    target_statement_id: sha256:a080d42d73bb5065f3f0de83cd9f778d22c211bb3ec06bae477a92fb73f337dd
+  - gid: D5/S3/ConceptDynamics/SensorFamilies/SensorFamilyRestrictionMonotonicity.restricting_sensor_family_enlarges_kernel
+    target_statement_id: sha256:ebe51b2b72a5c09dc2415bef5db6c75397e06cf7e68a49d42a6de747b848e9d7
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 48d8f9c9024dc2f27ecb8b8edcce7df26480bf1123516fc3db3d52b7938407c7
+    - f3be3691fbf705e2cadaf9fc4522c90b6b34dcfe45c7f438be93a59a5cec6a3f

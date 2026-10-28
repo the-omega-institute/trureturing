@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7ebd220d7305430e9cc0cfad518ab60c3e2ed5786f801709ba749d7bb83e2efb
+  normalized_sha256: sha256:7ebd220d7305430e9cc0cfad518ab60c3e2ed5786f801709ba749d7bb83e2efb
+cas_ref: sha256:7ebd220d7305430e9cc0cfad518ab60c3e2ed5786f801709ba749d7bb83e2efb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 在协议操作清单中列出串行组合，不给出组合律或存在性结论。'
+    previous_atom_id: 37faaebe6e7f4255125c796f7adcdbcc5f42befb03a2c3467f122217b58c21c4
+    next_atom_id: 44f27cc1fd52d6d634c1e06d42ea1943f4b5ed7e7b1f6b419c32b5af0f42c753

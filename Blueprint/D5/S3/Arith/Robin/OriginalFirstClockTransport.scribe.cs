@@ -11,6 +11,35 @@ internal sealed class OriginalFirstClockTransportDocument : IScribeDocumentDefin
         H("OriginalFirstClockTransport"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("original-canonical-source-specification"),
+                DeclarationHandle.Create(Prefix + "canonical_source_spec"),
+                H("The canonical source is the least full-class maximizer when attained"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For any natural label p, assume some N satisfies originalMaximizes(p,N). "
+                    + "Then canonicalSource(p) maximizes the original nonlinear objective over "
+                    + "all positive integers divisible by 5040*p, and is no larger than any "
+                    + "other maximizer in that full class. OriginalInventoryNormalizerLoss "
+                    + "uses the maximality projection for every label of its complete "
+                    + "enumeration, both in source-order classification and in charging "
+                    + "each omitted inventory-changing interval. Attainment remains an "
+                    + "explicit premise; no cofinal source family is asserted."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-first-clock-specification"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalFirstClockTransport.first_clock_spec"),
+                H("The canonical first clock has the exact first-layer price"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every prime q, q<firstClock(q)<q+1 and g(firstClock(q))=goldenLayerMarginal(q,1). The source is the actual reciprocal-log price and the original first layer. OriginalPrimeSourceOrder uses the strict lower location to exclude large forcing labels from complete strict inventories."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-first-clock-absent"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalFirstClockTransport.first_absent"),
+                H("A first-clock contact is absent from the complete strict inventory"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let U>0, q prime, t>1 and t<=firstClock(q). If every natural factorization coordinate of U equals optimalLayerCount(g(t),q) at the same clock, then q does not divide U. Equality at the actual first clock is included because the inventory uses strict marginals. This existing supplier is consumed by OriginalPrimeSourceOrder."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("original-upper-first-clock-exclusion"),
                 DeclarationHandle.Create(Prefix + "original_upper_first_clock_exclusion"),
                 H("Closed first-clock exclusion from the actual upper integer"),
@@ -30,6 +59,51 @@ internal sealed class OriginalFirstClockTransportDocument : IScribeDocumentDefin
                 Blocks(
                     Paragraph(Text("OriginalWindow requires its labels to be exactly all primes in [exp(labelStart),exp(2*labelStart)], with attainment on each complete positive 5040*p class; an arbitrary subsample is not an OriginalWindow. canonicalSource(p) is the least maximizing integer. windowOfGA2 uses exactly all primes in [exp(ell),exp(2*ell)], and supplies attainment from an actual GA2 integer divisible by every forced 5040*p via GA2ForcedPrimeSource. This conditional constructor proves no such common witness or cofinal existence.")),
                     Paragraph(Text("goodEdges includes every consecutive-label pair satisfying the original source conditions: N_p=p*U, N_r=r*U, U>0, 5040 divides U, A<C, and the literal strict inventory throughout the closed edge [A,C]. This finite set and selectedDomain, its full interval union, are independent of ell and R. OriginalBounds requires ell<=A<C<=R and p,r>2*R for every edge in that fixed complete set; bounds never select or remove an edge. The theorem excludes [q,firstClock(q)] for every prime q on this entire domain. It selects the actual edge containing a contact and applies the actual upper integer theorem. No favorable subset is chosen; the lower canonical endpoint and least attainment remain in the source data."))
+                ), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("good-edge-prime-buffer"),
+                DeclarationHandle.Create(Prefix + "good_edge_prime_buffer"),
+                H("A prime buffer around the unchanged original good edge"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Let X be the original complete-label window, with ell>=243 and "
+                        + "OriginalBounds(X,ell,R), and let (p,r) be an unchanged GoodEdge. "
+                        + "Put a=log(canonicalSource(p)) and b=log(canonicalSource(r)). "
+                        + "If a>=256, every prime q lies outside the closed interval [a-2,b+1]. "
+                        + "Both original canonical integers p*U and r*U, the common positive "
+                        + "5040-divisible U, and its exact strict inventory at every point of "
+                        + "[a,b] remain hypotheses. The original bounds apply to all good edges "
+                        + "and do not select a favorable subset.")),
+                    Paragraph(Text(
+                        "For a prime q in [a-2,a), the actual inventory gives q dividing U. "
+                        + "Here q>16, so q does not divide 5040. Writing U=5040*q*v gives "
+                        + "the legal deletion competitor M=p*5040*v, with 5040*p dividing M "
+                        + "and M*q=p*U. The exact next Euler marginal is bounded by the "
+                        + "first marginal, retaining arbitrary multiplicity of q. For a prime "
+                        + "q in (b,b+1], the actual upper inventory excludes q from U, and "
+                        + "the original label bounds give q different from r. Thus q does "
+                        + "not divide r*U, and the original legal integer insertion comparison "
+                        + "applies. Complete first-clock exclusion covers the central closed "
+                        + "interval [a,b], including its endpoints.")),
+                    Paragraph(Text(
+                        "For h=log(q) and the relevant endpoint x>=256, one has "
+                        + "5<h<=x/20. The literal Robin density satisfies "
+                        + "(81/100)*w(x-h)<=w(x) and (81/100)*w(x)<w(x+h). "
+                        + "The price integral is exactly the log-log difference. Its backward "
+                        + "and forward quadratic bounds, obtained from the original curve "
+                        + "slopes, contradict the corresponding integer comparison because "
+                        + "(5/2)*(81/100)>2. No real-center or fixed-price maximizer replaces "
+                        + "the original nonlinear integer objective.")),
+                    Paragraph(Text(
+                        "The range 243<=a<256 is not included. This excludes primes only: "
+                        + "proper prime powers and their von Mangoldt contributions remain. "
+                        + "The affine correction gamma in the separate residual accounting "
+                        + "is unchanged, with no sign or cancellation supplied here. The "
+                        + "theorem gives neither good-edge existence nor cofinality, a PC "
+                        + "cutoff identification, a prescribed residual sign, strict Robin "
+                        + "for all integers above 5040, or RH."))
                 ), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("first-error-decay"),

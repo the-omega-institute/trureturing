@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b17e1fd98e04aece576a27f11e637a5fce6755c559ae222ff91977edeeedd542
+  normalized_sha256: sha256:b17e1fd98e04aece576a27f11e637a5fce6755c559ae222ff91977edeeedd542
+cas_ref: sha256:b17e1fd98e04aece576a27f11e637a5fce6755c559ae222ff91977edeeedd542
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 个人自主的哲学解释与形成条件。
+    previous_atom_id: df2bff608e3a8a595a3f92ecaa43bd4f6a7479173eff366671f9db3d37849ea8
+    next_atom_id: e65b7da16865a25ad3a69ec7bb8f951e8561369a728ff32c68aa02483e7a4348

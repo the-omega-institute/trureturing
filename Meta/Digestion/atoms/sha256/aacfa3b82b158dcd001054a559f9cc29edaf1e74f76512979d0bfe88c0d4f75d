@@ -1,0 +1,37 @@
+**命题 98.1（本源的单终端包含及正交三态见证）。** 对定义 95.1 的停止策略，甚至定理 97.1 的较大有限因果比较域，允许终端后将完整记录数学重标记为 $a\in\{1,2,3\}$。写 $c(a\mid\ell,b)\ge0$、$\sum_a c(a\mid\ell,b)=1$；随机系数只为外扩比较，未安装外部硬币。其效果必为
+
+$$
+M_a=\sum_\ell\alpha_\ell
+ [c(a\mid\ell,1)R_\ell+c(a\mid\ell,0)(I_3-R_\ell)],
+\qquad \sum_aM_a=I_3.
+\tag{98.1}
+$$
+
+对每个正交秩一基 $(P_1,P_2,P_3)$，有
+
+$$
+\frac13\sum_{i=1}^3\operatorname{Tr}(P_iM_i)\le\frac23,
+\qquad
+\max_i\|M_i-P_i\|_\infty\ge\frac13.
+\tag{98.2}
+$$
+
+这些界在上述效果三元组的数学凸包及按 $\max_a\|\cdot\|_\infty$ 所取闭包上保持。因而该单终端域不能任意精确逼近任一尖锐正交三结果测量。
+
+证明。(98.1) 由原完整叶律直接求和；$\alpha_\ell$ 与数学输入态无关。因此它具有 [Guerini–Bavaresco–Terra Cunha–Acín，1705.06343v2，§II 式 (2)–(4)、§IV](https://arxiv.org/html/1705.06343v2) 的成熟二结果模拟形式：其模拟器为 $(R_\ell,I_3-R_\ell)$，混合权重为原 $\alpha_\ell$，后处理为 $c$。这只是包含关系，不授予独立选择这些模拟器或任意混合权重的权限。
+
+令 $x_{\ell i}=\operatorname{Tr}(P_iR_\ell)$，则 $0\le x_{\ell i}\le1$、$\sum_i x_{\ell i}=1$。逐叶有
+
+$$
+\begin{aligned}
+\sum_i\operatorname{Tr}\big(P_i[
+ c(i\mid\ell,1)R_\ell+c(i\mid\ell,0)(I_3-R_\ell)]\big)
+&\le\max_i x_{\ell i}+\max_i(1-x_{\ell i})\le2.
+\end{aligned}
+\tag{98.3}
+$$
+
+乘 $\alpha_\ell$ 并求和即得分数上界。若 $\max_i\|M_i-P_i\|_\infty=\eta$，每项正确响应至少 $1-\eta$，故 $1-\eta\le2/3$。等价地，在至少一个数学基态输入上，与理想三标签分布的 TV 距离至少 $1/3$。这些输入只是数学分离见证，不是给装置增加三个制备。分数是效果三元组的连续线性泛函，所以其上界在所述凸闭包保持，再推出同一距离界。
+
+这里的闭包始终是单次原终端之后的经典重标记；不含多次系统测量、额外制备、相干读取标签或终端后的量子接续。分别使用不同 $\pi_{P_i}$ 逼近三个二元效果不提供一个共同三结果 POVM；概率效果的逼近也不确定后测量后继仪器。通用可模拟性是所引文献的供应，(98.1) 的原叶权重对应及其在本 qutrit 合同中的 (98.2) 是此处消费的具体边界。∎
+

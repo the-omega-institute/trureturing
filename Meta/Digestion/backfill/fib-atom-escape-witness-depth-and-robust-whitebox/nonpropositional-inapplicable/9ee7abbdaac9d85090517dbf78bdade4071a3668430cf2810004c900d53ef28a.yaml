@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9ee7abbdaac9d85090517dbf78bdade4071a3668430cf2810004c900d53ef28a
+  normalized_sha256: sha256:9ee7abbdaac9d85090517dbf78bdade4071a3668430cf2810004c900d53ef28a
+cas_ref: sha256:9ee7abbdaac9d85090517dbf78bdade4071a3668430cf2810004c900d53ef28a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition of the finite deterministic response model, recursive word action and response notation; these equations stipulate the operations and assert no further law.
+    previous_atom_id: 4846267b3361ae161e5bc542be37e5079985313f89e08284d8e53bc48379c46a
+    next_atom_id: dac977e11d7962b72d38d96a6b4e43e75939bbb2718466f187e849847b64b126

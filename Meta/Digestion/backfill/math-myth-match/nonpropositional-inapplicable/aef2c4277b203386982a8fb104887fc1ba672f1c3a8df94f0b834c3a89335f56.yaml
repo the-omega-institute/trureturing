@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aef2c4277b203386982a8fb104887fc1ba672f1c3a8df94f0b834c3a89335f56
+  normalized_sha256: sha256:aef2c4277b203386982a8fb104887fc1ba672f1c3a8df94f0b834c3a89335f56
+cas_ref: sha256:aef2c4277b203386982a8fb104887fc1ba672f1c3a8df94f0b834c3a89335f56
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅解释柏格森多图像引导注意的建议，明确未给出概率分布或 TV 模型。
+    previous_atom_id: f36cb8ba293d254995c977dd217f8630110e663b7025a61796842af946602586
+    next_atom_id: 70bc3b27fcb1584cde6f3f598c133bccbddd76e2260415e06259cf6fd93734bb

@@ -1,0 +1,41 @@
+**定义 399.1（谱—事件全息边界）。** 本条替代 §366.1 的相应陈述与证明。
+
+固定有限 Hodge 空间、合法动力学和有限事件策略。定义
+
+$$
+\boxed{
+\eta_{\mathrm{spec\text{-}event}}
+=
+\left(
+\Delta,
+A_\tau,
+\tau,
+\{Q_j,\zeta_j\},
+\{C_a\},
+\mathcal O_N^\pi,
+W_N^\pi,
+\mathsf{Clock},
+\mathsf{Event},
+\mathsf{Err},
+\mathsf{Stop}
+\right).
+}
+$$
+
+在声明的 normal/self-adjoint 谱 sector 中写成
+
+$$
+A_\tau=\sum_j\zeta_jQ_j,\qquad
+\sum_jQ_j=I,\qquad
+Q_iQ_j=0\ (i\ne j).
+$$
+
+于是 $A_\tau$ 决定其谱值和谱投影（重复谱值只确定相应总投影）；对固定策略和接口序列，
+
+$$
+W_N^\pi=(\mathcal O_N^\pi)^*\mathcal O_N^\pi,\qquad
+\lambda_{\min}(W_N^\pi)\ \text{由 }W_N^\pi\text{ 决定}.
+$$
+
+这些是可重算缓存。若动力学不在 normal/self-adjoint sector，必须另列 Jordan/广义谱数据，不能套用上述投影表述。各字段保存的独立合同是：钟校准、允许接口、事件核、误差预算和停止后继。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5954f0b0ef8963def9a7ba1559c777123ab5cebc62c88794f5dff274367c86cb
+  normalized_sha256: sha256:5954f0b0ef8963def9a7ba1559c777123ab5cebc62c88794f5dff274367c86cb
+cas_ref: sha256:5954f0b0ef8963def9a7ba1559c777123ab5cebc62c88794f5dff274367c86cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 当前状态的规格数量及Q01-Q10未决说明，不是数学真实性断言。'
+    previous_atom_id: 8418cc9858d567b7f05f87e2ca41a473f795c238c3c42fd98c3ce0926da7abec
+    next_atom_id: null

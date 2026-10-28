@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d88a95a7435a917420a973e33b9bfe0a32b4bff6359a9b1d33cd1e805306a530
+  normalized_sha256: sha256:d88a95a7435a917420a973e33b9bfe0a32b4bff6359a9b1d33cd1e805306a530
+cas_ref: sha256:d88a95a7435a917420a973e33b9bfe0a32b4bff6359a9b1d33cd1e805306a530
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 比喻对象列表中的圆周相位名称，没有性质断言。'
+    previous_atom_id: c7a36c68fa19f73f3377c7c6cc526085b996efd8e29dbe21895805aab6b08d4c
+    next_atom_id: e25c9e84a4a7f1fe2f96bf55064b42370e22952b201b0428eb3a6f6349e03130

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8d8e8d9cafa07a25b7212e96ee4b28170d58a01c44309882871d09250404f810
+  normalized_sha256: sha256:8d8e8d9cafa07a25b7212e96ee4b28170d58a01c44309882871d09250404f810
+cas_ref: sha256:8d8e8d9cafa07a25b7212e96ee4b28170d58a01c44309882871d09250404f810
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/GainDifferenceCocycle.gain_difference_self_zero_and_cocycle
+    target_statement_id: sha256:8b708816711811a199192ea7077ff26d9c26167339a066abf2e570fe47732104
+receipts:
+  unresolved_subitems: []

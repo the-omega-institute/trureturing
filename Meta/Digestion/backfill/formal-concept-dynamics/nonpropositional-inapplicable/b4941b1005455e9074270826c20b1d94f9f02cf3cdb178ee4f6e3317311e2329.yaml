@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b4941b1005455e9074270826c20b1d94f9f02cf3cdb178ee4f6e3317311e2329
+  normalized_sha256: sha256:b4941b1005455e9074270826c20b1d94f9f02cf3cdb178ee4f6e3317311e2329
+cas_ref: sha256:b4941b1005455e9074270826c20b1d94f9f02cf3cdb178ee4f6e3317311e2329
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Externality 是对私人界面遗漏公共目标区别的术语释义，未给出一个具体交易系统的缺陷存在断言。'
+    previous_atom_id: 1adf9ff24013863f6f57ab482427d9222e6be6ef854131089f853f7ab7e171ea
+    next_atom_id: 775c74a216dfa2b760f48e14a9d6028caa423bb3a8f3ae5b20d326e791281a28

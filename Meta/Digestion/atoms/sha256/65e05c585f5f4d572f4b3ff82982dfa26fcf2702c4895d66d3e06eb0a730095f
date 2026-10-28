@@ -1,0 +1,20 @@
+### 85.7 来源与适用范围
+
+[Fithian 的 Berkeley Stat210A《Sufficiency》](https://stat210a.berkeley.edu/fall-2024/reader/sufficiency.html)提供因子分解、参数无关条件律及比例密度的最小充分性判据；此处只应用其经典有限正质量情形。
+多项式在无限点相等的代数成分已有成熟供应：钉版 mathlib 修订 $db584cd6d46c92f209a44c0f1c829460d327499d$ 的 [Polynomial.eq_of_infinite_eval_eq](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Polynomial/Roots.lean)给出对应恒等判据；根重数识别使用互异线性因子。
+
+仓内 [MinimalSufficientRelation](../../../D5/S3/Analytic/ZetaObservation/MinimalSufficientRelation.lean) 的 sample_product_is_minimal_sufficient_relation 处理等长、正样本的 iid zeta 族。
+它在这里仅作似然比方法先例；本节异质 FIB 因子的合并和根重数结论不是该定理的直接实例。
+[ExperimentStatePosteriorDecisionSeparation](../../../D5/S3/Estimation/DecisionRisk/ExperimentStatePosteriorDecisionSeparation.lean) 的 experiment_state_and_posterior_decision_separation 以有限 Theta 的后验相等供应 Bayes 值和最优动作集合相等。
+[PosteriorUniversalSufficiency](../../../D5/S3/Estimation/DecisionRisk/PosteriorUniversalSufficiency.lean) 与 [AdaptivePosteriorPolicySufficiency](../../../D5/S3/Estimation/DataProcessing/AdaptivePosteriorPolicySufficiency.lean) 分别承担其声明范围内的后验决策、更新及有限未来机制；后者还要求历史延拓实现规范 Bayes 更新、策略只通过后验选择实验。
+这里每份有限支撑先验分别把 Theta 对应为其有限支撑，把 joint 对应为 $\pi(m)p_m(\omega)$；不能把全部可数整数 $m$ 直接当作 Fintype。
+这些供应地址说明条件和接口，本节没有核验精确应用的当前编译。
+
+[OEIS A001519](https://oeis.org/A001519/internal)给出 $a(n)=F_{2n-1}$ 及避免相邻 $31$、末字非 $3$ 的三元词解释。
+将本节规范词反转，再重标 $L\mapsto3,\ 0\mapsto1,\ R\mapsto2$，便得到这类词；反转与逆重标给出逆映射。
+本节以式（85.11）固定长度索引，故 $M_K=a(K+2)$；该词枚举有既有组合来源，Fibonacci 恒等式也是成熟成分。
+
+实际来源与恢复抽样合同由本卷第81–84节承担；[过程几何第39–42节](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md#39-二叶生成历史的联合行为核与四视图恢复)及本卷第79–80节要求的任务、共同实际像、动作合法性与选择器下降更强。
+有限统计充分性和共同分布重构不替代那些原始轨迹、权限或四视图的联合条件；这里也不把二叶生成或局部重写解释成原胞自动机或物理时空模型。
+本节仅给出实际 FIB 族上的合并分区、重构和单次逐层规范形的普通数学桥接；未知或来源依赖配置、相关调用、不同深度更换来源及未经声明的任务均在结论之外。
+

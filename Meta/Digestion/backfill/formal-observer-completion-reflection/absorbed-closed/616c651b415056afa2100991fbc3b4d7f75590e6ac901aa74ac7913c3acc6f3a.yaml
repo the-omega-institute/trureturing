@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:616c651b415056afa2100991fbc3b4d7f75590e6ac901aa74ac7913c3acc6f3a
+  normalized_sha256: sha256:616c651b415056afa2100991fbc3b4d7f75590e6ac901aa74ac7913c3acc6f3a
+cas_ref: sha256:616c651b415056afa2100991fbc3b4d7f75590e6ac901aa74ac7913c3acc6f3a
+coverage_gids:
+  - gid: D5/S3/Observer/VisibleDescent/TargetObservabilityFourWayEquivalence.target_observability_four_way_equivalence
+    target_statement_id: sha256:98565ad0e562de7220b0306b0dd277f67feb2494a31ba1753b5f296607909ccd
+receipts:
+  unresolved_subitems: []

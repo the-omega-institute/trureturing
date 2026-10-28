@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:303974de4a6184554e67c4678bbd5e49a4f37f07eadaf63a39c5f5fe30c7c249
+  normalized_sha256: sha256:303974de4a6184554e67c4678bbd5e49a4f37f07eadaf63a39c5f5fe30c7c249
+cas_ref: sha256:303974de4a6184554e67c4678bbd5e49a4f37f07eadaf63a39c5f5fe30c7c249
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 行列式与 Ξ 的严格同一在“必须证明”清单内，低位拟合不替代义务是研究纪律。
+    previous_atom_id: ddd8a3eefe4520344e74c022a0b9d5877db6b1c7d151570c60882aa177fb994f
+    next_atom_id: b7c17fba2b60ff8995fd72e229075ebcca865c8b9c82c94571b5459aac3e272c

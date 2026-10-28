@@ -1,0 +1,37 @@
+**推论 47.2（Nonempty exact-record fibers arbitrarily near the first source）。**
+There is $\delta>0$ such that every fixed $0<|h|<\delta$ gives
+actual distinct complete original worlds
+
+$$
+\begin{gathered}
+z_\pm(h)=(R(h)\pm h,\ B(h)\pm k(h)h),\qquad
+W_\pm(h)=W(z_\pm(h)),\\
+R(0)=r_0,\quad B(0)=b_0,\quad k(0)=k_0,
+\end{gathered}
+\tag{47.4}
+$$
+
+where $R,B,k$ are IX's even analytic functions. Under Convention 45.2
+they have the same exact $R_7^J$, with $p(h)<-533$, $v(h)<-1018$,
+and satisfy (46.3) for every $1\le\rho<\varphi$ on that one pair.
+They converge in complete-world coordinates to $W(z_0)$ as $h\to0$.
+
+**证明。** IX Theorem 21.1 supplies (47.4) on an existential interval,
+with strict $0<r_\pm<1$, $b_\pm>0$, $D_{z_\pm}>0$ and exact equal
+$p,v,a$. Its original-world lift (47.2) gives each endpoint's own
+whole nonzero gain and fixed drift. Their $r$ coordinates differ by
+exactly $2h$, so their matrices and complete worlds are distinct for
+$h\ne0$. Continuity and the supplied strict base bounds allow the
+interval to be shrunk so that $p(h)<-533$ and $v(h)<-1018$ throughout.
+All hypotheses of Theorem 46.2 now hold. Analyticity of the lift gives
+the stated complete-world convergence. $\square$
+
+The supplied germ is genuinely punctured. IX gives
+$p(h)=p_0+P_2h^2+O(h^4)$ with $34271<P_2<34272$, and a right-opening
+graph $v=\gamma(p)$ for $p\in(p_0,p_0+\eta)$, for some $\eta>0$.
+These are attributed witness facts, not new coefficients or a claim of
+collisions at every nearby base. At $h=0$ the endpoints coalesce;
+SVII Theorem 25.1 identifies the center's entire child as a singleton.
+No collision is asserted at that center, and no effective positive
+value of $\delta$ or $\eta$ is supplied here.
+

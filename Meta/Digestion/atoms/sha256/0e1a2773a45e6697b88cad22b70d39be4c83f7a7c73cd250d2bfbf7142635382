@@ -1,0 +1,26 @@
+**定理 10.2（非交换预测的不确定界）。**
+对 Hermitian $A,B$ 和密度态 $\rho$，
+
+$$
+\Delta_\rho A\,\Delta_\rho B
+\ge\frac12\left|\operatorname{tr}(\rho[A,B])\right|.
+$$
+
+证明。
+令 $A_0=A-\operatorname{tr}(\rho A)I$、$B_0=B-\operatorname{tr}(\rho B)I$。
+对 Hilbert--Schmidt 向量 $A_0\sqrt\rho,B_0\sqrt\rho$
+用 Cauchy--Schwarz 得
+
+$$
+(\Delta_\rho A)^2(\Delta_\rho B)^2
+\ge|\operatorname{tr}(\rho A_0B_0)|^2
+\ge\frac14|\operatorname{tr}(\rho[A,B])|^2.
+$$
+
+取平方根。
+证毕。
+
+这类不确定性来自同一正态对非交换操作的约束。
+它不是因为不知道欧氏原点在哪里；
+原子的三个对角占位读口交换，不直接产生这项非零下界。
+

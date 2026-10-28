@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3b09302e864b6a98addd1cf79c640dd6435a73160477a89dc92c2babe78e944e
+  normalized_sha256: sha256:3b09302e864b6a98addd1cf79c640dd6435a73160477a89dc92c2babe78e944e
+cas_ref: sha256:3b09302e864b6a98addd1cf79c640dd6435a73160477a89dc92c2babe78e944e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义给定三阶矩阵 B 的模幂隐藏核，并限定它与内部允许状态集的角色区别；未声称核大小或提升性质。
+    previous_atom_id: 764feaa3a61c9f6d6b5e49974c2b32a236a75f044b302de976059860c79792e5
+    next_atom_id: 9877a7f534136429019bb3ba02862d209191f835ca09500f6533a6924b4eb05e

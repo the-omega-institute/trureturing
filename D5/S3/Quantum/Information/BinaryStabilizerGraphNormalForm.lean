@@ -260,17 +260,17 @@ private lemma sp_bilinear {N : ℕ} :
     apply Finset.sum_congr rfl
     intro i _
     ring
-private def spForm (N : ℕ) : LinearMap.BilinForm (ZMod 2) (((Fin N → ZMod 2) × (Fin N → ZMod 2))) :=
+def spForm (N : ℕ) : LinearMap.BilinForm (ZMod 2) (((Fin N → ZMod 2) × (Fin N → ZMod 2))) :=
   LinearMap.mk₂ (ZMod 2) sp sp_bilinear.1 sp_bilinear.2.1
     sp_bilinear.2.2.1 sp_bilinear.2.2.2
-private lemma sp_alt (N : ℕ) : (spForm N).IsAlt := by
+lemma sp_alt (N : ℕ) : (spForm N).IsAlt := by
   intro u
   change sp u u = 0
   apply Finset.sum_eq_zero
   intro i _
   rw [mul_comm (u.2 i) (u.1 i)]
   exact CharTwo.add_self_eq_zero _
-private lemma sp_nondegenerate (N : ℕ) : (spForm N).Nondegenerate := by
+lemma sp_nondegenerate (N : ℕ) : (spForm N).Nondegenerate := by
   classical
   apply (sp_alt N).isRefl.nondegenerate_iff_separatingLeft.mpr
   intro u hu
@@ -494,7 +494,7 @@ lemma tensor_smul {N : ℕ} (r : Fin N → ℂ)
   ext x y
   simp [tensorOp, Finset.prod_mul_distrib]
 
-private lemma tensor_weyl {N : ℕ} (v : ((Fin N → ZMod 2) × (Fin N → ZMod 2))) (f : (Fin N → ZMod 2)
+lemma tensor_weyl {N : ℕ} (v : ((Fin N → ZMod 2) × (Fin N → ZMod 2))) (f : (Fin N → ZMod 2)
   → ℂ) :
     tensorOp (fun i => wmat (v.1 i) (v.2 i)) *ᵥ f = weyl v f := by
   classical

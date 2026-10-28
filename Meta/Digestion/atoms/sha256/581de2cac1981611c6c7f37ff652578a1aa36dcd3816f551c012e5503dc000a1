@@ -1,0 +1,32 @@
+**Proposition 5.3 (route agreement and dynamics).** All current
+Boundary/Space-orbit/numerical-Memory conversions agree and commute
+with every defined native call on their current images. Time-to-current
+conversion agrees with both the actual scan and retained simulation.
+There is no claimed arbitrary-current-to-measured-past inverse.
+
+Proof. Each current decoder returns the same $(A,w)/G_K$. For a
+complete call $a$, Theorem 3.1 makes the successor $U_a$ and whole
+output well defined on these orbits, including growth's changed
+geometry. Write $e_i,d_i$ for each current encoding/decoder and
+$e_i',d_i'$ for the corresponding successor encoding/decoder, in
+the actual successor context. On their respective images both
+composites are identities. Therefore
+
+$$
+ (e_j'd_i')(e_i'U_ad_i)=e_j'U_ad_i
+   =(e_j'U_ad_j)(e_jd_i),
+ \qquad (e_hd_j)(e_jd_i)=e_hd_i.
+\tag{SC.14}
+$$
+
+These identities compare numerical conversions of one actual
+successor, with its actual new context and paid exports. Proper
+pending prefixes carry their actual parser state and no completed
+field update, as already checked in the interface induction. A fresh
+measured Time record requires the real calls and returned scalars;
+computed germ updates do not create one. At startup every route uses
+the same (SC.10), so the source execution, Time decoder and predictor
+simulation agree. For later arbitrary calls, append their actual
+records if a temporal record is desired and advance the predictor;
+no erasure of the journal is declared reversible. $\square$
+

@@ -1,0 +1,70 @@
+**Theorem 29.1 (P24-gap).** There exists $\epsilon>0$ such that, for
+all real $p,v$,
+
+$$
+0<|p-24|<\epsilon\quad\Longrightarrow\quad
+\left[W,W'\in C(p,v),\ m(W)=m(W')\ \Longrightarrow\ W=W'\right].
+\tag{29.1}
+$$
+
+Equivalently, with $D_M$ exactly as in Definition 1.2,
+
+$$
+24\notin\overline{\{p\in\mathbb R:\exists v\in\mathbb R,
+\ (p,v)\in D_M\}}.
+\tag{29.2}
+$$
+
+The same $\epsilon$ works for every real $v$ on the entire actual child,
+including all singular parent sources, zero drift, lower degrees,
+repeated gain roots and sampled gain roots.
+
+Proof. Suppose (29.1) fails for every positive $\epsilon$.
+Choose $p_i\ne24$, $p_i\to24$, real $v_i$, and actual distinct pairs
+$W_i,W'_i\in C(p_i,v_i)$ with $m(W_i)=m(W'_i)$.
+Eventually $|p_i|\le25$. Apply the all-actual-pair cap S, Theorem 7.3:
+one finite $B_*$ bounds $b$ at both endpoints of every selected pair.
+Apply S, Theorem 12.1, with $L=B_*$ and $P=25$.
+It bounds $c,d$ and all four padded coefficients of each entire gain,
+as well as $v_i$ and the common terminal response. These are bounds
+derived from the actual pairs, not imposed source or acquired-base guards.
+In particular the argument includes an attempted unbounded-$v$ sequence.
+
+Theorem 14.3, with $P=25,E=M$, gives
+
+$$
+\max\{\delta(W_i),\delta(W'_i)\}\ge\eta_{25}>0,
+\qquad\delta(W)=\min\{r,1-r,b,c\}.
+\tag{29.3}
+$$
+
+Relabel within each pair so that $\delta(W_i)\ge\eta_{25}$.
+Only one endpoint is anchored; no individual lower bound for the other
+endpoint is inferred. The theorem permits $p_i\to24$, by Lemma 14.2.
+Finite-dimensional bounded-sequence compactness gives simultaneous
+complete-tuple limits $W_i\to X$, $W'_i\to Y$ along a subsequence.
+The anchor makes $X$ strict. The original equations, their common fifth
+response and their equal $(v,m)$ pass to the limit; a zero limiting gain
+is again excluded by the original unequal $0,24$ readings. Thus
+
+$$
+X,Y\in\mathcal L_{24},\qquad
+\Psi_M(X)=\Psi_M(Y),\qquad X\text{ is strict}.
+\tag{29.4}
+$$
+
+If $X\ne Y$, Theorem 26.3 identifies them as a closed K mirror pair.
+Theorem 28.1 gives a product neighbourhood where every strict matching
+pair has $p=24$. Eventually $(W_i,W'_i)$ is in it, contradicting
+$p_i\ne24$.
+
+If $X=Y$, this common tuple is strict because $X$ is the anchored limit.
+Unless $X=W_c$, Theorem 27.2 gives a single neighbourhood in the full
+parent on which $\Psi_M$ is injective. Eventually both endpoints are in
+it, contradicting their distinctness. If $X=W_c$, F, Theorem 27.2,
+gives a full-parent neighbourhood where every distinct equal-$\Psi_M$
+pair is a reflected K pair and therefore has $p=24$, the same contradiction.
+There is no case of two boundary limits because the anchor is strict.
+These cases exhaust all finite subsequential limits and exclude the
+assumed sequence. This proves a positive $\epsilon$ and (29.2). ∎
+

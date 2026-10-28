@@ -1,0 +1,36 @@
+**Lemma 16.2 (Uniform endpoint signs and acquired-response differences).**
+For every $p\in K$, $b_i(r_t,p)$ lies in the interior of
+$J_{ti}$. Define
+
+$$
+\delta(r,p)=u_M(W_0(r,p))-u_M(W_1(r,p)).
+\tag{16.2}
+$$
+
+Then, uniformly for $p\in K$,
+
+$$
+-\frac{5454}{10^8}<\delta(r_0,p)<-\frac{5430}{10^8}<0,
+\qquad
+0<\frac{13103}{10^8}<\delta(r_1,p)<\frac{13238}{10^8}.
+\tag{16.3}
+$$
+
+Proof. Each $J_{ti}$ lies strictly inside the section of
+$\mathcal U_i$ at $r_t$, by its rational endpoints. For
+$e\in\{-,+\}$ form
+
+$$
+H_{ti}^e(z)=\mathsf A(r_t,B^e_{ti}/d_{ti},p(z)).
+\tag{16.4}
+$$
+
+Every degree-one Bernstein coefficient of $10^{12}H_{ti}^e$ lies
+strictly within the indicated interval:
+
+| $t$ | $i$ | For $e=-$ | For $e=+$ |
+| --- | --- | --- | --- |
+| $0$ | $0$ | $(24,25)$ | $(-273,-272)$ |
+| $0$ | $1$ | $(-1100,-1099)$ | $(656,657)$ |
+| $1$ | $0$ | $(88,89)$ | $(-209,-208)$ |
+| $1$ | $1$ | $(-5641,-5640)$ | $(6062,6063)$ |

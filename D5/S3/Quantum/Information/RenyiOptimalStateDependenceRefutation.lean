@@ -124,7 +124,7 @@ theorem result : ¬ claim := by
     classical
     rw [pX_basis]
     by_cases ha : α = 1
-    · simp only [H, ha, shannonEntropy]
+    · simp only [H, ha, shannonEntropy, if_true]
       apply Finset.sum_eq_zero
       intro i _
       by_cases hi : i = k <;> simp [hi]
@@ -155,7 +155,7 @@ theorem result : ¬ claim := by
         have hd := hdiag j
         change ρ.val j j = if j = k then 1 else 0 at hd
         simp [x, dotProduct, Matrix.mulVec, Pi.single_apply, hd, hj]
-      have hz := ((psd ρ).dotProduct_mulVec_zero_iff x).mp hx
+      have hz := ((psd ρ).dotProduct_mulVec_zero_iff (x := x)).mp hx
       have hi := congrFun hz i
       simpa [x, Matrix.mulVec, dotProduct, Pi.single_apply] using hi
     apply Subtype.ext

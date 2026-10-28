@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:85f9f5bc7ecd871a50ed045b47b6768497de528342e844a463e5d66eaab10588
+  normalized_sha256: sha256:85f9f5bc7ecd871a50ed045b47b6768497de528342e844a463e5d66eaab10588
+cas_ref: sha256:85f9f5bc7ecd871a50ed045b47b6768497de528342e844a463e5d66eaab10588
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：仅提出待 Lean 化模块路径与 theorem names，不提供这些定理已成立的断言。
+    previous_atom_id: 422a5a6c500606440982a5f229fb1a94564d7874670ba9f8fdf8d220fac6a301
+    next_atom_id: 8e6d8b08fe331b2fe4bf22a13e9ecae43d8352a6d0563c8d8fc813c68ffb6edd

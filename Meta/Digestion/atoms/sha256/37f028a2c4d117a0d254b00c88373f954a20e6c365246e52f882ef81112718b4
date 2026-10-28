@@ -1,0 +1,63 @@
+## 1. 三个认证数取代未量化的近基态断言
+
+固定同一闭 Weil 形式及其自伴实现 A。设归一化候选 k 属于算子域，真实归一化最低模态 u 满足 Au=lambda*u。记 mu=q(k)。已证的变分关系为 lambda<=mu。若实际算术证书给出
+
+\[
+ell\le\lambda\le\mu\le U<T,\qquad
+f\perp k\Longrightarrow q(f)\ge T\|f\|^2,
+\tag{RE1}
+\]
+
+则可以直接用能量包络捕获最低模态。这里 ell 是完整算子的下界，不能用有限 Ritz 最低值充当 ell；T 的量词覆盖全部形式域中的正交方向。
+
+令 alpha=<k,u>、v=u-alpha*k，内积对第二变量线性。由对称性及特征方程，
+
+\[
+\langle v,Ak\rangle=\overline\alpha(\lambda-\mu),\qquad
+q(v)=\lambda\|v\|^2+|\alpha|^2(\mu-\lambda).
+\tag{RE2}
+\]
+
+因 v 与 k 正交，得到
+
+\[
+(T-\lambda)\|v\|^2\le|\alpha|^2(\mu-\lambda).
+\tag{RE3}
+\]
+
+此前 Lean owner `WeilRayleighEnclosureModeCapture` 在实不变线性算子域 D 上，以嵌入 iota:D->H 和作用 A:D->H 证明了较松的
+
+\[
+(T-U)\|v\|^2\le U-ell.
+\]
+
+该表示允许非有界算子；没有把真实 Weil 算子替换为处处有定义的有限矩阵。到实际复 Hilbert 空间的实不变域识别另需承接。本节的复数版 (RE2) 及以下射影加强为纸面证明。
+
+若 alpha=0，则 v=u，(RE3) 与 T>lambda、||u||=1 矛盾。所以 alpha 非零。保留 (RE3) 中的重叠因子可直接得到
+
+\[
+\boxed{
+\left\|\frac{u}{\alpha}-k\right\|^2
+\le\frac{\mu-\lambda}{T-\lambda}
+\le\frac{U-ell}{T-ell}<1.
+}
+\tag{RE4}
+\]
+
+第二个不等式先使用 mu<=U，再使用 x->(U-x)/(T-x) 在 x<T 上递减及 ell<=lambda。最后一个严格不等式直接来自 U<T。因此无需额外假设前一轮松预算 R=(U-ell)/(T-U)<1，也无需再将其放大为 R/(1-R)。归一化的改变只有非零标量，不改变 Fourier 变换的零点。
+
+若某个独立模型族 k_a 已有 c_a*hat(k_a)->Xi 的条带紧集一致极限，则 (RE4) 与固定支撑 Fourier 估计给出新的充分条件
+
+\[
+\boxed{
+|c_a|\sqrt{2a}\,e^{ba}
+\sqrt{\frac{U_a-ell_a}{T_a-ell_a}}\longrightarrow0
+\qquad(0\le b<1/2).
+}
+\tag{RE5}
+\]
+
+本节没有证明这条无界尺度极限。还需证明所选有限候选与文献 prolate 模型之间的相容性。
+
+修正此前会话中的过强判断：换成 Rayleigh 包络并不证明已经绕过固定内缩平移障碍。它改变了可认证的误差量；该误差量能否在所需候选尺度族上衰减，仍是数学任务。尤其不能将另一个已知 Xi 极限的模型和本次有限候选默认为同一对象。
+

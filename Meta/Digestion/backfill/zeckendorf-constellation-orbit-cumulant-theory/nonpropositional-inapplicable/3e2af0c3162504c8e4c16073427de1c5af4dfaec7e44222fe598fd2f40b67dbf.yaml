@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3e2af0c3162504c8e4c16073427de1c5af4dfaec7e44222fe598fd2f40b67dbf
+  normalized_sha256: sha256:3e2af0c3162504c8e4c16073427de1c5af4dfaec7e44222fe598fd2f40b67dbf
+cas_ref: sha256:3e2af0c3162504c8e4c16073427de1c5af4dfaec7e44222fe598fd2f40b67dbf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Interpretive list fragment warning about an unfalsifiable quantum metaphor, with no mathematical predicate asserted.
+    previous_atom_id: 1d09be5cc23b8815707f09b83f821b6cac4ddf738ffa81789e8a95845520b2a7
+    next_atom_id: 3fab146fc9a7f75d3bf9b3e9117f8ae6550a28fce68572f42268d05da6a6654c

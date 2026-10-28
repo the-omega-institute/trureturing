@@ -1,0 +1,20 @@
+## 1. Klein 四群零点轨道
+
+定义三个作用：
+
+\[
+C(s)=\overline s,
+\qquad
+R(s)=1-s,
+\qquad
+J(s)=1-\overline s.
+\]
+
+它们满足：
+
+\[
+C^2=R^2=J^2=1,
+\qquad
+CR=RC=J.
+\]
+

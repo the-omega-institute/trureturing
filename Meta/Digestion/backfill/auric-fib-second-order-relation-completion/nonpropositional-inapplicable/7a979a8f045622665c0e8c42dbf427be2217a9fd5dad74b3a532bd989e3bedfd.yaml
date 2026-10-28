@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7a979a8f045622665c0e8c42dbf427be2217a9fd5dad74b3a532bd989e3bedfd
+  normalized_sha256: sha256:7a979a8f045622665c0e8c42dbf427be2217a9fd5dad74b3a532bd989e3bedfd
+cas_ref: sha256:7a979a8f045622665c0e8c42dbf427be2217a9fd5dad74b3a532bd989e3bedfd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 定义 Hermitian 括号及其递归树表示；不声称等变、闭合或物理可执行性。'
+    previous_atom_id: f5423fd9cc3ad48df78fec4ce1885be5052554ac59e5b4dc3ab4ecd5b5ac35bf
+    next_atom_id: e892122b35b8c45cd93fe4c76d7174ba91ed139bb990fc6798be241c3c3dd947

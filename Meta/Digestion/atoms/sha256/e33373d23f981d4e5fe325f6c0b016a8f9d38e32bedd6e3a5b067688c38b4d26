@@ -1,0 +1,64 @@
+**Definition 23.1 (supplier correspondence and scope).**
+The entrance and returning-excursion law is exactly §15, with the
+recurrent framework of Fukushima--Tanaka,
+[*Poisson point processes attached to symmetric diffusions*,
+§3.1, Theorem 3.1 and (3.12)](https://www.numdam.org/item/AIHPB_2005__41_3_419_0.pdf).
+Their distinguished point is $e$, absorbed semigroup is $P_t^0$,
+entrance measure is $q_t m$, and speed measure is the unchanged
+$h^2\mu$. All its required recurrent-point and original-domain
+hypotheses were checked in Theorem 15.2; no compactification or
+Poincare hypothesis from that paper's different construction is used.
+Equation (20.2) adds the original duration density as a terminal
+factor by differentiation of killed survival. It is a finite
+joint law, not a new general bridge theorem.
+
+Replacing small excursions by the source at their original times is
+the mature truncation map in Lambert--Simatos,
+[*The weak convergence of regenerative processes using some excursion
+path decompositions*, §3.2, (3) and Lemma 3.1](https://www.numdam.org/item/10.1214/12-AIHP531.pdf),
+with their size functional equal to original duration $\zeta$.
+Poisson restriction, marking, scalar subordinator sums and coordinate
+interpolation are likewise mature tools. The direct bound (21.3)
+specializes these tools to this continuous source and keeps every
+duration. No general regenerative-convergence theorem is claimed.
+Yano, [*Functional limit theorems for processes pieced together from
+excursions*, arXiv:1309.2652v3, Definition 2.3, Remark 2.4 and
+Theorem 2.5](https://arxiv.org/html/1309.2652v3), explicitly separates
+path convergence from lifetime convergence. Its full theorem and its
+general convergence hypotheses are not invoked here: retained
+excursion durations and starts agree exactly by (20.6), and the
+observation-exit passage is separately proved in Lemma 21.3.
+
+Chaumont--Uribe Bravo,
+[*Markovian bridges: weak continuity and pathwise constructions*,
+arXiv:0905.2155v3, Theorem 1 and (H1)--(H3)](https://arxiv.org/html/0905.2155v3),
+requires Feller and transition-density continuity hypotheses for its
+bridge construction. No such bridge from the singular source is
+assumed or invoked here. The finite measures (20.2) follow directly
+from the original entrance/killed suppliers; no unverified bridge
+hypothesis or endpoint heat-kernel value is imported.
+
+The repo-derived source-specific composite conclusion is (20.3)--(22.8): a finite
+explicitly normalized source interface, exact scalar accounting for
+all omitted shapes' elapsed durations, same-time approximation of
+the unchanged full source, justified observation exits, and a Borel
+consumer in actual finite lawful native commands preserving all ten
+held outputs in the limit. Its deterministic connectors, prefix
+guards, real chronological integral and phase map are the already
+paid results of §7, Theorem 17.2 and [GL, Lemma 17.1 and Theorem
+3.1]. Its full limiting source, complex selector, measure and source
+response are §16 and [S, §§115--116]. No new claim about the source
+clock of §18 is drawn from these approximate laws.
+
+The free diffusion rigidity of §§1--6, central-fiber exclusion of
+§§7--10, source-contact and Brownian-reference exclusions of
+§§11--14, and the affine/CPTP obstruction of [B, §12.2] are unchanged.
+The nonlinear/source-law action in [B, §12.3] retains its original
+contract. Variable-coefficient Green, independent central-noise Green,
+and spatial-cap/all-real limit suppliers retain the different carriers,
+walls, sources and clocks specified in Definition 19.1. None replaces
+$F,h,m$, the raw unit-source degree-$-3$ $\Gamma$, fixed
+$a,\eta>0$, $g_c=16\sqrt{a\eta}$ or the entire original complex
+domain. Coordinate polygons and their observation holds are finite
+approximations, not replacement source boundary conditions.
+

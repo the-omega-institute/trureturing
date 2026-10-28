@@ -1,0 +1,37 @@
+**Definition 14.1 (The delayed law and the comparison class).** Fix an integer $m\ge1$ and a real $0<q<1$. For nonnegative integers $t,k$, define
+
+$$
+\begin{aligned}
+(t)_{\underline m}&=t(t-1)\cdots(t-m+1),\\
+P_m(k)&=\sum_{t=0}^{k-1}(t)_{\underline m}^{\,2},\qquad P_m(0)=0,\\
+\mathcal Z_m(q)&=\sum_{k\ge0}q^kP_m(k),\qquad
+\gamma_k=\frac{q^kP_m(k)}{\mathcal Z_m(q)},\\
+S_a&=\sum_{j\ge a}\gamma_j,\qquad
+\mu=\sum_{k\ge0}(k+1)\gamma_k.
+\end{aligned}
+\tag{14.1}
+$$
+
+The $\gamma,S,\mu$ in Section 14 belong to (14.1). This is a separate law from the monomial law (1.1). The target stationary cylinders are
+
+$$
+\begin{aligned}
+\mathbb P_{m,q}(0^a1\,0^{g_1}1\cdots0^{g_{r-1}}1\,0^b)
+&=\frac{S_aS_b}{\mu}\prod_{i=1}^{r-1}\gamma_{g_i}\quad(r\ge1),\\
+\mathbb P_{m,q}(0^N)&=\frac1\mu\sum_{j\ge N}(j-N+1)\gamma_j\quad(N\ge0).
+\end{aligned}
+\tag{14.2}
+$$
+
+All zero-run lengths are nonnegative integers. The internal product is one at $r=1$, and $N=0$ denotes the empty word. The existence and stationary consistency of this law follow from the actual instrument in Theorem 14.4.
+
+A competing realization consists of a finite-dimensional complex memory, fixed CP maps $\mathcal E_0,\mathcal E_1$ whose sum is trace preserving, and a density $\rho_0$, such that for every finite binary word
+
+$$
+\operatorname{Tr}\big[\mathcal E_{w_N}\cdots\mathcal E_{w_1}(\rho_0)\big]
+=\mathbb P_{m,q}(w_1\cdots w_N).
+\tag{14.3}
+$$
+
+Neither invariance of $\rho_0$ nor a reset structure is assumed for the competitor. Every persistent register and any controller affecting later operations belongs to the counted complex memory dimension, as in Definition 1.2. The maps are homogeneous in time and there is no additional correlated external input.
+

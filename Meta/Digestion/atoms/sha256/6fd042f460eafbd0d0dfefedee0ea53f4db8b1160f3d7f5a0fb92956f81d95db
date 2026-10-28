@@ -1,0 +1,14 @@
+## 定义 8.1（横向素数预算）
+
+\[
+S\subset_{\mathrm{fin}}\mathbb P,
+\qquad
+\kappa:S\to\mathbb N_{>0},
+\]
+
+\[
+J(S,\kappa)
+=
+\{(p,\kappa(p)):p\in S\}.
+\]
+

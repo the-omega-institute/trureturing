@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:735c5246b7e2aa2ad968ea733bf39d3a7dbd21e860b5f9cafbb186817548b0b3
+  normalized_sha256: sha256:735c5246b7e2aa2ad968ea733bf39d3a7dbd21e860b5f9cafbb186817548b0b3
+cas_ref: sha256:735c5246b7e2aa2ad968ea733bf39d3a7dbd21e860b5f9cafbb186817548b0b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只记录席位、模块、依赖次序与结账安排；未提出需要证明的数学断言。文本定位：## 四 预算与结算 一席位轮(codex-cli,独立 worktree,三条一行定理同模块,新桶 `D5/S3/Weil/Separator/`;同 PR deposit(绑 M3-f-6 atom)+ 三条 cover)。预计 ≤ 40 分钟。 后续增订继续严格追加于本节之后。
+    previous_atom_id: f56b8257514675fa93155cee151b68d670d6a4024839c95ec3831ac2eb97e08b
+    next_atom_id: null

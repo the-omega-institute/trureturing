@@ -1254,6 +1254,107 @@ complete signed floor (S4), or proof of RH is obtained. Qualitative
 density $o(X)$ and averages in other variables still require the
 quantitative same-source measure transport described after (P4).
 
+### The classical Huxley rate on the same CA price path
+
+The supplier's recorded classical prime-error statement is the Huxley
+prime-number-theorem rate, as quoted in
+[Matomäki--Teräväinen, §2.1, printed p.4](../Analytic/shortuniformity2026robininterfaces.md#a-stronger-error-on-longer-möbius-intervals),
+with a fixed interval exponent $\theta>7/12$. Apply it here with
+$X=A$, $\theta=2/3$, and $A^{2/3}\le t\le A$. Write
+
+$$
+\rho_A=\left(\frac{\log A}{\log\log A}\right)^{1/3}
+       =\left(\frac{L}{\log L}\right)^{1/3}.
+$$
+
+After choosing a fixed $0<c_\Lambda<c_{\Lambda,2/3}$ to absorb the
+supplier's implied constant, put
+$\varepsilon_A=\exp(-c_\Lambda\rho_A)$. The complete $\psi$ increment,
+including every prime power, then gives for all sufficiently large $A$
+
+$$
+|B(A+t)-B(A)-t|\le C_\Lambda\varepsilon_A t
+\qquad(A^{2/3}\le t\le A),
+\tag{P10}
+$$
+
+with a fixed $C_\Lambda>0$. The existing correction
+$|B(x)-\psi(x)|\ll\sqrt{x}[\log(2x)]^{5/2}$ is absorbed because
+$\sqrt A L^{5/2}=o(\varepsilon_A A^{2/3})$. No future $C_b$ is assumed
+regular or GA1, and all activation ties remain in $B(b)$.
+
+Reuse the pressure identity, the tangent gap, the original right-tail
+maximality, and the same short initial segment from (P6). They give,
+for one fixed $C_2>0$ and $A\le b\le2A$,
+
+$$
+0\le X_N-X(b)
+\le C_2 k(A)\left[A^{4/3}+\varepsilon_A(b-A)^2\right].
+\tag{P11}
+$$
+
+This is the same actual ordinary selected $N$, full layer rule, price
+$g(b)$, and $B(b)$ as in (P1)--(P9); only the already sourced prime
+error is changed. Let the fixed supplied excess from (S2) be
+$X_N\ge dA^{-\eta'}$ with $d>0$ and $0<\eta'<1/2$. For a sufficiently
+small fixed $\kappa>0$, depending only on $d$ and $C_2$, set
+
+$$
+h_{\eta'}^{\mathrm H}(A)
+=\kappa A^{1-\eta'/2}\sqrt{L}\,\exp\!\left(\frac{c_\Lambda\rho_A}{2}\right).
+$$
+
+Then $h_{\eta'}^{\mathrm H}(A)=o(A)$ and
+
+$$
+k(A)\varepsilon_A\bigl(h_{\eta'}^{\mathrm H}(A)\bigr)^2
+=\kappa^2\left(1+\frac1L\right)A^{-\eta'},
+\qquad
+k(A)A^{4/3}=o(A^{-\eta'}).
+$$
+
+Thus (P11) yields, eventually,
+
+$$
+X(b)\ge\frac d2A^{-\eta'}
+\qquad\left(A\le b\le A+h_{\eta'}^{\mathrm H}(A)\right).
+\tag{P12}
+$$
+
+Compared with the previously retained width in (P8), the ratio is
+
+$$
+\frac{h_{\eta'}^{\mathrm H}(A)}{\widetilde h_{\eta'}(A)}
+=\frac{\kappa}{\lambda}\sqrt L\,
+\exp\!\left(\frac{c_\Lambda\rho_A-L^{1/4}}2\right)\longrightarrow\infty,
+$$
+
+using the same supplied $\eta'$ from (S2) as in (P8).
+For the existing set
+$\mathcal E_X=\{b\in[X,3X]:X(b)>\delta X^{-\eta'}\}$ with
+$\delta=d/(4\,2^{\eta'})$, every selected $A\in[X,2X]$ places the
+interval in $\mathcal E_X$ for large $X$. A sufficient still-missing
+exceptional-set estimate is therefore
+
+$$
+|\mathcal E_X|=o\!\left(
+X^{1-\eta'/2}\sqrt{\log X}\,
+\exp\!\left(\frac{c_\Lambda}{2}
+\left(\frac{\log X}{\log\log X}\right)^{1/3}\right)
+\right).
+\tag{P13}
+$$
+
+The constants $c_\Lambda$, $C_\Lambda$, $C_2$, $d$, and $\kappa$ are
+fixed existential constants; the sufficiently-large threshold may
+depend on the supplied fixed $\eta'$. This is an application of the
+published prime-error rate to the unchanged actual CA persistence
+interface, with no new supplier proof or estimate. It is not Lean
+certified and claims no source priority. Neither (P13), a
+directed mean bound, the original signed-tail floor, nor RH is proved;
+the actual-price measure transport and all unpaid boundaries remain
+explicit.
+
 ## A partial zero-free envelope leaves the supplied excess unpaid
 
 Keep the actual family (S2), proper GA1 and the event-free bridge above.
@@ -1357,3 +1458,387 @@ remainder at the slower $A^{\nu-1}$ scale. This is an applicability map
 and a localization of the remaining estimate, not a new RH criterion,
 new signed gain, originality claim, or Lean certification of the
 analytic source inputs.
+
+## Retain the original oscillation exponent on the regular GA1 source
+
+The direct [Pintz 1980 Corollary 1 input (P80)](../Analytic/pintz1984remainder.md#direct-full-chebyshev-sign-changes-on-every-fixed-power-window)
+can be used in the existing construction (S1)–(S2) and its subsequent
+proper-GA1 and regular-return selection. The CA oscillation theorem,
+integer maximization, activation rules and prime-local bridge are reused.
+The additional application retains every original oscillation exponent
+on the same joint source class; it is a paper-level parameter
+correspondence, without a literature-priority or Lean-certification claim.
+
+Assume RH fails and put $\Theta=\sup_{\zeta(\rho)=0}\Re\rho>1/2$.
+For every fixed
+
+$$
+1-\Theta<\eta<\frac12,
+$$
+
+there is a fixed $c_\eta>0$ and an unbounded family of actual
+$N\in\mathscr S_{\rm reg}$ such that
+
+$$
+G(N)>e^\gamma\left(1+c_\eta(\log N)^{-\eta}\right).
+\tag{S5}
+$$
+
+To apply the existing sources, choose a fixed
+$r\in((1-\Theta)/\eta,1)$ and set $u=r\eta$.
+Then $1-\Theta<u<1/2$, so (O1) supplies unbounded actual CA witnesses
+$C$ with $a=\log C$ and
+$G(C)>e^\gamma(1+c_u a^{-u})$.
+Apply (P80) with $Y=a/8$. It supplies a positive $\psi$-point
+$t\in[(a/8)^r,a/8]$ for every sufficiently large witness.
+The existing finite prime-power selection and the unchanged CA pair
+construction give actual $D,H$ with
+
+$$
+\log D\ge\frac12(a/8)^r,\qquad
+\log H\le a/4,\qquad D<H<C,\qquad G(H)>G(D).
+$$
+
+Select the same rightmost maximizer $N$ over integers at least $D$.
+The existing selection after (S2) and the proper-GA1 argument give
+$N\ge H$, $N\in\mathscr S_{\rm reg}$ and $G(N)\ge G(C)$.
+This retains the actual integer, every prime-deletion and insertion
+comparison, and the event-free own-price identification.
+
+Put $A=\log N$ and $k_r=(2\,8^r)^{-1}$. Then
+$A\ge k_r a^r\to\infty$, and the complete exponent comparison is
+
+$$
+a^{-u}\ge k_r^{u/r}A^{-u/r}=k_r^\eta A^{-\eta}.
+$$
+
+Thus (S5) holds with $c_\eta=c_u k_r^\eta$.
+All constants are fixed after $\Theta,\eta,r$ are chosen.
+The direct input allows the whole interval $0<r<1$, so this application
+needs neither an auxiliary $\sigma>\Theta$ nor the earlier
+$r\sigma<1/2$ restriction. It asserts no effective start or uniform
+limit as $\eta\downarrow1-\Theta$.
+
+At these same actual clocks, the already established implication (O3)
+therefore applies for every fixed $\eta\in(1-\Theta,1/2)$:
+
+$$
+\sqrt A\log A\,I_\psi(A)
+< -\mathcal E(\log A)
+  -\frac{c_\eta}{2}A^{1/2-\eta}\log A
+\longrightarrow-\infty.
+$$
+
+The complete original improper integral and all its prime-power and
+endpoint terms are retained. The independent signed lower bound (S4),
+strict Robin for every integer $n>5040$, and RH remain unproved.
+
+## Reuse the cone-envelope minimum at the selected source
+
+Use the full pressure $P$, inventory $B$ and kernel $k$ from (P1)--(P6):
+
+$$
+P(t)=\gamma+\log\log t-g(t)t-M(g(t))=I_\psi(t)+R(t),
+\qquad P'(t)=k(t)[t-B(t)]\quad\text{a.e.}
+$$
+
+The [archived cone-envelope theorem](../Analytic/mantovanelli2026primeworkload.md#existing-completeness-and-cone-reduction),
+Theorem 10.4 (`thm:cone-envelope`), already supplies the following
+minimum condition at a regular self-tangent source. Its notation maps
+by $\widehat{\mathcal F}=-P$, $D_{\rm CA}(t)=t-B(t)$ and $K=k$.
+The adjacent `lem:legendre-majorant` applies to every integer $m>e$,
+so its comparison at $t=\log m$ also gives the all-integer form below.
+These source statements and proofs were read in the primary TeX
+`paper/colossally_abundant_prime_layer_workload.tex` in the linked archive.
+The extremal interface is reused, not a new converse theorem.
+
+For an actual event-free own-price integer $N=C_A$, $A=\log N>1$,
+we have $B(A)=A$ and $P(A)=\Delta(N)$. The cited theorem and majorant
+make the following three conditions equivalent:
+
+$$
+\begin{aligned}
+&G(m)\le G(N)\quad\text{for every integer }m\ge N;\\
+&P(t)\ge P(A)\quad\text{for every real }t\ge A;\\
+&\int_A^t[B(u)-u]k(u)\,du\le0
+       \quad\text{for every real }t\ge A.
+\end{aligned}
+\tag{FR1}
+$$
+
+When the equivalent conditions (FR1) hold, the already retained (P6) also gives
+
+$$
+P(t)-P(A)\ge H(t,B(t))\ge0\qquad(t\ge A).
+\tag{FR2}
+$$
+
+All activation ties and prime-power layers remain in the cited inventory.
+No later $C_t$ is assumed to be self-tangent or a future record. The
+application below uses this existing minimum without repeating its proof.
+
+## Centering at the selected minimum leaves a positive transform offset
+
+Keep the same source in (FR1), now with its equivalent future-record
+conditions. Write $L=\log A$ and
+
+$$
+h_N=\log G(N)-\gamma=-P(A).
+$$
+
+Gronwall's existing limsup gives $h_N\ge0$. On the conditional
+RH-failure family (S5), $h_N>0$ and, after reducing a fixed positive
+constant if necessary, $h_N\ge c_\eta A^{-\eta}$.
+For each fixed such source define its actual future profile
+
+$$
+Q_A(y)=\sqrt A\,e^{y/2}(L+y)[P(Ae^y)-P(A)],\qquad y\ge0.
+\tag{FR3}
+$$
+
+The nonnegativity $Q_A\ge0$ follows from (FR1). It concerns the
+complete $P=I_\psi+R$, including the original reserve and every
+prime-power layer. Since $P(t)\to0$, when $h_N>0$,
+
+$$
+Q_A(y)\sim h_N\sqrt A\,e^{y/2}(L+y)\qquad(y\to\infty).
+\tag{FR4}
+$$
+
+Its Laplace integral therefore has convergence abscissa exactly
+$1/2$. On $\Re s>1/2$, elementary Laplace integration gives the
+complete identity
+
+$$
+\begin{aligned}
+\widehat Q_A(s)
+&=h_N\sqrt A\left(\frac{L}{s-1/2}
+                       +\frac1{(s-1/2)^2}\right)+\mathcal H_A(s),\\
+\mathcal H_A(s)
+&=\sqrt A\int_0^\infty e^{-(s-1/2)y}(L+y)P(Ae^y)\,dy.
+\end{aligned}
+\tag{FR5}
+$$
+
+The remainder has not been replaced by a truncated zero sum or an
+independently chosen source. To control its endpoint, reuse the
+[effective-PNT allowance for the original signed integral](../ArithSums/nicolas2025comparison.md#the-2026-signed-formula-and-the-available-absolute-error-scale)
+and the complete reserve in (KTO1). With some fixed $a>0$ they give
+
+$$
+P(t)=O\!\left(\frac{e^{-a\sqrt{\log t}}}{\sqrt{\log t}}\right)
+     +O\!\left(\frac1{\sqrt t\log t}\right).
+\tag{FR6}
+$$
+
+Indeed, the classical bound $|\psi(u)-u|\ll ue^{-a\sqrt{\log u}}$
+puts its absolute tail inside a constant times
+$\int_{\log t}^\infty e^{-a\sqrt v}(1+v)v^{-2}\,dv$;
+the substitution $z=\sqrt v$ gives the first allowance in (FR6).
+This is an absolute bound, with no favorable sign asserted.
+It implies
+$\int_0^\infty(L+y)|P(Ae^y)|\,dy<\infty$ for every fixed $A>1$.
+Thus $\mathcal H_A$ converges absolutely on $\Re s=1/2$ and stays
+bounded as real $s\downarrow1/2$. The resulting right-hand expansion is
+
+$$
+\boxed{\widehat Q_A(s)
+=\frac{h_N\sqrt A}{(s-1/2)^2}
+ +\frac{h_N\sqrt A L}{s-1/2}+O_A(1).}
+\tag{FR7}
+$$
+
+Unconditionally this is a one-sided asymptotic, not a claim of
+meromorphic continuation through $1/2$. If $\Theta<1$, choose
+$\max\{\Theta,1/2\}<\nu<1$. The classical bound
+$|\psi(t)-t|=O(t^\nu)$ and the complete reserve make
+$\mathcal H_A$ holomorphic for $\Re s>\nu-1/2$, so (FR5) then has a
+genuine double pole at $1/2$. No such strip is assumed when
+$\Theta=1$. The exact abscissa and nonzero double term in (FR4)--(FR7)
+require $h_N>0$; they do not follow in the $h_N=0$ case.
+
+### Why this nonnegative profile does not supply the original floor
+
+The classical Landau nonnegative-transform principle, already used in
+[the original signed-tail criterion](../Analytic/guthmaynard2024largevalues.md#the-sampling-implication-and-its-quantifiers),
+requires a real singularity at the convergence abscissa. For (FR3)
+that requirement is already met by (FR7). Its positive coefficients
+are supplied by $h_N$, the original violation height itself.
+Applying that principle to this centered future profile alone yields
+no contradiction or bound on $h_N$.
+
+Subtracting the explicit term in (FR5) leaves the transform of
+$\sqrt A e^{y/2}(L+y)P(Ae^y)$. When $h_N>0$, this unshifted profile
+is strictly negative at $y=0$ and nearby, since its initial value is
+$-h_N\sqrt A L<0$. Eventual nonnegativity, which could suffice for a
+Landau argument after a finite initial truncation, still needs an
+independent estimate; it is not supplied by (FR1).
+
+These statements take the transform limit for one fixed source.
+They do not interchange it with the cofinal source limit. In fact (S5)
+gives on the same actual family
+
+$$
+h_N\sqrt A\ge c_\eta A^{1/2-\eta}\longrightarrow\infty.
+\tag{FR8}
+$$
+
+Source centering has therefore supplied no uniformly bounded offset
+at the original root scale. At that source the complete original
+account remains $I_\psi(A)=-h_N-R(A)$.
+
+The cone-envelope minimum, optimization and pressure identities above
+are reused. The explicit selected-source offset in (FR5)--(FR8) records
+their application to this particular positivity route. They do
+not assume an actual off-critical zero, supply the missing directed
+signed estimate, or prove RH or strict Robin for every integer above
+5040. The Laplace integration and Landau principle are classical,
+not new project theorems. This paper application has no Lean/kernel
+certification or claim of literature priority.
+
+
+## A published small source certifies every future comparison
+
+The primary's proof of Theorem 5(i), printed pp.14--15, supplies a
+small actual source for (FR1), including its all-integer quantifier.
+This uses the proof, not an inference from GA2 comparisons with multiples.
+Equation (24), obtained there from Robin's finite verification, gives
+
+$$
+5040<m<e^{19747}\quad\Longrightarrow\quad G(m)<e^\gamma.
+$$
+
+For $\log m\ge19747$, Case 2 uses Robin's unconditional bound (2) to give
+
+$$
+G(m)<e^\gamma+\frac{0.6483}{(\log19747)^2}
+       <G(5040)<G(2520).
+$$
+
+Although that case writes $m=ar$, both estimates use only the displayed
+size range of $m$; neither uses divisibility by $r$. The exact set $R$
+on printed p.14, also tabulated in Table 1, has only $2520$ and $5040$
+in $[2520,5040]$. All remaining integers in that interval have
+$G(m)<e^\gamma$. Consequently these published inputs give
+
+$$
+G(m)<G(2520)\qquad\text{for every integer }m>2520.
+\tag{FR9}
+$$
+
+The ordinary prime-layer test at $A=\log2520$ is strict:
+$N=2520=2^3 3^2 5\cdot7=C_A$, with $B(A)=A$. Thus this is an
+event-free own-price source and the complete future conditions
+(FR1)--(FR2) apply. No RH premise, new global record classification,
+rerun of Robin's finite verification, or Lean certification is supplied
+or required by this reuse of the published estimates. The source lies
+below $5040$; it cannot by itself test a claim restricted to larger sources.
+
+
+## Future minimality does not force normalized-cap monotonicity
+
+For a regular own-price source satisfying (FR1), retain its same
+complete pressure and inventory. Define, for $t>A$,
+
+$$
+\begin{aligned}
+q_A(t)&=P(t)-P(A),\\
+c_A(t)&=\log\log t-\log\log A+\lambda(t)(A-t),\\
+\mathcal D_A(t)&=M(\lambda(t))-\log Z(N)+\lambda(t)A
+                 =c_A(t)-q_A(t),\\
+\mathscr R_A(t)&=q_A(t)/c_A(t).
+\end{aligned}
+\tag{FR10}
+$$
+
+The existing competitor and future-comparison bounds give
+$0\le q_A\le c_A$, hence $0\le\mathscr R_A\le1$. These bounds do
+not imply that $\mathscr R_A$ is nonincreasing. Indeed, on any
+activation-free cell, $c_A'(t)=k(t)(t-A)$ and the existing pressure
+derivative give
+
+$$
+\mathscr R_A'(t)=\frac{k(t)}{c_A(t)^2}
+ \bigl[(t-A)\mathcal D_A(t)-(B(t)-A)c_A(t)\bigr].
+\tag{FR11}
+$$
+
+Take the actual (FR9) source $N=2520$, $A=\log2520$. At both
+$t=11$ and $t=113/10$, the complete strict optimum is $C_t=5040$;
+only the fourth $2$-layer has been added to this original source.
+All intermediate clocks have this same inventory. Thus
+
+$$
+B(t)-A=\log2,\qquad
+\mathcal D_A(t)=\log(31/30)-\lambda(t)\log2.
+\tag{FR12}
+$$
+
+The strict layer tests check each last occupied and first absent
+layer for $p=2,3,5,7,11$. The bound
+$r_{p,1}<1/(p\log p)\le1/(13\log13)$ excludes every remaining
+prime at both endpoint clocks and at $A$; later layers have still
+smaller activation prices. Monotonicity of $\lambda$ then certifies
+the entire displayed cell, without a search over finite future integers.
+Outward rational logarithm enclosures in (FR11)--(FR12) give
+
+$$
+\begin{aligned}
+-0.009168&<\mathscr R_A'(11)<-0.009167,\\
+0.0003328&<\mathscr R_A'(113/10)<0.0003329.
+\end{aligned}
+\tag{FR13}
+$$
+
+This is a counterexample to monotonicity even with the complete
+future-record premise (FR1)--(FR2), rather than merely a CA source
+with a locally positive rise. In this cell the stronger gap is
+
+$$
+\begin{aligned}
+q_A(t)-H(t,B(t))
+&=\Delta(5040)-\Delta(2520)\\
+&=\log\frac{\log\log5040}{\log\log2520}-\log(31/30)\\
+&\in(0.007585743194634567140012,\,
+       0.007585743194634567140013).
+\end{aligned}
+\tag{FR14}
+$$
+
+The cellwise sign has an exact secant test. For a fixed later inventory
+$C>N$, put $h=\log(C/N)>0$, $f=\log(Z(C)/Z(N))>0$ and $r_C=f/h$.
+Cancelling the price terms in (FR11) gives
+
+$$
+\begin{aligned}
+\operatorname{sgn}\mathscr R_A'(t)
+ &=\operatorname{sgn}\bigl(r_C-s_A(t)\bigr),\\
+s_A(t)&=\frac{\log\log t-\log\log A}{t-A},\qquad
+s_A'(t)=-\frac{c_A(t)}{(t-A)^2}<0.
+\end{aligned}
+\tag{FR15}
+$$
+
+Thus on a fixed inventory cell the ratio can turn only from decreasing
+to increasing, and at most once. Its initial $C=N$ cell instead has
+$\mathscr R_A\equiv1$. At a future-record source, comparison with this
+same integer $C$ gives $r_C\le s_A(\log C)$, so any turn occurs at
+$t\ge\log C$. It does not prevent a turn before the next activation.
+Consequently the positive derivative in (FR13) is compatible with full
+future minimality. The secant monotonicity is the ordinary strict
+concavity of $\log\log t$, applied to the actual Euler reward and clock;
+it is not a new general concavity theorem. A monotonicity proof on a
+restricted source class must control this cellwise arithmetic comparison.
+
+This excludes the auxiliary monotonicity claim **without a lower
+restriction on the source size**. The example has $N<5040$, so it
+does not refute a version restricted to $N>5040$ or to sufficiently
+large sources. Such a version still requires a separate proof, as does
+the signed root-scale Robin estimate. The global comparison is reused
+from the published inputs in (FR9); the local calculation is a project
+application, with no claim of mathematical priority or Lean certification.
+
+The [rational interval certificate](https://github.com/the-omega-institute/trureturing-experiments/tree/c131e6e8a4183397db52334ad6a2a914cb9753cc/experiments/robin-future-record-shape)
+reuses the existing logarithm enclosure, checks the complete strict
+inventories and both derivative signs, and retains the positive (FR14)
+gap. It does not rerun or certify the external global inputs in (FR9).

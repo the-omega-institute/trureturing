@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4feef0fc6ee012d675026623cfef1c0d7aa5fe7730355855715c4c41c4fca37a
+  normalized_sha256: sha256:4feef0fc6ee012d675026623cfef1c0d7aa5fe7730355855715c4c41c4fca37a
+cas_ref: sha256:4feef0fc6ee012d675026623cfef1c0d7aa5fe7730355855715c4c41c4fca37a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 比较假设1.1与斯宾诺莎实体论的承诺差异，属于文本和哲学解释。
+    previous_atom_id: 56ae116610bd395f0a9f8a3fea9953bf27a581dfa336c91b211f8df4448f4b24
+    next_atom_id: 6a3a96e1065752bb415b3808d5ef0570fc0245e4dcedcd827350ae1363c22f9e

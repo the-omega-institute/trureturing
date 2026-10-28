@@ -1,0 +1,24 @@
+**定理 19.5（复合模数容量）。** 若
+$m=\prod_{p^h\parallel m}p^h$，则最大可用核阶为
+
+$$
+D=\prod_{p^h\parallel m}p^{e_p(h)},
+\qquad
+C_m=\min|R|=\frac{m^2}{D}
+=\prod_{p^h\parallel m}p^{\,2h-e_p(h)}.
+\tag{RA.1911}
+$$
+
+**证明。**
+CRT 给出 $V_m=\prod V_{p^h}$。取整数 CRT 幂等元
+$\varepsilon_p$，它在 $p^h$ 分量为一、其余分量为零。任意加法子群对整数倍封闭，故
+
+$$
+W=\bigoplus_{p^h\parallel m}\varepsilon_pW
+\tag{RA.1912}
+$$
+
+是其一次实际来源中的主分量分解。$M,q$ 与这些投影交换，因而稳定性和 $q|_W$ 单射逐分量成立。命题 19.3 给出每个分量的阶上界 $p^{e_p(h)}$，阶相乘得到 $|W|\le D$，从（RA.1903）得到下界 $|R|\ge m^2/D$。 对每个分量同时取达到 $e_p(h)$ 的根，CRT 合成一个整数 $\lambda$ 满足 $f(\lambda)\equiv0\pmod D$；当 $D=1$ 取 $\lambda=0$。
+
+令 $H=m/D$、$W=\langle H(1,\lambda)\rangle\le V_m$；由第一坐标知其阶为 $D$。因 $D\mid f(\lambda)$，$M(H(1,\lambda))=\lambda H(1,\lambda)$ 在 $V_m$ 中成立，故 $MW\subseteq W$；$M$ 可逆且 $W$ 有限，所以 $MW=W$。在 $p^h$ 分量，若 $e_p(h)=0$ 则子群为零，否则 $H$ 是 $p^{h-e_p(h)}$ 的单位倍，该分量由 $p^{h-e_p(h)}(1,\lambda)$ 生成。命题 19.3 的反向论证保证 $q$ 在每个非零局部分量上单射，因此在 $W$ 上单射。由定理 19.2，陪集记录 $r(x)=x+W$ 满足本节合同，容量为 $m^2/D$，达到同一模数下的下界。这组选取在同一个 $W$ 和同一个模态中实现，故不是把分别可达的最佳值误当成共同来源。CRT 幂等元只用于坐标证明，不是新增物理操作。证毕。
+

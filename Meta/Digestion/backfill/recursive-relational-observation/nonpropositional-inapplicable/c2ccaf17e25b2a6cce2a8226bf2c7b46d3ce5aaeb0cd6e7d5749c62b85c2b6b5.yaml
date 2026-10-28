@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c2ccaf17e25b2a6cce2a8226bf2c7b46d3ce5aaeb0cd6e7d5749c62b85c2b6b5
+  normalized_sha256: sha256:c2ccaf17e25b2a6cce2a8226bf2c7b46d3ce5aaeb0cd6e7d5749c62b85c2b6b5
+cas_ref: sha256:c2ccaf17e25b2a6cce2a8226bf2c7b46d3ce5aaeb0cd6e7d5749c62b85c2b6b5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 全部命题子句由 lake-manifest.json 钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 的既有声明经实例化、投影及规范化闭合；仓内无可用冻结 GID。所用上游全限定声明：Matrix.PosDef.inv, Matrix.PosDef.dotProduct_mulVec_pos, Matrix.dotProduct_transpose_mulVec, Matrix.mulVec_mulVec, ProbabilityTheory.integral_id_multivariateGaussian, CFC.sqrt_nonneg, CFC.sqrt_mul_sqrt_self, Matrix.conjTranspose_nonsing_inv, Matrix.mul_inv_rev, EuclideanSpace.real_norm_sq_eq。全部三个核及所有z、a的同一规范Gaussian观测律不变与精度作用恒等式；未加入先验协方差条件，也未声称任意零测点条件分布版本。 非作者编译探针 flight 6ad4ff7ae1b609a473a53dae：定向 make lean exit 0，标准公理闭包；未新增或冻结 Lean 声明。
+    previous_atom_id: f113ec574c83f57ad3edd3aaaf36fe6185354c2018d217b192f4698d3712b1dd
+    next_atom_id: 17098931ed49655b3b75053ae6e8d7c8a77b8b3b6ccb694420e70a812e9c1b75

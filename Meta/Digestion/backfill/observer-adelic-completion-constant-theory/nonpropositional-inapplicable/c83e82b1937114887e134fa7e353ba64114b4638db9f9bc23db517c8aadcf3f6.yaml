@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c83e82b1937114887e134fa7e353ba64114b4638db9f9bc23db517c8aadcf3f6
+  normalized_sha256: sha256:c83e82b1937114887e134fa7e353ba64114b4638db9f9bc23db517c8aadcf3f6
+cas_ref: sha256:c83e82b1937114887e134fa7e353ba64114b4638db9f9bc23db517c8aadcf3f6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅并列路线名称 Li–Clark，没有数学断言。
+    previous_atom_id: d92b85b84788b93daf74abd955090415f013ebc8bea9c4f997e769227bad83e1
+    next_atom_id: 47d3212fa69041c68c9751bc9c950b0a888bb1f29d6146ebb7d1cc8e8344b3fe

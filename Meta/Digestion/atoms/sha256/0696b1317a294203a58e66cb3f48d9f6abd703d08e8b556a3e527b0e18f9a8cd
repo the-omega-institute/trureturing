@@ -1,0 +1,12 @@
+进一步，以下两件事等价：
+
+1. \(p_C\) 不是单射；
+2. 存在 \(c,c'\in X_C\)，使得对所有 \(u\in X_{I\setminus C}\) 有
+   $$
+   F(c\sqcup u)=F(c'\sqcup u),
+   $$
+   但存在 \(u_0\in X_{I\setminus C}\) 使
+   $$
+   G(c\sqcup u_0)\neq G(c'\sqcup u_0).
+   $$
+

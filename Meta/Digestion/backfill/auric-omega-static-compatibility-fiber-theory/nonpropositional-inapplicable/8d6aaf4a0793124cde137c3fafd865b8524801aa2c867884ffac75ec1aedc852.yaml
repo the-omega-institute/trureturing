@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8d6aaf4a0793124cde137c3fafd865b8524801aa2c867884ffac75ec1aedc852
+  normalized_sha256: sha256:8d6aaf4a0793124cde137c3fafd865b8524801aa2c867884ffac75ec1aedc852
+cas_ref: sha256:8d6aaf4a0793124cde137c3fafd865b8524801aa2c867884ffac75ec1aedc852
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 只给定归一化策略与保迹仪器，并递归定义未归一化历史态和记录；未断言联合概率归一化。'
+    previous_atom_id: 4617397823584bda51e32befd8cc74b510323de4370c32a79dd495b2ad2f4775
+    next_atom_id: ed911cc3c080d320e18e45e7bd760087ee08473a5efe85629bf61835e743edcb

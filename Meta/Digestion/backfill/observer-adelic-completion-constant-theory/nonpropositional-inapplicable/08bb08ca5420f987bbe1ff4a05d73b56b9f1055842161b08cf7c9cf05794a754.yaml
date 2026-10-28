@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:08bb08ca5420f987bbe1ff4a05d73b56b9f1055842161b08cf7c9cf05794a754
+  normalized_sha256: sha256:08bb08ca5420f987bbe1ff4a05d73b56b9f1055842161b08cf7c9cf05794a754
+cas_ref: sha256:08bb08ca5420f987bbe1ff4a05d73b56b9f1055842161b08cf7c9cf05794a754
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题。研究问题：询问哪些状态是 harmonic，没有断言分类结果。
+    previous_atom_id: cae82f39341f4c37167f9e1edb3c5e4a050a72480a31f7fdd929059de8686761
+    next_atom_id: 647b99d2ed41361e890f684823dddfe795096e419344de1e8c51001c1abdd170

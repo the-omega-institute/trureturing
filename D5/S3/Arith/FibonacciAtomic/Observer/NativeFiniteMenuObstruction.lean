@@ -62,7 +62,7 @@ private theorem spine_flip (a : Address) : flip (spine a (.of true)) a = spine a
     · exact congrArg (fun t : Source => t.mul (.of true)) ih
     · exact congrArg (fun t : Source => (FreeMagma.of true).mul t) ih
 
-private theorem path_bounds (r : Address) :
+theorem path_bounds (r : Address) :
     pathCost r ≤ 2 * r.length ∧ pathThreshold r ≤ pathCost r + 1 := by
   induction r with
   | nil => simp [pathCost, pathThreshold]

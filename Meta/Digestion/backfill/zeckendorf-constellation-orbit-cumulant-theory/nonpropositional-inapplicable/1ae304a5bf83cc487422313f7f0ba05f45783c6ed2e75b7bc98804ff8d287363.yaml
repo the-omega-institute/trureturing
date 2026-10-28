@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1ae304a5bf83cc487422313f7f0ba05f45783c6ed2e75b7bc98804ff8d287363
+  normalized_sha256: sha256:1ae304a5bf83cc487422313f7f0ba05f45783c6ed2e75b7bc98804ff8d287363
+cas_ref: sha256:1ae304a5bf83cc487422313f7f0ba05f45783c6ed2e75b7bc98804ff8d287363
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces the following discussion of two parity forms.
+    previous_atom_id: 649dc1486ddb0e55666f1c688e96f24fd7e4d833cdde21720eb77c5e21f14e97
+    next_atom_id: 0ec26451ac9836469794de6b65ca84e2b0775ad667695928907f97ca7983d313

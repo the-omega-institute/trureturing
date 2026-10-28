@@ -103,7 +103,7 @@ theorem mulHeight_le_of_mem_smul_mixedCube [Finite ι] {r : ℝ} (hr : 0 < r) {x
     · calc ∏ v ∈ Finset.univ.filter (fun v : InfinitePlace K ↦ v.IsReal),
               (⨆ i, v (x i)) ^ v.mult
           ≤ ∏ _v ∈ Finset.univ.filter (fun v : InfinitePlace K ↦ v.IsReal), (r * ballRadius 1) := by
-            refine Finset.prod_le_prod
+            refine Finset.prod_le_prod₀
               (fun v _ ↦ pow_nonneg (Real.iSup_nonneg fun i ↦ apply_nonneg _ _) _) fun v hv ↦ ?_
             rw [Finset.mem_filter] at hv
             rw [show v.mult = 1 from mult_isReal ⟨v, hv.2⟩, pow_one]
@@ -114,7 +114,7 @@ theorem mulHeight_le_of_mem_smul_mixedCube [Finite ι] {r : ℝ} (hr : 0 < r) {x
               (⨆ i, v (x i)) ^ v.mult
           ≤ ∏ _v ∈ Finset.univ.filter (fun v : InfinitePlace K ↦ ¬ v.IsReal),
               ((r * ballRadius 2) ^ 2) := by
-            refine Finset.prod_le_prod
+            refine Finset.prod_le_prod₀
               (fun v _ ↦ pow_nonneg (Real.iSup_nonneg fun i ↦ apply_nonneg _ _) _) fun v hv ↦ ?_
             rw [Finset.mem_filter] at hv
             have hc : v.IsComplex := not_isReal_iff_isComplex.1 hv.2
@@ -460,7 +460,7 @@ theorem exists_basis_prod_mulHeight_le :
     ring
   calc (∏ l, Height.mulHeight ((x ∘ s) l))
       ≤ ∏ l : Fin (finrank K V), C * lam (finrank ℚ K * l.val) ^ finrank ℚ K :=
-        Finset.prod_le_prod (fun l _ ↦ (Height.mulHeight_pos _).le) fun l _ ↦ hheight l
+        Finset.prod_le_prod₀ (fun l _ ↦ (Height.mulHeight_pos _).le) fun l _ ↦ hheight l
     _ = C ^ finrank K V * ∏ l : Fin (finrank K V), lam (finrank ℚ K * l.val) ^ finrank ℚ K := by
         rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
     _ ≤ C ^ finrank K V * ∏ j ∈ Finset.range (finrank ℚ K * finrank K V), lam j := by
@@ -534,7 +534,7 @@ theorem exists_basis_prod_absMulHeight_le' :
     have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
     have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
     rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-    refine one_le_mul_of_one_le_of_one_le (Finset.one_le_prod fun v _ ↦ ?_)
+    refine one_le_mul_of_one_le_of_one_le (Finset.one_le_prod₀ fun v _ ↦ ?_)
       (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
     have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
       le_trans (le_of_eq (by simp [hi']))

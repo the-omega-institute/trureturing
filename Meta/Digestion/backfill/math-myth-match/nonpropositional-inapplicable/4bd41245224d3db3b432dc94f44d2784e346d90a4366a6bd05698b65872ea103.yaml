@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4bd41245224d3db3b432dc94f44d2784e346d90a4366a6bd05698b65872ea103
+  normalized_sha256: sha256:4bd41245224d3db3b432dc94f44d2784e346d90a4366a6bd05698b65872ea103
+cas_ref: sha256:4bd41245224d3db3b432dc94f44d2784e346d90a4366a6bd05698b65872ea103
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 给出物品归还后的条件性伦理案例与后续责任，不含形式化计数或数学恒等式。
+    previous_atom_id: 6e893b38d2294ae8353441b4d582424719e65dc66d831b1e0d87b167c86bcac6
+    next_atom_id: 069818f43162dcc7f1920c41f8f15581811b85bb90ab168e6f262ddb3265c26e

@@ -1,0 +1,18 @@
+**定义 111.1（原块的复无迹范数与安装偏离量）。** 沿用定义 72.1、103.1 的原 $U,W,\xi$、$P_\xi=\xi\xi^\dagger$ 和 $\Lambda$。在复 Hilbert–Schmidt 空间上取
+
+$$
+\langle X,Y\rangle_2=\operatorname{Tr}(X^\dagger Y),\qquad
+\mathcal H_0=\{X\in M_3(\mathbb C):\operatorname{Tr}X=0\}.
+\tag{111.1}
+$$
+
+对每个 $N\in U(3)$，仍取原块 $\Theta_N=\Lambda^2\circ\operatorname{Ad}_N\circ\Lambda^2$，并记
+
+$$
+\delta_N=\|NP_\xi-P_\xi N\|_2^2,\qquad
+r_N=\|\Theta_N|_{\mathcal H_0}\|_{2\to2}.
+\tag{111.2}
+$$
+
+这里 $\operatorname{Ad}_N(X)=NXN^\dagger$，$r_N$ 与 (103.1) 是同一个算子范数，其定义域包含全部复无迹矩阵。将这个代数定义取在全部 $U(3)$ 上，包括交换安装；原制备及其消费者仍使用定义 91.1 的原允许安装。
+

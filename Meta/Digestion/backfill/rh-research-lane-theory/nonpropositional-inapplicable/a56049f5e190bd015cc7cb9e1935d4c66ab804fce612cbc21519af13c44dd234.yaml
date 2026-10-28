@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a56049f5e190bd015cc7cb9e1935d4c66ab804fce612cbc21519af13c44dd234
+  normalized_sha256: sha256:a56049f5e190bd015cc7cb9e1935d4c66ab804fce612cbc21519af13c44dd234
+cas_ref: sha256:a56049f5e190bd015cc7cb9e1935d4c66ab804fce612cbc21519af13c44dd234
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非声明条目：不把相位压平本身冒领为 Weil/Pick 负证书，不给出证书存在性断言。
+    previous_atom_id: 38b90a5fe4e70462c9c7dd4ec790b780e0c5c1dcd39280814c59b68821896249
+    next_atom_id: 95cf4dfa031e89bb90396dbc79a5f0a9343236a67fdb49a2340281d25a6b0ce6

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:380c8309b6d57bbbda86c2993762bd83032c35ee367826d0e933065ed18341c5
+  normalized_sha256: sha256:380c8309b6d57bbbda86c2993762bd83032c35ee367826d0e933065ed18341c5
+cas_ref: sha256:380c8309b6d57bbbda86c2993762bd83032c35ee367826d0e933065ed18341c5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “Lean 已证明 RH”是被明确拒用的说法，不是 RH 证明状态的数学见证。
+    previous_atom_id: f1b84049e35542c734a2069216dedd410e9a6fa09d85dafa57b0ab00d3d6c501
+    next_atom_id: f43eaa6b85b5d3a8dbe44c6ba7c3582c6e7d2f07417d1302e3f4d8f78b6f4a37

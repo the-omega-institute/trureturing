@@ -1,0 +1,47 @@
+**命题 21.4（有向分辨率、残余宽度与共同概率的区别）。**
+在定义 21.3 下，
+
+$$
+\begin{gathered}
+K_\infty\ne\varnothing,\qquad
+\min_{K_\infty}q=\sup_C\min_{K_C}q,\qquad
+\max_{K_\infty}q=\inf_C\max_{K_C}q,\\
+\inf_C\operatorname{diam}q(K_C)=\operatorname{diam}q(K_\infty).
+\end{gathered}
+$$
+
+若极限宽度小于 $\epsilon$，存在一个有限信息切面，此后的全部相容精细化宽度均小于 $\epsilon$。
+宽度极限为零等价于查询在残余纤维上常值，不要求模型唯一，亦不产生先验权重或有效停止算法。
+
+证明。
+这是[预测波命题 28.2](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md)
+序列结论的有向应用；这里不假设指标有可数共尾序列，因此使用有限交证明。
+对任意有限个 $C$ 取共同上界 $D$，$K_D$ 包含于其交且非空。
+紧致性给 $K_\infty$ 非空紧。
+令 $a=\sup_C\min_{K_C}q$。
+闭集 $K_C\cap\{q\le a\}$ 非空，任意有限组也由一个共同上界中的最小点见证非空，
+故存在 $x\in K_\infty$ 且 $q(x)\le a$。
+反向所有 $x\in K_\infty$ 满足 $q(x)\ge\min_{K_C}q$ 对每个 $C$ 成立，
+所以其最小值恰为 $a$。对 $-q$ 同理，最大值为 $b=\inf_C\max_{K_C}q$。
+
+每层宽度为两端点差且至少 $b-a$。
+给 $\delta>0$，分别选切面使最小值大于 $a-\delta$、最大值小于 $b+\delta$；
+取共同上界后两者同时成立，宽度小于 $b-a+2\delta$。
+令 $\delta\downarrow0$ 得所需等式。有某层宽度小于 $\epsilon$ 后，包含单调性保证全部后继同样成立。
+
+此结论的对象是指定连续查询的宽度。
+$K_n=[0,1/n]$ 的极限查询宽度为零，有限层仍未达到精确值；
+无紧性时 $K_n=[n,\infty)\subset\mathbb R$ 各层非空却无交。
+对无穷查询菜单，逐项趋零不保证统一：
+令 $\Omega=\{0,1\}^{\mathbb N}$，产品度量为
+$\sum_k2^{-k}|x_k-y_k|$，$K_n$ 固定前 $n$ 位为零。
+每个固定坐标查询最终宽度零，但每个有限 $n$ 的所有坐标宽度上确界仍为一。
+若需统一菜单结论，可另要求紧查询参数集 $Q_0$ 及联合连续 $F:Q_0\times\Omega\to\mathbb R$；
+把同一有限交/极值论证应用到 $Q_0\times K_C^2$ 即得统一宽度等式。
+仅有“全部深度”的字面菜单不能替代这些条件。
+
+若两个候选对全部许可记录同律而事件值分别为零、一，
+$(1-\lambda)\delta_{\omega_0}+\lambda\delta_{\omega_1}$ 对任意 $0\le\lambda\le1$
+满足同一支持约束，却给不同事件概率 $\lambda$。
+故相容性不选择概率，抽象紧致性不供应可取得的收敛速率或停止证书。证毕。
+

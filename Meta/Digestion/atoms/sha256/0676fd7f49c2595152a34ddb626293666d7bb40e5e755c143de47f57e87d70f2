@@ -1,0 +1,93 @@
+**Definition 54.1 (conditional supplied alphabet).** Let $H\ge1$ be a public integer, fixed throughout a run. An actual source is a nonempty ordered binary tree
+
+$$
+t::=\alpha\mid\beta\mid\langle t,t\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\tag{TM.5401}
+$$
+
+Equality of trees retains leaf order and every bracket. Write $c(t)=(a,b)$ for the leaf composition, $m=a+b$, $n=a+2b$, and $E_i(t)=E(\rho^it)$. The leaf product $E$ is evaluated in the project's associative Clifford algebra, with $E(\alpha)=A$, $E(\beta)=B$, $A^2=1$, $B^2=-1$, and $AB+BA=1$. Set
+
+$$
+\begin{aligned}
+\mathcal T_H&=\{t:1\le\lambda(t)\le H\},\\
+U_H&=\{t\in\mathcal T_H:(E_0(t),E_1(t),E_2(t))=(1,1,1)\},\\
+q_H(t)&=\begin{cases}
+(0,E_0(t),m),&n>H,\\
+(1,c(t),E_0(t),E_1(t)),&n\le H<m+n,\\
+(2,c(t),(E_0(t),E_1(t),E_2(t))),&m+n\le H.
+\end{cases}
+\end{aligned}
+\tag{TM.5402}
+$$
+
+The last line is TM30's $(2,\eta)$ in its equivalent composition/three-window coordinates. Thus the target here is exactly the published $q_H$.
+
+The online actions are ambient TM30 actions: current `Read`, a whole $\rho$ attempt, and a whole left or right concatenation with a named actual nonempty positive context. The guard accepts precisely when the entire candidate has at most $H$ leaves, including equality. Rejection preserves the source and supplies no candidate read. The record includes public inputs, the supplied label, action and context identities, actual guard responses and actual reads. These semantics continue after the source leaves $U_H$. There is no reset, copy, navigation, source replacement, inverse action, row/size/target port, new cost observation, or candidate-read leakage.
+
+For nonempty $U_H$, define $A_U(H)$ to be the least cardinality of a finite nonempty alphabet $\mathcal L_H$ for which there exist a function $\ell_H:U_H\to\mathcal L_H$, genuinely supplied from the **same unmodified initial source**, and one effective deterministic controller $\Pi_H$, such that
+
+$$
+\forall t\in U_H:\quad
+\Pi_H\bigl(H,\ell_H(t);t\bigr)
+\text{ stops after finitely many source calls and outputs }q_H(t).
+\tag{TM.5403}
+$$
+
+Equal labels have equal initialization and public data. Every later choice depends only on that initialization and acquired records. The minimization allows arbitrary source-dependent supplied functions, including functions depending on leaf order or brackets; the lower proof does not require their computability or factorization through $q_H$. The upper suppliers and controllers constructed here are effective uniformly in $H$. Their supplier algorithms take already available initial-source information as input; this is not a free way to obtain that information from the unknown running source.
+
+The prior is the public logical promise of membership in the complete $U_H$, not a probability distribution. A varying supplied label is additional evidence. By Atomic360 and TM51, $U_H$ is empty exactly for $1\le H<8$. We use $A_U(H)=0$ there if an empty alphabet is permitted on an empty domain; a convention requiring nominally nonempty alphabets gives 1 instead. No depth or logarithmic advice width is assigned to the empty task. All substantive capacity claims concern $H\ge8$.
+
+**Source correspondence (reused, with coordinates for this appendix).** Put
+
+$$
+h=\lfloor H/4\rfloor,\qquad H=4h+\delta,\quad0\le\delta\le3.
+$$
+
+Atomic360.2–4 and TM51.2–3 give exactly
+
+$$
+c(t)=(4r,4s),\quad r,s\ge1,\quad r+s\le h.
+\qquad
+z=r+s,\quad w=r+2s.
+\tag{TM.5404}
+$$
+
+Consequently $m=4z$, $n=4w$, $m+n=4(z+w)$, and
+
+$$
+2\le z\le h,\quad z+1\le w\le2z-1,
+\qquad r=2z-w,\quad s=w-z.
+\tag{TM.5405}
+$$
+
+For every such pair there is an actual witness, with any fixed ordered bracketing, whose leaf word is
+
+$$
+\omega_{r,s}=
+\alpha^{2r-1}\beta^{2s}\alpha\beta^{2s-1}\alpha^{2r}\beta.
+\tag{TM.5406}
+$$
+
+Its eight state-edge multiplicities in Atomic360 are $(r,r,r,r;s,s,s,s)$: all are positive, balanced, and have connected support. The converse in that theorem is essential: **all** qualifying leaf words are the corresponding Euler-path labels, and **all** their ordered bracketings are actual members. A disconnected support with one of $r,s$ zero is excluded, and $r=s=0$ would be an excluded empty source. No merely marginally attainable resource triple is used here.
+
+Use the shorthand $\tau_h(z,w)$ for the original target of a finite pair $w\le h$:
+
+$$
+\tau_h(z,w)=
+\begin{cases}
+(2,(4(2z-w),4(w-z)),(1,1,1)),&z+w\le h,\\
+(1,(4(2z-w),4(w-z)),1,1),&z+w>h.
+\end{cases}
+\tag{TM.5407}
+$$
+
+If $w>h$, the target is $(0,1,4z)$; all its hidden compositions at that size count as one target. Such a target exists precisely when $2z-1>h$. Its actual representative is $\omega_{1,z-1}$. The symbol $(z,\infty)$ below denotes this target, not an observed or physical infinite resource.
+
+Every displayed inequality holds for every $\delta$. For instance, $w\le h$ is exactly $4w\le H$, while $z+w\ge h+1$ gives $4(z+w)>H$. This does not prove that the unrestricted optimum depends only on $h$: arbitrary ambient contexts can have lengths not divisible by four.
+
+TM30.2 states that equal initial $q_H$, equal label and common initialization force identical complete responses under every such controller. TM38.1 states that equal complete acquired records and equal **current** $q_H$, paired with different original targets, cause permanent failure of recovery. TM45.1–4 preserves these initial/current pairs throughout actual histories. Thus a construction with labels factoring through the original target lifts to every word and bracketing in that target fiber, without physically replacing the running source by a witness. For a competing arbitrary supplier in a lower bound, select one actual representative per target and retain that representative's actual label. This restriction makes no factorization assumption.
+

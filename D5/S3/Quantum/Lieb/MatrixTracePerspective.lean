@@ -7,6 +7,7 @@
    digest: Matrix trace perspective convexity with all adjoints and finite dimensions. -/
 
 import D5.S3.Quantum.Lieb.TracePerspectiveConvexity
+import Mathlib.Analysis.Matrix.Order
 
 noncomputable section
 namespace D5.S3.Quantum.Lieb.MatrixTracePerspective
@@ -39,7 +40,7 @@ private lemma transport_trace (X : Matrix d d ℂ) :
     traceRe (ℋ := EuclideanSpace ℂ d) (transport X) = (Matrix.trace X).re := by
   unfold traceRe
   change (LinearMap.trace ℂ (EuclideanSpace ℂ d) (Matrix.toEuclideanLin X)).re = _
-  rw [Matrix.toEuclideanLin_eq_toLin, Matrix.trace_toLin_eq]
+  rw [Matrix.toEuclideanLin_eq_toLin_orthonormal, Matrix.trace_toLin_eq]
 
 private lemma transport_lieb {a : ℝ} (Z X W : Matrix d d ℂ)
     (hX : X.PosDef) (hW : W.PosDef) :

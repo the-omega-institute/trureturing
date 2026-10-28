@@ -8,6 +8,56 @@ internal sealed class CanonicalRelativeModularModelDocument : IScribeDocumentDef
         "Actual supported modular coordinates are shared by the original DPI and fixed Petz equality.",
         H("Actual relative modular model"), Blocks(
             Describe.Lean(
+                DescribeId.Create("diagonal-quadratic-form"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.diagonal_quadratic_form"),
+                H("The real quadratic form of a real diagonal matrix"),
+                StatementSource.FromAuthor(FormulaDsl.Disp(
+                    new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("n"),
+                        FormulaDsl.Seq(Id("Type"), FormulaDsl.Sp, Id("u")),
+                        FormulaDsl.Seq(
+                            FormulaDsl.OpenBracket, Call("Fintype", Id("n")),
+                            FormulaDsl.CloseBracket, FormulaDsl.Sp,
+                            FormulaDsl.OpenBracket, Call("DecidableEq", Id("n")),
+                            FormulaDsl.CloseBracket, FormulaDsl.Sp,
+                            new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("d"),
+                                new Formula.TypeArrow(Id("n"),
+                                    FormulaDsl.Seq(FormulaDsl.Mathbb, FormulaDsl.Grp(Id("R")))),
+                                new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("y"),
+                                    new Formula.TypeArrow(Id("n"),
+                                        FormulaDsl.Seq(FormulaDsl.Mathbb, FormulaDsl.Grp(Id("C")))),
+                                    Equal(
+                                        FormulaDsl.Seq(FormulaDsl.Open,
+                                            Call("dotProduct", Call("star", Id("y")),
+                                                new Formula.Apply(
+                                                    FormulaDsl.Seq(Id("Matrix"), FormulaDsl.Dot,
+                                                        Id("mulVec")),
+                                                    [new Formula.Apply(
+                                                        FormulaDsl.Seq(Id("Matrix"), FormulaDsl.Dot,
+                                                            Id("diagonal")),
+                                                        [FormulaDsl.Seq(Id("fun"), FormulaDsl.Sp,
+                                                            Id("i"), FormulaDsl.Sp, FormulaDsl.Mapsto,
+                                                            FormulaDsl.Sp, FormulaDsl.Open,
+                                                            new Formula.Apply(Id("d"), [Id("i")]), FormulaDsl.Colon,
+                                                            FormulaDsl.Seq(FormulaDsl.Mathbb,
+                                                                FormulaDsl.Grp(Id("C"))),
+                                                            FormulaDsl.Close)]), Id("y")])),
+                                            FormulaDsl.Close, FormulaDsl.Dot, Id("re")),
+                                        FormulaDsl.Seq(FormulaDsl.Sum, FormulaDsl.Underscore,
+                                            FormulaDsl.Grp(Id("i")), FormulaDsl.Sp,
+                                            Multiply(new Formula.Apply(Id("d"), [Id("i")]),
+                                                new Formula.Power(new Formula.Norm(new Formula.Apply(Id("y"), [Id("i")])),
+                                                    Num(2))))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every finite index type, real weights and complex vector, "
+                        + "the real part of the diagonal quadratic form is the weighted sum of squared norms. "
+                        + "The weights need not be nonnegative, and the index type may be empty.")),
+                    Paragraph(Text("∀ {n : Type u} [Fintype n] [DecidableEq n] "
+                        + "(d : n → ℝ) (y : n → ℂ), "
+                        + "(star y ⬝ᵥ (Matrix.diagonal (fun i => (d i : ℂ)) *ᵥ y)).re "
+                        + "= ∑ i, d i * ‖y i‖ ^ 2."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("supported-relative-modular-model"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.supported_relative_modular_model"),
                 H("Actual supported relative modular model"), StatementSource.WithoutFormula(),

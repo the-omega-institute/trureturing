@@ -1,0 +1,34 @@
+**Proposition 116.1 (Every parameter occurs).** Every $v\in[1/3,1]$
+in (115.1) is realized by a CPTP decoder. In the diagonal-covariant
+class, the complete zero-parameter condition is that $C$ be doubly
+stochastic with column zero
+$(v,(1-v)/2,(1-v)/2)^{\mathsf T}$, $1/3\le v\le1$; the coherence
+parameters are constrained only by complete positivity.
+
+*Proof.* Let
+
+$$
+\sigma_v=\operatorname{diag}\!\left(v,\frac{1-v}{2},\frac{1-v}{2}\right),
+\qquad \beta_v=\frac{I-\sigma_v}{2},\qquad
+\mathcal R_v(X)=x_{00}\sigma_v+(x_{11}+x_{22})\beta_v.
+\tag{116.1}
+$$
+
+Both $\sigma_v$ and $\beta_v$ are states. The output-first Choi matrix
+is
+
+$$
+J(\mathcal R_v)=\sigma_v\otimes E_{00}
+                  +\beta_v\otimes(E_{11}+E_{22})\succeq0,
+\qquad \operatorname{Tr}_{\rm out}J(\mathcal R_v)=I.
+\tag{116.2}
+$$
+
+Thus the map is CPTP, with $\mathcal R_v(I)=\sigma_v+2\beta_v=I$ and
+$\mathcal R_v(E_{00})=\sigma_v$. Theorem 115.1 applies.
+For a diagonal-covariant map (112.5), unitality is exactly the additional
+row-sum condition on $C$, and its column zero is
+$\mathcal R(E_{00})$. Since $\Phi_0$ deletes every off-diagonal input
+matrix unit, no further restriction on the coherence parameters enters
+the zero objective. $\square$
+

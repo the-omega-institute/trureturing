@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:38e22c05e62a35e96f6930a97a181a7ff4c3bc8441ca41e4fa4a5c10a21113ce
+  normalized_sha256: sha256:38e22c05e62a35e96f6930a97a181a7ff4c3bc8441ca41e4fa4a5c10a21113ce
+cas_ref: sha256:38e22c05e62a35e96f6930a97a181a7ff4c3bc8441ca41e4fa4a5c10a21113ce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：解释限定述谓、不可说与关联立场的文本含义，明确不把梵文句子当作数据库拼接定理。
+    previous_atom_id: d2205c391060d23b5c0550bbfe11ac206eef8fbfc84d12929c7e981a3ae3683b
+    next_atom_id: 672822b70f079e6b27461c12f89f04acd757444e910ae5f64000c79a2c53fbc1

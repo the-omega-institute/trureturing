@@ -216,7 +216,7 @@ private theorem transition_particle_count {L s : ℕ} (i : Fin L) (x y : ((Fin (
 theorem standardB_sector_support {L s N : ℕ} (coeff : Fin L → ℝ) (ψ : (EuclideanSpace ℂ ({s : Fin (2*L+s) → Bool // occupationCount s = N})))
     (x : ((Fin (2*L+s) → Bool))) (hx : occupationCount x ≠ N-2) :
     (Matrix.toEuclideanLin (standardB coeff)) (lift ψ) x=0 := by
-  simp only [Matrix.toEuclideanLin_apply,WithLp.ofLp_toLp,Matrix.mulVec,dotProduct,standardB_real]
+  simp only [Matrix.toEuclideanLin, Matrix.toLpLin_apply, PiLp.toLp_apply,WithLp.ofLp_toLp,Matrix.mulVec,dotProduct,standardB_real]
   apply Finset.sum_eq_zero
   intro y _
   by_cases hy : occupationCount y=N
@@ -317,7 +317,7 @@ private theorem matrix_adjoint_energy {d : ℕ} (B : FullOperator d) (Ψ : (Eucl
   congr 1
   have hmul : (Matrix.toEuclideanLin (Bᴴ * B)) Ψ =
       (Matrix.toEuclideanLin Bᴴ) ((Matrix.toEuclideanLin B) Ψ) := by
-    simp only [Matrix.toEuclideanLin_apply, WithLp.ofLp_toLp, Matrix.mulVec_mulVec]
+    simp only [Matrix.toEuclideanLin, Matrix.toLpLin_apply, PiLp.toLp_apply, WithLp.ofLp_toLp, Matrix.mulVec_mulVec]
   rw [hmul]
   rw [Matrix.toEuclideanLin_conjTranspose_eq_adjoint]
   exact LinearMap.adjoint_inner_right _ _ _
@@ -330,7 +330,7 @@ private theorem actual_energy {L s : ℕ} (coeff : Fin L → ℝ) (Ψ : (Euclide
         (realK coeff x y : ℂ) * star (Ψ x) * Ψ y).re := by
   rw [← matrix_adjoint_energy]
   apply congrArg Complex.re
-  simp only [EuclideanSpace.inner_eq_star_dotProduct,Matrix.toEuclideanLin_apply,
+  simp only [EuclideanSpace.inner_eq_star_dotProduct,Matrix.toEuclideanLin, Matrix.toLpLin_apply, PiLp.toLp_apply,
     WithLp.ofLp_toLp,Matrix.mulVec,dotProduct,Pi.star_apply,Finset.mul_sum,Finset.sum_mul,standardK_real]
   apply Finset.sum_congr rfl
   intro x _
@@ -538,7 +538,7 @@ private theorem pairEmpty_set {L s : ℕ} (i : Fin L) (x : ((Fin (2*L+s) → Boo
 private theorem pair_matrix_row {L s : ℕ} (i : Fin L) (Ψ : (EuclideanSpace ℂ (Fin (2*L+s) → Bool))) (x : ((Fin (2*L+s) → Bool))) :
     (Matrix.toEuclideanLin (fullC (downMode i)*fullC (upMode i))) Ψ x =
       if pairEmpty i x then Ψ (addPair i x) else 0 := by
-  simp only [Matrix.toEuclideanLin_apply,WithLp.ofLp_toLp,Matrix.mulVec,dotProduct,
+  simp only [Matrix.toEuclideanLin, Matrix.toLpLin_apply, PiLp.toLp_apply,WithLp.ofLp_toLp,Matrix.mulVec,dotProduct,
     pair_entry_transition,transition_add]
   by_cases he : pairEmpty i x
   · simp [he]

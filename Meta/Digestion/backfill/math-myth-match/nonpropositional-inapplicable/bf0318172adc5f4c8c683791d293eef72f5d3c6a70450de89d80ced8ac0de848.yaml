@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bf0318172adc5f4c8c683791d293eef72f5d3c6a70450de89d80ced8ac0de848
+  normalized_sha256: sha256:bf0318172adc5f4c8c683791d293eef72f5d3c6a70450de89d80ced8ac0de848
+cas_ref: sha256:bf0318172adc5f4c8c683791d293eef72f5d3c6a70450de89d80ced8ac0de848
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 概述休息、身体照护与灵性实践的文本要求，不含医学时间公式。
+    previous_atom_id: 6725776dbb7b9b2a7723f6bfd15f906dac29d9650e58b8ef0ef94f09ea797be4
+    next_atom_id: 7defae2e458e7fc80d46e32013015b6e5d0941087e0272f28946e2af7fa23257

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:afbcec948922802bd65734674257153998aa043537bd10a98ddd7305546842cf
+  normalized_sha256: sha256:afbcec948922802bd65734674257153998aa043537bd10a98ddd7305546842cf
+cas_ref: sha256:afbcec948922802bd65734674257153998aa043537bd10a98ddd7305546842cf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 两轮预算如何核销及不复用预算的规则；分隔符不增加命题。
+    previous_atom_id: 97513df2c3c95fe2605d551e1fce8041970d3703f556172d76c7c2d35eed9c65
+    next_atom_id: 81a79af9aafe0ed884a61b1c4a7dc0640b0d97e89c1de188252da0e916b52eab

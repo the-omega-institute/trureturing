@@ -1,0 +1,38 @@
+**条件接口 380.2（拓扑泵与谱隙）。** 设外加准动量 \(k\in\mathbb T^1\) 与驱动参数 \(\lambda\in S^1\)，每个 \((k,\lambda)\in\mathbb T^2\) 给出同一 Hilbert 空间上的有限范围自伴算子 \(H(k,\lambda)\)，并存在统一谱隙
+
+$$
+\operatorname{dist}\bigl(0,\operatorname{spec}H(k,\lambda)\bigr)\ge\delta>0.
+\tag{380.4}
+$$
+
+若占据投影 \(P(k,\lambda)=\mathbf1_{(-\infty,0)}(H(k,\lambda))\) 随 \((k,\lambda)\) 连续可微，并在一个参数图上取有限秩局部正交框架 \(U(k,\lambda)\) 满足 \(P=UU^\dagger\)，则以反厄米 Chern–Weil 约定定义
+
+$$
+\mathcal A=U^\dagger dU,
+\qquad
+\mathcal F=d\mathcal A+\mathcal A\wedge\mathcal A,
+\qquad
+\operatorname{tr}\mathcal F
+=\operatorname{tr}\bigl(P\,dP\wedge dP\bigr).
+\tag{380.5}
+$$
+
+若无限维情形不具有限秩，则另须声明 \(\operatorname{tr}(P\,dP\wedge dP)\) 的迹类或每单位体积迹条件。在二维参数环面 \(\mathbb T^2\) 上，若相应丛满足这些正则性，第一 Chern 数
+
+$$
+\operatorname{Ch}_1(P)=\frac{1}{2\pi i}\int_{\mathbb T^2}\operatorname{tr}\mathcal F
+\in\mathbb Z
+\tag{380.6}
+$$
+
+是同伦不变的。把 FIB 路径提升为有限范围跃迁图只能提供矩阵元的组合支撑；式（380.4）中的 Hilbert 空间、自伴性、参数环面和谱隙不是递归计数的结论。
+
+在绝热驱动和边界条件满足相应正则性时，泵浦的每周期净输运可与 \(\operatorname{Ch}_1(P)\) 关联。若外加模型已经给出带取向的体—边界 K 类对应、同一公共定义域上的 Fredholm 映射 \(D_{\partial}\)，并保持边界谱隙，则可写成
+
+$$
+\operatorname{ind}(D_{\partial})=\operatorname{Ch}_1(P),
+\tag{380.7}
+$$
+
+但这需要给出上述体—边界对应、取向和 Fredholm 性；有限 FIB 树上的叶数差不自动是指数，也不自动代表边界电流。
+

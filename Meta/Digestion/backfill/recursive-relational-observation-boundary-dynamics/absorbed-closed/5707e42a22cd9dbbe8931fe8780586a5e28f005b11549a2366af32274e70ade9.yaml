@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5707e42a22cd9dbbe8931fe8780586a5e28f005b11549a2366af32274e70ade9
+  normalized_sha256: sha256:5707e42a22cd9dbbe8931fe8780586a5e28f005b11549a2366af32274e70ade9
+cas_ref: sha256:5707e42a22cd9dbbe8931fe8780586a5e28f005b11549a2366af32274e70ade9
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ExperimentBoundary/ProtocolInnovationCriterion.protocol_innovation_iff_separates_current_fiber
+    target_statement_id: sha256:15a92d1945d837a7efaf4ad1f07fbf8aaa48e5e1c995e403a3690bffb872c161
+receipts:
+  unresolved_subitems: []

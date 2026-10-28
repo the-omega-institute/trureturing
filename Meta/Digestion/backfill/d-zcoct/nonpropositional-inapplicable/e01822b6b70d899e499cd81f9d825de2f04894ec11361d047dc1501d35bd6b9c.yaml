@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e01822b6b70d899e499cd81f9d825de2f04894ec11361d047dc1501d35bd6b9c
+  normalized_sha256: sha256:e01822b6b70d899e499cd81f9d825de2f04894ec11361d047dc1501d35bd6b9c
+cas_ref: sha256:e01822b6b70d899e499cd81f9d825de2f04894ec11361d047dc1501d35bd6b9c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the allowed syntax for prime-generated finite systems and excludes zero coordinates as inputs; an engineering rule, not a theorem.
+    previous_atom_id: 7f616a2a263dd8db98842b5217cf496fd6237959c29ede9b4014d2909efab325
+    next_atom_id: 1c7e85a7ad096e9af78a64d728d85ec927cc9e281c83ac564c4c630316172153

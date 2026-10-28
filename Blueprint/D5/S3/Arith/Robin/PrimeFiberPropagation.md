@@ -6,7 +6,19 @@ A multiplicative edge test carries Robin's inequality, its first layer controls 
 
 Write Z(n)=sigma(n)/n and RobinAt(n) for Z(n)<exp(gamma)*log(log(n)). For a step n -> n*m the edge test EdgeTest(n,m) asks that (Z(n*m)/Z(n)-1)*log(log(n)) <= log(1+log(m)/log(n)). Since log(log(n*m))=log(log(n))+log(1+log(m)/log(n)), the test says that the relative increase of Z, weighted by log(log(n)), is paid by the increase of the double logarithm. It discards the existing Robin slack at n, so it is sufficient for propagation and not necessary.
 
-**Theorem 1.1 (A passing edge carries Robin's inequality).**
+**Theorem 1.1 (Positivity of the normalized divisor sum).**
+
+Lean statement: `D5/S3/Arith/Robin/PrimeFiberPropagation.divisorRatio_pos`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PrimeFiberPropagation.divisorRatio_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n with n!=0, divisorRatio(n)>0. The numerator sigma(1,n) and the denominator n are both positive. This permits logarithmic product identities at arbitrary positive arithmetic corners; no coprimality condition is needed for positivity.
+
+**Theorem 1.2 (A passing edge carries Robin's inequality).**
 
 Lean statement: `D5/S3/Arith/Robin/PrimeFiberPropagation.robinAt_mul_of_edgeTest`
 
@@ -20,7 +32,19 @@ For naturals n>1 and m>0, RobinAt(n) and EdgeTest(n,m) imply RobinAt(n*m). The m
 
 No estimate on sigma beyond its positivity is used. The statement does not decide whether a given edge passes; that is a separate numerical or analytic question.
 
-**Theorem 1.2 (The first layer of a prime fibre controls every later layer).**
+**Theorem 1.3 (The divisor sum at the next prime power).**
+
+$$\forall q: \mathbb{N}, \operatorname{Nat.Prime}\left(q\right) \implies \forall a: \mathbb{N}, \operatorname{ArithmeticFunction.sigma}\left(1, q^{a + 1}\right) = q \cdot \operatorname{ArithmeticFunction.sigma}\left(1, q^{a}\right) + 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PrimeFiberPropagation.sigma_prime_pow_succ` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every prime natural q and natural a, sigma(1,q^(a+1)) equals q*sigma(1,q^a)+1. The geometric divisor sum gives this recurrence; sigma_mul_prime uses it to compare consecutive prime layers.
+
+**Theorem 1.4 (The first layer of a prime fibre controls every later layer).**
 
 Lean statement: `D5/S3/Arith/Robin/PrimeFiberPropagation.edgeTest_mul_prime_pow`
 
@@ -34,7 +58,7 @@ Let q be prime and let n satisfy log(n)>=3. If EdgeTest(n,q) holds, then EdgeTes
 
 Put L=log(n) and l=log(q). The step uses log(1+l/L)<=l/L, log(L+l)<=log(L)+l/L, log(1+l/(L+l))>=l/(L+2l), log(L)>=1, and (L+l)(L+2l)<=L^2*(1+l+l^2/2)<=L^2*exp(l), the middle inequality using L>=3. Together they turn the test at scale L into the test at scale L+l. No restriction q>7 is needed; every prime direction behaves the same way.
 
-**Theorem 1.3 (Robin's inequality along a whole prime fibre).**
+**Theorem 1.5 (Robin's inequality along a whole prime fibre).**
 
 Lean statement: `D5/S3/Arith/Robin/PrimeFiberPropagation.robinAt_mul_prime_pow`
 
@@ -48,7 +72,7 @@ If q is prime, log(n)>=3, RobinAt(n) holds and EdgeTest(n,q) passes, then RobinA
 
 Combined with the frozen seven-smooth theorem, every certified seven-smooth core B>5040 whose first q-layer passes the test certifies the whole fibre B*q^k. The test can fail where Robin still holds: for B=27440=2^4*5*7^3 and q=11 the first layer fails numerically, while 301840=27440*11 satisfies Robin with margin. Most integers have seven-smooth part at most 5040 and are not reached from that core at all. The theorem therefore reduces each prime fibre to its first layer; it does not prove Robin's inequality for all n>5040, and the Riemann hypothesis remains open.
 
-**Theorem 1.4 (Replacing a prime by a larger prime keeps Robin's inequality).**
+**Theorem 1.6 (Replacing a prime by a larger prime keeps Robin's inequality).**
 
 Lean statement: `D5/S3/Arith/Robin/PrimeFiberPropagation.robinAt_prime_replace`
 
@@ -64,8 +88,11 @@ Repeating the replacement from the largest prime down moves a certified exponent
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/PrimeFiberPropagation.divisorRatio_pos`
 - Truth anchor: `D5/S3/Arith/Robin/PrimeFiberPropagation.edgeTest_mul_prime_pow`
 - Truth anchor: `D5/S3/Arith/Robin/PrimeFiberPropagation.robinAt_mul_of_edgeTest`
 - Truth anchor: `D5/S3/Arith/Robin/PrimeFiberPropagation.robinAt_mul_prime_pow`
 - Truth anchor: `D5/S3/Arith/Robin/PrimeFiberPropagation.robinAt_prime_replace`
+- Truth anchor: `D5/S3/Arith/Robin/PrimeFiberPropagation.sigma_prime_pow_succ`
 - Dependency: [D5/S3/Arith/ExponentExchange/IntegerSwap](../ExponentExchange/IntegerSwap.md)
+- Dependency: [D5/S3/Arith/RobinExponentSwap](../RobinExponentSwap.md)

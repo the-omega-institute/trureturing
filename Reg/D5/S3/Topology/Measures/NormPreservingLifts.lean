@@ -30,4 +30,14 @@ abbrev arbitraryLiftsScope := type_of% (@arbitrary_lifts_tendsto.{u,v,w})
 theorem arbitrary_lifts_actual : arbitraryLiftsScope.{u,v,w} :=
   @arbitrary_lifts_tendsto.{u,v,w}
 
+/-- Exact scopes for the finite positive-difference integration suppliers.
+These source bindings supply no four-slot realization or sensitivity evidence. -/
+theorem difference_integral_actual :
+    type_of% (@signedFunctional_sub_toSignedMeasure.{u}) :=
+  @signedFunctional_sub_toSignedMeasure.{u}
+
+theorem difference_variation_actual :
+    type_of% (@totalVariation_sub_toSignedMeasure_le.{u}) :=
+  @totalVariation_sub_toSignedMeasure_le.{u}
+
 end Reg.D5.S3.Topology.Measures.NormPreservingLifts

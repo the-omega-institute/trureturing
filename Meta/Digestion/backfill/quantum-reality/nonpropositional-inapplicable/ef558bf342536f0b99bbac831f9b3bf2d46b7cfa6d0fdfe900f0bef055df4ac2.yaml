@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ef558bf342536f0b99bbac831f9b3bf2d46b7cfa6d0fdfe900f0bef055df4ac2
+  normalized_sha256: sha256:ef558bf342536f0b99bbac831f9b3bf2d46b7cfa6d0fdfe900f0bef055df4ac2
+cas_ref: sha256:ef558bf342536f0b99bbac831f9b3bf2d46b7cfa6d0fdfe900f0bef055df4ac2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 要求将新增坐标接入共同钟、信号、输运与反作用，属于物理实现的开放任务。
+    previous_atom_id: fb41d406bb3813cabc497614c4df60482d4bd72f013e633f94f496cc67fca340
+    next_atom_id: 6504460edca4e88dd6ac32c7f63e7de6fdf4d623526ef5e79ef607c8e2d11228

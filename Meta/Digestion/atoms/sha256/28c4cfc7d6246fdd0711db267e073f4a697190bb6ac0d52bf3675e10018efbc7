@@ -1,0 +1,8 @@
+- BranchingPotential: weighted child sums, history-dependent counts, upper and
+  lower all-depth integer induction.
+- OrderedGridMemory: actual integer-grid maps, arbitrary-radius disjointness,
+  finite-domain path definition and simulation.
+- RadiusThreeData: lossless exact certificate data.
+- RadiusThreeCertificates: full geometric closure, integer row checks, concrete
+  upper, all-controller lower, fixed lower and finite-domain upper endpoints.
+

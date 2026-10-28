@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f59e0b0b6a96e4233ffd42ab92034f1c7848e74ad16337e1da908e04547c7d7e
+  normalized_sha256: sha256:f59e0b0b6a96e4233ffd42ab92034f1c7848e74ad16337e1da908e04547c7d7e
+cas_ref: sha256:f59e0b0b6a96e4233ffd42ab92034f1c7848e74ad16337e1da908e04547c7d7e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 尚未承担的结论仅披露本增订没有完成哪些工作，不给出关于这些未解对象的正反数学结论。
+    previous_atom_id: 4f1b4dbcc67e7664c31d2af97295a84d84dd8996db89b91b069572cc20626fb8
+    next_atom_id: 23136d771fb0be58dde71d7ad653e16e27e0ca27b99d929655a18fa177d8712b

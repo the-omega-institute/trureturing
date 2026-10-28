@@ -18,7 +18,35 @@ HalfField is HVertexOperator on integer exponents in t=sqrt(z). The supported ac
 
 At rank zero, the current colour is empty and the modes, shift and stress fields vanish.
 
-**Theorem 1.1 (Finite support on an arbitrary actual tensor vector).**
+**Theorem 1.1 (The original tensor normal pair).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.tensorPair_eq`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.tensorPair_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+Visibility-only exposure of the original two normal-order branches, with the proof body unchanged. ActualMobiusCovariance charged_pair_l1 consumes the equality for j and -j, retaining the j=0 boundary.
+
+**Theorem 1.2 (Pointwise finite support of the original tensor pair).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.tensorPair_finite`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.tensorPair_finite` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+Visibility-only exposure, statement and proof body unchanged. The charged normal-sum calculation applies the finite-support theorem only at an actual input x or chargedCoefficient(e)(x), never as finite support of endomorphism-valued modes.
+
+**Theorem 1.3 (Finite support on an arbitrary actual tensor vector).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.tensorPair_support_of_bound`
 
@@ -34,7 +62,7 @@ Exact currently loaded native universal type: ∀ (D : D5.S3.VertexAlgebra.Latti
 
 For every v in P tensor T, any actual current bound R for v gives support of j -> tensorPair_i,l(j,m-j-1)v contained in Icc(min(m-R,0),R-1). Such an R exists by tensor induction; no scalar-current-commutant or finite-dimensional premise is used.
 
-**Theorem 1.2 (Tensor operator agrees with its actual finite normal sum).**
+**Theorem 1.4 (Tensor operator agrees with its actual finite normal sum).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.tensor_rawL_finsum`
 
@@ -50,7 +78,7 @@ Exact currently loaded native universal type: ∀ (D : D5.S3.VertexAlgebra.Latti
 
 For every actual tensor vector v, tensorRawL_m v=(1/2) sum_i,l H_i,l finsum_j tensorPair_i,l(j,m-j-1)v. Tensor normalSum is constructed after finite support and proved equal to the mapped polynomial normalSum, so this formula is not a merely named transport.
 
-**Theorem 1.3 (Contextual stress truncation for arbitrary tensor inputs).**
+**Theorem 1.5 (Contextual stress truncation for arbitrary tensor inputs).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.tensor_L_truncation`
 
@@ -82,6 +110,8 @@ Charged theta fields, corrected fractional normal products, all-state twisted lo
 
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.tensorPair_eq`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.tensorPair_finite`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.tensorPair_support_of_bound`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.tensor_L_truncation`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.tensor_rawL_finsum`

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0bfd1dd763a96ae1eef424c56c516a50ec069a65bbd6de7716ef2e110cdb3285
+  normalized_sha256: sha256:0bfd1dd763a96ae1eef424c56c516a50ec069a65bbd6de7716ef2e110cdb3285
+cas_ref: sha256:0bfd1dd763a96ae1eef424c56c516a50ec069a65bbd6de7716ef2e110cdb3285
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：仅为“三种分类相”的引介标题和冒号；具体谱半径及渐近断言在其他独立 atom 中。
+    previous_atom_id: 449fc7aa6d654f10e13f89ba07c613b24b958f254950b0df4ca89be3d14e71dc
+    next_atom_id: b3afaf4cb3ed5e506eae6e974494f7110a668161c5280bb7577c2499da6bfb36

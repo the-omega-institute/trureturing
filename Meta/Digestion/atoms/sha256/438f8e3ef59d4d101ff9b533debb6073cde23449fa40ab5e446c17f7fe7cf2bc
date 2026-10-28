@@ -1,0 +1,63 @@
+**Proposition 7.1 (joining installation, acquisition and use).** For
+each fixed actual $u,T,x$, one complete bill consists of its own
+$\mathcal I(u,T,x)$, precisely (SC.11), and, when actually performed,
+Construction 4.4's additional $(\mathrm{Add},\mathrm{Hold},\mathrm{Read})
+=(1,1,1)$. It includes all the following separate resource classes.
+
+The design can be built from a genuine zero alpha using the original
+$c$ promotions and $b-1$ splits before commissioning. That constructor
+bill, old coefficient installation and unknown-field preparation are
+parts of $\mathcal I$, not consequences of later unit births. If a
+provider prepares its known $x$ using only commissioned terminal
+control from zero, the reused signed forcing vectors give a rational
+terminal Krylov basis of $N$ columns with degree at most $N-b$.
+Solving for $x$ and placing those $N$ pulses at descending remaining
+Tick degrees prepares it with $N$ Adds, $h\le N-b$ Ticks and $h+1$
+Holds, counting zero operands and empty-stage Holds. It requires
+provider knowledge of $T,x$, actual bindings, finite exact solves and
+real clearing/isolation of dependent preparation records. Direct
+commissioning and this terminal preparation are alternative paid
+preparations, never pooled or supplied as advice to the receiver.
+
+During receiver growth there are $c$ successful $S$ calls and no
+$P$, $2c$ new active-field zeros and $2c$ changed bindings, $c$ roster
+length increments and the actual fresh grants. The source structural
+template has $8c$ located assignments, by [NLBAII, §21][NLBAII], plus
+navigation, allocation, registry and grant work. Let
+$W_I=\sum_{p\in I}|p|$. The growth request and success payload sums
+are respectively $2W_I+4c$ and $2W_I+5c$, before their complete
+framing/acknowledgement/Return costs. There are no growth refusals in
+this specified acquisition. Other continuations pay their real
+success/refusal vectors separately.
+
+For an explicit sparse weighted-tree Tick implementation at size $M$,
+form each row's diagonal product in a paid local accumulator, add
+its directed neighbor contributions there, then write that row's
+final destination slot once. One source Tick uses $3M-2$ rational
+products, $2(M-1)$ rational additions and $M$ final destination
+writes, including zero diagonal products in this chosen implementation.
+Local accumulator/register writes, coefficient and old-field reads,
+and the eventual buffer swap remain charged as well. All $L$
+acquisition Ticks occur at that same grown size. Their source arithmetic
+and old/destination field buffers are charged. Predictor replay to
+calculate (SC.10) can use the same $L$
+local weighted updates and $k$ local pulse translations from the
+earned entrance; this is extra receiver work, not a second source
+execution. Recurrence solves, exact-square-root work, forcing/moment
+pairings, sign normalization, graph selectors, table/parser updates
+and any exported vectors/matrices are also charged at actual widths.
+
+Proof. The original beta count increases by one under $P$ and is
+unchanged under $S$, while each $S$ increases the logical leaf count
+by one; these give the original constructor counts. The signed
+forcing construction spans all coordinate vectors and supplies the
+terminal control basis. Each prepared pulse with remaining degree
+$s$ contributes its column $T^s e_\ell$; descending stages therefore
+give exactly the provider's solved $x$. Receiver growth counts follow
+the literal retained-owner/marker, two-cell split template. Address
+lengths and local weighted contributions are the displayed sums.
+Theorem 4.2 and Construction 4.4 give the remaining source-call
+coordinates. All refer to this one chosen preparation, acquisition
+and use. None is a measured runtime, width or energy estimate.
+$\square$
+

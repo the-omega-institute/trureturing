@@ -1,0 +1,47 @@
+**Definition 127.1 (source, metric and reference conventions).** Throughout
+§§127--130 the source quantifier is the full finite algebra
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle v,w\rangle=\langle\rho v,\rho w\rangle.
+\tag{127.1}
+$$
+
+For every $u\in\mathcal T$, an actual history with $m$ accepted updates has
+current source $s_e=\rho^e u$ at each accepted epoch $0\le e\le m$.
+Reads and refused attempts do not advance $e$. An accepted update with no
+new occurrences does advance $e$, because it changes the terminal labels.
+Stopping or a cap selects a finite accepted prefix; it does not remove an
+accepted empty-birth step from that prefix. For an uncapped iteration all
+accepted epochs $e\in\mathbb N$ are available. The semigroup parameter
+$t\ge0$ is separate from $e$ and is the same parameter on both sides of
+each intertwining identity.
+
+Use the actual occurrence vertices $V_e$, their original unit edges $E_e$,
+and $L_e$ of IV Definition 92.1. Set
+$\mathcal P_e=\{p\in V_e:s_e|_p=\beta\}$ and
+$B_e=\{pL,pR:p\in\mathcal P_e\}$.
+Write $G_e\succ0$ for the state metric and $A_e=G_e^{-1}L_e$,
+$Q_e=-A_e$. Thus $G_e$ is the metric denoted $M_e$ in §124, whereas
+$\mathcal P_e$ is the beta-parent set denoted $M_e$ in IV (112.6).
+These two objects have different types. For the entire $\mathcal T$,
+including both singleton sources, define $P_e$ and $T_e$ by
+$(P_ef)(c)=f(\operatorname{par}_e(c))$ and $T_ef=(f,P_ef)$.
+The old coordinates and edges retain their literal addresses. No port
+triple is required at a singleton.
+
+These conventions replace the branch-only source quantifier of Definition
+124.1 for the statements below. Proposition 127.2 supplies the previously
+unspecified residual cross vector used in Lemma 126.1, and Proposition
+128.2 replaces the signed block display in the proof of Proposition 125.2.
+Theorem 129.3 replaces the proof and source scope of Theorem 126.3, using
+Proposition 128.3 for the accepted empty steps and first usable branch
+epochs. The two distinct displays bearing the old tag
+(126.2) are distinguished as the fibre-sum display in Lemma 126.2 and the
+range display in Theorem 126.3; their unambiguous replacements are (129.5)
+and (129.3), respectively. The finite residual construction of §124 and
+the fixed-source witness of Proposition 125.3 retain their conclusions.
+

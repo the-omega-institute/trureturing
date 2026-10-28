@@ -1,0 +1,7 @@
+**Lemma 75.3 (compatibility with the required prime class).** Every $Q\in\mathcal Q$ satisfies $Q\equiv19\pmod{120}$.
+
+**Proof.** Coprimality excludes both $m,n$ being even. If they have opposite parity, $u,v$ are odd, and $Q=3u^2+v^2$ is divisible by four, impossible. Thus both are odd. Hence $u$ is odd, $r\equiv2\pmod8$, and $Q=5r^2-u^2\equiv3\pmod8$. Modulo five, $u\equiv(m+3n)^2$, so $Q\equiv-(m+3n)^4\equiv-1\pmod5$ because $Q\ne5$. Finally $Q\equiv v^2\equiv1\pmod3$ because $Q\ne3$. These combine to give $19$ modulo $120$. ∎
+
+The lemma is a compatibility check, not the exclusion argument. The family is not disjoint from actual golden prime support: $\mathcal F(1,1)=19=L_3^2+3$. This example is not a new individual exclusion. The theorem is uniform in all integer parameters and all original layers; it does not replace exact golden support by unrestricted splitting. No assertion is made that infinitely many represented primes have pure ternary golden period, that every other cross-level necessary condition is independent of the representation, or that a member cannot be WSS in another depth vector. The parametrization and congruence lemma are elementary; the global exclusion uses Section 74's height and reduction obstruction. This is a paper proof with no Lean certification claim.
+
+

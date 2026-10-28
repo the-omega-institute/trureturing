@@ -15,6 +15,27 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
             + "at Renyi order three, in arbitrary finite dimensions including singular marginals.",
         H("Order-three Renyi information combining"),
         Blocks(
+            Describe.Lean(DescribeId.Create("renyi-three-basis-projector-positive"),
+                DeclarationHandle.Create(Module + "unit_psd"), H("A basis projector is positive semidefinite"),
+                StatementSource.FromAuthor(Disp(All("i", Fin(Num(2)),
+                    App(Q("Matrix", "PosSemidef"), Typed(Single(F.Id("i")), Mat(Fin(Num(2)))))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For each of the two basis indices, Matrix.single i i 1 is positive semidefinite. "
+                    + "Its Kronecker products give the two positive blocks in blk_psd. "
+                    + "The channel time-reversal argument also uses the basis projector at index zero."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("renyi-three-unitary-diagonal-cfc"),
+                DeclarationHandle.Create("D5/S3/Quantum/Information/RenyiInformationCombiningOrderThree.cfc_unitary_diagonal"),
+                H("Functional calculus of a unitarily conjugated real diagonal matrix"),
+                StatementSource.FromAuthor(UnitaryDiagonalFormula()),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Real continuous functional calculus commutes with unitary conjugation "
+                    + "and applies the scalar function to each real diagonal entry. No continuity "
+                    + "assumption on f is needed because the matrix spectrum is finite. Its internal "
+                    + "kronecker_rpow consumer lies on the xor_sandwiches proof path. The "
+                    + "dependent-family escape audit remains unfinished; "
+                    + "the result audit remains unfinished."))),
+                DescribeRole.Theorem),
             Node("conditional-entropy", "condRenyiDown", "Sandwiched conditional Renyi entropy",
                 CondFormula(),
                 "Section IV, p. 4, defines the sandwiched conditional Renyi entropy by the "
@@ -45,23 +66,12 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
                     + "the diagonal X2 index, leaving X1 + X2 and B. This is the marginal "
                     + "used on the left of Conjecture V.5.",
                 DescribeRole.Definition),
-            Node("binary-entropy", "hRenyi", "Binary Renyi entropy",
-                EntropyFormula(),
-                "Page 2, before Theorem I.1: \"In the following, we denote the binary Rényi entropy "
-                    + "as hα.\" The formula is the binary specialization of Renyi entropy "
-                    + "with natural logarithms. Real powers are explicit in its Lean definition.",
-                DescribeRole.Definition),
             Node("restricted-inverse", "hRenyiInv", "The binary-entropy inverse branch",
                 InverseFormula(),
                 "Function.invFunOn restricts the probability input to the closed interval "
                     + "[0, 1/2]. At alpha = 3, hRenyi maps this interval bijectively to "
                     + "[0, Real.log 2]. Consequently the entropy arguments of this inverse "
                     + "belong to [0, Real.log 2], and its returned probabilities lie in [0, 1/2].",
-                DescribeRole.Definition),
-            Node("binary-convolution", "bconv", "Binary convolution",
-                ConvolutionFormula(),
-                "The star in the source denotes binary convolution: the probability that "
-                    + "two independent binary variables have different values.",
                 DescribeRole.Definition),
             Node("source-claim", "claim", "The order-three equality clause",
                 ClaimFormula(),
@@ -74,7 +84,7 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
                     + "positive semidefinite complex matrix of trace one.",
                 DescribeRole.Definition),
             Node("equality", "result", "Both order-three branches hold",
-                Disp(Seq(Operatorname, Grp(F.Id("claim")))),
+                Disp(ClaimBody()),
                 "At order three the sandwich exponent is -1/3. Write the two sandwiched "
                     + "blocks as A and B, and set S = A + B and D = A - B. Their cubic "
                     + "trace equals (1 + 3 trace(S D D))/4. The XOR moment factorizes as "
@@ -144,6 +154,23 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
         Operatorname, Grp(F.Id("let")), Sp, F.Id(name), Sp, Colon, Sp, type, Sp,
         Eq, Sp, value, Semi, Sp, body);
 
+    private static Formula FunctionBody(string name, Formula type, Formula body) =>
+        Parenthesized(Seq(F.Id("fun"), Sp, Typed(F.Id(name), type), Sp, Mapsto, Sp, body));
+
+    private static Formula UnitaryDiagonalFormula()
+    {
+        Formula n = F.Id("n"), u = F.Id("U"), d = F.Id("d"), f = F.Id("f"), i = F.Id("i");
+        Formula matrix = Typed(u, Mat(n));
+        Formula diagonal = App(Q("Matrix", "diagonal"),
+            FunctionBody("i", n, Typed(App(d, i), ComplexType())));
+        Formula mapped = App(Q("Matrix", "diagonal"),
+            FunctionBody("i", n, Typed(App(f, App(d, i)), ComplexType())));
+        return Disp(Finite("n", All("U", App(Q("Matrix", "unitaryGroup"), n, ComplexType()),
+            All("d", Arrow(n, RealType()), All("f", Arrow(RealType(), RealType()),
+                Eqn(Call("cfc", f, Times2(Times2(matrix, diagonal), Call("star", matrix))),
+                    Times2(Times2(matrix, mapped), Call("star", matrix))))))));
+    }
+
     private static Formula CondFormula()
     {
         Formula a = F.Id("a"), b = F.Id("b"), rho = F.Id("rho"), alpha = F.Id("alpha");
@@ -191,14 +218,6 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
                 Eqn(App(Call("traceOutX2", t), Pair(z, j), Pair(w, k)), rhs))))))));
     }
 
-    private static Formula EntropyFormula()
-    {
-        Formula alpha = F.Id("alpha"), p = F.Id("p");
-        return Disp(All("alpha", RealType(), All("p", RealType(),
-            Eqn(Call("hRenyi", alpha, p), Times2(Divide(Num(1), Minus2(Num(1), alpha)),
-                LogOf(Plus2(Pow(p, alpha), Pow(Minus2(Num(1), p), alpha))))))));
-    }
-
     private static Formula InverseFormula()
     {
         Formula alpha = F.Id("alpha");
@@ -207,17 +226,13 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
                 App(Q("Set", "Icc"), Num(0), Divide(Num(1), Num(2)))))));
     }
 
-    private static Formula ConvolutionFormula()
-    {
-        Formula p = F.Id("p"), q = F.Id("q");
-        return Disp(All("p", RealType(), All("q", RealType(), Eqn(Call("bconv", p, q),
-            Plus2(Times2(p, Minus2(Num(1), q)), Times2(Minus2(Num(1), p), q))))));
-    }
-
     private static Formula Density(Formula s) => All("x", Fin(Num(2)),
-        App(Q("GHZMeasureBiseparableBound", "IsDensity"), App(s, F.Id("x"))));
+        App(Q("SLDSpectralEnergy", "IsDensity"), App(s, F.Id("x"))));
 
-    private static Formula ClaimFormula()
+    private static Formula ClaimFormula() =>
+        Disp(Iff2(Seq(Operatorname, Grp(F.Id("claim"))), ClaimBody()));
+
+    private static Formula ClaimBody()
     {
         Formula n1 = F.Id("n1"), n2 = F.Id("n2"), s1 = F.Id("s1"), s2 = F.Id("s2");
         Formula h1 = F.Id("H1"), h2 = F.Id("H2"), hout = F.Id("Hout");
@@ -239,6 +254,6 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
             All("s1", Arrow(Fin(Num(2)), Mat(Fin(n1))),
             All("s2", Arrow(Fin(Num(2)), Mat(Fin(n2))),
                 Imp(Density(s1), Imp(Density(s2), quantities))))));
-        return Disp(Iff2(Seq(Operatorname, Grp(F.Id("claim"))), statement));
+        return statement;
     }
 }

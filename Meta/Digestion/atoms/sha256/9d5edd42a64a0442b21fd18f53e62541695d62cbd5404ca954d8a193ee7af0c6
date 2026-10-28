@@ -1,0 +1,26 @@
+### 44.10 原始来源映射与结论边界
+
+本章采用的仓内原文接口以修订 `1b2fb1ed46956e221da2b731f110361056eacd6c` 为依据，映射如下；读取声明和普通证明不称为本章的 Lean 编译核验。
+
+| 44复用来源 | 实际承担的前提／界限 | 本章接入 |
+| --- | --- | --- |
+| 44基础：Atomic2–5，Continuation1，Boundary7 | 非空有序树、$\rho,c,M,n,q,R$；两数量解码；有限方向像及线性5维任务 | 定义44.1、定理44.2–44.12；不把组成环的零向量作空树 |
+| 44形式源：GenealogicalFiberTransport `Source/substitution/composition/result` | `FreeMagma Bool`，true为$\alpha$、false为$\beta$；实际组成纤维及替换单射 | 定理44.3、44.6的准确源映射，不重发源单射为新成果 |
+| 44形式源：GraftAffineClosure `step/quantity/run/result` | 固定组成graft的前向affine词公式、模$H$词实现 | 定理44.3核对实际任意常量和左右位置；模周期不授整数逆 |
+| 44读源：ActualTreeReadoutAcquisition `readout/Policy/paid/restore/acquisition_foundation` 及其 [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.scribe.cs) | 同一不可变树上的所有地址、四回复、已取得历史、Boolean原目标与distinct-address费用 | 定义44.1和§44.9的数值消费者；不把查询Action改成flip/update，不免费取得数值 |
+| 44叶史：ActualHistorySingleHoleRecovery 与 ActualLeafHistoryRigidity；ActualImageSevenLeafSeparation | 实际第三替换像、正竞争者、已取得叶地址、一共同输出孔及等叶数等原假设 | 更宽来源／地址任务的既有结果，不用其单孔／七叶结论推出本章方向控制 |
+| 44上下文：StrictOneHoleContexts 与 DynamicClosureMinimality | 真实typed部分后继、失败总化、全部词响应及最小强合同商 | 命题44.7的明确数值任务核；没有从全部词量词生成一条破坏性执行 |
+| 44档案：ProductNodes 与 ParallelComposition | 实际父事件的有序source pairing、带标签档案编码 | 合法源构造的对照，不授复制／reset／重命名未知树 |
+| 44校准：SelfCalibratingRulings、SelfCalibratingFibers | 严格正rank-one实矩阵、trace／shear实验合同 | 不供应自由树或外部quaternion来源的校准lift |
+| 44任务：Process43、Observer79 | 任务充分核包含与无冗余条件；已经取得历史的同合同续接预算、完整有效响应表条件 | §44.4–44.6直接取得的对象；没有免费初始方向或通用有限状态算法替代 |
+| 44外部：Boundary37–41、Atomic19、375 | 连续或混合控制、锚、FullW／affine来源各有权限；整数操作环另许加负与方向提取；物理幅度／时钟／概率／资源模型外加 | 定义44.15后的条件消费者；不并入基线原生语法 |
+| 44球帽：Boundary42.1–42.5 | 同一初态球帽、全局分支单射与严格／临界精度条件 | §44.8来源忠实性对照，未换用球帽条件证明affine风险 |
+
+经典代数工具使用 John C. Baez, *The Octonions*, Bulletin AMS 39 (2002), 145–205 的作者原文 [§2](https://math.ucr.edu/home/baez/octonions/node2.html)、[§2.1](https://math.ucr.edu/home/baez/octonions/node5.html)、[§4.1](https://math.ucr.edu/home/baez/octonions/node14.html)：四元数乘法、共轭／逆、范数与叉积、$\operatorname{Im}\mathbb H$ 上的正向旋转保持关系。它们提供上述代数恒等式，不供应原生可达状态、控制权限或仪器来源。
+
+M. Petreczky, L. Bako, J. H. van Schuppen, *Realization theory of discrete-time linear switched systems*, [arXiv:1103.1343v2](https://arxiv.org/pdf/1103.1343v2)，Definitions5–6区分可达与 span-reachable，Remark6区分响应表的多次切换实验与一条切换序列。P. van den Bos, F. Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, [arXiv:1907.11034v2](https://arxiv.org/pdf/1907.11034v2)，§4的自适应识别定义及Figure3给不存在单一自适应区分图的实例。两者提供量词和接口纪律；其线性切换状态／有限自动机的来源、测试动作和成功判据不实例化本章无界计数树，不用它们的算法或例子替代定理44.12的四个实际树或定理44.17的共同实现。
+
+本章为这些明确来源、读／更新和资源合同中的普通数学综合推导，不作全球原创性或文献穷尽声明。定理44.2的实际像、44.4的固定58动作、44.8的付费反馈、44.12的普遍取得下界、44.13–44.14的新增权限和44.16–44.18的外部消费者是不同关系；其结论互不改判。未知源的 raw injectivity 与 numeric loss、固定词与已付费反馈、当前终态与保留初态、源准备与校准／转移、有限调用与精确实数／有限位、线性容量与物理资源均分别保留。
+
+Boundary15.1的四项物理桥仍未建立：原生完整旋转关系、实际位移的忠实双射、维护／泄漏／记录的物理价格、共同实际环境的网络贯通与任务容量。外部来源制备、校准和传感／致动对应也没有由本文变成物理证据。这里没有完成空间、时间、边界与记忆在全部来源及全部接口上的互恢复目标，亦不声称新kernel证明、独立最终评审或发布结算。
+

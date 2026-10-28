@@ -1,0 +1,43 @@
+**Theorem 10.2 (positive retraction, determinant correction, and unique representative).** For $X\in\mathcal P$ define
+$$
+\rho_N(X)=\frac{(Xr_K)(l_KX)}{h(X)}.
+\tag{10.4}
+$$
+Then $\rho_N(X)\in\mathcal A$ and
+$$
+(Xr_K)(l_KX)=h(X)X-(\det X)N,
+\qquad
+\rho_N(X)=X-\frac{\det X}{h(X)}N.
+\tag{10.5}
+$$
+The first identity holds for every real full matrix $X$. For positive $X$, $\rho_N(X)$ is the unique determinant-zero matrix on the entire real affine line $X+\mathbb RN$. In particular,
+$$
+\mathsf B_{\rm pre}\rho_N(X)=\mathsf B_{\rm pre}X,
+\qquad
+\mathsf B_{\rm pre}(\mathcal A)=\mathsf B_{\rm pre}(\mathcal P).
+\tag{10.6}
+$$
+The map is real analytic on $\mathcal P$, homogeneous of degree one under positive scalars, idempotent, and fixes every actual source. Every positive point on one prefix quotient fibre has the same retraction.
+
+**Proof.** To prove the matrix identity without an invertibility or positivity restriction on $X$, write
+$$
+Y=P^{-1}XP=\begin{pmatrix}w&\xi\\\nu&\zeta\end{pmatrix}.
+$$
+Equations (10.1)–(10.3) give $h(X)=t\zeta$, $\det X=\det Y$, $Xr_K=P(\xi,\zeta)^{\mathsf T}$ and $l_KX=t(\nu,\zeta)P^{-1}$. Conjugating the two sides of the first identity in (10.5) by $P^{-1},P$ reduces them respectively to
+$$
+t\begin{pmatrix}\xi\nu&\xi\zeta\\\zeta\nu&\zeta^2\end{pmatrix}
+\quad\hbox{and}\quad
+ t\left[\zeta\begin{pmatrix}w&\xi\\\nu&\zeta\end{pmatrix}
+ -(w\zeta-\xi\nu)E_{11}\right].
+$$
+They are identical entry by entry. For $X\in\mathcal P$, (10.4) is a positive outer product divided by $h(X)>0$, hence is strictly positive and has rank one. Division of the proved identity gives its determinant correction formula.
+
+Since $\det N=0$, (1.5) gives, for every real $u$,
+$$
+\det(X+uN)=\det X+u h(X).
+\tag{10.7}
+$$
+Its coefficient is strictly positive. It has exactly one zero, $u=-\det X/h(X)$, proving uniqueness on the entire affine line. Since $\ker\mathsf B_{\rm pre}=\mathbb RN$, this proves both assertions in (10.6), with the reverse image inclusion also following from $\mathcal A\subset\mathcal P$. If two positive matrices have the same prefix quotient, their lines $X+\mathbb RN$ coincide, so their unique determinant-zero representatives coincide.
+
+The rational formula (10.4) has a strictly positive denominator throughout the open set $\mathcal P$, proving real analyticity. Its numerator and denominator have degrees two and one under positive scalar multiplication, proving homogeneity. For $S\in\mathcal A$, (10.5) gives $\rho_N(S)=S$. Since every output lies in $\mathcal A$, applying the map twice changes nothing. All actual representatives have Proposition 1.2's positive fixed-row realization on the original words. No full auxiliary matrix is asserted to be an acquired rank-two source. ∎
+

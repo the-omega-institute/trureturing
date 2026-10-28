@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e020892d1db0de511f3fe6430bd13fd8b7e1e09e8941fd2c6be6d52459cdf292
+  normalized_sha256: sha256:e020892d1db0de511f3fe6430bd13fd8b7e1e09e8941fd2c6be6d52459cdf292
+cas_ref: sha256:e020892d1db0de511f3fe6430bd13fd8b7e1e09e8941fd2c6be6d52459cdf292
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该段提出保留概率、资源规模与精度界的后续研究任务，没有断言统一界成立。
+    previous_atom_id: f5a8a662899a799a19f14367ff9f9126443ab11324bc3c2f2a240244299309ca
+    next_atom_id: 58650d1bcb26fd20b9664ec0d708189b000897a3aec10956cb3f415284dd4336

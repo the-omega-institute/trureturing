@@ -1,0 +1,13 @@
+该引理同时适用于：
+
+- $V=S/m$，$S\sim\operatorname{Bin}(m,p)$，此时 $z=p$。
+- 给定较长任务批量 $M>m$ 中共有 $s$ 个成功，前 $m$ 枚中的成功数 $U$；此时
+
+  $$
+  V=U/m,\quad z=s/M,\quad
+  \operatorname{Var}(V)
+  =\frac{z(1-z)(M-m)}{m(M-1)}
+  \le\frac1{4m}.
+  \tag{338.11}
+  $$
+

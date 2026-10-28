@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:757dd12e6dff981005f7a15d716d40d4ecd4f760ee396af1f64f28831b94180c
+  normalized_sha256: sha256:757dd12e6dff981005f7a15d716d40d4ecd4f760ee396af1f64f28831b94180c
+cas_ref: sha256:757dd12e6dff981005f7a15d716d40d4ecd4f760ee396af1f64f28831b94180c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该行询问黄金坐标是否改善计算，并列出待分析成本，不给出成本估计或复杂度结论。
+    previous_atom_id: 163b1dab4b1f2e7b66df9c58cc8c53325a969787bcef006080ed6e657951aa9d
+    next_atom_id: 0ef0a1ab5f715125ed64faa178d05f92b57966d4145981191ae7251c2c1c15ab

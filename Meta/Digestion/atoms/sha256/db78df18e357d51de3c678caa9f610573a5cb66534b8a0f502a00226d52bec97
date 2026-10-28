@@ -1,0 +1,16 @@
+**Proposition 21.15 (scope of parsimony).** A route producing the two
+different raw target values must depend on some acquired fact which
+differs between the two actual loads. A source-independent canonical
+reservoir cannot do so. This construction supplies that dependency
+without adding a source oracle or a whole-history view.
+
+Proof. Equal acquired arguments to the same deterministic procedure give
+equal results; Corollary 21.11 requires distinct results. Thus the
+distinction must survive somewhere in its actual dependency chain.
+Tape74 and its copied word exhibit one such chain. This is only the
+stated two-input dependency condition. On the two-word family, the
+single differing bit already distinguishes the words mathematically;
+the full $e$-bit mirror is a sufficient implementation, not a minimal
+one. No minimum port count, optimal storage, universal alpha/beta
+reduction or representation-independent lower bound follows. ∎
+

@@ -1,0 +1,14 @@
+**Definition 57.1 (width and candidate quantities on the actual run).** Use Convention 41.1 and Definition 49.1's acquired-source quantities $B,D,F$, including the fixed matrices, $x_*,s=(I-T)^{-1}b$ and their actual construction widths. Use Proposition 41.3's acquisition width envelope $U$. For the actual word length $L$ define, for analysis rather than as decoder advice,
+
+$$
+\begin{aligned}
+S_L&=\sum_{l=0}^{L}(H+1)^l,\qquad d_H=\lceil\log_2(H+1)\rceil,\\
+W_L&=1+F+(L+3N)\lceil\log_2(D+1)\rceil
+ +\lceil\log_2(H+2)\rceil+\lceil\log_2(L+2)\rceil,\\
+V_L&=\max(U,W_L).
+\end{aligned}
+\tag{57.1}
+$$
+
+All counters and storage expand as needed during search. These after-the-fact envelopes need not be known at entry. For $H=0$, $S_L=L+1$; for $H\ge1$, it is the stated finite geometric sum. No exponential candidate table is retained by Definition 54.1.
+

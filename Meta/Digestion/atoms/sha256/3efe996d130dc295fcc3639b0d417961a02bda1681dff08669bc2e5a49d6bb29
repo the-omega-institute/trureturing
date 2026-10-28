@@ -1,0 +1,24 @@
+### 90.3 尺度交叉、压缩例子与适用边界
+
+由 $n_T/2\le n_{T-1}\le n_T$ 和（90.4），成对成本的统一尺度因子为
+$\Gamma_{T,m}^{-2}=(n_{T-1}n_T)^2/(1+n_T/m)^2$。当 $m$ 相比 $n_T$ 小时保留 $m^2n_T^2$ 的阶；当 $m$ 与 $n_T$ 可比或更大时，两种权限同阶。固定 $m$ 而 $T\to\infty$，在共同的 $\log(1/\varepsilon)$ 因子之外，成对成本为 $n_T^2$ 阶，Read-only 为 $n_T^4$ 阶，常数可依赖这个固定 $m$。这里的多项式变量是深度所对应的叶数尺度 $n_T$；Fibonacci 的 $n_T$ 随增长次数 $T$ 指数增长，不是关于 $T$ 的多项式成本界。
+
+一个静止采样压缩反例已经发生在 $m=2,T\ge2$：由（90.7），深度1和2的四格律分别为
+
+$$
+P_{2,1}=\left(\frac1{15},\frac4{15},\frac4{15},\frac25\right),
+\qquad
+P_{2,2}=\left(\frac2{15},\frac4{15},\frac4{15},\frac13\right).
+\tag{90.19}
+$$
+
+它们的完整律不同，但不匹配位 $Z=\mathbf1_{\{ab,ba\}}$ 的概率都为 $8/15$。恢复且保持深度不变时，全部不匹配位记录都是同一个 Bernoulli 乘积律，因而只保留这个位不能分辨这两个交接深度。此例只否定这种静止的不匹配位压缩，没有判定带增长或其他读数的全部受控压缩方案，也不主张四输出字母表最小。
+
+在同一深度执行两个独立有放回 Read，联合律为 $(r_k^2,v_k,v_k,(1-r_k)^2)$，其有限来源修正 $c$ 为零。它不能替代一次真正排除同一叶出现的 PairRead。若把 PairRead 按两叶收费为2，而 Read 和增长仍各为1，每份程序的总成本介于原成本与其两倍之间，相同误差和停止约束不变；两种最坏成本及（90.6）的比值阶因此只改变常数。取得速率的阶差不只是把两个输出算成一次调用的记账效果。
+
+比例间距及静态 Fibonacci 供应沿用（89.8）和既有 [fib_vajda](../../../D5/S1/Recurrence/FibVajda.lean)，四格律沿用命题82.2，统一格下界沿用（89.13）；新增推导是这些实际律在公开固定尺度下的关联分离及匹配成本。浓缩使用 [Vershynin《High-Dimensional Probability》第一版 Theorem 2.2.6](https://www.math.uci.edu/~rvershyn/papers/HDP-book/HDP-1.pdf)，印刷页17、PDF页25，对每格指标及其负值各用一次单侧界。[Kaufmann–Cappé–Garivier《On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models》](https://jmlr.org/papers/volume17/kaufman16a/kaufman16a.pdf) 的 Lemma 1（页7）及 Appendix A.1（页25）仍只是固定 iid 臂的序贯方法背景；本节有状态输出使用（90.15）—（90.18）的实际有限前缀计算。
+
+钉版 mathlib 的 [ChainRule](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/InformationTheory/KullbackLeibler/ChainRule.lean) 中 `klDiv_compProd_eq_add`、`integral_llr_compProd_eq_add` 和 [DataProcessing](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/InformationTheory/KullbackLeibler/DataProcessing.lean) 中 `klDiv_map_le` 是第89.3节已有的静态方法对应，ChainRule 的条件 KL 积分形式仍列为 TODO；它们不是本节已知尺度自适应停止成本的精确形式化证书。本节给出普通数学证明，不主张 Lean 核验或原创性。
+
+$T=0$ 时直接输出零；实际深度像为单点时输出其常标签，成本均为零。$\varepsilon=0$ 且实际深度像至少含两个值时，第88.1推论的有限停止障碍仍在；公共 $m$ 没有破坏其同种子有限前缀共同正支撑。某些旧实验比最坏界容易，（90.5）没有给每项旧实验统一下界。模型所供应的持久来源、抽样随机性和共同端口未由本节认证为物理实现；宏调用成本没有包括物理时间、位存储、计算量、硬件或接口成本。目标仅是交接深度，不是完整旧路径、读取顺序、空间树形或被擦除的档案。
+

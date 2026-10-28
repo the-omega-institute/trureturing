@@ -1,0 +1,82 @@
+**Proposition 120.6 (cycle-indicator whole-volume floor on every actual cut).**
+For the same fixed $u,m$ and every $n\ge0$, either choice $A_n$, and
+$0\le t\le2/13$, put $g_2(t)=t-13t^2/2$. Then
+
+$$
+\max_{c\in C_m}
+ \|e^{-tA_n}U_ne_c-U_ne^{-tK_m}e_c\|_{\mu_n}
+ \ge g_2(t)\sqrt{\frac{N_n+1}{2mN_n}}.
+\tag{120.21}
+$$
+
+In particular
+
+$$
+\max_{c\in C_m}
+ \|e^{-A_n/13}U_ne_c-U_ne^{-K_m/13}e_c\|_{\mu_n}
+ \ge\frac1{26}\sqrt{\frac{N_n+1}{2mN_n}}
+ \ge\frac1{26\sqrt{2m}}.
+\tag{120.22}
+$$
+
+No onto hypothesis on the finite restriction $q_n$ is required.
+
+Proof. Write $N=N_n$ and let $I$ and $\ell$ be the numbers of internal
+vertices and leaves. Every internal vertex has two children, so
+$N-1=2I$ and $\ell=N-I=(N+1)/2$, including a singleton. At every leaf
+$x$, its at-most-one actual neighbour in the finite domain cannot
+represent both distinct cycle neighbours of $q_n(x)$. Choose one
+absent adjacent colour $c_x$. The pair $(x,c_x)$ satisfies the zero-
+and one-event condition of (120.8). Both finite boundary choices
+therefore give source heat at most $9t^2/2$. On the cycle, the event
+of exactly one jump along the specified edge has probability
+$te^{-2t}\ge t-2t^2$. Hence target minus source is at least
+$g_2(t)$ at each selected pair. It is nonnegative on the stated
+interval. Summing one squared error per leaf yields
+
+$$
+\sum_{c\in C_m}
+ \|e^{-tA_n}U_ne_c-U_ne^{-tK_m}e_c\|_{\mu_n}^2
+ \ge\frac{N+1}{2N}g_2(t)^2.
+\tag{120.23}
+$$
+
+The largest of the $m$ squared norms is at least $1/m$ of this sum,
+proving (120.21). At $t=1/13$, $g_2(t)=1/26$, giving (120.22).
+For a singleton $q_n(o)=0$, either adjacent colour is unattained and
+its pullback is identically zero. Its source heat is exactly zero for
+both $[0]$ and $[2]$, while the same target one-jump bound applies.
+Thus the leaf argument includes this case without asserting a
+surjection from a singleton.
+
+Initially a cut can omit colours. Nevertheless all tests in (120.21)
+are defined on the full fixed $C_m$. The restriction eventually becomes
+onto: the addresses $o,p_1,\ldots,p_{m-1}$ have all $m$ residues, and
+belong to $B_{m-1}(o)$. By (120.3), $n\ge2(m-1)$ is a sufficient
+threshold. This is not an optimized threshold or a claim that any
+particular capped or stopped history reaches it.
+
+There is no conflict with Proposition 120.5. For every fixed finite
+address set, sufficiently advanced cuts put it strictly inside the
+domain, so its vertices are no longer leaves. Meanwhile
+
+$$
+N_n\longrightarrow\infty,\qquad
+\mu_n(\operatorname{Leaf}(\rho^nu))
+ =\frac{N_n+1}{2N_n}\longrightarrow\frac12,
+\qquad \mu_n(\{x\})=\frac1{N_n}\longrightarrow0
+\tag{120.24}
+$$
+
+for each eventually present fixed $x$. The lower-bound witnesses
+escape every fixed finite address set but retain a positive part of
+the changing whole-vertex probability. Pointwise dominated convergence
+with respect to one fixed measure does not establish convergence in
+these varying norms. For each $n$ at least one of the same $m$ fixed
+indicator tests has the floor (120.22). Finite pigeonhole gives one
+fixed colour $c$ and an infinite subsequence of stages with error at
+least $1/(26\sqrt{2m})$; neither the maximizing colour at every stage
+nor failure of every colour is asserted. The conclusion fixes $m$
+before taking $n\to\infty$, and gives no positive floor uniform in
+growing $m$. $\square$
+

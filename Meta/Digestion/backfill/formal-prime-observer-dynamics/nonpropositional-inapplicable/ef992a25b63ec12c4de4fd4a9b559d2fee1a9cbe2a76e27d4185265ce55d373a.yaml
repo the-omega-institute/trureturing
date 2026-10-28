@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ef992a25b63ec12c4de4fd4a9b559d2fee1a9cbe2a76e27d4185265ce55d373a
+  normalized_sha256: sha256:ef992a25b63ec12c4de4fd4a9b559d2fee1a9cbe2a76e27d4185265ce55d373a
+cas_ref: sha256:ef992a25b63ec12c4de4fd4a9b559d2fee1a9cbe2a76e27d4185265ce55d373a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Type and terminology conventions distinguish a sample in O from a law in P(O); no identifiability theorem is asserted.
+    previous_atom_id: 3352322b9f9efdb721fcb605b44742616fab315d1cd8f855d86b2453b984bb08
+    next_atom_id: f7aa01f13aaef2feb57b9af58b1fc808b204f2d1debca50345cdb907a1377bf0

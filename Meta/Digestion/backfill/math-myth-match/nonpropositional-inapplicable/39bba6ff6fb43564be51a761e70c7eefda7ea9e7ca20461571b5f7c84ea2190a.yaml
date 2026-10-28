@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:39bba6ff6fb43564be51a761e70c7eefda7ea9e7ca20461571b5f7c84ea2190a
+  normalized_sha256: sha256:39bba6ff6fb43564be51a761e70c7eefda7ea9e7ca20461571b5f7c84ea2190a
+cas_ref: sha256:39bba6ff6fb43564be51a761e70c7eefda7ea9e7ca20461571b5f7c84ea2190a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 专家跨域与证据可取得性的认识规范讨论，没有指定误差运输的数学前提或新结论。
+    previous_atom_id: ab11427b52d76bfdf14e98fbae09d902b32e97ac33503ff548473136a6f56205
+    next_atom_id: d674b3fee85606957c5f19c933465804dd30fc373a0bc674c39445d5d9266b92

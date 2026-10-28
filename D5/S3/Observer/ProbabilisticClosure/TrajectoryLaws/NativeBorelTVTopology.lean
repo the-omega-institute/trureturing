@@ -49,7 +49,7 @@ def coordinateEquiv (s : ActivePhase) : ProbabilityMeasure (ValidTail s) ≃ᵐ 
     apply Subtype.ext
     funext t
     exact Measure.sum_smul_dirac_singleton
-  measurable_toFun := (measurable_pi_lambda _ (fun t =>
+  measurable_toFun := (Measurable.of_eval (fun t =>
     (Measure.measurable_coe (measurableSet_singleton t)).comp
       measurable_subtype_coe)).subtype_mk
   measurable_invFun := by

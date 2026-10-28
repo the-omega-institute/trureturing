@@ -1,0 +1,55 @@
+**定理 396.4（相干控制产生非对角 tester 的条件）。** 本条替代 §337.4 的相应陈述与证明。
+
+固定控制基 $\{|i\rangle_C\}$，其余过程空间记为 $\mathcal K$，并使用该控制分块的投影与去相干映射
+$$
+P_i=|i\rangle\langle i|_C\otimes I_{\mathcal K},
+\qquad
+\Delta_C(T)=\sum_iP_iTP_i.
+$$
+设原普通 tester 闭包中每个 $T$ 都满足 $\Delta_C(T)=T$。允许加入控制酉 $U_C$ 的后置操作，并记 $U=U_C\otimes I_{\mathcal K}$，其 tester 拉回为 $T'=U^\dagger TU$。若存在原来允许的 tester $T$，使这个合法后继满足
+$$
+P_iT'P_j\ne0
+\quad\text{对某个 }i\ne j,
+$$
+则扩大后的闭包含有原闭包之外的非对角方向。这里要求该 tester 与旋转的组合合法且在声明深度内；仅有一个非平凡相干旋转不够。
+
+若另有两个合法过程 $J_1,J_2$，满足 $\Delta_C(J_1-J_2)=0$ 且 $\operatorname{Tr}(T'(J_1-J_2))\ne0$，则只保存对角块的边界对该后继合同不充分。这个合法过程对条件不能仅由 tester 非对角性替代；过程差须满足 §396.1 中相应过程类的仿射归一化约束与可实现性要求。
+
+**证明。**
+非零的 $P_iT'P_j$ 说明 $T'\ne\Delta_C(T')$，故 $T'$ 不在原对角闭包中，却由允许的拉回属于新闭包。对 $D=J_1-J_2$，定义块 $T'_{ij}=(\langle i|_C\otimes I)T'(|j\rangle_C\otimes I)$，并同样定义 $D_{ij}$。当 $D$ 的对角块为零时，精确配对律为
+$$
+\operatorname{Tr}(T'D)
+=\sum_{i\ne j}\operatorname{Tr}(T'_{ij}D_{ji})
+=2\operatorname{Re}\sum_{i<j}\operatorname{Tr}(T'_{ij}D_{ji}).
+$$
+若此数非零，两个相同对角边界的合法过程给出不同后继概率，由定理 337.2 得不充分性。
+
+一个可直接检验的充分条件是双块 tester
+$$
+T=
+\begin{pmatrix}T_0&0\\0&T_1\end{pmatrix},
+\qquad T_0\ne T_1,
+$$
+以及合法的 Hadamard 控制
+$$
+H=\frac1{\sqrt2}
+\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+$$
+逐块相乘得
+$$
+(H^\dagger\otimes I)T(H\otimes I)
+=\frac12
+\begin{pmatrix}
+T_0+T_1&T_0-T_1\\
+T_0-T_1&T_0+T_1
+\end{pmatrix},
+$$
+所以非对角块恰为 $(T_0-T_1)/2\ne0$。
+
+反之，若 $\mathcal V=\operatorname{span}_{\mathbb R}\{I_C\otimes T_0\}$，则对每个控制酉都有
+$$
+(U_C^\dagger\otimes I)(I_C\otimes T_0)(U_C\otimes I)
+=I_C\otimes T_0.
+$$
+即使允许全部控制酉，该空间也不扩大。有限例子是二维控制、$\mathcal K=\mathbb C$、$T_0=1$，tester 只有恒真效果 $I_C$ 及零效果：加入 Hadamard 仍不能产生非对角 tester。证毕。
+

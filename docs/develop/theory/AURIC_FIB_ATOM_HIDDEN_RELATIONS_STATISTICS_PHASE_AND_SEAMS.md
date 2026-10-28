@@ -4175,7 +4175,7 @@ $$
 V|s\rangle=|s\rangle e_s,\qquad W|s\rangle=|s\rangle e_O.
 $$
 
-系统标签正交给 $\|V-W\|=\max_s\|e_s-e_O\|$。对任意与参考关联的单位输入，两个输出向量之差范数不超过这个算子范数；单位向量 $a,b$ 的纯态迹距离满足 $\sqrt{1-|\langle a,b\rangle|^2}\le\|a-b\|$。取环境迹的收缩、密度态的凸分解和距离至多一给 (29.4)。这里用的是固定共同等距的直接估计，其一般连续性背景为 [Kretschmann–Schlingemann–Werner](../../../Library/Quantum/kretschmann2008continuity.md) 定理 1；没有对未知膨胀取最优值的步骤。
+系统标签正交给 $\|V-W\|=\max_s\|e_s-e_O\|$。对任意与参考关联的单位输入，两个输出向量之差范数不超过这个算子范数；单位向量 $a,b$ 的纯态迹距离满足 $\sqrt{1-|\langle a,b\rangle|^2}\le\|a-b\|$。取环境迹的收缩、密度态的凸分解和距离至多一给 (29.4)。这里用的是固定共同等距的直接估计，其一般连续性背景为 [Kretschmann–Schlingemann–Werner](../../../Library/QuantumChannels/kretschmann2008continuity.md) 定理 1；没有对未知膨胀取最优值的步骤。
 
 本证明要求已知精确 Schur 家族和同一相位校准。仅有近似占位保持，或分别给每条边选一个相位参照，均不满足这些前提。长链局部误差也必须与深度一起读：下述文献注中的半圆记录有邻边误差 $1-\cos(\pi/m)$，路径深度随 $m$ 增长，不能从邻边趋近一推出整体误差趋零。证毕。
 

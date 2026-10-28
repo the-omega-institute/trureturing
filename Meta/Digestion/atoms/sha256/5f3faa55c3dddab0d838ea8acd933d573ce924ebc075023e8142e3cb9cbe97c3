@@ -1,0 +1,53 @@
+**定理 93.5（根复现集合的傅里叶障碍）。** 若实线上概率测度 $\nu$
+集中于 $\mathcal R_\sigma$，则
+
+$$
+\sum_n\sup_{k\in\mathbb Z\setminus\{0\}}
+|\widehat\nu(kN_n)|=\infty.
+\tag{93.13}
+$$
+
+因此不存在任何 $A>0$ 使
+$|\widehat\nu(t)|=O((\ln(2+|t|))^{-A})$。
+两根复现集及 $E_2$ 的两个根投影的傅里叶维数均为零。
+第 88、89 章非空边缘通用集 $\mathcal V$ 在任意非空开区间
+$J\Subset D$ 上的两个根像则都有 Hausdorff 维数 $2/3$、傅里叶维数零。
+
+证明。(93.8) 的简单根必要条件给
+
+$$
+\mathcal R_\sigma\subset
+\bigcup_{C=1}^{\infty}
+\left\{x:\|N_nx\|\le C\frac{\ln Q_n}{Q_n}
+\text{ 于无穷多个 }n\right\}.
+\tag{93.14}
+$$
+
+这只是必要的包含关系，没有将 $-3\ln Q$ 位移或取整相位忽略为充分条件。
+直接用 Pollington–Velani–Zafeiropoulos–Zorin 原文的收敛定理：
+对 $[0,1]$ 上概率测度、正整数序列 $q_n$ 和正函数 $\psi$，
+若 $\sum_n\sup_{k\ne0}|\widehat\nu(kq_n)|<\infty$ 且
+$\sum_n\psi(q_n)<\infty$，则
+$\|q_nx\|\le\psi(q_n)$ 的上极限集测度为零。
+原 Lemma 2 的有限界为
+$\nu\{\|qx\|\le\psi(q)\}\le3\psi(q)+3\sup_{k\ne0}|\widehat\nu(kq)|$，
+$q\ge4$；接第一 Borel–Cantelli 引理即是该结论。
+
+对实线测度先模一推前，其整数频率傅里叶系数和 (93.14) 的事件均不变。
+取 $q_n=N_n\ge100$，$\psi(N_n)=\min(1/4,C\ln Q_n/Q_n)$。
+原增长 $Q_{n+1}=10^{Q_n^5}$ 使
+
+$$
+\sum_n\frac{\ln Q_n}{Q_n}<\infty,\qquad
+\sum_n(\ln N_n)^{-A}<\infty\quad\text{对每个 }A>0.
+\tag{93.15}
+$$
+
+若 (93.13) 不成立，成熟收敛定理使 (93.14) 中每个上极限集为零测，
+从而 $\nu(\mathcal R_\sigma)=0$，矛盾。
+任何正的对数衰减率都会使 (93.13) 的级数收敛，故也被排除。
+正傅里叶维数要求某个非零有限测度具有正幂次衰减，归一化后亦不可能。
+最后，$\mathcal V$ 的两个根像属于相应 $\mathcal R_\sigma$；
+原根映射在紧内部区间是双 Lipschitz，保留已证 Hausdorff 维数 $2/3$。
+傅里叶结论则从 (93.14) 单独推出。证毕。
+

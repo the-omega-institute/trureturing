@@ -1,0 +1,46 @@
+**Definition 68.1 (suppliers and the remaining interpretation boundary).**
+The hypotheses and coefficients in §§62–67 are exactly G (25.1)–(25.5),
+L (35.1)–(35.2), (37.2), (37.8)–(37.9) and Definition 55.1.
+Theorem 55.2 is reused for causal lifting, variation versions and
+known-calibration height recovery; Theorems 56.1 and 57.1–57.3 concern
+known-parameter rational projections and characters. They do not supply
+an unknown signed calibration. Theorems 58.2–59.1 keep their
+known-parameter finite-sample meanings and their stationary Q risk.
+The new native content is (63.2)–(63.5), the translated actual-law
+quotient (64.4) and posterior (64.7), its paired-source risk (65.1),
+and the signed minimal original-coordinate recovery (66.2)–(66.4).
+These statements are `repo-derived`; no worldwide priority is asserted.
+
+The intermediate quadratic-variation and Itô operations are classical.
+H. Föllmer, *Calcul d'Itô sans probabilités*,
+[primary text, pp.143–150](https://www.numdam.org/item/SPS_1981__15__143_0/),
+defines variation along fixed refining subdivisions and proves the
+$C^2$ change-of-variable formula. Here the localized semimartingale
+convergence and common versions are supplied by Theorem 55.2; arbitrary
+continuous paths are not presumed to satisfy them. Iterating that
+calculus gives (63.3)–(63.4), while their rational inverse is native.
+The ground-state density calculation is the classical Doob transform
+already proved in Theorem 37.2. The common-submeasure testing argument
+and Bayes disintegration in §§64–65 are classical statistical tools;
+the exact common measures and targets here are (64.5) and (65.4),
+and the squared-loss bounds are derived directly in (65.6).
+The classical decreasing-field $L^2$ projection argument is supplied
+inside the proof identifying the germ conditional expectation (67.2).
+
+K. D. Elworthy, Y. Le Jan and X.-M. Li,
+*The Geometry of Filtering*,
+[arXiv:0810.2253v1](https://arxiv.org/html/0810.2253v1), §§2.4 and 5.1,
+provides the projectible-symbol and non-Markovian filtering background.
+Section 2.4 assumes a projectible constant-rank symbol; §5.1 assumes
+conservative cohesive descent with a conservative reference and a
+horizontal drift correction. The projection onto $v$ has variance
+$2B_\kappa(K)^2$ depending on the hidden height, so merely supplying
+its history does not meet that projectible-symbol hypothesis. No
+identification theorem from that framework replaces the explicit
+translated stationary density or unknown-parameter inverse here.
+The [fixed-probability relative-phase torus bijection](https://github.com/the-omega-institute/trureturing/blob/6198ac3642d19f48f815df872aef049954aca64b/D5/S3/Quantum/Fibers/ProjectiveInteriorProbabilityFiber.lean)
+concerns a different target: phases conditional on supplied basis
+probabilities. Its private reconstruction proof and public bijection do
+not supply the missing native parameter or unobserved height in this
+stochastic experiment.
+

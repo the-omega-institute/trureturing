@@ -1,0 +1,4 @@
+**Corollary 49.3 (one simultaneous attainment).** The actual run of §§45–46 attains these two selected bounds jointly: exactly $k$ successful root Reads and $k$ acquisition splits, with exactly $2k$ acquisition-created vertices.
+
+The quantifiers are those of the cleared arbitrary-$\mathbb Q^k$ task, not a finite candidate promise. These are separate Read and acquisition-split lower bounds attained by one construction. They imply no minimum for Ticks, source preparation, bit work, precision, observer storage, total traffic or total resources. Under the original terminal-Read interface the already known $z_i$ can be read directly in $k$ calls with no acquisition split. No claim of a cheaper original-leaf implementation follows from replacing its interface and preparation conditions.
+

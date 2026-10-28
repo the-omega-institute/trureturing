@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0c57ce21a1b1d6160f0af81cf2fe618800e4c21dc08b4373b5f0c3da4544bc89
+  normalized_sha256: sha256:0c57ce21a1b1d6160f0af81cf2fe618800e4c21dc08b4373b5f0c3da4544bc89
+cas_ref: sha256:0c57ce21a1b1d6160f0af81cf2fe618800e4c21dc08b4373b5f0c3da4544bc89
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Checklist noun phrase naming the nontrivial-zero region; no property of that region is asserted here.
+    previous_atom_id: b64065d578196dfe0a2e9e46f2cf44f1c551bec93893ba0ca1cf081f4a797d7d
+    next_atom_id: c0ea15eb278c7d4dd6578e1b0c068e0a8151631817a544af37634f25dad23875

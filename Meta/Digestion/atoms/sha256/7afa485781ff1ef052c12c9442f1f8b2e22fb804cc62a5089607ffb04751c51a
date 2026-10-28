@@ -1,0 +1,56 @@
+**Corollary 20.2 (Source-only joint-limit consequence).** No sequence
+of (20.1) can satisfy
+
+$$
+(r_{0n},b_{0n},c_{0n})\longrightarrow(0,0,s),\quad s>0,
+\qquad
+(r_{1n},b_{1n},c_{1n})\longrightarrow(r_*,b_*,c_*),
+\tag{20.2}
+$$
+
+where the second limiting source is strict and $b_*+c_*=1$.
+Here the starred coordinates are local limit variables, unrelated to
+the evaluated target (10.5). Convergence of gain and drift need not
+be initially specified.
+
+Proof. SIII, Theorem 7.1 and Corollary 8.1, bound the bases and all
+complete companion coordinates over $D_J$, including every world
+unused by either selected pair. Apply these existing bounds to
+(20.1), and take a simultaneous convergent complete-coordinate
+subsequence of its four selected worlds. The assumed source limits
+are unchanged. Corollary 20.1 now gives a contradiction. The
+compact ambient region separated from $p=24$ is supplied for joint
+bases by SIII, Corollary 8.2; the source-only argument needs only
+the bounds of Corollary 8.1. Neither step changes the selected $M$
+pair or imposes equality of its common value with the $J$ value. ∎
+
+Theorem 17.1 permits the extra guard $j\ne1$ only for the strict
+mate in this evaluated real lower-face incidence relation. Within
+that guarded relation it can equivalently be recorded by an auxiliary
+inverse equation $h(j-1)=1$. This gives no permission to saturate
+an arbitrary complex closure or a global joint collision ideal.
+It supplies no uniform positive lower bound for $|j-1|$, no collar
+for all selected $J$ endpoints and no exclusion of mates at $j\ne1$.
+
+The original global alternative is still Definition 1.2: construct
+independently selected actual distinct $J$ and $M$ pairs at one real
+off-$24$ base in the same entire child, or exclude every such
+configuration. Sections 10–16 retain their evaluated target,
+whole-child inventory and nonclosedness result. SIII, Sections 7–9,
+retain their bounded-base and all-companion conclusions. The
+unevaluated finite boundary and strict incidence questions in that
+bounded region remain unresolved; there is no new infinity residual.
+
+The original whole-world interpolation is reused from Lemma 1.3
+and O, and the boundary response is reused from (10.3) and SII,
+Definition 12.1 and Lemma 12.2. The source-specific addition is the
+empty incidence (17.1), its exhaustive singular guards and exact
+coprimality calculations, and the guarded consequences above.
+Fixed-node interpolation, polynomial Euclidean division and Gauss
+lemma are standard tools, not new claims. For interpolation see the
+Berrut–Trefethen reference in Section 16; for Euclidean division and
+Gauss lemma see Dummit and Foote, *Abstract Algebra*, third edition,
+Chapter 9, §§9.2–9.3. The calculations here give all coefficients
+needed for this subtheorem and do not depend on an external
+classification or a separate computational artifact.
+

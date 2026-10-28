@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:181bcb17fc9725ee66b8035e15ec067673bc7982c55d888f0baf359ca8d0cf5f
+  normalized_sha256: sha256:181bcb17fc9725ee66b8035e15ec067673bc7982c55d888f0baf359ca8d0cf5f
+cas_ref: sha256:181bcb17fc9725ee66b8035e15ec067673bc7982c55d888f0baf359ca8d0cf5f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 要求允许反模型检验的方法论规范，没有断言任意理论存在反模型。
+    previous_atom_id: 59eb7c592e050cb834038e2fc519315d60e50910bcfc3a35773ae4517e9f22fa
+    next_atom_id: b7c2a971669110220357a3294a4415fe0466039128159118e7d74d4bf10bfda9

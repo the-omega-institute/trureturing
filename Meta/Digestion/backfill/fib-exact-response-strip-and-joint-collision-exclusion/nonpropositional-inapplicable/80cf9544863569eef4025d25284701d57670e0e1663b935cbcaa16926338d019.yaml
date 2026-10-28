@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:80cf9544863569eef4025d25284701d57670e0e1663b935cbcaa16926338d019
+  normalized_sha256: sha256:80cf9544863569eef4025d25284701d57670e0e1663b935cbcaa16926338d019
+cas_ref: sha256:80cf9544863569eef4025d25284701d57670e0e1663b935cbcaa16926338d019
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Records unresolved questions, retained domain and attribution limits; explicitly disclaims additional classification or global conclusions.
+    previous_atom_id: 2f0b656510529e6cbf204c8afca2bf743328040329c11cba4b838a8d117202a2
+    next_atom_id: null

@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: One mapped actual F2 cycle carries full inventory, all six marks, and retained native a/b edges. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameTransport
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedInventory
 

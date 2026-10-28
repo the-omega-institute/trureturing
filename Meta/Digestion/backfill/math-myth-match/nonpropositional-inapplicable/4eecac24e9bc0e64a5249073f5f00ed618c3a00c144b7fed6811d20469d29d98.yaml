@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4eecac24e9bc0e64a5249073f5f00ed618c3a00c144b7fed6811d20469d29d98
+  normalized_sha256: sha256:4eecac24e9bc0e64a5249073f5f00ed618c3a00c144b7fed6811d20469d29d98
+cas_ref: sha256:4eecac24e9bc0e64a5249073f5f00ed618c3a00c144b7fed6811d20469d29d98
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅阐释第二演讲中理论知识、虔敬和观照的关系，不把它们转作数学断言。
+    previous_atom_id: 9582344c6bdd6ab864c0c5945f5b02ccb2e2fcac344bb0f0a97b52c26a526dcd
+    next_atom_id: e05ca10e9beefd55868e0e6807a130a589b5f445cbe88702e98c68cf82b79d2b

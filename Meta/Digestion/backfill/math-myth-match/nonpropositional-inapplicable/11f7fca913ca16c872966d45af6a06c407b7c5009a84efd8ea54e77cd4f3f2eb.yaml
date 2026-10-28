@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:11f7fca913ca16c872966d45af6a06c407b7c5009a84efd8ea54e77cd4f3f2eb
+  normalized_sha256: sha256:11f7fca913ca16c872966d45af6a06c407b7c5009a84efd8ea54e77cd4f3f2eb
+cas_ref: sha256:11f7fca913ca16c872966d45af6a06c407b7c5009a84efd8ea54e77cd4f3f2eb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 明确提出减少敌意、保留差异的规范价值方向，不从数学事实推出该规范。
+    previous_atom_id: d2426b744a584de0547f8a59fedd9598c70b48505e1d455dc369e759ca166b3a
+    next_atom_id: 23047b8e490da072dcdcc108f47d51d37cfeab2e8bf97f7193ae0e0a78e71409

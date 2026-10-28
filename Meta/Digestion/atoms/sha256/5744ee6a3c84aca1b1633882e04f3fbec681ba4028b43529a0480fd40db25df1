@@ -1,0 +1,42 @@
+**Proposition 38.2 (compensation and the original unconditioned law).**
+The total mass of the raw killed kernel is exactly $S_k(t)$.
+Exponential compensation has total mass
+$e^{\lambda t}S_k(t)\to\phi(k)J_\phi$, not in general one. In
+particular its scaled endpoint measure converges to
+
+$$
+\phi(k)\phi(k')\Gamma_\kappa(z)\,dk'\,dz.
+\tag{38.7}
+$$
+
+This is a finite measure, and its normalized probability is the
+terminal-survivor endpoint limit. At every fixed positive macroscopic
+time the original unconditioned killed/cemetery law tends to the
+cemetery state. If instead phases are explicitly continued by the
+stopped convention $q_t^{\rm stop}=q_{t\wedge\zeta}$, then
+
+$$
+\sup_{0\le s\le b}
+\frac{|q_{Ts}^{\rm stop}-q_0|}{\sqrt T}\longrightarrow0
+\quad\text{almost surely}.
+\tag{38.8}
+$$
+
+Proof. The mass identities are (37.3)--(37.4). The phase endpoint
+law in (38.1) and the survival factor prove weak convergence of the
+entire finite measure (38.7), not just its density on compact sets.
+For simultaneous varying $\kappa$ this statement compares to the
+corresponding $\Gamma_\kappa$, or uses any limiting parameter as in
+Theorem 38.1. Since $\zeta<\infty$ almost surely and $S_k(Ts)\to0$
+for $s>0$, the cemetery assertion follows. The stopped stochastic
+integral has a continuous extension to the finite interval
+$[0,\zeta]$, because its coefficient is bounded and its bracket there
+is finite. Its sample-path supremum is finite, which proves (38.8)
+for each fixed $\kappa$. Uniformly in the parameter family the same
+zero limit holds in probability: conditional Doob inequality and
+$\mathbb E_k\zeta=(k-l)(u-k)/(2\varepsilon^2)$ bound the expected
+squared stopped supremum by one common constant. The almost sure
+statement does not identify sample paths across different parameter
+values. None of these laws is a postulated conservative physical
+diffusion. $\square$
+

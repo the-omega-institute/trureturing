@@ -1,0 +1,30 @@
+**Theorem 19.1 (Response enclosure retaining the exact parameter).**
+The actual $v_\star$ of (18.8) lies strictly inside
+
+$$
+\mathcal V=\left[\frac{144397245334493}{10^{12}},
+                       \frac{144397245371500}{10^{12}}\right].
+\tag{19.1}
+$$
+
+At the four worlds, the final responses have the enclosures below.
+Among these worlds the only unordered distinct final-J collision
+pair is $\{A,B\}$, and the final-M response is injective.
+
+Proof. First, natural interval evaluation in the full box gives these
+response and gain bounds. Every numerator interval in both tables
+is divided by $10^6$; they are enclosures before imposing $F_p=0$.
+
+| World | $p$ | $u$ | $f_J=f_{MJ}$ | $f_M=f_{MM}$ |
+| --- | --- | --- | --- | --- |
+| $A$ | $[27442122,27442163]$ | $[144397177,144397314]$ | $[489764880,489765207]$ | $[640171212,640171644]$ |
+| $B$ | $[27442140,27442145]$ | $[144397238,144397253]$ | $[489765025,489765062]$ | $[658972311,658972359]$ |
+| $C$ | $[27442037,27442248]$ | $[144396879,144397612]$ | $[403819508,403820934]$ | $[630538939,630541225]$ |
+| $D$ | $[27442138,27442147]$ | $[144397231,144397260]$ | $[569047436,569047516]$ | $[659677392,659677485]$ |
+
+| World | $g(5)$ | $g(6)$ | $g(7)$ |
+| --- | --- | --- | --- |
+| $A$ | $[238913,238926]$ | $[24029771,24029799]$ | $[75183233,75183286]$ |
+| $B$ | $[1131951,1131954]$ | $[26325905,26325909]$ | $[80945379,80945386]$ |
+| $C$ | $[-774637,-774562]$ | $[26399707,26399876]$ | $[83634921,83635239]$ |
+| $D$ | $[1156421,1156425]$ | $[26507980,26507987]$ | $[81463625,81463637]$ |

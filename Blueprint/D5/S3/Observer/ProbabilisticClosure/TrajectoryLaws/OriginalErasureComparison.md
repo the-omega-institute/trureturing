@@ -4,7 +4,67 @@
 
 Full-half-line squared erasure comparisons
 
-**Definition 1.1 (cellMass).**
+**Theorem 1.1 (The native bit predictor is a conditional expectation).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.bitPredictor_condExp`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.bitPredictor_condExp` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any probability law, measurable Boolean bit and measurable observation, the regular conditional singleton probability pulled back through that observation equals the conditional expectation of the bit indicator under its comap field. The native retained-forcing proof consumes this unchanged supplier.
+
+**Theorem 1.2 (Measurability of the total native predictor).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.bitPredictor_measurable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.bitPredictor_measurable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every probability law and observation, the singleton real mass of the conditional distribution is a measurable function of the observation. The native radius-zero and forcing losses consume this unchanged supplier.
+
+**Theorem 1.3 (The actual visible posterior pulls back to the same J).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.visible_conditional_pullback`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.visible_conditional_pullback` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite measurable Presentation theta, measurable visible observation o with arbitrary measurable codomain, the original visible bitPredictor evaluated at o(outputs) equals almost surely under jointLaw(theta) the conditional expectation of the original erasedBit given o composed with the visible projection. The proof uses actual condDistrib_map and the native conditional-expectation identity. TwelveStateFullErasure consumes the unchanged bridge for the complete exterior.
+
+**Definition 1.4 (A total finite cell-mass MAP choice).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.mapClassifier`
+
+*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.mapClassifier` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any actual finite-target and finite-observation probability space with the required measurable structures, mapClassifier selects the first maximizing class in a fixed finite ordering for each observation. Zero cells and ties are included.
+
+**Theorem 1.5 (Actual joint-cell maximization).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.mapClassifier_max`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.mapClassifier_max` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every actual finite target q, finite observation w, observed value b and target class a, cellMass(mu,q,w,b,a) is at most the cell mass at mapClassifier(mu,q,w,b). TwelveStateFutureRecovery uses it for the fixed initial future residue on J.
+
+**Definition 1.6 (cellMass).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.cellMass`
 
@@ -16,7 +76,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalEras
 
 For any measurable source, class and observation maps, cellMass(mu,q,w,b,a) is mu(q=a and w=b), in ENNReal. The actual quotient/MAP bridge uses this same joint cell, including null cells.
 
-**Theorem 1.2 (current map error).**
+**Theorem 1.7 (current map error).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.current_map_error`
 
@@ -28,7 +88,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalEras
 
 For every original theta and radius, an actual finite-word classifier attains classError and maximizes each class/word cellMass. OriginalUnifilarQuotient.actual_map_pairs uses both conclusions directly. The original universal theorem remains its other live consumer.
 
-**Theorem 1.3 (error mass formula).**
+**Theorem 1.8 (error mass formula).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.error_mass_formula`
 
@@ -48,7 +108,7 @@ erasedBit(z) is the real indicator of z(0)=true. bitPredictor(mu,x,o)(e) is the 
 
 classError(theta,r) is the ENNReal infimum, over all finite-word classifiers m from (Fin r to Bool) to the trimmed future classes, of J(originalClass(theta,0) differs from m(leftWord(r))). A fixed ordering induced by Fintype.equivFin resolves MAP ties by selecting the first class maximizing the actual joint mass of class and word. Every word, including a zero-mass word, receives a class. The finite success partition proves actual MAP attainment of this infimum.
 
-**Theorem 1.4 (Universal comparisons on the selected original realization).**
+**Theorem 1.9 (Universal comparisons on the selected original realization).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.full_half_line_erasure_comparison`
 
@@ -70,10 +130,15 @@ All coordinate reconstruction arguments include Fin 0 and use the original emitt
 
 ## References
 
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.bitPredictor_condExp`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.bitPredictor_measurable`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.cellMass`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.current_map_error`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.error_mass_formula`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.full_half_line_erasure_comparison`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.mapClassifier`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.mapClassifier_max`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.visible_conditional_pullback`
 - Dependency: [D5/S3/ConceptDynamics/Prediction/ConditionalExpectationOptimality](../../../ConceptDynamics/Prediction/ConditionalExpectationOptimality.md)
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalFutureScreening](OriginalFutureScreening.md)
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ScreenedBinaryPredictor](ScreenedBinaryPredictor.md)

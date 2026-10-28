@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f766594d56f4bc70d7a74b7fec29ba14ca18b589a44a65b92ef9a8319ed9b8ab
+  normalized_sha256: sha256:f766594d56f4bc70d7a74b7fec29ba14ca18b589a44a65b92ef9a8319ed9b8ab
+cas_ref: sha256:f766594d56f4bc70d7a74b7fec29ba14ca18b589a44a65b92ef9a8319ed9b8ab
+coverage_gids:
+  - gid: D5/S0/Rewriting/Expressions/GuardedArithmeticTerms.allLegal_div
+    target_statement_id: sha256:a080d42d73bb5065f3f0de83cd9f778d22c211bb3ec06bae477a92fb73f337dd
+  - gid: D5/S0/Rewriting/Expressions/GuardedArithmeticTerms.legal_iff_allLegal
+    target_statement_id: sha256:c35ecb3776b6803fd8044b58a39ce4046033ec628d410168a83057ab1246b29c
+receipts:
+  unresolved_subitems: []

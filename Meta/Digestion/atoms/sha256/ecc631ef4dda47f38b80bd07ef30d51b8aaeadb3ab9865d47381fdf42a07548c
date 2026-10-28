@@ -1,0 +1,11 @@
+**推论 311.3（最大安全商）。** 定义
+
+$$
+s\sim_{\mathcal T}t
+\quad\Longleftrightarrow\quad
+O_\phi(s)=O_\phi(t)
+\quad\forall\phi\in\mathcal T.
+$$
+
+则 $S/\!\sim_{\mathcal T}$ 是对整个任务族安全的最细状态商；任何安全记录合并都必须至少把属于同一商类的状态合并，且不能合并不同商类。
+

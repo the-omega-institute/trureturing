@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:dd73a931f7ccd426f71d61e9050a12c0a2cb0acf17d459b62eff76e4717f6267
+  normalized_sha256: sha256:dd73a931f7ccd426f71d61e9050a12c0a2cb0acf17d459b62eff76e4717f6267
+cas_ref: sha256:dd73a931f7ccd426f71d61e9050a12c0a2cb0acf17d459b62eff76e4717f6267
+coverage_gids:
+  - gid: D5/S3/Fourier/FourierLaplaceEntire.fourierLaplace_entire
+    target_statement_id: sha256:36f13efb84f0c319fd7327880fc2a9634484305c4d530aa702f96748073712d4
+  - gid: D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.weil_explicit_formula
+    target_statement_id: sha256:d0ab27a1af6591536c6381fffd1c6808499c0426820445c6d7c3eae0f07825b1
+  - gid: D5/S3/Weil/ZetaBridge/SymmetricConvergentOfZetaSummable.symmetricConvergent_of_zeroData
+    target_statement_id: sha256:4d920c70fb52788a7bf8a37055da70a83649ab255570352ad6169e5fa069895b
+receipts:
+  unresolved_subitems: []

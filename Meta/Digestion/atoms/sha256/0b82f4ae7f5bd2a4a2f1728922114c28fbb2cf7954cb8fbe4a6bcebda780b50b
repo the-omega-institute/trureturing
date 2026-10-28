@@ -1,0 +1,28 @@
+**定理 65.3（参数路径的 score 敏感性）。** 对固定支撑的 \(C^1\) 族 \((\nu_\theta,Q_\theta)\)，有
+
+\[
+\partial_a(\nu_\theta Q_\theta^T)
+=\nu'_aQ^T+\sum_{s=0}^{T-1}
+\nu Q^sQ'_aQ^{T-1-s}.
+\]
+
+路径分数
+
+\[
+S_a=\partial_a\log\nu_\theta(X_0)
++\sum_{t=0}^{T-1}\partial_a\log Q_\theta(X_t,X_{t+1})
+\]
+
+满足 \(\mathbb ES_a=0\)，且任意固定路径泛函 \(F\) 有
+
+\[
+\partial_a\mathbb EF=\mathbb E(FS_a)
+=\operatorname{Cov}(F,S_a),
+\qquad
+|\partial_a\mathbb EF|
+\le\sqrt{\operatorname{Var}(F)\,I_a},
+\quad I_a=\mathbb ES_a^2.
+\]
+
+若支撑随参数变化或出现零转移，不能无条件使用对数 score；应回到路径密度的直接差分或总变差界。
+

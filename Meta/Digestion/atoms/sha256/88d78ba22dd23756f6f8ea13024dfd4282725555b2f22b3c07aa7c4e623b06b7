@@ -1,0 +1,20 @@
+**Corollary 47.2 (opposite exact contacts and delayed violations are preserved).** The new tests have the following values on the already proved five-read consumers:
+
+$$
+ \begin{array}{c|c|c}
+ \text{received record and radius}&
+        \widehat{\mathsf{Pass}}_{12}&\widehat{\mathsf{Pass}}_{21}\\ \hline
+ y^{\rm B}=(0,2,0,0,0),\quad\delta=1
+       &\mathrm{false}&\mathrm{false}\\
+ y^{\rm U}=(1,7/10,17/10,19/10,21/10),\quad\delta=3/5
+       &\mathrm{true}&\mathrm{false}\\
+ y^{\rm E}=(0,5/2,3/2,1/2,3/2),\quad\delta=1
+       &\mathrm{false}&\mathrm{false}
+ \end{array}
+ \tag{47.7}
+$$
+
+For $y^{\rm B}$ every positive inflation instead has at least one passing direction. In the family of Proposition 42.1, for every prescribed finite weak Taylor depth, the worlds at radius one still fail an exact raw constraint, despite their nonnegative truncated slacks and nonzero auxiliary contact gain.
+
+**Proof.** Equation (46.6) transfers (40.2)–(40.3) directly. Proposition 34.1 supplies the inflation assertion, Proposition 41.1 the bounded nonzero-auxiliary contact, and Proposition 42.1 the exact positive violation (42.1) beyond any chosen finite depth. These are consumers of those existing results, without new proofs of their constructions. Theorem 45.2 excludes a complete passing reconstruction for a world violating an original raw inequality; Theorem 46.3 also excludes every escaping compatible family at radius one for $y^{\rm E}$. No finite-jet sign shortcut replaces the positive-scale signs in (46.5). $\square$
+

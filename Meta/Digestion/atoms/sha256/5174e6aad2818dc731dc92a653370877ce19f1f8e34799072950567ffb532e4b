@@ -1,0 +1,6 @@
+则：
+
+* 所有 moment constraints 不变；
+* Haar floor 不变，因为 \(m_{\mathbb T}(\{1\})=0\)；
+* budget 严格减小。
+

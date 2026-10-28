@@ -1,0 +1,33 @@
+**Theorem 3.2 (Exact full law of the witness).** Put
+
+$$
+T_m=\pi_0^m+\pi_1^m\quad(m\ge1),\qquad T_1=1,
+\qquad d_i=T_i-T_{i+1}=\pi_0^i\pi_1+\pi_1^i\pi_0>0.
+\tag{3.3}
+$$
+
+For every $k\ge1$, $W_{k,j}$ is one $p$-independent lawful rule on the original clock, returning after between one and $k$ paid calls on every formal branch. Its only nonzero source masses are, for $s\in\{0,1\}$,
+
+$$
+\begin{aligned}
+J_p(H_j=b_s,O=a_1,D=1,N=i)&=\frac{\pi_s}{2}d_i
+&& (1\le i\le k),\\
+J_p(H_j=b_s,O=a_0,D=1,N=k)&=\frac{\pi_s}{2}T_{k+1},\\
+J_p(H_j=a_s,O=a_0,D=1,N=k)&=\frac{\pi_s}{2}.
+\end{aligned}
+\tag{3.4}
+$$
+
+Every other tuple has mass zero, including every $D=0$ tuple and every $N=0$ tuple. For every $B\in\mathcal U$, each displayed joint mass with $u\in B$ is exactly $\nu(B)$ times its displayed value. Its address radius is $2k+1$.
+
+Proof. In phase $\psi$, (3.2) queries active spin edges with left endpoints $q+1,\ldots,q+k$. Their spins $S_{q+1},\ldots,S_{q+k+1}$ are disjoint from $S_q$. The first $r$ replies are zero exactly when those first $r+1$ spins are all equal, an event of probability $T_{r+1}$. For $r=0$ the probability is $T_1=1$. The first one therefore occurs at $i$ with probability $d_i$, while no one in all $k$ calls has probability $T_{k+1}$. Each event is independent of the actual target spin $S_q$.
+
+In the other phase all queried addresses are separators, so every reply is zero and the output is $a_0$ at count $k$. Multiplying by the phase weight $1/2$ and target mass $\pi_s$ proves every line of (3.4). At count $k$ the $a_1$ and $a_0$ outputs are different tuples. The telescope
+
+$$
+\sum_{i=1}^k d_i+T_{k+1}=T_1=1
+\tag{3.5}
+$$
+
+proves normalization in phase $\psi$, and the other phase already has mass one conditionally. The finite lists and next-event decisions are measurable and use only acquired replies. All calls are actual and paid, without an oracle or extra random variable. Independence from the unchanged $u$ gives the rectangle masses. Finally $t_i-j=2i+1$, so the largest distance is $2k+1$. $\square$
+

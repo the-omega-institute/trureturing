@@ -1,0 +1,32 @@
+### 22.4 新充分证书与仍缺的同一测试下界
+
+令 $U_S(f)$ 为第 21.3 节给出的明确非负上界；对本章限定的扩张族也可取 $U_{S,\mathcal R}$。在原有极点消去、支撑完整及线性迹合同下，复用
+
+$$
+Q_{\rm full}(f)=\sigma_S(f)-D_{\rm lin}(f)-N_S(f),\qquad
+L_S(f)\le\sigma_S(f),\qquad
+|D_{\rm lin}(f)-D_{\rm fin}(f)|
+\le\|f\|_2^2E_S(r,\mathbf N).
+$$
+
+于是新的充分证书为
+
+$$
+\boxed{
+L_S(f)-D_{\rm fin}(f)-\|f\|_2^2E_S(r,\mathbf N)-U_S(f)
+\ge0\quad\Longrightarrow\quad Q_{\rm full}(f)\ge0.
+}
+$$
+
+这只是预算替换后的逻辑接口，不另列新形式化目标。其待证的分析内容仍是实际同一测试上的下界
+
+$$
+\sigma_S(f)-D_{\rm lin}(f)\ge U_S(f)
+$$
+
+或更弱而足够的 $\sigma_S(f)-D_{\rm lin}(f)\ge N_S(f)$。前一个条件是方便使用上界而加入的充分条件，不是 RH 的必要条件；前一个条件失败不能否定后一个条件。要推进完整 Weil 判据，比较还须覆盖全部 constrained 测试及相应支撑完整的增长素数集；本章一个扩张族的预算改善不承担这个全称结论。
+
+Connes–Consani, arXiv:2006.13771v1, Proposition 4.5(iv) 的谱配对、Abusaksaka–Partington, arXiv:1704.00518v1, Proposition 2.5 的 Hankel 核判据及 DLMF 5.7.6 的 digamma 展开均为复用前置。完整物理符号的增长预算及其原测试族消费者是本卷的候选综合推导；限定文献检索未取得供应同一估计的定理，不认证原创性。本文未执行 Lean 构建，未摄入或冻结这些候选，也未给出实际正性数值证书。
+
+FIB 的 $\beta=\rho(\alpha)$、五模式来源及四相观察运输，尚无通向实际 prime-dilation 与本章迹读出的交织定理。Robin 的约数倒数预算也没有由本章 Hankel 上界推出。两条接口与 RH 的完整正性目标均保留为未解义务；不把几何长度守恒、换切面或减少估计损失写成这些义务的解答。
+

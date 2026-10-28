@@ -9,7 +9,7 @@ name: Lean build cache publication
 on:
   pull_request:
     branches: [dev, 'integration-**']
-    types: [labeled]
+    types: [opened, reopened, synchronize, labeled]
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
@@ -29,8 +29,18 @@ on:
         type: choice
         options: [build, pr]
         default: build
+      release_seed_tag:
+        description: 'Optional exact local candidate Release for the long build'
+        type: string
+      release_seed_producer:
+        description: 'Immutable producer commit of release_seed_tag'
+        type: string
       regenerate_report_artifacts:
         description: 'Explicitly regenerate all report artifacts, retaining compiled Lean/dependencies'
+        type: boolean
+        default: false
+      runner_diagnostics:
+        description: 'PR only: observe Linux Worker signal provenance and cgroup memory'
         type: boolean
         default: false
       pr_source:
@@ -116,10 +126,12 @@ jobs:
         uses: ./.github/actions/lean-cache-produce
         with:
           regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts }}
+          release-seed-tag: ${{ inputs.release_seed_tag }}
+          release-seed-producer: ${{ inputs.release_seed_producer }}
 
   pr-dispatch:
     name: Dispatch the PR cache build to its target
-    if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'lean-cache-produce'
+    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'lean-cache-produce') && (github.event.action != 'labeled' || github.event.label.name == 'lean-cache-produce')
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 5
     permissions:
@@ -140,6 +152,7 @@ jobs:
       - name: Dispatch the single long build and report its exact run ID
         env:
           GH_TOKEN: ${{ github.token }}
+          STRATALINT_RUNNER_DIAGNOSTICS: ${{ contains(github.event.pull_request.labels.*.name, 'lean-cache-diagnostics') }}
         run: python3 tools/scripts/worktree/lean_pr_cache.py dispatch --repository "$GITHUB_WORKSPACE"
 
   pr-producer:
@@ -155,7 +168,9 @@ jobs:
       group: lean-cache-pr-${{ fromJSON(inputs.pr_source).pr }}
       cancel-in-progress: true
     env:
+      LEAN_NUM_THREADS: '1'
       STRATALINT_CACHE_WRITES: 'true'
+      STRATALINT_RUNNER_DIAGNOSTICS: ${{ inputs.runner_diagnostics }}
       PR_SOURCE: ${{ inputs.pr_source }}
       SOURCE_REF: ${{ inputs.source_ref }}
       SOURCE_SHA: ${{ inputs.source_sha }}
@@ -179,6 +194,8 @@ jobs:
         with:
           preparation-only: 'true'
           regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts }}
+          release-seed-tag: ${{ inputs.release_seed_tag }}
+          release-seed-producer: ${{ inputs.release_seed_producer }}
       - id: pack
         name: Package the registered native cache paths
         env:
@@ -218,9 +235,14 @@ jobs:
         env:
           CI_HIT_PATHS: '*'
         run: bash tools/scripts/workflow/ci-entry.sh
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
       - uses: actions/setup-dotnet@v5
         with:
-          global-json-file: global.json
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
       - name: Build the scheduled Release producer
         run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
       - id: keys

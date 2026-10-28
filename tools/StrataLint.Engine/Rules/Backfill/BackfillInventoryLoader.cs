@@ -427,6 +427,7 @@ internal static partial class BackfillInventoryLoader
 
     internal static bool IsCanonicalPath(string path)
     {
+        if (DigestionContextPointerStore.IsCanonicalPath(path)) return true;
         if (!path.StartsWith(RootPath, StringComparison.Ordinal)) return false;
         var parts = path[RootPath.Length..].Split('/');
         if (parts.Length == 2 && parts[1] == "source.toml") return true;
@@ -468,7 +469,13 @@ internal static partial class BackfillInventoryLoader
         foreach (var path in snapshot.Files.Keys
                      .Where(static path => path.Value.StartsWith(RootPath, StringComparison.Ordinal)))
         {
-            if (!IsCanonicalPath(path.Value))
+            if (DigestionContextPointerStore.IsCanonicalPath(path.Value))
+            {
+                snapshot.TryGetFile(path.Value, out var contextFile);
+                _ = DigestionContextPointerStore.ParseVersions(contextFile!.RawBytes,
+                    path.Value[RootPath.Length..].Split('/')[0], Path.GetFileNameWithoutExtension(path.Value));
+            }
+            else if (!IsCanonicalPath(path.Value))
             {
                 throw new FormatException($"noncanonical digestion ledger path: {path.Value}");
             }
@@ -610,7 +617,8 @@ internal static partial class BackfillInventoryLoader
                 fields["atomizer"].Single(),
                 fields.GetValueOrDefault("acknowledged_stale", []).ToImmutableArray(),
                 metadataParse.GenreRegistryProjection,
-                entries.ToImmutable());
+                entries.ToImmutable(),
+                ParseDefaultDispatch(fields));
             sources.Add(parsedSource);
         }
 

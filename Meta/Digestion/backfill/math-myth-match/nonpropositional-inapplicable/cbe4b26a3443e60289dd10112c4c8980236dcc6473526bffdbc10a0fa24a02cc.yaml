@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cbe4b26a3443e60289dd10112c4c8980236dcc6473526bffdbc10a0fa24a02cc
+  normalized_sha256: sha256:cbe4b26a3443e60289dd10112c4c8980236dcc6473526bffdbc10a0fa24a02cc
+cas_ref: sha256:cbe4b26a3443e60289dd10112c4c8980236dcc6473526bffdbc10a0fa24a02cc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：说明现代证言哲学方案及概率模型的认识论边界；未主张模型决定全部证言资格。
+    previous_atom_id: 672822b70f079e6b27461c12f89f04acd757444e910ae5f64000c79a2c53fbc1
+    next_atom_id: d527102200c6af2c2dadb1230e4d71d000dfb87d82bea167fed6f3cb98244180

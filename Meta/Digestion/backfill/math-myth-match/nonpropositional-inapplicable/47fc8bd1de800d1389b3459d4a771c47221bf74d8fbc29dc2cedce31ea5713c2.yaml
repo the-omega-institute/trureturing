@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:47fc8bd1de800d1389b3459d4a771c47221bf74d8fbc29dc2cedce31ea5713c2
+  normalized_sha256: sha256:47fc8bd1de800d1389b3459d4a771c47221bf74d8fbc29dc2cedce31ea5713c2
+cas_ref: sha256:47fc8bd1de800d1389b3459d4a771c47221bf74d8fbc29dc2cedce31ea5713c2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：保存原典关于圣灵确认的积极神学主张，并区分主张本身与比较者的验证资格；没有待证明的数学命题。
+    previous_atom_id: e54dac52515d6dc35d20d18718fcab73cdfa972512df446990b5d3784d89a0ba
+    next_atom_id: 7bae296250d5cf9c1b4394829b19812bfc698367fd86405e3902e6e18bb300c8

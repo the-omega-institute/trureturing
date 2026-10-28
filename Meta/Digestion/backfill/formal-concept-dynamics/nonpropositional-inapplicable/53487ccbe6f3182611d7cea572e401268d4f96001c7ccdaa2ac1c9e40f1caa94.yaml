@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:53487ccbe6f3182611d7cea572e401268d4f96001c7ccdaa2ac1c9e40f1caa94
+  normalized_sha256: sha256:53487ccbe6f3182611d7cea572e401268d4f96001c7ccdaa2ac1c9e40f1caa94
+cas_ref: sha256:53487ccbe6f3182611d7cea572e401268d4f96001c7ccdaa2ac1c9e40f1caa94
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Cross-time identity transport is a normative parameter to specify, not a transport equation.
+    previous_atom_id: 10e0dab691534aaa54ab1838beec52e2f5bb654d70d5a2bd18d998e83880c326
+    next_atom_id: c56f99542bce79041889fa8d0150aa146fc665f3699b5e8ccd1c6efbe2618fa3

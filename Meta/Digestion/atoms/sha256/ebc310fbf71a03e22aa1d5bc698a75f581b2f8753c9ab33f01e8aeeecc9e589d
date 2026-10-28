@@ -1,0 +1,18 @@
+**Proposition 8.2 (complete attained traffic).** The following counts refer to that single schedule, with the final passive segment stopped at $k=2N$.
+
+| Coordinate | At unknown-field startup | Through actual unit preparation and the paid P39 cut |
+| --- | --- | --- |
+| Ticks | $J_*=2R-1+2N$ | $J=2R-1+5N$ |
+| Adds, including the startup Add$(1)$ | $1$ | $N+1$ |
+| Reads | $2$ | $3$ |
+| Scalar returns, including every Tick return | $J_*+2=2R+2N+1$ | $J+3=2R+5N+2$ |
+| Explicit Holds | $N+2$ | $3N+2$ |
+| Fixed acknowledgements, Add plus Hold | $N+3$ | $4N+3$ |
+| Total calls and return frames | $2R+3N+4$ | $2R+9N+5$ |
+
+Proof. The initial and post-pulse Reads account for the first two Reads. The only further Read is the actual new-origin Read. The Tick and Add counts were proved in Theorems 3.1, 5.1 and 6.2. The enumerated Hold schedule has respectively $1+1+N$ and $1+1+N+N+N$ Holds. Each Hold and Add produces one fixed acknowledgement; each Read and Tick produces one scalar. Summing the disjoint return types also equals the number of calls, giving the last row. $\square$
+
+There are also $N+1$ transmitted pulse rationals: the literal $1$ and the computed $u_j$. Their widths and all command/return framing are added to scalar payload, as are the initial cap input and its assurance. Acknowledgements are counted even when fixed. This attained schedule claims neither minimum Read count nor minimum total call or bit cost.
+
+For the direct simultaneous-buffer implementation of P Proposition 41.2, each source Tick uses $3N-2$ rational multiplications and $2N-2$ rational additions. Thus the final schedule has $J(3N-2)$ such multiplications and $J(2N-2)$ such additions, plus the $N+1$ actual root additions, input decoding, holds, output and framing. For $N=1$ the addition count for Tick is zero. Both source buffers coexist with the observer's stores.
+

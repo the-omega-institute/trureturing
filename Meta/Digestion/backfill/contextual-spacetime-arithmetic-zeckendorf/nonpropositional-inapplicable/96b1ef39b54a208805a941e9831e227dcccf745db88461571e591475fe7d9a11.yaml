@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:96b1ef39b54a208805a941e9831e227dcccf745db88461571e591475fe7d9a11
+  normalized_sha256: sha256:96b1ef39b54a208805a941e9831e227dcccf745db88461571e591475fe7d9a11
+cas_ref: sha256:96b1ef39b54a208805a941e9831e227dcccf745db88461571e591475fe7d9a11
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 181 defines two finite generating functions. Its final sentence explains which quantities their exponents denote; it states no factorization or coefficient identity.
+    previous_atom_id: 025b7c3d7fbf4a9305972770f300dbb3d8e3a9f3798942dd3928da0128896d87
+    next_atom_id: 8d0916e292b9d05f6cae5b2c426b3a5f36fe81a5c2410efe9d91abbc49b29b51

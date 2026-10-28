@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:66c20bbdc3c91185c22c227d082ab1dbfbb8d17e40f5c7245306e7aa70901496
+  normalized_sha256: sha256:66c20bbdc3c91185c22c227d082ab1dbfbb8d17e40f5c7245306e7aa70901496
+cas_ref: sha256:66c20bbdc3c91185c22c227d082ab1dbfbb8d17e40f5c7245306e7aa70901496
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：仅列 theta–Mellin chart 名称，不含 Mellin 变换公式或粘合断言。
+    previous_atom_id: 38637c881b0cbe832caf0032d773c3cc4fc83563eab4274c6d4d25c8304dd2c7
+    next_atom_id: 3ae853c2214cba1c68f8e1f61094d4226eb0fce17b1b6a8bde7b043774966efa

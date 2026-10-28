@@ -1,0 +1,30 @@
+**Corollary 13.2 (Coalescing selected strict pairs have regular sources).**
+Let $E\in\{J,M\}$. Suppose distinct actual selected endpoints obey
+
+$$
+\begin{gathered}
+W_n,W'_n\in C(p_n,v_n),\quad W_n\ne W'_n,\quad
+\tau_E(W_n)=\tau_E(W'_n),\qquad p_n\ne24,\\
+(p_n,v_n)\longrightarrow(p_*,v_*),\quad p_*\ne24,\qquad
+W_n\longrightarrow W,\quad W'_n\longrightarrow W,
+\end{gathered}
+\tag{13.3}
+$$
+
+where $W$ is a strict complete world and $\tau_J=a,\tau_M=m$.
+Then $\Lambda(W)\ne0$. Consequently case 2 of SII, Theorem 16.1,
+can occur only at a regular source, for either selected pair of the
+original joint relation (1.6).
+
+Proof. Continuity of the original readings and terminal response gives
+$W\in C(p_*,v_*)$. If $\Lambda(W)=0$, Theorem 13.1 supplies a
+neighbourhood in the full parent on which $\Psi_E$ is injective.
+Both convergent endpoints eventually lie in this one neighbourhood.
+They have equal $p_n,v_n,\tau_E$, so they have equal $\Psi_E$;
+injectivity makes them equal as complete worlds, contradicting their
+within-pair distinctness. This proves the assertion. In a joint
+sequence the argument applies to either selected pair at its own
+coalescence limit, independently of whether the pairs overlap or have
+equal common terminal values. SII, Theorem 16.1, supplies precisely
+these strict coalescing limits in its second alternative. ∎
+

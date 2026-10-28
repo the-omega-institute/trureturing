@@ -13,7 +13,8 @@ internal static class RemoveWorktreesCommand
         + "Names are complete final directory names of registered worktrees, matched exactly (Ordinal). "
         + "Separate names with whitespace; directory names containing whitespace are unsupported. "
         + "All names are resolved before any deletion; duplicates are removed once. "
-        + "The main checkout is protected; all Git locks require at least 24 hours since lock-file modification.\n"
+        + "The main checkout is protected; intentional Git locks require at least 24 hours since lock-file modification. "
+        + "Initialization markers require exclusive tree entry; live initializers remain protected.\n"
         + "Removal checks target identity and lock age. Eligible trees commit ordinary outstanding changes before removal; checkpoint failure retains the tree. "
         + "The optional CLI --force disables the default 300-second removal timeout; inventory remains bounded. "
         + "It may appear before or after --names and does not override main checkout or lock protection. "
@@ -92,10 +93,10 @@ internal static class RemoveWorktreesCommand
         {
             return Complete(74, items.Select(item => item with
             {
-                Outcome = "failed", Error = exception.Message, ExitCode = 74,
+                Outcome = "failed", Error = BoundedDiagnostic(exception.Message), ExitCode = 74,
             }).ToArray());
         }
-        if (removal.ExitCode is 68 or 73)
+        if (removal.ExitCode is 68 or 73 && CleanLanesCommand.CanonicalRefusal(removal) is not null)
             return Complete(removal.ExitCode.Value, items.Select(item => item with
             {
                 Outcome = removal.ExitCode == 68 ? "locked" : "identity_refused", Error = removal.Error, ExitCode = removal.ExitCode.Value,
@@ -103,27 +104,55 @@ internal static class RemoveWorktreesCommand
         try
         {
             using var document = JsonDocument.Parse(removal.Output);
-            var outcomes = document.RootElement.GetProperty("items").EnumerateArray().ToArray();
+            var receipt = document.RootElement;
+            var outcomes = receipt.GetProperty("items").EnumerateArray().ToArray();
+            if (receipt.GetProperty("event").GetString() != "worktree_removal" || outcomes.Length != items.Length)
+                throw new InvalidOperationException("invalid removal receipt envelope");
             var resolved = items.Select(item =>
             {
                 var outcome = outcomes.Single(entry => entry.GetProperty("path").GetString() == item.Path);
+                if (outcome.GetProperty("outcome").GetString() is not
+                    ("removed" or "refused" or "qualification_failed" or "checkpoint_failed" or "partial_or_indeterminate"))
+                    throw new InvalidOperationException("unknown removal outcome");
                 item = item with
                 {
                     RecoveryBranch = outcome.TryGetProperty("recovery_branch", out var recovery) ? recovery.GetString() : null,
                     RecoveryBranchCandidate = outcome.TryGetProperty("recovery_branch_candidate", out var candidate) ? candidate.GetString() : null,
+                    RecoveryRoots = outcome.TryGetProperty("recovery_roots", out var roots)
+                        ? roots.EnumerateArray().Select(root => root.GetString()!).ToArray() : null,
+                    NativeLocks = outcome.TryGetProperty("checkpoint", out var checkpoint)
+                        && checkpoint.ValueKind == JsonValueKind.Object
+                        && checkpoint.TryGetProperty("native_locks", out var locks) ? locks.Clone()
+                        : outcome.TryGetProperty("native_locks", out var failedLocks) ? failedLocks.Clone() : null,
                 };
+                if (outcome.GetProperty("outcome").GetString() == "refused")
+                {
+                    var reason = outcome.GetProperty("reason").GetString()!;
+                    if (string.IsNullOrWhiteSpace(reason)) throw new InvalidOperationException("missing removal refusal reason");
+                    var code = reason.StartsWith("locked_", StringComparison.Ordinal) ? 68 : 73;
+                    return item with { Outcome = code == 68 ? "locked" : "identity_refused", Error = reason, ExitCode = code };
+                }
                 return outcome.GetProperty("outcome").GetString() == "removed"
                     ? item with { Outcome = "removed" }
                     : item with { Outcome = "failed", ExitCode = 74,
                         Error = outcome.GetProperty("error").GetString() };
             }).ToArray();
-            return Complete(resolved.Any(item => item.ExitCode != 0) ? 74 : 0, resolved);
+            var failed = resolved.Any(item => item.ExitCode == 74);
+            var refused = resolved.Any(item => item.ExitCode is 68 or 73);
+            if (receipt.GetProperty("status").GetString() != (failed ? "failed" : refused ? "refused" : "succeeded"))
+                throw new InvalidOperationException("inconsistent removal receipt status");
+            if (failed && removal.ExitCode != 74 || !failed && !refused && !removal.Success
+                || refused && !failed && removal.ExitCode is not (68 or 73))
+                throw new InvalidOperationException("inconsistent removal process exit=" + removal.ExitCode);
+            return Complete(resolved.Any(item => item.ExitCode == 74) ? 74
+                : resolved.FirstOrDefault(item => item.ExitCode != 0)?.ExitCode ?? 0, resolved);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             return Complete(74, items.Select(item => item with
             {
-                Outcome = "failed", Error = "removal result indeterminate: " + removal.Error + exception.Message, ExitCode = 74,
+                Outcome = "failed", Error = "removal result indeterminate: " + BoundedDiagnostic(removal.Error)
+                    + BoundedDiagnostic(exception.Message), ExitCode = 74,
             }).ToArray());
         }
     }
@@ -161,6 +190,8 @@ internal static class RemoveWorktreesCommand
                 error = item.Error,
                 recovery_branch = item.RecoveryBranch,
                 recovery_branch_candidate = item.RecoveryBranchCandidate,
+                recovery_roots = item.RecoveryRoots,
+                native_locks = item.NativeLocks,
             }));
         }
         var removed = items.Count(static item => item.Outcome == "removed");
@@ -170,5 +201,6 @@ internal static class RemoveWorktreesCommand
     }
 
     private sealed record RemovalItem(string Name, string? Path, string Outcome, string? Error, int ExitCode,
-        string? RecoveryBranch = null, string? RecoveryBranchCandidate = null);
+        string? RecoveryBranch = null, string? RecoveryBranchCandidate = null,
+        IReadOnlyList<string>? RecoveryRoots = null, JsonElement? NativeLocks = null);
 }

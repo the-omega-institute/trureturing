@@ -45,7 +45,8 @@ private theorem cylinder_data (d : ℕ) (w : Fin d → Bool) :
   · exact MeasurableSet.pi (Finset.countable_toSet _) (fun _ _ => measurableSet_singleton _)
   · simpa [D5.S0.Naming.GreenClassMeasure.stringMeasure,
       D5.S0.Naming.GreenClassMeasure.uniformAlphabet,
-      D5.S0.Naming.GreenClassMeasure.greenClass, fairTape, fairBit] using
+      D5.S0.Naming.GreenClassMeasure.greenClass, fairTape, fairBit,
+      D5.S0.Tower.DBonacci.TerminalSampling.uniformPmf] using
       D5.S0.Naming.GreenClassMeasure.greenClass_measure (Finset.range d)
         (fun n => if h : n < d then w ⟨n,h⟩ else false)
 

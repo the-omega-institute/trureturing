@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bf96b77ba5eebc8421f311c0dc86018bcf36494a4346f1096f579444f41ea2ca
+  normalized_sha256: sha256:bf96b77ba5eebc8421f311c0dc86018bcf36494a4346f1096f579444f41ea2ca
+cas_ref: sha256:bf96b77ba5eebc8421f311c0dc86018bcf36494a4346f1096f579444f41ea2ca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The setup of a possible indoctrination-style update and the first example of an instructional source. No model transition, invariant or quantified mathematical law is asserted.
+    previous_atom_id: 36952fe653fe348cd78b74fb923ff733fdf5eb066d345455aa284a5b825f8639
+    next_atom_id: 6ad814dbee2e5fd63f8052765b919cdcff0439a158ac5414a4a9325a3167407b

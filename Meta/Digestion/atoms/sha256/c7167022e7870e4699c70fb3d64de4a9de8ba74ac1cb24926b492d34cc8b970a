@@ -1,0 +1,60 @@
+## 191. FIB 细胞复形上的外加 Regge 型曲率、离散引力与因果三角剖分统计
+
+FIB 递归可提供胞腔附着和细化路径，但没有内禀维数、长度或因果锥。另选有限 \(n\) 维单纯复形 \(\mathcal K_j\)，为每条边 \(e\) 指定长度 \(\ell_e\)，使各单纯形非退化。曲率集中在余维二铰链 \(h\)，欧氏亏角为
+$$
+\delta_h=2\pi-\sum_{\sigma\supset h}\theta_h^\sigma(\ell).
+\tag{191.1}
+$$
+给定 \(G,\Lambda\) 和边界项，Regge 作用量可写为
+$$
+S_R[\ell;\mathcal K_j]
+=\frac1{8\pi G}\left[
+\sum_hV_{n-2}(h)\delta_h-\Lambda\sum_\sigma V_n(\sigma)
+\right]+S_\partial[\ell].
+\tag{191.2}
+$$
+固定组合复形并对长度变分得到离散场方程；改变长度约束、胞腔粘合或边界变分空间，方程也随之改变。Lorentz 版本还需给每条边因果类型、离散时间函数和允许的 \((p,q)\) 单纯形；FIB 的有向边或递归先后不能代替时间函数，欧氏亏角也不能直接代替双曲因果角。
+
+固定测度、积分域和边界后，欧氏配分函数与 Lorentz 振幅分别形如
+$$
+Z_E=\int_{\mathcal D}d\mu(\ell)e^{-S_{E,R}(\ell;\mathcal K)/\hbar},
+\qquad
+Z_L=\sum_{\mathcal K\in\mathfrak C_{\rm FIB}}\frac1{C(\mathcal K)}
+\int_{\mathcal D_L(\mathcal K)}d\mu(\ell)e^{{\rm i}S_R(\ell;\mathcal K)/\hbar}.
+\tag{191.3}
+$$
+Wick 延拓、规范固定、积分轮廓和是否求和于不同粘合都需单独证明或规定。若另加全局切片和正转移核，可定义 CDT 型统计
+$$
+\mathsf T(T',T)=\sum_{B:T\to T'}\frac{e^{-S_E(B)/\hbar}}{C(B)},
+\qquad
+Z_N(T_N,T_0)=\langle T_N|\mathsf T^N|T_0\rangle .
+\tag{191.4}
+$$
+Lorentz 振幅本身不提供概率律；正性和归一化必须外加。
+
+几何观测可取总体积、积分曲率和切片体积
+$$
+\mathcal V=\sum_\sigma V_n(\sigma),\qquad
+\mathcal R=\sum_hV_{n-2}(h)\delta_h,\qquad
+V(k)=\sum_{\sigma:t(\sigma)=k}V_n(\sigma).
+\tag{191.5}
+$$
+对偶图上的扩散还可定义谱维
+$$
+P_{\mathcal K}(\sigma)=\frac1{|V^*|}\sum_{x\in V^*}
+\langle x|e^{-\sigma\Delta_{\mathcal K}^*}|x\rangle,
+\qquad
+d_s(\sigma)=-2\frac{d\log P_{\mathcal K}}{d\log\sigma}.
+\tag{191.6}
+$$
+扩散步长、对偶权重、系综平均次序和边界均为外加；谱维流动不能代替亏角曲率。
+
+若 FIB 层级给出细化 \(q_{j+1,j}:\mathcal K_{j+1}\to\mathcal K_j\)，连续极限还需规定长度缩放、\(G_j,\Lambda_j\) 的重整化、测度和观测量推前。形式上的粗粒化权重
+$$
+e^{-S_j^{\rm eff}(\ell_j)/\hbar}
+=\int_{q_{j+1,j}(\ell_{j+1})=\ell_j}
+d\mu_{j+1}(\ell_{j+1})e^{-S_{E,R,j+1}(\ell_{j+1})/\hbar}
+\tag{191.7}
+$$
+没有这些条件就不定义连续 Einstein 方程或普适固定点。相同组合骨架可配不同度量、签名和系综，得到平直、因果传播、不同曲率涨落或不同相结构；FIB 本身不决定离散引力统计。
+

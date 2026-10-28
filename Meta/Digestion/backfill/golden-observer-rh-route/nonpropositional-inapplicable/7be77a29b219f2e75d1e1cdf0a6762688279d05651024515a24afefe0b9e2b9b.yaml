@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7be77a29b219f2e75d1e1cdf0a6762688279d05651024515a24afefe0b9e2b9b
+  normalized_sha256: sha256:7be77a29b219f2e75d1e1cdf0a6762688279d05651024515a24afefe0b9e2b9b
+cas_ref: sha256:7be77a29b219f2e75d1e1cdf0a6762688279d05651024515a24afefe0b9e2b9b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Core 只定义共享词汇是 R-A—R-F 模块组织约束。
+    previous_atom_id: 5ab1460832799d4aafe2bc7db5f9d46063e52ebaf4c622534ad0ee3f24ef9b37
+    next_atom_id: 44cdfee2efc535738438decf334fb38a7bcc2f4c0858a3dacae70552417e297c

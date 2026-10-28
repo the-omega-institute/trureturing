@@ -141,20 +141,40 @@ fields, and every required check's current name, state, bucket, and link.
 
 ### 0. Establish isolation
 
-Run:
+Observation-only requests, including source/ledger inspection and issue work,
+follow CLAUDE.md §6.1 in the main checkout or a suitable existing worktree
+without creating a worktree or running a build. Do not run ingestion or the
+mutation steps below for such a request.
+
+For ingestion writes, first reuse a suitable linked worktree; create one only when isolation is needed.
+Check Git registration, repository identity, branch/commit and pin compatibility,
+existing material and cooperative scopes. A dispatcher-assigned lane can satisfy
+this check; reuse is not limited to dispatcher assignments or the current session.
+
+Prepare PATH for the mutation commands:
 
 ```sh
 eval "$(sed -n '/^export PATH=/p' tools/scripts/local-harness-gate.sh)"
-# If no dispatcher-assigned isolated lane exists:
-make worktree KIND=theory NAME=<lane> && cd <created-path-from-output>
+```
+
+Only when isolation requires creating a tree, run:
+
+```sh
+make worktree KIND=theory NAME=<lane> DEST=<main-checkout-parent>/trureturing-<session-id>
+cd <created-path-from-output>
+```
+
+In the reused or created tree, run:
+
+```sh
 pwd -P && git rev-parse --show-toplevel && git status --short
 ```
 
-If already assigned an isolated lane, do not create a nested worktree. Confirm
+When creating, use the JSON output's `path` for `<created-path-from-output>`. Confirm
 that `pwd -P` equals `git rev-parse --show-toplevel`, the branch is not `dev`, and
 the status contains no unrelated change. Run all later commands only there.
 
-Postcondition: the task has one isolated, identified worktree and a clean or
+Postcondition for mutation tasks: the task has one isolated, identified worktree and a clean or
 fully explained starting status.
 
 ### 1. Accept and classify the source
@@ -221,6 +241,10 @@ eligible numbered lowercase heading.
 
 ### 3. Ingest and verify the new atoms
 
+Register the canonical regular volume in the corresponding FILEMAP theory
+fragment with `digestion_source = true` before ingestion. Archive files and
+reader symlinks are ineligible.
+
 Run the canonical writer for the requested volume:
 
 ```sh
@@ -234,7 +258,8 @@ or Scribe verification. A failed ingest must be resolved from its actual
 
 Do not create or edit any `Meta/Digestion/**` file yourself. Locate the one
 generated `Meta/Digestion/backfill/<source_id>/source.toml` whose `path` equals
-the new volume, and require its `atomizer` to be `generic-v1`. Search the generated records in that source and read a matching ATOM:
+the new volume, and require its `atomizer` to be `generic-v1`. Search the
+generated records in that source and read a matching ATOM:
 
 ```sh
 make search-atoms SOURCE=<source-id> TEXT=<source-claim-keyword>

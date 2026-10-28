@@ -1,0 +1,96 @@
+**Definition 43.1 (exact cylinder, Fourier convention and response).**
+For $\kappa\ne0$ set $a=|\kappa|$, $L=2\pi/a$, $w=(\theta,v)\in\mathbb R^2$
+and $x=D/\kappa\in\mathbb R/(L\mathbb Z)$.
+There is no wrapping of $\theta$ or $v$. The resolved raw measure is
+$dk\,dw\,dx$; the original raw measure is $dk\,dw\,dD=a\,dk\,dw\,dx$.
+The original positive-probability margin gives $\kappa_*<l/2<1/4$,
+so the already fixed parameter interval has $L\ge1$.
+Let $F^L_\kappa=e^{\lambda t}g^L_\kappa$. Exactly,
+
+$$
+\begin{aligned}
+g^L_\kappa(t;k,k';w,x)
+ &=\sum_{j\in\mathbb Z}g^I_\kappa(t;k,k';w,x+jL)\\
+ &=\frac1{L(2\pi)^2}\sum_{j\in\mathbb Z}\int_{\mathbb R^2}
+ e^{i\eta\cdot w+i\kappa jx}K_{\kappa,(\eta,\kappa j)}(t;k,k')d\eta,\\
+g^{D}_\kappa(t;k,k';w,D)&=a^{-1}g^L_\kappa(t;k,k';w,D/\kappa).
+\end{aligned}
+\tag{43.1}
+$$
+
+Define $\mathcal G^L_{\kappa,m}=\int_0^\infty e^{-mt}F^L_\kappa dt$.
+For $m>0$ and nonzero phase point modulo $L$, define the effective response
+
+$$
+E^L_{\kappa,m}(w,x)=\int_0^\infty e^{-mt}
+       \sum_{j\in\mathbb Z}\Gamma_{\kappa,t}(w,x+jL)dt
+ =\sum_{j\in\mathbb Z}Y_{\kappa,m}(w,x+jL).
+\tag{43.2}
+$$
+
+Both expressions are nonnegative convergent expressions on that domain.
+Their source is exactly $\delta_0(dw)\delta_0(dx)$ relative to raw
+$dw\,dx$ on $\mathbb R^2\times(\mathbb R/L\mathbb Z)$:
+$(-\nabla\cdot M_\kappa\nabla+m)E^L_{\kappa,m}=\delta_0$.
+This follows by integrating its normalized heat equation; it includes
+no angular probability-Haar factor and no height delta in the effective
+operator. The native point source and its height factors are those in
+(41.1) and (43.6).
+Write the original tensor, without dropping any cross term, as
+
+$$
+M_\kappa=\begin{pmatrix}N_\kappa&h_\kappa\\h_\kappa^{\mathsf T}&d_\kappa^*\end{pmatrix},
+\quad S_\kappa=d_\kappa^*-h_\kappa^{\mathsf T}N_\kappa^{-1}h_\kappa>0,
+\quad y=x-h_\kappa^{\mathsf T}N_\kappa^{-1}w,\quad
+b=\sqrt{w^{\mathsf T}N_\kappa^{-1}w}.
+\tag{43.3}
+$$
+
+Here $d_\kappa^*$ is a tensor entry, not the distance in (42.1).
+Uniform positivity of $M_\kappa$ bounds $N_\kappa,S_\kappa$ above and below.
+The complete effective heat kernel is
+
+$$
+\Gamma^L_{\kappa,t}(w,x)
+=\frac{e^{-b^2/(4t)}}{4\pi t\sqrt{\det N_\kappa}}\,
+ \frac1L\sum_{j\in\mathbb Z}
+ e^{-S_\kappa\kappa^2j^2t}e^{i\kappa jy}.
+\tag{43.4}
+$$
+
+For $w\ne0$ its time integral also has the absolutely convergent expression
+
+$$
+E^L_{\kappa,m}(w,x)
+=\frac1{2\pi L\sqrt{\det N_\kappa}}
+ \sum_{j\in\mathbb Z}e^{i\kappa jy}
+ K_0\!\left(b\sqrt{m+S_\kappa\kappa^2j^2}\right),
+\quad
+K_0(z)=\frac12\int_0^\infty s^{-1}e^{-s-z^2/(4s)}ds.
+\tag{43.5}
+$$
+
+For $w=0$, $x\notin L\mathbb Z$, use (43.2), not an ordinary convergent
+sum of separately integrated modes: each integral of (43.4)'s individual
+mode then diverges at $t=0$.
+
+Proof. Projecting the native stochastic law gives the first image identity
+in (43.1); (41.2) makes its heat sum locally uniformly convergent.
+Fourier transformation in $w$ and the raw circle Fourier series give its
+second identity with exactly the displayed prefactor. The bound (36.6),
+or its small-time version proved in Lemma 41.2, is integrable in $\eta$
+and summable in $j$ at each $t>0$, so this is an identity of point kernels
+for the complete operator. The sign of $\kappa$ reverses the hidden lattice
+and is retained in $e^{ijD}$ and the cross terms. Its density factor is the
+absolute Jacobian $a^{-1}$.
+
+Tonelli gives (43.2). Completing the square in the two continuous Gaussian
+frequencies yields (43.4), including the shift $y$ and the Schur complement.
+Integrating a mode gives (43.5) by its displayed definition of $K_0$.
+For $b>0$ the inequality $s+z^2/(4s)\ge z$ and a split at $s=z/2$
+give exponential decay of $K_0(z)$ for large positive $z$, with a polynomial
+factor; thus the full sum is absolutely convergent. If $b=0$, each mode
+contains $\int_0^1dt/t=\infty$, whereas the image integral is finite at a
+nonzero hidden separation. This explicitly identifies the failed
+interchange, including visible-coincident hidden-separated points. $\square$
+

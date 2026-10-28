@@ -1,0 +1,16 @@
+**Definition 8.4 (one simultaneous layout).** An attained implementation can retain all the following resources together. The quantities are added, rather than drawn from incompatible cheap implementations.
+
+| Coexisting resource | Attained numerical store or separately specified charge |
+| --- | --- |
+| Actual source | $N$ cells, $N-1$ links, coefficient store $B$ |
+| Simultaneous source update buffers | $O(NU)$ bits |
+| Supplied cap and cap assurance | $O(\log(R+1))$ numerical bits, plus actual assurance representation/backing |
+| Actual scalar records, command/pulse journal, acknowledgements | $O((R+N)U)$ numerical bits, plus their actual framing; another retained copy is added |
+| Free-response certificate, generated window and extracted impulse records | $O((R+N)U)$ bits, including rank/pivot information |
+| Retained native law, $q,\mu$, actual native record and predictive state | $O(B+NU)$ bits |
+| Pulse list and preparation progress | $O(NU+\log(R+1))$ bits |
+| Elimination, polynomial, observability and control scratch | a constant number of $O(R^2)$-word arrays, or $O(R^2U)$ bits |
+| Generic program, parsing, counters and communication buffers | their actual allocated bits; all $O(R)$-bounded indices use $O(\log(R+1))$ bits |
+| Root/source reference, serialization and exclusive-access resources | their actual retained representations and backing |
+| Read/Tick/Hold and signed Add rights, source-class/fixedness assurance, Hold/control installation | their actual retained representations, setup and backing |
+| Exported view/predictor copies and output buffers | their actual simultaneous lengths, including every separately materialized Time list |

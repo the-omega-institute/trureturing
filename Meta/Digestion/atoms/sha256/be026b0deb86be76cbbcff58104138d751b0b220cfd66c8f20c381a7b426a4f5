@@ -1,0 +1,168 @@
+**引理 482.1（固定高估值部分的统一平均）。** 取一个指定的 good sixth-power-free 理想 $T$。设 $\alpha_a$ 支撑在 $q_a\asymp A$、$a$ good sixth-power-free、$a^{\ge2}\mid T^{\ge2}$，并有 $1\le A\le C_0X$。对固定光滑紧支撑 $\mathcal W$，有
+
+$$
+\begin{aligned}
+\sum_a\alpha_a\sum_{a\mid n}t(n)\mathcal W(q_n/X)
+={}&C_fX^{11/12}\widehat{\mathcal W}(11/12)
+       \sum_a\frac{\alpha_a}{q_a}\\
+&+O_\varepsilon\left((XAq_T)^\varepsilon
+ X^{5/12}A^{1/6}\|\alpha\|_2\right).
+\end{aligned}
+\tag{482.2}
+$$
+
+隐常数依赖原固定形式、level、$C_0$、$\varepsilon$ 及有限阶 profile seminorms，不依赖 $T$。对 H4 的固定有限族及固定过滤 $\phi$，相同条件给出
+
+$$
+\begin{aligned}
+&\sum_a\alpha_a\sum_{a\mid n}
+ \phi(n)\rho_{\mathrm{prim},\tau;S}(n)\mathcal W(q_n/X)\\
+&\quad=C_{\tau,Q,\phi}Z_SX^{5/6}\widehat{\mathcal W}(5/6)
+       \sum_a\frac{\alpha_av(\operatorname{rad}a)}{q_a}
+ +O_\varepsilon\left((XAq_T)^\varepsilon
+ X^{1/3}A^{1/6}\|\alpha\|_2\right).
+\end{aligned}
+\tag{482.3}
+$$
+
+这里 $Z_S,v$ 与 H5 相同；$T$ 可以随尺度变化，费用已显式保留为 $q_T^\varepsilon$，不声称对所有高估值部分同时求和仍无费用。
+
+证明。对原稿 §5 的有限 cusp 计算，不对 $r\mid a$ 使用平方自由的 $g(1,r)\overline{\chi_r(n)}$ 分解，而保持完整 $g(-n,r)$。矩阵恒等式、$f\circ\sigma_r$ 仅依赖 $r\bmod M$ 的结论、原 CRT 相位和 Mellin 核均不使用平方自由性。非单位 sixth-power-free $r$ 的局部指数在 $1,\ldots,5$，故 $\chi_r$ 在单位上非主；只有 $r=1$ 保留 cusp 常数。因此 progression 主项仍为原 $C_f/q_a$，完整对偶项为
+
+$$
+\frac X{q_a}\sum_{r\mid a}\frac{\chi_r(M)}{q_r}
+ \sum_{n\ne0}t_{[r]}(n/M)e(-n\bar r/M)g(-n,r)
+ \mathcal H\mathcal W\left(\frac{q_{n/M}X}{q_r^2}\right).
+\tag{482.4}
+$$
+
+对非平方自由 $r$ 的局部加性求和，正是 H5 已用的完整 Gauss 版本。为进行平均，写
+
+$$
+r=se,\quad s=r^{\ge2},\quad e\text{ squarefree},\quad(s,e)=1,
+\qquad S_1=q_s,\quad F=q_{\operatorname{rad}s},\quad
+c=s/\operatorname{rad}s,\quad C=q_c=S_1/F.
+\tag{482.5}
+$$
+
+固定 $s$，令 $q_e\asymp R$。字符 $\xi_s=\prod_{p^j\parallel s}\chi_p^j$ 在 $\operatorname{rad}s$ 上 primitive，因为每个 $2\le j\le5$ 的局部字符非主。加性正交及 CRT 给出
+
+$$
+\begin{gathered}
+g(n,s)=0\quad(c\nmid n),\qquad
+g(cm,s)=C\tau(\xi_s)\overline{\xi_s(m)},\qquad |\tau(\xi_s)|=\sqrt F,\\
+g(-cm,se)=C\sqrt{Fq_e}\,\omega_{s,e}
+       \overline{\xi_s(m)}\,\overline{\chi_e(m)},
+       \qquad |\omega_{s,e}|=1.
+\end{gathered}
+\tag{482.6}
+$$
+
+字符保留自然零延拓，包括 $(m,\operatorname{rad}s)>1$ 时的零值。单位因子 $\omega_{s,e}$ 与 $m$ 无关；例如可取
+
+$$
+\omega_{s,e}=\chi_s(e)\chi_e(s)
+ \frac{\tau(\xi_s)}{\sqrt F}\frac{g(1,e)}{\sqrt{q_e}}
+ \overline{\xi_s(-1)}\,\overline{\chi_e(-c)}.
+$$
+
+单位 $s,e$ 的相应因子按 $1$ 解释。原相位 $e(-cm\overline{se}/M)$ 只需按 $e\bmod M$ 分成固定有限 sectors。固定 $s$ 与该 sector 后，cusp 系数是同一有限族的一个成员，不引入模 $s$ 的自动形式或扭曲平方和假设。
+
+将所有模一因子吸收到外系数，定义
+
+$$
+\Psi_e=(Fq_e)^{-1/2}\omega'_{s,e}
+       \sum_{\substack{q_a\asymp A\\se\mid a}}\frac{\alpha_a}{q_a}.
+$$
+
+每个 $se$ 的倍数至多 $O(A/(S_1R))$ 个。Cauchy 不等式及每个 $a$ 的除数界给出
+
+$$
+\sum_{q_e\asymp R}|\Psi_e|^2
+\ll_\varepsilon(Aq_T)^\varepsilon
+ A^{-1}S_1^{-1}F^{-1}R^{-2}\|\alpha\|_2^2.
+\tag{482.7}
+$$
+
+频率块 $q_m\asymp H$ 上，对原固定 cusp 使用 (482.1)，只扩大频率集合：
+
+$$
+\sum_{q_m\asymp H}|t_{[se]}(cm/M)\xi_s(m)|^2
+\ll_\varepsilon(CH)^{1+\varepsilon}.
+\tag{482.8}
+$$
+
+这里不对稀疏子序列假设额外消去。由 (482.4) 的核参数，$m$ 的实际对偶长度是
+
+$$
+J\asymp_M\frac{S_1FR^2}{X},
+\tag{482.9}
+$$
+
+不是 $S_1^2R^2/X$。对剩余平方自由 $e$ 列使用原完整 unrestricted-frequency 筛
+
+$$
+\Delta_6(H,R)\ll_\varepsilon(HR)^\varepsilon
+ \left(H+H^{1/6}R+H^{5/6}R^{1/3}+H^{1/3}R^{5/6}\right).
+\tag{482.10}
+$$
+
+当 $1\le H\le J$ 时，$S_1R\ll A\le C_0X$ 蕴含 $H/R\ll F$。将四项分别除以 $H^{1/6}R$，得到
+
+$$
+H^{5/6}/R,\quad1,\quad(H/R)^{2/3},\quad(H/R)^{1/6}.
+$$
+
+因 $R\ge1$，它们均为 $O(F^{5/6})$。故 $\Delta_6(H,R)\ll(HR)^\varepsilon F^{5/6}H^{1/6}R$。将 (482.7)、(482.8) 和该筛界相乘，并作原共同光滑核的 Mellin 分离，块贡献至多
+
+$$
+(XAq_T)^\varepsilon X A^{-1/2}F^{-7/12}R^{-1/2}
+ H^{7/12}(J/H)^{1/12+\varepsilon}\|\alpha\|_2.
+\tag{482.11}
+$$
+
+固定 $s,R$ 后选择内部损失 $0<\varepsilon<1/4$，小频率块留下正的 $H$ 幂，故由 $H\asymp J$ 控制。若 $J\ge1$、$H>J$，(482.10) 的各项关于 $H$ 的幂至多 $1$，所以该筛不超过临界筛界乘 $(H/J)^{1+\varepsilon}$；统一固定大参数衰减阶 $B=4$ 即可求和。若 $J<1$，原非零频率间隙给 $H\gg_M1$，用 $\Delta_6(H,R)\ll(HR)^\varepsilon HR$ 和同一 $B=4$，整条尾部不超过
+
+$$
+(XAq_T)^\varepsilon X A^{-1/2}F^{-1}R^{-1/2}J^B\|\alpha\|_2,
+$$
+
+它被 (482.11) 的临界表达式控制，因 $F\ge1$、$J<1$、$B>7/12$。固定 $M$ 的比较常数并入隐常数。这些分离始终使用每个块的一个共同变换，不在 $e$ 间选择不同的 profile。
+
+在 $H\asymp J$ 的界中代入 (482.9)，全部 $F$ 幂抵消，得到
+
+$$
+\begin{aligned}
+X A^{-1/2}F^{-7/12}R^{-1/2}J^{7/12}\|\alpha\|_2
+&\ll X^{5/12}A^{-1/2}S_1^{7/12}R^{2/3}\|\alpha\|_2\\
+&\ll X^{5/12}A^{1/6}S_1^{-1/12}\|\alpha\|_2.
+\end{aligned}
+\tag{482.12}
+$$
+
+$R$ dyads 的正幂和由 $R\ll A/S_1$ 控制。每个可能的 $s$ 都整除 $T$，数量至多 $\tau(T)$，故其和只支付 $q_T^\varepsilon$。这证明 (482.2)。
+
+为恢复原 primitive 密度，按原稿 §7 使用 $w_S=1*h_S$，其中 $h_S(p)=-1/(q_p+1)$、$h_S(p^j)=0$（$j\ge2$）。对其平方自由除数写 $d=eg$，$e\mid\operatorname{rad}a$、$(g,a)=1$；则 $[a,d]=ag$，故即使 $a$ 非平方自由仍有精确展开
+
+$$
+\sum_{a\mid n}w_S(n)t(n)\mathcal W(q_n/X)
+=w_S(a)\sum_{\substack{g\ {\rm squarefree}\\(g,aS)=1}}h_S(g)
+ \sum_{ag\mid n}t(n)\mathcal W(q_n/X).
+\tag{482.13}
+$$
+
+在 $q_g\asymp G$ 上聚合到 $a'=ag$ 的系数 $\beta$，除数 Cauchy 与理想计数给
+
+$$
+\|\beta\|_2^2\ll_\varepsilon(AG)^\varepsilon G^{-1}\|\alpha\|_2^2.
+$$
+
+$a'$ 的高估值部分未改变，且有贡献时 $AG\ll X$。由 (482.2)，该块误差为 $\ll(XAq_T)^\varepsilon X^{5/12}A^{1/6}G^{-1/3}\|\alpha\|_2$，其 dyadic 和收敛。主项延到全部 $g$ 的尾部至多 $X^{-1/12+\varepsilon}A^{1/2}\|\alpha\|_2$，被目标误差吸收；主项 Euler 因子为
+
+$$
+w_S(a)\sum_{(g,a)=1}\frac{h_S(g)}{q_g}
+=Z_Sv(\operatorname{rad}a).
+$$
+
+最后使用 H4 的 $t(n)=q_n^{1/12}\rho_{\mathrm{full},\tau;S}(n)$，把 profile 换为 $x^{-1/12}\mathcal W(x)$ 并乘 $X^{-1/12}$，得到 (482.3)。固定过滤在 H4 密度关系之后施加，保留 H2–H5 的同一个有限族。证毕。
+

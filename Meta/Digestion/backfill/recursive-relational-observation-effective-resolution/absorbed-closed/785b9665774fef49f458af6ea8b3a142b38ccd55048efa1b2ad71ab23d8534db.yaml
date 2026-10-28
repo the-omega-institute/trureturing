@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:785b9665774fef49f458af6ea8b3a142b38ccd55048efa1b2ad71ab23d8534db
+  normalized_sha256: sha256:785b9665774fef49f458af6ea8b3a142b38ccd55048efa1b2ad71ab23d8534db
+cas_ref: sha256:785b9665774fef49f458af6ea8b3a142b38ccd55048efa1b2ad71ab23d8534db
+coverage_gids:
+  - gid: D5/S0/Tower/Tribonacci/Representation.decode
+    target_statement_id: sha256:142df587c42e0958706e2da16bdeefbd5db263a76caf83fd5e9cd20bdb7181c5
+  - gid: D5/S0/Tower/Tribonacci/Representation.decodeEquiv
+    target_statement_id: sha256:2372271faac3fe85c2d6ec5f8c4249268794e7c79dfa5792121d57a667b91c0d
+  - gid: D5/S0/Tower/Tribonacci/Representation.decode_bijective
+    target_statement_id: sha256:206bd6fa69cf3d5da5129604c2b370e4d2492134dc681802617d67de99babc3b
+  - gid: D5/S0/Tower/Tribonacci/Representation.decode_lt_tribonacci
+    target_statement_id: sha256:8fbbf3979ac794c6b77886b8e6dfa8ac0ee98febc42496093b62d3b203e83ef9
+  - gid: D5/S0/Tower/Tribonacci/Representation.encode
+    target_statement_id: sha256:5bc2fa3926bf7394ae9670ae8f79b0ac1978c5f5f5c9c507e733dca24dc24023
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:367a80aa4f71d71360b0b04ef9ce132e4cdf173ba9e188274ecc8621f8a79406
+  normalized_sha256: sha256:367a80aa4f71d71360b0b04ef9ce132e4cdf173ba9e188274ecc8621f8a79406
+cas_ref: sha256:367a80aa4f71d71360b0b04ef9ce132e4cdf173ba9e188274ecc8621f8a79406
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条规定三条具名边、正费用与时长、指数权重和权矩阵，说明其共同来源约定，不断言谱或响应公式。
+    previous_atom_id: 1a9c23da246ba5d54d499671f645fdd1981ccad501c47d216f8c1502da2b287b
+    next_atom_id: 432bc1299dc6c3bae43ccbbe505d5a360a98e4cc65b8debddbd5c0d722c862b0

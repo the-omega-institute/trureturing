@@ -1,0 +1,83 @@
+## 168. FIB 网络上的吸收态临界与定向渗流型统计
+
+设 FIB 给出递归图族
+$$
+G_N=(V_N,E_N)
+$$
+及其合法转移关系。递归只确定连接、允许操作和层级；转移速率、活动变量、噪声、初始分布、边界和无限系统极限都需外加。必须区分静态渗流、随时间更新的吸收态和 jamming：跨越簇、无合法运动的堵塞态以及活动最终熄灭并非同一事件。
+
+令 \(\Omega_N\) 为合法构型空间，\(\mathcal L_N\) 为 FIB 允许的转移。外加连续时间速率
+$$
+q_N(x,y)\ge0,\qquad
+(x,y)\notin\mathcal L_N\Longrightarrow q_N(x,y)=0
+$$
+给出主方程
+$$
+\frac{dP_N(x,t)}{dt}
+=\sum_{y\ne x}
+[P_N(y,t)q_N(y,x)-P_N(x,t)q_N(x,y)].
+\tag{168.1}
+$$
+吸收集合为
+$$
+\mathcal A_N
+=\{x:q_N(x,y)=0\ \text{对所有 }y\ne x\}.
+\tag{168.2}
+$$
+它取决于速率和约束，不由静态 FIB 图单独决定。
+
+一个外加活动过程可令节点变量 \(\eta_v\in\{0,1\}\)，失活率为 \(\mu_v\)，激活率为
+$$
+h_v+\lambda\sum_uK_{uv}\eta_u,
+$$
+其中 \(K\) 仅在允许传播的关系上非零，\(h_v\) 是自发激活率。\(h_v=0\) 时，全零构型是吸收态。其一阶矩满足
+$$
+\frac{d\langle\eta_v\rangle}{dt}
+=-\mu_v\langle\eta_v\rangle
++h_v(1-\langle\eta_v\rangle)
++\lambda\sum_uK_{uv}
+\langle(1-\eta_v)\eta_u\rangle.
+\tag{168.3}
+$$
+二点相关使方程不闭合；把相关项替换为一阶矩乘积只是平均场近似，不能直接当作真实临界点。
+
+活动密度可定义为
+$$
+\rho_N(t)=\frac1{|V_N|}\sum_{v\in V_N}\mathbb E[\eta_v(t)].
+\tag{168.4}
+$$
+有限、无源系统通常最终进入吸收态，因此活动相必须通过先取无限系统再取长时间的次序定义，例如
+$$
+\rho_{\rm st}(\lambda)
+=\lim_{t\to\infty}\lim_{N\to\infty}\rho_N(t).
+\tag{168.5}
+$$
+交换两个极限、使用准平稳分布或使用有限种子存活概率，得到的是不同观测量。持续源 \(h_v>0\) 会破坏全零吸收性，转而定义受迫响应。
+
+对局域、短程、单一非负活动场、连续转变且没有额外守恒慢变量或特殊对称性的模型，接触过程的随机时空路径可成为 directed percolation 型粗粒化的候选。条件性有效方程可写为
+$$
+\partial_t a
+=D\nabla^2a+ra-ua^2+\sqrt{2\Gamma a}\,\xi,
+\qquad u,\Gamma>0,
+\tag{168.6}
+$$
+其中零活动处漂移与噪声均消失，以保持吸收性。FIB 长程边、层级瓶颈、度异质性、相关无序或多个相互作用吸收态都可能改变普适类。
+
+若存在连续临界点 \(\lambda_c\)，令 \(\Delta=(\lambda-\lambda_c)/\lambda_c\)，可检验
+$$
+\rho_{\rm st}\sim\Delta^\beta,\qquad
+\xi_\perp\sim|\Delta|^{-\nu_\perp},\qquad
+\xi_\parallel\sim|\Delta|^{-\nu_\parallel},
+\tag{168.7}
+$$
+以及有限尺寸形式
+$$
+\rho_N(\Delta)
+=N^{-\beta/\nu_\perp}
+\mathcal F(\Delta N^{1/\nu_\perp},tN^{-\nu_\parallel/\nu_\perp}).
+\tag{168.8}
+$$
+这些指数只有在给定几何、边界、时间更新和极限后才有意义。静态渗流阈值、jamming 阈值和吸收态临界点不能由同一 FIB 数量递推自动识别。
+
+本节结论是：FIB 提供活动传播的合法关系与递归图族；吸收态、定向渗流型临界、序参量和有限尺寸指数由外加更新率、噪声、边界、相关性及极限次序决定。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:33ff28abd7f3306d0beb261fc80fc6dd86f84ba1567a989970e0df0815144259
+  normalized_sha256: sha256:33ff28abd7f3306d0beb261fc80fc6dd86f84ba1567a989970e0df0815144259
+cas_ref: sha256:33ff28abd7f3306d0beb261fc80fc6dd86f84ba1567a989970e0df0815144259
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅记录詹姆斯三项哲学主张及其文本范围和比较用途；没有可由 Lean 结算的数学断言。
+    previous_atom_id: 2b9d624bfac1fbbdfb76ec58cf0c20edfff0dc25fcdfbed065fa11c6f23b5865
+    next_atom_id: cea635f65a184f6eb4fba0c736f1977463844a29b0fe7838d1e9b2546b15dce7

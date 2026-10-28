@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2f23c0bd5f158e62a7c89fd286424ffce75bcdb3708e00219b3ef9aaf08090f3
+  normalized_sha256: sha256:2f23c0bd5f158e62a7c89fd286424ffce75bcdb3708e00219b3ef9aaf08090f3
+cas_ref: sha256:2f23c0bd5f158e62a7c89fd286424ffce75bcdb3708e00219b3ef9aaf08090f3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: δ_PSD 被指定为区间证书谱隙下界的统计名称，未声称某矩阵已有该下界。
+    previous_atom_id: 313b332aa5a498f987cb7485b308707d04a2d0a9d4c2b32b4abe6e03357d1367
+    next_atom_id: d57aa737c95f9770fd15f5e891f95327b1b9853695e89249bdb73712d2a10c62

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b8dadf01024b42c75a2a1c2540e99bfc650e5b648c401bddfe62835828916bc7
+  normalized_sha256: sha256:b8dadf01024b42c75a2a1c2540e99bfc650e5b648c401bddfe62835828916bc7
+cas_ref: sha256:b8dadf01024b42c75a2a1c2540e99bfc650e5b648c401bddfe62835828916bc7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 禁止把空、神和启示改称概率中心的解释纪律；只建议借用数学方法，不重述其数值结论。
+    previous_atom_id: d301706b93da873db2732557990dfd8cae4aa9065a307884bb71787aeeff8cb3
+    next_atom_id: 3b7d8cd86a12f14de990347aaa0db52d459943407371f09e054a1bab95c64358

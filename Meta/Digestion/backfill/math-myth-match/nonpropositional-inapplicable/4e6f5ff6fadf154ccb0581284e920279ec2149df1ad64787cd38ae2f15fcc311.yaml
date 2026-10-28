@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4e6f5ff6fadf154ccb0581284e920279ec2149df1ad64787cd38ae2f15fcc311
+  normalized_sha256: sha256:4e6f5ff6fadf154ccb0581284e920279ec2149df1ad64787cd38ae2f15fcc311
+cas_ref: sha256:4e6f5ff6fadf154ccb0581284e920279ec2149df1ad64787cd38ae2f15fcc311
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 讨论《心经》的修行语境及现实效果尚未测定，不给出量化的修行模型。
+    previous_atom_id: 2694c9d304c5e4e94938d76bf2cda2f84682336462ba104101279c1315edc08f
+    next_atom_id: 341ea32e7af25102bc200c1320267a1c92b2e5aa8345c0cc24d051113b351da1

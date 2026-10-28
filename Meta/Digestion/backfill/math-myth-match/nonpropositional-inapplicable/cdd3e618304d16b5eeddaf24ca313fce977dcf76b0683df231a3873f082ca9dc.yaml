@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cdd3e618304d16b5eeddaf24ca313fce977dcf76b0683df231a3873f082ca9dc
+  normalized_sha256: sha256:cdd3e618304d16b5eeddaf24ca313fce977dcf76b0683df231a3873f082ca9dc
+cas_ref: sha256:cdd3e618304d16b5eeddaf24ca313fce977dcf76b0683df231a3873f082ca9dc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 比较皮尔士四种方法及科学方法的实在假设，不宣称已证无条件收敛。
+    previous_atom_id: 2d95bcef26bba2a37523fad23b7a64dff2ea27fda9012f42388bc5271e97236b
+    next_atom_id: f40ddd8333e64344e2b07baf2761632557b3eea72d37dfdd736176c45d545cdd

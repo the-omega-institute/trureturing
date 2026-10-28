@@ -11,6 +11,7 @@ import D5.S3.Arith.Robin.FinitePulseKernelTransport
 import D5.S3.Arith.Robin.GA2ForcedPrimeSource
 import D5.S3.Arith.Robin.EulerLayerPhaseSeparation
 import D5.S3.Arith.Robin.ActualRobinClockCovariance
+import D5.S3.Arith.Robin.OriginalFirstClockBufferEstimates
 import D5.S3.Arith.Robin.MellinWeightedVariation
 import D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
 import D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
@@ -33,6 +34,7 @@ open D5.S3.Arith.GoldenResourceOptimalInteger
 open D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
 open D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
 open D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
+open D5.S3.Arith.Robin.OriginalFirstClockBufferEstimates
 
 -- Literal source expressions; these notations create no second price producer.
 local notation "λ₀" => D5.S3.Arith.Robin.ActualRobinClockCovariance.g
@@ -52,7 +54,7 @@ def originalMaximizes (p N : ℕ) : Prop :=
 def canonicalSource (p : ℕ) : ℕ :=
   if h : ∃ N, originalMaximizes p N then Nat.find h else 0
 
-private theorem canonical_source_spec {p : ℕ} (h : ∃ N, originalMaximizes p N) :
+theorem canonical_source_spec {p : ℕ} (h : ∃ N, originalMaximizes p N) :
     originalMaximizes p (canonicalSource p) ∧
       ∀ N, originalMaximizes p N → canonicalSource p ≤ N := by
   simp only [canonicalSource, dif_pos h]
@@ -206,7 +208,7 @@ private theorem first_clock_exists {q : ℕ} (hq : q.Prime) :
 def firstClock (q : ℕ) : ℝ :=
   if hq : q.Prime then Classical.choose (first_clock_exists hq) else 0
 
-private theorem first_clock_spec {q : ℕ} (hq : q.Prime) :
+theorem first_clock_spec {q : ℕ} (hq : q.Prime) :
     (q : ℝ) < firstClock q ∧ firstClock q < (q : ℝ)+1 ∧
       λ₀ (firstClock q) = goldenLayerMarginal q 1 := by
   simpa only [firstClock, dif_pos hq] using Classical.choose_spec (first_clock_exists hq)
@@ -276,7 +278,7 @@ private theorem contact_density {q : ℕ} (hq : q.Prime) {t : ℝ} (ht : 243 ≤
   have hw := original_curve.positive_weight t (by linarith)
   nlinarith
 
-private theorem first_absent {U q : ℕ} (hU : 0 < U) (hq : q.Prime) {t : ℝ}
+theorem first_absent {U q : ℕ} (hU : 0 < U) (hq : q.Prime) {t : ℝ}
     (ht : 1 < t) (hc : t ≤ firstClock q)
     (hstrict : ∀ q : ℕ, U.factorization q = optimalLayerCount (λ₀ t) q) : ¬q ∣ U := by
   have hy := first_clock_spec hq
@@ -391,6 +393,286 @@ theorem complete_original_first_clock_exclusion (X : OriginalWindow) {ell R : �
 
 #print axioms original_upper_first_clock_exclusion
 #print axioms complete_original_first_clock_exclusion
+
+-- BEGIN good_edge_prime_buffer: original integer comparisons.
+private theorem buffer_price_integrable {s t : ℝ}
+    (hs : 1 < s) (hst : s ≤ t) : IntervalIntegrable λ₀ volume s t := by
+  have hc : ContinuousOn λ₀ (Icc s t) := by
+    intro x hx
+    exact (original_curve.derivative x (hs.trans_le hx.1)).continuousAt.continuousWithinAt
+  exact hc.intervalIntegrable_of_Icc hst
+
+private theorem buffer_loglog_integral {s t : ℝ}
+    (hs : 1 < s) (hst : s ≤ t) :
+    (∫ x in s..t, λ₀ x) = Real.log (Real.log t)-Real.log (Real.log s) := by
+  apply intervalIntegral.integral_eq_sub_of_hasDerivAt
+    (f := fun x : ℝ => Real.log (Real.log x)) _
+    (buffer_price_integrable hs hst)
+  intro x hx
+  have hx1 : 1 < x := hs.trans_le (by
+    rw [uIcc_of_le hst] at hx
+    exact hx.1)
+  have hx0 : x ≠ 0 := by linarith
+  have hl := (Real.log_pos hx1).ne'
+  convert! (Real.hasDerivAt_log hx0).log hl using 1
+  unfold D5.S3.Arith.Robin.ActualRobinClockCovariance.g
+  field_simp
+  <;> ring
+
+private theorem buffer_average_left {x h : ℝ}
+    (hx : 1 < x-h) (hh : 0 < h) :
+    h*λ₀ x+h^2/2*w₀ x ≤ ∫ u in x-h..x, λ₀ u := by
+  have horder : x-h ≤ x := by linarith
+  have hlinear : IntervalIntegrable
+      (fun u => λ₀ x+(x-u)*w₀ x) volume (x-h) x :=
+    (show Continuous (fun u => λ₀ x+(x-u)*w₀ x) from by fun_prop).intervalIntegrable _ _
+  have hb := intervalIntegral.integral_mono_on horder hlinear
+    (buffer_price_integrable hx horder) (fun u hu => by
+      have hs := (curve_slope_bounds original_curve (hx.trans_le hu.1) hu.2).1
+      linarith)
+  have heq : (∫ u in x-h..x, λ₀ x+(x-u)*w₀ x) =
+      h*λ₀ x+h^2/2*w₀ x := by
+    have hia : IntervalIntegrable (fun u : ℝ => (x-u)*w₀ x) volume (x-h) x :=
+      (show Continuous (fun u : ℝ => (x-u)*w₀ x) from by fun_prop).intervalIntegrable _ _
+    rw [intervalIntegral.integral_add intervalIntegrable_const hia,
+      intervalIntegral.integral_mul_const,
+      intervalIntegral.integral_sub (f := fun _ : ℝ => x) (g := fun u : ℝ => u)
+        intervalIntegrable_const (continuous_id.intervalIntegrable _ _), integral_id]
+    simp only [intervalIntegral.integral_const, smul_eq_mul]
+    ring
+  exact heq ▸ hb
+
+private theorem buffer_average_right {x h : ℝ}
+    (hx : 1 < x) (hh : 0 < h) :
+    (∫ u in x..x+h, λ₀ u) ≤ h*λ₀ x-h^2/2*w₀ (x+h) := by
+  have horder : x ≤ x+h := by linarith
+  have hlinear : IntervalIntegrable
+      (fun u => λ₀ x-(u-x)*w₀ (x+h)) volume x (x+h) :=
+    (show Continuous (fun u => λ₀ x-(u-x)*w₀ (x+h)) from by fun_prop).intervalIntegrable _ _
+  have hb := intervalIntegral.integral_mono_on horder
+    (buffer_price_integrable hx horder) hlinear (fun u hu => by
+      have hs := (curve_slope_bounds original_curve hx hu.1).1
+      have hw := original_curve.antitone_weight (hx.trans_le hu.1)
+        (hx.trans_le horder) hu.2
+      have hm := mul_le_mul_of_nonneg_left hw (sub_nonneg.mpr hu.1)
+      linarith)
+  have heq : (∫ u in x..x+h, λ₀ x-(u-x)*w₀ (x+h)) =
+      h*λ₀ x-h^2/2*w₀ (x+h) := by
+    have hia : IntervalIntegrable (fun u : ℝ => (u-x)*w₀ (x+h)) volume x (x+h) :=
+      (show Continuous (fun u : ℝ => (u-x)*w₀ (x+h)) from by fun_prop).intervalIntegrable _ _
+    rw [intervalIntegral.integral_sub intervalIntegrable_const hia,
+      intervalIntegral.integral_mul_const,
+      intervalIntegral.integral_sub (f := fun u : ℝ => u) (g := fun _ : ℝ => x)
+        (continuous_id.intervalIntegrable _ _) intervalIntegrable_const, integral_id]
+    simp only [intervalIntegral.integral_const, smul_eq_mul]
+    ring
+  exact hb.trans_eq heq
+
+private theorem buffer_prime_not_dvd_5040 {q : ℕ} (hq : q.Prime)
+    (hlarge : (16 : ℝ) < q) : ¬q ∣ 5040 := by
+  intro hd
+  rw [show (5040 : ℕ) = (16*9*5)*7 by norm_num] at hd
+  rcases hq.dvd_mul.mp hd with hd | hd
+  · rcases hq.dvd_mul.mp hd with hd | hd
+    · rcases hq.dvd_mul.mp hd with hd | hd
+      · have h : (q : ℝ) ≤ 16 := by exact_mod_cast Nat.le_of_dvd (by norm_num : 0 < 16) hd
+        linarith
+      · have h : (q : ℝ) ≤ 9 := by exact_mod_cast Nat.le_of_dvd (by norm_num : 0 < 9) hd
+        linarith
+    · have h : (q : ℝ) ≤ 5 := by exact_mod_cast Nat.le_of_dvd (by norm_num : 0 < 5) hd
+      linarith
+  · have h : (q : ℝ) ≤ 7 := by exact_mod_cast Nat.le_of_dvd (by norm_num : 0 < 7) hd
+    linarith
+
+private theorem buffer_left_prime_exclusion {p U q : ℕ}
+    (hp : p.Prime) (hU : 0 < U) (h5040 : 5040 ∣ U)
+    (hmax : originalMaximizes p (p*U)) {a : ℝ}
+    (ha : a=Real.log (p*U : ℕ)) (ha256 : 256 ≤ a)
+    (hq : q.Prime) (hql : a-2 ≤ (q : ℝ)) (hqu : (q : ℝ) < a)
+    (hstrict : ∀ s : ℕ, U.factorization s=optimalLayerCount (λ₀ a) s)
+    (hcontact : a ∉ Icc (q : ℝ) (firstClock q)) : False := by
+  let h : ℝ := Real.log (q : ℝ)
+  have hs := buffer_log_size ha256 hql (by linarith : (q : ℝ) ≤ a+1)
+  change 5 < h ∧ h ≤ a/20 at hs
+  have hh : 0 < h := by linarith [hs.1]
+  have ha1 : 1 < a := by linarith
+  have hleft1 : 1 < a-h := by linarith [hs.2]
+  have hclock := first_clock_spec hq
+  have htau : firstClock q < a := by
+    by_contra hn
+    exact hcontact ⟨hqu.le, le_of_not_gt hn⟩
+  have htau1 : 1 < firstClock q := by linarith [hclock.1]
+  have hactive : λ₀ a < goldenLayerMarginal q 1 := by
+    rw [← hclock.2.2]
+    exact D5.S3.Arith.Robin.EulerLayerPhaseSeparation.price_strictAnti htau1 htau
+  have hprice : 0 < λ₀ a := by
+    exact one_div_pos.mpr (mul_pos (by linarith) (Real.log_pos ha1))
+  have hmemb : 1 ∈ Set.Icc 1 (optimalLayerCount (λ₀ a) q) := by
+    rw [← positive_layers_eq_count_interval hprice hq]
+    exact ⟨le_rfl, hq, hactive⟩
+  have hfac : 0 < U.factorization q := by rw [hstrict q]; exact hmemb.2
+  have hqU : q ∣ U := by
+    by_contra hn
+    have hz := Nat.factorization_eq_zero_of_not_dvd hn
+    omega
+  have hq5040 := buffer_prime_not_dvd_5040 hq (by linarith : (16 : ℝ) < q)
+  obtain ⟨k, hk⟩ := h5040
+  have hqk : q ∣ k := by
+    rw [hk] at hqU
+    exact (hq.dvd_mul.mp hqU).resolve_left hq5040
+  obtain ⟨v, hv⟩ := hqk
+  let V : ℕ := 5040*v
+  have hVq : V*q=U := by rw [hk, hv]; dsimp [V]; ring
+  have hV : 0 < V := by
+    by_contra hn
+    have hz : V=0 := by omega
+    rw [hz, zero_mul] at hVq
+    omega
+  let M : ℕ := p*V
+  have hM : 1 ≤ M := Nat.one_le_iff_ne_zero.mpr (mul_ne_zero hp.ne_zero hV.ne')
+  have hdiv : 5040*p ∣ M := by
+    refine ⟨v, ?_⟩
+    dsimp [M, V]
+    ring
+  have hMq : M*q=p*U := by dsimp [M]; rw [Nat.mul_assoc, hVq]
+  have hlog : Real.log (M : ℝ)=a-h := by
+    have he : a=Real.log (M : ℝ)+h := by
+      rw [ha, ← hMq, Nat.cast_mul,
+        Real.log_mul (by exact_mod_cast (by omega : M ≠ 0))
+          (by exact_mod_cast hq.ne_zero)]
+    linarith
+  have hcmp := buffer_integer_removal_comparison hM hMq hq
+    (by simpa only [originalObjective] using (hmax.2.2 M hM hdiv))
+  rw [← ha, hlog] at hcmp
+  have heq : h*λ₀ (firstClock q)=Real.log (1+1/(q : ℝ)) := by
+    rw [hclock.2.2, golden_layer_marginal_one_eq_log_one_add_inv hq]
+    dsimp [h]
+    exact mul_div_cancel₀ _ hh.ne'
+  have hcompat : (∫ u in a-h..a, λ₀ u) ≤ h*λ₀ (firstClock q) := by
+    rw [buffer_loglog_integral hleft1 (by linarith), heq]
+    exact hcmp
+  have havg := buffer_average_left hleft1 hh
+  have hlow : h/2*w₀ a ≤ λ₀ (firstClock q)-λ₀ a := by
+    apply (mul_le_mul_iff_left₀ hh).mp
+    nlinarith [hcompat, havg]
+  have htaul : a-h ≤ firstClock q := by linarith [hs.1, hclock.1]
+  have hwm := original_curve.antitone_weight hleft1 htau1 htaul
+  have hwn := original_curve.positive_weight (a-h) hleft1
+  have hup : λ₀ (firstClock q)-λ₀ a < 2*w₀ (a-h) := by
+    calc
+      _ ≤ (a-firstClock q)*w₀ (firstClock q) :=
+        (curve_slope_bounds original_curve htau1 htau.le).2
+      _ ≤ (a-firstClock q)*w₀ (a-h) :=
+        mul_le_mul_of_nonneg_left hwm (by linarith)
+      _ < 2*w₀ (a-h) := mul_lt_mul_of_pos_right (by linarith [hclock.1]) hwn
+  have hdensity := buffer_density_left ha256 hh hs.2
+  have hm := mul_le_mul_of_nonneg_left hdensity (show 0 ≤ h/2 by linarith)
+  have hbig := mul_pos (show 0 < h/2*(81/100)-2 by linarith [hs.1]) hwn
+  nlinarith
+
+private theorem buffer_right_prime_exclusion {r U q : ℕ}
+    (hr : r.Prime) (hU : 0 < U)
+    (hmax : originalMaximizes r (r*U)) {b : ℝ}
+    (hb : b=Real.log (r*U : ℕ)) (hb256 : 256 ≤ b)
+    (hq : q.Prime) (hql : b < (q : ℝ)) (hqu : (q : ℝ) ≤ b+1)
+    (hqr : q ≠ r)
+    (hstrict : ∀ s : ℕ, U.factorization s=optimalLayerCount (λ₀ b) s) : False := by
+  let h : ℝ := Real.log (q : ℝ)
+  have hs := buffer_log_size hb256 (by linarith : b-2 ≤ (q : ℝ)) hqu
+  change 5 < h ∧ h ≤ b/20 at hs
+  have hh : 0 < h := by linarith [hs.1]
+  have hb1 : 1 < b := by linarith
+  have hclock := first_clock_spec hq
+  have hbtau : b < firstClock q := by linarith [hclock.1]
+  have hqU := first_absent hU hq hb1 hbtau.le hstrict
+  have hqrdiv : ¬q ∣ r := by simpa [Nat.dvd_prime hr, hq.ne_one] using hqr
+  have hqN : ¬q ∣ r*U := by
+    intro hd
+    exact (hq.dvd_mul.mp hd).elim hqrdiv hqU
+  have hcmp := integer_insertion_comparison hmax hq hqN
+  rw [← hb] at hcmp
+  change Real.log (1+1/(q : ℝ)) ≤
+    Real.log (Real.log (b+h))-Real.log (Real.log b) at hcmp
+  have heq : h*λ₀ (firstClock q)=Real.log (1+1/(q : ℝ)) := by
+    rw [hclock.2.2, golden_layer_marginal_one_eq_log_one_add_inv hq]
+    dsimp [h]
+    exact mul_div_cancel₀ _ hh.ne'
+  have hcompat : h*λ₀ (firstClock q) ≤ ∫ u in b..b+h, λ₀ u := by
+    rw [buffer_loglog_integral hb1 (by linarith), heq]
+    exact hcmp
+  have havg := buffer_average_right hb1 hh
+  have hlow : h/2*w₀ (b+h) ≤ λ₀ b-λ₀ (firstClock q) := by
+    apply (mul_le_mul_iff_left₀ hh).mp
+    nlinarith [hcompat, havg]
+  have hwb := original_curve.positive_weight b hb1
+  have hup : λ₀ b-λ₀ (firstClock q) < 2*w₀ b := by
+    calc
+      _ ≤ (firstClock q-b)*w₀ b :=
+        (curve_slope_bounds original_curve hb1 hbtau.le).2
+      _ < 2*w₀ b := mul_lt_mul_of_pos_right (by linarith [hclock.2.1]) hwb
+  have hdensity := buffer_density_right hb256 hh hs.2
+  have hm := mul_lt_mul_of_pos_left hdensity (show 0 < h/2 by linarith)
+  have hbig := mul_pos (show 0 < h/2*(81/100)-2 by linarith [hs.1]) hwb
+  nlinarith
+
+/-- Actual integer maximality at both ends of an unchanged good edge gives a
+two-unit left and one-unit right prime buffer. The additional start is 256;
+this theorem supplies neither source existence nor a PC cutoff identification. -/
+theorem good_edge_prime_buffer
+    (X : OriginalWindow) {ell R : ℝ}
+    (hell : 243 ≤ ell) (hbounds : OriginalBounds X ell R)
+    {p r : ℕ} (hgood : GoodEdge X p r)
+    (ha256 : 256 ≤ Real.log (canonicalSource p : ℕ)) :
+    ∀ q : ℕ, q.Prime →
+      (q : ℝ) ∉ Icc (Real.log (canonicalSource p : ℕ)-2)
+        (Real.log (canonicalSource r : ℕ)+1) := by
+  let a : ℝ := Real.log (canonicalSource p : ℕ)
+  let b : ℝ := Real.log (canonicalSource r : ℕ)
+  have heMem : (p,r) ∈ goodEdges X := by
+    exact Finset.mem_filter.mpr
+      ⟨Finset.mem_product.mpr ⟨hgood.1, hgood.2.1⟩, hgood⟩
+  have hbnd := hbounds (p,r) heMem
+  obtain ⟨hp, hr, _, _, U, hU, h5040, hpU, hrU, hab, hstrict⟩ := hgood
+  have hpa := X.prime_labels p hp
+  have hra := X.prime_labels r hr
+  have hmaxp := (canonical_source_spec (X.attained p hp)).1
+  have hmaxr := (canonical_source_spec (X.attained r hr)).1
+  rw [hpU] at hmaxp
+  rw [hrU] at hmaxr
+  have ha : a=Real.log (p*U : ℕ) := by dsimp [a]; rw [hpU]
+  have hb : b=Real.log (r*U : ℕ) := by dsimp [b]; rw [hrU]
+  change a < b at hab
+  change 256 ≤ a at ha256
+  have hb256 : 256 ≤ b := by linarith
+  have hstricta : ∀ s : ℕ, U.factorization s=optimalLayerCount (λ₀ a) s :=
+    hstrict a (show a ∈ Icc a b from ⟨le_rfl, hab.le⟩)
+  have hstrictb : ∀ s : ℕ, U.factorization s=optimalLayerCount (λ₀ b) s :=
+    hstrict b (show b ∈ Icc a b from ⟨hab.le, le_rfl⟩)
+  have hamem : a ∈ selectedDomain X := by
+    exact mem_iUnion₂.mpr ⟨(p,r), heMem, ⟨le_rfl, hab.le⟩⟩
+  intro q hq hqI
+  change (q : ℝ) ∈ Icc (a-2) (b+1) at hqI
+  have hex := complete_original_first_clock_exclusion X hell hbounds q hq
+  by_cases hqa : (q : ℝ) < a
+  · have hcontact : a ∉ Icc (q : ℝ) (firstClock q) := by
+      intro hc
+      exact Set.disjoint_left.mp hex hamem hc
+    exact buffer_left_prime_exclusion hpa hU h5040 hmaxp ha ha256 hq hqI.1 hqa
+      hstricta hcontact
+  · have haq : a ≤ (q : ℝ) := le_of_not_gt hqa
+    by_cases hqb : (q : ℝ) ≤ b
+    · have hqmem : (q : ℝ) ∈ selectedDomain X :=
+        mem_iUnion₂.mpr ⟨(p,r), heMem, ⟨haq, hqb⟩⟩
+      exact Set.disjoint_left.mp hex hqmem ⟨le_rfl, (first_clock_spec hq).1.le⟩
+    · have hbq : b < (q : ℝ) := lt_of_not_ge hqb
+      have hqr : q ≠ r := by
+        intro heq
+        have hcast : (q : ℝ)=(r : ℝ) := by exact_mod_cast heq
+        change ell ≤ a ∧ b ≤ R ∧ 2*R < (p : ℝ) ∧ 2*R < (r : ℝ) at hbnd
+        linarith [hqI.2, hbnd.2.1, hbnd.2.2.2]
+      exact buffer_right_prime_exclusion hra hU hmaxr hb hb256 hq hbq hqI.2 hqr hstrictb
+#print axioms good_edge_prime_buffer
+-- END good_edge_prime_buffer.
 
 local notation "B₀" => (fun t : ℝ => t+t^(4/5 : ℝ))
 local notation "D₀" => (fun t : ℝ => w₀ t*t^(11/10 : ℝ))

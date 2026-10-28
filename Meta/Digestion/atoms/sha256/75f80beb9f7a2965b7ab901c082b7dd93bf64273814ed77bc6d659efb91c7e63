@@ -1,0 +1,142 @@
+**定理 351.2（可见重数残余给出严格扩张）。** 在定义351.1下，假设 $\gamma\le1/400000$，并存在 $a\in V_1$ 满足
+
+$$
+E_A(a)=0,
+\qquad \|E_{A'}(a)\|\ge\frac12.
+\tag{351.2}
+$$
+
+则存在含单位的环境代数 $B\supsetneq A$，使
+
+$$
+\nu(B,W)\le200\gamma.
+\tag{351.3}
+$$
+
+具体地，若所分裂的表示块为 $M_n\otimes I_m$，则 $\dim_{\mathbb C}B=\dim_{\mathbb C}A+n^2$。常数不依赖环境维数、块尺寸或表示重数。
+
+证明。对 $A$ 的任意最小中心投影 $r$，定义
+
+$$
+T_r(x)=rE_{A'}(x)r
+=\int_{U(A)}(ru)x(ru)^*\,du.
+$$
+
+它是到 $rA'r$ 的收缩投影。对 $x\in W_1$，每个 $ru\in A_1$ 可由某个 $v\in W$ 以误差 $\alpha$ 近似，且 $\|v\|\le1+\alpha$。先替换两侧因子，再两次近似乘积，得到
+
+$$
+\operatorname{dist}((ru)x(ru)^*,W)
+\le\alpha(2+\alpha)+\mu(2+\mu)(1+\alpha)^2=\gamma.
+$$
+
+在商空间 $M_d/W$ 中对原来的连续共轭映射积分，遂有
+
+$$
+\operatorname{dist}(T_r(x),W)\le\gamma\|x\|
+\qquad(x\in W).
+\tag{351.4}
+$$
+
+这一步不要求最近点选择具有可测性。
+
+令 $c=E_{A'}(a)$。由两期望交换，$E_A(c)=0$。在表示
+
+$$
+A=\bigoplus_j(M_{n_j}\otimes I_{m_j}),
+\qquad
+c=\bigoplus_j(I_{n_j}\otimes c_j)
+$$
+
+中，每个 $c_j$ 自伴且归一化迹为零。由式(351.2)，可选一个块使 $\|c_j\|\ge1/2$；令 $r$ 为该块的中心投影，$c_r=T_r(a)$。若 $m,M$ 是 $c_r$ 在 $r\mathcal H$ 上的极端特征值，则
+
+$$
+m\le0\le M,
+\qquad \Delta=M-m\ge\frac12.
+$$
+
+该块非零且无迹，两个端点不同。矩阵
+
+$$
+x_0=\frac{c_r-mr}{\Delta}
+$$
+
+属于 $rA'r$，在该角中具有精确谱端点 $0,1$，并满足 $\operatorname{dist}(x_0,W)\le2\gamma+\alpha\le4\gamma$。
+
+设一般的 $x\in rA'r$ 自伴，$0\le x\le r$，谱端点为 $0,1$，且到 $W$ 的距离不超过 $\epsilon=4\gamma$。取 $v\in V$ 以误差 $\epsilon$ 近似 $x$，再取 $t\in V$ 以误差 $\mu\|v\|^2$ 近似 $v^2$。取厄米部分保证这两次选择合法。于是
+
+$$
+\|t-x^2\|\le h,
+\qquad
+h=\epsilon(2+\epsilon)+\mu(1+\epsilon)^2\le9\gamma.
+$$
+
+令 $y=T_r(t)$。由于 $T_r$ 固定 $x^2$，式(351.4)给出
+
+$$
+\|y-x^2\|\le h,
+\qquad
+\operatorname{dist}(y,W)\le\gamma(1+h).
+$$
+
+若 $m_y,M_y$ 是 $y$ 在该角中的极端特征值，则 $|m_y|\le h$、$|M_y-1|\le h$。重新归一化
+
+$$
+x_+=\frac{y-m_yr}{M_y-m_y}
+$$
+
+恢复精确端点，且
+
+$$
+\begin{aligned}
+\operatorname{dist}(x_+,W)
+&\le\frac{\gamma(1+h)+\alpha h}{1-2h}
+\le2\gamma,\\
+\|x_+-x^2\|
+&\le\frac{4h}{1-2h}\le45\gamma.
+\end{aligned}
+\tag{351.5}
+$$
+
+所以这一步可以反复执行，而距离界不会逐轮累加。令 $\kappa=45\gamma$，以 $\theta_{i,k}$ 表示第 $k$ 步按大小排序的特征值。Weyl 不等式给出
+
+$$
+\theta_{i,k+1}\le\theta_{i,k}^2+\kappa,
+\qquad 0\le\theta_{i,k}\le1.
+$$
+
+当 $\gamma>0$ 时，区间 $[0,2\kappa]$ 在这个上界递推下不变；在 $[2\kappa,1-2\kappa]$ 中，每步至少下降 $\kappa/2$。每个有序指标若曾进入 $[0,1-2\kappa]$，就在有限步后进入低端区间并留在那里；否则始终位于高端。指标只有有限个，故存在同一个有限步 $N$，使全部特征值位于
+
+$$
+[0,2\kappa]\cup[1-2\kappa,1].
+$$
+
+迭代步数可以依赖维数和谱，本结论只要求误差界与维数无关。两个精确端点始终保留，因此 $q=1_{[1/2,1]}(x_N)$ 是 $r$ 的非零真子投影，属于 $A'$，并满足
+
+$$
+\operatorname{dist}(q,W)\le90\gamma+4\gamma=94\gamma.
+\tag{351.6}
+$$
+
+若 $\gamma=0$，则 $A\subseteq W$ 且 $W$ 已为精确有限维 $C^*$-代数。对非零无迹块 $c_r$ 作角内谱分解，直接得到这样的 $q\in W$，距离为零。
+
+置 $B=C^*(A,q)$。在所选块中，$q=I_n\otimes p$ 将重数空间分成两个非零部分，故 $M_n\otimes I_m$ 扩大成两个独立的 $M_n$ 系数块，维数增加 $n^2$。对任意 $b\in B_1$，将其中一个系数复制到另一重数部分，并保留所有未改变的块，可写成
+
+$$
+b=a_0+dq,
+\qquad a_0\in A_1,\quad d\in A,\quad\|d\|\le2.
+$$
+
+以误差 $\alpha,2\alpha,\epsilon_q=94\gamma$ 分别近似 $a_0,d,q$，再近似一次乘积，得到
+
+$$
+\begin{aligned}
+\operatorname{dist}(b,W)
+&\le3\alpha+2(1+\alpha)\epsilon_q
++2\mu(1+\alpha)(1+\epsilon_q)\\
+&\le\gamma(190.5+188.5\gamma+47\gamma^2)
+\le200\gamma.
+\end{aligned}
+$$
+
+这控制的是全部复收缩，没有按块数求和。证毕。
+

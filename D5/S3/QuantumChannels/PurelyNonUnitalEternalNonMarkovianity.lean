@@ -157,7 +157,7 @@ private theorem D_ne (t : ℝ) : D t ≠ 0 := by
   change 1 + (t : ℂ)^2 ≠ 0
   exact_mod_cast h
 
-private def affine (a : ℂ) (B : Matrix (Fin 2) (Fin 2) ℂ) : MatrixMap (Fin 2) (Fin 2) ℂ :=
+def affine (a : ℂ) (B : Matrix (Fin 2) (Fin 2) ℂ) : MatrixMap (Fin 2) (Fin 2) ℂ :=
   a • LinearMap.id + (Matrix.traceLinearMap (Fin 2) ℂ ℂ).smulRight B
 
 private def Phi (t : ℝ) : MatrixMap (Fin 2) (Fin 2) ℂ := affine (1 / D t) (((t : ℂ)^2 / D t^2) •
@@ -201,7 +201,7 @@ private theorem phi_nonunital (t : ℝ) (ht : 0 < t) : Phi t 1 ≠ 1 := by
       LinearMap.smulRight_apply, Matrix.traceLinearMap_apply, Matrix.vecMulVec, Matrix.trace,
           smul_eq_mul,
     ne_of_gt ht, D_ne t] at e
-private theorem dep_cptp (eta : ℝ) (h0 : 0 ≤ eta) (h1 : eta ≤ 1) :
+theorem dep_cptp (eta : ℝ) (h0 : 0 ≤ eta) (h1 : eta ≤ 1) :
     IsCPTP (depolarized (d := 2) LinearMap.id (1 - eta)) := by
   let p : Fin 4 → ℝ := ![eta+(1-eta)/4, (1-eta)/4, (1-eta)/4, (1-eta)/4]
   have hp : ∀ μ, 0 ≤ p μ := by

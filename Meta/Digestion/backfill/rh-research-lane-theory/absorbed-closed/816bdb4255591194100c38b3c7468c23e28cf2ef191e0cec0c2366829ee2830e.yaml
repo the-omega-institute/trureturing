@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:816bdb4255591194100c38b3c7468c23e28cf2ef191e0cec0c2366829ee2830e
+  normalized_sha256: sha256:816bdb4255591194100c38b3c7468c23e28cf2ef191e0cec0c2366829ee2830e
+cas_ref: sha256:816bdb4255591194100c38b3c7468c23e28cf2ef191e0cec0c2366829ee2830e
+coverage_gids:
+  - gid: D5/S3/Observer/Hilbert/NymanBeurlingFiniteGramDistance.correlations_entry
+    target_statement_id: sha256:889352a3afc18bcf35fbdf3d2ea0a487493c976660b6d0b9a6bf06a30bb2e544
+  - gid: D5/S3/Observer/Hilbert/NymanBeurlingFiniteGramDistance.gramOperator_entry
+    target_statement_id: sha256:aaab78bb842ee33b0847052314e6a93f564c9f38501f64df67c226b33dbe708b
+  - gid: D5/S3/Observer/Hilbert/NymanBeurlingFiniteGramDistance.nyman_beurling_finite_gram_distance
+    target_statement_id: sha256:b9818700ac8308b81435ef6557cef2ebf27a304444cdaec1f3c50bbcc3d14c68
+  - gid: D5/S3/Observer/Hilbert/NymanBeurlingFiniteGramDistance.sourceVector_coe_ae
+    target_statement_id: sha256:93abb4e007eb4c7373a3f3a6aef15705c97862e19a414572cd46f8bc04a737b5
+  - gid: D5/S3/Observer/Hilbert/NymanBeurlingFiniteGramDistance.target_coe_ae
+    target_statement_id: sha256:2ce959b0e008cbecf242e84c8d9fad9f09a62a56625d1ecc08df33f3d879a4c4
+receipts:
+  unresolved_subitems: []

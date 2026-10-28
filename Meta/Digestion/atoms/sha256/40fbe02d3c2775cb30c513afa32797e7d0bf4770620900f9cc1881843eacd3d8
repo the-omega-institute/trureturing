@@ -1,0 +1,125 @@
+**Theorem 26.2 (attained full-target recovery for every actual world and every error level).** On the trajectory (26.2) there is one decoder, using only its received raw records, $k,d$, and $\delta$, with
+
+$$
+ \|\operatorname{coeff}_k(\widehat H-H)\|_\infty\le a\delta,
+ \qquad
+ \|\operatorname{coeff}_d(\widehat D-D)\|_\infty\le a\delta,
+$$
+
+$$
+ \|\widehat P-P\|_{\max}\le C_{k,d}\chi\delta,
+ \qquad
+ \chi=\frac{1+\operatorname{tr}(MP)}
+                {\|\operatorname{coeff}_k H\|_\infty}.
+ \tag{26.8}
+$$
+
+These inequalities hold simultaneously for every world in Definition 25.1, every $\delta\ge0$, and all allowed errors. The decoder needs neither $\chi$ nor a bound on it, neither exact calibration nor a root service. In particular it gives pointwise linear stability at every fixed original world and exact recovery when $\delta=0$.
+
+**Proof and decoder.** First (26.4), the exact prefix supplier, and the elementary induced-norm inequality give
+
+$$
+ \|\widehat h-h\|_\infty\le a\delta,\quad
+ \|\widehat q-bh\|_\infty\le a\delta,\quad
+ \|\widehat a-\operatorname{coeff}_dD\|_\infty\le a\delta,
+ \qquad h=\operatorname{coeff}_kH.
+ \tag{26.9}
+$$
+
+This invokes the supplier only at the noiseless vector underlying the same actual prefix. It does not replace noisy records by acquired exact ones. In particular no noisy coefficient quotient is declared to be the true $b$.
+
+For a coefficient vector $u\in\mathbb R^{k+1}$, write $u(t)=\sum_j u_jt^j$. In fixed entry coordinates $\operatorname{vec}(S)=(S_{11},S_{12},S_{21},S_{22})^{\mathsf T}$ define the $(3k+4)\times4$ matrix $\mathsf A_u$ by
+
+$$
+ \mathsf A_u\operatorname{vec}(S)=
+ \left((u_j\operatorname{tr}S)_{j=0}^k,
+       (u_j\operatorname{tr}(MS))_{j=0}^k,
+       (u(n_r)\operatorname{tr}(G_rS))_{r=0}^{k+1}\right)^{\mathsf T}.
+ \tag{26.10}
+$$
+
+Form solely from the acquired records
+
+$$
+ y=\left((\widehat h_j)_{j=0}^k,
+          (\widehat q_j)_{j=0}^k,
+          (\widetilde z_{n_r}-\widehat D(n_r))_{r=0}^{k+1}\right)^{\mathsf T},
+ \qquad \mathsf A=\mathsf A_{\widehat h},
+$$
+
+$$
+ \operatorname{vec}(\widehat P)=
+       (\mathsf A^{\mathsf T}\mathsf A+\delta^2 I_4)^{-1}
+                      \mathsf A^{\mathsf T}y.
+ \tag{26.11}
+$$
+
+For $\delta>0$ this is a positive-definite inverse for every real received vector, even when $\widehat H$ vanishes identically. At $\delta=0$, actual records have $\widehat H=H\ne0$; the rank argument below proves the inverse exists. Formula (26.11) is a single formula at all actual error levels. The answer is allowed to be ambient. Neither a sampled gain nor a selected gain coefficient is a divisor in this decoder.
+
+Here is the quantitative rank bound, using only the credited interpolation and four-trace inverses. Among the $k+2$ numbers $|u(n_r)|$, the second largest is at least $c\|u\|_\infty$: delete a largest one and apply the Lagrange inverse bound (26.6) to the remaining $k+1$ values. This includes $k=0$. For $u\ne0$, choose two such positions $p,q$ only for this estimate, and a coefficient with modulus $\|u\|_\infty$. For every real matrix $S$, its four traces in $\mathcal I_{p,q}$ are then bounded by $\|\mathsf A_u\operatorname{vec}(S)\|_\infty/(c\|u\|_\infty)$. Since $c\le1$ and $\|\operatorname{vec}(S)\|_2\le2\|S\|_{\max}$, it follows that
+
+$$
+ \|\mathsf A_u\operatorname{vec}(S)\|_2
+          \ge s\|u\|_\infty\|\operatorname{vec}(S)\|_2.
+ \tag{26.12}
+$$
+
+For $u=0$ the same inequality is trivial. Thus $\sigma=\sigma_{\min}(\mathsf A)\ge s\|\widehat h\|_\infty$, and $\sigma>0$ at every actual noiseless record. No selection of these two positions occurs in the decoder and no actual zero is tested.
+
+Strict positivity and trace normalization give
+
+$$
+ b=P_{12}+P_{21}+P_{22}>0,\quad
+ \|P\|_{\max}\le1+b,\quad
+ \|\operatorname{vec}(P)\|_2\le2(1+b),\quad
+ |\operatorname{tr}(G_rP)|\le\Lambda(1+b).
+ \tag{26.13}
+$$
+
+Set $r=y-\mathsf A\operatorname{vec}(P)$. Its first $k+1$ coordinates vanish exactly, since $\operatorname{tr}P=1$. Its next coordinates equal $\widehat q_j-b\widehat h_j$, of modulus at most $a\delta(1+b)$. Its last coordinates equal
+
+$$
+ \xi_{n_r}+(D-\widehat D)(n_r)
+          +(H-\widehat H)(n_r)\operatorname{tr}(G_rP),
+ \tag{26.14}
+$$
+
+whose moduli are at most $B\delta(1+b)$. Consequently
+
+$$
+ \|r\|_2\le K\delta(1+b).
+ \tag{26.15}
+$$
+
+This is where the same actual source, whole polynomials, and original clock are needed: the gain-estimation error multiplies the trace of this very source, including at a true root. It is not an independent lifted source or a separately calibrated future signal.
+
+Use the elementary regularized-inverse singular-value estimates, with $\rho=(\sigma^2+\delta^2)^{1/2}$:
+
+$$
+ \|(\mathsf A^{\mathsf T}\mathsf A+\delta^2 I)^{-1}
+                         \mathsf A^{\mathsf T}\|_{2\to2}\le\rho^{-1},
+ \quad
+ \|\delta^2(\mathsf A^{\mathsf T}\mathsf A+\delta^2 I)^{-1}\|_{2\to2}
+                         \le\delta^2/\rho^2\le\delta/\rho.
+ \tag{26.16}
+$$
+
+These are the usual scalar inequalities for the singular values $v$: $v/(v^2+\delta^2)\le1/\sqrt{v^2+\delta^2}$ and the corresponding inverse-square bound. They are standard linear-algebra estimates, not additional calibration results. For every actual record $\rho>0$, including $\delta=0$. Subtracting $\operatorname{vec}(P)$ in (26.11) and using (26.13)–(26.16) gives
+
+$$
+ \|\widehat P-P\|_{\max}
+       \le(K+2)\frac{(1+b)\delta}{\rho}.
+ \tag{26.17}
+$$
+
+Finally (26.9) and (26.12) imply
+
+$$
+ \|h\|_\infty\le\|\widehat h\|_\infty+a\delta
+        \le\sigma/s+a\delta
+        \le\sqrt{s^{-2}+a^2}\,\rho.
+ \tag{26.18}
+$$
+
+Combining the last two inequalities proves the source bound in (26.8); (26.9) gives both entire-polynomial bounds. The proof covers arbitrary gain signs, degree drops, repeated roots, every sampled root, unbounded $b$, and arbitrary whole drift coefficients. Regularization, rather than a true-root decision or a supplied conditioning constant, makes the formula valid also when noise erases every estimated gain coefficient. $\square$
+

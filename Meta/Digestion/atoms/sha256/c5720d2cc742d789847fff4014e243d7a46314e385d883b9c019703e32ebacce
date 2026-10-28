@@ -1,0 +1,47 @@
+## 3. 实际 Gamma 与素数作用的全尺度抵消
+
+沿用上节 E、B_+、p=Eh。令 lambda=exp(a)，对 0<u<lambda 定义
+
+\[
+J_\lambda h(u)=\int_u^\lambda\frac{t(h(t)-h(u))}{t^2-u^2}\,dt,
+\quad
+T_\lambda h(u)=-\frac12\log(1-u^2/\lambda^2)h(u)-J_\lambda h(u).
+\tag{GE4}
+\]
+
+对在 [lambda^-1,lambda] 上 C1 的 seed，J 的下端奇性可去；T 的上端对数奇性局部可积。其端点值可任意指定，不改变 L2 合成。在有限算术断点以外，v>=0 的平移从不越过窗口左端，seed 支撑处理右端。令
+
+\[
+C_+=\pi/4+(3/2)\log2.
+\]
+
+使用 u=m*exp(x)、t=u*exp(v)，可直接算得
+
+\[
+D_+Eh=E\big((C_+-a+\log t)h+T_\lambda h\big).
+\tag{GE5}
+\]
+
+其中 C_+ 来自半个 digamma 差 psi(1)-psi(1/4)。上端截断另产生 -log(lambda/u)-(1/2)log(1-u^2/lambda^2)，所以边界项没有被删除。
+
+与已提交的 B_+Eh=E(log(t)h)-XEh 组合，得到
+
+\[
+\boxed{(D_+-B_+)p=(C_+-a)p+Xp+E(T_\lambda h).}
+\tag{GE6}
+\]
+
+这是实际 Gamma 与 prime 的一次精确相消，适用于每个有限尺度。令 e=(p+Rp)/2、r=(p-Rp)/2。反射交换 D_+、D_- 和 B_+、B_-，因此
+
+\[
+\boxed{
+(A_\Gamma-S)e=
+-\big(\gamma_E+\log(\pi\lambda^2)\big)e
++(I+R)E(T_\lambda h)+2Xr
+-(I+R)(D_+-B_+)r.
+}
+\tag{GE7}
+\]
+
+这里 S 是无符号素数块，完整 Weil 算子还需加实际 pole 算子。恒等式使用 gamma_0=-gamma_E-pi/2-3log2-logpi。全部奇部分修正仍然存在；(GE7) 不是小残差估计，也没有将 D_+ 视为有界算子。
+

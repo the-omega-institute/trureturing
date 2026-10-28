@@ -123,8 +123,7 @@ internal static partial class SettleAtomCommand
             .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
         // Reuse decomposition's complete CAS/identity/Plan/Materialize validation, including
         // the target, before trusting any stored terminal directory or invoking the writer.
-        var closure = DigestionDecomposition.ValidatedClosure([target.AtomId], entries, snapshot,
-            TheoryAtomizerDataLoader.Load(snapshot));
+        var closure = DigestionDecomposition.ValidatedClosure([target.AtomId], entries, snapshot);
         closure.Remove(target.AtomId);
         var closureDocument = ClosureDocument(document, closure, target.AtomId);
         DigestionLedgerEvaluation evaluation;
@@ -147,7 +146,6 @@ internal static partial class SettleAtomCommand
                 closureDocument, snapshot);
         }
         var evaluated = evaluation.Entries.ToDictionary(static item => item.Entry.AtomId, StringComparer.Ordinal);
-        var streams = new Dictionary<string, DigestionAtomContextProjection.SourceStream>(StringComparer.Ordinal);
         foreach (var id in closure.Order(StringComparer.Ordinal))
         {
             if (!evaluated.TryGetValue(id, out var item) || item.DerivedStatus != item.Entry.ProjectedStatus
@@ -158,12 +156,7 @@ internal static partial class SettleAtomCommand
                 throw Invalid("CHAIN_INCOMPLETE", $"atom_id={target.AtomId} descendant={id}");
             if (item.Entry.Receipts.Nonpropositional is { } receipt)
             {
-                if (!streams.TryGetValue(item.Entry.SourceId, out var stream))
-                {
-                    stream = DigestionAtomContextProjection.MaterializeSource(snapshot, document, item.Entry.SourceId);
-                    streams.Add(item.Entry.SourceId, stream);
-                }
-                if (!stream.ResolveOccurrences(id).Any(context =>
+                if (!DigestionAtomContextProjection.ResolveOccurrences(snapshot, document, id).Any(context =>
                         context.Previous?.AtomId == receipt.PreviousAtomId && context.Next?.AtomId == receipt.NextAtomId))
                     throw Invalid("CONTEXT_MISMATCH", $"atom_id={target.AtomId} descendant={id}");
             }

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ec3d3d9dc96f29f66fea0d7751c60ca5d3431c36a6d173c0a1a25648f4d92389
+  normalized_sha256: sha256:ec3d3d9dc96f29f66fea0d7751c60ca5d3431c36a6d173c0a1a25648f4d92389
+cas_ref: sha256:ec3d3d9dc96f29f66fea0d7751c60ca5d3431c36a6d173c0a1a25648f4d92389
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: MMM 对应关系接受反例和修订的研究要求，未给出新的形式命题。
+    previous_atom_id: 701687a15afd03ada26792247b4b5d191ebd39b7c1dc545408221de4159d54ba
+    next_atom_id: 5c88d8d0f55c66eced182a3282bdc9410da83402eb69ef70fbd0a058c4e655bb

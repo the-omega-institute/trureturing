@@ -1,0 +1,34 @@
+**Convention 3.2 (actual germ and remote companion).** VI, Theorem 15.1,
+supplies real analytic functions $X(q),\zeta(q)$, with
+$X(0)=\zeta(0)=0$, for which
+
+$$
+W_\pm(h)=\mathcal L\bigl(X(h^2),\zeta(h^2)\pm h\bigr)
+\tag{3.5}
+$$
+
+are actual complete worlds. For sufficiently small nonzero real $h$,
+they are distinct, have the same $\Phi$ value $y(h)$ and the same
+alternative $m$ value, and satisfy $p\ne24$. They exchange under
+$h\mapsto-h$ and converge to $W_3$. The equal-$m$ condition describes
+the mathematical domain; it is not a measurement or an input to recovery.
+The entire polynomial and drift in each branch are its own lawful
+whole-world lift, not a newly fitted gain at each clock.
+
+VI, Theorem 16.1, already proves
+
+$$
+a(W_+(h))-a(W_-(h))=2Ah+O(h^3).
+\tag{3.6}
+$$
+
+VI, Theorem 18.1, supplies one analytic remote branch $Z(y)$ over an
+open rectangle containing $K_3$, with source in the square of radius
+$10^{-8}$ centered at $(r,b)=(0.048472239114,0.046421593505)$.
+Its $J$ response obeys
+
+$$
+a(Z(y))\in[220.955521,220.976926]\qquad(y\in K_3).
+\tag{3.7}
+$$
+

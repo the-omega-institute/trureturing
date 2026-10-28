@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d8fc7bcdb036457be9f59aef0a01ca3061f2cf8f30be58d8c94e6441178c1ddd
+  normalized_sha256: sha256:d8fc7bcdb036457be9f59aef0a01ca3061f2cf8f30be58d8c94e6441178c1ddd
+cas_ref: sha256:d8fc7bcdb036457be9f59aef0a01ca3061f2cf8f30be58d8c94e6441178c1ddd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 计算 estimator、tail 和输出区间的算法任务规格，没有声称具体区间已通过认证。
+    previous_atom_id: 4e641eac388a80fdc67688aa715c25aff57f704149a1a07f94b58a430dae1caa
+    next_atom_id: 13ce8d085feec1679aae49af9bf5ddba935775348f431ca8600feae57b17c7df

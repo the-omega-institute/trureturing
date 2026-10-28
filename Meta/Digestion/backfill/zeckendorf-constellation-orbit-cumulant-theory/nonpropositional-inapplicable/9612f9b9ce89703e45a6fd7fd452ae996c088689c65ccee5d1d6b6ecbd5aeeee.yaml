@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9612f9b9ce89703e45a6fd7fd452ae996c088689c65ccee5d1d6b6ecbd5aeeee
+  normalized_sha256: sha256:9612f9b9ce89703e45a6fd7fd452ae996c088689c65ccee5d1d6b6ecbd5aeeee
+cas_ref: sha256:9612f9b9ce89703e45a6fd7fd452ae996c088689c65ccee5d1d6b6ecbd5aeeee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Optional quantum-lift schema with required proof fields; existence of an inhabitant is explicitly withheld.
+    previous_atom_id: 8245978792801cd097866835f334d118db64ded2dc9be5e805feecb9beb539f9
+    next_atom_id: 00c9e12de3a44381b6c483337dbe8ef5c8e41f1d278cb85acac5b9c5b78eb091

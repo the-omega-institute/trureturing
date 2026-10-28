@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b65abf27c04b4ae61ae02d8838c8cb5ce401486a25132b0cef65934ea27f5916
+  normalized_sha256: sha256:b65abf27c04b4ae61ae02d8838c8cb5ce401486a25132b0cef65934ea27f5916
+cas_ref: sha256:b65abf27c04b4ae61ae02d8838c8cb5ce401486a25132b0cef65934ea27f5916
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提出后续证明程序的章节导语，没有声称程序已经实现。
+    previous_atom_id: d7b5c218fe9befc353fbc8189d4d9bcbf45e4d8a96c0d2f770a7f4a9ac2a8b70
+    next_atom_id: 3aab8d4ef183f88f89390931a217464b91b53ff5ba371afe1afc67a73e984eb5

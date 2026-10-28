@@ -1,0 +1,8 @@
+## 133. The unrestricted first-order coefficient
+
+Throughout this section use the channel and objective in (118.1)--(118.2),
+write $q\in[0,1/2]$ and put $\mu_q=\mu(-q)$. The decoder is one common
+CPTP map chosen before the unknown complex qutrit input; no reference,
+history, postselection, or code restriction is added. Ordinary ancillary
+CPTP implementations remain included.
+

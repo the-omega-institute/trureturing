@@ -1,0 +1,15 @@
+## 4. 新 Lean：真正的奇积分被有限端点公式取代
+
+对前置 owner 的同一个 `cutPolynomialSeed`，即 h(t)=sum_(r<d) A_r*t^(2r) 于 t<=exp(a)，新主声明 `gamma_logarithmic_seed_remainder` 同时证明 J 的可积性和
+
+\[
+\boxed{
+J_{e^a}h(u)=\sum_{r<d}A_r\sum_{j<r}
+ u^{2(r-1-j)}\frac{e^{a(2j+2)}-u^{2j+2}}{2j+2},
+\qquad 0<u\le e^a.
+}
+\tag{GE8}
+\]
+
+证明先用标准差幂公式，将实际 integrand 在 (u,exp(a)] 上识别为连续多项式 sum_r A_r sum_(j<r) t^(2j+1)u^(2(r-1-j))。再通过几乎处处相等建立原 integrand 的可积性，使用固定 Mathlib 的有限积分线性与幂积分。t=u 处 totalized division 给出的值不能当作极限值；证明明确利用该点的零测性。d=0 和 u=exp(a) 均被覆盖。没有先假设目标积分相等，也没有强行设置边界矩为零。
+

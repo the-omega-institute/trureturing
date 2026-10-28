@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d78b2bcf010b28468cff2be739f2e985c89ac1344f07b0eedc68fe4d6e5e8d8
+  normalized_sha256: sha256:2d78b2bcf010b28468cff2be739f2e985c89ac1344f07b0eedc68fe4d6e5e8d8
+cas_ref: sha256:2d78b2bcf010b28468cff2be739f2e985c89ac1344f07b0eedc68fe4d6e5e8d8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A noun-phrase item naming the infinite-resolution representation of real coordinates, without asserting injectivity or a reconstruction theorem.
+    previous_atom_id: 06567e2802f596b77a80037e5f20a4ad2c74f10bbd152b8a67c8dc73b9773f6d
+    next_atom_id: efd87a25a002d4d87ed6697a85e33e8684225111501ecb5ebe83a99de45f58cf

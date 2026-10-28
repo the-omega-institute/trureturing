@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bc0b666a8c0271126d6ecdd1fc33cf33af981232d1c6795d641a4c5d3715c0bf
+  normalized_sha256: sha256:bc0b666a8c0271126d6ecdd1fc33cf33af981232d1c6795d641a4c5d3715c0bf
+cas_ref: sha256:bc0b666a8c0271126d6ecdd1fc33cf33af981232d1c6795d641a4c5d3715c0bf
+coverage_gids:
+  - gid: D5/S3/Observer/ArithmeticTomography/FinitePrimeInformationBudget.finite_prime_information_budget
+    target_statement_id: sha256:56316569476965d645800a201f3bfbdf83b5c3ea1347ce664963d1aaef06d658
+receipts:
+  unresolved_subitems: []

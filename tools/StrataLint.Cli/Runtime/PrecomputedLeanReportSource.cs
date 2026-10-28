@@ -12,7 +12,7 @@ internal sealed class PrecomputedLeanReportSource(string repositoryRoot) : ILean
         RawLeanReportArtifact.ReadFile(reportPath, snapshot);
 
     public LeanAxiomReport Load(LeanReportScope scope) =>
-        RawLeanReportArtifact.ReadFileForScope(reportPath, scope, validateMaterials: true);
+        RawLeanReportArtifact.ReadFileForScopeOrFull(reportPath, scope);
 
     internal CapturedBundle Capture() => new(repositoryRoot, reportPath);
 

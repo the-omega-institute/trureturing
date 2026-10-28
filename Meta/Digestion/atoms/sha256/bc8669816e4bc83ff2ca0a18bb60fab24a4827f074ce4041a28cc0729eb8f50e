@@ -1,0 +1,219 @@
+**定理 34.2（完整慢尾、原域零模与球质量）。** 在定义 34.1 的条件下，令
+
+$$
+\Sigma=\{\nu\in(0,1]:\nu^2\in\sigma(\mathsf K_g)\},
+$$
+
+并令 $\nu_+$ 为严格大于一的最小正谱平方根。$\Sigma$ 有限且允许为空。固定一次
+
+$$
+1<\delta<\min(1+d,\nu_+).
+\tag{34.3}
+$$
+
+则存在唯一复线性映射 $\mathsf A_\nu:K\to E_\nu$，使每个 $v\in K$ 在远端满足
+
+$$
+w_v(\ell)=\sum_{\nu\in\Sigma}e^{-\nu\ell}\mathsf A_\nu(v)+r_v(\ell),
+\tag{34.4}
+$$
+
+且余项具有完整中央图控制
+
+$$
+\int e^{2\delta\ell}
+ \bigl\{C[r_v']+A[r_v]+t\|Dr_v\|_{L^2(da)}^2\bigr\}\,d\ell<\infty.
+\tag{34.5}
+$$
+
+各系数的范数和 (34.5) 的平方根均由 $C\|v\|_{H_d}$ 控制。显式抽出有限个慢分量后，其余全部高阶偶角分量仍在 $r_v$ 的完整图范数中。
+
+更具体地，对任意 $C$ 单位本征向量 $\phi\in E_\nu$，置
+
+$$
+\begin{aligned}
+a(\ell)&=C(w_v(\ell),\phi),
+&p_\phi&=\upsilon\phi,
+&r_\phi&=4c\phi'-\upsilon\phi,\\
+f_1(\ell)&=-t\langle Dw_v,p_\phi\rangle_{L^2(da)},\\
+f_0(\ell)&=-t\langle Dw_v,r_\phi\rangle_{L^2(da)}
+                  +g\langle B_nw_v,\phi\rangle_{L^2(da)},
+&y&=a'-f_1.
+\end{aligned}
+$$
+
+用 $a,y$ 的连续 $H^1_{\rm loc}$ 代表，在任意充分大的 Lebesgue 点 $b$ 有
+
+$$
+C(\mathsf A_\nu(v),\phi)
+ =\frac12e^{\nu b}\left(a(b)-\frac{y(b)}\nu\right)
+  +\frac12\int_b^\infty e^{\nu u}
+                  \left(f_1(u)+\frac{f_0(u)}\nu\right)\,du.
+\tag{34.6}
+$$
+
+积分绝对收敛，右端与 $b$ 无关。在 $E_\nu$ 中取 $C$ 正交基即确定整个 $\mathsf A_\nu(v)$；公式包含原完整中央场和源项的 强迫项。
+
+此外，原域零模恰满足
+
+$$
+N=K\cap L^2(d\xi)=K\cap H_1^{\rm aux}
+ =\ker\left(\mathsf A:K\longrightarrow\bigoplus_{\nu\in\Sigma}E_\nu\right),
+\qquad \mathsf A=(\mathsf A_\nu)_{\nu\in\Sigma}.
+\tag{34.7}
+$$
+
+因而 $\dim_{\mathbb C}N\le\dim_{\mathbb C}K$，$K/N$ 注入所示有限自然角空间。这里不要求系数映射满射，不要求 $K$、$N$、$\Sigma$ 或任何系数非零。
+
+若 $v\in K\setminus N$，令 $\nu=\nu(v)$ 是 $\mathsf A_\nu(v)\ne0$ 的最小指数，则尖锐物理球质量满足
+
+$$
+\begin{aligned}
+\int_{R\le e^T}|v|^2\,d\xi
+ &\sim\frac{\|\mathsf A_\nu(v)\|_{L^2(da)}^2}{4(2-2\nu)}
+                          e^{(2-2\nu)T}&& (\nu<1),\\
+\int_{R\le e^T}|v|^2\,d\xi
+ &\sim\frac14\|\mathsf A_1(v)\|_{L^2(da)}^2T&& (\nu=1).
+\end{aligned}
+\tag{34.8}
+$$
+
+证明。先证明完整图能量中的展开。有限自然谱投影在该图空间上有界。对固定 $\phi\in\mathcal H_c$，由 $|\upsilon|\le2$、$c^2\le c$，有 $p_\phi,r_\phi\in L^2(da)$，且
+
+$$
+D(b\phi)=p_\phi b'+r_\phi b.
+$$
+
+投影系数的一阶 Sobolev 范数由 $C[w']$ 与 $A[w]$ 控制；上式同时控制其中央图项。因此减去有限投影保留整个高角图项。
+
+以 $b(\ell)\phi(a)$ 测试 (34.2)，使用自然弱本征式，不对角端点另作分部积分，得到
+
+$$
+-a''+\nu^2a=f_0-f_1',
+\qquad a'=y+f_1,\qquad y'=\nu^2a-f_0.
+\tag{34.9}
+$$
+
+由 $v\in H_d$ 得
+
+$$
+\int e^{2(d+1)\ell}(|f_0|^2+|f_1|^2)\,d\ell
+ \le C\|v\|_{H_d}^2.
+\tag{34.10}
+$$
+
+确实，中央项恰有
+
+$$
+\bigl(e^{(d+1)\ell}t\|Dw\|_2\bigr)^2
+ =e^{2d\ell}t\|Dw\|_2^2;
+$$
+
+源误差 $B_n$ 还带有 $e^{-2\ell}$，其估计多出一阶衰减。这只使用实际中央图范数中的一个权重单位增益。
+
+令
+
+$$
+c_-(\ell)=\frac12e^{\nu\ell}(a-y/\nu),
+\qquad c_+(\ell)=\frac12e^{-\nu\ell}(a+y/\nu).
+$$
+
+由 (34.9)，
+
+$$
+c_-'=\frac12e^{\nu\ell}(f_1+f_0/\nu),
+\qquad c_+'=\frac12e^{-\nu\ell}(f_1-f_0/\nu).
+$$
+
+因 $\nu\le1<d+1$，第一个导数在右半线上可积，故 $c_-$ 有极限，且积分导数即得 (34.6)。$a\in H^1_d$ 排除 $e^{\nu\ell}$ 增长解，故 $c_+(\infty)=0$。于是
+
+$$
+\begin{aligned}
+c_-(\ell)-c_-(\infty)
+ &=-\frac12\int_\ell^\infty e^{\nu u}(f_1(u)+f_0(u)/\nu)\,du,\\
+c_+(\ell)
+ &=-\frac12\int_\ell^\infty e^{-\nu u}(f_1(u)-f_0(u)/\nu)\,du.
+\end{aligned}
+$$
+
+Cauchy--Schwarz 不等式或半线指数卷积的 Young 不等式表明，$a-e^{-\nu\ell}c_-(\infty)$ 及其一阶导数具有 (34.3) 的 $\delta$ 加权 $L^2$ 控制；此时 $\delta>\nu$，尾积分的卷积核以 $\delta-\nu>0$ 衰减。端点值取 $y$ 的一阶方程所给的 $H^1_{\rm loc}$ 代表，公式不依赖所取点。
+
+对负角向量 $\psi$ 的系数，(34.9) 中 $\nu^2$ 改为 $-s^2$。相应常矩阵的指数有界，而 $a,y$ 的正权 $d$ 可积性排除两个振荡齐次解，故
+
+$$
+\begin{pmatrix}a\\y\end{pmatrix}(\ell)
+ =-\int_\ell^\infty e^{M(\ell-u)}
+             \begin{pmatrix}f_1(u)\\-f_0(u)\end{pmatrix}\,du,
+\qquad M=\begin{pmatrix}0&1\\-s^2&0\end{pmatrix}.
+$$
+
+这给出任意 $\delta<d+1$ 的加权 $H^1$ 控制，负角通道不留下振荡慢尾系数。
+
+令 $V_>$ 为与 $\psi$ 和所有 $E_\nu$（$\nu\le1$）均 $C$ 正交的高角空间。其上
+
+$$
+h\ge\nu_+^2C,\qquad h\ge\kappa_>A,\qquad \kappa_>>0.
+$$
+
+第二式由 $G$ (24.9) 的 $h+\beta C\ge\alpha A$ 与第一式组合得到。对 $\tau=d$ 或 $\delta$，
+
+$$
+h-\tau^2C\ge(1-\tau^2/\nu_+^2)h\ge\kappa_\tau A.
+$$
+
+在充分大的固定外部半线 $\ell\ge b$，将限制于 $V_>$ 的完整 $p$ 作相反 $\tau$ 权重共轭，其实对角为
+
+$$
+\int_b^\infty\bigl\{C[z']+h[z]-\tau^2C[z]
+ +t\|Dz\|_2^2-\tau^2t\|\upsilon z\|_2^2
+ -g\langle B_nz,z\rangle_{L^2(da)}\bigr\}\,d\ell.
+$$
+
+末两项的绝对值至多为 $Ce^{-2b}\int_b^\infty A[z],d\ell$，增大固定 $b$ 即可吸收。Riesz 表示及伴随的强制形式论证给出这个高块在半线零左迹图完成空间上的唯一有界逆，分别适用于 $\tau=d,\delta$。这里的零左迹仅用于径向截断后的未知量。
+
+令 $w_{\rm low}$ 为已得到的有限低投影，$v_>=w_v-w_{\rm low}$。取远端径向 $\eta$，在半线左端为零、远处为一，考察 $\eta v_>$ 的高块方程。右端是固定过渡带的实际交换子以及 $w_{\rm low}$ 的中央场、源项交叉 强迫项。每个正低标量为 $e^{-\nu\ell}$ 常系数加 $H^1_\delta$ 余项，且所有正 $\nu>d$，所以
+
+$$
+\int e^{2\delta\ell}t\|Dw_{\rm low}\|_2^2\,d\ell<\infty,
+\qquad
+\int e^{2\delta\ell}\|B_nw_{\rm low}\|_2^2\,d\ell<\infty.
+$$
+
+第一式对显式慢项使用 $\delta<1+d<1+\nu$，对加权余项使用 $t$ 有界；$\psi$ 系数使用刚证的加权 $\delta$ 控制。故右端是高块 $\delta$ 图对偶中的有界泛函。固定过渡带项由原局部图能量控制。高块 $\delta$ 逆产生的解也属于 $d$ 空间，而原 $\eta v_>$ 是同一个 $d$ 方程的解；$d$ 零左迹空间中的唯一性使两者相等。这证明高块的 (34.5)，与低标量余项相加即得 (34.4)--(34.5)。全部构造都是有界线性操作；不同指数的独立性及 $\delta>1\ge\nu$ 给出唯一性。这里使用的是完整高角半线强制形式逆，不是原整体低能补空间逆。
+
+再证明物理质量及原域对应。由 (34.1)、(34.5)、$\delta>1$ 以及 $A\ge\lambda_0\|\cdot\|_{L^2(da)}^2$，余项具有有限原物理 $L^2$ 质量。若最小非零指数为 $\nu<1$，其球质量首项按 (34.1) 积分恰为 (34.8) 第一式；其余有限显式项指数更快，均为低阶。余项与首项的物理 Cauchy--Schwarz 交叉界为 $O(e^{(1-\nu)T})$，也为低阶。若只有 $\nu=1$，首项为 $T\|\mathsf A_1(v)\|_2^2/4$，余项交叉为 $O(\sqrt T)$。故 (34.8) 成立，并有 $K\cap L^2=\ker\mathsf A$。整个计算用无权 $da$，未用 $C$ 正交性删去物理交叉项。
+
+对 $v\in K\cap L^2$，$H_d$ 控制外部全部原场 $U,V,Z$ 能量，定义中的内区范数控制原紧内区。原正极坐标恒等式与径向远端截断将其转回原自由闭包：截断损失由 $|\nabla_{\mathcal X}\chi_R|\le C/R$ 及物理 $L^2$ 尾部控制，趋于零；紧支撑局部自由形式元由原光滑核稠密性逼近。因此 $v\in\mathcal H_1$。全局零能弱方程先对所有复紧光滑测试成立，再由原形式连续性及核稠密性延拓至全部 $\mathcal H_1$。(31.3) 给出 $v\in D(\mathscr A)$、$\mathscr Av=0$，不要求 $Pv\in L^2$。
+
+反向取 $z\in N$。记原水平能量加中央能量为 $T_1[z]=\sum_{X\in\{U,V,Z\}}\|Xz\|_2^2$，势能为 $W[z]=\int P|z|^2\,d\xi$。原无穷小形式界与 $q[z]=0$ 给出 $T_1[z]+W[z]\le C\|z\|_2^2$。取平滑正函数 $a_0$，在内区有界、远端等于 $R$；令 $a_m=\min(a_0,m)$，折点用光滑逼近处理。原场直接给出
+
+$$
+(UR)^2+(VR)^2=c,
+\qquad (ZR)^2=\frac{4\sin^2a}{R^2},
+\qquad \Gamma(R)=\sum_{X\in\{U,V,Z\}}|XR|^2
+                  =c+\frac{4\sin^2a}{R^2}.
+\tag{34.11}
+$$
+
+故 $\Gamma(a_m)$ 在全空间一致有界，$a_m^2z$ 是合法原形式测试。由原乘法规则及 $q(z,a_m^2z)=0$，精确 IMS 等式为
+
+$$
+T_1[a_mz]
+ =g\int P a_m^2|z|^2\,d\xi
+    +\int\Gamma(a_m)|z|^2\,d\xi
+ \le C\|z\|_2^2.
+\tag{34.12}
+$$
+
+外区势项使用原 $P\le C/R^2$，内区使用刚得的 $W[z]$ 界。局部弱极限及下半连续性给出 $X(a_0z)\in L^2$，范数至多为 $C\|z\|_2$。在外部 $w_{a_0z}=e^\ell w_z$，其无权柱面 $L^2$ 范数正由 (34.1) 的物理质量控制。对 $a_0z$ 再作径向远端截断，(34.11) 使梯度损失由 $z$ 的物理 $L^2$ 尾部控制并趋零；原正极坐标恒等式遂给出 $e^\ell w_z$ 的完整外部图能量有限，内区仍为原自由域。因此
+
+$$
+z\in H_1^{\rm aux},\qquad
+\|z\|_{H_1^{\rm aux}}\le C\|z\|_{L^2(d\xi)}.
+\tag{34.13}
+$$
+
+$H_1^{\rm aux}\subset H_d$，原弱方程与相反权重空间的稠密性给出 $P_dz=0$，故 $z\in K$。另一方面，$A\ge\lambda_0\|\cdot\|_{L^2(da)}^2$ 给出 $H_1^{\rm aux}\subset L^2(d\xi)$。结合前述包含即得 (34.7)。原自然角光滑核、包含极点的原自由形式核以及全测试恢复贯穿上述域对应，没有增添端点值或 $Pz\in L^2$ 条件。
+
+本定理中的常系数变参数、半线卷积与强制形式论证是经典方法；Hilbert 空间的 Riesz 及伴随论证参见 Folland，*Real Analysis*，Chapter 5，闭形式表示与原算子域刻画参见 Kato，*Perturbation Theory for Linear Operators*，Chapter VI，Section 2。它们在这里用于原完整 强迫项 的 (34.6)、图增益 (34.10)、高角权重吸收以及原域与物理质量的具体对应。$\square$
+

@@ -58,13 +58,13 @@ Square.contextual | content; escape_witness=Square.parity_miss | none | Product.
 Square.defTarget | bind-only | none | Square.defect_agrees
 Square.goodB | bind-only | none | Square.fiber_sum
 Square.support | bind-only | none | Square.support_card
-Square.support_card | content; escape_witness=Square.support_card | none | Square.mu
+Square.support_card | content; escape_witness=Square.support_card | none | Square.mu_mass
 Square.mu | bind-only | none | Product.law_agrees
-Square.muTable | content; escape_witness=Square.support_card | none | Square.fiber_sum
+Square.muTable | bind-only | none | Square.fiber_sum
 Square.Ndef | bind-only | F0 | Square.defect_agrees
 Square.mu_nonneg | bind-only | none | Product.model_nc
 Square.mu_mass | bind-only | none | Product.model_nc
-Square.fiber_sum | content; escape_witness=Square.muTable | none | Square.defect_agrees
+Square.fiber_sum | bind-only | none | Square.defect_agrees
 Square.fiber_card | content; escape_witness=Square.fiber_card | none | Square.defect_agrees
 Square.defect_agrees | content; escape_witness=Square.fiber_card | F0 | Product.law_agrees
 Product.C | bind-only | none | Product.O_commute
@@ -345,30 +345,22 @@ private def support (c : Fin 6) : Finset (Fin 9 → Bool) := Finset.univ.filter 
 private lemma support_card (c : Fin 6) : (support c).card = 16 := by fin_cases c <;> decide
 
 private noncomputable def mu (c : Fin 6) (g : Fin 9 → Bool) : ℝ :=
-  (PMF.uniformOfFinset (support c)
-    (Finset.card_pos.mp (by rw [support_card]; decide)) g).toReal
+  if goodB c g then (1/16 : ℝ) else 0
 private lemma muTable (c : Fin 6) (g : Fin 9 → Bool) :
-    mu c g = if goodB c g then (1/16 : ℝ) else 0 := by
-  rw [mu, PMF.uniformOfFinset_apply, support_card]
-  by_cases h : goodB c g = true
-  · have hg : g ∈ support c := by simp [support, h]
-    rw [if_pos hg, if_pos h]
-    norm_num
-  · have hg : g ∉ support c := by simp [support, h]
-    rw [if_neg hg, if_neg h]
-    simp
+    mu c g = if goodB c g then (1/16 : ℝ) else 0 := by rfl
 
 private noncomputable def Ndef (c : Fin 6) : Behavior C := fun x => D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward (restrict C x) (mu c)
-private lemma mu_nonneg (c : Fin 6) (g : Fin 9 → Bool) : 0 ≤ mu c g :=
-  ENNReal.toReal_nonneg
+private lemma mu_nonneg (c : Fin 6) (g : Fin 9 → Bool) : 0 ≤ mu c g := by
+  unfold mu
+  split_ifs <;> norm_num
 private lemma mu_mass (c : Fin 6) : (∑ g, mu c g) = 1 := by
-  let p := PMF.uniformOfFinset (support c)
-    (Finset.card_pos.mp (by rw [support_card]; decide))
-  change (∑ g, (p g).toReal) = 1
-  have h : (∑ g, p g) = (1 : ENNReal) := by
-    simpa only [tsum_fintype] using p.tsum_coe
-  rw [← ENNReal.toReal_sum (fun g _ => p.apply_ne_top g), h]
-  simp
+  calc
+    (∑ g, mu c g) = ∑ _g ∈ support c, (1/16 : ℝ) := by
+      simp only [mu, support, Finset.sum_filter]
+    _ = 1 := by
+      rw [Finset.sum_const, support_card]
+      norm_num
+
 private lemma fiber_sum (c x : Fin 6) (a : (Fin (C x).length → Bool)) :
     (∑ g with restrict C x g = a, mu c g) =
       (((support c).filter (fun g => restrict C x g = a)).card : ℝ) * (1/16 : ℝ) := by

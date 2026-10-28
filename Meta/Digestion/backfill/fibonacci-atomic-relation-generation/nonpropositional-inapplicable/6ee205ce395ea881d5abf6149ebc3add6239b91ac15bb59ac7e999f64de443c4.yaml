@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6ee205ce395ea881d5abf6149ebc3add6239b91ac15bb59ac7e999f64de443c4
+  normalized_sha256: sha256:6ee205ce395ea881d5abf6149ebc3add6239b91ac15bb59ac7e999f64de443c4
+cas_ref: sha256:6ee205ce395ea881d5abf6149ebc3add6239b91ac15bb59ac7e999f64de443c4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 承接未证桥梁列表，列出最小割与约化熵的待研究关系，不是宣告该等式成立。
+    previous_atom_id: c766163bc097e5d5d6d38d6c051ba1b640db2bd65f87ddf84b03c46c8b19e61c
+    next_atom_id: 4bc30a90790ea6becde0ef0fbe7238803e62d3a862bbbf246b87aa6b69d31a31

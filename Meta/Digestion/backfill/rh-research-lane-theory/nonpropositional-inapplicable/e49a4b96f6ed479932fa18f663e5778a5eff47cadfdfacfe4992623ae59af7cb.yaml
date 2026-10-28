@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e49a4b96f6ed479932fa18f663e5778a5eff47cadfdfacfe4992623ae59af7cb
+  normalized_sha256: sha256:e49a4b96f6ed479932fa18f663e5778a5eff47cadfdfacfe4992623ae59af7cb
+cas_ref: sha256:e49a4b96f6ed479932fa18f663e5778a5eff47cadfdfacfe4992623ae59af7cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅标记 hard-core 零点自由区域 PR 与 RH 无关，未陈述具体零点自由区域或图递归公式。
+    previous_atom_id: baf5bd6a14944ce2b3c46b556c4045ac61a4f86c5f8a3e78d1d592dc2640194d
+    next_atom_id: dc7830cf44495c1cb6acb0a85f90dcc9dc149cb12e5f88f9a265e42b16301347

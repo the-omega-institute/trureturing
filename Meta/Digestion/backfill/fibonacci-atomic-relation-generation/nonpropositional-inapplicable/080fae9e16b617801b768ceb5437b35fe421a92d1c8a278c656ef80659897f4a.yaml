@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:080fae9e16b617801b768ceb5437b35fe421a92d1c8a278c656ef80659897f4a
+  normalized_sha256: sha256:080fae9e16b617801b768ceb5437b35fe421a92d1c8a278c656ef80659897f4a
+cas_ref: sha256:080fae9e16b617801b768ceb5437b35fe421a92d1c8a278c656ef80659897f4a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines R_{s,w}, J_{s,w} and the convention P^-(1)=infinity. The explanatory sentence describes which prime factors the definitions retain and the zero branch of the indicator. No multiplicativity, uniform bound, or function-class membership is claimed here.
+    previous_atom_id: 8c43cb255fc6c22da9f33747d8810958f9ed5dfdf4531e8fdb7eea40b0cc4aa1
+    next_atom_id: 1d3a7d67432d601880736366ab094b8be31a331532f42945c4e1c22f641b084b

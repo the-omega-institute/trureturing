@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e1d19ad3b9ab972ddb4e0d7d965391ad9cb4d06880c0820b4b7a9d679d8aabf3
+  normalized_sha256: sha256:e1d19ad3b9ab972ddb4e0d7d965391ad9cb4d06880c0820b4b7a9d679d8aabf3
+cas_ref: sha256:e1d19ad3b9ab972ddb4e0d7d965391ad9cb4d06880c0820b4b7a9d679d8aabf3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 说明给定满足谓词与经文无虚妄判词之间仍需语义规范桥梁。
+    previous_atom_id: 0654f08e243325580eed36fca4d4b17d727d1d71d65aa673b80c46cc23e8ace9
+    next_atom_id: 9edfc1ade301430339295794abe4ac24927080a65eda9dcaf92db7c2cac86730

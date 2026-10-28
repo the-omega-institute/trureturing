@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:64a6e0d7e10607d7c0aa4b5e8955d130ad032b4c732c9cad0e420a4bb7f90b6b
+  normalized_sha256: sha256:64a6e0d7e10607d7c0aa4b5e8955d130ad032b4c732c9cad0e420a4bb7f90b6b
+cas_ref: sha256:64a6e0d7e10607d7c0aa4b5e8955d130ad032b4c732c9cad0e420a4bb7f90b6b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Transport/TargetRelativeBiinterpretation.target_relative_biinterpretation_transports_answerability
+    target_statement_id: sha256:76a8cadbe749c31b81c25e3ef6d31cc36783aa84e7963ecae2a27cef4ecb7edf
+receipts:
+  unresolved_subitems: []

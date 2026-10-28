@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2be8cfdfe3a8d28c4383c9dc59076bb7a4848d750c3da808036e9aabae596fcc
+  normalized_sha256: sha256:2be8cfdfe3a8d28c4383c9dc59076bb7a4848d750c3da808036e9aabae596fcc
+cas_ref: sha256:2be8cfdfe3a8d28c4383c9dc59076bb7a4848d750c3da808036e9aabae596fcc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “截断误差”只是未来误差预算栏目，没有提出已证误差界。
+    previous_atom_id: 3f4c1db3689ad296f193da606f88ae2a7a52a2d8b73ae02bf07c3eff5129fda7
+    next_atom_id: fadc6528d7a52f55ca65453f06fdb176181d9085f2025898db45354516f2a9a4

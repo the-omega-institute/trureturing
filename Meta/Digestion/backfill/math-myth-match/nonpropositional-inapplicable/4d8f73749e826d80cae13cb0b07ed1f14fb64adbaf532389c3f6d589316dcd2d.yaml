@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4d8f73749e826d80cae13cb0b07ed1f14fb64adbaf532389c3f6d589316dcd2d
+  normalized_sha256: sha256:4d8f73749e826d80cae13cb0b07ed1f14fb64adbaf532389c3f6d589316dcd2d
+cas_ref: sha256:4d8f73749e826d80cae13cb0b07ed1f14fb64adbaf532389c3f6d589316dcd2d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅解释个人发展、既有共同体与新启示的文本主张，没有数学断言。
+    previous_atom_id: c20d21a0ec25811bbbca7cbf5b7f0388ab1715f5d3d30df5effd8280edb174e7
+    next_atom_id: d495ed5a0f827d01a6c263489c6f3688a0b25e3674b2cbc121c392543719b991

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7234b63b04a51f65008519763db83eb64e811685edc774453f8355c1f6245feb
+  normalized_sha256: sha256:7234b63b04a51f65008519763db83eb64e811685edc774453f8355c1f6245feb
+cas_ref: sha256:7234b63b04a51f65008519763db83eb64e811685edc774453f8355c1f6245feb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Normative requirement to specify comparable tasks and commitments. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: efd57023bfb720f9c7ad84877a8f054134317fb04f69adda64de8d00db4ee029
+    next_atom_id: 691c2c8e9f91b6cb908abd59f1cb523ff2d3065a9134b6b6f6b7aa1683d868bc

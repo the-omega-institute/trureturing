@@ -4,9 +4,8 @@ using System.Text;
 
 namespace StrataLint.Engine;
 
-// 缩进声明守卫:Lean 命令必须起于第 0 列,故任何【缩进行的首个 token】若看起来像
-// 声明,就说明提取器读到了它无法忠实还原的形状,一律 fail-closed 拒绝 —— 它挡的是
-// 「顶层陈述看着没变,却在缩进处偷加/偷改定义」这一类语义削弱。
+// 声明由第 0 逻辑列或已识别的命令起点进入提取器。
+// 行首块注释保留其起点缩进;其它无法忠实还原的缩进声明一律拒绝。
 internal sealed partial class LeanSourceCatalog
 {
     private static readonly ImmutableHashSet<string> BinderKeywords =
@@ -28,7 +27,7 @@ internal sealed partial class LeanSourceCatalog
         for (var index = 0; index < tokens.Length; index++)
         {
             var token = tokens[index];
-            if (token.Column == 0
+            if (token.CommandColumn == 0
                 || recognized.Contains(index)
                 || index > 0 && tokens[index - 1].Line == token.Line)
             {
@@ -55,12 +54,13 @@ internal sealed partial class LeanSourceCatalog
                     && IsIdentifierToken(tokens[index + 1].Text)
                     && tokens[index..Math.Min(tokens.Length, index + 32)].Any(candidate =>
                         candidate.Line == token.Line && candidate.Text == ":")
-                || token.Text is "private" or "protected" or "noncomputable" or "partial" or "unsafe"
+                || token.Text is "public" or "private" or "protected" or "noncomputable" or "partial" or "nonrec" or "unsafe" or "meta" or "local" or "scoped"
                     && tokens[index..Math.Min(tokens.Length, index + 32)].Any(candidate =>
                         candidate.Line == token.Line && DeclarationKinds.Contains(candidate.Text)))
             {
                 throw new LeanSourceExtractionException(
-                    $"Indented Lean declaration is unsupported in {path.Value}.");
+                    $"Indented Lean declaration is unsupported in {path.Value}.",
+                    LeanSourceExtractionFailure.IndentedDeclaration);
             }
         }
     }

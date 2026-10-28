@@ -1,0 +1,30 @@
+**Definition 26.1 (Unobserved ratio and exceptional quartic).** On
+the entire parent put
+
+$$
+\chi(W)=\frac{n}{U}>0,\qquad
+\mathfrak p(x)=8x^4+29x^3+18x^2-15x-6.
+\tag{26.1}
+$$
+
+The ratio is a source coordinate used to partition pairs of
+worlds; it is not an acquired reading. At clocks $3,4,5,6,7$
+the five actual M-continuation traces are
+
+$$
+ U\,(\chi,1,\chi+1,\chi+2,2\chi+3).
+\tag{26.2}
+$$
+
+Let $\alpha$ denote the unique positive root of $\mathfrak p$.
+Existence follows from its negative constant and positive leading
+coefficient, and uniqueness follows from the single sign change
+in its descending coefficient sequence, by Descartes' rule.
+Use the exact rational endpoints
+
+$$
+\ell=\frac{62587023180336296158875989932560022}{10^{35}},
+\qquad h_\alpha=\ell+10^{-35}.
+\tag{26.3}
+$$
+

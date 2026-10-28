@@ -1,0 +1,23 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.ResponseRealization;
+
+internal sealed class ResponseOutSplitConsumerDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/ConceptDynamics/Coding/ResponseRealization/ResponseOutSplitConsumer.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The actual numbered response output admits its first strict outgoing split and a shortened total inverse table.",
+        H("Consume the response output in the first strict split"),
+        Blocks(
+            Paragraph(Text("G has finite vertex and edge types, decidable equality on both, and a discrete edge topology. pair has arbitrary natural radii a,b,c,d. The numberedEdgeFintype instance transports finiteness through the existing edgeEquiv, retaining every response edge and all existing parallel numbers. responseCode requires the actual forward seam; its vertex map decodes vertexNumber and its edge map is edgeOutput after existing counted-edge decoding. Endpoint equations are derived from that same numbering.")),
+            Paragraph(Text("With hG:Essential G and S:SameTableConjugacy pair, local_of_conjugacy supplies both seams. numberedOutput is genuinely one-block on every counted history. The private inverse-table equation rewrites the existing recovery law using the inverse homeomorphism, so it holds on every target history, rather than only a supplied image.")),
+            Paragraph(Text("splitOutput is OutSplitConjugacyDecrease.changed for that exact code and numberedOutput. Its source is the outgoing split of countedGraph along the response edge-output map; its target is the full id outgoing split of G. splitRecover is a total legal-word table with new inverse radii (a+c,b+d), shortened from (a+c,b+d+1). Its construction uses the target essentiality and the complete old recovery, including the final carried edge.")),
+            Paragraph(Text("response_recovery supplies the all-history inverse equation used by ResponseTwoSidedConsumer.terminal and ConstructedTowerProfiles.response_profile. The terminal construction obtains its first-stage square directly from OutSplitConjugacyDecrease.square and the actual numbered output. Combining that square with the numbered response equation gives the original-S.forward diagram on each original history.")),
+            Describe.Remark(DescribeId.Create("response-realization-response-out-split-consumer-numbered-edge-fintype"), DeclarationHandle.Create(Prefix + "numberedEdgeFintype"), H("numberedEdgeFintype"), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Transport the finite edge type through the existing edge equivalence. This supplies the actual numbered response presentation and its outgoing constructions.")))),
+            Describe.Remark(DescribeId.Create("response-realization-response-out-split-consumer-response-code"), DeclarationHandle.Create(Prefix + "responseCode"), H("responseCode"), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Constructs the actual endpoint-preserving output Code with its finite vertex decoding and unchanged response-edge output. The endpoint proofs use the existing fibre numbering and the supplied seam. splitOutput, splitRecover and the concrete terminal consume it.")))),
+            Describe.Remark(DescribeId.Create("response-realization-response-out-split-consumer-split-output"), DeclarationHandle.Create(Prefix + "splitOutput"), H("splitOutput"), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Binds the imported changed construction to the actual responseCode and numberedOutput, with the concrete source and target split graphs. The terminal and its profile proof use this homeomorphism.")))),
+            Describe.Remark(DescribeId.Create("response-realization-response-out-split-consumer-split-recover"), DeclarationHandle.Create(Prefix + "splitRecover"), H("splitRecover"), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Binds the total outgoing recovery construction to the real code, its one-block equation, target essentiality and old inverse table. ResponseTwoSidedConsumer.terminal and the profile proof use it as Q prime.")))),
+            
+            Describe.Lean(DescribeId.Create("response-realization-response-out-split-consumer-response-recovery"), DeclarationHandle.Create(Prefix + "response_recovery"), H("response_recovery"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("This is the exact recover_window specialization on all split target histories with radii (a+c,b+d). terminal and response_profile pass it as hq prime to their actual reduce tail."))), DescribeRole.Theorem))));
+}

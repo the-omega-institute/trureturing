@@ -39,7 +39,7 @@ private instance : Nonempty CountableStage :=
   ⟨⟨0, Ordinal.omega0_pos.trans Ordinal.omega0_lt_omega_one⟩⟩
 
 /-- A consumed application of the existing full-thread lifting theorem. -/
-private theorem projection_surjective {J : Type v} [SmallCategory J]
+theorem projection_surjective {J : Type v} [SmallCategory J]
     [IsCofiltered J] [Quiver.IsThin J] (F : J ⥤ Profinite.{max u v})
     [∀ j, Nonempty (F.obj j)] (C : Cone F) (hC : IsLimit C)
     (hs : ∀ {i j} (f : i ⟶ j), Surjective (F.map f)) (i : J) :

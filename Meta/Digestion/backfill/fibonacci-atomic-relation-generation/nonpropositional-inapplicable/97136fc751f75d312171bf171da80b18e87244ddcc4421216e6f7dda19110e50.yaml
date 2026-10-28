@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:97136fc751f75d312171bf171da80b18e87244ddcc4421216e6f7dda19110e50
+  normalized_sha256: sha256:97136fc751f75d312171bf171da80b18e87244ddcc4421216e6f7dda19110e50
+cas_ref: sha256:97136fc751f75d312171bf171da80b18e87244ddcc4421216e6f7dda19110e50
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 只有第247.3节标题，未包含数学断言。
+    previous_atom_id: 42ea87a2d24d9198e4b192016bdb9c5227fc9afe1c993ac5692e4525a1f36c85
+    next_atom_id: 33be8218a1784a412f0f16f5ec3fd2aa1d0250ff482588e56edb921d78dad9b2

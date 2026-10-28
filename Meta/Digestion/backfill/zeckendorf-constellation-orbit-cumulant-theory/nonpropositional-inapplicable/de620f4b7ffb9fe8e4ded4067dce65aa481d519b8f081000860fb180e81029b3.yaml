@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:de620f4b7ffb9fe8e4ded4067dce65aa481d519b8f081000860fb180e81029b3
+  normalized_sha256: sha256:de620f4b7ffb9fe8e4ded4067dce65aa481d519b8f081000860fb180e81029b3
+cas_ref: sha256:de620f4b7ffb9fe8e4ded4067dce65aa481d519b8f081000860fb180e81029b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅列出高阶响应递归所用的 xi 导数符号；这是输入清单片段，没有独立命题。
+    previous_atom_id: c329de889e157cecfab3a268e1ea9de155be2931eee7255dfc827891393a5fa4
+    next_atom_id: a97ce47fa9a19d744f5aae68c3b544f2fa73c3fe2bbd18d97f4e6e7d96da0741

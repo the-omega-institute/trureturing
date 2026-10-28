@@ -1,0 +1,15 @@
+**Theorem 35.3 (whole-field zero earned by these actual operations).** The observation in Definition 35.1 returns the exact stated $x_{\rm mark}$ and synchronizes at the actual endpoint $x_d$. The control in Definition 35.2 ends with zero on every actual material vertex, for every unknown rational field allowed by Assumption 34.1. The graph, full raw correspondence, reference and current rights are retained on the same specimen throughout.
+
+Proof. During the observation, the $r$th literal terminal block is $J^{\mathsf T}A^rx_{\rm mark}$. Thus $y=K^{\mathsf T}x_{\rm mark}$, and symmetry together with $KC=\operatorname{Id}$ proves (NLBAII.44), including the actual advanced endpoint. No known initialization is required for this linear identity.
+
+The actual field after the $I+1$ control rounds is, by induction on the rounds,
+
+$$
+A^{I+1}x_d+\sum_{s=0}^I A^{I-s}Jg_{I-s}
+=A^{I+1}x_d+Kg
+=A^{I+1}x_d-KCA^{I+1}x_d=0.
+\tag{NLBAII.46}
+$$
+
+Indeed each block is added after its Tick and then undergoes exactly the remaining $I-s$ Ticks. Adds at distinct terminals commute within a block and affect exactly those actual terminals by the earned map. Holds introduce no extra dynamics. Formula (NLBAII.46) therefore describes the actual plant, not just a controllability matrix with unexecuted inputs. It proves zero at all coordinates, including internal cells which arming did not clear. Neither invertibility of $A$, positivity of its spectrum, a scalar clock, nor any known old initial field occurs in the calculation. The actual map and authority were retained, and no growth occurs during these two finite phases. $\square$
+

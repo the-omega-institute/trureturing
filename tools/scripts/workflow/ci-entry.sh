@@ -31,6 +31,11 @@ finish() {
     git update-ref -d "$ref" || fail "cannot delete $ref"
   done <<< "$refs"
   echo "hit=$hit" >> "${GITHUB_OUTPUT:?GITHUB_OUTPUT is required}"
+  if [[ "$reason" == matched=* ]]; then
+    echo "base=$base" >> "$GITHUB_OUTPUT"
+  else
+    echo 'base=' >> "$GITHUB_OUTPUT"
+  fi
   echo "CI_HIT hit=$hit reason=$reason"
   exit 0
 }
@@ -77,7 +82,7 @@ excluded() {
 }
 
 changes="$(mktemp)"
-git diff --name-only --no-renames -z "$base" "$head" > "$changes" || fail "cannot diff $base..$head"
+python3 tools/scripts/workflow/ci_contract.py --base "$base" --head "$head" --output "$changes" || fail "cannot diff $base..$head"
 if [[ -n "${CI_CHANGED_PATHS_FILE:-}" ]]; then
   cp -- "$changes" "$CI_CHANGED_PATHS_FILE" || fail "cannot write $CI_CHANGED_PATHS_FILE"
 fi

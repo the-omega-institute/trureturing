@@ -1,0 +1,24 @@
+**定义 76.2（自相关与谱测度）。** 给定有界字母权重 \(w:\mathcal A\to\mathbb C\)，定义加权梳
+\[
+\omega_x=\sum_{n\in\mathbb Z}w(x_n)\delta_n.
+\]
+唯一遍历性保证自相关系数
+\[
+\eta(m)=\int_{X_\sigma}
+w(x_0)\overline{w(x_{-m})}\,d\mu(x)
+\]
+存在且与 \(x\) 无关。令
+\[
+\gamma=\sum_{m\in\mathbb Z}\eta(m)\delta_m.
+\]
+\(\gamma\) 是正定测度，其 Fourier 变换 \(\widehat\gamma\) 是正测度，可称为该加权符号模型的数学衍射测度。对中心化观测
+\[
+f(x)=w(x_0)-\int w(x_0)\,d\mu,
+\]
+Koopman 谱测度 \(\sigma_f\) 由
+\[
+\int_{\mathbb T}z^m\,d\sigma_f(z)
+=\langle f\circ T^m,f\rangle_{L^2(\mu)}
+\]
+确定。零频原子来自常数均值；其余峰型取决于替换、权重和位置实现。标准 Fibonacci 的纯离散结论需要另用相应模型集或替换谱定理，不能只由递归拼接式推出。
+

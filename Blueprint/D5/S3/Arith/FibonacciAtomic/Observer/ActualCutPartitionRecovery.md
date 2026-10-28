@@ -280,7 +280,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery
 
 A depth bounded by the maximum public address length reaches every cut. Unused branches are concrete alpha leaves, and each cut is filled by a native finite source.
 
-**Theorem 1.24 (Uniform old-row collision).**
+**Theorem 1.24 (Actual subtree at a trie cut).**
+
+$$\forall n: Nat, (\forall P: CutSet, (\forall a, r: Address, (\forall f: Address \to Source, (((\operatorname{append}\left(a, r\right) \in P) \land (\operatorname{length}\left(r\right) \leq n) \land (\forall s: Address, ((\operatorname{IsPrefix}\left(s, r\right)) \implies ((s \neq r) \implies (\neg \operatorname{append}\left(a, s\right) \in P))))) \implies (\operatorname{subtree}\left(r, \operatorname{prefixTrie}\left(n, P, a, f\right)\right) = \operatorname{some}\left(\operatorname{f}\left(\operatorname{append}\left(a, r\right)\right)\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.prefixTrie_at` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original trie lemma reaches a ++ r within the supplied depth, provided no strict prefix of r enters the cut. Its unchanged proof is directly consumed by OriginalVector.InterleavedWordRecovery.original_at. Choosing the entire level retains the complete source skeleton, including all unselected leaves.
+
+**Theorem 1.25 (Uniform old-row collision).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.uniform_trie_row`
 
@@ -292,7 +304,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery
 
 Uniformly filling the same trie with any two sources gives the same complete old row: its exterior and its single equality class agree.
 
-**Theorem 1.25 (Uncovered-hole source pair).**
+**Theorem 1.26 (Uncovered-hole source pair).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.coverage_failure_pair`
 
@@ -304,7 +316,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery
 
 Fill every P hole with alpha or every P hole with beta. If one old cut has no Q prefix, its leaf remains visible in the Q exterior, so these actual sources have equal old rows and different new rows.
 
-**Theorem 1.26 (First matching position under a relation).**
+**Theorem 1.27 (First matching position under a relation).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.idxOf_map_relation`
 
@@ -316,7 +328,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery
 
 Two finite mapped value lists have the same first matching position when equality to the target agrees at every list entry. The fact is consumed by class preservation and decoder renaming.
 
-**Definition 1.27 (One-class path marker).**
+**Definition 1.28 (One-class path marker).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.markerContext`
 
@@ -328,7 +340,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery
 
 H_nil a = a; at a false step form mul (H_r a) beta, and at a true step form mul beta (H_r a). Alpha occurs as a complete subtree only at the selected suffix.
 
-**Definition 1.28 (Native row kernel inclusion).**
+**Definition 1.29 (Native row kernel inclusion).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.Recovers`
 
@@ -340,7 +352,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery
 
 Recovery means that equal old canonical rows imply equal new canonical rows for every pair of finite nonempty Boolean sources.
 
-**Theorem 1.29 (Necessary prefix coverage).**
+**Theorem 1.30 (Necessary prefix coverage).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.recovery_covers`
 
@@ -352,7 +364,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery
 
 The actual uncovered-hole collision excludes recovery whenever an old hole lacks a new-cut prefix.
 
-**Theorem 1.30 (Simultaneous whole-class preservation).**
+**Theorem 1.31 (Simultaneous whole-class preservation).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.nonuniform_old_row`
 
@@ -364,7 +376,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery
 
 Let t = H_s alpha and z = mul t beta. Fill one Q-prefix trie with t; in the other, fill q with H_s z exactly when q ++ s belongs to P. All alpha-valued old holes change together to the fresh z. All other actual values, absent cuts, exterior syntax, and class disequalities remain.
 
-**Theorem 1.31 (Nonuniform source separation).**
+**Theorem 1.32 (Nonuniform source separation).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.nonuniform_failure_pair`
 
@@ -376,7 +388,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery
 
 If x ++ s belongs to P and y ++ s does not, the two actual sources have equal complete P rows. Their Q subtrees at x and y were equal and become different. Native subtree leaf-count bounds prove z is fresh, without requiring all P addresses to be reached.
 
-**Theorem 1.32 (Actual present class value).**
+**Theorem 1.33 (Actual present class value).**
 
 $$\forall P: CutSet, (\forall u: Source, (\forall p: Address, (\forall t: Source, (((\operatorname{CutPrefixFree}\left(P\right)) \land (p \in P) \land (\operatorname{subtree}\left(p, u\right) = \operatorname{some}\left(t\right))) \implies (\operatorname{classValue}\left(P, u, \operatorname{classOrdinal}\left(P, u, p\right)\right) = t)))))$$
 
@@ -421,6 +433,7 @@ The source domain is every finite nonempty ordered Boolean-leaf tree, and the cu
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.nonuniform_old_row`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.orderedHoles_mem`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.prefixTrie`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.prefixTrie_at`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.recovery_covers`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.rowAt`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.uniform_trie_row`

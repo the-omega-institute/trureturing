@@ -1,0 +1,59 @@
+**Proposition 34.1 (a bounded complete-target contact consumer).** On the same five-read trajectory with $k=d=0$, take
+
+$$
+ y^{\rm B}=(0,2,0,0,0),\qquad \delta_{\rm B}=1.
+ \tag{34.1}
+$$
+
+Then $e(y^{\rm B})=1$, the exact-radius compatible set is nonempty, and every one of its whole worlds satisfies
+
+$$
+ b\le1,\qquad\|P\|_{\max}\le1,\qquad
+ -4\le h<0,\qquad |D-2|\le3.
+ \tag{34.2}
+$$
+
+Its complete targets are therefore bounded at exactly the declared radius, although both coefficient margins fail. For every $\eta>0$, $\mathcal W_{1+\eta}(y^{\rm B})$ has unbounded source projection.
+
+**Proof.** A legal complete witness is
+
+$$
+ P_* =\begin{pmatrix}9/10&3/10\\3/10&1/10\end{pmatrix},\qquad
+ h=-1,\qquad D=9/5.
+ \tag{34.3}
+$$
+
+It is strictly positive, trace one and rank one, and its five noiseless reports are $(4/5,11/10,1/10,-1/10,-3/10)$. The raw errors producing (34.1) are $(-4/5,9/10,-1/10,1/10,3/10)$, each of magnitude at most one. Every vector in either space (33.5) has equal coordinates $1,2$, whereas $y^{\rm B}_1-y^{\rm B}_2=2$. Thus both distances are at least one, and the constant vector $\mathbf1$ attains one in both spaces.
+
+Now consider any compatible whole world and its five exact reports $z$. Compatibility gives $z_1\ge1$, $z_2\le1$, and $z_0\le1$. The exact identities $h=z_2-z_1$ and $h\ne0$ imply $h<0$. Moreover
+
+$$
+ h(b-1)=z_1-z_0\ge0,
+$$
+
+so $b\le1$. Formula (30.5) then bounds every source entry by one. Also $z_1\le3$, $z_2\ge-1$ give $h\ge-4$, and $D=z_0-h\in[-1,5]$ gives (34.2). For this record $|y_2-y_1|-2\delta=0$ and $m-a\delta=2-3=-1$. Boundedness at contact did not require a successful coefficient certificate.
+
+For an explicit inflation family take $P_x$ from (30.7), let
+
+$$
+ b_x=x+1/2+1/(4x),\qquad H_x=b_x^{-2},\qquad D_x=1,
+ \qquad x\ge1.
+ \tag{34.4}
+$$
+
+All sources and gains are legal, and every parameter specifies a whole world at the same five original clocks. The five traces $r_i=\operatorname{tr}(A_iP_x)$ are positive and at most $2(1+b_x)$, directly from (29.5). Since $b_x\ge x\ge1$, their reports obey $z_i=1+r_i/b_x^2\to1$ simultaneously. More explicitly the clock-$1$ residual has magnitude
+
+$$
+ |y^{\rm B}_1-z_1|=|1-1/b_x|\le1,
+$$
+
+and at each of the other four paid clocks
+
+$$
+ |y^{\rm B}_i-z_i|=1+r_i/b_x^2
+       \le1+2(1+b_x)/b_x^2\le1+4/x.
+ \tag{34.5}
+$$
+
+Thus every $x\ge\max\{1,4/\eta\}$ belongs to $\mathcal W_{1+\eta}(y^{\rm B})$, with the displayed deterministic errors at every read, while $\|P_x\|_{\max}=x\to\infty$. Exact-radius boundedness is therefore strictly weaker than boundedness under some positive radius inflation. This statement is about a fixed record and its declared radii, not about pointwise small-noise recovery. $\square$
+

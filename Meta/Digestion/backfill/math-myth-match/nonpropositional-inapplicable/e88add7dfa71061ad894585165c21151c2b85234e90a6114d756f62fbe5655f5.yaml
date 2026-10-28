@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e88add7dfa71061ad894585165c21151c2b85234e90a6114d756f62fbe5655f5
+  normalized_sha256: sha256:e88add7dfa71061ad894585165c21151c2b85234e90a6114d756f62fbe5655f5
+cas_ref: sha256:e88add7dfa71061ad894585165c21151c2b85234e90a6114d756f62fbe5655f5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 康德启蒙文本的历史解释及偏见边界，不是关于能力的数值命题。
+    previous_atom_id: d674b3fee85606957c5f19c933465804dd30fc373a0bc674c39445d5d9266b92
+    next_atom_id: 1dc451e4a2192a246d61bb94a2c1ca17e437c6e6124272e7e2256beae6af514d

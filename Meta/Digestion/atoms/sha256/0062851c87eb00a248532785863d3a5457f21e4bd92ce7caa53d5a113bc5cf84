@@ -1,0 +1,22 @@
+**定理 78.1（原双世界的固定误差 Cesàro 下界）。** For every fixed $0<d<1$, every fixed real $\theta$ with $\sin(2\theta)\ne0$, the exact original pair (73.1), and every finite comparator (72.8) with arbitrary two preparations,
+
+$$
+\liminf_{N\to\infty}\frac1N\sum_{0\le n<N}
+\frac{\operatorname{TV}(P_{+,n},Q_{+,n})+
+\operatorname{TV}(P_{-,n},Q_{-,n})}{2}
+\ \ge\ \frac t4\ >\ \frac{d(1-d)}{3200}.
+\tag{78.1}
+$$
+
+The same bound holds with the maximum of the two TV errors inside the depth average.
+
+证明。For any real $|g|\le1$ on the complete record, $|\mathbb E_Pg-\mathbb E_Qg|\le2\operatorname{TV}(P,Q)$. Write $d_{\pm,n}=\operatorname{TV}(P_{\pm,n},Q_{\pm,n})$. Apply this to each preparation and the same statistic of Theorem 77.1:
+
+$$
+|A_{n;L,m}-C_{n;L,m}|\le2d_{+,n}+2d_{-,n},\qquad
+\frac{d_{+,n}+d_{-,n}}2\ge t\,v_{n;L,m}-\frac14C_{n;L,m}.
+\tag{78.2}
+$$
+
+For fixed comparator, $L,m$, averaging and taking $\liminf_{N\to\infty}$ gives the lower bound $t(1/4-\delta_{L,m})$ by (77.3). The left side is independent of $m$. Taking the supremum of these bounds as $m\to\infty$, with $L$ fixed, gives $t/4$. This does not exchange the two limits. The strict quantitative inequality follows from (73.2), and the maximum dominates the mean of the two errors. Both terminal entries are essential to the factor $4t$ in (77.3); the TV here sums both entries at every actual word. ∎
+

@@ -1,0 +1,27 @@
+**Definition 23.1 (fixed source and comparison).** Use the actual product realization (16.9):
+$J=\mathbb R^3\times\mathbb R^2$, $K=\mathbb R^3$,
+$\Pi(q,h,k)=q$, and $g_D((q,h,k),(q',h',k'))=q\cdot q'$.
+The original open source and base guards in this section are
+
+$$
+S=\{(q,h,k):q_3>0\},\qquad B=\{q:q_3>0\}.
+\tag{23.1}
+$$
+
+The original clock is $t$; there is no time change. Fix the six SPD settings of
+Proposition 17.5, denoted by $\mathcal Q$; they include $I_3$ and span
+$\operatorname{Sym}_3$. Their labels and the permission to execute them are fixed.
+For actual fields $X_a$ write $v_a=\Pi X_a$, including $a=0$.
+For comparison fields $V_a$ on $K$, let $r_a=v_a-V_a\circ\Pi$.
+A value comparison concerns these $r_a$ and the projected covariance
+$A_Q=\sum_{a,b=1}^3Q_{ab}v_av_b^{\mathsf T}$.
+It does not, by definition, include actual Itô first moments.
+The derivative $X_ar_b=Dr_b\,X_a$ uses the complete actual source field,
+including its hidden components.
+
+The sharp area–Jacobi budgets in §§19–22 concern the bilinear relation
+product on its given inner-product carrier. The comparisons below concern
+the actual source fields on (16.9). No estimate relating those algebraic
+budgets to the residuals (23.5) is assumed; the positive transport bounds
+use the explicit source membership of Assumption 24.1.
+

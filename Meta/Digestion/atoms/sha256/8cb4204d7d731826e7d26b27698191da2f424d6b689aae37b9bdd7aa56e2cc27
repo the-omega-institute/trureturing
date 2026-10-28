@@ -1,0 +1,70 @@
+**引理 107.1（控制掩码分块与嵌套纤维秩运输）。** 对 $S\subseteq Q$，令
+
+$$
+\begin{aligned}
+V_i(\beta,h;S)&=\mathop{\dot\bigcup}_{\kappa\in S}V_i(\beta,h,\kappa),\\
+C_i(\beta,h;S)&=\sum_{\kappa\in S}A_i(\beta,h,\kappa)
+                 =|V_i(\beta,h;S)|.
+\end{aligned}
+\tag{107.1}
+$$
+
+对 $i>0,b\in\{0,1\}$ 定义 $\beta_b=\beta-b,h_b=h+bv_i$，并令
+
+$$
+\operatorname{Pred}_{i,b}(\beta,h;S)=
+\{\kappa\in Q:
+ \chi_{i-1}(\beta_b,h_b,\kappa)=0,
+ \ \delta_{i-1}(\kappa,b)\in S\}.
+\tag{107.2}
+$$
+
+若 $\beta_b\notin\{0,\ldots,i-1\}$，该掩码及分支集合直接取空、分支计数取零，不在越域界面求值 $\chi$。于是按最后一位有
+
+$$
+\begin{aligned}
+V_i(\beta,h;S)
+={}&V_{i-1}(\beta,h;\operatorname{Pred}_{i,0}(\beta,h;S))\,0\\
+&\mathbin{\dot\cup}
+ V_{i-1}(\beta-1,h+v_i;\operatorname{Pred}_{i,1}(\beta,h;S))\,1.
+\end{aligned}
+\tag{107.3}
+$$
+
+colex 中整个末位0块在末位1块之前，每块内部保留前缀 colex 次序。给定 $S\subseteq T\subseteq Q$ 和有效秩
+$0\le r<C_c(\beta,h;S)$，可仅由 $A$、原控制规则及当前界面计算同一个 $u\in V_c(\beta,h;S)$ 在 $V_c(\beta,h;T)$ 内的秩，不保存 $u$ 的字缓冲。
+
+具体地，初始化 $i=c,t=0$，在每个 $i>0$ 令
+
+$$
+\begin{aligned}
+B_S^0&=C_{i-1}(\beta,h;\operatorname{Pred}_{i,0}(\beta,h;S)),\\
+B_T^0&=C_{i-1}(\beta,h;\operatorname{Pred}_{i,0}(\beta,h;T)),\\
+b&=\begin{cases}0,&r<B_S^0,\\1,&r\ge B_S^0,\end{cases}\\
+r&\leftarrow r-bB_S^0,\qquad t\leftarrow t+bB_T^0,\\
+(S,T)&\leftarrow
+ (\operatorname{Pred}_{i,b}(\beta,h;S),
+  \operatorname{Pred}_{i,b}(\beta,h;T)),\\
+(\beta,h,i)&\leftarrow(\beta-b,h+bv_i,i-1).
+\end{aligned}
+\tag{107.4}
+$$
+
+右边均读更新前的值。至 $i=0$ 时 $r=0$，返回 $t$；记此运输值为 $\mathcal R_c(\beta,h;S,T,r)$。无效界面、非嵌套掩码或无效秩可返回0。有效源范围的检查只验证存在唯一数学代表，不认证这个代表是某次物理执行的真实过去。
+
+证明。实际初态和确定性更新使每个字至多有一个控制态，所以（107.1）不交且计数正确。删去末位 $b$ 时，前一决定必须未标出，控制后继必须落在 $S$；反之满足这两项的每个前缀追加 $b$ 都属于当前集合。这正是（104.7）的逆关系，而非假设 $\delta$ 单射。综合征逆更新使用特征二的 $h-bv_i=h+bv_i$，包括 $\rho=0$。由末位区分得到（107.3）；最大的不同坐标决定 colex，故得到所述分块顺序。
+
+为证明（107.4），令 $w_i$ 为同一代表 $u$ 的前 $i$ 位。保持耦合不变量
+
+$$
+\begin{aligned}
+S_i&\subseteq T_i,\qquad w_i\in V_i(\beta_i,h_i;S_i),\\
+r_i&=\operatorname{rk}_{V_i(\beta_i,h_i;S_i)}(w_i),\\
+\operatorname{rk}_{V_c(\beta_c,h_c;T_c)}(u)
+ &=t_i+\operatorname{rk}_{V_i(\beta_i,h_i;T_i)}(w_i).
+\end{aligned}
+\tag{107.5}
+$$
+
+初始化显然成立。源零块大小决定真实末位；零块空时有效秩必选1，一块空时有效秩必选0。源秩减去自身零块偏移，目标秩在选1时加上目标零块大小；两边同时沿同一真实末位取带门前驱。逆像保留集合包含关系，（107.3）因而保持全部不变量。根集合只可能含实际初始化的空字：边界必为 $(0,C_\rho)$，两掩码都含 $\kappa_{\rm init}$，两根纤维均为单例、秩为0。因此返回 $t$ 恰为目标秩。$c=0$ 时直接得到0，包括根选中的情形。此逆扫描处理的是已付费秩所确定的数学代表，没有向来源倒读或取得实际后缀。证毕。
+

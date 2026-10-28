@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e2096971217be09bf370ef090b98dec6254978ff96e42de22e7c1707a3f4038
+  normalized_sha256: sha256:7e2096971217be09bf370ef090b98dec6254978ff96e42de22e7c1707a3f4038
+cas_ref: sha256:7e2096971217be09bf370ef090b98dec6254978ff96e42de22e7c1707a3f4038
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 仅以记号定义候选补集的命中计数 A 与实际矩 M_out；未断言计数公式、界或矩分解成立。
+    previous_atom_id: 6c771ec01480c90cf025e01efdc183f70f403c352ceb81f2aff993c697895350
+    next_atom_id: 320bfec88ebe941e4d20595ff2d145957af6dbf9e2eee696a86cd62ccd984a13

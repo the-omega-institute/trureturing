@@ -1,0 +1,4 @@
+**Lemma 7.2 (both ten-state entries correct everywhere).** On every actual source both original entries of $T_{10}$ return the complete correct row within four calls.
+
+Proof. In $\Pi_j$ precisely $b_j$ has root alpha, so the sequential classifier stops at $H_j$ in $j$ calls from either entry. On every zero profile no $b_j$ has root alpha, so either entry reaches $H_0$ in four calls. The eleven cases are exhaustive and §2 gives those exact whole outputs. The entries may converge after the first paid Read; no extra code register is needed. The original label remains recoverable from its distinct initial state at entry. $\square$
+

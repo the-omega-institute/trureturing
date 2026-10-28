@@ -12,11 +12,12 @@ result
   escape_witness: none
   admission_basis: open-problem-resolution (#15391; Proved)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15525
+Escape audit unfinished for weighted_psd: https://github.com/the-omega-institute/trureturing/issues/17573
 Escape audit unfinished for prepare_eb: https://github.com/the-omega-institute/trureturing/issues/16693
 Direct frozen dependencies (declaration statement_id):
 D5/S3/Quantum/Foundation/FiniteKrausChannel.MatrixMap; sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7
-D5/S3/Quantum/Foundation/FiniteKrausChannel.IsCompletelyPositive; sha256:39e2682fd93035c705a08181bb7fdfb77067eba43afcc98c200c30543b913ed4
-D5/S3/Quantum/Foundation/FiniteKrausChannel.add; sha256:ab035bd1524f24a389efcb6ae4d325d587be61770c5c649215e47141d0e193c5
+D5/S3/Quantum/Foundation/FiniteKrausChannel.IsCompletelyPositive; sha256:31bd68fc3c839750d1a8ac1474555b08fcd9579b1627c81db36a58f3172e1252
+D5/S3/Quantum/Foundation/FiniteKrausChannel.add; sha256:9ac4c5b7856928083ae6aacb766fd3eb958b2c365a91db6b7fea5d4fa8fcf6e4
 D5/S3/Quantum/Foundation/FiniteKrausChannel.kron; sha256:6bbbe42180d7cde8ee171b8a1aeeb16449194862345f2042d95ec7c0b2055471
 D5/S3/Quantum/Foundation/FiniteKrausChannel.kron_def; sha256:0a066df1b1de64e4fda175d1ac776d744674a6465abc8a7f13b12f185ce29405
 D5/S3/Quantum/Foundation/FiniteKrausChannel.of_kraus; sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287
@@ -47,6 +48,14 @@ set_option maxRecDepth 4096
 set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 variable {𝕜 : Type} [RCLike 𝕜] {n m p r : ℕ}
+/-- Finite convex mixtures of product density matrices. -/
+def IsSeparable {X Y : Type*} [Fintype X] [Fintype Y] (ρ : Matrix (X × Y) (X × Y) ℂ) : Prop :=
+  ∃ (n : ℕ) (p : Fin n → ℝ) (σ : Fin n → Matrix X X ℂ) (τ : Fin n → Matrix Y Y ℂ),
+    (∀ t, 0 ≤ p t) ∧
+      (∑ t, p t = 1) ∧
+      (∀ t, ((σ t).PosSemidef ∧ (σ t).trace = 1) ∧ ((τ t).PosSemidef ∧ (τ t).trace = 1)) ∧
+      ρ = ∑ t, (p t : ℂ) • (σ t ⊗ₖ τ t)
+
 def SEP (𝕜 : Type) [RCLike 𝕜] (m r : ℕ) :
     Set (Matrix (Fin m × Fin r) (Fin m × Fin r) 𝕜) :=
   {X | ∃ (k : ℕ) (x : Fin k → Fin m → 𝕜) (y : Fin k → Fin r → 𝕜),
@@ -74,7 +83,7 @@ private theorem map_expand (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matri
     simpa [Matrix.smul_single, smul_eq_mul] using Matrix.matrix_eq_sum_single A
   nth_rw 1 [he]
   simp only [map_sum, map_smul]
-private theorem kron_id_apply (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (r : ℕ)
+theorem kron_id_apply (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (r : ℕ)
     (P : Matrix (Fin n × Fin r) (Fin n × Fin r) 𝕜) (a b : Fin m × Fin r) :
     MatrixMap.kron Phi (LinearMap.id : MatrixMap (Fin r) (Fin r) 𝕜) P a b =
       Phi (fun i j => P (i, a.2) (j, b.2)) a.1 b.1 := by
@@ -136,7 +145,7 @@ private theorem ampl_comp (Phi : Matrix (Fin m) (Fin m) 𝕜 →ₗ[𝕜] Matrix
     (MatrixMap.kron (Phi ∘ₗ Psi) (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) P = (MatrixMap.kron Phi (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) ((MatrixMap.kron Psi (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) P) := by
   ext a b
   simp only [kron_id_apply, LinearMap.comp_apply]
-private theorem cp_comp {Phi : Matrix (Fin m) (Fin m) 𝕜 →ₗ[𝕜] Matrix (Fin p) (Fin p) 𝕜} {Psi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜}
+theorem cp_comp {Phi : Matrix (Fin m) (Fin m) 𝕜 →ₗ[𝕜] Matrix (Fin p) (Fin p) 𝕜} {Psi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜}
     (hPhi : MatrixMap.IsCompletelyPositive Phi) (hPsi : MatrixMap.IsCompletelyPositive Psi) : MatrixMap.IsCompletelyPositive (Phi ∘ₗ Psi) := by
   intro r P hP
   rw [ampl_comp]
@@ -184,7 +193,7 @@ private theorem sep_sum {I : Type} [Fintype I]
   convert hs using 1
   rw [Fintype.sum_sigma]
   exact Finset.sum_congr rfl (fun j _ => h j)
-private theorem ampl_kron (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (r : ℕ)
+theorem ampl_kron (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (r : ℕ)
     (A : Matrix (Fin n) (Fin n) 𝕜) (B : Matrix (Fin r) (Fin r) 𝕜) :
     (MatrixMap.kron Phi (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) ((Matrix.kroneckerMap (· * ·)) A B) = (Matrix.kroneckerMap (· * ·)) (Phi A) B := by
   ext a b
@@ -227,7 +236,7 @@ private theorem eb_post {Phi : Matrix (Fin m) (Fin m) 𝕜 →ₗ[𝕜] Matrix (
   intro r P hP
   rw [ampl_comp]
   exact sep_ampl hPhi r (hPsi r P hP)
-private def weighted (M : Matrix (Fin n) (Fin n) 𝕜)
+def weighted (M : Matrix (Fin n) (Fin n) 𝕜)
     (P : Matrix (Fin n × Fin r) (Fin n × Fin r) 𝕜) : Matrix (Fin r) (Fin r) 𝕜 :=
   fun u v =>
     let Q : Matrix (Fin n) (Fin n) 𝕜 := fun i j => P (i, u) (j, v)
@@ -256,7 +265,7 @@ private theorem weighted_sum {I : Type} [Fintype I]
     weighted (∑ j, M j) P = ∑ j, weighted (M j) P := by
   ext u v
   simp [weighted, Matrix.sum_mul, Matrix.trace_sum, Matrix.sum_apply]
-private theorem weighted_psd (M : Matrix (Fin n) (Fin n) 𝕜)
+theorem weighted_psd (M : Matrix (Fin n) (Fin n) 𝕜)
     (P : Matrix (Fin n × Fin r) (Fin n × Fin r) 𝕜)
     (hM : M.PosSemidef) (hP : P.PosSemidef) : (weighted M P).PosSemidef := by
   obtain ⟨x, rfl⟩ := psd_rank_sum M hM
@@ -652,7 +661,7 @@ private theorem bp_cp : MatrixMap.IsCompletelyPositive (bp n) := by unfold bp; e
 private theorem bm_cp : MatrixMap.IsCompletelyPositive (bm n) := by unfold bm; exact cp_half (conj_cp _)
 private theorem put_pp_cp : MatrixMap.IsCompletelyPositive (put n pp) := by rw [put_pp_conj]; exact cp_half (conj_cp _)
 private theorem put_pm_cp : MatrixMap.IsCompletelyPositive (put n pm) := by rw [put_pm_conj]; exact cp_half (conj_cp _)
-private theorem cp_double_tau {Phi : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] Matrix (Fin m) (Fin m) ℂ} (hPhi : MatrixMap.IsCompletelyPositive Phi) :
+theorem cp_double_tau {Phi : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] Matrix (Fin m) (Fin m) ℂ} (hPhi : MatrixMap.IsCompletelyPositive Phi) :
     MatrixMap.IsCompletelyPositive ((Matrix.transposeLinearEquiv (Fin m) (Fin m) ℂ ℂ).toLinearMap ∘ₗ Phi ∘ₗ (Matrix.transposeLinearEquiv (Fin n) (Fin n) ℂ ℂ).toLinearMap) := by
   intro r P hP
   have he : (MatrixMap.kron ((Matrix.transposeLinearEquiv (Fin m) (Fin m) ℂ ℂ).toLinearMap ∘ₗ Phi ∘ₗ (Matrix.transposeLinearEquiv (Fin n) (Fin n) ℂ ℂ).toLinearMap) (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) P = ((MatrixMap.kron Phi (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) Pᵀ)ᵀ := by

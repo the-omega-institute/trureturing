@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eaf08b401bfe89d045b4704499e9452c4b663df4eb2b77ee5db2148c1aa1a963
+  normalized_sha256: sha256:eaf08b401bfe89d045b4704499e9452c4b663df4eb2b77ee5db2148c1aa1a963
+cas_ref: sha256:eaf08b401bfe89d045b4704499e9452c4b663df4eb2b77ee5db2148c1aa1a963
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Introduces the branch/source indices and an arbitrary Compromised_i(H) predicate. The heading recommends a capture-cut metric and this atom states no minimum, bound or capture theorem.'
+    previous_atom_id: 6effcb1766c4497728f6824a1ef4540c23c36b1522bb3594de94aa76832ec169
+    next_atom_id: 68bcf6e2905d601eee38f56f91f970bcc3ef5fda2d86b0c454af7a79f44b520f

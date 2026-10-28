@@ -1,0 +1,26 @@
+**Theorem 28.2 (sharp consistency and linear-error caps for each $R>0$).** For every $k,d\ge0$ and every $R>0$, the least prescribed-prefix total cap for uniformly consistent complete-target recovery on $\mathcal C_R$ and the least such cap for uniform linear-error recovery are both
+
+$$
+ N+k+2=3k+d+5.
+ \tag{28.2}
+$$
+
+The attained decoder is (26.11), with all-$\delta$ complete-target error at most $\max\{a,C_{k,d}R\}\delta$. Every smaller fixed cap has complete-target risk bounded below by a positive number independent of $\delta$, even with zero noise. Lower-bound competitors may be arbitrary deterministic $\delta$-dependent adaptive protocols without continuity, measurability, linearity, or answer-palette restrictions.
+
+**Proof.** Theorem 26.2 gives the upper bound immediately on the stated joint class, at the same actual clocks and with every root read paid.
+
+For the lower bound reuse the positive golden crossing fiber of Theorems 5.1–5.2. Every $P$ in that fiber has $b=\phi$ and $\operatorname{tr}(M^iP)=\phi^i$ at all pure-$M$ clocks. Choose one common whole polynomial and drift
+
+$$
+ F(t)=\prod_{r=0}^{k-1}(t-(N+r)),\qquad
+ H_*(t)=\frac{1+\phi}{R\|\operatorname{coeff}_kF\|_\infty}F(t),
+ \qquad D_*=0.
+ \tag{28.3}
+$$
+
+The product is $1$ for $k=0$. Its coefficient norm is nonzero, $\deg H_*=k$, and every crossing-fiber world $(P,H_*,0)$ has exactly $\chi=R$. Thus the entire positive crossing fiber, rather than only selected source representatives, remains in $\mathcal C_R$.
+
+Its full prescribed prefix is source-independent. Its first $k$ continuation clocks $N,\ldots,N+k-1$ are roots, whose exact reports are zero regardless of the actions. Determinism fixes the entire action/history branch through those clocks. If the competitor stops there, any fixed two distinct sources in the fiber give a positive error obstruction. If it reaches clock $N+k$, the last possible read under a total cap $N+k+1$, its matrix $A$ is fixed before this first nonroot response. Theorem 5.2 supplies two distinct strictly positive sources in the same crossing fiber with equal trace against this $A$. They have the same $H_*,D_*$, agree on the full prefix and every root read, and give the same last report. Their whole received histories and final answer coincide, so one source error is at least half their distance. Both are whole fixed worlds realizing this actual branch.
+
+To make the obstruction uniform over error-dependent competitors, preselect one such collision pair for each of the finitely many matrices reached by literal continuation words of length $k+1$, and one fixed pair for early stopping. The minimum of their finitely many positive distances is positive. All shorter-cap competitors are included by permitting a larger cap $N+k+1$; early stopping is already covered. The same positive lower bound therefore holds separately at every $\delta$, using admissible zero errors throughout. It excludes both uniform consistency and a uniform $O(\delta)$ complete-target guarantee. This is precisely the inherited crossing-fiber/common-history obstruction applied inside the explicitly scaled joint class; it does not assume the competitor knows any calibration. $\square$
+

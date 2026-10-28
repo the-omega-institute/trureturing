@@ -1,0 +1,9 @@
+**Convention 8.3 (inherited depth-two endpoint).** [COK, §9][COK] records the credited ordinary supplier equality
+
+$$
+\Omega_2(w)=\beta_2(w)=J_2(w)
+=\max\{W-w(\alpha),W-w(\beta),w(\alpha)+w(\beta)+t\},
+$$
+
+where $W=\sum_xw(x)$ and $t$ is the maximum weight of a branch state. Its optimized endpoint $17/25$, with weights $(8,8,1,\ldots,1)/25$ on the eleven states, is inherited there from RCE/NCM/NPC. It is not a new numerical result of this volume. Exact acceptance by that older recursive-plus-range grammar does not establish positive conditional-kernel boundary acceptance.
+

@@ -1,0 +1,5 @@
+source_id = "fib-c35-entire-jm-response-injectivity"
+path = "docs/develop/theory/FIB_C35_ENTIRE_JM_RESPONSE_INJECTIVITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

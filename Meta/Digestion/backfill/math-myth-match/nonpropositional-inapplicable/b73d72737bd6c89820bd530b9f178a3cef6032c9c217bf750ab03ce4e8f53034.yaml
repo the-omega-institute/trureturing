@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b73d72737bd6c89820bd530b9f178a3cef6032c9c217bf750ab03ce4e8f53034
+  normalized_sha256: sha256:b73d72737bd6c89820bd530b9f178a3cef6032c9c217bf750ab03ce4e8f53034
+cas_ref: sha256:b73d72737bd6c89820bd530b9f178a3cef6032c9c217bf750ab03ce4e8f53034
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 寂天第三品愿心与渐次训练的指定译本解释；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: 7bedcd5b9bc06e703382579fe2d58b30193f5589965b8e30d8e5bfa18f762aea
+    next_atom_id: 885d08388079d7f17d1970245f6adfbed219726415ab80d63023147fd0ee2507

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d3310a3a60dc5221ac9e744b0c89b4cfe30ce50083d2af75c51330b95b93db7f
+  normalized_sha256: sha256:d3310a3a60dc5221ac9e744b0c89b4cfe30ce50083d2af75c51330b95b93db7f
+cas_ref: sha256:d3310a3a60dc5221ac9e744b0c89b4cfe30ce50083d2af75c51330b95b93db7f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Revise 的角色说明只约定修订涉及四角色，没有给出算子的变换定理。
+    previous_atom_id: b2303ad19b48124ea2dae7363207fe5b853eb82178ae977fe570720d090c7a23
+    next_atom_id: 40a5201caa085db99e9b0400e69261b000338751520f38b25caad064e2798b97

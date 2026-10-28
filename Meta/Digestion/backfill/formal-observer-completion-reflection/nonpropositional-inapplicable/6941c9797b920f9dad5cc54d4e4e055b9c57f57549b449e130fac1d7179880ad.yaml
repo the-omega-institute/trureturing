@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6941c9797b920f9dad5cc54d4e4e055b9c57f57549b449e130fac1d7179880ad
+  normalized_sha256: sha256:6941c9797b920f9dad5cc54d4e4e055b9c57f57549b449e130fac1d7179880ad
+cas_ref: sha256:6941c9797b920f9dad5cc54d4e4e055b9c57f57549b449e130fac1d7179880ad
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 在受控行为最小实现之后仅列预测状态这个应用名称，没有独立的等价桥梁陈述。'
+    previous_atom_id: f643c1b710380271675fd0da4ecd6a89ab419a72c837c22dbdac8badd192edfd
+    next_atom_id: bf90c9973d42ef913e2816ddec6b75b30db723b5b431a26864e2008ef5a9647b

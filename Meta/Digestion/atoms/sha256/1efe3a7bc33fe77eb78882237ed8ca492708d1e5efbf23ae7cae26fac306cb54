@@ -1,0 +1,4 @@
+**Proposition 7.3 (boundary acceptance is a separate requirement).** If $a_d$ is irrational it is not itself a rational cap input. If $a_d$ is rational, acceptance there requires both an attaining rational probability and positive rational arrays attaining every required type inequality. Real algebraic attainment and nonnegative real closed kernels supply neither requirement by themselves.
+
+Proof. Soundness at $C=a_d$ forces $\Omega_d(\nu)=a_d$. The input rules require rational $\nu$ and strictly positive rational full arrays. Conversely those data satisfying the inequalities are exactly a boundary label. Theorem 6.2 guarantees only algebraic coordinates and Theorem 5.1 permits zero entries; their conclusions therefore do not imply these stronger requirements. $\square$
+

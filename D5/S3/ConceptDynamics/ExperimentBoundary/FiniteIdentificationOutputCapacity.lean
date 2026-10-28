@@ -99,7 +99,7 @@ theorem finite_identification_output_capacity
       calc
         (∏ protocol, Nat.card (Set.range (readout protocol))) ≤
             ∏ _protocol : Protocol, bound := by
-          apply Finset.prod_le_prod
+          apply Finset.prod_le_prod₀
           · intro protocol protocolInUniverse
             exact Nat.zero_le _
           · intro protocol protocolInUniverse

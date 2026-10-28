@@ -1,0 +1,2 @@
+**Counterexample 42.4 (an unauthenticated origin).** Even with known $T$, arbitrary preparation $x=0$ gives a zero autonomous endpoint sequence and no faithful passive clock. Preparing instead $T^r e_0$ makes a subsequent $k$-tick passive state equal to the authentic state at epoch $r+k$. Without the certified unit-pulse origin its present data cannot distinguish the elapsed $k$ from that shifted authentic phase. The authentic initialization is a load-bearing premise, not a consequence of transfer-function knowledge.
+

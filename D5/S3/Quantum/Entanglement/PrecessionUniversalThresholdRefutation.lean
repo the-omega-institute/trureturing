@@ -40,7 +40,7 @@ The general bridge identifies the literal padded observables for every
 admission_basis: open-problem-resolution (#13586; Refuted)
 Direct frozen dependencies:
   D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound; module statement_id sha256:67dfbfec9f7079cdab0c268ebc937dd2e98663e2b481056b9f040d347de75cda
-    D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity: sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448
+    D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity: sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448
   D5/S3/Quantum/Entanglement/PrecessionSpinOneSeparableBound; module statement_id sha256:fbc446c4314bd47628ff448ec274cb3001f13b9b713e94a7d3a6298d898e2f08
     D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.positiveWeight: sha256:d9dd1bb6c83470a26764f2a3e6356a58bab1d9c341fba0078562bdab2bbf8926
     D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.c: sha256:7f19041ac051a19e442a44b180bb9fd67d4dbf9b8de8e2103b65f1b9f2b48d9f
@@ -55,6 +55,7 @@ Direct frozen dependencies:
     D5.S3.Resource.CompositeConeProperness.singletMatrix_posSemidef: sha256:e5de16539b2f92231f69ec6414837470e3ec36c028c4a88eb0c77b527c519f53
 Escape-audit registration is paused under CLAUDE.md §3.9.
 -/
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound
 import D5.S3.Resource.CompositeConeProperness
 import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
@@ -65,7 +66,7 @@ open scoped BigOperators Matrix Kronecker ComplexOrder
 namespace D5.S3.Quantum.Entanglement.PrecessionUniversalThresholdRefutation
 open D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound
 open D5.S3.Resource.CompositeConeProperness
-open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 
 /-- A local spin operator tensored with the identity at every other site. -/
 def siteOperator {N : ℕ} (j : Fin N → ℕ) (n : Fin N)

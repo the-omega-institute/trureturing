@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ad7ff6215f3de663d80725eff4a4195081e638fa365d84af209df16b1c4112d8
-  normalized_sha256: sha256:ad7ff6215f3de663d80725eff4a4195081e638fa365d84af209df16b1c4112d8
-cas_ref: sha256:ad7ff6215f3de663d80725eff4a4195081e638fa365d84af209df16b1c4112d8
-coverage_gids:
-  - gid: D5/S3/QuantumContext/ZaunerSymplecticMatrix.zauner_symplectic_matrix_certificate
-    target_statement_id: sha256:1489709dcc3c70b2338cf89f026d7202f74b871063591a41dff589f2d55029ac
-receipts:
-  unresolved_subitems: []

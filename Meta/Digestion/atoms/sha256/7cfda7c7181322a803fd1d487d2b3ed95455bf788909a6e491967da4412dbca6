@@ -1,0 +1,27 @@
+**Proposition 90.10 (non-correspondence under independent rescaling).**
+There are no constants $0<c\le C<\infty$ and positive factors
+$a_h,b_h$ such that, for every $h$ and every pair in $\mathcal F_h$,
+
+$$
+c\,a_hd^A_h(u,v)\le b_hd^E_h(u,v)\le C\,a_hd^A_h(u,v).
+\tag{90.18}
+$$
+
+Proof. Compare two sources differing only at $p_1$, and two differing
+only at $p_m$. Both address distances are $s_h$. Their full-event
+distances have ratio
+
+$$
+\frac{3^{-(h+3)}}{3^{-(4m-h-1)}}=3^{4m-2h-4}\longrightarrow\infty.
+\tag{90.19}
+$$
+
+Equation (90.18) would bound this ratio by $C/c$, independently of both
+scale factors. This is impossible. Thus an exact bounded-coordinate
+serial code and the address-depth packing obstruction coexist on the
+same sources; the missing implication is metric correspondence.
+The projected metric also fails to correspond uniformly to $d^E_h$:
+its endpoint ratio is $3^{m-1}$, so the ratio of the full-event endpoint
+ratio to that projected ratio is $3^{3m-2h-3}$, unbounded. Independent
+per-$h$ rescaling cannot remove this discrepancy either. $\square$
+

@@ -1,0 +1,85 @@
+**Branch 4: $r=1-z$.** Now $c=1-z$, $n=2-z$, $T=1+z$,
+$U=1+2z$. Put
+
+$$
+K=3z^3-12z^2-4z+2.
+\tag{18.5}
+$$
+
+Before division, the same parent gives
+
+$$
+\begin{gathered}
+\Lambda=\frac{2K}{(1+z)(1+2z)(2-z)},\qquad
+\eta=-\frac{6(8z-1)(5z+2)}{5(1+z)(1+2z)},\\
+10eK+6(8z-1)(5z+2)(2-z)=0.
+\end{gathered}
+\tag{18.6}
+$$
+
+The multiplier is $5(1+z)(1+2z)(2-z)>0$. If $K=0$, the last
+equation forces $(8z-1)(5z+2)(2-z)=0$. Both $5z+2$ and $2-z$
+are positive on the strict interval, so $z=1/8$. But
+
+$$
+K(1/8)=675/512\ne0.
+\tag{18.7}
+$$
+
+Therefore no actual finite complete parent world has $K=0$ on this
+branch. This excludes the singular parent itself, independently of
+any proposed finite $e$; it is not a regularity assumption. We may
+now write
+
+$$
+e=-\frac{3(8z-1)(5z+2)(2-z)}{5K},\qquad
+Q_4=5K(1+z)\ne0.
+\tag{18.8}
+$$
+
+No sign of $K$ is assumed. The original interpolation and traces give
+
+$$
+\begin{aligned}
+P_4&=120z^5-543z^4-6057z^3-3732z^2+1698z+36,\\
+V_4&=1440z^5-10749z^4-29562z^3-12723z^2+5214z+564,\\
+A_4&=-3600z^5+38202z^4-41784z^3-73575z^2+13497z+3486,\\
+R_4&=4800z^5-30216z^4-106653z^3-58392z^2+16731z+3486.
+\end{aligned}
+\tag{18.9}
+$$
+
+For both branches the construction reproduces all first five original
+readings; it uses exactly one entire nonzero polynomial and one
+fixed drift for each world. Conversely (18.1), the undivided parent
+and fixed-node uniqueness show that every actual strict $j=1$
+parent world appears in these formulas.
+
+The potentially exceptional specializations are visible without
+canceling any gain or drift factor:
+
+$$
+\begin{aligned}
+P_3-24Q_3&=3(8z-1)(15z^3+54z^2+27z-2),\\
+P_4-24Q_4&=3(z+1)(8z-1)(5z^3-42z^2-170z+68),\\
+5z(2+3z)d_3&=3(160z^2+91z-2),\\
+5Kd_4&=3(160z^3-549z^2-184z+84),
+\end{aligned}
+\tag{18.10}
+$$
+
+where $d_i=24+e_i$. At $z=1/8$, on either branch,
+
+$$
+e=0,\quad d=24,\quad p=24,\qquad
+g(t)=\frac85(t-1)(t-3)(t-5).
+\tag{18.11}
+$$
+
+Thus actual sampled zeros are explicitly present. The factor $8z-1$
+is never canceled, and $d=0$ is not excluded by (18.10). No division
+by a gain sample, its leading coefficient, a discriminant or a root
+difference occurs. Every permitted lower-degree or repeated-root
+specialization is therefore within the argument, without a demand
+that any such specialization exist on a particular branch.
+

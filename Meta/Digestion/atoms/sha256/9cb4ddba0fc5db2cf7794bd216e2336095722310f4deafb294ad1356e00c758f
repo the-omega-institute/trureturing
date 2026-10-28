@@ -1,0 +1,46 @@
+**定理 17.3（全部有界测试的充要反证书判据）。** 对任意
+$p\in\mathscr P_n$，包括尚不满足局部相容性的概率族，
+
+$$
+p\in\mathscr C_n\quad\Longleftrightarrow\quad
+\langle f,p\rangle\le H_n(f)
+\quad\text{对所有 }f=(f_i)_{i\in\mathbb Z_n},\quad 0\le f_i(\sigma)\le1.
+\tag{17.3}
+$$
+
+证明。若 $p$ 由 $P$ 实现，线性性给
+$\langle f,p\rangle=\sum_uP(u)F_f(u)\le H_n(f)$。
+反向，$\mathscr C_n$ 是有限个向量的凸包，非空且紧凸。
+若 $p\notin\mathscr C_n$，有限维严格分离给某个实向量 $g$，满足
+
+$$
+\langle g,p\rangle>\max_{r\in\mathscr C_n}\langle g,r\rangle=H_n(g).
+\tag{17.4}
+$$
+
+这里严格分离也可直接由最近欧氏点得到：取紧集上的最近点 $r_0$，
+令 $g=p-r_0\ne0$。对每个 $r\in\mathscr C_n$，线段
+$r_0+t(r-r_0)$ 留在凸集中，最短距离在 $t=0$ 的右导数非负，故
+$\langle g,r-r_0\rangle\le0$。于是
+$\langle g,p\rangle-\sup_r\langle g,r\rangle\ge\|g\|^2>0$。
+
+对每窗置 $m_i=\min_\sigma g_i(\sigma)$，并取共同正数
+
+$$
+R=\max_{i,\sigma}(g_i(\sigma)-m_i).
+$$
+
+若 $R=0$，各窗口测试均为常数，在每份归一化概率族上的总分都是
+$\sum_im_i$，与 (17.4) 矛盾。因此 $R>0$，可定义
+$f_i(\sigma)=(g_i(\sigma)-m_i)/R\in[0,1]$。
+所有窗口在 $p$、$r$ 和确定字上的质量都是一，故逐窗平移都扣去同一总数
+$\sum_im_i$；再除以同一个 $R$，有
+
+$$
+\langle f,p\rangle-H_n(f)
+=\frac{\langle g,p\rangle-H_n(g)}R>0.
+$$
+
+这与全部有界测试不等式矛盾，得充分性。不能将共同缩放擅自替换为
+各窗口不同缩放，因为那会改变各窗对分离差的相对权重。证毕。
+

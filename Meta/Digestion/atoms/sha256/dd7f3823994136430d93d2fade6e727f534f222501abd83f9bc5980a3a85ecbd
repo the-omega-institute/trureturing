@@ -1,0 +1,141 @@
+**Theorem 18.2 (normalized observable clock, uniformly on finite horizons).**
+Under the exact source-start law, on an event of probability one,
+for every finite $T$,
+
+$$
+ \lim_{\epsilon\downarrow0}
+ \sup_{0\le t\le T}
+  \left|\frac{C_\epsilon^I(t)}{\kappa(\epsilon)}
+                       -\mathsf L_{t\wedge\theta}\right|=0.
+\tag{18.2}
+$$
+
+In particular the convergence holds uniformly in probability and
+recovers the Revuz-$\delta_e$-normalized source clock stopped only
+for observation. For $M>0$, $\delta>0$ and
+$\kappa(\epsilon)>2/\delta$, one has the explicit localization
+bound
+
+$$
+\begin{aligned}
+ &\mathbb P\left\{
+   \sup_{t\le T}\left|
+       C_\epsilon^I(t)/\kappa(\epsilon)
+                  -\mathsf L_{t\wedge\theta}\right|>\delta\right\}\\
+ &\quad\le\mathbb P\{\mathsf L_T>M\}
+             +\frac{16M}{\delta^2\kappa(\epsilon)}.
+\end{aligned}
+\tag{18.3}
+$$
+
+The clock and count use the original time units. The normalization
+has the spectral and source identities (15.5), (16.8), (16.11);
+no factor $1/2$ is inserted.
+
+**Proof.** First reuse the exact all-time result (11.5): before
+observation exit the preparation-output contacts are exactly
+$\mathsf Z_t=e$, simultaneously for all times, and the held exit
+output is different from $v_0$. Thus every completed gap in
+(18.1) is exactly one complete excursion interval of (16.2), with
+its original duration. This is a use of the supplied detector,
+not a new detector or reset theorem. No false-contact issue is
+inferred from an approximate command path.
+
+For $\ell\ge0$ write
+
+$$
+ N_\epsilon(\ell)=
+   \Pi((0,\ell]\times\{\zeta>\epsilon\}).
+\tag{18.4}
+$$
+
+It is a Poisson counting process in label time, with rate
+$\mathbf n(\zeta>\epsilon)=\kappa(\epsilon)$.
+The inverse clock is continuous because $\tau$ is strictly
+increasing and unbounded. At an elapsed time $s$, every mark with
+label strictly smaller than $\mathsf L_s$ has completed; the mark
+at $\mathsf L_s$, if there is one, is either the current unfinished
+excursion or has just completed. Hence there is at most one
+uncounted mark among labels at most $\mathsf L_s$. At
+$s=t\wedge\theta$, a possible exit-cut excursion is this same
+single mark, and must be excluded even if its partial duration
+exceeds $\epsilon$. There is no contact at finite $\theta$,
+because its height is $l$ or $u$, different from $k_0$.
+Consequently, simultaneously for all $t\le T$,
+
+$$
+ \left|C_\epsilon^I(t)
+                -N_\epsilon(\mathsf L_{t\wedge\theta})\right|\le1.
+\tag{18.5}
+$$
+
+Zero ordinary source residence and absence of inverse drift ensure
+that no additional source interval is being omitted in this
+comparison. Infinite small excursions cause no ambiguity: after
+restricting to $\zeta>\epsilon$ both sides count finitely many
+marks on bounded label intervals.
+
+The compensated process
+$N_\epsilon(\ell)-\kappa(\epsilon)\ell$ is a square-integrable
+martingale on $[0,M]$ with terminal variance
+$M\kappa(\epsilon)$. The usual martingale maximal inequality yields
+
+$$
+ \mathbb E\sup_{\ell\le M}
+   \left|N_\epsilon(\ell)/\kappa(\epsilon)-\ell\right|^2
+             \le\frac{4M}{\kappa(\epsilon)}.
+\tag{18.6}
+$$
+
+On $\{\mathsf L_T\le M\}$, (18.5) bounds the supremum in
+(18.3) by the label supremum in (18.6) plus
+$1/\kappa(\epsilon)$. Markov's inequality with threshold
+$\delta/2$ proves (18.3). The clock is finite on finite elapsed
+horizons since $\tau$ is unbounded, so this also proves uniform
+convergence in probability, first fixing $M$ and then letting it
+increase.
+
+For the stronger almost-sure assertion, choose the unique
+$\epsilon_j>0$ satisfying $\kappa(\epsilon_j)=j^2$.
+Existence follows from the continuous strictly decreasing range
+proved in (15.4)--(15.6). For every integer $M$ and every fixed
+positive rational tolerance, (18.6) and the summability of
+$\sum_j j^{-2}$ imply by Borel--Cantelli that
+
+$$
+ \sup_{\ell\le M}|N_{\epsilon_j}(\ell)/j^2-\ell|
+                                      \longrightarrow0
+                    \quad\hbox{almost surely}.
+\tag{18.7}
+$$
+
+Take the countable intersection over those $M$ and tolerances.
+If $\epsilon_{j+1}\le\epsilon\le\epsilon_j$, monotonicity
+of the counts and of their rates gives, simultaneously for all
+$\ell\le M$,
+
+$$
+ \frac{N_{\epsilon_j}(\ell)}{(j+1)^2}
+ \le\frac{N_\epsilon(\ell)}{\kappa(\epsilon)}
+ \le\frac{N_{\epsilon_{j+1}}(\ell)}{j^2}.
+\tag{18.8}
+$$
+
+Since $(j+1)^2/j^2\to1$, the lower and upper bounds both
+converge uniformly to $\ell$ on $[0,M]$. Thus (18.7) holds for
+all real $\epsilon\downarrow0$. Apply (18.5), and on each sample
+choose an integer $M>\mathsf L_T$. A countable intersection over
+integer elapsed horizons proves (18.2) simultaneously for every
+finite $T$. This argument establishes the convergence mode; it
+does not assume independence between $\mathsf L_T$ and the counts.
+
+Finally Theorem 16.2 identifies the reconstructed clock with the
+PCAF of Revuz measure $\delta_e$, and (16.11) fixes its exact
+normalization. Formula (18.2), involving only the observed path
+and the known original-source spectral denominator, therefore makes
+that clock observable from the exact history. It recovers its
+stopped value at exit by completed pre-exit gaps, even though the
+exit-cut gap contributes no completed duration. The full process
+and its clock continue after exit; that future is not recovered
+from the held observation. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1d8c587aaafc4b542ef4190e21f4d0964d82bd1b066410a79d6c1a38681eed3d
+  normalized_sha256: sha256:1d8c587aaafc4b542ef4190e21f4d0964d82bd1b066410a79d6c1a38681eed3d
+cas_ref: sha256:1d8c587aaafc4b542ef4190e21f4d0964d82bd1b066410a79d6c1a38681eed3d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Heading and unfinished instruction introducing a future cumulant calculation from prime data.
+    previous_atom_id: 24fc64979bd9cc0f48bbc5b2fc8e991e6165e29bebee8d3287b26b1a35737ae3
+    next_atom_id: fbd386e0ef9241717351556ac26c37cd51cf4879839949d512b62e60c8af5914

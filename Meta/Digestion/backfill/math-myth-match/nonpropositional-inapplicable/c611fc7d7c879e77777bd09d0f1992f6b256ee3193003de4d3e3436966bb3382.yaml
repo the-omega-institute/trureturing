@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c611fc7d7c879e77777bd09d0f1992f6b256ee3193003de4d3e3436966bb3382
+  normalized_sha256: sha256:c611fc7d7c879e77777bd09d0f1992f6b256ee3193003de4d3e3436966bb3382
+cas_ref: sha256:c611fc7d7c879e77777bd09d0f1992f6b256ee3193003de4d3e3436966bb3382
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 中部47经询问、教导及亲知的文本解释，明确不以有限二元数据认证正觉。
+    previous_atom_id: ea6ef9113ea30698edc049aa630b5eab8f99fd3c0b895a06aa1cda4ab1f32920
+    next_atom_id: 8b0a4e4b6bd45f1e245f178ee5027fa468d79f3df50d4b2ee6209b65bb84691c

@@ -1,0 +1,125 @@
+**Proposition 5.3 (Growing dimension prevents a dimension-free modulus).** There are complete actual instruments with $D\to\infty$, $\nu=1$, $w_{D-1}\ge1/4$, and $\max_{0\le k\le D-2}w_k\to0$, but $E=2$ throughout. The effect trace is two throughout, so an increasing Choi trace is not responsible for this obstruction.
+
+Proof. Let $N\ge4$ be an integer and $D=N+1$. The memory is the orthogonal sum of an $N$-dimensional clock space $C_N$ with basis $f_1,\ldots,f_N$, and a unit vector $z$. On the clock put
+
+$$
+\omega=\exp\left(\frac{2\pi i}{N+1}\right),\qquad
+Uf_r=\omega^r f_r,\qquad
+x=\frac1{\sqrt N}\sum_{r=1}^N f_r,\qquad
+\eta=U^{-1}x.
+\tag{5.21}
+$$
+
+Here $U$ is unitary and $x,\eta,z$ are unit vectors. For any unit vector in use write $P_y=|y\rangle\langle y|$. Define
+
+$$
+\begin{aligned}
+K|_{C_N}&=U(I_{C_N}-P_\eta),\qquad Kz=0,\\
+L_0&=|x\rangle\langle\eta|,\qquad L_z=|z\rangle\langle z|,\\
+\Phi(X)&=KXK^\dagger,\qquad
+\Psi(X)=L_0XL_0^\dagger+L_zXL_z^\dagger,
+\qquad \rho_0=P_\eta.
+\end{aligned} \tag{5.22}
+$$
+
+Their effects satisfy
+
+$$
+K^\dagger K=I_{C_N}-P_\eta,\qquad
+F=L_0^\dagger L_0+L_z^\dagger L_z=P_\eta+P_z.
+\tag{5.23}
+$$
+
+They sum to $I_H$, so this is a complete binary CP instrument on the full complex algebra. Moreover $\Psi(\rho_0)=P_x$, giving actual $\nu=1$ and $\tau=P_x$. The zero states from this density stay in the clock.
+
+For all indices set
+
+$$
+a_k=\langle\eta,K^k x\rangle,\qquad
+b_k=\langle\eta,U^k x\rangle,\qquad
+c_\ell=\langle\eta,U^\ell\eta\rangle.
+\tag{5.24}
+$$
+
+Then $\Phi^k(\tau)=|K^kx\rangle\langle K^kx|$ and $w_k=|a_k|^2$. The root-of-unity sum gives
+
+$$
+c_\ell=\frac1N\sum_{r=1}^N\omega^{r\ell}
+=\begin{cases}
+1,&(N+1)\text{ divides }\ell,\\
+-1/N,&(N+1)\text{ does not divide }\ell,
+\end{cases}
+\qquad b_k=c_{k+1}.
+\tag{5.25}
+$$
+
+If $\omega^\ell\ne1$, the sum from $r=0$ to $N$ equals $(1-(\omega^\ell)^{N+1})/(1-\omega^\ell)=0$; removing its first term leaves $-1$. This proves the nontrivial case exactly.
+
+On $C_N$ one has $U-K=UP_\eta$. The difference-of-powers identity, without a commutation assumption, yields
+
+$$
+K^k=U^k-\sum_{j=0}^{k-1}U^{k-j}P_\eta K^j,
+\qquad a_k=b_k-\sum_{j=0}^{k-1}c_{k-j}a_j.
+\tag{5.26}
+$$
+
+The sum at $k=0$ is empty. These formulas determine the full amplitude sequence. For $0<k-j\le N$ each coefficient $c_{k-j}$ is $-1/N$, and $b_k=-1/N$ for $0\le k<N$, while $b_N=1$. With $R=1+1/N$, this gives
+
+$$
+a_k=-\frac1N R^k\quad(0\le k<N),\qquad
+ a_N=1-\frac{R^N-1}{N}.
+\tag{5.27}
+$$
+
+Indeed, if the first formula holds at all $j<k$, then $\sum_{j<k}a_j=-(R^k-1)$ by the geometric sum, so $a_k=-1/N+(1/N)\sum_{j<k}a_j=-R^k/N$. At $k=N$ use the same preceding sum and $b_N=1$.
+
+The required elementary bound is
+
+$$
+R^N=\sum_{j=0}^N\binom NjN^{-j}
+\le\sum_{j=0}^N\frac1{j!}<3.
+\tag{5.28}
+$$
+
+Termwise, $\binom NjN^{-j}\le1/j!$. For $j\ge2$, the $j-1$ factors $2,\ldots,j$ are at least two, so $j!\ge2^{j-1}$ and $\sum_{j=2}^N1/j!\le\sum_{j=2}^N2^{-(j-1)}<1$. Adding the first two terms proves the strict bound. It follows that
+
+$$
+\begin{aligned}
+\max_{0\le k\le D-2}w_k
+&=\frac{R^{2(N-1)}}{N^2}<\frac9{N^2}=: \epsilon_N,\\
+a_N&>1-\frac2N\ge\frac12,
+\qquad w_{D-1}=w_N>\frac14.
+\end{aligned} \tag{5.29}
+$$
+
+Thus early error tends to zero while the actual rate and a late lower bound remain fixed.
+
+The next-gap laws are also proper. The clock restriction of $K$ is a contraction. If $Ky=\lambda y$ for $y\ne0$ and $|\lambda|=1$, then
+
+$$
+\|Ky\|^2=\|(I-P_\eta)y\|^2
+=\|y\|^2-|\langle\eta,y\rangle|^2
+\tag{5.30}
+$$
+
+forces $\langle\eta,y\rangle=0$. Hence $Ky=Uy$, so $y$ is an eigenvector of $U$. The eigenvalues $\omega,\ldots,\omega^N$ are distinct, with eigenvectors proportional to $f_r$, but $\langle\eta,f_r\rangle=\omega^r/\sqrt N\ne0$. This is a contradiction. All eigenvalues of the clock restriction of $K$ therefore have modulus strictly below one. The powers of each nonzero-eigenvalue Jordan block are bounded by a polynomial times a decaying geometric sequence; a zero-eigenvalue block is nilpotent. Thus $K^kx\to0$, and (4.2) gives
+
+$$
+\sum_{k\ge0}w_k=1-\lim_{k\to\infty}\|K^{k+1}x\|^2=1.
+\tag{5.31}
+$$
+
+This decay is established for each example. No uniform spectral gap is assumed in this family or in Theorem 4.2.
+
+The entire Choi matrix and its calibrated difference are
+
+$$
+\begin{aligned}
+J(\Psi)&=P_x\otimes P_\eta^{\mathsf T}+P_z\otimes P_z^{\mathsf T},\\
+J(\Psi)-\tau\otimes F^{\mathsf T}
+&=(P_z-P_x)\otimes P_z^{\mathsf T}.
+\end{aligned} \tag{5.32}
+$$
+
+Since $x\perp z$, the first factor has eigenvalues $1,-1$ and zeros; the second is a rank-one projection. The tensor trace-norm identity gives $E=2$. Both Choi matrices have trace $\operatorname{Tr}F=2$; even dividing each by two leaves trace-norm distance one. The convention remains the unnormalized one of (3.1). Thus no dimension-free modulus tending to zero with early error follows from these fixed positive rates, even with bounded Choi trace. $\square$
+

@@ -332,7 +332,6 @@ def registration : Registration arena (type_of% (@WordCounts.forced_coin_balance
     rw [← Equiv.sum_comp (Equiv.funUnique (Fin 1) W).symm, ← Equiv.sum_comp (Equiv.funUnique (Fin 1) W).symm]
     simp only [show (Finset.univ : Finset W) = {.zero,.low,.middle,.ends,.high} from rfl]
     norm_num [Equiv.funUnique, Equiv.piUnique, Fin.sum_univ_one, WordCounts.highN, WordCounts.rareN, WordCounts.hb, WordCounts.rb, WordCounts.prefixCoin, WordCounts.endsN, WordCounts.eb, last]
-    decide
 def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@WordCounts.forced_coin_balance) (type_of% (realize.{0,0,0,0,0} sig (fun _ u k => ∑ p : Fin u.1 → W, if WordCounts.highN p = k ∧ last (p u.2.1) = u.2.2 ∧ WordCounts.prefixCoin p = false then X ^ WordCounts.rareN p else 0) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S3.Arith.FibonacciAtomic.CommonPrediction.WordCounts.forced_coin_balance.__information_unit,

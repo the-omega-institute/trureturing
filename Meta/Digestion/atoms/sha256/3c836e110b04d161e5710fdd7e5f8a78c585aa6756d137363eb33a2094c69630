@@ -1,0 +1,20 @@
+**Definition 38.1 (Common tapes and the finite upper-output task).** Retain exactly $X,N,\Omega$ from (36.1), and $\beta:X\to E$, its finite attained range $E_0$, $J_\beta$ and $B_\beta$ from Definition 37.1. Fix one probability space $(\Theta,\mathcal F,\mu)$ common to every source. A tape $\theta\in\Theta$ fixes a deterministic procedure whose only source inputs are $\beta(x)$ and Boolean answers to prime-divisibility queries $p\mid N(x)$. Its next action, stopping decision and output depend only on that tape, the advice, its preceding execution and fixed parameters shared by all sources. No distribution on $X$ is imposed; source independence means that the tape law and these rules are the same for every fixed $x$.
+
+For each $x$, let $L_x\subseteq\Theta$ be the event of literal termination after finite execution, and let $H_x\subseteq L_x$ be the event that this termination outputs a finite real number $C_x(\theta)$ as a proposed upper bound. A finite proposal may be correct or false. Other terminal outcomes, including unknown, abort and $+\infty$, belong to $L_x\setminus H_x$. There is one terminal outcome per run; intermediate numerical values are not upper outputs. On $H_x$, write $\tau_x(\theta)\in\mathbb N_0$ for its finite execution length and $Q_x(\theta)$ for the finite set of primes queried on that execution, including the empty set when no query occurs.
+
+Measurability is part of the contract: for every fixed $x$, all finite execution records and terminal outcomes are measurable in $\theta$, with discrete query, answer and status fields and Borel real-output fields. In particular $L_x,H_x\in\mathcal F$, and the restricted maps $\tau_x$, $Q_x$ and $C_x$ on $H_x$ are measurable, where finite prime sets carry their countable discrete sigma algebra. Thus the truncation events below and the false-output event are measurable. No regularity of $\beta$ on $X$ is required. Define
+
+$$
+\begin{aligned}
+F_x&=\{\theta\in H_x:C_x(\theta)<\Omega(x)\},&
+S_x&=H_x\setminus F_x,\\
+U_x&=\Theta\setminus H_x,&
+D_x&=\Theta\setminus L_x.
+\end{aligned}
+\tag{38.1}
+$$
+
+Here $S_x$ is finite successful output, meaning correctness at the actual source; it does not assert soundness on the whole observation cell. $U_x$ is operational uncertainty for this task: no finite upper proposal is returned. It includes unknown/abort and infinite outputs as well as literal nontermination $D_x$. It is neither posterior uncertainty nor the event of an incorrect proposal. The latter is $F_x$; failure to obtain a correct finite output is $U_x\cup F_x=\Theta\setminus S_x$.
+
+The common-tape convention follows the distribution-over-deterministic-procedures convention in [Magniez et al., *Improved bounds for the randomized decision tree complexity of recursive majority*, p. 2](https://arxiv.org/pdf/1309.7565v1), also recorded in [the existing source note](../../../Library/ConceptDynamics/magniez2013randomized.md). Its finite Boolean input domain and depth bounds are not hypotheses here. The distinction between one input-independent law, sourcewise probabilistic correctness and every-tape correctness is already present in [ExactRealProbeCosts](../../../D5/S3/ConceptDynamics/Decision/ExactRealProbeCosts.lean); those exact-real probes do not replace the prime queries in this definition.
+

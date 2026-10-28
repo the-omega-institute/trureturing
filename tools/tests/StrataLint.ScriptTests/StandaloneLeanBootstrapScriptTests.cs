@@ -15,7 +15,7 @@ public sealed class StandaloneLeanBootstrapScriptTests
         using var fixture = new BootstrapFixture(target);
 
         var makeCalls = target == "lean" ? 3 : 1;
-        var lakeCalls = target == "lean" ? new[] { "build", fixture.InspectorBuild, fixture.RegInspectorBuild } : [];
+        var lakeCalls = target == "lean" ? new[] { "--log-level=error build", fixture.InspectorBuild, fixture.RegInspectorBuild } : [];
         fixture.AssertSuccess(fixture.Make(target));
         Assert.Equal(Enumerable.Repeat("candidate-first", makeCalls), fixture.CliCalls);
         Assert.Equal(makeCalls, fixture.BuildCalls.Length);
@@ -64,7 +64,7 @@ public sealed class StandaloneLeanBootstrapScriptTests
         Assert.Equal(builds + (prebuilt ? 0 : 1), fixture.BuildCalls.Length);
         Assert.Equal(prebuilt ? (target == "lean" ? 4 : 2) : 1, fixture.CliCalls.Length);
         Assert.Equal(target == "lean"
-            ? prebuilt ? new[] { "build", fixture.InspectorBuild, fixture.RegInspectorBuild, "build" } : new[] { "build" }
+            ? prebuilt ? new[] { "--log-level=error build", fixture.InspectorBuild, fixture.RegInspectorBuild, "build" } : new[] { "build" }
             : [], fixture.LakeCalls);
     }
 
@@ -104,7 +104,8 @@ public sealed class StandaloneLeanBootstrapScriptTests
             root = Path.Combine(temporary.Path, "candidate with spaces");
             bin = Path.Combine(temporary.Path, "bin");
             ScriptHarnessScratch.EnsureDirectory(bin);
-            foreach (var path in new[] { "Makefile", WrapperPath("lean"), WrapperPath("lean-cache-ensure") })
+            foreach (var path in new[] { "Makefile", WrapperPath("lean"), WrapperPath("lean-cache-ensure"),
+                "tools/scripts/worktree/lean-git/git" })
                 ScriptHarnessScratch.CopyScriptInto(Path.Combine(TestRepositoryLayout.FindRoot(), path), Path.Combine(root, path));
             var physicalRoot = TestProcessRunner.Run("/bin/pwd", ["-P"], root,
                 TestBudgets.ScriptProcessHangGuard, 1024);
@@ -136,8 +137,8 @@ public sealed class StandaloneLeanBootstrapScriptTests
         internal string[] CliCalls => Calls("cli.log");
         internal string[] BuildCalls => Calls("bootstrap.log");
         internal string[] LakeCalls => Calls("lake.log");
-        internal string InspectorBuild => $"-d {root}/tools/lean-inspector build";
-        internal string RegInspectorBuild => $"-d {root}/tools/lean-inspector-reg build";
+        internal string InspectorBuild => $"--log-level=error -d {root}/tools/lean-inspector build";
+        internal string RegInspectorBuild => $"--log-level=error -d {root}/tools/lean-inspector-reg build";
 
         internal void ChangeSource(string marker) => Write(projectDirectory + "/Program.cs", $$"""
             using System;

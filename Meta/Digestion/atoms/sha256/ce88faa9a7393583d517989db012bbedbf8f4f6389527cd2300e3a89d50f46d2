@@ -1,0 +1,26 @@
+### 50.2 两个全局正交条件强制八个三维子空间之一
+
+**证明。** 单位相位三元组若有一个 Fourier 系数为零，就必为单模。若共同平坦输入的一个完整二维 mode 投影为零，则两个 channel 都是单模。它们只能取同一个 mode：否则某个输出 channel 恰有两个非零 Fourier 系数，这不可能是单位相位三元组。这里使用了所有 `T_l` 的四个矩阵元非零。因此，整个 mode 投影为零的输入必为 canonical。
+
+反设有非 canonical 射线满足命题的两个正交条件。它在三个 mode 上均非零。两条给定 canonical 射线不能来自同一个 mode，否则它们张成该完整 mode，导致上述矛盾。因此它们来自两个不同的 mode。
+
+在这两个 mode 内，输入分量必须分别沿另一个 canonical 方向，故两个输入 channel 的逐模质量相等。两条输入 channel 的总平方范数都为三，遂使第三个 mode 的两条输入质量也相等。前两个 mode 的两个输出质量同样相等；输出 channel 的总平方范数也都为三，故第三个 mode 的两个输出质量相等。
+
+非零二维向量 `(u,z)` 若满足 `|u|=|z|`，且在 `T_l` 下的两个输出质量相等，则
+
+```math
+\operatorname{Re}\bigl(\alpha_l\overline{\beta_l}
+ u\overline z\bigr)=0,
+\qquad \frac zu=g_l^\varepsilon
+```
+
+对某个符号 `epsilon` 成立。因此该输入必落在选定每个 mode 一个 canonical 方向的八个三维子空间之一：
+
+```math
+z_l=g_lu_l,\qquad
+ g_l=g_l^{\varepsilon_l},\qquad
+(\varepsilon_0,\varepsilon_1,\varepsilon_2)\in\{1,-1\}^3.
+```
+
+以下证明每个这样的子空间内，共同平坦射线只能是单模。
+

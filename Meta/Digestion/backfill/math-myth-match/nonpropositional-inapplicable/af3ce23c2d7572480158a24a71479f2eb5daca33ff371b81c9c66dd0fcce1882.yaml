@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:af3ce23c2d7572480158a24a71479f2eb5daca33ff371b81c9c66dd0fcce1882
+  normalized_sha256: sha256:af3ce23c2d7572480158a24a71479f2eb5daca33ff371b81c9c66dd0fcce1882
+cas_ref: sha256:af3ce23c2d7572480158a24a71479f2eb5daca33ff371b81c9c66dd0fcce1882
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Happiness, grace and Christ retain their theological content. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: b530668d0fdf07f72d19a1f81fc38ea44ce745fa9f50d2178065db2125874d0c
+    next_atom_id: d482c4a2fac01599d8177c2570815c801e0e159ee7d8ee5ff3f85c99d2a4166b

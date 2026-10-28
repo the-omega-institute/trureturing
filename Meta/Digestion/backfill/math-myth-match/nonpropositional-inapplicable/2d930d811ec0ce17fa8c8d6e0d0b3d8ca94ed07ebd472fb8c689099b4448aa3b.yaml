@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d930d811ec0ce17fa8c8d6e0d0b3d8ca94ed07ebd472fb8c689099b4448aa3b
+  normalized_sha256: sha256:2d930d811ec0ce17fa8c8d6e0d0b3d8ca94ed07ebd472fb8c689099b4448aa3b
+cas_ref: sha256:2d930d811ec0ce17fa8c8d6e0d0b3d8ca94ed07ebd472fb8c689099b4448aa3b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 区分赦免、免责、遗忘与和解，并列明主体权能的额外规范依据。
+    previous_atom_id: 1239865a06e6b827b9b7a648e9bdc8e77ea912e3c29dee780fb0cf2d06a8eeba
+    next_atom_id: 808a70e093fc514bfae29bbe57f88e12c0924d421d512a7ec01a9f22eae0ed5b

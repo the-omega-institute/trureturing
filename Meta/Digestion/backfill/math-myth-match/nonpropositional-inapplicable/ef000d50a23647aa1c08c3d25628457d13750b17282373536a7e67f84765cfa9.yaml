@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ef000d50a23647aa1c08c3d25628457d13750b17282373536a7e67f84765cfa9
+  normalized_sha256: sha256:ef000d50a23647aa1c08c3d25628457d13750b17282373536a7e67f84765cfa9
+cas_ref: sha256:ef000d50a23647aa1c08c3d25628457d13750b17282373536a7e67f84765cfa9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 几何组合、观察和更新等后续章节的研究目标与对象范围。
+    previous_atom_id: b77f394a397b3e512d57b502d3a5ac130ad52deb4411d62fd49df8d4707aca9f
+    next_atom_id: 0a251e677dde50f069bb6529930be59bb373108a0b51e4d754b18c4743828382

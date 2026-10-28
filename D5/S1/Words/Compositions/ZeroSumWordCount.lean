@@ -62,7 +62,7 @@ theorem orderings_card (S : Finset ℤ) : (orderings S).card = S.card.factorial 
     (List.nodup_permutations _ (Finset.nodup_toList _)), List.length_permutations]
   simp
 
-private theorem prefix_segment_sum (w : List ℤ) (j k : ℕ) :
+theorem prefix_segment_sum (w : List ℤ) (j k : ℕ) :
     (w.take j).sum + ((w.drop j).take k).sum = (w.take (j + k)).sum := by
   have h : w.take j ++ (w.drop j).take k = w.take (j + k) := by
     rw [List.take_drop]

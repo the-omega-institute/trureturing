@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0efa4ad4a5d7110f74510efc6c4d4589321477ae47d0d805a2713fdd8b081568
+  normalized_sha256: sha256:0efa4ad4a5d7110f74510efc6c4d4589321477ae47d0d805a2713fdd8b081568
+cas_ref: sha256:0efa4ad4a5d7110f74510efc6c4d4589321477ae47d0d805a2713fdd8b081568
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nielsen、外部贝叶斯性与 Cassirer 来源的不同证据范围。
+    previous_atom_id: 816883965d867964174a46008919025df86a96390ed7208b3d06b9dee1d8effb
+    next_atom_id: 8502387dddae414a79021bd4f409987c65b6746657fb9eca877fe219ed32584f

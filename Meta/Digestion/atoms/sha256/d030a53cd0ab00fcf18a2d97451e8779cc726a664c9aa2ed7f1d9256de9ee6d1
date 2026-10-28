@@ -1,0 +1,27 @@
+## 1845.1 三种最小正实现
+
+| 图表   | 实现对象                               | 谱变量          |
+| ---- | ---------------------------------- | ------------ |
+| 单位圆  | 循环酉算子 \(U_a\)                      | Cayley phase |
+| 正实轴  | 正 self-adjoint/string 算子           | \(\gamma^2\) |
+| 连续空间 | canonical Hamiltonian \(H_\xi(x)\) | Weyl 参数      |
+
+三者分别强调：
+
+$$
+\boxed{
+\begin{aligned}
+\text{unitary phase}
+&:\quad\text{复现与相位关系};\\
+\text{positive string}
+&:\quad\text{松弛、阻抗与平方谱};\\
+\text{canonical system}
+&:\quad\text{连续空间中的局部能量密度}.
+\end{aligned}
+}
+$$
+
+它们不是三个本体，而是同一个正解析响应的三个最小实现范畴。
+
+---
+

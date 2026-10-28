@@ -1,0 +1,6 @@
+若 P 的平方等于 P，则以下三者等价：
+
+1. 存在 bar_T 使 PT=bar_T P；
+2. ker(P) 包含于 ker(PT)；
+3. PTQ=0。
+

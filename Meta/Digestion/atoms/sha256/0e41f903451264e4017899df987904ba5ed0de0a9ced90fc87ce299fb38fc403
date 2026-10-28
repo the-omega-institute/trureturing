@@ -1,0 +1,67 @@
+### 4.1 两条径向分支
+
+定义：
+
+\[
+g_+(t)=e^{\delta t},
+\qquad
+g_-(t)=e^{-\delta t}.
+\]
+
+对任意 \(n\ge0\)：
+
+\[
+\frac{d^n}{dt^n}g_+(t)
+=
+\delta^n g_+(t),
+\]
+
+\[
+\frac{d^n}{dt^n}g_-(t)
+=
+(-\delta)^n g_-(t).
+\]
+
+特别地：
+
+\[
+g_+''(t)=\delta^2g_+(t),
+\qquad
+g_-''(t)=\delta^2g_-(t).
+\]
+
+定义负二阶观察器：
+
+\[
+\mathcal L=-\frac{d^2}{dt^2}.
+\]
+
+于是：
+
+\[
+\boxed{
+\mathcal Lg_+(t)=-\delta^2g_+(t),
+\qquad
+\mathcal Lg_-(t)=-\delta^2g_-(t).
+}
+\]
+
+结合上一真源：
+
+\[
+\operatorname{reflectionPairSignedDeterminant}(\delta)
+=-\delta^2,
+\]
+
+得到精确 observer agreement：
+
+\[
+\boxed{
+\text{反射生成元的有符号行列式}
+=
+\text{负二阶算子的谱值}.
+}
+\]
+
+这不是类比，而是同一个标量 \(-\delta^2\) 在有限生成元图表和微分算子图表中的完全相同读数。
+

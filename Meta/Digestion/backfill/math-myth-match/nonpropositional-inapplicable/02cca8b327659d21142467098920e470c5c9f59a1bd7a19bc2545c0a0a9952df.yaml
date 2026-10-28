@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:02cca8b327659d21142467098920e470c5c9f59a1bd7a19bc2545c0a0a9952df
+  normalized_sha256: sha256:02cca8b327659d21142467098920e470c5c9f59a1bd7a19bc2545c0a0a9952df
+cas_ref: sha256:02cca8b327659d21142467098920e470c5c9f59a1bd7a19bc2545c0a0a9952df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 转述巴哈伊祈祷汇编的灵性效力归因，并明确未独立确认病例因果关系。
+    previous_atom_id: 92d9a7659a4029eb865129861c3cc666e8aa63ad347f331dd8da637a36eab305
+    next_atom_id: 6725776dbb7b9b2a7723f6bfd15f906dac29d9650e58b8ef0ef94f09ea797be4

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e032b6eec94f6daa4c7dd10607d5fe7fb26a6cb6f2147cda2e8e414acbe27b56
+  normalized_sha256: sha256:e032b6eec94f6daa4c7dd10607d5fe7fb26a6cb6f2147cda2e8e414acbe27b56
+cas_ref: sha256:e032b6eec94f6daa4c7dd10607d5fe7fb26a6cb6f2147cda2e8e414acbe27b56
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 对对象与观察者联合结构的解释，不增加数学性质。
+    previous_atom_id: c0a08de1239ed71b75b9a730bfa089e7e750ea96c39701f43cd23503ee1ee240
+    next_atom_id: 8831b5c24f8103abd6b3a955a585c70c14b29cd84d8cd1e77dcf15cc6fa56131

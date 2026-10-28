@@ -166,7 +166,151 @@ $$\forall alpha \in \operatorname{Type},\; \forall E \in BlockCut\left(alpha\rig
 
 Take the minimum over valid successor masks failing at least one commutation. If there is no such mask, this value is infinity.
 
-**Theorem 1.14 (The complete exchange minimum criterion).**
+**Theorem 1.14 (Native schedule and projection equivalence).**
+
+$$\forall alpha \in \operatorname{Type},\; \forall u \in List\left(alpha\right),\; \forall v \in List\left(alpha\right),\; \forall w \in List\left(alpha\right),\; \forall M \in List\left(Side\right),\; ValidMask\left(u, v, w, M\right) \Leftrightarrow \left(length\left(M\right) = length\left(w\right) \land \left(projection\left(first, w, M\right) = u \land projection\left(second, w, M\right) = v\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/HughesBlockExchange.mask_projections` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Equal total lengths and both ordered source projections characterize the original schedule validity and evaluation. This is the original evaluator induction.
+
+**Definition 1.15 (A single inserted-run start).**
+
+$$\forall p \in Side,\; \forall q \in Side,\; step\left(p, q\right) = ite\left(p = second \land q = first, 1, 0\right)$$
+
+*Formalization.* `D5/S1/Words/HughesBlockExchange.step` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A transition contributes one precisely from second to first, and zero otherwise.
+
+**Definition 1.16 (Recursive inserted-run starts).**
+
+$$\forall p \in Side,\; starts\left(p, []\right) = 0 \land \left(\forall q \in Side,\; \forall s \in List\left(Side\right),\; starts\left(p, cons\left(q, s\right)\right) = step\left(p, q\right) + starts\left(q, s\right)\right)$$
+
+*Formalization.* `D5/S1/Words/HughesBlockExchange.starts` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Read every label with the previous label as state. The empty suffix contributes zero.
+
+**Definition 1.17 (The final label with an empty fallback).**
+
+$$\forall p \in Side,\; \forall s \in List\left(Side\right),\; lastSide\left(p, s\right) = getD\left(lastOption\left(s\right), p\right)$$
+
+*Formalization.* `D5/S1/Words/HughesBlockExchange.lastSide` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Return the last actual label, using p only for the empty list.
+
+**Theorem 1.18 (Run starts across concatenation).**
+
+$$\forall p \in Side,\; \forall s \in List\left(Side\right),\; \forall t \in List\left(Side\right),\; starts\left(p, concat\left(s, t\right)\right) = starts\left(p, s\right) + starts\left(lastSide\left(p, s\right), t\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/HughesBlockExchange.starts_append` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The suffix starts from the actual final prefix label, or from p for an empty prefix.
+
+**Theorem 1.19 (Maximal runs and transition starts).**
+
+$$\forall M \in List\left(Side\right),\; rho\left(M\right) = starts\left(second, M\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/HughesBlockExchange.rho_starts` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A virtual initial second label makes the recursive transition count equal to rho.
+
+**Theorem 1.20 (Ordered projections across a fitting cut).**
+
+$$\forall alpha \in \operatorname{Type},\; \forall q \in Side,\; \forall a \in List\left(alpha\right),\; \forall b \in List\left(alpha\right),\; \forall s \in List\left(Side\right),\; \forall t \in List\left(Side\right),\; length\left(a\right) = length\left(s\right) \Rightarrow projection\left(q, concat\left(a, b\right), concat\left(s, t\right)\right) = concat\left(projection\left(q, a, s\right), projection\left(q, b, t\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/HughesBlockExchange.projection_append` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Matching prefix word and mask lengths allow both zipped projections to split at the cut.
+
+**Theorem 1.21 (Projection of a pure label block).**
+
+$$\forall alpha \in \operatorname{Type},\; \forall q \in Side,\; \forall t \in Side,\; \forall a \in List\left(alpha\right),\; projection\left(q, a, replicate\left(length\left(a\right), t\right)\right) = ite\left(t = q, a, []\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/HughesBlockExchange.projection_pure` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A complete block is retained for its own label and erased for the other label.
+
+**Theorem 1.22 (Starts of a nonempty pure block).**
+
+$$\forall p \in Side,\; \forall q \in Side,\; \forall n \in \mathbb{N},\; 0 < n \Rightarrow starts\left(p, replicate\left(n, q\right)\right) = step\left(p, q\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/HughesBlockExchange.starts_pure` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Only the first transition can contribute in a positive length pure block.
+
+**Theorem 1.23 (The transported admissible successor mask).**
+
+$$\forall alpha \in \operatorname{Type},\; \forall u \in List\left(alpha\right),\; \forall v \in List\left(alpha\right),\; \forall E \in BlockCut\left(alpha\right),\; \forall M \in List\left(Side\right),\; \left(ValidMask\left(u, v, original\left(E\right), M\right) \land Admissible\left(E, M\right)\right) \Rightarrow \left(\exists N \in List\left(Side\right),\; ValidMask\left(u, v, successor\left(E\right), N\right) \land \left(Commuting\left(E, N\right) \land rho\left(N\right) + 1 = rho\left(M\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/HughesBlockExchange.intended_successor` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The actual pure blocks preserve both projections under transport. Maximality and the exterior inserted run make exactly one inserted run disappear.
+
+**Theorem 1.24 (Universal lower bounds for the minimum).**
+
+$$\forall P \in List\left(Side\right) \to Prop\left(\right),\; \forall k \in WithTop\left(\mathbb{N}\right),\; k \le minRuns\left(P\right) \Leftrightarrow \left(\forall N \in List\left(Side\right),\; P\left(N\right) \Rightarrow k \le rho\left(N\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/HughesBlockExchange.le_minRuns` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A lower bound holds for the minimum exactly when it holds for every member, including the empty-family infinity case.
+
+**Theorem 1.25 (Every actual member bounds the minimum).**
+
+$$\forall P \in List\left(Side\right) \to Prop\left(\right),\; \forall N \in List\left(Side\right),\; P\left(N\right) \Rightarrow minRuns\left(P\right) \le rho\left(N\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/HughesBlockExchange.minRuns_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+An actual mask in the family supplies an upper bound by its native run count.
+
+**Theorem 1.26 (The complete exchange minimum criterion).**
 
 $$\forall alpha \in \operatorname{Type},\; \forall u \in List\left(alpha\right),\; \forall v \in List\left(alpha\right),\; \forall w \in List\left(alpha\right),\; \forall z \in List\left(alpha\right),\; \forall E \in BlockCut\left(alpha\right),\; \forall M \in List\left(Side\right),\; \forall r \in \mathbb{N},\; \left(u \neq [] \land \left(v \neq [] \land \left(w = original\left(E\right) \land \left(z = successor\left(E\right) \land \left(IsMinimumMask\left(u, v, w, M, r\right) \land \left(1 < r \land Admissible\left(E, M\right)\right)\right)\right)\right)\right)\right) \Rightarrow \left(c\left(E, u, v\right) = r - 1 \land \left(degree\left(u, v, z\right) = min\left(r - 1, b\left(E, u, v\right)\right) \land \left(degree\left(u, v, z\right) = r - 1 \Leftrightarrow r - 1 \le b\left(E, u, v\right)\right)\right)\right)$$
 
@@ -188,10 +332,22 @@ Transport any successor labeling back across the two nonempty exchanged blocks. 
 - Truth anchor: `D5/S1/Words/HughesBlockExchange.back`
 - Truth anchor: `D5/S1/Words/HughesBlockExchange.c`
 - Truth anchor: `D5/S1/Words/HughesBlockExchange.degree`
+- Truth anchor: `D5/S1/Words/HughesBlockExchange.intended_successor`
+- Truth anchor: `D5/S1/Words/HughesBlockExchange.lastSide`
+- Truth anchor: `D5/S1/Words/HughesBlockExchange.le_minRuns`
+- Truth anchor: `D5/S1/Words/HughesBlockExchange.mask_projections`
 - Truth anchor: `D5/S1/Words/HughesBlockExchange.minRuns`
+- Truth anchor: `D5/S1/Words/HughesBlockExchange.minRuns_le`
 - Truth anchor: `D5/S1/Words/HughesBlockExchange.original`
 - Truth anchor: `D5/S1/Words/HughesBlockExchange.projection`
+- Truth anchor: `D5/S1/Words/HughesBlockExchange.projection_append`
+- Truth anchor: `D5/S1/Words/HughesBlockExchange.projection_pure`
 - Truth anchor: `D5/S1/Words/HughesBlockExchange.result`
 - Truth anchor: `D5/S1/Words/HughesBlockExchange.rho`
+- Truth anchor: `D5/S1/Words/HughesBlockExchange.rho_starts`
+- Truth anchor: `D5/S1/Words/HughesBlockExchange.starts`
+- Truth anchor: `D5/S1/Words/HughesBlockExchange.starts_append`
+- Truth anchor: `D5/S1/Words/HughesBlockExchange.starts_pure`
+- Truth anchor: `D5/S1/Words/HughesBlockExchange.step`
 - Truth anchor: `D5/S1/Words/HughesBlockExchange.successor`
 - Dependency: [D5/S1/Words/Complexity/ShuffleOrders/Binary/BinaryScheduleEvaluation](Complexity/ShuffleOrders/Binary/BinaryScheduleEvaluation.md)

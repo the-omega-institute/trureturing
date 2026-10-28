@@ -1,0 +1,86 @@
+## 2. The exact operational criterion and its determinant obligation
+
+For $i\in T$ and $0\le j<m$, let $V_T(i,j)=i^j$, with $0^0=1$, and set
+
+$$
+\lambda_i=F_{k_i},\qquad
+\mathcal D=
+\left[
+\operatorname{diag}(u_{k_i})V_T\
+\operatorname{diag}(\lambda_i)V_T
+\right].
+\tag{2.1}
+$$
+
+Rows are ordered by increasing original clock. The matrix is $2m\times2m$.
+
+The following classification is a credited result of *FIB Critical Mixed Gain Words and Clock-Pencil Obstructions*, Sections 3–10. On the full domain of Section 1, an all-input countable palette on a preassigned critical mixed word exists exactly when some $JJ$ word has a universal identity with functional $L=\rho I+M$, $\rho>0$. For that $JJ$ word the exact condition is (1.9)–(1.10) together with
+
+$$
+\det\mathcal D\ne0.
+\tag{2.2}
+$$
+
+One fixed matrix then suffices everywhere. The classification includes the obstruction on the exceptional positive-source stratum of an opposite-sign functional; it does not merely inspect the scale of one displayed identity. Consequently the countable-palette assertion includes globally nonuniversal matrices and arbitrary selectors. These classification and covering results are supplied premises of the operational application here. The new interpolation proofs below are independent of them.
+
+For completeness, the algebra connecting a positive universal identity to this exact interpolation criterion has the following direct proof. A universal identity with this functional and zero outlier column satisfies, for every auxiliary real matrix $S$,
+
+$$
+C\mathbf1=0,\qquad
+C\operatorname{diag}\bigl(\operatorname{tr}(A_iS)\bigr)V
+=\operatorname{tr}((\rho I+M)S)I_m.
+\tag{2.3}
+$$
+
+Here $V(i,j)=i^j$ on all $2m+1$ clocks. Auxiliary $S$ express linear identities; they are not additional physical sources. For $i\in T$,
+
+$$
+A_i=u_{k_i}I+\lambda_iL,\qquad L=\rho I+M.
+\tag{2.4}
+$$
+
+The trace functionals represented by $I,L$ are independent. Comparing their coefficients in (2.3), and writing $B_1,B_2$ for the two blocks of $\mathcal D$, gives
+
+$$
+C_TB_1=0,\qquad C_TB_2=I_m.
+\tag{2.5}
+$$
+
+In fact every $u_{k_i}$ is nonzero even before imposing (1.10): $u_0=1$, and $F_{k-1}>0$ for $k\ge2$, whereas $u_k=0$ would require $\rho=F_{k-1}/F_k$ with $k\ge2$. At such a zero $M^k=F_kL$ would be proportional to the functional matrix. The credited critical structural theorem excludes that proportionality for any acquired cumulative matrix of a nonzero identity. This is the only structural input needed for this necessity step. Alternatively (1.10) is already explicit in the interpolation problem.
+
+The $2m$ distinct retained clocks make $V_T$ have rank $m$: a polynomial of degree at most $m-1$ with $m$ distinct zeros vanishes. Nonzero weights give $\operatorname{rank}B_1=m$. Equation (2.5) gives $\operatorname{rank}B_2=m$ and trivial intersection of the two block images, because applying $C_T$ to an element of their intersection makes its second-block coefficient vector zero. Hence $\mathcal D$ is invertible, $C_T$ has rank $m$, and $\ker C_T=\operatorname{range}B_1$. The drift condition is exactly $\mathbf1_T\in\operatorname{range}B_1$, which is equivalent to (1.9).
+
+Conversely, assume (1.9)–(1.10) and (2.2). Set
+
+$$
+C_r=0,\qquad
+C_T=[\,0_{m\times m}\ \ I_m\,]\mathcal D^{-1}.
+\tag{2.6}
+$$
+
+The coefficient vector of $R$ expresses $\mathbf1_T$ as $B_1$ times that vector. With $t_P=\operatorname{tr}(MP)>0$, the actual reads therefore obey
+
+$$
+Z_T=B_1\beta+B_2\bigl((\rho+t_P)\beta\bigr)
++\delta\mathbf1_T,\qquad
+CZ=(\rho+t_P)\beta\ne0.
+\tag{2.7}
+$$
+
+Positivity of $t_P$ follows from strict entrywise positivity of $P$ and the nonzero nonnegative entries of $M$. This proves sufficiency on every source, coefficient vector, degree drop, root pattern, and drift in Section 1. All entries of $C$ depend only on $m,a,\rho$. The outlier read remains acquired, and no interpolation clock has been replaced by an exponent clock.
+
+There is also an exact determinant identity. If
+
+$$
+B_0=\operatorname{diag}(F_{k_i-1})V_T,
+$$
+
+then $\mathcal D=[B_0-\rho B_2\ \ B_2]$. Adding $\rho$ times each second-block column to its corresponding first-block column gives
+
+$$
+\det\mathcal D=\det[B_0\ \ B_2].
+\tag{2.8}
+$$
+
+Thus the determinant is independent of $\rho$ for fixed $m,a$. This does not determine its value or sign. No nonsingularity conclusion follows from interpolation alone, and no singularity conclusion follows from an interpolation obstruction.
+

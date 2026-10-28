@@ -1,0 +1,8 @@
+**假设 14.1（独立声明的连续幅度来源）。** 本章另取连续实变量 $x\in\mathbb R^r$，相对于 Lebesgue 测度定义正关系核
+
+$$
+K(x)=\exp\left(-\frac12x^TJx+h^Tx+\kappa\right),\qquad J=J^T.
+$$
+
+边界维数 $r$ 固定且有限。总积分非零有限的条件为 $J>0$。这是假设新的连续来源族，不把非负整数树组成自动解释为 Gaussian 随机变量。Gaussian 乘积与边缘的经典来源见 Rasmussen–Williams，[*Gaussian Processes for Machine Learning*, Appendix A.2，式 (A.4)–(A.9)](https://gaussianprocess.org/gpml/chapters/RWA.pdf)。Giscard、Choo、Thwaite、Jaksch，[*Exact Inference on Gaussian Graphical Models of Arbitrary Topology using Path-Sums*, §2](https://arxiv.org/abs/1410.7165) 采用 $J,h$ 的 canonical Gaussian 表示，并研究正定协方差下的精确边缘；下列带常数项的消元由完成平方给出。
+

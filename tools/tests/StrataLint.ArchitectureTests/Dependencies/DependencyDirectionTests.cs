@@ -30,7 +30,7 @@ public sealed class DependencyDirectionTests
     public void RegisteredProgramCompileInputsExcludeBlueprintDefinitions()
     {
         var root = TestRepositoryLayout.FindRoot();
-        var paths = StrataLint.FileMap.FileMapPolicy.TrackedPaths(root);
+        var paths = GitIndexRepositoryFiles.Enumerate(root).Select(static file => file.RelativePath).ToArray();
         var registry = EngineeringProjectRegistry.Read(paths.Select(path => new EngineeringSource(path,
             path == EngineeringProjectSchema.ManifestPath ? File.ReadAllText(Path.Combine(root, path)) : string.Empty)).ToArray());
         Assert.All(registry.Projects, project => Assert.DoesNotContain(project.Include,

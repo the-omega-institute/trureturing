@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bba2e46034a8b25cdbbfbe14116517fc153548a31ce5b175a634ddf029b5970f
+  normalized_sha256: sha256:bba2e46034a8b25cdbbfbe14116517fc153548a31ce5b175a634ddf029b5970f
+cas_ref: sha256:bba2e46034a8b25cdbbfbe14116517fc153548a31ce5b175a634ddf029b5970f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 解释合宜、后继与目标三个模型位置之外的实践意义，未断言它们满足新的数学性质。
+    previous_atom_id: 5b0a16e37f3bc10f9702ca4a2a0e67949e5141200371dfee04f8cb648acc6061
+    next_atom_id: 38a9b733676ee6713169eeaf91a3c2325debe6c5d7eb9f8a50a8499f306e3784

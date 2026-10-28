@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8c761cf8bd069ccc7505e3001bfa1b210c517942d52b167ff289706256abb4bb
+  normalized_sha256: sha256:8c761cf8bd069ccc7505e3001bfa1b210c517942d52b167ff289706256abb4bb
+cas_ref: sha256:8c761cf8bd069ccc7505e3001bfa1b210c517942d52b167ff289706256abb4bb
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/PredictionFactors/CanonicalPredictiveStateSufficiency.canonical_predictive_state_is_sufficient
+    target_statement_id: sha256:74a90cd447e2a773c88a4934c4cce7cb9f0ca37fb5f6d31943c7794091780aac
+  - gid: D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.causal_state_factorization
+    target_statement_id: sha256:a53b69057ed5e20a064e6c89da7e23bd6e7b2a670b25e89ad4fb614bd8be69d7
+  - gid: D5/S3/ObserverMemory/PredictionFactors/PredictiveStateUniversalMinimality.predictive_state_universal_minimality
+    target_statement_id: sha256:c2f95faffa0208b30fc56819e6d73b1d237ae3042d982ae8833d37abaa9795ff
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - ddf52f1de5d23fe89789b9dd833762dafda412dbd9aa9387fe8ba54cf604fecd
+    - 76e911338bb7df46d8f534df6ae020a6a3229ae73fea838430f44422bbd6e6aa

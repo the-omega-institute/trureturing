@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:689f462099272bc3eaa4218c116c4470df063c47189426bb79130198f11faeb6
-  normalized_sha256: sha256:689f462099272bc3eaa4218c116c4470df063c47189426bb79130198f11faeb6
-cas_ref: sha256:689f462099272bc3eaa4218c116c4470df063c47189426bb79130198f11faeb6
-coverage_gids:
-  - gid: D5/S3/Quantum/Completion/BoundedInverseLimitReconstruction.bounded_inverse_limit_reconstruction
-    target_statement_id: sha256:e5ba4733274e0eb436a4f4d8ab8259b11f6d930e4898908f00bbbb2945a57954
-receipts:
-  unresolved_subitems: []

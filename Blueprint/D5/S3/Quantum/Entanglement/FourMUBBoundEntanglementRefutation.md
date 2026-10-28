@@ -52,7 +52,35 @@ $$claim \Leftrightarrow (\forall r:\mathbb{N}, (2 \le r) \Rightarrow (\forall m:
 
 Section VIII, p. 8: 'Conjecture 1. If d = 2^r and r > 1, the minimal number of MUBs required for bound entanglement detection equals m = d/2 + 1 = 2^{r−1} + 1.' The preceding sentence reads: 'When d = 2^r, we predict that d/2 + 1 MUBs are both necessary and sufficient for the witness W^Γ(M_m, s) to be non-decomposable.' The formula states the necessity half for every natural r at least two, every family size below 2^(r−1)+1, every MUB family and every modular shift. Subtraction r−1 is natural subtraction. Refuting this half refutes the stated equality for the minimum.
 
-**Theorem 1.5 (Refutation in dimension eight).**
+**Lemma 1.5 (Real normalization identity).**
+
+$$((\operatorname{Real.sqrt}\left(8\right))^{-1}:\mathbb{R})^{2} = (\frac{1}{8}:\mathbb{R})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.scale_sq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* J. Bae; A. Bera; D. Chruściński; B. C. Hiesmayr; D. McNulty (2022). *How many mutually unbiased bases are needed to detect bound entangled states?*. DOI: [10.1088/1751-8121/acaa16](https://doi.org/10.1088/1751-8121/acaa16). URL: <https://arxiv.org/abs/2108.01109>.
+
+*Commentary.*
+
+The square of the reciprocal of the real square root of eight equals one eighth.
+
+**Lemma 1.6 (Complex normalization identity).**
+
+$$(((\operatorname{Real.sqrt}\left(8\right))^{-1}:\mathbb{R}):\mathbb{C})^{2} = (\frac{1}{8}:\mathbb{C})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.scale_complex_sq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* J. Bae; A. Bera; D. Chruściński; B. C. Hiesmayr; D. McNulty (2022). *How many mutually unbiased bases are needed to detect bound entangled states?*. DOI: [10.1088/1751-8121/acaa16](https://doi.org/10.1088/1751-8121/acaa16). URL: <https://arxiv.org/abs/2108.01109>.
+
+*Commentary.*
+
+The square of the complex coercion of the reciprocal of the real square root of eight equals the complex number one eighth.
+
+**Theorem 1.7 (Refutation in dimension eight).**
 
 $$\neg claim$$
 
@@ -76,5 +104,8 @@ Take r=3, m=4 and s=1. The bases are I, H/√8, diag(a)H/√8 and diag(b)H/√8,
 - Truth anchor: `D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.IsMUBFamily`
 - Truth anchor: `D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.claim`
 - Truth anchor: `D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.result`
+- Truth anchor: `D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.scale_complex_sq`
+- Truth anchor: `D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.scale_sq`
 - Truth anchor: `D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.witnessGamma`
-- Dependency: [D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction](ChoiKiemKye/ConstructionReduction.md)
+- Dependency: [D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction](../Divergence/ConditionalHockeyStickOrthogonalReduction.md)
+- Dependency: [D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation](StructuredNegativityCoincidenceRefutation.md)

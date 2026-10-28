@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5455add173b817f3dc51ee39a9dce159016408c4ad6ad0676eb3da84d96468d6
+  normalized_sha256: sha256:5455add173b817f3dc51ee39a9dce159016408c4ad6ad0676eb3da84d96468d6
+cas_ref: sha256:5455add173b817f3dc51ee39a9dce159016408c4ad6ad0676eb3da84d96468d6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: M3-e 追加部的标题、探针与作者来源、工单信息。
+    previous_atom_id: 507fc65fe0ef5e8f132f2e6c2a1474b9e2e9bd6eeb41ec6d9c4817af2d5f23ac
+    next_atom_id: 40932eb6fa8369f622be214c85d05564eb3147d5f7e2113f3727c50346b85766

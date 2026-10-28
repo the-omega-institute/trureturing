@@ -1,0 +1,40 @@
+**Theorem 18.1 (positive-history order acquisition and full first-response recurrence).** For every entrance satisfying Definitions 17.1–17.3 and Assumption 17.2, the following deterministic receiver stops its first stage after exactly $2N$ actual Ticks. Hold, execute Add$(1)$, and Read $y_0$. For $n=1,2,\ldots$, execute two returning Ticks, retain $y_{2n-1},y_{2n}$, then Hold and test
+
+$$
+Y_n=(y_{i+j})_{0\le i,j\le n}
+\tag{UFS.41}
+$$
+
+for singularity by exact rational elimination. Stop at the first singular block. Its index is the actual $N$, its preceding block $Y_{N-1}$ is positive definite, and the actual field at this cut is $T^{2N}b$. From this paid prefix the receiver computes the characteristic polynomial of the native $T$ and a recurrence generating every $y_j$, without obtaining the native coefficients from $Y_n$.
+
+Proof. Every eigenvalue $\lambda$ of $T$ lies in $(0,1)$. Since $p$ has nonnegative coefficients, $1+p(\lambda)\ge1$. The finite spectral theorem therefore gives $C\ge I>0$. Also $C$ is symmetric and commutes with $T$, because it is a polynomial in $T$. This uses the producer restriction on the whole spectrum; it does not follow from coordinate signs of $x^{\rm in}$.
+
+For P Lemma 37.1's native columns $K_n=[e_0,Te_0,\ldots,T^ne_0]$, symmetry and commutation give the exact identity
+
+$$
+Y_n=K_n^{\mathsf T}C K_n.
+\tag{UFS.42}
+$$
+
+That lemma supplies independence of these columns for $n<N$, and invertibility of $K_{N-1}$. Positive definiteness of $C$ then makes $Y_n$ positive definite for every $n<N$. At $n=N$ the columns span $\mathbb R^N$ but are dependent. Consequently $Y_N$ has rank $N$ and is singular, while $Y_{N-1}>0$. This proves the stopping claim, including $N=1$, when $Y_0=(y_0)$ is strictly positive. Each acquired block uses only the observations already emitted through epoch $2n$. No source-dependent search bound is needed.
+
+With this earned $N$, solve the nonsingular rational system
+
+$$
+Y_{N-1}(q_0,\ldots,q_{N-1})^{\mathsf T}
+=-(y_N,\ldots,y_{2N-1})^{\mathsf T},\qquad
+q(z)=z^N+\sum_{j<N}q_jz^j.
+\tag{UFS.43}
+$$
+
+Its equations are $K_{N-1}^{\mathsf T}Cq(T)e_0=0$. Both square factors $K_{N-1}^{\mathsf T}$ and $C$ are invertible, so $q(T)e_0=0$. Polynomial commutation then makes $q(T)$ vanish on every $T^je_0$, $j<N$, hence on a basis. Thus $q(T)=0$. No nonzero polynomial of degree below $N$ can annihilate $e_0$, by native triangularity. Cayley--Hamilton and subtraction of two monic degree-$N$ annihilators now identify $q=\det(zI-T)$. This is the same characteristic/companion algebra as P Proposition 37.4, with the invertible weighted form supplying its orthogonality equations here.
+
+For every $s\ge0$, multiplication by $e_0^{\mathsf T}T^s$ and by $b$ gives
+
+$$
+y_{s+N}=-\sum_{j<N}q_jy_{s+j}.
+\tag{UFS.44}
+$$
+
+The first $N$ actual values and rational coefficients generate the entire sequence effectively. Its least all-shift recurrence degree is also $N$: a lower-degree recurrence polynomial $r$ would imply $K_{N-1}^{\mathsf T}Cr(T)e_0=0$, hence $r(T)e_0=0$, a contradiction. Local processing takes place during the issued Holds, so the stopped physical field is exactly $T^{2N}b$. $\square$
+

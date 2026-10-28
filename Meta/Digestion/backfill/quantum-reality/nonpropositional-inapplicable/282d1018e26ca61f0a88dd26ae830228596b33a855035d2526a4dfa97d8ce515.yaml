@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:282d1018e26ca61f0a88dd26ae830228596b33a855035d2526a4dfa97d8ce515
+  normalized_sha256: sha256:282d1018e26ca61f0a88dd26ae830228596b33a855035d2526a4dfa97d8ce515
+cas_ref: sha256:282d1018e26ca61f0a88dd26ae830228596b33a855035d2526a4dfa97d8ce515
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该行在形式化衔接表中要求输出读数沿过去域精确下降，未提交某个实际下降等式。
+    previous_atom_id: 0bdf334b7c45f90e07defb08f4eb0c58f4d987aeec840f92a759bfc07e12c442
+    next_atom_id: 18990f143f4e6b51d411ddd3bef184e4855a454b19265bb0f2d65bb61f195eb9

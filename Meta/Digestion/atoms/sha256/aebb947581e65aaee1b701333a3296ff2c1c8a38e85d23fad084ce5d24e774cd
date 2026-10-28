@@ -1,0 +1,92 @@
+## 76.1 固定来源合同、参数域与完整图
+
+令
+$$
+ g=\sqrt5-2,\qquad g^2+4g=1,\qquad
+ t=\frac{1+g}{2},\qquad u=\frac{1-g}{2}=t^2,
+ \qquad \phi=1+t,
+$$
+并令
+$$
+ \lambda=\frac{u}{10},\qquad 0\le \beta<\lambda,\qquad
+ \delta=\lambda-\beta>0.
+$$
+状态区间为
+$$
+ I_0=[-1,\phi],\qquad I_1=[-1,t].
+$$
+标签集为
+$\Lambda=\{3,0,5,2,25\}$，其中 $0$ 是一个空窗标签，$25$ 是一个标签而不是两个可拆标签。平移量和仿射分支为
+$$
+ (\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+ =(-t,0,u,1,2-t),
+ \qquad f_\ell(x)=\Delta_\ell-gx,
+ \qquad F_\ell(x)=\frac{\Delta_\ell-x}{g}.
+$$
+实际 guard 合同是
+$$
+ 0\to0:3,0,2;\qquad 0\to1:5,25;\qquad
+ 1\to0:3,0;\qquad 1\to1:5,
+$$
+并且
+$$
+ \operatorname{out}(3)=\operatorname{out}(0)=\operatorname{out}(2)=0,
+ \qquad \operatorname{out}(5)=\operatorname{out}(25)=1.
+$$
+正时刻的 incoming guard 由前一实际标签的输出给出；不能根据当前标量重新指定类型。五个根像依空间次序为
+$$
+ [-1,-u],\quad[-u,g],\quad[g,t],\quad[t,2t],\quad[2t,\phi],
+$$
+而 guard 一只允许前三块。
+
+六个原闭色及其固定端点归属写成
+$$
+\begin{aligned}
+ E_0^\beta&=[-1,-u-\delta],\\
+ E_1^\beta&=\left[\frac{3(g-1)}5+\delta,
+                    \frac{11g-1}{10}-\delta\right],\\
+ E_2^\beta&=\left[\frac{6g-1}5+\delta,
+                    \frac{3+7g}{10}-\delta\right],\\
+ E_3^\beta&=\left[\frac{1+4g}5+\delta,
+                    \frac{7+13g}{10}-\delta\right],\\
+ E_4^\beta&=\left[\frac{3+7g}5+\delta,
+                    \frac{11+9g}{10}-\delta\right],\\
+ E_5^\beta&=[2t+\delta,\phi].
+\end{aligned}
+$$
+闭成员和端点所有权均保留。
+
+固定一个有限逆闭合端点集 $B\subseteq I_0$，它包含所有观察、guard、根域和闭色端点，并满足
+$$
+ e\in B,\quad F_\ell(e)\in I_0\quad\Longrightarrow\quad F_\ell(e)\in B.
+$$
+$B_s=B\cap I_s$ 的端点单点以及相邻端点之间的闭区间组成原规范整片。完整原图 $G_B$ 的边严格按
+$$
+ (s,P)\xrightarrow{\ell}(s',Q)
+ \Longleftrightarrow
+ s\xrightarrow{\ell}s'\text{ 合法},\quad
+ P\subseteq f_\ell(I_{s'}),\quad Q\subseteq F_\ell(P)
+$$
+定义；等价地，$f_\ell(Q)\subseteq P$。边的包含是整个原片的包含，不能改成相交测试或反向包含。完整配对顶点同时保留两侧实际 guard、两份整个原片、原端点归属、共同闭色资格以及第二投影的 typed singleton。
+
+固定一个有限整数 $P_{\max}\ge7$。对每个奇数
+$$
+ 7\le p\le P_{\max},
+$$
+每个 $S\in\Lambda^{p-2}$，以及四个相邻标签对
+$$
+ (a,b)\in\{(3,0),(0,5),(5,2),(2,25)\},
+$$
+定义
+$$
+\begin{aligned}
+ m&=4,\qquad h=4p,\\
+ A&=S\,b\,5,\qquad D_-=S\,a\,3,\qquad D_+=S\,b\,0,\\
+ \Pi&=A D_+D_-,\qquad T=\Pi S,\\
+ U&=\Pi D_-=T a3,\qquad W=\Pi D_+=T b0.
+\end{aligned}
+$$
+这里各块 $A,D_-,D_+$ 长度为 $p$，$|T|=4p-2=h-2$，而 $|U|=|W|=4p$。只量化逐步实际合法且第一 guard 从零返回零的 $U,W$；字面词形本身不替代实际 guard 合同。
+
+第二投影固定为同一个已给的、相干的、实际 primitive typed singleton rival $R$，其本原周期为奇数 $p$。其周期坐标、incoming guard、singleton 及周期边均已在同一个 $G_B$ 中。所有位置使用这一份 $B,G_B,R,S,a,b,p,\beta$，不得为不同位置另选来源。
+

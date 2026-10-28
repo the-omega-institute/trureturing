@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.IndecomposableInversio
 internal sealed class FranklinInversionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/IndecomposableInversion/FranklinInversion.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/franklin2024inversions");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/franklin2024inversions");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The number of indecomposable 321- and 1342-avoiders with k inversions is k(k - 1)/2 + 1, refuting the conjectured count k(k + 1)/2 + 1.",

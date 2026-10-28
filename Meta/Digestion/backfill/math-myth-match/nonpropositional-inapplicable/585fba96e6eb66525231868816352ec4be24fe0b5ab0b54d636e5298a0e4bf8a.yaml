@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:585fba96e6eb66525231868816352ec4be24fe0b5ab0b54d636e5298a0e4bf8a
+  normalized_sha256: sha256:585fba96e6eb66525231868816352ec4be24fe0b5ab0b54d636e5298a0e4bf8a
+cas_ref: sha256:585fba96e6eb66525231868816352ec4be24fe0b5ab0b54d636e5298a0e4bf8a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 模型设值与现实能力及授权的区别；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: 09d3db1618f74f22454eaa126afe5b08b2b55bf0a5296cf5ab338068e3cc2af8
+    next_atom_id: 47a51fab8cb096de940a6b73bec3640a040642feec552f8cbd7b12864c2172ae

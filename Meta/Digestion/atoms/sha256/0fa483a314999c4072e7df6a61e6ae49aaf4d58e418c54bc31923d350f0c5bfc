@@ -1,0 +1,18 @@
+**Definition 138.1 (Original interior infeasibility profile).** Fix the
+entire sequence and cap
+
+$$
+\begin{gathered}
+a_1=a_2=61/103,\quad a_3=60/103,\quad a_4=59/103,
+\quad a_5=54/103,\quad\varepsilon=1443/5974,\\
+a_{6+j}=\varepsilon/2^j\qquad(j\ge0).
+\end{gathered}
+\tag{138.1}
+$$
+
+Every amplitude is positive, nonincreasing, bounded by one and tends
+to zero. Here $a_6=\varepsilon$ and
+$a_5-\varepsilon=1689/5974>0$, so the active length is exactly five.
+The actual source, carrier, marked targets and all original competitors
+remain as in Definition 130.1.
+

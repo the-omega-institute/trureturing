@@ -45,7 +45,7 @@ private theorem fixed_of_one {V : Type} [Fintype V] [DecidableEq V]
     M *ᵥ a = a := by
   have hz : star a ⬝ᵥ ((1 - M) *ᵥ a) = 0 := by
     simp only [star_trivial, sub_mulVec, one_mulVec, dotProduct_sub, ha, hq, sub_self]
-  have hk := (hC.dotProduct_mulVec_zero_iff a).mp hz
+  have hk := (hC.dotProduct_mulVec_zero_iff (x := a)).mp hz
   simp only [sub_mulVec, one_mulVec, sub_eq_zero] at hk
   exact hk.symm
 
@@ -85,7 +85,7 @@ private theorem saturated_projection {V : Type} [Fintype V] [DecidableEq V]
     norm_num
   exact sub_eq_zero.mp ((hpos.trace_eq_zero_iff).mp hz)
 
-private theorem dot_cauchy {V : Type} [Fintype V] (v w : V → ℝ) :
+theorem dot_cauchy {V : Type} [Fintype V] (v w : V → ℝ) :
     (v ⬝ᵥ w) ^ 2 ≤ (v ⬝ᵥ v) * (w ⬝ᵥ w) := by
   simpa only [dotProduct, sq] using Finset.sum_mul_sq_le_sq_mul_sq Finset.univ v w
 

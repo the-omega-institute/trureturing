@@ -132,7 +132,7 @@ private theorem isPure_relabel {n m : Type*} [Fintype n] [DecidableEq n]
   obtain ⟨v, hv⟩ := hp
   exact ⟨v ∘ e, fun i j => hv (e i) (e j)⟩
 
-private def arGrouping : (A × R) × B ≃ A × B × R :=
+def arGrouping : (A × R) × B ≃ A × B × R :=
   (Equiv.prodAssoc A R B).trans
     (Equiv.prodCongr (Equiv.refl A) (Equiv.prodComm R B))
 
@@ -192,8 +192,6 @@ theorem input_information_balance (rho : DensityState (A × B × R)) (hp : IsPur
   rw [ar_retains_A, ab_retains_A, ar_retains_R, ab_retains_B, hAB, hAR]
   ring
 
-#print axioms pure_complementary_entropy
-#print axioms input_information_balance
 
 end
 end D5.S3.Quantum.Information.InputInformationBalance

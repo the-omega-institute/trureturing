@@ -6,6 +6,13 @@
    utility: none
    digest: Cubic lifting and a mod-two series identity prove Hanna's A392525 parity conjecture. -/
 
+/- Escape audit unfinished for D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.agree_iff, D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.agree_pow, D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.agree_subst_order, D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.power_two_one: https://github.com/the-omega-institute/trureturing/issues/19794. -/
+-- Escape audit unfinished for published theorems: https://github.com/the-omega-institute/trureturing/issues/19129.
+
+/- Escape audit unfinished for these published suppliers: https://github.com/the-omega-institute/trureturing/issues/19133
+proof_shape: power_two_zero: bind-only; consumer: D5.S1.Recurrence.Invariants.HannaSquareCompositionModFour.result (via its live helper chain).
+-/
+
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
 import Mathlib.FieldTheory.Finite.Basic
@@ -14,7 +21,7 @@ open PowerSeries
 
 namespace D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity
 
-private theorem prime_power_subst (p : ℕ) [Fact p.Prime]
+theorem prime_power_subst (p : ℕ) [Fact p.Prime]
     (f : PowerSeries (ZMod p)) : f ^ p = f.subst (X ^ p) := by
   have h := MvPowerSeries.map_frobenius_expand (σ := Unit) (R := ZMod p)
     p (NeZero.ne p) (f := f)
@@ -38,13 +45,13 @@ private theorem dyadic_halve (n : ℕ) (hn : n ≠ 1) :
     refine ⟨k + 1, ?_⟩
     rw [pow_succ, ← hk, Nat.div_mul_cancel hd]
 
-private theorem power_two_zero : constantCoeff powerTwoSeries = 0 := by
+theorem power_two_zero : constantCoeff powerTwoSeries = 0 := by
   have hz : ¬ ∃ k : ℕ, 0 = 2 ^ k := by
     rintro ⟨k, hk⟩
     exact pow_ne_zero k (by decide : (2 : ℕ) ≠ 0) hk.symm
   simp only [powerTwoSeries, constantCoeff_mk, if_neg hz]
 
-private theorem power_two_one : coeff 1 powerTwoSeries = 1 := by
+theorem power_two_one : coeff 1 powerTwoSeries = 1 := by
   simp only [powerTwoSeries, coeff_mk, if_pos (show ∃ k : ℕ, 1 = 2 ^ k from ⟨0, rfl⟩)]
 
 private theorem power_two_quadratic : powerTwoSeries = X + powerTwoSeries ^ 2 := by
@@ -99,11 +106,11 @@ variable {R : Type*} [CommRing R]
 private def Agree (n : ℕ) (f g : PowerSeries R) : Prop :=
   ∀ k < n, coeff k f = coeff k g
 
-private theorem agree_iff (n : ℕ) (f g : PowerSeries R) :
+theorem agree_iff (n : ℕ) (f g : PowerSeries R) :
     Agree n f g ↔ (X : PowerSeries R) ^ n ∣ f - g := by
   simp [Agree, X_pow_dvd_iff, map_sub, sub_eq_zero]
 
-private theorem agree_pow {n : ℕ} {f g : PowerSeries R}
+theorem agree_pow {n : ℕ} {f g : PowerSeries R}
     (h : Agree n f g) (k : ℕ) : Agree n (f ^ k) (g ^ k) :=
   (agree_iff _ _ _).mpr ((agree_iff _ _ _).mp h |>.trans
     (sub_dvd_pow_sub_pow f g k))
@@ -149,7 +156,7 @@ private theorem cube_top {n : ℕ} {f g : PowerSeries R}
   rw [hd]
   linear_combination hc
 
-private theorem agree_subst_order {n m d : ℕ} {f g u v : PowerSeries R}
+theorem agree_subst_order {n m d : ℕ} {f g u v : PowerSeries R}
     (hu : constantCoeff u = 0) (hv : constantCoeff v = 0)
     (hud : (X : PowerSeries R) ^ d ∣ u) (hvd : (X : PowerSeries R) ^ d ∣ v)
     (hm : m ≤ d * n) (hfg : Agree n f g) (huv : Agree m u v) :
@@ -394,9 +401,5 @@ theorem hanna_conjecture (n : ℕ) (_hn : 1 ≤ n) : Odd (a n) ↔ ∃ k : ℕ, 
   · exact ⟨fun _ => h, fun _ => rfl⟩
   · exact ⟨fun he => (zero_ne_one he).elim, fun he => (h he).elim⟩
 
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms thue_series_equation
-#print axioms hanna_conjecture
 
 end D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity

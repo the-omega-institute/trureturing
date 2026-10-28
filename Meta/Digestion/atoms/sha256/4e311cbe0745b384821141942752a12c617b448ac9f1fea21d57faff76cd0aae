@@ -1,0 +1,47 @@
+**Theorem 230.1 (native membership inside the scalar image).** Retain the
+scalar formulas and the ideal known-parameter preparation and operation
+assumptions of §§215–216. To distinguish the native coordinate $u$ from
+the interaction scalar in (216.1), write the latter as
+
+$$
+\upsilon=(1-t)^2p(1-p),\qquad
+h=t+(1-t)p,\qquad
+\lambda=\frac{\upsilon}{2t+\upsilon},\qquad
+w=\frac1{1+(1-\lambda)h},\qquad 0<t\le1.
+\tag{230.1}
+$$
+
+For $0<\lambda<1$ and $(2-\lambda)^{-1}<w<1$, define
+
+$$
+\begin{gathered}
+h_{\lambda,w}=\frac{1-w}{w(1-\lambda)},\\
+t_{\lambda,w}=
+\frac{h_{\lambda,w}(1-h_{\lambda,w})(1-\lambda)}
+{(1-h_{\lambda,w})(1-\lambda)+2\lambda},\\
+p_{\lambda,w}=\frac{h_{\lambda,w}-t_{\lambda,w}}{1-t_{\lambda,w}}.
+\tag{230.2}
+\end{gathered}
+$$
+
+Such a pair $(\lambda,w)$ is realized by some $q\in D$ and finite
+$t\in(0,1]$ exactly when
+
+$$
+m<p_{\lambda,w}<M.
+\tag{230.3}
+$$
+
+For the closed extension $\Delta$, replace the strict inequalities by
+$m\le p_{\lambda,w}\le M$. In either domain, the part with
+$\lambda=0$ consists only of $(\lambda,w)=(0,1/2)$.
+
+Proof. The inverse in (230.2) is (216.4). For positive $\lambda$,
+$h$ is determined by $\lambda,w$, the defining scalar relation determines
+$t$, and $p=(h-t)/(1-t)$; thus this inverse is necessary, not merely one
+optional realization. Theorem 229.1 now proves necessity of (230.3),
+and its monotone inverses prove sufficiency with the same $t$.
+For $\lambda=0$, the strict bounds $0<m\le p\le M<1$ imply
+$\upsilon=0$ only when $t=1$. Formula (230.1) then gives $w=1/2$.
+Conversely every $q\in D$ at $t=1$ realizes this pair.
+

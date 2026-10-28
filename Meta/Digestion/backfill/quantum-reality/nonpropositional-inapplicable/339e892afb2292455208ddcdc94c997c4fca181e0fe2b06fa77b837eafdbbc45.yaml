@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:339e892afb2292455208ddcdc94c997c4fca181e0fe2b06fa77b837eafdbbc45
+  normalized_sha256: sha256:339e892afb2292455208ddcdc94c997c4fca181e0fe2b06fa77b837eafdbbc45
+cas_ref: sha256:339e892afb2292455208ddcdc94c997c4fca181e0fe2b06fa77b837eafdbbc45
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 关于相位、热统计与能量交换怎样形成可信物理描述的解释及文献，不给出额外数学等式。
+    previous_atom_id: 94fe0fbc7889b5d29e030d54cec9991faa6a0d30094604a6467650c1cce7e112
+    next_atom_id: 18555a0027b77556ea54e956ca1c491b026f1f0e3483038fdd8b7ee41b91d5e2

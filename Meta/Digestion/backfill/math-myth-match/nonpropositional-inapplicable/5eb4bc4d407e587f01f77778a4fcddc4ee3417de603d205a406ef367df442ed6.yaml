@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5eb4bc4d407e587f01f77778a4fcddc4ee3417de603d205a406ef367df442ed6
+  normalized_sha256: sha256:5eb4bc4d407e587f01f77778a4fcddc4ee3417de603d205a406ef367df442ed6
+cas_ref: sha256:5eb4bc4d407e587f01f77778a4fcddc4ee3417de603d205a406ef367df442ed6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 区分法藏正文、承迁注与现代解释，并列举《金师子章》引文及页栏。
+    previous_atom_id: 385a43bb3ea31244cf77955e5a5efdf457f14f6fff85f6786ec03c4f4528e66b
+    next_atom_id: 9afee84338f188344579515c3c868d4805a11a8775d46da3219ea76d97bde4b0

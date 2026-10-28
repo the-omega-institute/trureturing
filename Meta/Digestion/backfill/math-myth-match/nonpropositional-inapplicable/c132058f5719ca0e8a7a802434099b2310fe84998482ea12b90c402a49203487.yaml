@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c132058f5719ca0e8a7a802434099b2310fe84998482ea12b90c402a49203487
+  normalized_sha256: sha256:c132058f5719ca0e8a7a802434099b2310fe84998482ea12b90c402a49203487
+cas_ref: sha256:c132058f5719ca0e8a7a802434099b2310fe84998482ea12b90c402a49203487
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Philosophical interpretation of further inquiry, waiting and risk. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: 693475dfa2abf07ccee5581b91fc7c218f3f36a793e4d099c84e2fe714caa6e5
+    next_atom_id: 18a187a1a4d4723eb4379ef76412fa0e5ca251a7b74c9b61a7ca2653890f1b79

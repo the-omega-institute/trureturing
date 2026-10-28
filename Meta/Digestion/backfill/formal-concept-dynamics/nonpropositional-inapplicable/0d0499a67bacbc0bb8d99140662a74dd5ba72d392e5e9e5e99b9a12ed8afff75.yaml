@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0d0499a67bacbc0bb8d99140662a74dd5ba72d392e5e9e5e99b9a12ed8afff75
+  normalized_sha256: sha256:0d0499a67bacbc0bb8d99140662a74dd5ba72d392e5e9e5e99b9a12ed8afff75
+cas_ref: sha256:0d0499a67bacbc0bb8d99140662a74dd5ba72d392e5e9e5e99b9a12ed8afff75
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅设置转移关系 R、初始集合和安全集合；不变量定义与安全结论位于后续 atom。
+    previous_atom_id: 780d20045950f8cb6caee2ed03681dd7ad0b543eea6e37128f0d80cb250eb050
+    next_atom_id: e3633f54b1b4a322f8f0a9e876743cf25c4aeaff5e42012240a590e06ebbadf7

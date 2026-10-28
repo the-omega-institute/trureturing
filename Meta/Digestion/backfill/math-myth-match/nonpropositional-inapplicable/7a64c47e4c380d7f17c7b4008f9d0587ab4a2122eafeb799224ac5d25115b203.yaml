@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7a64c47e4c380d7f17c7b4008f9d0587ab4a2122eafeb799224ac5d25115b203
+  normalized_sha256: sha256:7a64c47e4c380d7f17c7b4008f9d0587ab4a2122eafeb799224ac5d25115b203
+cas_ref: sha256:7a64c47e4c380d7f17c7b4008f9d0587ab4a2122eafeb799224ac5d25115b203
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举仪式的经验和解释维度，规定局部效果与超越关系的不同证据责任。
+    previous_atom_id: f2eb491cdb296294a73a1e7517971d4b8f60ce7454d20ab824bf06ddf338fbc2
+    next_atom_id: aaafc02fe8f4737ac89ce0addf19b18b739c553b0be0dea51278082b17c46ab8

@@ -6,9 +6,14 @@ readings are data and do not contribute to proof assessment or seal authority.
 import argparse
 import copy
 import json
+import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
+import sys
+import tempfile
+import time
 import zipfile
 
 HEX = re.compile(r"[0-9a-f]{64}")
@@ -137,7 +142,7 @@ def _qualify_compiled(request, reading):
     return reading
 
 
-def produce(row, previous_artifact, analyzer):
+def prepare(row, previous_artifact):
     """Reuse unchanged declaration payloads from the existing module artifact.
 
     No separate cache, source inventory or dependency planner is created.
@@ -178,13 +183,29 @@ def produce(row, previous_artifact, analyzer):
         elif leaf["request"] is None:
             leaf["reading"] = unavailable(leaf["unavailable_reason"])
         else:
+            leaf["reading"] = None
             pending.append(leaf)
+    return dict(extracted=len(partition['applications']), generated=len(pending), reused=reused,
+                unavailable=sum(x['request'] is None for x in partition['applications']))
+
+
+def finish(row, analyzer, stats):
+    """Complete the existing spool after Lake prepares a needed analyzer."""
+    partition = row.get('fib_analysis')
+    if partition is None:
+        return
+    pending = [leaf for leaf in partition['applications'] if leaf['reading'] is None]
+    if len(pending) != stats['generated']:
+        raise ValueError('fib.analysis_incomplete')
+    analysis_ns = 0
     if pending:
         if not analyzer:
             raise ValueError("fib.analysis_program_missing")
+        started = time.monotonic_ns()
         result = subprocess.run([str(analyzer), "--batch"],
             input=json.dumps([x["request"] for x in pending]),
             text=True, capture_output=True, check=False)
+        analysis_ns = time.monotonic_ns() - started
         if result.returncode not in (0, 2):
             raise ValueError(f"fib.analysis_failed:exit={result.returncode}:{result.stderr}")
         outputs = json.loads(result.stdout)
@@ -196,11 +217,91 @@ def produce(row, previous_artifact, analyzer):
         if (result.returncode == 2) != rejected:
             raise ValueError("fib.analysis_exit_mismatch")
     validate(partition)
-    stats = {'generated': len(pending), 'reused': reused,
-             'unavailable': sum(x['request'] is None for x in partition['applications'])}
-    print(f'LEAN_INSPECTOR_FIB module={row["module"]} generated={len(pending)} reused={reused} unavailable='
+    stats = dict(stats, **{'analysis-invocations': int(bool(pending)), 'analysis-ns': analysis_ns})
+    print(f'LEAN_INSPECTOR_FIB module={row["module"]} generated={len(pending)} reused={stats["reused"]} unavailable='
           f'{stats["unavailable"]}')
     return stats
+
+
+def produce(row, previous_artifact, analyzer):
+    stats = prepare(row, previous_artifact)
+    return finish(row, analyzer, stats) if stats is not None else None
+
+
+def application_inputs(report):
+    """Complete compiled inputs from an existing custody-bound report.
+
+    Only the input fields are compared. Readings and diagnostics are not test
+    receipts or invalidation keys. No source inventory or owner list is used.
+    """
+    import publication
+    with tempfile.TemporaryDirectory(prefix='fib-inputs.') as directory:
+        report = Path(report)
+        if report.suffix == '.zip':
+            with zipfile.ZipFile(report) as bundle:
+                for suffix in ('', '.provenance.json'):
+                    with bundle.open('raw-lean-report.json' + suffix) as source:
+                        with (Path(directory) / ('raw-lean-report.json' + suffix)).open('wb') as output:
+                            shutil.copyfileobj(source, output)
+            report = Path(directory) / 'raw-lean-report.json'
+        provenance = publication.read_json(publication.member(report, '.provenance.json').read_bytes())
+        origins = provenance.get('module_origins', {provenance['module']: provenance}
+                                 if 'module' in provenance else {})
+        result = {}
+        seen = set()
+        for row in publication.report_rows(report, publication.materials.REPORT_SCHEMA):
+            name = row['module']
+            if name in seen or name not in origins:
+                raise ValueError('fib.report_membership')
+            seen.add(name)
+            origin = origins[name]
+            expected = {x['name'] for x in origin['input_projection']['inputs']
+                        if x['type'] == 'LeanInformationAudit.AuricFib.Contract.Application'}
+            partition = row.get('fib_analysis')
+            if partition is None:
+                if expected:
+                    raise ValueError('fib.missing_required_inputs')
+                continue
+            publication.check_origin(origin, row)
+            leaves = validate(partition)['applications']
+            if expected != {x['application'] for x in leaves}:
+                raise ValueError('fib.missing_required_inputs')
+            for leaf in leaves:
+                if leaf['owner'] != name:
+                    raise ValueError('fib.application_owner_mismatch')
+                result[name, leaf['application']] = {k: leaf[k] for k in ROW_FIELDS - {'reading'}}
+        if seen != set(origins):
+            raise ValueError('fib.report_membership')
+        return result
+
+
+def run_regressions(repository, previous, current, selected=False):
+    """An already selected report consumer discharges one regression obligation.
+
+    This runs after its canonical writer returns and before publication. The
+    previous published data survives a failed command, so retries compare the
+    same inputs without a persisted semantic test receipt.
+    """
+    current_inputs = application_inputs(current)
+    try:
+        previous_inputs = application_inputs(previous) if Path(previous).exists() else {}
+    except ValueError as error:
+        if os.environ.get('REGENERATE_REPORT_ARTIFACTS') != '1' or str(error) != 'fib.invalid_partition':
+            raise
+        # Explicit regeneration cannot use a rejected old partition as equality
+        # evidence. Require one canonical suite before publishing fresh data.
+        previous_inputs = None
+    changed = current_inputs != previous_inputs
+    print(f'LEAN_INSPECTOR_FIB_REGRESSIONS changed={str(changed).lower()} selected={str(selected).lower()}',
+          flush=True)
+    if changed or selected:
+        environment = dict(os.environ)
+        for name in ('STRATALINT_INSPECTOR_ACTIVITY', 'STRATALINT_INSPECTOR_PHASES',
+                     'STRATALINT_INSPECTOR_MODULE_WORK'):
+            environment.pop(name, None)
+        subprocess.run(['make', '-C', str(repository), 'compiled-fib-test'],
+                       env=environment, check=True)
+    return changed or selected
 
 
 def consume(report, targets=()):
@@ -237,7 +338,20 @@ def consume(report, targets=()):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('report', type=Path)
+    parser.add_argument('report', type=Path, nargs='?')
     parser.add_argument('--target', action='append', default=[])
+    parser.add_argument('--regressions', type=Path)
+    parser.add_argument('--previous', type=Path)
+    parser.add_argument('--selected', choices=('true', 'false'), default='false')
     args = parser.parse_args()
-    print(json.dumps(consume(args.report, args.target), sort_keys=True))
+    if args.report is None:
+        parser.error('a report is required')
+    try:
+        if args.regressions:
+            if args.previous is None:
+                parser.error('regressions require --previous')
+            run_regressions(args.regressions, args.previous, args.report, args.selected == 'true')
+        else:
+            print(json.dumps(consume(args.report, args.target), sort_keys=True))
+    except subprocess.CalledProcessError as error:
+        sys.exit(error.returncode)

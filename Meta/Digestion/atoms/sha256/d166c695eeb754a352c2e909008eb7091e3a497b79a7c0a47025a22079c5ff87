@@ -1,0 +1,64 @@
+**Definition 120.1 (the unchanged source and the constrained quadratic direction).**
+Fix arbitrary original $a,\eta,t,\Delta>0$. Retain the entire source model
+of Definitions 115.1, 116.1, 117.1, 117.3, 118.1 and 119.1. In particular,
+
+$$
+\begin{gathered}
+G=H^1\times\mathbb R,\qquad
+(x,y,z,w)(x',y',z',w')
+ =(x+x',y+y',z+z',w+w'+xy'),\\
+e=(0,0,0,0),\qquad d\mu=dx\,dy\,dz\,dw,\qquad
+M=G\setminus\{e\},\\
+X_1=\partial_x,\quad X_2=\partial_y+x\partial_w,\quad
+X_3=\partial_z,\quad L=-\sum_{i=1}^3X_i^2,\quad
+L\Gamma=\delta_e,\\
+S=(aL+\eta D_w^2-16\sqrt{a\eta}\,\Gamma)|_{C_c^\infty(M;\mathbb C)},\\
+H=H_{\rm end},\qquad
+D(H)=\{u\in D(S^*):A(u)=\rho C(u)\},\qquad Hu=S^*u.
+\end{gathered}
+$$
+
+Here $\Gamma$ is the original unit-source field, and $h$ is the same
+coefficient-positive normalized zero vector of (115.2), smooth and strictly
+positive on $M$. Keep $F$, its form $(\overline q_c,\mathcal Q_c)$ and the
+full complex form and source summand of (115.15):
+
+$$
+\begin{gathered}
+D(H^{1/2})=\mathcal Q_c\dotplus\mathbb Ch,\qquad
+q_H[y+ch]=\overline q_c[y]
+ \quad(y\in\mathcal Q_c,\ c\in\mathbb C),\\
+m=h^2\mu,\qquad U_hv=hv,\qquad
+K=U_h^{-1}HU_h,\qquad T_s=e^{-sK},\\
+\mathscr V=\mathscr V_0\dotplus\mathbb C1,\qquad
+\mathscr E[u,v]=\int_M\left(
+ a\sum_{i=1}^3\overline{X_i u}X_i v
+ +\eta\overline{\partial_wu}\partial_wv\right)dm.
+\end{gathered}
+$$
+
+The operator domain is exactly (115.17). The conservative diffusion $Z$
+starts at $e$ at original time zero, and $T_s$ uses its original clock.
+Use its actual density $g_t$ from (117.2), so
+$\mathbb P_e(Z_t\in dp)=g_t(p)m(dp)$, $g_t\in L^2(m)$,
+$g_t>0$ $m$-almost everywhere and $\int g_t\,dm=1$.
+For real bounded Borel $u,w$ put
+
+$$
+Q(u,w)=\int_G g_t u\,T_\Delta w\,dm.
+$$
+
+For every pointwise Borel emission tuple $f\in\mathcal F$ of (117.9),
+with $f_y:G\to[0,1]$ and $\sum_{y\in\mathcal A}f_y(p)=1$ for every
+$p\in G$, where $\mathcal A=\{0,1,3,B\}$, and every $\kappa>0$, write
+
+$$
+E=\{p\in G:f_1(p)\ge\kappa,\ f_3(p)\ge\kappa\}.
+$$
+
+Thus $Q(f_y,f_z)=\nu_f(y,z)$ is exactly (118.2), with the same tuple at
+both epochs, fresh read noises conditional on the entire source path,
+and unchanged source evolution. In general $Q$ need not be symmetric.
+Its values are finite, since the Markov contraction and the unit mass of
+$g_t$ give $|Q(u,w)|\le\|u\|_\infty\|w\|_\infty$.
+

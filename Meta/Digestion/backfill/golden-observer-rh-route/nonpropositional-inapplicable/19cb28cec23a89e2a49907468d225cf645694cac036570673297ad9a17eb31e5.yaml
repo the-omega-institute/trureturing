@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:19cb28cec23a89e2a49907468d225cf645694cac036570673297ad9a17eb31e5
+  normalized_sha256: sha256:19cb28cec23a89e2a49907468d225cf645694cac036570673297ad9a17eb31e5
+cas_ref: sha256:19cb28cec23a89e2a49907468d225cf645694cac036570673297ad9a17eb31e5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: GFPT 来源、旧研究状态和三项状态/地址/窄通道纪律属于项目治理说明，不证明 G-A—G-H。
+    previous_atom_id: 66be3f93f1093fe7b9dc2fa9192758cec124d0a2fd371c473ac897fb2d5df118
+    next_atom_id: 424af7e44dc5c6c61577e832cd071e433bc6e305fbfb7e20388dd636d4ac6317

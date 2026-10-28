@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:22486a33d398032d68829241b5cce40be67e21c72860cccc5bbbad59873620f2
+  normalized_sha256: sha256:22486a33d398032d68829241b5cce40be67e21c72860cccc5bbbad59873620f2
+cas_ref: sha256:22486a33d398032d68829241b5cce40be67e21c72860cccc5bbbad59873620f2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 只有版本记录的小节标题与空列表标记，没有命题。'
+    previous_atom_id: 8a0f3918e6ee9b568a233824d62dc77c576afcfb1272a4bf2944ac3941b51a56
+    next_atom_id: 5416322d266151fdfdcd0444d20f656f574910011014e88fa0d47b73322af328

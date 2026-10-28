@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f2f88b2e714304b01c9c6f1b5faeec67310217745721cfc5ea78830df487fd34
+  normalized_sha256: sha256:f2f88b2e714304b01c9c6f1b5faeec67310217745721cfc5ea78830df487fd34
+cas_ref: sha256:f2f88b2e714304b01c9c6f1b5faeec67310217745721cfc5ea78830df487fd34
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 176 specifies the objects and morphisms of the two finite history structures and the object/morphism assignments of F_Z. The isomorphism assertion is in Theorem 177.
+    previous_atom_id: 0332bf30a0f2aaa08555529925426f2a65caf6d7d9dc65438a73bcdc94972b30
+    next_atom_id: 3481b0c16bc4e6baa0c7b58a6b28f01c0f8ced3c7e29351dadf05b9b43a81ced

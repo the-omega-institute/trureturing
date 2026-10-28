@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:58717e2dced62191794a782e8decb3101e4225d6761be74bf422ad8da9a38206
+  normalized_sha256: sha256:58717e2dced62191794a782e8decb3101e4225d6761be74bf422ad8da9a38206
+cas_ref: sha256:58717e2dced62191794a782e8decb3101e4225d6761be74bf422ad8da9a38206
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 仅列有限能量或有限维近似为实现约束，没有量化近似或存在性结论。'
+    previous_atom_id: 94680f3e82a86458212f34989df1a74208f6d14b335959e062b08cd7b40d32e8
+    next_atom_id: 33acd8d62b97daacf8f338309d94ba7d53cabaf3710773627cc315382e67db1e

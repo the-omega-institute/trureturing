@@ -171,7 +171,7 @@ namespace D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Tensor
 
 variable {n : ℕ} {σ : Fin n → Type*} [∀ j, Fintype (σ j)] [∀ j, DecidableEq (σ j)]
 
-private lemma tensor_star (M : ∀ j, Matrix (σ j) (σ j) ℂ) :
+lemma tensor_star (M : ∀ j, Matrix (σ j) (σ j) ℂ) :
     ProductPrefixRigidity.productMap σ (fun j => (M j)ᴴ) = (ProductPrefixRigidity.productMap σ M)ᴴ := by
   ext a b
   simp [ProductPrefixRigidity.productMap, Matrix.conjTranspose_apply, map_prod]
@@ -363,7 +363,7 @@ private lemma tensor_insert {n : ℕ} {σ : Fin (n + 1) → Type*}
     ∏ i, A (j.succAbove i) (x (j.succAbove i)) (a (j.succAbove i)) (b (j.succAbove i))
   exact (Fin.mul_prod_removeNth j (fun i => A i (x i) (a i) (b i))).symm
 
-private lemma involution_binary {m : Type*} [Fintype m] [DecidableEq m]
+lemma involution_binary {m : Type*} [Fintype m] [DecidableEq m]
     (A : Matrix m m ℂ) (hA : A.IsHermitian) (eA : A ^ 2 = 1) :
     (1 - A).PosSemidef ∧ (1 + A).PosSemidef := by
   have defect (B : Matrix m m ℂ) (hB : B.IsHermitian) (eB : B ^ 2 = 1) :

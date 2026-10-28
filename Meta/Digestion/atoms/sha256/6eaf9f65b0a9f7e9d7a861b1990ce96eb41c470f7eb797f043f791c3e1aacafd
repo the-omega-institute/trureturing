@@ -1,0 +1,6 @@
+## 14. 来源范围、复用和适用边界
+
+本批的仓内推导是定理 11.2 的鲁棒反对易估计、定理 12.2 的有限系数误差传播和定理 13.2 的条件消费者。命题 11.4 复用经典七维八元数积，并在明确的乘法和正交标架中核对全输入面积律、Jacobi 缺陷及缩放边界；它不把经典向量积另算为新发现。已有卷 [STABLE] §8.2 的完整有限群 Hilbert–Schmidt 标准、[FIB] §§7–8 的原生切面与外部方向障碍、[量子测量相对边界](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md) §§13–14 的固定五模逆／样本预算只作为供应者复用，不在此重写，也不把它们的有限样本升级为全域近似选择。
+
+Darpö, *Vector product algebras*, arXiv:0810.5464v1, Theorem 1 是带相容形式的精确向量积分类；Baez, *The Octonions*, §4.1 是精确的八元数与 $G_2$ 背景。钉版 mathlib Mathlib/LinearAlgebra/CrossProduct.lean 的 cross_dot_cross 与 jacobi_cross 只供应固定 Fin 3 的精确恒等式，不能替代未知维数的全域近似选择。本地 mathlib 不作为本批前提，公开生态检索也未覆盖全部近似向量积、稳健秩识别或有限关系检验文献；这里不作全局原创性或穷尽检索声明。所有实际物理端点、重复准备、控制复位、标量精度和来源身份仍须由相应合同另行供应。
+

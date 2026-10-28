@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6fb4cf48a3c0bf7f30a1f1680cde378336667adea9636a4dde08ae8ed93ba501
+  normalized_sha256: sha256:6fb4cf48a3c0bf7f30a1f1680cde378336667adea9636a4dde08ae8ed93ba501
+cas_ref: sha256:6fb4cf48a3c0bf7f30a1f1680cde378336667adea9636a4dde08ae8ed93ba501
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅说明柏格森引用范围及宗教解释边界，不把耦合、纤维或概率当作神学证明。
+    previous_atom_id: eea2dd9463b3f3e9f64aac27349c179a85ba5faa73d1444a3d4e478c2a08e199
+    next_atom_id: 2eef35eda2363270b66080874f18ea9256d1f813c311ed7508d1aeca42cfa4bf

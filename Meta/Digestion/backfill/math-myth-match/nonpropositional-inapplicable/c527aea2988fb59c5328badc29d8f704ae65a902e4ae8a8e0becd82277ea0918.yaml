@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c527aea2988fb59c5328badc29d8f704ae65a902e4ae8a8e0becd82277ea0918
+  normalized_sha256: sha256:c527aea2988fb59c5328badc29d8f704ae65a902e4ae8a8e0becd82277ea0918
+cas_ref: sha256:c527aea2988fb59c5328badc29d8f704ae65a902e4ae8a8e0becd82277ea0918
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 权威各义的记录字段和术语区分；未定义可核验的准确性—授权蕴含关系，有限独立模型另见331.2。
+    previous_atom_id: 4dfaaf12c4b59e22a5405d53292e15b56ef8367d7f611a572af45ef471ea1907
+    next_atom_id: da273d3592030ae7175bb8856503b8801991396ba57ceeb71f7abe3b93328258

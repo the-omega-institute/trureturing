@@ -190,7 +190,7 @@ private theorem trace_projector_mul_real (B : RankOneContext d)
     simpa using (show (Matrix.trace (B.projector j * A.1)).im = 0 by linarith)
 
 omit [NeZero d] in
-private theorem basis_measurement_eq_projector_sum (B : RankOneContext d)
+theorem basis_measurement_eq_projector_sum (B : RankOneContext d)
     (A : HermitianSpace d) :
     basisMeasurement B A =
       ∑ j, (Matrix.trace (B.projector j * A.1)).re • basisProjector B j := by

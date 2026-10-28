@@ -722,3 +722,207 @@ absence is claimed.
 [CM]: https://arxiv.org/html/1305.0808v3 "Nishant Chandgotia and Tom Meyerovitch, Markov Random Fields, Markov Cocycles and The 3-colored Chessboard"
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Guarded insertion, finite-record obstruction and label recovery
+
+**Definition 8.1 (Same mixture and common domain).** Reuse precisely
+[Universal, Proposition 7.2][U]'s four-state mixture, writing
+$P=(R^{1/3}+R^{1/4})/2$. Let $H\in\{1/3,1/4\}$ denote its persistent
+component label, not its time-indexed hidden state. Under $R^a$, either
+one-sided empirical frequency of ones converges to $a/(1+a)$; these
+distinct limits identify $H=a$ and survive every finite coordinate
+change. On the no11 space $\mathsf X$, write
+$F_i=\{x:x_{i-1}=x_{i+1}=0\}$. The free-site full-exterior predictor
+values are
+
+$$
+r_{1/3}=\frac37,\qquad r_{1/4}=\frac4{13},\qquad
+q_i(x)=r_{H(x)}\mathbf1_{F_i}(x).
+\tag{8.1}
+$$
+
+These $r_a$ predict the visible bit given its entire exterior. They are
+not finite-record posterior probabilities of $H$.
+
+Use Standing interface 2.2 at its stated ordinary mathematical status.
+Choose one Borel, shift-invariant, saturated $P$-conull domain $\Omega$
+on which the two frequency labels, all identities (8.1), and that
+interface agree, by its countable intersection and nonsingularity
+procedure. It is conull under both components. The band in (2.1) holds.
+For $j\ge1$, either erasure field in (2.1) retains an entire half-line
+identifying $H$ and both neighbors of the center, so $p_j^L=p_j^R=q_0$
+almost surely. Thus $e_L(j)=e_R(j)=0$ for $j\ge1$, while the two
+$j=0$ terms are bounded, proving $A_P<\infty$. This verifies the
+additional hypotheses for consuming Theorem 4.1 with this finite producer
+and the supplied interface.
+
+Define the cylinder and total center insertion by
+
+$$
+E=\{x:x_{-2}=x_{-1}=x_0=x_1=x_2=0\},\qquad
+(Rx)_i=\begin{cases}
+1,&i=0\text{ and }x_{-1}=x_1=0,\\
+x_i,&\text{otherwise}.
+\end{cases}
+\tag{8.2}
+$$
+
+Thus $R=R_{\{0\},1}$ is the identity on incompatible inputs and on
+inputs whose center is already one. All pathwise statements use
+$x,Rx\in\Omega$; in particular $H(Rx)=H(x)$. For
+$\ell_i(x)=(x_i-q_i(x))^2$, the sign convention is
+$\Delta_P(x,z)=\sum_i(\ell_i(x)-\ell_i(z))$.
+In comparing losses we keep the fixed original law $P$ and its fixed
+posterior versions $q_i$, rather than recomputing predictors under the
+image law of $R$.
+
+**Proposition 8.2 (Guarded cocycle and failure of preservation).** Put
+$D(x)=\Delta_P(x,Rx)$. On $E\cap\Omega$, only losses at $-1,0,1$
+change, and
+
+$$
+D(x)=2r_{H(x)}-1+2r_{H(x)}^2
+=\begin{cases}
+11/49,&H(x)=1/3,\\
+-33/169,&H(x)=1/4.
+\end{cases}
+\qquad
+R^{1/3}(E)=\frac4{27},\quad R^{1/4}(E)=\frac{81}{320}.
+\tag{8.3}
+$$
+
+Consequently, under (2.1), checked here in ordinary mathematics, and
+Standing interface 2.2,
+Theorem 4.1 implies $\neg\mathsf{RP}(P)$.
+
+Proof. For any nontrivial legal insertion, $x_{-1}=x_0=x_1=0$.
+Write $r=r_{H(x)}$ and
+$m(x)=\mathbf1_{\{x_{-2}=0\}}+\mathbf1_{\{x_2=0\}}$.
+The center loss difference is $r^2-(1-r)^2=2r-1$. Each adjacent
+site has visible bit zero; its predictor changes from $r$ to zero
+exactly when its other neighbor is zero, contributing $r^2$ in that
+case. For $|i|\ge2$, the bit, its neighbors and $H$ are unchanged,
+so its loss is unchanged by (8.1). Hence legality alone yields
+
+$$
+D(x)=2r_{H(x)}-1+m(x)r_{H(x)}^2,
+\qquad m(x)\in\{0,1,2\}.
+\tag{8.4}
+$$
+
+The radius-two guard in $E$ is required to set $m=2$; legality does
+not do so. When $Rx=x$, $D(x)=0$. The component transition probabilities
+in [Universal, (7.1)][U] give
+$R^a(E)=(1-a)^4/(1+a)$, yielding the two positive probabilities in
+(8.3). Substitution gives its two distinct, nonzero cocycle values.
+If $\mathsf{RP}(P)$ held, Theorem 4.1 would supply a saturated conull
+$\Omega_0$ on which all finite-change cocycles vanish. But
+$E\cap\Omega_0$ has positive probability, and saturation places
+$Rx$ in $\Omega_0$ there, contradicting (8.3). $\square$
+
+**Proposition 8.3 (Finite-coordinate minimax obstruction).** For every
+finite $K\subset\mathbb Z$ and every real-valued estimator $g$ based
+only on the original/modified records
+$Y_K(x)=(x|_K,(Rx)|_K)$,
+
+$$
+\operatorname*{ess\,sup}_{x\sim P(\,\cdot\mid E)}
+\left|g(Y_K(x))-D(x)\right|
+\ \ge\ \frac12\left|\frac{11}{49}+\frac{33}{169}\right|
+=\frac{1738}{8281}.
+\tag{8.5}
+$$
+
+Different finite sets for the two records are included by taking their
+union. The lower bound is sharp for every $K$: the constant estimator
+$g=121/8281$, the midpoint of the two target values, attains it.
+
+Proof. On $E$, the modification changes only the known center zero to
+one. Every positive-probability $Y_K$ fiber within $E$ therefore fixes
+only finitely many original bits and is a nonempty legal cylinder.
+Both component laws have positive probability on every such cylinder,
+by [Universal, Proposition 7.2][U]. Removing $\Omega^c$ preserves these
+probabilities. Thus the same observed record occurs with both labels
+on sets of positive conditional probability. For any value $z$ assigned
+to it, the triangle inequality gives
+$\max(|z-11/49|,|z+33/169|)\ge1738/8281$.
+There are only finitely many record fibers, proving (8.5); the midpoint
+proves sharpness. Independent randomization cannot lower this bound:
+condition on the seed and apply the same argument, with essential
+supremum taken over the joint conditional law. $\square$
+
+This is a conditional essential-supremum absolute-error bound, not a
+mean-square, mean-absolute, or fixed error-probability bound. Its
+boundary-locality consumer is [Exterior Localization, §6][L]: a
+finite visible collar for the center cocycle is a special case of
+$K$, so finite hidden presentation does not supply that missing
+finite-boundary-dependence hypothesis. Three changing summands do not
+make their values recoverable from a finite visible boundary.
+
+**Proposition 8.4 (Almost-surely-finite coordinate queries and recovery
+boundary).** Let a protocol query original visible coordinates
+$X_{i_1},X_{i_2},\ldots$, with indices in $\mathbb Z$. Its choices,
+stopping rule and real output are measurable functions only of the finite
+transcript of queried indices and revealed bits and a random seed $S$ independent
+of $(H,X)$, with a common law $\nu$ under both components. Suppose
+it terminates after $T<\infty$ queries $(P\otimes\nu)$-almost surely;
+no deterministic query bound is imposed. Then its output $\widehat D$
+cannot recover $D$ exactly even on $E$:
+
+$$
+(P\otimes\nu)(\widehat D\ne D\mid E)>0.
+\tag{8.6}
+$$
+
+Proof. Suppose exact recovery held almost surely on $E$. Since both
+mixture weights and both component probabilities of $E$ are positive,
+Fubini gives a seed for which termination and exactness hold on $E$
+almost surely under each component. Fix that seed. There are countably
+many finite stopping transcripts. Their leaves cover $E$ up to null
+sets, so some stopping leaf has positive $R^{1/3}$ probability within
+$E$. For a fixed seed, following that transcript and stopping is
+determined by precisely its finitely many revealed original bits.
+Its intersection with $E$ is therefore a nonempty legal cylinder,
+positive also under $R^{1/4}$. The same leaf has the same output under
+both laws, whereas exactness requires $11/49$ under one and $-33/169$
+under the other, a contradiction. This positive common-support leaf
+argument proves (8.6) without a uniform error-probability constant.
+$\square$
+
+The contract excludes tail queries, source-correlated advice and a
+supplied $H$ label. It does not apply to arbitrary finite-valued
+summaries: $H$ itself is a two-valued tail summary. If $H$ and the five
+local bits $x_{-2},\ldots,x_2$ are supplied, the identity cases and
+(8.4) recover $D$ on all of $\Omega$; on $E$, $H$ alone suffices.
+Acquisition of this label and retention of it for the comparison are
+separate obligations; its finite number of values supplies neither.
+
+This `repo-derived` application reuses the four-state construction,
+the cocycle interface and Theorem 4.1; its minimax and stopping-leaf
+steps are elementary common-support arguments, with no priority claim.
+It is ordinary mathematics with no Lean/kernel verification. It gives
+no new $c_\star$ conclusion, nonzero intrinsic response or all-$N$
+separation, and supplies no native-operation, metric, transport or
+physical three-dimensional bridge.
+
+## 追加锚（本行以下为增补区）
+
+## 8.99 Scope of the adaptive-query application
+
+**Scope clarification 8.5 (independent finite-query argument).**
+Proposition 8.4 is a source-specific ordinary-mathematical application, not
+an invocation of a generic DEV finite-query theorem. Its proof uses only the
+displayed mixture, the positive mass of $E$ under both components, a
+source-independent seed, almost-surely finite stopping, the countable family
+of finite stopping transcripts, and the fact that every nonempty legal finite
+cylinder in $E$ has positive mass under both component laws. Its contract is
+therefore limited to adaptive queries of original visible coordinates and
+exact recovery of $D$ on $E$ under $P\otimes\nu$. It makes no claim for tail
+queries, source-correlated advice or seeds, an externally supplied $H$ label,
+arbitrary finite-valued summaries, approximate recovery, or a different
+source/response contract. A result from another DEV source may be reused only
+after an explicit correspondence of source, responses, seed law, stopping
+semantics and target; no such transfer is asserted here. The proposition
+remains unverified by Lean or the kernel.
+
+## 追加锚（本行以下为增补区）

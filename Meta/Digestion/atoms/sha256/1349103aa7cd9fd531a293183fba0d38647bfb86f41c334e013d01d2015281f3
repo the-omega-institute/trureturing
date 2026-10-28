@@ -1,0 +1,27 @@
+**Theorem 18.3 (Faithfulness of the two interfaces).**  For each point of the actual
+$J$ arc with $p\ne24$, the regular system (18.1) is equivalent to the
+existence of an independent distinct equal-$M$ pair in the entire child.
+The undivided system (18.4)–(18.7) represents the same relation directly
+without eliminating $\Lambda=0$; it also gives the parent response
+interface for arbitrary strict endpoints.  The undivided reconstruction uses
+only the positive denominators $b,j,n,T,U$; it divides by neither
+$\Lambda$, $e$, a drift, a gain sample, a gain coefficient nor a root
+difference.  Thus the union of the regular system and the parent fallback
+is equivalent to the original independent-$M$ pair relation on this
+actual $J$ arc.  It asserts neither existence nor absence of a solution,
+and it does not replace the full strict real target by the arc.
+
+*Proof.*  Theorem 16.4 supplies the actual distinct $J$ pair and its
+common $(p,v_J(p))$.  S, Corollary 18.2 then removes only the singular
+selected-$M$ alternative, so every selected $M$ pair is regular and is represented by
+(18.1).  O, Theorem 2.1 and Lemma 10.2 above identify each zero of
+(18.4) with one complete world and (18.5) with its actual responses,
+including all singular and zero-drift cases.  In the regular system,
+$D_i\ne0$ is equivalent to $\Lambda_i\ne0$ by (16.2).  The map
+$(\tau,b)\mapsto(r,b)=(\tau b,b)$ is injective, and O, Theorem 12.3
+makes a complete world unique at fixed source and $p$; hence the
+source-distinctness inequality loses no distinct selected endpoints.  The guards in (18.1) and
+(18.7) are precisely within-pair distinctness and the original strict
+source conditions.  The cross-pair labels and terminal common values
+are unconstrained, which is the original fibre-product semantics. ∎
+

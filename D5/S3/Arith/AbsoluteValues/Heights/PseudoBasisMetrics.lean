@@ -27,6 +27,15 @@ open Finset Function Height Real
 
 variable {K : Type*} [Field K] [NumberField K] {ι ι' : Type*} [Fintype ι] [Fintype ι']
 
+lemma fun_smul_ne_zero
+    {K ι : Type*} [Field K] {c : K} {x : ι → K}
+    (hc : c ≠ 0) (hx : x ≠ 0) : c • x ≠ 0 := by
+  intro h
+  apply hx
+  funext i
+  have hi := congrFun h i
+  simpa [Pi.smul_apply, smul_eq_mul, hc] using hi
+
 /-- The **Arakelov height** of a tuple of elements of a number field: the ℓ² norm at the
 archimedean places, weighted by `InfinitePlace.mult`, and the sup norm at the finite places.
 For the zero tuple we take the junk value `1`, as `Height.mulHeight` does.
@@ -76,7 +85,7 @@ variable {K : Type*} [Field K] [NumberField K] {ι : Type*} [Fintype ι]
     classical
     rcases eq_or_ne x 0 with rfl | hx
     · rw [smul_zero]
-    have hcx : c • x ≠ 0 := by simp [hc, hx]
+    have hcx : c • x ≠ 0 := NumberField.fun_smul_ne_zero hc hx
     have hFinite :
         (∏ v : NumberField.InfinitePlace K, v c ^ v.mult) * ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v ((c • x) i)
           = ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v (x i) := by
@@ -122,7 +131,7 @@ noncomputable def arakelovLogHeight (x : Projectivization K (ι → K)) : ℝ :=
     classical
     rcases eq_or_ne x 0 with rfl | hx
     · rw [smul_zero]
-    have hcx : c • x ≠ 0 := by simp [hc, hx]
+    have hcx : c • x ≠ 0 := NumberField.fun_smul_ne_zero hc hx
     have hFinite :
         (∏ v : NumberField.InfinitePlace K, v c ^ v.mult) * ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v ((c • x) i)
           = ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v (x i) := by
@@ -182,7 +191,7 @@ meta def evalArakelovMulHeight : PositivityExt where eval {u α} _ pα? e :=
         classical
         rcases eq_or_ne x 0 with rfl | hx
         · rw [smul_zero]
-        have hcx : c • x ≠ 0 := by simp [hc, hx]
+        have hcx : c • x ≠ 0 := NumberField.fun_smul_ne_zero hc hx
         have hFinite :
             (∏ v : NumberField.InfinitePlace K, v c ^ v.mult) * ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v ((c • x) i)
               = ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v (x i) := by
@@ -222,10 +231,10 @@ meta def evalArakelovMulHeight : PositivityExt where eval {u α} _ pα? e :=
         rcases eq_or_ne x 0 with rfl | hx
         · simp [NumberField.arakelovMulHeight]
         obtain ⟨i, hi⟩ : ∃ i, x i ≠ 0 := ne_iff.mp hx
-        have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
+        have hx' : (x i)⁻¹ • x ≠ 0 := NumberField.fun_smul_ne_zero (inv_ne_zero hi) hx
         have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
         rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod fun v _ ↦ ?_)
+        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod₀ fun v _ ↦ ?_)
           (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
         have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
           le_trans (le_of_eq (by simp [hi']))
@@ -252,7 +261,7 @@ meta def evalArakelovLogHeight : PositivityExt where eval {u α} _ pα? e :=
         classical
         rcases eq_or_ne x 0 with rfl | hx
         · rw [smul_zero]
-        have hcx : c • x ≠ 0 := by simp [hc, hx]
+        have hcx : c • x ≠ 0 := NumberField.fun_smul_ne_zero hc hx
         have hFinite :
             (∏ v : NumberField.InfinitePlace K, v c ^ v.mult) * ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v ((c • x) i)
               = ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v (x i) := by
@@ -292,10 +301,10 @@ meta def evalArakelovLogHeight : PositivityExt where eval {u α} _ pα? e :=
         rcases eq_or_ne x 0 with rfl | hx
         · simp [NumberField.arakelovMulHeight]
         obtain ⟨i, hi⟩ : ∃ i, x i ≠ 0 := ne_iff.mp hx
-        have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
+        have hx' : (x i)⁻¹ • x ≠ 0 := NumberField.fun_smul_ne_zero (inv_ne_zero hi) hx
         have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
         rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod fun v _ ↦ ?_)
+        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod₀ fun v _ ↦ ?_)
           (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
         have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
           le_trans (le_of_eq (by simp [hi']))
@@ -322,7 +331,7 @@ meta def evalArakelovMulHeight₁ : PositivityExt where eval {u α} _ pα? e :=
         classical
         rcases eq_or_ne x 0 with rfl | hx
         · rw [smul_zero]
-        have hcx : c • x ≠ 0 := by simp [hc, hx]
+        have hcx : c • x ≠ 0 := NumberField.fun_smul_ne_zero hc hx
         have hFinite :
             (∏ v : NumberField.InfinitePlace K, v c ^ v.mult) * ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v ((c • x) i)
               = ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v (x i) := by
@@ -362,10 +371,10 @@ meta def evalArakelovMulHeight₁ : PositivityExt where eval {u α} _ pα? e :=
         rcases eq_or_ne x 0 with rfl | hx
         · simp [NumberField.arakelovMulHeight]
         obtain ⟨i, hi⟩ : ∃ i, x i ≠ 0 := ne_iff.mp hx
-        have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
+        have hx' : (x i)⁻¹ • x ≠ 0 := NumberField.fun_smul_ne_zero (inv_ne_zero hi) hx
         have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
         rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod fun v _ ↦ ?_)
+        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod₀ fun v _ ↦ ?_)
           (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
         have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
           le_trans (le_of_eq (by simp [hi']))
@@ -397,7 +406,7 @@ meta def evalArakelovLogHeight₁ : PositivityExt where eval {u α} _ pα? e :=
         classical
         rcases eq_or_ne x 0 with rfl | hx
         · rw [smul_zero]
-        have hcx : c • x ≠ 0 := by simp [hc, hx]
+        have hcx : c • x ≠ 0 := NumberField.fun_smul_ne_zero hc hx
         have hFinite :
             (∏ v : NumberField.InfinitePlace K, v c ^ v.mult) * ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v ((c • x) i)
               = ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v (x i) := by
@@ -437,10 +446,10 @@ meta def evalArakelovLogHeight₁ : PositivityExt where eval {u α} _ pα? e :=
         rcases eq_or_ne x 0 with rfl | hx
         · simp [NumberField.arakelovMulHeight]
         obtain ⟨i, hi⟩ : ∃ i, x i ≠ 0 := ne_iff.mp hx
-        have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
+        have hx' : (x i)⁻¹ • x ≠ 0 := NumberField.fun_smul_ne_zero (inv_ne_zero hi) hx
         have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
         rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod fun v _ ↦ ?_)
+        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod₀ fun v _ ↦ ?_)
           (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
         have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
           le_trans (le_of_eq (by simp [hi']))
@@ -472,7 +481,7 @@ meta def evalProjArakelovMulHeight : PositivityExt where eval {u α} _ pα? e :=
         classical
         rcases eq_or_ne x 0 with rfl | hx
         · rw [smul_zero]
-        have hcx : c • x ≠ 0 := by simp [hc, hx]
+        have hcx : c • x ≠ 0 := NumberField.fun_smul_ne_zero hc hx
         have hFinite :
             (∏ v : NumberField.InfinitePlace K, v c ^ v.mult) * ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v ((c • x) i)
               = ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v (x i) := by
@@ -512,10 +521,10 @@ meta def evalProjArakelovMulHeight : PositivityExt where eval {u α} _ pα? e :=
         rcases eq_or_ne x 0 with rfl | hx
         · simp [NumberField.arakelovMulHeight]
         obtain ⟨i, hi⟩ : ∃ i, x i ≠ 0 := ne_iff.mp hx
-        have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
+        have hx' : (x i)⁻¹ • x ≠ 0 := NumberField.fun_smul_ne_zero (inv_ne_zero hi) hx
         have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
         rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod fun v _ ↦ ?_)
+        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod₀ fun v _ ↦ ?_)
           (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
         have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
           le_trans (le_of_eq (by simp [hi']))
@@ -547,7 +556,7 @@ meta def evalProjArakelovLogHeight : PositivityExt where eval {u α} _ pα? e :=
         classical
         rcases eq_or_ne x 0 with rfl | hx
         · rw [smul_zero]
-        have hcx : c • x ≠ 0 := by simp [hc, hx]
+        have hcx : c • x ≠ 0 := NumberField.fun_smul_ne_zero hc hx
         have hFinite :
             (∏ v : NumberField.InfinitePlace K, v c ^ v.mult) * ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v ((c • x) i)
               = ∏ᶠ v : NumberField.FinitePlace K, ⨆ i, v (x i) := by
@@ -587,10 +596,10 @@ meta def evalProjArakelovLogHeight : PositivityExt where eval {u α} _ pα? e :=
         rcases eq_or_ne x 0 with rfl | hx
         · simp [NumberField.arakelovMulHeight]
         obtain ⟨i, hi⟩ : ∃ i, x i ≠ 0 := ne_iff.mp hx
-        have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
+        have hx' : (x i)⁻¹ • x ≠ 0 := NumberField.fun_smul_ne_zero (inv_ne_zero hi) hx
         have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
         rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod fun v _ ↦ ?_)
+        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod₀ fun v _ ↦ ?_)
           (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
         have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
           le_trans (le_of_eq (by simp [hi']))

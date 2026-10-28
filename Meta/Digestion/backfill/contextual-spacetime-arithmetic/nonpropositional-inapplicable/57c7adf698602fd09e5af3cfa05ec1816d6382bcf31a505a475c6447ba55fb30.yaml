@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:57c7adf698602fd09e5af3cfa05ec1816d6382bcf31a505a475c6447ba55fb30
+  normalized_sha256: sha256:57c7adf698602fd09e5af3cfa05ec1816d6382bcf31a505a475c6447ba55fb30
+cas_ref: sha256:57c7adf698602fd09e5af3cfa05ec1816d6382bcf31a505a475c6447ba55fb30
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 产地、执行读数、编号定位、文献归属或未验证边界的记录；不将它们解释为新的数学证明或覆盖。
+    previous_atom_id: f56603ecc0df84f06943d5c725269051766835df739693df995d069f0b1d0b1f
+    next_atom_id: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b

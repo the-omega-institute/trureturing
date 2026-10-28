@@ -14,12 +14,20 @@ internal sealed class NonlocalityDepthQuantumBoundDocument : IScribeDocumentDefi
         "For every n >= 3, the Bernards--Gühne Bell functional has exact quantum maximum sqrt(2) n 2^(n-2), over all finite local dimensions, binary observables and density matrices.",
         H("The exact quantum bound for nonlocality depth"),
         Blocks(
+            Node("tensor_star", "Adjoints commute with the tensor product", TensorStarFormula(),
+                "The tensor product of the adjoints of a finite family of complex matrices equals the adjoint of their tensor product. The local matrix carriers may be arbitrary types.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Node("IsBinaryObservable", "Binary observables", BinaryObservableFormula(),
                 "A binary observable is Hermitian and both its shifts 1 - M and 1 + M are positive semidefinite. The Bell maximum ranges over two such observables at each party.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("one_add_posSemidef_of_contraction", "The positive shift of a Hermitian contraction", ContractionFormula(),
                 "For a Hermitian matrix C, positivity of 1 - C conjugate-transpose times C implies positivity of 1 + C. Adding the positive square of 1 + C to the contraction defect gives twice 1 + C. This implication gives positivity of both shifts of an involution and of the diagonal blocks in the separable scalar-shift construction.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Describe.Lean(DescribeId.Create("nonlocality-quantum-upper-involution-binary"),
+                DeclarationHandle.Create(Prefix + "involution_binary"),
+                H("Both shifts of a Hermitian involution are positive"),
+                StatementSource.FromAuthor(InvolutionBinaryFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A Hermitian matrix whose square is the identity has positive semidefinite shifts 1 - A and 1 + A."))), DescribeRole.Lemma),
             Node("bellOp", "The Bell polynomial of Eq. (28)", BellFormula(),
                 "Section III.F, PDF p. 5, Eq. (28), reads: “F_n = ∑_{ℓ=1}^n (−1)^{1+⌈ℓ/2⌉} ℓ (1…1 2…2) ≤ n 2^{n−2}.” The bracket sums the distinct party permutations, with n - ℓ settings 1 and ℓ settings 2. Each Boolean setting string therefore occurs once. Its weight hammingDist(x,fun j ↦ false) counts the true coordinates. The integer sign phase(h) is the sign (-1)^(1+ceil(h/2)) defined in HybridMerminDepthBound.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -85,6 +93,21 @@ internal sealed class NonlocalityDepthQuantumBoundDocument : IScribeDocumentDefi
     private static Formula Trace(Formula value) => At(Q("Matrix", "trace"), value);
     private static Formula Smul(Formula a, Formula b) => At(Q("SMul", "smul"), a, b);
 
+    private static Formula TensorStarFormula()
+    {
+        Formula n = X("n"), sigma = X("sigma"), matrices = X("M"), j = X("j");
+        Formula local = Matrix(At(sigma, j));
+        Formula family = Family("j", Fin(n), local);
+        Formula adjoints = Parenthesized(Seq(LambdaLower, Sp,
+            Parenthesized(Seq(j, Sp, Colon, Sp, Fin(n))), Sp, Mapsto, Sp,
+            At(Q("Matrix", "conjTranspose"), At(matrices, j))));
+        Formula left = At(Q("ProductPrefixRigidity", "productMap"), sigma, adjoints);
+        Formula right = At(Q("Matrix", "conjTranspose"), At(Q("ProductPrefixRigidity", "productMap"), sigma, matrices));
+        return Disp(All("n", Numbers("N"), All("sigma", Arrow(Fin(n), X("Type")),
+            Seq(Instances(n, "Fintype"), Instances(n, "DecidableEq"),
+                All("M", family, Equal(left, right))))));
+    }
+
     private static Formula BinaryObservableFormula()
     {
         Formula m = X("m"), matrix = X("M");
@@ -103,6 +126,17 @@ internal sealed class NonlocalityDepthQuantumBoundDocument : IScribeDocumentDefi
             OpenBracket, Call("DecidableEq", iota), CloseBracket, Sp,
             All("C", Matrix(iota), Implies(Hermitian(c),
                 Implies(PSD(Sub(D(1), Mul(adjoint, c))), PSD(Add(D(1), c))))))));
+    }
+
+    private static Formula InvolutionBinaryFormula()
+    {
+        Formula m = X("m"), a = X("A");
+        return Disp(All("m", X("Type"), Seq(
+            OpenBracket, Call("Fintype", m), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", m), CloseBracket, Sp,
+            All("A", Matrix(m), Implies(Hermitian(a),
+                Implies(Equal(Pow(a, D(2)), D(1)),
+                    And(PSD(Sub(D(1), a)), PSD(Add(D(1), a)))))))));
     }
 
     private static Formula BellFormula()

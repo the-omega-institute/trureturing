@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5211b3c41728ec4ddcf758da257497fa894a92f06b2ce016f945c0b6bb018083
+  normalized_sha256: sha256:5211b3c41728ec4ddcf758da257497fa894a92f06b2ce016f945c0b6bb018083
+cas_ref: sha256:5211b3c41728ec4ddcf758da257497fa894a92f06b2ce016f945c0b6bb018083
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅引入有限通道和已有交换曲率并宣布下一段的能量定义，此条没有能量等式或界。
+    previous_atom_id: ebc45d859189068f29396e83b4153f76319c37957b8cab038bfb5b8f689cd4fd
+    next_atom_id: 1302f1bff6adf21a6925ef64c27d26912d3c383743a67d69bed2dd41f2ca4872

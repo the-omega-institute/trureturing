@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5cd4487ce91e407d00d3a511481b9f20391471fecc82f2870b0fe0ad5f9014d7
+  normalized_sha256: sha256:5cd4487ce91e407d00d3a511481b9f20391471fecc82f2870b0fe0ad5f9014d7
+cas_ref: sha256:5cd4487ce91e407d00d3a511481b9f20391471fecc82f2870b0fe0ad5f9014d7
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/ConditionalComparison/FiniteProbability.prob_congr
+    target_statement_id: sha256:b366dbbba517fb7d7be18d1ba80a9bf43ff799705ff8067b2329be68a80d8f5a
+  - gid: D5/S3/Arith/Congruence/ConditionalComparison/FiniteProbability.uniform_prob_eq_card
+    target_statement_id: sha256:30ae8a94e898ddfad31fc239b619587fee248a5871cb2fcd32483b9c93431dc8
+receipts:
+  unresolved_subitems: []

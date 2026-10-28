@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f9f25a70597d8282f106324b64ca1455d1a630f6c35129cfa1bf29e92c13a17a
+  normalized_sha256: sha256:f9f25a70597d8282f106324b64ca1455d1a630f6c35129cfa1bf29e92c13a17a
+cas_ref: sha256:f9f25a70597d8282f106324b64ca1455d1a630f6c35129cfa1bf29e92c13a17a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Prospective structure/interface schema with placeholder proof fields and an explicit prohibition on consuming it before constructing an inhabitant.
+    previous_atom_id: 78b35699c2cee6ea29a1759b083010714f9f2dbe59f3f08c8552345a59b0c697
+    next_atom_id: 8245978792801cd097866835f334d118db64ded2dc9be5e805feecb9beb539f9

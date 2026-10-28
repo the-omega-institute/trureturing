@@ -28,7 +28,7 @@ internal sealed class FiniteKrausChannelDocument : IScribeDocumentDefinition
                     + "and fromCstar are CStarMatrix.ofMatrix and its inverse. Adjoint means "
                     + "conjugate transpose. The displayed action holds for every input matrix.")),
                 Paragraph(Text(
-                    "The private proof closure retains Alex Meiburg's Physlib Kraus complete "
+                    "The proof closure retains Alex Meiburg's Physlib Kraus complete "
                     + "positivity and trace preservation proofs from revision "
                     + "6a09b2d1761a0d4430083045a247eb121d8da260, under the full Apache 2.0 "
                     + "license retained in the Lean source. A star algebra coordinate equivalence "
@@ -36,6 +36,22 @@ internal sealed class FiniteKrausChannelDocument : IScribeDocumentDefinition
                     + "The retained closure retires when equivalent declarations enter pinned Mathlib. "
                     + "The concrete shifted-record realization consumes this bridge."))),
             DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("finite-kraus-trace-preserving"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/FiniteKrausChannel.IsTracePreserving"),
+                H("Trace preservation on every matrix"),
+                StatementSource.FromAuthor(TracePreservingFormula()),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumChannels/meiburg2025physlibdual")),
+                Blocks(Paragraph(Text("A matrix map is trace preserving when its output has the same trace as its input for every matrix over the semiring."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("finite-kraus-trace-completeness"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/FiniteKrausChannel.of_kraus_isTracePreserving"),
+                H("Kraus completeness gives trace preservation"),
+                StatementSource.FromAuthor(KrausTracePreservingFormula()),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumChannels/meiburg2025physlibdual")),
+                Blocks(Paragraph(Text("Over a commutative semiring with a star operation, the completeness identity for two finite Kraus families makes their matrix map preserve the trace of every input."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("finite-kraus-add-kron"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/FiniteKrausChannel.add_kron"),
@@ -51,6 +67,22 @@ internal sealed class FiniteKrausChannelDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(AddCpFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For finite A and B and an RCLike scalar R, the sum of two completely positive matrix maps is completely positive. At every finite amplification, add_kron expresses the image as the sum of two positive semidefinite images. IptPptSquaredEquivalence.gamma_cp uses this closure to combine the four branches of the flag lift."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("finite-kraus-conjugation"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/FiniteKrausChannel.conj"),
+                H("Conjugation as a linear matrix map"),
+                StatementSource.FromAuthor(ConjFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a finite input coordinate type A and an RCLike scalar R, MatrixMap.conj y is the linear map sending x to y x y adjoint, with arbitrary output coordinate type B."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("finite-kraus-conjugation-apply"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/FiniteKrausChannel.conj_apply"),
+                H("Evaluation of matrix conjugation"),
+                StatementSource.FromAuthor(ConjFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Evaluating MatrixMap.conj y at x gives y x y adjoint for every matrix x on the finite input coordinate type."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args) =>
@@ -73,6 +105,51 @@ internal sealed class FiniteKrausChannelDocument : IScribeDocumentDefinition
     private static Formula Instance(string cls, Formula arg) =>
         Seq(OpenBracket, Call(cls, arg), CloseBracket, Sp);
     private static Formula MatrixMapOf(Formula a, Formula b, Formula r) => Call("MatrixMap", a, b, r);
+    private static Formula TracePreservingFormula()
+    {
+        Formula a = F.Id("A"), b = F.Id("B"), r = F.Id("R"), m = F.Id("M"), x = F.Id("x");
+        Formula preservation = All([Bound("x", Call("Matrix", a, a, r))],
+            Eqn(Call("trace", Apply(m, x)), Call("trace", x)));
+        Formula statement = new Formula.Logic(
+            Apply(Qualified("MatrixMap", "IsTracePreserving"), m),
+            FormulaLogicOperator.Iff, preservation);
+        return Disp(All([Bound("A", Named("Type")), Bound("B", Named("Type")),
+            Bound("R", Named("Type"))],
+            Seq(Instance("Fintype", a), Instance("Fintype", b), Instance("Semiring", r),
+                All([Bound("M", MatrixMapOf(a, b, r))], statement))));
+    }
+
+    private static Formula KrausTracePreservingFormula()
+    {
+        Formula a = F.Id("A"), b = F.Id("B"), s = F.Id("S"), kappa = F.Id("Kappa");
+        Formula m = F.Id("M"), n = F.Id("N"), k = F.Id("k");
+        Formula family = new Formula.TypeArrow(kappa, Call("Matrix", b, a, s));
+        Formula completeness = Eqn(Seq(Sum, Underscore, Grp(k, InMacro, Sp, kappa), Sp,
+            Mul(Call("conjTranspose", Apply(n, k)), Apply(m, k))), Num(1));
+        Formula preservation = Apply(Qualified("MatrixMap", "IsTracePreserving"),
+            Apply(Seq(Named("MatrixMap"), Dot, Named("of"), Underscore, Grp(Named("kraus"))), m, n));
+        return Disp(All([Bound("A", Named("Type")), Bound("B", Named("Type")),
+            Bound("S", Named("Type")), Bound("Kappa", Named("Type"))],
+            Seq(Instance("Fintype", a), Instance("DecidableEq", a),
+                Instance("Fintype", b), Instance("Fintype", kappa),
+                Instance("CommSemiring", s), Instance("Star", s),
+                All([Bound("M", family), Bound("N", family)],
+                    new Formula.Logic(completeness, FormulaLogicOperator.Implies, preservation)))));
+    }
+
+    private static Formula ConjFormula()
+    {
+        Formula a = F.Id("A"), b = F.Id("B"), r = F.Id("R");
+        Formula x = F.Id("x"), y = F.Id("y");
+        Formula statement = All([Bound("y", Call("Matrix", b, a, r)),
+            Bound("x", Call("Matrix", a, a, r))],
+            Eqn(Apply(Apply(Qualified("MatrixMap", "conj"), y), x),
+                Mul(Mul(y, x), Call("conjTranspose", y))));
+        return Disp(All([Bound("A", Named("Type")), Bound("B", Named("Type")),
+            Bound("R", Named("Type"))],
+            Seq(Instance("Fintype", a), Instance("RCLike", r), statement)));
+    }
+
     private static Formula AddKronFormula()
     {
         Formula a = F.Id("A"), b = F.Id("B"), c = F.Id("C"), d = F.Id("D"), r = F.Id("R");

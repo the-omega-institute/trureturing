@@ -406,8 +406,8 @@ theorem same_noise_finite_joint {ι : Type*} [Finite ι] (f : ι → Lp ℝ 2 μ
   classical
   letI := Fintype.ofFinite ι
   let X : Ω → (ι → ℝ) := fun ω i => W (f i) ω
-  have hXm : Measurable X := measurable_pi_lambda _ (fun i => (Lp.stronglyMeasurable _).measurable)
-  constructor
+  have hXm : Measurable X := Measurable.of_eval (fun i => (Lp.stronglyMeasurable _).measurable)
+  refine ⟨hXm.aemeasurable, ?_⟩
   apply isGaussian_of_isGaussian_map
   intro L
   let a : ι → ℝ := fun i => L (Pi.single i 1)

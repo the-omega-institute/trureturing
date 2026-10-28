@@ -193,7 +193,7 @@ private lemma weak_limit_uniform_cdf {μn : ℕ → ProbabilityMeasure ℝ} {μ 
     (cdf_nonneg _) (cdf_le_one _) (tendsto_cdf_atBot _) (tendsto_cdf_atTop _)
     (weak_limit_pointwise_cdf hweak)
 
-private lemma gaussian_charFun_standard (u : ℝ) :
+lemma gaussian_charFun_standard (u : ℝ) :
     charFun (gaussianReal 0 1) u = (Real.exp (-u^2/2):ℂ) := by
   rw [charFun_gaussianReal,Complex.ofReal_exp]
   congr 1
@@ -252,7 +252,7 @@ private lemma centeredBernoulli_norm_le (p s : ℝ) (hp0 : 0≤p) (hp1 : p≤1) 
         abs_of_nonneg (by linarith : 0≤1-p)]
       ring
 
-private lemma gaussian_factor_norm_le (v s : ℝ) (hv : 0≤v) :
+lemma gaussian_factor_norm_le (v s : ℝ) (hv : 0≤v) :
     ‖(Real.exp (-s^2*v/2):ℂ)‖ ≤ 1 := by
   rw [Complex.norm_real, Real.norm_eq_abs, abs_of_pos (Real.exp_pos _)]
   exact Real.exp_le_one_iff.mpr (by have := sq_nonneg s; nlinarith)
@@ -260,7 +260,7 @@ private lemma gaussian_factor_norm_le (v s : ℝ) (hv : 0≤v) :
 private lemma product_norm_le_one {ι : Type*} (s : Finset ι) (f : ι → ℂ)
     (hf : ∀ i ∈ s, ‖f i‖ ≤ 1) : ‖∏ i ∈ s, f i‖ ≤ 1 := by
   rw [norm_prod]
-  exact prod_le_one (by intros; positivity) hf
+  exact prod_le_one₀ (by intros; positivity) hf
 
 private lemma product_difference_norm {ι : Type*} (s : Finset ι) (f h : ι → ℂ)
     (hf : ∀ i ∈ s, ‖f i‖ ≤ 1) (hh : ∀ i ∈ s, ‖h i‖ ≤ 1) :
@@ -723,7 +723,7 @@ private lemma centered_bernoulli_product_envelope {m : ℕ} (p : Fin m → ℝ) 
   rw [norm_prod]
   calc
     _ ≤ ∏ i, Real.exp (-2*(p i * (1 - p i))*Real.sin (s/2)^2) :=
-      prod_le_prod (by intro i hi; exact norm_nonneg _)
+      prod_le_prod₀ (by intro i hi; exact norm_nonneg _)
         (by intro i hi; exact centered_bernoulli_gaussian_envelope _ _)
     _ = _ := by rw [← Real.exp_sum]; congr 1; simp only [sum_mul,mul_sum]
 

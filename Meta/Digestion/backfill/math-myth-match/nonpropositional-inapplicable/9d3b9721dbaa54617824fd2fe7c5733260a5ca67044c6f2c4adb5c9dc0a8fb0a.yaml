@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9d3b9721dbaa54617824fd2fe7c5733260a5ca67044c6f2c4adb5c9dc0a8fb0a
+  normalized_sha256: sha256:9d3b9721dbaa54617824fd2fe7c5733260a5ca67044c6f2c4adb5c9dc0a8fb0a
+cas_ref: sha256:9d3b9721dbaa54617824fd2fe7c5733260a5ca67044c6f2c4adb5c9dc0a8fb0a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只规定 MMM 自身的解释范围、共同来源假设与可检验要求，不包含特定数学对象上的新命题。
+    previous_atom_id: 7f9c1f3b904eb3b8664cdc42084aa87e51184cbda5a8d1013bc101c944184526
+    next_atom_id: 1bf44b1be8b686de10e77244cdda88813342ee28268408d44d5ca839e0c1b807

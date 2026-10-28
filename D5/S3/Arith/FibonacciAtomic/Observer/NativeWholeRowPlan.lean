@@ -396,7 +396,7 @@ theorem two_phase_uniform_bound (C : LiteralRow) (Q : CutSet) (H : History)
 
 set_option maxHeartbeats 2000000 in
 -- The finite dependent carrier and transcript proofs require extended elaboration fuel.
-private theorem labels_witness (C : LiteralRow) (n : Nat) (hn : n ∈ labels C)
+theorem labels_witness (C : LiteralRow) (n : Nat) (hn : n ∈ labels C)
     (a : Address) : ∃ p : Address, a ++ p ∈ holeAddresses a C ∧ holeLabel p C = some n := by
   induction C generalizing a with
   | of z => cases z with

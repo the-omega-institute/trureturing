@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0f9c146e174f4941e438ed1071020eea5a7faaf5042c246df8b1c4a2c36ed6ec
+  normalized_sha256: sha256:0f9c146e174f4941e438ed1071020eea5a7faaf5042c246df8b1c4a2c36ed6ec
+cas_ref: sha256:0f9c146e174f4941e438ed1071020eea5a7faaf5042c246df8b1c4a2c36ed6ec
+coverage_gids:
+  - gid: D5/S3/Entropy/Observation/AuthorInformationDecomposition.author_information_decomposition
+    target_statement_id: sha256:3e5d5c41d32ceb24deacbd9b6cf268664c333af3e8d99532af994a60dfb5312a
+  - gid: D5/S3/Entropy/Submodularity/MarkovDataProcessing.conditional_mutual_information_eq_zero_iff_conditional_product
+    target_statement_id: sha256:b19880e6e00033adead9d81601154c0791adbff8399cf682e60369833793a919
+receipts:
+  unresolved_subitems: []

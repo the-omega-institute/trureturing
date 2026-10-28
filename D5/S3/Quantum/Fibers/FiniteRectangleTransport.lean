@@ -281,7 +281,7 @@ private theorem charts_integral (b : Base) (N : ℕ) (q : ℝ → State)
         simpa only [Nat.cast_zero] using
           Finset.sum_range_sub (fun j : ℕ => (q j).2.2 i) N
 
-private theorem probability_derivative (b : Base) (k : ℝ → ℝ) (v t : ℝ)
+theorem probability_derivative (b : Base) (k : ℝ → ℝ) (v t : ℝ)
     (hk : HasDerivAt k v t) (i : Fin 5) :
     HasDerivAt (fun s => probability b (k s) i) (direction i * v) t := by
   fin_cases i
@@ -320,7 +320,7 @@ private theorem charts_probability (b : Base) (N : ℕ) (q : ℝ → State)
   rw [hd.deriv]
   exact probability_derivative b (fun s => (q s).1) (y.1-x.1) t hd i
 
-private theorem polygon_admissible (b : Base) (x : State) (xs : List State)
+theorem polygon_admissible (b : Base) (x : State) (xs : List State)
     (hx : x.1 ∈ Ioo (lower b) (upper b))
     (h : List.IsChain (LawfulLeg (phaseWeight b) (lower b) (upper b)) (x :: xs)) :
     Admissible b xs.length (polygon (x :: xs)) := by

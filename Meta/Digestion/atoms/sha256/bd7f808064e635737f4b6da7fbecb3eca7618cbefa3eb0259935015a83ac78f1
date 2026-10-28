@@ -1,0 +1,31 @@
+**定义 80.1（原对象与时间顺序）。** 固定 V (91.1) 的参数与对象：
+
+$$
+\begin{gathered}
+0<d<1,\quad c=d/2,\quad \sin(2\theta)\ne0,\quad
+[N,P_\xi]\ne0,\quad N\in U(3),\\
+a=Uq,\quad g=Uf,\quad
+\psi=\sqrt d\,a+\mathrm i\sqrt{1-d}\,g,\quad
+\rho_0=\psi\psi^\dagger,\quad E=qq^\dagger,\\
+G_j=\operatorname{Ad}_{V_j},\quad V_j=U\exp(\mathrm i\theta W)W^j\ (j=0,1),\quad
+G_N=\operatorname{Ad}_N,\quad A_j=G_j/2,\quad A_N=G_N.
+\end{gathered}
+\tag{80.1}
+$$
+
+$\rho_0$ 是唯一给定的纯制备，$E$ 是唯一给定的秩一是效果。$N$ 始终是同一个已安装的混合酉控制，不是子空间，也不是新生随机标签。对 $w=b_1\cdots b_n$，最左字母最早发生，记
+
+$$
+\begin{gathered}
+G_w=G_{b_n}\cdots G_{b_1},\quad
+k(w)=\#\{t:b_t\in\{0,1\}\},\quad A_w=2^{-k(w)}G_w,\\
+q_w=\operatorname{Tr}(EG_w\rho_0),\qquad
+p(w,1)=2^{-k(w)}q_w,\quad p(w,0)=2^{-k(w)}(1-q_w).
+\end{gathered}
+\tag{80.2}
+$$
+
+$q_w$ 只作归一化数学坐标；交付的预测仍是原始 $p(w,b)$，没有条件化筛去稀有事件。$0,1$ 是同一次原生仪器的实际结果。固定时序指定哪些位置用仪器、哪些位置用 $N$；同一时序中的其他标签史一并保留，$N$ 的位置不依赖标签值。以所有这种外定时序为域，每个有限字母词均为一个合法历史事件。
+
+此源仍有原五维来源：V 命题 91.3 的 $\mathcal T_0$ 保留完整源矩映射，$\mathcal G\mathcal T_0=S_{\rho_0}$；所给 $N$ 通过 $BNB^\dagger+(I_5-BB^\dagger)$ 延伸。那里关于所有复矩阵和未触动有限参考的恒等式属于原量子实现。本节的经典比较合同只要求 (80.2) 的单系统终端记录，不擅自要求它也实现该参考合同。
+

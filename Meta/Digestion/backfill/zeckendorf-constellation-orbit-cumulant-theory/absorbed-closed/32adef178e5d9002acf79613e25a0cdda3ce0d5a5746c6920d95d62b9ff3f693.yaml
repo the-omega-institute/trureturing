@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:32adef178e5d9002acf79613e25a0cdda3ce0d5a5746c6920d95d62b9ff3f693
+  normalized_sha256: sha256:32adef178e5d9002acf79613e25a0cdda3ce0d5a5746c6920d95d62b9ff3f693
+cas_ref: sha256:32adef178e5d9002acf79613e25a0cdda3ce0d5a5746c6920d95d62b9ff3f693
+coverage_gids:
+  - gid: D5/S3/CompletionDynamics/GoldenMobius/GoldenMobiusMap.golden_projective_multiplier_eq_neg_conjugate_sq
+    target_statement_id: sha256:d48b66b9741f9f28b272436fa8f26dff9ef3cf4d727d15eb02c1c479f37d4dae
+receipts:
+  unresolved_subitems: []

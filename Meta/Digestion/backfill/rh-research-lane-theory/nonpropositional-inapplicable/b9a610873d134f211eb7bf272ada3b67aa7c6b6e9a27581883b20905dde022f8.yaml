@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b9a610873d134f211eb7bf272ada3b67aa7c6b6e9a27581883b20905dde022f8
+  normalized_sha256: sha256:b9a610873d134f211eb7bf272ada3b67aa7c6b6e9a27581883b20905dde022f8
+cas_ref: sha256:b9a610873d134f211eb7bf272ada3b67aa7c6b6e9a27581883b20905dde022f8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 规格数量状态加 #5602 文件/commit/blob 引用，仅为覆盖与溯源信息。'
+    previous_atom_id: 8418cc9858d567b7f05f87e2ca41a473f795c238c3c42fd98c3ce0926da7abec
+    next_atom_id: 178b792cb8c51436134eb0e8a230e608886a957c7f0b877e2baf4d2c4c983c69

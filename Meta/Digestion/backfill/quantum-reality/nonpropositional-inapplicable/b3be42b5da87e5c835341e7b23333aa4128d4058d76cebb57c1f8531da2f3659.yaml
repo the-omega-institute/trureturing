@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b3be42b5da87e5c835341e7b23333aa4128d4058d76cebb57c1f8531da2f3659
+  normalized_sha256: sha256:b3be42b5da87e5c835341e7b23333aa4128d4058d76cebb57c1f8531da2f3659
+cas_ref: sha256:b3be42b5da87e5c835341e7b23333aa4128d4058d76cebb57c1f8531da2f3659
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: ADMIT 检查清单与仓库依据的范围说明，没有给出响应正谱或误差界本身的证明断言。
+    previous_atom_id: 41ff46e006bbbf6be35ae9b48769b696c407ab5c190d0b716385d8a71e9e055b
+    next_atom_id: 521c040e7358ef8140e1ac13fa848c3b4f4a2e258a067fa2a53509a1b6fe5063

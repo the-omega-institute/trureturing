@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:41d977147e5cf441f1710fafa7e0b9eedd73f9c27236e87b4c2fdc7e8daf8ab5
+  normalized_sha256: sha256:41d977147e5cf441f1710fafa7e0b9eedd73f9c27236e87b4c2fdc7e8daf8ab5
+cas_ref: sha256:41d977147e5cf441f1710fafa7e0b9eedd73f9c27236e87b4c2fdc7e8daf8ab5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：列出神圣主体、能力测量与传统接口尚未建立的实际对应；属于证据边界。
+    previous_atom_id: 0ca16f2ee3598ad982f9c38bd20cc0dac58c948839cdc6564af44fa6faad0ccb
+    next_atom_id: 5730e0007a28b5a6e25b31614392d5c2483f6cdbc9608b14bacd9f32404cd0c7

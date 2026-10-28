@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d056867a4a5139b11ceaafb3942e9b06ea1ab8c04e629c0715c1218fb82f48a2
+  normalized_sha256: sha256:d056867a4a5139b11ceaafb3942e9b06ea1ab8c04e629c0715c1218fb82f48a2
+cas_ref: sha256:d056867a4a5139b11ceaafb3942e9b06ea1ab8c04e629c0715c1218fb82f48a2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 对 MMM 自身表达范围与检验义务的立场；没有可独立验证的数学等式或不等式。
+    previous_atom_id: 69c018957bc0defa3921627b7a1d4a7a22e02b036b5fddbb5cf2acae7c836694
+    next_atom_id: 95562ccc8b82f847e57e8e69053c6443962fe8f86ba10d6580ae07d307df71e2

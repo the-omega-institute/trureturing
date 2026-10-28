@@ -46,6 +46,30 @@ internal sealed class ActualRobinClockCovarianceDocument : IScribeDocumentDefini
                 + "further arithmetic consumers remain conditional, and "
                 + "no primary-source or literature-priority claim is made.")),
             Describe.Lean(
+                DescribeId.Create("activation-density-integrable"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualRobinClockCovariance.density_integrable"),
+                H("Integrability of the activation density"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For real endpoints s,t with 1<s and s<=t, activationDensity is "
+                    + "interval integrable with respect to volume from s to t. "
+                    + "Continuity on the compact interval proves the assertion, including s=t. "
+                    + "Translation gives integrability of u -> activationDensity(x+u) "
+                    + "on [0,a] whenever x>1 and a>=0."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("price-terms-integrable"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualRobinClockCovariance.price_terms_integrable"),
+                H("Integrability of both logarithmic price terms"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For real endpoints a,b with 1<a and a<=b, both t -> 1/t and "
+                    + "t -> t^(-1)/log(t) are interval integrable with respect to volume "
+                    + "from a to b. The second integrand equals g(t). "
+                    + "Translation therefore supplies the shifted g integrals, and "
+                    + "singleton intervals are included."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-robin-clock-quantitative"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/ActualRobinClockCovariance.actual_clock_quantitative"),
                 H("Actual quantitative covariance, signs and support"),
@@ -105,7 +129,7 @@ internal sealed class ActualRobinClockCovarianceDocument : IScribeDocumentDefini
                 + "2*sum(mu(d)*beta(d)), the squarefree diagonal, d=1, all "
                 + "rows below L and every complementary shift. No one of "
                 + "these unpaid terms is removed by this covariance estimate. "
-                + "Faithful four-slot registration remains unfinished under "
+                + "Four-slot registration of actual_clock_quantitative remains unfinished under "
                 + "the source-owner issue https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-6101507121; no declared_validated state "
                 + "or literature priority is claimed.")))));
 }

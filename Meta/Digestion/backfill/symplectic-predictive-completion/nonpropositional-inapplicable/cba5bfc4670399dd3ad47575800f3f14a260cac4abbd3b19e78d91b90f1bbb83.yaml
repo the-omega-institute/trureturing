@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cba5bfc4670399dd3ad47575800f3f14a260cac4abbd3b19e78d91b90f1bbb83
+  normalized_sha256: sha256:cba5bfc4670399dd3ad47575800f3f14a260cac4abbd3b19e78d91b90f1bbb83
+cas_ref: sha256:cba5bfc4670399dd3ad47575800f3f14a260cac4abbd3b19e78d91b90f1bbb83
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 将旧卷第9节指向本卷第3.5节，属于章节索引。
+    previous_atom_id: e03577a2f5318976b48d3e79e40446acdc103d955867cb9415c276dba86c69d4
+    next_atom_id: 283c163f0bc4186fabb97b4a2161c3ea95443a46f470e45dc838f24200cb2285

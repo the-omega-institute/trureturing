@@ -69,7 +69,7 @@ open Equiv
 variable {X : Type*} [Finite X]
 
 omit [Finite X] in
-private theorem square_of_involutive (p : Perm X)
+theorem square_of_involutive (p : Perm X)
     (hp : Function.Involutive p) : p * p = 1 := by
   ext x
   exact hp x
@@ -242,7 +242,7 @@ variable {X : Type*} [Finite X]
 
 omit [Finite X] in
 /-- Reattaching marked endpoints leaves every interior step unchanged. -/
-private theorem first_visit_reattach (q : Perm X) (S : Set X)
+theorem first_visit_reattach (q : Perm X) (S : Set X)
     [DecidablePred (· ∈ S)] (J : Perm S) (x : S) (n : ℕ)
     (hn : FirstVisit q S (J x) n) :
     FirstVisit (q * J.ofSubtype) S x n ∧
@@ -270,7 +270,7 @@ private theorem first_visit_reattach (q : Perm X) (S : Set X)
 
 /-- A permutation's cycles restricted to a marked subset are exactly the
 cycles of a proved first-return permutation. -/
-private theorem same_cycle_of_first_visit (f : Perm X) (S : Set X) (H : Perm S)
+theorem same_cycle_of_first_visit (f : Perm X) (S : Set X) (H : Perm S)
     (jump : ∀ x : S, ∃ n : ℕ, FirstVisit f S x n ∧ (f ^ n) x = H x)
     (x y : S) : f.SameCycle x y ↔ H.SameCycle x y := by
   classical
@@ -348,6 +348,32 @@ theorem endpoint_pairing_reattach_same_cycle (s r : Perm X)
 
 
 
+
+/-- Actual first-return witnesses after reattachment, retaining the original
+cut-segment length. This is consumed by the weighted tower/cycle inventory bridge. -/
+theorem endpoint_pairing_reattach_return_data (s r : Perm X)
+    (hs : Function.Involutive s) (hr : Function.Involutive r)
+    (J : Perm {z // r z = z}) (x : {z // r z = z}) :
+    ∃ n : ℕ,
+      FirstVisit (s * r) {z | r z = z} (J x) n ∧
+      FirstVisit (s * (r * J.ofSubtype)) {z | r z = z} x n ∧
+      ((s * (r * J.ofSubtype)) ^ n) x =
+        (endpointPairing s r hs hr * J) x := by
+  classical
+  let E : Set X := {z | r z = z}
+  let q : Perm X := s * r
+  let n := visitTime q E (J x) (J x).property
+  have hn : FirstVisit q E (J x) n :=
+    first_visit_visit_time q E (J x) (J x).property
+  obtain ⟨hfirst, hend⟩ := first_visit_reattach q E J x n hn
+  refine ⟨n, hn, ?_, ?_⟩
+  · simpa only [q, mul_assoc] using hfirst
+  · change ((s * (r * J.ofSubtype)) ^ n) x = (nextVisit q E (J x) : X)
+    calc
+      _ = (q ^ n) (J x) := by simpa only [q, mul_assoc] using hend
+      _ = _ := (next_visit_eq_of_first_visit (q := q) (S := E) (J x) hn).symm
+
 #print axioms endpoint_pairing_fixed_point_free
 #print axioms endpoint_pairing_reattach_same_cycle
 end D5.S3.Combinatorics.PerfectMatchings.FiniteEndpointPairing
+

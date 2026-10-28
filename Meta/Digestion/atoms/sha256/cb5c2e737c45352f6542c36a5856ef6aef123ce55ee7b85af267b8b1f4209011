@@ -1,0 +1,21 @@
+## 29. PR3 增补 K：与既有理论的对照
+
+本节不新增数学，不作综述。表中外部文献的对象及结论标 `literature-attested`，与本卷的对应判断标 `repo-derived`；取回与核读强度在 §31 披露。对应只比较操作、观察和成立条件，不把名称相似当作定理。
+
+| 既有对象或定理 | 确切对应 | 确切不对应 | 来源与标签 |
+| --- | --- | --- | --- |
+| Conway，*On Numbers and Games*（1976） | 生日记录递归构造层级，对应本卷的构造深度；数的最简代表与定义 8 的固定代表，都须区别于一个给定构造；游戏在“对一切 $X$”的加法测试中相等，对应定义 16 用测试上下文定义观察等价的做法 | 生日不是档案时刻 $t$；本卷固定截面不承担 Conway 的最简性定理；游戏采用加法测试，本卷量化全部指定的一孔上下文，包括筛选、乘法和部分域失败，不能直接搬用游戏相等判据 | [第二版 DOI 10.1201/9781439864159](https://doi.org/10.1201/9781439864159)，**不是 1976 原版 DOI**。外部对象 `literature-attested`；局部对照 `repo-derived` |
+| Green–Ives–Tannen，*Reconcilable Differences*（2009） | $\mathbb Z$-关系以整数作元组重数，差允许负重数和消去；本卷在总背景平衡下得到 $q(NX)=-q(X)$，可在读数层比较有符号消去 | $N$ 是固定背景中的一元补选择，不等于二元关系差；该整数关系语义不提供本卷保留有序 pair 的非结合来源乘法 | DOI [10.1145/1514894.1514920](https://doi.org/10.1145/1514894.1514920)；整数差语义另见下列 TaPP 文 §4。文献陈述 `literature-attested`；对照 `repo-derived` |
+| Geerts–Poggi，*On Database Query Languages for K-relations*（2010） | 以 $K$-关系考察查询语言及差运算扩展，要求说明注释域和查询操作；本卷也须先固定观察签名才能谈下降 | 本卷未建立同一查询语言或公理组，来源 pair 乘法也未满足交换半环契约，不能直接调用其查询等价结论 | DOI [10.1016/j.jal.2009.09.001](https://doi.org/10.1016/j.jal.2009.09.001)。文献陈述 `literature-attested`；对照 `repo-derived` |
+| Amsterdamer–Deutch–Tannen，*On the Limitations of Provenance for Queries with Difference*（TaPP 2011） | 该文问能否**对每个注释交换半环**扩充关系差，使 Figure 1/2 的 A1–A13 同时成立；结论是否定这个普适要求。A1–A12 的 monus 扩展仍可在某些半环上违反 A13；§3 命题 3.4／推论 3.5 给出具体失败范围。本卷同样须按已声明的运算、公理及量词结算 | Figure 2 的 A10 是 $0-a=0$；§4 明说 $\mathbb Z$ 的差语义不满足 A10、A11。本卷 $N_C$ 是固定背景中的一元补选择，$u=0$ 只导出 $q(NX)=-q(X)$，没有建立 monus 或该文的二元差公理组。**两者是不同的语义任务**；本卷不构成克服、规避、反驳或满足该结果的实例 | [arXiv:1105.2255](https://arxiv.org/abs/1105.2255)，已核读全文及 Figure 2、§3–4。文献断言 `literature-attested`；不同语义任务的对照判断 `repo-derived` |
+| Amsterdamer–Deutch–Tannen，*Provenance for Aggregate Queries*（PODS 2011） | 将来源标注扩展至元组内的聚合值，并通过聚合表达差；与本卷“必须说明读数如何沿操作传播”的要求有局部对应 | 这是聚合查询语义，不是上一行的差运算不可能性论文；本卷没有建立其聚合值注释域、嵌套聚合与查询语言契约 | [arXiv:1101.1110](https://arxiv.org/abs/1101.1110)，与 TaPP 文分列。文献陈述 `literature-attested`；对照 `repo-derived` |
+| Köhler–Ludäscher–Zinn，*First-Order Provenance Games*（2013） | 用查询求值游戏解释来源，赢／输结构参与判定；与本卷用有结构的来源和明确观察解释读数的方向相接 | 本卷来源树不提供求值游戏、合法策略、赢输判据或 why-not 契约；一个 pair 结点不能替代一场求值游戏 | DOI [10.1007/978-3-642-41660-6_20](https://doi.org/10.1007/978-3-642-41660-6_20)；[arXiv:1309.2655](https://arxiv.org/abs/1309.2655)。文献陈述 `literature-attested`；对照 `repo-derived` |
+| Winskel，*Event Structures*（1987） | 用事件出现及因果依赖描述过程，对应本卷 $(E,\prec)$ 的因果层 | 本卷没有冲突关系，允许任意选择 $A\subseteq\Omega$；这些选择不冒充事件结构的合法配置，§1 已给补集不保持向下闭的例子 | DOI [10.1007/3-540-17906-2_31](https://doi.org/10.1007/3-540-17906-2_31)。文献陈述 `literature-attested`；对照 `repo-derived` |
+| Bombelli–Lee–Meyer–Sorkin，*Space-time as a Causal Set*（1987） | 因果偏序承载离散事件的先后结构，对应本卷 $(E,\prec,t)$ 中的有序事件层；本卷另给兼容该序的整数时标 | 仅有有限偏序和时标不提供连续几何重建、Lorentz 体积解释或动力学，不能把任意本卷情境认作已验证的物理时空 | DOI [10.1103/PhysRevLett.59.521](https://doi.org/10.1103/PhysRevLett.59.521)。文献陈述 `literature-attested`；对照 `repo-derived` |
+| Bennett，*Logical Reversibility of Computation*（1973） | 可逆计算要求能够反演计算状态转移；本卷档案保留使部分输入事件仍可追索，是可比较的保存信息问题 | 留有旧事件不足以证明反演：§3 的 $X\boxtimes0_\varnothing$ 遗忘 $A_X$，不同旧选择产生相同输出。因此“留历史所以可逆”越界 | DOI [10.1147/rd.176.0525](https://doi.org/10.1147/rd.176.0525)。文献陈述 `literature-attested`；本卷失败见证与对照 `repo-derived` |
+| Baez–Dolan，*Categorification*；Baez，*The Mysteries of Counting* | 结构到数值的压缩，以及在具备相应结构时推广计数，可与本卷从丰富表示取数值商、有符号读数的形式相比较 | 范畴化还需态射、函子和相干条件；Euler 示性数需相应拓扑或分次／链复形契约。本卷没有建立这些契约，不宣称已范畴化，也不把任意 $q$ 称为 Euler 示性数 | [arXiv:math/9802029](https://arxiv.org/abs/math/9802029)；Baez [讲座稳定入口](https://math.ucr.edu/home/baez/counting/)。文献陈述 `literature-attested`；对照 `repo-derived` |
+
+本节全部对应为局部对应，不构成“这些理论共同导出本卷”的叙事。
+
+<a id="pr3-quantum-boundaries"></a>
+

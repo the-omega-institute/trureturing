@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3ab0c31e514027267e954e34029c6db5beaadb4c4e74f604709e4f0d231da4fd
+  normalized_sha256: sha256:3ab0c31e514027267e954e34029c6db5beaadb4c4e74f604709e4f0d231da4fd
+cas_ref: sha256:3ab0c31e514027267e954e34029c6db5beaadb4c4e74f604709e4f0d231da4fd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：区分举石问题的时间、规范、知识和后继读法；属于模型语义选择。
+    previous_atom_id: 819e5a7dcffc224c9053fd99163e10831a797203e3b42549fc6d035108636f0f
+    next_atom_id: 9e09c70c241c07fbb06a5442d426cfa2279bcaa4c62b30c13d34005de6e8bcd9

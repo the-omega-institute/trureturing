@@ -1,0 +1,15 @@
+**Theorem 51.3 (the explicit finite separating family).** The $(I+1)(2L-1)$ indexed experiments in (51.1) separate every distinct rational pair $x,y$ on the earned original tree. From owned candidates $x,y$, a finite exact selector chooses one experiment whose actual Read(1) values differ. Executing only that choice uses at most one successful growth and at most $2I+3$ Ticks, and reads only the original first terminal.
+
+**Proof.** We use the all-leaf forcing result of §31.1 and NLBA §3.2 as a supplier. In its present coordinates, if $J$ has the terminal unit columns, then
+
+$$
+K=[J,AJ,\ldots,A^IJ]\quad\text{has rank }N.
+\tag{51.5}
+$$
+
+The hypotheses are exactly a finite native material tree, unit nonzero edges and all its terminal leaves. With $L\ge3$ the material root is a branch, so the rooted terminal set is also the set of all degree-one vertices. For clarity, the supplied forcing argument starts with all terminal coordinate rows. A deepest unforced vertex has a forced child whose other neighbors are already forced. Its adjacency row expresses that one remaining neighbor's coordinate as its row multiplied by $A$, minus its other known neighbor rows. At most $I$ internal vertices are added, so all resulting rows belong to the span of terminal rows times $A^j$, $0\le j\le I$. This is precisely (51.5), rather than a new general observability theorem.
+
+If all the experiment scalars agree on $x,y$, the $V_j$ give $(A^j(x-y))_e=0$. Equality of both $W^+_{z,j}$ and $W^-_{z,j}$, combined with (51.3), gives $(A^j(x-y))_z=0$ for every other terminal. Equation (51.5) now gives $x-y=0$, a contradiction. Thus a differing experiment exists. Enumerate the finite list in a fixed order, compute its two exact rational scalar predictions from the owned candidates, and choose the first difference. This finite selector needs neither a hidden-field oracle nor an actually observed alternative table.
+
+The path joining two distinct leaves contains only internal vertices between them, so its length is at most $I+1$. Thus $\kappa_z\le I+2$, and either $W$ has $j+\kappa_z+1\le2I+3$ Ticks and exactly one successful growth. A $V_j$ has $j\le I$ Ticks and no growth. The roster argument in Definition 51.1 makes their only Read exactly Read(1) at the persisting original $e$. $\square$
+

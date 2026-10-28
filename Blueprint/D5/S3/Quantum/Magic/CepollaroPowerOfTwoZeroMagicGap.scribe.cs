@@ -15,6 +15,22 @@ internal sealed class CepollaroPowerOfTwoZeroMagicGapDocument : IScribeDocumentD
         "For every qudit dimension divisible by four, and so for every power of two at least four, some three-dimensional subspace has zero average stabilizer entropy gap.",
         H("Zero-magic-gap three-dimensional subspaces in every power-of-two dimension"),
         Blocks(
+            Node("weyl-displacement-entry", "Entries of an unphased Weyl displacement",
+                "displacement_entry", Disp(
+                    For(V("d"), Seq(Mathbb, Grp(V("N"))),
+                        Imp(Seq(V("d"), Neq, D(0)),
+                            For(V("a"), ZModD(), For(V("b"), ZModD(),
+                                For(V("x"), ZModD(), For(V("y"), ZModD(),
+                                    Equal(Call("displacement", V("d"), V("a"), V("b"), V("x"), V("y")),
+                                        Call("ite", Equal(Call("val", V("x")),
+                                            Call("mod", Plus2(Call("val", V("y")), Call("val", V("a"))), V("d"))),
+                                            Pow(Call("windowRoot", V("d")),
+                                                Times2(Call("val", V("b")), Call("val", V("y")))), D(0)))))))))),
+                "For every nonzero natural dimension d and a, b, x, y in ZMod d, the unphased word "
+                    + "X to val(a) times Z to val(b) has one nonzero entry per column. "
+                    + "The column y is shifted by a and its phase is windowRoot(d) to val(b) times val(y). "
+                    + "Here displacement denotes WeylDisplacement.displacement, before the tau phase of paperDisplacement.",
+                DescribeRole.Theorem, Repo()),
             Node("displacement-phase", "The displacement phase", "tau", Disp(Equal(Call("tau", V("d")),
                 Seq(Minus, Call("exp", Frac2(Seq(Pi, Sp, V("i")), V("d")))))),
                 "The phase τ = −e^{iπ/d} of the displacement operators, as in §II.A of arXiv:2512.23013v1.",

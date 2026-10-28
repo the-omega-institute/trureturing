@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2fe7e34655180868fcb3b08a49b8adffdba0c03afeef1d42029a2de7a3662aec
+  normalized_sha256: sha256:2fe7e34655180868fcb3b08a49b8adffdba0c03afeef1d42029a2de7a3662aec
+cas_ref: sha256:2fe7e34655180868fcb3b08a49b8adffdba0c03afeef1d42029a2de7a3662aec
+coverage_gids:
+  - gid: D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition.oddObservation
+    target_statement_id: sha256:dbe45707e1812be97cd0be5bbf28193f6d9a6d6435d9446a71206487276dd59e
+receipts:
+  unresolved_subitems: []

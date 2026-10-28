@@ -1,0 +1,46 @@
+### 2.4 ANCHOR：实际且证明相关的锚
+
+给定：
+
+\[
+q:X\to B,\qquad b:B,
+\]
+
+先定义依赖余纤维：
+
+\[
+\boxed{
+R_q(b)
+=
+\sum_{x:X}(q(x)=b).
+}
+\]
+
+一个锚点类型是：
+
+\[
+\operatorname{Anchor}(q,b)=R_q(b).
+\]
+
+若还要求状态准入 \(A:X\to\mathsf{Prop}\)，则：
+
+\[
+\boxed{
+\operatorname{AdmissibleAnchor}(q,A,b)
+=
+\sum_{a:R_q(b)}A(\pi_Xa).
+}
+\]
+
+ANCHOR 的**类型**可以由 CUT 和 ADMIT 定义；但该类型中的一个**具体项**不能由定义凭空产生。
+
+所以 ANCHOR 的地位是：
+
+\[
+\boxed{
+\text{语法上是依赖见证，语义上是不可由结构自动替代的实际数据。}
+}
+\]
+
+---
+

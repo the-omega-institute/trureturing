@@ -76,7 +76,43 @@ $$\forall m \in \mathbb{N},\; \forall x \in \operatorname{Coord}\left(m + 1\righ
 
 The Lean construction supplies the four linearity proofs needed to inhabit Product(m+1).
 
-**Theorem 1.7 (The complete positive family and its exact embedding dimension).**
+**Definition 1.7 (A linear structure map defines an evolution product).**
+
+$$\forall n \in \mathbb{N},\; \forall M \in \operatorname{LinearMap}\left(\mathbb{C}, \operatorname{Coord}\left(n\right), \operatorname{Coord}\left(n\right)\right),\; \forall x \in \operatorname{Coord}\left(n\right),\; \forall y \in \operatorname{Coord}\left(n\right),\; \operatorname{coordinateProduct}\left(M\right)\left(x, y\right) = M\left(x \cdot y\right)$$
+
+*Formalization.* `D5/S3/QuadraticForms/EvolutionAlgebras/HuEvolutionJordanFamily.coordinateProduct` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any complex linear structure map M, multiply coordinates first and then apply M. This gives a bilinear product with zero mixed standard-basis products.
+
+**Theorem 1.8 (The standard coordinate law has a natural basis).**
+
+$$\forall n \in \mathbb{N},\; \forall M \in \operatorname{LinearMap}\left(\mathbb{C}, \operatorname{Coord}\left(n\right), \operatorname{Coord}\left(n\right)\right),\; \operatorname{hasNaturalBasis}\left(\operatorname{coordinateProduct}\left(M\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/EvolutionAlgebras/HuEvolutionJordanFamily.coordinate_product_natural` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The coordinate basis is natural for every linear structure map: the coordinatewise product of distinct coordinate vectors is zero.
+
+**Theorem 1.9 (The entire product span is the structure-map range).**
+
+$$\forall n \in \mathbb{N},\; \forall M \in \operatorname{LinearMap}\left(\mathbb{C}, \operatorname{Coord}\left(n\right), \operatorname{Coord}\left(n\right)\right),\; \operatorname{square}\left(\operatorname{coordinateProduct}\left(M\right), \operatorname{top}\right) = \operatorname{range}\left(M\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/EvolutionAlgebras/HuEvolutionJordanFamily.coordinate_product_square` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every pair product lies in range(M). Conversely each image of a coordinate vector is its square and these images span range(M). Thus invertible structure maps give perfect products.
+
+**Theorem 1.10 (The complete positive family and its exact embedding dimension).**
 
 $$\forall m \in \mathbb{N},\; (1 \le m) \Rightarrow \left(\exists mu \in \operatorname{Product}\left(m + 1\right),\; (\operatorname{jordanLaw}\left(m, mu\right)) \land ((\operatorname{commutative}\left(mu\right)) \land ((\operatorname{minimalPerfect}\left(mu\right)) \land ((\neg \operatorname{hasNaturalBasis}\left(mu\right)) \land ((\operatorname{hasStableSquareEmbedding}\left(mu, 2 \cdot m + 1\right)) \land (\operatorname{isEmbeddingDimension}\left(mu, 2 \cdot m + 1\right))))))\right)$$
 
@@ -102,6 +138,9 @@ The square-zero hyperplane has rank m. The general lower bound therefore gives 2
 
 ## References
 
+- Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/HuEvolutionJordanFamily.coordinateProduct`
+- Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/HuEvolutionJordanFamily.coordinate_product_natural`
+- Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/HuEvolutionJordanFamily.coordinate_product_square`
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/HuEvolutionJordanFamily.hasStableSquareEmbedding`
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/HuEvolutionJordanFamily.isEmbeddingDimension`
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/HuEvolutionJordanFamily.jordan`

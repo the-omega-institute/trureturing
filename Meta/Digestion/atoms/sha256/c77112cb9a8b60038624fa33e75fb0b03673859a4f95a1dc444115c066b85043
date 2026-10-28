@@ -1,0 +1,49 @@
+**定义 44.1（有限硬核 Gibbs 场与静态响应）。** 设 \(G=(V,E)\) 是有限简单图，\(\mathcal I_G(V)\) 为其独立集族。给定严格正的顶点活动
+\[
+\lambda_v=e^{\theta_v}>0,\qquad v\in V,
+\]
+定义
+\[
+Z(\theta)=\sum_{S\in\mathcal I_G(V)}
+ \exp\!\left(\sum_{v\in S}\theta_v\right),
+\qquad
+p_\theta(S)=\frac{\exp(\sum_{v\in S}\theta_v)}{Z(\theta)}.
+\]
+令
+\[
+\eta_v(S)={\bf1}_{\{v\in S\}},\qquad
+N_f(S)=\sum_{v\in V}f_v\eta_v(S).
+\]
+对任意随机变量 \(F\) 写 \(\langle F\rangle_\theta\) 和
+\(\operatorname{Cov}_\theta(F,H)\) 表示在 \(p_\theta\) 下的期望与协方差。对场 \(h=(h_v)_{v\in V}\)，令
+\[
+N_h=\sum_{v\in V}h_v\eta_v.
+\]
+沿活动的对数方向定义静态响应
+\[
+\mathcal R^{\mathrm{stat}}_{F,h}(\theta)
+ =
+ \left.\frac{d}{d\varepsilon}
+ \langle F\rangle_{\theta+\varepsilon h}\right|_{\varepsilon=0}.
+\]
+
+定义顶点涨落核
+\[
+\mathcal C_\theta(u,v)
+ =\operatorname{Cov}_\theta(\eta_u,\eta_v).
+\]
+它诱导有限维算子
+\[
+(\mathcal C_\theta h)_v
+ =\sum_{u\in V}\mathcal C_\theta(v,u)h_u.
+\]
+这里的 \(\mathcal C_\theta\) 首先是协方差核或静态易感核。只有在另行给出可逆线性算子 \(L_\theta\)、源算子 \(Q_\theta\) 以及
+\[
+L_\theta\mathcal C_\theta=Q_\theta
+\]
+时，才能把它写成 Green 表示
+\[
+\mathcal C_\theta=L_\theta^{-1}Q_\theta.
+\]
+若 \(Q_\theta=I\)，才得到通常意义的 \(L_\theta^{-1}\) Green 算子。
+

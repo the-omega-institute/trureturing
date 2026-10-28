@@ -1,0 +1,73 @@
+**假设 5.1（全域局部关系包）。** $K$ 是有限维实正定内积空间，至少含两个独立方向。给定全域双线性 $B:K\times K\to K$，要求三线性形式 $T(u,v,w)=\langle B(u,v),w\rangle_K$ 完全交错，并在同一长度、面积标定下满足
+
+$$
+\|B(u,v)\|_K^2
+=\|u\|_K^2\|v\|_K^2-\langle u,v\rangle_K^2
+\qquad(u,v\in K).
+$$
+
+再要求 Jacobi 循环式
+
+$$
+\mathcal J(u,v,w)
+=B(u,B(v,w))+B(v,B(w,u))+B(w,B(u,v))=0.
+$$
+
+不预先给叉积，不假设对完整 $SO(K)$ 等变，也不把有限原子值的核对替换成全域条件。非归一化关系 $B_0=\kappa B$ 的面积平方多一个 $\kappa^2$；除以实际非零有符号 $\kappa$ 才得到此合同。符号和尺度的供应范围沿用 [STABLE] §§4–6。
+
+用于主桥的三维选择是已知向量积结果的中间输入：Darpö Theorem 1 给维数 $0,1,3,7$，Baez node14 给三维 Lie 括号及七维非 Lie 边界，见 [VP]。以下保留这份面积—Jacobi 选择的初等证明，限定其全部条件；它不是新的向量积分类。
+
+置 $L_u(v)=B(u,v)$。完全交错性及内积非退化给 $B(u,v)=-B(v,u)$，并且
+
+$$
+\langle L_uv,w\rangle_K=-\langle v,L_uw\rangle_K,
+\qquad L_u^*=-L_u.
+$$
+
+对面积二次式在 $v,w$ 处极化，减去两个平方项再除二，得
+
+$$
+\langle L_uv,L_uw\rangle_K
+=\|u\|_K^2\langle v,w\rangle_K
+-\langle u,v\rangle_K\langle u,w\rangle_K.
+$$
+
+左侧为 $\langle -L_u^2v,w\rangle_K$，对全部 $w$ 成立，所以
+
+$$
+L_u^2v=\langle u,v\rangle_Ku-\|u\|_K^2v. \tag{5.1}
+$$
+
+取正交单位 $u,v$，令 $c_0=B(u,v)$。交错性给 $c_0\perp u,v$，面积律给 $\|c_0\|_K=1$，因此至少三维。假设仍有单位 $z\perp u,v,c_0$。对 (5.1) 中 $u$ 作极化，得全部 $w$ 上的式子
+
+$$
+(L_uL_v+L_vL_u)w
+=\langle u,w\rangle_Kv+\langle v,w\rangle_Ku
+-2\langle u,v\rangle_Kw.
+$$
+
+在该 $z$ 上右侧零。另一方面 Jacobi 与反对称性给
+
+$$
+\mathcal J(u,v,w)
+=(L_uL_v-L_vL_u-L_{B(u,v)})w=0,
+\qquad [L_u,L_v]=L_{B(u,v)}.
+$$
+
+相减与相加于是得到
+
+$$
+L_{c_0}z=2L_uL_vz. \tag{5.2}
+$$
+
+面积律给 $\|L_{c_0}z\|_K=1$、$\|L_vz\|_K=1$。还需检查第二次作用的真实垂直条件：
+
+$$
+\langle u,L_vz\rangle_K
+=T(v,z,u)=T(u,v,z)=\langle c_0,z\rangle_K=0.
+$$
+
+三输入循环置换是偶置换。因此面积律再给 $\|L_uL_vz\|_K=1$。(5.2) 左右范数分别为一和二，矛盾。有限维性使不存在这样的第四正交方向等价于 $\dim K\le3$，故恰为三。
+
+在任一已选正向正交单位基 $f_1,f_2,f_3$ 上，完全交错三形式由 $\kappa=T(f_1,f_2,f_3)$ 决定。交错展开给 $T=\kappa\operatorname{vol}_K$，面积律在 $f_1,f_2$ 上给 $\kappa^2=1$。所以 $B=\kappa\times_K$；选取使 $\kappa=+1$ 的定向后，$B$ 才是该定向的普通叉积。若定向已固定，则必须保留 $\kappa=\pm1$，不能只靠范数删去符号。
+

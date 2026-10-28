@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:84931afee066f1b61209e5da7e14c6466a690684e708aa90331376b5d05f0eec
+  normalized_sha256: sha256:84931afee066f1b61209e5da7e14c6466a690684e708aa90331376b5d05f0eec
+cas_ref: sha256:84931afee066f1b61209e5da7e14c6466a690684e708aa90331376b5d05f0eec
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “跨深度兼容”是完成桥待核对条件的名词项，不断言某族已经兼容。
+    previous_atom_id: 8827144b9017c4b78107a90ff1f57ee6e89a58f125b98254fd43ff745650c3a1
+    next_atom_id: 9cef73725cd3af225675187db9c172b736f6d153899c62ecb045dc3a1ed7235b

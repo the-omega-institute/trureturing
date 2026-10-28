@@ -1,0 +1,32 @@
+## 定理 13.2：抽象—具体化对应
+
+对任意 $S\subseteq X$、$U\subseteq B$：
+
+$$
+\boxed{
+\mathsf A_\eta(S)\subseteq U
+\iff
+S\subseteq\mathsf C_\eta(U).
+}
+$$
+
+而且：
+
+$$
+S\subseteq\operatorname{Sat}_\eta(S),
+$$
+
+$$
+S\subseteq T
+\Longrightarrow
+\operatorname{Sat}_\eta(S)
+\subseteq
+\operatorname{Sat}_\eta(T),
+$$
+
+$$
+\operatorname{Sat}_\eta^2
+=
+\operatorname{Sat}_\eta.
+$$
+

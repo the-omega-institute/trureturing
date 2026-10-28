@@ -1,0 +1,36 @@
+**Definition 3.9 (all actual calibration cells).** Tensor every system map below with $\operatorname{id}_Z$. Write
+
+$$
+\begin{gathered}
+\mathcal S_{x_i}=C_{x_i}^\gamma\circ\Theta^9,\qquad
+E_{x,y}=(\mathcal G_{y_m}\circ\cdots\circ\mathcal G_{y_1}
+          \circ\mathcal S_{x_{B_0}}\circ\cdots\circ\mathcal S_{x_1}
+          \otimes\operatorname{id}_Z)(\rho_0\otimes\zeta_Z),\\
+c=(x,y),\qquad a(c)=1_{\{\text{(3.12) holds}\}},\qquad
+\mu_c=\operatorname{tr}E_c,\qquad E_c^Z=\operatorname{tr}_Q E_c.
+\end{gathered}
+\tag{3.20}
+$$
+
+Here $\zeta_Z$ is the actual supplied untouched reference state. Since $\rho_0$ is pure, every extension with that original system marginal has this product form; no correlated initial preparation is being added. Conditional correlations created later, and old classical tapes, are covered by Lemma 3.5. Retain the whole $c$, its deterministic counters and flag, not just the sufficient statistic $K_+$.
+
+For a task word $v$, let $b$ range over all its actual g/F bit strings. Let $\mathcal F_{v,b}^\gamma$ be the chronological product of $\operatorname{Ad}_N$, $A_j$ or $C_y^\gamma$ prescribed by $v,b$. A word of length zero has the identity map and one empty output. The complete accessible mass-one instrument has rejection cells
+
+$$
+|c,0\rangle\langle c,0|\otimes E_c
+\quad(a(c)=0)
+\tag{3.21}
+$$
+
+and accepted cells
+
+$$
+|c,1,b\rangle\langle c,1,b|\otimes
+ \bigl((\mathcal F_{v,b}^\gamma\circ\Theta^{L_0})
+                  \otimes\operatorname{id}_Z\bigr)(E_c)
+\quad(a(c)=1).
+\tag{3.22}
+$$
+
+Deterministic controller work, retained fixed inputs, cursor values and the annotations of §3.4 are attached to each classical cell by their specified common update. Equations (3.20)–(3.22) include every branch, its complete live-system and reference successor and the failed gate's actual output. No zero cell is divided by its mass. Summing traces over all $c,b$ gives one, since each complete stage is trace preserving. Physical transport is by $B$ at every step; $\widetilde NB=BN$ and the branch intertwining identities prove this by induction, preserving all masses, references and successors. The original terminal effects are not used as unspecified post-measurement channels.
+

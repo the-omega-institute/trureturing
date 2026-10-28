@@ -109,6 +109,14 @@ original-statement reconstruction. The unfinished audit is disclosed at
 https://github.com/the-omega-institute/trureturing/issues/16520; that exception
 waives no other delivery duty.
 
+The six exposed helper audits remain unfinished at
+https://github.com/the-omega-institute/trureturing/issues/16571.
+The directly consumed `coeff_transform` and `T_window` helper audits have
+their separate scope at
+https://github.com/the-omega-institute/trureturing/issues/16582.
+These scopes supply no validated registration and do not change the original
+three-target scope at issue 16520.
+
 Unmet delivery duties: complete canonical local admission, the mandatory
 independent publication review triplet, exact-current-head required CI,
 MERGED status and subsequent dev verification remain necessary. The unit is

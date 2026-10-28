@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2b84bb2de525825c02437b80ed1e15b7ea74fb10011012dd3c450bd7a72e2e23
+  normalized_sha256: sha256:2b84bb2de525825c02437b80ed1e15b7ea74fb10011012dd3c450bd7a72e2e23
+cas_ref: sha256:2b84bb2de525825c02437b80ed1e15b7ea74fb10011012dd3c450bd7a72e2e23
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该行位于“必须证明的结论”栏，仅列算子钟律的正性、二次性与插值证明任务，未断言这些任务已成立。
+    previous_atom_id: 502f1f8c94be9de276206475f22726f8232e1b9ab8478f6e5e7c244273aa7790
+    next_atom_id: 75538b2a4edabdf8e25cfe07da9ebb9a68c23378f29d19f813e6752200081619

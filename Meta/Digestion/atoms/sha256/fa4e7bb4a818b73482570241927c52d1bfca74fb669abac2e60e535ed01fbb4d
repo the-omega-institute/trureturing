@@ -1,0 +1,44 @@
+**Definition 34.1 (Fixed polynomial presentation).** Use exactly
+$D,a_0,a_1,a_2,z_*,f,k,F_0,R$ of (31.1), (31.3)–(31.4),
+(31.7)–(31.8), with the same integer normalization of $R$. Put
+
+$$
+K=4k,\qquad
+S=\operatorname{coeff}_{d^5,d^4,\ldots,1}
+       (d^3f,d^2f,df,f,dK,K).
+\tag{34.1}
+$$
+
+Thus $S$ has six rows and six columns, retained under specialization.
+Lemmas 31.2–31.3 give the following inputs:
+
+$$
+\begin{gathered}
+\det S=256D^8F_0^2R,\qquad \deg_xR\le18,\\
+R(x,p,v)\not\equiv0\quad\text{for every }(p,v)\in\mathbb C^2,\\
+L_f=[d^2]f\in\mathbb C[x],\quad
+L_K=[d^4]K\in\mathbb C[x],\quad \gcd(L_f,L_K)=1.
+\end{gathered}
+\tag{34.2}
+$$
+
+The factor $256$ follows from multiplying the last two rows of (31.6)
+by $4$. In particular, $L_K=4L_k$; its coprimality with $L_f$ is
+the same leading-coefficient coprimality certified by the residue $87$
+in Lemma 31.2. The normalization also agrees with
+[support IX, Proposition 4.2](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md#4-the-fixed-finite-carrier-and-its-drift-equation).
+These determinant and global noncollapse results are inputs here.
+
+For fixed complex $(p,v)$ define
+
+$$
+\mathcal A_{p,v}=\mathbb C[x,d,D^{-1}]/(f,K),\qquad
+\operatorname{strip}_D(q)=
+\frac{q}{\displaystyle\prod_{c\in\{0,-1,-2\}}(x-c)^{\operatorname{ord}_{x=c}q}}
+\quad(0\ne q\in\mathbb C[x]).
+\tag{34.3}
+$$
+
+The strip is immaterial up to a nonzero constant; it removes all
+multiplicities at the three zeros of $D$.
+

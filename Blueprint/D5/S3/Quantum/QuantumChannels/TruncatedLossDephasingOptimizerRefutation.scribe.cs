@@ -34,6 +34,19 @@ internal sealed class TruncatedLossDephasingOptimizerRefutationDocument : IScrib
                 "The binomial candidates obey 1<=M<=K, 0<=mu<=1 and M mu=N. The other candidates are kappaKet(K,N,alpha) for any real alpha. Equality here is equality of ket functions; the conjecture tests their outer-product matrices."),
             Node("claim", "Conjecture 1", ClaimFormula(),
                 "Conjecture 1, section IV, arXiv v1 PDF p. 4: \"" + Quote + "\" The encoding quantifies over K>=1, N in [0,K], epsilon in [0,1] and t>=0. A candidate attains the minimum if its output entropy is no greater than the output entropy of every fixed-energy density input."),
+            Describe.Lean(
+                DescribeId.Create("qutritmoe-pair-entropy-le"),
+                DeclarationHandle.Create(Prefix + "pair_entropy_le"),
+                H("Two-point spreading decreases entropy"),
+                StatementSource.FromAuthor(PairEntropyLeFormula()),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For real u, v, p and q, assume 0 <= u < v, u <= p <= v and "
+                        + "p + q = u + v. The two inner points p and q are convex "
+                        + "combinations of u and v with exchanged weights. Applying "
+                        + "the concavity of Real.negMulLog to both combinations and "
+                        + "adding gives the entropy inequality, including u = 0."))),
+                DescribeRole.Theorem),
             Node("result", "Qutrit refutation", Disp(new Formula.Not(F.Id("claim"))),
                 "Take K=2, N=3/2, epsilon=6/7, t=(7/2)log(2), and psi=(|1>+|2>)/sqrt(2). The only binomial candidate is M=2, mu=3/4. Every kappa phase is covered by diagonal unitary conjugation. The psi output has an eigenvalue above 1/2 and one below 1/8, whereas all eigenvalues of each candidate output lie strictly between 1/8 and 1/2. Trace-one strict majorization and strict concavity of -x log(x) give smaller entropy for psi. The defining Kraus equations give the kappa output's off-diagonal coefficient sqrt(3)/32768; the displayed section-III coefficient in the source differs from those equations. The result excludes these candidate families as minimizers; it does not assert global optimality of psi. The proof applies the exponential-series, positive-definiteness and strict-concavity results to the displayed instance.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
@@ -88,6 +101,18 @@ internal sealed class TruncatedLossDephasingOptimizerRefutationDocument : IScrib
     private static Formula Fof => Sub(D(1), ExpOf(Mul(Mul(new Formula.Negate(D(2)), Sub(D(1), E)), T)));
     private static Formula Channel(Formula rho) => Call("lossDephasingChannel", K, E, T, rho);
     private static Formula Entropy(Formula rho) => Call("vonNeumannEntropy", K, rho);
+
+    private static Formula PairEntropyLeFormula()
+    {
+        Formula u = F.Id("u"), v = F.Id("v"), p = F.Id("p"), q = F.Id("q");
+        Formula NegMulLog(Formula x) => At(Seq(Operatorname,
+            Grp(F.Id("Real"), Dot, F.Id("negMulLog"))), x);
+        var bound = LeqOf(Add(NegMulLog(u), NegMulLog(v)), Add(NegMulLog(p), NegMulLog(q)));
+        var strict = new Formula.Relation(u, FormulaRelationOperator.LessThan, v);
+        return Disp(All("u", Real(), All("v", Real(), All("p", Real(), All("q", Real(),
+            Imp(LeqOf(D(0), u), Imp(strict, Imp(LeqOf(u, p), Imp(LeqOf(p, v),
+                Imp(Eqn(Add(p, q), Add(u, v)), bound))))))))));
+    }
 
     private static Formula AmplitudeFormula()
     {

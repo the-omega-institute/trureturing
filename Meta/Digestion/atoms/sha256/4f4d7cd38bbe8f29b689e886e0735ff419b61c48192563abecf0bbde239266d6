@@ -1,0 +1,113 @@
+**Corollary 12.6 (fixed acquisition cannot cover all supplied sizes).**
+There is no family of predictors satisfying (12.14) with $\delta=1/4$
+for every integer $k\ge20$ under these original schedules, no additional
+acquisition before prediction, and a common finite upper bound $M$ on
+the number of acquisition pair attempts. This remains true if the
+predictor and the public choice of schedule and $N$ depend on $k$.
+A common finite upper bound on training preparations also rules out
+such a family.
+
+Proof. Theorem 12.5 requires
+$m\ge k^4\log2/1600$, which exceeds any fixed $M$ for some integer
+$k$. Each pair attempt uses two preparations, so a finite preparation
+bound implies a finite pair-attempt bound. $\square$
+
+This corollary quantifies over both unknown sources for each supplied
+size. It does not assert failure for every fixed source, a fixed
+consumer, or training budgets increasing with $k$. It concerns
+prediction of one specified event with a two-source promise. It neither
+certifies all events simultaneously nor prohibits further sampling of
+the same service. The actual information-bearing record has many bits;
+the obstruction is its statistical relation to this consumer, not the
+finiteness of a program or a bound on all possible memory.
+
+Attribution and scope of Theorems 12.2 and 12.5. The contribution is the
+correspondence (12.4)–(12.8) for the original complete flagged
+acquisition and (12.11)–(12.13) for a particular same-source real
+continuation, yielding the horizon-dependent necessary budget (12.15).
+This is a repository-derived synthesis. Symmetric-mixture cancellation,
+product second moments, total-variation contraction, two-point testing
+and Chebyshev's inequality are reused ingredients, not new statistical
+principles or a global originality claim.
+[Phase Boundary §267](RECURSIVE_RELATIONAL_OBSERVATION_PHASE_BOUNDARY.md#267-唯一混合来源在完整重置接口上的八次方副本预算)
+compares access to its fixed input/reference states $\Omega_j$ and
+complete reset outputs $\sigma_j$, with budgets $h^{-2}$ and $h^{-8}$.
+Those states and reset channels are not the five-mode preparations and
+pair filters (12.4).
+[Its §283](RECURSIVE_RELATIONAL_OBSERVATION_PHASE_BOUNDARY.md#283-有限共同相位块的最优重置副本预算与径向信息)
+supplies the symmetric-binomial mechanism with block length $B$ and
+bias $z$, then a complete-block adaptive reset budget. Here its
+second-moment ingredient is used only with $B=2,z=5\theta$, conditional
+on the both-active spectral mask of weight $4/25$. There is no refreshed
+Haar phase, complete-block charging rule or transfer of its adaptive
+upper/lower bounds to this schedule. The spectral simulation is not an
+acquired program in either setting.
+
+[AURIC–Langlands](AURIC_LANGLANDS_STRUCTURE_ACQUISITION_AND_SPECTRAL_EXTENSION_THEORY.md),
+Theorem 3.5, already supplies logarithmic budget inversion from a
+likelihood second moment, while Theorem 4.2 and Proposition 6.3 give
+conjugation classification and full quadratic-tensor acquisition at the
+level of laws. Its Proposition 4.4 supplies stability for the full tensor,
+not this original record's numerical inverse. Its calibrated nonreal
+reference in §5 is a different supplied resource. Its representation
+splitting and conditional Hecke naturality in §§6–7 introduce no
+implementation of (12.11). The private `real_trace_pairing`,
+`statistics_iff_real` and `two_copy_classification`, together with public
+`real_copy_classification`, in
+[RealCopyConjugation](../../../D5/S3/Quantum/Fibers/RealCopyConjugation.lean)
+and its [owning Scribe](../../../Blueprint/D5/S3/Quantum/Fibers/RealCopyConjugation.scribe.cs)
+already express the real-statistics/conjugation suppliers; they assert
+no acquired-record budget for this consumer.
+
+Zhuang, [*On stability of generalized phase retrieval and generalized affine
+phase retrieval*, §2, Theorem 2.3](https://doi.org/10.1186/s13660-019-1968-z),
+gives the bi-Lipschitz estimate for a phase-retrievable real quadratic
+map $M_A$ in the metric $\|x+y\|\|x-y\|$. That stability supplier does
+not specify the finite sampling law, conditioning margins or an
+executable numerical decoder for the present filtered panels. The
+law/record distinction and lawful-output requirements also remain as
+in [Recovery Geometry §§1–3](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md).
+No new inverse-stability or sufficient all-source sampling theorem is
+asserted here.
+
+The [Native Structural Storage Atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md),
+Theorems 6.2 and 7.3 and §9, transports complete actual native
+representations and distinguishes their mathematical inverses from
+receiver acquisition. [Native Paid View Conversion](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md),
+Assumption 1.2 and §7, instead uses its declared fixed-height entrance
+and added installation/conversion services. Their complete-history and
+callable-conversion tasks are not this stochastic source's terminal
+record prediction task. The added result here is an explicit necessary
+budget between the latter record and a supplied later real event;
+it neither replaces those native constructions nor derives the present
+source, joint carrier or detector from them.
+
+In particular, Proposition 10.4's exact-decoding obstruction remains
+unchanged; it uses common support, whereas (12.15) quantifies approximate
+prediction at a growing supplied size. Proposition 10.2 and §11 still
+supply determination from exact panel laws: recover the same source
+orbit and evaluate $\operatorname{tr}(E_k\rho^{\otimes r})$ using one
+common representative. The two exact-law recovery routes agree by
+(10.6) and Proposition 11.2, and the real event removes their one common
+sign choice. Theorem 12.5 adds a necessary acquisition condition for
+that task; it supplies neither an inverse from one finite word nor an
+installed, calibrated and authorized implementation of the exact-law
+calculation.
+
+The fixed-$N$ hypotheses do not cover arbitrary adaptive configurations,
+retry schemes or stopping-time/expected-budget contracts. Surviving
+source-dependent quantum memory, new source-dependent advice, extra
+observations or a nonreal reference change the acquisition interface.
+No finite arithmetic or calibration-robust guarantee follows from the
+ideal matrices. Mathematical realness of $E_k$ does not generate it
+from the original menu or from native $\alpha/\beta$ constructors.
+Mode correlations, ordered control responses, boundary laws and the
+actual retained word keep their independent meanings in Definition 6.3;
+these results do not recover physical space or time, a realized past,
+or retained memory from a probability law. The fixed-$G_{gc}$,
+original-$Q$, parked-consumer, unchanged-initialization, original-root
+late-target, $M_1(D)$ and sharp-$\lambda$ obligations, and the all-size
+positive acquisition/certification bridges retain their original scopes.
+The joint four-expression recovery problem remains separate from this
+necessary budget for a supplied family of continuations.
+

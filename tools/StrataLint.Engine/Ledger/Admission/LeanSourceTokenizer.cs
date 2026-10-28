@@ -3,7 +3,11 @@ using System.Globalization;
 
 namespace StrataLint.Engine;
 
-internal sealed record LeanSourceToken(string Text, int Line, int Column);
+internal sealed record LeanSourceToken(string Text, int Line, int Column)
+{
+    // Physical locations remain available; a leading block comment supplies command indentation.
+    internal int CommandColumn { get; init; } = Column;
+}
 
 internal static class LeanSourceTokenizer
 {
@@ -16,6 +20,7 @@ internal static class LeanSourceTokenizer
         var index = 0;
         var line = 1;
         var column = 0;
+        int? leadingCommentColumn = null;
         while (index < source.Length)
         {
             if (char.IsWhiteSpace(source[index]))
@@ -37,6 +42,7 @@ internal static class LeanSourceTokenizer
 
             if (index + 1 < source.Length && source[index] == '/' && source[index + 1] == '-')
             {
+                var commentColumn = leadingCommentColumn ?? column;
                 var depth = 0;
                 do
                 {
@@ -63,11 +69,14 @@ internal static class LeanSourceTokenizer
                     throw new LeanSourceExtractionException("Lean block comment is unterminated.");
                 }
 
+                leadingCommentColumn = commentColumn;
                 continue;
             }
 
             var tokenLine = line;
             var tokenColumn = column;
+            var commandColumn = leadingCommentColumn ?? column;
+            leadingCommentColumn = null;
             if (source[index] == '"')
             {
                 var start = index;
@@ -96,7 +105,7 @@ internal static class LeanSourceTokenizer
                     throw new LeanSourceExtractionException("Lean string literal is unterminated.");
                 }
 
-                yield return new LeanSourceToken(source[start..index], tokenLine, tokenColumn);
+                yield return new LeanSourceToken(source[start..index], tokenLine, tokenColumn) { CommandColumn = commandColumn };
                 continue;
             }
 
@@ -117,7 +126,7 @@ internal static class LeanSourceTokenizer
                     else break;
                 }
 
-                yield return new LeanSourceToken(source[start..index], tokenLine, tokenColumn);
+                yield return new LeanSourceToken(source[start..index], tokenLine, tokenColumn) { CommandColumn = commandColumn };
                 continue;
             }
 
@@ -144,7 +153,7 @@ internal static class LeanSourceTokenizer
                 }
             }
 
-            yield return new LeanSourceToken(symbol, tokenLine, tokenColumn);
+            yield return new LeanSourceToken(symbol, tokenLine, tokenColumn) { CommandColumn = commandColumn };
         }
 
         if (brackets.Count != 0)
@@ -158,6 +167,7 @@ internal static class LeanSourceTokenizer
             {
                 line++;
                 column = 0;
+                leadingCommentColumn = null;
             }
             else
             {
@@ -174,7 +184,7 @@ internal static class LeanSourceTokenizer
     private static bool IsIdentifierPart(char value) =>
         IsIdentifierStart(value)
         || char.IsDigit(value)
-        || value is '\'' or '.'
+        || value is '\'' or '.' or '?' or '!'
         || char.GetUnicodeCategory(value) is
             UnicodeCategory.NonSpacingMark
             or UnicodeCategory.SpacingCombiningMark

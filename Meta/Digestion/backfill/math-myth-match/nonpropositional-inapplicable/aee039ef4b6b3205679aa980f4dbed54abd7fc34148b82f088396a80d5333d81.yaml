@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aee039ef4b6b3205679aa980f4dbed54abd7fc34148b82f088396a80d5333d81
+  normalized_sha256: sha256:aee039ef4b6b3205679aa980f4dbed54abd7fc34148b82f088396a80d5333d81
+cas_ref: sha256:aee039ef4b6b3205679aa980f4dbed54abd7fc34148b82f088396a80d5333d81
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：列出现实应有条件、措施效果、权重及经验改变等尚待承担的对应义务。
+    previous_atom_id: 2f2e5d7556b32b56fd6c2363d76e1916b4bb69624a8eb0e82a39c3f869f96423
+    next_atom_id: 7e71e041c09d17f8690fda89144f53fca87543e062c5418ad1dc629b5356b40f

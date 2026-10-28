@@ -23,14 +23,7 @@ public sealed partial class MakeWorkflowTests
         foreach (var target in RootTargets)
         {
             Assert.Matches(new Regex($"(?m)^{Regex.Escape(target)}:", RegexOptions.CultureInvariant), makefile);
-            if (target == "gate")
-            {
-                Assert.Equal(8, RecipeCount(makefile, target));
-            }
-            else
-            {
-                Assert.InRange(RecipeCount(makefile, target), 0, 1);
-            }
+            Assert.InRange(RecipeCount(makefile, target), 0, 1);
         }
 
         Assert.Contains("build: lean", makefile, StringComparison.Ordinal);
@@ -83,7 +76,7 @@ public sealed partial class MakeWorkflowTests
             inspector.Split('\n'),
             static line => line.StartsWith("run_phase report ", StringComparison.Ordinal));
         Assert.Equal(
-            $"run_phase report \"$REPOSITORY/{LeanCacheRunScriptPath}\" ${{REPORT_COMMAND[@]+\"${{REPORT_COMMAND[@]}}\"}} \"$LAKE\" \"${{workspace[@]}}\" build :report \\",
+            $"run_phase report \"$REPOSITORY/{LeanCacheRunScriptPath}\" ${{REPORT_COMMAND[@]+\"${{REPORT_COMMAND[@]}}\"}} \"$LAKE\" --log-level=error \"${{workspace[@]}}\" build :report \\",
             reportPhase);
 
         int EnsureDependency(string target)
@@ -125,7 +118,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("scribe-release-fetch: export DIGEST ?=", makefile, StringComparison.Ordinal);
         Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
         Assert.Equal(
-            $"\t@/bin/bash {IngestScriptPath} mathlib-reanchor \"$(BASE)\"",
+            $"\t@/bin/bash {IngestScriptPath} mathlib-reanchor \"$(BASE)\" \"$$REANCHOR_OLD_REPORT\"",
             Recipe(makefile, "mathlib-reanchor"));
         // The four targets that reach the command line keep the verb in the Makefile and stay one
         // recipe line: the dispatch table above allows at most one line per target, and
@@ -142,8 +135,7 @@ public sealed partial class MakeWorkflowTests
                 StringComparison.Ordinal);
         }
         var gateRecipe = string.Join('\n', RecipeLines(makefile, "gate"));
-        Assert.Contains("check-current", gateRecipe, StringComparison.Ordinal);
-        Assert.Contains("check-delta", gateRecipe, StringComparison.Ordinal);
+        Assert.Contains("tools/scripts/local-harness-gate.sh", gateRecipe, StringComparison.Ordinal);
         var worktreeRecipe = Recipe(makefile, "worktree");
         Assert.Contains(WorktreeInitScriptPath, worktreeRecipe, StringComparison.Ordinal);
         Assert.Contains("\"$(KIND)\" \"$(NAME)\"", worktreeRecipe, StringComparison.Ordinal);
@@ -257,7 +249,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("make -C tools xi-quantization-test ", helpRecipe, StringComparison.Ordinal);
         var testRecipe = Recipe(makefile, "test");
         Assert.Contains("TEST_PROJECT ?= $(HERE)/StrataLint.sln", makefile, StringComparison.Ordinal);
-        Assert.Contains("scripts/dotnet-test.sh \"$(SELECTED_TEST_PROJECT)\"", testRecipe, StringComparison.Ordinal);
+        Assert.Contains("scripts/dotnet-test.sh\" \"$(SELECTED_TEST_PROJECT)\"", testRecipe, StringComparison.Ordinal);
         Assert.Contains("$(if $(TEST_FILTER),--filter \"$(TEST_FILTER)\",)", testRecipe, StringComparison.Ordinal);
         foreach (var selected in OperatingSystem.IsWindows() ? Array.Empty<bool>() : new[] { false, true })
         {
@@ -270,7 +262,7 @@ public sealed partial class MakeWorkflowTests
                     : new[] { "TEST_FILTER=" }],
                 root, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
             Assert.True(dispatch.ExitCode == 0, Encoding.UTF8.GetString(dispatch.StandardError));
-            var expected = $"/bin/bash {root}/tools/scripts/dotnet-test.sh \"{(selected ? project : root + "/tools/StrataLint.sln")}\""
+            var expected = $"/bin/bash \"{root}/tools/scripts/dotnet-test.sh\" \"{(selected ? project : root + "/tools/StrataLint.sln")}\""
                 + (selected ? $" --filter \"{filter}\"" : "");
             Assert.Equal(expected, Encoding.UTF8.GetString(dispatch.StandardOutput).Trim());
         }
@@ -445,7 +437,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(0, rootResult.ExitCode);
         var rootOutput = System.Text.Encoding.UTF8.GetString(rootResult.StandardOutput);
         Assert.Contains("make test  Run lean-report and check-current", rootOutput, StringComparison.Ordinal);
-        Assert.Contains("make gate [BASE=origin/dev]  Run independent CI-equivalent commands", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make gate [BASE=origin/dev] [PURPOSE=pull-request|push]  Run all applicable shared CI checks", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make lean-report [REBUILD_REPORT_CACHE=1 | REGENERATE_REPORT_ARTIFACTS=1]  Full report; regenerate explicitly discards generated reports while retaining compiled Lean", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make lean-report-scoped LEAN_TARGETS=", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG", rootOutput, StringComparison.Ordinal);

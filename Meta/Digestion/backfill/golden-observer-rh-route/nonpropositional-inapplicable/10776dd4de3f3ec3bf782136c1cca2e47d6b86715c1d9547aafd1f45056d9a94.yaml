@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:10776dd4de3f3ec3bf782136c1cca2e47d6b86715c1d9547aafd1f45056d9a94
+  normalized_sha256: sha256:10776dd4de3f3ec3bf782136c1cca2e47d6b86715c1d9547aafd1f45056d9a94
+cas_ref: sha256:10776dd4de3f3ec3bf782136c1cca2e47d6b86715c1d9547aafd1f45056d9a94
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: source digest 是状态派生所要求的源码身份字段。
+    previous_atom_id: 0e310f6e89d46aa7abcf3eda31859c62eb919dc575293ad9354fa08e9edffc30
+    next_atom_id: 374fced1e7c2fac6e9d14aaad5093b38009b4ade85a2d605691eab63bd19be6b

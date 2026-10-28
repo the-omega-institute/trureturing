@@ -14,9 +14,9 @@
    Direct frozen dependencies: none; all imported mathematical declarations are pinned Mathlib.
    The projection condition is inlined literally in claim; its private instance proof uses
    the pinned Mathlib IsStarProjection owner through the real-matrix correspondence.
+   Public sixPerms and sixPerms_univ: consumed by StochasticGeneratorSetRefutation and sym_form.
    Private theorem proof_shape and consumers:
      instance_is_projection: bind-only; consumer: result
-     sixPerms_univ: bind-only; consumer=sym_form
      v_dot_v: bind-only; consumer=word_product
      v_dot_z: bind-only; consumer=word_form
      word_product: bind-only; consumer=word_form
@@ -72,11 +72,11 @@ private theorem instance_is_projection (i : Fin 3) :
     Matrix.conjTranspose_eq_transpose_of_trivial] at h
   exact h.symm
 
-private def sixPerms : Finset (Equiv.Perm (Fin 3)) :=
+def sixPerms : Finset (Equiv.Perm (Fin 3)) :=
   {1, Equiv.swap 0 1, Equiv.swap 0 2, Equiv.swap 1 2,
     Equiv.swap 0 1 * Equiv.swap 1 2, Equiv.swap 1 2 * Equiv.swap 0 1}
 
-private theorem sixPerms_univ : sixPerms = Finset.univ := by
+theorem sixPerms_univ : sixPerms = Finset.univ := by
   apply Finset.eq_univ_of_card
   rw [Fintype.card_perm, Fintype.card_fin]
   decide +kernel

@@ -589,3 +589,214 @@ theorem lengthLaw : lengthArena.{u}.Law observerActual.{u} := @run_length_bound.
 
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization.Exports
+
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization.PublishedSkipRetained
+open _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source substitution)
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address Reply readout)
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualFiniteObserverAbsentElimination
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+
+universe u
+structure Params where
+  E : Type u
+  finite : Fintype E
+  budget : Nat
+  machine : Observer E
+abbrev signature : Signature where
+  Params := Params.{u}
+  State p := p.E
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Option p.E
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature := realize signature
+  (fun _ p e => @skip p.E p.finite p.budget p.machine e) (fun e => nomatch e)
+private def haltParams : Params.{u} where
+  E := ULift Bool
+  finite := inferInstance
+  budget := 1
+  machine := {
+    e0 := ⟨false⟩
+    action := fun _ => .inr false
+    transition := fun e _ => e
+    decoder := fun _ => []
+    decoded_nodup := fun _ => List.nodup_nil }
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  refine ⟨haltParams,⟨false⟩,⟨true⟩,?_⟩
+  intro h
+  let _ := haltParams.finite
+  have a := skip_retained 1 haltParams.machine (e := ⟨false⟩) rfl
+  have b := skip_retained 1 haltParams.machine (e := ⟨true⟩) rfl
+  change skip 1 haltParams.machine ⟨false⟩ = skip 1 haltParams.machine ⟨true⟩ at h
+  rw [a,b] at h
+  cases h
+
+def bad : Realization signature := realize signature (fun _ _ _ => none) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {E : Type u} [f : Fintype E] N (M : Observer E) {e : E},
+    retained N M e = true → R.readout () ⟨E,f,N,M⟩ e = some e
+private theorem bad_law : ¬ arena.Law bad := by
+  intro law
+  let _ := haltParams.finite
+  have h := law 1 haltParams.machine (e := ⟨false⟩) rfl
+  cases h
+def family : Registration arena (type_of% (@skip_retained.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@skip_retained,bad,bad_law⟩
+  sensitivity := ⟨fun i => ⟨bad,fun j h => (h (Subsingleton.elim j i)).elim,rfl,bad_law⟩,fun e => nomatch e⟩
+  dependence := dependence
+
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization.PublishedSkipRetained
+
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization.PublishedSkipRemoved
+open _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source substitution)
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address Reply readout)
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualFiniteObserverAbsentElimination
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+
+universe u
+structure Params where
+  E : Type u
+  finite : Fintype E
+  budget : Nat
+  machine : Observer E
+abbrev signature : Signature where
+  Params := Params.{u}
+  State p := p.E
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Option p.E
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature := realize signature
+  (fun _ p e => @skip p.E p.finite p.budget p.machine e) (fun e => nomatch e)
+private def haltParams : Params.{u} where
+  E := ULift Bool
+  finite := inferInstance
+  budget := 1
+  machine := {
+    e0 := ⟨false⟩
+    action := fun _ => .inr false
+    transition := fun e _ => e
+    decoder := fun _ => []
+    decoded_nodup := fun _ => List.nodup_nil }
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  refine ⟨haltParams,⟨false⟩,⟨true⟩,?_⟩
+  intro h
+  let _ := haltParams.finite
+  have a := skip_retained 1 haltParams.machine (e := ⟨false⟩) rfl
+  have b := skip_retained 1 haltParams.machine (e := ⟨true⟩) rfl
+  change skip 1 haltParams.machine ⟨false⟩ = skip 1 haltParams.machine ⟨true⟩ at h
+  rw [a,b] at h
+  cases h
+
+def bad : Realization signature := realize signature (fun _ _ e => some e) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {E : Type u} [f : Fintype E] N (M : Observer E) {e : E},
+    retained N M e ≠ true → R.readout () ⟨E,f,N,M⟩ e = R.readout () ⟨E,f,N,M⟩ (M.transition e .absent)
+private def removedParams : Params.{u} where
+  E := ULift Bool
+  finite := inferInstance
+  budget := 1
+  machine := {
+    e0 := ⟨false⟩
+    action := fun _ => .inl [false]
+    transition := fun _ _ => ⟨true⟩
+    decoder := fun _ => []
+    decoded_nodup := fun _ => List.nodup_nil }
+private theorem bad_law : ¬ arena.Law bad := by
+  intro law
+  let _ := removedParams.finite
+  have h := law 1 removedParams.machine (e := ⟨false⟩) (by decide)
+  cases h
+def family : Registration arena (type_of% (@skip_removed.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@skip_removed,bad,bad_law⟩
+  sensitivity := ⟨fun i => ⟨bad,fun j h => (h (Subsingleton.elim j i)).elim,rfl,bad_law⟩,fun e => nomatch e⟩
+  dependence := dependence
+
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization.PublishedSkipRemoved
+
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization.PublishedSkipExact
+open _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source substitution)
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address Reply readout)
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualFiniteObserverAbsentElimination
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+
+universe u
+structure Params where
+  E : Type u
+  finite : Fintype E
+  budget : Nat
+  machine : Observer E
+abbrev signature : Signature where
+  Params := Params.{u}
+  State p := p.E
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Option p.E
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature := realize signature
+  (fun _ p e => @skip p.E p.finite p.budget p.machine e) (fun e => nomatch e)
+private def haltParams : Params.{u} where
+  E := ULift Bool
+  finite := inferInstance
+  budget := 1
+  machine := {
+    e0 := ⟨false⟩
+    action := fun _ => .inr false
+    transition := fun e _ => e
+    decoder := fun _ => []
+    decoded_nodup := fun _ => List.nodup_nil }
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  refine ⟨haltParams,⟨false⟩,⟨true⟩,?_⟩
+  intro h
+  let _ := haltParams.finite
+  have a := skip_retained 1 haltParams.machine (e := ⟨false⟩) rfl
+  have b := skip_retained 1 haltParams.machine (e := ⟨true⟩) rfl
+  change skip 1 haltParams.machine ⟨false⟩ = skip 1 haltParams.machine ⟨true⟩ at h
+  rw [a,b] at h
+  cases h
+
+def bad : Realization signature := realize signature (fun _ _ _ => none) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {E : Type u} [f : Fintype E] N (M : Observer E) (e : E),
+    (R.readout () ⟨E,f,N,M⟩ e = none ↔ ¬ ∃ j, retained N M ((absentStep N M)^[j] e) = true) ∧
+    ∀ s, R.readout () ⟨E,f,N,M⟩ e = some s → ∃ j < Fintype.card E,
+      (absentStep N M)^[j] e = s ∧ retained N M s = true ∧
+      ∀ i < j, retained N M ((absentStep N M)^[i] e) ≠ true
+private theorem bad_law : ¬ arena.Law bad := by
+  intro law
+  let _ := haltParams.finite
+  have no := (law 1 haltParams.machine ⟨false⟩).1.mp rfl
+  exact no ⟨0,rfl⟩
+def family : Registration arena (type_of% (@skip_exact.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@skip_exact,bad,bad_law⟩
+  sensitivity := ⟨fun i => ⟨bad,fun j h => (h (Subsingleton.elim j i)).elim,rfl,bad_law⟩,fun e => nomatch e⟩
+  dependence := dependence
+
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization.PublishedSkipExact

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0b46a70a2f05484b9b0c6ebbcfaec13773f1e20fc04ca09f22263982ffced14a
+  normalized_sha256: sha256:0b46a70a2f05484b9b0c6ebbcfaec13773f1e20fc04ca09f22263982ffced14a
+cas_ref: sha256:0b46a70a2f05484b9b0c6ebbcfaec13773f1e20fc04ca09f22263982ffced14a
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/NormativeStructure/VoluntarinessActionFactorizationObstruction.action_result_does_not_identify_voluntariness
+    target_statement_id: sha256:5aba0811baa0ddb6bb89b6706d99bb4a0aece73b9c241bfe01349a718aac1802
+receipts:
+  unresolved_subitems: []

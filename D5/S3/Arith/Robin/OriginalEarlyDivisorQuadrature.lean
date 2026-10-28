@@ -79,8 +79,77 @@ private lemma beta_integrable {a b : ℝ} (ha : 0 ≤ a) (hab : a ≤ b) :
   rw [Real.norm_eq_abs, beta_eq_B1 (ha.trans hx.1)]
   exact abs_B1_le_half (ha.trans hx.1)
 
-/-- The second-order remainder bound for a negative increasing smooth slope.
-The right derivative of the continuous periodic primitive retains integer endpoints. -/
+/-- The same periodic primitive, centered at the midpoint of its range. -/
+def centeredPrimitive (y : ℝ) : ℝ := bernoulliPrimitive y - 1 / 48
+
+private lemma centered_primitive_bound (y : ℝ) : |centeredPrimitive y| ≤ 1 / 16 := by
+  have h0 := Int.fract_nonneg y
+  have h1 := Int.fract_lt_one y
+  have hs := sq_nonneg (Int.fract y - 1 / 2)
+  have hp := mul_nonneg h0 (sub_nonneg.mpr h1.le)
+  unfold centeredPrimitive bernoulliPrimitive
+  exact abs_le.mpr ⟨by nlinarith, by nlinarith⟩
+
+private lemma primitive_parts {a b : ℝ} {v v' : ℝ → ℝ}
+    (ha : 0 ≤ a) (hab : a ≤ b)
+    (hv : ∀ x ∈ Icc a b, HasDerivAt v (v' x) x)
+    (hc : ContinuousOn v' (Icc a b)) (c : ℝ) :
+    (∫ x in a..b, v x * betaOne x) =
+      v b * (bernoulliPrimitive b - c) - v a * (bernoulliPrimitive a - c) -
+        ∫ x in a..b, v' x * (bernoulliPrimitive x - c) := by
+  have hvc : ContinuousOn v (uIcc a b) := by
+    rw [uIcc_of_le hab]
+    exact fun x hx => (hv x hx).continuousAt.continuousWithinAt
+  exact intervalIntegral.integral_mul_deriv_eq_deriv_mul_of_hasDeriv_right
+    hvc (primitive_continuous.sub continuous_const).continuousOn
+    (fun x hx => (hv x (by rw [min_eq_left hab, max_eq_right hab] at hx; exact ⟨hx.1.le, hx.2.le⟩)).hasDerivWithinAt)
+    (fun x _ => (primitive_right_deriv x).sub_const c)
+    ((uIcc_of_le hab ▸ hc).intervalIntegrable) (beta_integrable ha hab)
+
+/-- The centered bound is consumed by the old estimate and by actual density cells. -/
+private lemma centered_negative_bound {a b : ℝ} {v v' : ℝ → ℝ}
+    (ha : 0 ≤ a) (hab : a ≤ b)
+    (hv : ∀ x ∈ Icc a b, HasDerivAt v (v' x) x)
+    (hc : ContinuousOn v' (Icc a b))
+    (hn : ∀ x ∈ Icc a b, v x ≤ 0)
+    (hp : ∀ x ∈ Icc a b, 0 ≤ v' x) :
+    |∫ x in a..b, v x * betaOne x| ≤ -v a / 8 := by
+  have hvic : IntervalIntegrable v' volume a b :=
+    (uIcc_of_le hab ▸ hc).intervalIntegrable
+  have hft : (∫ x in a..b, v' x) = v b - v a :=
+    intervalIntegral.integral_eq_sub_of_hasDerivAt
+      (fun x hx => hv x (uIcc_of_le hab ▸ hx)) hvic
+  have hi : |∫ x in a..b, v' x * centeredPrimitive x| ≤ (v b - v a) / 16 := by
+    rw [← Real.norm_eq_abs]
+    calc
+      _ ≤ ∫ x in a..b, v' x / 16 := by
+        apply intervalIntegral.norm_integral_le_of_norm_le hab
+        · filter_upwards [] with x hx
+          have hpx := hp x ⟨hx.1.le, hx.2⟩
+          rw [Real.norm_eq_abs, abs_mul, abs_of_nonneg hpx]
+          exact (mul_le_mul_of_nonneg_left (centered_primitive_bound x) hpx).trans_eq (by ring)
+        · exact hvic.div_const 16
+      _ = _ := by rw [intervalIntegral.integral_div, hft]
+  have he := primitive_parts ha hab hv hc (1 / 48)
+  change (∫ x in a..b, v x * betaOne x) =
+    v b * centeredPrimitive b - v a * centeredPrimitive a -
+      ∫ x in a..b, v' x * centeredPrimitive x at he
+  rw [he]
+  calc
+    _ ≤ |v b * centeredPrimitive b| + |v a * centeredPrimitive a| +
+        |∫ x in a..b, v' x * centeredPrimitive x| :=
+      (abs_sub _ _).trans (add_le_add (abs_sub _ _) le_rfl)
+    _ ≤ (-v b) / 16 + (-v a) / 16 + (v b - v a) / 16 := by
+      gcongr
+      · rw [abs_mul, abs_of_nonpos (hn b ⟨hab, le_rfl⟩)]
+        exact (mul_le_mul_of_nonneg_left (centered_primitive_bound b)
+          (neg_nonneg.mpr (hn b ⟨hab, le_rfl⟩))).trans_eq (by ring)
+      · rw [abs_mul, abs_of_nonpos (hn a ⟨le_rfl, hab⟩)]
+        exact (mul_le_mul_of_nonneg_left (centered_primitive_bound a)
+          (neg_nonneg.mpr (hn a ⟨le_rfl, hab⟩))).trans_eq (by ring)
+    _ = _ := by ring
+
+/-- The original statement is preserved for all existing consumers. -/
 private lemma bernoulli_residual_bound {a b : ℝ} {v v' : ℝ → ℝ}
     (ha : 0 ≤ a) (hab : a ≤ b)
     (hv : ∀ x ∈ Icc a b, HasDerivAt v (v' x) x)
@@ -88,47 +157,8 @@ private lemma bernoulli_residual_bound {a b : ℝ} {v v' : ℝ → ℝ}
     (hn : ∀ x ∈ Icc a b, v x ≤ 0)
     (hp : ∀ x ∈ Icc a b, 0 ≤ v' x) :
     |∫ x in a..b, v x * betaOne x| ≤ -v a / 6 := by
-  have hvc : ContinuousOn v (uIcc a b) := by
-    rw [uIcc_of_le hab]
-    exact fun x hx => (hv x hx).continuousAt.continuousWithinAt
-  have hvic : IntervalIntegrable v' volume a b := by
-    exact (uIcc_of_le hab ▸ hc).intervalIntegrable
-  have hparts := intervalIntegral.integral_mul_deriv_eq_deriv_mul_of_hasDeriv_right
-    hvc primitive_continuous.continuousOn
-    (fun x hx => (hv x (by rw [min_eq_left hab, max_eq_right hab] at hx; exact ⟨hx.1.le, hx.2.le⟩)).hasDerivWithinAt)
-    (fun x _ => primitive_right_deriv x) hvic (beta_integrable ha hab)
-  have hft : (∫ x in a..b, v' x) = v b - v a :=
-    intervalIntegral.integral_eq_sub_of_hasDerivAt
-      (fun x hx => hv x (uIcc_of_le hab ▸ hx)) hvic
-  have hi : |∫ x in a..b, v' x * bernoulliPrimitive x| ≤ (v b - v a) / 12 := by
-    rw [← Real.norm_eq_abs]
-    calc
-      _ ≤ ∫ x in a..b, v' x / 12 := by
-        apply intervalIntegral.norm_integral_le_of_norm_le hab
-        · filter_upwards [] with x hx
-          have hpx := hp x ⟨hx.1.le, hx.2⟩
-          rw [Real.norm_eq_abs, abs_mul, abs_of_nonneg hpx]
-          exact (mul_le_mul_of_nonneg_left (primitive_bound x) hpx).trans_eq (by ring)
-        · exact hvic.div_const 12
-      _ = _ := by rw [intervalIntegral.integral_div, hft]
-  rw [hparts]
-  calc
-    _ ≤ |v b * bernoulliPrimitive b| + |v a * bernoulliPrimitive a| +
-        |∫ x in a..b, v' x * bernoulliPrimitive x| :=
-      by
-      have h1 := abs_sub (v b * bernoulliPrimitive b - v a * bernoulliPrimitive a)
-        (∫ x in a..b, v' x * bernoulliPrimitive x)
-      have h2 := abs_sub (v b * bernoulliPrimitive b) (v a * bernoulliPrimitive a)
-      linarith
-    _ ≤ (-v b) / 12 + (-v a) / 12 + (v b - v a) / 12 := by
-      gcongr
-      · rw [abs_mul, abs_of_nonpos (hn b ⟨hab, le_rfl⟩)]
-        exact (mul_le_mul_of_nonneg_left (primitive_bound b) (by linarith [hn b ⟨hab, le_rfl⟩])).trans_eq (by ring)
-      · rw [abs_mul, abs_of_nonpos (hn a ⟨le_rfl, hab⟩)]
-        exact (mul_le_mul_of_nonneg_left (primitive_bound a) (by linarith [hn a ⟨le_rfl, hab⟩])).trans_eq (by ring)
-    _ = _ := by ring
-
-
+  exact (centered_negative_bound ha hab hv hc hn hp).trans
+    (by have := hn a ⟨le_rfl, hab⟩; linarith)
 
 /-- The original kernel denominator. -/
 def normalization (t : ℝ) : ℝ := weight t * t ^ (11 / 10 : ℝ)
@@ -137,7 +167,7 @@ def normalization (t : ℝ) : ℝ := weight t * t ^ (11 / 10 : ℝ)
 def smoothBody (t d x : ℝ) : ℝ :=
   Real.log (x / d) * (g x - g (endpoint t)) / normalization t
 
-private def weightSlope (x : ℝ) : ℝ :=
+def weightSlope (x : ℝ) : ℝ :=
   (MellinWeightedVariation.scaleDerivative x 1 - weight x) / x
 
 private def bodySlope (t d x : ℝ) : ℝ :=
@@ -151,7 +181,7 @@ private lemma normalization_pos {t : ℝ} (ht : 1 < t) : 0 < normalization t := 
   exact mul_pos (OriginalMovingWindowMoment.weight_pos ht)
     (Real.rpow_pos_of_pos (by linarith) _)
 
-private lemma weight_deriv {x : ℝ} (hx : 1 < x) :
+lemma weight_deriv {x : ℝ} (hx : 1 < x) :
     HasDerivAt weight (weightSlope x) x := by
   have hx0 : 0 < x := by linarith
   have hd := (MellinWeightedVariation.hasDerivAt_scaleWeight (y := 1) hx0
@@ -214,6 +244,62 @@ private lemma weight_slope_bound {x : ℝ} (hx : 1 < x) :
     <;> ring
   rw [hnorm]
   exact sub_le_self _ (div_nonneg hp (sq_nonneg x))
+
+/-- Exact phases and derivative variation for arbitrary real endpoints above one. -/
+theorem weighted_bernoulli_phase {a b : ℝ} (ha : 1 < a) (hab : a ≤ b) :
+    (∫ x in a..b, weight x * betaOne x) =
+      weight b * centeredPrimitive b - weight a * centeredPrimitive a -
+        (∫ x in a..b, weightSlope x * centeredPrimitive x) ∧
+    |(∫ x in a..b, weight x * betaOne x) -
+      (weight b * centeredPrimitive b - weight a * centeredPrimitive a)| ≤
+        (weight a - weight b) / 16 ∧
+    |∫ x in a..b, weight x * betaOne x| ≤ weight a / 8 := by
+  have hd : ∀ x ∈ Icc a b, HasDerivAt weight (weightSlope x) x :=
+    fun x hx => weight_deriv (ha.trans_le hx.1)
+  have hc : ContinuousOn weightSlope (Icc a b) := by
+    intro x hx
+    have hx1 := ha.trans_le hx.1
+    have hx0 : x ≠ 0 := by linarith
+    have hl : Real.log x ≠ 0 := (Real.log_pos hx1).ne'
+    unfold weightSlope MellinWeightedVariation.scaleDerivative weight
+    simp only [mul_one, one_pow]
+    fun_prop (disch := aesop)
+  have hs : ∀ x ∈ Icc a b, weightSlope x ≤ 0 := by
+    intro x hx
+    have hx1 := ha.trans_le hx.1
+    exact (weight_slope_bound hx1).trans (by
+      have hw := MellinWeightedVariation.weight_nonneg hx1
+      exact div_nonpos_of_nonpos_of_nonneg (by linarith) (by linarith))
+  have hi : IntervalIntegrable weightSlope volume a b :=
+    (uIcc_of_le hab ▸ hc).intervalIntegrable
+  have hft := intervalIntegral.integral_eq_sub_of_hasDerivAt
+    (fun x hx => hd x (uIcc_of_le hab ▸ hx)) hi
+  have hr : |∫ x in a..b, weightSlope x * centeredPrimitive x| ≤
+      (weight a - weight b) / 16 := by
+    rw [← Real.norm_eq_abs]
+    calc
+      _ ≤ ∫ x in a..b, -weightSlope x / 16 := by
+        apply intervalIntegral.norm_integral_le_of_norm_le hab
+        · filter_upwards [] with x hx
+          have hn := hs x ⟨hx.1.le, hx.2⟩
+          rw [Real.norm_eq_abs, abs_mul, abs_of_nonpos hn]
+          exact (mul_le_mul_of_nonneg_left (centered_primitive_bound x)
+            (neg_nonneg.mpr hn)).trans_eq (by ring)
+        · exact hi.neg.div_const 16
+      _ = _ := by rw [intervalIntegral.integral_div, intervalIntegral.integral_neg, hft]; ring
+  have he := primitive_parts (by linarith : 0 ≤ a) hab hd hc (1 / 48)
+  change (∫ x in a..b, weight x * betaOne x) =
+    weight b * centeredPrimitive b - weight a * centeredPrimitive a -
+      (∫ x in a..b, weightSlope x * centeredPrimitive x) at he
+  refine ⟨he, ?_, ?_⟩
+  · rw [he, sub_sub_cancel_left, abs_neg]
+    exact hr
+  · have hn := centered_negative_bound (v := fun x => -weight x)
+      (v' := fun x => -weightSlope x) (by linarith : 0 ≤ a) hab
+      (fun x hx => (hd x hx).neg) hc.neg
+      (fun x hx => neg_nonpos.mpr (MellinWeightedVariation.weight_nonneg
+        (ha.trans_le hx.1))) (fun x hx => neg_nonneg.mpr (hs x hx))
+    simpa only [neg_mul, intervalIntegral.integral_neg, abs_neg, neg_neg] using hn
 
 private lemma width_le {t : ℝ} (ht : 1 ≤ t) : width t ≤ t := by
   simpa only [width, Real.rpow_one] using
@@ -769,5 +855,7 @@ theorem original_early_quadrature {t : ℝ} (ht : 256 ≤ t) :
     exact hs.2
 
 #print axioms original_early_quadrature
+
+#print axioms weighted_bernoulli_phase
 
 end D5.S3.Arith.Robin.OriginalEarlyDivisorQuadrature

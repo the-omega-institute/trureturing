@@ -96,3 +96,87 @@ $$
 for the same FIB candidate $N_*=1+F_rg$.
 
 A FIB congruence or a fixed forbidden-prime set can supply a particular coprimality parameter $q$, but it does not supply the required correspondence between the recursive address, the cutoff $X$, the logarithmic order $k$, and every divisor of $N_*$. The explicit $q$-dependence is therefore a possible input to a future common-candidate estimate, not that estimate itself. This card records the interface and its failure boundary so that later Robin/FIB searches do not repeat this route.
+
+## The centered error at a growing prime prefix
+
+For the same $P_z$, $E_z$ and $C_z$ used by the
+[actual-kernel application](ramarezuniga2026identityfactory.md#the-actual-logarithmic-scale-curvature-and-centered-second-abel-formula),
+put $L=\log z$ and
+$\varepsilon_z(r)=\check m_{P_z}^{(1)}(e^r)-C_z$.
+The source's equation (7.4) gives $Q_{1,P_z}=C_z$ exactly.
+Corollary 7.5, not a new asymptotic theorem, therefore supplies
+
+$$
+|\varepsilon_z(r)|\le
+R_{1/2}(z)e^{-r/2}
++\frac{8.55\times10^{-6}}r R_\theta(z)
+\mathbf1_{r\ge12\log10},\qquad r>0,
+$$
+
+$$
+R_\alpha(z)=\prod_{p\le z}(1-p^{-\alpha})^{-1},\qquad
+\theta=1-\frac1{12\log10}.
+$$
+
+This is a useful fixed-$z$ error bound. Its modulus factors cannot be
+replaced by constants independent of the prime prefix. For fixed
+$0<\alpha<1$, the global prime-count lower bound in
+[Rosser–Schoenfeld, Corollary 1](../Arith/rosser1962approximate.md#global-prime-counts-and-the-classical-pnt-interface)
+gives, for $z\ge17$,
+
+$$
+\log R_\alpha(z)\ge\sum_{p\le z}p^{-\alpha}
+\ge z^{-\alpha}\pi(z)>\frac{z^{1-\alpha}}{\log z}.
+$$
+
+Consequently, for each fixed $u>0$, both
+$R_{1/2}(z)z^{-u/2}$ and $R_\theta(z)/(u\log z)$ tend to infinity.
+Thus the displayed numerical allowance is not a small-error estimate
+at $e^r=z^u$. This is a statement about that allowance, not a lower
+bound for the actual error or a failure of the cited theorem.
+
+The actual error has an elementary, different behavior on the unit
+range. For $0\le r\le L$, the only integer at most $e^r$ coprime to
+$P_z$ is one. Hence
+
+$$
+\check m_{P_z}^{(1)}(e^r)=r,\qquad
+\varepsilon_z(r)=r-C_z<0.
+$$
+
+The strict sign follows without an asymptotic estimate: the complete
+positive smooth reciprocal sum $C_z$ contains every $n\le\lfloor z\rfloor$,
+so $C_z\ge H_{\lfloor z\rfloor}>\log z$. The classical prime-product
+bounds in [Rosser–Schoenfeld, Theorem 8](../Arith/rosser1962approximate.md)
+also give, for each fixed $0\le u\le1$,
+
+$$
+\frac{\varepsilon_z(uL)}L\longrightarrow u-e^\gamma<0.
+$$
+
+This unit-range component cannot be modeled as an error vanishing
+uniformly with the growing filter. Its source is retained explicitly
+in the complete centered Abel formula; it does not determine the
+complementary range's sign. For all $r\ge0$, the already available
+uniform inequality $0\le\check m_{P_z}^{(1)}(e^r)\le2C_z$ does give
+$|\varepsilon_z(r)|\le C_z$, but this constant envelope is not
+integrable against the whole actual curvature, whose fixed-$z$
+behavior is $\mathcal G_{z,x}''(r)\sim E_z(1)/r$.
+
+The two envelopes have distinct uses: the explicit decaying error
+pays fixed-filter convergence; the uniform coefficient bound pays
+finite intervals. Neither separately pays the signed integral with
+a growing filter, its affine endpoints and the original unit head.
+That common-filter estimate remains an additional obligation.
+
+
+The exact joint real-axis alternative in the
+[actual-kernel application](ramarezuniga2026identityfactory.md#exact-real-axis-payment-of-the-truncated-centered-tail)
+pairs this same centered error before applying an absolute envelope.
+It expresses the whole tail using finite prefix data and one combined
+$\zeta/E_z$ bracket, with both zero-end cancellations retained. The
+associated prime-resolution law transfers equal and opposite amounts
+between the auxiliary full pair and its original-source compensation.
+These applications do not turn either pointwise allowance into a
+uniformly vanishing error; the full same-integer Robin lower bound is
+still required.

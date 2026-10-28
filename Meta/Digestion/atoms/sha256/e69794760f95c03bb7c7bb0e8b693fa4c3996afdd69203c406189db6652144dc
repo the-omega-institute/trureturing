@@ -1,0 +1,101 @@
+**Theorem 94.2 (Sharp actual erased-history terminal recovery).** With the
+channel and metric of §93, the following are exact values:
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{horizon}&\eta_n=1-\delta_n\\ \hline
+0&1\\[2pt]
+n\ge1\text{ odd}&\displaystyle\frac{(1+s)(1+2s)}{5+7s}\\[6pt]
+2&\displaystyle\frac3{H(r_*)}\\[6pt]
+n\ge4\text{ even}&\displaystyle\frac{h^2(h^2+3)}{K(h)}\\[6pt]
+\infty&\displaystyle\frac15
+\end{array}}
+\tag{94.2}
+$$
+
+Here $s=s_n$ in the odd formula. The number $r_*$ is the unique root in
+$(3/10,1/3)$ of
+
+$$
+(2-r)(1-r^2)^2=4r,
+\qquad\text{equivalently}\qquad
+r^5-2r^4-2r^3+4r^2+5r-2=0,
+\tag{94.3}
+$$
+
+and
+
+$$
+H(r)=7+r^2-4r+\frac4{1-r^2}.
+\tag{94.4}
+$$
+
+For every even $n\ge4$ use
+
+$$
+t=2^{1-n},\qquad
+h=\sqrt{\frac{1+t}{1-t}}=\sqrt{\frac ba},\qquad
+K(h)=(1+h^2)^2+(h+1)^2(h^2+3).
+\tag{94.5}
+$$
+
+The following single terminal decoder attains the minimum for each horizon:
+
+$$
+\begin{aligned}
+D_0&=\operatorname{id},\\
+D_n&=\operatorname{Ad}_{U_0^\dagger}
+                         &&(n\ge1\text{ odd}),\\
+D_2&=\mathcal R_{r_*,0}^{-1}\circ\operatorname{Ad}_{U_0^\dagger},\\
+D_n&=\mathcal R_{r,z}^{-1}\circ\operatorname{Ad}_{U_0^\dagger}
+                         &&(n\ge4\text{ even}),\\
+D_\infty&=\operatorname{id},
+\end{aligned}
+\qquad
+\begin{aligned}
+r&=\frac{1+h^2}{(h+1)(h^2+3)},\\
+z&=h^2r^2-\frac{h(h-1)}{h+1}
+       &&(n\ge4\text{ even}).
+\end{aligned}
+\tag{94.6}
+$$
+
+In particular $0<r<1$, $0<z<1$ in the later even regime. For these
+decoders, for every finite $R$ and every $\rho_{AR}\in\mathsf D(A\otimes R)$,
+
+$$
+\frac12\left\|[(D_n\mathcal N_n-\operatorname{id})
+          \otimes\operatorname{id}_R](\rho_{AR})\right\|_1\le\delta_n.
+\tag{94.7}
+$$
+
+For each $n\ge1$, and also for $n=\infty$, an explicit probability vector
+$p$ below defines one probe
+
+$$
+|\psi_p\rangle=\sum_{i=0}^2\sqrt{p_i}\,|i\rangle_A|i\rangle_R,
+\qquad R=\mathbb C^3,
+\tag{94.8}
+$$
+
+whose output half trace distance is at least $\delta_n$ for every
+competing CPTP decoder and is exactly $\delta_n$ for (94.6). Thus the
+lower certificate covers arbitrary untwirled CPTP decoders. The formulas
+give
+
+$$
+\delta_1=\frac12,\qquad \delta_3=\frac{13}{18},\qquad
+\lim_{n\to\infty}\delta_n=\delta_\infty=\frac45.
+\tag{94.9}
+$$
+
+The empty-horizon identity case is immediate. The one-step value is the
+specialization of [Purity arithmetic, Theorem 59.2, (59.1)–(59.2)][PA] to
+$(\operatorname{id}+\operatorname{Ad}_W)/2$, with weights $1/2,1/2$
+and spectral convex hull containing zero. That theorem uses the unhalved
+diamond norm; (93.8) divides its value by two. The certificate below
+also includes this endpoint without an inverse of a singular matrix.
+The $n\ge2$ values, feasible parameter choices and limiting recovery
+value are the fixed-channel deductions proved in §§95–100.
+

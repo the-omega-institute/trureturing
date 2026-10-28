@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4af0e9ead78a679e036e37b7d5f32f2cdf11c043bf027cd896139ce97c1e717d
+  normalized_sha256: sha256:4af0e9ead78a679e036e37b7d5f32f2cdf11c043bf027cd896139ce97c1e717d
+cas_ref: sha256:4af0e9ead78a679e036e37b7d5f32f2cdf11c043bf027cd896139ce97c1e717d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 隐藏项的候选解释和识别证据要求，不由命名推断超越存在者。
+    previous_atom_id: a3404322eb92f1545e62fd4201619bfb2cf3a2cbd982d6a652397225e4866012
+    next_atom_id: 1fa23c5d55a7475cb792c8bd535b2f1f843570a327bd40e92bad90bf40965667

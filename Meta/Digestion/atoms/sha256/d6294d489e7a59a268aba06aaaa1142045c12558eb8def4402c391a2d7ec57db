@@ -1,0 +1,41 @@
+**Lemma 123.2 (Effects and probability normalization).** Each $T_r$ is
+a rank-one orthogonal projector, $0\preceq T_r\preceq I$, and
+$\lambda_e,\lambda_i>0$, $\lambda_e+\lambda_i=1$. Moreover
+
+$$
+\operatorname{Tr}\bigl[T_r(P_r-\mathcal C_*(P_r))\bigr]=L.
+\tag{123.3}
+$$
+
+*Proof.* By §122, $B_r\succeq0$ and $\det B_r=0$.
+The congruence in (122.7) identifies $B_r$ with a rank-one update
+$I-vv^\dagger$ of the identity, where $\|v\|=1$. It follows that
+$\operatorname{rank}B_r=2$. Thus $A_r\succeq0$ has rank one.
+Differentiating $\det B$ with respect to $L$, since $\partial_LB=I$,
+gives
+
+$$
+N_{r,L}=\operatorname{Tr}A_r=m_{0r}+m_{1r}+m_{2r}>0.
+\tag{123.4}
+$$
+
+Consequently $T_r$ is a rank-one orthogonal projector. The entries in
+(123.2) follow by the six three-by-three cofactors; equivalently
+$B_rA_r=0$ and
+$A_r^2=(\operatorname{Tr}A_r)A_r$ at the contact. Since
+$(P_r-\mathcal C_*(P_r))T_r=LT_r$, (123.3) follows.
+
+Rational interval evaluation of (123.2)–(123.4), on all of
+$\mathcal B$, gives the following strict outward enclosures:
+
+| Expression | Lower endpoint | Upper endpoint |
+| --- | --- | --- |
+| $N_{e,L}$ | $0.821001$ | $0.821002$ |
+| $N_{i,L}$ | $0.812395$ | $0.812397$ |
+| $\lambda_e$ | $0.340583$ | $0.340585$ |
+| $\lambda_i$ | $0.659415$ | $0.659417$ |
+
+In particular every effect denominator is greater than $4/5$.
+The positivity of $\alpha,\beta$ gives positive weights, and $F_6=0$
+is precisely $\lambda_e+\lambda_i=1$. $\square$
+

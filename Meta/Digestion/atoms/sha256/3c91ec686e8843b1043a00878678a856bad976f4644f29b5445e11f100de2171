@@ -1,0 +1,12 @@
+**候签命题 27.2（按最小活跃集选择的正角读出不连续）。** 在候签定理 26.1 的前提下，在实的三个 Fourier 零点 constrained 紧支撑光滑测试上定义
+
+$$
+\mathscr E(f)=E^+_{S_{\rm act}(f)}(f).
+$$
+
+赋予该测试域由 Schwartz 空间诱导的拓扑，则 $\mathscr E$ 在 $f_0$ 处不连续；相应的正角支付证书沿 $f_L\to f_0$ 趋于负无穷，尽管实际完整形式趋于严格正的 $q_0$。
+
+证明。$S_{\rm act}(f_0)=\{\infty\}$，且第 21 节的平滑合同给出 $\mathscr E(f_0)<\infty$。候签定理 26.1 同时给出 $f_L\to f_0$ 于 Schwartz 拓扑与 $\mathscr E(f_L)\to\infty$，故这份复合读出不连续。第 26 节的正迹、线性迹及完整形式极限给出其余结论。$\square$
+
+不连续的是 $f\mapsto E^+_{S_{\rm act}(f)}(f)$；此处没有断言固定 $S$ 上的能量泛函不连续，也没有从 $f_L\to f_0$ 单独推出全形式连续。实际全形式的极限是通过尾部幅度中的独立二次型约束取得的。算子范数 $\mathcal F_{S_L}\to\mathcal F_\infty$ 与普通度量条件数 $\chi_{S_L}\to1$ 同样不足以保证这些变动切面的正角 Hilbert–Schmidt 能量连续。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fa4de1ad979edba13bb5fe2da60a73bd1a98cd9af74a1b9c3e9051e1df68b568
+  normalized_sha256: sha256:fa4de1ad979edba13bb5fe2da60a73bd1a98cd9af74a1b9c3e9051e1df68b568
+cas_ref: sha256:fa4de1ad979edba13bb5fe2da60a73bd1a98cd9af74a1b9c3e9051e1df68b568
+coverage_gids:
+  - gid: D5/S3/Factorization/Automata/PrimeHistoryComposition.normal_eq_iff_contextual_run
+    target_statement_id: sha256:d45b26f98ea78724a724e8c32b71c8cabc6e1ca6f9ad0c760f4b61f2c4fb51af
+receipts:
+  unresolved_subitems: []

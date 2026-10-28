@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eeb479cc1bc309687026828ee29a425877bb2a28a18b6065e9c066bbdabd88f3
+  normalized_sha256: sha256:eeb479cc1bc309687026828ee29a425877bb2a28a18b6065e9c066bbdabd88f3
+cas_ref: sha256:eeb479cc1bc309687026828ee29a425877bb2a28a18b6065e9c066bbdabd88f3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 概述道德运气文献的争论范围，强调四状态模型没有解决全部规范问题。
+    previous_atom_id: f8523a114d8e3b9374e524a751b482f632c5157bd3e8de5a218ddaec8a805487
+    next_atom_id: c52f0ea652ee5df33e6ab85dd8c140e1afa7cf7858cfe74d9ab35b9cdd43718c

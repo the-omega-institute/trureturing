@@ -1,0 +1,17 @@
+### 定义 36.1（正来源协议）
+
+令 $R=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$ 的四个元素均为正，并满足 $ps=qr$。取累计操作
+
+$$
+A_0=I,\quad A_1=JM,\quad A_2=MJM,\quad A_3=M^2JM,\quad A_4=JM^2JM.
+$$
+
+只在这些五个位置读数，且漂移按读数序号计数：
+
+$$
+z_j=\operatorname{tr}(A_jR)+\delta_0+j\delta_1,
+\qquad0\le j\le4.
+$$
+
+这一定义把未读的中间操作纳入累计操作，而不把它们伪装成额外读数。
+

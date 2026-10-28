@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b8d41bdd26cdeac4cdff3e2e584071a0f484c79f29f9982e31ad9ead7bdb2d08
-  normalized_sha256: sha256:b8d41bdd26cdeac4cdff3e2e584071a0f484c79f29f9982e31ad9ead7bdb2d08
-cas_ref: sha256:b8d41bdd26cdeac4cdff3e2e584071a0f484c79f29f9982e31ad9ead7bdb2d08
-coverage_gids:
-  - gid: D5/S0/Diagonal/SelfApplicationFates.self_application_four_fates
-    target_statement_id: sha256:dfd4dba931937063f00ca001626bb857f2a5e6fd76d069e605901f047a7e6daf
-receipts:
-  unresolved_subitems: []

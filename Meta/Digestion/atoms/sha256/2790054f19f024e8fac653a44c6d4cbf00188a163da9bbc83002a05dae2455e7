@@ -1,0 +1,50 @@
+**Definition 111.2 (two read types and one causal realization).** Write
+$\mathrm{Read}_0$ for the original complete literal rational terminal
+Read. It remains nondestructive and retains its original parser and
+outputs. Separately commission, bind and grant a new nondisturbing
+$\mathrm{Read}_+$ service on genuinely bound terminals. On a successful
+call at terminal $f$ with prior accessible history $h$ it returns
+
+$$
+Y=x_f+\sigma(h)\xi,\qquad 0<\sigma(h)<\infty,
+\qquad \xi\sim\mathcal N(0,1).
+\tag{111.2}
+$$
+
+The common scale rule is measurable and uses only already accessible
+information. Each noise is fresh, independent of earlier noises, the
+source parameter and an optional independent common-law seed on a standard
+Borel probability space. The realized process for a fixed $\theta$ is the
+composition of the actual native transitions with this seed and successive
+independent noises. There is no independently chosen compatible marginal
+source, noise record or action schedule.
+
+For definiteness its separately authorized entry accepts the original
+Read request syntax and uses the same current-raw-label validation,
+pending-frame, malformed-frame, refusal and disabled-right rules.
+Only a successful terminal call samples noise. Its output is one typed
+ideal real payload $\mathsf{Noisy}(Y)$, then End, the caller's actual
+acknowledgement and Return, closing that serial call. No sampling occurs
+on a failed or incomplete request. These are the completion rules of the
+declared extension, not new instructions of the original dispatcher.
+It supplies no exact mean, seed, hidden
+provider record or noise-dependent native-field disturbance. Its real reply
+and an exact real sign test are ideal primitives when used below, not a
+finite-bit hardware realization. The original parser acquires no new tag
+merely because this service has been specified. No malformed original
+request, Reset, duplicate source, interior numerical port, extra writer,
+or timing/allocation/capacity side channel is thereby supplied.
+
+A common measurable causal policy may adaptively choose either read type,
+all original growth and rational Adds, finite raw frames, ports and stopping.
+Only finite rational command syntax/operands are admitted. Computation,
+framing and nonnumeric outcomes preserve the source's distinct absent,
+branch and wrong-type refusals, RangeRefusal, BadFrame, proper pending
+prefixes and disabled missing-right dispatch. Complete calls consume the
+whole output, End, acknowledgement and Return. Hold prevents unsolicited
+evolution. The policy must stop after finitely many executed calls almost
+surely **separately for every $\theta\in\mathbb Q^k$**. There is no uniform
+call bound, expected-cost hypothesis or uniform lower bound on $\sigma$.
+This measurable-policy class is an information relaxation; it is not a
+claim that all its members have finite effective implementations.
+

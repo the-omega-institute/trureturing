@@ -63,7 +63,7 @@ private theorem rowLen_zero (d : YoungDiagram) (i : ℕ) (hi : d.colLen 0 ≤ i)
   omega
 
 -- Height h occurs among the columns precisely at a strict drop after row h-1.
-private theorem height_mem_iff (d : YoungDiagram) (h : ℕ) (hp : 0 < h) :
+theorem height_mem_iff (d : YoungDiagram) (h : ℕ) (hp : 0 < h) :
     h ∈ d.transpose.rowLens ↔ d.rowLen h < d.rowLen (h - 1) := by
   constructor
   · intro hm

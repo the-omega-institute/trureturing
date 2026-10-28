@@ -1,0 +1,25 @@
+## 3. Faithful homomorphisms with reducible non-toral images
+
+For $j=1,2$, $D_j:N\to GL_3(\mathbb C)$ is an ordinary homomorphism, and
+
+$$
+S^2=I,\qquad
+SD_j(s,t,z)S^{-1}=D_j(t,s,z^{-1}).
+\tag{3.1}
+$$
+
+Thus (1.2) and (3.1) prove directly that
+
+$$
+R_j(nF^\epsilon)=D_j(n)S^\epsilon
+\tag{3.2}
+$$
+
+is a homomorphism to $GL_3(\mathbb C)$. Its projectivization is (1.4). In particular, ordinary lifts are constructed here for these two maps.
+
+To check projective injectivity on $N$, if $D_j(s,t,z)$ is scalar, its first entry makes the scalar $1$. Its other entries imply $z\in\mu_3\cap\{1,-1\}=\{1\}$, and then $s=t=1$. This is the inherited faithfulness calculation of [*Toral character triples*, §2.6](TORAL_CHARACTER_TRIPLE_SOURCE_SUPPORT.md#26-the-supporting-twelve-element-group). For an element $nF$, the last two coordinates of (3.2) form an invertible off-diagonal block, so $R_j(nF)$ is not scalar. Hence both $\rho_j$ have trivial kernel on all of $G_*$.
+
+Every $R_j(g)$ fixes $e_1$. Any matrix in the full inverse image of $\rho_j(G_*)$ is a nonzero scalar multiple of some $R_j(g)$, so that full inverse image preserves $\mathbb Ce_1$. This is a nonzero proper subspace, proving reducibility of both maps in Definition 1.1.
+
+The sign changes $v_{-1,1}$ and $v_{1,-1}$ are distinct and exchanged by $F$, so $G_*$ is nonabelian. Its two projective images are isomorphic to it by injectivity. An algebraic torus is abelian; neither image can therefore be contained in a torus. Both images are non-toral.
+

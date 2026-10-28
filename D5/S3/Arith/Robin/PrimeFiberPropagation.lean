@@ -6,12 +6,14 @@
    utility: none
    digest: Edge tests, first prime layers and prime replacement carry Robin's inequality. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19891; sigma_prime_pow_succ. -/
 import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Data.Nat.Factorization.Basic
 import D5.S3.Arith.ExponentExchange.IntegerSwap
+import D5.S3.Arith.RobinExponentSwap
 
 /-! The edge test compares the relative divisor-sum increase of `n → n * m` with the
 increase of `log log`. It uses no global estimate on `σ`; the fibre statement is a
@@ -35,7 +37,7 @@ def EdgeTest (n m : ℕ) : Prop :=
   (divisorRatio (n * m) / divisorRatio n - 1) * Real.log (Real.log n) ≤
     Real.log (1 + Real.log m / Real.log n)
 
-private theorem divisorRatio_pos {n : ℕ} (hn : n ≠ 0) : 0 < divisorRatio n := by
+theorem divisorRatio_pos {n : ℕ} (hn : n ≠ 0) : 0 < divisorRatio n := by
   unfold divisorRatio
   have h1 : (0 : ℝ) < ArithmeticFunction.sigma 1 n := by
     exact_mod_cast ArithmeticFunction.sigma_pos_iff.mpr (Nat.pos_of_ne_zero hn)
@@ -83,7 +85,7 @@ theorem robinAt_mul_of_edgeTest {n m : ℕ} (hn : 1 < n) (hm : 0 < m)
           (ℓℓ + Real.log (1 + Real.log m / Real.log n)) :=
         mul_le_mul_of_nonneg_left hstep hg.le
 
-private theorem sigma_prime_pow_succ {q : ℕ} (hq : q.Prime) (a : ℕ) :
+theorem sigma_prime_pow_succ {q : ℕ} (hq : q.Prime) (a : ℕ) :
     ArithmeticFunction.sigma 1 (q ^ (a + 1)) = q * ArithmeticFunction.sigma 1 (q ^ a) + 1 := by
   rw [ArithmeticFunction.sigma_one_apply_prime_pow hq,
     ArithmeticFunction.sigma_one_apply_prime_pow hq, Finset.sum_range_succ', Finset.mul_sum]
@@ -101,8 +103,8 @@ private theorem sigma_mul_prime {q n : ℕ} (hq : q.Prime) (hn : n ≠ 0) :
   generalize n / q ^ a = m at hcop hdecomp ⊢
   subst hdecomp
   have hmul : q ^ a * m * q = q ^ (a + 1) * m := by ring
-  rw [hmul, ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime (hcop (a + 1)),
-    ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime (hcop a),
+  rw [hmul, (ArithmeticFunction.isMultiplicative_sigma (k := 1)).map_mul_of_coprime (hcop (a + 1)),
+    (ArithmeticFunction.isMultiplicative_sigma (k := 1)).map_mul_of_coprime (hcop a),
     sigma_prime_pow_succ hq a]
   ring
 

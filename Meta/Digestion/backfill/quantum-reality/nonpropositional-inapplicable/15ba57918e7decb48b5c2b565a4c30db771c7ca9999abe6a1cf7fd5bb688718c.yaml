@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:15ba57918e7decb48b5c2b565a4c30db771c7ca9999abe6a1cf7fd5bb688718c
+  normalized_sha256: sha256:15ba57918e7decb48b5c2b565a4c30db771c7ca9999abe6a1cf7fd5bb688718c
+cas_ref: sha256:15ba57918e7decb48b5c2b565a4c30db771c7ca9999abe6a1cf7fd5bb688718c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: ST10–18范围段指定正内积、Born规则、范数和正交直和约定，并披露证明状态；不包含后续命题结论。
+    previous_atom_id: 03d95b4980b5ae8f82c57e2ddd2514b274d2bec92f1f85b296b4831319d70237
+    next_atom_id: 93b02dce98962534a5c2d9f9753f823d16fd4b2d1f43bc84e8840987c5e4b70b

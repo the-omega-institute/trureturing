@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a923bba3ae469362a3305b744e9a234e217ad09a2c21aa9a3a5851517e76dc4c
+  normalized_sha256: sha256:a923bba3ae469362a3305b744e9a234e217ad09a2c21aa9a3a5851517e76dc4c
+cas_ref: sha256:a923bba3ae469362a3305b744e9a234e217ad09a2c21aa9a3a5851517e76dc4c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 介绍 selection diagram、do-calculus 与 transportability 的文献方法，没有陈述具体识别定理或公式。'
+    previous_atom_id: 35ab127848ecc6e3a8e996dedfcf5af245755f5a815baf10a81a95394b3d37d7
+    next_atom_id: 016847947b440b51d2b5a1c7d4ca338fa2c7f58ecc1cefd831893dbdd32ae0dd

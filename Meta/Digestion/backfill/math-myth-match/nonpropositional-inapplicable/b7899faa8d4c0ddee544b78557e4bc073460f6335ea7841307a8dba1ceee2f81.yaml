@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b7899faa8d4c0ddee544b78557e4bc073460f6335ea7841307a8dba1ceee2f81
+  normalized_sha256: sha256:b7899faa8d4c0ddee544b78557e4bc073460f6335ea7841307a8dba1ceee2f81
+cas_ref: sha256:b7899faa8d4c0ddee544b78557e4bc073460f6335ea7841307a8dba1ceee2f81
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 概述 SEP 对耆那多面论、视角论、限定述谓及实在论的解释，无数学定理。
+    previous_atom_id: 5aeab1c1436658dae0fe4fd76981a2510b7bf6626cebddeae3a52b29fc40c7ed
+    next_atom_id: e39da4f21c119b141e93145bc3c9eecd8aa4d0c0a73aac7a205176d3f797daee

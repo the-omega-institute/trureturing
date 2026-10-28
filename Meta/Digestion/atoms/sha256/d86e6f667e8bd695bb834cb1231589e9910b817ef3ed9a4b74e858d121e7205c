@@ -1,0 +1,5 @@
+**Proposition 114.3 (An orbit attainer can fail the full-input problem).**
+At $s=-1/2$, the decoder $\mathcal A_{-1}$ in (113.2) has error $3/4$
+on the allowed input $E_{11}$. It is therefore not a full-input minimizer
+at that parameter.
+

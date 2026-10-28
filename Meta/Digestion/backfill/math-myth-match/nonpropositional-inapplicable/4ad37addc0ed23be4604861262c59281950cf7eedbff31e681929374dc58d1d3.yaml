@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4ad37addc0ed23be4604861262c59281950cf7eedbff31e681929374dc58d1d3
+  normalized_sha256: sha256:4ad37addc0ed23be4604861262c59281950cf7eedbff31e681929374dc58d1d3
+cas_ref: sha256:4ad37addc0ed23be4604861262c59281950cf7eedbff31e681929374dc58d1d3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 洛克宽容文本的历史排除项与作者立场说明。
+    previous_atom_id: c2f3606f47f13eaa84847a84c0c74d2f47a0b6f5aa960211d806f5b2e1ab93ab
+    next_atom_id: 66972789561571eaa56eac1218bcc9c6b73d969f5b3332bcfbaf95883e7fdfec

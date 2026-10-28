@@ -1,0 +1,33 @@
+**推论 42.3（矩递推、Fredholm 总质量与速度识别）。** 令 \(M_{p,v}(x)\) 为从 \(x\) 出发的 \(p\) 阶通过时间矩，且 \(M_{0,v}=1\)。则
+\[
+M_{p,v}=p!\,\mathsf T_v^p1,
+\]
+并满足
+\[
+-DM_{p,v}''=p\,v\,M_{p-1,v},\qquad
+M_{p,v}'(0)=0,\quad M_{p,v}(1)=0.
+\]
+特别地，\(m_v=M_{1,v}=\mathsf T_v1\) 给出
+\[
+-Dm_v''=v,\qquad m_v'(0)=0,\quad m_v(1)=0.
+\]
+所以若 \(D\) 与完整均值剖面 \(m_v\) 已知，则
+\[
+v(x)=-D\,m_v''(x)
+\]
+在分布意义下唯一恢复；单一起点的均值或总质量只给有限个线性约束，不能识别一般连续 \(v\)。
+
+令 \(\mathcal M_v:=\mu^{(v)}([0,1])=\int_0^1 v(u)\Lambda(u)\,du\)。对任意 \(S\ge0\)，Fredholm 恒等式为
+\[
+\det\nolimits_F(I+S \mathsf T_v)
+ =c_v(S,1)
+ =\prod_{n\ge0}\left(1+\frac S{\lambda_n(v)}\right).
+\]
+因此极限总占用质量 \(\mathcal M_v\) 的变换为
+\[
+\mathbb E e^{-S\mathcal M_v}
+ =c_v(S,1)^{-1}
+ =h_{v,S}(0).
+\]
+这把总质量读出、广义谱和带权 Green 算子连接起来，但不把任意有限个谱值当成速度的唯一编码。
+

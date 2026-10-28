@@ -13,7 +13,7 @@ motivation_gids:
 ## Problem
 
 OEIS A378576, Paul D. Hanna, Dec 01 2024, states the following NAME and
-COMMENT, reproduced verbatim from `Library/Recurrence/hanna2024a378576.md`:
+COMMENT, reproduced verbatim from `Library/RecurrenceComposition/hanna2024a378576.md`:
 
 > G.f. A(x) satisfies A(x) = x + x*A(A(A(A(A(A(x)))))), so that this sequence shifts left under the 6th self-COMPOSE.
 

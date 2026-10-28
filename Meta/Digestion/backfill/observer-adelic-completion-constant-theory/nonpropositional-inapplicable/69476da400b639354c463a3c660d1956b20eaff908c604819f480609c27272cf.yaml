@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:69476da400b639354c463a3c660d1956b20eaff908c604819f480609c27272cf
+  normalized_sha256: sha256:69476da400b639354c463a3c660d1956b20eaff908c604819f480609c27272cf
+cas_ref: sha256:69476da400b639354c463a3c660d1956b20eaff908c604819f480609c27272cf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅记录 canonical negative Weil square 链仍缺 distribution 接口的项目状态，不结算该数学蕴含。
+    previous_atom_id: b95febe955831afd2123a61cfca44289c94bba6d3428beb6719dfd33c340119d
+    next_atom_id: 7445da5b46b78b76c846ede18ac2dbfa6b65a4cf497592df2fc48b69cee91f48

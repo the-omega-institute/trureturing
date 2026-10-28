@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e54dac52515d6dc35d20d18718fcab73cdfa972512df446990b5d3784d89a0ba
+  normalized_sha256: sha256:e54dac52515d6dc35d20d18718fcab73cdfa972512df446990b5d3784d89a0ba
+cas_ref: sha256:e54dac52515d6dc35d20d18718fcab73cdfa972512df446990b5d3784d89a0ba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：限定《已答之问》第83章的版本、段落与认识论释读范围；关于解释步骤的讨论是应用边界，并未断言某个指定数学映射满足保真性质。
+    previous_atom_id: 3b58ad1044b1b8c8a77b06ee8b4a1e389c6c440206fdecbfb2049104e6b27423
+    next_atom_id: 47fc8bd1de800d1389b3459d4a771c47221bf74d8fbc29dc2cedce31ea5713c2

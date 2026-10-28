@@ -1,0 +1,47 @@
+**Corollary 18.2 (The unchanged full Gaussian laws).** Precisely,
+
+$$
+\begin{gathered}
+\forall W\in\mathcal W,\quad \forall\eta\in[0,\infty),\quad
+\forall\sigma\in(0,\infty),\quad \forall w\in\mathscr W_7,\\
+\forall B\in\mathcal B(\mathbb R^{|w|+1}),\qquad
+\nu_{w,\eta}(W)(B)=\nu_{w,0}(W)(B),\\
+\nu_{w,\eta}(W)
+=\mathcal N_{t+1}\!\left(L_w\mu(W),
+\frac12L_wL_w^T+\sigma^2I_{t+1}\right),\qquad t=|w|.
+\end{gathered}
+\tag{18.4}
+$$
+
+*Proof.* Apply (18.3) to the trace pairing with $\rho_W$:
+
+$$
+\operatorname{tr}(\mathcal M_\eta(\rho_W)\mathsf E_w(B))
+=\operatorname{tr}(\rho_W\mathcal M_\eta^*(\mathsf E_w(B)))
+=\operatorname{tr}(\rho_W\mathsf E_w(B)).
+\tag{18.5}
+$$
+
+This proves equality on every Borel event before using Gaussianity.
+For completeness, the common full density is
+
+$$
+p_{w,\eta}(z\mid W)=\int_{\mathbb R^{17}}
+\pi^{-17/2}e^{-\|x-\mu(W)\|^2}
+\prod_{i=0}^t\frac{e^{-(z_i-L_ix)^2/(2\sigma^2)}}
+{\sqrt{2\pi\sigma^2}}\,dx.
+\tag{18.6}
+$$
+
+It is the law of $R_w=L_wX+\epsilon$ with the same independent
+$X\sim\mathcal N_{17}(\mu(W),I_{17}/2)$ and
+$\epsilon\sim\mathcal N_{t+1}(0,\sigma^2I_{t+1})$ as Theorem 5.1.
+This gives the last line of (18.4). $\square$
+
+Every intervening clock factor is present in (18.2) and (18.6).
+The assertion concerns the complete fixed-word record measure,
+rather than only its means or covariances. The restriction to
+$\mathscr W_7$ keeps the original horizon; different words denote
+different runs. No adaptive-word or conditional internal-state
+equality is asserted here.
+

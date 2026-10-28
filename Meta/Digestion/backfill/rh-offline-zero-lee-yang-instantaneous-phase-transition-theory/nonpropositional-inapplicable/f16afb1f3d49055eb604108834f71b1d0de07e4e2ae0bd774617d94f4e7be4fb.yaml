@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f16afb1f3d49055eb604108834f71b1d0de07e4e2ae0bd774617d94f4e7be4fb
+  normalized_sha256: sha256:f16afb1f3d49055eb604108834f71b1d0de07e4e2ae0bd774617d94f4e7be4fb
+cas_ref: sha256:f16afb1f3d49055eb604108834f71b1d0de07e4e2ae0bd774617d94f4e7be4fb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：仅含依赖表的标题和列头，无数据行或数学断言。
+    previous_atom_id: 208d4ccb5a31dd2f756555a7e7d25515aa7a3139f5709faf3701e3b683439df3
+    next_atom_id: 7e59442381a851292a43ca92c6ce286d1ad4f190492b24f09eb45d8659c3c159

@@ -123,14 +123,11 @@ theorem sensitivity_of_source_inhabited (hs : ∃ U : ℕ → ℕ, Hyp24_1 U) :
     · funext e; exact nomatch e
   · intro e; exact nomatch e
 
-set_option maxRecDepth 100000 in
-set_option maxHeartbeats 2400000 in
--- Kernel reduction of the actual finite-prefix values needs these elaboration bounds.
 /-- The actual deficit observation distinguishes two legal points in the same row. -/
 theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), (8, 0), (8, 3), ?_⟩
-  change heightDeficit 8 0 ≠ heightDeficit 8 3
+  refine ⟨(), (4, 0), (4, 1), ?_⟩
+  change heightDeficit 4 0 ≠ heightDeficit 4 1
   decide +kernel
 
 #print axioms source_bridge

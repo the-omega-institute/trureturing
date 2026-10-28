@@ -261,8 +261,6 @@ public sealed partial class TruthReleaseCommandTests
                     repositoryRoot,
                     "Golden/Projection/statement-projection-expansion-v1.json"),
                 Encoding.UTF8),
-            [TheoryAtomizerDataLoader.DataPath] =
-                Encoding.UTF8.GetString(DigestionTestSupport.RulesBytes),
             ["Meta/FILEMAP.toml"] = FileMap(),
             ["Meta/Digestion/backfill/fixture-source/source.toml"] =
                 "source_id = \"fixture-source\"\n"
@@ -388,7 +386,7 @@ public sealed partial class TruthReleaseCommandTests
         var entry = new DigestionLedgerEntry(
             "fixture-source",
             sourcePath,
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             "receipt-mismatch",
             fingerprints,
             [new DigestionCoverageEdge(
@@ -398,7 +396,7 @@ public sealed partial class TruthReleaseCommandTests
             status,
             captured.Reference);
         var document = DigestionTestSupport.Document(
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             [entry],
             "fixture-source",
             sourcePath,

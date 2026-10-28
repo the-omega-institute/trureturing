@@ -1,0 +1,150 @@
+**定义 35.1（原对象、物理配对与供应关系）。** 固定任意整数 $n\ge2$，以及整个原自然隔离区间中的任意固定 $g\in(\lambda_n,g_n^{\rm iso})$；不要求 $n,g$ 一致性。解析条件恰为原定义 18.1（修订 [d6d829c43b0ed4f127a09666bc40088b6f440b94](https://github.com/the-omega-institute/trureturing/blob/d6d829c43b0ed4f127a09666bc40088b6f440b94/docs/develop/theory/FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE.md)），其定义 1.1 的供应者 C、V 固定于 5cec4fa83ae7bbb4e787c42606525db4cd11ed48。沿用定义 31.1--31.2、33.1--33.2、34.1 及其原条件下的结论；本节所用本卷第 31、33、34 节及 $G$ 第 24、26、28、30 节的文本固定于 [c4e346266d26ad884d034fd81e94f269df61a965](https://github.com/the-omega-institute/trureturing/blob/c4e346266d26ad884d034fd81e94f269df61a965/docs/develop/theory/FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GLUING.md)。
+
+具体地，原父算子与完整源仍为
+
+$$
+\begin{aligned}
+U_k&=\partial_{x_k}-\tfrac12y_k\partial_z,
+&V_k&=\partial_{y_k}+\tfrac12x_k\partial_z,
+&Z&=\partial_z,\\
+L_{n,\epsilon}&=-\sum_{k=1}^n(U_k^2+V_k^2)-\epsilon^2Z^2,\\
+M_{n,\epsilon}(x,y,z)
+ &=\int_0^\infty\int_{\mathbb R^{2n-2}}
+ (e^{-tL_{n,\epsilon}}\delta_0)(x,y,W,z)\,dW\,dt.
+\end{aligned}
+$$
+
+$\delta_0$ 是恒等单位源，水平热时钟 covariance 为 $2$，中央 covariance 为 $2\epsilon^2$；时间积分和遗漏坐标边缘完整且无权。固定 $\epsilon=1$，保留原场与单位，置 $P=M_{n,1}$、$d\xi=dx\,dy\,dz$。在保留的三维空间中，$U=\partial_x-(y/2)\partial_z$、$V=\partial_y+(x/2)\partial_z$。原自由闭包和形式为
+
+$$
+\begin{aligned}
+\mathcal H_1
+ &=\overline{C_c^\infty(\mathbb R^3;\mathbb C)}^{\,\|\cdot\|_{\rm free}},
+&\|u\|_{\rm free}^2&=\|u\|_2^2+
+             \sum_{X\in\{U,V,Z\}}\|Xu\|_2^2,\\
+q(u,v)&=\sum_{X\in\{U,V,Z\}}\langle Xu,Xv\rangle
+          -g\int P u\overline v\,d\xi,
+&D(q)&=\mathcal H_1.
+\end{aligned}
+$$
+
+所有内积第一变量线性。$\mathscr A=A_{n,1,g}$ 是此下半有界形式的完整复 Friedrichs 算子，包含原极点；其域恰为 (31.3)：$u\in\mathcal H_1$ 且存在 $a\in L^2(d\xi)$，使 $q(u,v)=\langle a,v\rangle$ 对全部 $v\in\mathcal H_1$ 成立，此时 $\mathscr Au=a$。不以穿孔闭包或各向同性 Sobolev 域替换它。
+
+取原坐标
+
+$$
+\begin{aligned}
+R&=((x^2+y^2)^2+16z^2)^{1/4},&\ell&=\log R,
+&J&=(-\pi/2,\pi/2),&c&=\cos a,\\
+\omega(a,\varphi)&=(\sqrt c\cos\varphi,\sqrt c\sin\varphi,\sin a/4),
+&d\xi&=\tfrac14 e^{4\ell}\,d\ell\,da\,d\varphi,\\
+\delta_r(x,y,z)&=(rx,ry,r^2z),
+&w_f(\ell,a)&=\sqrt{2\pi}\,e^\ell
+ f(\delta_{e^\ell}\omega(a,\varphi)).
+\end{aligned}
+$$
+
+最后一式用于轴对称 $f$，其精确物理配对为
+
+$$
+4\langle f,h\rangle_{L^2(d\xi)}
+ =\int e^{2\ell}\langle w_f(\ell),w_h(\ell)\rangle_{L^2(J,da)}\,d\ell.
+\tag{35.1}
+$$
+
+原自然角域为
+
+$$
+\mathcal H_c=\{b\in L^2(J,da):b\in AC_{\rm loc}(J),\
+                         \sqrt c\,b'\in L^2(J,da)\},
+$$
+
+没有额外端点迹条件。沿用角形式
+
+$$
+\begin{aligned}
+A[b]&=\int_J(4c|b'|^2+c|b|^2)\,da,
+&C[b]&=\int_Jc|b|^2\,da,\\
+I_n&=\int_0^{\pi/2}\sin^{n-2}t\,dt,
+&q_n(a)&=I_n^{-1}\int_0^1
+       u^{n-2}(1-u^2\sin^2a)^{-1/2}\,du,\\
+Q_n[b]&=\int_Jq_n|b|^2\,da,
+&h&=A-\frac{g}{2\pi}Q_n.
+\end{aligned}
+$$
+
+$H_{n,g}(\sigma,m)$ 是 $h[b]+\int c(\sigma+m\tan a)^2|b|^2\,da$ 的原自然复自伴表示。$m$ 遍历全部整数；$m=0$ 的域为 $\mathcal H_c$，$m\ne0$ 时另要求 $\int(\sin^2a/c)|b|^2\,da<\infty$。保留原复重数和全部角模定义
+
+$$
+L=L_{n,g}=\frac1{4\pi}\sum_{m\in\mathbb Z}\int_{\mathbb R}
+       \operatorname{rank}_{\mathbb C}
+       \mathbf1_{(-\infty,0)}(H_{n,g}(\sigma,m))\,d\sigma.
+$$
+
+$g_n^{\rm iso}>\lambda_n$、$L>0$ 以及 $s=2\pi L>0$ 由 $G$ 的引理 24.2、命题 24.3 推出，不是新增假设。
+
+下面的 $K,N,Z$ 仅定义在实际约化扇区 $\mathcal S$，即完整复轴对称、$z$ 偶扇区；不删除原算子的其他角模。$\mathsf K_g$ 是 $h$ 在偶 $L^2(J,c\,da)$ 中的自然表示，其唯一负本征值为 $-s^2$，相应 $\psi$ 实、正、偶且 $C[\psi]=1$；正本征值记作 $\nu^2$，相应自然复偶本征空间为 $E_\nu$。物理角质量仍是无权 $da$。
+
+加权空间取 (33.1) 的同一完成空间：内区范数为原自由范数，外部图能量为
+
+$$
+\int\{C[w_\ell]+A[w]+e^{-2\ell}\|Dw\|_{L^2(da)}^2\}\,d\ell,
+\qquad D=2\sin a\,(\partial_\ell-1)+4c\partial_a.
+$$
+
+$H_\sigma$ 由 $e^{\sigma\rho}$、$\rho=(\ell-L_*)_+$ 共轭定义。选择原供应者允许的固定小 $d>0$，使 $d<1/2$ 且小于最小正角指数。令
+
+$$
+\begin{aligned}
+P_d &:H_d\longrightarrow(H_{-d})^*,&(P_df)(z)&=4q(f,z),\\
+K&=\ker P_d,&N&=\ker\mathscr A\cap\mathcal S,\\
+Z&=\{z\in H_{-d}:q(f,z)=0\ \text{对每个 }f\in H_d\}.
+\end{aligned}
+$$
+
+这里反对偶及原自由闭包 $\mathcal H_1$ 的含义均与定义 33.1 相同；辅助指数一空间不被识别为 $\mathcal H_1$。直接复用 (33.3) 与定理 34.2：$K$ 有限维，$Z=K\oplus\mathbb C f_0$，$f_0$ 是原全局局部自由形式零能解，存在 $b\ne0$ 使
+
+$$
+w_{f_0}(\ell)=(be^{is\ell}+\overline b e^{-is\ell})\psi+r_0(\ell),
+\qquad
+\int_{b_*}^{\infty}e^{2d\ell}\|r_0(\ell)\|_{L^2(da)}^2\,d\ell<\infty.
+\tag{35.2}
+$$
+
+$b_*$ 为固定充分大对数半径。令 $\Sigma=\{\nu\in(0,1]:\nu^2\in\sigma(\mathsf K_g)\}$，允许为空。唯一复线性系数映射 $\mathsf A_\nu:K\to E_\nu$ 满足
+
+$$
+w_v(\ell)=\sum_{\nu\in\Sigma}e^{-\nu\ell}\mathsf A_\nu(v)+r_v(\ell),
+\tag{35.3}
+$$
+
+其中余项具有 (34.5) 的完整 $\delta$ 加权图界，固定 $\delta>1$ 满足 (34.3)。余项映射有界，包含原中央场和全部高阶偶角分量；$N=\ker(\mathsf A_\nu)_\nu=K\cap L^2(d\xi)$。不要求系数映射满射，其像和各系数均允许为零。这些均为定理 34.2 的供应结论。
+
+取定义 33.2 的同一原外解 $F_E$、固定内截断 $\eta$，以及 $U_E=\eta F_E$、$C_E=(\mathscr A+E)U_E$。对每个充分小的 $E>0$，$U_E\in D(\mathscr A)$，$C_E$ 是固定紧环带上的实际 $L^2$ 函数。令 $T=\tfrac12\log(1/E)$、$x=\ell-T$。完整耦合 wall 的同一实解 $W$ 满足
+
+$$
+W(x)=(\beta e^{isx}+\overline\beta e^{-isx})\psi
+                 +O_{\mathcal H_c}(e^{d_0x})\quad(x\to-\infty),
+\qquad |\beta|=1.
+$$
+
+(33.4) 给出 $w_{F_E}(T+x)=W(x)+r_T(x)$、$r_T=\sigma^{-1}Y_T$、$\|Y_T\|_{X_T}\le Ce^{-dT}$，其中 $\sigma=e^{dx}$ 于左端、右端为一；$X_T$ 范数含 $\int A[Y_T]$ 和 $\int e^{2x}\|Y_T\|_{L^2(da)}^2\,dx$。右端原外解与 $W$ 保有 (33.9) 的一致指数物理质量界。直接复用 (33.10)--(33.11)、(34.18) 及定理 34.4 证明中的弱收敛：
+
+$$
+\begin{aligned}
+\langle C_E,v\rangle&=E\langle U_E,v\rangle&& (v\in K),\\
+\langle C_E,f_0\rangle
+ &=-s\operatorname{Im}(\overline\beta b e^{isT})+o(1),
+\end{aligned}
+\tag{35.4}
+$$
+
+$$
+m_W=\frac14\int e^{2x}\|W(x)\|_{L^2(da)}^2\,dx\in(0,\infty),
+\qquad E\|U_E\|_2^2\longrightarrow m_W,
+\qquad \sqrt E\,U_E\rightharpoonup0\ \text{于 }L^2(d\xi).
+\tag{35.5}
+$$
+
+所有配对均使用原物理测度。这里的 $Z$ 不被断言为全算子余核。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1b726609cb1a1fd525795642a7a7e9121278afc366b97a5b5dd1e46c5d8604b7
+  normalized_sha256: sha256:1b726609cb1a1fd525795642a7a7e9121278afc366b97a5b5dd1e46c5d8604b7
+cas_ref: sha256:1b726609cb1a1fd525795642a7a7e9121278afc366b97a5b5dd1e46c5d8604b7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅说明 Wittgenstein 版本、引用范围与跨传统解释责任，没有数学结论。
+    previous_atom_id: 42d95025a7f175c0707f24051b5aca3c5477220b79f0c8367933651178121030
+    next_atom_id: 164bd5d80f8db82482001e73fa67b56468bca1ff64421a5f6b1d192fd0a1bf9f

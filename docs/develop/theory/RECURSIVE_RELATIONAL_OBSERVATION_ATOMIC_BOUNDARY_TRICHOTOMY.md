@@ -1986,3 +1986,2963 @@ $$
 列出的参考、证书、完整物理事件、计算、资源、档案和 actuator 桥梁。
 
 ## 追加锚（本行以下为增补区）
+
+## 18. 同一安装中偶纪元的像域障碍与原始守卫响应
+
+### 18.1 来源、观察和实际比较域
+
+本节在 CAP 的完整源动作签名上讨论两步形状逆的适用条件；§§2–17 各自的
+纯替换、固定滞后及原生串行语言合同保持原范围。这里增加的是对既有扩展动作
+的数学分析，不给任何图新增动作、入口或读取权。
+
+**定义 18.1（同一源与观察坐标）。** 固定 GENERAL 假设 1.2、ARC 定义 9.1
+的那一个实际安装 $G_{\mathrm{gc}}$：源发生为 $\xi$，初始源为 $\beta$，
+$H_0=h=K=1$，原客户端已初始化并停放，验证器和 INITIAL consumer 已占位。
+令 $P$ 是其第一个真实 Ready。以后所有路径都是从这个 $P$ 出发的替代有限
+延长；不另作私有准备、不更换客户端、不执行 outer00。保留 CAP 的实际
+source16、随 Reserve 延长的 $\phi_K$ 和全部原始返回、捕获及权限关系。
+
+用 $a(t),b(t)$ 分别数原树的 alpha、beta 叶，
+$\lambda(t)=a(t)+b(t)$。记 $\operatorname{sh}(t)$ 为保留根、左右次序和所有
+分支的完整无标签形状，$\operatorname{Pos}(t)$ 为所有实际存在的有限 $L/R$
+地址。它们只描述逻辑源树；GENERAL 的物理存储支撑 $S$ 另含所有实际存储
+构造，二者不等同。为免与 §12.1 的擦除编码 $C$ 混同，本节记
+
+$$
+\mathsf C_n(t)=\rho^n(t),\qquad
+\mathcal I_2=\mathsf C_2[\mathcal T].
+\tag{ABT.56}
+$$
+
+$\mathcal I_2$ 是实际带标签树的两步像。NESK 的原观察中 Bool 的 true/false
+分别为 alpha/beta，地址 false/true 分别为 L/R；erase 合并两种叶标签，保留
+branch 和 absent。其 ErasedAgree、SupportAgree 分别比较闭半径内所有擦除
+回复、所有存在位。取全部有限半径，便分别是完整 $\operatorname{sh}$ 与
+$\operatorname{Pos}$ 的相等。NESK 的两个定理用于真实 $\rho^{2k}u$，其前提
+没有声称当前记录的全局 accepted-Rho 数 $e=2k$ 自动证明当前源具有这个形式。
+
+本节来源简称如下，编号总指原来源自己的编号。
+
+| 简称 | 来源及承担的接口 |
+| --- | --- |
+| CAP | [Native capacity coherence and growth](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CAPACITY_COHERENCE_AND_GROWTH.md)，定义 1.2–1.4、4.4–4.6、5.1、6.2–6.3，定理 4.5、5.2–5.3、引理 4.7、6.7：完整候选守卫、七标签原始源体、实际保留请求、guard/reserve/counter、交付和返回。 |
+| ARC | [Native actor-local Reserve recovery](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACTOR_LOCAL_RESERVE_RECOVERY.md)，定义 4.1、5.2、9.1：停放客户端、完整内联 $F^A$、实际 outer01 源入口和固定 beta 准备。 |
+| AIF | [Native acquired input frontier and replay](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md)，定义 2.2–2.6：完整规范上下文、真实 admission、原始有限实验、执行拒绝及完整原始联合后继。 |
+| SOURCECALL | [Native source-call task recovery](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SOURCE_CALL_TASK_RECOVERY.md)，定义 1.3–1.4、2.2、引理 2.3、约定 2.4：changed idle CTL 以前逐行的原始实验对应；其后继解码器选材不是全部 $Q$ 响应的排除定理。 |
+| GENERAL | [Native general-target incidence cycle](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GENERAL_TARGET_INCIDENCE_CYCLE.md)，假设 1.2、定义 1.3、引理 8.1、定理 8.4、定义 8.5：同一初始化、原任务、完整源返回及全部实际账目。 |
+| LJA | [Native literal journal adapter](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LITERAL_JOURNAL_ADAPTER.md)，定义 2.1、4.2–4.4、7.1、定理 7.2：实际原树、accept/reject 与计数、仅在指定纯轨道子接口上的 $t=\rho^e u$。 |
+| NESK | [NativeErasedSupportKernels](../../../D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/NativeErasedSupportKernels.lean) 的 erase、ErasedAgree、SupportAgree、two_step_prefix_kernel、even_epoch_support_kernel，及其 [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/NativeErasedSupportKernels.scribe.cs)：精确像上前缀核。 |
+
+**约定 18.2（实际请求与相应原始实验）。** 下文一个已返回调用是已有
+outer01/$F^A$ 路径的完整有限执行：真实 gate 输入，原始 13 上的规范帧，
+当前 dispatcher/service token，ReadState、生成与源操作，响应，计数与行，
+实际双阶段复制、检查和 ACK，source TOK、idle CTL、InnerReturn 及
+CaptureCAP，最后回到真实 Ready。每步保留本次运行的操作数、头、latch、
+owner、控制、记录、收据和费用。新调用只在这个返回之后进入。
+
+原始源帧的语法为三位 tag、$U(d)=1^d0$ 和 $d$ 位 payload。
+Rho 是 `0010`；Right 的 tag 为 `100`，Left 为 `011`。上下文前缀码中
+branch 为 0、alpha 为 11、beta 为 10；每个非空有限上下文都属原任务语法，
+超过当前守卫的候选也合法地执行拒绝。Reserve/Raise 的完整帧和历史语义守卫
+沿用 CAP；不把 Raise 的效果解释为旧固定守卫的行为。
+
+一旦一个 Rho 帧已封口、解析并在原始源体内获得服务 admission，AIF 定义 2.6
+允许完成这个已获准请求的有限原始协议。其到原始响应释放/承诺为止的片段只用
+当时指定、启用的非 IN 行。SOURCECALL 引理 2.3 逐行保留这些行的原始 guard、
+owner、效果、标签、收据与后继；它们全部先于 row delivery 和最后 changed
+idle CTL。这个协议没有调用 outer gate，也没有执行 InnerReturn；准备路径
+包含那些新增行不使它们成为原始实验。完整原始后继按 AIF 保留，不用 74 端口
+的物理列表推定其全部字段。
+
+### 18.2 每个正偶纪元的真实碰撞族
+
+**定理 18.3（全形状和真实偶纪元不能认证两步像或下一 Rho 响应）。** 对每个
+偶整数 $E\ge2$，在定义 18.1 的同一安装内令
+
+$$
+A_E=\rho^{E-1}\beta,\qquad
+H_E=\lambda(\rho^2 A_E)+3,\qquad
+v_0=\beta,\quad v_1=\langle\alpha,\alpha\rangle.
+\tag{ABT.57}
+$$
+
+从共同 $P$ 分别执行已返回的请求序列
+
+$$
+\operatorname{Reserve}(H_E),\quad\operatorname{Raise}(H_E),\quad
+\underbrace{\operatorname{Rho},\ldots,\operatorname{Rho}}_{E-1},\quad
+\operatorname{Right}(v_i),\quad\operatorname{Rho},
+\qquad i\in\{0,1\}.
+\tag{ABT.58}
+$$
+
+随后分别实际供给同一个下一 Rho 帧，令 $z_i$ 为已封口/解析、已 admission、
+尚未修改源的原始 Rho 体切口。可取 ReadState 完成后、源模板生成之前的相应
+原始入口；它不是 outer Ready 或改变后的 return 行。则：
+
+1. 所有显示的准备调用都在当前权限下完成，所有显示的源修改都接受。
+   在 $z_i$，$h=K=H_E$，全局 accepted-Rho 纪元确为 $e=E$。
+   相对于 $P$，两边有效语义计数同为
+   $\Delta(q,g,e,j,m)=(E+1,E+1,E,E+1,E+3)$；下一请求尚未承诺，不再计一次。
+   已完成源修改的响应词都是 $E+1$ 个 accept。最新已取得的行携带这些真实
+   数值；所有原始上下文和各自历史也仍被保留。
+2. $z_i$ 的当前有效源分别是
+
+$$
+t_0=\langle\rho A_E,\langle\beta,\alpha\rangle\rangle,
+\qquad
+t_1=\langle\rho A_E,\langle\beta,\beta\rangle\rangle.
+\tag{ABT.59}
+$$
+
+   它们有相同完整有序形状、每个有限地址上的相同存在位，以及同一叶数
+   $\lambda(\rho A_E)+2$。
+3. $t_0\in\mathcal I_2$ 而 $t_1\notin\mathcal I_2$。
+4. 有一个在两切口同时合法的有限原始完成实验，止于各自原始响应承诺，
+   在 $z_0$ 给出 accept，在 $z_1$ 给出实际执行的 reject。因此两切口的原始
+   $Q$ 响应映射不同。这使用原始已包括的修改响应，不增添 view readout。
+
+**证明。** 先验证每条实际路径，而不由抽象树的可写性推定可达性。
+CAP 定理 5.2 和定义 5.1 从 $P$ 的 $h=K=1$ 供应同源的 Reserve 和 Raise，
+得到 $h=K=H_E$，原树仍为 beta。两操作改变 backing/guard 及其历史，不改变
+源 occurrence、$q,g,e,j$ 或原客户端；它们各增加一次 $m$。ARC 的 outer01
+确实进入 CAP 的完整原始帧体，GENERAL 引理 8.1 供应其完整返回。
+
+$\lambda(\rho t)=a(t)+2b(t)\ge\lambda(t)$。故前 $E-1$ 次 Rho 的每个
+候选叶数至多 $\lambda(A_E)\le H_E$，实际接受并到达 $A_E$。两次可选
+Right 的候选叶数至多 $\lambda(A_E)+2\le H_E$，所以接受整个给定上下文。
+再作一次 Rho 时，两个候选分别为 (ABT.59)，因为
+
+$$
+\rho v_0=\langle\beta,\alpha\rangle,
+\qquad \rho v_1=\langle\beta,\beta\rangle.
+$$
+
+两候选的叶数都是 $\lambda(\rho A_E)+2\le H_E$，因而这最后一次也接受。
+这只用每条路径内部的叶数单调性验证语义容量，不比较两条路径的原生行数。
+所有请求的 tag、长度、上下文和 gate 位都是实际供给的有限规范材料。
+CAP 引理 4.7、6.7 和 GENERAL 引理 8.1 给出每次原始交付、ACK、原始 token
+返回以及外层捕获返回的有限性；不把抽象源更新当作一条免费物理行。
+
+共有 $E$ 次接受的 Rho 和一次接受的 Right，故源调用、接受修改、Rho 和
+原始语义事件的增量分别为 $E+1,E+1,E,E+1$。加上两次维护得到 $m$ 增量
+$E+3$。CAP 的响应承诺规则在新 Rho 尚未释放响应时保留旧有效计数，
+所以这些也是 $z_i$ 的值。启动时的 acquisition 无源更新，$P$ 的 $e=0$，
+于是这里的 $E$ 是真实全局 epoch。此前每次完整行交付的 before/after 字段
+确实含 $h,K,q,g,e,j$ 和 all-event ordinal，载于实际拥有的接收副本；
+这不同于允许在当前 busy 阶段任意读取该副本。
+
+(ABT.59) 的两个右子树都是一个 terminal cherry，擦去叶标签即相同，左子树
+完全相同，所以完整形状及全部存在位相同。叶数式亦直接成立。
+
+像成员的一边有显式原像：
+
+$$
+t_0=\rho^2\langle\rho^{E-1}\alpha,\alpha\rangle.
+\tag{ABT.60}
+$$
+
+左分量等式使用 $\rho^{E+1}\alpha=\rho^E\beta=\rho A_E$，右分量为
+$\rho^2\alpha=\langle\beta,\alpha\rangle$。另一边的右子树是
+$\langle\beta,\beta\rangle$，违反每个两步像的 terminal-cherry 必须为
+$\langle\beta,\alpha\rangle$ 的既有必要条件。该条件正是
+[ActualTreeReadoutAcquisition.source_foundation](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean)
+中对所有 $t$ 的 $\operatorname{cherryValid}(\rho^2t)=\mathrm{true}$ 子句；
+其私有 pair2/branch2 证明说明复合原像的子像根均为 branch，新 terminal
+cherry 只可能来自叶像。[拥有它的 Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.scribe.cs)
+也将这个二步条件与另一个三步 positive 谓词区分。因此这里用的是两步必要条件，
+没有把三步成员定理的定义域扩大。
+
+最后计算实际下一 Rho 的整个候选：
+
+$$
+\lambda(\rho t_0)=\lambda(\rho^2A_E)+3=H_E,
+\qquad
+\lambda(\rho t_1)=\lambda(\rho^2A_E)+4=H_E+1.
+\tag{ABT.61}
+$$
+
+CAP 定理 4.5 和 LJA 定义 4.3 的原始整候选守卫在等号时接受，严格超界时
+执行拒绝。因此原始 Rho 的释放响应必为 accept/reject，而非两个未执行 none。
+
+为精确指明同一个有限实验，使用约定 18.2 的“完成已 admission 的 Rho 至其
+原始 response commitment”协议。它只按已公开的原始 phase 和响应释放选择
+规定的下一非 IN 行，并在承诺处停止；无需询问树、像成员或新端口。
+两个实际完成片段各自有限，取它们长度的最大值便给这个两点域上的有限决策树
+深度；该界是存在性证明参数，不写进初始化，也不要求控制器先取得它。
+每个执行行都由 SOURCECALL 引理 2.3 对应原始行；整个实验未到 changed idle
+CTL。AIF 定义 2.6 明确包括完成已获准请求的原始有限协议，其响应保留实际
+标签、释放输出和每次执行后的完整原始联合后继。两条路径在这个已有输出上已
+不同，完整响应因而不同；证明不需要判断 annex 内容是否属于原始后继。
+这也没有把不同当前状态的 row 数或 complete receipt chain 宣称为相等。
+证毕。
+
+### 18.3 最小偶参数实例与必要保留区别
+
+**例 18.4（$E=2$）。** 这是定理允许的最小偶纪元。此时
+$A_2=\langle\beta,\alpha\rangle$，$H_2=8$。从同一 $P$ 完成
+Reserve(8)、Raise(8)、Rho，再分别作 Right(beta) 或
+Right($\langle\alpha,\alpha\rangle$)，最后各作 Rho。所得
+
+$$
+\begin{aligned}
+t_0&=\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+                      \langle\beta,\alpha\rangle\rangle,\\
+t_1&=\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+                      \langle\beta,\beta\rangle\rangle
+\end{aligned}
+\tag{ABT.62}
+$$
+
+都是五叶、epoch 二；下一 Rho 候选分别为八叶和九叶。
+两种实际 Right payload 分别为 `10` 和 `01111`，其完整帧分别为
+`100`、$U(2)$、`10` 的连接和 `100`、$U(5)$、`01111` 的连接。
+它们是不同的已取得并保留的材料；本例没有共同 acquired-information 前提。
+
+**推论 18.5（源形状解释的具体必要区别）。** 在定理 18.3 的实际可达域上，
+令 $\eta(z)$ 只保留完整源形状、$e,h,K,q,g,j,m$、当前源叶数和已知的
+“下一请求为已 admission Rho”类型。不存在 $\eta$ 的确定函数，能在该域
+给出正确的两步像成员位；也不存在这样的函数给出上述原始完成实验的响应。
+任何声称保持该原始响应的源表示必须在这对实现之间保留一个区别。
+
+证明。$\eta(z_0)=\eta(z_1)$，而两个目标分别在成员位和原始释放响应上不同。
+确定函数对同一输入只能给一个值。证毕。
+
+这项必要区别可以来自已有完整上下文或历史、实际取得的另一种源材料，或一个
+另经证明足够的表示；结论不规定新字段，也不声称每条可行路线都必须判定整个
+$\mathcal I_2$。这里只否定把真实偶 $e$ 当作像域凭证。全局 $e$ 统计所有接受
+Rho，graft 不增加 $e$ 却改变树；它不是 IntrinsicSubstitutionCoordinates
+所定义的当前树内在祖先深度。
+
+作为正面供应，若最后两次接受且改变源的动作都是 Rho，之间及以后只有保持
+源值的操作，那么当前树确为 $\rho^2u$，$u$ 是这两次更新之前的实际源。
+本卷定理 12.1 和 NESK 的 two_step_prefix_kernel 对所有半径供应完整形状的
+唯一反解。这个已有充分条件无需全局 $e$ 偶数。定理 18.3 在每个所述偶 $e$
+都只有最后 graft 后一次接受 Rho，却同时含一个像成员和一个非成员。因此
+“graft 后至少两次接受 Rho”是这一统一像域保证的尖锐次数门槛；它不是某棵
+树属于像的必要条件，$t_0$ 已给出一次时的成员实例。这个表述不重新认领两步
+正面定理，不提供运行中的年龄检查器或取得形状的程序。
+
+## 19. 所有正偶滞后下整 graft 的共同守卫运输障碍
+
+### 19.1 被检验的运输类
+
+**定义 19.1（直接上下文同态运输）。** 固定 $k\in\mathbb N$、$k\ge1$ 和
+$N=2k$，源分量关系为
+$\widehat t=\mathsf C_N(t)$。所检验的具体扩展把一个完整 Left($v$) 或
+Right($v$) 分别映成同方向的一个完整 Left($\mathsf C_Nv$) 或
+Right($\mathsf C_Nv$)，并在该编码入口使用一个预先固定的当前标量守卫 $H$。
+要求它对每个原始合法请求保留 accept/reject，并在接受时保留源后继关系。
+
+$H$ 可以依赖 $N$、历史旧守卫和共同入口已有的全部实际保留数据，但不能随着
+本次所选上下文改变；本定义不包括请求相关的预判/补偿、多次源调用、其他编码、
+不同返回解释或别的关系。Reserve 所增加的 backing $K$ 不替代语义守卫 $H$；
+编码源必须实际满足 $H,K\in\mathbb N$、$\lambda(\widehat t)\le H\le K$。拒绝的请求仍属于
+合法任务域，不把接受集合误称为所有合法请求的集合。
+
+这个运输类是检验 §15 的固定滞后 Read/Rho 关系能否直接扩展到原始整 graft
+菜单的一种具体尝试。§15 原来的四指令语言不包含此菜单，因此下述失败不推翻
+其定理。CAP 定义 1.2、定理 4.5 和 LJA 定义 4.3 是本节的源动作供应；
+[GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean)
+的 Source、substitution、composition 以及 fiberMap 内部 one_step/transport
+供应同一 FreeMagma 上的迭代同态和组成演化。不是先假设一条完整 $Q$ 模拟，
+再用其投影计算结论。
+
+**定义 19.2（实际上下文族）。** 对 $m\ge1$，令
+$P_1(\gamma)=\gamma$，$P_{m+1}(\gamma)=\langle P_m(\gamma),\gamma\rangle$。
+它是一个固定有序括号化的 $m$ 叶树，不是把树等同于结合叶词。置
+
+$$
+A_N=\lambda(\mathsf C_N\alpha),\qquad
+B_N=\lambda(\mathsf C_N\beta),\qquad
+h_0=A_N+1,
+\qquad v_+=P_{A_N}(\beta),\quad v_-=P_{B_N}(\alpha),
+\qquad D_N=B_N(A_N+1).
+\tag{ABT.63}
+$$
+
+**定理 19.3（全正偶滞后的无共同标量守卫）。** 对每个 $N=2k\ge2$，有
+$2\le A_N<B_N$。在定义 18.1 的同一原始初始化中，可以到达源为 beta、
+历史守卫为 $h_0$ 的真实入口 $p$；又可以从该入口沿保持同一源 occurrence 的
+路径到达源为 $\mathsf C_N\beta$、当前守卫为任一给定 $H\ge B_N$ 的真实入口
+$\widehat p_H$。在 $p$ 分别请求 Left($v_+$)、Left($v_-$)，原始源响应是
+accept、reject；在 $\widehat p_H$ 分别请求
+Left($\mathsf C_Nv_+$)、Left($\mathsf C_Nv_-$)，两响应相同，且恰在
+$D_N\le H$ 时都接受。Right 方向也有完全相同的结论。
+
+因此，即使 $H$ 可以使用共同入口的全部保留数据来选取，定义 19.1 的一个
+请求无关标量也不能保持这两个原始源响应。所有四种请求分支都是真实有限规范
+源帧上的合法调用，拒绝分支不是被删去的未定义输入或无权 none。
+
+**证明。** 先给所有参数的精确范围。令 $F_0=0,F_1=1$ 且
+$F_{n+2}=F_{n+1}+F_n$。既有组成更新 $(a,b)\mapsto(b,a+b)$ 给出
+
+$$
+A_N=F_{N+1},\qquad B_N=F_{N+2},\qquad
+B_N-A_N=F_N\ge1\quad(N\ge2).
+\tag{ABT.64}
+$$
+
+也可由 $A_0=B_0=1$、$A_{n+1}=B_n$、$B_{n+1}=A_n+B_n$ 直接得到这些等式。
+故 $2\le A_N<B_N$，并且 $h_0=A_N+1\le B_N$。
+
+在共同 $P$ 之后完整执行 Reserve($h_0$)、Raise($h_0$)，得到 $p$：
+源仍是 beta，$h=K=h_0$，两条真实已返回维护记录留在同一历史内。
+若走编码入口分支，接着完整执行 Reserve($H$)、Raise($H$)，包括相等时的
+真实 unchanged 分支，再执行 $N$ 次 Rho。因 $H\ge B_N\ge h_0$，维护都合法；
+每次 Rho 候选沿这同一纯轨道的叶数不超过最终的 $B_N$，故全都接受。
+所得 $\widehat p_H$ 有 $t=\mathsf C_N\beta$、$h=K=H$，真实 accepted-Rho
+纪元为 $N$。其最新已取得行确实携带此纪元及守卫，不由形状反推或另供承诺。
+CAP 的同源 Reserve、实际帧入口及 GENERAL 的完整返回证明各步有限；
+全部旧记录、backing、token 与停放客户端保持其原有意义。
+
+在历史入口 $p$，两个整个左候选的叶数分别为
+
+$$
+\lambda\langle v_+,\beta\rangle=A_N+1=h_0,
+\qquad
+\lambda\langle v_-,\beta\rangle=B_N+1>h_0.
+\tag{ABT.65}
+$$
+
+所以它们实际接受、执行拒绝。两请求均按完整原始上下文语法进入；源守卫
+没有预先剔除较大的请求。它们是从共同 $p$ 的两个替代延长，不是先接受第一
+次修改后再在那个已改变的源上测试第二个请求。
+
+对任意源 $v$，同态性及逐叶相加给出
+
+$$
+\lambda(\mathsf C_Nv)=A_Na(v)+B_Nb(v).
+\tag{ABT.66}
+$$
+
+于是 $\lambda(\mathsf C_Nv_+)=A_NB_N$
+且 $\lambda(\mathsf C_Nv_-)=B_NA_N$。在共同编码入口 $\widehat p_H$，两个
+整个编码候选因而都有
+
+$$
+\lambda\langle\mathsf C_Nv_\pm,\mathsf C_N\beta\rangle
+ =A_NB_N+B_N=D_N
+\tag{ABT.67}
+$$
+
+个叶。CAP 对完整候选使用同一个 $H$，所以若 $H<D_N$ 两个都实际拒绝，
+若 $H\ge D_N$ 两个都实际接受。两个编码上下文本身是有限非空原树，其完整
+前缀码可以在同一已安装帧接口实际供给；无需给源任意新入口，也无需让停放
+客户端计算它们。请求过大只导致该次已执行 guard 拒绝。
+
+没有一个 $H$ 能同时把这个同值对变成 (accept,reject)。允许 $H$ 的选取
+读取更多共同入口数据不改变对每一个固定 $H$ 成立的二分。交换整个候选的
+左右方向不改变叶数，所以 Right 同样成立。证毕。
+
+本证明同时保留了源后继本应满足的同态等式
+
+$$
+\mathsf C_N\langle v,t\rangle
+ =\langle\mathsf C_Nv,\mathsf C_Nt\rangle,
+\qquad
+\mathsf C_N\langle t,v\rangle
+ =\langle\mathsf C_Nt,\mathsf C_Nv\rangle.
+\tag{ABT.68}
+$$
+
+也就是说，失败发生在真实原始接受/拒绝分支，而不是由丢掉括号或错误计算
+接受后的候选造成。任一保持完整原始响应的桥都必须保持这个已包括的响应
+分量；因此这个受限直接运输类连该必要源分量条件也不能满足。没有从它推出
+任意其他运输类的完整 $Q$ 不可能性。
+
+### 19.2 不编码上下文也不能保留源后继
+
+**命题 19.4（原样上下文的后继障碍）。** 对任意 $N=2k\ge2$、任何非空有限
+$v,t$，若把编码源 $\mathsf C_Nt$ 上的上下文仍用原 $v$，则一次接受的整左
+或整右 graft 均不能实现原接受后继在关系 $\widehat t=\mathsf C_Nt$ 下的
+对应。此结论不涉及被拒绝后保持旧源的情形。
+
+证明。由 (ABT.64)、(ABT.66) 有
+
+$$
+\lambda(\mathsf C_Nv)\ge2\lambda(v)>\lambda(v).
+$$
+
+故 $\mathsf C_Nv\ne v$。自由有序配对的构造子单射性与 (ABT.68) 给出
+
+$$
+\langle v,\mathsf C_Nt\rangle
+ \ne\mathsf C_N\langle v,t\rangle,
+\qquad
+\langle\mathsf C_Nt,v\rangle
+ \ne\mathsf C_N\langle t,v\rangle.
+\tag{ABT.69}
+$$
+
+原样上下文若接受，就写入左边的实际源，不能同时是右边的编码后继；若将它
+拒绝，又不能保持本来接受的原始响应。证明不使用结合律、重新配对或重新准备。
+证毕。
+
+**例 19.5（$N=2$ 的完整整动作见证）。** 最小正偶滞后给
+$A_2=2,B_2=3,h_0=3,D_2=9$。可取
+$v_+=\langle\beta,\beta\rangle$，
+$v_-=\langle\langle\alpha,\alpha\rangle,\alpha\rangle$。
+在原 beta/h=3 上，整 graft 候选分别是三叶和四叶，接受与拒绝。
+两个编码上下文都是六叶，编码 beta 是三叶，因此每个编码整候选都是九叶。
+合法编码入口的 $3\le H<9$ 使两者都拒绝，$H\ge9$ 使两者都接受。
+这些是一个原调用的完整上下文，不得拆成多次逐叶调用以保留某个已接受片段。
+
+### 19.3 对扩展路线的精确要求
+
+定理 19.3 的 $\widehat p_H$ 自身在真实纯 Rho 轨道上，具备 §12 和 NESK 所需
+的真实偶滞后关系；因此仅弥补定理 18.3 的像域证据仍不足以解决这个 graft
+问题。一个采用此表示关系的完整菜单桥，必须用另经证明的请求相关处理或
+不同的动作映射来保持旧语义守卫，或者采用其他经证明的表示关系。
+这是一条必要的路线条件，不声称请求相关补偿已经安装、可以免费执行，或一定
+存在。此处的两个分支本来就由不同已保留上下文触发；没有证明它们的完整
+acquired record 相同，也没有因此排除实际消费者使用那个区别。
+
+## 20. 两项障碍的恢复对应、费用与来源范围
+
+### 20.1 完整实际材料与费用
+
+两项证明中的真实运行一律保留原始接收副本、编码请求、旧 guard 记录、所有
+退役 source/scratch/copy 材料和最终返回行。定理 18.3 比较的请求材料不同，
+定理 19.3 比较的旧/编码入口位于同一源的不同历史阶段；两种比较都不宣称
+相同完整原始后继、相同物理 $S/B$、相同收据链或相同物理时钟。
+
+令 $n(x)$ 是一个实际切口从共同不可约入口累计的原生行数，$A(x)$ 是其实际
+非 meter 八轨构造 cell 数，$b_{\rm ctl}(x)$ 是 GENERAL 约定下实际控制位数。
+每条路径的完整账目正是 GENERAL 定义 8.5 的
+
+$$
+\operatorname{Bill}(x)=
+\bigl(n(x),\ 2n(x),\ S_{\rm irreducible}+b_{\rm ctl}(x)+8A(x)+8n(x)\bigr).
+\tag{ABT.70}
+$$
+
+对实际可连接的 $P\preceq z_i\preceq c_i$，$c_i$ 为定理 18.3 的原始响应
+承诺切口，ticks 和 fee 的后缀数分别是
+$n(c_i)-n(P)$ 和 $2(n(c_i)-n(P))$；取得原始响应的片段单独付
+$n(c_i)-n(z_i)$ 行。每个 IN、Base、元数据、Resolve、生成门、guard/MUX、
+计数、封口、原始行通道、ACK、外层捕获/银行和已执行拒绝都包括在各自真实
+$n,A$ 内。比较的数值 $q,g,e,j,m$ 不是这些完整账单的替代品。
+(ABT.70) 是实际运行计数的精确收费合同，不是另给一个未证明的封闭 runtime
+界。这里没有跨路径的总费用单调性、相等性、最优性或节省定理。
+
+定理 19.3 的旧入口到编码入口也实际支付两次维护及 $N$ 次完整 Rho 返回，
+即使某次维护返回 unchanged。编码上下文的取得、传输、完整解析和拒绝后的
+所有工作照价保留。将来若执行 $v\mapsto\mathsf C_Nv$ 或请求相关 guard
+补偿，须有已有合法消费者和当前有权材料来执行，并把每条额外行计入；本文
+只证明既有请求分支之间的数学障碍，没有实施这种补偿。
+
+### 20.2 原纲领的对应与未决条件
+
+| 原纲领要求 | 本节群确立的条件及仍须保留的范围 |
+| --- | --- |
+| 同一关系源、实际发生与初始化 | 两族都从 GENERAL 的同一 beta/$\xi$/停放客户端安装出发；Reserve 延长原 backing，Raise 公布新 guard，接受 Rho 与整 graft 是现役动作。不改变 alpha/beta、有序非结合配对或吸收 halt。 |
+| 空间/支撑与边界 | 定理 18.3 仅合并逻辑源完整形状和全部地址存在位；实际物理 $S$、自然终端边界 $B$ 保留其独立定义和完整附属材料，未证明二者碰撞。 |
+| 过程/时间 | 所有原生发生次序和实际收据各自保留；没有由形状恢复任意历史、未知起点、绝对时钟或省略外层过程。 |
+| 保留及 callable memory | 相同 selected epoch/guard/counter 均有真实已取得行，两个上下文的不同内容也真实保留。联合 $M_J$ 不等于当前 actor 内存；图中没有新增材料读取、旧目标调用、decoder 或 controller。 |
+| 原始任务的合法域及完整响应 | 定理 18.3 的 separator 在实际原始 Rho 体内，以既有释放的 accept/reject 区分完整响应；定理 19.3 是直接整 graft 源分量运输的障碍。两者都没有把 outer/annex 物理步自动纳入 $Q$，没有声明 $Q=Q_G$。 |
+| 恢复后的合法继续使用 | 形状逆所需的真实像域条件不能只用全局偶 epoch 认证；即便实际偶滞后成立，整 graft 的旧 guard 仍不能由请求无关标量和同态上下文直接运输。任何正路线须证明实际取得、当前权限、原始入域、原始完整后继及其所有额外费用。 |
+
+本节群不替代 GENERAL 的既有四视图付费循环、SOURCECALL 的原始行恢复、
+GENERAL14–15 的 entry/source-only 结果、GENERAL16–17 的 malformed/equal-weight
+边界或 GENERAL18 的受限成功混合历史逆。完整 retained-context/history 可以
+含所需区别，本文未证明其对每个当前消费者都可取得或可用。
+
+仍待处理的是实际安装中的源形状/像域证据取得和已安装消费、原始 full-$Q$
+响应的完整对应与同时合法续延域、changed idle CTL/InnerReturn 和 annex
+切口、成功混合中间切口与独立增长源、equal-weight full-$Q$、bootstrap
+歧义、任意旧目标/完整历史、terminal 比较及 halt 的无后继边界。没有从两个
+受限反例推出全纲领不可能，也没有缩小这些原有义务。已知 epoch 的抽象原生
+脚本、现有 full-source producer 和数学逆都不补上这个实际安装桥。
+
+### 20.3 证明供应与文献适用范围
+
+定理 18.3 与 19.3 的新内容是指定实际源上的参数化反例及其动作对应，归为
+`repo-derived` 普通数学；推论 18.5、命题 19.4 是它们的明确必要条件。
+已有树语法、像核、cherry 条件、组成演化、生产器和付费服务继续由原来源承担。
+正文给出源特定证明，没有新 Lean 证明、执行证书、编译或 CI 结论。
+
+| 供应或文献 | 在数学条目中的精确作用及边界 |
+| --- | --- |
+| 本卷定理 12.1、12.3、命题 12.4 与 NESK | 两步像上的真实形状逆及认证偶滞后的半径核。NESK 私有 root_reflection、erased_reflection、erased_support、labeled_iterates 支撑其公开定理；[Reg 镜像](../../../Reg/D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/NativeErasedSupportKernels.lean) 的 actual_two_step/actual_even_epoch 是该参数族的实际应用，不是 CAP/G_gc 当前访问或原始响应桥。 |
+| ActualTreeReadoutAcquisition 的 source_foundation 及 Scribe | 两步像的 terminal-cherry 必要条件用于 (ABT.60) 后的非成员证明；不采用其第三步 positive 决策任务、无价计算或可查询所有叶的权限模型。 |
+| GenealogicalFiberTransport 及 [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.scribe.cs)；IntrinsicSubstitutionCoordinates 的 intrinsic_coordinates、pair_image | 原始带标签自由树、配对同态和组成演化支撑 (ABT.64)、(ABT.66)、(ABT.68)；内在祖先坐标不等于 graft 后仍累计的全局 Rho counter。未引用 fiber 概率运输作为 actor 服务。 |
+| 钉版 mathlib [`Mathlib/Algebra/Free.lean`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Algebra/Free.lean) | FreeMagma.of/mul 和 lift/lift_of 的自由非结合代数接口与实际 substitution 对应；构造子不同及配对单射性用于命题 19.4。它不提供原始装置 authority、guard 或付费实现。 |
+| Berthé–Steiner–Thuswaldner–Yassawi，[Recognizability for sequences of morphisms](https://arxiv.org/abs/1705.00167) | `literature-attested` 的识别性问题针对自由幺半群态射、双向词 tiling、aperiodic/subshift 或 growing bounded-alphabet S-adic 条件。它不是有限有根自由树上的当前像域认证，也不供应 CAP 的权限或费用；定理 18.3 未从该文献迁移结论。 |
+| Lynch–Vaandrager，[Forward and Backward Simulations, Part I: Untimed Systems](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf)，§3.2 | `literature-attested` 的 forward simulation 要求初始关联覆盖和逐步匹配执行片段；观察相同本身不供应这些义务。定理 18.3 用实际原始输出，定理 19.3 用具体 guard 分支，检验必要匹配条件；不把通用 trace inclusion 当作完整原始收据、成本或后继相等。 |
+| Foster–Greenwald–Moore–Pierce–Schmitt，[Combinators for Bi-Directional Tree Transformations: A Linguistic Approach to the View Update Problem](https://www.cis.upenn.edu/~bcpierce/papers/lenses-toplas-final.pdf)，§3、定义 3.3 | `literature-attested` 的 GetPut/PutGet 定律与 totality 是分开的要求。其抽象 get/putback 模型不提供真实源 admission、当前读写权、整候选守卫或安装消费者；定理 19.3 不由 lens 定律推出，而由两个真实源响应直接证明。 |
+
+上述文献只承担所列一般背景，不作为两族实际可达性或完整原始输出的替代证明。
+文献范围限于具名原始来源，不主张全球新颖性、穷尽检索、所有表示的最小性，
+或从两个符号无前提推出动作、权限及物理规律。
+
+## 追加锚（本行以下为增补区）
+
+## 21. 紧 Rho 守卫下的形状与接受响应恢复
+
+**定义 21.1（形状的饱和标签与原始体入口）。** 保留定义 18.1 的同一
+$G_{\mathrm{gc}}$、第一个真实 Ready $P$、准备发生 $\xi$、原始动作和
+约定 18.2 的规范调用。另记 $\mathcal I_1=\rho[\mathcal T]$。
+对一个非空有限有序满二叉形状 $\sigma$，令 $n(\sigma)$ 为叶数，
+$c(\sigma)$ 为两个孩子都是叶的节点数，称这些节点为 terminal cherries。
+令 $\mathsf L_\sigma$ 在每个 terminal cherry 的右叶放 alpha，其余叶
+全部放 beta。不同 terminal cherries 的叶不交，故该定义无冲突。
+它保留完整根、左右次序和括号，不是只给出一个叶词。
+
+本节的比较切口 $z$ 是已实际供给 Rho 帧 `0010`、封口、解析、取得
+原始服务 admission 并完成 ReadState 后，尚未开始源模板生成的原始体入口。
+有效逻辑源为 $t$，其当前实际守卫及 reserve 满足
+$\lambda(t)\le h\le K$。断言 $t\in\mathcal I_1$ 是关于这个当前源的
+前提，不由累计 epoch 的奇偶性代替。$h$ 是 ReadState 读出的当前值，
+不是在 busy 切口另设的新守卫。
+
+**定理 21.2（紧原始 Rho 的接受恢复律）。** 在定义 21.1 的实际入口，若
+$t\in\mathcal I_1$，置 $\sigma=\operatorname{sh}(t)$、
+$n=n(\sigma)$、$c=c(\sigma)$，并假定当前实际守卫为
+
+$$
+h=2n-c,
+\tag{ABT.71}
+$$
+
+则完成这个已 admission 的原始 Rho 至其响应承诺时，
+
+$$
+\mathrm{accept}\quad\Longleftrightarrow\quad t=\mathsf L_\sigma.
+\tag{ABT.72}
+$$
+
+因此在接受分支，完整擦除形状与这个原来已包括的响应确定整个请求前带标签
+源，以及接受后的源 $\rho(\mathsf L_\sigma)$。若再有
+$\sigma\in\operatorname{sh}(\mathcal I_2)$，则同一响应还满足
+
+$$
+\mathrm{accept}\quad\Longleftrightarrow\quad t\in\mathcal I_2;
+\tag{ABT.73}
+$$
+
+此时接受分支的唯一两步祖先是定理 12.1 的 $D(\sigma)$。
+这里额外的形状像域正是该定理的 $\mathcal G$，不省略它。
+
+证明。复用 ActualTreeReadoutAcquisition 的 source_foundation 中一阶
+alphaValid 条件：$\mathcal I_1$ 中每个 alpha 都是某个终端
+$\langle\beta,\alpha\rangle$ 的右叶。于是每个 terminal cherry 至多
+贡献一个 alpha，其余叶不能是 alpha，故
+
+$$
+a(t)\le c,\qquad
+a(t)=c\quad\Longleftrightarrow\quad t=\mathsf L_\sigma.
+\tag{ABT.74}
+$$
+
+饱和标签本身也属于 $\mathcal I_1$：复用 IntrinsicSubstitutionCoordinates
+的 pair_image 语法，单叶 beta 有原像 alpha，终端
+$\langle\beta,\alpha\rangle$ 有原像 beta；其余配对的两个子树按同一
+规则分别有原像，再作有序配对即可。这是沿形状的有限结构归纳。
+
+原替换的组成恒等式给出整个下一候选的叶数
+
+$$
+\lambda(\rho t)=a(t)+2b(t)=2n-a(t).
+\tag{ABT.75}
+$$
+
+CAP 定理 4.5 用整个候选与实际 $h$ 比较。在 (ABT.71) 下，接受等价于
+$a(t)\ge c$；与 (ABT.74) 合并便得 (ABT.72)。这使用完成原始请求释放的
+accept/reject，拒绝也执行原始工作，不是无权或未执行的 none。
+
+若 $\sigma\in\operatorname{sh}(\mathcal I_2)$，取 $s\in\mathcal I_2$ 使
+$\operatorname{sh}(s)=\sigma$。$s\in\mathcal I_1$，且 source_foundation 的二步
+cherryValid 条件使它的每个 terminal cherry 恰为
+$\langle\beta,\alpha\rangle$；其他叶由 alphaValid 为 beta。因此
+$s=\mathsf L_\sigma$，证明该饱和标签确在 $\mathcal I_2$。任何同形状
+的两步像都必须是这个标签，遂得 (ABT.73)。定理 12.1 已供应
+$\rho^2D(\sigma)=\mathsf L_\sigma$ 和唯一性；这里直接使用其逆，不另造
+祖先解码器。证毕。
+
+**命题 21.3（紧条件在同一实际源上的达到）。** 取偶数 $E\ge2$、整数
+$r\ge1$，固定一个有 $r$ 个叶位置的有序满二叉骨架 $\Pi$。记
+$\Pi[u_1,\ldots,u_r]$ 为按其固定叶位置填入这些整树。置
+
+$$
+\begin{aligned}
+A&=\rho^{E-1}\beta,&D_0&=\lambda(\rho^2A),&H&=D_0+3r,\\
+u_0&=\beta,&u_1&=\langle\alpha,\alpha\rangle,&
+v_x&=\Pi[u_{x_1},\ldots,u_{x_r}],\qquad x\in\{0,1\}^r.
+\end{aligned}
+\tag{ABT.76}
+$$
+
+从共同 $P$ 各自完整返回于 Reserve($H$)、Raise($H$)、$E-1$ 次 Rho、
+Right($v_x$)、Rho，再供给下一 Rho 帧，取定义 21.1 的体入口 $z_x$。
+这些替代有限延长都实际存在。其当前源为
+
+$$
+t_x=\left\langle\rho A,\Pi[w_{x_1},\ldots,w_{x_r}]\right\rangle,
+\qquad
+w_0=\langle\beta,\alpha\rangle,\quad
+w_1=\langle\beta,\beta\rangle.
+\tag{ABT.77}
+$$
+
+它们满足定理 21.2 的全部前提，包括同一
+$\sigma\in\operatorname{sh}(\mathcal I_2)$ 和实际 $h=K=2n-c=H$。
+其下一原始 Rho 接受恰当 $x=0^r$。这是紧条件的达到与适用例，不以
+族大小、完整历史逆或增加响应个数另作恢复结论。
+
+证明。Reserve/Raise 用 CAP 的同源维护路径得到 $h=K=H$，源仍为 beta。
+由 $\lambda(\rho s)\ge\lambda(s)$，前 $E-1$ 次 Rho 的候选至多有
+$\lambda(A)\le D_0$ 叶；整个 Right 候选至多有 $\lambda(A)+2r\le H$
+叶。最后准备的 Rho 候选恰为 (ABT.77)，有
+$n=\lambda(\rho A)+2r\le H$ 叶，故所有准备修改均接受。全部实际帧有限
+且规范，CAP 引理 4.7、6.7 与 GENERAL 引理 8.1 在各自完整后继处供应
+交付、检查、ACK、source-token 返回、InnerReturn、CaptureCAP 和真实
+Ready；下一次 admission 只在这个返回之后发生。没有拼接独立源见证。
+
+所有 $w_i$ 有同一二叶形状，故所有 $t_x$ 的完整形状和地址存在位相同。
+最后一次准备 Rho 直接证明 $t_x\in\mathcal I_1$。由于
+$\rho A\in\mathcal I_2$，它的 alpha 数等于其 terminal cherry 数
+$c_L$，并有 $D_0=2\lambda(\rho A)-c_L$。骨架中新填的子树根都是
+branch，不会在两个填入块之间另生 terminal cherry；最外配对的左子树也
+是 branch。因此共同 $c=c_L+r$，得到 $2n-c=D_0+3r=H$。又有
+
+$$
+t_{0^r}=\rho^2\left\langle
+\rho^{E-1}\alpha,\Pi[\alpha,\ldots,\alpha]\right\rangle,
+\qquad
+\lambda(\rho t_x)=H+|x|_1.
+\tag{ABT.78}
+$$
+
+前式证明共同形状确在所需像域；后式也直接验证接受恰在全零处。非零 $x$
+留下至少一个终端 $\langle\beta,\beta\rangle$，与二步必要条件不合。
+例如 $E=r=2$、$\Pi=\langle\cdot,\cdot\rangle$ 时，$D_0=5$，
+$n=7,c=3,H=11$，四个下一候选的叶数为 $11,12,12,13$。
+
+在这些切口，实际 $e=E$，相对 $P$ 的有效语义增量为
+$\Delta(q,g,e,j,m)=(E+1,E+1,E,E+1,E+3)$；当前待承诺请求不再计一次。
+这些不是原生行数。不同 $v_x$ 的完整输入和收到的依赖副本照常保留，
+不主张共同完整 acquired material、物理视图或账单相等。
+
+对每个固定 $E,r,\Pi$，上述切口有限多个。约定 18.2 的协议仅按实际公开
+phase 和响应释放完成这个已 admission 请求，止于原始响应承诺。各分支有限，
+取有限多个完成长度的最大值即得这一固定族上共同合法的有限原始实验。
+SOURCECALL 引理 2.3 保留每个执行行的实际标签和完整原始后继；实验止于
+changed idle CTL 以前。全零与非零成员在既有释放响应上不同，因而其完整
+原始响应不同；不由相同 reject 推出其他分量相同。这不是全体入口上统一的
+停止界。证毕。
+
+**命题 21.4（形状像域前提不能由紧接受删去）。** 在同一个 $P$ 之后完整
+返回于 Reserve(5)、Raise(5)、Left(alpha)、Rho，再取下一 Rho 的上述
+体入口，则
+
+$$
+t=\langle\beta,\langle\beta,\alpha\rangle\rangle\in\mathcal I_1,
+\qquad n=3,\quad c=1,\quad h=5=2n-c.
+\tag{ABT.79}
+$$
+
+下一 Rho 接受，但 $t\notin\mathcal I_2$。
+
+证明。Left 的整候选 $\langle\alpha,\beta\rangle$ 有两叶，随后 Rho
+得到显示的三叶源，下一 Rho 有五叶；这些都在实际守卫 5 内。CAP 的完整
+返回路径与命题 21.3 相同。两步像若来自叶 alpha，其根有两个叶孩子；若来自
+叶 beta，其根左为 branch、右为叶；若来自配对，其两个孩子都是 branch。
+显示的源根左为叶、右为 branch，不属这三种情况。因此紧接受恢复它的
+饱和标签，却不能在任意形状上认证二步祖先。证毕。
+
+## 22. 整 Left/Right 直接运输的精确标量守卫区间
+
+**定义 22.1（已到达入口与固定守卫的源分量要求）。** 固定同一安装中任一
+实际到达、具有 ARC 定义 5.1 入口关系及 CAP 有效源不变量的规范 Ready
+$p$；不执行 outer00。令其源为 $t$，实际守卫及 reserve 为 $h,K$，并置
+
+$$
+\ell=\lambda(t),\qquad d=h-\ell\ge0.
+$$
+
+取偶数 $N\ge2$，复用定义 19.1 的直接运输和 (ABT.64)、(ABT.66)：
+
+$$
+\widehat t=\mathsf C_Nt,\qquad
+A_N=F_{N+1},\quad B_N=F_{N+2},\qquad
+w=\lambda(\widehat t)=A_Na(t)+B_Nb(t).
+\tag{ABT.80}
+$$
+
+编码端实际守卫 $H$ 在选上下文之前固定，$H\ge\max(h,w)$，其 reserve
+至少为 $H$。每个 Left($v$)、Right($v$) 分别映到同方向的一个完整
+Left($\mathsf C_Nv$)、Right($\mathsf C_Nv$)，$v$ 遍历全部非空有限
+有序带标签树。要求保留的是原始释放的 accept/reject 以及源后继关系
+$\widehat t'=\mathsf C_N(t')$。这两项是原始响应的必要分量；不把它们
+命名为一个替代 $Q$，也不要求或推出完整原始响应相等。
+
+**定理 22.2（整菜单的必要且充分守卫区间）。** 在定义 22.1 的每个入口，
+同一个 $H$ 对全部 Left/Right 请求满足该源分量要求，当且仅当
+
+$$
+\boxed{\quad w+B_Nd\ \le H\ \le w+A_N(d+1)-1.\quad}
+\tag{ABT.81}
+$$
+
+这样的整数守卫存在恰当 $d\in\{0,1\}$；其全部可行值分别为
+
+$$
+\begin{array}{c|c}
+d&\text{全部可行的 }H\\\hline
+0&[w,w+A_N-1]\cap\mathbb N\\
+1&[w+B_N,w+2A_N-1]\cap\mathbb N.
+\end{array}
+\tag{ABT.82}
+$$
+
+证明。对一个 $m\ge1$ 叶的整上下文，复用权重式 (ABT.66) 得
+
+$$
+A_Nm\le\lambda(\mathsf C_Nv)\le B_Nm.
+\tag{ABT.83}
+$$
+
+在固定任意一个 $m$ 叶有序骨架上，全 alpha 与全 beta 标签分别达到两端。
+每个这样的整树都有合法有限原始上下文帧，不因会拒绝而退出请求域。
+原端接受恰当 $\ell+m\le h$，即 $m\le d$；编码端接受恰当
+$w+\lambda(\mathsf C_Nv)\le H$。
+
+若 $d\ge1$，接受全部旧接受请求要求接受全 beta 的 $d$ 叶上下文，故
+$H\ge w+B_Nd$；拒绝全部旧拒绝请求要求拒绝全 alpha 的 $d+1$ 叶上下文，
+故 $H<w+A_N(d+1)$。这给出 (ABT.81) 的必要性。反之，对 $m\le d$
+用 (ABT.83) 上界，对 $m\ge d+1$ 用其下界，便分别强制接受和拒绝。
+若 $d=0$，旧端没有接受上下文；最轻的编码上下文是单叶 alpha，权重
+$A_N$，故必要且充分条件为 $w\le H<w+A_N$，仍是 (ABT.81)。
+接受时 (ABT.68) 供应同方向的源后继关系；拒绝时两边各保留原源，关系
+也保留。因此守卫条件对所述两个源分量同时必要且充分。
+
+令 $\delta=B_N-A_N=F_N$。$N\ge2$ 时
+
+$$
+\delta<A_N=F_N+F_{N-1}\le2\delta.
+\tag{ABT.84}
+$$
+
+整数区间非空等价于 $\delta d<A_N$，由此恰为 $d=0$ 或 $d=1$。
+其下端还满足 $w+B_Nd\ge\ell+d=h$，且不小于 $w$，所以没有额外的
+$H\ge h$ 障碍。代入便得 (ABT.82)。以上只比较完整候选的语义叶数，
+没有以其中一个行数或费用分量控制完整实际账单。证毕。
+
+**定理 22.3（实际编码入口和固定守卫的有限 graft 续延）。** 给定
+定义 22.1 的实际 $p$ 与满足 (ABT.81) 的 $H$，从 $p$ 完整返回于
+
+$$
+\operatorname{Reserve}(\max(K,H)),\quad\operatorname{Raise}(H),\quad
+\underbrace{\operatorname{Rho},\ldots,\operatorname{Rho}}_{N}
+\tag{ABT.85}
+$$
+
+实际到达同一源发生上的 Ready $\widehat p$，其源为 $\mathsf C_Nt$，
+守卫为 $H$，reserve 为 $\max(K,H)$。包括等值维护的真实 unchanged
+分支在内，这条准备路径都有完整返回。
+
+分别从 $p,\widehat p$ 比较任意有限 Left/Right 请求字及其逐项同态编码字，
+各端保持其守卫 $h,H$，不插入 Rho、Reserve/Raise 或其他动作。每个字都
+有实际有限返回序列；每次释放的接受/拒绝相同，每次源后继仍满足
+$\widehat t_i=\mathsf C_Nt_i$。若 $d=0$，所有请求拒绝；若 $d=1$，至多
+一个请求接受，且恰为字中第一个单叶上下文请求，若不存在则全部拒绝。
+
+证明。$H\ge h$ 且 $\max(K,H)\ge K,H$，所以 CAP 定义 5.1 的 greater
+或 equal 维护分支给出所述新参数，均保持当前源。每次准备 Rho 的整个
+候选叶数不超过最终的 $w\le H$，故 $N$ 次都接受。CAP 引理 6.7 与
+GENERAL 引理 8.1 给出所有源行、交付、检查、ACK、token 返回及外层捕获，
+从而建立真实 $\widehat p$。它不是在旧切口调用历史 token 或恢复旧快照。
+
+当 $d=0$ 时，编码端剩余 $H-w<A_N$，而每个映入的非空上下文至少有
+$A_N$ 叶；双方所有 graft 都拒绝，关系保持。当 $d=1$ 时，在第一次接受
+前两源都不变，定理 22.2 使双方恰接受单叶上下文。该次接受后，原端余量
+为零；编码端新叶数为 $w'=w+A_N$ 或 $w+B_N$。下界保证 $w'\le H$，
+上界保证
+
+$$
+0\le H-w'\le A_N-1.
+\tag{ABT.86}
+$$
+
+所以此后每个编码非空上下文也都拒绝。接受处用 (ABT.68)，拒绝处各自
+保持旧源，按字长归纳即得断言。每个完整上下文帧及其执行拒绝都由 CAP
+引理 6.7 返回；有限字在各自实际返回后逐次进入。两个被比较的路径是同一
+初始化的替代延长，不授予 reset、clone 或同时持有两个可调用源的权限。
+这里的归纳只保持显示的源分量，不把外层返回或两边整个调用解释为一个
+完整原始响应相等的实验。证毕。
+
+**命题 22.4（同时含接受和拒绝的实际正例）。** 从共同 $P$ 完整返回于
+Reserve(2)、Raise(2)，得 $t=\beta,h=K=2$ 的入口 $p$。取 $N=2$，
+则 $A_2=2,B_2=3,w=3,d=1$，唯一可行编码守卫为 $H=6$。从 $p$ 走
+Reserve(6)、Raise(6)、Rho、Rho 到达定理 22.3 的实际编码入口。
+在各自显示的入口，两端对每个单叶上下文都接受，对每个至少二叶上下文都执行拒绝；固定守卫
+下任意有限 graft 字都保持该定理的响应分支和源关系。
+
+证明。原端整个 graft 有 $1+m$ 叶，接受恰为 $m=1$。编码端源有三叶，
+单叶上下文映成二叶或三叶，整个候选有五叶或六叶；至少二叶上下文映成
+至少四叶，整个候选至少七叶。守卫 6 正好保持两种分支。显示的准备全在
+原有维护和 Rho 路径内，有限返回及后续关系由定理 22.3 给出。证毕。
+
+## 23. 两项正条件的原任务对应与恢复范围
+
+**约定 23.1（原始响应与当前权限）。** 定理 21.2 选取的是定义 21.1
+切口上完成已 admission Rho 的原始释放响应。其 admission 前所有有限
+请求材料都经原始 13 的规范入口实际供给、保留和解析；producer 当前持有
+source16、工作资源及 busy service token。完成实验只走其规定的原始非 IN
+行，保留每条实际标签、释放输出和完整原始联合后继，未越过 changed idle
+CTL。各准备调用还实际走完原始行/依赖交付、检查、ACK、source TOK、
+InnerReturn、CaptureCAP 和 Ready。后者是准备历史中的真实付费路径，
+不因存在就全成为原始 $Q$ 的动作。
+
+定理 22.2–22.3 的每个原/编码请求也分别在其当前真实入口供给完整帧，
+包括实际 unary 长度和全部上下文；过大请求保留为规范的执行拒绝。响应
+承诺以前的原始行对应仍用 SOURCECALL 引理 2.3。不同上下文、编码材料、
+头、latch、scratch、目录、counter、记录、收据、receiver 和控制都保留
+各自实际值；证明既不从相同源分量推出完整响应相等，也不消去其中的费用。
+不存在凭 74 端口列表或 complete 一词补出的 annex 可见性规则。
+
+两项结论保持 AIF 定义 2.6 的原任务：合法 Supply、规定启用的 Advance、
+语义协议的真实 admission、完整原始后继和吸收终端输出均不变。启用但
+非规范的 Supply 属任务未定义，禁用/无权尝试是未执行 none，执行拒绝
+是另一种结果。这里使用已包括输出作不等判断，未给这些结果改类型。
+
+**约定 23.2（同次运行的材料与费用）。** 每条实际前缀 $z$ 的账目沿用
+GENERAL 定义 8.5 与 (ABT.70)。为区别叶数及 $A_N$，记原生行数为
+$\nu_{\rm phys}(z)$，非 meter 构造 cell 数为 $A_{\rm phys}(z)$，则
+
+$$
+\operatorname{Bill}(z)=\bigl(\nu_{\rm phys}(z),\ 2\nu_{\rm phys}(z),
+S_{\rm irreducible}+b_{\rm ctl}(z)+8A_{\rm phys}(z)+8\nu_{\rm phys}(z)\bigr).
+\tag{ABT.87}
+$$
+
+实际连接的两切口之间逐坐标取差；原生行、收据和非 meter 材料均包括
+准备、输入、Base、Resolve、代码/门生成、guard/MUX、已执行拒绝、
+counter/fence/封口、行和依赖副本、检查、ACK、token、捕获及返回。
+Reserve 的 backing 和退役材料也一直在实际存储中。编码入口的两次维护及
+$N$ 次完整 Rho，即使维护 unchanged，仍须支付各自实际工作。
+这些计价约定不从语义 counter、候选叶数或同形状推出跨路径的行数、完整
+收据、总费用或物理视图相等。没有由区间非空推出取得/编码/执行的免费性。
+
+**约定 23.3（恢复目标及数学供应）。** 这里两项源特定推导为
+`repo-derived`：紧守卫的既有原始接受响应在 $\mathcal I_1$ 上迫使唯一
+饱和标签，并在另给的 $\operatorname{sh}(\mathcal I_2)$ 域认证祖先；
+直接同态整 graft 在任一所述入口的全部标量解由 (ABT.81) 给出，且其
+正类在固定守卫下恰容许上述有限续延。其余供应保持原来的范围：
+
+| 供应 | 在本节群中的作用 |
+| --- | --- |
+| source_foundation 的 alphaValid/cherryValid，及其拥有的 Scribe；IntrinsicSubstitutionCoordinates 的 pair_image | 一步 alpha 位置必要条件、二步终端标签必要条件及一步像语法，支撑 (ABT.74) 与饱和标签的存在；不移用第三步正成员任务或全源读取权。 |
+| 本卷定理 12.1 与 NESK 的 two_step_prefix_kernel | 在真实两步像形状上直接使用已有祖先逆与唯一性；不是重新证明形状核。 |
+| 本卷 (ABT.64)、(ABT.66)、(ABT.68)，GenealogicalFiberTransport 及其拥有的 Scribe | 逐叶权重与配对同态支撑整个上下文的两个权重极值及接受后的源关系；不是全响应仿真。 |
+| 钉版 mathlib 的 FreeMagma、lift、lift_of，见 §20.3 的精确版本引文 | 只用自由有序非结合树及替换的代数接口，不引入新的物理操作、权限或费用恒等式。 |
+| CAP 定理 4.5、5.2–5.3、引理 4.7、6.7；ARC 定义 4.1、5.1–5.5；GENERAL 引理 8.1 | 同一 source16/$\phi_K$、规范整帧、当前 admission、真实服务返回和已占位原客户端/验证器/INITIAL consumer 的保持。 |
+
+命题 21.3 仅给恢复条件的实际达到，不把 ABT18 的扩大族或 GENERAL15
+已经覆盖的 source-only 完整响应/历史逆再算作新结果。定理 22.2 保留
+定理 19.3 的反例：它的 $\ell=1,h=A_N+1$ 给 $d=A_N\ge2$，落在空区间。
+正余量一的完整分类没有将那个反例推广为所有入口都失败。GENERAL17–20、
+UAS5、TARGET_CURRENT3–4 和 ORIGINAL_INTERFACE9–11 的响应、历史及费用
+结论仍按其原域使用。没有额外外部定理负责上述实际源对应，也不主张全球
+新颖性、穷尽检索或所有表示的最小性。
+
+**定义 23.4（保留的恢复义务）。** 定理 21.2 是在完整形状、一步像及
+紧当前守卫前提下的数学恢复条件。它未供应形状或像域证据的实际取得，也未
+使 $\mathsf L_\sigma$、$D$ 成为当前可调用的消费者；定理 22.3 也未使
+上下文编码或 $H$ 的数学选取成为已安装控制器。原始客户端保持停放，所有
+历史 owner/token 数据仍只作历史材料。若要运行这些数学映射，仍须由实际
+已取得操作数、当前有权的既有入口及完整付费返回建立对应。
+
+逻辑源的 $\sigma$ 和地址存在位不是物理支撑 $S$ 或终端边界 $B$；
+恢复当前带标签源不是恢复任意原生发生史 $T$、联合 $M_J$ 或 actor 的
+callable memory。被拒绝分支、非紧守卫及未认证形状不在 (ABT.72) 的
+接受逆内。固定守卫 graft 正类至多接受一次，不能据此得到持续增长的
+四视图恢复策略。
+
+完整原始 $Q$ 的后继/续延对应、全部同时合法域和自适应实验，ReadE/TagRead/
+Rho 与维护的混合运输、成功混合中间切口及独立增长、equal-weight full-$Q$、
+raw/bootstrap/预取得/未完成/fault/annex/changed-return 切口、任意旧目标、
+final00 无后来 Ready 及吸收 terminal 比较，仍保留 §§10、18–20 与各供应
+的原有义务。两项源分量正条件既没有安装全域桥，也没有否定其他恢复路线。
+
+## 追加锚（本行以下为增补区）
+
+## 24. Attained varying-capacity original Rho tests
+
+**Convention 24.1 (same source and numerical coordinates).** Retain
+Definition 18.1's one actual GENERAL/ARC initialization, preparation
+occurrence $\xi$, first Ready $P$, source $\beta$, $H_0=h=K=1$,
+parked original client, occupied verifier and INITIAL consumer. Use only
+finite canonical outer01 source calls with their complete returns as in
+Convention 18.2. The actual source is always source16 under its continuing
+$\phi_K$. Neither a reset nor a fresh per-capacity installation is used.
+All required finite inputs are actually supplied at their original INs;
+reached local computations retain GENERAL Assumption 1.2's termination
+premises. No autonomous infinite supply or uniform completion time is
+assumed.
+
+Write $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$. Here $e$ counts accepted Rho
+calls after $P$; $h$ is the actual semantic guard, and $K$ the actual
+reserve. These are not a primitive clock, a receipt count or physical
+storage support. The supplied atomic recurrence gives
+
+$$
+t_e=\rho^e\beta=T_{e+1},\qquad
+\lambda(t_e)=F_{e+2},\qquad
+\lambda(\rho t_e)=F_{e+3}.
+\tag{ABT.88}
+$$
+
+The use below of this recurrence is not a new leaf-count theorem.
+
+**Theorem 24.2 (actual promised family and its included response).** For
+every pair
+
+$$
+(e,h)\in D:=\{(e,h)\in\mathbb N^2:h\ge F_{e+2}\},
+\tag{ABT.89}
+$$
+
+there is an actual finite alternative continuation from this same $P$
+ending with source $t_e$, accepted-Rho epoch $e$ and guard/reserve $h=K$.
+There is then a genuine original source-body cut $z_{e,h}$ after the
+next canonical Rho frame `0010` is sealed, parsed, admitted and
+ReadState-complete, before its template generation. The original finite
+completion through response release is lawful there and has label
+
+$$
+\operatorname{Accept}(z_{e,h})
+\quad\Longleftrightarrow\quad h\ge F_{e+3}.
+\tag{ABT.90}
+$$
+
+Failure of this inequality is executed original source refusal. All
+requests, work, records, native receipts and complete original successors
+retain their actual values; the assertion is not equality of observations
+between different $(e,h)$.
+
+Proof. If $h>1$, complete Reserve($h$), then Raise($h$) from $P$.
+CAP Theorems 5.2–5.3 preserve the same source and occurrence, set $K=h$
+and then the semantic guard to $h$, and preserve accepted-Rho epoch zero.
+If $h=1$, (ABT.89) forces $e=0$, and both maintenance calls are omitted.
+Now supply and complete $e$ original Rho calls. For the $i$th candidate,
+$1\le i\le e$, (ABT.88) and monotonicity of the positive Fibonacci
+sequence give $\lambda(t_i)=F_{i+2}\le F_{e+2}\le h$.
+CAP Theorem 4.5 therefore accepts every preparatory call. CAP Lemmas 4.7
+and 6.7, ARC's actual outer01 path and GENERAL Lemma 8.1 give each full
+finite row/delivery/check/ACK/source-token/InnerReturn/CaptureCAP/Ready
+return. Induction gives the asserted reached source and epoch. These
+are alternative continuations of one actual initialization, not permission
+to clone or replay a live source.
+
+Supply the next canonical `0010` frame through that same installed entry.
+The producer has its actual service/source authority after admission and
+ReadState. The whole candidate is $\rho t_e$, with the size in (ABT.88).
+CAP's existing original Rho rule accepts exactly at (ABT.90). Convention
+18.2, AIF Definition 2.6 and SOURCECALL Lemma 2.3 give the genuine original
+completion protocol to release, using prescribed enabled non-IN rows.
+It stops before the changed final idle CTL; no outer or return row has
+been relabelled as an original experiment. Its accept/refuse label is
+already included in the original response. Complete original successors
+are retained after every executed action. The distinction therefore
+requires neither a new output diagnostic nor an annex-visibility claim.
+$\square$
+
+**Convention 24.3 (authority, acquisition and price map).** Preparation
+calls begin only after the previous true Ready return. All framing,
+canonical context/material handling, current owner/token/phase, source
+and scratch bindings, generated code, receiver checks, ACK and fixed
+return paths are those of CAP/ARC/GENERAL. All original labels, legal
+Supply domains, actual prescribed Advance rows and finite semantic
+protocols keep AIF's meanings. Physically enabled noncanonical Supply
+remains task-undefined; disabled or unauthorized attempts remain
+unexecuted none; the refusal in (ABT.90) executes its actual work.
+
+The full original completion protocol is used instancewise at an already
+admitted request. Every instance is finite; this does not supply a
+uniform finite primitive-depth tree for the infinite family. The physical
+preparation also pays the actual added-phase rows, without declaring them
+to be original experiments. Convention 23.2's bill applies on each run,
+including every source/header/Base/Resolve/generation/guard/write,
+maintenance allocation, fence/counter/row/index, copy, seal/check/ACK,
+owner transfer, capture and return. Retired material and marked receipts
+are not erased. Neither (ABT.88) nor a within-run cost monotonicity claim
+is a cross-run full-cost comparison.
+
+The actual initial beta is acquired by its existing entrance. Supplied
+maintenance and source frames remain retained inputs. No new observer
+port for $e,h$, live tree value or a class label is supplied by their
+mathematical use in (ABT.89). Historical permissions remain historical;
+the original controller remains parked. The theorem compares the already
+defined mathematical original responses, not a newly installed actor
+computation of the guard.
+
+## 25. No Presburger separator even on the attained promise
+
+**Theorem 25.1 (no extension of the attained acceptance relation).** There
+is no Presburger predicate $A(e,h)$ on $\mathbb N^2$ such that
+
+$$
+\forall(e,h)\in D,\qquad
+A(e,h)\quad\Longleftrightarrow\quad h\ge F_{e+3}.
+\tag{ABT.91}
+$$
+
+Its values outside $D$ may be arbitrary. In particular the assertion does
+not assume that $D$ itself has a Presburger definition, and does not
+require any behavior on unattained pairs.
+
+Proof. Suppose such $A$ exists. In Presburger arithmetic define
+
+$$
+\begin{aligned}
+\operatorname{Tail}(e,H)&\ \Longleftrightarrow\
+           \forall h\ (h\ge H\Longrightarrow A(e,h)),\\
+B(e,H)&\ \Longleftrightarrow\
+\operatorname{Tail}(e,H)\land
+       \forall J\ (J<H\Longrightarrow\neg\operatorname{Tail}(e,J)).
+\end{aligned}
+\tag{ABT.92}
+$$
+
+For each $e$, $\operatorname{Tail}(e,F_{e+3})$ holds, since every
+$h\ge F_{e+3}$ belongs to $D$ and is accepting. On the other hand,
+$F_{e+3}-1\ge F_{e+2}$, because $F_{e+1}\ge1$. Thus this preceding
+integer is also attained and $A(e,F_{e+3}-1)$ is false. Every
+$H<F_{e+3}$ includes that false point in its tail. It follows that
+
+$$
+B(e,H)\quad\Longleftrightarrow\quad H=F_{e+3}.
+\tag{ABT.93}
+$$
+
+No value of $A$ below the promise was used. Presburger closure under
+Boolean operations and scalar quantification makes $B$ Presburger.
+
+For clarity, the graph in (ABT.93) is not semilinear. Any linear set
+contained in it has a base $(a,b)$ with $b=F_{a+3}>0$ and nonnegative
+periods. A period $(0,v)$ with $v>0$ violates the function property.
+For a period $(u,v)$ with $u>0$, take its second and fourth multiples.
+They would give
+
+$$
+F_{a+2u+3}=b+2v,\qquad F_{a+4u+3}=b+4v.
+\tag{ABT.94}
+$$
+
+For every $r\ge1$, $F_{r+2}\ge2F_r$. Since $u\ge1$, monotonicity
+gives $F_{r+2u}\ge2F_r$. Applying this to $r=a+2u+3$ in (ABT.94)
+yields $b+4v\ge2(b+2v)$, hence $b\le0$, a contradiction.
+Every period is therefore zero, so such a linear set is a singleton.
+A finite union of them cannot be the infinite graph (ABT.93).
+Ginsburg–Spanier Theorem 1.3 [ABT-GS] identifies Presburger subsets of
+$\mathbb N^2$ with semilinear sets. This contradicts the Presburger
+predicate $B$ and proves (ABT.91) impossible. $\square$
+
+This proof rules out an arbitrary Presburger *extension* of the promised
+response relation, rather than only a Presburger definition of its graph
+on the full plane. Nondefinability of the promise alone would not prove
+that stronger assertion. The two attained threshold neighbors are what
+make the least-tail argument independent of off-promise behavior.
+
+**Definition 25.2 (fixed finite uniform response language).** A uniform
+formula has free natural coordinates $(e,h)$ and finitely many auxiliary
+natural and finite native-tree variables. It uses alpha, beta, ordered
+pairing and the interpreted powers $\rho^{a(e,h,\mathbf s)}$ with
+specified integer-affine exponents, guarded nonnegative; Boolean native
+equalities/disequalities and regular native memberships; and Presburger
+scalar conditions. All native variables are existential. Regular
+automata and formula syntax are fixed independently of $(e,h)$.
+Finitely many existential auxiliary scalar projections and finite unions
+are allowed. A designated accept label is either a finite branch or
+an in-language definable coordinate, for example a scalar bit or one of
+the two literal leaf labels.
+
+There is no free ground record supplied as non-Presburger advice, variable
+formula length, unknown leaf-count cutoff inside an automaton, arbitrary
+predicate or alternating native-tree quantifier hidden in this definition.
+It concerns the same semantic $(e,h)$, rather than a new non-Presburger
+recoding whose original-parameter graph is left external to the formula.
+
+**Corollary 25.3 (uniform constructor/membership response exclusion).**
+No formula of Definition 25.2 can agree on every actual $z_{e,h}$ of
+Theorem 24.2 with the released original acceptance label. Consequently a
+complete-original-response representation in this class cannot be both
+exact on that family and have an in-language projection to its included
+accept/refuse label. The exclusion holds even when its off-promise
+behavior is unspecified.
+
+Proof. [NCE, Theorem 10.2][ABT-NCE] eliminates the jointly existential
+native variables at the identical full scalar tuple $(e,h,\mathbf s)$,
+including arbitrary supplied fixed regular memberships. Its output is
+Presburger. Existentially project $\mathbf s$, and take the finite label
+branch or its definable projection. The result would be a Presburger
+$A(e,h)$ satisfying (ABT.91), contrary to Theorem 25.1. Any allegedly
+complete response has to retain this existing label; when its projection
+is expressed in the stated class the same contradiction applies. This
+argument does not replace the complete response by the label as a task,
+or infer what its other fields are. $\square$
+
+## 26. Fixed numeral capacities and the surviving recovery obligation
+
+**Proposition 26.1 (the positive and negative capacity quantifiers).**
+For every supplied numeral $h\ge1$, [NCE, Definitions 13.1–13.3 and
+Theorem 13.4][ABT-NCE] gives fixed finite automata and exact Presburger
+supports $E_h^+,E_h^-$ for the two existing original Rho labels on its
+shared-epoch source class. This permits the automaton, formula syntax and
+construction cost to depend on $h$. There is nevertheless no one fixed
+finite formula of Definition 25.2 with $h$ free that represents those
+labels throughout the attained family (ABT.89).
+
+Proof. At a fixed numeral the language $L_h$ of trees with at most $h$
+leaves is recognized by truncated addition in $h+1$ states. It is a
+permitted fixed regular membership in NCE Theorem 10.2. Its exact
+source-class and original-admission application is NCE Theorems 13.2
+and 13.4, which retain one source, one epoch tuple and the actual guard.
+On the pure-beta orbit, each such fixed $h$ also bounds the attained
+$e$ by $F_{e+2}\le h$, so there is no conflicting assertion of an
+unbounded nonperiodic fixed-$h$ epoch set. A uniform formula with free
+$h$ would instead contradict Corollary 25.3. Quantifier order and the
+fixed automata, rather than the word regular, separate the claims.
+$\square$
+
+An effective procedure which takes numeral $h$ and builds a larger
+$L_h$ automaton is fully consistent with this obstruction. A finite
+algorithm computing Fibonacci thresholds in a stronger arithmetic
+language is likewise not excluded. The result is a fixed-language
+expressivity boundary, not an undecidability result or a physical
+resource lower bound. SFP's all-source representation with arbitrary
+finite residual shapes and shape-dependent arithmetic dimensions is
+outside the excluded fixed scalar projection class. A growing literal
+record, fully expanded ground source supplied as actual material, or a
+proved richer growth-sensitive relation also needs its own exact
+correspondence; none is excluded merely by (ABT.91).
+
+**Convention 26.2 (the changed original-goal condition).** NCE's regular
+membership extension decides joint feasibility at the same epoch tuple
+and tests possibility or uniqueness of an actual original response label
+at each fixed numeral capacity. The present result proves a necessary
+boundary for extending that relation to all actual capacities in one
+fixed formula: even the pure-orbit included guard label requires a
+relation outside its Presburger projection class. A proposed uniform
+complete-original-response bridge must therefore retain or construct
+such growth-sensitive information in a justified richer representation.
+An externally supplied unrepresented threshold cannot count as having
+proved that bridge.
+
+The obstruction does not assert a common acquired-information collision:
+$h$, the complete supplied frames and contexts, physical histories, all
+source/code/scratch bits, heads, latches, descriptors, channels, archives,
+owner bindings, original successors and receipts can differ between its
+actual prefixes. They have not been erased or identified. Likewise a
+fixed-class unique label is not complete-$Q$ equality, a mathematical
+source witness is not the actual unknown source, and an existential
+history is not its acquisition certificate. No current actor authority,
+callable decoder, controller, target chooser or return marker is added.
+The independent physical $S,B,T,M_J$ expressions keep their existing
+meanings and do not become logical leaf count or code shape.
+
+All original full-domain obligations remain: faithful complete-original
+successor and continuation maps; actual acquisition and retained/currently
+callable use; mixed independent history/source growth and intermediate
+cuts; equal-weight and synchronized-mate full-$Q$ cases; changed returns,
+annex and old-target access; raw/bootstrap/preacquisition/unfinished/fault
+cuts; final00 without later Ready and absorbing-terminal comparisons;
+and the independently specified four-view recovery directions with every
+actual price. The fixed-capacity construction and attained expressivity
+boundary advance that programme locally and do not complete or refute it.
+
+**References 26.3 (proof basis and literature scope).** The attained
+source/response map and no-extension argument are `repo-derived` ordinary
+proofs. CAP/ARC/GENERAL supply the actual same-initialization preparation,
+source operations, admission and paid return paths; AIF/SOURCECALL and
+Convention 18.2 supply the original response protocol. The atomic
+Fibonacci recurrence is reused. [NCE, Sections 10–12][ABT-NCE] supplies
+the independently proved regular-membership elimination; NCE Sections
+4–5 and SFP Sections 3–4 remain the prior equation and all-source suppliers.
+
+Ginsburg and Spanier, *Semigroups, Presburger Formulas, and Languages*,
+Pacific Journal of Mathematics 16(2), 285–296, Theorems 1.1–1.3,
+especially Theorem 1.3 on printed p. 288 [ABT-GS], is
+`literature-attested` for effective Presburger/semilinear equivalence
+and scalar projection closure. The pinned mathlib declaration
+`presburger.definable_iff_isSemilinearSet` has this arithmetic meaning;
+it is not a compiled instance of (ABT.91). Comon–Delor's admissible
+constructor-membership theorem is used only through NCE's proved
+$c/f$ reduction, not as a theorem about varying native capacity.
+No new Lean verification, installed algorithm, universal minimality or
+worldwide-originality claim is made.
+
+[ABT-NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CROSS_EPOCH_RELATIONS.md
+[ABT-GS]: https://msp.org/pjm/1966/16-2/pjm-v16-n2-p09-s.pdf
+
+## 追加锚（本行以下为增补区）
+
+## 27. Independent word recodings of attained original responses
+
+**Convention 27.1 (the attained source remains the parameter domain).**
+Use exactly Theorem 24.2 and Convention 24.3. Write
+$f(e)=F_{e+3}$. The mathematical parameters remain the ordinary accepted-Rho
+count $e$ and positive semantic guard/reserve $h=K$, with
+
+$$
+D=\{(e,h):h\ge F_{e+2}\},\qquad
+\operatorname{Accept}(z_{e,h})\ \Longleftrightarrow\ h\ge f(e).
+\tag{ABT.95}
+$$
+
+In particular both $f(e)-1$ and $f(e)$ are attained guards at that same
+count: $f(e)-1\ge F_{e+2}$ follows from $F_{e+1}\ge1$.
+The response is the lawful original completion of the already admitted
+Rho request, through its existing release. Its complete original
+successors remain part of the task. Neither an automatic numerical
+representation of $D$ nor a common acquired-information fiber is assumed.
+
+**Definition 27.2 (separately recoded synchronous arithmetic interface).**
+Let $C\subseteq\Sigma_C^*$ and $H\subseteq\Sigma_H^*$ be regular
+languages over fixed finite alphabets. Fix bijections
+
+$$
+c:\mathbb N\longrightarrow C,\qquad
+v:\mathbb N_{\ge1}\longrightarrow H.
+\tag{ABT.96}
+$$
+
+A tuple is read synchronously from the beginning of each word, padding
+shorter words at the right by a fresh symbol $\#$ through the maximum
+length. There are no common trailing padding columns. A relation is
+regular when its language of these convolutions is regular. Different
+sorts may have disjoint alphabets and entirely different numerical codes;
+no automatic identity between the sorts is required. Require the relations
+
+$$
+\begin{aligned}
+D_b&=\{(c(e),c(2e+b)):e\in\mathbb N\},\quad b=0,1,\\
+<_{H}&=\{(v(h),v(j)):1\le h<j\}
+\end{aligned}
+\tag{ABT.97}
+$$
+
+to be regular and numerically exact. These are properties of a candidate
+representation, not extra native source actions. Ordinary synchronous
+count addition implies both count maps, by first-order definitions using
+the fixed code of $1$. They are not requirements imposed on every
+possible solution of the recovery programme. A noncanonical presentation
+is covered here only after a specified regular unique-representative
+restriction gives (ABT.96) and preserves the stated regular relations.
+
+**Theorem 27.4 (no independent synchronous recoding retaining the count
+maps and capacity order).** Under Definition 27.2 there is no regular
+relation $A\subseteq C\times H$ such that
+
+$$
+\forall(e,h)\in D,\qquad
+A(c(e),v(h))\ \Longleftrightarrow\ h\ge f(e).
+\tag{ABT.99}
+$$
+
+Values outside $D$ are unrestricted. The exclusion permits arbitrary
+additional fixed automatic predicates and first-order definitions in
+the same word presentation.
+
+Proof. Suppose $A$ exists.
+
+Use the literature-attested finite-fiber length bound of Khoussainov,
+Nies, Rubin and Stephan [ABT-KNRS, Proposition 2]. For nonempty input
+and output tuples, if a synchronous regular relation $R(\mathbf x,\mathbf y)$
+has finitely many output tuples
+$\mathbf y$ for every fixed input tuple $\mathbf x$, there is a constant
+$p_R$ such that
+
+$$
+\max_i|y_i|\le\max_j|x_j|+p_R
+\quad\text{whenever }R(\mathbf x,\mathbf y).
+\tag{ABT.98}
+$$
+
+Its short proof also fixes the padding convention used here. In an
+accepting run whose longest output exceeds
+all inputs by more than the automaton's state count, some state repeats
+within that excess. The intervening input columns are all padding.
+Repeat the nonempty loop. If any shorter output then has a padding symbol
+followed by an ordinary symbol, the accepted word is not a valid
+convolution, contrary to the recognized language being exactly $R$.
+Otherwise pumping produces arbitrarily long distinct output tuples for
+the identical inputs, contrary to the finite fiber. This proves (ABT.98).
+The constant concerns words and automata, with no physical resource
+interpretation.
+
+Use the exact capacity order to define
+
+$$
+\begin{aligned}
+\operatorname{Tail}(x,y)&\ \Longleftrightarrow\
+ \forall z\in H\ (y\le_H z\Longrightarrow A(x,z)),\\
+B(x,y)&\ \Longleftrightarrow\
+ \operatorname{Tail}(x,y)\land
+ \forall w\in H\ (w<_H y\Longrightarrow
+                         \neg\operatorname{Tail}(x,w)).
+\end{aligned}
+\tag{ABT.100}
+$$
+
+Synchronous relations are closed under first-order operations on regular
+domains [ABT-KNRS, Theorem 1], so $B$ is regular. Reuse the least-tail
+argument of Theorem 25.1: every $h\ge f(e)$ is attained and accepts,
+whereas the attained $f(e)-1$ refuses. Thus a tail starts exactly at a
+capacity at least $f(e)$, independently of all off-promise values, and
+
+$$
+B(c(e),v(j))\ \Longleftrightarrow\ j=f(e).
+\tag{ABT.101}
+$$
+
+Apply the credited estimate (ABT.98) to this functional relation and then
+to the finite-fiber relation $\{(v(j),v(h)):1\le h\le j\}$. There are
+constants $p_B,p_\le$
+such that every $1\le h\le f(e)$ satisfies
+
+$$
+|v(h)|\le |v(f(e))|+p_\le
+          \le |c(e)|+p_B+p_\le.
+\tag{ABT.102}
+$$
+
+Put $K_\Sigma=\max(2,|\Sigma_H|)$ and $L=|c(e)|+p_B+p_\le$.
+The $f(e)$ distinct positive capacities through $f(e)$ have distinct
+words of length at most $L$. Counting all such words gives
+
+$$
+f(e)\le\sum_{i=0}^{L}|\Sigma_H|^i
+       \le K_\Sigma^{L+1},\qquad
+|c(e)|\ge\log_{K_\Sigma}f(e)-p_B-p_\le-1.
+\tag{ABT.103}
+$$
+
+In particular the label relation together with capacity order forces
+linear count-name growth: the supplied Fibonacci inequality gives
+$F_{e+3}\ge2^{(e+1)/2}$. This implication did not use either count map.
+
+Each graph $D_b$ is functional. The same credited estimate gives
+a common $p_D\ge1$ with $|c(2e+b)|\le|c(e)|+p_D$. Starting at $0$,
+read the ordinary binary digits of $e$ and use these two maps. For $e\ge1$
+this takes $\lfloor\log_2 e\rfloor+1$ maps, and therefore
+
+$$
+|c(e)|\le|c(0)|+p_D(\lfloor\log_2 e\rfloor+1).
+\tag{ABT.104}
+$$
+
+Equations (ABT.103)–(ABT.104) would bound $F_{e+3}$ by a fixed polynomial
+in $e+1$, contradicting its exponential lower bound. Equivalently their
+linear lower bound on $|c(e)|$ contradicts its logarithmic upper bound.
+The bijections, finite alphabets, exact order, affine count maps and
+off-promise quantifiers have all retained their original types. $\square$
+
+**Corollary 27.5 (completed-original-response representation boundary).**
+Consider the actual finite original completions at all $z_{e,h}$ in
+(ABT.95). There is no interface of Definition 27.2 with a fixed regular
+completed-response relation $R(c(e),v(h),\mathbf w)$, regular response-word
+domains and a regular included-accept predicate $P_{\rm acc}(\mathbf w)$,
+which represents those complete original responses faithfully on every
+attained pair. Finitely many regular auxiliary word tracks and
+first-order definitions do not change this conclusion.
+
+Here fidelity requires, in particular, at least one representing tuple
+for each attained completion and no tuple with an incorrect released
+label there. Requiring all actual original successor fields is stronger
+and hence also excluded. No condition is placed on $R$ outside $D$.
+
+Proof. The relation
+$\exists\mathbf w\,[R(x,y,\mathbf w)\land P_{\rm acc}(\mathbf w)]$
+would be regular and satisfy (ABT.99), contradicting Theorem 27.4.
+The same projection works after any fixed finite regular auxiliary
+relations. $\square$
+
+Regularity here is a hypothesis on the parameter-to-*completed-response*
+relation itself. An automatic primitive-step graph supplies no such
+conclusion about its unbounded finite completions. A history input whose
+parameter-to-history relation has not been shown regular likewise supplies
+no instance of this corollary. The result neither equates complete
+responses having the same label nor asserts impossibility of every
+representation, algorithm or full-$Q$ recovery route.
+
+## 28. Compressed counts, canonical numerals and a quantitative boundary
+
+**Convention 28.1 (canonical values and synchronization).** Let $Z(n)$ be
+the canonical most-significant-digit Zeckendorf word on weights
+$F_2,F_3,\ldots$, with $Z(0)=\varepsilon$, no leading zero and no adjacent
+ones. Put $\ell(n)=|Z(n)|$. The classical canonical representation theorem
+gives, for $h>0$,
+
+$$
+\ell(h)=m\quad\Longleftrightarrow\quad
+ F_{m+1}\le h<F_{m+2},\qquad
+Z(F_{r+2})=10^r.
+\tag{ABT.105}
+$$
+
+Indeed the least length-$m$ word has only its leading weight $F_{m+1}$.
+For the greatest value $M_m$ using the first $m$ weights, the
+no-adjacent-one constraint gives $M_0=0,M_1=1$ and
+$M_m=F_{m+1}+M_{m-2}=F_{m+2}-1$ for $m\ge2$. Canonical existence and
+uniqueness then give the length interval. This is numeral calibration,
+not a new native source recurrence or an index/value interface.
+
+For the quantitative statement only, align most-significant-digit
+words by *left-zero* padding to their maximum length, with no unnecessary
+common leading-zero column. Denote this convolution by $\otimes_0$.
+For canonical tuples its domain is regular. This convention is also
+available for any fixed count name $c(e)$ over an alphabet containing
+$0$: use exactly $c(e)$ as its unpadded suffix. It depends on $e$ alone,
+not on the subsequently chosen capacity. Extra padding is not a new
+count value.
+
+These regularity conventions match the preceding right-$\#$ convention
+after reversing every canonical word. Reverse the complete left-zero
+convolution; it becomes a right-zero-padded convolution of the reversed
+words. On valid right-$\#$ convolutions replace padding by zero and
+test this reversed language. Reversal, inverse letter homomorphism and
+regular-domain restriction preserve regularity in both directions.
+Common all-zero prefix columns can be added or removed by regular
+saturation and normalization. Existentially projected tracks use this
+normalization as well. These transformations preserve numerical values;
+they need not preserve a deterministic automaton's state count.
+
+**Theorem 28.2 (direct count-name/state bound on the attained domain).**
+Let a complete deterministic $q$-state classifier on
+$c(e)\otimes_0 Z(h)$ output the correct original accept/refuse label for
+every $h\ge F_{e+2}$ at each count $e$ in a specified set $I$.
+Its answers on all other inputs are arbitrary. Then, for every $e\in I$,
+
+$$
+q\ge\max(1,e+2-|c(e)|).
+\tag{ABT.106}
+$$
+
+The states counted are those of this classifier itself, including any
+completion or validation states it actually uses. No separate validity
+product or complement automaton is required for the bound.
+
+Proof. Write $l=|c(e)|$. If $l>e$, the right side of (ABT.106)
+is $1$. Otherwise put $k=e-l\ge0$ and choose the attained refusing
+guard $h_0=F_{e+2}$. Since $Z(h_0)=10^e$, its input has the exact form
+
+$$
+a\,z^k\,w,
+\qquad a=(0,1),\quad z=(0,0),
+\tag{ABT.107}
+$$
+
+where $w$ pairs the $l$ symbols of $c(e)$ with $l$ zeros. Consider the
+$k+2$ prefixes $p_i=az^i$, $0\le i\le k+1$. For $i<j$, append to
+both the identical suffix $z^{k-i}w$; its exponent is nonnegative since
+$i\le k$. From $p_i$ the result is (ABT.107), which refuses. From
+$p_j$ it is $az^{k+j-i}w$, exactly
+$c(e)\otimes_0 Z(F_{e+j-i+2})$. The genuine count suffix is unchanged,
+and $j-i\ge1$ makes this capacity at least $F_{e+3}$, so it accepts.
+Theorem 24.2 realizes both as alternatives at the same count from the
+same initialization, with their lawful original completions.
+
+Both completed test words are valid and on-promise, regardless of the
+classifier's treatment of other inputs. If two prefixes reached the
+same state, their common suffix would give the same final output,
+contradicting these two labels. All $k+2$ reached states are therefore
+distinct, proving $q\ge k+2=e+2-l$. $\square$
+
+For $c(e)=Z(e)$, a classifier exact for $0\le e\le E$ and **all**
+attained guards at those counts consequently needs
+
+$$
+q\ge\max(1,E+2-\ell(E)).
+\tag{ABT.108}
+$$
+
+For $E\ge1$, (ABT.105) and $F_{m+1}\ge2^{(m-1)/2}$ give
+$\ell(E)\le1+2\log_2 E$. Thus these state requirements are unbounded.
+For example $e=F_{k+2}$ has $\ell(e)=k+1$, so (ABT.106) requires
+$q\ge F_{k+2}-k+1$. There is no fixed canonical Zeckendorf-input classifier.
+The same theorem excludes every capacity-independent count naming with
+unbounded $e-|c(e)|$ in this left-zero convention, without assuming
+automatic count arithmetic. Nondeterministic presentations must first
+be determinized; the bound then concerns the resulting deterministic
+machine. No bound on an unmodified NFA state count or on a different
+padding convention is asserted.
+
+**Corollary 28.3 (the exact Fibonacci/Ostrowski consequence).** There is
+no Fibonacci-recognizable numerical predicate satisfying (ABT.95) on $D$,
+and no such predicate first-order definable in
+$(\mathbb N,+,V_\varphi)$, even with fixed numerical parameters and any
+finite collection of additional fixed Fibonacci-recognizable relations.
+Here $\varphi=(1+\sqrt5)/2$. More generally the same no-extension
+conclusion holds in any one fixed quadratic Ostrowski automatic
+presentation, including finite fixed automatic expansions of its
+first-order arithmetic.
+
+Proof. The canonical Fibonacci case follows directly from Theorem 28.2.
+Hieronymi–Terry Theorems A–B and Definitions 3.2–3.3 [ABT-HT] give
+regular domains, automatic addition and first-order closure for each
+fixed quadratic irrational. Reverse their canonical words as in
+Convention 28.1, restrict the capacity sort to the positive numbers,
+and apply Theorem 27.4. A fixed parameter is a singleton regular
+language; additional fixed automatic relations remain subject to
+first-order closure. $\square$
+
+For $\varphi$, the paper has $q_0=q_1=1$, $q_k=F_{k+1}$ and a forced
+lowest digit $b_1=0$. Deleting that one trailing zero gives $Z(n)$;
+appending it reverses the conversion, with the zero convention handled
+as a finite exceptional code. These are fixed regular transformations.
+$V_\varphi(n)$ for $n>0$ returns the least occupied denominator **value**
+$q_k$, and $V_\varphi(0)=1$; it does not return $k$.
+
+In particular the ordinary-index/value graph $j=F_{e+3}$ is not
+Fibonacci-recognizable or definable in the above Fibonacci signature:
+its graph together with automatic order would define
+$\exists j\,(j=F_{e+3}\land j\le h)$, contradicting Corollary 28.3.
+This is consistent with the Fibonacci-*value* set being automatic:
+its positive canonical words are $10^*$. That set is not Presburger,
+since an infinite ultimately periodic set has bounded successive gaps,
+whereas the distinct Fibonacci values have unbounded gaps. Thus the
+excluded scalar class genuinely extends the Presburger class of §25.
+The result does not assert automatic conversion between an ordinary
+count and a Fibonacci value merely because both have Fibonacci numerals.
+
+## 29. Enriching the joint native language by automatic scalar predicates
+
+**Definition 29.1 (unchanged native block and automatic scalar envelope).**
+Retain Definition 25.2's finite syntax and [NCE, Definition 10.1][ABT-NCE]:
+finite alpha/beta ordered trees, literal equalities/disequalities,
+fixed regular native-tree memberships, and interpreted powers of $\rho$
+with specified integer-affine exponents in one finite natural tuple
+$(e,h,\mathbf s)$. All those exponents have explicit nonnegativity
+guards. All native variables in a block are jointly existential, and
+every repeated name denotes the same entire tree throughout that block.
+
+Enlarge the scalar conditions to any fixed Fibonacci-automatic relations
+and first-order scalar arithmetic over them, in particular
+$\operatorname{FO}(\mathbb N,+,V_\varphi)$. As in Definition 25.2,
+allow finitely many existential scalar auxiliaries, finite Boolean
+branches and the designated finite or in-language accept-label projection.
+One may also take first-order scalar combinations of **already eliminated**
+whole-block support predicates. This last closure does not move scalar
+quantifiers through a native witness that has to be shared.
+
+There is no native quantifier alternation, free unknown tree advice,
+variable formula length, parameter-dependent membership automaton,
+numerical leaf-count operator or arbitrary supplied homomorphism.
+Linked native atoms must be eliminated jointly; separate feasibility
+tests cannot replace a shared witness. No broader alternating
+scalar/native synthesis language is asserted to be covered.
+
+**Corollary 29.2 (joint-native enrichment still has no attained response
+extension).** No formula of Definition 29.1 gives the existing released
+original acceptance label at every $z_{e,h}$ in $D$. A complete-original-
+response representation in this class with an in-class included-label
+projection is therefore also excluded, with arbitrary off-promise behavior.
+
+Proof. Split the finitely many Boolean scalar/native branches. In each
+branch keep the full tuple $(e,h,\mathbf s)$ and the single joint native
+block. Apply NCE Theorem 10.2 to its native Boolean condition with the
+Presburger affine nonnegativity guard. This yields a Presburger support
+at that **identical** tuple, preserving all shared native witnesses.
+Conjoin the branch's automatic scalar condition. Presburger predicates
+are Fibonacci-automatic; finite Boolean operations and scalar projection,
+including padding normalization, preserve that class. Finite label
+branches, an in-language label projection, or first-order combinations
+of the resulting support predicates likewise remain automatic.
+The resulting $A(e,h)$ would violate Corollary 28.3. $\square$
+
+The same argument works in any one of the fixed quadratic Ostrowski
+presentations of Corollary 28.3. This reuses NCE's elimination rather
+than strengthening its native theorem: witnesses coexist at one scalar
+tuple but may realize a different source from the actual unknown source.
+Neither existence nor a unique label acquires a native tree, identifies
+the observer's exact information fiber, or establishes complete-$Q$
+equality. NCE's supplied-numeral positive results in §§13–14 and the
+input-dependent constructions of Proposition 26.1 remain valid.
+
+## 30. Fixed matrix thresholds and a weaker encoding that survives
+
+**Theorem 30.1 (fixed nonnegative matrix output cannot be the threshold).**
+There are no fixed dimension $d\ge1$, nonnegative integer row/column
+vectors $u,v$, and fixed matrices $M_0,M_1\in\mathbb N^{d\times d}$
+such that, writing $Z(e)=d_1\cdots d_{\ell(e)}$,
+
+$$
+W(e)=uM_{d_1}\cdots M_{d_{\ell(e)}}v,
+\qquad
+\forall(e,h)\in D,\quad
+h\ge W(e)\ \Longleftrightarrow\ \operatorname{Accept}(z_{e,h}).
+\tag{ABT.109}
+$$
+
+The empty product is used for $e=0$. This is the fixed finite
+nonnegative linear-representation contract of Du, Mousavi, Schaeffer
+and Shallit [ABT-DMSS, §8], applied to the **canonical ordinary count**
+$Z(e)$. It is distinct from assuming an automatic graph for $W$.
+
+Proof. The two attained threshold neighbors $h=f(e)-1,f(e)$ respectively
+refuse and accept. Since $W(e)$ is an integer, correctness at just those
+two guards forces
+
+$$
+W(e)=f(e)=F_{e+3}\quad\text{for every }e.
+\tag{ABT.110}
+$$
+
+Let $B\ge1$ bound both matrices' maximum row sums, and let
+$C=\max(1,\|u\|_1\|v\|_\infty)$. The elementary matrix norm bound gives
+$W(e)\le CB^{\ell(e)}$. For $e\ge1$, Convention 28.1 gives
+
+$$
+W(e)\le CB\,e^{2\log_2 B},\qquad
+F_{e+3}\ge2^{(e+1)/2}.
+\tag{ABT.111}
+$$
+
+An exponential eventually exceeds each fixed polynomial, contradicting
+(ABT.110). No claim that arbitrary matrix-output comparisons are
+first-order automatic was used. $\square$
+
+The cited paper supplies Fibonacci-regular counting sequences and their
+fixed matrix representations, including its subword-complexity result
+in Theorem 56. It does not identify ordinary count $e$ with a Fibonacci
+index/value input or supply every comparison $W(e)\le h$ as an automatic
+predicate. Theorem 30.1 independently excludes the specific threshold-
+output route even if that comparison is provided separately. Variable
+matrices, a growing representation, unary-length count input, arbitrary
+matrix algorithms or a different complete-response interface are outside
+its hypotheses.
+
+**Proposition 30.2 (mixed unary/Zeckendorf containment check).** Let the
+count code instead be $U_c(e)=1^e$, and keep $Z(h)$ for positive capacity.
+With synchronous right-$\#$ padding, the two numerical relations
+
+$$
+(e,h)\in D\ \Longleftrightarrow\ |Z(h)|\ge|U_c(e)|+1,
+\qquad
+h\ge f(e)\ \Longleftrightarrow\ |Z(h)|\ge|U_c(e)|+2
+\tag{ABT.112}
+$$
+
+are regular. Unary count successor and exact capacity order are regular
+in this presentation. Count doubling, and hence full ordinary count
+addition, is not synchronous regular.
+
+Proof. Equation (ABT.105) gives (ABT.112) on all positive capacities,
+including the off-promise ones. A finite automaton checks the regular
+unary and canonical domains and counts one or two capacity symbols past
+the end of the count word. Unary successor is a one-symbol length
+increment. Capacity order is shortlex order on the canonical words:
+their length intervals are ordered, and within one length the first
+unequal weight exceeds every legal combination of lower weights.
+A finite automaton retains the first lexical comparison and, if lengths
+differ, uses the end order instead.
+
+If $\{(1^e,1^{2e}):e\in\mathbb N\}$ were synchronous regular, its
+functional graph would satisfy $2e\le e+p$ by the finite-fiber bound of
+Khoussainov–Nies–Rubin–Stephan [ABT-KNRS, Proposition 2], a
+contradiction. The same argument on the addition triples
+$(1^e,1^e,1^{2e})$ excludes ordinary ternary addition. Thus this
+presentation gives up a stated hypothesis of Theorem 27.4. $\square$
+
+This is a numerical scope check, not a new source service or a second
+recovery contribution. CAP's actual counter word is $U(e)=1^e0$;
+removing its fixed terminal zero gives the abstract unary name, but
+does not construct an acquired capacity word $Z(h)$ or an installed
+conversion. The two-sort comparison grants neither all affine arithmetic
+nor retained operands, a present token, an admitted invocation, an
+installed consumer, a complete-response decoder or paid return. It shows
+why the obstruction cannot be promoted to all encodings or even to
+every successor-only word interface.
+
+## 31. Original-source, response, authority and cost correspondence
+
+**Convention 31.1 (unchanged programme map).** The representation
+theorems have the following exact connection to the original task.
+
+| Original object or obligation | Correspondence and retained scope |
+| --- | --- |
+| Parameters and actual source | $e$ is the accepted original Rho count after the one fixed first Ready $P$; $h$ is the actual semantic guard and $K=h$ the reserve. The reached logical source is $\rho^e\beta$ on the same source16 and continuing $\phi_K$. None of these is native time, a receipt count, represented Step count, physical support, or a substituted Fibonacci-value count. |
+| Same initialization | GENERAL Assumption 1.2, ARC Definition 9.1 and Theorem 24.2 fix the beta seed, preparation occurrence $\xi$, original code/capture bindings, parked client, occupied verifier/INITIAL consumer and absorbing halt. Each attained $(e,h)$ is an alternative finite continuation of that installation. Alternatives do not authorize reset, cloning or simultaneous independently controllable sources. |
+| Actual operations and material | Theorem 24.2 uses completed Reserve($h$), Raise($h$) when $h>1$, then $e$ accepted returning original Rho calls. At $h=1$ only $e=0$ is attained and maintenance is omitted. Every frame is actually supplied and retained; each next call starts only after the preceding true Ready return. Ordered nonassociative pairing and alpha/beta remain the original constructors. |
+| Admitted original test | The tested next frame is canonical `0010`. The cut is after sealing, parsing, actual service admission and ReadState, before template generation. AIF Definition 2.6 and SOURCECALL Lemma 2.3 allow its instancewise finite original completion through release using prescribed enabled non-IN rows, before the changed final idle CTL. No outer gate, InnerReturn or CaptureCAP row becomes an original action by this argument. There is no uniform finite primitive-depth experiment tree over $D$. |
+| Complete response | The released accept/executed-refusal label is already included in the original response. Each executed action still has its complete source-defined original joint successor, output and marked receipt chain. Corollary 27.5 uses only a necessary projection of that requested whole response. It assumes the proposed completed-response graph is regular; it does not derive that assumption from automatic primitive steps or erase intermediate successors. |
+| Legal domains and continuations | Canonical Supply, prescribed enabled Advance and real protocol admission keep AIF/ARC/UAS meanings. An enabled noncanonical task input is undefined on the lawful task domain; a disabled or unauthorized attempt is unexecuted `none`; an overlarge admitted Rho candidate executes refusal. Empty responses retain only running/terminal type and actual terminal output. All other simultaneous lawful domains and adaptive continuations remain the original ones. |
+| Current authority and use | The producer has its actual current service/source token at the tested body cut. Actual input, code, scratch, copy, receiver, check, ACK, owner-transfer and saved-return paths remain CAP/ARC/GENERAL's. Historical owner/token data grants no current access. The arithmetic codes and automata add no actor port, free structural probe, class promise, query, target chooser, controller or handoff. |
+| Independent expressions | $S$ remains physical storage support, $B$ the independent terminal-path boundary, $T$ actual occurrence order with its operands and receipts, and $M_J$ the specified jointly retained material and rights. Logical leaf number, source shape, word length and classifier state replace none of these. No new four-view inverse follows from a label representation. |
+
+All actual same-run prices are still Convention 23.2's bill
+
+$$
+\bigl(\nu_{\rm phys},2\nu_{\rm phys},
+S_{\rm irreducible}+b_{\rm ctl}+8A_{\rm phys}+8\nu_{\rm phys}\bigr),
+\tag{ABT.113}
+$$
+
+with the separately declared UAS atomic/incidence foundation and
+structural tariff. This includes actual ingress, Base/Resolve,
+generation, whole-candidate guards and source writes, maintenance
+allocation, code/scratch, counters/fences/rows/indices, dependency copies,
+seals/checks, ACKs, source-token and owner transfers, capture and all
+returns. Retired material remains retained. The preparation pays its
+added-phase rows without converting them into original $Q$ experiments.
+No full bills, receipt chains, physical histories or acquired observations
+of two alternatives have been equated, and no cross-target full-cost
+monotonicity is assumed.
+
+The bounds (ABT.103), (ABT.106), (ABT.108) and (ABT.111) concern
+mathematical names, automaton states and fixed matrix growth. They are
+not physical storage, runtime, energy, acquisition-bit or paid-conversion
+lower bounds. The mathematical complete-response output is still
+distinct from an actor's current permission to read it.
+
+## 32. Suppliers, substantive boundary and remaining recovery conditions
+
+**References 32.1 (mathematical ownership and literature correspondence).**
+The new source-specific synthesis is Theorem 27.4 and its completed-
+response consequence, the direct quantitative bound of Theorem 28.2,
+the exact automatic-scalar/NCE consequences, and the independently proved
+fixed-matrix threshold exclusion. These are `repo-derived` ordinary
+deductions. The attained family and admission/label map in §24, the
+least-tail extraction in §25, NCE's native elimination, canonical
+numeration, first-order automata closure and finite-fiber pumping are
+suppliers, not new foundational results here.
+
+| Supplier | Exact role and limitation |
+| --- | --- |
+| Khoussainov–Nies–Rubin–Stephan, *Automatic Structures: Richness and Limitations*, [arXiv cs/0703064v2][ABT-KNRS], Definitions 2.2–2.3, Theorem 1, Proposition 2 and Lemma 3 | Right-padded synchronous relations, first-order closure, finite-fiber length control and logarithmic automatic-monoid product growth. Theorem 27.4 needs only the two stated unary affine count graphs and proves their logarithmic consequence directly. Proposition 2 also supplies the unary countercheck in Proposition 30.2. These results do not identify words with physical memory or turn an automatic transition graph into an automatic completion relation. |
+| Hieronymi–Terry, *Ostrowski numeration systems, addition and finite automata*, [arXiv 1407.7000v2][ABT-HT], Theorems A–B and Definitions 3.2–3.3 | For a fixed quadratic irrational, first-order $(\mathbb N,+,V_a)$ definability equals recognizability, and addition is recognizable. The paper's parameter-free statement extends to fixed numerical parameters by regular singleton codes. Convention 28.1 supplies the padding conversion; $V_a$ selects a denominator value, not its ordinal index. No ordinary count-to-denominator graph is imported. |
+| Du–Mousavi–Schaeffer–Shallit, *Decision Algorithms for Fibonacci-Automatic Words, with Applications to Pattern Avoidance*, [arXiv 1406.0670v4][ABT-DMSS], §2, Procedure 3, §8 and Theorem 56 | Canonical weights $F_2$ onward, empty zero, synchronous tuples and first-order arithmetic using supplied fixed DFAOs; separately, fixed nonnegative finite matrix representations for Fibonacci-regular counts. Their matrix contract is used literally in Theorem 30.1, with a separate norm proof. A supplied counting representation is not an automatic comparison or a G_gc acquisition service. |
+| NCE Theorem 10.2 and §§11–14 | Elimination of the entire joint native block at the identical scalar tuple, fixed regular memberships and fixed-numeral original-label supports. Corollary 29.2 changes scalar expressivity, not NCE's native witness, quantifier or acquisition scope. |
+| The present volume §§24–26; CAP/ARC/GENERAL; AIF/SOURCECALL | Same actual beta initialization, attained capacities/counts, original admission and included label, full paid returns and the original complete-successor contract. The new theorem does not repeat their source construction, recurrence, source-only history inverses or earlier meter/payload families as a new contribution. |
+
+The pinned mathlib canonical representation source
+`Mathlib/Data/Nat/Fib/Zeckendorf.lean` at revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679` supplies
+`Nat.zeckendorfEquiv`, `Nat.sum_zeckendorf_fib` and
+`Nat.zeckendorf_sum_fib`. The repository's
+`GoldenZeckendorfLanguage.zeckendorfMSDWord_noAdjacentOnes` and its
+owning Scribe concern canonical digit execution.
+`GoldenGapZeckendorf.wdigits_fib_add`, including its actual
+`CloitreActualSpineCarry` consumer, is a separated digit/value identity.
+Neither supplies an automatic ordinary-index/value graph.
+`DFAOStateLowerBound` and its Scribe use the classical reached-state and
+common-continuation principle. Theorem 28.2 uses that principle in a
+source-specific padded-prefix proof; it is not a compiled specialization
+of the module.
+
+`NativePresburgerDescriptorObstruction.result` and its owning Scribe
+concern all native trees and physical addresses with finite-dimensional
+Presburger descriptors, rather than the attained two-sort completed-
+response interface here. `NativeSourceSelectorCode.selector_code_correct`
+and `realization` have the real
+`NativeSerialEffective.original_code_service_simulation` consumer;
+that consumer preserves external reads and terminal observation after
+erasing evaluator steps. It is not a G_gc current-authority or literal
+complete-successor identification. These existing results are neither
+absent capabilities nor new accomplishments of this representation
+boundary. No worldwide novelty or new Lean certificate is asserted.
+
+**Convention 32.2 (the surviving original programme).** A uniform
+complete-original-response bridge cannot be obtained merely by replacing
+Presburger arithmetic with a fixed synchronous word language while
+retaining the stated count affine maps and exact capacity order.
+Independent recoding of both numeric sorts does not repair that class;
+the fixed matrix-threshold route on canonical ordinary count input also
+fails. This strengthens the necessary response-representation condition
+on the same attained original family. It establishes no common-observation
+collision, full-$Q$ equality, universal computational impossibility or
+all-representation obstruction.
+
+Input-dependent numeral-capacity automata, growing literal records,
+asynchronous or branching-tree presentations, and paid algorithms beyond
+the excluded interfaces remain possible routes. Each still owes its
+actual source/parameter/operation/admission and complete-response/
+continuation correspondence. The mixed unary construction only gives
+the label relation and explicitly abandons the affine count interface.
+No numerical representability alone provides actual acquired operands,
+current permission, an installed consumer or the cost of its invocation.
+
+The full programme remains incomplete. Required unresolved domains and
+interfaces include faithful complete original successors and all lawful
+finite adaptive continuations; actual acquisition and retained/currently
+callable use; independently variable successful source/history inputs,
+mixed intermediate cuts and independent source growth; equal-weight and
+synchronized-mate full-$Q$ comparisons; changed-return, annex and
+arbitrary old-target access; raw/bootstrap/preacquisition, unfinished,
+malformed/refusal/fault domains; final00 without later Ready and absorbing
+terminal comparisons; and every recovery direction among the independently
+defined $S,B,T,M_J$ with all actual same-run costs. The published positive
+four-view cycles, source-only and linked-input inverses retain their exact
+domains. No central bridge, decoder upgrade or actor control is assumed
+to close any of these remaining obligations.
+
+[ABT-KNRS]: https://arxiv.org/html/cs/0703064v2
+[ABT-HT]: https://arxiv.org/html/1407.7000v2
+[ABT-DMSS]: https://arxiv.org/html/1406.0670v4
+
+## 追加锚（本行以下为增补区）
+
+## 33. An authentic leaf count and an unknown positive even lag
+
+**Definition 33.1 (the acquisition domain).** Retain the free ordered
+source, substitution, actual addresses and total four-valued Read of
+Definitions 2.1 and §13.1. Write $\ell(t)$ for the number of leaves of
+$t$, and $P_t(q)=\mathbf1_{r_t(q)\ne\mathsf{absent}}$. The promised
+domain is
+
+$$
+\mathcal D_n=
+ \{(u,k,v):u\in\mathcal T,\ \ell(u)=n,\ k\in\mathbb N_{\ge1},
+                         \ v=\rho^{2k}u\},\qquad n\ge1.
+\tag{ABT.33.1}
+$$
+
+The actual stationary register is $v$, with one actual root and the
+original ordered $L/R$ interpretation. The target is the actual pair
+$(u,k)$ in this relation, retained as a tree and an integer. It is not
+an arbitrary predecessor, a normal-form origin, or merely a description
+of some source having the same observation. The supplied integer $n$
+is the authentic *original* leaf count. The authenticity premise
+asserts membership in (ABT.33.1), including positivity, evenness and
+same-original provenance; its certificate supplies neither a value of
+$k$ nor any further source-dependent operand.
+Provenance concerns the actual forward substitution stages from this
+original; $2k$ is their relative count, not an external clock reading.
+
+**Assumption 33.2 (the installed common-run contract).** There is one
+fixed deterministic effective acquisition program, common to every
+$n,u,k$ and every presentation satisfying Definition 33.1. Its initial
+numerical input is $n$. The following actual resources are supplied.
+
+1. One source binding and one root reference address this very $v$.
+   The two incidence interpretations $L,R$ are ordered and persistent.
+   They are the references used in every submitted absolute word.
+   Neither a symbolic tree nor an inverse manufactures this binding.
+2. One currently authorized total paid Read capability accepts every
+   finite absolute word $q$. It returns $r_v(q)$, including absent for
+   unreached words. Every invocation is paid, including repetitions and
+   absence. The acquisition continuation receives only $P_v(q)$.
+   An interface that physically returns four values is composed with
+   this projection before its continuation; it exposes no other reply
+   distinction to that continuation.
+3. An actual append writer records every physical Read with its full
+   literal word and four-valued reply, and every local transition.
+   Its epoch field is the semantic $2k$ relative to the promised
+   original. The controller has no writer-read capability. It receives
+   no epoch, source size, hidden subtree, source identity discriminator,
+   previous archive, timing observation or source-dependent initializer.
+   Any pre-entry writer prefix remains outside its accessible state.
+4. The actor owns accessible backing for the supplied count, acquired
+   data, scratch and address construction, and has the rights to retain
+   and read its acquired output at handoff. Backing can grow in response
+   to actual allocation requests. Initially it carries only the common
+   code and declared input; its initial contents or observable capacity
+   do not encode an unknown parameter. Every finite allocation and local
+   calculation used below completes. This is a variable-storage premise,
+   not a fixed finite carrier or a free memory oracle.
+5. The register remains stationary throughout acquisition, including
+   output preparation and the handoff cut. No concurrent writer, source
+   swap, reroot, clone or reset occurs. Scheduling permits each pending
+   finite local calculation and paid Read to complete, without a bound
+   on physical delay. Installation, authentication, reference maintenance,
+   storage, event writing and scheduling are separately priced services.
+6. For continued action, the same binding has current rights for the
+   original absolute-address Read, localStep, applyRho and stop menu
+   of §15. These rights survive the stated continuation. There is one
+   forward actuator on this same register. Acquisition does not use it.
+   No relative-cursor, graft, comparison, guard or revocation operation
+   is included.
+
+Thus the callable source resources are one total Read capability and,
+at continuation, one forward actuator, with one root binding and two
+ordered incidence interpretations. The physical writer is an additional
+resource, not a callable archive for this controller. Retained data and
+scratch are distinct fields even if one owned store backs both. Every
+internal choice, address and stopping decision below is computed from
+$n$, the program phase and previously acquired presence bits. Rights
+and backing are premises about the actor; their existence is not a
+conclusion of source identifiability.
+
+**Definition 33.3 (measured acquisition coordinates).** For the actual
+submitted words $q_1,\ldots,q_Q$, put
+
+$$
+ M=\max_i|q_i|,\qquad W=\sum_{i=1}^Q|q_i|.
+\tag{ABT.33.2}
+$$
+
+There is no prefix-sharing discount: each word starts at the actual
+root. Let $B$ be the actual number of acquisition localStep events,
+including any evaluator, projection, allocation-control, output and
+handoff phases represented by such steps. There are zero acquisition
+updates and $Q+B$ new native events. Native stop itself adds no Event.
+The costs of storing or writing these records are additional coordinates.
+
+## 34. A pruning criterion that orders correct and incorrect lags
+
+**Definition 34.1 (trial-lag pruning).** For a finite actual tree $x$,
+let $h_R(x)$ be the length of its maximal right-only path: zero on a
+leaf, and $1+h_R(y)$ on $\langle z,y\rangle$. For $j\ge0$ and a
+present address $p$, define
+
+$$
+ c_j^x(p)=P_x(pR^jL).
+\tag{ABT.34.1}
+$$
+
+Define an unlabelled full binary tree $F_j(x)$ from the root, making
+$p$ a branch exactly when $c_j^x(p)=1$, and in that case continuing at
+$pL,pR$. Otherwise make $p$ a terminal dot. Equivalently, on a present
+subtree $y$, stop when $h_R(y)\le j$, and otherwise recurse into its
+two children. A positive probe entails that $p$ is an actual branch,
+so the recursive child addresses exist. This recursion terminates
+because each recursive call is on a proper subtree of $x$.
+Put $a_j(x)=\ell(F_j(x))$.
+
+The object $F_j(x)$ is a trial pruning, not an assertion that $x$ lies
+in an inverse-substitution image at lag $2j$. Its leaf dots carry no
+guessed $\alpha/\beta$ labels. Its branch test uses one actual paid
+presence projection at the displayed word; knowing the mathematical
+function $F_j$ does not provide its value as an input.
+
+**Theorem 34.2 (the exact leaf-count crossing).** For every
+$(u,k,v)\in\mathcal D_n$, let $h=h_R(v)$. Then
+
+$$
+ h=k+h_R(u),\qquad
+ k\in[\max(1,h-n+1),h],\qquad
+ F_k(v)=\operatorname{sh}(u).
+\tag{ABT.34.2}
+$$
+
+For every integer $j\ge1$ the following is an exact criterion:
+
+$$
+ \boxed{a_j(v)>n\ \Longleftrightarrow\ j<k,
+ \qquad a_j(v)\le n\ \Longleftrightarrow\ j\ge k.}
+\tag{ABT.34.3}
+$$
+
+If $n>1$, equality $a_j(v)=n$ holds exactly at $j=k$; if $n=1$,
+it holds exactly for $j\ge k$, and $k=h$. In all cases
+
+$$
+ k=\min\{j\ge1:a_j(v)\le n\}.
+\tag{ABT.34.4}
+$$
+
+**Proof.** First record the pruning structure used in the criterion.
+In a full binary tree,
+
+$$
+ P_x(pR^{j+1}L)=1\quad\Longrightarrow\quad P_x(pR^jL)=1:
+\tag{ABT.34.5}
+$$
+
+the former word reaches a child below $pR^{j+1}$, so its parent
+$pR^j$ is a branch and also has its left child. Therefore $F_{j+1}(x)$
+is obtained from $F_j(x)$ by replacing some complete rooted subtrees
+by dots. This conclusion also follows recursively at their common
+retained nodes. In particular $a_{j+1}(x)\le a_j(x)$.
+
+There is strict decrease whenever $j<h_R(x)$. Set $H=h_R(x)$ and
+$p=R^{H-j-1}$. Every proper prefix $R^i$ of $p$ has right height
+$H-i\ge j+2$, and is a branch in both prunings. At $p$ the right
+height is $j+1$, so $F_j(x)$ has a branch but $F_{j+1}(x)$ has a
+dot. At least two leaves have been replaced by one; elsewhere the
+second pruning cannot add leaves. Thus
+
+$$
+ a_{j+1}(x)<a_j(x)\quad(0\le j<H),
+ \qquad a_j(x)=1\quad(j\ge H).
+\tag{ABT.34.6}
+$$
+
+These are finite tree facts inside the proof, requiring the ordered
+full-binary source and its actual prefix-closed support, rather than an
+unconstrained family of binary test answers.
+
+The right-spine supplier in DelayedOriginalReadout gives
+$\operatorname{rightClock}(x)=2h_R(x)+\epsilon(x)$, where
+$\epsilon(x)\in\{0,1\}$ records its rightmost leaf label, and
+$\operatorname{rightClock}(\rho^{2k}u)=
+\operatorname{rightClock}(u)+2k$. Taking integer halves proves
+$h=k+h_R(u)$. This is also the direct consequence of
+$T_{r+2}=\langle T_{r+1},T_r\rangle$ along the rightmost original
+leaf. A right spine of length $d$ has $d$ distinct off-spine sibling
+subtrees, each containing a leaf, in addition to its terminal leaf.
+Consequently $h_R(u)\le n-1$, giving the interval in (ABT.34.2).
+
+At every confirmed original position $p$, the existing §12.3 label
+table says precisely
+
+$$
+ P_v(pR^kL)=1\quad\Longleftrightarrow\quad r_u(p)=\mathsf{branch}.
+\tag{ABT.34.7}
+$$
+
+Starting with the original root, recurse only on this positive answer.
+Induction on $u$ identifies the retained addresses and gives
+$F_k(v)=\operatorname{sh}(u)$, hence $a_k(v)=n$. This application
+uses only the branch part of that supplied table, not a putative
+original-position test at a newly born address.
+
+Now $k\le h$. The strict decreases (ABT.34.6) before $h$, followed
+by the constant value one, prove (ABT.34.3). If $n>1$, then $k<h$:
+a nonleaf full binary tree has positive right height. Every $j>k$
+therefore has $a_j(v)<n$, and every $j<k$ has $a_j(v)>n$.
+If $n=1$, $h_R(u)=0$ and $h=k$, giving exactly the stated plateau.
+The least crossing is $k$ in both cases. $\square$
+
+**Proposition 34.3 (a capped comparison with actual probes).** Given
+$n\ge1$ and $j\ge1$, one deterministic traversal decides
+$a_j(v)>n$ using at most $2n-1$ paid Reads, with every submitted word
+of length at most $j+n$. It requires no putative inverse at $j$, and
+the bound holds for every finite full binary $v$.
+
+**Proof.** Traverse $F_j(v)$ in left-before-right depth-first order,
+with a stack of pending children and a counter $b$ of positive branch
+tests. Start at $p=\varepsilon$, and execute exactly the one Read
+$pR^jL$ at each visited address. A zero answer completes a dot. A
+positive answer increments $b$. If $b=n$, stop immediately with
+the answer $a_j(v)>n$; otherwise schedule the two actual children.
+If the stack becomes empty first, stop with $a_j(v)\le n$.
+
+A finite full binary tree with $b_*$ branches has $b_*+1$ leaves,
+by structural induction. Reaching $n$ branches certifies more than
+$n$ leaves even though many may remain unread. If the traversal
+finishes without that event, its exact branch count is at most $n-1$,
+which certifies at most $n$ leaves.
+
+Before a query the number of completed dots is at most the number of
+branches already found: the pending-slot count is $1+b-l>0$.
+Thus at the $n$th positive test there have been at most $n-1$ zeros,
+for at most $2n-1$ queries in total. A finished traversal with at
+most $n-1$ branches has at most $2n-1$ nodes as well. Every queried
+address $p$ has one already discovered branch at each proper prefix;
+there are at most $n-1$ such branches before that query. Hence
+$|p|\le n-1$ and $|pR^jL|\le j+n$.
+
+The pending addresses are constructed from the actual positive tests.
+They are not selected by inspecting an unacquired pruning. Finite
+source size or the branch cap forces termination; all stack work and
+counter arithmetic are finite local computations. $\square$
+
+## 35. Sparse actual calibration and retained original acquisition
+
+**Definition 35.1 (the common acquisition controller).** The following
+three phases use Assumption 33.2 without changing the register.
+
+First query $R^1,R^2,R^4,\ldots,R^{2^m}$, stopping at the first zero
+presence bit. Binary search between the last present and first absent
+lengths to find the maximal present right length $h$. On the promised
+domain $h\ge1$, so a last present length exists. For a presentation
+with $h=0$ the controller may return a fixed out-of-promise error.
+Binary search always submits the complete new word from the root.
+
+Next initialize
+
+$$
+ A=\max(1,h-n+1),\qquad Z=h.
+\tag{ABT.35.1}
+$$
+
+While $A<Z$, take $j=\lfloor(A+Z)/2\rfloor$ and perform
+Proposition 34.3. For its at-most answer set $Z=j$; for its
+greater-than answer set $A=j+1$. At $A=Z$, retain $K=A$.
+Neither these choices nor the comparison's early stop uses a label,
+epoch field or raw-writer entry.
+
+Finally use the existing full-source traversal, now with §12.3's
+two fixed presence probes at each confirmed original position:
+
+$$
+ pR^{K-1}LL,\qquad pR^KL.
+\tag{ABT.35.2}
+$$
+
+Their pairs $00,10,11$ return $\alpha,\beta,\mathsf{branch}$.
+On a branch recurse into the two children; on a leaf construct its
+label in owned memory. The root is confirmed by nonemptiness, and
+children are confirmed only by the decoded parent branch. The unused
+pair $01$ can stop with a fixed error; it never occurs in this phase
+on the promised domain. Complete the tree $U$ in memory, retain
+$(U,K,n)$, and stop or hand it to the declared continuation. The
+traversal is the acquired-stack supplier of §16.1, not a new free
+operation on an unknown subtree. A stored $U$ is assembled from the
+paid replies, not passed to the program by its proof.
+
+**Theorem 35.2 (unknown-original and unknown-even-lag acquisition).**
+For every $n\ge1$, every $(u,k,v)\in\mathcal D_n$, and every actual
+installation satisfying Assumption 33.2, Definition 35.1 terminates
+after finitely many events, retains $U=u$, $K=k$ and the original
+count $n$, and leaves that same actual register equal to $v$.
+All source-dependent choices use only paid non-absence bits.
+Let
+
+$$
+ m=\lfloor\log_2 h\rfloor+1,\qquad
+ d_n=\lceil\log_2 n\rceil,\qquad h=k+h_R(u).
+\tag{ABT.35.3}
+$$
+
+The same actual run satisfies the simultaneous bounds
+
+$$
+\begin{aligned}
+ Q&\le 2m+(2n-1)d_n+4n-2,\\
+ M&\le 2(k+n),\\
+ W&\le 2(k+n)\bigl(2m+(2n-1)d_n+4n-2\bigr).
+\end{aligned}
+\tag{ABT.35.4}
+$$
+
+In particular these give, uniformly over this domain,
+
+$$
+\begin{aligned}
+ Q&=O\bigl(\log(k+n+2)+n\log(n+1)\bigr),\\
+ M&=O(k+n),\\
+ W&=O\bigl((k+n)(\log(k+n+2)+n\log(n+1))\bigr).
+\end{aligned}
+\tag{ABT.35.5}
+$$
+
+These are upper bounds for one protocol, with no cost-optimality claim.
+
+**Proof.** Presence on $R^s$ is one precisely for $0\le s\le h$.
+The finite tree has finite $h$, and the first absent power is $2^m$,
+where $m$ is as in (ABT.35.3). The exponential phase makes $m+1$
+Reads and establishes a present length $2^{m-1}$ and absent length
+$2^m$. Their gap is $2^{m-1}$. Exactly $m-1$ midpoint tests reduce
+this power-of-two gap to one, determining $h$. Thus this phase uses
+$2m$ Reads and maximum length $2^m\le2h$.
+
+Theorem 34.2 places the actual $k$ in (ABT.35.1). That interval has
+at most $n$ integers. Its comparison predicate is false precisely
+below $k$ and true at and above $k$. Every update of $A,Z$ therefore
+retains $k$, and the interval size becomes at most the ceiling of
+half its previous size. After at most $d_n$ comparisons it is a
+singleton, necessarily $K=k$. Proposition 34.3 supplies at most
+$2n-1$ actual Reads per comparison, all on the still stationary $v$.
+The largest candidate is at most $h$, so their word lengths are at
+most $h+n$.
+
+With $K=k$, each probe pair (ABT.35.2) has the §12.3 interpretation
+at every address the final traversal reaches. Structural induction
+identifies its acquired subtree with the corresponding subtree of $u$.
+The existing stack traversal terminates, visiting each of the $2n-1$
+original nodes once; the fixed two-probe implementation therefore makes
+exactly $4n-2$ Reads. Even when a pair coincides with an earlier
+query, both invocations are executed and counted here. An original
+node has depth at most $n-1$, since its path has a distinct off-path
+leaf at each proper branch. Each of these final words has length
+$|p|+k+1\le k+n$.
+
+Adding the three phases gives the first bound. For the other bounds,
+$h\le k+n-1$ implies
+
+$$
+ M\le\max(2h,h+n,k+n)\le2(k+n),\qquad W\le MQ.
+\tag{ABT.35.6}
+$$
+
+Every counted Read is an actual invocation at its actual phase. No
+comparison, inverse evaluation or repeated address is a free source
+query. Local calculations in each finite phase terminate by Assumption
+33.2, giving a finite full run. None of the phases calls applyRho,
+so stationarity holds through retained output preparation. Finally
+$m=O(\log(k+n+2))$ and $d_n=O(\log(n+1))$ give (ABT.35.5).
+
+If $n=1$, the candidate interval is $[h,h]$ and makes no comparison.
+The true $k=h$ is acquired by the first phase, and the last two
+Reads distinguish the two original leaf labels. Thus the equality
+plateau of Theorem 34.2 causes neither ambiguity nor nontermination.
+$\square$
+
+**Proposition 35.3 (separate retained, working, writer and source
+resources).** Under the same assumptions, one may retain the tree
+using $2n-1$ preorder shape bits and $n$ leaf-label bits, together
+with binary $k,n$ and the actual binding and current grants. For
+$b(s)=1+\lfloor\log_2s\rfloor$ on positive integers, the numerical
+and tree payload has at most
+
+$$
+ 3n-1+b(k)+b(n)
+\tag{ABT.35.7}
+$$
+
+bits before any record framing or reference encoding. The writer,
+scratch, expanded source, preparation and later actions have separate
+costs; (ABT.35.7) bounds none of their complete states.
+
+**Proof.** A preorder branch/leaf bit at each of the $2n-1$ nodes,
+followed by the label bit of each encountered leaf, reconstructs the
+ordered tree uniquely. Appending the two binary integers gives the
+displayed bound. The actor retains readable backing for these actual
+bytes, rather than just a pointer to inaccessible output. Its binding
+and grants are additionally retained capabilities, with their actual
+encoding and maintenance costs.
+
+For example a depth-first evaluator may use a shared current path,
+finite phase frames and counters instead of storing all literal
+pending paths. Each capped comparison has at most $n$ frames, and
+the final traversal at most $n$ frames and $O(n)$ acquired tree
+constructors. One scratch address buffer of $2(k+n)$ letters suffices
+by (ABT.35.6). Allowing $O(\log(k+n+2))$ bits per frame and counter
+gives the conservative additional workspace bound
+$O(k+n+n\log(k+n+2))$ bits, excluding the output, binding and writer.
+The exponential search and interval arithmetic use finite binary
+counters of the same logarithmic order. Frames and address letters
+are created and copied by paid local work. This description is an
+ordinary finite algorithm with variable work storage; no quantitative
+bound on local transitions $B$ or physical duration is asserted.
+
+The actual raw acquisition writer has exactly $Q$ Read entries and
+$B$ localStep entries. Its Read entries retain all $W$ literal
+letters, $Q$ full replies and $Q$ epoch fields $2k$, even though the
+controller uses only one bit per reply and never reads those fields.
+For an ordinary self-delimiting binary serialization, the new writer
+payload is $O(B+W+Q\log(k+n+2))$ bits, in addition to any old prefix
+and storage-service metadata. Every localStep marker is still present.
+No source reconstruction or logical trace interpretation erases it.
+
+If $a,b$ are the numbers of original $\alpha,\beta$ leaves and
+$F_0=0,F_1=1$, the existing composition recurrence gives the actual
+expanded register
+
+$$
+ \ell(v)=aF_{2k+1}+bF_{2k+2},\qquad
+ |\operatorname{Pos}(v)|=2\ell(v)-1.
+\tag{ABT.35.8}
+$$
+
+These source nodes exist in the actual presentation; the sparse Read
+bound is not a material-size bound. If preparation starts from $u$
+and performs the $2k$ substitutions, it includes those $2k$ real
+updates, their event writing, control and all intermediate source
+rewrites. If instead an authentic prepared presentation is supplied,
+its preparation price is outside the acquisition interval, not zero.
+Subsequent expansion, output copying, retention lifetime and every
+later computation or request incur their own costs. In particular a
+finite program supplies no fixed complete memory bound. $\square$
+
+## 36. Handoff to the fixed-offset lawful continuation
+
+**Theorem 36.1 (acquired calibration supplies ABT15's initial relation).**
+At the successful retained cut of Theorem 35.2, set the *acquired*
+fixed parameter $N=2K=2k$. Fix any supplied effective logical
+source-free native program $\delta$, and initialize it at logical
+epoch zero with control $c_0$ computed
+effectively from its public task input and the retained $(U,K,n)$.
+Its source interface is exactly §15's Op signature. Then §15's
+compiled continuation runs on the same actual register with the same
+binding and the current rights of Assumption 33.2. Every attained
+finite logical fragment has its finite compiled execution; terminal
+output, completed logical Read replies including absence, and lawful
+source-free continuation choices agree. At every completed macro
+boundary after $e$ logical updates,
+
+$$
+ r_e=\rho^e u,\qquad
+ \widehat r_e=\rho^{2k}r_e=\rho^{2k+e}u,
+ \qquad \widehat e=e+2k.
+\tag{ABT.36.1}
+$$
+
+The calibration $K$ stays fixed when $e$ increases, including at odd
+absolute physical epochs. If the logical program terminates, so does
+the compiled continuation with the same entire output. No termination
+of an arbitrary nonterminating logical program is asserted.
+
+**Proof.** Theorem 35.2 supplies retained $U=u,K=k$ and the unchanged
+actual register $v=\rho^{2k}u$. Its provenance is the supplied
+same-original provenance, now with its numerical witness correctly
+acquired. At the handoff $e_0=0$, the logical proof source is $u$,
+and the actual physical source and semantic epoch are exactly
+$(\rho^N u,N)$. These are §15.1's initial hypotheses; they are
+derived from the successful actual run, not assumed as the
+controller's original numeric advice.
+
+The acquired $N$ is placed in retained control. A single finite
+interpreter parameterized by that stored integer implements the §15
+macros; no source-dependent code is supplied from outside. The actual
+root, ordered addresses, Read rights and forward actuator persist
+from Assumption 33.2. Finite address formation and evaluator work use
+the owned backing and remain paid local computation. Thus Theorem
+15.3 applies with this acquired fixed $N$ and $c_0$. Its finite-step
+induction, causal interpretation and partial-macro invariant give
+all the continuation conclusions. Its update equation (ABT.51)
+gives (ABT.36.1). The finite computation of $c_0$ and its control
+attachment are additional continuation local work, included in $B_c$
+below. Their backing and output costs are also additional; they do
+not enlarge the acquisition workspace claim of Proposition 35.3.
+The attachment uses a real localStep instead of stopping at the
+acquisition output, as in §16.1.
+$\square$
+
+**Definition 36.2 (raw and decoded traces across the cut).** Let
+$H_{\rm acq}$ be the actual complete acquisition event word and
+$H_{\rm cont}$ a physical continuation prefix. The raw writer has
+the literal concatenation
+$H_{\rm old}H_{\rm acq}H_{\rm cont}$, with no deletions. Start
+§15.3's logical interpreter at the acquired cut, in the declared
+finite initialization phase followed by $\mathsf{Ready}(c_0)$.
+The initialization's localStep events emit no logical events.
+It interprets $H_{\rm cont}$ with the now stored $N$; it does
+not reclassify acquisition probes as original-program Reads. An
+unfinished continuation macro retains its actual pending phase,
+request and paid first bit. The initial word $H_{\rm acq}$ is an
+actual acquisition chronology and remains distinct from the logical
+program's subsequent trace.
+
+**Corollary 36.3 (additive same-run continuation costs).** Let $R,U,L$
+be the numbers of logical Reads, updates and original localSteps in
+an attained continuation fragment ending at a completed macro boundary,
+and let $Q_c,W_c$ be its actual
+compiled Read and literal-letter costs from (ABT.52) or (ABT.53),
+with the acquired fixed $k$. If its additional evaluator uses $B_c$
+localSteps, the acquisition plus continuation pays
+
+$$
+ Q+Q_c\text{ Reads},\qquad W+W_c\text{ letters},\qquad
+ U\text{ updates},\qquad B+L+B_c\text{ localSteps}.
+\tag{ABT.36.2}
+$$
+
+The new native event count is $Q+Q_c+U+B+L+B_c$.
+
+**Proof.** Acquisition has no updates and never discounts a paid
+invocation. Theorem 36.1 supplies one actual continuation on that
+same register. Concatenating the real event words adds all four
+coordinates, and Proposition 15.4 counts the continuation coordinates.
+For a prefix inside a macro, the same additive identities use its
+actual incurred $Q_c,W_c$, including the pending macro's paid probes;
+(ABT.52)–(ABT.53) apply only to its completed part. Definition 36.2
+preserves these raw multiplicities and pending phases. Event copying,
+source rewrites, subsequent retained logical
+history and outputs remain additional material and computational costs.
+$\square$
+
+**Definition 36.4 (four independently specified observations).** At a
+successful acquisition cut, with $n$ and the installed reference
+convention fixed, consider the following observations of this one
+actual process.
+
+* $S$: the actual ordered rooted edge incidence of $v$, with leaf
+  labels erased; equivalently its full present-address set.
+* $\partial$: the actual terminal address antichain of $v$, with
+  leaf labels erased. These are current source leaves, not guessed
+  original leaves or an arbitrarily selected cut.
+* $T$: the count $2k$ of completed global substitutions relative to
+  the authentic original, with its order as repeated forward steps.
+  It is a semantic temporal observation, initially unavailable to the
+  acquisition controller. It gives no original leaf labels or bracket
+  structure, no acquisition durations and no raw event archive.
+* $M$: the actor's actually acquired readable $(u,k,n)$, together
+  with the binding and current grants for the stated continuation.
+  Scratch and the inaccessible raw writer are additional resources;
+  their contents are not smuggled into this memory observation.
+
+**Proposition 36.5 (attained recovery routes and a temporal failure).**
+On the domain of Theorem 35.2, $S$ and $\partial$, together with the
+authentic common $n$, each determine the same $(u,k)$ acquired in
+$M$. The routes $\partial\to S\to(u,k)$ and $S\to(u,k)$ agree,
+and reconstruction from the tree/count part of $M$ returns those same
+$S,\partial,T$. The observation $T$ alone, even with $n$, does not
+recover $u$. None of these mathematical reconstructions creates a
+root binding, a grant, or an unpriced invocation.
+
+**Proof.** Every present address of a finite tree is a prefix of a
+terminal address. Thus prefix closure recovers $S$ from $\partial$,
+and the maximal addresses of $S$ recover $\partial$. Both operations
+preserve the actual root and $L/R$ convention. Every paid answer used
+in Definition 35.1 is a membership bit in $S$. Running its finite
+mathematical decoder on these bits returns $(u,k)$ by Theorem 35.2.
+Consequently if two promised presentations have the same $S$ and
+$n$, they have the same acquired $u,k$. Conversely the retained
+tree and integer compute the finite expanded tree $\rho^{2k}u$,
+and hence its incidence, terminal antichain and count $2k$.
+Expansion is finite computation with the size cost (ABT.35.8), not
+a sparse source query or a free materialization.
+
+All these routes return the same actual $u,k$ and the same actual
+expanded tree, proving agreement on the attained domain. Operational
+acquisition does not require that full expansion: it is the sparse
+protocol already proved. For the failure, fix any $n\ge1$, any
+ordered $n$-leaf shape and any $k\ge1$. Label all its leaves $\alpha$
+in one original and $\beta$ in the other. Both actual preparations
+have the same $n$ and $T=2k$, but distinct originals. Thus there is
+no decoder from $(n,T)$ to $u$ on the promised domain.
+
+After handoff the actual temporal count is $2k+e$. The lawful
+evolution and decoded replies are (ABT.36.1) and Theorem 36.1,
+with $k$ retained. The initial unknown-positive-even theorem is not
+reapplied to $2k+e$ as though it were a fresh even calibration.
+This proves the stated dynamics correspondence without a four-way
+inverse, a raw-history identity or a real-cursor equivalence.
+$\square$
+
+## 37. Source correspondence and the surviving acquisition boundary
+
+**Mathematical attribution 37.1 (suppliers and the uncovered criterion).**
+Theorem 34.2's trial-pruning crossing, its branch-capped actual
+comparison and their simultaneous sparse acquisition bounds are
+`repo-derived` source-specific deductions. They select an unknown
+positive even lag from actual support and an authentic original leaf
+count. The existing history identifiability, fixed-lag inverse,
+stationary tree traversal and continuation compiler are suppliers.
+They do not alone specify this monotone wrong-lag test or its sparse
+actual acquisition run.
+
+| Original supplier | Parameter correspondence and exact use |
+| --- | --- |
+| FARG Definitions 2.1,3.1 and structure/finite-path results; this volume §§8–9 | The same free ordered two-label source and unchanged pair-distributing $\rho$. The known-original-count history classification does not already acquire an unknown even lag from paid support. No universality or two-operation claim follows from having two leaf labels. |
+| This volume §§12–14; NativeErasedSupportKernels and its owning Scribe | The known-lag branch/label table and erased-support correspondence, with the same root, order and actual register. The new test constructs unlabelled prunings even for incorrect trial lags; it assumes no inverse image or original-node advice at those lags. |
+| DelayedOriginalReadout, including private clock_step and public right_clock_iterate, right_clock_readout, address_clock_bounds; its owning Scribe | The right clock is $2h_R+\epsilon$ and shifts by the certified number of substitutions. Its known-$N$ arbitrary-address decoder and presence guard are reused by ABT15, not asserted to discover $N$. |
+| GenealogicalFiberTransport and ActualTreeReadoutAcquisition, with their owning Scribes | Source is FreeMagma Bool, true is $\alpha$, false is $\beta$, false address letter is $L$, true letter is $R$; substitution, literal readout and acquired node order retain these exact meanings. The latter module's distinct-address cost objective is not used: every native invocation here is charged. |
+| NativeFullSourceProducer and its owning Scribe, including private traverse, production_reads and stationary | The actual stack reconstructs only acquired subtrees; one original node visit and two local switches/combinations per branch. Its sourceControl is a supplier for the final traversal, not a new unknown-lag theorem. |
+| NativeSerialMachine and its owning Scribe; NativeSerialEffective as used in §15 | The actual source-blind Op, full Event, finite Run and paid evaluator contract. Epoch is a writer field, not a controller observation. A finite code or effective selector does not bound workspace or implement source binding. |
+| Acquired Intrinsic Depth Calibration §§4–8; Concurrent Native Cut Acquisition §§1–5,21–22; Native Unknown Epoch Gluing §§7–9 | Retention and authentic later entry, genuine same-source Read, stationarity/progress and the distinction between semantic feasibility, acquired witnesses and retained callable data. Their respective calibrated right-spine, concurrent/stamped and proposed-record domains are unchanged. |
+| AFFINE Finite Reply Recovery §§15–18 | Complete usable state includes backing, counters, rights and accessible archives. Its $5/2$ all-handoff and $5/4$ first-handoff minimax results belong to its noisy quadratic-clock finite-report source. No numeric bound is transferred to these trees or variable-memory acquisitions. |
+
+The upstream free-magma supplier is Kenny Lau's
+`Mathlib/Algebra/Free.lean` at mathlib revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679`: its free ordered constructors
+and lift fix the algebraic correspondence, not the acquisition port.
+The original sources and declaration bodies listed above include their
+private helpers; absence of an API name is not used as a novelty or
+impossibility argument. These are ordinary proofs, without a new
+Lean-certification assertion.
+
+Berthé--Steiner--Thuswaldner--Yassawi,
+[*Recognizability for sequences of morphisms*, arXiv:1705.00167v2](https://arxiv.org/abs/1705.00167v2),
+§2 Definitions 2.1,2.3–2.4 and §3 Theorem 3.1, concern non-erasing
+word morphisms, centered representations and aperiodic bi-infinite
+points. Their two-letter sufficient condition is not a theorem for
+finite ordered trees, an unknown iteration count, or paid presence
+acquisition. Engelfriet--Inaba--Maneth,
+[*Linear Bounded Composition of Tree-Walking Tree Transducers:
+Linear Size Increase and Complexity*,
+arXiv:1904.09203v3](https://arxiv.org/abs/1904.09203v3), §3, define
+walking configurations with input-label/child-number tests and optional
+regular look-around, and output branching into copies. Those are not
+the absolute-word, presence-only, one-register operations here. No
+label test, free walk, look-around or parallel source copy is imported.
+These primary definitions provide classical comparison domains,
+not the new leaf-count crossing or its cost bound. The generic finite
+simulation precedent in Lynch--Vaandrager, *Forward and Backward
+Simulations, Part I: Untimed Systems*, §3.2, remains the background
+already attributed in §17; Theorem 36.1 applies the concrete ABT15
+macros, rather than using generic trace inclusion to identify raw logs.
+This is a bounded comparison with those sources, not an exhaustive
+literature search or a global priority claim.
+
+**Convention 37.2 (unclosed domains and tasks).** The authentic $n$,
+positive-even same-original provenance, actual bound root/order,
+stationarity, current rights and sufficient variable owned backing are
+hypotheses. The theorem acquires their unknown numerical/tree witnesses
+$(u,k)$ under those hypotheses; it neither authenticates those premises
+from untrusted strings nor acquires the references or grants themselves.
+Without $n$, even-lag histories $(u,k+1)$ and $(\rho^2u,k)$ have the
+same current tree and different originals and lags. With arbitrary
+parity, §9's equal-original-count $\alpha/\beta$ partner histories
+remain. In particular the intrinsic count $2k$ is not physical duration.
+
+The actor retains $(u,k,n)$ rather than passing a complete finite
+memory cut. Loss of this data or of its backing does not become
+recoverable merely because a tree was once printed. Arbitrary histories,
+unrecorded earlier choices, concurrent or revoked sources, relative
+cursor/graft/guard menus, and old fixed-apparatus/full-$Q$ tasks retain
+their previous obligations. Actual four-view cycles elsewhere keep
+their own initializations and readouts. The present restricted routes,
+with the explicit failure of $T\to u$, establish no unrestricted
+mutual recovery, universal two-atom reduction, physical realization,
+duration bound or completion of the full relational-observation goal.
+
+## 追加锚（本行以下为增补区）
+
+## 38. Authentic interval advice for the actual original
+
+**Definition 38.1 (the interval domain and uniform target).** For integers
+$1\le A\le B$, retain Definitions 2.1,33.1 and put
+
+$$
+ \mathcal D_{[A,B]}=\bigcup_{n=A}^B\mathcal D_n
+ =\{(u,k,v):u\in\mathcal T,\ A\le\ell(u)\le B,
+                    \ k\ge1,\ v=\rho^{2k}u\}.
+\tag{ABT.38.1}
+$$
+
+The target is the actual $(u,k,n)$, where $n=\ell(u)$, on this entire
+domain. The interval is authentic advice about that original, including
+the positive-even same-original provenance in (ABT.38.1). It is not an
+estimate of the expanded register's size. For each fixed $(A,B)$ every
+member of the displayed union is included with the same advice; no
+primitive-origin promise, preferred shape or choice of leaf labels is
+imposed. Uniform acquisition means one deterministic effective program,
+with a finite instruction description independent of $A,B,u,k$, taking
+$(A,B)$ as numerical input, terminating on every promised finite source,
+and retaining the exact target in readable owned backing.
+
+**Assumption 38.2 (interval installation).** Keep Assumption 33.2 in full,
+replacing its initial numerical input $n$ by canonically encoded $(A,B)$.
+In particular there is one actual stationary register $v$, its same root
+binding and persistent ordered $L/R$ incidences, one currently authorized
+total paid absolute-word Read, and only its presence projection
+$P_v(q)=\mathbf1_{r_v(q)\ne\mathsf{absent}}$ reaches acquisition control.
+Absent and repeated invocations are paid. The actual writer appends every
+full word, four-valued reply, semantic epoch $2k$ and localStep; neither
+that writer nor any pre-entry archive is readable by the controller.
+No exact $n$, lag, size, source discriminator, timing observation or other
+source-dependent operand is supplied through authentication, identifiers,
+references, initial control, initial storage contents or observable capacity.
+Authenticity is a supplied relation, not an extra data channel; advice
+encodings have no source-dependent padding. At fixed advice the initial
+accessible non-source fields are common to all promised candidates.
+
+Owned backing for input, scratch, addresses and acquired output grows on
+actual finite requests; it is not allocated using an unknown $n$ or $k$.
+Every finite local computation, allocation and paid Read used here completes
+under the supplied scheduling grant. Stationarity includes output formation
+and handoff: no concurrent writer, source change, reroot, reset or clone is
+allowed. Authentication, installation, preparation, reference maintenance,
+writer, storage and scheduling retain their separate prices. Readable output
+retention and current rights persist through the declared continuation.
+Its menu is exactly absolute Read, localStep, applyRho and stop, with one
+forward actuator on this same register; acquisition issues no update.
+No relative cursor, graft, comparison, guard or revocation port is added.
+Thus these are conditional statements about an installed service, not a
+procedure to authenticate untrusted interval strings or create its rights.
+
+**Convention 38.3 (cost notation).** Write $Q,M_{\rm addr},W$ for the
+actual paid Read count, maximum submitted word length and sum of submitted
+letters as in Definition 33.3. Write $J$ for its localStep count, called
+$B$ there; here $B$ always denotes the advice endpoint. No word shares a
+free root-to-prefix traversal. The usable memory observation below is
+$\mathsf M$, distinct from the address-cost coordinate $M_{\rm addr}$.
+
+## 39. The source-specific separation and its exact failure boundary
+
+**Lemma 39.1 (the interval crossing).** Let $(u,k,v)\in\mathcal D_n$,
+and suppose $n\le B<2n$. For the actual trial prunings of Definition 34.1,
+
+$$
+\begin{aligned}
+ a_j(v)&=\ell(\rho^{2(k-j)}u)\ge2^{k-j}n &&(1\le j\le k),\\
+ a_j(v)\le B&\quad\Longleftrightarrow\quad j\ge k &&(j\ge1).
+\end{aligned}
+\tag{ABT.39.1}
+$$
+
+Consequently $k=\min\{j\ge1:a_j(v)\le B\}$. In particular the
+criterion holds simultaneously for every member of $\mathcal D_{[A,B]}$
+whenever $B<2A$.
+
+**Proof.** The existing composition law gives
+$\ell(\rho^2t)=2a+3b\ge2(a+b)=2\ell(t)$ when $t$ has composition
+$(a,b)$. This also follows by replacing each alpha leaf by the two-leaf
+$\rho^2\alpha$ and each beta leaf by the three-leaf $\rho^2\beta$,
+preserving every ordered pair. Iteration gives the displayed growth bound.
+For $1\le j\le k$, put $w=\rho^{2(k-j)}u$. The actual equality
+$v=\rho^{2j}w$ permits Theorem 34.2 with original $w$ and lag $j$,
+so $F_j(v)=\operatorname{sh}(w)$ and $a_j(v)=\ell(w)$.
+This is a proof parameter, not a tree or number delivered to the actor.
+If $j<k$, this count is at least $2n>B$. At $j=k$ it is $n\le B$;
+at $j>k$ the pruning monotonicity proved in (ABT.34.5) gives
+$a_j(v)\le a_k(v)=n$. These prove the equivalence and minimum, including
+$n=1$ and its later plateau. Finally $A\le n\le B<2A\le2n$ proves
+the simultaneous interval assertion. $\square$
+
+**Proposition 39.2 (indistinguishable authentic interval histories).**
+If $1\le A\le B$ and $B\ge2A$, no function of $(A,B)$ and even the
+complete labelled current tree recovers the target of Definition 38.1
+on its whole domain. No deterministic acquisition controller under
+Assumption 38.2 can terminate correctly on every promised source.
+
+**Proof.** Choose any ordered full binary shape with $A$ leaves and
+label every leaf alpha, giving $t$. Such a shape exists for every $A$:
+start with a leaf and repeatedly pair the previous shape with a leaf.
+Put $w=\rho^2t$ and $v=\rho^4t$. The same leaf replacement gives
+$\ell(t)=A$ and $\ell(w)=2A$. Both
+
+$$
+ (t,2,v)\in\mathcal D_{[A,B]},\qquad
+ (w,1,v)\in\mathcal D_{[A,B]}
+\tag{ABT.39.2}
+$$
+
+are authentic positive-even histories. Their targets differ in original,
+lag and count, while their entire current register, root convention,
+labelled replies and advice coincide. Hence the mathematical inverse
+already fails. These are alternatives for the actual initial history,
+not a permission to replace that history by its more primitive origin.
+
+For operational failure choose the same accessible initial control,
+binding and grants, and the same allocation and completion schedule.
+The possibly different preparation and semantic writer epochs are hidden
+by Assumption 38.2. Induct on accessible transitions: identical control
+selects identical local work or the same literal request, and the common
+$v$ gives identical presence bits and hence identical successor control.
+Allocation decisions also coincide because they use those acquired data.
+Thus stopping, output and retained accessible data coincide. If termination
+is required on both histories, that common result cannot equal both
+targets. Even exposing full current labels would not repair this pair.
+The obstruction is to this entire interval task with its declared advice,
+not to separately restricted source families or richer historical ports.
+$\square$
+
+## 40. A finite paid controller using the interval cap
+
+**Definition 40.1 (internally selected acquisition).** On input $(A,B)$
+first check $1\le A\le B<2A$ by finite local arithmetic; otherwise
+return a fixed out-of-contract result. On accepted advice use the following
+three phases, without changing the register.
+
+Find its maximal present right length $h$ by the exponential and binary
+search of Definition 35.1: query $R^1,R^2,R^4,\ldots$ through the first
+absent power, then halve the bracket between its last present and first
+absent lengths until they differ by one. Every test is a newly submitted
+complete absolute word. The promised domain has $h\ge1$; a zero answer
+at $R^1$ may return a fixed error outside that domain.
+
+Initialize $l=\max(1,h-B+1)$ and $z=h$. While $l<z$, choose
+$j=\lfloor(l+z)/2\rfloor$ and run Proposition 34.3 with cap $B$.
+Concretely its left-before-right traversal tests $pR^jL$ at the root
+and then at children of positively tested nodes, counting positive branch
+tests. Stop that comparison at the $B$th positive test, reporting
+$a_j(v)>B$, or at exhaustion of the pending stack, reporting
+$a_j(v)\le B$. In the former case set $l=j+1$; in the latter set
+$z=j$. At the singleton retain $K=l$.
+
+Now traverse confirmed original positions from the root. At each $p$
+execute both paid queries $pR^{K-1}LL$ and $pR^KL$ in that order.
+Their pairs $00,10,11$ mean alpha, beta and branch by §12.3. On a branch
+schedule its two children; on a leaf append that acquired label and
+increment a leaf counter initially zero. The pair $01$ returns a fixed
+error; it does not arise on promised inputs. Exhaustion constructs the
+ordered tree $U$ and the acquired count $\widehat n$. Retain
+$(U,K,\widehat n)$ with readable backing, actual binding and surviving
+grants, then stop or attach the stated continuation by paid local work.
+This last stopping rule uses the acquired stack, with no exact count input.
+
+These operations specify one deterministic effective controller: binary
+integer routines, stack push/pop, copying literal letters and emitting
+constructor/label bits have finite bit-level implementations with a fixed
+finite instruction repertoire. All choices use the input, phase and already
+paid presence bits. Their computations and address formation are actual
+localStep work. The variable stacks and buffers are owned storage, not
+finite-control states, a source-aware selector or an inverse oracle.
+
+**Theorem 40.2 (sharp uniform interval initialization with simultaneous
+costs).** For every fixed pair of integers $1\le A\le B$, uniform exact
+recovery and acquisition of the actual $(u,k,n)$ on all of
+$\mathcal D_{[A,B]}$, with Assumption 38.2's accessible resources and
+unchanged register, is possible if and only if $B<2A$.
+In that case Definition 40.1 terminates for every promised finite
+$(u,k,v)$, retains $(U,K,\widehat n)=(u,k,n)$ and leaves this same
+actual register equal to $v$ through handoff. For
+
+$$
+\begin{aligned}
+ h&=k+h_R(u),&m&=1+\lfloor\log_2h\rfloor,&d_B&=\lceil\log_2B\rceil,\\
+ q_*&=2m+(2B-1)d_B+4n-2,&
+ D_*&=\max\{2h,h+B,k+n\},
+\end{aligned}
+\tag{ABT.40.1}
+$$
+
+one and the same actual acquisition run satisfies
+
+$$
+ Q\le q_*,\qquad M_{\rm addr}\le D_*\le2(k+B),\qquad
+ W\le D_*q_*\le2(k+B)q_*.
+\tag{ABT.40.2}
+$$
+
+**Proof.** Necessity is Proposition 39.2. For sufficiency, Theorem 34.2
+gives $h=k+h_R(u)$ and $h_R(u)\le n-1\le B-1$. Thus $k$ lies
+in $[\max(1,h-B+1),h]$, an interval with at most $B$ integers.
+The right-spine presence answers are exactly those for lengths at most
+$h$. Its first absent power is $2^m$, so exponential search uses
+$m+1$ Reads. The last bracket has gap $2^{m-1}$; its $m-1$ midpoint
+tests finish the search. This pays exactly $2m$ Reads, with longest word
+$2^m\le2h$, as in the first phase of Theorem 35.2.
+
+Lemma 39.1 says the comparison answer at most $B$ is true exactly at
+$j\ge k$. Each midpoint update therefore preserves $k$ and reduces
+the interval size to at most its previous size divided by two, rounded
+up. At most $d_B$ comparisons leave its unique element $K=k$.
+Proposition 34.3 applies to every trial, including incorrect ones:
+each pays at most $2B-1$ Reads at words of length at most $j+B\le h+B$.
+Its cap and address bound follow from the actual pending-slot identity
+$1+b-l'>0$ before a query, with $b$ discovered branches and $l'$
+completed dots. No unacquired trial tree is used for control.
+
+At $K=k$, the two-probe label table holds at every confirmed original
+position. The root is confirmed by nonemptiness; a decoded branch alone
+confirms its children. Structural induction on $u$ now identifies the
+constructed ordered subtrees and their labels with $u$, and the leaf
+increments with its $n$ leaves. There are $2n-1$ visited nodes and
+exactly $4n-2$ final Reads, counting repetitions with earlier phases.
+Every original node has depth at most $n-1$, so these words have length
+at most $k+n$. This also proves termination of the last phase without
+using $n$ as an operand or allocating from it in advance.
+
+All searches, capped traversals and final recursion are finite, and each
+finite local routine and pending invocation completes by Assumption 38.2.
+No phase calls applyRho. Thus retention preparation also finishes on the
+unchanged register. Summing the three actual Read counts and taking their
+maximum address size proves (ABT.40.2), since $h\le k+n-1\le k+B-1$.
+The letter bound is $W\le M_{\rm addr}Q$, with every literal submission
+paid. The $n,k,h$ in these bounds describe the proved run; none is an
+unacquired initialization parameter. $\square$
+
+## 41. Authentic magnitude input, retained payload and other prices
+
+**Corollary 41.1 (dyadic initialization).** Replace the numerical advice
+of Assumption 38.2 by the authentic integer $s=\lfloor\log_2 n\rfloor$,
+$s\ge0$, with exactly the same prohibition on additional information.
+One common controller computes by paid local doubling
+$A_s=2^s$, $B_s=2^{s+1}-1$, then uses Definition 40.1. It acquires and
+retains the actual $(u,k,n)$ for every finite nonempty ordered original,
+every $k\ge1$ and $v=\rho^{2k}u$. Put
+
+$$
+ d_s=\lceil\log_2(2^{s+1}-1)\rceil,\qquad
+ q_s=2m+(2^{s+2}-3)d_s+4n-2,\qquad
+ L_s=2(k+2^{s+1}-1).
+\tag{ABT.41.1}
+$$
+
+The simultaneous bounds are $Q\le q_s$, $M_{\rm addr}\le L_s$ and
+$W\le L_sq_s$. Uniformly, these imply
+
+$$
+\begin{aligned}
+ Q&=O(\log(k+n+2)+n\log(n+1)),\\
+ M_{\rm addr}&=O(k+n),\\
+ W&=O((k+n)(\log(k+n+2)+n\log(n+1))).
+\end{aligned}
+\tag{ABT.41.2}
+$$
+
+**Proof.** Authenticity gives $2^s\le n\le2^{s+1}-1<2A_s$.
+Theorem 40.2 supplies all assertions and the displayed numerical bounds.
+Here $B_s\le2n-1$, $d_s\le s+1\le1+\log_2 n$, and
+$h\le k+n-1$ gives $m\le1+\log_2(k+n-1)$. Substitution gives
+(ABT.41.2), including $n=1$: then $s=0,B_s=1,d_s=0$, so no lag
+comparison is made and $k=h$. Constructing $A_s,B_s$ is finite
+local computation from $s$; exact $n$ first appears as the final acquired
+leaf count. Acquiring and authenticating the supplied $s$ is a separately
+paid entrance service, not an inference of $s$ from the current register.
+The same asymptotic bounds hold on every sharp interval, because
+$n\le B<2A\le2n$. They assert neither optimality nor physical duration.
+$\square$
+
+**Proposition 41.2 (separate simultaneous material coordinates).**
+For the successful run, retain $u$ by the preorder shape/label encoding
+of Proposition 35.3. With $b(t)=1+\lfloor\log_2t\rfloor$ for positive
+integers, its tree and numerical target payload occupies at most
+
+$$
+ 3n-1+b(k)+b(n)
+\tag{ABT.41.3}
+$$
+
+bits, before framing, references and grants. Additional working storage
+can be $O(k+B+B\log(k+B+2))$ bits. If the advice is retained too, its
+binary payload costs $b(A)+b(B)$, or $b(s+1)$ for magnitude input,
+plus framing. These statements do not bound the complete retained writer,
+source material, preparation or future consumer.
+
+**Proof.** There are $2n-1$ shape bits and $n$ leaf-label bits; the
+two acquired positive integers contribute the other two terms. The count
+is stored after acquisition, rather than supplied to the encoder in advance.
+A shared current path and stack of phase frames use at most $B$ frames
+in a capped comparison and at most $n\le B$ in final traversal.
+Each frame can use $O(\log(k+B+2))$ bits, storing phase, saved lengths
+and output positions instead of whole pending words. One growing literal
+address buffer of $2(k+B)$ letters suffices by (ABT.40.2); counters and
+search brackets have logarithmic bit width. Acquired output uses its own
+growing store. Ordinary depth-first stack manipulation and finite tape
+copying give the stated additional workspace bound. Allocation follows
+current counters, paths and actual constructor writes; the a posteriori
+bound is not an instruction to preallocate from unknown $k,n$.
+
+Let $J$ count all actual acquisition localSteps, including input arithmetic,
+projection, evaluator, address copying, allocation-control, output and
+handoff work. It is finite by the preceding proofs and is paid in addition
+to $Q$ Reads; zero updates occur, giving $Q+J$ new native events. There
+is no asserted backend-independent bound on $J$ or physical delay. Owned
+backing, each access/copy, framing and retention lifetime have their actual
+service prices; finite code does not imply a uniformly finite memory carrier.
+The binding, persistent ordered references and current grants have separate
+encoding, authentication and maintenance costs. Their existence and lawful
+continuation are supplied, never manufactured by a numerical decoder.
+
+The raw writer keeps $Q$ full Read entries, all $W$ literal letters,
+four-valued replies and epoch fields $2k$, and $J$ localStep markers.
+For ordinary self-delimiting binary serialization its new payload can be
+$O(J+W+Q\log(k+B+2))$ bits, besides the inaccessible old prefix and
+writer/storage metadata. This uses the bounds on word lengths and $k$;
+it does not give the controller a writer-read capability.
+If $u$ has $a$ alpha and $b$ beta leaves, its actual expanded source still
+has $aF_{2k+1}+bF_{2k+2}$ leaves and twice that number minus one nodes,
+by (ABT.35.8). Those material nodes are not paid by the sparse Read bound.
+Preparing from $u$ includes the $2k$ real substitutions, all intermediate
+rewrites, ingress, control and writer work; a supplied prepared source moves
+this price before acquisition rather than eliminating it. Installation,
+authentic interval or magnitude delivery, scheduling and source retention
+likewise remain separate. Any copied output, extra archive or subsequent
+expansion is additionally charged. $\square$
+
+## 42. Recovery routes and lawful retained continuation
+
+**Definition 42.1 (the four observations).** At a successful cut with
+fixed authentic interval, retain Definition 36.4's independent meanings:
+$S$ is the actual rooted ordered incidence of $v$ with leaf labels erased;
+$\partial$ is its actual terminal-address antichain, also unlabelled;
+$T=2k$ counts actual global substitutions from the authentic original;
+$\mathsf M$ is the acquired readable $(u,k,n)$ with its actual binding
+and current continuation grants. Thus $T$ contains no source labels,
+shape, duration or raw acquisition history, and $\mathsf M$ contains
+usable retained data, not merely a printed result or inaccessible pointer.
+Scratch and the inaccessible physical writer remain separate resources.
+
+**Theorem 42.2 (attained inverse directions and agreement).** If $B<2A$,
+then $(A,B,S)$ and $(A,B,\partial)$ each determine the same $(u,k,n)$
+retained in $\mathsf M$ on the whole domain. The routes through either
+incidence or terminal boundary agree; from the data in $\mathsf M$ one
+recovers the same $S,\partial,T$. These are data-recovery directions under
+the supplied reference/rights convention. $T$ alone, even supplemented by
+the authentic interval and exact $n$, does not determine $u$.
+
+**Proof.** Prefix closure of $\partial$ is exactly $S$, since every node
+of a finite tree extends to a leaf. Its maximal addresses return exactly
+$\partial$. Both constructions preserve the same root and ordered letters.
+All answers in Definition 40.1 are membership bits in this $S$; Theorem
+40.2 therefore makes its mathematical decoder a function of $(A,B,S)$.
+It returns exactly $(u,k,n)$ on every promised realization, proving both
+uniqueness and route agreement. Conversely $(u,k)$ computes the finite
+tree $\rho^{2k}u$, hence those actual incidence and terminal sets and
+$T=2k$. The two compositions return the original data on their attained
+domains. This expansion has its actual local and material costs and is
+not needed by the sparse acquisition protocol. Binding and grants persist
+by assumption; no inverse from incidence data creates them.
+
+For failure choose any $n\in[A,B]$, an $n$-leaf ordered shape and a
+fixed $k\ge1$. All-alpha and all-beta labellings have the same $n$,
+interval and $T=2k$, but distinct actual originals. Thus temporal count
+cannot supply that inverse. Proposition 39.2 already prevents uniform
+source-to-target recovery when $B\ge2A$. For magnitude advice use its
+computed interval; the same positive routes and time-only failure follow.
+$\square$
+
+**Theorem 42.3 (same-register retained use).** At Theorem 40.2's cut,
+or Corollary 41.1's cut, let $N=2K$ be computed from the acquired $K$.
+Every supplied effective source-free logical native program in ABT15's
+original menu, with initial control computed from its public input and
+the retained target, has that section's lawful compiled continuation on
+this very register and binding. It preserves all completed logical replies,
+including absence, continuation choices and entire terminal output. At
+each completed macro boundary after $e$ logical updates,
+
+$$
+ r_e=\rho^eu,\qquad \widehat r_e=\rho^{2k}r_e=\rho^{2k+e}u,
+ \qquad \widehat e=2k+e.
+\tag{ABT.42.1}
+$$
+
+**Proof.** Acquisition has now actually supplied exactly the initial
+relation, readable calibration and rights used in Theorem 36.1, including
+the formerly unknown $n$. Its proof applies with the newly obtained
+$(U,K,\widehat n)$: a single finite interpreter reads its retained $N$,
+and the initial attachment and all evaluator work are paid localSteps.
+For completeness a logical localStep changes only control; a Read runs
+ABT15's finite presence macro on the same $\widehat r_e$, returns exactly
+$r_{r_e}(p)$ even at original absent positions and invokes the original
+continuation only on macro completion. An update performs one actual
+applyRho and uses $\rho\rho^{2k}r_e=\rho^{2k}\rho r_e$; stop returns
+the same entire output. Induction on finite logical fragments gives
+(ABT.42.1) and the reply/choice claims. An unfinished macro preserves its
+pending request, phase and paid first bit, as in Definitions 15.2,36.2;
+resume continues it without repeating or erasing that paid event. Every
+attained finite fragment completes under the supplied progress grants;
+termination of a logical run implies termination of its compiled run.
+No assertion makes an arbitrary nonterminating logical program terminate.
+
+The acquired offset $2k$ stays fixed even when $2k+e$ is odd. The initial
+interval theorem is not reapplied to that odd absolute epoch. Consequently
+the recovered views refer to the same actual process and its lawful
+dynamics. If an attained continuation fragment has actual costs $Q_c,W_c$,
+$U_c$ updates, $L_c$ original localSteps and $J_c$ evaluator localSteps,
+the joint run pays $Q+Q_c$ Reads, $W+W_c$ letters, $U_c$ updates and
+$J+L_c+J_c$ localSteps. Its maximum submitted address is the maximum of
+the two actual maxima. ABT15.4's formulas price completed macros;
+unfinished ones retain their incurred actual prices. The raw writer remains
+$H_{\rm old}H_{\rm acq}H_{\rm cont}$, distinct from the decoded logical
+trace. Further source rewrites, output, working memory and retention are
+additional prices. This supplies exactly the old lawful continuation, not
+raw-log identity or transport of direct cursor, graft or guard operations.
+$\square$
+
+## 43. Supplier correspondence and the remaining domains
+
+**Convention 43.1 (mathematical attribution and scope).** Lemma 39.1,
+the sharp entire-interval criterion and its paid acquisition with magnitude
+input are `repo-derived` deductions in this specific actual-original task.
+The suppliers and distinctions are as follows.
+
+* ABT33–37 supply the exact-count acquisition contract, trial pruning,
+  monotonicity, capped comparisons, calibrated traversal, cost conventions
+  and ABT15 continuation. Here the cap is only the authentic upper endpoint;
+  the strict two-step size gap proves it sufficient exactly on the stated
+  all-source intervals, and the final traversal acquires the missing count.
+* [Joint-Memory §§36–39,65](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md)
+  supplies primitive rays, entire entrance fibers, their indistinguishability,
+  conditional record sizes and effective advice initialization under actual
+  entrance acquisition and complete-current-description contracts. These
+  general methods are reused, not new standalone results here. Its primitive
+  endpoint is not this task's actual original; its entrance record and full
+  acquired current tree are not extra inputs here. Proposition 39.2 uses its
+  indistinguishability principle on the explicit interval witness pair.
+* GenealogicalFiberTransport's Source/substitution/composition, the owning
+  Scribes, DelayedOriginalReadout's private clock_step and public clock laws,
+  and NativeErasedSupportKernels' private root/erased/support helpers fix the
+  same free ordered tree, right height and known-lag presence table.
+  NativeFullSourceProducer's private traverse/production_reads/stationary
+  and Scribe supply acquired-stack traversal, not unknown-size advice.
+  NativeSerialMachine supplies the source-blind Op and full writer semantics.
+  IntrinsicSubstitutionCoordinates, including its private ancestry helpers,
+  and Acquired Intrinsic Depth Calibration keep their maximal-depth and
+  prepared-defect/right-spine targets; neither is identified with this
+  unknown actual lag. Concurrent Native Cut Acquisition and Native Unknown
+  Epoch Gluing keep their own concurrency, stamp and retained-record grants.
+* Kenny Lau's FreeMagma constructors and lift in pinned mathlib
+  `56a005855ea17e0b0958f73ec801ae140b0a1679`, `Mathlib/Algebra/Free.lean`,
+  supply the ordered algebra. Berthé–Steiner–Thuswaldner–Yassawi,
+  [arXiv:1705.00167v2](https://arxiv.org/abs/1705.00167v2), §2 Definitions
+  2.1,2.3–2.4 and Theorem 3.1, treat centered representations of aperiodic
+  bi-infinite word points. Engelfriet–Inaba–Maneth,
+  [arXiv:1904.09203v3](https://arxiv.org/abs/1904.09203v3), §3, uses label
+  and child-number tests, walking and optional regular look-around with
+  output branching. Those primary models supply comparison terminology,
+  not this finite actual-original interval theorem or its absolute-word
+  paid interface. No label oracle, free walk or source copy is imported.
+
+The exact-count results remain in their original scope, and the no-advice
+collision of Convention 37.2 remains: interval advice is still authentic
+source information. Arbitrary parity retains §9's partner ambiguity.
+Authentication of the advice, creation of backing/references/rights,
+nonstationary or revoked presentations, lost retained data, arbitrary earlier
+histories, physical durations, whole-price optima and the old fixed-apparatus
+full tasks retain their separate obligations. Neither a general advice-growth
+theorem, a literature-priority assertion nor new Lean verification is claimed.
+There is no atomic-to-continuous transfer or unrestricted four-view inverse;
+the larger relational-observation objective remains open beyond these routes.
+
+## 追加锚（本行以下为增补区）

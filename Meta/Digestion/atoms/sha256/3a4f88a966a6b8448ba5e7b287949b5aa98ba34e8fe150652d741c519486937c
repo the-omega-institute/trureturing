@@ -1,0 +1,172 @@
+**Theorem 6.2 (joint-fiber compatibility of the tapered budgets).**
+Under (6.1), every real history with $C=C_j\ne\varnothing$,
+$j\in\{13,23\}$, satisfies
+
+$$
+|s-t|\le\widehat\rho_j(s)+\widehat\rho_j(t)
+\qquad(s,t\in C).
+\tag{6.4}
+$$
+
+All these budgets are positive and bounded. Consequently the interval
+
+$$
+\begin{aligned}
+\widehat J_j(C)&=[\widehat L_j(C),\widehat U_j(C)],\\
+\widehat L_j(C)&=\sup_{t\in C}(t-\widehat\rho_j(t)),\qquad
+\widehat U_j(C)=\inf_{t\in C}(t+\widehat\rho_j(t))
+\end{aligned}
+\tag{6.5}
+$$
+
+is nonempty and bounded, and its midpoint $\widehat d_j$ obeys
+
+$$
+|\widehat d_j-t|\le\widehat\rho_j(t)\quad(t\in C).
+\tag{6.6}
+$$
+
+Define $\widehat d_j=z$ when $C_j=\varnothing$. Thus the estimates
+are total, finite-valued functions of their three acquired reports.
+
+**Proof.** The identities (4.4) give $F=P$, $H=G$, and
+
+$$
+\begin{gathered}
+\chi=\frac{c(3E-c)}{(3+2c)(3+c)}>0,\qquad
+q=\frac{3E-c}{3+2c},\qquad
+r=\frac{3E-c}{3+c},\\
+0<q<r<E,\qquad r\le\frac12,\qquad r-q=\chi,\qquad
+G=\frac{c(1+r)}3,\\
+0<\kappa<1,\qquad
+\frac c3-2\kappa=\frac{c^2}{3(c+6)}>0.
+\end{gathered}
+\tag{6.7}
+$$
+
+The bound $r\le1/2$ is equivalent to the included upper endpoint
+condition in (6.1). The taper is nonincreasing and has Lipschitz
+constant $1$, with
+
+$$
+h(x)=\chi\ (0\le x\le q),\qquad
+h(x)=r-x\ (q\le x\le r),\qquad
+h(x)=0\ (r\le x\le E).
+\tag{6.8}
+$$
+
+The smallest possible budget in (6.3) is $G/2-\kappa\chi$.
+It is positive because
+
+$$
+\begin{aligned}
+G-2\kappa\chi
+&=\frac c3+
+  \left(\frac{3+2c}{3}-2\kappa\right)\chi\\
+&=\frac c3+
+  \frac{2c^2+9c+18}{3(c+6)}\chi>\frac c3.
+\end{aligned}
+\tag{6.9}
+$$
+
+Indeed $G-c/3=(3+2c)\chi/3$ by (4.4). The second line of
+(6.3) is also at least this minimum, and every budget is at most
+$(P+\kappa\chi)/2$.
+
+We prove (6.4) first for $013$. The exact compatible-set and
+joint-noise suppliers in Three-Index Design, Theorems 2.1 and 3.1,
+as used in (2.5)--(2.6), give the following restrictions on pairs
+in one $C_{13}$:
+
+$$
+\begin{gathered}
+|s-t|\le P,\\
+s,t\le z\ \Longrightarrow\ |s-t|\le G,\\
+s\le z\le t\ \Longrightarrow\ t-s\le c/3.
+\end{gathered}
+\tag{6.10}
+$$
+
+A further local consequence of that same separation theorem is
+essential here. If $z-y,z-x\in C_{13}$, with $0\le x<y\le E$
+and $x<r$, then $x<r\le1/2$. Substitution of $u=1,v=3$
+in its left coefficient gives $k_L(x)=3/(1+x)$, including
+$k_L(0)=3$. The two compatible noiseless triples are within
+$2\varepsilon=mc$ of one another in the original maximum norm.
+Their minimum possible distance is $3m(y-x)/(1+x)$, so
+
+$$
+y-x\le\frac{c(1+x)}3
+     =G-\frac c3(r-x).
+\tag{6.11}
+$$
+
+The gains and offsets in this comparison are the finite witnesses
+of membership in the same exact compatible set. Thus (6.11) uses
+the joint original error cube, with no independent relaxation of
+shared difference errors. The private `right_lower`, `lower` and
+reflection suppliers of `QuadraticThreeIndexSeparation.lean`
+are the corresponding fixed-pair separation ingredients identified
+in Section 1; (6.11) is their ordinary-mathematical specialization.
+
+Consider first two origins $z-y\le z-x\le z$ in $C_{13}$,
+with $0\le x\le y\le E$. If $x\ge r$, both tapers vanish,
+so the budget sum is $G$, sufficient by (6.10). If $x<r$,
+put $w=r-x>0$. Monotonicity gives
+$h(y)\le h(x)\le w$. For distinct origins, (6.11) and (6.7)
+therefore give
+
+$$
+\begin{aligned}
+\widehat\rho_{13}(z-x)+\widehat\rho_{13}(z-y)
+ &=G-\kappa(h(x)+h(y))\\
+ &\ge G-2\kappa w
+ \ge G-\frac c3w
+ \ge y-x.
+\end{aligned}
+\tag{6.12}
+$$
+
+Equal origins satisfy the desired inequality by positivity.
+
+Next take $z<z+x\le z+y$ in $C_{13}$, with $0<x\le y\le E$.
+If $x\le q$, then $h(x)=\chi$, and their budget sum is
+$P+\kappa h(y)\ge P$, sufficient by (6.10). If $x>q$,
+(6.8) gives $\chi-h(x)\le x-q$, while the prior gives
+$y-x\le E-x=P-(x-q)$. Hence
+
+$$
+\begin{aligned}
+\widehat\rho_{13}(z+x)+\widehat\rho_{13}(z+y)
+ &=P-\kappa\chi+\kappa(h(x)+h(y))\\
+ &\ge P-\kappa(x-q)
+ \ge P-(x-q)
+ \ge y-x.
+\end{aligned}
+\tag{6.13}
+$$
+
+For a pair with $s\le z<t$, each budget is at least
+$G/2-\kappa\chi$. Equations (6.9)--(6.10) show that their
+sum exceeds $c/3\ge t-s$. This also handles a point exactly
+at the center with the stated center convention. These cases
+exhaust $C_{13}$. Reflection (2.7) carries a compatible $023$
+history to a compatible $013$ history and sends $t$ to $-3-t$.
+Together with (6.3), it proves (6.4) for $023$. This is a relation
+between fixed experiments, not a reversal of actual acquisition.
+
+Finally apply the scalar budget-intersection argument of Theorem 2.1:
+(6.4) implies $s-\widehat\rho_j(s)\le t+\widehat\rho_j(t)$
+for every $s,t\in C$. Taking the supremum and infimum yields
+$\widehat L_j\le\widehat U_j$. Their finiteness follows from
+$C\subseteq[a,b]$ and the bounded budgets. Every point of
+$\widehat J_j$ belongs to every interval
+$[t-\widehat\rho_j(t),t+\widehat\rho_j(t)]$, proving (6.6).
+The empty-set convention completes totality.
+
+The regression-strip comparison is the one of
+Casini--Garulli--Vicino, Section 4, equations (7)--(10), cited in
+Section 1. The taper and its simultaneous inequalities (6.12)--(6.13)
+are deductions from the exact origin fibers, rather than from
+coordinate outer boxes. $\square$
+

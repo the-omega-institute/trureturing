@@ -2853,6 +2853,36 @@ equations (1.4)--(1.5). The argument above uses the Gauss and
 Jacobi sum identities in the pinned Mathlib library and retains
 both Frobenius directions.
 
+The following classical intermediate lemma spells out the Jacobi
+normalization used in the proof of Theorem 58.1. It introduces no
+novelty claim and does not by itself prove cubic reciprocity.
+
+**Lemma 58.2 (Jacobi normalization in the selected Eisenstein prime).**
+Let $P$ be a maximal ideal of $\mathcal E=\mathbb Z[\omega]$ with
+finite residue field of cardinality $q$, where $q\equiv1\pmod3$,
+and suppose $3\notin P$. Extend the Euler cubic residue character
+$\chi_P$ by zero at zero, with nonzero values in
+$\{1,\omega,\omega^2\}$ characterized by
+
+$$
+\chi_P(x)\bmod P=x^{(q-1)/3}.
+$$
+
+For every $\pi\in\mathcal E$ satisfying $P=(\pi)$ and $3\mid\pi-1$, one has
+
+$$
+-\sum_{x\in\mathcal E/P}\chi_P(x)\chi_P(1-x)=\pi.
+$$
+
+Proof. Write $m=(q-1)/3$ and $J=J(\chi_P,\chi_P)$. The Euler selector gives a multiplicative character of exact order three. Reducing $J$ modulo
+$P$ and expanding $(1-x)^m$ produces power sums with exponents $m,m+1,\ldots,2m$. All these exponents lie strictly between zero and $q-1$, so
+the power sums vanish. Consequently $J\in P$ for the specified prime $P$, rather than merely one of a pair of conjugate primes. Conjugation in
+$\mathcal E$ sends $\chi_P$ to its inverse; the Jacobi product identity then gives $N(J)=q$. The classical congruence $J=-1+z(\omega-1)^2$ and
+$(\omega-1)^2=-3\omega$ show $3\mid-J-1$. Thus $(-J)\subseteq P$. The principal ideal $(-J)$ has absolute norm $q$, and $P$ has the same finite
+index $q$, so this inclusion is equality. The generators $-J$ and $\pi$ therefore differ by a unit. Both are congruent to one modulo three,
+forcing that unit to be congruent to one. An Eisenstein unit with that congruence is one, giving $-J=\pi$. No norm or ideal-direction identity
+for the Jacobi sum is assumed. The convention and classical attribution are those cited immediately above.
+
 ## 追加锚（本行以下为增补区）
 
 
@@ -4180,5 +4210,790 @@ nonzero factor $3^{k+1}$ would force $3\mid u_k$.
 As $A_k=L_{3^k}^2+2>0$, its valuation is defined and therefore
 $v_3(A_k)=k+1$. Restricting these two conclusions to $j\geq1$
 proves the assertions.
+
+## 追加锚（本行以下为增补区）
+
+
+
+## 74. Global rational reduction obstruction for a depth-three golden prime
+
+**Definition 74.1 (global nonsingular and formal subgroups).**
+For a prime Q>5, let
+
+ E_Q: Y^2=X(X+5Q)(X-15Q).
+
+Write G_0(Q) for the subgroup of E_Q(\mathbb Q) whose points have nonsingular reduction modulo Q on this displayed integral model, and write G_1(Q) for its subgroup reducing to the point at infinity. These are subgroups of the global rational-point group, not the entire local groups E_Q(\mathbb Q_Q).
+
+**Theorem 74.2 (vanishing of the global nonsingular reduction image).**
+Let j>=1, and suppose
+
+ B_j=L_(3^j)^2+3=P^2 Q^3
+
+for distinct rational primes P,Q. Then
+
+ G_0(Q)=G_1(Q).
+
+In particular the image of G_0(Q) in the nonsingular group of the reduced cuspidal cubic, isomorphic to the additive group F_Q, is zero.
+
+Proof. The fixed-golden clock gives P,Q>5 and 2*3^(j+1) dividing Q-1. The quadratic constraint for this actual factorization gives Q=19 modulo 40. These are the TBN3, DCE5 and GPC1 statements in [the golden-unit-lift dossier](../../../Problems/wall-sun-sun-golden-unit-lift.md). Consequently Q=19 modulo 120 and Q>=19.
+
+We use the full two-Selmer bound of Goto, *A study on the Selmer groups of elliptic curves with a rational 2-torsion* (2002), [Section 2 and Table 9](https://www.ma.noda.tus.ac.jp/u/tg/files/thesis.pdf), printed p49 / PDF p48. The types in that table are prime residue classes modulo 24, as specified before Table 5. Its row 5 x 19 gives s_3(-n)=1 without a Legendre-sign restriction. Here s_3(-n) is dim_F2 Sel_2 minus 2 for y^2=x(x+n)(x-3n). Taking n=5Q proves rank E_Q(\mathbb Q)<=1. This is the full two-Selmer convention, not the potentially larger sum of two-isogeny bounds.
+
+We also use the nonsingular reduction homomorphism, the torsion-free formal kernel over Q_Q for Q>=3, prime-to-ell torsion injection at good reduction ell, and the quadratic canonical-height law; see Silverman, *The Arithmetic of Elliptic Curves*, [IV.6.3–6.4, VII.1–3 and VIII.9](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf). The height estimate needed below is proved explicitly.
+
+**1. An actual branch gives a non-torsion formal point**
+
+The displayed integral model has discriminant 2304*(5Q)^6. At Q>=19 its valuation is 6<12, so the model is minimal at Q. Its reduction is the cuspidal cubic Y^2=X^3, and the indicated nonsingular and formal subgroups therefore have the standard reduction meanings.
+
+Put x=L_(3^j), f=F_(3^j), s=PQ. Since 3^j is odd,
+
+ x^2+3=Qs^2,
+ x^2+4=5f^2.
+
+The point
+
+ R=(5Q(x^2+3), 25Q^2 x s f)
+
+lies on E_Q: its three factors are 5Q(x^2+3), 5Q(x^2+4), and 5Q*x^2. Their product equals the displayed Y-coordinate squared.
+
+Let T=(0,0), the rational point of order 2. The 2-torsion translation formula on Y^2=X^3-10QX^2-75Q^2X is
+
+ X(R+T)=(-75Q^2)/X(R).
+
+Thus S=R+T has
+
+ X(S)=-15Q/B_j=-15/(P^2 Q^2).
+
+In particular v_Q(X(S))=-2, so S is a nonzero point of the formal kernel G_1(Q). The formal group is torsion-free for Q>=3, hence S is non-torsion. The rank bound above therefore gives rank E_Q(\mathbb Q)=1.
+
+**2. The global nonsingular subgroup is infinite cyclic**
+
+G_0(Q) is a subgroup of the finitely generated rank-one group E_Q(\mathbb Q), and it contains S. It has rank 1.
+
+It has no torsion. Indeed, a torsion point in G_0(Q) injects into the additive reduction group F_Q because the formal kernel is torsion-free, so its order divides Q. But E_Q has good reduction at 7: Q=19 mod 120 ensures Q is not 7, and its discriminant is 2304*(5Q)^6, supported only at 2,3,5,Q. The curve y^2=x(x+1)(x-3) has 8 points over F7, and all its nonzero quadratic twists also have8 points (trace zero; equivalently a seven-residue count). Thus #E_Q(F7)=8. Prime-to-7 torsion injects into this group, ruling out Q-torsion for Q>=19.
+
+Consequently G_0(Q)=Z H for some H. Suppose its reduction image is nonzero. Then H reduces to a nonzero element of the additive group F_Q, of exact order Q. Since S lies in the kernel, S=[m]H with a nonzero integer m divisible by Q.
+
+**3. Explicit height bound on the fixed base, no conjectural height estimate**
+
+For any non-torsion A on E_Q put z(A)=X(A)/(5Q). The quadratic-twist isomorphism to
+
+ E: w^2=z(z+1)(z-3)
+
+preserves canonical height. More directly, the elementary rational-height inequality |h(X/(5Q))-h(X)|<=log(5Q), applied to every [2^k]A, shows that the difference disappears after multiplication by 4^(-k) in the canonical-height limit. Thus hhat(A)=(1/2) lim_(k->infinity) 4^(-k) h(z([2^k]A)) with the standard normalization. The duplication map on these rational z-coordinates is:
+
+ D(z)=(z^2+3)^2/[4z(z+1)(z-3)].
+
+For coprime integers a,b, b>0, put H_0=max(|a|,b),
+
+ F=(a^2+3b^2)^2,
+ G=4ab(a+b)(a-3b).
+
+Then H_0^4 <= max(|F|,|G|) <=24 H_0^4. Also gcd(F,G) divides 144:
+
+- A common prime other than 2,3 cannot divide a or b, and a=-b or a=3b would force it to divide 4 or 12.
+- If 3 divides a, then 3 does not divide b and v_3(a^2+3b^2)=1, so v_3(F)=2. If 3 does not divide a, 3 does not divide F.
+- At 2, F is odd unless a,b are both odd. In that case a^2+3b^2=4 mod8, hence v_2(F)=4.
+
+Thus, for logarithmic rational height h,
+
+ 4h(z)-log144 <= h(D(z)) <=4h(z)+log24.
+
+Telescoping the canonical-height limit gives
+
+ (1/2)h(z)-log144/6 <= hhat(A) <= (1/2)h(z)+log24/6,
+
+and in particular |hhat(A)-(1/2)h(z)|<1. None of the duplication denominators is zero because A is non-torsion.
+
+**4. Lower height from a nonzero global reduction**
+
+Since H reduces to a finite nonzero nonsingular point on Y^2=X^3, both its coordinates are Q-adic units. Therefore v_Q(z(H))=-1. Its rational height is at least log Q, so
+
+ hhat(H)>(1/2)log Q-1>1/3.
+
+For the last inequality use Q>=19>16 and log2>2/3. Since Q divides m,
+
+ hhat(S)=m^2 hhat(H)>Q^2/3.
+
+**5. Upper height from the ORIGINAL golden clock**
+
+The base coordinate of S is z(S)=-3/B_j. Since 3 does not divide B_j, h(z(S))=log B_j. Write N=3^j and phi=(1+sqrt5)/2. For odd N>=3,
+
+ L_N=phi^N-phi^(-N)<phi^N,
+ B_j<2phi^(2N),
+ log B_j<N+1,
+
+using 2log phi<1 and log2<1. The actual rank constraint gives N< Q/6. Hence
+
+ hhat(S)<(1/2)log B_j+1<Q/12+3/2.
+
+But Q^2/3>Q/12+3/2 for every Q>=3, a contradiction. The global reduction image must therefore be zero, proving the statement.
+
+
+**Theorem 74.3 (one-point certificate excluding the depth-three role).**
+Let Q>5 be prime. If there are rational numbers a,b satisfying
+
+ b^2=a(a+5Q)(a-15Q),     v_Q(a)=v_Q(b)=0,
+
+then there are no j>=1 and prime P distinct from Q such that
+
+ L_(3^j)^2+3=P^2 Q^3.
+
+Proof. The displayed rational point reduces to a finite nonsingular point of Y^2=X^3, because both coordinates are nonzero modulo Q. Hence it belongs to G_0(Q) but not G_1(Q). Theorem 74.2 contradicts the proposed golden factorization. This conclusion concerns only the depth-three role in this factorization; it asserts neither non-WSS status for Q in other settings nor existence of such certificates for infinitely many primes.
+
+## 75. A quartic prime family excluded from the depth-three role
+
+The construction below is an elementary rational-conic parametrization, not a new general method for constructing theta-congruent twists. This application supplies explicit certificates for Theorem 74.3 while retaining the original golden blocks. General twist-point parametrizations via products of linear factors modulo squares are classical: see M. Kan, *theta-congruent numbers and elliptic curves*, Acta Arith. 94(2) (2000), 153–160, lemma proof on p.154, [primary journal text](https://matwbn.icm.edu.pl/ksiazki/aa/aa94/aa9422.pdf). All identities and local-unit assertions needed here are proved below.
+
+**Definition 75.1 (the represented prime family).** Put
+
+$$\mathcal F(m,n)=4m^4-2m^3n+11m^2n^2+2mn^3+4n^4.$$
+
+Let $\mathcal Q$ be the set of primes $Q>5$ represented as $Q=\mathcal F(m,n)$ by integers $m,n$. This definition asserts neither infinitely many prime values nor infinitely many members in the actual golden prime supports.
+
+**Theorem 75.2 (uniform quartic-family exclusion).** For every $Q\in\mathcal Q$, every $j\ge1$, and every prime $P\ne Q$,
+
+$$\boxed{L_{3^j}^{\,2}+3\ne P^2Q^3.}$$
+
+Thus the depth-three prime in an actual surviving $P^2Q^3$ block cannot be represented by $\mathcal F$ over the integers.
+
+**Proof.** Choose $m,n$ with $Q=\mathcal F(m,n)$ and put
+
+$$u=m^2+mn-n^2,\qquad v=m^2-4mn-n^2,\qquad r=m^2+n^2.$$
+
+The identity $v+2iu=(1+2i)(m+in)^2$ and its norm, or direct polynomial expansion, give
+
+$$4u^2+v^2=5r^2,\qquad Q=3u^2+v^2=5r^2-u^2.$$
+
+Consequently $T=(-15u^2,75uvr)$ is an integral point on $E_Q:Y^2=X(X+5Q)(X-15Q)$. Indeed,
+
+$$X(T)+5Q=5v^2,\qquad X(T)-15Q=-75r^2,$$
+
+and the product of the three factors is $5625u^2v^2r^2=Y(T)^2$.
+
+We verify that both coordinates are $Q$-adic units. First $\gcd(m,n)=1$: otherwise a common divisor $d>1$ would have $d^4\mid Q$ by homogeneity, contradicting primality. If $Q\mid u$, the equation $Q=3u^2+v^2$ implies $Q\mid v$. Then $u-v=5mn$ and $Q>5$ imply $Q\mid m$ or $Q\mid n$. Substitution in $u=m^2+mn-n^2$ forces the other divisibility, contradicting coprimality. Hence $Q\nmid u$. If $Q\mid v$, then $Q\mid3u^2$, again impossible. If $Q\mid r$, the equation $Q=5r^2-u^2$ forces $Q\mid u$. Thus $Q\nmid uvr$, and $Q\nmid75$ gives the required unit coordinates. This also excludes zero $u,v,r$, since zero is divisible by $Q$. There are no omitted zero-coordinate exceptions. Theorem 74.3 proves the conclusion. ∎
+
+**Lemma 75.3 (compatibility with the required prime class).** Every $Q\in\mathcal Q$ satisfies $Q\equiv19\pmod{120}$.
+
+**Proof.** Coprimality excludes both $m,n$ being even. If they have opposite parity, $u,v$ are odd, and $Q=3u^2+v^2$ is divisible by four, impossible. Thus both are odd. Hence $u$ is odd, $r\equiv2\pmod8$, and $Q=5r^2-u^2\equiv3\pmod8$. Modulo five, $u\equiv(m+3n)^2$, so $Q\equiv-(m+3n)^4\equiv-1\pmod5$ because $Q\ne5$. Finally $Q\equiv v^2\equiv1\pmod3$ because $Q\ne3$. These combine to give $19$ modulo $120$. ∎
+
+The lemma is a compatibility check, not the exclusion argument. The family is not disjoint from actual golden prime support: $\mathcal F(1,1)=19=L_3^2+3$. This example is not a new individual exclusion. The theorem is uniform in all integer parameters and all original layers; it does not replace exact golden support by unrestricted splitting. No assertion is made that infinitely many represented primes have pure ternary golden period, that every other cross-level necessary condition is independent of the representation, or that a member cannot be WSS in another depth vector. The parametrization and congruence lemma are elementary; the global exclusion uses Section 74's height and reduction obstruction. This is a paper proof with no Lean certification claim.
+
+
+## 76. The original integral orbit forces a primitive global generator
+
+**Theorem 76.1 (primitive generator and simultaneous formal reduction).** Suppose $j\ge1$, $N=3^j$, and
+
+$$B_N=L_N^2+3=P^2Q^3$$
+
+for distinct primes $P,Q$. On $E_Q:Y^2=X(X+5Q)(X-15Q)$, let $G_0(Q)$ be the global rational subgroup of Definition 74.1, let $T_0=(0,0)$, and put
+
+$$R=(5QB_N,25Q^2 L_N(PQ)F_N),\qquad S=R+T_0.$$
+
+Then
+
+$$\boxed{G_0(Q)=\mathbb Z S.}$$
+
+In particular every point of $G_0(Q)$ reduces to infinity at both $Q$ and $P$. Reduction at $P$ is good. This asserts primitivity in the specified global subgroup, not a choice of generator of the full Mordell–Weil group modulo torsion.
+
+**Proof.** Section 74 supplies $P,Q>5$, $Q\ge19$, and the conditional conclusions that $G_0(Q)=G_1(Q)$ is torsion-free of rank one and that $S$ is non-torsion with
+
+$$X(S)=-\frac{15}{P^2Q^2},\qquad z(S)=\frac{X(S)}{5Q}=-\frac3{B_N}.$$
+
+Choose a generator $H$ of $G_0(Q)$ and its sign so that $S=[m]H$ with $m>0$.
+
+First $m$ is odd. For a real non-torsion point $U$, Section 74's duplication formula gives
+
+$$z(2U)=\frac{(z(U)^2+3)^2}{4z(U)(z(U)+1)(z(U)-3)}>0,$$
+
+because the denominator is $4Y(U)^2/(5Q)^3>0$. An even $m$ would therefore contradict $X(S)<0$. Set $K=H+T_0$. Since $m$ is odd and $T_0$ has order two,
+
+$$[m]K=[m]H+T_0=S+T_0=R.$$
+
+The point $K$ is non-torsion and integral. To see the latter, the displayed integral model has discriminant $2^8 3^2 5^6 Q^6$, whose valuation is less than twelve at every prime, so it is locally minimal everywhere. If a rational point on this model is nonintegral at a prime $\ell$, its $X$-coordinate has negative valuation and it belongs to the formal kernel. That kernel is a subgroup at every prime, including $2,3,5,Q$. Thus a nonintegral $K$ would make its nonzero multiple $[m]K=R$ nonintegral at the same prime, contradicting the displayed integer coordinates of $R$. No prime-to-$\ell$ assumption on $m$ is needed. These are the standard formal-kernel facts of Silverman, [VII.1–3](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf).
+
+For the split cubic, complete two-descent gives the squareclass homomorphism whose coordinates at a non-two-torsion point $U$ are $X(U)$, $X(U)+5Q$, and $X(U)-15Q$ modulo rational squares. See Silverman, [X.1, Proposition 1.4](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf), printed p.315 / PDF p.327; the third class follows from the curve equation. Odd multiplication preserves these classes. At $R$ they are $(5,Q,5Q)$, because
+
+$$X(R)=5(PQ^2)^2,\quad X(R)+5Q=Q(5F_N)^2,\quad X(R)-15Q=5Q L_N^2.$$
+
+Consequently
+
+$$X(K)=5a^2,\qquad X(K)+5Q=Qb^2,\qquad X(K)-15Q=5Qd^2$$
+
+for rational $a,b,d$. They are integers: each left side is integral, and each coefficient $5,Q,5Q$ is squarefree, so a reduced denominator would require an impossible square factor in that coefficient. The equality $5a^2+5Q=Qb^2$ gives $Q\mid a$. Write $a=Qc$. The remaining equalities yield
+
+$$X(K)=5Q^2c^2,\qquad d^2+3=Qc^2,\qquad b^2=5(Qc^2+1).$$
+
+Hence $5\mid b$; writing $b=5f$ gives $d^2+4=5f^2$. Here $c\ne0$ because $K$ is non-torsion, $d\ne0$ because $Qc^2=3$ is impossible, and $f\ne0$. Take $d,f$ positive by changing their signs.
+
+We recall the elementary integral negative-Pell classification, with its argument to fix the exact orbit: every positive solution of $d^2+4=5f^2$ is $(L_n,F_n)$ for an odd $n\ge1$. The two integers have the same parity. The solution with $d=1$ is $(1,1)$. If $d>1$, then $d\ge4$, and
+
+$$d'=\frac{3d-5f}{2},\qquad f'=\frac{3f-d}{2}$$
+
+are positive integers with $d'^2+4=5f'^2$ and $d'<d$. Positivity follows from $9d^2-25f^2=4d^2-20>0$ and $9f^2-d^2=4f^2+4>0$; strict decrease follows from $d<5f$. Descent ends at $(1,1)$. Its inverse multiplies $(d'+f'\sqrt5)/2$ by $\phi^2$, where $\phi=(1+\sqrt5)/2$, so $(d+f\sqrt5)/2=\phi^n$ for a positive odd $n$. This gives precisely the stated Lucas and Fibonacci coordinates.
+
+Thus $Q\mid L_n^2+3$. The odd-index identities
+
+$$L_{3n}=L_n(L_n^2+3),\qquad F_{6n}=F_{3n}L_{3n}$$
+
+imply $Q\mid F_{6n}$. The original exact rank is $\rho(Q)=2\cdot3^{j+1}=6N$, by TBN3 in [the golden-unit-lift dossier](../../../Problems/wall-sun-sun-golden-unit-lift.md). Rank divisibility gives $6N\mid6n$, hence $N\mid n$ and $n\ge N$. In particular
+
+$$z(K)=\frac{X(K)}{5Q}=Qc^2=L_n^2+3\ge B_N.$$
+
+The original integral orbit is essential in this step; an arbitrary rational Pell solution does not supply an integer index $n$.
+
+Write $c_0=\log144/6$ and $u_0=\log24/6$. The uniform bounds proved in Section 74, and invariance of canonical height under torsion translation, give
+
+$$\widehat h(K)=\widehat h(H)\ge\tfrac12\log B_N-c_0,\qquad
+\widehat h(R)=\widehat h(S)\le\tfrac12\log B_N+u_0.$$
+
+Set $t=\tfrac12\log B_N$. Since $R=[m]K$,
+
+$$m^2(t-c_0)\le t+u_0.$$
+
+But $B_N\ge19>12$, so $t-c_0>0$ and
+
+$$8t=4\log B_N>4\log12>3\log12+\frac{\log24}{6}=9c_0+u_0,$$
+
+using $24<12^6$. Thus $9(t-c_0)>t+u_0$ and $m<3$. The positive odd integer $m$ must equal one. Hence $H=S$ and $G_0(Q)=\mathbb ZS$.
+
+The entire group already lies in $G_1(Q)$ by Section 74. At $P$, the discriminant is a unit because $P>5$ and $P\ne Q$, and $v_P(X(S))=-2$ gives $\operatorname{red}_P(S)=O$. Therefore every point of $G_0(Q)$ also reduces to infinity at $P$. ∎
+
+**Corollary 76.2 (one-point second-prime exclusion).** Let $P,Q>5$ be distinct primes. If there is a rational point $U\in E_Q(\mathbb Q)$ with nonsingular reduction at $Q$ and nonzero reduction at $P$, then
+
+$$L_{3^j}^{\,2}+3\ne P^2Q^3\qquad\text{for every }j\ge1.$$
+
+**Proof.** A hypothetical factorization puts $U$ in the global group of Theorem 76.1, whose reduction at $P$ is zero, a contradiction. ∎
+
+This certificate may use a point in the $Q$-formal kernel; it does not require that point to generate any rational subgroup. Neither existence of a certificate for every pair, an infinite family of certificates, nor a general non-WSS conclusion follows. The rank-one hypothesis used in the proof is obtained only from the hypothetical actual factorization through Section 74, without a parity conjecture or finiteness assumption on a Tate–Shafarevich group.
+
+
+**Corollary 76.3 (full rational group and reduction image).** Under the hypotheses of Theorem 76.1,
+
+$$E_Q(\mathbb Q)=\mathbb Z S\oplus E_Q[2],\qquad
+\operatorname{red}_P(E_Q(\mathbb Q))=E_Q(\mathbb F_P)[2].$$
+
+The group on the right has exactly the four points $O,(0,0),(-5Q,0),(15Q,0)$ reduced modulo $P$.
+
+**Proof.** First $[2]U\in G_0(Q)$ for every $U\in E_Q(\mathbb Q)$. This is immediate for two-torsion and for $U\in G_0(Q)$. Otherwise $U$ reduces to the cusp at $Q$, so $k=v_Q(X(U))\ge1$. The duplication formula is
+
+$$X(2U)=\frac{(X(U)^2+75Q^2)^2}{4X(U)(X(U)+5Q)(X(U)-15Q)}.$$
+
+If $k\ge2$, the shifted factors each have valuation one. The curve equation forces $k+2$ to be even, and the numerator has valuation four, so $v_Q(X(2U))=2-k\le0$.
+
+If $k=1$, write $X(U)=Qw$ with $w$ a $Q$-adic unit. The even valuation of
+
+$$Y(U)^2=Q^3w(w+5)(w-15)$$
+
+forces exactly one of $w+5,w-15$ to have a positive, odd valuation $t$. Their difference is $20$, a unit at $Q>5$. At the respective residues $w=-5$ and $w=15$, the expression $w^2+75$ is $100$ or $300$, also a unit at $Q>5$. Thus $v_Q(X(2U))=4-(3+t)=1-t\le0$.
+
+Negative $X$-valuation gives reduction to infinity, while zero valuation gives a finite nonsingular point on $Y^2=X^3$. This proves $[2]U\in G_0(Q)$ in all cases. Theorem 76.1 now writes $[2]U=[k]S$ for an integer $k$. If $k$ were odd, its $X$-coordinate would have the negative squareclass $-15$ of $X(S)$, by complete two-descent. It would therefore be negative. But the nonzero double $[2]U$ has positive $X$ by the real duplication formula. Hence $k=2l$, and $U-[l]S$ is rational two-torsion. Non-torsion of $S$ makes the sum direct.
+
+The four rational two-torsion points reduce distinctly at $P>5$, $P\ne Q$. The point $S$ reduces to infinity, proving the image equality. ∎
+
+**Corollary 76.4 (explicit second-prime support from one rational point).** Let $P,Q>5$ be distinct primes and let $U=(x,y)\in E_Q(\mathbb Q)$ be a point which is not two-torsion. Write $\operatorname{den}(x)>0$ for the denominator of $x$ in lowest terms and $\operatorname{num}(y)\ne0$ for the numerator of $y$ in lowest terms. An actual factorization $L_{3^j}^2+3=P^2Q^3$ necessarily satisfies
+
+$$\boxed{P\mid\operatorname{den}(x)\operatorname{num}(y).}$$
+
+**Proof.** If $P$ divides neither factor, $x$ is $P$-integral and the integral curve equation makes $y$ $P$-integral as well. Its reduced numerator being a unit makes $y$ a unit. Thus $U$ reduces to a finite point with nonzero $Y$-coordinate, which is not two-torsion. This contradicts Corollary 76.3. ∎
+
+For a fixed $Q$ and one supplied non-two-torsion rational point, the nonzero integer in Corollary 76.4 gives a finite explicit set containing every possible second prime. The point need not be a generator or satisfy a nonsingular-reduction test at $Q$. This does not assert that such a point or a new excluded pair has been exhibited for every $Q$.
+
+
+
+## 77. A prime squareclass controls every even initial depth
+
+**Theorem 77.1 (the original generator with a simple odd-depth factor allowed).** Let $j\ge1$, $N=3^j$, and suppose the actual golden block satisfies
+
+$$B_N=L_N^2+3=QC^2$$
+
+for a rational prime $Q$ and a positive integer $C$. Thus $Q$ is the only prime of odd initial depth; no all-WSS hypothesis or assumption $Q\mid C$ is imposed. On $E_Q:Y^2=X(X+5Q)(X-15Q)$ put
+
+$$R=(5QB_N,25Q^2L_NCF_N),\qquad T_0=(0,0),\qquad S=R+T_0.$$
+
+Then
+
+$$\boxed{G_0(Q)=\mathbb ZS,\qquad E_Q(\mathbb Q)=\mathbb ZS\oplus E_Q[2].}$$
+
+Moreover the global formal subgroup is exactly
+
+$$\boxed{G_1(Q)=\begin{cases}Q\mathbb ZS,&h_Q=1,\\\mathbb ZS,&h_Q\ge3,\end{cases}\qquad h_Q=1+2v_Q(C).}$$
+
+The nonsingular global reduction image at $Q$ is respectively all of $\mathbb F_Q$ or zero. For every prime $p\mid C$ with $p\ne Q$, reduction is good and
+
+$$\operatorname{red}_p(E_Q(\mathbb Q))=E_Q(\mathbb F_p)[2].$$
+
+**Proof.** TBN3 and GPC5 in [the golden-unit-lift dossier](../../../Problems/wall-sun-sun-golden-unit-lift.md) give $p>5$, $\rho(p)=6N$ and $v_p(B_N)=h_p$ for every prime $p\mid B_N$. GPC5 gives the squarefree kernel $19$ modulo $120$, so here $Q\equiv19\pmod{120}$ without an all-WSS assumption. Goto's full two-Selmer bound, [Section 2 and Table 9](https://www.ma.noda.tus.ac.jp/u/tg/files/thesis.pdf), type $5\times19$, therefore gives $\operatorname{rank}E_Q(\mathbb Q)\le1$ as in Section 74.
+
+The torsion-freeness argument for $G_0(Q)$ in Section 74 is independent of the factorization pattern. The formal kernel at $Q\ge19$ is torsion-free. Torsion in $G_0(Q)$ therefore injects into the additive nonsingular group $\mathbb F_Q$ and has order dividing $Q$. Good reduction at seven, where this curve has eight points, rules out such torsion. The displayed model is minimal at every prime because its discriminant is $2^8 3^2 5^6Q^6$, with every nonzero valuation below twelve.
+
+The identities $B_N=QC^2$ and $L_N^2+4=5F_N^2$ show directly that $R$ is integral on $E_Q$. Translation by $T_0$ gives
+
+$$X(S)=-\frac{15}{C^2},\qquad z(S)=\frac{X(S)}{5Q}=-\frac3{B_N}.$$
+
+The point $S\ne O$ lies in $G_0(Q)$: it is formal if $Q\mid C$, and has unit coordinates and finite nonsingular reduction if $Q\nmid C$. Torsion-freeness of $G_0(Q)$ proves that $S$ is non-torsion in both cases. In particular this argument does not invoke the vanishing-image theorem 74.2 in the new case $h_Q=1$. The rank is one, and $G_0(Q)=\mathbb ZH$.
+
+Choose the sign of $H$ so $S=[m]H$ with $m>0$. A nonzero real double has positive $X$ by the duplication formula, whereas $X(S)<0$, so $m$ is odd. Put $K=H+T_0$; then $[m]K=R$. The formal-kernel argument of Theorem 76.1 proves that $K$ is integral at every prime, including $2,3,5,Q$: a nonintegral point belongs to the formal kernel, whose nonzero multiples remain nonintegral. This needs no condition on the prime divisors of $m$.
+
+Complete two-descent, [Silverman X.1, Proposition 1.4](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf), preserves squareclasses under odd multiplication. At $R$ the three classes are again $(5,Q,5Q)$, since
+
+$$X(R)=5(QC)^2,\quad X(R)+5Q=Q(5F_N)^2,\quad X(R)-15Q=5QL_N^2.$$
+
+As in the explicit descent of Theorem 76.1, integrality and squarefreeness of $5,Q,5Q$ therefore give integers $c,d,f$ with
+
+$$X(K)=5Q^2c^2,\qquad d^2+3=Qc^2,\qquad d^2+4=5f^2.$$
+
+After choosing positive $d,f$, the integral negative-Pell classification proved there gives $(d,f)=(L_n,F_n)$ for an odd integer $n\ge1$. The equation $Q\mid L_n^2+3$, the identities $L_{3n}=L_n(L_n^2+3)$ and $F_{6n}=F_{3n}L_{3n}$, and the original exact rank $\rho(Q)=6N$ imply $N\mid n$. Consequently
+
+$$z(K)=L_n^2+3\ge B_N.$$
+
+The uniform height bounds of Section 74 now give, with $t=\tfrac12\log B_N$, $c_0=\log144/6$ and $u_0=\log24/6$,
+
+$$m^2(t-c_0)\le t+u_0.$$
+
+Exactly as in Theorem 76.1, $B_N\ge19>12$ implies $9(t-c_0)>t+u_0$. Thus $m<3$ and the positive odd integer $m$ is one. This proves $G_0(Q)=\mathbb ZS$. The proof also applies when $C=1$.
+
+The local duplication computation of Corollary 76.3 uses only $Q>5$ and proves $[2]U\in G_0(Q)$ for every rational point $U$. Write $[2]U=[k]S$. If $k$ is odd, its $X$-coordinate has the negative squareclass $-15$ of $X(S)$, contrary to positivity of a nonzero real double. Hence $k$ is even and $U\in\mathbb ZS+E_Q[2]$. Non-torsion of $S$ makes the sum direct.
+
+If $Q\nmid C$, the reduction of $S$ is nonzero in the additive group $\mathbb F_Q$ and has order $Q$, giving $G_1(Q)=Q\mathbb ZS$. If $Q\mid C$, the generator is formal and $G_1(Q)=\mathbb ZS$. Finally, for $p\mid C$, $p\ne Q$, the discriminant is a $p$-unit and $v_p(X(S))=-2v_p(C)<0$. The generator reduces to infinity and the four rational two-torsion points reduce distinctly, proving the last assertion. ∎
+
+**Theorem 77.2 (full cofactor denominator certificate).** Under the hypotheses of Theorem 77.1, every rational point $U$ which is not two-torsion satisfies
+
+$$\boxed{C^2\mid\operatorname{den}(X(2U)),\qquad B_N\le Q\operatorname{den}(X(2U)).}$$
+
+Here denominators are positive and in lowest terms. In standard coprime coordinates $X(U)=A/D^2$, $Y(U)=B/D^3$, $D>0$, one also has
+
+$$\boxed{C\mid DB.}$$
+
+**Proof.** Theorem 77.1 writes $U=[l]S+T$ with $T\in E_Q[2]$ and $l\ne0$. Hence $2U=[2l]S\ne O$. For $p\mid C$ put $e=v_p(C)>0$. Since $p>5$, $v_p(X(S))=-2e$, and the standard formal parameter $t=-X/Y$ has valuation $e$. The formal multiplication series on this integral model has integral $p$-adic coefficients and zero constant term, so multiplication by every integer preserves $p^e\mathbb Z_p$. The formal Laurent expansion for $X$ then gives
+
+$$v_p(X(2U))\le-2e.$$
+
+These standard integral formal-group facts are recorded in [Silverman IV.1–2 and VII.2](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf). They apply also at $p=Q$ when $Q\mid C$; good reduction is unnecessary. Taking the product over all primes of $C$ proves the denominator divisibility and the bound for $B_N$.
+
+In the standard coordinates, duplication gives
+
+$$X(2U)=\frac{(A^2+75Q^2D^4)^2}{4D^2B^2}.$$
+
+Its reduced denominator divides $4D^2B^2$, so $C^2\mid4D^2B^2$. Since $C$ is odd, comparison of valuations gives $C\mid DB$. The premise on $U$ ensures $B\ne0$ and $2U\ne O$. ∎
+
+**Corollary 77.3 (an integral nonsingular point forces a prime block).** Let $Q>5$ be prime. If $E_Q$ has an affine integral point $U$ with nonsingular reduction at $Q$, then every actual equality $B_N=QC^2$ as in Theorem 77.1 has $C=1$, hence $B_N=Q$.
+
+**Proof.** The point belongs to $G_0(Q)=\mathbb ZS$, so $U=[k]S$ with $k\ne0$. If a prime $p$ divided $C$, then $S$ would belong to the formal kernel at $p$. Its nonzero multiple $U$ would also be formal, with negative $X$-valuation, contradicting integrality of $U$. Thus $C$ has no prime divisor and equals one. ∎
+
+**Corollary 77.4 (quartic prime-squareclass rigidity).** Use the integer polynomial and parameters of Section 75:
+
+$$Q=4m^4-2m^3n+11m^2n^2+2mn^3+4n^4>5\quad\text{prime},$$
+
+$$u=m^2+mn-n^2,\qquad v=m^2-4mn-n^2,\qquad r=m^2+n^2.$$
+
+If an actual block satisfies $B_N=QC^2$, then necessarily
+
+$$\boxed{C=1,\quad u^2=1,\quad v^2=L_N^2,\quad r=F_N,\quad h_Q=1.}$$
+
+In particular, if $|m^2+mn-n^2|\ne1$, the prime $Q$ cannot be the sole odd-depth prime of any actual golden ternary block. For every prime $Q$ in this quartic family, a nontrivial square cofactor $C>1$ is impossible; this includes every mixed-depth pattern $P^2Q$ with distinct primes.
+
+**Proof.** Section 75 supplies the integral point $U=(-15u^2,75uvr)$ and proves $Q\nmid uvr$, including all zero and coprimality exceptions. Thus $U$ is nonsingular at $Q$, and Corollary 77.3 gives $C=1$ and $Q=B_N$. Theorem 77.1 writes $U=[k]S$ with $k\ne0$. Its negative $X$-coordinate forces $k$ to be odd.
+
+Both base coordinates have the same rational height:
+
+$$z(U)=-\frac{3u^2}{Q},\qquad z(S)=-\frac3Q,\qquad h(z(U))=h(z(S))=\log Q.$$
+
+Indeed $Q=3u^2+v^2$, $v\ne0$ and $Q\nmid u$, so the first fraction is reduced and its denominator exceeds its numerator in absolute value. The uniform height bounds, with $t=\tfrac12\log Q$, give
+
+$$k^2(t-c_0)\le t+u_0.$$
+
+As above, $Q\ge19$ implies $|k|<3$, hence $k=\pm1$. Equality of the $X$-coordinates of $U$ and $S$ gives $u^2=1$. The identities $Q=3u^2+v^2=5r^2-u^2$ then give $v^2=L_N^2$ and $r^2=F_N^2$. Since $r=m^2+n^2>0$, one has $r=F_N$. Finally $C=1$ gives $h_Q=1$. ∎
+
+The new scope includes a simple odd-depth factor: in $P^2Q$, $P$ would be WSS while $Q$ would be non-WSS, and a $Q$-unit point alone does not invoke the earlier depth-three exclusion. The integral-point argument excludes this mixed pattern for the displayed quartic family. The denominator theorem also constrains all even exponents and arbitrary one-odd-prime all-WSS vectors. Multiple odd-depth primes are outside its rank-one argument. No new numerical previously surviving pair, infinitude of prime quartic values, independence from all older congruences, universal point existence, or global WSS decision is asserted.
+
+
+## 78. Two odd depths with mutual quadratic nonresidue
+
+**Theorem 78.1 (composite squareclass and the original generator).** Let $N=3^j$, $j\ge1$, and suppose the actual golden block is
+
+$$B_N=L_N^2+3=DC^2,\qquad D=qr,$$
+
+where $q,r$ are distinct primes and $C$ is a positive integer. Suppose
+
+$$\left(\frac qr\right)=-1.$$
+
+On $E_D:Y^2=X(X+5D)(X-15D)$ define $G_0$ to be the intersection of the global rational nonsingular subgroups at $q$ and $r$. Put
+
+$$R=(5DB_N,25D^2L_NCF_N),\qquad T_0=(0,0),\qquad S=R+T_0.$$
+
+Then
+
+$$\boxed{G_0=\mathbb ZS,\qquad E_D(\mathbb Q)=\mathbb ZS\oplus E_D[2].}$$
+
+Every rational $U\notin E_D[2]$ satisfies
+
+$$\boxed{C^2\mid\operatorname{den}X(2U),\qquad B_N\le D\operatorname{den}X(2U).}$$
+
+If there is an affine integral point $U\in G_0$, then $C=1$. Here the denominator is positive and reduced. In particular, this criterion applies to the original all-WSS profiles $q^3r^5$ and $p^2q^3r^3$ when the two odd-depth primes have mutual symbol $-1$.
+
+**Proof: the full Selmer input.** TBN3 and GPC5 give
+
+$$q,r>5,\quad q,r\equiv1\pmod6,\quad (5/q)=(5/r)=1,\quad D\equiv19\pmod{120}.$$
+
+The primes have opposite residues $1,4$ modulo five, but both are quadratic residues modulo five. Their ordered residue types modulo $24$ are $(1,19)$ or $(7,13)$. Reciprocity gives $(q/r)=(r/q)$.
+
+Use the full two-descent local formulas of Feng, Liu, Pan and Tian, *Quadratic twists of tiling number elliptic curves*, [arXiv:2405.11132](https://arxiv.org/pdf/2405.11132), §3.1.1–3.1.3, printed pages 9–10. Their model is $y^2=x(x-m)(x+3m)$; here $m=-5D<0$ and $m\equiv1\pmod{24}$. Write $[a/p]=(1-(a/p))/2\in\mathbb F_2$ and $\beta=[r/q]$. For primes $(5,q,r)$ put $d_i=[-1/p_i]$, $t_i=[2/p_i]$. The two ordered types give, respectively,
+
+$$(d,t)=((0,0,1),(1,0,1))\quad\hbox{or}\quad((0,1,0),(1,0,1)).$$
+
+The source's zero-row-sum matrix and character vectors are
+
+$$A=\begin{pmatrix}0&0&0\\0&\beta&\beta\\0&\beta&\beta\end{pmatrix},\qquad z_3=(1,d_q,d_r),\qquad z_{-3}=(1,0,0).$$
+
+For the full Selmer group represent the descent classes by
+
+$$b_1=(-1)^e3^a5^{x_0}q^{x_1}r^{x_2},\qquad b_2=2^b5^{y_0}q^{y_1}r^{y_2}.$$
+
+These forms exhaust the candidates: the real condition is $b_2>0$, the local condition at two makes $b_1$ odd, and the local condition at three makes $3\nmid b_2$. The local conditions at three and two then give
+
+$$b=y_0+a,\qquad e=y_0+d_qx_1+d_rx_2,$$
+
+$$y_0+x_0+t_qx_1+t_rx_2+d_qy_1+d_ry_2=0.$$
+
+In fact the two equations at two are $[-1/b_1]+b=0$ and $[-1/b_1]+[2/b_1]+[-1/(b_2/2^b)]=0$. All operations in this descent calculation are over $\mathbb F_2$.
+
+For $x=(x_0,x_1,x_2)^T$, $y=(y_0,y_1,y_2)^T$, the exact conditions at $5,q,r$ are
+
+$$(A+\operatorname{diag}(d))x+\operatorname{diag}(1,0,0)y=ed+a(1,d_q,d_r)^T,\qquad Ay=(y_0+a)t.$$
+
+Together these are seven equations in $(a,x_0,x_1,x_2,y_0,y_1,y_2)$. With $\beta=1$, for either residue type they reduce to the four independent equations
+
+$$a+y_0=0,\qquad x_0+x_2+y_0+y_2=0,\qquad x_1+x_2=0,\qquad y_1+y_2=0.$$
+
+Thus the full Selmer dimension is three. Subtracting the dimension two of the rational two-torsion image bounds the Mordell–Weil rank by one. For comparison, if $\beta=0$, the reduced equations are $a+y_0=0$ and $x_0+x_2+y_0+y_2=0$ for type $(1,19)$, or $a+y_0=0$ and $x_0+x_2+y_0+y_1=0$ for type $(7,13)$. The full Selmer dimension is then five; that case is not covered by the rank-one argument. No inference from rank parity or finiteness of $\Sha$ is used.
+
+**Proof: the integral golden orbit.** The model discriminant is $2^8 3^2 5^6D^6$. Because $D$ is squarefree, every nonzero discriminant valuation is less than twelve, so this model is minimal at every prime. At either $\ell\mid D$, its reduction is $Y^2=X^3$, with nonsingular group $\mathbb F_\ell$ under addition. TBN3 gives $\ell\ge19$. Its formal subgroup is torsion-free, so torsion in $G_0$ would have order dividing $\ell$. Good reduction at seven excludes this: the base curve $y^2=x(x+1)(x-3)$ and each nonzero quadratic twist over $\mathbb F_7$ have eight points.
+
+The Pell identity $L_N^2+4=5F_N^2$ verifies $R\in E_D(\mathbb Q)$, and translation gives
+
+$$X(S)=-15/C^2,\qquad z(S):=X(S)/(5D)=-3/B_N.$$
+
+For each $\ell\mid D$, the point $S$ is formal if $\ell\mid C$, and finite nonsingular otherwise. Thus $S$ is nonzero in the torsion-free group $G_0$. The Selmer bound makes the rank exactly one. Choose a generator $H$ of $G_0$ with $S=mH$, $m>0$.
+
+Every nonzero real double has positive $X$, by
+
+$$X(2V)=\frac{(X(V)^2+75D^2)^2}{4Y(V)^2}>0.$$
+
+Since $X(S)<0$, the integer $m$ is odd. Set $K=H+T_0$, so $mK=R$. A nonintegral point lies in a local formal kernel, and every nonzero multiple remains there. The integrality of $R$ therefore forces $K$ to be integral at every prime, including $2,3,5,q,r$.
+
+Odd multiplication preserves the complete two-descent classes. The classes of $R$ are $(5,D,5D)$, so
+
+$$X(K)=5a^2,\quad X(K)+5D=Db^2,\quad X(K)-15D=5Dd^2$$
+
+for integers $a,b,d$: all three squareclass representatives are squarefree. Since $D\mid a^2$ and $D$ is squarefree, write $a=Dc$. It follows that
+
+$$d^2+3=Dc^2,\qquad b=5f,\qquad d^2+4=5f^2.$$
+
+The three coordinates $c,d,f$ are nonzero. The integral negative-Pell descent from §77 gives $|d|=L_n$, $|f|=F_n$ for an odd positive $n$. Either $\ell\mid D$ divides $L_n^2+3$, hence divides $F_{6n}$. Its original exact rank is $6N$, so $N\mid n$ and $n\ge N$. Consequently
+
+$$z(K)=Dc^2=L_n^2+3\ge B_N.$$
+
+The scaled coordinate $z=X/(5D)$ has the same duplication function $(z^2+3)^2/[4z(z+1)(z-3)]$ used in §74. Its uniform height constants remain $c_0=\log144/6$, $u_0=\log24/6$. The difference between $h(X/(5D))$ and $h(X)$ is bounded by $\log(5D)$, so it vanishes in the canonical-height doubling limit. With $t=\log B_N/2$, the height argument gives
+
+$$m^2(t-c_0)\le t+u_0.$$
+
+As $B_N\ge19$ and $9(t-c_0)>t+u_0$, the positive odd integer $m$ equals one. Thus $G_0=\mathbb ZS$.
+
+For completeness, $2U\in G_0$ for every rational $U$. At $\ell\mid D$, write $D=\ell D'$ with $D'$ a unit. For a point reducing to the cusp put $k=v_\ell(X(U))\ge1$. If $k\ge2$, both shifted factors have valuation one, $k$ is even, and $v_\ell(X(2U))=2-k\le0$. If $k=1$, write $X=\ell w$. Exactly one of $w+5D',w-15D'$ has positive odd valuation $v$. The numerator $w^2+75D'^2$ is a unit, with residue $100D'^2$ or $300D'^2$, so $v_\ell(X(2U))=1-v\le0$. Nonsingular and two-torsion points are immediate. Now $2U=kS$; if $k$ were odd its $X$ squareclass would be negative, namely $-15$, impossible for a nonzero real double. Thus $k=2h$ and $U-hS\in E_D[2]$, proving the full direct sum.
+
+If $U\notin E_D[2]$, write $U=hS+T$ with $h\ne0$. At any $p\mid C$ the formal parameter of $S$ has valuation $v_p(C)$. Integral formal multiplication by $2h$ preserves this lower bound, so $v_p(X(2U))\le-2v_p(C)$. This also covers $p=q,r$ and proves the denominator divisibility. If $U\in G_0$ is affine integral, then $U=hS$ with $h\ne0$. A prime dividing $C$ would make $U$ formal and nonintegral; hence $C=1$.
+
+The group and descent inputs are Silverman, *The Arithmetic of Elliptic Curves*, IV.1–2 and IV.6, VII.1–3, VIII.9, and X.1 Proposition 1.4; see [the primary text](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf). The height and integral-Pell estimates are the explicit ones in §§74,76–77.
+
+**Corollary 78.2 (a supplied integral certificate for two odd depths).** Let integers $m,n$ give the squarefree integer
+
+$$D=4m^4-2m^3n+11m^2n^2+2mn^3+4n^4=qr,$$
+
+where $q,r>5$ are distinct primes, $q,r\equiv1\pmod6$, $D\equiv19\pmod{120}$, and $(q/r)=-1$. Put
+
+$$u=m^2+mn-n^2,\quad v=m^2-4mn-n^2,\quad r_0=m^2+n^2.$$
+
+If $B_N=DC^2$ is an actual golden ternary block, then
+
+$$\boxed{C=1,\qquad u^2=1,\qquad v^2=L_N^2,\qquad r_0=F_N.}$$
+
+In particular, $|u|>1$ excludes $D$ as the squarefree kernel of every such actual block. Any member of this family excludes the two-odd-prime all-WSS profiles with $C>1$.
+
+**Proof.** The classical two-conic parametrization already used in §75 gives
+
+$$D=3u^2+v^2=5r_0^2-u^2,\qquad 4u^2+v^2=5r_0^2.$$
+
+Thus $U=(-15u^2,75uvr_0)$ is integral on $E_D$. The values $u,v,r_0$ are nonzero: vanishing of $u$ or $v$ requires a rational root of a quadratic with nonsquare discriminant, and $r_0=0$ forces $D=0$. Squarefreeness of $D$ forces $\gcd(m,n)=1$. If $p\mid D$ also divides $u$, then $p\mid v$ and $v-u=-5mn$ gives $p\mid mn$. The second identity gives $p\mid r_0$, so $p\mid m,n$, a contradiction. Divisibility of $v$ or $r_0$ likewise forces divisibility of $u$. Therefore $\gcd(D,uvr_0)=1$, and $U$ is nonsingular at both odd-depth primes.
+
+Theorem 78.1 forces $C=1$ and $U=kS$ with $k\ne0$. Negative $X(U)$ makes $k$ odd. Since $0<3u^2<D$, $\gcd(u,D)=1$ and $3\nmid D$, both $z(U)=-3u^2/D$ and $z(S)=-3/D$ have height $\log D$. The same uniform height constants force $|k|<3$, hence $k=\pm1$. Comparing $X$ gives $u^2=1$, and the two conic identities give the remaining equalities.
+
+This application supplies an explicit conditional restriction for composite squareclass. The Selmer formulas and quartic parametrization are classical inputs. No infinitude of the prime-factorization family, previously surviving numerical pair, independence from every earlier support condition, or conclusion in the mutual-residue case is asserted.
+
+
+## 79. Quartic descent in the mutual-residue branch
+
+**Theorem 79.1 (an explicit Cassels pairing).** Let $q,r$ be distinct primes with
+
+$$q\equiv1\pmod{24},\qquad r\equiv19\pmod{24},\qquad (5/q)=(5/r)=(q/r)=1.$$
+
+Put $D=qr$ and $E_D:y^2=x(x+5D)(x-15D)$. In the complete two-descent pair convention $(x,x+5D)$, the classes
+
+$$\lambda=(q,1),\qquad \mu=(1,q)$$
+
+belong to the full two-Selmer group, and their multiplicative Cassels pairing is
+
+$$\boxed{\langle\lambda,\mu\rangle=\left(\frac{-5r}{q}\right)_4.}$$
+
+Here the rational quartic symbol of the quadratic residue $-5r$ is its $(q-1)/4$ power modulo $q$, identified with $\{1,-1\}$. If this symbol is $-1$, then $\operatorname{rank}E_D(\mathbb Q)\le1$, without assuming finiteness of $\Sha$.
+
+Consequently, if $B_N=DC^2$ is an actual golden ternary block and this quartic symbol is $-1$, all conclusions of Theorem 78.1 hold: the original translated point generates the full free rational group, every non-two-torsion point supplies the denominator bound, and an affine integral point nonsingular at both $q,r$ forces $C=1$. The quartic-parametrization conclusion of Corollary 78.2 also holds with its mutual-nonresidue hypothesis replaced by the hypotheses of this theorem and the negative quartic symbol.
+
+**Proof: Selmer space and pairing convention.** Since at most one prime is three modulo four, reciprocity gives $(r/q)=1$. The corrected local computation in §78 for type $(1,19)$ and $\beta=0$ gives full Selmer dimension five, with equations
+
+$$a=y_5,\qquad x_5+x_r+y_5+y_r=0$$
+
+in coordinates $(a,x_5,x_q,x_r,y_5,y_q,y_r)$. The two classes in the statement satisfy these equations. The rational two-torsion classes $(-3,5qr)$ and $(-5qr,1)$, together with $(-15,5)$, $\lambda$ and $\mu$, are independent: their respective binary coordinate masks are $113,14,19,4,32$. The $x_r$, $y_r$, $a$, $x_q$, and $y_q$ coordinates successively verify independence. Thus the pure Selmer dimension is three.
+
+Use the tangent-plane pairing formula in Shukla–Stoll, *The Cassels–Tate pairing on 2-Selmer groups of elliptic curves*, [arXiv:2302.01640](https://arxiv.org/pdf/2302.01640), §3.2, equations (3.9)–(3.10), printed pages 6–7. Its roots here are $0,-5qr,15qr$. The formula is independent of choices and agrees with the Cassels–Tate pairing. The same primary source, printed page 2, states that the Mordell–Weil image lies in the kernel, which is the image of the four-Selmer group. These statements require no finiteness of $\Sha$.
+
+The triple for $\lambda$ is $(q,1,q)$. Its auxiliary conics are
+
+$$H_1:z_2^2-qz_3^2=20qr t^2,\qquad H_2:z_1^2-z_3^2=15r t^2,\qquad H_3:z_2^2-qz_1^2=5qr t^2.$$
+
+Since $\lambda$ is locally soluble everywhere, each conic is. The Hasse principle gives rational $a,b$ with
+
+$$a^2-qb^2=5qr.$$
+
+Normalization to $t=1$ is valid because a nontrivial rational point with $t=0$ would make $q$ a square. Choose $Q_3=(t,z_1,z_2)=(1,b,a)$, $Q_1=(t,z_2,z_3)=(1,2a,2b)$ and
+
+$$Q_2=(t,z_1,z_3)=\left(1,\frac{15r+1}{2},\frac{1-15r}{2}\right).$$
+
+The relevant tangent forms are
+
+$$L_2=\frac{15r+1}{2}z_1-\frac{1-15r}{2}z_3-15rt,\qquad L_3=az_2-qbz_1-5qrt.$$
+
+The triple for $\mu$ is $(1,q,q)$, so the pairing is
+
+$$\prod_v(L_2(P_v)L_3(P_v),q)_v,$$
+
+where $P_v$ is a local covering point avoiding tangent zeros and $(\ ,\ )_v$ denotes the quadratic Hilbert symbol. Dividing the conic equations or tangent forms by nonzero rational constants does not change this global product, by Hilbert reciprocity.
+
+**Proof: the places away from $q$.** At $2,3,5,r$ and infinity, $q$ is locally a square, by its residues, the displayed quadratic symbols, and positivity. All these factors are one. The same holds at every other place where $q$ is a square.
+
+Let $p\nmid30qr$ be odd and $q$ a nonsquare unit in $\mathbb Q_p$. The norm equation forces $a,b$ to be $p$-integral: otherwise their leading terms cannot cancel modulo $p$, contradicting the unit right side. Thus both chosen tangent points are integral on smooth conics modulo $p$, with $t=1$, and both tangent forms are primitive since their $t$ coefficients are units.
+
+A primitive integral local covering point has $t$ a unit. Otherwise $H_3$ and nonsquareness of $q$ force $p\mid z_1,z_2$, and $H_2$ then forces $p\mid z_3$, contradicting primitivity. Normalize $t=1$. Each nonzero tangent evaluation has even valuation. Indeed, if the reduced point differs from the tangency point, the evaluation is a unit. Near the tangency point an integral change of coordinates puts the smooth conic and its tangent into the form
+
+$$a_0XZ+b_0Y^2+c_0YZ+d_0Z^2=0,\qquad Z=0,$$
+
+with $a_0,b_0$ units. Near $(1,0,0)$ one has
+
+$$Z(a_0X+c_0Y+d_0Z)=-b_0Y^2,$$
+
+so the valuation of the tangent coordinate $Z$ is even. This applies to both $L_2$ and $L_3$. Local points can avoid their finitely many zero loci on the smooth covering. Since the Hilbert symbol with a nonsquare unit at an odd prime depends only on valuation parity, the factor is one. This accounts also for possible auxiliary primes in the rational conic solution.
+
+**Proof: the factor at $q$.** The terms in $a^2-qb^2$ have opposite valuation parity, while their difference has valuation one. Therefore $v_q(b)=0$ and $v_q(a)\ge1$. Write $a=qA$ with $A$ integral at $q$, so
+
+$$b^2+5r=qA^2,\qquad b^2\equiv-5r\pmod q.$$
+
+Take $t=1$, $z_1=-b$, $z_2=qA$, and use Hensel's lemma to choose $z_3^2=b^2-15r$ with $z_3\equiv-2b\pmod q$. This is a local covering point. Direct substitution gives
+
+$$L_3=2qb^2,\qquad L_2\equiv\frac{b(3b+1)^2}{2}\pmod q.$$
+
+If $3b+1\equiv0\pmod q$, choose the other root, $z_3\equiv2b$. Then
+
+$$L_2\equiv-\frac{3b(b-1)^2}{2}\pmod q.$$
+
+This square factor is nonzero in that exceptional case because $q>3$. Thus one choice always makes $L_2$ a unit. As $(2/q)=(-1/q)=(-3/q)=1$, the $L_3$ Hilbert factor is one and the $L_2$ factor is $(b/q)$. From $b^2\equiv-5r\pmod q$ this equals $(-5r/q)_4$, proving the formula.
+
+A negative pairing value gives rank at least two for the alternating form on the three-dimensional pure Selmer space. Its radical has dimension at most one and contains the Mordell–Weil image modulo finite torsion. Hence the rational rank is at most one. Under an actual-block premise, §78's original point is nonzero in the torsion-free intersection of nonsingular subgroups, so the rank is exactly one. The rest of its integral-preimage, original Pell-index, height and denominator proof depends only on this rank bound and the unchanged original support inputs, proving the stated consumers.
+
+This gives a quartic-symbol guard in the mutual-residue type $(1,19)$. The type $(7,13)$, the positive quartic-symbol subcase, and unrestricted higher-rank cases are not decided. No infinitude, previously surviving numerical pair, priority over all literature, or global WSS conclusion is asserted.
+
+
+## 80. Direct Cassels obstruction to the golden squareclass
+
+**Theorem 80.1 (pairing with the actual golden class).** Let $q,r$ be distinct primes satisfying
+
+$$q\equiv1\pmod{24},\qquad r\equiv19\pmod{24},\qquad (5/q)=(5/r)=(q/r)=1.$$
+
+Suppose integers $a,b,c$ satisfy the primitive norm-certificate conditions
+
+$$a^2-qb^2=5qr c^2,\quad \gcd(a,b,c)=1,\quad c>0,\quad \gcd(c,30qr)=1,$$
+$$24\mid a,\qquad b\equiv3c\pmod4,\qquad 5\nmid b.$$
+
+Put $D=qr$ and $E_D:y^2=x(x+5D)(x-15D)$. In the complete two-descent pair convention $(x,x+5D)$, let $\lambda=(q,1)$ and $\sigma=(-15,5)$. These are full two-Selmer classes, and their **multiplicative** Cassels pairing is
+
+$$\boxed{\langle\lambda,\sigma\rangle=-(b/5).}$$
+
+Consequently, a certificate with $(b/5)=+1$ excludes $D$ as the squarefree kernel of every original golden ternary block
+
+$$B_N=L_N^2+3=D C^2,\qquad N=3^j,\quad j\ge1,\quad C\in\mathbb Z_{>0}.$$
+
+This conclusion includes $C=1$ and does not require an independently supplied elliptic point or a Mordell--Weil generator.
+
+**Proof.** The corrected mutual-residue, type $(1,19)$ calculation in §§78--79 supplies both Selmer classes. The triple for $\lambda$ is $(q,1,q)$, with auxiliary conics
+
+$$H_1:z_2^2-qz_3^2=20qr t^2,\quad H_2:z_1^2-z_3^2=15r t^2,\quad H_3:z_2^2-qz_1^2=5qr t^2.$$
+
+Use conic points $(z_2,z_3,t)=(2a,2b,c)$ on $H_1$, $(z_2,z_1,t)=(a,b,c)$ on $H_3$, and $(z_1,z_3,t)=((15r+1)/2,(1-15r)/2,1)$ on $H_2$. Tangent forms, up to global rational factors, are
+
+$$L_1=a z_2-qb z_3-10qr c t,$$
+$$L_2=\frac{15r+1}{2}z_1-\frac{1-15r}{2}z_3-15r t,\qquad L_3=a z_2-qb z_1-5qr c t.$$
+
+The triple for $\sigma$ is $(-15,5,-3)$. The primary tangent formula [Shukla--Stoll, §3.2, (3.9)--(3.10)](https://arxiv.org/pdf/2302.01640) therefore gives
+
+$$\langle\lambda,\sigma\rangle=\prod_v(L_1(P_v),-15)_v(L_2(P_v),5)_v(L_3(P_v),-3)_v.$$
+
+Here each $P_v$ is a local point of the covering, chosen off the finite tangent-zero loci. Retaining the primitive integral norm point is important: its scaling contributions cannot be discarded.
+
+For $p\nmid30qr$, all three conics are smooth modulo $p$, their chosen conic points and tangents are primitive, and a primitive covering point projects primitively to each conic. Indeed, vanishing of all coordinates in one projection forces the remaining coordinate to vanish by another covering equation. A primitive tangent on a smooth unimodular conic has even valuation at any nonzero integral-projective evaluation: away from its tangency reduction it is a unit; near tangency, integral coordinates give
+
+$$a_0XZ+b_0Y^2+c_0YZ+d_0Z^2=0,\qquad a_0,b_0\in\mathbb Z_p^\times,$$
+
+with tangent $Z=0$ and $X$ a unit. Then $Z(a_0X+c_0Y+d_0Z)=-b_0Y^2$ proves even valuation. Since all three second Hilbert arguments are units, every good-prime contribution is one. This includes auxiliary primes dividing $a,b$ or $c$ individually.
+
+At $q$, the numbers $-15,5,-3$ are local squares. At $r$, the hypotheses make $5$ a square and $r\equiv1\pmod3$ makes $-3$ a square, hence $-15$ is a square too. These places contribute one. At the real place take $a>0$, permissible by changing its sign, so $a>\sqrt q\,|b|$. For $t=1$, $z_1=z$ large and positive, choose $z_2=+\sqrt{q(z^2+5r)}$ and $z_3=+\sqrt{z^2-15r}$. Then $L_1,L_3>0$, while the second argument of the $L_2$ factor is positive. The real contribution is one.
+
+For $p=2,3,5$ write $\alpha=a/c$, $\beta=b/c$. They are locally integral, $\alpha$ is divisible by $24$ in the relevant local sense, and $\beta$ is a unit at all three primes. At $3$ this follows from $\alpha^2-q\beta^2=5qr$; the other two cases follow from the hypotheses. Use
+
+$$t=1,\quad z_1=-\beta,\quad z_2=\alpha,\quad z_3^2=\beta^2-15r.$$
+
+The norm relation ensures the other conic equations. Set $\ell_1=L_1/c$, $\ell_3=L_3/c$ for these local calculations only; then $\ell_3=2q\beta^2$.
+
+At $2$, the identity $\beta^2-15r=\alpha^2/q-20r$ has valuation two and unit part $1\pmod8$, so $z_3$ exists with valuation one. Moreover,
+
+$$L_2\equiv3(1-\beta)\equiv2\pmod4,\qquad v_2(L_3)=1.$$
+
+Since $-15$ is a $2$-adic square and $-3$ has squareclass $5$, the factor is $(L_2L_3,5)_2=+1$: the extension $\mathbb Q_2(\sqrt5)$ is unramified and the valuation is even.
+
+At $3$, choose $z_3\equiv\beta\pmod3$. Then
+
+$$\ell_1\equiv1,\qquad L_2\equiv2\beta,\qquad \ell_3\equiv2\pmod3.$$
+
+The three normalized Hilbert factors are respectively $+1,+1,-1$. Restoring the two factors of $c$ contributes $(c,45)_3=(c,5)_3=1$, since both arguments are units. Thus the factor at $3$ is $-1$.
+
+At $5$, choose $z_3\equiv\beta\pmod5$. Hensel expansion gives
+
+$$z_3\equiv\beta-\frac{15r}{2\beta}\pmod{25},\qquad \ell_1\equiv\frac{5qr}{2}\pmod{25},\qquad L_2\equiv-\beta\pmod5.$$
+
+Thus $v_5(\ell_1)=1$. The unit part $qr/2$ is a nonresidue modulo $5$, as is the unit part $-3$ of $-15$, so the odd-prime Hilbert formula gives $(\ell_1,-15)_5=+1$. The other normalized factors are $(L_2,5)_5=(\beta/5)$ and $(\ell_3,-3)_5=1$. Restoring $c$ contributes $(c,45)_5=(c,5)_5=(c/5)$, giving total $(b/5)$. Multiplication over all places proves the boxed formula.
+
+If an original block existed, its genuine rational point $R=(5D B_N,25D^2L_N C F_N)$ and translate $S=R+(0,0)$ would satisfy
+
+$$X(S)=-15/C^2,\qquad X(S)+5D=5L_N^2/C^2.$$
+
+Its descent pair is exactly $\sigma=(-15,5)$. The rational Mordell--Weil image lies in the Cassels-pairing radical, as recalled in the cited paper's introduction, so $\langle\lambda,\sigma\rangle=+1$. Hence every such certificate must satisfy $(b/5)=-1$. A certificate with the opposite symbol excludes the original block for every $C$. No finiteness assumption on $\Sha$ is used. This argument does not use the rank-one guard of §79 and remains valid when that section's quartic symbol is $+1$. ∎
+
+**Certificate-choice independence.** The sign in Theorem 80.1 cannot be freely changed by choosing another normalized primitive norm certificate. For two such points $Q=(a,b,c)$ and $Q'=(a',b',c')$, put $G=aa'-qbb'-5qrcc'$. If $G\ne0$, the Gram determinant identity on $H_3$ gives, at a common evaluation point away from tangent zeros,
+
+$$2G L_3L'_3=5q^2r\det(Q,Q',P)^2.$$
+
+Thus $L'_3/L_3$ has squareclass $k=5q^2r/(2G)$. On $H_1$ the corresponding points are $(2a,2b,c)$ and $(2a',2b',c')$, their inner product is $4G$, and the quadratic-form determinant is $20q^2r$. Since $L_1$ is half the associated bilinear evaluation, $L'_1/L_1$ has the same squareclass $k$. The global pairing ratio is therefore
+
+$$\prod_v(k,-15)_v(k,-3)_v=\prod_v(k,5)_v=1$$
+
+by Hilbert reciprocity. If $G=0$, the two isotropic vectors are orthogonal in a nondegenerate ternary quadratic space and hence proportional; primitivity and $c,c'>0$ make the representatives equal. Consequently every admissible certificate has the same $(b/5)$. Weak approximation on the rational conic controls $\beta=b/c$, but does not control the $5$-character of the primitive global denominator $c$; the retained factor $(c/5)$ is essential.
+
+**Corollary 80.2 (an explicit conditional prime family).** Let $q$ be prime, $q\equiv1\pmod{24}$ and $(5/q)=1$. Suppose integers $A,b$ satisfy
+
+$$24\mid A,\quad b\equiv3\pmod4,\quad \gcd(qA,b)=1,\quad (b/5)=+1,$$
+
+and
+
+$$r=(qA^2-b^2)/5$$
+
+is a positive prime greater than $5$, distinct from $q$, with $(5/r)=1$. Then $qr$ cannot be the squarefree kernel of any original golden ternary block.
+
+**Proof.** Set $a=qA,c=1$. The norm equation and primitive certificate conditions follow immediately. Coprimality forces $\gcd(b,6)=1$, so $r\equiv-5\equiv19\pmod{24}$. Reduction modulo $q$ gives $(r/q)=(-5/q)=1$, and reciprocity gives $(q/r)=1$. Apply Theorem 80.1. ∎
+
+For a potentially additional family one may impose $qr\equiv19\pmod{120}$; otherwise the old squarefree-kernel congruence already excludes it. All certificate and primality premises are retained. No existence or infinitude of prime values, previously surviving numerical pair, independence from every earlier support condition, exhaustive priority claim, or universal WSS exclusion is asserted.
+
+
+## 81. A fixed-golden-field residue test from the original orbit
+
+Write $\mathcal R(a,b,c)=(-1)^{[a,b,c]}$ for the multiplicative version of Stevenhagen's additive Rédei symbol. We use [Stevenhagen, *Rédei reciprocity, governing fields, and negative Pell*](https://arxiv.org/pdf/1806.06250), Corollary 5.2, Definitions 7.5--7.8, Theorem 7.9, and equations (45)--(48). The defining hypotheses are pairwise Hilbert symbols $+1$ at every place and $\gcd(\Delta(a),\Delta(b),\Delta(c))=1$; the discriminants need not be pairwise coprime. All infinite and dyadic conditions below are retained.
+
+**Theorem 81.1 (the original Fibonacci coordinate supplies the extension).** Let $q,r$ be distinct primes with
+
+$$q\equiv1\pmod{24},\qquad r\equiv19\pmod{24},\qquad (5/q)=(5/r)=(q/r)=1,$$
+
+and put $D=qr$. If $B_N=L_N^2+3=D C^2$ for $N=3^j$, where $j,C$ are positive integers, then
+
+$$\boxed{\mathcal R(5,-D,q)=\mathcal R(5,q,-D)=1.}$$
+
+**Proof.** For $(5,-D,q)$ the discriminants are $5,-D,q$, whose three-way gcd is one. The Hilbert symbols $(5,q)_p$ are trivial by $5$-splitting and $q\equiv1\pmod8$. For $(5,-D)_p$, the places $q,r,5$ give $(5/q),(5/r),(-D/5)=1$; at $2$ both arguments are $1\pmod4$. For $(-D,q)_p$, the places $q,r$ give $(r/q),(q/r)=1$, using $(-q,q)_q=1$, while $q$ is a square at $2$. All other finite places are unit pairs; the infinite symbols are trivial. Thus the primary theorem applies, including the shared ramified argument $q$.
+
+The original identities and the Fibonacci recurrence modulo four give
+
+$$5F_N^2-1=D C^2,\qquad F_N\equiv2\pmod4.$$
+
+Indeed, $N\equiv3\pmod6$ and the Fibonacci recurrence modulo four has period six. In $K_0=\mathbb Q(\sqrt5)$, with $\mathcal O_0=\mathbb Z[\phi]$ and $\phi=(1+\sqrt5)/2$, set
+
+$$\beta=-1-F_N\sqrt5=(F_N-1)-2F_N\phi\equiv1\pmod{4\mathcal O_0},\qquad N_{K_0/\mathbb Q}(\beta)=-D C^2.$$
+
+Put $E=\mathbb Q(\sqrt5,\sqrt{-D})$, $K=\mathbb Q(\sqrt{-5D})$, and $F=E(\sqrt\beta)$. The norm-field construction in Corollary 5.2 makes $F/K$ cyclic quartic and $F/E$ quadratic. We check that $F/K$ is unramified at every finite place, which suffices for Definition 7.6 here.
+
+At an odd $p\nmid5D$, the elements $\beta,\bar\beta$ cannot have a common prime divisor above $p$, since their sum is $-2$. At a split prime dividing $C$, exactly one has positive valuation, and that valuation is even; an inert prime cannot divide either. Hence adjoining $\sqrt\beta$ is unramified, as are the quadratic factors defining $E$ and $K$ at such $p$. This includes every additional prime and repeated power in $C$.
+
+At $p=q$ or $r$, choose the split place of $K_0$ where $F_N\sqrt5\equiv1\pmod p$. There $\beta\equiv-2$ is a unit; at the conjugate place its valuation is $1+2v_p(C)$. Since $\beta\bar\beta=-D C^2$ is a square in $E$, either conjugate defines the same quadratic extension of $E$. Locally $E/K$ is trivial because $5$ is a square in $\mathbb Q_p$, and the unit description makes $F/K$ unramified. At $5$, $-D$ is a square in $\mathbb Q_5$, so again locally $E=K$; $\beta$ is a unit with residue $-1$, and its quadratic extension is unramified.
+
+At $2$, the ring $\mathcal O_0\otimes\mathbb Z_2$ is unramified quadratic. Write $\beta=1+4t$. The element $(1+\sqrt\beta)/2$ satisfies $T^2-T-t$, whose derivative is a unit modulo two, so adjoining $\sqrt\beta$ is unramified. Also $5\equiv-D\equiv5\pmod8$ and $-5D\equiv1\pmod8$: $K$ is split at two and $E$ is unramified quadratic. Thus $F/K$ is unramified there as well. This uses the full golden integer ring.
+
+The resulting extension is minimally ramified in the primary definition. Equations (45)--(48) evaluate the third argument $q$ at the conjugate-unit place, giving
+
+$$\mathcal R(5,-D,q)=(-2/q)=1.$$
+
+This remains valid when $q\mid C$, since the unit residue is still $-2$. Rédei reciprocity proves the other equality. ∎
+
+**Theorem 81.2 (an explicit residue test).** Under the prime hypotheses of Theorem 81.1, suppose
+
+$$q=u^2-5v^2,\qquad u>0,\quad u\equiv1\pmod4,\quad4\mid v.$$
+
+For either root $s^2\equiv5\pmod r$, every original block in Theorem 81.1 requires
+
+$$\boxed{\left(\frac{u+vs}{r}\right)=\left(\frac{2u}{q}\right)=\left(\frac{u}{5}\right).}$$
+
+Thus the opposite sign excludes $D$ as the squarefree kernel for every $C$ and every ternary index.
+
+**Proof.** The element $\gamma=u+v\sqrt5$ has norm $q$, is totally positive, and is $1\pmod{4\mathcal O_0}$. Primality gives $\gcd(u,v)=1$ and $q\nmid2u$. The field $F_q=\mathbb Q(\sqrt5,\sqrt q,\sqrt\gamma)$ is minimally ramified over $K_q=\mathbb Q(\sqrt{5q})$. At odd primes outside $5q$, $\gamma$ is a unit. At $5$ it is a unit and $q$ splits. At $q$, the conjugate unit is $2u$; since $\gamma\bar\gamma=q$ is a square in $E_q=\mathbb Q(\sqrt5,\sqrt q)$, one has $E_q(\sqrt\gamma)=E_q(\sqrt{\bar\gamma})$, allowing that unit conjugate or its corresponding conjugate prime. The same local argument as in Theorem 81.1 gives unramified extension at these primes. At two, $\gamma\equiv1\pmod{4\mathcal O_0}$ and $q\equiv1\pmod8$ give unramified extension by the same étale quadratic polynomial.
+
+The negative third argument in $\mathcal R(5,q,-D)$ includes infinity. Total positivity of $\gamma$ makes that factor $+1$. The finite factors at $q,r$ are $(2u/q)$ and $(u+vs/r)$. The two choices of $s$ have product of residues $q$, whose Legendre symbol modulo $r$ is $+1$, so the factor is independent of the choice. Hence
+
+$$\mathcal R(5,q,-D)=\left(\frac{2u}{q}\right)\left(\frac{u+vs}{r}\right).$$
+
+Theorem 81.1 gives the first boxed equality. Since $q\equiv1\pmod8$, $u>0$ is odd and $u\equiv1\pmod4$, quadratic reciprocity for Jacobi symbols gives
+
+$$\left(\frac{2u}{q}\right)=\left(\frac{u}{q}\right)=\left(\frac{q}{u}\right)=\left(\frac{-5v^2}{u}\right)=\left(\frac{-5}{u}\right)=\left(\frac{u}{5}\right).$$
+
+Coprimality makes all these symbols defined and removes $v^2$. ∎
+
+**Theorem 81.3 (the primary generator exists on actual golden support).** Let $q$ be a prime. If $q\equiv1\pmod{24}$, $(5/q)=1$, and the original golden rank is $\rho(q)=6N$ with $N$ odd, then integers $u,v$ satisfying the representation and sign conditions of Theorem 81.2 exist. Therefore that representation is not an extra existence premise for an actual pair in Theorem 81.1.
+
+**Proof.** The triple $(5,-1,q)$ is admissible: $\phi$ has norm $-1$, the pair $(5,q)$ is locally split, $(-1,q)_p=1$ at every place because $q\equiv1\pmod4$, and $\gcd(5,-4,q)=1$. The norm element $\phi$ defines
+
+$$F_0=\mathbb Q(\sqrt5,i,\sqrt\phi)=\mathbb Q(\sqrt5,i,\sqrt{1+2i}).$$
+
+For example, if $w^2=\phi$, then $(w+i/w)^2=1+2i$, or equivalently $(\phi+i)^2=\phi(1+2i)$. At odd primes $\phi$ is a unit; the norm-field construction is unramified at the remaining odd ramified place $5$. At two this is exactly the $2$-minimally ramified model displayed immediately before Stevenhagen's Definition 7.5 for $(a,b)=(-1,5)$. Thus
+
+$$\mathcal R(5,-1,q)=\left(\frac{\phi\bmod q}{q}\right).$$
+
+Either split embedding gives the same sign because $N(\phi)=-1$ and $(-1/q)=1$. Binet's formula identifies the original rank with the order of $-\phi^2$. From $\operatorname{ord}_q(-\phi^2)=6N$ and $N$ odd, its $3N$-th power is $-1$, giving $\phi^{6N}=1$. Since $q\equiv1\pmod8$ and $6N\mid q-1$, one has $6N\mid(q-1)/2$, so $\phi$ is a quadratic residue. Reciprocity now gives $\mathcal R(5,q,-1)=1$.
+
+The ring $\mathcal O_0$ is norm-Euclidean: rounding both coefficients in the basis $1,\phi$ leaves $t+s\phi$ with $|t|,|s|\le1/2$, and
+
+$$|N(t+s\phi)|=|t^2+ts-s^2|\le5/16<1.$$
+
+Thus a prime above $q$ has a generator of norm $\pm q$; multiplication by $\phi$ if needed gives a generator $\pi$ of norm $q$. The unit group of $\mathcal O_0/4\mathcal O_0$ has twelve elements. Its norm-to-$(\mathbb Z/4)^\times$ kernel has six elements, exactly $\{\pm\phi^{2k}:k=0,1,2\}$: $\phi$ has norm $-1$, $\phi^2$ has order three modulo four, and $-1$ has order two. Since $N(\pi)\equiv1\pmod4$, multiplication by one of these global norm-one units produces $\delta\equiv1\pmod{4\mathcal O_0}$ with norm $q$.
+
+The finite-prime argument of Theorem 81.2, which uses norm $q$ and the primary congruence but not positivity, makes $\mathbb Q(\sqrt5,\sqrt q,\sqrt\delta)$ a permitted minimally ramified field. Its infinite Artin factor is $\mathcal R(5,q,-1)=1$. The two real signs of $\delta$ agree because its norm is positive, so triviality of this factor forces total positivity.
+
+Finally write $\delta=1+4(m+n\phi)=u+v\sqrt5$, with $u=1+4m+2n$ and $v=2n$. If $n$ were odd, then $q=u^2-5v^2\equiv5\pmod8$, contradicting $q\equiv1\pmod8$. Thus $4\mid v$, $u\equiv1\pmod4$, and total positivity gives $u>0$. ∎
+
+For an actual block, the existing rank input TBN3 supplies $\rho(q)=6N$, so Theorems 81.2--81.3 give a residue test using a constructible primary prime generator in the fixed golden field and the second prime. They do not require the auxiliary norm certificate of §80 or use weak approximation to choose its sign. The relation with every earlier Cassels and support condition has not been classified; no independence from all prior tests, previously surviving numerical pair, prime-family infinitude, or universal WSS exclusion is asserted. The residue type $(7,13)$ remains outside these statements.
+
+
+The companion residue type $(7,13)$ is treated in [Theorem 82.1 of the continuation](GOLDEN_CUBIC_BLOCK_PRIME_PERIODS_CONTINUATION.md#82-the-second-mutual-residue-type), with its distinct dyadic minimality condition and negative Rédei value.
 
 ## 追加锚（本行以下为增补区）

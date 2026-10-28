@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2351ab6943a704a2c8057b9fe9f02c335f7e30e673d2e9fdc5472f2d83d9467b
+  normalized_sha256: sha256:2351ab6943a704a2c8057b9fe9f02c335f7e30e673d2e9fdc5472f2d83d9467b
+cas_ref: sha256:2351ab6943a704a2c8057b9fe9f02c335f7e30e673d2e9fdc5472f2d83d9467b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只解释 V.1 中太一、理智、灵魂的层次与非时间生成譬喻，没有给出数学对象上的定理。
+    previous_atom_id: 9aaf7ab1fab42186afbee35b4b71aff93d1171b49335a73a471c6898228afa67
+    next_atom_id: ef37f85d4ac6afee8addf332272c6c0b2af58605f26e79c8017c6ffd0158b377

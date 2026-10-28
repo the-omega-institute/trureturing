@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:661f0a3f1a1bdf9c82058c858605d6d162c1e721cad924cb8de73fee9b1b5636
+  normalized_sha256: sha256:661f0a3f1a1bdf9c82058c858605d6d162c1e721cad924cb8de73fee9b1b5636
+cas_ref: sha256:661f0a3f1a1bdf9c82058c858605d6d162c1e721cad924cb8de73fee9b1b5636
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅是建议的 Lean 文件布局和形式化工作顺序。
+    previous_atom_id: a28beef0e819be118aaf166f1dc82f6415d6de729b28ead81887ef2e36f0cf79
+    next_atom_id: 1599d58ee5147c1f5c2f82a2cbb0b1f730488705976890c818defe22850dd09c

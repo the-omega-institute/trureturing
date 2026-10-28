@@ -1,0 +1,59 @@
+**约定 4.1（原有坐标接口）。** In the rest of the local joint analysis fix the single literal parent
+
+$$
+H_4(Y)=(0,M,1,M,23/7,J,331/35,M,Y),\quad
+B=JM^2=\begin{pmatrix}1&2\\1&1\end{pmatrix},\quad
+D=MB=\begin{pmatrix}1&1\\2&3\end{pmatrix}.
+\tag{4.1}
+$$
+
+Use II, Definitions 69.1–69.2: with $\eta=(DP)_{22}>0$, $R=P/\eta$ and $H=\eta g$,
+
+$$
+DR=\begin{pmatrix}xy&x\\y&1\end{pmatrix},\qquad
+R=\begin{pmatrix}(3x-1)y&3x-1\\(1-2x)y&1-2x\end{pmatrix},
+\quad \frac13<x<\frac12,\quad y>0.
+\tag{4.2}
+$$
+
+Put $s=x+y,p=xy$. The five parent trace factors are
+
+$$
+(T_0,T_1,T_2,T_3,T_4)
+=(3p+1-s-x,\ s-2p,\ p+1-x,\ s-p,\ p+1).
+\tag{4.3}
+$$
+
+All are positive. The entire parent requires
+
+$$
+H(i)T_i+\delta=h_i\quad(0\le i\le4),\qquad
+h=(0,1,23/7,331/35,Y).
+\tag{4.4}
+$$
+
+Let $\mathcal F(Y;m,j)$ be the joint fiber with fifth-$M$ response $m$ and fifth-$J$ response $j$. These are promise data about fixed worlds. Set $\kappa=m-j$. Then
+
+$$
+H(5)=\kappa,\qquad \delta=j-\kappa s.
+\tag{4.5}
+$$
+
+The coordinates $(x,y)$ own the complete target within this fiber: they determine $R,\delta$ and the four values $H(i)=(h_i-\delta)/T_i$ for $i=0,1,2,3$, which determine the entire cubic-or-lower polynomial. The remaining equalities, including the same $Y$, are still required. No gain sample is divided out.
+
+Write $v=H(6)$ and name the four sixth responses
+
+$$
+a=JJ=\delta+v(p+1),\quad b=JM=a+vx,\quad
+c=MJ=a+vy,\quad d=MM=c+v(x+1).
+\tag{4.6}
+$$
+
+Here $d$ is a response name and is never the drift. When $\kappa\ne0$, put $r=H(7)/\kappa$. The two final traces, ordered final $M,J$, are
+
+| Sixth node | Final trace pair |
+| --- | --- |
+| $a=JJ$ | $(s+1,s)$ |
+| $b=JM$ | $(p+2x+y+1,p+s)$ |
+| $c=MJ$ | $(s+2,s+1)$ |
+| $d=MM$ | $(p+2s+3,p+x+2y+1)$ |

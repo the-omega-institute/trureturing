@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f89c995fd3d492b2378233b714d9ff12bd166149f3bc0f4bce8dd88522682059
+  normalized_sha256: sha256:f89c995fd3d492b2378233b714d9ff12bd166149f3bc0f4bce8dd88522682059
+cas_ref: sha256:f89c995fd3d492b2378233b714d9ff12bd166149f3bc0f4bce8dd88522682059
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Meta-ADMIT 被命名为方法论准入，没有断言具体方法得到准入。
+    previous_atom_id: 32ca9393804b17ba08cb941ba11fc59b49aa071e69ace8c5a87ef03c3290b84d
+    next_atom_id: 7f2426221521a3cac0f4a8ee15aafbf6fcf1bc1d0f0230d923d648154f96ee5e

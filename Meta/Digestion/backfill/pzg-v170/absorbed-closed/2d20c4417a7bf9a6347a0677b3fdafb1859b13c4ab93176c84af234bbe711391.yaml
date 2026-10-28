@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2d20c4417a7bf9a6347a0677b3fdafb1859b13c4ab93176c84af234bbe711391
-  normalized_sha256: sha256:2d20c4417a7bf9a6347a0677b3fdafb1859b13c4ab93176c84af234bbe711391
-cas_ref: sha256:2d20c4417a7bf9a6347a0677b3fdafb1859b13c4ab93176c84af234bbe711391
-coverage_gids:
-  - gid: D5/S3/Analytic/AlternatingPoleCoefficients.alternating_pole_coefficients
-    target_statement_id: sha256:e29b792d0ed8e1a7ad34da1d4fd3aa3f3657194cd8840c35e66096e8c56f1a37
-receipts:
-  unresolved_subitems: []

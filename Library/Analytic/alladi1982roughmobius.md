@@ -5,7 +5,7 @@ year: 1982
 title: Asymptotic estimates of sums involving the Moebius function
 doi: 10.1016/0022-314X(82)90060-9
 url: https://doi.org/10.1016/0022-314X(82)90060-9
-claim: The fixed-u asymptotic for the signed Möbius sum over rough integers is recorded in Alladi–Goswami 2412.03088v1 §1.1; the original compact-u uniform range and the growing-prime-filter kernel estimates are not verified here.
+claim: Alladi’s original Theorem 1 gives a uniform signed rough-Möbius formula with its boundary compensation; it supplies compact-u prefix estimates but not the complete compensated signed Robin pairing.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -15,39 +15,44 @@ triage: anchor
 
 Alladi's paper appeared in *Journal of Number Theory* **14** (1982),
 86–98, DOI [10.1016/0022-314X(82)90060-9](https://doi.org/10.1016/0022-314X(82)90060-9).
-The checked statement is its explicit account in Krishnaswami Alladi and
-Ankush Goswami, *Parity results concerning the generalized divisor function
-involving small prime factors of integers*,
-[arXiv:2412.03088v1, §1.1](https://arxiv.org/html/2412.03088v1#S1.SS1).
-The original 1982 theorem and proof have not been directly inspected.
-No source text is vendored and no Lean verification is supplied.
+The [University of Michigan deposit](https://deepblue.lib.umich.edu/items/a69cf193-aafb-43b7-9540-7b55c1460333)
+supplies the [original scanned PDF](https://backend.production.deepblue-documents.lib.umich.edu/server/api/core/bitstreams/5a1463e5-878d-479d-ae59-8ffb43b18bcb/content):
+13 pages, 469,456 bytes, SHA256
+`2e560c69542bbd879f9c608fae023a76b0b5cd6c4305cc45a5bd00fe6d4f88b6`.
+Definition (1.4), Theorem 1, printed p.87, the absolute-constant
+convention on p.88, and §2, pp.90–91 were directly inspected;
+equations were checked against the scan. No complete proof audit,
+vendored source text or Lean verification is supplied.
 
-Write $P^-(n)$ for the least prime factor and set $P^-(1)=\infty$.
-The source defines
-
-$$
-M_{\mathrm{rough}}(z,y)
-=\sum_{\substack{1\le n\le z\\P^-(n)>y}}\mu(n).
-$$
-
-For each fixed $u=\log z/\log y>1$, §1.1 records, as $y\to\infty$,
+Write $P^-(1)=\infty$, $u=\log X/\log y$, and
 
 $$
-M_{\mathrm{rough}}(z,y)
-=\frac{z\rho'(u)}{\log y}
-+O_u\!\left(\frac{z}{(\log y)^2}\right),
+M_{\mathrm{rough}}(X,y)
+=\sum_{\substack{1\le n\le X\\P^-(n)>y}}\mu(n).
 $$
 
-where $\rho$ is the Dickman function. This is a literature-attested input,
-not a new asymptotic estimate. It uses the actual Möbius weight, includes
-the unit, and uses a strict least-prime-factor cutoff. The unweighted
-Buchstab count and Liouville weights are different objects.
+Theorem 1 gives $M_{\mathrm{rough}}(X,y)=1$ for $y\ge X\ge1$ and,
+uniformly for $2\le y<X$,
 
-The same subsection reports that Alladi established uniform estimates
-over longer ranges, but does not give their precise hypotheses and errors.
-This note therefore does not certify a bound uniform on
-$u\in[1+\delta,U]$, for fixed $\delta>0,U>1+\delta$, or on a growing range.
-Pointwise fixed-$u$ asymptotics do not supply those assertions.
+$$
+\boxed{M_{\mathrm{rough}}(X,y)
+=\frac{X\rho'(u)}{\log y}+\frac y{\log y}
++O\!\left(\frac{Xu^2}{\log^2y}\right),}
+$$
+
+where $\rho$ is the Dickman function. The implicit constant is absolute;
+no numerical value is supplied. The unit and strict cutoff are retained.
+For fixed $\delta>0$, $U>1+\delta$, the term $y/\log y$ is absorbed
+by $O_{\delta,U}(X/\log^2y)$ uniformly on $1+\delta\le u\le U$.
+Thus the compact-$u$ estimate is an existing original-source input.
+The fixed-$u$ synopsis in Alladi–Goswami
+[arXiv:2412.03088v1, §1.1](https://arxiv.org/html/2412.03088v1#S1.SS1)
+is consistent with it; that synopsis omits the boundary term.
+
+The original's higher expansion (2.17), p.91, has $O_n$ constants
+and requires $n\le\lfloor u\rfloor-1$; its accompanying arbitrary-length
+statement assumes $u\to\infty$. It supplies no growing-order constant
+budget or signed factorial-kernel remainder at Robin's critical scale.
 
 ## Correspondence with a growing FIB prime section
 
@@ -59,9 +64,9 @@ uniformity obligations. The constants in §426.7 and §426.15 have not been
 bounded uniformly for growing $Q(y)$.
 
 At a source clock $A$, choosing $y=A^{1/u_0}$ with fixed $u_0>1$ and
-$n\sim cA$ with fixed $c>0$ gives $\log n/\log y\to u_0$. This moving-$u$ sequence is not
-certified by the fixed-$u$ statement alone. Moreover, one filter must be
-shared by all rows of the complete pairing: choosing $y=n^{1/u_0}$
+$n\sim cA$ with fixed $c>0$ gives $\log n/\log y\to u_0$.
+The original uniform theorem covers this compact-parameter sequence.
+One filter must still be shared by all rows: choosing $y=n^{1/u_0}$
 separately for each row does not invoke §426's same-filter identity.
 
 A usable signed estimate still needs simultaneous control of the actual
@@ -74,59 +79,42 @@ the fixed positive power cutoff here.
 
 ## The source-scale boundary $u\to1^+$
 
-The fixed-$u$ estimate above cannot retain an
-$O(z/\log^2 y)$ error with one bounded constant when $z/y\to c>1$.
-For all real $y\ge2$ and $y\le z\le y^2$, exact prime counting gives
+For real $y\ge2$ and $y\le X\le y^2$, the existing exact formula is
 
 $$
-M_{\mathrm{rough}}(z,y)=1-\pi(z)+\pi(y).
+M_{\mathrm{rough}}(X,y)=1-\pi(X)+\pi(y).
 $$
 
-Indeed, a composite integer whose prime factors are all strictly greater
-than $y$ exceeds $y^2$. The allowed integers in this range are therefore
-the unit and the primes in $(y,z]$; their Möbius weights are $1$ and $-1$.
-For $z/y\to c>1$, the classical prime number theorem yields
-
-$$
-M_{\mathrm{rough}}(z,y)
-=-(c-1)\frac y{\log y}+o\!\left(\frac y{\log y}\right).
-$$
-
-Here $u=\log z/\log y\to1^+$ and eventually $1<u<2$. In that interval
-$\rho'(u)=-1/u$, so
+Only the unit and primes in $(y,X]$ occur. If $X/y\to c>1$, PNT gives
+$M_{\mathrm{rough}}(X,y)=-(c-1)y/\log y+o(y/\log y)$.
+Here $u\to1^+$ and $\rho'(u)=-1/u$, so
 
 $$
 \frac{\log y}{y}
-\left[M_{\mathrm{rough}}(z,y)-\frac{z\rho'(u)}{\log y}\right]
+\left[M_{\mathrm{rough}}(X,y)-\frac{X\rho'(u)}{\log y}\right]
 \longrightarrow1.
 $$
 
-Thus this moving-boundary error is of order $y/\log y$, rather than
-$z/\log^2 y$. This does not contradict the fixed-$u$ statement or settle
-uniformity on any interval bounded away from $u=1$. It is an elementary
-scope check using exact prime counting and the classical PNT, not a new
-rough-sum theorem or a claim about Alladi's uninspected uniform estimates.
+The original theorem's $y/\log y$ term is exactly this compensation.
+Dropping it cannot preserve an $O(X/\log^2y)$ error in this regime;
+this does not contradict Alladi's actual uniform statement.
 
-For an actual proper GA1 CA source, retain $A=\log N$ and
-$y=P(N)$ as distinct quantities. The [published GA1 envelope](../Arith/caveney2012sacaga.md),
-Theorem 13, gives $y\sim A$ as such sources tend to infinity. Initial CA
-prime support gives $\operatorname{rad}(N)=Q(y)$. Hence source-scale rows
-$z=cA$, for fixed $c>1$, have exactly this moving-boundary behavior with
-the same filter $Q(y)$, including the unit. This source class contains the
-conditional critical maximizer selected by the extraordinary-number
-reduction; no unbounded critical sequence is assumed. The asymptotic
-statement supplies no effective cutoff, growing-filter kernel estimate,
-complete compensated remainder bound, or Robin/RH conclusion.
+For an actual proper GA1 CA source retain $A=\log N$ and $y=P(N)$.
+The [published GA1 envelope](../Arith/caveney2012sacaga.md), Theorem 13,
+gives $y\sim A$ along any such family tending to infinity, and initial
+CA prime support gives $\operatorname{rad}(N)=\prod_{p\le y}p$.
+Rows $X=cA$, $c>1$ fixed, therefore use this same compensated boundary.
+This includes the conditional selected critical maximizer; it asserts
+no unbounded critical family, numerical threshold, joint kernel error,
+or Robin/RH conclusion.
 
 ## Integrated same-filter power windows from the fixed-parameter input
 
-The unverified compact-parameter pointwise estimate above is stronger than
-what is needed for a finite integrated row window. This section uses only
-the fixed-$u$ statement already attested in Alladi–Goswami §1.1, the
-classical PNT and second Mertens estimate, and the existing actual-kernel
-convergence of FIB §§433–434. The 1982 original's uniform theorem is not
-claimed to have been inspected. All arguments here are paper-level; no
-new rough-sum theorem, Lean verification or originality claim is made.
+This application uses the existing Alladi prefix input, classical PNT
+and second Mertens estimate, and actual-kernel convergence of FIB §§433–434.
+The dominated-integral argument needs only fixed-$u$ convergence; the
+original uniform theorem supplies more. This is a paper-level application,
+with no new rough-sum theorem, Lean verification or originality claim.
 
 Let $z\to\infty$, $L=\log z$, $P_z=\prod_{p\le z}p$, and use exactly
 
@@ -164,8 +152,7 @@ M_z(n)J_{z^\sigma}^{\eta_z}(n)
 \tag{R2}
 $$
 
-This is an integrated conclusion. It does not assert convergence uniform
-in $u$ for the rough prefix.
+This integrated conclusion keeps the same actual filter in every row.
 
 ### A bounded dominator from classical prime inputs
 
@@ -218,8 +205,8 @@ $$
 \tag{R5}
 $$
 
-This use of dominated convergence does not convert pointwise convergence
-into uniform convergence. It is sufficient for the actual row window.
+Dominated convergence suffices here; compact-parameter uniformity is
+independently supplied by the original theorem above.
 
 Indeed, on the cell $u\in[\log n/L,\log(n+1)/L)$ the actual prefix
 $M_z(z^u)$ is exactly $M_z(n)$. Uniform continuity of $h$ and the exact
@@ -307,10 +294,9 @@ including the original unit row, every $n<x$, and the whole upper tail.
 The existing unconditional PNT tail estimate gives $I_\psi(x)\to0$,
 so this complement tends to the negative of the displayed window limit.
 The order-one cancellation is not a lower bound at Robin's
-$1/(\sqrt x\log x)$ scale. The new joint window interface uses the
-existing fixed-parameter rough sum without paying the stronger,
-still unverified compact-parameter pointwise theorem. It leaves the full
-same-source signed comparison and RH unproved.
+$1/(\sqrt x\log x)$ scale. The joint window application uses existing
+prefix and kernel inputs; the full same-source signed comparison
+and RH remain unproved.
 
 ## A critical-scale bound for the complete upper row tail
 
@@ -319,9 +305,9 @@ place. A different application of existing inputs controls every row
 beyond one growing cutoff, at the Robin normalization itself. It uses the
 ordinary Mertens bound already consumed in FIB §409, the actual smooth
 semigroup identity in §428, the first-Mertens estimate in that section,
-and the full factorial density in §429. No Alladi uniform-parameter
-formula, new sieve theorem, numerical experiment, effective starting
-threshold for Alladi's theorem, or Lean result is asserted.
+and the full factorial density in §429. This tail application does not
+reprove Alladi, supply a new sieve theorem or numerical starting
+threshold, or claim an experiment or Lean result.
 
 The ordinary input is Lee–Leong,
 [arXiv:2208.06141v5, Theorem 1.1, (9)](https://arxiv.org/html/2208.06141v5#S1.Thmtheorem1):
@@ -934,3 +920,62 @@ The full signed finite head in (U8) still has no required one-sided
 Robin estimate. In particular the far-tail budget supplies no sign
 for that head, no square-root Möbius bound, no new Robin-safe integer
 range and no RH proof.
+
+## A uniform Halász input for the actual finite head
+
+Granville, Harper and Soundararajan, *A new proof of Halász's theorem,
+and its consequences*, [arXiv:1706.03749v1, §§1, 7.1–7.2](https://arxiv.org/html/1706.03749v1),
+give an existing uniform supplier. The inspected statements are their
+definition of $\mathcal C(\kappa)$, equation (7.3) and Proposition 7.2.
+The parameter correspondence below is a source application; no new
+mean-value theorem, critical estimate or Lean verification is claimed.
+
+Keep one actual filter $z$, including its unit, and put
+
+$$
+f_z(n)=\mu(n)\mathbf1_{P^-(n)>z},\qquad
+F_z(s)=\sum_{n\ge1}\frac{f_z(n)}{n^s}
+=\frac1{\zeta(s)E_z(s)},\qquad
+E_z(s)=\prod_{p\le z}(1-p^{-s}).
+$$
+
+For $\Re s>1$ the defining series converge absolutely. The coefficients
+of $-F_z'/F_z$ are $-\log p$ at $p^j$ with $p>z$, and zero at $p^j$
+with $p\le z$. Thus $f_z\in\mathcal C(1)$ with the same class constant
+for every $z$. No fixed-$u$ asymptotic is needed for this membership.
+
+For sufficiently large $X$ with $(\log X)^6\le z\le\sqrt X$, set
+$u=\log X/\log z$, $c_0=1+1/\log X$, and define $m=m_z(X)$ by
+
+$$
+\max_{|t|\le u}\left|\frac{F_z(c_0+it)}{c_0+it}\right|=e^{-m}u.
+$$
+
+Equation (7.3), with $\kappa=1$, directly gives
+
+$$
+|M_z(X)|\ll\frac X{\log X}\bigl((1+m)e^{-m}u+1\bigr).
+$$
+
+The constant is uniform in the actual filter. Proposition 7.2 also gives
+
+$$
+|F_z(c_0+it)|\ll u^{3/4}
+\left(\frac{\log(z+|t|)}{\log z}\right)^{1/4}.
+$$
+
+For the explicit (T12) head, write $L=\log z\ge100$.
+Every $z^2\le X<H_z=\exp(1024L^2)$ satisfies the source domain because
+$(\log X)^6\le(1024L^2)^6\le z$. Its frequency window has
+$|t|\le u\le1024L$, so the displayed maximum is $\ll u^{3/4}$.
+The lower rows retain the exact unit-and-prime formula
+$M_z(X)=1-\max\{\pi(X)-\pi(z),0\}$ for $1\le X\le z^2$.
+The value $L\ge100$ checks the parameter domain; it does not make the
+source's implicit constants or starting threshold numerical.
+
+This supplies uniform magnitude estimates across the explicit finite
+head. The same paper already bounds the Dirichlet maximum; its available
+strength and the complete signed pairing with $J_x^{\eta_z}$ remain
+distinct obligations. Taking absolute values does not retain that joint
+sign or supply the required critical lower bound. The smaller asymptotic
+cutoff in (U2)/(U8) remains available. No Robin/RH conclusion follows.

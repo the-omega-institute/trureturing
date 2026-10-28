@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cbff55f7ee838c68703ff68522316faeaf448003766f635bdc35ddeee320a622
+  normalized_sha256: sha256:cbff55f7ee838c68703ff68522316faeaf448003766f635bdc35ddeee320a622
+cas_ref: sha256:cbff55f7ee838c68703ff68522316faeaf448003766f635bdc35ddeee320a622
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: nominal information gain 后的减号是鲁棒设计的概念性记分草图，未定义数值泛函或提出数学性质。
+    previous_atom_id: 7f0dd402766235b066eea43028f5b33066e25bcd718750b15871f04d306de009
+    next_atom_id: 8d7af2b1a706bd1c091b08bd70e2b938f0fa09af4af8b4f3cd8228015e2fdc67

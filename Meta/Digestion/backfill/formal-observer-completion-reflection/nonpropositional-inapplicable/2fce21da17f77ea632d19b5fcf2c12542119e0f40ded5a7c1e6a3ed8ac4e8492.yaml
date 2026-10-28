@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2fce21da17f77ea632d19b5fcf2c12542119e0f40ded5a7c1e6a3ed8ac4e8492
+  normalized_sha256: sha256:2fce21da17f77ea632d19b5fcf2c12542119e0f40ded5a7c1e6a3ed8ac4e8492
+cas_ref: sha256:2fce21da17f77ea632d19b5fcf2c12542119e0f40ded5a7c1e6a3ed8ac4e8492
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：引入观察者分类坐标体系，是分类约定而非坐标存在性定理。
+    previous_atom_id: 0ce7f6bcb3ddccb81d80cefb1e5c25f5b22981f31ff71416df214c51ba755433
+    next_atom_id: e951ce7cef125a960c513bbf5d9f35dbae83022fa06d861898fae3935c1e90eb

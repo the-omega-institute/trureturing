@@ -1,0 +1,49 @@
+## 144. Finite-temperature boundaries for this same native family
+
+For finite $\beta\ge0$, the PT of (142.6) has positive singleton entries
+and the corner block
+
+$$
+\frac1{2(1+t)}\begin{pmatrix}
+1&(1-t)\sqrt{p(1-p)}\\(1-t)\sqrt{p(1-p)}&t
+\end{pmatrix}.
+\tag{144.1}
+$$
+
+Its determinant has the sign of $t-(1-t)^2p(1-p)$. Applying the same
+two-qubit criterion and the B-local spectator factorization gives, for the
+states specified in (142.5), the exact alternatives
+
+$$
+\rho_{q,\beta}\text{ separable}
+\ \Longleftrightarrow\ (1-t)^2p(1-p)\le t
+\ \Longleftrightarrow\ 4\sinh^2(\beta/2)p(1-p)\le1;
+\quad \rho_{q,\beta}\text{ NPT otherwise}.
+\tag{144.2}
+$$
+
+Here $(1-t)^2/t=e^\beta+e^{-\beta}-2=4\sinh^2(\beta/2)$.
+For $p=0$ or $p=1$ the effective state is a product for every finite
+$\beta$: it is respectively
+$\operatorname{diag}(1,t)/(1+t)\otimes I_2/2$ or
+$I_2/2\otimes\operatorname{diag}(1,t)/(1+t)$.
+These endpoint statements concern the effective rank-one family; they do
+not assert that either endpoint occurs in the interior pair (139.4).
+For $0<p<1$ define
+
+$$
+\beta_c(p)=2\operatorname{arsinh}\frac1{2\sqrt{p(1-p)}},\qquad
+\beta_{c,a}=2\operatorname{arsinh}\frac{99}{\sqrt{7301}},\qquad
+\beta_{c,b}=2\operatorname{arsinh}\frac3{2\sqrt2}.
+\tag{144.3}
+$$
+
+Since $p_a(1-p_a)<p_b(1-p_b)$, one has $\beta_{c,b}<\beta_{c,a}$.
+Monotonicity of $\sinh(\beta/2)$ gives the complete finite-temperature
+classification of this pair:
+
+| Inverse-temperature interval | Model $a$ | Model $b$ |
+| --- | --- | --- |
+| $0\le\beta\le\beta_{c,b}$ | separable | separable |
+| $\beta_{c,b}<\beta\le\beta_{c,a}$ | separable | NPT |
+| $\beta>\beta_{c,a}$, finite | NPT | NPT |

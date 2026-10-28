@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:80f1602514d1dcdd58733d9796bf83f6dd66610ea2f5e3502abd589f69e14168
+  normalized_sha256: sha256:80f1602514d1dcdd58733d9796bf83f6dd66610ea2f5e3502abd589f69e14168
+cas_ref: sha256:80f1602514d1dcdd58733d9796bf83f6dd66610ea2f5e3502abd589f69e14168
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/ComponentPacking/PositiveTwoCapacity.positive_two_capacity
+    target_statement_id: sha256:69b4b4024fbe2305d26f6f46d752b7f857ed41622bf5de1048338bc109520d8f
+receipts:
+  unresolved_subitems: []

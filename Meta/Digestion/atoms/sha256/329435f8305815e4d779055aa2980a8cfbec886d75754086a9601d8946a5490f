@@ -1,0 +1,22 @@
+**Lemma 6.2b (all-finite journal and consumer correspondence).** For every
+finite lawful execution and every inserted finite maintenance word, the
+preceding ordinal relation, both predecessor chains, index lookups and
+complete acquired row payloads agree. Filtering unified events by
+$\epsilon=1$ gives exactly LJA's semantic-event order, including locals,
+rejects and Halt. Its fixed-$H$ operation contract is retained where the
+historical guard is $H$; changes of guard use the explicitly annotated
+extended contract, never a silent fixed-$H$ identification.
+
+The precise field correspondence with LJA5.1 is:
+
+| LJA field or consumer | Relation in this resident instrument |
+| --- | --- |
+| Semantic count/event ordinal | Same semantic count $j$; row $k$ uses the postcommit ordinal $k$, while its unified mate has old ordinal $\sigma(k)$ and before/after $j=(k-1,k)$ |
+| Sealed predecessor and journal lookup | The $k-1$ semantic predecessor maps to the actual reference of $J_{k-1}$; GetSemantic uses index 18. Unified predecessors and index 19 use their own ordinals. Descriptor ordinal $c$ is obtained separately by ReadDescriptor |
+| Original model and $H$ | `SEG-J1` is an explicit new record version; $H$ becomes the row's historical $h$, with $H_0$/prior retained independently. A whole fixed-$H_0$ LJA replay is claimed only when every semantic guard is $H_0$ |
+| Preparation and `INITIAL-SOURCE` | The same actual $\xi$ and original ingress tuple, copied from boot; no second preparation, new source value or readable payload is supplied by its name |
+| Port, request, complete material, response, before/after $q,g,e$ | Equal original data for all seven kinds, including executed rejects and complete local/output material; source-call-only indices are obtained by the separate kind filter |
+| Actual source-block descriptor | The typed layout tuple replaces the contiguous descriptor. Its interpretation is $i\mapsto\phi_K(i)$ for $i<L(h)$, with the actual manifest; old interval handles keep their original meanings |
+| Template, start/response fences, row creation | The actual installed compiled template and new paid cut/descriptor references. Corresponding cut kinds and relative order are retained; numerical addresses, fence ordinals, ticks, fees and creation occurrences are not identified with a hypothetical contiguous execution |
+| Row copy and received reference | Equality of the whole payload and original reference; receiver allocation/owner/base/status are its own. Only its acquired local descriptor permits reading |
+| LJA replay/receipt consumer | The version-aware decoder and joined verifier of Definition 6.5, with the same initial $q_{H_0}$ target, then its actual acquired-binding consumer. An unmodified LJA or PR57 byte parser is not claimed to accept these new versions |

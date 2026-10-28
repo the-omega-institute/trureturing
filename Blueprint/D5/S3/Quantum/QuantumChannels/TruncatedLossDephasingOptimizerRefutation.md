@@ -124,7 +124,21 @@ $$claim \Leftrightarrow (\forall K : \mathbb{N}, \forall N : \mathbb{R}, \forall
 
 Conjecture 1, section IV, arXiv v1 PDF p. 4: "In a truncated Hilbert space of dimension K+1, the minimal output entropy of the quantum channel (3) is achieved either by binomial states of Eq.(14) or by states |κ_α⟩ of Eq. (11), depending on the values of ε and t." The encoding quantifies over K>=1, N in [0,K], epsilon in [0,1] and t>=0. A candidate attains the minimum if its output entropy is no greater than the output entropy of every fixed-energy density input.
 
-**Theorem 1.11 (Qutrit refutation).**
+**Theorem 1.11 (Two-point spreading decreases entropy).**
+
+$$\forall u : \mathbb{R}, \forall v : \mathbb{R}, \forall p : \mathbb{R}, \forall q : \mathbb{R}, (0 \le u) \Rightarrow ((u < v) \Rightarrow ((u \le p) \Rightarrow ((p \le v) \Rightarrow ((p + q = u + v) \Rightarrow (\operatorname{Real.negMulLog}\left(u\right) + \operatorname{Real.negMulLog}\left(v\right) \le \operatorname{Real.negMulLog}\left(p\right) + \operatorname{Real.negMulLog}\left(q\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.pair_entropy_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Laleh Memarzadeh; Stefano Mancini (2016). *Minimum output entropy of a non-Gaussian quantum channel*. DOI: [10.1103/PhysRevA.94.022341](https://doi.org/10.1103/PhysRevA.94.022341). URL: <https://arxiv.org/abs/1605.04525v1>.
+
+*Commentary.*
+
+For real u, v, p and q, assume 0 <= u < v, u <= p <= v and p + q = u + v. The two inner points p and q are convex combinations of u and v with exchanged weights. Applying the concavity of Real.negMulLog to both combinations and adding gives the entropy inequality, including u = 0.
+
+**Theorem 1.12 (Qutrit refutation).**
 
 $$\neg claim$$
 
@@ -152,6 +166,7 @@ Take K=2, N=3/2, epsilon=6/7, t=(7/2)log(2), and psi=(|1>+|2>)/sqrt(2). The only
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.kappaKet`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.lossDephasingChannel`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.numberOperator`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.pair_entropy_le`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.phaseKraus`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.result`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.vonNeumannEntropy`

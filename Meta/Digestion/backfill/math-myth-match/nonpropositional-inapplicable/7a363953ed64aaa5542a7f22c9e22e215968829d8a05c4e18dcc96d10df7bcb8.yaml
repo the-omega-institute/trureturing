@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7a363953ed64aaa5542a7f22c9e22e215968829d8a05c4e18dcc96d10df7bcb8
+  normalized_sha256: sha256:7a363953ed64aaa5542a7f22c9e22e215968829d8a05c4e18dcc96d10df7bcb8
+cas_ref: sha256:7a363953ed64aaa5542a7f22c9e22e215968829d8a05c4e18dcc96d10df7bcb8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: James edition, chapters, notes and reading scope. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: a96a70e0c729df756011fefb872291bf9861b56b42d087ab08c6a090548c3bee
+    next_atom_id: 3b2b71982e0d933f4194f063e8e8f1fbf395c94839404626580abeda175ba5ed

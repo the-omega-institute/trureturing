@@ -1,0 +1,11 @@
+**Definition 10.2 (stage amplitudes).** For $n\ge1$ set
+
+$$
+\ell_n=\lceil\log_2(n+1)\rceil,\qquad
+k_n=b+n+\ell_n,\qquad M_n=2^{k_n},\qquad
+\delta_n=2^{-b-n}.
+\tag{UFS.26}
+$$
+
+At stage $n$ exactly $k_n$ fresh bits, interpreted as an unsigned binary integer, choose $U_n$ uniformly from $\{0,\ldots,M_n-1\}$. There is no rejection sampling. The stage number is a computed search variable, not native-order advice.
+

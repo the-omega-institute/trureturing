@@ -6,6 +6,8 @@
    utility: none
    digest: Exact fixed-length decks recover every shorter scattered count. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19498; scatteredCount_eq_count_sublistsLen. -/
+
 import D5.S1.Words.Complexity.PositivePairs.Coefficients.CutoffCoefficientAlgebra
 import D5.S1.Words.Complexity.PositivePairs.Coefficients.MagnusWordCoefficients
 import D5.S1.Words.Complexity.PositivePairs.Coefficients.PositivePairFiltration
@@ -24,7 +26,7 @@ open D5.S1.Words.Complexity.PositivePairs.Coefficients.PositivePairFiltration
 
 variable {A : Type*}
 
-private theorem scatteredCount_eq_count_sublistsLen [DecidableEq A]
+theorem scatteredCount_eq_count_sublistsLen [DecidableEq A]
     (pattern source : List A) :
     scatteredCount pattern source =
       (source.sublistsLen pattern.length).count pattern := by

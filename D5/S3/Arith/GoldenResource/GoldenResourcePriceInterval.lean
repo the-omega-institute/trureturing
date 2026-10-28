@@ -47,7 +47,7 @@ open D5.S3.Arith.GoldenResource.GoldenResourceThresholdCriterion
 
 noncomputable section
 
-private theorem marginal_pos {p a : ℕ} (hp : p.Prime) (ha : 1 ≤ a) :
+theorem marginal_pos {p a : ℕ} (hp : p.Prime) (ha : 1 ≤ a) :
     0 < goldenLayerMarginal p a := by
   have hpPos : (0 : ℝ) < p := by exact_mod_cast hp.pos
   have hiPos : 0 < (p : ℝ)⁻¹ := inv_pos.mpr hpPos

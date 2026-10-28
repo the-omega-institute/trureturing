@@ -1,0 +1,81 @@
+**定理 77.1（先深度平均、后尾窗极限的过滤）。** Fix any one finite comparator (72.8). For each missing-language recurrent class $C$ choose a nonempty finite word $u_C$ forbidden from every starting vertex of that class. Choose $L\ge1$ at least their lengths, or $L=1$ if there are no such classes. For a fixed $m\ge L$, let $E_{L,m}$ mean that the last $m$ labels contain every length-$L$ binary word as a contiguous subword. For $n\ge m$ define
+
+$$
+\begin{gathered}
+g_{n;L,m}(h,y)=(2y-1)b(h)\mathbf1_{E_{L,m}}(\text{suffix}_m h),\\
+v_{n;L,m}=2^{-n}\sum_{|h|=n}b(h)^2\mathbf1_{E_{L,m}}(\text{suffix}_m h),\\
+A_{n;L,m}=\mathbb E_{P_{+,n}}g_{n;L,m}-\mathbb E_{P_{-,n}}g_{n;L,m},\quad
+C_{n;L,m}=\mathbb E_{Q_{+,n}}g_{n;L,m}-\mathbb E_{Q_{-,n}}g_{n;L,m}.
+\end{gathered}
+\tag{77.1}
+$$
+
+Set all four quantities to zero at $n<m$. Then $|g_{n;L,m}|\le1$ and, with
+
+$$
+\delta_{L,m}=\min\{1,\ 2^L(1-2^{-L})^{\lfloor m/L\rfloor}\},
+\tag{77.2}
+$$
+
+one has
+
+$$
+\begin{gathered}
+A_{n;L,m}=4t\,v_{n;L,m},\qquad
+\liminf_{N\to\infty}\frac1N\sum_{n<N}v_{n;L,m}\ge\frac14-\delta_{L,m},\\
+\lim_{N\to\infty}\frac1N\sum_{n<N}C_{n;L,m}=0,\qquad
+\lim_{m\to\infty}\delta_{L,m}=0\quad\text{for fixed }L.
+\end{gathered}
+\tag{77.3}
+$$
+
+The $N$ limits hold for each fixed comparator, $L$ and finite $m$.
+
+证明。Missing-language means failure of (75.1) with endpoints allowed anywhere in the class. Its chosen word is consequently forbidden from every vertex, not merely from one selected start. An occurrence of every length-$L$ word implies an occurrence of every shorter word: extend that shorter word to any length-$L$ word. Thus $E_{L,m}$ requires every $u_C$. The event may be empty for small $m$; the argument still applies.
+
+Under either target, the suffix is iid fair by (74.4), regardless of its correlations with the terminal outcome. For any length-$L$ word $w$, absence everywhere implies absence in $\lfloor m/L\rfloor$ disjoint length-$L$ blocks. Independence on these blocks bounds its probability by $(1-2^{-L})^{\lfloor m/L\rfloor}$. A union bound over the $2^L$ words gives target rejection probability at most $\delta_{L,m}$, uniformly in $n\ge m$ and in the source state. Therefore
+
+$$
+v_{n;L,m}\ge a_n-\delta_{L,m}\quad(n\ge m).
+\tag{77.4}
+$$
+
+The fixed initial depth prefix has no effect on a Cesàro limit, and (74.3) proves the target lower bound in (77.3). For each $h$, the terminal-$1$ contrast times $g$ contributes $2t\,2^{-n}b(h)^2\mathbf1_E$. The terminal-$0$ contrast contributes the same amount because both signs reverse. Thus their sum is exactly $4t\,v_{n;L,m}$.
+
+For the comparator set $a_{\rm cl}=2f_{\rm cl}-\mathbf1$, $p_{\rm diff}=p_+-p_-$, and define the chronological suffix operator
+
+$$
+\mathscr R_{L,m}=\sum_{s\in\{0,1\}^m}\mathbf1_{E_{L,m}}(s)(T_s\otimes B_s).
+\tag{77.5}
+$$
+
+Nonnegative path weights give $\|\mathscr R_{L,m}\|_{1,2}\le1$, since the sum over selected paths has column masses at most those of $S^m$. If a path starts in a missing-language recurrent class, closedness keeps it there. An accepted suffix contains its forbidden word and has zero weight on that class. Hence $\mathscr R_{L,m}$ annihilates every vector supported on these classes, and Theorem 75.2 implies
+
+$$
+\mathscr R_{L,m}\Pi=0.
+\tag{77.6}
+$$
+
+Write $h=(\text{prefix},s)$. Chronology gives $T_h=T_sT_{\rm prefix}$ and $B_h=B_sB_{\rm prefix}$. Summing both comparator outcomes first produces $a_{\rm cl}^{\mathsf T}T_hp_{\rm diff}$. This is real, so the exact transfer identity is
+
+$$
+C_{n;L,m}=\Im\left[(a_{\rm cl}^{\mathsf T}\otimes u^\dagger)
+\mathscr R_{L,m}\Lambda^{n-m}(p_{\rm diff}\otimes u)\right]
+\quad(n\ge m).
+\tag{77.7}
+$$
+
+Here $\Lambda=T_0\otimes B_0+T_1\otimes B_1$ has no factor $1/2$, and $\mathscr R$ has no extra $2^{-m}$. The comparator weights are its actual $T_h$; the separate target weights remain their actual $2^{-n}$. Expanding the two factors proves (77.7) with the suffix on the left; no reverse or conjugate word is substituted.
+
+For this fixed $m$, mean ergodicity gives
+
+$$
+\frac1N\sum_{n=m}^{N-1}\mathscr R_{L,m}\Lambda^{n-m}
+\longrightarrow\mathscr R_{L,m}\Pi=0,
+\tag{77.8}
+$$
+
+where $(N-m)/N\to1$. Equation (77.7) proves the comparator limit. It is the signed scalar mean, not the mean of absolute correlations. The projection may be nonorthogonal and may receive transient input contributions; its range support suffices. This treats every periodic, reducible or transient comparator allowed by (72.8).
+
+The construction uses only bounded classical functions of the acquired full record. All histories remain in the probability law; rejected histories get statistic zero. No event probability is divided out, and no selected physical branch replaces the experiment. One first fixes the comparator and its finite $L$, then fixes any finite $m$, and takes $N\to\infty$. Only after that does one let $m\to\infty$ with $L$ fixed. There is no moving-window substitution in a fixed-operator convergence result. ∎
+

@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:16c937044a69b37bf94cdd8b8c2911d0da200452ad51e4057395fb93d57571c4
+  normalized_sha256: sha256:16c937044a69b37bf94cdd8b8c2911d0da200452ad51e4057395fb93d57571c4
+cas_ref: sha256:16c937044a69b37bf94cdd8b8c2911d0da200452ad51e4057395fb93d57571c4
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroSum.multiplicity_pos
+    target_statement_id: sha256:6cf7b349caee02d13c4906c00c7a370e1b2a24ccf3d26de5d32f1f0bd90df517
+  - gid: D5/S3/Weil/ZetaBridge/ConvolutionSquareOffLineOrbits.off_line_zero_orbit_sum_eq_four_mul_re
+    target_statement_id: sha256:14eba28892b04fae46b38d79e77209030bc857647b37342acb9807477fc7dae8
+  - gid: D5/S3/Weil/ZetaBridge/OffLineNonrealZeroNegativeWeilSquare.exists_peak_and_finite_exception_killer
+    target_statement_id: sha256:56ec3ca4929329274cfc59172d771a80060decc61a2860bc02b6b65b7388e914
+  - gid: D5/S3/Weil/ZetaBridge/PrescribedPairNegativeOrbit.prescribed_pair_gives_negative_zero_orbit
+    target_statement_id: sha256:941de5196bd5012abbecbf277aae725c49ae0037e1e2521eb8fdb64571d67dc3
+  - gid: D5/S3/Weil/ZetaBridge/PrescribedPairNegativeOrbit.prescribed_pair_impossible_for_real_zero
+    target_statement_id: sha256:f4c2a0cdaa4adedbaa75a0e47a77f9d1c518ec8b84934174188f7f451bbe0011
+  - gid: D5/S3/Weil/ZetaBridge/PrescribedPairNegativeOrbit.real_off_line_zero_orbit_sum_re
+    target_statement_id: sha256:6ec51deaf4b36fe8b7b576ecd0956728064870e08ce63516b350e3908fe247cf
+receipts:
+  unresolved_subitems: []

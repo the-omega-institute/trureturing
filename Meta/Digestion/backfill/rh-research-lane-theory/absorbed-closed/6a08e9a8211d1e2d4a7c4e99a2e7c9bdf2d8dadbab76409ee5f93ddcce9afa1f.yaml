@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:6a08e9a8211d1e2d4a7c4e99a2e7c9bdf2d8dadbab76409ee5f93ddcce9afa1f
+  normalized_sha256: sha256:6a08e9a8211d1e2d4a7c4e99a2e7c9bdf2d8dadbab76409ee5f93ddcce9afa1f
+cas_ref: sha256:6a08e9a8211d1e2d4a7c4e99a2e7c9bdf2d8dadbab76409ee5f93ddcce9afa1f
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/SecondMagnusSwapCurvature.second_magnus_swap_kernel_equal_frequencies
+    target_statement_id: sha256:2fddaac4fd14af0205fcc881580bfb27035fe93587b28658fb792d7346bd9333
+  - gid: D5/S3/Observer/AgencyHolonomy/SecondMagnusSwapCurvature.second_magnus_swap_kernel_equal_times
+    target_statement_id: sha256:61b7e23123b8f70cae8d67e6f179f5a2ec26903171736eb6b91649a17be723e4
+  - gid: D5/S3/Observer/AgencyHolonomy/SecondMagnusSwapCurvature.second_magnus_swap_kernel_swap_frequency
+    target_statement_id: sha256:2fd6f48990d2b27fb10626e905cfc572e80ffa7ab1f780d17a8a0dfd0ef5e70f
+  - gid: D5/S3/Observer/AgencyHolonomy/SecondMagnusSwapCurvature.second_magnus_swap_kernel_swap_time
+    target_statement_id: sha256:799464eae2df2c01636b78ce0b29e25831f2e6570f0a3cb340e3af784649434f
+  - gid: D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.second_magnus_kernel_at_golden_samples
+    target_statement_id: sha256:991f4a5d08afd2e0c9e75307e406a845c893f5a27a5fd9afeeadd20d615f8bb8
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - f519f37a293d31ced19d05ebc640bbcfeb592628b84344def51b647ded1ae726
+    - 0b4a8da1955530a333b3799d0542b9d6d2214cd8393bf5e9e97f1eed7b88633d
+    - 107416e5822080531ebb1ad29e98f5bcb96e70724d724fdfd4ff4dcf8818ebbd
+    - 8d69a44e723782aa54e3fe851cb82b014608d51e95ccf384c0cb49729f143564
+    - 5ae5161b261ef0288ca85d1f0b8f9f4b7b0833eaa1bd1c926d061650c2bc2b36

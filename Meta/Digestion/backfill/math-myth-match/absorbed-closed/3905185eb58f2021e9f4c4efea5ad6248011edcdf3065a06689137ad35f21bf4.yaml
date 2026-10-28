@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3905185eb58f2021e9f4c4efea5ad6248011edcdf3065a06689137ad35f21bf4
+  normalized_sha256: sha256:3905185eb58f2021e9f4c4efea5ad6248011edcdf3065a06689137ad35f21bf4
+cas_ref: sha256:3905185eb58f2021e9f4c4efea5ad6248011edcdf3065a06689137ad35f21bf4
+coverage_gids:
+  - gid: D5/S0/Certificates/FiniteExhaustion.valid_of_exhaustive_check
+    target_statement_id: sha256:6e3552cca98ef3611ebf8fe632181fb4bb2ebec497a8895a3a87bb94b15c70c9
+receipts:
+  unresolved_subitems: []

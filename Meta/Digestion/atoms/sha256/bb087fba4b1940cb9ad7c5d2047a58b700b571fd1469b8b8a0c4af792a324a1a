@@ -1,0 +1,59 @@
+**Lemma 12.2 (actual native continuation of this request).** Along the
+canonical finite flight of Definition 12.1 from $P_0$, each executed
+native row has an enabled counterpart from the related $P_1$ state.
+They have the same native row label, supplied or released bit, ordinary
+operand identities and updates, and next current control. The complete
+successors remain related by $\equiv_{C_L}$, with each actual first word
+unchanged. This holds through all eight publications and the sole final
+Ready, including every intermediate allocation, bank, copy, check and
+token-transfer row.
+
+Proof. The relevant physical instructions are the expansions of
+Definitions 2.1, 7.1–7.2, ARC Definitions 2.1–2.2 and 5.2–5.3, and
+GCA Definition 3.1. Their data and control dependencies are as follows.
+
+| Reached work | Actual operands and guards |
+| --- | --- |
+| Gate, mode and frame ingress | Ordinary70, scratch66/67, descriptors68, the installed latch6/latch5 tests and current invocation slots. Each matching WR uses its actual supplied bit. |
+| Manifest, cover, binder and package work | Already imported manifest and frozen empty predecessor $M$; ordinary64–71 fields and current parity. ARC Definition 4.3's earlier $L$ description is a literal emitted word, not a copy of $C_L$. |
+| Boundary, Issue and Call | Literal word operations on represented states and code from the manifest. ARC Definition 6.1 supplies prescribed $E(L)$ at represented first-bootstrap sites. A simulated read of a represented old slot reads bank data. |
+| Publication and callbacks | The actual sender71, mailbox72, receiver73, descriptors68, staged placements69, positioned length/data heads, seals and distinct current invocation/read/availability slots of ARC Definitions 7.1–7.3. |
+| View construction, checks and return | The received word, acquired binding, PublicCode and ordinary work fields of Definitions 5–7; then the named ACK, mailbox return, five-field item append and invocation return. |
+
+The physical current instruction is selected from the identical active
+$G_{\mathrm{gc}}$ table. Its old first bootstrap is not reentered.
+The manifest's capture field is the identical acquired
+$\Delta(G_{\mathrm{gc}})$, and its first-bootstrap description remains
+the prescribed one. ARC Definition 7.1's service binding contains
+version tags, actual capture placement/field zero and the seed delivery
+reference. Definition 5.1 adds acquired origin references, target
+version/phase and selector arithmetic. Neither tuple adds a read or
+comparison with the current contents of $C_L$. The stage/body checkers
+read representations obtained from the delivered Image; they do not
+inspect live first-store slots. The rows in the table therefore have no
+native operand, branch or authority test depending on those values.
+Their finite effects name current stage/parity/token/marker locations,
+not a destination in $C_L$.
+
+For the physical local cases, RD reads the same marked ordinary cell and
+branches on the same symbol. WR has the same current writer/writability
+guard and literal or latched value. ML/MR have the same existing neighbor
+and current token. EX sees the same R, retains its old identity and
+constructs the same new R. BF has the same latch operands. IN is supplied
+the same next bit at the same site; OUT releases the same latched bit.
+TOK tests the same current source/destination slots, then performs both
+actual updates. CTL tests the same designated latch and applies the same
+ordered finite effects. No post-Ready row here is a boot-bit constructor.
+Every unmentioned coordinate persists, and each row appends its actual
+ordinary/F receipt, including the original meter-head alias rule. Thus
+the complete successor differs only in the retained $C_L$ values.
+
+Induction over the finite canonical flight proves both continued
+enabledness and the asserted relation; existence of that canonical
+flight is Theorem 8.2 at target $k=b$. The induction constructs the
+second physical flight, rather than invoking Theorem 8.2 on a
+noncanonical installation. Lemma 2.6 transfers each actual row
+to its incidence patch. Such a patch can test the full finite raw
+pattern, including $C_L$; equality of structural probe records or
+structural tariffs is not part of the native-row assertion. ∎
+

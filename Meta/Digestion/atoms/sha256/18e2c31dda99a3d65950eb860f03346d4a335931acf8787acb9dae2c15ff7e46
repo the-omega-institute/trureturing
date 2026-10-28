@@ -1,0 +1,7 @@
+其全部可能形态如下，所有显示的接收向量均属于 $S$：
+
+- 一维时，$M=\mathbb C(r\otimes\zeta)$，$r,\zeta\ne0$；
+- 二维且只有一条乘积环境支持射线时，$M=D\otimes\zeta$，$\dim D=2$；
+- 二维且有两条乘积环境支持射线时，
+  $M=\operatorname{span}(r\otimes\zeta,s\otimes\xi)$，其中 $r,s$ 线性独立，$\zeta,\xi$ 线性独立。
+

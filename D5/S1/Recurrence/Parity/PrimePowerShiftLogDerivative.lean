@@ -6,6 +6,8 @@
    utility: none
    digest: Integral prime-power recursion and logarithmic differentiation prove Hanna A393867. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19840; prime_is_prime. -/
+
 import Mathlib.RingTheory.PowerSeries.Derivative
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.NumberTheory.PrimeCounting
@@ -22,7 +24,7 @@ theorem lt_prime (n : ℕ) (hn : 1 ≤ n) : n < prime n := by
   unfold prime
   omega
 
-private theorem prime_is_prime (n : ℕ) : Nat.Prime (prime n) :=
+theorem prime_is_prime (n : ℕ) : Nat.Prime (prime n) :=
   Nat.prime_nth_prime _
 
 private theorem prime_coeff (B : PowerSeries ℤ) (h0 : constantCoeff B = 1)
@@ -171,15 +173,15 @@ theorem prime_dvd_coeff_pow (n j : ℕ) (hj : 1 ≤ j) (hjp : j < prime n) :
   prime_coeff _ generating_equation.1 (prime_is_prime n) hj hjp
 
 noncomputable def logDerivative : PowerSeries ℤ :=
-  derivative ℤ generatingSeries * invOfUnit generatingSeries 1
+  PowerSeries.derivative (R := ℤ) generatingSeries * invOfUnit generatingSeries 1
 
 noncomputable def a393867 (n : ℕ) : ℤ := coeff (n - 1) logDerivative
 
-private theorem log_mul : logDerivative * generatingSeries = derivative ℤ generatingSeries := by
+private theorem log_mul : logDerivative * generatingSeries = PowerSeries.derivative (R := ℤ) generatingSeries := by
   rw [logDerivative, mul_assoc, invOfUnit_mul _ 1 generating_equation.1, mul_one]
 
 private theorem derivative_identity (n : ℕ) :
-    derivative ℤ (generatingSeries ^ n) = C (n : ℤ) * logDerivative * generatingSeries ^ n := by
+    PowerSeries.derivative (R := ℤ) (generatingSeries ^ n) = C (n : ℤ) * logDerivative * generatingSeries ^ n := by
   cases n with
   | zero => simp
   | succ n =>
@@ -189,7 +191,7 @@ private theorem derivative_identity (n : ℕ) :
     ring
 
 theorem log_derivative_identity (n : ℕ) :
-    X * derivative ℤ (generatingSeries ^ n) =
+    X * PowerSeries.derivative (R := ℤ) (generatingSeries ^ n) =
       C (n : ℤ) * (X * logDerivative) * generatingSeries ^ n := by
   rw [derivative_identity]
   ring
@@ -267,12 +269,5 @@ theorem printed_formula_false :
   have := h 2 (by omega)
   norm_num [prime, hl2] at this
 
-#print axioms lt_prime
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms prime_dvd_coeff_pow
-#print axioms log_derivative_identity
-#print axioms hanna_conjecture
-#print axioms printed_formula_false
 
 end D5.S1.Recurrence.Parity.PrimePowerShiftLogDerivative

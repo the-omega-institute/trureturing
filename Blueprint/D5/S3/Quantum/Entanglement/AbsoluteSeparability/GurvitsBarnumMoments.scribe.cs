@@ -35,11 +35,31 @@ internal sealed class GurvitsBarnumMomentsDocument : IScribeDocumentDefinition
         "Finite fourth roots of unity, corrected by standard basis vectors, reproduce the two pairings of fourth moments.",
         H("Corrected finite fourth moments"), Blocks(
             Paragraph(Text("For z indexed by Fin d, let q(T,z) be the sum of conjugate(z_i) z_j T_ij. Let L_d(f) be the sum of f over all vectors with coordinates in {1,i,-1,-i}, plus 4^d times the sum of f over the standard basis vectors. The basis term supplies the additional contribution when all four indices coincide. These formulas include d = 0.")),
+            Describe.Lean(DescribeId.Create("gb-phase-definition"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.phase"),
+                H("The four phase values"), StatementSource.FromAuthor(Disp(PhaseDefinitionFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For s in Fin 4, phase(s) is the imaginary unit raised to the natural-number value of s. Its values, in order, are 1, i, -1 and -i."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("gb-phase-unit"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.phase_unit"),
+                H("Unit modulus of each phase"), StatementSource.FromAuthor(Disp(PhaseUnitFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Multiplying the conjugate of any of the four phase values by that phase gives one."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("gb-moment-four"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.moment_four"),
+                H("The uncorrected fourth phase moment"), StatementSource.FromAuthor(Disp(FourthMomentFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Summing conjugate(phase(z(i))) phase(z(j)) conjugate(phase(z(k))) phase(z(l)) over every function z from Fin d to Fin 4 gives 4^d times the two possible pairings, with one copy subtracted when all four indices coincide. Independent rotation of each coordinate makes every unbalanced character sum vanish. The formula holds in every natural dimension."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("gb-design-sum-definition"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.designSum"),
                 H("The corrected phase sum"), StatementSource.FromAuthor(Disp(DesignSumDefinition())),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The corrected phase sum evaluates f at every phase vector indexed by a function Fin d to Fin 4, then adds 4^d times its sum over standard basis vectors. Each coordinate is the imaginary unit Complex.I raised to the natural-number value val(z(i)) of z(i) : Fin 4. Both evaluation sums include all elements of their indicated finite types."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("gb-design-four"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.design_four"),
+                H("The corrected fourth phase moment"), StatementSource.FromAuthor(Disp(CorrectedFourthMomentFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The corrected phase sum of conjugate(z_i) z_j conjugate(z_k) z_l equals 4^d times the sum of the two pairings, including their coincident-index multiplicities."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("gb-design-sum"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.designSum_sum"),
                 H("Finite additivity"), StatementSource.FromAuthor(Disp(Additivity())),
@@ -132,4 +152,67 @@ internal sealed class GurvitsBarnumMomentsDocument : IScribeDocumentDefinition
 
     private static Formula Fun(string name, Formula type, Formula body) =>
         Par(Seq(LambdaLower, Sp, Par(Seq(F.Id(name), Colon, type)), Sp, Mapsto, Sp, body));
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula MomentAll(string name, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
+    private static Formula MomentEqual(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula MomentAnd(Formula left, Formula right) =>
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
+    private static Formula MomentIndicator(Formula condition) => Parenthesized(
+        Seq(F.Id("if"), Sp, Parenthesized(condition), Sp, F.Id("then"), Sp, D(1),
+            Sp, F.Id("else"), Sp, D(0)));
+
+    private static Formula PhaseDefinitionFormula() => MomentAll("s", Call("Fin", D(4)),
+        MomentEqual(Call("phase", F.Id("s")),
+            Power(Seq(Operatorname, Grp(F.Id("Complex")), Dot, Operatorname, Grp(F.Id("I"))),
+                Call("val", F.Id("s")))));
+
+    private static Formula PhaseUnitFormula() => MomentAll("s", Call("Fin", D(4)),
+        MomentEqual(Mul(Call("conj", Call("phase", F.Id("s"))), Call("phase", F.Id("s"))), D(1)));
+
+    private static Formula CorrectedFourthMomentFormula()
+    {
+        var i = F.Id("i");
+        var j = F.Id("j");
+        var k = F.Id("k");
+        var l = F.Id("l");
+        var z = F.Id("z");
+        var product = Mul(Mul(Mul(Call("conj", Call("z", i)), Call("z", j)),
+            Call("conj", Call("z", k))), Call("z", l));
+        var first = MomentIndicator(MomentAnd(MomentEqual(i, j), MomentEqual(k, l)));
+        var second = MomentIndicator(MomentAnd(MomentEqual(i, l), MomentEqual(j, k)));
+        var value = Mul(Power(Par(Seq(D(4), Colon, C)), Dim), Par(Seq(first, Plus, second)));
+        var sum = Call("designSum", Fun("z", Vector, product));
+        return MomentAll("d", N, MomentAll("i", Index, MomentAll("j", Index,
+            MomentAll("k", Index, MomentAll("l", Index, MomentEqual(sum, value))))));
+    }
+
+    private static Formula FourthMomentFormula()
+    {
+        var i = F.Id("i");
+        var j = F.Id("j");
+        var k = F.Id("k");
+        var l = F.Id("l");
+        var phaseIndex = new Formula.TypeArrow(Index, Call("Fin", D(4)));
+        Formula PhaseAt(Formula a) => Call("phase", Call("z", a));
+        Formula Product(Formula a, Formula b) =>
+            new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
+        var summand = Product(Product(Product(Call("conj", PhaseAt(i)), PhaseAt(j)),
+            Call("conj", PhaseAt(k))), PhaseAt(l));
+        var sum = Seq(new Formula.Subscript(F.Sum,
+            Parenthesized(Seq(F.Id("z"), Colon, Parenthesized(phaseIndex)))), Sp, Parenthesized(summand));
+        var first = MomentIndicator(MomentAnd(MomentEqual(i, j), MomentEqual(k, l)));
+        var second = MomentIndicator(MomentAnd(MomentEqual(i, l), MomentEqual(j, k)));
+        var coincident = MomentIndicator(MomentAnd(MomentEqual(i, j),
+            MomentAnd(MomentEqual(j, k), MomentEqual(k, l))));
+        var correction = new Formula.Binary(
+            new Formula.Binary(first, FormulaBinaryOperator.Add, second),
+            FormulaBinaryOperator.Subtract, coincident);
+        var value = Product(Power(Parenthesized(Seq(D(4), Colon, C)), Dim),
+            Parenthesized(correction));
+        return MomentAll("d", N, MomentAll("i", Index, MomentAll("j", Index,
+            MomentAll("k", Index, MomentAll("l", Index, MomentEqual(sum, value))))));
+    }
 }

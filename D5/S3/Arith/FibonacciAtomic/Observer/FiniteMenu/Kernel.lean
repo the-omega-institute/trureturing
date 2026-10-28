@@ -70,7 +70,7 @@ private theorem atomic_branch_after (q : Address) (k : Nat)
   have hAt := read_at q [] (substitution^[m+pathCost q+2] (.of true))
   simpa only [List.append_nil, nav, readout] using hAt
 
-private theorem atomic_not_branch_before (q : Address) (k : Nat)
+theorem atomic_not_branch_before (q : Address) (k : Nat)
     (hk : k < pathCost q + 2) :
     readout q (substitution^[k] (.of true)) ≠ .branch := by
   have hAt := read_at q [] (substitution^[k] (.of true))
@@ -89,7 +89,7 @@ private theorem atomic_not_branch_before (q : Address) (k : Nat)
       rw [hAt]; decide
 
 /-- Every source has become a branch at q by its atomic branch bound. -/
-private theorem branch_after (q : Address) (u : Source) (k : Nat)
+theorem branch_after (q : Address) (u : Source) (k : Nat)
     (hk : pathCost q + 2 ≤ k) : readout q (substitution^[k] u) = .branch := by
   induction q generalizing u k with
   | nil =>

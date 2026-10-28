@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:08ad3b5b29a59d47d5d5d4f86fa12782990650ca9217cec55cd7d20225c607fe
+  normalized_sha256: sha256:08ad3b5b29a59d47d5d5d4f86fa12782990650ca9217cec55cd7d20225c607fe
+cas_ref: sha256:08ad3b5b29a59d47d5d5d4f86fa12782990650ca9217cec55cd7d20225c607fe
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Trajectories/DominanceMemoryUpdate.actual_complete_runs_shift
+    target_statement_id: sha256:9f10fe227e2e2d8bf472c184b4a9fc2525fa2d4e89cccc9d59792fa1117a6256
+  - gid: D5/S3/ObserverMemory/Trajectories/DominanceMemoryUpdate.actual_window_update
+    target_statement_id: sha256:359ca6ea0cfd6f70cfe8272a98f6109dbc749e49efff6ad06f879b2477a6cf02
+  - gid: D5/S3/TotalVariation/ParryBilateralLaw.bilateral_parry_law
+    target_statement_id: sha256:92a203e6dd37708864bcc7c2189deb22d4cfe36134f01813f740f0810eeb40a7
+  - gid: D5/S3/TotalVariation/ParryBilateralLaw.bilateral_reset_coding
+    target_statement_id: sha256:96ed7f4c69cba5febd8a4a848a7c04388fe3d8fb472f6233830f33524ae2debe
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 573907bec69eb644f189ac4f08e59c799a8563d2a4d251f81423b01c3f95abce
+    - 4a16d3aa3fcebda7c3b59482f215b445eb810065d16e78ce06ac1b0bd879ecde

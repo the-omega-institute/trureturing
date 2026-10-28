@@ -34,7 +34,7 @@ local notation "T" => (fun n : ℕ =>
   Real.log (Real.log (Real.log (n : ℝ))))
 
 /-- The mandatory floor alone puts the actual natural clock in `(1,∞)`. -/
-private theorem legal_clock {p n : ℕ} (hp : 0 < p) (hn : 1 ≤ n)
+theorem legal_clock {p n : ℕ} (hp : 0 < p) (hn : 1 ≤ n)
     (hfloor : 5040 * p ∣ n) : 1 < Real.log (n : ℝ) := by
   have hn0 : 0 < n := by omega
   have hf3 : (3 : ℕ) ≤ 5040 * p := by nlinarith
@@ -112,7 +112,7 @@ private theorem deficit_identity {N M : ℕ} (hN : 0 < N) (hM : 0 < M)
 
 /-- Strict concave log-log rectangle on its actual positive-log domain.
 Here `a,b,c,d` will be the logs of `gcd,N,M,lcm`, respectively. -/
-private theorem strict_loglog_rectangle {a b c d : ℝ}
+theorem strict_loglog_rectangle {a b c d : ℝ}
     (ha : 1 < a) (hab : a < b) (hac : a < c) (hbalance : a + d = b + c) :
     Real.log (Real.log a) + Real.log (Real.log d) <
       Real.log (Real.log b) + Real.log (Real.log c) := by

@@ -78,7 +78,19 @@ $$(\operatorname{N}\left(1\right) = I+\frac{1}{2} Z) \land\\{}(\operatorname{N}\
 
 Positivity and the exact squares identify the candidates uniquely with the positive functional-calculus roots.
 
-**Theorem 1.6 (Canonical maximally mixed state).**
+**Theorem 1.6 (Strict positivity of the mixed state).**
+
+$$\operatorname{Matrix}.\operatorname{PosDef}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Dynamics}.\operatorname{PositivePauliClockOrder}.\operatorname{sigma}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.sigma_posDef` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The maximally mixed qubit matrix sigma is positive definite.
+
+**Theorem 1.7 (Canonical maximally mixed state).**
 
 $$(\operatorname{matrix}\left(\operatorname{mixedState}\left(\right)\right) = \sigma) \land\\{}(\operatorname{Surjective}\left(\operatorname{mulVec}\left(\sigma\right)\right))$$
 
@@ -90,7 +102,7 @@ $$(\operatorname{matrix}\left(\operatorname{mixedState}\left(\right)\right) = \s
 
 mixedState inhabits the current Foundation density carrier, with positivity and trace one proved. Its matrix has full range, so the standing support is the identity.
 
-**Theorem 1.7 (Existing propagator and source exponential agree).**
+**Theorem 1.8 (Existing propagator and source exponential agree).**
 
 $$\forall v,w,t \in R, \operatorname{V}\left(v, w, t\right) = \operatorname{exp}\left(-i w t \operatorname{N}\left(v\right)\right)$$
 
@@ -102,7 +114,7 @@ $$\forall v,w,t \in R, \operatorname{V}\left(v, w, t\right) = \operatorname{exp}
 
 pulse reuses hamiltonianPropagator with Hamiltonian omega times the actual positive root.
 
-**Theorem 1.8 (Unitary structure propagation).**
+**Theorem 1.9 (Unitary structure propagation).**
 
 $$\forall v,w,t \in R, (|v| < \sqrt{\frac{3}{2}}) \Rightarrow \operatorname{Unitary}\left(\operatorname{V}\left(v, w, t\right)\right)$$
 
@@ -114,7 +126,7 @@ $$\forall v,w,t \in R, (|v| < \sqrt{\frac{3}{2}}) \Rightarrow \operatorname{Unit
 
 The normalized generator is skew-adjoint. No additional free structure evolution is inserted.
 
-**Theorem 1.9 (Implemented controlled clock evolution).**
+**Theorem 1.10 (Implemented controlled clock evolution).**
 
 $$\forall v,w,t \in R, (|v| < \sqrt{\frac{3}{2}}) \Rightarrow (\operatorname{Unitary}\left(\operatorname{B}\left(I, \operatorname{V}\left(v, w, t\right)\right)\right)) \land\\{}(\operatorname{B}\left(I, \operatorname{V}\left(v, w, t\right)\right) = \operatorname{kron}\left(\operatorname{E}\left(0, 0\right), I\right)+\operatorname{kron}\left(\operatorname{E}\left(1, 1\right), \operatorname{V}\left(v, w, t\right)\right)) \land\\{}(\forall a,b\in\operatorname{Fin}\left(2\right),\operatorname{entry}\left(\operatorname{B}\left(I, \operatorname{V}\left(v, w, t\right)\right), \operatorname{pair}\left(1, a\right), \operatorname{pair}\left(1, b\right)\right) = \operatorname{entry}\left(\operatorname{V}\left(v, w, t\right), a, b\right))$$
 
@@ -126,7 +138,19 @@ $$\forall v,w,t \in R, (|v| < \sqrt{\frac{3}{2}}) \Rightarrow (\operatorname{Uni
 
 The joint operator is the source's controlled expression. Its excited-clock block acts by the actual structure propagator.
 
-**Theorem 1.10 (Mixed controlled-block trace identity).**
+**Theorem 1.11 (Unitary controlled qubit matrices).**
+
+$$\forall Q \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), Complex\right),\; \forall P \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), Complex\right),\; (Q \in \operatorname{unitary}\left(\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), Complex\right)\right)) \Rightarrow ((P \in \operatorname{unitary}\left(\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), Complex\right)\right)) \Rightarrow (\operatorname{Matrix}.\operatorname{submatrix}\left(\operatorname{Matrix}.\operatorname{blockDiagonal}\left(![Q, P]\right), \operatorname{Prod}.\operatorname{swap}, \operatorname{Prod}.\operatorname{swap}\right) \in \operatorname{unitary}\left(\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right), Complex\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled_unitary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any two unitary complex qubit matrices Q and P, the controlled matrix is unitary. The matrix is block diagonal with blocks Q and P, with both pair coordinates swapped. Thus the first coordinate selects Q for 0 and P for 1, while the second coordinate carries their action.
+
+**Theorem 1.12 (Mixed controlled-block trace identity).**
 
 $$\forall Q,P,\rho\in\operatorname{Mat}\left(2, C\right),\forall j,k\in\operatorname{Fin}\left(2\right),\operatorname{entry}\left(\operatorname{trG}\left(\operatorname{B}\left(Q, P\right) \operatorname{kron}\left(\rho, \sigma\right) (\operatorname{B}\left(Q, P\right))^{*}\right), j, k\right) = \operatorname{entry}\left(\rho, j, k\right) \operatorname{tr}\left(\sigma (\operatorname{branch}\left(Q, P, k\right))^{*} \operatorname{branch}\left(Q, P, j\right)\right)$$
 
@@ -138,7 +162,7 @@ $$\forall Q,P,\rho\in\operatorname{Mat}\left(2, C\right),\forall j,k\in\operator
 
 Q, P and rho are arbitrary complex two-dimensional matrices. branch(Q,P,0) is Q and branch(Q,P,1) is P. The identity directly expands the mixed partial trace; no damping or Gram hypothesis is assumed.
 
-**Theorem 1.11 (All entries of the actual reduced channel).**
+**Theorem 1.13 (All entries of the actual reduced channel).**
 
 $$\forall v,w,t \in R, (|v| < \sqrt{\frac{3}{2}}) \Rightarrow \forall \rho\in\operatorname{Mat}\left(2, C\right),\operatorname{Phi}\left(v, w, t, \rho\right) = \begin{pmatrix}\operatorname{entry}\left(\rho, 0, 0\right)&(\operatorname{chi}\left(v, w, t\right))^{*} \operatorname{entry}\left(\rho, 0, 1\right)\\\operatorname{chi}\left(v, w, t\right) \operatorname{entry}\left(\rho, 1, 0\right)&\operatorname{entry}\left(\rho, 1, 1\right)\end{pmatrix}$$
 
@@ -150,7 +174,7 @@ $$\forall v,w,t \in R, (|v| < \sqrt{\frac{3}{2}}) \Rightarrow \forall \rho\in\op
 
 The raw matrix identity specializes to every canonical density state. The conjugate occurs in the upper off-diagonal entry.
 
-**Theorem 1.12 (Special propagators with their global phase).**
+**Theorem 1.14 (Special propagators with their global phase).**
 
 $$\forall w,t \in R, (\operatorname{V}\left(1, w, t\right) = \operatorname{exp}\left(-i w t\right) ( \operatorname{cos}\left(\frac{w t}{2}\right) I - i \operatorname{sin}\left(\frac{w t}{2}\right) Z )) \land\\{}(\operatorname{V}\left(-1, w, t\right) = \operatorname{exp}\left(-i w t\right) ( \operatorname{cos}\left(\frac{w t}{2}\right) I - i \operatorname{sin}\left(\frac{w t}{2}\right) X ))$$
 
@@ -162,7 +186,7 @@ $$\forall w,t \in R, (\operatorname{V}\left(1, w, t\right) = \operatorname{exp}\
 
 Pinned Mathlib's map_exp applied to the two-coordinate algebra map and exp_diagonal evaluate the actual exponentials. No Hadamard result is copied or reproved.
 
-**Theorem 1.13 (Equal isolated coherence functions).**
+**Theorem 1.15 (Equal isolated coherence functions).**
 
 $$\forall w,t \in R, (\operatorname{chi}\left(1, w, t\right) = \operatorname{exp}\left(-i w t\right) \operatorname{cos}\left(\frac{w t}{2}\right)) \land\\{}(\operatorname{chi}\left(-1, w, t\right) = \operatorname{exp}\left(-i w t\right) \operatorname{cos}\left(\frac{w t}{2}\right))$$
 
@@ -174,7 +198,7 @@ $$\forall w,t \in R, (\operatorname{chi}\left(1, w, t\right) = \operatorname{exp
 
 The maximally mixed structure state gives the same coherence for both directions at every real duration.
 
-**Theorem 1.14 (Equal isolated reduced channels).**
+**Theorem 1.16 (Equal isolated reduced channels).**
 
 $$\forall w,t \in R, \forall \rho\in\operatorname{DensityState}\left(\operatorname{Fin}\left(2\right)\right),\operatorname{Phi}\left(1, w, t, \rho\right) = \operatorname{Phi}\left(-1, w, t, \rho\right)$$
 
@@ -186,7 +210,7 @@ $$\forall w,t \in R, \forall \rho\in\operatorname{DensityState}\left(\operatorna
 
 Equality quantifies over the current canonical density-state carrier and the actual partial-trace maps.
 
-**Theorem 1.15 (Actual pi-pulse operators).**
+**Theorem 1.17 (Actual pi-pulse operators).**
 
 $$\forall w,t \in R, (w t = \pi) \Rightarrow (\operatorname{V}\left(1, w, t\right) = i Z) \land\\{}(\operatorname{V}\left(-1, w, t\right) = i X)$$
 
@@ -198,7 +222,7 @@ $$\forall w,t \in R, (w t = \pi) \Rightarrow (\operatorname{V}\left(1, w, t\righ
 
 The pulse equation yields iZ and iX, including the global phase inherited from the positive roots.
 
-**Theorem 1.16 (Opposite pulse orders differ by sign).**
+**Theorem 1.18 (Opposite pulse orders differ by sign).**
 
 $$\forall w,t \in R, (w t = \pi) \Rightarrow \operatorname{V}\left(-1, w, t\right) \operatorname{V}\left(1, w, t\right) = -(\operatorname{V}\left(1, w, t\right) \operatorname{V}\left(-1, w, t\right))$$
 
@@ -210,7 +234,7 @@ $$\forall w,t \in R, (w t = \pi) \Rightarrow \operatorname{V}\left(-1, w, t\righ
 
 The exponential identities specialize the existing canonical Pauli anticommutation theorem.
 
-**Theorem 1.17 (Actual coherent order marginal).**
+**Theorem 1.19 (Actual coherent order marginal).**
 
 $$\forall w,t_{+},t_{-} \in R, \operatorname{rhoctrl}\left(w, t_{+}, t_{-}\right) = \frac{1}{2} \begin{pmatrix}1&(\operatorname{gamma}\left(w, t_{+}, t_{-}\right))^{*}\\\operatorname{gamma}\left(w, t_{+}, t_{-}\right)&1\end{pmatrix}$$
 
@@ -222,7 +246,7 @@ $$\forall w,t_{+},t_{-} \in R, \operatorname{rhoctrl}\left(w, t_{+}, t_{-}\right
 
 The same structure register is retained through both pulses. Branch zero carries Q and branch one P; the structure is discarded only after the coherent comparison.
 
-**Theorem 1.18 (General-duration interference coefficient).**
+**Theorem 1.20 (General-duration interference coefficient).**
 
 $$\forall w,t_{+},t_{-} \in R, \operatorname{gamma}\left(w, t_{+}, t_{-}\right) = 1-2 (\operatorname{sin}\left(\frac{w t_{+}}{2}\right))^{2} (\operatorname{sin}\left(\frac{w t_{-}}{2}\right))^{2}$$
 
@@ -234,7 +258,7 @@ $$\forall w,t_{+},t_{-} \in R, \operatorname{gamma}\left(w, t_{+}, t_{-}\right) 
 
 With a equal to omega tPlus over two and b equal to omega tMinus over two, the independent operator trace evaluates to one minus twice sin(a) squared sin(b) squared.
 
-**Theorem 1.19 (Relative pi phase in the implemented control).**
+**Theorem 1.21 (Relative pi phase in the implemented control).**
 
 $$\forall w,t \in R, (w t = \pi) \Rightarrow (\operatorname{H}\left(w, t, t\right) = -I) \land\\{}(\operatorname{gamma}\left(w, t, t\right) = -1) \land\\{}(\operatorname{rhoctrl}\left(w, t, t\right) = \frac{1}{2} \begin{pmatrix}1&-1\\-1&1\end{pmatrix})$$
 
@@ -252,7 +276,7 @@ $$
 (\operatorname{zplus}\left(\lambda\right) = \operatorname{exp}\left(-i w t_{+} \operatorname{nplus}\left(\lambda\right)\right)) \land\\{}(\operatorname{zminus}\left(\lambda\right) = \operatorname{exp}\left(-i w t_{-} \operatorname{nminus}\left(\lambda\right)\right)) \land\\{}(\operatorname{c}\left(\lambda\right) = (\operatorname{zplus}\left(\lambda\right) \operatorname{zminus}\left(\lambda\right))^{*} \operatorname{zminus}\left(\lambda\right) \operatorname{zplus}\left(\lambda\right))
 $$
 
-**Theorem 1.20 (Fixed-label scalar order).**
+**Theorem 1.22 (Fixed-label scalar order).**
 
 $$\forall \Lambda,\forall nplus,nminus:\Lambda \to R,\forall w,t_{+},t_{-} \in R, \forall \lambda\in\Lambda,(\operatorname{zminus}\left(\lambda\right) \operatorname{zplus}\left(\lambda\right) = \operatorname{zplus}\left(\lambda\right) \operatorname{zminus}\left(\lambda\right)) \land\\{}(\operatorname{c}\left(\lambda\right) = 1) \land\\{}(\operatorname{c}\left(\lambda\right)\neq-1)$$
 
@@ -264,7 +288,7 @@ $$\forall \Lambda,\forall nplus,nminus:\Lambda \to R,\forall w,t_{+},t_{-} \in R
 
 These scalar phases commute and have unit modulus. The relative coefficient is one, so it cannot be minus one.
 
-**Theorem 1.21 (Arbitrary probability averaging).**
+**Theorem 1.23 (Arbitrary probability averaging).**
 
 $$\forall \Lambda,\operatorname{MeasurableSpace}\left(\Lambda\right),\forall \mu\in\operatorname{ProbabilityMeasures}\left(\Lambda\right),\forall nplus,nminus:\Lambda \to R,\forall w,t_{+},t_{-} \in R, (\int \operatorname{c}\left(\lambda\right) d\mu = 1) \land\\{}(\int \operatorname{c}\left(\lambda\right) d\mu\neq-1) \land\\{}(\int \operatorname{zminus}\left(\lambda\right) \operatorname{zplus}\left(\lambda\right) d\mu = \int \operatorname{zplus}\left(\lambda\right) \operatorname{zminus}\left(\lambda\right) d\mu)$$
 
@@ -276,7 +300,7 @@ $$\forall \Lambda,\operatorname{MeasurableSpace}\left(\Lambda\right),\forall \mu
 
 The measure is any probability measure on the label space. Rates need no measurability assumption for the relative coefficient, which is pointwise constant before integration. Pointwise equal ordered amplitudes also have equal Bochner integrals. Their equality alone would not exclude a sign, since both averaged amplitudes can vanish.
 
-**Theorem 1.22 (Positive-frequency source experiment).**
+**Theorem 1.24 (Positive-frequency source experiment).**
 
 $$\forall w \in R, (w>0) \Rightarrow (\forall v \in R, (|v| < \sqrt{\frac{3}{2}}) \Rightarrow (\operatorname{PosDef}\left(\operatorname{R}\left(v\right)\right)) \land\\{}(\operatorname{PosDef}\left(\operatorname{N}\left(v\right)\right)) \land\\{}((\operatorname{N}\left(v\right))^{2} = \operatorname{R}\left(v\right))) \land\\{}((\operatorname{Hermitian}\left(A\right)) \land\\{}(\operatorname{Hermitian}\left(Bcoeff\right)) \land\\{}(\operatorname{Hermitian}\left(Ccoeff\right)) \land\\{}(\frac{1}{2} I \le A) \land\\{}(\forall v \in R, \operatorname{R}\left(v\right) = A+2 v Bcoeff-(v)^{2} Ccoeff) \land\\{}(\forall \xi \in R, (\xi)^{2} Ccoeff = \frac{(\xi)^{2}}{4} I)) \land\\{}((\operatorname{N}\left(1\right) = I+\frac{1}{2} Z) \land\\{}(\operatorname{N}\left(-1\right) = I+\frac{1}{2} X)) \land\\{}((\operatorname{matrix}\left(\operatorname{mixedState}\left(\right)\right) = \sigma) \land\\{}(\operatorname{Surjective}\left(\operatorname{mulVec}\left(\sigma\right)\right))) \land\\{}(\forall v,t \in R, (|v| < \sqrt{\frac{3}{2}}) \Rightarrow \operatorname{Unitary}\left(\operatorname{B}\left(I, \operatorname{V}\left(v, w, t\right)\right)\right)) \land\\{}(\forall t \in R, (\operatorname{chi}\left(1, w, t\right) = \operatorname{exp}\left(-i w t\right) \operatorname{cos}\left(\frac{w t}{2}\right)) \land\\{}(\operatorname{chi}\left(-1, w, t\right) = \operatorname{exp}\left(-i w t\right) \operatorname{cos}\left(\frac{w t}{2}\right))) \land\\{}(\forall t \in R, \forall \rho\in\operatorname{DensityState}\left(\operatorname{Fin}\left(2\right)\right),\operatorname{Phi}\left(1, w, t, \rho\right) = \operatorname{Phi}\left(-1, w, t, \rho\right)) \land\\{}(\forall t_{+},t_{-} \in R, (\operatorname{gamma}\left(w, t_{+}, t_{-}\right) = 1-2 (\operatorname{sin}\left(\frac{w t_{+}}{2}\right))^{2} (\operatorname{sin}\left(\frac{w t_{-}}{2}\right))^{2}) \land\\{}(\operatorname{rhoctrl}\left(w, t_{+}, t_{-}\right) = \frac{1}{2} \begin{pmatrix}1&(\operatorname{gamma}\left(w, t_{+}, t_{-}\right))^{*}\\\operatorname{gamma}\left(w, t_{+}, t_{-}\right)&1\end{pmatrix})) \land\\{}(\forall t \in R, (w t = \pi) \Rightarrow (\operatorname{V}\left(1, w, t\right) = i Z) \land\\{}(\operatorname{V}\left(-1, w, t\right) = i X) \land\\{}(\operatorname{V}\left(-1, w, t\right) \operatorname{V}\left(1, w, t\right) = -(\operatorname{V}\left(1, w, t\right) \operatorname{V}\left(-1, w, t\right))) \land\\{}((\operatorname{H}\left(w, t, t\right) = -I) \land\\{}(\operatorname{gamma}\left(w, t, t\right) = -1) \land\\{}(\operatorname{rhoctrl}\left(w, t, t\right) = \frac{1}{2} \begin{pmatrix}1&-1\\-1&1\end{pmatrix}))) \land\\{}(w \frac{\pi}{w} = \pi) \land\\{}(\forall \Lambda,\operatorname{MeasurableSpace}\left(\Lambda\right),\forall \mu\in\operatorname{ProbabilityMeasures}\left(\Lambda\right),\forall nplus,nminus:\Lambda \to R,\forall t_{+},t_{-} \in R, (\int \operatorname{c}\left(\lambda\right) d\mu = 1) \land\\{}(\int \operatorname{c}\left(\lambda\right) d\mu\neq-1) \land\\{}(\int \operatorname{zminus}\left(\lambda\right) \operatorname{zplus}\left(\lambda\right) d\mu = \int \operatorname{zplus}\left(\lambda\right) \operatorname{zminus}\left(\lambda\right) d\mu))$$
 
@@ -298,6 +322,7 @@ The exclusion concerns only fixed commuting scalar clocks. Time-varying classica
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.clock_reduced_entries`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled_clock_evolution`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled_partial_trace`
+- Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled_unitary`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.fixed_scalar_clock_order`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.isolated_clock_channels_equal`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.isolated_clock_coherence`
@@ -313,7 +338,9 @@ The exclusion concerns only fixed commuting scalar clocks. Time-varying classica
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.positive_clock_speed`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.positive_pauli_clock_order_separation`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.pulse_eq_exp`
+- Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.sigma_posDef`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.special_directions_mem`
 - Dependency: [D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow](ProjectionProbabilityFlow.md)
 - Dependency: [D5/S3/Quantum/EnvironmentRecords](../EnvironmentRecords.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Foundation/FiniteStateChannel.md)
+- Dependency: [D5/S3/Quantum/Matrix/SpectralPower](../Matrix/SpectralPower.md)

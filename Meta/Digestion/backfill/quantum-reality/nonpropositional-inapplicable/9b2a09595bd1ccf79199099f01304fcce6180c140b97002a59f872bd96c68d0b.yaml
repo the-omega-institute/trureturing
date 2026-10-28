@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9b2a09595bd1ccf79199099f01304fcce6180c140b97002a59f872bd96c68d0b
+  normalized_sha256: sha256:9b2a09595bd1ccf79199099f01304fcce6180c140b97002a59f872bd96c68d0b
+cas_ref: sha256:9b2a09595bd1ccf79199099f01304fcce6180c140b97002a59f872bd96c68d0b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 按 CLAUDE.md §3.2 只由钉版上游闭合的命题结算，不报非数学内容或新证明。mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679；实际供应声明：List.length_append, List.length_pos_iff_ne_nil, lt_add_of_pos_right。将原始记录解释为任意类型上的 List、字面连接解释为 List.append；非空追加词给出正长度，长度严格增加也排除追加后与原词相等。D5 搜索范围：全 D5/**/*.lean（含 private），按 length_append/append_ne_self/record length/rawRecord 检索；读取 HistoryCarrier、CancellationLedger、GenerationArrowOfTime、FixedFiberPairModulus、OriginalAcquiredTrace。已有追加结论限制于 Event、Action 或取得档案，未供应任意字母表的非空追加词原句。
+    previous_atom_id: 9f9026aa1f0a96d897ac1c792267270a786a38b40943bb1ccef16ba5c2a03e7d
+    next_atom_id: 5b8eda227859d44e6cf181d8e7b541a05efec11c68062087ad8db2e772bcd7fa

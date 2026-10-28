@@ -1,0 +1,7 @@
+**Theorem 13.1 (complete confidence-qualified unknown-field startup).** On the single event $E$ of Theorem 12.3, the same run has all the following properties simultaneously.
+
+- Its accepted $N,T$, impulse law, native field at the acquisition cut (UFS.30), and final native field are exact. The initial random pulses and every gate Tick are included in the actual entry field of the successful branch, rather than treated as a reset or a second specimen.
+- The branch's $N$ actual Tick/Add pairs prepare exactly $e_0$ at a new recorded origin $o$. The subsequent origin Read and $2N$ actual passive Ticks have the exact ordered values $(m_0,\ldots,m_{2N})$. At the terminal cut the physical field is $T^{2N}e_0$ relative to this new origin.
+- Its retained $T,q,\mu$, native vector $\widehat x$ and predictive vector $a$ satisfy $\widehat x=x_{\rm actual}$ and $a=\mathcal O_Nx_{\rm actual}$. They predict every declared output and native successor for every finite legal adaptive continuation in the original Read/Tick/Hold/signed-Add menu. Scratch forecasts require no new source observation. Real calls retain their original rights, update the actual specimen, and keep this record synchronized.
+- Space, Time, Boundary and Memory have precisely Definition 6.1's independent meanings and satisfy P Definition 39.1 with $k=2N$. Every recovery route and transported passive Tick agrees as in P Propositions 39.3–39.4. The independently retained command/output record does not become an extra field of each view.
+

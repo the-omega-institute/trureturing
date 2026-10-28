@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5a13871fa1f3a526bc4d5e390e28f01fff1e163868244a145c870c04243ab502
+  normalized_sha256: sha256:5a13871fa1f3a526bc4d5e390e28f01fff1e163868244a145c870c04243ab502
+cas_ref: sha256:5a13871fa1f3a526bc4d5e390e28f01fff1e163868244a145c870c04243ab502
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Cassirer 序列形式与成员的哲学解释及 MMM 的关系保留要求。
+    previous_atom_id: 21594bafa818070e16116d7cf558b2d4329e1b307175948cace39c295339fa4a
+    next_atom_id: 305601bd4d94ce203f89d6ceeb9405a93d0a8ad5d9d6dc0966ef219294b279a3

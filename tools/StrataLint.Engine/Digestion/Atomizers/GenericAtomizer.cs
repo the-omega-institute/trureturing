@@ -58,32 +58,19 @@ internal static class GenericAtomizer
         "[^\\p{L}\\p{N}]+",
         RegexOptions.CultureInvariant);
 
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
-        AtomizeWithContentKinds(bytes, rules, contentKinds: null);
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes) =>
+        AtomizeWithContentKinds(bytes, contentKinds: null);
 
     internal static ImmutableDictionary<string, string> ResolveContentKinds(
-        ReadOnlyMemory<byte> bytes,
-        TheoryAtomizerRules rules) =>
+        ReadOnlyMemory<byte> bytes) =>
         AtomizerRegistry.CaptureContentKinds(kinds =>
-            AtomizeWithContentKinds(bytes.Span, rules, kinds));
+            AtomizeWithContentKinds(bytes.Span, kinds));
 
     internal static AtomizedTheoryDocument AtomizeWithContentKinds(
         ReadOnlySpan<byte> bytes,
-        TheoryAtomizerRules _,
         IDictionary<string, string>? contentKinds)
     {
-        var document = MarkdownAstAtomizer.Atomize(
-            bytes,
-            IdentifyParagraph,
-            static () => GenreRegistryCheck.NoGenreRegistry,
-            identifyHeading: IdentifyHeading,
-            parse: MarkdigBlockAst.Parse,
-            identifyTableRow: IdentifyTableRow,
-            dropEmptyHeadingClaims: true,
-            identifyHeadingClaim: IsHeadingClaim,
-            contentKinds: contentKinds);
-        // 分解生产侧与 pzg 同一实现:08-15 的吸收分解门对全部方言执法,
-        // generic-v1 的多子句 claim 同样必须能产出 clause plan(#3499)。
+        var document = AtomizeStructure(bytes, contentKinds);
         var clausePlans = document.Claims
             .Select(DigestionDecomposition.PlanClauses)
             .Where(static plan => plan is not null)
@@ -97,16 +84,16 @@ internal static class GenericAtomizer
             document.GenreRegistryCheck);
     }
 
-    /// <summary>
-    /// Outside a numbered claim, a claim table states one proposition per row, each with
-    /// its own attestation and truth status. Scoped claims retain their internal tables;
-    /// MarkdownAstAtomizer resolves that ownership before emitting disjoint spans. The
-    /// header row names columns rather than stating anything, and is not a claim.
-    /// </summary>
-    private static string? IdentifyTableRow(MarkdownTableRow row) =>
-        row.IsHeader || row.FirstCellText.Length == 0
-            ? null
-            : RowKind + "/" + Slug(row.FirstCellText);
+    internal static AtomizedTheoryDocument AtomizeStructure(
+        ReadOnlySpan<byte> bytes, IDictionary<string, string>? contentKinds = null,
+        Func<string, ImmutableArray<MarkdownBlock>>? parse = null) =>
+        MarkdownAstAtomizer.Atomize(bytes, IdentifyParagraph,
+            static () => GenreRegistryCheck.NoGenreRegistry,
+            identifyHeading: IdentifyHeading,
+            parse: parse ?? MarkdigBlockAst.ParseOwned,
+            dropEmptyHeadingClaims: true,
+            identifyHeadingClaim: IsHeadingClaim,
+            contentKinds: contentKinds);
 
     private static string? IdentifyHeading(string heading)
     {

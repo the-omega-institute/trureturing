@@ -88,7 +88,19 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWin
 
 For every prior archive length a, child vertex v and coordinate i, the literal row at actual issued index a+i+1 increments the native scalar by that vertex label code coordinate. The modular phase includes the complete prior archive rotation.
 
-**Theorem 1.8 (The exact four-label charges).**
+**Theorem 1.8 (A final zero followed by one fixes the terminal tail).**
+
+$$(\forall (n:\mathbb{N}), ((\forall (w:\operatorname{Fin}\left(n + 2\right) \to \operatorname{Bool}), ((\forall (s:\mathbb{N}), (((w\left(n\right) = \operatorname{false}) \implies (((w\left(n + 1\right) = \operatorname{true}) \implies (\operatorname{tailAfter}\left(s, w\right) = 1))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.terminal01_tail` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every Boolean word of length n+2 and every incoming tail s, a zero at position n followed by a one at position n+1 makes the chronological terminal tail exactly one.
+
+**Theorem 1.9 (The exact four-label charges).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.exceptional_row_coordinates`
 
@@ -100,7 +112,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWin
 
 The explicit four-label code assignment at dimension two makes the first head charge zero, its last and preceding charges one, and the second first three charges 1,0,1. This holds for every m at least three, including m=3, with arbitrary repeated occurrences elsewhere in the table.
 
-**Theorem 1.9 (The exceptional two-word seam).**
+**Theorem 1.10 (The exceptional two-word seam).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.exceptional_literal_execution`
 
@@ -112,7 +124,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWin
 
 For every incoming scalar, phase and valid tail, the exact selected first word starts zero and ends 01, with terminal tail exactly one. The second word begins 110. Its crossing run is three, strictly below k=m+1 including m=3. The first native step succeeds and the second succeeds by first_zero_block_exact, without safeRows or a repair word.
 
-**Definition 1.10 (The actual fixed-script archive).**
+**Definition 1.11 (The actual fixed-script archive).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.scriptArchive`
 
@@ -124,7 +136,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWin
 
 Recursively issue every complete word and pair it with that source record's own endpoint. The script does not stop early, including on rejection.
 
-**Definition 1.11 (The forced-final archive-only selector).**
+**Definition 1.12 (The forced-final archive-only selector).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.finalSelector`
 
@@ -136,7 +148,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWin
 
 The selector indexes the prescribed words by its own archive length after the acquired prefix. It issues every available prescribed word before calling the decoder on its own suffix archive. It reads no source phase, hidden clock or sibling reply.
 
-**Theorem 1.12 (The original selector pays the exact script length).**
+**Theorem 1.13 (The original selector pays the exact script length).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.original_final_script`
 
@@ -148,7 +160,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWin
 
 For arbitrary label type, k at least two, block width, fixed complete-word list, decoder, given original history, free reading and acquired prefix, the prescribed selector has a PaidTrace issuing exactly that list. The issued archive length and returned original fee both equal the full script length; the decoder is called only after every word. Rejecting words are still paid. This theorem alone does not assert decoder correctness or successful endpoints.
 
-**Definition 1.13 (The fixed physical suffix).**
+**Definition 1.14 (The fixed physical suffix).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.actualWords`
 
@@ -160,7 +172,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWin
 
 Map every selected ordered donor row through the native prefix-parity inverse, in code coordinate order. Each complete word has width m and is legal in both original alphabets because m is less than k.
 
-**Definition 1.14 (Only own-endpoint differences).**
+**Definition 1.15 (Only own-endpoint differences).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.endpointDifferences`
 
@@ -172,7 +184,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWin
 
 Subtract the remembered scalar from the next actual endpoint and continue from that endpoint. Rejection is retained as an unavailable difference; no source coordinate is read.
 
-**Theorem 1.15 (Both branches give all code coordinates).**
+**Theorem 1.16 (Both branches give all code coordinates).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.physical_endpoint_codes`
 
@@ -186,7 +198,7 @@ For arbitrary odd m at least three, fitting d at least two, repeated-label table
 
 The native endpoint sequence equals chargeArchive in both branches. The no-none clause of charge_archive_live in `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowChargeInverse` then supplies endpoint availability for that same sequence.
 
-**Definition 1.16 (The full final code vector).**
+**Definition 1.17 (The full final code vector).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.codeVector`
 
@@ -198,7 +210,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWin
 
 The selected binary code is represented as d successful endpoint differences in their original coordinate order.
 
-**Definition 1.17 (Decode only the final own archive).**
+**Definition 1.18 (Decode only the final own archive).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.decodeArchive`
 
@@ -210,7 +222,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWin
 
 Match the final own-endpoint differences to the fixed selected code table and return the matching label. A fallback exists only for transcripts outside the stated compatible source fiber.
 
-**Theorem 1.18 (One complete original-source physical INITIAL decoder).**
+**Theorem 1.19 (One complete original-source physical INITIAL decoder).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.original_physical_initial_decoder`
 
@@ -241,6 +253,7 @@ For odd m at least three and k=m+1, fix either original alphabet, an arbitrary a
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.physical_endpoint_codes`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.regular_rows_safe`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.scriptArchive`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.terminal01_tail`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.vertexBit`
 - Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace](OriginalAcquiredTrace.md)
 - Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowSeamCodes](WindowSeamCodes.md)

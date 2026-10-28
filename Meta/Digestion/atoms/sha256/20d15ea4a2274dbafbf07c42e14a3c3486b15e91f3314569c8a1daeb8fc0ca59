@@ -1,0 +1,28 @@
+**Proposition 15.2 (finite rational work, including false branches).** There is an attained choice of the finite exact algorithms in Definition 11.1 with observer arithmetic/comparison work $O(m^5)$, and $O(m^2)$ integer square-root tests, on every run stopping at stage $m$. These counts include the detector determinants, failed elimination or positivity tests, false extrapolations, rejected link roots, candidate decoding, preparation, passive checking and retained predictor installation. There are absolute constants $c,C$ for this choice such that every tape on a fixed specimen satisfies
+
+$$
+\begin{aligned}
+H_0&=B+X+b+N+\lceil\log_2(N+2)\rceil+10,\\
+W_\rho&\le C\,8^{\,c(N+1)^5}H_0.
+\end{aligned}
+\tag{UFS.36}
+$$
+
+In terms of actual attained widths, one sufficient bit-work bound, including the direct source arithmetic, is
+
+$$
+O\!\left(\left[m^5+(5N-4)J+A\right]W_\rho^3
+       +K_m+L_{\rm io}\right)+G_{\rm work},
+\tag{UFS.37}
+$$
+
+with actual installation/control/backing work added. This is a finite sufficient bound, without a claim of arithmetic optimality or a polynomial width bound for false candidates.
+
+Proof. Reduced rational Gaussian elimination with finite pivot search costs $O(n^3)$ field operations per matrix of size at most $n+1$. Computing the at most $n$ successive blocks and all their finite leading-minor tests costs $O(n^4)$ if previously needed minors are reused. Alternatively, computing each matrix's positive-definiteness criterion by one symmetric elimination, rejecting zero or negative pivots, gives the same bound. Monic solves, moment pairings, native decoding and observability/control construction fit $O(n^4)$ as in Proposition 8.3, with all guards included. Determinants or the characteristic polynomial can be computed by elimination or the tridiagonal continuant; permutation enumeration is unnecessary. Generating and checking at most $4n$ free values takes $O(n^2)$ field operations. Each of the at most $n-1$ candidate links needs two finite integer-root tests. Propagating its bounded preparation/passive suffix and its predictor also fits the same arithmetic bound. A failed prefix costs at most the complete bounded calculation. Summing $O(n^4)$ and $O(n)$ over $n\le m$ gives the asserted bounds.
+
+For finiteness of widths on exceptional tapes, the smaller true-cap width estimate (UFS.23) is not used. In particular a false extrapolated value need not have a true-response denominator. Instead use the elementary height estimate for exact rational operations. If the existing operand widths are at most $h\ge1$, addition, subtraction, multiplication, division by a tested nonzero value, gcd/lcm and their unreduced cross-products have widths at most $4h+4$. Reduction does not increase widths. Integer floor-root extraction and squaring checks use widths bounded by a constant multiple of their input widths. These estimates also cover rejected tests and the actual source's additions and multiplications.
+
+The original source words have widths at most $B+X$. Each new random integer has width at most $k_N+1\le b+N+\lceil\log_2(N+1)\rceil+1$. Apart from bit copying/counters, all later rational words are obtained from those words and fixed small constants by the stated operations. The observer uses $O(N^5)$ such operations because $m\le N$. The source uses $O(NJ+A)=O(N^3)$ of them by Proposition 14.2. Increasing an absolute constant $c$ absorbs fixed factors and root-test intermediate widths into at most $c(N+1)^5$ height-growth steps, each bounded by multiplication by $8$. This proves (UFS.36). It allows bad candidate pulses to increase all later source widths; none has been omitted or bounded using a fictitious rollback.
+
+School integer multiplication/division at width $O(W_\rho)$ takes $O(W_\rho^2)$ bit steps. Euclidean reduction and binary-search integer square roots each admit the safe $O(W_\rho^3)$ bound. The preceding arithmetic counts, Proposition 14.4's source work, $K_m$ bit assembly, and actual I/O therefore give (UFS.37). The generosity of (UFS.36) makes no assumption that these widths are public or actually attained. It is a proof envelope; (UFS.37) charges actual widths. $\square$
+

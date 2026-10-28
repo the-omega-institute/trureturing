@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4502412dd27498859ed25f28d07987a5d1206544da169bd7f21851c1c820bd2c
+  normalized_sha256: sha256:4502412dd27498859ed25f28d07987a5d1206544da169bd7f21851c1c820bd2c
+cas_ref: sha256:4502412dd27498859ed25f28d07987a5d1206544da169bd7f21851c1c820bd2c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 建议形式化文件清单，没有声称列出的目标已经证明。
+    previous_atom_id: 8bab80618608b0326360547cfd5b309243c692425f2abbab3e2d1392c9947a0b
+    next_atom_id: 2a4ed4d89f188f0c1f5475a159f9091ae6d3753311de9ef7047ea410c929a571

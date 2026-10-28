@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fb86256b22e7d40d9b54d78af75089f72f66a7f77ed6bea646e300291ee3decf
+  normalized_sha256: sha256:fb86256b22e7d40d9b54d78af75089f72f66a7f77ed6bea646e300291ee3decf
+cas_ref: sha256:fb86256b22e7d40d9b54d78af75089f72f66a7f77ed6bea646e300291ee3decf
+coverage_gids:
+  - gid: D5/S3/Factorization/Embeddings/RationalValuationRecovery.rational_recovered_from_sign_and_finite_valuations
+    target_statement_id: sha256:07e1c3f4b3bb95958d080761e22815f86f32afd0e2e117728e0328dd817abe17
+receipts:
+  unresolved_subitems: []

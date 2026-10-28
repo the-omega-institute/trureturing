@@ -14,6 +14,26 @@ internal sealed class ActualOddMobiusFinitePairingDocument : IScribeDocumentDefi
                 + "O(N). Every kernel P is a real-valued function on the actual "
                 + "integer inputs, with J(n)=P(n)-P(n+1).")),
             Describe.Lean(
+                DescribeId.Create("actual-mobius-prefix-abel"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualOddMobiusFinitePairing.prefix_abel"),
+                H("The full-prefix Abel identity"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every real sequence P on the natural numbers and every "
+                        + "natural cutoff N, sum(1<=n<=N,M(n)*(P(n)-P(n+1)))="
+                        + "sum(1<=m<=N,mu(m)*P(m))-M(N)*P(N+1). "
+                        + "At N=0 both sums and M(0) are zero. Every positive Mobius "
+                        + "index through N and the exact N+1 boundary are retained.")),
+                    Paragraph(Text(
+                        "This is the original supplier used by the clipped pairing "
+                        + "below. OriginalResidualFiniteTransfer also consumes it "
+                        + "directly for its full-prefix identity and low-prefix bound. "
+                        + "Public visibility exposes that existing proof for reuse; "
+                        + "it adds no new mathematical or literature claim."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-odd-mobius-finite-pairing"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/ActualOddMobiusFinitePairing.result"),
                 H("The exact odd pairing and terminal remainder"),

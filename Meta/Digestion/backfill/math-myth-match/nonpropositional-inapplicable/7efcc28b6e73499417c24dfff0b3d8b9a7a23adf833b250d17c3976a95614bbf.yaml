@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7efcc28b6e73499417c24dfff0b3d8b9a7a23adf833b250d17c3976a95614bbf
+  normalized_sha256: sha256:7efcc28b6e73499417c24dfff0b3d8b9a7a23adf833b250d17c3976a95614bbf
+cas_ref: sha256:7efcc28b6e73499417c24dfff0b3d8b9a7a23adf833b250d17c3976a95614bbf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 并列三个传统的所问问题与不可互换的终点，属于比较哲学解释。
+    previous_atom_id: a2c7ec79bdef73b8f395b7e3d1fc99ee0b3e51c1b908a986a73fe9716786e7a2
+    next_atom_id: ddb031315a077103a9dd886e28655a56ff2023274a9fc6237a0e7ae7344eddcd

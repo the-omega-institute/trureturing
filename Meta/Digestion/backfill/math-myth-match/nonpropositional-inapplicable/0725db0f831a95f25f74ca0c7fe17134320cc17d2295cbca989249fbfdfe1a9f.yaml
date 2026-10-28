@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0725db0f831a95f25f74ca0c7fe17134320cc17d2295cbca989249fbfdfe1a9f
+  normalized_sha256: sha256:0725db0f831a95f25f74ca0c7fe17134320cc17d2295cbca989249fbfdfe1a9f
+cas_ref: sha256:0725db0f831a95f25f74ca0c7fe17134320cc17d2295cbca989249fbfdfe1a9f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 知识、判断、善意、指令权与学习者位置的概念分类。
+    previous_atom_id: de5f36479a4f2854b80eec7b8eb0922379de62210494f399d82dd882e45a0ea4
+    next_atom_id: 5222f8a6c287726cc0e76205385954b98c8a1c8e23f002ec96f42f88cb9f5f8b

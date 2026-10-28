@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ff7402a33d793cf8449636261e3b576bfdffc685b957f3a8434c7b9de85b36a6
+  normalized_sha256: sha256:ff7402a33d793cf8449636261e3b576bfdffc685b957f3a8434c7b9de85b36a6
+cas_ref: sha256:ff7402a33d793cf8449636261e3b576bfdffc685b957f3a8434c7b9de85b36a6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 描述 Hausdorff 路线在 q-moment 网格里寻找负有限差分的方法，不声称已经存在或找到负证书。
+    previous_atom_id: 657991a53e1acf31963b9fbef2d8ff6101e89575eebdf2149715c30f71e9dc17
+    next_atom_id: ee6c6a50884001c969397b1591576328ee044ad53275c7ed8c40c6ff1bd784ee

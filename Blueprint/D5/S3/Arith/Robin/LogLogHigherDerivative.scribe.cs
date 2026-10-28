@@ -30,6 +30,18 @@ internal sealed class LogLogHigherDerivativeDocument : IScribeDocumentDefinition
                     + "d K(m,a,b;x)/dx=-K(m+1,a,b;x)."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("positive-kernel-positive"),
+                DeclarationHandle.Create(Prefix + "positiveKernel_pos"),
+                H("Strict positivity of the recursive kernel"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For all natural m,a,b and every real x>1, K(m,a,b;x)>0. "
+                    + "The base inverse powers are positive; each recursion step is a sum "
+                    + "of two positive multiples. At m=1 and a=b=0 the kernel equals "
+                    + "(log(x)+1)/(x^2*log(x)^2), the activation density used by the "
+                    + "mixed arithmetic response."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("signed-higher-derivative"),
                 DeclarationHandle.Create(Prefix + "signed_iteratedDeriv_logLog_pos"),
                 H("The exact all-order sign"),

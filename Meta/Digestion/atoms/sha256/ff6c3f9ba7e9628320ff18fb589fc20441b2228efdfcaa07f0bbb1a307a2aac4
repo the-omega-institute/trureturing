@@ -1,0 +1,37 @@
+### 定义 379.1（有限路径与时间过滤）
+
+固定有限 horizon \(N\ge1\)，令
+
+$$
+\Omega_X=X_0\times\cdots\times X_{N-1},
+\qquad
+\Omega_Y=Y_0\times\cdots\times Y_{N-1},
+$$
+
+其中所有 \(X_n,Y_n\) 都是有限集。对 \(x\in\Omega_X\) 和 \(y\in\Omega_Y\)，写
+
+$$
+x_{\le n}=(x_0,\ldots,x_n),
+\qquad
+y_{\le n}=(y_0,\ldots,y_n).
+$$
+
+源路径与目标路径的自然过滤为
+
+$$
+\mathcal F^X_n=\sigma(x_{\le n}),
+\qquad
+\mathcal F^Y_n=\sigma(y_{\le n}).
+$$
+
+给定概率律 \(P\in\Delta(\Omega_X)\)、\(Q\in\Delta(\Omega_Y)\)，普通耦合为
+
+$$
+\Gamma(P,Q)
+=
+\left\{
+\pi\in\Delta(\Omega_X\times\Omega_Y):
+\pi_X=P,\ \pi_Y=Q
+\right\}.
+$$
+

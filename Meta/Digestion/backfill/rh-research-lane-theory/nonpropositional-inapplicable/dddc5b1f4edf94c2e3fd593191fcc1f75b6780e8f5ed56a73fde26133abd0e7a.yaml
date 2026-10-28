@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dddc5b1f4edf94c2e3fd593191fcc1f75b6780e8f5ed56a73fde26133abd0e7a
+  normalized_sha256: sha256:dddc5b1f4edf94c2e3fd593191fcc1f75b6780e8f5ed56a73fde26133abd0e7a
+cas_ref: sha256:dddc5b1f4edf94c2e3fd593191fcc1f75b6780e8f5ed56a73fde26133abd0e7a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在非声明清单中限制本轮未隔离离线零点；不是隔离定理的否定。
+    previous_atom_id: f648f3943a777e64de5ebd79424c83ab16c48a7beeff76b641a9576121780824
+    next_atom_id: 28a73ffae8c28f7cb97c6c0774f6117d7302ce5188d24d5000223204fe77c8c9

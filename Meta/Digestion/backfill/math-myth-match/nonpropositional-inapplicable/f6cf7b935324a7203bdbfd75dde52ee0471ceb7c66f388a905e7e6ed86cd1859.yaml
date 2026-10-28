@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f6cf7b935324a7203bdbfd75dde52ee0471ceb7c66f388a905e7e6ed86cd1859
+  normalized_sha256: sha256:f6cf7b935324a7203bdbfd75dde52ee0471ceb7c66f388a905e7e6ed86cd1859
+cas_ref: sha256:f6cf7b935324a7203bdbfd75dde52ee0471ceb7c66f388a905e7e6ed86cd1859
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提出跨传统话语比较的条件与MMM的自我约束，不宣称全部终点相同。
+    previous_atom_id: 7680cc64f453776a634214d0d7101652c909aecd962dc4f71ea07092880d2041
+    next_atom_id: 73a5f7215d473614d905a358aee0b91c0b77e7da61ddd671e4747b01c3fa87a2

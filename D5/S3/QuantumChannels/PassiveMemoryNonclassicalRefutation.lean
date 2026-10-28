@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.claim; result=D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.result; claim=D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.claim
    digest: A passive qubit memory for a qutrit system refutes classical Gram simulation. -/
 
+import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
@@ -53,10 +54,8 @@ def appendMemory {d r : ℕ} (τ : DensityState (Fin r)) :
 def discardMemory {d r : ℕ} : MatrixMap (Fin d × Fin r) (Fin d) ℂ :=
   { toFun := partialTraceRight
     map_add' := partialTraceRight_add
-    map_smul' := by
-      intro c A
-      ext i j
-      simp [partialTraceRight, Matrix.smul_apply, smul_eq_mul, Finset.mul_sum] }
+    map_smul' :=
+      D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.partialTraceRight_smul }
 
 def implemented {d r : ℕ} (τ : DensityState (Fin r))
     (Nen Nde : KrausChannel (Fin d × Fin r))

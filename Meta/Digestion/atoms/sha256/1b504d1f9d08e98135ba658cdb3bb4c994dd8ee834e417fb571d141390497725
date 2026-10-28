@@ -1,0 +1,225 @@
+**定理 109.2（任意发散余量下的标量桥与标记定位）。** 若确定噪声满足
+
+$$
+L\to\infty,\qquad\Delta\to\infty,
+\tag{109.3}
+$$
+
+则在原实际数据概率下，对原规定大小的确定支持一致，pair/path 分别成立
+
+$$
+\|f_{\mathsf Q}-f'\|_\infty\to0,
+\qquad
+\int(1+y^2)|f_x(y)-g_x(y)|\,dy\to0.
+\tag{109.4}
+$$
+
+第一式明确只对校准乘积比较律，不由它宣称原选中密度的逐点极限。
+此外，存在固定 $R_0>0$，使全部三个原标记变换在半整数带
+
+$$
+\left|t-\pi\ell\mathcal B\right|
+\le2\pi R_0\mathcal B/\mathcal D,\qquad\ell\in\mathbb Z
+\tag{109.5}
+$$
+
+之外的绝对积分至多 $CQ^{17/4}e^{-c\sqrt Q}$。
+下文给非零带的精确同数组表示及余项界。
+本定理没有把第 106 章的完整信息方差结论扩张到所有 (109.3)；
+带标记的中心抵消及输出尾部仍是缺口。
+
+**证明：小分母的精确收缩。** 在 (106.6) 的共同事件上，
+中心区域有至少 $c_0/\delta$ 个原坐标，$c\mathcal D\le d_j\le C\mathcal D$。
+对其中一个 $K\sim\operatorname{Bin}(n,p)$，写 $m=np$、$d=np(1-p)$。
+(106.8) 的离散 Gaussian 总变差误差为 $C\mathcal D^{-1/8}$。
+对既约 $p_0/k$，有限 Gauss 分解的系数模至多 $\sqrt{2/k}$。
+当 $k=1,2$ 时，整数平方模二等于整数本身，所以二次相位恰是一项模为一的线性相位。
+
+写 $\theta=p_0/k+\tau$。Poisson 求和中的单个 Gaussian 积分有模前因子
+
+$$
+F_d(\tau)=(1+16\pi^2d^2\tau^2)^{-1/4}
+\tag{109.6}
+$$
+
+及间距 $1/k$ 的对偶 Gaussian 网格。
+对固定 $k_0,R_0$，当 $k\le k_0$、$|\mathcal D\tau|\le2R_0$ 时，
+对任意实移位 $\xi$ 都有
+
+$$
+\sum_{v\in\mathbb Z}
+\exp\left[-\frac{2\pi^2d}{1+16\pi^2d^2\tau^2}(v/k-\xi)^2\right]
+\le1+C_{R_0,k_0}e^{-c_{R_0,k_0}\mathcal D}.
+\tag{109.7}
+$$
+
+取最近网格点，其项至多一，其余距离至少 $(j-1/2)/k$；
+若最近点并列，它们自身已指数小，仍给同一界。
+归一化常数也仅相差 $1+O(e^{-c\mathcal D})$。
+因此对 $3\le k\le k_0$，任意原实中心 $\mu$，
+
+$$
+|\mathbb E e^{2\pi i\theta(K-\mu)^2}|
+\le\sqrt{2/k}[1+Ce^{-c\mathcal D}]+C\mathcal D^{-1/8}.
+\tag{109.8}
+$$
+
+对 $k=1,2$，保留单模前因子则有
+
+$$
+|\mathbb E e^{2\pi i(\ell/2+\tau)(K-\mu)^2}|
+\le(1+C_{R_0}\mathcal D^{-1/8})
+ (1+c_1\mathcal D^2\tau^2)^{-1/4},
+\qquad |\mathcal D\tau|\le2R_0.
+\tag{109.9}
+$$
+
+这里 $F_d$ 在指定带内有正下界，才把加性二项误差转成乘性误差。
+它是 $1+o(1)$，不能换成逐坐标的任意固定常数。
+
+对所有分母使用 (106.10) 的粗界
+
+$$
+|\mathbb E e^{2\pi i\theta(K-\mu)^2}|
+\le C_0[k^{-1/2}(1+\mathcal D^2\tau^2)^{-1/4}+\mathcal D^{-1/8}],
+\quad k\le\lfloor\sqrt{\mathcal D}\rfloor,
+\quad |\tau|\le[k\lfloor\sqrt{\mathcal D}\rfloor]^{-1}.
+\tag{109.10}
+$$
+
+先选固定 $k_0$ 使 $C_0/\sqrt{k_0}<1/4$，再选固定 $R_0$ 使
+$C_0(1+R_0^2)^{-1/4}<1/4$。Dirichlet 逼近与 (109.8) 处理剩余有限分母，
+得到某个固定 $\rho<1$，一致于全部原中心和中心坐标：
+
+$$
+\operatorname{dist}(\theta,\tfrac12\mathbb Z)>R_0/\mathcal D
+\quad\Longrightarrow\quad
+|\mathbb E e^{2\pi i\theta(K-\mu)^2}|\le\rho.
+\tag{109.11}
+$$
+
+未要求经验中心有理，也未宣称实际特征函数周期化。
+
+**保留全部中央储备并先积分。** 取 $n_Q=\lfloor c_0/(2\delta)\rfloor$ 个收缩因子，
+另留十六个用于 (106.12)–(106.13) 的周期非负包络 $P_{\mathcal D,16}$。
+在至多两个信息标记之后，原共同事件仍供应这些不相交因子；
+所有剩余未标记因子的模至多一。包络满足
+
+$$
+\int_0^1P_{\mathcal D,16}(\theta)\,d\theta\le C/\mathcal D.
+\tag{109.12}
+$$
+
+展开前两阶中心信息量标记至多产生 $CQ^4$ 项，各标记坐标矩有一致界。
+同一测量变量精确给
+
+$$
+h_0(t)=e^{-\sigma^2t^2/2},\quad
+h_2(t)=(1-\sigma^2t^2)e^{-\sigma^2t^2/2},\quad
+h_4(t)=(3-6\sigma^2t^2+\sigma^4t^4)e^{-\sigma^2t^2/2}.
+\tag{109.13}
+$$
+
+令 $\theta=t/(2\pi\mathcal B)$。带外变换由
+$CQ^4\rho^{n_Q}P_{\mathcal D,16}(\theta)[1+(\sigma t)^4]e^{-\sigma^2t^2/2}$ 控制。
+令 $s=2\pi\sigma\mathcal B=2\pi e^\Delta\ge1$，按整周期划分实线。
+$e^{-s^2\theta^2/4}$ 在这些单位区间的上确界之和一致有界，
+且标记多项式可吸收入该较弱 Gaussian 指数。因此
+
+$$
+\int_{\rm 带外}|\widehat q_k(t)|dt
+\le CQ^4\rho^{n_Q}\mathcal B/\mathcal D
+\le CQ^{17/4}e^{-c\sqrt Q},\qquad k\le2.
+\tag{109.14}
+$$
+
+该积分覆盖整个无界频轴，而非先乘一个指数长频率区间。
+混合律的中心 Gaussian 因子有模
+$(1+4t^2w_j^2)^{-1/4}$，原非中心移位只降低该模。
+保留 $\lceil\ln Q\rceil+20$ 个因子即由第 106 章同样计算得
+
+$$
+\forall N<\infty:\qquad
+\max_{k\le2}\int_{|t|>Q^2}|\widehat q'_k(t)|dt\le C_NQ^{-N}.
+\tag{109.15}
+$$
+
+低频 $|t|\le Q^2$ 只用 (106.7) 的中心量化耦合，从未将其误差除以噪声。
+
+**非零共振的精确分离。** 取固定偶的光滑函数 $0\le\chi\le1$，在 $[-1,1]$ 为一，
+在 $[-2,2]$ 外为零。写
+
+$$
+t_\ell=\pi\ell\mathcal B,\quad W_Q=2\pi R_0\mathcal B/\mathcal D,\qquad
+\widehat a_k(t)=\sum_{\ell\ne0}\chi((t-t_\ell)/W_Q)\widehat q_k(t),
+\quad a_k=\mathcal F^{-1}\widehat a_k.
+\tag{109.16}
+$$
+
+这些带最终互不相交，零带完全包含在 $|t|\le Q^2$ 内。
+每个有限正噪声下所有变换可积。$a_k$ 是有符号振荡函数，不是密度或独立信道。
+结合低频耦合、(109.14)–(109.15)，得到
+
+$$
+q_k-q'_k=a_k+e_k,\qquad
+\forall N<\infty:\quad\max_{k\le2}\|e_k\|_\infty\le C_NQ^{-N}.
+\tag{109.17}
+$$
+
+没有从该上确界界自动推出全局 $L^1$ 或加权尾界；光滑分割也不能替代那一义务。
+
+**无标记共振的物理宽度。** 对 (109.9) 使用 $n_Q$ 个原因子，
+因 $n_Q\mathcal D^{-1/8}\to0$，其乘积至多
+$2(1+c_1\mathcal D^2\tau^2)^{-n_Q/4}$。
+Beta 积分给每一带内、在物理频率单位下
+
+$$
+\int_{\text{带 }\ell}|\text{未标记计数乘积}|dt
+\le\frac{C\mathcal B}{\mathcal D\sqrt{n_Q}}\le C.
+\tag{109.18}
+$$
+
+这里利用 $n_Q\delta$ 有正下界，消除了固定十六因子界的 $Q^{1/4}$ 损失。
+对 $\ell\ne0$，带内 $|t|\ge c|\ell|\mathcal B$，故
+
+$$
+\sum_{\ell\ne0}\int_{\text{带 }\ell}|\widehat q_0(t)|dt
+\le Ce^{-c e^{2\Delta}}.
+\tag{109.19}
+$$
+
+没有多项式 $Q$ 前因子。于是
+
+$$
+\|\widehat q_0-\widehat q'_0\|_1\le\varepsilon_Q,
+\quad\varepsilon_Q=Ce^{-c e^{2\Delta}}+\zeta_Q,
+\qquad\forall N:\ \zeta_Q\le C_NQ^{-N}.
+\tag{109.20}
+$$
+
+任意慢的发散余量都使它趋零，但不能把它称为关于 $Q$ 的任意幂小量。
+Fourier 反演给 (109.4) 第一式。直接四阶输出矩还给，对 $R\ge1$，
+
+$$
+\int(1+y^2)|f_{\mathsf Q}-f'|dy
+\le C(R+R^3)\varepsilon_Q+C(R^{-4}+R^{-2}).
+\tag{109.21}
+$$
+
+取 $R=\varepsilon_Q^{-1/5}$ 得上界 $C\varepsilon_Q^{2/5}$。
+回到原选中律时，先在同一计数与同一 $G$ 上条件化，再用 Cauchy–Schwarz：
+
+$$
+\int(1+y^2)|f_x-f_{\mathsf Q}|dy
+\le\mathbb E_{\mathsf Q}[|\mathscr L_x-1|(1+Y^2)]
+\le C\varepsilon_x\to0.
+\tag{109.22}
+$$
+
+无逆噪声。最后用第 101、102、106 章噪声前的二维核心正则器，
+对原外部计数和同一 $G$ 条件化后平移能量坐标，支付 $V_O\le Q^{-200}$；
+再用分块比较移去精确非中心和截距，联合变差成本为 $O_{\mathbb P}(Q^{-9/4})$。
+外部信息量与外部能量的相关性保留到合法平移完成。
+直接四阶输出矩把这些联合变差转成加权 $L^1$ 收敛，给 (109.4) 第二式，证毕。
+这一步只回接标量密度，没有传递放大的先验信息方差。
+

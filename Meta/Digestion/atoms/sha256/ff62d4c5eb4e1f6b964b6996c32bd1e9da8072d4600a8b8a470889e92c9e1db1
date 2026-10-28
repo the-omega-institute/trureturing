@@ -1,0 +1,12 @@
+**定理 59.3（Stokes 的共同定向与有限任务边界）。** 对 $d\ge1$ 的光滑紧致定向 $d$ 维流形 $U$ 及其光滑边界，光滑 $(d-1)$ 形式 $\eta$ 满足
+
+$$
+\int_{\partial U}\eta=\int_Ud\eta,
+$$
+
+其中边界取诱导定向。这个边界任务不恢复完整内部来源。
+
+证明（59.3）。经典教材背景为 John M. Lee，[*Introduction to Smooth Manifolds*, 第 16 章 “Integration on Manifolds”](https://doi.org/10.1007/978-1-4419-9982-5_16)中的光滑定向流形及微分形式积分；本条的具体光滑条件亦见 Brian Conrad，[*Stokes’ theorem with corners*, Theorem 1.1 及 §2](https://math.stanford.edu/~conrad/diffgeomPage/handouts/stokescorners.pdf)在光滑带边界情形的限制：取有限从属单位分解，把形式分成支持于内部坐标图或边界半空间图的小块。局部写成 $\sum_j(-1)^{j-1}f_j\,dx_1\wedge\cdots\widehat{dx_j}\cdots\wedge dx_d$，外微分为 $\sum_j\partial_jf_j$ 乘体积形式。内部紧支持块各方向积分导数为零。边界图的切向导数仍积分为零，法向导数由一维微积分基本定理给边界值，符号恰为诱导的向外定向。相加得到公式；单位分解的总和为一，故没有额外导数项。此处仅使用光滑条件，不主张任意低正则扩展。
+
+若多个区域确来自同一整体分割，内面两侧定向相反且拉回的是同一个 $\eta$，两积分恰抵消；不同形式或不同实际接缝不能自动抵消。这与 [FIB 严格开放核，定义 5.2、定理 5.3、5.4](https://github.com/the-omega-institute/trureturing/blob/6ab753e55d418380512deda9fc5fc9b8990892cc/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)同样要求共同实现。取同一圆盘及其同一边界形式，内部另附一个不参与该形式的来源标签 $h=0$ 或一；两者边界积分相同，标签任务不同。按任务纤维判据，边界积分不恢复该完整来源。$\eta$ 是微分形式，亦不与第三单位根 $\omega$ 混为同一对象。$\square$
+

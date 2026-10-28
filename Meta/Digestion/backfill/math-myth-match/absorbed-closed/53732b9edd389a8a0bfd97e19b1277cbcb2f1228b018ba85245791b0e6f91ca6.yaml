@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:53732b9edd389a8a0bfd97e19b1277cbcb2f1228b018ba85245791b0e6f91ca6
+  normalized_sha256: sha256:53732b9edd389a8a0bfd97e19b1277cbcb2f1228b018ba85245791b0e6f91ca6
+cas_ref: sha256:53732b9edd389a8a0bfd97e19b1277cbcb2f1228b018ba85245791b0e6f91ca6
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Rights/ViolationEnforceabilityCriterion.violation_enforceability_criterion
+    target_statement_id: sha256:53fa6210a01f2e9ba9bb66e9a49f5788038a587a1d8f6b407f8baade9c02b326
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,28 @@
+**Definition 4.1 (four types and role constraints).** Partition all finite terms into
+
+$$
+\mathsf A=\{\alpha\},\quad \mathsf H=\{\beta\},\quad
+\mathsf I=\mathcal B,\quad
+\mathsf O=\mathcal T\setminus(\mathsf A\cup\mathsf H\cup\mathsf I).
+\tag{FTC.11}
+$$
+
+A branch has type $\mathsf I$ exactly for ordered child-type pairs
+
+$$
+\mathcal C_I=\{(\mathsf H,\mathsf A),(\mathsf H,\mathsf H),
+(\mathsf H,\mathsf I),(\mathsf I,\mathsf H),(\mathsf I,\mathsf I)\}.
+\tag{FTC.12}
+$$
+
+All other ordered child-type pairs give $\mathsf O$. A branch is never a leaf type. The exceptional pair $(\mathsf H,\mathsf A)$ is precisely $E$.
+
+Given proposed joint vectors, keep one index $i$ for every installed Read of length at least three. Decompose its literal as $p_iw_i$ with $|p_i|=3$, retain its actual role $d_i=[p_i]$, and denote its requested reply by $r_i$. All words shorter than three must request branch, or reject. For each whole role define
+
+$$
+C_d=\{y\in\mathcal T:r_y(w_i)=r_i\text{ for every index with }d_i=d\}.
+\tag{FTC.13}
+$$
+
+Both occurrences of a repeated partner constrain this same set. Do not guess a full cross-role vector. Form the common prefix trie of all suffixes $w_i$, with all ending indices retained at each marker and $\#$ for an unobserved child. For a nonempty menu its explicit node count satisfies $V\le1+\sum_i|w_i|\le s+1$; for an empty menu set $V=0$ and use only $\#$. An unobserved child permits arbitrary finite child trees; it is not an absent child of a branch.
+

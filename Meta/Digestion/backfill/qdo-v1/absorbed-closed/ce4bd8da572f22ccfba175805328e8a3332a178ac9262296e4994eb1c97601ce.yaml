@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ce4bd8da572f22ccfba175805328e8a3332a178ac9262296e4994eb1c97601ce
-  normalized_sha256: sha256:ce4bd8da572f22ccfba175805328e8a3332a178ac9262296e4994eb1c97601ce
-cas_ref: sha256:ce4bd8da572f22ccfba175805328e8a3332a178ac9262296e4994eb1c97601ce
-coverage_gids:
-  - gid: D5/S3/Quantum/Algebra/RecordFixedCenter.record_fixed_center_eq_block_scalars
-    target_statement_id: sha256:63cf52719e7b9b90f6425d3b0a79bcd40bb3e331a481f4a2a786d5e6f756222f
-receipts:
-  unresolved_subitems: []

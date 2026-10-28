@@ -1,0 +1,8 @@
+\[
+\mathbb P\left(
+X_{p,h}=1\ \forall h\in H
+\right)
+=
+1-\frac{\nu_p(H)}p.
+\]
+

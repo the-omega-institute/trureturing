@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d066ee41c1f992ce6d8e0e11660bb82642bbc16b0aab6fe1d77f6eb33a5e8413
+  normalized_sha256: sha256:d066ee41c1f992ce6d8e0e11660bb82642bbc16b0aab6fe1d77f6eb33a5e8413
+cas_ref: sha256:d066ee41c1f992ce6d8e0e11660bb82642bbc16b0aab6fe1d77f6eb33a5e8413
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 本条询问离散更新与时间标定如何相容及如何实验区分，不主张已有普遍尺度。'
+    previous_atom_id: d593eb02fb152c1514580baf4707921a267202733f72a4c6b3cabe0f79b3c1e6
+    next_atom_id: b490adae5f2c6c8a05cd619e30aa83ab892a5ed18124a4082677d4072e175b42

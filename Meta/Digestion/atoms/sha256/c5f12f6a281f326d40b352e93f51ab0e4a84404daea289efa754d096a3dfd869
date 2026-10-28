@@ -1,0 +1,15 @@
+**Theorem 34.3 (earned correspondence at an arbitrary nonzero endpoint).** Under Assumption 34.1, the one procedure of Definition 34.2 terminates for every finite promised attachment. It earns the exact $(t,\lambda_0)$ and exact current $(u,\lambda)$ on the original callable source, where
+
+$$
+u=\rho(t),\qquad b=L+c,\qquad N=3L+2c-1,\qquad I=N-b=2L+c-1.
+\tag{NLBAII.43}
+$$
+
+The map $\lambda$ exhausts the actual current terminals, not merely those scanned. The full current graph is known. The field $x_{\rm mark}$ can still have arbitrary internal values, so the theorem has not yet established a synchronized full-field predictor or a zero entrance.
+
+Proof. Initial Read/Add arming sets every terminal to one, independently of its old rational value. Because no Tick occurs throughout marking, arbitrary internal values cannot propagate to the scanned terminals. Under the actual persistent fresh-zero growth rule, a promotion moves its one acted old raw label to a fresh zero marker; a split moves its one acted old label to a fresh zero marker and appends a separate fresh zero right terminal. Every other scanned old label remains at a one-valued terminal. Hence the literal old-label scan has exactly the single zero (NLBAII.5), even with arbitrary internal values. The actual rearming restores all current terminals to one.
+
+For termination and entry reconstruction, use structural induction on the finite entry subtree at each scheduled address, with an arbitrary pending continuation outside that subtree. Earlier edited entry leaves are in disjoint cones and preserve every unvisited entry constructor and binding. A branch refusal schedules exactly its two actual entry subtrees. At alpha the actual promotion finishes that leaf; at beta the actual wrong-type refusal and split finish that leaf. No new child is visited, no scheduled address is absent, and every recursive visit is to a proper entry subtree. Thus the finite stack empties with the exact entry code, without advice about its height or size.
+
+The unvisited entry labels have not moved. Each unique scanned zero is therefore the actual initial label of this addressed entry leaf. Across all leaves these distinct labels exhaust $1,\ldots,L$. At alpha, record $j\mapsto p$ for the entry and $j\mapsto pL$ currently. At beta, record $j\mapsto pL$ for the entry, and $j\mapsto pLL$, $n+1\mapsto pR$ currently. Disjoint cones and distinct append indices show that these assignments exhaust the final roster. The actual successful edits are precisely one old-frontier replacement at every entry leaf, giving $u=\rho(t)$, as in Theorem 18.4; its proof of code and map did not use internal zero. Counting that same actual material gives (NLBAII.43). All original values persist when their vertices become internal, and their old values were not measured there. This proves precisely why the endpoint is $x_{\rm mark}$, without inferring full zero from arming. $\square$
+

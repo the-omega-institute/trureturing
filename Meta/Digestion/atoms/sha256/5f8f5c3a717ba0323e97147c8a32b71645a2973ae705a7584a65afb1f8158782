@@ -1,0 +1,39 @@
+**定义 1.4（五模式及两个设置）。** 取 $\mathcal H=\mathbb C^5$，按
+
+$$
+(e_N,e_2,e_3,e_5,e_{25})
+$$
+
+排序的单位正交基及 $\Pi_s=e_se_s^\dagger$。$N$ 是一个范数为一的模式，既不是零向量，也不是 Stop。输入遍历全部复密度算子。固定
+
+$$
+K=\begin{pmatrix}
+0&1&1&1&0\\
+1&0&0&0&1\\
+1&0&0&0&0\\
+1&0&0&0&1\\
+0&1&0&1&0
+\end{pmatrix},\qquad U(t)=e^{-itK},\quad t\geq0.
+$$
+
+一次读是完整秩一 Lüders 仪器 $\mathcal J_s(X)=\Pi_sX\Pi_s$。实际菜单只含同一生成元的非负等待、这项完整读及 Stop，允许有限深度的记录反馈和输入无关的经典随机控制。初始控制资料独立于未知输入，不提供输入副本、参考纠缠或额外量子载体。不把相同效果的其他仪器、独立相位或任意酉加入菜单。一次完整读的结果可以经典合并，但这不是额外的粗块 Lüders 仪器。
+
+作被动变基
+
+$$
+\begin{aligned}
+D&=\operatorname{diag}(1,i,i,i,1),\\
+A&=-iD^\dagger KD=
+\begin{pmatrix}
+0&1&1&1&0\\
+-1&0&0&0&-1\\
+-1&0&0&0&0\\
+-1&0&0&0&-1\\
+0&1&0&1&0
+\end{pmatrix},\\
+O(t)&=D^\dagger U(t)D=e^{tA},\qquad Q_s(t)=O(t)^T\Pi_sO(t).
+\end{aligned}
+$$
+
+$A^T=-A$，故 $O(t)$ 实正交。以下密度矩阵和通道均在此实帧中表示；$D$ 不增加任何控制权限。设置 $t$ 的分布为 $p_t(\rho)_s=\operatorname{tr}(Q_s(t)\rho)$，两个指定设置为 $t=0$ 及 $t_*=2/3$。$2/3$ 是数学等待参数，不指定秒或事件数。这个五模式行走及完整实际菜单来自 [《AURIC FIB 二阶关系完成》§§65、79](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md) 与 [《实际等待读出下的近似单份量子边界》§1](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md)。
+

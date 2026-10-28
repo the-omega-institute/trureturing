@@ -1,0 +1,24 @@
+**Proposition 24.2 (boundedness at and below the first threshold).** For
+every fixed real $\lambda\le\lambda_D$, the actual ground energies are
+bounded below as $\epsilon\downarrow0$. Together with the fixed test
+upper bound they remain bounded. At $\lambda=\lambda_D$ this asserts
+boundedness, not an identified energy limit, state or realization.
+
+Proof. For $\lambda\le0$, (22.16) gives $E_\epsilon\ge E_*$.
+For $0<\lambda\le\lambda_D$, failure of a lower bound would give a
+sequence $E_\epsilon\to-\infty$. Its cap bound still gives
+$\epsilon^2|E_\epsilon|\to0$. The concentration compactness, positive
+profile identification and phase argument above require only these
+collapse assumptions and $q\to0$. The supercritical trial was used only
+to obtain collapse initially. They therefore imply on this sequence
+
+$$
+\log(s/b)=(\pi/\sqrt{\alpha\lambda}-1)L-\kappa_\Sigma+o(1).
+\tag{24.16}
+$$
+
+Its right side is bounded below when $\lambda\le\lambda_D$, including
+equality. Its left side tends to $-\infty$ because $s\to0$, a
+contradiction. Finite total energy here supplies no bounded-resource
+conclusion. $\square$
+

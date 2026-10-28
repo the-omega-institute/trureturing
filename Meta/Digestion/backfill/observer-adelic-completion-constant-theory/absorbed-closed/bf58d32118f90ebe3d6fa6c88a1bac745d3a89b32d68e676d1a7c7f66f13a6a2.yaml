@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:bf58d32118f90ebe3d6fa6c88a1bac745d3a89b32d68e676d1a7c7f66f13a6a2
+  normalized_sha256: sha256:bf58d32118f90ebe3d6fa6c88a1bac745d3a89b32d68e676d1a7c7f66f13a6a2
+cas_ref: sha256:bf58d32118f90ebe3d6fa6c88a1bac745d3a89b32d68e676d1a7c7f66f13a6a2
+coverage_gids:
+  - gid: D5/S3/Analytic/ShiftedXiPoisson/ShiftedPoissonSemigroup.xiReading_eq_zero_iff_nontrivial
+    target_statement_id: sha256:bdbcb256c87a795daab4f78a9b3d03bbceea13b1c4b4abaf46f03acbeb4f522b
+  - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
+    target_statement_id: sha256:260a95bcca3f1b09a54fbb51bf365134cf33b27a35312b81694a6d476633ca87
+  - gid: D5/S3/Zeros/ActualZeroGeometry.rh_iff_nontrivial_zeros_on_line
+    target_statement_id: sha256:4de5f23947c1d5e4f77f08c073db86922ed4bf72d784bf2c0d0d7a1b2b78cdd5
+  - gid: D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.xi_reading_one_sub_conj
+    target_statement_id: sha256:306cf22e3ce2375fb07d20735b8d5cd6c1abb416298f8c1785717afd5c17e704
+receipts:
+  unresolved_subitems: []

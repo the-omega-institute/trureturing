@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5cd8f6aadb61f0e2af40805c789987d07d122ab352af9a8e4e8566a56269188b
+  normalized_sha256: sha256:5cd8f6aadb61f0e2af40805c789987d07d122ab352af9a8e4e8566a56269188b
+cas_ref: sha256:5cd8f6aadb61f0e2af40805c789987d07d122ab352af9a8e4e8566a56269188b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Jowett 译《克拉底鲁篇》的选文范围、名称误配与解释方法；没有概率或几何命题。
+    previous_atom_id: 3ca7e85c92eff202229eba6bc2d66a0c4707cd38fcf34ae26440a96357849ac8
+    next_atom_id: d32b10df2a97d645cd0e35f77aab15e77afeba714e022c7a8e7fad4e551af611

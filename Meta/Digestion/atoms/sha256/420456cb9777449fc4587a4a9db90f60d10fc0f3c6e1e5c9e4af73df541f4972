@@ -1,0 +1,10 @@
+摘要 $q:\Theta\to Q$ 是学习合同下的精确白盒接口，当且仅当读数合同和可执行更新合同都成立：
+
+1. **读数合同：**
+   $$
+   \ker q\subseteq R_{\Gamma_{\mathrm{learn}}};
+   $$
+2. **可执行更新合同：** 对每个动作 $a$ 存在 $\overline U_a:q(\Theta)\to q(\Theta)$，使
+   $$
+   q\circ U_a=\overline U_a\circ q;
+   $$

@@ -1,0 +1,36 @@
+**Fixed-drift roots five and seven.** At each fixed $\delta=e$ at (17.2) there is at most one complete target with $g(5)=g(7)=0$.
+
+**Proof.** Write $u=\operatorname{tr}(MP)>0$, $v=\operatorname{tr}(BP)>0$, $w=\operatorname{tr}(DP)>0$. Then $v=1+P_{12}+2P_{21}<1+2u$, since $1+2u-v=P_{12}+2P_{22}>0$. Factor
+
+$$
+g(t)=(t-5)(t-7)(a+bt),\qquad
+a=-e/35,\quad b=(1-e)/(24u)+e/35.
+\tag{17.7}
+$$
+
+The first two parent equations give these coefficients, including lower degrees and further multiplicities. Clock two gives
+
+$$
+12eu^2+(5e-57)u+35(1-e)=0.
+\tag{17.8}
+$$
+
+If $0<e<1$, then $g(3)=(1-e)/u+16e/35>0$ and $eu<(57-5e)/12$. Substitution from (17.8) gives
+
+$$
+e+g(3)(1+2u)=(127-24e+20eu)/35
+<(222-97e/3)/35<222/35.
+$$
+
+But clock three would require $331/35=e+g(3)v<e+g(3)(1+2u)$, a contradiction. For $e<0$ or $e>1$, the quadratic has negative root product $35(1-e)/(12e)$, so at most one positive root. For $e=0,1$ its unique positive root is respectively $35/57,13/3$. Each admitting drift thus determines at most one $u$ and the entire gain.
+
+Its samples $g(3),g(4)$ are nonzero. An additional root three makes $g$ a nonzero multiple of $(t-3)(t-5)(t-7)$; the first three readings give $61e=333$, whereas clock three requires $e=331/35$. An additional root four gives a nonzero multiple of $(t-4)(t-5)(t-7)$; the first three readings force $e=241/31$ and $g(3)=-2e/35<0$, incompatible with $241/31<331/35$ and $v>0$. In either triple-root case $e=0$ would force the zero polynomial and is forbidden. Therefore
+
+$$
+v=(331/35-e)/g(3),\quad w=(Y-e)/g(4),\quad
+P=\begin{pmatrix}-1-3u+v+w&-3-4u+v+2w\\1+2u-w&2+3u-v-w\end{pmatrix}.
+\tag{17.9}
+$$
+
+The last formula is the four-trace inverse, also obtained by solving the traces against $I,M,B,D$. All divisors have been established nonzero. This proves uniqueness, without asserting existence for an empty drift class. $\square$
+

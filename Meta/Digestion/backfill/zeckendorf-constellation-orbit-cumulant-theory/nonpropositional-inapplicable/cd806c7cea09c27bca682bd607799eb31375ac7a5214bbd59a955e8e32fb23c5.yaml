@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cd806c7cea09c27bca682bd607799eb31375ac7a5214bbd59a955e8e32fb23c5
+  normalized_sha256: sha256:cd806c7cea09c27bca682bd607799eb31375ac7a5214bbd59a955e8e32fb23c5
+cas_ref: sha256:cd806c7cea09c27bca682bd607799eb31375ac7a5214bbd59a955e8e32fb23c5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional representation/scope declaration: proper marginals are to be expressed by the mass-function interface parityMarginalMass, and measure-theoretic objects are excluded; no equality of masses is asserted here.'
+    previous_atom_id: e0e1796080f5b53450b51f53c296b34c1a509f638901a70fb844a421c001989e
+    next_atom_id: 0d231239f8199b88d1838091d664e08d7fcb6d5f839bd575bf851e7686a87bc9

@@ -1,0 +1,5 @@
+本轮继续使用项目已经固定的 Poisson 与 Schur 接口：
+
+* `PoissonSemigroup.lean` 保留卷积、半群和读出表达的独立前件；它本身没有断言实际 ξ 全分辨率正性。
+* `SchurComplementAssociativity.lean` 保证在给定逆算子条件下，分步与整体消元一致；它不会自动证明被消去内部块为正。
+

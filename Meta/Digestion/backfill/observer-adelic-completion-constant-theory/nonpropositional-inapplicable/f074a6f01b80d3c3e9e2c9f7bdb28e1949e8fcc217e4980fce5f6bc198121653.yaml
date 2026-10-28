@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f074a6f01b80d3c3e9e2c9f7bdb28e1949e8fcc217e4980fce5f6bc198121653
+  normalized_sha256: sha256:f074a6f01b80d3c3e9e2c9f7bdb28e1949e8fcc217e4980fce5f6bc198121653
+cas_ref: sha256:f074a6f01b80d3c3e9e2c9f7bdb28e1949e8fcc217e4980fce5f6bc198121653
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This bare SO(3) to SU(2) arrow is an analogy item in the direction-completion discussion; it specifies no map or homomorphism, and asserts no theorem about a covering.
+    previous_atom_id: 60592b5ce223c759018a19c262fcecc29ea77b36afa77b3820c68cd3f7d4520d
+    next_atom_id: 53aee69679555d23aa9c9f756516ace372d1fc4386d94aefbb2c7bea23bbfee4

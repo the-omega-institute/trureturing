@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:36c1a52fc843b1ec9b3202a6b258c781ad50c2c8945fc9ee0f4b30e098cf9c34
+  normalized_sha256: sha256:36c1a52fc843b1ec9b3202a6b258c781ad50c2c8945fc9ee0f4b30e098cf9c34
+cas_ref: sha256:36c1a52fc843b1ec9b3202a6b258c781ad50c2c8945fc9ee0f4b30e098cf9c34
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 本条提出从独立组合条件推出Tr(ρE)的研究问题，不把该推导作为已证结论。'
+    previous_atom_id: ef5dfaa41ee160a93a9c6eb0a798e0b2693e3f9f4d416ad732045c45fce94735
+    next_atom_id: 451c2e9e8b0c4eb60b57b97901436fb87483dca038d799d6d51089dd2dfb1d50

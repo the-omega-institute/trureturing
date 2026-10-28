@@ -71,7 +71,7 @@ def boundedFamilySection (S : LightProfinite) (c : ℕ → LocallyConstant S ℤ
     F.sup Int.natAbs, ?_⟩
   intro j s
   rw [freeSectionEquiv_coordinate]
-  simp only [familyToIntegerMeasures, Pi.lift_π,
+  simp only [familyToIntegerMeasures, Pi.lift_comp_π,
     AddEquiv.apply_symm_apply]
   rw [← Int.natCast_natAbs]
   exact_mod_cast Finset.le_sup (f := Int.natAbs) (hF j s)
@@ -103,7 +103,7 @@ theorem boundedMeasureNumerator_comparison :
   rw [boundedMeasureNumerator, boundedFamilyMap_comparison]
   apply Pi.hom_ext
   intro j
-  simp only [familyToIntegerMeasures, Pi.lift_π, Category.assoc,
+  simp only [familyToIntegerMeasures, Pi.lift_comp_π, Category.assoc,
     PToIntegerMeasures_coordinate, P_proj_measureCoordinate]
   rfl
 

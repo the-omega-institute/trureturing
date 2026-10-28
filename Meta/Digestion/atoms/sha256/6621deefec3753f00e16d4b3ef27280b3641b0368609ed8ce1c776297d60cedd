@@ -1,0 +1,9 @@
+### 10.1 固定仓内供应及其适用层
+
+| 来源 | 本卷使用的合同和边界 |
+| --- | --- |
+| [R1] [KBONACCI_MINIMAL_MODULAR_OBSERVER，固定版本](https://github.com/the-omega-institute/trureturing/blob/73168b5b84a8ba1328b6fa51eb9d722f3d4a7daa/docs/develop/theory/KBONACCI_MINIMAL_MODULAR_OBSERVER.md) | 第8节区分规范 $\Phi$ 与三项式 $\Psi$；第9–12节给实际共同记录、加性更新及未来窗口；第13节式（30）–（31）给原阶匹配泛函；定理14.1给（1.1）。第15节的有限实例仍属这些合同。第1–7节的 $\Psi$ 前缀不承担本卷来源饱和。 |
+| [R2] [KBONACCI_SELF_CALIBRATING_BOUNDARIES，固定版本](https://github.com/the-omega-institute/trureturing/blob/84aeabc092530002a1a9f17079c15a8c803e38cd/docs/develop/theory/KBONACCI_SELF_CALIBRATING_BOUNDARIES.md) | 第15.1节式（15.1）–（15.5）和引理15.1给固定块、端点输出、独立拒绝、实际 $P$ 及同词联合可达性；第15.3–15.4节给全部受控未来的行为记录；第15.5–15.6节明确被动过去恢复和取得费用的边界。比较所有后缀的响应函数不是执行那些后缀取得档案。 |
+| [R3] [KBONACCI_ACTUAL_ACQUISITION_GEOMETRY，固定版本](https://github.com/the-omega-institute/trureturing/blob/dc3fa13ad47f1171fbc8dac1306273339091cd43/docs/develop/theory/KBONACCI_ACTUAL_ACQUISITION_GEOMETRY.md) | 定义2.1–2.4、定理3.1和命题4.1–4.3给规范合法实际词、固定长度像、尾与相位的实现条件。这里的“取得”是找一个已知目标的实现词，不是本卷的未知初始来源识别。 |
+| [R4] [FIB_RELATIONAL_CONTINUATION_GEOMETRY，固定版本](https://github.com/the-omega-institute/trureturing/blob/f6a4a894f2377f2a529748b9729b0637bd0ae006/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) | 定义3.2–3.3、4.1的动态充分纤维、全部未来行为商和预算核是通用供应；第6节的线性表示最小性属于另一种实现资源。命题2.2沿用确定性行为纤维的识别限制，不把该一般限制计为首零分类的新内容。 |
+| [R5] [RRO Context Geometry，固定版本第55–56节](https://github.com/the-omega-institute/trureturing/blob/1da3f395bff2193440078b307493b64b5b8b3652/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md) | 单轨道初态取得、控制器只依已取得输出、读取费与记忆费分离的既有讨论。其高位端口和加一轨道不是本卷的原阶权重、清尾及拒绝接口。 |

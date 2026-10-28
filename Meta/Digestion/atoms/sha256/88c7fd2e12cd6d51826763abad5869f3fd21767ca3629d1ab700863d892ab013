@@ -1,0 +1,63 @@
+**定义 432.1（凸因子、根面与完整有限分裂树）。** 设 $I$ 是有限指标集，允许 $I=\varnothing$。对每个 $i\in I$，令 $E_i$ 为有限维实赋范空间，$C_i\subset E_i$ 为非空凸集，$a_i\in C_i$。置
+
+$$
+C=\prod_{i\in I}C_i,\qquad a=(a_i)_{i\in I},\qquad
+0\le H<\infty,\qquad f:C\longrightarrow[0,H].
+$$
+
+不要求 $C_i$ 闭或有界，也不要求 $f$ 可测。凸集 $K$ 的非空凸子集 $G$ 称为一个面，如果对所有 $u,v\in K$ 和 $0<\theta<1$，
+
+$$
+\theta u+(1-\theta)v\in G\quad\Longrightarrow\quad u,v\in G.
+$$
+
+这里的面不附加闭性要求。包含 $b\in K$ 的最小面是所有包含 $b$ 的面的交。$\operatorname{aff}K$ 指代数仿射包，不取闭包；$\operatorname{ri}K$ 指 $K$ 在 $\operatorname{aff}K$ 的相对范数拓扑中的内部。先定义线段集合
+
+$$
+F_i=\{x\in C_i:\ \exists\lambda\in(0,1)\ \exists y\in C_i,
+\ a_i=\lambda x+(1-\lambda)y\},
+$$
+
+$$
+F=\prod_{i\in I}F_i,\qquad
+N=\{i\in I:F_i\ne\{a_i\}\},\qquad s=|N|.
+$$
+
+每个 $F_i$ 都包含 $a_i$。在 $C$ 及其子集上使用距离
+
+$$
+d(z,w)=\max\bigl(\{\|z_i-w_i\|:i\in I\}\cup\{0\}\bigr).
+$$
+
+只有在把收益限制为 $g=f|_F$ 之后，才在 $F$ 上定义包络
+
+$$
+\bar f(z)=\overline{\,f|_F\,}^{\,F}(z)
+=\inf_{\delta>0}\ \sup\{g(w):w\in F,\ d(w,z)<\delta\},
+\qquad z\in F.
+$$
+
+对任意非空凸因子乘积 $K=\prod_{i\in I}K_i$、根 $b\in K$ 和收益 $h:K\to[0,H]$，一棵以 $b$ 为根的完整有限单坐标分裂树 $\mathsf T$ 是一棵节点总数有限的有根树。每个节点 $v$ 有标签 $z_v\in K$，根标签为 $b$。每个内部节点选一个坐标 $i=i(v)\in I$，有有限非空子节点集，边权及标签满足
+
+$$
+\lambda_{vj}\ge0,\qquad \sum_j\lambda_{vj}=1,\qquad
+z_{v,i}=\sum_j\lambda_{vj}z_{vj,i},\qquad
+z_{vj,h}=z_{v,h}\quad(h\ne i).
+$$
+
+每个内部节点的分支数有限，但不设共同上界。坐标可重复选择，也可依节点而变。允许提前停止、不同叶深、单子节点及标签相同的分裂；所有零权、余项和失败分支均保留。深度是根至叶路径上的内部节点数的最大值，每个内部节点均计数，包括单子节点和常值分裂。节点概率 $q_v$ 是沿根至该节点路径的边权之积，根概率为 $1$。定义
+
+$$
+\operatorname{val}_h(\mathsf T)
+=\sum_{\ell\in\operatorname{Leaf}(\mathsf T)}q_\ell h(z_\ell),
+\qquad
+T_n^h(b;K)=\sup_{\operatorname{depth}(\mathsf T)\le n}
+\operatorname{val}_h(\mathsf T),\qquad n\in\mathbb N_0,
+$$
+
+$$
+T_\infty^h(b;K)=\sup_{n\in\mathbb N_0}T_n^h(b;K).
+$$
+
+上确界只遍历逐棵有限的完整树；$T_\infty$ 不以无限树为对象。深度零的树只有根叶。若 $I=\varnothing$，所有乘积均为只含空元组的单点集，距离恒为零，$N=\varnothing$、$s=0$；因没有可选坐标，任何深度上界下都只有根叶树。
+

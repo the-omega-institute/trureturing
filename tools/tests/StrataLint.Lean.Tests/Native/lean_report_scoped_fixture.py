@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import sys
 import unittest
+from unittest.mock import patch
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[4]
@@ -39,18 +40,21 @@ class ScopedContracts(unittest.TestCase):
         self.scope = dict(roots=['D5.A'], modules=[dict(module='D5.A', source_path='D5/A.lean', imports=[])],
                           dependencies=[dict(module='D5.A', source_path='D5/A.lean', imports=[])])
 
-    def bundle(self, producer):
-        row = dict(module='D5.A', source_path='D5/A.lean', imports=[], declarations=[],
-                   source_sha256='sha256:' + publication.digest(self.root / 'D5/A.lean'))
+    def bundle(self, producer, rows=None):
+        if rows is None:
+            rows = [dict(module=source['module'], source_path=source['source_path'],
+                         imports=source['imports'], declarations=[],
+                         source_sha256='sha256:' + publication.digest(self.root / source['source_path']))
+                    for source in self.scope['modules']]
         report = self.root / 'scoped.json'
-        report.write_bytes(materials.canonical_json(dict(schema='stratalint-scoped-lean-report-v1', modules=[row])))
+        report.write_bytes(materials.canonical_json(dict(schema='stratalint-scoped-lean-report-v1', modules=rows)))
         with zipfile.ZipFile(publication.member(report, '.materials.zip'), 'w'):
             pass
-        origin = dict(module='D5.A', report_sha256=hashlib.sha256(materials.canonical_json(
+        origins = {row['module']: dict(module=row['module'], report_sha256=hashlib.sha256(materials.canonical_json(
             dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest(),
-            input_projection=dict(schema='stratalint-judge-input-projection-v1', module='D5.A', inputs=[]),
-            producer_sources_sha256='a' * 64, inspector_executable_sha256='b' * 64)
-        producer.write_sidecars(report, producer.capture(self.root, self.scope), {'D5.A': origin})
+            input_projection=dict(schema='stratalint-judge-input-projection-v1', module=row['module'], inputs=[]),
+            producer_sources_sha256='a' * 64, inspector_executable_sha256='b' * 64) for row in rows}
+        producer.write_sidecars(report, producer.capture(self.root, self.scope), origins)
         return report
 
     def test_selected_utility_discovery_uses_production_reader(self):
@@ -111,6 +115,34 @@ class ScopedContracts(unittest.TestCase):
         self.assertEqual(rejected.returncode, 2, rejected.stdout + rejected.stderr)
         self.assertFalse((self.root / 'empty.json').exists(), '[FAIL] empty_scope_has_no_artifact')
 
+    def test_cache_replacement_preserves_scoped_discovery_logs(self):
+        producer = api(self)
+        report = self.root / '.lake/build/stratalint/scoped.json'
+        report.parent.mkdir(parents=True)
+        phase = producer.Entry.phase
+        def discover(entry, roots):
+            entry.phase('scope', [sys.executable, '-c',
+                'import shutil; shutil.rmtree(".lake"); print("scope discovered")'])
+            (entry.temporary / 'selected-modules.json').write_bytes(materials.canonical_json(self.scope))
+            return self.scope, []
+        def fail_report(entry, name, command):
+            if name == 'report':
+                command = [sys.executable, '-c', 'raise SystemExit(23)']
+            return phase(entry, name, command)
+        with patch.object(producer.Entry, 'provision'), \
+                patch.object(producer.Entry, 'discover', discover), \
+                patch.object(producer.Entry, 'phase', fail_report), \
+                patch.object(sys, 'argv', ['scoped.py', 'produce', '--repository', str(self.root),
+                                         '--report', str(report), '--targets', 'D5.A']), \
+                self.assertRaises(subprocess.CalledProcessError) as failure:
+            producer.main()
+        self.assertEqual(failure.exception.returncode, 23)
+        logs = Path(str(report) + '.logs')
+        self.assertEqual((logs / 'scope.exit.log').read_text(), '0\n')
+        self.assertEqual((logs / 'scope.stdout.log').read_text(), 'scope discovered\n')
+        self.assertEqual((logs / 'report.exit.log').read_text(), '23\n')
+        self.assertFalse(publication.member(report, '.input.attestation').exists())
+
     def test_scoped_bundle_checks_independent_membership_sources_and_materials(self):
         producer = api(self)
         report = self.bundle(producer)
@@ -131,6 +163,24 @@ class ScopedContracts(unittest.TestCase):
         self.fixture.write('D5/A.lean', 'def a := 1\n')
         publication.member(report, '.materials.zip').write_bytes(b'corrupt')
         with self.assertRaises((ValueError, zipfile.BadZipFile), msg='[FAIL] scoped_materials_are_validated'):
+            producer.validate_bundle(report, self.root, self.scope)
+
+    def test_scoped_bundle_reuses_registered_source_inventory_across_modules(self):
+        producer = api(self)
+        self.scope['roots'] = ['D5.A', 'D5.B']
+        self.scope['modules'].append(dict(module='D5.B', source_path='D5/B.lean', imports=[]))
+        self.scope['dependencies'] = copy.deepcopy(self.scope['modules'])
+        report = self.bundle(producer)
+        with patch.object(publication.selection, 'Selection', wraps=publication.selection.Selection) as selected:
+            producer.validate_bundle(report, self.root, self.scope)
+            self.assertLessEqual(selected.call_count, 2,
+                                 '[FAIL] scoped_validation_must_not_rescan_registered_sources_per_module')
+
+        rows = publication.read_json(report.read_bytes())['modules']
+        rows[-1]['information_templates'] = dict(schema_version=True, inventory=[], registered=[], records=[])
+        report = self.bundle(producer, rows)
+        with self.assertRaisesRegex(ValueError, 'declared-template evidence',
+                                    msg='[FAIL] scoped_validation_still_checks_later_module_templates'):
             producer.validate_bundle(report, self.root, self.scope)
 
     def test_scoped_inputs_exclude_siblings_and_program_bytes(self):
@@ -188,7 +238,12 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
 
     def scoped(self, targets, success=True):
         if self.compiler_seed is not None:
-            self.run_lake('-d', 'tools/lean-inspector', 'build', 'leanInspector/reportInspector')
+            # Restore both tools in the workspace used by scoped production.
+            # Compiler preparation must not compile any project/report inputs.
+            prepared = self.run_lake('--no-build', '-d', 'tools/lean-inspector-reg', 'build',
+                                     'leanInspector/reportInspector', 'leanInspector/inputDiscovery')
+            self.record_result('compiler-restore', dict(raw_exit=prepared.returncode,
+                stdout=prepared.stdout, stderr=prepared.stderr))
         result = self.guarded_command(['/bin/bash', str(self.root / 'tools/scripts/report/lean-report-scoped.sh'),
             '--targets', targets, '--output', str(self.output), '--log-dir', str(self.logs)], cwd=self.root, env=self.env)
         if success:
@@ -247,15 +302,31 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         receipt.write_text('deliberately unreadable whole receipt')
         seed_base = self.root / '.lake/lean-report-seed-base.json'
         seed_base.write_text('full seed generation metadata')
-        before = [canonical.read_bytes(), receipt.read_bytes(), seed_base.read_bytes()]
+        full_archive = self.root / '.lake/build/lean-inspector/report.zip'
+        full_archive.parent.mkdir(parents=True, exist_ok=True)
+        full_archive.write_bytes(b'previous whole-report archive')
+        protected = [canonical, receipt, seed_base, full_archive]
+        before = [path.read_bytes() for path in protected]
         self.write('D5/A.lean', 'import D5.B\n/- import D5.Alone /- nested comment -/ -/\ndef value : Nat := D5.hidden\n')
         self.write('D5/Alone.lean', 'this sibling deliberately does not compile\n')
         self.env['STRATALINT_LEAN_BUILD_TARGETS'] = '["reg/Reg"]'
         self.scoped('D5.A')
         self.assertEqual(set(self.rows()), {'D5.A', 'D5.B'}, '[FAIL] report_is_exact_import_closure')
+        phases = [json.loads(line) for line in (self.logs / 'native-phases.jsonl').read_text().splitlines()]
+        inspections = [row for row in phases if row['phase'] == 'native-inspect' and row['boundary'] == 'start']
+        self.assertEqual(len(inspections), 1, '[FAIL] selected_modules_share_one_native_inspection_batch')
+        cold_work = json.loads((self.logs / 'work.json').read_text())
+        build_log = ''.join((self.logs / ('report.' + stream + '.log')).read_text()
+                            for stream in ('stdout', 'stderr'))
+        self.record_result('cold-scope', cold_work, paths=[self.logs / 'work.json',
+            self.logs / 'report.stdout.log', self.logs / 'report.stderr.log'])
+        self.assertIn('Built Inspector native production batch', build_log)
+        self.assertEqual(cold_work['extracted_module_names'], ['D5.A', 'D5.B'])
+        self.assertEqual(cold_work['compiled_module_names'],
+                         ['D5.A', 'D5.B'])
         self.assertFalse((self.root / '.lake/build/lean-inspector/modules/D5.Alone.zip').exists(),
                          '[FAIL] unrelated_module_is_never_extracted')
-        self.assertEqual(before, [canonical.read_bytes(), receipt.read_bytes(), seed_base.read_bytes()],
+        self.assertEqual(before, [path.read_bytes() for path in protected],
                          '[FAIL] whole_report_and_seed_base_are_untouched')
         self.assertFalse(publication.member(self.output, '.reuse.json').exists())
         self.verify('D5.A')
@@ -282,6 +353,28 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.verify('Fixture')
         self.write('ClaimSupport.lean', 'def claimSupport : Prop := True\n')
         self.verify('Fixture', success=False)
+
+    def test_native_aged_warm_scope_reuses_cache_without_archive_refresh(self):
+        self.scoped('D5.A')
+        marker = self.root / '.lake/build/.release-refreshed-at'
+        marker.write_text('2000-01-01T00:00:00+00:00\n')
+        before = marker.read_bytes()
+        attempted = self.root / 'archive-attempted'
+        self.write('tools/scripts/worktree/lean-cache-publish.sh',
+                   '#!/bin/bash\ntouch archive-attempted\nexit 79\n')
+
+        self.scoped('D5.A')
+        self.verify('D5.A')
+        self.assertFalse(attempted.exists(), '[FAIL] warm_scope_needs_no_archive_transport')
+        self.assertEqual(marker.read_bytes(), before, '[FAIL] scope_does_not_rejuvenate_archive_age')
+        self.assertEqual(json.loads((self.logs / 'work.json').read_text())['extracted_modules'], 0)
+        receipt = next(line.removeprefix('LEAN_CACHE ') for line in
+                       (self.logs / 'scope.stdout.log').read_text().splitlines() if line.startswith('LEAN_CACHE '))
+        self.assertEqual(json.loads(receipt)['archive_status'], 'not_attempted')
+
+        # Explicit cache maintenance keeps its refresh behavior on the same cache.
+        self.ensure()
+        self.assertTrue(attempted.exists(), '[FAIL] standalone_ensure_still_refreshes_aged_cache')
 
     def test_native_cached_scope_still_builds_program_and_clears_failure_seal(self):
         self.ensure()

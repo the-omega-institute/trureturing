@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fe1171ff8fb14f37c6ecefe90ce2e23b25866ab8f06496e5da763de78129d957
+  normalized_sha256: sha256:fe1171ff8fb14f37c6ecefe90ce2e23b25866ab8f06496e5da763de78129d957
+cas_ref: sha256:fe1171ff8fb14f37c6ecefe90ce2e23b25866ab8f06496e5da763de78129d957
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只记录候选源写入、读取基线、PR 与编译未验证的过程状态，没有数学命题。
+    previous_atom_id: b301ca97ec8164c0d68b2f1d68a1b507cc7817784ad2b187779966da19189b1d
+    next_atom_id: 53cca57a7f226eb6f54fd19820219c0c12e13bd29f174e669cb81db8a60d137e

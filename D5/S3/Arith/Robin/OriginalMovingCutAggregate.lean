@@ -67,7 +67,7 @@ def cutPosterior (ell R : ℝ) (S : Set ℝ) : ℝ :=
   ∫ t in S, ∫ x in t..endpoint t,
     kernel t x * (divisorPosterior t x - averagedPosterior ell R x)
 
-private lemma measurable_kernel_joint : Measurable (fun p : ℝ × ℝ => kernel p.1 p.2) := by
+lemma measurable_kernel_joint : Measurable (fun p : ℝ × ℝ => kernel p.1 p.2) := by
   unfold kernel g weight endpoint width
   apply Measurable.ite
   · exact (measurableSet_lt measurable_fst measurable_snd).inter
@@ -101,7 +101,7 @@ private lemma beforeRatio_bounds_all {ell R x : ℝ} (hell : 4 ≤ ell) (d : ℕ
   have hK : 0 ≤ windowMass ell R x := by
     apply setIntegral_nonneg measurableSet_Icc
     intro s hs
-    exact (rowSupplier% kernel_nonneg) (hell.trans hs.1)
+    exact OriginalMovingCutRow.kernel_nonneg (hell.trans hs.1)
   rcases hK.eq_or_lt with hz | hp
   · simp [beforeRatio, ← hz]
   · exact (rowSupplier% beforeRatio_bounds) hell d hp
@@ -179,7 +179,7 @@ private lemma averagedPosterior_fixed_sum {ell R x : ℝ} (hell : 256 ≤ ell)
   let A : ℕ → ℝ := fun d => ((ArithmeticFunction.moebius d : ℤ) : ℝ) *
     Real.log (x / d) / d
   have hi : IntegrableOn (fun s => kernel s x) (Icc ell R) :=
-    (rowSupplier% kernel_integrableOn) (by linarith)
+    OriginalMovingCutRow.kernel_integrableOn (by linarith)
   have hj : ∀ d : ℕ, IntegrableOn (fun s => kernel s x *
       (if s < (d : ℝ) ^ (500 / 151 : ℝ) then 1 else 0)) (Icc ell R) := by
     intro d
@@ -238,7 +238,7 @@ private lemma posterior_weighted_identity {ell R t : ℝ}
         ((ArithmeticFunction.moebius d : ℤ) : ℝ) * cutRow ell R t d x / d := by
   by_cases hz : kernel t x = 0
   · simp [hz, cutRow]
-  have hk : 0 < kernel t x := lt_of_le_of_ne ((rowSupplier% kernel_nonneg) (by linarith [ht.1]))
+  have hk : 0 < kernel t x := lt_of_le_of_ne (OriginalMovingCutRow.kernel_nonneg (by linarith [ht.1]))
     (Ne.symm hz)
   have hK := (rowSupplier% windowMass_pos_of_kernel_pos) (by linarith) horder ht hk
   rw [posterior_fixed_sum (hell.trans ht.1) ht.2,
@@ -261,7 +261,7 @@ private lemma cutRow_uniform_bound {ell R t : ℝ} (hell : 256 ≤ ell)
   by_cases hz : kernel t x = 0
   · simpa [cutRow, hz] using hC
   have hk := ((rowSupplier% kernel_pos_iff) ht4).mp
-    (lt_of_le_of_ne ((rowSupplier% kernel_nonneg) ht4) (Ne.symm hz))
+    (lt_of_le_of_ne (OriginalMovingCutRow.kernel_nonneg ht4) (Ne.symm hz))
   have hx0 : 0 < x := by linarith [ht.1, hk.1]
   have hxR : x ≤ 2 * R := hk.2.le.trans
     (((rowSupplier% endpoint_le_twice) (by linarith)).trans (by linarith [ht.2]))
@@ -275,10 +275,10 @@ private lemma cutRow_uniform_bound {ell R t : ℝ} (hell : 256 ≤ ell)
       beforeRatio ell R d x| ≤ 1 := by
     split_ifs <;> rw [abs_le] <;> constructor <;> linarith [hr.1, hr.2]
   rw [Real.norm_eq_abs, cutRow, abs_mul, abs_mul,
-    abs_of_nonneg ((rowSupplier% kernel_nonneg) ht4)]
+    abs_of_nonneg (OriginalMovingCutRow.kernel_nonneg ht4)]
   calc
     _ ≤ (Real.log (2 * R) + Real.log d) * 1 * 1 := by
-      gcongr <;> first | exact (rowSupplier% kernel_le_one) ht4 | exact (rowSupplier% kernel_nonneg) ht4
+      gcongr <;> first | exact OriginalMovingCutRow.kernel_le_one ht4 | exact OriginalMovingCutRow.kernel_nonneg ht4
     _ = _ := by ring
 
 private lemma cutRow_integrable_fixed {ell R t : ℝ} (hell : 256 ≤ ell)

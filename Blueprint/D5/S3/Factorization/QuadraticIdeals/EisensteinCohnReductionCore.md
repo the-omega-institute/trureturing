@@ -4,7 +4,31 @@
 
 The square-plus-three equation has no integer solution with x at least two and exponent at least two.
 
-**Theorem 1.1 (Square plus three is not a nontrivial integer power).**
+**Theorem 1.1 (norm_unit_one).**
+
+$$\forall u \in \operatorname{Units}\left(EisensteinOrder\right),\; \operatorname{norm}\left(\operatorname{unitValue}\left(u\right)\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Factorization/QuadraticIdeals/EisensteinCohnReductionCore.norm_unit_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every integral Eisenstein unit has norm one. This existing owner proof is reused unchanged and is also consumed by ResetIntegralUnits after the imaginary coefficient vanishes, forcing the real coefficient to be plus or minus one.
+
+**Theorem 1.2 (unit_modTwo).**
+
+$$\forall u \in \operatorname{Units}\left(EisensteinOrder\right),\; \operatorname{modTwo}\left(\operatorname{unitValue}\left(u\right)\right) = 1 \Rightarrow \operatorname{im}\left(\operatorname{unitValue}\left(u\right)\right) = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Factorization/QuadraticIdeals/EisensteinCohnReductionCore.unit_modTwo` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+EisensteinOrder is QuadraticAlgebra Int (-1) (-1); the public ETwo abbreviation is the same algebra over ZMod 2. modTwo literally reduces both coefficients. The existing unit_modTwo gives imaginary coefficient zero for a unit reducing to one. It does not alone conclude plus or minus one. ResetIntegralUnits consumes it together with norm_unit_one at this owner.
+
+**Theorem 1.3 (Square plus three is not a nontrivial integer power).**
 
 $$\forall x, y \in \mathbb{Z}, \forall e \in \mathbb{N}, 2 \le x \Rightarrow 2 \le e \Rightarrow \neg x^{2} + 3 = y^{e}$$
 
@@ -30,9 +54,19 @@ Put xi=a squared minus one and m=(q-1)/2. The owner polynomial is P_q(T), the su
 
 The polynomial identity, evaluation hom, and final obstruction are reused from `D5/S3/Arith/Congruence/CohnUniformThreeAdic`. The reduction assumes neither an Eisenstein root nor coprimality: both are derived from the original equation.
 
+The same exclusion applies to every signed integer x when e is at least three. Replace x by its absolute value when |x| is at least two. For x=-1,0,1 the left side is four or three; an integer base of absolute value at least two has e-th power of absolute value at least eight, while bases of absolute value zero or one give zero or one. Thus these small values give no additional solutions.
+
+For the actual golden blocks put r_j=3^(j+1), B_j=natAbs(L_(3^j)^2+3), T_j equal to its prime support, and h_p=v_p(F_(p-(5/p))) at the original signed Fibonacci index. The cubic block product gives L_(3^j)>=4 for j>=1. GoldenCubicBlockRanks.cubic_block_b_prime_rank and FibonacciPrimeToIndexValuation.fibonacci_original_rank_valuation identify every exponent of B_j with this h_p. In particular the support is nonempty and every depth is positive. If a fixed e>=2 divided all these depths, Y=product(p in T_j,p^(h_p/e)) would satisfy B_j=Y^e, contrary to the exclusion. Therefore each such e has an actual factor whose depth it does not divide, and gcd(p in T_j,h_p)=1. A singleton support has depth one, so the block itself is prime.
+
+Every actual factor is split and has exact Fibonacci rank 2r_j, hence 2r_j divides p-1. For every real X, choose j large enough that 2r_j+1>X. All factors of this block then exceed X, and the preceding exponent witness lies in that same block. For each fixed e>=2 these witnesses are infinite, since a finite set of natural primes would be bounded. A common natural divisor of the original depths over the entire tail p>X divides the gcd of this finite block and must be one. The tail statement allows depth one and higher depths not divisible by e; it does not select either case.
+
+Let all actual depths be at least H>=2. There must be at least two factors. Three or more contribute at least 3H>2H+1. Two factors contribute at least 2H, and equality 2H would make both depths H, contrary to gcd one. Thus their total multiplicity is at least 2H+1; equality forces exactly two depths H,H+1. The rank divisibility and the split residues p=1 or 4 modulo five give the lower bound b(r)=8r+1,4r+1,6r+1,2r+1 for r=1,2,3,4 modulo five respectively. Multiplying the prime powers yields B_j>=b(r_j)^(2H+1), so a strict reverse inequality forces an actual depth below H. At j=4, r_j=243 and b(r_j)=1459, and the exact comparisons are 1459^10 < B_4 = 7177905237579946589743592924684179 < 1459^11. Taking H=5 gives a factor of original depth at most four. The abstract depth vector (2,3) still has gcd one with both entries at least two. These deductions neither construct nor exclude an all-WSS block with heterogeneous depths. The multiplicity-five residue specialization is explained in the existing QuadraticPrimeRadicalKernel narrative.
+
 ## References
 
 - Truth anchor: `D5/S3/Factorization/QuadraticIdeals/EisensteinCohnReductionCore.int_sq_add_three_not_pow`
+- Truth anchor: `D5/S3/Factorization/QuadraticIdeals/EisensteinCohnReductionCore.norm_unit_one`
+- Truth anchor: `D5/S3/Factorization/QuadraticIdeals/EisensteinCohnReductionCore.unit_modTwo`
 - Dependency: [D5/S3/Arith/Congruence/CohnUniformThreeAdic](../../Arith/Congruence/CohnUniformThreeAdic.md)
 - Dependency: [D5/S3/Factorization/QuadraticIdeals/EisensteinCyclotomicBridge](EisensteinCyclotomicBridge.md)
 - Narrative reference: [D5/S3/Arith/Congruence/CohnUniformThreeAdic](../../Arith/Congruence/CohnUniformThreeAdic.md)

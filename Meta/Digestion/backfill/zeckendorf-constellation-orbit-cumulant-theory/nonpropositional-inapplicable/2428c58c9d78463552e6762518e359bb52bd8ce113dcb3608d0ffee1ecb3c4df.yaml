@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2428c58c9d78463552e6762518e359bb52bd8ce113dcb3608d0ffee1ecb3c4df
+  normalized_sha256: sha256:2428c58c9d78463552e6762518e359bb52bd8ce113dcb3608d0ffee1ecb3c4df
+cas_ref: sha256:2428c58c9d78463552e6762518e359bb52bd8ce113dcb3608d0ffee1ecb3c4df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A disclaimer about what this document proves and a rule for using quantum terminology; no mathematical theorem is asserted.
+    previous_atom_id: ddef8ccd4f4530687541bbb373f47673778d1d38bd0aad8597b036088ee90e5f
+    next_atom_id: 06567e2802f596b77a80037e5f20a4ad2c74f10bbd152b8a67c8dc73b9773f6d

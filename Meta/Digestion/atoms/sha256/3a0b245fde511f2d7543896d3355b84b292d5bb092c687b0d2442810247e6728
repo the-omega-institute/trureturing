@@ -1,0 +1,36 @@
+**定义 40.1（同一实际历史的固定块与残余资源）。** 沿用[定义 29.1、30.1、30.6、31.1—31.3](#31-任意地址叶报告的块强制单孔刚性与容量阈值)的自由有序满二叉树域 $\mathcal T$、实际替换 $\rho$、$\mathcal I_3=\rho^3(\mathcal T)$、等叶数像集 $\mathcal I_3(n)$、叶地址集 $L$、标签 $\lambda$、四值报告 $\operatorname{out}$、非冲突关系 $\operatorname{NC}$、相容复形 $K,K_\circ$、全域确定性策略空间 $\mathfrak D_3$、共同费用 $D$ 与容量 $\mathsf{Cap}$。替换深度始终为 $d=3$。未知输入遍历全部非空有限带 $\alpha/\beta$ 标签的有序满二叉树，没有大小、组成、叶数、高度、正性、所属子类或候选身份承诺。每个有限左右地址，包括根 $\varepsilon$，都可直接请求；地址长度、定位与计算不收费。四种实际报告 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$ 保持不同，费用仅计真实同址缓存后不同的实际请求地址。
+
+取非空有限评价族 $F\subseteq\mathcal I_3(n)$。对同一实际请求—响应历史 $H$，记
+
+$$
+S_H=\{P\in F:P\text{ 匹配 }H\text{ 的全部实际报告}\},\qquad
+\Lambda_\beta(P)=\{u:\operatorname{out}_P(u)=\mathsf{leaf}_\beta\}.
+\tag{40.1}
+$$
+
+只对 $S_H\ne\varnothing$ 使用以下资源。令 $\mathcal B_H$ 恰为定义 31.3 对 $H$ 中实际叶报告应用五行规则（31.6）得到的 $A/C$ 块集合；分支、不存在及其他逻辑推论不增加块条目。采用式（30.2）的完整字面树
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle,\qquad
+C=\langle A,E\rangle,\qquad
+B=\langle C,A\rangle,
+\tag{40.2}
+$$
+
+定义固定的 $\beta$ 地址并集、其大小及任一统一整数上界 $W$ 下的残余为
+
+$$
+\begin{aligned}
+\Psi(H)&=\bigcup_{(v,T)\in\mathcal B_H}v\Lambda_\beta(T),
+ &m(H)&=|\Psi(H)|,\\
+\Lambda_\beta(A)&=\{\mathtt{LL},\mathtt R\},
+ &\Lambda_\beta(C)&=\{\mathtt{LLL},\mathtt{LR},\mathtt{RL}\},\\
+W&\ge\max_{P\in F}|\Lambda_\beta(P)|,
+ &R(H)&=W-m(H).
+\end{aligned}
+\tag{40.3}
+$$
+
+$vX=\{vx:x\in X\}$ 表示在地址前加同一有限字。集合并消去重复块和包含块造成的重复地址。$\Psi(H)$ 仅是正评价队列的数学约束，不能作未知输入的已取得报告或缓存条目。以下严格路由均取第 29 章的实际有限路由：非单点节点真实请求一个使当前队列严格分裂的地址，按实际四值进入非空真子队列，终端为单点；单点只选择完整带标签叶测试。
+

@@ -130,7 +130,8 @@ need a mathematical skill. A contribution request you can paste:
 
 1. Define the expected improvement using [Choose a starting point](#choose-a-starting-point)
    and read the linked rules before editing.
-2. Follow [Your first change](#your-first-change) to create or reuse a worktree;
+2. Follow [Your first change](#your-first-change) to reuse a suitable linked worktree
+   or create one when isolation is needed;
    open that directory as the agent's workspace for the contribution.
 3. [Edit the owning source](#edit-the-owning-source), run
    [focused validation](#check-your-change), and arrange independent review of
@@ -174,8 +175,18 @@ git clone https://github.com/YOUR-USERNAME/trureturing.git
 cd trureturing
 ```
 
-From your `dev` checkout, run `git worktree list --porcelain`; reuse this
-session's worktree if listed. Otherwise replace `SESSION-ID` with your actual
+For reading, search, statistics, diff, viewing commits/PRs/issues and
+creating/editing GitHub issues, use the main checkout or a suitable existing worktree;
+no new worktree or build is required. Prefer `git show <commit>:<path>` for
+pinned-revision reads. Never switch a shared checkout's branch for reading.
+
+For repository edits, worktree-mutating tests/verification, checkout changes,
+incompatible builds and builds with write side effects, first reuse a suitable linked worktree;
+create one only when isolation is needed. Builds that write are not read-only.
+From your `dev` checkout, run `git worktree list --porcelain`; check registration,
+repository identity, branch/commit and pin compatibility, existing material and
+cooperative scopes under CLAUDE.md §6.1 before reuse. Reuse can cross sessions.
+When isolation requires a new tree, replace `SESSION-ID` with your actual
 session ID and run the following, adding `upstream` only if absent:
 
 ```sh
@@ -188,7 +199,7 @@ cd ../trureturing-SESSION-ID
 This creates `lane/governance/first-docs` and restores locked .NET dependencies.
 For later tasks, commit existing work, confirm a clean tree and switch to a
 validated branch in the same session worktree, following
-[§6.1](../CLAUDE.md#61-独立-worktree-与-merged-完成态).
+[§6.1](../CLAUDE.md#61-reusable-collaborative-worktrees-and-merged-delivery).
 Other branch kinds are `math` and `theory`; file-level checks still apply.
 Maintainers use `BASE=origin/dev`.
 
@@ -297,7 +308,7 @@ results on your PR and address failures. GitHub branch-protection configuration
 is an external setting, not a guarantee supplied by this guide. An open PR or
 green local check is not a merged contribution: completion is **MERGED** into
 `dev`. Reuse the session worktree for subsequent tasks; cleanup follows
-[§6.1](../CLAUDE.md#61-独立-worktree-与-merged-完成态).
+[§6.1](../CLAUDE.md#61-reusable-collaborative-worktrees-and-merged-delivery).
 
 The root [LICENSE](../LICENSE) contains Apache-2.0. The repository's
 [licensing specification](develop/spec/golden-ledger-repo-spec.md#第八部治理)

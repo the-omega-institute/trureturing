@@ -13,9 +13,6 @@ internal static partial class RepositoryRules
     internal static bool IsTheoryOnlyChange(RawChangeSet changes) =>
         !changes.Paths.IsEmpty && changes.Paths.All(DigestionOpaquePathPolicy.IsTheoryDocument);
 
-    private static ImmutableArray<RuleFinding> TheoryCapacity(DeltaRuleContext context) =>
-        TheoryCapacity(context.Current, context.Changes);
-
     internal static ImmutableArray<RuleFinding> TheoryCapacity(RepositorySnapshot current, RawChangeSet changes)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();

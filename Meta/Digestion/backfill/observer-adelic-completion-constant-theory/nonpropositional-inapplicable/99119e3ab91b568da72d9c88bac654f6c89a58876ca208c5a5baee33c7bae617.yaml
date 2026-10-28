@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:99119e3ab91b568da72d9c88bac654f6c89a58876ca208c5a5baee33c7bae617
+  normalized_sha256: sha256:99119e3ab91b568da72d9c88bac654f6c89a58876ca208c5a5baee33c7bae617
+cas_ref: sha256:99119e3ab91b568da72d9c88bac654f6c89a58876ca208c5a5baee33c7bae617
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 共同影像的术语列表项“Haar common floor”，本条没有独立数学断言。
+    previous_atom_id: db968269105805dd1812b3b14495f94af27487d6f92e001f192bddac4deef5ed
+    next_atom_id: 953872ab9ea2f598babb2ac8f618090b0f35d0a5dc5e4e198a934f8322e53df5

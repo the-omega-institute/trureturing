@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:01e81e2c67c6e1584a5f5199201d19e00ea471a7767eea674fcca11014f9764c
+  normalized_sha256: sha256:01e81e2c67c6e1584a5f5199201d19e00ea471a7767eea674fcca11014f9764c
+cas_ref: sha256:01e81e2c67c6e1584a5f5199201d19e00ea471a7767eea674fcca11014f9764c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提出共同问题、证据与思想比较的规范性立场，不含数学对象上的独立命题。
+    previous_atom_id: 5b4a67efac3e17eb3d1cd3ddbd9d21b7a264ab1f0af81eb7cf676ea99ad3cbf4
+    next_atom_id: 42d95025a7f175c0707f24051b5aca3c5477220b79f0c8367933651178121030

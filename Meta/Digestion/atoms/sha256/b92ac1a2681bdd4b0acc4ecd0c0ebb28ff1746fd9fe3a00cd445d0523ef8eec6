@@ -1,0 +1,62 @@
+**Definition 127.1 (Coordinates and the actual channel).** Use the
+ordered orthonormal basis of [TR, Definition 93.1]: in the original
+coordinates its vectors are
+
+$$
+|0\rangle=\frac{(1,1,1)^{\mathsf T}}{\sqrt3},\qquad
+|1\rangle=\frac{(1,1,-2)^{\mathsf T}}{\sqrt6},\qquad
+|2\rangle=\frac{(1,-1,0)^{\mathsf T}}{\sqrt2}.
+\tag{127.1}
+$$
+
+In this basis let
+
+$$
+\begin{aligned}
+W&=\operatorname{diag}(1,1,-1),\qquad
+U_0=1\oplus\begin{pmatrix}-1/2&\sqrt3/2\\\sqrt3/2&1/2\end{pmatrix},\\
+U_1&=U_0W,\qquad
+\operatorname{Ad}_V(X)=VXV^\dagger,\\
+\Delta_W&=\tfrac12(\operatorname{id}+\operatorname{Ad}_W),\qquad
+F=\operatorname{Ad}_{U_0}\circ\Delta_W
+ =\tfrac12(\operatorname{Ad}_{U_0}+\operatorname{Ad}_{U_1}).
+\end{aligned}
+\tag{127.2}
+$$
+
+The fair chronological law of [TR, Definition 93.1] assigns probability
+$2^{-n}$ to each word of length $n$ in its actual letters
+$V_0(\theta)=U_0e^{i\theta W}$ and $V_1(\theta)=V_0(\theta)W$.
+The erased-history channel of that model is $\mathcal N_n=F^n$.
+We reuse the exact transport identity [TR, (93.5), (93.10)]:
+
+$$
+\begin{aligned}
+s_n&=(-1/2)^{n-1},\qquad
+\mathcal N_n=\operatorname{Ad}_{U_0}\circ\Phi_{s_n}\quad(n\ge1),\\
+\Phi_s(X)&=
+\begin{pmatrix}
+X_{00}&sX_{01}&0\\
+sX_{10}&(1+s)X_{11}/2+(1-s)X_{22}/2&0\\
+0&0&(1-s)X_{11}/2+(1+s)X_{22}/2
+\end{pmatrix}.
+\end{aligned}
+\tag{127.3}
+$$
+
+These identities hold on every complex matrix unit. Here $n=3$ means
+$s_3=1/4$. Write $\Phi=\Phi_{1/4}$, so explicitly
+
+$$
+\Phi(X)=
+\begin{pmatrix}
+X_{00}&X_{01}/4&0\\
+X_{10}/4&(5X_{11}+3X_{22})/8&0\\
+0&0&(3X_{11}+5X_{22})/8
+\end{pmatrix}.
+\tag{127.4}
+$$
+
+In particular the sign of the chronological parameter has been retained
+before specializing the horizon.
+

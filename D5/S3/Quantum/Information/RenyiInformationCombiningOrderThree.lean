@@ -13,8 +13,8 @@ admission_basis: open-problem-resolution (#15115; Proved)
 Direct frozen dependencies: F1--F6 are declaration identities, not module pins.
 F1: D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.trace_hermitian_product_real
   declaration statement_id: sha256:d57aafbe2afd1228c9b5e26bf06684ec80accc922d16f29290f16819337adc81
-F2: D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity
-  declaration statement_id: sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448
+F2: D5/S3/Quantum/Information/SLDSpectralEnergy.IsDensity
+  declaration statement_id: sha256:a10738dfb34d3f9f15b31e2052545ae2dd6f812042123ae918dc2a16912f1e85
 F3: D5/S3/Quantum/Information/PartialTraceMutualInformation.kronecker_eq_conj_diagonal_eigenvalues
   declaration statement_id: sha256:8b1b61a640dd9dac61868bff2b7627714c90764e99b8c320fdb404ae694c4b19
 F4: D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceLeft
@@ -25,6 +25,8 @@ F6: D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.diagonalSt
   public declaration statement_id (producing Lean report): sha256:29d9fc8170caff55b46b44d1e754079f686dada4d842c9cbbb8ae807649435e7
   baseline private declaration statement_id: sha256:3da5fa3a2feed6b43a22b9342c899b6f94a1556ea1c0fb205175999a3338b7d1
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15282
+Escape audit unfinished for cfc_unitary_diagonal:
+https://github.com/the-omega-institute/trureturing/issues/19914
 All theorem proofs are bind-only; private auxiliaries have live consumers.
 Definitions encode the source objects or consumed internal expressions.
 Per-declaration classifications (frozen dependencies expand same-delivery helpers):
@@ -40,15 +42,11 @@ proof_shape: tau: bind-only; escape_witness: none
 proof_shape: traceOutX2: bind-only; escape_witness: none
   Direct frozen dependencies (traceOutX2): none
   consumers (traceOutX2): claim, xor_state, output_entropy_exp, result
-proof_shape: hRenyi: bind-only; escape_witness: none
-  Direct frozen dependencies (hRenyi): none
-  consumers (hRenyi): hRenyiInv, claim, hRenyi_three, hRenyi_three_exp, hRenyi_three_continuous, hRenyi_three_strictMonoOn, hRenyi_three_zero, hRenyi_three_half, hRenyi_three_image, hRenyiInv_three_spec, hRenyi_three_combining, scalar_readout, result
+proof_shape: hRenyi: moved to D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
 proof_shape: hRenyiInv: bind-only; escape_witness: none
   Direct frozen dependencies (hRenyiInv): none
   consumers (hRenyiInv): claim, hRenyiInv_three_spec, scalar_readout, result
-proof_shape: bconv: bind-only; escape_witness: none
-  Direct frozen dependencies (bconv): none
-  consumers (bconv): claim, bconv_bias, hRenyi_three_combining, scalar_readout, result
+proof_shape: bconv: moved to D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
 proof_shape: claim: bind-only; escape_witness: none
   Direct frozen dependencies (claim): F2, F4
   consumers (claim): result
@@ -57,7 +55,7 @@ proof_shape: blk: bind-only; escape_witness: none
   consumers (blk): blk_psd, blk_mul, blk_trace, blk_three, sandwich_blocks, input_entropy_eq
 proof_shape: unit_psd: bind-only; escape_witness: none
   Direct frozen dependencies (unit_psd): none
-  consumers (unit_psd): blk_psd
+  consumers (unit_psd): blk_psd, D5.S3.QuantumChannels.ChannelTimeReversalNoGo.QubitPreimage.pure_preimage, D5.S3.QuantumChannels.ChannelTimeReversalNoGo.QubitNoGo.forced_witness_output, D5.S3.QuantumChannels.ChannelTimeReversalNoGo.QubitNoGo.inverse_unitary_no_go
 proof_shape: blk_psd: bind-only; escape_witness: none
   Direct frozen dependencies (blk_psd): none
   consumers (blk_psd): input_entropy_eq
@@ -124,9 +122,7 @@ proof_shape: hRenyi_three_image: bind-only; escape_witness: none
 proof_shape: hRenyiInv_three_spec: bind-only; escape_witness: none
   Direct frozen dependencies (hRenyiInv_three_spec): none
   consumers (hRenyiInv_three_spec): scalar_readout
-proof_shape: bconv_bias: bind-only; escape_witness: none
-  Direct frozen dependencies (bconv_bias): none
-  consumers (bconv_bias): hRenyi_three_combining
+proof_shape: bconv_bias: moved to D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
 proof_shape: hRenyi_three_combining: bind-only; escape_witness: none
   Direct frozen dependencies (hRenyi_three_combining): none
   consumers (hRenyi_three_combining): scalar_readout
@@ -215,13 +211,17 @@ proof_shape: output_entropy_exp: bind-only; escape_witness: none
   consumers (result): none
 -/
 
+import D5.S3.Quantum.Information.SLDSpectralEnergy
+import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
+import D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
 import D5.S3.Weil.ZetaLinear.RankTrace
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
 
 open Matrix
-open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
+open D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceLeft)
 open scoped Kronecker MatrixOrder Matrix.Norms.L2Operator BigOperators ComplexOrder
 
@@ -251,13 +251,8 @@ noncomputable def traceOutX2 (t : Matrix ((Fin 2 × Fin 2) × b) ((Fin 2 × Fin 
     Matrix (Fin 2 × b) (Fin 2 × b) ℂ :=
   fun (z, j) (z', j') => ∑ x2, t ((z, x2), j) ((z', x2), j')
 
-noncomputable def hRenyi (alpha p : ℝ) : ℝ :=
-  (1 / (1 - alpha)) * Real.log (p ^ alpha + (1 - p) ^ alpha)
-
 noncomputable def hRenyiInv (alpha : ℝ) : ℝ → ℝ :=
   Function.invFunOn (hRenyi alpha) (Set.Icc 0 (1/2))
-
-noncomputable def bconv (p q : ℝ) : ℝ := p * (1 - q) + (1 - p) * q
 
 noncomputable def claim : Prop :=
   ∀ (n1 n2 : ℕ) (s1 : Fin 2 → Matrix (Fin n1) (Fin n1) ℂ)
@@ -282,7 +277,7 @@ variable {n : Type*} [Fintype n] [DecidableEq n]
 private def blk (A B : Matrix n n ℂ) : Matrix (Fin 2 × n) (Fin 2 × n) ℂ :=
   single 0 0 1 ⊗ₖ A + single 1 1 1 ⊗ₖ B
 
-private lemma unit_psd (i : Fin 2) : (single i i (1 : ℂ)).PosSemidef := by
+lemma unit_psd (i : Fin 2) : (single i i (1 : ℂ)).PosSemidef := by
   have h : (diagonal (fun j : Fin 2 => if j = i then (1 : ℂ) else 0)).PosSemidef :=
     Matrix.PosSemidef.diagonal (fun j => by split <;> norm_num)
   convert h using 1
@@ -379,7 +374,7 @@ private lemma cfc_real_diagonal (d : n → ℝ) (f : ℝ → ℝ) :
   funext i
   simpa [z] using (cfc_algebraMap (R := ℝ) (A := ℂ) (d i) f)
 
-private lemma cfc_unitary_diagonal (U : Matrix.unitaryGroup n ℂ) (d : n → ℝ) (f : ℝ → ℝ) :
+lemma cfc_unitary_diagonal (U : Matrix.unitaryGroup n ℂ) (d : n → ℝ) (f : ℝ → ℝ) :
     cfc f ((U : Matrix n n ℂ) * diagonal (fun i => (d i : ℂ)) * star (U : Matrix n n ℂ)) =
       (U : Matrix n n ℂ) * diagonal (fun i => (f (d i) : ℂ)) * star (U : Matrix n n ℂ) := by
   let phi := (Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) U).toStarAlgHom
@@ -479,10 +474,6 @@ private lemma hRenyiInv_three_spec {H : ℝ} (hH : H ∈ Set.Icc 0 (Real.log 2))
     hRenyiInv 3 H ∈ Set.Icc 0 (1/2) ∧ hRenyi 3 (hRenyiInv 3 H) = H := by
   have him : H ∈ hRenyi 3 '' Set.Icc 0 (1/2) := by rw [hRenyi_three_image]; exact hH
   exact ⟨Function.invFunOn_mem him, Function.invFunOn_eq him⟩
-
-private lemma bconv_bias (p q : ℝ) : 1 - 2*bconv p q = (1 - 2*p)*(1 - 2*q) := by
-  unfold bconv
-  ring
 
 private lemma hRenyi_three_combining (p q : ℝ) :
     Real.exp (-2 * hRenyi 3 (bconv p q)) =
@@ -816,6 +807,4 @@ theorem result : claim := by
 end
 end
 
-#print axioms result
-#print claim
 end D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree

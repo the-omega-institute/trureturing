@@ -28,6 +28,7 @@ Direct frozen dependencies:
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 
+import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
@@ -87,9 +88,9 @@ theorem result : ¬ claim := by
         simp [partialTraceRight_add, add_mul, Matrix.trace_add]
       map_smul' := by
         intro c X
-        have hs : partialTraceRight (c • X) = c • partialTraceRight X := by
-          ext i j
-          simp [partialTraceRight, Finset.smul_sum]
+        have hs : partialTraceRight (c • X) = c • partialTraceRight X :=
+          D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.partialTraceRight_smul
+            c X
         rw [hs, smul_mul_assoc, Matrix.trace_smul]
         rfl
       } : Matrix (Fin a × Fin b) (Fin a × Fin b) ℂ →ₗ[ℝ] ℂ).toContinuousLinearMap)

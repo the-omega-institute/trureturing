@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d08dd785a05f8f9603a2abd33e8258037cbf89a0166878de2e1a367f2836696e
+  normalized_sha256: sha256:d08dd785a05f8f9603a2abd33e8258037cbf89a0166878de2e1a367f2836696e
+cas_ref: sha256:d08dd785a05f8f9603a2abd33e8258037cbf89a0166878de2e1a367f2836696e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 保留被删要求的伦理理由与计数粒度的研究警戒，未给出新的定量断言。
+    previous_atom_id: 882c26101c7100a723664008d51e522f53d431b112215d21efa91f190ccd53f8
+    next_atom_id: 11c0c3094fe04f0dd3a357ca458a8134e4cbf5bcefce444c9f8b8b2fe9b8512e

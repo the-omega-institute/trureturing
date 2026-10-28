@@ -48,7 +48,10 @@ def module_work(operation, names):
 
 
 def produce_fib(row, output, analyzer, previous=""):
-    stats = fib_analysis.produce(row, previous or output, analyzer)
+    if row.get('fib_analysis') is None:
+        return
+    with phase('native-fib', module=row['module']):
+        stats = fib_analysis.produce(row, previous or output, analyzer)
     for kind, count in (stats or {}).items():
         activity('fib-' + kind, count)
 
@@ -131,16 +134,25 @@ def state(root):
 def regenerate(root, *command):
     """Explicit report-only rebuild, called inside lean-cache-run's writer guard.
 
-    Compiled Lean and dependency directories are outside this generated state.
-    Removing the state also removes traces, pending/previous leaves and the
-    aggregate. Disable Lake's content-store restoration for this invocation so
+    Remove generated report leaves, traces and the aggregate, retaining native
+    program directories and compiler input projections. Mathematical Lean and
+    dependency build directories lie outside this report state. Disable Lake's
+    content-store restoration for this invocation so
     identical input traces cannot resurrect the discarded report artifacts.
     """
     if not command:
         raise ValueError('report regeneration requires a build command')
     generated = state(root)
-    if generated.exists() or generated.is_symlink():
-        shutil.rmtree(generated)
+    if generated.is_symlink():
+        raise ValueError('report state must not be a symlink')
+    if generated.exists():
+        for path in generated.iterdir():
+            if path.name in {'producer', 'interface', 'reg', 'judge-inputs'}:
+                continue
+            if path.is_dir() and not path.is_symlink():
+                shutil.rmtree(path)
+            else:
+                path.unlink()
     subprocess.run(command, cwd=root, check=True,
                    env=dict(os.environ, LAKE_ARTIFACT_CACHE='false', LAKE_RESTORE_ARTIFACTS='false'))
 
@@ -332,48 +344,72 @@ def row_binding(rows, root, module_name, utility_path, *, template_inputs=None):
                 raise ValueError('native utility binding mismatch')
 
 
-def module(root, name, source, utility_path, executable, output, analyzer="", previous=""):
-    root, source, output = Path(root), Path(source), Path(output)
-    output.parent.mkdir(parents=True, exist_ok=True)
+def module_stage(root, name, source, utility_path, executable, output, analyzer, previous, directory):
+    """Detach compiler data into the existing spool before preparing arithmetic."""
+    root, source, output, directory = Path(root), Path(source), Path(output), Path(directory)
     template_inputs = selection.Selection(root)
+    record = public.read_json(Path(utility_path).read_bytes())
+    validate_dependency_paths(root, utility_path, inputs=template_inputs)
+    utility = directory / 'utility.json'
+    utility.write_bytes(materials.canonical_json(record['utilities']))
+    spool = directory / 'spool'
+    spool.mkdir()
+    report = directory / public.RAW
+    arguments = ['--output', str(directory / 'spool.json'), '--material-spool', str(spool),
+        '--utility-input', str(utility), name, record['source_path'], 'sha256:' + public.digest(source)]
+    capture = retain_request(root, executable, arguments, record['utilities'])
+    with phase('native-inspect', request_capture=capture):
+        run_inspector(root, executable, arguments)
+    compiled = public.read_json((directory / 'spool.json').read_bytes())
+    stats = [fib_analysis.prepare(row, previous or output) for row in compiled['modules']]
+    (directory / 'spool.json').write_bytes(materials.canonical_json(compiled))
+    (directory / 'fib-work.json').write_text(json.dumps(stats))
+
+
+def module_finish(root, name, source, utility_path, executable, output, analyzer, previous, directory):
+    root, source, output, directory = Path(root), Path(source), Path(output), Path(directory)
+    template_inputs = selection.Selection(root)
+    spool = directory / 'spool'
+    report = directory / public.RAW
+    compiled = public.read_json((directory / 'spool.json').read_bytes())
+    stats = public.read_json((directory / 'fib-work.json').read_bytes())
+    if len(compiled['modules']) != len(stats):
+        raise ValueError('fib.analysis_incomplete')
+    for row, work in zip(compiled['modules'], stats):
+        if row.get('fib_analysis') is not None:
+            with phase('native-fib', module=row['module']):
+                result = fib_analysis.finish(row, analyzer, work)
+            for kind, count in result.items():
+                activity('fib-' + kind, count)
+    with phase('native-materials', module=name):
+        (directory / 'spool.json').write_bytes(materials.canonical_json(compiled))
+        materials.compact(directory / 'spool.json', spool, report)
+        public.write_origin(report, name,
+            public.production_origin(root, executable, inputs=template_inputs), input_projection(root, name))
+    # Like an olean, an artifact is validated once, when it is produced;
+    # Lake's trace alone decides later reuse.
+    with phase('native-validation', module=name):
+        rows, _ = validate_module(report, root, name, utility_path, template_inputs=template_inputs)
+    with phase('native-package', module=name):
+        artifact = directory / 'module.zip'
+        public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
+        os.replace(artifact, output)
+    if any(x['type'] != 'LeanInformationAudit.AuricFib.Contract.Application'
+           for x in input_projection(root, name)['inputs']):
+        print('LEAN_INSPECTOR_ASSESS module=' + name)
+        module_work('assess', [name])
+    module_work('extract', [name])
+    activity('extract', 1)
+    print(f'LEAN_INSPECTOR_EXTRACT module={name} declarations={len(rows[0]["declarations"])}')
+
+
+def module(root, name, source, utility_path, executable, output, analyzer="", previous=""):
+    output = Path(output)
+    output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='.module.', dir=output.parent) as directory:
-        directory = Path(directory)
-        record = public.read_json(Path(utility_path).read_bytes())
-        validate_dependency_paths(root, utility_path, inputs=template_inputs)
-        utility = directory / 'utility.json'
-        utility.write_bytes(materials.canonical_json(record['utilities']))
-        spool = directory / 'spool'
-        spool.mkdir()
-        report = directory / public.RAW
-        arguments = ['--output', str(directory / 'spool.json'), '--material-spool', str(spool),
-            '--utility-input', str(utility), name, record['source_path'], 'sha256:' + public.digest(source)]
-        capture = retain_request(root, executable, arguments, record['utilities'])
-        with phase('native-inspect', request_capture=capture):
-            run_inspector(root, executable, arguments)
-        with phase('native-fib', module=name):
-            compiled = public.read_json((directory / 'spool.json').read_bytes())
-            for row in compiled['modules']:
-                produce_fib(row, output, analyzer, previous)
-        with phase('native-materials', module=name):
-            (directory / 'spool.json').write_bytes(materials.canonical_json(compiled))
-            materials.compact(directory / 'spool.json', spool, report)
-            public.write_origin(report, name,
-                public.production_origin(root, executable, inputs=template_inputs), input_projection(root, name))
-        # Like an olean, an artifact is validated once, when it is produced;
-        # Lake's trace alone decides later reuse.
-        with phase('native-validation', module=name):
-            rows, _ = validate_module(report, root, name, utility_path, template_inputs=template_inputs)
-        with phase('native-package', module=name):
-            artifact = directory / 'module.zip'
-            public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
-            os.replace(artifact, output)
-        if any(x['type'] != 'LeanInformationAudit.AuricFib.Contract.Application'
-               for x in input_projection(root, name)['inputs']):
-            print('LEAN_INSPECTOR_ASSESS module=' + name)
-            module_work('assess', [name])
-        module_work('extract', [name])
-        activity('extract', 1)
-        print(f'LEAN_INSPECTOR_EXTRACT module={name} declarations={len(rows[0]["declarations"])}')
+        args = (root, name, source, utility_path, executable, str(output), analyzer, previous, directory)
+        module_stage(*args)
+        module_finish(*args)
 
 
 def produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs, analyzer=""):
@@ -388,15 +424,18 @@ def produce_row(row, directory, spool, root, origin, utility_path, output, templ
         source = materials.regular_spool_file(spool, decl['material_file'])
         os.replace(source, row_spool / source.name)
     spool_report = row_dir / 'spool.json'
-    spool_report.write_bytes(materials.canonical_json({'schema': materials.SPOOL_SCHEMA, 'modules': [row]}))
-    report = row_dir / public.RAW
-    materials.compact(spool_report, row_spool, report)
-    public.write_origin(report, name, origin, input_projection(root, name))
-    validate_module(report, root, name, utility_path, template_inputs=template_inputs)
-    output.parent.mkdir(parents=True, exist_ok=True)
-    artifact = row_dir / 'module.zip'
-    public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
-    os.replace(artifact, output)
+    with phase('native-materials', module=name):
+        spool_report.write_bytes(materials.canonical_json({'schema': materials.SPOOL_SCHEMA, 'modules': [row]}))
+        report = row_dir / public.RAW
+        materials.compact(spool_report, row_spool, report)
+        public.write_origin(report, name, origin, input_projection(root, name))
+    with phase('native-validation', module=name):
+        validate_module(report, root, name, utility_path, template_inputs=template_inputs)
+    with phase('native-package', module=name):
+        output.parent.mkdir(parents=True, exist_ok=True)
+        artifact = row_dir / 'module.zip'
+        public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
+        os.replace(artifact, output)
 
 
 def produce_batch_chunk(requests):
@@ -636,11 +675,13 @@ def _publish(root, destination):
 
 def main():
     actions = {'prepare': prepare, 'aggregate-inputs': aggregate_inputs,
-               'module': module, 'aggregate': aggregate, 'publish': publish, 'batch': batch,
+               'module': module, 'module-stage': module_stage, 'module-finish': module_finish,
+               'aggregate': aggregate, 'publish': publish, 'batch': batch,
                'regenerate': regenerate}
     if len(sys.argv) < 2 or sys.argv[1] not in actions:
         raise ValueError('expected prepare, module, aggregate, publish, or batch')
-    actions[sys.argv[1]](*sys.argv[2:])
+    with phase('native-' + sys.argv[1]):
+        actions[sys.argv[1]](*sys.argv[2:])
 
 
 if __name__ == '__main__':

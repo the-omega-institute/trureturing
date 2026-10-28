@@ -1,0 +1,20 @@
+**命题 12.8（原二十一格的Fisher分母随权重变化）。**
+
+下述投影公式是此有理／无理权重应用的中间接口；正支撑与满秩均为必要前提。
+
+Let $p_e>0$ on all twenty-one legal cells, with $\sum p_e=1$, and $M=\operatorname{diag}(p_e)$. The Fisher metric on probability tangent vectors is
+$g_p(u,v)=u^{\mathsf T}M^{-1}v=\sum_eu_ev_e/p_e$; the same form is an ambient positive definite extension. Since $D$ has full row rank,
+$t^{\mathsf T}DMD^{\mathsf T}t=\sum_ep_e(D^{\mathsf T}t)_e^2>0$ for nonzero $t$. Thus
+$$
+P_F=MD^{\mathsf T}(DMD^{\mathsf T})^{-1}D
+$$
+is defined, $DP_F=D$, and $g_p(z,P_Fu)=z^{\mathsf T}D^{\mathsf T}(DMD^{\mathsf T})^{-1}Du=0$ for $z\in\ker D$. Its complement is the Fisher-orthogonal hidden component. At uniform $p_e=1/21$, the metric is 21 times Euclidean and $P_F=P_V$.
+
+For a normalized tangent $\sum u_e=0$, both components have mass zero: mass equals minus the sum of left boundary coordinates, and $DP_Fu=Du$. This does not make either component a nonnegative source. Zero probabilities require a restricted support and an independent rank check; the displayed ambient metric and inverse cannot be used at such a boundary without modification.
+
+There is no common denominator 45 for arbitrary positive Fisher weights. Give $OO$ conductance $t>0$, all other edges conductance 1, and normalize these weights to a probability law; common scaling cancels from $P_F$. Removing $OO$ leaves a connected alternative network. Define its conductance $C>0$ as the current required for unit potential difference between the two endpoints; positive definiteness and connectedness give positivity. Linearity makes its current at potential difference $v$ equal to $Cv$, while the added edge carries $tv$. For a unit injection, $(t+C)v=1$. The $OO$ diagonal of $P_F$ is the current on that edge, hence $t/(t+C)$. At $t=1$, 命题12.6 gives $1/(1+C)=17/45$, so $C=28/17$ and that diagonal is
+$$
+\frac{17t}{17t+28}.
+$$
+Taking the positive rational $t=28k/17$ gives $k/(k+1)$, whose reduced denominators are unbounded. Irrational $t$ gives an irrational value, since the displayed expression has a rational inverse on $(0,1)$. Rational positive $p$ gives a rational matrix for each fixed law, but with law-dependent denominators; irrational inputs need not have any integer clearing denominator. This is a metric dependence, not a change in the underlying integer event lattice.
+

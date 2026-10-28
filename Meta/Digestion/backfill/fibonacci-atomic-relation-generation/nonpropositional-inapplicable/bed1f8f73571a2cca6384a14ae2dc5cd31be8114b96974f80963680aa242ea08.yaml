@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bed1f8f73571a2cca6384a14ae2dc5cd31be8114b96974f80963680aa242ea08
+  normalized_sha256: sha256:bed1f8f73571a2cca6384a14ae2dc5cd31be8114b96974f80963680aa242ea08
+cas_ref: sha256:bed1f8f73571a2cca6384a14ae2dc5cd31be8114b96974f80963680aa242ea08
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条说明 coarse_additions.py 的枚举范围、方法与有限实验和全称证明的证据边界，不给出枚举结果或新的数学断言。
+    previous_atom_id: 808a7202561352ddf0f96a12dde5437eba4904d0af9b75075a6bebb5204cb3e6
+    next_atom_id: 405f48c446c5e51c08b5fb80c15f7e82af8311eba2053bf2a86047ce4dab6ce7

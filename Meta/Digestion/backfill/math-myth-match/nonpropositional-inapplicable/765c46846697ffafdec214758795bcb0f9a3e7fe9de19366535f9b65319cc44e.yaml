@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:765c46846697ffafdec214758795bcb0f9a3e7fe9de19366535f9b65319cc44e
+  normalized_sha256: sha256:765c46846697ffafdec214758795bcb0f9a3e7fe9de19366535f9b65319cc44e
+cas_ref: sha256:765c46846697ffafdec214758795bcb0f9a3e7fe9de19366535f9b65319cc44e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 道与空的诠释边界，明确不把概率测度 C 当作共同本体。
+    previous_atom_id: 41d94c8eb25fa7391cd3c78fc976d805014a00110d1ecf4a606ae54261a5b724
+    next_atom_id: 874a1a81f0a4c85703cbd68477b99035c28080904b06c033b1c691cf53228a44

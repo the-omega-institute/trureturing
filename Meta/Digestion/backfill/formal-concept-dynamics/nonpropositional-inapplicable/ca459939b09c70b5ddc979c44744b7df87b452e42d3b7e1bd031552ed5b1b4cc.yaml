@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ca459939b09c70b5ddc979c44744b7df87b452e42d3b7e1bd031552ed5b1b4cc
+  normalized_sha256: sha256:ca459939b09c70b5ddc979c44744b7df87b452e42d3b7e1bd031552ed5b1b4cc
+cas_ref: sha256:ca459939b09c70b5ddc979c44744b7df87b452e42d3b7e1bd031552ed5b1b4cc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: New composite actions are an audit warning, without a closure or existence theorem.
+    previous_atom_id: 9f9363e6630bec6d1295c590523ebe0337c51e68abac238b0e1467ac73eefe55
+    next_atom_id: 43747a451047e6c7d8434c1a59f877969a5b0ab392bf630a2b27e4b6b89401a5

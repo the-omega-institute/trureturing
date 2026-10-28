@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:db2cc8a82920e4c9629ba3e8c2f9243f94972739531ead75cb4d82eae1483944
+  normalized_sha256: sha256:db2cc8a82920e4c9629ba3e8c2f9243f94972739531ead75cb4d82eae1483944
+cas_ref: sha256:db2cc8a82920e4c9629ba3e8c2f9243f94972739531ead75cb4d82eae1483944
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/QuadraticLoad/StarExtrema.maximum_degree_lower_bound
+    target_statement_id: sha256:ca7651a9b92c60409f2aa338d61cb93bee6beb1981b2b947877686e1c0a32e4e
+  - gid: D5/S3/Combinatorics/Graph/QuadraticLoad/StarExtrema.star_extrema
+    target_statement_id: sha256:05af13f8ae30704a7f0f8e531f29574bfc53dc0a7ff09a48cad7653168a333f3
+receipts:
+  unresolved_subitems: []

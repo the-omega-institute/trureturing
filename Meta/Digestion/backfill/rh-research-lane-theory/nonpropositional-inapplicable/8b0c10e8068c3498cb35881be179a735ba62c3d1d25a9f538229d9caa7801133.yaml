@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8b0c10e8068c3498cb35881be179a735ba62c3d1d25a9f538229d9caa7801133
+  normalized_sha256: sha256:8b0c10e8068c3498cb35881be179a735ba62c3d1d25a9f538229d9caa7801133
+cas_ref: sha256:8b0c10e8068c3498cb35881be179a735ba62c3d1d25a9f538229d9caa7801133
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本片只引介“能量聚合”要分为缺陷与相干两个概念，没有给出两者的数学关系。
+    previous_atom_id: e97c5ae2daed0a587b66df658ac037f03273262b820271f6f1eb2b82020457cd
+    next_atom_id: eb7754c64ff9baa17d107dd9d9ce7be667d1515dae23fbb3859d6ff335e7c83a

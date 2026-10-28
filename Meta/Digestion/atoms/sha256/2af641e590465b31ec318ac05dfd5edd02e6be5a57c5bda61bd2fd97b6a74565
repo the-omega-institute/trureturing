@@ -1,0 +1,59 @@
+**Theorem 110.2 (Uniform stabilized-versus-no-reference gap).** For every
+finite $n\ge2$, and also at the limiting channel,
+
+$$
+\boxed{\displaystyle
+\delta_n-\mu_n\ge\delta_2-\frac23>\frac{2}{87}.}
+\tag{110.3}
+$$
+
+At the two smaller horizons the gap is zero, and its exact limit is
+
+$$
+\delta_0-\mu_0=\delta_1-\mu_1=0,\qquad
+\lim_{n\to\infty}(\delta_n-\mu_n)
+ =\delta_\infty-\mu_\infty=\frac{2}{15}.
+\tag{110.4}
+$$
+
+*Proof.* Theorem 94.2, (94.3)–(94.4), gives
+
+$$
+\delta_2=1-\frac3{H(r_*)},\qquad
+H(r)=7+r^2-4r+\frac4{1-r^2},\qquad 0<r_*<\frac13.
+\tag{110.5}
+$$
+
+The denominator $1-r_*^2$ is positive, and the exact identity
+
+$$
+H(r_*)-\frac{29}{3}
+ =r_*^2+4\left(\frac13-r_*\right)
+       +\frac{4r_*^2}{1-r_*^2}>0
+\tag{110.6}
+$$
+
+implies $H(r_*)>29/3>9$. Consequently
+
+$$
+\delta_2-\frac23
+ =\frac13-\frac3{H(r_*)}
+ >\frac13-\frac9{29}=\frac2{87}.
+\tag{110.7}
+$$
+
+For $n\ge2$, Lemma 110.1 gives $\delta_n\ge\delta_2$ and the legal
+replacer gives $\mu_n\le2/3$. These prove (110.3) at every such finite
+horizon. By (94.9) and (107.9), the two sequences converge respectively
+to $4/5$ and $2/3$. Taking their difference proves both the limiting
+case of (110.3) and the limit $4/5-2/3=2/15$. Finally Theorem 94.2 and
+(107.4) give identical values zero at horizon zero and $1/2$ at horizon
+one, proving the two zero gaps. $\square$
+
+This proof uses the exact stabilized horizon-two theorem, the original
+power composition and a no-reference replacer. The comparison
+$\mu_n\le\delta_n$ alone would not yield a strictly positive gap.
+The constants in (110.3)–(110.4) concern the declared half trace-distance
+and half diamond-distance conventions throughout; no reference is made
+available to a decoder.
+

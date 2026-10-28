@@ -1,0 +1,16 @@
+**Definition 44.2 (the integer polynomial of the earned law).** In §§44–51 denote the monic rational polynomial of Proposition 37.4 by $\bar q$. Clear its coefficient denominators and divide by their positive greatest common divisor, choosing positive leading coefficient, to obtain the unique primitive polynomial
+
+$$
+q(z)=\sum_{j=0}^{N}q_jz^j\in\mathbb Z[z],\qquad
+a=q_N>0,\qquad \bar q=q/a,\qquad
+h=\max_{0\le j\le N}|q_j|.
+$$
+
+No irreducibility hypothesis is imposed. Both $q(T)=0$ and the absence of a nonzero annihilator of $b$ of degree below $N$ are supplied by Proposition 37.4 and Lemma 37.1. In fact $a\ge2$: the roots $\lambda_i$ of $\bar q$ are the $N$ eigenvalues of the actual symmetric $T$, with $0<\lambda_i<1$, so
+
+$$
+0<|q_0|=a\prod_{i=1}^{N}\lambda_i<a.
+$$
+
+The two endpoint inequalities use $N\ge1$ and strict positivity and contraction. Since $q_0$ is a nonzero integer, they imply the assertion. In particular $h\ge a$.
+

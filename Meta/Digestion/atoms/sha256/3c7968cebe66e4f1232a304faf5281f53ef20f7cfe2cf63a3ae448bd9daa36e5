@@ -1,0 +1,19 @@
+### 95.2 三条闭包律与反向包含的反例
+
+每个 $q\in\Pi(\mathscr R)$ 都保持 $\mathscr R$，故 $\mathscr R\subseteq\mathsf K(\mathscr R)$。同时
+
+$$
+\Pi(\mathsf K(\mathscr R))=\Pi(\mathscr R).
+$$
+
+一个方向由扩张性与 $\Pi$ 的反单调性得到；另一个方向是：若 $q\in\Pi(\mathscr R)$，则定义中的交核满足 $\mathsf K(\mathscr R)\subseteq\ker q$，所以 $q\in\Pi(\mathsf K(\mathscr R))$。再作用一次 $J$，即得
+
+$$
+\mathsf K(\mathsf K(\mathscr R))=\mathsf K(\mathscr R).
+\tag{95.4}
+$$
+
+因此式(31.2)的扩张性与式(31.4)的幂等性仍成立，并与式(95.3)一起组成普通集合包含序下的三条闭包律。
+
+反向包含并非另一种同样成立的表述。取 $X=O=\{0,1\}$、$\mathscr R=\Delta_X$、$\mathscr S=X\times X$。所有读出都保持对角关系，恒等读出使 $\mathsf K(\mathscr R)=\Delta_X$；保持全关系的读出都是常值读出，所以 $\mathsf K(\mathscr S)=X\times X$。于是 $\mathscr R\subseteq\mathscr S$，但 $(0,1)\in\mathsf K(\mathscr S)\setminus\mathsf K(\mathscr R)$，否定旧式(31.3)的方向。
+

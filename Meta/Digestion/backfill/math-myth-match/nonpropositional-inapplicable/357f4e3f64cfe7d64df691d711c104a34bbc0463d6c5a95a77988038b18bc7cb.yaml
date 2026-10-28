@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:357f4e3f64cfe7d64df691d711c104a34bbc0463d6c5a95a77988038b18bc7cb
+  normalized_sha256: sha256:357f4e3f64cfe7d64df691d711c104a34bbc0463d6c5a95a77988038b18bc7cb
+cas_ref: sha256:357f4e3f64cfe7d64df691d711c104a34bbc0463d6c5a95a77988038b18bc7cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 期望评分模型如何适用于宗教传统的解释条件。
+    previous_atom_id: cdf1cf117f49bf3bb8e1b8f518ef1de1b35c6057ddb1059fd19957e38c0d6635
+    next_atom_id: bca1764b2f1f9fe4e2f37c3a74a2d371e561474cf3466a89dffaf49d407e48a7

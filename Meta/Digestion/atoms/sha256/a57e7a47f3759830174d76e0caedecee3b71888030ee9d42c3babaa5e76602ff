@@ -1,0 +1,30 @@
+**Convention 8.1 (same actual run).** The action word is exactly
+$J,M,J,M,M,M,J$. There are seven actions and eight readings including
+the initial one at zero. Their values are
+
+$$
+(0,24,147/5,24,18,p,v,a).
+$$
+
+Every world uses one $P$, one $g$ and one $d$ on these clocks.
+There is no reset, extra preparation, copy, skipped read, rebased
+clock or extra port. The last $J$ is an original lawful choice, not
+a new acquisition primitive; the alternative last $M$ is unexecuted.
+The retained variable record consists of exact $p,v$, the single
+substitute $z$, and the known common radius. The fixed history and
+model are public references. Recovering $W$ and recomputing its
+responses agrees with this same acquired base and yields an $a$
+inside the reported interval by (5.3).
+
+This is a count of original actions/readings and a declaration of
+retained mathematical fields, not a finite-bit storage bound or a
+priced numerical implementation. In particular exact retention of
+$(p,v)$ is a potentially infinite-precision resource, and $z$ and
+$\varepsilon$ are real inputs as declared. No minimum memory,
+arithmetic complexity, physical realization, installed decoder,
+effective $V_3$ recognizer, or future post-terminal access is proved.
+The midpoint failure concerns the full channel (5.1), not every
+quantizer satisfying an error upper bound. The vanishing margin
+rules out a common positive radius only on this punctured family;
+it is not a universal observer obstruction or an all-target result.
+

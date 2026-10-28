@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ca58dcf0e295fe3dbe7a59ba6095a88ec890faaac2c8aa534ff146bc98b5c4c4
+  normalized_sha256: sha256:ca58dcf0e295fe3dbe7a59ba6095a88ec890faaac2c8aa534ff146bc98b5c4c4
+cas_ref: sha256:ca58dcf0e295fe3dbe7a59ba6095a88ec890faaac2c8aa534ff146bc98b5c4c4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 以 vs. 并列当前目标完成和动态完成两种表达式，作为静态与时间结构的对照；未断言二者相等或严格可比。
+    previous_atom_id: 55f3c5fa4dc0c5af2347575bb94a2b7dd62a07e9d4ceb7cc4e667f9e2045c8b1
+    next_atom_id: fa4ce011075ad86c4949e5a11f70d98a13b18e4e46b194ad1961dfda99e578df

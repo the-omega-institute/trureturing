@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f8bc0a2280a0a13053783a6186e9d4a804b479fdbbd0b3f60cfe0a05464bede0
+  normalized_sha256: sha256:f8bc0a2280a0a13053783a6186e9d4a804b479fdbbd0b3f60cfe0a05464bede0
+cas_ref: sha256:f8bc0a2280a0a13053783a6186e9d4a804b479fdbbd0b3f60cfe0a05464bede0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只要求w有独立几何测量与认证，禁止把概率权重直接改名度量；没有新增数学命题。
+    previous_atom_id: ec95624c72309266bc8b22006c14e023814a35772f1fd4e9ec2c0592f4354f62
+    next_atom_id: 09386c00de4b7ec8db5be07fcc87df5f8a4c5a91041b265be07d5e17557cd7f2

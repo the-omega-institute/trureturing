@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b5208234607e8024a949a7d7a3137dde2dd9ddb8a8338b0c30fd25860f6df06b
+  normalized_sha256: sha256:b5208234607e8024a949a7d7a3137dde2dd9ddb8a8338b0c30fd25860f6df06b
+cas_ref: sha256:b5208234607e8024a949a7d7a3137dde2dd9ddb8a8338b0c30fd25860f6df06b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是局部扰动参数列表中的 t 记号，不单独断言扰动保持负性。
+    previous_atom_id: a60e510d404ac743c1c01d74ecfed077bb3ce7fee7d2df6f83f761b92d0317b7
+    next_atom_id: 32019ca6a43903e0dd309e76697025bef3ca0d888956dd10147d6906c5169eb3

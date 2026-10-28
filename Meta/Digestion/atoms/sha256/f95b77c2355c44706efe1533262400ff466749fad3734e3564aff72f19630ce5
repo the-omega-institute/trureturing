@@ -1,0 +1,16 @@
+**Definition 5.2 (a specified mixing kernel).** A fiber probability kernel
+$\Lambda$ assigns a probability $\Lambda_x$ on $\pi^{-1}(x)$ for each
+$x\in B$, and acts on functions by integration. It satisfies $\Lambda U=1$.
+An intertwining for this prescribed law is
+
+$$
+\Lambda H_t=S_t\Lambda.
+\tag{5.5}
+$$
+
+This concerns processes started with distribution $\Lambda_x$ on a fiber.
+It differs in direction and quantifiers from the all-start pullback
+identity $H_tU=US_t$. Cemetery points are sent to cemetery points, and
+the killed convention remains in force in (5.5). One-time compression
+$\Lambda H_tU$ without (5.5) need not supply a Markov path law.
+

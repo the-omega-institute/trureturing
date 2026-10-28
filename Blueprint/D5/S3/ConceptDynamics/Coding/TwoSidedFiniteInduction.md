@@ -1,0 +1,37 @@
+# Finite two-sided state-splitting induction
+
+## Abstract
+
+Constructed finite two-sided split towers with supported in/out inverse-window decrease.
+
+**Definition 1.1 (Equal-depth towers and the original conjugacy).**
+
+Lean statement: `D5/S3/ConceptDynamics/Coding/TwoSidedFiniteInduction.reduce`
+
+*Formalization.* `D5/S3/ConceptDynamics/Coding/TwoSidedFiniteInduction.reduce` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Presentation bundles finite vertex and edge types, decidable equality, discrete edge topology, a directed multigraph and essentiality. Empty carriers are permitted. Code is an endpoint-preserving vertex and edge map. Given presentations F,H, a code c, an actual history homeomorphism P, and the one-block equation (P x)_t=c.edge(x_t) for every legal history x and integer t, reduce takes a total inverse table Q on all legal H words of length M+N+1. Its hypothesis is Q(window(y,t-M,M+N+1))=(P inverse y)_t for every y,t. For k=M+N it constructs Terminal F H P k. The radii are carried bounds and need not be minimal.
+
+Terminal contains two resulting presentations, a concrete tower from each original presentation, a vertex-and-edge graph relabeling between their endpoints, proofs that both tower lengths equal k, and the literal square rightTower(P x)=relabel.history(leftTower x) for every original x. Each Tower constructor is an actual outgoing or incoming partition lift. No constructor accepts an arbitrary homeomorphism, and the terminal relabeling and towers are outputs of the construction.
+
+ActualOutSplit uses vertices (v,l) supported by an outgoing edge at v with label l, and edges (e,l) supported by a following edge at target(e) with label l. Lift sends x_t to (x_t,p(x_(t+1))); forget keeps the first component. ActualInSplit instead uses incoming supports, edges (l,e) with a preceding edge at source(e), and lift x_t=(p(x_(t-1)),x_t). The inverse laws give homeomorphisms for discrete edge and label topologies. Both constructions preserve essentiality. Existential supports exclude empty classes without selecting default edges.
+
+For N=n+1, split G by c.edge and H by the identity. The new horizontal conjugacy is lift_H composed with P composed with forget_G. It satisfies the constructed split code on every legal split history and commutes with both original lifts. Expand a target split word of length M+n+1 by keeping its first components and appending its last second component. The new inverse table returns (Q(expand(w)),second component of w_M). EssentialWordRealization.every_prescribed_word_has_actual_history realizes the expanded word; the original hQ and hP certify support. recover_window proves recovery on every history with radii (M,n).
+
+For N=0 and M=m+1, use incoming splits on both sides. Prefix expansion prepends the preceding edge carried by the first split edge, then keeps all original-edge second components. The new table returns (first component of w_m,Q(expand(w))). The same actual-history realization certifies its support, and recover_window gives radii (m,0). Both total table definitions include their support proofs directly. Those subtype proof fields provide no separate mathematical-content claim after value projection. The all-history inverse equations and essentiality also supply the finite-word seam through FiniteWindowTableCriterion.seam_of_map.
+
+At M=N=0, singleton-word realization proves that c.edge and d mapped to Q(single d) are inverse. Vertex injectivity requires more than these edge equations: if c.vertex(v)=c.vertex(w), choose an incoming edge at v and an outgoing edge at w. Their images form a legal two-edge H word. Realize that word, use the edge inverse to recover those same two G edges in P inverse y, and apply its actual seam to obtain v=w. Essentiality of H and edge surjectivity give vertex surjectivity. These derived bijections form the terminal graph relabeling, whose history map equals the supplied P.
+
+Strong recursion on M+N applies the outgoing branch when N is positive, otherwise the incoming branch when M is positive, and the relabeling construction at zero. Each recursive call receives the actual changed conjugacy, its one-block formula, the constructed shorter table and its all-history inverse equation. Prepending both actual split lifts increases both depths by one. The proved split square transports the recursive square back to the same original P. Structural extensionality, inverse equations and square helpers organize this construction and carry no independent content credit.
+
+The reusable mathematical construction is the finite induction together with the derived zero-window graph bijections. The direct suppliers provide legal-word realization, window extensionality and the seam criterion; Mathlib provides ordinary topology, homeomorphism and equivalence operations. No arbitrary homeomorphism is asserted to be one-block here. Compatibility of the separate numbered-recoding and response consumers, their complete original-h and enumerated-root routes, SGCC, literal Fix(T^6), minimum maximum period six, and escape registration remain outside this result. No literature-completeness, novelty or minimality claim is made.
+
+## References
+
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/TwoSidedFiniteInduction.reduce`
+- Dependency: [D5/S3/ConceptDynamics/Coding/CountedMatrixOverlap](CountedMatrixOverlap.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion](FiniteWindowTableCriterion.md)

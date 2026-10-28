@@ -168,3 +168,418 @@ Proof. The exact certificate contains a fixed-rotation outcome with twist mask 1
 The paper's phrase “random embedding” by itself does not determine every possible distribution. The refutation applies to the explicit independently sampled rotations and signs implemented in the authors' notebook. If the intended law is different, that law must be stated before its corresponding expectation assertion can be judged.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. The graph-derived conditional inventory application
+
+**Definition 10.1 (Labelled signed flags and the sign convention).** Let $V,E$ be finite sets, let $\mathbb F_2=\{0,1\}$, and put $H=E\times\mathbb F_2$. An incidence map $v:H\to V$ specifies the ends of each edge. The two half-edges $(e,0),(e,1)$ are distinct even if they are incident with the same vertex, so loops and parallel edges are retained. Let $\rho$ be a permutation of $H$ preserving $v$, with one cycle on each nonempty incidence fibre. The flag set is $X=H\times\mathbb F_2$, with last coordinate called its side. For $t\in\mathbb F_2^E$, define
+
+$$
+ s_\rho(h,1)=(\rho h,0),\qquad
+ s_\rho(h,0)=(\rho^{-1}h,1),\qquad
+ t_t((e,a),b)=((e,a+1),b+1+t_e),\qquad
+ f_{\rho,t}=s_\rho t_t.
+ \tag{10.1}
+$$
+
+Composition is right to left. Both factors are fixed-point-free involutions: $s_\rho$ changes side and $t_t$ changes the labelled end. In these sections, sign zero reverses side across a band. Thus
+
+$$
+ t_{\mathrm{here}}=1+t_{\S3}
+ \tag{10.2}
+$$
+
+on every edge: this is the complement of the Section 3 and author-notebook lambda bit. A fixed reference vector $\tau$ is interpreted in this convention; its translation to Section 3 is $1+\tau$. Complementing preserves a fair bit, but not a specified fixed sign. No quotient by graph automorphisms is taken.
+
+For $q\in\mathbb F_2^V$, let $\rho^q$ reverse $\rho$ at precisely the vertices with $q=1$, and define
+
+$$
+ h_q(h,b)=(h,b+q(v(h))),\qquad
+ (\delta q)_e=q(v(e,0))+q(v(e,1)).
+ \tag{10.3}
+$$
+
+**Definition 10.2 (Partial-sign sampling and the observed outside signs).** Fix a reference sign vector $\tau\in\mathbb F_2^E$ and a randomized edge set $B\subseteq E$. Choose $q\in\mathbb F_2^V$ and $\eta\in\mathbb F_2^B$ independently and uniformly. Extend $\eta$ by zero outside $B$ and sample
+
+$$
+ f_{\rho^q,\tau+\widetilde\eta},\qquad
+ \sigma=\tau+\delta q+\widetilde\eta.
+ \tag{10.4}
+$$
+
+When each vertex has three incident labelled half-edges, $\rho^q$ samples all cyclic orders independently and uniformly: there are two orders, each represented by three of the six lists of those half-edges. A loop contributes two distinct half-edges. For other degrees, (10.4) is only the stated reversal-bit sampler, not uniform sampling of all cyclic orders. Isolated vertices have no flags but their $q$-bits remain in the fibre counts.
+
+Put $F=E\setminus B$. For any $A\subseteq E$, let $c(A)$ be the number of connected components of the spanning multigraph $(V,A)$, including isolated vertices. A cycle includes a loop of length one or a pair of parallel edges of length two. Cycle parity may equivalently be tested on closed walks, with edge occurrences counted modulo two.
+
+Let $U\subseteq E$ be the unresolved edges and fix an outside vector $a\in\mathbb F_2^{E\setminus U}$ such that the event $\sigma|_{E\setminus U}=a$ has positive probability. Define
+
+$$
+ \begin{split}
+ W_B&=\operatorname{im}\delta+\mathbb F_2^B,\\
+ A(a)&=\{\xi\in\mathbb F_2^U:(a,\xi)\in\tau+W_B\},\\
+ d_U&=|U\cap B|+c(F\setminus U)-c(F).
+ \end{split}
+ \tag{10.5}
+$$
+
+This is conditioning on *normalized outside signs*. It does not condition on the original $q$ or original rotations. Fixing $q$ instead leaves only the original $B$ coordinates random.
+
+**Definition 10.3 (The actual cut and complete inventory).** Put $S_U=\{((e,j),b):e\in U\}$. Let $r_a$ fix $S_U$ pointwise and equal the band map with signs $a$ on its complement. Write $Q_a=s_\rho r_a$. For every $e\in U$, label its actual endpoints by
+
+$$
+ \lambda(e,0)=((e,0),0),\quad
+ \lambda(e,1)=((e,0),1),\quad
+ \lambda(e,2)=((e,1),1),\quad
+ \lambda(e,3)=((e,1),0).
+ \tag{10.6}
+$$
+
+Let $J_0=(0\ 2)(1\ 3)$ and $J_1=(0\ 3)(1\ 2)$. For $\xi\in\mathbb F_2^U$, let $J_\xi$ use $J_{\xi_e}$ on the four labels at $e$, and let $\widetilde J_\xi$ extend it by the identity outside $S_U$.
+
+For a finite permutation $f$, let $p_f(x)$ be its least positive period and set
+
+$$
+ I_f(Z)=\sum_{x\in X}\frac{Z^{p_f(x)}}{p_f(x)}.
+ \tag{10.7}
+$$
+
+Each cycle contributes one monomial, including singleton cycles. This is the inventory of permutation cycles. For the two free matchings an unoriented combinatorial boundary has two opposite oriented cycles; (10.7) does not silently divide by two.
+
+The vertex-gauge normalization is the switch of Section 6. The proof combines the established four-endpoint band-cut correspondence, actual endpoint returns, the binary cut/cycle criterion and spanning-forest counts, and complete first-return segmentation. These are inherited mathematical ingredients. The application here couples them to the conditional law of normalized signs for simultaneous graph cuts and to the complete inventory; Section 11 supplies an observable separation.
+
+**Theorem 10.4 (Graph-derived complete conditional inventory law).** In Definitions 10.1–10.3, the following assertions hold together.
+
+1. The map $\lambda:U\times\{0,1,2,3\}\to\operatorname{Fix}(r_a)$ is a bijection, constructed from the labelled graph incidences, and
+
+$$
+ f_{\rho,(a,\xi)}=Q_a\widetilde J_\xi.
+ \tag{10.8}
+$$
+
+For every original outcome in (10.4), $h_q$ conjugates its complete permutation to $f_{\rho,\sigma}$. If that outcome satisfies $\sigma|_{E\setminus U}=a$, it also conjugates its cut on all edges of $U$ to $Q_a$, transports each actual first-return endpoint and length, and maps the whole set of untouched cycles with their original iterates.
+
+2. The vector $\sigma$ is uniform on $\tau+W_B$, with exactly $2^{c(F)}$ original pairs $(q,\eta)$ above each supported vector. Its support is characterized by
+
+$$
+ \sum_{e\in C}(\sigma_e+\tau_e)=0
+ \quad\text{for every cycle }C\text{ of }(V,F).
+ \tag{10.9}
+$$
+
+Conditional on the stated positive-probability outside event, $\sigma|_U$ is uniform on $A(a)$ and $|A(a)|=2^{d_U}$. This conditional law is independent fair bits on all of $U$ if and only if every edge of $U\setminus B$ is a bridge of $(V,F)$.
+
+3. Let $P_a$ be the actual first-positive-return permutation of $Q_a$ on $S_U$ and, for $\xi\in A(a)$, define
+
+$$
+ \begin{split}
+ N_\xi&=P_aJ_\xi,\\
+ \ell_\xi(x)&=\min\{k>0:Q_a^k(J_\xi x)\in S_U\},\\
+ L_\xi(x)&=\sum_{j=0}^{p_{N_\xi}(x)-1}\ell_\xi(N_\xi^jx).
+ \end{split}
+ \tag{10.10}
+$$
+
+Let $T_a$ be the union of the $Q_a$-cycles disjoint from $S_U$. Define
+
+$$
+ \mathcal I_a(\xi)=
+ \sum_{z\in T_a}\frac{Z^{p_{Q_a}(z)}}{p_{Q_a}(z)}
+ +\sum_{x\in S_U}\frac{\ell_\xi(x)}{L_\xi(x)}Z^{L_\xi(x)}.
+ \tag{10.11}
+$$
+
+Then the conditional distribution of the entire original inventory is the uniform distribution, with multiplicities, of these polynomials over $\xi\in A(a)$. Equivalently, for every function $\Psi:\mathbb Q[Z]\to\mathbb Q$,
+
+$$
+ \mathbb E\left[\Psi(I_{f_{\rho^q,\tau+\widetilde\eta}})
+       \mid\sigma|_{E\setminus U}=a\right]
+   =2^{-d_U}\sum_{\xi\in A(a)}\Psi(\mathcal I_a(\xi)).
+ \tag{10.12}
+$$
+
+Under the bridge condition in assertion 2, this is the independent fair average over all $2^{|U|}$ attachments. There is no claimed converse for equality of the *inventory* distributions: the inventory can identify different sign vectors.
+
+*Proof.* First construct the simultaneous cut interface. Outside $S_U$, $r_a$ changes the end coordinate and has no fixed point; on $S_U$ it is the identity. The inverse of (10.6) reads the edge, end and side: at end zero the index is the side, and at end one it is three minus the side. The four flags are distinct even for a loop. Substitution in (10.1) gives exactly $J_0$ or $J_1$ on each cut edge, while the extension of $J_\xi$ is the identity on every other edge. This proves (10.8), with no supplied endpoint equivalence.
+
+For a general full sign vector $t$, denote by $r_{U,t}$ its band map with $S_U$ fixed. The explicit vertex switch satisfies
+
+$$
+ h_qs_{\rho^q}h_q=s_\rho,\qquad
+ h_qt_th_q=t_{t+\delta q},\qquad
+ h_qr_{U,t}h_q=r_{U,t+\delta q}.
+ \tag{10.13}
+$$
+
+Indeed $q\circ v$ is constant under $\rho$ and $\rho^{-1}$. At a vertex where $q=1$, the side flip and the reversal of the local rotation interchange the two corner formulas twice, giving the first identity. The two side flips at the ends of a band add $\delta q$ to its sign. For a loop they cancel. Finally $h_q$ preserves edge labels and therefore preserves $S_U$, proving the cut identity. This is the concrete flag calculation behind the standard switch of Section 6 and Ghanbari–Šámal, Lemma 2.1. For an original outcome with normalized outside signs $a$, its normalized cut is exactly $Q_a$.
+
+The identities give equality of every conjugated iterate. Since $h_qS_U=S_U$, a first positive visit at time $k$ is transported with the same endpoint and the same time: all earlier positive times avoid $S_U$ on one side exactly when they do on the other. Conjugating the actual reattachment transports it as well. A proper return coordinate $(x,j)$ is sent to $(h_qx,j)$ and the represented flag $f^jx$ is sent to $(h_qfh_q)^jh_qx$. Orbits avoiding $S_U$ correspond in both directions, with identical periods and transported iterates. This proves assertion 1, including the untouched branch.
+
+Next apply the classical endpoint-gradient fibre calculation to the actual sampler map (10.4). On $F$ the preimage equations are
+
+$$
+ q(v(e,0))+q(v(e,1))=\sigma_e+\tau_e.
+ \tag{10.14}
+$$
+
+Summing around a closed walk makes each vertex label cancel. Conversely choose a spanning tree and a root in each component of $(V,F)$, assign each root a bit, and sum $\sigma+\tau$ along its unique tree paths to assign all other vertices. Tree edges then satisfy (10.14). A nonforest nonloop edge satisfies it precisely when its fundamental cycle has zero parity; a loop requires precisely that its own right-hand side vanish. Thus the argument includes loops and parallel edges rather than applying a simple-graph hypothesis to them. Two solutions differ by a constant on each component, so there are exactly $2^{c(F)}$ solutions. For each solution, the coordinates on $B$ determine $\eta$ uniquely. This proves the support and equal-fibre assertions.
+
+We record the standard forest calculations as intermediate consequences of this step. Put $\beta_F=|F|-|V|+c(F)$. Each nonforest edge gives one independent fundamental cycle; they span the binary cycle space because an even edge subset of a forest is empty, by leaf removal. Therefore
+
+$$
+ |W_B|=2^{|V|+|B|-c(F)}=2^{|E|-\beta_F}.
+ \tag{10.15}
+$$
+
+Full normalized signs are independent fair exactly when $F$ is a forest. Within the specified cubic-rotation/partial-sign sampler class, the least $|B|$ achieving this is $|E|-|V|+c(E)$, attained by the complement of a spanning forest: every forest $F$ has $|F|=|V|-c(F)\le |V|-c(E)$. These are the usual cut/cycle and spanning-forest counts used to evaluate this sampler, not separate new counting principles.
+
+For the conditional calculation, all full vectors in the affine support have equal probability, so conditioning gives a uniform law on the nonempty set $A(a)$. Differences of completions are exactly $W_B\cap\mathbb F_2^U$. A vertex difference must have $\delta q=0$ on $F\setminus U$, so it is constant on each of its $c(F\setminus U)$ components. Its differential on $F\cap U$ has kernel consisting of the functions constant on each of the $c(F)$ components of $F$. It therefore gives $2^{c(F\setminus U)-c(F)}$ possible differentials. The coordinates in $U\cap B$ are free: choose $\eta$ there to give any value, and choose it on $B\setminus U$ to cancel $\delta q$ there. This proves $|A(a)|=2^{d_U}$.
+
+The conditional support is the whole cube exactly when every coordinate unit vector on $U$ belongs to $W_B$. A unit vector on $B$ always does. For $e\in F$, the cycle condition (10.9) permits its unit vector exactly when no cycle of $F$ contains $e$, namely when $e$ is a bridge. A nonloop edge is on a cycle exactly when its ends remain connected after deleting it; a loop is on its length-one cycle and is never a bridge. This proves the criterion for every positive-probability outside value. It also exhibits why fair marginals are weaker: projecting to $U$ leaves free coordinates on $U\cap B$ and the gradient image of $(V,U\setminus B)$ on the rest. That marginal is the full fair cube exactly when $(V,U\setminus B)$ is a forest, even if its edges lie on cycles using outside edges. The corresponding conditional total variation from the fair cube is $1-2^{d_U-|U|}$; the unconditional full-sign value is $1-2^{-\beta_F}$, by comparing a uniform subset with its ambient uniform cube.
+
+It remains to feed this exact conditional law into the complete actual-return inventory. Equation (10.8) says that a marked flag $x$ first moves by $J_\xi$ and then by $Q_a$. Until its next visit to $S_U$, the extension of $J_\xi$ is the identity. Its next marked point is thus $P_aJ_\xi x$ and its first-return length is exactly $\ell_\xi(x)$. The required minima exist by finite permutation recurrence. An orbit of (10.8) avoiding $S_U$ is also a $Q_a$-orbit with the same iterates, and conversely, since the maps agree at every unmarked point. Hence the untouched set is exactly $T_a$ for every $\xi$.
+
+For clarity, the complete segmentation argument underlying the weighted-return identity is as follows. Every other orbit is partitioned by its successive visits to $S_U$. The proper segment beginning at $x$ has the $\ell_\xi(x)$ flags $x,fx,\ldots,f^{\ell_\xi(x)-1}x$. A point in a finite cyclic order has a unique most recent marked point, so these segments are disjoint and exhaust the orbit. The endpoint cycle through $x$ has $p_{N_\xi}(x)$ segments; their total length is $L_\xi(x)$. A smaller positive return to $x$ would contradict either the first-visit minimality of a segment or the least endpoint period. Therefore the original least period is $L_\xi(x)$, and the segment contributes $\ell_\xi(x)Z^{L_\xi(x)}/L_\xi(x)$ to (10.7). The untouched term is unchanged. This proves the identity (10.11) for every actual attachment before any averaging.
+
+Finally the concrete $h_q$ transports the original permutation, its actual cut segments and its untouched cycles to these normalized ones. Ordinary lengths are preserved. The equal conditional weights proved above give (10.12) for an arbitrary test of the whole polynomial, retaining correlations between different cycle counts. This proves assertion 3 and the theorem. ∎
+
+The standard cycle-character density gives a useful expression for the same application, without constituting an additional theorem. If $\mathcal C(F)$ is the binary cycle space extended by zero on $B$, then
+
+$$
+ 2^{\beta_F}\mathbf1_{t\in\tau+W_B}
+   =\sum_{C\in\mathcal C(F)}(-1)^{\langle C,t+\tau\rangle}.
+ \tag{10.16}
+$$
+
+To see this, multiply $1+(-1)^{\langle C,t+\tau\rangle}$ over a fundamental cycle basis and expand. For $F_\Psi(t)=\Psi(I_{f_{\rho,t}})$, inserting that density gives
+
+$$
+ \mathbb E F_\Psi(\sigma)
+ =2^{\beta_F-|E|}\sum_{t\in\tau+W_B}F_\Psi(t)
+ =\sum_{C\in\mathcal C(F)}(-1)^{\langle C,\tau\rangle}
+   \left[2^{-|E|}\sum_{t\in\mathbb F_2^E}
+       F_\Psi(t)(-1)^{\langle C,t\rangle}\right].
+ \tag{10.17}
+$$
+
+This last finite interchange is only the evaluation of the established density. It does not assert that a nonzero surviving cycle produces a nonzero bias for every inventory test.
+
+If an additive statistic also uses a label-dependent weight $w(x)$, its transport requires $w'(h_qx)=w(x)$, or the extra hypothesis $w\circ h_q=w$ if weights are held fixed. Edge- and vertex-dependent weights have this invariance; arbitrary side-dependent weights need not. Theorem 10.4 concerns the ordinary period inventory and makes no stronger fixed-weight claim.
+
+## 11. A cubic whole-inventory obstruction with an untouched component
+
+**Proposition 11.1 (Three parallel edges distinguish the laws).** Let $G$ have two vertices, called $0,1$, and three parallel edges $i\in\mathbb Z/3\mathbb Z$. At each vertex use reference rotation $i\mapsto i+1$. In Definition 10.2 take $\tau=0$. Then uniform rotations alone ($B=\varnothing$) and uniform independent signs at the reference rotation have different full inventory laws:
+
+$$
+ \begin{array}{c|cc}
+ \text{inventory}&\text{rotations alone}&\text{independent signs}\\\hline
+ 2Z^6&1/2&1/2\\
+ 2Z^2+2Z^4&0&3/8\\
+ 6Z^2&1/2&1/8
+ \end{array}
+ \tag{11.1}
+$$
+
+More sharply, take $B=\{0\}$ and leave $U=\{1\}$ unresolved after normalization. Each normalized sign is marginally fair. Conditional on $\sigma_0=\sigma_2=1$, an event of probability $1/4$, the actual inventory is deterministically $6Z^2$. Replacing the unresolved sign by an independent fair bit would instead give $6Z^2$ and $2Z^2+2Z^4$ with probability $1/2$ each. In this comparison the untouched inventory is exactly $2Z^2$ on both sides.
+
+*Proof.* Write a flag as $(v,i,b)$. Formula (10.1) gives
+
+$$
+ f_{\rho,t}(v,i,b)=\bigl(1-v,\ i+(-1)^{b+t_i},\ b+t_i\bigr).
+ \tag{11.2}
+$$
+
+Let $A_t(i,b)=(i+(-1)^{b+t_i},b+t_i)$. A cycle of $A_t$ of even length $k$ lifts to two $k$-cycles of $f$; one of odd length $k$ lifts to one $2k$-cycle, because the vertex coordinate flips at every step. For $t=000$, $A_t$ has the two 3-cycles given by the two sides. For $t=100$ it has the single cycle
+
+$$
+ (0,0),(2,1),(1,1),(0,1),(1,0),(2,0).
+$$
+
+For $t=110$ its cycles are
+
+$$
+ ((0,0),(2,1),(1,1),(2,0)),\qquad ((0,1),(1,0)).
+$$
+
+For $t=111$ it has the three 2-cycles $((i,0),(i-1,1))$. Cyclically relabelling the three edges covers all states of weight one or two. Consequently signs of weights zero and one give $2Z^6$, weight two gives $2Z^2+2Z^4$, and weight three gives $6Z^2$. Independent signs have the eight equally likely vectors. With rotations alone, $\delta q$ is either $000$ or $111$, each with probability $1/2$. This proves (11.1).
+
+For $B=\{0\}$, the normalized support is exactly
+
+$$
+ \{000,100,011,111\},
+$$
+
+uniformly. Every coordinate is fair, but $\sigma_1=\sigma_2$ always. The outside condition selects only $111$ and has probability $1/4$. A hypothetical fair unresolved sign would also allow $101$, whose inventory is the weight-two case above.
+
+To verify the untouched term directly, cut edge $1$ while keeping $t_0=t_2=1$. The two cycles
+
+$$
+ (v,0,0)\longleftrightarrow(1-v,2,1),\qquad v=0,1,
+ \tag{11.3}
+$$
+
+avoid every flag of edge $1$ and are untouched. The remaining four nonendpoint flags $(v,0,1),(v,2,0)$ each belong to a return segment from an edge-$1$ endpoint; hence (11.3) is the complete untouched set. The cut return from $(v,1,b)$ has length two and endpoint $(1-v,1,b)$. At sign one the attachment also interchanges $v$ while preserving $b$, so the return successor is the identity on the four endpoints. The touched inventory is $4Z^2$. At sign zero the attachment changes both $v$ and $b$, so the return successor has two 2-cycles, each with total length four. The touched inventory is $2Z^4$. Adding the same untouched $2Z^2$ proves the final assertion directly from the actual cut, rather than from a sign-vector count alone. ∎
+
+The vertex switch and binary cycle criterion are established mathematics. The application here identifies the exact normalized conditional sampler supplied to simultaneous actual graph cuts and to their complete weighted-return inventory. Proposition 11.1 gives an explicit inventory separation with the untouched term retained. The original all-edge fair-sign sampler remains uniform after normalization; this obstruction concerns omitting some of its independent signs. No graph-independent inventory probabilities, exact-thirds statement, cycle-double-cover conclusion, or external priority for the standard ingredients is asserted.
+
+Mathematical references: [Ghanbari–Šámal, *Facial diagrams and cycle double cover*, Lemma 2.1](https://arxiv.org/html/2605.01410v1#S2); [Archdeacon, *Topological Graph Theory: A Survey*, §2.5](https://www.math.u-szeged.hu/~hajnal/courses/PhD_Specialis/Archdeacon.pdf); [Zaslavsky, *Glossary of Signed and Gain Graphs and Allied Areas*, “balance”, “Harary bipartition”, and “potential function”](https://people.math.binghamton.edu/zaslav/Bsg/glossary.html). These supply the standard switching and balance background. The conditional-inventory formula combines the switching, cycle-space and first-return ingredients on the same labelled flag carrier.
+
+## 12. Diamond necklaces with a linear bad-singular excess
+
+**Definition 12.1 (The diamond necklace and its sampling law).** For an integer $k\ge1$, take disjoint labelled copies $D_i$ of $K_4-01$, indexed by $i\in\mathbb Z/k\mathbb Z$. The vertices of $D_i$ are $0_i,1_i,2_i,3_i$, its five internal edges are $02,03,12,13,23$, and its terminals are $0_i,1_i$. Add the $k$ connector edges $1_i0_{i+1}$ and denote the resulting graph by $N_k$. Sample cyclic orders independently and uniformly at every vertex and sample every band sign independently and fairly, independently of the orders. Use the actual flags, corner and band involutions of Definition 10.1. In particular sign zero reverses side, the complement of the author-notebook lambda convention.
+
+Let $G_k,B_k,R_k$ count physical good singular, bad singular and regular edges, respectively. Thus $B_k$ counts edges whose two traversals belong to one physical facial boundary and have opposite directions; it does not count oriented boundary cycles or all singular edges. This is the same probability law and classification as Sections 3–7 and the author notebook's `random_pi`, `random_lambda` and `count_good_bad_regular` functions, [pinned at commit 0d4404941894d3ef8dd9f27f1e61829bec2bcde5](https://github.com/babakghanbari993/cdc-random-embeddings/blob/0d4404941894d3ef8dd9f27f1e61829bec2bcde5/notebooks/random_embedding_experiment.ipynb).
+
+**Theorem 12.2 (Exact necklace means).** Every $N_k$ is a finite simple connected bridgeless cubic graph, with $4k$ vertices and $6k$ edges. Under Definition 12.1, put $a=23/32$. Then
+
+$$
+ \frac{\mathbb E B_k}{6k}
+   =\frac38-\frac{3}{32}a^{k-1},
+ \qquad
+ \mathbb E G_k=\mathbb E R_k=\frac{6k-\mathbb E B_k}{2}.
+ \tag{12.1}
+$$
+
+In particular,
+
+$$
+ \mathbb E B_k>\frac{|E(N_k)|}{3}\quad\Longleftrightarrow\quad k\ge4,
+ \qquad
+ \lim_{k\to\infty}\frac{\mathbb E B_k}{|E(N_k)|}=\frac38.
+ \tag{12.2}
+$$
+
+The excess over one third is
+
+$$
+ \mathbb E B_k-\frac{|E(N_k)|}{3}
+   =\frac{k}{4}-\frac{9k}{16}a^{k-1}.
+ \tag{12.3}
+$$
+
+For the simple bridgeless cubic graph $N_4$, which has sixteen vertices and twenty-four edges,
+
+$$
+ (\mathbb E G_4,\mathbb E B_4,\mathbb E R_4)
+ =\left(\frac{2075583}{262144},\frac{1070145}{131072},
+              \frac{2075583}{262144}\right)
+ =\left(8-\frac{21569}{262144},\ 8+\frac{21569}{131072},\
+              8-\frac{21569}{262144}\right).
+ \tag{12.4}
+$$
+
+*Proof.* First check the graph hypotheses. Each terminal has internal degree two and receives exactly one connector; the other vertices have degree three. For $k=1$, the connector is the missing edge $10$, so $N_1=K_4$. For $k\ge2$, connectors join different copies, with distinct unordered pairs of endpoints, even when $k=2$. Thus the graph is simple and cubic. It is connected. Every internal edge lies in one of the triangles $0_i2_i3_i0_i$ and $1_i2_i3_i1_i$. Every connector lies on the cycle obtained by using the terminal-to-terminal path $0_i2_i1_i$ in every copy. Hence every edge lies on a cycle and none is a bridge. No assertion of three-edge-connectivity is needed.
+
+We next reduce to fixed reference cyclic orders. At a cubic vertex there are exactly two cyclic orders. For any sampled choice, the vertex switch (10.13) conjugates its actual corner/band system to the chosen reference orders and translates the sign vector by a fixed coboundary. Since every sign is independently fair, this translation preserves the full uniform sign law. The conjugacy preserves physical facial boundaries and agreement or opposition of repeated directed traversals. Therefore the law of every edge category can be computed with fixed reference orders and independent fair signs. This uses the standard vertex switch of [Ghanbari–Šámal, Lemma 2.1](https://arxiv.org/html/2605.01410v1#S2); the actual flag identity and its all-edge fair-sign consequence are established in Sections 6 and 10.
+
+Cut the connector band or bands incident to a diamond, retaining its two port half-edges and their four side flags. The finite alternating corner/band paths pair the four port flags. Components missing all four flags are untouched. Write $D$ for the pairing of the two flags at each terminal separately, and $T_0,T_1$ for the two pairings joining each terminal's flags to the other terminal. Call these the *dead* and *through* cases. These pairings are actual first-positive-return pairings as in Section 10, not independently supplied connection data. Contracting each alternating path segment gives the same marked oriented-orbit relations before and after reattachment. In particular, after a distinguished band is cut, its dead pairing is exactly the bad-singular case in the four-endpoint calculation of Section 7.
+
+Here is the complete local diamond calculation. Identify a diamond's port flags with the four flags of the deleted edge $01$ in the edge order $01,02,03,12,13,23$. Number flags by $4e+2j+b$, where $j\in\{0,1\}$ is the labelled end and $b\in\{0,1\}$ is its side. Choose the reference corner involution
+
+$$
+ s=(0\ 9)(1\ 4)(2\ 17)(3\ 12)(5\ 8)(6\ 21)
+       (7\ 14)(10\ 23)(11\ 18)(13\ 16)(15\ 20)(19\ 22).
+ \tag{12.5}
+$$
+
+For signs on the five internal edges, let $r$ fix $0,1,2,3$ and, for $e\ne0$, act by
+
+$$
+ r(4e+2j+b)=4e+2(1-j)+(b+1+t_e\bmod2).
+ \tag{12.6}
+$$
+
+The port pairing $P(x)$ is $(sr)^{n_x}x$ at the first positive time $n_x$ when the orbit returns to $\{0,1,2,3\}$. Thus
+
+$$
+ D=(0\ 1)(2\ 3),\qquad T_0=(0\ 2)(1\ 3),\qquad T_1=(0\ 3)(1\ 2).
+ \tag{12.7}
+$$
+
+Put $u=t_{02}+2t_{03}$ and $v=t_{12}+2t_{13}$. Following (12.5)–(12.6) to the first positive return gives these two tables, with row $u$ and column $v$:
+
+$$
+ \begin{array}{c|cccc}
+ t_{23}=0&v=0&v=1&v=2&v=3\\\hline
+ u=0&T_1&T_0&T_1&T_0\\
+ u=1&T_1&D&T_1&T_1\\
+ u=2&T_0&T_0&D&T_0\\
+ u=3&T_0&T_0&T_1&T_1
+ \end{array}
+ \qquad
+ \begin{array}{c|cccc}
+ t_{23}=1&v=0&v=1&v=2&v=3\\\hline
+ u=0&T_0&T_0&D&T_0\\
+ u=1&D&D&D&D\\
+ u=2&T_0&T_0&D&T_0\\
+ u=3&T_0&T_0&D&T_0.
+ \end{array}
+$$
+
+The table accounts for all $2^5$ internal sign choices, with counts
+
+$$
+ \#D=9,\qquad \#T_0=16,\qquad \#T_1=7.
+ \tag{12.8}
+$$
+
+Consequently a diamond is through with probability $a=23/32$. Closing its two ports by an additional fair band gives the actual uniform-sign $K_4$ model. For each through pairing the two choices of that band's sign give one good and one regular state; the dead pairing gives a bad state under both signs. The bad marginal of the closing edge is therefore $9/32$. Every other edge of $K_4$ has the same marginal: relabel the vertices to map that edge to the closing edge, then apply the vertex normalization above. These operations preserve the uniform sign law and the physical category. Thus
+
+$$
+ \mathbb P_{K_4}(e\text{ bad})=\frac9{32}\quad\text{for every edge }e.
+ \tag{12.9}
+$$
+
+We use the elementary series-composition rule for these actual pairings. A chain of two-terminal modules is through if every module is through: concatenate the two-point bijections from one end to the other. Conversely, if a module is dead, choose the first dead module reached from the left. All earlier modules are through, so the two paths entering from the left return to that end instead of reaching the right. Repeating from the right gives the dead pairing at the two chain ends. Any closed components between dead modules miss the chain's endpoints and do not affect this conclusion. Thus a chain is through if and only if all of its modules are through.
+
+Diamonds have disjoint internal sign sets. A chain containing $j$ diamonds is therefore through with probability $a^j$, regardless of connector signs. Conditional on being through, a chain containing at least one fair connector has a fair effective pairing between $T_0,T_1$. Indeed, holding its internal signs and all other connectors fixed, toggling that connector swaps the two effective through pairings. The conditioning concerns only the diamond-internal signs and does not condition on the connector sign.
+
+Cut a connector of $N_k$. The remainder is a chain of all $k$ diamonds and the other $k-1$ connectors. Its dead pairing is exactly the event that the cut connector is bad. Hence every connector has bad probability
+
+$$
+ p_{\mathrm{connector}}=1-a^k.
+ \tag{12.10}
+$$
+
+Now fix one diamond and expose its two ports. The exterior consists of $k-1$ diamonds and all $k$ connectors, independently of the five internal signs of the chosen diamond. With probability $a^{k-1}$ it is through, and its effective band is fair. This includes $k=1$, whose exterior is just the single closing connector. Replacing the outside paths by that band gives uniform-sign $K_4$ and preserves each internal edge's physical category. By (12.9), each such edge has conditional bad probability $9/32$.
+
+If instead the exterior is dead, it pairs the two port flags separately at each terminal. Suppress the resulting degree-two terminals. The remaining graph is the theta multigraph with branch vertices $2_i,3_i$ and three branches: $23$, $2_i0_i3_i$, and $2_i1_i3_i$. This is only an intermediate path-compression graph; $N_k$ itself is simple. Each effective branch sign is the sum modulo two of the signs along that branch, up to a fixed convention-dependent constant. The three branches have disjoint edge sets, so their effective signs are independent fair bits. Suppressing degree-two vertices preserves boundary membership and the agreement or opposition of the two traversals along a branch. In particular every edge on a branch has the category of that branch.
+
+For completeness, take the same cyclic order of the three branches at both theta vertices. The actual face map is (11.2). Its type counts $(G,B,R)$, grouped by the number $w$ of one-signs, are
+
+$$
+ \begin{array}{c|c|c}
+ w&\text{number of sign vectors}&(G,B,R)\\\hline
+ 0&1&(0,3,0)\\
+ 1&3&(2,1,0)\\
+ 2&3&(1,0,2)\\
+ 3&1&(0,0,3).
+ \end{array}
+ \tag{12.11}
+$$
+
+In a weight-one vector, its unique one-signed branch is the bad one. These entries follow by following (11.2): weight zero has two opposite directed traversals of every branch; toggling one sign preserves that branch's bad category, and the other two are good; a second toggle splits the boundary and makes its two one-signed branches regular; at weight three every branch is regular. Equivalently these are the same eight actual theta states whose complete inventories appear in Proposition 11.1. The total bad incidence count is $3+3=6$ over eight states; symmetry gives marginal $1/4$ for every branch. Vertex normalization gives the same law for the other reference orders. Therefore every internal edge of the capped diamond, including both edges of either two-edge branch, has bad probability $1/4$.
+
+Combining the two exterior cases gives, for each of the five internal edges,
+
+$$
+ p_{\mathrm{internal}}
+   =\frac9{32}a^{k-1}+\frac14(1-a^{k-1})
+   =\frac14+\frac1{32}a^{k-1}.
+ \tag{12.12}
+$$
+
+There are $k$ connectors and $5k$ internal edges. Linearity of expectation, without independence of edge categories, now yields
+
+$$
+ \mathbb E B_k
+   =k(1-a^k)+5k\left(\frac14+\frac1{32}a^{k-1}\right)
+   =\frac{9k}{4}-\frac{9k}{16}a^{k-1}.
+ \tag{12.13}
+$$
+
+This proves the first identity in (12.1). It exceeds $2k$ precisely when $a^{k-1}<4/9$. Since $a^2=529/1024>4/9$ and $a^3=12167/32768<4/9$, the threshold is exactly $k\ge4$. The limit, linear excess and rational values follow. Finally each edge's own sign is fair, so the actual twist exchange of Section 7 gives equal good and regular marginals and hence the second identity in (12.1). ∎
+
+**Corollary 12.3 (Failure of a one-sided weakening under the same law).** In the uniform independent signed-rotation law of Definition 12.1, the assertion that every finite simple connected bridgeless cubic graph has expected bad-singular count at most one third of its edges is false. Moreover the deviation from one third need not tend to zero along growing graphs.
+
+*Proof.* Apply (12.2) to $N_k$ for $k\ge4$. Its limiting bad density is $3/8=1/3+1/24$. Its good and regular densities tend to $5/16=1/3-1/48$. ∎
+
+The corollary concerns a possible weakening of the exact-thirds assertion, not an additional conjecture attributed to the source authors. The graph family has two-edge cuts; no conclusion for three-edge-connected graphs follows. The standard vertex gauge, local band switch and first-return segmentation are inherited ingredients. The necklace application combines their actual port pairings, the capped-theta law and independent connector signs to obtain (12.1); it is distinct from the transitive dyadic obstruction and the partial-sign conditional law. The sampling law is essential throughout, and no conclusion about a different measure on unlabelled embeddings or about the cycle-double-cover conjecture is asserted. The source terminology and switching statements are recorded in [the existing Ghanbari–Šámal Library note](../../../Library/RibbonEmbeddings/ghanbarisamal2026facial.md); the four-endpoint construction and its oriented-orbit bridge are described in [FiniteEndpointPairing](../../../Blueprint/D5/S3/Combinatorics/PerfectMatchings/FiniteEndpointPairing.md) and [FiniteBandSwitch](../../../Blueprint/D5/S3/Combinatorics/PerfectMatchings/FiniteBandSwitch.md).

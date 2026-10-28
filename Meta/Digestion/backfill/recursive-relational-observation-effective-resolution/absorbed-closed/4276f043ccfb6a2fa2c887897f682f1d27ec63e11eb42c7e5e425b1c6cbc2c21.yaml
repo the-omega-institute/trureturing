@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:4276f043ccfb6a2fa2c887897f682f1d27ec63e11eb42c7e5e425b1c6cbc2c21
+  normalized_sha256: sha256:4276f043ccfb6a2fa2c887897f682f1d27ec63e11eb42c7e5e425b1c6cbc2c21
+cas_ref: sha256:4276f043ccfb6a2fa2c887897f682f1d27ec63e11eb42c7e5e425b1c6cbc2c21
+coverage_gids:
+  - gid: D5/S0/Tower/DBonacci/PerronRoot.dbonacciPerronRoot_characteristic
+    target_statement_id: sha256:bc3d5f484b31b4e66b2503997819172ef9f2092cdf875b7e3717b68bab59ce37
+  - gid: D5/S0/Tower/DBonacci/PerronRoot.dbonacciPerronRoot_spec
+    target_statement_id: sha256:e641ed2928272e1ae90f6d18981f2f757476c795a99916039ff59bb29fc61fcc
+  - gid: D5/S0/Tower/DBonacci/PerronRoot.dbonacciPerronRoot_strictMonoOn
+    target_statement_id: sha256:cb35e946220443549cdf0e615ebfacb07056cdbfacb11c8d11f1503104e31078
+  - gid: D5/S0/Tower/DBonacci/PerronRoot.dbonacciPerronRoot_tendsto_two
+    target_statement_id: sha256:42202df2e7bcb9c6fb1e331f742acde73528213edcfde76f9fb8135ea8c691a0
+  - gid: D5/S0/Tower/DBonacci/PerronRoot.dbonacciPerronRoot_two_eq_goldenRatio
+    target_statement_id: sha256:7929f252431964fdb6acd6b193c6b13099932d8fc3ef444cf02b69623746884a
+  - gid: D5/S0/Tower/DBonacci/PerronRoot.exists_unique_dbonacci_root
+    target_statement_id: sha256:592487f92e4961201b43b1e5ba3554a8e7bdd2162315c10bfb85dac7c155be9f
+  - gid: D5/S0/Tower/DBonacci/PerronRoot.two_sub_dbonacciPerronRoot_eq_inv_pow
+    target_statement_id: sha256:ecfe1af34aee490ed6e62e29e39675505e4fa34dcd1bcb1a4750eeec646495c1
+receipts:
+  unresolved_subitems: []

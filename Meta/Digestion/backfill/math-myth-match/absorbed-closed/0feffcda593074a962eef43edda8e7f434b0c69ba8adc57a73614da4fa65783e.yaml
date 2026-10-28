@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0feffcda593074a962eef43edda8e7f434b0c69ba8adc57a73614da4fa65783e
+  normalized_sha256: sha256:0feffcda593074a962eef43edda8e7f434b0c69ba8adc57a73614da4fa65783e
+cas_ref: sha256:0feffcda593074a962eef43edda8e7f434b0c69ba8adc57a73614da4fa65783e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ResidualCoverage/WeightedResidualCoverage.exactCover_uncoveredWeight_eq_zero
+    target_statement_id: sha256:c516cc39099f785b7836a4093bc260935b08813c87bb63af9461f35b19be7b54
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a20c44553c0452e0320489577fb2375344e6bf4be4571543243d4b2c34c71b97
+  normalized_sha256: sha256:a20c44553c0452e0320489577fb2375344e6bf4be4571543243d4b2c34c71b97
+cas_ref: sha256:a20c44553c0452e0320489577fb2375344e6bf4be4571543243d4b2c34c71b97
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题。额外假设清单中的名词项 Fibonacci 一步记忆，没有断言该假设成立或推出结论。
+    previous_atom_id: 9ef3caf4fcdc9381e9a1832664c13c670c0f00cfc0c5a570478d3c5299ea5a21
+    next_atom_id: f36237b6bba05514523ed366af4273ec895bdc9f7dde2574f5fee6ec3cfbf698

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:701f318f9ab11b00a949c24e5944b675e7989e9b75eb188d45b5738f8e389142
+  normalized_sha256: sha256:701f318f9ab11b00a949c24e5944b675e7989e9b75eb188d45b5738f8e389142
+cas_ref: sha256:701f318f9ab11b00a949c24e5944b675e7989e9b75eb188d45b5738f8e389142
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading and vocabulary introduction for three parity notions; no identification or intertwining theorem is asserted.
+    previous_atom_id: c3096fd044d4a9fd91945e407e6ca242949189f999958fc240b49dc94043d410
+    next_atom_id: 74fce2511837696ed847036bf6157ab5391443041cc35b2be0210c1224ef2c24

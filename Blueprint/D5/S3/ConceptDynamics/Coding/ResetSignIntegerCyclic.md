@@ -4,9 +4,33 @@
 
 Literal integral Sign elimination preserves forward time and both inverse maps.
 
+**Theorem 1.1 (The consumed geometric certificate).**
+
+$$\forall q \in Nat,\; \operatorname{sub}\left(\operatorname{power}\left(X, q\right), \operatorname{multiply}\left(\operatorname{sub}\left(X, 1\right), \operatorname{S}\left(q\right)\right)\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/ResetSignIntegerCyclic.geometric` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This existing all-natural-q certificate is public for ResetIntegralGluing's actual ideal and coefficient-half reconstruction. The proof is reused unchanged and is a consumed helper.
+
+**Theorem 1.2 (The consumed integral sign involution).**
+
+$$\forall q \in Nat,\; \operatorname{multiply}\left(\operatorname{fp}\left(q, \operatorname{W}\left(q\right)\right), \operatorname{fp}\left(q, \operatorname{W}\left(q\right)\right)\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/ResetSignIntegerCyclic.sign_square` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original sign certificate supplies the inverse of wUnit in ResetIntegralUnits. Its proof and scope are unchanged.
+
 Sign is Multiplicative Bool, oddTau is ofAdd true, and the coefficient ring R is literally MonoidAlgebra Int Sign. Its resetLabel is single oddTau 1 from ResetNativeOddObstruction. Put S(q)=sum over k<q of X^k, F(q)=X^(2q)-S(q)^2, and W(q)=S(q)-(X-1)*X^q. QP(q) is the accepted FiniteCompanionCyclicModule.CyclicQ at R and resetLabel, hence R[X]/(P), where P=X^q-C(resetLabel)*S(q). QF(q) is Int[X]/(F). pp and fp are their canonical quotient ring maps; inclusion maps integer coefficients canonically into R. No rational sign splitting, rank argument, or history equivariance assumption is used.
 
-**Theorem 1.1 (Actual inverse quotient maps and generator images).**
+**Theorem 1.3 (Actual inverse quotient maps and generator images).**
 
 $$\forall q \in Nat,\; \operatorname{compose}\left(\operatorname{forward}\left(q\right), \operatorname{backward}\left(q\right)\right) = \operatorname{ringIdentity}\left(\operatorname{QF}\left(q\right)\right) \land \left(\operatorname{compose}\left(\operatorname{backward}\left(q\right), \operatorname{forward}\left(q\right)\right) = \operatorname{ringIdentity}\left(\operatorname{QP}\left(q\right)\right) \land \left(\left(\forall p \in IntPolynomial,\; \operatorname{ringEquiv}\left(q, \operatorname{pp}\left(q, \operatorname{inclusion}\left(p\right)\right)\right) = \operatorname{fp}\left(q, p\right)\right) \land \left(\left(\forall p \in IntPolynomial,\; \operatorname{inverse}\left(\operatorname{ringEquiv}\left(q\right), \operatorname{fp}\left(q, p\right)\right) = \operatorname{pp}\left(q, \operatorname{inclusion}\left(p\right)\right)\right) \land \left(\operatorname{ringEquiv}\left(q, \operatorname{pp}\left(q, X\right)\right) = \operatorname{fp}\left(q, X\right) \land \left(\operatorname{ringEquiv}\left(q, \operatorname{pp}\left(q, \operatorname{C}\left(resetLabel\right)\right)\right) = \operatorname{fp}\left(q, \operatorname{W}\left(q\right)\right) \land \left(\left(\forall z \in Int,\; \operatorname{ringEquiv}\left(q, \operatorname{pp}\left(q, \operatorname{C}\left(\operatorname{integerScalar}\left(z\right)\right)\right)\right) = \operatorname{fp}\left(q, \operatorname{C}\left(z\right)\right)\right) \land \left(\operatorname{ringEquiv}\left(q, 1\right) = 1 \land \left(q = 1 \Rightarrow \operatorname{ringEquiv}\left(q, \operatorname{pp}\left(q, \operatorname{C}\left(resetLabel\right)\right)\right) = \operatorname{fp}\left(q, X\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -24,6 +48,8 @@ The next consumer is the actual integer-linear map from QF to DimensionGroup(res
 
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetSignIntegerCyclic.geometric`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetSignIntegerCyclic.literal_presentation`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetSignIntegerCyclic.sign_square`
 - Dependency: [D5/S1/Recurrence/FiniteCompanionCyclicModule](../../../S1/Recurrence/FiniteCompanionCyclicModule.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/ResetNativeIntegralDefect](ResetNativeIntegralDefect.md)

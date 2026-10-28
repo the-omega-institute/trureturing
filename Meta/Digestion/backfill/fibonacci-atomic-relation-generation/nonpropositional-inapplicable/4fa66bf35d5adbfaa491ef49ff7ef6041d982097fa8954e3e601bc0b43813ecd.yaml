@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4fa66bf35d5adbfaa491ef49ff7ef6041d982097fa8954e3e601bc0b43813ecd
+  normalized_sha256: sha256:4fa66bf35d5adbfaa491ef49ff7ef6041d982097fa8954e3e601bc0b43813ecd
+cas_ref: sha256:4fa66bf35d5adbfaa491ef49ff7ef6041d982097fa8954e3e601bc0b43813ecd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项只对 X≥2、y≥2 引入尾和 T_j(y) 的定义；章节标题仅指明密度估计及公因子的讨论主题，未陈述估计或密度结论。
+    previous_atom_id: eb4e256da32eba1b7d0308e1d46e78e35f218dd32169a39ca1de60f73778d00e
+    next_atom_id: 533251e0555a5f8be563ae903f5be24f88cebaf1abba9f78b59ae040c45c140f

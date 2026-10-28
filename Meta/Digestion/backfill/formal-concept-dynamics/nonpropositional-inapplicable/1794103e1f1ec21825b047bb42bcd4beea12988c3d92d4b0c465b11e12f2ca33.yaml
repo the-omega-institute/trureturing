@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1794103e1f1ec21825b047bb42bcd4beea12988c3d92d4b0c465b11e12f2ca33
+  normalized_sha256: sha256:1794103e1f1ec21825b047bb42bcd4beea12988c3d92d4b0c465b11e12f2ca33
+cas_ref: sha256:1794103e1f1ec21825b047bb42bcd4beea12988c3d92d4b0c465b11e12f2ca33
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列出当前完成在时间与行动后是否闭合的问题，没有断言动态闭合成立。
+    previous_atom_id: a0351a130b904ef8eb835497a45656ab3f9c0ba341ec02f5d7d156a732933866
+    next_atom_id: 928875a2df0deb6bfcd65ea7ea01409b1ef197f76241ec9f508c68a1d5798e52

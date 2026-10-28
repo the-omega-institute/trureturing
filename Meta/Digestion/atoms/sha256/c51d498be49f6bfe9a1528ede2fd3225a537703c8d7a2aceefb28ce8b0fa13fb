@@ -1,0 +1,20 @@
+项目已经机器证明：
+
+1. 若固定深度 moments 能以
+
+   $$
+   O(e^{-L}L^{N-1})
+   $$
+
+   恢复，则有限 Toeplitz 算子范数与最小特征值也以同阶恢复。
+
+2. 在已经假设存在有限偶正测度并完成 Li moment identification 时，Cayley–Laguerre tomography 给出明确 resolvent integral。
+
+3. 一旦 Verblunsky 参数已经满足
+
+   $$
+   |\alpha_n|<1,
+   $$
+
+   规范 Szegő transfer 就属于 \(SU(1,1)\)。
+

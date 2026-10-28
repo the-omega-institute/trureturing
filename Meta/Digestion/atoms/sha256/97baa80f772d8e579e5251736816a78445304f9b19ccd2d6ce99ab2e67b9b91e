@@ -1,0 +1,70 @@
+**定理 483.2（原卷积全部小标记的原分子连续项）。** 保留 (482.14) 的同一个原始 $b(h)$、全部标记 $R\in\mathcal L_L$（包括单位）、实际 $G_L$ 与 G7 范围。令
+
+$$
+C_R^0(t)=\sum_hb(h)\overline{\mathcal v_u(Rh)
+D_{\nu_{[h]};S}(Rh,u)}.
+\tag{483.17}
+$$
+
+在 primitive-mean 原稿 §7 的同一个实际 Mellin 伴随中，由 I2 精确分解 $E_L^*b=e_L^0+e_L^{\rm ref}$，其中 $e_L^0$ 积分 (483.17)，$e_L^{\rm ref}$ 保存每个非空反射选择。假设 $2L\le D$，并保留原固定字符 $B_0=7/8$ 的 inverse-$L$ 输入。令共同成本包络 $\mathcal C$ 覆盖原有限族、所需 smooth/Mellin seminorms、多项式 $t$ 积分、reciprocal-strip 与 G7 inverse-Gram 成本的实际有限乘积和。则
+
+$$
+|C_R^0(t)|\ll_\varepsilon\mathcal C(Kq_R)^\varepsilon(1+|t|)^B
+ \left(KD^{-1/8}+K^{5/12}D^{2/3}q_R^{7/12}\right),
+\tag{483.18}
+$$
+
+$$
+Q_{E0,L}:=(e_L^0)^*G_L^{-1}e_L^0
+\ll_\varepsilon\mathcal C^2(UKL)^\varepsilon U^{2\eta}
+ \left(K^2D^{-1/4}L+K^{5/6}D^{4/3}L^{13/6}\right).
+\tag{483.19}
+$$
+
+证明。对每个原 Möbius 变量写
+
+$$
+g=(d,\operatorname{rad}R),\quad d=ge,\quad(e,R)=1,
+\qquad R_5=\prod_{v_p(R)=5}p.
+\tag{483.20}
+$$
+
+直接把 (483.4) 用于实际外模数 $a=Rge$；不删除 $Rh$ 的六次幂。参数精确为
+
+$$
+T=Rg,\qquad A=q_RD,\qquad X=q_RK,\qquad
+\|\alpha\|_2\ll_\varepsilon\mathcal C(D/q_g)^{1/2+\varepsilon}.
+\tag{483.21}
+$$
+
+$a$ 的局部指数至多六，$a^{\ge2}=(Rg)^{\ge2}$，$q_T\le q_R^2$，$A/X=1/N$；原非空 annuli 及 $2L\le D$ 保证长度条件。原 fixed masks 沿 $h\equiv R^{-1}m\pmod B$ 拉回，只置换同一有限族。共同 Mellin 分离仍读取 $q_m/X=(q_d/D)(q_n/N)$，不额外选择依赖标签的任意 profile。于是误差为
+
+$$
+\mathcal C(Kq_R)^\varepsilon(1+|t|)^B
+ K^{5/12}D^{2/3}q_R^{7/12}
+ \sum_{g\mid\operatorname{rad}R}q_g^{-1/2},
+\tag{483.22}
+$$
+
+最后的和只支付 $q_R^\varepsilon$。
+
+主项的 $c$ 恰好遍历 $c\mid(g,R_5)$，与变化的 $e$ 无关；$\operatorname{rad}a=\operatorname{rad}R\,e$。故 (483.2) 的原有限 cusp 常数和 ray 相位可在每个 $g,c$ 分支固定后，直接复用 I7 的 $\mu(e)v_u(e)\xi(e)/q_e$ smooth inverse-$L$ 估计。局部因子的正常收敛域、所选 $B_0$ 和字符有限族均不改变。入射常数前的大小满足 $\varphi(c^6)q_c^{-6\Re u}\le q_c^{-6\eta}$，出射部分满足 $\varphi(c^6)q_c^{6\Re u-12}\le q_c^{6\eta}$。相应主项上界分别为
+
+$$
+\begin{aligned}
+&\mathcal C(Kq_R)^\varepsilon(1+|t|)^B KD^{-1/8}
+ \sum_{g\mid\operatorname{rad}R}q_g^{-7/8}
+ \sum_{c\mid(g,R_5)}q_c^{-6\eta},\\
+&\mathcal C(Kq_R)^\varepsilon(1+|t|)^B K^{1-\eta}q_R^{-\eta}D^{-1/8}
+ \sum_{g\mid\operatorname{rad}R}q_g^{-7/8}
+ \sum_{c\mid(g,R_5)}q_c^{6\eta}.
+\end{aligned}
+\tag{483.23}
+$$
+
+两和均为 $O_\varepsilon(q_R^\varepsilon)$：出射一项在 $p\mid R_5$ 的局部因子是
+$1+q_p^{-7/8}+q_p^{-7/8+6\eta}$，而 $6\eta<1/2<7/8$。这证明 (483.18)，没有用不同分支的分别最优值替代原来的联合系数。
+
+最后在原实际伴随中乘 $U^\eta$，对原快速衰减 row Mellin profile 积分，再用同一 G7 和
+$\sum_{q_R\le L}1\ll L$、$\sum_{q_R\le L}q_R^{7/6}\ll L^{13/6}$。先完成每个原 $h$ 的 coherent 求和后才取标签平方和，得到 (483.19)，不假设标签正交。证毕。
+

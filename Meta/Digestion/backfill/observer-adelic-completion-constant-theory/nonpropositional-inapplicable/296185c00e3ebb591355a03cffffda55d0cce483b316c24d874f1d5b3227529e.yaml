@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:296185c00e3ebb591355a03cffffda55d0cce483b316c24d874f1d5b3227529e
+  normalized_sha256: sha256:296185c00e3ebb591355a03cffffda55d0cce483b316c24d874f1d5b3227529e
+cas_ref: sha256:296185c00e3ebb591355a03cffffda55d0cce483b316c24d874f1d5b3227529e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举 weighted correspondence 作为补充结构名称；没有存在断言。
+    previous_atom_id: cfd05e7c96b8b88d84bf1b8b4c1eb7de192da2b34b10e2716c1acd8dbdb23d8e
+    next_atom_id: 9315a1550e427108b6d09c1400074b1b0cbc3b9b81cc5c00ab06de88a6f18fd6

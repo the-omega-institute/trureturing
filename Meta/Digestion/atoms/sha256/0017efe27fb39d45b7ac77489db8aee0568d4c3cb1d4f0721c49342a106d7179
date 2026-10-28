@@ -1,0 +1,23 @@
+**Theorem 74.1 (complete auxiliary-capacity bound).** Every translator of Definition 73.2 serving the actual layer of Definition 73.1 satisfies the following. If a finite execution reaches the full subset after $M$ post-entrance pulses, then
+
+$$
+2^k\le R(M+1),\qquad
+M\ge\left\lceil\frac{2^k}{R}\right\rceil-1.
+\tag{74.1}
+$$
+
+All full-subset executions have the same literal pulse word. For each subset $U$, all histories reaching it have a unique pulse word $v_U$, which is a prefix of that common full word. A refused repeat Select executes no pulse between its two settled cuts. Thus (74.1) holds on every full execution, including executions containing repeated selectors, not merely on a separately chosen optimal order.
+
+**Proof.** Choose one actual full execution and call its pulse word $W$, length $M$. Another full execution has the same final field by canonicality. Injectivity of (73.3) makes its entire word equal to $W$, including its length. Now take any finite history reaching $U$. Definition 73.1 extends its actual native history to the full subset. Serving the appended selectors appends a pulse word; it cannot remove earlier pulses. The resulting full word is $W$, so the partial word is a prefix of $W$. Two histories reaching the same $U$ have the same canonical field and hence, by the same injectivity, identical pulse words. This defines $v_U$. No assumption of fixed blocks or order-independent busy computations has been used.
+
+For each of the $2^k$ subsets, choose one reached settled cut and its actual jointly selected auxiliary value $A_U$. The map
+
+$$
+U\longmapsto(v_U,A_U)
+\tag{74.2}
+$$
+
+is injective. Indeed, equal pairs give equal exact fields by (73.3) and equal all selected auxiliary inputs, so the exact decoder must return the same subset. The word $W$ has exactly $M+1$ prefixes, including the empty and whole words, and the joint auxiliary alphabet has at most $R$ values. Counting the possible pairs proves the first inequality. Since $M+1$ is an integer, it implies the second.
+
+Finally, a repeat Select leaves $U$ unchanged. If its pre-cut pulse word is $v$ and its post-cut word is $vw$, canonicality gives $X(v)=X(vw)$. Injectivity gives equality of the literal finite words, hence $|w|=0$. Reads, Holds, complete refusals and busy work can still occur and are paid. This proves all claims. $\square$
+

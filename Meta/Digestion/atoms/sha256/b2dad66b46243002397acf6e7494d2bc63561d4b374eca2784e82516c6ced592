@@ -1,0 +1,18 @@
+## 定义 212.1（有限 Bhattacharyya 证据预算）
+
+\[
+\boxed{
+\mathcal B_J(x,y)
+=
+-\sum_{p\in J}\log\rho_p(x,y).
+}
+\]
+
+于是：
+
+\[
+\rho(P_{x,J},P_{y,J})
+=
+e^{-\mathcal B_J(x,y)}.
+\]
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9d16b2bcd3c7787c57e1a52dd199b36e77a8bcb15d9d371ece7ca32f4c9fccd6
+  normalized_sha256: sha256:9d16b2bcd3c7787c57e1a52dd199b36e77a8bcb15d9d371ece7ca32f4c9fccd6
+cas_ref: sha256:9d16b2bcd3c7787c57e1a52dd199b36e77a8bcb15d9d371ece7ca32f4c9fccd6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 伦理学 II.9 的实践矫正建议与一般判断的限制；不是数学命题。
+    previous_atom_id: eed9ac350f7ca50ec73024a84e5b7cebdc754ee9cd7dc89f87ec7f51de0e9cfd
+    next_atom_id: 2b708025cdaae41a88b94c2d193dfb349394273cc855acc934dfd29733946d85

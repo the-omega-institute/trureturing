@@ -1,0 +1,7 @@
+Initialize at $Q(0,0)$. At $Q(h,a)$ halt with fixed output $a$.
+At $Q(i,a)$ for $i<h$ read $p_{i+1}$. Its four response rows are:
+
+- At $i=0$, absent selects $V(a,01)$, branch holds $Q(0,a)$,
+  and $\alpha,\beta$ select $B(0,a,a\oplus\chi(o))$.
+- At $i>0$, every reply $o$ selects $B(i,a,a\oplus\chi(o))$.
+

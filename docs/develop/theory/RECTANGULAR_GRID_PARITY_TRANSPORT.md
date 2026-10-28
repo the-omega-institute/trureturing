@@ -285,3 +285,10 @@ A 是沿实际步词求和的二阶反对称量，恰体现仓库中“反向翻
 [Z] Thomas Zaslavsky, *Glossary of Signed and Gain Graphs and Allied Areas*, 本人维护的术语说明，条目 oriented/unoriented incidence matrix、signed-graph incidence。https://people.math.binghamton.edu/zaslav/Bsg/glossary.html 。用于核对换号及关联矩阵约定，不声称该页面已经给出本卷的网格缺额或距离界。
 
 第 3、5、9 节中的基础群和整数关联事实是经典结构，本卷给出自足证明以固定接口；第 4、6、7、8 节是本次从实际残余问题推导的端口理论与应用，不据此宣称全球首次发现。
+
+
+## 实验材料入口
+
+正文中的程序名与结果文件路径对应以下固定版本；有限核验数据不代替普遍证明或 Lean 证书。
+
+- [verification.json](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/grid-parity-transport/verification.json)

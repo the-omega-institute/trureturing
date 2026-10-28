@@ -34,16 +34,17 @@ internal static class DecomposeAtomCommand
                 repository,
                 loaded,
                 Decode,
-                [parent.SourcePath, TheoryAtomizerDataLoader.DataPath, DigestionCasStore.RootPath + id]);
+                [FileMapLoader.RelativePath, ":(glob)Meta/FILEMAP.*.toml", DigestionCasStore.RootPath + id]);
             raw = loaded.Raw;
             snapshot = loaded.Snapshot;
             ledger = loaded.Document;
             parent = ledger.RequireDigestionEntries().Single(entry => entry.AtomId == id);
             if (!snapshot.TryGetFile(DigestionCasStore.RootPath + id, out var blob))
                 throw new FormatException($"CAS_MISSING atom_id={id}");
-            var rules = TheoryAtomizerDataLoader.Load(snapshot);
+            if (FileMapLoader.LoadSnapshot(snapshot).Match(parent.SourcePath) is not [{ DigestionSource: true, Symlink: null }])
+                throw new FormatException($"ineligible digestion source: {parent.SourcePath}; a canonical eligible regular source is required");
             var atomizer = (atomizerResolver ?? (static name => AtomizerRegistry.Require(name).Atomize))(parent.Atomizer);
-            var plan = DigestionDecomposition.Plan(parent, blob.RawBytes, atomizer, rules, snapshot, splitAt);
+            var plan = DigestionDecomposition.Plan(parent, blob.RawBytes, atomizer, snapshot, splitAt);
             var existingChildren = DigestionQuerySelection.ReadAtoms(repository,
                 plan.Children.Select(static child => child.Fingerprints.RawSha256[7..]).Distinct(StringComparer.Ordinal).ToArray());
             loaded = DigestionQuerySelection.Load(DigestionQuerySelection.Merge(raw, existingChildren.Raw));
@@ -76,7 +77,7 @@ internal static class DecomposeAtomCommand
                 ledger = loaded.Document;
                 entries = ledger.RequireDigestionEntries().ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
             }
-            var writes = DigestionDecomposition.Materialize(parent, plan, entries, reconcileChain, snapshot, rules);
+            var writes = DigestionDecomposition.Materialize(parent, plan, entries, reconcileChain, snapshot);
             foreach (var child in plan.Children)
             {
                 var childId = child.Fingerprints.RawSha256[7..];
@@ -110,10 +111,38 @@ internal static class DecomposeAtomCommand
                 if (!BackfillInventoryWriter.WriteAtom(roundTrip).AsSpan().SequenceEqual(overlay[PathFor(entry)].Bytes.AsSpan()))
                     throw new FormatException($"ROUND_TRIP_FAILED atom_id={entry.AtomId}");
             }
+            if (updates.Count == 0 && writes.CasObjects.IsEmpty)
+                return new CommandResult(true, Render(id, plan, entries, [], [], dryRun, reconcileChain), string.Empty);
+            var pointerRaw = repository.ReadCurrent([
+                $":(glob){BackfillInventoryLoader.RootPath}*/context/{id}.json"]);
+            var pointerSnapshot = Decode(pointerRaw);
+            _ = DigestionContextPointerStore.Load(pointerSnapshot, parent.SourceId, id);
+            var versions = pointerRaw.Entries.Where(file => DigestionContextPointerStore.IsCanonicalPath(file.Path))
+                .SelectMany(file => DigestionContextPointerStore.ParseVersions(file.Bytes,
+                    DigestionQuerySelection.SourceId(file.Path), id)).ToImmutableArray();
+            var saved = repository.ReadCurrent(versions.Select(version => version.SourceId)
+                .Distinct(StringComparer.Ordinal).Select(sourceId =>
+                    $":(glob){BackfillInventoryLoader.RootPath}{sourceId}/context/*.json").ToArray());
+            saved = DigestionQuerySelection.Merge(saved, repository.ReadCurrent(versions
+                .SelectMany(version => version.Entries[0].Occurrences)
+                .SelectMany(occurrence => occurrence.GoverningContext).Select(scope => scope.AtomId)
+                .Distinct(StringComparer.Ordinal).Select(scopeId => DigestionQuerySelection.Literal(
+                    DigestionCasStore.RootPath + scopeId)).ToArray()));
+            raw = DigestionQuerySelection.Merge(raw, saved);
+            final = DigestionQuerySelection.Merge(final, saved);
+            var contextFinal = DigestionContextDecomposition.Expand(final, replayed, writes.Parent, versions, out var contextCas);
+            var contextBefore = final.Entries.ToDictionary(entry => entry.Path, StringComparer.Ordinal);
+            foreach (var file in contextFinal.Entries.Where(file => IngestCommand.IsContextIndexPath(file.Path)
+                         && (!contextBefore.TryGetValue(file.Path, out var old)
+                             || !old.Bytes.AsSpan().SequenceEqual(file.Bytes.AsSpan()))))
+                updates.Add(new IngestCommand.LedgerUpdate(file.Path, file.Bytes));
+            var existingPaths = raw.Entries.Select(file => file.Path).ToHashSet(StringComparer.Ordinal);
+            var allCas = writes.CasObjects.Concat(contextCas).DistinctBy(item => item.Reference)
+                .Where(item => !existingPaths.Contains(item.RelativePath)).ToImmutableArray();
             var ledgerUpdates = updates.ToImmutable();
             var output = Render(id, plan, entries, writes.CasObjects, ledgerUpdates, dryRun, reconcileChain);
             if (!dryRun && (!ledgerUpdates.IsEmpty || !writes.CasObjects.IsEmpty))
-                apply(root, raw, writes.CasObjects, ledgerUpdates);
+                apply(root, raw, allCas, ledgerUpdates);
             return new CommandResult(true, output, string.Empty);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)

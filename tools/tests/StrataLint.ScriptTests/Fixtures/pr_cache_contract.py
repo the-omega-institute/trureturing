@@ -48,7 +48,8 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         self.identity = dict(repository="owner/repository", pr="12", head=head, merge=merge, base=base,
             source_run="17", source_attempt="2", target_ref="refs/heads/integration-cache-tests")
         self.event = dict(action="labeled", label=dict(name="lean-cache-produce"), number=12,
-            pull_request=dict(head=dict(sha=head), base=dict(ref="integration-cache-tests")))
+            pull_request=dict(head=dict(sha=head), base=dict(ref="integration-cache-tests"),
+                              labels=[dict(name="lean-cache-produce")]))
         self.event_file = self.root / "event.json"
         self.event_file.write_text(json.dumps(self.event))
         self.env.update(GITHUB_EVENT_NAME="pull_request", GITHUB_REF="refs/pull/12/merge", GITHUB_SHA=merge,
@@ -56,6 +57,7 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         self.runtime_sha = "d" * 40
         self.calls = []
         self.pr = dict(number=12, state="open", merged=False, merge_commit_sha=None, merged_at=None,
+                       labels=[dict(name="lean-cache-produce")],
                        head=dict(sha=head), base=dict(ref="integration-cache-tests", repo=dict(full_name="owner/repository")))
         self.actual_merge = self.git("commit-tree", tree, "-p", base, "-p", head, data="actual merged commit\n")
         self.artifact = dict(id=81, name=producer.artifact_name(self.identity), expired=False,
@@ -123,12 +125,53 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         self.assertEqual("producer_run=28\n", (self.root / "outputs").read_text())
 
     def test_dispatch_rejects_wrong_label_event_ref_and_head(self):
-        for change in (dict(action="opened"), dict(label=dict(name="other")), dict(number=99),
+        for change in (dict(action="closed"), dict(label=dict(name="other")), dict(number=99),
                        dict(pull_request=dict(head=dict(sha="b" * 40), base=dict(ref="integration-cache-tests")))):
             with self.subTest(change=change):
                 self.event_file.write_text(json.dumps(dict(self.event, **change)))
                 with self.assertRaises(ValueError):
                     self.run_with(lambda: producer.dispatch(self.root))
+        self.assertFalse(any(path.endswith("/dispatches") for path, _ in self.calls))
+
+    def test_opted_in_current_head_events_dispatch_and_absent_label_rejects(self):
+        for action in ("opened", "reopened", "synchronize", "labeled"):
+            with self.subTest(action=action):
+                event = dict(self.event, action=action)
+                self.event_file.write_text(json.dumps(event))
+                result = self.run_with(lambda: producer.dispatch(self.root))
+                self.assertEqual(self.identity, result["source"])
+                event["pull_request"] = dict(event["pull_request"], labels=[])
+                self.event_file.write_text(json.dumps(event))
+                with self.assertRaisesRegex(ValueError, "opted-in"):
+                    self.run_with(lambda: producer.dispatch(self.root))
+        for action in ("unlabeled", "edited", "closed"):
+            self.event_file.write_text(json.dumps(dict(self.event, action=action)))
+            with self.assertRaises(ValueError):
+                self.run_with(lambda: producer.dispatch(self.root))
+
+    def test_synchronize_pins_the_replacement_head_and_rejects_the_old_event(self):
+        old = dict(self.identity)
+        tree = self.git("rev-parse", "HEAD^{tree}")
+        head = self.git("commit-tree", tree, "-p", old["head"], data="new current head\n")
+        merge = self.git("commit-tree", tree, "-p", old["base"], "-p", head, data="new candidate\n")
+        self.git("update-ref", "HEAD", merge)
+        self.identity.update(head=head, merge=merge)
+        self.pr["head"] = dict(sha=head)
+        self.env["GITHUB_SHA"] = merge
+        self.event["action"] = "synchronize"
+        self.event["pull_request"]["head"] = dict(sha=head)
+        self.event_file.write_text(json.dumps(self.event))
+        result = self.run_with(lambda: producer.dispatch(self.root))
+        self.assertEqual(self.identity, result["source"])
+        with self.assertRaisesRegex(ValueError, "head or target changed"):
+            self.run_with(lambda: producer.validate_remote(old))
+
+    def test_removed_label_blocks_delayed_dispatch_and_production(self):
+        self.pr["labels"] = []
+        with self.assertRaisesRegex(ValueError, "opted-in"):
+            self.run_with(lambda: producer.dispatch(self.root))
+        with self.assertRaisesRegex(ValueError, "opted-in"):
+            self.run_with(lambda: producer.prepare(self.root, self.identity), env=self.runtime())
         self.assertFalse(any(path.endswith("/dispatches") for path, _ in self.calls))
 
     def test_dispatch_requires_exact_run_id_and_preserves_api_failure(self):
@@ -411,7 +454,7 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         for key in ("partition", "elan_key"):
             (self.bundle / "preparation.json").write_text(json.dumps(dict(original, **{key: "foreign"})))
             self.zip_preparation()
-            with self.assertRaisesRegex(ValueError, "partition or toolchain"):
+            with self.assertRaisesRegex(ValueError, "invalid preparation native identity"):
                 self.adopt()
         (self.bundle / "preparation.json").write_text(json.dumps(original))
         self.zip_preparation()
@@ -423,6 +466,39 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "M parents are not B,H"):
             self.adopt(api=api)
         self.assertFalse((self.root / ".lake/build").exists())
+
+    def test_changed_native_inputs_skip_preparation_without_touching_cache(self):
+        self.preparation()
+        self.merged()
+        for filename, replacement in (
+                ("lean-toolchain", "leanprover/lean4:v4.35.0\n"),
+                ("lake-manifest.json", json.dumps({"packages": [{"name": "mathlib", "rev": "b" * 40}]}))):
+            path = self.root / filename
+            original = path.read_bytes()
+            path.write_text(replacement)
+            with self.subTest(filename=filename):
+                with mock.patch.object(producer, "receipt", wraps=producer.receipt) as receipts:
+                    result, _ = self.adopt()
+                self.assertEqual("miss", result["status"])
+                incompatible = [call.kwargs for call in receipts.call_args_list
+                                if call.args[0] == "incompatible"]
+                self.assertEqual(1, len(incompatible))
+                self.assertEqual(81, incompatible[0]["artifact"])
+                self.assertNotEqual(incompatible[0]["prepared"], incompatible[0]["current"])
+                self.assertFalse((self.root / ".lake").exists())
+                self.assertFalse((self.root / "build/lean-cache/pr-adopted.json").exists())
+                self.assertNotIn("adopted=true", (self.root / "outputs").read_text())
+                self.assertTrue(any(path.startswith("git/commits/") for path, _ in self.calls))
+            path.write_bytes(original)
+
+    def test_incompatible_preparation_still_rejects_invalid_identity(self):
+        self.preparation()
+        self.merged()
+        (self.root / "lean-toolchain").write_text("leanprover/lean4:v4.35.0\n")
+        self.producer_run["run_attempt"] = 2
+        with self.assertRaisesRegex(ValueError, "attempt identity differs"):
+            self.adopt()
+        self.assertFalse((self.root / ".lake").exists())
 
     def test_attempt_status_is_immutable_and_artifact_time_must_belong_to_it(self):
         self.preparation()

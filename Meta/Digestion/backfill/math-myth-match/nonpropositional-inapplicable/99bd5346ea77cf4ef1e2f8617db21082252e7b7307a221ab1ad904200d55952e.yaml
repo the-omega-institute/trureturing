@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:99bd5346ea77cf4ef1e2f8617db21082252e7b7307a221ab1ad904200d55952e
+  normalized_sha256: sha256:99bd5346ea77cf4ef1e2f8617db21082252e7b7307a221ab1ad904200d55952e
+cas_ref: sha256:99bd5346ea77cf4ef1e2f8617db21082252e7b7307a221ab1ad904200d55952e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 给出巴哈伊与实用主义的原文范围，并标明后续二元模型为额外假设，没有独立数学结论。
+    previous_atom_id: ba3d44e68922e438452dad2dd566195017cef8fe7b4d14c72e75e482942df6f8
+    next_atom_id: 807af83b2abec0f182140d5c31b18c458de18fa8996c6f967a17b80904a13cee

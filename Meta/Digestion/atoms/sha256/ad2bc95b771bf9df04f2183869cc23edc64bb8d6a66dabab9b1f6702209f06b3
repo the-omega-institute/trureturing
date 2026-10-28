@@ -1,0 +1,10 @@
+其中：
+
+- $H$ 是非空有限隐藏历史集，$H_\circ\subseteq H$ 是非空根集；
+- $E$ 是有限公开事件字母表；
+- 对每个 $e\in E$，$\delta_e:H\rightharpoonup H$ 是确定的部分后继；
+- $\ell:H\to E^*$ 是公开事件词，根满足 $\ell(h)=\varepsilon$，且若 $\delta_e(h)=h'$，则 $\ell(h')=\ell(h)e$；
+- $R$ 是非空有限终端记录集；
+- $\operatorname{Term}\subseteq H\times R$ 是合法终端对；
+- $t:\operatorname{Term}\to Y$ 给出目标值，其中 $Y$ 是非空集合。
+

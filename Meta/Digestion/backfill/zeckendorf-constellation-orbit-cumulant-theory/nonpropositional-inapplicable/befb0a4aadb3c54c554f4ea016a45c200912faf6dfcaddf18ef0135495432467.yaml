@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:befb0a4aadb3c54c554f4ea016a45c200912faf6dfcaddf18ef0135495432467
+  normalized_sha256: sha256:befb0a4aadb3c54c554f4ea016a45c200912faf6dfcaddf18ef0135495432467
+cas_ref: sha256:befb0a4aadb3c54c554f4ea016a45c200912faf6dfcaddf18ef0135495432467
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: An incomplete defining left-hand side A_p(s)=, not a completed mathematical equality.
+    previous_atom_id: 7e884b247893189ee450eeea853f62d03419e4086eb41e45f5cc1b900b232413
+    next_atom_id: 35fe557b06e6e57b014af676381ba5a8364808fc39a3879ff470299cc71b4281

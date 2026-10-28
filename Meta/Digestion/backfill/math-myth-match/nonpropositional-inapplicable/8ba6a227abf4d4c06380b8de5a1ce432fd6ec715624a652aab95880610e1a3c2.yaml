@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8ba6a227abf4d4c06380b8de5a1ce432fd6ec715624a652aab95880610e1a3c2
+  normalized_sha256: sha256:8ba6a227abf4d4c06380b8de5a1ce432fd6ec715624a652aab95880610e1a3c2
+cas_ref: sha256:8ba6a227abf4d4c06380b8de5a1ce432fd6ec715624a652aab95880610e1a3c2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 解释《帖撒罗尼迦前书》的持续祷告与成圣承诺，不给出数值最大间隔。
+    previous_atom_id: bfd27715d9e7a2131f279141cdc8d6570b9ac11feeb4e343adad7df53506bbc0
+    next_atom_id: f7cbfd9604e011e06aedb1687d87df91f151e2a24bcdcb98597242fa69b3a7ab

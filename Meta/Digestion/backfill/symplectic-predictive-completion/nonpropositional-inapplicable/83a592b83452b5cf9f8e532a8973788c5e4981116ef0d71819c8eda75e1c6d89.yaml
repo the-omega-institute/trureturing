@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:83a592b83452b5cf9f8e532a8973788c5e4981116ef0d71819c8eda75e1c6d89
+  normalized_sha256: sha256:83a592b83452b5cf9f8e532a8973788c5e4981116ef0d71819c8eda75e1c6d89
+cas_ref: sha256:83a592b83452b5cf9f8e532a8973788c5e4981116ef0d71819c8eda75e1c6d89
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第4章时间窗传播的疑问式目录项，不把问题作为已证命题。
+    previous_atom_id: ecc7faddbce806d02f2881ae9518a6f5e059d08555ec09d6f8c79b4c044d20eb
+    next_atom_id: 4e7ae2d2b574da82846c44f30dd4003147054d818916f5de28fb4ea9c71439af

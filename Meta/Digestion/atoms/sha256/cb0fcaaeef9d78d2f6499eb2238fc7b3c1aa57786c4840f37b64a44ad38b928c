@@ -1,0 +1,87 @@
+**Definition 18.2 (Supplied regular chart in original source coordinates).**
+For $z=(r,b)$ with $0<r<1$, $b>0$, put
+
+$$
+\begin{gathered}
+j=b+r(1-r)/b,\qquad n=j+r,\qquad T=1+b,\qquad U=1+2b,\\
+D=5\{(b^2+8b+4)jn-2TU(j+n)\},\qquad
+A_s=(8b-1)(2+5b),\\
+C_0=-24D+3A_sjn,\qquad C_1=3A_sn,\\
+C_2=3(49b+34)jn-54U(j+n),\qquad C_3=3A_sj,\\
+B_5=-4C_0+15C_1-20C_2+10C_3,\\
+B_6=-10C_0+36C_1-45C_2+20C_3,\\
+B_7=-20C_0+70C_1-84C_2+35C_3.
+\end{gathered}
+\tag{18.4}
+$$
+
+On $D\ne0$ the whole-world lift and responses are
+
+$$
+\begin{aligned}
+d(z)&=-C_0/D,\\
+g_z(s)&=\frac1D\sum_{i=0}^3 C_i
+ \prod_{\substack{0\le l\le3\\l\ne i}}\frac{s-l}{i-l},\\
+p(z)&=\{-C_0+(U+n)B_5\}/D,\\
+v(z)&=\{-C_0+(2U+n)B_6\}/D,\\
+a(z)&=\{-C_0+(T+2j+4r)B_7\}/D,\\
+m(z)&=\{-C_0+(3U+2n)B_7\}/D,\qquad
+W(z)=(P(r,b),g_z,d(z)).
+\end{aligned}
+\tag{18.5}
+$$
+
+These are SIII, Definition 16.1, with $\tau=r/b$ substituted; they
+are not new response functions. O, Definitions 1.1–1.3 and Theorem 2.1,
+and this volume's Proposition 2.1 supply their original-world bridge.
+In particular the chronological traces are
+
+$$
+(1,j,T,n,U,U+n,2U+n),\qquad T+2j+4r,\qquad3U+2n.
+\tag{18.6}
+$$
+
+For clarity, the clock identities needed for this lift can also be
+written directly. Let $C_4=-C_0+4C_1-6C_2+4C_3$. Substitution in
+(18.4) gives
+
+$$
+\begin{gathered}
+-C_0+C_0=0,\qquad -C_0+jC_1=24D,\\
+-C_0+TC_2=(147/5)D,\qquad -C_0+nC_3=24D,\\
+-C_0+UC_4=18D,\qquad
+Dg_z(i)=B_i\quad(i=5,6,7).
+\end{gathered}
+\tag{18.7}
+$$
+
+The last identities are evaluations of the same degree-at-most-three
+interpolant, not independent gain choices. Equations (18.6)–(18.7)
+give every reading in (18.2), with the last two readings defined by
+(18.5), and both clock-seven alternatives. If $g_z$ were the zero
+polynomial then clocks zero and one would both read $d(z)$,
+contradicting $0\ne24$. Thus the lift has one whole nonzero gain and
+one fixed drift at all clocks.
+
+The chart is used only for the worlds constructed below. To retain
+the boundary of the global problem, O, Theorem 2.1, describes the full
+parent without dividing by its potentially zero factor:
+
+$$
+\begin{gathered}
+e=d-24,\qquad
+\Lambda=1+6/T+1/U-4/j-4/n,\qquad
+\kappa=6/T-2/U=2(2+5b)/(TU)>0,\\
+e\Lambda+(24/5)(b-1/8)\kappa=0,\\
+\bigl(g(0),g(1),g(2),g(3)\bigr)
+=\bigl(-24-e,-e/j,(27/5-e)/T,-e/n\bigr).
+\end{gathered}
+\tag{18.8}
+$$
+
+On the regular chart $D=(5/2)TUjn\Lambda$ and
+$e=-3A_sjn/D$, so (18.8) follows there from (18.4).
+The undivided equation also retains singular sources and arbitrary
+drifts on their allowed branches. No exhaustive assertion about those
+branches follows from a calculation in (18.5).
+

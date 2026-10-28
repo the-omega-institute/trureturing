@@ -1,0 +1,32 @@
+**Convention 2.3 (zero-safe membership).** The following convenient
+description is O, Theorem 2.1, specialized to the present $H_4$. For
+$e=d-24$, put
+
+$$
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n,\qquad
+\kappa=\frac6T-\frac2U>0.
+$$
+
+The full parent is in bijection with the triples $(r,b,e)$ satisfying
+
+$$
+0<r<1,\quad b>0,\qquad
+e\Lambda+\frac{24}{5}(b-1/8)\kappa=0.
+\tag{2.8}
+$$
+
+The corresponding entire gain is uniquely fixed by its samples
+
+$$
+(g(0),g(1),g(2),g(3))
+=\left(-24-e,-\frac e j,\frac{27/5-e}{T},-\frac e n\right).
+\tag{2.9}
+$$
+
+Fixed-node interpolation supplies the degree-at-most-three polynomial;
+(2.8) is exactly the remaining clock-four compatibility condition.
+The positive denominators $T,U,j,n$ do not exclude zero gain samples.
+There is no division here by $e$, $\Lambda$, a gain coefficient or a
+root difference. Later regular coordinates describe the particular
+local worlds, rather than replacing this definition of $C(y)$.
+

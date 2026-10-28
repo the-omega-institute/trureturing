@@ -43,7 +43,7 @@ noncomputable def ansatzPolynomial (N : ℕ) (sign : Bool) (c : ℝ) : MvPolynom
 /-- Fock amplitudes in the basis `|N-k,k⟩`, without the scalar normalization. -/
 noncomputable def omega (N : ℕ) (sign : Bool) (c : ℝ) : Fin (N + 1) → ℂ := fun k =>
   (Real.sqrt ((N - k.val).factorial * k.val.factorial : ℕ) : ℂ) *
-    coeff (Finsupp.single 0 (N - k.val) + Finsupp.single 1 k.val) (ansatzPolynomial N sign c)
+    AddMonoidAlgebra.coeff (ansatzPolynomial N sign c) (Finsupp.single 0 (N - k.val) + Finsupp.single 1 k.val)
 
 /-- Matrix of `a₀†²a₁² + a₁†²a₀²` on the `N`-boson sector. -/
 noncomputable def pairTunnel (N : ℕ) : Matrix (Fin (N + 1)) (Fin (N + 1)) ℂ := fun i j =>
@@ -98,8 +98,7 @@ theorem result : ¬ claim := by
     simp only [hi, hi3, hi4]
     ring
   have hcoeff (d : ℝ) :
-      (fun k : Fin 9 => coeff (Finsupp.single (0 : Fin 2) (8-k.val) + Finsupp.single 1 k.val)
-        (ansatzFactor d false ^ 4)) =
+      (fun k : Fin 9 => AddMonoidAlgebra.coeff (ansatzFactor d false ^ 4) (Finsupp.single (0 : Fin 2) (8-k.val) + Finsupp.single 1 k.val)) =
       ![1, 8*Complex.I*d, -24*(d:ℂ)^2-4, -32*Complex.I*(d:ℂ)^3-24*Complex.I*d,
         16*(d:ℂ)^4+48*(d:ℂ)^2+6, 32*Complex.I*(d:ℂ)^3+24*Complex.I*d,
         -24*(d:ℂ)^2-4, -8*Complex.I*d, 1] := by
@@ -120,18 +119,14 @@ theorem result : ¬ claim := by
     funext k
     cases s
     · simp only [omega, ansatzPolynomial, hfactor, Nat.reduceDiv, Bool.false_eq_true,
-        ↓reduceIte, coeff_add]
-      change (weight k : ℂ) * (((fun k : Fin 9 => coeff
-        (Finsupp.single 0 (8-k.val) + Finsupp.single 1 k.val) (ansatzFactor c false ^ 4)) k) +
-        ((fun k : Fin 9 => coeff (Finsupp.single 0 (8-k.val) + Finsupp.single 1 k.val)
-          (ansatzFactor (-c) false ^ 4)) k)) = _
+        ↓reduceIte, MvPolynomial.coeff_add]
+      change (weight k : ℂ) * (((fun k : Fin 9 => AddMonoidAlgebra.coeff (ansatzFactor c false ^ 4) (Finsupp.single 0 (8-k.val) + Finsupp.single 1 k.val)) k) +
+        ((fun k : Fin 9 => AddMonoidAlgebra.coeff (ansatzFactor (-c) false ^ 4) (Finsupp.single 0 (8-k.val) + Finsupp.single 1 k.val)) k)) = _
       rw [hcoeff, hcoeff]
       fin_cases k <;> dsimp [evenQ] <;> push_cast <;> ring
-    · simp only [omega, ansatzPolynomial, hfactor, Nat.reduceDiv, ↓reduceIte, coeff_add, coeff_neg]
-      change (weight k : ℂ) * (((fun k : Fin 9 => coeff
-        (Finsupp.single 0 (8-k.val) + Finsupp.single 1 k.val) (ansatzFactor c false ^ 4)) k) -
-        ((fun k : Fin 9 => coeff (Finsupp.single 0 (8-k.val) + Finsupp.single 1 k.val)
-          (ansatzFactor (-c) false ^ 4)) k)) = _
+    · simp only [omega, ansatzPolynomial, hfactor, Nat.reduceDiv, ↓reduceIte, MvPolynomial.coeff_add, coeff_neg]
+      change (weight k : ℂ) * (((fun k : Fin 9 => AddMonoidAlgebra.coeff (ansatzFactor c false ^ 4) (Finsupp.single 0 (8-k.val) + Finsupp.single 1 k.val)) k) -
+        ((fun k : Fin 9 => AddMonoidAlgebra.coeff (ansatzFactor (-c) false ^ 4) (Finsupp.single 0 (8-k.val) + Finsupp.single 1 k.val)) k)) = _
       rw [hcoeff, hcoeff]
       fin_cases k <;> dsimp [oddQ] <;> push_cast <;> ring
   have scale (a b d e : ℝ) (ha : 0 ≤ a) (hd : 0 ≤ d) (hab : a*b = d^2*e) :
@@ -159,7 +154,6 @@ theorem result : ¬ claim := by
         mul_zero, zero_mul, add_zero, zero_add, ite_true, ite_false, Fin.sum_univ_zero,
         Matrix.cons_val_zero', Matrix.cons_val_succ',
         Nat.cast_ofNat, Complex.ofReal_ofNat] <;>
-      dsimp only <;>
       norm_num only [Nat.cast_ofNat, Nat.reduceSucc] <;>
       simp only [← mul_assoc] <;>
       (repeat' first | rw [s1] | rw [s2] | rw [s3] | rw [s4] | rw [s5] | rw [s6] | rw [s7]) <;>

@@ -1,0 +1,39 @@
+**Definition 4.1 (Centered coefficients and their Bernstein bounds).**
+For each sign expand the inherited polynomial exactly as
+
+$$
+R(r,p_c+x,v_{c,\sigma}+y)=\sum_{i,j}A_{ij,\sigma}(r)x^iy^j.
+\tag{4.1}
+$$
+
+In terms of O's integer coefficients this means
+
+$$
+A_{ij,\sigma}(r)=
+\sum_{\substack{a\ge0\\b\ge i,\ c\ge j}}c_{abc}
+ \binom bi p_c^{b-i}\binom cj v_{c,\sigma}^{c-j}r^a.
+\tag{4.2}
+$$
+
+Every mixed parameter term is retained. For each closed interval
+$[a,b]$ in Lemma 4.2, write
+
+$$
+\begin{gathered}
+A_{ij,\sigma}(a+(b-a)t)
+ =\sum_{\ell=0}^{18}a_{ij\ell,\sigma}t^\ell,\\
+\beta_{ijk,\sigma}=\sum_{\ell=0}^k
+ a_{ij\ell,\sigma}\frac{\binom k\ell}{\binom{18}\ell},
+\qquad
+e_{k,\sigma}=\sum_{i+j>0}
+ |\beta_{ijk,\sigma}|h_p^ih_v^j.
+\end{gathered}
+\tag{4.3}
+$$
+
+Degree eighteen is used even if a specialized polynomial has lower
+degree. For a parameter pair in $K\times V_\sigma$, the $k$th
+Bernstein coefficient lies in
+$[\beta_{00k,\sigma}-e_{k,\sigma},
+  \beta_{00k,\sigma}+e_{k,\sigma}]$.
+

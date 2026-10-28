@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:47dede307f472645b84dc641deb48ebc8a115aee507eb62a8cda423e52fea542
+  normalized_sha256: sha256:47dede307f472645b84dc641deb48ebc8a115aee507eb62a8cda423e52fea542
+cas_ref: sha256:47dede307f472645b84dc641deb48ebc8a115aee507eb62a8cda423e52fea542
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: At pinned Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679, riemannZeta_ne_zero_of_one_lt_re applied to 2*s supplies precisely nonvanishing under 1 < (2*s).re. D5 mathematical-shape search covered all public/private Lean sources for riemannZeta_ne_zero_of_one_lt_re, riemannZeta_ne_zero_of_one_le_re, half-plane nonvanishing and Euler-product zero-freeness; public real-axis and re>=2 results do not cover this complex domain, while the remaining hits consume the upstream theorem internally.
+    previous_atom_id: c0ea15eb278c7d4dd6578e1b0c068e0a8151631817a544af37634f25dad23875
+    next_atom_id: 908118e3111c0ff31b82676900c1f5fe617b0a9ffd50b849ed27dfc671cfb728

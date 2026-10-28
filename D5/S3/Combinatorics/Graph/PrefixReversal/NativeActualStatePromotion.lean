@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Recover the original P opening on the same actual parent. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateSuppliers
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualPJointPrefix
 import D5.S3.Combinatorics.Graph.Walks.ActualJointHalfCutInventory

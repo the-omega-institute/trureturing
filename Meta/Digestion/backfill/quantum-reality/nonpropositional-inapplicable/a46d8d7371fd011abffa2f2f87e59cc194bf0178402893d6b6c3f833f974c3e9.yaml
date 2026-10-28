@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a46d8d7371fd011abffa2f2f87e59cc194bf0178402893d6b6c3f833f974c3e9
+  normalized_sha256: sha256:a46d8d7371fd011abffa2f2f87e59cc194bf0178402893d6b6c3f833f974c3e9
+cas_ref: sha256:a46d8d7371fd011abffa2f2f87e59cc194bf0178402893d6b6c3f833f974c3e9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该段把不可比较接口作为同时切面的建模候选，并明确保留度量重建义务，没有给出实现定理。
+    previous_atom_id: 937add28409685c8b171b3e1ab5f6ab0f0f0d3347122181162945012ac820dde
+    next_atom_id: 9bb81a0d261934015e23d2a1b7a385dc17cdf0c51f26f4b4865391eb57cf8004

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0aee82ece9ce740d2a917eb6dcdaeb840e745192b0a5cc98fdfefe4a7f2a1e97
+  normalized_sha256: sha256:0aee82ece9ce740d2a917eb6dcdaeb840e745192b0a5cc98fdfefe4a7f2a1e97
+cas_ref: sha256:0aee82ece9ce740d2a917eb6dcdaeb840e745192b0a5cc98fdfefe4a7f2a1e97
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 表格仅列可研究关系与仍需保留的解释差异，明确不是跨传统同义字典，也未断言表中桥梁已实现。
+    previous_atom_id: e5bf9e7256c426aa1819d0d5d4b7b74b895fde69cbc2437bec6565a422b91d57
+    next_atom_id: 8e9e10996d3a4f6e12b0f0b787f549e2109ec1b15ce4e4dbde4c3ba155f42791

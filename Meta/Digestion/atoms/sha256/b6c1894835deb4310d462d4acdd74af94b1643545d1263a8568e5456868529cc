@@ -1,0 +1,50 @@
+**Lemma 132.3 (A conforming fourteen-tetrahedron interpolation).** The
+following facet cycles and their fans triangulate the entire boundary.
+
+| Facet | Cyclic vertex indices | Fan triangles |
+| --- | --- | --- |
+| 0 | (1,2,4,8,6,3) | (1,2,4); (1,4,8); (1,8,6); (1,6,3) |
+| 1 | (0,4,8,7) | (0,4,8); (0,8,7) |
+| 2 | (0,1,2) | (0,1,2) |
+| 3 | (3,5,6) | (3,5,6) |
+| 4 | (0,1,3,5) | (0,1,3); (0,3,5) |
+| 5 | (0,2,4) | (0,2,4) |
+| 6 | (0,5,7) | (0,5,7) |
+| 7 | (5,6,8,7) | (5,6,8); (5,8,7) |
+
+For each of the fourteen listed triangles $(i,j,k)$ use the tetrahedron
+$(C,R_i,R_j,R_k)$. These tetrahedra cover $P$ with disjoint interiors.
+There are continuous nonnegative functions $\mu_0,\ldots,\mu_8$ on
+$P$ satisfying
+
+$$
+\sum_j\mu_j(q)=1,\qquad q=\sum_j\mu_j(q)R_j.
+\tag{132.2}
+$$
+
+**Proof.** The cycles contain exactly the vertices on each facet;
+consecutive edges support their convex polygons. The fans cover those
+polygons with disjoint interiors. Along two facets' common original
+edge the triangulations agree. The fourteen boundary triangles have
+21 edges, each in two triangles. A ray from the strictly interior $C$
+meets the compact convex boundary in exactly one point. Coning each
+triangle to $C$ therefore covers $P$; intersections of tetrahedra are
+cones over common boundary faces, or just $C$. Each determinant is
+nonzero since $C$ is outside its facet plane.
+Assign nodal data $\mu(R_j)=e_j^{\rm vert}$ and
+$\mu(C)=(1/9,\ldots,1/9)$ in $\mathbb R^9$.
+On each tetrahedron solve the nonsingular barycentric system with
+columns $(C,1),(R_i,1),(R_j,1),(R_k,1)$. For barycentric coordinates
+$\alpha_C,\alpha_i,\alpha_j,\alpha_k$, set
+
+$$
+\mu_l=\alpha_C/9+\alpha_i\mathbf1_{l=i}
+                   +\alpha_j\mathbf1_{l=j}+\alpha_k\mathbf1_{l=k}.
+\tag{132.3}
+$$
+
+Inside the tetrahedron these are nonnegative, sum to one and recover
+$q$ by (132.1). On a common face each opposite coordinate vanishes
+and the remaining nodal data agree. Thus formulas agree on every
+overlap and are globally continuous. $\square$
+

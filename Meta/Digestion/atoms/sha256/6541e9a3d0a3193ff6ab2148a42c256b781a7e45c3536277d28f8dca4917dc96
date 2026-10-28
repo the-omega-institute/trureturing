@@ -1,0 +1,11 @@
+**候签定理 15.1（共同测试上的共振分解）。** 若上述迹识别、矩形截断与连续余项合同成立，则存在固定 $\kappa\in C([0,r_*])$，使
+
+$$
+D_2(f_\epsilon)=\int_0^{r_*}H_\epsilon(t)
+\bigl[\mathcal L(t)+\kappa(t)\bigr]dt.
+$$
+
+这里总余项 $\kappa$ 包含 $\kappa_{\rm nl}$、$j=k$ 的 diagonal 族、全部非共振 difference 与 plus 族，以及有限项 $(j,k)=(0,-1)$；它不只表示非线性 resolvent 贡献。
+
+这里是几乎处处及 $L^1$ 的核等式；$\mathcal L(\ell)$ 的定义级数正向发散，不是处处有限函数。积分忽略单点值。算术尺度上的集中项已在第 14 章单独配平；这里剩下的是 locally integrable 的对数共振，不能预先把整个投影修正当成连续核。
+

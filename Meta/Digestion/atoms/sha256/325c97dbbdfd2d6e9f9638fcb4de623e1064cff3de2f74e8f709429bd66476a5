@@ -1,0 +1,14 @@
+### 2.2. The exact actual-output endpoint used in Section 4
+
+[O, Theorem 13.3](FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK.md#13-detector-dead-time-reachable-support-and-actual-reset-rigidity) has the following complete telescope: $D\ge1$; a finite homogeneous complete binary CP instrument on $M_D(\mathbb C)$; a density $\rho_0$ with $\nu=\operatorname{Tr}\Psi(\rho_0)>0$; the actual density $\tau=\Psi(\rho_0)/\nu$; effect $F=\Psi^*(I)$; and first positive value of $\operatorname{Tr}[F\Phi^k(\tau)]$ at $h=D-1$. It concludes
+
+$$
+\operatorname{rank}\tau=\operatorname{rank}F=1,
+\qquad R=R^\vee=H,
+\qquad \Psi(X)=\tau\operatorname{Tr}(FX)\quad(X\in M_D(\mathbb C)).
+$$
+
+The tick Choi rank is one, and every nonzero operator in any tick Kraus representation has rank one and lies in a single operator direction. Any invariant density with positive tick rate is faithful, and is mixed if $D>1$. The correspondence in Corollary 4.4 is the identity on $D,\Phi,\Psi,\rho_0,\nu,\tau,F$, with $h=D-1$ supplied by $\epsilon=0$ and $w_{D-1}>0$. For $w_{D-1}=1$, completeness first forces all earlier weights to zero. The separate $D=2$ late-free conclusion in that corollary does not invoke full reachability without a positive late weight.
+
+The actual-output premise is essential even in the exact supplier. If $F=\lambda|\eta\rangle\langle\eta|$, every tick Kraus matrix has the form $v_i\eta^\dagger$, so $\Psi(X)=(\eta^\dagger X\eta)M$ with $M=\sum_i v_iv_i^\dagger$ and $\operatorname{Tr}M=\lambda$. The positive actual tick identifies $\tau=M/\lambda$. An independently chosen pure seed cannot make this identification. Section 4 quantitatively controls this same calibration, including off-diagonal blocks, and Proposition 5.4 gives the exact counterexample for a substituted seed.
+

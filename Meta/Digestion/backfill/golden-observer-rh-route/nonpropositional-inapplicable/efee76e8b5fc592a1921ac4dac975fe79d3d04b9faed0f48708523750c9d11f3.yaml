@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:efee76e8b5fc592a1921ac4dac975fe79d3d04b9faed0f48708523750c9d11f3
+  normalized_sha256: sha256:efee76e8b5fc592a1921ac4dac975fe79d3d04b9faed0f48708523750c9d11f3
+cas_ref: sha256:efee76e8b5fc592a1921ac4dac975fe79d3d04b9faed0f48708523750c9d11f3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 要求写明与 O-5 的逻辑关系，是待提供材料，未断言该关系。
+    previous_atom_id: 4b955007926a20a2386e7701afd17d03f33a9dbe1fcdb98486b2da2616d2a73d
+    next_atom_id: fdf562c72b57d323e080a6a92742783c9d9f48671a39e1d64ba3aba68310858b

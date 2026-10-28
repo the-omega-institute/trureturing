@@ -11,6 +11,7 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     // Publication, coordinates and verification use this class's private compiler stage.
     [Theory]
     [InlineData("test_streaming")]
+    [InlineData("test_entry_regressions.EntryRegressionTests")]
     [InlineData("test_reuse")]
     [InlineData("test_local_entry")]
     [InlineData("test_guarded_command.GuardedCommandTests")]

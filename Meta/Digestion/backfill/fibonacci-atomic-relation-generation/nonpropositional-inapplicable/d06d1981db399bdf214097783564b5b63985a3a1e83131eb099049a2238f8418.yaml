@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d06d1981db399bdf214097783564b5b63985a3a1e83131eb099049a2238f8418
+  normalized_sha256: sha256:d06d1981db399bdf214097783564b5b63985a3a1e83131eb099049a2238f8418
+cas_ref: sha256:d06d1981db399bdf214097783564b5b63985a3a1e83131eb099049a2238f8418
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为第147节标题，无数学命题。
+    previous_atom_id: 36367811b7d78c12009b1c0892151b5b5a9f6eb1b01417d1323c0bef5b08cfc3
+    next_atom_id: 203a78d14a50c918116c6d939f34bb1e71f9f2b5caf3ea436bef9ccaa10f265c
