@@ -815,4 +815,107 @@ def oneVertexReplacementEquiv (l0 : W) :
 
 end Replacement
 
+
+section HereditaryTransports
+
+/-- Graph isomorphisms act on the actual independence realizations. -/
+def graphIsoHomeomorph {U X : Type*} [Fintype U] [DecidableEq U]
+    [Fintype X] [DecidableEq X] {G : SimpleGraph U} {F : SimpleGraph X}
+    (e : G ≃g F) :
+    Space (independenceComplex G).toPreAbstractSimplicialComplex ≃ₜ
+      Space (independenceComplex F).toPreAbstractSimplicialComplex := by
+  have he : ((independenceComplex G).toPreAbstractSimplicialComplex).map
+      e.toEquiv.toEmbedding = (independenceComplex F).toPreAbstractSimplicialComplex := by
+    rw [← unrestricted, restricted_map G F e.toEquiv.toEmbedding
+      (fun a b => (e.map_adj_iff).symm), ← unrestricted]
+    congr 1
+    funext x
+    apply propext
+    exact ⟨fun _ => trivial, fun _ => ⟨e.symm x, trivial, e.apply_symm_apply x⟩⟩
+  exact (mapHomeomorph _ e.toEquiv.toEmbedding).trans
+    (Homeomorph.setCongr (congrArg realization he))
+
+/-- Fiberwise graph isomorphisms preserve substitution and the base coordinate. -/
+def substitutionFiberIso {V : Type*} {D E : V → Type*} (G : SimpleGraph V)
+    (H : ∀ v, SimpleGraph (D v)) (K : ∀ v, SimpleGraph (E v))
+    (e : ∀ v, H v ≃g K v) : substitution G H ≃g substitution G K where
+  toEquiv := Equiv.sigmaCongrRight (fun v => (e v).toEquiv)
+  map_rel_iff' := by
+    rintro ⟨v, a⟩ ⟨z, b⟩
+    change (substitution G K).Adj ⟨v, e v a⟩ ⟨z, e z b⟩ ↔
+      (substitution G H).Adj ⟨v, a⟩ ⟨z, b⟩
+    by_cases h : v = z
+    · subst z
+      rw [substitution_same, substitution_same]
+      exact (e v).map_adj_iff
+    · rw [substitution_ne G K h, substitution_ne G H h]
+
+/-- Reindex two successive induced subsets by their actual image in the base. -/
+def nestedInduceIso {V : Type*} (G : SimpleGraph V) (B : Set V) (S : Set B) :
+    (G.induce B).induce S ≃g G.induce (Subtype.val '' S) where
+  toEquiv := Equiv.ofBijective
+    (fun x : S => (⟨x.val.val, ⟨x.val, x.property, rfl⟩⟩ : Subtype.val '' S))
+    ⟨fun a b h => Subtype.ext (Subtype.ext
+        (congrArg (fun y : Subtype.val '' S => (y.val : V)) h)), by
+      rintro ⟨x, b, hb, rfl⟩
+      exact ⟨⟨b, hb⟩, rfl⟩⟩
+  map_rel_iff' := Iff.rfl
+
+private def univInduceIso {V : Type*} (G : SimpleGraph V) : G.induce Set.univ ≃g G where
+  toEquiv := {
+    toFun := Subtype.val
+    invFun := fun v => ⟨v, Set.mem_univ v⟩
+    left_inv := fun _ => rfl
+    right_inv := fun _ => rfl }
+  map_rel_iff' := Iff.rfl
+
+/-- The all-singleton substitution is the original graph, including a singleton base. -/
+def singletonSubstitutionIso {V : Type*} (G : SimpleGraph V) :
+    substitution G (fun _ => (⊥ : SimpleGraph PUnit)) ≃g G where
+  toEquiv := {
+    toFun := Sigma.fst
+    invFun := fun v => ⟨v, PUnit.unit⟩
+    left_inv := by rintro ⟨v, a⟩; cases a; rfl
+    right_inv := fun _ => rfl }
+  map_rel_iff' := by
+    rintro ⟨v, a⟩ ⟨z, b⟩
+    simp [substitution]
+
+/-- The empty left simplicial complex is an augmented join unit, by pure right faces. -/
+def emptyLeftJoinHomeomorph {U X : Type*} [Fintype U] [DecidableEq U]
+    [Fintype X] [DecidableEq X] (M : PreAbstractSimplicialComplex U)
+    (N : PreAbstractSimplicialComplex X) (hM : ∀ s, s ∉ M) :
+    Space N ≃ₜ Space (simplicialJoin M N) := by
+  have he : simplicialJoin M N = N.map (Function.Embedding.inr : X ↪ U ⊕ X) := by
+    ext s
+    constructor
+    · rintro ⟨hn, hl, hr⟩
+      have hl0 : s.toLeft = ∅ := hl.resolve_right (hM _)
+      have hs : s.toRight.image Sum.inr = s := by
+        ext x
+        cases x with
+        | inl a =>
+          have ha : Sum.inl a ∉ s := by
+            intro h
+            have : a ∈ s.toLeft := Finset.mem_toLeft.mpr h
+            simpa [hl0] using this
+          simp [ha]
+        | inr a => simp
+      have hrn : s.toRight.Nonempty := Finset.image_nonempty.mp (hs.symm ▸ hn)
+      have hrm : s.toRight ∈ N := hr.resolve_left (fun h => hrn.ne_empty h)
+      exact ⟨s.toRight, hrm, hs⟩
+    · rintro ⟨s, hs, rfl⟩
+      refine ⟨(N.isRelLowerSet_faces hs).1.image _, Or.inl ?_, Or.inr ?_⟩
+      · ext a
+        simp
+      · have hr : (s.image (Function.Embedding.inr : X ↪ U ⊕ X)).toRight = s := by
+          ext a
+          simp
+        exact hr.symm ▸ hs
+  exact (mapHomeomorph N Function.Embedding.inr).trans
+    (Homeomorph.setCongr (congrArg realization he.symm))
+
+end HereditaryTransports
+
+
 end D5.S3.Geometry.FiniteGraphVertexSubstitution
