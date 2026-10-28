@@ -67,7 +67,8 @@ def registration :
       (@simplex_volume) (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.SimplexVolume.unit
   realizationName :=
-    `Reg.D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.SimplexVolume.source_registration
+    .str `Reg.D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.SimplexVolume
+      "source_registration"
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -130,7 +131,8 @@ def registration :
   unitName :=
     `Reg.D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.SimplexSumBoundaryNull.unit
   realizationName :=
-    `Reg.D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.SimplexSumBoundaryNull.source_registration
+    .str `Reg.D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound.SimplexSumBoundaryNull
+      "source_registration"
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
