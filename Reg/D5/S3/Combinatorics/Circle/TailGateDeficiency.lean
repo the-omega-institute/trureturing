@@ -70,6 +70,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro r
+  cases r
   let w : Input := ⟨3, 1, 0, 0, 0, 0, [], [], [], [], []⟩
   refine ⟨(), w, { w with A := [0] }, ?_⟩
   decide
