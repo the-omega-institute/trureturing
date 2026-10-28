@@ -195,46 +195,46 @@ namespace SpinHermitian
 open _root_.D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (spin)
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Qubit) (fun _ => Bool)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => Star ℂ) (fun _ => Qubit → Prop)
 
-/-- Read the Hermitian predicate at the observed qubit matrix. -/
+/-- Read the Hermitian relation at the source scalar conjugation. -/
 def actual : Realization signature :=
-  realize signature
-    (fun _ _ X => @decide X.IsHermitian (Classical.propDecidable _)) (fun e => nomatch e)
+  realize signature (fun _ _ conjugation => @Matrix.IsHermitian ℂ (Fin 2) conjugation)
+    (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature
-    (fun _ _ X => @decide (¬ X.IsHermitian) (Classical.propDecidable _))
+  realize signature (fun _ _ conjugation X => ¬ @Matrix.IsHermitian ℂ (Fin 2) conjugation X)
     (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ c : Fin 3 → ℝ, R.readout () () (spin c) = true
+  Law R := ∀ c : Fin 3 → ℝ, R.readout () () (inferInstance : Star ℂ) (spin c)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact (@of_decide_eq_true _ (Classical.propDecidable _) (h 0)) (spin_hermitian 0)
+  exact h 0 (spin_hermitian 0)
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, Matrix.single 0 1 1, ?_⟩
+  let X : Qubit := fun _ _ => Complex.I
+  have hnot : ¬ X.IsHermitian := by
+    intro h
+    have he := congrArg (fun M : Qubit => M 0 0) h.eq
+    change star Complex.I = Complex.I at he
+    have him := congrArg Complex.im he
+    norm_num [Complex.star_def] at him
+  have hyes : @Matrix.IsHermitian ℂ (Fin 2) ⟨id⟩ X := rfl
+  refine ⟨(), (inferInstance : Star ℂ), ⟨id⟩, ?_⟩
   intro h
-  have hbad : (Matrix.single 0 1 1 : Qubit).IsHermitian :=
-    of_decide_eq_true (by simpa [actual, realize] using h.symm)
-  have he := congrArg (fun X : Qubit => X 0 1) hbad.eq
-  norm_num [Matrix.conjTranspose_apply, Matrix.single_apply] at he
+  have he := congrFun h X
+  change X.IsHermitian = @Matrix.IsHermitian ℂ (Fin 2) ⟨id⟩ X at he
+  exact hnot (Eq.mpr he hyes)
 
 def source_registration : Registration arena (type_of% @spin_hermitian) where
   actual := actual
-  bridge := by
-    constructor
-    · intro h c
-      exact @decide_eq_true _ (Classical.propDecidable _) (h c)
-    · intro h c
-      exact @of_decide_eq_true _ (Classical.propDecidable _) (h c)
-  variation := ⟨by
-    intro c
-    exact @decide_eq_true _ (Classical.propDecidable _) (spin_hermitian c), rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨@spin_hermitian, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := dependence
@@ -256,7 +256,8 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ _ X => @decide X.IsHermitian (Classical.propDecidable _)) (fun e => nomatch e))
+    (fun _ _ conjugation => @Matrix.IsHermitian ℂ (Fin 2) conjugation)
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -266,11 +267,11 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body"]
+      path := #["body", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
