@@ -4,8 +4,7 @@
    mirror-E: none(waiver:symbolic-structural-theorems)
    anchors: []
    utility: none
-   digest: Two twisted returns on one actual expanded history reduce exactly to a signed gcd return, with the noncommutative compatibility obstruction retained.
- -/
+   digest: Two twisted returns on one actual expanded history reduce exactly to a signed gcd return, with the noncommutative compatibility obstruction retained. -/
 
 import D5.S3.ConceptDynamics.Coding.TwistedPeriodicHistories
 import Mathlib.Data.Int.GCD

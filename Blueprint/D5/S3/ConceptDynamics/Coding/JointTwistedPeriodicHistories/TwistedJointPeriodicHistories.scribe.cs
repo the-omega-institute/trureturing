@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.JointTwistedPeriodicHistories;
 
 internal sealed class TwistedJointPeriodicHistoriesDocument : IScribeDocumentDefinition
 {
