@@ -55,7 +55,7 @@ private theorem positiveDependence : ObservationalDependence signature.{u} posit
     intro h
     have he := h.diag_nonneg (i := ⟨()⟩)
     norm_num at he
-  simp [positiveActual, realize, hn]
+  simp [positiveActual, realize, hn, Matrix.PosSemidef.zero]
 
 namespace Certificate
 private abbrev arena : Arena where
@@ -138,14 +138,15 @@ private abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hg : ((-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)-(-2)).PosSemidef := by
-    norm_num
+    convert Matrix.PosSemidef.one using 1 <;> noncomm_ring
   have hh := h (n := ULift.{u} Unit) (-1) (-2) 1 rfl hg Matrix.isHermitian_one (by simp)
   obtain ⟨hd2, hd3⟩ := identity_cubic_trace_derivatives
     (-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) (-2) 1 Matrix.isHermitian_one
   dsimp only at hh hd2 hd3
   rw [hd2, hd3] at hh
   norm_num [coefficient2, coefficient3, traceCoefficient2, traceCoefficient3,
-    Matrix.trace, Matrix.mul_apply, Fintype.sum_unique] at hh
+    Matrix.trace, Matrix.mul_apply, Matrix.ofNat_apply, Matrix.natCast_apply,
+    Fintype.sum_unique] at hh
 
 def evidence : Registration arena.{u} (type_of% (@projection_cubic_compatibility.{u})) where
   actual := positiveActual.{u}
@@ -206,21 +207,22 @@ private abbrev arena : Arena where
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n] (X A J : Matrix n n ℂ),
     R.readout () ⟨n, inferInstance, inferInstance⟩ (X+A) = true →
     (X-A).PosSemidef → J.IsHermitian → J*J = 1 →
-    let f := fun t : ℝ => (Matrix.trace
+    let f : ℝ → ℝ := fun t : ℝ => (Matrix.trace
       ((CFC.rpow (1+t • J) (-(1 : ℝ)/3) * (X+t • A) *
         CFC.rpow (1+t • J) (-(1 : ℝ)/3))^3)).re
     0 ≤ iteratedDeriv 2 f 0 ∧ |iteratedDeriv 3 f 0| ≤ 5*iteratedDeriv 2 f 0
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hg : ((-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)-(-2)).PosSemidef := by
-    norm_num
+    convert Matrix.PosSemidef.one using 1 <;> noncomm_ring
   have hh := h (n := ULift.{u} Unit) (-1) (-2) 1 rfl hg Matrix.isHermitian_one (by simp)
   obtain ⟨hd2, hd3⟩ := identity_cubic_trace_derivatives
     (-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) (-2) 1 Matrix.isHermitian_one
   dsimp only at hh hd2 hd3
   rw [hd2, hd3] at hh
   norm_num [coefficient2, coefficient3, traceCoefficient2, traceCoefficient3,
-    Matrix.trace, Matrix.mul_apply, Fintype.sum_unique] at hh
+    Matrix.trace, Matrix.mul_apply, Matrix.ofNat_apply, Matrix.natCast_apply,
+    Fintype.sum_unique] at hh
 
 def evidence : Registration arena.{u} (type_of% (@involution_cubic_compatibility.{u})) where
   actual := positiveActual.{u}

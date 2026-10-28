@@ -12,7 +12,7 @@ internal sealed class HsfProjectionCubicDocument : IScribeDocumentDefinition
         Blocks(
             Entry("traceLocalizer", "A positive trace localizer",
                 "For finite complex square matrices A,B,q, traceLocalizer(A,B,q) is "
-                + "Re Tr(A q* B q). The consumed positivity proof assumes A and B are PSD, "
+                + "Re Tr(A q* B q). Its positivity proof assumes A and B are PSD, "
                 + "uses the square root of A and PSD congruence by q sqrt(A), then applies "
                 + "cyclicity and nonnegativity of a PSD trace. It allows singular weights "
                 + "and arbitrary q; the product A q* B q is not asserted PSD.", DescribeRole.Definition),
@@ -30,7 +30,7 @@ internal sealed class HsfProjectionCubicDocument : IScribeDocumentDefinition
                 + "81 Lambda(L,G,H-(20/81)PH-(43/81)PG); "
                 + "(1382/81) Lambda(L,G,PH-(187/691)PG); "
                 + "(11003/691) Lambda(L,G,PG). All weights are positive. "
-                + "The consumed positivity theorem assumes H,G PSD and P Hermitian idempotent.",
+                + "Nonnegativity follows when H,G are PSD and P is Hermitian idempotent.",
                 DescribeRole.Definition),
             Entry("projection_certificate", "The exact actual coefficient identity",
                 "For every finite index type, Hermitian complex matrices H,G,P with P*P=P, "
