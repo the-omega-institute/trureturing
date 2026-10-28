@@ -46,9 +46,9 @@ abbrev arena : Arena where
     F.readout () (Occ D × Occ D) (fun z =>
       ‖q1^level D z.1 * q2^level D z.2 *
         (_root_.D5.S3.VertexAlgebra.LatticeSectorIntertwiner.canonical D a (-a+b) u
-          (r+(level D z.2 : ℤ)-(level D z.1 : ℤ)) (CanonicalOccupationSewing.b D z.2)).coeff z.1 *
+          (r+(level D z.2 : ℤ)-(level D z.1 : ℤ)) (_root_.D5.S3.VertexAlgebra.CanonicalOccupationSewing.b D z.2)).coeff z.1 *
         (_root_.D5.S3.VertexAlgebra.LatticeSectorIntertwiner.canonical D (-a) b v
-          (s+(level D z.1 : ℤ)-(level D z.2 : ℤ)) (CanonicalOccupationSewing.b D z.1)).coeff z.2‖)
+          (s+(level D z.1 : ℤ)-(level D z.2 : ℤ)) (_root_.D5.S3.VertexAlgebra.CanonicalOccupationSewing.b D z.1)).coeff z.2‖)
 
 private theorem source_bridge :
     (type_of% (@canonical_two_vertex_loop_summable)) ↔ arena.Law actual := Iff.rfl

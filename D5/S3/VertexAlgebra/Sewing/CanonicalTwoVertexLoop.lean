@@ -7,12 +7,12 @@
    digest: Joint absolute convergence of the literal fixed-sector two-vertex occupation loop. -/
 
 import D5.S3.VertexAlgebra.Sewing.CanonicalTwoCutScalar
-import Mathlib.Algebra.BigOperators.Ring.Finset
 import Batteries.Tactic.OpenPrivate
+
+/-! Factorial contraction of the two original mixed occupation kernels. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 2000000
 
 namespace D5.S3.VertexAlgebra.CanonicalTwoVertexLoop
 
@@ -48,7 +48,7 @@ private theorem envelope_mono (D : LatticeData) {A B : ℝ} (hA : 0 ≤ A) (hAB 
   classical
   rw [factorialEnvelope_prod D A d d.support (by rfl),
     factorialEnvelope_prod D B d d.support (by rfl)]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro x hx; positivity
   · intro x hx
     exact div_le_div_of_nonneg_right
@@ -94,11 +94,15 @@ private theorem envelope_convolution (D : LatticeData) (A B : ℝ) (d : Occ D) :
         (B / (x.2+1 : ℝ)) ^ n / (n.factorial : ℝ) *
           ((A / (x.2+1 : ℝ)) ^ (d x-n) / ((d x-n).factorial : ℝ)) := by
       rw [hi, Finset.finsupp, Finset.sum_map, Finset.prod_sum]
-      apply Finset.sum_congr rfl
-      intro f hf
-      apply Finset.prod_congr rfl
-      intro x hx
-      simp [Finsupp.indicator_of_mem hx]
+      simp only [Function.Embedding.coeFn_mk]
+      apply Finset.sum_congr
+      · ext f
+        simp only [Finset.mem_pi]
+      · intro f hf
+        conv_lhs => rw [← Finset.prod_attach]
+        apply Finset.prod_congr rfl
+        intro x hx
+        simp [Finsupp.indicator_of_mem x.2]
     _ = factorialEnvelope D (B+A) d := by
       rw [factorialEnvelope_prod D (B+A) d d.support (by rfl)]
       apply Finset.prod_congr rfl
@@ -113,7 +117,8 @@ private theorem envelope_convolution (D : LatticeData) (A B : ℝ) (d : Occ D) :
             ((d x-n).factorial : ℝ) = ((d x).factorial : ℝ) := by
           exact_mod_cast Nat.choose_mul_factorial_mul_factorial hle
         field_simp
-        nlinarith
+        rw [← hfact]
+        ring
       rw [Finset.sum_congr rfl hn, ← Finset.sum_div, ← add_pow, ← add_div]
 
 private theorem degree_le_level (D : LatticeData) (d : Occ D) : d.degree ≤ level D d := by
@@ -128,7 +133,7 @@ private theorem degree_le_level (D : LatticeData) (d : Occ D) : d.degree ≤ lev
 input radius is damped. No factor involving T enters its contraction ratio. -/
 private theorem mixed_schur (D : LatticeData) (A T B ρ : ℝ)
     (hA : 0 ≤ A) (hT : 0 ≤ T) (hB : 0 < B) (hρ : 0 ≤ ρ) (hρ1 : ρ < 1)
-    (hclose : ρ*B+A ≤ B) :
+    (hclose : ρ * B + A ≤ B) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ d e : Occ D,
       ρ ^ level D e * mixedEnvelope D A T d e * factorialEnvelope D B e ≤
         C * factorialEnvelope D B d := by
@@ -155,16 +160,16 @@ private theorem mixed_schur (D : LatticeData) (A T B ρ : ℝ)
     rw [hd,he] at hc
     simp only [one_pow, one_mul, translationEnvelope, chooseKernel_eq D e u hue] at hc
     have hl : level D e = level D u + level D (e-u) := by
-      rw [← he]
-      simp only [level, LatticePositiveEnergy.oscillatorEnergy, map_add]
+      have hh : level D (u+(e-u)) = level D u + level D (e-u) := by
+        simp only [level, LatticePositiveEnergy.oscillatorEnergy, map_add]
+      exact (congrArg (level D) he).symm.trans hh
     have hb : f (e-u) ≤ C := hf.le_tsum (e-u) (fun _ _ => hf0 _)
     calc
       _ = (ρ ^ level D u * factorialEnvelope D B u * factorialEnvelope D A (d-u)) *
           f (e-u) := by
         rw [hl,pow_add]
         dsimp [f]
-        rw [← hc]
-        ring
+        linear_combination (ρ ^ level D u * ρ ^ level D (e-u)) * hc
       _ ≤ (ρ ^ u.degree * factorialEnvelope D B u * factorialEnvelope D A (d-u)) * C := by
         apply mul_le_mul
         · exact mul_le_mul_of_nonneg_right
@@ -173,7 +178,8 @@ private theorem mixed_schur (D : LatticeData) (A T B ρ : ℝ)
             (factorialEnvelope_nonneg D A hA _)
         · exact hb
         · exact hf0 _
-        · positivity
+        · exact mul_nonneg (mul_nonneg (pow_nonneg hρ _)
+            (factorialEnvelope_nonneg D B hB.le _)) (factorialEnvelope_nonneg D A hA _)
       _ = _ := by rw [factorialEnvelope_mul]; ring
   calc
     _ = ∑ u ∈ S, ρ ^ level D e * (overlapBinomial D e u * T^(e-u).degree *
@@ -217,7 +223,7 @@ private theorem cyclic_envelope_summable (D : LatticeData) (A T : ℝ)
         (by linarith) hT e d)) (envelope_pos D B hB d).le)
       (mul_nonneg hC (envelope_pos D B hB d).le)
     have hp := mul_pos (envelope_pos D B hB d) (envelope_pos D B hB e)
-    apply (mul_le_mul_right hp).mp
+    apply (mul_le_mul_iff_left₀ hp).mp
     convert hh using 1 <;> ring
   have hs (r : ℝ) (hr : 0 ≤ r) (hrρ : r < ρ) :
       Summable (fun d : Occ D => (r/ρ)^level D d) := by
@@ -227,14 +233,14 @@ private theorem cyclic_envelope_summable (D : LatticeData) (A T : ℝ)
     have hh' : ‖((r/ρ : ℝ) : ℂ)‖ < 1 := by simpa using hh
     simpa [signedIntegerMonomial, integerEnergy, level,
       LatticePositiveEnergy.oscillatorEnergy, norm_mul, norm_pow,
-      abs_of_nonneg (div_nonneg hr hρ.le)] using
+      abs_of_nonneg hr, abs_of_pos hρ] using
       summable_norm_signed_integer_occupations (Fin D.rank) hh'
   have hs1 := hs r1 hr1 h1ρ
   have hs2 := hs r2 hr2 h2ρ
   have hsum := (hs1.mul_of_nonneg hs2 (fun _ => by positivity)
     (fun _ => by positivity)).mul_left (C*C)
-  refine hsum.of_nonneg_of_le (fun z => by
-    exact mul_nonneg (mul_nonneg (mul_nonneg (by positivity)
+  refine hsum.of_nonneg_of_le (fun z : Occ D × Occ D => by
+    exact mul_nonneg (mul_nonneg (by positivity)
       (mixedEnvelope_nonneg D A T (by linarith) hT _ _))
       (mixedEnvelope_nonneg D A T (by linarith) hT _ _)) ?_
   rintro ⟨d,e⟩
@@ -242,7 +248,7 @@ private theorem cyclic_envelope_summable (D : LatticeData) (A T : ℝ)
     _ = ((r1/ρ)^level D d * (r2/ρ)^level D e) *
         (ρ^level D d * ρ^level D e * mixedEnvelope D A T d e *
           mixedEnvelope D A T e d) := by
-      rw [div_pow,div_pow]
+      simp only [div_pow]
       field_simp
     _ ≤ ((r1/ρ)^level D d * (r2/ρ)^level D e) * (C*C) :=
       mul_le_mul_of_nonneg_left (hcycle d e) (by positivity)
@@ -275,6 +281,7 @@ private theorem word_loop_summable (D : LatticeData) (a b : Charge D)
   let J := mixedRadius D ω + mixedRadius D ν
   have hC : 0 ≤ C := mul_nonneg (mixedConstant_nonneg D a (-a+b) ω A T hA hT)
     (mixedConstant_nonneg D (-a) b ν A T hA hT)
+  have hCω := mixedConstant_nonneg D a (-a+b) ω A T hA hT
   let ρ1 := (1+‖q1‖)/2
   let ρ2 := (1+‖q2‖)/2
   obtain ⟨C1,hC1,hb1⟩ := radial_polynomial_bound J ‖q1‖ (norm_nonneg _) hq1
@@ -303,7 +310,8 @@ private theorem word_loop_summable (D : LatticeData) (a b : Charge D)
           mixedEnvelope D A T e d) :=
         mul_le_mul (mixed_descendant_bound D a (-a+b) A T hA hT ha ht ω _ d e)
           (mixed_descendant_bound D (-a) b A T hA hT hna hnt ν _ e d)
-          (norm_nonneg _) (by positivity)
+          (norm_nonneg _) (mul_nonneg (mul_nonneg hCω
+            (pow_nonneg (by dsimp [mixedEnergy]; positivity) _)) hM)
       _ = C * mixedEnergy D d e ^ J * mixedEnvelope D A T d e *
           mixedEnvelope D A T e d := by
         have he : mixedEnergy D e d = mixedEnergy D d e := by dsimp [mixedEnergy]; ring
@@ -344,9 +352,11 @@ theorem canonical_two_vertex_loop_summable (D : LatticeData) (a b : Charge D)
     Summable (fun z : Occ D × Occ D =>
       ‖q1^level D z.1 * q2^level D z.2 *
         (canonical D a (-a+b) u
-          (r+(level D z.2 : ℤ)-(level D z.1 : ℤ)) (CanonicalOccupationSewing.b D z.2)).coeff z.1 *
+          (r+(level D z.2 : ℤ)-(level D z.1 : ℤ))
+          (CanonicalOccupationSewing.b D z.2)).coeff z.1 *
         (canonical D (-a) b v
-          (s+(level D z.1 : ℤ)-(level D z.2 : ℤ)) (CanonicalOccupationSewing.b D z.1)).coeff z.2‖) := by
+          (s+(level D z.1 : ℤ)-(level D z.2 : ℤ))
+          (CanonicalOccupationSewing.b D z.1)).coeff z.2‖) := by
   classical
   have hs : Summable (fun z : Occ D × Occ D =>
       ∑ U ∈ u.support, ∑ V ∈ v.support,
@@ -361,13 +371,15 @@ theorem canonical_two_vertex_loop_summable (D : LatticeData) (a b : Charge D)
     apply summable_sum
     intro V hV
     simpa only [norm_mul] using
-      (word_loop_summable D a b (occurrences D U) (occurrences D V) r s q1 q2 hq1 hq2).
-        mul_left ‖u.coeff U * v.coeff V‖
+      (word_loop_summable D a b (occurrences D U) (occurrences D V) r s q1 q2 hq1 hq2).mul_left
+        ‖u.coeff U * v.coeff V‖
   refine hs.of_nonneg_of_le (fun _ => norm_nonneg _) ?_
   rintro ⟨d,e⟩
   have heq : q1^level D d * q2^level D e *
-      (canonical D a (-a+b) u (r+(level D e : ℤ)-(level D d : ℤ)) (CanonicalOccupationSewing.b D e)).coeff d *
-      (canonical D (-a) b v (s+(level D d : ℤ)-(level D e : ℤ)) (CanonicalOccupationSewing.b D d)).coeff e =
+      (canonical D a (-a+b) u (r+(level D e : ℤ)-(level D d : ℤ))
+        (CanonicalOccupationSewing.b D e)).coeff d *
+      (canonical D (-a) b v (s+(level D d : ℤ)-(level D e : ℤ))
+        (CanonicalOccupationSewing.b D d)).coeff e =
       ∑ U ∈ u.support, ∑ V ∈ v.support,
         (u.coeff U * v.coeff V) *
           (q1^level D d * q2^level D e *
@@ -376,6 +388,7 @@ theorem canonical_two_vertex_loop_summable (D : LatticeData) (a b : Charge D)
             wordCoeff D (-a) b (occurrences D V)
               (s+(level D d : ℤ)-(level D e : ℤ)) e d) := by
     simp only [canonical_basis_input_expansion, Finset.sum_mul, Finset.mul_sum]
+    rw [Finset.sum_comm]
     apply Finset.sum_congr rfl
     intro U hU
     apply Finset.sum_congr rfl
