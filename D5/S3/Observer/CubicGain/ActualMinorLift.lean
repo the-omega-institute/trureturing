@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Observer/CubicGain/ActualMinorLift
    mirror-E: none(waiver:actual-minor-lift-continuation)
-   anchors: [mathlib/module/Mathlib.RingTheory.Polynomial.Content]
+   anchors: [mathlib/module/Mathlib.RingTheory.Polynomial.GaussLemma]
    utility: none
    digest: Actual integer determinant polynomials and primitive gcd ratio bridge for the selected source minor. -/
 

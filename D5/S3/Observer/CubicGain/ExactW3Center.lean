@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Observer/CubicGain/ExactW3Center
    mirror-E: none(waiver:exact-w3-center-continuation)
-   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Pow.Real]
+   anchors: [mathlib/module/Mathlib.Analysis.Calculus.Deriv.MeanValue]
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Observer/CubicGain/ExactW3Center.exactW3_parent; premises=D5/S3/Observer/CubicGain/RegularParentChart.analytic_original_parent_chart
    digest: Exact rational root isolation and determinantal lift enclosures place the algebraic critical center in the original parent chart. -/
 

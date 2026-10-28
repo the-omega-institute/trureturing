@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Observer/CubicGain/RegularReadJacobian
    mirror-E: none(waiver:actual-original-read-local-inverse)
-   anchors: [mathlib/module/Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff]
+   anchors: [mathlib/module/Mathlib.Analysis.Calculus.FDeriv.Pow]
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Observer/CubicGain/RegularReadInverse.actual_local_source_inverse; premises=D5/S3/Observer/CubicGain/RegularParentChart.strip_denominator
    digest: The actual fifth and eighth read pair has an invertible derivative throughout a source strip. -/
 
