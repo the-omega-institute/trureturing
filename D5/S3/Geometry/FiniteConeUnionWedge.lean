@@ -6,6 +6,7 @@
    utility: none
    digest: A finite union along a nonempty cone is equivalent to the actual quotient wedge. -/
 import D5.S3.Geometry.FiniteConeCollapse
+import D5.S3.Geometry.SingletonRetractionBasedInverse
 import Mathlib.Analysis.Convex.Topology
 import Mathlib.Topology.Homeomorph.Quotient
 
@@ -140,6 +141,51 @@ private def wedgeEquiv {X Y X' Y' : Type*}
   invFun := wedgeMap f' g' hf' hg'
   left_inv := ⟨(wedgeInverseHomotopy f g f' g' hf hg hf' hg' H K).symm⟩
   right_inv := ⟨(wedgeInverseHomotopy f' g' f g hf' hg' hf hg H' K').symm⟩
+
+/-- Based wedge replacement, using the native quotient maps and their existing homotopies. -/
+def basedWedgeEquivalence {X Y X' Y' : Type*}
+    [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace X'] [TopologicalSpace Y']
+    {a : X} {b : Y} {a' : X'} {b' : Y'}
+    (E : SingletonRetractionBasedInverse.BasedEquivalence a a')
+    (F : SingletonRetractionBasedInverse.BasedEquivalence b b') :
+    SingletonRetractionBasedInverse.BasedEquivalence
+      (Quotient.mk (subsetSetoid (wedgePoints a b)) (Sum.inl a))
+      (Quotient.mk (subsetSetoid (wedgePoints a' b')) (Sum.inl a')) := by
+  let H : (ContinuousMap.id (Wedge a b)).HomotopyRel
+      ((wedgeMap E.backward F.backward E.backward_point F.backward_point).comp
+        (wedgeMap E.forward F.forward E.forward_point F.forward_point))
+      {Quotient.mk _ (Sum.inl a)} :=
+    { wedgeInverseHomotopy E.forward F.forward E.backward F.backward
+        E.forward_point F.forward_point E.backward_point F.backward_point
+        E.left.symm F.left.symm with
+      prop' := by
+        intro t z hz
+        have hz' : z = Quotient.mk _ (Sum.inl a) := hz
+        subst z
+        change Quotient.mk _ (Sum.inl (E.left.symm (t, a))) = Quotient.mk _ (Sum.inl a)
+        rw [E.left.symm.eq_fst t (by simp)]
+        rfl }
+  let K : (ContinuousMap.id (Wedge a' b')).HomotopyRel
+      ((wedgeMap E.forward F.forward E.forward_point F.forward_point).comp
+        (wedgeMap E.backward F.backward E.backward_point F.backward_point))
+      {Quotient.mk _ (Sum.inl a')} :=
+    { wedgeInverseHomotopy E.backward F.backward E.forward F.forward
+        E.backward_point F.backward_point E.forward_point F.forward_point
+        E.right.symm F.right.symm with
+      prop' := by
+        intro t z hz
+        have hz' : z = Quotient.mk _ (Sum.inl a') := hz
+        subst z
+        change Quotient.mk _ (Sum.inl (E.right.symm (t, a'))) = Quotient.mk _ (Sum.inl a')
+        rw [E.right.symm.eq_fst t (by simp)]
+        rfl }
+  exact {
+    forward := wedgeMap E.forward F.forward E.forward_point F.forward_point
+    backward := wedgeMap E.backward F.backward E.backward_point F.backward_point
+    forward_point := congrArg (fun x => Quotient.mk _ (Sum.inl x)) E.forward_point
+    backward_point := congrArg (fun x => Quotient.mk _ (Sum.inl x)) E.backward_point
+    left := H.symm
+    right := K.symm }
 
 section Cover
 
@@ -445,6 +491,13 @@ def homotopyEquiv :
     P.localWedgeEquiv.symm
 
 end ConeUnion
+
+/-- The actual coordinate inclusion induced by a finite subcomplex inclusion. -/
+def realizationInclusion {M N : PreAbstractSimplicialComplex V} (h : M ≤ N) :
+    C(↥(realization M), ↥(realization N)) :=
+  ⟨fun x => ⟨x.val, realization_mono h x.property⟩,
+    continuous_subtype_val.subtype_mk _⟩
+
 end FiniteRealizations
 
 end D5.S3.Geometry.FiniteConeUnionWedge

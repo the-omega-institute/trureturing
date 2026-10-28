@@ -285,4 +285,8 @@ def joinHomeomorph (hM : Nonempty (Space M)) (hN : Nonempty (Space N)) :
 #print axioms representative_eq_iff
 #print axioms joinHomeomorph
 
+/-- Compactness of the exact finite-coordinate realization, for finite gluing consumers. -/
+def realizationCompactSpace (M : PreAbstractSimplicialComplex V) : CompactSpace (Space M) :=
+  isCompact_iff_compactSpace.mp (compact_realization M)
+
 end D5.S3.Geometry.FiniteSimplicialJoin
