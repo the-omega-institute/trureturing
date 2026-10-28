@@ -3128,6 +3128,93 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+<a id="v9-labels"></a>
+
+## 112. Actual calibrated labels and the erased-channel recovery limit
+
+Use exactly the qutrit code B, matrices U,W and orthonormal basis (xi,e,f) of (72.1). In this basis W=diag(1,1,-1); put P_-=(I_3-W)/2=ff^dagger. This section distinguishes abstract all-input channel statements from the original source's restricted preparation and control permissions.
+
+**Theorem 112.1 (Erasure loses a distinguishable pair; labels retain a random-unitary word).** The code compression of the nonselective original instrument is
+
+$$
+\mathcal T(X)=\tfrac12(UXU^\dagger+UWXWU^\dagger)
+ =U(P_+XP_++P_-XP_-)U^\dagger.
+$$
+
+For every qutrit recovery CPTP map R there is a sign s in {+,-} with
+
+$$
+D\bigl((\mathcal R\mathcal T)(\rho_s),\rho_s\bigr)\ge\tfrac12,
+\qquad
+\|\mathcal R\mathcal T-\operatorname{id}_3\|_\diamond\ge1,
+\quad
+\rho_\pm=\left|\frac{e\pm f}{\sqrt2}\right\rangle
+          \left\langle\frac{e\pm f}{\sqrt2}\right|.
+$$
+
+In contrast, the actual labelled branches of (72.6) obey
+
+$$
+\begin{aligned}
+K_0B&=BU/\sqrt2,&K_1B&=BUW/\sqrt2,\\
+A_0B&=Bg_0/\sqrt2,&A_1B&=Bg_1/\sqrt2,\\
+g_0&=Ue^{i\theta W},&g_1&=UW e^{i\theta W}=g_0W.
+\end{aligned}
+$$
+
+Each label has probability 1/2 for every encoded input, also when entangled with a reference; the conditional system-reference output is the corresponding unitary g_j on the system. Every actual length-n labelled word has probability 2^-n and tracks its calibrated product g_(j_n)...g_(j_1).
+
+Proof. The first two identities follow by multiplying the actual five-by-three columns in (72.1). Substituting them in (72.6) and using exp(i theta W)=cos(theta)I+i sin(theta)W gives the two g_j. Each is unitary, so its branch effect is I_3/2, including with an untouched reference. Summing the two branches cancels the cross terms and gives the stated dephasing channel, independently of theta. The orthogonal pure states rho_+ and rho_- both map to U(ee^dagger+ff^dagger)U^dagger/2. Any recovery has the same output sigma on them. Since D(rho_+,rho_-)=1, the triangle inequality forces max_s D(sigma,rho_s)>=1/2. The diamond supremum includes this state input and is unhalved, proving its lower bound. The word assertion follows by composition of the branch intertwiners. QED.
+
+These test states define a full-channel recovery obstruction; the theorem does not grant their preparation within the original K_d source or the sole-preparation installation of Sections 91 and 101. Retaining actual labels is distinct from erasing them. It supplies neither a deterministic choice of the next label nor conditional inverse gates. If calibrated conditional inverses were separately supplied, the labelled unitary branches would have an abstract exact recovery; this is an enlarged menu. Moreover U xi=W xi=xi, hence g_j xi=e^(i theta)xi. Every such word preserves the line C xi and its orthogonal complement, so even freely selecting those words would not yield universal qutrit control. These original qutrit branches are not the independently driven five-mode rotations of Coherent Reconstruction Section 8.
+
+<a id="v9-full-completion"></a>
+
+## 113. Every faithful full ten-dimensional completion has a total-leakage subspace
+
+Keep Definition 106.1 and its *full-five-input* ready-column condition. Use its subspace notation
+
+$$
+R=\operatorname{im}B,\quad \mathcal T=R\otimes R_{\rm env},\quad
+\mathcal C=H\otimes\operatorname{span}\{f_0\},\quad \mathcal M=\mathcal VH.
+$$
+
+Thus $\dim H=5$, $\dim R_{\rm env}=2$, $\dim\mathcal T=6$, and $\dim\mathcal C=\dim\mathcal M=5$. The subspace $\mathcal T$ is distinct from Definition 106.1's completion identification $T:H\to\mathcal M^\perp$.
+
+**Theorem 113.1 (At least two dimensions of wholly leaking code-record input for every completion).** For every unitary $\mathsf J$ on $H\otimes R_{\rm env}$ satisfying
+
+$$
+\mathsf J(x\otimes f_0)=\mathcal Vx\qquad\text{for every }x\in H,
+$$
+
+there is a subspace $L\subseteq R\otimes\operatorname{span}\{f_1\}$, of complex dimension at least two, such that
+
+$$
+\mathsf J L\subseteq\mathcal T^\perp,
+\qquad
+\|( (I_H-BB^\dagger)\otimes I_2)\mathsf J\psi\|^2=1
+\quad(\psi\in L,\ \|\psi\|=1).
+$$
+
+In particular no such completion preserves the entire six-dimensional code-record space $\mathcal T$.
+
+Proof. Both original full-domain $K_j$, and therefore both $A_j$, have ranges contained in $R$ by (72.1) and (72.6). Consequently the isometry $\mathcal V$ maps *all five* input dimensions into $\mathcal T$: $\mathcal M\subseteq\mathcal T$. Put
+
+$$
+\mathcal Q=\mathsf J^{-1}(\mathcal T^\perp).
+$$
+
+Unitarity gives $\dim\mathcal Q=\dim\mathcal T^\perp=4$. For $q\in\mathcal Q$ and $c\in\mathcal C$, the images $\mathsf Jq$ and $\mathsf Jc$ are orthogonal, since the former lies in $\mathcal T^\perp$ and the latter in $\mathcal M\subseteq\mathcal T$. Hence $\mathcal Q\subseteq\mathcal C^\perp=H\otimes\operatorname{span}\{f_1\}$, which has dimension five. In that same five-dimensional space, $R\otimes\operatorname{span}\{f_1\}$ has dimension three. The dimension formula gives
+
+$$
+\dim\bigl(\mathcal Q\cap(R\otimes\operatorname{span}\{f_1\})\bigr)
+ \ge4+3-5=2.
+$$
+
+Take this intersection as $L$. Its image lies in $\mathcal T^\perp=R^\perp\otimes R_{\rm env}$, exactly the range of the leakage projector in the theorem. The displayed probability follows by normalization. QED.
+
+For mixed states supported in $L$ the same probability is one, also with any untouched reference, because the operator identity $(BB^\dagger\otimes I_2)\mathsf J|_L=0$ tensors with every identity. This is a statement about the full interaction on that input subspace, not a claim that the original sole preparation and schedules reach every vector of L. It leaves every actual ready column, retained record, original history weight and both terminal outcomes of (107.2) and (107.7) intact. A unitary dilation specified only on the prepared three-dimensional code slice inside a six-dimensional model has a different domain and does not satisfy the all-five-input hypothesis; it cannot replace the ten-dimensional completion here. The conclusion holds for every faithful completion, not just the particular one in Section 109, and grants no inverse interaction or record control.
+
 ## 114. Joint retention identification with an unknown full return completion
 
 **Definition 114.1 (Shared source and the full original probability family).**
@@ -3542,5 +3629,1126 @@ postterminal state is prescribed. The origin and acquisition
 premises distinguished in §110, and comparisons with different
 source parameters or different leakage families, are outside this
 exact observation quotient.
+
+## 追加锚（本行以下为增补区）
+
+
+## 116. A finite nuisance-independent modulus for the original weighted rows
+
+**Definition 116.1 (The fixed lift and its actual probability rows).**
+Fix one allowed source $\mathfrak s$ of Definition 114.1. Regard
+
+$$
+\mathscr V=\operatorname{Herm}_3\oplus\operatorname{Herm}_3
+             \oplus M_3(\mathbb C)
+$$
+
+as a real vector space. For $Q\in U(3)$ and
+$(X,Y,Z)\in\mathscr V$, put
+
+$$
+\Phi_Q(X,Y,Z)=Q^\dagger XQ+W(Q^\dagger YQ)W
+ +W(Q^\dagger ZQ)+(Q^\dagger Z^\dagger Q)W .
+\tag{116.1}
+$$
+
+For every actual prefix $u_i$ and every finite actual intermediate
+history $w$, let $Q_w=C_wV_0$ and $a_w=2^{-k(w)}$ as in
+Definition 107.1, and define the real row
+
+$$
+q_{i,w}(X,Y,Z)=\frac{a_w}{2}
+                 \operatorname{Tr}\!\left[r_i\Phi_{Q_w}(X,Y,Z)\right].
+\tag{116.2}
+$$
+
+The factor $a_w/2$ and the subnormalised $r_i$ are part of the row.
+For Hermitian $X,Y$, the matrix $\Phi_Q(X,Y,Z)$ is Hermitian, so each
+$q_{i,w}$ is real-valued on $\mathscr V$.
+Thus these rows are functionals of the original unconditioned
+probabilities, rather than of normalised prefix states or a new
+weighted experiment. The orbit-pairing intermediary used below is the
+observability principle recorded in §114 and in D'Alessandro,
+[*On Quantum State Observability and Measurement*, §2, Theorem 1](https://arxiv.org/html/quant-ph/0307127v1);
+the finite-dimensional row selection is the same dual-span principle
+used in Coherent Reconstruction, Definition 28.1 and Application 28.2.
+
+**Lemma 116.2 (The fixed common kernel).**
+The common kernel of all functionals in (116.2), with $i$ ranging over
+all nine prefixes and $w$ over all finite actual histories, is
+
+$$
+\mathscr K
+ =\{(xI_3,-xI_3,\mathrm i yI_3):x,y\in\mathbb R\}.
+\tag{116.3}
+$$
+
+In particular this kernel is fixed by the source controls and does not
+depend on either nuisance vector $h$ or $h'$.
+
+*Proof.* If every row vanishes, the real span of the nine $r_i$ and the
+positivity of $a_w$ imply $\Phi_{Q_w}(X,Y,Z)=0$ for every actual $w$.
+The positive-word conjugations supplied by V Theorem 95.1 are dense in
+the required unitary conjugation orbit. Since (116.1) is continuous in
+$Q$, it follows that $\Phi_Q(X,Y,Z)=0$ for every $Q\in U(3)$. Conversely,
+that identity plainly makes every actual row vanish.
+
+Let $P_+=(I_3+W)/2$ and $P_-=(I_3-W)/2$. The $P_+$ and $P_-$ diagonal
+compressions of $\Phi_Q=0$, with $Q$ varying, show that every unit
+vector has zero quadratic form for each of
+$X+Y+Z+Z^\dagger$ and $X+Y-Z-Z^\dagger$. Hence
+
+$$
+X+Y=0,\qquad Z^\dagger=-Z.
+\tag{116.4}
+$$
+
+The $P_+$, $P_-$ off-diagonal compression then gives
+
+$$
+P_+Q^\dagger(X+Z)QP_-=0\qquad(Q\in U(3)).
+\tag{116.5}
+$$
+
+Every orthonormal pair is the image of a fixed plus/minus pair under
+some $Q$. Therefore $\langle x,(X+Z)y\rangle=0$ whenever $x\perp y$.
+Applying this to an orthonormal basis and to pairwise sums shows that
+$X+Z=kI_3$ for some $k\in\mathbb C$. Taking Hermitian and
+skew-Hermitian parts, using (116.4), yields
+$X=(\operatorname{Re}k)I_3$ and
+$Z=\mathrm i(\operatorname{Im}k)I_3$, with $Y=-X$. The converse is
+immediate because $W$ commutes with scalar matrices. $\square$
+
+**Lemma 116.3 (A source-fixed traceless functional with a positive factor).**
+Let $e=a_+/\sqrt{5/8}$. Choose a unit vector $v$ orthogonal to both
+$a_+$ and $t$, and set
+
+$$
+F=ee^\dagger-vv^\dagger,\qquad \ell(M)=\operatorname{Tr}(FM).
+\tag{116.6}
+$$
+
+Then $\operatorname{Tr}F=0$, $Ft=0$, $\ell(D)=5/8$, and for every
+$\|h\|\le1$,
+
+$$
+\ell(K_h)=\mathrm i sc\,q_h,\qquad
+q_h=\frac58-\ell(H_h)\ge
+m:=\frac58-b=\frac{9-4\sqrt2}{24}>0.
+\tag{116.7}
+$$
+
+The same $F$ works for all nuisance vectors in the closed ball.
+
+*Proof.* The source identities in (106.3) give
+$a_+\perp f$, $t=\eta\alpha f\ne0$, and
+$D=a_+a_+^\dagger+\alpha^2ff^\dagger$ with
+$\|a_+\|^2=5/8$. Thus $e,v$ are orthonormal, both orthogonal to $f$,
+and (116.6) gives the trace and $Ft$ assertions. It also gives
+$\ell(D)=5/8$. Since $H_h=bhh^\dagger$ is positive and $F\le I_3$,
+$\ell(H_h)\le\operatorname{Tr}H_h=b\|h\|^2\le b$. Finally,
+$\ell(T_h)=\ell(T_h^\dagger)=0$ because $Ft=0$. Applying $\ell$ to
+(114.2) proves (116.7), and the displayed value of $m$ is positive. $\square$
+
+**Theorem 116.4 (Source-specific finite quantitative retention bound).**
+For every fixed allowed source $\mathfrak s$, there are an integer
+$L_{\mathfrak s}\ge0$ and a real $C_{\mathfrak s}>0$ such that, for
+all
+$(\gamma,h),(\gamma',h')$ with $|\gamma|,|\gamma'|\le1$ and
+$\|h\|,\|h'\|\le1$,
+
+$$
+|\gamma-\gamma'|
+\le C_{\mathfrak s}
+\max_{1\le i\le9,\ |w|\le L_{\mathfrak s},\ b\in\{0,1\}}
+\left|p_{\gamma,h}(u_i,w,b)-p_{\gamma',h'}(u_i,w,b)\right|.
+\tag{116.8}
+$$
+
+Here $w$ ranges over every actual intermediate history in the installed
+menu, with its original labels and weights. The constants depend on
+$\mathfrak s$ but on neither hypothesis. No operation, preparation,
+reset, record rotation, selected label or sampling service is added.
+
+*Proof.* For two hypotheses define the lift differences
+
+$$
+X=A_h-A_{h'},\qquad Y=B_h-B_{h'},\qquad
+Z=\gamma K_h-\gamma'K_{h'}.
+\tag{116.9}
+$$
+
+By (114.3), the outcome-$1$ probability difference at $(i,w)$ is
+exactly
+
+$$
+\Delta p_{i,w,1}=q_{i,w}(X,Y,Z).
+\tag{116.10}
+$$
+
+The outcome-$0$ difference is its negative. Lemma 116.2 says that the
+rows $q_{i,w}$ have common kernel $\mathscr K$. In a finite-dimensional
+real vector space, their span is therefore the annihilator
+$\mathscr K^\circ$. The two functionals
+
+$$
+\lambda(X,Y,Z)=\ell(X+Y),\qquad
+\mu(X,Y,Z)=\ell(Z)
+\tag{116.11}
+$$
+
+annihilate (116.3): $X+Y=0$ there and
+$\mu(xI_3,-xI_3,\mathrm i yI_3)=\mathrm i y\operatorname{Tr}F=0$.
+Consequently each is a finite linear combination of actual rows. Choose
+finite sets of actual row indices $J_\lambda,J_\mu$ and coefficients
+$d_j\in\mathbb R$, $e_j\in\mathbb C$ such that
+
+$$
+\lambda=\sum_{j\in J_\lambda}d_jq_j,\qquad
+\mu=\sum_{j\in J_\mu}e_jq_j.
+\tag{116.12}
+$$
+
+The complex coefficients in the second identity represent the real and
+imaginary parts of the complex-valued functional $\mu$. Let
+$L_{\mathfrak s}$ be the greatest length of a history occurring in
+these two finite sets, with $L_{\mathfrak s}=0$ if all selected
+histories are empty. In what follows, $\max_j$ ranges over the union
+of the two selected row sets. Put
+
+$$
+C_{\mathfrak s}=\frac{1}{m}
+ \left(\sum_{j\in J_\lambda}|d_j|
+       +\frac{1}{|sc|}\sum_{j\in J_\mu}|e_j|\right)
+=\frac{24}{9-4\sqrt2}
+ \left(\sum_{j\in J_\lambda}|d_j|
+       +\frac{1}{|sc|}\sum_{j\in J_\mu}|e_j|\right)>0.
+\tag{116.13}
+$$
+
+The positivity follows because the nonzero functional $\lambda$ or
+$\mu$ has a nonzero representation and $m,|sc|>0$. From (114.2) and
+(116.7),
+
+$$
+\frac{\ell(Z)}{\mathrm i sc}
+ =\gamma q_h-\gamma' q_{h'}
+ =(\gamma-\gamma')q_h-\gamma'\ell(H_h-H_{h'}).
+\tag{116.14}
+$$
+
+Since $A_h+B_h=D+H_h$, one has
+$H_h-H_{h'}=X+Y$. Rearranging (116.14) gives
+$q_h(\gamma-\gamma')=\ell(Z)/(\mathrm i sc)+\gamma'\ell(H_h-H_{h'})$.
+Therefore, using $|\gamma'|\le1$,
+
+$$
+\begin{aligned}
+q_h|\gamma-\gamma'|
+&\le \frac{|\mu(X,Y,Z)|}{|sc|}+|\lambda(X,Y,Z)|\\
+&\le \left(\frac1{|sc|}\sum_{j\in J_\mu}|e_j|
+          +\sum_{j\in J_\lambda}|d_j|\right)
+       \max_j|\Delta p_j|.
+\end{aligned}
+\tag{116.15}
+$$
+
+The lower bound $q_h\ge m$ and the definition (116.13) give (116.8)
+for outcome $1$. Including the outcome $0$ coordinates leaves the right
+side unchanged because their differences are the negatives in
+(116.10), and enlarging from the selected rows to every actual history
+of length at most $L_{\mathfrak s}$ can only increase the maximum. All
+selected factors $a_w/2$ and all nine original $r_i$ remain in the
+rows, so the comparison is on the original unconditioned law. $\square$
+
+Theorem 116.4 is a source-specific result derived from the exact
+observation-fiber law (114.3), the source's nine weighted prefixes and
+its positive-word density. The general finite-dimensional
+anti-Lipschitz principle is only the row-selection step here; it is not
+a separate generic closure or semialgebraic error theorem. The source
+constants are not evaluated numerically, and no uniformity in a changing
+source $\mathfrak s$ is asserted.
+
+## 117. Same-source finite-error comparison
+
+**Corollary 117.1 (Finite original-law modulus and separation).**
+Fix an allowed source $\mathfrak s$ and take the $L_{\mathfrak s}$ and
+$C_{\mathfrak s}$ supplied by Theorem 116.4. For two admissible paired
+parameters in the closed domain
+
+$$
+\mathcal P=\{(\gamma,h):|\gamma|\le1,\ \|h\|\le1\},
+\tag{117.1}
+$$
+
+define the finite original-law discrepancy
+
+$$
+\Delta_{\mathfrak s}((\gamma,h),(\gamma',h'))
+ =\max_{1\le i\le9,\ |w|\le L_{\mathfrak s},\ b\in\{0,1\}}
+ \left|p_{\gamma,h}(u_i,w,b)-p_{\gamma',h'}(u_i,w,b)\right|.
+\tag{117.2}
+$$
+
+Then
+
+$$
+|\gamma-\gamma'|\le C_{\mathfrak s}\Delta_{\mathfrak s},
+\qquad
+\Delta_{\mathfrak s}\ge C_{\mathfrak s}^{-1}|\gamma-\gamma'|.
+\tag{117.3}
+$$
+
+Equivalently, if every listed original probability differs by at most
+$\varepsilon$, then $|\gamma-\gamma'|\le C_{\mathfrak s}\varepsilon$;
+if $|\gamma-\gamma'|>C_{\mathfrak s}\varepsilon$, at least one listed
+coordinate differs by more than $\varepsilon$. These statements compare
+exact laws on the same source and do not assert a sampling, acquisition,
+or statistical certification procedure.
+
+*Proof.* This is (116.8) with the discrepancy named in (117.2), followed
+by division by the positive $C_{\mathfrak s}$. The domain (117.1) is
+exactly the paired closed-ball domain of Definition 114.1, so no further
+hypothesis is introduced. $\square$
+
+**Application 117.2 (The finite comparison retains the original return contract).**
+For a fixed source and any two full completions realizing $h$ and $h'$,
+Corollary 117.1 applies to the actual unconditioned terminal masses
+from the original nine prefix events and the selected finite original
+intermediate histories. Every coordinate retains its original prefix
+mass, every return remains the specified single forward return, and the
+full ten-dimensional successor is still the one in (107.2). The
+inequality is therefore a comparison of the source's existing
+probability family; it does not turn a mathematical finite row set into
+a new control or a promise of physical access. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 118. A full-domain normal form for the original return laws
+
+**Definition 118.1 (Paired comparison and the source normal form).**
+Fix an allowed source $\mathfrak s$ of Definition 114.1, including its
+original $d,\theta,N$, nine subnormalised prefix events $r_i$, clocks,
+menu and labels. The parameter domain is the entire closed set
+$\mathcal P$ in (114.1). Each hypothesis uses one full completion
+throughout all histories; the two hypotheses may use different
+completions. Retain the source vector $t\ne0$, matrix $D$ and positive
+constant $b$ of (106.3). Write
+
+$$
+\begin{gathered}
+c=\cos\theta,\qquad s=\sin\theta,\qquad \tau=\|t\|>0,\\
+\mathsf H_h=hh^\dagger,\qquad
+\mathsf S_h=\mathrm i(ht^\dagger-th^\dagger),\qquad z_{\gamma,h}=\gamma h,\\
+\delta\gamma=\gamma-\gamma',\qquad \delta h=h-h',\qquad
+H_\delta=\mathsf H_h-\mathsf H_{h'},\qquad
+S_\delta=\mathsf S_h-\mathsf S_{h'},\qquad
+G=\max(|\gamma|,|\gamma'|),\\
+\mathcal D((\gamma,h),(\gamma',h'))
+ =|\delta\gamma|+\|H_\delta\|_{\rm HS}
+                  +\|S_\delta\|_{\rm HS}+G\|\delta h\|,\\
+\mathcal N(\gamma,h)=(\gamma,\mathsf H_h,\mathsf S_h,z_{\gamma,h}),\\
+d_{\mathcal N}((\gamma,h),(\gamma',h'))
+ =|\delta\gamma|+\|H_\delta\|_{\rm HS}+\|S_\delta\|_{\rm HS}
+                         +\|z_{\gamma,h}-z_{\gamma',h'}\|.
+\end{gathered}
+\tag{118.1}
+$$
+
+Here $\mathsf H_h$ is unscaled: the matrix called $H_h$ in (114.2)
+is $b\mathsf H_h$. All vector norms are Euclidean. The symbol
+$\mathcal D$ denotes a comparison of parameter pairs; metric
+statements below concern the normal-form distance $d_{\mathcal N}$.
+For an integer $L\ge0$, define
+
+$$
+\begin{aligned}
+\Delta_L&=
+ \max_{1\le i\le9,\ |w|\le L,\ \beta\in\{0,1\}}
+ \left|p_{\gamma,h}(u_i,w,\beta)
+             -p_{\gamma',h'}(u_i,w,\beta)\right|,\\
+\Delta_{\rm all}&=
+ \sup_{(i,w,\beta)\in\mathcal I_{\mathfrak s}}
+ \left|p_{\gamma,h}(u_i,w,\beta)
+             -p_{\gamma',h'}(u_i,w,\beta)\right|.
+\end{aligned}
+\tag{118.2}
+$$
+
+Only actual histories occur in these expressions. Their probabilities
+are exactly (114.3), including $a_w/2$ and the original prefix masses.
+
+The use of a rank-one matrix lift and its matrix-norm distance is an
+established intermediate: Balan and Zou,
+[*On Lipschitz Analysis and Lipschitz Synthesis for the Phase Retrieval
+Problem*, §2.2, Theorems 2.3–2.4](https://arxiv.org/html/1506.02092v1),
+compare fixed frame-intensity measurements with distances between
+$hh^\dagger$ on a global-phase quotient. In (118.1) the additional
+source-fixed $\mathsf S_h$ and retention-weighted $\gamma h$ have their
+own roles. The quantitative return statement below uses these coordinates
+and the actual row kernel of Lemma 116.2, rather than an assumption of
+phase retrievability for a new measurement frame.
+
+**Proposition 118.2 (Finite original-law decoder for the normal form).**
+For each fixed allowed source there is one finite length $L_{\mathfrak s}$
+such that its original probability vector
+
+$$
+P_{\mathfrak s}(\gamma,h)
+ =\bigl(p_{\gamma,h}(u_i,w,\beta)\bigr)_
+             {1\le i\le9,\ |w|\le L_{\mathfrak s},\ \beta\in\{0,1\}}
+\tag{118.3}
+$$
+
+determines $\mathcal N(\gamma,h)$ by the following fixed linear
+decoders followed by explicit algebraic operations. Choose once the
+unit vector $v$ of (116.6), and put
+
+$$
+\Pi_v M=M-(v^\dagger Mv)I_3,\qquad p_*=1+\sqrt3.
+\tag{118.4}
+$$
+
+There are source-fixed real linear maps from the outcome-$1$ probability
+differences relative to $P_{\mathfrak s}(0,0)$ which return precisely
+
+$$
+\mathsf H_h,\qquad \mathsf S_h,\qquad
+V_{\gamma,h}:=\Pi_v(\gamma K_h).
+\tag{118.5}
+$$
+
+Let $F,\ell,m$ be those of Lemma 116.3. From these matrices one obtains
+
+$$
+\begin{aligned}
+q_h&=\frac58-b\ell(\mathsf H_h)\ge m>0,\\
+\gamma&=\frac{\ell(V_{\gamma,h})}{\mathrm i sc\,q_h},\\
+R_h&=s^2\mathsf S_h+sc(D-b\mathsf H_h),\\
+z_{\gamma,h}
+ &=\frac{(V_{\gamma,h}-\mathrm i\gamma\Pi_vR_h)t}{\tau^2}.
+\end{aligned}
+\tag{118.6}
+$$
+
+Moreover there is a source-dependent $B_{\mathfrak s}>0$ such that
+for every two parameters in $\mathcal P$, with
+$Z=\gamma K_h-\gamma'K_{h'}$,
+
+$$
+\|H_\delta\|_{\rm HS}+\|S_\delta\|_{\rm HS}
+                         +\|\Pi_v Z\|_{\rm HS}
+ \le B_{\mathfrak s}\Delta_{L_{\mathfrak s}}.
+\tag{118.7}
+$$
+
+*Proof.* On the real lift $\mathscr V$ of Definition 116.1 consider
+the matrix-valued linear maps
+
+$$
+\begin{aligned}
+\mathfrak H(X,Y,Z)&=(X+Y)/b,\\
+\mathfrak S(X,Y,Z)&=
+       \Pi_v\bigl(X-s^2(X+Y)\bigr)/(sc),\\
+\mathfrak V(X,Y,Z)&=\Pi_v Z.
+\end{aligned}
+\tag{118.8}
+$$
+
+Every real matrix coordinate of these maps annihilates the common
+kernel (116.3): $X+Y=0$ there, and $\Pi_v$ annihilates every complex
+scalar matrix. Reuse the dual-span consequence of Lemma 116.2 used in
+(116.12). Each such coordinate is a finite real linear combination of
+the actual rows (116.2). Fix the union of these finitely many rows,
+together with the retention rows already supplying Theorem 116.4.
+Take $L_{\mathfrak s}$ to be at least every length in this union and
+the length in that theorem. This choice precedes both hypotheses.
+The finite coefficients and matrix norms give a constant
+$B_{\mathfrak s}>0$ bounding the sum of the three output norms by
+the largest input-row magnitude. Enlarging to all rows of length at
+most $L_{\mathfrak s}$ preserves that bound. This is the existing
+finite-dimensional row step; it does not change a probability weight.
+
+For the physical lift differences in (116.9), (114.2) gives
+
+$$
+X=s^2bH_\delta+scS_\delta,\qquad
+Y=c^2bH_\delta-scS_\delta.
+\tag{118.9}
+$$
+
+Since $v\perp t$, one has $v^\dagger S_\delta v=0$ and hence
+$\Pi_v S_\delta=S_\delta$. Thus (118.8) returns
+$(H_\delta,S_\delta,\Pi_v Z)$. Equation (116.10) identifies its
+inputs as the original probability differences, proving (118.7).
+The same maps applied relative to $(0,0)$ return (118.5). The
+reference probabilities here are the known values of (114.3) at
+$(0,0)$; their subtraction requires no reference preparation.
+
+The source identities yield the useful exact block expression
+
+$$
+K_h=ht^\dagger+\mathrm i R_h,
+\qquad R_h=s^2\mathsf S_h+sc(D-b\mathsf H_h).
+\tag{118.10}
+$$
+
+Indeed $\mathrm i\mathsf S_h=th^\dagger-ht^\dagger$, so the
+first two terms of $ht^\dagger+\mathrm i s^2\mathsf S_h$ are
+$c^2ht^\dagger+s^2th^\dagger$, as in (114.2). The functional
+$\ell$ annihilates scalar matrices. Hence
+$\ell(V_{\gamma,h})=\ell(\gamma K_h)=\mathrm i sc\gamma q_h$
+by (116.7), proving the first two lines of (118.6).
+Finally $\Pi_v(ht^\dagger)=ht^\dagger$, again because $v\perp t$.
+Applying $\Pi_v$ to $\gamma$ times (118.10) therefore gives
+
+$$
+V_{\gamma,h}
+ =z_{\gamma,h}t^\dagger+\mathrm i\gamma\Pi_vR_h.
+\tag{118.11}
+$$
+
+Right multiplication by $t/\tau^2$ proves the last line of (118.6).
+The denominator $q_h$ is bounded below on the whole ball and $sc\ne0$;
+in particular the normal-form decoder has no division by $\gamma$.
+The orbit-pairing intermediate underlying Lemma 116.2 is D'Alessandro,
+[*On Quantum State Observability and Measurement*, §2, Theorem 1](https://arxiv.org/html/quant-ph/0307127v1).
+Here the source-specific content is the recovery (118.5)–(118.11)
+from that kernel and the original return blocks. $\square$
+
+**Theorem 118.3 (Two-sided comparison on the full paired closed domain).**
+For each allowed source $\mathfrak s$, fix the length in Proposition
+118.2. There are positive constants $c_{\mathfrak s},C_{\mathfrak s}$,
+depending only on that source, such that every two parameters in
+$\mathcal P$ satisfy
+
+$$
+c_{\mathfrak s}\mathcal D
+ \le \Delta_{\rm finite}:=\Delta_{L_{\mathfrak s}}
+ \le \Delta_{\rm all}
+ \le C_{\mathfrak s}\mathcal D.
+\tag{118.12}
+$$
+
+The same finite length and constants apply at $\gamma=0$, on both
+parameter boundaries, and to different full completions within the
+declared source. They require no additional operation or label.
+
+*Proof.* First the two comparison quantities obey
+
+$$
+\tfrac12\mathcal D\le d_{\mathcal N}\le2\mathcal D.
+\tag{118.13}
+$$
+
+For the upper estimate in (118.13), expand
+$\gamma h-\gamma'h'=\gamma\delta h+\delta\gamma h'$ and use
+$\|h'\|\le1$. For the reverse estimate, if $|\gamma|=G$ use
+$\gamma\delta h=(\gamma h-\gamma'h')-\delta\gamma h'$.
+If $|\gamma'|=G$, use instead
+$\gamma'\delta h=(\gamma h-\gamma'h')-\delta\gamma h$.
+In either case
+
+$$
+G\|\delta h\|\le\|\gamma h-\gamma'h'\|+|\delta\gamma|,
+\tag{118.14}
+$$
+
+which proves (118.13), including $G=0$.
+
+Let $\kappa_{\mathfrak s}>0$ be the retention constant of Theorem
+116.4 for its already included rows, so that
+$|\delta\gamma|\le\kappa_{\mathfrak s}\Delta_{\rm finite}$.
+The elementary bound
+$\|\Pi_v M\|_{\rm HS}\le p_*\|M\|_{\rm HS}$ and
+$\|\mathsf S_h\|_{\rm HS}\le2\tau$ give the source-fixed estimate
+
+$$
+\|\Pi_vR_h\|_{\rm HS}\le
+R_*:=p_*\bigl[2s^2\tau+|sc|(\|D\|_{\rm HS}+b)\bigr].
+\tag{118.15}
+$$
+
+Subtracting (118.11) for the two parameters gives
+
+$$
+\begin{aligned}
+(\gamma h-\gamma'h')t^\dagger
+ &=\Pi_v Z-\mathrm i\delta\gamma\Pi_vR_h
+                       -\mathrm i\gamma'\Pi_v(R_h-R_{h'}),\\
+R_h-R_{h'}&=s^2S_\delta-scbH_\delta.
+\end{aligned}
+\tag{118.16}
+$$
+
+The Hilbert–Schmidt norm of the left side is
+$\tau\|\gamma h-\gamma'h'\|$. Equations (118.7), (118.15),
+$|\gamma'|\le1$ and the triangle inequality consequently imply
+
+$$
+\begin{gathered}
+\|\gamma h-\gamma'h'\|\le Z_*\Delta_{\rm finite},\\
+Z_*:=\frac{[1+p_*(s^2+|sc|b)]B_{\mathfrak s}
+                           +\kappa_{\mathfrak s}R_*}{\tau},\\
+d_{\mathcal N}\le
+(\kappa_{\mathfrak s}+B_{\mathfrak s}+Z_*)\Delta_{\rm finite}.
+\end{gathered}
+\tag{118.17}
+$$
+
+Together with (118.13), this proves the first inequality in (118.12)
+with, for example,
+
+$$
+c_{\mathfrak s}
+ =\bigl[2(\kappa_{\mathfrak s}+B_{\mathfrak s}+Z_*)\bigr]^{-1}>0.
+\tag{118.18}
+$$
+
+For the upper bound keep an arbitrary actual history, of any length.
+Equation (114.2) and the unit-ball bound give
+
+$$
+\begin{aligned}
+\|K_h\|_{\rm HS}&\le
+ K_*:=\tau+|sc|(\|D\|_{\rm HS}+b),\\
+\|K_h-K_{h'}\|_{\rm HS}
+ &\le\tau\|\delta h\|+|sc|b\|H_\delta\|_{\rm HS},\\
+\|X\|_{\rm HS}+\|Y\|_{\rm HS}
+ &\le b\|H_\delta\|_{\rm HS}+2|sc|\|S_\delta\|_{\rm HS},\\
+\|Z\|_{\rm HS}
+ &\le K_*|\delta\gamma|+\tau G\|\delta h\|
+                               +|sc|b\|H_\delta\|_{\rm HS}.
+\end{aligned}
+\tag{118.19}
+$$
+
+For the second line use the two cross terms in (114.2): their norms
+sum to at most $(s^2+c^2)\tau\|\delta h\|$. The last line follows
+by writing $Z=\delta\gamma K_h+\gamma'(K_h-K_{h'})$.
+Set
+
+$$
+\begin{gathered}
+R_{\mathfrak s}=\max_{1\le i\le9}\|r_i\|_{\rm HS}>0,\\
+M_* =\max\{2K_*,\ b(1+2|sc|),\ 2|sc|,\ 2\tau\},\qquad
+C_{\mathfrak s}=\tfrac12 R_{\mathfrak s}M_*>0.
+\end{gathered}
+\tag{118.20}
+$$
+
+Unitary invariance of the Hilbert–Schmidt norm and Cauchy–Schwarz for
+the trace pairing, applied to (116.1)–(116.2), give
+
+$$
+\begin{aligned}
+|\Delta p_{i,w,1}|
+&\le\frac{a_w}{2}\|r_i\|_{\rm HS}
+       (\|X\|_{\rm HS}+\|Y\|_{\rm HS}+2\|Z\|_{\rm HS})\\
+&\le C_{\mathfrak s}\mathcal D.
+\end{aligned}
+\tag{118.21}
+$$
+
+Here $0<a_w\le1$; its original value remains in the first line.
+The outcome-$0$ difference is the negative of the outcome-$1$
+difference, since its total mass $a_w\operatorname{Tr}r_i$ is fixed.
+Taking the supremum proves the last inequality of (118.12).
+The finite set is contained in the full family, which proves the middle
+inequality. No limit history was substituted for an actual row in the
+lower bound, and no prefix was conditioned upon. $\square$
+
+**Corollary 118.4 (A metric on the exact law quotient).**
+On $\mathcal P$, equality of the normal forms $\mathcal N$ is
+equivalent to equality of the finite laws (118.3), and to equality of
+the full laws (114.1). Consequently $d_{\mathcal N}$ is a well-defined
+metric on that exact observation quotient, with
+
+$$
+\frac{c_{\mathfrak s}}2d_{\mathcal N}
+ \le\Delta_{\rm finite}\le\Delta_{\rm all}
+ \le2C_{\mathfrak s}d_{\mathcal N}.
+\tag{118.22}
+$$
+
+*Proof.* Equality of finite laws makes (118.12) give $\mathcal D=0$,
+and then (118.13) gives equality of normal forms. Equality of normal
+forms conversely gives $\mathcal D=0$ by (118.13) and hence equality
+of all laws by (118.12). Equality of all laws includes equality of the
+finite ones. The sum of the four coordinate norm distances is a metric
+on the normal-form image, so pulling it back to the quotient gives the
+claimed metric and its triangle inequality. The constants in (118.22)
+follow from (118.12)–(118.13). The rank-one matrix distance alone in
+the phase-retrieval result cited in Definition 118.1 does not encode
+these additional source and retention coordinates. $\square$
+
+## 119. Exact inversion and sharp degeneration of completion recovery
+
+**Theorem 119.1 (Finite inversion and the global weighted stability bound).**
+Fix a source and the finite length of Theorem 118.3. On its exact
+finite-law image, the terminal-relevant completion vector at every
+nonzero retention value is exactly
+
+$$
+h=\frac{z_{\gamma,h}}{\gamma},
+\tag{119.1}
+$$
+
+where both quantities on the right are decoded by (118.6) from the
+same finite raw probabilities. For every two hypotheses in the full
+closed domain, including zero retention, one has
+
+$$
+|\gamma-\gamma'|+G\|h-h'\|
+       \le c_{\mathfrak s}^{-1}\Delta_{\rm finite}.
+\tag{119.2}
+$$
+
+In particular, if all those original probabilities differ by at most
+$\varepsilon$, then the left side is at most
+$c_{\mathfrak s}^{-1}\varepsilon$.
+
+*Proof.* Proposition 118.2 recovers $\gamma$ and $z_{\gamma,h}$
+without dividing by $\gamma$. At a nonzero value their defining
+identity $z_{\gamma,h}=\gamma h$ gives (119.1). The two terms on
+the left of (119.2) are terms of $\mathcal D$, so (118.12) proves
+the inequality. The last statement is the definition of
+$\Delta_{\rm finite}$. These formulas concern the exact law image;
+they prescribe no decoder or statistical guarantee for an arbitrary
+vector outside that image. They identify $h$, not the full unitary
+$\mathsf J$. $\square$
+
+**Theorem 119.2 (The best completion inverse constants have order
+$1/\rho$).**
+For $0<\rho\le1$ let
+
+$$
+\mathcal P_\rho=\{(\gamma,h)\in\mathcal P:|\gamma|\ge\rho\}.
+\tag{119.3}
+$$
+
+Define $\kappa^{\rm finite}_{\mathfrak s}(\rho)$ to be the infimum
+of constants $K\ge0$ for which
+$\|h-h'\|\le K\Delta_{\rm finite}$ for all paired parameters in
+$\mathcal P_\rho$, and define
+$\kappa^{\rm all}_{\mathfrak s}(\rho)$ with $\Delta_{\rm all}$
+in its place. Then
+
+$$
+\frac1{C_{\mathfrak s}\rho}
+ \le\kappa^{\rm all}_{\mathfrak s}(\rho)
+ \le\kappa^{\rm finite}_{\mathfrak s}(\rho)
+ \le\frac1{c_{\mathfrak s}\rho}.
+\tag{119.4}
+$$
+
+Thus both best constants are $\Theta_{\mathfrak s}(1/\rho)$ as
+$\rho\downarrow0$. The lower bound is witnessed by two fixed actual
+full completions, each independent of $\rho$, with the original
+source, histories and single forward-return contract.
+
+*Proof.* On $\mathcal P_\rho$ one has $G\ge\rho$, so (119.2)
+proves the last inequality in (119.4). Since
+$\Delta_{\rm finite}\le\Delta_{\rm all}$, every valid finite-law
+constant is also a valid full-law constant, proving the middle one.
+
+For the matching pairs set once and for all
+
+$$
+h_+=\frac{t}{2\tau},\qquad h_-=-\frac{t}{2\tau},\qquad
+\gamma=\gamma'=\rho\in(0,1].
+\tag{119.5}
+$$
+
+The two vectors have norm $1/2$ and $\|h_+-h_-\|=1$.
+Their outer products agree, and their difference is a real multiple
+of $t$, so $H_\delta=S_\delta=0$. Thus
+$\mathcal D=\rho$. In particular (118.12) gives
+
+$$
+0<c_{\mathfrak s}\rho
+ \le\Delta_{\rm finite}\le\Delta_{\rm all}
+ \le C_{\mathfrak s}\rho.
+\tag{119.6}
+$$
+
+These pairs therefore force every full-law inverse constant to be at
+least $1/(C_{\mathfrak s}\rho)$. Theorem 106.3 supplies a full
+completion $\mathsf J_+$ for $h_+$ and a full completion
+$\mathsf J_-$ for $h_-$. Choose them once. Changing $\rho$ changes
+only the retention parameter of the specified leakage family, not
+either completion or any source control. At every $\rho>0$ (119.6)
+is strictly positive, so these vectors are distinguishable and have
+unique recovered $h$. The claim concerns the order of the best
+constants and does not evaluate their numerical optima. $\square$
+
+**Proposition 119.3 (Zero-retention fibers and the precise continuity
+boundary).**
+The finite law (118.3) at retention zero has exactly the fibers of
+(114.6)–(114.7). A nonsingleton fiber consists of the two vectors
+
+$$
+h=(x+\mathrm i y)t,\qquad h'=(-x+\mathrm i y)t,\qquad
+x,y\in\mathbb R,\quad x\ne0,\quad (x^2+y^2)\tau^2\le1.
+\tag{119.7}
+$$
+
+There is no continuous extension of the nonzero-retention $h$ recovery
+to the law of any such fiber. At a zero-retention law whose $h$ fiber
+is a singleton, the nonzero-retention recovery has a unique continuous
+extension to that law. Continuity here uses the maximum coordinate
+distance on the fixed finite probability vector and the Euclidean
+distance on $h$.
+
+*Proof.* Corollary 118.4 equates finite and full-law fibers, so Theorem
+114.3 gives exactly (119.7) and no further ambiguities. For one such
+pair hold $h,h'$ fixed and put $\gamma=\gamma'=r>0$. Their finite
+laws tend, as $r\downarrow0$, to the same zero-retention law by
+continuity of (114.3). At every positive $r$ the recovered vectors
+are respectively $h$ and $h'$, by Theorem 119.1, and these are
+distinct. A continuous extension at their common limit law cannot
+have both values. Their strict positive-retention distinction also
+follows quantitatively from (118.12), since
+$\mathcal D=r\|h-h'\|>0$ for these reflected pairs. In particular
+the pair (119.5) is an exact collision only at $r=0$.
+
+For the singleton assertion let $y_n=P_{\mathfrak s}(\gamma_n,h_n)$
+be any sequence of laws with $\gamma_n\ne0$ tending to a given
+$y_0=P_{\mathfrak s}(0,h_0)$ having singleton fiber. Theorem 118.3
+implies $|\gamma_n|\to0$. Compactness of the closed unit ball
+implies that every subsequence of $h_n$ has a further convergent
+subsequence. If its limit is $h_*$, continuity of (114.3) gives
+$P_{\mathfrak s}(0,h_*)=y_0$. The singleton assumption forces
+$h_*=h_0$. If $h_n$ did not converge to $h_0$, a subsequence staying
+a positive distance from $h_0$ would have such a further convergent
+subsequence, a contradiction. Thus assigning $h_0$ at this law is
+the unique continuous extension, since
+$P_{\mathfrak s}(r,h_0)\to y_0$ as $r\downarrow0$.
+
+Every comparison above retains the fixed-source implementation
+premises of Definitions 106.1 and 114.1. The implementation-dependence
+principle of Abbott et al.,
+[*Communication Through Coherent Control of Quantum Channels*,
+§§4–5 and Appendix C](https://arxiv.org/html/1810.09826v3),
+concerns controlled-channel transformation matrices; the present
+normal form and its reflected endpoint use (106.3) and (114.2) for
+the specified full return. The bounds here are for each fixed source,
+with a finite length supplied by its actual rows. They assert no
+length bound independent of the source and no bound on constants
+as the source itself changes. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 120. Local moduli at the zero-retention boundary
+
+**Definition 120.1 (Fixed-source anchored moduli).**
+Fix an allowed source $\mathfrak s$ of Definition 114.1 and the finite
+vector $P_{\mathfrak s}$ supplied by Proposition 118.2. Its nine raw
+prefix masses, actual intermediate histories, labels, clocks, installed
+menu, and externally fixed schedules are retained exactly as in
+Definitions 107.1, 114.1, and 118.1. For each hypothesis retain one
+full ten-dimensional completion $\mathsf J$ from Definition 106.1 for
+both emission and the single forward return, and use that same
+completion at every history. In a comparison of two hypotheses the
+source is fixed; the completions may be different, as allowed in
+Definition 114.1. Changing $N$, the menu, a clock, a label, a schedule,
+or a raw prefix changes the source and is outside this comparison.
+
+Put $e=t/\tau$, $\tau=\|t\|$, and $\Pi=I_3-ee^\dagger$. For a
+zero-retention anchor $h_0$ with $\|h_0\|\le1$ define
+
+$$
+\begin{aligned}
+\omega_{\mathfrak s,h_0}(\varepsilon)
+  &=\sup\left\{\|h-h_0\|:
+      0<|\gamma|\le1,\ \|h\|\le1,\right.\\[-2pt]
+  &\hspace{42mm}\left.
+      \|P_{\mathfrak s}(\gamma,h)-P_{\mathfrak s}(0,h_0)\|_\infty
+         \le\varepsilon\right\},\\
+\omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+  &=\sup\left\{\|h-h_0\|:
+      0<|\gamma|\le1,\ \|h\|\le1,\right.\\[-2pt]
+  &\hspace{42mm}\left.
+      \Delta_{\rm all}((\gamma,h),(0,h_0))\le\varepsilon\right\}.
+\end{aligned}
+\tag{120.1}
+$$
+
+The second supremum uses the same actual-history family
+$\mathcal I_{\mathfrak s}$ as (114.1); it adds no operation or label.
+For the pair in (120.1), write
+
+$$
+D_0(\gamma,h;h_0)=|\gamma|+\|\mathsf H_h-\mathsf H_{h_0}\|_{\rm HS}
+ +\|\mathsf S_h-\mathsf S_{h_0}\|_{\rm HS}+|\gamma|\|h-h_0\|.
+\tag{120.2}
+$$
+
+The established comparison (118.12) gives, for the same source-fixed
+$c_{\mathfrak s},C_{\mathfrak s}>0$,
+
+$$
+ c_{\mathfrak s}D_0
+ \le \|P_{\mathfrak s}(\gamma,h)-P_{\mathfrak s}(0,h_0)\|_\infty
+ \le \Delta_{\rm all}((\gamma,h),(0,h_0))
+ \le C_{\mathfrak s}D_0.
+\tag{120.3}
+$$
+
+The rank-one lift used in (120.2) is the fixed-source use of the
+matrix-distance principle in Balan--Zou, *On Lipschitz Analysis and
+Lipschitz Synthesis for the Phase Retrieval Problem*,
+[arXiv:1506.02092v1](https://arxiv.org/abs/1506.02092v1), and the affine
+phase-retrieval framework of Gao--Sun--Wang--Xu, *Phase Retrieval From
+the Magnitudes of Affine Linear Measurements*,
+[arXiv:1608.06117v1](https://arxiv.org/abs/1608.06117v1). The latter
+requires its own global injectivity hypotheses; none is added here.
+The observability and implementation intermediates remain those already
+cited in Definitions 114.1 and 118.1, including
+D'Alessandro, [arXiv:quant-ph/0307127v1](https://arxiv.org/abs/quant-ph/0307127v1),
+and Abbott et al., [arXiv:1810.09826v3](https://arxiv.org/abs/1810.09826v3).
+
+**Proposition 120.2 (Singleton anchors and all zero-law alternatives).**
+The zero-retention law at $h_0$ has a singleton fiber in the closed ball
+if and only if
+
+$$
+ h_0\notin\{(x+\mathrm i y)t:x\in\mathbb R\setminus\{0\},\ y\in\mathbb R,
+                    \ (x^2+y^2)\tau^2\le1\}.
+\tag{120.4}
+$$
+
+Equivalently, every $h_0\notin\mathbb C t$ is a singleton, and every
+$h_0=\mathrm i y t$ with $|y|\tau\le1$ is a singleton. If
+$h_0=(x+\mathrm i y)t$ with $x\ne0$ and
+$(x^2+y^2)\tau^2\le1$, the only distinct zero-law alternative is
+
+$$
+ h_1=(-x+\mathrm i y)t,
+ \qquad \|h_1-h_0\|=2|x|\tau.
+\tag{120.5}
+$$
+
+Thus $h_0=0$ is an interior imaginary singleton, while
+$h_0=\pm\mathrm i\,t/\tau$ are the two imaginary unit-sphere singleton
+endpoints. Points in (120.4) with equality in the ball constraint are
+included; the alternatives (120.5) then lie on the same boundary.
+
+*Proof.* Apply Theorem 114.3 with both retentions equal to zero. Its
+necessary and sufficient conditions are equality of the two outer
+products, a real multiple of $t$ for the difference, and no further
+condition on the common zero retention. Solving these equations gives
+exactly (120.4)--(120.5), which is also Proposition 119.3. In
+particular, a purely imaginary multiple of $t$ cannot be paired with a
+distinct vector because the required difference would have to be both
+real and purely imaginary as a multiple of $t$. The boundary and zero
+cases follow by allowing $|y|\tau=1$ and $y=0$. $\square$
+
+**Theorem 120.3 (Sharp anchored modulus for every singleton).**
+Let $h_0$ be a singleton anchor from Proposition 120.2. The two
+moduli in (120.1) have the following matching source- and
+anchor-dependent bounds.
+
+(a) Suppose $h_0\notin\mathbb C t$. Set
+
+$$
+ \eta=\|\Pi h_0\|>0,
+ \qquad L_{\rm out}=\frac1\tau+\frac{1+1/\tau}{\eta},
+ \qquad K_{\rm out}=4+2\tau.
+\tag{120.6}
+$$
+Then, for every $\varepsilon>0$,
+
+$$
+ \omega_{\mathfrak s,h_0}(\varepsilon),\quad
+ \omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+ \le \frac{L_{\rm out}}{c_{\mathfrak s}}\varepsilon.
+\tag{120.7}
+$$
+For $0<\varepsilon\le C_{\mathfrak s}K_{\rm out}\|h_0\|$,
+
+$$
+ \omega_{\mathfrak s,h_0}(\varepsilon),\quad
+ \omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+ \ge \frac{\varepsilon}{C_{\mathfrak s}K_{\rm out}}.
+\tag{120.8}
+$$
+Consequently both moduli have sharp order $\varepsilon$ at every such
+anchor, including anchors on the unit sphere.
+
+(b) Suppose $h_0=\mathrm i\beta e$ with $\beta\in[-1,1]$ (equivalently
+$h_0=\mathrm i y t$ and $\beta=y\tau$). Put
+
+$$
+ L_{\rm im}=\sqrt{1+\frac1\tau}+\frac{3}{2\tau}.
+\tag{120.9}
+$$
+For $0<\varepsilon\le c_{\mathfrak s}$,
+
+$$
+ \omega_{\mathfrak s,h_0}(\varepsilon),\quad
+ \omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+ \le L_{\rm im}\sqrt{\frac{\varepsilon}{c_{\mathfrak s}}}.
+\tag{120.10}
+$$
+If $|\beta|<1$, then for
+$0<\varepsilon\le3C_{\mathfrak s}(1-\beta^2)$,
+
+$$
+ \omega_{\mathfrak s,h_0}(\varepsilon),\quad
+ \omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+ \ge\sqrt{\frac{\varepsilon}{3C_{\mathfrak s}}}.
+\tag{120.11}
+$$
+In particular, (120.11) at $\beta=0$ is the explicit zero-anchor
+witness. At either endpoint $\beta=\sigma\in\{-1,1\}$, for
+$0<\varepsilon\le C_{\mathfrak s}(3+2\tau)$,
+
+$$
+ \omega_{\mathfrak s,\,\mathrm i\sigma e}(\varepsilon),\quad
+ \omega^{\rm all}_{\mathfrak s,\,\mathrm i\sigma e}(\varepsilon)
+ \ge\sqrt{\frac{\varepsilon}{C_{\mathfrak s}(3+2\tau)}}.
+\tag{120.12}
+$$
+Therefore every imaginary singleton, including zero, interior points, and
+both boundary endpoints, has sharp order $\sqrt\varepsilon$.
+
+If $h_0$ is a nonsingleton point in (120.4), then its modulus does not
+vanish: with $h_1$ from (120.5), for
+$0<\varepsilon\le C_{\mathfrak s}(1+2|x|\tau)$,
+
+$$
+ \omega_{\mathfrak s,h_0}(\varepsilon),\quad
+ \omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+ \ge2|x|\tau.
+\tag{120.13}
+$$
+
+*Proof.* For a pair in (120.1), abbreviate $D_0$ by $D$ and write
+$h=\alpha e+v$, $h_0=\alpha_0e+v_0$, with $v,v_0\perp e$.
+If $h_0\notin\mathbb C t$, then $\eta=\|v_0\|>0$. From the
+relations defining $\mathsf S_h$ and $\mathsf H_h$,
+
+$$
+ \Pi(\mathsf S_h-\mathsf S_{h_0})e=\mathrm i\tau(v-v_0),
+ \qquad
+ v_0^\dagger\Pi\mathsf H_h e=(v_0^\dagger v)\overline\alpha.
+\tag{120.14}
+$$
+
+Consequently
+
+$$
+ \|v-v_0\|\le\frac{D}{\tau},
+ \qquad
+ |\alpha-\alpha_0|
+ \le\frac{D}{\eta}+\frac{D}{\tau\eta}.
+\tag{120.15}
+$$
+Indeed, apply the second identity in (120.14) to the difference and
+use $|\alpha|\le1$ and
+$|v_0^\dagger(v-v_0)|\le\eta\|v-v_0\|$. Hence
+$\|h-h_0\|\le L_{\rm out}D$. If either probability distance in
+(120.1) is at most $\varepsilon$, (120.3) gives
+$D\le\varepsilon/c_{\mathfrak s}$, proving (120.7).
+
+For the lower bound in (120.8), let $a=\|h_0\|>0$ and
+$u=h_0/a$. For $0<r\le a$ take
+
+$$
+ h_r=(a-r)u,\qquad \gamma_r=r.
+\tag{120.16}
+$$
+These parameters lie in the closed ball and
+$\|h_r-h_0\|=r$. Moreover
+
+$$
+ \|\mathsf H_{h_r}-\mathsf H_{h_0}\|_{\rm HS}\le2r,
+ \quad
+ \|\mathsf S_{h_r}-\mathsf S_{h_0}\|_{\rm HS}\le2\tau r,
+ \quad
+ |\gamma_r|\|h_r-h_0\|=r^2\le r,
+$$
+so $D_0(\gamma_r,h_r;h_0)\le K_{\rm out}r$. Taking
+$r=\varepsilon/(C_{\mathfrak s}K_{\rm out})$ is allowed under the
+stated threshold, and (120.3) gives both distances at most
+$\varepsilon$. This proves (120.8).
+
+Now let $h_0=\mathrm i\beta e$ and write
+$\alpha=u+\mathrm i b$. The diagonal and off-diagonal components of
+$\mathsf S_h$ and $\mathsf H_h$ give
+
+$$
+ \|v\|\le\frac{D}{\tau},
+ \qquad |b-\beta|\le\frac{D}{2\tau},
+ \qquad |u|^2\le D\left(1+\frac1\tau\right).
+\tag{120.17}
+$$
+The last inequality follows from
+$\bigl||\alpha|^2-\beta^2\bigr|\le D$ and
+$|b^2-\beta^2|\le2|b-\beta|$, using $|b|,|\beta|\le1$.
+When $D\le1$, (120.17) implies
+
+$$
+ \|h-h_0\|\le
+ \left(\sqrt{1+\frac1\tau}+\frac{3}{2\tau}\right)\sqrt D
+ =L_{\rm im}\sqrt D.
+\tag{120.18}
+$$
+If either probability distance is at most $\varepsilon\le c_{\mathfrak s}$,
+then $D\le1$ by (120.3), and (120.10) follows.
+
+For $|\beta|<1$, choose $0<x\le\sqrt{1-\beta^2}$ and set
+
+$$
+ h_x=(x+\mathrm i\beta)e,\qquad \gamma_x=x^2.
+\tag{120.19}
+$$
+Then $\|h_x\|\le1$, $\|h_x-h_0\|=x$,
+$\mathsf S_{h_x}=\mathsf S_{h_0}$,
+$\|\mathsf H_{h_x}-\mathsf H_{h_0}\|_{\rm HS}=x^2$, and
+$D_0(\gamma_x,h_x;h_0)=2x^2+x^3\le3x^2$. Choose
+$x=\sqrt{\varepsilon/(3C_{\mathfrak s})}$; the threshold in
+(120.11) makes this choice admissible, and the upper inequality in
+(120.3) proves (120.11). For $\beta=0$, this is exactly
+$h_x=xe$ and $h_0=0$.
+
+For the two endpoints let $\beta=\sigma\in\{-1,1\}$ and, for
+$0<x\le1$, set
+
+$$
+ h_x=\bigl(x+\mathrm i\sigma\sqrt{1-x^2}\bigr)e,
+ \qquad \gamma_x=x^2.
+\tag{120.20}
+$$
+Both vectors have norm one, and
+$\mathsf H_{h_x}=\mathsf H_{\mathrm i\sigma e}$, while
+
+$$
+ \|\mathsf S_{h_x}-\mathsf S_{\mathrm i\sigma e}\|_{\rm HS}
+ =2\tau\bigl(1-\sqrt{1-x^2}\bigr)\le2\tau x^2,
+ \qquad
+ x\le\|h_x-\mathrm i\sigma e\|\le2x.
+\tag{120.21}
+$$
+Thus $D_0(\gamma_x,h_x;\mathrm i\sigma e)
+\le(3+2\tau)x^2$. Taking
+$x=\sqrt{\varepsilon/[C_{\mathfrak s}(3+2\tau)]}$ proves
+(120.12), and explicitly covers both signs.
+
+Finally, for a nonsingleton anchor use $h_1$ in (120.5). Its outer and
+skew rank-one matrices agree with those of $h_0$, so
+$D_0(\gamma,h_1;h_0)=|\gamma|(1+2|x|\tau)$. Choose
+$\gamma=\varepsilon/[C_{\mathfrak s}(1+2|x|\tau)]$. Equation (120.3)
+then gives (120.13), provided the displayed threshold ensures
+$|\gamma|\le1$.
+
+Every vector used above lies in the closed unit ball. The completion
+realization in Theorem 106.3 therefore supplies, separately for each
+hypothesis, a lawful fixed full ten-dimensional $\mathsf J$ that is
+used for all histories and for the forward return. The source data and
+single-return assumptions remain fixed throughout. The finite and full
+bounds are both consequences of the already existing comparison
+(120.3), so no new observation contract is invoked. $\square$
 
 ## 追加锚（本行以下为增补区）
