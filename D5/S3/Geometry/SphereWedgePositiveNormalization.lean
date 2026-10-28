@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/SphereWedgePositiveNormalization
    mirror-E: none(waiver:sphere-wedge-normalization)
-   anchors: [D5/S3/Geometry/CompactWedgeFiniteFactor, D5/S3/Geometry/EuclideanSphereJoin, mathlib/module/Mathlib.Analysis.InnerProductSpace.Projection.Reflection]
+   anchors: [mathlib/module/Mathlib.Analysis.InnerProductSpace.Projection.Reflection]
    utility: none
    digest: Actual pointed sphere wedges split as positive bouquets and isolated zero-sphere points. -/
 import D5.S3.Geometry.CompactWedgeFiniteFactor
@@ -19,7 +19,7 @@ attribute [local instance] Classical.propDecidable
 
 namespace D5.S3.Geometry.SphereWedgePositiveNormalization
 
-open CompactWedgeFiniteFactor (FamilyWedge base point basePoints)
+open CompactWedgeFiniteFactor (FamilyWedge base point basePoints point_base)
 open EuclideanSphereJoin (StdSphere coordinatePoint)
 open FiniteConeUnionWedge (subsetSetoid)
 
@@ -87,11 +87,6 @@ instance {J : Type u} (n : J → ℕ) : DiscreteTopology (ZeroIndex n) := ⟨rfl
 /-- The positive bouquet is the actual ordinary quotient, also for an empty index type. -/
 abbrev PositiveWedge {J : Type u} (n : J → ℕ) :=
   FamilyWedge (fun j : PositiveIndex n => coordinatePoint (n j.val))
-
-private theorem point_base {J : Type*} {Z : J → Type*}
-    [∀ j, TopologicalSpace (Z j)] (b : ∀ j, Z j) (j : J) :
-    point b j (b j) = base b :=
-  Quotient.sound (Or.inr ⟨Or.inr ⟨j, rfl⟩, Or.inl rfl⟩)
 
 variable {J : Type u} (n : J → ℕ) (b : ∀ j, StdSphere (n j))
 
