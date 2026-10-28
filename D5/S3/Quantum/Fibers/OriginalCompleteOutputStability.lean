@@ -48,13 +48,6 @@ def terminalOutput (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ)
     (terminalKraus c a k chi t * rho.1 * (terminalKraus c a k chi t).adjoint)
     (isTraceClass_mul_mul (TraceClass.isTraceClass_coe rho))
 
-/-- The same complete output norm as IS.7, with no time integration before the norm. -/
-def completeDistance (c a T : ℝ) (k chi l psi : ℝ → ℝ)
-    (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1) : ℝ :=
-  (‖terminalOutput c a k chi T rho - terminalOutput c a l psi T rho‖ +
-    ∑ i : Fin 5, ∫ t in Ioc (0 : ℝ) T,
-      ‖liveFailure c a k i rho hpos t - liveFailure c a l i rho hpos t‖) / 2
-
 /-- The literal failure Kraus with the transported phase, on the same input blocks. -/
 def phasedJump (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ) (i : Fin 5) :
     Blocks (Fin 5) H →L[ℂ] Blocks (Fin 6) H :=
@@ -64,10 +57,16 @@ def phasedJump (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ) (i : Fin 5) :
 private theorem phasedJump_scalar (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ) (i : Fin 5) :
     phasedJump (H := H) c a k chi t i = character c k chi t i •
       absorbingJump c a (k t) (survival c k t) (jumpRate c k t) i := by
-  ext x j
-  simp [phasedJump,absorbingJump,referenceJump,diagonalAction_apply,
-    ContinuousLinearMap.comp_apply,coordinate,insertion,PiLp.single_apply,
-    smul_smul,mul_comm,mul_left_comm]
+  apply ContinuousLinearMap.ext
+  intro x
+  rw [phasedJump,absorbingJump,referenceJump_factor]
+  change insertion (5 : Fin 6)
+      (amplitude c a (k t) (survival c k t) (jumpRate c k t) i •
+        diagonalAction (character c k chi t) x i) =
+    character c k chi t i • insertion (5 : Fin 6)
+      (amplitude c a (k t) (survival c k t) (jumpRate c k t) i • x i)
+  rw [diagonalAction_apply]
+  simp only [map_smul,smul_smul,mul_comm]
 
 /-- The failure density is the genuine phased Kraus congruence; its phase cancels. -/
 theorem phased_failure_actual (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ) (i : Fin 5)
@@ -78,10 +77,31 @@ theorem phased_failure_actual (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ) (i : F
   rw [phasedJump_scalar,ContinuousLinearMap.adjoint_smul]
   simp only [ContinuousLinearMap.smul_comp,ContinuousLinearMap.comp_smul,smul_smul]
   have hz : character c k chi t i * star (character c k chi t i) = 1 := by
-    rw [mul_star_eq_norm_sq]
+    rw [Complex.star_def,Complex.mul_conj']
     simp [character,Complex.norm_exp_ofReal_mul_I]
   rw [hz,one_smul]
   exact liveFailure_actual c a k i rho hpos t
+
+/-- The actual phased Kraus density, before integration over any recorded time event. -/
+def phasedFailure (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ) (i : Fin 5)
+    (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1) :
+    TraceClass (Blocks (Fin 6) H) :=
+  TraceClass.ofOperator
+    ((phasedJump c a k chi t i).comp (rho.1.comp (phasedJump c a k chi t i).adjoint))
+    (by rw [← phased_failure_actual c a k chi t i rho hpos]
+        exact TraceClass.isTraceClass_coe _)
+
+private theorem phasedFailure_eq (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ) (i : Fin 5)
+    (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1) :
+    phasedFailure c a k chi t i rho hpos = liveFailure c a k i rho hpos t :=
+  Subtype.ext (phased_failure_actual c a k chi t i rho hpos).symm
+
+/-- The same complete output norm as IS.7, with no time integration before the norm. -/
+def completeDistance (c a T : ℝ) (k chi l psi : ℝ → ℝ)
+    (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1) : ℝ :=
+  (‖terminalOutput c a k chi T rho - terminalOutput c a l psi T rho‖ +
+    ∑ i : Fin 5, ∫ t in Ioc (0 : ℝ) T,
+      ‖phasedFailure c a k chi t i rho hpos - phasedFailure c a l psi t i rho hpos‖) / 2
 
 /-- Every actual Borel failure event is a Bochner integral on the retained reference. -/
 theorem native_failure_bochner (c a T : ℝ) (k chi : ℝ → ℝ)
@@ -89,9 +109,10 @@ theorem native_failure_bochner (c a T : ℝ) (k chi : ℝ → ℝ)
     (hk : OriginalControl (c,c,1-2*c) T k chi)
     (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1)
     (i : Fin 5) (E : Set ℝ) (_hE : MeasurableSet E) :
-    IntegrableOn (liveFailure c a k i rho hpos) ((Ioc 0 T) ∩ E) := by
+    IntegrableOn (fun t => phasedFailure c a k chi t i rho hpos) ((Ioc 0 T) ∩ E) := by
   have hi := (native_mode_balance c a T k hc ha (height_control c T k chi hk)
     i 0 T ⟨le_rfl,hk.1⟩ ⟨hk.1,le_rfl⟩ hk.1).1
+  simp_rw [phasedFailure_eq]
   exact (hi.ofReal.smul_const _).mono_set inter_subset_left
 
 /-- A trace-class congruence, also for nonpositive mixed terms in a difference. -/
@@ -150,7 +171,9 @@ theorem native_mass_le (c a T : ℝ) (k chi : ℝ → ℝ)
     integral_nonneg (fun _ => Complex.normSq_nonneg _)
   rw [h,h0] at hn
   simp only [OriginalControlSurvivalInstability.survival,integral_same,neg_zero,Real.exp_zero,one_mul] at hn
-  exact sub_nonneg.mp ((div_nonneg_iff_of_pos (p_pos c a hc ha i)).mp hn)
+  apply sub_nonneg.mp
+  rw [← div_mul_cancel₀ (p c a i-survival c k t*p c (k t) i) (p_pos c a hc ha i).ne']
+  exact mul_nonneg hn (p_pos c a hc ha i).le
 
 private theorem terminal_norm (c a T : ℝ) (k chi : ℝ → ℝ)
     (hc : c < 1/2) (ha : a ∈ Ioo 0 c)
@@ -217,16 +240,16 @@ private theorem densityError_eq (c a T : ℝ) (k l : ℝ → ℝ)
     abs_of_pos (p_pos c a hc ha i),integral_mul_const]
   exact mul_div_cancel_right₀ _ (p_pos c a hc ha i).ne'
 
-private theorem actual_failure_error (c a T : ℝ) (k l : ℝ → ℝ)
+private theorem actual_failure_error (c a T : ℝ) (k chi l psi : ℝ → ℝ)
     (hc : c < 1/2) (ha : a ∈ Ioo 0 c) (i : Fin 5)
     (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1) :
     (∫ t in Ioc (0 : ℝ) T,
-      ‖liveFailure c a k i rho hpos t-liveFailure c a l i rho hpos t‖) =
+      ‖phasedFailure c a k chi t i rho hpos-phasedFailure c a l psi t i rho hpos‖) =
       densityError c a T k l i *
         ‖TraceClass.ofOperator (compression rho.1 i)
           (compression_traceClass (TraceClass.isTraceClass_coe rho) hpos i)‖ := by
   rw [densityError_eq c a T k l hc ha i]
-  simp_rw [liveFailure_diff_norm,modeOutput,← sub_smul,← Complex.ofReal_sub,
+  simp_rw [phasedFailure_eq,liveFailure_diff_norm,modeOutput,← sub_smul,← Complex.ofReal_sub,
     norm_smul,Complex.norm_real,Real.norm_eq_abs]
   rw [integral_mul_const]
 
@@ -256,8 +279,8 @@ theorem complete_output_bound (c a T : ℝ) (k chi l psi : ℝ → ℝ)
         gcongr
       _ = _ := by ring
   have hfail : (∑ i : Fin 5, ∫ t in Ioc (0 : ℝ) T,
-      ‖liveFailure c a k i rho hpos t-liveFailure c a l i rho hpos t‖) ≤ b*‖rho‖ := by
-    simp_rw [actual_failure_error c a T k l hc ha]
+      ‖phasedFailure c a k chi t i rho hpos-phasedFailure c a l psi t i rho hpos‖) ≤ b*‖rho‖ := by
+    simp_rw [actual_failure_error c a T k chi l psi hc ha]
     rw [← actual_output_mass_partition rho hpos,Finset.mul_sum]
     exact Finset.sum_le_sum (fun i _ => mul_le_mul_of_nonneg_right (hb i) (norm_nonneg _))
   dsimp only [completeDistance]
@@ -270,6 +293,21 @@ def completeOperationalDistance (c a T : ℝ) (k chi l psi : ℝ → ℝ) : ℝ 
   sSup {x : ℝ | ∃ s : JointState.{v} 5,
     x = completeDistance c a T k chi l psi s.rho s.positive}
 
+private def normalizedLive : JointState.{v} 5 := by
+  let rho : TraceClass (Blocks (Fin 5) witnessReference.{v}) :=
+    TraceClass.ofOperator (embedding witnessBase.{v}.1 (0 : Fin 5))
+      (embedding_traceClass (TraceClass.isTraceClass_coe _) witnessBase_pos _)
+  have hp : 0 ≤ rho.1 := by
+    apply ContinuousLinearMap.nonneg_iff_isPositive.mpr
+    simpa only [rho,TraceClass.ofOperator_coe,embedding,insertion,
+      ContinuousLinearMap.comp_assoc] using
+      (ContinuousLinearMap.nonneg_iff_isPositive.mp witnessBase_pos).adjoint_conj
+        (coordinate (0 : Fin 5))
+  have hn : ‖rho‖ = 1 :=
+    (embedding_trace_norm (TraceClass.isTraceClass_coe _) witnessBase_pos (0 : Fin 5)).2.trans
+      witnessBase_norm
+  exact ⟨witnessReference.{v},rho,hp,hn⟩
+
 /-- IS.27, uniformly over arbitrary, possibly entangled or nonseparable, references. -/
 theorem complete_operational_bound (c a T : ℝ) (k chi l psi : ℝ → ℝ)
     (hc : c < 1/2) (ha : a ∈ Ioo 0 c)
@@ -279,24 +317,28 @@ theorem complete_operational_bound (c a T : ℝ) (k chi l psi : ℝ → ℝ)
       krausError c a T k chi l psi +
         (Finset.univ.sup' Finset.univ_nonempty (densityError c a T k l))/2 := by
   apply csSup_le
-  · let rho : TraceClass (Blocks (Fin 5) witnessReference.{v}) :=
-      TraceClass.ofOperator (embedding witnessBase.{v}.1 (0 : Fin 5))
-        (embedding_traceClass (TraceClass.isTraceClass_coe _) witnessBase_pos _)
-    have hp : 0 ≤ rho.1 := by
-      apply ContinuousLinearMap.nonneg_iff_isPositive.mpr
-      simpa only [rho,TraceClass.ofOperator_coe,embedding,insertion,
-        ContinuousLinearMap.comp_assoc] using
-        (ContinuousLinearMap.nonneg_iff_isPositive.mp witnessBase_pos).adjoint_conj
-          (coordinate (0 : Fin 5))
-    have hn : ‖rho‖ = 1 :=
-      (embedding_trace_norm (TraceClass.isTraceClass_coe _) witnessBase_pos (0 : Fin 5)).2.trans
-        witnessBase_norm
-    let s : JointState.{v} 5 := ⟨witnessReference.{v},rho,hp,hn⟩
-    exact ⟨_,s,rfl⟩
+  · exact ⟨_,normalizedLive.{v},rfl⟩
   · rintro x ⟨s,rfl⟩
     have h := complete_output_bound c a T k chi l psi hc ha hk hl hk0 hl0
       s.rho s.positive _ (fun i => Finset.le_sup' _ (Finset.mem_univ i))
     simpa only [s.normalized,mul_one] using h
+
+theorem complete_operational_nonneg (c a T : ℝ) (k chi l psi : ℝ → ℝ)
+    (hc : c < 1/2) (ha : a ∈ Ioo 0 c)
+    (hk : OriginalControl (c,c,1-2*c) T k chi)
+    (hl : OriginalControl (c,c,1-2*c) T l psi) (hk0 : k 0=a) (hl0 : l 0=a) :
+    0 ≤ completeOperationalDistance.{v} c a T k chi l psi := by
+  let b := Finset.univ.sup' Finset.univ_nonempty (densityError c a T k l)
+  have hb : BddAbove {x : ℝ | ∃ s : JointState.{v} 5,
+      x = completeDistance c a T k chi l psi s.rho s.positive} := by
+    refine ⟨krausError c a T k chi l psi+b/2,?_⟩
+    rintro x ⟨s,rfl⟩
+    simpa only [s.normalized,mul_one] using
+      complete_output_bound c a T k chi l psi hc ha hk hl hk0 hl0 s.rho s.positive b
+        (fun i => Finset.le_sup' _ (Finset.mem_univ i))
+  apply le_csSup_of_le hb ⟨normalizedLive.{v},rfl⟩
+  exact div_nonneg (add_nonneg (norm_nonneg _) (Finset.sum_nonneg
+    (fun _ _ => integral_nonneg (fun _ => norm_nonneg _)))) (by norm_num)
 
 theorem survival_le_one (c T : ℝ) (k chi : ℝ → ℝ)
     (hk : OriginalControl (c,c,1-2*c) T k chi) (t : ℝ) (ht : t ∈ Icc 0 T) :

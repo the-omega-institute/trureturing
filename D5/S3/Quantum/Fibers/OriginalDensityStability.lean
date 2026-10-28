@@ -10,6 +10,7 @@ import D5.S3.Quantum.Fibers.OriginalCompleteOutputStability
 import Mathlib.Analysis.Calculus.MeanValue
 
 noncomputable section
+universe v
 open scoped ComplexOrder InnerProductSpace BigOperators
 open Set Filter Topology MeasureTheory intervalIntegral TraceClassFiniteBlocks
 namespace D5.S3.Quantum.Fibers.OriginalDensityStability
@@ -33,7 +34,7 @@ private theorem velocity_error (c eta x v w : ℝ) (he : 0 < eta)
         max_eq_left (neg_nonneg.mpr hw')]
     rw [hr,abs_of_nonneg (sub_nonneg.mpr (hw'.trans hv))]
     calc
-      _ ≤ v/x+(-w)/(c-x) := abs_sub_le _ _ |>.trans_eq (by
+      _ ≤ v/x+(-w)/(c-x) := (by simpa only [sub_eq_add_neg,abs_neg] using abs_add_le (v/x) (-((-w)/(c-x)))) |>.trans_eq (by
         rw [abs_of_nonneg (div_nonneg hv hx0.le),abs_of_nonneg (div_nonneg (neg_nonneg.mpr hw') hc0.le)])
       _ ≤ v/eta+(-w)/eta := add_le_add
         (div_le_div_of_nonneg_left hv he hx)
@@ -45,7 +46,7 @@ private theorem velocity_error (c eta x v w : ℝ) (he : 0 < eta)
         max_eq_left (neg_nonneg.mpr hv')]
     rw [hr,abs_of_nonpos (sub_nonpos.mpr (hv'.trans hw))]
     calc
-      _ ≤ (-v)/(c-x)+w/x := abs_sub_le _ _ |>.trans_eq (by
+      _ ≤ (-v)/(c-x)+w/x := (by simpa only [sub_eq_add_neg,abs_neg] using abs_add_le ((-v)/(c-x)) (-(w/x))) |>.trans_eq (by
         rw [abs_of_nonneg (div_nonneg (neg_nonneg.mpr hv') hc0.le),abs_of_nonneg (div_nonneg hw hx0.le)])
       _ ≤ (-v)/eta+w/eta := add_le_add
         (div_le_div_of_nonneg_left (neg_nonneg.mpr hv') he hcx)
@@ -64,7 +65,10 @@ private theorem reciprocal_error (eta x y : ℝ) (he : 0 < eta)
   have hx0 := he.trans_le hx
   have hy0 := he.trans_le hy
   have hxy : eta^2 ≤ x*y := by nlinarith [mul_le_mul hx hy he.le hx0.le]
-  rw [inv_sub_inv hx0.ne' hy0.ne',abs_div,abs_mul,abs_of_pos hx0,abs_of_pos hy0,abs_sub_comm]
+  have hid : |x⁻¹-y⁻¹| = |x-y|/(x*y) := by
+    simpa only [Real.dist_eq,Real.norm_eq_abs,abs_of_pos hx0,abs_of_pos hy0] using
+      dist_inv_inv₀ hx0.ne' hy0.ne'
+  rw [hid]
   exact div_le_div_of_nonneg_left (abs_nonneg _) (sq_pos_of_pos he) hxy
 
 private theorem height_error (c eta x y w : ℝ) (he : 0 < eta)
@@ -298,8 +302,9 @@ private theorem survival_derivative_error (c T eta delta : ℝ) (k chi l psi : �
       _ ≤ |hazard c k t-hazard c l t|*survival c k t+
           hazard c l t*|survival c k t-survival c l t| := by
         simpa only [abs_mul,abs_neg,abs_of_nonneg hS.1,abs_of_nonneg hl0] using
-          abs_sub_le (-(hazard c k t-hazard c l t)*survival c k t)
-            (hazard c l t*(survival c k t-survival c l t))
+          (by simpa only [sub_eq_add_neg,abs_neg] using
+            abs_add_le (-(hazard c k t-hazard c l t)*survival c k t)
+              (-(hazard c l t*(survival c k t-survival c l t))))
       _ ≤ |hazard c k t-hazard c l t|*1+hazard c l t*B := by gcongr
       _ = _ := by ring
   have h := integral_mono_ae (hki.sub hli).abs ((hkh.sub hlh).abs.add (hlh.const_mul B)) hb
@@ -480,5 +485,117 @@ theorem complete_error_bound (c a T eta delta : ℝ) (k chi l psi : ℝ → ℝ)
     _ ≤ (Real.sqrt ((B+delta)/initialFloor c a)+phaseError c T k chi l psi)+
       (C/initialFloor c a)/2 := by gcongr; exact hterm.trans (add_le_add_right hroot _)
     _ = _ := by dsimp [B,C]; ring
+
+/-- Common initial height upgrades L1 derivative error to uniform height error. -/
+theorem height_error_le_derivativeError (c T : ℝ) (k chi l psi : ℝ → ℝ)
+    (hk : OriginalControl (c,c,1-2*c) T k chi)
+    (hl : OriginalControl (c,c,1-2*c) T l psi) (h0 : k 0=l 0)
+    (t : ℝ) (ht : t ∈ Icc 0 T) : |k t-l t| ≤ derivativeError T k l := by
+  have hsub : uIcc (0 : ℝ) t ⊆ uIcc 0 T := by
+    rw [uIcc_of_le ht.1,uIcc_of_le hk.1]
+    exact Icc_subset_Icc le_rfl ht.2
+  have hki := ((original_ac _ _ _ _ hk).1.mono hsub)
+  have hli := ((original_ac _ _ _ _ hl).1.mono hsub)
+  have hEq : k t-l t = ∫ u in Ioc (0 : ℝ) t,deriv k u-deriv l u := by
+    rw [← intervalIntegral.integral_of_le ht.1,
+      intervalIntegral.integral_sub hki.intervalIntegrable_deriv hli.intervalIntegrable_deriv,
+      hki.integral_deriv_eq_sub,hli.integral_deriv_eq_sub,h0]
+    ring
+  rw [hEq]
+  exact (by simpa only [Real.norm_eq_abs] using norm_integral_le_integral_norm
+    (fun u => deriv k u-deriv l u)).trans
+    (setIntegral_mono_set ((derivative_integrable c T k chi hk).sub
+      (derivative_integrable c T l psi hl)).abs
+      (ae_of_all _ (fun _ => abs_nonneg _)) (Ioc_subset_Ioc le_rfl ht.2).eventuallySubset)
+
+/-- Strong derivative convergence and a separate terminal character certificate
+give convergence of the actual complete output, with no common speed bound. -/
+theorem complete_output_convergence (c a T eta M : ℝ)
+    (k chi l psi : ℕ → ℝ → ℝ)
+    (hc : c < 1/2) (ha : a ∈ Ioo 0 c) (he : 0 < eta)
+    (hk : ∀ n, OriginalControl (c,c,1-2*c) T (k n) (chi n))
+    (hl : ∀ n, OriginalControl (c,c,1-2*c) T (l n) (psi n))
+    (hk0 : ∀ n, k n 0=a) (hl0 : ∀ n, l n 0=a)
+    (hmk : ∀ n t, t ∈ Icc 0 T → k n t ∈ Icc eta (c-eta))
+    (hml : ∀ n t, t ∈ Icc 0 T → l n t ∈ Icc eta (c-eta))
+    (hM : ∀ n, variation T (l n) ≤ M)
+    (helim : Tendsto (fun n => derivativeError T (k n) (l n)) atTop (𝓝 0))
+    (hzlim : Tendsto (fun n => phaseError c T (k n) (chi n) (l n) (psi n)) atTop (𝓝 0)) :
+    Tendsto (fun n => completeOperationalDistance.{v} c a T (k n) (chi n) (l n) (psi n))
+      atTop (𝓝 0) := by
+  let e := fun n => derivativeError T (k n) (l n)
+  let b := fun n => budget eta (e n) (e n) M
+  let upper := fun n => Real.sqrt ((b n+e n)/initialFloor c a)+
+    phaseError c T (k n) (chi n) (l n) (psi n)+
+    ((1+M/eta+(M+e n))*b n+e n+e n)/(2*initialFloor c a)
+  have hM0 : 0 ≤ M := (integral_nonneg (fun _ => abs_nonneg _)).trans (hM 0)
+  have he0 (n) : 0 ≤ e n := integral_nonneg (fun _ => abs_nonneg _)
+  have hb0 (n) : 0 ≤ b n := by
+    dsimp [b,budget]
+    positivity
+  have hbound (n) : completeOperationalDistance.{v} c a T (k n) (chi n) (l n) (psi n) ≤ upper n := by
+    have hd := height_error_le_derivativeError c T (k n) (chi n) (l n) (psi n)
+      (hk n) (hl n) ((hk0 n).trans (hl0 n).symm)
+    have h := complete_error_bound.{v} c a T eta (e n) (k n) (chi n) (l n) (psi n)
+      hc ha he (hk n) (hl n) (hk0 n) (hl0 n) (hmk n) (hml n) hd
+    have hB : budget eta (e n) (e n) (variation T (l n)) ≤ b n := by
+      dsimp only [budget,b]
+      gcongr
+      exact hM n
+    have hD : variation T (k n) ≤ M+e n :=
+      (variation_le c T (k n) (chi n) (l n) (psi n) (hk n) (hl n)).trans
+        (add_le_add_right (hM n) _)
+    have hbudget : 0 ≤ budget eta (e n) (e n) (variation T (l n)) := by
+      have hv : 0 ≤ variation T (l n) := integral_nonneg (fun _ => abs_nonneg _)
+      dsimp [budget]
+      positivity
+    refine h.trans ?_
+    dsimp only [upper]
+    gcongr
+    · exact initialFloor_pos c a hc ha
+    · exact hB
+    · exact hM n
+    · exact hD
+    · exact hB
+  let F : ℝ × ℝ → ℝ := fun x =>
+    Real.sqrt ((budget eta x.1 x.1 M+x.1)/initialFloor c a)+x.2+
+      ((1+M/eta+(M+x.1))*budget eta x.1 x.1 M+x.1+x.1)/(2*initialFloor c a)
+  have hF : Continuous F := by dsimp [F,budget]; fun_prop
+  have hu : Tendsto upper atTop (𝓝 0) := by
+    have h := (hF.tendsto (0,0)).comp (helim.prodMk_nhds hzlim)
+    simpa [F,upper,b,budget,e] using h
+  exact squeeze_zero
+    (fun n => complete_operational_nonneg.{v} c a T (k n) (chi n) (l n) (psi n)
+      hc ha (hk n) (hl n) (hk0 n) (hl0 n)) hbound hu
+
+/-- The quantitative stability statement retains the actual tensor success map
+and every Borel failure event for the same arbitrary positive joint state. -/
+theorem complete_output_stability (c a T eta delta : ℝ) (k chi l psi : ℝ → ℝ)
+    (hc : c < 1/2) (ha : a ∈ Ioo 0 c) (he : 0 < eta)
+    (hk : OriginalControl (c,c,1-2*c) T k chi)
+    (hl : OriginalControl (c,c,1-2*c) T l psi) (hk0 : k 0=a) (hl0 : l 0=a)
+    (hmk : ∀ t ∈ Icc 0 T, k t ∈ Icc eta (c-eta))
+    (hml : ∀ t ∈ Icc 0 T, l t ∈ Icc eta (c-eta))
+    (hd : ∀ t ∈ Icc 0 T, |k t-l t| ≤ delta)
+    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1) :
+    (∀ z : EuclideanSpace ℂ (Fin 5) ⊗[ℂ] H,
+      terminalKraus c a k chi T (tensorCoordinates z) = tensorCoordinates
+        (TensorProduct.map (terminalKraus (H := ℂ) c a k chi T).toLinearMap
+          (LinearMap.id : H →ₗ[ℂ] H) z)) ∧
+    (∀ (i : Fin 5) (E : Set ℝ), MeasurableSet E →
+      IntegrableOn (fun t => phasedFailure c a k chi t i rho hpos) ((Ioc 0 T) ∩ E) ∧
+      IntegrableOn (fun t => phasedFailure c a l psi t i rho hpos) ((Ioc 0 T) ∩ E)) ∧
+    completeOperationalDistance.{v} c a T k chi l psi ≤
+      Real.sqrt ((budget eta delta (derivativeError T k l) (variation T l)+delta)/initialFloor c a)+
+      phaseError c T k chi l psi+
+      ((1+variation T l/eta+variation T k)*
+        budget eta delta (derivativeError T k l) (variation T l)+delta+derivativeError T k l)/
+        (2*initialFloor c a) := by
+  refine ⟨fun z => tensor_diagonal _ z,?_,?_⟩
+  · intro i E hE
+    exact ⟨native_failure_bochner c a T k chi hc ha hk rho hpos i E hE,
+      native_failure_bochner c a T l psi hc ha hl rho hpos i E hE⟩
+  · exact complete_error_bound.{v} c a T eta delta k chi l psi hc ha he hk hl hk0 hl0 hmk hml hd
 
 end D5.S3.Quantum.Fibers.OriginalDensityStability
