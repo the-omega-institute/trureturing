@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Circle/BinaryRunSource
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/BinaryRunSource
    mirror-E: none(waiver:audit-open-22063)
    anchors: [mathlib/module/Mathlib.Combinatorics.Colex, mathlib/module/Mathlib.Logic.Equiv.Fin.Rotate]
