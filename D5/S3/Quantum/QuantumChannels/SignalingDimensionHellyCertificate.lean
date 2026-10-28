@@ -58,9 +58,8 @@ private lemma channel_decomposition {α β : Type} [Fintype α] [Fintype β]
           (if z = x then (if f z = y then 1 else 0) else 1) := by
         apply Finset.sum_congr rfl
         intro f _
-        rw [Finset.prod_mul_distrib]
-        congr 1
-        exact (Fintype.prod_ite_eq' x _).symm
+        rw [Finset.prod_mul_distrib, Fintype.prod_ite_eq' x
+          (fun z => if f z = y then (1 : ℝ) else 0)]
       _ = ∏ z, ∑ b, p z b *
           (if z = x then (if b = y then 1 else 0) else 1) :=
         (Fintype.prod_sum (fun z b => p z b *
@@ -160,9 +159,19 @@ private lemma simulable_common {α : Type} [Fintype α] {k d : ℕ}
   · change (∑ j : Fin n × (α → Fin d) × (Fin d → Fin k), q j.1 * (∏ x, t j.1 x (j.2.1 x)) *
         ∏ μ, r j.1 μ (j.2.2 μ)) = 1
     simp only [Fintype.sum_prod_type]
-    simp_rw [← Finset.mul_sum, (channel_decomposition _ (hr _)).2.1, mul_one]
-    simp_rw [← Finset.mul_sum, (channel_decomposition _ (ht _)).2.1, mul_one]
-    exact hqs
+    calc
+      _ = ∑ l, ∑ f : α → Fin d, q l * (∏ z, t l z (f z)) * 1 := by
+        apply Finset.sum_congr rfl
+        intro l _
+        apply Finset.sum_congr rfl
+        intro f _
+        rw [← Finset.mul_sum, (channel_decomposition (r l) (hr l)).2.1]
+      _ = ∑ l, q l := by
+        apply Finset.sum_congr rfl
+        intro l _
+        simp only [mul_one]
+        rw [← Finset.mul_sum, (channel_decomposition (t l) (ht l)).2.1, mul_one]
+      _ = 1 := hqs
   · intro j
     change (Finset.univ.image (fun x => j.2.2 (j.2.1 x))).card ≤ d
     calc
@@ -186,11 +195,18 @@ private lemma simulable_common {α : Type} [Fintype α] {k d : ℕ}
       _ = ∑ f : α → Fin d, q l * (∏ z, t l z (f z)) * r l (f x) y := by
         apply Finset.sum_congr rfl
         intro f _
-        simp_rw [mul_assoc, ← Finset.mul_sum,
-          (channel_decomposition (r l) (hr l)).2.2 (f x) y]
+        calc
+          _ = (q l * ∏ z, t l z (f z)) *
+              ∑ g : Fin d → Fin k, (∏ μ, r l μ (g μ)) *
+                (if g (f x) = y then 1 else 0) := by
+            rw [Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro g _
+            ring
+          _ = _ := by rw [(channel_decomposition (r l) (hr l)).2.2 (f x) y]
       _ = q l * ∑ μ, t l x μ * r l μ y := by
         simp_rw [mul_assoc]
-        rw [← Finset.mul_sum, channel_expectation (t l) (ht l)]
+        rw [← Finset.mul_sum, channel_expectation (t l) (ht l) x (fun μ => r l μ y)]
       _ = _ := by congr 1; apply Finset.sum_congr rfl; intro μ _; ring
 
 private lemma finite_simulation {α ι : Type} [Fintype ι] {k d : ℕ}
@@ -266,8 +282,10 @@ private lemma common_simulable {α : Type} [Fintype α] [Nonempty α] {k d : ℕ
         change q s * ((if (e s μ).val = y then 1 else 0) *
           (if q s = 0 then _ else _)) = _
         rw [ite_eq_right hz]
-        split <;> simp_all only [one_mul, zero_mul, mul_zero]
-        field_simp
+        by_cases he : (e s μ).val = y
+        · rw [ite_eq_left he, one_mul]
+          field_simp
+        · rw [ite_eq_right he, zero_mul, mul_zero]
       rw [Finset.mul_sum]
       simp_rw [heach]
       rw [(e s).sum_comp (fun b : s.val => if b.val = y then a x s b else 0)]
@@ -311,7 +329,7 @@ private lemma common_simulable {α : Type} [Fintype α] [Nonempty α] {k d : ℕ
     intro s _
     simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
     simp_rw [mul_assoc]
-    rw [← Finset.mul_sum, channel_expectation (c s) (hc s)]
+    rw [← Finset.mul_sum, channel_expectation (c s) (hc s) x (fun μ => r s μ y)]
     simpa only [mul_comm] using (hrec s x y).symm
 
 private lemma empty_inputs_simulable {α : Type} [IsEmpty α] {k d : ℕ}
