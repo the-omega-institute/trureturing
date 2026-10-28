@@ -1,0 +1,15 @@
+**定义 9.1（归一父历史与实际子集）。** In the domain $\mathcal W_3$ of Definition 1.1, write a normalized target as $W=(P,f,d)$ and put
+
+$$
+\begin{gathered}
+H_p(y)=(0,J,24,M,48,M,312/5,J,y),\qquad
+\mathcal P_y=\mathcal F(H_p(y)),\\
+\mathcal F_y^E(z)=\mathcal F((H_p(y),E,z)),
+\qquad E\in\{M,J\},\quad y,z\in\mathbb R.
+\end{gathered}                                                     \tag{9.1}
+$$
+
+Thus $H_p(y)$ is precisely $H_J(Y)$ of Definition 5.1 at $D_0=0$, $\lambda=1$, $Y=y$. No drift, gain ray or root condition is imposed on $\mathcal P_y$ or its actual response subsets. Sources are strictly entrywise positive real rank-one trace-one matrices; symmetry is not assumed. Gains range over all nonzero real polynomials of degree at most three, with every sign, degree drop, repeated root and sampled root allowed, and $d$ is any real number.
+
+The clocks, actions, stopping rules and complete target are those of Definition 1.1. In particular, each chosen atomic action is immediately read on the same unresettable, uncopyable history at its original clock. A response formula for an unchosen action is a function of a fixed target, not an additional observation.
+
