@@ -106,9 +106,13 @@ Problem 58 asks: Is every graph realisable as a global coalition graph? In full,
 
 **Theorem 1.9 (Negation of the whole universal assertion).**
 
-$$\neg (claim)$$
+$$\neg ((\forall (V : Type), \forall [\operatorname{Finite}\left(V\right)], (2 \le Nat.\operatorname{card}\left(V\right)) \Rightarrow (\forall (H : \operatorname{SimpleGraph}\left(V\right)), \exists (W : Type), \exists (_ : \operatorname{Finite}\left(W\right)), \exists (G : \operatorname{SimpleGraph}\left(W\right)), (2 \le Nat.\operatorname{card}\left(W\right)) \land (\exists (pi : \operatorname{GCPartition}\left(G\right)), \operatorname{Nonempty}\left((SimpleGraph.\operatorname{Iso}\left(\operatorname{globalCoalitionGraph}\left(G, pi\right), H\right))\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/GlobalCoalitionUniversality.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/anholcer-2025-global-coalition-universality` (refuted) by `D5/S3/Combinatorics/Graph/Domination/GlobalCoalitionUniversality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"anholcer-2025-global-coalition-universality","declaration_gid":"D5/S3/Combinatorics/Graph/Domination/GlobalCoalitionUniversality.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
