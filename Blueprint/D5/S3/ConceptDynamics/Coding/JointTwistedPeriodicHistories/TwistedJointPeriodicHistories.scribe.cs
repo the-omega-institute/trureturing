@@ -48,5 +48,13 @@ internal sealed class TwistedJointPeriodicHistoriesDocument : IScribeDocumentDef
                 H("Exact joint coefficient count"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
                     "For positive d and compatible twists, the joint carrier has the existing diagonal conjugacy "
-                    + "sum at the gcd time."))), DescribeRole.Theorem))));
+                    + "sum at the gcd time."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("joint-twisted-cardinality-conjugacy-invariant"),
+                DeclarationHandle.Create(Prefix + "jointTwistedPeriod_card_conjugacy_invariant"),
+                H("Conjugacy-invariant joint coefficient count"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "The same joint carrier cardinality can be written with any conjugate representative of the "
+                    + "signed gcd twist. Reindexing the finite group sum by left multiplication preserves the "
+                    + "noncommutative conjugacy weight."))), DescribeRole.Theorem))));
 }
