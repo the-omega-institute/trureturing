@@ -276,6 +276,14 @@ theorem early_late_marked_probability (B : Band) (n : ℕ) (hn : 1≤n)
             jumpKraus B.c B.a (H (t-1)) (survival B.c H (t-1))
               (jumpRate B.c H (t-1)) i *ᵥ
                 (successfulKraus B.c B.a B.a (B.q^n) *ᵥ psi)) ∧
+      (∀ psi : Fin 5 → ℂ,
+        successfulKraus B.c B.a (B.early n hn 2)
+            (survival B.c (B.early n hn) 2) *ᵥ psi =
+          successfulKraus B.c B.a (B.late n hn 2)
+            (survival B.c (B.late n hn) 2) *ᵥ psi ∧
+        successfulKraus B.c B.a (B.early n hn 2)
+            (survival B.c (B.early n hn) 2) *ᵥ psi =
+          successfulKraus B.c B.a B.a (B.q^(n+1)) *ᵥ psi) ∧
       (∀ (i : Fin 5) (t : ℝ), failureMeasure B.c B.a beta 2 m theta k i {t}=0) := by
   intro e
   have hn0 : (n:ℝ)≠0 := by exact_mod_cast (by omega : n≠0)
@@ -307,7 +315,7 @@ theorem early_late_marked_probability (B : Band) (n : ℕ) (hn : 1≤n)
       (if e then B.earlySuffix else B.lateSuffix) 1 =
       (if e then B.early n hn else B.late n hn) := by cases e <;> rfl
   rw [hconcat] at hB hf
-  refine ⟨isProbabilityMeasure_iff.mpr ?_,?_,?_,?_⟩
+  refine ⟨isProbabilityMeasure_iff.mpr ?_,?_,?_,?_,?_⟩
   · rw [native_law_apply _ _ _ _ _ _ _ B.c_lt ⟨B.a_pos,B.ab.trans B.bc⟩
       (by rw [hend]; exact ⟨B.a_pos,B.ab.trans B.bc⟩) univ MeasurableSet.univ]
     simpa only [Balance,mem_univ,ite_true] using hB
@@ -337,6 +345,12 @@ theorem early_late_marked_probability (B : Band) (n : ℕ) (hn : 1≤n)
     · intro i
       rw [hheight,hrate]
       exact (hjump i psi).symm
+  · obtain ⟨_,_,_,_,_,_,_,he2,hl2,hse,hsl,_,_⟩ :=
+      early_late_native_survival B n hn 0
+    intro psi
+    constructor
+    · rw [he2,hse,hl2,hsl]
+    · rw [he2,hse]
   · intro i t
     change ((volume.restrict (Ioc (0:ℝ) 2)).withDensity
       (fun u => ENNReal.ofReal (failureDensity B.c B.a beta m theta
