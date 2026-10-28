@@ -14,15 +14,15 @@ open scoped BigOperators unitInterval
 namespace D5.S3.Geometry.FiniteComponentClosure
 
 open private
-  D5.S3.Geometry.FiniteComponentClosure.joinHomeomorph
-  D5.S3.Geometry.FiniteComponentClosure.TopologicalCone
-  D5.S3.Geometry.FiniteComponentClosure.coneHeight
-  D5.S3.Geometry.FiniteComponentClosure.coneBaseSuspensionHomeomorph
-  D5.S3.Geometry.FiniteComponentClosure.singleton_coordinates
+  joinHomeomorph
+  TopologicalCone
+  coneHeight
+  coneBaseSuspensionHomeomorph
+  singleton_coordinates
   from D5.S3.Geometry.FiniteComponentClosure.Transport
 
 open private
-  D5.S3.Geometry.FiniteComponentClosure.vertexComplex
+  vertexComplex
   from D5.S3.Geometry.FiniteComponentClosure.Models
 
 section ConeCovers

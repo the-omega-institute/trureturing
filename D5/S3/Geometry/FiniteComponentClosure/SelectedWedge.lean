@@ -14,24 +14,24 @@ open scoped BigOperators unitInterval
 namespace D5.S3.Geometry.FiniteComponentClosure
 
 open private
-  D5.S3.Geometry.FiniteComponentClosure.nativeCylinder
+  nativeCylinder
   from D5.S3.Geometry.FiniteComponentClosure.Transport
 
 open private
-  D5.S3.Geometry.FiniteComponentClosure.bouquetVertex_face
-  D5.S3.Geometry.FiniteComponentClosure.bouquetBases
-  D5.S3.Geometry.FiniteComponentClosure.normalVertex_face
-  D5.S3.Geometry.FiniteComponentClosure.normalPoint_embedding
-  D5.S3.Geometry.FiniteComponentClosure.normalPath
-  D5.S3.Geometry.FiniteComponentClosure.based_normalization
-  D5.S3.Geometry.FiniteComponentClosure.glueLeft
-  D5.S3.Geometry.FiniteComponentClosure.vertexGluing
-  D5.S3.Geometry.FiniteComponentClosure.vertexGluingHomeomorph
-  D5.S3.Geometry.FiniteComponentClosure.selectedVertexGluing
+  bouquetVertex_face
+  bouquetBases
+  normalVertex_face
+  normalPoint_embedding
+  normalPath
+  based_normalization
+  glueLeft
+  vertexGluing
+  vertexGluingHomeomorph
+  selectedVertexGluing
   from D5.S3.Geometry.FiniteComponentClosure.Models
 
 open private
-  D5.S3.Geometry.FiniteComponentClosure.wedgeHomeomorph
+  wedgeHomeomorph
   from D5.S3.Geometry.FiniteComponentClosure.ConeSplits
 
 section BouquetConcatenation

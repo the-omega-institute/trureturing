@@ -14,18 +14,18 @@ open scoped BigOperators unitInterval
 namespace D5.S3.Geometry.FiniteComponentClosure
 
 open private
-  D5.S3.Geometry.FiniteComponentClosure.pointJoinContraction
-  D5.S3.Geometry.FiniteComponentClosure.singleton_coordinates
-  D5.S3.Geometry.FiniteComponentClosure.sphereVertex_face
-  D5.S3.Geometry.FiniteComponentClosure.spherePath
-  D5.S3.Geometry.FiniteComponentClosure.nativeCylinder
-  D5.S3.Geometry.FiniteComponentClosure.coordinateLinear
-  D5.S3.Geometry.FiniteComponentClosure.coordinateLinear_at
-  D5.S3.Geometry.FiniteComponentClosure.coordinateLinear_single
-  D5.S3.Geometry.FiniteComponentClosure.coordinateHomeomorph
-  D5.S3.Geometry.FiniteComponentClosure.coproductComplex
-  D5.S3.Geometry.FiniteComponentClosure.mem_coproductComplex
-  D5.S3.Geometry.FiniteComponentClosure.coproductHomeomorph
+  pointJoinContraction
+  singleton_coordinates
+  sphereVertex_face
+  spherePath
+  nativeCylinder
+  coordinateLinear
+  coordinateLinear_at
+  coordinateLinear_single
+  coordinateHomeomorph
+  coproductComplex
+  mem_coproductComplex
+  coproductHomeomorph
   from D5.S3.Geometry.FiniteComponentClosure.Transport
 
 abbrev BouquetSpec := List {d : ℕ // 0 < d}

@@ -14,45 +14,45 @@ open scoped BigOperators unitInterval
 namespace D5.S3.Geometry.FiniteComponentClosure
 
 open private
-  D5.S3.Geometry.FiniteComponentClosure.joinHomeomorph
-  D5.S3.Geometry.FiniteComponentClosure.coneHeight
-  D5.S3.Geometry.FiniteComponentClosure.coneBaseSuspensionHomeomorph
-  D5.S3.Geometry.FiniteComponentClosure.coneBase_north
-  D5.S3.Geometry.FiniteComponentClosure.twoPoints_singleton
-  D5.S3.Geometry.FiniteComponentClosure.twoPoint
-  D5.S3.Geometry.FiniteComponentClosure.twoPoints_exhaust
-  D5.S3.Geometry.FiniteComponentClosure.nativeCylinder
-  D5.S3.Geometry.FiniteComponentClosure.coordinateLinear_single
+  joinHomeomorph
+  coneHeight
+  coneBaseSuspensionHomeomorph
+  coneBase_north
+  twoPoints_singleton
+  twoPoint
+  twoPoints_exhaust
+  nativeCylinder
+  coordinateLinear_single
   from D5.S3.Geometry.FiniteComponentClosure.Transport
 
 open private
-  D5.S3.Geometry.FiniteComponentClosure.vertexComplex
-  D5.S3.Geometry.FiniteComponentClosure.bouquetVertex_face
-  D5.S3.Geometry.FiniteComponentClosure.bouquetPath
-  D5.S3.Geometry.FiniteComponentClosure.glueLeft
-  D5.S3.Geometry.FiniteComponentClosure.vertexGluingHomeomorph
+  vertexComplex
+  bouquetVertex_face
+  bouquetPath
+  glueLeft
+  vertexGluingHomeomorph
   from D5.S3.Geometry.FiniteComponentClosure.Models
 
 open private
-  D5.S3.Geometry.FiniteComponentClosure.wedgeSubsingletonHomeomorph
-  D5.S3.Geometry.FiniteComponentClosure.finiteConeCover
-  D5.S3.Geometry.FiniteComponentClosure.join_left_vertex
-  D5.S3.Geometry.FiniteComponentClosure.join_right_vertex
-  D5.S3.Geometry.FiniteComponentClosure.join_mono_left
-  D5.S3.Geometry.FiniteComponentClosure.vertexComplex_le
-  D5.S3.Geometry.FiniteComponentClosure.join_union
-  D5.S3.Geometry.FiniteComponentClosure.disjoint_join_overlap
-  D5.S3.Geometry.FiniteComponentClosure.join_vertex_cone
-  D5.S3.Geometry.FiniteComponentClosure.nativeConeHomeomorph
-  D5.S3.Geometry.FiniteComponentClosure.nativeCone_base
-  D5.S3.Geometry.FiniteComponentClosure.nativeConeBaseHomeomorph
-  D5.S3.Geometry.FiniteComponentClosure.realization_pullback_intersection
-  D5.S3.Geometry.FiniteComponentClosure.join_intersection
+  wedgeSubsingletonHomeomorph
+  finiteConeCover
+  join_left_vertex
+  join_right_vertex
+  join_mono_left
+  vertexComplex_le
+  join_union
+  disjoint_join_overlap
+  join_vertex_cone
+  nativeConeHomeomorph
+  nativeCone_base
+  nativeConeBaseHomeomorph
+  realization_pullback_intersection
+  join_intersection
   from D5.S3.Geometry.FiniteComponentClosure.ConeSplits
 
 open private
-  D5.S3.Geometry.FiniteComponentClosure.bouquetAppendHomeomorph
-  D5.S3.Geometry.FiniteComponentClosure.vertexWedge_vertex
+  bouquetAppendHomeomorph
+  vertexWedge_vertex
   from D5.S3.Geometry.FiniteComponentClosure.SelectedWedge
 
 section BasedComposition
@@ -598,88 +598,5 @@ private def basedBouquetAppend (ds es : BouquetSpec) :
     (ds ++ es) (bouquetAppendHomeomorph ds es).toHomotopyEquiv
 
 end NativeBasedNormalization
-
-section FiniteFamilyJoinAssembly
-
-variable {V W : Type*} [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
-
-private structure NormalizedJoinPiece (Z : PreAbstractSimplicialComplex W)
-    (b : W) (hb : ({b} : Finset W) ∈ Z) where
-  complex : PreAbstractSimplicialComplex V
-  vertex : V
-  vertex_face : ({vertex} : Finset V) ∈ complex
-  spec : BouquetSpec
-  normalization : SingletonRetractionBasedInverse.BasedEquivalence
-    (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin complex Z)
-      (Sum.inr b) (join_right_vertex complex Z b hb)) (bouquetPoint spec)
-
-private def unionList (ps : List (PreAbstractSimplicialComplex V)) :
-    PreAbstractSimplicialComplex V := ps.foldr (· ⊔ ·) ⊥
-
-private theorem mem_unionList (ps : List (PreAbstractSimplicialComplex V)) (s : Finset V) :
-    s ∈ unionList ps ↔ ∃ P ∈ ps, s ∈ P := by
-  induction ps with
-  | nil =>
-    constructor
-    · intro h; exact False.elim h
-    · rintro ⟨P, hP, _⟩; cases hP
-  | cons P ps ih =>
-    change (s ∈ P ∨ s ∈ unionList ps) ↔ _
-    simp only [ih, List.mem_cons, exists_eq_or_imp]
-
-private def familyJoinSpec (es : BouquetSpec) {Z : PreAbstractSimplicialComplex W}
-    {b : W} {hb : ({b} : Finset W) ∈ Z} : List (NormalizedJoinPiece (V := V) Z b hb) → BouquetSpec
-  | [] => []
-  | [P] => P.spec
-  | P :: Q :: ps => P.spec ++ (familyJoinSpec es (Q :: ps) ++ es)
-
-/-- Assemble finitely many disjoint native components, retaining one suspension per extra component. -/
-private def familyJoinBased (Z : PreAbstractSimplicialComplex W) (b : W)
-    (hb : ({b} : Finset W) ∈ Z) (es : BouquetSpec)
-    (S : SingletonRetractionBasedInverse.BasedEquivalence
-      (nativeSuspensionPoint Z) (bouquetPoint es))
-    (ps : List (NormalizedJoinPiece (V := V) Z b hb)) :
-    (hne : ps ≠ []) →
-    (hd : ps.Pairwise (fun P Q => P.complex ⊓ Q.complex = ⊥)) →
-    SingletonRetractionBasedInverse.BasedEquivalence
-      (FiniteVertexCylinder.vertexPoint
-        (FiniteSimplicialJoin.simplicialJoin (unionList (ps.map (·.complex))) Z)
-        (Sum.inr b) (join_right_vertex _ Z b hb)) (bouquetPoint (familyJoinSpec es ps)) := by
-  induction ps with
-  | nil => intro hne; exact False.elim (hne rfl)
-  | cons P ps ih =>
-    intro hne hd
-    cases ps with
-    | nil =>
-      let e := Homeomorph.setCongr (congrArg FiniteConeCollapse.realization
-        (show FiniteSimplicialJoin.simplicialJoin
-          (unionList ([P].map (·.complex))) Z =
-          FiniteSimplicialJoin.simplicialJoin P.complex Z by simp [unionList]))
-      exact basedTrans (basedHomeomorphism e _
-        (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin P.complex Z)
-          (Sum.inr b) (join_right_vertex P.complex Z b hb)) (Subtype.ext rfl)) P.normalization
-    | cons Q qs =>
-      let tail := Q :: qs
-      let N := unionList (tail.map (·.complex))
-      have hN : ({Q.vertex} : Finset V) ∈ N := by
-        apply (mem_unionList _ _).mpr
-        exact ⟨Q.complex, by simp [tail], Q.vertex_face⟩
-      have hPN : P.complex ⊓ N = ⊥ := by
-        apply le_antisymm _ bot_le
-        rintro s ⟨hs, ht⟩
-        obtain ⟨J, hJ, hJs⟩ := (mem_unionList _ s).mp ht
-        obtain ⟨R, hR, rfl⟩ := List.mem_map.mp hJ
-        exact ((List.pairwise_cons.mp hd).1 R hR) ▸ ⟨hs, hJs⟩
-      let F := twoComponentJoinBased P.complex N Z hPN P.vertex P.vertex_face
-        Q.vertex hN b hb
-      let T := basedTrans
-        (FiniteConeUnionWedge.basedWedgeEquivalence
-          (ih (by simp) (List.pairwise_cons.mp hd).2) S)
-        (basedBouquetAppend (familyJoinSpec es tail) es)
-      exact basedTrans F (basedTrans
-        (FiniteConeUnionWedge.basedWedgeEquivalence P.normalization T)
-        (basedBouquetAppend P.spec (familyJoinSpec es tail ++ es)))
-
-end FiniteFamilyJoinAssembly
 
 end D5.S3.Geometry.FiniteComponentClosure

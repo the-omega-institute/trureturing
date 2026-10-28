@@ -5,6 +5,7 @@
    anchors: [mathlib/module/Mathlib.Topology.Homeomorph.Quotient]
    utility: none
    digest: Actual join transport, suspension quotients, sphere models, and finite coordinate coproducts. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Geometry.EuclideanSphereJoin
 import D5.S3.Geometry.FiniteVertexCylinder
 import D5.S3.Geometry.FiniteConeUnionWedge
