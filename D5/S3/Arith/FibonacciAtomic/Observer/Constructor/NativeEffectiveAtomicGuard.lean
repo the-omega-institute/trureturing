@@ -23,7 +23,7 @@ open PresburgerArithmetic
 /-- A finite syntactic Boolean constant. -/
 def constant (b : Bool) : Formula := .qf (if b then .truth else .falsity)
 
-private theorem constant_holds (b : Bool) (xs : List Int) :
+theorem constant_holds (b : Bool) (xs : List Int) :
     (constant b).holds xs ↔ b = true := by cases b <;> simp [constant, Formula.holds, QF.eval]
 
 /-- Equality of an original affine index plus a fixed offset to a fixed rank. -/
@@ -58,11 +58,15 @@ private theorem tokenEquals_holds {n k m : Nat} (I : Input n k m) (p : Fin n →
       evaluate (ranks I p) v (.token j c) = atomic r := by
   refine Fin.lastCases ?_ (fun i => ?_) j
   · simp only [tokenEquals, Fin.lastCases_last, constant_holds, Bool.false_eq_true]
+    simp only [evaluate, CompletionPositiveDriftRegion.value, tokenKind, tokenRank,
+      Fin.lastCases_last, Bool.false_eq_true, ite_false]
     change False ↔ Omega = atomic r
     exact ⟨False.elim, fun h => CompletionPositiveDriftRegion.omega_not_finite
       (h.symm ▸ CompletionPositiveDriftRegion.atomic_finite r)⟩
   · simp only [tokenEquals, Fin.lastCases_castSucc]
     rw [rankEquals_holds _ _ _ _ (legal.2 i)]
+    simp only [evaluate, CompletionPositiveDriftRegion.value, tokenKind, tokenRank,
+      Fin.lastCases_castSucc, ite_true]
     change ranks I p i + c = r ↔ atomic (ranks I p i + c) = atomic r
     exact CompletionPositiveDriftRegion.atomic_injective.eq_iff.symm
 
@@ -90,7 +94,7 @@ private theorem expressionAtom_holds {n k m : Nat} (I : Input n k m)
   | var a i =>
     simp only [expressionAtom]
     by_cases h : a ≤ j
-    · rw [if_pos h, correct (j-a) (by omega)]
+    · rw [ite_eq_left h, correct (j-a) (by omega)]
       change v i = atomic (j-a) ↔ rho^[a] (v i) = atomic j
       constructor
       · intro eq
@@ -101,7 +105,8 @@ private theorem expressionAtom_holds {n k m : Nat} (I : Input n k m)
         obtain ⟨r, rank, value⟩ := atomic_predecessor a j (v i) eq
         have : r = j-a := by omega
         exact this ▸ value
-    · rw [if_neg h, constant_holds]
+    · rw [ite_eq_right h, constant_holds]
+      simp only [Bool.false_eq_true]
       change False ↔ rho^[a] (v i) = atomic j
       constructor
       · exact False.elim
@@ -111,8 +116,8 @@ private theorem expressionAtom_holds {n k m : Nat} (I : Input n k m)
   | pair A B ihA ihB =>
     simp only [expressionAtom]
     by_cases h : 2 ≤ j
-    · rw [if_pos h]
-      change (_ ∧ _) ↔ node _ _ = atomic j
+    · rw [ite_eq_left h]
+      change (_ ∧ _) ↔ node (evaluate (ranks I p) v A) (evaluate (ranks I p) v B) = atomic j
       rw [ihA (j-1) (fun r hr => correct r (by omega)),
         ihB (j-2) (fun r hr => correct r (by omega))]
       constructor
@@ -126,8 +131,9 @@ private theorem expressionAtom_holds {n k m : Nat} (I : Input n k m)
         have h1 : r+1 = j-1 := by omega
         have h2 : r = j-2 := by omega
         exact ⟨h1 ▸ ha, h2 ▸ hb⟩
-    · rw [if_neg h, constant_holds]
-      change False ↔ node _ _ = atomic j
+    · rw [ite_eq_right h, constant_holds]
+      simp only [Bool.false_eq_true]
+      change False ↔ node (evaluate (ranks I p) v A) (evaluate (ranks I p) v B) = atomic j
       constructor
       · exact False.elim
       · intro eq
@@ -147,8 +153,9 @@ def stateStep {n k m s : Nat} (I : Input n k m) (mode : Mode s m)
 syntax. Pair roots decrease that rank before any recursive state call. -/
 def stateAtom {n k m s : Nat} (I : Input n k m) (mode : Mode s m) (j : Nat) :
     Fin m → Formula :=
-  Nat.strongRecOn j fun j rec =>
-    stateStep I mode (fun r => if h : r < j then rec r h else fun _ => constant false) j
+  stateStep I mode (fun r => if h : r < j then stateAtom I mode r
+    else fun _ => constant false) j
+termination_by j
 
 /-- The complete exact atomic observation formula; it never chooses a
 semantic normal form or enumerates the original parameter values. -/
@@ -165,7 +172,7 @@ private theorem stateAtom_holds {n k m s : Nat} (I : Input n k m)
   induction j using Nat.strong_induction_on with
   | h j ih =>
     intro i
-    rw [stateAtom, Nat.strongRecOn_eq]
+    rw [stateAtom]
     change (stateStep I mode _ j i).holds _ ↔ _
     cases eq : I.equations i with
     | none =>
@@ -189,17 +196,17 @@ private theorem stateAtom_holds {n k m s : Nat} (I : Input n k m)
       | pair A B =>
         simp only [expressionAtom]
         by_cases h : 2 ≤ j
-        · rw [if_pos h]
+        · rw [ite_eq_left h]
           have correct (r : Nat) (hr : r ≤ j-1) (i : Fin m) :
               ((if h : r < j then stateAtom I mode r else fun _ => constant false) i).holds
                 (environment p) ↔ v i = atomic r := by
-            rw [dif_pos (by omega : r < j)]
+            rw [dite_eq_left (by omega : r < j)]
             exact ih r (by omega) i
           rw [Formula.holds,
             expressionAtom_holds I p legal v _ A (j-1) correct,
             expressionAtom_holds I p legal v _ B (j-2)
               (fun r hr => correct r (by omega))]
-          change (_ ∧ _) ↔ node _ _ = atomic j
+          change (_ ∧ _) ↔ node (evaluate (ranks I p) v A) (evaluate (ranks I p) v B) = atomic j
           constructor
           · rintro ⟨ha, hb⟩
             rw [ha, hb]
@@ -211,8 +218,9 @@ private theorem stateAtom_holds {n k m s : Nat} (I : Input n k m)
             have h1 : r+1 = j-1 := by omega
             have h2 : r = j-2 := by omega
             exact ⟨h1 ▸ ha, h2 ▸ hb⟩
-        · rw [if_neg h, constant_holds]
-          change False ↔ node _ _ = atomic j
+        · rw [ite_eq_right h, constant_holds]
+          simp only [Bool.false_eq_true]
+          change False ↔ node (evaluate (ranks I p) v A) (evaluate (ranks I p) v B) = atomic j
           constructor
           · exact False.elim
           · intro same
@@ -226,8 +234,6 @@ theorem atomic_guard_correct {n k m s : Nat} (I : Input n k m)
     (legal : Legal I p) (E : Expression k m) (j : Nat) :
     (atomicGuard I mode E j).holds (environment p) ↔
       evaluate (ranks I p) (canonical I.equations (ranks I p) guarded mode) E = atomic j := by
-  have law := (normalized_saturation I.equations (ranks I p) guarded []
-    (fun _ => none))
   have canonicalLaw := Classical.choose_spec
     (guarded_extension I.equations (ranks I p) guarded (canonicalFree mode)).exists
   exact expressionAtom_holds I p legal _ _ E j
