@@ -568,34 +568,4 @@ theorem complete_output_convergence (c a T eta M : ℝ)
     (fun n => complete_operational_nonneg.{v} c a T (k n) (chi n) (l n) (psi n)
       hc ha (hk n) (hl n) (hk0 n) (hl0 n)) hbound hu
 
-/-- The quantitative stability statement retains the actual tensor success map
-and every Borel failure event for the same arbitrary positive joint state. -/
-theorem complete_output_stability (c a T eta delta : ℝ) (k chi l psi : ℝ → ℝ)
-    (hc : c < 1/2) (ha : a ∈ Ioo 0 c) (he : 0 < eta)
-    (hk : OriginalControl (c,c,1-2*c) T k chi)
-    (hl : OriginalControl (c,c,1-2*c) T l psi) (hk0 : k 0=a) (hl0 : l 0=a)
-    (hmk : ∀ t ∈ Icc 0 T, k t ∈ Icc eta (c-eta))
-    (hml : ∀ t ∈ Icc 0 T, l t ∈ Icc eta (c-eta))
-    (hd : ∀ t ∈ Icc 0 T, |k t-l t| ≤ delta)
-    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
-    (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1) :
-    (∀ z : EuclideanSpace ℂ (Fin 5) ⊗[ℂ] H,
-      terminalKraus c a k chi T (tensorCoordinates z) = tensorCoordinates
-        (TensorProduct.map (terminalKraus (H := ℂ) c a k chi T).toLinearMap
-          (LinearMap.id : H →ₗ[ℂ] H) z)) ∧
-    (∀ (i : Fin 5) (E : Set ℝ), MeasurableSet E →
-      IntegrableOn (fun t => phasedFailure c a k chi t i rho hpos) ((Ioc 0 T) ∩ E) ∧
-      IntegrableOn (fun t => phasedFailure c a l psi t i rho hpos) ((Ioc 0 T) ∩ E)) ∧
-    completeOperationalDistance.{v} c a T k chi l psi ≤
-      Real.sqrt ((budget eta delta (derivativeError T k l) (variation T l)+delta)/initialFloor c a)+
-      phaseError c T k chi l psi+
-      ((1+variation T l/eta+variation T k)*
-        budget eta delta (derivativeError T k l) (variation T l)+delta+derivativeError T k l)/
-        (2*initialFloor c a) := by
-  refine ⟨fun z => tensor_diagonal _ z,?_,?_⟩
-  · intro i E hE
-    exact ⟨native_failure_bochner c a T k chi hc ha hk rho hpos i E hE,
-      native_failure_bochner c a T l psi hc ha hl rho hpos i E hE⟩
-  · exact complete_error_bound.{v} c a T eta delta k chi l psi hc ha he hk hl hk0 hl0 hmk hml hd
-
 end D5.S3.Quantum.Fibers.OriginalDensityStability

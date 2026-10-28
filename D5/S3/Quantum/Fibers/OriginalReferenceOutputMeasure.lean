@@ -60,7 +60,7 @@ private theorem referenceTensorJump_eq (c a k S : ℝ) (g : Fin 5 → ℝ) (i : 
   rw [← OriginalReferenceLegOutput.tensor_jump_intertwining,
     LinearIsometryEquiv.apply_symm_apply]
 
-theorem source_coefficient (c a beta : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
+private theorem source_coefficient (c a beta : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
     (k : ℝ → ℝ) (i : Fin 5) (t : ℝ) (hc : c < 1 / 2) (ha : a ∈ Ioo 0 c) :
     failureDensity c a beta m theta k i t = modeCoefficient c a k i t * p c a i := by
   rw [failureDensity, jump_action]
@@ -68,7 +68,7 @@ theorem source_coefficient (c a beta : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
   rw [source_diagonal c a beta m theta hc ha]
   ring
 
-theorem coefficient_measurable (c a T : ℝ) (k : ℝ → ℝ) (i : Fin 5)
+private theorem coefficient_measurable (c a T : ℝ) (k : ℝ → ℝ) (i : Fin 5)
     (hk : OriginalControl (c,c,1-2*c) T k (fun _ => (0:ℝ))) :
     AEStronglyMeasurable (modeCoefficient c a k i) (volume.restrict (Ioc 0 T)) := by
   have hkm : AEStronglyMeasurable k (volume.restrict (Ioc 0 T)) :=

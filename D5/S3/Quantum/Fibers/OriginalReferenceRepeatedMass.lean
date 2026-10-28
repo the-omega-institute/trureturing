@@ -31,7 +31,7 @@ theorem survival_ac (c T : ℝ) (k : ℝ → ℝ)
     simpa only [Real.norm_eq_abs,abs_le,mem_Icc] using hb
   exact hK.comp_absolutelyContinuousOnInterval hm ha
 
-theorem probability_ac (c T : ℝ) (k : ℝ → ℝ)
+private theorem probability_ac (c T : ℝ) (k : ℝ → ℝ)
     (hk : AbsolutelyContinuousOnInterval k 0 T) (i : Fin 5) :
     AbsolutelyContinuousOnInterval (fun t => p c (k t) i) 0 T := by
   have hc (x : ℝ) : AbsolutelyContinuousOnInterval (fun _ : ℝ => x) 0 T :=
@@ -44,7 +44,7 @@ theorem probability_ac (c T : ℝ) (k : ℝ → ℝ)
   · exact (hc c).sub hk
   · simpa using hk
 
-theorem rate_nonneg (c : ℝ) (k : ℝ → ℝ) (t : ℝ)
+private theorem rate_nonneg (c : ℝ) (k : ℝ → ℝ) (t : ℝ)
     (hc : c < 1 / 2) (hb : k t ∈ Ioo 0 c) (hd : DifferentiableAt ℝ k t)
     (i : Fin 5) : 0 ≤ jumpRate c k t i := by
   have hp : HasDerivAt (fun u => p c (k u) i)
@@ -421,7 +421,7 @@ def successOutput (c a k S : ℝ) (rho : TraceClass (Blocks (Fin 5) H)) :
     (referenceSuccess c a k S * rho.1 * (referenceSuccess c a k S).adjoint)
     (isTraceClass_mul_mul (TraceClass.isTraceClass_coe rho))
 
-theorem tensor_diagonal {m : ℕ} (d : Fin m → ℂ)
+private theorem tensor_diagonal {m : ℕ} (d : Fin m → ℂ)
     (z : EuclideanSpace ℂ (Fin m) ⊗[ℂ] H) :
     diagonalAction d (tensorCoordinates z) = tensorCoordinates
       (TensorProduct.map (diagonalAction (H := ℂ) d).toLinearMap
