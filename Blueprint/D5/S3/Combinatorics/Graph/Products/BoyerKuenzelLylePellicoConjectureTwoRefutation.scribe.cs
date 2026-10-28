@@ -42,7 +42,11 @@ internal sealed class BoyerKuenzelLylePellicoConjectureTwoRefutationDocument : I
                     "of the balanced complete k-partite host. AntiNeighborhoodFree excludes an " +
                     "independent set of size alpha(G) outside each closed neighborhood: the forbidden " +
                     "induced graph in the source is the edgeless graph, with the overline retained. " +
-                    "These two conditions form the right side."))),
+                    "These two conditions form the right side. The displayed statement expands every " +
+                    "private predicate. Here card is Finset.card, indepNum is the graph independence " +
+                    "number, Coloring is SimpleGraph.Coloring, Adj is adjacency, and Connected is " +
+                    "graph connectedness. A finite set annotated with Set V is coerced to its " +
+                    "underlying vertex set; IsIndepSet is the Mathlib independence predicate."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The 3 by 3 rook graph counterexample"),
@@ -69,7 +73,14 @@ internal sealed class BoyerKuenzelLylePellicoConjectureTwoRefutationDocument : I
                     "n >= 2(m-1); their maximal-colorability construction supplies the obstruction " +
                     "used here at m=n=3. These facts are credited to that source. The conclusion here " +
                     "connects this obstruction to the unrestricted Conjecture 2 of the 2025 paper. " +
-                    "It establishes no corrected conjecture and makes no priority claim."))),
+                    "It establishes no corrected conjecture and makes no priority claim.")),
+                    Paragraph(Text(
+                    "The displayed negation expands every private predicate. The symbols card, " +
+                    "indepNum, Coloring, Adj, Connected and IsIndepSet denote respectively Finset " +
+                    "cardinality, graph independence number, proper graph colorings, adjacency, " +
+                    "connectedness and the Mathlib independence predicate. A finite set annotated " +
+                    "with Set V denotes its coercion to the underlying vertex set. Colorings on " +
+                    "different sets or extensions are existentially chosen independently."))),
                 DescribeRole.Theorem)), []));
 
     private static Formula WholeClaim()
@@ -77,9 +88,39 @@ internal sealed class BoyerKuenzelLylePellicoConjectureTwoRefutationDocument : I
         var v = F.Id("V");
         var g = F.Id("G");
         var k = F.Id("k");
-        var left = And(C("Connected", g), And(C("WellHued", g),
-            And(C("HasSequence", g, k), C("HasChromaticNumber", g, k))));
-        var right = And(C("BalancedMultipartiteSubgraph", g, k), C("AntiNeighborhoodFree", g));
+        var j = F.Id("j");
+        var s = F.Id("S");
+        var t = F.Id("T");
+        var i = F.Id("i");
+        var u = F.Id("u");
+        var x = F.Id("x");
+        var parts = F.Id("parts");
+        var vertices = C("Finset", v);
+        var alpha = C("indepNum", g);
+        var equalOrders = Imp(MaximalColorability(v, g, j, s),
+            Imp(MaximalColorability(v, g, j, t), Eq(C("card", s), C("card", t))));
+        var wellHued = All("j", C("Nat"), Imp(Le(D(1), j),
+            All("S", vertices, All("T", vertices, equalOrders))));
+        var sequence = All("j", C("Nat"), Imp(Le(D(1), j), Imp(Le(j, k),
+            All("S", vertices, Imp(MaximalColorability(v, g, j, s),
+                Eq(C("card", s), new Formula.Binary(j, FormulaBinaryOperator.Multiply, alpha)))))));
+        var chromatic = And(C("Nonempty", C("Coloring", g, C("Fin", k))),
+            All("j", C("Nat"), Imp(Lt(j, k),
+                Not(C("Nonempty", C("Coloring", g, C("Fin", j)))))));
+        var partOrders = All("i", C("Fin", k), Eq(C("card", Apply(parts, i)), alpha));
+        var partIndependence = All("i", C("Fin", k), Independent(v, g, Apply(parts, i)));
+        var partDisjointness = All("i", C("Fin", k), All("j", C("Fin", k),
+            Imp(Ne(i, j), C("Disjoint", Apply(parts, i), Apply(parts, j)))));
+        var covering = All("v", v, Some("i", C("Fin", k), Member(F.Id("v"), Apply(parts, i))));
+        var partition = Some("parts", new Formula.TypeArrow(C("Fin", k), vertices),
+            And(partOrders, And(partIndependence, And(partDisjointness, covering))));
+        var away = All("x", v, Imp(Member(x, F.Id("I")),
+            And(Ne(x, u), Not(C("Adj", g, u, x)))));
+        var forbidden = And(Eq(C("card", F.Id("I")), alpha),
+            And(Independent(v, g, F.Id("I")), away));
+        var antiNeighborhood = All("u", v, Not(Some("I", vertices, forbidden)));
+        var left = And(C("Connected", g), And(wellHued, And(sequence, chromatic)));
+        var right = And(partition, antiNeighborhood);
         return All("V", C("Type"),
             Seq(OpenBracket, C("Fintype", v), CloseBracket, Sp,
                 OpenBracket, C("DecidableEq", v), CloseBracket, Sp,
@@ -88,6 +129,33 @@ internal sealed class BoyerKuenzelLylePellicoConjectureTwoRefutationDocument : I
                         Iff(left, right))))));
     }
 
+    private static Formula ProperColorability(Formula v, Formula g, Formula j, Formula s)
+    {
+        var c = F.Id("c");
+        var u = F.Id("u");
+        var w = F.Id("v");
+        return Some("c", new Formula.TypeArrow(v, C("Fin", j)),
+            All("u", v, Imp(Member(u, s), All("v", v, Imp(Member(w, s),
+                Imp(C("Adj", g, u, w), Ne(Apply(c, u), Apply(c, w))))))));
+    }
+
+    private static Formula MaximalColorability(Formula v, Formula g, Formula j, Formula s) =>
+        And(ProperColorability(v, g, j, s), All("x", v,
+            Imp(Not(Member(F.Id("x"), s)),
+                Not(ProperColorability(v, g, j, C("insert", F.Id("x"), s))))));
+
+    private static Formula Independent(Formula v, Formula g, Formula s) =>
+        C("IsIndepSet", g, Parenthesized(Seq(s, Colon, Sp, C("Set", v))));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Apply(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula Some(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
+    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Member(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
+    private static Formula Not(Formula a) => new Formula.Not(a);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);

@@ -4,12 +4,9 @@
    mirror-E: none(waiver:open-problem-resolution-has-no-escape-mirror)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Clique, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Prod]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/Products/BoyerKuenzelLylePellicoConjectureTwoRefutation.claim; result=D5/S3/Combinatorics/Graph/Products/BoyerKuenzelLylePellicoConjectureTwoRefutation.result; claim=D5/S3/Combinatorics/Graph/Products/BoyerKuenzelLylePellicoConjectureTwoRefutation.claim
-   digest: The full general Conjecture 2 fails on the 3 by 3 rook graph, whose maximal induced bipartite sets have orders five and six. -/
+   digest: Conjecture 2 fails on the 3 by 3 rook graph: maximal bipartite orders five and six. -/
 
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 import Mathlib.Combinatorics.SimpleGraph.Prod
-import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
