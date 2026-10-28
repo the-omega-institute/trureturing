@@ -29,17 +29,19 @@ internal sealed class PrimitiveKernelLatticeDocument : IScribeDocumentDefinition
 
     private static Formula Call(string name, params Formula[] args) =>
         Seq(Operatorname, Grp(F.Id(name)), Open, Seq(args), Close);
+    private static Formula G(Formula w, Formula n) =>
+        Seq(F.Id("G"), Underscore, Grp(Plus), Open, w, Comma, n, Close);
     private static Formula Statement()
     {
         var w = F.Id("w"); var n = F.Id("N"); var p = F.Id("p");
         var scale = F.Id("s"); var m = F.Id("m"); var i = F.Id("i");
-        var g = Call("G", w, Comma, n);
+        var g = G(w, n);
         var fp = Call("F", p); var f = Call("f", p); var r = Call("r", p);
         var ai = Seq(F.Id("A"), Underscore, Grp(i));
         var mi = Seq(m, Underscore, Grp(i));
         var lattice = Seq(Call("m", D(0)), Eq, Sp, D(0), Land, Sp,
-            Forall, Sp, i, InMacro, Sp, OpenBrace, D(0), Comma, D(1), Comma, D(2), Comma, D(3), CloseBrace,
-            Comma, Sp, ai, f, Eq, Sp, f, Plus, Sp, mi, r);
+            Open, Forall, Sp, i, InMacro, Sp, OpenBrace, D(0), Comma, D(1), Comma, D(2), Comma, D(3), CloseBrace,
+            Comma, Sp, ai, f, Eq, Sp, f, Plus, Sp, mi, r, Close);
         var kernel = Seq(Call("ker", Seq(F.Id("B"), Underscore, Grp(w))), Eq, Sp,
             Mathbb, Grp(F.Id("R")), fp);
         var forward = Seq(Forall, Sp, w, Comma, n, Comma, Sp, g, Implies, Sp,
@@ -47,10 +49,10 @@ internal sealed class PrimitiveKernelLatticeDocument : IScribeDocumentDefinition
             Exists, Sp, scale, Gt, Sp, D(0), Comma, Sp,
             n, Eq, Sp, scale, fp, Land, Sp, kernel, Land, Sp,
             Exists, Sp, m, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Caret, Grp(D(4)), Comma, Sp, lattice);
-        var converse = Seq(Forall, Sp, w, Comma, Sp, p, InMacro, Sp, F.Id("P"), Comma, Sp,
+        var converse = Seq(Forall, Sp, w, Comma, Sp, Forall, Sp, p, InMacro, Sp, F.Id("P"), Comma, Sp,
             Forall, Sp, m, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Caret, Grp(D(4)), Comma, Sp,
             Open, lattice, Land, Sp, Call("rank", Seq(F.Id("B"), Underscore, Grp(w))), Eq, Sp, D(3), Close,
-            Implies, Sp, Call("G", w, Comma, fp));
+            Implies, Sp, G(w, fp));
         return Disp(Seq(Open, forward, Close, Land, Sp, Open, converse, Close));
     }
 }
