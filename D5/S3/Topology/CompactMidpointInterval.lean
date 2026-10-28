@@ -180,9 +180,9 @@ private theorem approximate_interval_map_of_finite_chain
           congr 1
           ring
         _ ≤ |rounded s - s.val| + |s.val - t.val| + |t.val - rounded t| :=
-          (abs_add _ _).trans (add_le_add_right (abs_add _ _) _)
+          (abs_add_le _ _).trans (add_le_add_left (abs_add_le _ _) _)
         _ ≤ d + |s.val - t.val| + d := by
-          exact add_le_add (add_le_add_right (herr s) _) (by simpa only [abs_sub_comm] using herr t)
+          exact add_le_add (add_le_add_left (herr s) _) (by simpa only [abs_sub_comm] using herr t)
         _ = |s.val - t.val| + 2 * d := by ring
     exact hgrid.trans (ENNReal.ofReal_le_ofReal (hidentity.le.trans herror))
 
@@ -230,7 +230,7 @@ private theorem exact_map_of_uniform_approximations
       rw [pow_succ]
       nlinarith [pow_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 2) n]
     exact (hf.2.2 s t).trans
-      (ENNReal.ofReal_le_ofReal (add_le_add_left (mul_le_mul_of_nonneg_left hpower hC) (d s t)))
+      (ENNReal.ofReal_le_ofReal (add_le_add_right (mul_le_mul_of_nonneg_left hpower hC) (d s t)))
   obtain ⟨f, hf⟩ :=
     IsCompact.nonempty_iInter_of_sequence_nonempty_isCompact_isClosed
       K hdecreasing hnonempty (hclosed 0).isCompact hclosed
@@ -242,7 +242,7 @@ private theorem exact_map_of_uniform_approximations
   have hbound : Tendsto
       (fun n : ℕ => ENNReal.ofReal (d s t + C * (1 / 2 : ℝ) ^ n))
       atTop (𝓝 (ENNReal.ofReal (d s t))) := by
-    simpa only [mul_zero, add_zero] using
+    simpa only [Function.comp_def, mul_zero, add_zero] using
       (ENNReal.continuous_ofReal.tendsto (d s t + C * 0)).comp
         (tendsto_const_nhds.add (tendsto_const_nhds.mul herr))
   exact ge_of_tendsto' hbound (fun n => (hmem n).2.2 s t)
@@ -281,9 +281,9 @@ private theorem isometry_of_endpoint_saturation
         ENNReal.ofReal L = edist (f first) (f last) := hend.symm
         _ ≤ edist (f first) (f t) + edist (f t) (f last) := edist_triangle _ _ _
         _ ≤ (edist (f first) (f s) + edist (f s) (f t)) + edist (f t) (f last) :=
-          add_le_add_right (edist_triangle _ _ _) _
+          add_le_add_left (edist_triangle _ _ _) _
         _ ≤ (ENNReal.ofReal s.val + edist (f s) (f t)) + ENNReal.ofReal (L - t.val) :=
-          add_le_add (add_le_add_right hleft _) hright
+          add_le_add (add_le_add_left hleft _) hright
     have hr := ENNReal.toReal_mono
       (ENNReal.add_ne_top.mpr ⟨hsum, ENNReal.ofReal_ne_top⟩) htri
     rw [ENNReal.toReal_add hsum ENNReal.ofReal_ne_top,
@@ -329,11 +329,12 @@ private theorem compact_midpoint_interval_aux
       apply Subtype.ext
       have hs := s.property
       have ht := t.property
-      rw [hzero] at hs ht
-      linarith
+      have hs0 : s.val ≤ 0 := by simpa only [hzero] using hs.2
+      have ht0 : t.val ≤ 0 := by simpa only [hzero] using ht.2
+      exact le_antisymm (hs0.trans ht.1) (ht0.trans hs.1)
     rw [hst]
     simp
-  · have hLpos : 0 < L := lt_of_le_of_ne hL hzero.symm
+  · have hLpos : 0 < L := lt_of_le_of_ne hL (Ne.symm hzero)
     let first : Set.Icc (0 : ℝ) L := ⟨0, ⟨le_rfl, hL⟩⟩
     let last : Set.Icc (0 : ℝ) L := ⟨L, ⟨hL, le_rfl⟩⟩
     have happrox : ∀ n : ℕ, ∃ f : Set.Icc (0 : ℝ) L → Y,
@@ -362,7 +363,9 @@ private theorem compact_midpoint_interval_aux
       first last a b (fun s t : Set.Icc (0 : ℝ) L => |s.val - t.val|)
       (2 * L) (mul_nonneg (by norm_num) hL) happrox
     refine ⟨f, isometry_of_endpoint_saturation L hL f ?_ hfbound, hf0, hfN⟩
-    simpa only [hf0, hfN] using hD
+    change edist (f first) (f last) = ENNReal.ofReal L
+    rw [hf0, hfN]
+    exact hD
 
 theorem compact_midpoints_isometric_interval
     (hmid : ∀ a b : Y, edist a b < ⊤ →
