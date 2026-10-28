@@ -114,6 +114,17 @@ private theorem covariance_coeff (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis
   rw [adjoint_coeff b k mu hC, trace_coeff b k mu hp hk hC,
     ← mul_assoc, ← pow_two, Real.sq_sqrt (hp i).le]
 
+private theorem diagonal_injective (k : HilbertBasis ℕ ℝ K) (L : K →L[ℝ] K)
+    (d : ℕ → ℝ) (hd : ∀ i, d i ≠ 0)
+    (hL : ∀ x i, k.repr (L x) i = d i * k.repr x i) : Function.Injective L := by
+  intro x y hxy
+  apply k.repr.injective
+  apply lp.ext
+  funext i
+  have he := congrArg (fun z : K => k.repr z i) hxy
+  rw [hL,hL] at he
+  exact mul_left_cancel₀ (hd i) he
+
 private theorem covariance_polar (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K)
     (mu : ℕ → ℝ) (hp : ∀ i, 0 < mu i)
     (hk : ∀ i, Sigma (k i).val = mu i • (k i).val)
@@ -200,7 +211,8 @@ private theorem graph_polar (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ 
     change Pi (Pi (J (C.adjoint h))) = _
     rw [Pi_idem]
     change boundaryCovariance h = _
-    rw [← congrArg Subtype.val hx]
+    have hxval : (polar b k x).val = h := congrArg Subtype.val hx
+    rw [← hxval]
     exact covariance_polar b k mu hp hk hC x
   · rintro ⟨x, rfl, hu⟩
     refine ⟨(polar b k x).property, ?_⟩
@@ -237,12 +249,10 @@ private theorem shift_inverse (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis �
       covariance_coeff b k mu hp hk hC, inverseOneAdd_coeff]
     have hn : 1 + mu i ≠ 0 := by linarith [hp i]
     field_simp
-    <;> ring
   · simp only [inverseOneAdd_coeff, map_add, lp.coeFn_add, Pi.add_apply,
       covariance_coeff b k mu hp hk hC]
     have hn : 1 + mu i ≠ 0 := by linarith [hp i]
     field_simp
-    <;> ring
 
 private theorem resolvent_polar (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K)
     (mu : ℕ → ℝ) (hp : ∀ i, 0 < mu i)
@@ -289,6 +299,7 @@ theorem actual_polar_domains_resolvent :
       (∀ x : K, S (S x) = T x) ∧
       (∀ x : K, (W (S x)).val = C x.val) ∧
       (∀ u : G0, C.adjoint u.val = (S (W.symm u)).val) ∧
+      (Function.Injective S ∧ Function.Injective T) ∧
       (∀ u : G0, u.val ∈ D ↔ ∃ x : K, W (S x) = u) ∧
       (∀ u : G0, u.val ∈ boundaryOperator.domain ↔ ∃ x : K, W (T x) = u) ∧
       (∀ u h : G, (u,h) ∈ boundaryOperator.graph ↔
@@ -300,7 +311,11 @@ theorem actual_polar_domains_resolvent :
   exact ⟨b,k,mu,polar b k,root b k,covarianceK,inverseOneAdd k mu hp,hp,
     polar_coeff b k,root_coeff b k mu hp hk hC,covariance_coeff b k mu hp hk hC,
     inverseOneAdd_coeff k mu hp,(fun _ => rfl),square_root b k mu hp hk hC,
-    polar_root b k,adjoint_polar b k mu hp hk hC,form_domain b k,
+    polar_root b k,adjoint_polar b k mu hp hk hC,
+    ⟨diagonal_injective k (root b k) (fun i => Real.sqrt (mu i))
+        (fun i => (Real.sqrt_pos.mpr (hp i)).ne') (root_coeff b k mu hp hk hC),
+      diagonal_injective k covarianceK mu (fun i => (hp i).ne')
+        (covariance_coeff b k mu hp hk hC)⟩,form_domain b k,
     operator_domain b k mu hp hk hC,graph_polar b k mu hp hk hC,
     shift_inverse b k mu hp hk hC,resolvent_polar b k mu hp hk hC⟩
 
