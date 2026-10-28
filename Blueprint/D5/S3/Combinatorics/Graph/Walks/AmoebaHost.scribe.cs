@@ -63,7 +63,7 @@ internal sealed class AmoebaHostDocument : IScribeDocumentDefinition
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) => Describe.Lean(
-        DescribeId.Create("amoeba-host-" + name.Replace('_', '-')), DeclarationHandle.Create(Prefix + name),
+        DescribeId.Create("amoeba-host-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
     private static Formula Id(string s) => F.Id(s);

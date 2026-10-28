@@ -19,7 +19,12 @@ internal sealed class AmoebaConfinementDocument : IScribeDocumentDefinition
                 + "H is a finite simple undirected tree and m assigns a nonnegative integer to each vertex. "
                 + "The number of roots is the sum of m, including multiplicity. A Host packages a finite vertex type, "
                 + "its simple graph and connectedness and acyclicity. Copy means an injective graph homomorphism, "
-                + "so its image is an actual subgraph isomorphic to H. Different copy maps retain different placements of m.")),
+                + "so its image is an actual subgraph isomorphic to H. Different copy maps retain different placements of m. "
+                + "Containment is expressed by an injective homomorphism, allowing vertex relabeling. Coincidence is tested against that very "
+                + "containing map, rather than against an unrelated isomorphism: it must cover all vertices and reflect every edge. "
+                + "Thus no additional vertex or edge can remain outside the original containing image. The finite host convention is supported "
+                + "by the published Lemma 3 and Theorem 4 and by the directly cited predecessor Avoidability beyond paths, DOI 10.37236/13023, "
+                + "Section 2; the main paper gives no blanket sentence declaring all graphs finite.")),
             Node("HasExtension", "All arms are present simultaneously", ExtensionFormula(),
                 "The extension graph has the original vertices and new vertices (v,a,j), with a below m(v) and j below l. "
                 + "Original edges are preserved, v is adjacent to (v,a,0), and consecutive j values on each arm are adjacent. "
@@ -57,7 +62,7 @@ internal sealed class AmoebaConfinementDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
-            DescribeId.Create("amoeba-" + name.Replace('_', '-')),
+            DescribeId.Create("amoeba-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance, Blocks(Paragraph(Text(prose))), role);
 
