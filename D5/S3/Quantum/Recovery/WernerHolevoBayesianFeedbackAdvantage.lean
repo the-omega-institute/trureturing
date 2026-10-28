@@ -598,59 +598,25 @@ private theorem frame_inner_sum {m₁ m₂ : ℕ} (z : Fin m₁ → Fin 3 → �
     (hw : (∑ b, (Matrix.of fun i j => w b i * star (w b j))) =
       (1 : Matrix (Fin 3) (Fin 3) ℂ)) :
     ∑ a, ∑ b, Complex.normSq (star (w b) ⬝ᵥ z a) = 3 := by
-  have hz00 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 0) hz
-  have hz01 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 1) hz
-  have hz02 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 2) hz
-  have hz10 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 1 0) hz
-  have hz11 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 1 1) hz
-  have hz12 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 1 2) hz
-  have hz20 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 2 0) hz
-  have hz21 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 2 1) hz
-  have hz22 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 2 2) hz
-  have hw00 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 0) hw
-  have hw01 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 1) hw
-  have hw02 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 2) hw
-  have hw10 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 1 0) hw
-  have hw11 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 1 1) hw
-  have hw12 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 1 2) hw
-  have hw20 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 2 0) hw
-  have hw21 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 2 1) hw
-  have hw22 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 2 2) hw
-  simp [Matrix.sum_apply, Matrix.of_apply, Matrix.one_apply, Fin.sum_univ_succ] at hz00 hz01 hz02 hz10 hz11 hz12 hz20 hz21 hz22 hw00 hw01 hw02 hw10 hw11 hw12 hw20 hw21 hw22
-  have hcomplex :
-      ∑ a, ∑ b, (star (w b) ⬝ᵥ z a) * (star (z a) ⬝ᵥ w b) = 3 := by
-    have hfactor :
-        (∑ a, ∑ b, (star (w b) ⬝ᵥ z a) * (star (z a) ⬝ᵥ w b)) =
-          ∑ i, ∑ j,
-            (∑ a, z a i * star (z a j)) *
-              (∑ b, star (w b i) * w b j) := by
-      simp [dotProduct, Fin.sum_univ_succ, Finset.mul_sum, Finset.sum_mul,
-        Finset.sum_add_distrib]
-      rw [Finset.sum_comm]
-      ring_nf
-    have hw00' : ∑ b, star (w b 0) * w b 0 = 1 := by
-      simpa only [starRingEnd_apply, mul_comm] using hw00
-    have hw01' : ∑ b, star (w b 0) * w b 1 = 0 := by
-      simpa only [starRingEnd_apply, mul_comm] using hw10
-    have hw02' : ∑ b, star (w b 0) * w b 2 = 0 := by
-      simpa only [starRingEnd_apply, mul_comm] using hw20
-    have hw10' : ∑ b, star (w b 1) * w b 0 = 0 := by
-      simpa only [starRingEnd_apply, mul_comm] using hw01
-    have hw11' : ∑ b, star (w b 1) * w b 1 = 1 := by
-      simpa only [starRingEnd_apply, mul_comm] using hw11
-    have hw12' : ∑ b, star (w b 1) * w b 2 = 0 := by
-      simpa only [starRingEnd_apply, mul_comm] using hw21
-    have hw20' : ∑ b, star (w b 2) * w b 0 = 0 := by
-      simpa only [starRingEnd_apply, mul_comm] using hw02
-    have hw21' : ∑ b, star (w b 2) * w b 1 = 0 := by
-      simpa only [starRingEnd_apply, mul_comm] using hw12
-    have hw22' : ∑ b, star (w b 2) * w b 2 = 1 := by
-      simpa only [starRingEnd_apply, mul_comm] using hw22
-    rw [hfactor]
-    simp [starRingEnd_apply, Fin.sum_univ_succ, hz00, hz01, hz02, hz10, hz11, hz12, hz20, hz21,
-      hz22, hw00', hw01', hw02', hw10', hw11', hw12', hw20', hw21', hw22']
-  have hre := congrArg Complex.re hcomplex
-  simpa [map_sum, inner_product_re] using hre
+  have hrow (v : Fin 3 → ℂ) :
+      ∑ b, Complex.normSq (star (w b) ⬝ᵥ v) = q v := by
+    have hc : ∑ b, (star (w b) ⬝ᵥ v) * (star v ⬝ᵥ w b) = (q v : ℂ) := by
+      calc
+        _ = ∑ b, (Matrix.vecMulVec (w b) (star (w b)) *
+            Matrix.vecMulVec v (star v)).trace := by
+              simp_rw [vec_product_trace]
+        _ = ((∑ b, Matrix.vecMulVec (w b) (star (w b))) *
+            Matrix.vecMulVec v (star v)).trace := by
+              rw [Matrix.sum_mul, Matrix.trace_sum]
+        _ = (q v : ℂ) := by
+          change ((∑ b, Matrix.of fun i j => w b i * star (w b j)) *
+            Matrix.vecMulVec v (star v)).trace = (q v : ℂ)
+          rw [hw, Matrix.one_mul, vec_trace]
+    have hre := congrArg Complex.re hc
+    rw [Complex.re_sum] at hre
+    simpa only [inner_product_re, Complex.ofReal_re] using hre
+  simp_rw [hrow]
+  exact frame_q_sum z hz
 
 private theorem markov_bound {m₁ m₂ : ℕ} (K₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ) (K₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ)
     (h₁ : IsKrausDecomposition K₁) (h₂ : IsKrausDecomposition K₂) :
