@@ -1,39 +1,99 @@
-# Exact CNF Partition Counting
+# ExactPartitionCounting
 
 ## Abstract
 
-An explicit finite CNF penalty model gives an exact rational partition identity. The satisfying-assignment count is recovered by a floor operation, and the local clause penalties are commuting diagonal projections.
+Explicit ExactPartitionCounting constructions. The linked declarations do not certify unproved analytic or quantum extensions.
 
-**Theorem 1.1 (Exact CNF counting recovery).**
+**Theorem 1.1 (exact cnf counting recovery).**
 
-For every finite CNF syntax tree, the constructed rational partition and visible factor recover the exact number of satisfying assignments by the stated floor identity.
+Lean statement: `D5/S3/Quantum/Thermal/ExactPartitionCounting.exact_cnf_counting_recovery`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ExactPartitionCounting.exact_cnf_counting_recovery` (`✓ std3`). ∎
 
-**Theorem 1.2 (Three-local clause support).**
+*Source.* Repository-derived.
 
-A clause of length at most three depends only on its explicit finite support, whose cardinality is at most three.
+*Commentary.*
+
+The input is a CNF syntax tree. Assignments, clause evaluation, violations, the rational Gibbs partition, and the extra visible bit are constructed. Taking the floor after multiplying the total partition by two thirds returns the satisfying-assignment count.
+
+**Theorem 1.2 (clause three local).**
+
+Lean statement: `D5/S3/Quantum/Thermal/ExactPartitionCounting.clause_three_local`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ExactPartitionCounting.clause_three_local` (`✓ std3`). ∎
 
-**Theorem 1.3 (Clause projections).**
+*Source.* Repository-derived.
 
-The diagonal violation operator of a clause is idempotent, and the operators for any two clauses commute.
+*Commentary.*
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ExactPartitionCounting.clauseProjector_idempotent` and `D5/S3/Quantum/Thermal/ExactPartitionCounting.clauseProjectors_commute` (`✓ std3`). ∎
+A clause of length at most three depends only on its explicit support, whose cardinality is at most three. Repeated literals and empty clauses are allowed.
 
-**Theorem 1.4 (Common denominator).**
+**Theorem 1.3 (clauseProjector idempotent).**
 
-Multiplying the rational partition by the explicit power-of-two denominator yields the natural numerator constructed from the finite penalty data.
+Lean statement: `D5/S3/Quantum/Thermal/ExactPartitionCounting.clauseProjector_idempotent`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ExactPartitionCounting.clauseProjector_idempotent` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The diagonal 0/1 violation operator is a projection in the rational matrix algebra.
+
+**Theorem 1.4 (clauseProjectors commute).**
+
+Lean statement: `D5/S3/Quantum/Thermal/ExactPartitionCounting.clauseProjectors_commute`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ExactPartitionCounting.clauseProjectors_commute` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The explicitly defined clause projections commute; no commutativity certificate is assumed.
+
+**Theorem 1.5 (common denominator).**
+
+Lean statement: `D5/S3/Quantum/Thermal/ExactPartitionCounting.common_denominator`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ExactPartitionCounting.common_denominator` (`✓ std3`). ∎
 
-**Theorem 1.5 (Boltzmann and penalty identities).**
+*Source.* Repository-derived.
 
-The rational clause weight is the corresponding inverse-temperature exponential, and the total penalty is the sum of the individual clause penalties.
+*Commentary.*
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ExactPartitionCounting.boltzmann_weight` and `D5/S3/Quantum/Thermal/ExactPartitionCounting.penalty_sum` (`✓ std3`). ∎
+Multiplication by two to the power (n+1) times the clause count yields the explicitly constructed natural numerator. This is an exact encoding identity, not a running-time or approximation-hardness theorem.
+
+**Theorem 1.6 (boltzmann weight).**
+
+Lean statement: `D5/S3/Quantum/Thermal/ExactPartitionCounting.boltzmann_weight`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ExactPartitionCounting.boltzmann_weight` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The rational weight agrees with the actual real exponential at inverse temperature log 2 and energy (n+1) times the violation count.
+
+**Theorem 1.7 (penalty sum).**
+
+Lean statement: `D5/S3/Quantum/Thermal/ExactPartitionCounting.penalty_sum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ExactPartitionCounting.penalty_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The total diagonal penalty is the sum of the syntactically constructed individual clause penalties.
 
 ## References
 
-- Truth anchors: the declarations listed in the theorem statements above.
+- Truth anchor: `D5/S3/Quantum/Thermal/ExactPartitionCounting.boltzmann_weight`
+- Truth anchor: `D5/S3/Quantum/Thermal/ExactPartitionCounting.clauseProjector_idempotent`
+- Truth anchor: `D5/S3/Quantum/Thermal/ExactPartitionCounting.clauseProjectors_commute`
+- Truth anchor: `D5/S3/Quantum/Thermal/ExactPartitionCounting.clause_three_local`
+- Truth anchor: `D5/S3/Quantum/Thermal/ExactPartitionCounting.common_denominator`
+- Truth anchor: `D5/S3/Quantum/Thermal/ExactPartitionCounting.exact_cnf_counting_recovery`
+- Truth anchor: `D5/S3/Quantum/Thermal/ExactPartitionCounting.penalty_sum`

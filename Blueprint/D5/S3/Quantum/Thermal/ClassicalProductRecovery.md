@@ -1,53 +1,86 @@
-# Explicit Classical Product Recovery
+# ClassicalProductRecovery
 
 ## Abstract
 
-For probability measures and a Markov kernel, the product reference law splits the joint Kullback–Leibler divergence into a marginal term and a hidden conditional defect. The explicitly constructed product lift attains the minimum, and reversible measure-preserving observation squares conserve both full and observed divergences.
+Explicit ClassicalProductRecovery constructions. The linked declarations do not certify unproved analytic or quantum extensions.
 
-**Theorem 1.1 (Product recovery chain).**
+**Theorem 1.1 (product recovery chain).**
 
-For probability measures `ν`, `γr`, and `γh`, and a Markov kernel `κ`,
-
-$$\operatorname{KL}(ν \otimes κ\,\|\,γr \times γh)=\operatorname{KL}(ν\,\|\,γr)+\operatorname{KL}(ν \otimes κ\,\|\,ν \times γh).$$
+Lean statement: `D5/S3/Quantum/Thermal/ClassicalProductRecovery.product_recovery_chain`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ClassicalProductRecovery.product_recovery_chain` (`✓ std3`). ∎
 
-**Theorem 1.2 (Finite recovery terms).**
+*Source.* Repository-derived.
 
-If the total divergence in Theorem 1.1 is finite, both summands are finite.
+*Commentary.*
+
+Applies the pinned Mathlib measure-level KL chain rule to a constant hidden thermal kernel. Infinite values are retained rather than silently mapped to a finite divergence.
+
+**Theorem 1.2 (recovery terms finite).**
+
+Lean statement: `D5/S3/Quantum/Thermal/ClassicalProductRecovery.recovery_terms_finite`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ClassicalProductRecovery.recovery_terms_finite` (`✓ std3`). ∎
 
-**Theorem 1.3 (Real recovery defect).**
+*Source.* Repository-derived.
 
-Under the finiteness hypothesis, subtracting the marginal divergence from the total divergence gives the real conditional defect.
+*Commentary.*
+
+Proves finiteness of both summands from finite total KL before any real-valued subtraction is performed.
+
+**Theorem 1.3 (recovery defect real).**
+
+Lean statement: `D5/S3/Quantum/Thermal/ClassicalProductRecovery.recovery_defect_real`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ClassicalProductRecovery.recovery_defect_real` (`✓ std3`). ∎
 
-**Theorem 1.4 (Explicit product minimum).**
+*Source.* Repository-derived.
 
-The product lift `ν × γh` has divergence `KL(ν‖γr)` and is no larger than the divergence of any Markov-disintegrated joint law with first marginal `ν`.
+*Commentary.*
+
+Converts the ENNReal chain identity to a real deficit only after proving both summands finite.
+
+**Theorem 1.4 (thermalLift minimizes).**
+
+Lean statement: `D5/S3/Quantum/Thermal/ClassicalProductRecovery.thermalLift_minimizes`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ClassicalProductRecovery.thermalLift_minimizes` (`✓ std3`). ∎
 
-**Theorem 1.5 (Unique product minimum under finite marginal divergence).**
+*Source.* Repository-derived.
 
-If `KL(ν‖γr)` is finite, equality in the minimum holds exactly when the joint law is the product lift.
+*Commentary.*
+
+The constructed product lift attains the marginal KL and no Markov-disintegrated joint law with that marginal has smaller KL.
+
+**Theorem 1.5 (thermalLift unique minimum).**
+
+Lean statement: `D5/S3/Quantum/Thermal/ClassicalProductRecovery.thermalLift_unique_minimum`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ClassicalProductRecovery.thermalLift_unique_minimum` (`✓ std3`). ∎
 
-**Theorem 1.6 (Reversible KL invariance).**
+*Source.* Repository-derived.
 
-Measurable equivalences preserve the KL divergence of finite measures. A reference-preserving equivalence therefore preserves the divergence after pushing forward the first measure.
+*Commentary.*
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ClassicalProductRecovery.klDiv_measurableEquiv` and `D5/S3/Quantum/Thermal/ClassicalProductRecovery.klDiv_reference_preserving` (`✓ std3`). ∎
+Cancels only a finite marginal KL. Equality of objective values forces equality of the actual joint measures, using the genuine converse Gibbs inequality.
 
-**Theorem 1.7 (Predictive defect invariance).**
+**Theorem 1.6 (predictive defect invariant).**
 
-When an observation intertwines two measurable equivalences and both reference measures are preserved, the pair consisting of full and observed KL divergences is invariant.
+Lean statement: `D5/S3/Quantum/Thermal/ClassicalProductRecovery.predictive_defect_invariant`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/ClassicalProductRecovery.predictive_defect_invariant` (`✓ std3`). ∎
 
+*Source.* Repository-derived.
+
+*Commentary.*
+
+An actual commuting observation/evolution square, with preserved reference measures, preserves both full and observed KL. It does not construct the Hamiltonian flow or a Gaussian disintegration.
+
 ## References
 
-- Truth anchors: the declarations listed in the theorem statements above.
+- Truth anchor: `D5/S3/Quantum/Thermal/ClassicalProductRecovery.predictive_defect_invariant`
+- Truth anchor: `D5/S3/Quantum/Thermal/ClassicalProductRecovery.product_recovery_chain`
+- Truth anchor: `D5/S3/Quantum/Thermal/ClassicalProductRecovery.recovery_defect_real`
+- Truth anchor: `D5/S3/Quantum/Thermal/ClassicalProductRecovery.recovery_terms_finite`
+- Truth anchor: `D5/S3/Quantum/Thermal/ClassicalProductRecovery.thermalLift_minimizes`
+- Truth anchor: `D5/S3/Quantum/Thermal/ClassicalProductRecovery.thermalLift_unique_minimum`

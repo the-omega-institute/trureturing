@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Thermal/ClassicalProductRecovery
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Genuine measure-level KL recovery, finite-defect accounting, unique minimum, and reversible invariance. -/
 
 import Mathlib.InformationTheory.KullbackLeibler.ChainRule

@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Thermal/ExactPartitionCounting
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Explicit CNF penalties, local commuting projections, and exact rational counting recovery. -/
 
 import Mathlib
