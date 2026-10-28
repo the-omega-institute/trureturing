@@ -20,7 +20,7 @@ internal sealed class ThetaRepresentationNonconvexDocument : IScribeDocumentDefi
                 DeclarationHandle.Create(Prefix + "dot_cauchy"),
                 H("Cauchy-Schwarz for finite real vectors"),
                 StatementSource.FromAuthor(DotCauchyFormula()),
-                AssessedProvenance.FromRepo(Source),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuadraticForms/mathlib2026finitecauchyschwarz")),
                 Blocks(Paragraph(Text(
                     "For real vectors indexed by any finite type, the square of their dot "
                     + "product is at most the product of their squared lengths."))),
