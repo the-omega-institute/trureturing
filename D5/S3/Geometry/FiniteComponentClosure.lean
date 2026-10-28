@@ -2326,6 +2326,61 @@ def selectedVertexWedgeClosure {V W : Type*} [Fintype V] [DecidableEq V]
 
 end BouquetConcatenation
 
+section BasedComposition
+
+private def relativePrecompose {X Y Z : Type*}
+    [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace Z]
+    {a : X} {b : Y} {f g : C(Y, Z)}
+    (H : f.HomotopyRel g {b}) (u : C(X, Y)) (hu : u a = b) :
+    (f.comp u).HomotopyRel (g.comp u) {a} where
+  toHomotopy := H.toHomotopy.compContinuousMap u
+  prop' := by
+    intro t x hx
+    have hx' : x = a := Set.mem_singleton_iff.mp hx
+    subst x
+    change H (t, u a) = f (u a)
+    rw [hu]
+    exact H.eq_fst t (by simp)
+
+private def basedSymm {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
+    {x : X} {y : Y} (E : SingletonRetractionBasedInverse.BasedEquivalence x y) :
+    SingletonRetractionBasedInverse.BasedEquivalence y x where
+  forward := E.backward
+  backward := E.forward
+  forward_point := E.backward_point
+  backward_point := E.forward_point
+  left := E.right
+  right := E.left
+
+private def basedTrans {X Y Z : Type*}
+    [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace Z]
+    {x : X} {y : Y} {z : Z}
+    (E : SingletonRetractionBasedInverse.BasedEquivalence x y)
+    (F : SingletonRetractionBasedInverse.BasedEquivalence y z) :
+    SingletonRetractionBasedInverse.BasedEquivalence x z where
+  forward := F.forward.comp E.forward
+  backward := E.backward.comp F.backward
+  forward_point := by change F.forward (E.forward x) = z; rw [E.forward_point, F.forward_point]
+  backward_point := by change E.backward (F.backward z) = x; rw [F.backward_point, E.backward_point]
+  left := ((relativePrecompose F.left E.forward E.forward_point).compContinuousMap
+    E.backward).trans E.left
+  right := ((relativePrecompose E.right F.backward F.backward_point).compContinuousMap
+    F.forward).trans F.right
+
+private def basedHomeomorphism {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
+    (e : X ≃ₜ Y) (x : X) (y : Y) (h : e x = y) :
+    SingletonRetractionBasedInverse.BasedEquivalence x y where
+  forward := ⟨e, e.continuous⟩
+  backward := ⟨e.symm, e.symm.continuous⟩
+  forward_point := h
+  backward_point := by change e.symm y = x; rw [← h, e.symm_apply_apply]
+  left := (HomotopyRel.refl (ContinuousMap.id X) {x}).cast
+    (by ext z; exact (e.symm_apply_apply z).symm) rfl
+  right := (HomotopyRel.refl (ContinuousMap.id Y) {y}).cast
+    (by ext z; exact (e.apply_symm_apply z).symm) rfl
+
+end BasedComposition
+
 section CollapsedBaseTransport
 
 /-- Transport along a collapsed basepoint trace keeps the forward map unchanged. -/
@@ -2362,7 +2417,8 @@ private def collapsedRebase {X Q : Type*} [TopologicalSpace X] [T1Space X]
       have hx' : x = z := Set.mem_singleton_iff.mp hx
       subst x
       change v (E.left (t, u z)) = v (s (q (u z)))
-      rw [show u z = a from U.forward_point, E.left.eq_fst t (by simp)] }
+      rw [show u z = a from U.forward_point, E.left.eq_fst t (by simp)]
+      rfl }
   let B₁ : (q.comp (v.comp s)).HomotopyRel ((q.comp u).comp (v.comp s)) {o} := {
     toHomotopy := (Homotopy.refl q).comp (L.compContinuousMap (v.comp s))
     prop' := by
@@ -2379,7 +2435,8 @@ private def collapsedRebase {X Q : Type*} [TopologicalSpace X] [T1Space X]
       have hy' : y = o := Set.mem_singleton_iff.mp hy
       subst y
       change q (U.right (t, s o)) = q (u (v (s o)))
-      rw [show s o = a from E.backward_point, U.right.eq_fst t (by simp)] }
+      rw [show s o = a from E.backward_point, U.right.eq_fst t (by simp)]
+      rfl }
   exact {
     forward := q
     backward := v.comp s
@@ -2400,13 +2457,14 @@ private theorem coneVertexSegment_mem {V : Type*} [Fintype V] [DecidableEq V]
     (1 - (t : ℝ)) • Pi.single z (1 : ℝ) + (t : ℝ) • Pi.single P.apex (1 : ℝ) ∈
       FiniteConeCollapse.realization P.cone := by
   refine ⟨insert P.apex {z}, P.cone_face {z} hz, ?_⟩
-  let S := (fun v : V => Pi.single v (1 : ℝ)) '' (insert P.apex {z} : Set V)
+  let S := (fun v : V => Pi.single v (1 : ℝ)) '' ((insert P.apex ({z} : Finset V)) : Set V)
   have hzmem : Pi.single z (1 : ℝ) ∈ convexHull ℝ S :=
     subset_convexHull ℝ S ⟨z, by simp, rfl⟩
   have hamem : Pi.single P.apex (1 : ℝ) ∈ convexHull ℝ S :=
     subset_convexHull ℝ S ⟨P.apex, by simp, rfl⟩
-  exact (convex_convexHull ℝ S) hzmem hamem
-    (sub_nonneg.mpr t.property.2) t.property.1 (by ring)
+  simpa only [S, Finset.coe_insert, Finset.coe_singleton] using
+    (convex_convexHull ℝ S) hzmem hamem
+      (sub_nonneg.mpr t.property.2) t.property.1 (by ring)
 
 private def coneVertexPath {V : Type*} [Fintype V] [DecidableEq V]
     (P : FiniteConeCollapse.ConePair V) (z : V) (hz : ({z} : Finset V) ∈ P.cone) :
@@ -2447,6 +2505,125 @@ private theorem nativeConeRebasedCollapse_forward {V : Type*} [Fintype V] [Decid
 
 end NativeConeBaseTransport
 
+section BasedConeCovers
+
+private abbrev collapseOf {V : Type*} [Fintype V] [DecidableEq V]
+    (X C : PreAbstractSimplicialComplex V) :=
+  FiniteConeUnionWedge.Collapse
+    {x : FiniteSimplicialJoin.Space X | x.val ∈ FiniteConeCollapse.realization C}
+
+private def collapseVertex {V : Type*} [Fintype V] [DecidableEq V]
+    (X C : PreAbstractSimplicialComplex V) (z : V) (hz : ({z} : Finset V) ∈ X) :
+    collapseOf X C := Quotient.mk _ (FiniteVertexCylinder.vertexPoint X z hz)
+
+private def wedgePoint {X Y : Type*} (x : X) (y : Y) :
+    FiniteConeUnionWedge.Wedge x y := Quotient.mk _ (Sum.inl x)
+
+/-- The cover quotient and the cone collapse share the chosen native cone vertex. -/
+private def coneCoverBased {V : Type*} [Fintype V] [DecidableEq V]
+    (X Y C : PreAbstractSimplicialComplex V) (a z : V)
+    (hzX : ({z} : Finset V) ∈ X) (hzY : ({z} : Finset V) ∈ Y)
+    (haC : ({a} : Finset V) ∈ C) (hzC : ({z} : Finset V) ∈ C)
+    (hC : C ≤ X ⊔ Y) (hXY : X ⊓ Y ≤ C)
+    (hcone : ∀ s ∈ C, insert a s ∈ C) :
+    SingletonRetractionBasedInverse.BasedEquivalence
+      (FiniteVertexCylinder.vertexPoint (X ⊔ Y) z (Or.inl hzX))
+      (wedgePoint (collapseVertex X C z hzX) (collapseVertex Y C z hzY)) := by
+  let Q : FiniteConeCollapse.ConePair V := ⟨X ⊔ Y, C, hC, a, haC, hcone⟩
+  let P := finiteConeCover X Y C z z hzX hzY hzC hzC hXY
+  let e := P.quotientWedgeHomeomorph
+  let ω := wedgePoint (collapseVertex X C z hzX) (collapseVertex Y C z hzY)
+  have he : e ω = Q.quotientMap Q.apexPoint := by
+    change Quotient.mk _ (FiniteVertexCylinder.vertexPoint (X ⊔ Y) z (Or.inl hzX)) =
+      Quotient.mk _ Q.apexPoint
+    apply Quotient.sound
+    exact Or.inr ⟨(FiniteVertexCylinder.vertexPoint C z hzC).property,
+      (FiniteVertexCylinder.vertexPoint C a haC).property⟩
+  exact basedTrans (nativeConeRebasedCollapse Q z hzC)
+    (basedSymm (basedHomeomorphism e ω (Q.quotientMap Q.apexPoint) he))
+
+private def unionConeCollapseBased {V : Type*} [Fintype V] [DecidableEq V]
+    (X D : PreAbstractSimplicialComplex V) (a z : V)
+    (hzX : ({z} : Finset V) ∈ X) (hzD : ({z} : Finset V) ∈ D)
+    (haD : ({a} : Finset V) ∈ D)
+    (hcone : ∀ s ∈ D, insert a s ∈ D) :
+    SingletonRetractionBasedInverse.BasedEquivalence
+      (FiniteVertexCylinder.vertexPoint (X ⊔ D) z (Or.inl hzX))
+      (collapseVertex X D z hzX) := by
+  letI : Subsingleton (collapseOf D D) := ⟨fun x y =>
+    Quotient.inductionOn₂ x y (fun x y => Quotient.sound (Or.inr ⟨x.property, y.property⟩))⟩
+  let e := wedgeSubsingletonHomeomorph (collapseVertex X D z hzX) (collapseVertex D D z hzD)
+  exact basedTrans
+    (coneCoverBased X D D a z hzX hzD haD hzD le_sup_right inf_le_right hcone)
+    (basedHomeomorphism e _ _ rfl)
+
+end BasedConeCovers
+
+section BasedAuxiliarySplit
+
+variable {V W : Type*} [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
+
+/-- Two native cone collapses based at the same vertex split the base quotient. -/
+private def auxiliaryBasedQuotientSplit
+    (N : PreAbstractSimplicialComplex V) (Z : PreAbstractSimplicialComplex W)
+    (d : V) (hNd : N ⊓ vertexComplex d = ⊥)
+    (v : V) (hv : ({v} : Finset V) ∈ N)
+    (b : W) (hb : ({b} : Finset W) ∈ Z) :
+    let X := FiniteSimplicialJoin.simplicialJoin N Z
+    let D := FiniteSimplicialJoin.simplicialJoin (vertexComplex d) Z
+    let C := FiniteSimplicialJoin.simplicialJoin (vertexComplex v) Z
+    let B := FiniteSimplicialJoin.simplicialJoin (⊥ : PreAbstractSimplicialComplex V) Z
+    SingletonRetractionBasedInverse.BasedEquivalence
+      (collapseVertex X B (Sum.inr b) (join_right_vertex N Z b hb))
+      (wedgePoint
+        (collapseVertex X C (Sum.inr b) (join_right_vertex N Z b hb))
+        (collapseVertex D B (Sum.inr b) (join_right_vertex (vertexComplex d) Z b hb))) := by
+  let X := FiniteSimplicialJoin.simplicialJoin N Z
+  let D := FiniteSimplicialJoin.simplicialJoin (vertexComplex d) Z
+  let C := FiniteSimplicialJoin.simplicialJoin (vertexComplex v) Z
+  let B := FiniteSimplicialJoin.simplicialJoin (⊥ : PreAbstractSimplicialComplex V) Z
+  have hCX : C ≤ X := join_mono_left (vertexComplex_le N v hv) Z
+  have hXD : X ⊓ D = B := disjoint_join_overlap N (vertexComplex d) Z hNd
+  have hdv : vertexComplex d ⊓ vertexComplex v = ⊥ := by
+    apply le_antisymm _ bot_le
+    intro s hs
+    have h : s ∈ N ⊓ vertexComplex d := ⟨vertexComplex_le N v hv hs.2, hs.1⟩
+    exact hNd ▸ h
+  have hDC : D ⊓ C = B := disjoint_join_overlap _ _ Z hdv
+  let eA : collapseOf X D ≃ₜ collapseOf X B :=
+    Homeomorph.Quotient.congrRight (by
+      intro x y
+      have h := realization_pullback_intersection X D B hXD
+      change (x = y ∨ (_ ∧ _)) ↔ (x = y ∨ (_ ∧ _))
+      rw [h])
+  let eD : collapseOf D C ≃ₜ collapseOf D B :=
+    Homeomorph.Quotient.congrRight (by
+      intro x y
+      have h := realization_pullback_intersection D C B hDC
+      change (x = y ∨ (_ ∧ _)) ↔ (x = y ∨ (_ ∧ _))
+      rw [h])
+  let hzX := join_right_vertex N Z b hb
+  let hzD := join_right_vertex (vertexComplex d) Z b hb
+  let hzC := join_right_vertex (vertexComplex v) Z b hb
+  let UA := basedTrans
+    (unionConeCollapseBased X D (Sum.inl d) (Sum.inr b) hzX hzD
+      (join_left_vertex (vertexComplex d) Z d rfl) (join_vertex_cone Z d))
+    (basedHomeomorphism eA (collapseVertex X D (Sum.inr b) hzX)
+      (collapseVertex X B (Sum.inr b) hzX) rfl)
+  let UW := coneCoverBased X D C (Sum.inl v) (Sum.inr b) hzX hzD
+    (join_left_vertex (vertexComplex v) Z v rfl) hzC (hCX.trans le_sup_left)
+    (by rw [hXD]; exact join_mono_left bot_le Z) (join_vertex_cone Z v)
+  let WD := FiniteConeUnionWedge.basedWedgeEquivalence
+    (basedHomeomorphism (Homeomorph.refl (collapseOf X C))
+      (collapseVertex X C (Sum.inr b) hzX) _ rfl)
+    (basedHomeomorphism eD (collapseVertex D C (Sum.inr b) hzD)
+      (collapseVertex D B (Sum.inr b) hzD) rfl)
+  exact basedTrans (basedSymm UA) (basedTrans UW WD)
+
+end BasedAuxiliarySplit
+
+#print axioms auxiliaryBasedQuotientSplit
+#print axioms unionConeCollapseBased
 #print axioms nativeConeRebasedCollapse
 #print axioms selectedVertexWedgeClosure
 #print axioms normalWedgeHomeomorph
