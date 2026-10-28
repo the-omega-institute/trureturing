@@ -278,10 +278,6 @@ theorem minimalFort_rootSet_iff (G : SimpleGraph V) [DecidableRel G.Adj]
         ((isFort_lift_iff G _).mp ((lift_baseSet hr).symm ▸ hfort)).1
       exact False.elim (hfree _ hbase hbf)
 
-/-- The number of vertices is exactly the base order plus one. -/
-theorem cone_order (G : SimpleGraph V) :
-    Fintype.card (Option V) = Fintype.card V + 1 := Fintype.card_option
-
 /-- All base subsets that become minimal forts when joined to the selected root. -/
 def rootedChoices {V : Type*} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] : Finset (Finset V) :=

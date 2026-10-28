@@ -9,6 +9,8 @@
 import D5.S3.Combinatorics.MinimalForts.CompleteBlock
 import D5.S3.Combinatorics.MinimalForts.UniversalRoot
 
+/-! The complete rooted class is characterized before its cardinality is counted. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -55,7 +57,7 @@ theorem complete_rooted_iff (S : Finset V) :
   · intro hc
     obtain ⟨a, rfl⟩ := Finset.card_eq_one.mp hc
     refine ⟨?_, ?_⟩
-    · refine ⟨singleton_dom a, ?_⟩
+    · refine ⟨by simpa using singleton_dom a, ?_⟩
       intro T hT hd v hv
       have hva : v = a := by simpa using hv
       rcases hd a with ha | ⟨w, hw, hadj⟩
@@ -76,7 +78,7 @@ theorem complete_rooted_count :
     ext S
     simp only [rootedChoices, Finset.mem_filter, Finset.mem_univ, true_and,
       complete_rooted_iff, Finset.mem_image]
-    exact Finset.card_eq_one
+    simpa only [eq_comm] using (Finset.card_eq_one (s := S))
   rw [he, Finset.card_image_of_injective _ Finset.singleton_injective, Finset.card_univ]
 
 end D5.S3.Combinatorics.MinimalForts.CompleteRooted

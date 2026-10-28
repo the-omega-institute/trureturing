@@ -20,4 +20,10 @@ Section 6, Conjecture 31 asks for a family whose full successive minimal-fort-co
 
 Nguyen Hoang Dat and Franklin H. J. Kenter, arXiv:2605.07298v1, section 5.2, Question 1, explicitly restate Conjecture 31 and report that their attempts to exceed the cube-root-of-three growth rate were unsuccessful. This is a bounded standing observation, not a claim that every subsequent or inaccessible source has been searched. The journal body at DOI 10.1007/s00373-025-02891-z has not been inspected.
 
-The universal-root and rotation results are ingredients. They do not supply an entire graph-family count formula or a successive-ratio theorem. Conjecture 31 remains open in this source checkpoint.
+The universal-root, block-counting and rotation results are ingredients. They do not supply an every-order graph sequence with a proved normalization or successive-ratio theorem. Conjecture 31 remains open in this source checkpoint.
+
+## Verified locator
+
+DOI: 10.48550/arXiv.2404.05963
+
+Primary version: https://arxiv.org/abs/2404.05963v1

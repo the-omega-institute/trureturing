@@ -1,4 +1,5 @@
 import Reg.Support.DependentFamily
+import Mathlib.NumberTheory.Real.Irrational
 import D5.S3.Combinatorics.MinimalForts.RotationWindow
 
 set_option autoImplicit false
@@ -11,7 +12,7 @@ open _root_.D5.S3.Combinatorics.MinimalForts.RotationWindow
 
 abbrev Parameters := ℝ × ℝ × ℤ × ℤ
 
-def signature : Signature where
+abbrev signature : Signature where
   Params := Parameters
   State _ := ℝ
   Role := Unit
@@ -21,14 +22,14 @@ def signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature :=
+abbrev actual : Realization signature :=
   realize signature (fun _ p T => (p.2.2.1 : ℝ) * p.2.1 + (p.2.2.2 : ℝ) * p.1 - T)
     (fun e => nomatch e)
 
-def rejected : Realization signature :=
+abbrev rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ p b : ℝ, 0 < p → Irrational (b / p) →
     ∀ ε : ℝ, 0 < ε → ∃ M : ℕ, ∀ N : ℕ, M ≤ N → ∀ T : ℝ,
