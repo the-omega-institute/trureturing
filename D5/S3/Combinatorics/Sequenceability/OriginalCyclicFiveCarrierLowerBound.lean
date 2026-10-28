@@ -213,25 +213,29 @@ private lemma four_small_residues_impossible (n : ℕ) (hn : 10 ≤ n) (hn' : n 
   have s123 := hsum 1 2 3 (by decide) (by decide) (by decide)
   omega
 
-private lemma four_signed_classes_card_bound
+/-- Normalize any finite family of distinct nonzero signed classes in a cyclic
+group to positive absolute residues, preserving both kinds of forbidden triples. -/
+lemma normalized_signed_classes
     {K : Type*} [AddCommGroup K] [Finite K] [IsAddCyclic K]
-    (hn : 10 ≤ Nat.card K) (A : Fin 4 → K)
+    (t : ℕ) (hn : 0 < Nat.card K) (A : Fin t → K)
     (hA0 : ∀ i, A i ≠ 0) (hAA : Function.Injective A)
     (hAN : ∀ i j, i ≠ j → A i ≠ -A j)
     (htriple : ∀ i j k, i ≠ j → i ≠ k → j ≠ k → ∀ s t u : Bool,
-      signedValue s (A i) + signedValue t (A j) + signedValue u (A k) ≠ 0) :
-    14 ≤ Nat.card K := by
+      (if s then -A i else A i) + (if t then -A j else A j) +
+        (if u then -A k else A k) ≠ 0) :
+    ∃ r : Fin t → ℕ,
+      (∀ i, 0 < r i) ∧ (∀ i, 2 * r i ≤ Nat.card K) ∧ Function.Injective r ∧
+      (∀ i j k, i ≠ j → i ≠ k → j ≠ k → r i + r j ≠ r k) ∧
+      (∀ i j k, i ≠ j → i ≠ k → j ≠ k → r i + r j + r k ≠ Nat.card K) := by
   classical
-  by_contra hcard
   let n := Nat.card K
-  have hn' : n ≤ 13 := by dsimp [n]; omega
-  have hn0 : 0 < n := by dsimp [n]; omega
+  have hn0 : 0 < n := hn
   letI : NeZero n := ⟨by omega⟩
   let e : K ≃+ ZMod n := (zmodAddCyclicAddEquiv (G := K) inferInstance).symm
-  let B : Fin 4 → ZMod n := fun i => e (A i)
+  let B : Fin t → ZMod n := fun i => e (A i)
   have hB0 (i) : B i ≠ 0 := by
     intro h; exact hA0 i (e.injective (by simpa [B] using h))
-  have hrepr (i : Fin 4) : ∃ s : Bool, ∃ v : ℕ,
+  have hrepr (i : Fin t) : ∃ s : Bool, ∃ v : ℕ,
       0 < v ∧ 2 * v ≤ n ∧ (v : ZMod n) = signedValue s (B i) := by
     have hv : (B i).val < n := ZMod.val_lt _
     have hv0 : 0 < (B i).val := (ZMod.val_pos).mpr (hB0 i)
@@ -243,7 +247,7 @@ private lemma four_signed_classes_card_bound
         zero_sub]
       rfl
   choose signs r hpos hbound hrepr using hrepr
-  have horbit (i j : Fin 4) (h : r i = r j) : A i = A j ∨ A i = -A j := by
+  have horbit (i j : Fin t) (h : r i = r j) : A i = A j ∨ A i = -A j := by
     have heq : signedValue (signs i) (B i) = signedValue (signs j) (B j) := by
       rw [← hrepr i, ← hrepr j, h]
     cases hi : signs i <;> cases hj : signs j <;>
@@ -258,7 +262,7 @@ private lemma four_signed_classes_card_bound
     · exact hAA he
     · by_contra hij
       exact hAN i j hij he
-  have hrepTriple (i j k : Fin 4) (hij : i ≠ j) (hik : i ≠ k) (hjk : j ≠ k)
+  have hrepTriple (i j k : Fin t) (hij : i ≠ j) (hik : i ≠ k) (hjk : j ≠ k)
       (s t u : Bool) : signedValue s (r i : ZMod n) + signedValue t (r j : ZMod n) +
         signedValue u (r k : ZMod n) ≠ 0 := by
     rw [hrepr i, hrepr j, hrepr k, signedValue_signedValue, signedValue_signedValue,
@@ -268,7 +272,7 @@ private lemma four_signed_classes_card_bound
       (Bool.xor t (signs j)) (Bool.xor u (signs k))
     apply e.injective
     simpa only [map_add, map_zero, signedValue, apply_ite, map_neg, B] using hz
-  apply four_small_residues_impossible n hn hn' r hpos hbound hinj
+  refine ⟨r, hpos, hbound, hinj, ?_, ?_⟩
   · intro i j k hij hik hjk heq
     apply hrepTriple i j k hij hik hjk false false true
     have hc := congrArg (fun v : ℕ => (v : ZMod n)) heq
@@ -279,6 +283,21 @@ private lemma four_signed_classes_card_bound
     have hc := congrArg (fun v : ℕ => (v : ZMod n)) heq
     simpa only [Nat.cast_add, ZMod.natCast_self, signedValue, Bool.false_eq_true,
       ↓reduceIte] using hc
+
+private lemma four_signed_classes_card_bound
+    {K : Type*} [AddCommGroup K] [Finite K] [IsAddCyclic K]
+    (hn : 10 ≤ Nat.card K) (A : Fin 4 → K)
+    (hA0 : ∀ i, A i ≠ 0) (hAA : Function.Injective A)
+    (hAN : ∀ i j, i ≠ j → A i ≠ -A j)
+    (htriple : ∀ i j k, i ≠ j → i ≠ k → j ≠ k → ∀ s t u : Bool,
+      signedValue s (A i) + signedValue t (A j) + signedValue u (A k) ≠ 0) :
+    14 ≤ Nat.card K := by
+  classical
+  by_contra hcard
+  have hn' : Nat.card K ≤ 13 := by omega
+  obtain ⟨r, hpos, hbound, hinj, hadd, hsum⟩ :=
+    normalized_signed_classes 4 (by omega) A hA0 hAA hAN htriple
+  exact four_small_residues_impossible (Nat.card K) hn hn' r hpos hbound hinj hadd hsum
 
 /-- The complete original support pattern for four pairs in a finite cyclic
 carrier requires at least seventy carrier elements. -/

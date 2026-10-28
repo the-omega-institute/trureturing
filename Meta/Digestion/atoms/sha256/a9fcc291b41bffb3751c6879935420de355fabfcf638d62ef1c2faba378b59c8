@@ -1,0 +1,122 @@
+**Proposition 22.12 (what this result does and does not acquire).** In the
+fixed-time theorem, the continuous $v$ path, stationary $Q$ source, exact
+clock/reference and nondisturbing detector are supplied premises. The $v$
+path and (when queried) the endpoint reply are acquired observations; $r,U,
+\Xi$, candidate comparison and prefix integrals are computed from retained
+records. Source preparation is not counted as an earned installation. The
+selector of Theorem 22.11 adds continuous monitoring, exact trigger
+recognition and a handoff tag. Exact real registers, archives, limits,
+request/reply traffic, output copies and continued callable use have their
+own resource coordinates. A simultaneous fixed-time bill can therefore be
+written as
+
+$$
+R_{\mathrm{fixed}}=\bigl(
+ \mathrm{Prep}_Q^{\mathrm{supplied}},
+ \mathrm{Obs}_v^{\mathrm{acquired}},
+ \mathrm{ClockRef}^{\mathrm{supplied}},
+ \mathrm{Sensor}_D^{\mathrm{installed}},
+ \mathrm{Reply}_D^{\mathrm{acquired}},
+ \mathrm{Compute}(r,U,\Xi,\mathrm{prefix}),
+ \mathrm{Retain}(V,\kappa,\mathsf{Space}),
+ \mathrm{Use}_Q^{\mathrm{callable}}\bigr).
+\tag{22.25}
+$$
+
+The selected-handoff bill is this same-run vector plus
+$\mathrm{Monitor}_v$, $\mathrm{Selector}$, the stop tag, and the retained
+trigger state; the exact-$\theta$ comparison replaces the endpoint payload
+with $\mathrm{Reply}_\theta$. The first, third, and fourth coordinates are
+supplied or installed premises, the second and fifth are actual observations,
+and the middle coordinates are computed or retained outputs. No coordinate
+may be copied from a different preparation or run. No finite apparatus,
+finite-bit, energy, lifetime, or total-cost bound follows.
+
+In particular, one binary response is only a payload cardinality. The actual
+request, framing, control, reference, return and export traffic remain charged
+in their own coordinates. Without an added sensor, L Theorem 67.1 already
+supplies eventual $v$-only singleton handoff; it is a sufficient alternative
+when unrestricted eventual delay is acceptable. At a prescribed finite time,
+the positive paired overlap prevents that no-addition method from supplying
+an almost-sure sign answer. Zero and singleton branches need no new reply.
+These alternatives compare the same target only within their declared time
+domains; the selector's elapsed-time improvement is not total-resource
+dominance.
+
+The mathematical reuse is source-specific. L Theorems 55.2 and 63.1 supply
+causal lifting and magnitude/shift recovery; L Theorem 64.1 supplies the
+actual translated-law overlap; L Theorems 66.1 and 67.1 supply continuous
+extra-phase and eventual-$v$ alternatives. The existing endpoint-timing
+volume, [FIB optimal endpoint query timing](FIB_NATIVE_OPTIMAL_ENDPOINT_QUERY_TIMING.md),
+already treats finite adaptive point queries and its own stopping domain; it
+does not supply the fixed $D$ reflection classification or the countable
+$\theta$ obstruction here. The D5 measure-separation declarations
+`equivalent_probability_laws_exclude_perfect_separator` and
+`equivalent_law_posterior_stays_interior` supply generic null-set transport
+only after the actual common measures (22.11) are established. The finite
+native prefix and common-flow declarations `native_acquired_prefix_reconstruction`
+and `NativeBorelCommonFlow` concern discrete acquired words and are not
+transported to this diffusion.
+
+The native contributions in [NLBA II](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md),
+[NLBA III](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_III.md),
+[clocked recovery](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md),
+[paid view conversion](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md),
+[structural storage](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md),
+[callable storage](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md),
+[transport completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md),
+and [process geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) retain
+their native acquired sources, rights, controls and resource vectors. They
+do not install the stationary-Q $v$ history or the nondisturbing endpoint
+sensor used here. The current third-germ/common-word additions likewise
+concern their own cubic response sensitivity and gluing interfaces; they
+provide no stationary-Q endpoint sensor or continuous diffusion acquisition.
+No claim from those sources is duplicated or used outside its declared model.
+
+Theorem 122.1 of
+[FIB Appendix II](https://github.com/the-omega-institute/trureturing/blob/27db8edb6c06d3ea80575cba4078f0a9ee287a57/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md)
+supplies exact deterministic attainment for its original passive pair under
+the source-side hypotheses stated there. It retains $G=H^1\times\mathbb R$,
+the conservative diffusion started at $e$
+at time zero, its actual nonstationary density $g_t$, the original clock, and
+one four-label Borel readout used at $t$ and $t+\Delta$ with fresh conditional
+noises and unchanged successors. Its proof establishes local infinite
+negative index and exact purification, hence equality of attainable
+deterministic and stochastic pair-law sets and attainment by one partition.
+This is a positive supplier for that pair-law task, not an unresolved
+deterministic-attainment gap. It supplies neither the stationary height
+preparation, continuously observed $v$, nor the unknown-calibration endpoint
+detector of Definition 22.1. No correspondence between those two sources or
+their target fibers is assumed; the pair-law attainment does not imply the
+pathwise inverses or sensor-alphabet assertions here.
+
+The classical ingredients are quadratic variation and Itô calculus, Gaussian
+conditioning, Brownian time change, and the common-submeasure separator. The
+variation convention is the one associated with Föllmer,
+[*Calcul d'Itô sans probabilités*](https://www.numdam.org/item/SPS_1981__15__143_0/),
+pp. 143--150. Elworthy--Le Jan--Li,
+[*The Geometry of Filtering*](https://arxiv.org/html/0810.2253v1), §§2.4 and
+5.1, gives filtering/projectibility context; its projectible-symbol and
+cohesive-descent hypotheses are not assumed here, so no filtering theorem is
+imported. The pinned upstream mathematical library is used only as a
+read-only source of standard measure and stochastic-analysis primitives; no
+new kernel verification is claimed.
+
+The endpoint classification, coordinate-quantizer contrast, full-prefix
+synthesis and handoff boundaries are `repo-derived` ordinary consequences
+of the stated source premises. The cited classical tools are
+`literature-attested`; this source-specific combination makes no claim of
+worldwide priority or exhaustive literature coverage.
+
+The result is conditional analytic mathematics. It does not prove physical
+acquisition or finite implementation of the stationary law, continuous $v$,
+exact clock/reference, endpoint detector, or ideal processing. It does not
+solve unchanged fixed-$G_{gc}$, original-$Q$, parked-consumer, or
+unchanged-initialization obligations; it does not claim a common physical
+apparatus, universal four-way recovery, a universal $\alpha/\beta$ minimum,
+or a conservative-source theorem. Arbitrary stopping rules remain outside
+the deterministic classification except for the explicit counterexample and
+the quadrant selector proved above. The old continuous-stream, eventual
+handoff, native acquisition, and physical-realization boundaries remain in
+force.
+
