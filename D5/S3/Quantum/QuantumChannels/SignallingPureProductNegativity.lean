@@ -7,6 +7,7 @@
    digest: Every signalling channel has a pure product input with positive PDM negativity. -/
 
 import D5.S3.Quantum.Recovery.LiJiangPolarPairOptimalityRefutation
+import D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility
 
 /-! # Pure product inputs detect signalling through PDM negativity -/
 
@@ -21,6 +22,7 @@ open Matrix
 open scoped BigOperators Kronecker ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.Recovery.LiJiangPolarPairOptimalityRefutation (matrixAction)
 open D5.S3.Quantum.Foundation.FiniteStateChannel
+open D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm trace_norm_jordan_mass)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 
 namespace D5.S3.Quantum.QuantumChannels.SignallingPureProductNegativity
@@ -45,10 +47,6 @@ def pdmBA (p : QuantumChannel (α₁ × β₁) (α₂ × β₂))
     (fun x : (α₁ × β₂) × (β₁ × α₂) => ((x.1.1, x.2.1), (x.2.2, x.1.2)))
     (fun x : (α₁ × β₂) × (β₁ × α₂) => ((x.1.1, x.2.1), (x.2.2, x.1.2))))
 
-/-- The trace norm minus one, using the positive matrix square root. -/
-def negativity (r : Matrix α α ℂ) : ℝ :=
-  (trace (CFC.sqrt (r * rᴴ))).re - 1
-
 /-- Failure of CPTP factorization through the input A marginal. -/
 def IsSignallingBA (p : QuantumChannel (α₁ × β₁) (α₂ × β₂)) : Prop :=
   ¬ ∃ t : QuantumChannel α₁ α₂, ∀ x : Matrix (α₁ × β₁) (α₁ × β₁) ℂ,
@@ -63,11 +61,9 @@ private def marginalMap (p : QuantumChannel (α₁ × β₁) (α₂ × β₂)) :
     rw [map_add, partialTraceRight_add]
   map_smul' := by
     intro z x
-    ext i j
-    change (∑ k, matrixAction p.toCompletelyPositiveMap (z • x) (i, k) (j, k)) =
-      z * ∑ k, matrixAction p.toCompletelyPositiveMap x (i, k) (j, k)
-    rw [map_smul]
-    simp only [Matrix.smul_apply, smul_eq_mul, Finset.mul_sum]
+    rw [map_smul,
+      D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.partialTraceRight_smul]
+    rfl
 
 private def conditionalMap (p : QuantumChannel (α₁ × β₁) (α₂ × β₂))
     (a : α₁ → ℂ) : Matrix β₁ β₁ ℂ →ₗ[ℂ] Matrix α₂ α₂ ℂ where
@@ -77,12 +73,9 @@ private def conditionalMap (p : QuantumChannel (α₁ × β₁) (α₂ × β₂)
     rw [Matrix.kronecker_add, map_add, partialTraceRight_add]
   map_smul' := by
     intro z x
-    ext i j
-    change (∑ k, matrixAction p.toCompletelyPositiveMap (vecMulVec a (star a) ⊗ₖ (z • x))
-      (i, k) (j, k)) = z * ∑ k, matrixAction p.toCompletelyPositiveMap
-        (vecMulVec a (star a) ⊗ₖ x) (i, k) (j, k)
-    rw [Matrix.kronecker_smul, map_smul]
-    simp only [Matrix.smul_apply, smul_eq_mul, Finset.mul_sum]
+    rw [Matrix.kronecker_smul, map_smul,
+      D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.partialTraceRight_smul]
+    rfl
 
 private def IsReplacement (e : Matrix α α ℂ →ₗ[ℂ] Matrix β β ℂ) : Prop :=
   ∃ σ : Matrix β β ℂ, ∀ x, e x = trace x • σ
@@ -97,11 +90,13 @@ private theorem cj_entry (e : Matrix α α ℂ →ₗ[ℂ] Matrix β β ℂ)
 
 private theorem map_expansion (e : Matrix α α ℂ →ₗ[ℂ] Matrix β β ℂ)
     (x : Matrix α α ℂ) : e x = ∑ i, ∑ j, x i j • e (single i j 1) := by
-  have hx : x = ∑ i, ∑ j, x i j • single i j (1 : ℂ) := by
-    conv_lhs => rw [matrix_eq_sum_single x]
-    simp only [smul_single, smul_eq_mul, mul_one]
-  conv_lhs => rw [hx]
-  simp only [map_sum, map_smul]
+  have h := congrArg (fun f :
+      D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap α β ℂ => f x)
+    (D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.choi_map_inv e)
+  change (fun r s => ∑ i, ∑ j, x i j * e (single i j 1) r s) = e x at h
+  ext r s
+  simpa only [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
+    using congrArg (fun m : Matrix β β ℂ => m r s) h.symm
 
 private theorem conditional_entry (p : QuantumChannel (α₁ × β₁) (α₂ × β₂))
     (a : α₁ → ℂ) (k l : β₁) (r s : α₂) :
@@ -120,15 +115,13 @@ private theorem conditional_entry (p : QuantumChannel (α₁ × β₁) (α₂ ×
 private theorem discard_channel : ∃ t : QuantumChannel (α × β) α,
     ∀ x : Matrix (α × β) (α × β) ℂ,
       matrixAction t.toCompletelyPositiveMap x = partialTraceRight x := by
-  have star_ite (p : Prop) [Decidable p] (x y : ℂ) :
-      star (if p then x else y) = if p then star x else star y := by
-    split_ifs <;> rfl
   let k : β → Matrix α (α × β) ℂ := fun b i j => if i = j.1 ∧ b = j.2 then 1 else 0
   have hk : ∑ b, (k b)ᴴ * k b = 1 := by
     ext ⟨i, b⟩ ⟨j, c⟩
     simp only [Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply]
     dsimp [k]
-    simp only [starRingEnd_apply, star_ite, star_one, star_zero, ite_and, ite_mul, one_mul, zero_mul]
+    simp only [starRingEnd_apply, apply_ite star, star_one, star_zero, ite_and,
+      ite_mul, one_mul, zero_mul]
     simp only [Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
     simp only [Matrix.one_apply, Prod.mk.injEq, ite_and]
   obtain ⟨t, ht⟩ :=
@@ -140,16 +133,13 @@ private theorem discard_channel : ∃ t : QuantumChannel (α × β) α,
   simp only [Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
     Fintype.sum_prod_type]
   dsimp [k]
-  simp only [starRingEnd_apply, star_ite, star_one, star_zero, ite_and, ite_mul, mul_ite,
+  simp only [starRingEnd_apply, apply_ite star, star_one, star_zero, ite_and, ite_mul, mul_ite,
     one_mul, mul_one, zero_mul, mul_zero]
   simp
 
 private theorem mixed_append_channel [Nonempty β] : ∃ t : QuantumChannel α (α × β),
     ∀ x : Matrix α α ℂ, matrixAction t.toCompletelyPositiveMap x =
       x ⊗ₖ ((Fintype.card β : ℂ)⁻¹ • (1 : Matrix β β ℂ)) := by
-  have star_ite (p : Prop) [Decidable p] (x y : ℂ) :
-      star (if p then x else y) = if p then star x else star y := by
-    split_ifs <;> rfl
   let q : ℂ := (Real.sqrt ((Fintype.card β : ℝ)⁻¹) : ℂ)
   have hq : star q = q := Complex.conj_ofReal _
   have hqq : q * q = (Fintype.card β : ℂ)⁻¹ := by
@@ -165,7 +155,8 @@ private theorem mixed_append_channel [Nonempty β] : ∃ t : QuantumChannel α (
       Matrix.one_apply, Fintype.sum_prod_type]
     dsimp [k]
     simp (config := { contextual := true }) only
-      [starRingEnd_apply, star_ite, hq, star_zero, ite_and, ite_mul, mul_ite, zero_mul, mul_zero]
+      [starRingEnd_apply, apply_ite star, hq, star_zero, ite_and, ite_mul, mul_ite,
+        zero_mul, mul_zero]
     simp only [Finset.sum_const_zero, Finset.sum_ite_irrel]
     try simp only [Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
     by_cases hij : i = j
@@ -182,7 +173,8 @@ private theorem mixed_append_channel [Nonempty β] : ∃ t : QuantumChannel α (
   simp only [Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
     kronecker_apply, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul]
   dsimp [k]
-  simp only [starRingEnd_apply, star_ite, hq, star_zero, ite_and, ite_mul, mul_ite, zero_mul, mul_zero]
+  simp only [starRingEnd_apply, apply_ite star, hq, star_zero, ite_and, ite_mul, mul_ite,
+    zero_mul, mul_zero]
   simp only [Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   by_cases hbc : b = c
   · subst c
@@ -209,9 +201,8 @@ private theorem pure_projectors_map_zero
       intro i _
       ring
     have hu (i : α) : star ⇑(hx.eigenvectorBasis i) ⬝ᵥ ⇑(hx.eigenvectorBasis i) = 1 := by
-      rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct,
-        inner_self_eq_norm_sq_to_K, hx.eigenvectorBasis.norm_eq_one]
-      norm_num
+      rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct]
+      exact hx.eigenvectorBasis.inner_eq_one i
     rw [hexp, map_sum]
     simp only [map_smul, he _ (hu _), smul_zero, Finset.sum_const_zero]
   apply LinearMap.ext
@@ -385,13 +376,9 @@ private theorem orthogonal_pair [Nonempty α]
     by_contra hn
     exact hpair ⟨b, c, hb, hc, hbc, hn⟩
   have hoff (i j : α) (hij : i ≠ j) : e (single i j 1) = 0 := by
+    have hpair := ElementaryChannelDivisibility.basis_pair j i hij.symm
     have h := hvan ((Pi.single j 1 : α → ℂ)) (Pi.single i 1)
-      (by simp only [Pi.star_single, star_one, single_dotProduct, Pi.single_eq_same,
-        mul_one])
-      (by simp only [Pi.star_single, star_one, single_dotProduct, Pi.single_eq_same,
-        mul_one])
-      (by simp only [Pi.star_single, star_one, single_dotProduct,
-        Pi.single_eq_of_ne (Ne.symm hij), mul_zero])
+      hpair.1 hpair.2.1 hpair.2.2
     simpa only [Pi.star_single, star_one, ← single_eq_single_vecMulVec_single] using h
   have hdiag (i j : α) : e (single i i 1) = e (single j j 1) := by
     by_cases hij : i = j
@@ -484,13 +471,10 @@ private theorem tensor_pairing (e : Matrix α α ℂ →ₗ[ℂ] Matrix β β �
     star (fun z : α × β => x z.1 * if z.2 = r then 1 else 0) ⬝ᵥ
       cjMatrix e *ᵥ (fun z : α × β => y z.1 * if z.2 = s then 1 else 0) =
       e (vecMulVec y (star x)) r s := by
-  have star_ite (p : Prop) [Decidable p] (x y : ℂ) :
-      star (if p then x else y) = if p then star x else star y := by
-    split_ifs <;> rfl
   generalize hm : cjMatrix e = m
   change (∑ z : α × β, star (x z.1 * if z.2 = r then 1 else 0) *
     ∑ w : α × β, m z w * (y w.1 * if w.2 = s then 1 else 0)) = _
-  simp only [Fintype.sum_prod_type, star_mul, star_ite, star_one, star_zero,
+  simp only [Fintype.sum_prod_type, star_mul, apply_ite star, star_one, star_zero,
     mul_ite, mul_one, mul_zero, ite_mul, one_mul, zero_mul,
     Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   rw [← hm, ← cj_pairing]
@@ -542,7 +526,7 @@ private theorem pdm_hermitian_trace (p : QuantumChannel (α₁ × β₁) (α₂ 
     (hb : star b ⬝ᵥ b = 1) :
     (pdmBA p a b).IsHermitian ∧ trace (pdmBA p a b) = 1 := by
   have hpa : (vecMulVec a (star a))ᴴ = vecMulVec a (star a) := by
-    rw [conjTranspose_vecMulVec, star_star]
+    exact (Matrix.posSemidef_vecMulVec_self_star a).isHermitian.eq
   have he (x : Matrix β₁ β₁ ℂ) :
       conditionalMap p a xᴴ = (conditionalMap p a x)ᴴ := by
     change partialTraceRight (matrixAction p.toCompletelyPositiveMap
@@ -561,7 +545,7 @@ private theorem pdm_hermitian_trace (p : QuantumChannel (α₁ × β₁) (α₂ 
   have hm := cj_hermitian (conditionalMap p a) he
   have hd : ((vecMulVec b (star b)) ⊗ₖ (1 : Matrix α₂ α₂ ℂ))ᴴ =
       (vecMulVec b (star b)) ⊗ₖ (1 : Matrix α₂ α₂ ℂ) := by
-    rw [conjTranspose_kronecker, conjTranspose_vecMulVec, star_star, conjTranspose_one]
+    exact ((Matrix.posSemidef_vecMulVec_self_star b).kronecker Matrix.PosSemidef.one).isHermitian.eq
   have ht : trace (conditionalMap p a (vecMulVec b (star b))) = 1 := by
     change trace (partialTraceRight (matrixAction p.toCompletelyPositiveMap
       (vecMulVec a (star a) ⊗ₖ vecMulVec b (star b)))) = 1
@@ -607,7 +591,7 @@ private theorem negative_minor (p : QuantumChannel (α₁ × β₁) (α₂ × β
   let d := (vecMulVec b (star b)) ⊗ₖ (1 : Matrix α₂ α₂ ℂ)
   have hd : dᴴ = d := by
     dsimp [d]
-    rw [conjTranspose_kronecker, conjTranspose_vecMulVec, star_star, conjTranspose_one]
+    exact ((Matrix.posSemidef_vecMulVec_self_star b).kronecker Matrix.PosSemidef.one).isHermitian.eq
   have hdv : d *ᵥ v = 0 := by
     change ((vecMulVec b (star b)) ⊗ₖ (1 : Matrix α₂ α₂ ℂ)) *ᵥ
       (fun z : β₁ × α₂ => c z.1 * if z.2 = s then 1 else 0) = 0
@@ -644,7 +628,7 @@ private theorem negative_minor (p : QuantumChannel (α₁ × β₁) (α₂ × β
 
 private theorem negativity_of_not_posSemidef (r : Matrix α α ℂ)
     (hr : r.IsHermitian) (ht : trace r = 1) (hn : ¬ r.PosSemidef) :
-    0 < negativity r := by
+    0 < traceNorm rᴴ - 1 := by
   have hneg : (negPart r).PosSemidef := (CFC.negPart_nonneg r).posSemidef
   have hne : negPart r ≠ 0 := by
     intro hz
@@ -656,22 +640,18 @@ private theorem negativity_of_not_posSemidef (r : Matrix α α ℂ)
     apply hne
     apply hneg.trace_eq_zero_iff.mp
     exact Complex.ext hz.symm hnonneg.2.symm
-  have habs : CFC.abs r = CFC.sqrt (r * rᴴ) := by
-    unfold CFC.abs
-    rw [Matrix.star_eq_conjTranspose, hr.eq]
-  have hh : CFC.abs r - r = negPart r + negPart r := by
-    simpa only [two_smul] using CFC.abs_sub_self r hr
-  have heq := congrArg (fun x : Matrix α α ℂ => (trace x).re) hh
-  rw [habs, trace_sub, trace_add, ht, Complex.sub_re, Complex.add_re,
-    Complex.one_re] at heq
-  unfold negativity
-  linarith only [heq, htr]
+  have hnorm := trace_norm_jordan_mass r hr
+  have htrace := congrArg (fun m : Matrix α α ℂ => (trace m).re)
+    (CFC.posPart_sub_negPart r hr)
+  rw [trace_sub, Complex.sub_re, ht, Complex.one_re] at htrace
+  rw [hr.eq]
+  linarith only [hnorm, htrace, htr]
 
 /-- A signalling channel admits a pure product input with strictly positive PDM negativity. -/
 theorem result [Nonempty α₁] [Nonempty β₁] [Nonempty α₂] [Nonempty β₂]
     (p : QuantumChannel (α₁ × β₁) (α₂ × β₂)) (hp : IsSignallingBA p) :
     ∃ (a : α₁ → ℂ) (b : β₁ → ℂ), star a ⬝ᵥ a = 1 ∧ star b ⬝ᵥ b = 1 ∧
-      0 < negativity (pdmBA p a b) := by
+      0 < traceNorm (pdmBA p a b)ᴴ - 1 := by
   obtain ⟨a, ha, he⟩ := signalling_dichotomy p hp
   obtain ⟨b, c, hb, hc, hbc, hcross⟩ := orthogonal_pair (conditionalMap p a) he
   obtain ⟨hr, ht⟩ := pdm_hermitian_trace p a b ha hb
