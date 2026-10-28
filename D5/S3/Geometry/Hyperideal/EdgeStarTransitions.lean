@@ -386,7 +386,7 @@ private def localFlagEquiv : Fin 4 × Fin 3 ≃ Fin 6 × Bool where
     rcases x with ⟨j, b⟩
     fin_cases j <;> cases b <;> decide
 
-private abbrev Flag (T : Type*) := T × (Fin 4 × Fin 3)
+abbrev Flag (T : Type*) := T × (Fin 4 × Fin 3)
 
 private def flagOcc {T : Type*} (d : Flag T) : Occurrence T :=
   (d.1, (localFlagEquiv d.2).1)
@@ -399,14 +399,14 @@ private def otherFace {T : Type*} : Equiv.Perm (Flag T) := by
       (Equiv.prodCongr (Equiv.refl (Fin 6)) (Equiv.swap false true))
   exact e.trans (flip.trans e.symm)
 
-private structure Pairing (T : Type*) where
+structure Pairing (T : Type*) where
   facePair : Equiv.Perm (T × Fin 4)
   faceMap : T × Fin 4 → Fin 3 ≃ Fin 3
   pairInvolutive : facePair * facePair = 1
   pairFixedFree : ∀ x, facePair x ≠ x
   mapInverse : ∀ x n, faceMap (facePair x) (faceMap x n) = n
 
-private def Pairing.cross {T : Type*} (p : Pairing T) : Equiv.Perm (Flag T) := by
+def Pairing.cross {T : Type*} (p : Pairing T) : Equiv.Perm (Flag T) := by
   let crossRaw (d : Flag T) : Flag T :=
     let x : T × Fin 4 := (d.1, d.2.1)
     let y := p.facePair x
