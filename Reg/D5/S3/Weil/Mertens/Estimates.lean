@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.Mertens.Estimates
 import Reg.Support.SingleDependentReadout
 
+/-! The complete weighted residual law with its inclusive real cutoff. -/
+
 namespace Reg.D5.S3.Weil.Mertens.Estimates
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit Real Set Filter MeasureTheory
@@ -28,7 +30,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   change _root_.Mertens.E₁Λ 1 - _root_.Mertens.E₁p 1 =
     ∑ n ∈ Finset.Ioc 0 ⌊(1 : ℝ)⌋₊,
       if ¬n.Prime then (ArithmeticFunction.vonMangoldt n + 1) / n else 0 at ht
-  norm_num [_root_.Mertens.E₁Λ, _root_.Mertens.E₁p,
+  norm_num [_root_.Mertens.E₁Λ, _root_.Mertens.E₁p, Finset.sum_filter,
+    Nat.not_prime_one, Nat.prime_two,
     show Finset.Ioc 0 1 = {1} by decide] at ht
 
 def splitEvidence : Registration arena
@@ -60,7 +63,8 @@ def splitRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 
   realization := .source arena ⟨splitEvidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ n => ArithmeticFunction.vonMangoldt n) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ _ n => ArithmeticFunction.vonMangoldt n) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

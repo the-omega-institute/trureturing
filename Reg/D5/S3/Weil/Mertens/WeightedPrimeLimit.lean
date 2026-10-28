@@ -1,6 +1,9 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.Mertens.WeightedPrimeLimit
 import Reg.Support.SingleDependentReadout
+import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+
+/-! Source laws retain the actual Chebyshev kernel and original weighted limits. -/
 
 namespace Reg.D5.S3.Weil.Mertens.WeightedPrimeLimit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -29,11 +32,15 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     refine h.congr_fun ?_ measurableSet_Ioi
     intro u hu
     change (u + u ^ 2 - u) / u ^ 2 = 1
-    have hu0 : u ≠ 0 := ne_of_gt (by linarith [hu] : 0 < u)
+    have hu0 : u ≠ 0 := ne_of_gt (by
+      have hu1 : (1 : ℝ) < u := hu
+      linarith : 0 < u)
     field_simp
     <;> ring
-  simpa only [integrableOn_const_iff, enorm_one, one_ne_zero, volume_Ioi,
-    lt_self_iff_false, or_self] using hi
+  have hi' : IntegrableOn (fun u : ℝ => u ^ (0 : ℝ)) (Ioi 1) := by
+    simpa only [Real.rpow_zero] using hi
+  exact (not_integrableOn_Ioi_rpow_of_neg_one_le
+    (a := 1) (s := 0) (by norm_num)) hi' 
 
 def kernelEvidence : Registration arena (type_of% chebyshev_error_kernel_integrable) where
   actual := actual
@@ -61,7 +68,8 @@ def kernelRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _,
   realization := .source arena ⟨kernelEvidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ u => Chebyshev.psi u) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ _ u => Chebyshev.psi u) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -186,7 +194,7 @@ def primeEvidence : Registration arena (type_of% exists_E₁p_limit) where
     intro i
     refine ⟨(), (1 : ℝ), (2 : ℝ), ?_⟩
     change _root_.Mertens.E₁p 1 ≠ _root_.Mertens.E₁p 2
-    norm_num [_root_.Mertens.E₁p,
+    norm_num [_root_.Mertens.E₁p, Finset.sum_filter, Nat.not_prime_one, Nat.prime_two,
       show Finset.Ioc 0 1 = {1} by decide,
       show Finset.Ioc 0 2 = {1, 2} by decide]
     have hp : 0 < Real.log 2 := Real.log_pos (by norm_num)
