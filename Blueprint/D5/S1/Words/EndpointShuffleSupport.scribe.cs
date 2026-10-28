@@ -7,6 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words;
 internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Words/EndpointShuffleSupport.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Words/layman2011a193020");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The endpoint-gap rectangle is exactly the distinct ordinary self-shuffle support.",
@@ -18,24 +20,34 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
                 + "finite set discards them. All cardinalities below count output words. All scalar indices are natural numbers.")),
             Node("endpointWord", "Two endpoint ones", DescribeRole.Definition,
                 Equal(Call("endpointWord", F.Id("m")),
-                    Call("concat", F.Id("one"), Call("zeros", F.Id("m")), F.Id("one"))),
+                    Call("List.append",
+                        Call("List.append", Call("List.singleton", F.Id("true")),
+                            Call("List.replicate", F.Id("m"), F.Id("false"))),
+                        Call("List.singleton", F.Id("true")))),
                 "The word consists of an initial one, m zeros and a final one. The value m=0 is allowed."),
             Node("endpointOutput", "Words parametrized by their outer gaps", DescribeRole.Definition,
                 Equal(Call("endpointOutput", F.Id("m"), F.Id("a"), F.Id("c")),
-                    Call("gap", F.Id("zero"), Call("list", Num(1), Num(1), Num(1), Num(1)),
+                    Call("gap", F.Id("false"), Call("list", Num(1), Num(1), Num(1), Num(1)),
                         Call("list", Num(0), F.Id("a"),
-                            Add(Seq(Open, Subtract(F.Id("m"), F.Id("a")), Close), Seq(Open, Subtract(F.Id("m"), F.Id("c")), Close)),
+                            Add(Parenthesized(Subtract(F.Id("m"), F.Id("a"))),
+                                Parenthesized(Subtract(F.Id("m"), F.Id("c")))),
                             F.Id("c"), Num(0)))),
                 "The five zero gaps around four ones are 0, a, (m-a)+(m-c), c and 0. "
-                + "When a and c are at most m, the total number of zeros is 2m."),
+                + "Natural subtraction is truncated: u-v means max(u-v,0), so this total definition "
+                + "is unambiguous for arbitrary natural a and c. When a and c are at most m, "
+                + "the total number of zeros is 2m; for example m=0,a=1,c=0 gives middle gap zero."),
             Node("endpointFamily", "The finite rectangle of output words", DescribeRole.Definition,
                 Equal(Call("endpointFamily", F.Id("m")),
-                    Call("image",
-                        Seq(Open, F.Id("a"), Comma, F.Id("c"), Close, Sp, Mapsto, Sp,
-                            Call("endpointOutput", F.Id("m"), F.Id("a"), F.Id("c"))),
-                        Call("square", Call("Fin", Add(F.Id("m"), Num(1)))))),
+                    Call("Finset.image",
+                        Lambda("p", PairType(F.Id("m")),
+                            Call("endpointOutput", F.Id("m"),
+                                Call("val", Call("fst", F.Id("p"))),
+                                Call("val", Call("snd", F.Id("p"))))),
+                        Parenthesized(Seq(Call("Finset.univ"), Colon, Sp,
+                            Call("Finset", PairType(F.Id("m"))))))),
                 "Take the image of Fin(m+1) times Fin(m+1) under the output map. "
-                + "Here a and c are the natural values of the two finite coordinates. "
+                + "The map binds p in the full finite product and casts both projections with val. "
+                + "The universal finite product includes every pair, including when m=0. "
                 + "The image is a finite set of words, rather than a set of schedules."),
             Node("endpointOutput_mem", "Constructing every outer-gap pair", DescribeRole.Theorem,
                 Seq(Forall, Sp, F.Id("m"), Comma, F.Id("a"), Comma, F.Id("c"), Comma, Sp,
@@ -88,15 +100,20 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
                 "The support equals the injectively parametrized rectangle, whose cardinality "
                 + "is (m+1)^2. This holds for every natural m, including m=0."),
             Node("binaryWord", "Ordinary binary numerals", DescribeRole.Definition,
-                Equal(Call("binaryWord", F.Id("n")), Call("mapDigitEqualsOne", Call("reverse", Call("digits", Num(2), F.Id("n"))))),
+                Equal(Call("binaryWord", F.Id("n")),
+                    Call("List.map",
+                        Lambda("d", NaturalType(),
+                            Call("ite", Equal(F.Id("d"), Num(1)), F.Id("true"), F.Id("false"))),
+                        Call("List.reverse", Call("Nat.digits", Num(2), F.Id("n"))))),
                 "For positive n, use its ordinary finite base-two digits, reverse the "
                 + "least-significant-first list to put the most significant digit first, and "
-                + "map 0 to false and 1 to true. The standard digits operation introduces no "
-                + "leading zeros. The definition extends to n=0 by the empty list."),
+                + "map each natural digit d to true exactly when d=1, and to false otherwise. "
+                + "The standard digits operation introduces no leading zeros. The definition "
+                + "extends to n=0 by the empty list."),
             Node("distinctSelfShuffleCount", "Distinct output count", DescribeRole.Definition,
                 Equal(Call("distinctSelfShuffleCount", F.Id("n")), Call("card", Call("toFinset", Call("ordinaryShuffles", Call("binaryWord", F.Id("n")), Call("binaryWord", F.Id("n")))))),
                 "This is a(n): arbitrary order-preserving interleavings of two identical "
-                + "ordinary binary numerals, counting each output word once."),
+                + "ordinary binary numerals, counting each output word once.", Source),
             Node("binaryWord_pow_add_one", "Binary bridge at every positive exponent", DescribeRole.Theorem,
                 Seq(Forall, Sp, F.Id("k"), Comma, Sp, AtMost(Num(1), F.Id("k")), Implies, Sp,
                     Equal(Call("binaryWord", Add(Power(Num(2), F.Id("k")), Num(1))), Call("endpointWord", Subtract(F.Id("k"), Num(1))))),
@@ -110,12 +127,11 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
                 "All variables are natural numbers. Choose K=1. For every k at least K, "
                 + "substitute m=k-1 into the exact support cardinality and use the ordinary "
                 + "binary bridge. Then (m+1)^2=k^2. This preserves the eventual quantifier "
-                + "and supplies a threshold valid uniformly for all subsequent exponents."),
+                + "and supplies a threshold valid uniformly for all subsequent exponents.", Source),
             Paragraph(Text("The selected source assertion is the standalone eventual identity "
-                + "a(2^k+1)=k^2 in OEIS A193020, introduced by John W. Layman and retained in "
-                + "revision 13 under the stated caveat that k must exceed a lower bound. "
-                + "Source: https://oeis.org/A193020, OEIS content licensed CC-BY-SA-4.0. "
-                + "The other identities listed there are separate assertions.")))));
+                + "a(2^k+1)=k^2 with its sufficiently-large lower-bound caveat. The proof here "
+                + "establishes the exact threshold K=1 in the formal model. The other identities "
+                + "listed by the source are separate assertions.")))));
 
     private static Formula CloseDefinition(string declaration, DescribeRole role, Formula statement)
     {
@@ -126,7 +142,19 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
     }
 
     private static Formula Natural(string name) =>
-        Seq(Open, F.Id(name), Colon, Seq(Mathbb, Grp(F.Id("N"))), Close);
+        Parenthesized(Seq(F.Id(name), Colon, Sp, NaturalType()));
+
+    private static Formula NaturalType() => Seq(Mathbb, Grp(F.Id("N")));
+
+    private static Formula PairType(Formula m) =>
+        Parenthesized(Seq(Call("Fin", Add(m, Num(1))), Sp, Times, Sp,
+            Call("Fin", Add(m, Num(1)))));
+
+    private static Formula Lambda(string name, Formula type, Formula body) =>
+        Parenthesized(Seq(Operatorname, Grp(F.Id("fun")), Sp,
+            Parenthesized(Seq(F.Id(name), Colon, Sp, type)), Sp, Mapsto, Sp, body));
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
     private static Formula AtMost(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
@@ -134,9 +162,11 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
     private static Formula Power(Formula a, Formula b) => new Formula.Power(a, b);
 
     private static DocumentBlock.Describe Node(string declaration, string title,
-        DescribeRole role, Formula statement, string prose) =>
+        DescribeRole role, Formula statement, string prose,
+        LibraryNoteRef? source = null) =>
         Describe.Lean(DescribeId.Create("endpoint-shuffle-" + declaration.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(Disp(CloseDefinition(declaration, role, statement))), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Disp(CloseDefinition(declaration, role, statement))),
+            source is null ? AssessedProvenance.FromRepo() : AssessedProvenance.FromRepo(source),
             Blocks(Paragraph(Text(prose))), role);
 }

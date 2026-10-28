@@ -8,8 +8,6 @@
 
 import D5.S1.Words.UnaryGapWords
 import D5.S1.Words.Complexity.ExactDecks.UpperBound.OverlapInfiltration
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Nat.Digits.Lemmas
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
