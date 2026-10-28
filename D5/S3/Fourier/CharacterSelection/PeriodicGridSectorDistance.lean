@@ -10,6 +10,8 @@ import D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy
 import Mathlib.InformationTheory.Hamming
 import Mathlib.Data.Finset.Prod
 
+/-! Hamming support bounds and exact changes of flat holonomy sector. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -32,7 +34,7 @@ private theorem row_disagreement_embedding {I J A : Type*} [Fintype J]
   have hd : ∀ i, ∃ j, f i j ≠ g i j := by
     intro i
     by_contra h
-    push_neg at h
+    push Not at h
     exact hs i (Finset.sum_congr rfl (fun j _ => h j))
   choose c hc using hd
   exact ⟨{
@@ -58,13 +60,16 @@ private theorem seam_support_distance {I J : Type*} [Fintype I] [Fintype J]
   classical
   by_cases hab : a = b
   · simp [hab]
-  · rw [if_neg hab, hammingDist]
+  · rw [ite_eq_right hab, hammingDist]
     have heq :
-        {ij : I × J | x ij.1 ij.2 + (if ij.2 = q then a else 0) ≠
-          x ij.1 ij.2 + (if ij.2 = q then b else 0)} =
+        ({ij : I × J | x ij.1 ij.2 + (if ij.2 = q then a else 0) ≠
+          x ij.1 ij.2 + (if ij.2 = q then b else 0)} : Finset (I × J)) =
         (univ : Finset I) ×ˢ {q} := by
-      ext ij
-      by_cases hj : ij.2 = q <;> simp [hj, hab]
+      ext ⟨i, j⟩
+      by_cases hj : j = q
+      · subst j
+        simp [hab, Prod.mk.injEq]
+      · simp [hj, Ne.symm hj, hab, Prod.mk.injEq]
     rw [heq, card_product]
     simp
 
@@ -87,7 +92,7 @@ private theorem combined_distance {M N : ℕ} [NeZero M] [NeZero N]
       if b = v then 0 else n + 1 := by
     have ht := seam_support_distance (Fin.last m)
       (fun j i => (gradient x).vertical i j) b v
-    rw [hammingDist, hammingDist] at ht ⊢
+    simp only [hammingDist] at ht ⊢
     have he :
         Fintype.card {ij : Fin (n + 1) × Fin (m + 1) //
           (gradient x).vertical ij.2 ij.1 + (if ij.2 = Fin.last m then b else 0) ≠
@@ -99,7 +104,8 @@ private theorem combined_distance {M N : ℕ} [NeZero M] [NeZero N]
       apply Equiv.subtypeEquiv (Equiv.prodComm _ _)
       intro ij
       simp [combinedLabel, seam, Fin.ext_iff, Nat.add_right_cancel_iff]
-    simpa only [Fintype.card_subtype] using he.symm.trans ht
+    simp only [Fintype.card_subtype] at he
+    simpa only [Fintype.card_fin] using he.symm.trans ht
   exact congrArg₂ (· + ·) hh hv
 
 /-- The minimum is attained for every target pair, and bounds every flat label in that sector. -/
@@ -120,8 +126,11 @@ theorem flat_sector_distance {M N : ℕ} [NeZero M] [NeZero N]
     have heq : combinedLabel c.1.1 (rowHolonomy y 0) (columnHolonomy y 0) = y :=
       congrArg Subtype.val ((flatLabelEquiv (M := M) (N := N)).symm_apply_apply ⟨y, hy⟩)
     change edgeDistance y (combinedLabel c.1.1 h v) = _
-    rw [← heq]
-    exact combined_distance c.1.1 _ _ h v
+    calc
+      edgeDistance y (combinedLabel c.1.1 h v) =
+          edgeDistance (combinedLabel c.1.1 (rowHolonomy y 0) (columnHolonomy y 0))
+            (combinedLabel c.1.1 h v) := congrArg (fun w => edgeDistance w _) heq.symm
+      _ = _ := combined_distance c.1.1 _ _ h v
   · intro z hz hh hv
     have hrow : (if rowHolonomy y 0 = h then 0 else M) ≤
         hammingDist (fun ij : Fin M × Fin N => y.horizontal ij.1 ij.2)
