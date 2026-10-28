@@ -421,7 +421,7 @@ def successOutput (c a k S : ℝ) (rho : TraceClass (Blocks (Fin 5) H)) :
     (referenceSuccess c a k S * rho.1 * (referenceSuccess c a k S).adjoint)
     (isTraceClass_mul_mul (TraceClass.isTraceClass_coe rho))
 
-private theorem tensor_diagonal {m : ℕ} (d : Fin m → ℂ)
+theorem tensor_diagonal {m : ℕ} (d : Fin m → ℂ)
     (z : EuclideanSpace ℂ (Fin m) ⊗[ℂ] H) :
     diagonalAction d (tensorCoordinates z) = tensorCoordinates
       (TensorProduct.map (diagonalAction (H := ℂ) d).toLinearMap
