@@ -23,16 +23,17 @@ internal sealed class BarczyPalesJensenConverseDocument : IScribeDocumentDefinit
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Sp, Colon, Sp, type));
     private static Formula Inverse(Formula value) => new Formula.Power(Parenthesized(value), new Formula.Negate(D(1)));
-    private static Formula Lam(string name, Formula type, Formula body) =>
-        Seq(Op("fun"), Sp, Parenthesized(Seq(X(name), Colon, Sp, type)), Sp, Mapsto, Sp, body);
     private static Formula SumOver(string name, Formula type, Formula body) =>
-        Seq(new Formula.Subscript(Sum, Seq(X(name), Colon, Sp, type)), Sp, body);
+        Seq(new Formula.Subscript(Sum, Typed(X(name), type)), Sp, body);
     private static Formula Real => Seq(Mathbb, Grp(X("R")));
     private static Formula Nat => Seq(Mathbb, Grp(X("N")));
     private static Formula Claim => Op("claim");
     private static Formula FinN => C("Fin", X("n"));
 
-    private static Formula Method(Formula receiver, string name) => Seq(receiver, Dot, X(name));
+    private static Formula Method(Formula receiver, string name) =>
+        name == "sum_mem"
+            ? Seq(receiver, Dot, X("sum"), Underscore, Grp(X("mem")))
+            : Seq(receiver, Dot, X(name));
 
     private static Formula SubtypeValue(Formula value, Formula membership) =>
         Seq(Langle, value, Comma, Sp, membership, Rangle);
@@ -86,7 +87,7 @@ internal sealed class BarczyPalesJensenConverseDocument : IScribeDocumentDefinit
             Describe.Lean(DescribeId.Create("claim"), DeclarationHandle.Create(Prefix + "claim"),
                 H("The complete original universal converse"), StatementSource.FromAuthor(Disp(Eq(Claim, WholeClaim))),
                 AssessedProvenance.FromLiterature(Source), Blocks(
-                    Paragraph(Text("For every positive integer n, every nonempty open convex subset I of the real line, every arbitrary function f from I itself to the reals, and every real n by n doubly stochastic matrix P of real rank at least two, the inequality f applied to the displayed subtype arithmetic mean is at most the average of f applied to the displayed subtype matrix rows for every x in I^n is asserted to imply midpoint convexity for every u and v in I. Nonempty open convex subsets of the real line are exactly the open intervals in scope, including unbounded intervals and the whole line. The antecedent compares the actual arithmetic-mean input with the actual matrix row images for all inputs. The claim is a closed proposition and contains no restriction of arbitrary subtype functions to functions supplied with an ambient extension."))), DescribeRole.Definition),
+                    Paragraph(Text("For every positive integer n, every nonempty open convex subset I of the real line, every arbitrary function f from I itself to the reals, and every real n by n doubly stochastic matrix P of real rank at least two, the inequality f applied to the displayed subtype arithmetic mean is at most the average of f applied to the displayed subtype matrix rows for every x in I^n is asserted to imply midpoint convexity for every u and v in I. Nonempty open convex subsets of the real line are exactly the open intervals in scope, including unbounded intervals and the whole line. The antecedent compares the actual arithmetic-mean input with the actual matrix row images for all inputs. The claim is a closed proposition and contains no restriction of arbitrary subtype functions to functions supplied with an ambient extension. The compiled declaration is D5.S3.QuadraticForms.BarczyPalesJensenConverse.claim."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("Negation of the complete converse"), StatementSource.FromAuthor(Disp(new Formula.Not(Claim))),
                 AssessedProvenance.FromRepo(Source), Blocks(

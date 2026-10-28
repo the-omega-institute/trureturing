@@ -45,7 +45,7 @@ The rank condition replaces the original special normalized disjoint-support col
 
 ## Quadratic-field model
 
-The companion module's closed proposition is `BarczyPalesJensenConverse.claim`; its theorem `BarczyPalesJensenConverse.result : ¬ BarczyPalesJensenConverse.claim` uses $n=3$ and $I=\mathbb R$. Put $s=\sqrt3$ and present $K=\mathbb Q(s)$ as `QuadraticAlgebra ℚ 3 0`. Its field structure uses the existing rational nonsquare transfer and prime nonsquare result. The injective quadratic lift sends $a+b\omega$ to $a+bs$, so the scalar action on $\mathbb R$ is multiplication through this actual embedding.
+The companion module's closed proposition is `D5.S3.QuadraticForms.BarczyPalesJensenConverse.claim`; its theorem `D5.S3.QuadraticForms.BarczyPalesJensenConverse.result : ¬ D5.S3.QuadraticForms.BarczyPalesJensenConverse.claim` uses $n=3$ and $I=\mathbb R$. Put $s=\sqrt3$ and present $K=\mathbb Q(s)$ as `QuadraticAlgebra ℚ 3 0`. Its field structure uses the existing rational nonsquare transfer and prime nonsquare result. The injective quadratic lift sends $a+b\omega$ to $a+bs$, so the scalar action on $\mathbb R$ is multiplication through this actual embedding.
 
 The existing vector-space linear splitting supplies a total $K$-linear retraction $L:\mathbb R\to K$ of that embedding. No finite-dimensionality of $\mathbb R$ over $K$ is assumed. Define
 
@@ -85,6 +85,6 @@ The source's positive theorem with its original special column-span premise and 
 
 ## Reuse and qualification boundary
 
-The algebra, quadratic lift, field-hom injectivity, vector-space splitting, convex-combination membership and determinant/submatrix rank APIs are reused from mathlib revision `56a005855ea17e0b0958f73ec801ae140b0a1679`. The finite norm cancellation and the full source-question application are compositions and algebraic normalization. The repository proof-shape classification is bind-only; the intended admission basis is the externally named open-problem preregistration [#23083](https://github.com/the-omega-institute/trureturing/issues/23083). This source note is not resolution metadata or a publication/priority assertion.
+The algebra, quadratic lift, field-hom injectivity, vector-space splitting, convex-combination membership and determinant/submatrix rank APIs are reused from mathlib revision `56a005855ea17e0b0958f73ec801ae140b0a1679`. The finite norm cancellation and the full source-question application are compositions and algebraic normalization. This source note records the exact unrestricted question and its mathematical boundary; it makes no publication, priority or exhaustive-literature assertion.
 
 The supplied bounded literature qualification identifies no earlier verified equal-or-stronger full answer. Niezgoda (2013), DOI `10.7153/mia-16-16`, supplies forward results assuming convexity. The later expected-loss paper arXiv:2606.22183 also imposes convexity and probabilistic/generator conditions. Neither quoted scope supplies this unrestricted converse. Burai–Makó–Szokol (2019) and the complete *Functions Generating Strongly Schur-Convex Sums* chapter, DOI `10.1007/978-3-0348-0249-9_13`, remain unread; other unexamined bibliography originals are not invoked. There is no claim of exhaustive literature coverage, global novelty or priority. Independent source-fidelity and prefreeze review remain outstanding.
