@@ -528,4 +528,252 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms audit
 end result
 
+namespace prefix_left
+universe u
+abbrev signature : Signature where
+  Params := Σ A : Type u, List A
+  State q := List q.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ q := List (List q.1)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature.{u} (fun _ q p => ordinaryShuffles p q.2) (fun e => nomatch e)
+def rejected : Realization signature.{u} :=
+  realize signature.{u} (fun _ _ _ => []) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {A : Type u} (p u v z : List A), z ∈ ordinaryShuffles u v →
+    p ++ z ∈ R.readout () ⟨A,v⟩ (p ++ u)
+private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
+  intro h
+  have hh := @h (ULift.{u} Bool) [] [] [] [] (by simp [ordinaryShuffles])
+  change [] ∈ ([] : List (List (ULift.{u} Bool))) at hh
+  simp at hh
+private theorem dependence : ObservationalDependence signature.{u} actual.{u} := by
+  intro i
+  refine ⟨⟨ULift.{u} Bool,[]⟩,[],[ULift.up true],?_⟩
+  change ordinaryShuffles ([] : List (ULift.{u} Bool)) [] ≠ ordinaryShuffles [ULift.up true] []
+  simp [ordinaryShuffles]
+private theorem sensitive : Sensitivity arena.{u} actual.{u} := by
+  constructor
+  · intro i
+    refine ⟨rejected.{u},?_,?_,rejected_law.{u}⟩
+    · intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · funext e
+      exact nomatch e
+  · intro e
+    exact nomatch e
+def family : Registration arena.{u} (type_of% (@_root_.D5.S1.Words.EndpointShuffleSupport.prefix_left.{u})) where
+  actual := actual.{u}
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S1.Words.EndpointShuffleSupport.prefix_left.{u},rejected.{u},rejected_law.{u}⟩
+  sensitivity := sensitive.{u}
+  dependence := dependence.{u}
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.EndpointShuffleSupport.prefix_left.{u}) (type_of% actual.{u}) Unit Unit := {
+  unitName := `D5.S1.Words.EndpointShuffleSupport.prefix_left.__information_unit
+  realizationName := `Reg.D5.S1.Words.EndpointShuffleSupport.prefix_left.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u}
+    (fun _ q p => ordinaryShuffles p q.2) actual.{u}.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S1.Words.EndpointShuffleSupport
+    definition := none
+    coordinates := #[0,3]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","fn","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn","arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+#print axioms family
+#print axioms audit
+end prefix_left
+
+
+namespace prefix_right
+universe u
+abbrev signature : Signature where
+  Params := Σ A : Type u, List A
+  State q := List q.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ q := List (List q.1)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature.{u} (fun _ q p => ordinaryShuffles q.2 p) (fun e => nomatch e)
+def rejected : Realization signature.{u} :=
+  realize signature.{u} (fun _ _ _ => []) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {A : Type u} (p u v z : List A), z ∈ ordinaryShuffles u v →
+    p ++ z ∈ R.readout () ⟨A,u⟩ (p ++ v)
+private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
+  intro h
+  have hh := @h (ULift.{u} Bool) [] [] [] [] (by simp [ordinaryShuffles])
+  change [] ∈ ([] : List (List (ULift.{u} Bool))) at hh
+  simp at hh
+private theorem dependence : ObservationalDependence signature.{u} actual.{u} := by
+  intro i
+  refine ⟨⟨ULift.{u} Bool,[]⟩,[],[ULift.up true],?_⟩
+  change ordinaryShuffles ([] : List (ULift.{u} Bool)) [] ≠ ordinaryShuffles [] [ULift.up true]
+  simp [ordinaryShuffles]
+private theorem sensitive : Sensitivity arena.{u} actual.{u} := by
+  constructor
+  · intro i
+    refine ⟨rejected.{u},?_,?_,rejected_law.{u}⟩
+    · intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · funext e
+      exact nomatch e
+  · intro e
+    exact nomatch e
+def family : Registration arena.{u} (type_of% (@_root_.D5.S1.Words.EndpointShuffleSupport.prefix_right.{u})) where
+  actual := actual.{u}
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S1.Words.EndpointShuffleSupport.prefix_right.{u},rejected.{u},rejected_law.{u}⟩
+  sensitivity := sensitive.{u}
+  dependence := dependence.{u}
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.EndpointShuffleSupport.prefix_right.{u}) (type_of% actual.{u}) Unit Unit := {
+  unitName := `D5.S1.Words.EndpointShuffleSupport.prefix_right.__information_unit
+  realizationName := `Reg.D5.S1.Words.EndpointShuffleSupport.prefix_right.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u}
+    (fun _ q p => ordinaryShuffles q.2 p) actual.{u}.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S1.Words.EndpointShuffleSupport
+    definition := none
+    coordinates := #[0,2]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","fn","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+#print axioms family
+#print axioms audit
+end prefix_right
+
+
+namespace mem_swap
+universe u
+abbrev signature : Signature where
+  Params := Σ A : Type u, List A
+  State q := List q.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ q := List (List q.1)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature.{u} (fun _ q p => ordinaryShuffles p q.2) (fun e => nomatch e)
+def rejected : Realization signature.{u} :=
+  realize signature.{u} (fun _ _ _ => []) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {A : Type u} (u v w : List A), w ∈ ordinaryShuffles u v →
+    w ∈ R.readout () ⟨A,u⟩ v
+private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
+  intro h
+  have hh := @h (ULift.{u} Bool) [] [] [] (by simp [ordinaryShuffles])
+  change [] ∈ ([] : List (List (ULift.{u} Bool))) at hh
+  simp at hh
+private theorem dependence : ObservationalDependence signature.{u} actual.{u} := by
+  intro i
+  refine ⟨⟨ULift.{u} Bool,[]⟩,[],[ULift.up true],?_⟩
+  change ordinaryShuffles ([] : List (ULift.{u} Bool)) [] ≠ ordinaryShuffles [ULift.up true] []
+  simp [ordinaryShuffles]
+private theorem sensitive : Sensitivity arena.{u} actual.{u} := by
+  constructor
+  · intro i
+    refine ⟨rejected.{u},?_,?_,rejected_law.{u}⟩
+    · intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · funext e
+      exact nomatch e
+  · intro e
+    exact nomatch e
+def family : Registration arena.{u} (type_of% (@_root_.D5.S1.Words.EndpointShuffleSupport.mem_swap.{u})) where
+  actual := actual.{u}
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S1.Words.EndpointShuffleSupport.mem_swap.{u},rejected.{u},rejected_law.{u}⟩
+  sensitivity := sensitive.{u}
+  dependence := dependence.{u}
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.EndpointShuffleSupport.mem_swap.{u}) (type_of% actual.{u}) Unit Unit := {
+  unitName := `D5.S1.Words.EndpointShuffleSupport.mem_swap.__information_unit
+  realizationName := `Reg.D5.S1.Words.EndpointShuffleSupport.mem_swap.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u}
+    (fun _ q p => ordinaryShuffles p q.2) actual.{u}.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S1.Words.EndpointShuffleSupport
+    definition := none
+    coordinates := #[0,1]
+    readouts := #[{
+      path := #["body","body","body","body","body","fn","arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+#print axioms family
+#print axioms audit
+end mem_swap
+
 end Reg.D5.S1.Words.EndpointShuffleSupport

@@ -30,7 +30,7 @@ def endpointFamily (m : Nat) : Finset (List Bool) :=
   Finset.univ.image (fun p : Fin (m + 1) × Fin (m + 1) =>
     endpointOutput m p.1.val p.2.val)
 
-private theorem prefix_left {α : Type*} (p u v z : List α)
+theorem prefix_left {α : Type*} (p u v z : List α)
     (hz : z ∈ ordinaryShuffles u v) :
     p ++ z ∈ ordinaryShuffles (p ++ u) v := by
   induction p with
@@ -46,7 +46,7 @@ private theorem prefix_left {α : Type*} (p u v z : List α)
           simp only [List.cons_append, ordinaryShuffles, List.mem_append, List.mem_map]
           exact Or.inl ⟨p ++ z, ih, rfl⟩
 
-private theorem prefix_right {α : Type*} (p u v z : List α)
+theorem prefix_right {α : Type*} (p u v z : List α)
     (hz : z ∈ ordinaryShuffles u v) :
     p ++ z ∈ ordinaryShuffles u (p ++ v) := by
   induction p with
@@ -123,7 +123,7 @@ theorem endpoint_self_shuffle_card_lower (m : Nat) :
     (endpointOutput_mem m p.1.val p.2.val (by omega) (by omega))
 
 
-private theorem mem_swap {α : Type*} (u v w : List α)
+theorem mem_swap {α : Type*} (u v w : List α)
     (h : w ∈ ordinaryShuffles u v) : w ∈ ordinaryShuffles v u := by
   cases u with
   | nil => cases v <;> simpa [ordinaryShuffles] using h

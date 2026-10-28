@@ -49,6 +49,21 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
                 + "The map binds p in the full finite product and casts both projections with val. "
                 + "The universal finite product includes every pair, including when m=0. "
                 + "The image is a finite set of words, rather than a set of schedules."),
+            Node("prefix_left", "Prefix from the left operand", DescribeRole.Theorem,
+                PrefixFormula(true),
+                "For every alphabet and every four words p,u,v,z, a complete shuffle of u and v can be preceded "
+                + "by p drawn entirely from the left operand. The resulting word is a complete shuffle of p++u and v."),
+            Node("prefix_right", "Prefix from the right operand", DescribeRole.Theorem,
+                PrefixFormula(false),
+                "For every alphabet and every four words p,u,v,z, a complete shuffle of u and v can be preceded "
+                + "by p drawn entirely from the right operand. The resulting word is a complete shuffle of u and p++v."),
+            Node("mem_swap", "Interchanging the two source operands", DescribeRole.Theorem,
+                All("alpha", Call("Type"), All("u", Call("List", F.Id("alpha")),
+                    All("v", Call("List", F.Id("alpha")), All("w", Call("List", F.Id("alpha")),
+                        Seq(Call("member", F.Id("w"), Call("ordinaryShuffles", F.Id("u"), F.Id("v"))),
+                            Implies, Sp, Call("member", F.Id("w"), Call("ordinaryShuffles", F.Id("v"), F.Id("u")))))))),
+                "Interchanging the source labels preserves the output word and complete order-preserving shuffle membership. "
+                + "The alphabet is arbitrary and all four words, or all three in this symmetry statement, may be empty."),
             Node("endpointOutput_mem", "Constructing every outer-gap pair", DescribeRole.Theorem,
                 Seq(Forall, Sp, F.Id("m"), Comma, F.Id("a"), Comma, F.Id("c"), Comma, Sp,
                     AtMost(F.Id("a"), F.Id("m")), Land, Sp, AtMost(F.Id("c"), F.Id("m")), Implies, Sp,
@@ -135,6 +150,25 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
                 + "a(2^k+1)=k^2 with its sufficiently-large lower-bound caveat. The proof here "
                 + "establishes the exact threshold K=1 in the formal model. The other identities "
                 + "listed by the source are separate assertions.")))));
+
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id(name), Colon, Sp, type)), Comma, Sp, body);
+
+    private static Formula PrefixFormula(bool left)
+    {
+        var p = F.Id("p");
+        var u = F.Id("u");
+        var v = F.Id("v");
+        var z = F.Id("z");
+        var wordType = Call("List", F.Id("alpha"));
+        var body = Seq(Call("member", z, Call("ordinaryShuffles", u, v)), Implies, Sp,
+            Call("member", Qualified("List", "append", p, z),
+                Call("ordinaryShuffles",
+                    left ? Qualified("List", "append", p, u) : u,
+                    left ? v : Qualified("List", "append", p, v))));
+        return All("alpha", Call("Type"), All("p", wordType, All("u", wordType,
+            All("v", wordType, All("z", wordType, body)))));
+    }
 
     private static Formula CloseDefinition(string declaration, DescribeRole role, Formula statement)
     {
