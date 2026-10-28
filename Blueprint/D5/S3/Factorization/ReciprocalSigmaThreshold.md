@@ -48,7 +48,7 @@ Prime divisor terms bound g below by sums of 1/(p+1). Divergence of the reciproc
 
 Otherwise let P be the largest prime divisor of m. Multiplicativity and g(p^a) <= p/(p-1), followed by the telescoping product over the integers from 2 to P, give g(m)<=P. Deleting one copy of P gives a positive q<m with g(m)<=g(q)(1+1/(P+1)). Minimality gives g(q)<r; since r<=P this yields r<=g(m)<r+1. Thus floor(g(m))=r. Every positive k with floor(g(k))=r also has g(k)>=r, proving leastness for both sets.
 
-Krizek posed the source conjecture. Israel's prior observations include multiplicativity, prime and prime-power formulas, divergence and existence of every level. The common-minimum proof here is a repository derivation; the citation supplies the question and those observations. No integrality assertion about values above one or proposed numerical minima at later indices is included.
+Krizek posed the source conjecture. Israel's prior observations include multiplicativity, the prime formula, divergence and existence of every level. The prime-power expansion is an elementary consequence of the divisor-sum definition. The common-minimum proof here is a repository derivation; the citation supplies the question and those observations. No integrality assertion about values above one or proposed numerical minima at later indices is included.
 
 ## References
 

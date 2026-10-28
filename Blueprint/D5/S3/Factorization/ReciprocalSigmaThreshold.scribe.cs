@@ -11,8 +11,9 @@ internal sealed class ReciprocalSigmaThresholdDocument : IScribeDocumentDefiniti
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Rat => Seq(Mathbb, Grp(F.Id("Q")));
     private static Formula Ints => Seq(Mathbb, Grp(F.Id("Z")));
-    private static Formula Call(string name, Formula x) => Seq(Operatorname, Grp(F.Id(name)), Open, x, Close);
-    private static Formula Cast(Formula x, Formula type) => Seq(Open, x, Colon, type, Close);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Call(string name, Formula x) => Seq(Operatorname, Grp(F.Id(name)), Parenthesized(x));
+    private static Formula Cast(Formula x, Formula type) => Parenthesized(Seq(x, Colon, type));
     private static Formula G(Formula k) => Call("g", k);
     private static Formula PositiveSet(Formula predicate) => Seq(OpenBrace, F.Id("k"), Colon, Nat, Sp, Mid, Sp, D(0), Lt, F.Id("k"), Sp, Land, Sp, predicate, CloseBrace);
     private static Formula CommonMinimum()
@@ -29,7 +30,7 @@ internal sealed class ReciprocalSigmaThresholdDocument : IScribeDocumentDefiniti
             Describe.Lean(DescribeId.Create("reciprocal-sigma-sum"), DeclarationHandle.Create(Prefix + "g"), H("Exact divisor sum"),
                 StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("k"), Colon, Nat, Comma, Sp, G(F.Id("k")), Sp, Eq, Sp,
                     Sum, Underscore, Grp(F.Id("d"), Sp, InMacro, Sp, Call("divisors", F.Id("k"))), Sp,
-                    Frac, Grp(D(1)), Grp(Cast(Seq(SigmaLower, Underscore, D(1), Open, F.Id("d"), Close), Rat))))),
+                    Frac, Grp(D(1)), Grp(Cast(Seq(SigmaLower, Underscore, D(1), Parenthesized(F.Id("d"))), Rat))))),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
                     "For every natural k, g(k) is the exact rational sum over k.divisors. For positive k these are all its positive divisors. "
                     + "ArithmeticFunction.sigma 1 d is the natural sum of all positive divisors of d, cast to the rationals before division. "
@@ -47,7 +48,8 @@ internal sealed class ReciprocalSigmaThresholdDocument : IScribeDocumentDefiniti
                     Paragraph(Text("Otherwise let P be the largest prime divisor of m. Multiplicativity and g(p^a) <= p/(p-1), followed by the telescoping product over "
                         + "the integers from 2 to P, give g(m)<=P. Deleting one copy of P gives a positive q<m with g(m)<=g(q)(1+1/(P+1)). Minimality gives g(q)<r; "
                         + "since r<=P this yields r<=g(m)<r+1. Thus floor(g(m))=r. Every positive k with floor(g(k))=r also has g(k)>=r, proving leastness for both sets.")),
-                    Paragraph(Text("Krizek posed the source conjecture. Israel's prior observations include multiplicativity, prime and prime-power formulas, divergence and "
-                        + "existence of every level. The common-minimum proof here is a repository derivation; the citation supplies the question and those observations. "
+                    Paragraph(Text("Krizek posed the source conjecture. Israel's prior observations include multiplicativity, the prime formula, divergence and "
+                        + "existence of every level. The prime-power expansion is an elementary consequence of the divisor-sum definition. "
+                        + "The common-minimum proof here is a repository derivation; the citation supplies the question and those observations. "
                         + "No integrality assertion about values above one or proposed numerical minima at later indices is included."))), DescribeRole.Theorem))));
 }
