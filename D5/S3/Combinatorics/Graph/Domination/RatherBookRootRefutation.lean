@@ -74,7 +74,7 @@ def FourRealRoots (p : ℝ[X]) (a b : ℝ) : Prop :=
   p.rootMultiplicity 0 = 2 ∧ p.rootMultiplicity a = 1 ∧ p.rootMultiplicity b = 1 ∧
   ∀ r : ℝ, p.IsRoot r ↔ r = 0 ∨ r = a ∨ r = b
 
-/-- The whole published Conjecture 5.4, on all n >= 1, including both parity clauses. -/
+/-- The whole arXiv v1/v2 Conjecture 5.4, on all n >= 1, including both parity clauses. -/
 def claim : Prop :=
   ∀ n : ℕ, 1 ≤ n →
     (Even n → ∃ a b : ℝ,
