@@ -4,7 +4,21 @@
 
 A fixed-price integer comparator removes the large-prime split error in the actual Robin objective.
 
-**Theorem 1.1 (An unconditional coefficient-two bound for every sufficiently large integer).**
+**Theorem 1.1 (A finite prime-support bound for the actual sigma ratio).**
+
+Lean statement: `D5/S3/Arith/Robin/ActualIntegerLogEnvelope.supported_sigma_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualIntegerLogEnvelope.supported_sigma_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive natural integer U and every real x, if each prime factor p of U satisfies p<=x, then sigma(1,U)/U is at most the product of (1-1/p)^(-1) over primes in the natural interval (0,floor(x)]. Prime-power reconstruction and the multiplicative sigma formula express the ratio as finite geometric factors. Each factor is bounded by (1-1/p)^(-1); GronwallUpperEnvelope.small_prime_product_le pads the product to the full prime interval.
+
+The coefficient-two envelope applies this bound to its positive fixed-price comparator U. AbundancyRecord5040.large_prime_of_abundancy applies it directly with U=m and x=30: if every prime factor is at most thirty, padding further to all integers from two through thirty telescopes to thirty, contradicting sigma(1,m)/m>30.
+
+**Theorem 1.2 (An unconditional coefficient-two bound for every sufficiently large integer).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualIntegerLogEnvelope.eventual_actual_integer_envelope`
 
@@ -25,6 +39,7 @@ The estimate is unconditional and uses the existing unconditional MediumPNT thro
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/ActualIntegerLogEnvelope.eventual_actual_integer_envelope`
+- Truth anchor: `D5/S3/Arith/Robin/ActualIntegerLogEnvelope.supported_sigma_bound`
 - Dependency: [D5/S3/Arith/Robin/EulerLayerInventoryGrowth](EulerLayerInventoryGrowth.md)
 - Dependency: [D5/S3/Arith/Robin/MertensExplicitEnvelope](MertensExplicitEnvelope.md)
 - Dependency: [D5/S3/Arith/Robin/OriginalFirstClockTransport](OriginalFirstClockTransport.md)

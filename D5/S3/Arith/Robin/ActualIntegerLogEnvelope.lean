@@ -24,7 +24,7 @@ open D5.S3.Arith.GoldenResourceOptimalInteger
 open D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
 open D5.S3.Arith.Robin.EulerLayerInventoryGrowth
 
-private theorem supported_sigma_bound {U : ℕ} (hU : 0 < U) {x : ℝ}
+theorem supported_sigma_bound {U : ℕ} (hU : 0 < U) {x : ℝ}
     (hsupport : ∀ p ∈ U.primeFactors, (p : ℝ) ≤ x) :
     (ArithmeticFunction.sigma 1 U : ℝ) / U ≤
       ∏ p ∈ Ioc (0 : ℕ) ⌊x⌋₊ with p.Prime, (1 - 1 / (p : ℝ))⁻¹ := by

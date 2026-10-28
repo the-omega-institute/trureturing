@@ -1,0 +1,250 @@
+**Theorem 131.2 (source-preserving full-form weighted weak heat realization).** Under the fixed data of Definition 131.1, for every original $a,\eta>0$ there are choices of $b\in(0,1/8]$, $R_0=b/2$, a single extension $\widetilde w$, and a cutoff $\chi$, all fixed before choosing $v$, $(t_0,t_1)$, or the test, such that the source-inclusive realization holds simultaneously for every real $v\in L^2(G,m)$, every $0<t_0<t_1$, and every $\psi\in C_c^\infty((t_0,t_1)\times B(0,R_0);\mathbb R)$. The local Sobolev regularity is (131.25), and the weak equation is (131.27), the full conservative one with coefficient $a$, actual $w$ and the original clock; its test trace is the prescribed smooth source value and the direct summand $V=V_0\oplus\mathbb C1$ is retained.
+
+**Proof.** The source-specific deduction is the conjunction of the actual normalized-source chart, full-form test realization and local heat correspondence. The radial $A_2$ model and nonnegative self-adjoint spectral calculus are established intermediate ingredients. The source suppliers used below are (109.1)–(109.2), (109.8), (110.2), (112.2)–(112.5), (115.2), (115.13)–(115.17), (116.1)–(116.4), and (130.1)–(130.10). They are used as supplied source results.
+
+1. Fix all spatial parameters before choosing any input or test. Theorem 130.3 gives $`R_*\in(0,1]`$ and $`c_*,C_*>0`$ with
+
+$$
+c_*R^{-1}\ell(R)\le f_h(R\omega)\le C_*R^{-1}\ell(R),
+\qquad \ell(R)=1-\log R,
+\qquad 0<R<R_*,\quad \omega\in S^3.
+\tag{131.4}
+$$
+
+Choose
+
+$$
+b=\min(R_*/2,1/8,c_*/2),\qquad R_0=b/2.
+\tag{131.5}
+$$
+
+Define the actual extension first by
+
+$$
+\widetilde w(Z)=
+\begin{cases}
+w(Z),&0<|Z|<b,\\
+1,&|Z|\ge b,
+\end{cases}
+\tag{131.6}
+$$
+
+with its value at $0$ immaterial. Thus $w\ge4$ on the punctured $b$-ball. Put $q(r)=r^{-2}\ell(r)^2$ and define the globally truncated radial model
+
+$$
+\rho_b(Z)=
+\begin{cases}
+q(|Z|),&0<|Z|<b,\\
+1,&|Z|\ge b.
+\end{cases}
+\qquad
+\min(1,c_*^2)\rho_b\le\widetilde w\le\max(1,C_*^2)\rho_b.
+\tag{131.7}
+$$
+
+Only the extension, rather than the unextended actual weight outside this ball, is being compared globally.
+
+2. We verify the $A_2$ property completely. For $0<s\le b$, polar integration gives
+
+$$
+\begin{aligned}
+I_+(s)&:=\int_0^s r^3q(r)\,dr
+ =\frac{s^2}{2}\left[\ell(s)^2+\ell(s)+\frac12\right]
+ \le\frac54s^2\ell(s)^2,\\
+I_-(s)&:=\int_0^s\frac{r^3}{q(r)}\,dr
+ \le\frac{s^6}{6\ell(s)^2}.
+\end{aligned}
+\tag{131.8}
+$$
+
+The second inequality follows from $\ell(r)\ge\ell(s)$. For $s\ge b$, both truncated radial integrals equal $I_\pm(b)+(s^4-b^4)/4$. Thus both the model and reciprocal are locally integrable.
+
+An established precedent for this model is D. D. Haroske and L. Skrzypczak, “Nuclear Embeddings in Weighted Function Spaces,” *Integral Equations and Operator Theory* (2020), [doi:10.1007/s00020-020-02603-7](https://doi.org/10.1007/s00020-020-02603-7), Examples 2.2(ii), (2.5)–(2.6), and the following sentence. Those passages give piecewise power-log weights with power exponents $\alpha_1,\beta_1>-d$, arbitrary logarithmic exponents, and the sufficient condition $\max(\alpha_1,\beta_1)<d(p-1)$ for $A_p$. Here $(\alpha_1,\alpha_2)=(-2,2)$ at the origin, $(\beta_1,\beta_2)=(0,0)$ outside, and $(d,p)=(4,2)$, so the sufficient model condition is met; truncation at fixed $b$ is a bounded positive comparability. The remaining ball estimates are recorded directly, so this precedent is intermediate attribution rather than an additional theorem used in the argument.
+
+For any ball $B(z,r)$, with $d=|z|$, and using $|S^3|/|B(0,1)|=4$,
+
+$$
+\fint_B\rho_b\le1+\frac{4I_+(b)}{r^4},
+\qquad
+\fint_B\rho_b^{-1}\le1+\frac{4I_-(b)}{r^4}.
+\tag{131.9}
+$$
+
+Indeed the exterior contribution is at most $|B|$ and the interior contribution is bounded by its whole radial integral. In fact $\rho_b^{-1}\le1$ everywhere. For $r\ge b/3$ these are uniform finite upper bounds on both averages, covering all large balls and all remaining large interface-crossing or source-near balls.
+
+Suppose now $r<b/3$. If $d<2r$, then $B\subset B(0,3r)\subset B(0,b)$, and the radial bounds give
+
+$$
+\fint_B\rho_b\le45r^{-2}\ell(3r)^2,
+\qquad
+\fint_B\rho_b^{-1}\le486\frac{r^2}{\ell(3r)^2},
+\qquad
+\left(\fint_B\rho_b\right)\left(\fint_B\rho_b^{-1}\right)\le21870.
+\tag{131.10}
+$$
+
+If $d\ge2r$ and $d+r\le b$, put $s_\pm=d\pm r$. Monotonicity of $q$ gives upper bounds $q(s_-)$ and $q(s_+)^{-1}$ for the two averages. Since $s_+/s_-\le3$ and $\ell(s_+)\ge1$,
+
+$$
+\frac{q(s_-)}{q(s_+)}\le9(1+\log3)^2.
+\tag{131.11}
+$$
+
+If $d-r\ge b$, both averages equal $1$. Finally, if $d-r<b<d+r$, every point of $B$ has radius greater than $b-2r>b/3$. Hence $1\le\rho_b\le q(b/3)$ throughout $B$, and the two averages are bounded above by $q(b/3)$ and $1$. These cases exhaust all balls (boundary equalities have no effect). Therefore $\rho_b\in A_2(\mathbb R^4)$. The pointwise comparison (131.7) transfers this to $\widetilde w$, with its $A_2$ constant multiplied by at most
+
+$$
+\frac{\max(1,C_*^2)}{\min(1,c_*^2)}.
+\tag{131.12}
+$$
+
+No reciprocal lower bound has been used.
+
+3. The exact chart has $\det D\Phi=\kappa$ and $dm=w\,dZ$. If $U=F\circ\Phi$, pullback sends $X_1,X_2,X_3,\partial_\zeta$ respectively to
+
+$$
+\partial_x-\frac{y}{2\kappa}\partial_t,
+\qquad
+\partial_y+\frac{x}{2\kappa}\partial_t,
+\qquad
+\partial_z,
+\qquad
+\kappa^{-1}\partial_t.
+\tag{131.13}
+$$
+
+Consequently, for full-form vectors,
+
+$$
+\|F\|_{L^2(m)}^2=\int w|U|^2\,dZ,
+\qquad
+E[F]=a\int w\,A[\nabla U]\,dZ,
+\tag{131.14}
+$$
+
+where, for $p=(p_1,p_2,p_3)$ and $q_0\in\mathbb R$,
+
+$$
+A[p,q_0]=\left|p_1-\frac{yq_0}{2\kappa}\right|^2
+ +\left|p_2+\frac{xq_0}{2\kappa}\right|^2+|p_3|^2+|q_0|^2.
+\tag{131.15}
+$$
+
+These are global identities with the actual $w$. The coefficient is exactly $a$ because $\eta/\kappa^2=a$; there is no time change or factor $1/2$.
+
+On $B(0,b)$, put $L_A=2(1+(b/(2\kappa))^2)$. The triangular shear defining $A$ and its inverse have squared operator norms at most $L_A$, so
+
+$$
+L_A^{-1}|\xi|^2\le A[\xi]\le L_A|\xi|^2.
+\tag{131.16}
+$$
+
+Each $F\in V$ therefore restricts to $U,\nabla U\in L^2(B(0,R_0),w)$ on the punctured ball. Since $w\ge1$, these are also in ordinary unweighted $L^2$.
+
+These gradients extend as ordinary distributional gradients across $0$. Take $\theta_\varepsilon$ smooth, zero on $|Z|\le\varepsilon$, one on $|Z|\ge2\varepsilon$, with $|\nabla\theta_\varepsilon|\le C/\varepsilon$. In the punctured weak-gradient identity test with $\theta_\varepsilon\varphi$, $\varphi\in C_c^\infty(B(0,R_0))$. The extra term has absolute value at most
+
+$$
+C\|\varphi\|_\infty\,\varepsilon\,
+\|U\|_{L^2(\{\varepsilon<|Z|<2\varepsilon\})},
+\qquad
+\|\nabla\theta_\varepsilon\|_{L^2(\mathbb R^4)}\le C\varepsilon,
+\tag{131.17}
+$$
+
+and tends to zero; all other terms converge by local $L^2$ integrability. This proves the ordinary distributional identity. Restriction $V\to H^1(B(0,R_0),\widetilde w)$ is bounded, with squared norm controlled by $\max(1,L_A/a)$ times $\|F\|^2+E[F]$. This weighted Sobolev space uses ordinary distributional derivatives; completeness follows by passing these identities to weighted $L^2$ limits, which also converge in local unweighted $L^2$.
+
+4. We prove full-form membership and the exact source trace for every required smooth test. Fix once and for all $\chi\in C_c^\infty(B(0,b))$, equal to $1$ on $B(0,R_0)$, with $0\le\chi\le1$, and identify it with its pullback to $G$. As in (115.22), the original Carnot cutoffs $\eta_H$ equal $1$ on growing compact sets and satisfy $|X_i\eta_H|\le C/H$, $|\partial_\zeta\eta_H|\le C/H^2$. Hence $\eta_H(1-\chi)\in C_c^\infty(G\setminus\{e\})$ converges to $1-\chi$ in the integral norm (115.14): its $L^2$ error is a probability-measure tail, and its energy error is at most $C(H^{-2}+H^{-4})$ once $\eta_H=1$ on $\operatorname{supp}\chi$. Therefore
+
+$$
+1-\chi\in V_0,
+\qquad \chi\in V,
+\qquad \operatorname{tr}\chi=1.
+\tag{131.18}
+$$
+
+Let $\psi\in C_c^\infty((t_0,t_1)\times B(0,R_0);\mathbb R)$, extended smoothly by zero, and let
+
+$$
+c(\sigma)=\psi(\sigma,0),
+\qquad
+g(\sigma,Z)=\psi(\sigma,Z)-c(\sigma)\chi(Z).
+\tag{131.19}
+$$
+
+For every integer $j\ge0$, compactness and smoothness give a finite $M_j$, independent of $\sigma$, such that on $|Z|<R_0$,
+
+$$
+|\partial_\sigma^jg(\sigma,Z)|\le M_j|Z|,
+\qquad
+|\nabla\partial_\sigma^jg(\sigma,Z)|\le M_j.
+\tag{131.20}
+$$
+
+Set $g_\varepsilon=\theta_\varepsilon g$, with $\varepsilon<R_0/4$. Each $g_\varepsilon$ pulled back to $G$ is a punctured compact smooth core vector. For $e_{\varepsilon,j}=(1-\theta_\varepsilon)\partial_\sigma^jg$, the upper profile and shear bound give, uniformly in $\sigma$,
+
+$$
+\int w|e_{\varepsilon,j}|^2\,dZ\le D_j\varepsilon^4\ell(\varepsilon)^2,
+\qquad
+a\int wA[\nabla e_{\varepsilon,j}]\,dZ\le D_j\varepsilon^2\ell(\varepsilon)^2.
+\tag{131.21}
+$$
+
+Indeed the first integral is bounded by a constant times $\int_0^{2\varepsilon}r^3\ell(r)^2dr$. In the gradient, both $(1-\theta_\varepsilon)\nabla\partial_\sigma^jg$ and $(\nabla\theta_\varepsilon)\partial_\sigma^jg$ are bounded by a constant times $M_j$; its integral is bounded by $\int_0^{2\varepsilon}r\ell(r)^2dr$. The radial identities give exactly the orders in (131.21), which tend to zero.
+
+These integral error estimates make the core approximants Cauchy in (115.14), with $L^2$ limit $\partial_\sigma^jg$. The estimates also give uniform convergence of every time derivative in the actual form norm. For fixed $\varepsilon$, $\sigma\mapsto g_\varepsilon(\sigma)$ is a smooth $V_0$-valued map by ordinary differentiation on its fixed compact punctured support. Uniform convergence of the maps and their derivatives, or the Banach-valued fundamental theorem of calculus, yields
+
+$$
+g\in C_c^\infty((t_0,t_1);V_0).
+\tag{131.22}
+$$
+
+Hence $\Psi_\sigma:=\psi(\sigma,\cdot)\circ\Phi^{-1}=c(\sigma)\chi+g(\sigma)\in C_c^\infty((t_0,t_1);V)$ and
+
+$$
+\operatorname{tr}\Psi_\sigma=\psi(\sigma,0),
+\qquad
+\operatorname{tr}\partial_\sigma^j\Psi_\sigma=\partial_\sigma^j\psi(\sigma,0).
+\tag{131.23}
+$$
+
+This establishes membership before using the source trace theorem; it assumes no density of arbitrary smooth source-meeting functions in the punctured core.
+
+5. For every real $v\in L^2(G,m)$, put $F_\sigma=T_\sigma v$ and $u(\sigma,Z)=F_\sigma(\Phi Z)$. Spectral calculus gives, for $\sigma\ge t_0>0$,
+
+$$
+\|F_\sigma\|^2\le\|v\|^2,
+\qquad
+E[F_\sigma]\le\frac{\|v\|^2}{2e t_0},
+\qquad
+\sup_{\lambda\ge0}\lambda e^{-2t_0\lambda}=\frac1{2e t_0}.
+\tag{131.24}
+$$
+
+The orbit is continuous in $V$ at positive times. The bounded restriction from step 3 therefore proves
+
+$$
+u\in L^2((t_0,t_1);H^1(B(0,R_0),\widetilde w)).
+\tag{131.25}
+$$
+
+For completeness, $F_\sigma\in D(K)$ and $F'_\sigma=-KF_\sigma$ in $L^2$ at positive times, since $\sup_{\lambda\ge0}\lambda e^{-t_0\lambda}<\infty$. For the admissible form-valued $\Psi$ from step 4, the closed-form representation and integration of $d\langle F_\sigma,\Psi_\sigma\rangle_m/d\sigma$ give
+
+$$
+-\int_{t_0}^{t_1}\langle F_\sigma,\partial_\sigma\Psi_\sigma\rangle_m\,d\sigma
++\int_{t_0}^{t_1}E[F_\sigma,\Psi_\sigma]\,d\sigma=0.
+\tag{131.26}
+$$
+
+The chart identities in step 3 convert this into precisely
+
+$$
+-\int_{t_0}^{t_1}\!\int_{B(0,R_0)}wu\,\partial_\sigma\psi\,dZ\,d\sigma
++a\int_{t_0}^{t_1}\!\int_{B(0,R_0)}w\,(A\nabla u)\cdot\nabla\psi\,dZ\,d\sigma=0.
+\tag{131.27}
+$$
+
+The identity uses the actual full form and tests of arbitrary source value. Ordinary removable-point gradient identification does not remove the weighted positive-capacity source or its trace. The identity therefore rules out an additional source distribution in this equation by the full identity itself, rather than by the point having zero measure. The constant summand and its trace remain present; neither the killed form nor a different extension has been substituted. All products are locally integrable by weighted Cauchy–Schwarz and the radial integrability above.
+
+The single $b,R_0,\widetilde w,\chi$ and the shear bounds were fixed using only $a,\eta$ and the fixed normalized $h$. They work simultaneously for every stated $v$, positive time interval and smooth test, including tests meeting $0$. This proves the whole exact source-inclusive event under the unchanged source hypotheses. $\square$
+
+The result is local: it makes no assertion of a global $A_2$ property for the unextended actual weight, no global density statement at infinity, and no negative-index conclusion.
+
