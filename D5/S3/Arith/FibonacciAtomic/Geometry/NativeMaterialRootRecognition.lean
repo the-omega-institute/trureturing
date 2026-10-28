@@ -164,7 +164,7 @@ private theorem children_cons (l r : Source) (b : Bool) (p : Address) :
   · cases h : readout p l <;> simp [children, readout, h]
   · cases h : readout p r <;> simp [children, readout, h]
 
-private theorem neighbors_cons (l r : Source) (b : Bool) (p : Address) :
+theorem neighbors_cons (l r : Source) (b : Bool) (p : Address) :
     neighbors (.mul l r) (b :: p) =
       (neighbors (if b then r else l) p).map (b :: ·) ++
         if p = [] then [[]] else [] := by

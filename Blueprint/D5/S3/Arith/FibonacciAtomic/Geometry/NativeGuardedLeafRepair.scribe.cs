@@ -24,7 +24,7 @@ internal sealed class NativeGuardedLeafRepairDocument : IScribeDocumentDefinitio
                         + "beta markers, and adjacency is the native parent-child graph. "
                         + "A successful history is a finite list of guarded promote and split "
                         + "calls; its trace is the actual subtree replacement computation and "
-                        + "its final domain is the original D predicate.")),
+                        + "its final domain is the original D predicate. Minimality is componentwise undominated cost, over every finite successful history at every depth.")),
                     Paragraph(Text(
                         "F is an actual perfect matching of every material cell. R is an "
                         + "actual matching of every nonroot material cell while the existing "
@@ -41,6 +41,18 @@ internal sealed class NativeGuardedLeafRepairDocument : IScribeDocumentDefinitio
                         + "the original term persist through every successful replacement; "
                         + "zero extension preserves every old rational value and assigns zero "
                         + "to fresh addresses.")),
+                    Paragraph(Text(
+                        "Every history lifts to an arbitrary native context by prefixing "
+                        + "its actual call addresses with the hole address. The source "
+                        + "replacement identity gives its literal final context. Guarded "
+                        + "growth preserves D, old material addresses and the induced old "
+                        + "edges; those unchanged addresses retain their root depths. "
+                        + "The native execution carries arbitrary rational values through "
+                        + "each zero extension, moves an alpha's raw binding to its new "
+                        + "marker, and on a split moves the old beta-terminal binding "
+                        + "to the new left marker while assigning the next raw integer "
+                        + "to the right alpha. These computations presume the originally "
+                        + "earned raw/canonical correspondence and do not acquire it.")),
                     Paragraph(Text(
                         "This result concerns only the four leaf frontiers and their source "
                         + "specific witnesses and lower bounds. It does not settle the global "

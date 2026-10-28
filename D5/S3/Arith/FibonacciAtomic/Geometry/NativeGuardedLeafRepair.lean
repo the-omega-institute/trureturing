@@ -20,7 +20,7 @@ namespace D5.S3.Arith.FibonacciAtomic.Geometry.NativeGuardedLeafRepair
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition (Address Reply readout)
 open ActualLeafHistoryRigidity (subtree OutputContext)
-open NativeMaterialRootRecognition (D material neighbors children root_mem material_nodup child_present)
+open NativeMaterialRootRecognition (D material neighbors children root_mem material_nodup child_present neighbors_cons)
 open ActualImageAddressCertificate (replace)
 
 abbrev Cell (t : Source) := {p : Address // p ∈ (material t).toFinset}
@@ -279,7 +279,7 @@ theorem history_preserves_material {root : Source} (h : History root) :
 
 abbrev Value := Address → ℚ
 
-def zeroExtend (old current : Source) (x : Value) : Value :=
+def zeroExtend (old : Source) (x : Value) : Value :=
   fun p => if p ∈ material old then x p else 0
 
 abbrev RawMap := ℤ → Address
@@ -303,14 +303,14 @@ def nativeRun : Source → RawMap → ℤ → Value → List Call →
       match subtree p t with
       | some (.of true) =>
           nativeRun (replace t p (.of false)) (promotedMap labels p) next
-            (zeroExtend t (replace t p (.of false)) x) w
+            (zeroExtend t x) w
       | _ => none
   | t, labels, next, x, .split p :: w =>
       match subtree p t with
       | some (.of false) =>
           nativeRun (replace t p (.mul (.of false) (.of true)))
             (splitMap labels next p) (next + 1)
-            (zeroExtend t (replace t p (.mul (.of false) (.of true))) x) w
+            (zeroExtend t x) w
       | _ => none
 
 private theorem native_run_of_run {t u : Source} {w : List Call}
@@ -332,7 +332,7 @@ private theorem native_run_of_run {t u : Source} {w : List Call}
           next hsub =>
             obtain ⟨labels', next', y, hy, hold, hfresh⟩ :=
               ih h (promotedMap labels p) next
-                (zeroExtend t (replace t p (.of false)) x)
+                (zeroExtend t x)
             refine ⟨labels', next', y, ?_, ?_, ?_⟩
             · simpa [nativeRun, hsub] using hy
             · intro q hq
@@ -349,7 +349,7 @@ private theorem native_run_of_run {t u : Source} {w : List Call}
           next hsub =>
             obtain ⟨labels', next', y, hy, hold, hfresh⟩ :=
               ih h (splitMap labels next p) (next + 1)
-                (zeroExtend t (replace t p (.mul (.of false) (.of true))) x)
+                (zeroExtend t x)
             refine ⟨labels', next', y, ?_, ?_, ?_⟩
             · simpa [nativeRun, hsub] using hy
             · intro q hq
@@ -419,6 +419,52 @@ def Call.shift (p : Address) : Call → Call
   | .promote q => .promote (p ++ q)
   | .split q => .split (p ++ q)
 
+private theorem context_neighbors (J : OutputContext) (t : Source) (p q : Address) :
+    J.holeAddress ++ q ∈ neighbors (J.plug t) (J.holeAddress ++ p) ↔
+      q ∈ neighbors t p := by
+  induction J with
+  | hole => rfl
+  | left J sibling ih =>
+      simpa [OutputContext.plug, OutputContext.holeAddress, neighbors_cons,
+        List.mem_map] using ih
+  | right sibling J ih =>
+      simpa [OutputContext.plug, OutputContext.holeAddress, neighbors_cons,
+        List.mem_map] using ih
+
+private theorem context_cell (J : OutputContext) (t : Source) (p : Address)
+    (hp : p ∈ material t) : J.holeAddress ++ p ∈ material (J.plug t) := by
+  induction J with
+  | hole => exact hp
+  | left J sibling ih =>
+      simp only [OutputContext.plug, OutputContext.holeAddress, List.cons_append,
+        material, List.mem_cons, List.mem_append, List.mem_map]
+      exact Or.inr (Or.inl ⟨J.holeAddress ++ p, ih, rfl⟩)
+  | right sibling J ih =>
+      simp only [OutputContext.plug, OutputContext.holeAddress, List.cons_append,
+        material, List.mem_cons, List.mem_append, List.mem_map]
+      exact Or.inr (Or.inr ⟨J.holeAddress ++ p, ih, rfl⟩)
+
+/-- The actual ambient adjacency restricted to the literal material cone. -/
+def coneGraph (J : OutputContext) (t : Source) : SimpleGraph (Cell t) :=
+  SimpleGraph.fromRel (fun x y =>
+    J.holeAddress ++ y.1 ∈ neighbors (J.plug t) (J.holeAddress ++ x.1))
+
+/-- The cone root remains in the ambient material support and is available to
+its parent; this graph restricts matching edges to its nonroot cells. -/
+def nonrootConeGraph (J : OutputContext) (t : Source) : SimpleGraph (NonrootCell t) :=
+  SimpleGraph.fromRel (fun x y =>
+    J.holeAddress ++ y.1 ∈ neighbors (J.plug t) (J.holeAddress ++ x.1))
+
+private theorem cone_graph_eq (J : OutputContext) (t : Source) :
+    coneGraph J t = cellGraph t := by
+  ext x y
+  simp only [coneGraph, cellGraph, SimpleGraph.fromRel_adj, context_neighbors]
+
+private theorem nonroot_cone_graph_eq (J : OutputContext) (t : Source) :
+    nonrootConeGraph J t = nonrootGraph t := by
+  ext x y
+  simp only [nonrootConeGraph, nonrootGraph, SimpleGraph.fromRel_adj, context_neighbors]
+
 private theorem context_subtree (J : OutputContext) (t : Source) (p : Address) :
     subtree (J.holeAddress ++ p) (J.plug t) = subtree p t := by
   induction J with
@@ -469,13 +515,13 @@ private theorem root_nonalpha_replace (t v : Source) (p : Address)
     (ht : readout [] t ≠ .alpha) (hv : readout [] v ≠ .alpha) :
     readout [] (replace t p v) ≠ .alpha := by
   cases p with
-  | nil => exact hv
+  | nil => simpa [replace] using hv
   | cons b p => cases t <;> cases b <;> simpa [replace, readout] using ht
 
 private theorem D_replace (t v : Source) (p : Address) (ht : D t)
     (hv : D v) (hvroot : readout [] v ≠ .alpha) : D (replace t p v) := by
   induction p generalizing t with
-  | nil => exact hv
+  | nil => simpa [replace] using hv
   | cons b p ih =>
       cases t with
       | of c => cases b <;> simpa [replace] using ht
@@ -786,7 +832,57 @@ theorem exact_frontiers :
           have hlo := beta_R_lower hs
           exact hlo
 
+/-- Every finite local history executes at its real address in every valid
+native context, with the same paid call coordinates and all old geometry. -/
+def ContextualPreservation : Prop :=
+  ∀ (J : OutputContext) {root : Source} (h : History root), D (J.plug root) →
+    ∀ (labels : RawMap) (next : ℤ) (x : Value),
+    ∃ labels' next' y,
+      nativeRun (J.plug root) labels next x
+        (h.calls.map (Call.shift J.holeAddress)) =
+          some (J.plug h.final, labels', next', y) ∧
+      D (J.plug h.final) ∧
+      (promotions (h.calls.map (Call.shift J.holeAddress)),
+        splits (h.calls.map (Call.shift J.holeAddress))) = pairCost h ∧
+      preservesMaterial (J.plug root) (J.plug h.final) ∧
+      (∀ p ∈ material h.final, J.holeAddress ++ p ∈ material (J.plug h.final)) ∧
+      (reachesF h → ∃ M : (coneGraph J h.final).Subgraph, M.IsPerfectMatching) ∧
+      (reachesR h → ∃ M : (nonrootConeGraph J h.final).Subgraph,
+        M.IsPerfectMatching) ∧
+      (∀ p ∈ material (J.plug root), ∀ q ∈ material (J.plug root),
+        q ∈ neighbors (J.plug root) p ↔ q ∈ neighbors (J.plug h.final) p) ∧
+      (∀ p ∈ material (J.plug root), y p = x p) ∧
+      (∀ p ∈ material (J.plug h.final), p ∉ material (J.plug root) → y p = 0)
+
+private theorem shifted_cost (w : List Call) (p : Address) :
+    promotions (w.map (Call.shift p)) = promotions w ∧
+    splits (w.map (Call.shift p)) = splits w := by
+  induction w with
+  | nil => exact ⟨rfl, rfl⟩
+  | cons c w ih =>
+      cases c <;> simp [Call.shift, promotions, splits, ih]
+
+private theorem contextual_preservation : ContextualPreservation := by
+  intro J root h hD labels next x
+  have hr := context_run J h.trace
+  let hc : History (J.plug root) :=
+    ⟨J.plug h.final, h.calls.map (Call.shift J.holeAddress), hr, run_preserves_D hD hr⟩
+  obtain ⟨labels', next', y, hy, hold, hfresh⟩ :=
+    history_preserves_values hc labels next x
+  have hm := context_material J (history_preserves_material h)
+  refine ⟨labels', next', y, hy, run_preserves_D hD hr, ?_, hm,
+    context_cell J h.final, ?_, ?_, ?_, hold, hfresh⟩
+  · exact Prod.ext (shifted_cost h.calls J.holeAddress).1
+      (shifted_cost h.calls J.holeAddress).2
+  · intro hs
+    simpa only [cone_graph_eq] using hs
+  · intro hs
+    simpa only [nonroot_cone_graph_eq] using hs
+  · intro p hp q hq
+    exact old_edges hm p q hq
+
 theorem result :
+    ContextualPreservation ∧
     (∀ h : History (.of true), reachesF h → 1 ≤ (pairCost h).1) ∧
     (∀ h : History (.of false), reachesR h →
       1 ≤ (pairCost h).1 ∧ 1 ≤ (pairCost h).2) ∧
@@ -794,7 +890,8 @@ theorem result :
       frontier (.of true) reachesR = {(0, 0)} ∧
       frontier (.of false) reachesF = {(0, 0)} ∧
       frontier (.of false) reachesR = {(1, 1)}) := by
-  exact ⟨fun h hs => alpha_F_lower hs, fun h hs => beta_R_lower hs, exact_frontiers⟩
+  exact ⟨contextual_preservation, fun h hs => alpha_F_lower hs,
+    fun h hs => beta_R_lower hs, exact_frontiers⟩
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.NativeGuardedLeafRepair
 
