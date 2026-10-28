@@ -4,7 +4,7 @@
 
 Valid flip-to-zero generators are connected by finite adjacent-position exchanges.
 
-The source is Adamson, Dudey, Fleischmann and Huch, arXiv:2508.19619v1. Its Conclusion asks whether any prefix normal generator can reach all others by swapping neighbouring entries. The result below answers exactly that v1 question in a zero-based model, for every natural n and hence every positive n. The later Springer chapter body is inaccessible and has not been compared with v1; its answer status remains ASSUMED-UNVERIFIED. This exposition asserts neither current literature priority nor a counted resolution.
+The source is Adamson, Dudey, Fleischmann and Huch, arXiv:2508.19619v1. Its Conclusion asks whether any prefix normal generator can reach all others by swapping neighbouring entries. The institutional accepted author manuscript poses the same question. The result answers that question in these two read versions in a zero-based model, for every natural n and hence every positive n. The later Springer chapter body is inaccessible and has not been compared with v1; its answer status remains ASSUMED-UNVERIFIED. This exposition asserts neither current literature priority nor a counted resolution.
 
 A set S represents a binary word of fixed length n: position i has bit 1 exactly when i belongs to S, for 0<=i<n. The actual chain sets are subsets of range(n). The source coordinate is i+1, and a zero-based permutation entry a means flipping source position a+1. Adding one to every entry is a bijection with permutations of 1,...,n and preserves list positions, order of flips and adjacency. After t flips, source component t+1 is the characteristic word of range(n) minus take(t,l). All times 0<=t<=n are quantified; permutation length and distinctness give precisely n+1 states, starting at all ones and ending at all zeros.
 
@@ -173,6 +173,10 @@ The suffix/undeleted equality transports each chain comparison in both direction
 $$\forall ( n : \mathbb {N} ) , \forall ( l : \operatorname {List}\left(\mathbb {N}\right) ) , \forall ( m : \operatorname {List}\left(\mathbb {N}\right) ) , \operatorname {ExactGenerator}\left(n, l\right) \implies \operatorname {ExactGenerator}\left(n, m\right) \implies \operatorname {ReflTransGen}\left(\operatorname {Edge}\left(\operatorname {ExactGenerator}\left(n\right)\right), l, m\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Permutations/PrefixNormalGeneratorConnectivity.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/adamson-dudey-fleischmann-huch-prefix-normal-connectivity` (proved) by `D5/S1/Words/Permutations/PrefixNormalGeneratorConnectivity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"adamson-dudey-fleischmann-huch-prefix-normal-connectivity","declaration_gid":"D5/S1/Words/Permutations/PrefixNormalGeneratorConnectivity.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 

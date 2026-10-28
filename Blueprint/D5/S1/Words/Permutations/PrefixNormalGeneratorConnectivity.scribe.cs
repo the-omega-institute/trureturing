@@ -45,7 +45,8 @@ internal sealed class PrefixNormalGeneratorConnectivityDocument : IScribeDocumen
         Blocks(
             Paragraph(Text("The source is Adamson, Dudey, Fleischmann and Huch, arXiv:2508.19619v1. "
                 + "Its Conclusion asks whether any prefix normal generator can reach all others by "
-                + "swapping neighbouring entries. The result below answers exactly that v1 question "
+                + "swapping neighbouring entries. The institutional accepted author manuscript poses "
+                + "the same question. The result answers that question in these two read versions "
                 + "in a zero-based model, for every natural n and hence every positive n. "
                 + "The later Springer chapter body is inaccessible and has not been compared with v1; "
                 + "its answer status remains ASSUMED-UNVERIFIED. This exposition asserts neither "
@@ -135,7 +136,10 @@ internal sealed class PrefixNormalGeneratorConnectivityDocument : IScribeDocumen
                 + "have zero moves. Every nontrivial edge has valid endpoints; the initial validity "
                 + "hypothesis also covers reflexivity. There is no restriction on direction, "
                 + "complexity, shortest paths or which sorting procedure a path must follow. "
-                + "The harmless n=0 extension does not replace any positive-n case."),
+                + "The harmless n=0 extension does not replace any positive-n case.",
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("adamson-dudey-fleischmann-huch-prefix-normal-connectivity"),
+                    ResolutionKind.Proved)),
             Paragraph(Text("The displayed names ReflTransGen, Perm, range, take, drop, toFinset, "
                 + "append, cons, erase and Ico denote their Lean operations. All new helpers lie on "
                 + "the result's live proof path. The generic sorting path, the suffix theorem and "
@@ -148,11 +152,13 @@ internal sealed class PrefixNormalGeneratorConnectivityDocument : IScribeDocumen
                 + "the retained application to the explicit v1 question.")))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, bool definition = false, bool literature = false) => Describe.Lean(
+        string prose, bool definition = false, bool literature = false,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("prefix-normal-" + name.Replace('_','-').ToLowerInvariant()),
         DeclarationHandle.Create(Root + name), H(title), StatementSource.FromAuthor(Disp(formula)),
         literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-        Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem);
+        Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem,
+        openProblemResolutionClaim: resolution);
 
     private static Formula All(string name, Formula type, Formula body) =>
         Q(Forall,Open,V(name),Colon,type,Close,Comma,body);
