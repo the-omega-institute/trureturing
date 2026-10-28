@@ -597,7 +597,7 @@ theorem actualSource_terminal_small_ownership_transition
   have hsQ : σ < Q k := by
     have his' : |f i| < Q k := his
     rw [abs_of_neg hineg] at his'
-    exact his' 
+    exact his'
   have hiSmall : ¬ Large k t i := not_le_of_gt his
   have hip : i ≠ p := by
     intro he
