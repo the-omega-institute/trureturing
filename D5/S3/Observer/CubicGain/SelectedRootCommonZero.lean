@@ -90,22 +90,22 @@ def sourceE0 {R : Type*} [CommRing R] (b : R) : Polynomial R :=
 def sourceE1 {R : Type*} [CommRing R] (b : R) : Polynomial R :=
     (((((((C ((-657408 : R) * b^2) * (X : Polynomial R)^15 + C ((-5259264 : R) * b^1) * (X : Polynomial R)^15) + (C ((-2629632 : R) * b^0) * (X : Polynomial R)^15 + C ((2958336 : R) * b^3) * (X : Polynomial R)^14)) + ((C ((28597248 : R) * b^2) * (X : Polynomial R)^14 + C ((51277824 : R) * b^1) * (X : Polynomial R)^14) + (C ((19722240 : R) * b^0) * (X : Polynomial R)^14 + C ((-18426880 : R) * b^4) * (X : Polynomial R)^13))) + (((C ((-48410304 : R) * b^3) * (X : Polynomial R)^13 + C ((-190071552 : R) * b^2) * (X : Polynomial R)^13) + (C ((-211083520 : R) * b^1) * (X : Polynomial R)^13 + C ((-64425984 : R) * b^0) * (X : Polynomial R)^13)) + ((C ((48118592 : R) * b^5) * (X : Polynomial R)^12 + C ((95654432 : R) * b^4) * (X : Polynomial R)^12) + (C ((217707360 : R) * b^3) * (X : Polynomial R)^12 + C ((587379968 : R) * b^2) * (X : Polynomial R)^12)))) + ((((C ((486541952 : R) * b^1) * (X : Polynomial R)^12 + C ((119648256 : R) * b^0) * (X : Polynomial R)^12) + (C ((-9870816 : R) * b^6) * (X : Polynomial R)^11 + C ((-239739808 : R) * b^5) * (X : Polynomial R)^11)) + ((C ((-161018400 : R) * b^4) * (X : Polynomial R)^11 + C ((-453449856 : R) * b^3) * (X : Polynomial R)^11) + (C ((-1049087872 : R) * b^2) * (X : Polynomial R)^11 + C ((-695388672 : R) * b^1) * (X : Polynomial R)^11))) + (((C ((-138055680 : R) * b^0) * (X : Polynomial R)^11 + C ((-105757736 : R) * b^7) * (X : Polynomial R)^10) + (C ((107992057 : R) * b^6) * (X : Polynomial R)^10 + C ((488410918 : R) * b^5) * (X : Polynomial R)^10)) + ((C ((-50951628 : R) * b^4) * (X : Polynomial R)^10 + C ((466298488 : R) * b^3) * (X : Polynomial R)^10) + (C ((1167494272 : R) * b^2) * (X : Polynomial R)^10 + (C ((639956864 : R) * b^1) * (X : Polynomial R)^10 + C ((101240832 : R) * b^0) * (X : Polynomial R)^10)))))) + (((((C ((84575416 : R) * b^8) * (X : Polynomial R)^9 + C ((457897569 : R) * b^7) * (X : Polynomial R)^9) + (C ((-423187248 : R) * b^6) * (X : Polynomial R)^9 + C ((-487598432 : R) * b^5) * (X : Polynomial R)^9)) + ((C ((624941312 : R) * b^4) * (X : Polynomial R)^9 + C ((-134055888 : R) * b^3) * (X : Polynomial R)^9) + (C ((-819641088 : R) * b^2) * (X : Polynomial R)^9 + C ((-378636544 : R) * b^1) * (X : Polynomial R)^9))) + (((C ((-46018560 : R) * b^0) * (X : Polynomial R)^9 + C ((61771440 : R) * b^9) * (X : Polynomial R)^8) + (C ((-533982882 : R) * b^8) * (X : Polynomial R)^8 + C ((-795199041 : R) * b^7) * (X : Polynomial R)^8)) + ((C ((920669835 : R) * b^6) * (X : Polynomial R)^8 + C ((178620594 : R) * b^5) * (X : Polynomial R)^8) + (C ((-1107508428 : R) * b^4) * (X : Polynomial R)^8 + (C ((-218343960 : R) * b^3) * (X : Polynomial R)^8 + C ((347807232 : R) * b^2) * (X : Polynomial R)^8))))) + ((((C ((138234240 : R) * b^1) * (X : Polynomial R)^8 + C ((11833344 : R) * b^0) * (X : Polynomial R)^8) + (C ((-58757336 : R) * b^10) * (X : Polynomial R)^7 + C ((-65822345 : R) * b^9) * (X : Polynomial R)^7)) + ((C ((1331732933 : R) * b^8) * (X : Polynomial R)^7 + C ((600163934 : R) * b^7) * (X : Polynomial R)^7) + (C ((-1293635116 : R) * b^6) * (X : Polynomial R)^7 + C ((98836144 : R) * b^5) * (X : Polynomial R)^7))) + (((C ((1027468608 : R) * b^4) * (X : Polynomial R)^7 + C ((278562976 : R) * b^3) * (X : Polynomial R)^7) + (C ((-77093248 : R) * b^2) * (X : Polynomial R)^7 + C ((-27999232 : R) * b^1) * (X : Polynomial R)^7)) + ((C ((-1314816 : R) * b^0) * (X : Polynomial R)^7 + C ((-17329720 : R) * b^11) * (X : Polynomial R)^6) + (C ((315478799 : R) * b^10) * (X : Polynomial R)^6 + (C ((-240251601 : R) * b^9) * (X : Polynomial R)^6 + C ((-1721263368 : R) * b^8) * (X : Polynomial R)^6))))))) + ((((((C ((53490740 : R) * b^7) * (X : Polynomial R)^6 + C ((1228365327 : R) * b^6) * (X : Polynomial R)^6) + (C ((-128565094 : R) * b^5) * (X : Polynomial R)^6 + C ((-557545492 : R) * b^4) * (X : Polynomial R)^6)) + ((C ((-143256888 : R) * b^3) * (X : Polynomial R)^6 + C ((4496512 : R) * b^2) * (X : Polynomial R)^6) + (C ((2356352 : R) * b^1) * (X : Polynomial R)^6 + C ((-3666480 : R) * b^12) * (X : Polynomial R)^5))) + (((C ((-109942566 : R) * b^11) * (X : Polynomial R)^5 + C ((-599971215 : R) * b^10) * (X : Polynomial R)^5) + (C ((610641617 : R) * b^9) * (X : Polynomial R)^5 + C ((1248579290 : R) * b^8) * (X : Polynomial R)^5)) + ((C ((-480319011 : R) * b^7) * (X : Polynomial R)^5 + C ((-773491684 : R) * b^6) * (X : Polynomial R)^5) + (C ((45889056 : R) * b^5) * (X : Polynomial R)^5 + C ((172938864 : R) * b^4) * (X : Polynomial R)^5)))) + ((((C ((35288688 : R) * b^3) * (X : Polynomial R)^5 + C ((775936 : R) * b^2) * (X : Polynomial R)^5) + (C ((21928328 : R) * b^13) * (X : Polynomial R)^4 + C ((10721323 : R) * b^12) * (X : Polynomial R)^4)) + ((C ((379412584 : R) * b^11) * (X : Polynomial R)^4 + C ((521597159 : R) * b^10) * (X : Polynomial R)^4) + (C ((-622274083 : R) * b^9) * (X : Polynomial R)^4 + C ((-522632408 : R) * b^8) * (X : Polynomial R)^4))) + (((C ((381230413 : R) * b^7) * (X : Polynomial R)^4 + C ((299652533 : R) * b^6) * (X : Polynomial R)^4) + (C ((-2965074 : R) * b^5) * (X : Polynomial R)^4 + C ((-27033908 : R) * b^4) * (X : Polynomial R)^4)) + ((C ((-3298952 : R) * b^3) * (X : Polynomial R)^4 + C ((6253720 : R) * b^14) * (X : Polynomial R)^3) + (C ((-6121075 : R) * b^13) * (X : Polynomial R)^3 + (C ((-30525463 : R) * b^12) * (X : Polynomial R)^3 + C ((-397217716 : R) * b^11) * (X : Polynomial R)^3)))))) + (((((C ((-183175273 : R) * b^10) * (X : Polynomial R)^3 + C ((360103188 : R) * b^9) * (X : Polynomial R)^3) + (C ((137704477 : R) * b^8) * (X : Polynomial R)^3 + C ((-126531840 : R) * b^7) * (X : Polynomial R)^3)) + ((C ((-60883208 : R) * b^6) * (X : Polynomial R)^3 + C ((-1006896 : R) * b^5) * (X : Polynomial R)^3) + (C ((1481520 : R) * b^4) * (X : Polynomial R)^3 + C ((-12208160 : R) * b^15) * (X : Polynomial R)^2))) + (((C ((-17599208 : R) * b^14) * (X : Polynomial R)^2 + C ((-45540924 : R) * b^13) * (X : Polynomial R)^2) + (C ((25570965 : R) * b^12) * (X : Polynomial R)^2 + C ((164605488 : R) * b^11) * (X : Polynomial R)^2)) + ((C ((-11384076 : R) * b^10) * (X : Polynomial R)^2 + C ((-124786956 : R) * b^9) * (X : Polynomial R)^2) + (C ((-29884834 : R) * b^8) * (X : Polynomial R)^2 + (C ((14801004 : R) * b^7) * (X : Polynomial R)^2 + C ((4388320 : R) * b^6) * (X : Polynomial R)^2))))) + ((((C ((1528984 : R) * b^16) * (X : Polynomial R)^1 + C ((15864033 : R) * b^15) * (X : Polynomial R)^1) + (C ((23224069 : R) * b^14) * (X : Polynomial R)^1 + C ((35493199 : R) * b^13) * (X : Polynomial R)^1)) + ((C ((-15108345 : R) * b^12) * (X : Polynomial R)^1 + C ((-32123964 : R) * b^11) * (X : Polynomial R)^1) + (C ((12588474 : R) * b^10) * (X : Polynomial R)^1 + C ((19459008 : R) * b^9) * (X : Polynomial R)^1))) + (((C ((4310120 : R) * b^8) * (X : Polynomial R)^1 + C ((960520 : R) * b^17) * (X : Polynomial R)^0) + (C ((-2391609 : R) * b^16) * (X : Polynomial R)^0 + C ((-2601574 : R) * b^15) * (X : Polynomial R)^0)) + ((C ((-2463507 : R) * b^14) * (X : Polynomial R)^0 + C ((1450942 : R) * b^13) * (X : Polynomial R)^0) + (C ((9415154 : R) * b^12) * (X : Polynomial R)^0 + (C ((6961040 : R) * b^11) * (X : Polynomial R)^0 + C ((1403320 : R) * b^10) * (X : Polynomial R)^0))))))))
 
-private def vD {R : Type*} [CommRing R] (t b : R) : R :=
+def vD {R : Type*} [CommRing R] (t b : R) : R :=
     (((((5 : R)*t^4*b^4 + (40 : R)*t^4*b^3) + ((20 : R)*t^4*b^2 + ((-5 : R)*t^3*b^4 + (-50 : R)*t^3*b^3))) + (((-100 : R)*t^3*b^2 + (-40 : R)*t^3*b^1) + ((-10 : R)*t^2*b^4 + ((-35 : R)*t^2*b^3 + (65 : R)*t^2*b^2)))) + ((((80 : R)*t^2*b^1 + (20 : R)*t^2*b^0) + ((5 : R)*t^1*b^4 + ((30 : R)*t^1*b^3 + (30 : R)*t^1*b^2))) + (((-30 : R)*t^1*b^1 + (-20 : R)*t^1*b^0) + ((5 : R)*t^0*b^4 + ((-40 : R)*t^0*b^2 + (-20 : R)*t^0*b^1)))))
 
 private def vN0 {R : Type*} [CommRing R] (t b : R) : R :=
     (((((-768 : R)*t^6*b^4 + ((96 : R)*t^6*b^3 + (1536 : R)*t^5*b^4)) + (((2112 : R)*t^5*b^3 + (-288 : R)*t^5*b^2) + ((2232 : R)*t^4*b^4 + (-2376 : R)*t^4*b^3))) + (((-1440 : R)*t^4*b^2 + ((288 : R)*t^4*b^1 + (-3648 : R)*t^3*b^4)) + (((-5511 : R)*t^3*b^3 + (-270 : R)*t^3*b^2) + ((-384 : R)*t^3*b^1 + (-96 : R)*t^3*b^0)))) + ((((-1368 : R)*t^2*b^4 + ((4869 : R)*t^2*b^3 + (4224 : R)*t^2*b^2)) + (((1500 : R)*t^2*b^1 + (480 : R)*t^2*b^0) + ((1872 : R)*t^1*b^4 + (1437 : R)*t^1*b^3))) + (((-1917 : R)*t^1*b^2 + ((-1125 : R)*t^1*b^1 + (-390 : R)*t^1*b^0)) + (((-216 : R)*t^0*b^4 + (-2238 : R)*t^0*b^3) + ((-1395 : R)*t^0*b^2 + (-390 : R)*t^0*b^1)))))
 
-private def vN1 {R : Type*} [CommRing R] (t b : R) : R :=
+def vN1 {R : Type*} [CommRing R] (t b : R) : R :=
     (((((-2655 : R)*t^6*b^4 + ((-270 : R)*t^6*b^3 + (5310 : R)*t^5*b^4)) + (((8505 : R)*t^5*b^3 + (810 : R)*t^5*b^2) + ((13050 : R)*t^4*b^4 + (-5595 : R)*t^4*b^3))) + (((-8295 : R)*t^4*b^2 + ((-810 : R)*t^4*b^1 + (-17880 : R)*t^3*b^4)) + (((-33168 : R)*t^3*b^3 + (-5574 : R)*t^3*b^2) + ((1695 : R)*t^3*b^1 + (270 : R)*t^3*b^0)))) + ((((-9750 : R)*t^2*b^4 + ((25266 : R)*t^2*b^3 + (26640 : R)*t^2*b^2)) + (((6891 : R)*t^2*b^1 + (750 : R)*t^2*b^0) + ((10650 : R)*t^1*b^4 + (9750 : R)*t^1*b^3))) + (((-11472 : R)*t^1*b^2 + ((-7320 : R)*t^1*b^1 + (-1032 : R)*t^1*b^0)) + (((-1125 : R)*t^0*b^4 + (-13293 : R)*t^0*b^3) + ((-7458 : R)*t^0*b^2 + (-1032 : R)*t^0*b^1)))))
 
-private def vN2 {R : Type*} [CommRing R] (t b : R) : R :=
+def vN2 {R : Type*} [CommRing R] (t b : R) : R :=
     (((((-12384 : R)*t^6*b^4 + ((-2304 : R)*t^6*b^3 + (24768 : R)*t^5*b^4)) + (((41760 : R)*t^5*b^3 + (6912 : R)*t^5*b^2) + ((48720 : R)*t^4*b^4 + (-32895 : R)*t^4*b^3))) + (((-44742 : R)*t^4*b^2 + ((-6912 : R)*t^4*b^1 + (-71088 : R)*t^3*b^4)) + (((-125037 : R)*t^3*b^3 + (-11076 : R)*t^3*b^2) + ((13740 : R)*t^3*b^1 + (2304 : R)*t^3*b^0)))) + ((((-35472 : R)*t^2*b^4 + ((100284 : R)*t^2*b^3 + (101658 : R)*t^2*b^2)) + (((23157 : R)*t^2*b^1 + (1626 : R)*t^2*b^0) + ((39120 : R)*t^1*b^4 + (33873 : R)*t^1*b^3))) + (((-46548 : R)*t^1*b^2 + ((-29001 : R)*t^1*b^1 + (-3954 : R)*t^1*b^0)) + (((-3264 : R)*t^0*b^4 + (-49569 : R)*t^0*b^3) + ((-28335 : R)*t^0*b^2 + (-3954 : R)*t^0*b^1)))))
 
-private def vDt {R : Type*} [CommRing R] (t b : R) : R :=
+def vDt {R : Type*} [CommRing R] (t b : R) : R :=
     (((((20 : R)*t^3*b^4 + (160 : R)*t^3*b^3) + ((80 : R)*t^3*b^2 + (-15 : R)*t^2*b^4)) + (((-150 : R)*t^2*b^3 + (-300 : R)*t^2*b^2) + ((-120 : R)*t^2*b^1 + (-20 : R)*t^1*b^4))) + ((((-70 : R)*t^1*b^3 + (130 : R)*t^1*b^2) + ((160 : R)*t^1*b^1 + (40 : R)*t^1*b^0)) + (((5 : R)*t^0*b^4 + (30 : R)*t^0*b^3) + ((30 : R)*t^0*b^2 + ((-30 : R)*t^0*b^1 + (-20 : R)*t^0*b^0)))))
 
-private def vDb {R : Type*} [CommRing R] (t b : R) : R :=
+def vDb {R : Type*} [CommRing R] (t b : R) : R :=
     (((((20 : R)*t^4*b^3 + (120 : R)*t^4*b^2) + ((40 : R)*t^4*b^1 + (-20 : R)*t^3*b^3)) + (((-150 : R)*t^3*b^2 + (-200 : R)*t^3*b^1) + ((-40 : R)*t^3*b^0 + ((-40 : R)*t^2*b^3 + (-105 : R)*t^2*b^2)))) + ((((130 : R)*t^2*b^1 + (80 : R)*t^2*b^0) + ((20 : R)*t^1*b^3 + (90 : R)*t^1*b^2)) + (((60 : R)*t^1*b^1 + (-30 : R)*t^1*b^0) + ((20 : R)*t^0*b^3 + ((-80 : R)*t^0*b^1 + (-20 : R)*t^0*b^0)))))
 
 private def vNt0 {R : Type*} [CommRing R] (t b : R) : R :=
@@ -114,19 +114,19 @@ private def vNt0 {R : Type*} [CommRing R] (t b : R) : R :=
 private def vNb0 {R : Type*} [CommRing R] (t b : R) : R :=
     (((((-3072 : R)*t^6*b^3 + ((288 : R)*t^6*b^2 + (6144 : R)*t^5*b^3)) + ((6336 : R)*t^5*b^2 + ((-576 : R)*t^5*b^1 + (8928 : R)*t^4*b^3))) + (((-7128 : R)*t^4*b^2 + ((-2880 : R)*t^4*b^1 + (288 : R)*t^4*b^0)) + ((-14592 : R)*t^3*b^3 + ((-16533 : R)*t^3*b^2 + (-540 : R)*t^3*b^1)))) + ((((-384 : R)*t^3*b^0 + ((-5472 : R)*t^2*b^3 + (14607 : R)*t^2*b^2)) + ((8448 : R)*t^2*b^1 + ((1500 : R)*t^2*b^0 + (7488 : R)*t^1*b^3))) + (((4311 : R)*t^1*b^2 + ((-3834 : R)*t^1*b^1 + (-1125 : R)*t^1*b^0)) + (((-864 : R)*t^0*b^3 + (-6714 : R)*t^0*b^2) + ((-2790 : R)*t^0*b^1 + (-390 : R)*t^0*b^0)))))
 
-private def vNt1 {R : Type*} [CommRing R] (t b : R) : R :=
+def vNt1 {R : Type*} [CommRing R] (t b : R) : R :=
     (((((-15930 : R)*t^5*b^4 + ((-1620 : R)*t^5*b^3 + (26550 : R)*t^4*b^4)) + ((42525 : R)*t^4*b^3 + ((4050 : R)*t^4*b^2 + (52200 : R)*t^3*b^4))) + (((-22380 : R)*t^3*b^3 + ((-33180 : R)*t^3*b^2 + (-3240 : R)*t^3*b^1)) + ((-53640 : R)*t^2*b^4 + ((-99504 : R)*t^2*b^3 + (-16722 : R)*t^2*b^2)))) + ((((5085 : R)*t^2*b^1 + ((810 : R)*t^2*b^0 + (-19500 : R)*t^1*b^4)) + ((50532 : R)*t^1*b^3 + ((53280 : R)*t^1*b^2 + (13782 : R)*t^1*b^1))) + (((1500 : R)*t^1*b^0 + ((10650 : R)*t^0*b^4 + (9750 : R)*t^0*b^3)) + ((-11472 : R)*t^0*b^2 + ((-7320 : R)*t^0*b^1 + (-1032 : R)*t^0*b^0)))))
 
-private def vNb1 {R : Type*} [CommRing R] (t b : R) : R :=
+def vNb1 {R : Type*} [CommRing R] (t b : R) : R :=
     (((((-10620 : R)*t^6*b^3 + ((-810 : R)*t^6*b^2 + (21240 : R)*t^5*b^3)) + ((25515 : R)*t^5*b^2 + ((1620 : R)*t^5*b^1 + (52200 : R)*t^4*b^3))) + (((-16785 : R)*t^4*b^2 + ((-16590 : R)*t^4*b^1 + (-810 : R)*t^4*b^0)) + ((-71520 : R)*t^3*b^3 + ((-99504 : R)*t^3*b^2 + (-11148 : R)*t^3*b^1)))) + ((((1695 : R)*t^3*b^0 + ((-39000 : R)*t^2*b^3 + (75798 : R)*t^2*b^2)) + ((53280 : R)*t^2*b^1 + ((6891 : R)*t^2*b^0 + (42600 : R)*t^1*b^3))) + (((29250 : R)*t^1*b^2 + ((-22944 : R)*t^1*b^1 + (-7320 : R)*t^1*b^0)) + (((-4500 : R)*t^0*b^3 + (-39879 : R)*t^0*b^2) + ((-14916 : R)*t^0*b^1 + (-1032 : R)*t^0*b^0)))))
 
-private def vNt2 {R : Type*} [CommRing R] (t b : R) : R :=
+def vNt2 {R : Type*} [CommRing R] (t b : R) : R :=
     (((((-74304 : R)*t^5*b^4 + ((-13824 : R)*t^5*b^3 + (123840 : R)*t^4*b^4)) + ((208800 : R)*t^4*b^3 + ((34560 : R)*t^4*b^2 + (194880 : R)*t^3*b^4))) + (((-131580 : R)*t^3*b^3 + ((-178968 : R)*t^3*b^2 + (-27648 : R)*t^3*b^1)) + ((-213264 : R)*t^2*b^4 + ((-375111 : R)*t^2*b^3 + (-33228 : R)*t^2*b^2)))) + ((((41220 : R)*t^2*b^1 + ((6912 : R)*t^2*b^0 + (-70944 : R)*t^1*b^4)) + ((200568 : R)*t^1*b^3 + ((203316 : R)*t^1*b^2 + (46314 : R)*t^1*b^1))) + (((3252 : R)*t^1*b^0 + ((39120 : R)*t^0*b^4 + (33873 : R)*t^0*b^3)) + ((-46548 : R)*t^0*b^2 + ((-29001 : R)*t^0*b^1 + (-3954 : R)*t^0*b^0)))))
 
-private def vNb2 {R : Type*} [CommRing R] (t b : R) : R :=
+def vNb2 {R : Type*} [CommRing R] (t b : R) : R :=
     (((((-49536 : R)*t^6*b^3 + ((-6912 : R)*t^6*b^2 + (99072 : R)*t^5*b^3)) + ((125280 : R)*t^5*b^2 + ((13824 : R)*t^5*b^1 + (194880 : R)*t^4*b^3))) + (((-98685 : R)*t^4*b^2 + ((-89484 : R)*t^4*b^1 + (-6912 : R)*t^4*b^0)) + ((-284352 : R)*t^3*b^3 + ((-375111 : R)*t^3*b^2 + (-22152 : R)*t^3*b^1)))) + ((((13740 : R)*t^3*b^0 + ((-141888 : R)*t^2*b^3 + (300852 : R)*t^2*b^2)) + ((203316 : R)*t^2*b^1 + ((23157 : R)*t^2*b^0 + (156480 : R)*t^1*b^3))) + (((101619 : R)*t^1*b^2 + ((-93096 : R)*t^1*b^1 + (-29001 : R)*t^1*b^0)) + (((-13056 : R)*t^0*b^3 + (-148707 : R)*t^0*b^2) + ((-56670 : R)*t^0*b^1 + (-3954 : R)*t^0*b^0)))))
 
-private theorem expanded_D {R : Type*} [CommRing R] (t b : R) :
+theorem expanded_D {R : Type*} [CommRing R] (t b : R) :
     sourceD t b = vD t b := by
   unfold sourceD sourceN sourceJ vD
   ring
@@ -135,17 +135,17 @@ private theorem expanded_N0 {R : Type*} [CommRing R] (t b : R) :
   simp only [sourceNumerator,sourceC,sourceD,sourceN,sourceJ,vN0,
     Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val]
   ring
-private theorem expanded_N1 {R : Type*} [CommRing R] (t b : R) :
+theorem expanded_N1 {R : Type*} [CommRing R] (t b : R) :
     sourceNumerator t b 1 = vN1 t b := by
   simp only [sourceNumerator,sourceC,sourceD,sourceN,sourceJ,vN1,
     Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val]
   ring
-private theorem expanded_N2 {R : Type*} [CommRing R] (t b : R) :
+theorem expanded_N2 {R : Type*} [CommRing R] (t b : R) :
     sourceNumerator t b 2 = vN2 t b := by
   simp only [sourceNumerator,sourceC,sourceD,sourceN,sourceJ,vN2,
     Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val]
   ring
-private theorem partial_Dt (t b : ℝ) :
+theorem partial_Dt (t b : ℝ) :
     (sourceD (X : Polynomial ℝ) (C b)).derivative.eval t = vDt t b := by
   rw [expanded_D]
   simp only [vD,vDt,derivative_add,derivative_sub,derivative_mul,
@@ -153,7 +153,7 @@ private theorem partial_Dt (t b : ℝ) :
     derivative_neg,eval_add,eval_sub,eval_mul,eval_pow,eval_C,eval_X,
     eval_natCast,eval_neg,eval_zero,eval_one,eval_ofNat]
   ring
-private theorem partial_Db (t b : ℝ) :
+theorem partial_Db (t b : ℝ) :
     (sourceD (C t) (X : Polynomial ℝ)).derivative.eval b = vDb t b := by
   rw [expanded_D]
   simp only [vD,vDb,derivative_add,derivative_sub,derivative_mul,
@@ -169,7 +169,7 @@ private theorem partial_Nt0 (t b : ℝ) :
     derivative_neg,eval_add,eval_sub,eval_mul,eval_pow,eval_C,eval_X,
     eval_natCast,eval_neg,eval_zero,eval_one,eval_ofNat]
   ring
-private theorem partial_Nt1 (t b : ℝ) :
+theorem partial_Nt1 (t b : ℝ) :
     (sourceNumerator (X : Polynomial ℝ) (C b) 1).derivative.eval t = vNt1 t b := by
   rw [expanded_N1]
   simp only [vN1,vNt1,derivative_add,derivative_sub,derivative_mul,
@@ -177,7 +177,7 @@ private theorem partial_Nt1 (t b : ℝ) :
     derivative_neg,eval_add,eval_sub,eval_mul,eval_pow,eval_C,eval_X,
     eval_natCast,eval_neg,eval_zero,eval_one,eval_ofNat]
   ring
-private theorem partial_Nt2 (t b : ℝ) :
+theorem partial_Nt2 (t b : ℝ) :
     (sourceNumerator (X : Polynomial ℝ) (C b) 2).derivative.eval t = vNt2 t b := by
   rw [expanded_N2]
   simp only [vN2,vNt2,derivative_add,derivative_sub,derivative_mul,
@@ -193,7 +193,7 @@ private theorem partial_Nb0 (t b : ℝ) :
     derivative_neg,eval_add,eval_sub,eval_mul,eval_pow,eval_C,eval_X,
     eval_natCast,eval_neg,eval_zero,eval_one,eval_ofNat]
   ring
-private theorem partial_Nb1 (t b : ℝ) :
+theorem partial_Nb1 (t b : ℝ) :
     (sourceNumerator (C t) (X : Polynomial ℝ) 1).derivative.eval b = vNb1 t b := by
   rw [expanded_N1]
   simp only [vN1,vNb1,derivative_add,derivative_sub,derivative_mul,
@@ -201,7 +201,7 @@ private theorem partial_Nb1 (t b : ℝ) :
     derivative_neg,eval_add,eval_sub,eval_mul,eval_pow,eval_C,eval_X,
     eval_natCast,eval_neg,eval_zero,eval_one,eval_ofNat]
   ring
-private theorem partial_Nb2 (t b : ℝ) :
+theorem partial_Nb2 (t b : ℝ) :
     (sourceNumerator (C t) (X : Polynomial ℝ) 2).derivative.eval b = vNb2 t b := by
   rw [expanded_N2]
   simp only [vN2,vNb2,derivative_add,derivative_sub,derivative_mul,
@@ -237,9 +237,9 @@ private def z00 (t b : ℝ) : ℝ :=
 private theorem product00 (t b : ℝ) : vD t b*p00 t b = z00 t b := by
   unfold vD p00 z00
   ring
-private def p01 (t b : ℝ) : ℝ :=
+def p01 (t b : ℝ) : ℝ :=
     (((((((106200 : ℝ)*t^9*b^7 + (228600 : ℝ)*t^9*b^6) + ((-147600 : ℝ)*t^9*b^5 + (-265500 : ℝ)*t^8*b^7)) + (((-944550 : ℝ)*t^8*b^6 + (-553500 : ℝ)*t^8*b^5) + ((669600 : ℝ)*t^8*b^4 + (-212400 : ℝ)*t^7*b^7))) + ((((2486325 : ℝ)*t^7*b^6 + (4542900 : ℝ)*t^7*b^5) + ((336900 : ℝ)*t^7*b^4 + (-1202400 : ℝ)*t^7*b^3)) + (((806100 : ℝ)*t^6*b^7 + (-1567125 : ℝ)*t^6*b^6) + ((-11041605 : ℝ)*t^6*b^5 + (-10694100 : ℝ)*t^6*b^4)))) + (((((-80460 : ℝ)*t^6*b^3 + (1065600 : ℝ)*t^6*b^2) + ((547800 : ℝ)*t^5*b^7 + (-2385525 : ℝ)*t^5*b^6)) + (((6749370 : ℝ)*t^5*b^5 + (21739815 : ℝ)*t^5*b^4) + ((12959640 : ℝ)*t^5*b^3 + (325980 : ℝ)*t^5*b^2))) + ((((-464400 : ℝ)*t^5*b^1 + (-1195200 : ℝ)*t^4*b^7) + ((2491965 : ℝ)*t^4*b^6 + (6854400 : ℝ)*t^4*b^5)) + (((-9541575 : ℝ)*t^4*b^4 + (-20913405 : ℝ)*t^4*b^3) + ((-8209890 : ℝ)*t^4*b^2 + (-362280 : ℝ)*t^4*b^1))))) + ((((((79200 : ℝ)*t^4*b^0 + (-844800 : ℝ)*t^3*b^7) + ((-743850 : ℝ)*t^3*b^6 + (-9807300 : ℝ)*t^3*b^5)) + (((-10624245 : ℝ)*t^3*b^4 + (6213900 : ℝ)*t^3*b^3) + ((9917940 : ℝ)*t^3*b^2 + (2526660 : ℝ)*t^3*b^1))) + ((((104760 : ℝ)*t^3*b^0 + (909300 : ℝ)*t^2*b^7) + ((1157865 : ℝ)*t^2*b^6 + (3655440 : ℝ)*t^2*b^5)) + (((10764915 : ℝ)*t^2*b^4 + (7246170 : ℝ)*t^2*b^3) + ((-1790910 : ℝ)*t^2*b^2 + (-2027730 : ℝ)*t^2*b^1)))) + (((((-286860 : ℝ)*t^2*b^0 + (480000 : ℝ)*t^1*b^7) + ((372690 : ℝ)*t^1*b^6 + (632970 : ℝ)*t^1*b^5)) + (((-1674630 : ℝ)*t^1*b^4 + (-4161600 : ℝ)*t^1*b^3) + ((-1876080 : ℝ)*t^1*b^2 + (154680 : ℝ)*t^1*b^1))) + ((((104160 : ℝ)*t^1*b^0 + (-235500 : ℝ)*t^0*b^7) + ((-529395 : ℝ)*t^0*b^6 + (-324510 : ℝ)*t^0*b^5)) + (((-374610 : ℝ)*t^0*b^4 + (105810 : ℝ)*t^0*b^3) + ((399060 : ℝ)*t^0*b^2 + (100320 : ℝ)*t^0*b^1))))))
-private theorem pair01 (t b : ℝ) : vDt t b*vNb1 t b-vDb t b*vNt1 t b = p01 t b := by
+theorem pair01 (t b : ℝ) : vDt t b*vNb1 t b-vDb t b*vNt1 t b = p01 t b := by
   unfold vDt vNb1 vDb vNt1 p01
   ring
 private def z01 (t b : ℝ) : ℝ :=
@@ -284,9 +284,9 @@ private def z10 (t b : ℝ) : ℝ :=
 private theorem product10 (t b : ℝ) : vD t b*p10 t b = z10 t b := by
   unfold vD p10 z10
   ring
-private def p11 (t b : ℝ) : ℝ :=
+def p11 (t b : ℝ) : ℝ :=
     (((((((495360 : ℝ)*t^9*b^7 + (1128960 : ℝ)*t^9*b^6) + ((-437760 : ℝ)*t^9*b^5 + (-1238400 : ℝ)*t^8*b^7)) + (((-4567680 : ℝ)*t^8*b^6 + (-3490560 : ℝ)*t^8*b^5) + ((2016000 : ℝ)*t^8*b^4 + (-990720 : ℝ)*t^7*b^7))) + ((((9715980 : ℝ)*t^7*b^6 + (19895280 : ℝ)*t^7*b^5) + ((4210320 : ℝ)*t^7*b^4 + (-3686400 : ℝ)*t^7*b^3)) + (((3763200 : ℝ)*t^6*b^7 + (-3698205 : ℝ)*t^6*b^6) + ((-40610430 : ℝ)*t^6*b^5 + (-43656900 : ℝ)*t^6*b^4)))) + (((((-3417720 : ℝ)*t^6*b^3 + (3340800 : ℝ)*t^6*b^2) + ((1983360 : ℝ)*t^5*b^7 + (-11310735 : ℝ)*t^5*b^6)) + (((19540170 : ℝ)*t^5*b^5 + (78831690 : ℝ)*t^5*b^4) + ((50818680 : ℝ)*t^5*b^3 + (2962440 : ℝ)*t^5*b^2))) + ((((-1497600 : ℝ)*t^5*b^1 + (-5186880 : ℝ)*t^4*b^7) + ((8116575 : ℝ)*t^4*b^6 + (28695285 : ℝ)*t^4*b^5)) + (((-28852725 : ℝ)*t^4*b^4 + (-75448680 : ℝ)*t^4*b^3) + ((-31452600 : ℝ)*t^4*b^2 + (-1833960 : ℝ)*t^4*b^1))))) + ((((((264960 : ℝ)*t^4*b^0 + (-2880000 : ℝ)*t^3*b^7) + ((-103740 : ℝ)*t^3*b^6 + (-33448320 : ℝ)*t^3*b^5)) + (((-41733315 : ℝ)*t^3*b^4 + (18953220 : ℝ)*t^3*b^3) + ((35626350 : ℝ)*t^3*b^2 + (9538920 : ℝ)*t^3*b^1))) + ((((440520 : ℝ)*t^3*b^0 + (3605760 : ℝ)*t^2*b^7) + ((3788985 : ℝ)*t^2*b^6 + (10301175 : ℝ)*t^2*b^5)) + (((37513755 : ℝ)*t^2*b^4 + (27915375 : ℝ)*t^2*b^3) + ((-5296140 : ℝ)*t^2*b^2 + (-7244790 : ℝ)*t^2*b^1)))) + (((((-1071060 : ℝ)*t^2*b^0 + (1680000 : ℝ)*t^1*b^7) + ((880935 : ℝ)*t^1*b^6 + (2916450 : ℝ)*t^1*b^5)) + (((-4347765 : ℝ)*t^1*b^4 + (-14536920 : ℝ)*t^1*b^3) + ((-7168110 : ℝ)*t^1*b^2 + (386160 : ℝ)*t^1*b^1))) + ((((368280 : ℝ)*t^1*b^0 + (-847680 : ℝ)*t^0*b^7) + ((-1812675 : ℝ)*t^0*b^6 + (-1075680 : ℝ)*t^0*b^5)) + (((-1717140 : ℝ)*t^0*b^4 + (-63690 : ℝ)*t^0*b^3) + ((1304580 : ℝ)*t^0*b^2 + (355680 : ℝ)*t^0*b^1))))))
-private theorem pair11 (t b : ℝ) : vDt t b*vNb2 t b-vDb t b*vNt2 t b = p11 t b := by
+theorem pair11 (t b : ℝ) : vDt t b*vNb2 t b-vDb t b*vNt2 t b = p11 t b := by
   unfold vDt vNb2 vDb vNt2 p11
   ring
 private def z11 (t b : ℝ) : ℝ :=
