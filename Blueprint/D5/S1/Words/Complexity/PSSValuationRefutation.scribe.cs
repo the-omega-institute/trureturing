@@ -31,10 +31,11 @@ internal sealed class PSSValuationRefutationDocument : IScribeDocumentDefinition
                 FiniteAlphabet(All("v", Valuation, All("p", Valuation,
                     Equal(Call("weightedSum", V, F.Id("p")),
                         Seq(Sum, Underscore, Grp(Seq(F.Id("a"), InMacro, Sp, A)), Sp,
-                            Call("v", F.Id("a")), Cdot, Call("p", F.Id("a"))))))),
+                            Call("v", F.Id("a")), Cdot, Sp, Call("p", F.Id("a"))))))),
                 "A valuation is any map v : A → Nat. The evaluation is the sum of v(a)p(a) "
-                + "over the finite alphabet. Induction on a list and the count-cons identity "
-                + "give sum(map v u) = weightedSum v (parikh u). No injectivity or positivity "
+                + "over the finite alphabet. Finset.sum_list_map_count, extending its sum "
+                + "from the letter support to the alphabet, gives sum(map v u) = weightedSum v "
+                + "(parikh u). No injectivity or positivity "
                 + "of v is required."),
             Definition("parikhSet", "Actual factor Parikh vectors",
                 WordLength(Equal(Call("parikhSet", W, N),
@@ -99,7 +100,7 @@ internal sealed class PSSValuationRefutationDocument : IScribeDocumentDefinition
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("A negative answer to the entire valuation-existence assertion"),
-                StatementSource.FromAuthor(Disp(Seq(Neg, F.Id("claim")))),
+                StatementSource.FromAuthor(Disp(Seq(Neg, Sp, F.Id("claim")))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(
                     Paragraph(Text(
@@ -140,7 +141,7 @@ internal sealed class PSSValuationRefutationDocument : IScribeDocumentDefinition
     private static Formula Word => new Formula.TypeArrow(Nat, A);
     private static Formula Factors => Call("wordFactorSet", W, N);
     private static Formula FiniteAlphabet(Formula body) =>
-        All("A", F.Id("Type"), All("h", Call("Fintype", A), body));
+        All("A", F.Id("Type"), Seq(OpenBracket, Call("Fintype", A), CloseBracket, Sp, body));
     private static Formula WordLength(Formula body) =>
         FiniteAlphabet(All("w", Word, All("n", Nat, body)));
     private static Formula Call(string name, params Formula[] args) =>

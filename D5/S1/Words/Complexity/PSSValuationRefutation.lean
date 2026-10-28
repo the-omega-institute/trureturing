@@ -110,12 +110,12 @@ private theorem universal_occurrence (u : List (Fin 3)) :
 private theorem sum_eq_weighted {A : Type*} [Fintype A] (v : A → ℕ) (u : List A) :
     (u.map v).sum = weightedSum v (parikh u) := by
   classical
-  induction u with
-  | nil => simp [weightedSum, parikh]
-  | cons a u ih =>
-    simp only [List.map_cons, List.sum_cons, ih]
-    simp only [weightedSum, parikh, List.count_cons, mul_add, Finset.sum_add_distrib]
-    simp [Nat.add_comm]
+  rw [Finset.sum_list_map_count]
+  simp only [weightedSum, parikh, nsmul_eq_mul]
+  rw [Finset.sum_subset (Finset.subset_univ u.toFinset)]
+  · exact Finset.sum_congr rfl (fun a _ => Nat.mul_comm _ _)
+  · intro a _ ha
+    simp [List.count_eq_zero_of_not_mem (by simpa using ha)]
 
 private theorem sums_image {A : Type*} [Fintype A] (w : ℕ → A) (v : A → ℕ) (n : ℕ) :
     sumSet w v n = (parikhSet w n).image (weightedSum v) := by

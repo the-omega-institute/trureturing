@@ -4,6 +4,7 @@ authors: Pierre Popoli and Jeffrey Shallit and Manon Stipulanti
 year: 2024
 title: Additive word complexity and Walnut
 doi: 10.4230/LIPIcs.FSTTCS.2024.32
+url: https://arxiv.org/abs/2410.02409v1
 claim: Question 31 asks whether a natural valuation can make the additive complexity of a given infinite word equal its original-symbol abelian complexity at every length.
 strata_touched:
   - D5/S1/Words/Complexity/PSSValuationRefutation
@@ -43,7 +44,7 @@ already identify distinct singleton classes. This is a repository derivation
 answering the full general existence reading, rather than a theorem attributed
 to the paper or an assertion about all individual infinite words.
 
-## Verified source locators
+## Verified locator
 
 - Versioned arXiv record: https://arxiv.org/abs/2410.02409v1
 - Versioned PDF: https://arxiv.org/pdf/2410.02409v1
