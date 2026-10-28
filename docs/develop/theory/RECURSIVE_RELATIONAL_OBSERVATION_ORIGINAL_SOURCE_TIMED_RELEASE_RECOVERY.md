@@ -9,7 +9,7 @@ For every original $a,\eta>0$, retain the same $G=H^1\times\mathbb R$, coordinat
 Fix $\varepsilon,\delta>0$ before a run. Install exactly the causal release service with source mode $E$ (the first excursion reaching age $\varepsilon$) and killed mode $C$ at actual contact or $D$ at the $\delta$ timeout with the current state. Let
 
 $$
-R_0=0,quad P_0=e,quad (R_i,\operatorname{type}_i,P_i)
+R_0=0,\quad P_0=e,\quad (R_i,\operatorname{type}_i,P_i)
 $$
 
 be the actual indexed releases. At an arrival, the service discloses the complete four-coordinate point $P_i=Z_{R_i}$, exact original timestamp and type. While a request is pending, the observer sees only the exact clock and nonarrival. There is no cancellation, adaptive timeout, deadline query, future timestamp, excursion mark, seed, actuator, or extra source read.

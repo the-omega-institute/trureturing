@@ -10,7 +10,13 @@ $$
 G=H^1\times\mathbb R,
 $$
 
-with the original coordinates $(x,y,z,w)$, group operation $w+xy'$ in the fourth coordinate, identity $e$, Haar measure $\mu$, unit Green field $\Gamma$, selector $A(u)=\rho C(u)$, positive normalized $h$, and $m=h^2\mu$. Retain the complete complex form $V_0$ and correction $C_1$, its nonnegative self-adjoint generator $K$, and the conservative semigroup
+with the original coordinates $(x,y,z,w)$ and product
+
+$$
+(x,y,z,w)(x',y',z',w')=(x+x',y+y',z+z',w+w'+xy').
+$$
+
+Retain its identity $e$, Haar measure $\mu$, unit Green field $\Gamma$, selector $A(u)=\rho C(u)$, positive normalized $h$, and $m=h^2\mu$. Retain the complete complex form $V_0$ and correction $C_1$, its nonnegative self-adjoint generator $K$, and the conservative semigroup
 
 $$
 T_s=\exp(-sK)\quad(s\geq0).
@@ -73,7 +79,14 @@ $$
 
 because every fixed positive gap has a separately attained purifier.
 
-**Proof.** Strong continuity gives $T_sf_j\to f_j$ in $L^2(m)$. Since $g_tf_i\in L^2(m)$, the pairings converge to $C_{ij}$. For a partition, $P_iT_sP_j$ converges to $P_iP_j$, which is zero for $i\ne j$ and $P_i$ for $i=j$; integration gives the second limit. The off-diagonal mass of $C$ is $J$, and its diagonal is $C_{ii}$, so the finite-alphabet $ell^1$ calculation yields (2.1). Since $\mu_t$ is atomless, coordinate quantile slabs produce a Borel partition with prescribed masses $\pi_i$; then $\alpha_i-C_{ii}=\int g_t f_i(1-f_i)\,dm+\sum_{j\ne i}\int g_t f_i f_j\,dm\geq0$ and the simplex identity gives $\sum_i(\pi_i-C_{ii})=J$. Thus equality is attained. Equation (2.2) uses the existing exact fixed-pair theorem, with $P$ allowed to depend on $s$. The two limits differ because their quantifiers differ. ∎
+**Proof.** Strong continuity gives $T_sf_j\to f_j$ in $L^2(m)$. Since $g_tf_i\in L^2(m)$, the pairings converge to $C_{ij}$. For a partition, $P_iT_sP_j$ converges to $P_iP_j$, which is zero for $i\ne j$ and $P_i$ for $i=j$; integration gives the second limit. The off-diagonal mass of $C$ is $J$, and its diagonal is $C_{ii}$, so the finite-alphabet $\ell^1$ calculation yields (2.1). Since $\mu_t$ is atomless, coordinate quantile slabs produce a Borel partition with prescribed masses $\pi_i$; then
+
+$$
+\alpha_i-C_{ii}=\pi_i-C_{ii}=\int g_t f_i(1-f_i)\,dm
+=\sum_{j\ne i}\int g_t f_i f_j\,dm\geq0.
+$$
+
+Summing over $i$ gives $\sum_i(\pi_i-C_{ii})=J$, so equality is attained. Equation (2.2) uses the existing exact fixed-pair theorem, with $P$ allowed to depend on $s$. The two limits differ because their quantifiers differ. ∎
 
 ## 3. One continuing detector and joint-source sufficiency
 
@@ -128,7 +141,13 @@ $$
 
 Neither a finite emitted word nor a finite label likelihood exactly acquires the corresponding spatial bit or scalar.
 
-**Proof.** On each half-space the binary probability vector is $(3/4,1/4)$ or $(1/4,3/4)$, giving $J=1-(9/16+1/16)=3/8$ and $E=1-3/4=1/4$. For the second detector, expand $f_0^2+f_1^2+1/16+1/16=(3+v^2)/8$ and integrate. Since $|v|<1$, the lower bound follows. Every finite word has a likelihood that is a finite product of factors in $[1/4,3/4]$ on either open half-space; both sides retain positive mass at every finite positive deterministic branch endpoint. The same conditioning argument leaves a continuous range of $v$ values, so no finite label word equals the spatial scalar. A specified sampler may use two fresh fair bits per read for the half-space detector; those bits and the retained labels are part of its run. ∎
+**Proof.** On each half-space the binary probability vector is $(3/4,1/4)$ or $(1/4,3/4)$, giving $J=1-(9/16+1/16)=3/8$ and $E=1-3/4=1/4$. For the second detector,
+
+$$
+f_0^2+f_1^2+\frac1{16}+\frac1{16}=\frac{2+v^2}{8},
+$$
+
+so integration gives $J=3/4-\frac18\int v^2\,d\mu_t\geq5/8$. The two families have different likelihood domains. For the half-space family, every supported finite binary word has a strictly positive likelihood on both open half-spaces, so its posterior leaves the bit non-degenerate. For the smooth family, $f_0,f_1\in(0,1/2)$ and $f_3=f_B=1/4$ everywhere; every finite word therefore has a strictly positive continuous likelihood on every open set of $v$ values, and a finite discrete word cannot determine the continuously varying scalar $v$. The common $[1/4,3/4]$ bound belongs only to the binary half-space factors and is not asserted for the smooth family. A specified sampler may use two fresh fair bits per read for the half-space detector; those bits and the retained labels are part of its run. ∎
 
 ## 5. Fixed positive clock and law-level recovery
 
@@ -169,6 +188,29 @@ The deterministic complete-law class is therefore the zero-deficit subset of the
 **Proof.** For a partition, $\sum_i1_{P_i}^2=1$, so its collision limit is one. If all positive-lag collisions agree, Theorem 5.1 forces $R=1$ and hence $J=0$. Full word equality implies collision equality by projection. If $J=0$, repair $f$ on one Borel null set; the countably many positive sampling states avoid it almost surely, so every word law agrees. Uniform $f$ has $C_f(k)=1/4$, $J=3/4$, and gives a concrete failure. The partition supplied by the fixed-pair theorem may depend on $k$; it does not contradict the common-partition criterion. ∎
 
 For every deterministic partition and every $J>0$ detector, some finite positive lag witnesses a discrepancy, but the witness may depend on the partition and detector. No uniform finite witness horizon or positive margin follows.
+
+### 5.1. Injectivity is a hypothesis, not a universal obstruction
+
+The injective positive-time operator in Theorem 5.1 is an actual hypothesis of that original-source argument. It cannot be deleted from a generalized claim. To see this, use the separate discrete-time source
+
+$$
+X_0,X_1,\ldots\ \text{iid with law }\operatorname{Unif}[0,1],\qquad
+(Qu)(x)=\int_0^1u(y)\,dy.
+$$
+
+The source is initialized uniformly and is refreshed independently at every integer time. The Markov operator $Q$ is noninjective: for example, $u=1_{[0,1/2)}-1_{[1/2,1]}$ is nonzero but $Qu=0$. Let
+
+$$
+I_0=[0,1/4),\quad I_1=[1/4,1/2),\quad I_2=[1/2,3/4),\quad I_3=[3/4,1],
+$$
+
+and define the deterministic label $Y_n=r$ when $X_n\in I_r$. In the same source, let a stochastic detector emit each of four labels with probability $1/4$ at every read, using fresh independent detector randomness. In both cases the labels are iid uniform on four symbols, so for every $n$ and every word $(y_0,\ldots,y_{n-1})$,
+
+$$
+\Pr(Y_0=y_0,\ldots,Y_{n-1}=y_{n-1})=4^{-n}.
+$$
+
+Thus the deterministic equal-quarter partition and the fresh stochastic detector have the same entire finite-word and infinite-record law, despite the noninjective source operator and the stochastic detector's $J=3/4$. This is a separate countermodel to deleting injectivity from a generalized deterministic-readout obstruction. It neither replaces the original e-start diffusion nor refutes Theorems 5.1--5.2 on their declared source.
 
 ## 6. One sequence for all finite schedules
 
@@ -211,13 +253,19 @@ For a finite positive set $D_0$, $\inf_P\max_{s\in D_0}\operatorname{TV}(\nu_P^s
 
 ### 7.1. Noisy quadrants
 
-Let $C_0,C_1,C_2,C_3$ be the four oriented quadrants of $(x,y)$, with axes assigned Borelly. Source symmetry gives each positive-time marginal mass $1/4$. For $\varepsilon\in[0,1]$, define
+Let $Q_0,Q_1,Q_2,Q_3$ be the four oriented quadrants of $(x,y)$, with axes assigned Borelly. Use the detector alphabet $\mathcal A=\{0,1,3,B\}$ and set
 
 $$
- f_i^\varepsilon=\varepsilon 1_{C_i}+\frac{1-\varepsilon}{4}.
+C_0=Q_0,\qquad C_1=Q_1,\qquad C_3=Q_2,\qquad C_B=Q_3.
 $$
 
-Let $q_{ij}(s)$ be the same-source quadrant pair law and let $U_{16}$ be uniform.
+Thus geometric quadrant $Q_2$ is carried by label $B$; the subscripts $0,1,3,B$ below are detector labels, not a claim that the alphabet contains label $2$. Source symmetry gives each positive-time marginal mass $1/4$. For $\varepsilon\in[0,1]$, define
+
+$$
+ f_i^\varepsilon=\varepsilon 1_{C_i}+\frac{1-\varepsilon}{4}\qquad(i\in\mathcal A).
+$$
+
+Let $q_{ij}(s)$, $i,j\in\mathcal A$, be the same-source quadrant pair law and let $U_{16}$ be uniform on $\mathcal A^2$.
 
 **(B9) Theorem 7.2 (sharp quadrant pair boundary).** For every $t_0>0$,
 
@@ -251,7 +299,7 @@ The infimum over $P$ of this supremum is one. At $\varepsilon=1$, the quadrant p
 **Proof.** Consider the event that all $n$ labels are equal. For a fixed $P$, strong continuity and the finite-word Markov formula imply that as $k\to\infty$ its probability tends to one. For the noisy quadrant detector, conditional independence leaves the limit
 
 $$
- c^n+3d^n,qquad c=\frac{1+3\varepsilon}{4},\quad d=\frac{1-\varepsilon}{4}.
+ c^n+3d^n,\qquad c=\frac{1+3\varepsilon}{4},\quad d=\frac{1-\varepsilon}{4}.
 $$
 
 For $\varepsilon<1$, this tends to zero as $n\to\infty$. Taking first $k$ large and then $n$ large makes the event gap arbitrarily close to one; total variation is at most one. At $\varepsilon=1$ the detector is the quadrant partition itself. ∎
@@ -264,7 +312,23 @@ For $\varepsilon<1$, this tends to zero as $n\to\infty$. Taking first $k$ large 
 
 All temporal comparisons charge the same actual source initialization, fixed original clock and detector installation. A retained deterministic partition has no fresh-emission-noise coordinate, but its Borel description, exact reference, comparisons, timing, reads, controller buffers, source binding, rights, and storage remain. An existential partition is not an acquired finite-bit procedure.
 
-A literal four-label sampler can use two fresh fair bits per read, so an $n$-read run uses $2n$ supplied random bits and $n$ labels, with the clock/menu inputs, source references, payload retention and controller work charged separately. A binary half-space sampler uses two fresh fair bits per read in the displayed implementation. For the noisy quadrant at $\varepsilon=1/2$, one selector bit chooses the quadrant branch; on the other $n-R$ branches two more fair bits are consumed, so the run uses $R$ actual quadrant calls and $3n-2R$ fair bits, with expected $2n$ and worst case $3n$. The lead-in is $t_0$, epochs are $t_0+j/k$, and elapsed post-lead-in time is $(n-1)/k$.
+A uniform four-label sampler ($f_i\equiv1/4$) can use two fresh fair bits per read, so an $n$-read run uses $2n$ supplied random bits and $n$ labels, with the clock/menu inputs, source references, payload retention and controller work charged separately. The binary half-space sampler has the same two-bit implementation in its declared realization. For the noisy quadrant at $\varepsilon=1/2$, one selector bit chooses the quadrant branch; on the other $n-R$ branches two more fair bits are consumed, so the run uses $R$ actual quadrant calls and $3n-2R$ fair bits, with expected $2n$ and worst case $3n$. The lead-in is $t_0$, epochs are $t_0+j/k$, and elapsed post-lead-in time is $(n-1)/k$.
+
+### 8.1. A smaller streaming statistic for a smaller task
+
+The full-burst task retains the entire ordered word. For the distinct task of deciding only the constant-word predicate
+
+$$
+\mathsf{Const}_n=1\quad\Longleftrightarrow\quad Y_0=Y_1=\cdots=Y_{n-1},
+$$
+
+the uniform sampler can stream a sufficient witness statistic on the same run. Store the first two-bit label $Y_0$, a one-bit disagreement flag $d$, and the supplied read-count/timing state. Initialize $d=0$ and, on each later read, update
+
+$$
+d\leftarrow d\lor 1_{\{Y_j\ne Y_0\}};
+$$
+
+the final answer is $1-d$. If the run length is supplied as data, a counter needs $\lceil\log_2(n+1)\rceil$ bits (or the equivalent exact timer/index register); the source reference, detector/controller context, framing and clock remain charged. Thus the retained label payload for this predicate is two bits plus one flag, with the counter and interface state, while fresh detector randomness is still consumed for every one of the $n$ reads. By contrast, the full-record task retains $2n$ label payload bits, all $n$ chronological labels, and their timing/framing metadata. The streaming statistic is a sufficient retained record only for $\mathsf{Const}_n$; it does not replace the complete-law or full-word task and does not assert a globally minimal memory bill.
 
 A prepared independent tape moves the randomness to initialization, tape storage, access and consumption; it is a different interface and is not free. The fixed-pair purifier is already a sufficient conditional alternative for one positive pair, but its partition may depend on $(t,s)$ and its acquisition or description cost is uncontrolled. A complete collision profile in Theorem 5.1 is a law-level input, not a finite acquired record. The coefficient sum $2^n-1$ gives no uniform numerical rate. Existing finite exact-real sampling and prospective consumers remain sufficient for their own declared tasks.
 
