@@ -51,9 +51,12 @@ private theorem source_coefficient_weight (i : Fin 3) (j : ℕ)
   have hle : j ≤ 15 := by
     by_contra hn
     exact hj (coeff_eq_zero_of_natDegree_lt ((source_r_degree i).trans_lt (by omega)))
-  fin_cases i <;> interval_cases j <;>
-    simp only [sourcePolynomial,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val,sourceE0,sourceE1,sourceE2,coeff_add,
-      coeff_C_mul_X_pow] <;> norm_num <;> compute_degree
+  have hb : ((sourcePolynomial i).coeff j).natDegree ≤ 17-j := by
+    fin_cases i <;> interval_cases j <;>
+      simp only [sourcePolynomial,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val,
+        sourceE0,sourceE1,sourceE2,coeff_add,coeff_C_mul_X_pow] <;>
+      norm_num <;> compute_degree
+  omega
 
 private theorem shifted_coefficient_weight (i : Fin 3) (s c : ℕ)
     (hc : ((X^s*sourcePolynomial i).coeff c) ≠ 0) :
