@@ -20,12 +20,12 @@ internal sealed class FreeRootAmalgamationDocument : IScribeDocumentDefinition
         Seq(Open, a, Sp, F.Iff, Sp, b, Close);
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
     private static Formula FreeGroup() => Call("FreeGroup", I("Bool"));
-    private static Formula Root() => And(Equal(I("x"), Pow(I("z"), I("n"))),
-        Equal(I("y"), Pow(I("z"), I("m"))));
+    private static Formula Root(Formula witness) => And(Equal(I("x"), Pow(witness, I("n"))),
+        Equal(I("y"), Pow(witness, I("m"))));
     private static Formula RootEquation() => Q(
         Implication(Call("Coprime", I("m"), I("n")),
             Iff(Equal(Pow(I("x"), I("m")), Pow(I("y"), I("n"))),
-                Ex(And(Root(), Q(Implication(Root(), Equal(I("w"), I("z"))),
+                Ex(And(Root(I("z")), Q(Implication(Root(I("w")), Equal(I("w"), I("z"))),
                     B("w", FreeGroup()))), B("z", FreeGroup())))),
         B("x", FreeGroup()), B("y", FreeGroup()), B("m", I("Nat")), B("n", I("Nat")));
     private static Formula Qualified(params string[] names)
