@@ -8,6 +8,8 @@
 
 import D5.S3.Arith.FibonacciAtomic.Geometry.NativeGuardedLeafRepair
 
+/-! Actual original-leaf fresh-sensor growth and ambient zero-root transport. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option Elab.async false
@@ -86,7 +88,9 @@ def sensors : Source → List Address
 private theorem sensor_terminal (t : Source) (p : Address) (hp : p ∈ sensors t) :
     p ∈ terminals (grown t) := by
   induction t generalizing p with
-  | of b => cases b <;> simpa [sensors, grown, cone, terminals] using hp
+  | of b =>
+      cases b <;> simp only [sensors, List.mem_singleton] at hp
+      all_goals subst p; simp [grown, cone, terminals]
   | mul l r il ir =>
       simp only [sensors, List.mem_append, List.mem_map] at hp
       rcases hp with ⟨q, hq, rfl⟩ | ⟨q, hq, rfl⟩
@@ -113,11 +117,11 @@ private theorem material_cons (l r : Source) (b : Bool) (p : Address) :
 
 private theorem sum_lift (b : Bool) (x : Value) (ps : List Address) :
     ((ps.map (b :: ·)).map (lift b x)).sum = (ps.map x).sum := by
-  simp [List.map_map, lift]
+  simp [List.map_map, Function.comp_def, lift]
 
 private theorem sum_other (b : Bool) (x : Value) (ps : List Address) :
     ((ps.map ((!b) :: ·)).map (lift b x)).sum = 0 := by
-  cases b <;> simp [List.map_map, lift]
+  cases b <;> simp [List.map_map, Function.comp_def, lift]
 
 /-- Zero at the attached root is exactly what removes the exterior parent charge. -/
 theorem update_lift (l r : Source) (b : Bool) (x : Value) (hx : x [] = 0) :
@@ -127,16 +131,9 @@ theorem update_lift (l r : Source) (b : Bool) (x : Value) (hx : x [] = 0) :
   | nil => cases b <;> simp [update, material, neighbors, NativeMaterialRootRecognition.children,
       readout, lift, hx]
   | cons c p =>
-      by_cases hcb : c = b
-      · subst c
-        rw [update, if_congr (propext (material_cons l r b p)) rfl rfl]
-        rw [NativeMaterialRootRecognition.neighbors_cons]
-        by_cases hm : p ∈ material (if b then r else l)
-        · simp [hm, List.map_append, List.sum_append, sum_lift, lift, update]
-        · simp [hm, lift, update]
-      · cases b <;> cases c <;> try contradiction
-        all_goals
-          simp [update, lift, NativeMaterialRootRecognition.neighbors_cons,
-            List.map_append, List.sum_append, List.map_map]
+      simp only [update, material_cons]
+      rw [NativeMaterialRootRecognition.neighbors_cons]
+      cases b <;> cases c <;> cases p <;>
+        simp [lift, update, List.map_append, List.sum_append, List.map_map, Function.comp_def]
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth
