@@ -504,21 +504,79 @@ private lemma costPrimitive_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
       show curve b x * 6 + b * 2 ≠ 0 by intro he; apply hd; linarith only [he]]
     <;> ring
 
+private lemma admissible_integrability {u : ℝ → ℝ} (hu : Admissible u) :
+    IntervalIntegrable u volume 1 2 ∧
+    IntervalIntegrable (fun x => x / u x) volume 1 2 ∧
+    IntervalIntegrable (fun x => primitive u x / u x ^ 2) volume 1 2 := by
+  obtain ⟨c, B, hc, hbounds⟩ := hu.2
+  have hi : IntegrableOn u (Icc (1 : ℝ) 2) volume :=
+    Integrable.of_bound hu.1.aestronglyMeasurable B (hbounds.mono fun x hx => by
+      rw [Real.norm_of_nonneg (by linarith [hx.1])]
+      exact hx.2)
+  have hii : IntervalIntegrable u volume 1 2 :=
+    (intervalIntegrable_iff_integrableOn_Icc_of_le (by norm_num)).2 hi
+  have huc : ContinuousOn (primitive u) (Icc (1 : ℝ) 2) := by
+    change ContinuousOn (fun x : ℝ => ∫ t in (1 : ℝ)..x, u t) (Icc (1 : ℝ) 2)
+    have h := intervalIntegral.continuousOn_primitive_interval' (a := (1 : ℝ))
+      hii left_mem_uIcc
+    rw [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] at h
+    exact h
+  obtain ⟨M, hM⟩ := isCompact_Icc.exists_bound_of_continuousOn huc
+  have hlag : IntegrableOn (fun x => x / u x) (Icc (1 : ℝ) 2) volume := by
+    apply Integrable.of_bound
+      (measurable_id.aemeasurable.div hu.1).aestronglyMeasurable (2 / c)
+    filter_upwards [hbounds, ae_restrict_mem measurableSet_Icc] with x hx hxmem
+    have hup : 0 < u x := hc.trans_le hx.1
+    change ‖x / u x‖ ≤ 2 / c
+    rw [norm_div, Real.norm_of_nonneg (by linarith [hxmem.1]),
+      Real.norm_of_nonneg hup.le]
+    apply (div_le_div_iff₀ hup hc).2
+    nlinarith [mul_nonneg (sub_nonneg.mpr hxmem.2) hc.le]
+  have hfuture : IntegrableOn (fun x => primitive u x / u x ^ 2)
+      (Icc (1 : ℝ) 2) volume := by
+    have hmeas : AEMeasurable (primitive u) (volume.restrict (Icc (1 : ℝ) 2)) :=
+      (huc.aestronglyMeasurable measurableSet_Icc).aemeasurable
+    apply Integrable.of_bound (hmeas.div (hu.1.pow_const 2)).aestronglyMeasurable
+      (M / c ^ 2)
+    filter_upwards [hbounds, ae_restrict_mem measurableSet_Icc] with x hx hxmem
+    have hup : 0 < u x := hc.trans_le hx.1
+    have hsq : c ^ 2 ≤ u x ^ 2 := by nlinarith [hx.1]
+    change ‖primitive u x / u x ^ 2‖ ≤ M / c ^ 2
+    rw [norm_div, norm_pow, Real.norm_of_nonneg hup.le]
+    exact (div_le_div_of_nonneg_left (norm_nonneg _) (sq_pos_of_pos hc) hsq).trans
+      (div_le_div_of_nonneg_right (hM x hxmem) (sq_nonneg c))
+  exact ⟨hii,
+    (intervalIntegrable_iff_integrableOn_Icc_of_le (by norm_num)).2 hlag,
+    (intervalIntegrable_iff_integrableOn_Icc_of_le (by norm_num)).2 hfuture⟩
+
+private lemma optimizer_admissible (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
+    Admissible (optimizer b) := by
+  have hsub := optimizerDomain_contains b hb hb1
+  have hc : ContinuousOn (optimizer b) (Icc (1 : ℝ) 2) :=
+    fun x hx => (optimizer_contDiff b hb hb1 (hsub hx)).continuousAt.continuousWithinAt
+  obtain ⟨x, hx, hmin⟩ := isCompact_Icc.exists_isMinOn (show (Icc (1 : ℝ) 2).Nonempty by
+    exact ⟨1, by norm_num⟩) hc
+  obtain ⟨y, hy, hmax⟩ := isCompact_Icc.exists_isMaxOn (show (Icc (1 : ℝ) 2).Nonempty by
+    exact ⟨1, by norm_num⟩) hc
+  refine ⟨(hc.aestronglyMeasurable measurableSet_Icc).aemeasurable,
+    optimizer b x, optimizer b y, optimizer_pos b hb hb1 (hsub hx), ?_⟩
+  filter_upwards [ae_restrict_mem measurableSet_Icc] with t ht
+  exact ⟨hmin ht, hmax ht⟩
+
 private lemma optimizer_cost (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
     cost b (optimizer b) = sharpConstant b := by
   have hsub := optimizerDomain_contains b hb hb1
-  have hwcont : ContinuousOn (optimizer b) (Icc (1 : ℝ) 2) :=
-    fun x hx => (optimizer_contDiff b hb hb1 (hsub hx)).continuousAt.continuousWithinAt
-  have hwne : ∀ x ∈ Icc (1 : ℝ) 2, optimizer b x ≠ 0 :=
-    fun x hx => ne_of_gt (optimizer_pos b hb hb1 (hsub hx))
-  have hvcont : ContinuousOn (profilePrimitive b) (Icc (1 : ℝ) 2) :=
-    fun x hx => (profile_hasDerivAt b hb hb1 (hsub hx)).continuousAt.continuousWithinAt
-  have hlag : IntervalIntegrable (fun x => x / optimizer b x) volume 1 2 :=
-    (continuousOn_id.div hwcont hwne).intervalIntegrable_of_Icc (by norm_num)
+  have hdata := admissible_integrability (optimizer_admissible b hb hb1)
+  have hlag := hdata.2.1
   have hfuture : IntervalIntegrable
-      (fun x => profilePrimitive b x / optimizer b x ^ 2) volume 1 2 :=
-    (hvcont.div (hwcont.pow 2) (fun x hx => pow_ne_zero _ (hwne x hx))).intervalIntegrable_of_Icc
-      (by norm_num)
+      (fun x => profilePrimitive b x / optimizer b x ^ 2) volume 1 2 := by
+    apply hdata.2.2.congr
+    intro x hx
+    change primitive (optimizer b) x / optimizer b x ^ 2 =
+      profilePrimitive b x / optimizer b x ^ 2
+    rw [primitive_eq_profile b hb hb1
+      (hsub (Ioc_subset_Icc_self
+        (show x ∈ Ioc (1 : ℝ) 2 by simpa only [uIoc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx)))]
   have hftc := intervalIntegral.integral_eq_sub_of_hasDerivAt
     (fun x hx => costPrimitive_hasDerivAt b hb hb1
       (hsub (by simpa only [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx)))
@@ -542,20 +600,6 @@ private lemma optimizer_cost (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
   dsimp only [sharpConstant, scalarRoot]
   field_simp
   <;> ring
-
-private lemma optimizer_admissible (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
-    Admissible (optimizer b) := by
-  have hsub := optimizerDomain_contains b hb hb1
-  have hc : ContinuousOn (optimizer b) (Icc (1 : ℝ) 2) :=
-    fun x hx => (optimizer_contDiff b hb hb1 (hsub hx)).continuousAt.continuousWithinAt
-  obtain ⟨x, hx, hmin⟩ := isCompact_Icc.exists_isMinOn (show (Icc (1 : ℝ) 2).Nonempty by
-    exact ⟨1, by norm_num⟩) hc
-  obtain ⟨y, hy, hmax⟩ := isCompact_Icc.exists_isMaxOn (show (Icc (1 : ℝ) 2).Nonempty by
-    exact ⟨1, by norm_num⟩) hc
-  refine ⟨(hc.aestronglyMeasurable measurableSet_Icc).aemeasurable,
-    optimizer b x, optimizer b y, optimizer_pos b hb hb1 (hsub hx), ?_⟩
-  filter_upwards [ae_restrict_mem measurableSet_Icc] with t ht
-  exact ⟨hmin ht, hmax ht⟩
 
 /-- The explicitly constructed profile is smooth, strictly increasing, normalized,
 and has the exact cost. Global minimality requires the measurable comparison. -/

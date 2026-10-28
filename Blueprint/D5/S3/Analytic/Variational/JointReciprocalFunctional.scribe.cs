@@ -13,7 +13,7 @@ internal sealed class JointReciprocalFunctionalDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create("D5/S3/Analytic/Variational/JointReciprocalFunctional.polynomial"),
                 H("The scalar denominator"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For real b and v, polynomial(b,v) is 2b+3(1-b)v-6v squared."))),
+                Blocks(Paragraph(Text("For real b and v, polynomial(b,v) is 2*b+3*(1-b)*v-6*v^2."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("joint-reciprocal-upperroot"),
@@ -55,7 +55,7 @@ internal sealed class JointReciprocalFunctionalDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create("D5/S3/Analytic/Variational/JointReciprocalFunctional.cost"),
                 H("The joint reciprocal cost"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every real b and real function u, cost(b,u) is b times the integral of x/u(x) from 1 to 2 plus the integral of primitive(u,x)/u(x) squared over the same interval."))),
+                Blocks(Paragraph(Text("For every real b and real function u, cost(b,u) is b times the integral of x/u(x) from 1 to 2 plus the integral of primitive(u,x)/(u(x)^2) over the same interval."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("joint-reciprocal-admissible"),
@@ -97,6 +97,6 @@ internal sealed class JointReciprocalFunctionalDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create("D5/S3/Analytic/Variational/JointReciprocalFunctional.constructed_profile"),
                 H("Smooth construction, normalization and exact cost"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every real b with 0<b<=1, scalarRoot(b) is positive, is less than upperRoot(b), solves the original integral equation, and sharpConstant(b)>0. There is an open subset s of the real line containing [1,2] on which optimizer(b) is infinitely continuously differentiable, positive and strictly increasing. This profile is admissible, has mass one, and has cost exactly sharpConstant(b). To obtain smoothness, local inverse uniqueness identifies the chosen inverse with the smooth local inverses. Direct differentiation of x optimizer(b,x) v(x) gives optimizer(b,x), proving normalization. Direct differentiation of x squared times [b v(x)+2v(x) squared] divided by optimizer(b,x) gives the full cost density, and its endpoint difference is the exact value. Global comparison with arbitrary measurable competitors is a separate mathematical obligation."))),
+                Blocks(Paragraph(Text("For every real b with 0<b<=1, scalarRoot(b) is positive, is less than upperRoot(b), solves the original integral equation, and sharpConstant(b)>0. There is an open subset s of the real line containing [1,2] on which optimizer(b) is infinitely continuously differentiable, positive and strictly increasing. This profile is admissible, has mass one, and has cost exactly sharpConstant(b). To obtain smoothness, local inverse uniqueness identifies the chosen inverse with the smooth local inverses. Direct differentiation of x optimizer(b,x) v(x) gives optimizer(b,x), proving normalization. Direct differentiation of x squared times [b v(x)+2v(x) squared] divided by optimizer(b,x) gives the full cost density, and its endpoint difference is the exact value. For every admissible function u, the individual upper and positive lower bounds imply integrability of u and x/u. The cumulative mass is continuous on [1,2], and its boundedness together with the positive lower bound gives integrability of primitive(u,x)/(u(x)^2). These integral facts are used in the cost calculation. Global comparison with arbitrary measurable competitors is a separate mathematical obligation."))),
                 DescribeRole.Theorem)))));
 }
