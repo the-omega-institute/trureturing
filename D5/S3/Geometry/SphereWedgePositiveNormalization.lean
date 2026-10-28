@@ -29,7 +29,9 @@ private def spherePointHomeomorph (n : ℕ) (b : StdSphere n) :
     {e : StdSphere n ≃ₜ StdSphere n // e b = coordinatePoint n} := by
   let R := (ℝ ∙ (b.val - (coordinatePoint n).val))ᗮ.reflection
   let e : StdSphere n ≃ₜ StdSphere n := R.toHomeomorph.subtype (fun x => by
-    simp only [mem_sphere_zero_iff_norm, LinearIsometryEquiv.norm_map])
+    simp only [mem_sphere_zero_iff_norm]
+    change ‖x‖ = 1 ↔ ‖R x‖ = 1
+    rw [R.norm_map])
   refine ⟨e, Subtype.ext ?_⟩
   exact Submodule.reflection_sub (by
     rw [mem_sphere_zero_iff_norm.mp b.property,
@@ -42,6 +44,7 @@ private def negativePoint (n : ℕ) : StdSphere n :=
 private theorem zero_poles (x : StdSphere 0) :
     x = coordinatePoint 0 ∨ x = negativePoint 0 := by
   have hx := x.property
+  change x.val ∈ Metric.sphere (0 : EuclideanSpace ℝ (Fin 1)) 1 at hx
   rw [EuclideanSpace.sphere_zero_eq 1 (by norm_num)] at hx
   have hs : x.val 0 ^ 2 = 1 := by simpa using hx
   have he : x.val 0 = 1 ∨ x.val 0 = -1 := sq_eq_one_iff.mp hs
@@ -105,8 +108,9 @@ private def factorForward (j : J) : StdSphere (n j) → PositiveWedge n ⊕ Zero
 private theorem continuous_factorForward (j : J) : Continuous (factorForward n b j) := by
   classical
   by_cases hp : 0 < n j
-  · simpa only [factorForward, dif_pos hp] using
-      continuous_inl.comp ((point (c n) ⟨j, hp⟩).continuous.comp (E n b j).continuous)
+  · simp only [factorForward, dite_eq_left hp]
+    exact continuous_inl.comp
+      ((point (c n) ⟨j, hp⟩).continuous.comp (E n b j).continuous)
   · have hz : n j = 0 := Nat.eq_zero_of_not_pos hp
     haveI : Finite (StdSphere (n j)) := by rw [hz]; infer_instance
     exact continuous_of_discreteTopology
@@ -192,10 +196,12 @@ private theorem forward_inverse (x : PositiveWedge n ⊕ ZeroIndex n) :
       · cases x
         rfl
       · change factorForward n b j.val ((E n b j.val).symm x) = Sum.inl (point (c n) j x)
-        simp only [factorForward, dif_pos j.property, Homeomorph.apply_symm_apply]
+        simp only [factorForward, dite_eq_left j.property, Homeomorph.apply_symm_apply]
   · change factorForward n b j.val ((E n b j.val).symm (negativePoint (n j.val))) = Sum.inr j
     have hp : ¬ 0 < n j.val := by rw [j.property]; omega
-    simp only [factorForward, dif_neg hp, Homeomorph.apply_symm_apply, negative_ne, if_false]
+    simp only [factorForward, dite_eq_right hp, Homeomorph.apply_symm_apply,
+      negative_ne, ite_false]
+    exact congrArg Sum.inr (Subtype.ext rfl)
 
 /-- The actual pointed normalization, for arbitrary index families and arbitrary sphere basepoints. -/
 def normalizationHomeomorph : FamilyWedge b ≃ₜ PositiveWedge n ⊕ ZeroIndex n where
@@ -228,12 +234,28 @@ def coproductNormalizationHomeomorph {A : Type u} {I : A → Type v}
   let distribute : (Σ a, PositiveWedge (d a) ⊕ ZeroIndex (d a)) ≃ₜ
       (Σ a, PositiveWedge (d a)) ⊕ (Σ a, ZeroIndex (d a)) := {
     toEquiv := Equiv.sigmaSumDistrib (fun a => PositiveWedge (d a)) (fun a => ZeroIndex (d a))
-    continuous_toFun := continuous_sigma_iff.mpr (fun a =>
-      (continuous_inl.comp continuous_sigmaMk).sumElim
-        (continuous_inr.comp continuous_sigmaMk))
-    continuous_invFun := (continuous_sigma_iff.mpr (fun a =>
-      continuous_sigmaMk.comp continuous_inl)).sumElim
-        (continuous_sigma_iff.mpr (fun a => continuous_sigmaMk.comp continuous_inr)) }
+    continuous_toFun := by
+      apply continuous_sigma_iff.mpr
+      intro a
+      change Continuous (Sum.elim
+        (fun x : PositiveWedge (d a) =>
+          Sum.inl (⟨a, x⟩ : Σ a, PositiveWedge (d a)))
+        (fun x : ZeroIndex (d a) => Sum.inr (⟨a, x⟩ : Σ a, ZeroIndex (d a))))
+      apply Continuous.sumElim
+      · exact continuous_inl.comp continuous_sigmaMk
+      · exact continuous_inr.comp continuous_sigmaMk
+    continuous_invFun := by
+      apply Continuous.sumElim
+      · apply continuous_sigma_iff.mpr
+        intro a
+        change Continuous (fun x : PositiveWedge (d a) =>
+          (⟨a, Sum.inl x⟩ : Σ a, PositiveWedge (d a) ⊕ ZeroIndex (d a)))
+        exact continuous_sigmaMk.comp continuous_inl
+      · apply continuous_sigma_iff.mpr
+        intro a
+        change Continuous (fun x : ZeroIndex (d a) =>
+          (⟨a, Sum.inr x⟩ : Σ a, PositiveWedge (d a) ⊕ ZeroIndex (d a)))
+        exact continuous_sigmaMk.comp continuous_inr }
   refine ⟨fiberwise.trans distribute, ?_⟩
   intro a
   change (Equiv.sigmaSumDistrib (fun a => PositiveWedge (d a))
