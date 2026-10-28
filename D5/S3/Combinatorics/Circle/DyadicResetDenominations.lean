@@ -39,9 +39,9 @@ theorem low_mass (m r q : ℕ) (hm : 0 < m) (hq : q ≤ m) :
         Finset.univ.filter (fun i : Fin (m * r) => i.val % m = a) := by
       ext i; rfl
     rw [hset]
-    simp only [Finset.sum_const, nsmul_eq_mul, hc]
+    simp [Finset.sum_const, hc]
   have hsum : (∑ a ∈ Finset.range q, (2 : ℕ) ^ a) = 2 ^ q - 1 :=
-    Nat.geomSum_eq (by decide : 2 ≤ (2 : ℕ)) q
+    by simpa using Nat.geomSum_eq (by decide : 2 ≤ (2 : ℕ)) q
   calc
     (∑ i ∈ low m r q, 2 ^ exponent m r i) =
         ∑ a ∈ Finset.range q,
@@ -105,7 +105,7 @@ theorem large_total (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r) :
         Finset.univ.filter (fun i : Fin (m * r) => i.val % m = a) := by
       ext i; rfl
     rw [hset]
-    simpa only [Finset.sum_const, nsmul_eq_mul, mul_one] using
+    simpa using
       residue_card m r a (by omega) ha
   simp_rw [hw]
   rw [Finset.sum_add_distrib, hc (m - 2) (by omega), hc (m - 1) (by omega)]
