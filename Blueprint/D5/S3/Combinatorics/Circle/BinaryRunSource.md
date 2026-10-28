@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/BinaryRunSource.separated_run_bound`
 
 *Commentary.*
 
-Every two selected run tops differ by at least two. Ordering them gives the j-th top at least 2j, hence e is at least the sum of 4^j over all selected tops. The geometric identity gives 4^(binaryRunCount e) <= 3e+1. This is the new escape content.
+Every two selected run tops differ by at least two. Ordering them gives the j-th top at least 2j, hence e is at least the sum of 4^j over all selected tops. The geometric identity gives 4^(binaryRunCount e) <= 3e+1.
 
 **Theorem 1.4 (Physical cyclic binary profile).**
 
@@ -52,7 +52,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/BinaryRunSource.cyclic_binary_run_bo
 
 *Commentary.*
 
-For k>=2, u:Fin(k)->Nat with recurrence u(rho i)=2u(i)-(2^k-1)c(i) in integers, an anchor u(a)=4e+1 below 2^(k-1) has physicalRunCount c=binaryRunCount e+1 and 4^(physicalRunCount c-1)<=3e+1. The proof consumes ZeroSumSubsets.carry_weight for reconstruction, Mathlib binary uniqueness for digit identification, and the physical cycle permutation. No upper bound on the other values of u is needed for this telescope.
+For k>=2, u:Fin(k)->Nat with recurrence u(rho i)=2u(i)-(2^k-1)c(i) in integers, an anchor u(a)=4e+1 below 2^(k-1) has physicalRunCount c=binaryRunCount e+1 and 4^(physicalRunCount c-1)<=3e+1. The proof uses ZeroSumSubsets.carry_weight for reconstruction, Mathlib binary uniqueness for digit identification, and the physical cycle permutation. No upper bound on the other values of u is needed for this telescope.
 
 **Theorem 1.5 (Actual negative LARGE labels).**
 
@@ -78,7 +78,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/BinaryRunSource.actualNegativeLargeC
 
 actualNegativeLargeCount k t is the cardinality of Finset.univ.filter (fun i:Fin(k) => actualSource k t i<=-quarter k). actualSource_runCount_eq identifies it with physicalRunCount (nativeCarry k t), using the pointwise equivalence at every label. Numerical repetitions are counted separately.
 
-**Theorem 1.7 (Actual centered source consumer).**
+**Theorem 1.7 (Actual centered source run bound).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/BinaryRunSource.actualSource_binary_run_bound`
 
@@ -88,7 +88,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/BinaryRunSource.actualSource_binary_
 
 *Commentary.*
 
-For the actual centered source, the oriented unsigned code is -actualSource plus the modulus when negative, and the carry is decide(actualSource>0). Existing SourceWidth and ExpandingSourcePath lemmas prove its nonnegative normalization and physical recurrence. At an anchor equal to -(4e+1), the native strict inequality 3e+1<quarter k puts the anchor code below 2^(k-1). The conclusion directly states actualNegativeLargeCount k t=binaryRunCount e+1 and 4^(actualNegativeLargeCount k t-1)<=3e+1; it consumes the pointwise sign-transition bridge via actualSource_runCount_eq. For use in the original 12-condition minimum setting, the consumer must establish k>=3, this anchor form and strict inequality, and four distinct negative LARGE physical labels. The count hypothesis remains separate from the doubling proof: once supplied, Rneg>=4 forces e>=21, and the strict quarter bound forces k>=2*Rneg+1. Neither the full original 12-condition configuration nor its four-label consequence is proved here. At k=6,t=42, all six labels remain, the numerical period is two and Rneg=3; the strict native hypothesis fails at equality 3e+1=quarter k=16. Full arbitrary signed-A C3.1 is open.
+For the actual centered source, the oriented unsigned code is -actualSource plus the modulus when negative, and the carry is decide(actualSource>0). Existing SourceWidth and ExpandingSourcePath lemmas prove its nonnegative normalization and physical recurrence. At an anchor equal to -(4e+1), the native strict inequality 3e+1<quarter k puts the anchor code below 2^(k-1). The conclusion directly states actualNegativeLargeCount k t=binaryRunCount e+1 and 4^(actualNegativeLargeCount k t-1)<=3e+1; the pointwise sign-transition bridge and actualSource_runCount_eq identify the counts. Applying this bound in the original 12-condition minimum setting requires k>=3, this anchor form and strict inequality, and four distinct negative LARGE physical labels. The count hypothesis remains separate from the doubling proof: once supplied, Rneg>=4 forces e>=21, and the strict quarter bound forces k>=2*Rneg+1. Neither the full original 12-condition configuration nor its four-label consequence is proved here. At k=6,t=42, all six labels remain, the numerical period is two and Rneg=3; the strict native hypothesis fails at equality 3e+1=quarter k=16. Full arbitrary signed-A C3.1 is open.
 
 ## References
 
