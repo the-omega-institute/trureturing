@@ -146,7 +146,8 @@ private lemma quantumness_bloch (p : ℝ) (r s : EuclideanSpace ℝ (Fin 3)) :
       blochMatrix 1 s * blochMatrix 1 r)^2)).re =
       -((r.ofLp ⨯₃ s.ofLp) ⬝ᵥ (r.ofLp ⨯₃ s.ofLp)) / 2 := by
     linarith only [hgram]
-  simp only [quantumness, Fin.sum_univ_two, cons_val_zero, cons_val_one,
+  unfold quantumness
+  simp only [Fin.sum_univ_two, cons_val_zero, cons_val_one,
     sub_self, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow,
     trace_zero, Complex.zero_re, mul_zero, zero_add, add_zero, hrev, htrace]
   ring
