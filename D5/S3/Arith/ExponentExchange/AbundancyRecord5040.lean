@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.GoldenResource.EightStepAbundancy
 import D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
+import D5.S3.Arith.Robin.ActualIntegerLogEnvelope
 
 /-! The one-prime transfer is the classical superabundant-number exchange of
 Alaoglu and Erdős, Library/Arith/alaoglu1944highly.md. All comparisons here use
@@ -95,50 +96,38 @@ private theorem large_prime_of_abundancy {m : ℕ} (hm : 0 < m)
     refine mem_Icc.mpr ⟨hprime.two_le, ?_⟩
     by_contra hn
     exact h ⟨p, hprime, Nat.dvd_of_mem_primeFactors hp, by omega⟩
-  have hgeom (p : ℕ) (hp : p.Prime) (a : ℕ) :
-      (∑ i ∈ range (a + 1), (p : ℝ) ^ i) / (p : ℝ) ^ a ≤ p / (p - 1) := by
-    have hp1 : (1 : ℝ) < p := by exact_mod_cast hp.one_lt
-    have hp0 : (0 : ℝ) < p := by exact_mod_cast hp.pos
-    have hpow : (0 : ℝ) < (p : ℝ) ^ a := pow_pos hp0 a
-    rw [geom_sum_eq hp1.ne']
+  have hb := D5.S3.Arith.Robin.ActualIntegerLogEnvelope.supported_sigma_bound hm
+    (x := (30 : ℝ)) (fun p hp => by exact_mod_cast (mem_Icc.mp (hsupport hp)).2)
+  have hprimeSupport : (Ioc (0 : ℕ) 30).filter Nat.Prime ⊆ Icc 2 30 := by
+    intro p hp
+    exact mem_Icc.mpr ⟨(mem_filter.mp hp).2.two_le, (mem_Ioc.mp (mem_filter.mp hp).1).2⟩
+  have hpad : (∏ p ∈ (Ioc (0 : ℕ) 30).filter Nat.Prime,
+      (1 - 1 / (p : ℝ))⁻¹) ≤ ∏ p ∈ Icc (2 : ℕ) 30, (p : ℝ) / (p - 1) := by
     calc
-      _ ≤ (p : ℝ) ^ (a + 1) / (p - 1) / p ^ a :=
-        div_le_div_of_nonneg_right
-          (div_le_div_of_nonneg_right (sub_le_self _ zero_le_one) (by linarith)) hpow.le
-      _ = _ := by rw [pow_succ]; field_simp
-  have hnprod : (m : ℝ) = ∏ p ∈ m.primeFactors, (p : ℝ) ^ m.factorization p := by
-    exact_mod_cast Nat.prod_primeFactors_pow_factorization hm.ne'
-  have hsprod : (ArithmeticFunction.sigma 1 m : ℝ) =
-      ∏ p ∈ m.primeFactors, ∑ i ∈ range (m.factorization p + 1), (p : ℝ) ^ i := by
-    simpa only [Nat.cast_prod, Nat.cast_sum, Nat.cast_pow, mul_one] using
-      congrArg (fun k : ℕ => (k : ℝ))
-        (ArithmeticFunction.sigma_eq_prod_primeFactors_sum_range_factorization_pow_mul
-          (k := 1) hm.ne')
-  have hb : (ArithmeticFunction.sigma 1 m : ℝ) / m ≤
-      ∏ p ∈ m.primeFactors, (p : ℝ) / (p - 1) := by
-    rw [hsprod, hnprod, ← prod_div_distrib]
-    exact prod_le_prod₀
-      (fun p _ => div_nonneg (sum_nonneg fun i _ => pow_nonneg (Nat.cast_nonneg p) i)
-        (pow_nonneg (Nat.cast_nonneg p) _))
-      (fun p hp => hgeom p (Nat.prime_of_mem_primeFactors hp) _)
-  have hpad : (∏ p ∈ m.primeFactors, (p : ℝ) / (p - 1)) ≤
-      ∏ p ∈ Icc (2 : ℕ) 30, (p : ℝ) / (p - 1) := by
-    apply prod_le_prod_of_subset_of_one_le₀ hsupport
-    · intro p hp
-      have := (Nat.prime_of_mem_primeFactors hp).two_le
-      apply div_nonneg (Nat.cast_nonneg p)
-      have : (2 : ℝ) ≤ p := by exact_mod_cast this
-      linarith
-    · intro p hp _
-      have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast (mem_Icc.mp hp).1
-      exact (one_le_div (by linarith)).mpr (by linarith)
+      _ = ∏ p ∈ (Ioc (0 : ℕ) 30).filter Nat.Prime, (p : ℝ) / (p - 1) := by
+        apply prod_congr rfl
+        intro p hp
+        have hp0 : (p : ℝ) ≠ 0 := by exact_mod_cast (mem_filter.mp hp).2.ne_zero
+        rw [one_sub_div hp0, inv_div]
+      _ ≤ _ := by
+        apply prod_le_prod_of_subset_of_one_le₀ hprimeSupport
+        · intro p hp
+          have hp2 : (2 : ℝ) ≤ p := by
+            exact_mod_cast (mem_filter.mp hp).2.two_le
+          exact div_nonneg (Nat.cast_nonneg p) (by linarith)
+        · intro p hp _
+          have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast (mem_Icc.mp hp).1
+          exact (one_le_div (by linarith)).mpr (by linarith)
   have htel : (∏ p ∈ Icc (2 : ℕ) 30, (p : ℝ) / (p - 1)) = 30 := by
     have hset : Icc (2 : ℕ) 30 =
         {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
           17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30} := by decide
     norm_num [hset]
   rw [htel] at hpad
-  linarith [hb.trans hpad]
+  have hb30 : (ArithmeticFunction.sigma 1 m : ℝ) / m ≤
+      ∏ p ∈ (Ioc (0 : ℕ) 30).filter Nat.Prime, (1 - 1 / (p : ℝ))⁻¹ := by
+    simpa only [Nat.floor_ofNat] using hb
+  linarith [hb30.trans hpad]
 
 /-- A strict record among every smaller positive integer with abundancy above thirty
 contains all four prime-power layers of the literal integer 5040. -/
