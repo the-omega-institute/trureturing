@@ -165,7 +165,9 @@ def rejected : Realization signature :=
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h (U := 1) (by norm_num) (x := 0) (by simp)
-  norm_num [rejected, realize] at hb
+  change (2 : ℝ) ≤ ∏ p ∈ Finset.Ioc (0 : ℕ) ⌊(0 : ℝ)⌋₊ with p.Prime,
+    (1 - 1 / (p : ℝ))⁻¹ at hb
+  norm_num at hb
 
 theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
