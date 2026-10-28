@@ -40,10 +40,12 @@ def splitEvidence : Registration arena
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨(), (0 : ℕ), (2 : ℕ), ?_⟩
-    change ArithmeticFunction.vonMangoldt 0 ≠ ArithmeticFunction.vonMangoldt 2
-    rw [map_zero, ArithmeticFunction.vonMangoldt_apply_prime Nat.prime_two]
-    exact (Real.log_pos (by norm_num : (1 : ℝ) < 2)).ne
+    refine ⟨(), (1 : ℕ), (4 : ℕ), ?_⟩
+    change ArithmeticFunction.vonMangoldt 1 ≠ ArithmeticFunction.vonMangoldt 4
+    rw [show (4 : ℕ) = 2 ^ 2 by norm_num,
+      ArithmeticFunction.vonMangoldt_apply_pow (by decide : (2 : ℕ) ≠ 0),
+      ArithmeticFunction.vonMangoldt_apply_prime Nat.prime_two]
+    simpa using (Real.log_pos (by norm_num : (1 : ℝ) < 2)).ne
 
 def splitRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.Mertens.E₁Λ.sub_E₁p_eq_sum_nonprime) (Realization signature) Unit Unit where
