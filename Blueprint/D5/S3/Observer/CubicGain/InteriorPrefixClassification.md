@@ -1,4 +1,4 @@
-# Necessary parameters on the actual interior prefix
+# Interior parameters and arithmetic first endpoints
 
 ## Abstract
 
@@ -26,7 +26,25 @@ The identity Q*(x+d)=c+(1-sigma)*d and direct multiplication give all four index
 
 Actual positive sources remain independent of the auxiliary signed kernel vectors. For every strictly positive rank-one real matrix S, det(S)=0, so S satisfies TraceFibers.FixedFiberPairModulus.positiveSource. The universal factorization component of its result gives positive columns fplus and rows ellplus with S=vecMulVec(fplus,ellplus) and tr(B*S)=ellplus dot (B*fplus) for every real matrix B. One exact available instantiation is upper=true, executed=[advance,exchange], continuation=[advance], k=1, x=1, zeta=1 and tau=0, followed by the fourth conjunction projection; its auxiliary execution parameters impose no restriction on the universally quantified S or B. PhaseRigidity.positive_sum gives positivity of T(u)*fplus for every finite native word u, including every unread prefix of this same execution. The row ellplus stays fixed. For every real gain slope k, whole constant drift delta and original index i=0,1,2,3, (1+i*k)*(ellplus dot (Ai*fplus))+delta=(1+i*k)*tr(Ai*S)+delta. Negative slopes and erased gains are included.
 
-Together with the necessity result below, these applications give the necessity and sufficiency derivation with both determinant signs and the original first-endpoint and rank filters. The conjugate correspondence uses the same four indices and restores the negative branch. This application introduces no separate mathematical declaration. It asserts neither positive multiplicity nor global recovery, a classification of all first endpoints, a final-word rank classification, sharper read bounds, resource bounds or physical acquisition costs.
+Together with the necessity result below, these applications give the necessity and sufficiency derivation with both determinant signs and the original first-endpoint and rank filters. The conjugate correspondence uses the same four indices and restores the negative branch. This application introduces no separate mathematical declaration. It asserts neither positive multiplicity nor global recovery, a final-word rank classification, sharper read bounds, resource bounds or physical acquisition costs.
+
+Exact arithmetic first endpoints as an application of primitive integer columns.
+
+Keep every scalar tuple above, with both values of sigma. Independently choose epsilon=+1 or -1. Put v=(x,d), f=(a,-b), r0=(d,c), ell=(c,-d), w=(b,a) and t=ac+bd=cx-d^2>0. The ordered columns [f,r0] and [v,r0] both have determinant t; neither is presumed to be an integer unimodular basis. The rational dual rows of [f,r0] are ell/t and w/t. In the following four formulas entry(A,i,j) uses indices 1,2.
+
+$$
+\begin{aligned}\operatorname{entry}(A, 1, 1)=\frac{cx+\varepsilon bd+gbx}{t}\\\operatorname{entry}(A, 1, 2)=\frac{-dx+\varepsilon ad+gax}{t}\\\operatorname{entry}(A, 2, 1)=\frac{cd+\varepsilon bc+gbd}{t}\\\operatorname{entry}(A, 2, 2)=\frac{-d^{2}+\varepsilon ac+gad}{t}\end{aligned}
+$$
+
+For every integer matrix A with Af=v and det(A)=epsilon, det(v,A*r0-epsilon*r0)=0. Choose Bezout coefficients alpha*x+beta*d=1 from IsCoprime x d. For z=A*r0-epsilon*r0, the zero determinant says x*z1=d*z0, and g=alpha*z0+beta*z1 gives z=g*v by multiplication of those two identities. Thus g is an integer, not a rational parameter, and t*A=v*ell+(epsilon*r0+g*v)*w gives exactly all four displayed numerators. Since b*x>0, the first entry makes g unique. Conversely the four scaled entry identities imply Af=v and det(A)=epsilon by cancellation of the nonzero t and t squared. This uses ac+bd=cx-d^2, without assuming t=1, gcd(t,a)=1 or a primitive companion r0.
+
+The parameter g ranges over all integers. A value is an arithmetic solution exactly when t divides each of the four numerators and every numerator is nonnegative. These are four separate divisibility conditions and four separate inequalities. Since t>0, they are equivalent to the four rational entries being nonnegative integers. Given the divisibilities, choose the integer entries from their divisibility witnesses; the converse identities then prove Af=v and det(A)=epsilon. No truncated integer quotient or unchecked division is used. LegalMatrixMonoid.legal_matrix_monoid gives precisely a legal first native word for each such matrix, with either determinant sign.
+
+For existence use the pinned IsCoprime.exists_SL2_col twice, on (a,-b) and (x,d), to obtain determinant-one integer completions B=[f,u] and C=[v,z]. Set Astar=[v,epsilon*z]*B inverse. The inverse is integral because det(B)=1; this is an algebraic proof device. Direct multiplication gives Astar*f=v and det(Astar)=epsilon, for either epsilon independently of sigma. Let g0 be its unique integer parameter from the preceding argument.
+
+The entire integral solution set is Astar+L*v*w, with L ranging over all integers, and its parameter is g0+L*t. To see exhaustiveness, put D=A-Astar. Each row obeys a*D(i,0)=b*D(i,1). Bezout coefficients rho*a+tau*b=1 give D(i,0)=b*ki and D(i,1)=a*ki, where ki=tau*D(i,0)+rho*D(i,1). Equality of determinants gives x*k1=d*k0; the Bezout coefficients for (x,d) then give k=L*v with integral L. Conversely every such L preserves Af=v and the determinant, and substitution into the four numerators gives exactly g=g0+L*t. Positivity of b*x proves uniqueness of L. This also proves that the integral numerator parameters are exactly the residue class g0+t*Z, without restricting the classification to natural L.
+
+All four entries of v*w are strictly positive integers. An explicit sufficient positive natural choice is L=1+sum of the absolute values of the four entries of Astar. Every entry of Astar+L*v*w is then strictly positive. This supplies arithmetic solutions for every scalar tuple and each determinant sign. It does not certify rank three for those choices: the full rank(prefixDifference w)=3 test remains a separate condition after A2=K*A1 and A3=H*A2 are formed. Nonnegative arithmetic endpoints give legal words; the original cumulative-history and strictly positive physical-source correspondence is exactly the existing forward realization above. The signed columns, completions and their inverses introduce no executed operation, read or signed physical source. Neither arithmetic nonemptiness nor this affine classification proves a positive collision, global recovery or a sharper read bound.
 
 **Theorem 1.1 (The two multipliers and the divisibility parameter).**
 
