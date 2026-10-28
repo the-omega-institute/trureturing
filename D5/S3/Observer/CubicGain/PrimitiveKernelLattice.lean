@@ -229,14 +229,14 @@ private theorem oriented_natural_kernel (w : Fin 3 → List Bool) (N : Mat)
     have hh' : (0:ℝ) ≤ -(Z 0 1:ℝ) := by
       rw [hh]
       exact neg_nonneg.mpr (mul_nonpos_of_nonneg_of_nonpos hρ.le hs.2.2.1)
-    exact_mod_cast hh' 
+    exact_mod_cast hh'
   have h10 : 0 ≤ -Z 1 0 := by
     have hh := congrFun (congrFun hZ 1) 0
     simp only [Matrix.map, Matrix.of_apply, Int.coe_castRingHom, Pi.smul_apply, smul_eq_mul] at hh
     have hh' : (0:ℝ) ≤ -(Z 1 0:ℝ) := by
       rw [hh]
       exact neg_nonneg.mpr (mul_nonpos_of_nonneg_of_nonpos hρ.le hs.2.2.2)
-    exact_mod_cast hh' 
+    exact_mod_cast hh'
   let p := (Z 0 0).toNat
   let q := (-Z 0 1).toNat
   let r := (-Z 1 0).toNat
