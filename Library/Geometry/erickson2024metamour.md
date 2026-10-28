@@ -14,7 +14,7 @@ triage: anchor
 
 # Known fixed points of the exact-distance-two operator
 
-## Source and locators
+## Verified locator
 
 The fixed source is [arXiv:2409.02306v1](https://arxiv.org/abs/2409.02306v1),
 [original PDF](https://arxiv.org/pdf/2409.02306v1) and

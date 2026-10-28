@@ -14,7 +14,7 @@ triage: anchor
 
 # Strong periodicity under the exact-distance operator
 
-## Source and locators
+## Verified locator
 
 The fixed source is [arXiv:2606.25493v1](https://arxiv.org/abs/2606.25493v1),
 [original PDF](https://arxiv.org/pdf/2606.25493v1) and
