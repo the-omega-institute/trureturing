@@ -78,10 +78,13 @@ def reconstructionFamily :
       exact (hj (@Subsingleton.elim Unit _ j i)).elim
     · intro e; exact nomatch e
   dependence := by
+    let : DecidableEq base.{u}.1 := base.2.1
     intro i
     refine ⟨⟨base, one, zero, zero⟩, zero, one, ?_⟩
     change majority one.val zero.val zero.val ≠ majority one.val zero.val one.val
-    simp [zero, one, majority]
+    simp only [zero, one, majority, Finset.inter_empty, Finset.empty_inter,
+      Finset.inter_self, Finset.empty_union, Finset.union_empty]
+    exact Finset.empty_ne_singleton _
 
 abbrev CarrierData := Σ V : Type u, DecidableEq V
 
@@ -141,7 +144,8 @@ def flagFamily : Registration flagArena.{u} (type_of% (@median_graph_iff_flag.{u
     intro i
     refine ⟨⟨ULift.{u} (Fin 3), Classical.decEq _⟩, Set.univ, {S | S.card ≤ 2}, ?_⟩
     intro heq
-    have ht : Flag (Set.univ : Set (Finset (ULift.{u} (Fin 3)))) := fun _ _ => trivial
+    have ht : _root_.D5.S3.Combinatorics.Graph.HereditaryFlip.Majority.Flag
+        (Set.univ : Set (Finset (ULift.{u} (Fin 3)))) := fun _ _ => trivial
     exact triangle_not_flag (Eq.mp heq ht)
 
 noncomputable def reconstructionRegistration :
@@ -182,7 +186,8 @@ noncomputable def reconstructionRegistration :
 noncomputable def flagRegistration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
       (@median_graph_iff_flag.{u}) (Realization flagSignature.{u}) Unit Unit where
-  unitName := `D5.S3.Combinatorics.Graph.HereditaryFlip.Median.median_graph_iff_flag.__information_unit
+  unitName :=
+    `D5.S3.Combinatorics.Graph.HereditaryFlip.Median.median_graph_iff_flag.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.HereditaryFlip.Median.flagFamily
   realizationSource := none
   generated := false

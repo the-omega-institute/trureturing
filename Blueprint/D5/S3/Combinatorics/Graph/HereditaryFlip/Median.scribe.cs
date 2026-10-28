@@ -61,7 +61,6 @@ internal sealed class MedianDocument : IScribeDocumentDefinition
                     + "family consisting only of the empty face gives a one-vertex median graph. "
                     + "The finite complex characterization is classical, as in Xie and Xu, "
                     + "Characterizing simplex graphs, Theorem 1.5.", DescribeRole.Theorem),
-            H("Independent sets and Fibonacci supports"),
             Paragraph(Text("For any simple graph H on V, take K to consist of its finite "
                 + "independent sets, using Mathlib's H.IsIndepSet on the underlying sets. "
                 + "Independence is hereditary and the empty set is independent. If all pairs "
@@ -79,7 +78,6 @@ internal sealed class MedianDocument : IScribeDocumentDefinition
                 + "bitwise majority. This consequence concerns the support graph. A graph "
                 + "isomorphism to any separately defined Boolean-word graph requires its own "
                 + "interface proof; it is not asserted here.")),
-            H("The boundary of a triangle"),
             Paragraph(Text("All proper subsets of a three-element set form a hereditary "
                 + "family. Its flip graph has native symmetric-difference distance, yet the "
                 + "three two-element faces have no median: their coordinate majority is the "
