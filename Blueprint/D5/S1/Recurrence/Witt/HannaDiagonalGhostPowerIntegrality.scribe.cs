@@ -56,14 +56,18 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
                     + "equation X*f'=L*f with prescribed constant coefficient identifies "
                     + "the integer Euler series with the displayed formal exponential. "
                     + "Each coefficient involves only finite sums and finite Euler prefixes.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("a156216-diagonalghost"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
             DescribeId.Create("hanna-diagonal-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula LogarithmicInputFormula()
     {
