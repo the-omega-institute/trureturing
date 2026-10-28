@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2505.06457v2
 claim: "Theorem 21 gives a suspended independence-complex conclusion for induced subgraphs of lexicographic products; Question 22 asks for unsuspended membership in the hereditary class W."
 strata_touched:
   - D5/S3/Geometry/FiniteGraphVertexSubstitution
+  - D5/S3/Geometry/HereditaryLexicographicProduct
 license: citation-only
 triage: anchor
 ---
@@ -70,6 +71,25 @@ local coordinate realizations use nonempty faces. In particular, an
 ordinary topological join interpretation requires nonempty factor
 realizations and is not asserted in the empty-link case. The exact
 heterogeneous telescope, coordinate maps and quotient topology are local
-proof content. This bridge supplies neither the hereditary sphere-wedge
-conclusion of Question 22 nor a novelty claim; the full question remains
-open in this delivery.
+proof content. This replacement bridge alone does not supply the hereditary
+sphere-wedge conclusion of Question 22.
+
+## Complete local product settlement
+
+`HereditaryLexicographicProduct.result` combines that original induction with
+actual occupied-induced transports, compact finite sphere models and the
+proved finite marked-wedge and ordinary-join closures. Its hypotheses are
+the original two graph-order conditions and unsuspended sourceSW on each
+factor; no closure or carrier-identification premise is added.
+
+The native empty independence realization is empty. Accordingly the local
+sourceSW convention requires SP on every nonempty induced set, while its
+sourceW conclusion covers all induced sets and realizes an empty target by
+zero outer coproduct components. The primary text does not separately settle
+this vertexless boundary; this convention must remain explicit.
+
+The [problem dossier](../../Problems/carnero-bravo-2025-hereditary-lexicographic-products.md)
+records the exact target, proof route and bounded literature standing.
+This is a local formal proof, not a theorem attributed to the source author,
+a global novelty certificate or official problem acceptance. The attempted
+source-readout registration remains unfinished under issue #22742.
