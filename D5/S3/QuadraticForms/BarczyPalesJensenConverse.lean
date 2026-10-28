@@ -50,39 +50,38 @@ noncomputable section
 open scoped BigOperators QuadraticAlgebra
 open Matrix
 
-namespace BarczyPalesJensenConverse
+namespace D5.S3.QuadraticForms.BarczyPalesJensenConverse
 
 private instance nonsquare : Fact (¬ IsSquare (3 : ℚ)) := by
   refine ⟨?_⟩
   intro h
   exact Nat.prime_three.not_isSquare ((Rat.isSquare_natCast_iff (n := 3)).mp h)
 
-private abbrev K := QuadraticAlgebra ℚ 3 0
-
-private def embedding : K →ₐ[ℚ] ℝ :=
+private def embedding : QuadraticAlgebra ℚ 3 0 →ₐ[ℚ] ℝ :=
   QuadraticAlgebra.lift ⟨Real.sqrt 3, by
     simp [Algebra.smul_def, pow_two]⟩
 
-private instance realAlgebra : Algebra K ℝ := embedding.toRingHom.toAlgebra
+private instance realAlgebra : Algebra (QuadraticAlgebra ℚ 3 0) ℝ := embedding.toRingHom.toAlgebra
 
-private def projection : ℝ →ₗ[K] K := (Algebra.linearMap K ℝ).leftInverse
+private def projection : ℝ →ₗ[QuadraticAlgebra ℚ 3 0] (QuadraticAlgebra ℚ 3 0) :=
+  (Algebra.linearMap (QuadraticAlgebra ℚ 3 0) ℝ).leftInverse
 
-private theorem projection_embedding (z : K) : projection (embedding z) = z := by
+private theorem projection_embedding (z : QuadraticAlgebra ℚ 3 0) : projection (embedding z) = z := by
   exact LinearMap.leftInverse_apply_of_inj
-    (LinearMap.ker_eq_bot.mpr (algebraMap K ℝ).injective) z
+    (LinearMap.ker_eq_bot.mpr (algebraMap (QuadraticAlgebra ℚ 3 0) ℝ).injective) z
 
-private theorem projection_scalar (c : K) (x : ℝ) :
+private theorem projection_scalar (c : QuadraticAlgebra ℚ 3 0) (x : ℝ) :
     projection (embedding c * x) = c * projection x := by
   exact projection.map_smul c x
 
-private def omega : K := ⟨0, 1⟩
+private def omega : QuadraticAlgebra ℚ 3 0 := ⟨0, 1⟩
 
 private theorem embedding_omega : embedding omega = Real.sqrt 3 := by
   simp [embedding, QuadraticAlgebra.lift, omega, Algebra.smul_def]
 
 private def counterFunction (x : ℝ) : ℝ := (QuadraticAlgebra.norm (projection x) : ℚ)
 
-private theorem norm_cancellation (a b : K) :
+private theorem norm_cancellation (a b : QuadraticAlgebra ℚ 3 0) :
     QuadraticAlgebra.norm (a + b) +
       QuadraticAlgebra.norm (a + (omega - 2) * b) +
       QuadraticAlgebra.norm (a + (1 - omega) * b) =
@@ -214,4 +213,4 @@ theorem result : ¬ claim := by
   convert hm using 1 <;>
     simp [f, intervalMean, intervalCombination, Fin.sum_univ_succ] <;> ring
 
-end BarczyPalesJensenConverse
+end D5.S3.QuadraticForms.BarczyPalesJensenConverse
