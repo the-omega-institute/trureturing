@@ -11,34 +11,7 @@ internal sealed class JointReciprocalFunctionalDocument : IScribeDocumentDefinit
         "The joint reciprocal functional has an explicit smooth increasing minimizer and exact attained infima over the full bounded positive measurable class.",
         H("Joint Reciprocal Functional"),
         Blocks(
-            Describe.Lean(
-                DescribeId.Create("joint-reciprocal-polynomial"),
-                DeclarationHandle.Create("D5/S3/Analytic/Variational/JointReciprocalFunctional.polynomial"),
-                H("The scalar denominator"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("For real b and v, polynomial(b,v) is 2*b+3*(1-b)*v-6*v^2."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("joint-reciprocal-upperroot"),
-                DeclarationHandle.Create("D5/S3/Analytic/Variational/JointReciprocalFunctional.upperRoot"),
-                H("The positive denominator root"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("For real b, upperRoot(b) is [3(1-b)+sqrt(9(1-b) squared+48b)]/12."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("joint-reciprocal-lowerroot"),
-                DeclarationHandle.Create("D5/S3/Analytic/Variational/JointReciprocalFunctional.lowerRoot"),
-                H("The negative root magnitude"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("For real b, lowerRoot(b) is [sqrt(9(1-b) squared+48b)-3(1-b)]/12."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("joint-reciprocal-coordinate"),
-                DeclarationHandle.Create("D5/S3/Analytic/Variational/JointReciprocalFunctional.coordinate"),
-                H("The original integral coordinate"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("For real b and v, coordinate(b,v) is the oriented Lebesgue integral from 0 to v of (2b+6s)/polynomial(b,s)."))),
-                DescribeRole.Definition),
+            Paragraph(Text("The cited supplier-relative paper supplies the original analytic construction and JVM1--JVM2 target. This formalization proves only scalar-coordinate existence, the explicit normalized profile and the full measurable-class variational values. It does not verify the paper's source-window, arithmetic, strict-gain, Robin or RH claims. The scalar-coordinate support retains the original Lean constant names so the three public theorem statements remain identical.")),
             Describe.Lean(
                 DescribeId.Create("joint-reciprocal-mass"),
                 DeclarationHandle.Create("D5/S3/Analytic/Variational/JointReciprocalFunctional.mass"),
