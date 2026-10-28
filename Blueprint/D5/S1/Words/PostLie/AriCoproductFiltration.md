@@ -106,7 +106,7 @@ tensorPairing is bilinear in Q and R and Q-linear in its tensor argument. It is 
 
 **Definition 1.8 (Original full transpose characterization).**
 
-$$\forall D:LinearMapQHTensorHH,\operatorname{transposeProperty}\left(D\right) \iff \forall P:H,\forall Q:H,\forall R:H,\operatorname{tensorPairing}\left(Q, R, \operatorname{apply}\left(D, P\right)\right) = \operatorname{pairing}\left(P, \operatorname{star}\left(Q, R\right)\right)$$
+$$\forall D:LinearMapQHTensorHH,\operatorname{transposeProperty}\left(D\right) \iff \forall P:H,\forall Q:H,\forall R:H,\operatorname{tensorPairing}\left(Q, R, \operatorname{apply}\left(D, P\right)\right) = \operatorname{pairing}\left(\operatorname{star}\left(Q, R\right), P\right)$$
 
 *Formalization.* `D5/S1/Words/PostLie/AriCoproductFiltration.transposeProperty` (`✓ std3`).
 
@@ -116,7 +116,7 @@ $$\forall D:LinearMapQHTensorHH,\operatorname{transposeProperty}\left(D\right) \
 
 *Commentary.*
 
-LinearMapQHTensorHH denotes Q-linear maps H to H tensor H. Equality is required for every triple of finite rational polynomials, with the ordinary tensor pairing and the original primitive-unshuffle product.
+LinearMapQHTensorHH denotes Q-linear maps H to H tensor H. The product is paired on the left, as in Definition 1.20. Equality is required for every triple of finite rational polynomials, with the ordinary tensor pairing and the original primitive-unshuffle product.
 
 **Definition 1.9 (The unique original ordinary ari coproduct).**
 
@@ -144,11 +144,11 @@ $$\forall P:H,\forall Q:H,\forall R:H,\operatorname{tensorPairing}\left(Q, R, \o
 
 *Commentary.*
 
-All three polynomials are arbitrary, including zero and the unit. This is Definition 1.20 with the ordinary pairing of words and the actual finite original product.
+All three polynomials are arbitrary, including zero and the unit. The ordinary word pairing is symmetric; its proved symmetry converts Definition 1.20 to the displayed coefficient convention with the actual finite original product.
 
 **Theorem 1.11 (Full ordinary transpose identity).**
 
-$$\forall P:H,\forall A:Word,\forall B:Word,\operatorname{apply}\left(\operatorname{tensorCoordinates}\left(\operatorname{delta}\left(P\right)\right), \operatorname{pair}\left(A, B\right)\right) = \operatorname{pairing}\left(P, \operatorname{star}\left(\operatorname{wordBasis}\left(A\right), \operatorname{wordBasis}\left(B\right)\right)\right)$$
+$$\forall P:H,\forall A:Word,\forall B:Word,\operatorname{apply}\left(\operatorname{repr}\left(tensorBasis, \operatorname{delta}\left(P\right)\right), \operatorname{pair}\left(A, B\right)\right) = \operatorname{pairing}\left(P, \operatorname{star}\left(\operatorname{wordBasis}\left(A\right), \operatorname{wordBasis}\left(B\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/PostLie/AriCoproductFiltration.delta_coefficient` (`✓ std3`). ∎
 
@@ -162,7 +162,7 @@ The identity holds for arbitrary rational input and all basis pairs. Bilinearity
 
 **Theorem 1.12 (All basis coefficients including outside the window).**
 
-$$\forall w:Word,\forall A:Word,\forall B:Word,\operatorname{apply}\left(\operatorname{tensorCoordinates}\left(\operatorname{delta}\left(\operatorname{wordBasis}\left(w\right)\right)\right), \operatorname{pair}\left(A, B\right)\right) = \operatorname{coeff}\left(\operatorname{starWord}\left(A, B\right), w\right)$$
+$$\forall w:Word,\forall A:Word,\forall B:Word,\operatorname{apply}\left(\operatorname{repr}\left(tensorBasis, \operatorname{delta}\left(\operatorname{wordBasis}\left(w\right)\right)\right), \operatorname{pair}\left(A, B\right)\right) = \operatorname{coeff}\left(\operatorname{starWord}\left(A, B\right), w\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/PostLie/AriCoproductFiltration.delta_basis_coefficient` (`✓ std3`). ∎
 

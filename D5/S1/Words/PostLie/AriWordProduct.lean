@@ -188,7 +188,7 @@ theorem starWord_above (k : ℕ) (A B : Word) : starWord A B ∈ above k (level 
       (l.map (fun s => level k (FreeMonoid.of s))).sum = level k (FreeMonoid.ofList l) := by
     intro l
     induction l with
-    | nil => rfl
+    | nil => exact (level_one k).symm
     | cons s l ih =>
       change level k (FreeMonoid.of s) + (l.map _).sum =
         level k (FreeMonoid.of s * FreeMonoid.ofList l)
