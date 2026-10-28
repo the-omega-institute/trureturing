@@ -60,4 +60,18 @@ theorem cachedInstance : Nat.sqrt ((10 ^ 256 + 123456789) * (10 ^ 256 + 12345678
 theorem expensiveVia : Nat.sqrt ((10 ^ 256 + 123456789) * (10 ^ 256 + 123456789)) = (10 ^ 256 + 123456789) :=
   cachedInstance
 
+
+def ladder : Nat → Nat
+  | 0 => 1
+  | n + 1 => ladder n + 2
+
+theorem ladderClosedForm (n : Nat) : ladder n = 2 * n + 1 := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simp [ladder, ih]; omega
+
+theorem ladderOddViaFormula (n : Nat) : ladder n % 2 = 1 := by
+  rw [ladderClosedForm]
+  omega
+
 end LeanInformationAudit.Tests.SearchReduction.ProductionNegativeCandidates
