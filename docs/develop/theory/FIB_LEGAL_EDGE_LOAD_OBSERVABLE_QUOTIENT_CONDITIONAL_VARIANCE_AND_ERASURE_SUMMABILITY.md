@@ -777,3 +777,626 @@ Raginsky's positive-reference formulation is matched by restricting to the suppo
 The proof uses the explicit $h_t$ identity (4.3) throughout. It imports no statistical-information normalization formula from the primary text, so the half-$L^1$ convention is fixed without ambiguity. Nested references are not independently certified here. Evidence for the displayed matrix products and rational values is limited to the handwritten proofs given here.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 11. Forward-only quotient laws and a legal $\Theta_4$ witness
+
+**Proposition 11.1 (forward-only quotient-law reduction).** Fix a finite positive stationary irreducible component $C$, with positive stationary vector $\lambda$, labeled matrices $M_0,M_1$, and visible law $P_C$. Let $\pi:C\to S$ be surjective and suppose only the forward labeled strong lumpability identities (3.2). Define
+
+$$
+\bar\lambda_u=\sum_{s:\pi(s)=u}\lambda_s,
+\qquad
+\sum_{t:\pi(t)=v}M_x(s,t)=\bar M_x(u,v)
+\quad (\pi(s)=u).
+$$
+
+Then $\bar A=\bar M_0+\bar M_1$ is stochastic, $\bar\lambda\bar A=\bar\lambda$, and $\bar\lambda_u>0$. The quotient producer $\bar\theta=(\bar\lambda,\bar M_0,\bar M_1)$ is in the same legal class $\Theta_{|S|}$, and its visible law equals $P_C$. Its canonical stationary reverse is the family
+
+$$
+R_x(u,v)=
+\frac{\bar\lambda_v\,\bar M_x(v,u)}{\bar\lambda_u}.
+\tag{11.1}
+$$
+
+Thus $R_0+R_1$ is stochastic and $\bar\lambda_uR_x(u,v)=\bar\lambda_v\bar M_x(v,u)$. If the forward matrices $\bar M_x$ and the canonical reverse matrices $R_x$ satisfy the two all-feasible-word diameter hypotheses (3.7), with constants $m_\pm,\rho_\pm$, then the original visible law $P_C$ satisfies exactly the bounds (6.1)--(6.3), with those constants. If every positive stationary component of an original producer has such a forward quotient and such constants, the mixture conclusion (7.1)--(7.3) applies.
+
+**Proof.** Summing (3.2) over $v$ and $x$ gives the row sums of $\bar A$. Summing the stationary flux over the fibers gives $\bar\lambda\bar A=\bar\lambda$. For a quotient-state cylinder, repeated use of (3.2) gives
+
+$$
+\begin{aligned}
+&J_C(Q_a=u_a,\ldots,Q_{b+1}=u_{b+1},X_a=x_a,\ldots,X_b=x_b)\\
+&\qquad=\bar\lambda_{u_a}\prod_{i=a}^{b}\bar M_{x_i}(u_i,u_{i+1}),
+\end{aligned}
+\tag{11.2}
+$$
+
+where $Q_i=\pi(H_i)$. Summing (11.2) over the quotient endpoints proves equality of all visible cylinders with the quotient producer. In particular,
+
+$$
+\bar\lambda\bar M_1^2\mathbf 1
+ =P_C(X_0=X_1=1)=0,
+$$
+
+so the quotient remains in $\Theta_{|S|}$. Irreducibility passes to the quotient: a positive hidden $A$-path between two fibers maps to a positive quotient path. Formula (11.1) is well-defined because every $\bar\lambda_u$ is positive; stationarity gives
+
+$$
+\sum_{v,x}R_x(u,v)
+ =\frac{1}{\bar\lambda_u}\sum_v\bar\lambda_v\bar A(v,u)=1.
+$$
+
+The identity quotient of $\bar\theta$ satisfies both labeled identities, with its reverse matrices equal to $R_x$. Applying Theorem 6.1 to this quotient producer yields (6.1)--(6.3) for its visible law. Equation (11.2) identifies that law with $P_C$, so the same bounds hold for the original component; Theorem 7.1 then gives the stated finite-mixture conclusion when the condition holds componentwise. This argument does not claim that the hidden reverse matrices $\check M_x$ are constant on fibers. It uses no new variance proof: the conditional-variance argument is exactly the one already contained in Theorem 6.1. $\square$
+
+**Proposition 11.2 (a legal $\Theta_4$ representation with a forward quotient).** In state order $0,1,2,3$, set
+
+$$
+M_0=
+\begin{pmatrix}
+\frac12&0&\frac12&0\\
+0&\frac12&0&\frac12\\
+0&0&0&\frac12\\
+0&0&\frac12&0
+\end{pmatrix},
+\qquad
+M_1=
+\begin{pmatrix}
+0&0&0&0\\
+0&0&0&0\\
+0&\frac12&0&0\\
+\frac18&\frac38&0&0
+\end{pmatrix},
+\qquad
+\lambda=\left(\frac1{13},\frac{11}{26},\frac5{26},\frac4{13}\right).
+\tag{11.3}
+$$
+
+Then $A=M_0+M_1$ is stochastic, $\lambda A=\lambda$, $M_1^2=0$, and $A$ is irreducible; hence (11.3) is a legal positive stationary $\Theta_4$ witness. Let $\pi=\{0,1\}\mid\{2,3\}$. Its forward quotient has
+
+$$
+\bar\lambda=\left(\frac12,\frac12\right),
+\qquad
+\bar M_0=\frac12\begin{pmatrix}1&1\\0&1\end{pmatrix},
+\qquad
+\bar M_1=\frac12\begin{pmatrix}0&0\\1&0\end{pmatrix},
+\tag{11.4}
+$$
+
+and the canonical reverse in (11.1) is
+
+$$
+R_0=\frac12\begin{pmatrix}1&0\\1&1\end{pmatrix},
+\qquad
+R_1=\frac12\begin{pmatrix}0&1\\0&0\end{pmatrix}.
+\tag{11.5}
+$$
+
+The feasible-row diameters of $\bar M_0,R_0$ are $1/2$, and those of $\bar M_1,R_1$ are $0$. Thus (3.7) holds with $m_+=m_-=1$ and $\rho_+=\rho_-=1/2$, and Proposition 11.1 transfers (6.1)--(6.3) to this representation's visible law.
+
+**Proof.** Explicitly,
+
+$$
+A=
+\begin{pmatrix}
+\frac12&0&\frac12&0\\
+0&\frac12&0&\frac12\\
+0&\frac12&0&\frac12\\
+\frac18&\frac38&\frac12&0
+\end{pmatrix},
+\qquad
+\lambda A=\left(\frac1{13},\frac{11}{26},\frac5{26},\frac4{13}\right).
+$$
+
+Every row of $A$ sums to one. The range of $M_1$ is contained in the span of the first two coordinate vectors, whose rows in $M_1$ vanish, so $M_1^2=0$ and therefore $\lambda M_1^2\mathbf1=0$. The positive paths $0\to2\to1\to3\to0$ and $3\to2$ show irreducibility. Aggregating the rows of (11.3) over the two fibers gives (11.4); since $\bar\lambda$ is uniform, (11.5) is the transpose family. For $\bar M_0$ and $R_0$, the two normalized feasible rows differ by TV $1/2$; each of $\bar M_1,R_1$ has one feasible row and hence diameter zero. $\square$
+
+The hidden reverse identity (3.3) fails for this same $\pi$. From (3.1), the relevant rows are
+
+$$
+\check M_0(2,\cdot)=\left(\frac15,0,0,\frac45\right),
+\qquad
+\check M_0(3,\cdot)=\left(0,\frac{11}{16},\frac5{16},0\right).
+$$
+
+Their reverse $M_0$-mass into the fiber $\{0,1\}$ is $1/5$ and $11/16$, respectively. Hence no hidden reverse channel is fiber-constant here; the canonical quotient reverse in (11.5) is the object used by Proposition 11.1.
+
+For the identity quotient, every $m\ge1$ fails (3.7) in both directions. The rows $2,3$ of $M_0^m$, after normalization, are the two alternating point masses, so $\delta(M_0^m)=1$. The rows $0,1$ of the hidden reverse $\check M_0^m$, after normalization, are the point masses at $0,1$, so $\delta(\check M_0^m)=1$. These are feasible because
+
+$$
+(M_0^m\mathbf1)_0=(M_0^m\mathbf1)_1=\frac{m+1}{2^m},
+\qquad
+(M_0^m\mathbf1)_2=(M_0^m\mathbf1)_3=\frac1{2^m},
+$$
+
+and therefore
+
+$$
+P(0^m)=\lambda M_0^m\mathbf1=\frac{m+2}{2^{m+1}}>0.
+\tag{11.6}
+$$
+
+The reverse word has the same positive probability by stationarity. Finally, every forward-labeled strongly lumpable partition refines $\{0,1\}\mid\{2,3\}$: label $1$ has total outgoing mass $0$ from $0,1$ and $1/2$ from $2,3$, so a block cannot cross these fibers. If $0,1$ were merged while $2,3$ were split, their $M_0$-masses into the block containing $2$ would be $1/2$ and $0$. If $2,3$ were merged while $0,1$ were split, their $M_1$-masses into the block containing $0$ would be $0$ and $1/8$. Thus the only forward-lumpable partitions are the identity and $\pi$. The identity fails the diameter hypotheses by (11.6), while $\pi$ fails hidden reverse lumpability by $1/5\ne11/16$; no deterministic quotient of this fixed representation satisfies the old combined criterion (3.2), (3.3), and (3.7).
+
+This obstruction is representation-level only. The quotient matrices (11.4) are exactly the producer in Proposition 8.2, so (11.3) has the same visible law as that triangular example and does not enlarge the output-law class. Its band failure is retained: by Counterexample 8.4, the exterior event $G$ has probability $1/64$ and $q_0=9/16>1/2$. Consequently this witness resolves neither $\mathsf Q_{\rm full}$ nor $\mathsf Q_{\rm band}$, and it claims no divergent root sum.
+
+**Open Question 11.3 (band-preserving obstructions and averaged criteria).** For a legal producer whose visible law satisfies $\mathsf B(P)$, must every positive stationary component admit a forward-labeled quotient whose canonical reverse and forward matrices satisfy (3.7), or can a band-preserving component make every such deterministic quotient fail? If the latter obstruction exists, can a stationary-word-weighted (averaged) diameter condition still imply the bounds (6.1)--(6.3)? This is the next exact question; no answer is asserted here.
+
+**Attribution 11.4.** Proposition 11.1 reuses Definition 3.2's forward identity, the cylinder calculation of Lemma 3.3, and Theorems 6.1 and 7.1. Proposition 11.2 is a direct $\Theta_4$ calculation from Definitions 2.1 and 3.1; its visible-law and band comparisons use Proposition 8.2 and Counterexample 8.4. No hidden reverse lumpability, new variance argument, or resolution of either open assertion is claimed.
+
+
+## 12. Posterior-variance-weighted block contraction
+
+**Lemma 12.1 (conditional variance-weighted block contraction).** Use the setup of Lemma 5.1: $U$ is binary, $Z,Z'$ are finite, $V$ is conditioning data, $W$ ranges over a finite family of words, and the matrices $B_w$ satisfy (5.1) and $\sum_wB_w\mathbf1=\mathbf1$. For almost every $V=v$, put
+
+$$
+p_v(w)=\mathbb P(W=w\mid V=v),\qquad
+\Delta_w(v)=\mathcal D(U;Z\mid V=v,W=w)\quad(p_v(w)>0),
+\qquad
+\Delta(v)=\sum_{w:p_v(w)>0} p_v(w)\Delta_w(v).
+\tag{12.1}
+$$
+
+Assume $0\le\delta(B_w)\le1$ for every $w$ with $p_v(w)>0$, and that, for some $0\le\kappa<1$,
+
+$$
+\sum_{w:p_v(w)>0} p_v(w)\,\delta(B_w)\,\Delta_w(v)
+\le \kappa\,\Delta(v)
+\tag{12.2}
+$$
+
+for almost every $v$ with $\Delta(v)>0$. All sums involving $\Delta_w(v)$ range over positive-probability words; zero-probability conditional versions are omitted. No diameter or conditional variance is assigned to a null word; in particular, the zero matrix remains excluded as in Definition 3.4. Fibers with $\Delta(v)=0$ are vacuous: every $\Delta_w(v)$ with positive $p_v(w)$ is then zero. Under these assumptions,
+
+$$
+\mathcal D(U;Z'\mid V,W)
+\le
+\kappa\bigl[\mathcal D(U;Z\mid V)-\mathcal D(U;W\mid V)\bigr]
+\le
+\kappa\,\mathcal D(U;Z\mid V).
+\tag{12.3}
+$$
+
+The hypothesis (12.2) is fiberwise in the posterior variances. It is not a stationary word average.
+
+**Proof.** Fix a $V=v$ fiber and a word $w$ of positive conditional probability. The conditional kernel in (5.4) has row diameter $\delta(B_w)$, so the conditional form of Lemma 4.3, applied on this $(v,w)$-fiber, gives
+
+$$
+\mathcal D(U;Z'\mid V=v,W=w)
+\le \delta(B_w)\Delta_w(v).
+$$
+
+Multiply by $p_v(w)$, sum over $w$, and use (12.2). Integrating over $v$ gives
+
+$$
+\mathcal D(U;Z'\mid V,W)\le\kappa\,\mathcal D(U;Z\mid V,W).
+$$
+
+The variance identity (5.5) rewrites the last factor as
+$\mathcal D(U;Z\mid V)-\mathcal D(U;W\mid V)$, and dropping the nonnegative term $\mathcal D(U;W\mid V)$ gives (12.3). No comparison of the reweighted priors in (5.3) is used. $\square$
+
+**Corollary 12.2 (good/bad sufficient condition).** In the setup of Lemma 12.1, let the word family be split into good and bad words, $G\sqcup H$. Suppose $0\le\rho,\eta\le1$,
+
+$$
+\delta(B_w)\le\rho\quad(w\in G,\ p_v(w)>0),
+\qquad
+\sum_{w\in H,\ p_v(w)>0}p_v(w)\Delta_w(v)\le\eta\,\Delta(v)
+\tag{12.4}
+$$
+
+for almost every $v$. Then (12.2) holds with
+
+$$
+\kappa=\rho+(1-\rho)\eta.
+\tag{12.5}
+$$
+
+In particular, if $\rho+(1-\rho)\eta<1$, Lemma 12.1 gives strict contraction.
+
+**Proof.** Since every diameter is at most one,
+
+$$
+\begin{aligned}
+\sum_{w:p_v(w)>0}p_v(w)\delta(B_w)\Delta_w(v)
+&\le \rho\sum_{w\in G,\ p_v(w)>0}p_v(w)\Delta_w(v)
+   +\sum_{w\in H,\ p_v(w)>0}p_v(w)\Delta_w(v)\\
+&=\rho\left(\Delta(v)-\sum_{w\in H,\ p_v(w)>0}p_v(w)\Delta_w(v)\right)
+  +\sum_{w\in H,\ p_v(w)>0}p_v(w)\Delta_w(v)\\
+&\le \rho\Delta(v)+(1-\rho)\eta\Delta(v).
+\end{aligned}
+$$
+
+This is (12.2) with (12.5). The endpoint cases $\rho=0,1$ and $\eta=0,1$ are included. $\square$
+
+**Theorem 12.3 (directional quotient application).** Fix a positive stationary component and a quotient as in Proposition 11.1. For the left direction, use exactly
+
+$$
+V_j^L=(X_{-j:-1},X_{1:\infty}),\qquad
+Z_j^L=Q_{-j}
+$$
+
+from (6.4), and put
+
+$$
+W_j^L=(X_{-j-1},\ldots,X_{-j-m_-}),
+\qquad
+Z_{j+m_-}^L=Q_{-j-m_-}.
+$$
+
+For the right direction, use exactly
+
+$$
+V_j^R=(X_{-\infty:-1},X_{1:j}),\qquad
+Z_j^R=Q_{j+1}
+$$
+
+from (6.8), and put
+
+$$
+W_j^R=(X_{j+1},\ldots,X_{j+m_+}),
+\qquad
+Z_{j+m_+}^R=Q_{j+m_++1}.
+$$
+
+Suppose that, in each direction $d\in\{L,R\}$, there is a positive integer block length $m_d\ge1$ ($m_L=m_-$ and $m_R=m_+$), a good word set $G_d$, numbers $0\le\rho_d,\eta_d\le1$, and
+
+$$
+\kappa_d=\rho_d+(1-\rho_d)\eta_d<1
+\tag{12.6}
+$$
+
+such that every good word of positive conditional probability has the corresponding quotient diameter at most $\rho_d$, and for every recursion cut $j\ge0$ the conditional bad-word variance inequality
+
+$$
+\sum_{\substack{w\notin G_d\\p_{j,v}^d(w)>0}}
+p_{j,v}^d(w)\,\Delta_{j,w}^d(v)
+\le \eta_d\,\Delta_j^d(v)
+\tag{12.7}
+$$
+
+holds for almost every $v$. Here $p_{j,v}^d(w)$, $\Delta_{j,w}^d(v)$, and $\Delta_j^d(v)$ are the quantities in (12.1) formed from $V_j^d,Z_j^d,W_j^d$.
+
+Then, for every $j\ge0$,
+
+$$
+e_L^{P_C}(j)\le\frac14\kappa_-^{\lfloor j/m_-\rfloor},
+\qquad
+e_R^{P_C}(j)\le\frac14\kappa_+^{\lfloor j/m_+\rfloor}.
+\tag{12.8}
+$$
+
+Consequently, for every $r\ge0$,
+
+$$
+A_{P_C}(r)\le\frac12\left[
+\frac{m_-\kappa_-^{\lfloor r/m_-\rfloor/2}}{1-\sqrt{\kappa_-}}
++
+\frac{m_+\kappa_+^{\lfloor r/m_+\rfloor/2}}{1-\sqrt{\kappa_+}}
+\right],
+\tag{12.9}
+$$
+
+and
+
+$$
+\tau_{P_C}(r)\le\frac14\left[
+\frac{m_-\kappa_-^{\lfloor r/m_-\rfloor}}{1-\kappa_-}
++
+\frac{m_+\kappa_+^{\lfloor r/m_+\rfloor}}{1-\kappa_+}
+\right].
+\tag{12.10}
+$$
+
+If every positive stationary component satisfies these directional conditions, the finite-mixture conclusions of Theorem 7.1 apply with the component-specific constants.
+
+**Proof.** Work on the quotient producer of Proposition 11.1, whose joint $(Q,X)$ law is (11.2). Apply Lemma 3.3 to its identity quotient and canonical reverse (11.1); no reverse lumpability of the original hidden representation is assumed. This supplies (5.1) at each left cut with $B_w=R_w$ and at each right cut with $B_w=\bar M_w$. Corollary 12.2 and (12.7) give the one-block recursions
+
+$$
+\mathcal D(U;Z_{j+m_-}^L\mid V_j^L,W_j^L)
+\le\kappa_-\mathcal D(U;Z_j^L\mid V_j^L),
+$$
+
+and
+
+$$
+\mathcal D(U;Z_{j+m_+}^R\mid V_j^R,W_j^R)
+\le\kappa_+\mathcal D(U;Z_j^R\mid V_j^R).
+$$
+
+The Jensen step in the proof of Theorem 6.1 transfers these quotient-state variances to the original output erasure errors. Starting from the $1/4$ variance bound at the initial cut, iterate complete blocks; a remainder of length smaller than $m_d$ has coefficient at most one. This proves (12.8). The geometric tail sums are exactly the estimates used for (6.2) and (6.3), with $\rho_\pm$ replaced by $\kappa_\pm$. No variance proof is added beyond Lemma 12.1, and no stationary word-average condition replaces the cutwise requirement (12.7). $\square$
+
+**Warning 12.3A (stationary word diameter alone does not contract).** The following is an abstract block example, not an FIB producer. Let $V$ be trivial, let $0<\varepsilon<1$, let $R\sim\operatorname{Bernoulli}(\varepsilon)$, and let $U$ be a fair bit independent of $R$. Set
+
+$$
+Z=
+\begin{cases}
+\star,&R=0,\\
+(1,U),&R=1,
+\end{cases}
+\qquad
+W=
+\begin{cases}
+g,&R=0,\\
+b,&R=1.
+\end{cases}
+$$
+
+Use endpoint alphabet $\{\mathsf c,(1,0),(1,1)\}$. Define complementary substochastic kernels by
+$$
+B_g(\star,\mathsf c)=1,\qquad B_g(i,t)=0\ \text{for every other input row }i,
+$$
+and
+$$
+B_b(\star,t)=0\ \text{for every }t,\qquad
+B_b((1,u),(1,u))=1\ (u\in\{0,1\}),
+$$
+with all other $B_b$-entries zero. Thus $\sum_wB_w\mathbf1=\mathbf1$: $B_g$ is constant on its only feasible row and $B_b$ is identity on its feasible rows. Let $Z'$ be the corresponding output. Then $W$ is determined by $Z$, so the premise (5.1) holds. The word probabilities are $1-\varepsilon,\varepsilon$, and
+
+$$
+\delta(B_g)=0,\qquad \delta(B_b)=1,
+\qquad
+(1-\varepsilon)\delta(B_g)+\varepsilon\delta(B_b)=\varepsilon.
+$$
+
+Nevertheless,
+
+$$
+\mathcal D(U;Z)=\frac{\varepsilon}{4},
+\qquad
+\mathcal D(U;Z'\mid W)=\frac{\varepsilon}{4}.
+\tag{12.11}
+$$
+
+Indeed, only the $b$-fiber reveals $U$, while the $g$-fiber is constant. Thus an unweighted stationary word-diameter average, even when equal to $\varepsilon<1$, gives no contraction. This warning concerns the abstract block lemma and is not a counterexample to any FIB statement.
+
+**Open Question 12.4 (band-preserving fiberwise concentration).** Under the posterior band $\mathsf B(P)$, can a forward/canonical-reverse quotient satisfy the fiberwise weighted condition (12.7) uniformly at all shifted cuts, or can bad-word variance concentration persist? The assertions $\mathsf Q_{\rm full}$ and $\mathsf Q_{\rm band}$ remain open; no universal tail result is claimed.
+
+**Attribution 12.5.** Lemma 12.1 is the posterior-variance refinement of Lemma 5.1, using the conditional SDPI in Lemma 4.3 and the variance identity (5.5). Theorem 12.3 reuses Lemma 3.3, Proposition 11.1, the Jensen and tail steps of Theorem 6.1, and the existing geometric sums (6.2)--(6.3). Warning 12.3A is abstract and supplies no FIB producer or resolution of either open assertion.
+
+## 13. A band-preserving phase obstruction and its conditional support
+
+**Proposition 13.1 (an actual periodic producer in the posterior band).** Order the states as
+
+$$
+A=(0,0),\quad B=(0,1),\quad C=(1,0),\quad D=(1,1),
+$$
+
+where $H_i=(S_i,X_{i-1})$ records a phase and the previous emitted bit. Set
+
+$$
+M_0=\begin{pmatrix}
+0&0&3/4&0\\
+0&0&1&0\\
+2/3&0&0&0\\
+1&0&0&0
+\end{pmatrix},\qquad
+M_1=\begin{pmatrix}
+0&0&0&1/4\\
+0&0&0&0\\
+0&1/3&0&0\\
+0&0&0&0
+\end{pmatrix},\qquad
+\lambda=\frac1{22}(8,3,9,2).
+\tag{13.1}
+$$
+
+This is a stationary legal irreducible producer in $\Theta_4$, of period exactly two. Either infinite observed half-line determines $S_0$ almost surely. Its full-exterior posterior is
+
+$$
+q_0=\begin{cases}
+1/3,&X_{-1}=X_1=0,\ S_0=0,\\
+2/5,&X_{-1}=X_1=0,\ S_0=1,\\
+0,&\{X_{-1}=X_1=0\}^{c}.
+\end{cases}
+\tag{13.2}
+$$
+
+In particular its visible law satisfies the original band $\mathsf B(P)$.
+
+**Proof.** Every row of $A=M_0+M_1$ sums to one, and multiplication gives
+
+$$
+\lambda A=\frac1{22}(9\cdot2/3+2,\ 9/3,\ 8\cdot3/4+3,\ 8/4)
+=\frac1{22}(8,3,9,2).
+$$
+
+Also $M_1^2=0$. The cycle $A\to D\to A$ and the paths $A\to C\to B\to C\to A$ connect all states. Every transition changes phase, so every return length is even; the two-step return at $A$ makes the period exactly two. These are properties of the original labeled edge law (2.2).
+
+Write $a_0=1/4$, $a_1=1/3$, and $t_s=1-a_s$. Given phase $s$ and previous bit zero, the next emitted bit is one with probability $a_s$; after a one the next bit is zero with probability one. Every transition satisfies $S_{i+1}=1-S_i$ and gives the endpoint previous bit $X_i$. The phase-conditioned stationary distributions of $H_i$ are $(8,3)/11$ on $\{A,B\}$ and $(9,2)/11$ on $\{C,D\}$. The two-step transition matrices on these classes are, respectively,
+
+$$
+\begin{pmatrix}3/4&1/4\\2/3&1/3\end{pmatrix},\qquad
+\begin{pmatrix}5/6&1/6\\3/4&1/4\end{pmatrix}.
+$$
+
+Both have strictly positive entries. The classical finite-chain occupation theorem, applied to these two-step chains, yields the emitted-one frequencies
+
+$$
+r_0=\mathbb P(X_i=1\mid S_i=0)=\frac8{11}\frac14=\frac2{11},
+\qquad
+r_1=\mathbb P(X_i=1\mid S_i=1)=\frac9{11}\frac13=\frac3{11}.
+\tag{13.3}
+$$
+
+For example, conditional on $S_0=s$, the empirical averages of $X_{2n}$ and $X_{2n-1}$, $1\le n\le k$, converge as $k\to\infty$ to $r_s$ and $r_{1-s}$. One can obtain this directly from the second coordinate of $H_{2n+1}$ and $H_{2n}$, respectively. For the left half-line the averages of $X_{-2n}$ and $X_{-(2n-1)}$ have the same two limits, by the occupation theorem for the stationary reversed two-step chains. Since $r_0\ne r_1$, either half-line determines $S_0$. This is an infinite-frequency assertion: every finite legal word has positive probability under each possible phase at its start, by starting with previous bit zero, so no such finite word identifies the phase.
+
+Conditional on the phase, the visible process has the alternating one-step transition rule just stated. On $F_0=\{X_{-1}=X_1=0\}$, the two possible center paths have respective weights
+
+$$
+X_0=0:\ t_st_{1-s}=\frac12,
+\qquad
+X_0=1:\ a_s\cdot1.
+$$
+
+All remaining factors cancel in finite exterior windows conditional on $S_0=s$. Passing to the full exterior by bounded conditional-expectation convergence gives $q_0=a_s/(1/2+a_s)$. The exterior already determines the phase by (13.3), so no phase averaging remains in this ratio. Off $F_0$, legality forces $q_0=0$. This proves (13.2); stationarity gives the same assertion at every translated site. Both nonzero values lie in $[1/4,1/2]$. $\square$
+
+**Proposition 13.2 (every deterministic forward quotient has a global diameter obstruction).** For the fixed representation (13.1), the only forward-labeled strongly lumpable partition is the identity partition. For every nonempty legal word $w$,
+
+$$
+\delta(M_w)=\delta(\check M_w)=1,
+\tag{13.4}
+$$
+
+where the word in the reverse product is read in reverse-motion order, as in Definition 3.4. Thus this band-preserving component makes every deterministic quotient in Question 11.3 fail (3.7).
+
+**Proof.** Equal blocks of a labeled strongly lumpable partition must have equal total outgoing mass for each label. For label one these masses, in state order, are $1/4,0,1/3,0$. Hence $A,C$ are singleton blocks and only $B,D$ could be merged. But $B$ sends its label-zero mass one to $C$, whereas $D$ sends its label-zero mass one to $A$. These singleton targets differ, excluding that merge.
+
+For any legal word of length $m\ge1$, both starting states $A,C$ have positive word likelihood. Forward evolution is deterministic once a starting state and the emitted word are specified; its endpoint is $(S_0+m\bmod2,x_m)$. The two normalized rows therefore are point masses of opposite phase, with TV distance one.
+
+The canonical reverse matrices (3.1) are
+
+$$
+\check M_0=\begin{pmatrix}
+0&0&3/4&1/4\\
+0&0&0&0\\
+2/3&1/3&0&0\\
+0&0&0&0
+\end{pmatrix},\qquad
+\check M_1=\begin{pmatrix}
+0&0&0&0\\
+0&0&1&0\\
+0&0&0&0\\
+1&0&0&0
+\end{pmatrix}.
+\tag{13.5}
+$$
+
+For a reverse word $w=x_1\cdots x_m$, take the two starting states $(s,x_1)$, $s=0,1$. Each is feasible: a forward path starting at $(s-m\bmod2,0)$ can emit the reversed legal word $x_m\cdots x_1$ with positive probability and end at $(s,x_1)$. Stationary reversal makes the reverse path positive. After $m$ reverse steps the two endpoint distributions are supported on opposite phase classes. Their TV distance is one, whether or not their previous-bit coordinates are deterministic. This proves (13.4). All these words have positive stationary probability since $\lambda$ is strictly positive. $\square$
+
+**Proposition 13.3 (failure of the post-word weighted condition at the right initial cut).** For every $m\ge1$, take the right cut $j=0$ of Theorem 12.3 with the identity quotient:
+
+$$
+V=V_0^R=X_{-\infty:-1},\qquad Z=H_1,\qquad W=X_{1:m},\qquad U=X_0.
+$$
+
+For almost every $v$ on $\{X_{-1}=0,S_0=s\}$, the post-word residual of (12.1) is
+
+$$
+\Delta(v)=\sum_{w:p_v(w)>0}p_v(w)\Delta_w(v)
+=\begin{cases}1/6,&s=0,\\1/5,&s=1.\end{cases}
+\tag{13.6}
+$$
+
+Any good set whose positive-probability words have global diameter at most $\rho<1$ has no positive-probability word here. Consequently its bad-word variance divided by the exact denominator $\Delta(v)$ is one. Thus (12.7) fails for every $\eta<1$ on these positive-measure sets, and the global-diameter condition (12.2) fails for every $\kappa<1$.
+
+**Proof.** The whole past identifies $s$ and the previous bit. On the stated event, $U$ is Bernoulli with parameter $a_s$ and $Z=(1-s,U)$ determines $U$. In particular,
+
+$$
+\mathcal D(U;Z\mid V=v)=a_s(1-a_s).
+$$
+
+For the word $0^m$, put $T_{s,m}=\prod_{i=2}^{m}t_{s+i\bmod2}$, with the empty product equal to one. Its two center masses are
+
+$$
+\mathbb P(U=1,W=0^m\mid V=v)=a_sT_{s,m},\qquad
+\mathbb P(U=0,W=0^m\mid V=v)=\frac12T_{s,m}.
+\tag{13.7}
+$$
+
+Both are positive. Hence $\Delta_{0^m}(v)=q_s(1-q_s)>0$, where $q_s=a_s/(1/2+a_s)$. More generally, $X_1=1$ forces $U=0$, while, conditional on $X_1=0$ and the known phase, observations $X_2,\ldots,X_m$ give no further information about $U$. Since $Z$ determines $U$, summing the posterior variances therefore gives
+
+$$
+\Delta(v)=\mathbb P(X_1=0\mid V=v)q_s(1-q_s)
+=(a_s+1/2)\frac{a_s(1/2)}{(a_s+1/2)^2}
+=\frac{a_s/2}{a_s+1/2}.
+$$
+
+This is (13.6), with no dependence on $m\ge1$. Proposition 13.2 says that every positive-probability word has global forward diameter one. Thus the entire positive residual is carried by bad words, and both weighted left-hand sides equal $\Delta(v)$. The phase/previous-zero events have probabilities $8/22$ and $9/22$, respectively, so failure is not confined to null conditioning data.
+
+The denominator is essential. Dividing the same residual by the variance *before* observing $W$ instead gives
+
+$$
+\frac{\Delta(v)}{\mathcal D(U;Z\mid V=v)}
+=\begin{cases}8/9,&s=0,\\9/10,&s=1.\end{cases}
+\tag{13.8}
+$$
+
+Accordingly, this obstruction to the exact post-word condition (12.7) does not disprove variants normalized by the pre-observation variance. No failure at the left initial cut or after a finite burn-in follows from this calculation. $\square$
+
+**Application 13.4 (the conditional-support form of the existing variance argument).** Fix a component and a forward quotient as in Proposition 11.1, and work with its joint quotient producer (11.2). Keep the original fields, endpoints, and word order of Theorem 12.3. In each direction separately, fix a positive integer block length $m_d$ and retain the full joint-channel premise
+
+$$
+\mathbb P(W_j^d=w,Z_{j+m_d}^d=t\mid U,Z_j^d=z,V_j^d)
+=B_w^d(z,t),\qquad
+B_w^R=\bar M_w,\quad B_w^L=R_w.
+\tag{13.9}
+$$
+
+Here $R_w$ uses the canonical quotient reverse, not an assumed lumping of the original hidden reverse. Proposition 11.1 and Lemma 3.3 on the quotient producer supply (13.9) at every cut. For $p_{j,v}^d(w)>0$, restrict the normalized rows to
+
+$$
+\begin{aligned}
+I_{j,v,w}^d
+&=\{z:\mathbb P(Z_j^d=z\mid V_j^d=v,W_j^d=w)>0\},\\
+c_{j,v}^d(w)
+&=\max_{z,z'\in I_{j,v,w}^d}
+\operatorname{TV}\left(
+\frac{B_w^d(z,\cdot)}{(B_w^d\mathbf1)_z},
+\frac{B_w^d(z',\cdot)}{(B_w^d\mathbf1)_{z'}}\right).
+\end{aligned}
+\tag{13.10}
+$$
+
+This is the posterior support marginal over $U$, not a separate support chosen after conditioning on $U=0$ or $U=1$. It is nonempty and all its row denominators are positive by (5.3). A singleton gives coefficient zero; null words are omitted, with no coefficient assigned to them.
+
+Suppose that, separately for $d=L,R$, there is $0\le\kappa_d<1$ such that at **every required shifted cut** $j$,
+
+$$
+\sum_{w:p_{j,v}^d(w)>0}
+p_{j,v}^d(w)c_{j,v}^d(w)\Delta_{j,w}^d(v)
+\le\kappa_d\Delta_j^d(v)
+\quad\text{for almost every }v,
+\qquad
+\Delta_j^d(v)=\sum_w p_{j,v}^d(w)\Delta_{j,w}^d(v).
+\tag{13.11}
+$$
+
+The last sum also omits null words. This denominator is again the post-word residual (12.1). If the required cuts are all $j\ge0$, then (12.8)--(12.10) hold with these constants. More generally, if (13.11) holds at every $j\ge b_d$ for fixed integers $b_d\ge0$, then
+
+$$
+e_d^{P_C}(j)\le\frac14\kappa_d^{\lfloor(j-b_d)/m_d\rfloor}
+\quad(j\ge b_d),
+\qquad e_d^{P_C}(j)\le\frac14\quad(0\le j<b_d),
+\tag{13.12}
+$$
+
+and in particular
+
+$$
+A_{P_C}(0)\le\frac{b_L+b_R}{2}
++\frac12\sum_{d=L,R}\frac{m_d}{1-\sqrt{\kappa_d}}<\infty.
+\tag{13.13}
+$$
+
+These constants may depend on the component. If each positive stationary component supplies them, Theorem 7.1 gives the original-law finite-mixture conclusion.
+
+To obtain these statements, use (13.9), which is exactly (5.1), for both roles it plays in Lemma 5.1. First, it gives the conditional Markov kernel (5.4) on each $(v,w)$-fiber. Restricting that kernel to $I_{j,v,w}^d$ is the classical support restriction already allowed in Lemma 4.3. Its application gives
+
+$$
+\mathcal D(U;Z_{j+m_d}^d\mid V_j^d=v,W_j^d=w)
+\le c_{j,v}^d(w)\Delta_{j,w}^d(v).
+$$
+
+Second, the same joint-channel premise makes $W_j^d$ conditionally independent of $U$ given $(Z_j^d,V_j^d)$ and hence gives the observation-variance identity (5.5). Sum the preceding inequality over words, use (13.11), and integrate, just as in Lemma 12.1. The resulting recursion is bounded by $\kappa_d\mathcal D(U;Z_j^d\mid V_j^d)$, because $\kappa_d\ge0$. Start at $b_d$ with variance at most $1/4$, iterate complete blocks, and handle any positive-length remainder by Lemma 5.1 with coefficient one; a zero-length remainder requires no block. The Jensen step (6.7)--(6.8) and the same geometric sums prove (13.12)--(13.13). This is an application of Lemmas 4.3, 5.1, and 12.1, not a new standalone SDPI. Conditional Markovness alone without the full premise (13.9) would not justify the observation-variance identity.
+
+**Proposition 13.5 (one-step conditional support and finite erasure for the witness).** For (13.1), the identity quotient has
+
+$$
+c_{j,v}^L(w)=c_{j,v}^R(w)=0
+\quad\text{for every }j\ge0\text{ and every positive-probability one-letter word, a.s.}
+\tag{13.14}
+$$
+
+Furthermore,
+
+$$
+e_L^P(j)=e_R^P(j)=0\quad(j\ge1),\qquad A_P(1)=0.
+\tag{13.15}
+$$
+
+**Proof.** In the right direction, $V_j^R$ determines the phase from its infinite left half-line. At $j=0$, the posterior support of $Z=H_1$ has a fixed phase and at most the two possible previous-bit coordinates $U$. After observing $W=X_1=1$, legality forces $U=0$, leaving a singleton. After observing $W=0$, all feasible forward $M_0$ rows of that fixed phase normalize to the same endpoint $(S_2,0)$. Their diameter is zero. At $j\ge1$, $X_j$ and the phase are already known from $V_j^R$, so $H_{j+1}$ itself is known; any further posterior support is a singleton.
+
+In the left direction, $V_j^L$ determines the phase from its infinite right half-line. The one-letter reverse observation is $W=X_{-j-1}$, exactly the previous-bit coordinate of $Z_j^L=H_{-j}$. Thus conditioning on $(V_j^L,W)$ fixes both coordinates of $Z_j^L$. Its support is a singleton at every $j\ge0$, irrespective of the endpoint distribution of its reverse row. This proves (13.14) in the required marginal-over-$U$ supports, so (13.11) holds with $m_L=m_R=1$ and $\kappa_L=\kappa_R=0$.
+
+Directly at the output level, for $j\ge1$ either retained field contains both neighbors of the center, and its infinite half-line determines the phase. Hence (13.2) is measurable in both $\mathcal L_j$ and $\mathcal R_j$. The tower identity gives $p_j^L=p_j^R=q_0$, proving (13.15). This also proves $A_P(0)<\infty$, since only the two bounded errors at $j=0$ can contribute.
+
+Alternatively a finite burn-in bypasses the initial obstruction even for the global-diameter variance condition: for $j\ge1$, both cut variances $\mathcal D(U;Z_j^d\mid V_j^d)$ vanish. In the right direction the cut state is already observed as above; in the left direction the phase-conditioned one-step Markov rule separates the center from the earlier cut state once the observed neighbors and phase are given. By (5.5), all post-word residuals at those cuts also vanish. Thus the weighted condition is vacuous after $b_L=b_R=1$. There is no persistent bad-variance obstruction after this burn-in. $\square$
+
+**Open Question 13.6 (universal availability of support-aware eventual-cut conditions).** For every $N\ge1$ and every $\theta\in\Theta_N$ whose visible law satisfies $\mathsf B(P_\theta)$, does each positive stationary component admit a deterministic forward-labeled quotient and constants $m_L,m_R\ge1$, $b_L,b_R\ge0$, and $0\le\kappa_L,\kappa_R<1$ such that the canonical quotient channels satisfy (13.11) for almost every conditioning value at every cut $j\ge b_d$, separately in each direction? Application 13.4 proves sufficiency if these conditions are supplied; their universal availability under the band remains open. Proposition 13.2 answers the deterministic global-diameter obstruction part of Question 11.3 affirmatively, and Proposition 13.3 excludes the all-cut global-diameter version of (12.7) for this witness. Neither result refutes $\mathsf Q_{\rm full}$ or $\mathsf Q_{\rm band}$, and neither classifies alternate realizations of the same visible law.
+
+**Attribution 13.7 (construction and classical intermediates).** The four-state construction and its consequences above are derived from the original domain and edge law of this volume; no novelty claim is made. The finite-chain occupation theorem and conditional projection are the classical tools identified in Section 10. The support restriction in Application 13.4 is the one already used in Lemma 4.3 and Correspondence 10.2; the SDPI remains the chi-square specialization of Raginsky's Theorem 3.1 cited there. Proposition 7.1 of [the universal-posterior-defect volume](FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md) uses an ordinary one-step visible Markov chain for a different band-preserving nonattainment comparison. It supplies no premise for the phase obstruction (13.1)--(13.8). The results here concern this fixed representation, its deterministic partitions, and its actual visible erasure fields, with the original clock and quantifiers unchanged.
