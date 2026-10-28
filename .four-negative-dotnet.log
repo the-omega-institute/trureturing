@@ -1,0 +1,66 @@
+  正在确定要还原的项目…
+  所有项目均是最新的，无法还原。
+  StrataLint.Runtime -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/StrataLint.Runtime/bin/Release/net10.0/StrataLint.Runtime.dll
+  StrataLint.TestSupport -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/TestSupport/StrataLint.TestSupport/bin/Release/net10.0/StrataLint.TestSupport.dll
+  Trureturing.Truth -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/Trureturing.Truth/bin/Release/net10.0/Trureturing.Truth.dll
+  StrataLint.Engineering -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/StrataLint.Engineering/bin/Release/net10.0/StrataLint.Engineering.dll
+  StrataLint.ProcessTestSupport -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/TestSupport/StrataLint.ProcessTestSupport/bin/Release/net10.0/StrataLint.ProcessTestSupport.dll
+  Trureturing.Truth.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/Trureturing.Truth.Tests/bin/Release/net10.0/Trureturing.Truth.Tests.dll
+  StrataLint.RegistrationTestSupport -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/TestSupport/StrataLint.RegistrationTestSupport/bin/Release/net10.0/StrataLint.RegistrationTestSupport.dll
+  StrataLint.TestEvidence -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/StrataLint.TestEvidence/bin/Release/net10.0/StrataLint.TestEvidence.dll
+  StrataLint.LeanTestSupport -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/TestSupport/StrataLint.LeanTestSupport/bin/Release/net10.0/StrataLint.LeanTestSupport.dll
+  StrataLint.ScriptProcessTestSupport -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/TestSupport/StrataLint.ScriptProcessTestSupport/bin/Release/net10.0/StrataLint.ScriptProcessTestSupport.dll
+  StrataLint.Engineering.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.Engineering.Tests/bin/Release/net10.0/StrataLint.Engineering.Tests.dll
+  StrataLint.TestEvidence.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.TestEvidence.Tests/bin/Release/net10.0/StrataLint.TestEvidence.Tests.dll
+  StrataLint.Cache.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.Cache.Tests/bin/Release/net10.0/StrataLint.Cache.Tests.dll
+  StrataLint.Cache.Release.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.Cache.Release.Tests/bin/Release/net10.0/StrataLint.Cache.Release.Tests.dll
+  StrataLint.Cache.Native.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.Cache.Native.Tests/bin/Release/net10.0/StrataLint.Cache.Native.Tests.dll
+  StrataLint.Runtime.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.Runtime.Tests/bin/Release/net10.0/StrataLint.Runtime.Tests.dll
+  StrataLint.HeaderScript.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.HeaderScript.Tests/bin/Release/net10.0/StrataLint.HeaderScript.Tests.dll
+  StrataLint.Engine -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/StrataLint.Engine/bin/Release/net10.0/StrataLint.Engine.dll
+  StrataLint.ReportSupervisor.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.ReportSupervisor.Tests/bin/Release/net10.0/StrataLint.ReportSupervisor.Tests.dll
+  StrataLint.InstructionContract.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.InstructionContract.Tests/bin/Release/net10.0/StrataLint.InstructionContract.Tests.dll
+  StrataLint.Configuration -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/StrataLint.Configuration/bin/Release/net10.0/StrataLint.Configuration.dll
+  StrataLint.AdmissionTestSupport -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/TestSupport/StrataLint.AdmissionTestSupport/bin/Release/net10.0/StrataLint.AdmissionTestSupport.dll
+  StrataLint.Lean -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll
+  StrataLint.ConfigurationTestSupport -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/TestSupport/StrataLint.ConfigurationTestSupport/bin/Release/net10.0/StrataLint.ConfigurationTestSupport.dll
+  StrataLint.PrScript.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.PrScript.Tests/bin/Release/net10.0/StrataLint.PrScript.Tests.dll
+  StrataLint.DigestionTestSupport -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/TestSupport/StrataLint.DigestionTestSupport/bin/Release/net10.0/StrataLint.DigestionTestSupport.dll
+  StrataLint.Engine.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.Engine.Tests/bin/Release/net10.0/StrataLint.Engine.Tests.dll
+  StrataLint.Scribe -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll
+  StrataLint.ResourceObservation.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.ResourceObservation.Tests/bin/Release/net10.0/StrataLint.ResourceObservation.Tests.dll
+  StrataLint.WorktreeContract.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.WorktreeContract.Tests/bin/Release/net10.0/StrataLint.WorktreeContract.Tests.dll
+  StrataLint.WorkflowScript.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.WorkflowScript.Tests/bin/Release/net10.0/StrataLint.WorkflowScript.Tests.dll
+  StrataLint.FileMap -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/StrataLint.FileMap/bin/Release/net10.0/StrataLint.FileMap.dll
+  StrataLint.RuleTestSupport -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/TestSupport/StrataLint.RuleTestSupport/bin/Release/net10.0/StrataLint.RuleTestSupport.dll
+  StrataLint.LeanCacheScript.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.LeanCacheScript.Tests/bin/Release/net10.0/StrataLint.LeanCacheScript.Tests.dll
+  StrataLint.LeanReportScript.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.LeanReportScript.Tests/bin/Release/net10.0/StrataLint.LeanReportScript.Tests.dll
+  StrataLint.Lean.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.Lean.Tests/bin/Release/net10.0/StrataLint.Lean.Tests.dll
+  StrataLint.PlaybookScript.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.PlaybookScript.Tests/bin/Release/net10.0/StrataLint.PlaybookScript.Tests.dll
+  StrataLint.RepositoryConfiguration.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.RepositoryConfiguration.Tests/bin/Release/net10.0/StrataLint.RepositoryConfiguration.Tests.dll
+  StrataLint.DeclaredTemplateTestSupport -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/TestSupport/StrataLint.DeclaredTemplateTestSupport/bin/Release/net10.0/StrataLint.DeclaredTemplateTestSupport.dll
+  StrataLint.Configuration.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.Configuration.Tests/bin/Release/net10.0/StrataLint.Configuration.Tests.dll
+  StrataLint.RepositoryFileMap.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.RepositoryFileMap.Tests/bin/Release/net10.0/StrataLint.RepositoryFileMap.Tests.dll
+  StrataLint.Cli -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
+  StrataLint.FileMap.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.FileMap.Tests/bin/Release/net10.0/StrataLint.FileMap.Tests.dll
+  StrataLint.Scribe.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.Scribe.Tests/bin/Release/net10.0/StrataLint.Scribe.Tests.dll
+  StrataLint.Rules.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.Rules.Tests/bin/Release/net10.0/StrataLint.Rules.Tests.dll
+  StrataLint.Digestion.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.Digestion.Tests/bin/Release/net10.0/StrataLint.Digestion.Tests.dll
+  StrataLint.DeclaredTemplate.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.DeclaredTemplate.Tests/bin/Release/net10.0/StrataLint.DeclaredTemplate.Tests.dll
+  StrataLint.CliTestSupport -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/TestSupport/StrataLint.CliTestSupport/bin/Release/net10.0/StrataLint.CliTestSupport.dll
+  StrataLint.RepositoryContract.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.RepositoryContract.Tests/bin/Release/net10.0/StrataLint.RepositoryContract.Tests.dll
+  StrataLint.ScriptTests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.ScriptTests/bin/Release/net10.0/StrataLint.ScriptTests.dll
+  StrataLint.ArchitectureTests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.ArchitectureTests/bin/Release/net10.0/StrataLint.ArchitectureTests.dll
+  StrataLint.CoverTestSupport -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/TestSupport/StrataLint.CoverTestSupport/bin/Release/net10.0/StrataLint.CoverTestSupport.dll
+  StrataLint.SourceAtomizer.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.SourceAtomizer.Tests/bin/Release/net10.0/StrataLint.SourceAtomizer.Tests.dll
+  StrataLint.RepositoryTopology.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.RepositoryTopology.Tests/bin/Release/net10.0/StrataLint.RepositoryTopology.Tests.dll
+  StrataLint.TruthRelease.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.TruthRelease.Tests/bin/Release/net10.0/StrataLint.TruthRelease.Tests.dll
+  StrataLint.CliIntegration.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.CliIntegration.Tests/bin/Release/net10.0/StrataLint.CliIntegration.Tests.dll
+  StrataLint.CoverBatch.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.CoverBatch.Tests/bin/Release/net10.0/StrataLint.CoverBatch.Tests.dll
+  StrataLint.Tests -> /Users/macstudio/omega/trureturing-01a1577a-circle-four-negative/tools/tests/StrataLint.Tests/bin/Release/net10.0/StrataLint.Tests.dll
+
+已成功生成。
+    0 个警告
+    0 个错误
+
+已用时间 00:00:04.75
