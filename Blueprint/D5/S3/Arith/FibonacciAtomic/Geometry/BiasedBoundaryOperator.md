@@ -92,7 +92,7 @@ The actual stopping spaces establish infinite dimension. If G0 had dimension d, 
 
 The weak graph is single-valued: CC*h=0 with mean(h)=0 implies C*h=0, and density of the original trace implies h=0. Constants and the pairs (CC*k,Pi k) belong to the graph. Testing them shows that its domain has trivial orthogonal complement and is dense. The same tests identify the orthogonal adjoint graph with the graph itself, giving self-adjointness as a partially defined Hilbert-space operator. The graph equality identifies this operator with the self-adjoint realization of the original free-root energy. At zero output, the graph equation is Pi(u)=0, so precisely the real constants are zero modes.
 
-The polar unitary, its range and domain identities, the ordered positive eigenvalue sequence and global counting bounds require further results. The subsequent theorem establishes compact resolvent directly on the same operator; it does not assume the polar formula.
+The polar unitary, its range and domain identities and global counting bounds require further results. The subsequent theorems establish compact resolvent and ordered positive modes directly on the same operator.
 
 **Theorem 1.8 (Compact Resolvent of the Actual Operator).**
 
@@ -108,7 +108,7 @@ Let A=CC* on the actual boundary L2 space. The pairing of (I+A)x with x is the s
 
 The exact weak graph implies (I+A)u=constG(mean(u+h))+A(u+h). Conversely that equation implies mean(h)=0 and Pi(u)=Ah. Injectivity of I+A then proves that (u,h) belongs to the actual operator graph exactly when R(u+h)=u. Thus R is the actual two-sided inverse of H+I, including the constant mode. This proves compact resolvent without assuming a polar unitary or a spectral-counting target.
 
-For each positive real lambda, the actual eigenvector equation (u,lambda u) in graph(H) is equivalent to mean(u)=0 and Au=lambda^(-1)u. This is the inverse eigenvalue correspondence with the actual boundary covariance CC*. The following theorem identifies the complete eigenspaces with the original edge covariance C*C. A complete ordered spectral sequence and the literal polar expression in source equation (2.3) require additional results.
+For each positive real lambda, the actual eigenvector equation (u,lambda u) in graph(H) is equivalent to mean(u)=0 and Au=lambda^(-1)u. This is the inverse eigenvalue correspondence with the actual boundary covariance CC*. The following theorems identify the complete eigenspaces with the original edge covariance C*C and construct an ordered complete sequence. The literal polar expression in source equation (2.3) requires additional results.
 
 **Theorem 1.9 (The Original Covariance and Operator Eigenspaces).**
 
@@ -124,12 +124,31 @@ For positive mu, intertwining CC* with C*C sends each original covariance eigenv
 
 Each positive edge eigenvector is mu^(-1)C*Cz and hence lies in K, since the original adjoint range lies in K. Thus these are precisely the effective edge modes relevant to the source. The original stopping-derived compactness of Sigma and the pinned finite-eigenspace theorem make its nonzero eigenspaces finite dimensional. The explicit equivalence transfers this property to the actual operator eigenspaces. At the empty prefix, the inherited suffix Hardy estimate gives the squared centered-trace norm bound with coefficient phi. On a nonzero mu eigenvector its covariance quadratic form is mu times its squared increment norm, so mu is at most phi. Consequently every nonzero actual operator eigenvector at mu^(-1) has eigenvalue at least phi^(-1). This proves the eigenvector gap; it does not define or settle the original spectral counting function.
 
-These results do not yet construct the polar unitary W or its range and domain identities, enumerate and exhaust the positive spectrum, establish divergence of an ordered sequence, or prove the original global counting inequalities. Source equation (2.3) in its literal W form and the full Theorem 2.1 remain unfinished.
+The following theorem constructs complete ordered positive modes. The polar range and domain identities, source equation (2.3) in its literal W form and the global counting inequalities require further results.
+
+**Theorem 1.10 (Complete Ordered Positive Spectral Modes).**
+
+$$\exists b: \operatorname{HilbertBasis}\left(\operatorname{Nat}\left(\right), \operatorname{Real}\left(\right), \operatorname{Gzero}\left(\right)\right), \exists k: \operatorname{HilbertBasis}\left(\operatorname{Nat}\left(\right), \operatorname{Real}\left(\right), K\right), \exists mu: \operatorname{Function}\left(\operatorname{Nat}\left(\right), \operatorname{Real}\left(\right)\right), (\forall i: \operatorname{Nat}\left(\right), (0<mu\left(i\right)))\land(\operatorname{Antitone}\left(mu\right))\land(\operatorname{TendstoZero}\left(mu\right))\land(\operatorname{Monotone}\left(\operatorname{reciprocalFamily}\left(mu\right)\right))\land(\operatorname{TendstoInfinity}\left(\operatorname{reciprocalFamily}\left(mu\right)\right))\land(\forall i: \operatorname{Nat}\left(\right), (\operatorname{boundaryCovariance}\left(b\left(i\right)\right)=\operatorname{smul}\left(mu\left(i\right), b\left(i\right)\right)))\land(\forall i: \operatorname{Nat}\left(\right), (\operatorname{pair}\left(b\left(i\right), \operatorname{smul}\left(\operatorname{inverse}\left(mu\left(i\right)\right), b\left(i\right)\right)\right)\in \operatorname{graph}\left(boundaryOperator\right)))\land(\forall i: \operatorname{Nat}\left(\right), (\operatorname{Sigma}\left(k\left(i\right)\right)=\operatorname{smul}\left(mu\left(i\right), k\left(i\right)\right)))\land(\forall i: \operatorname{Nat}\left(\right), (\operatorname{C}\left(k\left(i\right)\right)=\operatorname{smul}\left(\operatorname{sqrt}\left(mu\left(i\right)\right), b\left(i\right)\right)))\land(\forall a: \operatorname{Real}\left(\right), (0<a\implies \operatorname{FiniteDimensional}\left(\operatorname{Real}\left(\right), \operatorname{boundaryEigenspace}\left(\operatorname{inverse}\left(a\right)\right)\right)))\land(\forall a: \operatorname{Real}\left(\right), (0<a\implies \operatorname{finrank}\left(\operatorname{Real}\left(\right), \operatorname{boundaryEigenspace}\left(\operatorname{inverse}\left(a\right)\right)\right)=\operatorname{cardinality}\left(\operatorname{fiber}\left(mu, a\right)\right)))\land(\forall epsilon: \operatorname{Real}\left(\right), (0<epsilon\implies \operatorname{Finite}\left(\operatorname{superlevel}\left(mu, epsilon\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryOperator.actual_positive_spectral_exhaustion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Restrict the actual boundary covariance CC* to the closed mean-zero space G0. Its quadratic form is the squared norm of C*u, strictly positive for nonzero u by density of the original trace. Compactness is inherited from the actual centered trace. The compact symmetric Hilbert-basis theorem assembles all its eigenspaces, so no basis or spectral exhaustion is assumed.
+
+For each positive epsilon, only finitely many basis indices can have covariance weight at least epsilon. Otherwise their images under the actual compact covariance admit a convergent subsequence, while orthogonality makes the squared distance of any distinct pair the sum of the two squared weights, at least twice epsilon squared. Order the full index by decreasing weight, resolving ties with a fixed linear order. Every initial interval is finite, so the infinite index is order-isomorphic to Nat. This lists every basis vector once, including every repeated eigenvalue. The weights decrease to zero and their reciprocals increase to infinity. Lean index i corresponds to source index j=i+1.
+
+Normalize C* applied to each boundary basis vector by the reciprocal square root of its covariance weight. These vectors lie in the original K, are orthonormal and have dense span: a vector orthogonal to all of them has trace orthogonal to the entire boundary basis, hence zero trace and zero effective increment. They therefore form a full Hilbert basis of K, with Sigma eigenvalue mu and trace equal to sqrt(mu) times the boundary basis vector. The exact inverse eigenvalue graph equation puts each boundary mode in the original operator domain with eigenvalue 1/mu.
+
+For any positive a, symmetry forces a covariance eigenvector's coordinates to vanish outside the indices with weight a. This full eigenspace is exactly the span of those basis vectors. The coordinate family is independent, so its cardinality equals the finite dimension of the full actual H eigenspace at 1/a. Thus the enumeration preserves finite multiplicities without a simplicity assumption. The global counting estimates, trial-space inequality, polar domain and range identities and literal polar resolvent formula are separate conclusions.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryOperator.actual_compact_resolvent`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryOperator.actual_covariance_eigenspaces`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryOperator.actual_positive_spectral_exhaustion`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryOperator.actual_self_adjoint_realization`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryOperator.boundaryCovariance`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryOperator.boundaryEigenspace`
@@ -138,3 +157,4 @@ These results do not yet construct the polar unitary W or its range and domain i
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryOperator.centeredTrace`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryOperator.covarianceEigenEquiv`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm](BiasedBoundaryFreeRootForm.md)
+- Dependency: [D5/S3/Quantum/Analysis/TraceClass/Spectral](../../../Quantum/Analysis/TraceClass/Spectral.md)
