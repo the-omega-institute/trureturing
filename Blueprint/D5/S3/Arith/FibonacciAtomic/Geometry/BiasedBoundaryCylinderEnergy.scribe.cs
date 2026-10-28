@@ -15,7 +15,7 @@ internal sealed class BiasedBoundaryCylinderEnergyDocument : IScribeDocumentDefi
             Describe.Lean(DescribeId.Create("constant-trace-minimum"),
                 DeclarationHandle.Create(Prefix + "constant_trace_minimum"), H("The Constant-Trace Minimum"),
                 StatementSource.FromAuthor(Minimum()), AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("H is the original real square-summable space on nonempty ordered Boolean addresses. J maps H to real L2 of the golden biased product measure M. Constants, conditional suffixes and all equalities of traces use this same M.")),
+                    Paragraph(Text("H is the original real square-summable space on nonempty ordered Boolean addresses. J maps H to real L2 of the golden biased product measure M. Constants, conditional suffixes and all equalities of traces use this same M. In the displayed formula, eval(q,p) is the original increment coordinate q(p), and inner is the real inner product on H.")),
                     Paragraph(Text("Project the sum of the two unit root increments onto the orthogonal complement of the kernel of J. The result has constant trace one and is the fixed-root minimum. Pairing it with any constant trace c gives c times its squared norm.")),
                     Paragraph(Text("The adjoints of the two original suffix restrictions insert disjoint strict-descendant increments. Their pairing formula gives an exact decomposition of squared edge norm into the two root squares and the two suffix squared norms. Conditional pullback gives the corresponding decomposition of the actual trace.")),
                     Paragraph(Text("Write m for the squared norm of the minimum. Inserting half of it below each root edge, with root increments one half, gives another constant-one trace of squared norm (1+m)/2. Minimality gives m at most one. Applying minimality to the two suffixes of the minimum and completing their two squares gives m at least one. The squared norm is therefore one. Equality identifies the inserted vector with the minimum and gives both equal-split identities.")),
@@ -48,7 +48,7 @@ internal sealed class BiasedBoundaryCylinderEnergyDocument : IScribeDocumentDefi
         Formula q=V("q"), c=V("c"), z=V("z");
         Formula pair=All("c",Seq(Mathbb,Grp(V("R"))),All("z",V("H"),
             Seq(Call("J",z),Eq,Call("constG",c),Implies,Sp,Call("inner",q,z),Eq,c)));
-        Formula split=All("c",Call("Bool"),And(
+        Formula split=All("c",V("Bool"),And(
             Seq(Call("eval",q,Call("rootEdge",c)),Eq,Seq(Frac,Grp(D(1)),Grp(D(2)))),
             Seq(Call("S",ListOf(c),q),Eq,Seq(Frac,Grp(D(1)),Grp(D(2))),Cdot,Sp,q)));
         return Seq(Exists,Sp,q,Colon,Sp,V("H"),Comma,Sp,Par(And(
