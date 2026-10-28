@@ -8,7 +8,7 @@
 
 import Mathlib.Data.Finset.Card
 import Mathlib.Order.UpperLower.Basic
-import Mathlib.Tactic
+import Mathlib.Tactic.Tauto
 
 /-! # Majority and flag completion of hereditary finite-support families
 
@@ -99,7 +99,7 @@ private theorem flag_majorityClosed {K : Set (Finset V)}
 
 /-- A hereditary family of finite supports is majority closed precisely when
 its empty, singleton and pair constraints determine every face. -/
-theorem majorityClosed_iff_flag {K : Set (Finset V)} (hK : IsLowerSet K) :
+theorem majority_closed_iff_flag {K : Set (Finset V)} (hK : IsLowerSet K) :
     MajorityClosed K ↔ Flag K := by
   constructor
   · intro hclosed S hS
@@ -108,7 +108,7 @@ theorem majorityClosed_iff_flag {K : Set (Finset V)} (hK : IsLowerSet K) :
 
 /-- Pair completion is the least majority-closed family containing a hereditary
 family, even when the competing families are not hereditary. -/
-theorem pairClosure_isLeast {K : Set (Finset V)} (hK : IsLowerSet K) :
+theorem pair_closure_is_least {K : Set (Finset V)} (hK : IsLowerSet K) :
     IsLeast {L : Set (Finset V) | K ⊆ L ∧ MajorityClosed L} (pairClosure K) := by
   have hlower : IsLowerSet (pairClosure K) := by
     intro S T hST hT U hUS hcard
