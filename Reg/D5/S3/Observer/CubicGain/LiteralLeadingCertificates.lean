@@ -22,7 +22,7 @@ private theorem actual_law : arena.Law actual := by
   simpa [arena, actual, realize] using leading_determinants_ne_zero
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  exact ⟨(), 0, 1, by decide +kernel⟩
+  exact ⟨(), 0, 1, by simp [actual, realize]⟩
 def source_registration : Registration arena (type_of% @leading_determinants_ne_zero) where
   actual := actual
   bridge := by simp [arena, actual, realize]

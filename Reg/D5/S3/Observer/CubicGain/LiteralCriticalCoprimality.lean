@@ -90,7 +90,8 @@ private theorem actual_law : arena.Law actual := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  simp [actual, realize]
+  have hz : ¬ (0 : Polynomial ℤ).IsPrimitive := fun h => h.ne_zero rfl
+  simp [actual, realize, hz]
 def source_registration : Registration arena (type_of% @literal_critical_integer_normalization) where
   actual := actual
   bridge := by simp [arena, actual, realize]

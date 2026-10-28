@@ -3,6 +3,7 @@ import D5.S3.Observer.CubicGain.LiteralSylvesterBounds
 import Reg.Support.SingleDependentReadout
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option maxRecDepth 4000
 noncomputable section
 namespace Reg.D5.S3.Observer.CubicGain.LiteralSylvesterBounds
 open Polynomial
@@ -211,7 +212,7 @@ private theorem center_minors :
       sourceBb 0 (9/2) (1/8) * sourceBt 2 (9/2) (1/8) = 0) ∧
     (sourceBt 1 (9/2) (1/8) * sourceBb 2 (9/2) (1/8) -
       sourceBb 1 (9/2) (1/8) * sourceBt 2 (9/2) (1/8) = 0) := by
-  have hb : (1/8 : ℝ)^7 ≠ 0 := by norm_num
+  have hb : (1 / 2097152 : ℝ) ≠ 0 := by norm_num
   have h0 := source_e0_normalization (9/2) (1/8)
   have h1 := source_e1_normalization (9/2) (1/8)
   have h2 := source_e2_normalization (9/2) (1/8)

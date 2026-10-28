@@ -11,6 +11,11 @@ internal sealed class LiteralExceptionalCoprimalityDocument : IScribeDocumentDef
         H("The exceptional factor in the literal source identity"),
         Blocks(
             Paragraph(Text("F is the original criticalPolynomial, with precisely the sixty-eight integer coefficients FC. Write H over any commutative coefficient ring for X^90 (2X+1)^5 (5X+2)^14 (8X-1)^20 (X^2+8X+4)^2; exceptionalFactor is this expression. This is exactly the polynomial displayed on the right of the proposed h identity in VI, Lemma 4.2. No parameter or root is selected.")),
+            Describe.Lean(DescribeId.Create("literal-displayed-exceptional-factor"),
+                DeclarationHandle.Create("D5/S3/Observer/CubicGain/LiteralExceptionalCoprimality.exceptionalFactor"),
+                H("The displayed exceptional polynomial"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any commutative coefficient ring R, exceptionalFactor in R[X] is the displayed expression H above, using the same exponents and integer coefficients."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("displayed-exceptional-factor-coprime"),
                 DeclarationHandle.Create("D5/S3/Observer/CubicGain/LiteralExceptionalCoprimality.displayed_exceptional_factor_coprime"),
                 H("The displayed degree-133 factor is coprime to FC"),
