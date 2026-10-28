@@ -16,15 +16,23 @@ $$\forall H \in Type,\; [\operatorname{Group}\left(H\right)]\forall iota \in Typ
 
 *Source.* Repository-derived.
 
-**Theorem 1.2 (Arbitrary-index criterion with infinite fibers).**
-
-The same equivalence is machine-checked for every index type `ι`, with no `[Finite ι]` assumption, as `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/FiniteOrbitRootCriterion.arbitrary_root_criterion`. The left side and the right side have exactly the types displayed in Theorem 1.1, except that the finite-type premise is removed.
-
-*Proof.* Necessity uses the existing generic routing argument. For the isotypic subtype `C := {j // Isotypic A i j}`, the finite branch installs `Fintype.ofFinite C` and reuses the existing cycle-length proof. In the infinite branch `Nat.card C = 0` by Mathlib's convention, so `[]` is the faithful witness: it records that there is no finite multiplicity obstruction while retaining the nonempty infinite carrier. For sufficiency, the quotient by `Isotypic` is split into finite and infinite fibers. Finite fibers use the original list blocks. An infinite fiber uses itself as the block-index type and the cardinal-arithmetic equivalence `C ≃ C × Fin k`, obtained from `Cardinal.mul_eq_left` for the infinite cardinal `#C` and the nonempty finite cardinal `#(Fin k)`. The resulting finite and infinite block equivalences are assembled by the existing `roots_of_blocks` construction. ∎
-
 *Commentary.*
 
 For every positive natural k, an unrestricted map R:Sigma X->Sigma X with R(D_a(x))=D_a(R(x)) for all a,x and R iterated k times equal to T exists if and only if, for every index i, there is an actual finite list L of natural block lengths whose sum is the cardinality of {j | Isotypic A i j}, and each ell in L is positive, divides k, and satisfies Local (k/ell) A_i. Repeated lengths are permitted. The statement assumes neither bijectivity, time commutation nor component preservation of R.
+
+**Theorem 1.2 (Arbitrary-index criterion with infinite fibers).**
+
+$$\forall H \in Type,\; [\operatorname{Group}\left(H\right)]\forall iota \in Type, X \in \operatorname{Map}\left(iota, Type\right), A \in \operatorname{DependentReturnAtlases}\left(H, X\right),\; \forall k \in Nat,\; 0 < k \implies ((\exists R \in \operatorname{Map}\left(\operatorname{Sigma}\left(X\right), \operatorname{Sigma}\left(X\right)\right),\; ((\forall a \in H, x \in \operatorname{Sigma}\left(X\right),\; \operatorname{apply}\left(R, \operatorname{apply}\left(\operatorname{jointDeck}\left(A, a\right), x\right)\right) = \operatorname{apply}\left(\operatorname{jointDeck}\left(A, a\right), \operatorname{apply}\left(R, x\right)\right)) \land (\operatorname{iterate}\left(R, k\right) = \operatorname{jointTime}\left(A\right)))) \iff (\forall i \in iota,\; \exists L \in \operatorname{List}\left(Nat\right),\; ((\operatorname{sum}\left(L\right) = \operatorname{NatCard}\left(\operatorname{IsotypicClass}\left(A, i\right)\right)) \land (\forall ell \in Nat,\; \operatorname{Mem}\left(ell, L\right) \implies ((0 < ell) \land (((\operatorname{Divides}\left(ell, k\right)) \land (\operatorname{Local}\left(\operatorname{natDiv}\left(k, ell\right), \operatorname{apply}\left(A, i\right)\right)))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/FiniteOrbitRootCriterion.arbitrary_root_criterion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The same exact equivalence holds for every index type iota, with no Finite iota premise. For every positive k, the unrestricted equivariant kth root exists exactly when each isotypic class has a finite list of allowed positive block lengths whose sum is Nat.card of that class. The full telescope retains arbitrary H, dependent universes X:iota->Type and A:DependentReturnAtlases H X, and permits noncommutative or infinite groups, all positive k, and the empty family.
+
+For an infinite isotypic fiber C := {j // Isotypic A i j}, the construction uses an actual equivalence C ≃ C × Fin k, obtained from the infinite-cardinal arithmetic for nonempty Fin k. It does not replace C by the empty type: C remains the nonempty infinite block-index carrier. Mathlib's Nat.card C = 0 convention and the witness list [] encode only the absence of a finite multiplicity obstruction; they do not assert that C is empty. Finite fibers use the original finite list blocks, and the two branches are assembled by the existing roots_of_blocks construction.
 
 Necessity begins with R^k=T. Since T is injective and k is positive, R is injective; R also commutes with T. Completeness of each chart and deck equivariance make the output component constant on that whole chart. Thus R induces a component permutation sigma with sigma^k=id. The existing routing_isotypic proof uses ReturnAtlasFiniteCovers.normal_form and the full fiberEquiv: an injective factor cannot have positive covering degree greater than one, even when H is infinite. Hence every component is isotypic to its image under sigma.
 
@@ -40,6 +48,6 @@ The numerical condition is membership in the additive monoid generated by the al
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/FiniteOrbitRootCriterion.finite_root_criterion`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/FiniteOrbitRootCriterion.arbitrary_root_criterion`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/FiniteOrbitRootCriterion.finite_root_criterion`
 - Dependency: [D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimeOrbitRootCriterion](PrimeOrbitRootCriterion.md)
