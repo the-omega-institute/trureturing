@@ -431,33 +431,4 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
     (Or.inr ⟨hG, Prod.Lex.toLex_lt_toLex.mpr (Or.inl hHs)⟩)
   exact (not_lt_of_ge (hminimum V (legal_of_strip inv.nodup hsV))) hj
 
--- Transient integral endpoint application.
-example
-    (k t : ℕ) (hk : 3 ≤ k) (p y zpen z : Fin k)
-    (A T0 T1 T2 E : List (Fin k))
-    (hpositive : 0 < s k t p)
-    (hnlarge : Q k ≤ |s k t (hit k 1 p)|)
-    (hexpand : N k < 3 * |s k t p|)
-    (hW : Legal k t (oldWord p y zpen z A T0 T1 T2 E))
-    (hpunused : p ∉ oldWord p y zpen z A T0 T1 T2 E)
-    (hnunused : hit k 1 p ∉ oldWord p y zpen z A T0 T1 T2 E)
-    (hsmall : ∀ i ∈ smallWord T0 T1 T2 E, |s k t i| < Q k)
-    (hzpenlarge : Q k ≤ -s k t zpen)
-    (hzlarge : Q k ≤ -s k t z)
-    (hyhigh : s k t p < -s k t y)
-    (hminimum : ∀ V : List (Fin k), Legal k t V →
-      J k t (oldWord p y zpen z A T0 T1 T2 E) ≤ J k t V) :
-    let f := s k t
-    let delta := -f y - f p
-    let c1 := mass f (A ++ [hit k 2 p] ++ T0 ++ [y] ++ T1)
-    let c2 := mass f (A ++ [hit k 2 p] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2)
-    C k - c1 + mass (fun i => -f i) (signPool (fun i => -f i) T2 (C k + f zpen + 1)) ≤ delta - 1 ∨
-    C k - c2 + mass f (signPool f T2 (C k + f z + 1)) ≤ delta - 1 := by
-  have h := actualSource_threeNegative_twoGate_tail_deficiency k t hk p y zpen z A T0 T1 T2 E
-    hpositive hnlarge hexpand hW hpunused hnunused hsmall hzpenlarge hzlarge hyhigh hminimum
-  dsimp only at h ⊢
-  omega
-
-#print axioms actualSource_threeNegative_twoGate_tail_deficiency
-
 end D5.S3.Combinatorics.Circle.TailGateDeficiency
