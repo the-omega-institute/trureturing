@@ -19,7 +19,6 @@ The analytic derivative identification is a separate obligation; full HSF is ope
 module
 
 public import D5.S3.Quantum.Matrix.HsfQubitCoupledCubic
-public import D5.S3.Weil.ZetaLinear.RankTrace
 
 /-! The original ordered trace-word coefficients are defined independently of
 the six-square certificate. The identities below derive the certificate from
@@ -61,14 +60,39 @@ def coefficient3 (X H K : Matrix n n ℂ) : ℝ := (traceCoefficient3 X H K).re
 
 end Coefficients
 
-private def f (a b : ℝ) : ℝ := 2*(a+2*b)/(3*(a+b))
-private def q (a b : ℝ) : ℝ := -(a-b)*(3*a^2+9*a*b+8*b^2)/(18*(a+b)^2)
-private def c (a b : ℝ) : ℝ := (a-b)^2*(2*a+3*b)/(a+b)^2
-private def j (a b : ℝ) : ℝ := b^2/(3*(a+b))
-private def d (a b : ℝ) : ℝ :=
+/- The spectral argument is copied from
+`D5/S3/Weil/ZetaLinear/RankTrace.lean`,
+`RHLinalg.trace_mul_nonneg_of_posSemidef` (lines 123--138 at dev 25679597af3),
+ported there from anthropics/zeta-23-lean
+3635e74826a4c1fcece7d1cd2b6fa75e43a00510.
+Copyright (c) 2026 Anthropic, PBC. All rights reserved.
+Released under Apache 2.0 license as described in the repository LICENSE.
+SPDX-License-Identifier: Apache-2.0
+That source is a legacy non-module, so this consumed local bridge keeps the
+present public module importable by the analytic derivative supplier. -/
+private theorem trace_mul_nonneg_of_posSemidef
+    {n : Type*} [Fintype n] [DecidableEq n] {𝕜 : Type*} [RCLike 𝕜]
+    {A B : Matrix n n 𝕜}
+    (hA : A.PosSemidef) (hB : B.PosSemidef) :
+    0 ≤ RCLike.re (A * B).trace := by
+  rw [hA.isHermitian.spectral_theorem, Unitary.conjStarAlgAut_apply, mul_assoc,
+    trace_mul_comm, ← mul_assoc]
+  set M := star (hA.isHermitian.eigenvectorUnitary : Matrix n n 𝕜) * B *
+    (hA.isHermitian.eigenvectorUnitary : Matrix n n 𝕜) with hM_def
+  have hM : M.PosSemidef := hB.conjTranspose_mul_mul_same _
+  simp only [trace, diag_apply, mul_diagonal, Function.comp_apply, map_sum,
+    RCLike.mul_re, RCLike.ofReal_re, RCLike.ofReal_im, mul_zero, sub_zero]
+  refine Finset.sum_nonneg fun i _ => ?_
+  exact mul_nonneg (RCLike.nonneg_iff.mp hM.diag_nonneg).1 (hA.eigenvalues_nonneg i)
+
+def f (a b : ℝ) : ℝ := 2*(a+2*b)/(3*(a+b))
+def q (a b : ℝ) : ℝ := -(a-b)*(3*a^2+9*a*b+8*b^2)/(18*(a+b)^2)
+def c (a b : ℝ) : ℝ := (a-b)^2*(2*a+3*b)/(a+b)^2
+def j (a b : ℝ) : ℝ := b^2/(3*(a+b))
+def d (a b : ℝ) : ℝ :=
   (a-b)^2*(a+2*b)*(7*a^2+14*a*b+4*b^2)/(36*(a+b)^2)
 
-private def rowGram (x y : ℂ) : Mat :=
+def rowGram (x y : ℂ) : Mat :=
   Matrix.vecMulVec (star (![x,y] : Fin 2 → ℂ)) (![x,y] : Fin 2 → ℂ)
 
 private theorem rowGram_psd (x y : ℂ) : (rowGram x y).PosSemidef :=
@@ -90,13 +114,15 @@ theorem mixedMatrix_posSemidef (a b u v : ℝ) (w z : ℂ)
   have hd (a b : ℝ) (ha : 0 < a) (hb : 0 < b) : 0 ≤ d a b := by
     unfold d
     positivity
-  unfold mixedMatrix
-  exact (((((rowGram_psd _ _).smul (show 0 ≤ 9*a by positivity)).add
-    ((rowGram_psd _ _).smul (hc a b ha hb))).add
-    ((rowGram_psd _ _).smul (hd a b ha hb))).add
-    ((rowGram_psd _ _).smul (show 0 ≤ 9*b by positivity))).add
-    ((rowGram_psd _ _).smul (hc b a hb ha))).add
-    ((rowGram_psd _ _).smul (hd b a hb ha))
+  have h1 := (rowGram_psd (u : ℂ) ((f a b : ℂ)*w+(q a b : ℂ)*z)).smul
+    (show 0 ≤ 9*a by positivity)
+  have h2 := (rowGram_psd 0 (w+(j a b : ℂ)*z)).smul (hc a b ha hb)
+  have h3 := (rowGram_psd 0 z).smul (hd a b ha hb)
+  have h4 := (rowGram_psd ((f b a : ℂ)*star w+(q b a : ℂ)*star z) (v : ℂ)).smul
+    (show 0 ≤ 9*b by positivity)
+  have h5 := (rowGram_psd (star w+(j b a : ℂ)*star z) 0).smul (hc b a hb ha)
+  have h6 := (rowGram_psd (star z) 0).smul (hd b a hb ha)
+  exact ((((h1.add h2).add h3).add h4).add h5).add h6
 
 private theorem energy_identity_complex (a b u v r s : ℝ) (w z : ℂ)
     (hab : a+b ≠ 0) :
@@ -112,6 +138,7 @@ private theorem energy_identity_complex (a b u v r s : ℝ) (w z : ℂ)
   field_simp [habC]
   ring
 
+set_option maxRecDepth 8192 in
 private theorem mixed_identity_complex (a b u v r s : ℝ) (w z : ℂ)
     (hab : a+b ≠ 0) :
     3*Matrix.trace ((hermitian u v w)^3) -
@@ -120,24 +147,33 @@ private theorem mixed_identity_complex (a b u v r s : ℝ) (w z : ℂ)
         (2*(a^2+a*b+b^2)/(3*(a+b))) (hermitian r s z)) (hermitian r s z) =
       Matrix.trace (hermitian r s z*mixedMatrix a b u v w z) := by
   have habC : (a : ℂ)+(b : ℂ) ≠ 0 := by exact_mod_cast hab
+  have hbaC : (b : ℂ)+(a : ℂ) ≠ 0 := by simpa only [add_comm] using habC
   simp [traceCoefficient3, hermitian, weightedImage, mixedMatrix, rowGram,
     Matrix.trace, Matrix.mul_apply, Matrix.vecMulVec, Fin.sum_univ_two,
-    Matrix.smul_apply, Complex.real_smul, f, q, c, j, d, pow_succ]
+    Matrix.smul_apply, Matrix.vecHead, Matrix.vecTail, Pi.smul_apply,
+    Complex.real_smul, f, q, c, j, d, pow_succ]
   push_cast
-  field_simp [habC]
+  simp only [map_ofNat, map_add, map_sub, map_mul, map_div₀, map_pow, map_neg,
+    RCLike.conj_ofReal, starRingEnd_self_apply]
+  field_simp [habC, hbaC]
   ring
 
+set_option maxRecDepth 8192 in
 private theorem mass_identity_complex (a b u v : ℝ) (w z : ℂ)
     (hab : a+b ≠ 0) :
     Matrix.trace (mixedMatrix a b u v w z) =
       9*Matrix.trace (hermitian a b 0*(hermitian u v w)^2) +
       (((a-b)^2*(a^2+3*a*b+b^2)/(a+b) : ℝ) : ℂ)*(star z*z) := by
   have habC : (a : ℂ)+(b : ℂ) ≠ 0 := by exact_mod_cast hab
+  have hbaC : (b : ℂ)+(a : ℂ) ≠ 0 := by simpa only [add_comm] using habC
   simp [hermitian, mixedMatrix, rowGram, Matrix.trace, Matrix.mul_apply,
-    Matrix.vecMulVec, Fin.sum_univ_two, Matrix.smul_apply, Complex.real_smul,
+    Matrix.vecMulVec, Fin.sum_univ_two, Matrix.smul_apply, Matrix.vecHead,
+    Matrix.vecTail, Pi.smul_apply, Complex.real_smul,
     f, q, c, j, d, pow_succ]
   push_cast
-  field_simp [habC]
+  simp only [map_ofNat, map_add, map_sub, map_mul, map_div₀, map_pow, map_neg,
+    RCLike.conj_ofReal, starRingEnd_self_apply]
+  field_simp [habC, hbaC]
   ring
 
 /-- The Hessian energy is obtained from the original coefficient, not assumed. -/
@@ -149,7 +185,8 @@ theorem coordinate_energy_identity (a b u v r s : ℝ) (w z : ℂ)
     3*(Matrix.trace (hermitian a b 0*(hermitian u v w)^2)).re +
       ((a-b)^2*(a^2+3*a*b+b^2)/(3*(a+b)))*‖z‖^2 := by
   have h := congrArg Complex.re (energy_identity_complex a b u v r s w z hab)
-  simpa [coefficient2, Complex.mul_re, Complex.sq_norm, Complex.normSq_apply] using h
+  simp only [Complex.add_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im] at h
+  simpa [coefficient2, Complex.sq_norm, Complex.normSq_apply] using h
 
 /-- The full mixed-cubic supplier for arbitrary complex two-level displacement entries. -/
 theorem coordinate_mixed_cubic_bound (a b u v r s : ℝ) (w z : ℂ)
@@ -165,8 +202,10 @@ theorem coordinate_mixed_cubic_bound (a b u v r s : ℝ) (w z : ℂ)
           (2*(a^2+a*b+b^2)/(3*(a+b))) (hermitian r s z)) (hermitian r s z) := by
   have hab : a+b ≠ 0 := ne_of_gt (add_pos ha hb)
   have hN := mixedMatrix_posSemidef a b u v w z ha hb
-  have hp := RHLinalg.trace_mul_nonneg_of_posSemidef kp hN
-  have hn := RHLinalg.trace_mul_nonneg_of_posSemidef kn hN
+  have hp := trace_mul_nonneg_of_posSemidef kp hN
+  have hn := trace_mul_nonneg_of_posSemidef kn hN
+  change 0 ≤ ((1+hermitian r s z)*mixedMatrix a b u v w z).trace.re at hp
+  change 0 ≤ ((1-hermitian r s z)*mixedMatrix a b u v w z).trace.re at hn
   simp only [Matrix.add_mul, Matrix.sub_mul, Matrix.one_mul, Matrix.trace_add,
     Matrix.trace_sub, Complex.add_re, Complex.sub_re] at hp hn
   have hbound : |(Matrix.trace (hermitian r s z*mixedMatrix a b u v w z)).re| ≤
@@ -180,10 +219,13 @@ theorem coordinate_mixed_cubic_bound (a b u v r s : ℝ) (w z : ℂ)
     rw [mass_identity_complex a b u v w z hab,
       energy_identity_complex a b u v r s w z hab]
     push_cast
+    have habC : (a : ℂ)+(b : ℂ) ≠ 0 := by exact_mod_cast hab
+    field_simp [habC]
     ring
   rw [hmass] at hbound
+  rw [← hmixed] at hbound
   simpa [coefficient2, coefficient3, Complex.mul_re, Complex.sub_re] using
-    (hmixed.symm ▸ hbound)
+    hbound
 
 /-- Only the K endpoints are needed for the mixed part. The displacement H is arbitrary
 Hermitian, and the two positive spectral levels need not be distinct. -/
