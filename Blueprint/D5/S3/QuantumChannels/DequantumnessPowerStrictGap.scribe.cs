@@ -111,7 +111,10 @@ internal sealed class DequantumnessPowerStrictGapDocument : IScribeDocumentDefin
                         + "It follows that U < L. If the universal equality held, applying it to the completely positive trace-preserving map φ would identify the two suprema, "
                         + "contradicting L ≤ dequantumnessPower(φ) = restrictedDequantumnessPower(φ) ≤ U < L. "
                         + "Thus this map has strictly greater unrestricted two-state dequantumness power."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("song-li-2022-dequantumness-power-strict-gap"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula QuantumnessFormula()
     {
