@@ -8,7 +8,6 @@
 import D5.S3.Geometry.CompactWedgeFiniteFactor
 import D5.S3.Geometry.EuclideanSphereJoin
 import Mathlib.Analysis.InnerProductSpace.Projection.Reflection
-import Mathlib.Topology.Homeomorph.Quotient
 
 /-! Ordinary quotient wedges and coproducts retain every zero-sphere pole and
 all empty-family basepoints. No finiteness or connectedness hypothesis is used. -/
@@ -63,7 +62,7 @@ private theorem zero_poles (x : StdSphere 0) :
 private instance zeroSphereFinite : Finite (StdSphere 0) := by
   classical
   have h : (Set.univ : Set (StdSphere 0)).Finite :=
-    (Set.toFinite {coordinatePoint 0, negativePoint 0}).subset (by
+    ((Set.finite_singleton (negativePoint 0)).insert (coordinatePoint 0)).subset (by
       intro x _
       simpa only [Set.mem_insert_iff, Set.mem_singleton_iff] using zero_poles x)
   exact Set.finite_univ_iff.mp h
