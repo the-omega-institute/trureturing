@@ -45,7 +45,10 @@ internal sealed class MatharSameParityRecurrenceDocument : IScribeDocumentDefini
                         + "proves the recurrence in both parity cases, including n=4. "
                         + "All coefficients and sequence values in the displayed equality are integers; "
                         + "the indices n-1 and n-2 are natural indices."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a152661-mathar-first-recurrence"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] arguments) =>

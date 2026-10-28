@@ -24,6 +24,10 @@ $$\forall n \in \mathbb{N},\; 4 \le n \Rightarrow ((3 - n) \cdot \operatorname{a
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/MatharSameParityRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a152661-mathar-first-recurrence` (proved) by `D5/S3/Combinatorics/Permutation/MatharSameParityRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a152661-mathar-first-recurrence","declaration_gid":"D5/S3/Combinatorics/Permutation/MatharSameParityRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Emeric Deutsch; R. J. Mathar (2008). *OEIS A152661: permutations whose first two elements have the same parity*. URL: <https://oeis.org/A152661>.
