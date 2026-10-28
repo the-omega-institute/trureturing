@@ -1,0 +1,301 @@
+/- GID: D5/S3/Quantum/Fibers/OriginalCompleteOutputStability
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Fibers/OriginalCompleteOutputStability
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Stability of the actual original complete quantum output on an unchanged reference. -/
+
+import D5.S3.Quantum.Fibers.OriginalReferenceRepeatedMass
+import D5.S3.TotalVariation.Hellinger
+
+/-! The terminal congruence and all five time densities use one common joint input. -/
+noncomputable section
+open scoped ComplexOrder InnerProductSpace BigOperators Matrix TensorProduct
+open Set Filter Topology MeasureTheory intervalIntegral TraceClassFiniteBlocks
+
+namespace D5.S3.Quantum.Fibers.OriginalCompleteOutputStability
+open OriginalControlMarkedJump OriginalReferenceKraus OriginalReferenceOutputMeasure
+open OriginalReferenceRepeatedMass OriginalControlComposition OriginalMarkedConcatenation
+
+variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+
+/-- Forgetting the phase coordinate preserves original admissibility of the height. -/
+theorem height_control (c T : ℝ) (k chi : ℝ → ℝ)
+    (hk : OriginalControl (c,c,1-2*c) T k chi) :
+    OriginalControl (c,c,1-2*c) T k (fun _ => (0 : ℝ)) := by
+  refine ⟨hk.1,hk.2.1,continuousOn_const,hk.2.2.2.1,?_,Or.inl ⟨(original_ac _ _ _ _ hk).1,?_⟩⟩
+  · exact (LipschitzWith.const (0 : ℝ)).lipschitzOnWith.absolutelyContinuousOnInterval.boundedVariationOn
+  · exact (LipschitzWith.const (0 : ℝ)).lipschitzOnWith.absolutelyContinuousOnInterval
+
+/-- The transported terminal character retains the original real phase integral. -/
+def character (c : ℝ) (k chi : ℝ → ℝ) (t : ℝ) (i : Fin 5) : ℂ :=
+  Complex.exp (-(∫ u in (0 : ℝ)..t,
+    FiniteRectangleTransport.phaseWeight (c,c,1-2*c) (k u) i * deriv chi u) * Complex.I)
+
+/-- The genuine successful diagonal, with its terminal phase, on every reference block. -/
+def terminalDiagonal (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ) (i : Fin 5) : ℂ :=
+  (Real.sqrt (survival c k t) : ℂ) *
+    (Real.sqrt (p c (k t) i / p c a i) : ℂ) * character c k chi t i
+
+def terminalKraus (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ) :
+    Blocks (Fin 5) H →L[ℂ] Blocks (Fin 5) H :=
+  diagonalAction (terminalDiagonal c a k chi t)
+
+def terminalOutput (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ)
+    (rho : TraceClass (Blocks (Fin 5) H)) : TraceClass (Blocks (Fin 5) H) :=
+  TraceClass.ofOperator
+    (terminalKraus c a k chi t * rho.1 * (terminalKraus c a k chi t).adjoint)
+    (isTraceClass_mul_mul (TraceClass.isTraceClass_coe rho))
+
+/-- The same complete output norm as IS.7, with no time integration before the norm. -/
+def completeDistance (c a T : ℝ) (k chi l psi : ℝ → ℝ)
+    (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1) : ℝ :=
+  (‖terminalOutput c a k chi T rho - terminalOutput c a l psi T rho‖ +
+    ∑ i : Fin 5, ∫ t in Ioc (0 : ℝ) T,
+      ‖liveFailure c a k i rho hpos t - liveFailure c a l i rho hpos t‖) / 2
+
+/-- The literal failure Kraus with the transported phase, on the same input blocks. -/
+def phasedJump (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ) (i : Fin 5) :
+    Blocks (Fin 5) H →L[ℂ] Blocks (Fin 6) H :=
+  (absorbingJump c a (k t) (survival c k t) (jumpRate c k t) i).comp
+    (diagonalAction (character c k chi t))
+
+private theorem phasedJump_scalar (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ) (i : Fin 5) :
+    phasedJump (H := H) c a k chi t i = character c k chi t i •
+      absorbingJump c a (k t) (survival c k t) (jumpRate c k t) i := by
+  ext x j
+  simp [phasedJump,absorbingJump,referenceJump,diagonalAction_apply,
+    ContinuousLinearMap.comp_apply,coordinate,insertion,PiLp.single_apply,
+    smul_smul,mul_comm,mul_left_comm]
+
+/-- The failure density is the genuine phased Kraus congruence; its phase cancels. -/
+theorem phased_failure_actual (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ) (i : Fin 5)
+    (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1) :
+    (liveFailure c a k i rho hpos t).1 =
+      (phasedJump c a k chi t i).comp
+        (rho.1.comp (phasedJump c a k chi t i).adjoint) := by
+  rw [phasedJump_scalar,ContinuousLinearMap.adjoint_smul]
+  simp only [ContinuousLinearMap.smul_comp,ContinuousLinearMap.comp_smul,smul_smul]
+  have hz : character c k chi t i * star (character c k chi t i) = 1 := by
+    rw [mul_star_eq_norm_sq]
+    simp [character,Complex.norm_exp_ofReal_mul_I]
+  rw [hz,one_smul]
+  exact liveFailure_actual c a k i rho hpos t
+
+/-- Every actual Borel failure event is a Bochner integral on the retained reference. -/
+theorem native_failure_bochner (c a T : ℝ) (k chi : ℝ → ℝ)
+    (hc : c < 1/2) (ha : a ∈ Ioo 0 c)
+    (hk : OriginalControl (c,c,1-2*c) T k chi)
+    (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1)
+    (i : Fin 5) (E : Set ℝ) (_hE : MeasurableSet E) :
+    IntegrableOn (liveFailure c a k i rho hpos) ((Ioc 0 T) ∩ E) := by
+  have hi := (native_mode_balance c a T k hc ha (height_control c T k chi hk)
+    i 0 T ⟨le_rfl,hk.1⟩ ⟨hk.1,le_rfl⟩ hk.1).1
+  exact (hi.ofReal.smul_const _).mono_set inter_subset_left
+
+/-- A trace-class congruence, also for nonpositive mixed terms in a difference. -/
+def congruence (A : H →L[ℂ] H) (rho : TraceClass H) : TraceClass H :=
+  TraceClass.ofOperator (A * rho.1 * A.adjoint)
+    (isTraceClass_mul_mul (TraceClass.isTraceClass_coe rho))
+
+private theorem congruence_difference (A B : H →L[ℂ] H) (rho : TraceClass H) :
+    ‖congruence A rho - congruence B rho‖ ≤
+      (‖A‖ + ‖B‖) * ‖A-B‖ * ‖rho‖ := by
+  let X : TraceClass H := TraceClass.ofOperator ((A-B) * rho.1 * A.adjoint)
+    (isTraceClass_mul_mul (TraceClass.isTraceClass_coe rho))
+  let Y : TraceClass H := TraceClass.ofOperator (B * rho.1 * (A-B).adjoint)
+    (isTraceClass_mul_mul (TraceClass.isTraceClass_coe rho))
+  have he : congruence A rho - congruence B rho = X + Y := by
+    apply Subtype.ext
+    change A * rho.1 * A.adjoint - B * rho.1 * B.adjoint =
+      (A-B) * rho.1 * A.adjoint + B * rho.1 * (A-B).adjoint
+    rw [ContinuousLinearMap.adjoint_sub]
+    noncomm_ring
+  have hx : ‖X‖ ≤ ‖A-B‖ * ‖rho‖ * ‖A‖ := by
+    change traceNorm _ _ ≤ ‖A-B‖ * traceNorm rho.1 _ * ‖A‖
+    simpa only [ContinuousLinearMap.adjoint.norm_map] using
+      (traceNorm_mul_mul_le (TraceClass.isTraceClass_coe rho)
+        (isTraceClass_mul_mul (A := A-B) (B := A.adjoint) (TraceClass.isTraceClass_coe rho)))
+  have hy : ‖Y‖ ≤ ‖B‖ * ‖rho‖ * ‖A-B‖ := by
+    change traceNorm _ _ ≤ ‖B‖ * traceNorm rho.1 _ * ‖A-B‖
+    simpa only [ContinuousLinearMap.adjoint.norm_map] using
+      (traceNorm_mul_mul_le (TraceClass.isTraceClass_coe rho)
+        (isTraceClass_mul_mul (A := B) (B := (A-B).adjoint) (TraceClass.isTraceClass_coe rho)))
+  rw [he]
+  exact (norm_add_le X Y).trans ((add_le_add hx hy).trans_eq (by ring))
+
+private theorem diagonal_norm_le {m : ℕ} (d : Fin m → ℂ) (C : ℝ)
+    (hC : 0 ≤ C) (hd : ∀ i, ‖d i‖ ≤ C) :
+    ‖diagonalAction (H := H) d‖ ≤ C := by
+  apply ContinuousLinearMap.opNorm_le_bound _ hC
+  intro x
+  apply (sq_le_sq₀ (norm_nonneg _) (mul_nonneg hC (norm_nonneg _))).mp
+  rw [PiLp.norm_sq_eq_of_L2, mul_pow, PiLp.norm_sq_eq_of_L2, Finset.mul_sum]
+  apply Finset.sum_le_sum
+  intro i hi
+  rw [diagonalAction_apply,norm_smul,mul_pow]
+  exact mul_le_mul_of_nonneg_right
+    ((sq_le_sq₀ (norm_nonneg _) hC).mpr (hd i)) (sq_nonneg _)
+
+/-- Native mode balance makes every actual surviving diagonal a contraction. -/
+theorem native_mass_le (c a T : ℝ) (k chi : ℝ → ℝ)
+    (hc : c < 1/2) (ha : a ∈ Ioo 0 c)
+    (hk : OriginalControl (c,c,1-2*c) T k chi) (h0 : k 0 = a)
+    (t : ℝ) (ht : t ∈ Icc 0 T) (i : Fin 5) :
+    survival c k t * p c (k t) i ≤ p c a i := by
+  have h := (native_mode_balance c a T k hc ha (height_control c T k chi hk)
+    i 0 t ⟨le_rfl,hk.1⟩ ht ht.1).2
+  have hn : 0 ≤ ∫ u in Ioc (0 : ℝ) t, modeCoefficient c a k i u :=
+    integral_nonneg (fun _ => Complex.normSq_nonneg _)
+  rw [h,h0] at hn
+  simp only [OriginalControlSurvivalInstability.survival,integral_same,neg_zero,Real.exp_zero,one_mul] at hn
+  exact sub_nonneg.mp ((div_nonneg_iff_of_pos (p_pos c a hc ha i)).mp hn)
+
+private theorem terminal_norm (c a T : ℝ) (k chi : ℝ → ℝ)
+    (hc : c < 1/2) (ha : a ∈ Ioo 0 c)
+    (hk : OriginalControl (c,c,1-2*c) T k chi) (h0 : k 0 = a) :
+    ‖terminalKraus (H := H) c a k chi T‖ ≤ 1 := by
+  apply diagonal_norm_le _ _ zero_le_one
+  intro i
+  have hp := p_pos c (k T) hc
+    (OriginalRepeatedMarkedLaw.native_bounds c T 0 k (height_control c T k chi hk) T ⟨hk.1,le_rfl⟩) i
+  have hd := p_pos c a hc ha i
+  have hs := (Real.exp_pos (-(∫ u in (0 : ℝ)..T,hazard c k u))).le
+  have hb := native_mass_le c a T k chi hc ha hk h0 T ⟨hk.1,le_rfl⟩ i
+  change ‖(Real.sqrt (survival c k T) : ℂ) *
+    (Real.sqrt (p c (k T) i / p c a i) : ℂ) * character c k chi T i‖ ≤ 1
+  rw [norm_mul,norm_mul,show ‖character c k chi T i‖ = 1 by
+    simp [character,Complex.norm_exp_ofReal_mul_I],mul_one,
+    Complex.norm_real,Complex.norm_real,Real.norm_eq_abs,Real.norm_eq_abs,
+    abs_of_nonneg (Real.sqrt_nonneg _),abs_of_nonneg (Real.sqrt_nonneg _),
+    ← Real.sqrt_mul hs]
+  apply Real.sqrt_le_one.mpr
+  rw [← mul_div_assoc]
+  exact (div_le_one hd).mpr hb
+
+private theorem diagonal_sub {m : ℕ} (d e : Fin m → ℂ) :
+    diagonalAction (H := H) d - diagonalAction e = diagonalAction (fun i => d i-e i) := by
+  ext x i
+  simp [diagonalAction_apply,sub_smul]
+
+private theorem diagonal_scalar_lower {m : ℕ} (d : Fin m → ℂ) (i : Fin m) :
+    ‖d i‖ ≤ ‖diagonalAction (H := ℂ) d‖ := by
+  let x : Blocks (Fin m) ℂ := PiLp.single 2 i 1
+  have hx : ‖x‖ = 1 := by simp [x]
+  have he : diagonalAction (H := ℂ) d x = PiLp.single 2 i (d i) := by
+    ext j
+    simp [diagonalAction_apply,x,PiLp.single_apply]
+    split_ifs with h
+    · subst j; simp
+    · simp
+  have h := (diagonalAction (H := ℂ) d).le_opNorm x
+  simpa [he,hx] using h
+
+private theorem amplified_difference_le (d e : Fin 5 → ℂ) :
+    ‖diagonalAction (H := H) d-diagonalAction e‖ ≤
+      ‖diagonalAction (H := ℂ) d-diagonalAction e‖ := by
+  rw [diagonal_sub,diagonal_sub]
+  exact diagonal_norm_le _ _ (norm_nonneg _) (diagonal_scalar_lower _)
+
+/-- The terminal error is the operator norm on the original five-dimensional system. -/
+def krausError (c a T : ℝ) (k chi l psi : ℝ → ℝ) : ℝ :=
+  ‖terminalKraus (H := ℂ) c a k chi T-terminalKraus c a l psi T‖
+
+/-- Source-family density, with its original unnormalized initial mode weight. -/
+def lossDensity (c a : ℝ) (k : ℝ → ℝ) (i : Fin 5) (t : ℝ) : ℝ :=
+  modeCoefficient c a k i t * p c a i
+
+def densityError (c a T : ℝ) (k l : ℝ → ℝ) (i : Fin 5) : ℝ :=
+  (∫ t in Ioc (0 : ℝ) T, |lossDensity c a k i t-lossDensity c a l i t|) / p c a i
+
+private theorem densityError_eq (c a T : ℝ) (k l : ℝ → ℝ)
+    (hc : c < 1/2) (ha : a ∈ Ioo 0 c) (i : Fin 5) :
+    densityError c a T k l i =
+      ∫ t in Ioc (0 : ℝ) T, |modeCoefficient c a k i t-modeCoefficient c a l i t| := by
+  simp only [densityError,lossDensity,← sub_mul,abs_mul,
+    abs_of_pos (p_pos c a hc ha i),integral_mul_const]
+  exact mul_div_cancel_right₀ _ (p_pos c a hc ha i).ne'
+
+private theorem actual_failure_error (c a T : ℝ) (k l : ℝ → ℝ)
+    (hc : c < 1/2) (ha : a ∈ Ioo 0 c) (i : Fin 5)
+    (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1) :
+    (∫ t in Ioc (0 : ℝ) T,
+      ‖liveFailure c a k i rho hpos t-liveFailure c a l i rho hpos t‖) =
+      densityError c a T k l i *
+        ‖TraceClass.ofOperator (compression rho.1 i)
+          (compression_traceClass (TraceClass.isTraceClass_coe rho) hpos i)‖ := by
+  rw [densityError_eq c a T k l hc ha i]
+  simp_rw [liveFailure_diff_norm,modeOutput,← sub_smul,← Complex.ofReal_sub,
+    norm_smul,Complex.norm_real,Real.norm_eq_abs]
+  rw [integral_mul_const]
+
+/-- Complete-output stability on every positive joint input, retaining the same reference. -/
+theorem complete_output_bound (c a T : ℝ) (k chi l psi : ℝ → ℝ)
+    (hc : c < 1/2) (ha : a ∈ Ioo 0 c)
+    (hk : OriginalControl (c,c,1-2*c) T k chi)
+    (hl : OriginalControl (c,c,1-2*c) T l psi) (hk0 : k 0=a) (hl0 : l 0=a)
+    (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1)
+    (b : ℝ) (hb : ∀ i : Fin 5, densityError c a T k l i ≤ b) :
+    completeDistance c a T k chi l psi rho hpos ≤
+      (krausError c a T k chi l psi + b/2) * ‖rho‖ := by
+  have hterminal : ‖terminalOutput c a k chi T rho-terminalOutput c a l psi T rho‖ ≤
+      2 * krausError c a T k chi l psi * ‖rho‖ := by
+    have h := congruence_difference (terminalKraus c a k chi T)
+      (terminalKraus c a l psi T) rho
+    change ‖terminalOutput c a k chi T rho-terminalOutput c a l psi T rho‖ ≤ _ at h
+    have hk1 := terminal_norm (H := H) c a T k chi hc ha hk hk0
+    have hl1 := terminal_norm (H := H) c a T l psi hc ha hl hl0
+    have he : ‖terminalKraus (H := H) c a k chi T-terminalKraus c a l psi T‖ ≤
+        krausError c a T k chi l psi := amplified_difference_le _ _
+    calc
+      _ ≤ (‖terminalKraus (H := H) c a k chi T‖+
+        ‖terminalKraus (H := H) c a l psi T‖) *
+        ‖terminalKraus (H := H) c a k chi T-terminalKraus c a l psi T‖ * ‖rho‖ := h
+      _ ≤ (1+1) * krausError c a T k chi l psi * ‖rho‖ := by
+        gcongr
+      _ = _ := by ring
+  have hfail : (∑ i : Fin 5, ∫ t in Ioc (0 : ℝ) T,
+      ‖liveFailure c a k i rho hpos t-liveFailure c a l i rho hpos t‖) ≤ b*‖rho‖ := by
+    simp_rw [actual_failure_error c a T k l hc ha]
+    rw [← actual_output_mass_partition rho hpos,Finset.mul_sum]
+    exact Finset.sum_le_sum (fun i _ => mul_le_mul_of_nonneg_right (hb i) (norm_nonneg _))
+  dsimp only [completeDistance]
+  nlinarith [norm_nonneg rho]
+
+universe v
+
+/-- The supremum over every normalized live input and every unchanged Hilbert reference. -/
+def completeOperationalDistance (c a T : ℝ) (k chi l psi : ℝ → ℝ) : ℝ :=
+  sSup {x : ℝ | ∃ s : JointState.{v} 5,
+    x = completeDistance c a T k chi l psi s.rho s.positive}
+
+/-- IS.27, uniformly over arbitrary, possibly entangled or nonseparable, references. -/
+theorem complete_operational_bound (c a T : ℝ) (k chi l psi : ℝ → ℝ)
+    (hc : c < 1/2) (ha : a ∈ Ioo 0 c)
+    (hk : OriginalControl (c,c,1-2*c) T k chi)
+    (hl : OriginalControl (c,c,1-2*c) T l psi) (hk0 : k 0=a) (hl0 : l 0=a) :
+    completeOperationalDistance.{v} c a T k chi l psi ≤
+      krausError c a T k chi l psi +
+        (Finset.univ.sup' Finset.univ_nonempty (densityError c a T k l))/2 := by
+  apply csSup_le
+  · let rho : TraceClass (Blocks (Fin 5) witnessReference.{v}) :=
+      TraceClass.ofOperator (embedding witnessBase.{v}.1 (0 : Fin 5))
+        (embedding_traceClass (TraceClass.isTraceClass_coe _) witnessBase_pos _)
+    have hp : 0 ≤ rho.1 := by
+      apply ContinuousLinearMap.nonneg_iff_isPositive.mpr
+      simpa only [rho,TraceClass.ofOperator_coe,embedding,insertion,
+        ContinuousLinearMap.comp_assoc] using
+        (ContinuousLinearMap.nonneg_iff_isPositive.mp witnessBase_pos).adjoint_conj
+          (coordinate (0 : Fin 5))
+    have hn : ‖rho‖ = 1 :=
+      (embedding_trace_norm (TraceClass.isTraceClass_coe _) witnessBase_pos (0 : Fin 5)).2.trans
+        witnessBase_norm
+    let s : JointState.{v} 5 := ⟨witnessReference.{v},rho,hp,hn⟩
+    exact ⟨_,s,rfl⟩
+  · rintro x ⟨s,rfl⟩
+    have h := complete_output_bound c a T k chi l psi hc ha hk hl hk0 hl0
+      s.rho s.positive _ (fun i => Finset.le_sup' _ (Finset.mem_univ i))
+    simpa only [s.normalized,mul_one] using h
+
+end D5.S3.Quantum.Fibers.OriginalCompleteOutputStability
