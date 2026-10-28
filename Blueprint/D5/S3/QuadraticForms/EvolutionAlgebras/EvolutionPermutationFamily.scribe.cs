@@ -33,13 +33,14 @@ internal sealed class EvolutionPermutationFamilyDocument : IScribeDocumentDefini
 {
     private const string Prefix="D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionPermutationFamily.";
     private static AssessedProvenance Source => AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuadraticForms/kaygorodov2026evolution"));
-    private static Formula BasisVector(Formula n,Formula i) => SF.Call("apply",
+    private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula BasisVector(Formula n,Formula i) => App(
         new Formula.Apply(Seq(Operatorname,Grp(F.Id("Pi")),Dot,Operatorname,Grp(F.Id("basisFun"))),
             [SF.V("Complex"),SF.Index(n)]),i);
     private static Formula MixedStatement(Formula n,Formula mu) => SF.PermContext(
         SF.All("i",SF.Index(n),SF.All("j",SF.Index(n),new Formula.Logic(
             new Formula.Relation(SF.V("i"),FormulaRelationOperator.NotEqual,SF.V("j")),
-            FormulaLogicOperator.Implies,SF.Eq(SF.Call("apply",mu,BasisVector(n,SF.V("i")),BasisVector(n,SF.V("j"))),D(0))))));
+            FormulaLogicOperator.Implies,SF.Eq(App(mu,BasisVector(n,SF.V("i")),BasisVector(n,SF.V("j"))),D(0))))));
     public DocumentDefinition Create()
     {
         var n=SF.V("n");var sigma=SF.V("sigma");var tau=SF.V("tau");var x=SF.V("x");var y=SF.V("y");
@@ -57,8 +58,8 @@ internal sealed class EvolutionPermutationFamilyDocument : IScribeDocumentDefini
                     "The product is P_sigma applied to coordinatewise multiplication. The original coordinateProduct construction supplies bilinearity. "
                     + "Its basis squares are e_i squared=e_(sigma(i)) and distinct basis vectors multiply to zero. The structure map is invertible, so all pair products span the whole space.",DescribeRole.Definition,Source),
                 SF.Desc(Prefix,"permutationLinear_basis","The image of each coordinate basis vector",SF.PermContext(
-                    SF.All("i",SF.Index(n),SF.Eq(Apply(SF.Call("permutationLinear",sigma),BasisVector(n,SF.V("i"))),
-                        BasisVector(n,Apply(sigma,SF.V("i")))))),
+                    SF.All("i",SF.Index(n),SF.Eq(App(SF.Call("permutationLinear",sigma),BasisVector(n,SF.V("i"))),
+                        BasisVector(n,App(sigma,SF.V("i")))))),
                     "For every n, permutation sigma and index i, permutationLinear sigma sends Pi.basisFun at i to Pi.basisFun at sigma(i). This identity identifies the support permutation of explicit automorphisms."),
                 SF.Desc(Prefix,"permutation_mixed","Products of distinct basis vectors vanish",MixedStatement(n,mu),
                     "For every n, permutation sigma and distinct i,j in Fin n, permutationProduct sigma applied to the two coordinate basis vectors is zero. This supplies the natural basis for the cyclic algebras."),
@@ -66,7 +67,7 @@ internal sealed class EvolutionPermutationFamilyDocument : IScribeDocumentDefini
                     SF.All("i",SF.Index(n),SF.All("j",SF.Index(n),new Formula.Logic(
                         SF.Call("supportRelation",mu,new Formula.Apply(Seq(Operatorname,Grp(F.Id("Pi")),Dot,Operatorname,Grp(F.Id("basisFun"))),
                             [SF.V("Complex"),SF.Index(n)]),SF.V("i"),SF.V("j")),
-                        FormulaLogicOperator.Iff,SF.Eq(SF.V("j"),Apply(sigma,SF.V("i"))))))),
+                        FormulaLogicOperator.Iff,SF.Eq(SF.V("j"),App(sigma,SF.V("i"))))))),
                     "For every n, permutation sigma and indices i,j, the supportRelation of permutationProduct sigma in Pi.basisFun has an arrow from i to j exactly when j=sigma(i). The cyclic family uses this to establish strong connectivity."),
                 SF.Desc(Prefix,"centralizerLift","Every commuting permutation lifts",SF.PermContext(
                     SF.All("tau",SF.Call("centralizer",sigma),SF.Call("Member",SF.Call("centralizerLift",sigma,tau),SF.Aut(mu)))),

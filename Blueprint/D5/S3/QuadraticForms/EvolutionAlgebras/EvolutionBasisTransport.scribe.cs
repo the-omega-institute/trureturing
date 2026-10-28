@@ -45,9 +45,10 @@ internal sealed class EvolutionBasisTransportDocument : IScribeDocumentDefinitio
     private static Formula ReindexedNatural()
     {
         var complex=SF.V("Complex");var i=SF.V("I");var n=SF.V("n");
+        var type = Seq(Operatorname, Grp(F.Id("Type")));
         var reindexed=SF.Call("dimensionBasis",SF.V("hn"),Basis);
-        return SF.All("A",SF.Type,Instance(SF.Call("AddCommGroup",A),Instance(SF.Call("Module",complex,A),
-            Instance(SF.Call("FiniteDimensional",complex,A),SF.All("I",SF.Type,Instance(SF.Call("Fintype",i),
+        return SF.All("A",type,Instance(SF.Call("AddCommGroup",A),Instance(SF.Call("Module",complex,A),
+            Instance(SF.Call("FiniteDimensional",complex,A),SF.All("I",type,Instance(SF.Call("Fintype",i),
                 SF.All("n",SF.V("Nat"),SF.All("hn",SF.Eq(Apply(Qualified("Module","finrank"),complex,A),n),
                     SF.All("mu",SF.Call("LinearMap",complex,A,SF.Call("LinearMap",complex,A,A)),
                         SF.All("b",Apply(Qualified("Module","Basis"),i,complex,A),

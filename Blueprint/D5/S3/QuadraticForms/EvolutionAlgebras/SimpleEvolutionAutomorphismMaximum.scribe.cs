@@ -8,6 +8,7 @@ internal sealed class SimpleEvolutionAutomorphismMaximumDocument : IScribeDocume
 {
     private const string Prefix = "D5/S3/QuadraticForms/EvolutionAlgebras/SimpleEvolutionAutomorphismMaximum.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QuadraticForms/kaygorodov2026evolution");
+    private static readonly LibraryNoteRef SimplicitySource = LibraryNoteRef.Create("D5/L/QuadraticForms/cabrera2016evolution");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The full automorphism maximum for simple complex evolution algebras.",
@@ -18,7 +19,7 @@ internal sealed class SimpleEvolutionAutomorphismMaximumDocument : IScribeDocume
                 DescribeId.Create("simple"), DeclarationHandle.Create(Prefix + "IsSimple"), H("Simplicity"),
                 StatementSource.FromAuthor(Disp(VectorContext(X("A"),
                     All(X("mu"), Product(X("A")), Eq(App(Name("IsSimple"), X("mu")), SimpleBody()))))),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromLiterature(SimplicitySource),
                 Blocks(Paragraph(Text("The survey's Theorem 6 uses simplicity in the usual ideal sense. Its cited Cabrera Casado, Siles Molina and Velasco source, arXiv:1601.01832v2, section 4, page 18, states: “We recall that an algebra A is simple if A² ≠ 0 and 0 is the only proper ideal.” Here A² is productSpan, and ideals are all complex vector subspaces absorbing products on both sides. They are not restricted to spans of natural-basis vectors."))),
                 DescribeRole.Definition),
             Describe.Lean(
