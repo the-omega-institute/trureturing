@@ -44,11 +44,23 @@ internal sealed class BarczyPalesJensenConverseDocument : IScribeDocumentDefinit
                 Mul(Inverse(Typed(n, Real)), Typed(App(x, X("j")), Real))),
             Method(hI, "sum_mem"));
 
-    private static Formula IntervalRow(Formula hI, Formula p, Formula x, Formula i) =>
-        SubtypeValue(
+    private static Formula IntervalRow(Formula hI, Formula p, Formula hP, Formula x, Formula i)
+    {
+        var stochastic = Seq(Operatorname, Grp(X("mem"), Underscore,
+            Grp(X("doublyStochastic"), Underscore, Grp(X("iff"), Underscore, Grp(X("sum"))))));
+        var components = Parenthesized(App(Method(stochastic, "mp"), hP));
+        var nonnegative = Parenthesized(Seq(X("fun"), Sp, X("j"), Sp,
+            new Formula.Placeholder(), Sp, Mapsto, Sp,
+            App(Seq(components, Dot, D(1)), i, X("j"))));
+        var rowSum = App(Seq(components, Dot, D(2), Dot, D(1)), i);
+        var inputMemberships = Parenthesized(Seq(X("fun"), Sp, X("j"), Sp,
+            new Formula.Placeholder(), Sp, Mapsto, Sp,
+            Method(Parenthesized(App(x, X("j"))), "property")));
+        return SubtypeValue(
             SumOver("j", C("Fin", X("n")),
                 Mul(App(App(p, i), X("j")), Typed(App(x, X("j")), Real))),
-            Method(hI, "sum_mem"));
+            App(Method(hI, "sum_mem"), nonnegative, rowSum, inputMemberships));
+    }
 
     private static Formula Vector2(Formula u, Formula v) =>
         Seq(Bang, OpenBracket, u, Comma, Sp, v, CloseBracket);
@@ -61,7 +73,7 @@ internal sealed class BarczyPalesJensenConverseDocument : IScribeDocumentDefinit
             var hI = X("hI");
             var hypothesis = All("x", new Formula.TypeArrow(FinN, interval),
                 Le(App(f, IntervalMean(hI, X("n"), x)),
-                    Fr(SumOver("i", FinN, App(f, IntervalRow(hI, p, x, X("i")))), X("n"))));
+                    Fr(SumOver("i", FinN, App(f, IntervalRow(hI, p, X("hP"), x, X("i")))), X("n"))));
             var midpoint = All("u", interval, All("v", interval,
                 Le(App(f, IntervalMean(hI, D(2), Vector2(X("u"), X("v")))),
                     Fr(Add(App(f, X("u")), App(f, X("v"))), D(2)))));
