@@ -25,11 +25,12 @@ The following is the complete question and its conventions as recorded in prereg
 > Current v4 places the order>=2 convention after Definition 2. V1 has no corresponding global lower-order restriction; its unrestricted full question is preserved separately, not silently narrowed. The proposed two-vertex witness obeys both versions and they count as one target. V3 withdrew v2 because it had been uploaded without consulting all authors and contained incorrect results; current v4 is restored and retains the question.
 
 The formal claim is the literal closed assertion
-$$
-orall (V : Type) [operatorname{Finite}(V)], 2 le operatorname{Nat.card}(V) 	o
-orall H : operatorname{SimpleGraph}(V),exists (W : Type) (_ : operatorname{Finite}(W)) (G : operatorname{SimpleGraph}(W)),2 le operatorname{Nat.card}(W) land
-exists pi : operatorname{GCPartition}(G),operatorname{Nonempty}(operatorname{globalCoalitionGraph}(G,pi) simeq_g H).
-$$
+```lean
+def claim : Prop :=
+  ∀ (V : Type) [Finite V], 2 ≤ Nat.card V → ∀ H : SimpleGraph V,
+    ∃ (W : Type) (_ : Finite W) (G : SimpleGraph W), 2 ≤ Nat.card W ∧
+      ∃ π : GCPartition G, Nonempty (globalCoalitionGraph G π ≃g H)
+```
 
 The model retains actual finite Type-valued target and host types, native simple graphs and native loopless complements, genuine `Setoid.IsPartition` nonempty/disjoint-cover structure, and a distinct actual coalition partner for every actual block. The v1 unrestricted-order alias is a source boundary, not a second theorem or credit.
 
