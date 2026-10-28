@@ -68,6 +68,10 @@ $$\forall a: \mathbb{Z}, \forall b: \mathbb{Z}, \left(\left(a \neq 0\right) \lor
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/GibonacciPowerGcdNormalization.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mbirika-spilker-gibonacci-power-gcd-normalization` (proved) by `D5/S1/Recurrence/GibonacciPowerGcdNormalization.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mbirika-spilker-gibonacci-power-gcd-normalization","declaration_gid":"D5/S1/Recurrence/GibonacciPowerGcdNormalization.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* aBa Mbirika; Jürgen Spilker (2022). *GCD of sums of k consecutive squares of generalized Fibonacci numbers*. DOI: [10.1080/00150517.2022.12427444](https://doi.org/10.1080/00150517.2022.12427444). URL: <https://arxiv.org/abs/2204.12626v2>.

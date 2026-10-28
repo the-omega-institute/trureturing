@@ -49,14 +49,17 @@ internal sealed class GibonacciPowerGcdNormalizationDocument : IScribeDocumentDe
                 + "antisymmetry and cancellation by the positive scalar d raised to e give "
                 + "the displayed equality. These are applications of general Mathlib algebra "
                 + "to the source question; no assertion of literature priority is made.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mbirika-spilker-gibonacci-power-gcd-normalization"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role) => Describe.Lean(
+        string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("gibonacci-power-gcd-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Z => Seq(Mathbb, Grp(F.Id("Z")));
     private static Formula N => Seq(Mathbb, Grp(F.Id("N")));
