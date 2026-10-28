@@ -1,8 +1,8 @@
-# Right-hand total-domination seed roots
+# Small-shift and unbounded total-domination roots
 
 ## Abstract
 
-Total-domination seed roots approach minus one from the right in actual finite graphs.
+Actual total-domination roots approach minus one from the right and are unbounded to the left.
 
 A total dominating set S is an actual finite subset of the graph vertices. Every vertex v, including every selected vertex, must have a neighbour u in S. No independence, minimality, ordinary closed-neighbourhood domination, or connectedness restriction on S is substituted. The polynomial coefficients count exactly these subsets.
 
@@ -124,7 +124,7 @@ $$\forall (s:\mathbb{N}), ((3 \le s) \land (\operatorname{Odd}\left(s\right))) \
 
 *Commentary.*
 
-The same s and interval witness r satisfy totalPolynomial(seedGraph(s^2)).IsRoot r, that actual polynomial is nonzero, and every actual vertex has a neighbour. Nonzeroness follows from its value -1 at -1. Thus selected vertices obey the total condition in a real graph; no zero polynomial or density hypothesis supplies the conclusion. The underlying graph has 5s^2+4 vertices. This theorem is one auxiliary step toward Shao-Zhao arXiv:2609.06569v5 section 5.2 Open Problem 2, registered as issue 23313. It does not prove roots dense in C: independent-fibre substitution, large negative seeds, complex radial/angular approximation and the final Fin n witness assembly remain outside these statements.
+The same s and interval witness r satisfy totalPolynomial(seedGraph(s^2)).IsRoot r, that actual polynomial is nonzero, and every actual vertex has a neighbour. Nonzeroness follows from its value -1 at -1. Thus selected vertices obey the total condition in a real graph; no zero polynomial or density hypothesis supplies the conclusion. The underlying graph has 5s^2+4 vertices. This theorem is one auxiliary step toward Shao-Zhao arXiv:2609.06569v5 section 5.2 Open Problem 2, registered as issue 23313. It does not prove roots dense in C: independent-fibre substitution, complex radial/angular approximation and final whole-plane assembly remain outside this statement.
 
 **Theorem 1.11 (Exact finite labels).**
 
@@ -172,7 +172,7 @@ $$\operatorname{WholePlaneDensity}\left(\right)$$
 
 *Commentary.*
 
-This proposition is defined, with no theorem asserting it: for every complex z and every positive real epsilon, there exist n : N, G : SimpleGraph (Fin n), and w : C such that n>=2, every vertex has a neighbour, complexPolynomial G is nonzero, w is a root of that same polynomial, and norm(w-z)<epsilon. Every selected vertex must have a selected neighbour, as encoded in IsTotal. This retains the original all-z/all-epsilon, unbounded-order question.
+The unchanged proposition, consumed by TotalDominationDensity.result, states: for every complex z and every positive real epsilon, there exist n : N, G : SimpleGraph (Fin n), and w : C such that n>=2, every vertex has a neighbour, complexPolynomial G is nonzero, w is a root of that same polynomial, and norm(w-z)<epsilon. Every selected vertex must have a selected neighbour, as encoded in IsTotal. This retains the original all-z/all-epsilon, unbounded-order question.
 
 **Theorem 1.15 (Complex roots accumulating at minus one).**
 
@@ -184,12 +184,85 @@ $$\forall (epsilon:\mathbb{R}), (0 < epsilon) \Rightarrow (\operatorname{actualC
 
 *Commentary.*
 
-For every positive real epsilon there exist n, G : SimpleGraph (Fin n), and r : R such that n>=2, every vertex has a neighbour, complexPolynomial G is nonzero, the complex cast of r is its root, 0<1+r, and norm((r:C)-(-1:C))<epsilon. The same actual graph supplies all clauses. This follows by the injective real-to-complex coefficient map from arbitrarily_small_positive_shift. It proves accumulation at one point, while WholePlaneDensity remains unproved.
+For every positive real epsilon there exist n, G : SimpleGraph (Fin n), and r : R such that n>=2, every vertex has a neighbour, complexPolynomial G is nonzero, the complex cast of r is its root, 0<1+r, and norm((r:C)-(-1:C))<epsilon. The same actual graph supplies all clauses. This follows by the injective real-to-complex coefficient map from arbitrarily_small_positive_shift. It proves accumulation at one point and supplies the centre case of TotalDominationDensity.result.
+
+**Definition 1.16 (Disjoint-edge vertex types).**
+
+$$\operatorname{EdgeBase}\left(m\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.EdgeBase` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural m, EdgeBase 0 is Fin 2 and EdgeBase (m+1) is Fin 2 sum EdgeBase m. It has exactly 2(m+1) actual vertices and explicit finite and nonempty instances.
+
+**Definition 1.17 (The actual disjoint matching).**
+
+$$\operatorname{edgeBaseGraph}\left(m\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.edgeBaseGraph` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The base at zero is the complete graph on two vertices. Each successor takes the disjoint union with another complete two-vertex graph. Actual total domination selects both ends of every edge, so its actual subset polynomial is X^(2(m+1)). This known finite identity is consumed by the unbounded-root construction.
+
+**Definition 1.18 (The actual friendship graph).**
+
+$$\operatorname{friendshipGraph}\left(m\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.friendshipGraph` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This is coneGraph(edgeBaseGraph m), on Unit sum EdgeBase m. All m+1 triangles share exactly the hub. The nonempty base and hub give a neighbour to every vertex, including the hub.
+
+**Definition 1.19 (The known friendship expression).**
+
+$$\operatorname{friendshipPolynomial}\left(m\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.friendshipPolynomial` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural m this is X*((1+X)^(2(m+1))-1)+X^(2(m+1)) in R[X]. The private friendship_graph_polynomial proves literal equality with totalPolynomial(friendshipGraph m) by actual subset counting. This is an attributed cone/friendship ingredient, not a separate new-identity or resolution claim.
+
+**Theorem 1.20 (Actual total-domination roots are unbounded below).**
+
+$$\operatorname{friendshipRootUnbounded}\left(R\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.friendship_root_unbounded` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real R>2 there exist a natural m and a real r<-R such that r is a root of totalPolynomial(friendshipGraph m), that same actual polynomial is nonzero, and every vertex has a neighbour. Put a=(1-1/R)^2 in [0,1), and choose m with a^(m+1)<1/R using the pinned Archimedean power theorem. At -R the polynomial equals R^(2(m+1))*(1-R*a^(m+1))+R>0. At -Q, Q=2(m+1)+2, Bernoulli gives Q*(1-1/Q)^(2(m+1))>=2, making its value negative. The same Bernoulli inequality implies R<=Q. Strict IVT on [-Q,-R] supplies r. The positive endpoint value proves nonzeroness. This supplies an unbounded real seed family for the unchanged whole target; it asserts no arbitrary complex approximation.
+
+**Theorem 1.21 (Unbounded roots with exact finite labels).**
+
+$$\operatorname{labelledUnboundedNegativeRoots}\left(R\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.labelled_unbounded_negative_roots` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real R>2 there exist n, G : SimpleGraph (Fin n), and r : R with n>=2, r<-R, every vertex having a neighbour, complexPolynomial G nonzero, and the complex cast of r a root of that same actual polynomial. The inverse Fintype.equivFin transports the friendship graph, its actual subsets, adjacency and cardinalities. The injective real-to-complex coefficient map preserves nonzeroness and roots. The graph has 2(m+1)+1 vertices for the m selected by friendship_root_unbounded.
 
 The cycle, triangle, cone and disjoint-union identities are attributed ingredients: arXiv:1605.02222 and the H-join framework of Subramanian and Selvakumar, Filomat 2025. No worldwide priority or independent admission claim is made for this seed argument. The complete external question remains the density of nonzero total-domination roots of finite isolate-free graphs throughout the complex plane.
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.EdgeBase`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.IsTotal`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.SeedBase`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.WholePlaneDensity`
@@ -198,7 +271,12 @@ The cycle, triangle, cone and disjoint-union identities are attributed ingredien
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.complexPolynomial`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.complex_seed_accumulation`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.coneGraph`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.edgeBaseGraph`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.friendshipGraph`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.friendshipPolynomial`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.friendship_root_unbounded`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.labelled_seed_root`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.labelled_unbounded_negative_roots`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.seedBaseGraph`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.seedGraph`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.seedPolynomial`
