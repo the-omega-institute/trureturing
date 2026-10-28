@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Complexity;
 internal sealed class PSSValuationRefutationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Words/Complexity/PSSValuationRefutation.";
-    private const string Note = "D5/L/Combinatorics/popolishallitstipulanti2024additive";
+    private const string Note = "D5/L/Words/popolishallitstipulanti2024additive";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A single ternary infinite word has fewer additive classes than original-symbol "
