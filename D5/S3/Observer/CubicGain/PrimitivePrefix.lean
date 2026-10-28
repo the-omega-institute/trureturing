@@ -106,7 +106,7 @@ private theorem arithmetic_mul (H K : Mat) (hH : Arithmetic H)
   choose W hW using fun i j => (hK.1 i j).2
   constructor
   · intro i j
-    refine ⟨?_, ⟨((Z : Matrix (Fin 2) (Fin 2) ℤ)*(W : Matrix (Fin 2) (Fin 2) ℤ)) i j, ?_⟩⟩
+    refine ⟨?_, ⟨∑ k, Z i k * W k j, ?_⟩⟩
     · simp only [Matrix.mul_apply]
       exact Finset.sum_nonneg fun k _ => mul_nonneg (hH.1 i k).1 (hK.1 k j).1
     · simp [Matrix.mul_apply, hZ, hW]
@@ -119,8 +119,12 @@ private theorem endpoint_arithmetic (w : Fin 3 → List Bool) (i : Fin 4) :
     (legal_matrix_monoid _).mp ⟨w j,rfl⟩
   fin_cases i
   · constructor
-    · intro i j; fin_cases i <;> fin_cases j <;>
-        norm_num [endpoint] <;> first | exact ⟨0,by norm_num⟩ | exact ⟨1,by norm_num⟩
+    · intro i j
+      change 0 ≤ (1 : Mat) i j ∧ ∃ z : ℤ, (1 : Mat) i j = (z : ℝ)
+      by_cases hij : i = j
+      · subst j
+        exact ⟨by simp, 1, by simp⟩
+      · exact ⟨by simp [hij], 0, by simp [hij]⟩
     · simp [endpoint]
   · exact h 0
   · exact arithmetic_mul _ _ (h 1) (h 0)
@@ -214,7 +218,10 @@ private theorem kernel_rank (A : Fin 4 → Mat) (N : Mat)
   have hh := (prefixMap A).finrank_range_add_finrank_ker
   rw [hk,finrank_span_singleton hN.1] at hh
   have hdim : Module.finrank ℝ Mat = 4 := by
-    simp [Mat,Matrix,Module.finrank_pi_fintype,Module.finrank_pi]
+    calc
+      Module.finrank ℝ Mat = Fintype.card (Fin 2) * Fintype.card (Fin 2) *
+          Module.finrank ℝ ℝ := Module.finrank_matrix (Fin 2) (Fin 2)
+      _ = 4 := by norm_num
   omega
 
 private def flatten (N : Mat) : Fin 4 → ℝ := ![N 0 0,N 0 1,N 1 0,N 1 1]
@@ -240,10 +247,6 @@ private def traceAugment {R : Type*} [Ring R]
     (B : Matrix (Fin 3) (Fin 4) R) (j : Fin 4) :
     traceAugment B 0 j = (![1,0,0,1] : Fin 4 → R) j := rfl
 
-@[simp] private theorem traceAugment_succ {R : Type*} [Ring R]
-    (B : Matrix (Fin 3) (Fin 4) R) (i : Fin 3) (j : Fin 4) :
-    traceAugment B i.succ j = B i j := rfl
-
 private theorem traceAugment_det (A : Fin 4 → Mat) (N : Mat)
     (hN : OrientedKernel A N) (ht : 0 < Matrix.trace N) :
     (traceAugment (coefficients A)).det ≠ 0 := by
@@ -263,14 +266,15 @@ private theorem traceAugment_det (A : Fin 4 → Mat) (N : Mat)
   obtain ⟨v,hv⟩ := (hN.2.2.1 _).mp hp
   have htr : Matrix.trace (unflatten z) = 0 := by
     have he := congrFun hz 0
-    simpa [traceAugment,Matrix.mulVec,dotProduct,Fin.sum_univ_succ,
+    simpa [Matrix.mulVec,dotProduct,Fin.sum_univ_succ,
       unflatten,Matrix.trace,Matrix.diag,Fin.sum_univ_two] using he
   rw [hv,Matrix.trace_smul,smul_eq_mul] at htr
   have hv0 : v = 0 := (mul_eq_zero.mp htr).resolve_right (ne_of_gt ht)
   have hmat : unflatten z = 0 := by simpa [hv0] using hv
   have hflat := congrArg flatten hmat
-  ext j
-  fin_cases j <;> simpa [flatten,unflatten] using congrFun hflat _
+  have hf : flatten (unflatten z) = z := by ext j; fin_cases j <;> rfl
+  have hz0 : flatten (0 : Mat) = 0 := by ext j; fin_cases j <;> rfl
+  rwa [hf,hz0] at hflat
 
 private theorem trace_cofactor (B : Matrix (Fin 3) (Fin 4) ℤ) :
     (D5.S3.Arith.Lattices.CofactorKernel.cofactor B) 0 +
@@ -467,7 +471,9 @@ private theorem primitive_generator (w : Fin 3 → List Bool)
     exact_mod_cast (by rw [he]; exact mul_nonneg hv.le hn11 : (0:ℝ) ≤ (K 1 1:ℝ))
   have hdetK : K.det = 0 := by
     have hd : (K.det : ℝ) = 0 := by
-      rw [Int.cast_det,hK,Matrix.det_smul,hN.2.1,mul_zero]
+      rw [Int.cast_det]
+      change (K.map (Int.castRingHom ℝ)).det = 0
+      rw [hK,Matrix.det_smul,hN.2.1,mul_zero]
     exact_mod_cast hd
   have hdet : K 0 0 * K 1 1 = (-K 0 1)*(-K 1 0) := by
     simp only [Matrix.det_fin_two] at hdetK
@@ -485,15 +491,19 @@ private theorem primitive_generator (w : Fin 3 → List Bool)
       hp hq hr hs hdet ht
   have hfactor : K.map (Int.castRingHom ℝ) = (g:ℝ) • signedMatrix a b c d := by
     ext i j
-    fin_cases i <;> fin_cases j <;> simp only [Matrix.map_apply,Int.castRingHom_apply,
-      Matrix.smul_apply,smul_eq_mul,signedMatrix,Matrix.of_apply,
-      Matrix.cons_val_zero,Matrix.cons_val_one]
-    · exact_mod_cast hP
-    · have hh : K 0 1 = -(g*(a*d)) := by omega
-      exact_mod_cast hh
-    · have hh : K 1 0 = -(g*(b*c)) := by omega
-      exact_mod_cast hh
-    · exact_mod_cast hS
+    fin_cases i <;> fin_cases j
+    · change (K 0 0 : ℝ) = (g:ℝ) * ((a:ℝ)*(c:ℝ))
+      exact_mod_cast hP
+    · change (K 0 1 : ℝ) = (g:ℝ) * (-(a:ℝ)*(d:ℝ))
+      have hh : (K 0 1 : ℝ) = -((g:ℝ)*((a:ℝ)*(d:ℝ))) := by
+        exact_mod_cast (show K 0 1 = -(g*(a*d)) by omega)
+      nlinarith [hh]
+    · change (K 1 0 : ℝ) = (g:ℝ) * (-(b:ℝ)*(c:ℝ))
+      have hh : (K 1 0 : ℝ) = -((g:ℝ)*((b:ℝ)*(c:ℝ))) := by
+        exact_mod_cast (show K 1 0 = -(g*(b*c)) by omega)
+      nlinarith [hh]
+    · change (K 1 1 : ℝ) = (g:ℝ) * ((b:ℝ)*(d:ℝ))
+      exact_mod_cast hS
   refine ⟨a,b,c,d,(g:ℝ)/v,ha,hb,hc,hd,hab,hcd,ht,
     div_pos (by exact_mod_cast hg) hv,?_⟩
   rw [hfactor] at hK
@@ -554,23 +564,19 @@ private theorem primitive_levels (w : Fin 3 → List Bool) (N : Mat)
     fin_cases j
     · have hh : (Z i 0 0:ℝ)*(a:ℝ)+(Z i 0 1:ℝ)*(-(b:ℝ))-(a:ℝ)=
           (m i:ℝ)*(d:ℝ) := by exact_mod_cast (hm i).1
-      simp only [Matrix.mulVec,dotProduct,Fin.sum_univ_two,Matrix.cons_val_zero,
-        Matrix.cons_val_one,Matrix.of_apply,Pi.add_apply,Pi.smul_apply,smul_eq_mul,hZ]
-      linarith
+      norm_num [Matrix.mulVec,dotProduct,Fin.sum_univ_two,hZ]
+      linarith [hh]
     · have hh : (Z i 1 0:ℝ)*(a:ℝ)+(Z i 1 1:ℝ)*(-(b:ℝ))+(b:ℝ)=
           (m i:ℝ)*(c:ℝ) := by exact_mod_cast (hm i).2
-      simp only [Matrix.mulVec,dotProduct,Fin.sum_univ_two,Matrix.cons_val_zero,
-        Matrix.cons_val_one,Matrix.of_apply,Pi.add_apply,Pi.smul_apply,smul_eq_mul,hZ]
-      linarith
+      norm_num [Matrix.mulVec,dotProduct,Fin.sum_univ_two,hZ]
+      linarith [hh]
   refine ⟨m,?_,hlevels⟩
   have h0 := congrFun (hlevels 0) 0
   have h1 := congrFun (hlevels 0) 1
   simp [endpoint] at h0 h1
-  have hz0 : m 0*d=0 := by exact_mod_cast (by linarith [h0] : (m 0:ℝ)*(d:ℝ)=0)
-  have hz1 : m 0*c=0 := by exact_mod_cast (by linarith [h1] : (m 0:ℝ)*(c:ℝ)=0)
   by_contra hm0
-  have hd0 := (mul_eq_zero.mp hz0).resolve_left hm0
-  have hc0 := (mul_eq_zero.mp hz1).resolve_left hm0
+  have hd0 := h0.resolve_left hm0
+  have hc0 := h1.resolve_left hm0
   omega
 
 /-- Nonnegative primitive pairs include every zero-component case. -/
@@ -592,8 +598,8 @@ private theorem levels_converse (w : Fin 3 → List Bool) (N : Mat)
   have hn : N ≠ 0 := by
     intro hz
     have hpos := mul_pos hs ht'
-    simp [hz] at htrace
-    linarith
+    rw [hz,Matrix.trace_zero] at htrace
+    linarith [htrace]
   have hdet : N.det = 0 := by
     rw [hgen,Matrix.det_smul]
     have hp : (signedMatrix a b c d).det = 0 := by
@@ -615,7 +621,11 @@ private theorem levels_converse (w : Fin 3 → List Bool) (N : Mat)
     change s • prefixValue (endpoint w) (signedMatrix a b c d) = 0
     rw [hpker,smul_zero]
   have hdim := (prefixMap (endpoint w)).finrank_range_add_finrank_ker
-  have hfour : Module.finrank ℝ Mat = 4 := by simp [Mat,Matrix,Module.finrank_pi_fintype,Module.finrank_pi]
+  have hfour : Module.finrank ℝ Mat = 4 := by
+    calc
+      Module.finrank ℝ Mat = Fintype.card (Fin 2) * Fintype.card (Fin 2) *
+          Module.finrank ℝ ℝ := Module.finrank_matrix (Fin 2) (Fin 2)
+      _ = 4 := by norm_num
   have hkerdim : Module.finrank ℝ (LinearMap.ker (prefixMap (endpoint w))) = 1 := by omega
   have hkspan := eq_span_singleton_of_mem_of_finrank_eq_one hkerdim hker hn
   refine ⟨hn,hdet,?_,?_⟩
@@ -631,15 +641,18 @@ private theorem levels_converse (w : Fin 3 → List Bool) (N : Mat)
     have hbp : (0:ℝ) ≤ (b:ℝ) := by exact_mod_cast hb
     have hcp : (0:ℝ) ≤ (c:ℝ) := by exact_mod_cast hc
     have hdp : (0:ℝ) ≤ (d:ℝ) := by exact_mod_cast hd
-    have hcross0 : 0 ≤ (b:ℝ)*(c:ℝ)*S 0 1 := by positivity
-    have hcross1 : 0 ≤ (a:ℝ)*(d:ℝ)*S 1 0 := by positivity
+    have hcross0 : 0 ≤ (b:ℝ)*(c:ℝ)*S 0 1 :=
+      mul_nonneg (mul_nonneg hbp hcp) (hS 0 1).le
+    have hcross1 : 0 ≤ (a:ℝ)*(d:ℝ)*S 1 0 :=
+      mul_nonneg (mul_nonneg hap hdp) (hS 1 0).le
     have hdiagonal : 0 < (a:ℝ)*(c:ℝ)*S 1 1 + (b:ℝ)*(d:ℝ)*S 0 0 := by
       by_cases hac : (a:ℝ)*(c:ℝ)=0
       · have hbd : 0 < (b:ℝ)*(d:ℝ) := by linarith
         have hh := mul_pos hbd (hS 0 0)
         simpa [hac] using hh
       · have hacpos : 0 < (a:ℝ)*(c:ℝ) := lt_of_le_of_ne (mul_nonneg hap hcp) (Ne.symm hac)
-        exact add_pos_of_pos_of_nonneg (mul_pos hacpos (hS 1 1)) (by positivity)
+        exact add_pos_of_pos_of_nonneg (mul_pos hacpos (hS 1 1))
+          (mul_nonneg (mul_nonneg hbp hdp) (hS 0 0).le)
     have hpos := mul_pos hs (add_pos_of_pos_of_nonneg hdiagonal
       (add_nonneg hcross0 hcross1))
     nlinarith [hpos]
