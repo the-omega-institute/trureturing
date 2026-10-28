@@ -12,7 +12,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.polynomial
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
 
 *Commentary.*
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.upperRoot`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
 
 *Commentary.*
 
@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.lowerRoot`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
 
 *Commentary.*
 
@@ -54,7 +54,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.coordinate
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
 
 *Commentary.*
 
@@ -68,7 +68,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.mass`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
 
 *Commentary.*
 
@@ -82,7 +82,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.primitive`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
 
 *Commentary.*
 
@@ -96,7 +96,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.cost`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
 
 *Commentary.*
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.Admissible
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
 
 *Commentary.*
 
@@ -124,7 +124,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.scalarRoot
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
 
 *Commentary.*
 
@@ -138,7 +138,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.sharpConst
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
 
 *Commentary.*
 
@@ -152,7 +152,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.optimizer`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
 
 *Commentary.*
 
@@ -166,7 +166,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.exists_uni
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
 
 *Commentary.*
 
@@ -180,7 +180,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.constructe
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
 
 *Commentary.*
 
@@ -194,7 +194,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.sharp_join
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md>.
+*Acknowledgement.* trureturing research synthesis (2026). *Actual Robin price gaps, forced-core tail records and the selected-sign boundary*. URL: <https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md>.
 
 *Commentary.*
 
