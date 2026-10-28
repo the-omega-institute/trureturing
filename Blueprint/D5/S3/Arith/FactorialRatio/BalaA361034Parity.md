@@ -48,6 +48,10 @@ $$\forall n \in \mathbb{N},\; \operatorname{Odd}\left(\operatorname{a}\left(n\ri
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FactorialRatio/BalaA361034Parity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bala3610-parity` (proved) by `D5/S3/Arith/FactorialRatio/BalaA361034Parity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bala3610-parity","declaration_gid":"D5/S3/Arith/FactorialRatio/BalaA361034Parity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala (2023). *OEIS A361034 and A361035: parity of quartic factorial quotients*. URL: <https://oeis.org/A361034>.

@@ -23,7 +23,8 @@ internal sealed class BalaA361034ParityDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", ClaimBody(),
                 "The factorial quotient is odd exactly at the stated indices. Its exponent of 2 is three times the binary digit sum of n + 2, less three; this vanishes exactly when n + 2 is a power of two.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source), new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bala3610-parity"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("bala361034-" + name.Replace('_', '-')),
