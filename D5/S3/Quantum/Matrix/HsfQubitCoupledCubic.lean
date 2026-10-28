@@ -282,7 +282,8 @@ private theorem scalar_absolute_trace_swapped (a b m p h k r s : ℝ) (z w : ℂ
 def weightedImage (a b m : ℝ) (K : Mat) : Mat :=
   !![(a : ℂ)*K 0 0, (m : ℂ)*K 0 1; (m : ℂ)*K 1 0, (b : ℂ)*K 1 1]
 
-private theorem weightedImage_hermitian (a b m r s : ℝ) (z : ℂ) :
+/-- The kernel action preserves the exact Hermitian coordinates. -/
+theorem weightedImage_hermitian (a b m r s : ℝ) (z : ℂ) :
     weightedImage a b m (hermitian r s z) =
       hermitian (a*r) (b*s) ((m : ℂ)*z) := by
   ext i j
