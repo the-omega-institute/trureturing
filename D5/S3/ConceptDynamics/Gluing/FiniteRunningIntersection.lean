@@ -137,13 +137,13 @@ private theorem certificate_extends (hT : T.IsTree)
     hT hRI (fun n => ⟨a n, rfl⟩) hc r (a r) rfl
   exact ⟨j.val, fun n => Set.mem_singleton_iff.mp (j.property n (Set.mem_univ _))⟩
 
-instance validDecidable : DecidablePred (Valid T S rows) := fun a =>
+private instance validDecidable : DecidablePred (Valid T S rows) := fun a =>
   inferInstanceAs (Decidable ((∀ n, a n ∈ rows n) ∧ ∀ (p q : Node), T.Adj p q →
     restrictAssignment (fun _ => O) (D := S p ∩ S q) Set.inter_subset_left (a p) =
       restrictAssignment (fun _ => O) Set.inter_subset_right (a q)))
 
 /-- Root acceptance is precisely the existence of a finite separator certificate. -/
-theorem root_certificate_iff (hT : T.IsTree) (hRI : RunningIntersection T S)
+private theorem root_certificate_iff (hT : T.IsTree) (hRI : RunningIntersection T S)
     (r : Node) : (rootTable T S rows hT r).Nonempty ↔
       ∃ a, Valid T S rows a := by
   classical
@@ -203,7 +203,7 @@ theorem decode_spec (hT : T.IsTree) (hRI : RunningIntersection T S) (r : Node)
 
 /-- Enumerate total functions by finite updates from explicit coordinate and
 output lists. The base value is used only outside the listed coordinates. -/
-def functionEnumeration (values : List O) (base : O) : List Var → List (Var → O)
+private def functionEnumeration (values : List O) (base : O) : List Var → List (Var → O)
   | [] => [fun _ => base]
   | x :: xs => (functionEnumeration values base xs).flatMap
       (fun g => values.map (fun o => Function.update g x o))
@@ -226,7 +226,7 @@ private theorem enumeration_covers (values : List O) (base : O)
 
 /-- Candidate certificates use explicit finite assignment enumeration. Validity
 checks only input-row membership and equality on complete edge separators. -/
-def certificateCandidates (vars : List Var) (values : List O) (base : O) :
+private def certificateCandidates (vars : List Var) (values : List O) (base : O) :
     List ((n : Node) → Assignment (fun _ => O) (S n)) :=
   (functionEnumeration values base vars).map (fun g n x => g x.val)
 
@@ -308,7 +308,6 @@ theorem solve_spec (hT : T.IsTree) (hRI : RunningIntersection T S) (r : Node)
       intro n hn
       rw [decode_spec T S rows hT hRI r nodes hNodes a.val a.property.2 n]
       exact a.property.2.1 n
-    · cases hj
   · intro e
     exact ⟨(message_table_spec T S rows hT e).2,
       Finset.le_sup (f := fun e : T.Dart => Fintype.card ↥(S e.snd ∩ S e.fst))

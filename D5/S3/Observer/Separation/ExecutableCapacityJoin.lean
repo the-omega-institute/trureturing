@@ -23,7 +23,7 @@ open D5.S3.ConceptDynamics.Gluing.RunningIntersectionRecords
 open D5.S3.ConceptDynamics.Gluing.FiniteRunningIntersection
 
 /-- Compute descendant-leaf coordinates without inspecting vertex labels. -/
-def leafTable {I V : Type} [DecidableEq I] : Tree I V → Finset I
+private def leafTable {I V : Type} [DecidableEq I] : Tree I V → Finset I
   | .leaf _ i => {i}
   | .node _ _ c => Finset.univ.biUnion (fun j => leafTable (c j))
 
@@ -31,19 +31,21 @@ private theorem leaf_table_eq {I V : Type} [DecidableEq I] (s : Tree I V) :
     leafTable s = leaves s := by
   induction s with
   | leaf v i => rfl
-  | node v n c ih => simp only [leafTable, leaves, ih]
+  | node v n c ih =>
+    ext i
+    simp [leafTable, leaves, ih]
 
-instance leafDecidable {I V : Type} [DecidableEq I] (s : Tree I V) :
+private instance leafDecidable {I V : Type} [DecidableEq I] (s : Tree I V) :
     DecidablePred (fun i => i ∈ leaves s) := fun i =>
   decidable_of_iff (i ∈ leafTable s) (by rw [leaf_table_eq])
 
 /-- Totalize the prescribed task using exactly the supplied illegal-cell values. -/
-def completeTable {C O : Type} (D : Set C) [DecidablePred (· ∈ D)]
+private def completeTable {C O : Type} (D : Set C) [DecidablePred (· ∈ D)]
     (f : D → O) (h : ↥(Dᶜ) → O) : C → O :=
   fun x => if hx : x ∈ D then f ⟨x, hx⟩ else h ⟨x, hx⟩
 
 /-- A full complementary response for an actually promised input. -/
-def responseRow {I V O : Type} [DecidableEq I] {X : I → Type}
+private def responseRow {I V O : Type} [DecidableEq I] {X : I → Type}
     (H : (∀ i, X i) → O) (s : Tree I V) (x : ∀ i, X i) :
     (∀ i : {i // i ∉ leaves s}, X i.val) → O := fun b =>
   H (fun i => if hi : i ∈ leaves s then x i else b ⟨i, hi⟩)
@@ -70,28 +72,29 @@ private theorem response_row_eq (H : (∀ i, X i) → O) (s : Tree I V)
   apply congrArg H
   funext i
   simp only [Equiv.piEquivPiSubtypeProd_symm_apply]
-  split_ifs <;> rfl
 
 /-- The computable response count is precisely the original active capacity. -/
-theorem cost_table_eq (t : Tree I V) (D : Set (∀ i, X i))
+private theorem cost_table_eq (t : Tree I V) (D : Set (∀ i, X i))
     [DecidablePred (· ∈ D)] (f : D → O) : costTable t D f = sourceCost t D f := by
   classical
   funext v h
   have complete_eq : completeTable D f h = complete D f h := by
     funext x
-    simp only [completeTable, complete]
+    by_cases hx : x ∈ D <;> simp [completeTable, complete, hx]
   let H := completeTable D f h
   let R := Finset.univ.image (fun x : D => responseRow H v.val x.val)
   let A := Set.range (fun x : D => responseMessage H v.val x.val)
   let g : A → R := fun q => ⟨q.val.val, by
     obtain ⟨x, hx⟩ := q.property
-    exact Finset.mem_image.mpr ⟨x, Finset.mem_univ _, by rw [response_row_eq, hx]⟩⟩
+    exact Finset.mem_image.mpr ⟨x, Finset.mem_univ _, by
+      rw [response_row_eq]
+      exact congrArg Subtype.val hx⟩⟩
   have bij : Function.Bijective g := by
     constructor
     · intro a b hab
       apply Subtype.ext
       apply Subtype.ext
-      exact congrArg Subtype.val hab
+      exact congrArg (fun z : R => z.val) hab
     · intro b
       obtain ⟨x, _, hx⟩ := Finset.mem_image.mp b.property
       refine ⟨⟨responseMessage H v.val x.val, x, rfl⟩, ?_⟩
@@ -130,7 +133,7 @@ private theorem local_table_mem {U N : Type} [Fintype U] [DecidableEq U]
 
 /-- A base output is read from the supplied finite alphabet. Nonemptiness follows
 from the original nonempty promise; no choice of an extension is performed. -/
-def baseOutput (D : Set (∀ i, X i)) (hD : D.Nonempty) (f : D → O)
+private def baseOutput (D : Set (∀ i, X i)) (hD : D.Nonempty) (f : D → O)
     (values : List O) (hValues : ∀ o, o ∈ values) : O :=
   values.head (by
     intro he
@@ -217,7 +220,9 @@ theorem source_solver_spec (ht : Full t) (hall : leaves t = Finset.univ)
     change (solve G S (localTable c k) hG hRIc r nodes hNodes vars hVars values hValues
       (baseOutput D hD f values hValues)).isSome = true ↔ _
     rw [spec, joins k]
-    simpa only [c, cost_table_eq] using (source_result t ht hall D hD f).2 k |>.symm
+    change (sensitiveJoin (costTable t D f) k).Nonempty ↔ minimumPeak t D f ≤ k
+    rw [cost_table_eq t D f]
+    exact ((source_result t ht hall D hD f).2 k).symm
   · intro k j hj
     have sound := (solve_spec G S (localTable c k) hG hRIc r
       nodes hNodes vars hVars values hValues (baseOutput D hD f values hValues)).2.1 j hj
