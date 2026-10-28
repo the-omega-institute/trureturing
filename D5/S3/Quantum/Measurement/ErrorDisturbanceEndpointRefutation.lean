@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation
-import D5.S3.Weil.ZetaLinear.RankTrace
 
 /-! Exact state bounds for a rational three-dimensional measurement. -/
 
@@ -17,6 +16,7 @@ set_option autoImplicit false
 set_option linter.style.longLine false
 open scoped BigOperators ComplexOrder Matrix
 open Matrix
+open D5.S3.Observer.Conditioning (unreadState)
 open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation (measurementProjector)
 
@@ -33,7 +33,7 @@ def errorAt {d : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
 def disturbanceAt {d : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
     (c b : unitaryGroup (Fin d) ℂ) : ℝ :=
   ⨆ j, |(trace (ρ * (measurementProjector b j -
-    ∑ k, measurementProjector c k * measurementProjector b j * measurementProjector c k))).re|
+    unreadState (measurementProjector c) (measurementProjector b j)))).re|
 
 /-- The supremum of the sum, over one common density matrix. -/
 def overallError {d : ℕ} (a c b : unitaryGroup (Fin d) ℂ) : ℝ :=
@@ -71,16 +71,18 @@ private def v : Matrix (Fin 3) (Fin 3) ℂ :=
 private lemma u_unitary : u ∈ unitaryGroup (Fin 3) ℂ := by
   apply Matrix.mem_unitaryGroup_iff.mpr
   change u * uᴴ = 1
+  delta u
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [u, Matrix.mul_apply, Matrix.conjTranspose_apply, map_ofNat, Fin.sum_univ_three]
+    norm_num [Matrix.mul_apply, Matrix.conjTranspose_apply, map_ofNat, Fin.sum_univ_three]
 
 private lemma v_unitary : v ∈ unitaryGroup (Fin 3) ℂ := by
   apply Matrix.mem_unitaryGroup_iff.mpr
   change v * vᴴ = 1
+  delta v
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [v, Matrix.mul_apply, Matrix.conjTranspose_apply, map_ofNat, Fin.sum_univ_three]
+    norm_num [Matrix.mul_apply, Matrix.conjTranspose_apply, map_ofNat, Fin.sum_univ_three]
 
 private def c : unitaryGroup (Fin 3) ℂ := ⟨u, u_unitary⟩
 private def b : unitaryGroup (Fin 3) ℂ := ⟨v, v_unitary⟩
@@ -89,8 +91,7 @@ private def e (i : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=
   measurementProjector 1 i - measurementProjector c i
 
 private def f (j : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=
-  measurementProjector b j -
-    ∑ k, measurementProjector c k * measurementProjector b j * measurementProjector c k
+  measurementProjector b j - unreadState (measurementProjector c) (measurementProjector b j)
 
 private lemma projector_apply {d : ℕ} (a : unitaryGroup (Fin d) ℂ)
     (i j k : Fin d) : measurementProjector a i j k = a.val j i * star (a.val k i) := rfl
@@ -99,17 +100,21 @@ private lemma e_table (i : Fin 3) : e i =
   ![!![(625/97969), (-7800/97969), 0; (-7800/97969), (-625/97969), 0; 0, 0, 0],
     !![(-625/97969), (7800/97969), 0; (7800/97969), (625/97969), 0; 0, 0, 0],
     !![0, 0, 0; 0, 0, 0; 0, 0, 0]] i := by
+  delta e c u
   ext j k
   fin_cases i <;> fin_cases j <;> fin_cases k <;>
-    norm_num [e, projector_apply, c, u, Matrix.one_apply]
+    norm_num [projector_apply, Matrix.one_apply]
 
 private lemma f_table (j : Fin 3) : f j =
   ![!![(-48223663488/8071854892201), (7474590559128/201796372305025), 0; (7474590559128/201796372305025), (48223663488/8071854892201), 0; 0, 0, 0],
     !![(2355291948417408/423296142401912641), (-365066477498370648/10582403560047816025), (45084/1520789); (-365066477498370648/10582403560047816025), (-2355291948417408/423296142401912641), (-381888/1520789); (45084/1520789), (-381888/1520789), 0],
     !![(173605188556800/423296142401912641), (-1076341040514432/423296142401912641), (-45084/1520789); (-1076341040514432/423296142401912641), (-173605188556800/423296142401912641), (381888/1520789); (-45084/1520789), (381888/1520789), 0]] j := by
+  change (measurementProjector b j -
+    ∑ k, measurementProjector c k * measurementProjector b j * measurementProjector c k) = _
+  delta c b u v
   ext k l
   fin_cases j <;> fin_cases k <;> fin_cases l <;>
-    norm_num [f, projector_apply, c, b, u, v, Matrix.mul_apply,
+    norm_num [projector_apply, Matrix.mul_apply,
       Matrix.sum_apply, map_ofNat, Fin.sum_univ_three]
 
 private lemma psd_of_ldl {h : Matrix (Fin 3) (Fin 3) ℂ}
@@ -288,9 +293,13 @@ private lemma pure_isDensity (x : Fin 3 → ℂ) (n : ℝ) (hn : 0 < n)
     (ht : ∑ k, x k * star (x k) = (n : ℂ)) : IsDensity (pure x n) := by
   constructor
   · exact (Matrix.posSemidef_vecMulVec_self_star x).smul (by positivity : (0 : ℝ) ≤ 1/n)
-  · rw [pure, Matrix.trace_smul]
-    change (1/n : ℝ) • (∑ k, x k * star (x k)) = (1 : ℂ)
-    rw [ht]
+  · have htrace : trace (pure x n) = (1/n : ℝ) • ∑ k, x k * star (x k) := by
+      change (∑ k, pure x n k k) = _
+      calc
+        _ = ∑ k, (1/n : ℝ) • (x k * star (x k)) :=
+          Finset.sum_congr rfl fun k _ => pure_apply x n k k
+        _ = _ := Finset.smul_sum.symm
+    rw [htrace, ht]
     apply Complex.ext <;> simp [hn.ne']
 
 private lemma density_exists : ∃ ρ : Matrix (Fin 3) (Fin 3) ℂ, IsDensity ρ := by
@@ -313,8 +322,13 @@ private lemma sum_projectors {d : ℕ} (a : unitaryGroup (Fin d) ℂ) :
     ∑ i, measurementProjector a i = 1 := by
   have hh : a.val * a.valᴴ = 1 := Matrix.mem_unitaryGroup_iff.mp a.property
   ext j k
-  simpa only [Matrix.sum_apply, projector_apply, Matrix.mul_apply,
-    Matrix.conjTranspose_apply] using congrArg (fun m => m j k) hh
+  calc
+    (∑ i, measurementProjector a i) j k = ∑ i, a.val j i * star (a.val k i) := by
+      rw [Matrix.sum_apply]
+      exact Finset.sum_congr rfl fun i _ => projector_apply a i j k
+    _ = (1 : Matrix (Fin d) (Fin d) ℂ) j k := by
+      simpa only [Matrix.mul_apply, Matrix.conjTranspose_apply] using
+        congrArg (fun m => m j k) hh
 
 private lemma projector_complement_psd {d : ℕ} (a : unitaryGroup (Fin d) ℂ) (i : Fin d) :
     (1 - measurementProjector a i).PosSemidef := by
@@ -342,12 +356,14 @@ private lemma effect_difference_bound {d : ℕ} (ρ x y : Matrix (Fin d) (Fin d)
   exact abs_le.mpr ⟨by linarith, by linarith⟩
 
 private lemma standard_pinch (j : Fin 3) :
-    ∑ k, measurementProjector (1 : unitaryGroup (Fin 3) ℂ) k *
-      measurementProjector b j * measurementProjector 1 k =
-    diagonal (fun k => measurementProjector b j k k) := by
+    unreadState (measurementProjector (1 : unitaryGroup (Fin 3) ℂ))
+      (measurementProjector b j) = diagonal (fun k => measurementProjector b j k k) := by
+  change (∑ k, measurementProjector (1 : unitaryGroup (Fin 3) ℂ) k *
+    measurementProjector b j * measurementProjector 1 k) = _
+  delta b v
   ext k l
   fin_cases j <;> fin_cases k <;> fin_cases l <;>
-    norm_num [projector_apply, b, v, Matrix.mul_apply, Matrix.sum_apply,
+    norm_num [projector_apply, Matrix.mul_apply, Matrix.sum_apply,
       Matrix.diagonal_apply, Matrix.one_apply, Fin.sum_univ_three, map_ofNat]
 
 private lemma disturbance_bdd : BddAbove
@@ -387,8 +403,9 @@ private lemma disturbance_witness : ∃ ρ : Matrix (Fin 3) (Fin 3) ℂ,
   have heq : (trace (pure ![-5, 11, -10] 246 *
       (measurementProjector b 1 - diagonal (fun k => measurementProjector b 1 k k)))).re =
       2577721016/9041090605 := by
+    delta b v
     norm_num [trace_three, Matrix.mul_apply, Matrix.sub_apply, Matrix.diagonal_apply,
-      pure_apply, projector_apply, b, v, Fin.sum_univ_three, map_ofNat]
+      pure_apply, projector_apply, Fin.sum_univ_three, map_ofNat]
   rw [heq]
   norm_num
 
@@ -400,20 +417,23 @@ private lemma error_witness (π : Equiv.Perm (Fin 3)) :
   · refine ⟨pure ![0, 1, 0] 1, pure_isDensity _ _ (by norm_num)
       (by norm_num [Fin.sum_univ_three, map_ofNat]), ?_⟩
     apply lt_of_lt_of_le _ (Finite.le_ciSup _ (1 : Fin 3))
+    delta relabel b v
     norm_num [trace_three, Matrix.mul_apply, Matrix.sub_apply, Matrix.one_apply,
-      pure_apply, projector_apply, relabel, b, v, Matrix.submatrix_apply,
+      pure_apply, projector_apply, Matrix.submatrix_apply,
       Fin.sum_univ_three, map_ofNat, h]
   · refine ⟨pure ![-5, -16, -11] 402, pure_isDensity _ _ (by norm_num)
       (by norm_num [Fin.sum_univ_three, map_ofNat]), ?_⟩
     apply lt_of_lt_of_le _ (Finite.le_ciSup _ (1 : Fin 3))
+    delta relabel b v
     norm_num [trace_three, Matrix.mul_apply, Matrix.sub_apply, Matrix.one_apply,
-      pure_apply, projector_apply, relabel, b, v, Matrix.submatrix_apply,
+      pure_apply, projector_apply, Matrix.submatrix_apply,
       Fin.sum_univ_three, map_ofNat, h]
   · refine ⟨pure ![0, 1, 0] 1, pure_isDensity _ _ (by norm_num)
       (by norm_num [Fin.sum_univ_three, map_ofNat]), ?_⟩
     apply lt_of_lt_of_le _ (Finite.le_ciSup _ (1 : Fin 3))
+    delta relabel b v
     norm_num [trace_three, Matrix.mul_apply, Matrix.sub_apply, Matrix.one_apply,
-      pure_apply, projector_apply, relabel, b, v, Matrix.submatrix_apply,
+      pure_apply, projector_apply, Matrix.submatrix_apply,
       Fin.sum_univ_three, map_ofNat, h]
 
 private lemma disturbance_lower : (57/200 : ℝ) < disturbance 1 b := by
