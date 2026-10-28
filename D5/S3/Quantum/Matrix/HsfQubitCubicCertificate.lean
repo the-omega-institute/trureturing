@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Matrix/HsfQubitCubicCertificate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Sqrt]
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Matrix/HsfQubitCoupledScalar.coupled_cubic_le; premises=D5/S3/Quantum/Matrix/HsfQubitCubicCertificate.rectangular_J_nonneg
    digest: Exact endpoint positivity controls a coupled cubic residual on a rectangle. -/
 
 module
@@ -15,7 +15,9 @@ public import Mathlib.Tactic
 coupling estimate associated with HSF #23103. The Bernstein coefficients are
 rational or affine in sqrt(2); all identities and signs are checked by Lean.
 No sampled numerical premise, arbitrary-dimensional HSF theorem, or novelty
-claim is made. The original general HSF conjecture remains open. -/
+claim is made. The original general HSF conjecture remains open.
+The attempted information-escape audit is unresolved (IE-C050); see
+https://github.com/the-omega-institute/trureturing/issues/23103. -/
 
 @[expose] public section
 

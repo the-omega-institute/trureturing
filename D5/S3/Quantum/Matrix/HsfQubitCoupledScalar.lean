@@ -12,6 +12,11 @@ public import Mathlib.Analysis.Real.Sqrt
 public import Mathlib.Tactic
 public import D5.S3.Quantum.Matrix.HsfQubitCubicCertificate
 
+/-! The information-escape audits for `excess_nonneg` and `coupled_cubic_le`
+remain unfinished: no faithful complete source binding was obtained from the
+existing order/radial templates. See
+https://github.com/the-omega-institute/trureturing/issues/23103. -/
+
 @[expose] public section
 
 noncomputable section
