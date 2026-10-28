@@ -10,9 +10,7 @@ $$\forall V \in \mathrm{Type},\; [\operatorname{Fintype}\left(V\right)], \forall
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Orthogonality/ThetaRepresentationNonconvex.dot_cauchy` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Marcel K Carli Silva; Gabriel Coutinho; Thiago Oliveira; Levent Tunçel (2026). *On some k-fold generalizations of Lovász theta and their sandwich theorems*. URL: <https://arxiv.org/html/2609.06312v1>.
+*Citation.* Mathlib contributors (2026). *Finite Cauchy-Schwarz inequality in ordered commutative semirings*. URL: <https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Algebra/Order/BigOperators/Ring/Finset.lean>.
 
 *Commentary.*
 
