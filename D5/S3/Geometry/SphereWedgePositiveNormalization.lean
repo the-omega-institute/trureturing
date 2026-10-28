@@ -16,6 +16,7 @@ all empty-family basepoints. No finiteness or connectedness hypothesis is used. 
 noncomputable section
 open Set Topology
 open scoped ContinuousMap
+attribute [local instance] Classical.propDecidable
 
 namespace D5.S3.Geometry.SphereWedgePositiveNormalization
 
@@ -44,8 +45,7 @@ private theorem zero_poles (x : StdSphere 0) :
   have hx := x.property
   rw [EuclideanSpace.sphere_zero_eq 1 (by norm_num)] at hx
   have hs : x.val 0 ^ 2 = 1 := by simpa using hx
-  have he : x.val 0 = 1 ∨ x.val 0 = -1 := by
-    nlinarith [sq_nonneg (x.val 0 - 1), sq_nonneg (x.val 0 + 1)]
+  have he : x.val 0 = 1 ∨ x.val 0 = -1 := sq_eq_one_iff.mp hs
   rcases he with h | h
   · left
     apply Subtype.ext
@@ -94,7 +94,6 @@ private theorem point_base {J : Type*} {Z : J → Type*}
 variable {J : Type u} (n : J → ℕ) (b : ∀ j, StdSphere (n j))
 
 private abbrev c := fun j : PositiveIndex n => coordinatePoint (n j.val)
-private abbrev s := fun j => coordinatePoint (n j)
 private abbrev E (j : J) := (spherePointHomeomorph (n j) (b j)).val
 private theorem E_base (j : J) : E n b j (b j) = coordinatePoint (n j) :=
   (spherePointHomeomorph (n j) (b j)).property
@@ -211,5 +210,33 @@ def normalizationHomeomorph : FamilyWedge b ≃ₜ PositiveWedge n ⊕ ZeroIndex
 
 /-- The common basepoint stays in the positive bouquet, including when that bouquet is a point. -/
 theorem normalization_base : normalizationHomeomorph n b (base b) = Sum.inl (base (c n)) := rfl
+
+/-- Dependent outer coproduct normalization. Every original outer block retains
+its positive bouquet, and each zero factor contributes a separate isolated point. -/
+def coproductNormalizationHomeomorph {A : Type u} {I : A → Type v}
+    (d : ∀ a, I a → ℕ) (q : ∀ a j, StdSphere (d a j)) :
+    (Σ a, FamilyWedge (q a)) ≃ₜ
+      (Σ a, PositiveWedge (d a)) ⊕ (Σ a, ZeroIndex (d a)) := by
+  let fiberwise : (Σ a, FamilyWedge (q a)) ≃ₜ
+      (Σ a, PositiveWedge (d a) ⊕ ZeroIndex (d a)) := {
+    toEquiv := Equiv.sigmaCongrRight (fun a => (normalizationHomeomorph (d a) (q a)).toEquiv)
+    continuous_toFun := continuous_sigma_iff.mpr (fun a =>
+      continuous_sigmaMk.comp (normalizationHomeomorph (d a) (q a)).continuous)
+    continuous_invFun := continuous_sigma_iff.mpr (fun a =>
+      continuous_sigmaMk.comp (normalizationHomeomorph (d a) (q a)).symm.continuous) }
+  let distribute : (Σ a, PositiveWedge (d a) ⊕ ZeroIndex (d a)) ≃ₜ
+      (Σ a, PositiveWedge (d a)) ⊕ (Σ a, ZeroIndex (d a)) := {
+    toEquiv := Equiv.sigmaSumDistrib (fun a => PositiveWedge (d a)) (fun a => ZeroIndex (d a))
+    continuous_toFun := continuous_sigma_iff.mpr (fun a =>
+      (continuous_inl.comp continuous_sigmaMk).sumElim
+        (continuous_inr.comp continuous_sigmaMk))
+    continuous_invFun := (continuous_sigma_iff.mpr (fun a =>
+      continuous_sigmaMk.comp continuous_inl)).sumElim
+        (continuous_sigma_iff.mpr (fun a => continuous_sigmaMk.comp continuous_inr)) }
+  exact fiberwise.trans distribute
+
+#print axioms normalizationHomeomorph
+#print axioms normalization_base
+#print axioms coproductNormalizationHomeomorph
 
 end D5.S3.Geometry.SphereWedgePositiveNormalization
