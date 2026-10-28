@@ -3129,5 +3129,5 @@ $\operatorname{tr}(P\rho)$，还须保留失败分支，且只在成功质量为
 这不是对任意未知输入的确定信道。相反，
 [原生五模式／单参考编译供应](FIB_LEGAL_GATES_STATE_MACHINES_AND_SHOR_READOUT.md#13-a-clean-encoded-circuit-compiler-inside-the-existing-legal-pulse-model)
 保留空模式并以返回后的相对负号生成 $D_{00}$，不作非空后选择。
-[NAND 信道与完整门合同](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md#v9-nand)
+[NAND 信道与完整门合同](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md#v9-nand)
 进一步区分布尔图、不可逆输出信道和干净可逆 oracle。
