@@ -96,6 +96,18 @@ def pairing : H →ₗ[ℚ] H →ₗ[ℚ] ℚ :=
 theorem pairing_basis (w : Word) (P : H) : pairing (wordBasis w) P = P.coeff w := by
   simp [pairing]
 
+private theorem pairing_symm (P Q : H) : pairing P Q = pairing Q P := by
+  have he : pairing = pairing.flip := by
+    apply wordBasis.ext
+    intro A
+    apply wordBasis.ext
+    intro B
+    change pairing (wordBasis A) (wordBasis B) = pairing (wordBasis B) (wordBasis A)
+    rw [pairing_basis, pairing_basis]
+    by_cases h : A = B <;>
+      simp [wordBasis, MonoidAlgebra.coeff_single, Finsupp.single_apply, h, eq_comm]
+  exact LinearMap.congr_fun₂ he P Q
+
 /-- The ordinary tensor pairing, bilinear in its two polynomial factors.
 On a simple tensor it is the product of the two ordinary word pairings. -/
 def tensorPairing : H →ₗ[ℚ] H →ₗ[ℚ] (H ⊗[ℚ] H) →ₗ[ℚ] ℚ :=
@@ -125,7 +137,7 @@ private theorem tensorPairing_basis (A B : Word) (T : H ⊗[ℚ] H) :
 /-- The full ordinary transpose characterization from Definition 1.20.
 All three arguments are arbitrary finite rational polynomials. -/
 def transposeProperty (D : H →ₗ[ℚ] H ⊗[ℚ] H) : Prop :=
-  ∀ (P Q R : H), tensorPairing Q R (D P) = pairing P (star Q R)
+  ∀ (P Q R : H), tensorPairing Q R (D P) = pairing (star Q R) P
 
 private def finiteTranspose : H →ₗ[ℚ] H ⊗[ℚ] H := wordBasis.constr ℚ deltaWord
 
@@ -154,7 +166,7 @@ private theorem finiteTranspose_property : transposeProperty finiteTranspose := 
       pairing P (star (wordBasis A) (wordBasis B))
     rw [tensorPairing_basis, star_basis]
     exact finiteTranspose_coefficient P A B
-  exact LinearMap.congr_fun₂ he Q R
+  exact (LinearMap.congr_fun₂ he Q R).trans (pairing_symm P (star Q R))
 
 private theorem exists_unique_transpose : ∃! D, transposeProperty D := by
   refine ⟨finiteTranspose, finiteTranspose_property, ?_⟩
@@ -177,7 +189,8 @@ def delta : H →ₗ[ℚ] H ⊗[ℚ] H := Classical.choose exists_unique_transpo
 in all three arguments, including the unit and unrestricted rational coefficients. -/
 theorem delta_transpose (P Q R : H) :
     tensorPairing Q R (delta P) = pairing P (star Q R) :=
-  Classical.choose_spec exists_unique_transpose.exists P Q R
+  (Classical.choose_spec exists_unique_transpose.exists P Q R).trans
+    (pairing_symm (star Q R) P)
 
 /-- The ordinary transpose identity in every word-pair coordinate, for arbitrary
 rational input and the actual primitive-unshuffle product. -/

@@ -86,7 +86,10 @@ multiplicities.
 The ordinary word pairing is equation (18). Definition 1.20 characterizes
 the dual coproduct uniquely, and Remark 1.22 describes its coefficients as
 `[A tensor B] Delta_a(w) = [w](A star B)`.
-There is no factorial or divided-power normalization. Example 4.28 omits the
+The ordinary pairing is symmetric. Its symmetry identifies the source
+convention, which pairs the product on the left, with the coefficient
+convention that pairs the input basis word on the left. There is no
+factorial or divided-power normalization. Example 4.28 omits the
 two unit tensor terms in its display; the full defining pairing, rather
 than a reduced-coproduct convention, specifies the operation here.
 The source weight is `gamma(0)=1` and `gamma(i)=i` for positive `i`.
