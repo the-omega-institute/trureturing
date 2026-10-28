@@ -140,5 +140,8 @@ internal sealed class AchievementResidueConverseRefutationDocument : IScribeDocu
                         + "the argument here uses the actual HasSum equality instead of that endpoint. "
                         + "The tuple has a common factor three. Dividing it out changes residues modulo six and changes the assertion. "
                         + "Statements requiring primitive or normalized coefficients are separate questions and are not established here."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("glab-2025-achievement-residue-converse"),
+                    ResolutionKind.Refuted)))));
 }

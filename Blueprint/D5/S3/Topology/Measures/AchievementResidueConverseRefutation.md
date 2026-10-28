@@ -62,7 +62,13 @@ $$\neg (\begin{aligned}\forall (m : \mathbb{N}), \forall (hm : 0 < m), \forall (
 
 *Proof.* Machine-checked in Lean as `D5/S3/Topology/Measures/AchievementResidueConverseRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/glab-2025-achievement-residue-converse` (refuted) by `D5/S3/Topology/Measures/AchievementResidueConverseRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"glab-2025-achievement-residue-converse","declaration_gid":"D5/S3/Topology/Measures/AchievementResidueConverseRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* Szymon Głąb and Franciszek Prus-Wiśniowski (2025). *Achievement sets — current results and open problems*. URL: <https://arxiv.org/abs/2512.17285v1>.
 
 *Commentary.*
 
