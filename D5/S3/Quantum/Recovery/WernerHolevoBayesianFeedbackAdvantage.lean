@@ -7,9 +7,6 @@
    digest: Bayesian feedback beats Markovian feedback for the qutrit Werner--Holevo channel. -/
 
 import Mathlib.Analysis.Matrix.Order
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Module
 
 /-! The qutrit Werner--Holevo channel separates Bayesian and Markovian feedback. -/
 
