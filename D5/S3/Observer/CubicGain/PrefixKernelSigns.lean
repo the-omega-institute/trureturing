@@ -1,5 +1,5 @@
 /- GID: D5/S3/Observer/CubicGain/PrefixKernelSigns
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Observer/CubicGain/PrefixKernelSigns
    mirror-E: none(waiver:uniform-legal-prefix-kernel-geometry)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Rank, mathlib/module/Mathlib.LinearAlgebra.FiniteDimensional.Lemmas]

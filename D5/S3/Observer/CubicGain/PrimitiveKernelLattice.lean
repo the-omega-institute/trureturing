@@ -1,5 +1,5 @@
 /- GID: D5/S3/Observer/CubicGain/PrimitiveKernelLattice
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Observer/CubicGain/PrimitiveKernelLattice
    mirror-E: none(waiver:whole-class-primitive-kernel-lattice)
    anchors: [mathlib/module/Mathlib.RingTheory.Localization.Integer, mathlib/module/Mathlib.Data.Int.GCD]
