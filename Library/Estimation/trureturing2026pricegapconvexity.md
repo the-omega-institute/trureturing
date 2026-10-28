@@ -12238,15 +12238,3 @@ $$
 with the same admissible-height and integral consequences. WPH5 retains the original positive $1-aQ_\eta$ and the existing count suppliers' strict cuts. WPH6 retains DST's explicitly attributed unrefereed density input on its upper branch; WPH3--WPH4 use no such input.
 
 All limits remain uniform over the original full windows and ties. This is a fixed-parameter quantitative strengthening for the same $d,\ell_X,M_X$; it does not obtain the gain by renaming the witness constant and thereby changing the original source. No compensation is spent twice, no source clock or future horizon is replaced, and the analytic minimizer is not asserted to be arithmetically attainable. The actual same-source boundary-minus-credit upper, strict Robin above 5040 and RH remain unresolved. No Lean/kernel verification or literature-priority claim is made.
-
-## Locator
-
-The declared URL
-[original-window supplier](https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md)
-locates sections 3--4 (N1--N2) and the project application
-"two legal directions at the same source" (PT1--PT11).
-The analytic construction and variational target JVM1--JVM2 are local to
-[this note's joint variational margin section](https://github.com/the-omega-institute/trureturing/blob/a0bafa0673e5364a1c4f819f5b24311ee00b59ed/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin).
-This note is repository research synthesis. Its source-window and
-arithmetic applications remain supplier-relative; actual favorable slack,
-strict all-integer Robin and RH remain unproved here.

@@ -5,12 +5,13 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Variational;
 internal sealed class JointReciprocalScalarCoordinateDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Estimation/trureturing2026pricegapconvexity");
+        LibraryNoteRef.Create("D5/L/Estimation/trureturing2026jointreciprocalvariational");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Scalar integral coordinates, their smooth positive derivative and endpoint surjectivity support the exact joint reciprocal variational construction.",
         H("Joint Reciprocal Scalar Coordinate"),
         Blocks(
+            Paragraph(Text("The precise source excerpt is Library/Estimation/trureturing2026jointreciprocalvariational.md. Its Locator binds the complete JVM1--JVM6 formulas to the original long note, Actual Robin price gaps, forced-core tail records and the selected-sign boundary, pinned at https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin. The original JVM1--JVM2 source scope is 0<b<1; the endpoint b=1 is a separate formal extension in this Lean development. No RH or literature-priority claim is made.")),
             Describe.Lean(
                 DescribeId.Create("joint-reciprocal-polynomial"),
                 DeclarationHandle.Create("D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate.polynomial"),

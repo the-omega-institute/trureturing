@@ -5,13 +5,13 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Variational;
 internal sealed class JointReciprocalFunctionalDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Estimation/trureturing2026pricegapconvexity");
+        LibraryNoteRef.Create("D5/L/Estimation/trureturing2026jointreciprocalvariational");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The joint reciprocal functional has an explicit smooth increasing minimizer and exact attained infima over the full bounded positive measurable class.",
         H("Joint Reciprocal Functional"),
         Blocks(
-            Paragraph(Text("The source is trureturing research synthesis, Actual Robin price gaps, forced-core tail records and the selected-sign boundary, Library/Estimation/trureturing2026pricegapconvexity.md, pinned at https://github.com/the-omega-institute/trureturing/blob/a0bafa0673e5364a1c4f819f5b24311ee00b59ed/Library/Estimation/trureturing2026pricegapconvexity.md. That supplier-relative paper supplies the original analytic construction and JVM1--JVM2 target. This formalization proves only scalar-coordinate existence, the explicit normalized profile and the full measurable-class variational values. It does not verify the paper's source-window, arithmetic, strict-gain, Robin or RH claims. The scalar-coordinate support retains the original Lean constant names so the three public theorem statements remain identical.")),
+            Paragraph(Text("The precise source excerpt is trureturing research synthesis, Joint reciprocal variational construction and exact measurable-class values, Library/Estimation/trureturing2026jointreciprocalvariational.md. Its Locator binds the complete JVM1--JVM6 formulas to the original long note, Actual Robin price gaps, forced-core tail records and the selected-sign boundary, pinned at https://github.com/the-omega-institute/trureturing/blob/c68136a75d73324c52cb78e83821f2683126fae6/Library/Estimation/trureturing2026pricegapconvexity.md#the-same-source-response-admits-a-larger-joint-variational-margin. The original JVM1--JVM2 source scope is 0<b<1; this formalization separately includes the endpoint in its stated range 0<b<=1. It proves only scalar-coordinate existence, the explicit normalized profile and the full measurable-class variational values. It does not verify the source-window, arithmetic, strict-gain, Robin or RH claims. The scalar-coordinate support retains the original Lean constant names so the three public theorem statements remain identical.")),
             Describe.Lean(
                 DescribeId.Create("joint-reciprocal-mass"),
                 DeclarationHandle.Create("D5/S3/Analytic/Variational/JointReciprocalFunctional.mass"),
