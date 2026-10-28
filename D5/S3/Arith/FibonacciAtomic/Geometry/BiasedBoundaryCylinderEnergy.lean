@@ -72,7 +72,7 @@ private theorem graft_root (x y : ℝ) (z w : H) (c : Bool) :
     graft x y z w (rootEdge c) = if c then y else x := by
   classical
   simp only [graft, lp.coeFn_add, Pi.add_apply, E_root, add_zero]
-  cases c <;> simp [rootEdge, Pi.single_apply]
+  cases c <;> simp [rootEdge]
 
 private theorem suffix_graft (x y : ℝ) (z w : H) (c : Bool) :
     S [c] (graft x y z w) = if c then w else z := by
@@ -167,7 +167,7 @@ private theorem firstLevel_prefixfree :
 private theorem firstLevel_cover (ω : Omega) :
     ∃ p ∈ firstLevel, ω ∈ cylinder p.val := by
   refine ⟨rootEdge (ω 0), ?_, ?_⟩
-  · cases h : ω 0 <;> simp [firstLevel, h]
+  · cases h : ω 0 <;> simp [firstLevel]
   · rw [BiasedBoundaryCylinderProjection.cylinder_ray]
     simp [rootEdge, D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix]
 
@@ -175,13 +175,12 @@ private theorem pullback_ext {F T : G}
     (h : ∀ c : Bool, pullback [c] F = pullback [c] T) : F = T := by
   have hn := (BiasedBoundaryCylinderProjection.partition_centered_residual
     firstLevel firstLevel_prefixfree firstLevel_cover).2.2.1 (F-T)
-  have hp (c : Bool) : pullback [c] (F-T) = 0 := by rw [map_sub,h c,sub_self]
   have hz : ‖F-T‖^2 = 0 := by
     simpa [firstLevel, rootEdge, h] using hn
   exact sub_eq_zero.mp (norm_eq_zero.mp (sq_eq_zero_iff.mp hz))
 
 private theorem graft_constant {x y a b : ℝ} {z w : H}
-    (hz : J z = constG a) (hw : J w = constG b) (h : x+a = y+b) :
+    (hz : J z = constG a) (hw : J w = constG b) (h : x + a = y + b) :
     J (graft x y z w) = constG (x+a) := by
   apply pullback_ext
   intro c
@@ -249,8 +248,8 @@ private theorem fixed_norm : ‖fixedLift‖^2 = 1 := by
     norm_num at hh
   have hg : J (graft (1/2) (1/2) ((1/2:ℝ) • fixedLift)
       ((1/2:ℝ) • fixedLift)) = constG 1 := by
-    convert graft_constant (scalar_trace (1/2)) (scalar_trace (1/2)) (by ring) using 1 <;>
-      norm_num
+    convert graft_constant (scalar_trace (1/2)) (scalar_trace (1/2)) (by ring) using 1
+    norm_num
   have hu := fixed_bound 1 _ hg
   rw [graft_norm] at hu
   simp only [norm_smul,mul_pow,Real.norm_eq_abs,sq_abs] at hu
@@ -277,8 +276,8 @@ private theorem fixed_recursion :
     fixedLift = graft (1/2) (1/2) ((1/2:ℝ) • fixedLift) ((1/2:ℝ) • fixedLift) := by
   let r := graft (1/2) (1/2) ((1/2:ℝ) • fixedLift) ((1/2:ℝ) • fixedLift)
   have ht : J r = constG 1 := by
-    convert graft_constant (scalar_trace (1/2)) (scalar_trace (1/2)) (by ring) using 1 <;>
-      norm_num
+    convert graft_constant (scalar_trace (1/2)) (scalar_trace (1/2)) (by ring) using 1
+    norm_num
   have hn : ‖r‖^2 = 1 := by
     dsimp [r]
     rw [graft_norm]
@@ -341,12 +340,13 @@ private theorem graft_trace {x y a b : ℝ} {z w : H}
   apply pullback_ext
   intro c
   rw [pullback_graft,map_add,map_smul,map_smul,root_pullback,root_pullback]
-  cases c <;> simp only [Bool.false_eq_true, Bool.true_eq_false, not_false_eq_true,
+  cases c <;> simp only [Bool.false_eq_true, Bool.true_eq_false, 
     ite_true,ite_false,smul_zero,zero_add,add_zero]
   · rw [hz,constant_smul,←map_add]
   · rw [hw,constant_smul,←map_add]
 
-private theorem root_partition : indicator (rootEdge false)+indicator (rootEdge true) = constG 1 := by
+private theorem root_partition :
+    indicator (rootEdge false)+indicator (rootEdge true) = constG 1 := by
   have h := graft_trace (x := 1) (y := 1) (z := 0) (w := 0)
     (a := 0) (b := 0) (by simp) (by simp)
   simpa [seed,seed_trace] using h.symm.trans seed_trace
@@ -367,7 +367,7 @@ private theorem a_rep : indicator (rootEdge false) = constG (1/2)+J aLift := by
   rw [root_pullback,map_add,pullback_const]
   unfold aLift
   rw [pullback_graft]
-  cases c <;> simp only [Bool.false_eq_true, Bool.true_eq_false, not_false_eq_true,
+  cases c <;> simp only [Bool.false_eq_true, Bool.true_eq_false, 
     ite_true,ite_false,q_scalar_trace]
   · rw [← map_add,← map_add]
     norm_num
@@ -381,11 +381,13 @@ private theorem b_rep : indicator leftLeft = constG (1/4)+J bLift := by
   unfold bLift
   rw [pullback_graft]
   cases c
-  · rw [BiasedBoundaryPathSplit.pullback_indicator_descendant]
+  · change pullback [false] (indicator (descendant [false] (rootEdge false))) = _
+    rw [BiasedBoundaryPathSplit.pullback_indicator_descendant]
     simp only [Bool.false_eq_true,ite_false]
     rw [show J bLeft = (5/8:ℝ) • indicator (rootEdge false)+
         (-3/8:ℝ) • indicator (rootEdge true) by
-      simpa [bLeft] using graft_trace (q_scalar_trace (5/16)) (q_scalar_trace (-3/16))]
+      convert graft_trace (x := (5/16)) (y := (-3/16))
+        (q_scalar_trace (5/16)) (q_scalar_trace (-3/16)) using 1 <;> norm_num [bLeft]]
     rw [show constG (1/4) = (1/4:ℝ) • constG 1 from (constant_smul _).symm,
       show constG (1/8) = (1/8:ℝ) • constG 1 from (constant_smul _).symm,
       ← root_partition]
@@ -394,7 +396,9 @@ private theorem b_rep : indicator leftLeft = constG (1/4)+J bLift := by
       (by simp [leftLeft,descendant,rootEdge]) (by simp [leftLeft,descendant,rootEdge])]
     simp only [ite_true]
     have hbr : J bRight = constG (-1/8) := by
-      convert graft_constant (q_scalar_trace (-1/16)) (q_scalar_trace (-1/16)) (by ring)
+      convert graft_constant (x := (-1/16)) (y := (-1/16))
+        (a := (-1/16)) (b := (-1/16))
+        (q_scalar_trace (-1/16)) (q_scalar_trace (-1/16)) (by ring)
         using 1 <;> norm_num [bRight]
     rw [hbr,←map_add,←map_add]
     norm_num
@@ -440,7 +444,7 @@ private theorem b_effective : bLift ∈ K := by
   ring
 
 private theorem lift_of_rep (F : D) (c : ℝ) (z : H)
-    (hz : z ∈ K) (he : F.val = constG c+J z) : lift F = z := by
+    (hz : z ∈ K) (he : F.val = constG c + J z) : lift F = z := by
   apply ((free_root_least_energy F).2.2.2.2.2 z hz ?_).symm
   change Pi (J z) = Pi F.val
   rw [he,map_add,BiasedBoundaryCentering.Pi_const,zero_add]
@@ -455,7 +459,8 @@ in the original biased free-root form. -/
 theorem mixed_cylinder_energy :
     form (cylinderD ⟨[false,false],by simp⟩) (cylinderD (rootEdge false)) = 1/8 := by
   change form (cylinderD leftLeft) (cylinderD (rootEdge false)) = _
-  rw [form,a_minimizer,b_minimizer,show inner ℝ bLift aLift = inner ℝ aLift bLift from real_inner_comm _ _]
+  rw [form,a_minimizer,b_minimizer,
+    show inner ℝ bLift aLift = inner ℝ aLift bLift from real_inner_comm _ _]
   unfold aLift bLift
   rw [graft_pair,graft_root,graft_root,suffix_graft,suffix_graft]
   simp only [Bool.false_eq_true,ite_false,ite_true,real_inner_smul_left]
@@ -474,7 +479,5 @@ theorem mixed_cylinder_energy :
   rw [hl,hr]
   norm_num
 
-#print axioms constant_trace_minimum
-#print axioms mixed_cylinder_energy
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryCylinderEnergy
