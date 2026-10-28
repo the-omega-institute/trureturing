@@ -94,10 +94,6 @@ internal sealed class OriginalFullBandNormalizerDocument : IScribeDocumentDefini
                         + "cofinal qualifying OriginalWindow witnesses, "
                         + "the signed prime numerator, or Robin/RH. "
                         + "No second-order correction, rearrangement or "
-                        + "unimodality claim is assumed. The corresponding "
-                        + "Reg source keeps the full original telescope and "
-                        + "the actual windowMass observation; completion "
-                        + "of its source-occurrence binding remains separate "
-                        + "from this mathematical statement."))),
+                        + "unimodality claim is assumed."))),
                 DescribeRole.Theorem))));
 }

@@ -144,8 +144,8 @@ private lemma price_drop_sharp {t x b : ℝ} (ht : 4 ≤ t) (htx : t ≤ x) (hxb
         simp [zpow_neg, one_div]
       _ = (b ^ (-1 : ℤ) - x ^ (-1 : ℤ)) / (-1 : ℝ) := by
         convert _root_.integral_zpow (a := x) (b := b) (n := (-2 : ℤ))
-          (Or.inr ⟨by norm_num, hzero⟩) using 1 <;> norm_num
-      _ = _ := by norm_num; field_simp [hx0.ne', hb0.ne'] <;> ring
+          (Or.inr ⟨by norm_num, hzero⟩) using 1; norm_num
+      _ = _ := by norm_num; field_simp [hx0.ne', hb0.ne']; ring
   calc
     g x - g b = ∫ y in x..b, weight y :=
       (ActualRobinClockCovariance.density_integral (by linarith) hxb).symm
