@@ -39,7 +39,7 @@ private theorem atomic_predecessor (a j : Nat) (X : CompletionTree)
   have he : substitution^[a] t = substitution^[j] (.of true) := by
     apply NativeCompletionSupportClosure.embed_injective
     rw [← iterate_embed, ht]
-    exact eq
+    exact eq.trans (iterate_embed j (.of true))
   have zero : NativePrefixIdentityReflection.gamma t = 0 := by
     have h := congrArg NativePrefixIdentityReflection.gamma he
     simpa only [NativePrefixIdentityReflection.gamma_iterate,

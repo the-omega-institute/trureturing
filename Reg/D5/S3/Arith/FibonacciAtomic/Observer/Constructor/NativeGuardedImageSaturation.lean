@@ -68,7 +68,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     intro i
     exact _root_.D5.S3.Arith.FibonacciAtomic.Observer.CompletionPositiveDriftRegion.atomic_finite 2
   have accepted : rejected.readout () ⟨0, 1, p, []⟩ v = true := by
-    simp only [rejected, realize, finite, decide_true]
+    exact decide_eq_true finite
   have bad := ((law S p guarded [] mode).2.2).mp ⟨v, sat, vm, accepted⟩
   have cf := (Classical.choose_spec
     (guarded_extension S p guarded (canonicalFree mode)).exists).2 (0 : Fin 1) rfl
