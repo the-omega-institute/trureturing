@@ -16,9 +16,9 @@ internal sealed class ConditionalSubentropyGuessingBoundDocument : IScribeDocume
             Node("simplexCoords", SimplexCoordsFormula(),
                 "Equation (3), PDF page 2: \"this uniform measure (normalised to have total volume unity) is given by dx = (n − 1)! dx_1 … dx_{n−1}.\" The first n−1 coordinates are nonnegative and have sum at most one.", AssessedProvenance.FromLiterature(Source)),
             Node("simplex_volume", SimplexVolumeFormula(),
-                "The standard simplex in n coordinates has volume equal to the reciprocal of n factorial.", AssessedProvenance.FromRepo()),
+                "The standard simplex in n coordinates has volume equal to the reciprocal of n factorial.", AssessedProvenance.FromRepo(), role: DescribeRole.Lemma),
             Node("simplex_sum_boundary_null", SimplexSumBoundaryNullFormula(),
-                "Every positive level set of the coordinate sum has zero volume.", AssessedProvenance.FromRepo()),
+                "Every positive level set of the coordinate sum has zero volume.", AssessedProvenance.FromRepo(), role: DescribeRole.Lemma),
             Node("subentropySpectrum", SpectrumFormula(),
                 "Equation (4), PDF page 2: \"Introducing η(y) := −y ln y, we then obtain a third expression for the subentropy from eq.(2): Q(ρ) = n ∫_{Δn} η(λ · x) dx − C_n.\" Real.negMulLog is η. The Lebesgue integral is multiplied by (n−1)!, as in equation (3).", AssessedProvenance.FromLiterature(Source)),
             Node("subentropy", SubentropyFormula(),
@@ -30,10 +30,10 @@ internal sealed class ConditionalSubentropyGuessingBoundDocument : IScribeDocume
             Node("result", ClaimBody(),
                 "The simplex integral equals the determinant-integral subentropy on positive semidefinite trace-one matrices. Gaussian radial decomposition proves this equality without a simple-spectrum assumption. Normalizing the nonzero blocks gives a probability ensemble; zero blocks contribute zero. The ensemble guessing bound gives the inequality.", AssessedProvenance.FromRepo(Source), true))));
 
-    private static DocumentBlock.Describe Node(string name, Formula formula, string text, AssessedProvenance provenance, bool theorem = false) =>
+    private static DocumentBlock.Describe Node(string name, Formula formula, string text, AssessedProvenance provenance, bool theorem = false, DescribeRole? role = null) =>
         Describe.Lean(DescribeId.Create("conditionalsubentropy-" + name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Owner + name),
             H(name), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(text))),
-            theorem ? DescribeRole.Theorem : DescribeRole.Definition,
+            role ?? (theorem ? DescribeRole.Theorem : DescribeRole.Definition),
             theorem ? new OpenProblemResolutionClaim(
                 ProblemSlugRef.Create("datta-dorlas-jozsa-benatti-2014-conditional-subentropy-conjecture-2"),
                 ResolutionKind.Proved) : null);

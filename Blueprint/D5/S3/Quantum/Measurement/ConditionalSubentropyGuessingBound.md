@@ -28,11 +28,11 @@ $$\forall n \in \mathbb{N},\; \operatorname{simplexCoords}\left(n\right) = \{y: 
 
 Equation (3), PDF page 2: "this uniform measure (normalised to have total volume unity) is given by dx = (n − 1)! dx_1 … dx_{n−1}." The first n−1 coordinates are nonnegative and have sum at most one.
 
-**Definition 1.3 (simplex_volume).**
+**Lemma 1.3 (simplex_volume).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{volume}\left(\operatorname{simplexCoords}\left(n + 1\right)\right) = (\operatorname{Nat}.\operatorname{factorial}\left(n\right): \operatorname{ENNReal})^{-1}$$
 
-*Formalization.* `D5/S3/Quantum/Measurement/ConditionalSubentropyGuessingBound.simplex_volume` (`✓ std3`).
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/ConditionalSubentropyGuessingBound.simplex_volume` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -40,11 +40,11 @@ $$\forall n \in \mathbb{N},\; \operatorname{volume}\left(\operatorname{simplexCo
 
 The standard simplex in n coordinates has volume equal to the reciprocal of n factorial.
 
-**Definition 1.4 (simplex_sum_boundary_null).**
+**Lemma 1.4 (simplex_sum_boundary_null).**
 
 $$\forall n \in \mathbb{N},\; \forall t \in \mathbb{R},\; (0 < t) \Rightarrow (\operatorname{volume}\left(\{u: \operatorname{Fin}\left(n\right) \to \mathbb{R} | \sum_{i\in \operatorname{Fin}\left(n\right)}(u\left(i\right)) = t\}\right) = 0)$$
 
-*Formalization.* `D5/S3/Quantum/Measurement/ConditionalSubentropyGuessingBound.simplex_sum_boundary_null` (`✓ std3`).
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/ConditionalSubentropyGuessingBound.simplex_sum_boundary_null` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
