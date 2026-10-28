@@ -171,4 +171,105 @@ theorem inverse_two_thirds_derivatives {K : Matrix n n ℂ} (hK : K.IsHermitian)
   norm_num at h ⊢
   exact h
 
+private theorem trace_sandwich_cube (S A : Matrix n n ℂ) :
+    Matrix.trace ((S*A*S)^3) = Matrix.trace ((A*(S*S))^3) := by
+  have he : (S*A*S)^3 = S * (A*(S*S)*A*(S*S)*A) * S := by noncomm_ring
+  rw [he, Matrix.mul_assoc, Matrix.trace_mul_comm]
+  congr 1 <;> simp [pow_succ, Matrix.mul_assoc]
+
+/-- The original sandwich cubic trace agrees locally with the reduced inverse two-thirds trace.
+This is an identity-denominator statement and makes no congruence claim for a general denominator. -/
+theorem sandwich_trace_germ (X H K : Matrix n n ℂ) (hK : K.IsHermitian) :
+    (fun t : ℝ => (Matrix.trace
+      ((CFC.rpow (1+t • K) (-(1 : ℝ)/3) * (X+t • H) *
+        CFC.rpow (1+t • K) (-(1 : ℝ)/3))^3)).re) =ᶠ[𝓝 0]
+    (fun t : ℝ => (Matrix.trace
+      (((X+t • H)*CFC.rpow (1+t • K) (-(2 : ℝ)/3))^3)).re) := by
+  filter_upwards [affine_positive_near_zero hK] with t ht
+  have hs : CFC.rpow (1+t • K) (-(1 : ℝ)/3) *
+      CFC.rpow (1+t • K) (-(1 : ℝ)/3) =
+      CFC.rpow (1+t • K) (-(2 : ℝ)/3) := by
+    rw [affine_rpow_cfc hK _ t ht, affine_rpow_cfc hK _ t ht]
+    have hc (f : ℝ → ℝ) : ContinuousOn f (spectrum ℝ K) := by
+      rw [continuousOn_iff_continuous_domRestrict]
+      fun_prop
+    rw [← cfc_mul _ _ _ (hc _) (hc _)]
+    · apply cfc_congr
+      intro x hx
+      dsimp only
+      rw [← Real.rpow_add (ht x hx)]
+      congr 1
+      norm_num
+  rw [trace_sandwich_cube, hs]
+
+private def traceRealMap : Matrix n n ℂ →L[ℝ] ℝ :=
+  Complex.reCLM.comp (LinearMap.toContinuousLinearMap (Matrix.traceLinearMap n ℝ ℂ))
+
+private theorem hasDerivAt_traceReal {f : ℝ → Matrix n n ℂ} {f' : Matrix n n ℂ}
+    {t : ℝ} (hf : HasDerivAt f f' t) :
+    HasDerivAt (fun s => (Matrix.trace (f s)).re) (Matrix.trace f').re t := by
+  convert! traceRealMap.hasFDerivAt.comp_hasDerivAt t hf using 1
+
+/-- Actual second and third derivatives of a cubic trace from nearby matrix derivatives. -/
+theorem cubic_trace_derivatives (B B1 B2 B3 : ℝ → Matrix n n ℂ)
+    (h0 : ∀ᶠ t in 𝓝 (0 : ℝ), HasDerivAt B (B1 t) t)
+    (h1 : ∀ᶠ t in 𝓝 (0 : ℝ), HasDerivAt B1 (B2 t) t)
+    (h2 : HasDerivAt B2 (B3 0) 0) :
+    iteratedDeriv 2 (fun t => (Matrix.trace ((B t)^3)).re) 0 =
+      (Matrix.trace ((3 : ℝ) • (B2 0 * B 0 * B 0) +
+        (6 : ℝ) • (B1 0 * B1 0 * B 0))).re ∧
+    iteratedDeriv 3 (fun t => (Matrix.trace ((B t)^3)).re) 0 =
+      (Matrix.trace ((3 : ℝ) • (B3 0 * B 0 * B 0) +
+        (9 : ℝ) • (B2 0 * B1 0 * B 0) + (9 : ℝ) • (B2 0 * B 0 * B1 0) +
+        (6 : ℝ) • (B1 0 * B1 0 * B1 0))).re := by
+  let f0 := fun t => (Matrix.trace ((B t)^3)).re
+  let f1 := fun t => (Matrix.trace ((3 : ℝ) • (B1 t * B t * B t))).re
+  let f2 := fun t => (Matrix.trace ((3 : ℝ) • (B2 t * B t * B t) +
+    (6 : ℝ) • (B1 t * B1 t * B t))).re
+  let f3 := fun t => (Matrix.trace ((3 : ℝ) • (B3 t * B t * B t) +
+    (9 : ℝ) • (B2 t * B1 t * B t) + (9 : ℝ) • (B2 t * B t * B1 t) +
+    (6 : ℝ) • (B1 t * B1 t * B1 t))).re
+  have hd0 (t : ℝ) (ht : HasDerivAt B (B1 t) t) : HasDerivAt f0 (f1 t) t := by
+    have hd := hasDerivAt_traceReal (((ht.mul ht).mul ht))
+    convert hd using 1
+    · funext s
+      simp [f0, pow_succ, Matrix.mul_assoc]
+    · dsimp [f1]
+      simp only [Pi.mul_apply, Matrix.add_mul, Matrix.mul_add, Matrix.trace_add,
+        Matrix.trace_smul, Complex.add_re, Complex.real_smul, Complex.mul_re,
+        Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+      rw [Matrix.trace_mul_cycle (B t) (B1 t) (B t),
+        Matrix.trace_mul_cycle (B t) (B t) (B1 t)]
+      ring
+  have hd1 (t : ℝ) (ht : HasDerivAt B (B1 t) t)
+      (ht1 : HasDerivAt B1 (B2 t) t) : HasDerivAt f1 (f2 t) t := by
+    have hd := hasDerivAt_traceReal (((ht1.mul ht).mul ht).const_smul (3 : ℝ))
+    convert hd using 1
+    dsimp [f2]
+    simp only [Pi.mul_apply, Matrix.add_mul, Matrix.mul_add, Matrix.trace_add,
+      Matrix.trace_smul, Complex.add_re, Complex.real_smul, Complex.mul_re,
+      Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+    rw [Matrix.trace_mul_cycle (B1 t) (B t) (B1 t)]
+    ring
+  have hd2 : HasDerivAt f2 (f3 0) 0 := by
+    have ht := h0.self_of_nhds
+    have ht1 := h1.self_of_nhds
+    have hd := hasDerivAt_traceReal
+      ((((h2.mul ht).mul ht).const_smul (3 : ℝ)).add
+        (((ht1.mul ht1).mul ht).const_smul (6 : ℝ)))
+    convert hd using 1
+    dsimp [f3]
+    simp only [Pi.mul_apply, Matrix.add_mul, Matrix.mul_add, Matrix.trace_add,
+      Matrix.trace_smul, Complex.add_re, Complex.real_smul, Complex.mul_re,
+      Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+    rw [Matrix.trace_mul_cycle (B1 0) (B2 0) (B 0),
+      Matrix.trace_mul_cycle (B 0) (B1 0) (B2 0)]
+    ring
+  have he1 : deriv f0 =ᶠ[𝓝 (0 : ℝ)] f1 := h0.mono fun t ht => (hd0 t ht).deriv
+  have he2 : deriv (deriv f0) =ᶠ[𝓝 (0 : ℝ)] f2 :=
+    he1.deriv.trans ((h0.and h1).mono fun t ht => (hd1 t ht.1 ht.2).deriv)
+  constructor
+  · simpa only [iteratedDeriv_succ, iteratedDeriv_zero] using he2.eq_of_nhds
+  · simpa only [iteratedDeriv_succ, iteratedDeriv_zero] using he2.deriv_eq.trans hd2.deriv
+
 end D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives

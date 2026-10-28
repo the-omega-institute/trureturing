@@ -33,6 +33,20 @@ internal sealed class HsfIdentityCubicDerivativesDocument : IScribeDocumentDefin
                 + "third derivative -(80/27)K^3. These are suppliers for the HSF "
                 + "identity-denominator cubic trace; this declaration alone does not "
                 + "identify the trace coefficients or prove the HSF conjecture.",
+                DescribeRole.Theorem),
+            Entry("sandwich_trace_germ", "The original sandwich trace",
+                "For arbitrary finite matrices X,H and Hermitian K, the real trace "
+                + "of ((I+tK)^(-1/3)(X+tH)(I+tK)^(-1/3))^3 agrees near zero with "
+                + "the real trace of ((X+tH)(I+tK)^(-2/3))^3. Powers are actual CFC "
+                + "powers. The proof uses scalar powers on the fixed positive spectrum "
+                + "and cyclicity of trace, without commuting X,H with K.",
+                DescribeRole.Theorem),
+            Entry("cubic_trace_derivatives", "Differentiating a cubic trace",
+                "If B has nearby actual first and second matrix derivatives B1,B2, "
+                + "and B2 has derivative B3 at zero, cyclicity gives the exact second "
+                + "and third derivatives of Re Tr(B^3). The second is "
+                + "Re Tr(3 B2 B^2+6 B1^2 B), and the third is "
+                + "Re Tr(3 B3 B^2+9 B2 B1 B+9 B2 B B1+6 B1^3), all at zero.",
                 DescribeRole.Theorem)))));
 
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
