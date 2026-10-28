@@ -261,9 +261,9 @@ private theorem creation_occupation_summable (D : LatticeData) (α : Charge D)
   have hR1 : ‖q‖ / ρ < 1 := (div_lt_one hρ0).mpr hqρ
   have hs : Summable (fun d : Occ D => (‖q‖ / ρ) ^ level D d) := by
     have hh := summable_norm_signed_integer_occupations (Fin D.rank)
-        (q := ((‖q‖ / ρ : ℝ) : ℂ)) (by simpa [abs_of_nonneg hR0] using hR1)
+        (q := ((‖q‖ / ρ : ℝ) : ℂ)) (by simpa [abs_of_nonneg hR0, abs_of_pos hρ0] using hR1)
     simpa [signedIntegerMonomial, integerEnergy,
-      level, LatticePositiveEnergy.oscillatorEnergy, abs_of_nonneg hR0] using hh
+      level, LatticePositiveEnergy.oscillatorEnergy, abs_of_nonneg hR0, abs_of_pos hρ0] using hh
   let C := Real.exp ((D.rank : ℝ) * M * B / (1 - ρ))
   refine (hs.mul_left C).of_nonneg_of_le (fun d => mul_nonneg (pow_nonneg hB _) (norm_nonneg _)) ?_
   intro d
