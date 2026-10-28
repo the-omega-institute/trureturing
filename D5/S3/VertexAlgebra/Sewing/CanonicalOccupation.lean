@@ -367,7 +367,6 @@ private theorem wordMap_nil_X (D : LatticeData) (α β : Charge D)
     wordMap_nil, wordMap_nil]
   rw [show -m - 1 - bilinear D α β + (x.2 + 1 : ℕ) =
     -(m - (x.2 + 1 : ℕ)) - 1 - bilinear D α β by omega]
-  simp only [smul_eq_mul]
   ring
 
 private theorem derivative_mode (D : LatticeData) (x : Index D) (m : ℤ) :
@@ -524,6 +523,119 @@ private theorem wordCoeff_cons_finite (D : LatticeData) (α β : Charge D)
           positive_derivative_vanish D x j β d hj', map_zero])
       _ = _ := Finset.sum_congr rfl (fun j hj => heq j)
 
+private theorem wordCoeff_nil_add_single (D : LatticeData) (α β : Charge D)
+    (m : ℤ) (x : Index D) (e d : Occ D) :
+    wordCoeff D α β [] m e (d + Finsupp.single x 1) =
+      (if x ∈ e.support then
+        wordCoeff D α β [] m (e - Finsupp.single x 1) d else 0) -
+      (bilinear D α (unitCharge D x.1) : ℂ) *
+        wordCoeff D α β [] (m - (x.2 + 1 : ℕ)) e d := by
+  classical
+  have hb : b D (d + Finsupp.single x 1) = X x * b D d := by
+    simp [b, X, monomial_mul_monomial, add_comm]
+  simp only [wordCoeff, hb, wordMap_nil_X, MvPolynomial.coeff_sub,
+    MvPolynomial.coeff_X_mul', MvPolynomial.coeff_smul, smul_eq_mul]
+
+/-- A creation-seed row bound in every signed mode and every output occupation. -/
+private theorem creation_row_bound (D : LatticeData) (α : Charge D) :
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ (t : ℤ) (e : Occ D),
+      ‖(creationCoeff D α t).coeff e‖ ≤ C * (2 : ℝ) ^ level D e := by
+  classical
+  let M : ℝ := ∑ i : Fin D.rank, ‖(α i : ℂ)‖
+  have hM : 0 ≤ M := Finset.sum_nonneg (fun _ _ => norm_nonneg _)
+  have hα (i : Fin D.rank) : ‖(α i : ℂ)‖ ≤ M :=
+    Finset.single_le_sum (fun j _ => norm_nonneg (α j : ℂ)) (Finset.mem_univ i)
+  let C := Real.exp ((D.rank : ℝ) * M / (1 - (1 / 2 : ℝ)))
+  refine ⟨C, (Real.exp_pos _).le, ?_⟩
+  intro t e
+  have hr := creation_radial_bound D α M 1 (1/2) hM (by norm_num) hα
+    (by norm_num) (by norm_num) e
+  simp only [one_pow, mul_one] at hr
+  have hid : (1 / 2 : ℝ) ^ level D e * 2 ^ level D e = 1 := by
+    rw [← mul_pow]
+    norm_num
+  calc
+    _ ≤ ‖(creationCoeff D α (level D e)).coeff e‖ := creation_coefficient_norm_le D α t e
+    _ = (‖(creationCoeff D α (level D e)).coeff e‖ * (1/2 : ℝ) ^ level D e) *
+          2 ^ level D e := by rw [mul_assoc, hid, mul_one]
+    _ ≤ C * 2 ^ level D e := mul_le_mul_of_nonneg_right hr (by positivity)
+
+/-- Complementary row seed for the actual creation-and-translation field.
+The input occupation is unrestricted, and the mode is arbitrary. -/
+private theorem ground_row_bound (D : LatticeData) (α β : Charge D) :
+    ∃ C L : ℝ, 0 ≤ C ∧ 1 ≤ L ∧ ∀ (e d : Occ D) (m : ℤ),
+      ‖wordCoeff D α β [] m e d‖ ≤
+        C * (2 : ℝ) ^ level D e * L ^ d.degree := by
+  classical
+  obtain ⟨C, hC, hbase⟩ := creation_row_bound D α
+  let T : Fin D.rank → ℝ := fun i => ‖(bilinear D α (unitCharge D i) : ℂ)‖
+  let L : ℝ := 1 + ∑ i : Fin D.rank, T i
+  have hL : 1 ≤ L := by
+    dsimp [L, T]
+    exact le_add_of_nonneg_right (Finset.sum_nonneg (fun _ _ => norm_nonneg _))
+  have hTx (x : Index D) : 1 + T x.1 ≤ L := by
+    dsimp [L]
+    exact add_le_add_left (Finset.single_le_sum (fun i _ => norm_nonneg _)
+      (Finset.mem_univ x.1)) 1
+  have hphase : ‖epsilon D α β‖ = 1 := by
+    unfold epsilon paritySign
+    split_ifs <;> norm_num
+  have hzero (e : Occ D) (m : ℤ) :
+      ‖wordCoeff D α β [] m e 0‖ ≤ C * 2 ^ level D e := by
+    have hh : wordCoeff D α β [] m e 0 =
+        epsilon D α β * (creationCoeff D α (-m - 1 - bilinear D α β)).coeff e := by
+      simp [wordCoeff, b, wordMap_nil, translatedPolynomial, creationContract_apply]
+    rw [hh, norm_mul, hphase, one_mul]
+    exact hbase _ _
+  refine ⟨C, L, hC, hL, ?_⟩
+  have haux : ∀ n : ℕ, ∀ d : Occ D, d.degree = n → ∀ (e : Occ D) (m : ℤ),
+      ‖wordCoeff D α β [] m e d‖ ≤ C * 2 ^ level D e * L ^ d.degree := by
+    intro n
+    induction n using Nat.strong_induction_on with
+    | h n ih =>
+      intro d hd e m
+      by_cases hz : d = 0
+      · subst d
+        simpa using hzero e m
+      · obtain ⟨x, hx⟩ : ∃ x : Index D, d x ≠ 0 := by
+          by_contra h
+          push Not at h
+          exact hz (Finsupp.ext h)
+        let d' := d - Finsupp.single x 1
+        have hadd : d' + Finsupp.single x 1 = d := Finsupp.sub_add_single_one_cancel hx
+        have hdeg : d'.degree + 1 = d.degree := by
+          rw [← hadd, map_add, Finsupp.degree_single]
+        have hi (e' : Occ D) (m' : ℤ) := ih d'.degree (by omega) d' rfl e' m'
+        let B : ℝ := C * 2 ^ level D e * L ^ d'.degree
+        have hB : 0 ≤ B := by dsimp [B]; positivity
+        have hleft : ‖if x ∈ e.support then
+            wordCoeff D α β [] m (e - Finsupp.single x 1) d' else 0‖ ≤ B := by
+          split_ifs with he
+          · have hlev := Finsupp.weight_sub_single_add (w := fun y : Index D => y.2 + 1)
+              (Finsupp.mem_support_iff.mp he)
+            change level D (e - Finsupp.single x 1) + (x.2 + 1) = level D e at hlev
+            have hp : (2 : ℝ) ^ level D (e - Finsupp.single x 1) ≤ 2 ^ level D e :=
+              pow_le_pow_right₀ (by norm_num) (by omega)
+            exact (hi _ m).trans (mul_le_mul_of_nonneg_right
+              (mul_le_mul_of_nonneg_left hp hC) (pow_nonneg (by linarith) _))
+          · simpa only [norm_zero] using hB
+        rw [← hadd, wordCoeff_nil_add_single]
+        calc
+          _ ≤ ‖if x ∈ e.support then
+              wordCoeff D α β [] m (e - Finsupp.single x 1) d' else 0‖ +
+              ‖(bilinear D α (unitCharge D x.1) : ℂ) *
+                wordCoeff D α β [] (m - (x.2 + 1 : ℕ)) e d'‖ := norm_sub_le _ _
+          _ ≤ B + T x.1 * B := by
+            rw [norm_mul]
+            exact add_le_add hleft (mul_le_mul_of_nonneg_left (hi e _) (norm_nonneg _))
+          _ = (1 + T x.1) * B := by ring
+          _ ≤ L * B := mul_le_mul_of_nonneg_right (hTx x) hB
+          _ = C * 2 ^ level D e * L ^ (d' + Finsupp.single x 1).degree := by
+            rw [map_add, Finsupp.degree_single, pow_succ]
+            dsimp [B]
+            ring
+  exact fun e d m => haux d.degree d rfl e m
+
 private theorem signed_derivative_choose (j k : ℕ) :
     ((Ring.choose (-(j : ℤ) - 1 + k) k : ℤ) : ℂ) =
       (-1 : ℂ) ^ k * (j.choose k : ℂ) := by
@@ -607,6 +719,7 @@ private theorem wordCoeff_cons (D : LatticeData) (α β : Charge D)
 #print axioms creation_coefficient_factorial
 #print axioms creation_radial_bound
 #print axioms creation_occupation_summable
+#print axioms ground_row_bound
 #print axioms wordMap_nil_X
 #print axioms wordCoeff_cons_finite
 #print axioms wordCoeff_cons
