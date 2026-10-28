@@ -313,7 +313,7 @@ private theorem neutral_component (D : LatticeData) (i : Fin D.rank)
   | single β p =>
     by_cases h : β = δ
     · subst β; simp
-    · simp [Finsupp.single_apply, h]
+    · simp [h]
 
 private theorem negative_derivative_component (D : LatticeData) (x : Index D)
     (j : ℕ) (v : Carrier D) (δ : Charge D) :
@@ -324,7 +324,10 @@ private theorem negative_derivative_component (D : LatticeData) (x : Index D)
   rw [show -(-(j : ℤ) - 1) - 1 + x.2 = ((j + x.2 : ℕ) : ℤ) by omega,
     Ring.choose_natCast]
   have ht : (-(j : ℤ) - 1 - x.2) < 0 := by omega
-  simp [neutralPolynomialMode, ht, show (-(-(j : ℤ) - 1 - x.2) - 1).toNat = j + x.2 by omega]
+  rw [neutralPolynomialMode, if_pos ht]
+  change ((j + x.2).choose x.2 : ℂ) •
+    (X (x.1, (-(-(j : ℤ) - 1 - x.2) - 1).toNat) * v δ) = _
+  rw [show (-(-(j : ℤ) - 1 - x.2) - 1).toNat = j + x.2 by omega]
 
 private theorem derivative_single (D : LatticeData) (x : Index D)
     (j : ℕ) (β : Charge D) (p : Oscillator D) :
@@ -359,8 +362,13 @@ private theorem positive_derivative_vanish (D : LatticeData) (x : Index D)
       change ((j : ℤ) - x.2 - 1).toNat + 1 ≤ level D d at he
       have ht := Int.toNat_of_nonneg (show 0 ≤ (j : ℤ) - x.2 - 1 by omega)
       omega
-    simp [b, pderiv_monomial, hz]
-  simp [neutralPolynomialMode, not_lt.mpr hm.le, ne_of_gt hm, hderiv]
+    rw [b, pderiv_monomial, hz]
+    simp
+  have hz : neutralPolynomialMode D x.1 β ((j : ℤ) - x.2) (b D d) = 0 := by
+    rw [neutralPolynomialMode, if_neg (not_lt.mpr hm.le), if_neg (ne_of_gt hm)]
+    simp only [LinearMap.smul_apply, LinearMap.sum_apply, Derivation.coeFn_coe,
+      hderiv, smul_zero, Finset.sum_const_zero]
+  rw [hz, Finsupp.single_zero, smul_zero]
 
 /-- Both original normal-product branches, with exact finite ranges.
 The first range is forced by the output occupation and the second by the input.
@@ -417,7 +425,7 @@ private theorem wordCoeff_cons_finite (D : LatticeData) (α β : Charge D)
     intro j hj
     by_contra hn
     have hj' : level D e ≤ j := by simpa using hn
-    exact hj (by rw [negative_coefficient_vanish D x j e _ hj', mul_zero])
+    exact hj (by dsimp only; rw [negative_coefficient_vanish D x j e _ hj', mul_zero])
   · have heq (j : ℕ) :
         extract ((right[[m - j - 1]]) ((left[[j]]) v)) =
           ((Ring.choose (-(j : ℤ) - 1 + x.2) x.2 : ℤ) : ℂ) *
@@ -426,14 +434,16 @@ private theorem wordCoeff_cons_finite (D : LatticeData) (α β : Charge D)
       change (((right[[m - j - 1]]) ((left[[j]]) v)) (α + β)).coeff e = _
       rw [derivative_single, map_smul, Finsupp.smul_apply, MvPolynomial.coeff_smul]
       rfl
-    rw [finsum_eq_sum_of_support_subset (s := Finset.range (x.2 + level D d + 1))
-      (by
+    calc
+      _ = ∑ j ∈ Finset.range (x.2 + level D d + 1),
+          extract ((right[[m - j - 1]]) ((left[[j]]) v)) := by
+        apply finsum_eq_sum_of_support_subset
         intro j hj
         by_contra hn
         have hj' : x.2 + level D d < j := by simpa using hn
-        exact hj (by simp only [left, v, positive_derivative_vanish D x j β d hj',
-          map_zero]))]
-    exact Finset.sum_congr rfl (fun j hj => heq j)
+        exact hj (by dsimp only; simp only [left, v,
+          positive_derivative_vanish D x j β d hj', map_zero])
+      _ = _ := Finset.sum_congr rfl (fun j hj => heq j)
 
 #print axioms creation_coefficient_factorial
 #print axioms creation_radial_bound
