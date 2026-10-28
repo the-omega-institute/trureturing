@@ -33,7 +33,7 @@ private theorem sylow_le_normalizer_of_coprime_commutation [Finite G]
     (h : ∀ x y : G, Nat.Coprime (orderOf x) (orderOf y) → Commute x y)
     {p q : ℕ} [Fact p.Prime] [Fact q.Prime] (hpq : p ≠ q)
     (P : Sylow p G) (Q : Sylow q G) :
-    (Q : Subgroup G) ≤ (P : Subgroup G).normalizer := by
+    (Q : Subgroup G) ≤ Subgroup.normalizer (P : Set G) := by
   have hcard := IsPGroup.coprime_card_of_ne p q hpq
     (P : Subgroup G) (Q : Subgroup G) P.isPGroup' Q.isPGroup'
   apply Subgroup.le_normalizer_iff.mpr
@@ -57,10 +57,10 @@ private theorem sylow_normal_of_coprime_commutation [Finite G]
     by_cases hpq : p = q
     · subst q
       exact dvd_trans (P.pow_dvd_card_of_pow_dvd_card hqk)
-        ((P : Subgroup G).card_dvd_of_le Subgroup.le_normalizer)
+        (Subgroup.card_dvd_of_le (H := (P : Subgroup G)) Subgroup.le_normalizer)
     · let Q : Sylow q G := Classical.arbitrary _
       exact dvd_trans (Q.pow_dvd_card_of_pow_dvd_card hqk)
-        ((Q : Subgroup G).card_dvd_of_le
+        (Subgroup.card_dvd_of_le (H := (Q : Subgroup G))
           (sylow_le_normalizer_of_coprime_commutation h hpq P Q))
 
 /-- In a finite group, a common root for every prescribed coprime equal-power
@@ -69,7 +69,7 @@ neither uniqueness of the common root nor commutativity is assumed. -/
 theorem nilpotent_of_coprime_power_amalgamation [Finite G]
     (h : ∀ x y : G, ∀ m n : ℕ, Nat.Coprime m n → x ^ m = y ^ n →
       ∃ z : G, x = z ^ n ∧ y = z ^ m) : Group.IsNilpotent G := by
-  apply (Group.isNilpotent_of_finite_tfae (G := G)).out 3 0 |>.mp
+  apply (Group.isNilpotent_of_finite_tfae (G := G)).out 4 1 |>.mp
   intro p hp P
   letI := hp
   exact sylow_normal_of_coprime_commutation
