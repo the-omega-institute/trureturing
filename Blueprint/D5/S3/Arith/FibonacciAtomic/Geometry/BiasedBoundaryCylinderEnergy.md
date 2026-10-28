@@ -18,7 +18,7 @@ For a Boolean letter c, rootEdge(c) is the original nonempty one-letter address 
 
 **Theorem 1.2 (The Constant-Trace Minimum).**
 
-$$\exists q: H, ((\operatorname{J}\left(q\right)=\operatorname{constG}\left(1\right))\land ((\Vert q \Vert)^{2}=1)\land (\forall c: \mathbb{R}, (\forall z: H, (\operatorname{J}\left(z\right)=\operatorname{constG}\left(c\right)\implies \operatorname{inner}\left(q, z\right)=c)))\land (\forall c: \operatorname{Bool}\left(\right), ((\operatorname{eval}\left(q, \operatorname{rootEdge}\left(c\right)\right)=\frac{1}{2})\land (\operatorname{S}\left([c], q\right)=\frac{1}{2}\cdot q))))$$
+$$\exists q: H, ((\operatorname{J}\left(q\right)=\operatorname{constG}\left(1\right))\land ((\Vert q \Vert)^{2}=1)\land (\forall c: \mathbb{R}, (\forall z: H, (\operatorname{J}\left(z\right)=\operatorname{constG}\left(c\right)\implies \operatorname{inner}\left(q, z\right)=c)))\land (\forall c: Bool, ((\operatorname{eval}\left(q, \operatorname{rootEdge}\left(c\right)\right)=\frac{1}{2})\land (\operatorname{S}\left([c], q\right)=\frac{1}{2}\cdot q))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryCylinderEnergy.constant_trace_minimum` (`✓ std3`). ∎
 
@@ -26,7 +26,7 @@ $$\exists q: H, ((\operatorname{J}\left(q\right)=\operatorname{constG}\left(1\ri
 
 *Commentary.*
 
-H is the original real square-summable space on nonempty ordered Boolean addresses. J maps H to real L2 of the golden biased product measure M. Constants, conditional suffixes and all equalities of traces use this same M.
+H is the original real square-summable space on nonempty ordered Boolean addresses. J maps H to real L2 of the golden biased product measure M. Constants, conditional suffixes and all equalities of traces use this same M. In the displayed formula, eval(q,p) is the original increment coordinate q(p), and inner is the real inner product on H.
 
 Project the sum of the two unit root increments onto the orthogonal complement of the kernel of J. The result has constant trace one and is the fixed-root minimum. Pairing it with any constant trace c gives c times its squared norm.
 
