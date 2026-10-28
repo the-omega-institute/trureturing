@@ -70,26 +70,23 @@ run_cmd do
   let reverseBudget := reading.queryRecords.any fun query =>
     query.role.startsWith "target-part-reverse:" &&
       (query.encounteredSearchKappa || query.encounteredCoveragePrefixG)
-  let guardDecided := disposition == .reject ||
-    (disposition == .incomplete && !guardsComplete reading)
+  let reverseScheduled := reading.queryRecords.any (·.role.startsWith "target-part-reverse:")
+  let baselinePositive := match reading.baseline.upper with
+    | .finite n => decide (n > 0)
+    | .top => false
+  let pairedImproves := better reading.paired.upper reading.baseline.upper
+  let guardDecided := reverseScheduled && baselinePositive && pairedImproves &&
+    disposition == .incomplete && !reading.targetPartComplete &&
+    reading.graph.complete && reading.presentationComplete && reading.isolated &&
+    reading.structureChecked && reading.structureClean
   let kappaThenHit := reading.queryRecords.any fun query =>
     query.encounteredSearchKappa && (match query.terminal with | .hit _ => true | _ => false)
-  let reached := match selected with
-    | "kappa" | "kappa-large" => kappaThenHit && disposition == .bindOnly
-    | "G" | "G-large" => coverage
-    | "packed" | "bounds" | "iff" | "split" | "wide-packed" => reverseBudget && guardDecided
-    | _ => disposition == .bindOnly
-  if selected == "G" || selected == "G-large" then
-    if disposition == .reductionR && !budgetBasis reading then
-      throwError "G trap produced an exhaustive reduction"
-  else if disposition == .reductionR then
-    throwError "negative calibration produced a reduction: {selected}"
-  if selected == "G-control" || selected == "G-large-control" || selected == "expensive" then
-    unless disposition == .bindOnly do throwError "positive label control did not erase gain: {selected}"
-  if selected == "unwrapped" then
-    unless reading.baseline.lower == .finite 0 && reading.baseline.upper == .finite 0 &&
-        reading.paired.lower == .finite 0 && reading.paired.upper == .finite 0 do
-      throwError "unwrapped lost its [0,0]/[0,0] intervals"
+  let reached := match intendedStop with
+    | "searchKappa" => kappaThenHit && disposition == .bindOnly
+    | "coveragePrefixG" => coverage
+    | "reverse-kappa-or-G" => reverseBudget && guardDecided
+    | "positive-control" | "baseline-hit" | "zero-intervals" => disposition == .bindOnly
+    | _ => false
   logInfo s!"PRODUCTION_NEGATIVE {Json.mkObj [
     ("case", toJson selected), ("target", toJson target.toString),
     ("label_certificate", toJson label.render), ("label_B_only_kernel_checked", toJson true),
@@ -98,6 +95,10 @@ run_cmd do
     ("encountered_coverage_prefix_G", toJson coverage),
     ("kappa_followed_by_hit", toJson kappaThenHit),
     ("reverse_budget_stop", toJson reverseBudget),
+    ("reverse_scheduled", toJson reverseScheduled),
+    ("baseline_upper_positive", toJson baselinePositive),
+    ("paired_upper_improves", toJson pairedImproves),
+    ("target_part_complete", toJson reading.targetPartComplete),
     ("guard_decided", toJson guardDecided),
     ("query_stop_records", toJson (reading.queryRecords.map fun query => Json.mkObj [
       ("role", toJson query.role), ("terminal", toJson (reprStr query.terminal)),
@@ -110,3 +111,15 @@ run_cmd do
     ("index_digest", toJson index.header.digest), ("index_inputs", toJson index.header.inputs),
     ("stop_coverage_scope", toJson "same-key slow-before-easy and easy-beyond-G remain unverified unless actual candidate telemetry establishes their positions")
     ] |>.compress}"
+
+  if selected == "G" || selected == "G-large" then
+    if disposition == .reductionR && !budgetBasis reading then
+      throwError "G trap produced an exhaustive reduction"
+  else if disposition == .reductionR then
+    throwError "negative calibration produced a reduction: {selected}"
+  if selected == "G-control" || selected == "G-large-control" || selected == "expensive" then
+    unless disposition == .bindOnly do throwError "positive label control did not erase gain: {selected}"
+  if selected == "unwrapped" then
+    unless reading.baseline.lower == .finite 0 && reading.baseline.upper == .finite 0 &&
+        reading.paired.lower == .finite 0 && reading.paired.upper == .finite 0 do
+      throwError "unwrapped lost its [0,0]/[0,0] intervals"
