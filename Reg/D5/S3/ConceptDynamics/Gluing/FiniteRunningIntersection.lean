@@ -56,7 +56,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     rw [separatorMessages.eq_def]
     refine ⟨(fun _ => ()), by simp [rows], rfl, ?_⟩
     intro w hw hwp
-    fin_cases w <;> simp_all [T, e, SimpleGraph.starGraph_adj]
+    fin_cases w
+    · exact (hwp (by rfl)).elim
+    · exact (hw.ne rfl).elim
 
   exact ((law T S rows (SimpleGraph.isTree_starGraph _) e).1 _).mpr semantic
 

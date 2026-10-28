@@ -8,7 +8,7 @@ The input consists of finite node, variable and output types with their actual e
 
 **Theorem 1.1 (Finite messages refine the semantic recurrence).**
 
-$$\forall d: FiniteJoinData, \forall e: \operatorname{Dart}\left(\operatorname{graph}\left(d\right)\right), \forall a: \operatorname{Assignments}\left(\operatorname{output}\left(d\right), \operatorname{sep}\left(d, e\right)\right), a \in \operatorname{messageTable}\left(d, e\right) \iff a \in \operatorname{separatorMessages}\left(d, e\right) \land \operatorname{card}\left(\operatorname{messageTable}\left(d, e\right)\right) \le \operatorname{power}\left(\operatorname{card}\left(\operatorname{output}\left(d\right)\right), \operatorname{card}\left(\operatorname{sep}\left(d, e\right)\right)\right)$$
+$$(\forall d: FiniteJoinData, (\forall e: \operatorname{Dart}\left(\operatorname{graph}\left(d\right)\right), (\forall a: \operatorname{Assignments}\left(\operatorname{output}\left(d\right), \operatorname{sep}\left(d, e\right)\right), a \in \operatorname{messageTable}\left(d, e\right) \iff a \in \operatorname{separatorMessages}\left(d, e\right)) \land \operatorname{card}\left(\operatorname{messageTable}\left(d, e\right)\right) \le \operatorname{power}\left(\operatorname{card}\left(\operatorname{output}\left(d\right)\right), \operatorname{card}\left(\operatorname{sep}\left(d, e\right)\right)\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Gluing/FiniteRunningIntersection.message_table_spec` (`✓ std3`). ∎
 
@@ -20,7 +20,7 @@ FiniteJoinData abbreviates the complete telescope of message_table_spec: Node, V
 
 **Theorem 1.2 (A finite occurrence decoder reconstructs the certificate).**
 
-$$\forall d: DecodeData, \forall a: \operatorname{RowFamily}\left(d\right), \operatorname{Valid}\left(d, a\right) \to \forall n: \operatorname{Nodes}\left(d\right), \operatorname{restrict}\left(\operatorname{decode}\left(d, a\right), \operatorname{scope}\left(d, n\right)\right) = \operatorname{row}\left(a, n\right)$$
+$$(\forall d: DecodeData, (\forall a: \operatorname{RowFamily}\left(d\right), \operatorname{Valid}\left(d, a\right) \to (\forall n: \operatorname{Nodes}\left(d\right), \operatorname{restrict}\left(\operatorname{decode}\left(d, a\right), \operatorname{scope}\left(d, n\right)\right) = \operatorname{row}\left(a, n\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Gluing/FiniteRunningIntersection.decode_spec` (`✓ std3`). ∎
 
@@ -32,7 +32,7 @@ DecodeData abbreviates the complete telescope of decode_spec, including the fini
 
 **Theorem 1.3 (Exact root decision and a reconstructed global assignment).**
 
-$$\forall d: SolverData, \operatorname{isSome}\left(\operatorname{solve}\left(d\right)\right) = \operatorname{true}\left(\right) \iff \operatorname{Nonempty}\left(\operatorname{rawJoin}\left(d\right)\right) \land \forall j: \operatorname{Assignments}\left(\operatorname{output}\left(d\right), \operatorname{union}\left(d\right)\right), \operatorname{solve}\left(d\right) = \operatorname{some}\left(j\right) \to j \in \operatorname{rawJoin}\left(d\right) \land \forall e: \operatorname{Dart}\left(\operatorname{graph}\left(d\right)\right), \operatorname{card}\left(\operatorname{messageTable}\left(d, e\right)\right) \le \operatorname{power}\left(\operatorname{card}\left(\operatorname{output}\left(d\right)\right), \operatorname{card}\left(\operatorname{sep}\left(d, e\right)\right)\right) \land \operatorname{card}\left(\operatorname{sep}\left(d, e\right)\right) \le \operatorname{width}\left(d\right)$$
+$$(\forall d: SolverData, (\operatorname{isSome}\left(\operatorname{solve}\left(d\right)\right) = \operatorname{true}\left(\right) \iff \operatorname{Nonempty}\left(\operatorname{rawJoin}\left(d\right)\right)) \land (\forall j: \operatorname{Assignments}\left(\operatorname{output}\left(d\right), \operatorname{union}\left(d\right)\right), \operatorname{solve}\left(d\right) = \operatorname{some}\left(j\right) \to j \in \operatorname{rawJoin}\left(d\right)) \land (\forall e: \operatorname{Dart}\left(\operatorname{graph}\left(d\right)\right), \operatorname{card}\left(\operatorname{messageTable}\left(d, e\right)\right) \le \operatorname{power}\left(\operatorname{card}\left(\operatorname{output}\left(d\right)\right), \operatorname{card}\left(\operatorname{sep}\left(d, e\right)\right)\right) \land \operatorname{card}\left(\operatorname{sep}\left(d, e\right)\right) \le \operatorname{width}\left(d\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Gluing/FiniteRunningIntersection.solve_spec` (`✓ std3`). ∎
 

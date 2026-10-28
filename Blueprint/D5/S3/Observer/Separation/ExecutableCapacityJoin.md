@@ -8,7 +8,7 @@ I is finite, each coordinate alphabet X i is finite and nonempty, D is a nonempt
 
 **Theorem 1.1 (Exact original-task solver with a finite global witness).**
 
-$$\forall d: SourceData, \operatorname{costTable}\left(d\right) = \operatorname{sourceCost}\left(d\right) \land \forall k: Nat, \operatorname{isSome}\left(\operatorname{sourceSolve}\left(d, k\right)\right) = \operatorname{true}\left(\right) \iff \operatorname{minimumPeak}\left(d\right) \le k \land \forall k: Nat, \forall j: \operatorname{UnionAssignment}\left(d\right), \operatorname{sourceSolve}\left(d, k\right) = \operatorname{some}\left(j\right) \to j \in \operatorname{rawJoin}\left(d, k\right) \land \forall k: Nat, \forall e: \operatorname{Dart}\left(\operatorname{supportGraph}\left(d\right)\right), \forall a: \operatorname{SeparatorAssignment}\left(d, e\right), a \in \operatorname{messageTable}\left(d, k, e\right) \iff a \in \operatorname{separatorMessages}\left(d, k, e\right) \land \operatorname{card}\left(\operatorname{messageTable}\left(d, k, e\right)\right) \le \operatorname{power}\left(\operatorname{card}\left(\operatorname{output}\left(d\right)\right), \operatorname{card}\left(\operatorname{separator}\left(d, e\right)\right)\right) \land \operatorname{card}\left(\operatorname{separator}\left(d, e\right)\right) \le \operatorname{separatorWidth}\left(d\right)$$
+$$(\forall d: SourceData, \operatorname{costTable}\left(d\right) = \operatorname{sourceCost}\left(d\right) \land (\forall k: Nat, \operatorname{isSome}\left(\operatorname{sourceSolve}\left(d, k\right)\right) = \operatorname{true}\left(\right) \iff \operatorname{minimumPeak}\left(d\right) \le k) \land (\forall k: Nat, (\forall j: \operatorname{UnionAssignment}\left(d\right), \operatorname{sourceSolve}\left(d, k\right) = \operatorname{some}\left(j\right) \to j \in \operatorname{rawJoin}\left(d, k\right))) \land (\forall k: Nat, (\forall e: \operatorname{Dart}\left(\operatorname{supportGraph}\left(d\right)\right), (\forall a: \operatorname{SeparatorAssignment}\left(d, e\right), a \in \operatorname{messageTable}\left(d, k, e\right) \iff a \in \operatorname{separatorMessages}\left(d, k, e\right)) \land \operatorname{card}\left(\operatorname{messageTable}\left(d, k, e\right)\right) \le \operatorname{power}\left(\operatorname{card}\left(\operatorname{output}\left(d\right)\right), \operatorname{card}\left(\operatorname{separator}\left(d, e\right)\right)\right) \land \operatorname{card}\left(\operatorname{separator}\left(d, e\right)\right) \le \operatorname{separatorWidth}\left(d\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Separation/ExecutableCapacityJoin.source_solver_spec` (`✓ std3`). ∎
 
@@ -26,8 +26,21 @@ For every natural budget k, sourceSolve returns Some exactly when the minimum ac
 
 Empty coordinate products, zero-child constant roots, singleton alphabets, empty sensitive unions, empty separators and singleton support trees are included. The original nonempty promise and f already force a nonempty output alphabet. Separator width counts illegal-cell assignments for gluing constraints; response-state boundary width counts states in one observation process. No bound on total runtime, the sum of table sizes, total storage or certificate storage follows from a single separator-table bound.
 
+**Theorem 1.2 (The empty-coordinate constant root has peak one).**
+
+$$\operatorname{answer}\left(0\right) = \operatorname{false}\left(\right) \land \operatorname{answer}\left(1\right) = \operatorname{true}\left(\right) \land \operatorname{minimumPeak}\left(\operatorname{emptyTree}\left(\right), \operatorname{emptyPromise}\left(\right), \operatorname{constantTask}\left(\right)\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Separation/ExecutableCapacityJoin.result` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Here emptyTree is the actual zero-child implementation root on Empty coordinates, emptyPromise is the nonempty singleton empty product, and constantTask has output Unit. The separate support graph is the singleton tree. answer is the executable sourceSolve success flag for these exact inputs. Kernel evaluation gives false at zero and true at one; the general source_solver_spec then identifies the original counted-root minimum peak as one. The computation includes no illegal cells or separators.
+
 ## References
 
+- Truth anchor: `D5/S3/Observer/Separation/ExecutableCapacityJoin.result`
 - Truth anchor: `D5/S3/Observer/Separation/ExecutableCapacityJoin.source_solver_spec`
 - Dependency: [D5/S3/ConceptDynamics/Gluing/FiniteRunningIntersection](../../ConceptDynamics/Gluing/FiniteRunningIntersection.md)
 - Dependency: [D5/S3/Observer/Separation/CapacitySensitiveSupport](CapacitySensitiveSupport.md)
