@@ -53,7 +53,8 @@ private lemma column_ensemble {d : ℕ} (hd : 1 ≤ d)
   let a := CFC.sqrt ρ
   let p : Fin d → ℝ := fun j => (ρ j j).re
   let ψ : Fin d → Fin d → ℂ := fun j i =>
-    if p j = 0 then (Pi.single (⟨0, hd⟩ : Fin d) (1 : ℂ) : Fin d → ℂ) i else a i j / (Real.sqrt (p j) : ℂ)
+    if p j = 0 then (Pi.single (⟨0, hd⟩ : Fin d) (1 : ℂ) : Fin d → ℂ) i
+    else a i j / (Real.sqrt (p j) : ℂ)
   have ha : a.IsHermitian := (CFC.sqrt_nonneg ρ).posSemidef.isHermitian
   have haa : a * a = ρ := CFC.sqrt_mul_sqrt_self ρ hρ.1.nonneg
   have hp (j : Fin d) : 0 ≤ p j := (Complex.nonneg_iff.mp hρ.1.diag_nonneg).1
@@ -174,8 +175,7 @@ private lemma trace_sqrt_spectral {d : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
   apply Finset.sum_congr rfl
   intro i _
   simp only [Function.comp_apply, RCLike.ofReal_eq_complex_ofReal, Complex.ofReal_re,
-    Real.coe_sqrt,
-    Real.coe_toNNReal _ (hρ.1.eigenvalues_nonneg i)]
+    Real.coe_sqrt, Real.coe_toNNReal _ (hρ.1.eigenvalues_nonneg i)]
 
 private lemma spectral_bound {d : ℕ} (hd : 1 ≤ d)
     (ρ : Matrix (Fin d) (Fin d) ℂ) (hρ : IsState ρ) :
@@ -191,9 +191,12 @@ private lemma spectral_bound {d : ℕ} (hd : 1 ≤ d)
     exact le_csSup (Set.finite_range _).bddAbove ⟨i, rfl⟩
   have hl : 0 < maxEigenvalue ρ := by
     by_contra hn
+    have hlzero : maxEigenvalue ρ = 0 :=
+      le_antisymm (le_of_not_gt hn)
+        ((hρ.1.eigenvalues_nonneg ⟨0, hd⟩).trans (hle ⟨0, hd⟩))
     have hzero : ∀ i, hρ.1.isHermitian.eigenvalues i = 0 := by
       intro i
-      exact le_antisymm ((hle i).trans (le_of_not_gt hn)) (hρ.1.eigenvalues_nonneg i)
+      exact le_antisymm ((hle i).trans hlzero.le) (hρ.1.eigenvalues_nonneg i)
     simp only [hzero, Finset.sum_const_zero] at hsum
     norm_num at hsum
   refine ⟨hl, ?_⟩
