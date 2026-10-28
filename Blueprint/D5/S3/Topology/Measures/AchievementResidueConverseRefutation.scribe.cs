@@ -121,7 +121,7 @@ internal sealed class AchievementResidueConverseRefutationDocument : IScribeDocu
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Owner + "result"),
                 H("Negation of the full residue implication"),
                 StatementSource.FromAuthor(Disp(Seq(Neg, Sp, Par(ClaimBody())))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Topology/glabpruswisniowski2025achievement")),
                 Blocks(Paragraph(Text(
                         "The theorem is result : ¬ claim, with no free parameters or hypotheses. The proposition negated has the exact body: " + FullClaim + ".")),
                     Paragraph(Text(
