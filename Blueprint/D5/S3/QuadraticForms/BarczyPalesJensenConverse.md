@@ -22,7 +22,7 @@ For every positive integer n, every nonempty open convex subset I of the real li
 
 **Theorem 1.2 (Negation of the complete converse).**
 
-$$\neg \operatorname{claim}$$
+$$\neg (\forall n \in \mathbb{N},\; 0 < n \Rightarrow \left(\forall I \in \operatorname{Set}\left(\mathbb{R}\right),\; \operatorname{Nonempty}\left(I\right) \Rightarrow \left(\operatorname{IsOpen}\left(I\right) \Rightarrow \left(\forall hI \in \operatorname{Convex}\left(\mathbb{R}, I\right),\; \forall f \in I \to \mathbb{R},\; \forall P \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{R}\right),\; \forall hP \in P \in \operatorname{doublyStochastic}\left(\mathbb{R}, \operatorname{Fin}\left(n\right)\right),\; 2 \le \operatorname{rank}\left(P\right) \Rightarrow \left(\left(\forall x \in \operatorname{Fin}\left(n\right) \to I,\; f\left(\langle\sum_{(j : \operatorname{Fin}\left(n\right))} ((n : \mathbb{R}))^{-1} \cdot (x\left(j\right) : \mathbb{R}), hI.sum_{mem}\rangle\right) \le \frac{\sum_{(i : \operatorname{Fin}\left(n\right))} f\left(\langle\sum_{(j : \operatorname{Fin}\left(n\right))} P\left(i\right)\left(j\right) \cdot (x\left(j\right) : \mathbb{R}), hI.sum_{mem}\rangle\right)}{n}\right) \Rightarrow \left(\forall u \in I,\; \forall v \in I,\; f\left(\langle\sum_{(j : \operatorname{Fin}\left(2\right))} ((2 : \mathbb{R}))^{-1} \cdot (![u, v]\left(j\right) : \mathbb{R}), hI.sum_{mem}\rangle\right) \le \frac{f\left(u\right) + f\left(v\right)}{2}\right)\right)\right)\right)\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/BarczyPalesJensenConverse.result` (`✓ std3`). ∎
 
@@ -44,7 +44,7 @@ For an arbitrary real triple x, set m=(x(0)+x(1)+x(2))/3 and t=(x(0)-x(1))/12. D
 
 Retraction fixes s and -s, so F(s)=F(-s)=-3 and F(0)=0. Applying the alleged midpoint conclusion to the two interval elements s and -s would require 0<=-3. The contradiction uses the complete universal converse through its legal n=3 witness; it does not merely negate a witness-only surrogate.
 
-This mathematical result concerns the exact unrestricted v1 question. The paper's positive theorem under its original column-span hypothesis and its forward Jensen-convexity implications are not contradicted. Regularity-restricted variants are separate questions. The bounded literature qualification makes no global novelty or priority claim: Burai-Mako-Szokol 2019 and the full strongly Schur-convex-sums chapter remain unread. Independent source fidelity and prefreeze review remain separate from the kernel proof.
+This mathematical result concerns the exact unrestricted v1 question. The paper's positive theorem under its original column-span hypothesis and its forward Jensen-convexity implications are not contradicted. Regularity-restricted variants are separate questions.
 
 ## References
 
