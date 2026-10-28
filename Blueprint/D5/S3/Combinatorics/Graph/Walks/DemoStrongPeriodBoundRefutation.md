@@ -60,6 +60,10 @@ $$\neg (\forall V \in \operatorname{Type},\; \forall inst \in \operatorname{Fint
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/DemoStrongPeriodBoundRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/demo-2026-strong-period-bound` (refuted) by `D5/S3/Combinatorics/Graph/Walks/DemoStrongPeriodBoundRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"demo-2026-strong-period-bound","declaration_gid":"D5/S3/Combinatorics/Graph/Walks/DemoStrongPeriodBoundRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gregory Demo, David Lund, Oleksiy Al-saadi (2026). *On the Periodicity of k-distance Graphs*. URL: <https://arxiv.org/abs/2606.25493v1>.

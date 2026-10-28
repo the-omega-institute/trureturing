@@ -53,7 +53,10 @@ internal sealed class DemoStrongPeriodBoundRefutationDocument : IScribeDocumentD
                 Blocks(
                     Paragraph(Text("Take the edgeless simple graph on Unit. It is connected by SimpleGraph.Connected.of_subsingleton. Any two vertices coincide and their self-distance is zero, so distanceTwo G = G. Function.iterate_one and SimpleGraph.Iso.refl give PositiveReturn G 1. Nat.find_spec gives positivity of the least return and Nat.find_min' bounds it above by one; hence strongPeriod G = 1. Singleton cardinality then turns the asserted integer bound into 1 <= -2, a contradiction.")),
                     Paragraph(Text("The singleton fixed-point fact is already in the earlier metamour source: Theorem 4.1 characterizes edgeless fixed points, and the proof of Theorem 6.5 explicitly notes that the singleton has period one. The result here is the negation of the later paper's complete printed bound. It establishes no corrected bound for larger graphs and makes no claim of a new fixed-point theorem."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("demo-2026-strong-period-bound"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) =>
