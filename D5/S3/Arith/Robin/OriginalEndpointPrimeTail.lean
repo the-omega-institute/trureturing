@@ -592,6 +592,7 @@ theorem finite_min_tail_robin_bound {m : ℕ} (hm : 0 < m)
     by_cases heq : X = Chebyshev.theta (P : ℝ)
     · have hQzero : Q = 0 := by linarith [hsplit]
       rw [hQzero, heq]
+      simp
     · have ht := D5.S3.Arith.Robin.RestrictedDivisorStrictInventory.loglog_tangent
         (x := X) (y := Chebyshev.theta (P : ℝ)) hX htheta heq
       have ht' : Real.log (Real.log (Chebyshev.theta (P : ℝ))) -
@@ -602,7 +603,13 @@ theorem finite_min_tail_robin_bound {m : ℕ} (hm : 0 < m)
       have hrewrite : (Chebyshev.theta (P : ℝ) - X) / (X * Real.log X) =
           -Q / (X * Real.log X) := by rw [hsplit]; ring
       rw [hrewrite] at ht'
-      linarith
+      have ht''' : Real.log (Real.log (Chebyshev.theta (P : ℝ))) -
+          Real.log (Real.log X) < -(Q / (X * Real.log X)) := by
+        simpa only [neg_div] using ht'
+      have ht'' : Q / (X * Real.log X) <
+          Real.log (Real.log X) - Real.log (Real.log (Chebyshev.theta (P : ℝ))) := by
+        linarith only [ht''']
+      exact ht''.le
   have hterm (p : ℕ) (hp : p ∈ m.primeFactors) :
       min (Real.log p / (X * Real.log X))
           (-Real.log (1 - (p : ℝ)⁻¹ ^ 2)) ≤
@@ -617,6 +624,8 @@ theorem finite_min_tail_robin_bound {m : ℕ} (hm : 0 < m)
     have hi1 : (p : ℝ)⁻¹ < 1 := (inv_lt_one₀ hp0).mpr (by exact_mod_cast hpp.one_lt)
     have hz : (p : ℝ)⁻¹ ^ (m.factorization p + 1) < 1 :=
       pow_lt_one₀ hi0.le hi1 (by omega)
+    have hz0 : 0 ≤ (p : ℝ)⁻¹ ^ (m.factorization p + 1) :=
+      (pow_pos hi0 _).le
     have htail : 0 ≤ layerTail m p := by
       unfold layerTail
       apply neg_nonneg.mpr
@@ -630,15 +639,22 @@ theorem finite_min_tail_robin_bound {m : ℕ} (hm : 0 < m)
       have hqzero : (((m.factorization p - 1 : ℕ) : ℝ) * Real.log p) /
           (X * Real.log X) = 0 := by simp [hv1]
       rw [htail1, hqzero]
-      exact min_le_right _ _
+      simpa using (min_le_right (Real.log p / (X * Real.log X))
+        (-Real.log (1 - (p : ℝ)⁻¹ ^ 2)))
     · have hv2 : 2 ≤ m.factorization p := by omega
       have hcoef : (1 : ℝ) ≤ ((m.factorization p - 1 : ℕ) : ℝ) := by
         exact_mod_cast (show 1 ≤ m.factorization p - 1 by omega)
       have hq : Real.log p / (X * Real.log X) ≤
           (((m.factorization p - 1 : ℕ) : ℝ) * Real.log p) /
             (X * Real.log X) := by
-        apply (div_le_div_iff₀ hden).2
-        exact mul_le_mul_of_nonneg_right hcoef (Real.log_natCast_nonneg p)
+        apply (div_le_div_iff₀ hden hden).2
+        have hcoeflog : Real.log p ≤
+            ((m.factorization p - 1 : ℕ) : ℝ) * Real.log p := by
+          calc
+            Real.log p = 1 * Real.log p := by ring
+            _ ≤ ((m.factorization p - 1 : ℕ) : ℝ) * Real.log p :=
+              mul_le_mul_of_nonneg_right hcoef (Real.log_natCast_nonneg p)
+        exact mul_le_mul_of_nonneg_right hcoeflog hden.le
       exact (min_le_left _ _).trans (by linarith)
   have hsum :
       (∑ p ∈ m.primeFactors, min
@@ -660,9 +676,11 @@ theorem finite_min_tail_robin_bound {m : ℕ} (hm : 0 < m)
         (-Real.log (1 - (p : ℝ)⁻¹ ^ 2))) ≤
       tail m + Real.log (Real.log X) -
         Real.log (Real.log (Chebyshev.theta (P : ℝ))) := by
-    exact hsum.trans (add_le_add_left hD (tail m))
+    exact hsum.trans (by
+      have hadd := add_le_add_left hD (tail m)
+      convert hadd using 1 <;> ring)
   have hprefix : m.primeFactors = (Finset.Ioc 0 P).filter Nat.Prime := by
-    simpa [Nat.primesLE] using hsupport
+    simpa only [Nat.primesLE_eq_filter_Ioc_zero] using hsupport
   have hE : Mertens.E₃ (P : ℝ) = -eulerMass m +
       Real.log (Real.log (P : ℝ)) + Real.eulerMascheroniConstant := by
     unfold Mertens.E₃ eulerMass
