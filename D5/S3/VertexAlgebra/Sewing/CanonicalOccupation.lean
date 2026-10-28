@@ -316,50 +316,15 @@ private def wordCoeff (D : LatticeData) (α β : Charge D)
     (ω : List (Index D)) (m : ℤ) (e d : Occ D) : ℂ :=
   (wordMap D α β ω m (b D d)).coeff e
 
-/-- Finite contraction with the original creation coefficients. -/
-private def creationContract (D : LatticeData) (α : Charge D) (t : ℤ) :
-    Polynomial (Oscillator D) →ₗ[Oscillator D] Oscillator D :=
-  (Finsupp.linearCombination (Oscillator D) (fun n : ℕ => creationCoeff D α (t + n))).comp
-    (((Polynomial.toFinsuppIsoLinear (Oscillator D)).trans
-      (AddMonoidAlgebra.coeffLinearEquiv (Oscillator D))).toLinearMap)
-
-private theorem creationContract_apply (D : LatticeData) (α : Charge D) (t : ℤ)
-    (P : Polynomial (Oscillator D)) :
-    creationContract D α t P = ∑ j ∈ P.support, P.coeff j * creationCoeff D α (t + j) := by
-  rfl
-
-private theorem creationContract_monomial (D : LatticeData) (α : Charge D) (t : ℤ)
-    (n : ℕ) (a : Oscillator D) :
-    creationContract D α t (Polynomial.monomial n a) = a * creationCoeff D α (t + n) := by
-  simp [creationContract, Finsupp.linearCombination_apply]
-
-private theorem creationContract_C_mul (D : LatticeData) (α : Charge D) (t : ℤ)
-    (a : Oscillator D) (P : Polynomial (Oscillator D)) :
-    creationContract D α t (Polynomial.C a * P) = a * creationContract D α t P := by
-  rw [← Polynomial.smul_eq_C_mul]
-  exact map_smul (creationContract D α t) a P
-
-private theorem creationContract_shift (D : LatticeData) (α : Charge D) (t : ℤ)
-    (n : ℕ) (P : Polynomial (Oscillator D)) :
-    creationContract D α t (Polynomial.X ^ n * P) = creationContract D α (t + n) P := by
-  classical
-  induction P using Polynomial.induction_on' with
-  | add P Q hp hq => simp [mul_add, map_add, hp, hq]
-  | monomial j a =>
-    rw [Polynomial.X_pow_mul_monomial, creationContract_monomial,
-      creationContract_monomial]
-    congr 2
-    omega
-
 private theorem wordMap_nil (D : LatticeData) (α β : Charge D)
     (m : ℤ) (p : Oscillator D) :
     wordMap D α β [] m p = epsilon D α β •
-      creationContract D α (-m - 1 - bilinear D α β) (translatedPolynomial D α p) := by
+      LatticeActualProductKernel.convolution D α (-m - 1 - bilinear D α β)
+        (translatedPolynomial D α p) := by
   change (((actualField D α)[[m]]) (Finsupp.single β p)) (α + β) = _
   rw [actualField, VertexOperator.ncoeff_of_coeff,
-    (actual_creation_coefficient_transport D α α).2.2.1]
-  simp only [rawSingle, Finsupp.smul_apply, Finsupp.single_eq_same,
-    creationContract_apply, smul_eq_mul]
+    LatticeActualProductKernel.raw_single_convolution]
+  simp only [Finsupp.smul_apply, Finsupp.single_eq_same]
 
 /-- The actual input multiplication/translation recurrence, uniformly in signed mode. -/
 private theorem wordMap_nil_X (D : LatticeData) (α β : Charge D)
@@ -368,15 +333,18 @@ private theorem wordMap_nil_X (D : LatticeData) (α β : Charge D)
       X x * wordMap D α β [] m p -
         (bilinear D α (unitCharge D x.1) : ℂ) •
           wordMap D α β [] (m - (x.2 + 1 : ℕ)) p := by
-  have ht : translatedPolynomial D α (X x * p) =
-      translationVariable D α x.1 x.2 * translatedPolynomial D α p := by
-    simp [translatedPolynomial]
-  rw [wordMap_nil, ht, translationVariable, sub_mul, map_sub,
-    creationContract_C_mul, mul_assoc, creationContract_C_mul, creationContract_shift,
-    wordMap_nil, wordMap_nil]
-  rw [show -m - 1 - bilinear D α β + (x.2 + 1 : ℕ) =
-    -(m - (x.2 + 1 : ℕ)) - 1 - bilinear D α β by omega]
-  simp [smul_sub, mul_smul_comm, smul_mul_assoc, smul_smul, mul_comm]
+  change (((actualField D α)[[m]]) (Finsupp.single β (X x * p))) (α + β) =
+    X x * (((actualField D α)[[m]]) (Finsupp.single β p)) (α + β) -
+      (bilinear D α (unitCharge D x.1) : ℂ) •
+        (((actualField D α)[[m - (x.2 + 1 : ℕ)]]) (Finsupp.single β p)) (α + β)
+  simp only [actualField, VertexOperator.ncoeff_of_coeff]
+  rw [show -(m - (x.2 + 1 : ℕ)) - 1 = -m - 1 + (x.2 + 1 : ℕ) by omega]
+  have h := congrArg (fun v : Carrier D => v (α + β))
+    (LatticeActualProductKernel.raw_creator D α (-m - 1) β x p)
+  rw [LatticeActualProductKernel.raw_single_convolution D α (-m - 1) β p,
+    map_smul, LatticeActualProductKernel.creator_single] at h
+  simpa only [Finsupp.sub_apply, Finsupp.smul_apply, Finsupp.single_eq_same,
+    smul_mul_assoc, mul_smul_comm] using h
 
 private theorem derivative_mode (D : LatticeData) (x : Index D) (m : ℤ) :
     (dividedDerivative x.2 (neutralField D x.1))[[m]] =
@@ -594,9 +562,9 @@ private theorem ground_row_bound (D : LatticeData) (α β : Charge D) :
       ‖wordCoeff D α β [] m e 0‖ ≤ C * 2 ^ level D e := by
     have hh : wordCoeff D α β [] m e 0 =
         epsilon D α β * (creationCoeff D α (-m - 1 - bilinear D α β)).coeff e := by
-      have hc : creationContract D α (-m - 1 - bilinear D α β) 1 =
+      have hc : LatticeActualProductKernel.convolution D α (-m - 1 - bilinear D α β) 1 =
           creationCoeff D α (-m - 1 - bilinear D α β) := by
-        simpa using creationContract_monomial D α (-m - 1 - bilinear D α β) 0 (1 : Oscillator D)
+        simpa using LatticeActualProductKernel.convolution_monomial D α (-m - 1 - bilinear D α β) 0 (1 : Oscillator D)
       simp [wordCoeff, b, wordMap_nil, translatedPolynomial, hc]
     rw [hh, norm_mul, hphase, one_mul]
     exact hbase _ _
@@ -1056,9 +1024,9 @@ private theorem ground_column_bound (D : LatticeData) (α β : Charge D) :
     split_ifs <;> norm_num
   have hzero (d : Occ D) (m : ℤ) :
       ‖wordCoeff D α β [] m d 0‖ ≤ factorialEnvelope D B d := by
-    have hc : creationContract D α (-m - 1 - bilinear D α β) 1 =
+    have hc : LatticeActualProductKernel.convolution D α (-m - 1 - bilinear D α β) 1 =
         creationCoeff D α (-m - 1 - bilinear D α β) := by
-      simpa using creationContract_monomial D α (-m - 1 - bilinear D α β) 0 (1 : Oscillator D)
+      simpa using LatticeActualProductKernel.convolution_monomial D α (-m - 1 - bilinear D α β) 0 (1 : Oscillator D)
     have hh : wordCoeff D α β [] m d 0 =
         epsilon D α β * (creationCoeff D α (-m - 1 - bilinear D α β)).coeff d := by
       simp [wordCoeff, b, wordMap_nil, translatedPolynomial, hc]
