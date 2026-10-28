@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/FiniteGraphVertexSubstitution
    mirror-E: none(waiver:finite-graph-vertex-substitution)
-   anchors: [D5/S3/Geometry/FiniteConeUnionWedge, D5/S3/Geometry/FiniteSimplicialJoin]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Clique]
    utility: none
    digest: A singleton-fiber graph replacement decomposes into the old complex and the actual simplicial link join. -/
 import D5.S3.Geometry.FiniteConeUnionWedge

@@ -44,6 +44,14 @@ $G\circ H\in\mathcal W$. Thus its requested conclusion concerns the
 unsuspended complexes of all induced subgraphs; Theorem 21 does not supply
 that conclusion.
 
+## Verified locator
+
+- URL: https://arxiv.org/abs/2505.06457v2
+- Version v2, Section 2 (the definitions of $I(G)$, $G\circ H$, and
+  $\mathcal P$, $\mathcal{SP}$, $\mathcal W$, $\mathcal{SW}$), and the
+  paragraph immediately preceding Proposition 7.
+- Theorem 21 and Question 22.
+
 ## Local realization refinement
 
 `FiniteGraphVertexSubstitution.oneVertexReplacementEquiv` is a local
