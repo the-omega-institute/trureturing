@@ -23,7 +23,7 @@ noncomputable def fifthDrift (r b : ℝ) : ℝ :=
   1 + (1+2*b+sourceN r b) *
     (4 - 15 / sourceJ r b + 20 / (1+b) - 10 / sourceN r b)
 
-private def n4 (r b : ℝ) : ℝ :=
+def n4 (r b : ℝ) : ℝ :=
   let X := b^2+r-r^2
   let N := X+b*r
   2*(b^2+8*b+4)*X*N - 4*b*(1+b)*(1+2*b)*(X+N)
@@ -246,6 +246,34 @@ private theorem obstruction_neg (b : ℝ) (hb : 0 < b) (hb4 : b < 4) :
   have := mul_neg_of_pos_of_neg (pow_pos hb 14) htop
   linarith
 
+/-- The fourth numerator in source coordinates. -/
+theorem n4_parentLambda (r b : ℝ) (hb : b ≠ 0)
+    (hj : sourceJ r b ≠ 0) (hn : sourceN r b ≠ 0)
+    (ht : 1+b ≠ 0) (hu : 1+2*b ≠ 0) : n4 r b =
+    (1+b)*(1+2*b)*(b^2+r-r^2)*(b^2+r-r^2+b*r)*parentLambda r b := by
+  unfold n4 parentLambda
+  field_simp [hb,hj,hn,ht,hu]
+  unfold sourceN sourceJ
+  field_simp [hb]
+  <;> ring
+
+/-- The fourth drift coefficient is positive for large positive off-diagonal entry. -/
+theorem parentLambda_pos_of_four_le (r b : ℝ) (hr : 0 ≤ r) (hr1 : r ≤ 1)
+    (hb : 0 < b) (hb4 : 4 ≤ b) : 0 < parentLambda r b := by
+  have hc : 0 ≤ r*(1-r)/b := div_nonneg (mul_nonneg hr (by linarith)) hb.le
+  have hjb : b ≤ sourceJ r b := by unfold sourceJ; linarith
+  have hnb : b ≤ sourceN r b := by unfold sourceN; linarith
+  have hji : 4 / sourceJ r b ≤ 4 / b := div_le_div_of_nonneg_left (by norm_num) hb hjb
+  have hni : 4 / sourceN r b ≤ 4 / b := div_le_div_of_nonneg_left (by norm_num) hb hnb
+  have hnum : 0 < b^2-b-8 := by nlinarith
+  have hbase : 0 < 1 + 6/(1+b) - 8/b := by
+    have heq : 1+6/(1+b)-8/b = (b^2-b-8)/(b*(1+b)) := by field_simp; ring
+    rw [heq]
+    exact div_pos hnum (by positivity)
+  unfold parentLambda
+  have : 0 < 1/(1+2*b) := by positivity
+  linarith [show (8 : ℝ)/b = 4/b+4/b by ring]
+
 set_option maxHeartbeats 2000000 in
 -- Exact polynomial expansion and denominator clearing use the larger finite allowance.
 /-- Endpoints in r are included; no drift, gain, degree, or chart assumption occurs. -/
@@ -261,12 +289,8 @@ theorem drift_vector_nonzero (r b : ℝ) (hr : 0 ≤ r) (hr1 : r ≤ 1) (hb : 0 
     push_neg at h
     obtain ⟨hl,ha⟩ := h
     have hf : n4 r b = 0 := by
-      have heq : n4 r b =
-          (1+b)*(1+2*b)*(b^2+r-r^2)*(b^2+r-r^2+b*r)*parentLambda r b := by
-        unfold n4 parentLambda sourceN sourceJ
-        field_simp
-        <;> ring
-      rw [heq,hl,mul_zero]
+      rw [n4_parentLambda r b (ne_of_gt hb) (ne_of_gt hj) (ne_of_gt hn)
+        (ne_of_gt ht) (ne_of_gt hu),hl,mul_zero]
     have hg : n5 r b = 0 := by
       have heq : n5 r b = b*(1+b)*(b^2+r-r^2)*(b^2+r-r^2+b*r)*fifthDrift r b := by
         unfold n5 fifthDrift sourceN sourceJ
@@ -279,21 +303,7 @@ theorem drift_vector_nonzero (r b : ℝ) (hr : 0 ≤ r) (hr1 : r ≤ 1) (hb : 0 
       mul_neg_of_pos_of_neg (by positivity) (obstruction_neg b hb hb4)
     linarith
   · left
-    have hb4' : 4 ≤ b := le_of_not_gt hb4
-    have hjb : b ≤ sourceJ r b := by unfold sourceJ; linarith
-    have hnb : b ≤ sourceN r b := by unfold sourceN; linarith
-    have hji : 4 / sourceJ r b ≤ 4 / b := div_le_div_of_nonneg_left (by norm_num) hb hjb
-    have hni : 4 / sourceN r b ≤ 4 / b := div_le_div_of_nonneg_left (by norm_num) hb hnb
-    have hnum : 0 < b^2-b-8 := by nlinarith
-    have hbase : 0 < 1 + 6/(1+b) - 8/b := by
-      have heq : 1+6/(1+b)-8/b = (b^2-b-8)/(b*(1+b)) := by field_simp; ring
-      rw [heq]
-      exact div_pos hnum (by positivity)
-    have hpos : 0 < parentLambda r b := by
-      unfold parentLambda
-      have : 0 < 1/(1+2*b) := by positivity
-      linarith [show (8 : ℝ)/b = 4/b+4/b by ring]
-    exact ne_of_gt hpos
+    exact ne_of_gt (parentLambda_pos_of_four_le r b hr hr1 hb (le_of_not_gt hb4))
 
 #print axioms drift_vector_nonzero
 
