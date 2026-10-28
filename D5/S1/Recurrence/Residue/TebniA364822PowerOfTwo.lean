@@ -50,7 +50,7 @@ open D5.S1.Recurrence.Residue.TebniA364822 Finset
 /-- A364822 ("For n = 2^m (m natural number), a(n) == 1 (mod n)."). -/
 def claim : Prop := ∀ m : ℕ, ∃ z : ℤ, (z : ℚ) = a (2 ^ m) ∧ z ≡ 1 [ZMOD 2 ^ m]
 
-private theorem pow_two_dvd_choose_odd (m k : ℕ) (hk : Odd k) : 2^m ∣ (2^m).choose k := by
+theorem pow_two_dvd_choose_odd (m k : ℕ) (hk : Odd k) : 2^m ∣ (2^m).choose k := by
   have hpos : 0 < 2^m := by exact Nat.two_pow_pos m
   cases k with
   | zero => simp at hk

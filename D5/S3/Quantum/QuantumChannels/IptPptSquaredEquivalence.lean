@@ -193,7 +193,7 @@ private theorem sep_sum {I : Type} [Fintype I]
   convert hs using 1
   rw [Fintype.sum_sigma]
   exact Finset.sum_congr rfl (fun j _ => h j)
-private theorem ampl_kron (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (r : ℕ)
+theorem ampl_kron (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (r : ℕ)
     (A : Matrix (Fin n) (Fin n) 𝕜) (B : Matrix (Fin r) (Fin r) 𝕜) :
     (MatrixMap.kron Phi (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) ((Matrix.kroneckerMap (· * ·)) A B) = (Matrix.kroneckerMap (· * ·)) (Phi A) B := by
   ext a b

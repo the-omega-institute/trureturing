@@ -109,7 +109,7 @@ and $a(2)\bmod2=1$. This evaluation exits $0$ using the same script hash.
   vanish and the constant-index term gives residue $2$;
   `TebniA364822.result` uses `Nat.Prime.dvd_choose_self` for this step.
 - **Proved, kernel-checked:** if $k$ is odd then
-  $2^m\mid\binom{2^m}{k}$, by the private helper
+  $2^m\mid\binom{2^m}{k}$, by the helper
   `TebniA364822PowerOfTwo.pow_two_dvd_choose_odd`.
   `TebniA364822PowerOfTwo.result` applies it to the recurrence for positive
   $m$ and handles $m=0$ modulo one.
