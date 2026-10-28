@@ -26,7 +26,7 @@ $$\forall A \in \operatorname{Type}, B \in \operatorname{Type}, R \in \operatorn
 
 *Formalization.* `D5/S3/Quantum/Foundation/FiniteKrausChannel.IsTracePreserving` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Alex Meiburg and Dennj Osele (2025). *Physlib QuantumInfo: unbundled channels, channel duals and Hermitian-matrix order*. URL: <https://github.com/leanprover-community/physlib/tree/6a09b2d1761a0d4430083045a247eb121d8da260>.
 
 *Commentary.*
 
@@ -38,7 +38,7 @@ $$\forall A \in \operatorname{Type}, B \in \operatorname{Type}, S \in \operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/FiniteKrausChannel.of_kraus_isTracePreserving` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Alex Meiburg and Dennj Osele (2025). *Physlib QuantumInfo: unbundled channels, channel duals and Hermitian-matrix order*. URL: <https://github.com/leanprover-community/physlib/tree/6a09b2d1761a0d4430083045a247eb121d8da260>.
 
 *Commentary.*
 
