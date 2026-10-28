@@ -1,0 +1,12 @@
+**Theorem 6.3 (complete finite common adaptive continuation).** From the actual cut of Definition 6.2, the retained predictor supports every finite common adaptive continuation using the installed enlarged menu, including arbitrary rational leaf Adds and later Resets. It predicts every declared reply and remains synchronized with the actual native field after every committed operation.
+
+**Proof.** Use the following local rules.
+
+| Command | Predictor successor | Predicted complete reply |
+| --- | --- | --- |
+| Reset | $z:=0$ | the command's fixed acknowledgement |
+| Add$(j,u)$ | $z:=z+u e_{\ell_j}$ | the command's fixed acknowledgement |
+| Tick | $z:=T_0z$ | the command's fixed acknowledgement |
+| Read$(j)$ | $z$ | $z_{\ell_j}$ |
+| Read$_e$ | $z$ | $S z_d+C z_e$ |
+| Hold | $z$ | the command's fixed acknowledgement |

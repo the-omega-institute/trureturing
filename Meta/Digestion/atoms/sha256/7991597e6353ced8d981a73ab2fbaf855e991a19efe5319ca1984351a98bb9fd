@@ -1,0 +1,15 @@
+**Theorem 14.2 (complete synchronized actual continuation).** Either calibration installs exact prediction for every finite sufficiently backed common adaptive continuation of the entire menu of Assumption 11.2 on that same specimen, including Square, arbitrary rational boundary inputs, later Resets and the declared invalid/pending frames. At every settled cut the native invariant is $x_{\rm actual}=Rz$.
+
+**Proof.** The local rules for complete legal calls are
+
+| Call | Retained successor | Complete predicted reply |
+| --- | --- | --- |
+| Reset | $z:=0$ | its fixed ACK |
+| Add$(j,u)$ | $z:=z+uD_j$ | its fixed ACK |
+| Tick | $z:=Az$ | its fixed ACK |
+| Square | $z:=\mu(z,z)$ | its fixed ACK |
+| Read$(j)$ | $z$ | the literal rational $(Ez)_j$ |
+| Hold | $z$ | its fixed ACK |
+
+The initial invariant is Theorem 12.2. Reset, Add and Tick preserve it by (CM.6); Square preserves it by the product identity in that same equation; Read agrees by $E=B^{\mathsf T}R$; Hold preserves the field. For an actual call, forward its actual complete frame through the retained right, consume its whole actual reply and Return, and commit the displayed update before the next settled call. Fixed invalid-call/refusal frames have the same identity successor on both sides; proper incomplete frames retain their actual common pending bytes and have no completed update. Equal consumed histories and common external inputs select equal next calls and operands under a common adaptive controller. Induction proves every complete reply, pending-prefix correspondence and actual successor for a finite continuation. Fixing a common random tape gives the same pointwise argument. Hypothetical forecasts require scratch copies of the retained state and perform no source call. No arbitrary erased history is reconstructed. $\square$
+

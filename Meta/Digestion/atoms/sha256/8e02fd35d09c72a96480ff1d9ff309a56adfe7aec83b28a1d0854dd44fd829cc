@@ -1,0 +1,14 @@
+**Proposition 14.3 (two simultaneous finite call vectors).** In the coordinate order $(\mathrm{Reset},\mathrm{Add},\mathrm{Tick},\mathrm{Square},\mathrm{Read},\mathrm{Hold})$, Definition 12.1 realizes respectively
+
+$$
+\begin{aligned}
+\mathcal C_{\rm d}={}&\bigl(b+q,\ b+bNq,\ b(2N-1)+2q(N-1),\ q,\ 2Nb^2+bNq,\ 2Nb+Nq\bigr),\\
+\mathcal C_{\rm s}={}&\bigl(b+q+1,\ b+Nq,\ b(2N-1)+2q(N-1),\ q,\ 2Nb^2+bNq,\ 2Nb+2Nq+1\bigr).
+\end{aligned}
+\tag{CM.18}
+$$
+
+The first endpoint is the actual final Square trial after its read window; the second is actual zero. These are attained whole vectors, not coordinatewise optima.
+
+**Proof.** Each of $b$ impulse trials uses one Reset, one Add, $2N-1$ Ticks, $2Nb$ Reads and $2N$ Holds. Each of $q$ Square trials uses one Reset, one Square, $2(N-1)$ Ticks, $bN$ Reads and $N$ observation Holds. Its dense preparation has $bN$ Adds and no preparation Holds; its selected preparation has $N$ Adds and $N$ preparation Holds. The latter schedule alone adds a final Reset and Hold. Summing gives (CM.18), including literal zero input frames. Each non-Read call returns its own ACK, and every Read returns one whole rational. There is no implicit scalar on Tick or Square. $\square$
+
