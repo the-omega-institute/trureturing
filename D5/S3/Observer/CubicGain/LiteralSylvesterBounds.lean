@@ -52,17 +52,50 @@ private theorem source_r_degree (i : Fin 3) : (sourcePolynomial i).natDegree ≤
     unfold sourceE2
     compute_degree!
 
+private def MonomialBound (p : Polynomial (Polynomial ℤ)) (N : ℕ) : Prop :=
+  ∀ j k, (p.coeff j).coeff k ≠ 0 → j+k ≤ N
+
+private theorem monomial_bound_add {p q : Polynomial (Polynomial ℤ)} {N : ℕ}
+    (hp : MonomialBound p N) (hq : MonomialBound q N) : MonomialBound (p+q) N := by
+  intro j k h
+  by_cases hz : (p.coeff j).coeff k = 0
+  · apply hq j k
+    simpa only [coeff_add,hz,zero_add] using h
+  · exact hp j k hz
+
+private theorem monomial_bound_term (q : Polynomial ℤ) (a N : ℕ)
+    (ha : a ≤ N) (hq : q.natDegree ≤ N-a) : MonomialBound (C q*X^a) N := by
+  intro j k hk
+  rw [coeff_C_mul_X_pow] at hk
+  split_ifs at hk with hj
+  · subst j
+    have hh := le_natDegree_of_ne_zero hk
+    omega
+  · exact (hk rfl).elim
+
+private theorem source_monomial_bound (i : Fin 3) : MonomialBound (sourcePolynomial i) 17 := by
+  fin_cases i
+  · change MonomialBound (sourceE0 (X : Polynomial ℤ)) 17
+    unfold sourceE0
+    repeat' first
+      | apply monomial_bound_add
+      | (apply monomial_bound_term <;> first | norm_num | compute_degree!)
+  · change MonomialBound (sourceE1 (X : Polynomial ℤ)) 17
+    unfold sourceE1
+    repeat' first
+      | apply monomial_bound_add
+      | (apply monomial_bound_term <;> first | norm_num | compute_degree!)
+  · change MonomialBound (sourceE2 (X : Polynomial ℤ)) 17
+    unfold sourceE2
+    repeat' first
+      | apply monomial_bound_add
+      | (apply monomial_bound_term <;> first | norm_num | compute_degree!)
+
 private theorem source_coefficient_weight (i : Fin 3) (j : ℕ)
     (hj : (sourcePolynomial i).coeff j ≠ 0) :
     ((sourcePolynomial i).coeff j).natDegree+j ≤ 17 := by
-  have hle : j ≤ 15 := by
-    by_contra hn
-    exact hj (coeff_eq_zero_of_natDegree_lt ((source_r_degree i).trans_lt (by omega)))
-  have hb : ((sourcePolynomial i).coeff j).natDegree ≤ 17-j := by
-    fin_cases i <;> interval_cases j <;>
-      norm_num only [sourcePolynomial,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val,
-        sourceE0,sourceE1,sourceE2,coeff_add,coeff_C_mul_X_pow,
-        zero_add,add_zero,mul_zero,zero_mul,pow_zero,mul_one,one_mul] <;> compute_degree!
+  have h := source_monomial_bound i j ((sourcePolynomial i).coeff j).natDegree
+    (leadingCoeff_ne_zero.mpr hj)
   omega
 
 private theorem shifted_coefficient_weight (i : Fin 3) (s c : ℕ)
