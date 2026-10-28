@@ -14,6 +14,8 @@ internal sealed class FiniteConeUnionWedgeDocument : IScribeDocumentDefinition
                 "For any subset C of a space, two points are related exactly when they are equal or both belong to C.", DescribeRole.Definition),
             Node("wedge-points", "wedgePoints", "Two distinguished points",
                 "For points a of X and b of Y, the distinguished subset of the disjoint sum consists exactly of inl a and inr b. The wedge is its collapse quotient with the quotient topology.", DescribeRole.Definition),
+            Node("based-wedge-replacement", "basedWedgeEquivalence", "Based replacement on both wedge arms",
+                "Given based equivalences of the two input arms, the actual quotient wedges are based equivalent at the quotient classes of their left distinguished points. Both maps are the existing quotient wedge maps; both inverse homotopies descend from the arm homotopies and fix the quotient wedge point for every time parameter. This exports actual point-based data, rather than treating the wedge type as a point.", DescribeRole.Definition),
             Node("closed-cover", "CollapseCover", "A closed cover with controlled overlap",
                 "Two continuous injective closed maps from X and Y cover Z. Every equality between points from opposite summands lies in the subset C, and both chosen basepoints map into C. These are map and subset conditions; no gluing continuity, homotopy extension property, or equivalence is assumed.", DescribeRole.Definition),
             Node("quotient-wedge-homeomorphism", "quotientWedgeHomeomorph", "The actual quotient homeomorphism",
