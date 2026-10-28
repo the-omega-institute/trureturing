@@ -61,11 +61,11 @@ internal sealed class MatveevaGlobalBoundednessDocument : IScribeDocumentDefinit
     private static Formula Result => Seq(Neg, Sp, Named("claim"));
 
     private static DocumentBlock.Describe Description(string id, string declaration, string title, Formula formula,
-        string prose, bool definition = true) => Describe.Lean(
+        string prose, bool definition = true, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)),
             definition && declaration != "witness" ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem, resolution);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A rational linear solution contradicts the literal nonzero-parameter assertion about global boundedness.",
@@ -82,5 +82,8 @@ internal sealed class MatveevaGlobalBoundednessDocument : IScribeDocumentDefinit
             Description("linear-sequence", "witness", "The rational sequence n plus one", Witness,
                 "At natural index n the rational coefficient is n plus one. Its initial values are one and two."),
             Description("literal-refutation", "result", "Negation of the entire literal claim", Result,
-                "Take (b0, a1, b1, a2, b2) = (1, -3, -1, 2, 1) and s(n) = n + 1. The recurrence becomes (n+1)^2 + (-3*n-1)*n + (2*n+1)*(n-1) = 0 for every n at least two. The parameter expression is minus five. Integral scaling uses C = 1 and integer coefficient n + 1 at every positive index. The complex series is summable for every z of norm less than R = 1, by the k = 1 complex instance of summable_choose_mul_geometric_of_norm_lt_one. These facts contradict the universally quantified conclusion. The result concerns the literal parameter condition; Conjecture 4.1 is a separate assertion. A requirement that an exponential survive simplification would define a different claim.", false))));
+                "Take (b0, a1, b1, a2, b2) = (1, -3, -1, 2, 1) and s(n) = n + 1. The recurrence becomes (n+1)^2 + (-3*n-1)*n + (2*n+1)*(n-1) = 0 for every n at least two. The parameter expression is minus five. Integral scaling uses C = 1 and integer coefficient n + 1 at every positive index. The complex series is summable for every z of norm less than R = 1, by the k = 1 complex instance of summable_choose_mul_geometric_of_norm_lt_one. These facts contradict the universally quantified conclusion. The result concerns the literal parameter condition; Conjecture 4.1 is a separate assertion. A requirement that an exponential survive simplification would define a different claim.", false,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("matveeva-2025-global-boundedness-parameter-belief"),
+                    ResolutionKind.Refuted)))));
 }

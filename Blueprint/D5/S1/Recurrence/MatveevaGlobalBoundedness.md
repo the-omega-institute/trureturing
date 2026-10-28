@@ -72,6 +72,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/MatveevaGlobalBoundedness.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/matveeva-2025-global-boundedness-parameter-belief` (refuted) by `D5/S1/Recurrence/MatveevaGlobalBoundedness.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"matveeva-2025-global-boundedness-parameter-belief","declaration_gid":"D5/S1/Recurrence/MatveevaGlobalBoundedness.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Anastasia Matveeva (2025). *On the integrality of some P-recursive sequences*. URL: <https://arxiv.org/abs/2511.02121v1>.
