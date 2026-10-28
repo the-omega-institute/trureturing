@@ -118,7 +118,10 @@ internal sealed class CoherenceVectorSpectrumProductBoundDocument : IScribeDocum
                         + "product inequality. In particular, the majorization supremum ν(ρ) of "
                         + "Eq. (12) is an upper bound, so this establishes Conjecture 5, Eq. (20), "
                         + "in Section 3.4, PDF pp. 6–7, without requiring a construction of that supremum."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("alvarez-losada-portesi-bosyk-2023-coherence-spectrum-product-bound"),
+                    ResolutionKind.Proved)))));
 
     private static Formula DecreasingRearrangementFormula()
     {
