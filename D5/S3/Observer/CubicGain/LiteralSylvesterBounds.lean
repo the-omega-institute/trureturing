@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Observer/CubicGain/LiteralSylvesterBounds
    mirror-E: none(waiver:literal-elimination-continuation)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Determinant.Basic]
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Observer/CubicGain/LiteralSylvesterBounds.literal_elimination_exact_degrees; premises=D5/S3/Observer/CubicGain/LiteralLeadingCertificates.leading_determinants_ne_zero
    digest: Weighted degree bounds for the original fixed Sylvester and linear-minor determinants. -/
 
 import D5.S3.Observer.CubicGain.LiteralElimination
@@ -347,9 +347,11 @@ private theorem certificate_top_nonzero (k : Fin 2) : (![topR1,topR2] k).det ≠
 
 attribute [local irreducible] Matrix.det Polynomial.coeff
 
+set_option maxRecDepth 2000 in
 private theorem resultant_top_nonzero (k : Fin 2) :
     (actualResultant k).coeff 285 ≠ 0 := by
-  unfold actualResultant
+  have he : actualResultant k = (literalSylvester k).det := rfl
+  have hep := congrArg (fun p : Polynomial ℤ => p.coeff 285) he
   have hc := weighted_top_coeff (literalSylvester k) sylvesterWeight
     (fun j => 29-j.val) 285 31 (by decide +kernel) (by decide +kernel)
     (sylvester_entry_weight k)
@@ -357,7 +359,8 @@ private theorem resultant_top_nonzero (k : Fin 2) :
     (sylvester_top_bridge k)
   have hd := congrArg (fun M : Matrix (Fin 30) (Fin 30) ℤ => M.det)
     (sylvester_top_data k)
-  exact fun hz => certificate_top_nonzero k ((hc.trans (hb.trans hd)).symm.trans hz)
+  exact fun hz => certificate_top_nonzero k
+    (((hep.trans hc).trans (hb.trans hd)).symm.trans hz)
 
 private def minorTop (constant : Bool) : Matrix (Fin 28) (Fin 28) ℤ :=
   fun i j => topEntry (if i.val < 14 then 0 else 1)
