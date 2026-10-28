@@ -1978,11 +1978,12 @@ private def selectedComponentWedgeBased {V W : Type*} [Fintype V] [DecidableEq V
     ∃ m : ℕ, ∃ hm : 0 < m, ∃ p : Fin m → BouquetSpec, ∃ i : Fin m,
       ∃ n : ℕ, ∃ hn : 0 < n, ∃ q : Fin n → BouquetSpec, ∃ j : Fin n,
       Nonempty (SingletonRetractionBasedInverse.BasedEquivalence
-        (FiniteConeUnionWedge.Wedge
+        (Quotient.mk (FiniteConeUnionWedge.subsetSetoid (FiniteConeUnionWedge.wedgePoints
           (FiniteVertexCylinder.vertexPoint K a ha)
-          (FiniteVertexCylinder.vertexPoint L b hb))
-        (FiniteConeUnionWedge.Wedge
-          (normalPoint m p i) (normalPoint n q j))) := by
+          (FiniteVertexCylinder.vertexPoint L b hb)))
+          (Sum.inl (FiniteVertexCylinder.vertexPoint K a ha)))
+        (Quotient.mk (FiniteConeUnionWedge.subsetSetoid (FiniteConeUnionWedge.wedgePoints
+          (normalPoint m p i) (normalPoint n q j))) (Sum.inl (normalPoint m p i)))) := by
   obtain ⟨m, hm, p, i, ⟨E⟩⟩ := based_normalization K hK a ha
   obtain ⟨n, hn, q, j, ⟨F⟩⟩ := based_normalization L hL b hb
   exact ⟨m, hm, p, i, n, hn, q, j,
@@ -1997,11 +1998,12 @@ private def selectedComponentWedgeCarrier {V W : Type*} [Fintype V] [DecidableEq
     ∃ m : ℕ, ∃ hm : 0 < m, ∃ p : Fin m → BouquetSpec, ∃ i : Fin m,
       ∃ n : ℕ, ∃ hn : 0 < n, ∃ q : Fin n → BouquetSpec, ∃ j : Fin n,
       Nonempty (SingletonRetractionBasedInverse.BasedEquivalence
-        (FiniteConeUnionWedge.Wedge
+        (Quotient.mk (FiniteConeUnionWedge.subsetSetoid (FiniteConeUnionWedge.wedgePoints
           (FiniteVertexCylinder.vertexPoint K a ha)
-          (FiniteVertexCylinder.vertexPoint L b hb))
-        (FiniteConeUnionWedge.Wedge
-          (normalPoint m p i) (normalPoint n q j))) ∧
+          (FiniteVertexCylinder.vertexPoint L b hb)))
+          (Sum.inl (FiniteVertexCylinder.vertexPoint K a ha)))
+        (Quotient.mk (FiniteConeUnionWedge.subsetSetoid (FiniteConeUnionWedge.wedgePoints
+          (normalPoint m p i) (normalPoint n q j))) (Sum.inl (normalPoint m p i)))) ∧
       Nonempty (FiniteConeUnionWedge.Wedge
           (normalPoint m p i) (normalPoint n q j) ≃ₜ
         FiniteSimplicialJoin.Space
