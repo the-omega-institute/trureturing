@@ -1764,29 +1764,6 @@ private theorem join_intersection (M N : PreAbstractSimplicialComplex V)
     (s.toRight = ∅ ∨ s.toRight ∈ Z))
   tauto
 
-/-- Distribution over two finite pieces uses their common actual cone in the join. -/
-private def vertexUnionJoinEquiv (M N : PreAbstractSimplicialComplex V)
-    (Z : PreAbstractSimplicialComplex W) (a : V)
-    (hMN : M ⊓ N = vertexComplex a) :
-    let haM := (show ({a} : Finset V) ∈ M from
-      (show ({a} : Finset V) ∈ M ⊓ N from by rw [hMN]; rfl).1)
-    let haN := (show ({a} : Finset V) ∈ N from
-      (show ({a} : Finset V) ∈ M ⊓ N from by rw [hMN]; rfl).2)
-    FiniteSimplicialJoin.Space (FiniteSimplicialJoin.simplicialJoin (M ⊔ N) Z) ≃ₕ
-      FiniteConeUnionWedge.Wedge
-        (FiniteVertexCylinder.vertexPoint _ _ (join_left_vertex M Z a haM))
-        (FiniteVertexCylinder.vertexPoint _ _ (join_left_vertex N Z a haN)) := by
-  rw [join_union]
-  let P : FiniteConeUnionWedge.ConeUnion (V ⊕ W) :=
-    { left := FiniteSimplicialJoin.simplicialJoin M Z
-      right := FiniteSimplicialJoin.simplicialJoin N Z
-      cone := FiniteSimplicialJoin.simplicialJoin (vertexComplex a) Z
-      intersection := by rw [join_intersection, hMN]
-      apex := Sum.inl a
-      apex_face := join_left_vertex (vertexComplex a) Z a rfl
-      cone_face := join_vertex_cone Z a }
-  exact P.homotopyEquiv
-
 end DisjointJoin
 
 section BouquetConcatenation
@@ -3714,7 +3691,6 @@ end CompleteJoinClosure
 #print axioms coneBaseSuspensionHomeomorph
 #print axioms nativeConeBaseHomeomorph
 #print axioms auxiliaryBaseSplit
-#print axioms vertexUnionJoinEquiv
 #print axioms vertexGluingHomeomorph
 #print axioms connectedVertexGluingHomeomorph
 #print axioms selectedComponentWedgeBased
