@@ -1,0 +1,24 @@
+**应用 28.3（菜单相对的可见平衡）。** 固定同载体 CPTP $\Phi$、效果菜单 $\mathcal M$，令
+
+$$
+W_{\mathcal M}=\operatorname{span}_{\mathbb R}
+\{I,(\Phi^\dagger)^nF:F\in\mathcal M,n\ge0\},\qquad
+N_{\mathcal M}=W_{\mathcal M}^{\perp}
+$$
+
+采用自伴空间上的迹配对。对每个密度 $\rho$，全部菜单响应 $\operatorname{Tr}[F\Phi^n(\rho)]$ 对 $n\ge0$ 不变，当且仅当
+
+$$
+(\Phi-I)\rho\in N_{\mathcal M}. \tag{28.3}
+$$
+
+因为相邻深度差恰为 $\operatorname{Tr}[(\Phi^\dagger)^nF\,(\Phi-I)\rho]$；其全为零等价于与所有生成元正交，单位项由保迹自动为零。
+有限求和把相邻差零变为每层等于初层，反向显然。故 (28.3) 是充分且必要的菜单判据，弱于全态固定。
+若要求保分支记录，应以 (28.1) 的完整分支闭包检查，不能只用擦标签 $\Phi$ 的幂。
+
+对 §29 的实际三码，取 $A_0=i(E_{12}-E_{21})$、$\rho_t=I_3/3+tA_0$、$0<|t|\le1/3$，再嵌入为 $B\rho_tB^\dagger$。
+$A_0$ 的本征值为 $1,-1,0$，所以这是合法态。$WA_0W=-A_0$ 使 $\mathcal T(A_0)=0$，故该态并非固定态，一步后成为 $BI_3B^\dagger/3$。
+但码人口与五个物理人口从初层起就分别恒为 $(1/3,1/3,1/3)$、$(1/6,1/6,1/3,1/6,1/6)$，因为 $A_0$ 对角零且 $B$ 的三列支撑不交叠。
+因此以五个模式投影为 $\mathcal M$ 时，$(\mathcal G-I)(B\rho_tB^\dagger)\in N_{\mathcal M}$，精确实例化 (28.3)，而 $\mathcal G(\rho)\ne\rho$（此处 $\rho=B\rho_tB^\dagger$）。
+若扩充终端效果以读取相应虚相干，当前层与下一层即可不同；菜单相对平衡不是不依读口的属性。
+

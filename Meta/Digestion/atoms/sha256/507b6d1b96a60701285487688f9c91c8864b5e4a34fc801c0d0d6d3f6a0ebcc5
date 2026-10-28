@@ -1,0 +1,33 @@
+**Theorem 21.2 (attained acquisition operations and source work).** The acquisition of Definitions 18.1 and 18.3 has the following exact counts:
+
+$$
+\begin{aligned}
+N_0&=2L+c-1, & n_f&=L+c, & N_f&=3L+2c-1,\\
+\text{successful promotions}&=a,&\text{successful splits}&=c,
+&\text{fresh material vertices}&=a+2c.
+\end{aligned}
+\tag{NLBAII.13}
+$$
+
+There are $2L-1$ addressed $P$ calls and $c$ addressed $S$ calls, a total $M=2L+c-1$. Exactly $L$ succeed; the $L-1+c$ remaining calls are the stated branch and wrong-type refusals. Including initial arming, rearming after every assay including the last, and final zeroing, its field calls are
+
+$$
+\begin{array}{c|c}
+\text{operation}&\text{actual count}\\ \hline
+\mathrm{Reset}&2\\
+\mathrm{Add}(j,1)&2L+c\\
+\mathrm{Tick}&0\\
+\mathrm{Read}(j)&R_{\rm mark}\\
+\mathrm{Hold}&L+2.
+\end{array}
+\tag{NLBAII.14}
+$$
+
+Thus there are $3L+c+4$ fixed field acknowledgements, separately from $R_{\rm mark}$ scalar replies and $M$ full addressed replies. Every acquisition field value and scalar reading lies in $\{0,1\}$. Source field work is exactly $2L+c$ unit additions, $N_0+N_f$ Reset cell writes and $a+2c$ fresh active-field zero initializations, with no acquisition adjacency arithmetic or Tick-buffer clearing. The located source parent/left/right growth assignments are $4a+8c$ in AA's templates. Maintaining an indexed raw binding table uses one changed binding per promotion and two per split, hence $a+2c$ binding assignments, besides length updates, navigation, material allocation, grants, framing and return.
+
+Proof. A logical full binary tree with $L$ leaves has $2L-1$ logical nodes; each $\beta$ adds its one marker. This gives $N_0$. Theorem 18.4 visits each logical node with $P$ and visits each entry $\beta$ once more with $S$. The leaf edits are precisely $a$ promotions and $c$ splits; they add $a+2c$ vertices and $c$ leaves. This gives every count in (NLBAII.13) and the addressed success/refusal counts, without using a source-size announcement.
+
+Arming makes one Reset and $L$ Adds. Each of the $L$ assays scans exactly its old roster of size $n_s$, uses one Hold, and rearms one inherited terminal. Each split rearms one additional appended terminal. Final zeroing adds one Reset and one Hold. This proves (NLBAII.12) and (NLBAII.14). Reset, Add and Hold each return one fixed acknowledgement, giving $2+(2L+c)+(L+2)=3L+c+4$. The binary-field assertion follows from the zero start, the absence of Ticks and Theorem 18.2.
+
+Each Add makes exactly one unit addition. The two Resets act on the actual sizes $N_0,N_f$. Fresh active cells are initialized once per allocation by (NLBAII.3). AA Proposition 22.1's promotion and split templates have respectively four and eight located structural assignments. Formula (NLBAII.4) has respectively one and two changed binding entries. These counts concern the named structures and exclude neither the actual dispatcher work nor the allocation, grant and bit-level costs specified separately. $\square$
+

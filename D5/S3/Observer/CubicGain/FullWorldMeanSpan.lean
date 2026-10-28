@@ -48,7 +48,7 @@ def programColumns : Matrix (Fin 4) (Fin 4) ℝ :=
   fun j i => sourceVector (sourceR i) (sourceB i) j
 
 /-- Exact arithmetic premises for the unrestricted-family construction. -/
-private theorem source_certificate :
+theorem source_certificate :
     (∀ i : Fin 4, 0 < sourceR i ∧ sourceR i < 1 ∧
       0 < sourceB i) ∧
     programColumns.det = 1/768 := by

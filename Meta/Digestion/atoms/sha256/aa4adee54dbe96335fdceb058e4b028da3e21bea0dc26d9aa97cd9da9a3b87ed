@@ -1,0 +1,90 @@
+**Theorem 78.4 (U5 attainment by a paid terminal control).** The bound (78.3) is
+attained for every $0\le d\le N$. Use a fixed rational pivot order to select $d$
+independent actual rows $M_B$ of $M$, retaining their acquired values $M_Bx$.
+Select $N-d$ rows from the finite terminal Krylov family
+
+$$
+\{e_{\ell}^{\mathsf T}A^j:\ell\text{ a terminal},\ 0\le j\le I=N-b\}
+\tag{78.4}
+$$
+
+that complete $M_B$ to an invertible $N\times N$ matrix $Q=[M_B;O_S]$.
+All selections depend only on the known matrices and fixed orders, never on
+unknown values of $x$. Order selected sample pairs $(j,\ell)$ by increasing
+epoch and then terminal, and define
+$H=\max(\{0\}\cup\{j:(j,\ell)\text{ selected}\})$. At each epoch
+$t=0,\ldots,H$, actually Hold and perform exactly the selected Reads at $t$,
+consuming their full returns. Release the Hold before each intervening Tick.
+The actual fresh values $y=O_Sx$, together with $M_Bx$, reconstruct
+$x=Q^{-1}\binom{M_Bx}{y}$, with the two value blocks stacked as a column,
+while the real source is at $d_0=A^Hx$.
+The final sampling Hold covers this solve and the control solve below.
+
+Select $N$ independent allowed control columns from the same family, written
+
+$$
+K=[A^{j_1}e_{\ell_{i_1}}\ \cdots\ A^{j_N}e_{\ell_{i_N}}],
+\qquad L=\max_r j_r.
+\tag{78.5}
+$$
+
+Solve the exact rational system
+
+$$
+Kc=Fx-A^Ld_0.
+\tag{78.6}
+$$
+
+Release the sampling Hold. At each relative control epoch $s=0,\ldots,L$,
+execute every selected $\operatorname{Add}(i_r,c_r)$ with $L-j_r=s$, in a fixed
+tie order, then actually Hold. End that Hold before the next Tick to $s+1$.
+Thus injections occur at $L-j_r$ in decreasing $j_r$ order, including at epochs
+zero and $L$ when selected. The final source field is exactly $Fx$. The account is
+
+$$
+(N-d)\ \text{fresh Reads},\quad N\ \text{Adds},\quad
+H+L\ \text{Ticks},\quad H+L+2\ \text{Holds},
+\tag{78.7}
+$$
+
+with $H,L\le I$, no growth and no Reset. Zero Add operands remain literal calls.
+The $H+1$ sampling Holds and $L+1$ control Holds are separate real calls, including
+the two phase Holds at their common absolute epoch $H$.
+
+In particular, if $d=N$, no fresh row is selected, $O_S,y$ are empty, $H=0$,
+$Q=M_B$ is invertible and $d_0=x$ is reconstructed solely from the actually
+retained full-rank values. Execute the initial Hold and the same control phase.
+This branch has zero fresh Reads and zero sampling Ticks, but still $N$ Adds,
+$L$ Ticks and $L+2$ Holds. It applies equally when $M$ has more than $N$ rows.
+When $d=0$, $M_B$ is empty and all $N$ reconstruction values are fresh Reads.
+
+**Proof.** The existing all-terminal forcing identity in §31.1 makes (78.4)
+span the native row space. Fixed exact pivoting therefore extends any basis
+$M_B$ by exactly $N-d$ rows; redundant retained rows are not counted twice.
+Symmetry gives the same spanning assertion for the control columns, so $K$ is
+invertible. The source has no Adds in the sample phase, proving its actual
+values and endpoint. This also proves reconstruction and the empty-selection
+branch, without a maximum of an empty set.
+
+During the control phase, at epoch $s$, after that epoch's Adds, induction on
+actual Tick and Add calls gives the entire source field
+$A^s d_0+\sum_{L-j_r\le s}c_r A^{s-(L-j_r)}e_{\ell_{i_r}}$.
+An Add at epoch $L-j_r$ has exactly $j_r$ remaining Ticks before epoch $L$.
+Its endpoint contribution is therefore $c_rA^{j_r}e_{\ell_{i_r}}$.
+At $L$ the sum is $A^Ld_0+Kc=Fx$, by (78.6).
+
+After reconstructing $x$, initialize the full predictor at the true $d_0$;
+then update it on every actual Add/Tick/Hold and consume every complete inner
+reply/Return before exposing the endpoint. The schedule counts give (78.7),
+including the full-rank branch and literal zeros. Matrix selection/solves,
+rational widths, source and predictor update buffers, retained $Mx$, samples,
+control record, phase/schedule, genuine references/rights, parser, input/output
+backing, ACKs, framing, End/Return traffic and any exports coexist when live and
+are separately charged under §65. No scalar-count formula makes them free.
+
+Retain the synchronized current vector $z=Fx$. For another transfer use its
+actually acquired full record, namely $M=I$ and values $z$, at the new entrance.
+The $d=N,H=0$ branch physically produces $Fz$ with no fresh Reads, paying all
+$N$ Adds, $L$ Ticks, $L+2$ Holds and the same work/backing/traffic. This is warm
+use of acquired information, not an exemption from Definition 78.1. $\square$
+

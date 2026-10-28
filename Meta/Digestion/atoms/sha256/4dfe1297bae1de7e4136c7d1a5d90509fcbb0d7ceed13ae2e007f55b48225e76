@@ -1,0 +1,105 @@
+**Definition 12.3 (Native ray action and its law pushforward).** Retain
+the original partially defined $T_\gamma$ of Transport Theorems 9.2–9.3.
+For a command with chronological data $(A,B,K)$ and actual extrema
+$(m_\gamma,M_\gamma)$ its domain and formula remain
+
+$$
+\begin{gathered}
+D_\gamma=(-m_\gamma,L-M_\gamma),\qquad
+\mathcal D_\gamma=D_\gamma\times\mathbb T^2,\\
+T_\gamma(k,u,v)=
+ \left(k+A,\ u+B/2-(kB+K)/r,\ v-(kB+K)/r\right).
+\end{gathered}
+\tag{12.24}
+$$
+
+The domain uses the entire path excursions, not only its terminal
+height. On $P(\mathcal D_\gamma)$ the exact ray representation is
+$\mathcal R_\gamma(P(x))=P(T_\gamma x)$.
+It is well-defined because (12.1) is injective: the diagonal recovers
+$k$, and the nonzero middle reference recovers both phase circles.
+For a phase-only command with real increment $B$, its explicit form is
+
+$$
+\begin{aligned}
+\mathcal R_B(P)&=U_B(k(P))P\,U_B(k(P))^\dagger,
+\qquad k(P)=P_{13,13},\\
+U_B(k)&=\operatorname{diag}\left(
+e^{-iB(1/2-k/r)},e^{iBk/r},1,e^{iBk/r},
+e^{-iB(1/2-k/r)}\right).
+\end{aligned}
+\tag{12.25}
+$$
+
+This is the supplied nonlinear ray action written in complete density
+coordinates. At one fixed known height, $U_B(k)$ is one unitary for
+all phases. Its dependence on $k$ in (12.25) does not provide a common
+unitary or CPTP implementation on the variable-height source.
+Theorem 12.2 prohibits an affine implementation there for $B=4\pi$;
+it does not identify two distinct native pure states having the same
+complete projector.
+
+For a Borel probability law $\nu$ on $\mathcal M$ with
+$\nu(\mathcal D_\gamma)=1$, define its lawful successor and density
+barycenter by
+
+$$
+\nu^\gamma=(T_\gamma)_\#\nu,
+\qquad \mathcal B(\nu)=\int_{\mathcal M}P(x)\,d\nu(x).
+\tag{12.26}
+$$
+
+These finite-dimensional matrix integrals exist since $P$ has trace
+norm one; they are positive and have trace one. The pushforward is on
+the original ray carrier, with its original command and guard. In
+particular, whenever $\nu$ is concentrated on the lawful concatenated
+domain, the supplied identity
+$T_{\gamma*\delta}=T_\delta\circ T_\gamma$ gives
+$(\nu^\gamma)^\delta=\nu^{\gamma*\delta}$. This follows by integrating
+each Borel test against the two compositions. A law assigning positive
+mass to refused states is outside (12.26); restriction and normalization
+would be conditioning, rather than the stated total-law continuation.
+
+For (12.6), equations (12.7)–(12.19) read
+
+$$
+\mathcal B(\mu_+)=\mathcal B(\mu_-)=R_0,
+\qquad
+\mathcal B(\mu_+^\gamma)=R'_+\ne R'_-
+ =\mathcal B(\mu_-^\gamma).
+\tag{12.27}
+$$
+
+Consequently no function $F_\gamma$ of the mixed barycenter alone,
+even a nonlinear function, can satisfy
+$F_\gamma(\mathcal B(\nu))=\mathcal B(\nu^\gamma)$ for all native
+laws in (12.26) for this one command. Its value at $R_0$ would have to
+equal both distinct matrices in (12.27). The exact nonlinear action
+on pure projectors (12.25), and the exact pushforward on retained
+source laws (12.26), therefore survive with their distinct domains.
+An arbitrary nonlinear extension off the pure image need not respect
+this law compatibility, so is not supplied by the pure-state formula.
+
+The finite laws (12.6) are algebraic convex-decomposition tests. Their
+constituent points are individually reachable original rays, but these
+identities install no random ensemble preparation, reset, physical
+mixing operation, height sensor or source-dependent programme. In
+particular (12.27) does not assert that an unknown laboratory mixed
+specimen executes the native constituent law. It identifies exactly
+which compatibility requirement fails if that law is to factor through
+the full density barycenter.
+
+No source, evolution or readout map to the critical endpoint is
+constructed by these finite matrices. The full original endpoint
+source/selector and observation correspondence required in [Source
+contact, Definitions 115.4 and 116.5][SC12] remains a separate
+mathematical obligation. Neither the nonlinear source dimension, its
+matrix representation nor this obstruction determines physical spatial
+dimension.
+
+[OC12]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md
+[NA12]: FIB_NATIVE_CONTINUATION_AFFINE_OBSTRUCTION_AND_APPROXIMATION.md
+[SBG12]: https://arxiv.org/html/quant-ph/0102125v1
+[CJW12]: https://arxiv.org/html/quant-ph/0307227v1
+[SC12]: FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md
+

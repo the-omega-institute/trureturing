@@ -1,0 +1,40 @@
+**Theorem 11.8 (Native menu plus the $12$ coherence).**
+Fix any legal means with $Z>0$, not necessarily on the double wall.
+Let $\pi_0=|\psi_0\rangle\langle\psi_0|$ be a full-support pure target
+of height $\kappa_0$. If a PSD trace-one candidate has these means,
+the same five native complex coherences as $\pi_0$, and the same
+additional complex coherence $C_{12}$, then it equals $\pi_0$.
+This is a six-complex-edge, twelve-real-output menu: only $12$ is new.
+
+Proof. The $02$ and $12$ principal minors imply
+
+$$
+\begin{aligned}
+Z(r-X-Y+\kappa_0)=|C_{02}|^2
+ &\le Z(r-X-Y+\kappa),\\
+Z(X-\kappa_0)=|C_{12}|^2
+ &\le Z(X-\kappa).
+\end{aligned}
+$$
+
+Since $Z>0$, these force both $\kappa\ge\kappa_0$ and
+$\kappa\le\kappa_0$. All five probabilities now equal the positive
+target probabilities. The original connected native graph has every
+edge saturated, so the Gram step in §11.3 gives rank one and the target
+phases give the same projector.
+
+For a pure target the triangle also satisfies
+
+$$
+C_{01}=\frac{C_{02}\overline{C_{12}}}{Z},
+$$
+
+because $C_{02}\overline{C_{12}}=
+\overline{\psi_0}\psi_1|\psi_2|^2$.
+Knowing that identity for a pure target does not replace measuring
+the extra edge on an arbitrary PSD candidate: (11.4) has an unknown
+residual. Positivity, the means and the known positive reference
+supply the opposite height bounds. Merely knowing an odd-cycle phase
+would not supply them. This additional edge is not an original native
+readout, and is distinct from the full reference star below. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0e0a42c7cb2f2eeb9c96df457eda99c557feb4bd6b88441aa431ce23443b63e4
+  normalized_sha256: sha256:0e0a42c7cb2f2eeb9c96df457eda99c557feb4bd6b88441aa431ce23443b63e4
+cas_ref: sha256:0e0a42c7cb2f2eeb9c96df457eda99c557feb4bd6b88441aa431ce23443b63e4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This atom contains only the volume title and generic-v1 append-only source policy. It states how later corrections are appended and contains no mathematical proposition to cover. The adjacent scope-and-notation atom remains outside this settlement.
+    previous_atom_id: null
+    next_atom_id: 59a6eb26e7cf0ac738cb023ec2804059c2e0dbc63808e531bde22d04b7732b87

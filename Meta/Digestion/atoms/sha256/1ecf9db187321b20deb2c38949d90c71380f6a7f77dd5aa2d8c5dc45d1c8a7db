@@ -1,0 +1,148 @@
+**Proposition 78.5 (U5 completed-endpoint views, transport and failure boundary).**
+Fix the context of Definition 78.1, the deterministic selectors and tie orders of
+Theorem 78.4, and a declared rational input subspace $X\subseteq\mathbb Q^N$.
+The lower bound remains an all-$\mathbb Q^N$ theorem; $X$ specifies only the
+view-recovery domain. The common cut here is **after all sampling, solving,
+control, full outputs/Returns and predictor updates of that transfer**, in its
+final Hold with no pending packet and a retained completed-transfer phase marker.
+It is not an arbitrary settled acquisition/control cut.
+
+The receiver actually retains the chosen sample/column lists, $H,L$, phase and
+counter records, $Mx$, fresh sample triples, performed Add operands and complete
+transaction chronology, and the synchronized predictor at $z=Fx$. Lists and
+counters are obtained by the paid selections and actual calls just specified;
+$Mx$ comes from the paid entrance acquisition, $y$ from the new actual Reads,
+and $c$ from the paid solve and performed Adds. Their distinct live copies and
+retained backing are charged. Fixed contextual data $\kappa$ includes the
+material/law, $f,M$, program, selectors, schedule/phase convention, installed
+references and rights. It includes **no values $Mx,y,c,x$ or $Fx$**. Actual
+bindings/authority and the fact that these transactions occurred are common
+installation/run premises; numerical recovery does not manufacture them.
+
+On completed runs starting at $x\in X$ define these views by their independent
+exposures, relative to that retained context and phase:
+
+| View | Independent meaning |
+| --- | --- |
+| Space $\mathsf S(x)$ | the actual fixed native material, $A$, and current field $z=Fx$ at the completed transfer endpoint |
+| Time $\mathsf T(x)$ | this transfer's actual ordered selected Read triples $(j,\ell,y_{j,\ell})$, all performed control Add inputs $(L-j_r,i_r,c_r)$, and completed Tick/Hold/ACK/framing/Return chronology |
+| Boundary $\mathsf B(x)$ | the declared target $f$, actual terminal control interface, and a specified rational linear endpoint readout $w=C_Fz$ |
+| Memory $\mathsf M(x)$ | the retained synchronized predictor at $z$, acquired literal record $Mx$, solved control vector $c$, and completed phase/schedule/callable control state |
+
+Time is the finite actual transaction window of this transfer, not an unrestricted
+pre-entry history. Its input values, including zero Adds, are exposed as well as
+its Read outputs. Memory retains a current prediction and the specified acquired
+and control records, not the entire Time journal. Boundary's
+$C_F\in\mathbb Q^{s\times N}$ is fixed and known. Its value can be a paid
+computed export from the acquired predictor; that interpretation installs no
+new source port and claims no extra physical
+measurement. If instead an allowed endpoint Read is actually performed to supply
+it, that additional call and its complete traffic are charged separately from
+(78.7). Neither interpretation creates an unperformed measurement's provenance.
+
+The common joint image consists exactly of
+$(\mathsf S(x),\mathsf T(x),\mathsf B(x),\mathsf M(x))$ from these completed
+actual runs with $x\in X$, in this fixed context and phase. Every such input has
+the acquisition/transfer execution of Theorem 78.4; no separate marginal optima
+are being joined. On this image Space, Time and Memory recover each other's
+exposed mathematical content. Boundary recovers them exactly when
+
+$$
+\ker(C_FF)\cap X=\{0\}.
+\tag{78.8}
+$$
+
+All existing recovery routes agree. These statements concern content in the
+common actual run, not numerical certification that an absent run took place.
+
+**Proof.** Write $h=H+L$. The direct decoders of Space and Memory are
+$x=F^{-1}z$, using the actually current field or its synchronized predictor.
+In particular Space-to-Memory first recovers $x$, then computes the retained
+values $Mx$, samples $O_Sx$, and unique control
+$c=K^{-1}(F-A^h)x$ with the fixed selectors/schedule. It reproduces the defined
+completed control state; it does not infer archived values from predictor
+synchronization at an earlier cut.
+
+Time has a decoder requiring no import of Memory or of an unlisted $Mx$:
+its complete performed Add operands give $c$, and (78.6) gives
+
+$$
+Kc=(F-A^{H+L})x,\qquad x=(F-A^{H+L})^{-1}Kc.
+\tag{78.9}
+$$
+
+The inverse exists by Lemma 78.2, including $H=0$. This route uses the actual
+input chronology and the known $K,H,L$, not matrix $M$ as if it were the values
+$Mx$. Alternatively, when the acquired values are explicitly supplied alongside
+Time, $Q^{-1}\binom{M_Bx}{y}$ gives the same $x$ by the acquisition equations.
+With either direct decoder, forward evaluation computes $Fx$, $Mx$, $O_Sx$ and
+$c$; the fixed schedule then computes exactly the scalar/frame content of the
+already performed Time. Actual provenance is supplied by the joint-image
+premise, not by this calculation. The authentic reference and grants are retained
+context throughout, not reconstructed from rationals.
+
+For Boundary, two inputs in $X$ have equal readout exactly when their difference
+lies in $\ker(C_FF)\cap X$. Under (78.8), rational elimination on a basis of
+$X$ supplies a left inverse on the attained readout image, recovering $x$ and
+hence all three other views. If (78.8) fails, $0$ and a nonzero rational vector
+in that intersection have equal Boundary values but distinct endpoints because
+$F$ is invertible. Thus that inverse is impossible on this declared domain.
+Forward evaluation always supplies Boundary from each of the other views.
+
+Each decoder followed by its encoder is the identity on its attained image,
+and each encoder followed by its decoder recovers the same $x$. Consequently
+all routes with the same endpoints agree; where (78.8) fails this statement
+includes only the three invertible views and their forward Boundary maps.
+Different $x$ also give different complete future native field service at these
+endpoints: $F(x-x')\ne0$ is separated by an all-terminal Krylov Read. Equal
+endpoints have equal complete service by §64 with fixed material and callable
+context. Thus the invertible views have exactly the same kernel as the declared
+continuation task. Boundary has that kernel precisely under (78.8).
+
+For dynamics, start at this completed endpoint $z=Fx$ and actually execute the
+warm branch of Theorem 78.4. It ends at $Fz=F^2x$; its intermediate native law
+is still $A$. Apply the same view definitions to that new transfer with context
+$\kappa^{\rm w}$, acquired record $M^{\rm w}=I$, and input domain $FX$.
+The old transaction archive is separately retained with its own backing or
+released; it is not silently part of the newly defined window. If $E_i^\kappa$
+and $D_i^\kappa$ denote the encoders and proved decoders for view $i$, the
+transport is $E_i^{\kappa^{\rm w}}\circ F\circ D_i^\kappa$. For every $x\in X$
+it returns $E_i^{\kappa^{\rm w}}(Fx)$, the content supplied by this same warm
+execution. Composing any two recovery routes and this transport therefore gives
+the same result, by substitution of $x$ and then $Fx$. Boundary participates
+in an inverse transport square only when (78.8) holds on $X$ and its counterpart
+holds on $FX$ for the new readout. Actual calls and complete outputs, not local
+reencoding alone, establish the new run's provenance. Growth changes the material
+or adjacency and ends this fixed-$F=f(A)$ correspondence. $\square$
+
+The completed-endpoint restriction is essential. On the seven-vertex unit law
+(71.1), let $\eta$ be (77.17), so $A\eta=0$ but
+$C\eta=(-1,0,-1)$. Take the actually acquired complete entrance information to
+be $Mx=Cx$, with $d=b<N$. A completing sample set must contain a positive epoch,
+since its epoch-zero rows already lie in the row span of $C$; hence $H\ge1$.
+At the held cut after acquisition and the solve but before control, entries $x$
+and $x+\eta$ have identical actual fields $A^Hx$, while their retained $Mx$
+and control records differ: $K(c'-c)=F\eta\ne0$. Both predictors are correctly
+synchronized with that same intermediate field. Thus synchronization alone
+cannot invert the archive projection there. Nor does the completed-endpoint
+inverse extend through arbitrary subsequent singular native Ticks with archives
+retained. Complete prediction continues with those archives, but the old
+Space-to-archive claim has left its domain.
+
+The theorem is deliberately narrower than a physical equivalence of primitive
+laws. If the target is itself $F=A^k$, native Ticks attain it with zero fresh
+Reads and the separation hypothesis (78.2) is false. For an arbitrary rational
+weighted or nonsymmetric law, the algebraic-integer proof does not apply.
+Unrestricted nonlinear entrance information, noisy or finite-precision calls,
+growth during the transfer, and total-resource optimality are outside the theorem.
+The effective initialization $\rho_\kappa(Mx)$ may process its acquired values
+nonlinearly; what is restricted is the complete information supplied at entrance.
+The exact source-relative addition is the same-material, no-report lower bound
+and paid attainment for the contracting polynomial family. Generic Krylov
+spanning, finite saturation, complete adaptive transcript induction and terminal
+control are reused suppliers. Unknown Field Native Startup §§3–5 already gives
+paid control from an acquired advanced predictor on its different Jacobi source
+with scalar-returning Tick; it does not assert this original-integral-$A$
+no-report price. No new Lean certification, primitive-law replacement or
+original-$Q$ result follows.
+

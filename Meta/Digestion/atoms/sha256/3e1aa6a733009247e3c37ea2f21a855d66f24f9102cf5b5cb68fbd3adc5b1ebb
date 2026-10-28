@@ -1,0 +1,42 @@
+### 成熟数学与操作重建文献
+
+<a id="ref-hodge"></a>
+
+- **[hodge]** V. Bouchard，[MATH 215，Section 4.8: Hodge star](https://sites.ualberta.ca/~vbouchar/MATH215/section_hodge.html)，定义 4.8.1、三维例 4.8.4。这里使用实欧氏星号及其复线性延拓，按度量识别形式与多向量。
+
+<a id="ref-busch"></a>
+
+- **[busch]** P. Busch，*Quantum states and generalized observables: a simple proof of Gleason's theorem*，Physical Review Letters **91**, 120403 (2003)，[arXiv:quant-ph/9909073v3](https://arxiv.org/html/quant-ph/9909073v3)。本篇使用有限维、有限可加的全效果版本，正性导出的单调性和有理夹逼已足够给其普通证明；不把单个五结果上下文等同于全效果域。
+
+<a id="ref-watrous"></a>
+
+- **[watrous]** J. Watrous，*The Theory of Quantum Information*，Cambridge University Press, 2018，[作者提供的第 2 章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.double.2.pdf)。完全正映射、通道与仪器的标准有限维背景；本篇所需 Choi、Kraus、保迹及仪器结论均在第 6–7 节给出矩阵证明，不依赖额外未列明定理。
+
+<a id="ref-nayak"></a>
+
+- **[nayak]** A. Nayak and P. Sen，*Invertible Quantum Operations and Perfect Encryption of Quantum States*，[arXiv:quant-ph/0605041](https://arxiv.org/abs/quant-ph/0605041) (2006)。该文讨论具有 CPTP 逆的量子操作；本篇只使用并完整证明同维双边可逆的酉特例，不把不同维环境附加的一般表示简化为同一个酉矩阵。
+
+<a id="ref-cdp"></a>
+
+- **[cdp]** G. Chiribella, G. M. D'Ariano and P. Perinotti，*Informational derivation of Quantum Theory*，Physical Review A **84**, 012311 (2011)，[arXiv:1011.6451v3](https://arxiv.org/html/1011.6451v3)。使用该文完整有限维操作概率、系统组合与闭包框架；Theorem 20 是全部复密度态，Corollary 52 是全部 CP、迹不增分支。本篇没有从局部 Clifford 或五点结构重新证明其公理前提。
+
+<a id="ref-hardy"></a>
+
+- **[hardy]** L. Hardy，*Quantum Theory From Five Reasonable Axioms*，[arXiv:quant-ph/0101012v4](https://arxiv.org/abs/quant-ph/0101012v4) (2001)。连续可逆性须与同文的其余公理合用；本篇只使用其完整重建路线作为对照，并直接证明有限经典单纯形的连续可逆路径只能为常值。
+
+<a id="ref-sorkin"></a>
+
+- **[sorkin]** R. D. Sorkin，*Quantum Mechanics as Quantum Measure Theory*，Modern Physics Letters A **9**, 3119–3128 (1994)，[arXiv:gr-qc/9401003](https://arxiv.org/abs/gr-qc/9401003)。这里的三阶消去由同一个固定二次型直接展开，不主张任意开关路径实验自动满足同一幅度标定。
+
+<a id="ref-chsh"></a>
+
+- **[chsh]** J. F. Clauser, M. A. Horne, A. Shimony and R. A. Holt，*Proposed Experiment to Test Local Hidden-Variable Theories*，Physical Review Letters **23**, 880–884 (1969)，[doi:10.1103/PhysRevLett.23.880](https://doi.org/10.1103/PhysRevLett.23.880)。本篇使用共同局部确定赋值的概率混合界，并给完整四符号证明。
+
+<a id="ref-tsirelson"></a>
+
+- **[tsirelson]** B. S. Cirel'son，*Quantum generalizations of Bell's inequality*，Letters in Mathematical Physics **4**, 93–100 (1980)，[doi:10.1007/BF00417500](https://doi.org/10.1007/BF00417500)。本篇完整证明所用二设置、二结果的 $2\sqrt2$ 算子界，并分别声明编码、态制备、测量与空间分离条件。
+
+<a id="ref-control"></a>
+
+- **[control]** D. D'Alessandro，*Uniform finite generation of compact Lie groups and universal quantum gates*，[arXiv:quant-ph/0111133v1](https://arxiv.org/html/quant-ph/0111133v1)。Lemma 1、Theorem 2 的实际单参数群、共轭基与逆函数方法支持第 8 节的精确有限字论证；实参数可正可负、所需逆均须可用。紧群的一般生成结论不赋予原固定非负等待菜单额外控制，也不提供本篇尚未评价的编译或硬件成本。
+

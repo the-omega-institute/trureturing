@@ -1,0 +1,57 @@
+**定义 23.1（PDE 供应的源、状态、单位和拓扑对应）。**
+本节将[全息边界几何附录 §§102–105](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md)
+的既有实际态结果应用到静态观察者的读口区分，全部解析量沿用该源，不由五模式码构造。
+其群为 $G=\mathrm H^1\times\mathbb R$，坐标 $(x,y,z,w)$，
+
+$$
+\begin{aligned}
+(x,y,z,w)(x',y',z',w')
+ &=(x+x',y+y',z+z',w+w'+xy'),\\
+d\mu&=dx\,dy\,dz\,dw,\\
+X_1&=\partial_x,\quad X_2=\partial_y+x\partial_w,\quad X_3=\partial_z,\\
+L&=-\sum_{i=1}^3X_i^2,\qquad D_w=-i\partial_w.
+\end{aligned}
+$$
+
+$L$ 是原非负自由实现，时钟为 $e^{-tL}$，
+$\Gamma=\int_0^\infty h_t\,dt$ 是原正的 $-3$ 次齐次 Green 场，$L\Gamma=\delta_e$，单位源仍在群单位元 $e$。
+$a,\eta>0$、坐标与中心谱单位固定；不作随 $n$ 改变的坐标或源重标定。
+设
+
+$$
+\begin{gathered}
+\mathcal E_\sigma=D(L^{1/2})\cap D(|D_w|^{\sigma/2}),\qquad
+\|u\|_{\mathcal E_\sigma}^2=\|u\|_2^2+T[u]+D_\sigma[u],\\
+T[u]=\sum_i\|X_i u\|_2^2,\qquad
+D_\sigma[u]=\||D_w|^{\sigma/2}u\|_2^2,\qquad
+V[u]=\int_G\Gamma|u|^2d\mu,\\
+g_\sigma^*=
+\inf_{0\ne u\in\mathcal E_\sigma}\frac{aT[u]+\eta D_\sigma[u]}{V[u]},\qquad
+g_c=16\sqrt{a\eta},\quad t_c=g_c/(2a),\quad d_c=g_c/(2\eta)>0.
+\end{gathered}
+$$
+
+对任意 $\sigma_n>2$ 趋于二，不要求单调，取供应定理 102.3 的任意非零实际临界零态，
+仅调整振幅使 $V[u_n]=1$。
+它满足全复形式域上的实际弱方程
+
+$$
+a\,t(\phi,u_n)+\eta\,d_{\sigma_n}(\phi,u_n)
+ =g_{\sigma_n}^*\int_G\Gamma\overline\phi u_n\,d\mu
+\quad(\phi\in\mathcal E_{\sigma_n}),
+$$
+
+其中 $t,d_\sigma$ 是对应二次型的极化形式。
+不用试探态、正态假设、唯一态或另选剖面代替这些实际态。
+
+定义读口
+
+$$
+M_n=\|u_n\|_2^2>0,\qquad v_n=u_n/\sqrt{M_n},\qquad
+\mu_n=|v_n|^2d\mu,\qquad
+\nu_n=M_n\Gamma\,\mu_n=\Gamma|u_n|^2d\mu.
+$$
+
+二者均为概率测度，第一项是普通位置概率，第二项为归一化势资源权重。
+$M_n\Gamma$ 是同一态上的重加权，不是另一个已制备物理态，亦不是隐藏的坐标变换。
+

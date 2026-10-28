@@ -1,0 +1,47 @@
+**应用 32.2（概念识别与剩余宽度）。** 本卷命题 14.3 的全部共同响应取
+$R_O(\omega)=(P_\omega^\pi)_{\pi\in\mathfrak T}$，其等价 $\omega\sim_O\omega'$ 就是 $R_O(\omega)=R_O(\omega')$。
+概念 $f$ 由这些完整响应唯一确定，当且仅当它在每个等价类常值；此时
+
+$$
+f=\bar f\circ q,\qquad q:\Omega\to\Omega/{\sim_O},
+\quad\bar f([\omega])=f(\omega). \tag{32.1}
+$$
+
+常值性恰给良定义，商映射满射给唯一性；反向由因子化立即得同响应同概念。
+这应用于“点还是边”“哪个关系稳定”“有效维数”等已经对齐的查询，不表示存在有限样本算法或可实现 CPTP 压缩。
+后来新增读口会细分旧纤维，必须重新检查 (32.1)，不能静默沿用旧等价。
+
+连续查询的有限精度结论由[预测波命题 28.2](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md)直接供应。
+精确参数取该命题的紧度量世界空间为本节 $\Omega$、闭非空嵌套相容集为 $K_n$、查询为连续 $f:\Omega\to(Y,d_Y)$；则
+
+$$
+K_\infty=\bigcap_nK_n\ne\varnothing,\qquad
+\operatorname{diam}f(K_n)\downarrow\operatorname{diam}f(K_\infty). \tag{32.2}
+$$
+
+$Y$ 可为任意度量空间，不限实数。若菜单 $Q_0$ 本身非空紧度量，且 $F:Q_0\times\Omega\to Y$ 联合连续，供应还给
+
+$$
+\sup_{q\in Q_0}\operatorname{diam}F(q,K_n)
+\downarrow\sup_{q\in Q_0}\operatorname{diam}F(q,K_\infty). \tag{32.3}
+$$
+
+在每层紧集上选达到直径的点对（及菜单点），取收敛子列，嵌套闭性使极限落在交集；连续性给等式，包含关系给反向不等式。
+这个参数化应用保留了供应的完整 metric-valued 域，不将它重新列为一个新紧性定理。
+特别地，任意正查询精度最终可达，当且仅当查询在极限纤维上常值；不要求世界本身唯一。
+这仍是语义存在结论，没有提供可算停止层数或采样成本。
+
+对经典窗口，使用[静态接缝定义 33.1、命题 33.2、33.4–33.5](AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)：
+参数是其独立五事件 $L(b,c)$、过滤 $e^{-sL}$、增益阈值 $\varepsilon$，不是 $\mathcal G$ 或 $\mathcal T$。
+$c>b$ 时恰保三几何可见方向的区间是 $\ell/(4c+b)<s\le\ell/\max(2c+b,5b)$；$c=2b$ 给同速 $5b$ 与高率 $9b$。
+对同一合法实对称 Laplacian 的 $\Delta\mathbf1=0$、$\|\Delta\|\le\eta<2b$，供应的应用结论给 $\ell/(9b-\eta)<s\le\ell/(5b+\eta)$ 和整体低簇投影差至多 $\eta/(4b-\eta)$。
+合法性仍须非对角非正、零行和及对称，不能由范数界推断；常数模态始终保留，簇内命名轴可以改变。
+$c=b$ 有阈值并列不能恰选三；$c<b$ 的三慢方向可含原隐藏模态而丢掉 $e_z$。
+这些是指定过滤的有限分辨窗口，不是三个方向永久不衰减：有限 $s$ 的精确增益都非零，无限过滤只剩常数，硬投影还有原命题 30.12 的负概率反例。
+输入须激发相应符号模态、概率实现须取均匀附近小扰动、离散许可参数须实际落入窗口，以上都由该 owner 保留。
+
+从 (32.2) 推出“有效维数连续”仍需谱隙或离阈值裕量：阈值等号处模态数会跳变。
+精确固定性、无限全称句、零振幅处的相位也未必连续，不能直接套用该命题。
+在有谱隙的紧参数子类上，谱投影连续；再与本节的查询宽度配合，才能控制同一几何概念的剩余变化。
+§30 的双世界则提供另一具体消费：原效果查询宽度全零，而 diamond 度量的后继查询宽度仍为 $4t\sqrt{1-t^2}$，所以原菜单不能完成该后继概念识别。
+

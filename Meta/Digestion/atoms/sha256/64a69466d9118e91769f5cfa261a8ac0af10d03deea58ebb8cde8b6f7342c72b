@@ -1,0 +1,66 @@
+**Theorem 89.2 (entrance sensing and all advanced present germs).**
+For every such original tree and every integer $h\ge0$,
+
+$$
+\operatorname{rank}_{\mathbb Q}(OE)
+=\operatorname{rank}_{\mathbb Q}L_h
+=\operatorname{rank}_{\mathbb Q}K_h=N.
+\tag{89.2}
+$$
+
+Thus the whole current field and the designated-sensor present germ
+each determine the original entry on every actual Tick-advanced image
+$B^hE\mathbb Q^N$. No full-grown-space rank is asserted.
+
+**Proof of entrance sensing.** Suppose
+$z(t)=B^tE\eta$ satisfies $Cz(t)=0$ for every $t\ge0$.
+At an alpha cone the sensor equation
+$z_{pR}(t+1)=z_p(t)$ forces old $p$ to be zero at every time.
+The unobserved fresh two-cell tail $(pL,pLL)$ starts at zero and
+is driven only by this zero $p$; its two recurrence equations prove
+it remains zero by induction.
+
+At a beta cone the sensor equation forces old $pL$ zero at every
+time. Its fresh tail $(pLL,pLLL)$ likewise starts and stays zero.
+The equation
+
+$$
+z_{pL}(t+1)=z_p(t)+z_{pLL}(t)+z_{pLR}(t)
+\tag{89.3}
+$$
+
+then forces old $p$ zero. The fresh unmeasured $pR$ starts zero and
+its update is $z_p(t)$, so it too stays zero. This deals with all
+fresh coordinates in all disjoint cones. Only after this step may
+the old projection be identified with $A^t\eta$: all fresh feedback
+has been shown zero. Every old terminal trajectory is zero. The
+all-leaf forcing supplier therefore gives $\eta=0$.
+
+Cayley–Hamilton, equivalently the ambient finite-kernel saturation
+supplier specified in §93.3, reduces all $t\ge0$ to $0\le t<M$.
+Hence $OE$ has rank $N$. The subspace $E\mathbb Q^N$ need not
+be $B$-invariant; no saturation theorem on that subspace was used.
+
+**Proof of persistence.** Work first over $\mathbb R$. Put
+$W=\ker O=\bigcap_{t\ge0}\ker(CB^t)$. It is $B$-invariant,
+and symmetry makes $W^\perp$ invariant. For $h\ge1$, suppose
+$OB^hE\eta=0$, and decompose $E\eta=w+v$ with
+$w\in W$, $v\in W^\perp$. Then $B^hv$ belongs to both
+subspaces, and is zero. A symmetric matrix has
+$\ker B^h=\ker B$ for all $h\ge1$, so $Bv=0$.
+By $CE=0$ and $Cw=0$, also $Cv=0$. Thus every $CB^tv$
+vanishes, including $t=0$, and $v\in W$. Therefore $v=0$.
+Now $E\eta\in W$ and entrance sensing force $\eta=0$.
+The $h=0$ case is already established. Hence $K_h$ is injective
+for every $h$; so is $L_h$, since $K_h=OL_h$. Ranks of rational
+matrices agree over $\mathbb Q$ and $\mathbb R$ by nonzero
+minors. This proves (89.2) over the stated field.
+
+For a direct check of the field-retention mechanism,
+$BE\eta=0$ would give $A\eta=0$ by compression and
+$J^{\mathsf T}\eta=0$ by the first-sensor identity in (89.1).
+The old all-leaf window would then vanish, forcing $\eta=0$.
+Thus the very first new Tick already retains all entry distinctions;
+symmetry protects them from later powers. This does not assert a
+physical inverse Tick. $\square$
+

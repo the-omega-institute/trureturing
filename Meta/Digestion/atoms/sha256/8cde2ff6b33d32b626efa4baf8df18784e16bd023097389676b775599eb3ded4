@@ -1,0 +1,93 @@
+**Theorem 2.6 (radius–precision–confidence crossover for full orbit loss).** Uniformly for
+
+$$
+ 0\le r\le1/20,\qquad 0<h\le1/80,\qquad 0<\delta\le1/4,
+\tag{2.21}
+$$
+
+under ideal calibration,
+
+$$
+\boxed{
+ m_*(r,h,\delta)
+ =\Theta\!\left(\frac{\log(1/\delta)}{h^2(r+h)^2}\right).
+}
+\tag{2.22}
+$$
+
+An explicit lower constant is
+
+$$
+ m_*(r,h,\delta)\ge
+ \frac{\log(1/\delta)}{131072\,h^2(r+h)^2}.
+\tag{2.23}
+$$
+
+Proof of the upper bound. Set $H=h(r+h)$ and use the original acquisition and the same decoder from Theorem 2.3 with $\eta=0$ and
+
+$$
+ N=\left\lceil(768K_0)^2H^{-2}\log(130/\delta)\right\rceil,
+ \qquad
+ b=\max\left\{3,\left\lceil\log_2\frac{16384K_0}{H}\right\rceil\right\},
+ \qquad m=50N.
+\tag{2.24}
+$$
+
+Each of the two terms of $E$ is at most $H/(32K_0)$, so $E\le H/(16K_0)$. On its probability-$1-\delta$ event the parent product certificate yields $dD\le K_0E\le H/16$, and the parallelogram identity gives
+
+$$
+ D^2=\|a\|_2^2+\|b\|_2^2+2|a^Tb|
+ \ge\|a\|_2^2\ge r^2,\qquad D\ge d.
+$$
+
+For $r\le h$, $d^2\le H/16\le h^2/8$. For $r>h$, $d\le H/(16r)\le h/8$. This includes $r=0$ without division by zero. Furthermore $r+h\le1/16$ on (2.21), so $x\le E\le h/(256K_0)$. In both cases
+
+$$
+ \mathfrak d^2=x^2+2d^2
+ \le h^2\left((256K_0)^{-2}+\tfrac14\right)<h^2.
+\tag{2.25}
+$$
+
+The displayed procedure is in $\mathcal E_m$, has lawful output on every record, and succeeds uniformly on $\mathcal S_r$. Its acquisition, failure, record and finite-bit computation charges are exactly (2.10)–(2.11) with (2.24). In particular $b$ grows logarithmically in $1/H$, while the exhaustive bank of exponent fifty remains. Because
+
+$$
+ \log(130/\delta)\le\left(1+\frac{\log130}{\log4}\right)\log(1/\delta),
+$$
+
+and the ceiling adds at most one, $50N=O(H^{-2}\log(1/\delta))$ with one constant on (2.21).
+
+Proof of the lower bound, including full confidence dependence. Compare (2.14) at $\theta_0=r$ and $\theta_1=r+4h$. Both lie in $\mathcal S_r$, and $\theta_1\le1/10$ by (2.21). Their quotient distance is $\sqrt2(\theta_1-\theta_0)=4\sqrt2h>2h$. The triangle inequality for $\mathfrak d$ makes their closed $h$-balls disjoint. From any estimator successful on both sources, select source one exactly when the estimate lies in its $h$-ball. Both testing errors are at most $\delta$, including any decoder randomization already in the history.
+
+Here $\Delta=8rh+16h^2\le16h(r+h)=16H$ and $625r^4\le1/256$. The exact constant (2.19) therefore obeys
+
+$$
+ c(\theta_1,\theta_0)
+ \le\frac{6553600}{255}H^2\le32768H^2=:c_*.
+\tag{2.26}
+$$
+
+For clarity, the confidence argument uses both second moment and relative entropy. A test with error sum at most $2\delta$ requires $\operatorname{TV}(P_1,P_0)\ge1-2\delta$. From (2.16),
+
+$$
+ m\log(1+c_*)\ge\log(1+4(1-2\delta)^2).
+\tag{2.27}
+$$
+
+Let $\alpha=\int\sqrt{dP_1\,dP_0}$ be the affinity. With $L=dP_1/dP_0$, Jensen under $P_1$ gives $\alpha=\mathbb E_1L^{-1/2}\ge e^{-D(P_1\Vert P_0)/2}$. Cauchy–Schwarz on $(\sqrt p-\sqrt q)(\sqrt p+\sqrt q)$ gives $\operatorname{TV}\le\sqrt{1-\alpha^2}$. Every test consequently has error sum at least
+
+$$
+ 1-\operatorname{TV}\ge1-\sqrt{1-\alpha^2}
+ \ge\alpha^2/2\ge\tfrac12e^{-D(P_1\Vert P_0)}.
+$$
+
+Using its error sum at most $2\delta$ and (2.16) yields
+
+$$
+ m\log(1+c_*)\ge\log(1/(4\delta)).
+\tag{2.28}
+$$
+
+Write $A_\delta$ for the maximum of the right sides of (2.27) and (2.28). For $1/16\le\delta\le1/4$, its first term is at least $\log2\ge\tfrac14\log(1/\delta)$. For $\delta<1/16$, its second term is at least $\tfrac12\log(1/\delta)$. Thus always $A_\delta\ge\tfrac14\log(1/\delta)$. Since $\log(1+c_*)\le c_*$, (2.23) follows. This is a worst-run attempted-pair bound: the proof includes every failure and allows arbitrary finite single-copy insertions; it is not a success-count or expected-stopping-time bound. Together with (2.24) it proves (2.22). $\square$
+
+For $r\le h$, $h\le r+h\le2h$, so (2.22) is $\Theta(h^{-4}\log(1/\delta))$. For $r>h$, $r<r+h<2r$, so it is $\Theta(r^{-2}h^{-2}\log(1/\delta))$, with the same uniform interpretation. The $N^{-1/4}$ global orbit scale and the $r^{-1}N^{-1/2}$ positive-radius scale thus concern inversion of the quadratic coordinates, while terminal prediction below does not invert that final square root.
+

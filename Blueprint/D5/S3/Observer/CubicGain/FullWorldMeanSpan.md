@@ -4,6 +4,18 @@
 
 The unrestricted original world mean family affinely spans all seventeen real coordinates.
 
+**Theorem 1.1 (Four positive normalized source columns are independent).**
+
+Lean statement: `D5/S3/Observer/CubicGain/FullWorldMeanSpan.source_certificate`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/FullWorldMeanSpan.source_certificate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each i in Fin 4, sourceR(i) is strictly between zero and one and sourceB(i) is positive. The determinant of programColumns is exactly 1/768. The four source pairs are (1/4,1/8), (1/4,1/6), (1/4,1/4), and (1/3,1/8); programColumns uses column vectorization (00,10,01,11) of sourceMatrix(r,b). The certificate concerns only sources and is independent of the degree or coordinates of a gain.
+
 An original world consists of one program matrix P=[[r,b],[c,1-r]], one whole polynomial g(t)=a₀+a₁t+a₂t²+a₃t³, and one real drift d. Its complete domain has 0<r<1, b>0, c>0, bc=r(1-r), and g not identically zero. There are no bounds or history equations. Every degree from zero to three, zero samples, repeated roots and zero drift remain included.
 
 The native carrier OriginalWorld stores (r,b,d,a) in ordinary coefficient order. FullWorld requires precisely the strict r,b conditions and originalPolynomial W≠0. Since b>0, the source equation forces c=r(1-r)/b; conversely this value is positive and satisfies bc=r(1-r). Thus sourceMatrix gives exactly every source program, and Polynomial.ofFn 4 a gives exactly its whole polynomial. The coefficient map is injective, so nonzero means that the four coefficients are not all zero. Gain here names the four-coordinate type; these coordinates are ordinary coefficients, rather than the sample values used in gainPoly.
@@ -16,7 +28,7 @@ Choose source programs with (r,b,c) equal to (1/4,1/8,3/2), (1/4,1/6,9/8), (1/4,
 
 $\operatorname{det}\left(A\right)=\frac{1}{768}$
 
-**Theorem 1.1 (Full unrestricted affine span).**
+**Theorem 1.2 (Full unrestricted affine span).**
 
 $$\operatorname{aff}_{\mathbb{R}}(M)=\mathbb{R}^{17}$$
 
@@ -71,4 +83,5 @@ The reused project declarations are FullWorldMeanSpan.FullWorld, OriginalWorld a
 ## References
 
 - Truth anchor: `D5/S3/Observer/CubicGain/FullWorldMeanSpan.full_world_mean_span`
+- Truth anchor: `D5/S3/Observer/CubicGain/FullWorldMeanSpan.source_certificate`
 - Dependency: [D5/S3/Observer/CubicGain/OriginalWorld](OriginalWorld.md)

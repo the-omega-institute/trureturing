@@ -1,0 +1,18 @@
+**Definition 106.2 (fixed finite script and exposed phase).** Fix in
+advance a finite geometry-only list of Tick; Hold pairs and operations
+of Construction 106.1. Every donor and terminal choice is fixed, with its
+real binding and rights. The numerical Add operand is computed as in
+(106.1); there is no field-dependent choice of the list or its branches.
+At a completed prefix retain/expose the prefix index and phase, and let
+$W$ be the product of its $B$ and $G$ factors, latest on the left. The
+actual endpoint and its left inverse are
+
+$$
+z=Lx,\qquad L=WB^HE,\qquad
+D=E^{\mathsf T}B^{-H}W^{-1},\qquad DL=\mathrm{Id}_N.
+\tag{106.2}
+$$
+
+The empty script has $W=\mathrm{Id}_M$. Every fixed prefix, including
+zero prefixes and zero entry field, is admitted.
+

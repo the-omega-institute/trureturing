@@ -1,0 +1,86 @@
+**Proposition 125.2 (the exact 64-equation expansion).** For every $y,z,w\in L$,
+
+$$
+\nu_{f^s}^{(3)}(y,z,w)-\nu_f^{(3)}(y,z,w)
+=s\ell_{yzw}(v)+s^2q_{yzw}(v)+s^3\sigma_y\sigma_z\sigma_w\mathcal C(v,v,v),
+\tag{125.1}
+$$
+
+where
+
+$$
+\begin{aligned}
+\ell_{yzw}(v)={}&\sigma_y\mathcal C(v,f_z,f_w)
++\sigma_z\mathcal C(f_y,v,f_w)
++\sigma_w\mathcal C(f_y,f_z,v),\\
+q_{yzw}(v)={}&\sigma_y\sigma_z\mathcal C(v,v,f_w)
++\sigma_y\sigma_w\mathcal C(v,f_z,v)
++\sigma_z\sigma_w\mathcal C(f_y,v,v).
+\end{aligned}
+\tag{125.2}
+$$
+
+Thus preservation of the complete law means all 64 equations (125.1), one for each $(y,z,w)\in L^3$. The 48 slotwise linear conditions
+
+$$
+\mathcal C(v,f_z,f_w)=\mathcal C(f_y,v,f_w)=\mathcal C(f_y,f_z,v)=0
+$$
+
+are sufficient for all first-order coefficients to vanish. The twelve conditions
+
+$$
+A_w(v)=\mathcal C(v,v,f_w)=0,\qquad
+B_z(v)=\mathcal C(v,f_z,v)=0,\qquad
+D_y(v)=\mathcal C(f_y,v,v)=0
+\tag{125.3}
+$$
+
+are sufficient for all second-order coefficients to vanish, and $\mathcal C(v,v,v)=0$ removes the cubic term. For a fixed nonzero $s$, the exact conditions for both signs in (125.1) are instead
+
+$$
+q_{yzw}(v)=0,\qquad
+\ell_{yzw}(v)+s^2\sigma_y\sigma_z\sigma_w\mathcal C(v,v,v)=0
+\quad(y,z,w\in L).
+\tag{125.4}
+$$
+
+Consequently the slotwise system is sufficient, not necessary for every same-fiber perturbation.
+
+The quadratic forms in (125.3) are
+
+$$
+\begin{aligned}
+A_w(v)&=\int g v\,P(vRf_w)\,dm,\\
+B_z(v)&=\int f_z\,P(gv)\,Rv\,dm,\\
+D_y(v)&=\int P(gf_y)\,vRv\,dm.
+\end{aligned}
+\tag{125.5}
+$$
+
+All these integrals are finite by boundedness of $v$, $g\in L^2(m)$, and the Markov contractions. Summing over the free label gives
+
+$$
+\begin{aligned}
+\sum_wA_w(v)&=\int g_t vT_{\Delta _1}v\,dm,\\
+\sum_zB_z(v)&=\int g_t vT_{\Delta _1+\Delta _2}v\,dm,\\
+\sum_yD_y(v)&=\int g_{t+\Delta _1}vT_{\Delta _2}v\,dm.
+\end{aligned}
+\tag{125.6}
+$$
+
+The three marginal sums in (125.6) do not determine the twelve individual forms. In particular, an index statement for one form does not supply simultaneous nullity of (125.3).
+
+Let $U=\mathbb R^4$ and split $U=\mathbb R\sigma\oplus U_0$ with $\dim U_0=3$. The first-order coefficient tensor lies in
+
+$$
+(\mathbb R\sigma\otimes U\otimes U)+(U\otimes\mathbb R\sigma\otimes U)+(U\otimes U\otimes\mathbb R\sigma),
+$$
+
+of dimension $4^3-3^3=37$. The quadratic coefficient tensor lies in
+
+$$
+(\mathbb R\sigma\otimes\mathbb R\sigma\otimes U)+(\mathbb R\sigma\otimes U\otimes\mathbb R\sigma)+(U\otimes\mathbb R\sigma\otimes\mathbb R\sigma),
+$$
+
+of dimension $3\cdot3+1=10$, and the cubic tensor lies on $\mathbb R\sigma^{\otimes3}$. These counts compress the actual coefficient families; they do not discard any of the 64 equations.
+

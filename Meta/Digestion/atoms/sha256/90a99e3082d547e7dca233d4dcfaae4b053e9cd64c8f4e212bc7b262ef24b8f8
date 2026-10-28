@@ -1,0 +1,254 @@
+**Theorem 120.2 (a positive direction satisfying all eight pair-law constraints).**
+For every original $a,\eta,t,\Delta>0$, every pointwise Borel tuple
+$f\in\mathcal F$ of Definition 117.3, and every $\kappa>0$ with $m(E)>0$,
+there is a bounded real Borel function $v:G\to\mathbb R$ such that
+
+$$
+\begin{gathered}
+v(p)=0\quad\text{for every }p\in G\setminus E,\\
+Q(v,f_z)=Q(f_z,v)=0\quad\text{for every }z\in\{0,1,3,B\},\qquad
+Q(v,v)>0.
+\tag{120.3}
+\end{gathered}
+$$
+
+All eight equalities hold for this one function, the actual source-start
+$g_t$ and the original-clock $T_\Delta$.
+
+**Proof.** We first identify a symmetry of the full endpoint. Use the
+Jacobian-one coordinates $(x,y,z,\xi)$ with $\xi=w-xy/2$. Then
+
+$$
+X_1=\partial_x-\frac y2\partial_\xi,\qquad
+X_2=\partial_y+\frac x2\partial_\xi,\qquad
+X_3=\partial_z,\qquad \partial_w=\partial_\xi.
+\tag{120.4}
+$$
+
+Let $R_\theta$ rotate $(x,y)$ through $\theta$, leaving $z,\xi$ fixed,
+and let its action on functions be pullback. It preserves $\mu$, $e$,
+$L$ and $\partial_w^2$. The original representation
+$\Gamma(p)=\int_0^\infty h_s(p)\,ds$ in
+[(82.8)](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md#82-rank-three-transport-carrier-point-source-stability-and-target-fibre-defect)
+uses the free heat densities of $L$. Its classical supplier, as in
+Proposition 82.4, is Folland, [*Subelliptic estimates and function spaces
+on nilpotent Lie groups*, Theorem 3.1 and Proposition 3.17 at $\alpha=2$](https://doi.org/10.1007/BF02386204).
+That free semigroup commutes with
+these rotations and its source $e$ is fixed, so its densities, and hence
+$\Gamma$, are invariant. Thus rotations preserve the punctured symmetric
+operator $S$, its adjoint and its Friedrichs operator $F$, including
+$\mathcal Q_c$ and $\overline q_c$.
+
+The supplied identity $\ker S^*=\mathbb Ch$, recalled in Definition 114.1
+from (112.1), implies $R_\theta h\in\mathbb Ch$. Rotation preserves
+reality, positivity and unit norm. The positive unit vector in this
+one-dimensional line is unique, so $R_\theta h=h$. The entire domain
+$\mathcal Q_c\dotplus\mathbb Ch$ and the full form
+$q_H[y+ch]=\overline q_c[y]$ are therefore rotation invariant. The
+closed-form representation of the operator shows that the actual $H$
+commutes with rotations. Since $h$ is invariant, so do $K$ and $T_s$ on
+$L^2(m)$. This uses the source summand and fixes the actual extension.
+
+Rotations also preserve $\mathscr V_0$, fix $1$ and preserve
+$\operatorname{tr}(v_0+c)=c$ in (116.1). Applying (117.2) to a rotated
+input and using Riesz uniqueness proves $R_\theta g_t=g_t$ in $L^2(m)$.
+The initial law in this argument is still the source law at $e$.
+
+We next obtain the local regularity needed to evaluate the full
+semigroup off the source. On each relatively compact neighborhood in
+$M$, $h$ and $\Gamma$ are smooth, $h$ is bounded above and below by
+positive constants, and the principal matrix $\mathsf A$ has symbol
+
+$$
+\langle\mathsf A(p)\zeta,\zeta\rangle
+ =a\bigl[\zeta_x^2+(\zeta_y+x\zeta_w)^2+\zeta_z^2\bigr]
+   +\eta\zeta_w^2.
+\tag{120.5}
+$$
+
+It is strictly positive for nonzero $\zeta$ and uniformly positive on
+compact subsets. The full form puts $D(K)$ in $H^1_{\rm loc}(M)$.
+Testing its operator identity against punctured smooth functions gives,
+in the original coordinates, the weak equation
+
+$$
+-\operatorname{div}(h^2\mathsf A\nabla u)=h^2Ku
+\quad\text{on }M,\qquad u\in D(K).
+\tag{120.6}
+$$
+
+The interior divergence-form estimates used here are John K. Hunter,
+[*Chapter 4: Elliptic PDEs*, Theorems 4.27 and 4.28, printed pp. 112 and 114](https://www.math.ucdavis.edu/~hunter/pdes/ch4.pdf).
+Their coefficient matrix is $h^2\mathsf A$ and their right-hand side is
+$h^2Ku$ on nested punctured neighborhoods. Both the smooth coefficient
+hypotheses and uniform ellipticity hold there. For $u\in D(K^2)$,
+apply the interior $H^2$ estimate first to $Ku$, whose right-hand side
+is $h^2K^2u$, and then the $H^4$ estimate to $u$, whose right-hand side
+$h^2Ku$ is now locally $H^2$. Local weighted and unweighted norms are
+equivalent. The local $H^1$ terms are controlled by the full energy
+$\mathscr E[w,w]=\langle w,Kw\rangle_m$ for $w=u,Ku$.
+Consequently, for each compact $C\Subset M$, nested relatively compact
+neighborhoods give a finite constant $C_C$ with
+
+$$
+\|u\|_{H^4(C)}
+ \le C_C\sum_{j=0}^2\|K^ju\|_{L^2(m)},\qquad u\in D(K^2).
+\tag{120.7}
+$$
+
+Here the norm on $C$ means restriction from such a neighborhood.
+The same interior estimates at higher orders give arbitrary local
+Sobolev regularity for vectors in all the domains $D(K^N)$.
+There is no assertion about extending (120.6) through $e$.
+
+Classical Sobolev embedding in four dimensions sends local $H^4$ into
+local $C^1$. The spectral theorem for the nonnegative self-adjoint $K$
+gives bounded maps $T_s:L^2(m)\to D(K^N)$ for every $s>0$ and integer
+$N\ge0$, since $\lambda^Ne^{-s\lambda}$ is bounded on $[0,\infty)$.
+Thus $T_su$ has a smooth representative on $M$. On the real Hilbert
+space, (120.7) and the Riesz representation theorem give vectors
+$k_{s,p}\in L^2(m;\mathbb R)$ such that
+
+$$
+(T_su)(p)=\langle k_{s,p},u\rangle_m
+\quad(p\in M,\ u\in L^2(m;\mathbb R)).
+\tag{120.8}
+$$
+
+The local $C^1$ bound is uniform for $\|u\|_2\le1$, so
+$p\mapsto k_{s,p}$ is locally norm-continuous. Also
+$g_t=T_{t/2}g_{t/2}$ by (117.3), hence $g_t$ has a smooth representative
+on $M$. Its rotation invariance is pointwise there: for any fixed
+rotation the continuous difference vanishes almost everywhere, and
+$m$ has full support on $M$.
+
+Define on $M\times M$
+
+$$
+p_\Delta(p,q)=\langle k_{\Delta/2,p},k_{\Delta/2,q}\rangle_m.
+\tag{120.9}
+$$
+
+This is continuous and symmetric. Self-adjointness and the semigroup
+identity give $T_{\Delta/2}k_{\Delta/2,p}=k_{\Delta,p}$ in $L^2(m)$.
+Evaluating the left side at $q$ by (120.8) shows that its continuous
+representative is $p_\Delta(p,q)$. Thus (120.8) also yields
+
+$$
+(T_\Delta u)(p)=\int_M p_\Delta(p,q)u(q)\,dm(q),
+\qquad p\in M,\quad u\in L^2(m;\mathbb R).
+\tag{120.10}
+$$
+
+In particular the formula applies to the bounded compactly supported
+functions below. It requires no value of this kernel at $e$, which has
+zero $m$-measure.
+
+For distinct $p_1,\ldots,p_n\in M$, the matrix
+$(p_\Delta(p_i,p_j))_{i,j=1}^n$ is strictly positive definite. To see
+strictness, a zero Gram quadratic form for real coefficients $c_i$
+would give $\sum_i c_i k_{\Delta/2,p_i}=0$. The functional
+$\ell(u)=\sum_i c_i u(p_i)$ is continuous on $D(K^2)$ in its graph
+norm by (120.7), and would vanish on $T_{\Delta/2}(L^2(m;\mathbb R))$.
+This range is graph-norm dense in $D(K^2)$: for any real $u\in D(K^2)$,
+its spectral truncations satisfy
+
+$$
+u_N=\mathbf1_{[0,N]}(K)u\longrightarrow u\quad\text{in }D(K^2),
+\qquad
+u_N=T_{\Delta/2}\bigl(e^{(\Delta/2)K}u_N\bigr),
+\tag{120.11}
+$$
+
+where the parenthesized vector is in $L^2(m)$ by the spectral cutoff.
+Thus $\ell$ vanishes on $D(K^2)$. Every punctured smooth compactly
+supported function belongs to $D(K^N)$ for all $N$: multiplication by
+$h$ sends it into the original punctured core, and the smooth local
+expression for $K$ preserves smooth compact support in $M$. Induction
+gives the asserted domain membership. Disjoint smooth bump functions
+with value one at their respective $p_i$ force $c_i=0$ for every $i$.
+This proves the finite Gram strictness for the actual full semigroup.
+
+We now choose points inside the given Borel overlap. Let $E^*$ be the
+Lebesgue density points belonging to $E\cap M$, using the coordinates
+$(x,y,z,\xi)$. Local equivalence of $m$ and Lebesgue measure and the
+Lebesgue density theorem give $m(E\setminus E^*)=0$. Remove also the
+axis $x=y=0$, a null set. In cylindrical coordinates
+$x=r\cos\theta$, $y=r\sin\theta$ with $r>0$, the measure is
+
+$$
+dm=h(r,z,\xi)^2r\,dr\,d\theta\,dz\,d\xi.
+\tag{120.12}
+$$
+
+Fubini's theorem gives a positive-measure set of bases $(r,z,\xi)$
+whose angular slice of $E^*$ has positive one-dimensional measure.
+The smooth rotation-invariant representative of $g_t$ depends only on
+this base. Since $g_t>0$ $m$-almost everywhere, one can choose such a
+base with $g_t=c>0$. Its slice contains nine distinct angles. The
+corresponding distinct points $p_1,\ldots,p_9$ of $E^*$ have the exact
+same actual density value $g_t(p_i)=c$. This uses no regularity of the
+emissions or of the boundary of $E$.
+
+Take small pairwise disjoint coordinate balls $B_i(\varepsilon)$ about
+these points, with closures in $M$, and put
+
+$$
+A_i(\varepsilon)=E\cap B_i(\varepsilon),\qquad
+\phi_i=\frac{\mathbf1_{A_i(\varepsilon)}}{m(A_i(\varepsilon))}
+\quad(1\le i\le9).
+\tag{120.13}
+$$
+
+The density-point property makes every denominator positive for all
+sufficiently small $\varepsilon>0$. Each $\phi_i$ is a pointwise
+defined bounded real Borel function zero outside $E$. Write
+$B_{ij}(\varepsilon)=\tfrac12[Q(\phi_i,\phi_j)+Q(\phi_j,\phi_i)]$.
+By (120.10), kernel symmetry and Fubini on these compact neighborhoods,
+
+$$
+\begin{aligned}
+B_{ij}(\varepsilon)
+ &=\frac{1}{m(A_i(\varepsilon))m(A_j(\varepsilon))}
+   \int_{A_i(\varepsilon)\times A_j(\varepsilon)}
+   \frac{g_t(p)+g_t(q)}2\,p_\Delta(p,q)\,dm(p)dm(q)\\
+ &\longrightarrow c\,p_\Delta(p_i,p_j)
+ \qquad(\varepsilon\downarrow0).
+\end{aligned}
+\tag{120.14}
+$$
+
+Indeed the integrand is continuous on the fixed compact punctured
+neighborhoods, and these are normalized averages over sets shrinking
+to $(p_i,p_j)$. Local boundedness justifies the integrals, while the
+original definition of $Q$ is finite on all bounded inputs. The limit
+matrix is strictly positive definite by the preceding Gram argument
+and $c>0$. Positive definiteness is open for real symmetric finite
+matrices, so fix one sufficiently small $\varepsilon$ for which
+$B(\varepsilon)$ is strictly positive definite. For every nonzero
+$b\in\mathbb R^9$ this gives
+
+$$
+Q\left(\sum_{i=1}^9b_i\phi_i,\sum_{i=1}^9b_i\phi_i\right)
+ =b^{\mathsf T}B(\varepsilon)b>0.
+\tag{120.15}
+$$
+
+Finally consider the single real linear map
+
+$$
+\mathbb R^9\longrightarrow\mathbb R^8,\qquad
+b\longmapsto
+\left(Q\left(\sum_i b_i\phi_i,f_z\right),
+      Q\left(f_z,\sum_i b_i\phi_i\right)\right)_{z\in\mathcal A}.
+\tag{120.16}
+$$
+
+Its entries are finite by the bound in Definition 120.1. Rank-nullity
+gives a nonzero vector $b$ in its kernel, even if some rows are
+dependent. Set $v=\sum_i b_i\phi_i$. This is one bounded real Borel
+function vanishing at every point outside $E$. All eight required
+constraints hold simultaneously by (120.16), and (120.15) gives
+$Q(v,v)>0$. The parameters, emission tuple and $\kappa$ were arbitrary,
+which proves exactly (120.3). $\square$
+
