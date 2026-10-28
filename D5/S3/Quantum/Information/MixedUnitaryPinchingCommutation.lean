@@ -7,12 +7,8 @@
    digest: Non-isotropic mixed-unitary qubit channels fail to commute with marginal pinching. -/
 
 import D5.S3.Quantum.Information.TraceNormDiscordMutualCorrelationBound
-import D5.S3.Quantum.QuantumChannels.ProductUnitaryChoiSpectrum
 import D5.S3.Quantum.QuantumChannels.HiaiRuskaiRiemannianContraction
-import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.QuantumChannels.ChannelTimeReversalNoGo
-import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
-import D5.S3.Quantum.Information.ActualQubitChordObstruction
 
 /-! Spectral marginal pinching and mixed-unitary qubit channels.
 
