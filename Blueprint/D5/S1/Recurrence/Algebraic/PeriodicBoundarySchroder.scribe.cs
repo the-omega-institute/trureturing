@@ -79,7 +79,11 @@ internal sealed class PeriodicBoundarySchroderDocument : IScribeDocumentDefiniti
                         + "OEIS attribution and its CC-BY-SA-4.0 license apply to source "
                         + "text. The proof is a repository derivation reusing Mathlib's "
                         + "Apache-2.0 Schroder series theorem. The literature search "
-                        + "has a bounded scope and does not establish global priority.")))))));
+                        + "has a bounded scope and does not establish global priority."))),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a376317-kurkov-periodic-boundary-schroder"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Identity() => Disp(Seq(
         Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,

@@ -46,6 +46,10 @@ $$\forall n \in \mathbb{N}, \left(P_{f2}\right)\left(n+1, n+1\right) = largeSchr
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/PeriodicBoundarySchroder.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a376317-kurkov-periodic-boundary-schroder` (proved) by `D5/S1/Recurrence/Algebraic/PeriodicBoundarySchroder.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a376317-kurkov-periodic-boundary-schroder","declaration_gid":"D5/S1/Recurrence/Algebraic/PeriodicBoundarySchroder.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mikhail Kurkov (2024). *OEIS A376317, periodic shifts of a two-index recurrence*. URL: <https://oeis.org/A376317>.
