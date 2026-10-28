@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/Coding/JointTwistedPeriodicHistories/TwistedJointPeriodicHistories
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/Coding/TwistedJointPeriodicHistories
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/JointTwistedPeriodicHistories/TwistedJointPeriodicHistories
    mirror-E: none(waiver:symbolic-structural-theorems)
    anchors: []
    utility: none
