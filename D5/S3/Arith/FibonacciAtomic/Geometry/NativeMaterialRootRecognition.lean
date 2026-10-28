@@ -66,7 +66,7 @@ structure OrderedIso (t s : Source) where
     ((neighbors t p).map forward).Perm (neighbors s (forward p))
   forward_terminals : (terminals t).map forward = terminals s
 
-private theorem root_mem (t : Source) : [] ∈ material t := by
+theorem root_mem (t : Source) : [] ∈ material t := by
   cases t with
   | of b => cases b <;> simp [material]
   | mul l r => simp [material]
@@ -164,7 +164,7 @@ private theorem children_cons (l r : Source) (b : Bool) (p : Address) :
   · cases h : readout p l <;> simp [children, readout, h]
   · cases h : readout p r <;> simp [children, readout, h]
 
-private theorem neighbors_cons (l r : Source) (b : Bool) (p : Address) :
+theorem neighbors_cons (l r : Source) (b : Bool) (p : Address) :
     neighbors (.mul l r) (b :: p) =
       (neighbors (if b then r else l) p).map (b :: ·) ++
         if p = [] then [[]] else [] := by
@@ -261,7 +261,7 @@ private theorem bare_map {t s : Source} (e : OrderedIso t s)
   rw [← degree_map e v (neighbor_mem t p hp v hv)]
   exact hb v hv
 
-private theorem child_present (t : Source) (p : Address) (b : Bool) :
+theorem child_present (t : Source) (p : Address) (b : Bool) :
     p ++ [b] ∈ material t ↔ p ++ [b] ∈ children t p := by
   induction p generalizing t with
   | nil =>
@@ -605,7 +605,7 @@ theorem original_rigidity (t s : Source) (ht : D t) (hs : D s)
     (fun p _ => (readouts_from_support t s hm p).symm)).symm
 
 
-private theorem material_nodup (t : Source) : (material t).Nodup := by
+theorem material_nodup (t : Source) : (material t).Nodup := by
   induction t with
   | of b => cases b <;> simp [material]
   | mul l r il ir =>
