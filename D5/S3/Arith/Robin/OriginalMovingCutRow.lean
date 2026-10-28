@@ -76,7 +76,7 @@ lemma kernel_nonneg {t x : ℝ} (ht : 4 ≤ t) : 0 ≤ kernel t x := by
     exact (mul_nonneg hwb (sub_nonneg.mpr hx.2)).trans h
   · exact le_rfl
 
-private lemma height_bounds {t : ℝ} (ht : 4 ≤ t) :
+lemma height_bounds {t : ℝ} (ht : 4 ≤ t) :
     0 ≤ lowerHeight t ∧ lowerHeight t ≤ t ^ (-3 / 10 : ℝ) := by
   have ht0 : 0 < t := by linarith
   have htb : t ≤ endpoint t := le_add_of_nonneg_right (Real.rpow_nonneg ht0.le _)
@@ -97,7 +97,7 @@ private lemma height_bounds {t : ℝ} (ht : 4 ≤ t) :
           ← Real.rpow_add ht0]
         norm_num
 
-private lemma kernel_le_height {t x : ℝ} (ht : 4 ≤ t) :
+lemma kernel_le_height {t x : ℝ} (ht : 4 ≤ t) :
     kernel t x ≤ lowerHeight t := by
   have ht0 : 0 < t := by linarith
   have hden := mul_pos (weight_pos (by linarith : 1 < t))
