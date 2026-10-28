@@ -8,6 +8,7 @@ url: https://arxiv.org/html/2411.12945v1
 claim: "Theorem 3.1 characterizes finite clique complexes by requiring the union of the three pairwise intersections of any three facets to be a face."
 strata_touched:
   - D5/S3/Combinatorics/Graph/HereditaryFlip/Majority
+  - D5/S3/Combinatorics/Graph/HereditaryFlip/Median
 license: citation-only
 triage: anchor
 ---
@@ -33,4 +34,12 @@ also allows absent vertices and the empty family. The universal least
 majority-closed extension follows by induction on support cardinality and
 does not assume heredity of competing extensions. These are classical
 combinatorial statements and their consequences; no novelty is claimed.
-The module contains no graph metric or metric median theorem.
+The Majority module contains no graph metric or metric median theorem.
+The Median module uses the native shortest-walk distance and the three
+pairwise distance intervals. Their unique common vertex has exactly the
+majority support. For a hereditary family, its flip graph is connected
+and has a unique metric median for every triple if and only if the family
+contains the empty face and is flag. The empty-face condition is explicit
+because connectedness requires a vertex. This is the finite-support
+form of the classical characterization discussed by Xie and Xu; it also
+permits infinite ambient types and families, with finite individual faces.

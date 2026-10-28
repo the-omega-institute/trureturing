@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Metric]
    utility: none
-   digest: Native metric medians of hereditary flip graphs are support majorities and classify flag families. -/
+   digest: Native metric medians reconstruct support majorities and classify flag families. -/
 
 import D5.S3.Combinatorics.Graph.HereditaryFlip.Majority
 import D5.S3.Combinatorics.Graph.HereditaryFlip.Metric
@@ -43,19 +43,42 @@ theorem is_median_iff {K : Set (Finset V)} (hK : IsLowerSet K)
   constructor
   · rintro ⟨hAB, hBC, hCA⟩
     ext x
-    have hablo := @hAB.1 x
-    have habup := @hAB.2 x
-    have hbclo := @hBC.1 x
-    have hbcup := @hBC.2 x
-    have hcalo := @hCA.1 x
-    have hcaup := @hCA.2 x
-    simp only [Finset.mem_inter, Finset.mem_union] at hablo habup hbclo hbcup hcalo hcaup
     simp only [majority, Finset.mem_union, Finset.mem_inter]
-    tauto
+    constructor
+    · intro hx
+      rcases Finset.mem_union.mp (hAB.2 hx) with ha | hb
+      · rcases Finset.mem_union.mp (hBC.2 hx) with hb | hc
+        · exact Or.inl (Or.inl ⟨ha, hb⟩)
+        · exact Or.inr ⟨hc, ha⟩
+      · rcases Finset.mem_union.mp (hCA.2 hx) with hc | ha
+        · exact Or.inl (Or.inr ⟨hb, hc⟩)
+        · exact Or.inl (Or.inl ⟨ha, hb⟩)
+    · rintro ((hab | hbc) | hca)
+      · exact hAB.1 (Finset.mem_inter.mpr hab)
+      · exact hBC.1 (Finset.mem_inter.mpr hbc)
+      · exact hCA.1 (Finset.mem_inter.mpr hca)
   · intro hM
     rw [hM]
     simp only [majority, Finset.subset_iff, Finset.mem_union, Finset.mem_inter]
-    refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩ <;> intro x hx <;> tauto
+    refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩
+    · intro x hx; exact Or.inl (Or.inl hx)
+    · intro x hx
+      rcases hx with ((hab | hbc) | hca)
+      · exact Or.inl hab.1
+      · exact Or.inr hbc.1
+      · exact Or.inl hca.2
+    · intro x hx; exact Or.inl (Or.inr hx)
+    · intro x hx
+      rcases hx with ((hab | hbc) | hca)
+      · exact Or.inl hab.2
+      · exact Or.inl hbc.1
+      · exact Or.inr hca.1
+    · intro x hx; exact Or.inr hx
+    · intro x hx
+      rcases hx with ((hab | hbc) | hca)
+      · exact Or.inr hab.1
+      · exact Or.inl hbc.2
+      · exact Or.inl hca.1
 
 /-- A hereditary flip graph is a native median graph exactly when its family
 contains the empty support and is determined by its empty, singleton and pair faces. -/
