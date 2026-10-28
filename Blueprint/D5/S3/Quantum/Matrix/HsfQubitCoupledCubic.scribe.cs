@@ -23,6 +23,9 @@ internal sealed class HsfQubitCoupledCubicDocument : IScribeDocumentDefinition
             Entry("weightedImage", "A symmetric two point kernel",
                 "For real a,b,m, weightedImage multiplies K00 by a, K11 by b, "
                 + "and both off-diagonal entries by m.", DescribeRole.Definition),
+            Entry("weightedImage_hermitian", "The kernel in Hermitian coordinates",
+                "The kernel action sends the Hermitian coordinates r,s,z to "
+                + "ar,bs,mz, for arbitrary real a,b,m.", DescribeRole.Theorem),
             Entry("endpoint_coupling", "The joint endpoint estimate",
                 "For nonnegative a,b, let X-H with diagonal a-h,b-k and upper entry -z "
                 + "and I+K with diagonal 1+r,1+s and upper entry w both be PSD. Then "
