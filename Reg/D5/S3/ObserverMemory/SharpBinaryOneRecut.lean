@@ -3,7 +3,7 @@ import Reg.Support.DependentFamily
 import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 
-/-! Source - bound audit of the lawful actual - image recut statement. -/
+/-! Audit of the lawful recut on the actual boundary image. -/
 
 namespace Reg.D5.S3.ObserverMemory.SharpBinaryOneRecut
 open _root_.D5.S3.ObserverMemory.SharpBinaryOneRecut
