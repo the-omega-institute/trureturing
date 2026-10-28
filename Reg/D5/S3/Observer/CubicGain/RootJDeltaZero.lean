@@ -16,12 +16,14 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 /-- A complete source tuple; repeated sources are intentional. -/
 def witnessSources (q : Slot) : Mat :=
   if q.val = 9 then sourceChart 3 (5/3)
+  else if q.val = 13 then sourceChart (1/2) (8/5)
   else if 8 ≤ q.val ∧ q.val < 16 then sourceChart (3/2) (4/3)
   else sourceChart 1 1
 
 private theorem witness_legal (q : Slot) : LegalSource (witnessSources q) := by
   unfold witnessSources
   split_ifs
+  · exact source_chart_legal _ _ (by norm_num) (by norm_num)
   · exact source_chart_legal _ _ (by norm_num) (by norm_num)
   · exact source_chart_legal _ _ (by norm_num) (by norm_num)
   · exact source_chart_legal _ _ (by norm_num) (by norm_num)
@@ -33,25 +35,37 @@ private theorem witness_trace_one (q : Slot) :
 private theorem witness_default (q : Slot) (h : q.val < 8 ∨ 16 ≤ q.val) :
     witnessSources q = sourceChart 1 1 := by
   have hn : q.val ≠ 9 := by omega
+  have hn13 : q.val ≠ 13 := by omega
   have hm : ¬ (8 ≤ q.val ∧ q.val < 16) := by omega
-  simp [witnessSources, hn, hm]
+  simp [witnessSources, hn, hn13, hm]
 
 private theorem witness_middle (q : Slot) (hlo : 8 ≤ q.val) (hhi : q.val < 16)
-    (hne : q.val ≠ 9) : witnessSources q = sourceChart (3/2) (4/3) := by
-  simp [witnessSources, hne, hlo, hhi]
+    (hne : q.val ≠ 9) (hne13 : q.val ≠ 13) :
+    witnessSources q = sourceChart (3/2) (4/3) := by
+  simp [witnessSources, hne, hne13, hlo, hhi]
 
 private theorem witness_m_trace (q : Slot) (hlo : 8 ≤ q.val) (hhi : q.val < 16) :
     witnessSources q 1 0 + (witnessSources q 0 1 + witnessSources q 1 1) = 29/18 := by
   by_cases he : q.val = 9
   · norm_num [witnessSources, he, sourceChart]
-  · rw [witness_middle q hlo hhi he]
-    norm_num [sourceChart]
+  · by_cases he13 : q.val = 13
+    · norm_num [witnessSources, he, he13, sourceChart]
+    · rw [witness_middle q hlo hhi he he13]
+      norm_num [sourceChart]
 
-private theorem witness_jm_trace (q : Slot) (hlo : 8 ≤ q.val) (hhi : q.val < 16) :
+private theorem witness_jm_trace (q : Slot) (hlo : 8 ≤ q.val) (hhi : q.val < 12) :
     witnessSources q 0 0 + witnessSources q 1 0 + witnessSources q 1 1 = 3/2 := by
   by_cases he : q.val = 9
   · norm_num [witnessSources, he, sourceChart]
-  · rw [witness_middle q hlo hhi he]
+  · rw [witness_middle q hlo (by omega) he (by omega)]
+    norm_num [sourceChart]
+
+private theorem witness_mm_trace (q : Slot) (hlo : 12 ≤ q.val) (hhi : q.val < 16) :
+    witnessSources q 0 0 + witnessSources q 1 0 +
+      (witnessSources q 0 1 + 2 * witnessSources q 1 1) = 47/18 := by
+  by_cases he13 : q.val = 13
+  · norm_num [witnessSources, show q.val ≠ 9 by omega, he13, sourceChart]
+  · rw [witness_middle q (by omega) hhi (by omega) he13]
     norm_num [sourceChart]
 
 def witnessCoefficients (a b : ℝ) : Blocks :=
@@ -115,7 +129,12 @@ private theorem witness_kernel (a b : ℝ) :
     · have he : p = 2 := Fin.ext hp
       subst p
       have hq0 : 8 ≤ (descendant ⟨⟨5, by decide⟩,2,j⟩).val := by dsimp [descendant]; norm_num; omega
-      have hq1 : (descendant ⟨⟨5, by decide⟩,2,j⟩).val < 16 := by have hj := j.isLt; dsimp [descendant]; norm_num at hj ⊢; omega
+      have hq1 : (descendant ⟨⟨5, by decide⟩,2,j⟩).val < 12 := by
+        have hj := j.isLt
+        change j.val < 3 at hj
+        dsimp [descendant]
+        norm_num
+        omega
       norm_num [prefixWord, List.ofFn_succ, acquisition, Raw,
         _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
         _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
@@ -126,11 +145,15 @@ private theorem witness_kernel (a b : ℝ) :
     · by_cases hp3 : p.val = 3
       · have he : p = 3 := Fin.ext hp3
         subst p
-        have hq0 : 8 ≤ (descendant ⟨⟨5, by decide⟩,3,j⟩).val := by dsimp [descendant]; norm_num; omega
+        have hq0 : 12 ≤ (descendant ⟨⟨5, by decide⟩,3,j⟩).val := by dsimp [descendant]; norm_num; omega
         have hq1 : (descendant ⟨⟨5, by decide⟩,3,j⟩).val < 16 := by have hj := j.isLt; dsimp [descendant]; norm_num at hj ⊢; omega
-        have hn : (descendant ⟨⟨5, by decide⟩,3,j⟩).val ≠ 9 := by dsimp [descendant]; norm_num; omega
-        rw [witness_middle _ hq0 hq1 hn]
-        norm_num [reference, witnessSources]
+        norm_num [prefixWord, List.ofFn_succ, acquisition, Raw,
+          _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
+          _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
+          _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
+          Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two]
+        rw [witness_mm_trace _ hq0 hq1]
+        norm_num [reference, witnessSources, sourceChart] <;> ring
       · have hr : (reference ⟨⟨5, by decide⟩,p,j⟩).val < 8 ∨ 16 ≤ (reference ⟨⟨5, by decide⟩,p,j⟩).val := by dsimp [reference]; norm_num; omega
         have hq : (descendant ⟨⟨5, by decide⟩,p,j⟩).val < 8 ∨ 16 ≤ (descendant ⟨⟨5, by decide⟩,p,j⟩).val := by
           have hj := j.isLt; dsimp [descendant]; norm_num at hj ⊢; omega
@@ -150,25 +173,49 @@ private theorem witness_kernel (a b : ℝ) :
         _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
         _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
         Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two, witnessSources, sourceChart]
-    · by_cases hm : 4 < p.val ∧ p.val < 8
-      · have hq0 : 8 ≤ (descendant ⟨⟨6, by decide⟩,p,j⟩).val := by dsimp [descendant]; norm_num; omega
-        have hq1 : (descendant ⟨⟨6, by decide⟩,p,j⟩).val < 16 := by
+    · by_cases hp6 : p.val = 6
+      · have he : p = 6 := Fin.ext hp6
+        subst p
+        have hj0 : j.val = 0 := by
           have hj := j.isLt
           change j.val < 1 at hj
-          dsimp [descendant]
-          norm_num
           omega
-        have hn : (descendant ⟨⟨6, by decide⟩,p,j⟩).val ≠ 9 := by dsimp [descendant]; norm_num; omega
-        have hr0 : 8 ≤ (reference ⟨⟨6, by decide⟩,p,j⟩).val := by dsimp [reference]; norm_num; omega
-        have hr1 : (reference ⟨⟨6, by decide⟩,p,j⟩).val < 16 := by dsimp [reference]; norm_num; omega
-        have hrn : (reference ⟨⟨6, by decide⟩,p,j⟩).val ≠ 9 := by dsimp [reference]; norm_num; omega
-        rw [witness_middle _ hq0 hq1 hn, witness_middle _ hr0 hr1 hrn]
-        ring
-      · have hr : (reference ⟨⟨6, by decide⟩,p,j⟩).val < 8 ∨ 16 ≤ (reference ⟨⟨6, by decide⟩,p,j⟩).val := by dsimp [reference]; norm_num; omega
-        have hq : (descendant ⟨⟨6, by decide⟩,p,j⟩).val < 8 ∨ 16 ≤ (descendant ⟨⟨6, by decide⟩,p,j⟩).val := by
-          have hj := j.isLt; dsimp [descendant]; norm_num at hj ⊢; omega
-        rw [witness_default _ hq, witness_default _ hr]
-        ring
+        have heq : j = ⟨0, by norm_num⟩ := Fin.ext hj0
+        subst j
+        norm_num [prefixWord, List.ofFn_succ, acquisition, Raw, reference, descendant,
+          _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
+          _root_.D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
+          _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
+          Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two, witnessSources, sourceChart]
+      · by_cases hm : 4 < p.val ∧ p.val < 8
+        · have hq0 : 8 ≤ (descendant ⟨⟨6, by decide⟩,p,j⟩).val := by dsimp [descendant]; norm_num; omega
+          have hq1 : (descendant ⟨⟨6, by decide⟩,p,j⟩).val < 16 := by
+            have hj := j.isLt
+            change j.val < 1 at hj
+            dsimp [descendant]
+            norm_num
+            omega
+          have hn : (descendant ⟨⟨6, by decide⟩,p,j⟩).val ≠ 9 := by dsimp [descendant]; norm_num; omega
+          have hr0 : 8 ≤ (reference ⟨⟨6, by decide⟩,p,j⟩).val := by dsimp [reference]; norm_num; omega
+          have hr1 : (reference ⟨⟨6, by decide⟩,p,j⟩).val < 16 := by dsimp [reference]; norm_num; omega
+          have hrn : (reference ⟨⟨6, by decide⟩,p,j⟩).val ≠ 9 := by dsimp [reference]; norm_num; omega
+          have hn13 : (descendant ⟨⟨6, by decide⟩,p,j⟩).val ≠ 13 := by
+            have hj := j.isLt
+            change j.val < 1 at hj
+            dsimp [descendant]
+            norm_num
+            omega
+          have hrn13 : (reference ⟨⟨6, by decide⟩,p,j⟩).val ≠ 13 := by
+            dsimp [reference]
+            norm_num
+            omega
+          rw [witness_middle _ hq0 hq1 hn hn13, witness_middle _ hr0 hr1 hrn hrn13]
+          ring
+        · have hr : (reference ⟨⟨6, by decide⟩,p,j⟩).val < 8 ∨ 16 ≤ (reference ⟨⟨6, by decide⟩,p,j⟩).val := by dsimp [reference]; norm_num; omega
+          have hq : (descendant ⟨⟨6, by decide⟩,p,j⟩).val < 8 ∨ 16 ≤ (descendant ⟨⟨6, by decide⟩,p,j⟩).val := by
+            have hj := j.isLt; dsimp [descendant]; norm_num at hj ⊢; omega
+          rw [witness_default _ hq, witness_default _ hr]
+          ring
 
 set_option maxHeartbeats 1000000 in
 -- Ten native response rows are normalized simultaneously before exact elimination.
@@ -332,8 +379,8 @@ abbrev arena : Arena where
   Law R := ∀ (P : Slot → Mat), (∀ q, LegalSource (P q)) →
     P 0 0 1 + P 0 1 0 = 1 → P 1 0 1 + P 1 1 0 = 1 →
     Module.finrank ℝ (LinearMap.range (H P)) = 2 → E P ≠ 0 → Delta P = 0 →
-    (P 8 = P 9 ∧ ∀ x : V P, R.readout () () (x.val 8) (x.val 9)) ∨
-    (P 12 = P 13 ∧ ∀ x : V P, R.readout () () (x.val 12) (x.val 13)) ∨
+    (P 8 = P 9 ∧ ∀ x : V P, x.val 8 = x.val 9) ∨
+    (P 12 = P 13 ∧ ∀ x : V P, x.val 12 = x.val 13) ∨
     (P 10 = P 11 ∧ ∀ x : V P, R.readout () () (x.val 10) (x.val 11))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -343,8 +390,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have h1 : witnessSources 1 0 1 + witnessSources 1 1 0 = 1 := by
     norm_num [witnessSources, sourceChart]
   have hh := h witnessSources witness_legal h0 h1 witness_rank witness_nonzero_e witness_delta
-  rcases hh with ⟨_,hh⟩ | ⟨_,hh⟩ | ⟨_,hh⟩
-  all_goals exact hh 0
+  rcases hh with ⟨hs,_⟩ | ⟨hs,_⟩ | ⟨_,hh⟩
+  · have he := congrArg (fun Q : Mat => Q 0 0) hs
+    norm_num [witnessSources, sourceChart] at he
+  · have he := congrArg (fun Q : Mat => Q 0 0) hs
+    norm_num [witnessSources, sourceChart] at he
+  · exact hh 0
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -384,13 +435,13 @@ def registration :
     owner := `D5.S3.Observer.CubicGain.RootJDeltaZero
     definition := none
     coordinates := #[]
-    readouts := #[
-      { path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "fn"],
-        stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "body", "fn", "fn"],
-        stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "body", "fn", "fn"],
-        stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "arg", "arg", "arg", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
