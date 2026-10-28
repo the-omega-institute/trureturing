@@ -1,0 +1,14 @@
+**Proposition 5.4 (literal polarity is not acquired).** There are
+distinct literal laws on every design of Section 1 with identical
+entire future service, identical numerical Time/Boundary and identical
+acquired predictor class. Thus no inverse from those numbers to
+Literal Space exists.
+
+Proof. There is a branch in $K$, since $b\ge3$. Flip only it and
+transform the field by the same sign. The law changes along its
+nonzero incident edges, while Theorem 3.1 preserves the full service
+and every startup record. Theorem 2.3 also counts the $2^{b-1}$
+distinct residual laws after full calibration. Their literal polarity
+is genuinely different even when every field is zero. No coordinate
+choice in Memory selects which physical law occurred. $\square$
+
