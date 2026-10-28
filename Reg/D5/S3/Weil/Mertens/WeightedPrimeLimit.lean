@@ -40,7 +40,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hi' : IntegrableOn (fun u : ℝ => u ^ (0 : ℝ)) (Ioi 1) := by
     simpa only [Real.rpow_zero] using hi
   exact (not_integrableOn_Ioi_rpow_of_neg_one_le
-    (a := 1) (s := 0) (by norm_num)) hi' 
+    (a := 1) (s := 0) (by norm_num)) hi'
 
 def kernelEvidence : Registration arena (type_of% chebyshev_error_kernel_integrable) where
   actual := actual
