@@ -27,7 +27,7 @@ internal sealed class CarrylessThirteenElevenContainmentDocument : IScribeDocume
                     + "its holds_step theorem turn this finite certificate into an induction over every "
                     + "natural number. The certificate is a proof component; its bounded enumeration is "
                     + "not used as a substitute for the all-natural-number induction."))),
-                DescribeRole.Theorem))),
+                DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(GidRef.Create(
             "D5/S1/Digit/Admissibility/CarrylessMultiplierEquivalence"))]));
 
