@@ -22,7 +22,9 @@ private theorem log_tail_le_twice_gain {x r : ℝ} (hx : 0 ≤ x) (hxhalf : x �
     (hr : 0 ≤ r) (hrlt : r < 1) :
     -Real.log (1 - r) ≤ 2 * Real.log ((1 - r * x) / (1 - r)) := by
   have hd : 0 < 1 - r := sub_pos.mpr hrlt
-  have hn : 0 < 1 - r * x := by nlinarith
+  have hn : 0 < 1 - r * x := by
+    have hrx := mul_le_mul_of_nonneg_left hxhalf hr
+    nlinarith
   have hs : 1 - r ≤ (1 - r * x) ^ 2 := by
     nlinarith [mul_nonneg hr (by linarith : 0 ≤ 1 - 2 * x), sq_nonneg (r * x)]
   have hlog := Real.log_le_log hd hs
