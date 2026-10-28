@@ -11,6 +11,20 @@ internal sealed class OriginalFirstClockTransportDocument : IScribeDocumentDefin
         H("OriginalFirstClockTransport"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("original-first-clock-specification"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalFirstClockTransport.first_clock_spec"),
+                H("The canonical first clock has the exact first-layer price"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every prime q, q<firstClock(q)<q+1 and g(firstClock(q))=goldenLayerMarginal(q,1). The source is the actual reciprocal-log price and the original first layer. OriginalPrimeSourceOrder uses the strict lower location to exclude large forcing labels from complete strict inventories."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-first-clock-absent"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalFirstClockTransport.first_absent"),
+                H("A first-clock contact is absent from the complete strict inventory"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let U>0, q prime, t>1 and t<=firstClock(q). If every natural factorization coordinate of U equals optimalLayerCount(g(t),q) at the same clock, then q does not divide U. Equality at the actual first clock is included because the inventory uses strict marginals. This existing supplier is consumed by OriginalPrimeSourceOrder."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("original-upper-first-clock-exclusion"),
                 DeclarationHandle.Create(Prefix + "original_upper_first_clock_exclusion"),
                 H("Closed first-clock exclusion from the actual upper integer"),

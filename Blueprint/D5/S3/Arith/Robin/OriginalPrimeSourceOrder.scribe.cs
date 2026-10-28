@@ -10,6 +10,34 @@ internal sealed class OriginalPrimeSourceOrderDocument : IScribeDocumentDefiniti
         "Literal original maxima have ordered clocks and nested complete Euler inventories.",
         H("Original Prime Sources: Legal Exchange and Inventory Order"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("original-label-window-no-internal-prime"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalPrimeSourceOrder.original_label_window_no_internal_prime"),
+                H("Complete-label adjacency excludes every internal prime"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For p<r in originalLabelWindow(ell), assume no label of that entire literal window lies strictly between p and r. Then no ordinary prime lies strictly between them. Any such prime would satisfy the same lower exponential bound as p and the same upper bound as r. Completeness of the label interval is essential; an arbitrary prime subsequence does not suffice."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-label-window-adjacent-prime-bound"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalPrimeSourceOrder.original_label_window_adjacent_prime_bound"),
+                H("Adjacent complete labels satisfy the Bertrand ratio bound"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Under the same complete-window membership and adjacency premises, r<=2*p. Apply Bertrand at p and use absence of any internal ordinary prime to place its witness at or beyond r. This does not assert a shorter prime gap or any cofinal source existence."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("inventory-gap-log-bound"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalPrimeSourceOrder.inventory_gap_log_bound"),
+                H("A strict positive integer inventory change pays the source-clock gap"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let p<r be ordinary consecutive primes, U,V positive natural numbers, U dividing V and U different from V. Then log(r*V)-log(p*U)<=2*(log(V)-log(U)). Bertrand gives log(r)-log(p)<=log(2). Writing V=U*k, positivity and strict change force k>=2, hence log(V)-log(U)>=log(2). Exact logarithmic factorization combines the two increments. OriginalInventoryNormalizerLoss consumes this charge on every omitted edge of the complete original label chain."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-prime-source-inventory-gap"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalPrimeSourceOrder.original_prime_source_inventory_gap"),
+                H("Full source maximality supplies the charged complete inventories"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For primes p<r and original maximizing ties N,M, assume 243<=log(N), 243<=log(M), log(N)<p, log(M)<p and no internal ordinary prime. The exact source-order theorem supplies N=p*U and M=r*V with positive U,V retaining 5040 and U dividing V. A strict change U!=V implies log(M)-log(N)<=2*(log(V)-log(U)). The quotient identification and complete-window consumer are in OriginalInventoryNormalizerLoss. No normalizer smallness or signed prime-moment estimate is assumed or concluded here."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "The source geometry is the late, large-label branch of AVB10-AVB14 "
                 + "in Library/ArithSums/nicolas2025comparison.md. The source objective "
