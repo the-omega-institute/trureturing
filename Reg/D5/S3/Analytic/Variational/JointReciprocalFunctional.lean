@@ -177,4 +177,144 @@ def variationalAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+
+abbrev energySignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℝ (fun _ => ℝ) (fun _ => ℝ)
+
+def energyActual : Realization energySignature :=
+  realize energySignature (fun _ b z => b * z) (fun e => nomatch e)
+
+def energyRejected : Realization energySignature :=
+  realize energySignature (fun _ b z => b * z + 1) (fun e => nomatch e)
+
+private theorem energy_dependence : ObservationalDependence energySignature energyActual := by
+  intro i
+  refine ⟨1, 0, 1, ?_⟩
+  norm_num [energyActual, realize]
+
+def normalizedArena : Arena where
+  signature := energySignature
+  Law R := ∀ (b : ℝ), 0 < b → b ≤ 1 → ∀ {u : ℝ → ℝ}, Admissible u → mass u = 1 →
+    IntervalIntegrable (energyDensity b u) volume 1 2 ∧
+    0 ≤ energy b u ∧
+    sharpConstant b + R.readout () b (energy b u) ≤ cost b u ∧
+    (energy b u = 0 ↔
+      u =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] optimizer b) ∧
+    (cost b u = sharpConstant b ↔ u =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] optimizer b)
+
+private theorem rejected_normalized : ¬ normalizedArena.Law energyRejected := by
+  intro h
+  obtain ⟨_, _, _, _, s, _, _, _, _, _, hw, hm, hc⟩ := constructed_profile 1 (by norm_num) le_rfl
+  have hE := (normalized_stability 1 (by norm_num) le_rfl hw hm).2.2.2.1.2
+    (Filter.EventuallyEq.rfl : optimizer 1 =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] optimizer 1)
+  have he := (h 1 (by norm_num) le_rfl hw hm).2.2.1
+  change sharpConstant 1 + (1 * energy 1 (optimizer 1) + 1) ≤ cost 1 (optimizer 1) at he
+  rw [hE, hc] at he
+  linarith
+
+def normalizedFamily : Registration normalizedArena (type_of% normalized_stability) where
+  actual := energyActual
+  bridge := Iff.rfl
+  variation := ⟨normalized_stability, energyRejected, rejected_normalized⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    normalizedArena.Law energyActual energyRejected rejected_normalized
+  dependence := energy_dependence
+
+def normalizedAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    normalized_stability (Realization energySignature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.Variational.JointReciprocalFunctional.normalizedUnit
+  realizationName := `Reg.D5.S3.Analytic.Variational.JointReciprocalFunctional.normalizedFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨normalizedArena⟩
+  objectArena := .source ⟨normalizedArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source normalizedArena ⟨normalizedFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize energySignature (fun _ b z => b * z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Variational.JointReciprocalFunctional
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body",
+      "arg", "arg", "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def stabilityArena : Arena where
+  signature := energySignature
+  Law R := ∀ (b : ℝ), 0 < b → b ≤ 1 → ∀ {u : ℝ → ℝ}, Admissible u →
+    let v := fun x => (mass u)⁻¹ * u x
+    0 < mass u ∧ IntervalIntegrable (energyDensity b v) volume 1 2 ∧
+    0 ≤ energy b v ∧
+    R.readout () b (energy b v) ≤ mass u * cost b u - sharpConstant b ∧
+    (mass u * cost b u = sharpConstant b ↔
+      u =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] (fun x => mass u * optimizer b x)) ∧
+    (mass u * cost b u = sharpConstant b ↔
+      ∃ a : ℝ, 0 < a ∧ u =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] (fun x => a * optimizer b x))
+
+private theorem rejected_stability : ¬ stabilityArena.Law energyRejected := by
+  intro h
+  obtain ⟨_, _, _, _, s, _, _, _, _, _, hw, hm, hc⟩ := constructed_profile 1 (by norm_num) le_rfl
+  have hE := (normalized_stability 1 (by norm_num) le_rfl hw hm).2.2.2.1.2
+    (Filter.EventuallyEq.rfl : optimizer 1 =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] optimizer 1)
+  have he := (h 1 (by norm_num) le_rfl hw).2.2.2.1
+  change 1 * energy 1 (fun x => (mass (optimizer 1))⁻¹ * optimizer 1 x) + 1 ≤
+    mass (optimizer 1) * cost 1 (optimizer 1) - sharpConstant 1 at he
+  simp only [hm, inv_one, one_mul, hE, hc, sub_self, zero_add] at he
+  norm_num at he
+
+def stabilityFamily : Registration stabilityArena (type_of% global_stability) where
+  actual := energyActual
+  bridge := Iff.rfl
+  variation := ⟨global_stability, energyRejected, rejected_stability⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    stabilityArena.Law energyActual energyRejected rejected_stability
+  dependence := energy_dependence
+
+def stabilityAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    global_stability (Realization energySignature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.Variational.JointReciprocalFunctional.stabilityUnit
+  realizationName := `Reg.D5.S3.Analytic.Variational.JointReciprocalFunctional.stabilityFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨stabilityArena⟩
+  objectArena := .source ⟨stabilityArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source stabilityArena ⟨stabilityFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize energySignature (fun _ b z => b * z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Variational.JointReciprocalFunctional
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body",
+      "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Analytic.Variational.JointReciprocalFunctional
