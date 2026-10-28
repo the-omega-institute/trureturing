@@ -97,21 +97,21 @@ end Reg.D5.S3.Observer.CubicGain.PhaseRigidity.MixedLevel
 
 namespace Reg.D5.S3.Observer.CubicGain.PhaseRigidity.WholeClass
 
-private def exampleWords : Fin 3 → List Bool :=
+def exampleWords : Fin 3 → List Bool :=
   ![[true,false,true,false,true,false,true,false,true,false,true,false,false,true],
     [false,true,true,false,true,false],
     [true,true,false,true,false,true,false,true,false]]
 
-private def p : PrimitiveCoordinates := ⟨1,5,6,1,by norm_num,by norm_num,by norm_num⟩
+def p : PrimitiveCoordinates := ⟨1,5,6,1,by norm_num,by norm_num,by norm_num⟩
 
-private theorem example_endpoints : prefixMatrix exampleWords =
+theorem example_endpoints : prefixMatrix exampleWords =
     ![1, !![7,1;6,1], !![13,2;32,5], !![32,5;141,22]] := by
   ext i j k
   fin_cases i <;> fin_cases j <;> fin_cases k <;>
     norm_num [prefixMatrix,prefixWord,exampleWords,List.ofFn_succ,
       futureProduct,actionJ,actionM,Matrix.mul_apply,Fin.sum_univ_two]
 
-private theorem example_rank :
+theorem example_rank :
     Module.finrank ℝ (LinearMap.range (prefixDifference exampleWords)) = 3 := by
   have hsur : Function.Surjective (prefixDifference exampleWords) := by
     intro y
@@ -127,7 +127,7 @@ private theorem example_rank :
   rw [LinearMap.range_eq_top.mpr hsur]
   simp
 
-private theorem example_generator : OrientedKernelGenerator exampleWords p.matrix := by
+theorem example_generator : OrientedKernelGenerator exampleWords p.matrix := by
   apply whole_class_primitive_lattice.2 exampleWords p (![0,1,2,6] : Fin 4 → ℤ) rfl
   · intro i
     rw [example_endpoints]
@@ -137,7 +137,7 @@ private theorem example_generator : OrientedKernelGenerator exampleWords p.matri
         Matrix.mulVec,dotProduct,Fin.sum_univ_two]
   · exact example_rank
 
-private theorem example_nonzero : ∀ i j, p.matrix i j ≠ 0 := by
+theorem example_nonzero : ∀ i j, p.matrix i j ≠ 0 := by
   intro i j
   fin_cases i <;> fin_cases j <;>
     norm_num [p,PrimitiveCoordinates.matrix,PrimitiveCoordinates.column,
