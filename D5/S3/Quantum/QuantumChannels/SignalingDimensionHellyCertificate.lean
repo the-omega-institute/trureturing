@@ -7,7 +7,6 @@
    digest: At most binomially many inputs certify classical signaling dimension. -/
 
 import D5.S3.Estimation.DecisionRisk.DescentDefectBounds
-import Mathlib.Analysis.Convex.Radon
 
 /-! Finite shared randomness reduces simulation to intersecting convex sets indexed by inputs.
 Deleting one simplex coordinate allows Helly's theorem to bound a separating input family. -/
