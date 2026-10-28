@@ -2254,3 +2254,786 @@ detector or union inverse is supplied. No external-priority claim
 is made.
 
 ## 追加锚（本行以下为增补区）
+## 17. 双混合二步约束下的完整原根四世界排除
+
+**定理 17.1（完整域的恰四世界原根排除）。** For every real
+$a_0$ and every set $K$ of exactly four distinct complete worlds
+in the initial-$a_0$ fiber of Definition 1.1,
+
+$$
+\neg L_7(K,(a_0)).
+\tag{17.1}
+$$
+
+The assertion uses the guarded full-intersection recursion (1.3),
+the original clocks zero through seven, and the entire domain
+$\mathcal W_3$. In particular the gains may have any permitted
+signs, lower degrees, sampled roots or repeated roots. No restriction
+on deterministic policies is added.
+
+Proof. Suppose that the displayed $L_7$ holds. Theorem 15.3 and
+Corollary 16.2 supply four different sources, two constant first
+responses $j,m$ with $\ell=m-j\ne0$, and constant responses at
+both chronological mixed words $JM,MJ$. Each of those mixed
+histories retains this same entire $K$ with $L_5$.
+
+Apply the affine response change $z\mapsto(z-j)/\ell$ to every
+history and world. This is a bijection of responses even when
+$\ell<0$, preserves every actual action, original clock and full
+response intersection, and replaces each world by
+$(P,g/\ell,(\delta-j)/\ell)$. It preserves legality and $L_s$.
+In the rest of the proof write $g,\delta$ for these transformed
+gain and drift, and set $a=(a_0-j)/\ell$. The first-$J$ and
+first-$M$ responses are now zero and one. The positive chart of
+(15.10), with $q=1+xy$ and $s=x+y$, becomes
+
+$$
+\begin{gathered}
+R=\begin{pmatrix}xy&x\\y&1\end{pmatrix},\qquad
+P=R/q,\qquad x,y>0,\qquad h=g/q,\\
+\delta=-s,\qquad h(1)=1,\qquad h(0)=(a+s)/q.
+\end{gathered}
+\tag{17.2}
+$$
+
+Each $h$ is one fixed entire polynomial of degree at most three.
+A read at the actual matrix $A$ and clock $i$ is
+$-s+h(i)\operatorname{tr}(AR)$. Let $u,v$ be the two normalized
+mixed constants, with $u$ for chronological $JM$ and $v$ for
+chronological $MJ$. With $L=MJ$ and $U=JM$ as in (16.3), all
+four worlds satisfy
+
+$$
+u+s=h(2)(q+x),\qquad v+s=h(2)(q+y).
+\tag{17.3}
+$$
+
+These are properties of the potential fixed support. Their use
+does not acquire two mutually exclusive responses on a trajectory.
+
+*Common drifts and two-step trace equations.* We first record two
+consequences used below, always for members of this fixed $K$.
+For two positive sources with the same $s$, write their coordinates
+as $(x,y)$ and $(X,Y)$, where $x+y=X+Y=s$, and put
+$q=1+xy$, $Q=1+XY$. Direct expansion gives
+
+$$
+(q+x)(Q+Y)-(Q+X)(q+y)
+=(x-X)(2+s+xX+yY).
+\tag{17.4}
+$$
+
+The last factor is strictly positive. If two different sources
+have the same drift, they have this same $s$. If either second
+gain sample is zero, (17.3) and positivity of its trace factors
+make both samples zero and give $u=v=-s$. If neither is zero,
+(17.3) gives equality of the two ratios $(q+x)/(q+y)$; (17.4)
+would identify $x,X$ and then $y,Y$, contrary to different
+sources. Consequently every equal-drift pair satisfies
+
+$$
+h_W(2)=h_Z(2)=0,\qquad u=v=\delta_W=\delta_Z.
+\tag{17.5}
+$$
+
+For the second consequence reuse the actual-product certificate
+of [the sampled-root core, Lemma 22.2](FIB_SAMPLED_ROOT_COLLAPSE_AND_SAME_PARENT_FAILURE_CORE.md).
+If two worlds share the four responses at clock $k+2$ following
+all two-action continuations of an actual clock-$k$ matrix $A$,
+put $D=g_W(k+2)P_W-g_Z(k+2)P_Z$ and
+$d=\delta_Z-\delta_W$. That certificate gives
+
+$$
+AD=dE_{11}.
+\tag{17.6}
+$$
+
+In this application the rank-one and positivity hypotheses force
+$d=0$ and $D=0$. Indeed the matrices
+$X=g_W(k+2)AP_W$ and $Y=g_Z(k+2)AP_Z$ have rank at most one
+and equal entries in positions $(1,2),(2,1),(2,2)$. Every entry
+of $AP_W,AP_Z$ is positive: an actual product is nonnegative
+and invertible and has no zero row. If the common $(2,2)$ entry
+of $X,Y$ is zero, both gain samples are zero. Otherwise
+$X_{11}=X_{12}X_{21}/X_{22}$ and the same identity for $Y$
+give $X=Y$. Thus (17.6) gives $d=0$ in either case; invertibility
+of $A$ then gives $D=0$. Since the two trace-one sources differ,
+taking traces of $D=0$ also forces both gain samples to be zero.
+In particular an actual two-world $L_2$ at clock five has common
+drift and seventh gain roots. Here the four continuation
+responses need agree between the two worlds for each word;
+the response for one word need not equal that for another word.
+
+We also reuse [the same core, Lemmas 22.1 and 22.3](FIB_SAMPLED_ROOT_COLLAPSE_AND_SAME_PARENT_FAILURE_CORE.md):
+a two-world $L_s$, $s\ge3$, has common drift and roots at its
+original clocks $k+2,\ldots,k+s$. No such property is assigned
+to an arbitrary pair inside a larger nonterminal losing set.
+
+*A distinct-drift exclusion.* Three worlds with pairwise different
+drifts cannot have $L_4$ at clock three. A selected fourth child
+would have $L_3$; its cardinality cannot be two, by the preceding
+pair result, so it must retain all three worlds. A selected fifth
+child would have $L_2$; it likewise cannot be a pair, by (17.6),
+so again retains all three. The four clock-five histories obtained
+from the clock-three matrix therefore retain all three. Applied
+to any two of them, (17.6) forces equal drifts, a contradiction.
+All empty and singleton possibilities are excluded by the guards.
+
+The original quartet cannot have pairwise different drifts either.
+If it did, each selected third child after either mixed history
+would have $L_4$ and cardinality four: two is excluded by the
+pair result, and three by the preceding argument. Thus all four
+mixed-prefix clock-three response functions are constant on $K$.
+Their actual matrices and trace factors are
+
+$$
+\begin{array}{c|c|c}
+\text{chronological word}&A&\operatorname{tr}(AR)\\ \hline
+JMJ&JL=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)&xy+s\\
+JMM&ML=\left(\begin{smallmatrix}1&1\\2&1\end{smallmatrix}\right)&xy+s+x+1\\
+MJJ&JU=M& s+1\\
+MJM&MU=\left(\begin{smallmatrix}0&1\\1&2\end{smallmatrix}\right)&s+2
+\end{array}.
+\tag{17.7}
+$$
+
+Subtracting the last two constant responses makes $h(3)=k$
+constant. If $k=0$, their reads make $s$ constant, contradicting
+the different drifts. Otherwise comparison with the first response
+makes $xy=w>0$ constant. The last two responses include
+$k+(k-1)s$; different drifts therefore force $k=1$.
+Eliminating $h(2)$ from (17.3) gives
+
+$$
+(u-v)(1+xy)+uy-vx+y^2-x^2=0.
+\tag{17.8}
+$$
+
+With $xy=w$, each of the four different positive $x$ values is a
+root of the monic quartic
+
+$$
+X^4+vX^3-(u-v)(1+w)X^2-uwX-w^2.
+\tag{17.9}
+$$
+
+Four distinct positive roots would make its constant coefficient
+their positive product, contradicting $-w^2<0$. Different sources
+with $xy=w$ have different $x$, so this is a contradiction.
+
+Hence $K$ has an equal-drift pair. By (17.5), there is $S>0$ with
+$u=v=-S$. Define the following subset of the same quartet:
+
+$$
+Z=\{W\in K:s_W=S\}=\{W\in K:\delta_W=-S\},\qquad
+c=a+S.
+\tag{17.10}
+$$
+
+It has at least two members. On $Z$, $h(2)=0$ and $h(0)=c/q$.
+For every member of $K\setminus Z$, equation (17.3) has
+$h(2)\ne0$ and gives $x=y$. Different members outside $Z$ have
+different $s=2x$, so have different drifts; none has the drift of
+$Z$. Thus $Z$ is the only possible repeated-drift class.
+
+*Pair children after either mixed history.* A third child of size
+two with $L_4$ is impossible. Its common drift places both worlds
+in $Z$; their root $2$ would join the three roots $5,6,7$ supplied
+by the pair result, making a nonzero gain impossible.
+
+A fourth child of size two with $L_3$ is also impossible. Such a
+pair lies in $Z$ and has gain roots $2,6,7$. Its common initial
+value and drift fix its entire gain to one common polynomial $G$;
+if $c=0$, those three roots and root zero already contradict
+legality. Otherwise $G(1),G(4),G(5)$ are nonzero. Equation (17.2)
+gives $q=G(1)$ on this pair, hence a common $q$ and common $s=S$.
+Its distinct matrices therefore satisfy
+
+$$
+R_W-R_Z=\eta\Omega,\qquad
+\Omega=\begin{pmatrix}0&1\\-1&0\end{pmatrix},\qquad \eta\ne0.
+\tag{17.11}
+$$
+
+Write $A=FEQ$ for its actual clock-four matrix, where $Q=L$ or
+$U$. Its clock-four read and both clock-five predictions, divided
+only by the established nonzero samples, imply
+$A\Omega\in\mathbb R\Omega$, by the three-trace kernel (15.6).
+Thus $A$ would be scalar. This is impossible for an actual
+$A=BL$ or $BU$ with $B=FE$: $(BL)_{21}=B_{21}+B_{22}>0$
+and $(BU)_{12}=B_{11}+B_{12}>0$. Here $B$ is nonnegative,
+invertible and has no zero row. This excludes every such actual
+pair child, without requiring its sibling to retain the pair.
+
+*Three-world third children after chronological $MJ$.* At clock
+three following $U$, the two matrices are
+
+$$
+A_e=\begin{pmatrix}0&1\\1&e\end{pmatrix},\qquad e=1,2.
+\tag{17.12}
+$$
+
+Suppose a selected third child $T$ has three worlds and $L_4$.
+Both fourth actions retain all of $T$ with $L_3$, since fourth
+pair children have just been excluded. If $T$ contains at most
+one member of $Z$, its drifts are pairwise different and the
+distinct-drift exclusion applies. Otherwise take two of its
+members in $Z$. Their two fourth responses are constant on this
+pair. The difference of those responses is $h(4)(x+e)$. If that
+common difference is nonzero, their common ratio of fourth-$J$
+response plus $S$ to that difference is
+
+$$
+\frac{q+ey}{x+e}=S-x+\frac1{x+e}.
+\tag{17.13}
+$$
+
+This is strictly decreasing for $0<x<S$, since its derivative
+is $-1-(x+e)^{-2}$. It would identify the two sources. The
+difference must therefore be zero: both fourth responses on
+this pair equal $-S$, and both fourth gain samples vanish.
+A member outside $Z$ sharing these two responses would also have
+$h(4)=0$, because $x+e>0$, and then drift $-S$, a contradiction.
+Hence $T\subseteq Z$, and applying the same argument to its
+pairs gives $h(4)=0$ throughout $T$.
+
+The third trace on $Z$ is $S+e$, so $h(3)=k_T$ is constant on
+$T$. Cubic finite differences, with $h(1)=1,h(2)=0$, give
+
+$$
+0=h(4)=4k_T+4-h(0),\qquad h(0)=c/q.
+\tag{17.14}
+$$
+
+If $c\ne0$, all three $q$ are equal. Fixed $x+y=S$ and $xy=q-1$
+allow at most two ordered positive sources, a contradiction.
+If $c=0$, then $k_T=-1$ and all three normalized polynomials are
+
+$$
+H(t)=\frac{t(t-2)(t-4)}3.
+\tag{17.15}
+$$
+
+In particular $H(5)H(7)\ne0$. No fifth child can be a two-world
+$L_2$, since (17.6) would force seventh roots. Thus every fifth
+action retains all of $T$. Applying (17.6) at clock five to the
+four continuations from $A_e$ would force fifth gain roots,
+contrary to $g_W(5)=q_WH(5)\ne0$. This excludes $T$.
+
+The selected third children after $U$ are therefore all four
+worlds, each with $L_4$. Both third responses on $K$ are constant,
+so subtraction and (17.12) give
+
+$$
+h_W(3)=k,\qquad k+(k-1)s_W\text{ is constant on }K.
+\tag{17.16}
+$$
+
+If $K\setminus Z$ is nonempty, its $s$ differs from $S$ and
+(17.16) forces $k=1$.
+
+*The case $|Z|=4$.* Work at $A_1$ and its $L_4$ on $K$. Each
+selected fourth child has $L_3$ and at least three worlds, because
+pairs have been excluded. The two children intersect in at least
+two worlds. Formula (17.13) on that pair makes both selected
+responses equal $-S$. Since every member has drift $-S$ and
+positive fourth trace factors, the two full response intersections
+are consequently the same set $\{W\in K:h_W(4)=0\}$, of size
+at least three. On all of $K$, finite differences give
+
+$$
+h_W(4)=4k+4-c/q_W.
+\tag{17.17}
+$$
+
+If $c\ne0$, three zero samples would require three sources with
+the same $S,q$, impossible. If $c=0$, a zero sample makes
+$k=-1$, so the entire $K$ has the common normalized gain (17.15).
+The fourth-$M$ child is then all of $K$, with $L_3$. Take fifth
+$M$. Its actual matrix is $M^2A_1=M^3$, and its trace on $Z$ is
+
+$$
+\operatorname{tr}(M^3R)=q+2S+2
+=3+2S+Sy-y^2.
+\tag{17.18}
+$$
+
+Because $H(5)\ne0$, every fifth-$M$ response fiber has at most
+two sources. None can have $L_2$: a pair would require seventh
+gain roots by (17.6), whereas $H(7)\ne0$. Empty and singleton
+fibers fail the guard. This contradicts the retained $L_3$.
+
+*The case $|Z|=2$.* Now (17.16) gives $h(3)=1$ throughout $K$.
+Consider a selected third child after $L$. A pair is impossible.
+A triple $T$ with $L_4$ would have to contain both members of
+$Z$, by the distinct-drift exclusion. Both fourth children retain
+$T$, because fourth pairs are impossible. At clock five a selected
+$L_2$ child is either all of $T$ or a pair. By (17.6), that pair
+can only be the two members of $Z$. Thus these same two worlds
+belong to every selected fifth child along the four length-two
+continuations of this clock-three history. Their four clock-five
+responses agree, so (17.6) gives fifth gain roots for both.
+
+For these two worlds the four values $h(1)=h(3)=1$ and
+$h(2)=h(5)=0$ determine the common entire polynomial
+
+$$
+H_*(t)=\frac{(t-2)(t-5)(5-3t)}8,\qquad
+H_*(0)=\frac{25}4,\qquad H_*(4)=\frac74.
+\tag{17.19}
+$$
+
+The initial equations $c/q=25/4$ fix a common $q$, so their
+matrix difference is (17.11). Let $A$ be this actual clock-three
+matrix, either $JL$ or $ML$. Its entry $A_{21}$ is $1$ for $JL$ and $2$ for $ML$, hence positive. Both
+fourth responses on this pair agree, while $H_*(4)\ne0$;
+subtracting their $M$ and $J$ trace equations gives
+$\eta(A\Omega)_{22}=\eta A_{21}=0$, a contradiction.
+No such triple exists. Consequently both third actions after $L$
+also retain the full $K$.
+
+All four responses in (17.7) are now constant on $K$, and
+$h(3)=1$. Their comparison gives a common $xy=w>0$. But the two
+members outside $Z$ have $x=y>0$, so both would have
+$x=y=\sqrt w$ and the same source. This contradicts source
+injectivity.
+
+*The case $|Z|=3$.* There is a single remaining world $D\notin Z$,
+and it has $x_D=y_D$. Again $h(3)=1$ on the entire $K$. Parametrize
+members of $Z$ by their distinct $y\in(0,S)$, with $x=S-y$ and
+
+$$
+q(y)=1+Sy-y^2,\qquad C(y)=h(4)=8-c/q(y).
+\tag{17.20}
+$$
+
+The four fourth actions, after the two full third children
+$A_1,A_2$, have the following trace factors on $Z$:
+
+$$
+\begin{array}{c|c}
+\text{actual matrix}&\text{trace factor}\\ \hline
+JA_1&T_1=q+y\\
+JA_2&T_2=q+2y\\
+MA_1&T_3=q+S+1\\
+MA_2&T_4=q+y+S+2.
+\end{array}
+\tag{17.21}
+$$
+
+Their reads are $-S+C(y)T_r(y)$. Each selected fourth child has
+$L_3$ and at least three worlds, hence contains at least two
+members of $Z$. Thus each of these four functions must have a
+collision on a pair among the same three $Z$ members.
+
+Suppose first that $c\ne0$. A pair of distinct $Z$ members can
+collide at two of these functions only if both have $C=0$.
+To check this, if one $C$ is zero then positivity of all the
+$T_r$ makes the other zero. Otherwise a double collision requires
+equal trace ratios. For the five index pairs other than $(1,4)$,
+those ratios are injective on $(0,S)$, as the following identities
+and derivatives show:
+
+$$
+\begin{gathered}
+\frac{T_2}{T_1}=1+\frac y{T_1},\qquad
+\left(\frac y{T_1}\right)'=\frac{1+y^2}{T_1^2}>0,\\
+\frac{T_1}{T_3-T_1}=y+\frac1{S+1-y},\qquad
+\frac{T_2}{T_4-T_2}=y+\frac1{S+2-y},\\
+\left(\frac{T_2}{T_3}\right)'
+=\frac{2\bigl(y-(S+1)/2\bigr)^2+(S^2+4S+7)/2}{T_3^2}>0,\\
+\frac{T_4}{T_3}=1+\frac{y+1}{T_3},\qquad
+\left(\frac{y+1}{T_3}\right)'
+=\frac{(y+1)^2+1}{T_3^2}>0.
+\end{gathered}
+\tag{17.22}
+$$
+
+The middle two functions are strictly increasing, with positive
+denominators; passing from $T_i/(T_j-T_i)$ to $T_i/T_j$
+preserves injectivity. For the exceptional pair $(1,4)$, use
+$T_4-T_1=S+2$. A double collision gives equal $C$ at the two
+worlds. Since $c\ne0$, (17.20) gives equal $q$; a nonzero $C$
+then gives equal $T_1$ and equal $y$, again impossible.
+
+There are only three pairs among the three $Z$ members. If none
+has two zero $C$ values, each pair can collide at at most one
+function, so cannot supply all four required collisions. If a
+zero pair exists, it is the only possible colliding pair for
+any function: $C=0$ fixes $q=c/8$ and allows at most two
+sources, and the third member's nonzero $C$ cannot collide with
+either zero member. All four selected responses must then be
+$-S$, and their children must contain $D$. Already its two
+fourth responses after $A_1$ being $-S$ force $h_D(4)=0$
+and $\delta_D=-S$, contrary to $D\notin Z$.
+
+It remains to consider $c=0$. Now $C=8$ on $Z$. Each function
+$T_r$ is a nonconstant quadratic in $y$, so a fiber on the three
+sources has at most two members. Every selected fourth child
+must therefore contain $D$ and its colliding $Z$ pair. For two
+distinct values $y,Y$, the three different collision conditions
+are
+
+$$
+\begin{aligned}
+T_3(y)=T_3(Y)&\iff y+Y=S,\\
+T_1(y)=T_1(Y)\quad\text{or}\quad T_4(y)=T_4(Y)
+&\iff y+Y=S+1,\\
+T_2(y)=T_2(Y)&\iff y+Y=S+2.
+\end{aligned}
+\tag{17.23}
+$$
+
+Ordering the three coordinates $y_1<y_2<y_3$, their pair sums
+are ordered in the same way. Thus all three requirements in
+(17.23) force
+
+$$
+\begin{gathered}
+y_1+y_2=S,\quad y_1+y_3=S+1,\quad y_2+y_3=S+2,\\
+(y_1,y_2,y_3)=\left(\frac{S-1}2,\frac{S+1}2,\frac{S+3}2\right).
+\end{gathered}
+\tag{17.24}
+$$
+
+Their colliding trace values for $T_2,T_3$ are both
+$(S^2+4S+7)/4$; that for $T_1$ is $(S+1)^2/4$. In particular
+$D$ must have equal fourth responses at $JA_2$ and $MA_1$.
+For its diagonal coordinates $x_D=y_D$, the difference of these
+trace factors is
+
+$$
+\operatorname{tr}(MA_1R_D)-\operatorname{tr}(JA_2R_D)
+=(q_D+s_D+1)-(q_D+2y_D)=1.
+\tag{17.25}
+$$
+
+The equal responses therefore force $h_D(4)=0$. All four fourth
+responses of $D$ are then its same drift. But its required
+responses at $JA_1$ and $JA_2$ differ by
+
+$$
+8\left(\frac{S^2+4S+7}4-\frac{(S+1)^2}4\right)
+=4(S+3)>0,
+\tag{17.26}
+$$
+
+a contradiction.
+
+The three cases $|Z|=2,3,4$ exhaust the potential quartet and
+have all been excluded. Every selected child used above is the
+full intersection with its parent support at an actual response.
+A pair is used as a losing set only when that full child has
+cardinality two. In the $|Z|=2$ argument the distinguished pair
+is instead explicitly retained by every selected fifth child;
+only its resulting response equalities are used. All gains and
+sources remain those of the same four original worlds throughout.
+The contradiction proves (17.1). ∎
+
+Theorem 17.1 excludes exactly-four-world original-root supports.
+Its new inference is joint continuation under both mixed constants:
+equal-drift source separation, exclusion of the actual three-world
+third children, and the common four-world response constraints
+(17.20)–(17.26) complete the exclusion. Theorem 15.3, Corollary
+16.2, and the cited actual-history pair and product results are
+reused with their original hypotheses. The polynomial identities,
+monotonicity and pair counting are the explicit ordinary deductions
+above; no external-priority claim is made.
+
+The unrestricted assertion $U$ remains unresolved here. Theorem
+9.2 already supplies finite failure certificates of at most
+$2^{s+1}$ fixed worlds, and Theorem 9.3 supplies the original-root
+bound of 256. To use the exclusion (17.1) to prove $U$ still
+requires a failure-preserving reduction to at most four worlds,
+or a sufficient larger-support exclusion. Neither is asserted.
+No protocol has acquired both first responses or both mixed
+responses on a single trajectory; those equations remain
+conditional properties of the potential witness throughout.
+
+## 追加锚（本行以下为增补区）
+
+## 18. beta 零秩二层的回返传播与完整守卫排除
+
+**定义 18.1（完整核上的 beta 零秩二来源层）。** Fix an arbitrary
+legal source tuple of Definition 13.1, retaining its full
+$1538\times1024$ matrix $B$, all $254$ prefixes, all $256$ maps
+$G_q$ and all $128$ four-component maps $D_w$ of Definition 13.2.
+Write $V=\ker B$ and $j_e=(J^7,e)$. Use exactly the scalar maps
+$E_J,\alpha,\Delta,\beta$ of
+[E-zero, Definition 7.1](FIB_ORIGINAL_ROOT_EZERO_FIBER_AND_GAIN_RANK_REDUCTION.md).
+The source layer considered here is
+
+$$
+\begin{gathered}
+\sigma(P_{j_0})=\sigma(P_{j_1})=s>0,\qquad s\ne1,\\
+E_J|_V=0,\qquad \beta|_V=0,\qquad
+\operatorname{rank}(G_{j_0}|_V)=2.
+\end{gathered}
+\tag{18.1}
+$$
+
+These are identities and a rank condition on the entire $V$.
+For each slot write
+
+$$
+P_q=\begin{pmatrix}a_q&b_q\\c_q&1-a_q\end{pmatrix},\qquad
+ d_q=1-a_q\in(0,1),\qquad t_q=b_q+c_q>0,
+\qquad T_q=t_q+d_q=\operatorname{tr}(MP_q)>0.
+\tag{18.2}
+$$
+
+The gain $g_q$ and $k_q=g_q(0)$ are polynomial-valued and
+scalar-valued linear maps on $V$, respectively; their normalized
+drift is $-k_q$. Zero blocks are allowed in these linear identities.
+For every nonempty prefix $v$, let $R_v$ denote its common response
+map on $V$, as supplied by all the rows (13.5). Thus every descendant
+slot realizes all of its ancestor response maps on the same $V$.
+Set $r_i=R_{J^i}$ for $1\le i\le4$ and $y=R_{J^4M}$.
+
+**引理 18.2（四个 J 祖先对全部后代的约束）。** Under (18.1),
+$\alpha,\Delta\in V^*$ are linearly independent. Reuse the
+polynomials of E-zero, Definition 4.1,
+
+$$
+u(T)=\frac{T^3-9T^2+23T}{15},\qquad
+v(T)=\frac{T(T-2)(T-4)}6.
+\tag{18.3}
+$$
+
+Every slot $q\in\mathcal D_{J^4}$ satisfies, as identities on $V$,
+
+$$
+g_q=k_q+\alpha u-\frac{\Delta}{t_q}v,\qquad
+(t_q-1)(k_q+\alpha)=0.
+\tag{18.4}
+$$
+
+In particular $k_q=-\alpha$ when $t_q\ne1$, whereas $t_q=1$
+does not by itself fix $k_q$.
+
+Proof. E-zero, Lemma 7.2 gives
+$\operatorname{rank}(G_{j_0}|_V)
+=\operatorname{rank}((\alpha,\Delta,\beta)|_V)$ under the common
+nonunit signature and $E_J|_V=0$. Hence (18.1) makes
+$\alpha,\Delta$ independent. The same history coordinates give
+
+$$
+r_2=\frac65\alpha,\qquad r_4=\frac45\alpha,\qquad
+r_1=\alpha-\frac\Delta2,\qquad r_3=\alpha+\frac\Delta2.
+\tag{18.5}
+$$
+
+Indeed $E_J=3r_4-2r_2$, $\alpha=5r_2/6$,
+$\Delta=r_3-r_1$, and $\beta=(r_1+r_3)/2-\alpha$.
+For any $q\in\mathcal D_{J^4}$ put $p_q=g_q-k_q$.
+The even ancestor reads give $p_q(2)=6\alpha/5$ and
+$p_q(4)=4\alpha/5$. The polynomial $p_q-\alpha u$ has roots
+$0,2,4$ and degree at most three, so is a scalar multiple of $v$,
+including the zero multiple. Since $u(1)=u(3)=1$ and
+$v(3)-v(1)=-1$, the odd ancestor difference
+$\Delta=t_q(p_q(3)-p_q(1))$ makes this multiple $-\Delta/t_q$.
+The average of the two odd ancestor reads is then
+$(t_q-1)k_q+t_q\alpha$. By (18.5) it equals $\alpha$, giving
+the second identity (18.4). All these arguments apply to each
+$x\in V$, including its zero blocks, and therefore establish map
+identities on $V$. The interpolation step divides only by $t_q>0$;
+the conclusion $k_q=-\alpha$ uses the stated $t_q\ne1$ branch.
+No fifth read or unit-signature exclusion was used. ∎
+
+**定理 18.3（beta 零秩二完整来源层的原守卫失败）。** For every
+complete legal source tuple satisfying (18.1), put
+
+$$
+w_A=J^4MJJ,\qquad w_B=J^4MMJ,\qquad
+q_{Ae}=(w_A,e),\quad q_{Be}=(w_B,e).
+\tag{18.6}
+$$
+
+Then
+
+$$
+D_{w_A}|_V=0,
+\tag{18.7}
+$$
+
+and at least one of the following two alternatives holds:
+
+$$
+\begin{aligned}
+&P_{q_{A0}}=P_{q_{A1}},\\
+& P_{q_{B0}}=P_{q_{B1}}\quad\hbox{and}\quad D_{w_B}|_V=0.
+\end{aligned}
+\tag{18.8}
+$$
+
+Thus an original same-source separation guard of Theorem 13.3
+fails at $w_A$ or $w_B$. In particular the source layer (18.1)
+has empty intersection with the complete guarded source locus of
+that theorem. No assumption on any other source equality, gain
+map or leaf difference is required.
+
+Proof. All calculations below are on the original whole $V$.
+Along $J^4MJJ$ the cumulative matrices at clocks $5,6,7$ are
+
+$$
+M,\qquad JM=\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad M,
+\tag{18.9}
+$$
+
+with trace factors $T_q,1+c_q,T_q$. By (18.3),
+$u(7)-u(5)=16/5$ and $v(7)-v(5)=15$. For the two slots of this
+leaf, subtracting their common clock-five read from their common
+clock-seven read and using (18.4) gives
+
+$$
+\frac{16}{5}(T_{q_{A0}}-T_{q_{A1}})\alpha
+-15\left(\frac{T_{q_{A0}}}{t_{q_{A0}}}
+        -\frac{T_{q_{A1}}}{t_{q_{A1}}}\right)\Delta=0.
+\tag{18.10}
+$$
+
+Independence of $\alpha,\Delta$ makes both fixed coefficients
+zero. Since $T_q,t_q>0$, the two slots have the same $T$, the
+same $t$ and hence the same $d=T-t$. Their nonconstant gain
+parts in (18.4) coincide. If $t\ne1$, their constant terms both
+are $-\alpha$. If $t=1$, their clock-five read difference is
+$(T-1)(k_{q_{A0}}-k_{q_{A1}})=d(k_{q_{A0}}-k_{q_{A1}})$;
+$d>0$ again makes their constant terms equal. Their entire gains
+and normalized drifts therefore coincide as maps, proving the
+full four-component identity (18.7).
+
+If these two fixed sources are equal, the first alternative in
+(18.8), together with (18.7), already gives a failing original
+guard. Suppose instead that they differ. Their common $d,t$
+then imply $c_{q_{A0}}\ne c_{q_{A1}}$, since $a=1-d$ and
+$b=t-c$. The clock-six equality, its trace factor $1+c_q$ and
+their already common gain give
+
+$$
+(c_{q_{A0}}-c_{q_{A1}})g_{q_{A0}}(6)=0
+\quad\hbox{on }V.
+\tag{18.11}
+$$
+
+Consequently their common $g(6)$ is the zero map. A nonunit
+$t$ is impossible: (18.4), $u(6)=2$ and $v(6)=8$ would give
+$g(6)=\alpha-8\Delta/t\ne0$. Thus $t=1$, and (18.4) gives
+
+$$
+k_{q_{A0}}=k_{q_{A1}}=-2\alpha+8\Delta.
+\tag{18.12}
+$$
+
+Write their common $d$ as $d_*\in(0,1)$ and introduce
+
+$$
+\kappa=\alpha-\frac{11}{2}\Delta,\qquad
+\lambda=\frac{16}{5}\alpha-15\Delta,\qquad
+Y=y-\alpha+\frac52\Delta.
+\tag{18.13}
+$$
+
+The two forms $\kappa,\lambda$ are independent, since their
+coefficient determinant relative to $\alpha,\Delta$ is
+$-15+(11/2)(16/5)=13/5\ne0$. At clock five,
+$u(5)=1$, $v(5)=5/2$ and (18.12) give $g(5)=-\kappa$.
+Its trace factor is $1+d_*$, so the common response satisfies
+
+$$
+y=\alpha-\frac52\Delta-d_*\kappa,\qquad Y=-d_*\kappa.
+\tag{18.14}
+$$
+
+This forces every one of the eight slots below $J^4M$ to have
+unit signature. Indeed, if such a slot $q$ had $t_q\ne1$,
+(18.4) would instead give
+
+$$
+y=\alpha-\frac52\left(1+\frac{d_q}{t_q}\right)\Delta.
+\tag{18.15}
+$$
+
+Its $\alpha$ coefficient is $1$, whereas the coefficient in
+(18.14) is $1-d_*$. Their equality contradicts independence
+and $d_*>0$. This uses the shared fifth response of the entire
+subtree, not separate choices of gains on different branches.
+
+For any of its now unit-signature slots, the same fifth read is
+
+$$
+y=d_qk_q+(1+d_q)\alpha-\frac52(1+d_q)\Delta.
+\tag{18.16}
+$$
+
+Solving only by the positive fixed scalar $d_q$ yields
+
+$$
+k_q=\frac{Y}{d_q}-\alpha+\frac52\Delta,\qquad
+g_q(6)=\frac{Y}{d_q}+\kappa,\qquad
+g_q(7)=\frac{Y}{d_q}+\lambda.
+\tag{18.17}
+$$
+
+These are identities for the whole original polynomials in their
+slots; no final coefficient vector has been selected.
+
+Now use the other leaf $w_B=J^4MMJ$. Its cumulative matrices
+at clocks $5,6,7$ are $M,M^2,JM^2$, with trace factors
+$1+d_q,2+d_q,2+c_q$ because $t_q=1$. Write
+$d_e=d_{q_{Be}}$. The common sixth read, (18.17) and (18.14)
+give
+
+$$
+\begin{aligned}
+0&=(d_0-d_1)\kappa+
+        \left(\frac1{d_0}-\frac1{d_1}\right)Y\\
+ &= (d_0-d_1)\left(1+\frac{d_*}{d_0d_1}\right)\kappa.
+\end{aligned}
+\tag{18.18}
+$$
+
+Here $d_*,d_0,d_1>0$ and $\kappa\ne0$, so $d_0=d_1=d$.
+Equation (18.17) makes the two entire gains and drifts equal.
+Their common final gain map is
+
+$$
+g(7)=\lambda-\frac{d_*}{d}\kappa\ne0,
+\tag{18.19}
+$$
+
+by independence of $\kappa,\lambda$. The common final read
+with trace factor $2+c_q$ therefore forces
+$c_{q_{B0}}=c_{q_{B1}}$. Together with $t=1$ and the common
+$d$, this gives the same $a,b,c$ and hence the same complete
+source. The already equal entire gains prove $D_{w_B}|_V=0$,
+which is the second alternative in (18.8).
+
+Every case has produced a same-source leaf with its full
+four-component difference zero on $V$. Equivalently its original
+rank guard has $\operatorname{rank}[B;D_w]=\operatorname{rank}B$
+by (13.15), while its source-inequality alternative is false.
+Theorem 13.3 therefore excludes a complete guarded realization
+in (18.1). All source repetitions and all other slots remain in
+the quantifier. All inversions and cancellations above involve fixed
+source scalars with the stated positive or nonzero conditions. No
+gain sample or value of a history coordinate is divided out. ∎
+
+**推论 18.4（beta 零平面的完整源增益秩一必要性）。** Fix a
+complete legal source tuple satisfying every original guard of
+Theorem 13.3. If its two $J^7$ sources have a common nonunit
+signature and $E_J|_V=\beta|_V=0$, then
+
+$$
+\operatorname{rank}(G_{j_0}|_V)=1.
+\tag{18.20}
+$$
+
+This is a necessary condition, asserting neither a realization of
+this rank-one locus nor exclusion of the other original source
+strata or a decision of the unrestricted eight-read problem.
+
+Proof. The original $G_{j_0}$ guard makes the rank positive.
+E-zero, Theorem 8.1 bounds it by two, and Theorem 18.3 excludes
+two when $\beta|_V=0$. Thus it equals one. ∎
+
+## 追加锚（本行以下为增补区）

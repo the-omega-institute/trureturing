@@ -1,0 +1,35 @@
+**Theorem 104.3 (all-beta balanced family).** Put
+$t_0=\beta$ and $t_{h+1}=\langle t_h,t_h\rangle$ for every integer $h\ge0$.
+These terms belong to $\mathcal D$, with $b_h=2^h$ and $N_h=3b_h-1$.
+Their exact frontiers are singletons
+
+$$
+\mathcal F_{t_h}=\{(k_h,k_h)\},\qquad
+\mathcal R_{t_h}=\{(j_h,j_h)\},
+\quad
+k_h=\frac{2^h-(-1)^h}{3},\quad
+j_h=\frac{2^h+2(-1)^h}{3}.
+\tag{104.5}
+$$
+
+Ambient completion therefore needs exactly $2k_h$ successful calls,
+with the unique undominated pair $P=S=k_h$. Its normalized witness
+adds $3k_h$ cells and $k_h$ terminal labels and has
+
+$$
+M_h=4\cdot2^h-1-(-1)^h.
+\tag{104.6}
+$$
+
+**Proof.** All leaves are beta, so there is no forbidden alpha. At $h=0$
+the sets are $(0,0)$ and $(1,1)$, respectively. The two alternatives
+for $F$ in (104.1) coincide for equal subtrees; hence
+$k_{h+1}=k_h+j_h$ and $j_{h+1}=2k_h$. Substitution of (104.5) verifies
+both recurrences and their bases, proving the formula for all $h$ by
+induction, including its integrality and nonnegativity. Equation (103.1)
+gives (104.6). Theorem 104.1 supplies the lower bounds against deeper
+refinements, not just against this symmetric recipe. At $h=0$ no growth
+is needed; at $h=1$ exactly one beta repair suffices. The branching
+acquisition application below uses $h\ge2$, so $b_h\ge4$; it does not
+apply a three-terminal root theorem to these smaller bases. $\square$
+
