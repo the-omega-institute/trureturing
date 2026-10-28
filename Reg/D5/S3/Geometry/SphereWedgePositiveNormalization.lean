@@ -63,7 +63,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have hh := h testParameters
   change (if h : Nonempty (ZeroIndex testParameters.n) then Sum.inr (Classical.choice h)
     else Sum.inl (base _)) = Sum.inl (base _) at hh
-  rw [dif_pos ⟨testZero⟩] at hh
+  rw [dite_eq_left ⟨testZero⟩] at hh
   cases hh
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
@@ -75,7 +75,8 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   change e x ≠ e y
   dsimp [x, y]
   rw [Homeomorph.apply_symm_apply, Homeomorph.apply_symm_apply]
-  exact Sum.noConfusion
+  intro h
+  cases h
 
 def family : Registration arena.{u} (type_of% (@normalization_base.{u})) where
   actual := actual
