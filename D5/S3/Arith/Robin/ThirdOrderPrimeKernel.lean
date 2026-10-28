@@ -54,7 +54,7 @@ open D5.S3.Arith.Robin.OriginalFirstClockTransport
 open D5.S3.Arith.Robin.LogLogHigherDerivative
 open D5.S3.Arith.Robin.DelayedAtomTransport
 
-open private original_curve first_clock_spec selected_domain_bounds domain_compact from
+open private original_curve selected_domain_bounds domain_compact from
   D5.S3.Arith.Robin.OriginalFirstClockTransport
 open private hasDerivAt_positiveKernel from D5.S3.Arith.Robin.LogLogHigherDerivative
 
