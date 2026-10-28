@@ -7,7 +7,7 @@
    digest: Exact guarded original-leaf P/S cost frontiers with actual material trees. -/
 
 import D5.S3.Arith.FibonacciAtomic.Geometry.NativeMaterialRootRecognition
-import D5.S3.Arith.FibonacciAtomic.ActualImageAddressCertificate
+import D5.S3.Arith.FibonacciAtomic.ActualImageAlphaSeparation
 import Mathlib.Combinatorics.SimpleGraph.Matching
 import Mathlib.Data.Finset.Card
 import Mathlib.Tactic
@@ -19,8 +19,8 @@ namespace D5.S3.Arith.FibonacciAtomic.Geometry.NativeGuardedLeafRepair
 
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition (Address Reply readout)
-open ActualLeafHistoryRigidity (subtree)
-open NativeMaterialRootRecognition (D material neighbors children root_mem material_nodup)
+open ActualLeafHistoryRigidity (subtree OutputContext)
+open NativeMaterialRootRecognition (D material neighbors children root_mem material_nodup child_present)
 open ActualImageAddressCertificate (replace)
 
 abbrev Cell (t : Source) := {p : Address // p ∈ (material t).toFinset}
@@ -85,7 +85,7 @@ def reachesR {root : Source} (h : History root) : Prop := StateR h.final
 def dominates (x y : ℕ × ℕ) : Prop := x.1 ≤ y.1 ∧ x.2 ≤ y.2
 
 def frontier (root : Source) (X : History root → Prop) : Set (ℕ × ℕ) :=
-  {c | ∃ h, X h ∧ pairCost h = c ∧ ∀ h', X h' → dominates c (pairCost h')}
+  {c | ∃ h, X h ∧ pairCost h = c ∧ ∀ h', X h' → dominates (pairCost h') c → dominates c (pairCost h')}
 
 theorem material_card (t : Source) :
     (material t).toFinset.card = (material t).length := by
@@ -282,15 +282,210 @@ abbrev Value := Address → ℚ
 def zeroExtend (old current : Source) (x : Value) : Value :=
   fun p => if p ∈ material old then x p else 0
 
-theorem history_preserves_values {root : Source} (h : History root) (x : Value) :
-    (∀ p ∈ material root, zeroExtend root h.final x p = x p) ∧
-    (∀ p ∈ material h.final, p ∉ material root →
-      zeroExtend root h.final x p = 0) := by
+abbrev RawMap := ℤ → Address
+
+/-- Move the acted raw label; all other existing labels keep their ports. -/
+def promotedMap (labels : RawMap) (p : Address) : RawMap :=
+  fun i => if labels i = p then p ++ [false] else labels i
+
+/-- The old beta terminal moves down its left edge; the next raw integer
+names the fresh right alpha. -/
+def splitMap (labels : RawMap) (next : ℤ) (p : Address) : RawMap :=
+  fun i => if i = next then p ++ [true]
+    else if labels i = p ++ [false] then p ++ [false, false] else labels i
+
+/-- Actual guarded growth with its raw table and rational field.  Only logical
+subtrees enable calls; material markers never pass these guards. -/
+def nativeRun : Source → RawMap → ℤ → Value → List Call →
+    Option (Source × RawMap × ℤ × Value)
+  | t, labels, next, x, [] => some (t, labels, next, x)
+  | t, labels, next, x, .promote p :: w =>
+      match subtree p t with
+      | some (.of true) =>
+          nativeRun (replace t p (.of false)) (promotedMap labels p) next
+            (zeroExtend t (replace t p (.of false)) x) w
+      | _ => none
+  | t, labels, next, x, .split p :: w =>
+      match subtree p t with
+      | some (.of false) =>
+          nativeRun (replace t p (.mul (.of false) (.of true)))
+            (splitMap labels next p) (next + 1)
+            (zeroExtend t (replace t p (.mul (.of false) (.of true))) x) w
+      | _ => none
+
+private theorem native_run_of_run {t u : Source} {w : List Call}
+    (h : run t w = some u) (labels : RawMap) (next : ℤ) (x : Value) :
+    ∃ labels' next' y,
+      nativeRun t labels next x w = some (u, labels', next', y) ∧
+      (∀ p ∈ material t, y p = x p) ∧
+      (∀ p ∈ material u, p ∉ material t → y p = 0) := by
+  induction w generalizing t labels next x with
+  | nil =>
+      have ht : t = u := by simpa [run] using h
+      subst u
+      exact ⟨labels, next, x, rfl, fun _ _ => rfl, fun _ hp hn => (hn hp).elim⟩
+  | cons c w ih =>
+      cases c with
+      | promote p =>
+          unfold run at h
+          split at h <;> try simp at h
+          next hsub =>
+            obtain ⟨labels', next', y, hy, hold, hfresh⟩ :=
+              ih h (promotedMap labels p) next
+                (zeroExtend t (replace t p (.of false)) x)
+            refine ⟨labels', next', y, ?_, ?_, ?_⟩
+            · simpa [nativeRun, hsub] using hy
+            · intro q hq
+              rw [hold q (promote_material_preserves t p hsub q hq)]
+              simp [zeroExtend, hq]
+            · intro q hq hnot
+              by_cases hmid : q ∈ material (replace t p (.of false))
+              · rw [hold q hmid]
+                simp [zeroExtend, hnot]
+              · exact hfresh q hq hmid
+      | split p =>
+          unfold run at h
+          split at h <;> try simp at h
+          next hsub =>
+            obtain ⟨labels', next', y, hy, hold, hfresh⟩ :=
+              ih h (splitMap labels next p) (next + 1)
+                (zeroExtend t (replace t p (.mul (.of false) (.of true))) x)
+            refine ⟨labels', next', y, ?_, ?_, ?_⟩
+            · simpa [nativeRun, hsub] using hy
+            · intro q hq
+              rw [hold q (split_material_preserves t p hsub q hq)]
+              simp [zeroExtend, hq]
+            · intro q hq hnot
+              by_cases hmid : q ∈ material (replace t p (.mul (.of false) (.of true)))
+              · rw [hold q hmid]
+                simp [zeroExtend, hnot]
+              · exact hfresh q hq hmid
+
+theorem history_preserves_values {root : Source} (h : History root)
+    (labels : RawMap) (next : ℤ) (x : Value) :
+    ∃ labels' next' y,
+      nativeRun root labels next x h.calls = some (h.final, labels', next', y) ∧
+      (∀ p ∈ material root, y p = x p) ∧
+      (∀ p ∈ material h.final, p ∉ material root → y p = 0) := by
+  exact native_run_of_run h.trace labels next x
+
+private theorem child_shape (t : Source) (p q : Address)
+    (h : q ∈ children t p) : ∃ b : Bool, q = p ++ [b] := by
+  cases hr : readout p t <;> simp only [children, hr, List.mem_cons,
+    List.not_mem_nil, or_false] at h
+  · exact ⟨false, h⟩
+  · rcases h with h | h
+    · exact ⟨false, h⟩
+    · exact ⟨true, h⟩
+
+private theorem old_children {t u : Source} (h : preservesMaterial t u)
+    (p q : Address) (hq : q ∈ material t) :
+    q ∈ children t p ↔ q ∈ children u p := by
   constructor
-  · intro p hp
-    simp [zeroExtend, hp]
-  · intro p hp hnot
-    simp [zeroExtend, hnot]
+  · intro hc
+    obtain ⟨b, rfl⟩ := child_shape t p q hc
+    exact (child_present u p b).mp (h _ hq)
+  · intro hc
+    obtain ⟨b, rfl⟩ := child_shape u p q hc
+    exact (child_present t p b).mp hq
+
+private theorem old_edges {t u : Source} (h : preservesMaterial t u)
+    (p q : Address) (hq : q ∈ material t) :
+    q ∈ neighbors t p ↔ q ∈ neighbors u p := by
+  simp only [neighbors, List.mem_append, old_children h p q hq]
+
+private theorem context_material (J : OutputContext) {t u : Source}
+    (h : preservesMaterial t u) : preservesMaterial (J.plug t) (J.plug u) := by
+  induction J with
+  | hole => exact h
+  | left J sibling ih =>
+      intro p hp
+      simp only [OutputContext.plug, material, List.mem_cons, List.mem_append,
+        List.mem_map] at hp ⊢
+      rcases hp with rfl | ⟨q, hq, rfl⟩ | ⟨q, hq, rfl⟩
+      · exact Or.inl rfl
+      · exact Or.inr (Or.inl ⟨q, ih q hq, rfl⟩)
+      · exact Or.inr (Or.inr ⟨q, hq, rfl⟩)
+  | right sibling J ih =>
+      intro p hp
+      simp only [OutputContext.plug, material, List.mem_cons, List.mem_append,
+        List.mem_map] at hp ⊢
+      rcases hp with rfl | ⟨q, hq, rfl⟩ | ⟨q, hq, rfl⟩
+      · exact Or.inl rfl
+      · exact Or.inr (Or.inl ⟨q, hq, rfl⟩)
+      · exact Or.inr (Or.inr ⟨q, ih q hq, rfl⟩)
+
+def Call.shift (p : Address) : Call → Call
+  | .promote q => .promote (p ++ q)
+  | .split q => .split (p ++ q)
+
+private theorem context_subtree (J : OutputContext) (t : Source) (p : Address) :
+    subtree (J.holeAddress ++ p) (J.plug t) = subtree p t := by
+  induction J with
+  | hole => rfl
+  | left J sibling ih => simpa [OutputContext.plug, OutputContext.holeAddress, subtree] using ih
+  | right sibling J ih => simpa [OutputContext.plug, OutputContext.holeAddress, subtree] using ih
+
+private theorem context_run (J : OutputContext) {t u : Source} {w : List Call}
+    (h : run t w = some u) :
+    run (J.plug t) (w.map (Call.shift J.holeAddress)) = some (J.plug u) := by
+  induction w generalizing t with
+  | nil =>
+      have ht : t = u := by simpa [run] using h
+      subst u
+      rfl
+  | cons c w ih =>
+      cases c with
+      | promote p =>
+          unfold run at h
+          split at h <;> try simp at h
+          next hsub =>
+            simpa [Call.shift, run, context_subtree, hsub,
+              ActualImageAlphaSeparation.path_replace] using ih h
+      | split p =>
+          unfold run at h
+          split at h <;> try simp at h
+          next hsub =>
+            simpa [Call.shift, run, context_subtree, hsub,
+              ActualImageAlphaSeparation.path_replace] using ih h
+
+private theorem D_mul (l r : Source) :
+    D (.mul l r) ↔ D l ∧ D r ∧ readout [] l ≠ .alpha := by
+  constructor
+  · intro h
+    refine ⟨?_, ?_, ?_⟩
+    · intro p
+      simpa [readout] using h (false :: p)
+    · intro p
+      simpa [readout] using h (true :: p)
+    · simpa [readout] using h []
+  · rintro ⟨hl, hr, hroot⟩ p
+    cases p with
+    | nil => simpa [readout] using hroot
+    | cons b p => cases b <;> simp only [List.cons_append, readout]
+                      <;> first | exact hl p | exact hr p
+
+private theorem root_nonalpha_replace (t v : Source) (p : Address)
+    (ht : readout [] t ≠ .alpha) (hv : readout [] v ≠ .alpha) :
+    readout [] (replace t p v) ≠ .alpha := by
+  cases p with
+  | nil => exact hv
+  | cons b p => cases t <;> cases b <;> simpa [replace, readout] using ht
+
+private theorem D_replace (t v : Source) (p : Address) (ht : D t)
+    (hv : D v) (hvroot : readout [] v ≠ .alpha) : D (replace t p v) := by
+  induction p generalizing t with
+  | nil => exact hv
+  | cons b p ih =>
+      cases t with
+      | of c => cases b <;> simpa [replace] using ht
+      | mul l r =>
+          obtain ⟨hl, hr, hroot⟩ := (D_mul l r).mp ht
+          cases b
+          · apply (D_mul _ _).mpr
+            exact ⟨ih l hl, hr, root_nonalpha_replace l v p hroot hvroot⟩
+          · apply (D_mul _ _).mpr
+            exact ⟨hl, ih r hr, hroot⟩
 
 private theorem perfect_even {t : Source} (h : StateF t) :
     Even ((material t).toFinset.card) := by
@@ -322,6 +517,26 @@ private theorem leaf_tail_absent (b : Bool) (q : Address) :
 private theorem D_leaf (b : Bool) : D (.of b) := by
   intro p
   cases p <;> simp [readout]
+
+private theorem run_preserves_D {t u : Source} {w : List Call}
+    (ht : D t) (h : run t w = some u) : D u := by
+  induction w generalizing t with
+  | nil =>
+      have he : t = u := by simpa [run] using h
+      exact he ▸ ht
+  | cons c w ih =>
+      cases c with
+      | promote p =>
+          unfold run at h
+          split at h <;> try simp at h
+          exact ih (D_replace t (.of false) p ht (D_leaf false) (by simp [readout])) h
+      | split p =>
+          unfold run at h
+          split at h <;> try simp at h
+          have hd : D (.mul (.of false) (.of true)) :=
+            (D_mul _ _).mpr ⟨D_leaf false, D_leaf true, by simp [readout]⟩
+          exact ih (D_replace t (.mul (.of false) (.of true)) p ht hd
+            (by simp [readout])) h
 
 private theorem D_false_false : D (.mul (.of false) (.of false)) := by
   intro p
@@ -508,8 +723,8 @@ theorem exact_frontiers :
   · ext c
     constructor
     · rintro ⟨h, hs, rfl, hmin⟩
-      have hle := hmin alphaFHistory hαF
       have hlo := alpha_F_lower hs
+      have hle := hmin alphaFHistory hαF ⟨hlo, Nat.zero_le _⟩
       have hcost : pairCost alphaFHistory = (1, 0) := rfl
       rw [hcost] at hle
       change (pairCost h).1 ≤ 1 ∧ (pairCost h).2 ≤ 0 at hle
@@ -519,13 +734,13 @@ theorem exact_frontiers :
     · intro hc
       subst c
       refine ⟨alphaFHistory, hαF, rfl, ?_⟩
-      intro h hs
+      intro h hs _
       exact ⟨alpha_F_lower hs, Nat.zero_le _⟩
   · constructor
     · ext c
       constructor
       · rintro ⟨h, hs, rfl, hmin⟩
-        have hle := hmin alphaRHistory hαR
+        have hle := hmin alphaRHistory hαR ⟨Nat.zero_le _, Nat.zero_le _⟩
         have hcost : pairCost alphaRHistory = (0, 0) := rfl
         rw [hcost] at hle
         change (pairCost h).1 ≤ 0 ∧ (pairCost h).2 ≤ 0 at hle
@@ -535,13 +750,13 @@ theorem exact_frontiers :
       · intro hc
         subst c
         refine ⟨alphaRHistory, hαR, rfl, ?_⟩
-        intro h hs
+        intro h hs _
         exact ⟨Nat.zero_le _, Nat.zero_le _⟩
     · constructor
       · ext c
         constructor
         · rintro ⟨h, hs, rfl, hmin⟩
-          have hle := hmin betaFHistory hβF
+          have hle := hmin betaFHistory hβF ⟨Nat.zero_le _, Nat.zero_le _⟩
           have hcost : pairCost betaFHistory = (0, 0) := rfl
           rw [hcost] at hle
           change (pairCost h).1 ≤ 0 ∧ (pairCost h).2 ≤ 0 at hle
@@ -551,13 +766,13 @@ theorem exact_frontiers :
         · intro hc
           subst c
           refine ⟨betaFHistory, hβF, rfl, ?_⟩
-          intro h hs
+          intro h hs _
           exact ⟨Nat.zero_le _, Nat.zero_le _⟩
       · ext c
         constructor
         · rintro ⟨h, hs, rfl, hmin⟩
-          have hle := hmin betaRHistory hβR
           have hlo := beta_R_lower hs
+          have hle := hmin betaRHistory hβR hlo
           have hcost : pairCost betaRHistory = (1, 1) := rfl
           rw [hcost] at hle
           change (pairCost h).1 ≤ 1 ∧ (pairCost h).2 ≤ 1 at hle
@@ -567,7 +782,7 @@ theorem exact_frontiers :
         · intro hc
           subst c
           refine ⟨betaRHistory, hβR, rfl, ?_⟩
-          intro h hs
+          intro h hs _
           have hlo := beta_R_lower hs
           exact hlo
 

@@ -261,7 +261,7 @@ private theorem bare_map {t s : Source} (e : OrderedIso t s)
   rw [← degree_map e v (neighbor_mem t p hp v hv)]
   exact hb v hv
 
-private theorem child_present (t : Source) (p : Address) (b : Bool) :
+theorem child_present (t : Source) (p : Address) (b : Bool) :
     p ++ [b] ∈ material t ↔ p ++ [b] ∈ children t p := by
   induction p generalizing t with
   | nil =>
