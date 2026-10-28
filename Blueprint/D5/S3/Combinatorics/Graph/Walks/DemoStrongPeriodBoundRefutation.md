@@ -56,7 +56,7 @@ claim has type Prop and no parameters. The binder inst is the finite-type instan
 
 **Theorem 1.5 (Refutation of the full universal claim).**
 
-$$\neg \operatorname{claim}$$
+$$\neg (\forall V \in \operatorname{Type},\; \forall inst \in \operatorname{Fintype}\left(V\right),\; \forall G \in \operatorname{SimpleGraph}\left(V\right),\; (\operatorname{SimpleGraph}.\operatorname{Connected}\left(G\right)) \Rightarrow (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{strongPeriod}\left(G\right)\right) \le \operatorname{Int}.\operatorname{ofNat}\left(\operatorname{Fintype}.\operatorname{card}\left(V, inst\right)\right) - 3))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/DemoStrongPeriodBoundRefutation.result` (`✓ std3`). ∎
 
