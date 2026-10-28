@@ -691,7 +691,7 @@ private theorem actual_tail_finite {m : ℕ} {lam alpha kappa rho u y : ℝ}
         _ ≤ (p : ℝ)⁻¹ ^ 2 / (1 - (p : ℝ)⁻¹ ^ 2) := hh
         _ ≤ (p : ℝ)⁻¹ ^ 2 / (1 - 1 / (P : ℝ)) := hd
         _ = (1 / (1 - 1 / (P : ℝ))) * (1 / (p : ℝ) ^ 2) := by
-          simpa only [inv_pow, one_div, div_eq_mul_inv] using
+          simpa only [inv_pow, one_div, div_eq_mul_inv, one_mul] using
             (mul_comm ((p : ℝ) ^ 2)⁻¹ (1 - (P : ℝ)⁻¹)⁻¹)
     calc
       _ ≤ ∑ p ∈ large, (1 / (1 - 1 / (P : ℝ))) * (1 / (p : ℝ) ^ 2) := sum_le_sum hpoint
@@ -855,17 +855,18 @@ theorem actual_record_tail_upper :
     have hh := Real.log_le_log (Real.exp_pos _) hExpX
     rw [Real.log_exp] at hh
     have hh' := (div_le_iff₀ hk).mp hh
-    nlinarith
+    nlinarith only [hh']
   have hPlog : (1 - kappa / 4) * Real.log X ≤ Real.log (P / 2) := by
     have hh := Real.log_le_log (div_pos hX0 (by norm_num))
       (show X / 4 ≤ P / 2 by linarith)
     rw [Real.log_div hX0.ne' (by norm_num)] at hh
-    linarith
+    linarith only [hh, hlogXlarge]
   have hD : 1 - kappa / 2 ≤ P * Real.log (P / 2) / (X * Real.log X) := by
     apply (le_div_iff₀ hdenX).mpr
     have hprod := mul_le_mul hPX hPlog
       (mul_nonneg (by linarith : 0 ≤ 1 - kappa / 4) hLX.le) hP0.le
-    have hsq : 1 - kappa / 2 ≤ (1 - kappa / 4) ^ 2 := by nlinarith [sq_nonneg kappa]
+    have hsq : 1 - kappa / 2 ≤ (1 - kappa / 4) ^ 2 := by
+      nlinarith only [sq_nonneg kappa]
     have hh := mul_le_mul_of_nonneg_right hsq hdenX.le
     nlinarith only [hprod, hh]
   have hprice : ∀ q : ℕ, q.Prime → u < (q : ℝ) → (q : ℝ) ≤ y →
@@ -876,9 +877,11 @@ theorem actual_record_tail_upper :
       (pow_le_pow_left₀ hq0.le hqy 2).trans hy2P
     have hlogs := Real.log_le_log (sq_pos_of_pos hq0) hqSq
     rw [Real.log_pow, Real.log_mul (by norm_num) hP0.ne'] at hlogs
+    norm_num only [Nat.cast_ofNat] at hlogs
     have hlogdiv : Real.log (P / 2) = Real.log P - Real.log 2 :=
       Real.log_div hP0.ne' (by norm_num)
-    have hlogdiff : Real.log (P / 2) / 2 ≤ Real.log P - Real.log q := by linarith
+    have hlogdiff : Real.log (P / 2) / 2 ≤ Real.log P - Real.log q := by
+      linarith only [hlogs, hlogdiv]
     have hmul := mul_le_mul_of_nonneg_left hlogdiff
       (show 0 ≤ P * (alpha / (X * Real.log X)) by positivity)
     have heq : P * (alpha / (X * Real.log X)) * (Real.log (P / 2) / 2) =
@@ -926,12 +929,13 @@ theorem actual_record_tail_upper :
       have heq : y * Real.sqrt (c + kappa) * Real.log P *
           ((1 + 3 * rho) / ((1 - 1 / P) * y * Real.log y)) * (1 - 1 / P) =
           ((1 + 3 * rho) * Real.sqrt (c + kappa) * Real.log P) / Real.log y := by
-        field_simp [hy0.ne', hlogy.ne', hden.ne'] <;> ring
+        field_simp [hy0.ne', hlogy.ne', hden.ne', hP0.ne',
+          show P - 1 ≠ 0 by linarith] <;> ring
       rw [heq]
       apply (div_le_iff₀ hlogy).mpr
       nlinarith only [hlogs]
     rw [mul_add, hsmallEq] at hh
-    exact hh.trans (add_le_add_left hlargeBound _)
+    exact hh.trans (add_le_add (le_refl _) hlargeBound)
   have hrootc : 1 / 2 ≤ Real.sqrt c :=
     (Real.le_sqrt (by norm_num) (by linarith : 0 ≤ c)).mpr (by linarith)
   have hrootck : Real.sqrt (c + kappa) ≤ 1 :=
@@ -946,7 +950,7 @@ theorem actual_record_tail_upper :
   have hnum : 2 * (1 + 3 * rho) * Real.sqrt (c + kappa) ≤
       2 * Real.sqrt c + epsilon / 4 := by
     have hh := mul_le_mul_of_nonneg_left hrootck hr.le
-    nlinarith only [hh, hrootdiff, hke, hre]
+    nlinarith only [hh, hrootdiff, hke, hre, hepsilon]
   have hnum4 : 2 * (1 + 3 * rho) * Real.sqrt (c + kappa) ≤ 4 := by
     have hh := mul_le_mul_of_nonneg_left hrootck (show 0 ≤ 1 + 3 * rho by positivity)
     nlinarith only [hh, hr4]
