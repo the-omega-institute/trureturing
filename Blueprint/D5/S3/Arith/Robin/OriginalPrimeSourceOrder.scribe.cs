@@ -18,13 +18,6 @@ internal sealed class OriginalPrimeSourceOrderDocument : IScribeDocumentDefiniti
                 Blocks(Paragraph(Text("For p<r in originalLabelWindow(ell), assume no label of that entire literal window lies strictly between p and r. Then no ordinary prime lies strictly between them. Any such prime would satisfy the same lower exponential bound as p and the same upper bound as r. Completeness of the label interval is essential; an arbitrary prime subsequence does not suffice."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("original-label-window-adjacent-prime-bound"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalPrimeSourceOrder.original_label_window_adjacent_prime_bound"),
-                H("Adjacent complete labels satisfy the Bertrand ratio bound"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Under the same complete-window membership and adjacency premises, r<=2*p. Apply Bertrand at p and use absence of any internal ordinary prime to place its witness at or beyond r. This does not assert a shorter prime gap or any cofinal source existence."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("inventory-gap-log-bound"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalPrimeSourceOrder.inventory_gap_log_bound"),
                 H("A strict positive integer inventory change pays the source-clock gap"),

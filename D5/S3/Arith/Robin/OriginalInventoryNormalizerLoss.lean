@@ -23,9 +23,8 @@ open D5.S3.Arith.Robin.OriginalMovingCutRow
 open D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
 
 private theorem canonical_maximum (X : OriginalWindow) {p : ℕ} (hp : p ∈ X.labels) :
-    originalMaximizes p (canonicalSource p) := by
-  have h := X.attained p hp
-  simpa only [canonicalSource, dif_pos h] using Nat.find_spec h
+    originalMaximizes p (canonicalSource p) :=
+  (canonical_source_spec (X.attained p hp)).1
 
 /-- Quotients here are the complete actual inventories, not chosen factors. -/
 private theorem canonical_pair (X : OriginalWindow) {p r : ℕ}
@@ -112,7 +111,8 @@ private theorem integral_selected_cells {n : ℕ} (T : Fin (n + 1) → ℝ)
     ae_eq_set_biUnion good.countable_toSet (fun _ _ => Ioc_ae_eq_Icc)
   rw [← setIntegral_congr_set hae]
   have hdisj : Set.Pairwise (↑good)
-      (Disjoint on (fun i : Fin n => Ioc (T i.castSucc) (T i.succ))) := by
+      (fun i j : Fin n => Disjoint (Ioc (T i.castSucc) (T i.succ))
+        (Ioc (T j.castSucc) (T j.succ))) := by
     intro i _ j _ hij
     rcases lt_or_gt_of_ne hij with hij | hji
     · apply Ioc_disjoint_Ioc_of_le
@@ -297,7 +297,8 @@ theorem original_inventory_normalizer_loss
   have hJfinite : volume (Icc ell R) ≠ ⊤ := isCompact_Icc.measure_ne_top
   have hOmfinite : volume (Icc ell R \ selectedDomain X) ≠ ⊤ :=
     ne_top_of_le_ne_top hJfinite (measure_mono sdiff_subset)
-  have hOmmeas := measurableSet_Icc.diff hSmeas
+  have hOmmeas : MeasurableSet (Icc ell R \ selectedDomain X) :=
+    measurableSet_Icc.diff hSmeas
   have hpartition (f : ℝ → ℝ) (hf : IntegrableOn f (Icc ell R)) :
       (∫ t in Icc ell R, f t) - (∫ t in selectedDomain X, f t) =
         (∫ t in Icc ell (T 0), f t) +
@@ -326,6 +327,7 @@ theorem original_inventory_normalizer_loss
         T i.succ - T i.castSucc :=
       Real.volume_real_Icc_of_le (hT.monotone (by change i.val ≤ i.val + 1; omega))
     simp only [hleft, hright, hcell] at hpart
+    change (volume (Icc ell R \ selectedDomain X)).toReal = _ at hpart
     dsimp [C]
     linarith
   have hbadbound (i : Fin n) (hi : i ∈ bad) :
@@ -371,7 +373,8 @@ theorem original_inventory_normalizer_loss
     linarith
   refine ⟨hT, hinventory, hedge, hselected, hlength, hlengthBound, ?_⟩
   intro x
-  have hkint := kernel_integrableOn (x := x) (by linarith : 4 ≤ ell)
+  have hkint : IntegrableOn (fun t => kernel t x) (Icc ell R) :=
+    kernel_integrableOn (by linarith : 4 ≤ ell)
   have hmass := hpartition (fun t => kernel t x) hkint
   have hloss : windowMass ell R x - (∫ t in selectedDomain X, kernel t x) =
       ∫ t in Icc ell R \ selectedDomain X, kernel t x :=
@@ -390,7 +393,7 @@ theorem original_inventory_normalizer_loss
         (Real.rpow_le_rpow_of_nonpos (by linarith : 0 < ell) ht.1.1 (by norm_num)))
     have hle := setIntegral_mono_on (hkint.mono_set sdiff_subset)
       (integrableOn_const (C := ell ^ (-3 / 10 : ℝ)) hOmfinite) hOmmeas hpoint
-    simpa only [setIntegral_const, smul_eq_mul, mul_comm] using hle
+    simpa only [setIntegral_const, smul_eq_mul, Measure.real_def, mul_comm] using hle
   refine ⟨hmass, hnonneg, hupper.trans ?_⟩
   exact mul_le_mul_of_nonneg_left hlengthBound (Real.rpow_nonneg (by linarith) _)
 

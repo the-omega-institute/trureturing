@@ -197,23 +197,6 @@ theorem original_label_window_no_internal_prime {ell : ℝ} {p r : ℕ}
     refine Finset.mem_filter.mpr ⟨Nat.mem_primesLE.mpr ⟨hqLE, hq⟩, hqLower⟩
   exact hadj q hqmem ⟨hpq, hqr⟩
 
-/- Completeness of the literal prime window turns label adjacency into the
-   ordinary Bertrand bound; no thinned prime subsequence is allowed. -/
-theorem original_label_window_adjacent_prime_bound {ell : ℝ} {p r : ℕ}
-    (hp : p ∈ originalLabelWindow ell) (hr : r ∈ originalLabelWindow ell)
-    (hpr : p < r)
-    (hadj : ∀ q : ℕ, q ∈ originalLabelWindow ell →
-      ¬(p < q ∧ q < r)) :
-    r ≤ 2 * p := by
-  have hprimeAdj := original_label_window_no_internal_prime hp hr hpr hadj
-  rcases Finset.mem_filter.mp hp with ⟨hpLE, _⟩
-  have hpp : p.Prime := (Nat.mem_primesLE.mp hpLE).2
-  obtain ⟨q, hq, hpq, hq2⟩ := Nat.exists_prime_lt_and_le_two_mul p hpp.ne_zero
-  by_contra hnot
-  have h2pr : 2 * p < r := Nat.lt_of_not_ge hnot
-  have hqr : q < r := lt_of_le_of_lt hq2 h2pr
-  exact (hprimeAdj q hq hpq hqr).elim
-
 /-- A strict inventory change pays for the whole logarithmic source gap.
 
 This is the arithmetic charge used later when the complete prime-label window

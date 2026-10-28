@@ -11,6 +11,21 @@ internal sealed class OriginalFirstClockTransportDocument : IScribeDocumentDefin
         H("OriginalFirstClockTransport"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("original-canonical-source-specification"),
+                DeclarationHandle.Create(Prefix + "canonical_source_spec"),
+                H("The canonical source is the least full-class maximizer when attained"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For any natural label p, assume some N satisfies originalMaximizes(p,N). "
+                    + "Then canonicalSource(p) maximizes the original nonlinear objective over "
+                    + "all positive integers divisible by 5040*p, and is no larger than any "
+                    + "other maximizer in that full class. OriginalInventoryNormalizerLoss "
+                    + "uses the maximality projection for every label of its complete "
+                    + "enumeration, both in source-order classification and in charging "
+                    + "each omitted inventory-changing interval. Attainment remains an "
+                    + "explicit premise; no cofinal source family is asserted."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("original-first-clock-specification"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalFirstClockTransport.first_clock_spec"),
                 H("The canonical first clock has the exact first-layer price"),
