@@ -66,7 +66,7 @@ private theorem example_generator : OrientedKernelGenerator exampleWords E := by
     nlinarith
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (Fin 3 → List Bool)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
     (fun _ => Mat) (fun _ => ℝ)
 
 def actual : Realization signature :=
@@ -79,7 +79,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (w : Fin 3 → List Bool) (N : Mat), OrientedKernelGenerator w N →
     (0 ≤ N 0 0 ∧ 0 ≤ N 1 1 ∧ N 0 1 ≤ 0 ∧ N 1 0 ≤ 0) ∧
-      0 < R.readout () w N ∧ Function.Bijective (prefixTrace w)
+      0 < R.readout () () N ∧ Function.Bijective (prefixTrace w)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -94,7 +94,7 @@ def family : Registration arena (type_of% @kernel_signs_positive_trace_invertibl
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨exampleWords, 0, E, ?_⟩
+    refine ⟨(), 0, E, ?_⟩
     change Matrix.trace (0 : Mat) ≠ Matrix.trace E
     norm_num [E, Matrix.trace, Matrix.diag, Fin.sum_univ_two, Pi.zero_apply]
 
