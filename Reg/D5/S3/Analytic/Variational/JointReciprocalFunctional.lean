@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Registration
+import LeanInformationAuditInterface.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 import D5.S3.Analytic.Variational.JointReciprocalFunctional
 import Reg.Support.SingleDependentReadout
 
@@ -46,7 +46,7 @@ def rootFamily : Registration rootArena (type_of% exists_unique_scalar_root) whe
     rootArena.Law actual rejected rejected_root
   dependence := actual_dependence
 
-def rootAudit : Contract.Registration
+def rootAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     exists_unique_scalar_root (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.Variational.JointReciprocalFunctional.rootUnit
   realizationName := `Reg.D5.S3.Analytic.Variational.JointReciprocalFunctional.rootFamily
@@ -94,7 +94,7 @@ def profileFamily : Registration profileArena (type_of% constructed_profile) whe
     profileArena.Law actual rejected rejected_profile
   dependence := actual_dependence
 
-def profileAudit : Contract.Registration
+def profileAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     constructed_profile (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.Variational.JointReciprocalFunctional.profileUnit
   realizationName := `Reg.D5.S3.Analytic.Variational.JointReciprocalFunctional.profileFamily
@@ -154,7 +154,7 @@ def variationalFamily : Registration variationalArena (type_of% sharp_joint_vari
     variationalArena.Law actual rejected rejected_variational
   dependence := actual_dependence
 
-def variationalAudit : Contract.Registration
+def variationalAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     sharp_joint_variational (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.Variational.JointReciprocalFunctional.variationalUnit
   realizationName := `Reg.D5.S3.Analytic.Variational.JointReciprocalFunctional.variationalFamily

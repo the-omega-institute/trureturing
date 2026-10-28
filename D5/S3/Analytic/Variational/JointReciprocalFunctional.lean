@@ -1138,5 +1138,3 @@ theorem sharp_joint_variational (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
     exact ⟨hleast, hleast.csInf_eq, hscaled, heq⟩
 
 end D5.S3.Analytic.Variational.JointReciprocalFunctional
-
-
