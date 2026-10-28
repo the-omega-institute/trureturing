@@ -36,14 +36,14 @@ internal sealed class TotalDominationSeedsDocument : IScribeDocumentDefinition
             Node("labelled_seed_root", "Exact finite labels", Call("labelledSeedRoot", V("s")),
                 "For every natural s>=3 with Odd s, there exist a natural n, an actual SimpleGraph G on Fin n, and a real r such that n=5s^2+4, n>=2, -1<r<-1+1/s, T_G(r)=0, T_G is nonzero, and for every vertex v there exists a neighbour u. The exact same graph and polynomial satisfy all clauses. The proof transports finite subsets through the inverse Fintype.equivFin equivalence and preserves adjacency and cardinality.", DescribeRole.Theorem),
             Node("arbitrarily_small_positive_shift", "Arbitrarily small positive shifted roots", All("epsilon", Real,
-                Imp(Lt(V("0"), V("epsilon")), Call("actualSmallShift", V("epsilon")))),
+                Imp(Lt(D(0), V("epsilon")), Call("actualSmallShift", V("epsilon")))),
                 "For every positive real epsilon there exist n, G : SimpleGraph (Fin n), and r : R with n>=2, 0<1+r<epsilon, T_G(r)=0, T_G nonzero, and every vertex having a neighbour. Choose k with 1/(k+1)<epsilon and the odd s=2k+3. Then 1/s<=1/(k+1), and labelled_seed_root supplies the witness. No order bound is imposed on n.", DescribeRole.Theorem),
             Node("complexPolynomial", "The literal complex-coefficient subset polynomial", Eq(Call("complexPolynomial", V("G")), Call("complexSubsetSum", V("G"))),
                 "For every finite vertex type V and SimpleGraph G on V, complexSubsetSum is the sum over S : Finset V of the complex indeterminate X to S.card when IsTotal G S, and zero otherwise. It equals totalPolynomial G mapped by the real-to-complex ring homomorphism. Thus this is the same actual-subset counting definition in C[X].", DescribeRole.Definition),
             Node("WholePlaneDensity", "The unchanged full target", Call("WholePlaneDensity"),
                 "This proposition is defined, with no theorem asserting it: for every complex z and every positive real epsilon, there exist n : N, G : SimpleGraph (Fin n), and w : C such that n>=2, every vertex has a neighbour, complexPolynomial G is nonzero, w is a root of that same polynomial, and norm(w-z)<epsilon. Every selected vertex must have a selected neighbour, as encoded in IsTotal. This retains the original all-z/all-epsilon, unbounded-order question.", DescribeRole.Definition),
             Node("complex_seed_accumulation", "Complex roots accumulating at minus one", All("epsilon", Real,
-                Imp(Lt(V("0"), V("epsilon")), Call("actualComplexSeed", V("epsilon")))),
+                Imp(Lt(D(0), V("epsilon")), Call("actualComplexSeed", V("epsilon")))),
                 "For every positive real epsilon there exist n, G : SimpleGraph (Fin n), and r : R such that n>=2, every vertex has a neighbour, complexPolynomial G is nonzero, the complex cast of r is its root, 0<1+r, and norm((r:C)-(-1:C))<epsilon. The same actual graph supplies all clauses. This follows by the injective real-to-complex coefficient map from arbitrarily_small_positive_shift. It proves accumulation at one point, while WholePlaneDensity remains unproved.", DescribeRole.Theorem),
             Paragraph(Text("The cycle, triangle, cone and disjoint-union identities are attributed ingredients: arXiv:1605.02222 and the H-join framework of Subramanian and Selvakumar, Filomat 2025. No worldwide priority or independent admission claim is made for this seed argument. The complete external question remains the density of nonzero total-domination roots of finite isolate-free graphs throughout the complex plane."))), []));
 
@@ -67,8 +67,14 @@ internal sealed class TotalDominationSeedsDocument : IScribeDocumentDefinition
     private static Formula SeedRoot(bool actual)
     {
         Formula p = actual ? Call("totalPolynomial", Call("seedGraph", Call("square", V("s")))) : Call("seedPolynomial", Call("square", V("s")));
-        Formula body = And(Lt(Seq(Minus, V("1")), V("r")), And(Lt(V("r"), Seq(Minus, V("1"), Plus, new Formula.Fraction(V("1"), V("s")))), Call("IsRoot", p, V("r"))));
-        if (actual) body = And(body, And(Seq(p, Sp, Neq, Sp, V("0")), All("v", Call("SeedVertex", V("s")), Some("u", Call("SeedVertex", V("s")), Call("Adj", Call("seedGraph", Call("square", V("s"))), V("v"), V("u")))));
-        return All("s", Nat, Imp(And(Le(V("3"), V("s")), Call("Odd", V("s"))), Some("r", Real, body)));
+        Formula body = And(Lt(Seq(Minus, D(1)), V("r")), And(Lt(V("r"), Seq(Minus, D(1), Plus, new Formula.Fraction(D(1), V("s")))), Call("IsRoot", p, V("r"))));
+        if (actual)
+        {
+            Formula vertices = Call("sumType", Call("Unit"), Call("SeedBase", Call("square", V("s"))));
+            Formula neighbours = All("v", vertices, Some("u", vertices,
+                Call("Adj", Call("seedGraph", Call("square", V("s"))), V("v"), V("u"))));
+            body = And(body, And(Seq(p, Sp, Neq, Sp, D(0)), neighbours));
+        }
+        return All("s", Nat, Imp(And(Le(D(3), V("s")), Call("Odd", V("s"))), Some("r", Real, body)));
     }
 }
