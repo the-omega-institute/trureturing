@@ -90,3 +90,71 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms registration
 
 end Reg.D5.S3.Observer.CubicGain.LegalMatrixMonoid
+
+namespace Reg.D5.S3.Observer.CubicGain.LegalMatrixMonoid.Append
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => List Bool) (fun _ => Mat)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ u => futureProduct u) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => (0 : Mat)) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ u v : List Bool, futureProduct (u ++ v) = futureProduct v * R.readout () () u
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := congrArg (fun A : Mat => A 0 0) (h [] [])
+  norm_num [rejected,realize,futureProduct] at he
+
+def family : Registration arena (type_of% @product_append) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨product_append,rejected,rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(),[],[false],?_⟩
+    intro h
+    have he := congrArg (fun A : Mat => A 0 0) h
+    norm_num [actual,realize,futureProduct,actionM] at he
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@product_append) (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Observer.CubicGain.LegalMatrixMonoid.product_append.__information_unit
+  realizationName := `Reg.D5.S3.Observer.CubicGain.LegalMatrixMonoid.Append.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ u => futureProduct u) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Observer.CubicGain.LegalMatrixMonoid
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","body","arg","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end Reg.D5.S3.Observer.CubicGain.LegalMatrixMonoid.Append

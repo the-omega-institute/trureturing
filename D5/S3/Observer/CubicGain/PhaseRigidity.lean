@@ -37,6 +37,9 @@ private theorem j_square : actionJ * actionJ = 1 := by
   fin_cases i <;> fin_cases j <;>
     norm_num [actionJ,Matrix.mul_apply,Fin.sum_univ_two]
 
+private theorem j_pair (A : Mat) : actionJ * (actionJ * A) = A := by
+  rw [←Matrix.mul_assoc,j_square,Matrix.one_mul]
+
 def Positive (v : Fin 2 → ℝ) : Prop := 0 < v 0 ∧ 0 < v 1
 private def Negative (v : Fin 2 → ℝ) : Prop := v 0 < 0 ∧ v 1 < 0
 def Mixed (v : Fin 2 → ℝ) : Prop :=
@@ -92,7 +95,7 @@ private theorem mixed_bounds (u : List Bool) (a b : ℝ)
               intro i
               fin_cases i
               · simpa using hm 1
-              · simp only [Matrix.cons_val_one,Matrix.cons_val_zero]
+              · change -b ≤ v 0+v 1 ∧ v 0+v 1 ≤ a
                 rcases hm 0 with ⟨h00,h01⟩
                 rcases hm 1 with ⟨h10,h11⟩
                 by_cases hx : 0 ≤ v 0
@@ -350,7 +353,7 @@ private theorem conjugate_prefix (w : Fin 3 → List Bool) (i : Fin 4) :
     prefixMatrix (conjugateHistory w) i = actionJ * prefixMatrix w i * actionJ := by
   fin_cases i <;>
     simp [prefixMatrix,prefixWord,conjugateHistory,List.ofFn_succ,product_append,
-      futureProduct,Matrix.mul_assoc,←Matrix.mul_assoc,j_square]
+      futureProduct,Matrix.mul_assoc,j_pair,j_square]
 
 private theorem conjugate_column (w : Fin 3 → List Bool) (p : PrimitiveCoordinates)
     (i : Fin 4) :
@@ -362,8 +365,8 @@ private theorem conjugate_column (w : Fin 3 → List Bool) (p : PrimitiveCoordin
     ext k; fin_cases k <;> simp [swapCoordinates,PrimitiveCoordinates.column]
   rw [hf,Matrix.mulVec_neg]
   congr 1
-  rw [←Matrix.mulVec_mulVec,←Matrix.mulVec_mulVec,Matrix.mulVec_mulVec,j_square,
-    Matrix.one_mulVec]
+  simp only [←Matrix.mulVec_mulVec]
+  rw [Matrix.mulVec_mulVec p.column actionJ actionJ,j_square,Matrix.one_mulVec]
 
 private theorem conjugate_lattice (w : Fin 3 → List Bool) (p : PrimitiveCoordinates)
     (m : Fin 4 → ℤ)
@@ -402,7 +405,7 @@ private theorem positive_phase (w : Fin 3 → List Bool) (p : PrimitiveCoordinat
     (hp : ∀ i : Fin 3, Positive (prefixMatrix w i.succ *ᵥ p.column)) :
     StrictPhase w p m := by
   have hfirst : 1 ≤ m 1 := by
-    have hh := (hp 0).2
+    have hh : 0 < (prefixMatrix w 1 *ᵥ p.column) 1 := by simpa using (hp 0).2
     rw [hm 1] at hh
     simp [PrimitiveCoordinates.column,PrimitiveCoordinates.direction] at hh
     have hc' : (0:ℝ) < p.c := by exact_mod_cast hc
@@ -467,11 +470,15 @@ theorem phase_rigidity (w : Fin 3 → List Bool) (N : Mat)
   refine ⟨p,scale,m,hs,hN,⟨ha,hb,hc,hd⟩,hm0,hm,conjugate_prefix w,?_⟩
   rcases hinterior 0 with hp1 | hn1
   · left
+    have hs1 : prefixMatrix w 2 = futureProduct (w 1) * prefixMatrix w 1 := by
+      simpa using prefix_step w 1
+    have hs2 : prefixMatrix w 3 = futureProduct (w 2) * prefixMatrix w 2 := by
+      simpa using prefix_step w 2
     have hp2 : Positive (prefixMatrix w 2 *ᵥ p.column) := by
-      rw [prefix_step w 1,←Matrix.mulVec_mulVec]
+      rw [hs1,←Matrix.mulVec_mulVec]
       exact (positive_sum (w 1) _ hp1).1
     have hp3 : Positive (prefixMatrix w 3 *ᵥ p.column) := by
-      rw [prefix_step w 2,←Matrix.mulVec_mulVec]
+      rw [hs2,←Matrix.mulVec_mulVec]
       exact (positive_sum (w 2) _ hp2).1
     apply positive_phase w p m ha hb hc hd hm0 hm hinj
     intro i; fin_cases i
@@ -479,11 +486,15 @@ theorem phase_rigidity (w : Fin 3 → List Bool) (N : Mat)
     · exact hp2
     · exact hp3
   · right
+    have hs1 : prefixMatrix w 2 = futureProduct (w 1) * prefixMatrix w 1 := by
+      simpa using prefix_step w 1
+    have hs2 : prefixMatrix w 3 = futureProduct (w 2) * prefixMatrix w 2 := by
+      simpa using prefix_step w 2
     have hn2 : Negative (prefixMatrix w 2 *ᵥ p.column) := by
-      rw [prefix_step w 1,←Matrix.mulVec_mulVec]
+      rw [hs1,←Matrix.mulVec_mulVec]
       exact negative_word (w 1) _ hn1
     have hn3 : Negative (prefixMatrix w 3 *ᵥ p.column) := by
-      rw [prefix_step w 2,←Matrix.mulVec_mulVec]
+      rw [hs2,←Matrix.mulVec_mulVec]
       exact negative_word (w 2) _ hn2
     have hneg (i : Fin 3) : Negative (prefixMatrix w i.succ *ᵥ p.column) := by
       fin_cases i
@@ -491,7 +502,7 @@ theorem phase_rigidity (w : Fin 3 → List Bool) (N : Mat)
       · exact hn2
       · exact hn3
     apply positive_phase (conjugateHistory w) (swapCoordinates p) (fun i => -m i)
-      hb ha hd hc (by simp [hm0]) (conjugate_lattice w p m hm)
+      hb ha hd hc (by simp [hm0]) (by simpa only [Int.cast_neg] using conjugate_lattice w p m hm)
       (conjugate_injective w hinj)
     intro i
     rw [conjugate_column,atom_j]
