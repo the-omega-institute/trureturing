@@ -48,7 +48,7 @@ internal sealed class DemoStrongPeriodBoundRefutationDocument : IScribeDocumentD
             Describe.Lean(DescribeId.Create("demo-period-result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("Refutation of the full universal claim"),
-                StatementSource.FromAuthor(Disp(new Formula.Not(Named("claim")))),
+                StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(ClaimBody())))),
                 AssessedProvenance.FromRepo(Source, FixedPoints),
                 Blocks(
                     Paragraph(Text("Take the edgeless simple graph on Unit. It is connected by SimpleGraph.Connected.of_subsingleton. Any two vertices coincide and their self-distance is zero, so distanceTwo G = G. Function.iterate_one and SimpleGraph.Iso.refl give PositiveReturn G 1. Nat.find_spec gives positivity of the least return and Nat.find_min' bounds it above by one; hence strongPeriod G = 1. Singleton cardinality then turns the asserted integer bound into 1 <= -2, a contradiction.")),
@@ -98,7 +98,9 @@ internal sealed class DemoStrongPeriodBoundRefutationDocument : IScribeDocumentD
         ImpliesFormula(new Formula.Not(Parenthesized(HasReturn())),
             Equal(Call(Named("strongPeriod"), F.Id("G")), D(0))))));
 
-    private static Formula ClaimFormula() => Disp(IffFormula(Named("claim"),
+    private static Formula ClaimFormula() => Disp(IffFormula(Named("claim"), ClaimBody()));
+
+    private static Formula ClaimBody() =>
         All("V", Named("Type"),
             All("inst", Call(Named("Fintype"), F.Id("V")),
                 All("G", Call(Named("SimpleGraph"), F.Id("V")),
@@ -109,5 +111,5 @@ internal sealed class DemoStrongPeriodBoundRefutationDocument : IScribeDocumentD
                             new Formula.Binary(
                                 Call(Qualified("Int", "ofNat"),
                                     Call(Qualified("Fintype", "card"), F.Id("V"), F.Id("inst"))),
-                                FormulaBinaryOperator.Subtract, D(3)))))))));
+                                FormulaBinaryOperator.Subtract, D(3)))))));
 }
