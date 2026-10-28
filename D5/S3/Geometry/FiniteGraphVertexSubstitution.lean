@@ -855,7 +855,8 @@ def nestedInduceIso {V : Type*} (G : SimpleGraph V) (B : Set V) (S : Set B) :
     (G.induce B).induce S ≃g G.induce (Subtype.val '' S) where
   toEquiv := Equiv.ofBijective
     (fun x : S => (⟨x.val.val, ⟨x.val, x.property, rfl⟩⟩ : Subtype.val '' S))
-    ⟨fun a b h => Subtype.ext (Subtype.ext (congrArg (fun y : Subtype.val '' S => (y.val : V)) h)), by
+    ⟨fun a b h => Subtype.ext (Subtype.ext
+        (congrArg (fun y : Subtype.val '' S => (y.val : V)) h)), by
       rintro ⟨x, b, hb, rfl⟩
       exact ⟨⟨b, hb⟩, rfl⟩⟩
   map_rel_iff' := Iff.rfl
@@ -966,25 +967,29 @@ def finalStageIso (G : SimpleGraph V) (H : ∀ v, SimpleGraph (D v)) :
     substitution G (stageGraphs H Finset.univ) ≃g substitution G H :=
   substitutionFiberIso G _ _ (fun v => stageSelectedIso H Finset.univ v (by simp))
 
+private def replacementAtIso (H : ∀ v, SimpleGraph (D v)) (R : Finset V) (v : V) :
+    newGraphs (stageGraphs H R) v (H v) v ≃g H v where
+  toEquiv := Equiv.cast (by simp [newFiber])
+  map_rel_iff' := by intro a b; simp [newGraphs, Equiv.cast]
+
+private def replacementAwayIso (H : ∀ v, SimpleGraph (D v)) (R : Finset V)
+    (v z : V) (hz : z ≠ v) :
+    newGraphs (stageGraphs H R) v (H v) z ≃g stageGraphs H R z where
+  toEquiv := Equiv.cast (by simp [newFiber, hz])
+  map_rel_iff' := by intro a b; simp [newGraphs, hz, Equiv.cast]
+
 private def replacementStageFiberIso (H : ∀ v, SimpleGraph (D v))
     (R : Finset V) (v z : V) :
     newGraphs (stageGraphs H R) v (H v) z ≃g stageGraphs H (insert v R) z := by
   by_cases hz : z = v
   · subst z
-    refine { toEquiv := Equiv.cast (by simp [newFiber, stageFiber]), map_rel_iff' := ?_ }
-    intro a b
-    simp [newGraphs, stageGraphs, SimpleGraph.comap, newFiber, stageFiber]
-    simp only [Equiv.cast_apply, cast_cast]
-  · by_cases hr : z ∈ R
-    · refine { toEquiv := Equiv.cast (by simp [newFiber, stageFiber, hz, hr]),
-               map_rel_iff' := ?_ }
-      intro a b
-      simp [newGraphs, stageGraphs, SimpleGraph.comap, newFiber, stageFiber, hz, hr]
-      simp only [Equiv.cast_apply, cast_cast]
-    · refine { toEquiv := Equiv.cast (by simp [newFiber, stageFiber, hz, hr]),
-               map_rel_iff' := ?_ }
-      intro a b
-      simp [newGraphs, stageGraphs, SimpleGraph.comap, newFiber, stageFiber, hz, hr]
+    exact (replacementAtIso H R v).trans (stageSelectedIso H (insert v R) v (by simp)).symm
+  · apply (replacementAwayIso H R v z hz).trans
+    by_cases hr : z ∈ R
+    · exact (stageSelectedIso H R z hr).trans
+        (stageSelectedIso H (insert v R) z (by simp [hr])).symm
+    · exact (stageSingletonIso H R z hr).trans
+        (stageSingletonIso H (insert v R) z (by simp [hz, hr])).symm
 
 /-- A single supplier replacement is the next actual mixed stage. -/
 def replacementStageIso (G : SimpleGraph V) (H : ∀ v, SimpleGraph (D v))
@@ -1060,7 +1065,8 @@ private theorem hereditarySubstitutionCore
       · exact hom (graphIsoHomeomorph (stageSingletonIso H R v hv)).symm.toHomotopyEquiv
           (hom pointIndependenceHomeomorph.symm.toHomotopyEquiv point)
     have hstage : ∀ R : Finset V,
-        C (Space (independenceComplex (substitution G (stageGraphs H R))).toPreAbstractSimplicialComplex) := by
+        C (Space (independenceComplex
+          (substitution G (stageGraphs H R))).toPreAbstractSimplicialComplex) := by
       intro R
       induction R using Finset.induction_on with
       | empty =>
@@ -1092,7 +1098,8 @@ private theorem hereditarySubstitutionCore
                 C (Space (independenceComplex
                   ((G.induce (LinkBaseSet G v)).induce S)).toPreAbstractSimplicialComplex) := by
               intro S hs
-              exact hom (graphIsoHomeomorph (nestedInduceIso G (LinkBaseSet G v) S)).symm.toHomotopyEquiv
+              exact hom (graphIsoHomeomorph
+                (nestedInduceIso G (LinkBaseSet G v) S)).symm.toHomotopyEquiv
                 (hbase (Subtype.val '' S) (hs.image Subtype.val))
             have hM : C (Space M) := by
               exact ih (Fintype.card (LinkBaseSet G v)) hlt
