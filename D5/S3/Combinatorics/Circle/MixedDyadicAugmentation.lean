@@ -15,10 +15,12 @@ public import D5.S3.Combinatorics.Circle.DyadicResetDenominations
 /-! Mixed insertion uses physical permutation balances and the original lexicographic objective. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+-- Dependent physical-bin transports and the exhaustive residue case split are elaborated together.
+set_option maxHeartbeats 1600000
 
 @[expose] public section
 namespace D5.S3.Combinatorics.Circle.MixedDyadicAugmentation
-open SourceWidth ExpandingSourcePath MixedSuffixEnergy TwoOppositeLargeExchange
+open List SourceWidth ExpandingSourcePath MixedSuffixEnergy TwoOppositeLargeExchange
 open DyadicResetSource DyadicResetBlocks DyadicResetAllocation DyadicResetWords DyadicResetDenominations
 open scoped BigOperators
 
@@ -167,7 +169,6 @@ private theorem heads_allocation {α : Type*} [DecidableEq α]
 /-- The coupled allocation is realized with the original physical top and reset
 labels. Its hypotheses are the arithmetic residue budgets used by the all-word
 reduction; no intermediate append is required to be legal. -/
-set_option maxHeartbeats 800000 in
 private theorem coupled_exchange (m r p j g : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
     (W : List (Fin (m * r))) (hW : Legal (m * r) (unit m r) W)
     (S : Finset (Fin (m * r))) (A : Fin p → Fin (m * r))
@@ -343,11 +344,13 @@ private theorem fresh_top (m r : ℕ) (hm : 3 ≤ m)
     (hc : (S.filter (fun x => exponent m r x = m - 2)).card < r) :
     ∃ a : Fin (m * r), a ∉ W ∧ exponent m r a = m - 2 := by
   classical
-  have hrc := residue_card m r (m - 2) (by omega) (by omega)
+  have hrc : (Finset.univ.filter (fun x : Fin (m * r) => exponent m r x = m - 2)).card = r :=
+    residue_card m r (m - 2) (by omega) (by omega)
   obtain ⟨a, ha, hn⟩ := Finset.exists_mem_notMem_of_card_lt_card
     (show (S.filter (fun x => exponent m r x = m - 2)).card <
       (Finset.univ.filter (fun x : Fin (m * r) => exponent m r x = m - 2)).card by
-        simpa only [exponent, hrc] using hc)
+        rw [hrc]
+        exact hc)
   have he := (Finset.mem_filter.mp ha).2
   refine ⟨a, ?_, he⟩
   intro haW
@@ -364,11 +367,13 @@ private theorem fresh_reset (m r : ℕ) (hm : 3 ≤ m)
     (hc : Z.length < r) :
     ∃ a : Fin (m * r), a ∉ W ∧ exponent m r a = m - 1 := by
   classical
-  have hrc := residue_card m r (m - 1) (by omega) (by omega)
+  have hrc : (Finset.univ.filter (fun x : Fin (m * r) => exponent m r x = m - 1)).card = r :=
+    residue_card m r (m - 1) (by omega) (by omega)
   obtain ⟨a, ha, hn⟩ := Finset.exists_mem_notMem_of_card_lt_card
     (show Z.toFinset.card <
       (Finset.univ.filter (fun x : Fin (m * r) => exponent m r x = m - 1)).card by
-        simpa only [exponent, hrc, List.toFinset_card_of_nodup hZN] using hc)
+        rw [hrc, List.toFinset_card_of_nodup hZN]
+        exact hc)
   have he' := (Finset.mem_filter.mp ha).2
   refine ⟨a, ?_, he'⟩
   intro haW
@@ -397,10 +402,10 @@ private theorem append_exchange (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
       mass (scaled m r) W + scaled m r a ≤ height m from
       ⟨hend.1, hend.2, hfit⟩)
   have hVstrip : InStrip (scaled m r) (height m) 0 (W ++ [a]) :=
-    inStrip_append hs (by simpa using hsingle)
+    inStrip_append hs (by simpa only [mass, zero_add] using hsingle)
   have hperm : ((W ++ [a]) ++ []).Perm (W ++ [a]) := by simp
   have hgain : 0 < largeUsed (m * r) (unit m r) [a] ∨
-      ([].length < [a].length ∧ ∀ x ∈ [a], ¬ Large (m * r) (unit m r) x) := by
+      (0 < [a].length ∧ ∀ x ∈ [a], ¬ Large (m * r) (unit m r) x) := by
     by_cases hL : Large (m * r) (unit m r) a
     · left; simp [largeUsed, mass, largeWeight, hL]
     · right; simp [hL]
@@ -481,7 +486,6 @@ private theorem replace_exchange (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
 /-- Arbitrary actual legal words in every one-bit repeated source admit a
 strict original-J augmentation with at most two originally fresh labels. All
 returned labels are SMALL. The source hypothesis remains a genuine restriction. -/
-set_option maxHeartbeats 1600000 in
 theorem native_two_fresh_augmentation (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
     (W : List (Fin (m * r))) (hW : Legal (m * r) (unit m r) W)
     (hG : 0 < G (m * r) (unit m r) W) :
@@ -555,17 +559,16 @@ theorem native_two_fresh_augmentation (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
   · obtain ⟨i, hi⟩ := hmissing
     have hpN := missing i hi
     obtain ⟨a, ha, hae⟩ := fresh_top m r hm W S Z hperm hz (by change p < r; omega)
-    apply replace_exchange m r hm hr W hW S Z h hcap hperm he hz K hKS hKD hKC hKb i
+    refine replace_exchange m r hm hr W hW S Z h hcap hperm he hz K hKS hKD hKC hKb i ?_ ?_ a ha hae
     · intro x hx hxe
       have hm' : x ∈ (K i).filter (fun a => exponent m r a = b) :=
         Finset.mem_filter.mpr ⟨hx, hxe⟩
       have hempty := Finset.card_eq_zero.mp hi
       simpa only [hempty, Finset.notMem_empty] using hm'
     · rw [hKb]
-      cases i <;> simp only [Sum.elim_inl, Sum.elim_inr] <;> omega
-    · exact a
-    · exact ha
-    · exact hae
+      cases i with
+      | inl i => change B ≤ M; exact hBM
+      | inr u => change B ≤ h; omega
   have hpn : p = Z.length + 1 := by
     have hone : ∀ i : Fin Z.length ⊕ Unit,
         ((K i).filter (fun a => exponent m r a = b)).card = 1 := by
@@ -604,16 +607,23 @@ theorem native_two_fresh_augmentation (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
   have hcom : S.filter (fun x => ¬ exponent m r x < b) = T := by
     ext x
     simp only [T, Finset.mem_filter]
-    have hle : x ∈ S → exponent m r x ≤ b := fun hx => he x hx
-    omega
+    constructor
+    · rintro ⟨hx, hn⟩
+      have hle := he x hx
+      exact ⟨hx, by change exponent m r x = m - 2; omega⟩
+    · rintro ⟨hx, hxe⟩; exact ⟨hx, by omega⟩
   have hsplit : (∑ x ∈ SM, 2 ^ exponent m r x) + p * B = Z.length * M + h := by
     have hs := Finset.sum_filter_add_sum_filter_not S (fun x => exponent m r x < b)
       (fun x => (2 : ℕ) ^ exponent m r x)
     rw [hcom, hTmass] at hs
     exact hs.trans htot
   have hmass : (∑ x ∈ SM, 2 ^ exponent m r x) + g = p * (B - 1) := by
-    rw [hpn] at hsplit ⊢
-    nlinarith
+    have hMx : M = B + (B - 1) := by omega
+    have hnM : Z.length * M = Z.length * B + Z.length * (B - 1) := by
+      rw [hMx, Nat.mul_add]
+    rw [hpn, Nat.add_mul, one_mul, hnM] at hsplit
+    rw [hpn, Nat.add_mul, one_mul]
+    omega
   have hfullmass : (∑ x ∈ low m r b, 2 ^ exponent m r x) = r * (B - 1) :=
     low_mass m r b (by omega) (by dsimp [b]; omega)
   let F := low m r b \ SM
@@ -681,9 +691,14 @@ theorem native_two_fresh_augmentation (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
   have hparts : S.toList.Perm (SM.toList ++ T.toList) := by
     apply (List.perm_ext_iff_of_nodup (Finset.nodup_toList S) ?_).mpr
     · intro x
-      have hx : x ∈ S → exponent m r x ≤ b := fun hx => he x hx
       simp only [List.mem_append, Finset.mem_toList, SM, T, Finset.mem_filter]
-      omega
+      constructor
+      · intro hx
+        have hle := he x hx
+        by_cases hxb : exponent m r x < b
+        · exact Or.inl ⟨hx, hxb⟩
+        · exact Or.inr ⟨hx, by change exponent m r x = m - 2; omega⟩
+      · rintro (⟨hx, _⟩ | ⟨hx, _⟩) <;> exact hx
     · apply (Finset.nodup_toList SM).append (Finset.nodup_toList T)
       apply List.disjoint_left.mpr
       intro x hx hy
@@ -701,7 +716,7 @@ theorem native_two_fresh_augmentation (m r : ℕ) (hm : 3 ≤ m) (hr : 1 ≤ r)
     (by simpa [p] using hpr') (by simpa [p] using hpn.symm) hperm'
     (fun x hx => (Finset.mem_filter.mp hx).2) hAe hz haW hzW rfl haj hze hg hgs
     (by simpa [p, B, b] using hmass) howned
-    (by intro q hjq hqb; simpa only [← hpn, SM] using hOld q hjq hqb)
+    (by intro q hjq hqb; simpa [← hpn, SM, p] using hOld q hjq hqb)
   refine ⟨V, hVL, hVJ, ?_, ?_⟩
   · rw [hVI]
     exact le_trans (Finset.card_insert_le _ _) (by simp)
