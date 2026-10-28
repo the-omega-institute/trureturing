@@ -4,7 +4,7 @@ authors: trureturing research synthesis
 year: 2026
 title: Actual Robin price gaps, forced-core tail records and the selected-sign boundary
 doi: null
-url: https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md
+url: https://github.com/the-omega-institute/trureturing/blob/cf052b34b8b275b74ea62a8860481c927eb77daa/Library/Estimation/trureturing2026pricegapconvexity.md
 claim: Under the original source-window hypotheses, the complete selected response retains actual price-gap costs; every inactive-forced-prime core is a strict all-integer right-tail record with original-exponent own-size excess. A synthetic positive-reference model excludes height-and-envelope plus numerical full-Q reasoning alone. A cited unrefereed density theorem extends the original high-frequency range and complete compensated clock transport. Exact total-clock pressure raises the pure-future joint margin throughout the original range. Actual favorable slack and RH remain unproved.
 strata_touched:
   - D5/S3/Analytic/Variational/JointReciprocalFunctional
