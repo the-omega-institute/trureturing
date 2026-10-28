@@ -522,7 +522,26 @@ private lemma witness_partial_transpose_negative :
     RCLike.re (dotProduct (star witnessVector)
       (Matrix.mulVec (partialTranspose
         (MatrixMap.kron (LinearMap.id : MatrixMap (Fin 3) (Fin 3) ℂ) t omega))
-        witnessVector)) = -1 / 9 := by sorry
+        witnessVector)) = -1 / 9 := by
+  classical
+  have hsqrt : (Real.sqrt 3 : ℂ) ^ 2 = (3 : ℂ) := by
+    exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 3 by norm_num)
+  have hsqrtR : (Real.sqrt 3) ^ 2 = (3 : ℝ) :=
+    Real.sq_sqrt (show (0 : ℝ) ≤ 3 by norm_num)
+  have hc0 : (Finset.univ.filter (fun x : Fin 3 => (0 : Fin 3) = x)).card = 1 := by
+    decide
+  have hc1 : (Finset.univ.filter (fun x : Fin 3 => (1 : Fin 3) = x)).card = 1 := by
+    decide
+  have hc2 : (Finset.univ.filter (fun x : Fin 3 => (2 : Fin 3) = x)).card = 1 := by
+    decide
+  simp [witnessVector, omega, partialTranspose, MatrixMap.kron_def,
+    MatrixMap.id, t_formula, Matrix.mulVec, dotProduct, Matrix.vecMulVec,
+    Matrix.single, Matrix.trace, Matrix.transpose_apply, Fin.sum_univ_three,
+    Fin.sum_univ_succ, Fintype.sum_prod_type]
+  norm_num [hc0, hc1, hc2]
+  ring_nf
+  rw [hsqrtR]
+  norm_num
 
 private lemma t_not_entanglementBreaking : ¬ IsEntanglementBreaking t := by
   intro h
