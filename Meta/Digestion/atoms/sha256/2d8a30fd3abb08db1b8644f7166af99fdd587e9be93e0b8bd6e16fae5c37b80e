@@ -1,0 +1,45 @@
+**Theorem 14.2 (The entire first negative-J family).** For every
+$0<q<q_*$ of exactly the continuation specified above,
+
+$$
+\begin{gathered}
+(p(q),v(q))\in\mathcal S,\qquad
+C(p(q),v(q))=\{W_-(q),W_+(q)\},\\
+W_-(q)\ne W_+(q),\qquad a(W_-(q))=a(W_+(q)),\\
+m(W_-(q))<m(W_+(q)).
+\end{gathered}
+\tag{14.31}
+$$
+
+In particular $m$ is injective on this entire original child.
+
+Proof. The common-parameter enclosure (14.30) puts the exact base
+in $\mathcal S$. Theorem 13.1 excludes all singular original worlds
+there, and (13.24) identifies this nonsingularity with the regularity
+used in Theorem 14.1. Hence the entire child has at most two worlds.
+IX Theorem 28.1 supplies two distinct complete original worlds at
+this identical full base, with their own original whole-gain lifts
+and drifts. They exhaust the child. Its same theorem, (28.1)–(28.2),
+gives their equal $J$ readings and strict $M$ ordering. Any two
+distinct worlds in the entire child must therefore be this pair, so
+their terminal $M$ readings differ. ∎
+
+The new uniform conclusions are the regular-world count on all of
+$\mathcal S$ and the complete-child inventory on every strict
+parameter of this first continuation. The Bernstein estimate is a
+classical tool, and the existence, original-world lifts and strict
+$M$ ordering of the selected pair are the cited inputs. The deductions
+here are specific to the displayed source equations; no
+literature-priority claim is made for them.
+
+Theorem 14.1 does not assert two-world existence, singular exclusion
+or $M$ injectivity at every base of the strip. The endpoints $q=0$
+and $q=q_*$ are excluded from (14.31): the two endpoints coalesce
+at zero, whereas the minus source has $b_-=r_-=0$ at $q_*$. The
+analytic enclosure (14.30) does not turn either limit into a strict
+distinct pair. Other bases and branches, globally independent $J/M$
+incidence, the fixed48 obligation V (18.12)(i), earlier losing
+histories and their common-tree feasibility, the original rootQ,
+eight-read recovery and the nine-read question remain outside these
+conclusions. The lower bound $n_{\rm det}(3,0)\ge8$ is unchanged.
+
