@@ -36,7 +36,8 @@ internal sealed class SimpleEvolutionAutomorphismMaximumDocument : IScribeDocume
                     Paragraph(Text("Simplicity forces the support graph to be strongly connected. Every support path projects to an orbit of the successor permutation on the least successor-compatible quotient, so this permutation has a single orbit. Invertibility of the structure map supplies a permutation supported on the arrows. Restricting it to consecutive quotient fibers gives bijections, forcing every fiber to have the same positive size k. If the quotient has h elements, then n=hk.")),
                     Paragraph(Text("The joint bound for the actual algebra group becomes h(2ʰ−1)(k!)ʰ. For h,k at least two, an induction using ascending factorials bounds this by (hk)!. The cases h=1 and k=1 give n! and n(2ⁿ−1), respectively. The argument uses the actual kernel and permutation image of the same algebra.")),
                     Paragraph(Text("The cyclic product has full group order n(2ⁿ−1). The product with structure matrix I+J, where every entry of J is one, is simple and has full group order n!: every permutation lifts, while loops force every diagonal automorphism to be the identity. Choosing the larger family proves attainment in every positive dimension, including dimension one. The upper-bound argument also works without a separate commutativity hypothesis when the mixed products of a finite natural basis vanish."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("kmvc4-simpleaut"), ResolutionKind.Proved)))));
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Name(string name) => Seq(Operatorname, Grp(X(name)));
