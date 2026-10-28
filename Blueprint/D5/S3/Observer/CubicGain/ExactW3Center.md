@@ -18,6 +18,8 @@ At this same exact lifted coordinate, exactW3_parent applies the actual local so
 
 The regular whole-world correspondence identifies the reconstructed world with the Ck/D lift at these same source coordinates. Identification of the explicit coefficient arrays with the fixed determinant definition remains a separate algebraic obligation. Thus this construction alone does not identify the world with a determinantal critical center. The parent and analyticity conclusions here alone supply neither the remote branch nor exhaustion of the original preimage.
 
+The fixed-minor bridge encodes the literal 28 rows in columns r^28,...,1. Retaining the first 27 columns and appending the r or constant column gives fixedMinorR and fixedMinorC; fixed_minor_linear_relation proves the necessary relation z det(fixedMinorR)+det(fixedMinorC)=0 from the row-wise common-root equation. This is the exact no-specialization implication used by the source's Lemma 4.3, including leading-coefficient drops. The source-specific expansion of E0 and E1, the 1080 determinant comparisons, and the equality of these determinants with the stored coefficient arrays remain open, so this bridge does not yet identify the selected criticalRoot lift with the source-defined W3.
+
 **Theorem 1.1 (exact degree-67 critical root).**
 
 Lean statement: `D5/S3/Observer/CubicGain/ExactW3Center.critical_root_exists`
@@ -66,11 +68,24 @@ Lean statement: `D5/S3/Observer/CubicGain/ExactW3Center.exactW3_parent`
 
 With no hypotheses, SourceCertificate and OriginalParent exactW3 hold, and chartWorld, chartSource and chartRead are analytic at liftedCoordinates criticalRoot. For every real b in the original open isolating interval, criticalPolynomial.eval(b)=0 implies b=criticalRoot. For every W:OriginalWorld, OriginalParent W, W.first=liftedR criticalRoot and W.second.first=criticalRoot imply W=exactW3. The same theorem returns the compiled actual local source inverse centered at liftedCoordinates criticalRoot, including its analytic inverse neighborhood, complete source-vector Lipschitz estimate, center membership, and all pairwise local-world bounds. It does not prove that the explicit numerator and denominator arrays are the fixed 28-row minors from Definition 4.1, so the source identity of this candidate lift remains open.
 
+**Theorem 1.5 (literal fixed-minor necessary relation).**
+
+Lean statement: `D5/S3/Observer/CubicGain/ExactW3Center.fixed_minor_linear_relation`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/ExactW3Center.fixed_minor_linear_relation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a 28-by-29 coefficient matrix whose columns are ordered r^28,...,1, the row-wise common-root equation in the fixed-column form implies z times the determinant retaining columns r^28,...,r^2,r plus the determinant retaining columns r^28,...,r^2,1 is zero. This is a necessary determinant relation and does not identify the source-specific E-polynomial arrays or the selected criticalRoot lift.
+
 ## References
 
 - Truth anchor: `D5/S3/Observer/CubicGain/ExactW3Center.criticalRoot_spec`
 - Truth anchor: `D5/S3/Observer/CubicGain/ExactW3Center.critical_root_exists`
 - Truth anchor: `D5/S3/Observer/CubicGain/ExactW3Center.exactW3_parent`
 - Truth anchor: `D5/S3/Observer/CubicGain/ExactW3Center.exactW3_parent_of_source_certificate`
+- Truth anchor: `D5/S3/Observer/CubicGain/ExactW3Center.fixed_minor_linear_relation`
 - Dependency: [D5/S3/Observer/CubicGain/RegularParentChart](RegularParentChart.md)
 - Dependency: [D5/S3/Observer/CubicGain/RegularReadInverse](RegularReadInverse.md)

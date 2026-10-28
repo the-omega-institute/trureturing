@@ -8,6 +8,7 @@
 
 import D5.S3.Observer.CubicGain.RegularParentChart
 import D5.S3.Observer.CubicGain.RegularReadInverse
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Polynomial
 
@@ -25,6 +26,58 @@ open D5.S3.Observer.CubicGain.RegularParentChart
 open D5.S3.Observer.CubicGain.RegularReadInverse
 open D5.S3.Observer.CubicGain.CommonWordSensitivity
 open scoped NNReal Topology
+
+/-! The fixed-column bridge used by the source's degree-one subresultant.
+
+The source matrix has 28 rows and 29 columns, ordered by the powers
+`r^28,...,1`.  The first 27 columns are retained and the final column is
+either the `r` column or the constant column.  The theorem below is the
+literal determinant relation forced by a common finite root; it does not
+expand or identify the source-specific coefficient arrays.
+-/
+
+/-- The fixed 28-row minor retaining the `r` column (columns `r^28,...,r^2,r`). -/
+def fixedMinorR (X : Matrix (Fin 28) (Fin 29) ℝ) : Matrix (Fin 28) (Fin 28) ℝ :=
+  fun i j =>
+    if h : j.val < 27 then X i ⟨j.val, by omega⟩ else X i ⟨27, by omega⟩
+
+/-- The fixed 28-row minor retaining the constant column (columns `r^28,...,r^2,1`). -/
+def fixedMinorC (X : Matrix (Fin 28) (Fin 29) ℝ) : Matrix (Fin 28) (Fin 28) ℝ :=
+  fun i j =>
+    if h : j.val < 27 then X i ⟨j.val, by omega⟩ else X i ⟨28, by omega⟩
+
+/-- Coefficients of the root relation in the fixed-column ordering. -/
+def fixedMinorRootCoeffs (z : ℝ) : Fin 28 → ℝ := fun j =>
+  if h : j.val < 27 then -(z ^ (28 - j.val)) else -z
+
+/--
+The literal fixed 28-row determinants satisfy the necessary linear lift
+relation.  The premise is the row-wise common-root equation written in the
+same fixed-column ordering.  Thus this is the source's no-specialization
+necessary implication, including leading-coefficient drops.
+-/
+theorem fixed_minor_linear_relation
+    (X : Matrix (Fin 28) (Fin 29) ℝ) (z : ℝ)
+    (hroot : ∀ i : Fin 28,
+      ∑ j : Fin 28, (fixedMinorRootCoeffs z j) • fixedMinorR X i j =
+        fixedMinorC X i 27) :
+    z * (fixedMinorR X).det + (fixedMinorC X).det = 0 := by
+  let A := fixedMinorR X
+  have hupd : A.updateCol (27 : Fin 28)
+      (fun i => ∑ j : Fin 28, (fixedMinorRootCoeffs z j) • A i j) =
+      fixedMinorC X := by
+    funext i j
+    by_cases hj : j.val < 27
+    · simp only [Matrix.updateCol_apply]
+      rw [if_neg (by omega : j ≠ 27)]
+      simp [A, fixedMinorR, fixedMinorC, hj]
+    · have hj' : j = 27 := by omega
+      subst j
+      simp only [Matrix.updateCol_apply, if_pos rfl]
+      exact hroot i
+  rw [← hupd, Matrix.det_updateCol_sum]
+  simp [fixedMinorRootCoeffs]
+  ring
 
 /-- Horner encoding of a descending integer coefficient list. -/
 def polyDesc : List ℤ → Polynomial ℝ
