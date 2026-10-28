@@ -215,8 +215,9 @@ theorem normalization_base : normalizationHomeomorph n b (base b) = Sum.inl (bas
 its positive bouquet, and each zero factor contributes a separate isolated point. -/
 def coproductNormalizationHomeomorph {A : Type u} {I : A → Type v}
     (d : ∀ a, I a → ℕ) (q : ∀ a j, StdSphere (d a j)) :
-    (Σ a, FamilyWedge (q a)) ≃ₜ
-      (Σ a, PositiveWedge (d a)) ⊕ (Σ a, ZeroIndex (d a)) := by
+    {e : (Σ a, FamilyWedge (q a)) ≃ₜ
+      (Σ a, PositiveWedge (d a)) ⊕ (Σ a, ZeroIndex (d a)) //
+      ∀ a, e ⟨a, base (q a)⟩ = Sum.inl ⟨a, base (c (d a))⟩} := by
   let fiberwise : (Σ a, FamilyWedge (q a)) ≃ₜ
       (Σ a, PositiveWedge (d a) ⊕ ZeroIndex (d a)) := {
     toEquiv := Equiv.sigmaCongrRight (fun a => (normalizationHomeomorph (d a) (q a)).toEquiv)
@@ -233,7 +234,12 @@ def coproductNormalizationHomeomorph {A : Type u} {I : A → Type v}
     continuous_invFun := (continuous_sigma_iff.mpr (fun a =>
       continuous_sigmaMk.comp continuous_inl)).sumElim
         (continuous_sigma_iff.mpr (fun a => continuous_sigmaMk.comp continuous_inr)) }
-  exact fiberwise.trans distribute
+  refine ⟨fiberwise.trans distribute, ?_⟩
+  intro a
+  change (Equiv.sigmaSumDistrib (fun a => PositiveWedge (d a))
+    (fun a => ZeroIndex (d a))) ⟨a, normalizationHomeomorph (d a) (q a) (base (q a))⟩ = _
+  rw [normalization_base]
+  rfl
 
 #print axioms normalizationHomeomorph
 #print axioms normalization_base
