@@ -96,7 +96,7 @@ private lemma relative_chebyshev_error_tendsto :
 
 /-- The original weighted Mangoldt error converges with exact Euler normalization. -/
 theorem E₁Λ_tendsto :
-    Tendsto _root_.Mertens.E₁Λ atTop (𝓝 (-Real.eulerMascheroniConstant)) := by
+    Tendsto (fun t : ℝ => _root_.Mertens.E₁Λ t) atTop (𝓝 (-Real.eulerMascheroniConstant)) := by
   have htail : Tendsto
       (fun t : ℝ => ∫ u in Ioi t, (Chebyshev.psi u - u) / u ^ 2)
       atTop (𝓝 0) := tendsto_integral_Ioi_zero tendsto_id
@@ -117,7 +117,7 @@ theorem E₁Λ_tendsto :
 
 /-- The original real-variable weighted prime error has a finite limit. -/
 theorem exists_E₁p_limit :
-    ∃ ell : ℝ, Tendsto _root_.Mertens.E₁p atTop (𝓝 ell) := by
+    ∃ ell : ℝ, Tendsto (fun t : ℝ => _root_.Mertens.E₁p t) atTop (𝓝 ell) := by
   let f : ℕ → ℝ := fun n =>
     if ¬n.Prime then ArithmeticFunction.vonMangoldt n / n else 0
   have hf : Summable f := by
