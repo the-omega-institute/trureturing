@@ -1,0 +1,48 @@
+**Definition 3.1 (Two compilation stages).** Set
+
+$$
+\delta=\min\{\varepsilon/8,1/16\}.
+\tag{3.1}
+$$
+
+The first algorithm $G(a_\theta,a_N,\varepsilon)$ performs Lemmas
+2.2–2.3. Replace the $0,1$ letters of $\omega$ by $\mathsf J$, and its
+$N$ letters by $\mathsf N$, obtaining a block $s_*$. Its length is $n$,
+its instrument count is $k\ge1$, its control count is $r=n-k$, and its
+$M$ checkpoints are the endpoints of the prefixes in (2.2). Choose by
+an exact rational loop a positive integer $L$ with
+
+$$
+(1-2^{-k})^L<\delta.
+\tag{3.2}
+$$
+
+Output the timetable $s=s_*^L$, its repeated checkpoints, $T=nL$,
+$\omega$ and the finite sweep certificates. This algorithm has no
+target input.
+
+The second algorithm $H(a_\theta,a_N,a_P,\varepsilon,G\text{-output})$
+enumerates every label prefix at every checkpoint of this timetable,
+including those which its eventual stop table will make unreachable.
+For the chronological word $w$ at that row, compute
+$u_w=u(w,P,\delta/8)$ from (2.1). Its normal stop bit is
+
+$$
+\operatorname{hit}(w)=1\quad\Longleftrightarrow\quad u_w<\delta/2.
+\tag{3.3}
+$$
+
+This is a decidable rational comparison, including when the exact norm
+equals a threshold. At a checkpoint, a hit stops immediately. At the
+last checkpoint, a hit takes priority; otherwise stop and mark timeout.
+At every other row without a hit, continue the same timetable. The
+finite table and its trimmed tree of reachable stopping leaves are
+denoted by $\pi_P$ and $\Lambda_{\pi_P}$.
+
+Along each actual block record whether any of its observed labels
+differs from the corresponding reference label of $\omega$. In a final
+partial block compare only labels which actually occurred. Keep these
+mismatch bits, the timeout bit, every actual original label, the
+executed $N$ positions and the stopping position. Mismatch never causes
+postselection, restart, renormalization or a change of action.
+
