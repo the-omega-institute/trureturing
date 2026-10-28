@@ -37,9 +37,6 @@ private theorem j_square : actionJ * actionJ = 1 := by
   fin_cases i <;> fin_cases j <;>
     norm_num [actionJ,Matrix.mul_apply,Fin.sum_univ_two]
 
-private theorem j_pair (A : Mat) : actionJ * (actionJ * A) = A := by
-  rw [←Matrix.mul_assoc,j_square,Matrix.one_mul]
-
 def Positive (v : Fin 2 → ℝ) : Prop := 0 < v 0 ∧ 0 < v 1
 private def Negative (v : Fin 2 → ℝ) : Prop := v 0 < 0 ∧ v 1 < 0
 def Mixed (v : Fin 2 → ℝ) : Prop :=
@@ -349,7 +346,7 @@ private theorem conjugate_prefix (w : Fin 3 → List Bool) (i : Fin 4) :
     prefixMatrix (conjugateHistory w) i = actionJ * prefixMatrix w i * actionJ := by
   fin_cases i <;>
     simp [prefixMatrix,prefixWord,conjugateHistory,List.ofFn_succ,product_append,
-      futureProduct,Matrix.mul_assoc,j_pair,j_square]
+      futureProduct,Matrix.mul_assoc,j_square]
 
 private theorem conjugate_column (w : Fin 3 → List Bool) (p : PrimitiveCoordinates)
     (i : Fin 4) :
