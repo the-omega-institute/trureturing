@@ -1,0 +1,3 @@
+WIP: actual price-record arithmetic and finite prime confinement
+
+Refactor the occupied log-factorization split and prove divisibility monotonicity of truncated higher mass. Assemble same-integer prime structure and the full-inventory envelope at the logarithmic clock; author compilation and qualitative localization remain pending.
