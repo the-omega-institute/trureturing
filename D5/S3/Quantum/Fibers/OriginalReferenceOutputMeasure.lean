@@ -61,7 +61,7 @@ private theorem referenceTensorJump_eq (c a k S : ℝ) (g : Fin 5 → ℝ) (i : 
     LinearIsometryEquiv.apply_symm_apply]
 
 private theorem source_coefficient (c a beta : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
-    (k : ℝ → ℝ) (i : Fin 5) (t : ℝ) (hc : c < 1/2) (ha : a ∈ Ioo 0 c) :
+    (k : ℝ → ℝ) (i : Fin 5) (t : ℝ) (hc : c < 1 / 2) (ha : a ∈ Ioo 0 c) :
     failureDensity c a beta m theta k i t = modeCoefficient c a k i t * p c a i := by
   rw [failureDensity, jump_action]
   simp only [jump, live, Complex.normSq_mul, modeCoefficient, amplitude]
@@ -95,9 +95,11 @@ private theorem coefficient_measurable (c a T : ℝ) (k : ℝ → ℝ) (i : Fin 
     simp only [p_explicit]
     fin_cases i
     · simpa using hkm
-    · simpa only [Pi.sub_apply] using aestronglyMeasurable_const.sub hkm
+    · change AEStronglyMeasurable ((fun _ : ℝ => c) - k) (volume.restrict (Ioc 0 T))
+      exact aestronglyMeasurable_const.sub hkm
     · exact aestronglyMeasurable_const
-    · simpa only [Pi.sub_apply] using aestronglyMeasurable_const.sub hkm
+    · change AEStronglyMeasurable ((fun _ : ℝ => c) - k) (volume.restrict (Ioc 0 T))
+      exact aestronglyMeasurable_const.sub hkm
     · simpa using hkm
   have ham : AEStronglyMeasurable
       (fun t => amplitude c a (k t) (survival c k t) (jumpRate c k t) i)

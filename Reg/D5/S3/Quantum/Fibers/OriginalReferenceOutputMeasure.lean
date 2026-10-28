@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Fibers.OriginalReferenceOutputMeasure
 import Reg.Support.DependentFamily
 
+/-! Full-telescope audit attempt for the repeated-reference Bochner event norm. -/
+
 open scoped ComplexOrder InnerProductSpace BigOperators
 open TraceClassFiniteBlocks MeasureTheory Set
 open _root_.D5.S3.Quantum.Fibers
@@ -59,7 +61,13 @@ private theorem actual_law : arena.{u}.Law actual := by
 
 private theorem rejected_fails : ¬ arena.{u}.Law rejected := by
   intro h
-  have hh := (h (H := EuclideanSpace ℂ (ULift.{u} Unit)) band 1 (by norm_num) false 0 0 (by simp)).2.2
+  have hz : 0 ≤ (0 : TraceClass (Blocks (Fin 5)
+      (EuclideanSpace ℂ (ULift.{u} Unit)))).1 := by
+    change (0 : Blocks (Fin 5) (EuclideanSpace ℂ (ULift.{u} Unit)) →L[ℂ]
+      Blocks (Fin 5) (EuclideanSpace ℂ (ULift.{u} Unit))) ≤ 0
+    exact le_rfl
+  have hh := (h (H := EuclideanSpace ℂ (ULift.{u} Unit)) band 1
+    (by norm_num) false 0 0 hz).2.2
     ∅ MeasurableSet.empty
   have he := hh.2.2.2
   norm_num [rejected, realize] at he
