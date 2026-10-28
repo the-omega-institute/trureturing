@@ -64,7 +64,7 @@ Lean statement: `D5/S3/Quantum/Matrix/HsfCubicRadial.universal_constant_iff`
 
 For every real C, UniversalCubicBound(C) holds if and only if C>=5. Sufficiency follows from the general matrix estimate. Necessity already follows in dimension one from A=1, B=-1, k=1, for which the Hessian is 24 and the third derivative is -120. The center is positive definite and one endpoint is singular. Consequently 5 cannot be improved even if the class is restricted to positive definite centers.
 
-This is the normalized matrix-pencil result for alpha=3 and the radial second-variable restriction of the He-Saunderson-Fawzi question, Operator convexity along lines, self-concordance, and sandwiched Renyi entropies: arXiv:2502.05627v1, Conjecture 6.2; DOI 10.1007/s10107-025-02314-0, Conjecture 1. A fixed congruence motivates this normalization. An equality with the physical CFC-power expression is not proved here. General second-variable directions and exponents above 3 remain outside this theorem. The full conjecture remains open. No originality or official acceptance is asserted.
+This is the normalized matrix-pencil result for alpha=3 and the radial second-variable restriction of the He-Saunderson-Fawzi question, Operator convexity along lines, self-concordance, and sandwiched Renyi entropies: arXiv:2502.05627v1, Conjecture 6.2; DOI 10.1007/s10107-025-02314-0, Conjecture 1. A fixed congruence motivates this normalization. An equality with the physical CFC-power expression is not proved here. General second-variable directions and other exponents remain outside this theorem. The full conjecture remains open.
 
 ## References
 

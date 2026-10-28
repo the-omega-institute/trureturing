@@ -52,9 +52,8 @@ internal sealed class HsfCubicRadialDocument : IScribeDocumentDefinition
                 + "arXiv:2502.05627v1, Conjecture 6.2; DOI 10.1007/s10107-025-02314-0, "
                 + "Conjecture 1. A fixed congruence motivates this normalization. "
                 + "An equality with the physical CFC-power expression is not proved here. "
-                + "General second-variable directions and exponents above 3 remain outside "
-                + "this theorem. The full conjecture remains open. No originality or "
-                + "official acceptance is asserted.")))));
+                + "General second-variable directions and other exponents remain outside "
+                + "this theorem. The full conjecture remains open.")))));
 
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("hsf-cubic-radial-" + name.Replace('_', '-').ToLowerInvariant()),
