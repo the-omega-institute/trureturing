@@ -82,6 +82,10 @@ $$\forall k \in Nat,\; \forall n \in Nat,\; (8 \le k) \Rightarrow ((1 \le n - k)
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/EdgeLabeling/CycleStarIrregularity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cycle-star-irregularity` (proved) by `D5/S3/Combinatorics/EdgeLabeling/CycleStarIrregularity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cycle-star-irregularity","declaration_gid":"D5/S3/Combinatorics/EdgeLabeling/CycleStarIrregularity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Umme Salma; H. M. Nagesh; Narahari N. (2024). *On edge irregularity strength of cycle-star graphs*. DOI: [10.22199/issn.0717-6279-5801](https://doi.org/10.22199/issn.0717-6279-5801). URL: <https://arxiv.org/abs/2405.12263v1>.

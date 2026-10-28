@@ -63,13 +63,16 @@ internal sealed class CycleStarIrregularityDocument : IScribeDocumentDefinition
                 + "sums are at most K, and the closing and leaf sums are larger. The resulting labeling "
                 + "attains K, and the two lower bounds prove leastness. Splitting at n=2k-3 gives exactly "
                 + "the displayed assertion.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cycle-star-irregularity"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("cycle-star-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Nat => F.Id("Nat");
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
