@@ -460,7 +460,7 @@ private lemma Delta_fixed {S : MatrixMap (Fin 2) (Fin 2) ℂ → MatrixMap (Fin 
   have hmix : (∑ i : Fin 4, ((1/4 : ℝ) : ℂ) • unitaryChannel (U i)) = (D5.S3.Quantum.QuantumChannels.ProductUnitaryChoiSpectrum.depol 2) := by
     rw [Delta_pauli]; simp [unitaryChannel, U, Fin.sum_univ_succ, Finset.smul_sum, add_assoc]
   simpa only [hmix] using h
-private lemma pauli_expansion (X : QubitMatrix) : X = (Matrix.trace X / 2) • (1 : QubitMatrix) + ∑ b : Fin 3, (Matrix.trace (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli b * X) / 2) • D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli b := by
+lemma pauli_expansion (X : QubitMatrix) : X = (Matrix.trace X / 2) • (1 : QubitMatrix) + ∑ b : Fin 3, (Matrix.trace (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli b * X) / 2) • D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli b := by
   let Y : Matrix (Fin 1 → Fin 2) (Fin 1 → Fin 2) ℂ := fun i j => X (i 0) (j 0)
   have ht (p : Pauli) : Matrix.trace (wordOp (fun _ : Fin 1 => p) * Y) = Matrix.trace (pauliMatrix p * X) := by
     simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply,
@@ -554,7 +554,7 @@ lemma density_psd (a : Fin 3) (e : Bool) : ((fun (a : Fin 3) (e : Bool) => D5.S3
   have hp : (![Pauli.X, Pauli.Y, Pauli.Z] a) ≠ Pauli.I := by fin_cases a <;> decide
   obtain ⟨_, U, _, _, _, _, _, hEq⟩ := D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral_stabilizer (![Pauli.X, Pauli.Y, Pauli.Z] a) (if e then 1 else 0) hp
   dsimp only; rw [hEq]; exact Matrix.posSemidef_vecMulVec_self_star _
-private lemma sigma_trace (a : Fin 3) : Matrix.trace (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli a) = 0 := by
+lemma sigma_trace (a : Fin 3) : Matrix.trace (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli a) = 0 := by
   have h := D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.pauli_trace_pair (![Pauli.X, Pauli.Y, Pauli.Z] a) Pauli.I
   fin_cases a <;> simpa [D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli, pauliMatrix] using h
 lemma density_trace (a : Fin 3) (e : Bool) : Matrix.trace ((fun (a : Fin 3) (e : Bool) => D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral (![Pauli.X, Pauli.Y, Pauli.Z] a) (if e then 1 else 0)) a e) = 1 := by
