@@ -109,7 +109,10 @@ internal sealed class SignalingDimensionHellyCertificateDocument : IScribeDocume
                         + "to obtain a nonempty input set i with at most K elements and empty intersection. "
                         + "If the restriction of p to i were simulable, the forward construction would give one q belonging to Fₓ "
                         + "for every x in i, contradicting that empty intersection. Substituting K = binomial(k,d) proves the bound."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("doolittle-chitambar-2021-signaling-dimension-certificate-size"),
+                    ResolutionKind.Proved)))));
 
     private static Formula SimulationFormula()
     {
