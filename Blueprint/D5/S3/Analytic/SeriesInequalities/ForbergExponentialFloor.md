@@ -10,6 +10,10 @@ $$\forall n: \mathbb{N}, 1\leq n \implies \lfloor \frac{n}{\operatorname{exp}\le
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/SeriesInequalities/ForbergExponentialFloor.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a002620-forberg-exponential-floor` (proved) by `D5/S3/Analytic/SeriesInequalities/ForbergExponentialFloor.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a002620-forberg-exponential-floor","declaration_gid":"D5/S3/Analytic/SeriesInequalities/ForbergExponentialFloor.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Richard R. Forberg; OEIS Foundation Inc. (2013). *Forberg's empirical exponential formula for OEIS A002620*. URL: <https://oeis.org/A002620/internal>.

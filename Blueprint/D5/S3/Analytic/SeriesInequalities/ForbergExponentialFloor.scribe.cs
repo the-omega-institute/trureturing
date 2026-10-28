@@ -25,7 +25,10 @@ internal sealed class ForbergExponentialFloorDocument : IScribeDocumentDefinitio
                 Paragraph(Text("For every real r >= 2, the analytic estimate is (r-1)^2/4 <= r/(exp(4/r)-1) < r^2/4-r/2+1. To prove the lower bound, put q=(1+1/r)/(1-1/r). The logarithmic series bound gives 4/r <= 2 log(q), hence exp(4/r) <= ((r+1)/(r-1))^2. The denominator exp(4/r)-1 is positive, so division gives the required lower bound. The upper bound follows from exp(4/r) >= 1+4/r+(4/r)^2/2 and multiplication by positive quantities.")),
                 Paragraph(Text("For n=2k, both real expressions lie in the integer floor interval [k(k-1),k(k-1)+1). For n=2k+1, both lie in [k^2,k^2+1). The two-sided estimate supplies these intervals for all n >= 2. At n=1 the quadratic exponential bound gives 0 <= 1/(exp(4)-1) < 1, while the shifted square is zero. The characterization floor(x)=z if and only if z <= x < z+1 finishes every case.")),
                 Paragraph(Text("The logarithmic, quadratic exponential, order and floor facts are classical. The identity is stated on the positive integers; no real-parameter extension or claim of priority is asserted."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("oeis-a002620-forberg-exponential-floor"),
+                ResolutionKind.Proved)))));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Sub(Formula a, Formula b) =>
