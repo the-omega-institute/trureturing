@@ -10,6 +10,7 @@ import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 import Mathlib.Data.Finset.Sum
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Analysis.Polynomial.Basic
+import Mathlib.Analysis.Complex.Basic
 import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Tactic
 
@@ -140,7 +141,8 @@ private theorem cone_polynomial [Fintype V] [Nonempty V] (G : SimpleGraph V) :
   rw [hs, Fintype.sum_prod_type]
   have hu : (univ : Finset (Finset Unit)) = {∅, {()}} := by decide +kernel
   rw [hu]
-  simp only [Finset.sum_insert, Finset.sum_singleton, show (∅ : Finset Unit) ∉ ({ {()} } : Finset (Finset Unit)) by decide,
+  simp only [Finset.sum_insert, Finset.sum_singleton, show (∅ : Finset Unit) ∉
+      ({ {()} } : Finset (Finset Unit)) by decide,
     not_false_eq_true, cone_without_hub, cone_with_hub, card_disjSum, card_empty,
     card_singleton, zero_add]
   have hB : (∑ B : Finset V, if B.Nonempty then (X : ℝ[X]) ^ (1 + B.card) else 0) =
@@ -157,7 +159,7 @@ private theorem cone_polynomial [Fintype V] [Nonempty V] (G : SimpleGraph V) :
         ext B
         simp [Finset.nonempty_iff_ne_empty]
       rw [hfilter]
-      simpa using eq_sub_iff_add_eq.mpr he
+      simpa only [card_empty, pow_zero] using eq_sub_iff_add_eq.mpr he
     rw [← hsum, Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro B _
@@ -228,7 +230,7 @@ def seedGraph (m : ℕ) : SimpleGraph (Unit ⊕ SeedBase m) := coneGraph (seedBa
 
 private theorem seed_base_card (m : ℕ) : Fintype.card (SeedBase m) = 5 * m + 3 := by
   induction m with
-  | zero => norm_num [SeedBase]
+  | zero => change Fintype.card (Fin 3) = 3; norm_num
   | succ m ih =>
     change Fintype.card (Fin 5 ⊕ SeedBase m) = _
     rw [Fintype.card_sum, ih]
@@ -238,7 +240,10 @@ private theorem seed_base_card (m : ℕ) : Fintype.card (SeedBase m) = 5 * m + 3
 private theorem seed_base_polynomial (m : ℕ) : totalPolynomial (seedBaseGraph m) =
     (5 * X ^ 3 + 5 * X ^ 4 + X ^ 5) ^ m * (3 * X ^ 2 + X ^ 3) := by
   induction m with
-  | zero => simpa [seedBaseGraph] using clique_three_polynomial
+  | zero =>
+    simp only [pow_zero, one_mul]
+    convert clique_three_polynomial using 1
+    rfl
   | succ m ih =>
     change totalPolynomial (unionGraph (SimpleGraph.cycleGraph 5) (seedBaseGraph m)) = _
     rw [union_polynomial, cycle_five_polynomial, ih, pow_succ]
@@ -360,6 +365,108 @@ theorem actual_seed_root_right (s : ℕ) (hs : 3 ≤ s) (ho : Odd s) :
       obtain ⟨u⟩ := seedBaseNonempty (s ^ 2)
       exact ⟨.inr u, trivial⟩
     | inr v => exact ⟨.inl (), trivial⟩
+
+private theorem total_equiv (G : SimpleGraph V) (e : W ≃ V) (S : Finset W) :
+    IsTotal (G.comap e) S ↔ IsTotal G (S.map e.toEmbedding) := by
+  constructor
+  · intro h v
+    obtain ⟨u, hu, hadj⟩ := h (e.symm v)
+    exact ⟨e u, mem_map.mpr ⟨u, hu, rfl⟩, by simpa using hadj⟩
+  · intro h w
+    obtain ⟨v, hv, hadj⟩ := h (e w)
+    obtain ⟨u, hu, rfl⟩ := mem_map.mp hv
+    exact ⟨u, hu, hadj⟩
+
+private theorem polynomial_equiv [Fintype V] [Fintype W]
+    (G : SimpleGraph V) (e : W ≃ V) :
+    totalPolynomial (G.comap e) = totalPolynomial G := by
+  classical
+  unfold totalPolynomial
+  exact Fintype.sum_equiv e.finsetCongr _ _ (fun S => by
+    simp [Equiv.finsetCongr_apply, total_equiv G e S])
+
+/-- Finite labelled witnesses to the right-hand accumulation at minus one. -/
+theorem labelled_seed_root (s : ℕ) (hs : 3 ≤ s) (ho : Odd s) :
+    ∃ (n : ℕ) (G : SimpleGraph (Fin n)) (r : ℝ),
+      n = 5 * s ^ 2 + 4 ∧ 2 ≤ n ∧ -1 < r ∧ r < -1 + 1 / (s : ℝ) ∧
+      (totalPolynomial G).IsRoot r ∧ totalPolynomial G ≠ 0 ∧
+      (∀ v, ∃ u, G.Adj v u) := by
+  classical
+  obtain ⟨r, hl, hr, hz, hnz, hni⟩ := actual_seed_root_right s hs ho
+  let V := Unit ⊕ SeedBase (s ^ 2)
+  let n := Fintype.card V
+  let e : Fin n ≃ V := (Fintype.equivFin V).symm
+  let G := (seedGraph (s ^ 2)).comap e
+  have hp : totalPolynomial G = totalPolynomial (seedGraph (s ^ 2)) :=
+    polynomial_equiv _ e
+  have hn : n = 5 * s ^ 2 + 4 := by
+    dsimp [n, V]
+    rw [Fintype.card_sum, seed_base_card]
+    simp
+    omega
+  refine ⟨n, G, r, hn, by omega, hl, hr, ?_, ?_, ?_⟩
+  · rwa [hp]
+  · rwa [hp]
+  · intro v
+    obtain ⟨u, hu⟩ := hni (e v)
+    exact ⟨e.symm u, by simpa [G] using hu⟩
+
+/-- Arbitrarily small positive shifts are realized by nonzero actual graph polynomials. -/
+theorem arbitrarily_small_positive_shift (ε : ℝ) (hε : 0 < ε) :
+    ∃ (n : ℕ) (G : SimpleGraph (Fin n)) (r : ℝ),
+      2 ≤ n ∧ 0 < 1 + r ∧ 1 + r < ε ∧
+      (totalPolynomial G).IsRoot r ∧ totalPolynomial G ≠ 0 ∧
+      (∀ v, ∃ u, G.Adj v u) := by
+  obtain ⟨k, hk⟩ := exists_nat_one_div_lt hε
+  let s := 2 * k + 3
+  have hs : 3 ≤ s := by dsimp [s]; omega
+  have ho : Odd s := ⟨k + 1, by dsimp [s]; omega⟩
+  obtain ⟨n, G, r, hn, hn2, hl, hr, hz, hnz, hni⟩ := labelled_seed_root s hs ho
+  have hks : (k : ℝ) + 1 ≤ s := by dsimp [s]; push_cast; linarith
+  have hsmall : 1 / (s : ℝ) < ε :=
+    lt_of_le_of_lt (one_div_le_one_div_of_le (by positivity) hks) hk
+  exact ⟨n, G, r, hn2, by linarith, by linarith, hz, hnz, hni⟩
+
+/-- The same actual-subset definition with complex coefficients. -/
+noncomputable def complexPolynomial [Fintype V] (G : SimpleGraph V) : ℂ[X] := by
+  classical
+  exact ∑ S : Finset V, if IsTotal G S then X ^ S.card else 0
+
+private theorem complex_polynomial_map [Fintype V] (G : SimpleGraph V) :
+    complexPolynomial G = (totalPolynomial G).map Complex.ofRealHom := by
+  classical
+  unfold complexPolynomial totalPolynomial
+  rw [Polynomial.map_sum]
+  apply Finset.sum_congr rfl
+  intro S _
+  split_ifs <;> simp
+
+/-- The exact original whole-plane target. No theorem asserting this is supplied here. -/
+def WholePlaneDensity : Prop :=
+  ∀ (z : ℂ) (ε : ℝ), 0 < ε →
+    ∃ (n : ℕ) (G : SimpleGraph (Fin n)) (w : ℂ),
+      2 ≤ n ∧ (∀ v, ∃ u, G.Adj v u) ∧ complexPolynomial G ≠ 0 ∧
+      (complexPolynomial G).IsRoot w ∧ ‖w - z‖ < ε
+
+/-- Genuine complex graph roots accumulate at minus one from the real right side. -/
+theorem complex_seed_accumulation (ε : ℝ) (hε : 0 < ε) :
+    ∃ (n : ℕ) (G : SimpleGraph (Fin n)) (r : ℝ),
+      2 ≤ n ∧ (∀ v, ∃ u, G.Adj v u) ∧ complexPolynomial G ≠ 0 ∧
+      (complexPolynomial G).IsRoot (r : ℂ) ∧
+      0 < 1 + r ∧ ‖(r : ℂ) - (-1 : ℂ)‖ < ε := by
+  obtain ⟨n, G, r, hn, hl, hr, hz, hnz, hni⟩ := arbitrarily_small_positive_shift ε hε
+  refine ⟨n, G, r, hn, hni, ?_, ?_, hl, ?_⟩
+  · rw [complex_polynomial_map]
+    exact (Polynomial.map_ne_zero_iff Complex.ofReal_injective).mpr hnz
+  · rw [complex_polynomial_map]
+    exact hz.map
+  · have he : (r : ℂ) - (-1 : ℂ) = ((1 + r : ℝ) : ℂ) := by push_cast; ring
+    rw [he, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hl]
+    exact hr
+
+#print axioms complex_seed_accumulation
+
+#print axioms arbitrarily_small_positive_shift
 
 #print axioms actual_seed_root_right
 
