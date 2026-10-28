@@ -268,7 +268,9 @@ noncomputable def lowerRegistration :
   realization := .source lowerArena ⟨lowerFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some pairActual
+  readout := some (realize pairSignature
+    (fun _ p A => letI : DecidableEq p.1.1 := p.1.2.1; (A.val ∆ p.2.val).card)
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -301,7 +303,9 @@ noncomputable def shortestRegistration :
   realization := .source shortestArena ⟨shortestFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some pairActual
+  readout := some (realize pairSignature
+    (fun _ p A => letI : DecidableEq p.1.1 := p.1.2.1; (A.val ∆ p.2.val).card)
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -334,7 +338,9 @@ noncomputable def distanceRegistration :
   realization := .source distanceArena ⟨distanceFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some pairActual
+  readout := some (realize pairSignature
+    (fun _ p A => letI : DecidableEq p.1.1 := p.1.2.1; (A.val ∆ p.2.val).card)
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -367,7 +373,9 @@ noncomputable def intervalRegistration :
   realization := .source intervalArena ⟨intervalFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some tripleActual
+  readout := some (realize tripleSignature
+    (fun _ p A => letI : DecidableEq p.1.1.1 := p.1.1.2.1;
+      (flipGraph p.1.1.2.2).dist A p.1.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -400,7 +408,9 @@ noncomputable def connectedRegistration :
   realization := .source connectedArena ⟨connectedFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some connectedActual
+  readout := some (realize connectedSignature
+    (fun _ p F => letI : DecidableEq p.1 := p.2; (flipGraph F).Connected)
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
