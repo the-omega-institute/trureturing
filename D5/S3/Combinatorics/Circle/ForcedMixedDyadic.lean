@@ -422,7 +422,8 @@ theorem obstructing_inventory_exists (r : ℕ) (hr : 3 ≤ r) :
     simp only [List.countP_append]
     change count r (prior r) _ + _ = _
     rw [prior_counts r _ (by decide)]
-    norm_num [T, List.countP_cons, label_exp]; omega
+    norm_num [T, List.countP_cons, label_exp]
+  all_goals omega
 
 
 /-- The two-label bound is attained on an unbounded family, and every strict
