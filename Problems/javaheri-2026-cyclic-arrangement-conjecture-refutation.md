@@ -105,6 +105,38 @@ a certified instance refutation; it does not assert a corrected formula for
 the largest valid dimension, settle the source's other parameter pairs, or
 make finite arithmetic screening itself a Lean proof.
 
+### What the settlement shows
+
+- **Proved — failure mechanism:**
+  `D5/S0/Certificates/Polynomials/JavaheriArrangementDimensionRefutation.result`
+  refutes the universal identity using the consumed private lemmas
+  `isNStar_three` and `not_valid_three`: at `(a,b)=(6,1)` the threshold maximum
+  is `3`, but dimension `3` is invalid. Thus satisfying the source's
+  second-variation threshold does not suffice for the inequality to hold for
+  every nonnegative tuple. The witness has strictly positive entries and
+  lies at threshold equality, `36 = 48·(3/4)`.
+- **Computed — exact witness difference:**
+  `python3 -c 'print(16*(6**6*5+5**6*5+5**6*6)-(6**4+2*5**4)**2)'`
+  returns `364`. This arithmetic check supplements the existing Lean proof.
+- **Open — nearest surviving statements:** the source separately argues for
+  the weaker upper bound `N(a,b) ≤ N*(a,b)` (Theorem 1.2) and restricted cases
+  of equality: `(1,1)`, the coordinate axes, and the triangle region with
+  `N*=4` (Section 7). Their independent formal verification remains open
+  here; `result` does not prove them. Whether a strict threshold inequality
+  or a further parameter restriction suffices globally is also open, as are
+  a corrected formula and the actual value of `N(6,1)`.
+- **Open — effects on other source results and questions:** Section 7 uses
+  Conjecture 1.3 and the square-root triangle lemma to predict the exact
+  parameter region for validity in dimension `4`. The refuted conjecture
+  no longer supplies that prediction's justification; the prediction itself
+  remains open here. The numerical observations in that section supply no
+  replacement proof. The source also gives separate arguments for
+  finiteness/descent, the triangle-region dimension-four inequality, the
+  `(1,1)` case, ray monotonicity, and the arrangement/volume bounds. This
+  settlement does not verify those arguments or settle those statements;
+  their independent verification and any further consequences for them
+  remain open here.
+
 ## ASSUMED-UNVERIFIED
 
 The literature check is bounded to the source and repository/search surfaces
