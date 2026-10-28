@@ -192,8 +192,15 @@ theorem old_bins_residues {α : Type*} [DecidableEq α]
       S.filter (fun x => e x < q) := by
     ext x
     simp only [Finset.mem_filter]
-    omega
+    constructor
+    · rintro ⟨⟨hx, _⟩, hq⟩; exact ⟨hx, hq⟩
+    · rintro ⟨hx, hq⟩; exact ⟨⟨hx, lt_of_lt_of_le hq hqb⟩, hq⟩
   rw [hf]
-  omega
+  have heq : (n + 1) * (2 ^ q - 1) - g =
+      n * (2 ^ q - 1) + (2 ^ q - (g + 1)) := by
+    rw [Nat.add_mul, one_mul]
+    omega
+  rw [heq]
+  exact hr
 
 end D5.S3.Combinatorics.Circle.DyadicResetAllocation
