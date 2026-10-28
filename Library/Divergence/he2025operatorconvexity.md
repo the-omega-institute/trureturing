@@ -39,9 +39,14 @@ estimate at \(\alpha=3\): for Hermitian \(A,B\) with
 satisfies \(f''(0)\ge0\) and
 \(|f'''(0)|\le(1+4|k|)f''(0)\). Over \(|k|\le1\), the least
 uniform constant is 5. Its proof is repository-derived and allows
-noncommuting matrices. An equality with the physical CFC-power expression
-is not formalized there. General second-variable directions and other
-exponents are outside that module; it does not resolve the conjecture.
+noncommuting matrices. Its physical radial application takes
+\(K=kY\), \(S=Y^{-1/3}\), \(A=SXS\), and \(B=SHS\).
+For positive definite \(X,Y\) and Hermitian \(H\) with
+\(X\pm H\succeq0\), positive-scalar CFC scaling identifies the original
+trace function with \(f\) near zero. Thus its actual second and third
+derivatives satisfy the same bound, including singular endpoints.
+General second-variable directions and other exponents are outside
+this application; it does not resolve the conjecture.
 
 ## Verified locators
 

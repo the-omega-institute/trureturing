@@ -50,10 +50,22 @@ internal sealed class HsfCubicRadialDocument : IScribeDocumentDefinition
                 + "radial second-variable restriction of the He-Saunderson-Fawzi question, "
                 + "Operator convexity along lines, self-concordance, and sandwiched Renyi entropies: "
                 + "arXiv:2502.05627v1, Conjecture 6.2; DOI 10.1007/s10107-025-02314-0, "
-                + "Conjecture 1. A fixed congruence motivates this normalization. "
-                + "An equality with the physical CFC-power expression is not proved here. "
+                + "Conjecture 1. "
                 + "General second-variable directions and other exponents remain outside "
-                + "this theorem. The full conjecture remains open.")))));
+                + "this theorem. The full conjecture remains open.")),
+            Paragraph(Text("Application to the physical radial trace. Let X and Y be positive "
+                + "definite complex Hermitian matrices, let H be Hermitian with X+H and X-H "
+                + "positive semidefinite, and let k be real with |k|<=1. Set S=Y^(-1/3), "
+                + "A=SXS and B=SHS, using real continuous functional calculus for the matrix "
+                + "power. For the actual function phi(t)=Re Tr[((Y+t kY)^(-1/3)(X+tH) "
+                + "(Y+t kY)^(-1/3))^3], the positive-scalar CFC identity "
+                + "(cY)^(-1/3)=c^(-1/3)S applies with c=1+kt>0 near zero. It yields "
+                + "phi(t)=f(t) on a neighborhood of zero. The derivative formulas and "
+                + "inequalities above therefore apply to phi, in particular phi''(0)>=0 "
+                + "and |phi'''(0)|<=5phi''(0). Congruence by the Hermitian S preserves "
+                + "both PSD endpoints; no pairwise commutation is used, and singular "
+                + "endpoints are allowed. This application covers only alpha=3 and "
+                + "radial second-variable directions.")))));
 
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("hsf-cubic-radial-" + name.Replace('_', '-').ToLowerInvariant()),
