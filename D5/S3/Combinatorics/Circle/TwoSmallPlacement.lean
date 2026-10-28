@@ -8,6 +8,8 @@
 module
 public import D5.S3.Combinatorics.Circle.TwoSmallProfile
 
+/-! # Explicit placement for two free SMALL gaps -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -56,7 +58,7 @@ private theorem paired_segment (f : ℕ → ℤ) (B : ℤ) (off start len : ℕ)
       rw [he]
       omega
 
-private theorem unscale_strip (f : ℕ → ℤ) (C h : ℤ) (word : List ℕ)
+theorem unscale_strip (f : ℕ → ℤ) (C h : ℤ) (word : List ℕ)
     (hs : InStrip (fun i => 3 * f i) (3 * C) (3 * h) word) :
     InStrip f C h word := by
   induction word generalizing h with

@@ -8,6 +8,8 @@
 module
 public import D5.S3.Combinatorics.Circle.ExpandingSourcePath
 
+/-! # Alternating profiles and two-gap period closure -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -28,7 +30,7 @@ def paritySign (n : ℕ) : ℤ := if n % 2 = 0 then 1 else -1
   unfold paritySign
   split_ifs <;> norm_num
 
- theorem paritySign_pow (n : ℕ) : paritySign n * (2 : ℤ) ^ n = (-2 : ℤ) ^ n := by
+theorem paritySign_pow (n : ℕ) : paritySign n * (2 : ℤ) ^ n = (-2 : ℤ) ^ n := by
   induction n with
   | zero => simp
   | succ n ih => rw [paritySign_succ, pow_succ, pow_succ, ← ih]; ring
@@ -49,7 +51,7 @@ theorem large_gap_profile (Q N : ℤ) (hQ : 2 ≤ Q) (hN : N = 4 * Q - 1)
     have ht := hstep 0 (by omega)
     have h1 : ¬N < 4 * w 0 := by omega
     have h2 : ¬4 * w 0 < -N := by omega
-    rw [doubleStep, if_neg h1, if_neg h2] at ht
+    rw [doubleStep, ite_eq_right h1, ite_eq_right h2] at ht
     simp only [paritySign_zero, one_mul, pow_zero]
     constructor <;> omega
   | succ j ih =>
@@ -63,14 +65,14 @@ theorem large_gap_profile (Q N : ℤ) (hQ : 2 ≤ Q) (hN : N = 4 * Q - 1)
       rw [he] at hsgn heq ⊢
       simp only [one_mul] at hsgn heq
       rw [abs_of_pos hsgn] at hL
-      rw [doubleStep, if_pos (by omega : N < 4 * w (j + 1))] at ht
+      rw [doubleStep, ite_eq_left (by omega : N < 4 * w (j + 1))] at ht
       constructor <;> nlinarith
     · have he : paritySign j = -1 := by simp [paritySign, hp]
       rw [he] at hsgn heq ⊢
       have hn : w (j + 1) < 0 := by omega
       rw [abs_of_neg hn] at hL
-      rw [doubleStep, if_neg (by omega : ¬N < 4 * w (j + 1)),
-        if_pos (by omega : 4 * w (j + 1) < -N)] at ht
+      rw [doubleStep, ite_eq_right (by omega : ¬N < 4 * w (j + 1)),
+        ite_eq_left (by omega : 4 * w (j + 1) < -N)] at ht
       constructor <;> nlinarith
 
 /-- The magnitude equation at the endpoint of the same actual arc. -/
@@ -145,6 +147,7 @@ theorem cyclic_two_gap_classifier (ell m : ℕ) (Q N C : ℤ)
     dsimp [v]
     unfold paritySign
     split_ifs <;> simp only [one_mul, neg_one_mul] <;> omega
+  have hsmallbounds := abs_lt.mp hsmall
   have hvs : 0 < v 0 ∧ v 0 < Q := by
     rw [hv0]
     refine ⟨hr, ?_⟩
@@ -172,7 +175,7 @@ theorem cyclic_two_gap_classifier (ell m : ℕ) (Q N C : ℤ)
     dsimp [v] at hlast
     rw [he, hclose] at hlast
     unfold paritySign at hlast
-    split_ifs at hlast <;> nlinarith
+    split_ifs at hlast <;> simp only [one_mul, neg_one_mul, neg_neg] at hlast <;> omega
   have hsign : paritySign m = paritySign ell := by simp [paritySign, hpar]
   have he2' : 3 * w 0 = N + (-2 : ℤ) ^ m * (6 * r - N) := by
     have he : paritySign m * v (m + 1) = w 0 := by
