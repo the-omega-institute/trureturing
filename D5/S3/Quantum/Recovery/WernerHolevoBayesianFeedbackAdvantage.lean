@@ -122,7 +122,7 @@ private theorem diag_zero {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
     (hK : IsKrausDecomposition K) (a : Fin m) (i : Fin 3) : K a i i = 0 := by
   have hh := quad_zero K hK (basisVector i) a
   unfold quad Matrix.mulVec dotProduct at hh
-  simpa [basisVector, Fin.sum_univ_succ] using hh
+  simpa [basisVector.eq_1, Fin.sum_univ_succ] using hh
 
 private theorem offdiag_zero {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
     (hK : IsKrausDecomposition K) (a : Fin m) (i j : Fin 3) (hij : i ≠ j) :
@@ -130,7 +130,7 @@ private theorem offdiag_zero {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ
   have hh := quad_zero K hK (fun k => basisVector i k + basisVector j k) a
   unfold quad Matrix.mulVec dotProduct at hh
   fin_cases i <;> fin_cases j <;>
-    simp_all [basisVector, Fin.sum_univ_succ,
+    simp_all [basisVector.eq_1, Fin.sum_univ_succ,
       diag_zero K hK a] <;> simpa [add_comm] using hh
 
 private theorem tp {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
@@ -165,7 +165,7 @@ private theorem reprK {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
   have h02' := eq_neg_of_add_eq_zero_left h02
   have h12' := eq_neg_of_add_eq_zero_left h12
   fin_cases i <;> fin_cases j <;>
-    simp [z, crossProduct, hs, hd, h01, h02, h12, h01', h02', h12']
+    simp [z, crossProduct.eq_1, hs, hd, h01, h02, h12, h01', h02', h12']
 
 private theorem frameK {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
     (hK : IsKrausDecomposition K) (z : Fin m → Fin 3 → ℂ)
@@ -185,7 +185,7 @@ private theorem frameK {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
   have h01 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 1) htp
   have h02 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 2) htp
   have h12 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 1 2) htp
-  simp [crossProduct, Matrix.mul_apply, Matrix.conjTranspose_apply,
+  simp [crossProduct.eq_1, Matrix.mul_apply, Matrix.conjTranspose_apply,
     Matrix.sum_apply, Matrix.one_apply, Fin.sum_univ_succ,
     Complex.star_def] at h00 h11 h22 h01 h02 h12
   simp only [← mul_assoc] at h00 h11 h22 h01 h02 h12
@@ -261,14 +261,14 @@ private theorem complement_square {n : Type} [Fintype n] [DecidableEq n]
     Matrix.mul_one, hV, smul_smul]
   module
 
-private theorem complement_scale {n : Type} [Fintype n] [DecidableEq n]
-    (r c : ℂ) (hr : r ≠ 0) (hr2 : r ^ 2 = c) (V : Matrix n n ℂ) :
+private theorem complement_scale {n : Type} [DecidableEq n]
+    (r c : ℂ) (hr2 : r ^ 2 = c) (V : Matrix n n ℂ) :
     r • (1 : Matrix n n ℂ) - r⁻¹ • V = r⁻¹ • (c • (1 : Matrix n n ℂ) - V) := by
-  simp only [smul_sub, smul_smul]
-  field_simp [hr]
-  rw [← hr2]
-  congr 1
-  field_simp [hr]
+  subst c
+  by_cases hr : r = 0
+  · simp [hr]
+  · simp only [smul_sub, smul_smul]
+    rw [show r⁻¹ * r ^ 2 = r by field_simp [hr]]
 
 private theorem complement_root {n : Type} [Fintype n] [DecidableEq n]
     (c : ℂ) (r : ℝ) (hrpos : 0 < r) (hr : (r : ℂ) ≠ 0) (hr2 : (r : ℂ) ^ 2 = c)
@@ -281,7 +281,7 @@ private theorem complement_root {n : Type} [Fintype n] [DecidableEq n]
   have hsq : H * H = c • H := complement_square c V hV
   have hs : S = (r : ℂ)⁻¹ • H := by
     dsimp [S, H]
-    exact complement_scale (r : ℂ) c hr hr2 V
+    exact complement_scale (r : ℂ) c hr2 V
   have hss : S * S = H := by
     rw [hs, Matrix.smul_mul, Matrix.mul_smul, hsq]
     have he : ((r : ℂ)⁻¹ * (r : ℂ)⁻¹) * c = 1 := by
@@ -311,14 +311,14 @@ private theorem abs_crossProduct (z : Fin 3 → ℂ) :
   · subst z
     have hcp : crossProduct (0 : Fin 3 → ℂ) = 0 := by
       ext i j
-      fin_cases i <;> fin_cases j <;> simp [crossProduct]
+      fin_cases i <;> fin_cases j <;> simp [crossProduct.eq_1]
     rw [hcp]
-    simp [absMat]
+    simp [absMat.eq_1]
   · have hAA : (crossProduct z)ᴴ * crossProduct z =
         (q z : ℂ) • (1 : Matrix (Fin 3) (Fin 3) ℂ) - Matrix.vecMulVec z (star z) := by
       ext i j
       fin_cases i <;> fin_cases j <;>
-        simp [crossProduct, q, Matrix.mul_apply, Matrix.conjTranspose_apply,
+        simp [crossProduct.eq_1, q.eq_1, Matrix.mul_apply, Matrix.conjTranspose_apply,
           Matrix.vecMulVec_apply, Matrix.one_apply, Fin.sum_univ_succ,
           Complex.normSq_eq_conj_mul_self, Complex.star_def, Complex.mul_re,
           Complex.mul_im] <;> ring
@@ -327,7 +327,7 @@ private theorem abs_crossProduct (z : Fin 3 → ℂ) :
       rw [Matrix.vecMulVec_mul_vecMulVec]
       unfold dotProduct
       ext i j
-      simp [q, Matrix.vecMulVec_apply,
+      simp [q.eq_1, Matrix.vecMulVec_apply,
         Complex.normSq_eq_conj_mul_self, Complex.star_def, Fin.sum_univ_succ]
       ring
     have hq : 0 < q z := by
@@ -368,7 +368,7 @@ private theorem vec_trace (z : Fin 3 → ℂ) :
     (Matrix.vecMulVec z (star z)).trace = (q z : ℂ) := by
   rw [Matrix.trace_vecMulVec]
   unfold dotProduct
-  simp only [q, Complex.normSq_eq_conj_mul_self, Complex.star_def, Complex.ofReal_sum]
+  simp only [q.eq_1, Complex.normSq_eq_conj_mul_self, Complex.star_def, Complex.ofReal_sum]
   apply Finset.sum_congr rfl
   intro i hi
   rw [Pi.star_apply, starRingEnd_apply]
@@ -464,25 +464,7 @@ private theorem abs_pair_trace (w z : Fin 3 → ℂ) (hw : w ≠ 0) (hz : z ≠ 
   rw [hs']
   rw [complement_trace_product, vec_trace, vec_trace, vec_product_trace]
   rw [← hqw, ← hqz]
-  have hcancel₁ :
-      (euclideanNorm w : ℂ) * (euclideanNorm z : ℂ) *
-          (star w ⬝ᵥ z) * (star z ⬝ᵥ w) *
-          (euclideanNorm w : ℂ)⁻¹ * (euclideanNorm z : ℂ)⁻¹ =
-        (star w ⬝ᵥ z) * (star z ⬝ᵥ w) := by
-    calc
-      _ = ((star w ⬝ᵥ z) * (star z ⬝ᵥ w)) *
-          ((euclideanNorm w : ℂ) * (euclideanNorm w : ℂ)⁻¹) *
-          ((euclideanNorm z : ℂ) * (euclideanNorm z : ℂ)⁻¹) := by ring
-      _ = _ := by rw [mul_inv_cancel₀ huw, mul_inv_cancel₀ huz]; ring
-  have hcancel₂ :
-      (euclideanNorm w : ℂ) ^ 3 * (euclideanNorm z : ℂ) ^ 3 *
-          (euclideanNorm w : ℂ)⁻¹ * (euclideanNorm z : ℂ)⁻¹ =
-        (euclideanNorm w : ℂ) ^ 2 * (euclideanNorm z : ℂ) ^ 2 := by
-    calc
-      _ = ((euclideanNorm w : ℂ) ^ 2 * (euclideanNorm z : ℂ) ^ 2) *
-          ((euclideanNorm w : ℂ) * (euclideanNorm w : ℂ)⁻¹) *
-          ((euclideanNorm z : ℂ) * (euclideanNorm z : ℂ)⁻¹) := by ring
-      _ = _ := by rw [mul_inv_cancel₀ huw, mul_inv_cancel₀ huz]; ring
+
   field_simp [huw, huz]
   change 2 * (euclideanNorm w : ℂ) * (euclideanNorm z : ℂ) *
       ((1 / 2 : ℂ) *
@@ -494,11 +476,10 @@ private theorem abs_pair_trace (w z : Fin 3 → ℂ) (hw : w ≠ 0) (hz : z ≠ 
   field_simp [huw, huz]
   ring
 
-private theorem div_real_re (c : ℂ) (x y : ℝ) (hx : x ≠ 0) (hy : y ≠ 0) :
+private theorem div_real_re (c : ℂ) (x y : ℝ) :
     (c / ((x : ℂ) * (y : ℂ))).re = c.re / (x * y) := by
-  simp [Complex.div_re, Complex.mul_re, Complex.mul_im, Complex.normSq_apply]
-  field_simp [hx, hy]
-  
+  rw [← Complex.ofReal_mul, Complex.div_ofReal_re]
+
 
 private theorem inner_cauchy (w z : Fin 3 → ℂ) :
     Complex.normSq (star w ⬝ᵥ z) ≤ q w * q z := by
@@ -524,7 +505,7 @@ private theorem inner_cauchy (w z : Fin 3 → ℂ) :
     simp only [Complex.sq_norm]
   rw [Complex.normSq_eq_norm_sq]
   rw [hnormw, hnormz] at h
-  simpa [q, pow_two] using h
+  simpa [q.eq_1, pow_two] using h
 
 private theorem abs_pair_bound (w z : Fin 3 → ℂ) :
     (((absMat (((Real.sqrt 2)⁻¹ : ℂ) • crossProduct w) *
@@ -534,24 +515,22 @@ private theorem abs_pair_bound (w z : Fin 3 → ℂ) :
   · subst w
     have hzero : ((Real.sqrt 2)⁻¹ : ℂ) • crossProduct (0 : Fin 3 → ℂ) = 0 := by
       ext i j
-      fin_cases i <;> fin_cases j <;> simp [crossProduct]
+      fin_cases i <;> fin_cases j <;> simp [crossProduct.eq_1]
     rw [hzero]
-    simp [absMat, q]
+    simp [absMat.eq_1, q.eq_1]
   by_cases hz : z = 0
   · subst z
     have hzero : ((Real.sqrt 2)⁻¹ : ℂ) • crossProduct (0 : Fin 3 → ℂ) = 0 := by
       ext i j
-      fin_cases i <;> fin_cases j <;> simp [crossProduct]
+      fin_cases i <;> fin_cases j <;> simp [crossProduct.eq_1]
     rw [hzero]
-    simp [absMat, q]
+    simp [absMat.eq_1, q.eq_1]
   have htrace := abs_pair_trace w z hw hz
   rw [htrace]
   simp only [Complex.mul_re, Complex.div_re]
   norm_num [Complex.normSq_apply]
   have hdiv := div_real_re (star w ⬝ᵥ z * star z ⬝ᵥ w)
     (euclideanNorm w) (euclideanNorm z)
-    (ne_of_gt (Real.sqrt_pos.2 (q_pos hw)))
-    (ne_of_gt (Real.sqrt_pos.2 (q_pos hz)))
   rw [hdiv, inner_product_re]
   rw [← Complex.normSq_apply]
   have hu : 0 < euclideanNorm w := Real.sqrt_pos.2 (q_pos hw)
@@ -576,7 +555,7 @@ private theorem abs_pair_bound (w z : Fin 3 → ℂ) :
       (Complex.normSq (star w ⬝ᵥ z) /
         (euclideanNorm w * euclideanNorm z)) =
       Complex.normSq (star w ⬝ᵥ z) := by
-    field_simp [ne_of_gt huv]
+    exact mul_div_cancel₀ _ (ne_of_gt huv)
   have hsquare :
       (euclideanNorm w * euclideanNorm z +
         Complex.normSq (star w ⬝ᵥ z) /
@@ -670,7 +649,7 @@ private theorem canonical_is_kraus : IsKrausDecomposition canonicalKraus := by
   unfold whChannel Matrix.trace
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [canonicalKraus, crossProduct, basisVector,
+    simp [canonicalKraus.eq_1, crossProduct.eq_1, basisVector.eq_1,
       Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.transpose_apply,
       Fin.sum_univ_succ] <;>
     simp only [← mul_assoc, ← pow_two, hs] <;> ring
@@ -691,7 +670,7 @@ private theorem rotation_is_kraus : IsKrausDecomposition rotationKraus := by
   unfold whChannel Matrix.trace
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [rotationKraus, rotationVector, crossProduct,
+    simp [rotationKraus.eq_1, rotationVector.eq_1, crossProduct.eq_1,
       Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.transpose_apply,
       Fin.sum_univ_succ, Complex.conj_ofReal, h2, h3] <;>
     simp only [← mul_assoc, ← pow_two, hs] <;> ring
@@ -702,14 +681,14 @@ private theorem abs_canonical (i : Fin 3) :
   have hb : basisVector i ≠ 0 := by
     intro h
     have hi := congrFun h i
-    simp [basisVector] at hi
+    simp [basisVector.eq_1] at hi
   have hn : euclideanNorm (basisVector i) = 1 := by
-    fin_cases i <;> norm_num [euclideanNorm, q, basisVector, Fin.sum_univ_succ]
+    fin_cases i <;> norm_num [euclideanNorm.eq_1, q.eq_1, basisVector.eq_1, Fin.sum_univ_succ]
   have hv : Matrix.vecMulVec (basisVector i) (star (basisVector i)) =
       Matrix.single i i 1 := by
     ext a b
     fin_cases i <;> fin_cases a <;> fin_cases b <;>
-      norm_num [basisVector, Matrix.vecMulVec_apply, Matrix.single_apply]
+      norm_num [basisVector.eq_1, Matrix.vecMulVec_apply, Matrix.single_apply]
   unfold canonicalKraus
   rw [abs_crossProduct]
   simp only [if_neg hb, hn, Complex.ofReal_one, inv_one, one_smul, hv]
@@ -737,14 +716,14 @@ private theorem bayes_pair_trace (i j : Fin 3) :
   have hsq : root * root = ((1 / 2 : ℂ) • b)ᴴ * ((1 / 2 : ℂ) • b) := by
     ext a c
     fin_cases i <;> fin_cases j <;> fin_cases a <;> fin_cases c <;>
-      norm_num [root, b, p, s, rotationVector, crossProduct, Matrix.mul_apply,
+      norm_num [root, b, p, s, rotationVector.eq_1, crossProduct.eq_1, Matrix.mul_apply,
         Matrix.conjTranspose_apply, Matrix.single_apply, Matrix.one_apply, Fin.sum_univ_succ,
         Complex.real_smul, Complex.ext_iff, Complex.mul_re, Complex.mul_im,
         Complex.div_re, Complex.div_im, Complex.normSq_apply]
   have ht : root.trace.re = (1 + s) / 2 := by
     change (∑ k, root k k).re = (1 + s) / 2
     fin_cases i <;> fin_cases j <;>
-      norm_num [root, b, p, s, rotationVector, crossProduct, Matrix.mul_apply,
+      norm_num [root, b, p, s, rotationVector.eq_1, crossProduct.eq_1, Matrix.mul_apply,
         Matrix.conjTranspose_apply, Matrix.single_apply, Matrix.one_apply, Fin.sum_univ_succ,
         Complex.real_smul, Complex.mul_re, Complex.mul_im,
         Complex.div_re, Complex.div_im, Complex.normSq_apply]
@@ -755,7 +734,7 @@ private theorem bayes_pair_trace (i j : Fin 3) :
       Complex.ofReal_re, Complex.ofReal_im, Real.sq_sqrt]
   have hm : rotationKraus j * absMat (canonicalKraus i) = (1 / 2 : ℂ) • b := by
     rw [abs_canonical]
-    simp only [rotationKraus, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
+    simp only [rotationKraus.eq_1, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
     change ((Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹) • b = (1 / 2 : ℂ) • b
     rw [hs]
   have hr : absMat ((1 / 2 : ℂ) • b) = root := CFC.sqrt_unique hsq hpos.nonneg
@@ -766,7 +745,7 @@ private theorem bayesian_witness : 1 / 2 < bayesFidelity canonicalKraus rotation
   have he : bayesFidelity canonicalKraus rotationKraus = 11 / 18 := by
     unfold bayesFidelity
     simp_rw [bayes_pair_trace]
-    norm_num [rotationVector, Fin.sum_univ_succ, Complex.div_re,
+    norm_num [rotationVector.eq_1, Fin.sum_univ_succ, Complex.div_re,
       Complex.div_im, Complex.normSq_apply]
   rw [he]
   norm_num
