@@ -208,6 +208,78 @@ def crossingAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+abbrev divisorSignature := ActualIntegerLogEnvelope.signature
+
+def divisorActual : Realization divisorSignature :=
+  realize divisorSignature (fun _ _ n => divisorLog n) (fun e => nomatch e)
+
+abbrev divisorArena : Arena where
+  signature := divisorSignature
+  Law R := ∀ {n : ℕ}, 0 < n → R.readout () () n ≤ Real.log (n : ℝ)
+
+def divisorRejected : Realization divisorSignature :=
+  realize divisorSignature (fun _ _ n => Real.log (n : ℝ) + 1) (fun e => nomatch e)
+
+theorem divisor_rejected_law : ¬ divisorArena.Law divisorRejected := by
+  intro h
+  have := h (n := 1) (by norm_num)
+  change Real.log (1 : ℝ) + 1 ≤ Real.log (1 : ℝ) at this
+  linarith
+
+def divisorFamily : Registration divisorArena (type_of% @divisor_log_le_log) where
+  actual := divisorActual
+  bridge := Iff.rfl
+  variation := ⟨divisor_log_le_log, divisorRejected, divisor_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨divisorRejected, ?_, rfl, divisor_rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 1, 3, ?_⟩
+    change divisorLog 1 ≠ divisorLog 3
+    have hs : (ArithmeticFunction.sigma 1 3 : ℝ) = 4 := by norm_num [ArithmeticFunction.sigma]
+    simp only [divisorLog, ArithmeticFunction.sigma_one, Nat.cast_one, div_one, Real.log_one, hs]
+    exact (Real.log_pos (by norm_num : (1 : ℝ) < 4 / 3)).ne
+
+def divisorAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@divisor_log_le_log) (Realization divisorSignature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.ActualIntegerHeightJump.divisor_log_le_log.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.ActualIntegerHeightJump.divisorFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨divisorArena⟩
+  objectArena := .source ⟨divisorArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source divisorArena ⟨divisorFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize divisorSignature divisorActual.readout divisorActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.ActualIntegerHeightJump
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms divisorAudit
+
 #print axioms jumpFamily
 #print axioms crossingFamily
 #print axioms jumpAudit

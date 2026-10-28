@@ -11,6 +11,18 @@ internal sealed class ActualIntegerHeightJumpDocument : IScribeDocumentDefinitio
         H("Actual Integer Height Jumps"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("actual-divisor-log-le-log"),
+                DeclarationHandle.Create(Prefix + "divisor_log_le_log"),
+                H("An elementary upper bound for the actual divisor logarithm"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Every positive actual integer n satisfies W(n)<=log(n), where "
+                    + "W(n)=log(sigma(1,n)/n). The bound sigma(1,n)<=n^2 and monotonicity "
+                    + "of log prove this. In the positive-price comparison it puts a "
+                    + "hypothetical rival in the established envelope range before that "
+                    + "envelope is applied."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-divisor-log"), DeclarationHandle.Create(Prefix + "divisorLog"),
                 H("The actual divisor-sum logarithm"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

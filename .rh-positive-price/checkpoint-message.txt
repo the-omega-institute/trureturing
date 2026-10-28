@@ -1,1 +1,0 @@
-WIP: generalize actual envelope and extract uniform escape; scalar implementation

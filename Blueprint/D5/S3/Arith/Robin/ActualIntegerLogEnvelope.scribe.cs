@@ -11,6 +11,21 @@ internal sealed class ActualIntegerLogEnvelopeDocument : IScribeDocumentDefiniti
         H("Actual Integer Logarithmic Envelope"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("actual-integer-arbitrary-error-envelope"),
+                DeclarationHandle.Create(Prefix + "eventual_actual_integer_envelope_epsilon"),
+                H("An arbitrary positive inventory error"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every epsilon>0 there is A>=286 such that every positive actual "
+                    + "integer n with log(n)>=A satisfies F(n)-gamma<=(19/10+epsilon)/log(log(n)). "
+                    + "The comparator has strict layer counts at price 1/(X*log(X)), X=log(n). "
+                    + "Its uniform inventory growth gives 1-log(U)/X<=epsilon. The exact "
+                    + "fixed-price cost difference is (1-log(U)/X)/log(X). Combining this with "
+                    + "the effective prime-product coefficient 19/10 proves the bound. Only U "
+                    + "has smooth support. The coefficient-two theorem takes epsilon=1/10; "
+                    + "ActualLeastCrossingPriceRecord takes epsilon=1/20 directly."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-integer-coefficient-two-envelope"),
                 DeclarationHandle.Create(Prefix + "eventual_actual_integer_envelope"),
                 H("An unconditional coefficient-two bound for every sufficiently large integer"),
@@ -39,10 +54,8 @@ internal sealed class ActualIntegerLogEnvelopeDocument : IScribeDocumentDefiniti
                         + "growth theorem with epsilon=1/10 gives 1-log(U)/X<=1/10. Global "
                         + "fixed-price comparison transfers the bound to n and adds at most "
                         + "1/(10*log(X)), yielding coefficient two. All prime powers in U are "
-                        + "retained. This is a repository-derived application of these existing "
-                        + "arithmetic inputs, present together at immutable revision "
-                        + "16c3ea75a9347e03a4401e66b911cef405ba17df; it makes no literature "
-                        + "priority claim. The consumer is ActualIntegerHeightJump: the new "
+                        + "retained. This deduction combines the existing arithmetic inputs "
+                        + "without a literature priority claim. In ActualIntegerHeightJump the "
                         + "bound is applied at the actual divisor m/q, after proving its size.")),
                     Paragraph(Text(
                         "The estimate is unconditional and uses the existing unconditional "
