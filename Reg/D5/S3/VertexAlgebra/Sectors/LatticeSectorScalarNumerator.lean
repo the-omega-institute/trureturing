@@ -1,6 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import Reg.Support.LatticeSectorIntertwiner
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorScalarNumerator
 
 /-! Source-bound coefficient, support and finite-polynomial observations. -/
@@ -155,8 +154,26 @@ def family : Registration arena (type_of% (@scalar_numerator_support)) where
 end Support
 
 namespace Numerator
-open Reg.Support.LatticeSectorIntertwiner
-open private dependence from Reg.Support.LatticeSectorIntertwiner
+abbrev signature : Signature where
+  Params := Unit
+  State _ := MvPowerSeries (Fin 2) ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := MvPowerSeries (Fin 2) ℂ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize _ (fun _ _ x y => x = y) (fun e => nomatch e)
+def rejected : Realization signature := realize _ (fun _ _ _ _ => False) (fun e => nomatch e)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have bad : (1 : MvPowerSeries (Fin 2) ℂ) = 0 := Eq.mp (congrFun h 0) rfl
+  exact one_ne_zero bad
+
 abbrev arena : Arena where
   signature := signature
   Law a := ∀ (D : LatticeData) (J : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -176,7 +193,7 @@ abbrev arena : Arena where
           clear N (reverseProduct D α β γ u v w) (a - A) (b - B) = extend P a b ∧
           clearIterate N A B (iterate D α β γ u v w) a b = extend (collision P) a b) ∧
         ∀ p : Oscillator D, ∃! R : MvPolynomial (Fin 2) ℂ,
-          a.readout () (MvPowerSeries (Fin 2) ℂ)
+          a.readout () ()
             (R : MvPowerSeries (Fin 2) ℂ) (mapSeries (readout D p) P) ∧
           R.totalDegree ≤ (degreeBound D α β γ A B N p).toNat ∧
           (degreeBound D α β γ A B N p < 0 →
@@ -197,7 +214,7 @@ private theorem bad : ¬ arena.Law rejected := by
   exact hR.1
 
 def family : Registration arena (type_of% (@ordinary_actual_finite_scalar_numerator)) where
-  actual := equality
+  actual := actual
   bridge := Iff.rfl
   variation := ⟨ordinary_actual_finite_scalar_numerator, rejected, bad⟩
   sensitivity := by
@@ -285,7 +302,7 @@ def supportAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 def numeratorAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@ordinary_actual_finite_scalar_numerator)
-    (Realization Reg.Support.LatticeSectorIntertwiner.signature) Type Unit where
+    (Realization Numerator.signature) Unit Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.Sectors.LatticeSectorScalarNumerator.numeratorUnit
   realizationName := `Reg.D5.S3.VertexAlgebra.Sectors.LatticeSectorScalarNumerator.Numerator.family
   realizationSource := none
@@ -297,9 +314,7 @@ def numeratorAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source Numerator.arena ⟨Numerator.family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize Reg.Support.LatticeSectorIntertwiner.signature
-    Reg.Support.LatticeSectorIntertwiner.equality.readout
-    Reg.Support.LatticeSectorIntertwiner.equality.anchor)
+  readout := some (realize Numerator.signature Numerator.actual.readout Numerator.actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
