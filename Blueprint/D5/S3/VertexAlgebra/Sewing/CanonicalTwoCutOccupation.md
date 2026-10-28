@@ -4,37 +4,28 @@
 
 Literal two-cut occupation control for canonical lattice coefficients.
 
-The overlap envelope retains both unrestricted occupations and the literal factorialEnvelope. MixedControl records the all-mode coefficient estimate with the explicit energy polynomial and the finite positive overlap family. The analytic comparison theorem then consumes a summable majorant to obtain the exact signed-mode pair sum, including zero radial parameters.
+**Definition 1.1 (Two unrestricted occupations).**
 
-**Definition 1.1 (Uniform mixed descendant control).**
+Lean statement: `D5/S3/VertexAlgebra/Sewing/CanonicalTwoCutOccupation.Occ`
 
-Lean statement: `D5/S3/VertexAlgebra/Sewing/CanonicalTwoCutOccupation.MixedControl`
-
-*Formalization.* `D5/S3/VertexAlgebra/Sewing/CanonicalTwoCutOccupation.MixedControl` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Sewing/CanonicalTwoCutOccupation.Occ` (`✓ std3`).
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-For arbitrary signed modes and both occupations, the literal wordCoeff is bounded by the recursively defined word constant, the total-energy polynomial and the finite overlap envelope built from binomial(e,u), T^(degree(e-u)) and factorialEnvelope A(d-u). The predicate keeps the charge coefficient buffers A and T explicit. The recurrence proof and the summability of this majorant remain separate obligations of the sewing owner.
+Each occupation is an arbitrary finitely supported natural function on Fin D.rank times Nat. Its energy weights the coordinate (i,k) by k+1; its degree counts occupation multiplicities.
 
-**Theorem 1.2 (Two-index absolute summability comparison).**
+For buffers A and T at least one, the finite overlap M(d,e) sums binomial(e,u) T^degree(e-u) factorialEnvelope A(d-u) over all u below both d and e. The factorial envelope is the original product of (A/(k+1)) to each multiplicity, divided by the product of multiplicity factorials. No frequency factor is inserted into the factorial coordinate metric.
 
-Lean statement: `D5/S3/VertexAlgebra/Sewing/CanonicalTwoCutOccupation.mixed_pair_summable_of_control`
+The original ground-field input recurrence and Pascal's identity prove norm(wordCoeff [] m d e) <= M(d,e), uniformly in both occupations and every signed mode. The buffers bound norm(a(i)) and norm(bilinear a (unitCharge i)). Removing an occupied output coordinate x costs at most (x.2+1)d(x)/A; removing an occupied input coordinate costs at most 1/T. These comparisons keep their support conditions.
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sewing/CanonicalTwoCutOccupation.mixed_pair_summable_of_control` (`✓ std3`). ∎
+Let N(d,e)=1+level(d)+level(e). For every finite descendant word omega and every signed mode, the literal coefficient is bounded by C(omega) N(d,e)^R(omega) M(d,e). Here R is the sum of k+1 over the insertions (i,k), C([])=1, and inserting (i,k) multiplies C by A inverse plus norm(bilinear (unitCharge i) b) plus ((k+1)^k divided by T) times the sum over a of norm(G(i,a)). The constants are independent of both occupations and the mode. The two branches of the actual normal-product recurrence close this induction by their frequency-weighted occupation moments.
 
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Assuming the exact mixed coefficient control and a summable literal overlap majorant, comparison yields the original pair-index kernel with rowWeight on the first occupation, columnWeight on the second occupation, arbitrary signed offset s+level(e)-level(d), and both open-disk parameters. No inverse Gram, positivity or nonzero-q premise is introduced by the comparison.
-
-The source definitions are the original private canonical maps, wordCoeff, rowWeight, columnWeight and factorialEnvelope accessed through Batteries.Tactic.OpenPrivate. The finite overlap expression is a proof-local majorant, not a replacement field. The unproved coefficient induction and majorant summability are intentionally not claimed as completed by this unit.
+CanonicalTwoCutScalar uses this estimate before any grouping of the two internal occupations. The fields, translation factors and factorial coordinates are those of the imported lattice construction. The background is the lattice-field and normal-product calculus of Bakalov--Kac, Matsuo--Nagatomo and Carnahan used by the suppliers; no literature novelty, invariant BPZ form, physical unitarity, operator sewing or complete CFT is asserted.
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/Sewing/CanonicalTwoCutOccupation.MixedControl`
-- Truth anchor: `D5/S3/VertexAlgebra/Sewing/CanonicalTwoCutOccupation.mixed_pair_summable_of_control`
+- Truth anchor: `D5/S3/VertexAlgebra/Sewing/CanonicalTwoCutOccupation.Occ`
 - Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner](../Sectors/LatticeSectorIntertwiner.md)
 - Dependency: [D5/S3/VertexAlgebra/Sewing/CanonicalOccupation](CanonicalOccupation.md)
