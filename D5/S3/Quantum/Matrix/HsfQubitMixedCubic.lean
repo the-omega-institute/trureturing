@@ -75,11 +75,6 @@ private theorem psd_entries (a b : ℝ) (z : ℂ)
   rw [Complex.sq_norm, Complex.normSq_apply]
   nlinarith [hd]
 
-private theorem hermitian_neg (a b : ℝ) (z : ℂ) :
-    -hermitian a b z = hermitian (-a) (-b) (-z) := by
-  ext i j
-  fin_cases i <;> fin_cases j <;> simp [hermitian]
-
 private theorem hermitian_sub (a b c d : ℝ) (z w : ℂ) :
     hermitian a b z - hermitian c d w = hermitian (a-c) (b-d) (z-w) := by
   ext i j
