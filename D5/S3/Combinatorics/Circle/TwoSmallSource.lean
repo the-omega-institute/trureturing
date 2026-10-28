@@ -5,17 +5,15 @@
    anchors: [mathlib/module/Mathlib.Logic.Equiv.Fin.Rotate]
    utility: none
    digest: Exactly two physical SMALL labels admit a complete native half-strip word. -/
-module
-public import D5.S3.Combinatorics.Circle.TwoSmallPlacement
-public import D5.S3.Combinatorics.Circle.AntipodalSourceCompletion
-public import D5.S1.Words.Compositions.ZeroSumWordCount
+import D5.S3.Combinatorics.Circle.TwoSmallPlacement
+import D5.S3.Combinatorics.Circle.AntipodalSourceCompletion
+import D5.S1.Words.Compositions.ZeroSumWordCount
 
 /-! # Native completion with exactly two SMALL physical labels -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-@[expose] public section
 namespace D5.S3.Combinatorics.Circle.TwoSmallSource
 open SourceWidth ExpandingSourcePath TwoSmallProfile TwoSmallPlacement
 open MixedSuffixEnergy TwoOppositeLargeExchange
