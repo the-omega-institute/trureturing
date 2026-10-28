@@ -14,6 +14,8 @@ $$\forall c,a,b,beta,T,U,chi:\mathbb{R},m:\mathbb{Z},theta:\operatorname{Fin}(5)
 
 *Commentary.*
 
+The owning native_bounds lemma exposes the original interior-control invariant: under OC((c,c,1-2*c),U,k,const(chi)) and t in Icc(0,U), the height k(t) lies in Ioo(0,c). Consumers reuse this exact supplier, with any clock-interval conversion stated at the use site.
+
 Record is Unit plus Fin5 times the real clock. Success is inl(()); failures are inr(i,t). OC(c,T,k,chi) is OriginalControl((c,c,1-2*c),T,k,const(chi)). S(c,k,t) is the exponential of minus the interval integral of the derivative hazard max(k prime,0)/k+max(-k prime,0)/(c-k). The join J(k,K,T) equals k before the join and k(T)+K(t-T)-K(0) after it.
 
 F(c,a,beta,T,m,theta,k,A) is the sum over the five modes of the nonnegative integrals on (0,T] intersect {t:inr(i,t) in A} of the squared absorbing amplitude. That amplitude is jumpKraus(c,a,k(t),S(c,k,t),jumpRate(c,k,t),i) applied to the original source(c,a,beta,m,theta), where jumpRate is the derivative hazard minus the derivative of log p_i(k). The shift(T,A) is the pullback of A by the clock map sending inr(i,s) to inr(i,s+T), preserving success. All measures and integrals use the original Lebesgue clock.
