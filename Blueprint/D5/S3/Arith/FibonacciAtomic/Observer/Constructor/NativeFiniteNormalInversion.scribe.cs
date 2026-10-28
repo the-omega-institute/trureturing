@@ -97,6 +97,6 @@ internal sealed class NativeFiniteNormalInversionDocument : IScribeDocumentDefin
             All("R",Arr(C("Fin",V("r")),C("Expression",V("k"),V("m"))),All("i",C("Fin",V("r")),
             All("f",C("FiniteExpression",Add(V("k"),F.D(1))),
             Imp(EqOf(C("finiteImageExpressions",input,s,mode,V("R"),V("i")),C("some",V("f"))),
-            All("p",Arr(C("Fin",V("n")),Nat),All("passing",C("holds",C("originalImageGuard",j,mode),xs),body)))))))))))))));
+            All("p",Arr(C("Fin",V("n")),Nat),All("passing",C("holds",C("originalImageGuard",j,mode),xs),body))))))))))))));
     }
 }

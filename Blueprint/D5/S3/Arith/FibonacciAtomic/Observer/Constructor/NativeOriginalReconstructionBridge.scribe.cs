@@ -70,7 +70,7 @@ internal sealed class NativeOriginalReconstructionBridgeDocument : IScribeDocume
             All("u",Values,Imp(And(Admissible(V("u")),EqOf(C("imageValues",V("s"),V("u")),V("w"))),EqOf(V("u"),V("v"))))));
         var lhs=And(C("Legal",J,V("p")),And(C("SourceSatisfies",J,V("p"),V("w")),C("SourcePasses",J,V("p"),V("w"))));
         return Dims(All("I",C("EpochInput",V("n"),V("k"),V("m")),All("s",Arr(C("Fin",V("m")),Nat),
-            All("valid",C("Potential",V("I"),V("s")),All("p",Arr(C("Fin",V("n")),Nat),All("w",Values,IffOf(lhs,rhs)))))));
+            Imp(C("Potential",V("I"),V("s")),All("p",Arr(C("Fin",V("n")),Nat),All("w",Values,IffOf(lhs,rhs)))))));
     }
     private static Formula Transport()
     {
