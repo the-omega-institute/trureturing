@@ -14,8 +14,9 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
+set_option linter.checkUnivs false in
 abbrev signature.{u, s} : Signature where
-  Params := Σ A : Type u, Type s
+  Params := Σ _A : Type u, Type s
   State p := Matrix p.1 p.1 p.2
   Role := Unit
   finiteRole := inferInstance
@@ -30,6 +31,7 @@ def actual.{u, s} : Realization signature.{u, s} :=
 def rejected.{u, s} : Realization signature.{u, s} :=
   realize signature (fun _ _ _ _ => True) (fun e => nomatch e)
 
+set_option linter.checkUnivs false in
 abbrev arena.{u, v, k, s} : Arena where
   signature := signature.{u, s}
   Law R := ∀ {A : Type u} {B : Type v} [Fintype A] [DecidableEq A] [Fintype B]
@@ -40,7 +42,7 @@ abbrev arena.{u, v, k, s} : Arena where
 
 theorem rejected_law.{u, v, k, s} : ¬ arena.{u, v, k, s}.Law rejected := by
   intro h
-  letI : Star (ULift.{s} ℕ) := ⟨id⟩
+  let : Star (ULift.{s} ℕ) := ⟨id⟩
   have hbad := @h (ULift.{u} Unit) (ULift.{v} Unit)
     inferInstance inferInstance inferInstance (ULift.{k} Unit) inferInstance
     (ULift.{s} ℕ) inferInstance inferInstance (fun _ => 0) (fun _ => 0) trivial
