@@ -35,7 +35,6 @@ internal sealed class TotalDominationApproximationDocument : IScribeDocumentDefi
     private static Formula Imp(Formula x, Formula y) => new Formula.Logic(Par(x),FormulaLogicOperator.Implies,Par(y));
     private static Formula All(string s, Formula t, Formula b) => Seq(Forall,Sp,Par(Seq(V(s),Colon,t)),Comma,Sp,b);
     private static Formula Some(string s, Formula t, Formula b) => Seq(Exists,Sp,Par(Seq(V(s),Colon,t)),Comma,Sp,b);
-    private static Formula Graph(Formula t) => Call("SimpleGraph",t);
     private static Formula Norm(Formula x) => Seq(Vert,Sp,x,Vert);
     private static Formula Approximation() => All("xi",Complex,Imp(Ne(Call("re",V("xi")),D(0)),All("epsilon",Real,Imp(Lt(D(0),V("epsilon")),Some("N",Nat,All("t",Real,All("alpha",Real,Imp(Lt(Add(Cast(V("N"),Real),D(2)),new Formula.Fraction(V("t"),Call("re",V("xi")))),Some("k",Nat,Some("w",Complex,And(Lt(D(0),V("k")),Eq(Pow(V("w"),V("k")),Call("exp",Add(Cast(V("t"),Complex),Mul(Cast(V("alpha"),Complex),Call("I"))))),Lt(Norm(Sub(V("w"),Call("exp",V("xi")))),V("epsilon")))))))))))));
 }
