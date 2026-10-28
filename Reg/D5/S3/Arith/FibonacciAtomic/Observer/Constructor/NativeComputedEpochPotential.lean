@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeComputedEpochPotential
 import Reg.Support.DependentFamily
 
+/-! Source-bound potential and native image observations retain the full theorem telescopes. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -57,8 +59,11 @@ def potentialEvidence : Registration potentialArena (type_of% (@cycleCondition_i
   dependence := by
     intro role
     let I : EpochInput 0 0 1 := {
-      base := { equations := fun _ => some (.ground (.of false)), filters := [],
-        indices := Fin.elim0, guard := .qf .truth }
+      base := {
+        equations := fun _ => some (.ground (.of false))
+        filters := []
+        indices := Fin.elim0
+        guard := .qf .truth }
       headPower := fun _ => 1 }
     have good : Potential I (fun _ => 1) := by
       intro i E he
@@ -75,7 +80,7 @@ def potentialEvidence : Registration potentialArena (type_of% (@cycleCondition_i
 
 def potentialRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@cycleCondition_iff_potential) (Realization potentialSignature)
-    (potentialSignature.Params → Type) Unit where
+    (Nat → Type) Unit where
   unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeComputedEpochPotential.cycleCondition_iff_potential.__information_unit
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeComputedEpochPotential.potentialEvidence
   realizationSource := none
@@ -92,7 +97,7 @@ def potentialRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (fun m : Nat => Fin m → Nat)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeComputedEpochPotential
     definition := none
@@ -126,7 +131,7 @@ abbrev transportRejected : Realization transportSignature :=
 
 abbrev transportArena : Arena where
   signature := transportSignature
-  Law R := ∀ {n k m : Nat} (I : EpochInput n k m) (hcycle : CycleCondition I),
+  Law R := ∀ {n k m : Nat} (I : EpochInput n k m) (_hcycle : CycleCondition I),
     ∃ s : Fin m → Nat, Potential I s ∧
       ∀ (p : Fin n → Nat) (w : Fin m → CompletionTree),
         (Legal (functionalInput I s) p ∧ SourceSatisfies (functionalInput I s) p w ∧
@@ -175,7 +180,7 @@ def transportEvidence : Registration transportArena (type_of% (@cycleCondition_g
 
 def transportRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@cycleCondition_gives_epoch_transport) (Realization transportSignature)
-    (transportSignature.Params → Type) Unit where
+    (Nat → Type) Unit where
   unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeComputedEpochPotential.cycleCondition_gives_epoch_transport.__information_unit
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeComputedEpochPotential.transportEvidence
   realizationSource := none
@@ -192,7 +197,7 @@ def transportRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (fun m : Nat => Fin m → CompletionTree)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeComputedEpochPotential
     definition := none
