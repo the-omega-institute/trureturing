@@ -1,0 +1,17 @@
+**推论 5.3（同 $M$ 迹类的增益刚性）。** 任取合法全源元组和 $x\in\mathcal U$。若 $q,r\in\mathcal D_{M^5}$，并且
+
+$$
+\operatorname{tr}(MP_q)=\operatorname{tr}(MP_r)=\tau,
+\tag{5.9}
+$$
+
+则 $x_q=x_r$，且 $\delta_q=\delta_r$，即使 $P_q\ne P_r$。在 $\mathcal D_{M^4}$ 上，$\tau\ne\alpha$ 时同样成立；$\tau=\alpha$ 时精确的可能差异为
+
+$$
+g_q-g_r=\lambda H_\alpha,\qquad
+\delta_q-\delta_r=-\lambda\quad(\lambda\in\mathbb R).
+\tag{5.10}
+$$
+
+**证明。** 迹一与 $M^2=M+I$ 使全部纯 $M$ 迹序列只取决于初值 $1,\tau$。两槽的源虽可不同，但在这些共同祖先上的迹完全相同。其共享读数相减，仍得到 (3.3)。原始 $M^5$ 用定理 4.1，原始 $M^4$ 用定理 5.1 和 (5.8)，再由 $H_\alpha(0)=1$ 得漂移差公式。该论证对任意其余源及每个联合核向量均成立。源不同的完整目标即使具有相同增益和漂移仍然不同；此刚性不取得未知源，也不把纯 $M$ 路径变成全目标解码器。∎
+
