@@ -25,6 +25,9 @@ internal sealed class BiasedBoundaryFreeRootFormDocument : IScribeDocumentDefini
             Result("Pi_idem", "Idempotent Centering", All("F",V("G"),Seq(Call("Pi",Call("Pi",V("F"))),Eq,Call("Pi",V("F")))),
                 "A centered vector already has zero mean, so centering it again leaves it fixed.",
                 "This identity identifies covariance graph coordinates with centered boundary vectors."),
+            Result("adjoint_mem_K", "The Adjoint Lies in the Effective Edge Space", All("h",V("G"),Seq(Call("adjoint",V("C"),V("h")),InMacro,Sp,V("K"))),
+                "Every vector C*h is orthogonal to the original covariance kernel because pairing it with an edge vector z equals pairing h with Cz.",
+                "This effective-space inclusion is consumed by the positive eigenspace identification of the original boundary operator."),
             Result("inner_centered", "Pairing with a Mean-Zero Vector", All("h",V("G"),All("F",V("G"),Seq(Call("mean",V("h")),Eq,D(0),Implies,Sp,Par(Seq(Call("inner",V("h"),Call("Pi",V("F"))),Eq,Call("inner",V("h"),V("F"))))))),
                 "A vector with zero mean is orthogonal to constants. Its inner product with any centered test vector equals its inner product with the original test vector.",
                 "The identity applies to every test vector in the original boundary L2 space."),
@@ -40,7 +43,7 @@ internal sealed class BiasedBoundaryFreeRootFormDocument : IScribeDocumentDefini
             Def("formInclusion", "The inclusion of the original form domain into G is the first-coordinate map on formSpace. Its second-coordinate map is the unique least increment."),
             Result("free_root_variational_graph", "The Entire Weak Variational Graph", GraphFormula(),
                 "The form diagonal equals the original free-root energy on every element of D. Uniqueness of the effective lift makes it additive and subtractive; the real inner-product polarization identity identifies this pairing with the polarization of the original infimum. The graph of F mapped to (F,lift(F)) is closed in G times H: it is exactly the closed constraint set z in K and Cz=Pi F. In these complete graph coordinates, the actual inclusion equals the compact map C applied to the increment coordinate plus the constant map applied to the mean of the trace coordinate. Thus the original form-domain inclusion is compact. The weak equation holds for all original traces exactly when mean(h)=0 and u=constG(mean(u))+CC*h. Testing constants forces mean(h)=0; testing every Jz identifies the least increment of u with C*h. Conversely C*h belongs to K, and the stated covariance representation satisfies the equation against every F in D.",
-                "This characterizes the entire weak graph without assuming an operator realization. A self-adjoint operator identification still requires density and the closed-form representation bridge. The compact spectral basis, the unitary polar map, its two range-domain identities, compact resolvent, and eigenvalue counting require additional arguments."))));
+                "This module characterizes the entire weak graph without assuming an operator realization. BiasedBoundaryOperator constructs its dense self-adjoint realization, compact resolvent and positive covariance eigenspace identification. The complete ordered spectral sequence, the unitary polar map, its two range-domain identities and global eigenvalue counting require additional arguments."))));
 
     private static DocumentBlock Def(string name, string prose) => Describe.Lean(
         DescribeId.Create("biasedboundaryfreerootform-" + name.ToLowerInvariant()),

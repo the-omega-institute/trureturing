@@ -8,6 +8,8 @@
 
 import D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryFreeRootForm
 import Mathlib.Analysis.InnerProductSpace.LinearPMap
+import Mathlib.Analysis.InnerProductSpace.Positive
+import Mathlib.Analysis.InnerProductSpace.Spectrum
 import Mathlib.MeasureTheory.VectorMeasure.WithDensity
 
 /-! The original form is realized on the actual infinite biased boundary. -/
@@ -24,7 +26,9 @@ open BiasedBoundaryTrace (G Omega M J cylinder indicator J_single cylinder_measu
 open BiasedBoundaryPathSplit (constG)
 open BiasedBoundaryStopping (G0 Threshold A Vt Vt0 actual_stopping_partition actual_stopping_residual)
 open BiasedBoundaryCentering (mean Pi C centered_suffix_residual)
-open BiasedBoundaryFreeRootForm (D form weakGraph free_root_variational_graph mean_Pi Pi_const Pi_idem inner_centered)
+open BiasedBoundaryFreeRootForm
+  (D form weakGraph free_root_variational_graph mean_Pi Pi_const Pi_idem inner_centered
+    Sigma K adjoint_mem_K)
 open MeasureTheory hiding cylinder
 open Filter
 open scoped Topology ENNReal
@@ -372,6 +376,194 @@ theorem actual_self_adjoint_realization :
     · rintro ⟨c,rfl⟩
       exact graph_constant c
 
+private def shift : G →L[ℝ] G := 1 + boundaryCovariance
+
+private theorem shift_unit : IsUnit shift := by
+  apply ContinuousLinearMap.isUnit_of_forall_le_norm_inner_map shift (c := 1) (by norm_num)
+  intro x
+  change ‖x‖^2 * (1 : ℝ) ≤ ‖inner ℝ (x + boundaryCovariance x) x‖
+  rw [inner_add_left,covariance_inner,real_inner_self_eq_norm_sq,
+    real_inner_self_eq_norm_sq,Real.norm_eq_abs,abs_of_nonneg (by positivity)]
+  nlinarith [sq_nonneg ‖C.adjoint x‖]
+
+private theorem shift_bijective : Function.Bijective shift :=
+  ContinuousLinearMap.isUnit_iff_bijective.mp shift_unit
+
+private def shiftEquiv : G ≃L[ℝ] G :=
+  ContinuousLinearEquiv.ofBijective shift
+    (LinearMap.ker_eq_bot.mpr shift_bijective.1)
+    (LinearMap.range_eq_top.mpr shift_bijective.2)
+
+private def inverseShift : G →L[ℝ] G := shiftEquiv.symm.toContinuousLinearMap
+
+private theorem shift_inverse (f : G) : shift (inverseShift f) = f :=
+  shiftEquiv.apply_symm_apply f
+
+/-- The bounded inverse of I+H, constructed from the actual boundary covariance. -/
+def boundaryResolvent : G →L[ℝ] G :=
+  constG.comp mean + boundaryCovariance.comp inverseShift
+
+private theorem covariance_const (c : ℝ) : boundaryCovariance (constG c) = 0 := by
+  rw [← covariance_Pi,Pi_const,map_zero]
+
+private theorem shift_resolvent (f : G) :
+    shift (boundaryResolvent f) = constG (mean f) + boundaryCovariance f := by
+  have ht : inverseShift f + boundaryCovariance (inverseShift f) = f := shift_inverse f
+  have ha : boundaryCovariance (inverseShift f) +
+      boundaryCovariance (boundaryCovariance (inverseShift f)) = boundaryCovariance f := by
+    rw [← map_add,ht]
+  change (constG (mean f)+boundaryCovariance (inverseShift f)) +
+    boundaryCovariance (constG (mean f)+boundaryCovariance (inverseShift f)) = _
+  rw [map_add,covariance_const,zero_add,← ha]
+  abel
+
+private theorem graph_shift (u h : G) (hh : (u,h) ∈ operatorGraph) :
+    shift u = constG (mean (u+h)) + boundaryCovariance (u+h) := by
+  have hm : mean h = 0 := hh.1
+  have hu : Pi u = boundaryCovariance h := hh.2
+  change u + boundaryCovariance u = _
+  rw [map_add,hm,add_zero,map_add,← hu,centered_suffix_residual.2.2.1]
+  abel
+
+private theorem graph_of_shift {u f : G}
+    (he : shift u = constG (mean f)+boundaryCovariance f) :
+    (u,f-u) ∈ operatorGraph := by
+  have hm := congrArg mean he
+  change mean (u+boundaryCovariance u) = mean (constG (mean f)+boundaryCovariance f) at hm
+  rw [map_add,covariance_centered,add_zero,map_add,
+    centered_suffix_residual.2.1,covariance_centered,add_zero] at hm
+  change mean (f-u) = 0 ∧ Pi u = boundaryCovariance (f-u)
+  constructor
+  · rw [map_sub,hm,sub_self]
+  · rw [map_sub,centered_suffix_residual.2.2.1,hm]
+    apply sub_eq_sub_iff_add_eq_add.mpr
+    change u+boundaryCovariance u = boundaryCovariance f+constG (mean f)
+    exact he.trans (add_comm _ _)
+
+private theorem resolvent_inverse (u h : G) :
+    (u,h) ∈ boundaryOperator.graph ↔ boundaryResolvent (u+h) = u := by
+  rw [operator_graph]
+  constructor
+  · intro hh
+    apply shift_bijective.1
+    rw [shift_resolvent]
+    exact (graph_shift u h hh).symm
+  · intro he
+    have hg := graph_of_shift (shift_resolvent (u+h))
+    simpa only [he,add_sub_cancel_left] using hg
+
+private theorem resolvent_compact : IsCompactOperator boundaryResolvent := by
+  have hp : IsCompactOperator (constG.comp mean) :=
+    (isCompactOperator_of_locallyCompactSpace_rng constG).comp_clm mean
+  have ha : IsCompactOperator boundaryCovariance :=
+    BiasedBoundaryFreeRootForm.actual_compact_covariance.2.1.comp_clm C.adjoint
+  exact hp.add (ha.comp_clm inverseShift)
+
+private theorem inverse_eigenvalue (lam : ℝ) (hlam : 0 < lam) (u : G) :
+    (u,lam • u) ∈ boundaryOperator.graph ↔
+      mean u = 0 ∧ boundaryCovariance u = lam⁻¹ • u := by
+  rw [operator_graph]
+  change (mean (lam • u) = 0 ∧ Pi u = boundaryCovariance (lam • u)) ↔ _
+  constructor
+  · rintro ⟨hm,he⟩
+    have hm' : mean u = 0 := by
+      rw [map_smul,smul_eq_mul] at hm
+      exact (mul_eq_zero.mp hm).resolve_left (ne_of_gt hlam)
+    refine ⟨hm',?_⟩
+    have he' : u = lam • boundaryCovariance u := by
+      simpa only [centered_suffix_residual.2.2.1,hm',map_zero,sub_zero,map_smul] using he
+    have hs := congrArg (fun x : G => lam⁻¹ • x) he'
+    simpa only [smul_smul,inv_mul_cancel₀ (ne_of_gt hlam),one_smul] using hs.symm
+  · rintro ⟨hm,he⟩
+    constructor
+    · rw [map_smul,hm,smul_zero]
+    · rw [centered_suffix_residual.2.2.1,hm,map_zero,sub_zero,
+        map_smul,he,smul_smul,mul_inv_cancel₀ (ne_of_gt hlam),one_smul]
+
+/-- Compact resolvent and exact inverse eigenvalue equation for the original
+operator; this does not assume a polar realization or a spectral counting field. -/
+theorem actual_compact_resolvent :
+    IsCompactOperator boundaryResolvent ∧
+    (∀ u h : G, (u,h) ∈ boundaryOperator.graph ↔ boundaryResolvent (u+h) = u) ∧
+    (∀ (lam : ℝ), 0 < lam → ∀ u : G,
+      (u,lam • u) ∈ boundaryOperator.graph ↔
+        mean u = 0 ∧ boundaryCovariance u = lam⁻¹ • u) :=
+  ⟨resolvent_compact,resolvent_inverse,inverse_eigenvalue⟩
+
+/-- The genuine eigenspace of the partially defined original boundary operator. -/
+def boundaryEigenspace (lam : ℝ) : Submodule ℝ G :=
+  boundaryOperator.graph.comap ((LinearMap.id : G →ₗ[ℝ] G).prod (lam • LinearMap.id))
+
+private theorem eigen_covariance (mu : ℝ) (hmu : 0 < mu)
+    (u : boundaryEigenspace mu⁻¹) : boundaryCovariance u.val = mu • u.val := by
+  have hu : (u.val,mu⁻¹ • u.val) ∈ boundaryOperator.graph := u.property
+  simpa only [inv_inv] using
+    ((inverse_eigenvalue mu⁻¹ (inv_pos.mpr hmu) u.val).mp hu).2
+
+private theorem eigen_forward (mu : ℝ) (hmu : 0 < mu)
+    (z : Module.End.eigenspace Sigma.toLinearMap mu) :
+    C z.val ∈ boundaryEigenspace mu⁻¹ := by
+  change (C z.val,mu⁻¹ • C z.val) ∈ boundaryOperator.graph
+  apply (inverse_eigenvalue mu⁻¹ (inv_pos.mpr hmu) (C z.val)).mpr
+  refine ⟨mean_Pi _,?_⟩
+  have hz : Sigma z.val = mu • z.val := Module.End.mem_eigenspace_iff.mp z.property
+  change C (Sigma z.val) = (mu⁻¹)⁻¹ • C z.val
+  rw [hz,map_smul,inv_inv]
+
+private theorem eigen_backward (mu : ℝ) (hmu : 0 < mu)
+    (u : boundaryEigenspace mu⁻¹) :
+    mu⁻¹ • C.adjoint u.val ∈ Module.End.eigenspace Sigma.toLinearMap mu := by
+  apply Module.End.mem_eigenspace_iff.mpr
+  change Sigma (mu⁻¹ • C.adjoint u.val) = mu • (mu⁻¹ • C.adjoint u.val)
+  rw [map_smul]
+  change mu⁻¹ • C.adjoint (boundaryCovariance u.val) = _
+  rw [eigen_covariance mu hmu u,map_smul,smul_smul,smul_smul,
+    inv_mul_cancel₀ (ne_of_gt hmu),mul_inv_cancel₀ (ne_of_gt hmu)]
+
+/-- The original trace identifies the complete positive edge and boundary
+operator eigenspaces, with an explicit inverse and no simplicity assumption. -/
+def covarianceEigenEquiv (mu : ℝ) (hmu : 0 < mu) :
+    Module.End.eigenspace Sigma.toLinearMap mu ≃ₗ[ℝ] boundaryEigenspace mu⁻¹ where
+  toFun z := ⟨C z.val,eigen_forward mu hmu z⟩
+  invFun u := ⟨mu⁻¹ • C.adjoint u.val,eigen_backward mu hmu u⟩
+  left_inv z := by
+    apply Subtype.ext
+    change mu⁻¹ • Sigma z.val = z.val
+    rw [Module.End.mem_eigenspace_iff.mp z.property,smul_smul,
+      inv_mul_cancel₀ (ne_of_gt hmu),one_smul]
+  right_inv u := by
+    apply Subtype.ext
+    change C (mu⁻¹ • C.adjoint u.val) = u.val
+    rw [map_smul]
+    change mu⁻¹ • boundaryCovariance u.val = u.val
+    rw [eigen_covariance mu hmu u,smul_smul,inv_mul_cancel₀ (ne_of_gt hmu),one_smul]
+  map_add' z w := by apply Subtype.ext; exact map_add C z.val w.val
+  map_smul' c z := by apply Subtype.ext; exact map_smul C c z.val
+
+/-- Positive original covariance eigenvectors lie in K. The actual trace gives
+inverse eigenvalues and preserves the full finite eigenspace multiplicities. -/
+theorem actual_covariance_eigenspaces (mu : ℝ) (hmu : 0 < mu) :
+    (∀ z : Module.End.eigenspace Sigma.toLinearMap mu, z.val ∈ K) ∧
+    (∀ z : Module.End.eigenspace Sigma.toLinearMap mu,
+      (covarianceEigenEquiv mu hmu z).val = C z.val) ∧
+    (∀ u : boundaryEigenspace mu⁻¹,
+      ((covarianceEigenEquiv mu hmu).symm u).val = mu⁻¹ • C.adjoint u.val) ∧
+    FiniteDimensional ℝ (boundaryEigenspace mu⁻¹) := by
+  refine ⟨?_,fun _ => rfl,fun _ => rfl,?_⟩
+  · intro z
+    have hz : Sigma z.val = mu • z.val := Module.End.mem_eigenspace_iff.mp z.property
+    have he : z.val = mu⁻¹ • C.adjoint (C z.val) := by
+      change z.val = mu⁻¹ • Sigma z.val
+      rw [hz,smul_smul,inv_mul_cancel₀ (ne_of_gt hmu),one_smul]
+    rw [he]
+    exact K.smul_mem _ (adjoint_mem_K _)
+  · letI : FiniteDimensional ℝ (Module.End.eigenspace Sigma.toLinearMap mu) :=
+      ContinuousLinearMap.finite_dimensional_eigenspace
+        BiasedBoundaryFreeRootForm.actual_compact_covariance.2.2.1 mu (ne_of_gt hmu)
+    exact (covarianceEigenEquiv mu hmu).finiteDimensional
+
 #print axioms actual_self_adjoint_realization
+#print axioms actual_compact_resolvent
+#print axioms actual_covariance_eigenspaces
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryOperator

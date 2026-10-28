@@ -284,7 +284,7 @@ private theorem lift_constant (c : ℝ) : lift (constantD c) = 0 := by
     (by simp [constantD])).1
   simpa using he
 
-private theorem adjoint_mem_K (h : G) : C.adjoint h ∈ K := by
+theorem adjoint_mem_K (h : G) : C.adjoint h ∈ K := by
   change ∀ z ∈ Sigma.ker, inner ℝ z (C.adjoint h) = 0
   intro z hz
   rw [ker_Sigma] at hz
