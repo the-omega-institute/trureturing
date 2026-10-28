@@ -21,6 +21,14 @@ the claim field. The earlier version is arXiv:2507.22861v1, where Definition
 4.1, Theorem 2.1 and Section 6 correspond to the journal's Definition 1.1,
 Theorem 1.1 and Section 4. These are versions of the same question.
 
+## Verified locator
+
+DOI: 10.46787/pump.v9i.6304
+Source: https://journals.calstate.edu/pump/article/view/6304
+
+Published journal version, pages 158–179: Definition 1.1 (pages 158 and 172),
+Theorem 1.1, and the Section 4 question (page 178).
+
 ## Source definition and theorem
 
 Definition 1.1, pages 158 and 172:
