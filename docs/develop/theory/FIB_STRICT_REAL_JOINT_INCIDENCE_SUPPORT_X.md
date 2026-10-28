@@ -2860,17 +2860,11 @@ coefficients.
 The two polynomial divisions in (12.12) have zero remainder; the
 resulting carrier has 512 nonzero monomials in $(x,p,v)$ and degree
 vector $(18,6,6)$. These facts and (14.2) specify the comparisons
-without selecting any roots. For the unbounded part, write the exact
-translation
-
-$$
-\widetilde R(34+z,p,w)=\sum_{k=0}^{18}c_k(p,w)z^k.
-\tag{14.5}
-$$
-
-For every $0\le k\le18$ the same two-variable coefficient formula
-gives $\mathfrak b_{Z_{pw}}(c_k)>10^{21}$. Thus the whole tail
-$x\ge34$ is strictly positive. Finally,
+without selecting any roots. The attempted translated-tail certificate
+is not used: the finite data above do not establish a uniform sign on
+the unbounded tail. We therefore use the source equation itself for
+$x\ge34$; the exact exclusion is proved in Section 14.3 below. No
+assertion about the sign of $R$ on that tail is needed. Finally,
 
 $$
 \mathfrak b_{[24/25,501/500]\times Z_{pw}}
@@ -2879,11 +2873,12 @@ $$
 $$
 
 Here the degree vector is $(16,6,6)$ and all 833 tensor coefficients
-are included. Equations (14.2), (14.4), (14.5) and the displayed
+are included. Equations (14.2), (14.4), (14.6) and the displayed
 polynomial definitions are finite rational expressions for all the
 bounds; in particular (14.6) holds at the strip faces as well.
 
-It follows that every positive carrier root belongs to the union
+For an actual source with $0<x\le34$, the finite comparisons above
+place every possible carrier root in the union
 
 $$
 \begin{aligned}
@@ -2895,9 +2890,9 @@ I_c={}&[24/25,501/500].
 \tag{14.7}
 $$
 
-The closed complementary intervals and tail include every boundary;
-allowing those boundary points again in (14.7) only enlarges the
-possible root set. Strict positivity of the second derivative on
+The closed complementary intervals include every boundary; allowing
+those boundary points again in (14.7) only enlarges the possible root
+set. Strict positivity of the second derivative on
 $I_c$ implies at most two distinct roots there: three distinct roots
 would, by two applications of Rolle's theorem, force a zero of the
 second derivative. This argument includes repeated-root
@@ -3094,6 +3089,49 @@ $$
 Concavity then makes $\Phi$ strictly decreasing and negative for
 $U\ge1$, again excluding every source.
 
+The same source-side exclusion covers the unbounded tail. For
+$x\ge34$, $a(x)<18/x$, $a_2(x)>0$, and the strip bounds give
+
+$$
+\begin{gathered}
+-45<\tau<-43,\qquad 0<s<1,\qquad c_0>-1070,\qquad c_0<0,\\
+c_2<0,\qquad e>162.
+\end{gathered}
+\tag{14.21a}
+$$
+
+Here $a$ is decreasing and $a(x)<18/x$ follows by cross
+multiplication; also $-v\ge87837/100$ on the strip. Explicitly,
+
+$$
+c_0>-810-\frac{9132}{x}+\frac{1877}{5(x+2)}>-1070,
+$$
+
+because the last difference from $-1070$ is increasing for $x\ge34$
+and equals $5629/3060$ at $x=34$. Further,
+
+$$
+e\ge162-\frac{384}{x}+\frac{87837}{100(x+2)}>162,
+$$
+
+since $49437x-76800>0$ there. The remaining displayed bounds follow
+from $\tau'<0$, $s'<0$, and the endpoint estimates
+$96/x-108+1877/(1800)<0$ and
+$480/x-810+1877/(180)<0$. Using (14.18), these inequalities yield
+
+$$
+\Phi(1)<\frac{36380}{9}-\frac{20856}{5}<0,
+\qquad
+\Phi'(1)<\frac{25680}{9}-828-2646<0.
+\tag{14.21b}
+$$
+
+Together with $\Phi''=2(c_2-\gamma)<0$, this makes $\Phi$ negative
+for every $U\ge1$. The source identity (14.11) gives $1<U<2$ for
+$x\ge34$, so no actual source occurs on the tail. This argument uses
+the source equation and does not claim that every tail carrier root is
+positive or that a carrier root lifts to a world.
+
 Finally on $I_c$, (14.18) gives
 
 $$
@@ -3118,12 +3156,13 @@ $$
 $$
 
 Proof. Any original regular world gives $x>0$ and $R(x,p,v)=0$
-by (12.13). The coefficient bounds (14.4)–(14.7) place it in one of
-the six closed ranges of (14.7). The first two ranges are contained
-in $[1/3,5/12]$; the fourth and fifth are contained in
-$[19/10,63/25]$; the last is $[27,34]$. The necessary quadratic
-excludes actual worlds on all these exterior ranges. Thus every
-regular world has $x\in I_c$, where (14.6) allows at most two
+by (12.13). If $x\le34$, the finite coefficient bounds place it in
+one of the six closed ranges of (14.7); if $x\ge34$, the tail
+exclusion in (14.21a)–(14.21b) applies directly to the source. The
+first two ranges are contained in $[1/3,5/12]$; the fourth and fifth
+are contained in $[19/10,63/25]$; the last is $[27,34]$. The necessary
+quadratic excludes actual worlds on all these exterior ranges. Thus
+every regular world has $x\in I_c$, where (14.6) allows at most two
 distinct carrier roots. Equations (14.9) and (14.21), followed by
 the faithful inverse, allow at most one complete world over each.
 This proves (14.22).
@@ -3158,7 +3197,7 @@ For each cell let
 $$
 \ell_i=\left\lfloor\sqrt{G^2q_{i,l}}\right\rfloor,\quad
 u_i=\left\lceil\sqrt{G^2q_{i,u}}\right\rceil,\quad
-h_i(z)=\frac{\ell_i+\nu_i+(\nu_i-\ell_i)z}{2G},\quad -1\le z\le1.
+h_i(z)=\frac{\ell_i+u_i+(u_i-\ell_i)z}{2G},\quad -1\le z\le1.
 \tag{14.24}
 $$
 
