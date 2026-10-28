@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Topology/ChainSourceLocalIsometry
    mirror-E: none(waiver:arbitrary-original-chain-locality)
-   anchors: [mathlib/module/Mathlib.Topology.EMetricSpace.Defs]
+   anchors: [mathlib/module/Mathlib.Topology.MetricSpace.Isometry]
    utility: none
    digest: A generator-free open source region contains a ball that is isometric in the original chain quotient. -/
 
