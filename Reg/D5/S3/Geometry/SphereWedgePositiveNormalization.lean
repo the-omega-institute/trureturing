@@ -110,7 +110,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     definition := none
     coordinates := #[0,1,2]
     readouts := #[{
-      path := #["body","body","body","fn","arg"],
+      path := #["body","body","body","fn","arg","fn"],
       stateBinder := 0,
       functionOperand := true,
       stateOperand := none,
