@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Information.CoherenceAssistanceRoofEquality
 import D5.S3.Quantum.Matrix.LinDTIMajorizationRefutation
-import Mathlib.Data.Fin.Tuple.Sort
 
 /-! The coherence set of Alvarez–Losada–Portesi–Bosyk, Eqs. (11)–(12), and Conjecture 5. -/
 
@@ -98,13 +97,16 @@ private lemma column_ensemble {d : ℕ} (hd : 1 ≤ d)
   refine ⟨p, ψ, ⟨hp, ?_, hunit, ?_⟩, fun _ => rfl, hcol⟩
   · have ht := congrArg Complex.re hρ.2
     simpa only [Matrix.trace, Matrix.diag, Complex.re_sum, Complex.one_re] using ht
-  · rw [← haa, ← ha.eq]
-    ext i k
-    change (∑ j, a i j * star (a k j)) = ∑ j, (p j : ℂ) * (ψ j i * star (ψ j k))
-    exact Finset.sum_congr rfl (fun j _ => (houter j i k).symm)
+  · calc
+      ρ = a * aᴴ := by rw [ha.eq, haa]
+      _ = ∑ j, (p j : ℂ) • rankOneDensity (ψ j) := by
+        ext i k
+        change (∑ j, a i j * star (a k j)) = ∑ j, (p j : ℂ) * (ψ j i * star (ψ j k))
+        exact Finset.sum_congr rfl (fun j _ => (houter j i k).symm)
 
 private lemma rearrangement_max {d : ℕ} (hd : 1 ≤ d) (x : Fin d → ℝ) (i : Fin d) :
     x i ≤ decreasingRearrangement x ⟨0, hd⟩ := by
+  rw [decreasingRearrangement]
   have h := Tuple.monotone_sort (α := ℝᵒᵈ) x
     (show (⟨0, hd⟩ : Fin d) ≤ (Tuple.sort (α := ℝᵒᵈ) x).symm i from Fin.zero_le _)
   change x (Tuple.sort (α := ℝᵒᵈ) x ((Tuple.sort (α := ℝᵒᵈ) x).symm i)) ≤ _ at h
@@ -119,7 +121,10 @@ private lemma first_component_bound {d : ℕ} (hd : 1 ≤ d)
     (∑ j, (CFC.sqrt ρ j j).re ^ 2) ≤ ν ⟨0, hd⟩ := by
   classical
   let u : Fin d → ℝ := fun i => ∑ j, p j * decreasingRearrangement (coherenceVector (ψ j)) i
-  have hu : u ∈ coherenceSet ρ := ⟨d, p, ψ, hdec, rfl⟩
+  have hu : u ∈ coherenceSet ρ := by
+    rw [coherenceSet]
+    exact ⟨d, p, ψ, hdec, rfl⟩
+  rw [IsMajorizationUpperBound] at hν
   have htake (x : Fin d → ℝ) : ((List.ofFn x).take 1).sum = x ⟨0, hd⟩ := by
     cases d with
     | zero => omega
