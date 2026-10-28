@@ -136,6 +136,7 @@ private theorem all_input_identity (x : Fin 3 → ℝ) :
     simp [embedding_omega]
   have hthree : embedding (1 - omega) = 1 - Real.sqrt 3 := by
     simp [embedding_omega]
+  change (∑ i, counterFunction ((counterMatrix *ᵥ x) i)) = 3 * counterFunction m
   rw [hrow]
   simp only [Fin.sum_univ_three, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.cons_val_two, counterFunction, map_add]
