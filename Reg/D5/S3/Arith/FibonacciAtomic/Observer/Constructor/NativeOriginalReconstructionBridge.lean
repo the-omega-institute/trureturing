@@ -9,6 +9,7 @@ set_option relaxedAutoImplicit false
 
 open _root_.D5.S3.Arith.FibonacciAtomic.Observer
 open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeOriginalReconstructionBridge
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeDepthPatterns (Pattern)
 open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeSymbolicFiniteForcing (canonicalSolution)
 open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionPrefixLifting
 open _root_.D5.S3.Arith.FibonacciAtomic.Observer.CompletionHomogeneousFixedPoints
@@ -23,32 +24,31 @@ open LeanInformationAudit
 namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeOriginalReconstructionBridge
 noncomputable section
 
-abbrev signature : Signature where
-  Params := Unit
-  State _ := CompletionTree
+
+abbrev rigiditySignature : Signature where
+  Params := Nat
+  State q := CompletionTree
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ q := Pattern (q + 1)
   Anchor := Empty
   finiteAnchor := inferInstance
 
-abbrev actual : Realization signature := realize signature
-  (fun _ _ X => @decide (IsFinite X) (Classical.propDecidable _)) (fun e => nomatch e)
+abbrev rigidityActual : Realization rigiditySignature :=
+  realize rigiditySignature (fun _ h X => cutoff (h + 1) X) (fun e => nomatch e)
+abbrev rigidityRejected : Realization rigiditySignature :=
+  realize rigiditySignature (fun _ _ _ => .inl true) (fun e => nomatch e)
 
-abbrev rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
-
-abbrev arena : Arena where
-  signature := signature
+abbrev rigidityArena : Arena where
+  signature := rigiditySignature
   Law A := ∀ {n k m r : Nat} (I : EpochInput n k m)
     (s : Fin m → Nat) (valid : Potential I s) (mode : EffectiveMode (functionalInput I s))
     (R : Fin r → Expression k m) (p : Fin n → Nat)
     (passing : (originalImageGuard (functionalInput I s) mode).holds (environment p)),
     OriginalAdmissible I p (canonicalOriginal I s valid mode p passing) ∧
     ∀ i : Fin r,
-      (A.readout () () (evaluate (ranks I.base p)
-        (canonicalOriginal I s valid mode p passing) (R i)) = true ↔
+      (IsFinite (evaluate (ranks I.base p) (canonicalOriginal I s valid mode p passing) (R i)) ↔
         i ∈ finiteReconstructions I s mode R) ∧
       (i ∈ finiteReconstructions I s mode R →
         ∃ g : Source,
@@ -56,14 +56,13 @@ abbrev arena : Arena where
           ∀ v, OriginalAdmissible I p v →
             EffectiveInMode (functionalInput I s) mode p (imageValues s v) →
             evaluate (ranks I.base p) v (R i) = embed g) ∧
-      (∀ h, originalPrefixProgram I s mode p R h i = cutoff (h + 1)
+      (∀ h, originalPrefixProgram I s mode p R h i = A.readout () h
         (evaluate (ranks I.base p) (canonicalOriginal I s valid mode p passing) (R i)))
 
-private theorem actual_law : arena.Law actual := by
-  simpa only [arena, actual, realize, decide_eq_true_eq] using
-    (@original_classification_rigidity_prefix)
+private theorem rigidity_actual : rigidityArena.Law rigidityActual := by
+  simpa only [rigidityArena, rigidityActual, realize, decide_eq_true_eq] using (@original_classification_rigidity_prefix)
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rigidity_rejected : ¬ rigidityArena.Law rigidityRejected := by
   intro law
   let I : EpochInput 0 0 0 := {
     base := {
@@ -82,64 +81,60 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     · exact ⟨rfl, fun j => Fin.elim0 j⟩
     · intro E r hr
       simp [functionalInput, I] at hr
-  let R : Fin 1 → Expression 0 0 := fun _ => .ground (.of true)
-  have finite : IsFinite (evaluate (ranks I.base p)
-      (canonicalOriginal I s valid mode p passing) (R 0)) := ⟨.of true, rfl⟩
-  have member := ((original_classification_rigidity_prefix I s valid mode R p passing).2 0).1.mp finite
-  have bad := ((law I s valid mode R p passing).2 0).1.mpr member
-  exact Bool.noConfusion bad
+  let R : Fin 1 → Expression 0 0 := fun _ => .ground (.of false)
+  have correct := ((original_classification_rigidity_prefix I s valid mode R p passing).2 0).2.2 0
+  have bad := ((law I s valid mode R p passing).2 0).2.2 0
+  rw [correct] at bad
+  change (Sum.inl false : Pattern 1) = Sum.inl true at bad
+  cases bad
 
-def evidence : Registration arena (type_of% (@original_classification_rigidity_prefix)) where
-  actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨actual_law, rejected, rejected_law⟩
-  sensitivity := ⟨fun i => ⟨rejected,
-    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
+def rigidityEvidence : Registration rigidityArena (type_of% (@original_classification_rigidity_prefix)) where
+  actual := rigidityActual
+  bridge := by simp only [rigidityArena, rigidityActual, realize, decide_eq_true_eq]
+  variation := ⟨rigidity_actual, rigidityRejected, rigidity_rejected⟩
+  sensitivity := ⟨fun i => ⟨rigidityRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rigidity_rejected⟩,
     fun e => nomatch e⟩
   dependence := by
     intro i
-    refine ⟨(), embed (.of true), Omega, ?_⟩
-    have finite : IsFinite (embed (.of true)) := ⟨.of true, rfl⟩
-    simp only [actual, realize, finite, decide_true,
-      _root_.D5.S3.Arith.FibonacciAtomic.Observer.CompletionPositiveDriftRegion.omega_not_finite,
-      decide_false]
-    decide
+    refine ⟨0, leaf true, leaf false, ?_⟩
+    intro h
+    cases h
 
-noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@original_classification_rigidity_prefix) (Realization signature) Type Unit where
+noncomputable def rigidityRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@original_classification_rigidity_prefix) (Realization rigiditySignature) (rigiditySignature.Params → Type) Unit where
   unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeOriginalReconstructionBridge.original_classification_rigidity_prefix.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeOriginalReconstructionBridge.evidence
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeOriginalReconstructionBridge.rigidityEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨rigidityArena⟩
+  objectArena := .source ⟨rigidityArena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨evidence⟩
+  realization := .source rigidityArena ⟨rigidityEvidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
-    (fun _ _ X => @decide (IsFinite X) (Classical.propDecidable _)) (fun e => nomatch e))
+  readout := some (realize rigiditySignature (fun _ h X => cutoff (h + 1) X) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some CompletionTree
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeOriginalReconstructionBridge
     definition := none
-    coordinates := #[]
+    coordinates := #[12]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "arg", "body", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
 
-#print axioms evidence
-#print axioms registration
+#print axioms rigidityEvidence
+
 def emptyEpoch : EpochInput 0 0 0 where
   base := {
     equations := Fin.elim0
@@ -257,38 +252,41 @@ noncomputable def canonicalRegistration : Contract.Registration.{_,_,_,0,0,0,_,_
 
 #print axioms canonicalEvidence
 
+
 abbrev transportSignature : Signature where
-  Params := Σ m : Nat, Fin m → Nat
-  State _ := CompletionTree
+  Params := Σ k : Nat, Σ m : Nat, (Fin m → Nat) × (Fin k → Nat) × Expression k m
+  State q := Fin q.2.1 → CompletionTree
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ q := CompletionTree
   Anchor := Empty
   finiteAnchor := inferInstance
 
 abbrev transportActual : Realization transportSignature :=
-  realize transportSignature (fun _ q X => @decide (NativeImage (commonShift q.2) X) (Classical.propDecidable _)) (fun e => nomatch e)
+  realize transportSignature (fun _ q w => evaluate q.2.2.2.1 w (transport q.2.2.1 (commonShift q.2.2.1) q.2.2.2.2)) (fun e => nomatch e)
 abbrev transportRejected : Realization transportSignature :=
-  realize transportSignature (fun _ _ _ => false) (fun e => nomatch e)
+  realize transportSignature (fun _ _ _ => leaf true) (fun e => nomatch e)
 
 abbrev transportArena : Arena where
   signature := transportSignature
   Law A := ∀ {k m : Nat} (s : Fin m → Nat)
     (p : Fin k → Nat) (v : Fin m → CompletionTree) (E : Expression k m),
-    evaluate p (imageValues s v) (transport s (commonShift s) E) =
+    A.readout () ⟨k, m, s, p, E⟩ (imageValues s v) =
       rho^[commonShift s] (evaluate p v E) ∧
-    A.readout () ⟨m, s⟩
-      (evaluate p (imageValues s v) (transport s (commonShift s) E)) = true
+    NativeImage (commonShift s)
+      (evaluate p (imageValues s v) (transport s (commonShift s) E))
 
 private theorem transport_actual : transportArena.Law transportActual := by
   simpa only [transportArena, transportActual, realize, decide_eq_true_eq] using (@reconstruction_transport)
 
 private theorem transport_rejected : ¬ transportArena.Law transportRejected := by
   intro law
-  let R : Expression 0 0 := .ground (.of true)
-  have bad := (law Fin.elim0 Fin.elim0 Fin.elim0 R).2
-  exact Bool.noConfusion bad
+  let E : Expression 0 0 := .ground (.of false)
+  have bad := (law Fin.elim0 Fin.elim0 Fin.elim0 E).1
+  change leaf true = leaf false at bad
+  have tags := congrArg (fun X => (PFunctor.M.dest X).1) bad
+  cases tags
 
 def transportEvidence : Registration transportArena (type_of% (@reconstruction_transport)) where
   actual := transportActual
@@ -299,18 +297,11 @@ def transportEvidence : Registration transportArena (type_of% (@reconstruction_t
     fun e => nomatch e⟩
   dependence := by
     intro i
-    refine ⟨⟨1, fun _ => 1⟩, Omega, leaf true, ?_⟩
-    have good : NativeImage 1 Omega := ⟨Omega, iterate_omega 1⟩
-    have bad : ¬ NativeImage 1 (leaf true) := by
-      rintro ⟨X, hx⟩
-      obtain ⟨q, hq, _⟩ :=
-        _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeGuardedAtomicReplacement.atomic_predecessor
-          1 0 X hx
-      omega
-    change @decide (NativeImage 1 Omega) (Classical.propDecidable _) ≠
-      @decide (NativeImage 1 (leaf true)) (Classical.propDecidable _)
-    simp only [good, bad, decide_true, decide_false]
-    decide
+    refine ⟨⟨0, 1, (fun _ => 0), Fin.elim0, .var 0 0⟩,
+      (fun _ => leaf true), (fun _ => leaf false), ?_⟩
+    intro h
+    have tags := congrArg (fun X => (PFunctor.M.dest X).1) h
+    cases tags
 
 noncomputable def transportRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@reconstruction_transport) (Realization transportSignature) (transportSignature.Params → Type) Unit where
@@ -325,7 +316,7 @@ noncomputable def transportRegistration : Contract.Registration.{_,_,_,0,0,0,_,_
   realization := .source transportArena ⟨transportEvidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize transportSignature (fun _ q X => @decide (NativeImage (commonShift q.2) X) (Classical.propDecidable _)) (fun e => nomatch e))
+  readout := some (realize transportSignature (fun _ q w => evaluate q.2.2.2.1 w (transport q.2.2.1 (commonShift q.2.2.1) q.2.2.2.2)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -333,18 +324,19 @@ noncomputable def transportRegistration : Contract.Registration.{_,_,_,0,0,0,_,_
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeOriginalReconstructionBridge
     definition := none
-    coordinates := #[1, 2]
+    coordinates := #[0, 1, 2, 3, 5]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
 
 #print axioms transportEvidence
+
 
 abbrev epochSignature : Signature where
   Params := Σ m : Nat, Fin m → Nat
