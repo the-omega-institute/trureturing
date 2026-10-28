@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/OccupiedFiberSubstitution
    mirror-E: none(waiver:occupied-fiber-substitution)
-   anchors: [D5/S3/Geometry/FiniteGraphVertexSubstitution]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Clique]
    utility: none
    digest: Induced substitutions split into occupied bases and selected fibers. -/
 import D5.S3.Geometry.FiniteGraphVertexSubstitution
