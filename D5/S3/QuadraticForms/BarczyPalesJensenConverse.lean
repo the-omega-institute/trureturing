@@ -99,4 +99,96 @@ private theorem matrix_rank : 2 ≤ counterMatrix.rank := by
   have hl := Matrix.rank_submatrix_le counterMatrix e e
   simpa [hr] using hl
 
+private theorem all_input_identity (x : Fin 3 → ℝ) :
+    ∑ i, counterFunction ((counterMatrix *ᵥ x) i) =
+      3 * counterFunction ((∑ j, x j) / 3) := by
+  let m := (∑ j, x j) / 3
+  let t := (x 0 - x 1) / 12
+  have hrow : counterMatrix *ᵥ x =
+      ![m + t, m + (Real.sqrt 3 - 2) * t, m + (1 - Real.sqrt 3) * t] := by
+    ext i
+    fin_cases i <;> simp [counterMatrix, Matrix.mulVec, dotProduct,
+      Fin.sum_univ_succ, m, t] <;> ring
+  have htwo : embedding (omega - 2) = Real.sqrt 3 - 2 := by
+    simp [embedding_omega]
+  have hthree : embedding (1 - omega) = 1 - Real.sqrt 3 := by
+    simp [embedding_omega]
+  rw [hrow]
+  simp only [Fin.sum_univ_three, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two, counterFunction, map_add]
+  rw [← htwo, ← hthree, projection_scalar, projection_scalar]
+  have hc := congrArg (fun q : ℚ => (q : ℝ))
+    (norm_cancellation (projection m) (projection t))
+  push_cast at hc
+  exact hc
+
+private theorem midpoint_failure :
+    ¬ counterFunction ((Real.sqrt 3 + -Real.sqrt 3) / 2) ≤
+      (counterFunction (Real.sqrt 3) + counterFunction (-Real.sqrt 3)) / 2 := by
+  have hroot : projection (Real.sqrt 3) = omega := by
+    rw [← embedding_omega, projection_embedding]
+  norm_num [counterFunction, map_neg, hroot, QuadraticAlgebra.norm_def, omega]
+
+/-- A finite convex combination in the original interval subtype. -/
+private def intervalCombination {I : Set ℝ} (hI : Convex ℝ I) {n : ℕ}
+    (w : Fin n → ℝ) (hw0 : ∀ i, 0 ≤ w i) (hw1 : ∑ i, w i = 1)
+    (x : Fin n → I) : I :=
+  ⟨∑ i, w i * (x i : ℝ), by
+    simpa only [smul_eq_mul] using hI.sum_mem
+      (fun i _ => hw0 i) hw1 (fun i _ => (x i).property)⟩
+
+/-- The arithmetic mean, with membership proved in the original interval. -/
+private def intervalMean {I : Set ℝ} (hI : Convex ℝ I) {n : ℕ} (hn : 0 < n)
+    (x : Fin n → I) : I :=
+  intervalCombination hI (fun _ => (n : ℝ)⁻¹)
+    (fun _ => inv_nonneg.mpr (Nat.cast_nonneg n))
+    (by simp [ne_of_gt hn]) x
+
+/-- An actual matrix row output in the original interval. -/
+private def intervalRow {I : Set ℝ} (hI : Convex ℝ I) {n : ℕ}
+    (P : Matrix (Fin n) (Fin n) ℝ) (hP : P ∈ doublyStochastic ℝ (Fin n))
+    (x : Fin n → I) (i : Fin n) : I :=
+  intervalCombination hI (P i)
+    (fun j => (mem_doublyStochastic_iff_sum.mp hP).1 i j)
+    ((mem_doublyStochastic_iff_sum.mp hP).2.1 i) x
+
+/-- The original universal rank-only converse, with arbitrary subtype functions.
+Nonempty open convex subsets of the real line are exactly the intervals in scope.
+No regularity of the function or former column-span assumption is imposed. -/
+def claim : Prop :=
+  ∀ (n : ℕ) (hn : 0 < n) (I : Set ℝ), I.Nonempty → IsOpen I →
+    ∀ (hI : Convex ℝ I) (f : I → ℝ)
+      (P : Matrix (Fin n) (Fin n) ℝ) (hP : P ∈ doublyStochastic ℝ (Fin n)),
+      2 ≤ P.rank →
+      (∀ x : Fin n → I,
+        f (intervalMean hI hn x) ≤ (∑ i, f (intervalRow hI P hP x i)) / n) →
+      ∀ u v : I,
+        f (intervalMean hI (by norm_num : 0 < 2) ![u, v]) ≤ (f u + f v) / 2
+
+theorem result : ¬ claim := by
+  intro h
+  let f : (Set.univ : Set ℝ) → ℝ := fun x => counterFunction x
+  have hj := h 3 (by norm_num) Set.univ Set.univ_nonempty isOpen_univ
+    convex_univ f counterMatrix matrix_stochastic matrix_rank
+  have hi : ∀ x : Fin 3 → (Set.univ : Set ℝ),
+      f (intervalMean convex_univ (by norm_num : 0 < 3) x) ≤
+        (∑ i, f (intervalRow convex_univ counterMatrix matrix_stochastic x i)) / 3 := by
+    intro x
+    have he := all_input_identity (fun i => (x i : ℝ))
+    change counterFunction (∑ i, (3:ℝ)⁻¹ * (x i : ℝ)) ≤
+      (∑ i, counterFunction (∑ j, counterMatrix i j * (x j : ℝ))) / 3
+    have hm : (∑ i, (3:ℝ)⁻¹ * (x i : ℝ)) = (∑ i, (x i : ℝ)) / 3 := by
+      rw [← Finset.mul_sum]
+      ring
+    rw [hm]
+    change counterFunction ((∑ i, (x i : ℝ)) / 3) ≤
+      (∑ i, counterFunction ((counterMatrix *ᵥ fun j => (x j : ℝ)) i)) / 3
+    rw [he]
+    linarith
+  have hm := hj hi ⟨Real.sqrt 3, Set.mem_univ _⟩ ⟨-Real.sqrt 3, Set.mem_univ _⟩
+  apply midpoint_failure
+  convert hm using 1 <;>
+    simp [f, intervalMean, intervalCombination, Fin.sum_univ_succ] <;> ring
+
 end BarczyPalesJensenConverse
+
