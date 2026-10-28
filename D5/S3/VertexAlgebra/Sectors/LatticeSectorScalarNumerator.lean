@@ -19,9 +19,10 @@ degree, without positivity or a vacuum assumption.
 
 proof_shape: content
 admission_basis: escape-witness
-escape_witness: finite multilinear expansion and actual mode grading force a
-charge-energy lower bound on every nonzero double canonical coefficient.
-This bound makes the scalar common series an exact polynomial truncation.
+escape_witness: length induction propagates the entire suffix lower-energy
+support through arbitrary actual lattice words, using finite grade projections.
+The resulting signed n-word estimate bounds the same supplied scalar common
+series and makes it an exact polynomial truncation; the double bound is retained.
 -/
 
 set_option autoImplicit false
@@ -490,7 +491,11 @@ theorem ordinary_actual_word_finite_scalar_numerator
     rw [Module.End.pow_apply]
     exact hr
   obtain ⟨k, hk, rest⟩ := ungraded_local_word_common_series A order
-    (by simp [order, List.nodup_ofFn, Function.injective_id]) (by intro i; simp [order]) localFields
+    (by
+      change (List.ofFn (fun i : Fin n => i)).Nodup
+      rw [List.nodup_ofFn]
+      intro i j h
+      exact h) (by intro i; simp [order]) localFields
   refine ⟨k, hk, ?_⟩
   intro δ w
   obtain ⟨a, P, truncation, common⟩ := rest (inclusion D δ w)
