@@ -66,7 +66,7 @@ Lean statement: `D5/S3/Arith/Robin/EulerLayerRootCorrection.strict_inventory_roo
 
 The proof splits log(U) into first, second and all remaining layers. The first-layer error is bounded by log(t), the second layer contributes sqrt(2)*sqrt(t), and the entire higher tail is o(sqrt(t)). Costa-Pereira bounds and the existing unconditional MediumPNT give (psi(t)-theta(t))/sqrt(t)->1. Combining the four errors gives the exact uniform coefficient sqrt(2)-1. This is an arithmetic supplier for the Robin/5040 program, and does not prove RH or a signed-tail or attainment statement.
 
-The paper and theory attribution is the existing ZECKENDORF_EULER_5040 Definition 7.1, Theorem 8.1 and equations (19)--(24), as cross-referenced by the existing analytic workload note. The existing Lean O(sqrt(t)) bound is not presented as this exact asymptotic. The outer Reg source binding remains unfinished and does not claim a validated four-slot registration.
+The paper and theory attribution is the existing ZECKENDORF_EULER_5040 Definition 7.1, Theorem 8.1 and equations (19)--(24), as cross-referenced by the existing analytic workload note. The existing Lean O(sqrt(t)) bound is not presented as this exact asymptotic.
 
 ## References
 
