@@ -90,14 +90,14 @@ internal sealed class PeriodicGridSectorDistanceDocument : IScribeDocumentDefini
         Formula m = F.Id("M"), n = F.Id("N"), y = F.Id("y"), z = F.Id("z");
         Formula h = F.Id("h"), v = F.Id("v");
         Formula label = Call("EdgeLabel", m, n);
-        Formula cost = Seq(m, Indicator(Seq(Call("H", y), Neq, h)), Plus,
-            n, Indicator(Seq(Call("V", y), Neq, v)));
+        Formula cost = Seq(m, Indicator(Seq(Call("H", y), Neq, Sp, h)), Plus,
+            n, Indicator(Seq(Call("V", y), Neq, Sp, v)));
         Formula member = Seq(Call("Flat", z), Land, Call("H", z), Eq, h,
             Land, Call("V", z), Eq, v);
         Formula attained = Seq(Exists, Sp, z, Colon, label, Comma, Sp,
             member, Land, Call("D", y, z), Eq, cost);
         Formula lower = Seq(Forall, Sp, z, Colon, label, Comma, Sp,
-            Par(member), Rightarrow, cost, Leq, Call("D", y, z));
+            Par(member), Rightarrow, Sp, cost, Leq, Call("D", y, z));
         return Disp(Seq(Forall, Sp, m, Comma, n, Colon, Mathbb, Grp(F.Id("N")), Comma, Sp,
             Par(Seq(D(0), Lt, m, Land, D(0), Lt, n)), Rightarrow,
             Forall, Sp, y, Colon, label, Comma, Sp, Call("Flat", y), Rightarrow,
