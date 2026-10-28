@@ -58,9 +58,7 @@ internal sealed class AndoyoPrimeFiberRefutationDocument : IScribeDocumentDefini
                         + "Section 4, the definition of the prime fiber there, and Section 5 "
                         + "Question 5.2 supply the source interpretation. The argument does not "
                         + "settle infinitude for coprime seeds or assert worldwide priority."))),
-                DescribeRole.Theorem,
-                openProblemResolutionClaim: new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("andoyo-2026-pisano-question-5-2"), ResolutionKind.Refuted)))));
+                DescribeRole.Theorem)))));
 
     private static Formula ClaimFormula()
     {
