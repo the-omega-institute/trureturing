@@ -27,4 +27,4 @@ For every real pair x=(t,b) satisfying all four displayed closed strip bounds, t
 ## References
 
 - Truth anchor: `D5/S3/Observer/CubicGain/RegularReadJacobian.actual_jacobian_nonsingular`
-- Dependency: [D5/S3/Observer/CubicGain/RegularResponseCircuit](RegularResponseCircuit.md)
+- Dependency: [D5/S3/Observer/CubicGain/RegularParentChart](RegularParentChart.md)

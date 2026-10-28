@@ -12,8 +12,6 @@ At b=criticalRoot and r=liftedR(b), selected_minor_nonzero supplies the nonzero 
 
 This is a local identification at the actual selected algebraic parameter. The global determinant factorization and degree claims in VI (4.3), the universal complex-root and three-equation assertions, and the broader parents 15.2 and 15.3 remain open. The clock-five/six/seven source equations and the complete-world distinctions retain their original scope.
 
-Utility classification: none. This module transports exact polynomial and determinant identities and cancels a common factor; it introduces no new finite certificate, enumeration or numerical reduction. Its selected-root proof consumes the existing same-unit common-zero and nonzero-minor certificates on the actual source proof path.
-
 **Definition 1.1 (actual leading fixed determinant).**
 
 Lean statement: `D5/S3/Observer/CubicGain/ActualMinorLift.actualMinorA0`
