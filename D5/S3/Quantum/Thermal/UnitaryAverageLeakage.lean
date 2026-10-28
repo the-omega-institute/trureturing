@@ -40,7 +40,11 @@ private theorem card_pos : (0 : ℝ) < Fintype.card ι := by
 @[simp] theorem conjugate_norm (U : unitary A) (X : A) :
     ‖conjugate U X‖ = ‖X‖ := by
   unfold conjugate
-  rw [CStarRing.norm_mul_coe_unitary _ (star U), CStarRing.norm_coe_unitary_mul]
+  have hstar : star (U : A) ∈ unitary A := Unitary.star_mem U.property
+  calc
+    ‖(U : A) * X * star (U : A)‖ = ‖(U : A) * (X * star (U : A))‖ := by rw [mul_assoc]
+    _ = ‖X * star (U : A)‖ := CStarRing.norm_coe_unitary_mul U _
+    _ = ‖X‖ := CStarRing.norm_mul_mem_unitary X hstar
 
 /-- A conjugation defect is a commutator followed by a unitary. -/
 theorem conjugation_defect_norm (U : unitary A) (X : A) :
@@ -49,7 +53,8 @@ theorem conjugation_defect_norm (U : unitary A) (X : A) :
   have he : X - conjugate U X =
       (X * (U : A) - (U : A) * X) * star (U : A) := by
     simp only [conjugate, sub_mul, mul_assoc, hu, mul_one]
-  rw [he, CStarRing.norm_mul_coe_unitary _ (star U)]
+  have hstar : star (U : A) ∈ unitary A := Unitary.star_mem U.property
+  rw [he, CStarRing.norm_mul_mem_unitary _ hstar]
 
 /-- The normalized average is contractive in the C-star norm. -/
 theorem average_norm_le (U : ι → unitary A) (X : A) : ‖average U X‖ ≤ ‖X‖ := by
@@ -80,7 +85,8 @@ theorem average_defect_le_leakage (U : ι → unitary A) (X : A) :
   have hn : (Fintype.card ι : ℝ) ≠ 0 := (card_pos (ι := ι)).ne'
   have hi (i : ι) : ‖X - conjugate (U i) X‖ ≤ leakage U X := by
     rw [conjugation_defect_norm]
-    exact Finset.le_sup' _ (Finset.mem_univ i)
+    exact Finset.le_sup' (fun j => ‖X * (U j : A) - (U j : A) * X‖)
+      (Finset.mem_univ i)
   rw [average_defect, norm_smul, Real.norm_eq_abs,
     abs_of_nonneg (inv_nonneg.mpr (le_of_lt card_pos))]
   calc
@@ -119,7 +125,8 @@ theorem leakage_eq_zero_iff (U : ι → unitary A) (X : A) :
   · intro h i
     have hi : ‖X * (U i : A) - (U i : A) * X‖ ≤ 0 := by
       rw [← h]
-      exact Finset.le_sup' _ (Finset.mem_univ i)
+      exact Finset.le_sup' (fun j => ‖X * (U j : A) - (U j : A) * X‖)
+        (Finset.mem_univ i)
     exact sub_eq_zero.mp (norm_eq_zero.mp (le_antisymm hi (norm_nonneg _)))
   · intro h
     unfold leakage
@@ -135,13 +142,14 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 For Hilbert-Schmidt conjugation this gives the sum-of-squared-leakages identity. -/
 theorem sum_isometry_defect_sq (T : ι → E ≃ₗᵢ[ℝ] E) (x : E) :
     (∑ i, ‖x - T i x‖ ^ 2) =
-      2 * (Fintype.card ι : ℝ) * ‖x‖ ^ 2 - 2 * ⟪x, ∑ i, T i x⟫_ℝ := by
-  have hi (i : ι) : ‖x - T i x‖ ^ 2 = 2 * ‖x‖ ^ 2 - 2 * ⟪x, T i x⟫_ℝ := by
+      2 * (Fintype.card ι : ℝ) * ‖x‖ ^ 2 - 2 * inner ℝ x (∑ i, T i x) := by
+  have hi (i : ι) : ‖x - T i x‖ ^ 2 = 2 * ‖x‖ ^ 2 - 2 * inner ℝ x (T i x) := by
     rw [norm_sub_sq_real, (T i).norm_map]
     ring
   simp_rw [hi]
   rw [Finset.sum_sub_distrib, ← Finset.mul_sum, inner_sum]
   simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+  rw [← Finset.mul_sum]
   ring
 
 end HilbertSquare
