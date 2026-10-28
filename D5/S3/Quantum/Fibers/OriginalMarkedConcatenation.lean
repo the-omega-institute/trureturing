@@ -163,7 +163,7 @@ theorem hazard_integrable (c T chi : ℝ) (k : ℝ → ℝ)
 private theorem leg_hazard (L : Leg) :
     OriginalControlSurvivalInstability.hazard L.c L.height = L.hazard := by
   funext t
-  simp [hazard, OriginalControlSurvivalInstability.hazard, Leg.hazard,
+  simp [OriginalControlSurvivalInstability.hazard, Leg.hazard,
     (L.height_deriv t).deriv]
 
 theorem leg_survival (L : Leg) : survival L.c L.height = L.survival := by
@@ -182,6 +182,7 @@ private theorem height_end (L : Leg) : L.height L.duration = L.y := by
 
 private theorem leg_integrable (L : Leg) (t : ℝ) (ht : t ∈ Icc 0 L.duration) :
     IntervalIntegrable (hazard L.c L.height) volume 0 t := by
+  change IntervalIntegrable (OriginalControlSurvivalInstability.hazard L.c L.height) volume 0 t
   rw [leg_hazard]
   exact (L.hazard_cont.mono (Icc_subset_Icc le_rfl ht.2)).intervalIntegrable_of_Icc ht.1
 
