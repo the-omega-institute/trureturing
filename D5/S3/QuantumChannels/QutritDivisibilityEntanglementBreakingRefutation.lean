@@ -24,6 +24,8 @@ open D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite (partialTranspose)
 
 namespace D5.S3.QuantumChannels.QutritDivisibilityEntanglementBreakingRefutation
 
+noncomputable section
+
 private def IsCPTP (T : MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
   T.IsCompletelyPositive ∧ T.IsTracePreserving
 
@@ -61,22 +63,45 @@ private def IsEntanglementBreaking (T : MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
 def claim : Prop :=
   ∀ T, IsCPTP T → IsDivisible T → T ∉ pDivisibleSet → IsEntanglementBreaking T
 
-private def w : MatrixMap (Fin 3) (Fin 3) ℂ := sorry
+private def w : MatrixMap (Fin 3) (Fin 3) ℂ where
+  toFun X := (1 / 2 : ℂ) • (X.trace • (1 : Matrix (Fin 3) (Fin 3) ℂ) - X.transpose)
+  map_add' X Y := by
+    ext i j
+    simp [Matrix.trace_add, Matrix.transpose_apply]
+    ring
+  map_smul' c X := by
+    ext i j
+    simp [Matrix.trace_smul, Matrix.transpose_apply]
+    ring
 
-private def d : MatrixMap (Fin 3) (Fin 3) ℂ := sorry
+private def d : MatrixMap (Fin 3) (Fin 3) ℂ where
+  toFun X := (1 / 2 : ℂ) • X + (1 / 2 : ℂ) • (X.trace / 3) •
+    (1 : Matrix (Fin 3) (Fin 3) ℂ)
+  map_add' X Y := by
+    ext i j
+    simp [Matrix.trace_add]
+    ring
+  map_smul' c X := by
+    ext i j
+    simp [Matrix.trace_smul]
+    ring
 
 private def t : MatrixMap (Fin 3) (Fin 3) ℂ := d.comp w
 
 private lemma w_formula (X : Matrix (Fin 3) (Fin 3) ℂ) :
-    w X = (1 / 2 : ℂ) • (X.trace • (1 : Matrix (Fin 3) (Fin 3) ℂ) - X.transpose) := by sorry
+    w X = (1 / 2 : ℂ) • (X.trace • (1 : Matrix (Fin 3) (Fin 3) ℂ) - X.transpose) := by rfl
 
 private lemma d_formula (X : Matrix (Fin 3) (Fin 3) ℂ) :
     d X = (1 / 2 : ℂ) • X + (1 / 2 : ℂ) • (X.trace / 3) •
-      (1 : Matrix (Fin 3) (Fin 3) ℂ) := by sorry
+      (1 : Matrix (Fin 3) (Fin 3) ℂ) := by rfl
 
 private lemma t_formula (X : Matrix (Fin 3) (Fin 3) ℂ) :
     t X = (5 / 12 : ℂ) • X.trace • (1 : Matrix (Fin 3) (Fin 3) ℂ) -
-      (1 / 4 : ℂ) • X.transpose := by sorry
+      (1 / 4 : ℂ) • X.transpose := by
+  ext i j
+  simp [t, d_formula, w_formula, Matrix.trace_smul, Matrix.trace_sub,
+    Matrix.trace_transpose, Matrix.trace_one, Fintype.card_fin]
+  ring
 
 private lemma w_cptp : IsCPTP w := by sorry
 
@@ -129,4 +154,5 @@ theorem result : ¬ claim := by
   exact t_not_entanglementBreaking
     (h t t_cptp t_divisible t_not_pdivisible)
 
+end
 end D5.S3.QuantumChannels.QutritDivisibilityEntanglementBreakingRefutation
