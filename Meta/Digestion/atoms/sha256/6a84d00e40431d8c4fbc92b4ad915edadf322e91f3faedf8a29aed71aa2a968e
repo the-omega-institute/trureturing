@@ -1,0 +1,38 @@
+**Theorem 12.1 (the exact current-service language kernel).** In the
+fixed C context with every finite precision allowed, two settled rational
+states have the same complete trace language for all common finite
+sufficiently backed adaptive continuations if and only if their current
+addressed terms and fields agree. On Definition 11.1's image the nominal
+four views therefore have the same current-task kernel, which separates
+every two distinct successful words.
+
+**Proof.** If $(t,x)=(t',x')$, the deterministic branches and successors
+in Theorem 7.2 agree, and every digital Read has exactly the same
+two-element response set. There is no additional hidden sensor state.
+For any allowed next integer in either execution the other admits it
+after its matching prefix. Induction on input/output events gives the
+same full finite trace language, including proper prefixes, malformed
+frames, refusals, actual adapter replies and Return. The controller
+predicts this set and consumes the actual member, not an invisible bit.
+
+If terms differ, the first-constructor $P$ test in Theorem 5.4 gives
+different deterministic growth/refusal responses. If terms agree and
+$x-x'\ne0$, the forcing left inverse gives a terminal $j$ and $r\le I$
+with $\delta=(T_t^r(x-x'))_{\ell_j}\ne0$. Actually perform those $r$
+Ticks in both sources. Choose a finite nonnegative integer $p$ so large
+that $2^p|\delta|>2$. The two floor integers then differ by at least
+two, so their adjacent report pairs in (8.1) are disjoint. This fixed
+finite continuation has disjoint possible final integer replies and
+distinguishes the languages. It uses unrestricted finite precision,
+and therefore does not contradict the capped common-record lower bound.
+
+On the sampled pure image, $T_t^n$ is injective and AAII Theorem 85.1
+is injective in $w$. Theorem 11.2 transfers that equality kernel to all
+four nominal views. Literal nuisance journals can still differ at the
+same kernel point as proved there. $\square$
+
+Pair separation with unrestricted finite precision is not an algorithm
+with a finite stopping certificate for an arbitrary unknown rational
+field. The actual exact acquisition in §10 uses the smaller known-lattice
+history domain; Theorem 12.1 does not enlarge that acquisition claim.
+

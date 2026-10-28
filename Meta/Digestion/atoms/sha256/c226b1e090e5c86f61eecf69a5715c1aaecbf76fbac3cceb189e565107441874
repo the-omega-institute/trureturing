@@ -1,0 +1,38 @@
+**Definition 2.1 (persistent material and legal edits).** Use the LAB
+construction of [Atomic Generation and Acquisition, §§17 and 20](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md),
+abbreviated AA, and [its continuation, §84](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md),
+abbreviated AAII. A logical term is
+
+$$
+t::=\alpha\mid\beta\mid\langle t,t\rangle.
+$$
+
+Logical addresses are finite words in $L,R$, with root $\varepsilon$.
+A logical alpha is one material vertex. A logical beta is its root with a
+terminal left marker. A branch has its two ordered logical subtrees.
+The marker is material, but is not a logical child available for addressed
+growth. The reachable terms form $\mathcal D$: no logical alpha leaf has
+an $L$-ending address. AA Theorem 17.2 proves this exact reachability
+criterion; AA Definition 17.3 proves the support/boundary parsing rule.
+
+At a logical alpha, $P_p$ changes alpha to beta and adds only $pL$.
+At a logical beta, $S_p$ changes beta to $\langle\beta,\alpha\rangle$,
+retains $p,pL$, and adds only $pLL,pR$. Thus old vertices and edges persist.
+Write $V_t$ for the material address support and $A_t$ for its unit
+undirected adjacency matrix. An enabled edit $g:t\to t'$ has the actual
+zero extension $\iota_g:\mathbb Q^{V_t}\to\mathbb Q^{V_{t'}}$.
+All fresh fields are zero. The auxiliary history tapes of AA §19 are not
+installed.
+
+Let $b(t)$ be the number of rooted childless material vertices, let
+$N(t)=|V_t|$, and put $I(t)=N(t)-b(t)$. If a legal successful word has $P$
+promotions and $S$ splits, its length $n$ and present sizes satisfy
+
+$$
+n=P+S,\qquad N=1+P+2S,\qquad b=1+S,\qquad I=n.
+\tag{2.1}
+$$
+
+These are AAII (84.3). A rooted terminal is not an unrooted leaf: alpha
+has its root as terminal, and beta has its unary marker as terminal.
+

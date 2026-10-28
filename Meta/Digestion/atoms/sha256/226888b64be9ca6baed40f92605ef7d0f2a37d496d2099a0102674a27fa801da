@@ -1,0 +1,27 @@
+**Definition 2.2 (the known rational law).** In both installations the
+field law on each current tree is
+
+$$
+T_t=\frac{4\operatorname{Id}+A_t}{8},\qquad \lambda=\frac78.
+\tag{2.2}
+$$
+
+There is no autonomous field evolution. A requested Tick applies $T_t$;
+Read and Hold do not. AAII Proposition 86.1, using the degree-three bound,
+supplies rational invertibility and
+
+$$
+\frac18\operatorname{Id}\le T_t\le\frac78\operatorname{Id},
+\qquad \|T_ty\|_\infty\le\lambda\|y\|_\infty.
+\tag{2.3}
+$$
+
+The second inequality also follows directly from the nonnegative row sums
+of (2.2), and holds for every real vector. In particular
+$\|T_t^{-1}y\|_\infty\ge\lambda^{-1}\|y\|_\infty$.
+Positive diagonal and edge entries have the following supplied consequence:
+one Tick after a zero extension of a strictly positive old field is
+strictly positive everywhere. Each fresh vertex has an old positive
+neighbor, including both fresh vertices of a split. We use exactly the
+fresh-support mechanism of AAII §85.
+

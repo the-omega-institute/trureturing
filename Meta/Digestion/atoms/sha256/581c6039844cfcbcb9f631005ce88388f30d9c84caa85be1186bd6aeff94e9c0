@@ -1,0 +1,35 @@
+**Theorem 4.3 (decidability, exact image and unique certificate).** The
+procedure in Definition 4.2 terminates on every finite rational input.
+It accepts precisely $\operatorname{im}F_A$, and its returned history is
+the unique preimage. Membership in this numerical image does not certify
+that a candidate was physically acquired or that its holder has access.
+
+**Proof.** Invalid encodings and finite guard tests terminate. Every
+non-alpha $T_t$ is a finite nonsingular rational matrix by (2.3), so
+exact elimination computes its inverse. Consider one positive inversion
+loop after all preceding tests have passed. If it neither finds a zero
+nor rejects, all its vectors have norm at most one, but after $r$ iterations
+their norms are at least $\lambda^{-r}\|y\|_\infty$. Since the starting
+norm is positive and $\lambda<1$, this eventually exceeds one. Hence such
+an infinite loop is impossible. There are at most $N-1$ successful
+collapses. The positive alpha scalar also cannot double indefinitely
+without reaching or exceeding one. This proves total termination,
+including off-image positive rational inputs.
+
+Every actual history passes the cube and nonzero checks by Observation
+3.3, and passes the reverse steps by Theorem 4.1. At each inner non-alpha
+stage its gap is one of $q_1,\ldots,q_{n-1}$ and hence positive. Its alpha
+scalar passes. This proves completeness.
+
+For soundness, suppose the procedure accepts. It has produced an alpha
+scalar $2^{-q_0}$ and a finite reverse chain of legal literal collapses.
+Read the chain forward. Each inverse collapse is exactly an enabled $P$
+or $S$ with the zero extension of Definition 2.1. The stored field
+equations are exactly $y=T_t^q\iota_gz$. The stored counters are
+nonnegative; all counters between successive growths are positive by
+the inner test. Thus the chain defines a history in $\mathcal H_A$.
+The alpha equation and then these equations show that its actual
+recurrence returns the accepted input. Uniqueness follows from Theorem
+4.1. None of these algebraic checks produces a reference, a right or an
+actual observation; the distinction in the statement follows. $\square$
+
