@@ -370,14 +370,15 @@ def logSplitFamily : Registration logSplitArena (type_of% @log_factorization_spl
 abbrev massMonoArena : Arena where
   signature := signature
   Law R := ∀ {A B : ℕ}, 0 < A → 0 < B → A ∣ B →
-    R.readout () () A ≤ R.readout () () B
+    R.readout () () A ≤
+      ∑ p ∈ B.primeFactors, ((B.factorization p - 1 : ℕ) : ℝ) * Real.log p
 
 def massMonoRejected : Realization signature :=
-  realize signature (fun _ _ U => -(U : ℝ)) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
 private theorem mass_mono_rejected : ¬ massMonoArena.Law massMonoRejected := by
   intro h
-  have hh := h (A := 1) (B := 2) (by norm_num) (by norm_num) (by norm_num)
+  have hh := h (A := 1) (B := 1) (by norm_num) (by norm_num) (by norm_num)
   norm_num [massMonoRejected, realize] at hh
 
 def massMonoFamily : Registration massMonoArena (type_of% @higher_layer_mass_mono) where
@@ -446,11 +447,6 @@ def massMonoAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "arg"]
-      stateBinder := 1
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

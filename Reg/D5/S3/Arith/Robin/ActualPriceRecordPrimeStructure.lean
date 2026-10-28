@@ -104,7 +104,7 @@ def supportAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure
     definition := none
-    coordinates := #[]
+    coordinates := #[2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "arg", "fn", "arg"]
       stateBinder := 0
@@ -181,7 +181,7 @@ def divisorAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure
     definition := none
-    coordinates := #[]
+    coordinates := #[2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0
@@ -228,8 +228,8 @@ abbrev confinementArena : Arena where
       m.factorization q ≤ m.factorization p) ∧
     m.primeFactors = Nat.primesLE (largestPrime m) ∧
     X = Chebyshev.theta (largestPrime m) + R.readout () () m ∧
-    0 ≤ R.readout () () m ∧
-    R.readout () () m ≤
+    (0 ≤ ∑ p ∈ m.primeFactors, ((m.factorization p - 1 : ℕ) : ℝ) * Real.log p) ∧
+    (∑ p ∈ m.primeFactors, ((m.factorization p - 1 : ℕ) : ℝ) * Real.log p) ≤
       2 * Chebyshev.theta (Real.sqrt (80 * X)) +
         2 * (Chebyshev.psi (40 * X) - Chebyshev.theta (40 * X)) ∧
     2 * Chebyshev.theta (Real.sqrt (80 * X)) +
@@ -306,9 +306,13 @@ def massRejected : Realization primeSignature :=
 private theorem confinement_rejected : ¬ confinementArena.Law massRejected := by
   rintro ⟨K, hK, hbad⟩
   have hh := hbad 4 (by norm_num) four_price_record
-  have hn := hh.2.2.2.1
-  change (0 : ℝ) ≤ -1 at hn
-  norm_num at hn
+  obtain ⟨_, _, hactual⟩ := price_record_prime_confinement
+  have ha := hactual 4 (by norm_num) four_price_record
+  have heq := hh.2.2.1
+  have heqa := ha.2.2.1
+  have hn := ha.2.2.2.1
+  change Real.log (4 : ℝ) = Chebyshev.theta (largestPrime 4) + (-1) at heq
+  linarith only [heq, heqa, hn]
 
 private theorem mass_dependence : ObservationalDependence primeSignature massActual := by
   intro i
@@ -360,16 +364,6 @@ def confinementAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[]
     readouts := #[{
       path := #["arg", "body", "arg", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "arg", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["arg", "body", "arg", "body", "body", "body", "body", "body", "arg", "arg", "arg", "fn", "arg", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["arg", "body", "arg", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
