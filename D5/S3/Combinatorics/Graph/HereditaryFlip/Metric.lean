@@ -8,7 +8,9 @@
 
 import Mathlib.Combinatorics.SimpleGraph.Metric
 import Mathlib.Data.Finset.SymmDiff
-import Mathlib.Order.Interval.Set.LowerUpper
+import Mathlib.Order.UpperLower.Basic
+
+/-! Native geodesics and distance intervals for hereditary finite-support families. -/
 
 set_option autoImplicit false
 
@@ -26,7 +28,7 @@ def flipGraph (F : Set (Finset V)) : SimpleGraph {A : Finset V // A ∈ F} where
 
 private theorem card_triangle (A B C : Finset V) :
     (A ∆ C).card ≤ (A ∆ B).card + (B ∆ C).card :=
-  (Finset.card_le_card (symmDiff_triangle A B C)).trans Finset.card_union_le
+  (Finset.card_le_card (symmDiff_triangle A B C)).trans (Finset.card_union_le _ _)
 
 /-- Every native walk must change all coordinates on which its endpoints differ. -/
 theorem walk_lower_bound {F : Set (Finset V)} {A B : {s : Finset V // s ∈ F}}
@@ -35,7 +37,7 @@ theorem walk_lower_bound {F : Set (Finset V)} {A B : {s : Finset V // s ∈ F}}
   | nil => simp
   | @cons A C B h p ih =>
       have hc := card_triangle A.val C.val B.val
-      change (A.val ∆ C.val).card = 1 at h
+      have hh : (A.val ∆ C.val).card = 1 := h
       simp only [SimpleGraph.Walk.length_cons]
       omega
 
@@ -43,8 +45,8 @@ private theorem downward_walk {F : Set (Finset V)} (hF : IsLowerSet F)
     (T : Finset V) (hT : T ∈ F) (S : Finset V) (hST : S ⊆ T) :
     ∃ p : (flipGraph F).Walk ⟨T, hT⟩ ⟨S, hF hST hT⟩,
       p.length + S.card = T.card := by
-  induction T using Finset.strongInductionOn with
-  | H T ih =>
+  induction T using Finset.strongInductionOn generalizing S with
+  | _ T ih =>
       by_cases heq : T = S
       · subst T
         exact ⟨.nil, by simp⟩
@@ -53,7 +55,7 @@ private theorem downward_walk {F : Set (Finset V)} (hF : IsLowerSet F)
           intro y hy
           exact Finset.mem_erase.mpr ⟨fun hyx => hxS (hyx ▸ hy), hST hy⟩
         have hE : T.erase x ∈ F := hF (Finset.erase_subset x T) hT
-        obtain ⟨p, hp⟩ := ih (T.erase x) (Finset.erase_ssubset hxT) hE hsub
+        obtain ⟨p, hp⟩ := ih (T.erase x) (Finset.erase_ssubset hxT) hE S hsub
         have hedge : (flipGraph F).Adj ⟨T, hT⟩ ⟨T.erase x, hE⟩ := by
           change (T ∆ T.erase x).card = 1
           have hs : T ∆ T.erase x = {x} := by
@@ -138,13 +140,13 @@ theorem interval_iff {F : Set (Finset V)} (hF : IsLowerSet F)
       exact hnot x ⟨Or.inl ⟨hx.1, hxm⟩, Or.inr ⟨hx.2, hxm⟩⟩
     · intro x hxm
       by_contra hx
-      push_neg at hx
+      push Not at hx
       exact hnot x ⟨Or.inr ⟨hxm, hx.1⟩, Or.inl ⟨hxm, hx.2⟩⟩
   · rintro ⟨hlo, hup⟩ x ⟨hAM, hMB⟩
     rcases hAM with hAM | hAM <;> rcases hMB with hMB | hMB
     · exact hAM.2 hMB.1
-    · exact hAM.2 (hlo x ⟨hAM.1, hMB.1⟩)
-    · exact (hup x hAM.1).elim hAM.2 hMB.2
+    · exact hAM.2 (hlo ⟨hAM.1, hMB.1⟩)
+    · exact (hup hAM.1).elim hAM.2 hMB.2
     · exact hMB.2 hAM.1
 
 end D5.S3.Combinatorics.Graph.HereditaryFlip.Metric
