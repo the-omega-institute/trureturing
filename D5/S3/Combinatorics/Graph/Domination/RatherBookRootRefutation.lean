@@ -9,7 +9,7 @@
 import D5.S3.Combinatorics.Graph.DominatingSetAverage
 import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 
 /-!
 Bilal Ahmad Rather, arXiv:2604.08998v1/v2, Section 5, Conjecture 5.4:
@@ -108,7 +108,9 @@ private theorem book_one_polynomial : dominationPolynomial (bookGraph 1) =
   rw [book_one_eq_cycle]
   unfold dominationPolynomial
   rw [cycle_domSets]
-  norm_num [Finset.sum_insert, Finset.sum_singleton] <;> ring
+  simp (disch := decide +kernel) only [Finset.sum_insert, Finset.sum_singleton]
+  norm_num [Finset.card_insert_of_notMem, Finset.card_singleton]
+  ring
 
 /-- Literal negation of the entire closed conjecture, using its legal B1 = C4 boundary. -/
 theorem result : ¬ claim := by
