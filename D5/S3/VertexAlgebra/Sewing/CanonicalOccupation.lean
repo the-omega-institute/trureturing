@@ -295,7 +295,7 @@ private theorem creation_coefficient_norm_le (D : LatticeData) (α : Charge D)
         apply he
         rw [h, Int.toNat_of_nonneg (not_lt.mp ht)]
       rw [((actual_creation_coefficient_transport D α α).1 t).coeff_eq_zero d hn]
-      exact norm_nonneg _
+      simpa only [norm_zero] using norm_nonneg ((creationCoeff D α (level D d)).coeff d)
 
 /-- Projection of the original recursively normal-ordered word field. -/
 private def wordMap (D : LatticeData) (α β : Charge D)
@@ -306,6 +306,69 @@ private def wordMap (D : LatticeData) (α β : Charge D)
 private def wordCoeff (D : LatticeData) (α β : Charge D)
     (ω : List (Index D)) (m : ℤ) (e d : Occ D) : ℂ :=
   (wordMap D α β ω m (b D d)).coeff e
+
+/-- Finite contraction with the original creation coefficients. -/
+private def creationContract (D : LatticeData) (α : Charge D) (t : ℤ) :
+    Polynomial (Oscillator D) →ₗ[Oscillator D] Oscillator D :=
+  (Finsupp.linearCombination (Oscillator D) (fun n : ℕ => creationCoeff D α (t + n))).comp
+    (((Polynomial.toFinsuppIsoLinear (Oscillator D)).trans
+      (AddMonoidAlgebra.coeffLinearEquiv (Oscillator D))).toLinearMap)
+
+private theorem creationContract_apply (D : LatticeData) (α : Charge D) (t : ℤ)
+    (P : Polynomial (Oscillator D)) :
+    creationContract D α t P = ∑ j ∈ P.support, P.coeff j * creationCoeff D α (t + j) := by
+  rfl
+
+private theorem creationContract_monomial (D : LatticeData) (α : Charge D) (t : ℤ)
+    (n : ℕ) (a : Oscillator D) :
+    creationContract D α t (Polynomial.monomial n a) = a * creationCoeff D α (t + n) := by
+  simp [creationContract, Finsupp.linearCombination_apply]
+
+private theorem creationContract_C_mul (D : LatticeData) (α : Charge D) (t : ℤ)
+    (a : Oscillator D) (P : Polynomial (Oscillator D)) :
+    creationContract D α t (Polynomial.C a * P) = a * creationContract D α t P := by
+  rw [← Polynomial.smul_eq_C_mul]
+  exact map_smul (creationContract D α t) a P
+
+private theorem creationContract_shift (D : LatticeData) (α : Charge D) (t : ℤ)
+    (n : ℕ) (P : Polynomial (Oscillator D)) :
+    creationContract D α t (Polynomial.X ^ n * P) = creationContract D α (t + n) P := by
+  classical
+  induction P using Polynomial.induction_on' with
+  | add P Q hp hq => simp [mul_add, map_add, hp, hq]
+  | monomial j a =>
+    rw [Polynomial.X_pow_mul_monomial, creationContract_monomial,
+      creationContract_monomial]
+    congr 2
+    omega
+
+private theorem wordMap_nil (D : LatticeData) (α β : Charge D)
+    (m : ℤ) (p : Oscillator D) :
+    wordMap D α β [] m p = epsilon D α β •
+      creationContract D α (-m - 1 - bilinear D α β) (translatedPolynomial D α p) := by
+  change (((actualField D α)[[m]]) (Finsupp.single β p)) (α + β) = _
+  rw [actualField, VertexOperator.ncoeff_of_coeff,
+    (actual_creation_coefficient_transport D α α).2.2.1]
+  simp only [rawSingle, Finsupp.smul_apply, Finsupp.single_eq_same,
+    creationContract_apply, smul_eq_mul]
+
+/-- The actual input multiplication/translation recurrence, uniformly in signed mode. -/
+private theorem wordMap_nil_X (D : LatticeData) (α β : Charge D)
+    (m : ℤ) (x : Index D) (p : Oscillator D) :
+    wordMap D α β [] m (X x * p) =
+      X x * wordMap D α β [] m p -
+        (bilinear D α (unitCharge D x.1) : ℂ) •
+          wordMap D α β [] (m - (x.2 + 1 : ℕ)) p := by
+  have ht : translatedPolynomial D α (X x * p) =
+      translationVariable D α x.1 x.2 * translatedPolynomial D α p := by
+    simp [translatedPolynomial]
+  rw [wordMap_nil, ht, translationVariable, sub_mul, map_sub,
+    creationContract_C_mul, mul_assoc, creationContract_C_mul, creationContract_shift,
+    wordMap_nil, wordMap_nil]
+  rw [show -m - 1 - bilinear D α β + (x.2 + 1 : ℕ) =
+    -(m - (x.2 + 1 : ℕ)) - 1 - bilinear D α β by omega]
+  simp only [smul_eq_mul]
+  ring
 
 private theorem derivative_mode (D : LatticeData) (x : Index D) (m : ℤ) :
     (dividedDerivative x.2 (neutralField D x.1))[[m]] =
@@ -340,7 +403,7 @@ private theorem negative_derivative_component (D : LatticeData) (x : Index D)
   rw [show -(-(j : ℤ) - 1) - 1 + x.2 = ((j + x.2 : ℕ) : ℤ) by omega,
     Ring.choose_natCast]
   have ht : (-(j : ℤ) - 1 - x.2) < 0 := by omega
-  rw [neutralPolynomialMode, if_pos ht]
+  rw [neutralPolynomialMode, ite_eq_left ht]
   change ((j + x.2).choose x.2 : ℂ) •
     (X (x.1, (-(-(j : ℤ) - 1 - x.2) - 1).toNat) * v δ) = _
   rw [show (-(-(j : ℤ) - 1 - x.2) - 1).toNat = j + x.2 by omega]
@@ -381,7 +444,7 @@ private theorem positive_derivative_vanish (D : LatticeData) (x : Index D)
     rw [b, pderiv_monomial, hz]
     simp
   have hz : neutralPolynomialMode D x.1 β ((j : ℤ) - x.2) (b D d) = 0 := by
-    rw [neutralPolynomialMode, if_neg (not_lt.mpr hm.le), if_neg (ne_of_gt hm)]
+    rw [neutralPolynomialMode, ite_eq_right (not_lt.mpr hm.le), ite_eq_right (ne_of_gt hm)]
     simp only [LinearMap.smul_apply, LinearMap.sum_apply, Derivation.coeFn_coe,
       hderiv, smul_zero, Finset.sum_const_zero]
   rw [hz, Finsupp.single_zero, smul_zero]
@@ -467,7 +530,10 @@ private theorem signed_derivative_choose (j k : ℕ) :
   rw [show -(j : ℤ) - 1 + k = -((j : ℤ) + 1 - k) by ring,
     Ring.choose_neg]
   rw [show (j : ℤ) + 1 - k + k - 1 = (j : ℤ) by ring, Ring.choose_natCast]
-  simp [Int.coe_negOnePow_natCast, Int.cast_pow]
+  change (((Int.negOnePow (k : ℤ) : ℤ) * (j.choose k : ℤ) : ℤ) : ℂ) = _
+  rw [Int.coe_negOnePow_natCast]
+  push_cast
+  rfl
 
 /-- Every positive branch is a zero mode or lowers one actual input occupation.
 The gap below the derivative order is zero, including its apparent negative modes. -/
@@ -486,17 +552,18 @@ private theorem wordMap_neutral_coefficient (D : LatticeData) (α β : Charge D)
   rw [signed_derivative_choose]
   by_cases hlt : j < k
   · simp [hlt, Nat.choose_eq_zero_of_lt hlt]
-  · rw [if_neg hlt]
+  · rw [ite_eq_right hlt]
     by_cases heq : j = k
     · subst j
       simp [neutralPolynomialMode, wordCoeff, map_smul, MvPolynomial.coeff_smul]
-    · rw [if_neg heq]
+    · rw [ite_eq_right heq]
       have hm : 0 < (j : ℤ) - k := by omega
-      rw [neutralPolynomialMode, if_neg (not_lt.mpr hm.le), if_neg (ne_of_gt hm)]
+      rw [neutralPolynomialMode, ite_eq_right (not_lt.mpr hm.le), ite_eq_right (ne_of_gt hm)]
       simp only [LinearMap.smul_apply, LinearMap.sum_apply, Derivation.coeFn_coe,
-        map_smul, map_sum, MvPolynomial.coeff_smul, MvPolynomial.coeff_sum]
+        map_smul, map_sum, MvPolynomial.coeff_smul, MvPolynomial.coeff_sum,
+        smul_eq_mul]
       congr 1
-      rw [Finset.mul_sum]
+      simp_rw [Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro a ha
       have hd : pderiv (a, ((j : ℤ) - k - 1).toNat) (b D d) =
@@ -504,7 +571,7 @@ private theorem wordMap_neutral_coefficient (D : LatticeData) (α β : Charge D)
         rw [show ((j : ℤ) - k - 1).toNat = j - k - 1 by omega]
         simp [b, pderiv_monomial, smul_monomial]
       rw [hd, map_smul, MvPolynomial.coeff_smul]
-      simp only [wordCoeff]
+      simp only [wordCoeff, Int.cast_sub, Int.cast_natCast]
       ring
 
 /-- A finite recurrence solely in literal word-field matrix coefficients.
@@ -540,6 +607,7 @@ private theorem wordCoeff_cons (D : LatticeData) (α β : Charge D)
 #print axioms creation_coefficient_factorial
 #print axioms creation_radial_bound
 #print axioms creation_occupation_summable
+#print axioms wordMap_nil_X
 #print axioms wordCoeff_cons_finite
 #print axioms wordCoeff_cons
 
