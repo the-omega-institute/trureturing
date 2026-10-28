@@ -22,12 +22,6 @@ internal sealed class HsfIdentityCubicDerivativesDocument : IScribeDocumentDefin
                 + "derivative p K (I+tK)^(p-1). Positivity persists in a neighborhood "
                 + "because the fixed spectrum is finite. No Taylor premise is used.",
                 DescribeRole.Theorem),
-            Entry("affine_rpow_derivatives", "Second and third derivatives at identity",
-                "For every real p and every finite dimensional Hermitian K, the second "
-                + "and third iterated derivatives at zero of the actual CFC function "
-                + "t maps to (I+tK)^p are respectively p(p-1)K^2 and "
-                + "p(p-1)(p-2)K^3. The proof differentiates actual nearby functions.",
-                DescribeRole.Theorem),
             Entry("sandwich_trace_germ", "The original sandwich trace",
                 "For arbitrary finite matrices X,H and Hermitian K, the real trace "
                 + "of ((I+tK)^(-1/3)(X+tH)(I+tK)^(-1/3))^3 agrees near zero with "
@@ -50,10 +44,31 @@ internal sealed class HsfIdentityCubicDerivativesDocument : IScribeDocumentDefin
                 + "Re Tr(3M X^2+6L^2 X) and third derivative "
                 + "Re Tr(3N X^2+9MLX+9MXL+6L^3) at zero. "
                 + "The nearby derivatives are proved from the actual CFC curve.",
-                DescribeRole.Theorem)))));
+                DescribeRole.Theorem),
+            Entry("identity_cubic_trace_derivatives", "The original ordered coefficients",
+                "For arbitrary finite X,H and Hermitian K, the actual CFC sandwich "
+                + "trace with exponent -1/3 has second derivative twice coefficient2 "
+                + "and third derivative six times coefficient3 at zero. The coefficients "
+                + "are exactly the original ordered trace words of HsfQubitMixedCubic, "
+                + "not a renamed jet expression or a Taylor assumption.",
+                DescribeRole.Theorem),
+            Entry("qubit_cubic_compatibility", "The physical qubit estimate at identity",
+                "Let X=diag(a,b) with a,b>0, and let H,K be arbitrary complex Hermitian "
+                + "two by two matrices. Assume X+H,X-H,I+K,I-K are PSD. Then for the "
+                + "actual CFC function phi(t)=Re Tr(((I+tK)^(-1/3)(X+tH)"
+                + "(I+tK)^(-1/3))^3), phi''(0)>=0 and |phi'''(0)|<=5 phi''(0). "
+                + "The PSD endpoints may be singular, and no trace or phase constraint "
+                + "is imposed on H or K. This is the alpha=3, Y=I, diagonal-X qubit "
+                + "restriction, not the arbitrary-denominator or arbitrary-dimension result.",
+                DescribeRole.Theorem),
+            Paragraph(Text("The motivating compatibility question is due to "
+                + "He, Saunderson and Fawzi: arXiv:2502.05627v1, Conjecture 6.2; "
+                + "published DOI 10.1007/s10107-025-02314-0, Conjecture 1. "
+                + "No literature-priority claim is made.")))));
 
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("hsf-identity-derivatives-" + name.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("hsf-identity-derivatives-"
+                + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Module + "." + name), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);

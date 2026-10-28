@@ -6,6 +6,15 @@
    utility: none
    digest: Actual derivatives of affine Hermitian matrix powers at the identity. -/
 
+/-
+admission_basis: escape-witness
+proof_shape: qubit_cubic_compatibility: content
+escape_witness: HsfQubitMixedCubic.coefficient_compatibility
+The fixed-spectrum differentiation and cubic trace helpers are consumed by the
+actual identity-denominator derivative bridge and qubit compatibility result.
+No Taylor premise, arbitrary-denominator reduction, or novelty claim is used.
+-/
+
 module
 
 public import Mathlib.Analysis.Matrix.Order
@@ -14,6 +23,7 @@ public import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 public import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
 public import Mathlib.Analysis.Calculus.Deriv.Prod
 public import Mathlib.Tactic
+public import D5.S3.Quantum.Matrix.HsfQubitMixedCubic
 
 /-! Differentiation on a fixed finite spectrum, with actual CFC powers of the affine pencil. -/
 
@@ -119,47 +129,6 @@ theorem hasDerivAt_affine_rpow {K : Matrix n n ℂ} (hK : K.IsHermitian) (p t : 
         rw [cfc_id' ℝ K hK.isSelfAdjoint, affine_rpow_cfc hK (p-1) t ht]
   rw [hv] at hd
   exact hd.congr_of_eventuallyEq he
-
-/-- The second and third actual derivatives of an affine Hermitian power at the identity.
-There is no commutation condition on any other matrix and no Taylor assumption. -/
-theorem affine_rpow_derivatives {K : Matrix n n ℂ} (hK : K.IsHermitian) (p : ℝ) :
-    iteratedDeriv 2 (fun t : ℝ => CFC.rpow (1+t • K) p) 0 =
-      (p*(p-1)) • K^2 ∧
-    iteratedDeriv 3 (fun t : ℝ => CFC.rpow (1+t • K) p) 0 =
-      (p*(p-1)*(p-2)) • K^3 := by
-  let f0 := fun t : ℝ => CFC.rpow (1+t • K) p
-  let f1 := fun t : ℝ => p • (K * CFC.rpow (1+t • K) (p-1))
-  let f2 := fun t : ℝ => p • (K * ((p-1) •
-    (K * CFC.rpow (1+t • K) ((p-1)-1))))
-  let f3 := fun t : ℝ => p • (K * ((p-1) • (K * (((p-1)-1) •
-    (K * CFC.rpow (1+t • K) (((p-1)-1)-1))))))
-  have hd0 (t : ℝ) (ht : ∀ x ∈ spectrum ℝ K, 0 < 1+t*x) :
-      HasDerivAt f0 (f1 t) t := hasDerivAt_affine_rpow hK p t ht
-  have hd1 (t : ℝ) (ht : ∀ x ∈ spectrum ℝ K, 0 < 1+t*x) :
-      HasDerivAt f1 (f2 t) t :=
-    ((hasDerivAt_affine_rpow hK (p-1) t ht).const_mul K).const_smul p
-  have hd2 (t : ℝ) (ht : ∀ x ∈ spectrum ℝ K, 0 < 1+t*x) :
-      HasDerivAt f2 (f3 t) t :=
-    (((((hasDerivAt_affine_rpow hK ((p-1)-1) t ht).const_mul K).const_smul
-      (p-1)).const_mul K).const_smul p)
-  have hn := affine_positive_near_zero hK
-  have he1 : deriv f0 =ᶠ[𝓝 (0 : ℝ)] f1 := hn.mono fun t ht => (hd0 t ht).deriv
-  have he2 : deriv (deriv f0) =ᶠ[𝓝 (0 : ℝ)] f2 :=
-    he1.deriv.trans (hn.mono fun t ht => (hd1 t ht).deriv)
-  have e2 : iteratedDeriv 2 f0 0 = f2 0 := by
-    simpa only [iteratedDeriv_succ, iteratedDeriv_zero] using he2.eq_of_nhds
-  have e3 : iteratedDeriv 3 f0 0 = f3 0 := by
-    simpa only [iteratedDeriv_succ, iteratedDeriv_zero] using
-      he2.deriv_eq.trans (hd2 0 (by intros; norm_num)).deriv
-  constructor
-  · rw [e2]
-    simp [f2, Matrix.mul_smul, smul_smul, pow_two]
-  · rw [e3]
-    simp only [f3, zero_smul, add_zero, CFC.rpow_eq_pow, CFC.one_rpow, mul_one,
-      Matrix.mul_smul, smul_smul]
-    rw [show p-1-1 = p-2 by ring]
-    simp only [pow_succ, pow_zero, one_mul, Matrix.mul_assoc]
-    module
 
 private theorem trace_sandwich_cube (S A : Matrix n n ℂ) :
     Matrix.trace ((S*A*S)^3) = Matrix.trace ((A*(S*S))^3) := by
@@ -324,5 +293,50 @@ theorem affine_power_cubic_derivatives (X H K : Matrix n n ℂ) (hK : K.IsHermit
       pow_succ, pow_zero, one_mul, Matrix.mul_assoc]
     module
   simpa only [B, A, T0, e0, e1, e2, e3] using hj
+
+/-- The original CFC sandwich trace has exactly the original ordered-word coefficients.
+The statement holds in arbitrary finite dimension and requires only Hermitian `K`. -/
+theorem identity_cubic_trace_derivatives (X H K : Matrix n n ℂ) (hK : K.IsHermitian) :
+    let phi := fun t : ℝ => (Matrix.trace
+      ((CFC.rpow (1+t • K) (-(1 : ℝ)/3) * (X+t • H) *
+        CFC.rpow (1+t • K) (-(1 : ℝ)/3))^3)).re
+    iteratedDeriv 2 phi 0 = 2*HsfQubitMixedCubic.coefficient2 X H K ∧
+    iteratedDeriv 3 phi 0 = 6*HsfQubitMixedCubic.coefficient3 X H K := by
+  dsimp only
+  have hg := sandwich_trace_germ X H K hK
+  have hc := affine_power_cubic_derivatives X H K hK (-(2 : ℝ)/3)
+  norm_num at hc
+  constructor
+  · rw [hg.iteratedDeriv_eq 2]
+    simp only [CFC.rpow_eq_pow, neg_div]
+    rw [hc.1]
+    simpa [HsfQubitMixedCubic.coefficient2, sub_eq_add_neg, neg_smul] using
+      congrArg Complex.re (HsfQubitMixedCubic.trace_jet_coefficient2 X H K)
+  · rw [hg.iteratedDeriv_eq 3]
+    simp only [CFC.rpow_eq_pow, neg_div]
+    rw [hc.2]
+    simpa [HsfQubitMixedCubic.coefficient3, sub_eq_add_neg, neg_smul] using
+      congrArg Complex.re (HsfQubitMixedCubic.trace_jet_coefficient3 X H K)
+
+/-- The actual identity-denominator qubit cubic trace satisfies the HSF constant-five estimate.
+The four PSD endpoints may be singular; the two eigenvalues of `X` are strictly positive. -/
+theorem qubit_cubic_compatibility (a b : ℝ) (H K : HsfQubitCoupledCubic.Mat)
+    (ha : 0 < a) (hb : 0 < b) (hH : H.IsHermitian) (hK : K.IsHermitian)
+    (hp : (HsfQubitCoupledCubic.hermitian a b 0+H).PosSemidef)
+    (hn : (HsfQubitCoupledCubic.hermitian a b 0-H).PosSemidef)
+    (kp : (1+K).PosSemidef) (kn : (1-K).PosSemidef) :
+    let X := HsfQubitCoupledCubic.hermitian a b 0
+    let phi := fun t : ℝ => (Matrix.trace
+      ((CFC.rpow (1+t • K) (-(1 : ℝ)/3) * (X+t • H) *
+        CFC.rpow (1+t • K) (-(1 : ℝ)/3))^3)).re
+    0 ≤ iteratedDeriv 2 phi 0 ∧
+      |iteratedDeriv 3 phi 0| ≤ 5*iteratedDeriv 2 phi 0 := by
+  dsimp only
+  obtain ⟨hd2, hd3⟩ :=
+    identity_cubic_trace_derivatives (HsfQubitCoupledCubic.hermitian a b 0) H K hK
+  obtain ⟨h2, h3⟩ := HsfQubitMixedCubic.coefficient_compatibility a b H K
+    ha hb hH hK hp hn kp kn
+  rw [hd2, hd3, abs_mul, abs_of_pos (by norm_num : (0 : ℝ) < 6)]
+  constructor <;> linarith
 
 end D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives
