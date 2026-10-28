@@ -68,10 +68,10 @@ internal sealed class BiasedBoundaryOperatorDocument : IScribeDocumentDefinition
         Formula g=V("G"), u=V("u"), h=V("h"), l=V("lambda");
         Formula r=V("boundaryResolvent"), a=V("boundaryCovariance");
         Formula graph=Call("graph",V("boundaryOperator"));
-        Formula inverse=All("u",g,All("h",g,Seq(Call("pair",u,h),InMacro,Sp,graph,Iff,
+        Formula inverse=All("u",g,All("h",g,Seq(Call("pair",u,h),InMacro,Sp,graph,Iff,Sp,
             new Formula.Apply(r,[Par(Seq(u,Plus,h))]),Eq,u)));
         Formula eigen=All("lambda",Seq(Mathbb,Grp(V("R"))),Seq(D(0),Lt,l,Implies,Sp,
-            All("u",g,Seq(Call("pair",u,Call("smul",l,u)),InMacro,Sp,graph,Iff,And(
+            All("u",g,Seq(Call("pair",u,Call("smul",l,u)),InMacro,Sp,graph,Iff,Sp,And(
                 Seq(Call("mean",u),Eq,D(0)),
                 Seq(new Formula.Apply(a,[u]),Eq,Call("smul",Call("inverse",l),u)))))));
         return And(Call("IsCompactOperator",r),inverse,eigen);
@@ -83,8 +83,8 @@ internal sealed class BiasedBoundaryOperatorDocument : IScribeDocumentDefinition
         return And(Call("DenseRange",V("J")),Call("DenseRange",V("centeredTrace")),
             Seq(Neg,Sp,Call("FiniteDimensional",Seq(Mathbb,Grp(V("R"))),Seq(V("G"),Underscore,Grp(D(0))))),
             Call("Dense",V("D")),Call("Dense",Call("domain",op)),Call("IsSelfAdjoint",op),
-            All("u",g,All("h",g,Seq(Call("pair",u,h),InMacro,Sp,graph,Iff,Call("weakGraph",u,h)))),
-            All("u",g,Seq(Call("pair",u,D(0)),InMacro,Sp,graph,Iff,
+            All("u",g,All("h",g,Seq(Call("pair",u,h),InMacro,Sp,graph,Iff,Sp,Call("weakGraph",u,h)))),
+            All("u",g,Seq(Call("pair",u,D(0)),InMacro,Sp,graph,Iff,Sp,
                 Exists,Sp,V("c"),Colon,Sp,Seq(Mathbb,Grp(V("R"))),Comma,Sp,u,Eq,Call("constG",V("c")))));
     }
 }

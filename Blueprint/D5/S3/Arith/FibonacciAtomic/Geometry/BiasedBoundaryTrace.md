@@ -76,7 +76,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.cylind
 
 The cylinder of p prescribes precisely its original initial address coordinates. The empty cylinder is the entire ray space.
 
-**Definition 1.7 (mass).**
+**Theorem 1.7 (Measurable Prefix Cylinders).**
+
+$$\forall p: \operatorname{Address}\left(\right), (\operatorname{MeasurableSet}\left(\operatorname{cylinder}\left(p\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.cylinder_measurable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every finite prefix cylinder is measurable for the original product sigma algebra, including the empty prefix. This allows the original cylinder integrals to determine boundary vectors.
+
+**Definition 1.8 (mass).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.mass`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.mass`
 
 The cylinder mass is the product of the biased letter probabilities along its finite address.
 
-**Definition 1.8 (indicator).**
+**Definition 1.9 (indicator).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.indicator`
 
@@ -100,7 +112,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.indica
 
 A unit increment at a nonempty address is the L2 indicator of its cylinder.
 
-**Definition 1.9 (J).**
+**Definition 1.10 (J).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.J`
 
@@ -112,7 +124,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.J`
 
 J is the continuous linear extension of the actual cylinder indicator sum on finitely supported increments. Its domain is the original real edge ell2 H.
 
-**Theorem 1.10 (Positive Left Probability).**
+**Theorem 1.11 (Positive Left Probability).**
 
 $$0< a$$
 
@@ -124,7 +136,7 @@ $$0< a$$
 
 The reciprocal golden ratio a is strictly positive because the golden ratio is positive.
 
-**Theorem 1.11 (Strict Contraction of Mass).**
+**Theorem 1.12 (Strict Contraction of Mass).**
 
 $$a< 1$$
 
@@ -136,7 +148,7 @@ $$a< 1$$
 
 The left probability a is strictly smaller than one because the golden ratio exceeds one. Hence powers of a decay to zero, giving a common finite depth for every positive mass threshold.
 
-**Theorem 1.12 (Conservation of Probability).**
+**Theorem 1.13 (Conservation of Probability).**
 
 $$a+b=1$$
 
@@ -148,7 +160,7 @@ $$a+b=1$$
 
 The golden conjugate equation gives a plus its square equal to one. Thus the two child probabilities a and b sum to one at every vertex.
 
-**Theorem 1.13 (Actual Cylinder Mass).**
+**Theorem 1.14 (Actual Cylinder Mass).**
 
 $$\forall p: \operatorname{Address}\left(\right), (\operatorname{toReal}\left(\operatorname{M}\left(\operatorname{cylinder}\left(p\right)\right)\right)=\operatorname{mass}\left(p\right))$$
 
@@ -162,7 +174,7 @@ For every original finite address p, including the empty address, the real mass 
 
 The finite-coordinate product formula for M reduces the cylinder measure to singleton probabilities. Appending one letter multiplies both that measure and mass(p) by the same probability. The empty address has mass one. Consequently this is the actual cylinder mass used by the mass-crossing frontier.
 
-**Theorem 1.14 (An Actual Single Increment).**
+**Theorem 1.15 (An Actual Single Increment).**
 
 $$\forall p: \operatorname{Edge}\left(\right), (\forall c: \mathbb{R}, (\operatorname{J}\left(\operatorname{single}\left(2, p, c\right)\right)=(c) \cdot (\operatorname{indicator}\left(p\right))))$$
 
@@ -174,7 +186,7 @@ $$\forall p: \operatorname{Edge}\left(\right), (\forall c: \mathbb{R}, (\operato
 
 For every original nonempty edge p and real increment c, J sends the square-summable single-coordinate vector to c times the actual biased cylinder indicator. This identifies the coordinate covariance with the intersection probabilities of the same measure M.
 
-**Theorem 1.15 (Convergence and Hardy Tail).**
+**Theorem 1.16 (Convergence and Hardy Tail).**
 
 $$(\forall z: \operatorname{H}\left(\right), (\operatorname{HasSum}\left((p: \operatorname{Edge}\left(\right) \mapsto (\operatorname{coordinate}\left(z, p\right)) \cdot (\operatorname{indicator}\left(p\right))), \operatorname{J}\left(z\right)\right)))\land(\forall h: \mathbb{N}, (\forall z: \operatorname{H}\left(\right), ((\Vert \operatorname{J}\left((z) - (\operatorname{P}\left(h, z\right))\right) \Vert)^{2}\leq(\frac{(a)^{h+1}}{(1) - (a)}) \cdot ((\Vert z \Vert)^{2}))))$$
 
@@ -208,6 +220,7 @@ The conditional suffix identity, the stopping-cylinder projection and its residu
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.boundary_trace_hardy`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.cylinder`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.cylinder_mass`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.cylinder_measurable`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.indicator`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.mass`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.sum_weights`

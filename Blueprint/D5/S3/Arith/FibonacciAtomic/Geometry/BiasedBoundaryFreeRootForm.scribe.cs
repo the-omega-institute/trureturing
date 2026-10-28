@@ -50,7 +50,7 @@ internal sealed class BiasedBoundaryFreeRootFormDocument : IScribeDocumentDefini
         DeclarationHandle.Create(Prefix + name), H(name), StatementSource.WithoutFormula(),
         AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
     private static DocumentBlock Result(string name, string title, Formula formula, string first, string second) => Describe.Lean(
-        DescribeId.Create("biasedboundaryfreerootform-" + name.Replace("_", "")),
+        DescribeId.Create("biasedboundaryfreerootform-" + name.Replace("_", "").ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
         AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(first)), Paragraph(Text(second))), DescribeRole.Theorem);
     private static Formula V(string s) => F.Id(s);
