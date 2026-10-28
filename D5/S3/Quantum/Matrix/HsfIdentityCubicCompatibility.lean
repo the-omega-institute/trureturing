@@ -157,7 +157,7 @@ theorem signed_derivative_transfer (U H K : Matrix n n ℂ) (hK : K.IsHermitian)
       12*iteratedDeriv 2 g 0 + 8*iteratedDeriv 3 g 0 := by
   dsimp only
   have hk : (((1/2 : ℝ) • (1+K))).IsHermitian :=
-    (Matrix.isHermitian_one.add hK).smul _
+    (Matrix.isHermitian_one.add hK).smul (by simp : IsSelfAdjoint (1/2 : ℝ))
   obtain ⟨hf2, hf3⟩ := identity_cubic_trace_derivatives U H K hK
   obtain ⟨hg2, hg3⟩ := identity_cubic_trace_derivatives U
     ((1/2 : ℝ) • (U+H)) ((1/2 : ℝ) • (1+K)) hk
@@ -201,8 +201,8 @@ theorem identity_cubic_compatibility (U H K : Matrix n n ℂ) (hK : K.IsHermitia
       |iteratedDeriv 3 (curve U H K) 0| ≤ 5*iteratedDeriv 2 (curve U H K) 0 := by
   have hu := signed_upper U H K hK hp hn kp kn
   have hl := signed_upper U (-H) (-K) hK.neg
-    (by simpa using hn) (by simpa using hp)
-    (by simpa using kn) (by simpa using kp)
+    (by simpa only [sub_eq_add_neg] using hn) (by simpa using hp)
+    (by simpa only [sub_eq_add_neg] using kn) (by simpa using kp)
   obtain ⟨hf2,hf3⟩ := identity_cubic_trace_derivatives U H K hK
   obtain ⟨hr2,hr3⟩ := identity_cubic_trace_derivatives U (-H) (-K) hK.neg
   have he2 : coefficient2 U (-H) (-K) = coefficient2 U H K := by
@@ -215,7 +215,7 @@ theorem identity_cubic_compatibility (U H K : Matrix n n ℂ) (hK : K.IsHermitia
   change iteratedDeriv 3 (curve U H K) 0 = _ at hf3
   change iteratedDeriv 2 (curve U (-H) (-K)) 0 = _ at hr2
   change iteratedDeriv 3 (curve U (-H) (-K)) 0 = _ at hr3
-  rw [hr2,hr3,he2,he3,← hf2,← hf3] at hl
+  rw [hr2,hr3,he2,he3,mul_neg,← hf2,← hf3] at hl
   have hab := abs_le.mpr ⟨by linarith, hu⟩
   exact ⟨by nlinarith [abs_nonneg (iteratedDeriv 3 (curve U H K) 0)], hab⟩
 

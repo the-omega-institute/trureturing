@@ -355,7 +355,7 @@ private theorem expand_M00 (A B K : Matrix n n ℂ)
     (26 : ℝ) * (Matrix.trace (A*(K*(K*(B*(K*(K*(B)))))))).re +
     (117 : ℝ) * (Matrix.trace (A*(K*(K*(B*(K*(K*(B*(K))))))))).re +
     (-40 : ℝ) * (Matrix.trace (A*(K*(K*(B*(K*(K*(K*(B))))))))).re := by
-  simp only [traceGram, words, M00, Fin.sum_univ_succ, Fin.sum_univ_zero, Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.of_apply, star_sub, star_add, star_mul, hA.star_eq, hB.star_eq, hK.star_eq, 
+  simp only [traceGram, words, M00, Fin.sum_univ_succ, Fin.sum_univ_zero, Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.of_apply, star_sub, star_add, star_mul, hA.star_eq, hB.star_eq, hK.star_eq,
     Matrix.add_mul, Matrix.sub_mul, Matrix.mul_add, Matrix.mul_sub,
     Matrix.one_mul, Matrix.mul_one, Matrix.trace_add, Matrix.trace_sub,
     Complex.add_re, Complex.sub_re, Complex.mul_re, Complex.div_re,
@@ -461,7 +461,7 @@ private theorem expand_M01 (A B K : Matrix n n ℂ)
     (-155 : ℝ) * (Matrix.trace (A*(K*(K*(B*(K*(K*(B)))))))).re +
     (-346 : ℝ) * (Matrix.trace (A*(K*(K*(B*(K*(K*(B*(K))))))))).re +
     (40 : ℝ) * (Matrix.trace (A*(K*(K*(B*(K*(K*(K*(B))))))))).re := by
-  simp only [traceGram, words, M01, Fin.sum_univ_succ, Fin.sum_univ_zero, Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.of_apply, star_sub, star_add, star_mul, hA.star_eq, hB.star_eq, hK.star_eq, 
+  simp only [traceGram, words, M01, Fin.sum_univ_succ, Fin.sum_univ_zero, Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.of_apply, star_sub, star_add, star_mul, hA.star_eq, hB.star_eq, hK.star_eq,
     Matrix.add_mul, Matrix.sub_mul, Matrix.mul_add, Matrix.mul_sub,
     Matrix.one_mul, Matrix.mul_one, Matrix.trace_add, Matrix.trace_sub,
     Complex.add_re, Complex.sub_re, Complex.mul_re, Complex.div_re,
@@ -585,7 +585,7 @@ private theorem expand_M10 (A B K : Matrix n n ℂ)
     (-320 : ℝ) * (Matrix.trace (B*(K*(B*(K*(B*(K*(K)))))))).re +
     (-208 : ℝ) * (Matrix.trace (B*(K*(B*(K*(B*(K*(K*(K))))))))).re +
     (-270 : ℝ) * (Matrix.trace (B*(K*(B*(K*(K*(B*(K*(K))))))))).re := by
-  simp only [traceGram, words, M10, Fin.sum_univ_succ, Fin.sum_univ_zero, Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.of_apply, star_sub, star_add, star_mul, hA.star_eq, hB.star_eq, hK.star_eq, 
+  simp only [traceGram, words, M10, Fin.sum_univ_succ, Fin.sum_univ_zero, Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.of_apply, star_sub, star_add, star_mul, hA.star_eq, hB.star_eq, hK.star_eq,
     Matrix.add_mul, Matrix.sub_mul, Matrix.mul_add, Matrix.mul_sub,
     Matrix.one_mul, Matrix.mul_one, Matrix.trace_add, Matrix.trace_sub,
     Complex.add_re, Complex.sub_re, Complex.mul_re, Complex.div_re,
@@ -722,7 +722,7 @@ private theorem expand_M11 (A B K : Matrix n n ℂ)
     (320 : ℝ) * (Matrix.trace (B*(K*(B*(K*(B*(K*(K)))))))).re +
     (208 : ℝ) * (Matrix.trace (B*(K*(B*(K*(B*(K*(K*(K))))))))).re +
     (270 : ℝ) * (Matrix.trace (B*(K*(B*(K*(K*(B*(K*(K))))))))).re := by
-  simp only [traceGram, words, M11, Fin.sum_univ_succ, Fin.sum_univ_zero, Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.of_apply, star_sub, star_add, star_mul, hA.star_eq, hB.star_eq, hK.star_eq, 
+  simp only [traceGram, words, M11, Fin.sum_univ_succ, Fin.sum_univ_zero, Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.of_apply, star_sub, star_add, star_mul, hA.star_eq, hB.star_eq, hK.star_eq,
     Matrix.add_mul, Matrix.sub_mul, Matrix.mul_add, Matrix.mul_sub,
     Matrix.one_mul, Matrix.mul_one, Matrix.trace_add, Matrix.trace_sub,
     Complex.add_re, Complex.sub_re, Complex.mul_re, Complex.div_re,
@@ -789,7 +789,7 @@ private theorem expand_p2 (A B K : Matrix n n ℂ) :
     (5/3 : ℝ) * (Matrix.trace (A*(K*(K*(B*(B)))))).re +
     (5/3 : ℝ) * (Matrix.trace (B*(B*(B*(K*(K)))))).re +
     (4/3 : ℝ) * (Matrix.trace (B*(B*(K*(B*(K)))))).re := by
-  simp only [coefficient2, traceCoefficient2, 
+  simp only [coefficient2, traceCoefficient2,
     Matrix.add_mul, Matrix.sub_mul, Matrix.mul_add, Matrix.mul_sub,
     Matrix.one_mul, Matrix.mul_one, Matrix.trace_add, Matrix.trace_sub,
     Complex.add_re, Complex.sub_re, Complex.mul_re, Complex.div_re,
@@ -855,7 +855,7 @@ private theorem expand_p3 (A B K : Matrix n n ℂ) :
     (-10/9 : ℝ) * (Matrix.trace (B*(B*(K*(B*(K*(K))))))).re +
     (-10/9 : ℝ) * (Matrix.trace (B*(B*(K*(K*(B*(K))))))).re +
     (-8/27 : ℝ) * (Matrix.trace (B*(K*(B*(K*(B*(K))))))).re := by
-  simp only [coefficient3, traceCoefficient3, 
+  simp only [coefficient3, traceCoefficient3,
     Matrix.add_mul, Matrix.sub_mul, Matrix.mul_add, Matrix.mul_sub,
     Matrix.one_mul, Matrix.mul_one, Matrix.trace_add, Matrix.trace_sub,
     Complex.add_re, Complex.sub_re, Complex.mul_re, Complex.div_re,
