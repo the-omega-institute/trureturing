@@ -8,6 +8,7 @@
 
 import D5.S3.Observer.CubicGain.SelectedRootCommonZero
 import Mathlib.LinearAlgebra.Matrix.Gershgorin
+import Mathlib.RingTheory.Polynomial.GaussLemma
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -98,12 +99,16 @@ private theorem minor_is_literal (b : ℝ) :
       simp [fixedMinorR, literalMatrix, hj, hj']
   rw [hc]
   by_cases hi : i.val < 14
-  · simp only [literalRow, hi, if_pos, source_encoding0, coeff_X_pow_mul', encoded_coeff]
-    simp [minor, entryData, hi, Nat.mod_eq_of_lt hi, value]
-  · have hm : i.val % 14 = i.val - 14 := by omega
-    have hs : 27-i.val = 13-i.val%14 := by omega
-    simp only [literalRow, hi, if_neg, source_encoding1, coeff_X_pow_mul', encoded_coeff, hs]
-    simp [minor, entryData, hi, value]
+  · simp only [literalRow, if_pos hi, source_encoding0, coeff_X_pow_mul', encoded_coeff]
+    unfold minor entryData
+    simp only [if_pos hi, Nat.mod_eq_of_lt hi]
+    split_ifs <;> simp [value]
+  · have hs : 27-i.val = 13-i.val%14 := by omega
+    simp only [literalRow, if_neg hi, source_encoding1, hs]
+    rw [coeff_X_pow_mul', encoded_coeff]
+    unfold minor entryData
+    simp only [if_neg hi]
+    split_ifs <;> simp [value]
 
 private theorem value_bound (cs : List ℤ) (x : ℝ) (hx : |x| ≤ 1) :
     |value x cs| ≤ (mass cs : ℝ) := by
@@ -117,7 +122,7 @@ private theorem value_bound (cs : List ℤ) (x : ℝ) (hx : |x| ≤ 1) :
       _ ≤ |(a : ℝ)| + (mass cs : ℝ) := by
         gcongr
         exact mul_le_of_le_one_left (by positivity) hx |>.trans (by simpa using ih)
-      _ = _ := by norm_cast
+      _ = _ := by simp [Nat.cast_natAbs, Int.cast_abs]
 
 private theorem value_lipschitz (cs : List ℤ) (x y : ℝ)
     (hx : |x| ≤ 1) (hy : |y| ≤ 1) :
@@ -134,17 +139,16 @@ private theorem value_lipschitz (cs : List ℤ) (x y : ℝ)
       _ ≤ |x-y| * (mass cs : ℝ) + 1 * ((slope cs : ℝ)*|x-y|) := by
         gcongr
         · exact value_bound cs x hx
-        · exact ih
       _ = _ := by simp only [slope, Nat.cast_add]; ring
 
 private theorem scaled_values0 :
     e0.map (value rootEndpoint) =
-      s0.map (fun s => (s : ℝ) / (rootDenominator : ℝ)^17) := by
+      s0.map (fun s : ℤ => (s : ℝ) / (rootDenominator : ℝ)^17) := by
   norm_num [e0, s0, value, rootEndpoint, rootNumerator, rootDenominator]
 
 private theorem scaled_values1 :
     e1.map (value rootEndpoint) =
-      s1.map (fun s => (s : ℝ) / (rootDenominator : ℝ)^17) := by
+      s1.map (fun s : ℤ => (s : ℝ) / (rootDenominator : ℝ)^17) := by
   norm_num [e1, s1, value, rootEndpoint, rootNumerator, rootDenominator]
 
 private theorem mapped_getD {α β : Type*} (f : α → β) (xs : List α)
@@ -153,20 +157,34 @@ private theorem mapped_getD {α β : Type*} (f : α → β) (xs : List α)
 
 private theorem minor_at_endpoint (i j : Fin 28) :
     minor rootEndpoint i j = (scaledEntry i j : ℝ) / (rootDenominator : ℝ)^17 := by
-  have h0 := congrArg (fun xs : List ℝ => xs.getD (28-j.val-(13-i.val%14)) 0) scaled_values0
-  have h1 := congrArg (fun xs : List ℝ => xs.getD (28-j.val-(13-i.val%14)) 0) scaled_values1
-  have hv : value rootEndpoint ([] : List ℤ) = 0 := rfl
-  have hz : (0 : ℝ) / (rootDenominator : ℝ)^17 = 0 := zero_div _
-  simp only [← hv, mapped_getD] at h0 h1
-  simp only [hv] at h0 h1
-  have h0' : value rootEndpoint (e0.getD (28-j.val-(13-i.val%14)) []) =
-      (s0.getD (28-j.val-(13-i.val%14)) 0 : ℝ) / (rootDenominator : ℝ)^17 := by
-    simpa only [← hz, mapped_getD] using h0
-  have h1' : value rootEndpoint (e1.getD (28-j.val-(13-i.val%14)) []) =
-      (s1.getD (28-j.val-(13-i.val%14)) 0 : ℝ) / (rootDenominator : ℝ)^17 := by
-    simpa only [← hz, mapped_getD] using h1
-  unfold minor entryData scaledEntry
-  split_ifs <;> simp_all [value]
+  let k := 28-j.val-(13-i.val%14)
+  have h0 := congrArg (fun xs : List ℝ => xs.getD k 0) scaled_values0
+  have h1 := congrArg (fun xs : List ℝ => xs.getD k 0) scaled_values1
+  have h0' : value rootEndpoint (e0.getD k []) =
+      (s0.getD k 0 : ℝ) / (rootDenominator : ℝ)^17 := by
+    calc
+      _ = (e0.map (value rootEndpoint)).getD k 0 :=
+        (mapped_getD (value rootEndpoint) e0 k []).symm
+      _ = _ := h0
+      _ = _ := by
+        have hz : (fun s : ℤ => (s : ℝ)/(rootDenominator : ℝ)^17) 0 = 0 := by
+          norm_num
+        rw [← hz]
+        exact mapped_getD (fun s : ℤ => (s : ℝ)/(rootDenominator : ℝ)^17) s0 k 0
+  have h1' : value rootEndpoint (e1.getD k []) =
+      (s1.getD k 0 : ℝ) / (rootDenominator : ℝ)^17 := by
+    calc
+      _ = (e1.map (value rootEndpoint)).getD k 0 :=
+        (mapped_getD (value rootEndpoint) e1 k []).symm
+      _ = _ := h1
+      _ = _ := by
+        have hz : (fun s : ℤ => (s : ℝ)/(rootDenominator : ℝ)^17) 0 = 0 := by
+          norm_num
+        rw [← hz]
+        exact mapped_getD (fun s : ℤ => (s : ℝ)/(rootDenominator : ℝ)^17) s1 k 0
+  change value rootEndpoint (entryData i j) = _
+  unfold entryData scaledEntry
+  split_ifs <;> first | exact h0' | exact h1' | simp [value]
 
 private theorem endpoint_signs :
     0 < criticalPolynomial.eval rootEndpoint ∧
@@ -187,7 +205,7 @@ private theorem refined_root :
     (by have h := hb.1; norm_num [rootEndpoint, rootNumerator, rootDenominator] at h ⊢; linarith)
     (by have h := hb.2; norm_num [rootEndpoint, rootNumerator, rootDenominator] at h ⊢; linarith)
     hz
-  simpa only [he] using hb
+  exact he ▸ hb
 
 private theorem endpoint_residual (i j : Fin 28) :
     |(preconditioner * minor rootEndpoint) i j - (1 : Matrix (Fin 28) (Fin 28) ℝ) i j| ≤
@@ -206,23 +224,28 @@ private theorem endpoint_residual (i j : Fin 28) :
        (if i=j then 2^64*(rootDenominator : ℝ)^17 else 0)) /
        (2^64*(rootDenominator : ℝ)^17) := by
     simp only [div_mul_div_comm, ← Finset.sum_div, Matrix.one_apply]
-    split_ifs <;> field_simp <;> ring
+    have hr : (rootDenominator : ℝ) ≠ 0 := by norm_num [rootDenominator]
+    split_ifs <;> field_simp [hr] <;> ring
   rw [he, abs_div, abs_of_pos hd]
   apply (div_le_iff₀ hd).mpr
+  norm_num [rootDenominator] at hc' ⊢
   linarith
 
 private theorem preconditioner_bound (i j : Fin 28) : |preconditioner i j| ≤ (2^79 : ℝ) := by
   have h : |(intInverse i j : ℝ)| ≤ (2^(64+79) : ℝ) := by exact_mod_cast finite_inverse_bound i j
   simp only [preconditioner, abs_div]
-  norm_num
+  norm_num at h ⊢
+  apply (div_le_iff₀ (by norm_num : (0 : ℝ) < 18446744073709551616)).mpr
   linarith
 
 private theorem entry_perturbation (i j : Fin 28) :
     |minor criticalRoot i j - minor rootEndpoint i j| ≤
       (2^35 : ℝ) / (rootDenominator : ℝ) := by
+  have hlo := exactW3_parent.1.2.2.1
+  have hhi := exactW3_parent.1.2.2.2.1
   have hx : |criticalRoot| ≤ 1 := by
-    rw [abs_of_pos (by linarith [criticalRoot_spec.1] : 0 < criticalRoot)]
-    linarith [criticalRoot_spec.2.1]
+    rw [abs_of_pos (by linarith : 0 < criticalRoot)]
+    linarith
   have hy : |rootEndpoint| ≤ 1 := by norm_num [rootEndpoint, rootNumerator, rootDenominator]
   have hr : |criticalRoot-rootEndpoint| ≤ 1/(rootDenominator : ℝ) := by
     rw [abs_of_nonneg (sub_nonneg.mpr refined_root.1)]
@@ -264,7 +287,7 @@ private theorem selected_residual (i j : Fin 28) :
 theorem selected_minor_nonzero :
     Matrix.det (fixedMinorR (literalMatrix criticalRoot)) ≠ 0 := by
   have hdet : Matrix.det (preconditioner * minor criticalRoot) ≠ 0 := by
-    apply Matrix.det_ne_zero_of_sum_row_lt_diag
+    apply det_ne_zero_of_sum_row_lt_diag
     intro i
     have hd : (63/64 : ℝ) ≤ |(preconditioner * minor criticalRoot) i i| := by
       have h := selected_residual i i
@@ -294,5 +317,246 @@ theorem selected_minor_nonzero :
   exact (mul_ne_zero_iff.mp hdet).2
 
 #print axioms selected_minor_nonzero
+
+private def constantData (i : Fin 28) : List ℤ :=
+  if 13-i.val%14 = 0 then (if i.val < 14 then e0 else e1).getD 0 [] else []
+
+private def cData (i j : Fin 28) : List ℤ :=
+  if j.val < 27 then entryData i j else constantData i
+
+private def minorC (b : ℝ) : Matrix (Fin 28) (Fin 28) ℝ :=
+  fun i j => value b (cData i j)
+
+private theorem minorC_is_literal (b : ℝ) :
+    minorC b = fixedMinorC (literalMatrix b) := by
+  ext i j
+  by_cases hj : j.val < 27
+  · have h := congrFun (congrFun (minor_is_literal b) i) j
+    simpa [minorC, cData, fixedMinorC, fixedMinorR, hj, minor] using h
+  · change value b (cData i j) = _
+    simp only [cData, if_neg hj, fixedMinorC, if_neg hj, literalMatrix]
+    simp only [dif_neg hj, Nat.sub_self]
+    change value b (constantData i) = (literalRow b i).coeff 0
+    by_cases hi : i.val < 14
+    · simp only [literalRow, if_pos hi, source_encoding0, coeff_X_pow_mul', encoded_coeff]
+      unfold constantData
+      simp only [if_pos hi, Nat.mod_eq_of_lt hi]
+      by_cases hs : 13-i.val = 0
+      · simp [hs]
+      · simp [hs, show ¬(13-i.val ≤ 0) by omega, value]
+    · have hs : 27-i.val = 13-i.val%14 := by omega
+      simp only [literalRow, if_neg hi, source_encoding1, hs]
+      rw [coeff_X_pow_mul', encoded_coeff]
+      unfold constantData
+      simp only [if_neg hi]
+      by_cases hh : 13-i.val%14 = 0
+      · simp [hh]
+      · simp [hh, show ¬(13-i.val%14 ≤ 0) by omega, value]
+
+private theorem value_map {R S : Type*} [CommRing R] [CommRing S]
+    (f : R →+* S) (x : R) (cs : List ℤ) : f (value x cs) = value (f x) cs := by
+  induction cs with
+  | nil => simp [value]
+  | cons c cs ih => simp only [value, map_add, map_mul, map_intCast, ih]
+
+/-- The original r-column determinant, as a rational polynomial in b. -/
+def literalA0 : Polynomial ℚ :=
+  Matrix.det (Matrix.of (fun i j : Fin 28 => value (X : Polynomial ℚ) (entryData i j)))
+
+/-- The original constant-column determinant, as a rational polynomial in b. -/
+def literalC0 : Polynomial ℚ :=
+  Matrix.det (Matrix.of (fun i j : Fin 28 => value (X : Polynomial ℚ) (cData i j)))
+
+attribute [irreducible] literalA0 literalC0
+
+private theorem eval_literalA0 (b : ℝ) :
+    literalA0.eval₂ (Rat.castHom ℝ) b = Matrix.det (fixedMinorR (literalMatrix b)) := by
+  let f := Polynomial.eval₂RingHom (Rat.castHom ℝ) b
+  change f literalA0 = _
+  rw [literalA0, RingHom.map_det]
+  rw [← minor_is_literal]
+  congr 1
+  ext i j
+  exact value_map f (X : Polynomial ℚ) (entryData i j)
+
+private theorem eval_literalC0 (b : ℝ) :
+    literalC0.eval₂ (Rat.castHom ℝ) b = Matrix.det (fixedMinorC (literalMatrix b)) := by
+  let f := Polynomial.eval₂RingHom (Rat.castHom ℝ) b
+  change f literalC0 = _
+  rw [literalC0, RingHom.map_det]
+  rw [← minorC_is_literal]
+  congr 1
+  ext i j
+  exact value_map f (X : Polynomial ℚ) (cData i j)
+
+private def positivePrimitive (p : Polynomial ℚ) : Polynomial ℤ :=
+  let q := (IsLocalization.integerNormalization (nonZeroDivisors ℤ) p).primPart
+  if 0 < q.leadingCoeff then q else -q
+
+private theorem positivePrimitive_spec (p : Polynomial ℚ) (hp : p ≠ 0) :
+    (positivePrimitive p).IsPrimitive ∧ 0 < (positivePrimitive p).leadingCoeff ∧
+      Associated ((positivePrimitive p).map (Int.castRingHom ℚ)) p := by
+  let z := IsLocalization.integerNormalization (nonZeroDivisors ℤ) p
+  let q := z.primPart
+  have hz : z ≠ 0 := by
+    exact (IsFractionRing.integerNormalization_eq_zero_iff (A := ℤ) (K := ℚ) (p := p)).not.mpr hp
+  have hq : q.IsPrimitive := z.isPrimitive_primPart
+  have hqc : q.leadingCoeff ≠ 0 := leadingCoeff_ne_zero.mpr hq.ne_zero
+  obtain ⟨c, hc, he⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors ℤ) p
+  have hc0 : c ≠ 0 := mem_nonZeroDivisors_iff_ne_zero.mp hc
+  have hcq : (c : ℚ) ≠ 0 := by exact_mod_cast hc0
+  have hcont : (z.content : ℚ) ≠ 0 := by
+    exact_mod_cast ((content_eq_zero_iff (p := z)).not.mpr hz)
+  have hzassoc : Associated (z.map (Int.castRingHom ℚ)) p := by
+    have he' : z.map (Int.castRingHom ℚ) = C (c : ℚ) * p := by
+      change z.map (Int.castRingHom ℚ) = c • p at he
+      simpa only [Algebra.smul_def, Polynomial.algebraMap_apply, algebraMap_int_eq] using he
+    rw [he']
+    exact associated_unit_mul_left p _ (isUnit_C.mpr hcq.isUnit)
+  have hzq : Associated (z.map (Int.castRingHom ℚ)) (q.map (Int.castRingHom ℚ)) := by
+    have he' : z.map (Int.castRingHom ℚ) = C (z.content : ℚ) * q.map (Int.castRingHom ℚ) := by
+      conv_lhs => rw [z.eq_C_content_mul_primPart]
+      simp only [Polynomial.map_mul, Polynomial.map_C]
+      rfl
+    rw [he']
+    exact associated_unit_mul_left _ _ (isUnit_C.mpr hcont.isUnit)
+  have hqa := hzq.symm.trans hzassoc
+  change (if 0 < q.leadingCoeff then q else -q).IsPrimitive ∧
+    0 < (if 0 < q.leadingCoeff then q else -q).leadingCoeff ∧
+    Associated ((if 0 < q.leadingCoeff then q else -q).map (Int.castRingHom ℚ)) p
+  split_ifs with h
+  · exact ⟨hq, h, hqa⟩
+  · refine ⟨?_, ?_, ?_⟩
+    · intro r hr
+      exact hq r (dvd_neg.mp hr)
+    · rw [leadingCoeff_neg]
+      omega
+    · rw [Polynomial.map_neg]
+      exact (Associated.neg_left (Associated.refl (q.map (Int.castRingHom ℚ)))).trans hqa
+
+private def integerA0 : Polynomial ℤ :=
+  Matrix.det (Matrix.of (fun i j : Fin 28 => value (X : Polynomial ℤ) (entryData i j)))
+
+private def integerC0 : Polynomial ℤ :=
+  Matrix.det (Matrix.of (fun i j : Fin 28 => value (X : Polynomial ℤ) (cData i j)))
+
+attribute [irreducible] integerA0 integerC0
+
+private theorem integerA0_map : integerA0.map (Int.castRingHom ℚ) = literalA0 := by
+  let f := Polynomial.mapRingHom (Int.castRingHom ℚ)
+  change f integerA0 = literalA0
+  rw [integerA0, RingHom.map_det]
+  unfold literalA0
+  congr 1
+  ext i j
+  simpa only [f, Polynomial.map_X] using value_map f (X : Polynomial ℤ) (entryData i j)
+
+private theorem integerC0_map : integerC0.map (Int.castRingHom ℚ) = literalC0 := by
+  let f := Polynomial.mapRingHom (Int.castRingHom ℚ)
+  change f integerC0 = literalC0
+  rw [integerC0, RingHom.map_det]
+  unfold literalC0
+  congr 1
+  ext i j
+  simpa only [f, Polynomial.map_X] using value_map f (X : Polynomial ℤ) (cData i j)
+
+private theorem selected_degrees :
+    (sourceE0 criticalRoot).natDegree = 15 ∧ (sourceE1 criticalRoot).natDegree = 15 := by
+  have hb : 0 < criticalRoot := by
+    have h := exactW3_parent.1.2.2.1
+    linarith
+  have hc0 : (sourceE0 criticalRoot).coeff 15 < 0 := by
+    rw [source_encoding0, encoded_coeff]
+    norm_num [e0, value]
+    nlinarith [sq_nonneg criticalRoot]
+  have hc1 : (sourceE1 criticalRoot).coeff 15 < 0 := by
+    rw [source_encoding1, encoded_coeff]
+    norm_num [e1, value]
+    nlinarith [sq_nonneg criticalRoot]
+  constructor
+  · exact natDegree_eq_of_le_of_coeff_ne_zero
+      (by unfold sourceE0; compute_degree) (ne_of_lt hc0)
+  · exact natDegree_eq_of_le_of_coeff_ne_zero
+      (by unfold sourceE1; compute_degree) (ne_of_lt hc1)
+
+/-- The positive primitive integer associate of the actual rational determinant gcd. -/
+def primitiveGcd : Polynomial ℤ := positivePrimitive (gcd literalA0 literalC0)
+
+/-- The exact rational quotient a0/h, using the original determinants. -/
+def normalizedA : Polynomial ℚ := literalA0 / primitiveGcd.map (Int.castRingHom ℚ)
+
+/-- The exact rational quotient c0/h, using the original determinants. -/
+def normalizedC : Polynomial ℚ := literalC0 / primitiveGcd.map (Int.castRingHom ℚ)
+
+/-- Exact cancellation of the actual primitive determinant gcd identifies the selected lift. -/
+theorem selected_normalized_lift :
+    primitiveGcd.IsPrimitive ∧ 0 < primitiveGcd.leadingCoeff ∧
+    primitiveGcd.map (Int.castRingHom ℚ) * normalizedA = literalA0 ∧
+    primitiveGcd.map (Int.castRingHom ℚ) * normalizedC = literalC0 ∧
+    primitiveGcd.eval₂ (Int.castRingHom ℝ) criticalRoot ≠ 0 ∧
+    normalizedA.eval₂ (Rat.castHom ℝ) criticalRoot ≠ 0 ∧
+    -(normalizedC.eval₂ (Rat.castHom ℝ) criticalRoot) /
+      normalizedA.eval₂ (Rat.castHom ℝ) criticalRoot = liftedR criticalRoot ∧
+    (∃ a c : Polynomial ℤ, a.map (Int.castRingHom ℚ) = normalizedA ∧
+      c.map (Int.castRingHom ℚ) = normalizedC) ∧
+    (sourceE0 criticalRoot).natDegree = 15 ∧ (sourceE1 criticalRoot).natDegree = 15 := by
+  let f := Polynomial.eval₂RingHom (Rat.castHom ℝ) criticalRoot
+  let hq := primitiveGcd.map (Int.castRingHom ℚ)
+  have ha : f literalA0 ≠ 0 := by
+    change literalA0.eval₂ (Rat.castHom ℝ) criticalRoot ≠ 0
+    rw [eval_literalA0]
+    exact selected_minor_nonzero
+  have ha0 : literalA0 ≠ 0 := by intro hh; simp [hh] at ha
+  have hg := positivePrimitive_spec (gcd literalA0 literalC0) (gcd_ne_zero_of_left ha0)
+  have hdA : hq ∣ literalA0 := hg.2.2.dvd_iff_dvd_left.mpr (gcd_dvd_left _ _)
+  have hdC : hq ∣ literalC0 := hg.2.2.dvd_iff_dvd_left.mpr (gcd_dvd_right _ _)
+  have hq0 : hq ≠ 0 := ne_zero_of_dvd_ne_zero ha0 hdA
+  have heA : hq * normalizedA = literalA0 := EuclideanDomain.mul_div_cancel' hq0 hdA
+  have heC : hq * normalizedC = literalC0 := EuclideanDomain.mul_div_cancel' hq0 hdC
+  have heAr : f hq * f normalizedA = f literalA0 := by simpa only [map_mul] using congrArg f heA
+  have heCr : f hq * f normalizedC = f literalC0 := by simpa only [map_mul] using congrArg f heC
+  have hprod : f hq * f normalizedA ≠ 0 := by rw [heAr]; exact ha
+  have hh : f hq ≠ 0 := (mul_ne_zero_iff.mp hprod).1
+  have hA : f normalizedA ≠ 0 := (mul_ne_zero_iff.mp hprod).2
+  have hhbridge : f hq = primitiveGcd.eval₂ (Int.castRingHom ℝ) criticalRoot := by
+    change (primitiveGcd.map (Int.castRingHom ℚ)).eval₂ (Rat.castHom ℝ) criticalRoot = _
+    rw [eval₂_map]
+    rfl
+  have hr : liftedR criticalRoot * f literalA0 + f literalC0 = 0 := by
+    change liftedR criticalRoot * literalA0.eval₂ (Rat.castHom ℝ) criticalRoot +
+      literalC0.eval₂ (Rat.castHom ℝ) criticalRoot = 0
+    rw [eval_literalA0, eval_literalC0]
+    exact SelectedRootCommonZero.selected_root_common_zero.2.2.2.2.2
+  have hrn : liftedR criticalRoot * f normalizedA + f normalizedC = 0 := by
+    apply (mul_eq_zero.mp (show f hq *
+      (liftedR criticalRoot * f normalizedA + f normalizedC) = 0 from by
+        rw [← heAr, ← heCr] at hr
+        linear_combination hr)).resolve_left hh
+  have hiA : primitiveGcd ∣ integerA0 :=
+    (Polynomial.IsPrimitive.Int.dvd_iff_map_cast_dvd_map_cast _ _ hg.1).mpr
+      (by rw [integerA0_map]; exact hdA)
+  have hiC : primitiveGcd ∣ integerC0 :=
+    (Polynomial.IsPrimitive.Int.dvd_iff_map_cast_dvd_map_cast _ _ hg.1).mpr
+      (by rw [integerC0_map]; exact hdC)
+  obtain ⟨a, haint⟩ := hiA
+  obtain ⟨c, hcint⟩ := hiC
+  have hamap : a.map (Int.castRingHom ℚ) = normalizedA := by
+    have he := congrArg (Polynomial.mapRingHom (Int.castRingHom ℚ)) haint
+    change integerA0.map _ = (primitiveGcd * a).map _ at he
+    rw [integerA0_map, Polynomial.map_mul] at he
+    unfold normalizedA
+    rw [he, mul_div_cancel_left₀ _ hq0]
+  have hcmap : c.map (Int.castRingHom ℚ) = normalizedC := by
+    have he := congrArg (Polynomial.mapRingHom (Int.castRingHom ℚ)) hcint
+    change integerC0.map _ = (primitiveGcd * c).map _ at he
+    rw [integerC0_map, Polynomial.map_mul] at he
+    unfold normalizedC
+    rw [he, mul_div_cancel_left₀ _ hq0]
+  refine ⟨hg.1, hg.2.1, heA, heC, ?_, hA, ?_, ⟨a,c,hamap,hcmap⟩,
+    selected_degrees.1, selected_degrees.2⟩
+  · rwa [← hhbridge]
+  · exact (div_eq_iff hA).mpr (by linarith [hrn])
+
+#print axioms selected_normalized_lift
 
 end D5.S3.Observer.CubicGain.SelectedMinorNonzero
