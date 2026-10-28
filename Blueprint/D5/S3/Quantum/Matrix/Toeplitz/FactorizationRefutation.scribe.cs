@@ -117,7 +117,7 @@ internal sealed class FactorizationRefutationDocument : IScribeDocumentDefinitio
     {
         Formula c = V("C"), n = V("n"), m = V("M"), p = V("P"), t = V("T");
         Formula factors = All("k", Fin(c), OrdinaryBody(n, Apply(t, V("k"))));
-        Formula orderedProduct = Call("List.prod", Call("List.ofFn", t));
+        Formula orderedProduct = QualifiedCall("List", "prod", QualifiedCall("List", "ofFn", t));
         return Some("C", Naturals, And(Less(D(0), c),
             All("n", Naturals, Imp(Less(D(0), n), All("M", Mat(n),
                 Some("P", Mat(n), Some("T", Arrow(Fin(c), Mat(n)),
@@ -128,12 +128,12 @@ internal sealed class FactorizationRefutationDocument : IScribeDocumentDefinitio
     private static Formula OrdinaryBody(Formula n, Formula matrix)
     {
         Formula i = V("i"), j = V("j"), hi = V("hi"), hj = V("hj");
-        Formula nextI = Add(Call("Fin.val", i), D(1));
-        Formula nextJ = Add(Call("Fin.val", j), D(1));
+        Formula nextI = Add(QualifiedCall("Fin", "val", i), D(1));
+        Formula nextJ = Add(QualifiedCall("Fin", "val", j), D(1));
         return All("i", Fin(n), All("j", Fin(n),
             All("hi", Less(nextI, n), All("hj", Less(nextJ, n),
                 Eqn(Apply(matrix, i, j),
-                    Apply(matrix, Call("Fin.mk", nextI, hi), Call("Fin.mk", nextJ, hj)))))));
+                    Apply(matrix, QualifiedCall("Fin", "mk", nextI, hi), QualifiedCall("Fin", "mk", nextJ, hj)))))));
     }
 
     private static Formula MatrixMultiplication()
@@ -150,14 +150,10 @@ internal sealed class FactorizationRefutationDocument : IScribeDocumentDefinitio
     private static Formula Complexes => Seq(Mathbb, Grp(V("C")));
     private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Mat(Formula n) => Call("Matrix", Fin(n), Fin(n), Complexes);
-    private static Formula Call(string name, params Formula[] args)
-    {
-        int separator = name.IndexOf('.');
-        Formula symbol = separator < 0
-            ? V(name)
-            : Seq(V(name[..separator]), Dot, V(name[(separator + 1)..]));
-        return Apply(Seq(Operatorname, Grp(symbol)), args);
-    }
+    private static Formula Call(string name, params Formula[] args) =>
+        Apply(Seq(Operatorname, Grp(V(name))), args);
+    private static Formula QualifiedCall(string space, string name, params Formula[] args) =>
+        Apply(Seq(Operatorname, Grp(V(space), Dot, V(name))), args);
     private static Formula Apply(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
