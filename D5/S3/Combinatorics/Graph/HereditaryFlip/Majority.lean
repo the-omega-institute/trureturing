@@ -47,24 +47,23 @@ private theorem majority_erase (S : Finset V) {a b c : V}
   by_cases hxa : x = a <;> by_cases hxb : x = b <;> by_cases hxc : x = c <;>
     simp_all
 
-/-- Every majority-generated extension obeying the original two-face constraints
+/-- Every finite support obeying the original two-face constraints
 already belongs to any majority-closed containing family, without heredity of that family. -/
-private theorem pairClosure_le {K L : Set (Finset V)} (hKL : K ⊆ L)
+private theorem pair_closure_le {K L : Set (Finset V)} (hKL : K ⊆ L)
     (hL : MajorityClosed L) : pairClosure K ⊆ L := by
   intro S
-  induction S using Finset.strongInductionOn with
-  | H S ih =>
-    intro hS
-    by_cases hsmall : S.card ≤ 2
-    · exact hKL (hS S Finset.Subset.rfl hsmall)
-    · obtain ⟨a, b, c, ha, hb, hc, hab, hac, hbc⟩ :=
-        Finset.two_lt_card_iff.mp (Nat.lt_of_not_ge hsmall)
-      have herase (x : V) (hx : x ∈ S) : S.erase x ∈ L := by
-        apply ih (S.erase x) (Finset.erase_ssubset hx)
-        intro T hT hcard
-        exact hS T (hT.trans (Finset.erase_subset x S)) hcard
-      rw [← majority_erase S hab hac hbc]
-      exact hL _ (herase a ha) _ (herase b hb) _ (herase c hc)
+  refine Finset.strongInductionOn S ?_
+  intro S ih hS
+  by_cases hsmall : S.card ≤ 2
+  · exact hKL (hS S Finset.Subset.rfl hsmall)
+  · obtain ⟨a, b, c, ha, hb, hc, hab, hac, hbc⟩ :=
+      Finset.two_lt_card_iff.mp (Nat.lt_of_not_ge hsmall)
+    have herase (x : V) (hx : x ∈ S) : S.erase x ∈ L := by
+      apply ih (S.erase x) (Finset.erase_ssubset hx)
+      intro T hT hcard
+      exact hS T (hT.trans (Finset.erase_subset x S)) hcard
+    rw [← majority_erase S hab hac hbc]
+    exact hL _ (herase a ha) _ (herase b hb) _ (herase c hc)
 
 private theorem small_subset_majority {T A B C : Finset V}
     (hT : T ⊆ majority A B C) (hcard : T.card ≤ 2) :
@@ -87,7 +86,7 @@ private theorem small_subset_majority {T A B C : Finset V}
   simp only [Finset.insert_subset_iff, Finset.singleton_subset_iff]
   tauto
 
-private theorem flag_majorityClosed {K : Set (Finset V)}
+private theorem flag_majority_closed {K : Set (Finset V)}
     (hK : IsLowerSet K) (hflag : Flag K) : MajorityClosed K := by
   intro A hA B hB C hC
   apply hflag
@@ -103,8 +102,8 @@ theorem majority_closed_iff_flag {K : Set (Finset V)} (hK : IsLowerSet K) :
     MajorityClosed K ↔ Flag K := by
   constructor
   · intro hclosed S hS
-    exact pairClosure_le (fun _ h => h) hclosed hS
-  · exact flag_majorityClosed hK
+    exact pair_closure_le (fun _ h => h) hclosed hS
+  · exact flag_majority_closed hK
 
 /-- Pair completion is the least majority-closed family containing a hereditary
 family, even when the competing families are not hereditary. -/
@@ -120,8 +119,8 @@ theorem pair_closure_is_least {K : Set (Finset V)} (hK : IsLowerSet K) :
   · constructor
     · intro S hS T hTS _
       exact hK hTS hS
-    · exact flag_majorityClosed hlower hflag
+    · exact flag_majority_closed hlower hflag
   · intro L hL
-    exact pairClosure_le hL.1 hL.2
+    exact pair_closure_le hL.1 hL.2
 
 end D5.S3.Combinatorics.Graph.HereditaryFlip.Majority

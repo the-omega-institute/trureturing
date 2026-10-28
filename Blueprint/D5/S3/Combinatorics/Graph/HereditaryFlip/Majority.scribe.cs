@@ -65,7 +65,7 @@ internal sealed class MajorityDocument : IScribeDocumentDefinition
             Node("least-completion", "Least majority-closed extension", "pair_closure_is_least",
                 All("K", Families(), Imp(Call("IsLowerSet", Id("K")),
                     Call("IsLeast", Call("majorityClosedExtensions", Id("K")),
-                        Call("pairClosure", Id("K")))))),
+                        Call("pairClosure", Id("K"))))),
                 "The extensions are all families L with K contained in L and MajorityClosed L. "
                 + "Pair completion contains K, is hereditary and is flag, hence is majority closed. "
                 + "For universal minimality, L is not assumed hereditary. Strong induction on the "
@@ -97,5 +97,8 @@ internal sealed class MajorityDocument : IScribeDocumentDefinition
         new Formula.Logic(Seq(Open, a, Close), FormulaLogicOperator.And, Seq(Open, b, Close));
     private static Formula Imp(Formula a, Formula b) =>
         new Formula.Logic(Seq(Open, a, Close), FormulaLogicOperator.Implies, Seq(Open, b, Close));
-    private static Formula SmallFaces(Formula k, Formula s) => Call("SmallFaces", k, s);
+    private static Formula SmallFaces(Formula k, Formula s) => All("T", Supports(),
+        Imp(And(new Formula.Relation(Id("T"), FormulaRelationOperator.SubsetOf, s),
+            new Formula.Relation(Call("card", Id("T")),
+                FormulaRelationOperator.LessThanOrEqual, D(2))), Member(Id("T"), k)));
 }
