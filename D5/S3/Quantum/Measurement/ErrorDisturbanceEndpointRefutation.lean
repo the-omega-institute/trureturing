@@ -6,8 +6,11 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Measurement/ErrorDisturbanceEndpointRefutation.claim; result=D5/S3/Quantum/Measurement/ErrorDisturbanceEndpointRefutation.result; claim=D5/S3/Quantum/Measurement/ErrorDisturbanceEndpointRefutation.claim
    digest: A rational qutrit measurement beats both error-disturbance endpoints. -/
 
-import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation
+import D5.S3.Quantum.Matrix.CartesianVariance
+import D5.S3.Quantum.CotfasDVGS
+import D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment
+import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
 
 /-! Exact state bounds for a rational three-dimensional measurement. -/
 
@@ -19,6 +22,8 @@ open Matrix
 open D5.S3.Observer.Conditioning (unreadState)
 open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation (measurementProjector)
+open D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment (ray)
+open D5.S3.QuantumBounds.NonlocalityDepthQuantumBound (expectation_upper)
 
 namespace D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation
 
@@ -94,7 +99,8 @@ private def f (j : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=
   measurementProjector b j - unreadState (measurementProjector c) (measurementProjector b j)
 
 private lemma projector_apply {d : ℕ} (a : unitaryGroup (Fin d) ℂ)
-    (i j k : Fin d) : measurementProjector a i j k = a.val j i * star (a.val k i) := rfl
+    (i j k : Fin d) : measurementProjector a i j k = a.val j i * star (a.val k i) :=
+  Matrix.vecMulVec_apply _ _ _ _
 
 private lemma e_table (i : Fin 3) : e i =
   ![!![(625/97969), (-7800/97969), 0; (-7800/97969), (-625/97969), 0; 0, 0, 0],
@@ -251,14 +257,10 @@ private lemma signed_certificate (i j : Fin 3) (ε δ : ℝ)
 private lemma signed_expectation (ρ : Matrix (Fin 3) (Fin 3) ℂ) (hρ : IsDensity ρ)
     (i j : Fin 3) (ε δ : ℝ) (hε : ε = 1 ∨ ε = -1) (hδ : δ = 1 ∨ δ = -1) :
     ε * (trace (ρ * e i)).re + δ * (trace (ρ * f j)).re ≤ 71/250 := by
-  have hn := RHLinalg.trace_mul_nonneg_of_posSemidef hρ.1
+  have hu := expectation_upper ρ (ε • e i + δ • f j) (71/250) hρ
     (signed_certificate i j ε δ hε hδ)
-  simp only [Matrix.mul_sub, Matrix.mul_add, mul_smul_comm, Matrix.mul_one,
-    Matrix.trace_sub, Matrix.trace_add, Matrix.trace_smul, hρ.2] at hn
-  change 0 ≤ ((71/250 : ℝ) • (1 : ℂ) -
-    (ε • trace (ρ * e i) + δ • trace (ρ * f j))).re at hn
-  simp only [Complex.sub_re, Complex.add_re, Complex.smul_re, Complex.one_re, smul_eq_mul] at hn
-  linarith
+  simpa only [Matrix.mul_add, mul_smul_comm, Matrix.trace_add, Matrix.trace_smul,
+    Complex.add_re, Complex.smul_re, smul_eq_mul] using hu
 
 private lemma state_overall_bound (ρ : Matrix (Fin 3) (Fin 3) ℂ)
     (hρ : IsDensity ρ) : errorAt ρ 1 c + disturbanceAt ρ c b ≤ 71/250 := by
@@ -278,36 +280,22 @@ private lemma state_overall_bound (ρ : Matrix (Fin 3) (Fin 3) ℂ)
   · rw [abs_of_neg (lt_of_not_ge hx), abs_of_neg (lt_of_not_ge hy)]
     simpa using signed_expectation ρ hρ i j (-1) (-1) (Or.inr rfl) (Or.inr rfl)
 
-private lemma trace_three (h : Matrix (Fin 3) (Fin 3) ℂ) :
-    trace h = h 0 0 + h 1 1 + h 2 2 := by
-  change (∑ k : Fin 3, h k k) = _
-  simp only [Fin.sum_univ_three]
-
-private def pure (x : Fin 3 → ℂ) (n : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
-  (1/n : ℝ) • D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity x
-
 private lemma pure_apply (x : Fin 3 → ℂ) (n : ℝ) (i j : Fin 3) :
-    pure x n i j = (1/n : ℝ) • (x i * star (x j)) := rfl
+    ray 2 x n i j = (1/n : ℝ) • (x i * star (x j)) := by
+  simp [ray, Matrix.smul_apply, Matrix.vecMulVec_apply, Complex.real_smul, one_div]
 
 private lemma pure_isDensity (x : Fin 3 → ℂ) (n : ℝ) (hn : 0 < n)
-    (ht : ∑ k, x k * star (x k) = (n : ℂ)) : IsDensity (pure x n) := by
-  constructor
-  · exact (Matrix.posSemidef_vecMulVec_self_star x).smul (by positivity : (0 : ℝ) ≤ 1/n)
-  · have htrace : trace (pure x n) = (1/n : ℝ) • ∑ k, x k * star (x k) := by
-      change (∑ k, pure x n k k) = _
-      calc
-        _ = ∑ k, (1/n : ℝ) • (x k * star (x k)) :=
-          Finset.sum_congr rfl fun k _ => pure_apply x n k k
-        _ = _ := Finset.smul_sum.symm
-    rw [htrace, ht]
-    apply Complex.ext <;> simp [hn.ne']
-
-private lemma density_exists : ∃ ρ : Matrix (Fin 3) (Fin 3) ℂ, IsDensity ρ := by
-  exact ⟨pure ![1, 0, 0] 1, pure_isDensity _ _ (by norm_num)
-    (by norm_num [Fin.sum_univ_three, map_ofNat])⟩
+    (ht : ∑ k, x k * star (x k) = (n : ℂ)) : IsDensity (ray 2 x n) := by
+  have htrace : trace (vecMulVec x (star x)) = (n : ℂ) := ht
+  have hnC : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'
+  simpa only [htrace, ray] using
+    D5.S3.Quantum.CotfasDVGS.normalization_isDensity
+      (vecMulVec x (star x)) (Matrix.posSemidef_vecMulVec_self_star x)
+      (by rw [htrace]; exact hnC)
 
 private lemma overall_bound : overallError 1 c b ≤ 71/250 := by
-  obtain ⟨ρ, hρ⟩ := density_exists
+  obtain ⟨ρ, hρ⟩ :=
+    D5.S3.Quantum.Matrix.CartesianVariance.density_nonempty (n := 3) (by norm_num)
   unfold overallError
   refine csSup_le ?_ ?_
   · exact ⟨errorAt ρ 1 c + disturbanceAt ρ c b, ρ, hρ, rfl⟩
@@ -344,27 +332,27 @@ private lemma effect_difference_bound {d : ℕ} (ρ x y : Matrix (Fin d) (Fin d)
     |(trace (ρ * (x - y))).re| ≤ 1 := by
   have h0x := RHLinalg.trace_mul_nonneg_of_posSemidef hρ.1 hx
   have h0y := RHLinalg.trace_mul_nonneg_of_posSemidef hρ.1 hy
-  have h1x := RHLinalg.trace_mul_nonneg_of_posSemidef hρ.1 hcx
-  have h1y := RHLinalg.trace_mul_nonneg_of_posSemidef hρ.1 hcy
+  have h1x := expectation_upper ρ x 1 hρ (by simpa using hcx)
+  have h1y := expectation_upper ρ y 1 hρ (by simpa using hcy)
   change 0 ≤ (trace (ρ * x)).re at h0x
   change 0 ≤ (trace (ρ * y)).re at h0y
-  change 0 ≤ (trace (ρ * (1 - x))).re at h1x
-  change 0 ≤ (trace (ρ * (1 - y))).re at h1y
-  rw [Matrix.mul_sub, Matrix.trace_sub, Matrix.mul_one, hρ.2,
-    Complex.sub_re, Complex.one_re] at h1x h1y
   rw [Matrix.mul_sub, Matrix.trace_sub, Complex.sub_re]
   exact abs_le.mpr ⟨by linarith, by linarith⟩
 
 private lemma standard_pinch (j : Fin 3) :
     unreadState (measurementProjector (1 : unitaryGroup (Fin 3) ℂ))
       (measurementProjector b j) = diagonal (fun k => measurementProjector b j k k) := by
-  change (∑ k, measurementProjector (1 : unitaryGroup (Fin 3) ℂ) k *
-    measurementProjector b j * measurementProjector 1 k) = _
-  delta b v
-  ext k l
-  fin_cases j <;> fin_cases k <;> fin_cases l <;>
-    norm_num [projector_apply, Matrix.mul_apply, Matrix.sum_apply,
-      Matrix.diagonal_apply, Matrix.one_apply, Fin.sum_univ_three, map_ofNat]
+  have hp (k : Fin 3) : measurementProjector (1 : unitaryGroup (Fin 3) ℂ) k =
+      Matrix.single k k 1 := by
+    unfold measurementProjector D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity
+    have hv : (fun l => (1 : Matrix (Fin 3) (Fin 3) ℂ) l k) = Pi.single k 1 := by
+      funext l
+      simp [Matrix.one_apply, Pi.single_apply, eq_comm]
+    change vecMulVec (fun l => (1 : Matrix (Fin 3) (Fin 3) ℂ) l k)
+      (star (fun l => (1 : Matrix (Fin 3) (Fin 3) ℂ) l k)) = _
+    rw [hv, Pi.star_single, star_one, ← Matrix.single_eq_single_vecMulVec_single]
+  simpa only [unreadState, hp, Matrix.single_mul_mul_single, one_mul, mul_one] using
+    Matrix.sum_single_eq_diagonal (fun k => measurementProjector b j k k)
 
 private lemma disturbance_bdd : BddAbove
     {t | ∃ ρ : Matrix (Fin 3) (Fin 3) ℂ, IsDensity ρ ∧ t = disturbanceAt ρ 1 b} := by
@@ -396,16 +384,18 @@ private lemma error_bdd (π : Equiv.Perm (Fin 3)) : BddAbove
 
 private lemma disturbance_witness : ∃ ρ : Matrix (Fin 3) (Fin 3) ℂ,
     IsDensity ρ ∧ (57/200 : ℝ) < disturbanceAt ρ 1 b := by
-  refine ⟨pure ![-5, 11, -10] 246, pure_isDensity _ _ (by norm_num)
+  refine ⟨ray 2 ![-5, 11, -10] 246, pure_isDensity _ _ (by norm_num)
     (by norm_num [Fin.sum_univ_three, map_ofNat]), ?_⟩
   apply lt_of_lt_of_le _ (Finite.le_ciSup _ (1 : Fin 3))
   rw [standard_pinch]
-  have heq : (trace (pure ![-5, 11, -10] 246 *
+  have heq : (trace (ray 2 ![-5, 11, -10] 246 *
       (measurementProjector b 1 - diagonal (fun k => measurementProjector b 1 k k)))).re =
       2577721016/9041090605 := by
     delta b v
-    norm_num [trace_three, Matrix.mul_apply, Matrix.sub_apply, Matrix.diagonal_apply,
-      pure_apply, projector_apply, Fin.sum_univ_three, map_ofNat]
+    rw [Matrix.trace_fin_three]
+    simp only [Matrix.mul_apply, Matrix.sub_apply, Matrix.diagonal_apply,
+      pure_apply, projector_apply, Fin.sum_univ_succ]
+    norm_num [map_ofNat]
   rw [heq]
   norm_num
 
@@ -414,27 +404,27 @@ private lemma error_witness (π : Equiv.Perm (Fin 3)) :
       IsDensity ρ ∧ (57/200 : ℝ) < errorAt ρ 1 (relabel b π) := by
   have hh : ∀ k : Fin 3, k = 0 ∨ k = 1 ∨ k = 2 := by decide
   rcases hh (π 1) with h | h | h
-  · refine ⟨pure ![0, 1, 0] 1, pure_isDensity _ _ (by norm_num)
+  · refine ⟨ray 2 ![0, 1, 0] 1, pure_isDensity _ _ (by norm_num)
       (by norm_num [Fin.sum_univ_three, map_ofNat]), ?_⟩
     apply lt_of_lt_of_le _ (Finite.le_ciSup _ (1 : Fin 3))
     delta relabel b v
-    norm_num [trace_three, Matrix.mul_apply, Matrix.sub_apply, Matrix.one_apply,
-      pure_apply, projector_apply, Matrix.submatrix_apply,
-      Fin.sum_univ_three, map_ofNat, h]
-  · refine ⟨pure ![-5, -16, -11] 402, pure_isDensity _ _ (by norm_num)
+    simp only [Matrix.trace_fin_three, Matrix.mul_apply, Matrix.sub_apply,
+      pure_apply, projector_apply, Matrix.submatrix_apply, Fin.sum_univ_succ]
+    norm_num [map_ofNat, h]
+  · refine ⟨ray 2 ![-5, -16, -11] 402, pure_isDensity _ _ (by norm_num)
       (by norm_num [Fin.sum_univ_three, map_ofNat]), ?_⟩
     apply lt_of_lt_of_le _ (Finite.le_ciSup _ (1 : Fin 3))
     delta relabel b v
-    norm_num [trace_three, Matrix.mul_apply, Matrix.sub_apply, Matrix.one_apply,
-      pure_apply, projector_apply, Matrix.submatrix_apply,
-      Fin.sum_univ_three, map_ofNat, h]
-  · refine ⟨pure ![0, 1, 0] 1, pure_isDensity _ _ (by norm_num)
+    simp only [Matrix.trace_fin_three, Matrix.mul_apply, Matrix.sub_apply,
+      pure_apply, projector_apply, Matrix.submatrix_apply, Fin.sum_univ_succ]
+    norm_num [map_ofNat, h]
+  · refine ⟨ray 2 ![0, 1, 0] 1, pure_isDensity _ _ (by norm_num)
       (by norm_num [Fin.sum_univ_three, map_ofNat]), ?_⟩
     apply lt_of_lt_of_le _ (Finite.le_ciSup _ (1 : Fin 3))
     delta relabel b v
-    norm_num [trace_three, Matrix.mul_apply, Matrix.sub_apply, Matrix.one_apply,
-      pure_apply, projector_apply, Matrix.submatrix_apply,
-      Fin.sum_univ_three, map_ofNat, h]
+    simp only [Matrix.trace_fin_three, Matrix.mul_apply, Matrix.sub_apply,
+      pure_apply, projector_apply, Matrix.submatrix_apply, Fin.sum_univ_succ]
+    norm_num [map_ofNat, h]
 
 private lemma disturbance_lower : (57/200 : ℝ) < disturbance 1 b := by
   obtain ⟨ρ, hρ, ht⟩ := disturbance_witness

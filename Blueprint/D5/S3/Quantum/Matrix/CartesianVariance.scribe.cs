@@ -16,6 +16,9 @@ internal sealed class CartesianVarianceDocument : IScribeDocumentDefinition
         Formula var=Sub(ReF(Trace(Mul(rho,Parenthesized(cart)))),Apply(Qualified("Complex","normSq"),Trace(Mul(rho,a))));
         Formula pq=Pure(v);
         return DocumentDefinition.Create(ScribeNode.Create("A pure vector maximizes the Cartesian matrix variance.",H("Cartesian variance"),Blocks(
+            Item("density_nonempty", "Density matrices exist in positive dimension",
+                All([B("n",N)],Imp(Lt(Num(0),n),Ex([B("rho",Mat(n))],Density(rho)))),
+                "Every positive finite dimension has a positive semidefinite matrix of trace one."),
             Item("psd_entry_bound", "Positive semidefinite entry bound",
                 All([B("n",F.Id("Type"))], Seq(OpenBracket,Call("Fintype",n),CloseBracket,Sp,
                     OpenBracket,Call("DecidableEq",n),CloseBracket,Sp,Comma,Sp,
