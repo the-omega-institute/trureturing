@@ -141,7 +141,10 @@ internal sealed class SignallingPureProductNegativityDocument : IScribeDocumentD
                         + "the adjoint argument computes the real trace of the square root of RR*, "
                         + "as in Eq. eq: causmono at arxiv.tex lines 143–145. Thus the unit vectors "
                         + "a and b provide the required pure product input."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("liu-qiu-dahlsten-vedral-2025-pure-product-signalling-negativity"),
+                    ResolutionKind.Proved)))));
 
     private static Formula A1 => new Formula.Subscript(Alpha, D(1));
     private static Formula B1 => new Formula.Subscript(Beta, D(1));
