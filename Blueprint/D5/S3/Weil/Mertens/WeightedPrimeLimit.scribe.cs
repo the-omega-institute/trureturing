@@ -33,7 +33,7 @@ internal sealed class WeightedPrimeLimitDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("weighted-mangoldt-euler-limit"),
-                DeclarationHandle.Create(Prefix + "E₁Λ_tendsto"),
+                DeclarationHandle.Create(Prefix + "E1Lambda_tendsto"),
                 H("Euler-normalized limit of the original Mangoldt error"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -52,7 +52,7 @@ internal sealed class WeightedPrimeLimitDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("weighted-prime-finite-limit"),
-                DeclarationHandle.Create(Prefix + "exists_E₁p_limit"),
+                DeclarationHandle.Create(Prefix + "exists_E1p_limit"),
                 H("A finite limit at real infinity for the original prime error"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

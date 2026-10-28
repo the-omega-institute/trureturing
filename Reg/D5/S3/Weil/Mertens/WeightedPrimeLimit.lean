@@ -112,10 +112,10 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact not_tendsto_nhds_of_tendsto_atTop
     (tendsto_id : Tendsto (fun t : ℝ => t) atTop atTop) _ h
 
-def mangoldtEvidence : Registration arena (type_of% E₁Λ_tendsto) where
+def mangoldtEvidence : Registration arena (type_of% E1Lambda_tendsto) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨E₁Λ_tendsto, rejected, rejected_law⟩
+  variation := ⟨E1Lambda_tendsto, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
@@ -130,8 +130,8 @@ def mangoldtEvidence : Registration arena (type_of% E₁Λ_tendsto) where
     linarith
 
 def mangoldtRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@E₁Λ_tendsto) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Weil.Mertens.WeightedPrimeLimit.E₁Λ_tendsto.__information_unit
+    (@E1Lambda_tendsto) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.WeightedPrimeLimit.E1Lambda_tendsto.__information_unit
   realizationName := `Reg.D5.S3.Weil.Mertens.WeightedPrimeLimit.Mangoldt.mangoldtEvidence
   realizationSource := none
   generated := false
@@ -184,10 +184,10 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact not_tendsto_nhds_of_tendsto_atTop
     (tendsto_id : Tendsto (fun t : ℝ => t) atTop atTop) ell h
 
-def primeEvidence : Registration arena (type_of% exists_E₁p_limit) where
+def primeEvidence : Registration arena (type_of% exists_E1p_limit) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨exists_E₁p_limit, rejected, rejected_law⟩
+  variation := ⟨exists_E1p_limit, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
@@ -201,8 +201,8 @@ def primeEvidence : Registration arena (type_of% exists_E₁p_limit) where
     linarith
 
 def primeRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@exists_E₁p_limit) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Weil.Mertens.WeightedPrimeLimit.exists_E₁p_limit.__information_unit
+    (@exists_E1p_limit) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.WeightedPrimeLimit.exists_E1p_limit.__information_unit
   realizationName := `Reg.D5.S3.Weil.Mertens.WeightedPrimeLimit.Prime.primeEvidence
   realizationSource := none
   generated := false

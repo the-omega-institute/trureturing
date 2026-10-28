@@ -10,7 +10,7 @@ internal sealed class EstimatesDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(
                 DescribeId.Create("weighted-nonprime-residual-split"),
-                DeclarationHandle.Create("D5/S3/Weil/Mertens/Estimates.sub_E₁p_eq_sum_nonprime"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/Estimates.sub_E1p_eq_sum_nonprime"),
                 H("The original real-endpoint finite split"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

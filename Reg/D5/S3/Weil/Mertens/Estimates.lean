@@ -35,10 +35,10 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     show Finset.Ioc 0 1 = {1} by decide] at ht
 
 def splitEvidence : Registration arena
-    (type_of% @_root_.Mertens.E₁Λ.sub_E₁p_eq_sum_nonprime) where
+    (type_of% @_root_.Mertens.E₁Λ.sub_E1p_eq_sum_nonprime) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨_root_.Mertens.E₁Λ.sub_E₁p_eq_sum_nonprime, rejected, rejected_law⟩
+  variation := ⟨_root_.Mertens.E₁Λ.sub_E1p_eq_sum_nonprime, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
@@ -51,8 +51,8 @@ def splitEvidence : Registration arena
     simpa using (Real.log_pos (by norm_num : (1 : ℝ) < 2)).ne
 
 def splitRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@_root_.Mertens.E₁Λ.sub_E₁p_eq_sum_nonprime) (Realization signature) Unit Unit where
-  unitName := `Mertens.E₁Λ.sub_E₁p_eq_sum_nonprime.__information_unit
+    (@_root_.Mertens.E₁Λ.sub_E1p_eq_sum_nonprime) (Realization signature) Unit Unit where
+  unitName := `Mertens.E₁Λ.sub_E1p_eq_sum_nonprime.__information_unit
   realizationName := `Reg.D5.S3.Weil.Mertens.Estimates.splitEvidence
   realizationSource := none
   generated := false

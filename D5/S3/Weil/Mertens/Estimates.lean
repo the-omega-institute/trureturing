@@ -185,7 +185,7 @@ theorem E₁p.le_E₁Λ (x : ℝ) :
 
 /-- The weighted Mangoldt-prime difference retains exactly the nonprime terms,
 including prime powers at the inclusive real cutoff. -/
-theorem E₁Λ.sub_E₁p_eq_sum_nonprime (x : ℝ) :
+theorem E₁Λ.sub_E1p_eq_sum_nonprime (x : ℝ) :
     E₁Λ x - E₁p x =
       ∑ n ∈ Ioc 0 ⌊x⌋₊, if ¬n.Prime then vonMangoldt n / n else 0 := by
   unfold E₁Λ E₁p

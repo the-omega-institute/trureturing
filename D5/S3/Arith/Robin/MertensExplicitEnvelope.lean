@@ -629,7 +629,7 @@ private theorem selectedPrimePowers_lower :
 
 theorem E1Lambda_sub_E1p_lower {x : ℝ} (hx : 286 ≤ x) :
     (319 / 500 : ℝ) ≤ E₁Λ x - E₁p x := by
-  rw [E₁Λ.sub_E₁p_eq_sum_nonprime]
+  rw [E₁Λ.sub_E1p_eq_sum_nonprime]
   apply selectedPrimePowers_lower.trans
   apply sum_le_sum_of_subset_of_nonneg
   · intro n hn
