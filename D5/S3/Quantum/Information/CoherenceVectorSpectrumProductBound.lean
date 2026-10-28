@@ -8,6 +8,8 @@
 
 import D5.S3.Quantum.Information.CoherenceAssistanceRoofEquality
 import D5.S3.Quantum.Matrix.LinDTIMajorizationRefutation
+import D5.S3.Resource.LogDet.PathSpectralClassical
+import D5.S3.Quantum.Measurement.AdvantageQuantumNonSimulability
 
 /-! The coherence set of Alvarez–Losada–Portesi–Bosyk, Eqs. (11)–(12), and Conjecture 5. -/
 
@@ -41,7 +43,9 @@ def IsMajorizationUpperBound {d : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
 
 /-- The largest Hermitian eigenvalue; the value on non-Hermitian matrices is immaterial. -/
 def maxEigenvalue {d : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ) : ℝ :=
-  if h : ρ.IsHermitian then sSup (Set.range h.eigenvalues) else 0
+  if h : ρ.IsHermitian then
+    D5.S3.Quantum.Measurement.AdvantageQuantumNonSimulability.aqGreatestEigenvalue h
+  else 0
 
 private lemma column_ensemble {d : ℕ} (hd : 1 ≤ d)
     (ρ : Matrix (Fin d) (Fin d) ℂ) (hρ : IsState ρ) :
@@ -145,8 +149,7 @@ private lemma first_component_bound {d : ℕ} (hd : 1 ≤ d)
     (∑ j, (CFC.sqrt ρ j j).re ^ 2) ≤ ∑ j, Complex.normSq (CFC.sqrt ρ j j) := by
       apply Finset.sum_le_sum
       intro j _
-      rw [Complex.normSq_apply]
-      nlinarith [sq_nonneg (CFC.sqrt ρ j j).im]
+      simpa only [pow_two] using Complex.re_sq_le_normSq (CFC.sqrt ρ j j)
     _ = ∑ j, p j * Complex.normSq (ψ j j) :=
       Finset.sum_congr rfl (fun j _ => (hcol j j).symm)
     _ ≤ u ⟨0, hd⟩ := by
@@ -159,33 +162,24 @@ private lemma first_component_bound {d : ℕ} (hd : 1 ≤ d)
 
 private lemma diagonal_cauchy_schwarz {d : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ) :
     (CFC.sqrt ρ).trace.re ^ 2 ≤ (d : ℝ) * ∑ j, (CFC.sqrt ρ j j).re ^ 2 := by
-  have h := Finset.sum_mul_sq_le_sq_mul_sq (Finset.univ : Finset (Fin d))
-    (fun _ => (1 : ℝ)) (fun j => (CFC.sqrt ρ j j).re)
-  change (∑ j, CFC.sqrt ρ j j).re ^ 2 ≤ _
-  rw [Complex.re_sum]
-  simpa only [one_mul, one_pow, Finset.sum_const, Finset.card_univ,
-    Fintype.card_fin, nsmul_eq_mul, mul_one] using h
+  simpa only [Matrix.trace, Matrix.diag_apply, Complex.re_sum, Finset.card_univ,
+    Fintype.card_fin] using
+    (sq_sum_le_card_mul_sum_sq (s := Finset.univ) (f := fun j : Fin d => (CFC.sqrt ρ j j).re))
 
 private lemma trace_sqrt_spectral {d : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
     (hρ : IsState ρ) :
     (CFC.sqrt ρ).trace.re = ∑ i, Real.sqrt (hρ.1.isHermitian.eigenvalues i) := by
-  rw [CFC.sqrt_eq_cfc, cfc_nnreal_eq_real _ ρ hρ.1.nonneg, hρ.1.isHermitian.cfc_eq,
-    Matrix.IsHermitian.cfc, Unitary.conjStarAlgAut_apply, Matrix.trace_mul_cycle,
-    Unitary.coe_star_mul_self, one_mul, Matrix.trace_diagonal, Complex.re_sum]
+  rw [CFC.sqrt_eq_cfc, cfc_nnreal_eq_real _ ρ hρ.1.nonneg,
+    D5.S3.Resource.LogDet.PathSpectralClassical.trace_cfc_eq_sum ρ hρ.1.isHermitian]
   apply Finset.sum_congr rfl
   intro i _
-  simp only [Function.comp_apply, RCLike.ofReal_eq_complex_ofReal, Complex.ofReal_re,
-    Real.coe_sqrt, Real.coe_toNNReal _ (hρ.1.eigenvalues_nonneg i)]
+  simp only [Real.coe_sqrt, Real.coe_toNNReal _ (hρ.1.eigenvalues_nonneg i)]
 
 private lemma spectral_bound {d : ℕ} (hd : 1 ≤ d)
     (ρ : Matrix (Fin d) (Fin d) ℂ) (hρ : IsState ρ) :
     0 < maxEigenvalue ρ ∧ 1 / Real.sqrt (maxEigenvalue ρ) ≤ (CFC.sqrt ρ).trace.re := by
   classical
-  have hsum : (∑ i, hρ.1.isHermitian.eigenvalues i) = 1 := by
-    have h := congrArg Complex.re
-      (hρ.1.isHermitian.trace_eq_sum_eigenvalues.symm.trans hρ.2)
-    simpa only [Complex.one_re, Complex.re_sum, RCLike.ofReal_eq_complex_ofReal,
-      Complex.ofReal_re] using h
+  have hsum := D5.S3.Quantum.Matrix.CartesianVariance.density_eigenvalues_sum ρ hρ
   have hle (i : Fin d) : hρ.1.isHermitian.eigenvalues i ≤ maxEigenvalue ρ := by
     rw [maxEigenvalue, dite_eq_left hρ.1.isHermitian]
     exact le_csSup (Set.finite_range _).bddAbove ⟨i, rfl⟩
