@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Observer/CubicGain/SelectedRootCommonZero
    mirror-E: none(waiver:selected-root-continuation)
-   anchors: [mathlib/module/Mathlib.Algebra.Polynomial.CoeffList]
+   anchors: [mathlib/module/Mathlib.Algebra.Polynomial.Derivative]
    utility: none
    digest: Exact selected-root common-zero certificates for the literal VI polynomials. -/
 
