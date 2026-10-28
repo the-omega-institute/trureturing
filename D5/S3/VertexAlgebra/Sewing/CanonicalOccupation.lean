@@ -281,6 +281,22 @@ private theorem creation_occupation_summable (D : LatticeData) (α : Charge D)
     _ ≤ C * (‖q‖ / ρ) ^ level D d :=
       mul_le_mul_of_nonneg_right hb (pow_nonneg hR0 _)
 
+private theorem creation_coefficient_norm_le (D : LatticeData) (α : Charge D)
+    (t : ℤ) (d : Occ D) :
+    ‖(creationCoeff D α t).coeff d‖ ≤
+      ‖(creationCoeff D α (level D d)).coeff d‖ := by
+  by_cases ht : t < 0
+  · simp [creationCoeff, ht]
+  · by_cases he : t = (level D d : ℤ)
+    · rw [he]
+    · have hn : Finsupp.weight (oscillatorWeight D) d ≠ t.toNat := by
+        change level D d ≠ t.toNat
+        intro h
+        apply he
+        rw [h, Int.toNat_of_nonneg (not_lt.mp ht)]
+      rw [((actual_creation_coefficient_transport D α α).1 t).coeff_eq_zero d hn]
+      exact norm_nonneg _
+
 /-- Projection of the original recursively normal-ordered word field. -/
 private def wordMap (D : LatticeData) (α β : Charge D)
     (ω : List (Index D)) (m : ℤ) : Oscillator D →ₗ[ℂ] Oscillator D :=
@@ -445,10 +461,87 @@ private theorem wordCoeff_cons_finite (D : LatticeData) (α β : Charge D)
           positive_derivative_vanish D x j β d hj', map_zero])
       _ = _ := Finset.sum_congr rfl (fun j hj => heq j)
 
+private theorem signed_derivative_choose (j k : ℕ) :
+    ((Ring.choose (-(j : ℤ) - 1 + k) k : ℤ) : ℂ) =
+      (-1 : ℂ) ^ k * (j.choose k : ℂ) := by
+  rw [show -(j : ℤ) - 1 + k = -((j : ℤ) + 1 - k) by ring,
+    Ring.choose_neg]
+  rw [show (j : ℤ) + 1 - k + k - 1 = (j : ℤ) by ring, Ring.choose_natCast]
+  simp [Int.coe_negOnePow_natCast, Int.cast_pow]
+
+/-- Every positive branch is a zero mode or lowers one actual input occupation.
+The gap below the derivative order is zero, including its apparent negative modes. -/
+private theorem wordMap_neutral_coefficient (D : LatticeData) (α β : Charge D)
+    (ω : List (Index D)) (i : Fin D.rank) (k j : ℕ) (m : ℤ) (e d : Occ D) :
+    ((Ring.choose (-(j : ℤ) - 1 + k) k : ℤ) : ℂ) *
+      (wordMap D α β ω m
+        (neutralPolynomialMode D i β ((j : ℤ) - k) (b D d))).coeff e =
+    (-1 : ℂ) ^ k * (j.choose k : ℂ) *
+      (if j < k then 0 else if j = k then
+        (bilinear D (unitCharge D i) β : ℂ) * wordCoeff D α β ω m e d
+      else ((j : ℤ) - k : ℂ) *
+        ∑ a : Fin D.rank, (D.G i a : ℂ) * (d (a, j - k - 1) : ℂ) *
+          wordCoeff D α β ω m e (d - Finsupp.single (a, j - k - 1) 1)) := by
+  classical
+  rw [signed_derivative_choose]
+  by_cases hlt : j < k
+  · simp [hlt, Nat.choose_eq_zero_of_lt hlt]
+  · rw [if_neg hlt]
+    by_cases heq : j = k
+    · subst j
+      simp [neutralPolynomialMode, wordCoeff, map_smul, MvPolynomial.coeff_smul]
+    · rw [if_neg heq]
+      have hm : 0 < (j : ℤ) - k := by omega
+      rw [neutralPolynomialMode, if_neg (not_lt.mpr hm.le), if_neg (ne_of_gt hm)]
+      simp only [LinearMap.smul_apply, LinearMap.sum_apply, Derivation.coeFn_coe,
+        map_smul, map_sum, MvPolynomial.coeff_smul, MvPolynomial.coeff_sum]
+      congr 1
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro a ha
+      have hd : pderiv (a, ((j : ℤ) - k - 1).toNat) (b D d) =
+          (d (a, j - k - 1) : ℂ) • b D (d - Finsupp.single (a, j - k - 1) 1) := by
+        rw [show ((j : ℤ) - k - 1).toNat = j - k - 1 by omega]
+        simp [b, pderiv_monomial, smul_monomial]
+      rw [hd, map_smul, MvPolynomial.coeff_smul]
+      simp only [wordCoeff]
+      ring
+
+/-- A finite recurrence solely in literal word-field matrix coefficients.
+All colours, both normal-product branches, and every signed mode are retained. -/
+private theorem wordCoeff_cons (D : LatticeData) (α β : Charge D)
+    (x : Index D) (ω : List (Index D)) (m : ℤ) (e d : Occ D) :
+    wordCoeff D α β (x :: ω) m e d =
+      (∑ j ∈ Finset.range (level D e),
+        ((j + x.2).choose x.2 : ℂ) *
+          if (x.1, j + x.2) ∈ e.support then
+            wordCoeff D α β ω (m + j) (e - Finsupp.single (x.1, j + x.2) 1) d
+          else 0) +
+      ∑ j ∈ Finset.range (x.2 + level D d + 1),
+        (-1 : ℂ) ^ x.2 * (j.choose x.2 : ℂ) *
+          (if j < x.2 then 0 else if j = x.2 then
+            (bilinear D (unitCharge D x.1) β : ℂ) *
+              wordCoeff D α β ω (m - j - 1) e d
+          else ((j : ℤ) - x.2 : ℂ) *
+            ∑ a : Fin D.rank, (D.G x.1 a : ℂ) * (d (a, j - x.2 - 1) : ℂ) *
+              wordCoeff D α β ω (m - j - 1) e
+                (d - Finsupp.single (a, j - x.2 - 1) 1)) := by
+  classical
+  rw [wordCoeff_cons_finite]
+  congr 1
+  · apply Finset.sum_congr rfl
+    intro j hj
+    rw [MvPolynomial.coeff_X_mul']
+    rfl
+  · apply Finset.sum_congr rfl
+    intro j hj
+    exact wordMap_neutral_coefficient D α β ω x.1 x.2 j (m - j - 1) e d
+
 #print axioms creation_coefficient_factorial
 #print axioms creation_radial_bound
 #print axioms creation_occupation_summable
 #print axioms wordCoeff_cons_finite
+#print axioms wordCoeff_cons
 
 end
 end D5.S3.VertexAlgebra.CanonicalOccupationSewing
