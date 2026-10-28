@@ -210,3 +210,105 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 end
 end Reg.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.InvolutionBinary
+
+namespace Reg.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.ExpectationUpper
+open _root_.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound (expectation_upper)
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Matrix
+open scoped ComplexOrder
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+universe u
+
+/-- Observe the order relation between the expectation and its upper bound. -/
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m : Type u} [Fintype m] [DecidableEq m]
+    (rho B : Matrix m m ℂ) (q : ℝ)
+    (_hr : rho.PosSemidef ∧ Matrix.trace rho = 1)
+    (_hp : (q • (1 : Matrix m m ℂ) - B).PosSemidef),
+    R.readout () () (Matrix.trace (rho * B)).re q
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  exact h (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) 0 0
+    ⟨Matrix.PosSemidef.one, by simp [Matrix.trace]⟩
+    (by simpa using (Matrix.PosSemidef.zero :
+      (0 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ).PosSemidef))
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have he := congrFun h 0
+  exact (show ¬ (1 : ℝ) ≤ 0 by norm_num) (Eq.mp he (le_refl 0))
+
+def source_registration : Registration arena.{u} (type_of% @expectation_upper.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@expectation_upper, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@expectation_upper.{u}) (Realization signature) Unit Unit := {
+  unitName := .str
+    `D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.expectation_upper "__information_unit"
+  realizationName := ``source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end
+end Reg.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.ExpectationUpper

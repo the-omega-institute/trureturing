@@ -4915,3 +4915,33 @@ $Q_E$ 的四项均非零，故两个对角块与它交织当且仅当四个对�
 因此此极构造供应了等待相容性，但未供应定义 20.2、34.1 所需的共同状态—效果—仪器—组合关系。若采用定义 4.4、定理 4.5 及命题 4.6 的正向路线，还须在同一个操作表示中供应非零事件角、相融矩阵单位、局部复单位及保持它的运输。Moretti–Oppio Theorem 4.3 另要求强连续、不可约且局部忠实的 Poincaré 表示及非负质量平方；两条旋转平面上的本等待没有实例化这些前提。另一条成熟充分路线 [Niestegge，§5 Definition 1、Theorem 1、Corollary 1](https://arxiv.org/html/1402.0158v2)要求在其论文的实有序可观察量空间及乘法合同上，对每个可观察量 $a$ 线性指定 skew order derivation $D_a$，满足 $[D_a,D_b]=-[R_a,R_b]$、$D_aa=0$，再以平方正性取得复 $C^*$ 表示；一只作用在向量上的 $A$ 不是这个对应。概率标定、全参考与并置的其余前提仍按定义 20.2、34.1 保留；[Symplectic 假设 35.3](SYMPLECTIC_PREDICTIVE_COMPLETION.md)的振幅及辛尺度也仍为所给前提。这里排除的是所声明的同系统极射线下降，不排除原物理 $\mathbb C^5$，也不判定另行改变编码、载体或操作合同的表示。∎
 
 ## 追加锚（本行以下为增补区）
+
+<a id="v9-nand"></a>
+
+## 37. v9 门合同、可逆 NAND 与完整确定信道球
+
+本节完整正文与证明见[续卷同节](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md#v9-nand)；编号与原链接入口保留。
+
+<a id="v9-reflections"></a>
+
+## 38. 固定反射的稠密范围与目标依赖的反射分解
+
+本节完整正文与证明见[续卷同节](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md#v9-reflections)；编号与原链接入口保留。
+
+<a id="v9-native-bus"></a>
+
+## 39. 原生返回供应、控制菜单与另供的共享记录总线
+
+本节完整正文与证明见[续卷同节](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md#v9-native-bus)；编号与原链接入口保留。
+
+<a id="v9-instrument-return"></a>
+
+## 40. 坐标返回为什么不等于实际仪器逆
+
+本节完整正文与证明见[续卷同节](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md#v9-instrument-return)；编号与原链接入口保留。
+
+<a id="v9-synthesis"></a>
+
+## 41. 完整十五组的源对应与资源限定综合
+
+本节完整正文与证明见[续卷同节](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md#v9-synthesis)；编号与原链接入口保留。
