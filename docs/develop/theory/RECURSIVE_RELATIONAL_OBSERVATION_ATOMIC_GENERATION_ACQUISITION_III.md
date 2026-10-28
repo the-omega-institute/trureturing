@@ -4256,3 +4256,445 @@ single native/path/quantum/continuous apparatus. All original fixed-model
 and common-realization obligations retain their exact scopes.
 
 ## 追加锚（本行以下为增补区）
+
+## 35. Finite dyadic actuator words and the full-return ready column
+
+**Definition 35.1 (the literal word and its fixed factors).** Work in
+finite-dimensional complex Hilbert spaces with specified orthonormal
+coordinate bases. Put $k=\overline{\mathbb Q}\subset\mathbb C$, the field
+of all algebraic complex numbers, and $M_a=M_a(\mathbb C)$.
+An algebraic linear map between matrix spaces means a complex-linear map
+whose coefficients in the matrix-unit bases belong to $k$.
+Write $\operatorname{Ad}_U(X)=UXU^\dagger$.
+
+Fix any one finite actual classical source/control execution of the
+[source-owned actuator, §§60.1--60.3 and 62.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md#60-a-source-owned-finite-actuator-for-the-installed-whole-rho-interaction).
+Its original source is the authentic PR57 packet with fixed leaf cap
+$H\ge1$, original INITIAL and preparation occurrence, $2H-1$ token
+slots, original guard and original chronological records. Its address
+bank has $K=2^H-1$ qubits and the distinct reference qubit $r$;
+§62 additionally supplies $c,u,v$. Its actual private enables are obtained
+by the locked, paid packet scan and flag computation of §60, with all
+borrowed cursors restored. The original source service, refusals, copies
+and absorbing Stop keep their original meanings. A finite quantum word
+considered here finishes before Stop.
+
+Let $\mathscr K=(\mathbb C^2)^{\otimes n}$ contain all the finitely many
+qubits used in the word. A qubit constructed later in the run can be
+represented mathematically by its stipulated initial factor and identity
+evolution until its construction cut; this changes no actual construction
+order or price. The word $W=U_L\cdots U_1$, $L\ge0$, uses the literal
+actuator factors
+
+$$
+\begin{aligned}
+P_p(v,\xi)&=\operatorname{diag}(1,e^{-iv\xi})_p,\\
+B_{pq}(v,\xi)|_{\operatorname{span}\{|10\rangle,|01\rangle\}}
+ &=\begin{pmatrix}\cos(v\xi)&i\sin(v\xi)\\
+                    i\sin(v\xi)&\cos(v\xi)\end{pmatrix},
+\qquad B_{pq}|00\rangle=|00\rangle,\quad
+B_{pq}|11\rangle=|11\rangle,
+\end{aligned}
+\tag{35.1}
+$$
+
+where $p\ne q$, $v\in\{0,1\}$ and
+$\xi\in\mathbb Z[1/2]$ is an angle in radians. Untouched factors are
+identities. The other allowed factors are explicitly specified fixed
+unitaries $G$ with **all** their matrix entries algebraic, on their
+specified physical supports. Their number, order and positions are part
+of this word. Classical service and ideal holds act as quantum identity.
+There is no intermediate quantum measurement, quantum-dependent branch,
+reset, postselection or discarding inside $W$. The chosen classical
+execution determines $W$ independently of its logical matrix input;
+it does not obtain quantum amplitudes as classical control data.
+
+Freeze the actual classical choices, private enables, signs, denominators,
+wiring and fixed factors of this execution. Define $W_0$ by replacing
+every $P/B$ occurrence by identity and retaining every $G$ occurrence in
+its original position. This is a mathematical comparison of the chosen
+word, not a rerun of its controller with altered replies. In particular
+an executed physical SWAP, the signed fermionic-swap matrix or another
+algebraic permutation gate is a fixed factor if separately supplied as
+such, and remains in $W_0$ with its complete matrix.
+Descriptions of wires and tensor-coordinate identifications are not
+additional executed permutation gates. If a swap is instead synthesized
+from $P/B$ factors, those factors remain subject to (35.1).
+
+The signed-dyadic convention is the executed catalog of §§60.1 and 62.9.
+The real-angle $\pi/2,\pi/4$ factors in §62.7's reference word are
+rounded in that catalog; they are not extra exact factors of (35.1).
+The full algebraicity premise on each $G$ also applies to any balanced
+preparation completion admitted as a fixed factor. Knowing only its
+action on $|r\rangle$ does not specify its other columns.
+
+**Definition 35.2 (the prescribed full consumer).** The consumer is the
+fixed installation of [Waves VI, Definitions 101.1 and 106.1,
+Theorem 109.1](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VI.md#109-a-completely-specified-return-with-an-original-state-witness).
+Write $H_5=\mathbb C^5$ with basis $e_0,\ldots,e_4$, and let
+$E_2=\mathbb C^2$ have basis $f_0,f_1$. Put
+
+$$
+\begin{gathered}
+u_H=(e_0+e_3)/\sqrt2,\quad v_H=(e_1+e_4)/\sqrt2,\quad z_H=e_2,\\
+B(x_0,x_1,x_2)=x_0u_H+x_1v_H+x_2z_H,\qquad R=BH_3,
+\quad H_3=\mathbb C^3,\\
+u_-=(e_0-e_3)/\sqrt2,\quad v_-=(e_1-e_4)/\sqrt2,\quad
+\zeta=v_H\otimes(f_0-f_1)/\sqrt2.
+\end{gathered}
+\tag{35.2}
+$$
+
+The five ready columns and complementary columns are exactly
+
+$$
+\begin{aligned}
+\mathcal Ve_0&=u_Hf_0,&\mathcal Ve_1&=u_Hf_1,&
+\mathcal Ve_2&=v_H(f_0+f_1)/\sqrt2,\\
+\mathcal Ve_3&=z_Hf_1,&\mathcal Ve_4&=z_Hf_0,\\
+Tu_H&=u_-f_0,&Tv_H&=u_-f_1,&Tz_H&=v_-f_0,\\
+Tu_-&=\zeta,&Tv_-&=v_-f_1,
+\end{aligned}
+\tag{35.3}
+$$
+
+where juxtaposition denotes a tensor product. Thus the prescribed map
+is the full ten-dimensional unitary
+
+$$
+\mathsf J(xf_0+yf_1)=\mathcal Vx+Ty\qquad(x,y\in H_5).
+\tag{35.4}
+$$
+
+These are the supplier's complete columns, including its complementary
+five-dimensional domain and all off-code outputs. In particular
+$\mathsf J$ and $\operatorname{Ad}_{\mathsf J}$ have algebraic entries.
+
+The original system menu and sole preparation are retained, not enlarged.
+In qutrit coordinates set
+
+$$
+\begin{gathered}
+\xi=(1,1,1)/\sqrt3,\quad a=(1,1,-2)/\sqrt6,\quad
+f=(1,-1,0)/\sqrt2,\quad q=(\xi+a)/\sqrt2,\\
+U(x_0,x_1,x_2)=(x_0,x_2,x_1),\qquad
+W_{\rm sys}(x_0,x_1,x_2)=(x_1,x_0,x_2),\\
+\psi=\sqrt d\,Uq+i\sqrt{1-d}\,Uf,\quad
+\rho_0=\psi\psi^\dagger,\quad 0<d<1,\\
+V_0=Ue^{i\pi W_{\rm sys}/4},\quad V_1=V_0W_{\rm sys},\quad
+A_j=\tfrac12\operatorname{Ad}_{V_j}\ (j=0,1).
+\end{gathered}
+\tag{35.5}
+$$
+
+Here $a$ is the vector denoted $e$ in the qutrit supplier. The one installed
+$N\in U(3)$ satisfies $[N,\xi\xi^\dagger]\ne0$ and acts on $H_5$ as
+$BNB^\dagger+(I_5-BB^\dagger)$. The sole preparation on $H_5$ is
+$B\rho_0B^\dagger$; the record starts in $f_0$. The original terminal is
+effects-only, with
+$F_1=(Bqq^\dagger B^\dagger)\otimes I_2$ and $F_0=I_{10}-F_1$.
+No selected label, new preparation, extra terminal setting or instrument
+inverse is supplied.
+
+The actual emitted record, in the original basis
+$g_0=(f_0-if_1)/\sqrt2$, $g_1=(-if_0+f_1)/\sqrt2$, is retained with the
+fixed Schur parameter $|\gamma|\le1$ and returned once to the same
+forward $\mathsf J$, as in VI Assumption 106.2. Old system operations act
+as identity on that record and every untouched reference. For example
+the prescribed full no-prefix, no-intermediate-operation successor is
+
+$$
+\begin{gathered}
+L_0=(\mathcal VBV_0-iTBV_0)/\sqrt2,\qquad
+L_1=(-i\mathcal VBV_1+TBV_1)/\sqrt2,\\
+\mathcal R_\gamma(X)=\tfrac12\bigl(L_0XL_0^\dagger+L_1XL_1^\dagger
+              +\gamma L_0XL_1^\dagger+\bar\gamma L_1XL_0^\dagger\bigr),
+\qquad X\in M_3.
+\end{gathered}
+\tag{35.6}
+$$
+
+Its output is retained as an operator on the full $H_5\otimes E_2$,
+and the map tensors with identity on untouched references. Full
+realization of this specified device
+requires (35.4), not merely matching two numbers obtained by applying
+$F_0,F_1$ to (35.6). No algebraicity of $d$, $N$ or $\gamma$ is assumed;
+the algebraic target used below is the interaction (35.4) itself.
+
+**Definition 35.3 (the coordinate and single-pair class).** Choose ten
+distinct physical data modes $D=\{p_{jb}:0\le j\le4,\ b=0,1\}$ and
+any finite disjoint set of work modes $A$. Define one fixed isometry,
+used at both input and output,
+
+$$
+C:H_5\otimes E_2\longrightarrow(\mathbb C^2)^{\otimes D},
+\qquad C(e_jf_b)=|p_{jb}\rangle,
+\tag{35.7}
+$$
+
+where $|p\rangle$ has its single excitation at $p$ and zeros at all
+other data modes. Every work mode starts in one fixed computational
+basis string $|\omega\rangle$, $\omega\in\{0,1\}^{A}$, independent
+of the logical input. It is retained. This is a conditional encoding
+class, not an assertion that the original observer has acquired this
+encoder or any new preparation.
+
+Within Definition 35.1 allow arbitrary finite $P/B$ words on these
+modes. Restrict the fixed algebraic factors to arbitrary two-qubit
+unitaries on the **one** distinguished physical pair $(r,o)$,
+$o=\varepsilon$, and one-qubit monomial unitaries on every other mode.
+The pair can meet $D$ or $A$ in any way. A one-qubit monomial unitary is
+a diagonal unitary or a diagonal unitary times $X$; its entries are
+algebraic. This includes the fixed local phases and bit flips of §60.6.
+Allowing all algebraic pair unitaries, their inverses and arbitrary live
+interleavings is a generous enlargement of any specified algebraic
+balanced completion on this pair. It does not assert that §60.6, which
+specifies a preparation action on one vector, licenses that whole menu
+or that every possible completion is algebraic.
+
+In particular a separately supplied fixed permutation moving quantum
+states between other modes is outside this single-pair class; it would
+still remain among the fixed factors in the general condition below.
+The class places no restriction on length, private finite classical
+computation, dyadic precision, signs or $P/B$ routing. It does not
+identify the original $N$ or its instruments with bank gates. Any use
+of such an operation inside an attempted realization needs its actual
+matrix and support and must be checked against this class.
+
+The required reduced data map, even if arbitrary final work is allowed,
+is
+
+$$
+\operatorname{Tr}_{A}\!\left[
+ W\bigl(CXC^\dagger\otimes|\omega\rangle\langle\omega|\bigr)W^\dagger
+ \right]
+ =C\mathsf JX\mathsf J^\dagger C^\dagger\qquad(X\in M_{10}).
+\tag{35.8}
+$$
+
+All work remains in the actual carrier; the trace here only states a
+necessary marginal equality. It neither authorizes discarding work
+nor projects away data leakage. A full carrier implementation must
+satisfy at least (35.8), including every untouched-reference extension.
+
+**Theorem 35.4 (finite-word exactness and the mandatory ready column).**
+For every word of Definition 35.1, every $a,b\ge1$, all algebraic linear
+maps $\mathrm{Enc}:M_a\to M_{2^n}$ and
+$\mathrm{Dec}:M_{2^n}\to M_b$, and every algebraic linear map
+$\mathcal A:M_a\to M_b$,
+
+$$
+\mathrm{Dec}\circ\operatorname{Ad}_W\circ\mathrm{Enc}=\mathcal A
+\quad\Longrightarrow\quad
+\mathrm{Dec}\circ\operatorname{Ad}_{W_0}\circ\mathrm{Enc}=\mathcal A.
+\tag{35.9}
+$$
+
+Likewise, for every algebraic-entry input matrix $\rho\in M_{2^n}$,
+algebraic-entry effect $F\in M_{2^n}$ and $\alpha\in k$,
+
+$$
+\operatorname{Tr}(FW\rho W^\dagger)=\alpha
+\quad\Longrightarrow\quad
+\operatorname{Tr}(FW_0\rho W_0^\dagger)=\alpha.
+\tag{35.10}
+$$
+
+Consequently no finite word in Definition 35.3 satisfies (35.8). It
+already fails the required ready-column output for $e_2f_0$. This
+conclusion holds for each finite actual source execution, with no common
+bound on its precision or length. It is an obstruction for the stated
+coordinate, basis-work and single-pair class.
+
+*Proof.* Choose $b_0\ge0$ so that every actual enabled angle in this
+finite word is $m_\ell 2^{-b_0}$ with $m_\ell\in\mathbb Z$.
+For a word without any $P/B$ factors take $b_0=0$. Put
+$z=e^{i2^{-b_0}}$. The Hermite--Lindemann consequence of
+Lindemann--Weierstrass says that the exponential of a nonzero algebraic
+number is transcendental. Applied to $i2^{-b_0}$, it makes evaluation
+
+$$
+\operatorname{ev}_z:k[t,t^{-1}]\longrightarrow\mathbb C
+\tag{35.11}
+$$
+
+injective: clearing negative powers in a nonzero vanishing Laurent
+polynomial would give a polynomial relation for $z$ over $k$.
+An element algebraic over $k$ is algebraic over $\mathbb Q$, since the
+finitely many coefficients of its polynomial lie in one finite
+extension of $\mathbb Q$. This contradicts transcendence over
+$\mathbb Q$. The classical transcendence ingredient is used in exactly
+its one-exponent form; see Adamczewski--Delaygue,
+[*Algebraic relations between sine and cosine values*, Theorem 3 and
+Corollary 4](https://arxiv.org/html/2406.01296v1).
+
+Represent a phase factor by $\operatorname{diag}(1,t^{-m_\ell})$ and
+the single-occupation block of a hopping factor by
+
+$$
+\begin{pmatrix}
+(t^{m_\ell}+t^{-m_\ell})/2&(t^{m_\ell}-t^{-m_\ell})/2\\
+(t^{m_\ell}-t^{-m_\ell})/2&(t^{m_\ell}+t^{-m_\ell})/2
+\end{pmatrix},
+\tag{35.12}
+$$
+
+retaining its vacuum and double-occupation entries equal to one.
+Keep every $G$ as its full constant matrix. Their ordered product
+$\mathcal W(t)$ lies in $M_{2^n}(k[t,t^{-1}])$ and satisfies
+$\mathcal W(z)=W$, $\mathcal W(1)=W_0$. Negative angles and disabled
+factors are covered by negative and zero exponents.
+
+On this ring conjugate coefficients and send $t$ to $t^{-1}$; together
+with matrix transposition this defines $\mathcal W^\sharp$.
+Since $|z|=1$, its evaluation at $z$ is $W^\dagger$, and its evaluation
+at one is $W_0^\dagger$. Thus every matrix-unit coefficient of
+
+$$
+\mathrm{Dec}\bigl(\mathcal W(t)\mathrm{Enc}(X)
+                            \mathcal W^\sharp(t)\bigr)-\mathcal A(X)
+\tag{35.13}
+$$
+
+is a Laurent polynomial over $k$. Under the premise of (35.9), each
+coefficient at every matrix unit $X$ vanishes at $z$. Injectivity makes
+it identically zero. Evaluation at one proves (35.9). The same argument
+for $\operatorname{Tr}(F\mathcal W(t)\rho\mathcal W^\sharp(t))-\alpha$
+proves (35.10). Channel equality, rather than equality of unitary
+representatives, allows an irrelevant global phase without losing
+relative phases or reference correctness. Enc and Dec are mathematical
+parameters in this argument, not newly installed operations.
+
+For (35.8), the correspondence in (35.9) is
+$a=10$, $b=2^{10}$,
+$\mathrm{Enc}(X)=CXC^\dagger\otimes|\omega\rangle\langle\omega|$,
+$\mathrm{Dec}=\operatorname{Tr}_A$, and
+$\mathcal A(X)=C\mathsf JX\mathsf J^\dagger C^\dagger$.
+All three maps have algebraic matrix-unit coefficients. This supplies
+the necessary condition without discarding any actual work. More
+specifically, (35.3) forces
+
+$$
+\mathsf J(e_2f_0)
+ =\frac12(e_1f_0+e_1f_1+e_4f_0+e_4f_1).
+\tag{35.14}
+$$
+
+Here $e_2=z_H$ is in the original qutrit image $R$; no claim that it is
+an additional installed preparation is needed. Start the mathematical
+column test at the computational basis vector
+$C(e_2f_0)\otimes|\omega\rangle$. For each of the four distinct data
+modes
+$p\in\{p_{10},p_{11},p_{40},p_{41}\}$, the occupation effect
+$n_p=|1\rangle\langle1|_p$, tensored with identity on all other modes,
+must have expectation $1/4$ if (35.8) holds. Both the test input and
+these effects have algebraic entries. Formula (35.10) therefore forces
+the same four expectations to be $1/4$ for $W_0$.
+
+After removing the $P/B$ factors, the remaining word factorizes into
+one unitary on $(r,o)$ and a tensor product of one-qubit monomial
+unitaries on the other modes. This follows by commuting factors with
+disjoint supports, retaining their order on each support. On the stated
+basis input every bit outside $(r,o)$ consequently has one definite
+final value. At least two of the four distinct modes in (35.14) lie
+outside this pair. Each such mode has $W_0$ occupation expectation
+either zero or one, contradicting $1/4$. Work entanglement on the
+distinguished pair and an arbitrary final work state do not alter this
+definiteness outside the pair. This contradiction proves the asserted
+failure of (35.8). $\square$
+
+**Definition 35.5 (source correspondence and the remaining realization
+domain).** The conclusion is the finite-word restriction (35.9) consumed
+by the specific ready column (35.14). The transcendental polynomial
+evaluation principle is mature; [Environment Record Memory,
+Theorem 14.1](AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md#14-maximal-binary-growth-from-actual-integral-coordinates)
+already consumes injective evaluation for a different binary-word
+count. Exact-synthesis ring restrictions are also established tools;
+Kliuchnikov--Maslov--Mosca,
+[*Fast and efficient exact synthesis of single qubit unitaries generated
+by Clifford and T gates*, Theorem 1](https://arxiv.org/html/1206.5236v4),
+characterizes its single-qubit $H,T$ ring and supplies no $H,T$ access
+here. The source-specific implication proved above connects the literal
+actuator to this full-return consumer; it asserts no worldwide priority.
+
+The fixed factors are indispensable to the statement. They are retained
+in (35.9) even if they already realize the target. Its converse is not
+asserted: agreement at $t=1$ alone need not make (35.13) identically
+zero. A nonalgebraic fixed gate, initialization or encoder needs another
+argument. Physical permutations outside the distinguished pair change
+the class of Definition 35.3, even when their entries are algebraic and
+(35.9) still applies. A wiring description alone changes no state.
+
+The bank's address capacity and its actual source support are different
+premises. $H\ge4$ supplies at least ten bank coordinates, but at $H=4$
+an authentic source has at most $2H-1=7$ active nodes. If all ten data
+modes are required to denote active source occurrences, their existence
+must additionally be assumed or actually established for that source.
+Definition 35.3 only assumes ten distinct available physical modes; it
+does not acquire an active occurrence selector or a logical input.
+
+The full-map requirement is what permits the mathematical column test.
+It installs neither preparation of $e_2f_0$ nor measurement of $n_p$ in
+the old menu. A simulator required only on the one prepared trajectory
+or only on the effects-only terminal has a weaker contract; Theorem
+35.4 does not turn it into the full-map target. Conversely those weaker
+tasks cannot replace (35.4) when realizing the prescribed full device.
+The original sole preparation, $N$, instruments, retention contexts,
+all ten continuing output dimensions, old classical records and
+untouched references of §§106--109 remain required.
+
+The real-angle matchgate constructions in Brod--Childs,
+[*The computational power of matchgates and the XY interaction on
+arbitrary graphs*, equations (4), (6) and Theorem 1](https://arxiv.org/html/1308.1463v1),
+use their stated arbitrary-matchgate and auxiliary permissions. The
+actuator consumes their fermionic-swap matrix in §62.7, while §62.9
+executes rounded angles. Neither fact supplies an exact $\pi/2$
+dyadic-radian factor. [Coherent Reconstruction continuation,
+§§37--41](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md#37-v9-门合同可逆-nand-与完整确定信道球)
+and [Coherent Relations V10, §§14 and 17.1](AURIC_COHERENT_RELATIONS_AND_RECURSIVE_OBSERVATION_THEORY_V10.md#section-17-1)
+retain their independently addressed exact real-angle controls,
+encodings, routing and separately supplied measurement/bus contracts.
+Their constructive results are not restricted by changing their pulse
+contract to (35.1). VI §§116--117 concern finite comparisons of the
+already specified return laws; they do not synthesize the interaction.
+
+There is no acquisition or continued-use algorithm added by (35.9).
+Whenever an actual actuator word is commissioned, the source's locked
+copy, private Boolean computation, catalog construction, description
+and digit fetch, preparation, reference, holds and every retained
+auxiliary are still paid on that same execution. In the §62 carrier
+the exact coordinates remain
+
+$$
+\begin{aligned}
+E_{\rm run}&=E_C+(K+4)+G_Q+G_P+G_R,\qquad
+\mathrm{Fee}=2E_{\rm run},\\
+\mathrm{Storage}(z)&=
+ (S_0+b_{\rm ctl}(z)+8A(z)+8E_{\rm run}(z),Q(z)),\qquad
+\mathrm{Retention}=\sum_{z\text{ a logical tick}}Q(z),
+\end{aligned}
+\tag{35.15}
+$$
+
+with exactly §62.11's actual classical count $E_C$, quantum slot counts,
+constructed cells $A(z)$, control $b_{\rm ctl}(z)$, foundations $S_0$ and
+simultaneous constructed qubits $Q(z)$. An additional commissioned
+resource has its own construction and retention, not a free allowance
+in (35.15). The comparison $W_0$ is not an executed cheaper substitute
+and earns no resource saving. The retained acquisition/callability
+suppliers of §16.2 preserve their own interfaces.
+
+Theorems 60.4--60.5 and 62.10 still supply their finite-error
+approximation results. Theorem 35.4 gives no uniform positive error
+floor, efficiency claim or physical impossibility, and does not exclude
+other encodings, non-basis work states or larger fixed-gate menus. It
+does not synthesize a common native/path/quantum/continuous apparatus.
+Open problem 16.3 still requires its actual preparation, legal actions,
+selectors, references, rights, complete outputs and successors, retained
+records and simultaneous resources. Every older fixed-$G_{\rm gc}$,
+original-$Q$, parked-consumer, unchanged-initialization, original-terminal
+and final-no-Ready obligation retains its exact scope. No universal
+alpha/beta minimality or completion of the four-expression programme
+follows from this coordinate obstruction.
+
+## 追加锚（本行以下为增补区）

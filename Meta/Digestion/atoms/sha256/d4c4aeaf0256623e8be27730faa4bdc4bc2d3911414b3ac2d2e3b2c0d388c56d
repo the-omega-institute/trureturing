@@ -1,0 +1,81 @@
+**Theorem 17.3 (earned exponent and exact unknown-gap acquisition).**
+For every $h\in\mathcal H_A$ and every legal nuisance sequence,
+Construction 17.2 terminates. With $R=Q(h)+1$ used only as proof
+notation, its acquired certificate satisfies
+
+$$
+R<L,\qquad p_*<2(3R+1),\qquad d=1+\log_2p_*.
+\tag{17.3}
+$$
+
+The extracted block, recovered historical field and actual returned
+field are
+
+$$
+Y=OTx_h,\qquad
+x_h=T^{-1}DY,\qquad
+v=T^{n+1}x_h.
+\tag{17.4}
+$$
+
+Thus Theorem 4.1 recovers the unique entire $h$. The current predictor
+and autonomous block $m=Ov$ can be retained under the actual callable
+context. No bound for $Q$ is supplied, and no physical inverse occurs.
+
+Proof. Observation 3.3 shows that immediately before each historical
+birth the old field is positive; a final raw birth can leave only its
+fresh cells zero. Each such cell has a positive old neighbor. Therefore
+$z=Tx_h$ is positive everywhere, also for alpha. Induction over the
+actual historical and scout Ticks, using their integer numerator
+matrix $4\operatorname{Id}+A$, gives
+
+$$
+z_a\in8^{-R}\mathbb Z,\qquad
+z_a\ge8^{-R},\qquad
+0<z_a\le\|z\|_\infty\le\lambda^R
+\quad(a\in V_t).
+\tag{17.5}
+$$
+
+Zero extensions preserve the common denominator and do not increase
+the sup norm. These are the arithmetic inductions of Proposition 13.4
+with the present actual Tick count, not a known-$Q$ input.
+
+At any scout precision $p\ge3R+1$, the scaled terminal is at least
+two. Its lower report is therefore at least two, so every allowed
+report passes. The first power of two at least $3R+1$ is strictly
+smaller than $2(3R+1)$; hence the stopping rule and bounds for $p_*,d$
+hold on every nuisance path. At the successful Read the actual law gives
+
+$$
+2^{-p_*}\le(k_*-1)2^{-p_*}\le z_{\ell_1}\le\lambda^R.
+\tag{17.6}
+$$
+
+Indeed $\lfloor2^{p_*}z_{\ell_1}\rfloor\ge k_*-1$.
+Since $2\cdot7^6=235298<262144=8^6$, one has
+$\lambda^6<1/2$. Consequently
+$\lambda^{6p_*}<2^{-p_*}\le\lambda^R$, forcing $R<6p_*=L$.
+This finite integer calculation earns the certificate from that actual
+report. Neither an unknown exponent nor an exact-real logarithm is read.
+
+At assay epoch $r$, the actual field is $T^rz$. Its denominator divides
+$8^{R+r}$, which divides $2^M$ because $R+r<L+n$.
+Write its terminal value as $a_{r,j}/2^M$ with an integer
+$a_{r,j}\ge0$. The actual report is
+$k_{r,j}=2a_{r,j}+\zeta_{r,j}$. Formula (17.2) extracts that same
+$a_{r,j}/2^M$ for either bit. This is pointwise exact, with no averaging,
+independence or repeated-noise assumption. The executed epochs therefore
+give $Y=Oz$. The earned-tree forcing identity $DO=\operatorname{Id}$
+gives (17.4). Theorem 4.1 applies to the original known-unit,
+separated raw history after the one local inverse $T^{-1}$; its
+hypotheses have not changed. The $n+1$ real acquisition Ticks give $v$.
+The local current prediction $m=Ov$ introduces no further source Tick.
+Every loop is finite on this promised domain. $\square$
+
+The new inference is the actual report-to-exponent bridge (17.6).
+The raw inverse and rational image recognition in §4, terminal forcing
+in AAII Proposition 87.2, and even-grid extraction in §10 are reused.
+Theorem 10.2 has a supplied exponent from pure post-clock history;
+here the unknown raw exponent is earned before extraction.
+
