@@ -15,6 +15,7 @@ import D5.S3.Quantum.QuantumChannels.NoisyWernerHolevoLindbladEmbedding
 import D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitMaximumPurity
 import D5.S3.QuantumBounds.PeritoTsirelson
+import D5.S3.Observer.Existence.EmpiricalReflexiveSeparation
 
 /-! A fixed qutrit counterexample to the higher-dimensional divisibility claim. -/
 
@@ -31,6 +32,7 @@ open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsCPTP)
 open D5.S3.Quantum.QuantumChannels.NoisyWernerHolevoLindbladEmbedding (wernerHolevo)
 open D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound (depolarized)
 open D5.S3.QuantumBounds.PeritoTsirelson (maxEntangled maxEntangledVector max_entangled_density)
+open D5.S3.Observer.Existence.EmpiricalReflexiveSeparation (complex_sqrt_two_sq)
 
 namespace D5.S3.QuantumChannels.QutritDivisibilityEntanglementBreakingRefutation
 
@@ -52,11 +54,14 @@ private noncomputable def transferMatrix (T : MatrixMap (Fin 3) (Fin 3) ℂ) :=
   LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin 3) (Fin 3))
     (Matrix.stdBasis ℂ (Fin 3) (Fin 3)) T
 
+/-- P-divisible dynamics allowing a positive trace-preserving propagator on either side.
+The formal class contains the source's P-divisible maps under either composition order. -/
 def IsPDivisibleMap (e : ℝ → MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
   e 0 = LinearMap.id ∧
     (∀ t, 0 ≤ t → IsCPTP (e t)) ∧
     ContinuousOn (fun t => transferMatrix (e t)) (Set.Ici (0 : ℝ)) ∧
-    (∀ t s, 0 ≤ t → t < s → ∃ v, IsPositiveTP v ∧ e s = v.comp (e t))
+    (∀ t s, 0 ≤ t → t < s → ∃ v, IsPositiveTP v ∧
+      (e s = v.comp (e t) ∨ e s = (e t).comp v))
 
 def pDivisibleSet : Set (MatrixMap (Fin 3) (Fin 3) ℂ) :=
   {T | transferMatrix T ∈ closure {M | ∃ E, IsPDivisibleMap E ∧ ∃ t, 0 ≤ t ∧
@@ -87,18 +92,6 @@ private def dk : Fin 10 → Matrix (Fin 3) (Fin 3) ℂ := ![
   (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single 2 1 1,
   (Real.sqrt 6 : ℂ)⁻¹ • Matrix.single 2 2 1]
 
-private lemma sqrt2_inv_sq : (Real.sqrt 2 : ℂ)⁻¹ ^ 2 = (1 / 2 : ℂ) := by
-  have h : (Real.sqrt 2 : ℂ) ^ 2 = (2 : ℂ) := by
-    exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
-  rw [inv_pow, h]
-  norm_num
-
-private lemma sqrt2_sq : (Real.sqrt 2 : ℂ) ^ 2 = (2 : ℂ) := by
-  exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
-
-private lemma sqrt6_sq : (Real.sqrt 6 : ℂ) ^ 2 = (6 : ℂ) := by
-  exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 6 by norm_num)
-
 private lemma sqrt6_inv_sq : (Real.sqrt 6 : ℂ)⁻¹ ^ 2 = (1 / 6 : ℂ) := by
   have h : (Real.sqrt 6 : ℂ) ^ 2 = (6 : ℂ) := by
     exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 6 by norm_num)
@@ -107,6 +100,8 @@ private lemma sqrt6_inv_sq : (Real.sqrt 6 : ℂ)⁻¹ ^ 2 = (1 / 6 : ℂ) := by
 
 private lemma wernerHolevo_one_eq_kraus :
     wernerHolevo 1 = MatrixMap.of_kraus wk wk := by
+  have h2Inv : (Real.sqrt 2 : ℂ)⁻¹ ^ 2 = (1 / 2 : ℂ) := by
+    rw [inv_pow, complex_sqrt_two_sq]; norm_num
   symm
   ext X i j
   simp [MatrixMap.of_kraus, Matrix.mul_apply, Matrix.conjTranspose_apply,
@@ -116,11 +111,13 @@ private lemma wernerHolevo_one_eq_kraus :
   fin_cases i <;> fin_cases j <;>
     norm_num [Matrix.single, Matrix.one_apply, Matrix.mul_apply,
       Matrix.conjTranspose_apply, Fin.sum_univ_three] <;>
-    ring_nf <;> simp only [sqrt2_inv_sq] <;> ring
+    ring_nf <;> simp only [h2Inv] <;> ring
 
 private lemma depolarized_one_eq_kraus :
     depolarized (LinearMap.id : MatrixMap (Fin 3) (Fin 3) ℂ) (1 / 2) =
       MatrixMap.of_kraus dk dk := by
+  have h2Inv : (Real.sqrt 2 : ℂ)⁻¹ ^ 2 = (1 / 2 : ℂ) := by
+    rw [inv_pow, complex_sqrt_two_sq]; norm_num
   symm
   ext X i j
   simp [MatrixMap.of_kraus, Matrix.mul_apply, Matrix.conjTranspose_apply,
@@ -129,7 +126,7 @@ private lemma depolarized_one_eq_kraus :
   fin_cases i <;> fin_cases j <;>
     norm_num [Matrix.single, Matrix.one_apply, Matrix.mul_apply,
       Matrix.conjTranspose_apply, Fin.sum_univ_succ] <;>
-    ring_nf <;> simp only [sqrt2_inv_sq, sqrt6_inv_sq] <;> ring
+    ring_nf <;> simp only [h2Inv, sqrt6_inv_sq] <;> ring
 
 private def t : MatrixMap (Fin 3) (Fin 3) ℂ :=
   (depolarized (LinearMap.id : MatrixMap (Fin 3) (Fin 3) ℂ) (1 / 2)).comp
@@ -167,15 +164,17 @@ private lemma wk_complete : (∑ r, (wk r).conjTranspose * wk r) =
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [wk, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.single,
-      Fin.sum_univ_three] <;> ring_nf <;> simp [sqrt2_sq] <;> norm_num
+      Fin.sum_univ_three] <;> ring_nf <;> simp [complex_sqrt_two_sq] <;> norm_num
 
 private lemma dk_complete : (∑ r, (dk r).conjTranspose * dk r) =
     (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
+  have h6Sq : (Real.sqrt 6 : ℂ) ^ 2 = (6 : ℂ) := by
+    exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 6 by norm_num)
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [dk, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.single,
       Fin.sum_univ_succ] <;> ring_nf <;>
-    simp [sqrt2_sq, sqrt6_sq] <;> norm_num
+    simp [complex_sqrt_two_sq, h6Sq] <;> norm_num
 
 private lemma w_cptp : IsCPTP (wernerHolevo 1) := by
   rw [wernerHolevo_one_eq_kraus]
@@ -360,12 +359,21 @@ private lemma pdivisible_endpoint_det_nonneg {E : ℝ → MatrixMap (Fin 3) (Fin
     subst z
     linarith
   obtain ⟨v, hv, hcomp⟩ := hE.2.2.2 z u hz.1 hzu
-  have hcompM : transferMatrix (E u) =
-      transferMatrix v * transferMatrix (E z) := by
-    rw [hcomp]
-    exact LinearMap.toMatrix_comp _ _ _ _ _
+  have hdetcomp : Matrix.det (transferMatrix (E u)) =
+      Matrix.det (transferMatrix v) * Matrix.det (transferMatrix (E z)) := by
+    rcases hcomp with hcomp | hcomp
+    · have hcompM : transferMatrix (E u) =
+          transferMatrix v * transferMatrix (E z) := by
+        rw [hcomp]
+        exact LinearMap.toMatrix_comp _ _ _ _ _
+      rw [hcompM, Matrix.det_mul]
+    · have hcompM : transferMatrix (E u) =
+          transferMatrix (E z) * transferMatrix v := by
+        rw [hcomp]
+        exact LinearMap.toMatrix_comp _ _ _ _ _
+      rw [hcompM, Matrix.det_mul, mul_comm]
   have hdetu : Matrix.det (transferMatrix (E u)) = 0 := by
-    rw [hcompM, Matrix.det_mul, hzdet, mul_zero]
+    rw [hdetcomp, hzdet, mul_zero]
   have : f u = 0 := by
     simpa [f, hdetu]
   linarith
