@@ -11,6 +11,8 @@ import Mathlib.Logic.Equiv.List
 import Mathlib.Data.List.GetD
 import Mathlib.Data.List.OfFn
 
+/-! Natural valuations and the original-symbol Parikh vectors of contiguous factors. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -68,7 +70,10 @@ private theorem boundary_strict : StrictMono boundary := by
 private theorem boundary_ge (k : ℕ) : k ≤ boundary k := by
   induction k with
   | zero => simp [boundary]
-  | succ k ih => have := boundary_strict (Nat.lt_succ_self k); omega
+  | succ k ih =>
+    have := boundary_strict (Nat.lt_succ_self k)
+    simp only [Nat.succ_eq_add_one] at *
+    omega
 
 private theorem has_boundary (i : ℕ) : ∃ k, i < boundary (k + 1) :=
   ⟨i, lt_of_lt_of_le (Nat.lt_succ_self i) (boundary_ge (i + 1))⟩
@@ -82,7 +87,7 @@ def universalWord (i : ℕ) : Fin 3 :=
 private theorem universalWord_at (k j : ℕ) (hj : j < (block k).length) :
     universalWord (boundary k + j) = (block k).getD j 0 := by
   have hfind : Nat.find (has_boundary (boundary k + j)) = k := by
-    apply Nat.find_eq_iff.mpr
+    apply (Nat.find_eq_iff _).mpr
     constructor
     · simp only [boundary]; omega
     · intro m hm
@@ -100,7 +105,7 @@ private theorem universal_occurrence (u : List (Fin 3)) :
   · intro j h₁ h₂
     simp only [List.getElem_ofFn, wordFactor]
     rw [universalWord_at k j (by simp [hb]; omega), hb]
-    simp [List.getD_eq_getElem, h₂]
+    rw [List.getD_eq_getElem _ _ (by simp; omega), List.getElem_append_left h₂]
 
 private theorem sum_eq_weighted {A : Type*} [Fintype A] (v : A → ℕ) (u : List A) :
     (u.map v).sum = weightedSum v (parikh u) := by
@@ -110,7 +115,7 @@ private theorem sum_eq_weighted {A : Type*} [Fintype A] (v : A → ℕ) (u : Lis
   | cons a u ih =>
     simp only [List.map_cons, List.sum_cons, ih]
     simp only [weightedSum, parikh, List.count_cons, mul_add, Finset.sum_add_distrib]
-    simp
+    simp [Nat.add_comm]
 
 private theorem sums_image {A : Type*} [Fintype A] (w : ℕ → A) (v : A → ℕ) (n : ℕ) :
     sumSet w v n = (parikhSet w n).image (weightedSum v) := by
@@ -132,10 +137,12 @@ private def runs (a b c : ℕ) : List (Fin 3) :=
 private theorem runs_parikh (a b c : ℕ) : parikh (runs a b c) = ![a,b,c] := by
   classical
   funext i
-  fin_cases i <;> simp [parikh, runs]
+  fin_cases i <;>
+    simp only [parikh, runs, List.count_append, List.count_replicate, beq_iff_eq]
+    <;> norm_num
 
 private theorem runs_length (a b c : ℕ) : (runs a b c).length = a + b + c := by
-  simp [runs]
+  simp [runs, Nat.add_assoc]
 
 private theorem collision (v : Fin 3 → ℕ) :
     ∃ n, 0 < n ∧ ∃ p ∈ parikhSet universalWord n,
@@ -160,18 +167,20 @@ private theorem collision (v : Fin 3 → ℕ) :
       exact h ⟨by change a = b; omega, by change b = c; omega⟩
     refine ⟨a + b + c, hpos, parikh (runs b c a), ?_,
       parikh (runs c a b), ?_, ?_, ?_⟩
-    · convert parikh_occurs (runs b c a) using 1 <;> simp [runs_length] <;> omega
-    · convert parikh_occurs (runs c a b) using 1 <;> simp [runs_length] <;> omega
+    · rw [← show (runs b c a).length = a + b + c from by rw [runs_length]; omega]
+      exact parikh_occurs (runs b c a)
+    · rw [← show (runs c a b).length = a + b + c from by rw [runs_length]; omega]
+      exact parikh_occurs (runs c a b)
     · rw [runs_parikh, runs_parikh]
       intro hp
       have h₀ := congrFun hp 0
       have h₁ := congrFun hp 1
       simp only [Matrix.cons_val_zero, Matrix.cons_val_one] at h₀ h₁
       apply h
-      constructor <;> change _ = _ <;> dsimp [a,b,c] at * <;> omega
+      constructor <;> dsimp [a,b,c] at * <;> omega
     · rw [runs_parikh, runs_parikh]
       simp [weightedSum, Fin.sum_univ_three, a, b, c]
-      <;> ring
+      ring
 
 private theorem universal_failure (v : Fin 3 → ℕ) :
     ∃ n, 0 < n ∧ additiveComplexity universalWord v n < abelianComplexity universalWord n := by
@@ -181,7 +190,7 @@ private theorem universal_failure (v : Fin 3 → ℕ) :
   rw [additiveComplexity, abelianComplexity, sums_image]
   apply lt_of_le_of_ne (Finset.card_image_le) ?_
   intro he
-  have hinj := Finset.card_image_iff.mp he.symm
+  have hinj := Finset.card_image_iff.mp he
   exact hne (hinj hp hq heq)
 
 /-- Popoli--Shallit--Stipulanti Question 31 has a negative answer in its full generality. -/
