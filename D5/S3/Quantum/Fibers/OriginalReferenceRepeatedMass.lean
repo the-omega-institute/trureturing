@@ -16,13 +16,6 @@ namespace D5.S3.Quantum.Fibers.OriginalReferenceRepeatedMass
 open OriginalControlMarkedJump OriginalReferenceKraus OriginalReferenceOutputMeasure
 open OriginalRepeatedPrefix OriginalControlComposition OriginalMarkedConcatenation
 
-private theorem native_bounds (c T : ℝ) (k : ℝ → ℝ)
-    (hk : OriginalControl (c, c, 1 - 2*c) T k (fun _ => (0 : ℝ)))
-    (t : ℝ) (ht : t ∈ uIcc 0 T) : k t ∈ Ioo 0 c := by
-  have hl : FiniteRectangleTransport.lower (c, c, 1 - 2*c)=0 := by
-    dsimp [FiniteRectangleTransport.lower]; ring_nf; simp
-  simpa [hl,FiniteRectangleTransport.upper] using hk.2.2.2.1 t ht
-
 private theorem survival_ac (c T : ℝ) (k : ℝ → ℝ)
     (hk : OriginalControl (c, c, 1 - 2*c) T k (fun _ => (0 : ℝ))) :
     AbsolutelyContinuousOnInterval (survival c k) 0 T := by
@@ -51,22 +44,14 @@ private theorem probability_ac (c T : ℝ) (k : ℝ → ℝ)
   · exact (hc c).sub hk
   · simpa using hk
 
-private theorem probability_deriv (c : ℝ) (k : ℝ → ℝ) (t : ℝ)
-    (hd : DifferentiableAt ℝ k t) (i : Fin 5) :
-    HasDerivAt (fun u => p c (k u) i)
-      (![1,-1,0,-1,1] i * deriv k t) t := by
-  simp only [p_explicit]
-  fin_cases i
-  · simpa using hd.hasDerivAt
-  · simpa using hd.hasDerivAt.const_sub c
-  · simpa using hasDerivAt_const t (1 - 2*c)
-  · simpa using hd.hasDerivAt.const_sub c
-  · simpa using hd.hasDerivAt
-
 private theorem rate_nonneg (c : ℝ) (k : ℝ → ℝ) (t : ℝ)
     (hc : c < 1 / 2) (hb : k t ∈ Ioo 0 c) (hd : DifferentiableAt ℝ k t)
     (i : Fin 5) : 0 ≤ jumpRate c k t i := by
-  have hp := probability_deriv c k t hd i
+  have hp : HasDerivAt (fun u => p c (k u) i)
+      (![1,-1,0,-1,1] i * deriv k t) t := by
+    simpa [p, FiniteRectangleTransport.direction] using
+      (FiniteRectangleTransport.probability_derivative
+        (c, c, 1 - 2*c) k (deriv k t) t hd.hasDerivAt i)
   rw [jumpRate,(hp.log (p_pos c (k t) hc hb i).ne').deriv]
   have h0 : 0 ≤ max (deriv k t) 0 := le_max_right _ _
   have h1 : 0 ≤ max (-deriv k t) 0 := le_max_right _ _
@@ -93,9 +78,15 @@ private theorem native_coefficient_deriv (c a T : ℝ) (k : ℝ → ℝ)
   have hi := hazard_integrable c T 0 k hk
   filter_upwards [(original_ac _ _ _ _ hk).1.ae_differentiableAt,
     hi.ae_hasDerivAt_integral] with t hkt hIt ht
-  have hb := native_bounds c T k hk t ht
+  have ht' : t ∈ Icc 0 T := by
+    simpa only [uIcc_of_le hk.1] using ht
+  have hb := OriginalRepeatedMarkedLaw.native_bounds c T 0 k hk t ht'
   have hd := hkt ht
-  have hp := probability_deriv c k t hd i
+  have hp : HasDerivAt (fun u => p c (k u) i)
+      (![1,-1,0,-1,1] i * deriv k t) t := by
+    simpa [p, FiniteRectangleTransport.direction] using
+      (FiniteRectangleTransport.probability_derivative
+        (c, c, 1 - 2*c) k (deriv k t) t hd.hasDerivAt i)
   have hS : HasDerivAt (survival c k)
       (survival c k t * (-hazard c k t)) t :=
     (hIt ht 0 (by simp)).neg.exp

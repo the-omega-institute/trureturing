@@ -63,7 +63,7 @@ private theorem raw_density (c a k S beta : ℝ) (m : ℤ) (theta : Fin 5 → �
     source_diagonal c a beta m theta hc ha]
   field_simp [(p_pos c a hc ha i).ne']
 
-private theorem native_bounds (c U chi : ℝ) (k : ℝ → ℝ)
+theorem native_bounds (c U chi : ℝ) (k : ℝ → ℝ)
     (hk : OriginalControl (c,c,1-2*c) U k (fun _ => chi))
     (t : ℝ) (ht : t ∈ Icc 0 U) : k t ∈ Ioo 0 c := by
   have hl : FiniteRectangleTransport.lower (c,c,1-2*c)=0 := by
