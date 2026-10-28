@@ -8,7 +8,6 @@
 
 import Mathlib.NumberTheory.FrobeniusNumber
 import Mathlib.NumberTheory.Real.GoldenRatio
-import Mathlib.Tactic
 
 /-!
 Mbirika--Spilker, arXiv:2204.12626v2, Section 6.1, Question 6.2.
