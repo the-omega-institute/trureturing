@@ -33,7 +33,11 @@ internal sealed class HadamardTruncatedBinomialLimitDocument : IScribeDocumentDe
         string prose, DescribeRole role, AssessedProvenance provenance) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(declaration), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            declaration == "result"
+                ? new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ulg398064"), ResolutionKind.Proved)
+                : null);
 
     private static Formula HadamardBody(Formula h)
     {

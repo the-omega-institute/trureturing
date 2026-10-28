@@ -46,6 +46,10 @@ $$(\exists H \in (\mathbb{C}\to\mathbb{C}),\; \operatorname{IsHadamard}\left(H\r
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/HadamardTruncatedBinomialLimit.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ulg398064` (proved) by `D5/S3/Weil/ZetaGamma/HadamardTruncatedBinomialLimit.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ulg398064","declaration_gid":"D5/S3/Weil/ZetaGamma/HadamardTruncatedBinomialLimit.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* David Ulgenes (2026). *OEIS A398064, truncated-binomial limit for Hadamard's Gamma function*. URL: <https://oeis.org/A398064>.
