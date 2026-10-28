@@ -700,6 +700,54 @@ private theorem abs_canonical (i : Fin 3) :
   rw [abs_crossProduct]
   simp only [if_neg hb, hn, Complex.ofReal_one, inv_one, one_smul, hv]
 
+set_option maxRecDepth 2048 in
+set_option maxHeartbeats 4000000 in
+private theorem bayes_pair_trace (i j : Fin 3) :
+    (absMat (rotationKraus j * absMat (canonicalKraus i))).trace.re =
+      (1 + |(rotationVector j i).re|) / 2 := by
+  let p : Matrix (Fin 3) (Fin 3) ℂ := 1 - Matrix.single i i 1
+  let b := crossProduct (rotationVector j) * p
+  let s : ℝ := |(rotationVector j i).re|
+  let root : Matrix (Fin 3) (Fin 3) ℂ :=
+    (s / (2 * (1 + s))) • p + (1 / (2 * (1 + s))) • (bᴴ * b)
+  have hp : p.PosSemidef := by
+    have he : pᴴ * p = p := by
+      simp [p, sub_mul, mul_sub]
+    rw [← he]
+    exact Matrix.posSemidef_conjTranspose_mul_self p
+  have hsn : 0 ≤ s := abs_nonneg _
+  have hpos : root.PosSemidef := by
+    exact (hp.smul (show (0 : ℝ) ≤ s / (2 * (1 + s)) by positivity)).add
+      ((Matrix.posSemidef_conjTranspose_mul_self b).smul
+        (show (0 : ℝ) ≤ 1 / (2 * (1 + s)) by positivity))
+  have hsq : root * root = ((1 / 2 : ℂ) • b)ᴴ * ((1 / 2 : ℂ) • b) := by
+    ext a c
+    fin_cases i <;> fin_cases j <;> fin_cases a <;> fin_cases c <;>
+      norm_num [root, b, p, s, rotationVector, crossProduct, Matrix.mul_apply,
+        Matrix.conjTranspose_apply, Matrix.single_apply, Matrix.one_apply, Fin.sum_univ_succ,
+        Complex.real_smul, Complex.ext_iff, Complex.mul_re, Complex.mul_im,
+        Complex.div_re, Complex.div_im, Complex.normSq_apply]
+  have ht : root.trace.re = (1 + s) / 2 := by
+    change (∑ k, root k k).re = (1 + s) / 2
+    fin_cases i <;> fin_cases j <;>
+      norm_num [root, b, p, s, rotationVector, crossProduct, Matrix.mul_apply,
+        Matrix.conjTranspose_apply, Matrix.single_apply, Matrix.one_apply, Fin.sum_univ_succ,
+        Complex.real_smul, Complex.mul_re, Complex.mul_im,
+        Complex.div_re, Complex.div_im, Complex.normSq_apply]
+  have hs : (Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹ = (1 / 2 : ℂ) := by
+    have hn : (Real.sqrt 2 : ℂ) ≠ 0 := by norm_num
+    field_simp [hn]
+    norm_num [pow_two, Complex.ext_iff, Complex.mul_re, Complex.mul_im,
+      Complex.ofReal_re, Complex.ofReal_im, Real.sq_sqrt]
+  have hm : rotationKraus j * absMat (canonicalKraus i) = (1 / 2 : ℂ) • b := by
+    rw [abs_canonical]
+    simp only [rotationKraus, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
+    change ((Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹) • b = (1 / 2 : ℂ) • b
+    rw [hs]
+  have hr : absMat ((1 / 2 : ℂ) • b) = root := CFC.sqrt_unique hsq hpos.nonneg
+  rw [hm, hr]
+  exact ht
+
 private theorem bayesian_witness : 1 / 2 < bayesFidelity canonicalKraus rotationKraus := by
   sorry
 
