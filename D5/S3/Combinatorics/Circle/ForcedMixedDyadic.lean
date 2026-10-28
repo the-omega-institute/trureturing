@@ -59,7 +59,7 @@ private theorem count_card (r : ℕ) (L : List (Fin (4 * r))) (hn : L.Nodup)
     ext i
     simp
   rw [he, List.toFinset_card_of_nodup (hn.filter _)]
-  rfl
+  exact List.length_filter _ _
 
 private theorem four_sums (r : ℕ) (W : List (Fin (4 * r))) :
     mass (scaled 4 r) W =
@@ -256,9 +256,9 @@ theorem forced_mixed_of_counts (r : ℕ) (hr : 3 ≤ r)
   have hbal : H (4 * r) (unit 4 r) V + count r R 2 * 3 ^ (4 * unit 4 r) +
       count r R 3 * 3 ^ (7 * unit 4 r) = H (4 * r) (unit 4 r) W +
       count r I 2 * 3 ^ (4 * unit 4 r) + count r I 3 * 3 ^ (7 * unit 4 r) := by
-    have he := (hperm.map (energyWeight (4 * r) (unit 4 r))).sum_eq
-    change H (4 * r) (unit 4 r) V + H (4 * r) (unit 4 r) R =
-      H (4 * r) (unit 4 r) W + H (4 * r) (unit 4 r) I at he
+    have he : H (4 * r) (unit 4 r) V + H (4 * r) (unit 4 r) R =
+        H (4 * r) (unit 4 r) W + H (4 * r) (unit 4 r) I := by
+      simpa [H, mass] using (hperm.map (energyWeight (4 * r) (unit 4 r))).sum_eq
     simpa [four_energy r (by omega), add_assoc] using he
   have hubal : U V + count r I 2 + count r I 3 + count r I 1 =
       5 + count r R 2 + count r R 3 + count r R 0 + count r R 1 := by
@@ -294,8 +294,12 @@ theorem forced_mixed_of_counts (r : ℕ) (hr : 3 ≤ r)
   have hne : e ≠ z := by intro h; subst z; omega
   refine ⟨e, z, hne, ?_, ?_, ?_⟩
   · have hsub : {e, z} ⊆ V.toFinset \ W.toFinset := by
-      apply Finset.pair_subset.mpr
-      exact ⟨Finset.mem_toList.mp heI, Finset.mem_toList.mp hzI⟩
+      intro x hx
+      rcases Finset.mem_insert.mp hx with rfl | hx
+      · exact Finset.mem_toList.mp heI
+      · have hx' := Finset.mem_singleton.mp hx
+        subst x
+        exact Finset.mem_toList.mp hzI
     exact (Finset.eq_of_subset_of_card_le hsub (by simpa [hne] using fresh)).symm
   · rw [source_values 4 r (by decide) (by omega)]
     change (unit 4 r : ℤ) * value 4 (exponent 4 r e) = _
