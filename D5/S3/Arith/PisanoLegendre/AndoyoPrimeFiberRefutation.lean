@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Arith/PisanoLegendre/AndoyoPrimeFiberRefutation
    mirror-E: none(waiver:symbolic-external-open-problem-refutation)
-   anchors: [andoyo2026pisanolegendrecollision]
+   anchors: []
    utility: none
    digest: Andoyo Question 5.2 fails: seeds (0,3) have exact odd-prime fiber {3} at -1. -/
 
