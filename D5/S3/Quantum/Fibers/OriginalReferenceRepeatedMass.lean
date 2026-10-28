@@ -905,4 +905,5 @@ theorem repeated_operational_supremum (B : Band) (n : ℕ) (hn : 1 ≤ n) :
     rw [hop]
     exact (OriginalRepeatedMarkedLaw.native_marked_tv B n hn beta m theta).2.2.2
 
+
 end D5.S3.Quantum.Fibers.OriginalReferenceRepeatedMass
