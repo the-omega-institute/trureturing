@@ -30,9 +30,9 @@ private structure Block where
   V : Type
   finite : Fintype V
   eqDec : DecidableEq V
-  graph : SimpleGraph V
-  adjDec : DecidableRel graph.Adj
-  noIsolated : ∀ v, ∃ w, graph.Adj v w
+  blockGraph : SimpleGraph V
+  adjDec : DecidableRel blockGraph.Adj
+  noIsolated : ∀ v, ∃ w, blockGraph.Adj v w
 
 attribute [instance] Block.finite Block.eqDec Block.adjDec
 
@@ -40,7 +40,7 @@ private def sum (A B : Block) : Block where
   V := A.V ⊕ B.V
   finite := inferInstance
   eqDec := inferInstance
-  graph := A.graph ⊕g B.graph
+  blockGraph := A.blockGraph ⊕g B.blockGraph
   adjDec := inferInstance
   noIsolated := by
     intro v
@@ -52,7 +52,7 @@ private def empty : Block where
   V := Fin 0
   finite := inferInstance
   eqDec := inferInstance
-  graph := ⊥
+  blockGraph := ⊥
   adjDec := inferInstance
   noIsolated := fun v => Fin.elim0 v
 
@@ -64,7 +64,7 @@ private def complete (r : ℕ) : Block where
   V := Fin (r + 2)
   finite := inferInstance
   eqDec := inferInstance
-  graph := ⊤
+  blockGraph := ⊤
   adjDec := inferInstance
   noIsolated := by
     intro v
@@ -76,25 +76,25 @@ private def oct : Block where
   V := Fin 3 × Fin 2
   finite := inferInstance
   eqDec := inferInstance
-  graph := octahedron
+  blockGraph := octahedron
   adjDec := inferInstance
   noIsolated := octahedron_block.2.2.2
 
 private theorem copies_metrics (A : Block) (n : ℕ) :
     Fintype.card (copies A n).V = n * Fintype.card A.V ∧
-    (minimalForts (copies A n).graph).card = n * (minimalForts A.graph).card ∧
-    (rootedChoices (copies A n).graph).card = (rootedChoices A.graph).card ^ n := by
+    (minimalForts (copies A n).blockGraph).card = n * (minimalForts A.blockGraph).card ∧
+    (rootedChoices (copies A n).blockGraph).card = (rootedChoices A.blockGraph).card ^ n := by
   induction n with
   | zero =>
     change Fintype.card (Fin 0) = 0 * Fintype.card A.V ∧
-      (minimalForts (⊥ : SimpleGraph (Fin 0))).card = 0 * (minimalForts A.graph).card ∧
-      (rootedChoices (⊥ : SimpleGraph (Fin 0))).card = (rootedChoices A.graph).card ^ 0
+      (minimalForts (⊥ : SimpleGraph (Fin 0))).card = 0 * (minimalForts A.blockGraph).card ∧
+      (rootedChoices (⊥ : SimpleGraph (Fin 0))).card = (rootedChoices A.blockGraph).card ^ 0
     norm_num
     decide +kernel
   | succ n ih =>
     change Fintype.card (A.V ⊕ (copies A n).V) = _ ∧
-      (minimalForts (A.graph ⊕g (copies A n).graph)).card = _ ∧
-      (rootedChoices (A.graph ⊕g (copies A n).graph)).card = _
+      (minimalForts (A.blockGraph ⊕g (copies A n).blockGraph)).card = _ ∧
+      (rootedChoices (A.blockGraph ⊕g (copies A n).blockGraph)).card = _
     rw [Fintype.card_sum, minimalFort_sum_count,
       rootedChoices_sum_count _ _ A.noIsolated (copies A n).noIsolated,
       ih.1, ih.2.1, ih.2.2]
@@ -106,8 +106,8 @@ private theorem copies_metrics (A : Block) (n : ℕ) :
 
 private theorem complete_metrics (r : ℕ) :
     Fintype.card (complete r).V = r + 2 ∧
-    (minimalForts (complete r).graph).card = (r + 2).choose 2 ∧
-    (rootedChoices (complete r).graph).card = r + 2 := by
+    (minimalForts (complete r).blockGraph).card = (r + 2).choose 2 ∧
+    (rootedChoices (complete r).blockGraph).card = r + 2 := by
   haveI : Nontrivial (Fin (r + 2)) := Fin.nontrivial_iff_two_le.mpr (by omega)
   refine ⟨Fintype.card_fin _, ?_, ?_⟩
   · convert (complete_block (V := Fin (r + 2))).2 using 1 <;> try simp only [Fintype.card_fin]
@@ -116,12 +116,12 @@ private theorem complete_metrics (r : ℕ) :
     congr 3
 
 private theorem sum_metrics (A B : Block) :
-    (minimalForts (sum A B).graph).card = (minimalForts A.graph).card + (minimalForts B.graph).card ∧
-    (rootedChoices (sum A B).graph).card = (rootedChoices A.graph).card * (rootedChoices B.graph).card := by
+    (minimalForts (sum A B).blockGraph).card = (minimalForts A.blockGraph).card + (minimalForts B.blockGraph).card ∧
+    (rootedChoices (sum A B).blockGraph).card = (rootedChoices A.blockGraph).card * (rootedChoices B.blockGraph).card := by
   constructor
-  · convert (minimalFort_sum_count A.graph B.graph) using 1
+  · convert (minimalFort_sum_count A.blockGraph B.blockGraph) using 1
     congr 3
-  · convert (rootedChoices_sum_count A.graph B.graph A.noIsolated B.noIsolated) using 1
+  · convert (rootedChoices_sum_count A.blockGraph B.blockGraph A.noIsolated B.noIsolated) using 1
     congr 3
 
 private def base (x y z r : ℕ) : Block :=
@@ -135,10 +135,10 @@ instance (x y z r : ℕ) : Fintype (Vertex x y z r) := inferInstanceAs (Fintype 
 instance (x y z r : ℕ) : DecidableEq (Vertex x y z r) := inferInstanceAs (DecidableEq (Option _))
 
 /-- The cone over x complete six-blocks, 2y triangles, z octahedra and one K_(r+2). -/
-def graph (x y z r : ℕ) : SimpleGraph (Vertex x y z r) := cone (base x y z r).graph
+def graph (x y z r : ℕ) : SimpleGraph (Vertex x y z r) := cone (base x y z r).blockGraph
 
 instance (x y z r : ℕ) : DecidableRel (graph x y z r).Adj :=
-  inferInstanceAs (DecidableRel (cone (base x y z r).graph).Adj)
+  inferInstanceAs (DecidableRel (cone (base x y z r).blockGraph).Adj)
 
 /-- Exact order, connectedness, and the count of every actual minimal fort. -/
 theorem mixed_graph_count (x y z r : ℕ) :
@@ -152,8 +152,8 @@ theorem mixed_graph_count (x y z r : ℕ) :
   have hc4 := complete_metrics 4
   have hc1 := complete_metrics 1
   have hcr := complete_metrics r
-  have ho : Fintype.card oct.V = 6 ∧ (minimalForts oct.graph).card = 11 ∧
-      (rootedChoices oct.graph).card = 12 :=
+  have ho : Fintype.card oct.V = 6 ∧ (minimalForts oct.blockGraph).card = 11 ∧
+      (rootedChoices oct.blockGraph).card = 12 :=
     ⟨octahedron_block.1, octahedron_block.2.1, octahedron_block.2.2.1⟩
   refine ⟨?_, cone_connected _, ?_⟩
   · change Fintype.card (Option ((copies (complete 4) x).V ⊕
@@ -161,12 +161,12 @@ theorem mixed_graph_count (x y z r : ℕ) :
     simp only [Fintype.card_option, Fintype.card_sum, hx.1, hy.1, hz.1,
       hc4.1, hc1.1, ho.1, hcr.1]
     omega
-  · change (minimalForts (cone (base x y z r).graph)).card = _
+  · change (minimalForts (cone (base x y z r).blockGraph)).card = _
     rw [cone_minimalFort_count _ (base x y z r).noIsolated]
     change (minimalForts (sum (copies (complete 4) x)
-      (sum (copies (complete 1) (2 * y)) (sum (copies oct z) (complete r)))).graph).card +
+      (sum (copies (complete 1) (2 * y)) (sum (copies oct z) (complete r)))).blockGraph).card +
       (rootedChoices (sum (copies (complete 4) x)
-      (sum (copies (complete 1) (2 * y)) (sum (copies oct z) (complete r)))).graph).card = _
+      (sum (copies (complete 1) (2 * y)) (sum (copies oct z) (complete r)))).blockGraph).card = _
     rw [(sum_metrics _ _).1, (sum_metrics _ _).2,
       (sum_metrics (copies (complete 1) (2 * y)) _).1,
       (sum_metrics (copies (complete 1) (2 * y)) _).2,
