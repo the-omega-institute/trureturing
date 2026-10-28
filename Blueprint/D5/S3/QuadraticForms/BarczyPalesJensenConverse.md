@@ -26,6 +26,10 @@ $$\neg (\forall n \in \mathbb{N},\; 0 < n \Rightarrow \left(\forall I \in \opera
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/BarczyPalesJensenConverse.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/barczy-2025-unrestricted-jensen-converse` (refuted) by `D5/S3/QuadraticForms/BarczyPalesJensenConverse.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"barczy-2025-unrestricted-jensen-converse","declaration_gid":"D5/S3/QuadraticForms/BarczyPalesJensenConverse.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mátyás Barczy; Zsolt Páles (2025). *Jensen convex functions and doubly stochastic matrices*. URL: <https://arxiv.org/abs/2510.03715v1>.
