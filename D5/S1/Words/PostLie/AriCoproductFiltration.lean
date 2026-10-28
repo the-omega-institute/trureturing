@@ -92,14 +92,40 @@ def pairing : H →ₗ[ℚ] H →ₗ[ℚ] ℚ :=
   wordBasis.constr ℚ fun A =>
     (Finsupp.lapply A).comp (MonoidAlgebra.coeffLinearEquiv ℚ).toLinearMap
 
-private theorem pairing_basis (w : Word) (P : H) : pairing (wordBasis w) P = P.coeff w := by
+/-- Pairing with a basis word extracts its ordinary coefficient, for every polynomial. -/
+theorem pairing_basis (w : Word) (P : H) : pairing (wordBasis w) P = P.coeff w := by
   simp [pairing]
 
-/-- The ordinary transpose characterization from Definition 1.20 and Remark 1.22,
-using the original primitive-unshuffle product and every pair of word coordinates. -/
+/-- The ordinary tensor pairing, bilinear in its two polynomial factors.
+On a simple tensor it is the product of the two ordinary word pairings. -/
+def tensorPairing : H →ₗ[ℚ] H →ₗ[ℚ] (H ⊗[ℚ] H) →ₗ[ℚ] ℚ :=
+  LinearMap.mk₂ ℚ
+    (fun P Q => TensorProduct.lift ((pairing P).smulRight (pairing Q)))
+    (by intro P P' Q; ext U V; simp [add_mul])
+    (by intro c P Q; ext U V; simp [mul_assoc])
+    (by intro P Q Q'; ext U V; simp [mul_add])
+    (by intro c P Q; ext U V; simp [mul_left_comm, mul_assoc])
+
+private theorem tensorPairing_basis (A B : Word) (T : H ⊗[ℚ] H) :
+    tensorPairing (wordBasis A) (wordBasis B) T = tensorBasis.repr T (A, B) := by
+  have he : tensorPairing (wordBasis A) (wordBasis B) =
+      (Finsupp.lapply (A, B)).comp tensorBasis.repr.toLinearMap := by
+    apply tensorBasis.ext
+    rintro ⟨U, V⟩
+    change tensorPairing (wordBasis A) (wordBasis B) (tensorBasis (U, V)) =
+      tensorBasis.repr (tensorBasis (U, V)) (A, B)
+    rw [show tensorBasis (U, V) = wordBasis U ⊗ₜ[ℚ] wordBasis V by simp [tensorBasis]]
+    simp only [tensorPairing, LinearMap.mk₂_apply, TensorProduct.lift.tmul,
+      LinearMap.smulRight_apply, LinearMap.smul_apply, pairing_basis, smul_eq_mul]
+    simp only [tensorBasis, Module.Basis.tensorProduct_repr_tmul_apply, Module.Basis.repr_self]
+    by_cases ha : U = A <;> by_cases hb : V = B <;>
+      simp_all [tensorBasis, wordBasis, eq_comm]
+  exact LinearMap.congr_fun he T
+
+/-- The full ordinary transpose characterization from Definition 1.20.
+All three arguments are arbitrary finite rational polynomials. -/
 def transposeProperty (D : H →ₗ[ℚ] H ⊗[ℚ] H) : Prop :=
-  ∀ (P : H) (A B : Word),
-    tensorBasis.repr (D P) (A, B) = pairing P (star (wordBasis A) (wordBasis B))
+  ∀ (P Q R : H), tensorPairing Q R (D P) = pairing P (star Q R)
 
 private def finiteTranspose : H →ₗ[ℚ] H ⊗[ℚ] H := wordBasis.constr ℚ deltaWord
 
@@ -107,15 +133,28 @@ private theorem finiteTranspose_basis_coefficient (w A B : Word) :
     tensorBasis.repr (finiteTranspose (wordBasis w)) (A, B) = (starWord A B).coeff w := by
   simp [finiteTranspose, deltaWord]
 
-private theorem finiteTranspose_property : transposeProperty finiteTranspose := by
-  intro P A B
-  rw [star_basis]
+private theorem finiteTranspose_coefficient (P : H) (A B : Word) :
+    tensorBasis.repr (finiteTranspose P) (A, B) = pairing P (starWord A B) := by
   have he : (Finsupp.lapply (A, B)).comp (tensorBasis.repr.toLinearMap.comp finiteTranspose) =
       (LinearMap.applyₗ (starWord A B)).comp pairing := by
     apply wordBasis.ext
     intro w
     simpa [pairing_basis] using finiteTranspose_basis_coefficient w A B
   exact LinearMap.congr_fun he P
+
+private theorem finiteTranspose_property : transposeProperty finiteTranspose := by
+  intro P Q R
+  have he : tensorPairing.compr₂ (LinearMap.applyₗ (finiteTranspose P)) =
+      star.compr₂ (pairing P) := by
+    apply wordBasis.ext
+    intro A
+    apply wordBasis.ext
+    intro B
+    change tensorPairing (wordBasis A) (wordBasis B) (finiteTranspose P) =
+      pairing P (star (wordBasis A) (wordBasis B))
+    rw [tensorPairing_basis, star_basis]
+    exact finiteTranspose_coefficient P A B
+  exact LinearMap.congr_fun₂ he Q R
 
 private theorem exists_unique_transpose : ∃! D, transposeProperty D := by
   refine ⟨finiteTranspose, finiteTranspose_property, ?_⟩
@@ -124,19 +163,27 @@ private theorem exists_unique_transpose : ∃! D, transposeProperty D := by
   intro w
   apply tensorBasis.repr.injective
   ext ab
-  exact (hD (wordBasis w) ab.1 ab.2).trans
-    (finiteTranspose_property (wordBasis w) ab.1 ab.2).symm
+  have hd := hD (wordBasis w) (wordBasis ab.1) (wordBasis ab.2)
+  have hf := finiteTranspose_property (wordBasis w) (wordBasis ab.1) (wordBasis ab.2)
+  rw [tensorPairing_basis] at hd hf
+  exact hd.trans hf.symm
 
 /-- The original ordinary ari coproduct: the unique linear transpose of `star`.
 Its existence in the algebraic tensor product is proved by the finite weight-window
 construction, without a completion or an assumed realization map. -/
 def delta : H →ₗ[ℚ] H ⊗[ℚ] H := Classical.choose exists_unique_transpose.exists
 
-/-- The defining ordinary transpose identity for arbitrary rational input and all
-word pairs, with the actual primitive-unshuffle product. -/
+/-- The full original ordinary tensor-pairing identity, for arbitrary polynomials
+in all three arguments, including the unit and unrestricted rational coefficients. -/
+theorem delta_transpose (P Q R : H) :
+    tensorPairing Q R (delta P) = pairing P (star Q R) :=
+  Classical.choose_spec exists_unique_transpose.exists P Q R
+
+/-- The ordinary transpose identity in every word-pair coordinate, for arbitrary
+rational input and the actual primitive-unshuffle product. -/
 theorem delta_coefficient (P : H) (A B : Word) :
-    tensorBasis.repr (delta P) (A, B) = pairing P (star (wordBasis A) (wordBasis B)) :=
-  Classical.choose_spec exists_unique_transpose.exists P A B
+    tensorBasis.repr (delta P) (A, B) = pairing P (star (wordBasis A) (wordBasis B)) := by
+  simpa only [tensorPairing_basis] using delta_transpose P (wordBasis A) (wordBasis B)
 
 /-- Full ordinary basis coefficients, including pairs outside the finite window
 and either unit word; there is no factorial normalization. -/

@@ -177,8 +177,20 @@ private theorem nested_homogeneous (ls : List ℕ) (p : H) (n : ℕ)
 private theorem beta_zero_iff (a l : ℕ) (h : beta a l ≠ 0) : a = 0 ↔ l = 0 := by
   cases a <;> cases l <;> simp_all [beta]
 
-private theorem gamma_split (a l : ℕ) (hle : l ≤ a) (hb : beta a l ≠ 0) :
+private theorem beta_bound (a l : ℕ) (hb : beta a l ≠ 0) : l ≤ a := by
+  cases a with
+  | zero => cases l <;> simp_all [beta]
+  | succ a =>
+    cases l with
+    | zero => omega
+    | succ l =>
+      by_contra hn
+      have hl : a < l := by omega
+      exact hb (Nat.choose_eq_zero_of_lt hl)
+
+private theorem gamma_split (a l : ℕ) (hb : beta a l ≠ 0) :
     gamma a = gamma l + (a - l) := by
+  have hle := beta_bound a l hb
   have hz := beta_zero_iff a l hb
   by_cases ha : a = 0
   · simp_all [gamma]
@@ -206,14 +218,10 @@ theorem letterAction_homogeneous (A : Word) (s : ℕ) :
     by_cases hm : multiplicity A l = 0
     · simp [hm]
     apply (homogeneous _).smul_mem
-    have hle (i : Fin A.toList.length) : l i ≤ A.toList.get i := by
-      have := Fintype.mem_piFinset.mp hl i
-      simp only [Finset.mem_range] at this
-      omega
     have hw : weight A = (∑ i, gamma (l i)) + ∑ i, (A.toList.get i - l i) := by
       have he : ∑ i, gamma (A.toList.get i) =
           ∑ i, (gamma (l i) + (A.toList.get i - l i)) :=
-        Finset.sum_congr rfl fun i _ => gamma_split _ _ (hle i) (multiplicity_beta A l hm i)
+        Finset.sum_congr rfl fun i _ => gamma_split _ _ (multiplicity_beta A l hm i)
       rw [Finset.sum_add_distrib] at he
       have hsum : weight A = ∑ i : Fin A.toList.length, gamma (A.toList.get i) := by
         rw [← List.sum_ofFn]
