@@ -10,7 +10,7 @@ internal sealed class JJFiveFailureDocument : IScribeDocumentDefinition
         "The prescribed 64 complete targets realize one simultaneous JJ history tree and defeat five further readings on its unrestricted whole fiber.",
         H("The second-J five-level obstruction"), Blocks(
             Paragraph(Text("The domain is exactly Definition 1.1 of SelfCalibrating Relation Mathematics V: every strictly entrywise positive real 2 by 2 source P with determinant zero and trace one, every nonzero entire real polynomial g of degree at most three, and every real constant drift. The native World 3 representation is bidirectionally equivalent to this domain by CompleteFailure.whole_domain. Lower degrees, either gain sign, sampled or repeated roots, asymmetric sources and all drifts remain in the ambient fiber. No witness choice restricts the decoder's domain.")),
-            Paragraph(Text("False means M=[[0,1],[1,1]], true means J=[[0,1],[1,0]]. Words are chronological. The empty acquisition is I, and appending E left-multiplies by E. Every atom is immediately read on the same complete world at its original clock; there are no resets, copies, skipped reads or additional ports. For a suffix u of length five write w=JJ++u, A(w)=acquisition(w), and W(w,e)=world(u,e). The 32 terminal words and their two Boolean slots give 64 labels, even when complete worlds repeat across different words.")),
+            Paragraph(Text("False means M=[[0,1],[1,1]], true means J=[[0,1],[1,0]]. Words are chronological. The empty acquisition is I, and appending E left-multiplies by E. Every atom is immediately read on the same complete world at its original clock; there are no resets, copies, skipped reads or additional ports. For a suffix u of length five write w=JJ++u, A(w)=acquisition(w), and W(u,e)=world(u,e). The 32 terminal words and their two Boolean slots give 64 labels, even when complete worlds repeat across different words.")),
             Paragraph(Math(Disp(Seq(I("H"), Caret, Grp(I("JJ")), Eq, Sp,
                 Tup(N(0), I("J"), N(24), I("J"), Q(192,5)))))),
             Paragraph(Text("For each word beginning JJJ the source map qSource uses the following two unit-J-signature lines. All parameters satisfy absolute value less than one half. These are positive rank-one trace-one sources, and their J trace is one. The equal-column and equal-row lines meet only at Pstar.")),
@@ -24,14 +24,14 @@ internal sealed class JJFiveFailureDocument : IScribeDocumentDefinition
             Paragraph(Text("The ordered pair (Q(w,0),Q(w,1)) is fixed by these exact exhaustive cases, with the alpha-zero case taking precedence:")),
             Paragraph(Math(Disp(Seq(Tup(Sub(I("Q"),Seq(I("w"),Comma,N(0))), Sub(I("Q"),Seq(I("w"),Comma,N(1)))), Eq, Sp,
                 Tup(Seq(I("Pstar"),Minus,Q(1,4),I("Rzero")), Seq(I("Pstar"),Plus,Q(1,4),I("Rzero"))),
-                Quad, Sub(I("alpha"),I("w")),Eq,N(0))))),
+                Quad, Sp, Sub(I("alpha"),I("w")),Eq,N(0))))),
             Paragraph(Math(Disp(Seq(Tup(Sub(I("Q"),Seq(I("w"),Comma,N(0))), Sub(I("Q"),Seq(I("w"),Comma,N(1)))), Eq, Sp,
                 Tup(Seq(I("Pstar"),Minus,Q(1,4),I("Lzero")), Seq(I("Pstar"),Plus,Q(1,4),I("Lzero"))),
-                Quad, Sub(I("alpha"),I("w")),Neq,Sp,N(0),Comma,Sub(I("beta"),I("w")),Eq,N(0))))),
+                Quad, Sp, Sub(I("alpha"),I("w")),Neq,Sp,N(0),Comma,Sub(I("beta"),I("w")),Eq,N(0))))),
             Paragraph(Math(Disp(Seq(Tup(Sub(I("Q"),Seq(I("w"),Comma,N(0))), Sub(I("Q"),Seq(I("w"),Comma,N(1)))), Eq, Sp,
                 Tup(Seq(I("Pstar"),Plus,Frac,Grp(Sub(I("beta"),I("w"))),Grp(Sub(I("c"),I("w"))),I("Rzero")),
                     Seq(I("Pstar"),Plus,Frac,Grp(Sub(I("alpha"),I("w"))),Grp(Sub(I("c"),I("w"))),I("Lzero"))),
-                Quad, Sub(I("alpha"),I("w")),Sub(I("beta"),I("w")),Neq,Sp,N(0))))),
+                Quad, Sp, Sub(I("alpha"),I("w")),Sub(I("beta"),I("w")),Neq,Sp,N(0))))),
             Paragraph(Text("The last parameters are nonzero and have absolute value less than one quarter. In the first two cases opposite nonzero parameters give different sources. Trace linearity gives tr(A(w)Q(w,0))=tr(A(w)Q(w,1)): in the last case both increments from tr(A(w)Pstar) equal alpha(w)beta(w)/c(w), and in the first two cases both increments vanish.")),
             Paragraph(Math(Disp(Seq(Sub(I("P"),Seq(I("A"),Comma,N(0))), Eq, Sp, Q(1,768),
                 Mat(N(607),Seq(N(372),Plus,Root(40657)),Seq(N(372),Minus,Root(40657)),N(161)),
@@ -73,7 +73,7 @@ internal sealed class JJFiveFailureDocument : IScribeDocumentDefinition
         )));
 
     private static Formula I(string n) => F.Id(n);
-    private static Formula N(long n) => Num(n);
+    private static Formula N(long n) => n < 0 ? Seq(Minus, Num(-n)) : Num(n);
     private static Formula Q(long a,long b) => Div(N(a),N(b));
     private static Formula Div(Formula a, Formula b) => Seq(Frac,Grp(a),Grp(b));
     private static Formula C(string n, Formula x) => Seq(Operatorname,Grp(I(n)),Open,x,Close);

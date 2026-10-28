@@ -66,25 +66,39 @@ internal sealed class CompleteFailureDocument : IScribeDocumentDefinition
                 C("natDegree", f), Leq, Sp, d))))));
     }
     private static Formula Nat => Seq(Mathbb, Grp(I("N")));
-    private static Formula Word => C("List", C("Bool", Seq()));
+    private static Formula Word => C("List", I("Bool"));
     private static Formula Bind(string x, Formula t, Formula body) =>
         All(Seq(I(x), InMacro, Sp, t), body);
     private static Formula Worlds => C("World", I("d"));
-    private static Formula MonoStatement() => Disp(Bind("d", Nat,
-        Bind("n", Nat, Bind("K", C("Set", Worlds), Bind("S", C("Set", Worlds),
-        Bind("v", Word, Seq(L(I("n"), I("K"), I("v")), Land, Sp,
-        I("K"), Subseteq, Sp, I("S"), Implies, Sp,
-        L(I("n"), I("S"), I("v"))))))));
-    private static Formula FiniteStatement() => Disp(Bind("n", Nat,
-        Bind("T", C("Finset", C("World", D(3))), Bind("v", Word, Seq(
-        L(I("n"), C("coe", I("T")), I("v")), Iff, Sp,
-        C("FiniteLosing", Seq(I("n"), Comma, I("T"), Comma, I("v")))))));
-    private static Formula PolicyStatement() => Disp(Bind("d", Nat,
-        Bind("n", Nat, Bind("K", C("Set", Worlds), Bind("v", Word,
-        Bind("h", C("History", I("v")), Bind("P", C("Policy", I("d")), Seq(
-        I("K"), Subseteq, Sp, C("wholeSet", Seq(I("v"), Comma, I("h"))), Land, Sp,
-        L(I("n"), I("K"), I("v")), Implies, Sp, Neg, Sp,
-        Open, Forall, Sp, I("W"), InMacro, Sp, I("K"), Comma, Sp,
-        C("Identifies", Seq(I("P"), Comma, I("n"), Comma, I("v"), Comma, I("W"))),
-        Close))))))));
+    private static Formula MonoStatement()
+    {
+        var body = Seq(L(I("n"), I("K"), I("v")), Land, Sp,
+            I("K"), Subseteq, Sp, I("S"), Implies, Sp, L(I("n"), I("S"), I("v")));
+        body = Bind("v", Word, body);
+        body = Bind("S", C("Set", Worlds), body);
+        body = Bind("K", C("Set", Worlds), body);
+        body = Bind("n", Nat, body);
+        return Disp(Bind("d", Nat, body));
+    }
+    private static Formula FiniteStatement()
+    {
+        var body = Seq(L(I("n"), C("coe", I("T")), I("v")), Iff, Sp,
+            C("FiniteLosing", Seq(I("n"), Comma, I("T"), Comma, I("v"))));
+        body = Bind("v", Word, body);
+        body = Bind("T", C("Finset", C("World", D(3))), body);
+        return Disp(Bind("n", Nat, body));
+    }
+    private static Formula PolicyStatement()
+    {
+        var body = Seq(I("K"), Subseteq, Sp, C("wholeSet", Seq(I("v"), Comma, I("h"))),
+            Land, Sp, L(I("n"), I("K"), I("v")), Implies, Sp, Neg, Sp,
+            Open, Forall, Sp, I("W"), InMacro, Sp, I("K"), Comma, Sp,
+            C("Identifies", Seq(I("P"), Comma, I("n"), Comma, I("v"), Comma, I("W"))), Close);
+        body = Bind("P", C("Policy", I("d")), body);
+        body = Bind("h", C("History", I("v")), body);
+        body = Bind("v", Word, body);
+        body = Bind("K", C("Set", Worlds), body);
+        body = Bind("n", Nat, body);
+        return Disp(Bind("d", Nat, body));
+    }
 }
