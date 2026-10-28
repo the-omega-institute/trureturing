@@ -26,6 +26,10 @@ $$\neg \left(\forall V \in \mathrm{Type},\; [\operatorname{Fintype}\left(V\right
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Products/BoyerKuenzelLylePellicoConjectureTwoRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/boyer-kuenzel-lyle-pellico-2025-conjecture-two` (refuted) by `D5/S3/Combinatorics/Graph/Products/BoyerKuenzelLylePellicoConjectureTwoRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"boyer-kuenzel-lyle-pellico-2025-conjecture-two","declaration_gid":"D5/S3/Combinatorics/Graph/Products/BoyerKuenzelLylePellicoConjectureTwoRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Geoffrey Boyer, Kirsti Kuenzel, Jeremy Lyle, Ryan Pellico (2025). *Well-hued graphs with first difference two*. DOI: [10.48550/arXiv.2506.04993](https://doi.org/10.48550/arXiv.2506.04993). URL: <https://arxiv.org/abs/2506.04993v1>.
