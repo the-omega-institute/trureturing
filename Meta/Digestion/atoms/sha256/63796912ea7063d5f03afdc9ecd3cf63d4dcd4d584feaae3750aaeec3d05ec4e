@@ -1,0 +1,16 @@
+**Definition 122.2 (source-specific scope and supplied boundary).**
+Theorem 122.1 is a repo-derived analytic application of the actual Green-field
+formula in Proposition 85.4, the source-side suppliers of §§115–116, and the
+attainment and positive-direction suppliers of Theorems 119.2 and 120.2.
+The new inference supplies exactly the previously unresolved boundary between
+(119.3), which gave only equality of stochastic and deterministic infima and
+weak-star deterministic approximation, and deterministic attainment by one
+Borel partition. It also supplies the local infinite-negative-index premise
+needed to turn the positive quadratic direction of Theorem 120.2 into an
+exact same-law perturbation. The cited analytic, heat-RKHS, density-point,
+Agler–Young, rotation, commutator and compact-fiber ingredients are used
+inside this source-specific proof; no standalone renamed literature theorem
+or worldwide priority claim is asserted. The conclusion is only for the
+original finite-positive-time family and the unchanged target and quantifiers
+of Definition 119.1.
+

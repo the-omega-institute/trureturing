@@ -25,7 +25,7 @@ open MeasureTheory Set
 def twoScaleShape (a b t : ℝ) : ℝ :=
   a * Real.exp (-t) + b * Real.exp (-(2 * t))
 
-private theorem exponential_moment (r : ℝ) (hr : 0 < r) (k : ℕ) :
+theorem exponential_moment (r : ℝ) (hr : 0 < r) (k : ℕ) :
     IntegrableOn (fun t : ℝ => t ^ k * Real.exp (-(r * t))) (Ioi 0) ∧
       (∫ t : ℝ in Ioi 0, t ^ k * Real.exp (-(r * t))) =
         (k.factorial : ℝ) / r ^ (k + 1) := by

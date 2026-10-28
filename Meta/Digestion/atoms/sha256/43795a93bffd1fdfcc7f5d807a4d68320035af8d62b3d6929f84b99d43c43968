@@ -1,0 +1,33 @@
+**(B1) Lemma 2.1 (ordered short-gap limits).** For every fixed $t>0$ and every Borel partition $P$,
+
+$$
+\lim_{s\downarrow0}\nu_f^s(i,j)=C_{ij},\qquad
+\lim_{s\downarrow0}\nu_P^s(i,j)=\begin{cases}\alpha_i,&i=j,\\0,&i\ne j.\end{cases}
+$$
+
+Consequently,
+
+$$
+\lim_{s\downarrow0}\operatorname{TV}(\nu_P^s,\nu_f^s)
+=\frac12\left(\sum_i|\alpha_i-C_{ii}|+J\right)\geq J.
+\tag{2.1}
+$$
+
+The infimum over $P$ of the right side is $J$ and is attained by any partition with $\alpha_i=\pi_i$. In the reversed order,
+
+$$
+\lim_{s\downarrow0}\inf_P\operatorname{TV}(\nu_P^s,\nu_f^s)=0,
+\tag{2.2}
+$$
+
+because every fixed positive gap has a separately attained purifier.
+
+**Proof.** Strong continuity gives $T_sf_j\to f_j$ in $L^2(m)$. Since $g_tf_i\in L^2(m)$, the pairings converge to $C_{ij}$. For a partition, $P_iT_sP_j$ converges to $P_iP_j$, which is zero for $i\ne j$ and $P_i$ for $i=j$; integration gives the second limit. The off-diagonal mass of $C$ is $J$, and its diagonal is $C_{ii}$, so the finite-alphabet $\ell^1$ calculation yields (2.1). Since $\mu_t$ is atomless, coordinate quantile slabs produce a Borel partition with prescribed masses $\pi_i$; then
+
+$$
+\alpha_i-C_{ii}=\pi_i-C_{ii}=\int g_t f_i(1-f_i)\,dm
+=\sum_{j\ne i}\int g_t f_i f_j\,dm\geq0.
+$$
+
+Summing over $i$ gives $\sum_i(\pi_i-C_{ii})=J$, so equality is attained. Equation (2.2) uses the existing exact fixed-pair theorem, with $P$ allowed to depend on $s$. The two limits differ because their quantifiers differ. ∎
+

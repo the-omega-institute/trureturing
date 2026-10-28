@@ -1,0 +1,57 @@
+### 7.1. Noisy quadrants
+
+Let $Q_0,Q_1,Q_2,Q_3$ be the four oriented quadrants of $(x,y)$, with axes assigned Borelly. Use the detector alphabet $\mathcal A=\{0,1,3,B\}$ and set
+
+$$
+C_0=Q_0,\qquad C_1=Q_1,\qquad C_3=Q_2,\qquad C_B=Q_3.
+$$
+
+Thus geometric quadrant $Q_2$ is carried by label $3$, and $Q_3$ by label $B$; the subscripts $0,1,3,B$ below are detector labels, not a claim that the alphabet contains label $2$. Source symmetry gives each positive-time marginal mass $1/4$. For $\varepsilon\in[0,1]$, define
+
+$$
+ f_i^\varepsilon=\varepsilon 1_{C_i}+\frac{1-\varepsilon}{4}\qquad(i\in\mathcal A).
+$$
+
+Let $q_{ij}(s)$, $i,j\in\mathcal A$, be the same-source quadrant pair law and let $U_{16}$ be uniform on $\mathcal A^2$.
+
+**(B9) Theorem 7.2 (sharp quadrant pair boundary).** For every $t_0>0$,
+
+$$
+\inf_P\sup_{k\geq1}\operatorname{TV}(\nu_P^{1/k},\nu_{f^\varepsilon}^{1/k})
+=\frac{3(1-\varepsilon^2)}4.
+\tag{7.2}
+$$
+
+The explicit partition $P_i=C_i$ attains the upper bound for every $t>0$ and $s>0$. Every separately fixed pair has infimum zero. No positive-gap supremum attainment is asserted.
+
+**Proof.** The full-endpoint rotation in $\xi=w-xy/2$ preserves the source entrance, selector, form, and positive-time marginal, so the quadrants are equiprobable. Conditional independence and the two uniform quadrant marginals give
+
+$$
+\nu_{f^\varepsilon}^s=\varepsilon^2q(s)+(1-\varepsilon^2)U_{16}.
+$$
+
+As $s\downarrow0$, the off-diagonal mass of $q(s)$ tends to zero, so its distance from $U_{16}$ tends to $3/4$. For every partition, Lemma 2.1 applied to the limiting mixture gives the same lower bound. With $P=C$, the difference is $(1-\varepsilon^2)(q(s)-U_{16})$; the row-overlap argument bounds its norm by $3(1-\varepsilon^2)/4$. Fixed-pair attainment gives the last assertion. ∎
+
+**(B10) Theorem 7.3 (full finite bursts).** At fixed $t_0>0$, for every $\varepsilon<1$ and every one fixed partition $P$,
+
+$$
+\sup_{n\geq2,\ k\geq1}
+\operatorname{TV}(L_P^{t_0,t_0+1/k,\ldots,t_0+(n-1)/k},
+L_{f^\varepsilon}^{t_0,t_0+1/k,\ldots,t_0+(n-1)/k})=1.
+\tag{7.3}
+$$
+
+The infimum over $P$ of this supremum is one. At $\varepsilon=1$, the quadrant partition reproduces the full law exactly.
+
+**Proof.** Consider the event that all $n$ labels are equal. For a fixed $P$, strong continuity and the finite-word Markov formula imply that as $k\to\infty$ its probability tends to one. For the noisy quadrant detector, conditional independence leaves the limit
+
+$$
+ c^n+3d^n,\qquad c=\frac{1+3\varepsilon}{4},\quad d=\frac{1-\varepsilon}{4}.
+$$
+
+For $\varepsilon<1$, this tends to zero as $n\to\infty$. Taking first $k$ large and then $n$ large makes the event gap arbitrarily close to one; total variation is at most one. At $\varepsilon=1$ the detector is the quadrant partition itself. ∎
+
+**(B11) Theorem 7.4 (resolution obstruction).** If $\varepsilon<1$ and $P^{(k)}$ exactly purifies the noisy-quadrant pair at gap $1/k$ and fixed $t_0$, the indicator tuples $(1_{P_i^{(k)}})_i$ have no strongly $L^2(m)$-convergent subsequence. Hence no finite detector dictionary and no $L^2$-precompact family supplies all these exact replacements.
+
+**Proof.** Suppose a subsequence converges strongly to $a$. A further subsequence converges almost everywhere, and the indicator/simplex constraints make $a$ an indicator tuple. Strong continuity with variable inputs gives $T_{1/k}1_{P_i^{(k)}}\to a_i$ in $L^2$. Pairing with $g_{t_0}$ and truncating the $L^2$ weight yields a diagonal short-gap limit for the pair laws. The noisy target has positive limiting off-diagonal mass $3(1-\varepsilon^2)/4$, whereas any deterministic limit has zero off-diagonal mass, a contradiction. A finite program with an unbounded precision or parameter input can still generate a nonprecompact family; this is not a finite-bit or physical lower bound. ∎
+

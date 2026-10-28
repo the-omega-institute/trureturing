@@ -811,3 +811,156 @@ $$
 本卷没有进行外部文献检索，新增性只按上述给定来源的对应范围陈述，不作全球首创或文献穷尽声明。这里的结论为符号数学推导，未以数值实验、枚举、通用神经网络、形式证明助手或 Lean kernel 核验作为证据，亦不附带稳定性或资源保证。完整原根八读存在与至少九读必要的二选一仍未判定。
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 三个初始 J 的全部混合七字词与五个新增同源排除
+
+**定义 12.1（原单槽路径映射与两个词族）。** Retain the legal source domain, original clocks and complete $B,G,D$ of Definitions 2.1–2.2. For a seven-action chronological word $w$, write
+
+$$
+T_w(P):\mathbb R^4\longrightarrow\mathbb R^7,\qquad
+(T_w(P)x)_i=\ell_{w_{\le i}}(P)x\quad(1\le i\le7).
+\tag{12.1}
+$$
+
+
+This is exactly $R_w(P)$ of Definition 3.2. Put
+
+$$
+\begin{aligned}
+\mathcal W_{JJJ}&=\{JJJz:z\in\{J,M\}^4,\ z\ne JJJJ\},\\
+\mathcal W_{\mathrm{new}}&=\{JJJMJMJ,JJJMJMM,JJJMMJM,JJJMMMJ,JJJMMMM\},\\
+\mathcal W_{\mathrm{old}}&=
+\{J^4z:z\in\{J,M\}^3,\ z\ne JJJ\}
+\cup\{JJJMJJJ,JJJMJJM,JJJMMJJ\}.
+\end{aligned}
+\tag{12.2}
+$$
+
+
+**定理 12.2（三个初始 J 的混合七字词逐源单射）。** For every legal $P$ and every $w\in\mathcal W_{JJJ}$,
+
+$$
+\ker T_w(P)=\{0\},\qquad\operatorname{rank}T_w(P)=4.
+\tag{12.3}
+$$
+
+
+The family has fifteen words: the ten in $\mathcal W_{\mathrm{old}}$ are supplied directly by Theorem 6.1; the five new instances are exactly $\mathcal W_{\mathrm{new}}$. No unit-signature, source symmetry, bounded-entry, gain-sign or exact-degree premise is imposed.
+
+Proof. Splitting the suffix after the initial $JJJ$ gives the disjoint union of the two sets in (12.2). Every old word contains an $M$ and at least three occurrences of $JJ$ counted by distinct starting positions, including overlaps. The first seven old words have four initial $J$'s; each of the other three has an additional $JJ$ after its first $M$. Apply Theorem 6.1 directly to these ten instances.
+
+It remains to prove the five instances whose first $M$ is at clock four. Write
+
+$$
+P=\begin{pmatrix}a&b\\c&1-a\end{pmatrix},\qquad
+s=b+c>0,\qquad bc=a(1-a),\qquad0<a<1,
+\tag{12.4}
+$$
+
+
+and $t_i=\operatorname{tr}(A_{w_{\le i}}P)>0$ by the positive-trace result 3.1. Let a polynomial $g$ of degree at most three represent a vector in $\ker T_w(P)$. Its equations are
+
+$$
+t_i g(i)=g(0)\quad(1\le i\le7).
+\tag{12.5}
+$$
+
+
+If $g(0)=0$, the seven distinct roots force $g=0$. For a nonzero local kernel element one may therefore divide by its nonzero $g(0)$ within this proof, obtaining
+
+$$
+g(0)=1,\qquad g(i)=t_i^{-1}>0\quad(1\le i\le7).
+\tag{12.6}
+$$
+
+
+This normalization only tests a linear kernel element and adds no original-world sign or initial-value promise. The first three actual $J$ actions give the four interpolation values $g(0)=1,g(1)=s^{-1},g(2)=1,g(3)=s^{-1}$. Their unique polynomial of degree at most three is
+
+$$
+g(z)=1+(s^{-1}-1)\frac{z(2z-5)(z-2)}3.
+\tag{12.7}
+$$
+
+
+Indeed the displayed cubic has those four values, so uniqueness follows from four distinct roots of the difference. Its seventh value is $(105-104s)/s$, which is positive by (12.6). Hence $s<105/104$. Its fourth value is $(8-7s)/s$. At clock four the cumulative matrix is $MJ$, whose trace is $1+b$, so
+
+$$
+1+b=\frac{s}{8-7s},\qquad
+b=\frac{8(s-1)}{8-7s}.
+\tag{12.8}
+$$
+
+
+Here $8-7s>0$ from $s<105/104$. Since $b>0$, setting $e=s-1$ gives
+
+$$
+0<e<\frac1{104},\qquad
+b=\frac{8e}{1-7e},\qquad
+g(5)=\frac{25-24s}{s}=\frac{1-24e}{1+e}>0.
+\tag{12.9}
+$$
+
+
+All denominators used here are strictly positive; no unknown gain sample is discarded.
+
+If the fifth action is $J$, the cumulative matrix is $JMJ$ and its trace is $a+s$. The fifth equation then forces
+
+$$
+a+s=\frac{s}{25-24s},\qquad
+a=\frac{24(1+e)e}{1-24e}.
+\tag{12.10}
+$$
+
+
+Using $0<e<1/104$ gives the strict rational bounds
+
+$$
+\begin{aligned}
+b&<\frac{832}{97}e,&c&<s<\frac{105}{104},
+&bc&<\frac{840}{97}e,\\
+24e&<a<\frac{63}{208},&&
+&a(1-a)&>24e\frac{145}{208}=\frac{435}{26}e.
+\end{aligned}
+\tag{12.11}
+$$
+
+
+For the upper bound on $a$, bound the positive factors $1+e$, $e$, and $(1-24e)^{-1}$ by their values at $1/104$; their product is $63/208$. The lower bound is immediate from $(1+e)/(1-24e)>1$. The $b$ bound uses $1-7e>97/104$, and the bound on $bc$ follows by multiplying the positive upper bounds for $b,c$. Since $840/97<435/26$, (12.11) contradicts $bc=a(1-a)$. This treats both new words with fifth action $J$.
+
+If the fifth action is $M$, its cumulative matrix is $M^2J$ and its trace is $1+b+s$. Substitution of (12.8) and $g(5)=(25-24s)/s$ into its equation gives
+
+$$
+217-384s+168s^2=0.
+\tag{12.12}
+$$
+
+
+More explicitly, $1+b=s/(8-7s)$, so the equation is
+$(9-7s)(25-24s)=8-7s$, which expands to (12.12). But at $s=1+e$ its left-hand side is
+
+$$
+1-48e+168e^2>1-\frac{48}{104}=\frac7{13}>0.
+\tag{12.13}
+$$
+
+
+This contradiction treats the other three new words. Both fifth actions are exhausted, so no nonzero local kernel element exists. The argument uses clocks zero through seven on each actual word, not responses from its unselected sibling actions. ∎
+
+**定理 12.3（五个新词在同一完整核上的同源守卫失败）。** Fix any complete legal $256$-source tuple and its original whole $V=\ker B=\mathcal U$, with all $254$ prefixes and the full $1538\times1024$ matrix. If for any $w\in\mathcal W_{\mathrm{new}}$ its two slot sources are equal, then
+
+$$
+D_w|_V=0,\qquad
+\operatorname{rank}[B;D_w]=\operatorname{rank}B.
+\tag{12.14}
+$$
+
+
+Consequently that original same-source separation guard fails. Any tuple satisfying every original guard must have unequal sources at each of these five leaves; together with the ten supplied instances the same necessity holds on all of $\mathcal W_{JJJ}$.
+
+Proof. For any $x\in V$, the full matrix equations make the two slots realize the same response at every ancestor of their leaf. When their fixed sources agree at $P$, subtracting those equations says that the complete four-component coefficient difference is in $\ker T_w(P)$. By Theorem 12.2 this difference is zero, including its constant coefficient and thus its normalized drift difference. Since $x$ is arbitrary in the original $V$, this proves $D_w|_V=0$. A linear map vanishing on $\ker B$ has all rows in the row space of $B$, giving the rank equality. Equal sources also make the source-inequality alternative false, so Definition 2.2's applicable full guard fails. For the ten old instances use Theorem 6.1 and the existing Theorem 8.2 directly. The other $254$ sources are unrestricted in every such comparison; no separate branch witness or restricted kernel was substituted for $V$. ∎
+
+Section 12 is a repository-derived synthesis from this volume's Definitions 2.1–2.2 and 3.2, positive-trace result 3.1, Theorem 6.1, and the same-source interface used in Theorem 8.2. The full original consumer agrees with [IV, Definitions 13.1–13.2 and Theorem 13.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md). The mathematical source version is `1eef3601bb81023352394a59bcb682b0c9b57cd8`; no external priority or exhaustive literature claim is made. The fifteen-word statement retains ten supplied cases and adds exactly the five instances named in (12.2), through the explicit model-specific interpolation and positivity contradictions above. No separate generic readout-space or finite-subspace theorem is introduced.
+
+These exclusions give no nonvanishing gain guard for any slot, and no acquisition of an unknown source. They do not prove a common full-tree response space has a nonzero projection onto the affected slots, produce a simultaneous legal coefficient vector, or decide the complete original-root problem. Unequal leaf sources may distinguish complete targets even when gain coefficients agree; different leaves may repeat sources. Arbitrary real constant drift, nonzero gains of any degree at most three and either sign, degree drops, sampled or repeated roots, all original clocks, both actions and early stops remain in the original domain.
+
+## 追加锚（本行以下为增补区）

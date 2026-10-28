@@ -1,0 +1,10 @@
+**Definition 1.4 (enlarged service).** The enlarged model separately installs the authentic command
+
+$$
+\operatorname{Read}_e:\quad x\longmapsto x,
+\qquad\text{reply }e_e^{\mathsf T}x=x_e.
+\tag{CL.6}
+$$
+
+This is a read of the native $e$ coordinate, with its own binding, units, nondestructiveness, call right and backing. Its installation is present already at the zero entrance of this different model. There is no Add at $e$. The old service neither acquires nor installs this port. In particular, a read in a transported coordinate frame would be a different command from (CL.6).
+

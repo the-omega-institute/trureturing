@@ -28,7 +28,19 @@ Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.wedgePoints`
 
 For points a of X and b of Y, the distinguished subset of the disjoint sum consists exactly of inl a and inr b. The wedge is its collapse quotient with the quotient topology.
 
-**Definition 1.3 (A closed cover with controlled overlap).**
+**Definition 1.3 (Based replacement on both wedge arms).**
+
+Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.basedWedgeEquivalence`
+
+*Formalization.* `D5/S3/Geometry/FiniteConeUnionWedge.basedWedgeEquivalence` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Given based equivalences of the two input arms, the actual quotient wedges are based equivalent at the quotient classes of their left distinguished points. Both maps are the existing quotient wedge maps; both inverse homotopies descend from the arm homotopies and fix the quotient wedge point for every time parameter. This exports actual point-based data, rather than treating the wedge type as a point.
+
+**Definition 1.4 (A closed cover with controlled overlap).**
 
 Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.CollapseCover`
 
@@ -40,7 +52,7 @@ Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.CollapseCover`
 
 Two continuous injective closed maps from X and Y cover Z. Every equality between points from opposite summands lies in the subset C, and both chosen basepoints map into C. These are map and subset conditions; no gluing continuity, homotopy extension property, or equivalence is assumed.
 
-**Definition 1.4 (The actual quotient homeomorphism).**
+**Definition 1.5 (The actual quotient homeomorphism).**
 
 Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.quotientWedgeHomeomorph`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.quotientWedgeHomeomorph`
 
 The wedge of the actual quotients of X and Y by the preimages of C is homeomorphic to Z modulo C. The map from the disjoint sum to Z is a continuous closed surjection, hence a quotient map. After descending on both arms, the resulting quotient map has exactly the two-basepoint wedge relation as kernel. The homeomorphism is obtained from that kernel equality. The proof includes the degenerate cases in which C is a whole summand or the whole space.
 
-**Theorem 1.5 (Actual intersections of finite realizations).**
+**Theorem 1.6 (Actual intersections of finite realizations).**
 
 Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.realization_intersection`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.realization_intersection`
 
 For every finite vertex type V and every pair M,N of pre-abstract simplicial complexes on V, the coordinate realization of M intersect N equals the intersection of their coordinate realizations. A point represented in faces s and t belongs to the simplex of s intersect t; the coordinate sum one proves that this common face is nonempty. Downward closure then places it in both complexes. No empty face is assumed to be a face.
 
-**Definition 1.6 (Concrete finite cone union data).**
+**Definition 1.7 (Concrete finite cone union data).**
 
 Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.ConeUnion`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.ConeUnion`
 
 The data are two finite-vertex complexes, their intersection cone, and an apex. The singleton apex is a cone face, and adjoining the apex preserves cone faces. The intersection equality is an equality of complexes, rather than an assumed topological intersection statement.
 
-**Definition 1.7 (The left cone pair).**
+**Definition 1.8 (The left cone pair).**
 
 Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.leftPair`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.leftPair`
 
 The left native coordinate realization contains the specified cone and has its coordinate apex as basepoint.
 
-**Definition 1.8 (The right cone pair).**
+**Definition 1.9 (The right cone pair).**
 
 Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.rightPair`
 
@@ -100,7 +112,7 @@ Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.rightPair`
 
 The right native coordinate realization contains the same cone and has the same coordinate apex as basepoint.
 
-**Definition 1.9 (The union cone pair).**
+**Definition 1.10 (The union cone pair).**
 
 Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.unionPair`
 
@@ -112,7 +124,7 @@ Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.unionPair`
 
 The ambient complex is the actual union of the two face collections. The specified intersection cone is a subcomplex of that union.
 
-**Definition 1.10 (The cone-union wedge equivalence).**
+**Definition 1.11 (The cone-union wedge equivalence).**
 
 Lean statement: `D5/S3/Geometry/FiniteConeUnionWedge.homotopyEquiv`
 
@@ -128,6 +140,7 @@ For every ConeUnion, the actual coordinate realization of the union is homotopy 
 
 - Truth anchor: `D5/S3/Geometry/FiniteConeUnionWedge.CollapseCover`
 - Truth anchor: `D5/S3/Geometry/FiniteConeUnionWedge.ConeUnion`
+- Truth anchor: `D5/S3/Geometry/FiniteConeUnionWedge.basedWedgeEquivalence`
 - Truth anchor: `D5/S3/Geometry/FiniteConeUnionWedge.homotopyEquiv`
 - Truth anchor: `D5/S3/Geometry/FiniteConeUnionWedge.leftPair`
 - Truth anchor: `D5/S3/Geometry/FiniteConeUnionWedge.quotientWedgeHomeomorph`
@@ -137,3 +150,4 @@ For every ConeUnion, the actual coordinate realization of the union is homotopy 
 - Truth anchor: `D5/S3/Geometry/FiniteConeUnionWedge.unionPair`
 - Truth anchor: `D5/S3/Geometry/FiniteConeUnionWedge.wedgePoints`
 - Dependency: [D5/S3/Geometry/FiniteConeCollapse](FiniteConeCollapse.md)
+- Dependency: [D5/S3/Geometry/SingletonRetractionBasedInverse](SingletonRetractionBasedInverse.md)

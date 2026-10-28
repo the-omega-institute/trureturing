@@ -1,0 +1,6 @@
+**(B2) Theorem 3.1 (shrinking-menu criterion).** Let $D\subset(0,\infty)$ with $\inf D=0$. The following are equivalent:
+
+1. one partition $P$ satisfies $\nu_P^s=\nu_f^s$ for every $s\in D$;
+2. $J=0$;
+3. $f$ is a simplex vertex $m$-almost everywhere.
+

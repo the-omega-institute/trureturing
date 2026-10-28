@@ -1,0 +1,56 @@
+**定义 2.1（一个完整来源元组）。** 取
+
+$$
+\mathcal S=\{(w,e):w\in\{J,M\}^7,\ e\in\{0,1\}\},\qquad
+\mathcal V=\bigcup_{i=1}^7\{J,M\}^i.
+\tag{2.1}
+$$
+
+共有 $256$ 槽和 $254$ 非空前缀。固定任意一个合法元组 $\mathbf P=(P_q)_{q\in\mathcal S}$。对 $v=E_1\cdots E_i$，置 $A_v=E_i\cdots E_1$，令 $\mathcal D_v$ 为所有以 $v$ 为前缀的叶槽，$\mathcal D_\varnothing=\mathcal S$。按 $J<M$、$0<1$ 的字典序取首槽 $q_v$，定义
+
+$$
+t_v(P)=\operatorname{tr}(A_vP),\qquad
+\ell_v(P)=(t_v(P)-1,\ i\,t_v(P),\ i^2t_v(P),\ i^3t_v(P)).
+\tag{2.2}
+$$
+
+同一个向量 $x=(x_q)_{q\in\mathcal S}\in\mathbb R^{1024}$ 的四分量块给出
+
+$$
+g_q(T)=\sum_{j=0}^3x_{qj}T^j,\qquad\delta_q=-x_{q0}.
+\tag{2.3}
+$$
+
+其响应为 $\ell_v(P_q)x_q$。线性推理允许零块；实际世界要求非零增益。完整矩阵 $B=B(\mathbf P)$ 的所有行是
+
+$$
+(Bx)_{v,q}=\ell_v(P_q)x_q-\ell_v(P_{q_v})x_{q_v},
+\qquad v\in\mathcal V,\ q\in\mathcal D_v\setminus\{q_v\}.
+\tag{2.4}
+$$
+
+第 $i$ 层行数为 $2^i(2^{8-i}-1)=256-2^i$，依次为
+
+$$
+(254,252,248,240,224,192,128),\qquad
+B\in\mathbb R^{1538\times1024},\qquad U=\ker B.
+\tag{2.5}
+$$
+
+后文始终使用这个完整 $U$，不取某个选定分支的子核。全部 $768$ 个来源环境坐标仍须满足 $256$ 个秩一方程及每个严格正性条件；该环境坐标数不是无约束合法空间的维数。矩阵条目是整数仿射多项式，因为
+
+$$
+t_v(P_q)=(A_v)_{22}+((A_v)_{11}-(A_v)_{22})a_q
+ +(A_v)_{21}b_q+(A_v)_{12}c_q.
+\tag{2.6}
+$$
+
+定义完整四分量映射
+
+$$
+G_qx=x_q,\qquad D_wx=x_{(w,0)}-x_{(w,1)}.
+\tag{2.7}
+$$
+
+$D_w$ 包括常数系数和全部非常数系数，因而包括归一化漂移差。它不能用一个样本差或部分系数差替代。
+
