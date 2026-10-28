@@ -120,7 +120,7 @@ no automatic change to the entry's other assertions or their truth.
 
 The external source identity, revision-13 interpretation and literature
 limits are those of the existing source verification associated with
-issue 23034 and `Library/Words/layman2011a193020.md`; no fresh external
+issue 23034 and `Library/Digit/layman2011a193020.md`; no fresh external
 source or literature search is asserted here. Later revisions, linked
 material not read in that scope, worldwide openness and first-publication
 priority are not certified. The source is credited to John W. Layman and

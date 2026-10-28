@@ -8,7 +8,7 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Words/EndpointShuffleSupport.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/layman2011a193020");
+        LibraryNoteRef.Create("D5/L/Digit/layman2011a193020");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The endpoint-gap rectangle is exactly the distinct ordinary self-shuffle support.",
