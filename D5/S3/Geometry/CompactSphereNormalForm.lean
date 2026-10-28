@@ -1,0 +1,235 @@
+/- GID: D5/S3/Geometry/CompactSphereNormalForm
+   generality: G
+   mirror-B: D5/B/S3/Geometry/CompactSphereNormalForm
+   mirror-E: none(waiver:compact-sphere-normal-form)
+   anchors: [mathlib/module/Mathlib.Topology.Homeomorph.Quotient, mathlib/module/Mathlib.Data.List.OfFn]
+   utility: none
+   digest: Compact arbitrary sphere coproduct models transport to finite lists of positive bouquets. -/
+import D5.S3.Geometry.SphereWedgePositiveNormalization
+import Mathlib.Data.List.OfFn
+import Mathlib.Data.Fintype.EquivFin
+import Mathlib.Topology.Homotopy.Contractible
+
+/-! Source adapters for the unsuspended hereditary W route of Carnero Bravo
+Question 22. These are actual sphere quotient models, not native finite
+simplicial models or a proof of the graph composition conclusion. -/
+
+noncomputable section
+open Set Topology
+open scoped ContinuousMap
+
+namespace D5.S3.Geometry.CompactSphereNormalForm
+
+open CompactWedgeFiniteFactor (FamilyWedge base basePoints WedgeSum)
+open SphereWedgePositiveNormalization (PositiveIndex ZeroIndex PositiveWedge)
+open EuclideanSphereJoin (StdSphere coordinatePoint)
+open FiniteConeUnionWedge (subsetSetoid)
+
+universe u v w
+
+/-- Dimensions in the finite output are strictly positive. -/
+abbrev PositiveDimension := {d : ℕ // 0 < d}
+
+/-- The genuine quotient bouquet at the coordinate points. The empty list is a point. -/
+abbrev Bouquet (l : List PositiveDimension) :=
+  FamilyWedge (fun i : Fin l.length => coordinatePoint (l.get i).val)
+
+/-- A finite outer coproduct of the actual positive sphere bouquets. -/
+abbrev Model {m : ℕ} (b : Fin m → List PositiveDimension) := Σ k, Bouquet (b k)
+
+/-- Output data, including the actual maps and both inverse homotopies. -/
+structure HomotopyModel (X : Type w) [TopologicalSpace X] where
+  size : ℕ
+  bouquets : Fin size → List PositiveDimension
+  equivalence : X ≃ₕ Model bouquets
+
+private instance emptyBouquetUnique : Unique (Bouquet []) where
+  default := base _
+  uniq x := by
+    induction x using Quotient.inductionOn with
+    | h x =>
+      rcases x with x | ⟨i, x⟩
+      · cases x; rfl
+      · exact Fin.elim0 i
+
+private def sphereCast {n m : ℕ} (h : n = m) : StdSphere n ≃ₜ StdSphere m := by
+  subst m
+  exact Homeomorph.refl _
+
+private theorem sphereCast_base {n m : ℕ} (h : n = m) :
+    sphereCast h (coordinatePoint n) = coordinatePoint m := by
+  subst m
+  rfl
+
+/-- Enumerate the dimensions of a finite positive sphere family, retaining multiplicities. -/
+def dimensionList {J : Type u} [Fintype J] (n : J → PositiveDimension) :
+    List PositiveDimension :=
+  List.ofFn (fun i => n ((Fintype.equivFin J).symm i))
+
+private def listIndex {J : Type u} [Fintype J] (n : J → PositiveDimension) :
+    J ≃ Fin (dimensionList n).length :=
+  (Fintype.equivFin J).trans (finCongr (List.length_ofFn _).symm)
+
+private theorem list_dimension {J : Type u} [Fintype J]
+    (n : J → PositiveDimension) (j : J) :
+    ((dimensionList n).get (listIndex n j)).val = (n j).val := by
+  simp [dimensionList, listIndex, List.get_ofFn]
+
+/-- Actual pointed quotient reindexing from a finite positive family to its list.
+The dimension casts carry coordinate points to coordinate points. -/
+def positiveListHomeomorph {J : Type u} [Fintype J] (n : J → PositiveDimension) :
+    {e : FamilyWedge (fun j => coordinatePoint (n j).val) ≃ₜ Bouquet (dimensionList n) //
+      e (base _) = base _} := by
+  let c := fun j => coordinatePoint (n j).val
+  let c' := fun i : Fin (dimensionList n).length =>
+    coordinatePoint ((dimensionList n).get i).val
+  let E := listIndex n
+  let h := fun j => sphereCast (list_dimension n j).symm
+  let S : (Σ j, StdSphere (n j).val) ≃ₜ
+      (Σ i : Fin (dimensionList n).length, StdSphere ((dimensionList n).get i).val) :=
+    (Equiv.sigmaCongr E (fun j => (h j).toEquiv)).toHomeomorphOfContinuousOpen
+      (Continuous.sigma_map (fun j => (h j).continuous))
+      (isOpenMap_sigma_map.mpr (fun j => (h j).isOpenMap))
+  let R := Homeomorph.sumCongr (Homeomorph.refl Unit) S
+  have hb : ∀ j, h j (c j) = c' (E j) := fun j => sphereCast_base _
+  have bases : ∀ x, x ∈ basePoints c ↔ R x ∈ basePoints c' := by
+    intro x
+    constructor
+    · rintro (rfl | ⟨j, rfl⟩)
+      · exact Or.inl rfl
+      · exact Or.inr ⟨E j, congrArg Sum.inr (congrArg (Sigma.mk (E j)) (hb j))⟩
+    · rintro (hx | ⟨i, hx⟩)
+      · left
+        exact R.injective hx
+      · obtain ⟨j, rfl⟩ := E.surjective i
+        right
+        refine ⟨j, R.injective ?_⟩
+        exact hx.trans (congrArg Sum.inr (congrArg (Sigma.mk (E j)) (hb j))).symm
+  let Q : FamilyWedge c ≃ₜ FamilyWedge c' := Homeomorph.Quotient.congr R (by
+    intro x y
+    change (x = y ∨ (x ∈ basePoints c ∧ y ∈ basePoints c)) ↔
+      (R x = R y ∨ (R x ∈ basePoints c' ∧ R y ∈ basePoints c'))
+    rw [R.injective.eq_iff, ← bases x, ← bases y])
+  exact ⟨Q, rfl⟩
+
+section FiniteCoproduct
+
+variable {A : Type u} [Fintype A] {I : A → Type v} [∀ a, Fintype (I a)]
+    (d : ∀ a, I a → ℕ) (q : ∀ a j, StdSphere (d a j))
+
+private abbrev Component := A ⊕ (Σ a, ZeroIndex (d a))
+
+private def componentList : Component d → List PositiveDimension :=
+  Sum.elim (fun a => dimensionList (fun j : PositiveIndex (d a) => ⟨d a j.val, j.property⟩))
+    (fun _ => [])
+
+/-- Reassemble the normalized positive bouquets and all isolated S0 poles into
+one dependent finite coproduct, then enumerate that coproduct by Fin. -/
+def finiteCoproductHomeomorph :
+    (Σ a, FamilyWedge (q a)) ≃ₜ
+      Model (fun k : Fin (Fintype.card (Component d)) =>
+        componentList d ((Fintype.equivFin (Component d)).symm k)) := by
+  let C := Component d
+  let l := componentList d
+  let positive : (Σ a, PositiveWedge (d a)) ≃ₜ
+      (Σ a, Bouquet (l (Sum.inl a))) :=
+    (Equiv.sigmaCongrRight (fun a =>
+      (positiveListHomeomorph (fun j : PositiveIndex (d a) =>
+        ⟨d a j.val, j.property⟩)).val.toEquiv)).toHomeomorphOfContinuousOpen
+      (Continuous.sigma_map (fun a =>
+        (positiveListHomeomorph (fun j : PositiveIndex (d a) =>
+          ⟨d a j.val, j.property⟩)).val.continuous))
+      (isOpenMap_sigma_map.mpr (fun a =>
+        (positiveListHomeomorph (fun j : PositiveIndex (d a) =>
+          ⟨d a j.val, j.property⟩)).val.isOpenMap))
+  let isolated : (Σ a, ZeroIndex (d a)) ≃ₜ
+      (Σ z : (Σ a, ZeroIndex (d a)), Bouquet (l (Sum.inr z))) :=
+    (Equiv.sigmaUnique _ (fun _ => Bouquet [])).symm.toHomeomorphOfDiscrete
+  let distribute : (Σ c : C, Bouquet (l c)) ≃ₜ
+      (Σ a, Bouquet (l (Sum.inl a))) ⊕
+        (Σ z : (Σ a, ZeroIndex (d a)), Bouquet (l (Sum.inr z))) := {
+    toEquiv := Equiv.sumSigmaDistrib (fun c : C => Bouquet (l c))
+    continuous_toFun := continuous_sigma_iff.mpr (by
+      rintro (a | z)
+      · exact continuous_inl.comp continuous_sigmaMk
+      · exact continuous_inr.comp continuous_sigmaMk)
+    continuous_invFun := Continuous.sumElim
+      (Continuous.sigma_map (fun _ => continuous_id))
+      (Continuous.sigma_map (fun _ => continuous_id)) }
+  let E := Fintype.equivFin C
+  let enumerate : (Σ k : Fin (Fintype.card C), Bouquet (l (E.symm k))) ≃ₜ
+      (Σ c : C, Bouquet (l c)) :=
+    (Equiv.sigmaCongrLeft E.symm).toHomeomorphOfContinuousOpen
+      (Continuous.sigma_map (fun _ => continuous_id))
+      (isOpenMap_sigma_map.mpr (fun _ => isOpenMap_id))
+  exact (SphereWedgePositiveNormalization.coproductNormalizationHomeomorph d q).val.trans
+    ((Homeomorph.sumCongr positive isolated).trans (distribute.symm.trans enumerate.symm))
+
+end FiniteCoproduct
+
+section CompactSource
+
+variable {X : Type w} [TopologicalSpace X]
+
+/-- An empty source has zero outer summands, not a one-point bouquet. -/
+def emptyModel [IsEmpty X] : HomotopyModel X where
+  size := 0
+  bouquets := Fin.elim0
+  equivalence := (Homeomorph.empty : X ≃ₜ Model (Fin.elim0 : Fin 0 → _)).toHomotopyEquiv
+
+/-- Compact nonempty sources with arbitrary sphere-coproduct models have actual
+finite positive-list models, with strictly positive outer size. -/
+def nonemptyCompactModel [CompactSpace X] [Nonempty X]
+    {A : Type u} {I : A → Type v} (d : ∀ a, I a → ℕ)
+    (q : ∀ a j, StdSphere (d a j)) (e : X ≃ₕ WedgeSum q) :
+    {M : HomotopyModel X // 0 < M.size} := by
+  let R := CompactWedgeFiniteFactor.finiteFactor q e.toFun
+  let d' := fun (a : R.outer) (j : R.inner a) => d a.val j.val
+  let q' := fun (a : R.outer) (j : R.inner a) => q a.val j.val
+  let N := finiteCoproductHomeomorph d' q'
+  let E := (CompactWedgeFiniteFactor.finiteFactorHomotopyEquiv q e).trans N.toHomotopyEquiv
+  refine ⟨⟨_, _, E⟩, ?_⟩
+  let x : X := Classical.choice inferInstance
+  exact Nat.zero_lt_of_lt (E.toFun x).1.isLt
+
+/-- Transport from an arbitrary sphere-coproduct source model. Neither original
+index family is assumed finite; compactness produces the finite selections. -/
+def compactModel [CompactSpace X] {A : Type u} {I : A → Type v}
+    (d : ∀ a, I a → ℕ) (q : ∀ a j, StdSphere (d a j))
+    (e : X ≃ₕ WedgeSum q) : HomotopyModel X := by
+  classical
+  by_cases h : Nonempty X
+  · letI := h
+    exact (nonemptyCompactModel d q e).val
+  · letI : IsEmpty X := ⟨fun x => h ⟨x⟩⟩
+    exact emptyModel
+
+/-- The single arbitrary wedge alternative uses an actual one-summand
+coproduct homeomorphism before the compact transport. -/
+def compactWedgeModel [CompactSpace X] {J : Type v} (d : J → ℕ)
+    (q : ∀ j, StdSphere (d j)) (e : X ≃ₕ FamilyWedge q) : HomotopyModel X := by
+  let one : (Σ _ : Unit, FamilyWedge q) ≃ₜ FamilyWedge q := {
+    toEquiv := (Equiv.sigmaEquivProd Unit (FamilyWedge q)).trans
+      (Equiv.uniqueProd Unit (FamilyWedge q))
+    continuous_toFun := continuous_sigma_iff.mpr (fun _ => continuous_id)
+    continuous_invFun := continuous_sigmaMk }
+  exact compactModel (fun _ : Unit => d) (fun _ : Unit => q)
+    (e.trans one.symm.toHomotopyEquiv)
+
+/-- The contractible alternative has one empty bouquet, with actual maps. -/
+def contractibleModel [ContractibleSpace X] : HomotopyModel X := by
+  letI : Unique (Model (fun _ : Fin 1 => ([] : List PositiveDimension))) :=
+    { default := ⟨0, default⟩
+      uniq := by rintro ⟨i, x⟩; have hi : i = 0 := Fin.eq_zero i; subst i; congr }
+  exact ⟨1, fun _ => [], (ContractibleSpace.hequiv_unit X).some.trans
+    (Homeomorph.homeomorphOfUnique Unit _).toHomotopyEquiv⟩
+
+#print axioms positiveListHomeomorph
+#print axioms finiteCoproductHomeomorph
+#print axioms nonemptyCompactModel
+#print axioms compactModel
+#print axioms compactWedgeModel
+#print axioms contractibleModel
+
+end CompactSource
+end D5.S3.Geometry.CompactSphereNormalForm
