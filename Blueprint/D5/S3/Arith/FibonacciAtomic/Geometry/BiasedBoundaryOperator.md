@@ -157,4 +157,4 @@ For any positive a, symmetry forces a covariance eigenvector's coordinates to va
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryOperator.centeredTrace`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryOperator.covarianceEigenEquiv`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm](BiasedBoundaryFreeRootForm.md)
-- Dependency: [D5/S3/Quantum/Analysis/TraceClass/Spectral](../../../Quantum/Analysis/TraceClass/Spectral.md)
+- Dependency: [D5/S3/Quantum/Analysis/CompactEigenbasis](../../../Quantum/Analysis/CompactEigenbasis.md)
