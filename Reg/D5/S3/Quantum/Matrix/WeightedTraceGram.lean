@@ -11,6 +11,7 @@ open LeanInformationAudit Matrix
 open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 namespace Reg.D5.S3.Quantum.Matrix.WeightedTraceGram
 noncomputable section
+attribute [local simp] Matrix.PosSemidef.zero Matrix.PosSemidef.one
 universe u v
 
 namespace weighted_traceGram_nonneg
@@ -29,16 +30,16 @@ private def rejected : Realization signature :=
   realize signature (fun _ _ _ => False) (fun e => nomatch e)
 private abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
-    {m : Type v} [Fintype m] [DecidableEq m]
+  Law R := ∀ {n : Type u} {m : Type v}
+    [Fintype n] [DecidableEq n] [Fintype m] [DecidableEq m]
     (L T : Matrix n n ℂ) (q : m → Matrix n n ℂ) (M : Matrix m m ℝ),
     L.PosSemidef → T.PosSemidef → M.PosSemidef →
     R.readout () () (traceGram L T q M)
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
   exact h (n := ULift.{u} Unit) (m := ULift.{v} Unit) 0 0 (fun _ => 0) 0
     (by simp) (by simp) (by simp)
-private theorem sensitivity : Sensitivity arena actual := by
+private theorem sensitivity : Sensitivity arena.{u,v} actual := by
   constructor
   · intro i
     refine ⟨rejected, ?_, ?_, rejected_law⟩
@@ -52,7 +53,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, -1, ?_⟩
   norm_num [actual, realize]
-def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Matrix.WeightedTraceGram.weighted_traceGram_nonneg.{u,v})) where
+def family : Registration arena.{u,v} (type_of% (@_root_.D5.S3.Quantum.Matrix.WeightedTraceGram.weighted_traceGram_nonneg.{u,v})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Matrix.WeightedTraceGram.weighted_traceGram_nonneg.{u,v}, rejected, rejected_law⟩
@@ -65,11 +66,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realizationName := `Reg.D5.S3.Quantum.Matrix.WeightedTraceGram.weighted_traceGram_nonneg.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u,v}⟩
+  objectArena := .source ⟨arena.{u,v}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u,v} ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ s => 0 ≤ s) (fun e => nomatch e))
@@ -82,5 +83,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end weighted_traceGram_nonneg
+
+end
 
 end Reg.D5.S3.Quantum.Matrix.WeightedTraceGram

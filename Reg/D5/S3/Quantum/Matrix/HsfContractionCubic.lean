@@ -11,6 +11,7 @@ open LeanInformationAudit Matrix
 open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 namespace Reg.D5.S3.Quantum.Matrix.HsfContractionCubic
 noncomputable section
+attribute [local simp] Matrix.PosSemidef.zero Matrix.PosSemidef.one
 universe u v
 
 namespace coefficient_gap_identity
@@ -36,10 +37,10 @@ private abbrev arena : Arena where
      WeightedTraceGram.traceGram A K (words A B K) HsfContractionGrams.M01+
      WeightedTraceGram.traceGram B (1-K) (words A B K) HsfContractionGrams.M10+
      WeightedTraceGram.traceGram B K (words A B K) HsfContractionGrams.M11)
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   exact h (n := ULift.{u} Unit) 0 0 0 (by simp) (by simp) (by simp)
-private theorem sensitivity : Sensitivity arena actual := by
+private theorem sensitivity : Sensitivity arena.{u} actual := by
   constructor
   · intro i
     refine ⟨rejected, ?_, ?_, rejected_law⟩
@@ -53,7 +54,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), (0,0), (0,1), ?_⟩
   norm_num [actual, realize]
-def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfContractionCubic.coefficient_gap_identity.{u})) where
+def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfContractionCubic.coefficient_gap_identity.{u})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfContractionCubic.coefficient_gap_identity.{u}, rejected, rejected_law⟩
@@ -66,11 +67,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfContractionCubic.coefficient_gap_identity.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ s => s.1 = s.2) (fun e => nomatch e))
@@ -103,10 +104,10 @@ private abbrev arena : Arena where
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n] (U H K : Matrix n n ℂ),
     H.PosSemidef → (U-H).PosSemidef → K.PosSemidef → (1-K).PosSemidef →
     R.readout () () (6*HsfQubitMixedCubic.coefficient3 U H K, 2*HsfQubitMixedCubic.coefficient2 U H K)
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   exact h (n := ULift.{u} Unit) 0 0 0 (by simp) (by simp) (by simp) (by simp)
-private theorem sensitivity : Sensitivity arena actual := by
+private theorem sensitivity : Sensitivity arena.{u} actual := by
   constructor
   · intro i
     refine ⟨rejected, ?_, ?_, rejected_law⟩
@@ -120,7 +121,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), (0,0), (1,0), ?_⟩
   norm_num [actual, realize]
-def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfContractionCubic.coefficient_gap_nonneg.{u})) where
+def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfContractionCubic.coefficient_gap_nonneg.{u})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfContractionCubic.coefficient_gap_nonneg.{u}, rejected, rejected_law⟩
@@ -133,11 +134,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfContractionCubic.coefficient_gap_nonneg.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ s => s.1 ≤ s.2) (fun e => nomatch e))
@@ -150,5 +151,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end coefficient_gap_nonneg
+
+end
 
 end Reg.D5.S3.Quantum.Matrix.HsfContractionCubic

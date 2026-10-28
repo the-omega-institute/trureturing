@@ -11,6 +11,7 @@ open LeanInformationAudit Matrix
 open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 namespace Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicCompatibility
 noncomputable section
+attribute [local simp] Matrix.PosSemidef.zero Matrix.PosSemidef.one
 universe u v
 
 namespace positive_direction_bound
@@ -32,10 +33,10 @@ private abbrev arena : Arena where
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n] (U H K : Matrix n n ℂ),
     H.PosSemidef → (U-H).PosSemidef → K.PosSemidef → (1-K).PosSemidef →
     R.readout () () (iteratedDeriv 3 (curve U H K) 0, iteratedDeriv 2 (curve U H K) 0)
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   exact h (n := ULift.{u} Unit) 0 0 0 (by simp) (by simp) (by simp) (by simp)
-private theorem sensitivity : Sensitivity arena actual := by
+private theorem sensitivity : Sensitivity arena.{u} actual := by
   constructor
   · intro i
     refine ⟨rejected, ?_, ?_, rejected_law⟩
@@ -49,7 +50,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), (0,0), (1,0), ?_⟩
   norm_num [actual, realize]
-def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicCompatibility.positive_direction_bound.{u})) where
+def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicCompatibility.positive_direction_bound.{u})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicCompatibility.positive_direction_bound.{u}, rejected, rejected_law⟩
@@ -62,11 +63,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicCompatibility.positive_direction_bound.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ s => s.1 ≤ s.2) (fun e => nomatch e))
@@ -101,10 +102,10 @@ private abbrev arena : Arena where
     let g := curve U ((1/2 : ℝ) • (U+H)) ((1/2 : ℝ) • (1+K))
     R.readout () () ((iteratedDeriv 2 (curve U H K) 0,iteratedDeriv 3 (curve U H K) 0),
       (iteratedDeriv 2 g 0,iteratedDeriv 3 g 0))
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   exact h (n := ULift.{u} Unit) 0 0 0 (by simp)
-private theorem sensitivity : Sensitivity arena actual := by
+private theorem sensitivity : Sensitivity arena.{u} actual := by
   constructor
   · intro i
     refine ⟨rejected, ?_, ?_, rejected_law⟩
@@ -118,7 +119,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), ((0,0),(0,0)), ((1,0),(0,0)), ?_⟩
   norm_num [actual, realize]
-def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicCompatibility.signed_derivative_transfer.{u})) where
+def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicCompatibility.signed_derivative_transfer.{u})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicCompatibility.signed_derivative_transfer.{u}, rejected, rejected_law⟩
@@ -131,11 +132,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicCompatibility.signed_derivative_transfer.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ s => s.1.1 = 4*s.2.1 ∧ s.1.2 = 12*s.2.1+8*s.2.2) (fun e => nomatch e))
@@ -169,10 +170,10 @@ private abbrev arena : Arena where
     K.IsHermitian → (U+H).PosSemidef → (U-H).PosSemidef →
     (1+K).PosSemidef → (1-K).PosSemidef →
     R.readout () () (iteratedDeriv 2 (curve U H K) 0,iteratedDeriv 3 (curve U H K) 0)
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   exact h (n := ULift.{u} Unit) 0 0 0 (by simp) (by simp) (by simp) (by simp) (by simp)
-private theorem sensitivity : Sensitivity arena actual := by
+private theorem sensitivity : Sensitivity arena.{u} actual := by
   constructor
   · intro i
     refine ⟨rejected, ?_, ?_, rejected_law⟩
@@ -186,7 +187,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), (0,0), (0,1), ?_⟩
   norm_num [actual, realize]
-def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicCompatibility.identity_cubic_compatibility.{u})) where
+def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicCompatibility.identity_cubic_compatibility.{u})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Matrix.HsfIdentityCubicCompatibility.identity_cubic_compatibility.{u}, rejected, rejected_law⟩
@@ -199,11 +200,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicCompatibility.identity_cubic_compatibility.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ s => 0 ≤ s.1 ∧ |s.2| ≤ 5*s.1) (fun e => nomatch e))
@@ -282,5 +283,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end sharp5
+
+end
 
 end Reg.D5.S3.Quantum.Matrix.HsfIdentityCubicCompatibility

@@ -11,6 +11,7 @@ open LeanInformationAudit Matrix
 open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 namespace Reg.D5.S3.Quantum.Matrix.HsfContractionGrams
 noncomputable section
+attribute [local simp] Matrix.PosSemidef.zero Matrix.PosSemidef.one
 universe u v
 
 namespace grams_posSemidef
@@ -82,5 +83,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end grams_posSemidef
+
+end
 
 end Reg.D5.S3.Quantum.Matrix.HsfContractionGrams
