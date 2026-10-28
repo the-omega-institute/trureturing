@@ -3183,3 +3183,1076 @@ sustained search for a common space/time/boundary/memory relation structure
 or establish universal alpha/beta minimality.
 
 ## 追加锚（本行以下为增补区）
+
+## 28. Dense rational entrances under two exact floor interfaces
+
+**Definition 28.1 (QN and requested-precision native service).** These
+sections use the original material of Definition 2.1, with the original
+unit, zero-diagonal adjacency law
+
+$$
+\operatorname{Tick}(x)=A_t x,
+\tag{28.1}
+$$
+
+rather than the contracting law (2.2). Growth is the persistent fresh-zero
+inclusion, without an attached Tick. Use the six-operation no-Reset
+installation of [Native Leaf Boundary Acquisition II, Assumption 34.1
+and Theorem 64.1](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md#34-arbitrary-field-acquisition-in-the-six-operation-installation),
+abbreviated NLBAII, with these explicitly different numerical Read
+contracts. The term, complete terminal map and known law may already be
+earned; they are field-independent context, with actual source bindings
+and rights, rather than unknown coordinates supplied for free.
+
+In QN an installed rational $h>0$ specifies
+
+$$
+\operatorname{Read}_h(j)=\left\lfloor x_{\lambda(j)}/h\right\rfloor.
+\tag{28.2}
+$$
+
+The reply is the entire signed integer, with no clipping or saturation.
+In the separately installed requested-precision service, a completed
+$\operatorname{Read}(j,p)$, $p\in\mathbb N$, returns
+
+$$
+\left\lfloor 2^p x_{\lambda(j)}\right\rfloor.
+\tag{28.3}
+$$
+
+The precision request has its actual finite encoding and cost. Arbitrary
+rational $h$ in (28.2) is not a new opcode silently available in (28.3).
+Their identical fixed-scale subcase is $h=2^{-p_0}$ when that precision is
+actually installed. A robust variant of (28.3) allows either the displayed
+integer or that integer plus one at every successful Read; it is a
+separate interface. The positive results below use deterministic (28.2),
+not that variant.
+
+All other full requests and replies are NLBAII's original ones. Add is
+an exact rational translation at the actual currently bound terminal;
+Tick, Add and Hold have fixed acknowledgements. Successful P/S return the
+original Growth result and update the genuine roster and fresh grants by
+NLBAII Definition 17.3. Distinct absent, branch and wrong-type growth
+refusals, out-of-roster RangeRefusal, complete BadFrame, proper incomplete
+frames and disabled calls retain their meanings. In particular a complete
+former Reset tag is BadFrame with identity successor. Hold and Read do
+not evolve the field. Calls, matching retained updates, all output bytes,
+End, acknowledgement and Return are serially completed. There is no
+concurrent writer, unrequested evolution or exposed exhaustion branch.
+Every asserted finite execution has sufficient actual backing and rights.
+
+Fix a finite reachable initial tree with $N_0\ge2$ material vertices.
+The usual branching domain has at least three terminals; allowing also
+smaller reachable trees is an explicit extension of the same service
+rules, used only where stated. At attachment $x\in\mathbb Q^{N_0}$ is
+arbitrary. The receiver is cleared in the sense of NLBAII Definition
+61.1: every accessible initial record, program, selector, provider state,
+parser, counter, reference byte and advice is independent of $x$. Only
+successful numerical Reads add field information. Timing, allocation
+names, capacity, arithmetic duration, hidden archives and field-dependent
+metadata are not additional observations. Isolated producer records still
+have paid backing. Initially known $D$ in §30 will be an additional class
+promise, not a consequence of this dense entrance.
+
+A causal protocol can adapt its exact rational Adds, growth, Ticks,
+Holds, Reads, requested precisions and local computation to the whole
+acquired record. A terminating run has finitely many completed calls and
+finite acquired and produced strings; there is no common bound on their
+number, width or local work. After its acquisition cutoff, an autonomous
+predictor uses its retained record and source-independent computation,
+without further numerical source calls or dependent-archive consultation.
+A live handle forwarding later paid Reads is a different useful service.
+
+**Theorem 28.2 (one-sided collision of the complete terminating record).**
+For every deterministic protocol of Definition 28.1, every rational
+entrance $x$ on which it terminates has a distinct rational entrance
+$x'=x+\epsilon\mathbf1$, $\epsilon>0$, with the identical complete
+terminating record, local state and stopping decision. This holds for
+fixed QN, and separately for arbitrary finite adaptively requested
+precisions. The final trees and contexts agree, while their fields differ
+by $\epsilon v$, where $v\ge0$ and $v$ is strictly positive on every
+original vertex. It also supplies a counterexample to an all-nuisance
+guarantee for the robust variant by its admissible zero-nuisance runs.
+
+Proof. Freeze one actual finite terminating run, including its input
+frames, adaptive choices, full replies and local execution. On its fixed
+prefix the field, as a function of the initial vector $z$, has form
+
+$$
+F_i z+c_i,\qquad
+F_i\in\mathbb Z_{\ge0}^{N_i\times N_0},\quad c_i\in\mathbb Q^{N_i}.
+\tag{28.4}
+$$
+
+Initially $F_i$ is the identity. Add changes only $c_i$; Tick
+left-multiplies both terms by the current nonnegative integer adjacency;
+successful growth zero-includes both terms; identity operations and
+refusals preserve them. Thus (28.4) follows by induction, with all matrix
+dimensions belonging to this same finite run.
+
+At successful Read $i$ let the frozen scalar be $a_i z+d_i$, with
+$a_i\ge0$ an integer row, and let its actual bin width be $h_i>0$.
+Here $h_i=h$ for QN and $h_i=2^{-p_i}$ for (28.3). Put
+
+$$
+q_i=\left\lfloor(a_i x+d_i)/h_i\right\rfloor,
+\qquad \sigma_i=h_i(q_i+1)-(a_i x+d_i)>0.
+\tag{28.5}
+$$
+
+Every upper slack is strictly positive, even when the original value is
+on the closed lower wall of its bin, and also for negative values.
+For each nonzero $a_i$ require
+
+$$
+0<\epsilon<\frac{\sigma_i}{a_i\mathbf1}.
+\tag{28.6}
+$$
+
+There are finitely many positive rational bounds. Choose one positive
+rational below all of them; if there are none choose any positive
+rational. At $x+\epsilon\mathbf1$ each sampled value has increased
+nonnegatively and remains strictly below the same upper wall. It remains
+at or above the same lower wall, so its entire floor integer agrees.
+Rows $a_i=0$ give identical values without a bound.
+
+The frozen path is now justified on this one alternative entrance, not
+assumed common. Equal complete previous replies and local states force
+the same next input bytes, operands, precision, selector and local
+choices. The graph and roster are the same; therefore guards, range,
+malformed/proper-prefix behavior and grants agree. At a Read, (28.5)–
+(28.6) give the same whole reply, hence the same framing and completion.
+Other results are field independent. Induction gives the same path,
+including stop and output, for the entire finite execution.
+
+Let $F$ be its final homogeneous map and $v=F\mathbf1$. Initially this
+vector is positive on all original vertices. Growth preserves their
+values and all their original edges. Each original vertex has an
+original neighbor since the initial tree is connected and $N_0\ge2$.
+A Tick therefore preserves strict positivity at each original vertex;
+elsewhere it preserves nonnegativity. Common Adds cancel from the
+difference. Consequently the final difference is $\epsilon v$ with
+the stated nonzero positive support. For the robust variant choose
+zero nuisance at every Read in both runs; that is a permitted pair of
+realizations. $\square$
+
+This argument uses positivity of the homogeneous dependence instead of
+continuity of floor at its walls. The off-boundary premise of
+[FinitePrefixLocalConstancy](../../../D5/S3/Observer/SymbolicStability/FinitePrefixLocalConstancy.lean)
+is not imposed at (28.5). Nor does §19's two-legal-output open-neighborhood
+argument change this deterministic interface or the law (28.1).
+
+**Corollary 28.3 (exact current service and physical nulling are not
+finitely acquired over the dense entrance).** No such protocol can,
+for every rational entrance, terminate with an exact autonomous predictor
+of the complete current QN service, an exact whole-current-field report,
+or an actual all-zero current field. The same conclusion holds for the
+requested-precision installation. The service statement concerns all
+common finite sufficiently backed continuations, not merely unperturbed
+passive responses.
+
+Proof. Theorem 28.2 gives identical stopped receiver states and distinct
+actual current vectors $w,w+\epsilon v$. Distinct reports cannot both
+be returned by the same local state, and the two physical endpoints
+cannot both be zero. To distinguish complete current services, choose
+an original vertex $s$ with $v_s>0$ and any current terminal $j$.
+Let $d$ be their graph distance on the common final tree, with adjacency
+$B$. After $d$ common Ticks the terminal difference is positive, since
+
+$$
+(B^d v)_j\ge v_s>0.
+\tag{28.7}
+$$
+
+Nonnegative walk counting proves the inequality: the simple path from
+$s$ to $j$ contributes one summand. Write the two rational terminal
+values at that epoch as $a<a'$. Execute the same legal
+$\operatorname{Add}(j,-(a+a')/2)$, then Hold and Read. The values are
+$-(a'-a)/2<0$ and $(a'-a)/2>0$. At any positive bin width the first
+floor is at most $-1$ and the second at least $0$. For (28.3) one may
+use $p=0$. This is a common finite distinguishing continuation.
+
+The operand is an existential witness to inequality of two task
+functions; the acquiring receiver is not granted either unknown value
+or their midpoint. Its identical stopped state cannot supply both exact
+services. This proof includes the nonbranching two-vertex beta; it does
+not assert exponential growth of its passive responses. $\square$
+
+Reset, signed homogeneous measurement rows, exact rational Reads,
+source-dependent accessible advice, or a genuinely discrete entrance
+would change a load-bearing premise. In particular on the one-vertex
+alpha, Tick erases the field, so the $N_0\ge2$ current/nulling statement
+cannot be extended by omitting that condition.
+
+## 29. Branching gives unbounded stopped autonomous error
+
+**Definition 29.1 (the future task at the actual cutoff).** Suppose the
+initial native tree has at least three terminals. The cutoff of any
+terminating acquisition has a definite final tree, adjacency $B$ and
+field $w$. Fix any of its current terminals $j$. The real response curve
+and the deterministic digital response curve at an actually available
+fixed scale $h_*>0$ are
+
+$$
+f_w(k)=(B^k w)_j,
+\qquad g_w(k)=\left\lfloor(B^k w)_j/h_*\right\rfloor,
+\qquad k\in\mathbb N.
+\tag{29.1}
+$$
+
+For requested precision use $h_*=2^{-p_0}$, with fixed $p_0\ge0$.
+Each value refers to the pure-Tick continuation followed by a held Read;
+Read and Hold have identity field successor. An autonomous forecast is
+a function $\widehat r:\mathbb N\to\mathbb R$ determined by the stopped
+receiver state; arbitrary further source-independent computation is
+allowed. Its loss is the supremum,
+over all $k$, of absolute response error, taking value $+\infty$ when
+unbounded. The task quantifies sufficiently backed finite continuations
+of every length; it does not assume an infinite physical run with finite
+backing.
+
+**Theorem 29.2 (infinite conditional worst-case error).** At every
+realized terminating record in this branching dense-entrance model,
+there are two compatible rational entrances whose curves $f$ have
+infinite supremum distance, and whose curves $g$ have infinite supremum
+distance. Every common autonomous forecast has infinite supremum error
+on at least one of them. Thus the infimum over all forecasts of their
+worst compatible-source error is $+\infty$ at that record, for either
+target of (29.1).
+
+Proof. Use the compatible pair of Theorem 28.2, with final difference
+$\epsilon v$. A rooted native tree with at least three terminals has
+an unrooted degree-three vertex: it has a nonroot logical branch, whose
+two children and parent are distinct neighbors. That vertex persists
+through subsequent growth. Choose such a vertex $r$, a vertex $s$ with
+$v_s>0$, and the fixed terminal $j$. Put
+
+$$
+d_0=\operatorname{dist}(s,r)+\operatorname{dist}(r,j).
+\tag{29.2}
+$$
+
+Follow a fixed path from $s$ to $r$. Make $m$ successive two-step
+excursions $r\to u\to r$, independently choosing one of the three
+neighbors of $r$ at each excursion. Then follow a fixed path from $r$
+to $j$. The $3^m$ neighbor-choice strings give distinct walks of the
+same length $d_0+2m$. The ordinary adjacency-power/walk identity gives
+
+$$
+(B^{d_0+2m}\epsilon v)_j\ge\epsilon v_s3^m.
+\tag{29.3}
+$$
+
+For real $a\le b$, $\lfloor b\rfloor-\lfloor a\rfloor>b-a-1$.
+Applying this with scale $1/h_*$ shows that the corresponding digital
+difference is at least $\epsilon v_s3^m/h_*-1$. Both distances are
+unbounded. If one forecast had finite supremum errors $E,E'$ on both
+curves, their pairwise distance would be at most $E+E'$ at every epoch,
+a contradiction. This proves the worst-case assertion for every
+forecast and hence its infimum. $\square$
+
+The walk identity used here is the standard one in pinned mathlib's
+[SimpleGraph/AdjMatrix.lean](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Combinatorics/SimpleGraph/AdjMatrix.lean),
+`SimpleGraph.adjMatrix_pow_apply_eq_card_walk`. The new source-local
+step is its use on the same positive difference surviving the entire
+adaptive terminating service, rather than on an unrelated favorable
+initialization. Contraction-dependent
+[QuantizedWordApproximation](../../../D5/S3/ObserverMemory/Prediction/QuantizedWordApproximation.lean)
+and the strictly stable scalar
+[RankOneInfiniteHorizonRisk](../../../D5/S3/Observer/Hankel/RankOneInfiniteHorizonRisk.lean)
+have different hypotheses and conclusions. None supplies a bounded
+all-future error for this branching unit law.
+
+**Corollary 29.3 (robustness and the zero-error random-tape boundary).**
+An all-nuisance guarantee for the robust requested-precision interface
+cannot avoid the deterministic obstruction above. Nor can a
+field-independent randomized protocol be separately almost surely
+terminating and exactly correct on every rational entrance for any of
+the exact tasks in Corollary 28.3.
+
+Proof. Zero nuisance is allowed after every prefix, so the deterministic
+pair remains admitted. For randomization, fix the graph and context.
+The rational entrance set is countable. Intersect the probability-one
+events of termination and exact correctness for every entrance. A tape
+in this countable intersection makes a deterministic protocol correct
+and terminating on all of them, contradicting Corollary 28.3. $\square$
+
+This is not a positive-error randomized minimax rate. No infinite-error
+claim is made for every $N_0\ge2$ nonbranching graph, a contracting law,
+Reset-assisted current tasks or a receiver that continues to acquire
+actual source data after the advertised cutoff. Finite-horizon error
+bounds and ongoing paid observation remain compatible with Theorem 29.2.
+
+## 30. An assured lattice converts infinite separation to finite acquisition
+
+**Definition 30.1 (the arithmetic observation problem and its native
+consumer).** Let $N,m\ge1$, $I\ge0$ be integers, let
+$A=A^{\mathsf T}\in\mathbb Z^{N\times N}$, and let
+$C\in\mathbb Q^{m\times N}$. Assume the known stacked matrix and a
+known rational matrix $K$ satisfy
+
+$$
+O_I=\begin{pmatrix}C\\CA\\\vdots\\CA^I\end{pmatrix},
+\qquad KO_I=\operatorname{Id}_N,
+\qquad \kappa=\|K\|_{\infty\to\infty}>0.
+\tag{30.1}
+$$
+
+For an integer $D\ge1$ let $\Lambda_D=D^{-1}\mathbb Z^N$. There is
+no bound on its coordinate magnitudes. For rational $h>0$ put
+
+$$
+R_H(x)=\left(\left\lfloor CA^k x/h\right\rfloor\right)_{k=0}^{H},
+\tag{30.2}
+$$
+
+where floor is componentwise and the finite blocks retain their epoch
+and output indices. The native consumer takes $A=A_t$, terminal inclusion
+$J$, $C=J^{\mathsf T}$ and $I=N-b$, where $b$ is the actual number of
+terminals. These are known earned matrices, not measurements supplied
+by a response oracle. NLBA's all-leaf forcing, NLBAII (58.3) and symmetry
+supply an integer $K$ satisfying (30.1): transpose the terminal
+controllability right inverse. Explicitly, start with the terminal
+vectors; when a marked vertex has one unmarked neighbor, subtract its
+already represented other neighbors from $Ae_v$. The result is that
+neighbor's coordinate vector. The existing tree forcing order finishes
+in at most $I$ steps and increases polynomial degree by at most one
+per step. Thus its integer terminal polynomials have degree at most $I$.
+No nonlinear coordinate or unknown-law acquisition is asserted here.
+
+For QN-D, preparation authentically assures $x\in\Lambda_D$ and
+supplies $D$ before acquisition, besides the known graph/law, units,
+exact deterministic QN interface and genuine access. This is an
+additional entrance premise, with the producer and its isolation paid
+as in Construction 33.1. The fixed $h$ is supplied by the installation.
+A finite record fitting a denominator does not certify this promise.
+
+**Theorem 30.2 (the bounded rational difference and effective passive
+horizon).** Under (30.1), for every $v\in\mathbb Q^N$,
+
+$$
+\sup_{k\ge0}\|CA^k v\|_\infty<\infty
+\quad\Longleftrightarrow\quad A(A^2-\operatorname{Id})v=0.
+\tag{30.3}
+$$
+
+Consequently the following are equivalent:
+
+1. $A$ has no eigenvalue $0,1,-1$.
+2. For every $D\ge1$ and rational $h>0$, a finite effectively
+   computable $H\ge I$, depending only on $A,C,K,D,h$, makes $R_H$
+   injective on all of $\Lambda_D$.
+
+In case 1, the record has a terminating exact decoder, whose number
+of initial candidates is at most
+
+$$
+\bigl(\lfloor D\kappa h\rfloor+2\bigr)^N.
+\tag{30.4}
+$$
+
+The horizon is independent of the unknown entry height. This is a
+passive entrance theorem at every scale; it is not a characterization
+of active acquisition or of current-only recovery after erased modes.
+
+Proof. For each $k$ the supplied inverse gives
+
+$$
+A^k v=K\begin{pmatrix}CA^k v\\CA^{k+1}v\\\vdots\\CA^{k+I}v\end{pmatrix}.
+\tag{30.5}
+$$
+
+If the boundary sequence is bounded, the state sequence is bounded.
+Choose a common positive denominator $d$ for $v$. Integer $A$ places
+every $A^k v$ in $d^{-1}\mathbb Z^N$. A bounded box contains only
+finitely many such points, so $A^r v=A^s v$ for some $0\le r<s$.
+Use the ordinary real spectral decomposition of the symmetric matrix
+$A$. Every nonzero spectral component of $v$ has real eigenvalue
+$\lambda$ satisfying $\lambda^r(\lambda^{s-r}-1)=0$.
+The only possibilities are $0,1,-1$. Hence
+$A(A^2-\operatorname{Id})v=0$. Conversely this identity implies
+$A^{k+2}v=A^k v$ for all $k\ge1$, so the boundary orbit has only its
+initial value and two subsequent periodic values. This proves (30.3).
+Rationality, integrality and symmetry are all used: a bounded real
+contracting eigenvector alone would not give the lattice repetition.
+
+Assume case 1. Equal initial records $R_I(x)=R_I(x')$ imply that
+corresponding coordinates of $O_Ix,O_Ix'$ lie in one half-open $h$-cell.
+Thus
+
+$$
+\|x-x'\|_\infty
+ \le\kappa\|O_I(x-x')\|_\infty<\kappa h.
+\tag{30.6}
+$$
+
+Effectively enumerate the finite set
+
+$$
+\mathcal V=\{v\in\Lambda_D:0<\|v\|_\infty\le\kappa h\}.
+\tag{30.7}
+$$
+
+For each $v\in\mathcal V$, iterate exact rational powers until an
+epoch $k(v)$ with $\|CA^{k(v)}v\|_\infty>h$ is found. Equation
+(30.3) and case 1 prove that every one of these finite searches
+terminates. Set
+
+$$
+H=\max\bigl(\{I\}\cup\{k(v):v\in\mathcal V\}\bigr).
+\tag{30.8}
+$$
+
+If $\mathcal V$ is empty take $H=I$. For two distinct lattice entries
+with equal $R_H$, (30.6) puts their difference in $\mathcal V$.
+At its witness epoch two corresponding outputs differ in absolute
+value by more than $h$, which is impossible inside one common $h$-cell.
+This proves injectivity on the whole unbounded lattice, without
+sampling the entry in the precomputation.
+
+For decoding, let $q$ be the actual first $I+1$ blocks and form the
+coordinatewise bin centers $r=h(q+\tfrac12\mathbf1)$ and $z=Kr$.
+Then
+
+$$
+\|x-z\|_\infty\le\kappa h/2.
+\tag{30.9}
+$$
+
+Enumerate all $\Lambda_D$ points in the closed box of (30.9), using
+integer ceilings and floors for each coordinate. Each coordinate
+interval has length $\kappa h$, so its number of lattice points is
+at most $\lfloor D\kappa h\rfloor+2$, a conservative bound also
+covering endpoints. Test these candidates against the entire actual
+$R_H$ by rational arithmetic and floor. The true entry is present,
+and injectivity makes it the unique survivor. Enumeration and each
+finite test terminate, proving (30.4) and the decoder assertion.
+
+For the converse suppose $A(A^2-\operatorname{Id})$ is singular.
+Its integer matrix has a nonzero rational kernel vector, hence after
+clearing denominators a nonzero $v\in\mathbb Z^N$. By (30.3) the
+number
+
+$$
+M=\max_{k=0,1,2}\|CA^k v\|_\infty
+\tag{30.10}
+$$
+
+bounds its whole boundary orbit. Choose rational $h>2M$, with $h>0$.
+For each output coordinate at each epoch, its values at entrances
+$v$ and $2v$ have the same sign. Both positive values are in $[0,h)$,
+both negative values in $(-h,0)$, and zeros agree. Their floors are
+therefore equal, respectively $0,-1,0$, forever. These two distinct
+integer entries belong to every $\Lambda_D$. No finite horizon can
+separate them at that scale. Symmetry identifies nonsingularity of
+this polynomial in $A$ with absence of the three stated eigenvalues,
+completing the equivalence. $\square$
+
+The converse chooses a scale; it does not claim failure at every fixed
+$h$. A zero mode may be erased before a current-only task. Nonintegral
+or nonsymmetric systems have not been substituted into
+(30.3). In case 1 the infinite word also separates all rational
+entries: their nonzero rational difference has unbounded boundary
+orbit. Theorem 28.2 nevertheless prohibits a pointwise finite stopping
+rule over dense rational entrances. The authentic lattice earns the
+finite difference set (30.7); infinite-word separation alone does not.
+
+The proof uses mature spectral decomposition, finite lattice repetition,
+ordinary observability and floor inequalities inside this acquisition
+consumer. [FiniteObservabilityEquivalence](../../../D5/S3/Observer/Linear/FiniteObservabilityEquivalence.lean)
+identifies finite kernel/rank/Gram conditions; its real inner-product
+statement does not by itself provide the rational inverse or the
+assured entrance here. The rational $K$ in (30.1) is computed from
+nonzero rational minors; in the native case it is already supplied by
+forcing. [FiniteTimeTomographySaturation](../../../D5/S3/ObserverMemory/Dynamics/FiniteTimeTomographySaturation.lean)
+concerns exact linear kernels, not a finite floor-code stopping horizon.
+
+## 31. An infinite birth-legal family meeting the passive condition
+
+**Theorem 31.1 (native unimodular family).** Define
+
+$$
+\gamma=\langle\beta,\alpha\rangle,
+\qquad t_0=\gamma,
+\qquad t_{n+1}=\langle\gamma,\langle t_n,\beta\rangle\rangle
+\quad(n\ge0).
+\tag{31.1}
+$$
+
+Every $t_n$ is reachable by the original P/S constructors. Its material
+size, number of terminals, number of beta leaves and forcing horizon are
+
+$$
+N_n=4+8n,\quad b_n=2+3n,\quad c_n=1+2n,\quad I_n=2+5n.
+\tag{31.2}
+$$
+
+For its original adjacency $A_n$, $\det A_n=1$ and $0,1,-1$ are not
+eigenvalues. In particular $A_n$ and $A_n^{-1}$ preserve every
+$\Lambda_D$. For $n\ge1$ these are branching sources to which both
+the dense negative results and the separately assured-lattice positive
+result apply, on their different entrance classes.
+
+Proof. Every alpha in (31.1) has an R-ending logical address, and
+prepending the branch addresses in the recurrence does not change its
+last letter. The original reachable-term criterion, AA Theorem 17.2,
+therefore gives birth legality. Gamma has four material vertices, two
+terminals and one beta leaf. One recurrence adds two branch roots,
+one gamma and one beta outside the old term, hence eight vertices,
+three terminals and two beta leaves. This proves (31.2), including
+$I=N-b$. Distinct sizes give an infinite family.
+
+For a rooted material tree $u$ write
+$p_u(z)=\det(z\operatorname{Id}-A_u)$ and let $q_u(z)$ be the
+characteristic polynomial after deleting its material root. The empty
+determinant is one. The base pairs are
+
+$$
+(p_\alpha,q_\alpha)=(z,1),\qquad
+(p_\beta,q_\beta)=(z^2-1,z).
+\tag{31.3}
+$$
+
+The ordinary tree determinant expansion at a binary root gives
+
+$$
+\begin{aligned}
+q_{\langle l,r\rangle}&=p_l p_r,\\
+p_{\langle l,r\rangle}&=z p_l p_r-q_l p_r-p_l q_r.
+\end{aligned}
+\tag{31.4}
+$$
+
+Indeed a nonzero permutation term has only fixed points or edge
+transpositions: a longer permutation cycle would require a graph cycle.
+The root is either fixed, contributing $z p_lp_r$, or transposed
+with the left or right child. That transposition has permutation sign
+minus and product of its two off-diagonal entries one; deleting the
+paired root and child leaves respectively $q_lp_r$ or $p_lq_r$.
+Deleting only the root gives the two separate subtrees, proving both
+identities. Thus no new determinant or matching principle is assumed.
+
+For gamma, (31.3)–(31.4) give
+
+$$
+(p_\gamma(0),q_\gamma(0))=(1,0),\qquad
+(p_\gamma(1),q_\gamma(1))=(-1,0).
+\tag{31.5}
+$$
+
+For an arbitrary old pair $(p_t,q_t)$, substitution first in
+$u=\langle t,\beta\rangle$ and then in
+$\langle\gamma,u\rangle$ sends its evaluation pair at zero to
+$(p_t(0),q_t(0))$, and its pair at one to
+$(p_t(1),p_t(1))$. For example at zero the inner pair is
+$(q_t(0),-p_t(0))$, while at one it is $(-p_t(1),0)$.
+Therefore $p_{t_n}(0)=1$ and $p_{t_n}(1)=-1$ for every $n$.
+
+The material tree is bipartite. Multiplying coordinates in one color
+class by minus one conjugates $A_n$ to $-A_n$; consequently
+$p_{t_n}(-z)=(-1)^{N_n}p_{t_n}(z)$. Since $N_n$ is even,
+$p_{t_n}(-1)=-1$. These three nonzero evaluations exclude $0,1,-1$.
+Also $p_{t_n}(0)=(-1)^{N_n}\det A_n=1$.
+The adjugate formula now makes $A_n^{-1}$ integer, proving its lattice
+automorphism assertion. No claim that every real eigenmode expands
+is used; (30.3) concerns rational vectors. $\square$
+
+## 32. A performed assay, four numerical expressions and actual continued use
+
+**Construction 32.1 (passive QN-D acquisition on the same specimen).**
+Fix an actually built $t_n$, $n\ge1$, with its earned complete map,
+known law, authentic context and supplied $D,h$. Compute $K$ by the
+credited forcing algorithm and $H$ by (30.7)–(30.8). At the held entrance
+$x\in\Lambda_D$, perform Hold and all $b$ Reads in earned order.
+Repeat exactly $H$ times: Tick, Hold, then all $b$ Reads in that order.
+Consume every complete source lifecycle. The numerical record is
+exactly $R_H(x)$, and the actual terminal cut is
+
+$$
+s=A_n^H x.
+\tag{32.1}
+$$
+
+During the final Hold decode $x$ by Theorem 30.2 and compute and retain
+$s$, graph, roster, model and a synchronized complete predictor.
+This executes $b(H+1)$ scalar Reads, $H$ Ticks and $H+1$ Holds,
+with no acquisition Add, growth or Reset. Computing $A_n^{-H}$ is
+local arithmetic; it does not physically reverse any executed Tick.
+
+**Definition 32.2 (independent meanings on the assay image).** Fix
+$n,D,h,H$, the earned graph, output order, units, parser, real bindings,
+rights and the held serial-completion convention as common context.
+The designated phase is the end of precisely one Construction 32.1
+window; any preceding control chronology is excluded from Time. For
+each actual endpoint $s=A_n^Hx$, define the numerical contents:
+
+| Expression | Independently specified observation or retained content |
+| --- | --- |
+| Space | The actual rooted ordered material graph and its entire current field $s$. |
+| Time | The numerical, epoch-labelled replies of the actually performed consecutive window, $R_H(x)$, with its prescribed Hold/Read/Tick schedule. |
+| Boundary | The present finite response word $R_H(s)$ of that same held source to Construction 32.1 begun now. |
+| Memory | The retained integer block $Ds$, with the earned model/update code and genuine callable context. |
+
+Space concerns current cells, Time the performed temporal record,
+Boundary a specified finite terminal-response experiment, and Memory
+retained current numerical state. None is an unrestricted copy of a
+whole history. Boundary has a callable meaning independently of any
+chosen inverse: (28.1)–(28.2) define every response of its probe. After
+acquisition its numerical export can be computed from the earned
+predictor, with paid arithmetic and output. It is not an already
+performed present probe. Executing that probe costs another full assay
+and advances the actual field to $A_n^Hs$.
+
+Reference identity, ownership, permissions, provenance and physical
+occurrence of a record are not numerical contents. They remain actual
+common context. Regenerating the same Time integers does not manufacture
+the original physical record or turn a calculated prediction into a
+performed measurement. A literal retained or exported Time tape and its
+copies have their own backing. Forgetting the designated phase or
+allowing arbitrary earlier journals would change this image.
+
+**Corollary 32.3 (exact routes, task kernel and installed complete
+service).** On this actual QN-D assay image all four numerical contents
+recover one another, every route agrees, and their equality kernels
+are exactly equality of the actual current field in fixed context.
+This is also the kernel of complete current service. Construction 32.1
+installs that service and can actually use it on this specimen.
+
+Proof. Write $\operatorname{Dec}$ for the proved decoder of (30.2).
+The four routes to the same actual field are
+
+$$
+\begin{aligned}
+\mathrm{Space}&\longmapsto s,\\
+\mathrm{Time}=q&\longmapsto A_n^H\operatorname{Dec}(q)=s,\\
+\mathrm{Boundary}=q'&\longmapsto\operatorname{Dec}(q')=s,\\
+\mathrm{Memory}=z&\longmapsto z/D=s.
+\end{aligned}
+\tag{32.2}
+$$
+
+Theorem 31.1 gives the integral inverse $A_n^{-H}$ on $\Lambda_D$.
+Consequently from any one recovered $s$ the reverse routes give
+
+$$
+x=A_n^{-H}s,\qquad R_H(x),\qquad R_H(s),\qquad Ds.
+\tag{32.3}
+$$
+
+The actual window was deterministic on precisely this $x$, so the
+regenerated integers equal its actual measured integers, including all
+epoch labels. Every lattice $s$ has a lattice preimage $A_n^{-H}s$;
+the chart is on this actual image, not an arbitrary unrecognized array.
+The decoder, (32.1) and the two lattice inverse identities show that
+each forward/reverse composition is the identity. Every indirect route
+uses the same uniquely recovered $s$, so all routes agree. These are
+partial inverse maps on the declared images; an off-image input is not
+assumed to have a valid inverse.
+
+For full service reuse NLBAII Theorem 64.1's entire one-step invariant,
+with exactly its numerical Read row replaced by (28.2). At the final
+handoff actual and retained term, graph, map, all current coordinates
+and context agree. Add translates the same bound coordinate; Tick uses
+the same whole adjacency; Hold preserves it. Growth preserves all old
+values/edges and introduces the literal fresh zeros and genuine roster
+updates. Read returns the floor of the retained actual rational, with
+its entire integer encoding. The separate absent/branch/wrong-type,
+RangeRefusal and BadFrame outcomes are computed from the same code and
+input. Proper incomplete frames keep the same backed parser/pending
+state and have no completed reply; disabled calls do not become invented
+refusals. The original complete End/acknowledgement/Return and retained
+update occur before the next settled request. Thus induction, also for
+an adaptive next request from common replies, gives all whole outputs
+and successors for every sufficiently backed finite continuation.
+No field-dependent side channel or unknown-law port is added.
+
+Equal current fields therefore give equal complete services. Unequal
+lattice current fields have different $R_H(s)$ by Theorem 30.2, so a
+real finite passive probe distinguishes them. Hence the complete-service
+kernel and all four view kernels are equality of $s$ in this context.
+
+For one actual selected use, find the least terminal label $j$ in earned
+order maximizing $|s_{\lambda(j)}|$, by a finite comparison of the
+acquired rationals.
+Let
+
+$$
+a=\frac{\lceil Dh\rceil}{D}\ge h>0.
+\tag{32.4}
+$$
+
+Actually execute Add$(j,a-s_{\lambda(j)})$, Hold and Read$_h(j)$. The
+source really has field $s+(a-s_{\lambda(j)})e_{\lambda(j)}$, and its returned integer is
+$\lfloor a/h\rfloor$. The predictor computes this operand and
+successor from the acquired state and updates on the same completed
+calls. The real selector, source terminal, right, operand, output and
+current vector are used, without an unknown seed or external answer
+selector. The three calls and their local work are additional. $\square$
+
+When (28.3) is the installed deterministic interface, the same construction
+applies at the actually available fixed $p_0$, with $h=2^{-p_0}$:
+every assay/use Read includes that precision payload, and the retained
+exact vector predicts later requests at every finite $p$. This transfers
+only the identical numerical subcase, not an arbitrary rational-scale
+opcode or the optional nuisance interface.
+
+The exact predictor continues under later arbitrary rational Adds and
+original growth even when the state leaves the fixed $\Lambda_D$ or
+the graph leaves this family. That broader current service does not
+extend the fixed-image Time inverse. Similarly, a current field without
+the fixed assay phase need not identify any arbitrary forgotten past.
+
+**Corollary 32.4 (dynamics of an executed control followed by a new
+assay).** Let $F$ be the field transformation of an actually executed,
+known finite fixed-graph word of Tick, Hold and terminal Adds with
+operands in $D^{-1}\mathbb Z$. Its actual replies and costs are paid.
+More generally the same assertion holds for an earned deterministic
+control with a proved effective lattice-preserving field map $F$ and
+its own actual execution. After that control, actually perform a new
+Construction 32.1 assay. The new endpoint and numerical contents are
+
+$$
+\begin{aligned}
+s^+&=A_n^H F(s),\\
+\mathrm{Time}^+&=R_H(F(s)),\\
+\mathrm{Boundary}^+&=R_H(A_n^H F(s)),\\
+\mathrm{Memory}^+&=D A_n^H F(s).
+\end{aligned}
+\tag{32.5}
+$$
+
+For each pair of the four views, recovery commutes with this composite
+actual dynamics. Bare control $F$ is not identified with the control
+plus assay, and no inverse of a noninjective $F$ or of its entire past
+journal is concluded.
+
+Proof. Every primitive in the fixed word preserves $\Lambda_D$ by
+integrality and the stated operands, so $F(s)$ is an admitted entrance.
+The newly executed $H$ Ticks give (32.5), with their actual deterministic
+read word. If $\Phi_\nu(s)$ denotes any numerical view of Definition
+32.2, including $\Phi_{\rm Time}(s)=R_H(A_n^{-H}s)$, and
+$\Psi_\nu$ is its inverse in (32.2), its transported update is exactly
+
+$$
+\Phi_\nu\circ(A_n^H F)\circ\Psi_\nu.
+\tag{32.6}
+$$
+
+Substituting $\Psi_\nu\Phi_\nu=\operatorname{Id}$ shows that
+conversion before or after (32.6) gives the same result in every
+other view. The actual measurement and endpoint equations establish
+that these maps describe the executed composite, not a fictitious
+measurement of a bare Add. Growth and off-lattice controls require a
+new qualifying chart if one is claimed; the broader predictor of
+Corollary 32.3 still follows them. $\square$
+
+## 33. Paid entrance, alternative actuation and the exact resource boundary
+
+**Construction 33.1 (one genuinely prepared unknown lattice entrance).**
+Use the paid original preparation of NLBAII Proposition 53.2 and
+Construction 62.3 on this same $t_n$. Actually allocate known-zero
+alpha with authentic source access. Execute a legal original constructor
+word to $t_n$, retaining the earned map: it has $c_n$ promotions,
+$b_n-1$ splits and $N_n-1$ fresh cells. There is no attached Tick and
+all fields remain zero. Receive the owned target $x\in\Lambda_D$ in
+a separately backed producer; the actual producer assures the stated
+$D$. With the integer forcing inverse $K$ of (30.1), form
+
+$$
+u=K^{\mathsf T}x=(u_0,\ldots,u_I),\qquad u_r\in D^{-1}\mathbb Z^b.
+\tag{33.1}
+$$
+
+Actually Add all terminal coordinates of $u_I$, then repeat Tick and
+all terminal Adds of the next descending block, ending with $u_0$.
+The transposed identity $O_I^{\mathsf T}K^{\mathsf T}=\operatorname{Id}$
+and symmetry give the actual endpoint
+
+$$
+\sum_{r=0}^I A_n^r J u_r=x.
+\tag{33.2}
+$$
+
+This is exactly the supplier's pulse preparation, costing $I$ Ticks
+and $b(I+1)$ Adds, including zero operands. Hold for handoff. Clear or
+isolate every receiver-accessible target, pulse, request/reply copy,
+producer predictor, dependent archive and control register before the
+new acquisition phase, charging the actual overwrites, isolation and
+all coexisting backing. Keep only field-independent earned context
+and the authentic class promise. This producer can likewise prepare
+arbitrary dense rational entrances when no lattice promise is supplied.
+Neither realization provides a free unknown seed or a retained target
+copy to the receiver.
+
+**Proposition 33.2 (one attained account and its distinct alternatives).**
+For that preparation, passive assay and the selected use of Corollary
+32.3, the attained source-operation vector is
+
+$$
+\begin{aligned}
+P&=c_n,& S&=b_n-1,& \text{fresh cells}&=N_n-1,\\
+\mathrm{Tick}&=I+H,&
+\mathrm{Add}&=b_n(I+1)+1,&
+\mathrm{Read}_h&=b_n(H+1)+1,\\
+\mathrm{Hold}&=H+3,&\mathrm{Reset}&=0.
+\end{aligned}
+\tag{33.3}
+$$
+
+The known-zero seed allocation, all local work, traffic, isolation,
+records and actual bit widths are additional resources of this same
+run. A separately executed present Boundary probe adds its own
+$b_n(H+1)$ Reads, $H$ Ticks and $H+1$ Holds and changes the endpoint.
+A new control-plus-assay round pays that control and a new full assay.
+No coordinate in (33.3) is taken from an alternative shorter protocol.
+
+Proof. The construction counts are those of Construction 33.1 and
+NLBAII's original legal realization. Its handoff uses one Hold.
+Construction 32.1 adds $H+1$ Holds, and selected use one, yielding
+$H+3$. Adding the proved preparation, assay and use counts gives all
+remaining coordinates in (33.3). Its pre-use endpoint is $A_n^Hx$,
+and its post-use endpoint is precisely the translation proved in
+Corollary 32.3. Executing a present probe applies $H$ further Ticks,
+so its field successor cannot be substituted for that post-use field
+or treated as another free view at the old cut. $\square$
+
+There is an elementary active alternative with a different whole
+vector. On any known observable native graph with assured $D$, one
+held coarse Read brackets a terminal value in a half-open interval of
+width $h$. At each of $r$ bisections, actually Add the negative rational
+midpoint, Read$_h$, and Add the midpoint back. A negative floor means
+the old value was strictly below the midpoint; a nonnegative floor
+means it was at or above it. Restoration returns the actual old field
+before any next probe or Tick. Choose $r\ge0$ with $h/2^r<1/D$.
+The final half-open bracket contains at most one lattice value, and
+contains the actual one. Applying these exact scalar extractions to
+all terminals through epoch $I$ recovers the credited observable
+window and reaches the actual field $A^Ix$. Its acquisition vector is
+
+$$
+\begin{aligned}
+\mathrm{Read}_h&=b(I+1)(1+r),&
+\mathrm{Add}&=2br(I+1),\\
+\mathrm{Tick}&=I,&\mathrm{Hold}&=I+1.
+\end{aligned}
+\tag{33.4}
+$$
+
+Held local work introduces no additional Tick. Intermediate midpoint
+translations may leave the lattice, but are exactly reversed before
+continuation. This standard threshold/bisection construction needs no
+exclusion of $0,1,-1$; it is a sufficient active comparator, not a
+second passive theorem or a claimed new general extraction principle.
+Its added actuation and different horizon/endpoint do not produce a
+componentwise improvement of (33.3). Its preparation and eventual use
+must be added on its own run.
+
+Likewise ordinary finite-horizon approximation remains available:
+from the centers in (30.9), $\widehat s=A^I Kr$ approximates the
+actual advanced $s=A^Ix$, with
+
+$$
+\|CA^k(\widehat s-s)\|_\infty
+ \le \|CA^{I+k}\|_{\infty\to\infty}\,\kappa h/2.
+\tag{33.5}
+$$
+
+This is the supplied linear inverse estimate and ordinary error
+propagation, not an all-future bound. The contraction condition in
+QuantizedWordApproximation cannot be dropped to replace the growing
+factor in (33.5). Neither (33.4) nor (33.5) contradicts dense stopping
+failure or Theorem 29.2.
+
+**Definition 33.3 (literal and simultaneous resource accounting).**
+Use NLBAII Assumption 17.2's native literal codec and Definition 65.1's
+rational-width convention, with binary length $\mathsf b(0)=1$.
+A nonnegative integer $m$ has unary-length/binary payload
+$2\mathsf b(m)+1$ bits; a signed integer has its additional sign bit.
+Thus the QN response integer $q$ has payload $2\mathsf b(|q|)+2$,
+besides the operation/reply tags and full framing. QN Read requests
+carry the actual label; (28.3) additionally carries the actual precision
+$p$. Installed $h$, promised $D$, known model and every rational Add
+operand have their actual finite representation and storage. This is
+a separate codec from Definition 13.2's digital C codec; their numerical
+length formulas are not exchanged. Sum actual complete requests,
+responses, ACKs, End/local acknowledgements, Return/navigation, roster
+and reference/grant updates, reports, input reception, copies, clearing
+and exports. Untruncated floor integers have no source-uniform width
+bound even when $h$ is fixed.
+
+Computing $K$ uses the earned finite graph and exact forcing/elimination.
+Computing $H$ enumerates (30.7) and iterates exact rational powers for
+each difference until its proved witness. Decoding enumerates the box
+(30.9) and tests every complete finite word. These are finite algorithms,
+not a search oracle, a polynomial-time claim or a practical-size bound.
+A sufficient implementation stores $A,C,K$, model/code/map, $D,h,H$,
+current counters, one current difference and its iterates, the current
+candidate and its iterates, bin centers and solve scratch. Enumerations
+may be sequential; the work of recomputing discarded entries is paid.
+Storing the full acquired Time adds its $b(H+1)$ actual integers.
+Exporting any four-view content adds literal output and retained copies
+where present. Precomputing or storing $A^{-H}$ and forecast words adds
+its actual work and widths; it is not free decoder advice.
+
+Plant old/new fields and observer/predictor old/new fields coexist during
+Tick, besides the producer input/pulse stores while live, parser/request/
+reply/pending frames, traversal/dispatch stacks, real source bindings and
+current/fresh grants, initialization and cleared-but-retained capacity.
+An isolated producer or external input archive is additional physical
+backing even though inaccessible to the recovering receiver. Missing
+rights or an uninstalled codec/backend are not repaired by the numerical
+inverse. The no-side-channel condition does not make preparation,
+isolation or arithmetic resources free.
+
+For the passive native window, if $z=Dx$, then
+
+$$
+\|D A_n^k x\|_\infty\le3^k\|z\|_\infty.
+\tag{33.6}
+$$
+
+It follows from maximum degree three, by induction. It bounds the
+source numerators using their actual input magnitude and elapsed
+Ticks, not a uniform bit budget in $n,D,h$. Solver and inverse scratch
+can have other denominators and must be counted independently. All
+finite promised runs terminate with adequate finite backing; a finite
+program supplies no bounded lifetime storage, traffic, precision,
+physical time, energy, noise tolerance or global resource optimum.
+
+**Supplier correspondence 33.4 (the uncovered operational delta).**
+The material/lifecycle, forcing inverse, owned-target preparation and
+complete service invariant are directly reused from AA, NLBA and
+NLBAII, specifically NLBAII (58.3), Construction 62.3 and Theorem 64.1.
+The numerical Read row is explicitly changed in (28.2)–(28.3).
+The new source-relative deductions are the deterministic all-wall
+finite-record collision with surviving endpoint, its separate branching
+autonomous-error consequence, the fixed-scale height-independent
+passive lattice construction (30.6)–(30.9), and the infinite native
+family earning its hypotheses. The assay-image routes and actual use
+consume those deductions on the same prepared specimen. They do not
+claim new generic observability, determinant, spectral or replay
+principles.
+
+Sections 19–20 already provide stopping and supplied-denominator
+acquisition for their distinct contracting post-clock C, including its
+two-legal-output interface and the stated Reset/entrance contract.
+Their denominator format and growing-precision mechanism are credited
+suppliers, not unresolved gaps. The present deterministic fixed $h$,
+original noncontracting adjacency and no-Reset complete-current tasks
+are different. Public [NLBAIII §§87–93](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_III.md#87-repairing-an-arbitrary-inherited-observation-mask)
+already supplies mask repair, fresh-only attained-image retention and
+partial-repair split prices with literal exact sensors. Public NLBAII
+§§77–79 already supplies unknown-law WLAB-ord acquisition on its
+commissioned positive tree and the fresh-Read price of a same-material
+polynomial-law transfer. Those exact-rational source interfaces and
+retained information do not install QN-D's digitizer or its assurance.
+No duplicate mask, unknown-law or polynomial-transfer theorem is claimed.
+
+The primary neighboring quantized-control reference is
+[Dubbini–Piccoli–Bicchi, *Left invertibility of discrete-time
+output-quantized systems: the linear case with finite inputs*,
+arXiv:1103.4039v1, §§2–5](https://arxiv.org/html/1103.4039v1).
+Its uniform partition is the floor readout, and its doubled same-cell
+system is the paired-trajectory comparison. Its unknown target is an
+input string from a finite alphabet; its general real-matrix and
+left-D-invertibility conditions are not the unbounded rational-lattice
+initial-state problem, nor the complete adaptive persistent-growth
+service here. Its quantization and separation methods, the ordinary
+floor bounds in pinned mathlib, and the cited D5 observability and
+prediction declarations with their owning Scribes are reused at their
+stated hypotheses. These deductions are source-relative synthesis,
+without a claim of worldwide priority or new formal certification.
+
+**Boundary 33.5 (retained common-source obligations).** The present
+views refer to one actual QN-D source, earned map, prepared entrance,
+performed assay, current predictor and paid use. They do not identify
+separately installed literal-read, floor, native-Square/Reset, quantum
+or continuous sources with one apparatus. The existing NCR, PVC, PR57,
+Process Geometry and Structural/Callable Atlas suppliers retain their
+own prepared/acquired images, authorized operations, references,
+callable records, clocks and complete outputs. Numerical recovery here
+neither installs those resources nor closes their original named-cut or
+common-realization acquisition bridges. Open problems 16.3 and 24.4
+retain the actual-preparation, original-control, full-output/refusal/
+pending/successor, selector, reference/grant, retained-record and
+simultaneous-resource correspondence they require.
+
+[FIB mixed-clock §§19–20](FIB_CRITICAL_MIXED_GAIN_WORDS_AND_CLOCK_PENCIL_OBSTRUCTIONS.md#19-one-open-source-domain-for-all-bounded-three-dimensional-words)
+retains its strictly positive rank-one trace-one source, actual word
+reads, nonzero polynomial gain and constant drift. Its §19 common-open-
+domain ambiguity for bounded three-dimensional mixed words allows
+arbitrary nonlinear answers; its §20 complete-target exclusion through
+$2d+3$ reads additionally uses a countable preassigned palette of fixed
+linear gain-output matrices. It is not an unrestricted nonlinear
+complete-recovery exclusion. [Coherent reconstruction §35](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md#35-符号相位效果的普适障碍与共同原生区分)
+retains its literal ordered-carrier identification, fixed waiting/rank-one
+read/Stop menu and real-frame universal-effect obstruction. Its separate
+parameter-independent sign-pair test assumes the specified inputs on
+that carrier; a probability gap is not finite-sample certainty or their
+native preparation. Neither result supplies a QN channel.
+
+[FIB appendix II §119](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#119-stochastic-attainment-and-deterministic-approximation-for-the-original-passive-pair)
+supplies stochastic attainment and deterministic same-partition
+approximation for its unchanged nonstationary source at two positive
+times, with one common Borel emission and fresh conditional noises.
+Deterministic attainment remains unresolved. [Free diffusion §§20–23](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md#20-finite-source-samples-with-explicitly-normalized-joint-laws)
+supplies a normalized finite exact-real sampler, including hidden $z$,
+retained excursion durations and aggregate omitted durations. Its
+original-time interpolation and actual finite native consumer preserve
+all ten held outputs in the limit under that added interface. Bare-native
+causal acquisition of those samplers, effective rates, finite bits/shots
+and full arbitrary-intervention/resource correspondence are separate
+unresolved bridges. None is denied by the present dense floor
+counterexample or supplied by its lattice decoder.
+
+Every older fixed-$G_{\rm gc}$, original-$Q$, parked-consumer,
+unchanged-initialization, original terminal/final-no-Ready,
+erased-history and model-specific settlement retains its exact scope.
+The present altered entrance and read contract settles none by
+relabelling. Unknown law, seed, units, source/reference/permission
+acquisition, arbitrary forgotten histories, nuisance provenance,
+physical conformance and uniform lifetime resources remain outside
+these results. Alpha/beta is a candidate foundation, not a proved
+universal minimum. A single common process expressing all four
+independent meanings across these installations, with its actual
+operational and resource bridges, remains unresolved.
+
+## 追加锚（本行以下为增补区）
+
+## 34. Current-public supplier reconciliation for the digital result
+
+**Supplier correspondence 34.1 (timed release versus digital acquisition).**
+The current public [Native Free Diffusion §§24--28](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md#24-timed-entrance-and-killed-releases-from-the-original-source)
+now supplies Theorem 24.3's original-source causal release, Theorem 25.2's
+filtration containment and released-state accuracy under Assumption 25.1,
+Theorem 26.3's finite lawful prospective consumer under Assumption 26.1, and
+Theorem 27.1's same-time output/exit convergence. The service exposes exact
+real states, timestamps and nonarrival and assumes an exact-real actuation
+interface. These are genuine acquisition and consumer results for that
+analytic diffusion service, but they do not install the QN-D floor channel,
+the supplied denominator lattice, the integer native adjacency, or the
+complete current service of §§28--33. The present lattice decoder therefore
+does not claim the diffusion service, finite-bit or finite-shot realization,
+effective rate, or a native-to-diffusion identification.
+
+**Supplier correspondence 34.2 (other current public sources).** The current
+public [attractive gluing §35](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GLUING.md#35-实际慢共振输入有限相容修正与修正后的物理质量)
+constructs a finite compatibility correction and positive corrected mass for
+its analytic Friedrichs source, but leaves its full residual estimate open.
+[Coherent reconstruction §36](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md#36-同一被动等待的极分解与完整原生读取的不相容)
+proves a fixed five-mode polar-factor/readout obstruction under its own
+quantum menu. [Appendix II §120](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#120-a-positive-quadratic-direction-on-every-original-emission-overlap)
+proves a positive quadratic direction for its original emission overlap while
+leaving deterministic attainment unresolved. Their sources, clocks, effects,
+and admissible consumers are distinct from the QN-D source and are not used
+to strengthen the floor collision, lattice injectivity, or resource account.
+
+**Boundary 34.3 (retained obligations).** The digital contribution remains
+one actual QN-D installation with its supplied $D$, $h$, source map, prepared
+entrance, performed floor assay, retained predictor and paid continuation.
+It does not settle unknown-law acquisition, seed or units, physical source
+conformance, arbitrary erased histories, uniform lifetime resources, or a
+single native/path/quantum/continuous apparatus. All original fixed-model
+and common-realization obligations retain their exact scopes.
+
+## 追加锚（本行以下为增补区）

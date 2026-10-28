@@ -37,7 +37,7 @@ private theorem iterate_fib (n k : ℕ) :
         D5.S3.Arith.FibonacciAtomic.GlobalGcdSampling.iterate_second
           (k + 1) ((0, 1) : ZMod n × ZMod n)
 
-private theorem period_iff_return (n k : ℕ) :
+theorem period_iff_return (n k : ℕ) :
     (∀ m, Nat.fib (m + k) % n = Nat.fib m % n) ↔
       Function.IsPeriodicPt (step (A := ZMod n)) k (0, 1) := by
   constructor
