@@ -212,7 +212,6 @@ search-reduction-test: search-reduction-index-fixtures
 	@env -u SEARCH_REDUCTION_INDEX /bin/bash tools/scripts/search-reduction-runner.sh test
 search-reduction-test: export SEARCH_REDUCTION_WORKERS := 1
 
-.PHONY: search-reduction-execution-mutation-test
 search-reduction-execution-mutation-test:
 	@python3 tools/scripts/search-reduction-execution-mutation-test.py
 
