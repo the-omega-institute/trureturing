@@ -36,7 +36,7 @@ Write N(K) for the existence of two distinct members of K. The failure recursion
 
 **Theorem 1.3 (Same-history inclusion monotonicity).**
 
-$$\forall d\in \mathbb{N}, \forall n\in \mathbb{N}, \forall K\in \operatorname{Set}(\operatorname{World}(d)), \forall S\in \operatorname{Set}(\operatorname{World}(d)), \forall v\in \operatorname{List}(\operatorname{Bool}()), \operatorname{L}(n,K,v)\land K\subseteq S\implies \operatorname{L}(n,S,v)$$
+$$\forall d\in \mathbb{N}, \forall n\in \mathbb{N}, \forall K\in \operatorname{Set}(\operatorname{World}(d)), \forall S\in \operatorname{Set}(\operatorname{World}(d)), \forall v\in \operatorname{List}(Bool), \operatorname{L}(n,K,v)\land K\subseteq S\implies \operatorname{L}(n,S,v)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/CompleteFailure.loses_mono` (`✓ std3`). ∎
 
@@ -48,7 +48,7 @@ Induction preserves the distinct pair and sends each losing child into the corre
 
 **Theorem 1.4 (Agreement with finite native-world failure).**
 
-$$\forall n\in \mathbb{N}, \forall T\in \operatorname{Finset}(\operatorname{World}(3)), \forall v\in \operatorname{List}(\operatorname{Bool}()), \operatorname{L}(n,\operatorname{coe}(T),v)\iff \operatorname{FiniteLosing}(n,T,v)$$
+$$\forall n\in \mathbb{N}, \forall T\in \operatorname{Finset}(\operatorname{World}(3)), \forall v\in \operatorname{List}(Bool), \operatorname{L}(n,\operatorname{coe}(T),v)\iff \operatorname{FiniteLosing}(n,T,v)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/CompleteFailure.finite_losing_iff` (`✓ std3`). ∎
 
@@ -62,7 +62,7 @@ A policy P receives the entire actual reading vector on each literal word and re
 
 **Theorem 1.5 (Every losing fiber defeats every policy).**
 
-$$\forall d\in \mathbb{N}, \forall n\in \mathbb{N}, \forall K\in \operatorname{Set}(\operatorname{World}(d)), \forall v\in \operatorname{List}(\operatorname{Bool}()), \forall h\in \operatorname{History}(v), \forall P\in \operatorname{Policy}(d), K\subseteq \operatorname{wholeSet}(v,h)\land \operatorname{L}(n,K,v)\implies \neg (\forall W\in K, \operatorname{Identifies}(P,n,v,W))$$
+$$\forall d\in \mathbb{N}, \forall n\in \mathbb{N}, \forall K\in \operatorname{Set}(\operatorname{World}(d)), \forall v\in \operatorname{List}(Bool), \forall h\in \operatorname{History}(v), \forall P\in \operatorname{Policy}(d), K\subseteq \operatorname{wholeSet}(v,h)\land \operatorname{L}(n,K,v)\implies \neg (\forall W\in K, \operatorname{Identifies}(P,n,v,W))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/CompleteFailure.loses_excludes_policy` (`✓ std3`). ∎
 

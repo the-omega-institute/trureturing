@@ -6,7 +6,7 @@ The prescribed 64 complete targets realize one simultaneous JJ history tree and 
 
 The domain is exactly Definition 1.1 of SelfCalibrating Relation Mathematics V: every strictly entrywise positive real 2 by 2 source P with determinant zero and trace one, every nonzero entire real polynomial g of degree at most three, and every real constant drift. The native World 3 representation is bidirectionally equivalent to this domain by CompleteFailure.whole_domain. Lower degrees, either gain sign, sampled or repeated roots, asymmetric sources and all drifts remain in the ambient fiber. No witness choice restricts the decoder's domain.
 
-False means M=[[0,1],[1,1]], true means J=[[0,1],[1,0]]. Words are chronological. The empty acquisition is I, and appending E left-multiplies by E. Every atom is immediately read on the same complete world at its original clock; there are no resets, copies, skipped reads or additional ports. For a suffix u of length five write w=JJ++u, A(w)=acquisition(w), and W(w,e)=world(u,e). The 32 terminal words and their two Boolean slots give 64 labels, even when complete worlds repeat across different words.
+False means M=[[0,1],[1,1]], true means J=[[0,1],[1,0]]. Words are chronological. The empty acquisition is I, and appending E left-multiplies by E. Every atom is immediately read on the same complete world at its original clock; there are no resets, copies, skipped reads or additional ports. For a suffix u of length five write w=JJ++u, A(w)=acquisition(w), and W(u,e)=world(u,e). The 32 terminal words and their two Boolean slots give 64 labels, even when complete worlds repeat across different words.
 
 $H^{JJ}= (0, J, 24, J, \frac{192}{5})$
 
