@@ -1772,6 +1772,181 @@ private def vertexUnionJoinEquiv (M N : PreAbstractSimplicialComplex V)
 
 end DisjointJoin
 
+section BouquetConcatenation
+
+private def collapseSumHomeomorph {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
+    (C : Set X) (D : Set Y) (a : X) (b : Y) (ha : a ∈ C) (hb : b ∈ D) :
+    FiniteConeUnionWedge.Wedge
+      (Quotient.mk (FiniteConeUnionWedge.subsetSetoid C) a)
+      (Quotient.mk (FiniteConeUnionWedge.subsetSetoid D) b) ≃ₜ
+      FiniteConeUnionWedge.Collapse {z : X ⊕ Y | Sum.elim (· ∈ C) (· ∈ D) z} := by
+  let P : FiniteConeUnionWedge.CollapseCover a b
+      {z : X ⊕ Y | Sum.elim (· ∈ C) (· ∈ D) z} := {
+    left := ⟨Sum.inl, continuous_inl⟩
+    right := ⟨Sum.inr, continuous_inr⟩
+    left_injective := Sum.inl_injective
+    right_injective := Sum.inr_injective
+    left_closed := isClosedMap_inl
+    right_closed := isClosedMap_inr
+    covers := by rintro (x | y); exact ⟨Sum.inl x, rfl⟩; exact ⟨Sum.inr y, rfl⟩
+    overlap := by intro x y h; cases h
+    left_base := ha
+    right_base := hb }
+  exact P.quotientWedgeHomeomorph
+
+private def anchorCollapseHomeomorph {A Z : Type*} [TopologicalSpace A] [TopologicalSpace Z]
+    (a : A) (B : Set Z) :
+    FiniteConeUnionWedge.Collapse {z : A ⊕ Z | Sum.elim (fun _ => True) (· ∈ B) z} ≃ₜ
+      FiniteConeUnionWedge.Collapse
+        {z : PUnit.{1} ⊕ Z | Sum.elim (fun _ => True) (· ∈ B) z} := by
+  let f : A ⊕ Z → PUnit.{1} ⊕ Z := Sum.map (fun _ => PUnit.unit) id
+  let g : PUnit.{1} ⊕ Z → A ⊕ Z := Sum.map (fun _ => a) id
+  have hf : ∀ z w, (FiniteConeUnionWedge.subsetSetoid
+        {z : A ⊕ Z | Sum.elim (fun _ => True) (· ∈ B) z}).r z w →
+      (FiniteConeUnionWedge.subsetSetoid
+        {z : PUnit.{1} ⊕ Z | Sum.elim (fun _ => True) (· ∈ B) z}).r (f z) (f w) := by
+    rintro z w (rfl | ⟨hz, hw⟩)
+    · exact Or.inl rfl
+    · exact Or.inr ⟨by cases z <;> exact hz, by cases w <;> exact hw⟩
+  have hg : ∀ z w, (FiniteConeUnionWedge.subsetSetoid
+        {z : PUnit.{1} ⊕ Z | Sum.elim (fun _ => True) (· ∈ B) z}).r z w →
+      (FiniteConeUnionWedge.subsetSetoid
+        {z : A ⊕ Z | Sum.elim (fun _ => True) (· ∈ B) z}).r (g z) (g w) := by
+    rintro z w (rfl | ⟨hz, hw⟩)
+    · exact Or.inl rfl
+    · exact Or.inr ⟨by cases z <;> exact hz, by cases w <;> exact hw⟩
+  exact {
+    toFun := Quotient.map' f hf
+    invFun := Quotient.map' g hg
+    left_inv := by
+      intro z; induction z using Quotient.inductionOn with
+      | h z =>
+        apply Quotient.sound
+        cases z
+        · exact Or.inr ⟨True.intro, True.intro⟩
+        · exact Or.inl rfl
+    right_inv := by
+      intro z; induction z using Quotient.inductionOn with
+      | h z =>
+        apply Quotient.sound
+        cases z with
+        | inl x => exact Or.inl (congrArg Sum.inl (Subsingleton.elim _ _))
+        | inr x => exact Or.inl rfl
+    continuous_toFun := (continuous_const.sumMap continuous_id).quotient_map' hf
+    continuous_invFun := (continuous_const.sumMap continuous_id).quotient_map' hg }
+
+private def sphereCast {d e : ℕ} (h : d = e) :
+    FiniteSimplicialJoin.Space (sphereComplex d) ≃ₜ
+      FiniteSimplicialJoin.Space (sphereComplex e) := by
+  subst e
+  exact Homeomorph.refl _
+
+private theorem sphereCast_point {d e : ℕ} (h : d = e) :
+    sphereCast h (spherePoint d) = spherePoint e := by
+  subst e
+  rfl
+
+private abbrev SphereFamily (ds : BouquetSpec) :=
+  Σ i : Fin ds.length, FiniteSimplicialJoin.Space (sphereComplex (ds.get i).val)
+
+private def appendIndex (ds es : BouquetSpec) :
+    Fin ds.length ⊕ Fin es.length ≃ Fin (ds ++ es).length :=
+  finSumFinEquiv.trans (finCongr (List.length_append ds es).symm)
+
+private def appendDimension (ds es : BouquetSpec) : Fin ds.length ⊕ Fin es.length → ℕ :=
+  Sum.elim (fun i => (ds.get i).val) (fun i => (es.get i).val)
+
+private theorem appendDimension_eq (ds es : BouquetSpec) (i : Fin ds.length ⊕ Fin es.length) :
+    appendDimension ds es i = ((ds ++ es).get (appendIndex ds es i)).val := by
+  cases i with
+  | inl i =>
+    change ds[i.val].val = (ds ++ es)[i.val].val
+    rw [List.getElem_append_left i.isLt]
+  | inr i =>
+    change es[i.val].val = (ds ++ es)[ds.length + i.val].val
+    rw [List.getElem_append_right (Nat.le_add_right _ _)]
+    simp
+
+private def appendFamilyEquiv (ds es : BouquetSpec) :
+    SphereFamily ds ⊕ SphereFamily es ≃ SphereFamily (ds ++ es) :=
+  (Equiv.sumSigmaDistrib (fun i =>
+    FiniteSimplicialJoin.Space (sphereComplex (appendDimension ds es i)))).symm.trans
+    (Equiv.sigmaCongr (appendIndex ds es) (fun i =>
+      (sphereCast (appendDimension_eq ds es i)).toEquiv))
+
+private def appendFamilyHomeomorph (ds es : BouquetSpec) :
+    SphereFamily ds ⊕ SphereFamily es ≃ₜ SphereFamily (ds ++ es) := by
+  letI (i : Fin ds.length) : CompactSpace
+      (FiniteSimplicialJoin.Space (sphereComplex (ds.get i).val)) :=
+    FiniteSimplicialJoin.realizationCompactSpace _
+  letI (i : Fin es.length) : CompactSpace
+      (FiniteSimplicialJoin.Space (sphereComplex (es.get i).val)) :=
+    FiniteSimplicialJoin.realizationCompactSpace _
+  apply Continuous.homeoOfEquivCompactToT2 (f := appendFamilyEquiv ds es)
+  exact (continuous_sigma fun i => continuous_sigmaMk.comp
+      (sphereCast (appendDimension_eq ds es (Sum.inl i))).continuous).sumElim
+    (continuous_sigma fun i => continuous_sigmaMk.comp
+      (sphereCast (appendDimension_eq ds es (Sum.inr i))).continuous)
+
+private theorem appendFamily_base (ds es : BouquetSpec) (z : SphereFamily ds ⊕ SphereFamily es) :
+    (appendFamilyHomeomorph ds es z).2 =
+      spherePoint ((ds ++ es).get (appendFamilyHomeomorph ds es z).1).val ↔
+    Sum.elim (fun x : SphereFamily ds => x.2 = spherePoint (ds.get x.1).val)
+      (fun x : SphereFamily es => x.2 = spherePoint (es.get x.1).val) z := by
+  rcases z with ⟨i, x⟩ | ⟨i, x⟩
+  · change sphereCast (appendDimension_eq ds es (Sum.inl i)) x = _ ↔ _
+    rw [← sphereCast_point (appendDimension_eq ds es (Sum.inl i))]
+    exact (sphereCast _).injective.eq_iff
+  · change sphereCast (appendDimension_eq ds es (Sum.inr i)) x = _ ↔ _
+    rw [← sphereCast_point (appendDimension_eq ds es (Sum.inr i))]
+    exact (sphereCast _).injective.eq_iff
+
+private def bouquetSourceShuffle (ds es : BouquetSpec) :
+    BouquetSource ds ⊕ BouquetSource es ≃ₜ
+      (PUnit.{1} ⊕ PUnit.{1}) ⊕ SphereFamily (ds ++ es) :=
+  (Homeomorph.sumSumSumComm PUnit.{1} (SphereFamily ds) PUnit.{1} (SphereFamily es)).trans
+    ((Homeomorph.refl _).sumCongr (appendFamilyHomeomorph ds es))
+
+private def bouquetAppendHomeomorph (ds es : BouquetSpec) :
+    FiniteConeUnionWedge.Wedge (bouquetPoint ds) (bouquetPoint es) ≃ₜ
+      FiniteSimplicialJoin.Space (bouquetComplex (ds ++ es)) := by
+  let qd : CoordinateBouquetQuotient ds := Quotient.mk _ (Sum.inl PUnit.unit)
+  let qe : CoordinateBouquetQuotient es := Quotient.mk _ (Sum.inl PUnit.unit)
+  let hd := bouquetQuotientHomeomorph ds
+  let he := bouquetQuotientHomeomorph es
+  let first : FiniteConeUnionWedge.Wedge (bouquetPoint ds) (bouquetPoint es) ≃ₜ
+      FiniteConeUnionWedge.Wedge qd qe :=
+    wedgeHomeomorph hd.symm he.symm
+      (hd.injective (by rfl)) (he.injective (by rfl))
+  let h := bouquetSourceShuffle ds es
+  let B : Set (SphereFamily (ds ++ es)) :=
+    {z | z.2 = spherePoint ((ds ++ es).get z.1).val}
+  let middle : FiniteConeUnionWedge.Collapse
+      {z : BouquetSource ds ⊕ BouquetSource es |
+        Sum.elim (· ∈ bouquetBases ds) (· ∈ bouquetBases es) z} ≃ₜ
+      FiniteConeUnionWedge.Collapse
+        {z : (PUnit.{1} ⊕ PUnit.{1}) ⊕ SphereFamily (ds ++ es) |
+          Sum.elim (fun _ => True) (· ∈ B) z} := by
+    apply Homeomorph.Quotient.congr h
+    intro z w
+    have hb (z : BouquetSource ds ⊕ BouquetSource es) :
+        Sum.elim (fun _ => True) (· ∈ B) (h z) ↔
+        Sum.elim (· ∈ bouquetBases ds) (· ∈ bouquetBases es) z := by
+      rcases z with (u | x) | (v | y)
+      · rfl
+      · exact appendFamily_base ds es (Sum.inl x)
+      · rfl
+      · exact appendFamily_base ds es (Sum.inr y)
+    change (z = w ∨ (_ ∧ _)) ↔ (h z = h w ∨ (_ ∧ _))
+    rw [h.injective.eq_iff, hb, hb]
+  exact first.trans
+    ((collapseSumHomeomorph (bouquetBases ds) (bouquetBases es)
+      (Sum.inl PUnit.unit) (Sum.inl PUnit.unit) True.intro True.intro).trans
+      (middle.trans ((anchorCollapseHomeomorph (Sum.inl PUnit.unit) B).trans
+        (bouquetQuotientHomeomorph (ds ++ es)))))
+
+end BouquetConcatenation
+
 #print axioms sphereHomeomorph
 #print axioms bouquetQuotientHomeomorph
 #print axioms normalHomeomorph
