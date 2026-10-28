@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure
 import Reg.Support.DependentFamily
 
+/-! Complete source families for actual positive-price records and their prime structure. -/
+
 namespace Reg.D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure
 
 open _root_.D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure
@@ -58,7 +60,7 @@ private theorem two_price_record :
 private theorem support_rejected : ¬ supportArena.Law supportRejected := by
   intro h
   have hh := (h (m := 2) (by norm_num) (lam := 1 / 10) (by norm_num) two_price_record).2
-  have hfac : (2 : ℕ).primeFactors = {2} := by simp
+  have hfac : (2 : ℕ).primeFactors = {2} := Nat.prime_two.primeFactors
   have hP : largestPrime 2 = 2 := by simp [largestPrime, hfac]
   have htwo : Nat.primesLE 2 = {2} := by decide
   change ∅ = Nat.primesLE (largestPrime 2) at hh
@@ -69,7 +71,8 @@ private theorem support_dependence : ObservationalDependence supportSignature su
   intro i
   refine ⟨1, 1, 2, ?_⟩
   change (1 : ℕ).primeFactors ≠ (2 : ℕ).primeFactors
-  simp
+  rw [Nat.primeFactors_one, Nat.prime_two.primeFactors]
+  exact Finset.empty_ne_singleton 2
 
 def supportFamily : Registration supportArena (type_of% @price_record_prime_structure) where
   actual := supportActual
@@ -258,7 +261,7 @@ private theorem four_price_record :
   have hXL : 1 / 3 < X * Real.log X := by
     have hh := Real.one_sub_inv_le_log_of_pos hX0
     have hx := mul_le_mul_of_nonneg_left hh hX0.le
-    have hid : X * (1 - X⁻¹) = X - 1 := by field_simp; ring
+    have hid : X * (1 - X⁻¹) = X - 1 := by field_simp
     rw [hid] at hx
     linarith
   have hlam : 0 < lam := by dsimp [lam]; positivity
@@ -289,7 +292,9 @@ private theorem four_price_record :
   have hleft := mul_nonneg hlam.le hlogn
   rw [golden_resource_sigma_identity _ (by omega : 1 ≤ n),
     golden_resource_sigma_identity _ (by norm_num : 1 ≤ (4 : ℕ))]
-  have hs : (ArithmeticFunction.sigma 1 4 : ℝ) = 7 := by norm_num [ArithmeticFunction.sigma]
+  have hs : (ArithmeticFunction.sigma 1 4 : ℝ) = 7 := by
+    have hdiv : Nat.divisors 4 = {1, 2, 4} := by decide
+    norm_num [ArithmeticFunction.sigma, hdiv]
   rw [hs]
   change Real.log ((ArithmeticFunction.sigma 1 n : ℝ) / n) - lam * Real.log n <
     Real.log (7 / 4 : ℝ) - lam * X
@@ -396,5 +401,7 @@ theorem localization_actual_law : localizationArena.Law primeActual :=
 
 #print axioms divisorFamily
 #print axioms localization_actual_law
+
+end
 
 end Reg.D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure

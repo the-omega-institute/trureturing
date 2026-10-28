@@ -341,6 +341,8 @@ def sqrtAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end
 
+noncomputable section
+
 abbrev logSplitArena : Arena where
   signature := signature
   Law R := ∀ {U : ℕ}, 0 < U →
@@ -353,7 +355,8 @@ private theorem log_split_rejected : ¬ logSplitArena.Law growthRejected := by
   have ha := log_factorization_split (U := 2) (by norm_num)
   change 0 = _ at hh
   have hlog := Real.log_pos (by norm_num : (1 : ℝ) < 2)
-  linarith
+  norm_num only [Nat.cast_ofNat] at ha
+  linarith only [ha, hh, hlog]
 
 def logSplitFamily : Registration logSplitArena (type_of% @log_factorization_split) where
   actual := actual
@@ -375,8 +378,7 @@ def massMonoRejected : Realization signature :=
 private theorem mass_mono_rejected : ¬ massMonoArena.Law massMonoRejected := by
   intro h
   have hh := h (A := 1) (B := 2) (by norm_num) (by norm_num) (by norm_num)
-  change -(1 : ℝ) ≤ -(2 : ℝ) at hh
-  norm_num at hh
+  norm_num [massMonoRejected, realize] at hh
 
 def massMonoFamily : Registration massMonoArena (type_of% @higher_layer_mass_mono) where
   actual := higherActual
@@ -455,5 +457,7 @@ def massMonoAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+end
 
 end Reg.D5.S3.Arith.Robin.EulerLayerInventoryGrowth
