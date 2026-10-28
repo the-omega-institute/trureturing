@@ -102,7 +102,7 @@ private theorem cylindrical_reconstruct (p : HyperbolicThreeSpace) :
       Complex.norm_mul_cos_arg (transverse p)
   · simpa [cylinderLift, hr, angularCoordinate, transverse] using
       Complex.norm_mul_sin_arg (transverse p)
-  · simpa only [cylinderLift, Matrix.cons_val_two, hz] using
+  · simpa only [cylinderLift, Matrix.cons_val, hz] using
       mul_div_cancel₀ (lift p 2) hc
   · change Real.cosh (radialCoordinate p) * Real.cosh (axialCoordinate p) = lift p 3
     have htime := lift_time p
@@ -176,7 +176,7 @@ private def horizontalIso (e : ℂ ≃ₗᵢ[ℝ] ℂ) :
   left_inv p := by
     cases p with
     | mk p =>
-      change HyperbolicThreeSpace.mk _ = HyperbolicThreeSpace.mk _
+      change HyperbolicSpace.mk _ = HyperbolicSpace.mk _
       congr 1
       apply Subtype.ext
       apply WithLp.ofLp_injective
@@ -186,7 +186,7 @@ private def horizontalIso (e : ℂ ≃ₗᵢ[ℝ] ℂ) :
   right_inv p := by
     cases p with
     | mk p =>
-      change HyperbolicThreeSpace.mk _ = HyperbolicThreeSpace.mk _
+      change HyperbolicSpace.mk _ = HyperbolicSpace.mk _
       congr 1
       apply Subtype.ext
       apply WithLp.ofLp_injective
@@ -208,8 +208,10 @@ private theorem turn_lift (theta : ℝ) (p : HyperbolicThreeSpace) :
   have hnorm : (e p.coordinates.val.fst).re ^ 2 +
       (e p.coordinates.val.fst).im ^ 2 =
       p.coordinates.val.fst.re ^ 2 + p.coordinates.val.fst.im ^ 2 := by
-    have h := congrArg (fun x : ℝ => x ^ 2) (e.norm_map p.coordinates.val.fst)
-    simpa only [← Complex.normSq_eq_norm_sq, Complex.normSq_apply, pow_two] using h
+    have h : Complex.normSq (e p.coordinates.val.fst) =
+        Complex.normSq p.coordinates.val.fst := by
+      rw [Complex.normSq_eq_norm_sq, Complex.normSq_eq_norm_sq, e.norm_map]
+    simpa only [Complex.normSq_apply, ← pow_two] using h
   have hre : (e p.coordinates.val.fst).re =
       Real.cos theta * p.coordinates.val.fst.re -
         Real.sin theta * p.coordinates.val.fst.im := by
@@ -223,11 +225,11 @@ private theorem turn_lift (theta : ℝ) (p : HyperbolicThreeSpace) :
   fin_cases k
   · change (e p.coordinates.val.fst).re / height p.coordinates = _
     rw [hre]
-    simp only [lift, Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.cons_val_one]
+    simp only [lift, Matrix.cons_val]
     ring
   · change (e p.coordinates.val.fst).im / height p.coordinates = _
     rw [him]
-    simp only [lift, Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.cons_val_one]
+    simp only [lift, Matrix.cons_val]
     ring
   · change (((e p.coordinates.val.fst).re ^ 2 + (e p.coordinates.val.fst).im ^ 2 +
         height p.coordinates ^ 2 - 1) / (2 * height p.coordinates)) = lift p 2
@@ -260,13 +262,13 @@ private theorem turn_radial (theta : ℝ) (p : HyperbolicThreeSpace) :
 
 private theorem turn_axial (theta : ℝ) (p : HyperbolicThreeSpace) :
     axialCoordinate (turn theta p) = axialCoordinate p := by
-  simp only [axialCoordinate, turn_radial, turn_lift, Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.cons_val_two]
+  simp only [axialCoordinate, turn_radial, turn_lift, Matrix.cons_val]
 
 def sector (alpha : ℝ) : Set HyperbolicThreeSpace :=
   {p | 0 ≤ lift p 1 ∧
     Real.cos alpha * lift p 1 - Real.sin alpha * lift p 0 ≤ 0}
 
-private theorem sector_angle (alpha : ℝ) (ha : 0 < alpha) (hapi : alpha < Real.pi)
+private theorem sector_angle (alpha : ℝ) (ha : 0 < alpha)
     (p : sector alpha) : angularCoordinate p.val ∈ Icc 0 alpha := by
   have harg : 0 ≤ angularCoordinate p.val :=
     Complex.arg_nonneg_iff.mpr p.property.1
@@ -303,8 +305,8 @@ private theorem sector_fold_nonexpanding (alpha A reference offset : ℝ)
         (foldedAngle A reference (offset + angularCoordinate p.val)))
       (cylindricalPoint (radialCoordinate q.val) (axialCoordinate q.val)
         (foldedAngle A reference (offset + angularCoordinate q.val))) ≤ dist p q := by
-  have hp := sector_angle alpha ha hapi p
-  have hq := sector_angle alpha ha hapi q
+  have hp := sector_angle alpha ha p
+  have hq := sector_angle alpha ha q
   have hang : |angularCoordinate p.val - angularCoordinate q.val| ≤ Real.pi := by
     rw [abs_le]
     constructor <;> linarith [hp.1, hp.2, hq.1, hq.2]
@@ -318,7 +320,7 @@ private theorem sector_fold_nonexpanding (alpha A reference offset : ℝ)
     (foldedAngle A reference (offset + angularCoordinate q.val))
     (Real.arsinh_nonneg_iff.mpr (norm_nonneg _))
     (Real.arsinh_nonneg_iff.mpr (norm_nonneg _)) hfold hang
-  simpa only [cylindrical_reconstruct, Subtype.isometry.dist_eq] using h
+  simpa only [cylindrical_reconstruct, Subtype.dist_eq] using h
 
 private def upperFace (alpha : ℝ) : Set (sector alpha) :=
   {p | Real.cos alpha * lift p.val 1 - Real.sin alpha * lift p.val 0 = 0}
@@ -338,11 +340,11 @@ private theorem upper_rotates_to_lower (alpha beta : ℝ)
   have hy : lift (turn (-alpha) p.val.val) 1 = 0 := by
     rw [turn_lift]
     have hp : Real.cos alpha * lift p.val.val 1 - Real.sin alpha * lift p.val.val 0 = 0 := p.property
-    simpa only [Matrix.cons_val_zero, Matrix.cons_val_succ, Real.sin_neg, Real.cos_neg, neg_mul] using hp
+    simpa only [Matrix.cons_val, Real.sin_neg, Real.cos_neg, neg_mul] using hp
   have hx : 0 ≤ lift (turn (-alpha) p.val.val) 0 := by
     have heq : Real.sin alpha * lift (turn (-alpha) p.val.val) 0 = lift p.val.val 1 := by
       rw [turn_lift]
-      simp only [Matrix.cons_val_zero, Matrix.cons_val_succ, Real.cos_neg, Real.sin_neg, neg_mul, sub_neg_eq_add]
+      simp only [Matrix.cons_val, Real.cos_neg, Real.sin_neg, neg_mul, sub_neg_eq_add]
       have hp : Real.cos alpha * lift p.val.val 1 - Real.sin alpha * lift p.val.val 0 = 0 := p.property
       linear_combination -(Real.cos alpha) * hp +
         (lift p.val.val 1) * (Real.sin_sq_add_cos_sq alpha)
@@ -367,13 +369,13 @@ private theorem lower_rotates_to_upper (alpha beta : ℝ)
       Real.sin alpha * lift (turn alpha p.val.val) 0 = 0 := by
     rw [turn_lift]
     have hp : lift p.val.val 1 = 0 := p.property
-    simp only [Matrix.cons_val_zero, Matrix.cons_val_succ, hp, mul_zero,
+    simp only [Matrix.cons_val, hp, mul_zero,
       add_zero, sub_zero]
     ring
   refine ⟨⟨?_, heq.le⟩, heq⟩
   rw [turn_lift]
   have hp : lift p.val.val 1 = 0 := p.property
-  simpa only [Matrix.cons_val_zero, Matrix.cons_val_succ, hp, mul_zero, add_zero] using mul_nonneg hs hx
+  simpa only [Matrix.cons_val, hp, mul_zero, add_zero] using mul_nonneg hs hx
 
 private def seamEquiv (alpha beta : ℝ)
     (ha : 0 < alpha) (hapi : alpha < Real.pi)
@@ -432,7 +434,7 @@ private theorem lower_face_angle (alpha : ℝ) (ha : 0 < alpha) (hapi : alpha < 
 private theorem upper_face_angle (alpha : ℝ) (ha : 0 < alpha) (hapi : alpha < Real.pi)
     (p : upperFace alpha) (hv : transverse p.val.val ≠ 0) :
     angularCoordinate p.val.val = alpha := by
-  have htheta := sector_angle alpha ha hapi p.val
+  have htheta := sector_angle alpha ha p.val
   have hnorm : 0 < ‖transverse p.val.val‖ := norm_pos_iff.mpr hv
   have hx := Complex.norm_mul_cos_arg (transverse p.val.val)
   have hy := Complex.norm_mul_sin_arg (transverse p.val.val)
@@ -468,14 +470,16 @@ private theorem fold_seam {I : Type*} (next : I → I) (alpha : I → ℝ)
     fold alpha A reference offset ⟨i, p.val⟩ =
       fold alpha A reference offset
         ⟨next i, ((sectorDatum next alpha ha hapi).iso i p).val⟩ := by
-  change cylindricalPoint (radialCoordinate p.val.val) (axialCoordinate p.val.val) _ =
+  change cylindricalPoint (radialCoordinate p.val.val) (axialCoordinate p.val.val)
+      (foldedAngle A reference (offset i + angularCoordinate p.val.val)) =
     cylindricalPoint (radialCoordinate (turn (-alpha i) p.val.val))
-      (axialCoordinate (turn (-alpha i) p.val.val)) _
+      (axialCoordinate (turn (-alpha i) p.val.val))
+      (foldedAngle A reference (offset (next i) + angularCoordinate (turn (-alpha i) p.val.val)))
   rw [turn_radial, turn_axial]
   by_cases hv : transverse p.val.val = 0
   · have hr : radialCoordinate p.val.val = 0 := by
       simp [radialCoordinate, hv]
-    rw [hr, cylindrical_axis, cylindrical_axis]
+    simp only [hr, cylindrical_axis]
   · have hu := upper_face_angle (alpha i) (ha i) (hapi i) p hv
     have hl := lower_face_angle (alpha (next i)) (ha (next i)) (hapi (next i))
       ((sectorDatum next alpha ha hapi).iso i p)
@@ -502,9 +506,19 @@ private theorem chain_fold_bound {I : Type*} (next : I → I) (alpha : I → ℝ
           (sector_fold_nonexpanding (alpha i) A reference (offset i) (ha i) (hapi i) x y)
       exact (edist_triangle _ _ _).trans (add_le_add ih hnon)
   | @forward i x t h ih =>
+      change edist (fold alpha A reference offset p)
+        (fold alpha A reference offset ⟨i,x.val⟩) ≤ t at ih
+      change edist (fold alpha A reference offset p)
+        (fold alpha A reference offset
+          ⟨next i,((sectorDatum next alpha ha hapi).iso i x).val⟩) ≤ t
       rw [← fold_seam next alpha ha hapi A reference offset hshift i x]
       exact ih
   | @backward i x t h ih =>
+      change edist (fold alpha A reference offset p)
+        (fold alpha A reference offset ⟨next i,x.val⟩) ≤ t at ih
+      change edist (fold alpha A reference offset p)
+        (fold alpha A reference offset
+          ⟨i,(((sectorDatum next alpha ha hapi).iso i).symm x).val⟩) ≤ t
       have heq := fold_seam next alpha ha hapi A reference offset hshift i
         (((sectorDatum next alpha ha hapi).iso i).symm x)
       simp only [IsometryEquiv.apply_symm_apply] at heq
@@ -543,11 +557,17 @@ private theorem cyclic_offset {n : ℕ} (alpha : Fin (n + 1) → ℝ) (i : Fin (
   · subst i
     have htop : Finset.Iic (Fin.last n) = (Finset.univ : Finset (Fin (n + 1))) := by
       ext k
-      simp
+      simp only [Finset.mem_Iic, Finset.mem_univ, iff_true]
+      exact Fin.le_last k
     rw [finRotate_last, htop]
     change ((totalAngle alpha : ℝ) : AddCircle (totalAngle alpha)) =
       (offset alpha 0 : AddCircle (totalAngle alpha))
-    simp [offset]
+    have hzero : offset alpha 0 = 0 := by
+      apply Finset.sum_eq_zero
+      intro k hk
+      have hk' : k.val < 0 := Finset.mem_Iio.mp hk
+      omega
+    rw [hzero, AddCircle.coe_zero, AddCircle.coe_period]
   · have hnext := coe_finRotate_of_ne_last hi
     have hsets : Finset.Iio (finRotate (n + 1) i) = Finset.Iic i := by
       ext k
