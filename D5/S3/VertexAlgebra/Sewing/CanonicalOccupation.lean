@@ -1260,13 +1260,13 @@ private theorem word_column_step (D : LatticeData) (α β : Charge D)
       linarith
     _ = C e * columnWeight D B ((K + (x.2 + 2)) + e.degree) d + S * W := by
       dsimp [columnWeight, W, N]
-      rw [show K + (x.2 + 2) + e.degree = (K + e.degree) + (x.2 + 2) by omega,
-        pow_add, pow_succ (1 + (level D d : ℝ)) (x.2 + 1)]
+      rw [show K + (x.2 + 2) + e.degree = (K + e.degree) + (x.2 + 2) by omega]
+      simp only [pow_add, pow_succ, pow_one]
       ring
     _ ≤ _ := by
       rw [add_mul]
-      apply add_le_add_left
-      exact mul_le_mul_of_nonneg_left (columnWeight_grow D B hB _ _ (by omega) d) hS
+      exact add_le_add le_rfl
+        (mul_le_mul_of_nonneg_left (columnWeight_grow D B hB _ _ (by omega) d) hS)
 
 /-- Every actual descendant word has a factorial column envelope in every signed mode. -/
 private theorem word_column_bound (D : LatticeData) (α β : Charge D) :
