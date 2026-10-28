@@ -2,9 +2,12 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorGeneralScalarNumerator
 
+/-! Full-source finite scalar numerator observation for arbitrary lattice data. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
+open _root_.D5.S3.VertexAlgebra
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
@@ -98,8 +101,10 @@ end WordNumerator
 
 def wordNumeratorAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@ordinary_actual_word_finite_scalar_numerator) (Realization WordNumerator.signature) Unit Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.Sectors.LatticeSectorGeneralScalarNumerator.WordNumeratorUnit
-  realizationName := `Reg.D5.S3.VertexAlgebra.Sectors.LatticeSectorGeneralScalarNumerator.WordNumerator.family
+  unitName :=
+    `Reg.D5.S3.VertexAlgebra.Sectors.LatticeSectorGeneralScalarNumerator.WordNumeratorUnit
+  realizationName :=
+    `Reg.D5.S3.VertexAlgebra.Sectors.LatticeSectorGeneralScalarNumerator.WordNumerator.family
   realizationSource := none
   generated := false
   arena := .source ⟨WordNumerator.arena⟩
@@ -109,7 +114,8 @@ def wordNumeratorAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source WordNumerator.arena ⟨WordNumerator.family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize WordNumerator.signature WordNumerator.actual.readout WordNumerator.actual.anchor)
+  readout := some
+    (realize WordNumerator.signature WordNumerator.actual.readout WordNumerator.actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -122,7 +128,8 @@ def wordNumeratorAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       path := #["body",
         "body", "body", "body", "body", "body",
         "arg", "body", "arg", "body", "body",
-        "arg", "body", "arg", "body", "arg", "arg", "body", "body", "body", "arg", "arg", "body", "fn", "arg", "fn", "fn"]
+        "arg", "body", "arg", "body", "arg", "arg", "body", "body", "body",
+        "arg", "arg", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
