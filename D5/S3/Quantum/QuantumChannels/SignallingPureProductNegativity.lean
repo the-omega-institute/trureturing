@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Recovery.LiJiangPolarPairOptimalityRefutation
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
-import Mathlib.Analysis.Matrix.Order
 
 /-! # Pure product inputs detect signalling through PDM negativity -/
 
@@ -91,7 +90,8 @@ private def IsReplacement (e : Matrix α α ℂ →ₗ[ℂ] Matrix β β ℂ) : 
 
 private theorem cj_entry (e : Matrix α α ℂ →ₗ[ℂ] Matrix β β ℂ)
     (i j : α) (r s : β) : cjMatrix e (i, r) (j, s) = e (single j i 1) r s := by
-  unfold cjMatrix
+  change (∑ k, ∑ l, single l k (1 : ℂ) ⊗ₖ e (single k l 1))
+    (i, r) (j, s) = _
   simp only [Matrix.sum_apply, kronecker_apply, single_apply, ite_and,
     ite_mul, one_mul, zero_mul]
   simp
@@ -297,9 +297,17 @@ private theorem pdm_reduction (p : QuantumChannel (α₁ × β₁) (α₂ × β�
         cjMatrix (conditionalMap p a) +
        cjMatrix (conditionalMap p a) *
         ((vecMulVec b (star b)) ⊗ₖ (1 : Matrix α₂ α₂ ℂ))) := by
+  generalize hn : cjMatrix (conditionalMap p a) = n
   unfold pdmBA partialTraceLeft
+  generalize hm : cjMatrix (matrixAction p.toCompletelyPositiveMap) = m
+  have hm_entry (i j : α₁ × β₁) (r s : α₂ × β₂) :
+      m (i, r) (j, s) = matrixAction p.toCompletelyPositiveMap (single j i 1) r s := by
+    rw [← hm, cj_entry]
+  have hn_entry (i j : β₁) (r s : α₂) :
+      n (i, r) (j, s) = conditionalMap p a (single j i 1) r s := by
+    rw [← hn, cj_entry]
   ext ⟨k, r⟩ ⟨l, s⟩
-  simp only [submatrix_apply, Matrix.smul_apply, Matrix.add_apply, mul_apply, cj_entry,
+  simp only [submatrix_apply, Matrix.smul_apply, Matrix.add_apply, mul_apply, ↓hm_entry, ↓hn_entry,
     kronecker_apply, vecMulVec_apply, Pi.star_apply, Fintype.sum_prod_type,
     one_apply, Prod.mk.injEq, ite_and, mul_ite, ite_mul, one_mul, mul_one,
     zero_mul, mul_zero, Finset.sum_add_distrib]
@@ -362,8 +370,7 @@ private theorem basis_pair_units (i j : α) (hij : i ≠ j) (q : ℂ)
   simp only [star_smul, star_add, star_sub, Pi.star_single, star_one, hq,
     smul_dotProduct, dotProduct_smul, add_dotProduct, sub_dotProduct,
     dotProduct_add, dotProduct_sub, single_dotProduct, Pi.single_apply,
-    hij, (Ne.symm hij), ite_false, ite_true, mul_one, one_mul, mul_zero,
-    smul_eq_mul, ← mul_assoc, hqq]
+    hij, (Ne.symm hij), ite_false, ite_true, mul_one, mul_zero, smul_eq_mul]
   norm_num
   linear_combination 2 * hqq
 
@@ -460,8 +467,11 @@ private theorem cj_pairing (e : Matrix α α ℂ →ₗ[ℂ] Matrix β β ℂ)
     (x y : α → ℂ) (r s : β) :
     (∑ i, ∑ j, star (x i) * cjMatrix e (i, r) (j, s) * y j) =
       e (vecMulVec y (star x)) r s := by
+  generalize hm : cjMatrix e = m
+  have hm_entry (i j : α) (r s : β) : m (i, r) (j, s) = e (single j i 1) r s := by
+    rw [← hm, cj_entry]
   rw [map_expansion e (vecMulVec y (star x))]
-  simp only [cj_entry, Matrix.sum_apply, Matrix.smul_apply, vecMulVec_apply,
+  simp only [↓hm_entry, Matrix.sum_apply, Matrix.smul_apply, vecMulVec_apply,
     Pi.star_apply, smul_eq_mul]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
@@ -478,12 +488,13 @@ private theorem tensor_pairing (e : Matrix α α ℂ →ₗ[ℂ] Matrix β β �
   have star_ite (p : Prop) [Decidable p] (x y : ℂ) :
       star (if p then x else y) = if p then star x else star y := by
     split_ifs <;> rfl
+  generalize hm : cjMatrix e = m
   change (∑ z : α × β, star (x z.1 * if z.2 = r then 1 else 0) *
-    ∑ w : α × β, cjMatrix e z w * (y w.1 * if w.2 = s then 1 else 0)) = _
+    ∑ w : α × β, m z w * (y w.1 * if w.2 = s then 1 else 0)) = _
   simp only [Fintype.sum_prod_type, star_mul, star_ite, star_one, star_zero,
     mul_ite, mul_one, mul_zero, ite_mul, one_mul, zero_mul,
     Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
-  rw [← cj_pairing]
+  rw [← hm, ← cj_pairing]
   apply Finset.sum_congr rfl
   intro i _
   rw [Finset.mul_sum]
@@ -514,9 +525,12 @@ private theorem cj_projector_trace (e : Matrix α α ℂ →ₗ[ℂ] Matrix β �
     (b : α → ℂ) :
     trace (((vecMulVec b (star b)) ⊗ₖ (1 : Matrix β β ℂ)) * cjMatrix e) =
       trace (e (vecMulVec b (star b))) := by
+  generalize hm : cjMatrix e = m
+  have hm_entry (i j : α) (r s : β) : m (i, r) (j, s) = e (single j i 1) r s := by
+    rw [← hm, cj_entry]
   change (∑ z : α × β, (((vecMulVec b (star b)) ⊗ₖ
-    (1 : Matrix β β ℂ)) * cjMatrix e) z z) = ∑ r, e (vecMulVec b (star b)) r r
-  simp only [Matrix.mul_apply, cj_entry, kronecker_apply, vecMulVec_apply,
+    (1 : Matrix β β ℂ)) * m) z z) = ∑ r, e (vecMulVec b (star b)) r r
+  simp only [Matrix.mul_apply, ↓hm_entry, kronecker_apply, vecMulVec_apply,
     Pi.star_apply, Matrix.one_apply, Fintype.sum_prod_type,
     mul_ite, ite_mul, mul_one, zero_mul, mul_zero,
     Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
