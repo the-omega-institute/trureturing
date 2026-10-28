@@ -43,8 +43,8 @@ private theorem price_record_antitone {m : ℕ} (hm : 0 < m) {lam : ℝ}
       div_pos (by exact_mod_cast ArithmeticFunction.sigma_pos 1 m hm.ne')
         (by exact_mod_cast hm)
     have hlog := Real.log_le_log hpos hratio
-    have hsize := Real.log_lt_log (by exact_mod_cast (by omega : 0 < a))
-      (by exact_mod_cast halt)
+    have hsize : Real.log (a : ℝ) < Real.log (m : ℝ) :=
+      Real.log_lt_log (by exact_mod_cast (by omega : 0 < a)) (by exact_mod_cast halt)
     nlinarith [mul_pos hlam (sub_pos.mpr hsize)]
   simpa only [heq] using hanti
 
@@ -185,7 +185,7 @@ theorem price_record_prime_confinement :
   have hmass' : (∑ p ∈ m.primeFactors,
       ((m.factorization p - 1 : ℕ) : ℝ) * Real.log p) ≤
       2 * θ (Real.sqrt (80 * X)) + 2 * (ψ (40 * X) - θ (40 * X)) := by
-    convert hmass using 1 <;> congr 2 <;> ring
+    simpa only [show (2 : ℝ) * (40 * X) = 80 * X by ring] using hmass
   have htail : ψ (40 * X) - θ (40 * X) ≤ |c| * Real.sqrt (40 * X) :=
     (hc _).trans (mul_le_mul_of_nonneg_right (le_abs_self c) (Real.sqrt_nonneg _))
   have hroot : Real.sqrt (80 * X) ≤ 2 * Real.sqrt (40 * X) := by
@@ -212,7 +212,8 @@ theorem price_record_prime_confinement :
   · linarith
   · linarith
   · intro p k hp hk hkm
-    convert hcut p k hp hk hkm using 1 <;> ring
+    simpa only [show (k : ℝ) * (40 * X) = 40 * (k : ℝ) * X by ring] using
+      hcut p k hp hk hkm
 
 /-- For each tolerance one log-size threshold works for every integer with the
 same full positive-price predecessor record. Only the higher mass has a specified
@@ -265,7 +266,7 @@ theorem price_record_largest_prime_localization :
   have hPY : max Y 1 ≤ P := by nlinarith
   have hP : 0 < P := lt_of_lt_of_le (by norm_num) ((le_max_right Y 1).trans hPY)
   have hrel := hY P ((le_max_left Y 1).trans hPY)
-  rw [Metric.mem_ball, Real.dist_eq] at hrel
+  rw [Real.dist_eq] at hrel
   have hrelLo := (abs_lt.mp hrel).1
   have hrelHi := (abs_lt.mp hrel).2
   have hthetaLo : (1 - d) * P < θ P := by
@@ -286,10 +287,14 @@ theorem price_record_largest_prime_localization :
   have hdP : d * P ≤ 2 * d * X := by nlinarith
   apply abs_lt.mpr
   constructor
-  · apply (lt_div_iff₀ hX).mpr
-    nlinarith
-  · apply (div_lt_iff₀ hX).mpr
-    nlinarith
+  · have hh : (1 - epsilon) * X < P := by nlinarith
+    have hr := (lt_div_iff₀ hX).mpr hh
+    change -epsilon < P / X - 1
+    linarith
+  · have hh : P < (1 + epsilon) * X := by nlinarith
+    have hr := (div_lt_iff₀ hX).mpr hh
+    change P / X - 1 < epsilon
+    linarith
 
 #print axioms price_record_divides_strictInteger
 #print axioms price_record_prime_confinement
