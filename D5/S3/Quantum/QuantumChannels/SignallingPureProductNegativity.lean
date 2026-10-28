@@ -7,7 +7,6 @@
    digest: Every signalling channel has a pure product input with positive PDM negativity. -/
 
 import D5.S3.Quantum.Recovery.LiJiangPolarPairOptimalityRefutation
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
 
 /-! # Pure product inputs detect signalling through PDM negativity -/
 
