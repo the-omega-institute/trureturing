@@ -14,6 +14,9 @@ internal sealed class NonlocalityDepthQuantumBoundDocument : IScribeDocumentDefi
         "For every n >= 3, the Bernards--Gühne Bell functional has exact quantum maximum sqrt(2) n 2^(n-2), over all finite local dimensions, binary observables and density matrices.",
         H("The exact quantum bound for nonlocality depth"),
         Blocks(
+            Node("expectation_upper", "An operator bound controls every density expectation", ExpectationUpperFormula(),
+                "If q times the identity minus B is positive semidefinite, then the real trace pairing of B with any positive semidefinite trace-one matrix is at most q.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Node("tensor_star", "Adjoints commute with the tensor product", TensorStarFormula(),
                 "The tensor product of the adjoints of a finite family of complex matrices equals the adjoint of their tensor product. The local matrix carriers may be arbitrary types.",
                 DescribeRole.Lemma, AssessedProvenance.FromRepo()),
@@ -92,6 +95,18 @@ internal sealed class NonlocalityDepthQuantumBoundDocument : IScribeDocumentDefi
     private static Formula Hermitian(Formula value) => At(Q("Matrix", "IsHermitian"), value);
     private static Formula Trace(Formula value) => At(Q("Matrix", "trace"), value);
     private static Formula Smul(Formula a, Formula b) => At(Q("SMul", "smul"), a, b);
+
+    private static Formula ExpectationUpperFormula()
+    {
+        Formula m = X("m"), rho = X("rho"), b = X("B"), q = X("q");
+        return Disp(All("m", X("Type"), Seq(
+            OpenBracket, Call("Fintype", m), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", m), CloseBracket, Sp,
+            All("rho", Matrix(m), All("B", Matrix(m), All("q", Numbers("R"),
+                Implies(And(PSD(rho), Equal(Trace(rho), D(1))),
+                    Implies(PSD(Sub(Smul(q, D(1)), b)),
+                        Le(At(Q("Complex", "re"), Trace(Mul(rho, b))), q)))))))));
+    }
 
     private static Formula TensorStarFormula()
     {

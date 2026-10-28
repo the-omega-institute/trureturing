@@ -901,7 +901,7 @@ private lemma upper_binary (k : ℕ) {d : Fin (k + 3) → ℕ}
   exact D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Upper.weighted_upper_binary k A (fun j s => (hA j s).1)
       (fun j s => (hA j s).2.1) (fun j s => (hA j s).2.2)
 
-private lemma expectation_upper {m : Type*} [Fintype m] [DecidableEq m]
+lemma expectation_upper {m : Type*} [Fintype m] [DecidableEq m]
     (rho B : Matrix m m ℂ) (q : ℝ) (hr : (rho.PosSemidef ∧ Matrix.trace rho = 1))
     (hp : (q • (1 : Matrix m m ℂ) - B).PosSemidef) :
     (Matrix.trace (rho * B)).re ≤ q := by
