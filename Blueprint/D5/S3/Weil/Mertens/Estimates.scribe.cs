@@ -16,7 +16,7 @@ internal sealed class EstimatesDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "For every real x, the original difference Mertens.E1Lambda(x)-Mertens.E1p(x) "
+                        "For every real x, the original difference Mertens.E₁Λ(x)-Mertens.E₁p(x) "
                         + "is sum(if n is not prime then Lambda(n)/n else 0,0<n<=floorNat(x)). "
                         + "The logarithmic terms cancel and Lambda(p)=log(p) at each prime p. "
                         + "The cutoff is inclusive, so a prime power equal to x remains present. "

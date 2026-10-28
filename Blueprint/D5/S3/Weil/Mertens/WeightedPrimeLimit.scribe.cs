@@ -39,13 +39,13 @@ internal sealed class WeightedPrimeLimitDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "As the real variable t tends to infinity, the original Mertens.E1Lambda(t) "
+                        "As the real variable t tends to infinity, the original Mertens.E₁Λ(t) "
                         + "tends to minus Real.eulerMascheroniConstant. The original expression is "
                         + "sum(Lambda(n)/n,0<n<=floorNat(t))-log(t), with an inclusive upper endpoint "
                         + "and every prime power retained.")),
                     Paragraph(Text(
                         "Absolute integrability supplies the premise of complete_chebyshev_tail_identity. "
-                        + "For every real t>=2, rearrangement gives E1Lambda(t)="
+                        + "For every real t>=2, rearrangement gives E₁Λ(t)="
                         + "(psi(t)-t)/t-EulerGamma-integral(K(u),u>t). Quantitative MediumPNT "
                         + "makes the relative error tend to zero; the integral tail tends to zero. "
                         + "The constant minus one in the tail identity cancels with t/t=1."))),
@@ -58,12 +58,12 @@ internal sealed class WeightedPrimeLimitDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "There exists a real ell such that the original Mertens.E1p(t) tends to ell "
-                        + "as the real variable t tends to infinity. Here E1p(t) is "
+                        "There exists a real ell such that the original Mertens.E₁p(t) tends to ell "
+                        + "as the real variable t tends to infinity. Here E₁p(t) is "
                         + "sum(log(p)/p,0<p<=floorNat(t),p prime)-log(t). No integrability, "
                         + "convergence or Riemann-hypothesis premise is imposed.")),
                     Paragraph(Text(
-                        "The original Estimates identity expresses E1Lambda(t)-E1p(t) as the "
+                        "The original Estimates identity expresses E₁Λ(t)-E₁p(t) as the "
                         + "finite sum of nonprime Lambda(n)/n. Mathlib's "
                         + "vonMangoldt.summable_residueClass_non_primes_div at modulus one "
                         + "supplies summability of exactly these terms. Its natural partial sums "
