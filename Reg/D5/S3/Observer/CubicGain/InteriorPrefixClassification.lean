@@ -10,6 +10,7 @@ open _root_.D5.S3.Observer.CubicGain.CommonWordSensitivity
 open _root_.D5.S3.Observer.CubicGain.PrefixKernelSigns
 open _root_.D5.S3.Observer.CubicGain.PrimitiveKernelLattice
 open _root_.D5.S3.Observer.CubicGain.PhaseRigidity
+open _root_.D5.S3.Observer.CubicGain.InteriorNormalForm
 open _root_.D5.S3.Observer.CubicGain.InteriorPrefixClassification
 open scoped Matrix
 noncomputable section
@@ -36,8 +37,11 @@ abbrev arena : Arena where
         ParameterForm (conjugateHistory w) (swapCoordinates p) (fun i => -m i))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  open _root_.Reg.D5.S3.Observer.CubicGain.PhaseRigidity.WholeClass in
-    obtain ⟨q,s,m,hs,_⟩ := h exampleWords p.matrix example_generator example_nonzero
+  obtain ⟨q,s,m,hs,_⟩ := h
+    _root_.Reg.D5.S3.Observer.CubicGain.PhaseRigidity.WholeClass.exampleWords
+    _root_.Reg.D5.S3.Observer.CubicGain.PhaseRigidity.WholeClass.p.matrix
+    _root_.Reg.D5.S3.Observer.CubicGain.PhaseRigidity.WholeClass.example_generator
+    _root_.Reg.D5.S3.Observer.CubicGain.PhaseRigidity.WholeClass.example_nonzero
   change (0:ℝ) < -1 at hs
   norm_num at hs
 def family : Registration arena (type_of% @interior_necessity) where
@@ -132,7 +136,8 @@ def family : Registration arena (type_of% @two_transition_parameters) where
   dependence := by
     intro i
     refine ⟨(),0,1,?_⟩
-    norm_num [actual,realize]
+    change (0:ZMat) ≠ 1
+    exact zero_ne_one
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@two_transition_parameters) (Realization signature) Unit Unit := {
   unitName := `D5.S3.Observer.CubicGain.InteriorPrefixClassification.two_transition_parameters.__information_unit

@@ -65,7 +65,8 @@ private theorem example_rank : Module.finrank ℝ (LinearMap.range
       (!![0,1;1,4] : Mat)*((!![1,1;2,3] : Mat)*real (!![7,1;6,1] : ZMat))] : Fin 3 → Mat) i*X)-Matrix.trace X = _
     change _ = Matrix.trace (prefixMatrix PhaseRigidity.WholeClass.exampleWords i.succ*X)-Matrix.trace X
     rw [PhaseRigidity.WholeClass.example_endpoints]
-    fin_cases i <;> norm_num [real,Matrix.trace,Matrix.diag,Matrix.mul_apply,Fin.sum_univ_two] <;> ring
+    fin_cases i <;> norm_num [real,Matrix.trace,Matrix.diag,Matrix.mul_apply,Matrix.vecMul,
+      dotProduct,Matrix.map_apply,Fin.sum_univ_two] <;> ring
   rw [he]
   exact PhaseRigidity.WholeClass.example_rank
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -77,7 +78,11 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     (by intro i j; fin_cases i <;> fin_cases j <;> norm_num)
     (by left; norm_num [Matrix.det_fin_two])
     (by ext i; fin_cases i <;> norm_num [Matrix.mulVec,dotProduct,Fin.sum_univ_two])
-    (by convert example_rank using 1 <;> norm_num)
+    (by
+      change Module.finrank ℝ (LinearMap.range
+        (endpointDifference (real (!![7,1;6,1] : ZMat))
+          (!![1,1;2,3]) (!![0,1;1,4]))) = 3
+      exact example_rank)
   change (0:ℤ) < 0 at hpos
   exact lt_irrefl _ hpos
 def family : Registration arena (type_of% @admitted_parameters_realize) where
