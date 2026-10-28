@@ -140,7 +140,7 @@ private abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hg : ((-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)-(-2)).PosSemidef := by
-    rw [show (-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)-(-2) = 1 by noncomm_ring]
+    rw [show (-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)-(-2) = 1 by norm_num]
     exact Matrix.PosSemidef.one
   have hh := h (n := ULift.{u} Unit) (-1) (-2) 1 rfl hg Matrix.isHermitian_one (by simp)
   obtain ⟨hd2, hd3⟩ := identity_cubic_trace_derivatives
@@ -217,7 +217,7 @@ private abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hg : ((-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)-(-2)).PosSemidef := by
-    rw [show (-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)-(-2) = 1 by noncomm_ring]
+    rw [show (-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)-(-2) = 1 by norm_num]
     exact Matrix.PosSemidef.one
   have hh := h (n := ULift.{u} Unit) (-1) (-2) 1 rfl hg Matrix.isHermitian_one (by simp)
   obtain ⟨hd2, hd3⟩ := identity_cubic_trace_derivatives
