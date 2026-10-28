@@ -7,6 +7,7 @@
    digest: Exact rational root isolation and determinantal lift enclosures place the algebraic critical center in the original parent chart. -/
 
 import D5.S3.Observer.CubicGain.RegularParentChart
+import D5.S3.Observer.CubicGain.RegularReadInverse
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Polynomial
 
@@ -21,6 +22,9 @@ namespace D5.S3.Observer.CubicGain.ExactW3Center
 
 open D5.S3.Observer.CubicGain
 open D5.S3.Observer.CubicGain.RegularParentChart
+open D5.S3.Observer.CubicGain.RegularReadInverse
+open D5.S3.Observer.CubicGain.CommonWordSensitivity
+open scoped NNReal Topology
 
 /-- Horner encoding of a descending integer coefficient list. -/
 def polyDesc : List ℤ → Polynomial ℝ
@@ -444,7 +448,34 @@ theorem exactW3_parent :
     (∀ b : ℝ, 12758053/100000000 < b → b < 12758054/100000000 →
       criticalPolynomial.eval b = 0 → b = criticalRoot) ∧
     (∀ W : OriginalWorld, OriginalParent W → W.1 = liftedR criticalRoot →
-      W.2.1 = criticalRoot → W = exactW3) := by
+      W.2.1 = criticalRoot → W = exactW3) ∧
+    (∃ (e : OpenPartialHomeomorph (ℝ × ℝ) (ℝ × ℝ)) (ε : ℝ) (L : ℝ≥0),
+      (e : (ℝ × ℝ) → (ℝ × ℝ)) = chartRead ∧
+      liftedCoordinates criticalRoot ∈ e.source ∧
+      0 < ε ∧ 0 < (L : ℝ) ∧
+      IsOpen (Metric.ball (chartRead (liftedCoordinates criticalRoot)) ε) ∧
+      Convex ℝ (Metric.ball (chartRead (liftedCoordinates criticalRoot)) ε) ∧
+      IsCompact (closure (Metric.ball (chartRead (liftedCoordinates criticalRoot)) ε)) ∧
+      closure (Metric.ball (chartRead (liftedCoordinates criticalRoot)) ε) ⊆ e.target ∧
+      AnalyticOnNhd ℝ e.symm
+        (closure (Metric.ball (chartRead (liftedCoordinates criticalRoot)) ε)) ∧
+      AnalyticOnNhd ℝ (fun q => chartSource (e.symm q))
+        (closure (Metric.ball (chartRead (liftedCoordinates criticalRoot)) ε)) ∧
+      (∀ q ∈ closure (Metric.ball (chartRead (liftedCoordinates criticalRoot)) ε),
+        ‖fderiv ℝ (fun q => chartSource (e.symm q)) q‖ ≤ (L : ℝ)) ∧
+      LipschitzOnWith L (fun q => chartSource (e.symm q))
+        (Metric.ball (chartRead (liftedCoordinates criticalRoot)) ε) ∧
+      exactW3 ∈ localWorlds e
+        (Metric.ball (chartRead (liftedCoordinates criticalRoot)) ε) ∧
+      (∀ W ∈ localWorlds e
+          (Metric.ball (chartRead (liftedCoordinates criticalRoot)) ε),
+        chartSource (e.symm (originalPM W)) = sourceCoordinates W) ∧
+      (∀ W ∈ localWorlds e
+          (Metric.ball (chartRead (liftedCoordinates criticalRoot)) ε),
+        ∀ W' ∈ localWorlds e
+          (Metric.ball (chartRead (liftedCoordinates criticalRoot)) ε),
+        ‖sourceCoordinates W - sourceCoordinates W'‖ ≤
+          (L : ℝ) * ‖originalPM W - originalPM W'‖)) := by
   have h := source_certificate
   have hb0 : 0 < criticalRoot := by linarith [criticalRoot_refined.1]
   have hm : liftedR criticalRoot / criticalRoot * criticalRoot = liftedR criticalRoot :=
@@ -453,9 +484,13 @@ theorem exactW3_parent :
     (by simpa [liftedCoordinates, hm] using h.1)
     (by simpa [liftedCoordinates, hm] using h.2.1) h.2.2.1 h.2.2.2.1
   refine ⟨h, (exactW3_parent_of_source_certificate h).1, hc.2.1, hc.2.2.1,
-    hc.2.2.2.1, criticalRoot_unique, ?_⟩
+    hc.2.2.2.1, criticalRoot_unique, ?_, ?_⟩
   intro W hW hr hb
-  exact hc.2.2.2.2.1 W hW (by simpa [liftedCoordinates, hm] using hr) hb
+  · exact hc.2.2.2.2.1 W hW (by simpa [liftedCoordinates, hm] using hr) hb
+  · exact actual_local_source_inverse (liftedCoordinates criticalRoot)
+      (by simpa [liftedCoordinates, hm] using h.1)
+      (by simpa [liftedCoordinates, hm] using h.2.1)
+      h.2.2.1 h.2.2.2.1
 
 #print axioms critical_root_exists
 #print axioms exactW3_parent_of_source_certificate
