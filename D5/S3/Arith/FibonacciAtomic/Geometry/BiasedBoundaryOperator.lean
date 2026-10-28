@@ -528,8 +528,9 @@ def covarianceEigenEquiv (mu : ℝ) (hmu : 0 < mu) :
   invFun u := ⟨mu⁻¹ • C.adjoint u.val,eigen_backward mu hmu u⟩
   left_inv z := by
     apply Subtype.ext
+    have hz : Sigma z.val = mu • z.val := Module.End.mem_eigenspace_iff.mp z.property
     change mu⁻¹ • Sigma z.val = z.val
-    rw [Module.End.mem_eigenspace_iff.mp z.property,smul_smul,
+    rw [hz,smul_smul,
       inv_mul_cancel₀ (ne_of_gt hmu),one_smul]
   right_inv u := by
     apply Subtype.ext
