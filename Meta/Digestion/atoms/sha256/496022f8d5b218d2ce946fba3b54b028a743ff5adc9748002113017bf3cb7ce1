@@ -1,0 +1,13 @@
+**(B7) Theorem 7.1 (uniform minimax).** For $f_i=1/4$ and every $D\subset(0,\infty)$ with $\inf D=0$,
+
+$$
+\min_P\sup_{s\in D}\operatorname{TV}(\nu_P^s,U_{16})=\frac34,
+\qquad
+\sup_{s\in D}\min_P\operatorname{TV}(\nu_P^s,U_{16})=0.
+\tag{7.1}
+$$
+
+For a finite positive set $D_0$, $\inf_P\max_{s\in D_0}\operatorname{TV}(\nu_P^s,U_{16})=0$; common exact attainment for arbitrary finite $D_0$ is not asserted.
+
+**Proof.** Lemma 2.1 gives the lower bound $3/4$ for every fixed $P$. Choose an atomless $\mu_t$-equal-mass partition. Every row of its pair law has mass $1/4$; its overlap with the four target entries of size $1/16$ is at least $1/16$ per row, hence total overlap at least $1/4$ and total variation at most $3/4$ for every positive $s$. The two orders in (7.1) follow from the fixed-pair attainment theorem. For a finite $D_0$, use the common weak-star approximation and smoothing argument on the finitely many gaps. ∎
+
