@@ -173,6 +173,8 @@ private theorem creation_coefficient_norm (D : LatticeData) (α : Charge D)
   classical
   have hw : (FactorialFockMetric.weight d : ℝ) ≠ 0 :=
     Nat.cast_ne_zero.mpr (Nat.ne_of_gt (FactorialFockMetric.weight_pos d))
+  have hn (n : ℕ) : ‖(n + 1 : ℂ)‖ = (n + 1 : ℝ) := by
+    simpa only [Nat.cast_add, Nat.cast_one] using (Complex.norm_natCast (n + 1))
   have h := congrArg norm (creation_coefficient_factorial D α d)
   simp only [norm_mul, Complex.norm_natCast] at h
   calc
@@ -180,15 +182,15 @@ private theorem creation_coefficient_norm (D : LatticeData) (α : Charge D)
       (eq_div_iff hw).mpr h
     _ = _ := by
       simp [creationCoordinate, FactorialFockMetric.weight, Finsupp.prod,
-        norm_prod, norm_div, norm_pow, Finset.prod_div_distrib, ← Nat.cast_add_one]
+        norm_prod, norm_div, norm_pow, Finset.prod_div_distrib, hn]
 
 /-- A radial estimate for every literal creation occupation, with no energy cutoff.
 The arbitrary descendant field estimate needed for scalar sewing is separate. -/
 private theorem creation_radial_bound (D : LatticeData) (α : Charge D)
-    (M ρ : ℝ) (hM : 0 ≤ M) (hα : ∀ i, ‖(α i : ℂ)‖ ≤ M)
-    (hρ0 : 0 ≤ ρ) (hρ1 : ρ < 1) (d : Occ D) :
-    ‖(creationCoeff D α (level D d)).coeff d‖ * ρ ^ level D d ≤
-      Real.exp ((D.rank : ℝ) * M / (1 - ρ)) := by
+    (M B ρ : ℝ) (hM : 0 ≤ M) (hB : 0 ≤ B)
+    (hα : ∀ i, ‖(α i : ℂ)‖ ≤ M) (hρ0 : 0 ≤ ρ) (hρ1 : ρ < 1) (d : Occ D) :
+    ‖(creationCoeff D α (level D d)).coeff d‖ * B ^ d.degree * ρ ^ level D d ≤
+      Real.exp ((D.rank : ℝ) * M * B / (1 - ρ)) := by
   classical
   have hpow : ρ ^ level D d = d.prod (fun x n => (ρ ^ (x.2 + 1)) ^ n) := by
     simp only [level, LatticePositiveEnergy.oscillatorEnergy, Finsupp.weight_apply,
@@ -196,38 +198,46 @@ private theorem creation_radial_bound (D : LatticeData) (α : Charge D)
       Finset.prod_pow_eq_pow_sum]
     congr 1
     exact Finset.sum_congr rfl (fun x hx => Nat.mul_comm _ _)
+  have hdegree : B ^ d.degree = d.prod (fun _ n => B ^ n) := by
+    simp [Finsupp.degree_apply, Finsupp.prod, Finset.prod_pow_eq_pow_sum]
   let f : Index D → ℝ := fun x =>
-    ‖(α x.1 : ℂ)‖ / (x.2 + 1 : ℝ) * ρ ^ (x.2 + 1)
+    ‖(α x.1 : ℂ)‖ / (x.2 + 1 : ℝ) * B * ρ ^ (x.2 + 1)
   have hf (x : Index D) : 0 ≤ f x := by dsimp [f]; positivity
-  have hprod : ‖(creationCoeff D α (level D d)).coeff d‖ * ρ ^ level D d ≤
+  have hprod : ‖(creationCoeff D α (level D d)).coeff d‖ * B ^ d.degree * ρ ^ level D d ≤
       Real.exp (∑ x ∈ d.support, f x) := by
-    rw [creation_coefficient_norm, hpow]
-    change (∏ x ∈ d.support,
+    rw [creation_coefficient_norm, hdegree, hpow]
+    change ((∏ x ∈ d.support,
         (‖(α x.1 : ℂ)‖ / (x.2 + 1 : ℝ)) ^ d x / ((d x).factorial : ℝ)) *
+        (∏ x ∈ d.support, B ^ d x)) *
       (∏ x ∈ d.support, (ρ ^ (x.2 + 1)) ^ d x) ≤ _
-    rw [← Finset.prod_mul_distrib, Real.exp_sum]
+    rw [← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib, Real.exp_sum]
     apply Finset.prod_le_prod₀
     · intro x hx
       positivity
     · intro x hx
-      convert Real.pow_div_factorial_le_exp (hf x) (d x) using 1 <;>
-        simp [f, mul_pow, div_mul_eq_mul_div]
+      calc
+        _ = (f x) ^ d x / ((d x).factorial : ℝ) := by
+          simp only [f, mul_pow]
+          ring
+        _ ≤ Real.exp (f x) := Real.pow_div_factorial_le_exp (f x) (hf x) (d x)
   have hgeo := summable_geometric_of_lt_one hρ0 hρ1
-  have hs : Summable (fun x : Index D => M * ρ ^ x.2) := by
-    exact (summable_prod_of_nonneg (fun x : Index D => mul_nonneg hM (pow_nonneg hρ0 _))).2
-      ⟨fun _ => hgeo.mul_left M, Summable.of_finite⟩
-  have hdom (x : Index D) : f x ≤ M * ρ ^ x.2 := by
+  have hMB : 0 ≤ M * B := mul_nonneg hM hB
+  have hs : Summable (fun x : Index D => (M * B) * ρ ^ x.2) := by
+    exact (summable_prod_of_nonneg
+      (fun x : Index D => mul_nonneg hMB (pow_nonneg hρ0 _))).2
+      ⟨fun _ => hgeo.mul_left (M * B), Summable.of_finite⟩
+  have hdom (x : Index D) : f x ≤ (M * B) * ρ ^ x.2 := by
     have hd : (1 : ℝ) ≤ x.2 + 1 := by exact_mod_cast Nat.succ_le_succ (Nat.zero_le x.2)
     have hdiv : ‖(α x.1 : ℂ)‖ / (x.2 + 1 : ℝ) ≤ M :=
       (div_le_self (norm_nonneg _) hd).trans (hα x.1)
     have hp : ρ ^ (x.2 + 1) ≤ ρ ^ x.2 :=
       pow_le_pow_of_le_one hρ0 hρ1.le (by omega)
-    exact mul_le_mul hdiv hp (pow_nonneg hρ0 _) hM
-  have hsum : (∑ x ∈ d.support, f x) ≤ (D.rank : ℝ) * M / (1 - ρ) := by
+    exact mul_le_mul (mul_le_mul_of_nonneg_right hdiv hB) hp (pow_nonneg hρ0 _) hMB
+  have hsum : (∑ x ∈ d.support, f x) ≤ (D.rank : ℝ) * M * B / (1 - ρ) := by
     calc
-      _ ≤ ∑ x ∈ d.support, M * ρ ^ x.2 := Finset.sum_le_sum (fun x hx => hdom x)
-      _ ≤ ∑' x : Index D, M * ρ ^ x.2 :=
-        hs.sum_le_tsum d.support (fun x hx => mul_nonneg hM (pow_nonneg hρ0 _))
+      _ ≤ ∑ x ∈ d.support, (M * B) * ρ ^ x.2 := Finset.sum_le_sum (fun x hx => hdom x)
+      _ ≤ ∑' x : Index D, (M * B) * ρ ^ x.2 :=
+        hs.sum_le_tsum d.support (fun x hx => mul_nonneg hMB (pow_nonneg hρ0 _))
       _ = _ := by
         rw [hs.tsum_prod]
         simp [tsum_mul_left, tsum_geometric_of_lt_one hρ0 hρ1, mul_div_assoc,
@@ -237,15 +247,16 @@ private theorem creation_radial_bound (D : LatticeData) (α : Charge D)
 /-- The all-occupation creation seed is absolutely summable on the open disk.
 This is an internal seed estimate, not the all-descendant canonical sewing theorem. -/
 private theorem creation_occupation_summable (D : LatticeData) (α : Charge D)
-    (q : ℂ) (hq : ‖q‖ < 1) :
-    Summable (fun d : Occ D => ‖q ^ level D d *
+    (B : ℝ) (hB : 0 ≤ B) (q : ℂ) (hq : ‖q‖ < 1) :
+    Summable (fun d : Occ D => B ^ d.degree * ‖q ^ level D d *
       (creationCoeff D α (level D d)).coeff d‖) := by
   obtain ⟨ρ, hqρ, hρ1⟩ := exists_between hq
   have hρ0 : 0 < ρ := lt_of_le_of_lt (norm_nonneg q) hqρ
   let M : ℝ := ∑ i : Fin D.rank, ‖(α i : ℂ)‖
   have hM : 0 ≤ M := Finset.sum_nonneg (fun _ _ => norm_nonneg _)
-  have hα (i : Fin D.rank) : ‖(α i : ℂ)‖ ≤ M :=
-    Finset.single_le_sum (fun _ _ => norm_nonneg _) (Finset.mem_univ i)
+  have hα (i : Fin D.rank) : ‖(α i : ℂ)‖ ≤ M := by
+    dsimp [M]
+    exact Finset.single_le_sum (fun j _ => norm_nonneg (α j : ℂ)) (Finset.mem_univ i)
   have hR0 : 0 ≤ ‖q‖ / ρ := div_nonneg (norm_nonneg q) hρ0.le
   have hR1 : ‖q‖ / ρ < 1 := (div_lt_one hρ0).mpr hqρ
   have hs : Summable (fun d : Occ D => (‖q‖ / ρ) ^ level D d) := by
@@ -255,17 +266,18 @@ private theorem creation_occupation_summable (D : LatticeData) (α : Charge D)
     simpa [D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation.signedIntegerMonomial,
       D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation.integerEnergy,
       level, LatticePositiveEnergy.oscillatorEnergy, abs_of_nonneg hR0] using hh
-  let C := Real.exp ((D.rank : ℝ) * M / (1 - ρ))
-  refine (hs.mul_left C).of_nonneg_of_le (fun _ => norm_nonneg _) ?_
+  let C := Real.exp ((D.rank : ℝ) * M * B / (1 - ρ))
+  refine (hs.mul_left C).of_nonneg_of_le (fun d => mul_nonneg (pow_nonneg hB _) (norm_nonneg _)) ?_
   intro d
-  have hb := creation_radial_bound D α M ρ hM hα hρ0.le hρ1 d
+  have hb := creation_radial_bound D α M B ρ hM hB hα hρ0.le hρ1 d
   rw [norm_mul, norm_pow]
   have hr : 0 < ρ ^ level D d := pow_pos hρ0 _
   calc
-    _ = (‖(creationCoeff D α (level D d)).coeff d‖ * ρ ^ level D d) *
+    _ = (‖(creationCoeff D α (level D d)).coeff d‖ * B ^ d.degree * ρ ^ level D d) *
         (‖q‖ / ρ) ^ level D d := by
       rw [div_pow]
       field_simp
+      <;> ring
     _ ≤ C * (‖q‖ / ρ) ^ level D d :=
       mul_le_mul_of_nonneg_right hb (pow_nonneg hR0 _)
 
