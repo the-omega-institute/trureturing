@@ -3,13 +3,15 @@
    mirror-B: D5/B/S3/Observer/MetricGeometry/PermanentFinitePredictionObstruction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: No finite autonomous orbit can maintain a fixed subunit error forever on an irrational rotation. -/
+   digest: No finite autonomous orbit maintains a fixed subunit error forever on an irrational rotation. -/
 
 import D5.S3.Observer.MetricGeometry.ArithmeticHorizon
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.NumberTheory.Real.Irrational
 import Mathlib.Tactic
+
+/-! A finite autonomous predictor cannot maintain a fixed subunit error forever on an irrational rotation. -/
 
 namespace D5.S3.Observer.MetricGeometry.PermanentFinitePredictionObstruction
 
@@ -28,7 +30,7 @@ theorem no_permanent_finite_prediction
   let B : ℝ := Fintype.card S +
     (Real.arcsin ε / Real.pi) * Psi α (Fintype.card S)
   obtain ⟨H, hH⟩ := exists_nat_gt B
-  have hbound := finite_predictor_horizon G h initial x α ε hα hε hεh H accuracy
+  have hbound := finite_predictor_horizon G h initial x α ε hα hε hεh H (fun n _ => accuracy n)
   have hHB : (B : ℝ) < H := by
     simpa [Nat.cast_add, B] using hH
   exact (not_lt_of_ge (le_of_lt hHB)) hbound
