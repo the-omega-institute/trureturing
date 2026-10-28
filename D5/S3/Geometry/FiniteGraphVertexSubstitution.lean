@@ -974,11 +974,13 @@ private def replacementStageFiberIso (H : ∀ v, SimpleGraph (D v))
     refine { toEquiv := Equiv.cast (by simp [newFiber, stageFiber]), map_rel_iff' := ?_ }
     intro a b
     simp [newGraphs, stageGraphs, SimpleGraph.comap, newFiber, stageFiber]
+    simp only [Equiv.cast_apply, cast_cast]
   · by_cases hr : z ∈ R
     · refine { toEquiv := Equiv.cast (by simp [newFiber, stageFiber, hz, hr]),
                map_rel_iff' := ?_ }
       intro a b
       simp [newGraphs, stageGraphs, SimpleGraph.comap, newFiber, stageFiber, hz, hr]
+      simp only [Equiv.cast_apply, cast_cast]
     · refine { toEquiv := Equiv.cast (by simp [newFiber, stageFiber, hz, hr]),
                map_rel_iff' := ?_ }
       intro a b
@@ -1007,7 +1009,7 @@ private def pointIndependenceHomeomorph :
     cases a
     obtain ⟨s, hs, hx⟩ := (native_mem _ x.val).mp x.property
     have hx1 := hx.2.1
-    simpa using hx1.symm
+    simpa [vertex, Pi.single_apply] using hx1.symm
   right_inv _ := Subsingleton.elim _ _
   continuous_toFun := continuous_const
   continuous_invFun := continuous_const
@@ -1117,6 +1119,8 @@ private theorem hereditarySubstitutionCore
           (oneVertexReplacementEquiv G (stageGraphs H R) v (H v) d0 hsingle l0).symm hw
         exact hom (graphIsoHomeomorph (replacementStageIso G H R v)).toHomotopyEquiv hnew
     exact hom (graphIsoHomeomorph (finalStageIso G H)).toHomotopyEquiv (hstage Finset.univ)
+
+#print axioms hereditarySubstitutionCore
 
 end HereditaryCore
 
