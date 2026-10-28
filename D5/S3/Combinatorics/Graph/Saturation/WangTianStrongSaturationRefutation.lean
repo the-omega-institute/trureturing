@@ -7,11 +7,21 @@
    digest: Odd orders refute the unrestricted exact strong-digraph saturation formula. -/
 import Mathlib.Data.Finset.Max
 import Mathlib.Data.Finset.Powerset
+import Mathlib.Data.Fintype.Card
+import Mathlib.Data.Fintype.Prod
 import Mathlib.Data.List.Chain
 import Mathlib.Data.Nat.Choose.Basic
 import Mathlib.Data.Rat.Cast.CharZero
 import Mathlib.Algebra.Ring.Parity
-import Mathlib.Tactic
+import Mathlib.Tactic.Linarith
+
+/-! Strict digraphs on `Fin n` represent n-vertex digraphs after choosing labels.
+An arc subset specifies the entire labelled host, whose vertex set is `Fin n`.
+Its subdigraphs have independent vertex and arc subsets. Relabelling vertices
+relabells the lists defining dipaths, vertex deletion and separator sets, and
+preserves their cardinalities. No induced or spanning restriction is imposed.
+The empty-domain convention is explicit in `KStrong`; trivial means singleton.
+-/
 
 set_option autoImplicit false
 
@@ -26,19 +36,19 @@ structure Digraph (n : ℕ) where
   arcs : Finset (Arc n)
   endpoints : ∀ e ∈ arcs, e.val.1 ∈ vertices ∧ e.val.2 ∈ vertices
 
-def Adj {n : ℕ} (H : Digraph n) (a b : Fin n) : Prop :=
+def Digraph.Adj {n : ℕ} (H : Digraph n) (a b : Fin n) : Prop :=
   ∃ e ∈ H.arcs, e.val = (a, b)
 
 /-- The list starts at a, ends at b, has no repeated vertices and uses directed arcs. -/
-def Dipath {n : ℕ} (H : Digraph n) (a b : Fin n) : Prop :=
+def Digraph.Dipath {n : ℕ} (H : Digraph n) (a b : Fin n) : Prop :=
   ∃ l : List (Fin n), (a :: l).Nodup ∧
     (∀ v ∈ a :: l, v ∈ H.vertices) ∧ List.IsChain H.Adj (a :: l) ∧
     (a :: l).getLast (List.cons_ne_nil _ _) = b
 
-def Strong {n : ℕ} (H : Digraph n) : Prop :=
+def Digraph.Strong {n : ℕ} (H : Digraph n) : Prop :=
   ∀ a ∈ H.vertices, ∀ b ∈ H.vertices, a ≠ b → H.Dipath a b
 
-def delete {n : ℕ} (H : Digraph n) (S : Finset (Fin n)) : Digraph n where
+def Digraph.delete {n : ℕ} (H : Digraph n) (S : Finset (Fin n)) : Digraph n where
   vertices := H.vertices \ S
   arcs := H.arcs.filter (fun e => e.val.1 ∉ S ∧ e.val.2 ∉ S)
   endpoints := by
@@ -48,17 +58,17 @@ def delete {n : ℕ} (H : Digraph n) (S : Finset (Fin n)) : Digraph n where
       Finset.mem_sdiff.mpr ⟨(H.endpoints e he).2, hb⟩⟩
 
 /-- Trivial means exactly one vertex, even though pairwise reachability is then vacuous. -/
-def Separator {n : ℕ} (H : Digraph n) (S : Finset (Fin n)) : Prop :=
+def Digraph.Separator {n : ℕ} (H : Digraph n) (S : Finset (Fin n)) : Prop :=
   S ⊆ H.vertices ∧ (¬ (H.delete S).Strong ∨ (H.delete S).vertices.card = 1)
 
-noncomputable def separatorCards {n : ℕ} (H : Digraph n) : Finset ℕ := by
+noncomputable def Digraph.separatorCards {n : ℕ} (H : Digraph n) : Finset ℕ := by
   classical
   exact ((H.vertices.powerset).filter H.Separator).image Finset.card
 
 private theorem erase_separator {n : ℕ} (H : Digraph n) {u : Fin n}
     (hu : u ∈ H.vertices) : H.Separator (H.vertices.erase u) := by
   refine ⟨Finset.erase_subset _ _, Or.inr ?_⟩
-  simp [delete, Finset.sdiff_erase_self hu]
+  simp [Digraph.delete, Finset.sdiff_erase_self hu]
 
 private theorem separatorCards_nonempty {n : ℕ} (H : Digraph n)
     (hne : H.vertices.Nonempty) : H.separatorCards.Nonempty := by
@@ -69,7 +79,7 @@ private theorem separatorCards_nonempty {n : ℕ} (H : Digraph n)
     erase_separator H hu⟩
 
 /-- The actual minimum separator size, with attainment and domination retained. -/
-noncomputable def connectivity {n : ℕ} (H : Digraph n) (hne : H.vertices.Nonempty) :
+noncomputable def Digraph.connectivity {n : ℕ} (H : Digraph n) (hne : H.vertices.Nonempty) :
     {m : ℕ // (∃ S, H.Separator S ∧ S.card = m) ∧
       ∀ S, H.Separator S → m ≤ S.card} := by
   classical
@@ -90,7 +100,8 @@ def KStrong {n : ℕ} (k : ℕ) (H : Digraph n) : Prop :=
 private theorem kstrong_order {n k : ℕ} (H : Digraph n) (h : KStrong k H) :
     k + 1 ≤ H.vertices.card := by
   obtain ⟨hne, hk⟩ := h
-  obtain ⟨u, hu⟩ := hne
+  let u := Classical.choose hne
+  have hu : u ∈ H.vertices := Classical.choose_spec hne
   have hm := (H.connectivity hne).property.2 _ (erase_separator H hu)
   have hc := Finset.card_erase_lt_of_mem hu
   omega
@@ -122,12 +133,12 @@ private theorem empty_free {n k : ℕ} (hk : 1 ≤ k) : Free k (∅ : Finset (Ar
   have hsep : H.Separator ∅ := by
     refine ⟨Finset.empty_subset _, Or.inl ?_⟩
     intro hs
-    obtain ⟨l, _, _, hchain, hlast⟩ := hs a (by simpa [delete] using ha)
-      b (by simpa [delete] using hb) hab
+    obtain ⟨l, _, _, hchain, hlast⟩ := hs a (by simpa [Digraph.delete] using ha)
+      b (by simpa [Digraph.delete] using hb) hab
     have hr := List.relationReflTransGen_of_exists_isChain_cons l hchain hlast
     have heq : b = a := Relation.reflTransGen_iff_eq (fun v hv => by
       obtain ⟨e, he, _⟩ := hv
-      simpa [delete, hArc] using he) |>.mp hr
+      simpa [Digraph.delete, hArc] using he) |>.mp hr
     exact hab heq.symm
   have hm := (H.connectivity hne).property.2 ∅ hsep
   simp only [Finset.card_empty] at hm
