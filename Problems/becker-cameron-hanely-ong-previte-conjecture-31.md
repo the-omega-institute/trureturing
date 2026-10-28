@@ -87,7 +87,7 @@ successive-ratio assertion and strengthens its graph-order and connectedness req
 
 The proved existence assertion has limiting base $3/2$. It gives no extremal optimum and no
 claim that every graph family has this growth rate. The source's explicit counts for its other
-graph families are not changed. Their extremal comparison questions remain open.
+graph families are not changed.
 
 ## ASSUMED-UNVERIFIED
 
