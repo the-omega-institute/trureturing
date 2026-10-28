@@ -29,10 +29,12 @@ set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.VertexAlgebra.LatticeSectorScalarNumerator
 open LatticeGeneratingFieldLocality LatticeSectorIntertwiner LatticeSectorChannelTransport
 open LatticePositiveEnergy LatticeSugawaraCurrents SupportedChannelSeries MvPolynomial
+open FieldNormalProductLocality
 open scoped BigOperators VertexOperator
 noncomputable section
 
 open private map_extend from D5.S3.VertexAlgebra.Sectors.LatticeSectorChannelTransport
+open private powerIndex_ext from D5.S3.VertexAlgebra.FormalSeries.SupportedChannelSeries
 open private inner_coefficient_expansion from D5.S3.VertexAlgebra.Sewing.CanonicalOccupation
 
 private theorem inclusion_monomial_grade (D : LatticeData) (α : Charge D)
@@ -47,7 +49,7 @@ private theorem inclusion_monomial_grade (D : LatticeData) (α : Charge D)
     · subst T
       exact (h rfl).elim
     · simp [inclusion, coeff_monomial, hT]
-  · simp [inclusion, Finsupp.single_apply, hα]
+  · simp [inclusion, hα]
 
 private theorem double_coefficient_zero_below_charge (D : LatticeData)
     (J : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -59,15 +61,18 @@ private theorem double_coefficient_zero_below_charge (D : LatticeData)
   classical
   induction u using MvPolynomial.induction_on' with
   | add u₁ u₂ ih₁ ih₂ =>
-    simpa only [map_add, Pi.add_apply, LinearMap.add_apply, MvPolynomial.coeff_add, ih₁, ih₂, add_zero]
+    simp only [map_add, Pi.add_apply, LinearMap.add_apply,
+      AddMonoidAlgebra.coeff_add, Finsupp.add_apply, ih₁, ih₂, add_zero]
   | monomial U a =>
     induction v using MvPolynomial.induction_on' with
     | add v₁ v₂ ih₁ ih₂ =>
-      simpa only [map_add, Pi.add_apply, LinearMap.add_apply, MvPolynomial.coeff_add, ih₁, ih₂, add_zero]
+      simp only [map_add, Pi.add_apply, LinearMap.add_apply,
+        AddMonoidAlgebra.coeff_add, Finsupp.add_apply, ih₁, ih₂, add_zero]
     | monomial V b =>
       induction w using MvPolynomial.induction_on' with
       | add w₁ w₂ ih₁ ih₂ =>
-        simpa only [map_add, Pi.add_apply, LinearMap.add_apply, MvPolynomial.coeff_add, ih₁, ih₂, add_zero]
+        simp only [map_add, Pi.add_apply, LinearMap.add_apply,
+        AddMonoidAlgebra.coeff_add, Finsupp.add_apply, ih₁, ih₂, add_zero]
       | monomial W c =>
         have hi := actual_mode_grade D J hJG hGJ _ _ n _ _
           (inclusion_monomial_grade D β V b) (inclusion_monomial_grade D γ W c)
@@ -122,8 +127,11 @@ private theorem readout_zero_of_above (D : LatticeData)
   apply Finset.sum_eq_zero
   intro T hT
   have hE : oscillatorEnergy T ≤ testEnergy D p := Finset.le_sup hT
-  rw [double_coefficient_zero_below_charge D J hJG hGJ α β γ u v w m n T (by omega)]
-  exact mul_zero _
+  have hz : (canonical D α (β + γ) u m (canonical D β γ v n w)).coeff T = 0 := by
+    by_contra hn
+    have := actual_product_coefficient_energy_le D J hJG hGJ α β γ u v w m n T hn
+    omega
+  rw [hz, mul_zero]
 
 /-- A common actual vector numerator has no tested coefficient above the
 explicit energy cutoff. The clearing summation index cancels from the bound. -/
@@ -139,14 +147,12 @@ theorem scalar_numerator_support (D : LatticeData)
     (d.degree : ℤ) ≤ degreeBound D α β γ A B N p := by
   classical
   by_contra h
-  have hd : d = powerIndex (d 0) (d 1) := by
-    ext i
-    fin_cases i <;> simp [powerIndex]
+  have hd := powerIndex_ext d
   have hdeg : d.degree = d 0 + d 1 := by
     rw [Finsupp.degree_eq_sum]
     exact Fin.sum_univ_two _
   have hc := common (d 0) (d 1)
-  rw [extend, if_pos (by constructor <;> positivity)] at hc
+  rw [extend, ite_eq_left (by constructor <;> positivity)] at hc
   simp only [Int.toNat_natCast, ← hd] at hc
   apply hne
   change readout D p (MvPowerSeries.coeff d P) = 0
@@ -159,6 +165,91 @@ theorem scalar_numerator_support (D : LatticeData)
     rw [hdeg] at h
     push_cast at h
     omega), smul_zero]
+
+private theorem polynomial_of_degree_support (Q : MvPowerSeries (Fin 2) ℂ) (K : ℤ)
+    (support : ∀ d, MvPowerSeries.coeff d Q ≠ 0 → (d.degree : ℤ) ≤ K) :
+    ∃ R : MvPolynomial (Fin 2) ℂ,
+      (R : MvPowerSeries (Fin 2) ℂ) = Q ∧ R.totalDegree ≤ K.toNat ∧
+      (K < 0 → Q = 0 ∧ R = 0) := by
+  let R := MvPowerSeries.truncTotal (K.toNat + 1) Q
+  have heq : (R : MvPowerSeries (Fin 2) ℂ) = Q := by
+    apply MvPowerSeries.ext
+    intro d
+    rw [MvPolynomial.coeff_coe]
+    change (MvPowerSeries.truncTotal (K.toNat + 1) Q).coeff d = _
+    rw [MvPowerSeries.coeff_truncTotal_eq_ite]
+    split_ifs with hd
+    · rfl
+    · symm
+      by_contra hn
+      have := support d hn
+      omega
+  refine ⟨R, heq, ?_, ?_⟩
+  · exact Nat.le_of_lt_succ
+      (MvPowerSeries.totalDegree_truncTotal_lt Q (by omega : K.toNat + 1 ≠ 0))
+  · intro hK
+    have hQ : Q = 0 := by
+      apply MvPowerSeries.ext
+      intro d
+      change MvPowerSeries.coeff d Q = 0
+      by_contra hn
+      have := support d hn
+      omega
+    refine ⟨hQ, ?_⟩
+    apply MvPolynomial.coe_injective (Fin 2) ℂ
+    rw [heq, hQ, MvPolynomial.coe_zero]
+
+/-- One finite scalar polynomial gives the original three cleared channels.
+N precedes the third state, and A,B,P precede the arbitrary test polynomial p.
+Both inverse-Gram equations are explicit; no definiteness is assumed. -/
+theorem ordinary_actual_finite_scalar_numerator
+    (D : LatticeData) (J : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hJG : J * gramComplex D = 1) (hGJ : gramComplex D * J = 1)
+    (α β : Charge D) (u : Sector D α) (v : Sector D β) :
+    ∃ N : ℕ,
+      delta^[N] (FieldNormalProductLocality.commutator
+        (LatticeAllStateField.Y D (inclusion D α u))
+        (LatticeAllStateField.Y D (inclusion D β v))) = 0 ∧
+      (∀ n : ℤ, (N : ℤ) ≤ n → canonical D α β u n v = 0) ∧
+      ∀ (γ : Charge D) (w : Sector D γ), ∃ A B : ℕ,
+        ∃ P : MvPowerSeries (Fin 2) (Oscillator D),
+        (∀ n : ℤ, (A : ℤ) ≤ n → canonical D α γ u n w = 0) ∧
+        (∀ n : ℤ, (B : ℤ) ≤ n → canonical D β γ v n w = 0) ∧
+        (∀ a b : ℤ,
+          clear N (product D α β γ u v w) (a - A) (b - B) = extend P a b ∧
+          clear N (reverseProduct D α β γ u v w) (a - A) (b - B) = extend P a b ∧
+          clearIterate N A B (iterate D α β γ u v w) a b = extend (collision P) a b) ∧
+        ∀ p : Oscillator D, ∃! R : MvPolynomial (Fin 2) ℂ,
+          (R : MvPowerSeries (Fin 2) ℂ) = mapSeries (readout D p) P ∧
+          R.totalDegree ≤ (degreeBound D α β γ A B N p).toNat ∧
+          (degreeBound D α β γ A B N p < 0 →
+            mapSeries (readout D p) P = 0 ∧ R = 0) ∧
+          ∀ a b : ℤ,
+            clear N (fun x y => readout D p (product D α β γ u v w x y))
+                (a - A) (b - B) = extend (R : MvPowerSeries (Fin 2) ℂ) a b ∧
+            clear N (fun x y => readout D p (reverseProduct D α β γ u v w x y))
+                (a - A) (b - B) = extend (R : MvPowerSeries (Fin 2) ℂ) a b ∧
+            clearIterate N A B (fun x y => readout D p (iterate D α β γ u v w x y))
+                a b = extend (collision (R : MvPowerSeries (Fin 2) ℂ)) a b := by
+  obtain ⟨N, hN, huv, rest⟩ := ordinary_actual_cleared_channel_transport D α β u v
+  refine ⟨N, hN, huv, ?_⟩
+  intro γ w
+  obtain ⟨A, B, P, hA, hB, common, _inverse, _inverseI⟩ := rest γ w
+  refine ⟨A, B, P, hA, hB, common, ?_⟩
+  intro p
+  obtain ⟨R, heq, hdeg, hneg⟩ := polynomial_of_degree_support (mapSeries (readout D p) P)
+    (degreeBound D α β γ A B N p)
+    (scalar_numerator_support D J hJG hGJ α β γ u v w N A B P (fun a b => (common a b).1) p)
+  refine ⟨R, ⟨heq, hdeg, hneg, ?_⟩, ?_⟩
+  · intro a b
+    have first := congrArg (readout D p) (common a b).1
+    have second := congrArg (readout D p) (common a b).2.1
+    have third := congrArg (readout D p) (common a b).2.2
+    simp only [clear, map_sum, map_smul, map_extend, ← heq] at first second
+    simp only [clearIterate, map_sum, map_smul, map_extend, ← collision_map, ← heq] at third
+    exact ⟨first, second, third⟩
+  · intro R' hR'
+    exact MvPolynomial.coe_injective (Fin 2) ℂ (hR'.1.trans heq.symm)
 
 end
 end D5.S3.VertexAlgebra.LatticeSectorScalarNumerator
