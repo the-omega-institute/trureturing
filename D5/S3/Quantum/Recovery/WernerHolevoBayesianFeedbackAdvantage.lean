@@ -245,13 +245,115 @@ private theorem kraus_classification {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fi
   obtain ⟨z, hz⟩ := reprK K hK
   exact ⟨z, hz, frameK K hK z hz⟩
 
+private theorem complement_square {n : Type} [Fintype n] [DecidableEq n]
+    (c : ℂ) (V : Matrix n n ℂ) (hV : V * V = c • V) :
+    (c • (1 : Matrix n n ℂ) - V) * (c • (1 : Matrix n n ℂ) - V) =
+      c • (c • (1 : Matrix n n ℂ) - V) := by
+  simp only [sub_mul, mul_sub, Matrix.smul_mul, Matrix.mul_smul, Matrix.one_mul,
+    Matrix.mul_one, hV, smul_smul]
+  module
+
+private theorem complement_scale {n : Type} [Fintype n] [DecidableEq n]
+    (r c : ℂ) (hr : r ≠ 0) (hr2 : r ^ 2 = c) (V : Matrix n n ℂ) :
+    r • (1 : Matrix n n ℂ) - r⁻¹ • V = r⁻¹ • (c • (1 : Matrix n n ℂ) - V) := by
+  simp only [smul_sub, smul_smul]
+  field_simp [hr]
+  rw [← hr2]
+  congr 1
+  field_simp [hr]
+
+private theorem complement_root {n : Type} [Fintype n] [DecidableEq n]
+    (c : ℂ) (r : ℝ) (hrpos : 0 < r) (hr : (r : ℂ) ≠ 0) (hr2 : (r : ℂ) ^ 2 = c)
+    (V : Matrix n n ℂ) (hV : V * V = c • V)
+    (hpos : (c • (1 : Matrix n n ℂ) - V).PosSemidef) :
+    CFC.sqrt (c • (1 : Matrix n n ℂ) - V) =
+      (r : ℂ) • (1 : Matrix n n ℂ) - ((r⁻¹ : ℝ) : ℂ) • V := by
+  let H := c • (1 : Matrix n n ℂ) - V
+  let S := (r : ℂ) • (1 : Matrix n n ℂ) - (r : ℂ)⁻¹ • V
+  have hsq : H * H = c • H := complement_square c V hV
+  have hs : S = (r : ℂ)⁻¹ • H := by
+    dsimp [S, H]
+    exact complement_scale (r : ℂ) c hr hr2 V
+  have hss : S * S = H := by
+    rw [hs, Matrix.smul_mul, Matrix.mul_smul, hsq]
+    have he : ((r : ℂ)⁻¹ * (r : ℂ)⁻¹) * c = 1 := by
+      rw [← hr2]
+      field_simp [hr]
+    simp only [smul_smul]
+    rw [← mul_assoc, he, one_smul]
+  have hsp : S.PosSemidef := by
+    rw [hs]
+    apply Matrix.nonneg_iff_posSemidef.mp
+    have hp := hpos.smul (show (0 : ℝ) ≤ r⁻¹ by positivity)
+    have heq : (r : ℂ)⁻¹ • H = (r⁻¹ : ℝ) • H := by
+      ext i j
+      simp [Complex.real_smul]
+    rw [heq]
+    exact hp.nonneg
+  have hinv : ((r⁻¹ : ℝ) : ℂ) = (r : ℂ)⁻¹ := by norm_cast
+  simpa [S, hinv] using (CFC.sqrt_unique hss hsp.nonneg)
+
 private theorem abs_crossProduct (z : Fin 3 → ℂ) :
     absMat (((Real.sqrt 2)⁻¹ : ℂ) • crossProduct z) =
       if z = 0 then 0 else
         ((Real.sqrt 2)⁻¹ : ℂ) •
           ((euclideanNorm z : ℂ) • (1 : Matrix (Fin 3) (Fin 3) ℂ) -
             ((euclideanNorm z)⁻¹ : ℂ) • Matrix.vecMulVec z (star z)) := by
-  sorry
+  by_cases hz : z = 0
+  · subst z
+    have hcp : crossProduct (0 : Fin 3 → ℂ) = 0 := by
+      ext i j
+      fin_cases i <;> fin_cases j <;> simp [crossProduct]
+    rw [hcp]
+    simp [absMat]
+  · have hAA : (crossProduct z)ᴴ * crossProduct z =
+        (q z : ℂ) • (1 : Matrix (Fin 3) (Fin 3) ℂ) - Matrix.vecMulVec z (star z) := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [crossProduct, q, Matrix.mul_apply, Matrix.conjTranspose_apply,
+          Matrix.vecMulVec_apply, Matrix.one_apply, Fin.sum_univ_succ,
+          Complex.normSq_eq_conj_mul_self, Complex.star_def, Complex.mul_re,
+          Complex.mul_im] <;> ring
+    have hV : Matrix.vecMulVec z (star z) * Matrix.vecMulVec z (star z) =
+        (q z : ℂ) • Matrix.vecMulVec z (star z) := by
+      rw [Matrix.vecMulVec_mul_vecMulVec]
+      ext i j
+      simp [q, Matrix.vecMulVec_apply, dotProduct,
+        Complex.normSq_eq_conj_mul_self, Complex.star_def, Fin.sum_univ_succ]
+      ring
+    have hq : 0 < q z := by
+      dsimp [q]
+      have hsum : 0 ≤ ∑ i, Complex.normSq (z i) :=
+        Finset.sum_nonneg fun i _ => Complex.normSq_nonneg _
+      by_contra hn
+      have hzq : q z = 0 := le_antisymm (not_lt.mp hn) hsum
+      have hi := (Finset.sum_eq_zero_iff_of_nonneg
+        (fun i _ => Complex.normSq_nonneg (z i))).mp hzq
+      exact hz (funext fun i => Complex.normSq_eq_zero.mp (hi i (Finset.mem_univ i)))
+    have hr : (euclideanNorm z : ℂ) ≠ 0 := by
+      have h : 0 < euclideanNorm z := Real.sqrt_pos.2 hq
+      exact_mod_cast ne_of_gt h
+    have hr2 : (euclideanNorm z : ℂ) ^ 2 = (q z : ℂ) := by
+      exact_mod_cast (Real.sq_sqrt hq.le)
+    have hpos : ((q z : ℂ) • (1 : Matrix (Fin 3) (Fin 3) ℂ) -
+        Matrix.vecMulVec z (star z)).PosSemidef := by
+      rw [← hAA]
+      exact Matrix.posSemidef_conjTranspose_mul_self _
+    have hroot := complement_root (q z : ℂ) (euclideanNorm z) (Real.sqrt_pos.2 hq)
+      hr hr2 (Matrix.vecMulVec z (star z)) hV hpos
+    have hs := CFC.abs_smul ((Real.sqrt 2)⁻¹ : ℂ) (crossProduct z)
+    change absMat (((Real.sqrt 2)⁻¹ : ℂ) • crossProduct z) =
+      ‖((Real.sqrt 2)⁻¹ : ℂ)‖ • absMat (crossProduct z) at hs
+    dsimp [absMat] at hs ⊢
+    rw [hAA, hroot] at hs
+    have hsqrt : 0 ≤ Real.sqrt 2 := Real.sqrt_nonneg _
+    have hnorm : ‖((Real.sqrt 2)⁻¹ : ℂ)‖ = (Real.sqrt 2)⁻¹ := by
+      simp [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hsqrt]
+    rw [hnorm] at hs
+    simp only [hz, if_false]
+    convert hs using 1
+    ext i j
+    simp [Complex.real_smul]
 
 private theorem markov_bound {m₁ m₂ : ℕ} (K₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ) (K₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ)
     (h₁ : IsKrausDecomposition K₁) (h₂ : IsKrausDecomposition K₂) :
