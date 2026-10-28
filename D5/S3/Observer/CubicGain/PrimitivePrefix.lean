@@ -9,7 +9,10 @@
 import D5.S3.Observer.CubicGain.LegalMatrixMonoid
 import D5.S3.Arith.Lattices.CofactorKernel
 import Mathlib.LinearAlgebra.Matrix.Rank
+import Mathlib.LinearAlgebra.Matrix.Nonsingular
 import Mathlib.Tactic
+
+/-! Primitive signed levels for the original native cumulative prefix. -/
 
 set_option autoImplicit false
 noncomputable section
@@ -49,7 +52,6 @@ private theorem slope_nonneg (a b : ℝ)
   have he : b*x = -(|a|+1) := by
     dsimp [x]
     field_simp [ne_of_lt hb]
-    <;> ring
   have hh := h x hx
   rw [he] at hh
   have ha := le_abs_self a
@@ -80,8 +82,8 @@ private theorem polar_signs (N : Mat)
       (by intro i j; fin_cases i <;> fin_cases j <;> simp <;> positivity)
       (by simp [Matrix.det_fin_two])
     rw [polar_expand] at hh
-    simpa only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.of_apply,
-      one_mul, mul_assoc] using hh.le
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.of_apply,one_mul] at hh
+    nlinarith [hh]
   have hv (v : ℝ) (hv : 0 < v) :
       0 ≤ N 0 0 - N 0 1*v ∧ 0 ≤ N 1 1*v - N 1 0 := by
     apply affine_nonneg
@@ -104,7 +106,7 @@ private theorem arithmetic_mul (H K : Mat) (hH : Arithmetic H)
   choose W hW using fun i j => (hK.1 i j).2
   constructor
   · intro i j
-    refine ⟨?_, ⟨(Z*W) i j, ?_⟩⟩
+    refine ⟨?_, ⟨((Z : Matrix (Fin 2) (Fin 2) ℤ)*(W : Matrix (Fin 2) (Fin 2) ℤ)) i j, ?_⟩⟩
     · simp only [Matrix.mul_apply]
       exact Finset.sum_nonneg fun k _ => mul_nonneg (hH.1 i k).1 (hK.1 k j).1
     · simp [Matrix.mul_apply, hZ, hW]
@@ -117,7 +119,8 @@ private theorem endpoint_arithmetic (w : Fin 3 → List Bool) (i : Fin 4) :
     (legal_matrix_monoid _).mp ⟨w j,rfl⟩
   fin_cases i
   · constructor
-    · intro i j; fin_cases i <;> fin_cases j <;> norm_num [endpoint]
+    · intro i j; fin_cases i <;> fin_cases j <;>
+        norm_num [endpoint] <;> first | exact ⟨0,by norm_num⟩ | exact ⟨1,by norm_num⟩
     · simp [endpoint]
   · exact h 0
   · exact arithmetic_mul _ _ (h 1) (h 0)
@@ -134,8 +137,14 @@ private theorem triangular_diagonal (H : Mat) (hH : Arithmetic H)
   have han : (0 : ℤ) ≤ a := by exact_mod_cast (ha ▸ (hH.1 0 0).1)
   have hbn : (0 : ℤ) ≤ b := by exact_mod_cast (hb ▸ (hH.1 1 1).1)
   have hab : a*b = 1 := by rw [ha,hb] at hd; exact_mod_cast hd
-  have hap : 1 ≤ a := by by_contra h; have : a = 0 := by omega; simp [this] at hab
-  have hbp : 1 ≤ b := by by_contra h; have : b = 0 := by omega; simp [this] at hab
+  have hap : 1 ≤ a := by
+    by_contra h
+    have haa : a = 0 := by omega
+    simp [haa] at hab
+  have hbp : 1 ≤ b := by
+    by_contra h
+    have hbb : b = 0 := by omega
+    simp [hbb] at hab
   have haa : a = 1 := by nlinarith
   have hbb : b = 1 := by nlinarith
   simpa [ha,hb,haa,hbb]
@@ -164,12 +173,13 @@ private theorem signs_trace (A : Fin 4 → Mat) (hA : ∀ i, Arithmetic (A i))
     · have hg : N 1 0 ≠ 0 := by
         intro hg; apply hn; ext i j
         fin_cases i <;> fin_cases j <;> simp [hd0,hd1,h,hg]
-      right
-      apply (mul_eq_zero.mp he).resolve_right hg
+      left
+      have he' : A i.succ 0 1 * N 1 0 = 0 := by simpa [h] using he
+      exact (mul_eq_zero.mp he').resolve_right hg
     · have hg : N 0 1 ≠ 0 := by
         intro hg; apply hn; ext i j
         fin_cases i <;> fin_cases j <;> simp [hd0,hd1,h,hg]
-      left
+      right
       have he' : A i.succ 1 0 * N 0 1 = 0 := by simpa [h] using he
       exact (mul_eq_zero.mp he').resolve_right hg
   have hex : prefixValue A !![1,0;0,0] = 0 := by
@@ -204,7 +214,7 @@ private theorem kernel_rank (A : Fin 4 → Mat) (N : Mat)
   have hh := (prefixMap A).finrank_range_add_finrank_ker
   rw [hk,finrank_span_singleton hN.1] at hh
   have hdim : Module.finrank ℝ Mat = 4 := by
-    simp [Mat,Matrix,Module.finrank_pi]
+    simp [Mat,Matrix,Module.finrank_pi_fintype,Module.finrank_pi]
   omega
 
 private def flatten (N : Mat) : Fin 4 → ℝ := ![N 0 0,N 0 1,N 1 0,N 1 1]
@@ -225,6 +235,14 @@ private theorem coefficients_value (A : Fin 4 → Mat) (N : Mat) :
 private def traceAugment {R : Type*} [Ring R]
     (B : Matrix (Fin 3) (Fin 4) R) : Matrix (Fin 4) (Fin 4) R :=
   Fin.cases ![1,0,0,1] B
+
+@[simp] private theorem traceAugment_zero {R : Type*} [Ring R]
+    (B : Matrix (Fin 3) (Fin 4) R) (j : Fin 4) :
+    traceAugment B 0 j = (![1,0,0,1] : Fin 4 → R) j := rfl
+
+@[simp] private theorem traceAugment_succ {R : Type*} [Ring R]
+    (B : Matrix (Fin 3) (Fin 4) R) (i : Fin 3) (j : Fin 4) :
+    traceAugment B i.succ j = B i j := rfl
 
 private theorem traceAugment_det (A : Fin 4 → Mat) (N : Mat)
     (hN : OrientedKernel A N) (ht : 0 < Matrix.trace N) :
@@ -260,8 +278,10 @@ private theorem trace_cofactor (B : Matrix (Fin 3) (Fin 4) ℤ) :
         (traceAugment B).det := by
   symm
   rw [Matrix.det_succ_row_zero]
-  simp [traceAugment,D5.S3.Arith.Lattices.CofactorKernel.cofactor,
-    Matrix.submatrix,Fin.sum_univ_succ]
+  have hsub (j : Fin 4) :
+      (traceAugment B).submatrix Fin.succ j.succAbove = B.submatrix id j.succAbove := rfl
+  simp only [hsub,traceAugment_zero]
+  norm_num [D5.S3.Arith.Lattices.CofactorKernel.cofactor,Fin.sum_univ_succ]
 
 private theorem integer_oriented_kernel (w : Fin 3 → List Bool)
     (N : Mat) (hN : OrientedKernel (endpoint w) N) :
@@ -282,7 +302,7 @@ private theorem integer_oriented_kernel (w : Fin 3 → List Bool)
     rw [← hB]
     ext i
     have he := RingHom.map_mulVec (Int.castRingHom ℝ) B C i
-    simpa [hc] using he.symm
+    simpa [hc,Function.comp_def] using he.symm
   let K : Matrix (Fin 2) (Fin 2) ℤ := unflatten C
   have hk : prefixValue (endpoint w) (K.map (Int.castRingHom ℝ)) = 0 := by
     rw [← coefficients_value]
@@ -295,6 +315,8 @@ private theorem integer_oriented_kernel (w : Fin 3 → List Bool)
     have hzK : K.map (Int.castRingHom ℝ) = 0 := by simpa [hz] using hv
     have h0 := congrArg (fun X : Mat => X 0 0) hzK
     have h3 := congrArg (fun X : Mat => X 1 1) hzK
+    change (C 0:ℝ)=0 at h0
+    change (C 3:ℝ)=0 at h3
     have hdet : (traceAugment B).det = 0 := by
       rw [← trace_cofactor]
       change C 0 + C 3 = 0
@@ -306,13 +328,20 @@ private theorem integer_oriented_kernel (w : Fin 3 → List Bool)
         traceAugment (coefficients (endpoint w)) := by
       ext i j
       refine Fin.cases ?_ (fun i => ?_) i
-      · fin_cases j <;> simp [traceAugment]
+      · change (Int.castRingHom ℝ) ((![1,0,0,1] : Fin 4 → ℤ) j) =
+          (![1,0,0,1] : Fin 4 → ℝ) j
+        fin_cases j <;> norm_num
       · exact congrFun (congrFun hB i) j
-    rw [← ht,← RingHom.map_det]
-    simp [hdet]
+    rw [← ht]
+    change ((traceAugment B).map (fun z : ℤ => (z:ℝ))).det=0
+    rw [← Int.cast_det,hdet,Int.cast_zero]
   rcases lt_or_gt_of_ne hvn with hvn | hvn
   · refine ⟨-K,-v,neg_pos.mpr hvn,?_⟩
-    simp only [Matrix.map_neg,hv,neg_smul]
+    have hneg : (-K).map (Int.castRingHom ℝ) = -(K.map (Int.castRingHom ℝ)) := by
+      ext i j
+      change ((-K i j:ℤ):ℝ) = -(K i j:ℝ)
+      simp
+    rw [hneg,hv,neg_smul]
   · exact ⟨K,v,hvn,hv⟩
 
 private theorem pair_gcd (a b : ℤ) (hg : Int.gcd a b = 1) :
@@ -323,6 +352,7 @@ private theorem pair_gcd (a b : ℤ) (hg : Int.gcd a b = 1) :
     Finset.gcd_dvd (Finset.mem_univ (1 : Fin 2))
   have he := Int.gcd_eq_gcd_ab a b
   rw [hg] at he
+  norm_num only [Int.cast_one] at he
   have hd : Finset.univ.gcd (![a,b] : Fin 2 → ℤ) ∣ 1 := by
     rw [he]
     exact dvd_add (dvd_mul_of_dvd_left ha _) (dvd_mul_of_dvd_left hb _)
@@ -334,8 +364,12 @@ private theorem pair_span (a b x y : ℤ) (hs : 0 < a+b)
     ∃ z : ℤ, x=z*a ∧ y=z*b := by
   let B : Matrix (Fin 1) (Fin 2) ℤ := !![b,-a]
   have hdet : (D5.S3.Arith.Lattices.CofactorKernel.augment B).det ≠ 0 := by
-    simp [D5.S3.Arith.Lattices.CofactorKernel.augment,B,Matrix.det_fin_two]
-    <;> omega
+    have he : D5.S3.Arith.Lattices.CofactorKernel.augment B = !![1,1;b,-a] := by
+      ext i j
+      fin_cases i <;> fin_cases j <;> rfl
+    rw [he,Matrix.det_fin_two]
+    simp
+    omega
   have hker : B *ᵥ (![a,b] : Fin 2 → ℤ) = 0 := by
     ext i; fin_cases i
     simp [B,Matrix.mulVec,dotProduct,Fin.sum_univ_two,mul_comm]
@@ -354,8 +388,8 @@ private theorem primitive_pair (x y : ℤ) (hx : 0 ≤ x) (hy : 0 ≤ y)
   have hgcd : 0 < Int.gcd x y := Int.gcd_pos_iff.mpr hn
   obtain ⟨g,a,b,hg,hprim,ha,hb⟩ := Int.exists_gcd_one' hgcd
   have hgr : (0 : ℤ) < g := by exact_mod_cast hg
-  have hap : 0 ≤ a := nonneg_of_mul_nonneg_right (ha ▸ hx) hgr
-  have hbp : 0 ≤ b := nonneg_of_mul_nonneg_right (hb ▸ hy) hgr
+  have hap : 0 ≤ a := nonneg_of_mul_nonneg_left (ha ▸ hx) hgr
+  have hbp : 0 ≤ b := nonneg_of_mul_nonneg_left (hb ▸ hy) hgr
   have hsum : 0 < a+b := by
     by_contra hh
     have haa : a=0 := by omega
@@ -382,15 +416,16 @@ private theorem nonnegative_rank_one_factor (P Q R S : ℤ)
       by_cases hap : a=0
       · have hbp : 0 < b := by omega
         rw [hSv] at hS
-        exact nonneg_of_mul_nonneg_right hS hbp
+        exact nonneg_of_mul_nonneg_left hS hbp
       · have hapos : 0 < a := by omega
         rw [hQv] at hQ
-        exact nonneg_of_mul_nonneg_right hQ hapos
+        exact nonneg_of_mul_nonneg_left hQ hapos
     obtain ⟨c,d,g,hc,hd,hg,hcd,hsc,huc,hvd⟩ :=
       primitive_pair u v hu.le hv (Or.inl (ne_of_gt hu))
     refine ⟨a,b,c,d,g,ha,hb,hc,hd,hg,hab,hcd,?_,?_,?_,?_,?_⟩
-    · have hh : 0 < g*(a*c+b*d) := by nlinarith [ht]
-      exact pos_of_mul_pos_left hh hg.le
+    · rw [hPu,hSv,huc,hvd] at ht
+      have hh : 0 < g*(a*c+b*d) := by nlinarith [ht]
+      exact pos_of_mul_pos_right hh hg.le
     · rw [hPu,huc]; ring
     · rw [hQv,hvd]; ring
     · rw [hRu,huc]; ring
@@ -402,10 +437,229 @@ private theorem nonnegative_rank_one_factor (P Q R S : ℤ)
     refine ⟨a,b,0,1,g,ha,hb,by omega,by omega,hg,hab,by norm_num,?_,?_,?_,?_,?_⟩
     · have : 0 < S := by omega
       rw [hSb] at this
-      simpa using pos_of_mul_pos_left this hg.le
+      simpa using pos_of_mul_pos_right this hg.le
     · simp [hP0]
     · simpa using hQa
     · simp [hR0]
     · simpa using hSb
+
+/-- The auxiliary signed outer product; it is not an actual positive source. -/
+def signedMatrix (a b c d : ℤ) : Mat :=
+  !![(a:ℝ)*(c:ℝ),-(a:ℝ)*(d:ℝ);-(b:ℝ)*(c:ℝ),(b:ℝ)*(d:ℝ)]
+
+private theorem primitive_generator (w : Fin 3 → List Bool)
+    (N : Mat) (hN : OrientedKernel (endpoint w) N) :
+    ∃ (a b c d : ℤ) (s : ℝ),
+      0 ≤ a ∧ 0 ≤ b ∧ 0 ≤ c ∧ 0 ≤ d ∧
+      Int.gcd a b = 1 ∧ Int.gcd c d = 1 ∧ 0 < a*c+b*d ∧
+      0 < s ∧ N = s • signedMatrix a b c d := by
+  obtain ⟨K,v,hv,hK⟩ := integer_oriented_kernel w N hN
+  obtain ⟨hn00,hn11,hn01,hn10,hntr⟩ :=
+    signs_trace (endpoint w) (endpoint_arithmetic w) N hN
+  have he (i j : Fin 2) : (K i j : ℝ) = v*N i j := congrArg (fun X : Mat => X i j) hK
+  have hp : (0 : ℤ) ≤ K 0 0 := by
+    exact_mod_cast (by rw [he]; exact mul_nonneg hv.le hn00 : (0:ℝ) ≤ (K 0 0:ℝ))
+  have hq : (0 : ℤ) ≤ -K 0 1 := by
+    exact_mod_cast (by rw [Int.cast_neg,he]; nlinarith : (0:ℝ) ≤ (-K 0 1:ℤ))
+  have hr : (0 : ℤ) ≤ -K 1 0 := by
+    exact_mod_cast (by rw [Int.cast_neg,he]; nlinarith : (0:ℝ) ≤ (-K 1 0:ℤ))
+  have hs : (0 : ℤ) ≤ K 1 1 := by
+    exact_mod_cast (by rw [he]; exact mul_nonneg hv.le hn11 : (0:ℝ) ≤ (K 1 1:ℝ))
+  have hdetK : K.det = 0 := by
+    have hd : (K.det : ℝ) = 0 := by
+      rw [Int.cast_det,hK,Matrix.det_smul,hN.2.1,mul_zero]
+    exact_mod_cast hd
+  have hdet : K 0 0 * K 1 1 = (-K 0 1)*(-K 1 0) := by
+    simp only [Matrix.det_fin_two] at hdetK
+    nlinarith
+  have ht : (0 : ℤ) < K 0 0 + K 1 1 := by
+    have hh : (0:ℝ) < (K 0 0:ℝ)+(K 1 1:ℝ) := by
+      rw [he,he]
+      have htr : Matrix.trace N = N 0 0 + N 1 1 := by
+        simp [Matrix.trace,Matrix.diag,Fin.sum_univ_two]
+      rw [htr] at hntr
+      nlinarith [mul_pos hv hntr]
+    exact_mod_cast hh
+  obtain ⟨a,b,c,d,g,ha,hb,hc,hd,hg,hab,hcd,ht,hP,hQ,hR,hS⟩ :=
+    nonnegative_rank_one_factor (K 0 0) (-K 0 1) (-K 1 0) (K 1 1)
+      hp hq hr hs hdet ht
+  have hfactor : K.map (Int.castRingHom ℝ) = (g:ℝ) • signedMatrix a b c d := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp only [Matrix.map_apply,Int.castRingHom_apply,
+      Matrix.smul_apply,smul_eq_mul,signedMatrix,Matrix.of_apply,
+      Matrix.cons_val_zero,Matrix.cons_val_one]
+    · exact_mod_cast hP
+    · have hh : K 0 1 = -(g*(a*d)) := by omega
+      exact_mod_cast hh
+    · have hh : K 1 0 = -(g*(b*c)) := by omega
+      exact_mod_cast hh
+    · exact_mod_cast hS
+  refine ⟨a,b,c,d,(g:ℝ)/v,ha,hb,hc,hd,hab,hcd,ht,
+    div_pos (by exact_mod_cast hg) hv,?_⟩
+  rw [hfactor] at hK
+  ext i j
+  have hh := congrArg (fun X : Mat => X i j) hK
+  simp only [Matrix.smul_apply,smul_eq_mul] at hh ⊢
+  rw [div_mul_eq_mul_div]
+  apply (eq_div_iff (ne_of_gt hv)).mpr
+  nlinarith [hh]
+
+/-- Every retained endpoint has an integer level on the primitive lattice line. -/
+def HasLevels (w : Fin 3 → List Bool) (a b c d : ℤ) (m : Fin 4 → ℤ) : Prop :=
+  m 0 = 0 ∧ ∀ i : Fin 4,
+    endpoint w i *ᵥ (![(a:ℝ),-(b:ℝ)] : Fin 2 → ℝ) =
+      ![(a:ℝ),-(b:ℝ)] + (m i:ℝ) • ![(d:ℝ),(c:ℝ)]
+
+private theorem primitive_levels (w : Fin 3 → List Bool) (N : Mat)
+    (hN : OrientedKernel (endpoint w) N) (a b c d : ℤ) (s : ℝ)
+    (hc : 0 ≤ c) (hd : 0 ≤ d) (hcd : Int.gcd c d = 1)
+    (ht : 0 < a*c+b*d) (hs : 0 < s)
+    (hgen : N = s • signedMatrix a b c d) :
+    ∃ m : Fin 4 → ℤ, HasLevels w a b c d m := by
+  classical
+  have hsum : 0 < c+d := by
+    by_contra hh
+    have hc0 : c=0 := by omega
+    have hd0 : d=0 := by omega
+    simp [hc0,hd0] at ht
+  have hk : prefixValue (endpoint w) (signedMatrix a b c d) = 0 := by
+    apply (hN.2.2.1 _).mpr
+    refine ⟨s⁻¹,?_⟩
+    rw [hgen,smul_smul,inv_mul_cancel₀ (ne_of_gt hs),one_smul]
+  have htrace (i : Fin 4) :
+      Matrix.trace (endpoint w i * signedMatrix a b c d) -
+        Matrix.trace (signedMatrix a b c d) = 0 := by
+    refine Fin.cases ?_ (fun j => ?_) i
+    · simp [endpoint]
+    · exact congrFun hk j
+  choose Z hZ using fun i j k => ((endpoint_arithmetic w i).1 j k).2
+  have hsat (i : Fin 4) : ∃ z : ℤ,
+      Z i 0 0*a+Z i 0 1*(-b)-a=z*d ∧
+      Z i 1 0*a+Z i 1 1*(-b)+b=z*c := by
+    have hh := htrace i
+    simp only [signedMatrix,Matrix.trace,Matrix.diag,Matrix.mul_apply,
+      Fin.sum_univ_two,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.of_apply] at hh
+    simp only [hZ] at hh
+    have hr : (c:ℝ)*((Z i 0 0:ℝ)*(a:ℝ)+(Z i 0 1:ℝ)*(-(b:ℝ))-(a:ℝ)) =
+        (d:ℝ)*((Z i 1 0:ℝ)*(a:ℝ)+(Z i 1 1:ℝ)*(-(b:ℝ))+(b:ℝ)) := by
+      nlinarith [hh]
+    have hi : c*(Z i 0 0*a+Z i 0 1*(-b)-a) =
+        d*(Z i 1 0*a+Z i 1 1*(-b)+b) := by exact_mod_cast hr
+    exact pair_span d c _ _ (by omega) (by simpa [Int.gcd_comm] using hcd) hi
+  choose m hm using hsat
+  have hlevels (i : Fin 4) :
+      endpoint w i *ᵥ (![(a:ℝ),-(b:ℝ)] : Fin 2 → ℝ) =
+        ![(a:ℝ),-(b:ℝ)] + (m i:ℝ) • ![(d:ℝ),(c:ℝ)] := by
+    ext j
+    fin_cases j
+    · have hh : (Z i 0 0:ℝ)*(a:ℝ)+(Z i 0 1:ℝ)*(-(b:ℝ))-(a:ℝ)=
+          (m i:ℝ)*(d:ℝ) := by exact_mod_cast (hm i).1
+      simp only [Matrix.mulVec,dotProduct,Fin.sum_univ_two,Matrix.cons_val_zero,
+        Matrix.cons_val_one,Matrix.of_apply,Pi.add_apply,Pi.smul_apply,smul_eq_mul,hZ]
+      linarith
+    · have hh : (Z i 1 0:ℝ)*(a:ℝ)+(Z i 1 1:ℝ)*(-(b:ℝ))+(b:ℝ)=
+          (m i:ℝ)*(c:ℝ) := by exact_mod_cast (hm i).2
+      simp only [Matrix.mulVec,dotProduct,Fin.sum_univ_two,Matrix.cons_val_zero,
+        Matrix.cons_val_one,Matrix.of_apply,Pi.add_apply,Pi.smul_apply,smul_eq_mul,hZ]
+      linarith
+  refine ⟨m,?_,hlevels⟩
+  have h0 := congrFun (hlevels 0) 0
+  have h1 := congrFun (hlevels 0) 1
+  simp [endpoint] at h0 h1
+  have hz0 : m 0*d=0 := by exact_mod_cast (by linarith [h0] : (m 0:ℝ)*(d:ℝ)=0)
+  have hz1 : m 0*c=0 := by exact_mod_cast (by linarith [h1] : (m 0:ℝ)*(c:ℝ)=0)
+  by_contra hm0
+  have hd0 := (mul_eq_zero.mp hz0).resolve_left hm0
+  have hc0 := (mul_eq_zero.mp hz1).resolve_left hm0
+  omega
+
+/-- Nonnegative primitive pairs include every zero-component case. -/
+def PrimitiveParameters (a b c d : ℤ) : Prop :=
+  0 ≤ a ∧ 0 ≤ b ∧ 0 ≤ c ∧ 0 ≤ d ∧ Int.gcd a b = 1 ∧
+    Int.gcd c d = 1 ∧ 0 < a*c+b*d
+
+private theorem levels_converse (w : Fin 3 → List Bool) (N : Mat)
+    (a b c d : ℤ) (s : ℝ) (m : Fin 4 → ℤ)
+    (hpar : PrimitiveParameters a b c d) (hs : 0 < s)
+    (hgen : N = s • signedMatrix a b c d) (hlev : HasLevels w a b c d m)
+    (hrank : Module.finrank ℝ (LinearMap.range (prefixMap (endpoint w))) = 3) :
+    OrientedKernel (endpoint w) N := by
+  obtain ⟨ha,hb,hc,hd,hab,hcd,ht⟩ := hpar
+  have ht' : (0:ℝ) < (a:ℝ)*(c:ℝ)+(b:ℝ)*(d:ℝ) := by exact_mod_cast ht
+  have htrace : Matrix.trace N = s*((a:ℝ)*(c:ℝ)+(b:ℝ)*(d:ℝ)) := by
+    rw [hgen,Matrix.trace_smul]
+    simp [signedMatrix,Matrix.trace,Matrix.diag,Fin.sum_univ_two,smul_eq_mul]
+  have hn : N ≠ 0 := by
+    intro hz
+    have hpos := mul_pos hs ht'
+    simp [hz] at htrace
+    linarith
+  have hdet : N.det = 0 := by
+    rw [hgen,Matrix.det_smul]
+    have hp : (signedMatrix a b c d).det = 0 := by
+      simp [signedMatrix,Matrix.det_fin_two]
+      <;> ring
+    simp [hp]
+  have hker : prefixValue (endpoint w) N = 0 := by
+    have hpker : prefixValue (endpoint w) (signedMatrix a b c d) = 0 := by
+      ext i
+      have h0 := congrFun (hlev.2 i.succ) 0
+      have h1 := congrFun (hlev.2 i.succ) 1
+      simp only [Matrix.mulVec,dotProduct,Fin.sum_univ_two,Pi.add_apply,
+        Pi.smul_apply,smul_eq_mul,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.of_apply] at h0 h1
+      simp only [prefixValue,signedMatrix,Matrix.trace,Matrix.diag,Matrix.mul_apply,
+        Fin.sum_univ_two,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.of_apply,Pi.zero_apply]
+      linear_combination (c:ℝ)*h0-(d:ℝ)*h1
+    change prefixMap (endpoint w) N = 0
+    rw [hgen,LinearMap.map_smul]
+    change s • prefixValue (endpoint w) (signedMatrix a b c d) = 0
+    rw [hpker,smul_zero]
+  have hdim := (prefixMap (endpoint w)).finrank_range_add_finrank_ker
+  have hfour : Module.finrank ℝ Mat = 4 := by simp [Mat,Matrix,Module.finrank_pi_fintype,Module.finrank_pi]
+  have hkerdim : Module.finrank ℝ (LinearMap.ker (prefixMap (endpoint w))) = 1 := by omega
+  have hkspan := eq_span_singleton_of_mem_of_finrank_eq_one hkerdim hker hn
+  refine ⟨hn,hdet,?_,?_⟩
+  · intro X
+    change X ∈ LinearMap.ker (prefixMap (endpoint w)) ↔ _
+    rw [hkspan,Submodule.mem_span_singleton]
+    exact exists_congr fun v => eq_comm
+  · intro S hS _
+    rw [hgen,polar_expand]
+    simp only [Matrix.smul_apply,smul_eq_mul,signedMatrix,Matrix.of_apply,
+      Matrix.cons_val_zero,Matrix.cons_val_one]
+    have hap : (0:ℝ) ≤ (a:ℝ) := by exact_mod_cast ha
+    have hbp : (0:ℝ) ≤ (b:ℝ) := by exact_mod_cast hb
+    have hcp : (0:ℝ) ≤ (c:ℝ) := by exact_mod_cast hc
+    have hdp : (0:ℝ) ≤ (d:ℝ) := by exact_mod_cast hd
+    have hcross0 : 0 ≤ (b:ℝ)*(c:ℝ)*S 0 1 := by positivity
+    have hcross1 : 0 ≤ (a:ℝ)*(d:ℝ)*S 1 0 := by positivity
+    have hdiagonal : 0 < (a:ℝ)*(c:ℝ)*S 1 1 + (b:ℝ)*(d:ℝ)*S 0 0 := by
+      by_cases hac : (a:ℝ)*(c:ℝ)=0
+      · have hbd : 0 < (b:ℝ)*(d:ℝ) := by linarith
+        have hh := mul_pos hbd (hS 0 0)
+        simpa [hac] using hh
+      · have hacpos : 0 < (a:ℝ)*(c:ℝ) := lt_of_le_of_ne (mul_nonneg hap hcp) (Ne.symm hac)
+        exact add_pos_of_pos_of_nonneg (mul_pos hacpos (hS 1 1)) (by positivity)
+    have hpos := mul_pos hs (add_pos_of_pos_of_nonneg hdiagonal
+      (add_nonneg hcross0 hcross1))
+    nlinarith [hpos]
+
+/-- Exact primitive representation on actual cumulative native histories.
+The scale retains every positively oriented input generator. -/
+theorem whole_word_primitive_representation (w : Fin 3 → List Bool) (N : Mat) :
+    OrientedKernel (endpoint w) N ↔
+      Module.finrank ℝ (LinearMap.range (prefixMap (endpoint w))) = 3 ∧
+      ∃ (a b c d : ℤ) (s : ℝ) (m : Fin 4 → ℤ),
+        PrimitiveParameters a b c d ∧ 0 < s ∧
+        N = s • signedMatrix a b c d ∧ HasLevels w a b c d m := by
+  constructor
+  · intro hN
+    obtain ⟨a,b,c,d,s,ha,hb,hc,hd,hab,hcd,ht,hs,hgen⟩ := primitive_generator w N hN
+    obtain ⟨m,hm⟩ := primitive_levels w N hN a b c d s hc hd hcd ht hs hgen
+    exact ⟨kernel_rank _ _ hN,a,b,c,d,s,m,⟨ha,hb,hc,hd,hab,hcd,ht⟩,hs,hgen,hm⟩
+  · rintro ⟨hrank,a,b,c,d,s,m,hpar,hs,hgen,hlev⟩
+    exact levels_converse w N a b c d s m hpar hs hgen hlev hrank
+
+#print axioms whole_word_primitive_representation
 
 end D5.S3.Observer.CubicGain.PrimitivePrefix
