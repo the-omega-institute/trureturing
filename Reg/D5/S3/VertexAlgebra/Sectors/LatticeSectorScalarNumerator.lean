@@ -598,7 +598,7 @@ def wordNumeratorAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Sectors.LatticeSectorScalarNumerator
     definition := none
-    coordinates := #[]
+    coordinates := #[4]
     readouts := #[{
       path := #["body",
         "body", "body", "body", "body",
