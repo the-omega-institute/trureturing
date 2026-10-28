@@ -23,7 +23,9 @@ namespace D5.S3.VertexAlgebra.CanonicalOccupationSewing
 open LatticeGeneratingFieldLocality LatticeSectorIntertwiner
 open ActualSeriesDerivation MvPolynomial
 open D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation
-open scoped BigOperators
+open LatticeAllStateField LatticeFiniteNegativeGeneration LatticeSugawaraCurrents
+open FieldNormalProduct
+open scoped BigOperators VertexOperator
 
 noncomputable section
 
@@ -279,9 +281,164 @@ private theorem creation_occupation_summable (D : LatticeData) (α : Charge D)
     _ ≤ C * (‖q‖ / ρ) ^ level D d :=
       mul_le_mul_of_nonneg_right hb (pow_nonneg hR0 _)
 
+/-- Projection of the original recursively normal-ordered word field. -/
+private def wordMap (D : LatticeData) (α β : Charge D)
+    (ω : List (Index D)) (m : ℤ) : Oscillator D →ₗ[ℂ] Oscillator D :=
+  (Finsupp.lapply (α + β)).comp
+    (((wordField D α ω)[[m]]).comp (Finsupp.lsingle β))
+
+private def wordCoeff (D : LatticeData) (α β : Charge D)
+    (ω : List (Index D)) (m : ℤ) (e d : Occ D) : ℂ :=
+  (wordMap D α β ω m (b D d)).coeff e
+
+private theorem derivative_mode (D : LatticeData) (x : Index D) (m : ℤ) :
+    (dividedDerivative x.2 (neutralField D x.1))[[m]] =
+      ((Ring.choose (-m - 1 + x.2) x.2 : ℤ) : ℂ) •
+        neutralMode D x.1 (m - x.2) := by
+  apply LinearMap.ext
+  intro v
+  change Ring.choose (-m - 1 + x.2) x.2 •
+    HVertexOperator.coeff (neutralField D x.1) (-m - 1 + x.2) v = _
+  rw [VertexOperator.coeff_eq_ncoeff, neutralField_ncoeff]
+  rw [show -(-m - 1 + x.2) - 1 = m - x.2 by omega]
+  simp only [LinearMap.smul_apply, Int.cast_smul_eq_zsmul]
+
+private theorem neutral_component (D : LatticeData) (i : Fin D.rank)
+    (m : ℤ) (v : Carrier D) (δ : Charge D) :
+    (neutralMode D i m v) δ = neutralPolynomialMode D i δ m (v δ) := by
+  classical
+  induction v using Finsupp.induction_linear with
+  | zero => simp
+  | add v w hv hw => simp [map_add, hv, hw]
+  | single β p =>
+    by_cases h : β = δ
+    · subst β; simp
+    · simp [Finsupp.single_apply, h]
+
+private theorem negative_derivative_component (D : LatticeData) (x : Index D)
+    (j : ℕ) (v : Carrier D) (δ : Charge D) :
+    (((dividedDerivative x.2 (neutralField D x.1))[[-(j : ℤ) - 1]]) v) δ =
+      ((j + x.2).choose x.2 : ℂ) •
+        (X (x.1, j + x.2) * v δ) := by
+  rw [derivative_mode, LinearMap.smul_apply, Finsupp.smul_apply, neutral_component]
+  rw [show -(-(j : ℤ) - 1) - 1 + x.2 = ((j + x.2 : ℕ) : ℤ) by omega,
+    Ring.choose_natCast]
+  have ht : (-(j : ℤ) - 1 - x.2) < 0 := by omega
+  simp [neutralPolynomialMode, ht, show (-(-(j : ℤ) - 1 - x.2) - 1).toNat = j + x.2 by omega]
+
+private theorem derivative_single (D : LatticeData) (x : Index D)
+    (j : ℕ) (β : Charge D) (p : Oscillator D) :
+    ((dividedDerivative x.2 (neutralField D x.1))[[j]]) (Finsupp.single β p) =
+      ((Ring.choose (-(j : ℤ) - 1 + x.2) x.2 : ℤ) : ℂ) •
+        Finsupp.single β (neutralPolynomialMode D x.1 β ((j : ℤ) - x.2) p) := by
+  rw [derivative_mode, LinearMap.smul_apply, neutralMode_single]
+
+private theorem negative_coefficient_vanish (D : LatticeData) (x : Index D)
+    (j : ℕ) (e : Occ D) (p : Oscillator D) (hj : level D e ≤ j) :
+    (X (x.1, j + x.2) * p).coeff e = 0 := by
+  classical
+  rw [MvPolynomial.coeff_X_mul']
+  split_ifs with h
+  · have he := Finsupp.le_weight_of_ne_zero'
+      (w := fun y : Index D => y.2 + 1) (Finsupp.mem_support_iff.mp h)
+    change j + x.2 + 1 ≤ level D e at he
+    omega
+  · rfl
+
+private theorem positive_derivative_vanish (D : LatticeData) (x : Index D)
+    (j : ℕ) (β : Charge D) (d : Occ D) (hj : x.2 + level D d < j) :
+    ((dividedDerivative x.2 (neutralField D x.1))[[j]]) (Finsupp.single β (b D d)) = 0 := by
+  rw [derivative_single]
+  have hm : 0 < (j : ℤ) - x.2 := by omega
+  have hderiv (i : Fin D.rank) :
+      pderiv (i, ((j : ℤ) - x.2 - 1).toNat) (b D d) = 0 := by
+    have hz : d (i, ((j : ℤ) - x.2 - 1).toNat) = 0 := by
+      by_contra hn
+      have he := Finsupp.le_weight_of_ne_zero'
+        (w := fun y : Index D => y.2 + 1) hn
+      change ((j : ℤ) - x.2 - 1).toNat + 1 ≤ level D d at he
+      have ht := Int.toNat_of_nonneg (show 0 ≤ (j : ℤ) - x.2 - 1 by omega)
+      omega
+    simp [b, pderiv_monomial, hz]
+  simp [neutralPolynomialMode, not_lt.mpr hm.le, ne_of_gt hm, hderiv]
+
+/-- Both original normal-product branches, with exact finite ranges.
+The first range is forced by the output occupation and the second by the input.
+No field truncation or growth premise is introduced. -/
+private theorem wordCoeff_cons_finite (D : LatticeData) (α β : Charge D)
+    (x : Index D) (ω : List (Index D)) (m : ℤ) (e d : Occ D) :
+    wordCoeff D α β (x :: ω) m e d =
+      (∑ j ∈ Finset.range (level D e),
+        ((j + x.2).choose x.2 : ℂ) *
+          (X (x.1, j + x.2) * wordMap D α β ω (m + j) (b D d)).coeff e) +
+      ∑ j ∈ Finset.range (x.2 + level D d + 1),
+        ((Ring.choose (-(j : ℤ) - 1 + x.2) x.2 : ℤ) : ℂ) *
+          (wordMap D α β ω (m - j - 1)
+            (neutralPolynomialMode D x.1 β ((j : ℤ) - x.2) (b D d))).coeff e := by
+  classical
+  let left := dividedDerivative x.2 (neutralField D x.1)
+  let right := wordField D α ω
+  let v := Finsupp.single β (b D d)
+  have hf₁ : Function.HasFiniteSupport
+      (fun j : ℕ => (left[[-(j : ℤ) - 1]]) ((right[[m + j]]) v)) := by
+    refine BddAbove.finite (bddAbove_def.mpr ?_)
+    refine ⟨(-((HahnModule.of ℂ).symm (right v)).order - m).toNat, ?_⟩
+    intro j hj
+    contrapose! hj
+    have hz : (right[[m + j]]) v = 0 := by
+      apply VertexOperator.ncoeff_eq_zero_of_lt_order
+      omega
+    simp [hz]
+  have hf₂ : Function.HasFiniteSupport
+      (fun j : ℕ => (right[[m - j - 1]]) ((left[[j]]) v)) := by
+    refine BddAbove.finite (bddAbove_def.mpr ?_)
+    refine ⟨(-((HahnModule.of ℂ).symm (left v)).order - 1).toNat, ?_⟩
+    intro j hj
+    contrapose! hj
+    have hz : (left[[j]]) v = 0 := by
+      apply VertexOperator.ncoeff_eq_zero_of_lt_order
+      omega
+    simp [hz]
+  let extract : Carrier D →ₗ[ℂ] ℂ :=
+    (MvPolynomial.lcoeff ℂ e).comp (Finsupp.lapply (α + β))
+  change extract (((wordField D α (x :: ω))[[m]]) v) = _
+  rw [wordField, (normalMinusOne _ _).2, map_add,
+    map_finsum extract hf₁, map_finsum extract hf₂]
+  congr 1
+  · have heq (j : ℕ) :
+        extract ((left[[-(j : ℤ) - 1]]) ((right[[m + j]]) v)) =
+          ((j + x.2).choose x.2 : ℂ) *
+          (X (x.1, j + x.2) * wordMap D α β ω (m + j) (b D d)).coeff e := by
+      change (((left[[-(j : ℤ) - 1]]) ((right[[m + j]]) v)) (α + β)).coeff e = _
+      rw [negative_derivative_component]
+      rfl
+    simp_rw [heq]
+    apply finsum_eq_sum_of_support_subset
+    intro j hj
+    by_contra hn
+    have hj' : level D e ≤ j := by simpa using hn
+    exact hj (by rw [negative_coefficient_vanish D x j e _ hj', mul_zero])
+  · have heq (j : ℕ) :
+        extract ((right[[m - j - 1]]) ((left[[j]]) v)) =
+          ((Ring.choose (-(j : ℤ) - 1 + x.2) x.2 : ℤ) : ℂ) *
+          (wordMap D α β ω (m - j - 1)
+            (neutralPolynomialMode D x.1 β ((j : ℤ) - x.2) (b D d))).coeff e := by
+      change (((right[[m - j - 1]]) ((left[[j]]) v)) (α + β)).coeff e = _
+      rw [derivative_single, map_smul, Finsupp.smul_apply, MvPolynomial.coeff_smul]
+      rfl
+    rw [finsum_eq_sum_of_support_subset (s := Finset.range (x.2 + level D d + 1))
+      (by
+        intro j hj
+        by_contra hn
+        have hj' : x.2 + level D d < j := by simpa using hn
+        exact hj (by simp only [left, v, positive_derivative_vanish D x j β d hj',
+          map_zero]))]
+    exact Finset.sum_congr rfl (fun j hj => heq j)
+
 #print axioms creation_coefficient_factorial
 #print axioms creation_radial_bound
 #print axioms creation_occupation_summable
+#print axioms wordCoeff_cons_finite
 
 end
 end D5.S3.VertexAlgebra.CanonicalOccupationSewing
