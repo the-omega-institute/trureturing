@@ -45,9 +45,11 @@ internal sealed class PhaseRigidityDocument : IScribeDocumentDefinition
     {
         var w = F.Id("w"); var n = F.Id("N"); var p = F.Id("p"); var m = F.Id("m"); var i = F.Id("i");
         var a = Seq(F.Id("A"), Underscore, Grp(i));
-        var ap = Seq(F.Id("A'"), Underscore, Grp(i));
+        var ap = Seq(F.Id("A"), Apos, Underscore, Grp(i));
+        var wp = Seq(w, Apos); var pp = Seq(p, Apos);
         return Disp(Seq(Forall, Sp, w, Comma, n, Comma, Sp,
-            Call("G+", Seq(w, Comma, n)), Land, Sp, Call("allEntriesNonzero", n), Implies, Sp,
+            Seq(F.Id("G"), Underscore, Grp(Plus), Open, w, Comma, n, Close),
+            Land, Sp, Call("allEntriesNonzero", n), Implies, Sp,
             Exists, Sp, p, InMacro, Sp, F.Id("P"), Underscore, Grp(Plus), Comma, Sp,
             Exists, Sp, F.Id("s"), Gt, Sp, D(0), Comma, Sp,
             Exists, Sp, m, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Caret, Grp(D(4)), Comma, Sp,
@@ -58,8 +60,8 @@ internal sealed class PhaseRigidityDocument : IScribeDocumentDefinition
             Seq(m, Underscore, Grp(i)), F.Id("r"), Close, Land, Sp,
             Open, Forall, Sp, i, InMacro, Sp, Call("Fin", D(4)), Comma, Sp,
             ap, Eq, Sp, F.Id("J"), a, F.Id("J"), Close, Land, Sp,
-            F.Id("J"), n, F.Id("J"), Eq, Sp, F.Id("s"), Call("F", F.Id("p'")), Land, Sp,
+            F.Id("J"), n, F.Id("J"), Eq, Sp, F.Id("s"), Call("F", pp), Land, Sp,
             Open, Call("Phi", Seq(w, Comma, p, Comma, m)), Lor, Sp,
-            Call("Phi", Seq(F.Id("w'"), Comma, F.Id("p'"), Comma, Minus, m)), Close));
+            Call("Phi", Seq(wp, Comma, pp, Comma, Minus, m)), Close));
     }
 }
