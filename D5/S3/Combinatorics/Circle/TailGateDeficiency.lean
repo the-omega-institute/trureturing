@@ -4,7 +4,7 @@
    mirror-E: none(waiver:audit-open-22063)
    anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic]
    utility: none
-   digest: An original ALL-Legal minimum forces a sharp gate-specific sign deficiency in its physical middle tail. -/
+   digest: A minimum forces a sharp gate-specific sign deficiency in its physical middle tail. -/
 module
 public import D5.S3.Combinatorics.Circle.FirstNegativeShiftExchange
 public import D5.S3.Combinatorics.Circle.PositiveSmallReturnExchange
@@ -422,9 +422,42 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
   rw [hei, her] at he
   have henergy := geo.energy
   change (3 : ℕ) ^ (f p).natAbs + 3 ^ (f n).natAbs < 3 ^ (f x).natAbs at henergy
-  have hHs : H k t V < H k t W := by omega
+  have hret : (3 : ℕ) ^ (f p).natAbs + 3 ^ (f n).natAbs <
+      3 ^ (f x).natAbs + 3 ^ (f y).natAbs :=
+    lt_of_lt_of_le henergy (Nat.le_add_right _ _)
+  have hHs : H k t V < H k t W := by
+    exact Nat.lt_of_add_lt_add_right (he.trans_lt (Nat.add_lt_add_left hret _))
   have hj : J k t V < J k t W := Prod.Lex.toLex_lt_toLex.mpr
     (Or.inr ⟨hG, Prod.Lex.toLex_lt_toLex.mpr (Or.inl hHs)⟩)
   exact (not_lt_of_ge (hminimum V (legal_of_strip inv.nodup hsV))) hj
+
+-- Transient integral endpoint application.
+example
+    (k t : ℕ) (hk : 3 ≤ k) (p y zpen z : Fin k)
+    (A T0 T1 T2 E : List (Fin k))
+    (hpositive : 0 < s k t p)
+    (hnlarge : Q k ≤ |s k t (hit k 1 p)|)
+    (hexpand : N k < 3 * |s k t p|)
+    (hW : Legal k t (oldWord p y zpen z A T0 T1 T2 E))
+    (hpunused : p ∉ oldWord p y zpen z A T0 T1 T2 E)
+    (hnunused : hit k 1 p ∉ oldWord p y zpen z A T0 T1 T2 E)
+    (hsmall : ∀ i ∈ smallWord T0 T1 T2 E, |s k t i| < Q k)
+    (hzpenlarge : Q k ≤ -s k t zpen)
+    (hzlarge : Q k ≤ -s k t z)
+    (hyhigh : s k t p < -s k t y)
+    (hminimum : ∀ V : List (Fin k), Legal k t V →
+      J k t (oldWord p y zpen z A T0 T1 T2 E) ≤ J k t V) :
+    let f := s k t
+    let delta := -f y - f p
+    let c1 := mass f (A ++ [hit k 2 p] ++ T0 ++ [y] ++ T1)
+    let c2 := mass f (A ++ [hit k 2 p] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2)
+    C k - c1 + mass (fun i => -f i) (signPool (fun i => -f i) T2 (C k + f zpen + 1)) ≤ delta - 1 ∨
+    C k - c2 + mass f (signPool f T2 (C k + f z + 1)) ≤ delta - 1 := by
+  have h := actualSource_threeNegative_twoGate_tail_deficiency k t hk p y zpen z A T0 T1 T2 E
+    hpositive hnlarge hexpand hW hpunused hnunused hsmall hzpenlarge hzlarge hyhigh hminimum
+  dsimp only at h ⊢
+  omega
+
+#print axioms actualSource_threeNegative_twoGate_tail_deficiency
 
 end D5.S3.Combinatorics.Circle.TailGateDeficiency
