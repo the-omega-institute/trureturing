@@ -1,7 +1,15 @@
+/- GID: D5/S3/Geometry/FiniteComponentClosure
+   generality: G
+   mirror-B: D5/B/S3/Geometry/FiniteComponentClosure
+   mirror-E: none(waiver:finite-component-closure)
+   anchors: [mathlib/module/Mathlib.Topology.Homeomorph.Quotient]
+   utility: none
+   digest: Selected-vertex WPlus wedges and complete finite-component ordinary joins preserve the finite sphere-component models. -/
 import D5.S3.Geometry.EuclideanSphereJoin
 import D5.S3.Geometry.FiniteVertexCylinder
 import D5.S3.Geometry.FiniteConeUnionWedge
 import D5.S3.Geometry.SingletonRetractionBasedInverse
+import Mathlib.Topology.Homeomorph.Quotient
 
 /-!
 Finite coordinate models for the finite-component closure problem in
