@@ -46,6 +46,10 @@ $$\forall V \in \operatorname{Type},\; [\operatorname{Fintype}\left(V\right)] [\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/BonettoSignature.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bonetto-jardon-kojakhmetov-2024-signature-monotonicity` (proved) by `D5/S3/Combinatorics/SpectralGraph/BonettoSignature.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bonetto-jardon-kojakhmetov-2024-signature-monotonicity","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/BonettoSignature.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Riccardo Bonetto; Hildeberto Jardón Kojakhmetov (2024). *On the Eigenvalues of Graphs with Mixed Algebraic Structure*. URL: <https://arxiv.org/html/2408.00487v1>.

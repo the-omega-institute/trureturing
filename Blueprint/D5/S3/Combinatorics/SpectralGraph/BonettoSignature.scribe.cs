@@ -47,15 +47,19 @@ internal sealed class BonettoSignatureDocument : IScribeDocumentDefinition
                     DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
                 Node("result", "Signature monotonicity on the positive axis", "result", conclusion,
                     "This is the nonincreasing assertion of Section 3, Conjecture 1. Every finite vertex type, including the empty type, every disjoint spanning edge partition and all 0 < s ≤ t are quantified. Singular matrices, persistent kernels, disconnected graphs, empty edge classes and s = t remain included. The partition fixes the original graph interpretation; the argument itself needs only L_G ≥ 0 and symmetry. Write M(u) = L_G + u A_H. The identities M(s) = (s/t)M(t) + (1−s/t)L_G and −M(t) = (t/s)(−M(s)) + (t/s−1)L_G have strictly positive first coefficients and nonnegative second coefficients. Consequently every subspace positive for M(t) is positive for M(s), and every subspace positive for −M(s) is positive for −M(t). RHLinalg.posIndex_eq_max_finrank_posDefOn and finrank_le_posIndex_of_posDefOn turn these transfers into Nplus(M(t)) ≤ Nplus(M(s)) and Nminus(M(s)) ≤ Nminus(M(t)); the existing posIndex_neg_eq_negIndex supplies the sign reversal. Subtracting the integer counts proves the displayed inequality. This assembly uses established spectral and inertia ingredients. No eigenvalue continuity, inverse matrix, generic crossing or kernel removal is required. It asserts no transition-count bound or limiting-signature formula. Bounded literature checks do not establish global novelty or priority.",
-                    DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                    DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                    new OpenProblemResolutionClaim(
+                        ProblemSlugRef.Create("bonetto-jardon-kojakhmetov-2024-signature-monotonicity"),
+                        ResolutionKind.Proved)))));
     }
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("bonetto-signature-" + id),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula Carrier(Formula body) => All("V", C("Type"), Seq(
         OpenBracket, Call("Fintype", V("V")), CloseBracket, Sp,
