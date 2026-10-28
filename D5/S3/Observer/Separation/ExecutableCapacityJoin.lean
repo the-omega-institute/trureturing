@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Observer/Separation/ExecutableCapacityJoin
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Data.Fintype.Sets]
-   utility: none
+   utility: kind=checker; basis=terminal=atom:d2fac14b8e7fa9aa385d45040174d92e9218ffd5b7dcb0b3f54205f079bca92c; instance=D5/S3/Observer/Separation/ExecutableCapacityJoin.result
    digest: Finite active response tables supply the exact original-tree separator solver. -/
 
 import D5.S3.Observer.Separation.CapacitySensitiveSupport
@@ -237,5 +237,66 @@ theorem source_solver_spec (ht : Full t) (hall : leaves t = Finset.univ)
 
 #print axioms cost_table_eq
 #print axioms source_solver_spec
+
+namespace EmptyCoordinates
+
+private def tree : Tree Empty Unit := .node () 0 Fin.elim0
+private abbrev N := Nodes tree
+private def root : N := ⟨tree, by simp [tree, subtrees]⟩
+private instance : Subsingleton N := ⟨fun a b => by
+  apply Subtype.ext
+  have ha : a.val = tree := by simpa [tree, subtrees] using a.property
+  have hb : b.val = tree := by simpa [tree, subtrees] using b.property
+  exact ha.trans hb.symm⟩
+private instance : Nonempty N := ⟨root⟩
+private instance : DecidableEq N := fun _ _ => isTrue (Subsingleton.elim _ _)
+private instance : Fintype N :=
+  ⟨{root}, fun n => by simp [Subsingleton.elim n root]⟩
+private def promise : Set (Empty → Unit) := Set.univ
+private instance : DecidablePred (· ∈ promise) := fun _ => isTrue (Set.mem_univ _)
+private def task (_ : promise) : Unit := ()
+private theorem promise_nonempty : promise.Nonempty :=
+  ⟨(fun i => nomatch i), Set.mem_univ _⟩
+private def graph : SimpleGraph N := ⊥
+private instance : DecidableRel graph.Adj :=
+  inferInstanceAs (DecidableRel (⊥ : SimpleGraph N).Adj)
+private theorem graph_tree : graph.IsTree := SimpleGraph.IsTree.of_subsingleton
+private theorem graph_ri :
+    RunningIntersection graph (fun v => sensitive (sourceCost tree promise task v)) :=
+  fun _ => SimpleGraph.Preconnected.of_subsingleton
+
+/-- Run the original constant root with an empty coordinate product and its
+nonempty singleton promise. The root remains an original counted node. -/
+def answer (k : ℕ) : Bool :=
+  (sourceSolve tree promise promise_nonempty task graph graph_tree graph_ri
+    root [root] (by intro n; simp [Subsingleton.elim n root])
+    [] (by intro x; exact x.property.elim (Set.mem_univ _))
+    [()] (by intro x; cases x; simp) k).isSome
+
+end EmptyCoordinates
+
+open EmptyCoordinates
+
+/-- The executed empty-coordinate task rejects zero messages and accepts one;
+the general solver's soundness identifies its exact original root budget. -/
+theorem result : answer 0 = false ∧ answer 1 = true ∧ minimumPeak tree promise task = 1 := by
+  have no : answer 0 = false := by decide
+  have yes : answer 1 = true := by decide
+  have full : Full tree := ⟨(fun j => Fin.elim0 j), (fun j => Fin.elim0 j)⟩
+  have all : leaves tree = Finset.univ := by ext i; exact nomatch i
+  have spec := (source_solver_spec tree promise promise_nonempty task graph full all
+    graph_tree graph_ri root [root] (by intro n; simp [Subsingleton.elim n root])
+    [] (by intro x; exact x.property.elim (Set.mem_univ _))
+    [()] (by intro x; cases x; simp)).2.1
+  have upper : minimumPeak tree promise task ≤ 1 := (spec 1).mp yes
+  have lower : ¬ minimumPeak tree promise task ≤ 0 := by
+    intro h
+    have yesZero := (spec 0).mpr h
+    change answer 0 = true at yesZero
+    rw [no] at yesZero
+    cases yesZero
+  exact ⟨no, yes, by omega⟩
+
+#print axioms result
 
 end D5.S3.Observer.Separation.ExecutableCapacityJoin

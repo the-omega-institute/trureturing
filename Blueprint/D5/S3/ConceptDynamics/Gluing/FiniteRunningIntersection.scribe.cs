@@ -110,8 +110,8 @@ internal sealed class FiniteRunningIntersectionDocument : IScribeDocumentDefinit
         var join = Call("rawJoin", d);
         var sep = Call("sep", d, e);
         return All("d", F.Id("SolverData"), Seq(
-            Seq(Equal(Call("isSome", solved), Call("true")), Sp, Iff, Sp,
-                Call("Nonempty", join)), Sp, Land, Sp,
+            Paren(Seq(Equal(Call("isSome", solved), Call("true")), Sp, Iff, Sp,
+                Call("Nonempty", join))), Sp, Land, Sp,
             All("j", Call("Assignments", Call("output", d), Call("union", d)),
                 Seq(Equal(solved, Call("some", j)), Sp, To, Sp, Member(j, join))),
             Sp, Land, Sp,
@@ -124,6 +124,7 @@ internal sealed class FiniteRunningIntersectionDocument : IScribeDocumentDefinit
         Seq(Call("card", table), Sp, Le, Sp,
             Call("power", Call("card", output), Call("card", sep)));
     private static Formula Member(Formula x, Formula set) => Seq(x, Sp, InMacro, Sp, set);
+    private static Formula Paren(Formula x) => Seq(Open, x, Close);
     private static Formula All(string x, Formula type, Formula body) =>
-        Seq(Forall, Sp, F.Id(x), Colon, Sp, type, Comma, Sp, body);
+        Paren(Seq(Forall, Sp, F.Id(x), Colon, Sp, type, Comma, Sp, body));
 }

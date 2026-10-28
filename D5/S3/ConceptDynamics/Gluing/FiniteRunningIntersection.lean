@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Gluing/FiniteRunningIntersection
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Data.Fintype.BigOperators]
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Observer/Separation/ExecutableCapacityJoin.source_solver_spec; instance=D5/S3/Observer/Separation/ExecutableCapacityJoin.result
    digest: Executable separator tables and finite certificate decoding refine running-intersection messages. -/
 
 import D5.S3.ConceptDynamics.Gluing.RunningIntersectionMessages

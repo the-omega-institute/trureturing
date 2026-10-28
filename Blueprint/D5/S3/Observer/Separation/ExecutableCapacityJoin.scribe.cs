@@ -72,6 +72,24 @@ internal sealed class ExecutableCapacityJoinDocument : IScribeDocumentDefinition
                         + "counts states in one observation process. No bound on total runtime, "
                         + "the sum of table sizes, total storage or certificate storage follows "
                         + "from a single separator-table bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("empty-coordinate-root-check"),
+                DeclarationHandle.Create(Module + "result"),
+                H("The empty-coordinate constant root has peak one"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Equal(Call("answer", D(0)), Call("false")), Sp, Land, Sp,
+                    Equal(Call("answer", D(1)), Call("true")), Sp, Land, Sp,
+                    Equal(Call("minimumPeak", Call("emptyTree"), Call("emptyPromise"),
+                        Call("constantTask")), D(1))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Here emptyTree is the actual zero-child implementation root on Empty "
+                    + "coordinates, emptyPromise is the nonempty singleton empty product, and "
+                    + "constantTask has output Unit. The separate support graph is the singleton "
+                    + "tree. answer is the executable sourceSolve success flag for these exact "
+                    + "inputs. Kernel evaluation gives false at zero and true at one; the general "
+                    + "source_solver_spec then identifies the original counted-root minimum "
+                    + "peak as one. The computation includes no illegal cells or separators."))),
                 DescribeRole.Theorem))));
 
     private static Formula SourceStatement()
@@ -97,6 +115,7 @@ internal sealed class ExecutableCapacityJoinDocument : IScribeDocumentDefinition
     }
 
     private static Formula Member(Formula x, Formula set) => Seq(x, Sp, InMacro, Sp, set);
+    private static Formula Paren(Formula x) => Seq(Open, x, Close);
     private static Formula All(string x, Formula type, Formula body) =>
-        Seq(Forall, Sp, F.Id(x), Colon, Sp, type, Comma, Sp, body);
+        Paren(Seq(Forall, Sp, F.Id(x), Colon, Sp, type, Comma, Sp, body));
 }
