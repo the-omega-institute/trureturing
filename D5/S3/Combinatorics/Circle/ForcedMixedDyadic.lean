@@ -393,4 +393,39 @@ theorem obstructing_inventory_exists (r : ℕ) (hr : 3 ≤ r) :
     norm_num [T, List.countP_cons, label_exp]
     omega
 
+
+/-- The two-label bound is attained on an unbounded family, and every strict
+competitor within that bound must use an existential fresh +2d label together
+with an existential fresh -7d label. Arbitrary returns and orders remain in
+scope; no particular pair of equal-valued physical outsiders is singled out. -/
+theorem forced_mixed_obstruction (r : ℕ) (hr : 3 ≤ r) :
+    ∃ W : List (Fin (4 * r)),
+      TwoOppositeLargeExchange.Legal (4 * r) (unit 4 r) W ∧
+      G (4 * r) (unit 4 r) W = 3 ∧
+      (∃ V : List (Fin (4 * r)),
+        TwoOppositeLargeExchange.Legal (4 * r) (unit 4 r) V ∧
+        J (4 * r) (unit 4 r) V < J (4 * r) (unit 4 r) W ∧
+        (V.toFinset \ W.toFinset).card ≤ 2) ∧
+      (∀ V : List (Fin (4 * r)),
+        TwoOppositeLargeExchange.Legal (4 * r) (unit 4 r) V →
+        J (4 * r) (unit 4 r) V < J (4 * r) (unit 4 r) W →
+        (V.toFinset \ W.toFinset).card ≤ 2 →
+        ∃ e z : Fin (4 * r), e ≠ z ∧
+          V.toFinset \ W.toFinset = {e, z} ∧
+          actualSource (4 * r) (unit 4 r) e = 2 * (unit 4 r : ℤ) ∧
+          actualSource (4 * r) (unit 4 r) z = -7 * (unit 4 r : ℤ)) := by
+  classical
+  obtain ⟨W, hW, h0, h1, h2, h3⟩ := obstructing_inventory_exists r hr
+  have hGW : G (4 * r) (unit 4 r) W = 3 := by
+    have hb := physical_balance (largeWeight (4 * r) (unit 4 r)) W hW.1
+    change G (4 * r) (unit 4 r) W + largeUsed (4 * r) (unit 4 r) W = _ at hb
+    rw [large_total 4 r (by decide) (by omega),
+      large_used_counts 4 r (by decide) (by omega), h2, h3] at hb
+    omega
+  obtain ⟨V, hVL, hVJ, hVI, _⟩ := MixedDyadicAugmentation.native_two_fresh_augmentation
+    4 r (by decide) (by omega) W hW (by omega)
+  refine ⟨W, hW, hGW, ⟨V, hVL, hVJ, hVI⟩, ?_⟩
+  intro T hT hJ hI
+  exact forced_mixed_of_counts r hr W T hW hT h0 h1 h2 h3 hI hJ
+
 end D5.S3.Combinatorics.Circle.ForcedMixedDyadic
