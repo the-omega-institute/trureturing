@@ -8,7 +8,15 @@ There is a unique positive real β satisfying β³−8β−4=0. Every strict par
 
 The intermediate value theorem gives a root in (3,31/10). A positive root must exceed two: for 0<x≤2, x³≤4x<8x+4. For 2≤x<y, the difference of the cubic values is (y−x)(y²+xy+x²−8)>0. This proves uniqueness among all positive real roots.
 
-Write j=b+r(1−r)/b, n=j+r, T=1+b, U=1+2b, X=b²+r(1−r), N=X+br, k=fifthDrift(r,b), and F=parentEq(r,b,ε). Direct denominator clearing gives pΛ−kF=−6Q(r,b)/(5bTUXN). For t=b−3, write Q=Σᵢ₌₀⁷qᵢ(r)tⁱ. Bounding every negative monomial −arʲ below by −a and every positive nonconstant monomial below by zero on 0≤r≤1 gives, in increasing degree, qᵢ≥[234693,583167,550481,277599,85069,15790,1634,72]. The displayed polynomial definition of Q expresses these bounds as sums of nonnegative multiples of rʲ and 1−rʲ. Hence Q>0 for all b≥3.
+Write j=b+r(1−r)/b, n=j+r, T=1+b, U=1+2b, X=b²+r(1−r), N=X+br, k=fifthDrift(r,b), and F=parentEq(r,b,ε). Direct denominator clearing gives pΛ−kF=−6Q(r,b)/(5bTUXN). For t=b−3, the polynomial Q=Σᵢ₌₀⁷qᵢ(r)tⁱ has the following coefficients.
+
+q₀=736r⁶−6624r⁵−11616r⁴+149321r³−63651r²−508239r+824823; q₁=256r⁶−3776r⁵−14856r⁴+181595r³−31780r²−1023870r+1657449.
+
+q₂=−512r⁵−5904r⁴+82287r³+22306r²−849479r+1406376; q₃=−744r⁴+16429r³+20156r²−372027r+650370.
+
+q₄=1216r³+5217r²−90786r+175855; q₅=456r²−11711r+27501; q₆=2258−624r; q₇=72.
+
+On 0≤r≤1, bound every negative monomial −arʲ below by −a and every positive nonconstant monomial below by zero. In increasing degree this gives qᵢ≥[234693,583167,550481,277599,85069,15790,1634,72]. Equivalently, each coefficient is its listed positive lower bound plus nonnegative multiples of rʲ and 1−rʲ. Hence Q>0 for all b≥3.
 
 If b≥β, monotonicity of the cubic above two gives b³−8b−4≥0. The identity 1+6/T+1/U−8/b=2(b³−8b−4)/(bTU), together with j>b and n>b for strict r, gives Λ>0. In an actual parent F=0, so the identity for pΛ has negative right side and positive left side when p>0, a contradiction.
 
