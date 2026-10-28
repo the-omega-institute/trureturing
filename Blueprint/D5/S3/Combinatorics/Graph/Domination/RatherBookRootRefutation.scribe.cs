@@ -62,14 +62,18 @@ internal sealed class RatherBookRootRefutationDocument : IScribeDocumentDefiniti
                 "Conjecture 5.4 retains every n at least one and both parity implications. For even n the simple roots lie below -2 and between -1/2 and zero. For odd n both lie between -1/2 and zero. FourRealRoots includes all exact multiplicities and the root equivalence for every real number. The rational endpoint is negative one divided by two in Real."),
             Node("result", "The order-one book contradicts the universal conjecture", "result", DescribeRole.Theorem,
                 new Formula.Not(P(ClaimBody())), AssessedProvenance.FromRepo(Source),
-                "The order-one book equals SimpleGraph.cycleGraph 4. Exactly its six two-element subsets, four three-element subsets and full vertex set dominate; the empty set and four singletons do not. The finite comparison and enumeration are checked by kernel decision, using mem_domSets. Summing the eleven actual subsets gives 6*X^2+4*X^3+X^4. Evaluation at a factors as a^2*((a+2)^2+2), strictly positive for every nonzero a. Instantiating the odd implication at n=1 supplies a nonzero root a, a contradiction. The private book_one_eq_cycle and cycle_domSets establish book_one_polynomial, which supplies this evaluation. The C4 count, book polynomial and positive-cofactor argument are established ingredients; no new general root theorem is asserted."),
+                "The order-one book equals SimpleGraph.cycleGraph 4. Exactly its six two-element subsets, four three-element subsets and full vertex set dominate; the empty set and four singletons do not. The finite comparison and enumeration are checked by kernel decision, using mem_domSets. Summing the eleven actual subsets gives 6*X^2+4*X^3+X^4. Evaluation at a factors as a^2*((a+2)^2+2), strictly positive for every nonzero a. Instantiating the odd implication at n=1 supplies a nonzero root a, a contradiction. The private book_one_eq_cycle and cycle_domSets establish book_one_polynomial, which supplies this evaluation. The C4 count, book polynomial and positive-cofactor argument are established ingredients; no new general root theorem is asserted.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rather-2026-book-domination-root-conjecture"),
+                    ResolutionKind.Refuted)),
             Paragraph(Text("The author bibliography lists the paper as Filomat (2026), to appear. The journal text and any corrections remain unread, so agreement with a journal statement is not asserted. The relevant six-page 2013 article also remains unread; its located arXiv document contains only an abstract. The argument refutes the literal arXiv v1/v2 universal statement at n=1. The separately amended n at least two statement remains unsettled. No global literature priority or exhaustive ownership conclusion follows."))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration, DescribeRole role,
-        Formula formula, AssessedProvenance provenance, string prose) => Describe.Lean(
+        Formula formula, AssessedProvenance provenance, string prose,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula X(string name) => F.Id(name);
     private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
     private static Formula Real() => new Formula.NamedConstant(FormulaIdentifier.Create("Real"));

@@ -100,6 +100,10 @@ $$\neg (\forall (n : \mathrm{Nat}), (1 \le n) \Rightarrow (((\operatorname{Even}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/RatherBookRootRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rather-2026-book-domination-root-conjecture` (refuted) by `D5/S3/Combinatorics/Graph/Domination/RatherBookRootRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rather-2026-book-domination-root-conjecture","declaration_gid":"D5/S3/Combinatorics/Graph/Domination/RatherBookRootRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Bilal Ahmad Rather (2026). *On roots of domination polynomials for friendship and book graphs*. URL: <https://arxiv.org/abs/2604.08998v2>.
