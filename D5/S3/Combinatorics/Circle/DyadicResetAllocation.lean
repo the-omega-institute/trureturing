@@ -176,8 +176,7 @@ theorem old_bins_residues {α : Type*} [DecidableEq α]
   intro q hjq hqb
   have htotal := allocation_total S e _ hal
   have hr := (allocation_iff_residues S e _ htotal).mp hal q
-  simp only [Fintype.sum_sum_type, Finset.sum_const, Finset.card_univ,
-    Fintype.card_fin, nsmul_eq_mul, Fintype.sum_unique] at hr
+  simp [Fintype.sum_sum_type] at hr
   rw [dyadic_pred_mod (b + 1) q (by omega)] at hr
   have hF : 0 < (2 : ℕ) ^ q := by positivity
   have hlt : g < 2 ^ q := lt_of_lt_of_le hgs
