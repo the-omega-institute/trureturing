@@ -1784,3 +1784,66 @@ The sufficient implications in Lemmas 5.1 and 12.1 and Application 13.4, the sep
 **Attribution 15.4 (classical intermediates in the counterexample).** The eight-state construction and its application to the exact quotient and full-conditioning quantifiers are a repository derivation, without a priority claim. The ordinary Markov-law band calculation is the $a=1/4$ instance of [the universal-posterior-defect volume, Proposition 7.1](FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md). Conditional projection and the observed-word variance budget are reused exactly as proved in Lemmas 5.1 and 12.1; their classical credit is recorded in Section 10. [Pavel Chigansky and Ramon van Handel, *A complete solution to Blackwell's unique ergodicity problem for hidden Markov chains*, arXiv:0910.3603v2, Section 2.1 (including Remark 1) and Example 10](https://arxiv.org/html/0910.3603v2) provides the classical edge-observation convention and an example of observation-invisible hidden information. Its unique-filter-ergodicity criteria are not a premise for (15.4), (15.19), or the deterministic quotient classification. All nonnegativity, stationarity, full-field independence and cutwise residual assertions needed here are proved above; no structural-zero nondegeneracy assumption is imported.
 
 ## 追加锚（本行以下为增补区）
+
+## 16. Correction of the root-summability assertions by existing suppliers
+
+**Correction 16.1 (the scope of (9.2)).** Both assertions $\mathsf Q_{\rm full}$ and $\mathsf Q_{\rm band}$ in (9.2) follow from [Strip, Theorems 3.1, 5.1 and 6.5][Strip] and [Entropy, Theorem 3.1][Entropy]. Their descriptions as open in Open problem 9.2, Open Question 12.4, Convention 14.2 and Consequence 15.3 are superseded by this application. The definitions and universal quantifiers in (9.2) are unchanged; this is reuse of the existing suppliers, not an additional universal rate theorem.
+
+**Parameter correspondence and deduction.** Fix $N\ge1$ and $\theta\in\Theta_N$. In [Strip] take $B_x=M_x$, $d=N$, $\pi=\lambda$ and $L=2N$, on exactly the stationary edge law $J_\theta$ of (2.2) and its visible marginal $P=P_\theta$. The center still labels $H_0\longrightarrow H_1$, and every integer radius counts original emitted edges. With natural-log entropies, put
+
+$$
+\begin{aligned}
+a_k&=H_P(X_0\mid X_{-k:-1})-H_P(X_0\mid X_{-\infty:-1}),
+& R_j&=\sum_{k\ge j}a_k,\\
+\mathcal F_j&=\sigma(X_{0:j-1}),
+&\mathcal F_\infty&=\sigma(X_i:i\ge0),\\
+\ell_j&=H_{J_\theta}(H_0\mid\mathcal F_j)
+       -H_{J_\theta}(H_0\mid\mathcal F_\infty)
+&& (k,j\ge0).
+\end{aligned}
+\tag{16.1}
+$$
+
+The fields in [Strip, Definition 6.4] and [Entropy, (1.1)] are exactly $\mathcal E_0,\mathcal L_j,\mathcal R_j$ of Definition 2.2, including the empty finite side at $j=0$ and the entire opposite half-line in each direction. Every quantity uses the full stationary law, including its component mixture; no component conditioning or reweighting is made.
+
+If the collection of incompatible nonempty support pairs in [Strip, Definition 2.3] is nonempty, use its $\kappa=1-\zeta^2/2\in[1/2,1)$ and the constant
+
+$$
+K_\lambda=\frac{\pi_{\mathrm{circ}}}{2}
+          \sum_{i=1}^N\sqrt{\lambda_i(1-\lambda_i)},
+$$
+
+where $\pi_{\mathrm{circ}}$ denotes the circle constant. The maximal-stripping bound of [Strip, Theorem 3.1] supplies the expected terminal-information estimate in its Theorem 5.1; its same-law Theorem 6.5 and [Entropy, Theorem 3.1] then give, for every $j\ge0$,
+
+$$
+R_j\le\ell_j\le K_\lambda\kappa^{\lfloor j/L\rfloor},
+\qquad
+e_L^P(j),e_R^P(j)\le\frac12R_j
+\le\frac{K_\lambda}{2}\kappa^{\lfloor j/L\rfloor}.
+\tag{16.2}
+$$
+
+These are deterministic bounds on expectations on the specified infinite fields. Each value of $\lfloor j/L\rfloor$ occurs for exactly $L$ nonnegative integer radii, so for every integer $r\ge0$,
+
+$$
+\begin{aligned}
+A_P(r)
+&\le\sqrt{2K_\lambda}\sum_{j\ge r}\kappa^{\lfloor j/L\rfloor/2}\\
+&\le\frac{L\sqrt{2K_\lambda}}{1-\sqrt\kappa}
+       \kappa^{\lfloor r/L\rfloor/2}<\infty.
+\end{aligned}
+\tag{16.3}
+$$
+
+If that support-pair collection is empty, [Strip, Lemma 2.4 and Theorems 5.1 and 6.5] give identical future laws from every initial state and $\ell_j=R_j=0$. The same [Entropy] comparison gives $e_L^P(j)=e_R^P(j)=0$ and $A_P(r)=0$. No minimum over an empty collection is taken. Zero stationary coordinates contribute zero to $K_\lambda$ and require no positive-posterior assumption.
+
+Thus (16.3), with the separate zero case, proves the conclusions in (9.2), including radius zero. The band $\mathsf B(P)$ of (2.5) is unnecessary for this application. The domain remains the entire (2.1), with only scalar legality $\lambda M_1^2\mathbf1=0$, real nonnegative entries, structural zeros, zero stationary masses, reducibility, periodicity and redundant presentations. No positivity, observability, identifiability, ergodicity or aperiodicity is added. $\square$
+
+**Boundary 16.2 (criterion obstruction and the original variational alternative).** Theorem 15.2 remains a negative answer to Question 13.6 with its specified deterministic-quotient quantifier; it also supersedes Convention 14.2's description of that question as open. Consequence 15.3 shows that its signed residual has zero likelihood on every future output word, although the hidden conditional residual in (15.19)--(15.20) is positive. [Strip] works with common future-equivalent submeasures and subtracts terminal hidden ambiguity in $\ell_j$; it requires neither those hidden residual variances nor worst-row diameters to contract. Thus the presentation-sensitive obstruction and the exact finite erasure in (15.5) are consistent with (16.2). The sufficient implications in Sections 5, 6, 12 and 13 and the separate phase-law conclusions of Sections 13--14 retain their stated scope.
+
+The constants above belong to a fixed producer and are not asserted uniform over $\Theta_N$, even at fixed $N$. The sentence following Statement 9.3 requiring a hypothetical attainer to supply quotient and contraction hypotheses applies only to using Theorem 7.1; root summability itself is supplied by (16.2)--(16.3). Neither finite attainment of $c_\star$ nor the alternative $C_N<c_\star$ for every finite $N$, including (9.3), is decided. No productive variational direction or uniform optimization-error estimate follows merely from this pointwise tail bound.
+
+[Strip]: FIB_LEGAL_EDGE_LOAD_EQUIVALENT_MASS_STRIPPING_EXPONENTIAL_TERMINAL_INFORMATION.md
+[Entropy]: FIB_LEGAL_EDGE_LOAD_ENTROPY_ERASURE_INFLUENCE_WEIGHTED_MOMENT.md
+
+## 追加锚（本行以下为增补区）
