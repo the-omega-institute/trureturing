@@ -10,7 +10,10 @@ import Mathlib.Analysis.Calculus.ContDiff.Deriv
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.AbsolutelyContinuousFun
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.ContDiff
 import Mathlib.Tactic
+
+/-! # Quantitative measurable calibration and transport rigidity -/
 
 open Set Filter MeasureTheory
 open scoped Topology ContDiff
@@ -38,7 +41,7 @@ def defect (u U Q : ℝ → ℝ) (x : ℝ) : ℝ :=
 def potential (U Z M : ℝ → ℝ) (x : ℝ) : ℝ :=
   M (U x) * (x * Real.sqrt x - Z (U x) / 2)
 
-private lemma support {b r z q Z Q : ℝ} (hb : 0 ≤ b) (hr : 0 ≤ r)
+private lemma support {b r z q Z Q : ℝ} (hr : 0 ≤ r)
     (hz : 0 < z) (hq : 0 ≤ q) (hZ : 0 < Z) (hQ : 0 < Q) :
     (-8 * r * Q ^ 3 / (27 * Z ^ 2)) * z +
       (8 * b * Q / 9 + 8 * r * Q ^ 2 / (9 * Z)) * q -
@@ -83,9 +86,10 @@ private lemma space_deriv {x : ℝ} (hx : 0 < x) :
     HasDerivAt (fun t : ℝ => t * Real.sqrt t) (3 * Real.sqrt x / 2) x := by
   have hs := Real.sq_sqrt hx.le
   convert (hasDerivAt_id x).mul (Real.hasDerivAt_sqrt (ne_of_gt hx)) using 1
-  dsimp only [id_eq]
-  field_simp [ne_of_gt (Real.sqrt_pos.2 hx)]
-  nlinarith
+  · rfl
+  · dsimp only [id_eq]
+    field_simp [ne_of_gt (Real.sqrt_pos.2 hx)]
+    nlinarith
 
 private lemma space_ac :
     AbsolutelyContinuousOnInterval (fun x : ℝ => x * Real.sqrt x) 1 2 := by
@@ -120,7 +124,8 @@ private lemma defect_integrable {u U Q : ℝ → ℝ}
   have hQc := hQ.comp hUc hmap
   obtain ⟨K, hK⟩ := isCompact_Icc.exists_bound_of_continuousOn hQc
   apply (intervalIntegrable_iff_integrableOn_Icc_of_le (by norm_num)).2
-  have hm := (hQc.aestronglyMeasurable measurableSet_Icc).aemeasurable
+  have hm : AEMeasurable (Q ∘ U) (volume.restrict (Icc (1 : ℝ) 2)) :=
+    (hQc.aestronglyMeasurable measurableSet_Icc).aemeasurable
   apply Integrable.of_bound
     (hu.mul (((Real.continuous_sqrt.measurable.aemeasurable.div hu).sub
       (hm.const_mul (2 / 3 : ℝ))).pow_const 2)).aestronglyMeasurable
@@ -138,16 +143,67 @@ private lemma defect_integrable {u U Q : ℝ → ℝ}
       2 / c + (2 / 3 : ℝ) * K := by
     calc
       _ ≤ ‖Real.sqrt x / u x‖ + ‖(2 / 3 : ℝ) * Q (U x)‖ := norm_sub_le _ _
-      _ ≤ _ := by rw [norm_mul, Real.norm_of_nonneg (by norm_num : (0 : ℝ) ≤ 2 / 3)]; gcongr; exact hK x hxmem
+      _ ≤ _ := by
+        rw [norm_mul, Real.norm_of_nonneg (by norm_num : (0 : ℝ) ≤ 2 / 3)]
+        gcongr
+        exact hK x hxmem
   change ‖u x * _ ^ 2‖ ≤ _
   rw [norm_mul, norm_pow, Real.norm_of_nonneg hup.le]
   exact mul_le_mul hx.2 (pow_le_pow_left₀ (norm_nonneg _) ht 2) (by positivity)
     (hc.le.trans hx.1 |>.trans hx.2)
 
+/-- Individual positive bounds suffice for all three reciprocal integrals. -/
+theorem bounded_positive_integrability {u : ℝ → ℝ}
+    (hu : AEMeasurable u (volume.restrict (Icc (1 : ℝ) 2)))
+    (hbounds : ∃ c B : ℝ, 0 < c ∧
+      ∀ᵐ x ∂volume.restrict (Icc (1 : ℝ) 2), c ≤ u x ∧ u x ≤ B) :
+    IntervalIntegrable u volume 1 2 ∧
+    IntervalIntegrable (fun x => x / u x) volume 1 2 ∧
+    IntervalIntegrable (fun x => (∫ s in (1 : ℝ)..x, u s) / u x ^ 2) volume 1 2 := by
+  obtain ⟨c, B, hc, hbounds⟩ := hbounds
+  have hi : IntegrableOn u (Icc (1 : ℝ) 2) volume :=
+    Integrable.of_bound hu.aestronglyMeasurable B (hbounds.mono fun x hx => by
+      rw [Real.norm_of_nonneg (by linarith [hx.1])]
+      exact hx.2)
+  have hii : IntervalIntegrable u volume 1 2 :=
+    (intervalIntegrable_iff_integrableOn_Icc_of_le (by norm_num)).2 hi
+  have huc : ContinuousOn ((fun x : ℝ => ∫ s in (1 : ℝ)..x, u s)) (Icc (1 : ℝ) 2) := by
+    have h := intervalIntegral.continuousOn_primitive_interval' (a := (1 : ℝ))
+      hii left_mem_uIcc
+    rw [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] at h
+    exact h
+  obtain ⟨M, hM⟩ := isCompact_Icc.exists_bound_of_continuousOn huc
+  have hlag : IntegrableOn (fun x => x / u x) (Icc (1 : ℝ) 2) volume := by
+    apply Integrable.of_bound
+      (measurable_id.aemeasurable.div hu).aestronglyMeasurable (2 / c)
+    filter_upwards [hbounds, ae_restrict_mem measurableSet_Icc] with x hx hxmem
+    have hup : 0 < u x := hc.trans_le hx.1
+    change ‖x / u x‖ ≤ 2 / c
+    rw [norm_div, Real.norm_of_nonneg (by linarith [hxmem.1]),
+      Real.norm_of_nonneg hup.le]
+    apply (div_le_div_iff₀ hup hc).2
+    nlinarith [mul_nonneg (sub_nonneg.mpr hxmem.2) hc.le]
+  have hfuture : IntegrableOn (fun x => (fun x : ℝ => ∫ s in (1 : ℝ)..x, u s) x / u x ^ 2)
+      (Icc (1 : ℝ) 2) volume := by
+    have hmeas : AEMeasurable ((fun x : ℝ => ∫ s in (1 : ℝ)..x, u s)) (volume.restrict (Icc (1 : ℝ) 2)) :=
+      (huc.aestronglyMeasurable measurableSet_Icc).aemeasurable
+    apply Integrable.of_bound (hmeas.div (hu.pow_const 2)).aestronglyMeasurable
+      (M / c ^ 2)
+    filter_upwards [hbounds, ae_restrict_mem measurableSet_Icc] with x hx hxmem
+    have hup : 0 < u x := hc.trans_le hx.1
+    have hsq : c ^ 2 ≤ u x ^ 2 := by nlinarith [hx.1]
+    change ‖(fun x : ℝ => ∫ s in (1 : ℝ)..x, u s) x / u x ^ 2‖ ≤ M / c ^ 2
+    rw [norm_div, norm_pow, Real.norm_of_nonneg hup.le]
+    exact (div_le_div_of_nonneg_left (norm_nonneg _) (sq_pos_of_pos hc) hsq).trans
+      (div_le_div_of_nonneg_right (hM x hxmem) (sq_nonneg c))
+  exact ⟨hii,
+    (intervalIntegrable_iff_integrableOn_Icc_of_le (by norm_num)).2 hlag,
+    (intervalIntegrable_iff_integrableOn_Icc_of_le (by norm_num)).2 hfuture⟩
+
 /-- Global square remainder and zero-energy transport for the full measurable class.
 The calibration equations are hypotheses only on the smooth reference. -/
 theorem remainder {b : ℝ} {Z Q M N u U : ℝ → ℝ}
-    (hb : 0 ≤ b) (hcal : Calibration b Z Q M N)
+    (hcal : Calibration b Z Q M N)
     (hu : AEMeasurable u (volume.restrict (Icc (1 : ℝ) 2)))
     (hbounds : ∃ c B : ℝ, 0 < c ∧
       ∀ᵐ x ∂volume.restrict (Icc (1 : ℝ) 2), c ≤ u x ∧ u x ≤ B)
@@ -162,6 +218,8 @@ theorem remainder {b : ℝ} {Z Q M N u U : ℝ → ℝ}
         b * (∫ x in (1 : ℝ)..2, defect u U Q x) ≤
       ∫ x in (1 : ℝ)..2, b * (x / u x) + U x / u x ^ 2 ∧
     ((∫ x in (1 : ℝ)..2, defect u U Q x) = 0 →
+      (∀ᵐ x ∂volume.restrict (Icc (1 : ℝ) 2),
+        Real.sqrt x / u x = (2 / 3 : ℝ) * Q (U x)) ∧
       ∀ x ∈ Icc (1 : ℝ) 2, Z (U x) = x * Real.sqrt x) := by
   obtain ⟨c, B, hc, hbounds⟩ := hbounds
   have hi := defect_integrable hu hc hbounds hU hmap hcal.continuousQ
@@ -184,7 +242,7 @@ theorem remainder {b : ℝ} {Z Q M N u U : ℝ → ℝ}
     change HasDerivAt (potential U Z M) _ x at hV
     rw [hV.deriv]
     obtain ⟨hZpos, hQpos, hMeq, hNeq⟩ := hcal.coefficients _ hr
-    have hs := support hb hr.1 (mul_pos hxpos (Real.sqrt_pos.2 hxpos))
+    have hs := support (b := b) hr.1 (mul_pos hxpos (Real.sqrt_pos.2 hxpos))
       (show 0 ≤ 3 * Real.sqrt x / (2 * u x) by positivity) hZpos hQpos
     rw [← hMeq, ← hNeq] at hs
     have hle := mul_le_mul_of_nonneg_left hs hup.le
@@ -208,26 +266,32 @@ theorem remainder {b : ℝ} {Z Q M N u U : ℝ → ℝ}
     rw [integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le (by norm_num)]
     exact he
   have hz := (integral_eq_zero_iff_of_nonneg_ae hn hie).1 he'
+  have hslope : ∀ᵐ x ∂volume.restrict (Icc (1 : ℝ) 2),
+      Real.sqrt x / u x = (2 / 3 : ℝ) * Q (U x) := by
+    filter_upwards [hz, hbounds] with x hx hux
+    have hup : 0 < u x := hc.trans_le hux.1
+    have hs : (Real.sqrt x / u x - (2 / 3 : ℝ) * Q (U x)) ^ 2 = 0 :=
+      (mul_eq_zero.mp hx).resolve_left (ne_of_gt hup)
+    exact sub_eq_zero.mp (sq_eq_zero_iff.mp hs)
+  refine ⟨hslope, ?_⟩
   have hHac := hZac.sub space_ac
   have hdH : ∀ᵐ x, x ∈ uIcc (1 : ℝ) 2 →
       HasDerivAt (fun t => Z (U t) - t * Real.sqrt t) 0 x := by
-    apply (ae_restrict_iff' measurableSet_Icc).1 ?_ |>.mono
-      (fun x h hx => h (by simpa only [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx))
-    filter_upwards [hz, hbounds, hdU] with x hx hux hd hxmem
+    rw [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)]
+    apply (ae_restrict_iff' measurableSet_Icc).1
+    filter_upwards [hslope, hbounds, hdU, ae_restrict_mem measurableSet_Icc]
+      with x hs hux hd hxmem
     have hup : 0 < u x := hc.trans_le hux.1
-    have hs : Real.sqrt x / u x - (2 / 3 : ℝ) * Q (U x) = 0 := by
-      have hs : (Real.sqrt x / u x - (2 / 3 : ℝ) * Q (U x)) ^ 2 = 0 :=
-        (mul_eq_zero.mp hx).resolve_left (ne_of_gt hup)
-      exact sq_eq_zero_iff.mp hs
     have hdv := ((hcal.derivZ _ (hmap hxmem)).comp x hd).sub
       (space_deriv (show 0 < x by linarith [hxmem.1]))
-    convert hdv using 1
-    have heq := (div_eq_iff (ne_of_gt hup)).1 (sub_eq_zero.mp hs)
-    dsimp only [Function.comp_apply]
-    nlinarith
+    have heq := (div_eq_iff (ne_of_gt hup)).1 hs
+    have hd0 : Q (U x) * u x - 3 * Real.sqrt x / 2 = 0 := by nlinarith
+    rw [hd0] at hdv
+    exact hdv
   obtain ⟨C, hC⟩ := hHac.const_of_ae_hasDerivAt_zero hdH
   have hC0 := hC 1 (by norm_num)
-  simp only [Function.comp_apply, hU1, hZ0, Real.sqrt_one, one_mul, sub_self] at hC0
+  change Z (U 1) - 1 * Real.sqrt 1 = C at hC0
+  simp only [hU1, hZ0, Real.sqrt_one, one_mul, sub_self] at hC0
   intro x hx
   have hx' := hC x (by simpa only [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx)
   dsimp only [Function.comp_apply, Pi.sub_apply] at hx'
