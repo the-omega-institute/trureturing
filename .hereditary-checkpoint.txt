@@ -1,3 +1,0 @@
-WIP: Construct exact hereditary substitution graph transports
-
-Keep original declarations and private identities unchanged. Add actual graph and realization transports, mixed-stage graphs, and augmented empty-link unit. Source compilation and private generalized induction are pending.

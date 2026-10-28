@@ -855,7 +855,7 @@ def nestedInduceIso {V : Type*} (G : SimpleGraph V) (B : Set V) (S : Set B) :
     (G.induce B).induce S ≃g G.induce (Subtype.val '' S) where
   toEquiv := Equiv.ofBijective
     (fun x : S => (⟨x.val.val, ⟨x.val, x.property, rfl⟩⟩ : Subtype.val '' S))
-    ⟨fun a b h => Subtype.ext (Subtype.ext (congrArg Subtype.val h)), by
+    ⟨fun a b h => Subtype.ext (Subtype.ext (congrArg (fun y : Subtype.val '' S => (y.val : V)) h)), by
       rintro ⟨x, b, hb, rfl⟩
       exact ⟨⟨b, hb⟩, rfl⟩⟩
   map_rel_iff' := Iff.rfl
@@ -907,7 +907,10 @@ def emptyLeftJoinHomeomorph {U X : Type*} [Fintype U] [DecidableEq U]
       refine ⟨(N.isRelLowerSet_faces hs).1.image _, Or.inl ?_, Or.inr ?_⟩
       · ext a
         simp
-      · simpa using hs
+      · have hr : (s.image (Function.Embedding.inr : X ↪ U ⊕ X)).toRight = s := by
+          ext a
+          simp
+        exact hr.symm ▸ hs
   exact (mapHomeomorph N Function.Embedding.inr).trans
     (Homeomorph.setCongr (congrArg realization he.symm))
 
@@ -970,16 +973,16 @@ private def replacementStageFiberIso (H : ∀ v, SimpleGraph (D v))
   · subst z
     refine { toEquiv := Equiv.cast (by simp [newFiber, stageFiber]), map_rel_iff' := ?_ }
     intro a b
-    simp [newGraphs, stageGraphs, Equiv.cast, newFiber, stageFiber]
+    simp [newGraphs, stageGraphs, SimpleGraph.comap, newFiber, stageFiber]
   · by_cases hr : z ∈ R
     · refine { toEquiv := Equiv.cast (by simp [newFiber, stageFiber, hz, hr]),
                map_rel_iff' := ?_ }
       intro a b
-      simp [newGraphs, stageGraphs, Equiv.cast, newFiber, stageFiber, hz, hr]
+      simp [newGraphs, stageGraphs, SimpleGraph.comap, newFiber, stageFiber, hz, hr]
     · refine { toEquiv := Equiv.cast (by simp [newFiber, stageFiber, hz, hr]),
                map_rel_iff' := ?_ }
       intro a b
-      simp [newGraphs, stageGraphs, Equiv.cast, newFiber, stageFiber, hz, hr]
+      simp [newGraphs, stageGraphs, SimpleGraph.comap, newFiber, stageFiber, hz, hr]
 
 /-- A single supplier replacement is the next actual mixed stage. -/
 def replacementStageIso (G : SimpleGraph V) (H : ∀ v, SimpleGraph (D v))
@@ -989,5 +992,132 @@ def replacementStageIso (G : SimpleGraph V) (H : ∀ v, SimpleGraph (D v))
   substitutionFiberIso G _ _ (replacementStageFiberIso H R v)
 
 end Stages
+
+
+section HereditaryCore
+
+private def pointIndependenceHomeomorph :
+    Space (independenceComplex (⊥ : SimpleGraph PUnit.{u + 1})).toPreAbstractSimplicialComplex ≃ₜ
+      PUnit.{u + 1} where
+  toFun _ := PUnit.unit
+  invFun _ := vertex _ PUnit.unit ((independenceComplex _).singleton_mem _)
+  left_inv x := by
+    apply Subtype.ext
+    funext a
+    cases a
+    obtain ⟨s, hs, hx⟩ := (native_mem _ x.val).mp x.property
+    have hx1 := hx.2.1
+    simpa using hx1.symm
+  right_inv _ := Subsingleton.elim _ _
+  continuous_toFun := continuous_const
+  continuous_invFun := continuous_const
+
+/-- Inference inputs for a class of actual spaces; none is asserted for W here. -/
+private abbrev ClassHomotopyClosed
+    (C : (X : Type u) → [TopologicalSpace X] → Prop) : Prop :=
+  ∀ {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y],
+    (X ≃ₕ Y) → C X → C Y
+
+private abbrev ClassJoinClosed
+    (C : (X : Type u) → [TopologicalSpace X] → Prop) : Prop :=
+  ∀ {U X : Type u} [Fintype U] [DecidableEq U] [Fintype X] [DecidableEq X]
+    (M : PreAbstractSimplicialComplex U) (N : PreAbstractSimplicialComplex X),
+    Nonempty (Space M) → Nonempty (Space N) → C (Space M) → C (Space N) →
+      C (OrdinaryJoin (Space M) (Space N))
+
+private abbrev ClassVertexWedgeClosed
+    (C : (X : Type u) → [TopologicalSpace X] → Prop) : Prop :=
+  ∀ {U X : Type u} [Fintype U] [DecidableEq U] [Fintype X] [DecidableEq X]
+    (M : PreAbstractSimplicialComplex U) (N : PreAbstractSimplicialComplex X)
+    (a : Space M) (b : Space N),
+    (∃ v, a.val = Pi.single v 1) → (∃ w, b.val = Pi.single w 1) →
+    C (Space M) → C (Space N) → C (Wedge a b)
+
+/-- Strong induction on the actual base cardinality, with an inner induction
+on the replaced vertices. The right summand always retains all current fibers. -/
+private theorem hereditarySubstitutionCore
+    (C : (X : Type u) → [TopologicalSpace X] → Prop)
+    (hom : ClassHomotopyClosed C) (point : C PUnit.{u + 1})
+    (join : ClassJoinClosed C) (wedge : ClassVertexWedgeClosed C)
+    {V : Type u} [Fintype V] [DecidableEq V] [Nonempty V]
+    {D : V → Type u} [∀ v, Fintype (D v)] [∀ v, DecidableEq (D v)]
+    [∀ v, Nonempty (D v)] (G : SimpleGraph V) (H : ∀ v, SimpleGraph (D v))
+    (hbase : ∀ S : Set V, S.Nonempty →
+      C (Space (independenceComplex (G.induce S)).toPreAbstractSimplicialComplex))
+    (hfiber : ∀ v, C (Space (independenceComplex (H v)).toPreAbstractSimplicialComplex)) :
+    C (Space (independenceComplex (substitution G H)).toPreAbstractSimplicialComplex) := by
+  classical
+  generalize hn : Fintype.card V = n
+  induction n using Nat.strong_induction_on generalizing V with
+  | h n ih =>
+    have hstageFiber (R : Finset V) (v : V) :
+        C (Space (independenceComplex (stageGraphs H R v)).toPreAbstractSimplicialComplex) := by
+      by_cases hv : v ∈ R
+      · exact hom (graphIsoHomeomorph (stageSelectedIso H R v hv)).symm.toHomotopyEquiv
+          (hfiber v)
+      · exact hom (graphIsoHomeomorph (stageSingletonIso H R v hv)).symm.toHomotopyEquiv
+          (hom pointIndependenceHomeomorph.symm.toHomotopyEquiv point)
+    have hstage : ∀ R : Finset V,
+        C (Space (independenceComplex (substitution G (stageGraphs H R))).toPreAbstractSimplicialComplex) := by
+      intro R
+      induction R using Finset.induction_on with
+      | empty =>
+        have hb := hbase Set.univ ⟨Classical.choice (inferInstance : Nonempty V), trivial⟩
+        have hg := hom (graphIsoHomeomorph (univInduceIso G)).toHomotopyEquiv hb
+        exact hom (graphIsoHomeomorph (initialStageIso G H)).symm.toHomotopyEquiv hg
+      | @insert v R hv hr =>
+        let e0 := stageSingletonIso H R v hv
+        let d0 : stageFiber (D := D) R v := e0.symm PUnit.unit
+        have hsingle : ∀ d : stageFiber (D := D) R v, d = d0 := by
+          intro d
+          exact e0.injective (Subsingleton.elim _ _)
+        let l0 : D v := Classical.choice (inferInstance : Nonempty (D v))
+        let M := linkComplex G (stageGraphs H R) v
+        let N := (independenceComplex (H v)).toPreAbstractSimplicialComplex
+        have hN : C (Space N) := hfiber v
+        have hNne : Nonempty (Space N) :=
+          ⟨vertex N l0 ((independenceComplex (H v)).singleton_mem l0)⟩
+        have hright : C (Space (simplicialJoin M N)) := by
+          by_cases hL : Nonempty (LinkBaseSet G v)
+          · letI : Nonempty (LinkBaseSet G v) := hL
+            have hlt : Fintype.card (LinkBaseSet G v) < n := by
+              rw [← hn]
+              apply Fintype.card_lt_of_injective_of_notMem
+                (fun x : LinkBaseSet G v => x.val) Subtype.val_injective (b := v)
+              rintro ⟨x, hx⟩
+              exact x.property.1 hx
+            have hb : ∀ S : Set (LinkBaseSet G v), S.Nonempty →
+                C (Space (independenceComplex
+                  ((G.induce (LinkBaseSet G v)).induce S)).toPreAbstractSimplicialComplex) := by
+              intro S hs
+              exact hom (graphIsoHomeomorph (nestedInduceIso G (LinkBaseSet G v) S)).symm.toHomotopyEquiv
+                (hbase (Subtype.val '' S) (hs.image Subtype.val))
+            have hM : C (Space M) := by
+              exact ih (Fintype.card (LinkBaseSet G v)) hlt
+                (G := G.induce (LinkBaseSet G v))
+                (H := fun x : LinkBaseSet G v => stageGraphs H R x.val)
+                hb (fun x => hstageFiber R x.val) rfl
+            let x : LinkBaseSet G v := Classical.choice hL
+            let d : stageFiber (D := D) R x.val := Classical.choice inferInstance
+            have hMne : Nonempty (Space M) :=
+              ⟨vertex M ⟨x, d⟩ ((independenceComplex _).singleton_mem _)⟩
+            exact hom (FiniteSimplicialJoin.joinHomeomorph M N hMne hNne).toHomotopyEquiv
+              (join M N hMne hNne hM hN)
+          · have hempty : ∀ s, s ∉ M := by
+              intro s hs
+              obtain ⟨x, _⟩ := (M.isRelLowerSet_faces hs).1
+              exact hL ⟨x.1⟩
+            exact hom (emptyLeftJoinHomeomorph M N hempty).toHomotopyEquiv hN
+        have hw := wedge
+          (independenceComplex (substitution G (stageGraphs H R))).toPreAbstractSimplicialComplex
+          (simplicialJoin M N) (oldPoint G (stageGraphs H R) v d0)
+          (joinPoint G (stageGraphs H R) v (H v) l0)
+          ⟨⟨v, d0⟩, rfl⟩ ⟨Sum.inr l0, rfl⟩ hr hright
+        have hnew := hom
+          (oneVertexReplacementEquiv G (stageGraphs H R) v (H v) d0 hsingle l0).symm hw
+        exact hom (graphIsoHomeomorph (replacementStageIso G H R v)).toHomotopyEquiv hnew
+    exact hom (graphIsoHomeomorph (finalStageIso G H)).toHomotopyEquiv (hstage Finset.univ)
+
+end HereditaryCore
 
 end D5.S3.Geometry.FiniteGraphVertexSubstitution
