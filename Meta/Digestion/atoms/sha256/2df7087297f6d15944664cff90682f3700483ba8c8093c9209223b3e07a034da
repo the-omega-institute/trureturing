@@ -1,0 +1,16 @@
+**数学引文 23.2（共同动作判据的准确域）。** [Rutten 文献注命题 7](../../../Library/ConceptDynamics/rutten1996universal.md#2-auxiliary-information-and-good-action-selection)
+取 $S=\Theta,q=\eta,A=\mathcal A$，已证明摘要规则可靠存在当且仅当
+
+$$
+G_\eta(y):=\bigcap_{\theta:\eta(\theta)=y}\mathsf{Good}(\theta)
+\ne\varnothing\quad(y\in\eta(\Theta)).
+\tag{48}
+$$
+
+同一证明以 $\mathsf{Opt}$ 替换 $\mathsf{Good}$，给对全部相容来源实际
+最优的准确判据。只对已经达到的摘要量化，避免把空纤维当作需完成的实际
+状态。菜单固定有限时可在交集中按序选第一个；这是集合函数的语义定义，
+不是高效计算交集、判断合法性或取得来源的算法。该文献注也说明共同动作
+不自动使下一摘要 $\eta(\delta(\theta,a))$ 在纤维上恒定；若还要预测
+下一地址，须另外满足这个因子化条件。
+
