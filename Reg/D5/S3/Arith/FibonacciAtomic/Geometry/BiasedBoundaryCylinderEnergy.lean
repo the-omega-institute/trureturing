@@ -58,7 +58,7 @@ def familyRegistration : Registration arena (type_of% constant_trace_minimum) wh
     intro i
     refine ⟨(),(0:H),lp.single 2 (rootEdge false) (1:ℝ),?_⟩
     change ‖(0:H)‖^2 ≠ ‖(lp.single 2 (rootEdge false) (1:ℝ) : H)‖^2
-    rw [lp.norm_single (by norm_num : (0:ℝ≥0∞) < 2)]
+    rw [lp.norm_single (by norm_num) (rootEdge false) (1:ℝ)]
     norm_num
 
 def registration :
@@ -85,7 +85,9 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryCylinderEnergy,
     definition := none, coordinates := #[],
-    readouts := #[{path := #["arg","body","arg","fn","arg","fn","arg"], stateBinder := 0,
+    readouts := #[{
+      path := #["arg","body","arg","fn","arg","fn","arg"],
+      stateBinder := 0,
       functionOperand := false, stateOperand := none, booleanPredicate := false}] },
   continuation := .unknown,
   familyRecord := none,
@@ -163,7 +165,9 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryCylinderEnergy,
     definition := none, coordinates := #[],
-    readouts := #[{path := #["fn","arg"], stateBinder := 0,
+    readouts := #[{
+      path := #["fn","arg"],
+      stateBinder := 0,
       functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false}] },
   continuation := .unknown,
   familyRecord := none,
