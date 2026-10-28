@@ -47,6 +47,7 @@ chapter cited by related literature was not inspected.
 ## Verified locator
 
 - DOI: 10.1080/00150517.2022.12427444
+- URL: https://arxiv.org/abs/2204.12626v2
 - URL: https://arxiv.org/pdf/2204.12626v2
 - Locator: Definition 2.1, PDF p. 3; Section 6.1, Question 6.2, PDF p. 14.
 - Versioned primary PDF SHA-256: `09166fb6caa2d89d68f612bcab335636cc162b380ef1262395ff2fc1f63b94da`.
