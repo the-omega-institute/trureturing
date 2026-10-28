@@ -23,6 +23,37 @@ noncomputable section
    are not supplied by the source reconstructions; no declared_validated
    four-slot registration is claimed. -/
 
+abbrev primeNumberLimitsScope := type_of% prime_number_limits
+
+theorem source_prime_number_limits : primeNumberLimitsScope := prime_number_limits
+
+abbrev primeLimitSignature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ × ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def primeLimitActual : Realization primeLimitSignature :=
+  realize primeLimitSignature (fun _ _ t => (Chebyshev.psi t / t, Chebyshev.theta t / t))
+    (fun e => nomatch e)
+
+abbrev primeLimitArena : Arena where
+  signature := primeLimitSignature
+  Law R := Filter.Tendsto (fun t : ℝ => (R.readout () () t).1) Filter.atTop (nhds 1) ∧
+    Filter.Tendsto (fun t : ℝ => (R.readout () () t).2) Filter.atTop (nhds 1)
+
+theorem prime_limit_source_bridge : primeNumberLimitsScope ↔
+    primeLimitArena.Law primeLimitActual := Iff.rfl
+
+theorem prime_limit_actual_law : primeLimitArena.Law primeLimitActual := prime_number_limits
+
+/- The exact two-limit source and its actual dependent-family law are retained.
+   No outer Contract.Registration for the paired limit readouts is asserted. -/
+
 abbrev thirdLayerBoundScope := type_of% (@strict_inventory_third_layer_bound)
 theorem source_third_layer_bound : thirdLayerBoundScope :=
   @strict_inventory_third_layer_bound
