@@ -31,7 +31,8 @@ internal sealed class CommutingMidpointDocument : IScribeDocumentDefinition
     private static Formula Bound(string names, Formula type) => Seq(Open, Names(names), Colon, type, Close);
     private static Formula For(Formula binders, Formula body) => Seq(Forall, Sp, binders, Comma, Quad, body);
     private static Formula Par(Formula body) => Seq(Open, body, Close);
-    private static Formula BlochCommutator => Par(Seq(
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula BlochCommutator => Parenthesized(Seq(
         Call("blochMatrix", D(1), V("a")), Call("blochMatrix", D(1), V("b")), Minus,
         Call("blochMatrix", D(1), V("b")), Call("blochMatrix", D(1), V("a"))));
     private static Formula Implies(Formula premise, Formula conclusion) =>
@@ -128,9 +129,9 @@ internal sealed class CommutingMidpointDocument : IScribeDocumentDefinition
                 + "On the full physical chord it is PSD with trace one; interior parameters give PD states.",
                 DescribeRole.Definition),
             Entry("bloch_commutator_gram", "The Bloch commutator Gram identity",
-                For(Bound("a,b", VectorType), Seq(
-                    ReOf(Call("tr", Seq(Call("conjTranspose", BlochCommutator), BlochCommutator))),
-                    Eq, Half, Par(Seq(Sq(Call("norm", V("a"))), Sq(Call("norm", V("b"))), Minus,
+                For(Parenthesized(Seq(Names("a,b"), Colon, VectorType)), Seq(
+                    Re, Parenthesized(Call("tr", Seq(Call("conjTranspose", BlochCommutator), BlochCommutator))),
+                    Eq, Half, Parenthesized(Seq(Sq(Call("norm", V("a"))), Sq(Call("norm", V("b"))), Minus,
                         Sq(Call("inner", V("a"), V("b"))))))),
                 "For arbitrary real Euclidean three-vectors a,b, the real trace of C conjugate-transpose times C, "
                 + "where C=blochMatrix(1,a)blochMatrix(1,b)-blochMatrix(1,b)blochMatrix(1,a), "
