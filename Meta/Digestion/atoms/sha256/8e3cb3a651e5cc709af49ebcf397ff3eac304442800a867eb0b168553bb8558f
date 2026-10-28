@@ -1,0 +1,14 @@
+**Example 7.5 (degree and law promises matter).** Outside the declared
+nilpotent class, take $B=\operatorname{diag}(0,1)$, $C=(1,1)$, $T=1$.
+The one constant moment sends $h=(e-1,-1)$ to zero, whereas its endpoint
+output is $-1$. Also the two scalar sources $(B,x_0)=(0,1)$ and
+$(1,1/(e-1))$ have the same constant integral one and different endpoint
+outputs. These compare stronger proposed promotions, not members of
+the theorem's fixed known-$B$ class. Neither a general exponential
+trajectory nor an unknown law is supplied by the finite filter.
+
+No ancillary noise theorem is used: all equalities concern the declared
+exact replies. If actual taps have errors $\eta$, (2.2) transforms their
+error to $W\eta$; it does not supply independent Gaussian moment channels
+or any of the accuracy/cost premises of a different instrument.
+
