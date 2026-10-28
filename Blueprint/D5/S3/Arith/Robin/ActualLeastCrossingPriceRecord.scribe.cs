@@ -55,12 +55,12 @@ internal sealed class ActualLeastCrossingPriceRecordDocument : IScribeDocumentDe
                     + "H(eta,m)<H(eta,n), contradicting leastness. Lowering lambda to "
                     + "lambda0 preserves strictness because log(n)<X.")),
                 Paragraph(Text(
-                    "For every occupied prime p use the actual proper positive quotient "
-                    + "m/p. The public single-layer objective identity and exact factorization "
-                    + "arithmetic give lambda0<goldenLayerMarginal(p,v_p(m)). The existing "
-                    + "strict_layer_iff places this exponent, and hence every smaller occupied "
-                    + "layer, in the same canonical strictInteger(lambda0). Coordinatewise "
-                    + "factorization comparison proves divisibility. The reciprocal-power "
+                    "The positive lambda0 record satisfies the hypotheses of "
+                    + "ActualPriceRecordPrimeStructure.price_record_divides_strictInteger, "
+                    + "so m divides the canonical strictInteger(lambda0). The existing "
+                    + "factorization comparison places every occupied layer of m in this "
+                    + "strict inventory. Applying strict_layer_iff gives "
+                    + "lambda0<goldenLayerMarginal(p,j). The reciprocal-power "
                     + "marginal bound gives the literal strict cutoff. Positive-price records "
                     + "also give strict abundancy records; W(m)>log(30) permits the existing "
                     + "5040 theorem to apply.")),
