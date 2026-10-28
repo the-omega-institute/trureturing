@@ -49,7 +49,8 @@ theorem actual_stopping_trial_energy :
     rw [(actual_stopping_residual t).2.1]
     exact (Vt t).starProjection_eq_self_iff.mpr F.property
   have hsum : (∑ p ∈ A t, x p • indicator p) = F.val := by
-    simpa only [Qt, Q, sum_apply,
+    change Q (A t) F.val = F.val at hfix
+    simpa only [Q, sum_apply,
       ContinuousLinearMap.smulRight_apply] using hfix
   have htrace : J z = F.val := by
     dsimp only [z]
