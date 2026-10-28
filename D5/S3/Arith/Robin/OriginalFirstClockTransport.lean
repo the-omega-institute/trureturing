@@ -54,7 +54,7 @@ def originalMaximizes (p N : ℕ) : Prop :=
 def canonicalSource (p : ℕ) : ℕ :=
   if h : ∃ N, originalMaximizes p N then Nat.find h else 0
 
-private theorem canonical_source_spec {p : ℕ} (h : ∃ N, originalMaximizes p N) :
+theorem canonical_source_spec {p : ℕ} (h : ∃ N, originalMaximizes p N) :
     originalMaximizes p (canonicalSource p) ∧
       ∀ N, originalMaximizes p N → canonicalSource p ≤ N := by
   simp only [canonicalSource, dif_pos h]

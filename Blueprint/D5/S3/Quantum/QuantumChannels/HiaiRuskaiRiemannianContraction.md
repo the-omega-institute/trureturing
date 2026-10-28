@@ -112,7 +112,19 @@ $$(claim) \Leftrightarrow (\forall alpha \in \mathbb{R},\; \forall tau \in \math
 
 The arXiv v1 PDF, p. 19: "Although the bounds in the above theorem are sufficient to disprove two conjectures as remarked below, we believe that they are optimal, i.e.," "Conjecture 6.3. Equality holds in (45c) through (45e) above." The three equations below encode (45c), (45d), and (45e), respectively. Equation (45d) uses the geometric kernel fun x : ℝ => Real.rpow x (-1/2). Equation (45e) uses dslope Real.log 1, which equals Real.log x / (x - 1) away from x = 1 and has the continuous value 1 at x = 1. The carrier is Matrix (Fin 2) (Fin 2) C; the supremum ranges over every positive definite trace-one input and every nonzero traceless Hermitian tangent. Both signs of tau and alpha = 0 are included.
 
-**Theorem 1.10 (Coordinates of a trace-one Hermitian qubit matrix).**
+**Theorem 1.10 (Real Bloch coordinates give a Hermitian matrix).**
+
+$$\forall w1 \in \mathbb{R},\; \forall w2 \in \mathbb{R},\; \forall w3 \in \mathbb{R},\; \operatorname{Matrix.IsHermitian}\left(\operatorname{D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix}\left(1, \operatorname{WithLp.toLp}\left(2, ![w1, w2, w3]\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction.rho_hermitian` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The trace-one Bloch matrix is Hermitian for every triple of real coordinates.
+
+**Theorem 1.11 (Coordinates of a trace-one Hermitian qubit matrix).**
 
 $$\forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\operatorname{Matrix.IsHermitian}\left(A\right)) \Rightarrow ((\operatorname{Matrix.trace}\left(A\right) = 1) \Rightarrow (A = \operatorname{D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix}\left(1, \operatorname{WithLp.toLp}\left(2, ![2 \cdot \operatorname{Complex.re}\left(A\left(0, 1\right)\right), 0 - 2 \cdot \operatorname{Complex.im}\left(A\left(0, 1\right)\right), 2 \cdot \operatorname{Complex.re}\left(A\left(0, 0\right)\right) - 1]\right)\right)))$$
 
@@ -124,7 +136,7 @@ $$\forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \op
 
 For any Hermitian complex two-by-two matrix A with trace one, its Bloch coordinates are twice the real part of A(0,1), minus twice the imaginary part of A(0,1), and twice the real part of A(0,0) minus one. This formula identifies arbitrary density inputs with the coordinates used in matrix_contraction_from_pauli and in the affine reconstruction of an isolated qubit ensemble.
 
-**Theorem 1.11 (All three bounds are exact).**
+**Theorem 1.12 (All three bounds are exact).**
 
 $$\forall alpha \in \mathbb{R},\; \forall tau \in \mathbb{R},\; (\operatorname{admissible}\left(alpha, tau\right)) \Rightarrow ((\operatorname{eta}\left(\operatorname{kDualWY}, alpha, tau\right) = \frac{(alpha)^{2} \cdot \left(1 + \operatorname{Real.sqrt}\left(1 - (tau)^{2}\right)\right)}{2 \cdot \left(1 - (tau)^{2}\right)}) \land ((\operatorname{eta}\left(fun (x : \mathbb{R}) \mapsto \operatorname{Real.rpow}\left(x, 0 - \frac{1}{2}\right), alpha, tau\right) = \frac{(alpha)^{2}}{\operatorname{Real.sqrt}\left(1 - (tau)^{2}\right)}) \land (\operatorname{eta}\left(\operatorname{dslope}\left(\operatorname{Real.log}, 1\right), alpha, tau\right) = \frac{(alpha)^{2} \cdot \operatorname{Real.log}\left(\frac{1 + tau}{1 - tau}\right)}{2 \cdot tau})))$$
 
@@ -155,5 +167,6 @@ For every extreme kernel, a scalar pinching identity bounds the input metric bel
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction.phi`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction.ratio`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction.result`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction.rho_hermitian`
 - Dependency: [D5/S3/Quantum/FiniteDimensional](../FiniteDimensional.md)
 - Dependency: [D5/S3/Quantum/Information/ActualPureQubitGeometry](../Information/ActualPureQubitGeometry.md)

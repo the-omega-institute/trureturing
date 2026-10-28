@@ -1,0 +1,18 @@
+## 9. The $JJ$ family and the exceptional-source bridge
+
+Fix the word
+
+$$
+w_a=M^aJJM^{2m-2-a},\qquad 0\le a\le2m-2.
+$$
+
+Let $r=a+1$ and $T=\{0,\ldots,2m\}\setminus\{r\}$. Then
+
+$$
+A_r=JM^a,\qquad A_i=M^{k_i}\ (i\in T),\qquad
+k_i=\begin{cases}i&i\le a,\\i-2&i\ge a+2.\end{cases}
+\tag{9.1}
+$$
+
+In particular the same matrix $M^a$ is read at the two different original clocks $a$ and $a+2$.
+

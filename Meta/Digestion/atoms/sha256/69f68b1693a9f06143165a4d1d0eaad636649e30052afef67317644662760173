@@ -1,0 +1,45 @@
+**Theorem 3.3 (every-path inherited-owner necessity).** Every exact
+startup acquisition in Definition 1.4 must successfully split each
+original beta owner before stopping, on every terminating path.
+Consequently at least $c$ successful splits, $2c$ fresh cells and $c$
+appended labels are necessary on each such path. These are structural
+coordinates of this no-later-learning task, not total-resource or
+Read/work/bit minima.
+
+Proof. Fix a terminating path leaving an original beta $p$ unsplit.
+Let $D_p$ flip only its owner coordinate, and compare the actual
+entrance with $(D_pTD_p,D_px)$. This is another admitted commissioned
+signed source with exactly the same supplied design/context. Until
+$S_p$, that beta remains a logical leaf. Its marker is not a logical
+target, no enabled descendant edit is possible, and edits elsewhere
+cannot attach a new edge to $p$. Extend $D_p$ by $1$ on all births
+elsewhere. Terminal inputs/outputs, Tick, Hold, all those growth
+successors, guards, refusals and frames satisfy the same conjugacy
+induction as above. Equal preceding outputs give equal choices,
+operands, local computation and stop. Thus the entire stopped
+receiver state, including every accessible retained record, is
+identical on the two runs.
+
+At the cutoff the inherited $p$ is still unsplit and its signed old
+edge $p-pL$ is nonzero with opposite values on the two sources. A
+later lawful $S_p$ followed by the finite terminal free/pulse scan
+distinguishes their services: equal complete returns would imply
+equal earned length-three moment in (SC.7), a contradiction. This
+is one legal sequential experiment, with its actual free/pulse
+offsets, rather than an assumption of resetting either field. Hence
+one stopped autonomous evaluator cannot be correct for both current
+services. Uniform exactness contradicts the hypothesized path.
+Repeat for each original $p\in I$. Every successful inherited split
+really allocates two cells and appends one label, proving all three
+coordinates. Fixing a common tape proves the all-path-exact randomized
+version. No statistical-error lower bound is asserted. $\square$
+
+For a fixed old topology, the larger terminal-fixing sign quotient
+already suffices, as [NLBA, Proposition 8.3][NLBA] establishes. Allowing
+future learning, supplying authentic sign advice, prescribing old
+positive signs, or adding interior reference ports changes a premise
+of Theorem 3.3. In particular selecting an all-positive representative
+of an uncalibrated signed old tree can fit its old terminal data and
+still predict the wrong (SC.7) after a real split. The distinction is
+observable future service, not a preferred notation for hidden cells.
+

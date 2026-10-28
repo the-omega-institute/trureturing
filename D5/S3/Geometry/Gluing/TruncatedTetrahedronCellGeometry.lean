@@ -713,7 +713,7 @@ private theorem facePoly_eq (k : FaceShape) : facePoly k = poly 2 (faceMass k) (
 private def faceBall : (k : FaceShape) → ↥(facePoly k) ≃ₜ Disk 2
   | .hex => polyBall .hex | .cap => polyBall .cap
 
-private theorem faceBall_symm_interior_iff (k : FaceShape) (x : Disk 2) :
+theorem faceBall_symm_interior_iff (k : FaceShape) (x : Disk 2) :
     ((faceBall k).symm x).val ∈ interior (facePoly k) ↔ x.val ∈ ball 0 1 := by
   cases k
   · exact polyBall_symm_interior_iff .hex x
@@ -860,7 +860,7 @@ private def faceHomeomorph (k : FaceShape) (t : T) (j : Fin 4) :
         exact ⟨x, Subtype.ext hx⟩⟩
   exact hf.homeomorph f
 
-private theorem faceRealize_strict_iff (k : FaceShape) (t : T) (j : Fin 4)
+theorem faceRealize_strict_iff (k : FaceShape) (t : T) (j : Fin 4)
     (x : ↥(facePoly k)) :
     x.val ∈ interior (facePoly k) ↔
       ∀ i, i ≠ j → 0 < (faceRealize k t j x).2.val i ∧

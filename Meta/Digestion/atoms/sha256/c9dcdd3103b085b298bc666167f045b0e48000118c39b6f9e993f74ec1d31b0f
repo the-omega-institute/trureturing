@@ -1,0 +1,38 @@
+**定义 14.1（原根源可行域及其适用边界）。** Define
+
+$$
+\mathfrak S_7=\{\mathbf P\in\mathcal P^{\mathcal S}:
+                         \Phi(\mathbf P)\}.
+\tag{14.1}
+$$
+
+Theorem 13.3 identifies its nonemptiness with failure of every
+full-domain at-most-eight-reading decoder, and its emptiness with
+existence of such a decoder. Nonemptiness asserts the existence of
+one legal source tuple satisfying every gain guard and every applicable
+same-source separation guard; its one common coefficient vector
+then exists by (13.17). An emptiness proof must show that every
+legal source tuple fails at least one of those guards. Checking
+only a specified history, source band, sign, gain shape or root
+stratum cannot replace this universal source-tuple condition.
+Neither alternative is determined by Proposition 13.4 or by the
+rank equivalence itself. No feasible tuple, universal guard failure,
+explicit eight-reading full-domain inverse or nine-reading upper
+bound is supplied here.
+
+The explicit $1538\times1024$ response matrix, its joint guarded
+projection and the legal equal-source counterexample are
+repository-derived deductions. Initial-reading translation, the
+$256$-slot tree and its actual-history equivalence are the prior
+results of Section 9. Finite-subspace avoidance, rank-nullity and
+minor characterizations of rank are established tools within the
+projection proof, not separate new general theorems.
+
+| Mathematical source | Correspondence and retained hypotheses |
+| --- | --- |
+| This volume, Definitions 1.1–1.2 and 9.1; Theorem 9.3 | The full legal model, losing-history recursion, normalized complete-target coordinates and all $256$ terminal slots are reused. Equation (13.5) eliminates their common responses; (13.12) also eliminates the normalized gain/drift coordinates while retaining their legality and terminal distinctions. |
+| This volume, Corollary 9.4 and proof of Theorem 10.2 | Real-closed-field elimination already gives abstract decidability, algebraic-witness transfer and semialgebraic policy existence. Finite hyperplane avoidance already occurs in the fixed-linear-readout proof. The present result is the explicit source-dependent formula (13.12)–(13.13), without an evaluated feasibility or complexity conclusion. |
+| [FIB 自校准关系数学 IX](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md), Theorem 3.1 and Definition 11.1 | On its prescribed six-reading $JMMJM$ ancestor, gain and drift are uniquely forced once a legal source is supplied. That source graph neither acquires an unknown source nor supplies losing responses on the other original-root actions. The tuple in (13.1) is an existential mathematical witness variable, not an observed class label. |
+| [FIB JMMJM Terminal-Root Decoders and the Simultaneous Core](FIB_JMMJM_TERMINAL_ROOT_DECODERS_AND_SIMULTANEOUS_CORE.md), Theorems 8.1–9.1 | Its inclusion-minimal triple has root seven, common drift, nonzero ancestor and sixth samples and two different proper sixth collision pairs. Those restrictions define its own simultaneous core; they are not imposed on $\mathfrak S_7$. |
+| [FIB JMMJM Nonzero-Terminal Collision Sparsity and Ratio Diversity](FIB_JMMJM_NONZERO_TERMINAL_COLLISION_SPARSITY_AND_RATIO_DIVERSITY.md), Definitions 1.2 and 7.1; Proposition 7.2 | The source chart and PP/PT/TP/TT conditions keep one literal $JMMJM$ ancestor and terminal nonvanishing. Their actual-child distinctions are consistent with (13.19), but a three-world conditioned system is not the unrestricted original-root source locus. |
+| [FIB JMMJM Zero-Sixth Root Rigidity and Terminal Collision Geometry](https://github.com/the-omega-institute/trureturing/blob/7a5bd6a6bce1b3213422b7b3a1eca2d6c10ec707/docs/develop/theory/FIB_JMMJM_ZERO_SIXTH_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_GEOMETRY.md), Theorems 2.1, 4.1 and Proposition 7.1 | Its whole-class rigidity, three-terminal-coordinate injections and exact TT system assume the specified ancestor, common drift, root six and terminal nonvanishing where stated. They neither eliminate the full original-root coefficient vector nor give an unknown class label. The guard formula retains the zero-sixth and terminal-root possibilities without any such promises. |

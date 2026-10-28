@@ -1,0 +1,28 @@
+**Proposition 5.3 (nonvacuity with the rank filter).** The normal form contains an actual legal prefix with four nonzero kernel entries and rank-three prefix differences.
+
+**Proof.** Choose
+$$
+x=2,\quad d=1,\quad m=n=1,\quad \sigma=+1.
+$$
+Then $Q=2$, $h=4$, $c=6$, $a=1$, $b=5$, $t=11$. Taking $\epsilon=+1$, $g=6$ in (5.10) gives
+$$
+A_1=\begin{pmatrix}7&1\\6&1\end{pmatrix}=UL^6,
+\qquad K=L^2U,\qquad H=L^4J,
+$$
+$$
+A_2=\begin{pmatrix}13&2\\32&5\end{pmatrix},\qquad
+A_3=\begin{pmatrix}32&5\\141&22\end{pmatrix}.
+\tag{5.12}
+$$
+These follow from multiplying the displayed forward matrices. In source-entry order $(p,q,r,s)$, the prefix difference rows are
+$$
+(6,6,1,0),\qquad(12,32,2,4),\qquad(31,141,5,21).
+$$
+Their first-three-column minor is $-20$: subtract twice the first row from the second and five times the first from the third, obtaining rows $(0,20,0)$ and $(1,111,0)$ in those columns; expansion in the third column gives $-20$. Thus the rank is three. The kernel generator and its polar are
+$$
+N=\begin{pmatrix}6&-1\\-30&5\end{pmatrix},\qquad
+\operatorname{tr}N=11,\qquad
+\mathfrak b(S,N)=5p+30q+r+6s>0.
+$$
+This proves nonvacuity of all filters together. It is a structural witness, not a collision witness. ∎
+

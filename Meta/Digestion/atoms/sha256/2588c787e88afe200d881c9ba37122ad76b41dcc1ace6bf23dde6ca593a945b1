@@ -1,0 +1,13 @@
+**Proposition 15.3 (actual reporting dynamics and singular failure).** For a common actual menu call $c$ at a Report cut, let $U_c(T,x)$ and $r_c(T,x)$ be its native successor and complete reply. Execute that call and then a new actual Report. The new endpoint is
+
+$$
+\Phi_c(T,x)=\bigl(T,T^{N-1}U_c(T,x)\bigr).
+\tag{CM.22}
+$$
+
+On the declared images the transported view dynamics $\mathcal E_i^\sigma\Phi_c\mathcal D_i^\sigma$ commute with all recovery routes and emit the same $r_c$. This is the call-plus-Report evolution, not the bare call. A bare call still has the exact predictor of Theorem 14.2; it does not supply a new measured Time record. Without invertibility, the historical inverse in Theorem 15.2 can fail even in QLAB-Sq, while acquisition and current prediction remain valid.
+
+**Proof.** The actual call gives $U_c(T,x)$ and its complete reply; the subsequent $N-1$ real Ticks give (CM.22). The new actual read window, held completion and predictor updates supply precisely the new encodings. Substitution in (CM.21) proves each commuting square and equality of emitted replies. Each Report adds $bN$ Reads, $N-1$ Ticks and $N$ Holds, plus its record, solves, exports and full traffic; $c$ itself is also charged.
+
+For the singular counterexample take the star with $b\ge3$ leaves and center $o$, $N=b+1$, and let $T$ be its unit zero-diagonal adjacency. All true leaves are ports. Leaf columns and $Te_{\ell_1}=e_o$ span all coordinates, so (CM.1) holds. The rational nonzero $\eta=e_{\ell_1}-e_{\ell_2}$ satisfies $T\eta=0$. Reports from $x_0=0$ and $x_0=\eta$ have different epoch-zero reads but the same endpoint zero because $N-1\ge1$. The law, current field, germ and current predictor coincide, while their latest performed Time records differ. Both entries are preparable by legal Adds after the same calibration. This disproves the unqualified current-to-prior-Report inverse on the singular class. Likewise Reset and Reset followed by Tick give identical present zero states but different arbitrary journals even for invertible $T$. No current-state chart recovers those journals. $\square$
+
