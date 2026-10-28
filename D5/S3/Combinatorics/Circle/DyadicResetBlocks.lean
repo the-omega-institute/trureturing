@@ -58,6 +58,7 @@ theorem reset_decomposition {α : Type*} (f : α → ℤ) (M : ℤ)
     have hz := complete_mass hP
     have he : mass f W = mass f T := by
       rw [heq]
+      simp only [mass, List.map_append, List.sum_append]
       change mass f (packets P) + mass f T = mass f T
       rw [hz]; ring
     have hend := inStrip_prefix hW (W ++ [a]).length
@@ -86,20 +87,6 @@ theorem reset_decomposition {α : Type*} (f : α → ℤ) (M : ℤ)
       · simp only [mass, List.map_nil, List.sum_nil, le_refl, true_and]
         omega
 
-private theorem count_mass_bound {α : Type*} (f : α → ℤ) (B : ℤ)
-    (L : List α) (hL : ∀ a ∈ L, 0 ≤ f a) (hB : 0 ≤ B) :
-    (L.countP (fun a => f a = B) : ℤ) * B ≤ mass f L := by
-  induction L with
-  | nil => simp [mass]
-  | cons a L ih =>
-    have ha := hL a (by simp)
-    have ht := ih (fun x hx => hL x (by simp [hx]))
-    by_cases he : f a = B
-    · simp [mass, List.countP_cons, he, Nat.cast_add] at *
-      nlinarith
-    · simp [mass, List.countP_cons, he] at *
-      omega
-
 /-- Each positive block has at most one top coin. The final block contributes
 one only when its endpoint is at least that denomination. -/
 theorem reset_top_bound {α : Type*} (f : α → ℤ) (B M : ℤ)
@@ -122,22 +109,22 @@ theorem reset_top_bound {α : Type*} (f : α → ℤ) (B M : ℤ)
     change 0 ≤ mass f W + f a ∧ mass f W + f a ≤ M at hend
     have hstart := inStrip_prefix hw W.length
     simp only [List.take_length, zero_add] at hstart
+    change 0 ≤ mass f W ∧ mass f W ≤ M at hstart
+    have hsum : mass f (W ++ [a]) = mass f W + f a := by simp [mass]
     simp only [List.countP_append, List.countP_cons, List.countP_nil, Nat.cast_add,
-      mass, List.map_append, List.sum_append, List.map_cons, List.sum_cons,
-      List.map_nil, List.sum_nil, add_zero]
-    change _ ≤ _ + if B ≤ mass f W + f a then 1 else 0
+      hsum]
     rcases steps a with ha | ha
     · have hn : f a ≠ -M := by omega
       by_cases hb : f a = B
       · have hlow : mass f W < B := by omega
-        simp only [hb, decide_true, decide_false, Nat.cast_one, if_pos,
-          hn, Nat.cast_zero, add_zero] at *
-        split_ifs at * <;> omega
-      · simp only [hb, hn, decide_false, Nat.cast_zero, add_zero]
-        split_ifs at * <;> omega
+        simp only [hb, hn, decide_true, decide_false, ite_true, ite_false,
+          Nat.cast_one, Nat.cast_zero, add_zero]
+        split_ifs at h ⊢ <;> omega
+      · simp only [hb, hn, decide_false, ite_false, Nat.cast_zero, add_zero]
+        split_ifs at h ⊢ <;> omega
     · have hb : f a ≠ B := by omega
-      simp only [ha, hb, decide_true, decide_false, Nat.cast_one, Nat.cast_zero,
-        add_zero]
-      split_ifs at * <;> omega
+      simp only [ha, hb, decide_true, decide_false, ite_true, ite_false,
+        Nat.cast_one, Nat.cast_zero, add_zero]
+      split_ifs at h ⊢ <;> omega
 
 end D5.S3.Combinatorics.Circle.DyadicResetBlocks
