@@ -36,7 +36,7 @@ private theorem layer_active {t : ℝ} (ht : 1 < t) {U q k : ℕ}
   rw [← positive_layers_eq_count_interval hprice hq] at hmem
   exact hmem.2.2
 
-private theorem active_power_bound {t : ℝ} (ht : 1 < t) {U q k : ℕ}
+theorem active_power_bound {t : ℝ} (ht : 1 < t) {U q k : ℕ}
     (hstrict : ∀ q : ℕ, q.Prime →
       U.factorization q = optimalLayerCount (1 / (t * Real.log t)) q)
     (hq : q.Prime) (hk : 1 ≤ k) (hka : k ≤ U.factorization q) :
@@ -101,7 +101,7 @@ private theorem support_bounds {t : ℝ} (ht : 1 < t) {U : ℕ} (hU : 0 < U)
       exact hmem.2
     · omega
 
-private theorem first_layer_comparison {t : ℝ} (ht : 2 ≤ t) {U : ℕ} (hU : 0 < U)
+theorem first_layer_comparison {t : ℝ} (ht : 2 ≤ t) {U : ℕ} (hU : 0 < U)
     (hstrict : ∀ q : ℕ, q.Prime →
       U.factorization q = optimalLayerCount (1 / (t * Real.log t)) q) :
     θ t - Real.log t ≤ ∑ q ∈ U.primeFactors, Real.log q ∧
@@ -226,7 +226,7 @@ theorem strict_inventory_chebyshev_bounds {t : ℝ} (ht : 2 ≤ t) {U : ℕ} (hU
 
 #print axioms strict_inventory_chebyshev_bounds
 
-private theorem active_power_linear_cutoff {t : ℝ} (ht : 2 ≤ t) {U q k : ℕ}
+theorem active_power_linear_cutoff {t : ℝ} (ht : 2 ≤ t) {U q k : ℕ}
     (hstrict : ∀ q : ℕ, q.Prime →
       U.factorization q = optimalLayerCount (1 / (t * Real.log t)) q)
     (hq : q.Prime) (hk : 1 ≤ k) (hka : k ≤ U.factorization q) :

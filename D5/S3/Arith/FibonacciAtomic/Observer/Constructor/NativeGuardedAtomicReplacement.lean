@@ -21,7 +21,7 @@ open NativeCompletionPrefixLifting CompletionHomogeneousFixedPoints
 open NativeGuardedFreeExtension
 open GenealogicalFiberTransport (Source substitution)
 
-private theorem atomic_pair (n : Nat) :
+theorem atomic_pair (n : Nat) :
     atomic (n + 2) = node (atomic (n + 1)) (atomic n) := by
   unfold atomic
   change rho^[n + 2] (embed (.of true)) =
@@ -32,7 +32,7 @@ private theorem atomic_pair (n : Nat) :
 
 /-- An actual power can equal a finite atomic terminal only at its exact
 nonnegative atomic predecessor. Infinite native inputs are not excluded. -/
-private theorem atomic_predecessor (a j : Nat) (X : CompletionTree)
+theorem atomic_predecessor (a j : Nat) (X : CompletionTree)
     (eq : rho^[a] X = atomic j) : ∃ l, l + a = j ∧ X = atomic l := by
   obtain ⟨t, ht⟩ := (finite_iterate_iff a X).mp
     (eq.symm ▸ CompletionPositiveDriftRegion.atomic_finite j)
@@ -58,7 +58,7 @@ private theorem atomic_predecessor (a j : Nat) (X : CompletionTree)
   simpa only [atomic, Nat.add_comm] using
     (Function.iterate_add_apply rho a l (leaf true))
 
-private theorem pair_atomic {U V : CompletionTree} {j : Nat}
+theorem pair_atomic {U V : CompletionTree} {j : Nat}
     (eq : node U V = atomic j) :
     ∃ n, j = n + 2 ∧ U = atomic (n + 1) ∧ V = atomic n := by
   cases j with
