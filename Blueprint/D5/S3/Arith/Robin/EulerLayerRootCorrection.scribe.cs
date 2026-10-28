@@ -93,7 +93,7 @@ internal sealed class EulerLayerRootCorrectionDocument : IScribeDocumentDefiniti
                 "The paper and theory attribution is the existing ZECKENDORF_EULER_5040 "
                 + "Definition 7.1, Theorem 8.1 and equations (19)--(24), as cross-referenced "
                 + "by the existing analytic workload note. The existing Lean O(sqrt(t)) "
-                + "bound is not presented as this exact asymptotic. The faithful Reg "
-                + "source reconstruction remains open and does not claim a validated "
-                + "four-slot registration."))));
+                + "bound is not presented as this exact asymptotic. The outer Reg "
+                + "source binding remains unfinished and does not claim a validated "
+                + "four-slot registration.")))));
 }
