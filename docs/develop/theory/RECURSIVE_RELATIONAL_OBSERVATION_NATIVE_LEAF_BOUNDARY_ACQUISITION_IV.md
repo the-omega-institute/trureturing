@@ -906,3 +906,675 @@ minimum, new kernel verification or completion of the sustained programme
 is established by these ordinary conditional proofs.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 111. Mixed observations of the attained native source
+
+The common source in this section is the actual rational material of
+Definitions 75.1, 87.1, 89.1 and 103.1, with the preparation of
+Proposition 104.1 and Theorem 105.1. The additional observation service
+below changes the declared interface; it does not change the meaning of
+an original Read or discharge a duty posed with the original interface.
+The resulting frontier concerns exact current service and retained usable
+information, rather than a reduction of the old exact-Read price.
+
+**Definition 111.1 (source, preparation and late entrance).** Fix one
+earned $u$, its $a,c,b,N,M,s$, and $k\ge1$ disjoint beta-beta cherries
+as in Definition 103.1. For every $\theta\in\mathbb Q^k$ use the marker
+preparation (104.2), then exactly the displayed growth and cancellation
+schedule of Theorem 105.1. This is one actual specimen, starting from its
+allocated known-zero alpha, receiving the owned target $x_\theta$, and
+actually measuring the epoch-two values used in its cancellation.
+Its settled endpoint is
+
+$$
+H\theta=\sum_{i=1}^k\frac{\theta_i}{2}(a_i-c_i),\qquad
+BH\theta=\sum_{i=1}^k\frac{\theta_i}{2}(e_i-d_i),\qquad B^2H=H.
+\tag{111.1}
+$$
+
+Here all six local vectors have exactly the meanings in (103.3).
+In particular the subtracted $c_i$ lives at the new internal $p_iLL,q_iLL$;
+$H\theta$ is not the owner-only vector $\sum_i\theta_i a_i/2$.
+Indeed $B^2a_i=2a_i+c_i+f_i$ distinguishes those two fields.
+At $H\theta$ every terminal is zero; at $BH\theta$ the genuine fresh
+$p_iR$ reads $\theta_i/2$, the moved inherited $p_iLLL$ reads
+$-\theta_i/2$, and the designated $p_iLR$ reads zero. The actual repair
+endpoint after one more Tick;Hold is $BH\theta$.
+
+Fix a known $R\in\mathbb Q^{r\times k}$ of rank $d$, and actually retain
+$s_0=R\theta$. At the late entrance require precisely Definition 106.1's
+complete information contract: every other accessible parameter dependency
+factors through $s_0$ and fixed context $\kappa$. Producing $s_0$, removing
+or isolating every other copy of the acquired parameters, operands,
+predictor, producer input and provider buffers, and retaining the surviving
+backing are real operations with real costs. Retaining the earlier full
+predictor gives the different warm entrance. The context includes the
+actual source binding, earned ordered graph, complete raw/canonical label
+map and label lifecycle, exact law, settled parser, phase, serialization
+and genuine current/fresh grants. Numeric equality never creates these
+assets. Genuine zero origin, isolation, exact arithmetic and physical
+conformance remain **ASSUMED-UNVERIFIED** ideal premises.
+
+**Definition 111.2 (two read types and one causal realization).** Write
+$\mathrm{Read}_0$ for the original complete literal rational terminal
+Read. It remains nondestructive and retains its original parser and
+outputs. Separately commission, bind and grant a new nondisturbing
+$\mathrm{Read}_+$ service on genuinely bound terminals. On a successful
+call at terminal $f$ with prior accessible history $h$ it returns
+
+$$
+Y=x_f+\sigma(h)\xi,\qquad 0<\sigma(h)<\infty,
+\qquad \xi\sim\mathcal N(0,1).
+\tag{111.2}
+$$
+
+The common scale rule is measurable and uses only already accessible
+information. Each noise is fresh, independent of earlier noises, the
+source parameter and an optional independent common-law seed on a standard
+Borel probability space. The realized process for a fixed $\theta$ is the
+composition of the actual native transitions with this seed and successive
+independent noises. There is no independently chosen compatible marginal
+source, noise record or action schedule.
+
+For definiteness its separately authorized entry accepts the original
+Read request syntax and uses the same current-raw-label validation,
+pending-frame, malformed-frame, refusal and disabled-right rules.
+Only a successful terminal call samples noise. Its output is one typed
+ideal real payload $\mathsf{Noisy}(Y)$, then End, the caller's actual
+acknowledgement and Return, closing that serial call. No sampling occurs
+on a failed or incomplete request. These are the completion rules of the
+declared extension, not new instructions of the original dispatcher.
+It supplies no exact mean, seed, hidden
+provider record or noise-dependent native-field disturbance. Its real reply
+and an exact real sign test are ideal primitives when used below, not a
+finite-bit hardware realization. The original parser acquires no new tag
+merely because this service has been specified. No malformed original
+request, Reset, duplicate source, interior numerical port, extra writer,
+or timing/allocation/capacity side channel is thereby supplied.
+
+A common measurable causal policy may adaptively choose either read type,
+all original growth and rational Adds, finite raw frames, ports and stopping.
+Only finite rational command syntax/operands are admitted. Computation,
+framing and nonnumeric outcomes preserve the source's distinct absent,
+branch and wrong-type refusals, RangeRefusal, BadFrame, proper pending
+prefixes and disabled missing-right dispatch. Complete calls consume the
+whole output, End, acknowledgement and Return. Hold prevents unsolicited
+evolution. The policy must stop after finitely many executed calls almost
+surely **separately for every $\theta\in\mathbb Q^k$**. There is no uniform
+call bound, expected-cost hypothesis or uniform lower bound on $\sigma$.
+This measurable-policy class is an information relaxation; it is not a
+claim that all its members have finite effective implementations.
+
+**Definition 111.3 (three different obligations).** An exact entrance
+report equals $\theta$ almost surely for each rational $\theta$.
+This is also an exact report of the entrance native full-service class:
+$H$ is injective, and a common original continuation
+Tick;Hold;$\mathrm{Read}_0(p_iR)$ returns $\theta_i/2$ for every $i$.
+Thus two parameters give the same entrance complete native service if
+and only if they agree. Reporting this class is a receiver task, not an
+extra original source opcode or an assertion that one scalar Read returns
+the whole parameter.
+An exact current native predictor instead owes, at its actual stopping
+cut, a self-contained description/evaluator of the complete original
+native service for every sufficiently backed finite common continuation.
+It owes the correct outputs, legal domains, parser/pending/refusal behavior
+and synchronized successors, with genuine callable context. It need not
+report $\theta$ and cannot defer learning by later rereading the plant or
+another dependent archive. These are the tasks of Definition 106.1 with
+almost-sure correctness and termination.
+
+Predicting future $\mathrm{Read}_+$ **conditional laws** additionally owes
+the current noise-rule/controller context. Recovering the **realized**
+chronology instead owes the actual previous real samples and their order,
+ports, epochs and completion events. A prediction of a law is neither a
+prediction of its next random outcome nor a reconstruction of its past.
+Restricted future menus may require less than complete native service.
+
+## 112. The finite mixed branch and the current-service bridge
+
+For a finite realized command word $w$, freeze its rational operands,
+addresses, edits and stop choice. Let the field after its $t$th step be
+
+$$
+x_t=D_t\theta+c_t,\qquad D_0=H,\quad c_0=0.
+\tag{112.1}
+$$
+
+A growth zero-includes both terms, a Tick multiplies both by the then-current
+adjacency, and an Add changes $c_t$ by its frozen rational translation.
+Other calls do not change the field. At a successful exact read of $f$,
+append the rational row $\ell=e_f^{\mathsf T}D_t$ to $A_w$ and the actual
+adjusted value $v=x_f-e_f^{\mathsf T}c_t$ to $v_w$. Thus
+
+$$
+A_w\theta=v_w,\qquad V_w=\begin{bmatrix}R\\A_w\end{bmatrix}.
+\tag{112.2}
+$$
+
+No noisy value is counted as an exact row. These objects describe the
+executed word; having executed it does not imply that its values survived
+in callable memory.
+
+**Lemma 112.1 (equivalence on one compatible stopped branch).** Fix a
+finite word $w$ and two rational parameters $\theta,\theta'$ satisfying
+$R\theta=R\theta'$ and $A_w\theta=A_w\theta'$. The two subprobability
+laws restricted to execution of $w$ and stopping there, represented by
+the seed and its finitely many noisy replies, are mutually absolutely
+continuous. If that branch has positive probability under one parameter,
+it has positive probability under the other.
+
+**Proof.** There are countably many finite words: all syntax, rational
+operands, addresses and finite framing are countable. Real noisy outputs
+are coordinates of a word's branch, not extra discrete letters. Suppose
+$w$ contains $m$ successful noisy calls. On coordinates
+$(\omega,y_1,\ldots,y_m)$, reconstruct successive histories by inserting
+the frozen commands, their exact replies and their structural outputs.
+Equality of the advice and of all the exact rows implies equality of these
+inserted exact replies, including every prefix. The same policy therefore
+defines the same measurable selection-and-stopping region $E_w$ for both
+parameters. At a common history the scale is the same, although the
+current terminal means can differ.
+
+Relative to seed law $\lambda$ times Lebesgue measure on $\mathbb R^m$,
+the restricted measure has density
+
+$$
+\mathbf1_{E_w}(\omega,y)
+\prod_{j=1}^m
+\frac{1}{\sqrt{2\pi}\,\sigma(h_j)}
+\exp\left(-\frac{(y_j-\mu_{\theta,j})^2}{2\sigma(h_j)^2}\right).
+\tag{112.3}
+$$
+
+This follows by iterating the conditional observation kernels and the
+causal selection indicators; Tonelli applies to their nonnegative
+products. Every factor is finite and strictly positive on $E_w$ under
+both parameters. The empty product is one when $m=0$. Thus both restricted
+measures have exactly the same null sets, proving the assertion. Complete
+exact replies, reconstruction of controller state and the final report are
+measurable functions of these same coordinates. $\square$
+
+The lemma asserts neither equivalence of the entire mixed stopped laws
+nor equivalence of infinite paths. An exact read on another branch can
+have unequal Dirac returns. Infinitely many positive-noise samples can
+also separate means; for instance averages of independent
+$\mathcal N(\theta,1)$ samples converge to $\theta$. Neither operation is
+licensed by a finite restricted-branch equivalence.
+
+**Theorem 112.2 (mixed exact/noisy rank necessity).** Under Definitions
+111.1--111.3, any common policy satisfying either the exact entrance-report
+task or the exact current-native-predictor task obeys, for every rational
+$\theta$,
+
+$$
+\mathbb P_\theta\{\operatorname{rank}_{\mathbb Q}V_W=k\}=1,
+\qquad
+\mathbb P_\theta\{m_0\ge k-d\}=1,
+\tag{112.4}
+$$
+
+where $W$ is its stopped finite word and $m_0$ counts new successful
+$\mathrm{Read}_0$ calls. Arbitrary finite positive-noise sampling,
+adaptive rational control and original growth do not reduce this exact
+read coordinate. In particular $d<k$ excludes an all-noisy solution of
+either task.
+
+**Proof for the entrance report.** If the deficient-rank stopping event
+has positive probability for some $\theta$, countability and almost-sure
+finite stopping give one positive-probability finite word $w$ on it.
+Choose nonzero rational
+$\eta\in\ker R\cap\ker A_w$ and put $\theta'=\theta+\eta$.
+Lemma 112.1 applies to this single branch. Correctness under $\theta$
+means its report is $\theta$ except on a null subset of that branch.
+Equivalence transports that null subset to the branch under $\theta'$.
+Correctness under $\theta'$ likewise requires report $\theta'$ there
+almost everywhere. The branch has positive measure, so both requirements
+cannot hold. This proves full rank almost surely. The inequality follows
+from $\operatorname{rank}V_w\le d+m_0$. $\square$
+
+**Proof for current native service.** The same branch argument needs a
+separate bridge: different entrance parameters must still give different
+complete current services. This is exactly the persistence mechanism of
+Theorem 106.4, reused here, with the following parameter correspondence.
+Initially the difference $z=H\eta$ is nonzero and lies in
+$\operatorname{im}B$ because $B^2H=H$. Group consecutive growths before
+a Tick into an old-cell inclusion $E$, with old adjacency $A$ and new
+symmetric adjacency $A'$. Native persistence gives
+$E^{\mathsf T}A'E=A$. If $z=Av$ and $A'Ez=0$, compression implies
+$Az=0$, and symmetry gives
+
+$$
+\|z\|^2=(Av)^{\mathsf T}z=v^{\mathsf T}Az=0.
+\tag{112.5}
+$$
+
+Thus $A'E$ is injective on $\operatorname{im}A$. After each Tick the
+surviving difference is again in the new adjacency image. Common Adds
+cancel, both read types are nondestructive, and final growth without a
+Tick is an injective inclusion. Induction proves $D_W\eta\ne0$ at the
+same final tree on this branch, including words with no Tick.
+
+For that actual final tree, the all-terminal forcing supplier in
+Convention 75.2 has full controllability row rank. If $J$ includes its
+terminal coordinates and its adjacency is $A$, then for some finite $I$
+
+$$
+K=[J,AJ,\ldots,A^I J],\qquad KQ=I_{\rm cells}.
+\tag{112.6}
+$$
+
+Consequently $K^{\mathsf T}D_W\eta\ne0$. Symmetry identifies these
+entries with terminal observations after finitely many Ticks. An actual
+common finite Tick/Hold/$\mathrm{Read}_0$ continuation therefore
+separates the two fields, with adequate backing and genuine grants as
+required by the task. This is separation of complete original services,
+not merely of a chosen estimand. Full-service correctness is a measurable
+condition: finite rational query/frame words are countable, and equality
+of their prescribed finite outputs and successors is a countable family
+of measurable conditions on the predictor. On the common branch the same
+retained predictor cannot be correct for both separated services.
+Lemma 112.1 transports the two correctness null sets as before, giving
+the contradiction and (112.4). $\square$
+
+The bridge uses symmetric persistent growth, original terminal access and
+no Reset. It does not prove an obstruction after nonsymmetric erasure or
+for a designated-only future menu. The mathematical observation class can
+even retain its whole finite transcript for this negative proof; the
+positive constructions below require only their stated usable records.
+
+## 113. Retention, installation and the different law state
+
+**Proposition 113.1 (a sufficient acquired record).** On an actual finite
+run retain $s_0$, the successful exact adjusted values and their rows,
+and enough executed update/context data to compute $D_W,c_W$. If
+$\operatorname{rank}V_W=k$, exact rational solving uniquely recovers
+$\theta$ and hence the actual current field $D_W\theta+c_W$. With the
+authentic context of Definition 111.1 and actual paid installation,
+Theorem 64.1's synchronized predictor supplies the complete current native
+service and remains synchronized through its subsequent legal use.
+
+**Proof.** The stacked linear equations have the actual $\theta$ as a
+solution and full column rank makes it unique. The affine recursion
+(112.1) computes the actual advanced endpoint, including all performed
+translations and growths. Install that field with the actual label table,
+parser/phase, law and callable rights. At each original command the
+predictor then has the same legal domain, complete outcome and updated
+state as the source by Theorem 64.1. Induction gives agreement for every
+finite continuation, including pending prefixes and distinct refusal
+classes under their source rules. Solving first and propagating, or
+propagating the consistent affine expression first and substituting, both
+give $D_W\theta+c_W$; the two recovery routes agree. $\square$
+
+Full executed rank is only a necessary historical condition without this
+retention premise. A receiver that actually erases its decisive values
+and retains only their port names does not thereby have an installed
+predictor. Conversely, after solving it may replace the rows and samples
+by the recovered parameter/current state and sufficient update context;
+retaining every old sample forever is unnecessary for native service.
+Nor must every possible successful representation literally store a
+matrix: Proposition 113.1 is a sufficient constructive representation,
+not a classification or a rational-slot minimum.
+
+**Proposition 113.2 (conditional noisy-law service).** A current native
+predictor plus a genuinely retained noise state $\zeta$, an installed
+scale evaluator $\widehat\sigma(\zeta)$ and an update rule sufficient for
+the chosen future interface supplies its next noisy kernel
+
+$$
+\mathcal N\bigl(x_f,\widehat\sigma(\zeta)^2\bigr).
+\tag{113.1}
+$$
+
+Updating $\zeta$ from each actual completed event and the native state
+from each actual native action supplies the whole conditional hybrid
+service. This is a sufficient condition, not a finite-memory theorem for
+arbitrary measurable $\sigma(h)$.
+
+**Proof and necessity of the extra qualification.** Evaluate the terminal
+mean from the synchronized field and the scale from $\zeta$. Formula
+(111.2) gives (113.1); induction using the two actual updates gives the
+successive kernels. A rule that sets the next scale to 1 after a negative
+previous noisy sample and to 2 otherwise gives different next variances
+at the same unchanged native field. Thus native state alone need not
+supply the kernel. If this sign has already been encoded by a performed
+action, the resulting field can contain it; the general unchanged-field
+counterexample still shows why such encoding must be established.
+An arbitrary measurable rule need not have any finite effective sufficient
+state. For constant scale 1 the additional rule state is trivial. None
+of these laws determine a future realized sample. $\square$
+
+## 114. One attained process that acquires and uses both read types
+
+**Theorem 114.1 (sign-selected exact acquisition and performed use).**
+Let $\delta_i$ denote the $i$th standard coordinate vector of
+$\mathbb Q^k$, distinct from the material vectors in (103.3). Let $d<k$.
+From $R$ alone choose an ordered coordinate complement $J$ of size $k-d$
+as in Theorem 107.1, and let $j$ be its first index. Continue
+the actual prepared and cleared specimen as follows, with constant noisy
+scale 1 and with the commissioned service genuinely callable.
+
+1. Perform Tick;Hold. The actual field is $BH\theta$.
+2. Perform $\mathrm{Read}_+$ at the genuine fresh terminal $p_jR$.
+   Its actual reply is $Y=\theta_j/2+\xi$. Compute and retain
+   $\varepsilon=\mathbf1_{\{Y\ge0\}}$.
+3. For index $j$, perform $\mathrm{Read}_0$ at $p_jR$ if
+   $\varepsilon=0$, and at the moved inherited $p_jLLL$ if
+   $\varepsilon=1$. From its literal reply $z_j$ obtain
+   $\theta_j=2(1-2\varepsilon)z_j$. For each other $i\in J$, in the
+   fixed order, actually read $p_iR$ and obtain $\theta_i/2$.
+4. Solve with the genuinely retained $R\theta$, install the native
+   predictor at this actual $BH\theta$, and retain the sign until use.
+   This is the **readiness cut**. There have been exactly $k-d$ new
+   successful exact reads and one new noisy read.
+5. Compute $q=\theta_j/2+\varepsilon$, using the value acquired in
+   step 3 and the acquired sign. Actually submit
+   Add$(p_jLR,q)$;Hold and consume its complete acknowledgements and
+   return. Update the predictor to the actual successor. This is the
+   **used cut**, with no additional read.
+
+If a literal output/export of the new designated value is also owed,
+perform an additional $\mathrm{Read}_0(p_jLR)$; its reply is $q$.
+This is a third, separately charged cut. The used cut already includes
+a real legal native continuation; a numerical forecast or an unused
+ready predictor is not being counted as that continuation.
+
+**Proof.** All port and value identities are from (111.1), with the actual
+raw-label correspondence; no address creates authority. The complement
+makes $[R;(\delta_i^{\mathsf T})_{i\in J}]$ full rank, so the actual exact
+replies recover $\theta$ and Proposition 113.1 installs its current
+service. The noisy sign selects different actual exact ports even when
+$|J|=1$. Each sign has strictly positive probability for every rational
+$\theta_j$; its probability also varies with the source mean. Since
+$\delta_j^{\mathsf T}$ is outside the row space of $R$, this is a genuine
+source measurement along a missing coordinate, not independent free seed
+advice. The sign is actually used again in the submitted rational operand.
+The exact returned value is used in that operand too, including when the
+inherited port was selected.
+
+Let $f=p_jR$ and $g=p_jLR$. At readiness $x_f=\theta_j/2$ and $x_g=0$.
+After the performed Add the actual field is
+
+$$
+F=BH\theta+(\theta_j/2+\varepsilon)e_g
+  =G BH\theta+\varepsilon e_g,
+\qquad
+G=I+e_g e_f^{\mathsf T},\quad G^{-1}=I-e_g e_f^{\mathsf T}.
+\tag{114.1}
+$$
+
+Distinct $f,g$ make the rank-one part square to zero. All the fresh
+$p_iR$ coordinates remain $\theta_i/2$. Updating the retained predictor
+with this actual Add gives $F$, not $H\theta$ or the unmodified
+$BH\theta$. It therefore serves the original subsequent native menu
+at the used cut, by Theorem 64.1. The optional read really returns $q$.
+The matrix inverse in (114.1) is a coordinate inverse; it does not perform
+a physical undo or a return Tick. $\square$
+
+**Boundary 114.2 (full advice and the read frontier).** If $d=k$, the
+retained advice already determines $H\theta$: its information need is
+zero new calls, with computation and installation still paid. If the
+task nevertheless mandates occurrence and actual use of **both** new
+read types, take $j=1$, perform the same Tick;Hold and noisy read, and
+perform the one sign-selected exact read of step 3. Use that exact reply
+in $q$ and perform step 5, solving the remaining coordinates from advice.
+The exact read is informationally redundant but actually acquired and
+used. The endpoint is again (114.1).
+
+Consequently the sharp successful-read coordinates for complete native
+service with mandatory mixed occurrence and the displayed actual use are
+
+$$
+(m_0,m_+)=(\max\{1,k-d\},1).
+\tag{114.2}
+$$
+
+Necessity is Theorem 112.2 plus the literal occurrence requirements;
+attainment is Theorem 114.1 and the full-advice construction just stated.
+If noisy calls are merely permitted, the existing exact repair attains
+$(k-d,0)$ for $d<k$, and full advice needs $(0,0)$ at its original cut.
+There is no noise-based saving of exact reads or claim of lower total
+cost. Warming, readiness, performed use and optional export have different
+tasks and endpoints.
+
+## 115. Independent views and exactly the recoverable directions
+
+**Definition 115.1 (views of this actual late window).** Fix the earned
+context and the displayed template of §114. The window starts at the
+settled late entrance and ends at the named readiness or used cut.
+Choose that cut once as known context: the two cut images are separate
+domains, not their union. Their sampled Boundary records alone do not
+distinguish readiness from the later Add/Hold used cut.
+Constructor ancestry is the earned ordered material ancestry. The four
+views expose independently specified data of this one process:
+
+- **Space:** the rooted ordered current material graph, its unit law and
+  whole current rational field. It is a mathematical state view, not a
+  free interior numerical port available to the controller.
+- **Time:** the complete actual chronological call/return window, with
+  types, ports, rational operands, sample values including the literal
+  real $Y$, epochs and all completion events. It is the actual chronology,
+  not all counterfactual future responses or an arbitrary producer journal.
+- **Boundary:** the earned ordered terminal geometry and the ordered typed
+  samples actually acquired in this window, with their ports and epochs.
+  It does not contain the other control calls. The retained entrance
+  advice $s_0$ is a separately named supplement to this view and to Time.
+  The designated autonomous germ $CB^nH\theta=0$ is a different, blind
+  boundary view; it is not the sampled boundary just defined.
+- **Memory:** the actually retained callable predictor data and its
+  authenticated table, law, parser/phase and rights. At readiness the
+  controller also retains $\varepsilon$ for its owed selected action.
+  At the used cut a canonical economical representation is
+  $(\theta,\varepsilon;\kappa)$, installed to represent (114.1).
+  Raw $Y$ may be cleared after taking its sign in this constant-scale
+  task, and no past sample archive is silently included.
+
+The view functions describe what occurred or exists. They do not grant a
+receiver an unretained historical view. If a task requires supplying Time
+or sampled Boundary later, actual retention, copying and export of their
+real sample and finite context must be provisioned. Internal CPU
+microsteps, arbitrary pre-entrance journals and independent scheduling
+choices are outside this declared window; their recovery is not asserted.
+
+**Proposition 115.2 (the positive routes on the template image).** With
+actually supplied $s_0$ and authentic fixed context, Time and sampled
+Boundary recover each other on this template's actual image. Each
+recovers $\theta$, the current Space and an economical native Memory.
+At the used cut Space and canonical Memory recover each other, relative
+to the same fixed template/context. These are all the inverse directions
+asserted here.
+
+**Proof.** Time exposes its sampled boundary projection. Conversely,
+Boundary contains $Y$, hence $\varepsilon$, and the actual sign-selected
+exact replies and ports. Together with $s_0$ these determine $\theta$.
+The fixed template, $\theta$ and $Y$ then specify every call, rational
+operand, epoch and complete deterministic native outcome in this window;
+they give its actual Time. The extra ideal service has the declared
+completion convention, so that completion is specified too. No independent
+unrecorded controller choice is present in this witness. The computed
+fields are $BH\theta$ at readiness and (114.1) after use, giving Space
+and the indicated installed numerical predictor.
+
+At the used cut, $\theta_i=2F_{p_iR}$ for every $i$, and
+$\varepsilon=F_g-F_f$. Thus Space determines the canonical retained
+pair. Conversely (114.1) computes Space from that pair. This does not
+recover incidental scratch or create source identity/grants from numbers:
+the same genuine fixed context is required on both sides. Substitution
+of these formulas makes each round trip the identity on its stated image.
+Every route from acquired samples to field gives (114.1), so routes agree.
+For subsequent original calls, updating this field and the installed
+predictor gives the same outputs and successors by Proposition 113.1.
+The specific chart need not remain invariant under arbitrary later growth
+or Add; native synchronization continues without claiming that historical
+samples have changed. $\square$
+
+**Proposition 115.3 (chronology and phase do not follow from native state).**
+At readiness Space determines $\theta$ but not the retained sign needed
+for the selected next action. At the used cut Space also determines that
+sign, but neither it nor economical native Memory determines $Y$, Time
+or sampled Boundary. No measurable decoder from a bare finite rational
+native snapshot can recover the first executed real noisy sample almost
+surely, even if the finite rational native evolution encodes adaptively
+chosen information about that sample.
+
+**Proof.** Before use both signs occur with the same $BH\theta$.
+After use any two distinct real $Y$ of the same sign give the same
+selected exact port, exact replies, $q$, $F$ and canonical Memory, but
+different actual Time and sampled Boundary. Conditional on a sign the
+normal density remains atomless; neither value of the sign identifies
+its literal sample. More generally finite ordered native graphs with
+rational fields form a countable set, also after arbitrary finite adaptive
+growth and rational Add. A decoder from this set has countable real
+range. The first executed positive-variance noisy sample has an atomless
+subprobability law on its execution event: condition on its pre-call
+history and integrate its Gaussian density. Therefore the probability
+that this decoder equals that sample on the execution event is zero.
+Adding finite strings for geometry and references does not change this
+argument. Adding an actual analog sample archive changes its premise.
+
+Finally $B^2H=H$ identifies elapsed epochs $n$ and $n+2$ in the unmodified
+field; $\theta=0$ even hides parity. The retained template phase and
+sample epochs cannot be inferred as unrestricted elapsed chronology from
+that field. Unknown entrance histories, provenance or grants are not
+restored by these coordinate formulas. $\square$
+
+This gives a bounded obstruction/recovery condition for the four-expression
+objective: actual retained full-rank exact information suffices for current
+native service, but a genuinely noisy realized chronology contains another
+information coordinate. To recover it, retain the actual relevant noisy
+record in addition to the native service state. To predict a history-based
+future noisy law, retain sufficient current law state instead. These three
+requirements are different even on the same attained process. The witness
+provides current Space/Memory agreement and acquired Boundary/Time routes;
+it does not provide an unrestricted four-way history inverse.
+
+## 116. Same-run operations, retained resources and scope
+
+**Proposition 116.1 (one joined bill).** Put $m=\max\{1,k-d\}$ for the
+mandatory-both task. In coordinates
+$(P,S,\mathrm{Read}_0,\mathrm{Read}_+,\mathrm{Add},\mathrm{Tick},\mathrm{Hold})$
+the single marker-prepared run has the following exact source-call counts.
+All zero operands are executed, and no unused general-preparation bill
+is substituted for this actual marker run.
+
+| Actual segment/cut | Source-call vector |
+| --- | --- |
+| Build zero $u$, marker preparation, fresh growth, displayed cancellation, late advice/clearing cut | $(b,2a+3c-1,k,0,6k,5,7)$ |
+| Late window through readiness | $(0,0,m,1,0,1,1)$ |
+| Readiness through performed Add/Hold use | $(0,0,0,0,1,0,1)$ |
+| Joined run through used cut | $(b,2a+3c-1,k+m,1,6k+1,6,9)$ |
+| Optional additional designated-value export | $(0,0,1,0,0,0,0)$ |
+
+**Proof.** Original zero construction costs $c$ promotions and $b-1$
+splits. Marker preparation adds $2k$ Adds, one Tick and one Hold.
+Fresh growth adds $a$ promotions and $a+2c$ splits. The displayed
+cancellation has $k$ exact Reads, $4k$ Adds, four Ticks and six Holds.
+Summing gives the first row; the actual steps of §114 give the remaining
+rows. Native material is $M=5a+7c-1$ cells with $M-1$ births beyond the
+initial alpha; it is not the number of observer scratch cells. $\square$
+
+These source-call counts are only coordinates of the same-run resource
+vector. Use Conventions 109.2--109.3's actual framing/traffic and resource
+accounting for every original call, including complete reply/End/ACK/Return.
+Additionally charge the new service's commissioning, binding, grants,
+noise supply, real reply handling and sign processing. Charge the owned
+$N$-coordinate target reception, extraction, $R\theta$ computation and
+retention, clearing/isolation of dependent copies, greedy complement
+calculation, rational solving and each actual predictor initialization and
+update. Selector construction, raw-table lookup, rational arithmetic,
+operand creation, every copy/transport, installed evaluator, scratch,
+coexisting buffers, persistent or isolated producer material and final
+callable backing are resource coordinates on this same run. There is no
+free unknown seed or full-response oracle. Mathematical addresses and
+arithmetic create neither provenance nor an unearned grant.
+
+For fixed finite $u,R$ and rational inputs, the rational computations and
+finite strings can use ordinary finite algorithms with size depending on
+the actual data; their work, precision, scans and storage remain charged.
+Finite control does not imply bounded memory. Exact $Y$ handling/sign is
+instead the separately declared ideal real interface: this text provides
+no finite-bit length, hardware construction or bit-cost upper bound for
+it. If later historical export is selected, retaining/copying the literal
+$Y$ requires an additional ideal real record and its explicit resource
+coordinate; discarding it for native service does not retain it for free.
+Native prediction alone is cheaper by omitting that archive and, when
+mixed occurrence is optional, by using the existing noiseless repair.
+These comparisons claim no joint optimum over material, computation,
+precision, traffic, storage or physical cost.
+
+The rational linear advice domain is essential to (112.4): an irrational
+row $(1,\sqrt2)$ is injective on $\mathbb Q^2$, while unrestricted nonlinear
+encodings can pack rational tuples outside this contract. Zero noise,
+support-separated alternatives, leaked means/seeds, infinite averaging,
+nonpersistent erasure or a restricted future menu likewise require their
+own statements. There is no physical/universal impossibility theorem here.
+
+## 117. Suppliers, the new composition and the continuing objective
+
+**Supplier correspondence 117.1.** The relevant public source for this
+comparison is `af4d8c241cab6127cbf82c52956fc609bbbb0628`. The statements
+below reuse suppliers with their actual source and task hypotheses.
+
+| Supplier | Reused content and exact limit |
+| --- | --- |
+| NLBAIII Definitions 75.1, 87.1, 89.1; NLBAII §§60--64; this volume §§103--109 | Actual rational material, raw-label movement, complete parser/service, all-terminal forcing, symmetric-growth persistence, marker preparation, cancellation, exact repair and synchronized current predictor. These supply the native bridge and deterministic inverses, not a new mixed adaptive probability theorem. |
+| [Gaussian adaptive record kernel](RECURSIVE_RELATIONAL_OBSERVATION_GAUSSIAN_ADAPTIVE_RECORD_KERNEL.md), Definitions 1.1--1.4, Theorems 2.2, 3.2 and Proposition 3.3 | Its source is the post-$JM$ quantum pointer process, with a common latent Gaussian base law and source-independent path kernel. Its full-path equivalence is proved by equivalence of those base laws. That argument does not give full-path equivalence for fixed distinct native means, nor handle unequal exact Dirac replies. Lemma 112.1 uses only a compatible finite mixed branch. |
+| [Polynomial flow/tap memory](RECURSIVE_RELATIONAL_OBSERVATION_POLYNOMIAL_FLOW_TAP_MEMORY.md), §§1--8 | Published actual timed exact taps, nilpotent continuous flow, interpolation into integrated memory, endpoint task kernels and paid four-view conversions. Its fixed linear noiseless kernel/rank statements do not imply (112.4) for adaptive exact/noisy finite stopping or native persistent growth. A native Tick is $B$, not $e^{tB}$; tap errors transformed by interpolation are not new independent noisy channels. |
+| [Appendix II](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md), §129, especially Theorem 129.2 and Corollary 129.3 | Negative directions for a Heisenberg-product diffusion heat operator with bounded rotation-invariant multipliers; the actual density corollary additionally assumes its $L^\infty$ condition. Neither that source, its quadratic-form conclusion nor its heat evolution is the native rational terminal service. No bound or realization is transferred here from the shared word “noise.” |
+| [Native clocked recovery](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md), Definitions 2.1--2.3, Theorem 5.3, §§8.1--8.3 | Actual acquired seed, two substitution warm-ups, deterministic installed controller and retained receipt position permit its full-prefix replay; independent command choices require an additional order relation. The new real samples in §114 are independent choices not determined by that seed/position supplier. |
+| [Paid view conversion](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md), Assumption 1.2; [Callable Atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md), Definitions 2.1--2.2 and §7 | Post-acquisition owner-authorized Ready/Install, genuine code/copy rights, constructed backing and actual Call are premises. A solved field does not supply these installations, recover arbitrary historical packages, or create Ready in an old final-no-Ready controller. |
+| [Transport Memory](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §57.1, PR57.D1--D3 and §57.10; [Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), §§37.3--37.4 | PR57 has original Clifford-valued $E$ Read, whole-candidate cap guard and literal tagged $q_H$ including its tag-2 $\eta$. PG's entrance inverse consumes an acquired exponent and certified transport-image point. Neither is replaced by a rational field read, and the periodic field does not acquire an elapsed exponent or a missing reference. |
+| [Equivalent measures exclude perfect separation](../../../D5/S3/Observer/MeasureSeparation/EquivalentMeasuresExcludePerfectSeparator.lean) and its [owning Scribe](../../../Blueprint/D5/S3/Observer/MeasureSeparation/EquivalentMeasuresExcludePerfectSeparator.scribe.cs) | `equivalent_probability_laws_exclude_perfect_separator` supplies the generic null-set contradiction, applicable after normalizing a positive restricted branch. Constructing that branch and the native separation bridge are additional obligations proved here. Reading the declaration supplies no fresh kernel verification of this application. |
+| [Predictive memory minimal quotient](../../../D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean) and its owning Scribe; [Future readout quotient](../../../D5/S3/ObserverMemory/Dynamics/FutureReadoutQuotient.lean) and its owning Scribe | Readout/update factorization and coarsest predictive equivalence are reused as the task distinction, not as acquisition or installation. The latter's finite inner-product theorem assumes `RCLike`, so it is not a literal rational-field specialization. |
+
+**References 117.2 (standard probability and status of the increment).**
+Kaufmann, Cappe and Garivier, *On the Complexity of Best-Arm Identification
+in Multi-Armed Bandit Models*, [arXiv:1407.4443v2](https://arxiv.org/html/1407.4443v2),
+Appendix A, Lemma 18 and its §A.3 proof, supplies the classical adaptive
+likelihood-product induction and the decomposition over finite stopping
+counts. Its mutually absolutely continuous arm laws cannot be applied
+wholesale to unequal exact returns. Formula (112.3) is that standard
+finite-kernel argument on the specifically compatible mixed branch, with
+positive Gaussian factors; no new probability principle, KL optimality or
+bandit sample complexity is asserted. Null-set transport is also the
+definition `Measure.AbsolutelyContinuous` in pinned mathlib
+`56a005855ea17e0b0958f73ec801ae140b0a1679`,
+[MeasureTheory/Measure/AbsolutelyContinuous.lean](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/MeasureTheory/Measure/AbsolutelyContinuous.lean),
+with `AbsolutelyContinuous.ae_eq` transporting almost-everywhere equality.
+Gaussian positivity and finite rational solving are standard suppliers.
+
+The `repo-derived` increment is the mixed adaptive rank necessity for this
+attained source, together with its separate complete-current-service
+bridge, retained-data sufficiency and actual sign-selected two-read-type
+continuation. Its view result identifies exactly where acquired samples,
+current native state, law state and noisy chronology part company.
+The native geometry, preparation, deterministic repair, growth persistence,
+linear algebra and general measure-separation principle are reused rather
+than presented as new theorems. Relevant repository theory, D5, owning
+Scribes, pinned upstream definitions and the cited primary likelihood
+proof provide this bounded comparison; it establishes neither worldwide
+originality nor absence from every unrelated source.
+
+The authorship is a single external mathematical-author contribution using
+the formal-thinking-and-answer and theory-volume-template source disciplines
+under a theory-only scope. Repository priors and supplied earlier candidate
+conclusions are exposed inputs, with no sterile-context or model-diversity
+claim. All assertions here are ordinary conditional mathematical proofs;
+no new Lean compilation, kernel certification, digestion or machine-state
+claim accompanies them.
+
+**Boundary 117.3 (unchanged larger obligations).** The mixed construction
+is a conditional extension of one actual native source. It does not
+identify a universal or absolutely minimal alpha/beta foundation or prove
+a common physical apparatus. It leaves AGAIII Boundary 16.2/Open problem
+16.3's common native/original-path/quantum/continuous implementation,
+selectors, complete outputs/successors, rights and simultaneous resource
+correspondence open. Every fixed-$G_{gc}$, original-$Q$, parked-consumer,
+unchanged-initialization, original-terminal and final-no-Ready obligation
+retains its original scope. Changing an observation interface does not
+settle one of those fixed-interface tasks. Arbitrary erased journals,
+unknown phase and unearned authority remain outside the positive inverses.
+This bounded source-specific frontier does not establish complete-program
+success or complete the sustained four-expression objective.
+
+## 追加锚（本行以下为增补区）
