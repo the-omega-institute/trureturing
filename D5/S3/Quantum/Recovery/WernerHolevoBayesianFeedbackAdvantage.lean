@@ -398,7 +398,7 @@ private theorem bayesian_witness : 1 / 2 < bayesFidelity canonicalKraus rotation
   sorry
 
 /-- For the unital Matrix (Fin 3) (Fin 3) ℂ Werner--Holevo channel, every Markovian value is at most
-`1/2`, while the canonical/Fourier Kraus pair has Bayesian value above `1/2`.
+`1/2`, while the canonical/rational-rotation Kraus pair has Bayesian value above `1/2`.
 This answers the source's request with a unital channel, hence not an amplitude
 damping channel. -/
 theorem result :
