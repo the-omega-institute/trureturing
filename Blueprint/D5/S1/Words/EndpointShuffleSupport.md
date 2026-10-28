@@ -156,6 +156,10 @@ $$\exists K, 1 \le K\land \forall k, K \le k\implies \operatorname{distinctSelfS
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/EndpointShuffleSupport.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a193020-plus-one-eventual-identity` (proved) by `D5/S1/Words/EndpointShuffleSupport.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a193020-plus-one-eventual-identity","declaration_gid":"D5/S1/Words/EndpointShuffleSupport.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* John W. Layman (2011). *OEIS A193020, distinct binary self-shuffles*. URL: <https://oeis.org/A193020>.
