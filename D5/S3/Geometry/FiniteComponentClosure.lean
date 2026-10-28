@@ -2273,6 +2273,10 @@ structure SelectedVertexWedgeClosure {V W : Type*} [Fintype V] [DecidableEq V]
   rightPositive : 0 < rightCount
   rightSpec : Fin rightCount → BouquetSpec
   rightSelected : Fin rightCount
+  leftNormalization : SingletonRetractionBasedInverse.BasedEquivalence
+    (FiniteVertexCylinder.vertexPoint K a ha) (normalPoint leftCount leftSpec leftSelected)
+  rightNormalization : SingletonRetractionBasedInverse.BasedEquivalence
+    (FiniteVertexCylinder.vertexPoint L b hb) (normalPoint rightCount rightSpec rightSelected)
   normalization : SingletonRetractionBasedInverse.BasedEquivalence
     (Quotient.mk (FiniteConeUnionWedge.subsetSetoid (FiniteConeUnionWedge.wedgePoints
       (FiniteVertexCylinder.vertexPoint K a ha) (FiniteVertexCylinder.vertexPoint L b hb)))
@@ -2286,6 +2290,8 @@ structure SelectedVertexWedgeClosure {V W : Type*} [Fintype V] [DecidableEq V]
     (normalPoint (leftCount + rightCount - 1)
       (selectedWedgeSpec leftSpec rightSpec leftSelected rightSelected) outputComponent)
 
+  wplus : WPlus (vertexWedgeComplex K L a b)
+
 /-- WPlus is closed under an actual wedge at any two existing vertices, preserving point components. -/
 def selectedVertexWedgeClosure {V W : Type*} [Fintype V] [DecidableEq V]
     [Fintype W] [DecidableEq W]
@@ -2294,7 +2300,9 @@ def selectedVertexWedgeClosure {V W : Type*} [Fintype V] [DecidableEq V]
     (a : V) (ha : ({a} : Finset V) ∈ K) (b : W) (hb : ({b} : Finset W) ∈ L) :
     SelectedVertexWedgeClosure K L a ha b hb := by
   have h : Nonempty (SelectedVertexWedgeClosure K L a ha b hb) := by
-    obtain ⟨m, hm, p, i, n, hn, q, j, ⟨E⟩⟩ := selectedComponentWedgeBased K L hK hL a ha b hb
+    obtain ⟨m, hm, p, i, ⟨EL⟩⟩ := based_normalization K hK a ha
+    obtain ⟨n, hn, q, j, ⟨ER⟩⟩ := based_normalization L hL b hb
+    let E := FiniteConeUnionWedge.basedWedgeEquivalence EL ER
     let eW : FiniteConeUnionWedge.Wedge (FiniteVertexCylinder.vertexPoint K a ha)
         (FiniteVertexCylinder.vertexPoint L b hb) ≃ₕ
         FiniteConeUnionWedge.Wedge (normalPoint m p i) (normalPoint n q j) := {
@@ -2312,7 +2320,8 @@ def selectedVertexWedgeClosure {V W : Type*} [Fintype V] [DecidableEq V]
       (nativeCylinder (normalComplex (m + n - 1) (selectedWedgeSpec p q i j)) ⟨k, none⟩
         (normalVertex_face _ _ k)) e.toFun e.invFun e.left_inv.some e.right_inv.some
       (normalPath _ _ (e.toFun x))
-    exact ⟨⟨m, hm, p, i, n, hn, q, j, E, k, F⟩⟩
+    refine ⟨⟨m, hm, p, i, n, hn, q, j, EL, ER, E, k, F, ?_⟩⟩
+    exact ⟨m + n - 1, by omega, selectedWedgeSpec p q i j, ⟨e⟩⟩
   exact Classical.choice h
 
 end BouquetConcatenation
