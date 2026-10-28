@@ -2,10 +2,13 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.QuantumChannels.QutritChannelUnitaryExtremeDecomposition
 import Reg.Support.DependentFamily
 
+/-! Source-bound audit of the unitary and doubly extreme qutrit decomposition. -/
+
 namespace Reg.D5.S3.Quantum.QuantumChannels.QutritChannelUnitaryExtremeDecomposition
 
 open _root_.D5.S3.Quantum.QuantumChannels.QutritChannelUnitaryExtremeDecomposition
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 open Matrix
 open MatrixMap
 open scoped ComplexOrder MatrixOrder
@@ -50,8 +53,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hsqrt : 0 < Real.sqrt 2 := Real.sqrt_pos.2 (by norm_num)
   have hnorm : ‖(1 / Real.sqrt 2 : ℂ)‖ = 1 / Real.sqrt 2 := by
-    rw [Complex.norm_real, Real.norm_eq_abs, abs_of_pos]
-    positivity
+    rw [norm_div, norm_one, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hsqrt]
   obtain ⟨u, lam, ψ, hu, hlam0, hlam1, hcp, hunit, htp, hrank, hue, hte, hdec⟩ :=
     h (1 / Real.sqrt 2) (1 / Real.sqrt 2) hnorm hnorm
   change (0 : ℕ) = 3 at hrank
@@ -61,14 +63,14 @@ theorem dependence : ObservationalDependence signature actual := by
   intro i
   have hsqrt : 0 < Real.sqrt 2 := Real.sqrt_pos.2 (by norm_num)
   have hnorm : ‖(1 / Real.sqrt 2 : ℂ)‖ = 1 / Real.sqrt 2 := by
-    rw [Complex.norm_real, Real.norm_eq_abs, abs_of_pos]
-    positivity
+    rw [norm_div, norm_one, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hsqrt]
   obtain ⟨u, lam, ψ, hu, hlam0, hlam1, hcp, hunit, htp, hrank, hue, hte, hdec⟩ :=
     result (1 / Real.sqrt 2) (1 / Real.sqrt 2) hnorm hnorm
   refine ⟨(), 0, ψ, ?_⟩
   change (choi_matrix (0 : MatrixMap (Fin 3) (Fin 3) ℂ)).rank ≠
     (choi_matrix ψ).rank
-  rw [map_zero, Matrix.rank_zero, hrank]
+  have hz : choi_matrix (0 : MatrixMap (Fin 3) (Fin 3) ℂ) = 0 := rfl
+  rw [hz, Matrix.rank_zero, hrank]
   norm_num
 
 def source_registration : Registration arena (type_of% (@result)) where
