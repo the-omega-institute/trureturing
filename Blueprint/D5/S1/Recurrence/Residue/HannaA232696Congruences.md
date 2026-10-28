@@ -34,6 +34,10 @@ $$\forall A \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \operatorna
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/HannaA232696Congruences.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hefg-egfcongruences` (proved) by `D5/S1/Recurrence/Residue/HannaA232696Congruences.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hefg-egfcongruences","declaration_gid":"D5/S1/Recurrence/Residue/HannaA232696Congruences.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2013). *Derivative-substitution exponential generating functions A232694, A232695, A232696 and A232686*. URL: <https://oeis.org/A232694>.

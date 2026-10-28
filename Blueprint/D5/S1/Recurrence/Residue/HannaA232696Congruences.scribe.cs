@@ -25,12 +25,15 @@ internal sealed class HannaA232696CongruencesDocument : IScribeDocumentDefinitio
                 + "Multiplication by the third or ninth power of the approximate derivative makes the residual polynomial. "
                 + "Its exponential coefficients are divisible by two or four, respectively. "
                 + "Cancellation of the integral series with constant coefficient one gives the two divisibility tails.",
-                AssessedProvenance.FromRepo(Source()), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source()), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hefg-egfcongruences"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role) => Describe.Lean(
+        AssessedProvenance provenance, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("hanna-a232696-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role,
+            resolution);
 
     private static Formula SolutionDefinition()
     {
