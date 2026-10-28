@@ -1311,8 +1311,7 @@ private def vertexGluingHomeomorph (K : PreAbstractSimplicialComplex V)
   exact (Homeomorph.Quotient.congrRight (gluingSum_kernel K L a b ha hb)).trans
     (Topology.IsQuotientMap.homeomorph (f := gluingSum K L a b) hq)
 
-/- Public carrier for the selected-component gluing consumer.  The original
-  private `vertexGluing` declaration and all of its identities stay intact. -/
+/- Concrete carrier for selected-component gluing. -/
 private abbrev SelectedGluedVertices (a : V) (b : W) :=
   FiniteConeUnionWedge.Wedge a b
 
