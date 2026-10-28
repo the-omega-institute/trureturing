@@ -43,10 +43,10 @@ private theorem function_dependence : ObservationalDependence functionSignature 
   intro i
   exact ⟨id, 0, 1, by norm_num [functionActual, realize]⟩
 
-def integrabilityFamily : Registration integrabilityArena (type_of% bounded_positive_integrability) where
+def integrabilityFamily : Registration integrabilityArena (type_of% @bounded_positive_integrability) where
   actual := functionActual
   bridge := Iff.rfl
-  variation := ⟨bounded_positive_integrability, functionBad, integrability_bad⟩
+  variation := ⟨@bounded_positive_integrability, functionBad, integrability_bad⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     integrabilityArena.Law functionActual functionBad integrability_bad
   dependence := function_dependence
@@ -70,10 +70,10 @@ private theorem primitive_dependence : ObservationalDependence functionSignature
   intro i
   exact ⟨fun _ => 1, 1, 2, by norm_num [primitiveActual, realize]⟩
 
-def congruenceFamily : Registration congruenceArena (type_of% primitive_congr) where
+def congruenceFamily : Registration congruenceArena (type_of% @primitive_congr) where
   actual := primitiveActual
   bridge := Iff.rfl
-  variation := ⟨primitive_congr, primitiveBad, congruence_bad⟩
+  variation := ⟨@primitive_congr, primitiveBad, congruence_bad⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     congruenceArena.Law primitiveActual primitiveBad congruence_bad
   dependence := primitive_dependence
@@ -118,7 +118,7 @@ private theorem calibration_witness : Calibration (-3) Z Q M N := by
     have hs := (Real.hasDerivAt_sqrt (ne_of_gt (hp r hr))).comp r ((hasDerivAt_id r).add_const 1)
     convert (((hasDerivAt_id r).add_const 1).mul hs) using 1
     · rfl
-    · dsimp only [Q]
+    · dsimp only [Q, Pi.mul_apply, Pi.add_apply, Function.comp_apply, id_eq]
       field_simp [ne_of_gt (Real.sqrt_pos.2 (hp r hr))]
       nlinarith [Real.sq_sqrt (hp r hr).le]
   refine ⟨?_, ?_, ?_, hZ, ?_, ?_⟩
@@ -127,13 +127,11 @@ private theorem calibration_witness : Calibration (-3) Z Q M N := by
       ((Real.contDiffAt_sqrt (ne_of_gt (hp r hr))).comp r
         (contDiffAt_id.add contDiffAt_const)))
   · intro r hr
-    dsimp only [M]
     have hs := (Real.contDiffAt_sqrt (n := ∞) (ne_of_gt (hp r hr))).comp r
       (contDiffAt_id.add contDiffAt_const)
     exact (contDiffAt_const.mul hs).add
       ((contDiffAt_const.mul contDiffAt_id).div hs (ne_of_gt (Real.sqrt_pos.2 (hp r hr))))
   · intro r hr
-    dsimp only [Q]
     exact (((Real.continuous_sqrt.continuousAt.comp
         (continuousAt_id.add continuousAt_const)).const_mul 3).div_const 2).continuousWithinAt
   · intro r hr
@@ -142,7 +140,7 @@ private theorem calibration_witness : Calibration (-3) Z Q M N := by
       (((hasDerivAt_id r).const_mul 2).div hs (ne_of_gt (Real.sqrt_pos.2 (hp r hr))))
     convert hd using 1
     · rfl
-    · dsimp only [N]
+    · dsimp only [N, Pi.mul_apply, Pi.add_apply, Pi.div_apply, Function.comp_apply, id_eq]
       field_simp [ne_of_gt (hp r hr), ne_of_gt (Real.sqrt_pos.2 (hp r hr))]
       nlinarith [Real.sq_sqrt (hp r hr).le]
   · intro r hr
@@ -163,16 +161,17 @@ private theorem remainder_bad : ¬ remainderArena.Law energyBad := by
     (contDiff_id.sub contDiff_const).contDiffOn.absolutelyContinuousOnInterval
   have hm : MapsTo (fun x : ℝ => x - 1) (Icc 1 2) (Icc 0 1) := by
     intro x hx; constructor <;> linarith [hx.1, hx.2]
+  have hi : IntervalIntegrable (fun x : ℝ => x) volume 1 2 :=
+    continuous_id.intervalIntegrable _ _
   have hL : IntervalIntegrable (fun x : ℝ => -3 * (x / 1) + (x - 1) / 1 ^ 2) volume 1 2 := by
-    exact ((intervalIntegrable_id.div_const 1).const_mul (-3)).add
-      ((intervalIntegrable_id.sub intervalIntegrable_const).div_const (1 ^ 2))
+    simpa using (hi.const_mul (-3)).add (hi.sub intervalIntegrable_const)
   have he := (h calibration_witness aemeasurable_const
     ⟨1, 1, by norm_num, Filter.Eventually.of_forall (fun _ => ⟨le_rfl, le_rfl⟩)⟩ hU hm
     (Filter.Eventually.of_forall (fun x => by simpa using (hasDerivAt_id x).sub_const 1))
     hL (by norm_num) (by norm_num [Z])).2.2.1
   have hE : (∫ x in (1 : ℝ)..2, defect (fun _ => 1) (fun x => x - 1) Q x) = 0 := by
     have hd : defect (fun _ => 1) (fun x => x - 1) Q = fun _ => (0 : ℝ) := by
-      funext x; dsimp [defect, Q]; ring
+      funext x; dsimp [defect, Q]; rw [sub_add_cancel]; ring
     rw [hd, intervalIntegral.integral_zero]
   change potential (fun x => x - 1) Z M 2 - potential (fun x => x - 1) Z M 1 +
     (-3 * (∫ x in (1 : ℝ)..2, defect (fun _ => 1) (fun x => x - 1) Q x) + 1) ≤ _ at he
@@ -184,11 +183,11 @@ private theorem remainder_bad : ¬ remainderArena.Law energyBad := by
     nlinarith
   have hI : (∫ x in (1 : ℝ)..2, -3 * (x / 1) + (x - 1) / 1 ^ 2) = -4 := by
     simp only [div_one, one_pow]
-    rw [intervalIntegral.integral_add (intervalIntegrable_id.const_mul (-3))
-      (intervalIntegrable_id.sub intervalIntegrable_const),
+    rw [intervalIntegral.integral_add (hi.const_mul (-3))
+      (hi.sub intervalIntegrable_const),
       intervalIntegral.integral_const_mul,
-      intervalIntegral.integral_sub intervalIntegrable_id intervalIntegrable_const]
-    norm_num [intervalIntegral.integral_id]
+      intervalIntegral.integral_sub hi intervalIntegrable_const]
+    norm_num [integral_id]
   rw [hV, hI] at he
   norm_num at he
 
@@ -196,17 +195,17 @@ private theorem energy_dependence : ObservationalDependence energySignature ener
   intro i
   exact ⟨1, 0, 1, by norm_num [energyActual, realize]⟩
 
-def remainderFamily : Registration remainderArena (type_of% remainder) where
+def remainderFamily : Registration remainderArena (type_of% @remainder) where
   actual := energyActual
   bridge := Iff.rfl
-  variation := ⟨remainder, energyBad, remainder_bad⟩
+  variation := ⟨@remainder, energyBad, remainder_bad⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     remainderArena.Law energyActual energyBad remainder_bad
   dependence := energy_dependence
 
 
 def integrabilityAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    bounded_positive_integrability (Realization functionSignature) Unit Unit where
+    (@bounded_positive_integrability) (Realization functionSignature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.Variational.MeasurableJointCalibration.integrabilityUnit
   realizationName := `Reg.D5.S3.Analytic.Variational.MeasurableJointCalibration.integrabilityFamily
   realizationSource := none
@@ -239,7 +238,7 @@ def integrabilityAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 
 def congruenceAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    primitive_congr (Realization functionSignature) Unit Unit where
+    (@primitive_congr) (Realization functionSignature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.Variational.MeasurableJointCalibration.congruenceUnit
   realizationName := `Reg.D5.S3.Analytic.Variational.MeasurableJointCalibration.congruenceFamily
   realizationSource := none
@@ -272,7 +271,7 @@ def congruenceAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 
 def remainderAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    remainder (Realization energySignature) Unit Unit where
+    (@remainder) (Realization energySignature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.Variational.MeasurableJointCalibration.remainderUnit
   realizationName := `Reg.D5.S3.Analytic.Variational.MeasurableJointCalibration.remainderFamily
   realizationSource := none
