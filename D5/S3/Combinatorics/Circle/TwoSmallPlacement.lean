@@ -121,6 +121,27 @@ private theorem loss_pairs (f : ℕ → ℤ) (B N coeff R : ℤ) (off start len 
   dsimp [H] at hm
   nlinarith only [hm]
 
+
+private theorem gap_inventory (ell m : ℕ) :
+    [0] ++ List.range' 1 ell ++ [ell + 1] ++ List.range' (ell + 2) m =
+      List.range (ell + m + 2) := by
+  have h1 : List.range' 1 ell ++ [ell + 1] = List.range' 1 (ell + 1) := by
+    simpa only [Nat.add_comm] using (List.range'_1_concat (s := 1) (n := ell)).symm
+  have h2 : List.range' 1 (ell + 1) ++ List.range' (ell + 2) m =
+      List.range' 1 (ell + 1 + m) := by
+    simpa only [show 1 + (ell + 1) = ell + 2 by omega] using
+      (List.range'_append_1 (s := 1) (m := ell + 1) (n := m))
+  calc
+    [0] ++ List.range' 1 ell ++ [ell + 1] ++ List.range' (ell + 2) m =
+        [0] ++ ((List.range' 1 ell ++ [ell + 1]) ++ List.range' (ell + 2) m) := by
+          simp only [List.append_assoc]
+    _ = [0] ++ List.range' 1 (ell + 1 + m) := by rw [h1, h2]
+    _ = List.range (ell + m + 2) := by
+      rw [List.range_eq_range', show ell + m + 2 = (ell + 1 + m) + 1 by omega,
+        List.range'_succ]
+      rfl
+
+
 /-- Both SMALL labels are placed separately. The cut is calculated from the
 two free even gaps, and all its endpoint and peak gates are consequences. -/
 theorem even_placement (p q : ℕ) (hpq : p ≤ q) (hne : 1 ≤ p + q)
@@ -185,14 +206,19 @@ theorem even_placement (p q : ℕ) (hpq : p ≤ q) (hne : 1 ≤ p + q)
     (by simpa [ha] using hmid0) (by simpa using (show R + N - alpha ≤ 3 * C by omega))
     (by simpa [ha] using hApos) (by
       intro i _ hi
-      simpa only [alpha, Nat.add_comm, Nat.add_left_comm, Nat.add_assoc] using hfirst i hi)
+      constructor
+      · simpa only [alpha, show 1 + 2 * i = 2 * i + 1 by omega] using (hfirst i (by omega)).1
+      · simpa only [alpha, show 1 + 2 * i + 1 = 2 * i + 2 by omega] using (hfirst i (by omega)).2)
   obtain ⟨hsB, hmB⟩ := loss_pairs f (3 * C) N beta
     (R - alpha * (a - 1)) (2 * p + 2) 0 h hcb
     (by simpa [v, hmiddle] using hT)
     (by simpa using (show R - alpha * (a - 1) + N - beta ≤ 3 * C by omega))
-    (le_trans (mul_le_mul_of_nonneg_left hav hcb) hBpos) (by
+    (by simpa [v] using le_trans (mul_le_mul_of_nonneg_left hav hcb) hBpos) (by
       intro j _ hj
-      simpa only [beta, Nat.add_comm, Nat.add_left_comm, Nat.add_assoc] using hsecond j (by omega))
+      constructor
+      · simpa only [beta] using (hsecond j (by omega)).1
+      · simpa only [beta, show 2 * p + 2 + 2 * j + 1 = 2 * p + 3 + 2 * j by omega] using
+          (hsecond j (by omega)).2)
   have hafter : T + f 0 = beta * (b - v) := by
     dsimp [T, beta]; rw [h0, hC]; ring
   obtain ⟨hsD, hmD⟩ := loss_pairs f (3 * C) N beta (beta * (b - 1))
@@ -201,7 +227,10 @@ theorem even_placement (p q : ℕ) (hpq : p ≤ q) (hne : 1 ≤ p + q)
     (by dsimp [v] at hgate; dsimp [beta] at *; nlinarith)
     (by simpa [show h + (q - h) = q by omega, ← hb] using hBpos) (by
       intro j hj hjq
-      simpa only [beta, Nat.add_comm, Nat.add_left_comm, Nat.add_assoc] using hsecond j (by omega))
+      constructor
+      · simpa only [beta] using (hsecond j (by omega)).1
+      · simpa only [beta, show 2 * p + 2 + 2 * j + 1 = 2 * p + 3 + 2 * j by omega] using
+          (hsecond j (by omega)).2)
   let A := List.range' 1 (2 * p)
   let B := List.range' (2 * p + 2) (2 * h)
   let D := List.range' (2 * p + 2 + 2 * h) (2 * (q - h))
@@ -224,7 +253,7 @@ theorem even_placement (p q : ℕ) (hpq : p ≤ q) (hne : 1 ≤ p + q)
     simp only [InStrip]
     exact ⟨hT, by linarith [he.2], by rw [hafter]; exact he.1,
       by rw [hafter]; exact he.2⟩
-  have hsAB := inStrip_append hsa (by simpa [hma] using hsb)
+  have hsAB := inStrip_append hsa (by simpa [hma, sub_eq_add_neg] using hsb)
   have hs0D := inStrip_append hsmall (by simpa only [List.map_singleton,
     List.sum_singleton, hafter] using hsd)
   have hsall := inStrip_append hsingle (by
@@ -245,16 +274,7 @@ theorem even_placement (p q : ℕ) (hpq : p ≤ q) (hne : 1 ≤ p + q)
     congr 1 <;> omega
   have hinventory : [0] ++ A ++ [2 * p + 1] ++ B ++ D =
       List.range (2 * p + 2 * q + 2) := by
-    rw [List.append_assoc _ B D, hBD]
-    dsimp [A]
-    have h1 : [0] = List.range' 0 1 := rfl
-    have h2 : [2 * p + 1] = List.range' (1 + 2 * p) 1 := by simp
-    rw [h1, h2, List.range'_append_1, List.range'_append_1]
-    have he : 0 + (1 + 2 * p) + 1 = 2 * p + 2 := by omega
-    simp only [zero_add] at *
-    rw [show 1 + 2 * p + 1 = 2 * p + 2 by omega, List.range'_append_1]
-    simp only [List.range_eq_range', zero_add]
-    congr 1 <;> omega
+    simpa only [A, List.append_assoc, hBD] using gap_inventory (2 * p) (2 * q)
   refine ⟨word, ?_, hsword, hmword⟩
   rw [← hinventory]
   apply List.perm_iff_count.mpr
@@ -295,7 +315,7 @@ theorem odd_placement (p q : ℕ) (a b N C : ℤ)
   have hH : H ≤ 3 * C := by dsimp [H]; omega
   have hYp : Y p = F := by
     dsimp [Y, D, F]
-    rw [ha, hN, hC]
+    rw [hN, hC, ha]
     ring
   have hJ0 : J 0 = H := by
     dsimp [J, E, H]
@@ -334,7 +354,7 @@ theorem odd_placement (p q : ℕ) (a b N C : ℤ)
       have hp := hfirstP i (by omega)
       have hn := hfirstN i (by omega)
       dsimp [X, Y, D]
-      rw [show 1 + 2 * i = 2 * i + 1 by omega, show 1 + 2 * i + 1 = 2 * i + 2 by omega,
+      rw [show 1 + 2 * i = 2 * i + 1 by omega, show 2 * i + 1 + 1 = 2 * i + 2 by omega,
         hp, hn, pow_succ]
       constructor <;> ring)
   have hlastA : InStrip f (3 * C) (X p) [2 * p + 1] := by
@@ -348,13 +368,13 @@ theorem odd_placement (p q : ℕ) (a b N C : ℤ)
   let A := List.range' 1 (2 * p + 1)
   have hsa : InStrip f (3 * C) 0 A := by
     have ht := inStrip_append hsA (by simpa [hmA, X] using hlastA)
-    simpa [A, X, ← List.range'_1_concat] using ht
+    simpa [A, X, List.range'_1_concat, Nat.add_comm] using ht
   have hma : (A.map f).sum = F := by
     dsimp [A]
     rw [List.range'_1_concat, List.map_append, List.sum_append]
     simp only [List.map_singleton, List.sum_singleton, hmA, X, pow_zero, sub_self,
       mul_zero, sub_zero, Nat.zero_add]
-    rw [hfirstP p (le_refl _), ← hYp]
+    rw [show 1 + 2 * p = 2 * p + 1 by omega, hfirstP p (le_refl _), ← hYp]
     dsimp [X, Y, D]; ring
   have hJZ (j : ℕ) (hj : j ≤ q) : 0 ≤ Z j ∧ Z j ≤ J j ∧ J j ≤ 3 * C := by
     have hpow := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 4) hj
@@ -386,8 +406,8 @@ theorem odd_placement (p q : ℕ) (a b N C : ℤ)
   have hsLastB : InStrip f (3 * C) (J q) [2 * p + 3 + 2 * q] := by
     have hj := hJZ q (le_refl _)
     simp only [InStrip]
-    exact ⟨le_trans hj.1 hj.2.1, hj.2.2, by rw [hlastB]; omega,
-      by rw [hlastB]; omega⟩
+    exact ⟨le_trans hj.1 hj.2.1, hj.2.2, by rw [hlastB] <;> omega,
+      by rw [hlastB] <;> omega⟩
   let B := List.range' (2 * p + 3) (2 * q + 1)
   have hsb : InStrip f (3 * C) H B := by
     have ht := inStrip_append hsB (by simpa [hmB] using hsLastB)
@@ -404,6 +424,8 @@ theorem odd_placement (p q : ℕ) (a b N C : ℤ)
       by rw [hseam, hseam2]; exact hH⟩
   let word := A ++ [2 * p + 2, 0] ++ B
   have hsword : InStrip f (3 * C) 0 word := by
+    dsimp only [word]
+    rw [List.append_assoc]
     apply inStrip_append hsa
     simp only [zero_add, hma]
     exact inStrip_append hsSmall (by
@@ -415,15 +437,10 @@ theorem odd_placement (p q : ℕ) (a b N C : ℤ)
       List.sum_cons, List.sum_nil, add_zero, hma, hmb]
     linarith
   have hi : [0] ++ A ++ [2 * p + 2] ++ B = List.range (2 * p + 2 * q + 4) := by
-    dsimp [A, B]
-    rw [show [0] = List.range' 0 1 from rfl,
-      show [2 * p + 2] = List.range' (1 + (2 * p + 1)) 1 by simp]
-    rw [List.range'_append_1]
-    simp only [zero_add]
-    rw [List.range'_append_1]
-    rw [show 1 + (2 * p + 1) + 1 = 2 * p + 3 by omega, List.range'_append_1]
-    rw [List.range_eq_range']
-    congr 1 <;> omega
+    simpa only [A, B, show 2 * p + 1 + 1 = 2 * p + 2 by omega,
+      show 2 * p + 1 + 2 = 2 * p + 3 by omega,
+      show 2 * p + 1 + (2 * q + 1) + 2 = 2 * p + 2 * q + 4 by omega] using
+      gap_inventory (2 * p + 1) (2 * q + 1)
   refine ⟨word, ?_, hsword, hmword⟩
   rw [← hi]
   apply List.perm_iff_count.mpr
