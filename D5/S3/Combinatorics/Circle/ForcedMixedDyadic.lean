@@ -4,7 +4,7 @@
    mirror-E: none(waiver:audit-open-22063)
    anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic]
    utility: none
-   digest: Every two-fresh strict competitor in an unbounded native family requires a mixed packet. -/
+   digest: An unbounded native family forces mixed fresh-label packets. -/
 module
 public import D5.S3.Combinatorics.Circle.MixedDyadicAugmentation
 public import D5.S3.Combinatorics.Circle.DyadicResetDenominations
@@ -59,7 +59,7 @@ private theorem count_card (r : ℕ) (L : List (Fin (4 * r))) (hn : L.Nodup)
     ext i
     simp
   rw [he, List.toFinset_card_of_nodup (hn.filter _)]
-  exact List.length_filter _ _
+  simp only [count, List.countP_eq_length_filter]
 
 private theorem four_sums (r : ℕ) (W : List (Fin (4 * r))) :
     mass (scaled 4 r) W =
@@ -422,7 +422,7 @@ theorem obstructing_inventory_exists (r : ℕ) (hr : 3 ≤ r) :
     simp only [List.countP_append]
     change count r (prior r) _ + _ = _
     rw [prior_counts r _ (by decide)]
-    norm_num [T, List.countP_cons, label_exp] <;> omega
+    norm_num [T, List.countP_cons, label_exp]; omega
 
 
 /-- The two-label bound is attained on an unbounded family, and every strict
