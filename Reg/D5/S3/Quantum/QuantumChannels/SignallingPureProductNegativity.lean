@@ -66,7 +66,7 @@ private theorem exists_signalling :
     ext ⟨⟨⟩, ⟨i⟩⟩ ⟨⟨⟩, ⟨j⟩⟩
     fin_cases i <;> fin_cases j <;>
       simp [V, Matrix.mul_apply, Matrix.conjTranspose_apply,
-        Fintype.sum_prod_type, sum_ulift, Fin.sum_univ_two]
+        Fintype.sum_prod_type, sum_ulift]
   obtain ⟨p, hp⟩ := finite_kraus_quantum_channel (fun _ : Unit => V)
     (by simpa using hV)
   have haction (X : Matrix (ULift.{u₁} Unit × ULift.{u₂} (Fin 2)) _ ℂ) :
