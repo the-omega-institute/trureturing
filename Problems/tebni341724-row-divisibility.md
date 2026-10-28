@@ -110,3 +110,10 @@ standard axiom closure; no finite table is a premise.
 - **Literature:** the source definitions are literature-attested; the
   settlement is repo-derived with status not-found-in-searched-scope.
   Global novelty and exhaustive search completeness remain unverified.
+
+## ASSUMED-UNVERIFIED
+
+Exhaustive literature priority and search completeness are not established.
+The proved prime and dyadic claims have no extra assumed mathematical
+premise. Arbitrary composite-row divisibility, exact valuations, stronger
+moduli, and downstream conclusions are not established here.
