@@ -9,7 +9,9 @@ open _root_.D5.S3.Combinatorics.Circle.BinaryRunSource
 open _root_.D5.S3.Combinatorics.Circle.SourceWidth
 open _root_.D5.S3.Combinatorics.Circle.ExpandingSourcePath
 
+/-! Whole-source dependent-family audits for the physical binary run bridge. -/
 set_option autoImplicit false
+noncomputable section
 namespace Reg.D5.S3.Combinatorics.Circle.BinaryRunSource
 
 namespace recurrence_wordValue
@@ -43,7 +45,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro r
   refine ⟨⟨2, fun i => decide (i.val = 1)⟩, ⟨0, by decide⟩, ⟨1, by decide⟩, ?_⟩
-  norm_num [actual, realize, wordValue, lsbDigit, forwardDigit, finCycle_apply,
+  change wordValue (fun i : Fin 2 => decide (i.val = 1)) (0 : Fin 2) ≠
+    wordValue (fun i : Fin 2 => decide (i.val = 1)) (1 : Fin 2)
+  norm_num [wordValue, lsbDigit, forwardDigit, finCycle_apply,
     Fin.sum_univ_two, Fin.rev, Fin.val_add]
 def source_registration : Registration arena
     (type_of% (@_root_.D5.S3.Combinatorics.Circle.BinaryRunSource.recurrence_wordValue)) where
@@ -78,7 +82,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     owner := `D5.S3.Combinatorics.Circle.BinaryRunSource
     definition := none
     coordinates := #[0, 3]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 4
       functionOperand := false
       stateOperand := none
@@ -152,12 +157,14 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     owner := `D5.S3.Combinatorics.Circle.BinaryRunSource
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "domain", "fn", "arg"]
+    readouts := #[{
+      path := #["body", "body", "body", "domain", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
       booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "domain", "fn", "arg"]
+      {
+      path := #["body", "body", "body", "body", "domain", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
@@ -229,7 +236,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     owner := `D5.S3.Combinatorics.Circle.BinaryRunSource
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "fn", "arg", "arg"]
+    readouts := #[{
+      path := #["body", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
@@ -286,8 +294,14 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   rw [actualSource_runCount_eq (by decide)]
   have hc : actualNegativeLargeCount 6 42 = 3 := by decide
   rw [hc]
-  classical
-  simp [physicalRunCount, falseTrueEdge]
+  have hz : physicalRunCount (fun _ : Fin 6 => false) = 0 := by
+    classical
+    have hf : Finset.univ.filter (falseTrueEdge (fun _ : Fin 6 => false)) = ∅ := by
+      ext i
+      simp [falseTrueEdge]
+    rw [physicalRunCount, hf]
+    rfl
+  omega
 def source_registration : Registration arena
     (type_of% (@_root_.D5.S3.Combinatorics.Circle.BinaryRunSource.cyclic_binary_run_bound)) where
   actual := actual
@@ -321,12 +335,14 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     owner := `D5.S3.Combinatorics.Circle.BinaryRunSource
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 3
       functionOperand := false
       stateOperand := none
       booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn", "arg"]
+      {
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn", "arg"]
       stateBinder := 3
       functionOperand := false
       stateOperand := none
@@ -401,7 +417,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     owner := `D5.S3.Combinatorics.Circle.BinaryRunSource
     definition := none
     coordinates := #[0, 1]
-    readouts := #[{ path := #["body", "body", "body", "body", "arg", "fn", "arg"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "fn", "arg"]
       stateBinder := 3
       functionOperand := false
       stateOperand := none
@@ -477,7 +494,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     owner := `D5.S3.Combinatorics.Circle.BinaryRunSource
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "arg"]
+    readouts := #[{
+      path := #["body", "body", "body", "arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
@@ -554,12 +572,14 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     owner := `D5.S3.Combinatorics.Circle.BinaryRunSource
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
       booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn", "arg"]
+      {
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn", "arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
