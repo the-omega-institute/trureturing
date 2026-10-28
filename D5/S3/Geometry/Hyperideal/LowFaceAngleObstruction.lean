@@ -10,6 +10,8 @@ import D5.S3.Geometry.Hyperideal.EdgeStarTransitions
 import D5.S3.Geometry.Hyperideal.EvenAngleSumObstruction
 import D5.S3.PrimeForms.Crossing.GlideCrossingParity
 
+/-! Actual low-face transport and angle sums on the original edge quotient. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -38,6 +40,7 @@ private theorem unique_low_flag_table :
     ∀ a j : Fin 6, j ≠ a → j ≠ opposite a →
       ∃! z : Fin 4 × Fin 3,
         faceEdge z.1 z.2 = j ∧ ∃ k : Fin 3, faceEdge z.1 k = a := by
+  unfold ExistsUnique
   decide
 
 private theorem local_low_flag_unique {x : Fin 6 → ℝ} {h : ℝ}
@@ -83,6 +86,8 @@ private theorem local_low_flag_unique {x : Fin 6 → ℝ} {h : ℝ}
     · intro _
       exact ⟨a, ha⟩
 
+attribute [local instance] Classical.propDecidable
+
 variable {T : Type*} [Fintype T]
 
 /-- The low-face flags over a middle global edge count genuine local occurrences
@@ -107,19 +112,20 @@ theorem genuine_occurrences_even
     constructor
     · intro d z hdz
       have hocc := congrArg Subtype.val hdz
+      dsimp only [project] at hocc
       have ht : d.1.1 = z.1.1 := congrArg Prod.fst hocc
       have hj : faceEdge d.1.2.1 d.1.2.2 = faceEdge z.1.2.1 z.1.2.2 :=
         congrArg Prod.snd hocc
       obtain ⟨q, hq, huniq⟩ :=
         (local_low_flag_unique (hshape d.1.1)
-          (faceEdge d.1.2.1 d.1.2.2) (d.2.1 ▸ he)).mp (project d).2.2
+          (faceEdge d.1.2.1 d.1.2.2) (by rw [d.2.1]; exact he)).mp (project d).2.2
       have hd : d.1.2 = q := huniq _ ⟨rfl, d.2.2⟩
       have hz : z.1.2 = q := huniq _ ⟨hj.symm, by simpa only [ht] using z.2.2⟩
       apply Subtype.ext
       exact Prod.ext ht (hd.trans hz.symm)
     · intro i
       obtain ⟨z, hz, _⟩ :=
-        (local_low_flag_unique (hshape i.1.1) i.1.2 (i.2.1 ▸ he)).mp i.2.2
+        (local_low_flag_unique (hshape i.1.1) i.1.2 (by rw [i.2.1]; exact he)).mp i.2.2
       refine ⟨⟨(i.1.1, z), ?_⟩, ?_⟩
       · exact ⟨by simpa only [hz.1] using i.2.1, hz.2⟩
       · apply Subtype.ext
