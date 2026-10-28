@@ -42,8 +42,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     (by norm_num [p]) (by norm_num [p])
     (by left; norm_num [p,PrimitiveCoordinates.column,futureProduct])
     (by norm_num [p,PrimitiveCoordinates.column,futureProduct])
-  have he := congrArg (fun A : Mat => A 0 0) hh
-  norm_num [rejected,realize,Matrix.one_apply] at he
+  change (0 : Mat) = 1 at hh
+  exact zero_ne_one hh
 
 def family : Registration arena (type_of% @mixed_level_identity) where
   actual := actual
@@ -160,6 +160,7 @@ abbrev arena : Arena where
       m 0 = 0 ∧
       (∀ i, prefixMatrix w i *ᵥ p.column = p.column+(m i:ℝ) • p.direction) ∧
       (∀ i, prefixMatrix (conjugateHistory w) i = actionJ * prefixMatrix w i * actionJ) ∧
+      actionJ * N * actionJ = scale • (swapCoordinates p).matrix ∧
       (StrictPhase w p m ∨
         StrictPhase (conjugateHistory w) (swapCoordinates p) (fun i => -m i))
 

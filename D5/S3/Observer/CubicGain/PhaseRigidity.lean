@@ -437,6 +437,7 @@ theorem phase_rigidity (w : Fin 3 → List Bool) (N : Mat)
       m 0 = 0 ∧
       (∀ i, prefixMatrix w i *ᵥ p.column = p.column+(m i:ℝ) • p.direction) ∧
       (∀ i, prefixMatrix (conjugateHistory w) i = actionJ * prefixMatrix w i * actionJ) ∧
+      actionJ * N * actionJ = scale • (swapCoordinates p).matrix ∧
       (StrictPhase w p m ∨
         StrictPhase (conjugateHistory w) (swapCoordinates p) (fun i => -m i)) := by
   obtain ⟨p,scale,hs,hN,hker,m,hm0,hm⟩ := whole_class_primitive_lattice.1 w N h
@@ -463,7 +464,13 @@ theorem phase_rigidity (w : Fin 3 → List Bool) (N : Mat)
   have hl (i : Fin 4) := level_of_parameter p _ _ (hm i)
   have hinterior (i : Fin 3) := level_interior (prefixWord w i.succ) p
     ha hb hc hd (hne i) (hl i.succ)
-  refine ⟨p,scale,m,hs,hN,⟨ha,hb,hc,hd⟩,hm0,hm,conjugate_prefix w,?_⟩
+  have hconj : actionJ * N * actionJ = scale • (swapCoordinates p).matrix := by
+    rw [hN]
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [swapCoordinates,PrimitiveCoordinates.matrix,PrimitiveCoordinates.column,
+        PrimitiveCoordinates.row,Matrix.vecMulVec,actionJ,Matrix.mul_apply,Fin.sum_univ_two]
+  refine ⟨p,scale,m,hs,hN,⟨ha,hb,hc,hd⟩,hm0,hm,conjugate_prefix w,hconj,?_⟩
   rcases hinterior 0 with hp1 | hn1
   · left
     have hs1 : prefixMatrix w 2 = futureProduct (w 1) * prefixMatrix w 1 := by

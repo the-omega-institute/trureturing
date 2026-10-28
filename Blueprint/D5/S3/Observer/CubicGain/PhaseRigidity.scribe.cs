@@ -58,6 +58,7 @@ internal sealed class PhaseRigidityDocument : IScribeDocumentDefinition
             Seq(m, Underscore, Grp(i)), F.Id("r"), Close, Land, Sp,
             Open, Forall, Sp, i, InMacro, Sp, Call("Fin", D(4)), Comma, Sp,
             ap, Eq, Sp, F.Id("J"), a, F.Id("J"), Close, Land, Sp,
+            F.Id("J"), n, F.Id("J"), Eq, Sp, F.Id("s"), Call("F", F.Id("p'")), Land, Sp,
             Open, Call("Phi", Seq(w, Comma, p, Comma, m)), Lor, Sp,
             Call("Phi", Seq(F.Id("w'"), Comma, F.Id("p'"), Comma, Minus, m)), Close));
     }
