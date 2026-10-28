@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Constructive scalar coordinates for the joint reciprocal integral functional. -/
+   digest: Sharp attained joint reciprocal variational values on the full measurable class. -/
 
 import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
 import Mathlib.Analysis.Calculus.InverseFunctionTheorem.Deriv
@@ -16,7 +16,7 @@ import Mathlib.MeasureTheory.Integral.IntervalIntegral.ContDiff
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.AbsolutelyContinuousFun
 import Mathlib.Tactic
 
-/-! # The joint reciprocal functional and its scalar coordinate -/
+/-! # Sharp attained variational values for the joint reciprocal functional -/
 
 open Set Filter MeasureTheory
 open scoped Topology ContDiff
@@ -603,7 +603,7 @@ private lemma optimizer_cost (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
   <;> ring
 
 /-- The explicitly constructed profile is smooth, strictly increasing, normalized,
-and has the exact cost. Global minimality requires the measurable comparison. -/
+and has the exact cost. The measurable comparison gives global minimality. -/
 theorem constructed_profile (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
     0 < scalarRoot b ∧ scalarRoot b < upperRoot b ∧
     coordinate b (scalarRoot b) = Real.log 2 ∧ 0 < sharpConstant b ∧
@@ -678,16 +678,6 @@ private lemma inverseMass_contDiff (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
     exact inverseMass_left b hb hb1 hs
   have heq := (hc.hasStrictFDerivAt' hfd (by simp)).localInverse_unique hl
   exact (hc.to_localInverse hfd (by simp)).congr_of_eventuallyEq heq
-
-private lemma massDomain_open (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
-    IsOpen (massDomain b) := by
-  rw [isOpen_iff_mem_nhds]
-  rintro r ⟨x, hx, rfl⟩
-  have h := ((profile_contDiff b hb hb1 hx).hasStrictDerivAt'
-    (profile_hasDerivAt b hb hb1 hx) (by simp)).map_nhds_eq
-    (ne_of_gt (optimizer_pos b hb hb1 hx))
-  rw [← h]
-  exact image_mem_map (isOpen_Ioi.mem_nhds hx)
 
 private lemma profile_one (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
     profilePrimitive b 1 = 0 := by simp [profilePrimitive, curve_one b hb hb1]
@@ -1038,7 +1028,7 @@ private lemma mass_pos {u : ℝ → ℝ} (hu : Admissible u) : 0 < mass u := by
     (show (1 : ℝ) ≤ 2 by norm_num) (intervalIntegrable_const :
       IntervalIntegrable (fun _ : ℝ => c) volume 1 2)
     (admissible_integrability hu).1 (hbounds.mono (fun x hx => hx.1))
-  have h : c ≤ mass u := by simpa only [intervalIntegral.integral_const,
+  have h : c ≤ mass u := by simpa only [mass, intervalIntegral.integral_const,
     sub_self, show (2 : ℝ) - 1 = 1 by norm_num, smul_eq_mul, one_mul] using hle
   exact hc.trans_le h
 
@@ -1062,13 +1052,11 @@ private lemma cost_scale {a : ℝ} (ha : a ≠ 0) (b : ℝ) (u : ℝ → ℝ) :
   have h1 : (fun x => x / (a * u x)) = (fun x => (x / u x) / a) := by
     funext x
     field_simp
-    ring
   have h2 : (fun x => primitive (fun t => a * u t) x / (a * u x) ^ 2) =
       (fun x => (primitive u x / u x ^ 2) / a) := by
     funext x
     rw [primitive_scale]
     field_simp [ha]
-    ring
   dsimp only [cost]
   rw [h1, h2, intervalIntegral.integral_div, intervalIntegral.integral_div]
   ring
@@ -1142,7 +1130,7 @@ theorem sharp_joint_variational (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
       have ht : 0 ≤ mass u *
           (4 * mass u + cost b u - 4 * Real.sqrt (sharpConstant b)) := by
         nlinarith [sq_nonneg (2 * mass u - Real.sqrt (sharpConstant b)), hsq]
-      have hbound := nonneg_of_mul_nonneg_left ht hp
+      have hbound := nonneg_of_mul_nonneg_right ht hp
       have hmul := mul_le_mul_of_nonneg_left
         (show 4 * Real.sqrt (sharpConstant b) ≤ 4 * mass u + cost b u by linarith)
         (show 0 ≤ d / 8 by positivity)

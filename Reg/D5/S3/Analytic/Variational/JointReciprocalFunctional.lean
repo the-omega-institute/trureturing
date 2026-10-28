@@ -117,4 +117,64 @@ def profileAudit : Contract.Registration
   familyRecord := none
   options := #[]
 
+def variationalArena : Arena where
+  signature := signature
+  Law R := ∀ (b : ℝ), 0 < b → b ≤ 1 →
+    let C := R.readout () () (sharpConstant b)
+    0 < C ∧
+    (∀ u : ℝ → ℝ, Admissible u → C ≤ mass u * cost b u) ∧
+    IsLeast {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧ mass u * cost b u = y}
+      (C) ∧
+    sInf {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧ mass u * cost b u = y} =
+      C ∧
+    (∀ a : ℝ, 0 < a → Admissible (fun x => a * optimizer b x) ∧
+      mass (fun x => a * optimizer b x) * cost b (fun x => a * optimizer b x) =
+        C) ∧
+    ∀ d : ℝ, 0 < d →
+      IsLeast {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧
+        d / 8 * (4 * mass u + cost b u) = y} (d / 2 * Real.sqrt (C)) ∧
+      sInf {y : ℝ | ∃ u : ℝ → ℝ, Admissible u ∧
+        d / 8 * (4 * mass u + cost b u) = y} = d / 2 * Real.sqrt (C) ∧
+      Admissible (fun x => Real.sqrt (C) / 2 * optimizer b x) ∧
+      d / 8 * (4 * mass (fun x => Real.sqrt (C) / 2 * optimizer b x) +
+        cost b (fun x => Real.sqrt (C) / 2 * optimizer b x)) =
+          d / 2 * Real.sqrt (C)
+
+private theorem rejected_variational : ¬ variationalArena.Law rejected := by
+  intro h
+  have hp := (h 1 (by norm_num) le_rfl).1
+  change (0 : ℝ) < 0 at hp
+  exact (lt_irrefl 0) hp
+
+def variationalFamily : Registration variationalArena (type_of% sharp_joint_variational) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨sharp_joint_variational, rejected, rejected_variational⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    variationalArena.Law actual rejected rejected_variational
+  dependence := actual_dependence
+
+def variationalAudit : Contract.Registration
+    sharp_joint_variational (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.Variational.JointReciprocalFunctional.variationalUnit
+  realizationName := `Reg.D5.S3.Analytic.Variational.JointReciprocalFunctional.variationalFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨variationalArena⟩
+  objectArena := .source ⟨variationalArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source variationalArena ⟨variationalFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Analytic.Variational.JointReciprocalFunctional
