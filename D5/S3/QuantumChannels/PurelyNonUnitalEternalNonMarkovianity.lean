@@ -157,7 +157,7 @@ private theorem D_ne (t : ℝ) : D t ≠ 0 := by
   change 1 + (t : ℂ)^2 ≠ 0
   exact_mod_cast h
 
-private def affine (a : ℂ) (B : Matrix (Fin 2) (Fin 2) ℂ) : MatrixMap (Fin 2) (Fin 2) ℂ :=
+def affine (a : ℂ) (B : Matrix (Fin 2) (Fin 2) ℂ) : MatrixMap (Fin 2) (Fin 2) ℂ :=
   a • LinearMap.id + (Matrix.traceLinearMap (Fin 2) ℂ ℂ).smulRight B
 
 private def Phi (t : ℝ) : MatrixMap (Fin 2) (Fin 2) ℂ := affine (1 / D t) (((t : ℂ)^2 / D t^2) •
