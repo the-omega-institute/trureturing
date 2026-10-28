@@ -1,0 +1,38 @@
+**Definition 4.3 (one resource vector, without free phase acquisition).**
+For a run with fixed $d$, the current inside record contains one
+height, two exact circle coordinates and one of $d$ sheet labels,
+with the fixed lattice, section, calibration and preparation held
+as context. A fixed-width injective binary code for all $d$ possible
+labels requires and suffices $\lceil\log_2d\rceil$ bits: $b$ bits
+have $2^b$ codewords, and enumeration supplies the converse. For
+$d=1$ this discrete contribution is zero. It says nothing about
+bits for exact reals, source-reference storage, a path-tracking
+algorithm, or total memory. Even the full cover record has the
+continuous fibers (2.3). Outside the slab, rule $0$ returns one
+unavailability symbol, while rule $+$ returns a tag and four exact
+real coordinates. Their acquisition, precision and traffic also
+belong to the same unpaid resource coordinates.
+
+For $n$ actually supplied lawful commands, (2.4) consumes their
+same-run chronological triples, performs $n$ cover updates and $n$
+whole-prefix guard checks, and retains the current cover point.
+If commands are retained for later replay, their $n$ descriptions
+and actual chronology must also be retained; the empty script costs
+zero updates. Acquisition of each triple, evaluation of its real
+integral and extrema, lattice reduction, real arithmetic and the
+five output pairs are separate costs. A piecewise command needs
+its actual representation and prefix checks; a finite formula
+does not bound their bit complexity. No diffusion step, source read,
+shot, energy expenditure or notification is manufactured by this
+algebraic count.
+
+In the impossibility theorem the ideal current record and arbitrary
+Borel computation are granted. Its same-run bill must therefore
+keep installation/calibration, source access, exact phase and sheet
+acquisition, original clock, arithmetic precision, record traffic,
+storage and actuation as unpaid coordinates. No finite-bit upper
+bound, physical lower bound or cheapest apparatus is inferred.
+These ideal allowances concern only a fixed current finite-cover
+map and fixed link; arbitrary history-dependent finite-memory
+controllers are a different quantified class.
+

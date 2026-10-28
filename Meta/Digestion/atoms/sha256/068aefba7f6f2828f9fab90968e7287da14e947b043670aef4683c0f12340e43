@@ -1,0 +1,32 @@
+**Step 3 (comparison above a fixed spectral cutoff).**
+Write $s=d/2$. Positivity of $R=P(\alpha I+\gamma P)$ implies
+$\alpha I+\gamma P\ge0$ on this sector: its quadratic form is
+nonnegative on the dense range of $P^{1/2}$, and it is bounded.
+Let
+$$
+ F=(\alpha I+\gamma P)^{1/2},
+ \qquad R^{1/2}=e^{-sK_\ell}F.
+$$
+Choose a finite $\Lambda>0$ so large that
+$$
+ c\le\alpha+\gamma e^{-d\lambda}\le C_0
+ \qquad(\lambda\ge\Lambda)
+ \tag{128.7}
+$$
+for some $c>0$, $C_0<\infty$; for example the lower bound
+$c=\alpha/2$ holds for a sufficiently large cutoff. Put
+$E=\mathbf1_{[\Lambda,\infty)}(K_\ell)$, let $K_E$ be the restricted
+operator, and put $b_E=EM_bE$ on $E\mathcal L_\ell$.
+The restriction $F_E$ is bounded and invertible by (128.7).
+Compressing (128.6), then multiplying by $F_E^{-1}$, gives
+$$
+ b_Ee^{-sK_E}=e^{-sK_E}B_E,
+ \qquad
+ B_E=F_E(EC^*E)F_E^{-1},
+ \qquad \|B_E\|\le\sqrt{C_0/c}.
+ \tag{128.8}
+$$
+The cutoff $\Lambda$ is fixed independently of all subsequent oscillation parameters $N$. Thus the conjugation by heat is bounded on this high-energy compression.
+This remains valid when $\gamma=-\alpha$; no lower comparison at zero
+has been used.
+

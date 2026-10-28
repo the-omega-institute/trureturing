@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/SingletonRetractionBasedInverse
    mirror-E: none(waiver:singleton-retraction-based-inverse)
-   anchors: [mathlib/module/Mathlib.Topology.Homotopy.Basic]
+   anchors: [mathlib/module/Mathlib.Topology.Homotopy.Path]
    utility: none
    digest: Singleton-cylinder retractions construct both relative inverse homotopies. -/
 import Mathlib.Topology.Homotopy.Path

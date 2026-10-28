@@ -2883,3 +2883,209 @@ BQP 的错误概率或量子原语静默删掉。三个结论的输入能力分�
 概率模型的成功率、可靠完成与实际全局最优仍是不同强度。定义 20.1 的
 传播、命题 22.2 的同源边和命题 24.2 的辅助控制分别供应这些义务中的
 明确局部接口，不单独供应全体 SAT 上的统一增长构造器。
+## 追加锚（本行以下为增补区）
+
+## 二十七、有限完成计数接入付费预测与终端增长
+
+**约定 27.1（来源、论域与外部供应）。** 本节把本卷 §§19–26 的显式共享端口、同源任务和终端合同接到一个外部精确计数供应；这是 `repo-derived` 的项目应用，采用普通数学证明。自归约、计数到生成、图计数和消元作为既有供应消费，不主张文献优先权。项目接口取共同快照 [827c052e48735c7532da597131ec33fad26a6c6f](https://github.com/the-omega-institute/trureturing/tree/827c052e48735c7532da597131ec33fad26a6c6f) 的本卷 §§19–26 及[预测谱卷 §11](AURIC_FIB_OBSERVATION_HIERARCHICAL_PHASES_AND_PREDICTIVE_SPECTRA.md)。
+
+输入 $G$ 显式列出一个由不同名字组成的布尔变量全集 $V=\{x_1,\ldots,x_v\}$、$q$ 个关系及其有序端口、钉值和变量次序。每关系的元数 $d_j\in\{0,1,2,3\}$，以至多八位的完整真值表表示；同名端口是同一个全局变量，允许重复端口。五模式、其子关系、exact-one 和 NOR 均可作为这种表。端口序使用本卷代数序；与预测谱的物理序之间仍作 $(x,y,z)=(X_1,X_3,X_2)$ 的置换。输入总位长度记为 $N$，包括所有名字、未出现于关系的声明变量、端口、关系表、钉值和实际采用的辅助表示。变量表显式，故 $v,q\le\operatorname{poly}(N)$；不把二进制声明的巨大宇宙当作免费输入。重复声明、越界端口、错误表长、非法位或次序并非排列者按语法拒绝；相反，互相矛盾的合法钉值给零解。
+
+记 $\operatorname{Sol}(G)\subseteq\{0,1\}^V$ 为**完整赋值**集合。未使用变量仍各贡献一个自由位。$v=0$ 时只有空赋值，计数为零或一，由零元关系及钉值合法性决定；$q=0$ 且无钉值时计数为 $2^v$。输出完整见证至少支付 $v$ 位写出成本，计数的二进制表示至多 $v+1$ 位。
+
+**数学引文 27.2（固定宽度计数供应的三个界与类型）。** 外部版本固定为 OpenAI, *The Exponential Time Hypothesis is False*, [7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a 的论文](https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/preprints/The-Exponential-Time-Hypothesis-is-False-October-25-2026/paper.pdf)，修订版日期为 2026-10-25。以下均为 `literature-attested` 的外部供应，应用明确依赖该算法结论，不把源码阅读当作本卷的外部重新编译或独立内核认证。令 $n$ 为声明变量数，$m$ 为子句数，$k\ge2$ 固定，$L$ 为供应者的规范编码位长度。
+
+| 供应及精确地址 | 时间上界；空间均为相应输入规模的多项式 |
+| --- | --- |
+| [形式化范围说明 `lean/docs/378.md`](https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/lean/docs/378.md) | $(L+1)^{O_k(1)}2^{O_k(n(\log\log n)^2/\sqrt{\log n})}$ |
+| 论文 Theorem 1.1，一般 $m$，$n\ge20$ | $(n+m)^{O_k(1)}2^{O_k(n\log\log n/\sqrt{\log n})}$ |
+| 同一定理，$m\le Dn$，$D>0$ 固定 | $(n+m)^{O_{k,D}(1)}2^{O_{k,D}(n/\sqrt{\log n})}$ |
+
+论文 Appendix D 的 Theorem D.1、Lemma D.2 分别供应张量收缩及稀疏多项式系统的较强界；不把后两行冒称为第一行的同界形式核验。固定宽度的有限小规模可直接枚举并吸收到常数中。下文统一使用保守的正则化尺度
+
+$$
+\rho(n)=\frac{n(\log\log(n+16))^2}{\sqrt{\log(n+16)}},\qquad
+T_3(L,n)=(L+1)^{O(1)}2^{O(\rho(n))}.
+\tag{58}
+$$
+
+[实际端点 `SqrtLogSpace/Final.lean`](https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/lean/OAI/Algorithms/SubexponentialSAT/SqrtLogSpace/Final.lean) 的 `exact_count_and_sat` 是 $\forall k\ge2\;\exists M,C,A,S,d,e\;\forall n,F$ 的顺序：一台固定有限 primitive machine，输出精确二进制计数和 SAT 位，停止，且每个执行前缀的已访问纸带空间有多项式界。`compiled_exact_count_and_sat` 给其固定程序，`exact_count_eth` 给 $n\ge20$ 的声明规模形式；量词不是每个规模重选一个免费程序或 advice。
+
+[规范 `SubexponentialSAT/Encoding.lean`](https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/lean/OAI/Algorithms/SubexponentialSAT/Encoding.lean) 中 `encodeNat n` 是 $n$ 个 true 后接 false，`encodeCNF F = encodeNat n ++ encodeCNFBody F`。故空公式也保留声明的 $n$，不能用仅出现的变量数替代。其 `formulaBitLength_lower`、`formulaBitLength_upper` 给
+
+$$
+n+m+2\le L\le n+2+\bigl(4+(8n+8)k\bigr)m.
+\tag{59}
+$$
+
+两个有限集合层都排序，重复文字、重复子句可去重，恒真子句可删除，均不改变**同一声明宇宙**上的解数。名称重编号、规范排序、单目数字和列表框架的写出是实际多项式位成本。
+
+发布方的[公告](https://openai.com/index/building-scientific-understanding-with-academic-communities/)题为 *Working with academic communities to build scientific understanding*；其[可读 HTML 转呈](https://r.jina.ai/https://openai.com/index/building-scientific-understanding-with-academic-communities/)标示 2026-10-26，并将 Russell Impagliazzo、Ramamohan Paturi、Ryan Williams 列为共同主持开放检查的团队负责人。公告的 Lean 验证措辞属于发布方主张，不供应本节的独立认证；这里不另立无原始出处的 Williams 个人引语。
+
+**定理 27.3（三端口完整计数与可靠增长的付费应用）。** 在引文 27.2 的固定 $k=3$ 计数供应前提下，约定 27.1 的网络可零新增变量编译成宽度至多三的 CNF $F_G$，逐完整赋值保持解。其精确计数、判空和一条无回溯完整见证的取得均有
+
+$$
+\operatorname{poly}(N)\,2^{O(\rho(v))}
+\tag{60}
+$$
+
+位时间和 $\operatorname{poly}(N)$ 空间上界。增长含最终原网络验证，满足定义 26.1 的非空保持、rank 和成功解码三个数学义务；这里取得费用是 (60)，尚未声称定义 26.1 的多项式时间前提。
+
+证明。对一个 $d$ 元局部表 $R$ 的每个禁止元组 $a$ 加入
+
+$$
+C_a=\bigvee_{i=1}^{d}\ell_{a_i}(s_i),\qquad
+\ell_0(t)=t,\quad\ell_1(t)=\neg t.
+\tag{61}
+$$
+
+在任意全局赋值上，$C_a$ 假恰当且仅当其有序端口取值等于 $a$；全取合取恰为属于 $R$。若端口重复而 $a$ 对别名不相容，(61) 是恒真式，删除即可；相容的禁止行仍精确排除该行。不能将各端口独立计数。$d=0$ 时，合法空元组不加子句，禁止空元组加空子句。钉值加单位子句。每三端口表至多八子句；总计 $m\le8q+$钉值条数，变量仍为 $V$，宽度不超过三。譬如本卷两种表给
+
+$$
+\begin{aligned}
+E(x,y,z)&\equiv(x\lor y\lor z)\land(\neg x\lor\neg y)
+ \land(\neg x\lor\neg z)\land(\neg y\lor\neg z),\\
+N(x,y,z)&\equiv(\neg x\lor\neg z)\land(\neg y\lor\neg z)
+ \land(x\lor y\lor z).
+\end{aligned}
+\tag{62}
+$$
+
+这些式子在别名代入后仍成立。由 (59)，规范长度为 $\operatorname{poly}(N)$，编译和读写也为多项式，故一次计数满足 (60)。只有在名字、钉值等也采用 $\operatorname{poly}(v+q+1)$ 长度的规范描述时，才能将前因子简写为 $(v+q+1)^{O(1)}$。一般输入必须保留 $N$。对高元 succinct 关系，禁止行最多 $2^d$，不获本定理的常数编译费用。
+
+自归约使用 [Cook 文献注 §§1–2、7–9](../../../Library/ConceptDynamics/cook2006pversusnp.md) 的既有机制；原始决定到搜索供应见 [Cook 原文 PDF 第 5 页](https://www.claymath.org/wp-content/uploads/2022/06/pvsnp.pdf)。本应用的精确对应如下。对 $|p|=t\le v$，令
+
+$$
+Z_G(p)=\#\{w\in\{0,1\}^{v-t}:pw\in\operatorname{Sol}(G)\}.
+\quad Z_G(p)=Z_G(p0)+Z_G(p1)\quad(t<v).
+\tag{63}
+$$
+
+先取得 $Z_G(\varepsilon)$；零时拒绝。有解时每步只数 $Z_G(p0)$，正则添零，否则添一。当前正计数和 (63) 保证所选子前缀仍正。把前缀钉成单位子句后仍在原 $v$ 变量上计数，钉住的位有唯一取值，所得完整计数恰为 (63)，不是多乘 $2^t$。单位子句不增宽；每次规范输入长度 $L_p\le\operatorname{poly}(N)$。
+
+取 $O=(G,p)$、$W_G(O)=\{pw\in\operatorname{Sol}(G)\}$、$\Phi=v-|p|$。每步 rank 减一，恰 $v$ 步到完整 $p$；终端 $Z_G(p)=\mathbf1_{p\in\operatorname{Sol}(G)}$，所以非空终端是单点 $\{p\}$，解码 $d(G,O)=p$ 满足 (56)。最后逐原表和钉值验证并写出 $v$ 位。总计至多 $v+1$ 次计数，包含空前缀的一次；$v=0$ 时此一次计数与空赋值验证已经终结。若 $T_* =\max_{|p|\le v}T_3(L_p,v)$，则
+
+$$
+T_{\rm grow}\le(v+1)T_*+\operatorname{poly}(N).
+\tag{64}
+$$
+
+编译、每次输入构造、计数输出读取、状态更新、解码及原验证均在右侧；所有次数和表示受 $N$ 的多项式控制。顺序调用复用工作空间，只保存前缀及常数个至多 $v+1$ 位计数，故空间仍多项式。指数多地址的语义完成表未被一次性取得。∎
+
+**命题 27.4（投影多重性与本卷工具的唯一扩展）。** (60) 计算完整解数，不能直接当作任意边界的投影解数。本卷命题 19.6 的 NOR 到 exact-one 工具则有唯一辅助扩展，故可以保完整计数地拼接。
+
+证明。若全局变量分为边界 $B$ 与内部 $I$，定义 $m(b)=\#\{i:(b,i)\in\operatorname{Sol}(G)\}$，则
+
+$$
+\#\operatorname{Sol}(G)=\sum_bm(b),\qquad
+\#\operatorname{pr}_B\operatorname{Sol}(G)=\sum_b\mathbf1_{m(b)>0}.
+\tag{65}
+$$
+
+$E(x,u,v)$ 的完整行 $100,010,001$ 共三行，边界 $x$ 的投影却只有两个值；均匀完整律给 $\Pr(x=0)=2/3$，不是均匀边界律的 $1/2$。存在辅助变量的一般等价并不保计数。
+
+命题 19.6 的三个式子给 $u=1-x-z,v=1-y-z,w=1-u-v$。在合法 NOR 行 $z=1$ 时唯一为 $(u,v,w)=(0,0,1)$；$z=0$ 时 $x\lor y=1$ 且唯一为 $(1-x,1-y,x+y-1)$，均为布尔值；非法行无扩展。外端口即使别名仍只是对这些等式代入，唯一性不变。每次工具使用取互异的新辅助名；各工具仅共享原信号，于是其唯一扩展合成全局双射。每门新添三个变量是实际代价，应用指数应使用扩大后的变量数，除非另证原参数控制。∎
+
+### 27.1 条件律作为同源任务的可取得输入
+
+**命题 27.5（完整来源的条件生成、熵与联合读口）。** 在定理 27.3 的前提下，令来源为同一个 $G$ 的**均匀完整合法赋值**，且 $Z_G(p)>0$。对非终端前缀定义
+
+$$
+q_b(G,p)=\frac{Z_G(pb)}{Z_G(p)}\in\mathbb Q\cap[0,1].
+\tag{66}
+$$
+
+这些有理数可在 (60) 的位时间和多项式空间内取得；精确均匀完整生成有同阶确定计数费用及附加的期望多项式随机费用。剩余熵是符号实值 $H_2(G,p)=\log_2Z_G(p)$，且
+
+$$
+\log_2Z_G(p)-\sum_{b:Z_G(pb)>0}q_b(G,p)\log_2Z_G(pb)
+=h_2(q_0),\qquad h_2(u)=-u\log_2u-(1-u)\log_2(1-u).
+\tag{67}
+$$
+
+证明。式 (63) 给 (66) 的有理类型和归一化。分子分母各至多 $v+1$ 位，可直接保留未约分比值，若约分也只需多项式位运算。给父计数和零子计数即可相减得另一个子计数；对一个按需查询可取得父子两个计数，沿生成路径则保留所选子计数，整次只需初始及每步零子的计数。
+
+计数到均匀生成是经典供应，见 Jerrum–Valiant–Vazirani, *Random generation of combinatorial structures from a uniform distribution* (1986), [Theorem 3.3(1)](https://stat.duke.edu/~scs/Courses/Stat376/Papers/ConvergeRates/RandomizedAlgs/JerrumValiantVaziraniTCS1986.pdf) 及引文 27.2 的 Theorem 1.1 后段。这里的具体有限实现为：给正整数 $Z=Z_G(p)$，取 $d=\lceil\log_2 Z\rceil$ 个公平位组成 $U\in[0,2^d)$，若 $U\ge Z$ 则重抽，接受后以 $U<Z_G(p0)$ 选零。$Z=1$ 时 $d=0,U=0$；其余接受率 $Z/2^d>1/2$，期望尝试少于二。每次只处理 $O(v+1)$ 位整数，$v$ 步的附加期望位费为多项式。拒绝次数没有确定的最坏多项式时钟，不能将此采样结论改称确定性生成；其工作空间每次复用。对任意合法完整 $x$，条件概率乘积望远镜为 $Z_G(x)/Z_G(\varepsilon)=1/Z_G(\varepsilon)$，故严格均匀。
+
+在正分支代入 $Z_G(pb)=q_bZ_G(p)$、展开对数并用 $\sum_bq_b=1$，即得 (67)；零分支的加权项约定为零，$0\log0=0$。这是符号熵恒等式，不是精确有限位输出一个通常非有理的对数，也不减免取得计数、随机位或所需数值精度的费用。$Z_G(p)=1$ 的零熵只说明唯一完成；取得它仍需定理 27.3 的计算。终端无下一位，不定义 (66)，直接作原验证。∎
+
+**推论 27.6（从显式均匀来源到五模式的任务系数）。** 设 $G$ 在三个指定代数端口 $(x,y,z)$ 上强制本卷五模式，且 $Z_*:=\#\operatorname{Sol}(G)>0$。在同一个均匀完整来源上，固定次数的计数给
+
+$$
+X=\frac{\#(G\land x)}{Z_*},\quad
+Y=\frac{\#(G\land y)}{Z_*},\quad
+Z_{\rm mid}=\frac{\#(G\land z)}{Z_*},\quad
+\kappa=\frac{\#(G\land x\land y)}{Z_*}.
+\tag{68}
+$$
+
+因此同源不一致概率及五模式任务的既有展开成为可取得的有理消费者：
+
+$$
+\begin{aligned}
+D&=\Pr(x\ne y)=X+Y-2\kappa,\\
+\mathbb E f&=A_f+J_f\kappa,\\
+A_f&=f_{\varnothing}+(f_1-f_{\varnothing})X
+ +(f_3-f_{\varnothing})Y+(f_2-f_{\varnothing})Z_{\rm mid},\\
+J_f&=f_{\varnothing}+f_{13}-f_1-f_3=\Lambda_f.
+\end{aligned}
+\tag{69}
+$$
+
+证明。式 (68) 的五次计数含共同分母，事件通过单位钉值编译，不增变量和宽度。$\mathbf1_{x\ne y}=x+y-2xy$ 逐行成立，得 $D$；(69) 直接使用本卷定理 7.2 的占位展开，而不是新增一个通用期望公式。内部完成的多重性按 (65) 保留，故没有把均匀完整来源误换为均匀边界来源。此输入含完整关系 $G$ 及其指定均匀律；只给物理边缘 $(X,Y,Z_{\rm mid})$ 而不知来源的纤维，仍可有不同 $\kappa$，与 §§6、22–23 的不可识别例不冲突。
+
+若五个任务值是显式有理数、其总编码长为 $B$，则精确期望及显式有限菜单中各期望的比较还需 $\operatorname{poly}(N+B)$ 的算术、读写成本；中间数位长受 $\operatorname{poly}(v+B)$ 控制。对于一个菜单，$B$ 应包含所有动作、费用表和系数，不能只报单个系数的长度。用这些比较选择最小期望动作只对这个已给菜单和同源费用律有效，合法性及执行费仍遵守 §23；不求全局最廉辅助结构。若 $f$ 只是任意实值函数，(69) 保持符号意义，不能附送数值时间界；若另给可计算系数的求值器，精度、求值时间及比较所需的分离条件都须另外收费。∎
+
+### 27.2 粗预测的充分目标与结构边界
+
+**命题 27.7（全输入严格误差预测的单向后果）。** 假设有一个固定的总经典确定性程序 $Q$：对每个显式声明变量的 3-CNF $F$ 及前缀 $p$，在总位长的统一多项式时间内输出有限有理数 $\widehat q(F,p)$。错误输入、过长前缀、完整前缀和无完成前缀也必须在该界内停止；准确性只要求每个 $|p|<v$ 且 $Z_F(p)>0$ 满足
+
+$$
+\left|\widehat q(F,p)-\frac{Z_F(p0)}{Z_F(p)}\right|\le\epsilon,
+\qquad 0\le\epsilon<\frac12
+\tag{70}
+$$
+
+的一个固定误差界。则 $P=NP$。这是定理 26.3 的充分接口，不宣称 $Q$ 已有统一多项式构造，也不把这个有理概率预测合同写成与 $P=NP$ 等价的计数定理。
+
+证明。在空前缀起步，每次 $\widehat q\ge1/2$ 选零，否则选一。若当前可完成而零子无解，真条件概率为零，(70) 强制 $\widehat q<1/2$；若一子无解，真值为一，强制 $\widehat q>1/2$。两子都可完成时任选仍保持正计数。因此 YES 输入经过 $v$ 次调用输出满足赋值；终端解码正是该完整前缀，补足 (56)。NO 输入每次调用亦按全输入总成本停止，最终原公式验证必拒绝。解析、比较有理输出、至多 $v$ 次调用、输出及最终验证合计多项式；$v=0$ 直接验证空赋值。由 3-SAT 的既有 NP 完全性得结论。相同误差界下 $\epsilon=1/2$ 不足：对 $F=x_1$ 的根，真值零而允许输出 $1/2$，上述规则选了无解分支。∎
+
+与 (70) 不同，无条件概率 $\#F/2^v$ 在无解与唯一解之间只差 $2^{-v}$；固定加性误差不能统一分辨。平均训练准确、只保证某一条未知成功路径、在 NO 上不停止，均不满足命题的量词。引文 27.2 通过精确父子计数供应亚指数时间的 (66)，而统一多项式时间求 (70) 的构造仍为 `open`。研究目标是证明预测器如何从显式共享关系、层级或可构造辅助结构取得，不以免费极限表、最佳结构的存在或精确计数本身替代取得算法。
+
+**数学引文 27.8（辅助代数的恢复合同）。** 论文 §2 的解释模型及 §3 在各组仅经已给共享标签 $y$ 相互作用、固定 $y$ 后剩余变量和因素分解为组的条件下，使用形如
+
+$$
+Z=\sum_y\prod_g B_g(y)
+\tag{71}
+$$
+
+的有限分配律接口。这里每个组和标签都属于同一实际求和问题，不能把分别可达的最优摘要拼成一次共同实现。恢复形式在零点复原输入，§3 的 $H(0)=Z$ 可表达这个解释模型；非零节点的中间量是代数值，未必是布尔值、概率或等价 SAT 实例。
+
+一般公式的 §5.2–§5.4 则取 $\ell=n+1$，在 $A_\ell=\mathbb Q[V]/(V^\ell)$ 中作全体因子共同的截断。$V$ 是记录可整除次数的形式变量，不是新增待枚举布尔变量。令 $S_\ell(\sum_{s<\ell}b_sV^s)=\sum_{s<\ell}b_s$，式 (5.5) 给
+
+$$
+S_\ell(H(0))\equiv N(\mathcal P)\pmod{2^\ell},\qquad
+0\le N(\mathcal P)\le2^n<2^\ell.
+\tag{72}
+$$
+
+故取最小非负余数才恢复该稀疏系统的准确计数；$S_\ell$ 不保持乘法，必须在截断乘积之后应用。§6 把确定性构造的系统及互不相交分支的计数还原为原公式计数，不能用裸 $H(0)=\#F$ 取代这条一般恢复链。Proposition 5.3 与 Appendix B 支付有理系数位长、Taylor 数据、精确插值及求余成本。较强的 Appendix D 在 $(\mathbb Z/2^p\mathbb Z)[V]/(V^\ell)$ 中收缩，D.4.4 的 Lemma D.5 使用 tapered Hermite recovery；不是简单忽略系数费用的同一次插值。辅助关系可以扩大代数表示，并不要求在原图中找到短路径。把任何这类结构接到 §§20–26，仍须支付构造、共享摘要处理、恢复及最终解码三类成本。
+
+**命题 27.9（指数尺度、顺序与量子类型的不可替代性）。** 定理 27.3 的界为相对于变量数的亚指数上界，不提供一般多项式保证；显式残余表的顺序障碍也不提供所有算法的下界。有限布尔计数不能替代相干振幅。
+
+证明。置 $t=\log(n+16)$，则 $\rho(n)/n=(\log t)^2/\sqrt t\to0$，而 $\rho(n)/\log n\sim n(\log\log n)^2/(\log n)^{3/2}\to\infty$。所以在该计数供应成立时，固定宽度 3-SAT 有 $2^{o(n)}\operatorname{poly}(L)$ 时间算法，与要求某个正指数率下界的 ETH 相矛盾；这条条件结论不等于 $P=NP$。一个正固定常数 $c$ 下 $2^{c\rho(n)}$ 的表达式超过每个固定 $n^d$，但这是所给上界的尺度，不是算法不可加速的下界；例如 $2^{\sqrt n}=2^{o(n)}$ 亦非多项式尺度。ETH 的标准变量参数和归约边界可对照 [Paturi 的 ETH 讲义](https://www.ias.edu/sites/default/files/video/ams/2009/CSDM/CSDM%20-%20Monday%2C%20October%2012%2C%202009%20-%20Paturi.pdf)。
+
+在完整输入 $N$ 上，已取得的共享枚举 $2^r\operatorname{poly}(N)$ 若 $r=O(\log(N+2))$ 则多项式；[预测谱命题 11.2](AURIC_FIB_OBSERVATION_HIERARCHICAL_PHASES_AND_PREDICTIVE_SPECTRA.md) 的树袋费用则要求 $(w+1)\log a=O(\log(N+2))$，连同分解取得、表示、局部测试、解码均为多项式。定义一个对数宽度辅助结构不证明统一付费编译器存在；条件性 $P=NP$ 后果仍取该卷推论 11.5。相反，(60) 不要求小树宽或少量共享标签。上下界的归约方向分别是目标 $\to$ 3-SAT 与 3-SAT $\to$ 目标；一般多项式归约不保持变量亚指数上界。若 $n'\le Cn$ 则 $\rho(n')=O(\rho(n))$，而 $n'=\Theta(n^2)$ 时 $\rho(n')/n\to\infty$，不能据该代入推出对原 $n$ 的亚指数界。
+
+[Dechter 文献注命题 4](../../../Library/ConceptDynamics/dechter1996bucket.md) 的既有例 $\bigwedge_{i=1}^r(x_i\leftrightarrow y_i)$：先全部 $x$ 后全部 $y$，切口有 $2^r$ 个不同单点后缀要求；交错读取只留当前一对。两种次序下计数都是 $2^r$，且即使分组次序也有简单的复制型选择程序。这只限制指定的单向观察表示，不构成一般 P/NP 下界，也不把固定纯 DAG 的调度顺序误作变量观察顺序。
+
+最后，对本节实际布尔表，
+
+$$
+Z_G=\sum_{x\in\{0,1\}^V}\prod_j\mathbf1_{R_j}(x|_{s_j})
+\tag{73}
+$$
+
+是识别同名指标的有限布尔张量收缩。量子振幅却是 $\mathcal A=\sum_{\rm path}\prod\alpha$，概率为 $|\mathcal A|^2$。对 Hadamard 矩阵 $H_{\rm Had}=2^{-1/2}\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$，$H_{\rm Had}^2|0\rangle=|0\rangle$ 的通往 $|1\rangle$ 的两条非零路径各有振幅 $1/2,-1/2$，和为零；路径数二不产生正概率。这个矩阵乘法反例已排除从布尔路径数到 Born 概率的替换。本卷 §24 的占位概率、相干相位、实际门及许可读口仍分别收费；引文 27.2 是经典确定性供应。有限局部关系经收缩取得条件预测，再经 (63) 增长出可验证完整记录，是本节的离散链；物理量子实现另需振幅、相位、制备、读出和成本保持桥。∎
+
+## 追加锚（本行以下为增补区）

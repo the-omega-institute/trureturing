@@ -1,0 +1,15 @@
+**Lemma 5.1 (IID potential marks from actual zero transitions).** After the first observed tick, the potential flag values at successive closing ticks are iid Bernoulli variables with parameter $p_i(q)=Z_i(q^2)/Z_i(q)$ under source $i$, independent of $\tau$. The actual flags used by the controller form the stopped prefix of this potential sequence. Independence between a mark and its own gap duration is not asserted.
+
+Proof. A gap starts with flag one. Conditional on $K_n=k$, it has exactly $k$ zero transitions. Its flag is still one at the closing tick exactly when all $k$ survival trials succeed, an event with conditional probability $q^k$. After the first failure the remaining zero transitions leave flag zero, but every zero and the closing one is read. Therefore
+
+$$
+\mathsf P_{i,q}(\text{closing flag}=1)
+=\sum_{k\ge1}\frac{F_i(k)q^k}{Z_i(q)}q^k
+=\frac{Z_i(q^2)}{Z_i(q)}=p_i(q).
+\tag{5.1}
+$$
+
+To make independence precise, use an analytical probability space with, for every gap, its own independent sequence of Bernoulli$(q)$ survival coins and an independent Bernoulli$(t)$ closing coin. All these supplies are independent of the source. The potential mark $A_n$ is the product of the first $K_n$ survival outcomes. Unused outcomes after a failure, and potential blocks after absorption, need never be drawn by the actual machine. They only define a continuation for analysis; they provide no accessible random tape or extra reads.
+
+The blocks consisting of $K_n$, its survival coins and its closing coin $C_n$ are independent and identically distributed, and are independent of $\tau$. Consequently $(A_n,C_n)$ are iid potential pairs with $A_n\sim\operatorname{Bernoulli}(p_i)$ and $C_n\sim\operatorname{Bernoulli}(t)$ independent within each pair. Every nonterminal closing tick initializes the next flag at one, so the table implements these pairs up to its absorption. In particular the next pair is independent of all preceding gaps, coins and walk coordinates before absorption. The stopped prefix need not be an unconditioned fixed-length iid sample. Since its conditional success probability is $q^k$, the mark retains dependence on $K_n$; no payment step below removes that dependence. $\square$
+

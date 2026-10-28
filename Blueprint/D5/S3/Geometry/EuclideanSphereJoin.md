@@ -12,6 +12,8 @@ Lean statement: `D5/S3/Geometry/EuclideanSphereJoin.UnitSphere`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Allen Hatcher (2002). *Algebraic Topology*. URL: <https://pi.math.cornell.edu/~hatcher/AT/AT.pdf>.
+
 *Commentary.*
 
 The unit sphere is the actual metric sphere of radius one about zero, equipped with its normed-space subspace topology.
@@ -23,6 +25,8 @@ Lean statement: `D5/S3/Geometry/EuclideanSphereJoin.StdSphere`
 *Formalization.* `D5/S3/Geometry/EuclideanSphereJoin.StdSphere` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Allen Hatcher (2002). *Algebraic Topology*. URL: <https://pi.math.cornell.edu/~hatcher/AT/AT.pdf>.
 
 *Commentary.*
 
@@ -36,9 +40,11 @@ Lean statement: `D5/S3/Geometry/EuclideanSphereJoin.representative`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Allen Hatcher (2002). *Algebraic Topology*. URL: <https://pi.math.cornell.edu/~hatcher/AT/AT.pdf>.
+
 *Commentary.*
 
-For unit vectors x and y and t in the closed unit interval, put d=max(1-t,t). The representative map is the pair (((1-t)/d)x,(t/d)y). The positive denominator is at least one half. The product carries its native maximum norm, so the resulting vector has norm one.
+For unit vectors x and y and t in the closed unit interval, put d=max(1-t,t). The representative map is the pair (((1-t)/d)x,(t/d)y). The positive denominator is at least one half. The product carries its native maximum norm, so the resulting vector has norm one. This explicit normalization is a local refinement of the cited ordinary quotient convention.
 
 **Theorem 1.4 (The exact ordinary join relation).**
 
@@ -47,6 +53,8 @@ Lean statement: `D5/S3/Geometry/EuclideanSphereJoin.representative_eq_iff`
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/EuclideanSphereJoin.representative_eq_iff` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Allen Hatcher (2002). *Algebraic Topology*. URL: <https://pi.math.cornell.edu/~hatcher/AT/AT.pdf>.
 
 *Commentary.*
 
@@ -60,6 +68,8 @@ Lean statement: `D5/S3/Geometry/EuclideanSphereJoin.productSphereMap`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Allen Hatcher (2002). *Algebraic Topology*. URL: <https://pi.math.cornell.edu/~hatcher/AT/AT.pdf>.
+
 *Commentary.*
 
 The continuous normalized block formula descends through FiniteSimplicialJoin.OrdinaryJoin, using exactly its endpoint setoid and native quotient topology.
@@ -71,6 +81,8 @@ Lean statement: `D5/S3/Geometry/EuclideanSphereJoin.productSphereHomeomorph`
 *Formalization.* `D5/S3/Geometry/EuclideanSphereJoin.productSphereHomeomorph` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Allen Hatcher (2002). *Algebraic Topology*. URL: <https://pi.math.cornell.edu/~hatcher/AT/AT.pdf>.
 
 *Commentary.*
 
@@ -84,6 +96,8 @@ Lean statement: `D5/S3/Geometry/EuclideanSphereJoin.coordinatePoint`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Allen Hatcher (2002). *Algebraic Topology*. URL: <https://pi.math.cornell.edu/~hatcher/AT/AT.pdf>.
+
 *Commentary.*
 
 The chosen point of each standard sphere is the first coordinate vector, with coefficient one in coordinate zero and zero elsewhere.
@@ -94,11 +108,11 @@ Lean statement: `D5/S3/Geometry/EuclideanSphereJoin.sphereJoinHomeomorph`
 
 *Formalization.* `D5/S3/Geometry/EuclideanSphereJoin.sphereJoinHomeomorph` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Allen Hatcher (2002). *Algebraic Topology*. URL: <https://pi.math.cornell.edu/~hatcher/AT/AT.pdf>.
 
 *Commentary.*
 
-For every pair of natural p and q, the ordinary join of the actual standard Euclidean spheres of dimensions p and q is homeomorphic to the actual standard Euclidean sphere of dimension p+q+1. The normalized quotient homeomorphism first reaches the maximum-norm product sphere. Native linear coordinate concatenation identifies the ambient product with the Euclidean space indexed by Fin (p+q+2). Radial normalization sends z to L(z)/norm(L(z)); the inverse sends w to L inverse(w)/norm(L inverse(w)). Nonzero images, linearity and scalar norm identities prove that the maps are inverse, and the native polar-coordinate homeomorphism supplies their continuity. No equality between the product maximum norm and the Euclidean norm is used. Both zero-dimensional sphere factors are included. Hatcher, Algebraic Topology, page 9 defines the ordinary join, and Chapter 0 Exercise 18 on page 19 states this classical sphere identity. This construction supplies a classical geometric bridge and makes no claim to resolve Carnero Bravo Question 22.
+For every pair of natural p and q, the ordinary join of the actual standard Euclidean spheres of dimensions p and q is homeomorphic to the actual standard Euclidean sphere of dimension p+q+1. The normalized quotient homeomorphism first reaches the maximum-norm product sphere. Native linear coordinate concatenation identifies the ambient product with the Euclidean space indexed by Fin (p+q+2). Radial normalization sends z to L(z)/norm(L(z)); the inverse sends w to L inverse(w)/norm(L inverse(w)). Nonzero images, linearity and scalar norm identities prove that the maps are inverse, and the native polar-coordinate homeomorphism supplies their continuity. No equality between the product maximum norm and the Euclidean norm is used. Both zero-dimensional sphere factors are included. The cited Chapter 0 page 9 defines the ordinary join, and Exercise 18 on page 19 states the classical sphere identity as an exercise. The identity is literature-attested; the explicit maximum-norm and coordinate construction is a local refinement. This construction supplies a classical geometric bridge and makes no claim to resolve Carnero Bravo Question 22.
 
 **Theorem 1.9 (Exact coordinate endpoint).**
 
@@ -108,9 +122,11 @@ Lean statement: `D5/S3/Geometry/EuclideanSphereJoin.sphereJoinHomeomorph_coordin
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Allen Hatcher (2002). *Algebraic Topology*. URL: <https://pi.math.cornell.edu/~hatcher/AT/AT.pdf>.
+
 *Commentary.*
 
-For every natural p and q and every actual point y of the q-dimensional sphere, the homeomorphism sends the quotient class of (e0,y,0) exactly to the first coordinate unit vector of the target sphere. At parameter zero the normalized product vector is (e0,0). Concatenation sends it to the first target coordinate vector, whose Euclidean norm is one, so radial normalization fixes it.
+For every natural p and q and every actual point y of the q-dimensional sphere, the homeomorphism sends the quotient class of (e0,y,0) exactly to the first coordinate unit vector of the target sphere. At parameter zero the normalized product vector is (e0,0). Concatenation sends it to the first target coordinate vector, whose Euclidean norm is one, so radial normalization fixes it. The cited quotient convention collapses y at this end; it does not prescribe this exact selected-coordinate formula, which is proved locally.
 
 ## References
 

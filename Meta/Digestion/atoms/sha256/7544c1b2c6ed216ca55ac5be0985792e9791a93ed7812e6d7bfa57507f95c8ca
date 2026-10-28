@@ -1,0 +1,40 @@
+**Theorem 95.3 (the missing information is owed current service).**
+Entries $0$ and $e_{p_0}$ have identical complete scheduled replies
+for arbitrarily many cycles, but after every $R\ge1$ completed cycles
+their actual endpoints are distinguished by an immediately legal
+original Read at $\ell_1=RLL$. The same paired-execution conclusion
+holds if common adaptive terminal Adds are inserted while keeping
+exactly this Read/Tick schedule and fixed graph.
+
+**Proof.** The difference $e_{p_0}$ is supported at odd depth, so every
+scheduled scalar difference is zero. The complete ACKs, framing and
+other context are the same. At the end of $R$ cycles the homogeneous
+difference is $A^{bR}e_{p_0}$. The path
+$p_0,q_0,q_1,p_1,\ell_1$ has length four. Since $bR$ is even and
+at least four, insert $(bR-4)/2$ immediate edge-backtracking pairs
+into this path. It is a walk of length $bR$. Adjacency powers count
+walks with nonnegative integral coefficients, so
+
+$$
+e_{\ell_1}^{\mathsf T}A^{bR}e_{p_0}>0.
+\tag{95.3}
+$$
+
+That extra Read distinguishes the actual current fields. Under
+adaptive Adds, identical preceding complete records produce identical
+next operands and addresses. Their translations cancel in the
+paired difference. Induction preserves the same homogeneous difference
+at every specified Tick and the same scheduled observations. Equation
+(95.3) remains the difference at the additional Read, regardless of
+those common translations. Fixing a common input-independent random
+tape gives the same paired statement.
+
+There is no allowance here for growth, extra/reordered acquisition
+Reads, or extra Ticks. These would be different acquiring schedules.
+The distinguishing off-schedule Read belongs to the original owed
+future service, which has not been narrowed to the acquiring clock.
+An identical self-contained installed predictor cannot predict both
+replies. Thus this is surviving current-task ambiguity, rather than
+an erased-entry example or an impossibility for every native protocol.
+$\square$
+
