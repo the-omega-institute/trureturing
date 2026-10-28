@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Quantum/Matrix/RpowPencilTaylor
   - D5/S3/Quantum/Matrix/HsfBalancedSpectralCertificate
   - D5/S3/Quantum/Matrix/HsfBalancedCfcBridge
+  - D5/S3/Quantum/Matrix/HsfProjectionCubic
 license: citation-only
 triage: anchor
 ---
@@ -144,6 +145,32 @@ There is no formal three-level or arbitrary-spectrum theorem here, and this
 library update does not claim the full all-`alpha` HSF conjecture, a novelty
 result, or an official open-problem resolution. The primary HSF source and
 the original radial `alpha=3` exposition above remain the citation anchor.
+
+`D5/S3/Quantum/Matrix/HsfProjectionCubic` supplies a separate
+arbitrary-finite-dimensional identity-denominator result at \(\alpha=3\).
+For \(X>0\), \(H\succeq0\), \(X-H\succeq0\), and a Hermitian
+idempotent \(P\), the actual function
+\(g(t)=\Psi_3(X+tH,I+tP)\) satisfies \(g'''(0)\le g''(0)\).
+Its exact certificate writes \(27(p_2-3p_3)\) as eleven positive
+rational multiples of \(\operatorname{Re}\operatorname{Tr}(Aq^*Bq)\),
+with \(A\in\{P,I-P\}\), \(B\in\{H,X-H\}\), and explicitly
+specified linear factors. PSD congruence and cyclicity prove each localizer
+nonnegative without asserting that a product of PSD matrices is PSD.
+The existing `HsfIdentityCubicDerivatives.identity_cubic_trace_derivatives`
+identifies \(g''(0)=2p_2\) and \(g'''(0)=6p_3\) for the actual CFC
+sandwich trace. No pair of \(X,H,P\) is required to commute, and singular
+PSD directions are included.
+
+For Hermitian \(A,J\) with \(X\pm A\succeq0\) and \(J^2=I\),
+the same module proves \(f''(0)\ge0\) and
+\(|f'''(0)|\le5f''(0)\) for \(f(t)=\Psi_3(X+tA,I+tJ)\).
+It uses \(H=(X+A)/2\), \(P=(I+J)/2\), the exact ordered coefficient
+identities \(p_2^{\mathrm{signed}}=4p_2\) and
+\(p_3^{\mathrm{signed}}=4p_2+8p_3\), and the reverse pair
+\((-A,-J)\), whose projection is \(I-P\).
+This establishes the projection and signed involution subclasses only.
+Arbitrary noncommuting positive contractions, independent denominator
+centers, and the full HSF conjecture remain OPEN.
 
 ## Verified locators
 
