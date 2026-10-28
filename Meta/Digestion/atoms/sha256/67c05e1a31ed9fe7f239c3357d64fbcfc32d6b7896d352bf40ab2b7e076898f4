@@ -1,0 +1,51 @@
+**Corollary 129.3 (the original pencil under actual global essential boundedness).** Under the complete source hypotheses of Definition 129.1, suppose additionally that the actual source density at the specified original time satisfies
+
+$$
+g_t\in L^\infty(G,m).
+\tag{129.16}
+$$
+
+For every real $(\alpha,\beta,\gamma)$ with $(\alpha,\beta)\ne(0,0)$, the original equal-gap mixed pencil
+
+$$
+\begin{aligned}
+\varphi&=\alpha g_t+\beta g_{t+d}
+       =\alpha g_t+\beta Pg_t,\\
+Q(v)&=\int\varphi\,vPv\,dm
+       +\gamma\int g_t\,vP^2v\,dm,
+\qquad v\in\mathcal V_G,
+\end{aligned}
+\tag{129.17}
+$$
+
+has a bounded real negative test at each positive global angular frequency, with mutually orthogonal real polar pairings between distinct positive frequencies. Moreover, for every Borel $E$ with $m(E)>0$ and every exact first-order domain above,
+
+$$
+n_-(Q|_{\mathcal V_G})
+=n_-(Q|_{\mathcal V_E})
+=n_-(Q|_{\mathcal V_E^{\rm lin}})=\infty.
+\tag{129.18}
+$$
+
+No sign restriction on the coefficients is required by this conditional corollary. The boundedness hypothesis (129.16) is an additional condition on the actual original density, not a consequence of its supplied $L^2$ integrability or local regularity.
+
+**Proof of Corollary 129.3.** Make the exact substitutions into Theorem 129.2
+
+$$
+f=\alpha g_t+\beta Pg_t,\qquad w=g_t,\qquad c=\gamma,
+\tag{129.19}
+$$
+
+without changing $K,m,P$, the extension, the source or the clock. The Markov $L^\infty$ contraction gives
+
+$$
+\|Pg_t\|_\infty\le\|g_t\|_\infty,
+\qquad
+\|f\|_\infty\le(|\alpha|+|\beta|)\|g_t\|_\infty.
+\tag{129.20}
+$$
+
+Thus both distinct multipliers are globally bounded. Source §§120 and 122 give their rotation invariance and the smoothness of $f$ on $\Omega$. Nonconstancy for every $(\alpha,\beta)\ne(0,0)$ is exactly the supplier (126.7) and its accompanying injectivity/source-start contradiction in Corollary 126.2: constancy would force $g_t-1$ to be zero or a single positive-eigenvalue vector, and injectivity toward time zero would produce an $L^2(m)$ density for $\delta_e$, contradicting $m(\{e\})=0$. This established source argument is reused with its original hypotheses. Theorem 129.2 now supplies the global negative subspaces for (129.17).
+
+For the local and constrained conclusions, apply Proposition 127.2, rather than localizing the angular tests. Equation (127.4) equates the local and global negative indices. With $r_E=\operatorname{rank}\Lambda_E\le37$, equation (127.5) says that a finite bound $k$ on the exact first-order domain would imply the global bound $k+r_E\le k+37$, contradicting the global infinite index. This proves (129.18). An arbitrary positive-measure $E$ need not preserve angular sectors, so the local conclusion is a total-index conclusion and contains no sectorwise localization assertion. $\square$
+

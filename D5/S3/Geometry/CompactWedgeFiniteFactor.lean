@@ -49,7 +49,7 @@ def point (j : J) : C(Z j, FamilyWedge b) :=
   ⟨fun z => Quotient.mk _ (Sum.inr ⟨j, z⟩),
     continuous_quotient_mk'.comp (continuous_inr.comp continuous_sigmaMk)⟩
 
-private theorem point_base (j : J) : point b j (b j) = base b :=
+theorem point_base (j : J) : point b j (b j) = base b :=
   Quotient.sound (Or.inr ⟨Or.inr ⟨j, rfl⟩, Or.inl rfl⟩)
 
 private theorem raw_eq_point {j : J} {z : Z j} (hz : z ≠ b j)
