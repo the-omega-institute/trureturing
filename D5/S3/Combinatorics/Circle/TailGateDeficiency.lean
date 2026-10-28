@@ -90,6 +90,7 @@ private theorem no_large_append {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
   exact (not_lt_of_ge (hmin _ hv)) hj
 
 set_option maxHeartbeats 1600000 in
+-- Two independent physical selections, three strip orders and exact inventory share this budget.
 /-- Under the original twelve conditions, one complete gate-specific sign pool
 in the SAME physical T2 is insufficient. There is no clearance, supplied old
 margin, favorable-resource or numerical-injectivity premise. -/
@@ -146,11 +147,13 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
   have hnval : f n = -D := by
     have hv := geo.nValue
     change orient (decide (f p < 0)) (f n) = -D at hv
-    simpa only [orient, show ¬ f p < 0 by omega, decide_false, Bool.false_eq_true, ite_false] using hv
+    simpa only [orient, show ¬ f p < 0 by omega, decide_false,
+      Bool.false_eq_true, ite_false] using hv
   have hxabs : f x = |f x| := by
     have hv := geo.xValue
     change orient (decide (f p < 0)) (f x) = |f x| at hv
-    simpa only [orient, show ¬ f p < 0 by omega, decide_false, Bool.false_eq_true, ite_false] using hv
+    simpa only [orient, show ¬ f p < 0 by omega, decide_false,
+      Bool.false_eq_true, ite_false] using hv
   have hDP : D < P := by simpa [D, n, f, hpabs] using geo.strictOrder.1
   have hPr : P < r := by
     simpa only [P, r, f, x, abs_of_pos hpositive, ← hxabs] using geo.strictOrder.2
@@ -228,13 +231,17 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
       hpositive hnlarge hexpand (hw ▸ hW) (hw ▸ hpunused) (hw ▸ hnunused) hcut (by omega)
     exact (not_lt_of_ge (hminimum _ hv)) (by simpa [← hw] using hj)
   have hc1 : c1 ≤ C k := by
-    have hs : InStrip f (C k) 0 (A ++ [x] ++ T0 ++ [y] ++ T1) := (strip_split (A ++ [x] ++ T0 ++ [y] ++ T1) ([zpen] ++ T2 ++ [z] ++ E)
+    have hs : InStrip f (C k) 0 (A ++ [x] ++ T0 ++ [y] ++ T1) :=
+      (strip_split (A ++ [x] ++ T0 ++ [y] ++ T1) ([zpen] ++ T2 ++ [z] ++ E)
       (by simpa only [oldWord, x, List.append_assoc] using hsW)).1
-    simpa only [List.take_length, zero_add, c1, mass] using (inStrip_prefix hs (A ++ [x] ++ T0 ++ [y] ++ T1).length).2
+    simpa only [List.take_length, zero_add, c1, mass] using
+      (inStrip_prefix hs (A ++ [x] ++ T0 ++ [y] ++ T1).length).2
   have hc2 : c2 ≤ C k := by
-    have hs : InStrip f (C k) 0 (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2) := (strip_split (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2) ([z] ++ E)
+    have hs : InStrip f (C k) 0 (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2) :=
+      (strip_split (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2) ([z] ++ E)
       (by simpa only [oldWord, x, List.append_assoc] using hsW)).1
-    simpa only [List.take_length, zero_add, c2, mass] using (inStrip_prefix hs (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2).length).2
+    simpa only [List.take_length, zero_add, c2, mass] using
+      (inStrip_prefix hs (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2).length).2
   change C k - c1 + mass (fun i => -f i) (signPool (fun i => -f i) T2 (C k + f zpen + 1)) < delta ∨
     C k - c2 + mass f (signPool f T2 (C k + f z + 1)) < delta
   by_contra hnot

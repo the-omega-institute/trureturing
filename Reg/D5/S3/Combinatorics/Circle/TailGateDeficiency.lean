@@ -18,8 +18,15 @@ namespace Reg.D5.S3.Combinatorics.Circle.TailGateDeficiency
 structure Input where
   k : ℕ
   t : ℕ
-  p y zpen z : Fin k
-  A T0 T1 T2 E : List (Fin k)
+  p : Fin k
+  y : Fin k
+  zpen : Fin k
+  z : Fin k
+  A : List (Fin k)
+  T0 : List (Fin k)
+  T1 : List (Fin k)
+  T2 : List (Fin k)
+  E : List (Fin k)
 
 abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature Unit
   (fun _ => Input) (fun _ => ℤ × ℤ)
