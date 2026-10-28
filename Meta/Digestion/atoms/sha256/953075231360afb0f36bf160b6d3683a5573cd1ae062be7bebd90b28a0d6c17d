@@ -1,0 +1,41 @@
+**Boundary 8.2 (what remains a separate obligation).** Positive
+unknown-design post-acquisition completion and pre-acquisition
+protection require their own distinct hypotheses, histories, actual
+actuators and costs; the signed known-design theorem cannot substitute
+for either. Acquired dark-family feedback and alternative preparations
+belong to distinct actual runs. Their reporting and fixed-graph bounds
+are unchanged. The additional adaptive-growth no-report converse in
+[Native Leaf Boundary Acquisition IV, Theorem 106.4][NLBAIV] uses the
+symmetric growth-survival lemma on its own unit-law family; it is
+separate from the signed commissioning argument here.
+Conditional stationary-source endpoint theorems may take an ideal
+stationary law, continuous observation, exact clock/alignment,
+nondisturbing sensor and exact real-path processing as supplied
+premises; these are not finite acquired hardware or native resources
+earned here. Their deterministic/selected-time and historical domains
+are not silently extended by this construction.
+
+The remaining common physical-process correspondence, earned source
+installation and all historic four-view obligations remain explicit.
+Original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer,
+unchanged-initialization and final-no-Ready problems retain their
+original conditions.
+No common apparatus across different source models, universal
+alpha/beta minimum, arbitrary-history inverse, noisy finite-precision
+recovery, implementation of signed commissioning, or completion of
+the full programme follows. The result supplies exactly the conditional
+native service orbit, its earned calibration, current dynamics and
+the stated historical boundary.
+
+[NLBA]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION.md
+[NLBAII]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md
+[NLBAIII]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_III.md
+[NLBAIV]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_IV.md
+[AGAIII]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_III.md
+[CLBA]: RECURSIVE_RELATIONAL_OBSERVATION_CYCLIC_LEAF_BOUNDARY_AMBIGUITY.md
+[MRQB]: RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY_CONTINUATION_I.md
+[TG]: RECURSIVE_RELATIONAL_OBSERVATION_THIRD_GERM_RETENTION_THRESHOLD.md
+[SCIV]: FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md
+[BM]: https://arxiv.org/pdf/0903.0612v1
+[CH]: https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/LinearAlgebra/Charpoly/Basic.lean
+

@@ -38,11 +38,26 @@ For P equal to the original ports in reverse cyclic order, the literal cycleWord
 
 If a selected disjoint union contains q, exactly one selected terminal d contains q. For d=a, alpha is present and beta is forbidden by beta's exact neighbourhood {z,b0}. For any other terminal, its arrival port is present and the immediately preceding port is absent from the entire selected union. An interval joining q to that arrival port must cross the absent predecessor. If q is absent, any selected minimal row has both a red and a blue coordinate, so its interval crosses q. These arguments handle all complete rows, including larger disjoint unions. They reuse the original infix_avoid_separator proof in PrivatePairBooleanDescent.
 
-This proves the stated conditional original-coordinate word construction. The derivation of Geometry from original positive charges, exterior obstruction exclusion and the separate universal-neighbour case are not supplied here. The whole positiveGood, fullGood and adaptive-merge conclusions remain open. The longest-cycle theorem is classical; the original-coordinate composition makes no literature-priority claim.
+**Theorem 1.3 (Universal-neighbour rows admit a literal avoiding word).**
+
+Lean statement: `D5/S3/Combinatorics/Sequenceability/PositiveChargePorts.universal_avoiding_word`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Sequenceability/PositiveChargePorts.universal_avoiding_word` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary M, Omega and q, assume Blue lies in Omega minus q, l is red, rho is blue, u and v are distinct terminals, and bzero is a q-free row meeting every terminal. The exact original neighbourhoods of l and rho are {u,bzero} and {v,bzero}. A red original coordinate b belongs to v; every terminal has a blue coordinate; every q-free minimal row has both colours. Every Complete row is the disjoint union of original minimal rows. The explicit word (red minus l).toList followed by l,q,rho and (Blue minus rho).toList permutes ALL Omega and avoids EVERY Complete infix. These remain explicit hypotheses in this port theorem; the geometry module derives them on the actual positive-charge branch.
+
+If q belongs to an infix, disjointness identifies its unique selected terminal d. For d=v, the red b forces l across the interval, but l is forbidden by its exact two suppliers. Otherwise a blue coordinate of d forces rho, forbidden by its exact two suppliers. If q is absent, mixedness forces the q separator. All residual original coordinates are retained, and either residual side may be empty.
+
+The port constructions are conditional. PositiveChargeGeometry derives their original geometry, exterior colouring, universal frame and decomposition inputs in the actual ordinaryChargeGCD=r positive branch. Zero charge, full Good and adaptive merge are separate obligations. The longest-cycle theorem is classical; the original-coordinate composition makes no literature-priority claim.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Sequenceability/PositiveChargePorts.exists_portCycle`
 - Truth anchor: `D5/S3/Combinatorics/Sequenceability/PositiveChargePorts.native_avoiding_word`
+- Truth anchor: `D5/S3/Combinatorics/Sequenceability/PositiveChargePorts.universal_avoiding_word`
 - Dependency: [D5/S3/Combinatorics/Graph/Walks/SemicompleteHamilton](../Graph/Walks/SemicompleteHamilton.md)
-- Dependency: [D5/S3/Combinatorics/Sequenceability/PrivatePairBooleanDescent](PrivatePairBooleanDescent.md)
+- Dependency: [D5/S3/Combinatorics/Sequenceability/PositiveChargePortGeometry](PositiveChargePortGeometry.md)
