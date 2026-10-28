@@ -1,5 +1,5 @@
 /- GID: D5/S3/Observer/CubicGain/PrimitivePrefix
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Observer/CubicGain/PrimitivePrefix
    mirror-E: none(waiver:uniform-legal-prefix-representation)
    anchors: []
