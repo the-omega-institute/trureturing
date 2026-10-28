@@ -482,9 +482,12 @@ private def referenceSlope (b r : ℝ) : ℝ :=
 private def calibrationSlope (b r : ℝ) : ℝ := slopeCoefficient b (inverseMass b r)
 private def calibrationValue (b r : ℝ) : ℝ := valueCoefficient b (inverseMass b r)
 
+/-- The original reciprocal square density relative to the calibrated profile. -/
+def energyDensity (b : ℝ) (u : ℝ → ℝ) : ℝ → ℝ :=
+  MeasurableJointCalibration.defect u (primitive u) (referenceSlope b)
+
 /-- The integrable reciprocal square defect relative to the calibrated profile. -/
-def energy (b : ℝ) (u : ℝ → ℝ) : ℝ :=
-  ∫ x in (1 : ℝ)..2, MeasurableJointCalibration.defect u (primitive u) (referenceSlope b) x
+def energy (b : ℝ) (u : ℝ → ℝ) : ℝ := ∫ x in (1 : ℝ)..2, energyDensity b u x
 
 private lemma spaceCoordinate_hasDerivAt {x : ℝ} (hx : 0 < x) :
     HasDerivAt spaceCoordinate (3 * Real.sqrt x / 2) x := by
@@ -750,7 +753,7 @@ private lemma cost_congr {u v : ℝ → ℝ}
 theorem normalized_stability (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
     {u : ℝ → ℝ} (hu : Admissible u) (hm : mass u = 1) :
     IntervalIntegrable
-      (MeasurableJointCalibration.defect u (primitive u) (referenceSlope b)) volume 1 2 ∧
+      (energyDensity b u) volume 1 2 ∧
     0 ≤ energy b u ∧ sharpConstant b + b * energy b u ≤ cost b u ∧
     (energy b u = 0 ↔ u =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] optimizer b) ∧
     (cost b u = sharpConstant b ↔ u =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] optimizer b) := by
@@ -854,7 +857,7 @@ theorem global_stability (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
     let v := fun x => (mass u)⁻¹ * u x
     0 < mass u ∧
     IntervalIntegrable
-      (MeasurableJointCalibration.defect v (primitive v) (referenceSlope b)) volume 1 2 ∧
+      (energyDensity b v) volume 1 2 ∧
     0 ≤ energy b v ∧ b * energy b v ≤ mass u * cost b u - sharpConstant b ∧
     (mass u * cost b u = sharpConstant b ↔
       u =ᵐ[volume.restrict (Icc (1 : ℝ) 2)] (fun x => mass u * optimizer b x)) ∧
