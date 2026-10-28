@@ -26,9 +26,7 @@ $$\forall n:N,\operatorname{primitiveUnshuffle}\left(n\right) = \operatorname{Fr
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordProduct.primitiveUnshuffle` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -54,9 +52,7 @@ $$\forall B:Word,\forall S:\operatorname{Fin}\left(\operatorname{length}\left(B\
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordProduct.orderedTerm` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -68,9 +64,7 @@ $$\forall A:Word,\forall B:Word,\operatorname{starWord}\left(A, B\right) = \oper
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordProduct.starWord` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -82,9 +76,7 @@ $$\forall A:Word,\forall B:Word,\operatorname{starWord}\left(A, B\right) = \oper
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/PostLie/AriWordProduct.starWord_unshuffle` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -96,9 +88,7 @@ $$\forall P:H,\forall Q:H,\operatorname{star}\left(P, Q\right) = \operatorname{s
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordProduct.star` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -124,9 +114,7 @@ $$\forall A:Word,\forall B:Word,\operatorname{starWord}\left(A, B\right) \in \op
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/PostLie/AriWordProduct.starWord_homogeneous` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 

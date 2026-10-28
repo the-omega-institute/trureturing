@@ -68,9 +68,7 @@ $$\forall P:H,\forall Q:H,\operatorname{pairing}\left(P, Q\right) = \operatornam
 
 *Formalization.* `D5/S1/Words/PostLie/AriCoproductFiltration.pairing` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -82,9 +80,7 @@ $$\forall w:Word,\forall P:H,\operatorname{pairing}\left(\operatorname{wordBasis
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/PostLie/AriCoproductFiltration.pairing_basis` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -96,9 +92,7 @@ $$\forall Q:H,\forall R:H,\forall U:H,\forall V:H,\operatorname{tensorPairing}\l
 
 *Formalization.* `D5/S1/Words/PostLie/AriCoproductFiltration.tensorPairing` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -110,9 +104,7 @@ $$\forall D:LinearMapQHTensorHH,\operatorname{transposeProperty}\left(D\right) \
 
 *Formalization.* `D5/S1/Words/PostLie/AriCoproductFiltration.transposeProperty` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -124,9 +116,7 @@ $$(\operatorname{transposeProperty}\left(delta\right)) \land (\forall D:LinearMa
 
 *Formalization.* `D5/S1/Words/PostLie/AriCoproductFiltration.delta` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -138,9 +128,7 @@ $$\forall P:H,\forall Q:H,\forall R:H,\operatorname{tensorPairing}\left(Q, R, \o
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/PostLie/AriCoproductFiltration.delta_transpose` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -152,9 +140,7 @@ $$\forall P:H,\forall A:Word,\forall B:Word,\operatorname{apply}\left(\operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/PostLie/AriCoproductFiltration.delta_coefficient` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -166,9 +152,7 @@ $$\forall w:Word,\forall A:Word,\forall B:Word,\operatorname{apply}\left(\operat
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/PostLie/AriCoproductFiltration.delta_basis_coefficient` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -180,9 +164,7 @@ $$\forall k:N,\forall r:N,\operatorname{filtration}\left(k, r\right) = \operator
 
 *Formalization.* `D5/S1/Words/PostLie/AriCoproductFiltration.filtration` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -208,9 +190,7 @@ $$claim \iff \forall k:N,\forall r:N,\forall P:H,(P \in \operatorname{filtration
 
 *Formalization.* `D5/S1/Words/PostLie/AriCoproductFiltration.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 

@@ -12,9 +12,7 @@ $$Word = \operatorname{FreeMonoid}\left(N\right)$$
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordOperations.Word` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -26,9 +24,7 @@ $$H = \operatorname{RationalWordPolynomial}\left(N\right)$$
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordOperations.H` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -40,9 +36,7 @@ $$\forall w:Word,\operatorname{wordBasis}\left(w\right) = \operatorname{single}\
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordOperations.wordBasis` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -54,9 +48,7 @@ $$\forall s:N,\operatorname{letter}\left(s\right) = \operatorname{wordBasis}\lef
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordOperations.letter` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -68,9 +60,7 @@ $$\forall s:N,\operatorname{gamma}\left(s\right) = \operatorname{ifThenElse}\lef
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordOperations.gamma` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -82,9 +72,7 @@ $$\forall w:Word,\operatorname{weight}\left(w\right) = \operatorname{sum}\left(\
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordOperations.weight` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -96,9 +84,7 @@ $$\forall k:N,\forall w:Word,\operatorname{level}\left(k, w\right) = \operatorna
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordOperations.level` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -152,9 +138,7 @@ $$\forall a:N,\forall l:N,(\operatorname{beta}\left(0, 0\right) = 1) \land ((\op
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordOperations.beta` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -180,9 +164,7 @@ $$\forall A:Word,\forall l:\operatorname{Fin}\left(\operatorname{length}\left(A\
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordOperations.multiplicity` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -194,9 +176,7 @@ $$\forall p:H,\forall q:H,\operatorname{commutator}\left(p, q\right) = p \cdot q
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordOperations.commutator` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -208,9 +188,7 @@ $$\forall p:H,\forall l:N,\forall ls:\operatorname{List}\left(N\right),(\operato
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordOperations.nestedBracket` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -222,9 +200,7 @@ $$\forall A:Word,\forall s:N,\operatorname{letterAction}\left(A, s\right) = \ope
 
 *Formalization.* `D5/S1/Words/PostLie/AriWordOperations.letterAction` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
@@ -390,9 +366,7 @@ $$\forall A:Word,\forall s:N,\operatorname{letterAction}\left(A, s\right) \in \o
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/PostLie/AriWordOperations.letterAction_homogeneous` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
+*Citation.* Annika Burmester; Ulf Kühn (2025). *On post-Lie structures for free Lie algebras*. DOI: [10.48550/arXiv.2504.19661](https://doi.org/10.48550/arXiv.2504.19661). URL: <https://arxiv.org/html/2504.19661v1>.
 
 *Commentary.*
 
