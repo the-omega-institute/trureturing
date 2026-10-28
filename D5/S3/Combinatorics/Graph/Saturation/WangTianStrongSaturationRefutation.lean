@@ -2,17 +2,12 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/Saturation/WangTianStrongSaturationRefutation
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.Data.Finset.Max, mathlib/module/Mathlib.Data.List.Chain]
+   anchors: [mathlib/module/Mathlib.Data.Finset.Max]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/Saturation/WangTianStrongSaturationRefutation.claim; result=D5/S3/Combinatorics/Graph/Saturation/WangTianStrongSaturationRefutation.result; claim=D5/S3/Combinatorics/Graph/Saturation/WangTianStrongSaturationRefutation.claim
    digest: Odd orders refute the unrestricted exact strong-digraph saturation formula. -/
 import Mathlib.Data.Finset.Max
 import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.List.Chain
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Rat.Cast.CharZero
-import Mathlib.Algebra.Ring.Parity
 import Mathlib.Tactic.Linarith
 
 /-! Strict digraphs on `Fin n` represent n-vertex digraphs after choosing labels.

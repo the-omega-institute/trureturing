@@ -60,7 +60,7 @@ internal sealed class WangTianStrongSaturationRefutationDocument : IScribeDocume
             Node("delete", "Vertex deletion", "delete", OnGraph(All("S", Subsets,
                 And(Equal(Call("vertices", Call("delete", Hh, S)), Seq(Vertices, Sp, Setminus, Sp, S)),
                     Equal(Call("arcs", Call("delete", Hh, S)), Filter("e", Arcs, Edges,
-                        And(Not(Member(Call("fst", e), S)), Not(Member(Call("snd", e), S)))))))),
+                        And(Not(Member(Call("fst", Call("val", e)), S)), Not(Member(Call("snd", Call("val", e)), S)))))))),
                 "Deletion restricts the original vertices and arcs. Its endpoint proof follows from H.endpoints and the two nonmembership conditions, so the result is again a Digraph n. The difference is finite-set difference, not arithmetic subtraction."),
             Node("separator", "Separators, including trivial remainders", "Separator", OnGraph(All("S", Subsets,
                 Iff(Call("Separator", Hh, S), And(Subset(S, Vertices),
@@ -93,10 +93,10 @@ internal sealed class WangTianStrongSaturationRefutationDocument : IScribeDocume
                 "For positive k the empty arc set is free: a k-strong forbidden record would have at least two vertices, while empty adjacency cannot connect distinct vertices. Maximizing cardinality among all free arc sets gives a saturated set, because inserting a missing arc strictly increases cardinality. If n <= k, every graph is free and the complete arc set is saturated, including n=0. Hence the displayed finite saturated family is nonempty for every positive k and every n."),
             Node("extremum", "The actual attained extremal arc number", "extremum", ExtremumFormula(),
                 "Let C be the image of card on saturatedFamily k n. It is finite and nonempty by the preceding maximal-free construction. The value of extremum is C.max'. Its subtype contains an actual saturated host attaining that value and domination over every saturated host. Nonempty refers to the family of hosts, not a requirement that n be positive; the full eventual claim and its contradicting witnesses use positive orders."),
-            Node("claim", "The full unrestricted eventual equality", "claim", Equal(F.Id("claim"), ClaimFormula()),
+            Node("claim", "The full unrestricted eventual equality", "claim", Equal(F.Id("claim"), ClaimBody()),
                 "This is the complete positive-k reading of Conjecture 1 in Section 4, printed PDF page 13 of arXiv:2605.01269v1. The threshold may depend on k. The symbol hk is the proof of 1 <= k required by the actual extremum definition. All casts, divisions and subtractions in the equality are rational; choose is the natural binomial coefficient before casting. The printed conjecture has no floor, ceiling, divisibility restriction or error term. The refutation also applies to the local k >= 2 reading because it uses k=3."),
             Describe.Lean(DescribeId.Create("wt-result"), DeclarationHandle.Create(Prefix + "result"),
-                H("No threshold satisfies the full exact formula"), StatementSource.FromAuthor(Disp(Not(F.Id("claim")))),
+                H("No threshold satisfies the full exact formula"), StatementSource.FromAuthor(Disp(Not(Parenthesized(ClaimBody())))),
                 AssessedProvenance.FromRepo(Source), Blocks(
                     Paragraph(Text("Assume the whole claim and use k=3. For any threshold N choose n=2N+5, which is at least N and at least five. Clearing denominator two in the rational equality gives 2 ex = 2 choose(2N+5,2) + 5(2N+3) = 2(choose(2N+5,2)+5N+7)+1. Both ex and choose are natural numbers. Injectivity of the natural-to-rational cast therefore equates an even natural with an odd natural, a contradiction. No value of an extremizer is assumed or calculated.")),
                     Paragraph(Text("This repository-derived argument concerns the literal exact unrestricted formula. It does not determine a corrected divisible-order, rounded, upper-bound or asymptotic statement. The source's construction theorem and other bounds are not assumed as axioms. The source note distinguishes the new conjecture from the related undirected Mader upper-bound literature; no global priority assertion is made."))), DescribeRole.Theorem),
@@ -128,7 +128,7 @@ internal sealed class WangTianStrongSaturationRefutationDocument : IScribeDocume
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Iff, Parenthesized(b));
     private static Formula Not(Formula a) => Seq(Neg, Sp, Parenthesized(a));
     private static Formula Card(Formula a) => Call("card", a);
-    private static Formula Pair(Formula a, Formula b) => Seq(Open, a, Comma, Sp, b, Close);
+    private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula Subtype(string variable, Formula type, Formula predicate) =>
         Seq(OpenBrace, Typed(F.Id(variable), type), Sp, Bar, Sp, predicate, CloseBrace);
     private static Formula Filter(string variable, Formula type, Formula set, Formula predicate) =>
@@ -136,7 +136,7 @@ internal sealed class WangTianStrongSaturationRefutationDocument : IScribeDocume
     private static Formula OnGraph(Formula body) => All("n", N, All("H", Graph, body));
     private static Formula OnArcset(Formula body) => All("n", N, All("k", N, All("A", Arcsets, body)));
     private static Formula EndpointLaw(Formula vertices, Formula arcs) => All("e", Arcs,
-        Imp(Member(e, arcs), And(Member(Call("fst", e), vertices), Member(Call("snd", e), vertices))));
+        Imp(Member(e, arcs), And(Member(Call("fst", Call("val", e)), vertices), Member(Call("snd", Call("val", e)), vertices))));
     private static Formula DipathFormula()
     {
         Formula a = F.Id("a"), b = F.Id("b"), l = F.Id("l"), path = Call("cons", a, l), v = F.Id("v");
@@ -162,7 +162,7 @@ internal sealed class WangTianStrongSaturationRefutationDocument : IScribeDocume
             Typed(c, Subtype("m", N, certificate)),
             Equal(Call("val", c), Call("maxPrime", Call("image", F.Id("card"), Call("saturatedFamily", k, n))))]))));
     }
-    private static Formula ClaimFormula()
+    private static Formula ClaimBody()
     {
         Formula hk = F.Id("hk"), threshold = F.Id("N");
         Formula value = Rational(Call("val", Call("extremum", k, n, hk)));
