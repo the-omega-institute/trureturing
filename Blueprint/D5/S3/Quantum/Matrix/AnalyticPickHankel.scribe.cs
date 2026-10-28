@@ -48,7 +48,11 @@ internal sealed class AnalyticPickHankelDocument : IScribeDocumentDefinition
             + "power of a noncommuting matrix pencil, the global analytic and sector "
             + "supplier and its identification with that power remain separate proof "
             + "obligations. No novelty or full independent X,Y He–Saunderson–Fawzi "
-            + "compatibility conclusion is asserted.")))));
+            + "compatibility conclusion is asserted.")),
+        Paragraph(Text("The two typed dependent-family Reg attempts compile, but their "
+            + "source-selection bindings remain unfinished (IE-C050, "
+            + "source.selection_missing). See https://github.com/the-omega-institute/"
+            + "trureturing/issues/23333. Registration acceptance is not claimed.")))));
 
     private static DocumentBlock Item(string name, string title, string text, bool definition = false) =>
         Describe.Lean(DescribeId.Create("analytic-hankel-" + name.Replace('_', '-').ToLowerInvariant()),

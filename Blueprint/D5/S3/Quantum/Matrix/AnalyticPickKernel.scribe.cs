@@ -15,7 +15,7 @@ internal sealed class AnalyticPickKernelDocument : IScribeDocumentDefinition
             "For positive R, samples z_i in the radius-R disk, and a finite complex matrix "
             + "function G, entry (i,a),(j,b) is entry a,b of G(z_i)+G(z_j) star divided by "
             + "1-z_i conjugate(z_j)/R squared. The indices include all sample and vector "
-            + "coordinates, so positivity tests arbitrary distinct vectors at different samples.", true),
+            + "coordinates, so positivity tests arbitrary vectors assigned independently to all samples.", true),
         Item("finite_circle_caratheodory_posSemidef", "Positivity from the actual Cauchy formula",
             "In every finite matrix dimension and for every finite sample set, suppose R>0, "
             + "G is complex differentiable on the open radius-R disk and continuous on its "
@@ -35,7 +35,7 @@ internal sealed class AnalyticPickKernelDocument : IScribeDocumentDefinition
             + "finite matrix positive cone is closed. No values or regularity on the unit "
             + "circle are assumed."),
         Item("imaginaryPart", "Hermitian imaginary part",
-            "The imaginary part of A is (-i/2) times A-A star.", true),
+            "The imaginary part of A is (-i/2)(A-A star).", true),
         Item("pickGram", "The finite Pick block matrix",
             "Entry (i,a),(j,b) is entry a,b of T(z_i)-T(z_j) star divided by "
             + "z_i-conjugate(z_j). On the upper half-plane all denominators are nonzero.", true),
@@ -56,7 +56,11 @@ internal sealed class AnalyticPickKernelDocument : IScribeDocumentDefinition
             + "Hankel consequence uses additional local analytic and Hermitian real-axis "
             + "hypotheses. Applying it to actual principal matrix powers still requires "
             + "the global analytic and sector supplier bridge. Full independent X,Y "
-            + "He–Saunderson–Fawzi compatibility remains open.")))));
+            + "He–Saunderson–Fawzi compatibility remains open.")),
+        Paragraph(Text("The three typed dependent-family Reg attempts compile, but their "
+            + "source-selection bindings remain unfinished (IE-C050, "
+            + "source.selection_missing). See https://github.com/the-omega-institute/"
+            + "trureturing/issues/23333. Registration acceptance is not claimed.")))));
 
     private static DocumentBlock Item(string name, string title, string text, bool definition = false) =>
         Describe.Lean(DescribeId.Create("analytic-pick-" + name.Replace('_', '-').ToLowerInvariant()),
