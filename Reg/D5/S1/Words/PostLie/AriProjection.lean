@@ -56,7 +56,7 @@ def projectionCoeffAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source projectionCoeffArena ⟨projectionCoeffFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some projectionActual
+  readout := some (realize projectionSignature (fun _ k p => pureProjection k p) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -66,10 +66,10 @@ def projectionCoeffAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body","body","body","fn","arg","fn","arg","fn"]
+      path := #["body","body","body","fn","arg","fn","arg","arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -113,7 +113,7 @@ def projectionCommutatorAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source projectionCommutatorArena ⟨projectionCommutatorFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some projectionActual
+  readout := some (realize projectionSignature (fun _ k p => pureProjection k p) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -123,10 +123,10 @@ def projectionCommutatorAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body","body","body","fn","arg","fn"]
+      path := #["body","body","body","fn","arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -171,7 +171,7 @@ def actionProjectionAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source actionProjectionArena ⟨actionProjectionFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some projectionActual
+  readout := some (realize projectionSignature (fun _ k p => pureProjection k p) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -181,10 +181,10 @@ def actionProjectionAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body","body","body","body","fn","arg","fn"]
+      path := #["body","body","body","body","fn","arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -237,7 +237,7 @@ def actionAboveAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source actionAboveArena ⟨actionAboveFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actionActual
+  readout := some (realize actionSignature (fun _ A s => letterAction A s) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

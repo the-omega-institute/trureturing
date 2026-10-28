@@ -74,7 +74,7 @@ def productUnshuffleAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source productUnshuffleArena ⟨productUnshuffleFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some productActual
+  readout := some (realize productSignature (fun _ A B => starWord A B) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -133,7 +133,7 @@ def starBasisAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source starBasisArena ⟨starBasisFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some productActual
+  readout := some (realize productSignature (fun _ A B => starWord A B) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -192,7 +192,7 @@ def productHomogeneousAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source productHomogeneousArena ⟨productHomogeneousFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some productActual
+  readout := some (realize productSignature (fun _ A B => starWord A B) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -251,7 +251,7 @@ def productAboveAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source productAboveArena ⟨productAboveFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some productActual
+  readout := some (realize productSignature (fun _ A B => starWord A B) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -323,7 +323,7 @@ def unshuffleAssignmentsAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source unshuffleAssignmentsArena ⟨unshuffleAssignmentsFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some unshuffleActual
+  readout := some (realize unshuffleSignature (fun _ n A => primitiveUnshuffle n A) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -333,10 +333,10 @@ def unshuffleAssignmentsAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body","body","fn","arg","fn"]
+      path := #["body","body","fn","arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

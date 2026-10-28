@@ -39,6 +39,6 @@ internal sealed class AriCoproductFiltrationDocument : IScribeDocumentDefinition
     private static Formula Tensor(Formula a, Formula b) => Call("tmulQ",a,b);
     private static Formula WB(Formula a) => Call("wordBasis",a);
     private static Formula TB(Formula a, Formula b) => Call("tensorBasis",Call("pair",a,b));
-    private static Formula TC(Formula p, Formula a, Formula b) => Call("apply",Call("tensorCoordinates",p),Call("pair",a,b));
+    private static Formula TC(Formula p, Formula a, Formula b) => Call("apply",Call("repr",V("tensorBasis"),p),Call("pair",a,b));
     private static Formula Sum(Formula set, string x, Formula body) => Call("sum",set,Call("lambda",V(x),body));
 }

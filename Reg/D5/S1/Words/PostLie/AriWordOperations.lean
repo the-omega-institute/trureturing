@@ -108,7 +108,7 @@ def weightMulAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source weightMulArena ⟨weightMulFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some weightActual
+  readout := some (realize weightSignature (fun _ _ w => weight w) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -162,7 +162,7 @@ def weightOfAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source weightOfArena ⟨weightOfFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some weightActual
+  readout := some (realize weightSignature (fun _ _ w => weight w) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -223,7 +223,7 @@ def levelOneAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source levelOneArena ⟨levelOneFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some levelActual
+  readout := some (realize levelSignature (fun _ k w => level k w) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -277,7 +277,7 @@ def levelMulAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source levelMulArena ⟨levelMulFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some levelActual
+  readout := some (realize levelSignature (fun _ k w => level k w) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -331,7 +331,7 @@ def levelOfAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source levelOfArena ⟨levelOfFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some levelActual
+  readout := some (realize levelSignature (fun _ k w => level k w) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -396,7 +396,7 @@ def homogeneousBasisAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source homogeneousBasisArena ⟨homogeneousBasisFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some basisActual
+  readout := some (realize basisSignature (fun _ _ w => wordBasis w) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -406,10 +406,10 @@ def homogeneousBasisAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body","arg","fn"]
+      path := #["body","arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -454,7 +454,7 @@ def aboveBasisAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source aboveBasisArena ⟨aboveBasisFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some basisActual
+  readout := some (realize basisSignature (fun _ _ w => wordBasis w) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -464,10 +464,10 @@ def aboveBasisAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body","body","arg","fn"]
+      path := #["body","body","arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -519,7 +519,7 @@ def homogeneousMulAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source homogeneousMulArena ⟨homogeneousMulFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some mulActual
+  readout := some (realize mulSignature (fun _ p q => p * q) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -576,7 +576,7 @@ def aboveMulAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source aboveMulArena ⟨aboveMulFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some mulActual
+  readout := some (realize mulSignature (fun _ p q => p * q) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -642,7 +642,7 @@ def actionHomogeneousAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source actionHomogeneousArena ⟨actionHomogeneousFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actionActual
+  readout := some (realize actionSignature (fun _ A s => letterAction A s) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

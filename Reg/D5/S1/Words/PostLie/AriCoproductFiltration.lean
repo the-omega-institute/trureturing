@@ -58,7 +58,7 @@ def windowMembershipAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source windowMembershipArena ⟨windowMembershipFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some windowActual
+  readout := some (realize windowSignature (fun _ _ n => weightWindow n) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -129,7 +129,7 @@ def fullTransposeAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source fullTransposeArena ⟨fullTransposeFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some transposeActual
+  readout := some (realize transposeSignature (fun _ _ P => delta P) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -139,10 +139,10 @@ def fullTransposeAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body","body","body","fn","arg","arg","fn"]
+      path := #["body","body","body","fn","arg","arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -189,7 +189,7 @@ def transposeCoefficientAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source transposeCoefficientArena ⟨transposeCoefficientFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some transposeActual
+  readout := some (realize transposeSignature (fun _ _ P => delta P) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -199,10 +199,10 @@ def transposeCoefficientAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body","body","body","fn","arg","fn","arg","arg","fn"]
+      path := #["body","body","body","fn","arg","fn","arg","arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -248,7 +248,7 @@ def transposeBasisCoefficientAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,
   realization := .source transposeBasisCoefficientArena ⟨transposeBasisCoefficientFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some transposeActual
+  readout := some (realize transposeSignature (fun _ _ P => delta P) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -258,10 +258,10 @@ def transposeBasisCoefficientAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body","body","body","fn","arg","fn","arg","arg","fn"]
+      path := #["body","body","body","fn","arg","fn","arg","arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -342,7 +342,7 @@ def filtrationResultAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source filtrationResultArena ⟨filtrationResultFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some transposeActual
+  readout := some (realize transposeSignature (fun _ _ P => delta P) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -352,10 +352,10 @@ def filtrationResultAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := some { owner := `D5.S1.Words.PostLie.AriCoproductFiltration, name := `D5.S1.Words.PostLie.AriCoproductFiltration.claim, path := #[] }
     coordinates := #[]
     readouts := #[{
-      path := #["body","body","body","body","arg","fn"]
+      path := #["body","body","body","body","arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -405,7 +405,7 @@ def pairingBasisAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source pairingBasisArena ⟨pairingBasisFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some coefficientActual
+  readout := some (realize coefficientSignature (fun _ P w => P.coeff w) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -415,10 +415,10 @@ def pairingBasisAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[1]
     readouts := #[{
-      path := #["body","body","arg","fn"]
+      path := #["body","body","arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
