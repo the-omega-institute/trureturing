@@ -8,15 +8,15 @@ Matrices have complex entries. Fin n indexes the source's n computational basis 
 
 **Definition 1.1 (Quantum states).**
 
-$$\forall d \in \mathbb{N},\; \forall sigma \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{IsState}\left(sigma\right) \Leftrightarrow ((\operatorname{Matrix.PosSemidef}\left(sigma\right)) \land (\operatorname{Matrix.trace}\left(sigma\right) = 1))$$
+$$\forall d \in \mathbb{N},\; \forall sigma \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation.IsDensity}\left(sigma\right) \Leftrightarrow ((\operatorname{Matrix.PosSemidef}\left(sigma\right)) \land (\operatorname{Matrix.trace}\left(sigma\right) = 1))$$
 
-*Formalization.* `D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.IsState` (`✓ std3`).
+*Formalization.* `D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.IsDensity` (`✓ std3`).
 
 *Citation.* Kiera Hutton; Arthur Mehta; Andrej Vukovic (2025). *Deciding whether a C–Q channel preserves a bit is QCMA-complete*. DOI: [10.48550/arXiv.2508.10664](https://doi.org/10.48550/arXiv.2508.10664). URL: <https://arxiv.org/abs/2508.10664v1>.
 
 *Commentary.*
 
-A quantum state in M_d(ℂ) is a positive semidefinite matrix with trace one.
+A quantum state in M_d(ℂ) is a positive semidefinite matrix with trace one. This is the existing CoPRelativeQuantumnessRefutation.IsDensity predicate used directly in the hypothesis.
 
 **Definition 1.2 (Output on a pure input).**
 
@@ -68,7 +68,7 @@ The right side of Conjecture 1.5, page 3, minimizes over k distinct basis indice
 
 **Definition 1.6 (Conjecture 1.5).**
 
-$$\operatorname{claim} \Leftrightarrow (\forall n \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall k \in \mathbb{N},\; \forall sigma \in \operatorname{Fin}\left(n\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; (\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{IsState}\left(sigma\left(i\right)\right)) \Rightarrow ((2 \le k) \Rightarrow ((k \le n) \Rightarrow (\forall u \in \operatorname{Fin}\left(k\right) \to \left(\operatorname{Fin}\left(n\right) \to \mathbb{C}\right),\; (\operatorname{IsOrthonormalFamily}\left(u\right)) \Rightarrow (\operatorname{minDistinctOverlap}\left(sigma, k\right) \le \operatorname{averageOutputOverlap}\left(sigma, u\right))))))$$
+$$\operatorname{claim} \Leftrightarrow (\forall n \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall k \in \mathbb{N},\; \forall sigma \in \operatorname{Fin}\left(n\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; (\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation.IsDensity}\left(sigma\left(i\right)\right)) \Rightarrow ((2 \le k) \Rightarrow ((k \le n) \Rightarrow (\forall u \in \operatorname{Fin}\left(k\right) \to \left(\operatorname{Fin}\left(n\right) \to \mathbb{C}\right),\; (\operatorname{IsOrthonormalFamily}\left(u\right)) \Rightarrow (\operatorname{minDistinctOverlap}\left(sigma, k\right) \le \operatorname{averageOutputOverlap}\left(sigma, u\right))))))$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.claim` (`✓ std3`).
 
@@ -80,7 +80,7 @@ Conjecture 1.5, page 3: “Let σ₁, …, σₙ ∈ M_d(ℂ) be arbitrary quant
 
 **Theorem 1.7 (The orthogonal lower bound).**
 
-$$\forall n \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall k \in \mathbb{N},\; \forall sigma \in \operatorname{Fin}\left(n\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; (\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{IsState}\left(sigma\left(i\right)\right)) \Rightarrow ((2 \le k) \Rightarrow ((k \le n) \Rightarrow (\forall u \in \operatorname{Fin}\left(k\right) \to \left(\operatorname{Fin}\left(n\right) \to \mathbb{C}\right),\; (\operatorname{IsOrthonormalFamily}\left(u\right)) \Rightarrow (\operatorname{minDistinctOverlap}\left(sigma, k\right) \le \operatorname{averageOutputOverlap}\left(sigma, u\right)))))$$
+$$\forall n \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall k \in \mathbb{N},\; \forall sigma \in \operatorname{Fin}\left(n\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; (\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation.IsDensity}\left(sigma\left(i\right)\right)) \Rightarrow ((2 \le k) \Rightarrow ((k \le n) \Rightarrow (\forall u \in \operatorname{Fin}\left(k\right) \to \left(\operatorname{Fin}\left(n\right) \to \mathbb{C}\right),\; (\operatorname{IsOrthonormalFamily}\left(u\right)) \Rightarrow (\operatorname{minDistinctOverlap}\left(sigma, k\right) \le \operatorname{averageOutputOverlap}\left(sigma, u\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.result` (`✓ std3`). ∎
 
@@ -99,11 +99,11 @@ The squared absolute determinants of the k-row minors of the input matrix form a
 ## References
 
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.IsOrthonormalFamily`
-- Truth anchor: `D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.IsState`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.averageOutputOverlap`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.channelOutput`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.claim`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.minDistinctOverlap`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.result`
+- Truth anchor: `D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.IsDensity`
 - Dependency: [D5/S3/Quantum/Schatten/CompoundMatrices](../Schatten/CompoundMatrices.md)
 - Dependency: [D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation](../../QuantumChannels/CoPRelativeQuantumnessRefutation.md)
