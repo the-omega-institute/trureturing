@@ -2499,10 +2499,6 @@ private def nativeConeRebasedCollapse {V : Type*} [Fintype V] [DecidableEq V]
   · exact coneVertexSegment_mem P z hz t
   · exact ⟨{P.apex}, P.apex_face, subset_convexHull ℝ _ ⟨P.apex, by simp, rfl⟩⟩
 
-private theorem nativeConeRebasedCollapse_forward {V : Type*} [Fintype V] [DecidableEq V]
-    (P : FiniteConeCollapse.ConePair V) (z : V) (hz : ({z} : Finset V) ∈ P.cone) :
-    (nativeConeRebasedCollapse P z hz).forward = P.quotientMap := rfl
-
 end NativeConeBaseTransport
 
 section BasedConeCovers
@@ -3460,9 +3456,6 @@ private theorem specFiberCard (ds : BouquetSpec) (d : {n : ℕ // 0 < n}) :
     _ = #{i : Fin ds.length | v.get i = d} := by
       rw [Fintype.card_subtype]
       congr 1
-      ext i
-      simp only [Finset.mem_filter, Finset.mem_univ, true_and, v, List.Vector.get,
-        List.get_eq_getElem, Fin.val_cast]
     _ = _ := by
       simpa only [v, List.Vector.toList, List.count, beq_eq_decide] using
         Fin.card_filter_univ_eq_vector_get_eq_count d v
@@ -3672,12 +3665,14 @@ def finiteComponentJoinClosure {V W : Type*}
 /-- An empty whole left factor gives an empty ordinary join. -/
 def ordinaryJoinEmptyLeft {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     (h : IsEmpty X) : FiniteSimplicialJoin.OrdinaryJoin X Y → PEmpty.{1} :=
-  fun z => Quotient.inductionOn z (fun p => False.elim (h.false p.1))
+  Quotient.lift (fun p => False.elim (h.false p.1))
+    (fun p _ _ => False.elim (h.false p.1))
 
 /-- An empty whole right factor gives an empty ordinary join. -/
 def ordinaryJoinEmptyRight {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     (h : IsEmpty Y) : FiniteSimplicialJoin.OrdinaryJoin X Y → PEmpty.{1} :=
-  fun z => Quotient.inductionOn z (fun p => False.elim (h.false p.2.1))
+  Quotient.lift (fun p => False.elim (h.false p.2.1))
+    (fun p _ _ => False.elim (h.false p.2.1))
 
 end CompleteJoinClosure
 
