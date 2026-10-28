@@ -48,9 +48,17 @@ $$\operatorname{Filter}.\operatorname{Tendsto}\left((n: \mathbb{N} \mapsto \frac
 
 *Proof.* Machine-checked in Lean as `D5/S0/Asymptotics/GeneratingFunctions/KotesovecA022629.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/kotdp-weighteddistinct` (proved) by `D5/S0/Asymptotics/GeneratingFunctions/KotesovecA022629.result`.
+*Resolves.* `Problems/kotdp-weighteddistinct` (proved) by `D5/S0/Asymptotics/GeneratingFunctions/KotesovecA022629.result` and `D5/S0/Asymptotics/GeneratingFunctions/KotesovecA092484.result` and `D5/S0/Asymptotics/GeneratingFunctions/KotesovecA265840.result` and `D5/S0/Asymptotics/GeneratingFunctions/KotesovecA265841.result` and `D5/S0/Asymptotics/GeneratingFunctions/KotesovecA265842.result`.
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"kotdp-weighteddistinct","declaration_gid":"D5/S0/Asymptotics/GeneratingFunctions/KotesovecA022629.result","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kotdp-weighteddistinct","declaration_gid":"D5/S0/Asymptotics/GeneratingFunctions/KotesovecA092484.result","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kotdp-weighteddistinct","declaration_gid":"D5/S0/Asymptotics/GeneratingFunctions/KotesovecA265840.result","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kotdp-weighteddistinct","declaration_gid":"D5/S0/Asymptotics/GeneratingFunctions/KotesovecA265841.result","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kotdp-weighteddistinct","declaration_gid":"D5/S0/Asymptotics/GeneratingFunctions/KotesovecA265842.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
