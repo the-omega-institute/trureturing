@@ -367,7 +367,7 @@ private theorem wordMap_nil_X (D : LatticeData) (α β : Charge D)
     wordMap_nil, wordMap_nil]
   rw [show -m - 1 - bilinear D α β + (x.2 + 1 : ℕ) =
     -(m - (x.2 + 1 : ℕ)) - 1 - bilinear D α β by omega]
-  ring
+  simp [smul_sub, mul_smul_comm, smul_mul_assoc, smul_smul, mul_comm]
 
 private theorem derivative_mode (D : LatticeData) (x : Index D) (m : ℤ) :
     (dividedDerivative x.2 (neutralField D x.1))[[m]] =
@@ -575,7 +575,8 @@ private theorem ground_row_bound (D : LatticeData) (α β : Charge D) :
     exact le_add_of_nonneg_right (Finset.sum_nonneg (fun _ _ => norm_nonneg _))
   have hTx (x : Index D) : 1 + T x.1 ≤ L := by
     dsimp [L]
-    exact add_le_add_left (Finset.single_le_sum (fun i _ => norm_nonneg _)
+    simpa only [T, add_comm] using add_le_add_left (Finset.single_le_sum
+      (fun i _ => norm_nonneg (bilinear D α (unitCharge D i) : ℂ))
       (Finset.mem_univ x.1)) 1
   have hphase : ‖epsilon D α β‖ = 1 := by
     unfold epsilon paritySign
@@ -584,7 +585,10 @@ private theorem ground_row_bound (D : LatticeData) (α β : Charge D) :
       ‖wordCoeff D α β [] m e 0‖ ≤ C * 2 ^ level D e := by
     have hh : wordCoeff D α β [] m e 0 =
         epsilon D α β * (creationCoeff D α (-m - 1 - bilinear D α β)).coeff e := by
-      simp [wordCoeff, b, wordMap_nil, translatedPolynomial, creationContract_apply]
+      have hc : creationContract D α (-m - 1 - bilinear D α β) 1 =
+          creationCoeff D α (-m - 1 - bilinear D α β) := by
+        simpa using creationContract_monomial D α (-m - 1 - bilinear D α β) 0 (1 : Oscillator D)
+      simp [wordCoeff, b, wordMap_nil, translatedPolynomial, hc]
     rw [hh, norm_mul, hphase, one_mul]
     exact hbase _ _
   refine ⟨C, L, hC, hL, ?_⟩
@@ -634,6 +638,8 @@ private theorem ground_row_bound (D : LatticeData) (α β : Charge D) :
             rw [map_add, Finsupp.degree_single, pow_succ]
             dsimp [B]
             ring
+          _ ≤ _ := le_rfl
+        all_goals exact le_rfl
   exact fun e d m => haux d.degree d rfl e m
 
 private theorem signed_derivative_choose (j k : ℕ) :
@@ -716,9 +722,211 @@ private theorem wordCoeff_cons (D : LatticeData) (α β : Charge D)
     intro j hj
     exact wordMap_neutral_coefficient D α β ω x.1 x.2 j (m - j - 1) e d
 
+private theorem occupation_sub_bounds (D : LatticeData) (d : Occ D) (x : Index D) :
+    level D (d - Finsupp.single x 1) ≤ level D d ∧
+      (d - Finsupp.single x 1).degree ≤ d.degree := by
+  classical
+  by_cases hx : d x = 0
+  · have heq : d - Finsupp.single x 1 = d := by
+      ext y
+      by_cases hy : y = x
+      · subst y; simp [Finsupp.sub_apply, hx]
+      · simp [Finsupp.sub_apply, Finsupp.single_apply, hy]
+    rw [heq]
+    exact ⟨le_rfl, le_rfl⟩
+  · have hh := Finsupp.sub_add_single_one_cancel hx
+    have hl : level D (d - Finsupp.single x 1) + (x.2 + 1) = level D d := by
+      simpa [level, LatticePositiveEnergy.oscillatorEnergy, map_add,
+        Finsupp.weight_single] using congrArg (level D) hh
+    have hd : (d - Finsupp.single x 1).degree + 1 = d.degree := by
+      simpa [map_add, Finsupp.degree_single] using congrArg Finsupp.degree hh
+    omega
+
+private def rowWeight (D : LatticeData) (L : ℝ) (K : ℕ) (d : Occ D) : ℝ :=
+  (1 + (level D d : ℝ)) ^ K * L ^ d.degree
+
+private theorem rowWeight_nonneg (D : LatticeData) (L : ℝ) (hL : 1 ≤ L)
+    (K : ℕ) (d : Occ D) : 0 ≤ rowWeight D L K d := by
+  dsimp [rowWeight]
+  positivity
+
+private theorem rowWeight_sub_le (D : LatticeData) (L : ℝ) (hL : 1 ≤ L)
+    (K : ℕ) (d : Occ D) (x : Index D) :
+    rowWeight D L K (d - Finsupp.single x 1) ≤ rowWeight D L K d := by
+  have hb := occupation_sub_bounds D d x
+  dsimp [rowWeight]
+  apply mul_le_mul
+  · exact pow_le_pow_left₀ (by positivity) (by exact_mod_cast Nat.add_le_add_left hb.1 1)
+  · exact pow_le_pow_right₀ hL hb.2
+  · positivity
+  · positivity
+
+private theorem rowWeight_grow (D : LatticeData) (L : ℝ) (hL : 1 ≤ L)
+    (K t : ℕ) (d : Occ D) : rowWeight D L K d ≤ rowWeight D L (K + t) d := by
+  dsimp [rowWeight]
+  exact mul_le_mul_of_nonneg_right (pow_le_pow_right₀ (by positivity) (Nat.le_add_right _ _))
+    (pow_nonneg (by linarith) _)
+
+/-- One actual normal-product insertion preserves the polynomial row envelope. -/
+private theorem word_row_step (D : LatticeData) (α β : Charge D)
+    (ω : List (Index D)) (x : Index D) (L : ℝ) (hL : 1 ≤ L) (K : ℕ)
+    (C : Occ D → ℝ) (hC : ∀ e, 0 ≤ C e)
+    (hrow : ∀ (e d : Occ D) (m : ℤ),
+      ‖wordCoeff D α β ω m e d‖ ≤ C e * rowWeight D L K d) (e : Occ D) :
+    ∃ B : ℝ, 0 ≤ B ∧ ∀ (d : Occ D) (m : ℤ),
+      ‖wordCoeff D α β (x :: ω) m e d‖ ≤
+        B * rowWeight D L (K + (x.2 + 3)) d := by
+  classical
+  let Z : ℝ := ‖(bilinear D (unitCharge D x.1) β : ℂ)‖
+  let G : ℝ := ∑ a : Fin D.rank, ‖(D.G x.1 a : ℂ)‖
+  let P : ℝ := (x.2 + 1 : ℝ) ^ x.2
+  let F : ℝ := ∑ j ∈ Finset.range (level D e),
+    ((j + x.2).choose x.2 : ℝ) *
+      if (x.1, j + x.2) ∈ e.support then C (e - Finsupp.single (x.1, j + x.2) 1) else 0
+  have hZ : 0 ≤ Z := norm_nonneg _
+  have hG : 0 ≤ G := Finset.sum_nonneg (fun _ _ => norm_nonneg _)
+  have hP : 0 ≤ P := by dsimp [P]; positivity
+  have hF : 0 ≤ F := by
+    apply Finset.sum_nonneg
+    intro j hj
+    apply mul_nonneg (Nat.cast_nonneg _)
+    split_ifs <;> positivity
+  refine ⟨F + (x.2 + 1 : ℝ) * P * (Z + G) * C e, by positivity, ?_⟩
+  intro d m
+  let N : ℝ := 1 + (level D d : ℝ)
+  have hN : 1 ≤ N := by dsimp [N]; positivity
+  have hN0 : 0 ≤ N := le_trans zero_le_one hN
+  have hW := rowWeight_nonneg D L hL K d
+  have hb (a : Fin D.rank) (n : ℕ) (m' : ℤ) :
+      ‖wordCoeff D α β ω m' e (d - Finsupp.single (a,n) 1)‖ ≤
+        C e * rowWeight D L K d :=
+    (hrow e _ m').trans (mul_le_mul_of_nonneg_left (rowWeight_sub_le D L hL K d (a,n)) (hC e))
+  have hchoose (j : ℕ) (hj : j < x.2 + level D d + 1) :
+      (j.choose x.2 : ℝ) ≤ P * N ^ x.2 := by
+    have hjN : (j : ℝ) ≤ (x.2 + 1 : ℝ) * N := by
+      have hj' : (j : ℝ) ≤ (x.2 : ℝ) + level D d := by exact_mod_cast (show j ≤ x.2 + level D d by omega)
+      dsimp [N]
+      nlinarith [Nat.cast_nonneg (level D d)]
+    calc
+      _ ≤ (j : ℝ) ^ x.2 := by exact_mod_cast Nat.choose_le_pow j x.2
+      _ ≤ ((x.2 + 1 : ℝ) * N) ^ x.2 := pow_le_pow_left₀ (Nat.cast_nonneg _) hjN
+      _ = _ := mul_pow _ _ _
+  have hpos (j : ℕ) (hj : j < x.2 + level D d + 1) :
+      ‖(-1 : ℂ) ^ x.2 * (j.choose x.2 : ℂ) *
+        (if j < x.2 then 0 else if j = x.2 then
+          (bilinear D (unitCharge D x.1) β : ℂ) * wordCoeff D α β ω (m - j - 1) e d
+        else ((j : ℤ) - x.2 : ℂ) *
+          ∑ a : Fin D.rank, (D.G x.1 a : ℂ) * (d (a, j - x.2 - 1) : ℂ) *
+            wordCoeff D α β ω (m - j - 1) e (d - Finsupp.single (a, j - x.2 - 1) 1))‖ ≤
+      P * (Z + G) * N ^ (x.2 + 2) * C e * rowWeight D L K d := by
+    have hinner :
+        ‖if j < x.2 then 0 else if j = x.2 then
+          (bilinear D (unitCharge D x.1) β : ℂ) * wordCoeff D α β ω (m - j - 1) e d
+        else ((j : ℤ) - x.2 : ℂ) *
+          ∑ a : Fin D.rank, (D.G x.1 a : ℂ) * (d (a, j - x.2 - 1) : ℂ) *
+            wordCoeff D α β ω (m - j - 1) e (d - Finsupp.single (a, j - x.2 - 1) 1)‖ ≤
+          (Z + G) * N ^ 2 * (C e * rowWeight D L K d) := by
+      split_ifs with hlt heq
+      · simp only [norm_zero]; positivity
+      · rw [norm_mul]
+        have hsq : 1 ≤ N ^ 2 := one_le_pow₀ hN
+        calc
+          _ ≤ Z * (C e * rowWeight D L K d) := mul_le_mul_of_nonneg_left (hrow e d _) hZ
+          _ ≤ (Z + G) * N ^ 2 * (C e * rowWeight D L K d) := by gcongr; nlinarith
+      · have hm : 0 ≤ (j : ℤ) - x.2 := by omega
+        have hjN : ‖((j : ℤ) - x.2 : ℂ)‖ ≤ N := by
+          rw [Complex.norm_intCast, Int.norm_eq_abs, abs_of_nonneg hm]
+          dsimp [N]
+          exact_mod_cast (show j - x.2 ≤ 1 + level D d by omega)
+        have hdN (a : Fin D.rank) : (d (a, j - x.2 - 1) : ℝ) ≤ N := by
+          have hh := Finsupp.le_weight (w := fun y : Index D => y.2 + 1)
+            (s := (a, j - x.2 - 1)) (by omega) d
+          change d (a, j - x.2 - 1) ≤ level D d at hh
+          dsimp [N]
+          exact_mod_cast (hh.trans (Nat.le_add_left _ _))
+        rw [norm_mul]
+        calc
+          _ ≤ N * ∑ a : Fin D.rank,
+              ‖(D.G x.1 a : ℂ)‖ * (d (a, j - x.2 - 1) : ℝ) *
+                ‖wordCoeff D α β ω (m - j - 1) e (d - Finsupp.single (a, j - x.2 - 1) 1)‖ := by
+            gcongr
+            exact (norm_sum_le _ _).trans (le_of_eq (by simp [norm_mul]))
+          _ ≤ N * ∑ a : Fin D.rank, ‖(D.G x.1 a : ℂ)‖ * N *
+              (C e * rowWeight D L K d) := by
+            gcongr with a
+            · exact hdN a
+            · exact hb a _ _
+          _ = G * N ^ 2 * (C e * rowWeight D L K d) := by
+            simp only [G, ← Finset.sum_mul]
+            ring
+          _ ≤ (Z + G) * N ^ 2 * (C e * rowWeight D L K d) := by gcongr; positivity
+    simp only [norm_mul, norm_pow, norm_neg, norm_one, one_pow, one_mul,
+      Complex.norm_natCast]
+    calc
+      _ ≤ (P * N ^ x.2) * ((Z + G) * N ^ 2 * (C e * rowWeight D L K d)) := by
+        exact mul_le_mul (hchoose j hj) hinner (norm_nonneg _) (mul_nonneg hP (pow_nonneg hN0 _))
+      _ = _ := by rw [pow_add]; ring
+  rw [wordCoeff_cons]
+  calc
+    _ ≤ (∑ j ∈ Finset.range (level D e),
+        ‖((j + x.2).choose x.2 : ℂ) *
+          if (x.1, j + x.2) ∈ e.support then
+            wordCoeff D α β ω (m + j) (e - Finsupp.single (x.1, j + x.2) 1) d else 0‖) +
+      ∑ j ∈ Finset.range (x.2 + level D d + 1),
+        ‖(-1 : ℂ) ^ x.2 * (j.choose x.2 : ℂ) *
+          (if j < x.2 then 0 else if j = x.2 then
+            (bilinear D (unitCharge D x.1) β : ℂ) * wordCoeff D α β ω (m - j - 1) e d
+          else ((j : ℤ) - x.2 : ℂ) *
+            ∑ a : Fin D.rank, (D.G x.1 a : ℂ) * (d (a, j - x.2 - 1) : ℂ) *
+              wordCoeff D α β ω (m - j - 1) e (d - Finsupp.single (a, j - x.2 - 1) 1))‖ :=
+      (norm_add_le _ _).trans (add_le_add (norm_sum_le _ _) (norm_sum_le _ _))
+    _ ≤ F * rowWeight D L K d +
+        (x.2 + level D d + 1 : ℕ) * (P * (Z + G) * N ^ (x.2 + 2) * C e * rowWeight D L K d) := by
+      apply add_le_add
+      · rw [Finset.sum_mul]
+        apply Finset.sum_le_sum
+        intro j hj
+        rw [norm_mul, Complex.norm_natCast]
+        split_ifs with he
+        · exact mul_le_mul_of_nonneg_left (hrow _ _ _) (Nat.cast_nonneg _)
+        · simp
+      · exact (Finset.sum_le_sum (fun j hj => hpos j (Finset.mem_range.mp hj))).trans (by simp)
+    _ ≤ F * rowWeight D L (K + (x.2 + 3)) d +
+        ((x.2 + 1 : ℝ) * N) * (P * (Z + G) * N ^ (x.2 + 2) * C e * rowWeight D L K d) := by
+      apply add_le_add
+      · exact mul_le_mul_of_nonneg_left (rowWeight_grow D L hL K (x.2 + 3) d) hF
+      · gcongr
+        dsimp [N]
+        push_cast
+        nlinarith [Nat.cast_nonneg (level D d)]
+    _ = _ := by
+      dsimp [rowWeight, N]
+      rw [pow_add, pow_succ (1 + (level D d : ℝ)) (x.2 + 2)]
+      ring
+
+/-- Every actual descendant word has a row envelope uniform in all signed modes. -/
+private theorem word_row_bound (D : LatticeData) (α β : Charge D) :
+    ∃ L : ℝ, 1 ≤ L ∧ ∀ ω : List (Index D), ∃ K : ℕ, ∀ e : Occ D,
+      ∃ C : ℝ, 0 ≤ C ∧ ∀ (d : Occ D) (m : ℤ),
+        ‖wordCoeff D α β ω m e d‖ ≤ C * rowWeight D L K d := by
+  classical
+  obtain ⟨C₀, L, hC₀, hL, hbase⟩ := ground_row_bound D α β
+  refine ⟨L, hL, ?_⟩
+  intro ω
+  induction ω with
+  | nil =>
+    refine ⟨0, fun e => ⟨C₀ * 2 ^ level D e, by positivity, ?_⟩⟩
+    intro d m
+    simpa [rowWeight, mul_assoc] using hbase e d m
+  | cons x ω ih =>
+    obtain ⟨K, hi⟩ := ih
+    choose C hC hb using hi
+    exact ⟨K + (x.2 + 3), fun e => word_row_step D α β ω x L hL K C hC hb e⟩
+
 #print axioms creation_coefficient_factorial
 #print axioms creation_radial_bound
 #print axioms creation_occupation_summable
+#print axioms word_row_bound
 #print axioms ground_row_bound
 #print axioms wordMap_nil_X
 #print axioms wordCoeff_cons_finite
