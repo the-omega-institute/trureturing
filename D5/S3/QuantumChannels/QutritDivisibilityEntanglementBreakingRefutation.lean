@@ -26,42 +26,42 @@ namespace D5.S3.QuantumChannels.QutritDivisibilityEntanglementBreakingRefutation
 
 noncomputable section
 
-private def IsCPTP (T : MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
-  T.IsCompletelyPositive ∧ T.IsTracePreserving
+def IsCPTP (t : MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
+  t.IsCompletelyPositive ∧ t.IsTracePreserving
 
-private def IsUnitaryChannel (T : MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
+def IsUnitaryChannel (t : MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
   ∃ U : Matrix.unitaryGroup (Fin 3) ℂ, ∀ X,
-    T X = (U : Matrix (Fin 3) (Fin 3) ℂ) * X *
+    t X = (U : Matrix (Fin 3) (Fin 3) ℂ) * X *
       (U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose
 
-private def IsDivisible (T : MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
-  ∃ T₁ T₂, IsCPTP T₁ ∧ IsCPTP T₂ ∧ T = T₁.comp T₂ ∧
-    ¬ IsUnitaryChannel T₁ ∧ ¬ IsUnitaryChannel T₂
+def IsDivisible (t : MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
+  ∃ t1 t2, IsCPTP t1 ∧ IsCPTP t2 ∧ t = t1.comp t2 ∧
+    ¬ IsUnitaryChannel t1 ∧ ¬ IsUnitaryChannel t2
 
-private def IsPositiveTP (V : MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
-  (∀ ⦃X⦄, X.PosSemidef → (V X).PosSemidef) ∧ V.IsTracePreserving
+def IsPositiveTP (v : MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
+  (∀ ⦃X⦄, X.PosSemidef → (v X).PosSemidef) ∧ v.IsTracePreserving
 
 private noncomputable def transferMatrix (T : MatrixMap (Fin 3) (Fin 3) ℂ) :=
   LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin 3) (Fin 3))
     (Matrix.stdBasis ℂ (Fin 3) (Fin 3)) T
 
-private def IsPDivisibleMap (E : ℝ → MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
-  E 0 = LinearMap.id ∧
-    (∀ t, 0 ≤ t → IsCPTP (E t)) ∧
-    ContinuousOn (fun t => transferMatrix (E t)) (Set.Ici (0 : ℝ)) ∧
-    (∀ t s, 0 ≤ t → t < s → ∃ V, IsPositiveTP V ∧ E s = V.comp (E t))
+def IsPDivisibleMap (e : ℝ → MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
+  e 0 = LinearMap.id ∧
+    (∀ t, 0 ≤ t → IsCPTP (e t)) ∧
+    ContinuousOn (fun t => transferMatrix (e t)) (Set.Ici (0 : ℝ)) ∧
+    (∀ t s, 0 ≤ t → t < s → ∃ v, IsPositiveTP v ∧ e s = v.comp (e t))
 
-private def pDivisibleSet : Set (MatrixMap (Fin 3) (Fin 3) ℂ) :=
+def pDivisibleSet : Set (MatrixMap (Fin 3) (Fin 3) ℂ) :=
   {T | transferMatrix T ∈ closure {M | ∃ E, IsPDivisibleMap E ∧ ∃ t, 0 ≤ t ∧
     M = transferMatrix (E t)}}
 
-private def IsEntanglementBreaking (T : MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
+def IsEntanglementBreaking (t : MatrixMap (Fin 3) (Fin 3) ℂ) : Prop :=
   ∀ n : ℕ, ∀ rho : Matrix (Fin n × Fin 3) (Fin n × Fin 3) ℂ,
     rho.PosSemidef → rho.trace = 1 →
-      separableCone (MatrixMap.kron (LinearMap.id : MatrixMap (Fin n) (Fin n) ℂ) T rho)
+      separableCone (MatrixMap.kron (LinearMap.id : MatrixMap (Fin n) (Fin n) ℂ) t rho)
 
 def claim : Prop :=
-  ∀ T, IsCPTP T → IsDivisible T → T ∉ pDivisibleSet → IsEntanglementBreaking T
+  ∀ t, IsCPTP t → IsDivisible t → t ∉ pDivisibleSet → IsEntanglementBreaking t
 
 private def w : MatrixMap (Fin 3) (Fin 3) ℂ where
   toFun X := (1 / 2 : ℂ) • (X.trace • (1 : Matrix (Fin 3) (Fin 3) ℂ) - X.transpose)
@@ -185,7 +185,7 @@ private lemma separableCone_partialTranspose_posSemidef {m n : ℕ}
   exact hs
 
 private lemma witness_partial_transpose_negative :
-      RCLike.re (dotProduct (star witnessVector)
+    RCLike.re (dotProduct (star witnessVector)
       (Matrix.mulVec (partialTranspose
         (MatrixMap.kron (LinearMap.id : MatrixMap (Fin 3) (Fin 3) ℂ) t omega))
         witnessVector)) = -1 / 9 := by sorry
