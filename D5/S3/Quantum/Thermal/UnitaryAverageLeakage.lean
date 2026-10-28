@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Thermal/UnitaryAverageLeakage
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Construct finite unitary averages and prove quantitative commutator leakage bounds in a C-star operator norm. -/
 
 import Mathlib.Analysis.CStarAlgebra.Matrix
