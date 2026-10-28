@@ -478,7 +478,7 @@ private theorem context_subtree (J : OutputContext) (t : Source) (p : Address) :
   | left J sibling ih => simpa [OutputContext.plug, OutputContext.holeAddress, subtree] using ih
   | right sibling J ih => simpa [OutputContext.plug, OutputContext.holeAddress, subtree] using ih
 
-private theorem context_run (J : OutputContext) {t u : Source} {w : List Call}
+theorem context_run (J : OutputContext) {t u : Source} {w : List Call}
     (h : run t w = some u) :
     run (J.plug t) (w.map (Call.shift J.holeAddress)) = some (J.plug u) := by
   induction w generalizing t with
@@ -570,7 +570,7 @@ private theorem D_leaf (b : Bool) : D (.of b) := by
   intro p
   cases p <;> simp [readout]
 
-private theorem run_preserves_D {t u : Source} {w : List Call}
+theorem run_preserves_D {t u : Source} {w : List Call}
     (ht : D t) (h : run t w = some u) : D u := by
   induction w generalizing t with
   | nil =>
