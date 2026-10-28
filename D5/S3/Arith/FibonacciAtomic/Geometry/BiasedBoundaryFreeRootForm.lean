@@ -385,13 +385,6 @@ def formSpace : Submodule ℝ (G × H) where
     change c • x.2 ∈ K ∧ C (c • x.2) = Pi (c • x.1)
     exact ⟨K.smul_mem c hx.1,by rw [map_smul,map_smul,hx.2]⟩
 
-instance : CompleteSpace formSpace := by
-  have hc : IsClosed (formSpace : Set (G × H)) := by
-    change IsClosed {x : G × H | x.2 ∈ K ∧ C x.2 = Pi x.1}
-    rw [← lift_graph_eq]
-    exact closed_lift_graph
-  exact hc.completeSpace_coe
-
 /-- The actual inclusion into G of the original energy domain, in graph coordinates. -/
 def formInclusion : formSpace →L[ℝ] G :=
   (ContinuousLinearMap.fst ℝ G H).comp formSpace.subtypeL

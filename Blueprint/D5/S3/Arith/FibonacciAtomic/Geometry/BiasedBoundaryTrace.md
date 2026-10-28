@@ -162,7 +162,19 @@ For every original finite address p, including the empty address, the real mass 
 
 The finite-coordinate product formula for M reduces the cylinder measure to singleton probabilities. Appending one letter multiplies both that measure and mass(p) by the same probability. The empty address has mass one. Consequently this is the actual cylinder mass used by the mass-crossing frontier.
 
-**Theorem 1.14 (Convergence and Hardy Tail).**
+**Theorem 1.14 (An Actual Single Increment).**
+
+$$\forall p: \operatorname{Edge}\left(\right), (\forall c: \mathbb{R}, (\operatorname{J}\left(\operatorname{single}\left(2, p, c\right)\right)=(c) \cdot (\operatorname{indicator}\left(p\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.J_single` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original nonempty edge p and real increment c, J sends the square-summable single-coordinate vector to c times the actual biased cylinder indicator. This identifies the coordinate covariance with the intersection probabilities of the same measure M.
+
+**Theorem 1.15 (Convergence and Hardy Tail).**
 
 $$(\forall z: \operatorname{H}\left(\right), (\operatorname{HasSum}\left((p: \operatorname{Edge}\left(\right) \mapsto (\operatorname{coordinate}\left(z, p\right)) \cdot (\operatorname{indicator}\left(p\right))), \operatorname{J}\left(z\right)\right)))\land(\forall h: \mathbb{N}, (\forall z: \operatorname{H}\left(\right), ((\Vert \operatorname{J}\left((z) - (\operatorname{P}\left(h, z\right))\right) \Vert)^{2}\leq(\frac{(a)^{h+1}}{(1) - (a)}) \cdot ((\Vert z \Vert)^{2}))))$$
 
@@ -186,6 +198,7 @@ The conditional suffix identity, the stopping-cylinder projection and its residu
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.G`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.J`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.J_single`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.M`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.Omega`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.a_lt_one`

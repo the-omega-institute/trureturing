@@ -42,7 +42,7 @@ internal sealed class BiasedBoundaryFreeRootFormDocument : IScribeDocumentDefini
     private static Formula Par(Formula x) => Seq(Open, x, Close);
     private static Formula Call(string s, params Formula[] xs) => new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. xs]);
     private static Formula All(string s, Formula t, Formula x) => Seq(Forall, Sp, V(s), Colon, Sp, t, Comma, Sp, Par(x));
-    private static Formula NormSq(Formula x) => Seq(Par(Seq(Vert, x, Vert)), Caret, Grp(D(2)));
+    private static Formula NormSq(Formula x) => Seq(Par(Seq(Vert,Sp,x,Sp,Vert)), Caret, Grp(D(2)));
     private static Formula And(params Formula[] xs) => Seq([.. xs.SelectMany((x, i) => i == 0 ? new[] { Par(x) } : new[] { Land, Par(x) })]);
     private static Formula CompactFormula()
     {
@@ -62,11 +62,11 @@ internal sealed class BiasedBoundaryFreeRootFormDocument : IScribeDocumentDefini
         Formula f=V("F"), z=V("z"), c=V("c"), l=Call("lift",f), h=V("H"), k=V("K");
         Formula rep=Seq(f,Eq,Call("constG",c),Plus,Call("J",z));
         Formula original=Seq(f,Eq,Call("constG",Seq(Call("mean",f),Minus,Call("mean",Call("J",l)))),Plus,Call("J",l));
-        return All("F",V("D"),And(Seq(l,InMacro,k),Seq(Call("C",l),Eq,Call("Pi",f)),original,
+        return All("F",V("D"),And(Seq(l,InMacro,Sp,k),Seq(Call("C",l),Eq,Call("Pi",f)),original,
             Seq(Call("energy",f),Eq,NormSq(l)),
-            All("c",Seq(Mathbb,Grp(V("R"))),All("z",h,Seq(rep,Implies,Par(And(
+            All("c",Seq(Mathbb,Grp(V("R"))),All("z",h,Seq(rep,Implies,Sp,Par(And(
                 Seq(l,Eq,Call("starProjection",k,z)),Seq(NormSq(l),Leq,NormSq(z))))))),
-            All("z",h,Seq(And(Seq(z,InMacro,k),Seq(Call("C",z),Eq,Call("Pi",f))),Implies,Seq(z,Eq,l)))));
+            All("z",h,Seq(And(Seq(z,InMacro,Sp,k),Seq(Call("C",z),Eq,Call("Pi",f))),Implies,Sp,Seq(z,Eq,l)))));
     }
     private static Formula GraphFormula()
     {
