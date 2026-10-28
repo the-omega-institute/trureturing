@@ -95,8 +95,6 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 
 **Proved by `result`:** it is false that for every natural dimension $n$, every strictly positive real vector $d$ and every complex $n\times n$ matrix $A$, there is a finite set of ambient matrices representing every real extreme point of $M_D(A)$ by conjugation with unitaries commuting with $D=\operatorname{diag}(d)$.
 
-**Computed, not formalized:** exact rational checks of the channel identities and of the invariant $\operatorname{tr}(DP_m)$ over an initial range of $m$ found no discrepancy and no repeated value.
-
 **Argued, not formalized.**
 
 - *Mechanism and missing structure.* For this $D$, the off-diagonal entries of $UD=DU$ give $(2/3-1/3)U_{01}=0$ and $(1/3-2/3)U_{10}=0$. Hence every commuting unitary is diagonal and its conjugation preserves diagonal populations. The populations $m^2/(m^2+1)$ vary injectively for natural $m$. A simple spectrum therefore does not supply the missing finite-orbit structure: the symmetry removes phases while preserving infinitely many population choices. This explains the separation established by `invariant` and `invariant_injective` for the fixed $D$ and family above.
@@ -108,4 +106,4 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 
 The bounded literature check does not establish exhaustive worldwide novelty or priority. The eight-work OpenCitations screen, MathDB and formal-conjectures queries, and the reported recurrence of the question in arXiv:2012.03496v2, Chapter 6, are reports by `search-fo` in issue #22739; their underlying readings have not been independently reproduced. The related arXiv:2207.11189v4 observation and its reachable-set definition were checked in the source text, but its full proof was not independently verified.
 
-The finite computations and every extension or interpretation in "Argued, not formalized" are not additional formalized conclusions. The identification of the entire reachable set with the state space relies on the cited source proof, rather than a declaration of this module. Continuity, classification of all extreme classes, and the restriction to strictly positive inputs remain open within this settlement.
+Every extension or interpretation in "Argued, not formalized" is not additional formalized conclusions. The identification of the entire reachable set with the state space relies on the cited source proof, rather than a declaration of this module. Continuity, classification of all extreme classes, and the restriction to strictly positive inputs remain open within this settlement.
