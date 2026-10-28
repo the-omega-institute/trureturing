@@ -116,7 +116,7 @@ internal sealed class CoherenceL1RelativeEntropyBoundDocument : IScribeDocumentD
     private static Formula ClaimBody() => All("n", Nat, All("rho", Mat, Imp(Call("IsState", Rho),
         Le(Call("coherenceRel", Rho), App(L1Owner, Rho)))));
     private static Formula VectorDotStar() => Disp(All("n", Nat,
-        All("v", Seq(Fin, Sp, Rightarrow, Sp, Complex),
+        All("v", new Formula.TypeArrow(Fin, Complex),
             Eq(Call("dotProduct", V("v"), Call("star", V("v"))),
                 Call("ofReal", Sum("j", Fin,
                     new Formula.Power(Call("norm", App(V("v"), V("j"))), D(2))))))));

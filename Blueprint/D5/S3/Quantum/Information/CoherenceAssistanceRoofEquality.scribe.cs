@@ -39,7 +39,7 @@ internal sealed class CoherenceAssistanceRoofEqualityDocument : IScribeDocumentD
                 "The claim asks whether every natural dimension, every symmetric concave coherence function with a nonzero simplex value, and every mixed density matrix have strictly separated convex and assisted roofs.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("result", "A rank-two counterexample", new Formula.Not(Parenthesized(Local("claim"))),
-                "Choose the quadratic function q(p) = 1 − Σᵢ pᵢ² in dimension four. It is concave on the simplex, permutation invariant, zero at every vertex, and nonzero at the barycenter. Let v = (1/√2, 1/√6, 1/√6, 1/√6) and w = (0, 1/√3, ω/√3, ω²/√3), where ω = (−1 + i√3)/2. Direct calculation gives unit norms and zero mutual inner products. Let P be the sum of their rank-one density matrices and let ρ = (1/2)P. The two vectors make P a self-adjoint idempotent, and the complementary projection has zero trace against ρ. For every complex a and b, the fourth-moment identity Σᵢ |a vᵢ + b wᵢ|⁴ = (|a|² + |b|²)²/3 holds. Therefore every unit vector in the range of P has q equal to 2/3. Positivity of the complementary projection and the zero trace force every positive-weight vector in any decomposition of ρ into the range of P. Hence every decomposition average is 2/3. The displayed two-vector decomposition shows that this value is attained, so the decomposition-value set is exactly {2/3}. Finally ρ is positive semidefinite, has trace one, and has squared trace 1/2, so it is mixed. The convex roof and the coherence of assistance are both 2/3, contradicting the strict inequality asserted by the claim.",
+                "Choose the quadratic function q(p) = 1 − Σᵢ pᵢ² in dimension four. It is concave on the simplex, permutation invariant, zero at every vertex, and nonzero at the barycenter. Let v = (1/√2, 1/√6, 1/√6, 1/√6) and w = (0, 1/√3, ω/√3, ω²/√3), where ω = (−1 + i√3)/2. Direct calculation gives unit norms and zero mutual inner products. Let P be the sum of their rank-one density matrices and let ρ = (1/2)P. The two vectors make P a self-adjoint idempotent, and the complementary projection has zero trace against ρ. For every complex a and b, the fourth-moment identity Σᵢ |a vᵢ + b wᵢ|⁴ = (|a|² + |b|²)²/3 holds. Therefore every unit vector in the range of P has q equal to 2/3. Positivity of the complementary projection and the zero trace force every positive-weight vector in any decomposition of ρ into the range of P. Hence every decomposition average is 2/3. The displayed two-vector decomposition shows that this value is attained, so the decomposition-value set is exactly {2/3}. Finally ρ is positive semidefinite, has trace one, and has trace(ρ²) = 1/2, so it is mixed. The convex roof and the coherence of assistance are both 2/3, contradicting the strict inequality asserted by the claim.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
         ), []));
 
@@ -140,7 +140,7 @@ internal sealed class CoherenceAssistanceRoofEqualityDocument : IScribeDocumentD
         Formula composition = Seq(p, Sp, Circ, Sp, Typed(sigma, Function(Fin(n), Fin(n))));
         Formula symmetry = All(sigma, permutation,
             All(p, function, Imp(Mem(p, simplex), Eq(At(f, composition), At(f, p)))));
-        Formula vertices = All(i, Fin(n), Eq(At(f, At(Call("Pi.single", i, One(Real())))), Typed(D(0), Real())));
+        Formula vertices = All(i, Fin(n), Eq(At(f, Call("Pi.single", i, One(Real()))), Typed(D(0), Real())));
         Formula body = And(Call("ConcaveOn", Real(), simplex, f), And(symmetry, vertices));
         return All(n, Nat(), All(f, Function(function, Real()), Iff(LocalCall("IsCoherenceFunction", f), body)));
     }
@@ -180,7 +180,7 @@ internal sealed class CoherenceAssistanceRoofEqualityDocument : IScribeDocumentD
         Formula members = Some(k, Nat(), Some(p, weight, Some(psi, state,
             And(LocalCall("IsDecomposition", rho, k, p, psi), average))));
         Formula set = SetOf(x, Real(), members);
-        return All(n, Nat(), All(f, function, All(rho, Matrix(n),
+        return All(n, Nat(), All(f, Function(function, Real()), All(rho, Matrix(n),
             Eq(LocalCall("decompositionValues", f, rho), set))));
     }
 
@@ -188,7 +188,7 @@ internal sealed class CoherenceAssistanceRoofEqualityDocument : IScribeDocumentD
     {
         Formula n = F.Id("n"), f = F.Id("f"), rho = Rho;
         Formula function = Function(Fin(n), Real());
-        return All(n, Nat(), All(f, function, All(rho, Matrix(n),
+        return All(n, Nat(), All(f, Function(function, Real()), All(rho, Matrix(n),
             Eq(LocalCall("convexRoof", f, rho), Call("sInf", LocalCall("decompositionValues", f, rho))))));
     }
 
@@ -196,7 +196,7 @@ internal sealed class CoherenceAssistanceRoofEqualityDocument : IScribeDocumentD
     {
         Formula n = F.Id("n"), f = F.Id("f"), rho = Rho;
         Formula function = Function(Fin(n), Real());
-        return All(n, Nat(), All(f, function, All(rho, Matrix(n),
+        return All(n, Nat(), All(f, Function(function, Real()), All(rho, Matrix(n),
             Eq(LocalCall("assistance", f, rho), Call("sSup", LocalCall("decompositionValues", f, rho))))));
     }
 
@@ -218,7 +218,7 @@ internal sealed class CoherenceAssistanceRoofEqualityDocument : IScribeDocumentD
             And(Mem(p, Simplex(n)), Ne(At(f, p), D(0))));
         Formula conclusion = All(rho, Matrix(n), Imp(LocalCall("IsMixed", rho),
             Lt(LocalCall("convexRoof", f, rho), LocalCall("assistance", f, rho))));
-        return All(n, Nat(), All(f, function, Imp(LocalCall("IsCoherenceFunction", f),
+        return All(n, Nat(), All(f, Function(function, Real()), Imp(LocalCall("IsCoherenceFunction", f),
             Imp(witness, conclusion))));
     }
 
