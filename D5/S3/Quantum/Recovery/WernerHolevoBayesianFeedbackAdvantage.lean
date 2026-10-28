@@ -621,7 +621,32 @@ private theorem frame_inner_sum {m₁ m₂ : ℕ} (z : Fin m₁ → Fin 3 → �
 private theorem markov_bound {m₁ m₂ : ℕ} (K₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ) (K₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ)
     (h₁ : IsKrausDecomposition K₁) (h₂ : IsKrausDecomposition K₂) :
     markovFidelity K₁ K₂ ≤ 1 / 2 := by
-  sorry
+  obtain ⟨z, hrz, hfz⟩ := kraus_classification K₁ h₁
+  obtain ⟨w, hrw, hfw⟩ := kraus_classification K₂ h₂
+  have hqz := frame_q_sum z hfz
+  have hqw := frame_q_sum w hfw
+  have hinner := frame_inner_sum z w hfz hfw
+  have hprod : ∑ a, ∑ b, q (w b) * q (z a) = 9 := by
+    simp_rw [← Finset.sum_mul, ← Finset.mul_sum]
+    rw [hqw, hqz]
+    norm_num
+  unfold markovFidelity
+  simp_rw [hrz, hrw]
+  calc
+    _ ≤ (1 / 9 : ℝ) * ∑ a, ∑ b,
+        (q (w b) * q (z a) + 3 * Complex.normSq (star (w b) ⬝ᵥ z a)) / 4 := by
+      apply mul_le_mul_of_nonneg_left _ (by norm_num)
+      exact Finset.sum_le_sum fun a _ => Finset.sum_le_sum fun b _ =>
+        abs_pair_bound (w b) (z a)
+    _ = 1 / 2 := by
+      have he : (∑ a, ∑ b,
+          (q (w b) * q (z a) + 3 * Complex.normSq (star (w b) ⬝ᵥ z a)) / 4) =
+          ((∑ a, ∑ b, q (w b) * q (z a)) +
+            3 * (∑ a, ∑ b, Complex.normSq (star (w b) ⬝ᵥ z a))) / 4 := by
+        simp only [div_eq_mul_inv, Finset.sum_add_distrib, Finset.sum_mul,
+          Finset.mul_sum, add_mul]
+      rw [he, hprod, hinner]
+      norm_num
 
 private theorem canonical_is_kraus : IsKrausDecomposition canonicalKraus := by
   have hs : ((Real.sqrt 2 : ℂ)⁻¹) ^ 2 = (1 / 2 : ℂ) := by
