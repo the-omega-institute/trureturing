@@ -12,6 +12,16 @@ internal sealed class NativeComputedEpochPotentialDocument : IScribeDocumentDefi
         "Computed occurrence potentials for native epoch transport",
         H("Finite occurrence cycles yield a natural epoch potential"), Blocks(
             Paragraph(Text("Finite occurrence positions are enumerated directly from every original equation. The resulting graph keeps loops, parallel edges, repeated occurrences, disconnected states, empty systems, signed exponent differences and equations with undefined heads.")),
+            Describe.Lean(DescribeId.Create("finite-tuple-program"),
+                DeclarationHandle.Create(Prefix + "computedPotential"),
+                H("An input-only terminating natural tuple program"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every n, k and m and every input I : EpochInput n k m, computedPotential I has type Fin m → Nat. Its integer precursor computedSignedPotential I is the m-th relaxation iterate. The zero iterate d_i is a_i when equation i is defined and zero otherwise. The next iterate at i is the maximum of d_i and all preceding values at j plus a_i-b for each syntax-position occurrence of rho^b X_j in equation i. Each round scans the finite indexed occurrence list; the natural round counter decreases structurally. The output is defined even when the cycle criterion fails, with correctness conditional on that criterion."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("certified-finite-tuple"),
+                DeclarationHandle.Create(Prefix + "constructPotential"),
+                H("The computed tuple and its correctness certificate"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every input I and proof hcycle : CycleCondition I, constructPotential I hcycle returns the subtype {s : Fin m → Nat // Potential I s}. Its value is definitionally computedPotential I. Nonnegativity comes from the initial lower bounds; a maximizing finite walk and nonpositive cycle deletion prove the edge inequalities after m rounds. Only the proof component uses the cycle condition. The tuple itself needs no additional mathematical witness."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("computed-occurrence-potential"),
                 DeclarationHandle.Create(Prefix + "cycleCondition_iff_potential"),
                 H("Cycle criterion and computed potential"),
