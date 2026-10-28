@@ -1,0 +1,30 @@
+**定义 2.1（完整仿射签名）。** 对迹一矩阵 (1.2) 令
+
+$$
+\sigma=b+c=\operatorname{tr}(JP),\qquad
+\tau=b+c+1-a=\operatorname{tr}(MP),\qquad
+\eta=b+2c.
+\tag{2.1}
+$$
+
+签名具有精确逆
+
+$$
+P=\begin{pmatrix}
+1-\tau+\sigma&2\sigma-\eta\\
+\eta-\sigma&\tau-\sigma
+\end{pmatrix}.
+\tag{2.2}
+$$
+
+**证明。** 从 $\eta-\sigma=c$、$2\sigma-\eta=b$、$\tau-\sigma=1-a$ 逐项恢复四个元素。因此三个签名分量相等当且仅当来源矩阵相等。合法来源的签名像恰为
+
+$$
+0<\tau-\sigma<1,\qquad \sigma<\eta<2\sigma,\qquad
+(2\sigma-\eta)(\eta-\sigma)
+=(1-\tau+\sigma)(\tau-\sigma).
+\tag{2.3}
+$$
+
+这些式子分别重写正性和行列式零，逆向代入 (2.2) 也得到 (1.2)。特别地 $\sigma>0$；不要求 $\sigma\ne1$。这里的签名是数学来源变量的函数，不是额外取得的观测。∎
+

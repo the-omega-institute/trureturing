@@ -1,0 +1,60 @@
+**定理 5.2（合法非对称奇异源与实际碰撞）。** 该奇异层有合法非对称源；在其上有非零三次或更低次增益，使原始 $M^4$ 的五次读数全部为零。
+
+**证明。** 定义
+
+$$
+\begin{aligned}
+s_\alpha&=\alpha-\tfrac12>1,\\
+b_\alpha&=\frac{s_\alpha+\sqrt{s_\alpha^2-1}}2,\qquad
+c_\alpha=\frac{s_\alpha-\sqrt{s_\alpha^2-1}}2,\\
+P_\alpha&=\begin{pmatrix}1/2&b_\alpha\\c_\alpha&1/2\end{pmatrix}.
+\end{aligned}
+\tag{5.4}
+$$
+
+平方根实且非零，又小于 $s_\alpha$，故 $b_\alpha,c_\alpha>0$ 且不相等。它们的乘积为 $1/4$，所以 $P_\alpha$ 迹一、行列式零、秩一、严格正且非对称。直接取迹得 $\operatorname{tr}(MP_\alpha)=b_\alpha+c_\alpha+1/2=\alpha$。
+
+取完整多项式
+
+$$
+\begin{aligned}
+H_\alpha(T)={}&-\frac{(T-1)(T-2)(T-3)}6
++\frac{T(T-2)(T-3)}{2\alpha}\\
+&-\frac{T(T-1)(T-3)}{2(1+\alpha)}
++\frac{T(T-1)(T-2)}{6(1+2\alpha)}.
+\end{aligned}
+\tag{5.5}
+$$
+
+四项恰是节点 $0,1,2,3$ 对应倒数迹
+
+$$
+1,\quad\frac1\alpha,\quad\frac1{1+\alpha},\quad\frac1{1+2\alpha}
+$$
+
+的 Lagrange 插值项，因而 $H_\alpha(0)=1$，多项式非零且次数至多三。等式 $N(\alpha)=0$ 由 (4.3) 等价于五个倒数迹的四阶差分为零。前三次插值在节点四处满足同一差分关系，因此
+
+$$
+H_\alpha(4)=\frac1{2+3\alpha}.
+\tag{5.6}
+$$
+
+所以两个不同的合法完整世界
+
+$$
+(P_\alpha,H_\alpha,-1),\qquad
+(P_\alpha,2H_\alpha,-2)
+\tag{5.7}
+$$
+
+在原时钟 $0,1,2,3,4$ 沿 $M^4$ 全部读零：每处都有 $t_iH_\alpha(i)=1$，包括初读。它们增益及漂移确实不同。
+
+定理 5.1 使该层的路径核一维，而 $H_\alpha$ 的系数向量非零且属于核，故
+
+$$
+\ker R_{M^4}(P)=\mathbb R H_\alpha\quad(\tau=\alpha).
+\tag{5.8}
+$$
+
+这里右边以多项式与其四维系数向量作自然识别。非奇异层的核为零。第五个 $M$ 由定理 4.1 消去此一维歧义。因此统一五步定理中的五不能在初始纯 $M$ 前缀上降为四。这是固定初始前缀的锐性：不声称先前混合历史或之后其他观测不能解除四个 $M$ 的歧义，(5.7) 也不是原根失败树。∎
+

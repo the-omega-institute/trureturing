@@ -23,7 +23,7 @@ open NativeCompletionPrefixLifting CompletionHomogeneousFixedPoints
 open NativeGuardedFreeExtension NativeGuardedAtomicReplacement
 open NativeImageSaturationInterface
 
-private theorem image_coinduction (k : Nat) (R : CompletionTree → Prop)
+theorem image_coinduction (k : Nat) (R : CompletionTree → Prop)
     (step : ∀ X, R X → X = atomic k ∨ X = atomic (k + 1) ∨
       ∃ U V, X = node U V ∧ R U ∧ R V) :
     ∀ X, R X → NativeImage k X := by
@@ -105,12 +105,12 @@ private theorem image_coinduction (k : Nat) (R : CompletionTree → Prop)
   intro a
   exact (cutoff_readout (a.length + 1) _ _).mp (prefixes _ ⟨X, hx⟩) a (by omega)
 
-private theorem image_shift_large (k a : Nat) (X : CompletionTree) (ha : k ≤ a) :
+theorem image_shift_large (k a : Nat) (X : CompletionTree) (ha : k ≤ a) :
     NativeImage k (rho^[a] X) := by
   refine ⟨rho^[a - k] X, ?_⟩
   rw [← Function.iterate_add_apply, Nat.add_sub_of_le ha]
 
-private theorem image_shift_cancel (k a : Nat) (X : CompletionTree) (ha : a ≤ k) :
+theorem image_shift_cancel (k a : Nat) (X : CompletionTree) (ha : a ≤ k) :
     NativeImage k (rho^[a] X) ↔ NativeImage (k - a) X := by
   constructor
   · rintro ⟨Y, h⟩
