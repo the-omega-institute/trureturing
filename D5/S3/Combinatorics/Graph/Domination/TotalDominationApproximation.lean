@@ -7,8 +7,6 @@
    digest: Joint logarithmic radius and angle approximation for actual total roots. -/
 
 import D5.S3.Combinatorics.Graph.Domination.TotalDominationBlowup
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.Algebra.Order.Round
 
 /-!
 The logarithmic power-root approximation is an elementary ingredient on the

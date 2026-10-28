@@ -7,11 +7,7 @@
    digest: Actual total-domination graph families and right-hand seed estimates. -/
 
 import Mathlib.Combinatorics.SimpleGraph.CycleGraph
-import Mathlib.Data.Finset.Sum
-import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Analysis.Polynomial.Basic
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Tactic
 
 /-!
