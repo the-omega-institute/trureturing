@@ -111,7 +111,10 @@ internal sealed class FactorizationRefutationDocument : IScribeDocumentDefinitio
                         + "Toep_n^Inv remains unresolved here. Failure of this factorization "
                         + "assertion does not establish an unbounded difference of those "
                         + "two global Toeplitz numbers. Conjectures 5.2 and 5.3 are separate statements."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("garcia-marco-2025-uniform-toeplitz-factorization"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula FullClaim()
     {

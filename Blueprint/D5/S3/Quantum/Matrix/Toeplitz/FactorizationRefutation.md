@@ -38,6 +38,10 @@ $$\neg (\exists (C: \mathbb{N}), ((0 < C) \land (\forall (n: \mathbb{N}), ((0 < 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/Toeplitz/FactorizationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/garcia-marco-2025-uniform-toeplitz-factorization` (refuted) by `D5/S3/Quantum/Matrix/Toeplitz/FactorizationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"garcia-marco-2025-uniform-toeplitz-factorization","declaration_gid":"D5/S3/Quantum/Matrix/Toeplitz/FactorizationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ignacio García-Marco, Irene Márquez-Corbella, Daniel Seco (2025). *On the minimum number of Toeplitz factors of a matrix*. DOI: [10.48550/arXiv.2506.16432](https://doi.org/10.48550/arXiv.2506.16432). URL: <https://arxiv.org/abs/2506.16432v1>.
