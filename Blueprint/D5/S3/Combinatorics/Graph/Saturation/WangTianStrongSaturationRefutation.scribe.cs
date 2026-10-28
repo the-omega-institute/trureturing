@@ -35,47 +35,47 @@ internal sealed class WangTianStrongSaturationRefutationDocument : IScribeDocume
                     Ne(Call("fst", F.Id("p")), Call("snd", F.Id("p")))))),
                 "Arc n is the subtype of Fin n x Fin n with unequal coordinates. Each ordered pair appears at most once in a finite arc set; reversing the pair gives a separate permissible arc."),
             Node("digraph", "Subdigraph records", "Digraph", All("n", N,
-                Seq(Graph, Colon, Call("Type"), Comma, Sp,
-                    Call("fields", Typed(F.Id("vertices"), Subsets),
-                        Typed(F.Id("arcs"), Arcsets),
-                        Typed(F.Id("endpoints"), EndpointLaw(F.Id("vertices"), F.Id("arcs")))))),
+                Seq(Graph, Sp, Colon, Eq, Sp, OpenBrace,
+                    Typed(F.Id("vertices"), Subsets), Semi, Sp,
+                    Typed(F.Id("arcs"), Arcsets), Semi, Sp,
+                    Typed(F.Id("endpoints"), EndpointLaw(F.Id("vertices"), F.Id("arcs"))), CloseBrace)),
                 "Digraph n is the record with precisely the displayed three fields, including the endpoint proof. There is no induced-subgraph requirement: deleting extra arcs or retaining isolated vertices is allowed. The field names in the record signature bind its subsequent field types."),
-            Node("vertices", "The vertex field", "Digraph.vertices", OnGraph(Typed(Vertices, Subsets)),
+            Node("vertices", "The vertex field", "vertices", OnGraph(Typed(Vertices, Subsets)),
                 "The vertex field is any finite subset of Fin n. It need not be the endpoints of the arc field."),
-            Node("arcs", "The arc field", "Digraph.arcs", OnGraph(Typed(Edges, Arcsets)),
+            Node("arcs", "The arc field", "arcs", OnGraph(Typed(Edges, Arcsets)),
                 "The arc field is a finite set of permissible directed arcs whose endpoints satisfy the next field."),
-            Node("endpoints", "The endpoint proof field", "Digraph.endpoints", OnGraph(EndpointLaw(Vertices, Edges)),
+            Node("endpoints", "The endpoint proof field", "endpoints", OnGraph(EndpointLaw(Vertices, Edges)),
                 "For each arc in the record, both coordinates belong to its vertex set. This proof field is part of the structure, rather than an additional graph axiom."),
-            Node("adj", "Directed adjacency", "Digraph.Adj", OnGraph(All("a", V, All("b", V,
+            Node("adj", "Directed adjacency", "Adj", OnGraph(All("a", V, All("b", V,
                 Iff(Call("Adj", Hh, F.Id("a"), F.Id("b")), Ex("e", Arcs,
                     And(Member(e, Edges), Equal(Call("val", e), Pair(F.Id("a"), F.Id("b"))))))))),
                 "Adjacency means that an arc in H has exactly the given ordered endpoints."),
-            Node("dipath", "Vertex-simple directed paths", "Digraph.Dipath", DipathFormula(),
+            Node("dipath", "Vertex-simple directed paths", "Dipath", DipathFormula(),
                 "The nonempty list a::l has no repeated vertices, every vertex lies in H.vertices, consecutive vertices satisfy H.Adj in the listed direction, and its final vertex is b. The getLast proof argument is the canonical proof that a cons list is nonempty; it contributes no additional condition."),
-            Node("strong", "Strong connectivity", "Digraph.Strong", OnGraph(Iff(Call("Strong", Hh),
+            Node("strong", "Strong connectivity", "Strong", OnGraph(Iff(Call("Strong", Hh),
                 All("a", V, Imp(Member(F.Id("a"), Vertices), All("b", V,
                     Imp(Member(F.Id("b"), Vertices), Imp(Ne(F.Id("a"), F.Id("b")),
                         Call("Dipath", Hh, F.Id("a"), F.Id("b"))))))))),
                 "Quantifying ordered distinct endpoints requires paths in both directions. The predicate is vacuous on empty and singleton records; positive strong connectivity below explicitly excludes the empty record."),
-            Node("delete", "Vertex deletion", "Digraph.delete", OnGraph(All("S", Subsets,
+            Node("delete", "Vertex deletion", "delete", OnGraph(All("S", Subsets,
                 And(Equal(Call("vertices", Call("delete", Hh, S)), Seq(Vertices, Sp, Setminus, Sp, S)),
                     Equal(Call("arcs", Call("delete", Hh, S)), Filter("e", Arcs, Edges,
                         And(Not(Member(Call("fst", e), S)), Not(Member(Call("snd", e), S)))))))),
                 "Deletion restricts the original vertices and arcs. Its endpoint proof follows from H.endpoints and the two nonmembership conditions, so the result is again a Digraph n. The difference is finite-set difference, not arithmetic subtraction."),
-            Node("separator", "Separators, including trivial remainders", "Digraph.Separator", OnGraph(All("S", Subsets,
+            Node("separator", "Separators, including trivial remainders", "Separator", OnGraph(All("S", Subsets,
                 Iff(Call("Separator", Hh, S), And(Subset(S, Vertices),
                     Or(Not(Call("Strong", Call("delete", Hh, S))),
                         Equal(Card(Call("vertices", Call("delete", Hh, S))), D(1))))))),
                 "A separator is a subset of the original vertices whose deletion leaves a graph that is not strongly connected or has exactly one vertex. Trivial means singleton. Removing all vertices does not count via the singleton alternative."),
-            Node("separator-cards", "The actual finite separator-size family", "Digraph.separatorCards", OnGraph(
+            Node("separator-cards", "The actual finite separator-size family", "separatorCards", OnGraph(
                 Equal(Call("separatorCards", Hh), Call("image", F.Id("card"),
                     Filter("S", Subsets, Call("powerset", Vertices), Call("Separator", Hh, S))))),
                 "Take every subset of H.vertices, keep exactly the separators, then take their cardinalities. If H is nonempty, erasing one chosen vertex from H.vertices leaves a singleton and supplies a member of this family."),
-            Node("connectivity", "An attained minimum with its full certificate", "Digraph.connectivity", ConnectivityFormula(),
+            Node("connectivity", "An attained minimum with its full certificate", "connectivity", ConnectivityFormula(),
                 "Nonempty T means there exists a vertex in T. The value is min' of separatorCards, with its nonemptiness proof supplied by the singleton remainder. The subtype retains an actual minimizing separator and the inequality against every separator. The displayed value equation uses min' only on this proved nonempty family; there is no default for an empty family."),
             Node("kstrong", "Positive strong connectivity and the empty-domain convention", "KStrong", All("n", N, All("k", N, All("H", Graph,
-                Iff(Call("KStrong", k, Hh), Ex("h", Call("Nonempty", Vertices),
-                    Leq(k, Call("val", Call("connectivity", Hh, h))))))))),
+                Iff(Call("KStrong", k, Hh), ProofEx("h", Call("Nonempty", Vertices),
+                    Leq(k, Call("val", Call("connectivity", Hh, h)))))))),
                 "The existential h is a proof of vertex nonemptiness. Thus even a vacuously strongly connected empty record is excluded. The minimum certificate applied to the singleton remainder gives k+1 <= card(H.vertices) whenever KStrong k H. This matches the size consequence used in the source's Lemma 2.2."),
             Node("forbidden", "Arbitrary forbidden subdigraphs", "Forbidden", OnArcset(
                 Iff(Call("Forbidden", k, A), Ex("H", Graph,
@@ -113,6 +113,10 @@ internal sealed class WangTianStrongSaturationRefutationDocument : IScribeDocume
     private static Formula Typed(Formula value, Formula type) => Seq(value, Colon, Sp, type);
     private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Ex(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula ProofAll(string name, Formula proposition, Formula body) =>
+        Seq(Forall, Sp, Parenthesized(Typed(F.Id(name), proposition)), Comma, Sp, body);
+    private static Formula ProofEx(string name, Formula proposition, Formula body) =>
+        Seq(Exists, Sp, Parenthesized(Typed(F.Id(name), proposition)), Comma, Sp, body);
     private static Formula Equal(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula Leq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
@@ -145,7 +149,7 @@ internal sealed class WangTianStrongSaturationRefutationDocument : IScribeDocume
         Formula m = F.Id("m"), c = Call("connectivity", Hh, h);
         Formula certificate = And(Ex("S", Subsets, And(Call("Separator", Hh, S), Equal(Card(S), m))),
             All("S", Subsets, Imp(Call("Separator", Hh, S), Leq(m, Card(S)))));
-        return OnGraph(All("h", Call("Nonempty", Vertices), new Formula.Aligned([
+        return OnGraph(ProofAll("h", Call("Nonempty", Vertices), new Formula.Aligned([
             Typed(c, Subtype("m", N, certificate)),
             Equal(Call("val", c), Call("minPrime", Call("separatorCards", Hh)))])));
     }
@@ -154,7 +158,7 @@ internal sealed class WangTianStrongSaturationRefutationDocument : IScribeDocume
         Formula hk = F.Id("hk"), m = F.Id("m"), b = F.Id("B"), c = Call("extremum", k, n, hk);
         Formula certificate = And(Ex("A", Arcsets, And(Call("Saturated", k, A), Equal(Card(A), m))),
             All("B", Arcsets, Imp(Call("Saturated", k, b), Leq(Card(b), m))));
-        return All("k", N, All("n", N, All("hk", Leq(D(1), k), new Formula.Aligned([
+        return All("k", N, All("n", N, ProofAll("hk", Leq(D(1), k), new Formula.Aligned([
             Typed(c, Subtype("m", N, certificate)),
             Equal(Call("val", c), Call("maxPrime", Call("image", F.Id("card"), Call("saturatedFamily", k, n))))]))));
     }
@@ -165,7 +169,7 @@ internal sealed class WangTianStrongSaturationRefutationDocument : IScribeDocume
         Formula rhs = Add(Mul(Mul(new Formula.Fraction(D(3), D(2)),
             Parenthesized(Sub(Rational(k), new Formula.Fraction(D(4), D(3))))),
             Parenthesized(Add(Sub(Rational(n), Rational(k)), D(1)))), Rational(Call("choose", n, D(2))));
-        return All("k", N, All("hk", Leq(D(1), k), Ex("N", N, All("n", N,
+        return All("k", N, ProofAll("hk", Leq(D(1), k), Ex("N", N, All("n", N,
             Imp(Leq(threshold, n), Equal(value, rhs))))));
     }
     private static Formula Rational(Formula value) => Parenthesized(Typed(value, Q));
