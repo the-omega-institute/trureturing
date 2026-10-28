@@ -16,7 +16,7 @@ internal sealed class LiteralLeadingCertificatesDocument : IScribeDocumentDefini
                 DeclarationHandle.Create("D5/S3/Observer/CubicGain/LiteralLeadingCertificates.leading_determinants_ne_zero"),
                 H("The four integer determinants are nonzero"),
                 StatementSource.FromAuthor(Nonzero()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The determinants of topR1, topR2, topA and topC are all nonzero integers. Their role is to establish exact polynomial degrees after the weighted leading-coefficient identities; they are not samples of an asserted resultant factorization."))), DescribeRole.Theorem)))));
+                Blocks(Paragraph(Text("The determinants of topR1, topR2, topA and topC are all nonzero integers. Their role is to establish exact polynomial degrees after the weighted leading-coefficient identities; they are not samples of an asserted resultant factorization."))), DescribeRole.Theorem))));
     private static Formula Call(string name, params Formula[] args) =>
         Seq(Operatorname, Grp(F.Id(name)), Open, Seq(args), Close);
     private static Formula Nonzero() => Disp(Seq(
