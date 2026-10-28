@@ -19,9 +19,12 @@ path_family_legal: proof_shape: bind-only; consumer: result.
 
 import Mathlib.Combinatorics.Digraph.Orientation
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Order.Interval.Finset.Basic
+import Mathlib.Order.Interval.Finset.Fin
+import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Data.Fin.Embedding
 import Mathlib.Tactic.NormNum
+
+/-! # Strictly positive convolution necessity for generalized action graphs -/
 
 namespace D5.S3.Combinatorics.Graph.ActionGraphs.PositiveNecessity
 
@@ -88,14 +91,16 @@ private theorem path_family_legal :
           {v : Fin (n + 1 + 1) // v = Fin.last (n + 1)} := by
         congr 1
         funext v
-        simp only [Fin.coe_castSuccEmb, Fin.range_castSucc, Set.mem_setOf_eq,
+        simp only [Fin.coe_castSuccEmb, Fin.range_castSucc, Set.mem_ofPred_eq,
           not_lt, Fin.ext_iff, Fin.val_last]
         exact propext (by omega)
       rw [h]
       simp
     · intro v hv
-      simp only [Fin.coe_castSuccEmb, Fin.range_castSucc, Set.mem_setOf_eq,
+      simp only [Fin.coe_castSuccEmb, Fin.range_castSucc, Set.mem_ofPred_eq,
         not_lt] at hv
+      change v.val = n + 1
+      have := v.isLt
       omega
   · intro n v
     refine ⟨n - v.val, Nat.sub_le _ _, ?_⟩
@@ -111,7 +116,8 @@ private theorem path_family_legal :
         dsimp [f] at this
         omega
       · intro w
-        have hw : v.val ≤ w.val.val := le_iff_reflTransGen_covBy.mpr w.property
+        have hw : v ≤ w.val := le_iff_reflTransGen_covBy.mpr w.property
+        change v.val ≤ w.val.val at hw
         refine ⟨⟨w.val.val - v.val, by have := w.val.isLt; omega⟩, ?_⟩
         apply Subtype.ext
         apply Fin.ext
@@ -124,7 +130,9 @@ private theorem path_family_legal :
         map_rel_iff' := by
           intro a b
           change (f a).val ⋖ (f b).val ↔ a ⋖ b
-          simp [f] }
+          simp only [Fin.covBy_iff, Nat.covBy_iff_add_one_eq]
+          dsimp [f]
+          omega }
     refine ⟨e, ?_, v.val, ?_⟩
     · apply Subtype.ext
       apply Fin.ext
@@ -133,6 +141,8 @@ private theorem path_family_legal :
       change v.val + w.val = w.val + v.val
       omega
   · intro n v hv
+    change (∀ w, ¬ v ⋖ w) at hv
+    change v.val = n
     by_contra h
     have hvn : v.val < n := by have := v.isLt; omega
     exact hv ⟨v.val + 1, by omega⟩ (by simp)
