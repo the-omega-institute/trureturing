@@ -106,7 +106,7 @@ theorem word_of_allocation {α : Type*} [DecidableEq α]
   calc
     packets P ++ T ~ (P.flatMap Prod.fst ++ P.map Prod.snd) ++ T := hpack.append_right T
     _ ~ (P.flatMap Prod.fst ++ T) ++ P.map Prod.snd := by
-      simpa only [List.append_assoc] using
+      simpa only [L, List.append_assoc] using
         (List.Perm.refl (P.flatMap Prod.fst)).append (List.perm_append_comm :
           (P.map Prod.snd ++ T).Perm (T ++ P.map Prod.snd))
     _ ~ S.toList ++ Z := by rw [hF, hZ]; exact hFP.append_right Z
@@ -209,5 +209,121 @@ theorem allocation_of_blocks {α : Type*} [DecidableEq α]
       push_cast
       exact hs.trans hm
     exact_mod_cast hs'
+
+
+/-- Replacing physical coins in one bin by a fresh coin of their exact total
+preserves all capacities and all other bins. -/
+theorem replace_bin {α β : Type*} [DecidableEq α] [Fintype β]
+    (S : Finset α) (e : α → ℕ) (cap : β → ℕ)
+    (K : β → Finset α) (hKS : ∀ i, K i ⊆ S)
+    (hKD : ∀ i j, i ≠ j → Disjoint (K i) (K j))
+    (hKC : ∀ a ∈ S, ∃ i, a ∈ K i)
+    (hKb : ∀ i, ∑ a ∈ K i, 2 ^ e a = cap i)
+    (i : β) (a : α) (R : Finset α) (ha : a ∉ S)
+    (hR : R ⊆ K i) (hRm : (∑ x ∈ R, 2 ^ e x) = 2 ^ e a) :
+    Allocation (insert a (S \ R)) e cap := by
+  classical
+  let K' : β → Finset α := fun j => if j = i then insert a (K j \ R) else K j
+  have hnot (j : β) : a ∉ K j := fun h => ha (hKS j h)
+  have hnotR (j : β) (hji : j ≠ i) : Disjoint (K j) R :=
+    (hKD j i hji).mono_right hR
+  refine ⟨K', ?_, ?_, ?_, ?_⟩
+  · intro j x hx
+    by_cases hj : j = i
+    · simp only [K', if_pos hj, Finset.mem_insert, Finset.mem_sdiff] at hx
+      rcases hx with rfl | ⟨hx, hn⟩
+      · exact Finset.mem_insert_self _ _
+      · exact Finset.mem_insert_of_mem (Finset.mem_sdiff.mpr ⟨hKS j hx, hn⟩)
+    · have hx' : x ∈ K j := by simpa [K', hj] using hx
+      exact Finset.mem_insert_of_mem (Finset.mem_sdiff.mpr
+        ⟨hKS j hx', fun hr => Finset.disjoint_left.mp (hnotR j hj) hx' hr⟩)
+  · intro j l hjl
+    apply Finset.disjoint_left.mpr
+    intro x hx hy
+    by_cases hj : j = i <;> by_cases hl : l = i
+    · exact hjl (hj.trans hl.symm)
+    · simp only [K', if_pos hj, Finset.mem_insert, Finset.mem_sdiff] at hx
+      have hy' : x ∈ K l := by simpa [K', hl] using hy
+      rcases hx with rfl | ⟨hx, _⟩
+      · exact hnot l hy'
+      · exact Finset.disjoint_left.mp (hKD j l hjl) hx hy'
+    · have hx' : x ∈ K j := by simpa [K', hj] using hx
+      simp only [K', if_pos hl, Finset.mem_insert, Finset.mem_sdiff] at hy
+      rcases hy with rfl | ⟨hy, _⟩
+      · exact hnot j hx'
+      · exact Finset.disjoint_left.mp (hKD j l hjl) hx' hy
+    · exact Finset.disjoint_left.mp (hKD j l hjl)
+        (by simpa [K', hj] using hx) (by simpa [K', hl] using hy)
+  · intro x hx
+    rcases Finset.mem_insert.mp hx with rfl | hx
+    · exact ⟨i, by simp [K']⟩
+    · obtain ⟨j, hj⟩ := hKC x (Finset.mem_sdiff.mp hx).1
+      refine ⟨j, ?_⟩
+      by_cases hji : j = i
+      · simp only [K', if_pos hji, Finset.mem_insert, Finset.mem_sdiff]
+        exact Or.inr ⟨hj, (Finset.mem_sdiff.mp hx).2⟩
+      · simpa [K', hji] using hj
+  · intro j
+    by_cases hj : j = i
+    · subst j
+      have hz := Finset.sum_sdiff hR (f := fun x => (2 : ℕ) ^ e x)
+      have hn : a ∉ K i \ R := fun h => hnot i (Finset.mem_sdiff.mp h).1
+      simp only [K', if_pos rfl, Finset.sum_insert hn]
+      rw [hRm] at hz
+      have hb := hKb i
+      omega
+    · simpa [K', hj] using hKb j
+
+/-- All-prefix reset legality supplies both the exact positive allocation and
+the physical reset list used by its realization. -/
+theorem allocation_of_strip {α : Type*} [DecidableEq α]
+    (f : α → ℤ) (e : α → ℕ) (M : ℕ) (W : List α)
+    (steps : ∀ a, 0 < f a ∨ f a = -(M : ℤ))
+    (powers : ∀ a, 0 < f a → f a = (2 : ℤ) ^ e a)
+    (hW : W.Nodup) (hs : InStrip f M 0 W) :
+    ∃ (S : Finset α) (Z : List α) (h : ℕ),
+      h ≤ M ∧ W.Perm (S.toList ++ Z) ∧
+      (∀ a ∈ S, 0 < f a) ∧ (∀ a ∈ Z, f a = -(M : ℤ)) ∧
+      mass f W = h ∧
+      Allocation S e (fun i : Fin Z.length ⊕ Unit =>
+        Sum.elim (fun _ => M) (fun _ => h) i) := by
+  classical
+  obtain ⟨P, T, heq, hP, hT, ht0, htM⟩ := reset_decomposition f M steps W hs
+  let L := P.flatMap Prod.fst ++ T
+  let Z := P.map Prod.snd
+  have hp : W.Perm (L ++ Z) := by
+    rw [heq]
+    have hpack : (packets P).Perm (P.flatMap Prod.fst ++ Z) := by
+      simpa [packets, Z, ← List.map_eq_flatMap] using
+        (List.flatMap_append_perm P Prod.fst (fun p => [p.2])).symm
+    exact (hpack.append_right T).trans (by
+      simpa only [L, List.append_assoc] using
+        (List.Perm.refl (P.flatMap Prod.fst)).append
+          (List.perm_append_comm : (Z ++ T).Perm (T ++ Z)))
+  have hLN := (List.nodup_append.mp (hp.nodup_iff.mp hW)).1
+  have hpos : Positive f L := by
+    intro a ha
+    rcases List.mem_append.mp ha with ha | ha
+    · obtain ⟨p, hp, ha⟩ := List.mem_flatMap.mp ha
+      exact (hP p hp).1 a ha
+    · exact hT a ha
+  have hZ : ∀ a ∈ Z, f a = -(M : ℤ) := by
+    intro a ha
+    obtain ⟨p, hp, rfl⟩ := List.mem_map.mp ha
+    exact (hP p hp).2.2
+  have hmass : mass f W = mass f T := by
+    rw [heq]
+    simp only [mass, List.map_append, List.sum_append]
+    change mass f (packets P) + mass f T = _
+    rw [complete_mass hP, zero_add]
+    rfl
+  have htcast : (mass f T).toNat = mass f T := Int.toNat_of_nonneg ht0
+  refine ⟨L.toFinset, Z, (mass f T).toNat, by omega, ?_, ?_, hZ,
+    hmass.trans htcast.symm, ?_⟩
+  · exact hp.trans ((List.toFinset_toList hLN).symm.append_right Z)
+  · intro a ha; exact hpos a (List.mem_toFinset.mp ha)
+  · have hal := allocation_of_blocks f e P T M (mass f T).toNat
+      (heq ▸ hW) hP hT htcast.symm (fun a ha => powers a (hpos a ha))
+    simpa only [Z, L, List.length_map] using hal
 
 end D5.S3.Combinatorics.Circle.DyadicResetWords

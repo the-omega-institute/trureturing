@@ -7,6 +7,7 @@
    digest: Every two-fresh strict competitor in an unbounded native family requires a mixed packet. -/
 module
 public import D5.S3.Combinatorics.Circle.MixedDyadicAugmentation
+public import D5.S3.Combinatorics.Circle.DyadicResetDenominations
 import Mathlib.Tactic
 
 /-! Necessary physical count and prefix constraints allow arbitrary returns and reorderings. -/
@@ -16,7 +17,8 @@ set_option relaxedAutoImplicit false
 @[expose] public section
 namespace D5.S3.Combinatorics.Circle.ForcedMixedDyadic
 open SourceWidth ExpandingSourcePath MixedSuffixEnergy TwoOppositeLargeExchange
-open DyadicResetSource DyadicResetBlocks
+open DyadicResetSource DyadicResetBlocks DyadicResetDenominations
+open scoped BigOperators
 
 private theorem forced_counts (a b c x y z₁ z₂ A B H₀ Gt Ht Ut : ℕ)
     (hAB : A < B) (ha : a ≤ 1) (budget : a + b + c ≤ 2) (h : ℤ)
@@ -44,5 +46,235 @@ private theorem forced_counts (a b c x y z₁ z₂ A B H₀ Gt Ht Ut : ℕ)
     · have hv : v = 0 := by nlinarith
       subst v
       omega
+
+
+private def count (r : ℕ) (W : List (Fin (4 * r))) (a : ℕ) : ℕ :=
+  W.countP (fun i => exponent 4 r i = a)
+
+private theorem four_sums (r : ℕ) (W : List (Fin (4 * r))) :
+    mass (scaled 4 r) W =
+      (count r W 0 : ℤ) + 2 * count r W 1 + 4 * count r W 2 - 7 * count r W 3 ∧
+    W.length = count r W 0 + count r W 1 + count r W 2 + count r W 3 := by
+  induction W with
+  | nil => simp [count, mass]
+  | cons a W ih =>
+    have ha : exponent 4 r a < 4 := Nat.mod_lt _ (by decide)
+    have hv : scaled 4 r a =
+        if exponent 4 r a = 0 then 1 else
+        if exponent 4 r a = 1 then 2 else
+        if exponent 4 r a = 2 then 4 else -7 := by
+      interval_cases h : exponent 4 r a <;>
+        norm_num [scaled, value, height, top, ← show a.val % 4 = exponent 4 r a from rfl, h]
+    simp only [mass, List.map_cons, List.sum_cons, List.length_cons]
+    change _ ∧ _ at ih
+    simp only [count, List.countP_cons]
+    rw [hv]
+    interval_cases h : exponent 4 r a <;> simp [h] at * <;> omega
+
+private theorem four_energy (r : ℕ) (hr : 1 ≤ r) (W : List (Fin (4 * r))) :
+    H (4 * r) (unit 4 r) W =
+      count r W 2 * 3 ^ (4 * unit 4 r) + count r W 3 * 3 ^ (7 * unit 4 r) := by
+  have hv (a : Fin (4 * r)) : energyWeight (4 * r) (unit 4 r) a =
+      if exponent 4 r a = 2 then 3 ^ (4 * unit 4 r) else
+      if exponent 4 r a = 3 then 3 ^ (7 * unit 4 r) else 0 := by
+    have ha : exponent 4 r a < 4 := Nat.mod_lt _ (by decide)
+    have hs := source_values 4 r (by decide) hr a
+    have hl := large_iff 4 r (by decide) hr a
+    change Large _ _ a ↔ 2 ≤ exponent 4 r a at hl
+    unfold energyWeight
+    interval_cases h : exponent 4 r a <;>
+      simp [scaled, value, height, top, ← show a.val % 4 = exponent 4 r a from rfl, h] at hs hl ⊢ <;>
+      simp [hs, hl, Int.natAbs_mul, mul_comm]
+  induction W with
+  | nil => simp [H, mass, count]
+  | cons a W ih =>
+    have ha : exponent 4 r a < 4 := Nat.mod_lt _ (by decide)
+    simp only [H, mass, List.map_cons, List.sum_cons] at ih ⊢
+    simp only [count, List.countP_cons]
+    rw [hv]
+    interval_cases h : exponent 4 r a <;> simp [h] at * <;> omega
+
+private theorem permutation_of_differences {α : Type*} [DecidableEq α]
+    (W V : List α) (hW : W.Nodup) (hV : V.Nodup) :
+    (V ++ (W.toFinset \ V.toFinset).toList).Perm
+      (W ++ (V.toFinset \ W.toFinset).toList) := by
+  classical
+  apply List.perm_ext_iff_of_nodup
+  · apply hV.append (Finset.nodup_toList _)
+    apply List.disjoint_left.mpr
+    intro a ha hb
+    exact (Finset.mem_sdiff.mp (Finset.mem_toList.mp hb)).2 (List.mem_toFinset.mpr ha)
+  · apply hW.append (Finset.nodup_toList _)
+    apply List.disjoint_left.mpr
+    intro a ha hb
+    exact (Finset.mem_sdiff.mp (Finset.mem_toList.mp hb)).2 (List.mem_toFinset.mpr ha)
+  · intro a
+    simp only [List.mem_append, Finset.mem_toList, Finset.mem_sdiff, List.mem_toFinset]
+    tauto
+
+/-- The necessity argument quantifies over every physical ordering and every
+choice of returned old labels. The old inventory is specified by its four
+native residue multiplicities, not by a proposed competitor or arrival gate. -/
+theorem forced_mixed_of_counts (r : ℕ) (hr : 3 ≤ r)
+    (W V : List (Fin (4 * r)))
+    (hW : TwoOppositeLargeExchange.Legal (4 * r) (unit 4 r) W)
+    (hV : TwoOppositeLargeExchange.Legal (4 * r) (unit 4 r) V)
+    (hc0 : W.countP (fun i => exponent 4 r i = 0) = r)
+    (hc1 : W.countP (fun i => exponent 4 r i = 1) = r - 2)
+    (hc2 : W.countP (fun i => exponent 4 r i = 2) = r - 1)
+    (hc3 : W.countP (fun i => exponent 4 r i = 3) = r - 2)
+    (fresh : (V.toFinset \ W.toFinset).card ≤ 2)
+    (strict : J (4 * r) (unit 4 r) V < J (4 * r) (unit 4 r) W) :
+    ∃ e z : Fin (4 * r), e ≠ z ∧
+      V.toFinset \ W.toFinset = {e, z} ∧
+      actualSource (4 * r) (unit 4 r) e = 2 * (unit 4 r : ℤ) ∧
+      actualSource (4 * r) (unit 4 r) z = -7 * (unit 4 r : ℤ) := by
+  classical
+  let I := (V.toFinset \ W.toFinset).toList
+  let R := (W.toFinset \ V.toFinset).toList
+  have hperm : (V ++ R).Perm (W ++ I) := permutation_of_differences W V hW.1 hV.1
+  have hcount (a : ℕ) : count r V a + count r R a = count r W a + count r I a := by
+    simpa [count] using hperm.countP_eq (fun i => exponent 4 r i = a)
+  have hIc0 : count r I 0 = 0 := by
+    have hfull : W.toFinset.filter (fun i => exponent 4 r i = 0) =
+        Finset.univ.filter (fun i : Fin (4 * r) => exponent 4 r i = 0) := by
+      apply Finset.eq_of_subset_of_card_le (Finset.filter_subset_filter _ (Finset.subset_univ _))
+      have hwc := List.toFinset_card_of_nodup (hW.1.filter (fun i => exponent 4 r i = 0))
+      have hrc := residue_card 4 r 0 (by decide) (by decide)
+      simpa [List.toFinset_filter, hc0, exponent] using (show r ≤ r from le_refl r)
+    apply List.countP_eq_zero.mpr
+    intro a ha
+    have hi := Finset.mem_sdiff.mp (Finset.mem_toList.mp ha)
+    simp only [Bool.not_eq_true, decide_eq_false_iff_not]
+    intro hz
+    have hmem : a ∈ W.toFinset.filter (fun i => exponent 4 r i = 0) := by
+      rw [hfull]; exact Finset.mem_filter.mpr ⟨Finset.mem_univ a, hz⟩
+    exact hi.2 (Finset.mem_filter.mp hmem).1
+  have hIc2 : count r I 2 ≤ 1 := by
+    have htot : count r W 2 + count r I 2 ≤ r := by
+      have hn : (W ++ I).Nodup := hW.1.append (Finset.nodup_toList _)
+        (List.disjoint_left.mpr (by
+          intro a ha hi; exact (Finset.mem_sdiff.mp (Finset.mem_toList.mp hi)).2
+            (List.mem_toFinset.mpr ha)))
+      have hsub : ((W ++ I).toFinset.filter (fun i => exponent 4 r i = 2)) ⊆
+          Finset.univ.filter (fun i : Fin (4 * r) => exponent 4 r i = 2) :=
+        Finset.filter_subset_filter _ (Finset.subset_univ _)
+      have hle := Finset.card_le_card hsub
+      rw [List.toFinset_card_of_nodup] at hle
+      · simpa [List.toFinset_filter, count, exponent,
+          residue_card 4 r 2 (by decide) (by decide), List.countP_append] using hle
+      · exact hn.filter _
+    change count r W 2 = r - 1 at hc2
+    omega
+  have hbudget : count r I 2 + count r I 3 + count r I 1 ≤ 2 := by
+    have hlen : I.length ≤ 2 := by simpa [I] using fresh
+    have hl := (four_sums r I).2
+    omega
+  have hws : count r W 0 = r ∧ count r W 1 = r - 2 ∧
+      count r W 2 = r - 1 ∧ count r W 3 = r - 2 := ⟨hc0, hc1, hc2, hc3⟩
+  have hWmass : mass (scaled 4 r) W = 6 := by
+    have hs := (four_sums r W).1
+    obtain ⟨h0, h1, h2, h3⟩ := hws
+    rw [h0, h1, h2, h3] at hs
+    omega
+  have hWlen : W.length = 4 * r - 5 := by
+    have hs := (four_sums r W).2
+    omega
+  have hWG : G (4 * r) (unit 4 r) W = 3 := by
+    have hb := physical_balance (largeWeight (4 * r) (unit 4 r)) W hW.1
+    rw [large_total 4 r (by decide) (by omega), large_used_counts 4 r (by decide) (by omega)] at hb
+    omega
+  have hWU : U W = 5 := by
+    have hb := physical_balance (fun _ : Fin (4 * r) => (1 : ℕ)) W hW.1
+    have hb' : U W + W.length = 4 * r := by simpa [U, mass, List.map_const'] using hb
+    omega
+  have hVG := physical_balance (largeWeight (4 * r) (unit 4 r)) V hV.1
+  rw [large_total 4 r (by decide) (by omega), large_used_counts 4 r (by decide) (by omega)] at hVG
+  have hgbal : G (4 * r) (unit 4 r) V + count r I 2 + count r I 3 =
+      3 + count r R 2 + count r R 3 := by
+    have h2 := hcount 2; have h3 := hcount 3
+    change count r V 2 + count r V 3 + G (4 * r) (unit 4 r) V = 2 * r at hVG
+    omega
+  have hVm := (four_sums r V).1
+  have hmass : mass (scaled 4 r) V = 6 +
+      4 * ((count r I 2 : ℤ) - count r R 2) -
+      7 * ((count r I 3 : ℤ) - count r R 3) +
+      2 * count r I 1 - count r R 0 - 2 * count r R 1 := by
+    have h0 := hcount 0; have h1 := hcount 1
+    have h2 := hcount 2; have h3 := hcount 3
+    have hw := (four_sums r W).1
+    omega
+  have hstrip := ((legal_iff 4 r (by decide) (by omega) V).mp hV).2
+  have hend : 0 ≤ mass (scaled 4 r) V ∧ mass (scaled 4 r) V ≤ 7 := by
+    simpa [height, top, List.take_length] using inStrip_prefix hstrip V.length
+  have hsteps (a : Fin (4 * r)) : 0 < scaled 4 r a ∨ scaled 4 r a = -(7 : ℤ) := by
+    by_cases h : exponent 4 r a = 3
+    · right; simpa [height, top] using (scaled_reset_iff 4 r (by decide) a).mpr h
+    · left; exact (scaled_positive_iff 4 r (by decide) a).mpr
+        (by have := Nat.mod_lt a.val (by decide : 0 < 4); change a.val % 4 ≠ 3 at h; omega)
+  have hblock := reset_top_bound (scaled 4 r) 4 7 (by norm_num) (by norm_num) hsteps V
+    (by simpa [height, top] using hstrip)
+  have htop : (fun a : Fin (4 * r) => decide (scaled 4 r a = 4)) =
+      (fun a => decide (exponent 4 r a = 2)) := by
+    funext a; apply congrArg decide; simpa [top] using propext (scaled_top_iff 4 r (by decide) a)
+  have hreset : (fun a : Fin (4 * r) => decide (scaled 4 r a = -7)) =
+      (fun a => decide (exponent 4 r a = 3)) := by
+    funext a; apply congrArg decide; simpa [height, top] using propext (scaled_reset_iff 4 r (by decide) a)
+  rw [htop, hreset] at hblock
+  have hblock' : (1 : ℤ) + count r I 2 + count r R 3 ≤
+      count r I 3 + count r R 2 + if 4 ≤ mass (scaled 4 r) V then 1 else 0 := by
+    have h2 := hcount 2; have h3 := hcount 3
+    change (count r V 2 : ℤ) ≤ count r V 3 + _ at hblock
+    omega
+  have hbal : H (4 * r) (unit 4 r) V + count r R 2 * 3 ^ (4 * unit 4 r) +
+      count r R 3 * 3 ^ (7 * unit 4 r) = H (4 * r) (unit 4 r) W +
+      count r I 2 * 3 ^ (4 * unit 4 r) + count r I 3 * 3 ^ (7 * unit 4 r) := by
+    have he := (hperm.map (energyWeight (4 * r) (unit 4 r))).sum_eq
+    change H (4 * r) (unit 4 r) V + H (4 * r) (unit 4 r) R =
+      H (4 * r) (unit 4 r) W + H (4 * r) (unit 4 r) I at he
+    simpa [four_energy r (by omega), add_assoc] using he
+  have hubal : U V + count r I 2 + count r I 3 + count r I 1 =
+      5 + count r R 2 + count r R 3 + count r R 0 + count r R 1 := by
+    have hb := physical_balance (fun _ : Fin (4 * r) => (1 : ℕ)) V hV.1
+    have hc : U V + V.length = 4 * r := by simpa [U, mass, List.map_const'] using hb
+    have hi := (four_sums r I).2; have hr' := (four_sums r R).2
+    have hl := hperm.length_eq
+    simp only [List.length_append] at hl
+    omega
+  have hstrict : G (4 * r) (unit 4 r) V < 3 ∨
+      G (4 * r) (unit 4 r) V = 3 ∧
+        (H (4 * r) (unit 4 r) V < H (4 * r) (unit 4 r) W ∨
+         H (4 * r) (unit 4 r) V = H (4 * r) (unit 4 r) W ∧ U V < 5) := by
+    have hs := Prod.Lex.toLex_lt_toLex.mp strict
+    rcases hs with h | ⟨h, h'⟩
+    · exact Or.inl (by simpa [hWG] using h)
+    · exact Or.inr ⟨by simpa [hWG] using h,
+        by simpa [hWU] using Prod.Lex.toLex_lt_toLex.mp h'⟩
+  have hAB : 3 ^ (4 * unit 4 r) < 3 ^ (7 * unit 4 r) := by
+    have hd := (capacity_bounds 4 r (by decide) (by omega)).1
+    exact pow_lt_pow_right₀ (by decide) (by omega)
+  obtain ⟨ha, hb, hc⟩ := forced_counts (count r I 2) (count r I 3) (count r I 1)
+    (count r R 2) (count r R 3) (count r R 0) (count r R 1)
+    (3 ^ (4 * unit 4 r)) (3 ^ (7 * unit 4 r)) (H (4 * r) (unit 4 r) W)
+    (G (4 * r) (unit 4 r) V) (H (4 * r) (unit 4 r) V) (U V)
+    hAB hIc2 hbudget (mass (scaled 4 r) V) hend hmass hblock' hgbal hbal hubal hstrict
+  obtain ⟨e, heI, he⟩ : ∃ e ∈ I, exponent 4 r e = 1 := by
+    have hn : count r I 1 ≠ 0 := by omega
+    simpa [count, List.countP_eq_zero, not_forall] using hn
+  obtain ⟨z, hzI, hz⟩ : ∃ z ∈ I, exponent 4 r z = 3 := by
+    have hn : count r I 3 ≠ 0 := by omega
+    simpa [count, List.countP_eq_zero, not_forall] using hn
+  have hne : e ≠ z := by intro h; subst z; omega
+  refine ⟨e, z, hne, ?_, ?_, ?_⟩
+  · have hsub : {e, z} ⊆ V.toFinset \ W.toFinset := by
+      apply Finset.pair_subset.mpr
+      exact ⟨Finset.mem_toList.mp heI, Finset.mem_toList.mp hzI⟩
+    exact (Finset.eq_of_subset_of_card_le hsub (by simpa [hne] using fresh)).symm
+  · rw [source_values 4 r (by decide) (by omega)]
+    change (unit 4 r : ℤ) * value 4 (exponent 4 r e) = _
+    norm_num [he, value]; ring
+  · rw [source_values 4 r (by decide) (by omega)]
+    change (unit 4 r : ℤ) * value 4 (exponent 4 r z) = _
+    norm_num [hz, value, height, top]; ring
 
 end D5.S3.Combinatorics.Circle.ForcedMixedDyadic
