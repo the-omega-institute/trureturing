@@ -28,12 +28,6 @@ internal sealed class HsfIdentityCubicDerivativesDocument : IScribeDocumentDefin
                 + "t maps to (I+tK)^p are respectively p(p-1)K^2 and "
                 + "p(p-1)(p-2)K^3. The proof differentiates actual nearby functions.",
                 DescribeRole.Theorem),
-            Entry("inverse_two_thirds_derivatives", "The inverse two-thirds jet",
-                "The p=-2/3 specialization gives second derivative (10/9)K^2 and "
-                + "third derivative -(80/27)K^3. These are suppliers for the HSF "
-                + "identity-denominator cubic trace; this declaration alone does not "
-                + "identify the trace coefficients or prove the HSF conjecture.",
-                DescribeRole.Theorem),
             Entry("sandwich_trace_germ", "The original sandwich trace",
                 "For arbitrary finite matrices X,H and Hermitian K, the real trace "
                 + "of ((I+tK)^(-1/3)(X+tH)(I+tK)^(-1/3))^3 agrees near zero with "
@@ -47,6 +41,15 @@ internal sealed class HsfIdentityCubicDerivativesDocument : IScribeDocumentDefin
                 + "and third derivatives of Re Tr(B^3). The second is "
                 + "Re Tr(3 B2 B^2+6 B1^2 B), and the third is "
                 + "Re Tr(3 B3 B^2+9 B2 B1 B+9 B2 B B1+6 B1^3), all at zero.",
+                DescribeRole.Theorem),
+            Entry("affine_power_cubic_derivatives", "Actual derivatives of the reduced trace",
+                "For arbitrary finite matrices X,H, Hermitian K and any real p, put "
+                + "L=H+pXK, M=2pHK+p(p-1)XK^2 and "
+                + "N=3p(p-1)HK^2+p(p-1)(p-2)XK^3. The actual reduced trace "
+                + "Re Tr(((X+tH)(I+tK)^p)^3) has second derivative "
+                + "Re Tr(3M X^2+6L^2 X) and third derivative "
+                + "Re Tr(3N X^2+9MLX+9MXL+6L^3) at zero. "
+                + "The nearby derivatives are proved from the actual CFC curve.",
                 DescribeRole.Theorem)))));
 
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>

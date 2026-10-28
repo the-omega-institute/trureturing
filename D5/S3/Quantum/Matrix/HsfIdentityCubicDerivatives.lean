@@ -161,16 +161,6 @@ theorem affine_rpow_derivatives {K : Matrix n n ℂ} (hK : K.IsHermitian) (p : �
     simp only [pow_succ, pow_zero, one_mul, Matrix.mul_assoc]
     module
 
-/-- The inverse two-thirds power supplies the exact coefficients needed by the cubic trace. -/
-theorem inverse_two_thirds_derivatives {K : Matrix n n ℂ} (hK : K.IsHermitian) :
-    iteratedDeriv 2 (fun t : ℝ => CFC.rpow (1+t • K) (-(2 : ℝ)/3)) 0 =
-      (10/9 : ℝ) • K^2 ∧
-    iteratedDeriv 3 (fun t : ℝ => CFC.rpow (1+t • K) (-(2 : ℝ)/3)) 0 =
-      (-(80 : ℝ)/27) • K^3 := by
-  have h := affine_rpow_derivatives hK (-(2 : ℝ)/3)
-  norm_num at h ⊢
-  exact h
-
 private theorem trace_sandwich_cube (S A : Matrix n n ℂ) :
     Matrix.trace ((S*A*S)^3) = Matrix.trace ((A*(S*S))^3) := by
   have he : (S*A*S)^3 = S * (A*(S*S)*A*(S*S)*A) * S := by noncomm_ring
@@ -271,5 +261,68 @@ theorem cubic_trace_derivatives (B B1 B2 B3 : ℝ → Matrix n n ℂ)
   constructor
   · simpa only [iteratedDeriv_succ, iteratedDeriv_zero] using he2.eq_of_nhds
   · simpa only [iteratedDeriv_succ, iteratedDeriv_zero] using he2.deriv_eq.trans hd2.deriv
+
+/-- The actual reduced cubic trace derivatives for any real exponent of the affine pencil. -/
+theorem affine_power_cubic_derivatives (X H K : Matrix n n ℂ) (hK : K.IsHermitian)
+    (p : ℝ) :
+    let L := H + p • (X*K)
+    let M := (2*p) • (H*K) + (p*(p-1)) • (X*K^2)
+    let N := (3*p*(p-1)) • (H*K^2) + (p*(p-1)*(p-2)) • (X*K^3)
+    iteratedDeriv 2 (fun t : ℝ =>
+      (Matrix.trace (((X+t • H)*CFC.rpow (1+t • K) p)^3)).re) 0 =
+      (Matrix.trace ((3 : ℝ) • (M*X*X) + (6 : ℝ) • (L*L*X))).re ∧
+    iteratedDeriv 3 (fun t : ℝ =>
+      (Matrix.trace (((X+t • H)*CFC.rpow (1+t • K) p)^3)).re) 0 =
+      (Matrix.trace ((3 : ℝ) • (N*X*X) + (9 : ℝ) • (M*L*X) +
+        (9 : ℝ) • (M*X*L) + (6 : ℝ) • (L*L*L))).re := by
+  let A := fun t : ℝ => X+t • H
+  let T0 := fun t : ℝ => CFC.rpow (1+t • K) p
+  let T1 := fun t : ℝ => p • (K*CFC.rpow (1+t • K) (p-1))
+  let T2 := fun t : ℝ => p • (K*((p-1) • (K*CFC.rpow (1+t • K) (p-1-1))))
+  let T3 := fun t : ℝ => p • (K*((p-1) •
+    (K*((p-1-1) • (K*CFC.rpow (1+t • K) (p-1-1-1))))))
+  let B := fun t => A t*T0 t
+  let B1 := fun t => H*T0 t+A t*T1 t
+  let B2 := fun t => H*T1 t+(H*T1 t+A t*T2 t)
+  let B3 := fun t => H*T2 t+(H*T2 t+(H*T2 t+A t*T3 t))
+  have hA (t : ℝ) : HasDerivAt A H t := by
+    convert! (hasDerivAt_const t X).add ((hasDerivAt_id t).smul_const H) using 1
+    simp
+  have hT0 (t : ℝ) (ht : ∀ x ∈ spectrum ℝ K, 0 < 1+t*x) :
+      HasDerivAt T0 (T1 t) t := hasDerivAt_affine_rpow hK p t ht
+  have hT1 (t : ℝ) (ht : ∀ x ∈ spectrum ℝ K, 0 < 1+t*x) :
+      HasDerivAt T1 (T2 t) t :=
+    ((hasDerivAt_affine_rpow hK (p-1) t ht).const_mul K).const_smul p
+  have hT2 (t : ℝ) (ht : ∀ x ∈ spectrum ℝ K, 0 < 1+t*x) :
+      HasDerivAt T2 (T3 t) t :=
+    ((((hasDerivAt_affine_rpow hK (p-1-1) t ht).const_mul K).const_smul
+      (p-1)).const_mul K).const_smul p
+  have hB (t : ℝ) (ht : ∀ x ∈ spectrum ℝ K, 0 < 1+t*x) :
+      HasDerivAt B (B1 t) t := (hA t).mul (hT0 t ht)
+  have hB1 (t : ℝ) (ht : ∀ x ∈ spectrum ℝ K, 0 < 1+t*x) :
+      HasDerivAt B1 (B2 t) t :=
+    ((hT0 t ht).const_mul H).add ((hA t).mul (hT1 t ht))
+  have hB2 (t : ℝ) (ht : ∀ x ∈ spectrum ℝ K, 0 < 1+t*x) :
+      HasDerivAt B2 (B3 t) t :=
+    ((hT1 t ht).const_mul H).add
+      (((hT1 t ht).const_mul H).add ((hA t).mul (hT2 t ht)))
+  have hn := affine_positive_near_zero hK
+  have hj := cubic_trace_derivatives B B1 B2 B3
+    (hn.mono fun t ht => hB t ht) (hn.mono fun t ht => hB1 t ht)
+    (hB2 0 (by intros; norm_num))
+  have e0 : B 0 = X := by simp [B, A, T0]
+  have e1 : B1 0 = H+p • (X*K) := by
+    simp [B1, A, T0, T1]
+  have e2 : B2 0 = (2*p) • (H*K)+(p*(p-1)) • (X*K^2) := by
+    simp only [B2, A, T1, T2, zero_smul, add_zero, CFC.rpow_eq_pow,
+      CFC.one_rpow, mul_one, Matrix.mul_smul, Matrix.smul_mul, smul_smul,
+      pow_succ, pow_zero, one_mul, Matrix.mul_assoc]
+    module
+  have e3 : B3 0 = (3*p*(p-1)) • (H*K^2)+(p*(p-1)*(p-2)) • (X*K^3) := by
+    simp only [B3, A, T2, T3, zero_smul, add_zero, CFC.rpow_eq_pow,
+      CFC.one_rpow, mul_one, Matrix.mul_smul, Matrix.smul_mul, smul_smul,
+      pow_succ, pow_zero, one_mul, Matrix.mul_assoc]
+    module
+  simpa only [B, A, T0, e0, e1, e2, e3] using hj
 
 end D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives
