@@ -2957,6 +2957,8 @@ private def familyJoinBased (Z : PreAbstractSimplicialComplex W) (b : W)
 
 end FiniteFamilyJoinAssembly
 
+set_option maxSynthPendingDepth 12
+
 section NativeJoinModels
 
 private def joinSymmetry {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y] :
@@ -3045,6 +3047,11 @@ private def spherePairJoinNormalization (p q : ℕ) :
 
 end NativeJoinModels
 
+private def basedBouquetListCast {ds es : BouquetSpec} (h : ds = es) :
+    SingletonRetractionBasedInverse.BasedEquivalence (bouquetPoint ds) (bouquetPoint es) := by
+  subst es
+  exact basedHomeomorphism (Homeomorph.refl _) _ _ rfl
+
 section FiniteVertexFamilyAssembly
 
 variable {V W : Type*} [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
@@ -3120,12 +3127,15 @@ private def vertexFamilyJoinBased (Z : PreAbstractSimplicialComplex W)
         (Sum.inl a) (join_left_vertex _ Z a (Or.inl rfl)))
       (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin (P.complex ⊔ N) Z)
         (Sum.inl a) (join_left_vertex _ Z a (Or.inl P.vertex_face))) (Subtype.ext rfl)
-    simpa only [List.flatMap_cons] using
-      basedTrans pre (basedTrans F (basedTrans
+    exact basedTrans
+      (basedTrans pre (basedTrans F (basedTrans
         (FiniteConeUnionWedge.basedWedgeEquivalence P.normalization
           (ih (List.pairwise_cons.mp hd).2))
         (basedBouquetAppend P.spec
-          (ps.flatMap (fun R : NormalizedVertexJoinPiece Z a => R.spec)))))
+          (ps.flatMap (fun R : NormalizedVertexJoinPiece Z a => R.spec))))))
+      (basedBouquetListCast (List.flatMap_cons (f := fun R : NormalizedVertexJoinPiece Z a => R.spec)
+        (x := P) (xs := ps)).symm)
+
 
 end FiniteVertexFamilyAssembly
 
@@ -3217,11 +3227,468 @@ private def bouquetFamilyJoinNormalization {W : Type*} [Fintype W] [DecidableEq 
     (fun K => FiniteConeCollapse.realization (FiniteSimplicialJoin.simplicialJoin K Z))
     (bouquetJoinFamilyComplex ds Z z spec E).symm)
   have hs : ps.flatMap (·.spec) = (List.ofFn spec).flatten := by
-    simp only [ps, List.flatMap_def, List.map_ofFn, bouquetJoinPieces]
+    simp only [ps, List.flatMap_def, List.map_ofFn]
+    rfl
   exact e.toHomotopyEquiv.trans ((basedOrdinary F).trans (bouquetListCast hs).toHomotopyEquiv)
 
 end BouquetJoinAssembly
 
+section BouquetPairJoin
+
+private def sphereBouquetJoinSpec (p : ℕ) (ds : BouquetSpec) : BouquetSpec :=
+  (List.ofFn (fun i : Fin ds.length => [⟨p + (ds.get i).val + 1, by omega⟩])).flatten
+
+private def sphereBouquetJoinNormalization (p : ℕ) (ds : BouquetSpec) :
+    FiniteSimplicialJoin.Space
+      (FiniteSimplicialJoin.simplicialJoin (sphereComplex p) (bouquetComplex ds)) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex (sphereBouquetJoinSpec p ds)) := by
+  let spec : Fin ds.length → BouquetSpec := fun i => [⟨p + (ds.get i).val + 1, by omega⟩]
+  let E := fun i : Fin ds.length =>
+    (spherePairJoinNormalization (ds.get i).val p).trans
+      (bouquetListCast (show [⟨(ds.get i).val + p + 1, by omega⟩] = spec i by
+        congr 1
+        apply Subtype.ext
+        change (ds.get i).val + p + 1 = p + (ds.get i).val + 1
+        omega)).toHomotopyEquiv
+  exact (nativeJoinSymmetry (sphereComplex p) (bouquetComplex ds)
+    ⟨spherePoint p⟩ ⟨bouquetPoint ds⟩).toHomotopyEquiv.trans
+    (bouquetFamilyJoinNormalization ds (sphereComplex p) (spherePoint p) spec E)
+
+private def bouquetPairJoinSpec (ds es : BouquetSpec) : BouquetSpec :=
+  (List.ofFn (fun i : Fin ds.length => sphereBouquetJoinSpec (ds.get i).val es)).flatten
+
+private def bouquetPairJoinNormalization (ds es : BouquetSpec) :
+    FiniteSimplicialJoin.Space
+      (FiniteSimplicialJoin.simplicialJoin (bouquetComplex ds) (bouquetComplex es)) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex (bouquetPairJoinSpec ds es)) :=
+  bouquetFamilyJoinNormalization ds (bouquetComplex es) (bouquetPoint es)
+    (fun i => sphereBouquetJoinSpec (ds.get i).val es)
+    (fun i => sphereBouquetJoinNormalization (ds.get i).val es)
+
+private def bouquetSuspensionSpec (ds : BouquetSpec) : BouquetSpec :=
+  (List.ofFn (fun i : Fin ds.length => [⟨(ds.get i).val + 1, by omega⟩])).flatten
+
+private def bouquetSuspensionNormalization (ds : BouquetSpec) :
+    FiniteSimplicialJoin.Space (nativeSuspensionComplex (bouquetComplex ds)) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex (bouquetSuspensionSpec ds)) :=
+  bouquetFamilyJoinNormalization ds twoPoints (twoPoint true)
+    (fun i => [⟨(ds.get i).val + 1, by omega⟩])
+    (fun i => spherePairJoinNormalization (ds.get i).val 0)
+
+private def twoPointSuspensionNormalization :
+    SingletonRetractionBasedInverse.BasedEquivalence
+      (nativeSuspensionPoint twoPoints) (bouquetPoint [⟨1, by omega⟩]) :=
+  nativeBouquetNormalization (nativeSuspensionComplex twoPoints) (Sum.inr true)
+    (join_right_vertex twoPoints twoPoints true (twoPoints_singleton true))
+    [⟨1, by omega⟩] (sphereSingletonBouquetHomeomorph ⟨1, by omega⟩).toHomotopyEquiv
+
+end BouquetPairJoin
+
+section NormalComponentJoinAssembly
+
+private def normalComponentEmbedding (m : ℕ) (p : Fin m → BouquetSpec) (i : Fin m) :
+    BouquetVertices (p i) ↪ NormalVertices m p where
+  toFun v := (⟨i, v⟩ : NormalVertices m p)
+  inj' := fun _ _ h => (@sigma_mk_injective (Fin m) (fun i => BouquetVertices (p i)) i) h
+
+
+private theorem normalMappedIntersection {m : ℕ} (p : Fin m → BouquetSpec)
+    (i j : Fin m) (hij : i ≠ j) :
+    (bouquetComplex (p i)).map (normalComponentEmbedding m p i) ⊓
+      (bouquetComplex (p j)).map (normalComponentEmbedding m p j) = ⊥ := by
+  apply le_antisymm _ bot_le
+  intro s hs
+  obtain ⟨u, hu⟩ := (((bouquetComplex (p i)).map (normalComponentEmbedding m p i)).isRelLowerSet_faces hs.1).1
+  obtain ⟨A, hA, hAi⟩ := hs.1
+  obtain ⟨B, hB, hBj⟩ := hs.2
+  obtain ⟨v, hv, hvi⟩ := Finset.mem_image.mp (hAi.symm ▸ hu)
+  obtain ⟨w, hw, hwj⟩ := Finset.mem_image.mp (hBj.symm ▸ hu)
+  exact (hij (congrArg Sigma.fst (hvi.trans hwj.symm))).elim
+
+private def normalJoinPieces {W : Type*} [Fintype W] [DecidableEq W]
+    (m : ℕ) (p : Fin m → BouquetSpec) (Z : PreAbstractSimplicialComplex W)
+    (b : W) (hb : ({b} : Finset W) ∈ Z) (spec : Fin m → BouquetSpec)
+    (E : ∀ i, FiniteSimplicialJoin.Space
+      (FiniteSimplicialJoin.simplicialJoin (bouquetComplex (p i)) Z) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex (spec i)))
+    (i : Fin m) : NormalizedJoinPiece (V := NormalVertices m p) Z b hb where
+  complex := (bouquetComplex (p i)).map (normalComponentEmbedding m p i)
+  vertex := ⟨i, none⟩
+  vertex_face := mappedVertexFace (bouquetComplex (p i))
+    (normalComponentEmbedding m p i) none (bouquetVertex_face (p i))
+  spec := spec i
+  normalization := nativeBouquetNormalization _ _ _ (spec i)
+    ((nativeJoinCongr _ Z (bouquetComplex (p i)) Z
+      ⟨FiniteVertexCylinder.vertexPoint _ ⟨i, none⟩
+        (mappedVertexFace (bouquetComplex (p i)) (normalComponentEmbedding m p i)
+          none (bouquetVertex_face (p i)))⟩
+      ⟨FiniteVertexCylinder.vertexPoint Z b hb⟩ ⟨bouquetPoint (p i)⟩
+      ⟨FiniteVertexCylinder.vertexPoint Z b hb⟩
+      (coordinateHomeomorph (bouquetComplex (p i)) (normalComponentEmbedding m p i)).symm.toHomotopyEquiv
+      (HomotopyEquiv.refl _)).trans (E i))
+
+private theorem normalJoinFamilyComplex {W : Type*} [Fintype W] [DecidableEq W]
+    (m : ℕ) (p : Fin m → BouquetSpec) (Z : PreAbstractSimplicialComplex W)
+    (b : W) (hb : ({b} : Finset W) ∈ Z) (spec : Fin m → BouquetSpec)
+    (E : ∀ i, FiniteSimplicialJoin.Space
+      (FiniteSimplicialJoin.simplicialJoin (bouquetComplex (p i)) Z) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex (spec i))) :
+    unionList ((List.ofFn (normalJoinPieces m p Z b hb spec E)).map (·.complex)) = normalComplex m p := by
+  apply SetLike.ext
+  intro s
+  rw [mem_unionList]
+  change _ ↔ s ∈ coproductComplex (fun i => bouquetComplex (p i))
+  rw [mem_coproductComplex]
+  constructor
+  · rintro ⟨J, hJ, hs⟩
+    obtain ⟨P, hP, rfl⟩ := List.mem_map.mp hJ
+    obtain ⟨i, rfl⟩ := List.mem_ofFn.mp hP
+    exact ⟨i, hs⟩
+  · rintro ⟨i, hs⟩
+    exact ⟨_, List.mem_map.mpr ⟨_, List.mem_ofFn.mpr ⟨i, rfl⟩, rfl⟩, hs⟩
+
+private theorem familyJoinSpec_eq {V W : Type*}
+    [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
+    {Z : PreAbstractSimplicialComplex W} {b : W} {hb : ({b} : Finset W) ∈ Z}
+    (es : BouquetSpec) (ps : List (NormalizedJoinPiece (V := V) Z b hb)) (hne : ps ≠ []) :
+    familyJoinSpec es ps = ps.flatMap (·.spec) ++ (List.replicate (ps.length - 1) es).flatten := by
+  induction ps with
+  | nil => exact False.elim (hne rfl)
+  | cons P ps ih =>
+    cases ps with
+    | nil => simp [familyJoinSpec]
+    | cons Q qs =>
+      rw [familyJoinSpec, ih (by simp)]
+      simp only [List.flatMap_cons, List.length_cons, Nat.add_sub_cancel,
+        List.replicate_succ', List.flatten_append, List.flatten_cons, List.flatten_nil,
+        List.append_nil, List.append_assoc]
+
+private def normalFamilyJoinNormalization {W : Type*} [Fintype W] [DecidableEq W]
+    (m : ℕ) (hm : 0 < m) (p : Fin m → BouquetSpec) (Z : PreAbstractSimplicialComplex W)
+    (b : W) (hb : ({b} : Finset W) ∈ Z) (spec : Fin m → BouquetSpec)
+    (E : ∀ i, FiniteSimplicialJoin.Space
+      (FiniteSimplicialJoin.simplicialJoin (bouquetComplex (p i)) Z) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex (spec i)))
+    (es : BouquetSpec) (S : SingletonRetractionBasedInverse.BasedEquivalence
+      (nativeSuspensionPoint Z) (bouquetPoint es)) :
+    FiniteSimplicialJoin.Space (FiniteSimplicialJoin.simplicialJoin (normalComplex m p) Z) ≃ₕ
+      FiniteSimplicialJoin.Space
+        (bouquetComplex ((List.ofFn spec).flatten ++ (List.replicate (m - 1) es).flatten)) := by
+  let ps := List.ofFn (normalJoinPieces m p Z b hb spec E)
+  have hne : ps ≠ [] := by intro h; have := congrArg List.length h; simp [ps] at this; omega
+  have hd : ps.Pairwise (fun P Q => P.complex ⊓ Q.complex = ⊥) :=
+    List.pairwise_ofFn.mpr (fun i j hij => normalMappedIntersection p i j (ne_of_lt hij))
+  let F := familyJoinBased Z b hb es S ps hne hd
+  let e := Homeomorph.setCongr (congrArg
+    (fun K => FiniteConeCollapse.realization (FiniteSimplicialJoin.simplicialJoin K Z))
+    (normalJoinFamilyComplex m p Z b hb spec E).symm)
+  have hs : familyJoinSpec es ps =
+      (List.ofFn spec).flatten ++ (List.replicate (m - 1) es).flatten := by
+    rw [familyJoinSpec_eq es ps hne]
+    simp only [ps, List.flatMap_def, List.map_ofFn, List.length_ofFn]
+    rfl
+  exact e.toHomotopyEquiv.trans ((basedOrdinary F).trans (bouquetListCast hs).toHomotopyEquiv)
+
+end NormalComponentJoinAssembly
+
+private instance normalJoinDecidableEq (m : ℕ) (p : Fin m → BouquetSpec)
+    (n : ℕ) (q : Fin n → BouquetSpec) :
+    DecidableEq (NormalVertices m p ⊕ NormalVertices n q) := by
+  letI : DecidableEq (NormalVertices m p) := inferInstance
+  letI : DecidableEq (NormalVertices n q) := inferInstance
+  infer_instance
+
+section NormalJoinConstruction
+
+private def normalSuspensionSpec (n : ℕ) (q : Fin n → BouquetSpec) : BouquetSpec :=
+  (List.ofFn (fun j => bouquetSuspensionSpec (q j))).flatten ++
+    (List.replicate (n - 1) [⟨1, by omega⟩]).flatten
+
+private def normalSuspensionNormalization (n : ℕ) (hn : 0 < n) (q : Fin n → BouquetSpec) :
+    FiniteSimplicialJoin.Space (nativeSuspensionComplex (normalComplex n q)) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex (normalSuspensionSpec n q)) :=
+  normalFamilyJoinNormalization n hn q twoPoints true (twoPoints_singleton true)
+    (fun j => bouquetSuspensionSpec (q j)) (fun j => bouquetSuspensionNormalization (q j))
+    [⟨1, by omega⟩] twoPointSuspensionNormalization
+
+private def bouquetNormalJoinSpec (ds : BouquetSpec) (n : ℕ) (q : Fin n → BouquetSpec) : BouquetSpec :=
+  (List.ofFn (fun j => bouquetPairJoinSpec ds (q j))).flatten ++
+    (List.replicate (n - 1) (bouquetSuspensionSpec ds)).flatten
+
+private def bouquetNormalJoinNormalization (ds : BouquetSpec) (n : ℕ)
+    (hn : 0 < n) (q : Fin n → BouquetSpec) :
+    FiniteSimplicialJoin.Space
+      (FiniteSimplicialJoin.simplicialJoin (bouquetComplex ds) (normalComplex n q)) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex (bouquetNormalJoinSpec ds n q)) := by
+  let E := fun j : Fin n =>
+    (nativeJoinSymmetry (bouquetComplex (q j)) (bouquetComplex ds)
+      ⟨bouquetPoint (q j)⟩ ⟨bouquetPoint ds⟩).toHomotopyEquiv.trans
+      (bouquetPairJoinNormalization ds (q j))
+  let S := nativeBouquetNormalization (nativeSuspensionComplex (bouquetComplex ds))
+    (Sum.inr true) (join_right_vertex _ twoPoints true (twoPoints_singleton true))
+    (bouquetSuspensionSpec ds) (bouquetSuspensionNormalization ds)
+  exact (nativeJoinSymmetry (bouquetComplex ds) (normalComplex n q)
+    ⟨bouquetPoint ds⟩ ⟨normalPoint n q ⟨0, hn⟩⟩).toHomotopyEquiv.trans
+    (normalFamilyJoinNormalization n hn q (bouquetComplex ds) none (bouquetVertex_face ds)
+      (fun j => bouquetPairJoinSpec ds (q j)) E (bouquetSuspensionSpec ds) S)
+
+private def constructedJoinSpec (m : ℕ) (p : Fin m → BouquetSpec)
+    (n : ℕ) (q : Fin n → BouquetSpec) : BouquetSpec :=
+  (List.ofFn (fun i => bouquetNormalJoinSpec (p i) n q)).flatten ++
+    (List.replicate (m - 1) (normalSuspensionSpec n q)).flatten
+
+private def constructedNormalJoinNormalization (m : ℕ) (hm : 0 < m) (p : Fin m → BouquetSpec)
+    (n : ℕ) (hn : 0 < n) (q : Fin n → BouquetSpec) :
+    FiniteSimplicialJoin.Space
+      (FiniteSimplicialJoin.simplicialJoin (normalComplex m p) (normalComplex n q)) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex (constructedJoinSpec m p n q)) := by
+  let S := nativeBouquetNormalization (nativeSuspensionComplex (normalComplex n q))
+    (Sum.inr true) (join_right_vertex _ twoPoints true (twoPoints_singleton true))
+    (normalSuspensionSpec n q) (normalSuspensionNormalization n hn q)
+  exact normalFamilyJoinNormalization m hm p (normalComplex n q) ⟨⟨0, hn⟩, none⟩
+    (normalVertex_face n q ⟨0, hn⟩) (fun i => bouquetNormalJoinSpec (p i) n q)
+    (fun i => bouquetNormalJoinNormalization (p i) n hn q) (normalSuspensionSpec n q) S
+
+end NormalJoinConstruction
+
+section BouquetMultiplicityReindexing
+
+private theorem specFiberCard (ds : BouquetSpec) (d : {n : ℕ // 0 < n}) :
+    Fintype.card {i : Fin ds.length // ds.get i = d} = ds.count d := by
+  let v : List.Vector {n : ℕ // 0 < n} ds.length := ⟨ds, rfl⟩
+  calc
+    _ = #{i : Fin ds.length | v.get i = d} := by
+      rw [Fintype.card_subtype]
+      congr 1
+      ext i
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and, v, List.Vector.get,
+        List.get_eq_getElem, Fin.val_cast]
+    _ = _ := by
+      simpa only [v, List.Vector.toList, List.count, beq_eq_decide] using
+        Fin.card_filter_univ_eq_vector_get_eq_count d v
+
+private def specIndexEquiv (ds es : BouquetSpec) (h : ∀ d, ds.count d = es.count d) :
+    Fin ds.length ≃ Fin es.length :=
+  Equiv.ofFiberEquiv (fun d => Fintype.equivOfCardEq
+    ((specFiberCard ds d).trans ((h d).trans (specFiberCard es d).symm)))
+
+private theorem specIndexEquiv_get (ds es : BouquetSpec) (h : ∀ d, ds.count d = es.count d)
+    (i : Fin ds.length) : es.get (specIndexEquiv ds es h i) = ds.get i :=
+  Equiv.ofFiberEquiv_map _ i
+
+private def sameMultiplicityFamilyHomeomorph (ds es : BouquetSpec)
+    (h : ∀ d, ds.count d = es.count d) : SphereFamily ds ≃ₜ SphereFamily es := by
+  let e := specIndexEquiv ds es h
+  let hd := fun i : Fin ds.length => (congrArg Subtype.val (specIndexEquiv_get ds es h i)).symm
+  let f : SphereFamily ds ≃ SphereFamily es :=
+    Equiv.sigmaCongr e (fun i => (sphereCast (hd i)).toEquiv)
+  letI (i : Fin ds.length) : CompactSpace
+      (FiniteSimplicialJoin.Space (sphereComplex (ds.get i).val)) :=
+    FiniteSimplicialJoin.realizationCompactSpace _
+  apply Continuous.homeoOfEquivCompactToT2 (f := f)
+  apply continuous_sigma
+  intro i
+  exact (@continuous_sigmaMk _ (fun j : Fin es.length =>
+    FiniteSimplicialJoin.Space (sphereComplex (es.get j).val)) _ (e i)).comp
+    (sphereCast (hd i)).continuous
+
+private theorem sameMultiplicityFamily_base (ds es : BouquetSpec)
+    (h : ∀ d, ds.count d = es.count d) (z : SphereFamily ds) :
+    (sameMultiplicityFamilyHomeomorph ds es h z).2 =
+      spherePoint (es.get (sameMultiplicityFamilyHomeomorph ds es h z).1).val ↔
+      z.2 = spherePoint (ds.get z.1).val := by
+  rcases z with ⟨i, x⟩
+  let hd := (congrArg Subtype.val (specIndexEquiv_get ds es h i)).symm
+  change sphereCast hd x = spherePoint _ ↔ x = spherePoint _
+  rw [← sphereCast_point hd]
+  exact (sphereCast hd).injective.eq_iff
+
+private def sameMultiplicityBouquetHomeomorph (ds es : BouquetSpec)
+    (h : ∀ d, ds.count d = es.count d) :
+    FiniteSimplicialJoin.Space (bouquetComplex ds) ≃ₜ
+      FiniteSimplicialJoin.Space (bouquetComplex es) := by
+  let e := (Homeomorph.refl PUnit.{1}).sumCongr (sameMultiplicityFamilyHomeomorph ds es h)
+  let q : CoordinateBouquetQuotient ds ≃ₜ CoordinateBouquetQuotient es :=
+    Homeomorph.Quotient.congr e (by
+      intro z w
+      have hb (z : BouquetSource ds) : e z ∈ bouquetBases es ↔ z ∈ bouquetBases ds := by
+        rcases z with u | z
+        · rfl
+        · exact sameMultiplicityFamily_base ds es h z
+      change (z = w ∨ (_ ∧ _)) ↔ (e z = e w ∨ (_ ∧ _))
+      rw [e.injective.eq_iff, hb, hb])
+  exact ((bouquetQuotientHomeomorph ds).symm.trans q).trans (bouquetQuotientHomeomorph es)
+
+end BouquetMultiplicityReindexing
+
+section CompleteJoinDimensions
+
+private def copies (k : ℕ) (ds : BouquetSpec) : BouquetSpec := (List.replicate k ds).flatten
+
+/-- All sphere-join, suspension, and circle terms, counted with their actual multiplicities. -/
+def finiteJoinSpec (m : ℕ) (p : Fin m → BouquetSpec)
+    (n : ℕ) (q : Fin n → BouquetSpec) : BouquetSpec :=
+  (List.ofFn (fun i => (List.ofFn (fun j => bouquetPairJoinSpec (p i) (q j))).flatten)).flatten ++
+  (List.ofFn (fun i => copies (n - 1) (bouquetSuspensionSpec (p i)))).flatten ++
+  (List.ofFn (fun j => copies (m - 1) (bouquetSuspensionSpec (q j)))).flatten ++
+  List.replicate ((m - 1) * (n - 1)) ⟨1, by omega⟩
+
+private theorem countCopies (k : ℕ) (ds : BouquetSpec) (d : {n : ℕ // 0 < n}) :
+    (copies k ds).count d = k * ds.count d := by
+  induction k with
+  | zero => simp [copies]
+  | succ k ih =>
+    change ((ds ++ copies k ds).count d) = _
+    rw [List.count_append, ih, Nat.succ_mul]
+    omega
+
+private theorem countOfFnFlatten {k : ℕ} (f : Fin k → BouquetSpec) (d : {n : ℕ // 0 < n}) :
+    ((List.ofFn f).flatten).count d = ∑ i, (f i).count d := by
+  rw [List.count_flatten, List.map_ofFn, List.sum_ofFn]
+  rfl
+
+private theorem copiesSingleton (k : ℕ) (d : {n : ℕ // 0 < n}) :
+    copies k [d] = List.replicate k d := by
+  induction k with
+  | zero => rfl
+  | succ k ih => simpa only [copies, List.replicate_succ, List.flatten_cons,
+      List.singleton_append] using congrArg (List.cons d) ih
+
+private theorem constructedJoinSpec_count (m : ℕ) (p : Fin m → BouquetSpec)
+    (n : ℕ) (q : Fin n → BouquetSpec) (d : {n : ℕ // 0 < n}) :
+    (constructedJoinSpec m p n q).count d = (finiteJoinSpec m p n q).count d := by
+  simp only [constructedJoinSpec, bouquetNormalJoinSpec, normalSuspensionSpec, finiteJoinSpec]
+  rw [← copiesSingleton ((m - 1) * (n - 1)) ⟨1, by omega⟩]
+  change (((List.ofFn (fun i =>
+    (List.ofFn (fun j => bouquetPairJoinSpec (p i) (q j))).flatten ++
+      copies (n - 1) (bouquetSuspensionSpec (p i)))).flatten ++
+    copies (m - 1) ((List.ofFn (fun j => bouquetSuspensionSpec (q j))).flatten ++
+      copies (n - 1) [⟨1, by omega⟩])).count d) = _
+  simp only [List.count_append, countOfFnFlatten, countCopies, Finset.sum_add_distrib,
+    ← Finset.mul_sum]
+  ring
+
+private def completeNormalJoinNormalization (m : ℕ) (hm : 0 < m) (p : Fin m → BouquetSpec)
+    (n : ℕ) (hn : 0 < n) (q : Fin n → BouquetSpec) :
+    FiniteSimplicialJoin.Space
+      (FiniteSimplicialJoin.simplicialJoin (normalComplex m p) (normalComplex n q)) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex (finiteJoinSpec m p n q)) :=
+  (constructedNormalJoinNormalization m hm p n hn q).trans
+    (sameMultiplicityBouquetHomeomorph _ _ (constructedJoinSpec_count m p n q)).toHomotopyEquiv
+
+end CompleteJoinDimensions
+
+section CompleteJoinClosure
+
+private def singleNormalHomeomorph (ds : BouquetSpec) :
+    FiniteSimplicialJoin.Space (normalComplex 1 (fun _ => ds)) ≃ₜ
+      FiniteSimplicialJoin.Space (bouquetComplex ds) := by
+  let e : (Σ _ : Fin 1, FiniteSimplicialJoin.Space (bouquetComplex ds)) ≃ₜ
+      FiniteSimplicialJoin.Space (bouquetComplex ds) := {
+    toFun := fun x => x.2
+    invFun := fun x => ⟨0, x⟩
+    left_inv := by
+      rintro ⟨i, x⟩
+      have hi : i = 0 := Subsingleton.elim _ _
+      subst i
+      rfl
+    right_inv := fun _ => rfl
+    continuous_toFun := continuous_sigma (fun _ => continuous_id)
+    continuous_invFun := @continuous_sigmaMk (Fin 1)
+      (fun _ => FiniteSimplicialJoin.Space (bouquetComplex ds)) _ 0 }
+  exact (normalHomeomorph 1 (fun _ => ds)).trans e
+
+/-- Exact finite-component join closure, including both native and ordinary quotient carriers. -/
+structure FiniteComponentJoinClosure {V W : Type*}
+    [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
+    (K : PreAbstractSimplicialComplex V) (L : PreAbstractSimplicialComplex W) where
+  leftCount : ℕ
+  leftPositive : 0 < leftCount
+  leftSpec : Fin leftCount → BouquetSpec
+  rightCount : ℕ
+  rightPositive : 0 < rightCount
+  rightSpec : Fin rightCount → BouquetSpec
+  leftNormalization : FiniteSimplicialJoin.Space K ≃ₕ
+    FiniteSimplicialJoin.Space (normalComplex leftCount leftSpec)
+  rightNormalization : FiniteSimplicialJoin.Space L ≃ₕ
+    FiniteSimplicialJoin.Space (normalComplex rightCount rightSpec)
+  equivalence : FiniteSimplicialJoin.Space (FiniteSimplicialJoin.simplicialJoin K L) ≃ₕ
+    FiniteSimplicialJoin.Space (bouquetComplex (finiteJoinSpec leftCount leftSpec rightCount rightSpec))
+  based : ∀ (z : V ⊕ W) (hz : ({z} : Finset (V ⊕ W)) ∈ FiniteSimplicialJoin.simplicialJoin K L),
+    SingletonRetractionBasedInverse.BasedEquivalence
+      (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin K L) z hz)
+      (bouquetPoint (finiteJoinSpec leftCount leftSpec rightCount rightSpec))
+  ordinaryEquivalence : FiniteSimplicialJoin.OrdinaryJoin
+    (FiniteSimplicialJoin.Space K) (FiniteSimplicialJoin.Space L) ≃ₕ
+      FiniteSimplicialJoin.Space (bouquetComplex (finiteJoinSpec leftCount leftSpec rightCount rightSpec))
+  ordinaryBased : ∀ (z : V ⊕ W)
+    (hz : ({z} : Finset (V ⊕ W)) ∈ FiniteSimplicialJoin.simplicialJoin K L),
+    SingletonRetractionBasedInverse.BasedEquivalence
+      ((FiniteSimplicialJoin.joinHomeomorph K L
+        ⟨leftNormalization.invFun (normalPoint leftCount leftSpec ⟨0, leftPositive⟩)⟩
+        ⟨rightNormalization.invFun (normalPoint rightCount rightSpec ⟨0, rightPositive⟩)⟩).symm
+          (FiniteVertexCylinder.vertexPoint (FiniteSimplicialJoin.simplicialJoin K L) z hz))
+      (bouquetPoint (finiteJoinSpec leftCount leftSpec rightCount rightSpec))
+  wplus : WPlus (FiniteSimplicialJoin.simplicialJoin K L)
+
+/-- Construct the full finite-component join formula without quotient HEP assumptions. -/
+def finiteComponentJoinClosure {V W : Type*}
+    [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
+    (K : PreAbstractSimplicialComplex V) (L : PreAbstractSimplicialComplex W)
+    (hK : WPlus K) (hL : WPlus L) : FiniteComponentJoinClosure K L := by
+  have h : Nonempty (FiniteComponentJoinClosure K L) := by
+    obtain ⟨m, hm, p, ⟨EK⟩⟩ := hK
+    obtain ⟨n, hn, q, ⟨EL⟩⟩ := hL
+    let x := normalPoint m p ⟨0, hm⟩
+    let y := normalPoint n q ⟨0, hn⟩
+    let hk : Nonempty (FiniteSimplicialJoin.Space K) := ⟨EK.invFun x⟩
+    let hl : Nonempty (FiniteSimplicialJoin.Space L) := ⟨EL.invFun y⟩
+    let e := (nativeJoinCongr K L (normalComplex m p) (normalComplex n q)
+      hk hl ⟨x⟩ ⟨y⟩ EK EL).trans (completeNormalJoinNormalization m hm p n hn q)
+    let E := fun (z : V ⊕ W)
+        (hz : ({z} : Finset (V ⊕ W)) ∈ FiniteSimplicialJoin.simplicialJoin K L) =>
+      nativeBouquetNormalization
+      (FiniteSimplicialJoin.simplicialJoin K L) z hz (finiteJoinSpec m p n q) e
+    let j := FiniteSimplicialJoin.joinHomeomorph K L hk hl
+    refine ⟨{
+      leftCount := m
+      leftPositive := hm
+      leftSpec := p
+      rightCount := n
+      rightPositive := hn
+      rightSpec := q
+      leftNormalization := EK
+      rightNormalization := EL
+      equivalence := e
+      based := E
+      ordinaryEquivalence := j.toHomotopyEquiv.trans e
+      ordinaryBased := fun z hz => basedTrans
+        (basedHomeomorphism j (j.symm (FiniteVertexCylinder.vertexPoint _ z hz))
+          (FiniteVertexCylinder.vertexPoint _ z hz) (j.apply_symm_apply _)) (E z hz)
+      wplus := ⟨1, by omega, (fun _ => finiteJoinSpec m p n q),
+        ⟨e.trans (singleNormalHomeomorph (finiteJoinSpec m p n q)).symm.toHomotopyEquiv⟩⟩ }⟩
+  exact Classical.choice h
+
+/-- An empty whole left factor gives an empty ordinary join. -/
+def ordinaryJoinEmptyLeft {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
+    (h : IsEmpty X) : FiniteSimplicialJoin.OrdinaryJoin X Y → PEmpty.{1} :=
+  fun z => Quotient.inductionOn z (fun p => False.elim (h.false p.1))
+
+/-- An empty whole right factor gives an empty ordinary join. -/
+def ordinaryJoinEmptyRight {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
+    (h : IsEmpty Y) : FiniteSimplicialJoin.OrdinaryJoin X Y → PEmpty.{1} :=
+  fun z => Quotient.inductionOn z (fun p => False.elim (h.false p.2.1))
+
+end CompleteJoinClosure
+
+#print axioms finiteComponentJoinClosure
+#print axioms ordinaryJoinEmptyLeft
+#print axioms ordinaryJoinEmptyRight
+#print axioms completeNormalJoinNormalization
+#print axioms sameMultiplicityBouquetHomeomorph
+#print axioms constructedNormalJoinNormalization
+#print axioms bouquetPairJoinNormalization
+#print axioms bouquetSuspensionNormalization
 #print axioms bouquetFamilyJoinNormalization
 #print axioms vertexFamilyJoinBased
 #print axioms spherePairJoinNormalization
