@@ -82,7 +82,7 @@ private theorem prefix_insert {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
   exact ⟨legal_of_strip inv.nodup hsV, hsV,
     fun j => by simpa only [mass, zero_add] using inStrip_prefix hsV j, inv, hp⟩
 
-private theorem two_energy_threshold (D L Z1 Z2 : ℕ) (hDL : D < L)
+theorem two_energy_threshold (D L Z1 Z2 : ℕ) (hDL : D < L)
     (h : L < max Z1 Z2 ∨ max Z1 Z2 = L ∧ D < min Z1 Z2) :
     (3 : ℕ) ^ L + 3 ^ D < 3 ^ Z1 + 3 ^ Z2 := by
   have hD := pow_lt_pow_right₀ (by decide : 1 < (3 : ℕ)) hDL
