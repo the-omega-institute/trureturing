@@ -277,9 +277,4 @@ theorem result : ¬ claim := by
       _ = r * r := by dsimp [r]; ring
   omega
 
-#check graphMatrix
-#check claim
-#check result
-#print axioms result
-
 end D5.S3.Quantum.Matrix.Toeplitz.FactorizationRefutation
