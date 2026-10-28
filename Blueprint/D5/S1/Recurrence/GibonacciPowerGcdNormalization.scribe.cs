@@ -83,7 +83,7 @@ internal sealed class GibonacciPowerGcdNormalizationDocument : IScribeDocumentDe
     private static Formula SeedBind(Formula body) => For("a", Z, For("b", Z, body));
 
     private static Formula GibonacciFormula() => Disp(SeedBind(Eqn(
-        Seq(Op("gibonacci", V("a"), V("b")), Colon, Sp, N, Sp, To, Sp, Z),
+        Par(Seq(Op("gibonacci", V("a"), V("b")), Colon, Sp, Par(Seq(N, Sp, To, Sp, Z)))),
         Op("mkSol", V("fibRecZ"), Seq(OpenBracket, V("a"), Comma, V("b"), CloseBracket)))));
 
     private static Formula WindowFormula() => Disp(SeedBind(For("k", N, For("e", N, For("t", N,
@@ -93,7 +93,7 @@ internal sealed class GibonacciPowerGcdNormalizationDocument : IScribeDocumentDe
 
     private static Formula FamilyFormula() => Disp(For("f", Seq(N, Sp, To, Sp, Z),
         Eqn(Op("familyGcd", V("f")), Op("IntCast", Op("NatSetGcd",
-            Seq(OpenBrace, Op("natAbs", Op("f", V("t"))), Sp, Mid, Sp,
+            Seq(OpenBrace, Op("natAbs", new Formula.Apply(V("f"), [V("t")])), Sp, Mid, Sp,
                 V("t"), InMacro, N, CloseBrace))))));
 
     private static Formula PowerFormula()

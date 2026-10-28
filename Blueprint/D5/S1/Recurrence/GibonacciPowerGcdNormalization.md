@@ -8,7 +8,7 @@ Mbirika and Spilker's Question 6.2 concerns the gcd of infinitely many finite po
 
 **Definition 1.1 (The seeded integer recurrence).**
 
-$$\forall a: \mathbb{Z}, \forall b: \mathbb{Z}, \operatorname{gibonacci}\left(a, b\right): \mathbb{N} \to \mathbb{Z} = \operatorname{mkSol}\left(fibRecZ, [a,b]\right)$$
+$$\forall a: \mathbb{Z}, \forall b: \mathbb{Z}, \left(\operatorname{gibonacci}\left(a, b\right): \left(\mathbb{N} \to \mathbb{Z}\right)\right) = \operatorname{mkSol}\left(fibRecZ, [a,b]\right)$$
 
 *Formalization.* `D5/S1/Recurrence/GibonacciPowerGcdNormalization.gibonacci` (`✓ std3`).
 
@@ -36,7 +36,7 @@ The endpoints are inclusive: the terms have indices t+1 through t+k. The definit
 
 **Definition 1.3 (The nonnegative gcd of a whole integer family).**
 
-$$\forall f: \mathbb{N} \to \mathbb{Z}, \operatorname{familyGcd}\left(f\right) = \operatorname{IntCast}\left(\operatorname{NatSetGcd}\left(\{\operatorname{natAbs}\left(\operatorname{f}\left(t\right)\right) \mid t\in\mathbb{N}\}\right)\right)$$
+$$\forall f: \mathbb{N} \to \mathbb{Z}, \operatorname{familyGcd}\left(f\right) = \operatorname{IntCast}\left(\operatorname{NatSetGcd}\left(\{\operatorname{natAbs}\left(f\left(t\right)\right) \mid t\in\mathbb{N}\}\right)\right)$$
 
 *Formalization.* `D5/S1/Recurrence/GibonacciPowerGcdNormalization.familyGcd` (`✓ std3`).
 
