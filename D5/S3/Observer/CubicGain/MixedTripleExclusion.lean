@@ -182,7 +182,6 @@ private theorem pair_gain_zero_of_drift (n : ℕ) (T : Finset World3) (v : List 
   have hz' : acquisition (v ++ p) * D = acquisition (v ++ p) * 0 := by simpa using hz
   have hd0 : D = 0 := (acquisition_unit (v ++ p)).mul_left_cancel hz'
   exact weighted_sources_zero W Z hP _ _ (sub_eq_zero.mp hd0)
-
 private theorem pair_gain_zero (n : ℕ) (T : Finset World3) (v : List Bool)
     (hT : T.card = 2) (h : Losing n T v) (hn : 3 ≤ n)
     (W Z : World3) (hW : W ∈ T) (hZ : Z ∈ T) (hP : W.source ≠ Z.source)
@@ -191,14 +190,12 @@ private theorem pair_gain_zero (n : ℕ) (T : Finset World3) (v : List Bool)
       (gain 3 Z.coeff).eval ((v.length+j : ℕ) : ℝ) = 0 := by
   exact pair_gain_zero_of_drift n T v hT h W Z hW hZ
     (pair_common_drift n T v hT h hn W Z hW hZ) hP j hj hjn
-
 private theorem four_evaluations (β γ : Coeff 3) (t : Fin 4 → ℝ)
     (ht : Function.Injective t)
     (he : ∀ i, (gain 3 β).eval (t i) = (gain 3 γ).eval (t i)) : β = γ := by
   apply evaluation_injective 3 4 t ht (by omega)
   ext i
   simpa only [evaluation_polynomial] using he i
-
 private theorem not_four_roots (W : World3) (t : Fin 4 → ℝ)
     (ht : Function.Injective t) : ¬ ∀ i, (gain 3 W.coeff).eval (t i) = 0 := by
   intro he
@@ -206,7 +203,6 @@ private theorem not_four_roots (W : World3) (t : Fin 4 → ℝ)
   apply four_evaluations W.coeff 0 t ht
   intro i
   simpa [gain, Polynomial.ofFn_eq_sum_monomial] using he i
-
 private theorem common_gain_source (j m b : ℝ) (v : List Bool)
     (hv : v = [true,false] ∨ v = [false,true]) (W Z : World3)
     (hWJ : readAt W [true] 1 = j) (hWM : readAt W [false] 1 = m)
@@ -271,21 +267,18 @@ private theorem norm_source (W : World3) :
   · dsimp [nx,ny]
     field_simp
     nlinarith
-
 private theorem nh_eval (W : World3) (t : ℝ) :
     nh W t = W.source 1 1 * (gain 3 W.coeff).eval t := by
   change (gain 3 (W.source 1 1 • W.coeff)).eval t = _
   rw [show gain 3 (W.source 1 1 • W.coeff) = W.source 1 1 • gain 3 W.coeff from
     (Polynomial.ofFn 4).map_smul _ _, Polynomial.eval_smul]
   rfl
-
 private theorem norm_read (W : World3) (u : List Bool) :
     readAt W u u.length = nh W (u.length : ℝ) * Matrix.trace (acquisition u * nr W) + W.drift := by
   rw [readAt, List.take_length, (norm_source W).2.2.1, Matrix.mul_smul, Matrix.trace_smul,
     nh_eval]
   simp only [smul_eq_mul]
   ring
-
 private theorem norm_first (W : World3) (a₀ j m : ℝ)
     (h0 : readAt W [] 0 = a₀) (hj : readAt W [true] 1 = j)
     (hm : readAt W [false] 1 = m) :
@@ -304,7 +297,6 @@ private theorem norm_first (W : World3) (a₀ j m : ℝ)
   · rw [h1] at hj'
     nlinarith only [hj', hj]
   · nlinarith only [h0', h0]
-
 private theorem norm_injective (W Z : World3) (hx : nx W = nx Z) (hy : ny W = ny Z) :
     W.source = Z.source := by
   have hqW := (norm_source W).2.2.2
@@ -321,12 +313,10 @@ private theorem norm_injective (W Z : World3) (hx : nx W = nx Z) (hy : ny W = ny
 private theorem nh_zero (W : World3) (t : ℝ) : nh W t = 0 ↔ (gain 3 W.coeff).eval t = 0 := by
   rw [nh_eval, mul_eq_zero]
   simp [ne_of_gt (W.legal.1 1 1)]
-
 private theorem nh_four (W : World3) (t : Fin 4 → ℝ) (ht : Function.Injective t) :
     ¬ ∀ i, nh W (t i) = 0 := by
   intro he
   exact not_four_roots W t ht (fun i => (nh_zero W (t i)).mp (he i))
-
 private theorem norm_third_L (W : World3) :
     readAt W [true,false,true] 3 = nh W 3 * (nx W*ny W+nx W+ny W) + W.drift ∧
     readAt W [true,false,false] 3 = nh W 3 * (nx W*ny W+2*nx W+ny W+1) + W.drift := by
@@ -338,7 +328,6 @@ private theorem norm_third_L (W : World3) :
     D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
     nr, Matrix.mul_apply, Matrix.trace, Matrix.diag, Fin.sum_univ_two] at hj hm
   constructor <;> nlinarith
-
 private theorem norm_third_U (W : World3) :
     readAt W [false,true,true] 3 = nh W 3 * (nx W+ny W+1) + W.drift ∧
     readAt W [false,true,false] 3 = nh W 3 * (nx W+ny W+2) + W.drift := by
@@ -350,7 +339,6 @@ private theorem norm_third_U (W : World3) :
     D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
     nr, Matrix.mul_apply, Matrix.trace, Matrix.diag, Fin.sum_univ_two] at hj hm
   constructor <;> nlinarith
-
 private theorem left_third_root (W Z : World3) (hs : nx W+ny W = nx Z+ny Z)
     (hd : W.drift = Z.drift) (hP : W.source ≠ Z.source)
     (hj : readAt W [true,false,true] 3 = readAt Z [true,false,true] 3)
@@ -377,7 +365,6 @@ private theorem left_third_root (W Z : World3) (hs : nx W+ny W = nx Z+ny Z)
     have hpZ : nx Z+1 ≠ 0 := by have := (norm_source Z).1; positivity
     exact (mul_eq_zero.mp (by simpa [hw] using he.symm)).resolve_right hpZ
   exact ⟨hw,hz⟩
-
 private theorem roots_identify (a₀ j m b : ℝ) (v : List Bool)
     (hv : v = [true,false] ∨ v = [false,true]) (W Z : World3)
     (hW : readAt W [] 0 = a₀ ∧ readAt W [true] 1 = j ∧ readAt W [false] 1 = m ∧ readAt W v 2 = b)
@@ -401,7 +388,6 @@ private theorem roots_identify (a₀ j m b : ℝ) (v : List Bool)
   exact common_gain_source j m b v hv W Z hW.2.1 hW.2.2.1 hW.2.2.2
     hZ.2.1 hZ.2.2.1 hZ.2.2.2 hd (congrArg (gain 3) hc)
     (hn 1 (Or.inl rfl)) (hn 2 (Or.inr rfl))
-
 private theorem normalized_equal_read (W Z : World3) (u : List Bool)
     (hc : nc W = nc Z) (hd : W.drift = Z.drift)
     (hn : nh W (u.length : ℝ) ≠ 0)
@@ -411,7 +397,6 @@ private theorem normalized_equal_read (W Z : World3) (u : List Bool)
   have hnz : nh Z (u.length : ℝ) = nh W (u.length : ℝ) := by simp [nh,hc]
   rw [hnz] at he
   exact mul_left_cancel₀ hn (add_right_cancel he)
-
 private theorem fourth_pair_constraint (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
     (v : List Bool) (hv : v = [true,false] ∨ v = [false,true]) (E F : Bool)
     (W Z : World3) (hP : W.source ≠ Z.source)
@@ -534,7 +519,6 @@ private theorem fourth_pair_constraint (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
           nr,Matrix.mul_apply,Matrix.trace,Matrix.diag,Fin.sum_univ_two] at e4 e5
         apply hP
         apply norm_injective W Z <;> nlinarith only [hs,hprod,e4,e5]
-
 private theorem mixed_weighted_zero (W Z : World3) (hP : W.source ≠ Z.source)
     (v : List Bool) (hv : v = [true,false] ∨ v = [false,true]) (a b c : ℝ)
     (he : acquisition v * (a • W.source - b • Z.source) = !![c,0;0,0]) :
@@ -574,7 +558,6 @@ private theorem mixed_weighted_zero (W Z : World3) (hP : W.source ≠ Z.source)
     have hb : b = 0 := by
       exact (mul_eq_zero.mp (by simpa [ha] using hab.symm)).resolve_right dZ
     exact ⟨by simpa [ha,hb] using e00.symm,ha,hb⟩
-
 private theorem odd_trace_obstruction (A : Mat) (hdet : A.det = -1) (e : ℝ) (he : e ≠ 0)
     (h0 : Matrix.trace (A * (e • !![0,1;-1,0])) = 0)
     (hj : Matrix.trace (action true * A * (e • !![0,1;-1,0])) = 0)
@@ -592,7 +575,6 @@ private theorem odd_trace_obstruction (A : Mat) (hdet : A.det = -1) (e : ℝ) (h
     linear_combination hj
   simp [Matrix.det_fin_two,h01,h10,hdiag] at hdet
   nlinarith [sq_nonneg (A 1 1)]
-
 private theorem fifth_pair_nezero (a₀ j m b : ℝ) (W Z : World3)
     (hP : W.source ≠ Z.source)
     (hW : readAt W [] 0 = a₀ ∧ readAt W [true] 1 = j ∧ readAt W [false] 1 = m ∧ readAt W [false,true] 2 = b)
@@ -660,7 +642,6 @@ private theorem fifth_pair_nezero (a₀ j m b : ℝ) (W Z : World3)
   have hm := hta false
   rw [hD] at hj hm
   exact odd_trace_obstruction (acquisition u) hdet (nx W-nx Z) hx ht hj hm
-
 private theorem three_quadratic (T : Finset World3) (hT : T.card = 3)
     (hP : ∀ W ∈ T, ∀ Z ∈ T, W ≠ Z → W.source ≠ Z.source)
     (s C lam : ℝ) (hs : ∀ W ∈ T, nx W+ny W = s)
@@ -698,7 +679,6 @@ private theorem three_quadratic (T : Finset World3) (hT : T.card = 3)
     (by intro i _; fin_cases i <;> first | exact hp W hW | exact hp Z hZ | exact hp X hX)
   have he := congrArg (fun q : Polynomial ℝ => q.coeff 2) hzero
   norm_num [p,Polynomial.coeff_X_pow,Polynomial.coeff_C_mul_X] at he
-
 /-- Both first-response equations constrain each of the same three complete worlds.
 The recursion begins at the chosen chronological mixed word and uses clocks three to seven. -/
 theorem mixed_prefix_three_world_exclusion (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
