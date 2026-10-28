@@ -142,7 +142,10 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
                 "All variables are natural numbers. Choose K=1. For every k at least K, "
                 + "substitute m=k-1 into the exact support cardinality and use the ordinary "
                 + "binary bridge. Then (m+1)^2=k^2. This preserves the eventual quantifier "
-                + "and supplies a threshold valid uniformly for all subsequent exponents.", AssessedProvenance.FromRepo(Source)),
+                + "and supplies a threshold valid uniformly for all subsequent exponents.", AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a193020-plus-one-eventual-identity"),
+                    ResolutionKind.Proved)),
             Paragraph(Text("The selected source assertion is the standalone eventual identity "
                 + "a(2^k+1)=k^2 with its sufficiently-large lower-bound caveat. The proof here "
                 + "establishes the exact threshold K=1 in the formal model. The other identities "
@@ -200,10 +203,11 @@ internal sealed class EndpointShuffleSupportDocument : IScribeDocumentDefinition
 
     private static DocumentBlock.Describe Node(string declaration, string title,
         DescribeRole role, Formula statement, string prose,
-        AssessedProvenance? provenance = null) =>
+        AssessedProvenance? provenance = null,
+        OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("endpoint-shuffle-" + declaration.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(CloseDefinition(declaration, role, statement))),
             provenance ?? AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, claim);
 }

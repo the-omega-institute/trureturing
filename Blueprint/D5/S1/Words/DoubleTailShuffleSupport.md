@@ -48,6 +48,10 @@ $$\exists (K: \mathbb{N}), (3 \le K\land \forall (k: \mathbb{N}), K \le k\implie
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/DoubleTailShuffleSupport.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a193020-minus-four-eventual-identity` (proved) by `D5/S1/Words/DoubleTailShuffleSupport.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a193020-minus-four-eventual-identity","declaration_gid":"D5/S1/Words/DoubleTailShuffleSupport.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* John W. Layman (2011). *OEIS A193020, distinct binary self-shuffles*. URL: <https://oeis.org/A193020>.

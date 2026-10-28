@@ -54,7 +54,10 @@ internal sealed class DoubleTailShuffleSupportDocument : IScribeDocumentDefiniti
                 + "Choose K=3. For every k at least K, the numeral identity identifies the operand with root(k-2), "
                 + "and the exact support cardinality gives k*(k-1)/2. The existential threshold and every subsequent "
                 + "index are retained. The definition of the sequence comes from OEIS A193020; the proof of this "
-                + "minus-four assertion is the support argument given here.", AssessedProvenance.FromRepo(Source)))));
+                + "minus-four assertion is the support argument given here.", AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a193020-minus-four-eventual-identity"),
+                    ResolutionKind.Proved)))));
 
     private static Formula NaturalType() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Natural(string name) => Parenthesized(Seq(F.Id(name), Colon, Sp, NaturalType()));
@@ -67,8 +70,9 @@ internal sealed class DoubleTailShuffleSupportDocument : IScribeDocumentDefiniti
     private static Formula Divide(Formula a, Formula b) => Qualified("Nat", "div", a, b);
     private static Formula Power(Formula a, Formula b) => new Formula.Power(a, b);
     private static DocumentBlock.Describe Node(string declaration, string title, DescribeRole role,
-        Formula statement, string prose, AssessedProvenance? provenance = null) =>
+        Formula statement, string prose, AssessedProvenance? provenance = null,
+        OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("double-tail-" + declaration.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.FromAuthor(Disp(statement)),
-            provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+            provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role, claim);
 }
