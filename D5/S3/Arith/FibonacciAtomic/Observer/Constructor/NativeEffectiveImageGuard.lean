@@ -8,6 +8,9 @@
 
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeEffectiveAtomicGuard
 
+/-! Finite syntax tests and post-fixed Boolean obligation graphs for original
+affine native systems and their unrestricted completed canonical outputs. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -36,8 +39,7 @@ private theorem groundImage_holds {n k m s : Nat} (I : Input n k m)
   induction g with
   | of b =>
     simp only [groundImage, Formula.holds, atomic_guard_correct I guarded mode p legal]
-    rw [native_image_iff]
-    change (_ ∨ _) ↔ _ ∨ _ ∨ _
+    conv_rhs => rw [native_image_iff]
     constructor
     · rintro (h | h) <;> tauto
     · rintro (h | h | ⟨U, V, h, _, _⟩)
@@ -48,8 +50,7 @@ private theorem groundImage_holds {n k m s : Nat} (I : Input n k m)
   | mul A B ihA ihB =>
     simp only [groundImage, Formula.holds, atomic_guard_correct I guarded mode p legal,
       ihA, ihB]
-    rw [native_image_iff]
-    change (_ ∨ _ ∨ (_ ∧ _)) ↔ _ ∨ _ ∨ _
+    conv_rhs => rw [native_image_iff]
     constructor
     · rintro (h | h | ⟨ha, hb⟩)
       · exact Or.inl h
@@ -83,18 +84,17 @@ private theorem rankAtLeast_holds (a : Affine) (c t : Nat) (xs : List Int)
     Affine.eval_add, Affine.eval_const]
   omega
 
-def tokenImage {n k m : Nat} (I : Input n k m) (j : Fin (k+1)) (c t : Nat) : Formula :=
+def tokenImage {n k m : Nat} (I : Input n k m) (j : Fin (k + 1)) (c t : Nat) : Formula :=
   Fin.lastCases (constant true) (fun i => rankAtLeast (I.indices i) c t) j
 
 private theorem tokenImage_holds {n k m : Nat} (I : Input n k m) (p : Fin n → Nat)
-    (legal : Legal I p) (v : Fin m → CompletionTree) (j : Fin (k+1)) (c t : Nat) :
+    (legal : Legal I p) (v : Fin m → CompletionTree) (j : Fin (k + 1)) (c t : Nat) :
     (tokenImage I j c t).holds (environment p) ↔
       NativeImage t (evaluate (ranks I p) v (.token j c)) := by
   refine Fin.lastCases ?_ (fun i => ?_) j
   · simp only [tokenImage, Fin.lastCases_last, constant_holds]
     simp only [evaluate, CompletionPositiveDriftRegion.value, tokenKind, tokenRank,
       Fin.lastCases_last, Bool.false_eq_true, ite_false]
-    change True ↔ NativeImage t Omega
     exact ⟨fun _ => ⟨Omega, iterate_omega t⟩, fun _ => trivial⟩
   · simp only [tokenImage, Fin.lastCases_castSucc]
     rw [rankAtLeast_holds _ _ _ _ (legal.2 i)]
@@ -104,7 +104,7 @@ private theorem tokenImage_holds {n k m : Nat} (I : Input n k m) (p : Fin n → 
     exact (atomic_image_iff _ _).symm
 
 /-- A Boolean state obligation is indexed by an original state and a threshold. -/
-abbrev Configuration (m s : Nat) := Fin m → Fin (s+1) → Bool
+abbrev Configuration (m s : Nat) := Fin m → Fin (s + 1) → Bool
 
 /-- Positive finite expression syntax over the state obligations. -/
 def expressionImage {n k m s : Nat} (I : Input n k m) (mode : Mode s m)
@@ -119,7 +119,7 @@ def expressionImage {n k m s : Nat} (I : Input n k m) (mode : Mode s m)
 
 /-- The finite closure constraint for one state and threshold. -/
 def stateImage {n k m s : Nat} (I : Input n k m) (mode : Mode s m)
-    (cfg : Configuration m s) (i : Fin m) (t : Fin (s+1)) : Formula :=
+    (cfg : Configuration m s) (i : Fin m) (t : Fin (s + 1)) : Formula :=
   match I.equations i with
   | some E => expressionImage I mode cfg E t.val (by omega)
   | none => match mode i with
@@ -141,7 +141,7 @@ private theorem configurations_complete {K : Type} [DecidableEq K] (l : List K)
     refine ⟨Function.update g i (f i), ?_, ?_⟩
     · apply List.mem_flatMap.mpr
       refine ⟨g, hg, ?_⟩
-      cases h : f i <;> simp [h]
+      cases h : f i <;> simp
     · intro j hj
       rcases List.mem_cons.mp hj with eq | hj
       · subst j; exact Function.update_self _ _ _
@@ -150,10 +150,10 @@ private theorem configurations_complete {K : Type} [DecidableEq K] (l : List K)
         · rw [Function.update_of_ne eq]
           exact same j hj
 
-def keys (m s : Nat) : List (Fin m × Fin (s+1)) :=
-  (List.finRange m).flatMap fun i => (List.finRange (s+1)).map fun t => (i,t)
+def keys (m s : Nat) : List (Fin m × Fin (s + 1)) :=
+  (List.finRange m).flatMap fun i => (List.finRange (s + 1)).map fun t => (i, t)
 
-private theorem mem_keys {m s : Nat} (i : Fin m) (t : Fin (s+1)) : (i,t) ∈ keys m s := by
+private theorem mem_keys {m s : Nat} (i : Fin m) (t : Fin (s + 1)) : (i, t) ∈ keys m s := by
   simp [keys]
 
 def conjunction : List Formula → Formula
@@ -189,7 +189,7 @@ private theorem closedConfiguration_holds {n k m s : Nat} (I : Input n k m)
   simp only [closedConfiguration, conjunction_holds, List.forall_mem_map]
   constructor
   · intro h i t ht
-    have law := h (i,t) (mem_keys i t)
+    have law := h (i, t) (mem_keys i t)
     simpa only [ht, ite_true] using law
   · intro h q hq
     cases hc : cfg q.1 q.2
@@ -209,7 +209,7 @@ completed value, parameter enumeration or semantic choice is used. -/
 def imageGuard {n k m : Nat} (I : Input n k m) (mode : Mode (threshold I.filters) m) : Formula :=
   let s := threshold I.filters
   .and (legalGuard I) (disjunction ((configurations (keys m s)).map fun f =>
-    let cfg : Configuration m s := fun i t => f (i,t)
+    let cfg : Configuration m s := fun i t => f (i, t)
     .and (closedConfiguration I mode cfg)
       (conjunction (I.filters.attach.map fun q =>
         expressionImage I mode cfg q.val.1 q.val.2 (by
@@ -240,8 +240,7 @@ private theorem expressionImage_exact {n k m s : Nat} (I : Input n k m)
   | pair A B ihA ihB =>
     simp only [expressionImage, Formula.holds, atomic_guard_correct I guarded mode p legal,
       ihA, ihB]
-    rw [native_image_iff]
-    change (_ ∨ _ ∨ (_ ∧ _)) ↔ _ ∨ _ ∨ _
+    conv_rhs => rw [native_image_iff]
     constructor
     · rintro (h | h | ⟨ha, hb⟩)
       · exact Or.inl h
@@ -343,7 +342,8 @@ private theorem closedConfiguration_sound {n k m s : Nat} (I : Input n k m)
               simp only [stateImage, eq] at statePass
               rw [law.1 i F eq]
               cases F with
-              | ground g => exact known _ ((groundImage_holds I guarded mode p legal g t).mp statePass)
+              | ground g =>
+                exact known _ ((groundImage_holds I guarded mode p legal g t).mp statePass)
               | token j c => exact known _ ((tokenImage_holds I p legal K j c t).mp statePass)
               | pair A B => exact pair_step A B statePass
               | var a j => exact (guarded i a j eq).elim
@@ -355,9 +355,9 @@ private theorem closedConfiguration_sound {n k m s : Nat} (I : Input n k m)
       _ (Or.inr ⟨E, rfl, accept⟩)
 
 private theorem filters_bound {k m : Nat} (fs : List (Filter k m))
-    (E : Expression k m) (t : Nat) (mem : (E,t) ∈ fs) : t ≤ threshold fs := by
+    (E : Expression k m) (t : Nat) (mem : (E, t) ∈ fs) : t ≤ threshold fs := by
   unfold threshold
-  exact List.le_max_of_le (List.mem_map.mpr ⟨(E,t), mem, rfl⟩) le_rfl
+  exact List.le_max_of_le (List.mem_map.mpr ⟨(E, t), mem, rfl⟩) le_rfl
 
 /-- A finite Presburger formula, constructed from the original syntax, is
 exactly the simultaneous canonical actual-image condition on every legal
@@ -371,22 +371,25 @@ theorem effective_image_guard {n k m : Nat} (I : Input n k m)
   classical
   let s := threshold I.filters
   let K := canonical I.equations (ranks I p) guarded mode
-  simp only [imageGuard, Formula.holds, legalGuard_holds, disjunction_holds,
-    List.exists_mem_map, conjunction_holds, List.forall_mem_map, List.forall_mem_attach]
+  simp only [imageGuard, Formula.holds, legalGuard_holds, disjunction_holds]
   constructor
-  · rintro ⟨legal, f, hf, closed, filters⟩
+  · rintro ⟨legal, F, hF, accepted⟩
+    obtain ⟨f, hf, rfl⟩ := List.mem_map.mp hF
+    rcases accepted with ⟨closed, filters⟩
     refine ⟨legal, ?_⟩
     intro E t mem
+    have pass := (conjunction_holds _ _).mp filters _
+      (List.mem_map.mpr ⟨⟨(E, t),mem⟩,List.mem_attach _ _,rfl⟩)
     exact closedConfiguration_sound I guarded mode p legal _ closed E t
-      (filters_bound I.filters E t mem) (filters ⟨(E,t), mem⟩)
+      (filters_bound I.filters E t mem) pass
   · rintro ⟨legal, filters⟩
     let exactCfg : Configuration m s := fun i t => decide (NativeImage t.val (K i))
     obtain ⟨f, hf, same⟩ := configurations_complete (keys m s) (fun q => exactCfg q.1 q.2)
-    have exactStates : ∀ i t, f (i,t) = true ↔ NativeImage t.val (K i) := by
+    have exactStates : ∀ i t, f (i, t) = true ↔ NativeImage t.val (K i) := by
       intro i t
-      rw [same (i,t) (mem_keys i t)]
-      exact decide_eq_true_eq
-    refine ⟨legal, f, hf, ?_, ?_⟩
+      rw [same (i, t) (mem_keys i t)]
+      exact decide_eq_true_iff
+    refine ⟨legal, _, List.mem_map.mpr ⟨f,hf,rfl⟩, ?_, ?_⟩
     · apply (closedConfiguration_holds I mode _ _).mpr
       intro i t selected
       have accepted := (exactStates i t).mp selected
@@ -408,9 +411,171 @@ theorem effective_image_guard {n k m : Nat} (I : Input n k m)
           simp only [hm, canonicalFree] at accepted ⊢
           rw [constant_holds, decide_eq_true_eq]
           exact (atomic_image_iff j.val t.val).mp accepted
-    · intro q
+    · apply (conjunction_holds _ _).mpr
+      intro F hF
+      obtain ⟨q,hq,rfl⟩ := List.mem_map.mp hF
       exact (expressionImage_exact I guarded mode p legal _ exactStates q.val.1 q.val.2
         (filters_bound I.filters q.val.1 q.val.2 q.property)).mpr
           (filters q.val.1 q.val.2 q.property)
+
+
+open NativeRootLinkNormalization
+
+/-- A parsed root occurrence, with equality evidence obtained from syntax. -/
+abbrev RootLink {k m : Nat} (S : System k m) :=
+  {q : Fin m × Nat × Fin m // S q.1 = some (.var q.2.1 q.2.2)}
+
+def rootAt {k m : Nat} (S : System k m) (i : Fin m) : Option (RootLink S) :=
+  match h : S i with
+  | some (.var a j) => some ⟨(i, a, j),h⟩
+  | _ => none
+
+/-- Inspect original state names in their finite order. -/
+def findRoot {k m : Nat} (S : System k m) : Option (RootLink S) :=
+  (List.finRange m).findSome? (rootAt S)
+
+private theorem findRoot_none {k m : Nat} (S : System k m)
+    (none : findRoot S = Option.none) : Guarded S := by
+  have all := List.findSome?_eq_none_iff.mp none
+  intro i a j eq
+  have absent := all i (by simp)
+  unfold rootAt at absent
+  split at absent <;> simp_all
+
+def rootStep {k m : Nat} (S : System k m) (r : RootLink S) : Presentation k m :=
+  if r.val.2.2 = r.val.1 then selfStep S r.val.1 r.val.2.1
+  else linkStep S r.val.1 r.val.2.1 r.val.2.2
+
+private theorem rootStep_correct {k m : Nat} (S : System k m) (r : RootLink S) :
+    Correct S (rootStep S r) := by
+  unfold rootStep
+  split_ifs with h
+  · exact selfStep_correct S _ _ (by simpa only [h] using r.property)
+  · exact linkStep_correct S _ _ _ h r.property
+
+private theorem rootStep_decreases {k m : Nat} (S : System k m) (r : RootLink S) :
+    (roots (rootStep S r).equations).card < (roots S).card := by
+  unfold rootStep
+  split_ifs with h
+  · exact selfStep_decreases S _ _ (by simpa only [h] using r.property)
+  · exact linkStep_decreases S _ _ _ r.property
+
+def initialPresentation {k m : Nat} (S : System k m) : Presentation k m :=
+  ⟨S, identity, identity⟩
+
+private theorem initialPresentation_correct {k m : Nat} (S : System k m) :
+    Correct S (initialPresentation S) := by
+  intro p
+  constructor <;> intro v sat <;> exact ⟨sat,rfl⟩
+
+/-- A total finite syntactic program with an explicit input-size fuel bound. -/
+def normalizeFuel {k m : Nat} : Nat → System k m → Presentation k m
+  | 0, S => initialPresentation S
+  | f+1, S => match findRoot S with
+    | none => initialPresentation S
+    | some r => let T := rootStep S r
+      compose T (normalizeFuel f T.equations)
+
+private theorem normalizeFuel_correct {k m : Nat} (f : Nat) (S : System k m) :
+    Correct S (normalizeFuel f S) := by
+  induction f generalizing S with
+  | zero => exact initialPresentation_correct S
+  | succ f ih =>
+    simp only [normalizeFuel]
+    cases h : findRoot S with
+    | none => exact initialPresentation_correct S
+    | some r => exact compose_correct S _ _ (rootStep_correct S r) (ih _)
+
+private theorem normalizeFuel_guarded {k m : Nat} (f : Nat) (S : System k m)
+    (enough : (roots S).card ≤ f) : Guarded (normalizeFuel f S).equations := by
+  classical
+  induction f generalizing S with
+  | zero =>
+    change Guarded S
+    intro i a j eq
+    have mem := (mem_roots S i).mpr ⟨a,j,eq⟩
+    have positive := Finset.card_pos.mpr ⟨i,mem⟩
+    omega
+  | succ f ih =>
+    simp only [normalizeFuel]
+    cases h : findRoot S with
+    | none => exact findRoot_none S h
+    | some r =>
+      change Guarded (normalizeFuel f (rootStep S r).equations).equations
+      apply ih
+      have decrease := rootStep_decreases S r
+      omega
+
+/-- Compute root-link normalization while retaining both original expression maps. -/
+def effectiveNormalForm {k m : Nat} (S : System k m) : Presentation k m := normalizeFuel m S
+
+private theorem effectiveNormalForm_law {k m : Nat} (S : System k m) :
+    Guarded (effectiveNormalForm S).equations ∧ Correct S (effectiveNormalForm S) := by
+  classical
+  refine ⟨normalizeFuel_guarded m S ?_,normalizeFuel_correct m S⟩
+  exact (Finset.card_le_card (Finset.subset_univ (roots S))).trans_eq (Fintype.card_fin m)
+
+/-- Every original filter is substituted through its retained reconstruction. -/
+def normalizedInput {n k m : Nat} (I : Input n k m) : Input n k m where
+  equations := (effectiveNormalForm I.equations).equations
+  filters := transformedFilters (effectiveNormalForm I.equations) I.filters
+  indices := I.indices
+  guard := I.guard
+
+abbrev EffectiveMode {n k m : Nat} (I : Input n k m) :=
+  Mode (threshold (normalizedInput I).filters) m
+
+def originalImageGuard {n k m : Nat} (I : Input n k m) (mode : EffectiveMode I) : Formula :=
+  imageGuard (normalizedInput I) mode
+
+noncomputable def effectiveCanonical {n k m : Nat} (I : Input n k m)
+    (mode : EffectiveMode I) (p : Fin n → Nat) : Fin m → CompletionTree :=
+  mapValues (ranks I p) (effectiveNormalForm I.equations).reconstruct
+    (canonical (normalizedInput I).equations (ranks I p)
+      (effectiveNormalForm_law I.equations).1 mode)
+
+def EffectiveInMode {n k m : Nat} (I : Input n k m) (mode : EffectiveMode I)
+    (p : Fin n → Nat) (v : Fin m → CompletionTree) : Prop :=
+  InMode (normalizedInput I).equations (threshold (normalizedInput I).filters) mode
+    (mapValues (ranks I p) (effectiveNormalForm I.equations).project v)
+
+/-- Effective acceptance and simultaneous existence in the entire original
+completed relation, with every original name and filter reconstructed. -/
+theorem original_effective_image_guard {n k m : Nat} (I : Input n k m)
+    (mode : EffectiveMode I) (p : Fin n → Nat) :
+    ((originalImageGuard I mode).holds (environment p) ↔
+      Legal I p ∧ SourcePasses I p (effectiveCanonical I mode p)) ∧
+    ((originalImageGuard I mode).holds (environment p) ↔
+      Legal I p ∧ ∃ v, SourceSatisfies I p v ∧
+        EffectiveInMode I mode p v ∧ SourcePasses I p v) := by
+  let T := effectiveNormalForm I.equations
+  let J := normalizedInput I
+  have guard : Guarded T.equations := (effectiveNormalForm_law I.equations).1
+  have corr := (effectiveNormalForm_law I.equations).2 (ranks I p)
+  let K := canonical T.equations (ranks I p) guard mode
+  have sat := normalized_saturation T.equations (ranks I p) guard J.filters mode
+  have accepted := effective_image_guard J guard mode p
+  have filters := filters_correspond T (ranks I p) K I.filters
+  have canonicalTest : (originalImageGuard I mode).holds (environment p) ↔
+      Legal I p ∧ SourcePasses I p (effectiveCanonical I mode p) := by
+    exact accepted.trans (and_congr Iff.rfl filters)
+  refine ⟨canonicalTest, canonicalTest.trans ?_⟩
+  apply and_congr_right
+  intro legal
+  constructor
+  · intro passes
+    have back := corr.2 K sat.1
+    refine ⟨mapValues (ranks I p) T.reconstruct K,back.1,?_,passes⟩
+    change InMode T.equations (threshold J.filters) mode
+      (mapValues (ranks I p) T.project (mapValues (ranks I p) T.reconstruct K))
+    rw [back.2]
+    exact sat.2.1
+  · rintro ⟨v, hv, vm, pass⟩
+    have forward := corr.1 v hv
+    have transformed : Passes (ranks I p) (mapValues (ranks I p) T.project v) J.filters := by
+      apply (filters_correspond T (ranks I p) _ I.filters).mpr
+      rw [forward.2]
+      exact pass
+    exact filters.mp (sat.2.2.mp ⟨_,forward.1,vm,transformed⟩)
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativeEffectiveImageGuard

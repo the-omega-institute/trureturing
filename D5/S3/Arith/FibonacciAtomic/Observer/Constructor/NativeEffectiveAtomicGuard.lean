@@ -8,6 +8,9 @@
 
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeAffineImageSaturation
 
+/-! Total finite syntax for exact atomic tests of unrestricted completed
+canonical values, using the original shared affine parameter tuple. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
