@@ -120,15 +120,27 @@ private theorem minor_entry_weight (constant : Bool) (i j : Fin 28)
       (if j.val < 27 then 28-j.val else if constant then 0 else 1) ≤ minorWeight i := by
   unfold minorMatrix minorRow at h ⊢
   unfold minorWeight
-  split_ifs with hi
-  · exact shifted_coefficient_weight 0 (13-i.val) _ h
-  · exact shifted_coefficient_weight 1 (27-i.val) _ h
+  by_cases hi : i.val < 14
+  · simp only [if_pos hi] at h ⊢
+    exact shifted_coefficient_weight 0 (13-i.val) _ h
+  · simp only [if_neg hi] at h ⊢
+    exact shifted_coefficient_weight 1 (27-i.val) _ h
 
 /-- The original r-column minor has degree at most 252 and the constant-column minor at most 253. -/
 theorem literal_minor_degree_bounds :
     actualMinorA0.natDegree ≤ 252 ∧ actualMinorC0.natDegree ≤ 253 := by
-  have ha : actualMinorA0 = (minorMatrix false).det := by rfl
-  have hc : actualMinorC0 = (minorMatrix true).det := by rfl
+  have ha : actualMinorA0 = (minorMatrix false).det := by
+    change Matrix.det (fun i j : Fin 28 => if h : j.val < 27 then
+      (minorRow i).coeff (28-j.val) else (minorRow i).coeff 1) = _
+    congr 1
+    ext i j
+    by_cases hj : j.val < 27 <;> simp [minorMatrix,hj]
+  have hc : actualMinorC0 = (minorMatrix true).det := by
+    change Matrix.det (fun i j : Fin 28 => if h : j.val < 27 then
+      (minorRow i).coeff (28-j.val) else (minorRow i).coeff 0) = _
+    congr 1
+    ext i j
+    by_cases hj : j.val < 27 <;> simp [minorMatrix,hj]
   constructor
   · rw [ha]
     apply weighted_det_bound (minorMatrix false) minorWeight
