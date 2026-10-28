@@ -50,7 +50,7 @@ def kernelEvidence : Registration arena (type_of% chebyshev_error_kernel_integra
 
 def kernelRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@chebyshev_error_kernel_integrable) (Realization signature) Unit Unit where
-  unitName := `chebyshev_error_kernel_integrable.__information_unit
+  unitName := `D5.S3.Weil.Mertens.WeightedPrimeLimit.chebyshev_error_kernel_integrable.__information_unit
   realizationName := `Reg.D5.S3.Weil.Mertens.WeightedPrimeLimit.Kernel.kernelEvidence
   realizationSource := none
   generated := false
@@ -123,7 +123,7 @@ def mangoldtEvidence : Registration arena (type_of% E₁Λ_tendsto) where
 
 def mangoldtRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@E₁Λ_tendsto) (Realization signature) Unit Unit where
-  unitName := `E₁Λ_tendsto.__information_unit
+  unitName := `D5.S3.Weil.Mertens.WeightedPrimeLimit.E₁Λ_tendsto.__information_unit
   realizationName := `Reg.D5.S3.Weil.Mertens.WeightedPrimeLimit.Mangoldt.mangoldtEvidence
   realizationSource := none
   generated := false
@@ -194,7 +194,7 @@ def primeEvidence : Registration arena (type_of% exists_E₁p_limit) where
 
 def primeRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@exists_E₁p_limit) (Realization signature) Unit Unit where
-  unitName := `exists_E₁p_limit.__information_unit
+  unitName := `D5.S3.Weil.Mertens.WeightedPrimeLimit.exists_E₁p_limit.__information_unit
   realizationName := `Reg.D5.S3.Weil.Mertens.WeightedPrimeLimit.Prime.primeEvidence
   realizationSource := none
   generated := false
@@ -216,7 +216,7 @@ def primeRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 
     coordinates := #[]
     readouts := #[{
       path := #["arg", "body", "fn", "fn", "arg", "body", "fn"]
-      stateBinder := 1
+      stateBinder := 0
       functionOperand := true
       stateOperand := none
       booleanPredicate := false }] }

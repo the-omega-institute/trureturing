@@ -69,7 +69,7 @@ def splitRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 
     coordinates := #[]
     readouts := #[{
       path := #["body", "arg", "arg", "body", "fn", "arg", "fn", "arg", "fn"]
-      stateBinder := 1
+      stateBinder := 0
       functionOperand := true
       stateOperand := none
       booleanPredicate := false }] }

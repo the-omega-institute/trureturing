@@ -57,7 +57,7 @@ theorem chebyshev_error_kernel_integrable :
       _ ≤ (D * (u * Real.exp (-c * (Real.log u) ^ ((1 : ℝ) / 10)) )) / u ^ 2 :=
         div_le_div_of_nonneg_right hp (sq_nonneg u)
       _ = D * (Real.exp (-c * (Real.log u) ^ ((1 : ℝ) / 10)) / u) := by
-        field_simp
+        field_simp [hu0.ne']
         <;> ring
   have hlocal : IntegrableOn
       (fun u : ℝ => (Chebyshev.psi u - u) / u ^ 2) (Ioc 1 B) := by
@@ -82,15 +82,16 @@ private lemma relative_chebyshev_error_tendsto :
       (fun x : ℝ => Real.exp (-c * (Real.log x) ^ ((1 : ℝ) / 10)))
       atTop (𝓝 0) :=
     Real.tendsto_exp_atBot.comp
-      (((Real.tendsto_rpow_atTop (by norm_num : (0 : ℝ) < 1 / 10)).comp
-        Real.tendsto_log_atTop).const_mul_atTop_of_neg (by linarith : -c < 0))
+      (Filter.Tendsto.const_mul_atTop_of_neg (by linarith : -c < 0)
+        ((Real.tendsto_rpow_atTop (by norm_num : (0 : ℝ) < 1 / 10)).comp
+          Real.tendsto_log_atTop))
   have hmul := hO.mul (isBigO_refl (fun x : ℝ => x⁻¹) atTop)
   have hright : Tendsto
       (fun x : ℝ => (x * Real.exp (-c * (Real.log x) ^ ((1 : ℝ) / 10))) * x⁻¹)
       atTop (𝓝 0) := by
     refine hexp.congr' ?_
     filter_upwards [eventually_gt_atTop (0 : ℝ)] with x hx
-    field_simp
+    field_simp [hx.ne']
   simpa only [Pi.mul_apply, Pi.sub_apply, id_eq, div_eq_mul_inv] using
     hmul.trans_tendsto hright
 
