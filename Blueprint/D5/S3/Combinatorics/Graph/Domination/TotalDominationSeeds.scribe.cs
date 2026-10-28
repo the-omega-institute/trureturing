@@ -48,7 +48,7 @@ internal sealed class TotalDominationSeedsDocument : IScribeDocumentDefinition
             Paragraph(Text("The cycle, triangle, cone and disjoint-union identities are attributed ingredients: arXiv:1605.02222 and the H-join framework of Subramanian and Selvakumar, Filomat 2025. No worldwide priority or independent admission claim is made for this seed argument. The complete external question remains the density of nonzero total-domination roots of finite isolate-free graphs throughout the complex plane."))), []));
 
     private static DocumentBlock Node(string selector, string title, Formula formula, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("td-seed-" + selector.Replace("_", "-")), DeclarationHandle.Create(Prefix + selector),
+        Describe.Lean(DescribeId.Create("td-seed-" + selector.Replace("_", "-").ToLowerInvariant()), DeclarationHandle.Create(Prefix + selector),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));

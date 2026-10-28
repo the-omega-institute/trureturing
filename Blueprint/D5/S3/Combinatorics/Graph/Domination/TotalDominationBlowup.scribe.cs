@@ -25,7 +25,7 @@ internal sealed class TotalDominationBlowupDocument : IScribeDocumentDefinition
             Paragraph(Text("The full issue 23313 target remains WholePlaneDensity in TotalDominationSeeds. The independent-fibre identity and these power-map branches do not by themselves establish the complete complex density or authorize resolution credit."))), []));
 
     private static DocumentBlock Node(string selector, string title, Formula formula, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("td-blowup-" + selector.Replace("_", "-")), DeclarationHandle.Create(Prefix + selector),
+        Describe.Lean(DescribeId.Create("td-blowup-" + selector.Replace("_", "-").ToLowerInvariant()), DeclarationHandle.Create(Prefix + selector),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);

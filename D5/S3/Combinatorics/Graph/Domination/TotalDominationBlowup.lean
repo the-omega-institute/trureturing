@@ -19,8 +19,6 @@ set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.Domination.TotalDominationBlowup
 
-open scoped Classical
-
 open Finset Polynomial
 open D5.S3.Combinatorics.Graph.Domination.TotalDominationSeeds
 
@@ -93,6 +91,7 @@ private theorem occupied_subsets :
   rw [hf, ← all_subsets]
   simpa only [card_empty, pow_zero] using eq_sub_iff_add_eq.mpr he
 
+open Classical in
 private theorem fixed_support_sum (A : Finset V) :
     (∑ f : V → Finset W, if support f = A then
       ∏ v, (X : ℂ[X]) ^ (f v).card else 0) =
@@ -111,8 +110,9 @@ private theorem fixed_support_sum (A : Finset V) :
     · simpa [hv] using (occupied_subsets (W := W))
     · simp [hv, Finset.nonempty_iff_ne_empty]
   simp_rw [hi]
-  simp [Finset.prod_ite]
+  simp
 
+open Classical in
 private theorem group_support (G : SimpleGraph V) :
     (∑ f : V → Finset W, if IsTotal G (support f) then
       ∏ v, (X : ℂ[X]) ^ (f v).card else 0) =
@@ -166,14 +166,15 @@ private theorem polynomial_nonzero (G : SimpleGraph V)
     · simp [ht]
     · intro S _ hS
       have hlt : S.card < Fintype.card V := by
-        simpa using Finset.card_lt_card (ssubset_iff_subset_ne.mpr ⟨subset_univ S, hS⟩)
+        simpa using Finset.card_lt_card (Finset.ssubset_iff_subset_ne.mpr ⟨subset_univ S, hS⟩)
       by_cases hs : IsTotal G S <;>
-        simp [hs, Polynomial.coeff_X_pow, Nat.ne_of_lt hlt, (Nat.ne_of_lt hlt).symm]
+        simp [hs, Polynomial.coeff_X_pow, (Nat.ne_of_lt hlt).symm]
     · simp
   intro he
   rw [he] at hc
   norm_num at hc
 
+omit [Fintype V] [Fintype W] in
 private theorem blowup_no_isolates [Nonempty W] (G : SimpleGraph V)
     (h : ∀ v, ∃ u, G.Adj v u) : ∀ v, ∃ u, (blowupGraph G W).Adj v u := by
   intro v
@@ -193,7 +194,7 @@ theorem seed_blowup_roots (ε : ℝ) (hε : 0 < ε) (k : ℕ) (hk : 0 < k) :
         (complexPolynomial (blowupGraph G (Fin k))).IsRoot w := by
   classical
   obtain ⟨n, G, r, hn, hni, hnz, hc, hl, hclose⟩ := complex_seed_accumulation ε hε
-  letI : Nonempty (Fin k) := ⟨⟨0, hk⟩⟩
+  haveI : Nonempty (Fin k) := ⟨⟨0, hk⟩⟩
   have hr : 1 + r < ε := by
     have he : (r : ℂ) - (-1 : ℂ) = ((1 + r : ℝ) : ℂ) := by push_cast; ring
     simpa only [he, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hl] using hclose
