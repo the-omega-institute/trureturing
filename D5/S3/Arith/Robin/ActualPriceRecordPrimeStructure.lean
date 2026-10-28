@@ -296,7 +296,7 @@ theorem price_record_largest_prime_localization :
   have hQsmall := hmass.trans hbound
   change X = θ P + _ at hsplit
   have hdP : d * P ≤ 2 * d * X := by
-    exact mul_le_mul_of_nonneg_left hPupper hd.le
+    nlinarith only [mul_le_mul_of_nonneg_left hPupper hd.le]
   have hQlt := hQsmall.trans_lt hsmall
   have hminus : X - P < 3 * d * X := by
     nlinarith only [hsplit, hQlt, hthetaHi, hdP]
