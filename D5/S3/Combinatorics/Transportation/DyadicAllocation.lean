@@ -10,6 +10,8 @@ public import Mathlib.Data.Finset.Max
 public import Mathlib.Algebra.Order.BigOperators.Group.Finset
 public import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Tactic
+
+/-! Exact labelled allocation by maximal-coin deletion and capacity residues. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -28,9 +30,8 @@ def Allocation {α β : Type*} [DecidableEq α] [Fintype β]
 private theorem residue_bound {α : Type*} [DecidableEq α]
     (S : Finset α) (e : α → ℕ) (q : ℕ) :
     (∑ a ∈ S, 2 ^ e a) % 2 ^ q ≤ ∑ a ∈ S.filter (fun a => e a < q), 2 ^ e a := by
-  have hm : (∑ a ∈ S, 2 ^ e a) % 2 ^ q =
-      (∑ a ∈ S.filter (fun a => e a < q), 2 ^ e a) % 2 ^ q := by
-    rw [Finset.sum_nat_mod, Finset.sum_nat_mod]
+  have he : (∑ a ∈ S, 2 ^ e a % 2 ^ q) =
+      ∑ a ∈ S.filter (fun a => e a < q), 2 ^ e a % 2 ^ q := by
     rw [Finset.sum_filter]
     apply Finset.sum_congr rfl
     intro a ha
@@ -38,6 +39,9 @@ private theorem residue_bound {α : Type*} [DecidableEq α]
     · simp [h]
     · have hd : 2 ^ q ∣ (2 : ℕ) ^ e a := pow_dvd_pow 2 (by omega)
       simp [h, Nat.mod_eq_zero_of_dvd hd]
+  have hm : (∑ a ∈ S, 2 ^ e a) % 2 ^ q =
+      (∑ a ∈ S.filter (fun a => e a < q), 2 ^ e a) % 2 ^ q := by
+    rw [Finset.sum_nat_mod S, he, ← Finset.sum_nat_mod]
   rw [hm]
   exact Nat.mod_le _ _
 
@@ -81,7 +85,7 @@ theorem allocation_of_residues {α β : Type*} [DecidableEq α] [Fintype β]
           · subst j; omega
           · omega
         simpa [Finset.sum_add_distrib] using
-          (Finset.sum_congr (s := Finset.univ) rfl (fun j _ => ht j))
+          (Finset.sum_congr (s₁ := Finset.univ) rfl (fun j _ => ht j))
       have ht' : (∑ x ∈ S.erase a, 2 ^ e x) = ∑ j, b' j := by omega
       have hr' : ∀ q : ℕ, (∑ j, b' j % 2 ^ q) ≤
           ∑ x ∈ (S.erase a).filter (fun x => e x < q), 2 ^ e x := by
@@ -124,7 +128,7 @@ theorem allocation_of_residues {α β : Type*} [DecidableEq α] [Fintype β]
       refine ⟨K', ?_, ?_, ?_, ?_⟩
       · intro j x hx
         by_cases hj : j = i
-        · simp only [K', if_pos hj, Finset.mem_insert] at hx
+        · simp only [K', ite_eq_left hj, Finset.mem_insert] at hx
           rcases hx with rfl | hx
           · exact ha
           · exact Finset.mem_of_mem_erase (hKS j hx)
@@ -134,13 +138,13 @@ theorem allocation_of_residues {α β : Type*} [DecidableEq α] [Fintype β]
         intro x hxj hxl
         by_cases hj : j = i <;> by_cases hl : l = i
         · exact hjl (hj.trans hl.symm)
-        · simp only [K', if_pos hj, Finset.mem_insert] at hxj
-          simp only [K', if_neg hl] at hxl
+        · simp only [K', ite_eq_left hj, Finset.mem_insert] at hxj
+          simp only [K', ite_eq_right hl] at hxl
           rcases hxj with rfl | hxj
           · exact haK l hxl
           · exact Finset.disjoint_left.mp (hKD j l hjl) hxj hxl
-        · simp only [K', if_neg hj] at hxj
-          simp only [K', if_pos hl, Finset.mem_insert] at hxl
+        · simp only [K', ite_eq_right hj] at hxj
+          simp only [K', ite_eq_left hl, Finset.mem_insert] at hxl
           rcases hxl with rfl | hxl
           · exact haK j hxj
           · exact Finset.disjoint_left.mp (hKD j l hjl) hxj hxl
@@ -150,14 +154,18 @@ theorem allocation_of_residues {α β : Type*} [DecidableEq α] [Fintype β]
         by_cases hxa : x = a
         · exact ⟨i, by simp [K', hxa]⟩
         · obtain ⟨j, hj⟩ := hKC x (Finset.mem_erase.mpr ⟨hxa, hx⟩)
-          exact ⟨j, by by_cases h : j = i <;> simp [K', h, hj]⟩
+          refine ⟨j, ?_⟩
+          by_cases h : j = i
+          · simp only [K', h, ite_true, Finset.mem_insert]
+            exact Or.inr (by simpa [h] using hj)
+          · simpa [K', h] using hj
       · intro j
         by_cases hj : j = i
         · subst j
-          simp only [K', if_pos rfl, Finset.sum_insert (haK i)]
+          simp only [K', ite_eq_left rfl, Finset.sum_insert (haK i)]
           rw [hKb]
           dsimp [b']
-          simp only [if_pos rfl]
+          simp only [ite_eq_left rfl]
           change F + (b i - F) = b i
           omega
         · simpa [K', b', hj] using hKb j
@@ -182,7 +190,7 @@ theorem allocation_iff_residues {α β : Type*} [DecidableEq α] [Fintype β]
   constructor
   · rintro ⟨K, hS, hD, hC, hb⟩ q
     let L : β → Finset α := fun i => (K i).filter (fun a => e a < q)
-    have hLD : (Finset.univ : Finset β).PairwiseDisjoint L := by
+    have hLD : Set.PairwiseDisjoint (↑(Finset.univ : Finset β)) L := by
       intro i _ j _ hij
       exact (hD i j hij).mono (Finset.filter_subset _ _) (Finset.filter_subset _ _)
     have hL : Finset.univ.biUnion L = S.filter (fun a => e a < q) := by
@@ -202,7 +210,7 @@ theorem allocation_iff_residues {α β : Type*} [DecidableEq α] [Fintype β]
         rw [← hb i]
         exact residue_bound (K i) e q
       _ = ∑ a ∈ S.filter (fun a => e a < q), 2 ^ e a := by
-        rw [← hL, Finset.sum_biUnion hLD]
+        exact (Finset.sum_biUnion hLD).symm.trans (congrArg (fun T : Finset α => ∑ a ∈ T, 2 ^ e a) hL)
   · exact allocation_of_residues S e b total
 
 end D5.S3.Combinatorics.Transportation.DyadicAllocation
