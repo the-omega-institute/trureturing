@@ -188,43 +188,36 @@ namespace PauliChannelsSigmaTrace
 
 abbrev signature : Signature where
   Params := Unit
-  State _ := Fin 3 ⊕ Bool
+  State _ := ℂ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := ℂ
+  Output _ _ := ℂ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ s => match s with
-    | Sum.inl a => Matrix.trace (pauli a)
-    | Sum.inr b => if b then 1 else 0) (fun e => nomatch e)
+  realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+  realize signature (fun _ _ x y => x ≠ y) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ a : Fin 3, R.readout () () (Sum.inl a) = 0
+  Law R := ∀ a : Fin 3, R.readout () () (Matrix.trace (pauli a)) 0
 
 private theorem bridge :
-    (type_of% @PauliChannels.sigma_trace) ↔ arena.Law actual := by
-  constructor
-  · intro h a
-    simpa [actual, realize] using h a
-  · intro h a
-    simpa [actual, realize] using h a
+    (type_of% @PauliChannels.sigma_trace) ↔ arena.Law actual := Iff.rfl
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hh := h 0
-  simp [rejected, realize] at hh
+  exact h 0 (PauliChannels.sigma_trace 0)
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), Sum.inr false, Sum.inr true, ?_⟩
-  norm_num [actual, realize]
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  exact one_ne_zero (Eq.mp (congrFun h 0) rfl)
 
 def source_registration : Registration arena (type_of% @PauliChannels.sigma_trace) where
   actual := actual
@@ -250,7 +243,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
+  readout := some (realize signature (fun _ _ x y => x = y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -260,10 +253,10 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "fn", "arg"]
+      path := #["body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn"]
+      functionOperand := true
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
