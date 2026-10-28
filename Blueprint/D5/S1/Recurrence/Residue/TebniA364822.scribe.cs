@@ -54,7 +54,7 @@ internal sealed class TebniA364822Document : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? claim = null) =>
-        Describe.Lean(DescribeId.Create("tebni364822-" + name.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("tebni364822-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             provenance, Blocks(Paragraph(Text(prose))), role, claim);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));

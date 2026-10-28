@@ -78,7 +78,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S1.Recurrence.Residue.TebniA341724RowDivisibility
     definition := some { owner := `D5.S1.Recurrence.Residue.TebniA341724RowDivisibility, name := `D5.S1.Recurrence.Residue.TebniA341724RowDivisibility.claim, path := #[] }

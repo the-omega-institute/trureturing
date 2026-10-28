@@ -22,7 +22,7 @@ internal sealed class TebniA341724RowDivisibilityDocument : IScribeDocumentDefin
                 "OEIS A341724 specifies the column denominator as 1-2 sinh(-X). Oddness of the Taylor series gives 1+2 sinh(X); in particular its constant coefficient is one.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source())),
             Node("column", "The literal column EGF", All("k", Nat(), Equal(Call("column", K()), Column())),
-                "The displayed product is X^k divided by k! times the original denominator. The scalar inverse and the formal inverse are taken in their respective carriers.",
+                "The displayed product is X^k divided by the product of k! and the original denominator. The scalar inverse and the formal inverse are taken in their respective carriers.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source())),
             Node("Tq", "Factorial-normalized column coefficients", All("n", Nat(), All("k", Nat(),
                 Equal(T(N(), K()), Mul(Cast(Factorial(N()), Rat()),
@@ -43,7 +43,7 @@ internal sealed class TebniA341724RowDivisibilityDocument : IScribeDocumentDefin
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? claim = null) =>
-        Describe.Lean(DescribeId.Create("tebni341724-" + name), DeclarationHandle.Create(Prefix + name),
+        Describe.Lean(DescribeId.Create("tebni341724-" + name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, claim);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Par(Formula value) => Seq(Open, value, Close);
@@ -67,7 +67,7 @@ internal sealed class TebniA341724RowDivisibilityDocument : IScribeDocumentDefin
     private static Formula Denominator() => Sub(D(1), Mul(D(2),
         App(Qualified("PowerSeries", "rescale"), Seq(Minus, D(1)), Qualified("TebniA364822", "sinh"))));
     private static Formula Column() => Mul(new Formula.Power(F.Id("X"), K()),
-        Mul(App(Qualified("PowerSeries", "C"), Inv(Cast(Factorial(K()), Rat()))), Inv(Call("denominator"))));
+        Mul(App(Qualified("PowerSeries", "C"), Inv(Cast(Factorial(K()), Rat()))), Inv(Denominator())));
     private static Formula T(Formula n, Formula k) => Call("Tq", n, k);
     private static Formula Witness(Formula index, Formula k)
     {

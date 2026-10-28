@@ -18,7 +18,19 @@ $$\operatorname{claim} \iff (\forall m: \mathbb{N}, \exists z: \mathbb{Z}, ((z: 
 
 OEIS A364822, Comments (unpaginated): "For n = 2^m (m natural number), a(n) == 1 (mod n)." At m=0 the modulus is one. At positive m the index is even.
 
-**Theorem 1.2 (Residue one at every power of two).**
+**Theorem 1.2 (Odd-index dyadic binomial divisibility).**
+
+$$\forall m: \mathbb{N}, \forall k: \mathbb{N}, (\operatorname{Odd}\left(k\right)) \implies (2^{m} \mid \operatorname{Nat}.\operatorname{choose}\left(2^{m}, k\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/TebniA364822PowerOfTwo.pow_two_dvd_choose_odd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The adjacent binomial identity makes the product of k and choose(2^m,k) divisible by 2^m. Since odd k is coprime to every power of two, the binomial coefficient itself is divisible by 2^m. The exponent and index are arbitrary naturals.
+
+**Theorem 1.3 (Residue one at every power of two).**
 
 $$\forall m: \mathbb{N}, \exists z: \mathbb{Z}, ((z: \mathbb{Q}) = \operatorname{D5}.\operatorname{S1}.\operatorname{Recurrence}.\operatorname{Residue}.\operatorname{TebniA364822}.\operatorname{a}\left(2^{m}\right)) \land (\operatorname{Int}.\operatorname{ModEq}\left((2^{m}: \mathbb{Z}), z, 1\right))$$
 
@@ -39,5 +51,6 @@ For odd k, 2^m divides the binomial coefficient choose(2^m,k), by the adjacent b
 ## References
 
 - Truth anchor: `D5/S1/Recurrence/Residue/TebniA364822PowerOfTwo.claim`
+- Truth anchor: `D5/S1/Recurrence/Residue/TebniA364822PowerOfTwo.pow_two_dvd_choose_odd`
 - Truth anchor: `D5/S1/Recurrence/Residue/TebniA364822PowerOfTwo.result`
 - Dependency: [D5/S1/Recurrence/Residue/TebniA364822](TebniA364822.md)
