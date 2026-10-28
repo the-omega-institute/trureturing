@@ -8,9 +8,12 @@ The exact elimination observes the four odd moment combinations; the classical
 lemma observes its first monomial while fixing the other inputs. All bridges,
 countermodels and sensitivity/dependence proofs are kernel checked below.
 The standalone endpoint replay is kept outside D5 as verification evidence.
-The polymorphic table and absolute-bound source_registration proofs compile,
-but their outer Contract.Registration payloads are omitted: the reader rejects
-their rigid universe parameters with contract.discovery:rigid_universes.
+All four faithful source_registration proofs compile. Native discovery rejected
+outer Contract.Registration payloads for Absolute and ClassicalBound with
+contract.discovery:rigid_universes. Discovery aborted at these records; no separate
+verdict is claimed for the table-bound and projection payloads. Serialized outer
+payloads are omitted under the linked-issue delivery rule (CLAUDE section 3.9),
+while all four proof attempts and their full source hypotheses are retained.
 Their source-binding audit remains incomplete. No declared_validated claim is made.
 Outstanding audit coordination: https://github.com/the-omega-institute/trureturing/issues/5214.
 -/
@@ -188,39 +191,6 @@ def source_registration : Registration arena (type_of% (@eliminate_pairs)) where
       exact nomatch e
   dependence := dependence
 
-def registration : LeanInformationAudit.Contract.Registration
-    (@_root_.D5.S3.QuantumBounds.LocalPerceptionMermin.eliminate_pairs)
-    (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.QuantumBounds.LocalPerceptionMermin.Projection.eliminate_pairs
-  realizationName := `Reg.D5.S3.QuantumBounds.LocalPerceptionMermin.Projection.source_registration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨source_registration⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ q a => odd a q.1 q.2.1 q.2.2)
-    (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.QuantumBounds.LocalPerceptionMermin
-    definition := none
-    coordinates := #[1, 2, 3]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "fn", "arg", "arg", "body", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "fn", "fn", "arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
 
 end Projection
 
@@ -281,39 +251,6 @@ def source_registration : Registration arena (type_of% (@classical_bound)) where
       exact nomatch e
   dependence := dependence
 
-def registration : LeanInformationAudit.Contract.Registration
-    (@_root_.D5.S3.QuantumBounds.LocalPerceptionMermin.classical_bound)
-    (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.QuantumBounds.LocalPerceptionMermin.ClassicalBound.classical_bound
-  realizationName := `Reg.D5.S3.QuantumBounds.LocalPerceptionMermin.ClassicalBound.source_registration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨source_registration⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ q a => a*q.2.1*q.2.2.2.1)
-    (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.QuantumBounds.LocalPerceptionMermin
-    definition := none
-    coordinates := #[1, 2, 3, 4, 5]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg", "fn", "arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
 
 end ClassicalBound
 
