@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeOriginalCoordinatePrefix
 import Reg.Support.DependentFamily
 
+/-! Faithful original-readout and finite decoder registrations. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -43,8 +45,9 @@ private theorem agreement_rejected : ¬ agreementArena.Law agreementRejected := 
   have bad := law 0 0 (node (leaf true) (leaf true)) (node (leaf false) (leaf true))
     (by
       intro p hp
-      have empty : p = [] := by simpa [terminalHeight,
-        _root_.D5.S3.Arith.FibonacciAtomic.ActualImageAddressCertificate.height] using hp
+      have hz : terminalHeight 0 = 0 := rfl
+      rw [hz] at hp
+      have empty : p = [] := by simpa using hp
       subst p
       rfl) [] (by simp)
   change Reply.alpha = Reply.beta at bad
