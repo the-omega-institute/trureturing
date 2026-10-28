@@ -28,9 +28,11 @@ internal sealed class NativeGuardedFreeExtensionDocument : IScribeDocumentDefini
         var tuple = Arr(Call("Fin", m), V("CompletionTree"));
         Formula Law(Formula x) => And(Call("Satisfies", s, p, x), Call("Extends", s, f, x));
         var unique = Some("v", tuple, And(Law(v), All("w", tuple, Imp(Law(w), EqOf(w, v)))));
-        return StatementSource.FromAuthor(Disp(All("k", V("Nat"), All("m", V("Nat"),
-            All("S", Call("System", k, m), All("p", Arr(Call("Fin", k), V("Nat")),
-                Imp(Call("Guarded", s), All("f", tuple, unique)))))));
+        var body = Imp(Call("Guarded", s), All("f", tuple, unique));
+        body = All("p", Arr(Call("Fin", k), V("Nat")), body);
+        body = All("S", Call("System", k, m), body);
+        body = All("m", V("Nat"), body);
+        return StatementSource.FromAuthor(Disp(All("k", V("Nat"), body)));
     }
 
     private static Formula V(string n) => F.Id(n);

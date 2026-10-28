@@ -31,11 +31,13 @@ internal sealed class NativeGuardedAtomicReplacementDocument : IScribeDocumentDe
         var conclusion=All("E",Call("Expression",k,m),All("j",V("Nat"),Imp(LeOf(j,b),
             Imp(EqOf(Call("evaluate",p,v,e),Call("atomic",j)),
                 EqOf(Call("evaluate",p,w,e),Call("evaluate",p,v,e))))));
-        return StatementSource.FromAuthor(Disp(All("k",V("Nat"),All("m",V("Nat"),
-            All("S",Call("System",k,m),All("p",Arr(Call("Fin",k),V("Nat")),
-                Imp(Call("Guarded",s),All("v",tuple,All("w",tuple,
-                    Imp(Call("Satisfies",s,p,v),Imp(Call("Satisfies",s,p,w),
-                        All("B",V("Nat"),Imp(free,conclusion))))))))))));
+        var body = All("B",V("Nat"),Imp(free,conclusion));
+        body = Imp(Call("Satisfies",s,p,v),Imp(Call("Satisfies",s,p,w),body));
+        body = Imp(Call("Guarded",s),All("v",tuple,All("w",tuple,body)));
+        body = All("p",Arr(Call("Fin",k),V("Nat")),body);
+        body = All("S",Call("System",k,m),body);
+        body = All("m",V("Nat"),body);
+        return StatementSource.FromAuthor(Disp(All("k",V("Nat"),body)));
     }
     private static Formula V(string n)=>F.Id(n);
     private static Formula Par(Formula f)=>Seq(Open,f,Close);
