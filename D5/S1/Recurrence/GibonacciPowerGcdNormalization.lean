@@ -74,8 +74,9 @@ private theorem gibonacci_spec (a b : ℤ) :
   · simp [gibonacci, LinearRecurrence.mkSol, Real.fibRec]
   · intro n
     have h := (Real.fibRec : LinearRecurrence ℤ).is_sol_mkSol ![a, b] n
-    simpa [LinearRecurrence.IsSolution, Real.fibRec, gibonacci, Fin.sum_univ_two,
-      add_comm] using h
+    change gibonacci a b (n + 2) =
+      ∑ i : Fin 2, (![1, 1] : Fin 2 → ℤ) i * gibonacci a b (n + i) at h
+    simpa [Fin.sum_univ_two, add_comm] using h
 
 private theorem gibonacci_scale (a b c : ℤ) (n : ℕ) :
     gibonacci (c * a) (c * b) n = c * gibonacci a b n := by
@@ -85,8 +86,10 @@ private theorem gibonacci_scale (a b c : ℤ) (n : ℕ) :
   have h := congrArg (fun u : (Real.fibRec : LinearRecurrence ℤ).solSpace =>
     (u : ℕ → ℤ) n)
     ((Real.fibRec : LinearRecurrence ℤ).toInit.symm.map_smul c ![a, b])
+  change (Real.fibRec : LinearRecurrence ℤ).mkSol
+    (c • (![a, b] : Fin 2 → ℤ)) n = c * gibonacci a b n at h
   rw [hinit] at h
-  simpa [gibonacci, LinearRecurrence.toInit, smul_eq_mul] using h
+  exact h
 
 private theorem windowSum_scale (a b c : ℤ) (k e t : ℕ) :
     windowSum (c * a) (c * b) k e t = c ^ e * windowSum a b k e t := by
@@ -98,6 +101,7 @@ theorem result (a b : ℤ) (hab : a ≠ 0 ∨ b ≠ 0)
     let d : ℤ := Int.gcd a b
     0 < d ∧
     d * (a / d) = a ∧ d * (b / d) = b ∧
+    Int.gcd (a / d) (b / d) = 1 ∧
     (gibonacci a b 0 = a ∧ gibonacci a b 1 = b ∧
       ∀ n, gibonacci a b (n + 2) = gibonacci a b (n + 1) + gibonacci a b n) ∧
     (gibonacci (a / d) (b / d) 0 = a / d ∧
@@ -111,22 +115,28 @@ theorem result (a b : ℤ) (hab : a ≠ 0 ∨ b ≠ 0)
     powerGcd a b k e = d ^ e * powerGcd (a / d) (b / d) k e := by
   dsimp only
   let d : ℤ := Int.gcd a b
-  have hd : 0 < d := by exact_mod_cast (Int.gcd_pos_iff.mpr hab)
+  have hd : 0 < d := by
+    change (0 : ℤ) < (Int.gcd a b : ℤ)
+    exact_mod_cast (Int.gcd_pos_iff.mpr hab)
   have ha : d * (a / d) = a := by
     simpa [d, mul_comm] using Int.ediv_mul_cancel (Int.gcd_dvd_left a b)
   have hb : d * (b / d) = b := by
     simpa [d, mul_comm] using Int.ediv_mul_cancel (Int.gcd_dvd_right a b)
-  refine ⟨hd, ha, hb, gibonacci_spec a b, gibonacci_spec (a / d) (b / d),
+  refine ⟨hd, ha, hb, Int.gcd_ediv_gcd_ediv_gcd (Int.gcd_pos_iff.mpr hab),
+    gibonacci_spec a b, gibonacci_spec (a / d) (b / d),
     familyGcd_nonneg _, familyGcd_nonneg _, familyGcd_spec _, familyGcd_spec _, ?_⟩
   change familyGcd (windowSum a b k e) = d ^ e * familyGcd (windowSum (a / d) (b / d) k e)
   have hw : windowSum a b k e = fun t => d ^ e * windowSum (a / d) (b / d) k e t := by
     funext t
-    rw [← ha, ← hb]
-    exact windowSum_scale (a / d) (b / d) d k e t
+    calc
+      windowSum a b k e t = windowSum (d * (a / d)) (d * (b / d)) k e t := by
+        rw [ha, hb]
+      _ = d ^ e * windowSum (a / d) (b / d) k e t :=
+        windowSum_scale (a / d) (b / d) d k e t
   rw [hw]
   exact familyGcd_scale _ _ (pow_pos hd e)
 
-#print result
+#check @result
 #print axioms result
 
 end D5.S1.Recurrence.GibonacciPowerGcdNormalization
