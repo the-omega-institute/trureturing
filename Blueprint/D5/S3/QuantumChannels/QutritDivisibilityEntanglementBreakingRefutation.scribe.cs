@@ -30,9 +30,10 @@ internal sealed class QutritDivisibilityEntanglementBreakingRefutationDocument :
                 AssessedProvenance.FromLiterature(Source)),
             Definition("p-divisible-map", "IsPDivisibleMap", "P-divisible dynamics", DynamicsFormula(),
                 "The family e starts at the identity, is a channel at every nonnegative real time, and is continuous on the nonnegative half-line in matrix-unit coordinates. "
-                    + "For every pair of times with 0 ≤ t < s, a positive trace-preserving map v carries e(t) to e(s) by composition. "
+                    + "For every pair of times with 0 ≤ t < s, there is a positive trace-preserving map v with e(s) = v ∘ e(t) or e(s) = e(t) ∘ v. "
                     + "The coordinate matrix is LinearMap.toMatrix in the standard matrix basis on both sides. "
                     + "Section 2.2, TeX lines 281–295, gives the dynamical-map and P-divisibility notions. "
+                    + "The source prints the propagator as the inverse of e(t) composed with e(s); allowing either composition order includes the source's P-divisible maps under either reading. "
                     + "The composition condition also applies at singular times, without requiring an inverse.",
                 AssessedProvenance.FromLiterature(Source)),
             Definition("p-divisible-set", "pDivisibleSet", "Limits of dynamical endpoints", EndpointSetFormula(),
@@ -77,7 +78,8 @@ internal sealed class QutritDivisibilityEntanglementBreakingRefutationDocument :
                     Paragraph(Text(
                         "For a P-divisible family E, the determinant is continuous on nonnegative times and starts at one. "
                             + "If its real part were negative at a time u, the intermediate value theorem would give an earlier nonnegative time z with zero real part. "
-                            + "Reality makes the determinant itself zero at z. The factorization E(u) = v ∘ E(z) makes the coordinate determinant at u a product with this zero factor, a contradiction. "
+                            + "Reality makes the determinant itself zero at z. Either factorization, E(u) = v ∘ E(z) or E(u) = E(z) ∘ v, gives det(E(u)) = det(v) det(E(z)), since the scalar determinants commute. "
+                            + "This product has a zero factor, a contradiction. "
                             + "Every endpoint consequently has real nonnegative determinant. The set of coordinate matrices with zero imaginary part of the determinant and nonnegative real part is closed, "
                             + "so the same constraint holds throughout the endpoint closure.")),
                     Paragraph(Text(
@@ -130,10 +132,12 @@ internal sealed class QutritDivisibilityEntanglementBreakingRefutationDocument :
         Formula continuity = At(Qualified("ContinuousOn"),
             LambdaOf("t", Reals(), CoordinateMatrix(At(X("e"), X("t")))),
             At(Qualified("Set", "Ici"), Typed(D(0), Reals())));
+        Formula composition = OrOf(
+            Equal(At(X("e"), X("s")), At(Qualified("LinearMap", "comp"), X("v"), At(X("e"), X("t")))),
+            Equal(At(X("e"), X("s")), At(Qualified("LinearMap", "comp"), At(X("e"), X("t")), X("v"))));
         Formula propagators = All("t", Reals(), All("s", Reals(),
             Arrow(LE(Typed(D(0), Reals()), X("t")), Arrow(LT(X("t"), X("s")),
-                Some("v", QutritMap(), AndOf(LocalCall("IsPositiveTP", X("v")),
-                    Equal(At(X("e"), X("s")), At(Qualified("LinearMap", "comp"), X("v"), At(X("e"), X("t"))))))))));
+                Some("v", QutritMap(), AndOf(LocalCall("IsPositiveTP", X("v")), composition))))));
         return All("e", DynamicsType(), IffOf(LocalCall("IsPDivisibleMap", X("e")),
             AndOf(Equal(At(X("e"), Typed(D(0), Reals())), Typed(Qualified("LinearMap", "id"), QutritMap())),
                 AndOf(channels, AndOf(continuity, propagators)))));
@@ -208,6 +212,7 @@ internal sealed class QutritDivisibilityEntanglementBreakingRefutationDocument :
     private static Formula NotOf(Formula value) => new Formula.Not(Parenthesized(value));
     private static Formula Arrow(Formula left, Formula right) => new Formula.TypeArrow(Parenthesized(left), Parenthesized(right));
     private static Formula AndOf(Formula left, Formula right) => new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
+    private static Formula OrOf(Formula left, Formula right) => new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Or, Parenthesized(right));
     private static Formula IffOf(Formula left, Formula right) => new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Iff, Parenthesized(right));
     private static Formula LE(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
     private static Formula LT(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
