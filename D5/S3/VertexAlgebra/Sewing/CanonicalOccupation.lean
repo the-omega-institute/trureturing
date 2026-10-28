@@ -22,6 +22,7 @@ namespace D5.S3.VertexAlgebra.CanonicalOccupationSewing
 
 open LatticeGeneratingFieldLocality LatticeSectorIntertwiner
 open ActualSeriesDerivation MvPolynomial
+open D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation
 open scoped BigOperators
 
 noncomputable section
@@ -66,8 +67,7 @@ private theorem creation_partial (D : LatticeData) (α : Charge D) (x : Index D)
     · subst n
       simp [map_sum, Derivation.map_smul, pderiv_X, Pi.single_apply, Prod.mk.injEq,
         eq_comm]
-    · simp [map_sum, Derivation.map_smul, pderiv_X, Pi.single_apply, Prod.mk.injEq,
-        h, Ne.symm h]
+    · simp [map_sum, Derivation.map_smul, pderiv_X, Prod.mk.injEq, h, Ne.symm h]
   have hlog : seriesDerivation D (pderiv x) (creationSeries D α) =
       PowerSeries.C (((α x.1 : ℂ) / (x.2 + 1 : ℂ)) • (1 : Oscillator D)) *
         PowerSeries.X ^ (x.2 + 1) := by
@@ -84,7 +84,7 @@ private theorem creation_partial (D : LatticeData) (α : Charge D) (x : Index D)
       · rw [ite_eq_left hx]
         simp [hx, div_eq_mul_inv, smul_smul, mul_comm]
       · rw [ite_eq_right hx]
-        simp [hx, Ne.symm hx]
+        simp [Ne.symm hx]
   have hnat (n : ℕ) : pderiv x (PowerSeries.coeff n (creationExponential D α)) =
       if x.2 + 1 ≤ n then
         ((α x.1 : ℂ) / (x.2 + 1 : ℂ)) •
@@ -182,7 +182,7 @@ private theorem creation_coefficient_norm (D : LatticeData) (α : Charge D)
       (eq_div_iff hw).mpr h
     _ = _ := by
       simp [creationCoordinate, FactorialFockMetric.weight, Finsupp.prod,
-        norm_prod, norm_div, norm_pow, Finset.prod_div_distrib, hn]
+        norm_prod, norm_pow, Finset.prod_div_distrib, hn]
 
 /-- A radial estimate for every literal creation occupation, with no energy cutoff.
 The arbitrary descendant field estimate needed for scalar sewing is separate. -/
@@ -240,7 +240,7 @@ private theorem creation_radial_bound (D : LatticeData) (α : Charge D)
         hs.sum_le_tsum d.support (fun x hx => mul_nonneg hMB (pow_nonneg hρ0 _))
       _ = _ := by
         rw [hs.tsum_prod]
-        simp [tsum_mul_left, tsum_geometric_of_lt_one hρ0 hρ1, mul_div_assoc,
+        simp [tsum_mul_left, tsum_geometric_of_lt_one hρ0 hρ1,
           div_eq_mul_inv, mul_assoc, mul_comm, mul_left_comm]
   exact hprod.trans (Real.exp_le_exp.mpr hsum)
 
@@ -260,11 +260,9 @@ private theorem creation_occupation_summable (D : LatticeData) (α : Charge D)
   have hR0 : 0 ≤ ‖q‖ / ρ := div_nonneg (norm_nonneg q) hρ0.le
   have hR1 : ‖q‖ / ρ < 1 := (div_lt_one hρ0).mpr hqρ
   have hs : Summable (fun d : Occ D => (‖q‖ / ρ) ^ level D d) := by
-    have hh := D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation.
-      summable_norm_signed_integer_occupations (Fin D.rank)
+    have hh := summable_norm_signed_integer_occupations (Fin D.rank)
         (q := ((‖q‖ / ρ : ℝ) : ℂ)) (by simpa [abs_of_nonneg hR0] using hR1)
-    simpa [D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation.signedIntegerMonomial,
-      D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation.integerEnergy,
+    simpa [signedIntegerMonomial, integerEnergy,
       level, LatticePositiveEnergy.oscillatorEnergy, abs_of_nonneg hR0] using hh
   let C := Real.exp ((D.rank : ℝ) * M * B / (1 - ρ))
   refine (hs.mul_left C).of_nonneg_of_le (fun d => mul_nonneg (pow_nonneg hB _) (norm_nonneg _)) ?_
