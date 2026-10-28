@@ -2,6 +2,8 @@ import D5.S3.Quantum.Matrix.HsfProjectionCubic
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
+/-! Dependent-family registrations for the projection certificate and actual derivative bounds. -/
+
 open _root_.D5.S3.Quantum.Matrix.HsfProjectionCubic
 open _root_.D5.S3.Quantum.Matrix.HsfQubitMixedCubic
 open _root_.D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives
@@ -138,7 +140,8 @@ private abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hg : ((-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)-(-2)).PosSemidef := by
-    convert Matrix.PosSemidef.one using 1 <;> noncomm_ring
+    rw [show (-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)-(-2) = 1 by noncomm_ring]
+    exact Matrix.PosSemidef.one
   have hh := h (n := ULift.{u} Unit) (-1) (-2) 1 rfl hg Matrix.isHermitian_one (by simp)
   obtain ⟨hd2, hd3⟩ := identity_cubic_trace_derivatives
     (-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) (-2) 1 Matrix.isHermitian_one
@@ -214,7 +217,8 @@ private abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hg : ((-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)-(-2)).PosSemidef := by
-    convert Matrix.PosSemidef.one using 1 <;> noncomm_ring
+    rw [show (-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)-(-2) = 1 by noncomm_ring]
+    exact Matrix.PosSemidef.one
   have hh := h (n := ULift.{u} Unit) (-1) (-2) 1 rfl hg Matrix.isHermitian_one (by simp)
   obtain ⟨hd2, hd3⟩ := identity_cubic_trace_derivatives
     (-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) (-2) 1 Matrix.isHermitian_one
