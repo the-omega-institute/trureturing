@@ -314,7 +314,57 @@ private lemma hermiticity_preserving_det_real (T : MatrixMap (Fin 3) (Fin 3) ℂ
 private lemma pdivisible_endpoint_det_nonneg {E : ℝ → MatrixMap (Fin 3) (Fin 3) ℂ}
     (hE : IsPDivisibleMap E) (u : ℝ) (hu : 0 ≤ u) :
     (Matrix.det (transferMatrix (E u))).im = 0 ∧
-      0 ≤ (Matrix.det (transferMatrix (E u))).re := by sorry
+      0 ≤ (Matrix.det (transferMatrix (E u))).re := by
+  have hreal : ∀ x, 0 ≤ x →
+      (Matrix.det (transferMatrix (E x))).im = 0 := by
+    intro x hx
+    exact hermiticity_preserving_det_real (E x)
+      (cptp_hermiticity (E x) (hE.2.1 x hx))
+  have hcontDet : ContinuousOn
+      (fun x => Matrix.det (transferMatrix (E x))) (Set.Ici (0 : ℝ)) := by
+    exact (continuous_id.matrix_det.continuousOn.comp'
+      hE.2.2.1 (Set.mapsTo_univ _ _))
+  have hcont : ContinuousOn
+      (fun x => (Matrix.det (transferMatrix (E x))).re) (Set.Ici (0 : ℝ)) := by
+    exact Complex.continuous_re.continuousOn.comp' hcontDet
+      (Set.mapsTo_univ _ _)
+  constructor
+  · exact hreal u hu
+  by_contra hneg
+  have hlt : (Matrix.det (transferMatrix (E u))).re < 0 := lt_of_not_ge hneg
+  let f : ℝ → ℝ := fun x => (Matrix.det (transferMatrix (E x))).re
+  have hfcont : ContinuousOn f (Set.Icc (0 : ℝ) u) := by
+    exact hcont.mono Set.Icc_subset_Ici_self
+  have hfzero : f 0 = 1 := by
+    dsimp [f]
+    rw [hE.1]
+    simp [transferMatrix]
+  have hzero_mem : (0 : ℝ) ∈ Set.Icc (f u) (f 0) := by
+    constructor
+    · exact le_of_lt (by simpa [f] using hlt)
+    · simpa [hfzero]
+  have himage := intermediate_value_Icc' hu hfcont hzero_mem
+  rcases himage with ⟨z, hz, hzf⟩
+  have hz0 : f z = 0 := hzf
+  have hzdet : Matrix.det (transferMatrix (E z)) = 0 := by
+    apply Complex.ext
+    · simpa [f] using hz0
+    · exact hreal z hz.1
+  have hzu : z < u := by
+    apply lt_of_le_of_ne hz.2
+    intro hzu
+    subst z
+    linarith
+  obtain ⟨v, hv, hcomp⟩ := hE.2.2.2 z u hz.1 hzu
+  have hcompM : transferMatrix (E u) =
+      transferMatrix v * transferMatrix (E z) := by
+    rw [hcomp]
+    exact LinearMap.toMatrix_comp _ _ _ _ _
+  have hdetu : Matrix.det (transferMatrix (E u)) = 0 := by
+    rw [hcompM, Matrix.det_mul, hzdet, mul_zero]
+  have : f u = 0 := by
+    simpa [f, hdetu]
+  linarith
 
 private def nonnegativeDetSet : Set (MatrixMap (Fin 3) (Fin 3) ℂ) :=
   {T | (Matrix.det (transferMatrix T)).im = 0 ∧
