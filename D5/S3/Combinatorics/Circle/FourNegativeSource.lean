@@ -47,7 +47,7 @@ theorem permutation_doubleStep_positive_flux
     split_ifs <;> omega
   have hsmall (i : α) (hi : i ∈ SP) : f (ρ i) = 2 * f i := by
     have hi' : 0 < f i ∧ f i < q := (Finset.mem_filter.mp hi).2
-    rw [hstep, doubleStep, if_neg (by omega), if_neg (by omega)]
+    rw [hstep, doubleStep, ite_eq_right (by omega), ite_eq_right (by omega)]
   have hd1 : Disjoint SP PL := by
     simp only [Finset.disjoint_left, SP, PL, Finset.mem_filter, Finset.mem_univ, true_and]
     omega
@@ -109,6 +109,10 @@ theorem actualSource_minimum_negativeLargeCount_ge_five
   classical
   by_contra hgoal
   let f := s k t
+  change 0 < f p at hpositive
+  change f p < -f y at hPY
+  change Q k ≤ -f zpen at hzpenlarge
+  change Q k ≤ -f z at hzlarge
   let ρ := finRotate k
   let n := hit k 1 p
   let x := hit k 2 p
@@ -137,17 +141,18 @@ theorem actualSource_minimum_negativeLargeCount_ge_five
     (by intro i; simpa only [← hN] using hstep i)
   change PL.card = NL.card ∧
     (∑ i ∈ SP, f i) + (∑ i ∈ NL, f (ρ i)) = ∑ i ∈ PL, f i at hflux
-  have geo := native_geometry hk t p hnlarge (by simpa [abs_of_pos hpositive] using hexpand)
+  have hpabs : |s k t p| = s k t p := abs_of_pos hpositive
+  have geo := native_geometry hk t p hnlarge (by simpa [hpabs] using hexpand)
   have hnval : f n = -|f n| := by
     simpa [f, n, orient, show ¬ s k t p < 0 by omega] using geo.nValue
   have hxval : f x = |f x| := by
     simpa [f, x, orient, show ¬ s k t p < 0 by omega] using geo.xValue
-  have hDP : |f n| < f p := by simpa [f, n, abs_of_pos hpositive] using geo.strictOrder.1
+  have hDP : |f n| < f p := by simpa [f, n, hpabs] using geo.strictOrder.1
   have hPx : f p < f x := by simpa [f, x, abs_of_pos hpositive, ← hxval] using geo.strictOrder.2
   have hfirst : |f n| = N k - 2 * f p := by
-    simpa [f, n, abs_of_pos hpositive] using geo.firstEquation
+    simpa [f, n, hpabs] using geo.firstEquation
   have hD : Q k ≤ |f n| := hnlarge
-  have hY : Q k ≤ -f y := by change f p < -f y at hPY; omega
+  have hY : Q k ≤ -f y := by omega
   have hrot : ρ n = x := by simp [ρ, n, x, hit, Function.iterate_succ_apply']
   have hsW : InStrip f (C k) 0 W := strip_of_legal hW
   have hsub : [y,zpen,z].Sublist W := by
@@ -177,7 +182,7 @@ theorem actualSource_minimum_negativeLargeCount_ge_five
   have hnegstep (i : Fin k) (hi : Q k ≤ -f i) :
       f (ρ i) = N k + 2 * f i ∧ 0 < f (ρ i) := by
     have hb := hbound i
-    rw [hstep, doubleStep, if_neg (by omega), if_pos (by omega)]
+    rw [hstep, doubleStep, ite_eq_right (by omega), ite_eq_left (by omega)]
     constructor <;> omega
   have hzp := hnegstep zpen hzpenlarge
   have hz := hnegstep z hzlarge
@@ -190,8 +195,7 @@ theorem actualSource_minimum_negativeLargeCount_ge_five
     let K : Finset (Fin k) := {ρ n,ρ zpen,ρ z}
     have hKcard : K.card = 3 := by
       have hh := List.toFinset_card_of_nodup (hnd'.map ρ.injective)
-      simpa only [List.map_cons, List.map_nil, List.toFinset_cons, List.toFinset_nil,
-        Finset.insert_empty_eq, List.length_cons, List.length_nil] using hh
+      simpa [K] using hh
     have hKsub : K ⊆ PL := by
       intro i hi
       simp only [K, Finset.mem_insert, Finset.mem_singleton] at hi
@@ -204,7 +208,7 @@ theorem actualSource_minimum_negativeLargeCount_ge_five
       rw [Finset.card_sdiff_of_subset hKsub, hflux.1, hfour, hKcard]
     obtain ⟨u, hu⟩ := Finset.card_eq_one.mp hres
     have hsumPL : (∑ i ∈ PL, f i) = f u + f (ρ n) + f (ρ zpen) + f (ρ z) := by
-      have he := Finset.sum_sdiff hKsub f
+      have he := Finset.sum_sdiff (f := f) hKsub
       rw [hu, Finset.sum_singleton] at he
       have hsumK : (∑ i ∈ K, f i) = f (ρ n) + f (ρ zpen) + f (ρ z) := by
         have hh := List.sum_toFinset f (hnd'.map ρ.injective)
@@ -267,7 +271,7 @@ theorem actualSource_minimum_negativeLargeCount_ge_five
       (hsc : 0 < f (ρ u) ∧ f (ρ u) < Q k) :
       mass f (L ++ [u]) < C k - f p := by
     have hs := (strip_split L ([u] ++ R)
-      (by simpa only [List.append_assoc, hword] using hsW)).2
+      (by simpa only [← List.append_assoc, hword] using hsW)).2
     have hd := inStrip_prefix hs 0
     have ha := inStrip_prefix hs 1
     simp only [List.take_zero, List.map_nil, List.sum_nil, add_zero, zero_add] at hd
@@ -295,11 +299,11 @@ theorem actualSource_minimum_negativeLargeCount_ge_five
     have hw : F1 ++ (T2 ++ [z] ++ E) = W := by
       simp only [F1, L1, L0, W, oldWord, x, List.append_assoc]
     have hreturn : largeUsed k t (T2 ++ [z] ++ E) ≤ 1 := by
-      simpa [largeUsed, mass, largeWeight, hzL] using (show
+      simpa [largeUsed, mass, largeWeight, hzL, add_assoc] using (show
         largeUsed k t T2 + 1 + largeUsed k t E ≤ 1 by omega)
     have hh := FirstNegativeShiftExchange.actualSource_prefix_pair_truncation
       k t hk p F1 (T2 ++ [z] ++ E) hpositive hnlarge
-      (by simpa [abs_of_pos hpositive] using hexpand)
+      (by simpa [hpabs] using hexpand)
       (by simpa only [hw] using hW) (by simpa only [hw] using hpunused)
       (by simpa only [hw] using hnunused) hcut1.le hreturn
     have hstrict : J k t (F1 ++ [p,n]) < J k t W := by simpa only [hw, n] using hh.2.2.2.2.2
@@ -309,7 +313,7 @@ theorem actualSource_minimum_negativeLargeCount_ge_five
     have hw : F2 ++ E = W := by
       simp only [F2, L2, F1, L1, L0, W, oldWord, x, List.append_assoc]
     have hh := FirstNegativeShiftExchange.actualSource_prefix_pair_truncation
-      k t hk p F2 E hpositive hnlarge (by simpa [abs_of_pos hpositive] using hexpand)
+      k t hk p F2 E hpositive hnlarge (by simpa [hpabs] using hexpand)
       (by simpa only [hw] using hW) (by simpa only [hw] using hpunused)
       (by simpa only [hw] using hnunused) hcut2.le (by omega)
     have hstrict : J k t (F2 ++ [p,n]) < J k t W := by simpa only [hw, n] using hh.2.2.2.2.2
