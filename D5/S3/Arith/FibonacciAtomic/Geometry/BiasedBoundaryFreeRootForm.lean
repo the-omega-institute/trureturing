@@ -77,13 +77,13 @@ private theorem compact_C : IsCompactOperator C := by
       exact hb.trans_lt (by linarith)
   rwa [isClosed_setOfPred_isCompactOperator.closure_eq] at hmem
 
-private theorem mean_Pi (F : G) : mean (Pi F) = 0 := by
+theorem mean_Pi (F : G) : mean (Pi F) = 0 := by
   rw [centered_suffix_residual.2.2.1, map_sub, centered_suffix_residual.2.1, sub_self]
 
-private theorem Pi_const (c : ℝ) : Pi (constG c) = 0 := by
+theorem Pi_const (c : ℝ) : Pi (constG c) = 0 := by
   rw [centered_suffix_residual.2.2.1, centered_suffix_residual.2.1, sub_self]
 
-private theorem Pi_idem (F : G) : Pi (Pi F) = Pi F := by
+theorem Pi_idem (F : G) : Pi (Pi F) = Pi F := by
   rw [centered_suffix_residual.2.2.1 (Pi F), mean_Pi, map_zero, sub_zero]
 
 private theorem Sigma_pair (z w : H) : inner ℝ z (Sigma w) = inner ℝ (C z) (C w) :=
@@ -290,7 +290,7 @@ private theorem adjoint_mem_K (h : G) : C.adjoint h ∈ K := by
   rw [ker_Sigma] at hz
   rw [ContinuousLinearMap.adjoint_inner_right, show C z = 0 from hz, inner_zero_left]
 
-private theorem inner_centered (h F : G) (hh : mean h = 0) :
+theorem inner_centered (h F : G) (hh : mean h = 0) :
     inner ℝ h (Pi F) = inner ℝ h F := by
   have he : Pi h = h := by
     rw [centered_suffix_residual.2.2.1, hh, map_zero, sub_zero]

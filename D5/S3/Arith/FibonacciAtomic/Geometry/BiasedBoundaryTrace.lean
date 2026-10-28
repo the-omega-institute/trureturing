@@ -59,7 +59,7 @@ abbrev G := Lp ℝ 2 M
 def cylinder (p : Address) : Set Omega :=
   Set.pi (Finset.range p.length) (fun i => {p.getD i false})
 
-private theorem cylinder_measurable (p : Address) : MeasurableSet (cylinder p) :=
+theorem cylinder_measurable (p : Address) : MeasurableSet (cylinder p) :=
   MeasurableSet.pi (Finset.countable_toSet _) (fun _ _ => measurableSet_singleton _)
 
 /-- The product of the actual biased letter masses. -/
