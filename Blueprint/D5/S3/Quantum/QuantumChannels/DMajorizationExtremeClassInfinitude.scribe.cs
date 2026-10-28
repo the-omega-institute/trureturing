@@ -104,7 +104,10 @@ internal sealed class DMajorizationExtremeClassInfinitudeDocument : IScribeDocum
                         + "trace invariance gives tr(DPₘ) = tr(DPₖ), hence m = k. "
                         + "The function y is therefore injective. Its preimage of the finite set f is finite, "
                         + "but contains every natural number, contradicting infinitude of the natural numbers."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("vom-ende-2022-d-majorization-extreme-class-infinitude"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula DMajorizedByFormula()
     {
