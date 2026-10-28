@@ -470,7 +470,8 @@ theorem phase_rigidity (w : Fin 3 → List Bool) (N : Mat)
     ext i j
     fin_cases i <;> fin_cases j <;>
       simp [swapCoordinates,PrimitiveCoordinates.matrix,PrimitiveCoordinates.column,
-        PrimitiveCoordinates.row,Matrix.vecMulVec,actionJ,Matrix.mul_apply,Fin.sum_univ_two]
+        PrimitiveCoordinates.row,Matrix.vecMulVec,Matrix.vecHead,Matrix.vecTail,
+        actionJ,Matrix.mul_apply,Fin.sum_univ_two]
   refine ⟨p,scale,m,hs,hN,⟨ha,hb,hc,hd⟩,hm0,hm,conjugate_prefix w,hconj,?_⟩
   rcases hinterior 0 with hp1 | hn1
   · left
