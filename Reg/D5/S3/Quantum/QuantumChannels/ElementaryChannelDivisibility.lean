@@ -106,52 +106,47 @@ end KetbraStar
 namespace FactorOfKernel
 
 abbrev signature.{u_1} : Signature where
-  Params := Σ n : Type u_1, Matrix n n ℂ × Matrix n n ℂ
-  State p := Matrix p.1 p.1 ℂ
+  Params := Type u_1
+  State n := Matrix n n ℂ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := Matrix p.1 p.1 ℂ
+  Output _ n := Matrix n n ℂ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual.{u_1} : Realization signature.{u_1} :=
-  realize signature (fun _ p C => C * p.2.1) (fun e => nomatch e)
+  realize signature (fun _ _ X => Eq X) (fun e => nomatch e)
 
 def rejected.{u_1} : Realization signature.{u_1} :=
-  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena.{u_1} : Arena where
   signature := signature.{u_1}
   Law R := ∀ {n : Type u_1} [Fintype n] [DecidableEq n]
     (A B : Matrix n n ℂ),
     (∀ v, A *ᵥ v = 0 → B *ᵥ v = 0) →
-      ∃ C : Matrix n n ℂ, B = R.readout () ⟨n, A, B⟩ C
+      ∃ C : Matrix n n ℂ, R.readout () n B (C * A)
 
 theorem rejected_law.{u_1} : ¬ arena.{u_1}.Law rejected := by
   intro h
-  have hh := @h (ULift.{u_1} Unit) inferInstance inferInstance
+  obtain ⟨C, hC⟩ := @h (ULift.{u_1} Unit) inferInstance inferInstance
     (1 : Matrix (ULift.{u_1} Unit) (ULift.{u_1} Unit) ℂ)
     1 (by intro v hv; exact hv)
-  obtain ⟨C, hC⟩ := hh
-  have he := congrArg
-    (fun M : Matrix (ULift.{u_1} Unit) (ULift.{u_1} Unit) ℂ =>
-      M (ULift.up ()) (ULift.up ())) hC
-  simp [rejected, realize] at he
+  exact hC
 
 theorem dependence.{u_1} : ObservationalDependence signature.{u_1} actual := by
   intro i
-  refine ⟨⟨ULift.{u_1} Unit, 1, 1⟩, 0, 1, ?_⟩
-  intro he
-  have he' := congrArg
-    (fun M : Matrix (ULift.{u_1} Unit) (ULift.{u_1} Unit) ℂ =>
-      M (ULift.up ()) (ULift.up ())) he
-  simp [actual, realize] at he'
+  refine ⟨ULift.{u_1} Unit, 0, 1, ?_⟩
+  intro h
+  have he := congrFun h 0
+  change ((0 : Matrix (ULift.{u_1} Unit) (ULift.{u_1} Unit) ℂ) = 0) = (1 = 0) at he
+  simpa using he
 
 def source_registration.{u_1} :
     Registration arena.{u_1} (type_of% (@factor_of_kernel.{u_1})) where
   actual := actual
-  bridge := by rfl
+  bridge := Iff.rfl
   variation := ⟨@factor_of_kernel.{u_1}, rejected, rejected_law⟩
   sensitivity := by
     constructor
@@ -177,7 +172,7 @@ def registration_factor_of_kernel.{u_1} :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p C => C * p.2.1) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ X => Eq X) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -185,64 +180,65 @@ def registration_factor_of_kernel.{u_1} :
   sourceSelection := some {
     owner := `D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body", "fn"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #[]
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
+
+#print axioms source_registration
+#print axioms registration_factor_of_kernel
 
 end FactorOfKernel
 
 namespace KernelOfSubPsd
 
 abbrev signature.{u_1} : Signature where
-  Params := Σ n : Type u_1, Matrix n n ℂ × Matrix n n ℂ
-  State p := p.1 → ℂ
+  Params := Type u_1
+  State n := n → ℂ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ n := (n → ℂ) → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual.{u_1} : Realization signature.{u_1} :=
-  realize signature (fun _ p v => p.2.1 *ᵥ v = 0) (fun e => nomatch e)
+  realize signature (fun _ _ w => Eq w) (fun e => nomatch e)
 
 def rejected.{u_1} : Realization signature.{u_1} :=
-  realize signature (fun _ _ _ => True) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena.{u_1} : Arena where
   signature := signature.{u_1}
   Law R := ∀ {n : Type u_1} [Fintype n] [DecidableEq n]
     (A B : Matrix n n ℂ) (hB : B.PosSemidef) (t : ℝ) (ht : 0 < t)
     (hAB : (A - t • B).PosSemidef),
-    ∀ v, R.readout () ⟨n, A, B⟩ v → B *ᵥ v = 0
+    ∀ v, A *ᵥ v = 0 → R.readout () n (B *ᵥ v) 0
 
 theorem rejected_law.{u_1} : ¬ arena.{u_1}.Law rejected := by
   intro h
-  have hh := @h (ULift.{u_1} Unit) inferInstance inferInstance
+  exact @h (ULift.{u_1} Unit) inferInstance inferInstance
     (1 : Matrix (ULift.{u_1} Unit) (ULift.{u_1} Unit) ℂ)
-    1 Matrix.PosSemidef.one 1 (by norm_num) (by simp)
-  have hv := hh (fun _ => (1 : ℂ)) trivial
-  have he := congrArg (fun z : ℂ => z) hv
-  simpa [Matrix.mulVec, dotProduct] using he
+    1 Matrix.PosSemidef.one 1 (by norm_num) (by simp) 0 (by simp)
 
 theorem dependence.{u_1} : ObservationalDependence signature.{u_1} actual := by
   intro i
-  refine ⟨⟨ULift.{u_1} Unit, 1, 1⟩, (fun _ => 0), (fun _ => 1), ?_⟩
-  intro he
-  have he' := congrArg (fun P : Prop => P) he
-  simp [actual, realize, Matrix.mulVec, dotProduct] at he'
+  refine ⟨ULift.{u_1} Unit, 0, 1, ?_⟩
+  intro h
+  have he := congrFun h 0
+  change ((0 : ULift.{u_1} Unit → ℂ) = 0) = (1 = 0) at he
+  simpa using he
 
 def source_registration.{u_1} :
     Registration arena.{u_1} (type_of% (@kernel_of_sub_psd.{u_1})) where
   actual := actual
-  bridge := by rfl
+  bridge := Iff.rfl
   variation := ⟨@kernel_of_sub_psd.{u_1}, rejected, rejected_law⟩
   sensitivity := by
     constructor
@@ -268,7 +264,7 @@ def registration_kernel_of_sub_psd.{u_1} :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p v => p.2.1 *ᵥ v = 0) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ w => Eq w) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -276,16 +272,20 @@ def registration_kernel_of_sub_psd.{u_1} :
   sourceSelection := some {
     owner := `D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "fn"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #[]
-      booleanPredicate := true }] }
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
+
+#print axioms source_registration
+#print axioms registration_kernel_of_sub_psd
 
 end KernelOfSubPsd
 end

@@ -15,7 +15,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 abbrev signature : Signature where
-  Params := ℂ × ℂ
+  Params := Unit
   State _ := MatrixMap (Fin 3) (Fin 3) ℂ
   Role := Unit
   finiteRole := inferInstance
@@ -37,7 +37,7 @@ abbrev arena : Arena where
       (ψ : MatrixMap (Fin 3) (Fin 3) ℂ),
       u ∈ Matrix.unitaryGroup (Fin 3) ℂ ∧ 0 ≤ lam ∧ lam ≤ 1 ∧
       ψ.IsCompletelyPositive ∧ IsUnital ψ ∧ IsTracePreserving ψ ∧
-      R.readout () (α, β) ψ = 3 ∧
+      R.readout () () ψ = 3 ∧
       ψ ∈ Set.extremePoints ℝ
         {θ : MatrixMap (Fin 3) (Fin 3) ℂ | θ.IsCompletelyPositive ∧ IsUnital θ} ∧
       ψ ∈ Set.extremePoints ℝ
@@ -65,7 +65,7 @@ theorem dependence : ObservationalDependence signature actual := by
     positivity
   obtain ⟨u, lam, ψ, hu, hlam0, hlam1, hcp, hunit, htp, hrank, hue, hte, hdec⟩ :=
     result (1 / Real.sqrt 2) (1 / Real.sqrt 2) hnorm hnorm
-  refine ⟨(1 / Real.sqrt 2, 1 / Real.sqrt 2), 0, ψ, ?_⟩
+  refine ⟨(), 0, ψ, ?_⟩
   change (choi_matrix (0 : MatrixMap (Fin 3) (Fin 3) ℂ)).rank ≠
     (choi_matrix ψ).rank
   rw [map_zero, Matrix.rank_zero, hrank]
@@ -119,10 +119,11 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #[]
-      stateBinder := 0
+      path := #["body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "body",
+        "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 6
       functionOperand := false
-      stateOperand := some #[]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
