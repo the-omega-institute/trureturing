@@ -79,6 +79,52 @@ theorem roots_approximate_exp_nonunit (ξ : ℂ) (hξ : ξ.re ≠ 0)
   · have hh : (u - 1) - (Complex.exp ξ - 1) = u - Complex.exp ξ := by ring
     rwa [hh]
 
+
+/-- Continuity also covers the logarithmic line of zero real part. -/
+theorem roots_approximate_exp (ξ : ℂ) (ε : ℝ) (hε : 0 < ε) :
+    ∃ (n : ℕ) (G : SimpleGraph (Fin n)) (w : ℂ),
+      2 ≤ n ∧ (∀ v, ∃ u, G.Adj v u) ∧ complexPolynomial G ≠ 0 ∧
+      (complexPolynomial G).IsRoot w ∧ ‖w - (Complex.exp ξ - 1)‖ < ε := by
+  by_cases hξ : ξ.re ≠ 0
+  · exact roots_approximate_exp_nonunit ξ hξ ε hε
+  · have hzero : ξ.re = 0 := not_ne_iff.mp hξ
+    obtain ⟨δ, hδ, hcont⟩ := Metric.continuousAt_iff.mp
+      Complex.continuous_exp.continuousAt (ε / 2) (by linarith)
+    let ξ' : ℂ := ξ + (δ / 2 : ℝ)
+    have hξ' : ξ'.re ≠ 0 := by simp [ξ', hzero]; linarith
+    have hdist : ‖ξ' - ξ‖ < δ := by
+      have he : ξ' - ξ = (δ / 2 : ℝ) := by dsimp [ξ']; ring
+      rw [he, Complex.norm_real, Real.norm_eq_abs, abs_of_pos (by linarith)]
+      linarith
+    have heclose : ‖Complex.exp ξ' - Complex.exp ξ‖ < ε / 2 :=
+      hcont (by simpa [dist_eq_norm] using hdist)
+    obtain ⟨n, G, w, hn, hni, hnz, hz, hw⟩ :=
+      roots_approximate_exp_nonunit ξ' hξ' (ε / 2) (by linarith)
+    refine ⟨n, G, w, hn, hni, hnz, hz, ?_⟩
+    have he : w - (Complex.exp ξ - 1) =
+        (w - (Complex.exp ξ' - 1)) + (Complex.exp ξ' - Complex.exp ξ) := by ring
+    rw [he]
+    exact lt_of_le_of_lt (norm_add_le _ _) (by linarith)
+
+/-- The exact original all-complex, all-positive-error total-domination target. -/
+theorem result : WholePlaneDensity := by
+  intro z ε hε
+  by_cases hz : 1 + z = 0
+  · have hzm : z = -1 := by linear_combination hz
+    obtain ⟨n, G, r, hn, hni, hnz, hr, _, hclose⟩ := complex_seed_accumulation ε hε
+    refine ⟨n, G, (r : ℂ), hn, hni, hnz, hr, ?_⟩
+    simpa [hzm] using hclose
+  · obtain ⟨n, G, w, hn, hni, hnz, hr, hclose⟩ :=
+      roots_approximate_exp (Complex.log (1 + z)) ε hε
+    refine ⟨n, G, w, hn, hni, hnz, hr, ?_⟩
+    have he : Complex.exp (Complex.log (1 + z)) - 1 = z := by
+      rw [Complex.exp_log hz]
+      ring
+    rwa [he] at hclose
+
+#print axioms roots_approximate_exp
+#print axioms result
+
 #print axioms roots_approximate_exp_nonunit
 
 end D5.S3.Combinatorics.Graph.Domination.TotalDominationDensity

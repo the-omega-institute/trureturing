@@ -46,11 +46,12 @@ private theorem logarithmic_grid (t α θ : ℝ) (k : ℕ) (hk : 0 < k) :
       dsimp [β]
       field_simp
       <;> ring
-    change |β - θ| ≤ Real.pi / k
+    have himv : v.im = β := by simp [v]
+    rw [himv]
     rw [hβ, abs_mul, abs_neg, abs_of_pos (by positivity : 0 < 2 * Real.pi / k)]
     have hmul := mul_le_mul_of_nonneg_left hj
       (by positivity : 0 ≤ 2 * Real.pi / k)
-    nlinarith
+    convert hmul using 1 <;> ring
 
 /-- Both logarithmic coordinates are approximated with the same integer exponent. -/
 theorem joint_power_root_approximation (ξ : ℂ) (hξ : ξ.re ≠ 0)
@@ -66,7 +67,7 @@ theorem joint_power_root_approximation (ξ : ℂ) (hξ : ξ.re ≠ 0)
   intro t α hp
   let p : ℝ := t / ξ.re
   let k : ℕ := ⌊p⌋₊
-  have hp0 : 0 ≤ p := by dsimp [p]; nlinarith [Nat.cast_nonneg N]
+  have hp0 : 0 ≤ p := by dsimp [p]; nlinarith [show (0 : ℝ) ≤ N from Nat.cast_nonneg N]
   have hkN : (N : ℝ) < k := by
     have hf := Nat.sub_one_lt_floor p
     change (N : ℝ) < (⌊p⌋₊ : ℝ)
@@ -98,7 +99,7 @@ theorem joint_power_root_approximation (ξ : ℂ) (hξ : ξ.re ≠ 0)
         _ = _ := by ring
     exact lt_of_le_of_lt (hnorm.trans hs) hlt
   refine ⟨k, Complex.exp v, hk, hv, ?_⟩
-  exact hcont (by simpa [dist_eq_norm] using hvδ)
+  simpa [dist_eq_norm] using hcont (by simpa [dist_eq_norm] using hvδ)
 
 #print axioms joint_power_root_approximation
 
