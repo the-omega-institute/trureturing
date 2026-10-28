@@ -137,13 +137,13 @@ private lemma first_component_bound {d : ℕ} (hd : 1 ≤ d)
   rw [IsMajorizationUpperBound] at hν
   have htake (x : Fin d → ℝ) : ((List.ofFn x).take 1).sum = x ⟨0, hd⟩ := by
     cases d with
-    | zero => omega
+    | zero => exact (Nat.not_succ_le_zero 0 hd).elim
     | succ n =>
       simp only [List.ofFn_succ, List.take_succ_cons, List.take_zero,
         List.sum_cons, List.sum_nil, add_zero]
       rfl
   have hmaj := hν.2.2.2 u hu
-  have hfirst := hmaj.1 1 (by omega) (by simpa only [List.length_ofFn] using hd)
+  have hfirst := hmaj.1 1 (le_refl _) (by simpa only [List.length_ofFn] using hd)
   rw [htake, htake] at hfirst
   calc
     (∑ j, (CFC.sqrt ρ j j).re ^ 2) ≤ ∑ j, Complex.normSq (CFC.sqrt ρ j j) := by
@@ -212,7 +212,7 @@ private lemma spectral_bound {d : ℕ} (hd : 1 ≤ d)
 private lemma assemble_bound (d : ℕ) (hd : 1 ≤ d) (v l t s : ℝ)
     (hl : 0 < l) (ht : 1 / Real.sqrt l ≤ t)
     (hcs : t ^ 2 ≤ (d : ℝ) * s) (hv : s ≤ v) : 1 / (d : ℝ) ≤ v * l := by
-  have hdpos : (0 : ℝ) < d := by exact_mod_cast (show 0 < d by omega)
+  have hdpos : (0 : ℝ) < d := by exact_mod_cast (show 0 < d from hd)
   have hsqrt : 0 < Real.sqrt l := Real.sqrt_pos.mpr hl
   have htpos : 0 ≤ t := (le_of_lt (one_div_pos.mpr hsqrt)).trans ht
   have hsq : (1 / Real.sqrt l) ^ 2 ≤ t ^ 2 := sq_le_sq₀ (by positivity) htpos |>.mpr ht
