@@ -175,7 +175,7 @@ def main (args : List String) : IO Unit := do
         line = lines[0]
         indent = line[:len(line) - len(line.lstrip())]
         source = source.replace(line, line + '\n' + indent +
-            'let format := format.mapM fun value => do\n' + indent +
+            'let format ← format.mapM fun value => do\n' + indent +
             '  IO.sleep 50\n' + indent +
             '  observePhase s!"test-format-{mod.name}" "finish"\n' + indent +
             '  pure value')
