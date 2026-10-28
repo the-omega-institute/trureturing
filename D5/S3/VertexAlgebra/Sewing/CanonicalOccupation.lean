@@ -12,9 +12,10 @@ import D5.S3.VertexAlgebra.LatticePositiveEnergy
 import D5.S3.VertexAlgebra.LatticeActualAnnihilation
 import D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation
 
+/-! Literal factorial-coordinate sewing and occupation coefficients of the original lattice fields. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 2000000
 
 namespace D5.S3.VertexAlgebra.CanonicalOccupationSewing
 
@@ -60,7 +61,7 @@ private theorem creation_partial (D : LatticeData) (α : Charge D) (x : Index D)
       pderiv x (∑ j : Fin D.rank, (α j : ℂ) • (X (j,n) : Oscillator D)) =
         if x.2 = n then (α x.1 : ℂ) • (1 : Oscillator D) else 0 := by
     rcases x with ⟨i,k⟩
-    simp [map_sum, map_smul, pderiv_X, Prod.mk.injEq, eq_comm]
+    simp [map_sum, Derivation.map_smul, pderiv_X, Pi.single_apply, Prod.mk.injEq, eq_comm]
   have hlog : seriesDerivation D (pderiv x) (creationSeries D α) =
       PowerSeries.C (((α x.1 : ℂ) / (x.2 + 1 : ℂ)) • (1 : Oscillator D)) *
         PowerSeries.X ^ (x.2 + 1) := by
@@ -71,12 +72,12 @@ private theorem creation_partial (D : LatticeData) (α : Charge D) (x : Index D)
     | zero => simp [creationSeries]
     | succ n =>
       simp only [creationSeries, PowerSeries.coeff_mk,
-        dif_neg (Nat.succ_ne_zero n), Nat.add_sub_cancel,
-        map_smul, hlin, PowerSeries.coeff_C_mul, PowerSeries.coeff_X_pow]
+        dite_eq_right (Nat.succ_ne_zero n), Nat.add_sub_cancel,
+        Derivation.map_smul, hlin, PowerSeries.coeff_C_mul, PowerSeries.coeff_X_pow]
       by_cases hx : x.2 = n
-      · rw [if_pos hx]
+      · rw [ite_eq_left hx]
         simp [hx, div_eq_mul_inv, smul_smul, mul_comm]
-      · rw [if_neg hx]
+      · rw [ite_eq_right hx]
         simp [hx, Ne.symm hx]
   have hnat (n : ℕ) : pderiv x (PowerSeries.coeff n (creationExponential D α)) =
       if x.2 + 1 ≤ n then
@@ -90,16 +91,18 @@ private theorem creation_partial (D : LatticeData) (α : Charge D) (x : Index D)
     · rw [PowerSeries.coeff_mul_C, mul_smul_comm, mul_one]
     · rfl
   by_cases ht : t < 0
-  · rw [creationCoeff, dif_pos ht, map_zero, creationCoeff,
-      dif_pos (show t - (x.2 + 1 : ℕ) < 0 by omega), smul_zero]
-  · rw [creationCoeff, dif_neg ht, hnat]
+  · rw [creationCoeff, dite_eq_left ht, map_zero, creationCoeff,
+      dite_eq_left (show t - (x.2 + 1 : ℕ) < 0 by omega), smul_zero]
+  · rw [creationCoeff, dite_eq_right ht, hnat]
     by_cases hx : x.2 + 1 ≤ t.toNat
-    · rw [if_pos hx, creationCoeff, dif_neg (by omega),
+    · rw [ite_eq_left hx, creationCoeff, dite_eq_right (by omega),
         show (t - (x.2 + 1 : ℕ)).toNat = t.toNat - (x.2 + 1) by omega]
-    · rw [if_neg hx, creationCoeff, dif_pos (by omega), smul_zero]
+    · rw [ite_eq_right hx, creationCoeff, dite_eq_left (by omega), smul_zero]
 
 /-- Exact occupation coefficient of the original creation exponential.
 The factorial is supplied by the original polynomial derivations, not postulated. -/
+set_option maxHeartbeats 2000000 in
+-- Strong induction removes one actual occupation quantum at a time.
 theorem creation_coefficient_factorial (D : LatticeData) (α : Charge D)
     (d : Occ D) :
     (creationCoeff D α (level D d)).coeff d * (FactorialFockMetric.weight d : ℂ) =
@@ -145,7 +148,7 @@ theorem creation_coefficient_factorial (D : LatticeData) (α : Charge D)
           creationCoordinate, FactorialFockMetric.weight]
       · obtain ⟨x, hx⟩ : ∃ x : Index D, d x ≠ 0 := by
           by_contra h
-          push_neg at h
+          push Not at h
           exact hz (Finsupp.ext h)
         let e := d - Finsupp.single x 1
         have hed : e + Finsupp.single x 1 = d :=
