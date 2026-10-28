@@ -1152,142 +1152,230 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
-## 13. 非坐标斜平面的秩二排除
+## 13. 非零 beta 秩二层的回返与同父来源刚性
 
-本节处理一个不落在 $α=0$ 或 $Δ=0$ 坐标平面内的完整核层。它仍使用
-IV 定义 13.1--13.2、定理 13.3 的原始 $B$、全部增益守卫和完整
-$D_w$ 守卫；只在指定的 $J^5MJ$ 叶上消费共享响应，不把该叶的局部
-计算改写成固定槽或子核的实现。
-
-**定理 13.1（斜平面 $Δ=λα$ 的完整守卫失败）。** 固定一个完整合法
-来源元组，令 $V=\ker B$，并假设
+**定理 13.1（非零 beta 秩二完整来源层的原守卫失败）。** 固定定义 2.1
+的任意完整合法来源元组，保留其全部 $256$ 槽、$254$ 非空前缀及原始
+$1538\times1024$ 矩阵 $B$。令 $V=\ker B$，使用定义 7.1 的标量映射，
+并假设
 
 $$
-
-\sigma(P_{j_0})=\sigma(P_{j_1})=s>0,\qquad s\ne1,\qquad
-E_J|_V=0,qquad \beta|_V\ne0,
-$$
-
-$$
-\operatorname{rank}(G_{j_0}|_V)=2,
-\qquad \Delta|_V=\lambda\alpha|_V
-\quad\text{for a fixed }\lambda\ne0.
+\begin{gathered}
+\sigma(P_{j_0})=\sigma(P_{j_1})=s>0,\qquad s\ne1,\\
+E_J|_V=0,\qquad \beta|_V\ne0,\qquad
+\operatorname{rank}(G_{j_0}|_V)=2.
+\end{gathered}
 \tag{13.1}
 $$
 
-Put $w_*=J^5MJ$ and $p_e=(w_*,e)$. Then
+这里的二是增益像的秩，不是 $\dim V$。置
 
 $$
-P_{p_0}=P_{p_1},qquad D_{w_*}|_V=0.
+w_0=J^5MJ,\qquad w_A=J^4MJJ,\qquad w_B=J^4MMJ.
 \tag{13.2}
 $$
 
-Consequently this source tuple is outside the fully guarded source locus of
-IV 定理 13.3. Thus, within the noncoordinate family (13.1), the surviving
-locus satisfying every original guard is empty.
-
-**证明。** By 引理 7.2, the gain-image coordinates on $V$ are
-$(\alpha,\Delta,\beta)$ and have rank two. The relation in (13.1) therefore
-gives
+这三个原始叶中至少一个 $w$ 满足
 
 $$
-\operatorname{rank}(\alpha,\beta)|_V=2;
-$$
-
-otherwise the three coordinates would have image dimension at most one.
-In particular the two scalar maps $\alpha|_V$ and $\beta|_V$ are independent.
-The same lemma and $\beta|_V\ne0$ exclude the unit signature for both
-$p_0,p_1$. Write their legal source entries as
-
-$$
-P_{p_e}=\begin{pmatrix}a_e&b_e\\c_e&1-a_e\end{pmatrix},
-\qquad t_e=b_e+c_e>0,
-$$
-
-so $t_e\ne1$. The nonunit formula (4.11), together with the response
-formula (5.1), says that the clock-six $M$ and clock-seven $MJ$ responses
-of $p_e$ are respectively
-
-$$
-\begin{aligned}
-Z_{6,e}&=(2+b_e)\alpha-8\frac{1+b_e}{t_e}\Delta
-       +\frac{b_e}{t_e-1}\beta,\\
-Z_{7,e}&=\left[1+\frac{16}{5}(a_e+t_e)\right]\alpha
- -\frac{35}{2}\frac{a_e+t_e}{t_e}\Delta
- +\frac{a_e+t_e-1}{t_e-1}\beta .
-\end{aligned}
+P_{(w,0)}=P_{(w,1)},\qquad D_w|_V=0\in\operatorname{Hom}(V,\mathbb R^4).
 \tag{13.3}
 $$
 
-Both are shared prefix responses for the two slots of $w_*$, hence
-$Z_{6,0}=Z_{6,1}$ and $Z_{7,0}=Z_{7,1}$ as linear maps on $V$. Substitute
-$\Delta=\lambda\alpha$. Since $\alpha|_V$ and $\beta|_V$ are independent,
-the coefficients of $\beta$ in each equality agree. Consequently
+所以该完整来源元组的一个原同源分离守卫失败。若
+$\operatorname{rank}((\alpha,\Delta)|_V)=2$，还恒有
+$D_{w_A}|_V=0$；此时可在 $w_A,w_B$ 中选取 (13.3) 的叶。
+
+**证明。** 下文所有标量、增益和响应均为原来整个 $V$ 上的线性映射。
+对任一前缀 $v$，用 $R_v$ 表示其共同响应映射；完整 $B$ 的所有祖先行
+保证每个后代槽同时实现这些映射。零增益块也保留在这些线性恒等式中。
+
+先复用定理 6.1 与引理 7.2 已给出的常数方向排除。若
+$\operatorname{rank}((\alpha,\Delta)|_V)\le1$，引理 7.2 的秩等式和
+(13.1) 给出一个 $x\in V$，满足 $\alpha(x)=\Delta(x)=0$、
+$\beta(x)=1$。在 $w_0$ 的两个槽，引理 7.2 排除固定单位签名，且使
+这同一个 $x$ 的增益分别为非零常数 $1/(t_e-1)$。它们的全部 J5 祖先及
+第六 $M$、第七 $J$ 读数由原 $B$ 相同；定理 6.1 的整个纤维逆直接给出
+两个固定来源相等。其共同非单位签名再由 (7.4) 给出整个 $V$ 上全部四个
+增益系数相同，即 $D_{w_0}|_V=0$。这一分支仅使用定理 6.1 的既有逆和
+(7.4)。
+
+剩下的情形是 $\alpha,\Delta$ 在 $V$ 上独立。用 $u,v$ 表示 (4.2) 中
+原有的两个多项式。对于每个 $q\in\mathcal D_{J^4}$，写
 
 $$
-\frac{b_0}{t_0-1}=\frac{b_1}{t_1-1}=:S,
-\qquad
-\frac{a_0+t_0-1}{t_0-1}
-=\frac{a_1+t_1-1}{t_1-1}.
+P_q=\begin{pmatrix}a_q&b_q\\c_q&1-a_q\end{pmatrix},\qquad
+ d_q=1-a_q\in(0,1),\qquad t_q=b_q+c_q>0,\qquad
+ T_q=t_q+d_q>0.
 \tag{13.4}
 $$
 
-Set $h_e=t_e-1\ne0$ and
+四个 J 祖先已经强制
 
 $$
-A_e=\frac{a_e}{h_e},
-\qquad S_e=\frac{b_e}{h_e}.
-$$
-
-Equation (13.4) gives $S_0=S_1=S$ and $A_0=A_1=:A$. Hence
-$a_e=Ah_e$ and $b_e=Sh_e$. The rank-one source equation
-$b_e(t_e-b_e)=a_e(1-a_e)$ becomes, after dividing only by the already
-nonzero $h_e$,
-
-$$
-(S-A)+h_e\bigl(S(1-S)+A^2\bigr)=0.
+g_q=k_q+\alpha u-\frac{\Delta}{t_q}v,\qquad
+(t_q-1)(k_q+\alpha)=\beta,\qquad k_q=g_q(0).
 \tag{13.5}
 $$
 
-If $h_0\ne h_1$, subtracting the two instances of (13.5) gives
-$S(1-S)+A^2=0$, and either instance then gives $S=A$. These two equalities
-imply $S=S(1-S)+S^2=0$, contradicting $b_e=Sh_e>0$. Therefore
-$h_0=h_1$, and then $a_0=a_1$, $b_0=b_1$, $t_0=t_1$ and
-$c_0=t_0-b_0=t_1-b_1=c_1$. This proves the first equality in (13.2).
-
-With the common signature $t_0=t_1$, formula (7.4) gives the same complete
-gain coefficient map on $V$ for the two slots:
+为核对这里的后代范围，定义 7.1、引理 7.2 和 $E_J|_V=0$ 给出
 
 $$
-p_{p_e}=\alpha u-\frac{\Delta}{t_0}v,
+\begin{aligned}
+R_J&=\alpha+\beta-\Delta/2,& R_{J^2}&=6\alpha/5,\\
+R_{J^3}&=\alpha+\beta+\Delta/2,& R_{J^4}&=4\alpha/5.
+\end{aligned}
+\tag{13.6}
+$$
+
+任一这样的槽写 $p_q=g_q-k_q$。两个偶数祖先使
+$p_q-\alpha u$ 在 $0,2,4$ 为零，故它是 $v$ 的一个标量倍数。
+两个奇数祖先之差为 $\Delta$，而 $u(3)-u(1)=0$、
+$v(3)-v(1)=-1$，故该倍数为 $-\Delta/t_q$。
+两个奇数祖先的平均为 $\alpha+\beta$，同时等于
+$(t_q-1)k_q+t_q\alpha$，遂得 (13.5)。这只用了四个已读祖先，
+不假定第五动作仍为 $J$。由于 $\beta|_V\ne0$，(13.5) 排除每个
+$q\in\mathcal D_{J^4}$ 的固定 $t_q=1$，因而在这个完整后代集中均有
+
+$$
+k_q=-\alpha+\frac{\beta}{t_q-1}.
+\tag{13.7}
+$$
+
+现看 $w_A$ 的两槽 $q_{Ae}=(w_A,e)$。在原时钟 $5,6,7$，依次执行的
+单独动作是 $M,J,J$，累计矩阵为
+
+$$
+M,\qquad JM=\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad M,
+\tag{13.8}
+$$
+
+迹因子依次为 $T_q,1+c_q,T_q$。第五与第七的共同响应之差消去 $k_q$。
+由 $u(7)-u(5)=16/5$、$v(7)-v(5)=15$ 得
+
+$$
+\frac{16}{5}(T_{q_{A0}}-T_{q_{A1}})\alpha
+-15\left(\frac{T_{q_{A0}}}{t_{q_{A0}}}
+        -\frac{T_{q_{A1}}}{t_{q_{A1}}}\right)\Delta=0.
+\tag{13.9}
+$$
+
+独立性分别使两个固定系数为零。严格正的共同 $T$ 于是给出共同
+$t=t_*>0$，继而给出共同 $d=d_*\in(0,1)$。由 (13.5)、(13.7)，
+两槽的整个增益和常数项均相同，记为 $g_*,k_*$；这已经证明
+$D_{w_A}|_V=0$。若它们的固定来源相等，(13.3) 已在 $w_A$ 成立。
+
+设这两个固定来源不同。它们已有相同 $a=1-d_*$ 和 $t=t_*$，所以
+$c_{q_{A0}}\ne c_{q_{A1}}$。共享第六读数及 (13.8) 给出
+$(c_{q_{A0}}-c_{q_{A1}})g_*(6)=0$，因此 $g_*(6)=0$ 作为映射恒成立。
+用 (13.5)、(13.7) 及 $u(6)=2,v(6)=8$，可将此式写为
+
+$$
+\alpha+\frac{\beta}{t_*-1}-\frac8{t_*}\Delta=0,
 \qquad
-k_{p_e}=\frac{\beta}{t_0-1}-\alpha.
+\beta=(t_*-1)\left(-\alpha+\frac8{t_*}\Delta\right).
+\tag{13.10}
 $$
 
-Thus $G_{p_0}|_V=G_{p_1}|_V$ and their constant coefficients, as well as
-all three nonconstant coefficients, agree. By Definition 13.2,
-$D_{w_*}|_V=0$. Since the two sources are equal, IV 定理 13.3 requires
-the strict $D_{w_*}$ guard there, and (2.10) gives
-$\operatorname{rank}[B;D_{w_*}]=\operatorname{rank}B$. The guard therefore
-fails. Every division above used only $t_e-1\ne0$ or $h_e\ne0$; no gain
-sample, discriminant, leading coefficient, or source difference was assumed
-nonzero. ∎
+这里 $t_*\ne1$ 已由非零 $\beta$ 映射保证。由于 $\alpha,\Delta$
+独立，(13.10) 还证明 $\beta,\Delta$ 独立：若
+$h\beta+j\Delta=0$，其 $\alpha$ 系数为 $-h(t_*-1)$，先得 $h=0$，
+再得 $j=0$。
 
-Theorem 13.1 is a full-source exclusion for every fixed nonzero slope
-$\lambda$; it is not a coordinate-plane corollary. The unrestricted rank-two
-case with an oblique relation involving $\beta$ remains open. In particular,
-the theorem does not classify planes whose normal has a nonzero $\beta$
-component, and it does not alter the original eight-read problem $U$ or the
-other source strata.
+关键是把同一个第五响应用于整个 $J^4M$ 后代，而非只用于这两个槽。
+置 $y=R_{J^4M}$。对每个 $q\in\mathcal D_{J^4M}$，(13.5)、(13.7)
+和 $u(5)=1,v(5)=5/2$ 给出
 
-## 14. 增补范围
+$$
+\begin{aligned}
+y&=T_qg_q(5)-k_q\\
+ &=\alpha+
+    \left(1+\frac{d_q}{t_q-1}\right)\beta
+    -\frac52\left(1+\frac{d_q}{t_q}\right)\Delta.
+\end{aligned}
+\tag{13.11}
+$$
 
-The new inference is exactly the empty surviving locus in Theorem 13.1. It
-consumes the original $J^5MJ$ full-kernel gain and separation guards through
-IV 定理 13.3, while reusing 引理 7.2 and formulas (4.11), (5.1), (7.4).
-No conclusion is drawn for the remaining rank-two planes, for
-$\beta|_V=0$, for other terminal words, or for the existence of a complete
-guarded $256$-source tuple. The unrestricted $U$ and the long-term
-eight-read question remain unresolved.
+与 $q_{A0}$ 的同一个 $y$ 比较，并用刚证明的 $\beta,\Delta$ 独立性，得
+
+$$
+\frac{d_q}{t_q-1}=\frac{d_*}{t_*-1},\qquad
+\frac{d_q}{t_q}=\frac{d_*}{t_*}.
+\tag{13.12}
+$$
+
+这两个固定来源比值同时确定 $t_q,d_q$。具体地，令
+$\rho_q=d_q/(t_q-1)$、$\nu_q=d_q/t_q$。合法性给出
+$\nu_q>0$、$\rho_q-\nu_q=d_q/[t_q(t_q-1)]\ne0$，且
+
+$$
+t_q=\frac{\rho_q}{\rho_q-\nu_q},\qquad d_q=\nu_qt_q.
+$$
+
+所以 (13.12) 强制全部八个 $J^4M$ 后代槽满足
+
+$$
+t_q=t_*,\qquad d_q=d_*,\qquad g_q=g_*,\qquad k_q=k_*.
+\tag{13.13}
+$$
+
+这一步利用了同父响应与两个独立历史映射；它不为不同子分支另选增益。
+来源的 $b,c$ 排序仍可不同，尚未据此宣称来源相等。
+
+最后取 $w_B$ 的两槽 $q_{Be}=(w_B,e)$。在原时钟 $5,6,7$，单独动作
+依次为 $M,M,J$，累计矩阵为 $M,M^2,JM^2$，其中
+
+$$
+JM^2=\begin{pmatrix}1&2\\1&1\end{pmatrix},\qquad
+\operatorname{tr}(JM^2P_q)=1+t_q+c_q.
+\tag{13.14}
+$$
+
+(13.13) 已给出两槽相同的全部四系数及相同 $t_*,d_*$。
+又因 $g_*(6)=0$，原有多项式的相邻样本差给出
+
+$$
+g_*(7)=g_*(7)-g_*(6)
+=\frac{11}{5}\alpha-\frac{19}{2t_*}\Delta\ne0
+\quad\text{作为 }V\text{ 上的映射}.
+\tag{13.15}
+$$
+
+最后的不等来自 $\alpha,\Delta$ 独立，未断言每个向量的该样本都非零。
+两个第七读数相同，由 (13.14) 便有
+$(c_{q_{B0}}-c_{q_{B1}})g_*(7)=0$，故两个固定 $c$ 相同。
+共同 $t_*,d_*$ 再给出相同 $b=t_*-c$、$a=1-d_*$，即
+$P_{q_{B0}}=P_{q_{B1}}$。其已经相同的完整增益映射使
+$D_{w_B}|_V=0$，所以 (13.3) 在 $w_B$ 成立。
+
+各情形都得到固定同源叶及整个 $V$ 上的完整四分量差消失。由 (2.10)，
+该叶满足 $\operatorname{rank}[B;D_w]=\operatorname{rank}B$，而来源不等
+备选为假，故 IV 定理 13.3 的原分离守卫失败。未对其他槽的来源、增益
+守卫或分离守卫添加条件；任意来源重复仍在全称量词内。除复用的完整逆外，
+本证明的除法仅涉及已述非零的固定来源标量，从未除以某个向量的历史坐标、
+增益样本、最高次系数或判别式。∎
+
+本定理的新增推断是独立 $\alpha,\Delta$ 情形中的 (13.10)–(13.13)：
+回返叶的不同来源迫使一个共同根六映射，继而共享第五响应使整个非单位
+$J^4M$ 来源族的签名、对角和完整增益刚性传播到另一原叶。所用完整源投影
+是 IV 定义 13.1–13.2、定理 13.3；三坐标与常数逆是本卷引理 7.2、
+定理 6.1 的既有供给。回返比较的 beta 零情形由
+[IV 定理 18.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md)
+给出；该情形包含单位来源例外，不能代入 (13.7)、(13.12) 的非单位分母。
+这里的推导为 repo-derived，不作外部优先性断言。
+
+结合本卷定理 8.1、上述 IV 定理 18.3 和本定理，每个满足全部原守卫的
+相等非单位 E 零完整来源元组必有增益像秩一：原 $G_{j_0}$ 守卫排除秩零，
+定理 8.1 排除秩三，秩二按 $\beta|_V=0$ 或 $\beta|_V\ne0$ 分别由
+IV 定理 18.3 或本定理排除。这只留下该 E 零层的秩一来源可行性问题，
+并未实现或排除该剩余层。单位 J7 签名域、其他原根来源层及其所需的全部
+联合守卫仍未由此判定；非 E 零的根六、根七来源层也不受本定理支配。
+
+本定理没有假定 $F_6|_V$ 或 $F_7|_V$ 非零，因此 E 零层与它们的所有
+交层均在 (13.1) 的量词内。零块只参与线性推理，实际完整世界仍须满足
+全部原 $G$ 守卫；任意符号、实际次数下降、采样根和重根没有被删除。
+这项完整来源排除既不把局部 J5 的 $L_2$ 提升成原根见证，也不给出全域
+八读协议或九读下界。原始不受限问题 $U$ 与其全域八读／至少九读的备选
+仍未解决；这里的证明是普通数学证明，不是 Lean 或 kernel 核验。
 
 ## 追加锚（本行以下为增补区）
