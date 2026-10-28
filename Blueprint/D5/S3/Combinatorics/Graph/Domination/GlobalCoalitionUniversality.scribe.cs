@@ -8,7 +8,7 @@ internal sealed class GlobalCoalitionUniversalityDocument : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Domination/GlobalCoalitionUniversality.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/anholcer2025globalcoalitions");
+        LibraryNoteRef.Create("D5/L/FiniteGeometry/anholcer2025globalcoalitions");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The edgeless two-vertex graph has no global coalition realization, because every partition block has an actual coalition partner.",
@@ -32,15 +32,18 @@ internal sealed class GlobalCoalitionUniversalityDocument : IScribeDocumentDefin
                 "The result has type SimpleGraph {A : Set V // A belongs to pi.blocks}. Its adjacency is exactly the displayed full coalition predicate. Symmetry exchanges A and B, uses symmetric disjointness and commutativity of union. A loop would make A union A globally dominating while A is not; union self gives a contradiction. Thus the native symmetric, loopless graph uses the actual coalition relation.", DescribeRole.Definition),
             Node("claim", "The complete universal realizability question", IffFormula(X("claim"), ClaimBody()),
                 "Problem 58 asks: Is every graph realisable as a global coalition graph? In full, for every finite actual target type V of order at least two and every simple graph H on V, there exist an arbitrary finite actual host type W of order at least two, a simple graph G on W, an actual global coalition partition pi of G, and an ordinary graph isomorphism from its global coalition graph to H. Finite V is an anonymous instance binder. The existential Finite W proof is anonymous; G, its order bound and pi all belong to that same W. The earlier v1 Section 6 Problem 4 asks the same realizability question without the order restrictions; it is a separate statement boundary for the same question.", DescribeRole.Definition),
-            Node("result", "Negation of the whole universal assertion", NotFormula(X("claim")),
-                "The theorem states not claim, with every target, host and partition quantifier as above. Use the edgeless graph on Fin 2, which has order two. For any proposed host G and any actual pi, an isomorphism to this target has a preimage A of vertex zero. The partners field supplies B in the same partition and an actual global coalition between A and B, hence an actual adjacent pair in globalCoalitionGraph G pi. The isomorphism transports this adjacency to the edgeless target, a contradiction. The private lemma no_edgeless_realization supplies this argument for arbitrary universe-polymorphic hosts and arbitrary nonempty edgeless targets, and result applies it to Fin 2. This excludes every host and eligible partition for one legal target, rather than only a selected host. The same argument also excludes that target under the unrestricted v1 question. Whether every isolate-free target is globally realizable remains unsettled here; no classification or realization construction follows. No conclusion about the paper's other results or literature priority is asserted.", DescribeRole.Theorem)),
+            Node("result", "Negation of the whole universal assertion", NotFormula(P(ClaimBody())),
+                "The theorem states not claim, with every target, host and partition quantifier as above. Use the edgeless graph on Fin 2, which has order two. For any proposed host G and any actual pi, an isomorphism to this target has a preimage A of vertex zero. The partners field supplies B in the same partition and an actual global coalition between A and B, hence an actual adjacent pair in globalCoalitionGraph G pi. The isomorphism transports this adjacency to the edgeless target, a contradiction. The private lemma no_edgeless_realization supplies this argument for arbitrary universe-polymorphic hosts and arbitrary nonempty edgeless targets, and result applies it to Fin 2. This excludes every host and eligible partition for one legal target, rather than only a selected host. The same argument also excludes that target under the unrestricted v1 question. Whether every isolate-free target is globally realizable remains unsettled here; no classification or realization construction follows. No conclusion about the paper's other results or literature priority is asserted.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("anholcer-2025-global-coalition-universality"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string selector, string title, Formula formula, string prose,
-        DescribeRole role) => Describe.Lean(DescribeId.Create("gc-" + selector.Replace(".", "-").ToLowerInvariant()),
+        DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(DescribeId.Create("gc-" + selector.Replace(".", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + selector), H(title), StatementSource.FromAuthor(Disp(formula)),
             selector == "result" ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula P(Formula value) => Seq(Open, value, Close);
