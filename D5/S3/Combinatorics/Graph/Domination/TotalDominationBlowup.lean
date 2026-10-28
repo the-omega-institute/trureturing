@@ -208,6 +208,46 @@ theorem seed_blowup_roots (ε : ℝ) (hε : 0 < ε) (k : ℕ) (hk : 0 < k) :
   rw [harg]
   exact hc
 
+/-- All power-map branches share one finite labelled, isolate-free, nonzero witness. -/
+theorem labelled_seed_blowup_roots (ε : ℝ) (hε : 0 < ε) (k : ℕ) (hk : 0 < k) :
+    ∃ (m : ℕ) (H : SimpleGraph (Fin m)) (r : ℝ),
+      2 ≤ m ∧ 0 < 1 + r ∧ 1 + r < ε ∧ complexPolynomial H ≠ 0 ∧
+      (∀ v, ∃ u, H.Adj v u) ∧
+      ∀ w : ℂ, (1 + w) ^ k = (1 + r : ℝ) → (complexPolynomial H).IsRoot w := by
+  classical
+  obtain ⟨n, G, r, hn, hl, hr, _, _, hnz, hni, hroots⟩ := seed_blowup_roots ε hε k hk
+  let B := blowupGraph G (Fin k)
+  let m := Fintype.card (Fin n × Fin k)
+  let e : Fin m ≃ Fin n × Fin k := (Fintype.equivFin _).symm
+  let H := B.comap e
+  have htotal (S : Finset (Fin m)) : IsTotal H S ↔ IsTotal B (S.map e.toEmbedding) := by
+    constructor
+    · intro h v
+      obtain ⟨u, hu, hadj⟩ := h (e.symm v)
+      exact ⟨e u, mem_map.mpr ⟨u, hu, rfl⟩, by simpa [H] using hadj⟩
+    · intro h v
+      obtain ⟨u, hu, hadj⟩ := h (e v)
+      obtain ⟨u, hu, rfl⟩ := mem_map.mp hu
+      exact ⟨u, hu, hadj⟩
+  have hp : complexPolynomial H = complexPolynomial B := by
+    unfold complexPolynomial
+    exact Fintype.sum_equiv e.finsetCongr _ _ (fun S => by
+      simp [Equiv.finsetCongr_apply, htotal S])
+  have hm : 2 ≤ m := by
+    dsimp [m]
+    simp only [Fintype.card_prod, Fintype.card_fin]
+    nlinarith
+  refine ⟨m, H, r, hm, hl, hr, ?_, ?_, ?_⟩
+  · rwa [hp]
+  · intro v
+    obtain ⟨u, hu⟩ := hni (e v)
+    exact ⟨e.symm u, by simpa [H] using hu⟩
+  · intro w hw
+    rw [hp]
+    exact hroots w hw
+
+#print axioms labelled_seed_blowup_roots
+
 #print axioms seed_blowup_roots
 
 #print axioms blowup_polynomial
