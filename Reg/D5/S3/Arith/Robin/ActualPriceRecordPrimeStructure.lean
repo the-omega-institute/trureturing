@@ -312,6 +312,7 @@ private theorem confinement_rejected : ¬ confinementArena.Law massRejected := b
   have heqa := ha.2.2.1
   have hn := ha.2.2.2.1
   change Real.log (4 : ℝ) = Chebyshev.theta (largestPrime 4) + (-1) at heq
+  norm_num only [Nat.cast_ofNat] at heqa
   linarith only [heq, heqa, hn]
 
 private theorem mass_dependence : ObservationalDependence primeSignature massActual := by
