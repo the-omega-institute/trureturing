@@ -74,6 +74,18 @@ private theorem support_of_antitone {m : ℕ} (hm : 2 ≤ m)
     exact hprime.mem_primeFactors
       ((hprime.dvd_iff_one_le_factorization (by omega)).mpr hval) (by omega)
 
+/-- Every positive-price predecessor record has antitone valuations, including
+zero valuations, and initial prime support for this same integer. -/
+theorem price_record_prime_structure {m : ℕ} (hm : 2 ≤ m) {lam : ℝ}
+    (hlam : 0 < lam)
+    (hrecord : ∀ n : ℕ, 0 < n → n < m →
+      goldenResourceObjective lam n < goldenResourceObjective lam m) :
+    (∀ p q : ℕ, p.Prime → q.Prime → p < q →
+      m.factorization q ≤ m.factorization p) ∧
+    m.primeFactors = Nat.primesLE (largestPrime m) := by
+  have hanti := price_record_antitone (by omega : 0 < m) hlam hrecord
+  exact ⟨hanti, support_of_antitone hm hanti⟩
+
 /-- A strict record at a positive price divides the existing canonical strict
 integer at that price. Zero and nonprime coordinates impose no extra premise. -/
 theorem price_record_divides_strictInteger {m : ℕ} (hm : 0 < m) {lam : ℝ}
@@ -168,8 +180,7 @@ theorem price_record_prime_confinement :
   have hL : 0 < Real.log X := Real.log_pos hX
   have hlam : 0 < 1 / (40 * X * Real.log X) := by positivity
   intro hrecord
-  have hanti := price_record_antitone hm0 hlam hrecord
-  have hsupport := support_of_antitone (by omega : 2 ≤ m) hanti
+  obtain ⟨hanti, hsupport⟩ := price_record_prime_structure (by omega : 2 ≤ m) hlam hrecord
   have hsplit : X = θ (largestPrime m) +
       ∑ p ∈ m.primeFactors, ((m.factorization p - 1 : ℕ) : ℝ) * Real.log p := by
     rw [Chebyshev.theta_eq_sum_primesLE_log, ← hsupport]
@@ -284,18 +295,28 @@ theorem price_record_largest_prime_localization :
       (sub_pos.mpr hh)]
   have hQsmall := hmass.trans hbound
   change X = θ P + _ at hsplit
-  have hdP : d * P ≤ 2 * d * X := by nlinarith
+  have hdP : d * P ≤ 2 * d * X := by
+    exact mul_le_mul_of_nonneg_left hPupper hd.le
+  have hQlt := hQsmall.trans_lt hsmall
+  have hminus : X - P < 3 * d * X := by
+    nlinarith only [hsplit, hQlt, hthetaHi, hdP]
+  have hplus : P - X < 2 * d * X := by
+    nlinarith only [hsplit, hnonneg, hthetaLo, hdP]
+  have heX := mul_le_mul_of_nonneg_right hde hX.le
+  have hdX := mul_pos hd hX
+  have hlarge : 3 * d * X < epsilon * X := by nlinarith only [heX, hdX]
   apply abs_lt.mpr
   constructor
-  · have hh : (1 - epsilon) * X < P := by nlinarith
+  · have hh : (1 - epsilon) * X < P := by nlinarith only [hminus, hlarge]
     have hr := (lt_div_iff₀ hX).mpr hh
     change -epsilon < P / X - 1
-    linarith
-  · have hh : P < (1 + epsilon) * X := by nlinarith
+    linarith only [hr]
+  · have hh : P < (1 + epsilon) * X := by nlinarith only [hplus, hlarge, hdX]
     have hr := (div_lt_iff₀ hX).mpr hh
     change P / X - 1 < epsilon
-    linarith
+    linarith only [hr]
 
+#print axioms price_record_prime_structure
 #print axioms price_record_divides_strictInteger
 #print axioms price_record_prime_confinement
 #print axioms price_record_largest_prime_localization

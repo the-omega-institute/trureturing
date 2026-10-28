@@ -14,6 +14,104 @@ open scoped Chebyshev
 
 noncomputable section
 
+abbrev supportSignature : Signature where
+  Params := ℝ
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Finset ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def supportActual : Realization supportSignature :=
+  realize supportSignature (fun _ _ m => m.primeFactors) (fun e => nomatch e)
+
+def supportRejected : Realization supportSignature :=
+  realize supportSignature (fun _ _ _ => ∅) (fun e => nomatch e)
+
+abbrev supportArena : Arena where
+  signature := supportSignature
+  Law R := ∀ {m : ℕ}, 2 ≤ m → ∀ {lam : ℝ}, 0 < lam →
+    (∀ n : ℕ, 0 < n → n < m →
+      goldenResourceObjective lam n < goldenResourceObjective lam m) →
+    (∀ p q : ℕ, p.Prime → q.Prime → p < q →
+      m.factorization q ≤ m.factorization p) ∧
+    R.readout () lam m = Nat.primesLE (largestPrime m)
+
+private theorem two_price_record :
+    ∀ n : ℕ, 0 < n → n < 2 →
+      goldenResourceObjective (1 / 10) n < goldenResourceObjective (1 / 10) 2 := by
+  intro n hn hlt
+  have hn1 : n = 1 := by omega
+  subst n
+  rw [golden_resource_sigma_identity _ (by norm_num : 1 ≤ (1 : ℕ)),
+    golden_resource_sigma_identity _ (by norm_num : 1 ≤ (2 : ℕ))]
+  have hs1 : (ArithmeticFunction.sigma 1 1 : ℝ) = 1 := by norm_num [ArithmeticFunction.sigma]
+  have hs2 : (ArithmeticFunction.sigma 1 2 : ℝ) = 3 := by norm_num [ArithmeticFunction.sigma]
+  rw [hs1, hs2]
+  norm_num only [Nat.cast_one, Nat.cast_ofNat, div_one, Real.log_one, mul_zero, sub_self]
+  have hh := Real.one_sub_inv_le_log_of_pos (by norm_num : (0 : ℝ) < 3 / 2)
+  norm_num at hh
+  linarith [Real.log_two_lt_d9]
+
+private theorem support_rejected : ¬ supportArena.Law supportRejected := by
+  intro h
+  have hh := (h (m := 2) (by norm_num) (lam := 1 / 10) (by norm_num) two_price_record).2
+  have hfac : (2 : ℕ).primeFactors = {2} := by simp
+  have hP : largestPrime 2 = 2 := by simp [largestPrime, hfac]
+  have htwo : Nat.primesLE 2 = {2} := by decide
+  change ∅ = Nat.primesLE (largestPrime 2) at hh
+  rw [hP, htwo] at hh
+  exact (Finset.empty_ne_singleton 2) hh
+
+private theorem support_dependence : ObservationalDependence supportSignature supportActual := by
+  intro i
+  refine ⟨1, 1, 2, ?_⟩
+  change (1 : ℕ).primeFactors ≠ (2 : ℕ).primeFactors
+  simp
+
+def supportFamily : Registration supportArena (type_of% @price_record_prime_structure) where
+  actual := supportActual
+  bridge := Iff.rfl
+  variation := ⟨price_record_prime_structure, supportRejected, support_rejected⟩
+  sensitivity := ⟨fun i => ⟨supportRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, support_rejected⟩,
+    fun i => nomatch i⟩
+  dependence := support_dependence
+
+def supportAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@price_record_prime_structure) (Realization supportSignature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure.price_record_prime_structure.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure.supportFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨supportArena⟩
+  objectArena := .source ⟨supportArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source supportArena ⟨supportFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize supportSignature supportActual.readout supportActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 abbrev divisorSignature : Signature where
   Params := ℝ
   State _ := ℕ

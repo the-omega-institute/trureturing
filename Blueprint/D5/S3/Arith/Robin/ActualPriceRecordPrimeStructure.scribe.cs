@@ -18,6 +18,21 @@ internal sealed class ActualPriceRecordPrimeStructureDocument : IScribeDocumentD
                 + "goldenResourceObjective(lambda,n) with goldenResourceObjective(lambda,m) "
                 + "for every natural n with 0<n<m. In particular, one and two remain rivals.")),
             Describe.Lean(
+                DescribeId.Create("positive-price-record-same-integer-prime-structure"),
+                DeclarationHandle.Create(Prefix + "price_record_prime_structure"),
+                H("Antitone valuations and initial prime support at every positive price"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every m>=2 and every lambda>0, the full strict predecessor "
+                    + "record forces v_q(m)<=v_p(m) for all primes p<q, including "
+                    + "zero valuations, and primeFactors(m)=primesLE(largestPrime(m)). "
+                    + "The antitone companion must equal m because a smaller companion "
+                    + "would improve the positive-price score even when its normalized "
+                    + "divisor sum only ties. Nonempty support and its existing supremum "
+                    + "then close every missing-prime position."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("price-record-divides-canonical-strict-integer"),
                 DeclarationHandle.Create(Prefix + "price_record_divides_strictInteger"),
                 H("Occupied layers embed into the canonical strict integer"),
