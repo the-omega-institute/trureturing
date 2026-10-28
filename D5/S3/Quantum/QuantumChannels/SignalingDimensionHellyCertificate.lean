@@ -66,7 +66,9 @@ private lemma channel_decomposition {α β : Type} [Fintype α] [Fintype β]
             (if z = x then (if b = y then 1 else 0) else 1)) =
             if z = x then p x y else 1 := by
           by_cases hzx : z = x
-          · subst z; simp
+          · subst z
+            simp only [if_pos rfl, mul_ite, mul_one, mul_zero,
+              Finset.sum_ite_eq', Finset.mem_univ, if_true]
           · simp only [if_neg hzx, mul_one, hs, if_false]
         simp_rw [hz]
         exact Fintype.prod_ite_eq' x _
