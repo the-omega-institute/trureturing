@@ -11,6 +11,28 @@ internal sealed class ActualIntegerLogEnvelopeDocument : IScribeDocumentDefiniti
         H("Actual Integer Logarithmic Envelope"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("supported-sigma-bound"),
+                DeclarationHandle.Create(Prefix + "supported_sigma_bound"),
+                H("A finite prime-support bound for the actual sigma ratio"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every positive natural integer U and every real x, if each prime "
+                        + "factor p of U satisfies p<=x, then sigma(1,U)/U is at most the product "
+                        + "of (1-1/p)^(-1) over primes in the natural interval (0,floor(x)]. "
+                        + "Prime-power reconstruction and the multiplicative sigma formula "
+                        + "express the ratio as finite geometric factors. Each factor is bounded "
+                        + "by (1-1/p)^(-1); GronwallUpperEnvelope.small_prime_product_le pads "
+                        + "the product to the full prime interval.")),
+                    Paragraph(Text(
+                        "The coefficient-two envelope applies this bound to its positive "
+                        + "fixed-price comparator U. AbundancyRecord5040.large_prime_of_abundancy "
+                        + "applies it directly with U=m and x=30: if every prime factor is at "
+                        + "most thirty, padding further to all integers from two through thirty "
+                        + "telescopes to thirty, contradicting sigma(1,m)/m>30."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-integer-arbitrary-error-envelope"),
                 DeclarationHandle.Create(Prefix + "eventual_actual_integer_envelope_epsilon"),
                 H("An arbitrary positive inventory error"),

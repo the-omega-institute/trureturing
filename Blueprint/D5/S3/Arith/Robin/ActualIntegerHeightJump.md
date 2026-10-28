@@ -4,19 +4,7 @@
 
 Actual maximal occupied prime powers control Robin height jumps and genuine least-crossing overshoot.
 
-**Theorem 1.1 (An elementary upper bound for the actual divisor logarithm).**
-
-Lean statement: `D5/S3/Arith/Robin/ActualIntegerHeightJump.divisor_log_le_log`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualIntegerHeightJump.divisor_log_le_log` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Every positive actual integer n satisfies W(n)<=log(n), where W(n)=log(sigma(1,n)/n). The bound sigma(1,n)<=n^2 and monotonicity of log prove this. In the positive-price comparison it puts a hypothetical rival in the established envelope range before that envelope is applied.
-
-**Definition 1.2 (The actual divisor-sum logarithm).**
+**Definition 1.1 (The actual divisor-sum logarithm).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualIntegerHeightJump.divisorLog`
 
@@ -27,6 +15,18 @@ Lean statement: `D5/S3/Arith/Robin/ActualIntegerHeightJump.divisorLog`
 *Commentary.*
 
 For every natural n, divisorLog(n)=log(sigma(1,n)/n). The expression is totalized by Lean at zero; arithmetic applications below prove positivity of n.
+
+**Theorem 1.2 (The divisor-sum logarithm is bounded by log n).**
+
+Lean statement: `D5/S3/Arith/Robin/ActualIntegerHeightJump.divisor_log_le_log`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualIntegerHeightJump.divisor_log_le_log` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive natural n, the actual divisor-sum logarithm satisfies divisorLog(n) <= log(n). The proof uses positivity of sigma(1,n)/n, the logarithm monotonicity, and the elementary bound sigma(1,n)<=n^2. This owner theorem is reused by the actual least-crossing record.
 
 **Definition 1.3 (The original scaled excess).**
 

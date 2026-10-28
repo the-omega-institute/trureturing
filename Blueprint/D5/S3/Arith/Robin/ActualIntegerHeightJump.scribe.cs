@@ -11,18 +11,6 @@ internal sealed class ActualIntegerHeightJumpDocument : IScribeDocumentDefinitio
         H("Actual Integer Height Jumps"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("actual-divisor-log-le-log"),
-                DeclarationHandle.Create(Prefix + "divisor_log_le_log"),
-                H("An elementary upper bound for the actual divisor logarithm"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "Every positive actual integer n satisfies W(n)<=log(n), where "
-                    + "W(n)=log(sigma(1,n)/n). The bound sigma(1,n)<=n^2 and monotonicity "
-                    + "of log prove this. In the positive-price comparison it puts a "
-                    + "hypothetical rival in the established envelope range before that "
-                    + "envelope is applied."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("actual-divisor-log"), DeclarationHandle.Create(Prefix + "divisorLog"),
                 H("The actual divisor-sum logarithm"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -30,6 +18,17 @@ internal sealed class ActualIntegerHeightJumpDocument : IScribeDocumentDefinitio
                     "For every natural n, divisorLog(n)=log(sigma(1,n)/n). The expression is "
                     + "totalized by Lean at zero; arithmetic applications below prove positivity of n."))),
                 DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("actual-divisor-log-le-log"),
+                DeclarationHandle.Create(Prefix + "divisor_log_le_log"),
+                H("The divisor-sum logarithm is bounded by log n"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every positive natural n, the actual divisor-sum logarithm satisfies "
+                    + "divisorLog(n) <= log(n). The proof uses positivity of sigma(1,n)/n, "
+                    + "the logarithm monotonicity, and the elementary bound sigma(1,n)<=n^2. "
+                    + "This owner theorem is reused by the actual least-crossing record."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-robin-height"), DeclarationHandle.Create(Prefix + "actualHeight"),
                 H("The original scaled excess"), StatementSource.WithoutFormula(),

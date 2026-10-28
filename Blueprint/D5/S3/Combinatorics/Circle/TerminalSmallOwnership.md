@@ -44,7 +44,7 @@ Every retained prefix and returned suffix is literal. Freshness is against the w
 
 For the original H1-H12 word W=A++[hit(k,2,p)]++T0++[y]++T1++[zpen]++T2++[z]++E, take F=A++[hit(k,2,p)]++T0++[y]++T1++[zpen]++T2. H8 restricts to E, H10 supplies the terminal negative LARGE, and the same H12 compares all Legal lengths. H9 and H11 remain additional original assumptions; the stronger theorem needs neither. This is a conditional specialization, with no concrete terminal-minimum instance asserted.
 
-Full arbitrary-signed-A Circle C3.1 remains open. An unused SMALL orbit may enter an already-used negative LARGE, or the used positive SMALL second successor, including labels inside A. Such labels cannot be reused as fresh resources. A legal whole-word competitor still requires a disjoint physical repartition and every new LARGE departure and arrival. Finite orbit length, positive-flux conservation and positive SMALL ownership do not supply that construction.
+The terminal ownership conclusions alone do not supply an exchange for every arbitrary signed F. For the full word with additional negative LARGE y,zpen and intervening SMALL batches, ThreeNegativeExchange.actualSource_threeNegative_exchange_full gives a strict-J Legal competitor by a positive terminal overshoot and three physical reroutings. This stronger three-negative conclusion requires no unused SMALL resource or inverse-parent premise. Used successors are never treated as fresh resources.
 
 ## References
 

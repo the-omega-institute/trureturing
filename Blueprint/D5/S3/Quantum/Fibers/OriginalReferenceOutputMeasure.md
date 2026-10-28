@@ -1,0 +1,31 @@
+# Every reference and every Borel time event
+
+## Abstract
+
+Trace-norm Bochner outputs for the literal repeated early/late controls.
+
+**Theorem 1.1 (Positive actual quantum failure outputs on the complete time domain).**
+
+$$\forall H \in CompleteComplexHilbertSpace, B \in OriginalSupportBand, n \in Natural, e \in Bool, i \in \operatorname{Fin}\left(5\right), rho \in \operatorname{TraceClass}\left(\operatorname{Blocks}\left(\operatorname{Fin}\left(5\right), H\right)\right),\; \left(\operatorname{atLeastOne}\left(n\right) \land \operatorname{Positive}\left(rho\right)\right) \Rightarrow \left(\operatorname{pointwiseActualKrausConjugationAllTimes}\left(\operatorname{modeOutput}\left(B, \operatorname{literalEarlyLate}\left(B, n, e\right), i, rho\right), B, \operatorname{literalEarlyLate}\left(B, n, e\right), i, rho\right) \land \left(\operatorname{IntegrableOnTraceNorm}\left(\operatorname{modeOutput}\left(B, \operatorname{literalEarlyLate}\left(B, n, e\right), i, rho\right), \operatorname{Ioc}\left(0, 2\right)\right) \land \left(\forall E \in \operatorname{Set}\left(Real\right),\; \operatorname{MeasurableSet}\left(E\right) \Rightarrow \left(\operatorname{IntegrableOnTraceNorm}\left(\operatorname{modeOutput}\left(B, \operatorname{literalEarlyLate}\left(B, n, e\right), i, rho\right), \operatorname{intersection}\left(\operatorname{Ioc}\left(0, 2\right), E\right)\right) \land \left(\operatorname{Positive}\left(\operatorname{integralOnEvent}\left(\operatorname{modeOutput}\left(B, \operatorname{literalEarlyLate}\left(B, n, e\right), i, rho\right), \operatorname{intersection}\left(\operatorname{Ioc}\left(0, 2\right), E\right)\right)\right) \land \left(\operatorname{integralOnEvent}\left(\operatorname{modeOutput}\left(B, \operatorname{literalEarlyLate}\left(B, n, e\right), i, rho\right), \operatorname{intersection}\left(\operatorname{Ioc}\left(0, 2\right), E\right)\right) = \operatorname{smul}\left(\operatorname{integralOnEvent}\left(\operatorname{modeCoefficient}\left(B, \operatorname{literalEarlyLate}\left(B, n, e\right), i\right), \operatorname{intersection}\left(\operatorname{Ioc}\left(0, 2\right), E\right)\right), \operatorname{referenceCompression}\left(rho, i\right)\right) \land \operatorname{norm}\left(\operatorname{integralOnEvent}\left(\operatorname{modeOutput}\left(B, \operatorname{literalEarlyLate}\left(B, n, e\right), i, rho\right), \operatorname{intersection}\left(\operatorname{Ioc}\left(0, 2\right), E\right)\right)\right) = \operatorname{integralOnEvent}\left(\operatorname{normFunction}\left(\operatorname{modeOutput}\left(B, \operatorname{literalEarlyLate}\left(B, n, e\right), i, rho\right)\right), \operatorname{intersection}\left(\operatorname{Ioc}\left(0, 2\right), E\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fibers/OriginalReferenceOutputMeasure.repeated_failure_event` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Fix a band 0<a<b<c<1/2, any integer n>=1, either literal early or late history k, and any of its five original modes i. H is an arbitrary complete complex Hilbert space, with no separability or dimension restriction. rho is any positive trace-class operator on the full five-coordinate Hilbert sum B(Fin5,H), without normalization, rank, or product-state restrictions. The finite-system tensor isometry is supplied by FiniteBlocks. tensorJump is the literal scalar absorbing row tensored with the identity on H, promoted to a bounded map using the proved action intertwining. referenceTensorJump composes this map with the inverse tensor coordinates, and the pointwise Kraus identity uses the resulting equality with referenceJump. Thus the reference action is verified on every joint vector, rather than stipulated by renaming the joint carrier.
+
+Let alpha_i(t)=sqrt(g_i(t))*sqrt(S(t))*sqrt(p_i(k(t))/p_i(a)), using the actual original totalized derivatives, hazard integral and Kraus matrices. Set f_i(t)=normSq(alpha_i(t)), A_i=pi_i rho iota_i, and F_i(t)=f_i(t) A_i in the genuine trace-norm Banach space TraceClass H. At every real time its underlying operator is exactly J_i(t) rho J_i(t)*. In particular, the time values at corners are not substituted by assumed rate identities. Positivity and trace class of A_i come from compression of the same joint input; its reference correlations are retained.
+
+Continuity of the actual control on its time domain, measurability of derivatives, and continuity of the integrable hazard primitive give strong measurability of f_i on (0,2]. To prove integrability, evaluate the already established native marked probability law at one auxiliary source-family input. Its i-th density is exactly p_i(a) f_i(t), and its finite mode measure is bounded by the total probability measure. Dividing by the strictly positive p_i(a) proves integrability of f_i. This auxiliary scalar calculation does not restrict the quantum input rho: the resulting theorem quantifies over every positive joint input independently of that source-family witness.
+
+For every Borel E, let D=(0,2] intersect E. Both F_i on the full time domain and its restriction to D are Bochner integrable in trace norm. Its event integral equals (integral_D f_i) A_i, is positive, and satisfies norm(integral_D F_i)=integral_D norm(F_i). Scalar factorization keeps the range inside one fixed trace-class line, so nonseparable references require no countable basis assumption. The theorem retains each exact time event and original mode.
+
+This result supplies actual output identities, integrability and positive event integrals for the original repeated histories. It does not identify each suffix coefficient integral with q^n(1-q), prove the disjoint-window distance calculation, establish the operational supremum, extend a general initially stopped input, or supply the operational inverse/resource consumer. The mixed parent theorem and corollary remain open.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/Fibers/OriginalReferenceOutputMeasure.repeated_failure_event`
+- Dependency: [D5/S3/Quantum/Fibers/OriginalReferenceLegOutput](OriginalReferenceLegOutput.md)
+- Dependency: [D5/S3/Quantum/Fibers/OriginalRepeatedMarkedLaw](OriginalRepeatedMarkedLaw.md)

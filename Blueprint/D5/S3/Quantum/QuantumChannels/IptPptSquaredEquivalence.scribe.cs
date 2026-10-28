@@ -22,6 +22,9 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
             Node("kron_id_apply", "Coordinates of an identity amplification", KronIdApply(),
                 "Over every RCLike field 𝕜 and all finite input, output and ancillary dimensions, amplifying a linear matrix map Phi by the identity applies Phi to each matrix slice with the ancillary indices fixed.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("ampl_kron", "Identity amplification on a product matrix", AmplKron(),
+                "For every RCLike field and finite system and ancillary dimensions, identity amplification sends the product A tensor B to Phi(A) tensor B.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             OwnerNode("cp", "D5/S3/Quantum/Foundation/FiniteKrausChannel.IsCompletelyPositive", "Complete positivity", PositivePredicate(false),
                 "MatrixMap.IsCompletelyPositive states that a map is completely positive when every amplification preserves positive semidefiniteness. Matrix.PosSemidef is the pinned matrix predicate. Quantification includes r = 0; that case contains only the empty matrix.",
                 DescribeRole.Definition, Lit()),
@@ -216,6 +219,16 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
             All("a", indices, All("b", indices, coordinates)))))));
         return Disp(Seq(Forall, Sp, Parenthesized(Seq(field, Colon, Sp, Named("Type"))),
             Comma, Sp, OpenBracket, Call("RCLike", field), CloseBracket, Sp, body));
+    }
+
+    private static Formula AmplKron()
+    {
+        Formula phi = V("Phi"), a = V("A"), b = V("B");
+        Formula kron(Formula left, Formula right) => App(Qualified("Matrix", "kronecker"), left, right);
+        Formula conclusion = EqTo(Amplified(phi, V("r"), kron(a, b)), kron(App(phi, a), b));
+        return Disp(Generic(All("Phi", MapOf(V("K")), All("r", N,
+            All("A", Mat(FinOf(V("n")), V("K")),
+            All("B", Mat(FinOf(V("r")), V("K")), conclusion))))));
     }
 
     private static Formula PositivePredicate(bool breaking)
