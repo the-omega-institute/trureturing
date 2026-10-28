@@ -40,7 +40,7 @@ private theorem logarithmic_grid (t α θ : ℝ) (k : ℕ) (hk : 0 < k) :
   refine ⟨v, ?_, by simp [v], ?_⟩
   · rw [← Complex.exp_nat_mul, hv, Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I,
       mul_one]
-  · have hj := Int.abs_sub_round (((k : ℝ) * θ - α) / (2 * Real.pi))
+  · have hj := abs_sub_round (((k : ℝ) * θ - α) / (2 * Real.pi))
     have hβ : β - θ = -(2 * Real.pi / k) *
         (((k : ℝ) * θ - α) / (2 * Real.pi) - j) := by
       dsimp [β]
@@ -53,18 +53,18 @@ private theorem logarithmic_grid (t α θ : ℝ) (k : ℕ) (hk : 0 < k) :
     nlinarith
 
 /-- Both logarithmic coordinates are approximated with the same integer exponent. -/
-theorem joint_power_root_approximation (λ : ℂ) (hλ : λ.re ≠ 0)
+theorem joint_power_root_approximation (ξ : ℂ) (hξ : ξ.re ≠ 0)
     (ε : ℝ) (hε : 0 < ε) :
-    ∃ N : ℕ, ∀ t α : ℝ, (N : ℝ) + 2 < t / λ.re →
+    ∃ N : ℕ, ∀ t α : ℝ, (N : ℝ) + 2 < t / ξ.re →
       ∃ (k : ℕ) (w : ℂ), 0 < k ∧
         w ^ k = Complex.exp ((t : ℂ) + (α : ℂ) * I) ∧
-        ‖w - Complex.exp λ‖ < ε := by
+        ‖w - Complex.exp ξ‖ < ε := by
   obtain ⟨δ, hδ, hcont⟩ := Metric.continuousAt_iff.mp
     Complex.continuous_exp.continuousAt ε hε
-  obtain ⟨N, hN⟩ := exists_nat_gt ((|λ.re| + Real.pi) / δ)
+  obtain ⟨N, hN⟩ := exists_nat_gt ((|ξ.re| + Real.pi) / δ)
   refine ⟨N, ?_⟩
   intro t α hp
-  let p : ℝ := t / λ.re
+  let p : ℝ := t / ξ.re
   let k : ℕ := ⌊p⌋₊
   have hp0 : 0 ≤ p := by dsimp [p]; nlinarith [Nat.cast_nonneg N]
   have hkN : (N : ℝ) < k := by
@@ -76,25 +76,25 @@ theorem joint_power_root_approximation (λ : ℂ) (hλ : λ.re ≠ 0)
   have hk : 0 < k := by exact_mod_cast hkR
   have hf0 : 0 ≤ p - k := Nat.zero_le_self_sub_floor hp0
   have hf1 : p - k < 1 := Nat.self_sub_floor_lt_one p
-  have hr : |t / k - λ.re| ≤ |λ.re| / k := by
-    have hid : t / k - λ.re = λ.re * (p - k) / k := by
+  have hr : |t / k - ξ.re| ≤ |ξ.re| / k := by
+    have hid : t / k - ξ.re = ξ.re * (p - k) / k := by
       dsimp [p]
       field_simp
       <;> ring
     rw [hid, abs_div, abs_mul, abs_of_pos hkR, abs_of_nonneg hf0]
     apply div_le_div_of_nonneg_right _ hkR.le
     exact mul_le_of_le_one_right (abs_nonneg _) hf1.le
-  obtain ⟨v, hv, hre, him⟩ := logarithmic_grid t α λ.im k hk
-  have hvδ : ‖v - λ‖ < δ := by
-    have hnorm := Complex.norm_le_abs_re_add_abs_im (v - λ)
-    have hlt : (|λ.re| + Real.pi) / k < δ := by
+  obtain ⟨v, hv, hre, him⟩ := logarithmic_grid t α ξ.im k hk
+  have hvδ : ‖v - ξ‖ < δ := by
+    have hnorm := Complex.norm_le_abs_re_add_abs_im (v - ξ)
+    have hlt : (|ξ.re| + Real.pi) / k < δ := by
       apply (div_lt_iff₀ hkR).mpr
-      have hN' : |λ.re| + Real.pi < (N : ℝ) * δ := (div_lt_iff₀ hδ).mp hN
+      have hN' : |ξ.re| + Real.pi < (N : ℝ) * δ := (div_lt_iff₀ hδ).mp hN
       nlinarith
-    have hs : |(v - λ).re| + |(v - λ).im| ≤ (|λ.re| + Real.pi) / k := by
+    have hs : |(v - ξ).re| + |(v - ξ).im| ≤ (|ξ.re| + Real.pi) / k := by
       simp only [sub_re, sub_im, hre]
       calc
-        |t / k - λ.re| + |v.im - λ.im| ≤ |λ.re| / k + Real.pi / k := add_le_add hr him
+        |t / k - ξ.re| + |v.im - ξ.im| ≤ |ξ.re| / k + Real.pi / k := add_le_add hr him
         _ = _ := by ring
     exact lt_of_le_of_lt (hnorm.trans hs) hlt
   refine ⟨k, Complex.exp v, hk, hv, ?_⟩
