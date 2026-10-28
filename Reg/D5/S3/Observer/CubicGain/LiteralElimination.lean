@@ -74,10 +74,10 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Observer.CubicGain.LiteralElimination
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
       path := #["body","body","fn","arg"]
-      stateBinder := 0
+      stateBinder := 1
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

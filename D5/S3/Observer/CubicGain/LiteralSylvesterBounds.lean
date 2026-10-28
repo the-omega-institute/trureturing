@@ -211,6 +211,40 @@ theorem literal_minor_relation_of_common_root (b z : ℝ)
   rw [actualMinorA0_eval_bridge b, actualMinorC0_eval_bridge b]
   exact h
 
+/-- Every critical source satisfies the original literal elimination equations,
+including the entire singular branch and all specialized degree drops. -/
+theorem source_critical_literal_elimination (t b : ℝ)
+    (h01 : sourceBt 0 t b * sourceBb 1 t b -
+      sourceBb 0 t b * sourceBt 1 t b = 0)
+    (h02 : sourceBt 0 t b * sourceBb 2 t b -
+      sourceBb 0 t b * sourceBt 2 t b = 0)
+    (h12 : sourceBt 1 t b * sourceBb 2 t b -
+      sourceBb 1 t b * sourceBt 2 t b = 0) :
+    sourceD t b = 0 ∨
+      ((∀ k : Fin 2, (actualResultant k).eval₂ (Int.castRingHom ℝ) b = 0) ∧
+        (t * b) * evalB b actualMinorA0 + evalB b actualMinorC0 = 0) := by
+  by_cases hd : sourceD t b = 0
+  · exact Or.inl hd
+  right
+  have hc : 45 * sourceD t b ≠ 0 := mul_ne_zero (by norm_num) hd
+  have he0 : (sourceE0 b).eval (t * b) = 0 := by
+    have h := source_e0_normalization t b
+    rw [h01, mul_zero] at h
+    exact (mul_eq_zero.mp h).resolve_left hc
+  have he1 : (sourceE1 b).eval (t * b) = 0 := by
+    have h := source_e1_normalization t b
+    rw [h02, mul_zero] at h
+    exact (mul_eq_zero.mp h).resolve_left hc
+  have he2 : (sourceE2 b).eval (t * b) = 0 := by
+    have h := source_e2_normalization t b
+    rw [h12, mul_zero] at h
+    exact (mul_eq_zero.mp h).resolve_left hc
+  refine ⟨?_, literal_minor_relation_of_common_root b (t * b) he0 he1⟩
+  intro k
+  apply literal_resultant_vanishes_of_common_root b (t * b) k he0
+  fin_cases k <;> simp only [Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.head_cons] <;> assumption
+
 private theorem source_r_degree (i : Fin 3) : (sourcePolynomial i).natDegree ≤ 15 := by
   fin_cases i
   · change (sourceE0 (X : Polynomial ℤ)).natDegree ≤ 15
