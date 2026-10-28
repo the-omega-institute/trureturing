@@ -134,7 +134,7 @@ Lean statement: `D5/S3/Geometry/FiniteComponentClosure.SelectedVertexWedgeClosur
 
 *Commentary.*
 
-The data contain positive input model counts, their bouquet specifications and selected indices, the based quotient-wedge normalization, an output component index, and a BasedEquivalence from the actual glued native vertex to that output normal vertex. BasedEquivalence contains continuous forward and backward maps, both strict basepoint equations, and both inverse homotopies relative to the corresponding singleton.
+The data contain positive input model counts, their bouquet specifications and selected indices, a separate BasedEquivalence from each original selected vertex to its model vertex, the based quotient-wedge normalization, an output component index, a direct WPlus witness, and a BasedEquivalence from the actual glued native vertex to that output normal vertex. BasedEquivalence contains continuous forward and backward maps, both strict basepoint equations, and both inverse homotopies relative to the corresponding singleton.
 
 **Definition 1.12 (Selected-vertex WPlus wedge closure).**
 
