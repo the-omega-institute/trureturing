@@ -6,7 +6,6 @@
    utility: none
    digest: The maximal arithmetic-geometric entry index is 2d-5 for d >= 5, and 2 for d=3. -/
 
-import Mathlib.Algebra.BigOperators.Field
 import D5.S3.Constants.PowerMeanKernel
 import D5.S3.TotalVariation.CycleSingleCutMinimax
 
@@ -467,9 +466,14 @@ private lemma geom_le_arith {d : ℕ} {p : Fin d → ℝ} (hp : Probability p)
   rw [geom.eq_1, arith.eq_1]
   unfold D5.S3.Constants.PowerMeanKernel.meanZero
   unfold D5.S3.Constants.PowerMeanKernel.meanOne
-  have hs := Real.sq_sqrt (mul_nonneg (hp.1 ab.1) (hp.1 ab.2))
-  have hn := Real.sqrt_nonneg (p ab.1 * p ab.2)
-  nlinarith [sq_nonneg (p ab.1 - p ab.2), hp.1 ab.1, hp.1 ab.2]
+  let a : NNReal := ⟨p ab.1, hp.1 ab.1⟩
+  let b : NNReal := ⟨p ab.2, hp.1 ab.2⟩
+  calc
+    Real.sqrt (p ab.1 * p ab.2) = (NNReal.sqrt (a * b) : ℝ) := by
+      rw [Real.coe_sqrt]
+      rfl
+    _ ≤ (((a + b) / 2 : NNReal) : ℝ) := NNReal.sqrt_mul_le_half_add a b
+    _ = (p ab.1 + p ab.2) / 2 := rfl
 
 private lemma arithmetic_two_bound {d : ℕ} {p : Fin d → ℝ} (hp : Probability p)
     (s : Finset (Fin d × Fin d)) (hs : s.card = 2) :
