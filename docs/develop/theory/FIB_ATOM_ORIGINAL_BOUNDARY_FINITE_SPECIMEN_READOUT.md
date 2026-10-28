@@ -12,15 +12,28 @@ algebra, a new equality oracle, or a derivation of quantum principles.
 
 ### 1.1 The retained original contract
 
-**Definition 1.1 (source, entry and complete native service).** Let
-$\mathcal T$ be the entire free ordered algebra of Definition 113.1, with
-$\rho$, all occurrence addresses and the four replies
+**Definition 1.1 (ambient source, authentic branch entry and complete native
+service).** Let $\mathcal T$ be the entire free ordered algebra of Definition
+113.1, with $\rho$, all occurrence addresses and the four replies
 $\{\mathsf{alpha},\mathsf{beta},\mathsf{branch},\mathsf{absent}\}$ from
-ActualTreeReadoutAcquisition.  A source enters with the root branch record
-of the authentic entry.  The full INITIAL target at $Q=(L,R)$ is the
-required output of Definitions 112.1 and 112.2, not a supplied
-source-dependent tag: it retains the two numbered holes, the complete
-exterior and the partition of holes by equality of their original subtrees.
+ActualTreeReadoutAcquisition.  The authentic branch-entry service has the
+domain
+
+$$
+\mathcal B=\{\langle x,y\rangle:x,y\in\mathcal T\}\subseteq\mathcal T
+$$
+
+and retains the IV112 root record
+$H_0=[(0,\varepsilon,\mathsf{branch})]$.  Thus, for $u\in\mathcal B$, a
+source enters with the root branch record of the authentic entry.  The
+singleton ambient sources $\alpha$ and $\beta$ remain in $\mathcal T$ with
+their own leaf-root replies and no reached $L/R$ holes; they are not silently
+treated as branch entries and are handled only in the explicitly qualified
+singleton cases below.  For $u\in\mathcal B$, the full INITIAL target at
+$Q=(L,R)$ is the required output of Definitions 112.1 and 112.2, not a
+supplied source-dependent tag: it retains the two numbered holes, the
+complete exterior and the partition of holes by equality of their original
+subtrees.
 An attempted
 Apply has the common guard $G(\gamma,e,H)$ of Contract 112.1a, where $e$ is
 the accepted epoch and $H$ is the complete chronological Read/status
@@ -29,8 +42,9 @@ unchanged.  A Read is a real event, including repeats and absent addresses.
 Stop is absorbing and executes no suffix.  These records, the guard, the
 common apparatus and the reference are part of the service contract.
 
-The complete native service means a finite history-only operation word may
-perform every lawful Read and every continuation required by this contract.
+On this branch-entry domain, the complete native service means a finite
+history-only operation word may perform every lawful Read and every
+continuation required by this contract.
 In particular, the epoch-zero root-first frontier of Definition 112.9 may
 read every reached node and restore the exact finite ordered source before
 any optional Apply.  The source itself, its phase, $W(u)$, a future specimen,
@@ -283,13 +297,25 @@ p_m(n)=\frac{1-\sqrt{1-(1-\delta/w_n)^{2m}}}{2}.
 $$
 
 Proof. The overlap of the tensor powers is
-$(1-\delta/w_n)^m$ by (3.3).  The equal-prior pure-state binary
-discrimination formula gives
+$(1-\delta/w_n)^m$ by (3.3).  Let $\kappa$ be the common tensor factor
+formed by the exact $W$ register, apparatus and reference, allowing the
+reference $\tau$ to be mixed; $\kappa$ is a common density operator.  The
+two inputs are
+$\rho_{U_n}^{(m)}\otimes\kappa$ and $\rho_{V_n}^{(m)}\otimes\kappa$; since
+$\operatorname{tr}\kappa=1$,
+
+$$
+\bigl\|(\rho_{U_n}^{(m)}-\rho_{V_n}^{(m)})\otimes\kappa\bigr\|_1
+=\bigl\|\rho_{U_n}^{(m)}-\rho_{V_n}^{(m)}\bigr\|_1\,\|\kappa\|_1
+=\bigl\|\rho_{U_n}^{(m)}-\rho_{V_n}^{(m)}\bigr\|_1.
+$$
+
+The equal-prior pure-state binary discrimination formula therefore gives
 $p=(1-\sqrt{1-|\langle\psi,\phi\rangle|^{2}})/2$; this is the
 Barnett--Croke result, [arXiv:0810.1970v1, §3.1, equation (12)](https://arxiv.org/html/0810.1970v1),
 under its stated two-state and POVM assumptions.  Substitution yields
-(4.1).  The common exact $W$ and $\tau$ tensor factors do not change the
-overlap. $\square$
+(4.1).  The displayed trace-norm identity shows that the common factor
+leaves the Helstrom minimum unchanged even when $\tau$ is mixed. $\square$
 
 This formula is used only for the bare cut with no source-dependent side
 record, equivalently $\eta_{U_n}=\eta_{V_n}$.  A source-dependent record
@@ -363,8 +389,9 @@ D_{a,b}=\{u\in\mathcal T:a(u)=a,\ b(u)=b\}.
 \tag{5.1}
 $$
 
-This is the entire ordered source fiber, including every binary shape and
-every ordered leaf labeling.  The existing
+This is the entire ordered source fiber in the ambient algebra, including
+every binary shape and every ordered leaf labeling.  When $\ell\ge2$, every
+member is in $\mathcal B$, so the existing
 GenealogicalFiberTransport result supplies
 
 $$
@@ -373,18 +400,23 @@ K_{a,b}=|D_{a,b}|
 \tag{5.2}
 $$
 
-An exact complete service for this fiber is one common CPTP/instrument family
-that, from (1.3), returns every requested original four-valued Read and
-continues with the same actual guard, Apply rule, chronological records and
-absorbing Stop.  It must therefore support the finite epoch-zero traversal
-that reads the root and every reached node.  The traversal's replies encode
-the ordered source uniquely; it is the same paid acquisition supplier used in
-Theorem 112.10, not a free source index.
+An exact complete service for a nondegenerate fiber ($\ell\ge2$) is one
+common CPTP/instrument family that, from (1.3), returns every requested
+original four-valued Read and continues with the same actual guard, Apply
+rule, chronological records and absorbing Stop.  It must therefore support
+the finite epoch-zero traversal that reads the root and every reached node.
+The traversal's replies encode the ordered source uniquely; it is the same
+paid acquisition supplier used in Theorem 112.10, not a free source index.
+For $\ell=1$, the fibers are the singleton cases
+$D_{1,0}=\{\alpha\}$ and $D_{0,1}=\{\beta\}$, with $K_{a,b}=1$; their
+authentic entries are the leaf-root services just stated, and no $Q=(L,R)$
+branch target is asserted for them.
 
 ### 5.2 Orthogonality forced by complete native reading
 
 **Theorem 5.2 (source-dependent orthogonal side record is necessary).**
-Assume the finite-specimen input on $D_{a,b}$ has the form
+For a nondegenerate fiber $\ell\ge2$, assume the finite-specimen input on
+$D_{a,b}$ has the form
 
 $$
 \widetilde\rho_u^{(m)}
@@ -438,10 +470,12 @@ cannot alter this conclusion. $\square$
 $K_{a,b}>1$, the bare boundary specimens with only source-independent
 apparatus ($\dim E=1$) cannot implement exact complete native reading,
 regardless of the number of finite copies.  If $K_{a,b}=1$, the bound is
-vacuous: the fiber contains one source and this particular ambiguity is
-absent.  Thus the blanket statement that every fiber with $\ell\ge2$ fails
-at $d=1$ requires this $K_{a,b}>1$ qualification.  In the witness family,
-$K_{2n+2,2}>1$, so the qualification is always active.
+vacuous: these are exactly the singleton fibers $D_{1,0}=\{\alpha\}$ and
+$D_{0,1}=\{\beta\}$, whose leaf-root reply already identifies the sole
+source and which have no $L/R$ branch ambiguity.  Thus the blanket statement
+that every fiber with $\ell\ge2$ fails at $d=1$ requires this $K_{a,b}>1$
+qualification.  In the witness family, $K_{2n+2,2}>1$, so the qualification
+is always active.
 
 ### 5.3 Conditional attainment and its price boundary
 
@@ -455,8 +489,10 @@ $$
 $$
 
 attains the dimension bound mathematically: measure the label, restore the
-ordered source description, and run the existing Read/Apply/guard/Stop
-contract.  This construction assumes the label's preparation, storage,
+ordered source description, and run the corresponding native
+Read/Apply/guard/Stop contract (the branch-entry contract for $\ell\ge2$ and
+the leaf-root contract for the singleton fibers).  This construction assumes
+the label's preparation, storage,
 protection and control and says nothing about their physical availability,
 runtime, energy, clock conversion or total acquisition price.  It is a
 full-history/orthogonal-source dilation, not a realization of the bare
@@ -477,10 +513,13 @@ encoding has the following precise status.
    finite-copy error (4.1), and the fixed-$m$ error is nonuniform over this
    source family.  Therefore finite bare specimens cannot provide the exact
    native Read on that promise, with its original zero-error event and bill.
-3. Exact complete reading on an entire fixed-composition fiber requires a
-   source-dependent orthogonal side record of dimension at least (5.2).
-   Supplying such a record changes the input cut; it does not prove that the
-   bare boundary marginal is insufficient for every possible quantum model.
+3. Exact complete reading on an entire nondegenerate fixed-composition fiber
+   ($\ell\ge2$) requires a source-dependent orthogonal side record of
+   dimension at least (5.2).  For the singleton fibers $D_{1,0}$ and
+   $D_{0,1}$, $K_{a,b}=1$ and the bound is vacuous; their native leaf-root
+   service has no $L/R$ branch target.  Supplying such a record changes the
+   input cut; it does not prove that the bare boundary marginal is
+   insufficient for every possible quantum model.
 4. A coherent quantum instrument, a purification carrying the source, an
    exact equality register, or a full-history dilation must be stated as an
    additional source-bearing resource.  None is silently identified with the
