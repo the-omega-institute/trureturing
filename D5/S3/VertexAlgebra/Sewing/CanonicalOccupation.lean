@@ -958,7 +958,8 @@ private theorem factorialEnvelope_add_single (D : LatticeData) (B : ℝ)
   unfold factorialEnvelope
   rw [Finsupp.prod_add_index' (by simp) (by intros; exact pow_add _ _ _),
     FactorialFockMetric.weight_add_single]
-  simp only [Finsupp.prod_single_index, pow_one, Nat.cast_mul, Nat.cast_add, Nat.cast_one]
+  rw [Finsupp.prod_single_index (by simp)]
+  simp only [pow_one, Nat.cast_mul, Nat.cast_add, Nat.cast_one]
   field_simp
 
 private theorem factorialEnvelope_sub_le (D : LatticeData) (B : ℝ) (hB : 1 ≤ B)
@@ -1082,17 +1083,19 @@ private theorem ground_column_bound (D : LatticeData) (α β : Charge D) :
         have hleft : ‖if x ∈ d.support then
             wordCoeff D α β [] m (d - Finsupp.single x 1) e' else 0‖ ≤ V := by
           split_ifs with hd
-          · calc
+          · have henv' := factorialEnvelope_nonneg D B (by linarith)
+              (d - Finsupp.single x 1)
+            calc
               _ ≤ L ^ e'.degree * (1 + (level D (d - Finsupp.single x 1) : ℝ)) ^ e'.degree *
                   factorialEnvelope D B (d - Finsupp.single x 1) := hi _ _
               _ ≤ L ^ e'.degree * N ^ e'.degree * (N * factorialEnvelope D B d) := by
                 gcongr
-                · exact_mod_cast Nat.add_le_add_left (occupation_sub_bounds D d x).1 1
+                · dsimp [N]; exact_mod_cast Nat.add_le_add_left (occupation_sub_bounds D d x).1 1
                 · exact factorialEnvelope_sub_le D B hB d x
               _ = V := by dsimp [V]; rw [pow_succ]; ring
           · simpa only [norm_zero] using hV
         have hright : ‖wordCoeff D α β [] (m - (x.2 + 1 : ℕ)) d e'‖ ≤ V := by
-          exact (hi d _).trans (by dsimp [V]; gcongr; exact pow_le_pow_right₀ hN (Nat.le_succ _))
+          exact (hi d _).trans (by dsimp [V]; gcongr; omega)
         rw [← hadd, wordCoeff_nil_add_single]
         calc
           _ ≤ ‖if x ∈ d.support then
@@ -1113,9 +1116,181 @@ private theorem ground_column_bound (D : LatticeData) (α β : Charge D) :
         all_goals exact le_rfl
   exact fun e d m => haux e.degree e rfl d m
 
+private def columnWeight (D : LatticeData) (B : ℝ) (K : ℕ) (d : Occ D) : ℝ :=
+  (1 + (level D d : ℝ)) ^ K * factorialEnvelope D B d
+
+private theorem columnWeight_nonneg (D : LatticeData) (B : ℝ) (hB : 1 ≤ B)
+    (K : ℕ) (d : Occ D) : 0 ≤ columnWeight D B K d :=
+  mul_nonneg (by positivity) (factorialEnvelope_nonneg D B (by linarith) d)
+
+private theorem columnWeight_grow (D : LatticeData) (B : ℝ) (hB : 1 ≤ B)
+    (K J : ℕ) (hK : K ≤ J) (d : Occ D) :
+    columnWeight D B K d ≤ columnWeight D B J d := by
+  apply mul_le_mul_of_nonneg_right _ (factorialEnvelope_nonneg D B (by linarith) d)
+  exact pow_le_pow_right₀ (by have hh := Nat.cast_nonneg (α := ℝ) (level D d); linarith) hK
+
+private theorem columnWeight_sub_le (D : LatticeData) (B : ℝ) (hB : 1 ≤ B)
+    (K : ℕ) (d : Occ D) (x : Index D) :
+    columnWeight D B K (d - Finsupp.single x 1) ≤
+      (1 + (level D d : ℝ)) * columnWeight D B K d := by
+  have henv := factorialEnvelope_nonneg D B (by linarith) (d - Finsupp.single x 1)
+  have henv' := factorialEnvelope_nonneg D B (by linarith) d
+  dsimp [columnWeight]
+  calc
+    _ ≤ (1 + (level D d : ℝ)) ^ K *
+        ((1 + (level D d : ℝ)) * factorialEnvelope D B d) := by
+      apply mul_le_mul
+      · exact pow_le_pow_left₀ (by positivity)
+          (by exact_mod_cast Nat.add_le_add_left (occupation_sub_bounds D d x).1 1) K
+      · exact factorialEnvelope_sub_le D B hB d x
+      · exact henv
+      · positivity
+    _ = _ := by ring
+
+/-- One actual normal-product insertion preserves the factorial column envelope. -/
+private theorem word_column_step (D : LatticeData) (α β : Charge D)
+    (ω : List (Index D)) (x : Index D) (B : ℝ) (hB : 1 ≤ B) (K : ℕ)
+    (C : Occ D → ℝ) (hC : ∀ e, 0 ≤ C e)
+    (hcol : ∀ (e d : Occ D) (m : ℤ),
+      ‖wordCoeff D α β ω m d e‖ ≤ C e * columnWeight D B (K + e.degree) d) (e : Occ D) :
+    ∃ S : ℝ, 0 ≤ S ∧ ∀ (d : Occ D) (m : ℤ),
+      ‖wordCoeff D α β (x :: ω) m d e‖ ≤
+        S * columnWeight D B ((K + (x.2 + 2)) + e.degree) d := by
+  classical
+  let Z : ℝ := ‖(bilinear D (unitCharge D x.1) β : ℂ)‖
+  let T : ℕ → ℝ := fun j => (j.choose x.2 : ℝ) *
+    (if j < x.2 then 0 else if j = x.2 then Z * C e
+    else ‖((j : ℤ) - x.2 : ℂ)‖ *
+      ∑ a : Fin D.rank, ‖(D.G x.1 a : ℂ)‖ * (e (a, j - x.2 - 1) : ℝ) *
+        C (e - Finsupp.single (a, j - x.2 - 1) 1))
+  let S : ℝ := ∑ j ∈ Finset.range (x.2 + level D e + 1), T j
+  have hCe := hC e
+  have hT (j : ℕ) : 0 ≤ T j := by
+    dsimp [T]
+    apply mul_nonneg (Nat.cast_nonneg _)
+    split_ifs
+    · exact le_rfl
+    · exact mul_nonneg (norm_nonneg _) hCe
+    · apply mul_nonneg (norm_nonneg _)
+      exact Finset.sum_nonneg (fun a ha =>
+        mul_nonneg (mul_nonneg (norm_nonneg _) (Nat.cast_nonneg _)) (hC _))
+  have hS : 0 ≤ S := Finset.sum_nonneg (fun j hj => hT j)
+  refine ⟨C e + S, add_nonneg hCe hS, ?_⟩
+  intro d m
+  let N : ℝ := 1 + (level D d : ℝ)
+  let W : ℝ := columnWeight D B (K + e.degree) d
+  have hW : 0 ≤ W := columnWeight_nonneg D B hB _ d
+  have hN : 1 ≤ N := by dsimp [N]; have hh := Nat.cast_nonneg (α := ℝ) (level D d); linarith
+  have hshift (a : Fin D.rank) (n : ℕ) (m' : ℤ) :
+      ‖wordCoeff D α β ω m' d (e - Finsupp.single (a,n) 1)‖ ≤
+        C (e - Finsupp.single (a,n) 1) * W :=
+    (hcol _ d m').trans (mul_le_mul_of_nonneg_left
+      (columnWeight_grow D B hB _ _ (Nat.add_le_add_left (occupation_sub_bounds D e (a,n)).2 K) d)
+      (hC _))
+  have hpos (j : ℕ) :
+      ‖(-1 : ℂ) ^ x.2 * (j.choose x.2 : ℂ) *
+        (if j < x.2 then 0 else if j = x.2 then
+          (bilinear D (unitCharge D x.1) β : ℂ) * wordCoeff D α β ω (m - j - 1) d e
+        else ((j : ℤ) - x.2 : ℂ) *
+          ∑ a : Fin D.rank, (D.G x.1 a : ℂ) * (e (a, j - x.2 - 1) : ℂ) *
+            wordCoeff D α β ω (m - j - 1) d (e - Finsupp.single (a, j - x.2 - 1) 1))‖ ≤
+        T j * W := by
+    simp only [norm_mul, norm_pow, norm_neg, norm_one, one_pow, one_mul,
+      Complex.norm_natCast, T]
+    rw [mul_assoc]
+    apply mul_le_mul_of_nonneg_left _ (Nat.cast_nonneg _)
+    split_ifs with hlt heq
+    · simp
+    · rw [norm_mul]
+      simpa only [mul_assoc] using mul_le_mul_of_nonneg_left (hcol e d _) (norm_nonneg (bilinear D (unitCharge D x.1) β : ℂ))
+    · rw [norm_mul, mul_assoc]
+      apply mul_le_mul_of_nonneg_left _ (norm_nonneg _)
+      calc
+        _ ≤ ∑ a : Fin D.rank,
+            ‖(D.G x.1 a : ℂ)‖ * (e (a, j - x.2 - 1) : ℝ) *
+              ‖wordCoeff D α β ω (m - j - 1) d (e - Finsupp.single (a, j - x.2 - 1) 1)‖ :=
+          (norm_sum_le _ _).trans (le_of_eq (by simp))
+        _ ≤ ∑ a : Fin D.rank, ‖(D.G x.1 a : ℂ)‖ * (e (a, j - x.2 - 1) : ℝ) *
+            (C (e - Finsupp.single (a, j - x.2 - 1) 1) * W) := by
+          apply Finset.sum_le_sum
+          intro a ha
+          exact mul_le_mul_of_nonneg_left (hshift a _ _) (by positivity)
+        _ = _ := by rw [Finset.sum_mul]; congr 1; funext a; ring
+  have hneg (j : ℕ) (hj : j < level D d) :
+      ‖((j + x.2).choose x.2 : ℂ) *
+        if (x.1, j + x.2) ∈ d.support then
+          wordCoeff D α β ω (m + j) (d - Finsupp.single (x.1, j + x.2) 1) e else 0‖ ≤
+        C e * N ^ (x.2 + 1) * W := by
+    have hchoose : ((j + x.2).choose x.2 : ℝ) ≤ N ^ x.2 := by
+      calc
+        _ ≤ (j + 1 : ℝ) ^ x.2 := by exact_mod_cast Nat.choose_add_le_add_one_pow j x.2
+        _ ≤ N ^ x.2 := pow_le_pow_left₀ (by positivity)
+          (by dsimp [N]; exact_mod_cast (show j + 1 ≤ 1 + level D d by omega)) _
+    rw [norm_mul, Complex.norm_natCast]
+    split_ifs with hd
+    · have hh := (hcol e _ (m + j)).trans
+        (mul_le_mul_of_nonneg_left (columnWeight_sub_le D B hB _ d (x.1, j + x.2)) hCe)
+      calc
+        _ ≤ N ^ x.2 * (C e * (N * W)) :=
+          mul_le_mul hchoose hh (norm_nonneg _) (by positivity)
+        _ = _ := by rw [pow_succ]; ring
+    · simp only [norm_zero, mul_zero]; positivity
+  rw [wordCoeff_cons]
+  calc
+    _ ≤ (∑ j ∈ Finset.range (level D d),
+        ‖((j + x.2).choose x.2 : ℂ) *
+          if (x.1, j + x.2) ∈ d.support then
+            wordCoeff D α β ω (m + j) (d - Finsupp.single (x.1, j + x.2) 1) e else 0‖) +
+      ∑ j ∈ Finset.range (x.2 + level D e + 1),
+        ‖(-1 : ℂ) ^ x.2 * (j.choose x.2 : ℂ) *
+          (if j < x.2 then 0 else if j = x.2 then
+            (bilinear D (unitCharge D x.1) β : ℂ) * wordCoeff D α β ω (m - j - 1) d e
+          else ((j : ℤ) - x.2 : ℂ) *
+            ∑ a : Fin D.rank, (D.G x.1 a : ℂ) * (e (a, j - x.2 - 1) : ℂ) *
+              wordCoeff D α β ω (m - j - 1) d (e - Finsupp.single (a, j - x.2 - 1) 1))‖ :=
+      (norm_add_le _ _).trans (add_le_add (norm_sum_le _ _) (norm_sum_le _ _))
+    _ ≤ (level D d : ℝ) * (C e * N ^ (x.2 + 1) * W) + S * W := by
+      apply add_le_add
+      · exact (Finset.sum_le_sum (fun j hj => hneg j (Finset.mem_range.mp hj))).trans (by simp)
+      · rw [Finset.sum_mul]
+        exact Finset.sum_le_sum (fun j hj => hpos j)
+    _ ≤ N * (C e * N ^ (x.2 + 1) * W) + S * W := by
+      gcongr
+      dsimp [N]
+      linarith
+    _ = C e * columnWeight D B ((K + (x.2 + 2)) + e.degree) d + S * W := by
+      dsimp [columnWeight, W, N]
+      rw [show K + (x.2 + 2) + e.degree = (K + e.degree) + (x.2 + 2) by omega,
+        pow_add, pow_succ (1 + (level D d : ℝ)) (x.2 + 1)]
+      ring
+    _ ≤ _ := by
+      rw [add_mul]
+      apply add_le_add_left
+      exact mul_le_mul_of_nonneg_left (columnWeight_grow D B hB _ _ (by omega) d) hS
+
+/-- Every actual descendant word has a factorial column envelope in every signed mode. -/
+private theorem word_column_bound (D : LatticeData) (α β : Charge D) :
+    ∃ B : ℝ, 1 ≤ B ∧ ∀ ω : List (Index D), ∃ K : ℕ, ∀ e : Occ D,
+      ∃ C : ℝ, 0 ≤ C ∧ ∀ (d : Occ D) (m : ℤ),
+        ‖wordCoeff D α β ω m d e‖ ≤ C * columnWeight D B (K + e.degree) d := by
+  classical
+  obtain ⟨B, L, hB, hL, hbase⟩ := ground_column_bound D α β
+  refine ⟨B, hB, ?_⟩
+  intro ω
+  induction ω with
+  | nil =>
+    refine ⟨0, fun e => ⟨L ^ e.degree, by positivity, ?_⟩⟩
+    intro d m
+    simpa [columnWeight, mul_assoc] using hbase e d m
+  | cons x ω ih =>
+    obtain ⟨K, hi⟩ := ih
+    choose C hC hb using hi
+    exact ⟨K + (x.2 + 2), fun e => word_column_step D α β ω x B hB K C hC hb e⟩
+
 #print axioms creation_coefficient_factorial
 #print axioms creation_radial_bound
 #print axioms creation_occupation_summable
+#print axioms word_column_bound
 #print axioms ground_column_bound
 #print axioms word_row_bound
 #print axioms ground_row_bound
