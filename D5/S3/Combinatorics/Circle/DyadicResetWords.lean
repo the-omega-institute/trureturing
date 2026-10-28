@@ -106,7 +106,7 @@ theorem word_of_allocation {α : Type*} [DecidableEq α]
   calc
     packets P ++ T ~ (P.flatMap Prod.fst ++ P.map Prod.snd) ++ T := hpack.append_right T
     _ ~ (P.flatMap Prod.fst ++ T) ++ P.map Prod.snd := by
-      simpa only [L, List.append_assoc] using
+      simpa only [List.append_assoc] using
         (List.Perm.refl (P.flatMap Prod.fst)).append (List.perm_append_comm :
           (P.map Prod.snd ++ T).Perm (T ++ P.map Prod.snd))
     _ ~ S.toList ++ Z := by rw [hF, hZ]; exact hFP.append_right Z
@@ -324,6 +324,7 @@ theorem allocation_of_strip {α : Type*} [DecidableEq α]
   · intro a ha; exact hpos a (List.mem_toFinset.mp ha)
   · have hal := allocation_of_blocks f e P T M (mass f T).toNat
       (heq ▸ hW) hP hT htcast.symm (fun a ha => powers a (hpos a ha))
-    simpa only [Z, L, List.length_map] using hal
+    have hlen : P.length = Z.length := by simp [Z]
+    exact hlen ▸ hal
 
 end D5.S3.Combinatorics.Circle.DyadicResetWords
