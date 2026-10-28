@@ -104,7 +104,59 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.optimizer`
 
 For real b and x, let v(x) be the same inverse integral coordinate applied to log(x), and let vb=scalarRoot(b). The profile optimizer(b,x) is x squared times polynomial(b,v(x)), divided by 8 vb polynomial(b,vb). Its existence uses no differential equation solution or normalization hypothesis.
 
-**Theorem 1.8 (Existence and uniqueness of the original scalar root).**
+**Definition 1.8 (The original square-root reciprocal defect density).**
+
+Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.energyDensity`
+
+*Formalization.* `D5/S3/Analytic/Variational/JointReciprocalFunctional.energyDensity` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For b and a real density u, let U be its cumulative mass, let X be the inverse of the constructed optimizer primitive, and put Y(x)=X(U(x)). The energyDensity is u(x)[sqrt(x)/u(x)-sqrt(Y(x))/optimizer(b,Y(x))]^2. The equivalent calibration formula uses (2/3)Q(U(x)) for the second reciprocal. This density is interval integrable for every normalized admissible u, as asserted by normalized_stability; global_stability applies it to u/mass(u).
+
+**Definition 1.9 (The calibrated reciprocal square energy).**
+
+Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.energy`
+
+*Formalization.* `D5/S3/Analytic/Variational/JointReciprocalFunctional.energy` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For b and a real density u, write U(x)=primitive(u,x), let W be the constructed optimizer primitive, and let X be its inverse on its positive open domain. Put Y(x)=X(U(x)). Energy is the interval integral on [1,2] of u(x)[sqrt(x)/u(x)-sqrt(Y(x))/optimizer(b,Y(x))]^2. Equivalently, the second term is (2/3)Q(U(x)), where Q(r)=3sqrt(X(r))/(2optimizer(b,X(r))). Integrability and nonnegativity are conclusions for admissible normalized competitors, rather than conventions for the integral.
+
+**Theorem 1.10 (Quantitative comparison and normalized a.e. uniqueness).**
+
+Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.normalized_stability`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Variational/JointReciprocalFunctional.normalized_stability` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real b with 0<b<=1 and every admissible measurable u with mass one, the energy density is interval integrable, E=energy(b,u)>=0, and C+bE<=cost(b,u), where C=sharpConstant(b). The coefficient is exactly b in the reciprocal square-root coordinates. Moreover, E=0 if and only if u=optimizer(b) almost everywhere for volume restricted to [1,2], and cost(b,u)=C if and only if the same a.e. identity holds. The endpoint b=1, individual density bounds, and null-set changes of representative are included.
+
+The measurable calibration theorem supplies the integrable remainder and the zero-energy transport equation Z(U(x))=x sqrt(x) on all of [1,2]. Since t sqrt(t) is strictly increasing on the positive axis, X(U(x))=x. Combining this with the a.e. reciprocal slope equation gives u(x)=optimizer(b,x) a.e. In the reverse direction, a.e. equality gives equality of every initial cumulative integral, hence zero energy and the exact optimizer cost. No regularity, monotonicity, or common bound on the competitor is added.
+
+**Theorem 1.11 (Global product remainder and all positive scalar optimizers).**
+
+Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.global_stability`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Variational/JointReciprocalFunctional.global_stability` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every b with 0<b<=1 and every admissible measurable u, A=mass(u)>0. Set v(x)=u(x)/A. Its energy density is interval integrable, energy(b,v)>=0, and b energy(b,v)<=A cost(b,u)-C. Product equality A cost(b,u)=C holds if and only if u(x)=A optimizer(b,x) a.e. on [1,2]. Equivalently, it holds exactly when u is a positive scalar multiple of the optimizer a.e. The coefficient, domain and null-set convention are those of normalized_stability.
+
+Positive scaling preserves admissibility, multiplies mass and cumulative mass by the scale, and divides cost by it. Apply normalized stability to v. A positive scalar representative has mass equal to its scale, which proves both directions of the full equality characterization. The original sharp attained variational theorem uses the resulting nonnegative remainder bound. No positive arithmetic separation follows from step shape: positive increasing step approximations can approach the smooth analytic optimizer. The arithmetic signed strict upper, Robin above 5040, and the Riemann hypothesis are not established by these analytic results.
+
+**Theorem 1.12 (Existence and uniqueness of the original scalar root).**
 
 Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.exists_unique_scalar_root`
 
@@ -118,7 +170,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.exists_uni
 
 For every real b with 0<b<=1, there is exactly one real v with 0<v<upperRoot(b) and coordinate(b,v)=log(2). The proof factors the denominator as 6[upperRoot(b)-v][v+lowerRoot(b)], identifies a logarithmic antiderivative, proves its divergence at the positive root, and uses strict monotonicity and the intermediate value theorem. The endpoint b=1 remains in scope.
 
-**Theorem 1.9 (Smooth construction, normalization and exact cost).**
+**Theorem 1.13 (Smooth construction, normalization and exact cost).**
 
 Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.constructed_profile`
 
@@ -132,7 +184,7 @@ Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.constructe
 
 For every real b with 0<b<=1, scalarRoot(b) is positive, is less than upperRoot(b), solves the original integral equation, and sharpConstant(b)>0. There is an open subset s of the real line containing [1,2] on which optimizer(b) is infinitely continuously differentiable, positive and strictly increasing. This profile is admissible, has mass one, and has cost exactly sharpConstant(b). To obtain smoothness, local inverse uniqueness identifies the chosen inverse with the smooth local inverses. Direct differentiation of x optimizer(b,x) v(x) gives optimizer(b,x), proving normalization. Direct differentiation of x squared times [b v(x)+2v(x) squared] divided by optimizer(b,x) gives the full cost density, and its endpoint difference is the exact value. For every admissible function u, the individual upper and positive lower bounds imply integrability of u and x/u. The cumulative mass is continuous on [1,2], and its boundedness together with the positive lower bound gives integrability of primitive(u,x)/(u(x)^2). These integral facts are used in the cost calculation. The sharp variational theorem compares this profile with every admissible measurable competitor.
 
-**Theorem 1.10 (Sharp attained variational values on the full measurable class).**
+**Theorem 1.14 (Sharp attained variational values on the full measurable class).**
 
 Lean statement: `D5/S3/Analytic/Variational/JointReciprocalFunctional.sharp_joint_variational`
 
@@ -150,18 +202,23 @@ For mass-one competitors, U is absolutely continuous with derivative u almost ev
 
 For nonnegative r and q and positive z, Z and Q, the functional density F(r,z,q)=4bq squared/9+8rq cubed/(27z) lies above its tangent plane at (Z,Q). The cubic tangent gap follows from two polynomial cases: if q<=Q/3 all remaining terms are nonnegative; otherwise four times the denominator-cleared gap is Q times (2Qz-3qZ+QZ) squared plus Z squared times (q-Q) squared times (4q-Q). The quadratic tangent gap is 4b(q-Q) squared/9.
 
-The comparison function V(x)=M(U(x)) times [x sqrt(x)-Z(U(x))/2] is absolutely continuous: the calibration coefficients are smooth on a neighborhood of the compact range of U and therefore Lipschitz there. The a.e. chain and product rules and the tangent inequality give V'(x)<=b x/u(x)+U(x)/u(x) squared. The endpoint difference equals the difference of M(W(x))*x sqrt(x)/2 at 2 and 1. Direct differentiation of this latter smooth function gives the profile cost density, so the fundamental theorem of calculus proves cost(b,u)>=C. All integrability facts follow from the original bounds. Positive scaling then removes normalization. Finally, mass(u)>0 and the square (2 mass(u)-sqrt(C)) squared combine with the product bound to give 4 mass(u)+cost(b,u)>=4 sqrt(C); the stated scaled profile attains equality. These are analytic variational values, with no claim of arithmetic attainability, a strict Robin inequality above 5040, or the Riemann hypothesis.
+The comparison function V(x)=M(U(x)) times [x sqrt(x)-Z(U(x))/2] is absolutely continuous: the calibration coefficients are smooth on a neighborhood of the compact range of U and therefore Lipschitz there. The a.e. chain and product rules retain the square remainder: V'(x)+b u(x)[sqrt(x)/u(x)-(2/3)Q(U(x))] squared<=b x/u(x)+U(x)/u(x) squared. The endpoint difference equals the difference of M(W(x))*x sqrt(x)/2 at 2 and 1. Direct differentiation of this latter smooth function gives the profile cost density, so the fundamental theorem of calculus proves cost(b,u)>=C+b energy(b,u). The zero-energy transport and all a.e. equality cases are stated in normalized_stability and global_stability. All integrability facts follow from the original bounds. Positive scaling then removes normalization. Finally, mass(u)>0 and the square (2 mass(u)-sqrt(C)) squared combine with the product bound to give 4 mass(u)+cost(b,u)>=4 sqrt(C); the stated scaled profile attains equality. These are analytic variational values, with no claim of arithmetic attainability, a strict Robin inequality above 5040, or the Riemann hypothesis.
 
 ## References
 
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.Admissible`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.constructed_profile`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.cost`
+- Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.energy`
+- Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.energyDensity`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.exists_unique_scalar_root`
+- Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.global_stability`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.mass`
+- Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.normalized_stability`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.optimizer`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.primitive`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.scalarRoot`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.sharpConstant`
 - Truth anchor: `D5/S3/Analytic/Variational/JointReciprocalFunctional.sharp_joint_variational`
 - Dependency: [D5/S3/Analytic/Variational/JointReciprocalScalarCoordinate](JointReciprocalScalarCoordinate.md)
+- Dependency: [D5/S3/Analytic/Variational/MeasurableJointCalibration](MeasurableJointCalibration.md)
