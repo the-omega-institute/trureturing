@@ -52,7 +52,7 @@ private theorem signature_eq_indices {Q : Matrix V V ℝ} (hQ : Q.IsHermitian) :
     signature Q = (posIndex hQ : ℤ) - (negIndex hQ : ℤ) := by
   classical
   simp [signature, posIndex, negIndex, hQ.roots_charpoly_eq_eigenvalues,
-    Multiset.filter_map, Function.comp_def]
+    Multiset.filter_map, Finset.card_def, Finset.filter_val]
 
 private theorem posIndex_le_of_form {A B : Matrix V V ℝ}
     (hA : A.IsHermitian) (hB : B.IsHermitian)
@@ -83,7 +83,7 @@ theorem result (F G H : SimpleGraph V) (_partition : IsEdgePartition F G H)
       ext i j
       simp only [mixedMatrix, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul]
       field_simp
-      <;> ring
+      ring
     rw [hid, hermForm_add, hscale, hscale]
     exact add_pos_of_pos_of_nonneg (mul_pos (div_pos hs ht) hx)
       (mul_nonneg (sub_nonneg.mpr ((div_le_one ht).mpr hst)) (hL x))
@@ -99,7 +99,7 @@ theorem result (F G H : SimpleGraph V) (_partition : IsEdgePartition F G H)
       simp only [mixedMatrix, Matrix.neg_apply, Matrix.add_apply,
         Matrix.smul_apply, smul_eq_mul]
       field_simp
-      <;> ring
+      ring
     rw [hid, hermForm_add, hscale, hscale]
     exact add_pos_of_pos_of_nonneg (mul_pos (div_pos ht hs) hx)
       (mul_nonneg (sub_nonneg.mpr ((one_le_div hs).mpr hst)) (hL x))
