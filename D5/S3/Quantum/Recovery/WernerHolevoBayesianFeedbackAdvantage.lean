@@ -4,9 +4,12 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Bayesian feedback beats Markovian feedback for Matrix (Fin 3) (Fin 3) ℂ Werner--Holevo. -/
+   digest: Bayesian feedback beats Markovian feedback for the qutrit Werner--Holevo channel. -/
 
-import D5.S3.Quantum.Foundation.FiniteTraceDistance
+import Mathlib.Analysis.Matrix.Order
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.Module
 
 /-! The qutrit Werner--Holevo channel separates Bayesian and Markovian feedback. -/
 
@@ -20,25 +23,27 @@ open Matrix
 namespace D5.S3.Quantum.Recovery.WernerHolevoBayesianFeedbackAdvantage
 
 /-- The Matrix (Fin 3) (Fin 3) ℂ Werner--Holevo (transpose-depolarizing) channel. -/
-def whChannel (X : Matrix (Fin 3) (Fin 3) ℂ) : Matrix (Fin 3) (Fin 3) ℂ :=
-  (1 / 2 : ℂ) • (X.trace • (1 : Matrix (Fin 3) (Fin 3) ℂ) - X.transpose)
+def whChannel (x : Matrix (Fin 3) (Fin 3) ℂ) : Matrix (Fin 3) (Fin 3) ℂ :=
+  (1 / 2 : ℂ) • (x.trace • (1 : Matrix (Fin 3) (Fin 3) ℂ) - x.transpose)
 
 /-- A finite Kraus family represents the Werner--Holevo channel. -/
-def IsKrausDecomposition {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ) : Prop :=
-  ∀ X : Matrix (Fin 3) (Fin 3) ℂ, ∑ a, K a * X * (K a)ᴴ = whChannel X
+def IsKrausDecomposition {m : ℕ} (k : Fin m → Matrix (Fin 3) (Fin 3) ℂ) : Prop :=
+  ∀ x : Matrix (Fin 3) (Fin 3) ℂ, ∑ a, k a * x * (k a)ᴴ = whChannel x
 
-/-- Matrix absolute value, defined by the positive square root of `Tᴴ * T`. -/
-def absMat (T : Matrix (Fin 3) (Fin 3) ℂ) : Matrix (Fin 3) (Fin 3) ℂ := CFC.sqrt (Tᴴ * T)
+/-- Matrix absolute value, defined by the positive square root of `tᴴ * t`. -/
+def absMat (t : Matrix (Fin 3) (Fin 3) ℂ) : Matrix (Fin 3) (Fin 3) ℂ := CFC.sqrt (tᴴ * t)
 
 /-- The two-step Markovian feedback fidelity from the source. -/
-def markovFidelity {m₁ m₂ : ℕ} (K₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ) (K₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ) : ℝ :=
+def markovFidelity {m₁ m₂ : ℕ} (k₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ)
+    (k₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ) : ℝ :=
   (1 / 9 : ℝ) * ∑ a, ∑ b,
-    (((absMat (K₂ b) * absMat (K₁ a)).trace).re) ^ 2
+    (((absMat (k₂ b) * absMat (k₁ a)).trace).re) ^ 2
 
 /-- The two-step Bayesian feedback fidelity from the source. -/
-def bayesFidelity {m₁ m₂ : ℕ} (K₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ) (K₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ) : ℝ :=
+def bayesFidelity {m₁ m₂ : ℕ} (k₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ)
+    (k₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ) : ℝ :=
   (1 / 9 : ℝ) * ∑ a, ∑ b,
-    (((absMat (K₂ b * absMat (K₁ a))).trace).re) ^ 2
+    (((absMat (k₂ b * absMat (k₁ a))).trace).re) ^ 2
 
 private def crossProduct (z : Fin 3 → ℂ) : Matrix (Fin 3) (Fin 3) ℂ := fun i j =>
   if i.val = 0 then
@@ -71,9 +76,9 @@ private def euclideanNorm (z : Fin 3 → ℂ) : ℝ := Real.sqrt (q z)
 private theorem quad_identity (K : Matrix (Fin 3) (Fin 3) ℂ) (x : Fin 3 → ℂ) :
     star (star x) ⬝ᵥ ((K * Matrix.vecMulVec x (star x) * Kᴴ) *ᵥ (star x)) =
       quad K x * star (quad K x) := by
-  simp [quad, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul,
-    Matrix.vecMulVec_mulVec, dotProduct, Matrix.mulVec, Matrix.vecMul,
-    Matrix.vecMulVec_apply, Matrix.conjTranspose_apply, Finset.mul_sum,
+  simp only [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.vecMulVec_mulVec]
+  unfold quad Matrix.mulVec Matrix.vecMul dotProduct
+  simp [Matrix.vecMulVec_apply, Matrix.conjTranspose_apply, Finset.mul_sum,
     Finset.sum_mul, star_mul, star_sum, star_star, Fin.sum_univ_succ]
   ring
 
@@ -90,8 +95,8 @@ private theorem quad_sum_zero {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) �
     exact quad_identity (K a) x
   rw [hleft] at he
   have hright : star (star x) ⬝ᵥ (whChannel (Matrix.vecMulVec x (star x)) *ᵥ (star x)) = 0 := by
-    simp [whChannel, Matrix.vecMulVec_apply, dotProduct, Matrix.mulVec,
-      Matrix.trace, Matrix.transpose_apply, Fin.sum_univ_succ, Complex.star_def,
+    unfold whChannel Matrix.trace Matrix.mulVec dotProduct
+    simp [Matrix.vecMulVec_apply, Matrix.transpose_apply, Fin.sum_univ_succ, Complex.star_def,
       Complex.conj_ofReal]
     ring
   rw [hright] at he
@@ -116,14 +121,16 @@ private theorem quad_zero {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
 private theorem diag_zero {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
     (hK : IsKrausDecomposition K) (a : Fin m) (i : Fin 3) : K a i i = 0 := by
   have hh := quad_zero K hK (basisVector i) a
-  simpa [quad, basisVector, dotProduct, Matrix.mulVec, Fin.sum_univ_succ] using hh
+  unfold quad Matrix.mulVec dotProduct at hh
+  simpa [basisVector, Fin.sum_univ_succ] using hh
 
 private theorem offdiag_zero {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
     (hK : IsKrausDecomposition K) (a : Fin m) (i j : Fin 3) (hij : i ≠ j) :
     K a i j + K a j i = 0 := by
   have hh := quad_zero K hK (fun k => basisVector i k + basisVector j k) a
+  unfold quad Matrix.mulVec dotProduct at hh
   fin_cases i <;> fin_cases j <;>
-    simp_all [quad, basisVector, dotProduct, Matrix.mulVec, Fin.sum_univ_succ,
+    simp_all [basisVector, Fin.sum_univ_succ,
       diag_zero K hK a] <;> simpa [add_comm] using hh
 
 private theorem tp {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
@@ -131,8 +138,9 @@ private theorem tp {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
       (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
   ext i j
   have he := congrArg Matrix.trace (hK (Matrix.single j i 1))
+  unfold whChannel Matrix.trace at he
   fin_cases i <;> fin_cases j <;>
-    simp [whChannel, Matrix.trace, Matrix.sum_apply, Matrix.mul_apply,
+    simp [Matrix.sum_apply, Matrix.mul_apply,
       Matrix.conjTranspose_apply, Matrix.single_apply, Fin.sum_univ_succ,
       diag_zero K hK] at he ⊢ <;>
     convert he using 1 <;>
@@ -317,8 +325,9 @@ private theorem abs_crossProduct (z : Fin 3 → ℂ) :
     have hV : Matrix.vecMulVec z (star z) * Matrix.vecMulVec z (star z) =
         (q z : ℂ) • Matrix.vecMulVec z (star z) := by
       rw [Matrix.vecMulVec_mul_vecMulVec]
+      unfold dotProduct
       ext i j
-      simp [q, Matrix.vecMulVec_apply, dotProduct,
+      simp [q, Matrix.vecMulVec_apply,
         Complex.normSq_eq_conj_mul_self, Complex.star_def, Fin.sum_univ_succ]
       ring
     have hq : 0 < q z := by
@@ -358,6 +367,7 @@ private theorem abs_crossProduct (z : Fin 3 → ℂ) :
 private theorem vec_trace (z : Fin 3 → ℂ) :
     (Matrix.vecMulVec z (star z)).trace = (q z : ℂ) := by
   rw [Matrix.trace_vecMulVec]
+  unfold dotProduct
   simp only [q, Complex.normSq_eq_conj_mul_self, Complex.star_def, Complex.ofReal_sum]
   apply Finset.sum_congr rfl
   intro i hi
@@ -588,7 +598,8 @@ private theorem frame_q_sum {m : ℕ} (z : Fin m → Fin 3 → ℂ)
   simp_rw [Matrix.trace_vecMulVec] at htr
   rw [Matrix.trace_one] at htr
   have htrr := congrArg Complex.re htr
-  simp [q, dotProduct, Complex.normSq_eq_conj_mul_self, Complex.star_def] at htrr
+  unfold dotProduct at htrr
+  simp [Complex.normSq_eq_conj_mul_self, Complex.star_def] at htrr
   exact_mod_cast htrr
 
 private theorem frame_inner_sum {m₁ m₂ : ℕ} (z : Fin m₁ → Fin 3 → ℂ)
@@ -618,7 +629,8 @@ private theorem frame_inner_sum {m₁ m₂ : ℕ} (z : Fin m₁ → Fin 3 → �
   simp_rw [hrow]
   exact frame_q_sum z hz
 
-private theorem markov_bound {m₁ m₂ : ℕ} (K₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ) (K₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ)
+private theorem markov_bound {m₁ m₂ : ℕ} (K₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ)
+    (K₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ)
     (h₁ : IsKrausDecomposition K₁) (h₂ : IsKrausDecomposition K₂) :
     markovFidelity K₁ K₂ ≤ 1 / 2 := by
   obtain ⟨z, hrz, hfz⟩ := kraus_classification K₁ h₁
@@ -655,11 +667,12 @@ private theorem canonical_is_kraus : IsKrausDecomposition canonicalKraus := by
     norm_num [pow_two, Complex.ext_iff, Complex.mul_re, Complex.mul_im,
       Complex.ofReal_re, Complex.ofReal_im, Real.sq_sqrt]
   intro X
+  unfold whChannel Matrix.trace
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [canonicalKraus, crossProduct, basisVector, whChannel,
+    simp [canonicalKraus, crossProduct, basisVector,
       Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.transpose_apply,
-      Matrix.trace, Fin.sum_univ_succ] <;>
+      Fin.sum_univ_succ] <;>
     simp only [← mul_assoc, ← pow_two, hs] <;> ring
 
 private theorem rotation_is_kraus : IsKrausDecomposition rotationKraus := by
@@ -675,11 +688,12 @@ private theorem rotation_is_kraus : IsKrausDecomposition rotationKraus := by
     rw [← Complex.star_def]
     norm_num
   intro X
+  unfold whChannel Matrix.trace
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [rotationKraus, rotationVector, crossProduct, whChannel,
+    simp [rotationKraus, rotationVector, crossProduct,
       Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.transpose_apply,
-      Matrix.trace, Fin.sum_univ_succ, Complex.conj_ofReal, h2, h3] <;>
+      Fin.sum_univ_succ, Complex.conj_ofReal, h2, h3] <;>
     simp only [← mul_assoc, ← pow_two, hs] <;> ring
 
 private theorem abs_canonical (i : Fin 3) :
@@ -762,15 +776,16 @@ private theorem bayesian_witness : 1 / 2 < bayesFidelity canonicalKraus rotation
 This answers the source's request with a unital channel, hence not an amplitude
 damping channel. -/
 theorem result :
-    (∀ (m₁ m₂ : ℕ) (K₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ) (K₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ),
-      IsKrausDecomposition K₁ → IsKrausDecomposition K₂ →
-        markovFidelity K₁ K₂ ≤ 1 / 2) ∧
-    (∃ L₁ : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ, ∃ L₂ : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ,
-      IsKrausDecomposition L₁ ∧ IsKrausDecomposition L₂ ∧
-        1 / 2 < bayesFidelity L₁ L₂) := by
+    (∀ (m₁ m₂ : ℕ) (k₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ)
+      (k₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ),
+      IsKrausDecomposition k₁ → IsKrausDecomposition k₂ →
+        markovFidelity k₁ k₂ ≤ 1 / 2) ∧
+    (∃ l₁ : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ, ∃ l₂ : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ,
+      IsKrausDecomposition l₁ ∧ IsKrausDecomposition l₂ ∧
+        1 / 2 < bayesFidelity l₁ l₂) := by
   constructor
-  · intro m₁ m₂ K₁ K₂ h₁ h₂
-    exact markov_bound K₁ K₂ h₁ h₂
+  · intro m₁ m₂ k₁ k₂ h₁ h₂
+    exact markov_bound k₁ k₂ h₁ h₂
   · exact ⟨canonicalKraus, rotationKraus, canonical_is_kraus, rotation_is_kraus,
       bayesian_witness⟩
 
