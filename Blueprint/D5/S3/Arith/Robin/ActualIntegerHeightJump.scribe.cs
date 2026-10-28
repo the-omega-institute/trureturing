@@ -19,6 +19,17 @@ internal sealed class ActualIntegerHeightJumpDocument : IScribeDocumentDefinitio
                     + "totalized by Lean at zero; arithmetic applications below prove positivity of n."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("actual-divisor-log-le-log"),
+                DeclarationHandle.Create(Prefix + "divisor_log_le_log"),
+                H("The divisor-sum logarithm is bounded by log n"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every positive natural n, the actual divisor-sum logarithm satisfies "
+                    + "divisorLog(n) <= log(n). The proof uses positivity of sigma(1,n)/n, "
+                    + "the logarithm monotonicity, and the elementary bound sigma(1,n)<=n^2. "
+                    + "This owner theorem is reused by the actual least-crossing record."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-robin-height"), DeclarationHandle.Create(Prefix + "actualHeight"),
                 H("The original scaled excess"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

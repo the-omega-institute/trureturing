@@ -3544,3 +3544,295 @@ source parameters or different leakage families, are outside this
 exact observation quotient.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 116. A finite nuisance-independent modulus for the original weighted rows
+
+**Definition 116.1 (The fixed lift and its actual probability rows).**
+Fix one allowed source $\mathfrak s$ of Definition 114.1. Regard
+
+$$
+\mathscr V=\operatorname{Herm}_3\oplus\operatorname{Herm}_3
+             \oplus M_3(\mathbb C)
+$$
+
+as a real vector space. For $Q\in U(3)$ and
+$(X,Y,Z)\in\mathscr V$, put
+
+$$
+\Phi_Q(X,Y,Z)=Q^\dagger XQ+W(Q^\dagger YQ)W
+ +W(Q^\dagger ZQ)+(Q^\dagger Z^\dagger Q)W .
+\tag{116.1}
+$$
+
+For every actual prefix $u_i$ and every finite actual intermediate
+history $w$, let $Q_w=C_wV_0$ and $a_w=2^{-k(w)}$ as in
+Definition 107.1, and define the real row
+
+$$
+q_{i,w}(X,Y,Z)=\frac{a_w}{2}
+                 \operatorname{Tr}\!\left[r_i\Phi_{Q_w}(X,Y,Z)\right].
+\tag{116.2}
+$$
+
+The factor $a_w/2$ and the subnormalised $r_i$ are part of the row.
+For Hermitian $X,Y$, the matrix $\Phi_Q(X,Y,Z)$ is Hermitian, so each
+$q_{i,w}$ is real-valued on $\mathscr V$.
+Thus these rows are functionals of the original unconditioned
+probabilities, rather than of normalised prefix states or a new
+weighted experiment. The orbit-pairing intermediary used below is the
+observability principle recorded in §114 and in D'Alessandro,
+[*On Quantum State Observability and Measurement*, §2, Theorem 1](https://arxiv.org/html/quant-ph/0307127v1);
+the finite-dimensional row selection is the same dual-span principle
+used in Coherent Reconstruction, Definition 28.1 and Application 28.2.
+
+**Lemma 116.2 (The fixed common kernel).**
+The common kernel of all functionals in (116.2), with $i$ ranging over
+all nine prefixes and $w$ over all finite actual histories, is
+
+$$
+\mathscr K
+ =\{(xI_3,-xI_3,\mathrm i yI_3):x,y\in\mathbb R\}.
+\tag{116.3}
+$$
+
+In particular this kernel is fixed by the source controls and does not
+depend on either nuisance vector $h$ or $h'$.
+
+*Proof.* If every row vanishes, the real span of the nine $r_i$ and the
+positivity of $a_w$ imply $\Phi_{Q_w}(X,Y,Z)=0$ for every actual $w$.
+The positive-word conjugations supplied by V Theorem 95.1 are dense in
+the required unitary conjugation orbit. Since (116.1) is continuous in
+$Q$, it follows that $\Phi_Q(X,Y,Z)=0$ for every $Q\in U(3)$. Conversely,
+that identity plainly makes every actual row vanish.
+
+Let $P_+=(I_3+W)/2$ and $P_-=(I_3-W)/2$. The $P_+$ and $P_-$ diagonal
+compressions of $\Phi_Q=0$, with $Q$ varying, show that every unit
+vector has zero quadratic form for each of
+$X+Y+Z+Z^\dagger$ and $X+Y-Z-Z^\dagger$. Hence
+
+$$
+X+Y=0,\qquad Z^\dagger=-Z.
+\tag{116.4}
+$$
+
+The $P_+$, $P_-$ off-diagonal compression then gives
+
+$$
+P_+Q^\dagger(X+Z)QP_-=0\qquad(Q\in U(3)).
+\tag{116.5}
+$$
+
+Every orthonormal pair is the image of a fixed plus/minus pair under
+some $Q$. Therefore $\langle x,(X+Z)y\rangle=0$ whenever $x\perp y$.
+Applying this to an orthonormal basis and to pairwise sums shows that
+$X+Z=kI_3$ for some $k\in\mathbb C$. Taking Hermitian and
+skew-Hermitian parts, using (116.4), yields
+$X=(\operatorname{Re}k)I_3$ and
+$Z=\mathrm i(\operatorname{Im}k)I_3$, with $Y=-X$. The converse is
+immediate because $W$ commutes with scalar matrices. $\square$
+
+**Lemma 116.3 (A source-fixed traceless functional with a positive factor).**
+Let $e=a_+/\sqrt{5/8}$. Choose a unit vector $v$ orthogonal to both
+$a_+$ and $t$, and set
+
+$$
+F=ee^\dagger-vv^\dagger,\qquad \ell(M)=\operatorname{Tr}(FM).
+\tag{116.6}
+$$
+
+Then $\operatorname{Tr}F=0$, $Ft=0$, $\ell(D)=5/8$, and for every
+$\|h\|\le1$,
+
+$$
+\ell(K_h)=\mathrm i sc\,q_h,\qquad
+q_h=\frac58-\ell(H_h)\ge
+m:=\frac58-b=\frac{9-4\sqrt2}{24}>0.
+\tag{116.7}
+$$
+
+The same $F$ works for all nuisance vectors in the closed ball.
+
+*Proof.* The source identities in (106.3) give
+$a_+\perp f$, $t=\eta\alpha f\ne0$, and
+$D=a_+a_+^\dagger+\alpha^2ff^\dagger$ with
+$\|a_+\|^2=5/8$. Thus $e,v$ are orthonormal, both orthogonal to $f$,
+and (116.6) gives the trace and $Ft$ assertions. It also gives
+$\ell(D)=5/8$. Since $H_h=bhh^\dagger$ is positive and $F\le I_3$,
+$\ell(H_h)\le\operatorname{Tr}H_h=b\|h\|^2\le b$. Finally,
+$\ell(T_h)=\ell(T_h^\dagger)=0$ because $Ft=0$. Applying $\ell$ to
+(114.2) proves (116.7), and the displayed value of $m$ is positive. $\square$
+
+**Theorem 116.4 (Source-specific finite quantitative retention bound).**
+For every fixed allowed source $\mathfrak s$, there are an integer
+$L_{\mathfrak s}\ge0$ and a real $C_{\mathfrak s}>0$ such that, for
+all
+$(\gamma,h),(\gamma',h')$ with $|\gamma|,|\gamma'|\le1$ and
+$\|h\|,\|h'\|\le1$,
+
+$$
+|\gamma-\gamma'|
+\le C_{\mathfrak s}
+\max_{1\le i\le9,\ |w|\le L_{\mathfrak s},\ b\in\{0,1\}}
+\left|p_{\gamma,h}(u_i,w,b)-p_{\gamma',h'}(u_i,w,b)\right|.
+\tag{116.8}
+$$
+
+Here $w$ ranges over every actual intermediate history in the installed
+menu, with its original labels and weights. The constants depend on
+$\mathfrak s$ but on neither hypothesis. No operation, preparation,
+reset, record rotation, selected label or sampling service is added.
+
+*Proof.* For two hypotheses define the lift differences
+
+$$
+X=A_h-A_{h'},\qquad Y=B_h-B_{h'},\qquad
+Z=\gamma K_h-\gamma'K_{h'}.
+\tag{116.9}
+$$
+
+By (114.3), the outcome-$1$ probability difference at $(i,w)$ is
+exactly
+
+$$
+\Delta p_{i,w,1}=q_{i,w}(X,Y,Z).
+\tag{116.10}
+$$
+
+The outcome-$0$ difference is its negative. Lemma 116.2 says that the
+rows $q_{i,w}$ have common kernel $\mathscr K$. In a finite-dimensional
+real vector space, their span is therefore the annihilator
+$\mathscr K^\circ$. The two functionals
+
+$$
+\lambda(X,Y,Z)=\ell(X+Y),\qquad
+\mu(X,Y,Z)=\ell(Z)
+\tag{116.11}
+$$
+
+annihilate (116.3): $X+Y=0$ there and
+$\mu(xI_3,-xI_3,\mathrm i yI_3)=\mathrm i y\operatorname{Tr}F=0$.
+Consequently each is a finite linear combination of actual rows. Choose
+finite sets of actual row indices $J_\lambda,J_\mu$ and coefficients
+$d_j\in\mathbb R$, $e_j\in\mathbb C$ such that
+
+$$
+\lambda=\sum_{j\in J_\lambda}d_jq_j,\qquad
+\mu=\sum_{j\in J_\mu}e_jq_j.
+\tag{116.12}
+$$
+
+The complex coefficients in the second identity represent the real and
+imaginary parts of the complex-valued functional $\mu$. Let
+$L_{\mathfrak s}$ be the greatest length of a history occurring in
+these two finite sets, with $L_{\mathfrak s}=0$ if all selected
+histories are empty. In what follows, $\max_j$ ranges over the union
+of the two selected row sets. Put
+
+$$
+C_{\mathfrak s}=\frac{1}{m}
+ \left(\sum_{j\in J_\lambda}|d_j|
+       +\frac{1}{|sc|}\sum_{j\in J_\mu}|e_j|\right)
+=\frac{24}{9-4\sqrt2}
+ \left(\sum_{j\in J_\lambda}|d_j|
+       +\frac{1}{|sc|}\sum_{j\in J_\mu}|e_j|\right)>0.
+\tag{116.13}
+$$
+
+The positivity follows because the nonzero functional $\lambda$ or
+$\mu$ has a nonzero representation and $m,|sc|>0$. From (114.2) and
+(116.7),
+
+$$
+\frac{\ell(Z)}{\mathrm i sc}
+ =\gamma q_h-\gamma' q_{h'}
+ =(\gamma-\gamma')q_h-\gamma'\ell(H_h-H_{h'}).
+\tag{116.14}
+$$
+
+Since $A_h+B_h=D+H_h$, one has
+$H_h-H_{h'}=X+Y$. Rearranging (116.14) gives
+$q_h(\gamma-\gamma')=\ell(Z)/(\mathrm i sc)+\gamma'\ell(H_h-H_{h'})$.
+Therefore, using $|\gamma'|\le1$,
+
+$$
+\begin{aligned}
+q_h|\gamma-\gamma'|
+&\le \frac{|\mu(X,Y,Z)|}{|sc|}+|\lambda(X,Y,Z)|\\
+&\le \left(\frac1{|sc|}\sum_{j\in J_\mu}|e_j|
+          +\sum_{j\in J_\lambda}|d_j|\right)
+       \max_j|\Delta p_j|.
+\end{aligned}
+\tag{116.15}
+$$
+
+The lower bound $q_h\ge m$ and the definition (116.13) give (116.8)
+for outcome $1$. Including the outcome $0$ coordinates leaves the right
+side unchanged because their differences are the negatives in
+(116.10), and enlarging from the selected rows to every actual history
+of length at most $L_{\mathfrak s}$ can only increase the maximum. All
+selected factors $a_w/2$ and all nine original $r_i$ remain in the
+rows, so the comparison is on the original unconditioned law. $\square$
+
+Theorem 116.4 is a source-specific result derived from the exact
+observation-fiber law (114.3), the source's nine weighted prefixes and
+its positive-word density. The general finite-dimensional
+anti-Lipschitz principle is only the row-selection step here; it is not
+a separate generic closure or semialgebraic error theorem. The source
+constants are not evaluated numerically, and no uniformity in a changing
+source $\mathfrak s$ is asserted.
+
+## 117. Same-source finite-error comparison
+
+**Corollary 117.1 (Finite original-law modulus and separation).**
+Fix an allowed source $\mathfrak s$ and take the $L_{\mathfrak s}$ and
+$C_{\mathfrak s}$ supplied by Theorem 116.4. For two admissible paired
+parameters in the closed domain
+
+$$
+\mathcal P=\{(\gamma,h):|\gamma|\le1,\ \|h\|\le1\},
+\tag{117.1}
+$$
+
+define the finite original-law discrepancy
+
+$$
+\Delta_{\mathfrak s}((\gamma,h),(\gamma',h'))
+ =\max_{1\le i\le9,\ |w|\le L_{\mathfrak s},\ b\in\{0,1\}}
+ \left|p_{\gamma,h}(u_i,w,b)-p_{\gamma',h'}(u_i,w,b)\right|.
+\tag{117.2}
+$$
+
+Then
+
+$$
+|\gamma-\gamma'|\le C_{\mathfrak s}\Delta_{\mathfrak s},
+\qquad
+\Delta_{\mathfrak s}\ge C_{\mathfrak s}^{-1}|\gamma-\gamma'|.
+\tag{117.3}
+$$
+
+Equivalently, if every listed original probability differs by at most
+$\varepsilon$, then $|\gamma-\gamma'|\le C_{\mathfrak s}\varepsilon$;
+if $|\gamma-\gamma'|>C_{\mathfrak s}\varepsilon$, at least one listed
+coordinate differs by more than $\varepsilon$. These statements compare
+exact laws on the same source and do not assert a sampling, acquisition,
+or statistical certification procedure.
+
+*Proof.* This is (116.8) with the discrepancy named in (117.2), followed
+by division by the positive $C_{\mathfrak s}$. The domain (117.1) is
+exactly the paired closed-ball domain of Definition 114.1, so no further
+hypothesis is introduced. $\square$
+
+**Application 117.2 (The finite comparison retains the original return contract).**
+For a fixed source and any two full completions realizing $h$ and $h'$,
+Corollary 117.1 applies to the actual unconditioned terminal masses
+from the original nine prefix events and the selected finite original
+intermediate histories. Every coordinate retains its original prefix
+mass, every return remains the specified single forward return, and the
+full ten-dimensional successor is still the one in (107.2). The
+inequality is therefore a comparison of the source's existing
+probability family; it does not turn a mathematical finite row set into
+a new control or a promise of physical access. $\square$
+
+## 追加锚（本行以下为增补区）
