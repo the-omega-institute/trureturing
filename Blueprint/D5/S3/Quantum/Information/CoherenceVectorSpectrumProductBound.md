@@ -26,7 +26,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(\rho: \operatorname{Ma
 
 *Commentary.*
 
-The set consists of all averages of decreasing pure-state coherence vectors over finite decompositions of ρ. In a decomposition, p is nonnegative and sums to one, every ψ j has squared norm one, and ρ is the sum of their rank-one density matrices weighted by the complex embeddings of p j. The coherence vector of ψ j has ith entry equal to the squared modulus of ψ j i. Thus this is Dᵖˢᵈ(ρ) from Section 2.2, Eqs. (9)–(11), PDF p. 3.
+The set consists of all averages of decreasing pure-state coherence vectors over finite decompositions of ρ. In a decomposition, p is nonnegative and sums to one, every ψ j has squared norm one, and ρ is the sum of their rank-one density matrices weighted by the complex embeddings of p j. The coherence vector of ψ j has ith entry equal to the squared modulus of ψ j i. Thus this is 𝒰ᵖˢᵈ(ρ) from Section 2.2, Eqs. (9)–(11), PDF p. 3.
 
 **Definition 1.3 (Majorization upper bounds of the coherence set).**
 
@@ -38,7 +38,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(\rho: \operatorname{Ma
 
 *Commentary.*
 
-An upper bound is a decreasing, nonnegative real vector with total mass one whose partial sums dominate those of the decreasing rearrangement of every member of the coherence set. Majorizes takes the dominating list first and also requires equality of the total sums. Section 2.2, Eq. (12), PDF pp. 3–4, defines ν(ρ) as the majorization supremum of Dᵖˢᵈ(ρ). The predicate requires only the upper-bound property and makes no leastness assertion.
+An upper bound is a decreasing, nonnegative real vector with total mass one whose partial sums dominate those of the decreasing rearrangement of every member of the coherence set. Majorizes takes the dominating list first and also requires equality of the total sums. Section 2.2, Eq. (12), PDF pp. 3–4, defines ν(ρ) as the majorization supremum of 𝒰ᵖˢᵈ(ρ). The predicate requires only the upper-bound property and makes no leastness assertion.
 
 **Definition 1.4 (The largest spectral value).**
 
