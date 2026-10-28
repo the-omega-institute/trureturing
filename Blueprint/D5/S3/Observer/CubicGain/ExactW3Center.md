@@ -14,7 +14,7 @@ The denominator is positive on the narrower interval, and the quotient satisfies
 
 The chart reconstructs one whole gain polynomial and drift from the literal parent history. Consequently this algebraic lift is an OriginalParent. chartWorld, the original eight-coordinate chartSource, and chartRead=(originalResponse.first,futureRead at the empty common word) are analytic at its lifted coordinates. Every OriginalParent with the same r and b equals this world, including lower degree polynomials and zero samples permitted by the original model.
 
-At this same exact lifted coordinate, `exactW3_parent` applies the actual local source inverse. It supplies an open partial homeomorphism whose forward map is chartRead, a positive-radius convex read ball with compact closure inside the inverse and analytic domains, a finite derivative bound and Lipschitz estimate for the complete eight-coordinate source vector, and the center-world membership and pairwise estimate for all worlds in that local neighborhood. This is a local consequence of the compiled actual Jacobian and inverse theorem.
+At this same exact lifted coordinate, exactW3_parent applies the actual local source inverse. It supplies an open partial homeomorphism whose forward map is chartRead, a positive-radius convex read ball with compact closure inside the inverse and analytic domains, a finite derivative bound and Lipschitz estimate for the complete eight-coordinate source vector, and the center-world membership and pairwise estimate for all worlds in that local neighborhood. This is a local consequence of the compiled actual Jacobian and inverse theorem.
 
 The regular whole-world correspondence identifies the reconstructed world with the Ck/D lift at these same source coordinates. Identification of the explicit coefficient arrays with the fixed determinant definition remains a separate algebraic obligation. Thus this construction alone does not identify the world with a determinantal critical center. The parent and analyticity conclusions here alone supply neither the remote branch nor exhaustion of the original preimage.
 
@@ -64,9 +64,7 @@ Lean statement: `D5/S3/Observer/CubicGain/ExactW3Center.exactW3_parent`
 
 *Commentary.*
 
-With no hypotheses, SourceCertificate and OriginalParent exactW3 hold, and chartWorld, chartSource and chartRead are analytic at liftedCoordinates criticalRoot. For every real b in the original open isolating interval, criticalPolynomial.eval(b)=0 implies b=criticalRoot. For every W:OriginalWorld, OriginalParent W, W.first=liftedR criticalRoot and W.second.first=criticalRoot imply W=exactW3.
-
-The same theorem also returns the compiled actual local source inverse centered at liftedCoordinates criticalRoot, including its analytic inverse neighborhood, complete source-vector Lipschitz estimate, center membership, and all pairwise local-world bounds. It does not prove that the explicit numerator and denominator arrays are the fixed 28-row minors from Definition 4.1, so the source identity of this candidate lift remains open.
+With no hypotheses, SourceCertificate and OriginalParent exactW3 hold, and chartWorld, chartSource and chartRead are analytic at liftedCoordinates criticalRoot. For every real b in the original open isolating interval, criticalPolynomial.eval(b)=0 implies b=criticalRoot. For every W:OriginalWorld, OriginalParent W, W.first=liftedR criticalRoot and W.second.first=criticalRoot imply W=exactW3. The same theorem returns the compiled actual local source inverse centered at liftedCoordinates criticalRoot, including its analytic inverse neighborhood, complete source-vector Lipschitz estimate, center membership, and all pairwise local-world bounds. It does not prove that the explicit numerator and denominator arrays are the fixed 28-row minors from Definition 4.1, so the source identity of this candidate lift remains open.
 
 ## References
 
@@ -75,3 +73,4 @@ The same theorem also returns the compiled actual local source inverse centered 
 - Truth anchor: `D5/S3/Observer/CubicGain/ExactW3Center.exactW3_parent`
 - Truth anchor: `D5/S3/Observer/CubicGain/ExactW3Center.exactW3_parent_of_source_certificate`
 - Dependency: [D5/S3/Observer/CubicGain/RegularParentChart](RegularParentChart.md)
+- Dependency: [D5/S3/Observer/CubicGain/RegularReadInverse](RegularReadInverse.md)
