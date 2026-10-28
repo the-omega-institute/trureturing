@@ -1,0 +1,16 @@
+**Corollary 7.1 (A computable original target with no preparation name).**
+Choose the fixed computable target $P=P_\xi$. The generated advice is
+independent of $d$, and on the actual original preparation it satisfies
+
+$$
+\left|\Pr_{\rho_0}^{\pi_{P_\xi}}(\text{terminal }1)-d/2\right|
+<\varepsilon\qquad(0<d<1).
+\tag{7.1}
+$$
+
+**Proof.** The entries of $P_\xi$ are rational. V (91.6) gives
+$\operatorname{Tr}(P_\xi\rho_0)=d/2$. Apply (3.4) or sum the complete
+law in (3.5). This is a bound on a Bernoulli probability, not an
+estimator of $d$ from one terminal bit or a finite-sample certification
+of the model. ∎
+

@@ -34,7 +34,7 @@ internal sealed class HannaLogarithmicAffineClosureDocument : IScribeDocumentDef
                                 Lambda("n", Nat(), Call("L",
                                     Add(Mul(V("m"), V("n")), V("b"))))))))))),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Recurrence/hanna2009affineclosure")),
+                    LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2009affineclosure")),
                 Blocks(
                     Paragraph(Text("If the whole input transform is integral, the whole "
                         + "transform of n -> L(m*n+b) is integral for every positive m "
