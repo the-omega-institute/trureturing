@@ -143,10 +143,10 @@ theorem mixed_level_identity (u : List Bool) (p : PrimitiveCoordinates)
   exact fixed_signed (futureProduct u) p.a p.b ha' hb' (fun i j => (hlegal.1 i j).1)
     hlegal.2 hfix
 
-private def Primitive (v : Fin 2 → ℝ) : Prop :=
+def Primitive (v : Fin 2 → ℝ) : Prop :=
   ∃ x y : ℤ, v 0 = (x:ℝ) ∧ v 1 = (y:ℝ) ∧ IsCoprime x y
 
-private theorem word_primitive (u : List Bool) (v : Fin 2 → ℝ) (hv : Primitive v) :
+theorem word_primitive (u : List Bool) (v : Fin 2 → ℝ) (hv : Primitive v) :
     Primitive (futureProduct u *ᵥ v) := by
   induction u generalizing v with
   | nil => simpa [futureProduct] using hv
@@ -227,7 +227,7 @@ private theorem level_interior (u : List Bool) (p : PrimitiveCoordinates)
   · exact (hmix (Or.inl ⟨hp0,hn1⟩)).elim
   · exact Or.inl ⟨hp0,hp1⟩
 
-private theorem positive_sum (u : List Bool) (v : Fin 2 → ℝ) (hv : Positive v) :
+theorem positive_sum (u : List Bool) (v : Fin 2 → ℝ) (hv : Positive v) :
     Positive (futureProduct u *ᵥ v) ∧
     v 0+v 1 ≤ (futureProduct u *ᵥ v) 0+(futureProduct u *ᵥ v) 1 ∧
     (v 0+v 1 = (futureProduct u *ᵥ v) 0+(futureProduct u *ᵥ v) 1 →
