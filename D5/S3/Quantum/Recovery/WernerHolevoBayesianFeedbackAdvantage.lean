@@ -390,6 +390,18 @@ private theorem vec_product_trace (w z : Fin 3 → ℂ) :
         ring
   simpa [s] using hs
 
+private theorem complement_trace_product (u v : ℂ)
+    (V W : Matrix (Fin 3) (Fin 3) ℂ) :
+    ((u • (1 : Matrix (Fin 3) (Fin 3) ℂ) - u⁻¹ • V) *
+        (v • (1 : Matrix (Fin 3) (Fin 3) ℂ) - v⁻¹ • W)).trace =
+      3 * u * v - u * v⁻¹ * W.trace - u⁻¹ * v * V.trace +
+        u⁻¹ * v⁻¹ * (V * W).trace := by
+  simp only [sub_mul, mul_sub, smul_mul, mul_smul, Matrix.one_mul,
+    Matrix.mul_one, Matrix.trace_sub, Matrix.trace_add, Matrix.trace_smul,
+    Matrix.trace_one, Matrix.smul_mul, Matrix.mul_smul]
+  norm_num [Fintype.card_fin]
+  ring
+
 private theorem markov_bound {m₁ m₂ : ℕ} (K₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ) (K₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ)
     (h₁ : IsKrausDecomposition K₁) (h₂ : IsKrausDecomposition K₂) :
     markovFidelity K₁ K₂ ≤ 1 / 2 := by
