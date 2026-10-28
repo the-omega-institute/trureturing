@@ -9,8 +9,8 @@ module
 public import D5.S3.Combinatorics.Circle.TerminalLargeSubstitution
 public import D5.S3.Combinatorics.Circle.FirstNegativeShiftExchange
 
-/-! The proved prefix of terminal SMALL ownership: the endpoint corridor and
-nonnegative SMALL ownership for an arbitrary physical signed source word. -/
+/-! Terminal SMALL ownership and the actual two-step orbit transition for an
+arbitrary physical signed source word. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -26,6 +26,56 @@ local macro "source_arith" : tactic =>
     List.nil_append, List.take_zero, List.take_succ_cons, List.map_append,
     List.map_cons, List.map_nil, List.sum_append, List.sum_cons, List.sum_nil,
     add_zero, zero_add] at *) <;> omega))
+
+private theorem small_append_balances (k t : ℕ) (W : List (Fin k))
+    (hWnod : W.Nodup) (i : Fin k) (hi : i ∉ W)
+      (hiSmall : ¬ Large k t i) :
+    G k t (W ++ [i]) = G k t W ∧ H k t (W ++ [i]) = H k t W ∧
+      U (W ++ [i]) + 1 = U W := by
+  have hVnod : (W ++ [i]).Nodup := hWnod.append (by simp)
+    (List.disjoint_left.mpr (by
+      intro x hx hxi
+      have : x = i := by simpa using hxi
+      subst x
+      exact hi hx))
+  have hwg := physical_balance (largeWeight k t) W hWnod
+  have hvg := physical_balance (largeWeight k t) (W ++ [i]) hVnod
+  have hwc := physical_balance (fun _ : Fin k => (1 : ℕ)) W hWnod
+  have hvc := physical_balance (fun _ : Fin k => (1 : ℕ)) (W ++ [i]) hVnod
+  have hL : largeUsed k t (W ++ [i]) = largeUsed k t W := by
+    simp [largeUsed, mass, largeWeight, hiSmall]
+  have hH : H k t (W ++ [i]) = H k t W := by
+    simp [H, mass, energyWeight, hiSmall]
+  have hG : G k t (W ++ [i]) = G k t W := by
+    change G k t W + largeUsed k t W = _ at hwg
+    change G k t (W ++ [i]) + largeUsed k t (W ++ [i]) = _ at hvg
+    rw [hL] at hvg
+    omega
+  have hU : U (W ++ [i]) + 1 = U W := by
+    have hwc' : U W + W.length = k := by
+      simpa [U, mass, List.map_const'] using hwc
+    have hvc' : U (W ++ [i]) + (W ++ [i]).length = k := by
+      simpa [U, mass, List.map_const'] using hvc
+    simp only [List.length_append, List.length_singleton] at hvc'
+    omega
+  exact ⟨hG, hH, hU⟩
+
+private theorem fresh_cut (k t : ℕ) (K R S : List (Fin k))
+    (hW : (K ++ R).Nodup) (hS : S.Nodup)
+    (hfresh : ∀ x ∈ S, x ∉ K ++ R) :
+    (K ++ S).Nodup ∧
+      G k t (K ++ S) + largeUsed k t S =
+        G k t (K ++ R) + largeUsed k t R := by
+  have hK := hW.sublist (List.sublist_append_left K R)
+  have hV : (K ++ S).Nodup := hK.append hS (List.disjoint_left.mpr (by
+    intro x hx hxS
+    exact hfresh x hxS (List.mem_append_left R hx)))
+  have hw := physical_balance (largeWeight k t) (K ++ R) hW
+  have hv := physical_balance (largeWeight k t) (K ++ S) hV
+  change G k t (K ++ R) + largeUsed k t (K ++ R) = _ at hw
+  change G k t (K ++ S) + largeUsed k t (K ++ S) = _ at hv
+  simp only [largeUsed_append] at hw hv
+  exact ⟨hV, by omega⟩
 
 theorem actualSource_terminal_small_ownership_prefix
     (k t : ℕ) (hk : 3 ≤ k) (p z : Fin k)
@@ -184,37 +234,6 @@ theorem actualSource_terminal_small_ownership_prefix
       apply Prod.Lex.toLex_lt_toLex.mpr
       exact Or.inl (show G k t (K ++ [n]) < G k t W from hG)
     exact (not_lt_of_ge (hmin _ (legal_of_strip hnod hsKn))) hJ
-  have small_append_balances (i : Fin k) (hi : i ∉ W)
-      (hiSmall : ¬ Large k t i) :
-      G k t (W ++ [i]) = G k t W ∧ H k t (W ++ [i]) = H k t W ∧
-        U (W ++ [i]) + 1 = U W := by
-    have hVnod : (W ++ [i]).Nodup := hW.1.append (by simp)
-      (List.disjoint_left.mpr (by
-        intro x hx hxi
-        have : x = i := by simpa using hxi
-        subst x
-        exact hi hx))
-    have hwg := physical_balance (largeWeight k t) W hW.1
-    have hvg := physical_balance (largeWeight k t) (W ++ [i]) hVnod
-    have hwc := physical_balance (fun _ : Fin k => (1 : ℕ)) W hW.1
-    have hvc := physical_balance (fun _ : Fin k => (1 : ℕ)) (W ++ [i]) hVnod
-    have hL : largeUsed k t (W ++ [i]) = largeUsed k t W := by
-      simp [largeUsed, mass, largeWeight, hiSmall]
-    have hH : H k t (W ++ [i]) = H k t W := by
-      simp [H, mass, energyWeight, hiSmall]
-    have hG : G k t (W ++ [i]) = G k t W := by
-      change G k t W + largeUsed k t W = _ at hwg
-      change G k t (W ++ [i]) + largeUsed k t (W ++ [i]) = _ at hvg
-      rw [hL] at hvg
-      omega
-    have hU : U (W ++ [i]) + 1 = U W := by
-      have hwc' : U W + W.length = k := by
-        simpa [U, mass, List.map_const'] using hwc
-      have hvc' : U (W ++ [i]) + (W ++ [i]).length = k := by
-        simpa [U, mass, List.map_const'] using hvc
-      simp only [List.length_append, List.length_singleton] at hvc'
-      omega
-    exact ⟨hG, hH, hU⟩
   have hWend : mass f W < D := by
     have hh := hcorridor_high E.length
     simpa only [q, W, mass, f, List.take_length, List.map_append,
@@ -345,7 +364,7 @@ theorem actualSource_terminal_small_ownership_prefix
           have : x = i := by simpa using hxi
           subst x
           exact hiFresh hx))
-      obtain ⟨hG, hH, hU⟩ := small_append_balances i hiFresh hiSmall
+      obtain ⟨hG, hH, hU⟩ := small_append_balances k t W hW.1 i hiFresh hiSmall
       have hUlt : U (W ++ [i]) < U W := by omega
       have hJ : J k t (W ++ [i]) < J k t W := by
         apply Prod.Lex.toLex_lt_toLex.mpr
@@ -436,7 +455,7 @@ theorem actualSource_terminal_small_ownership_prefix
           (List.perm_append_comm : ([i, n] ++ E).Perm (E ++ [i, n])).append_left K
       have hinv := inventory_of_perm hk t W' V [n] E hW'nod
         (by simp) hIW hRsub hIL hperm
-      have hbal := small_append_balances i hiFresh hiSmall
+      have hbal := small_append_balances k t W hW.1 i hiFresh hiSmall
       have hG : G k t V < G k t W := by
         have hh := hinv.largeBalance
         have hE0 := (small_weights t E hsmall).1
@@ -453,4 +472,281 @@ theorem actualSource_terminal_small_ownership_prefix
         apply Prod.Lex.toLex_lt_toLex.mpr
         exact Or.inl hG
       exact (not_lt_of_ge (hmin V (legal_of_strip hinv.nodup hsV))) hJ
+theorem actualSource_terminal_small_ownership_transition
+    (k t : ℕ) (hk : 3 ≤ k) (p z : Fin k)
+    (F E : List (Fin k))
+    (hpositive : 0 < s k t p)
+    (hnlarge : Q k ≤ |s k t (hit k 1 p)|)
+    (hexpand : N k < 3 * |s k t p|)
+    (hW : Legal k t (F ++ [z] ++ E))
+    (hpunused : p ∉ F ++ [z] ++ E)
+    (hnunused : hit k 1 p ∉ F ++ [z] ++ E)
+    (hsmall : ∀ i ∈ E, |s k t i| < Q k)
+    (hz : Q k ≤ -s k t z)
+    (hmin : ∀ V : List (Fin k), Legal k t V →
+      J k t (F ++ [z] ++ E) ≤ J k t V) :
+    let f := s k t
+    let W := F ++ [z] ++ E
+    let n := hit k 1 p
+    let P := f p
+    let D := |f n|
+    let B := C k - P
+    let d := P - D
+    let u := mass f F
+    let q := fun m : ℕ => mass f (F ++ [z] ++ E.take m)
+    C k - d < u ∧
+    (∀ m : ℕ, B < q m ∧ q m < D) ∧
+    (∀ i : Fin k, |f i| < Q k → 0 ≤ f i → i ∈ W) ∧
+    (∀ i : Fin k, i ∉ W → |f i| < Q k →
+      let σ := -f i
+      0 < σ ∧
+      (∀ m : ℕ, q m < σ) ∧
+      u - D < σ ∧
+      f (hit k 1 i) = -(2 * σ) ∧
+      Q k ≤ -f (hit k 1 i) ∧
+      (hit k 1 i ∈ W ∨
+        (u < 2 * σ ∧ hit k 2 i ∈ W ∧
+          0 < f (hit k 2 i) ∧
+          f (hit k 2 i) ≤ 2 * d - 3 ∧
+          f (hit k 2 i) < Q k))) := by
+  classical
+  dsimp only
+  let f := s k t
+  let W := F ++ [z] ++ E
+  let n := hit k 1 p
+  let P := f p
+  let D := |f n|
+  let B := C k - P
+  let d := P - D
+  let u := mass f F
+  let q := fun m : ℕ => mass f (F ++ [z] ++ E.take m)
+  obtain ⟨hu, hq, hown⟩ := actualSource_terminal_small_ownership_prefix
+    k t hk p z F E hpositive hnlarge hexpand hW hpunused hnunused hsmall hz hmin
+  change C k - d < u at hu
+  change (∀ m : ℕ, B < q m ∧ q m < D) at hq
+  change (∀ i : Fin k, |f i| < Q k → 0 ≤ f i → i ∈ W) at hown
+  change Legal k t W at hW
+  change p ∉ W at hpunused
+  change n ∉ W at hnunused
+  change (∀ i ∈ E, |f i| < Q k) at hsmall
+  change Q k ≤ -f z at hz
+  change (∀ V, Legal k t V → J k t W ≤ J k t V) at hmin
+  have geo := native_geometry hk t p hnlarge hexpand
+  obtain ⟨hQ, hN, hC, hNpos, hNodd⟩ := source_geometry hk
+  change 2 ≤ Q k at hQ
+  change N k = 4 * Q k - 1 at hN
+  change C k = 2 * Q k - 1 at hC
+  have hnval : f n = -D := by
+    simpa [f, n, D, orient, show ¬ s k t p < 0 by omega] using geo.nValue
+  have hD : Q k ≤ D := hnlarge
+  have hDP : D < P := by
+    simpa only [f, n, D, P, abs_of_pos hpositive] using geo.strictOrder.1
+  have hbudget : 2 * P ≤ C k + Q k := by
+    simpa [P, f, abs_of_pos hpositive] using geo.budget
+  have hDrel : D = 2 * B + 1 := by
+    have hh := geo.firstEquation
+    change D = N k - 2 * |f p| at hh
+    rw [abs_of_pos hpositive, hN] at hh
+    dsimp [B, P]
+    rw [hC]
+    omega
+  have hdefs : P = D + d ∧ C k = D + B + d := by
+    dsimp [d, B]; omega
+  have hdpos : 0 < d := by dsimp [d]; omega
+  have hBd : d ≤ B := by omega
+  have hdQ : 2 * d ≤ Q k - 1 := by omega
+  have hpL : Large k t p := geo.pLarge
+  have hnL : Large k t n := geo.nLarge
+  have hzL : Large k t z := by
+    change Q k ≤ |f z|
+    rw [abs_of_neg (by omega : f z < 0)]
+    exact hz
+  have hE0 : largeUsed k t E = 0 := (small_weights t E hsmall).1
+  have hR1 : largeUsed k t ([z] ++ E) = 1 := by
+    simp [largeUsed_append, largeUsed_cons, hE0, largeWeight, hzL]
+  have hsF : InStrip f (C k) 0 F :=
+    (strip_split F ([z] ++ E) (by simpa [W, List.append_assoc] using
+      strip_of_legal hW)).1
+  have huBounds : 0 ≤ u ∧ u ≤ C k := by
+    simpa [u, mass] using inStrip_prefix hsF F.length
+  have hqend : q E.length = mass f W := by simp [q, W]
+  have hend : B < mass f W ∧ mass f W < D := by simpa [hqend] using hq E.length
+  have hend0 : 0 ≤ mass f W := by
+    simpa [mass] using (inStrip_prefix (strip_of_legal hW) W.length).1
+  have hnp : n ≠ p := by
+    intro he
+    have he' := congrArg f he
+    change f n = P at he'
+    omega
+  have hstrict (V : List (Fin k)) (hV : Legal k t V)
+      (hG : G k t V < G k t W) : False := by
+    have hJ : J k t V < J k t W :=
+      Prod.Lex.toLex_lt_toLex.mpr (Or.inl hG)
+    exact (not_lt_of_ge (hmin V hV)) hJ
+  refine ⟨hu, hq, hown, ?_⟩
+  intro i hi his
+  let σ := -f i
+  change 0 < σ ∧ (∀ m : ℕ, q m < σ) ∧ u - D < σ ∧
+    f (hit k 1 i) = -(2 * σ) ∧ Q k ≤ -f (hit k 1 i) ∧
+    (hit k 1 i ∈ W ∨ (u < 2 * σ ∧ hit k 2 i ∈ W ∧
+      0 < f (hit k 2 i) ∧ f (hit k 2 i) ≤ 2 * d - 3 ∧ f (hit k 2 i) < Q k))
+  have hineg : f i < 0 := lt_of_not_ge (fun h => hi (hown i his h))
+  have hival : f i = -σ := by dsimp [σ]; omega
+  have hspos : 0 < σ := by dsimp [σ]; omega
+  have hsQ : σ < Q k := by simpa [σ, abs_of_neg hineg] using his
+  have hiSmall : ¬ Large k t i := not_le_of_gt his
+  have hip : i ≠ p := by
+    intro he
+    exact hiSmall (he ▸ hpL)
+  have hin : i ≠ n := by
+    intro he
+    exact hiSmall (he ▸ hnL)
+  have hsEnd : mass f W < σ := by
+    by_contra hnot
+    have hle : σ ≤ mass f W := le_of_not_gt hnot
+    have hsWi : InStrip f (C k) 0 (W ++ [i]) := by
+      apply inStrip_append (strip_of_legal hW)
+      simp only [InStrip, List.map_cons, List.map_nil, List.sum_cons,
+        List.sum_nil, add_zero, zero_add]
+      rw [hival]
+      exact ⟨hend0, by omega, by omega, by omega⟩
+    have hnod : (W ++ [i]).Nodup := hW.1.append (by simp)
+      (List.disjoint_left.mpr (by
+        intro x hx hxi
+        have : x = i := by simpa using hxi
+        subst x
+        exact hi hx))
+    obtain ⟨hG, hH, hU⟩ := small_append_balances k t W hW.1 i hi hiSmall
+    have hJ : J k t (W ++ [i]) < J k t W := by
+      apply Prod.Lex.toLex_lt_toLex.mpr
+      exact Or.inr ⟨hG, Prod.Lex.toLex_lt_toLex.mpr (Or.inr ⟨hH, by omega⟩)⟩
+    exact (not_lt_of_ge (hmin _ (legal_of_strip hnod hsWi))) hJ
+  have hsB : B < σ := by omega
+  have hsq (m : ℕ) : q m < σ := by
+    by_contra hnot
+    have hle : σ ≤ q m := le_of_not_gt hnot
+    let K := F ++ [z] ++ E.take m
+    let R := E.drop m
+    have hsplit : K ++ R = W := by simp [K, R, W, List.append_assoc]
+    have hsK : InStrip f (C k) 0 K :=
+      (strip_split K R (by simpa [hsplit] using strip_of_legal hW)).1
+    have hKmass : mass f K = q m := rfl
+    have hqm := hq m
+    have hsV : InStrip f (C k) 0 (K ++ [i, p]) := by
+      apply inStrip_append hsK
+      simp only [InStrip, List.map_cons, List.map_nil, List.sum_cons,
+        List.sum_nil, add_zero, zero_add]
+      rw [hKmass, hival]
+      change 0 ≤ q m ∧ q m ≤ C k ∧ 0 ≤ q m - σ ∧ q m - σ ≤ C k ∧
+        0 ≤ q m - σ + P ∧ q m - σ + P ≤ C k
+      omega
+    have hS : ([i, p] : List (Fin k)).Nodup := by simp [hip]
+    have hfresh : ∀ x ∈ ([i, p] : List (Fin k)), x ∉ K ++ R := by
+      intro x hx
+      rw [hsplit]
+      simp only [List.mem_cons, List.mem_singleton] at hx
+      rcases hx with rfl | rfl
+      · exact hi
+      · exact hpunused
+    obtain ⟨hVnod, hbal⟩ := fresh_cut k t K R [i, p]
+      (by simpa [hsplit] using hW.1) hS hfresh
+    have hS1 : largeUsed k t [i, p] = 1 := by
+      simp [largeUsed, mass, largeWeight, hiSmall, hpL]
+    have hR0 : largeUsed k t R = 0 :=
+      (small_weights t R (fun x hx => hsmall x (List.mem_of_mem_drop hx))).1
+    rw [hsplit, hS1, hR0] at hbal
+    exact hstrict _ (legal_of_strip hVnod hsV) (by omega)
+  have hsuD : u - D < σ := by
+    by_contra hnot
+    have hle : σ ≤ u - D := le_of_not_gt hnot
+    have hsV : InStrip f (C k) 0 (F ++ [n, i, p]) := by
+      apply inStrip_append hsF
+      simp only [InStrip, List.map_cons, List.map_nil, List.sum_cons,
+        List.sum_nil, add_zero, zero_add]
+      rw [hnval, hival]
+      change 0 ≤ u ∧ u ≤ C k ∧ 0 ≤ u - D ∧ u - D ≤ C k ∧
+        0 ≤ u - D - σ ∧ u - D - σ ≤ C k ∧
+        0 ≤ u - D - σ + P ∧ u - D - σ + P ≤ C k
+      omega
+    have hS : ([n, i, p] : List (Fin k)).Nodup := by
+      simp [hnp, hin.symm, hip]
+    have hfresh : ∀ x ∈ ([n, i, p] : List (Fin k)), x ∉ F ++ ([z] ++ E) := by
+      intro x hx
+      change x ∉ W
+      simp only [List.mem_cons, List.mem_singleton] at hx
+      rcases hx with rfl | rfl | rfl
+      · exact hnunused
+      · exact hi
+      · exact hpunused
+    obtain ⟨hVnod, hbal⟩ := fresh_cut k t F ([z] ++ E) [n, i, p]
+      (by simpa [W, List.append_assoc] using hW.1) hS hfresh
+    have hS2 : largeUsed k t [n, i, p] = 2 := by
+      simp [largeUsed, mass, largeWeight, hnL, hiSmall, hpL]
+    rw [hS2, hR1] at hbal
+    change G k t (F ++ [n, i, p]) + 2 = G k t W + 1 at hbal
+    exact hstrict _ (legal_of_strip hVnod hsV) (by omega)
+  have hstep (m : ℕ) : f (hit k (m + 1) i) =
+      doubleStep (N k) (f (hit k m i)) := by
+    simpa only [f, s, hit_phase (by omega : 0 < k)] using phase_step hk t i m
+  have hjval : f (hit k 1 i) = -(2 * σ) := by
+    have hh := hstep 0
+    simp only [hit_zero, hival] at hh
+    rw [doubleStep, if_neg (by omega), if_neg (by omega)] at hh
+    omega
+  have hjL : Q k ≤ -f (hit k 1 i) := by rw [hjval]; omega
+  refine ⟨hspos, hsq, hsuD, hjval, hjL, ?_⟩
+  by_cases hjUsed : hit k 1 i ∈ W
+  · exact Or.inl hjUsed
+  · right
+    let j := hit k 1 i
+    have hjfresh : j ∉ W := hjUsed
+    have hjlarge : Large k t j := by
+      change Q k ≤ |f (hit k 1 i)|
+      rw [hjval, abs_of_neg (by omega : -(2 * σ) < 0)]
+      omega
+    have hjp : j ≠ p := by
+      intro he
+      have he' := congrArg f he
+      change f (hit k 1 i) = P at he'
+      rw [hjval] at he'
+      have hp0 : 0 < P := hpositive
+      omega
+    have hu2s : u < 2 * σ := by
+      by_contra hnot
+      have hle : 2 * σ ≤ u := le_of_not_gt hnot
+      have hjs : f j = -(2 * σ) := hjval
+      have hsV : InStrip f (C k) 0 (F ++ [j, p]) := by
+        apply inStrip_append hsF
+        simp only [InStrip, List.map_cons, List.map_nil, List.sum_cons,
+          List.sum_nil, add_zero, zero_add]
+        rw [hjs]
+        change 0 ≤ u ∧ u ≤ C k ∧ 0 ≤ u - 2 * σ ∧ u - 2 * σ ≤ C k ∧
+          0 ≤ u - 2 * σ + P ∧ u - 2 * σ + P ≤ C k
+        omega
+      have hS : ([j, p] : List (Fin k)).Nodup := by simp [hjp]
+      have hfresh : ∀ x ∈ ([j, p] : List (Fin k)), x ∉ F ++ ([z] ++ E) := by
+        intro x hx
+        change x ∉ W
+        simp only [List.mem_cons, List.mem_singleton] at hx
+        rcases hx with rfl | rfl
+        · exact hjfresh
+        · exact hpunused
+      obtain ⟨hVnod, hbal⟩ := fresh_cut k t F ([z] ++ E) [j, p]
+        (by simpa [W, List.append_assoc] using hW.1) hS hfresh
+      have hS2 : largeUsed k t [j, p] = 2 := by
+        simp [largeUsed, mass, largeWeight, hjlarge, hpL]
+      rw [hS2, hR1] at hbal
+      change G k t (F ++ [j, p]) + 2 = G k t W + 1 at hbal
+      exact hstrict _ (legal_of_strip hVnod hsV) (by omega)
+    have hlambda : f (hit k 2 i) = N k - 4 * σ := by
+      have hh := hstep 1
+      rw [hjval, doubleStep, if_neg (by omega), if_pos (by omega)] at hh
+      omega
+    have hlpos : 0 < f (hit k 2 i) := by rw [hlambda]; omega
+    have hlbound : f (hit k 2 i) ≤ 2 * d - 3 := by rw [hlambda]; omega
+    have hlQ : f (hit k 2 i) < Q k := by omega
+    have hlused : hit k 2 i ∈ W := hown _
+      (by rwa [abs_of_pos hlpos]) (le_of_lt hlpos)
+    exact ⟨hu2s, hlused, hlpos, hlbound, hlQ⟩
+
 end D5.S3.Combinatorics.Circle.TerminalSmallOwnership
