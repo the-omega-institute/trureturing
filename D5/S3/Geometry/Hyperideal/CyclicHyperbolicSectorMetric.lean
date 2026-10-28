@@ -717,7 +717,7 @@ private theorem short_angle_forward_run {I : Type*}
         ⟨cylindricalPoint rq w tq,
           cylindrical_mem_sector rq w tq (alpha i) hrq.le (ha i) (hapi i) hq⟩
       have hpaid :=
-        D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.move p q
+        D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.move (G := sectorDatum next alpha ha hapi) (a := ⟨i, p⟩) p q
           (D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.nil
             (G := sectorDatum next alpha ha hapi) (a := ⟨i, p⟩))
       simpa only [runWidth_zero, Function.iterate_zero_apply, zero_add,
@@ -751,9 +751,14 @@ private theorem short_angle_forward_run {I : Type*}
             dist (cylindricalPoint rp z beta) Q = dist (cylindricalPoint rp z tp) Q
           simp only [hpwall, dist_self, zero_add]
         by_cases hQwall : T = beta
-        · have hVzero : V = 0 := le_antisymm (by dsimp only [T] at hQwall;
-              linarith [hq.1]) hV
-          have htqzero : tq = 0 := by dsimp only [T] at hQwall; linarith
+        · have hVzero : V = 0 := by
+            apply le_antisymm
+            · dsimp only [T] at hQwall
+              linarith [hq.1]
+            · exact hV
+          have htqzero : tq = 0 := by
+            dsimp only [T] at hQwall
+            linarith [hq.1]
           have hmzero : m = 0 := by
             by_contra hm
             obtain ⟨k, hk⟩ := Nat.exists_eq_succ_of_ne_zero hm
@@ -817,11 +822,11 @@ private theorem short_angle_forward_run {I : Type*}
       have hpaid : G.Chain (⟨i, p⟩ : Sigma (fun k => sector (alpha k)))
           ⟨i, R.val⟩ (ENNReal.ofReal (dist p.val R.val.val)) := by
         simpa only [zero_add, edist_dist, Subtype.dist_eq] using
-          D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.move p R.val
+          D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.move (G := G) (a := ⟨i, p⟩) p R.val
             (D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.nil
               (G := G) (a := ⟨i, p⟩))
       have hforward :=
-        D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.forward i R hpaid
+        D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.forward (G := G) (a := ⟨i, p⟩) i R hpaid
       have happend :=
         D5.S3.Topology.FiniteOrbitChainMetric.Datum.chain_append G hforward htailActual
       have htaildist : dist (cylindricalPoint r s 0)
@@ -936,6 +941,7 @@ private def cyclicWrap {n : ℕ} (i : Fin (n + 1)) : ℕ → ℕ
   | 0 => 0
   | m + 1 => cyclicWrap i m + if cyclicTag i m = Fin.last n then 1 else 0
 
+open Fin.NatCast in
 private theorem cyclicTag_add {n : ℕ} (i : Fin (n + 1)) (m : ℕ) :
     cyclicTag i m = i + (m : Fin (n + 1)) := by
   induction m with
@@ -1174,7 +1180,7 @@ private theorem shorterSpan_norm {n : ℕ} (alpha : Fin (n + 1) → ℝ)
   rcases forwardSpan_pair alpha i j tp tq with hzero | hsum
   · rw [hzero.2.2.1, hzero.2.2.2, min_self]
     rw [hzero.2.2.1] at hclass
-    simpa only [AddCircle.coe_zero, norm_zero] using congrArg norm hclass.symm
+    simpa only [AddCircle.coe_zero, norm_zero] using congrArg norm hclass
   · by_cases hle : forwardSpan alpha i j tp tq ≤ forwardSpan alpha j i tq tp
     · rw [min_eq_left hle, ← hclass]
       have hhalf : |forwardSpan alpha i j tp tq| ≤ |totalAngle alpha| / 2 := by
@@ -1266,9 +1272,9 @@ private theorem axis_walk {I : Type*} (next : I → I) (alpha : I → ℝ)
       have hx : (G.iso j x).val = axisPoint (alpha (next j)) z := by
         apply Subtype.ext
         exact turn_axis (-alpha j) z
-      have h := D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.forward j x ih
+      have h := D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.forward (G := G) j x ih
       rw [hx] at h
-      simpa only [Function.iterate_succ_apply'] using h
+      simpa only [G, sectorDatum, j, Function.iterate_succ_apply'] using h
 
 private theorem axis_change_tag {n : ℕ} (alpha : Fin (n + 1) → ℝ)
     (ha : ∀ i, 0 < alpha i) (hapi : ∀ i, alpha i < Real.pi)
@@ -1290,9 +1296,9 @@ private theorem chain_via_axis {n : ℕ} (alpha : Fin (n + 1) → ℝ)
   let G := cyclicDatum alpha ha hapi
   have hfirst : G.Chain p ⟨p.1, axisPoint (alpha p.1) z⟩
       (edist p.2 (axisPoint (alpha p.1) z)) := by
-    simpa only [zero_add] using D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.move p.2 (axisPoint (alpha p.1) z) (D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.nil (G := G))
+    simpa only [zero_add] using D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.move (G := G) (a := p) p.2 (axisPoint (alpha p.1) z) (D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.nil (G := G))
   have hmid := G.chain_append hfirst (axis_change_tag alpha ha hapi p.1 q.1 z)
-  have h := D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.move (axisPoint (alpha q.1) z) q.2 hmid
+  have h := D5.S3.Topology.FiniteOrbitChainMetric.Datum.Chain.move (G := G) (a := p) (axisPoint (alpha q.1) z) q.2 hmid
   simpa only [add_zero, edist_dist, Subtype.dist_eq, axisPoint,
     ENNReal.ofReal_add dist_nonneg dist_nonneg] using h
 
@@ -1338,6 +1344,8 @@ private theorem opposite_axis_split (rho z sigma w : ℝ) (hr : 0 < rho) (hs : 0
   have hx1 : 0 ≤ lift (gamma t0) 0 := by
     rw [h0, hp]
     exact (Real.sinh_pos_iff.mpr hr).le
+  letI : PreconnectedSpace (Icc (0 : ℝ) (dist p q)) :=
+    Subtype.preconnectedSpace isPreconnected_Icc
   obtain ⟨t, ht⟩ := intermediate_value_univ t1 t0 hc ⟨hx0, hx1⟩
   have hy : lift (gamma t) 1 = 0 := by
     rw [hg]
@@ -1377,8 +1385,12 @@ private theorem opposite_attaining_chain {n : ℕ} (alpha : Fin (n + 1) → ℝ)
     conv_lhs =>
       arg 2
       rw [dist_comm, ← cylindrical_reconstruct q.2.val, cylindrical_axis_distance, dist_comm]
-    rw [← cylindrical_axis_distance (radialCoordinate q.2.val) (axialCoordinate q.2.val)
-      Real.pi a, dist_comm] at hsplit
+    have hdq : dist (cylindricalPoint 0 a 0)
+        (cylindricalPoint (radialCoordinate q.2.val) (axialCoordinate q.2.val) Real.pi) =
+        dist (cylindricalPoint 0 a 0)
+          (cylindricalPoint (radialCoordinate q.2.val) (axialCoordinate q.2.val) 0) := by
+      rw [dist_comm, cylindrical_axis_distance, dist_comm]
+    rw [hdq] at hsplit
     exact hsplit
   simpa only [hd] using h
 
@@ -1413,7 +1425,9 @@ private theorem axis_endpoint_attaining {n : ℕ} (alpha : Fin (n + 1) → ℝ)
   have hd : dist p.2.val (cylindricalPoint 0 (axialCoordinate p.2.val) 0) +
       dist (cylindricalPoint 0 (axialCoordinate p.2.val) 0) q.2.val =
       comparisonLength alpha p q := by
-    rw [hpaxis, dist_self, zero_add]
+    have h0 : dist p.2.val (cylindricalPoint 0 (axialCoordinate p.2.val) 0) = 0 :=
+      dist_eq_zero.mpr hpaxis
+    rw [h0, zero_add]
     conv_lhs =>
       arg 2
       rw [← cylindrical_reconstruct q.2.val]
@@ -1459,7 +1473,8 @@ private theorem short_forward_attaining {n : ℕ} (alpha : Fin (n + 1) → ℝ)
     (radialCoordinate p.2.val) (axialCoordinate p.2.val) (angularCoordinate p.2.val)
     (radialCoordinate q.2.val) (axialCoordinate q.2.val) (angularCoordinate q.2.val)
     hp hq (sector_angle (alpha p.1) (ha p.1) p.2) hqangle
-    (by simpa only [hwp] using hspan) (by simpa only [hwp] using hshort)
+    (by simpa only [hwp, forwardSpan, m] using hspan)
+    (by simpa only [hwp, forwardSpan, m] using hshort)
   have hd : dist
       (cylindricalPoint (radialCoordinate p.2.val) (axialCoordinate p.2.val)
         (angularCoordinate p.2.val))
@@ -1482,7 +1497,7 @@ private theorem short_forward_attaining {n : ℕ} (alpha : Fin (n + 1) → ℝ)
   rw [hd] at h
   change (cyclicDatum alpha ha hapi).Chain
     ⟨p.1, _⟩ ⟨cyclicTag p.1 m, _⟩ _ at h
-  simpa only [htag, cylindrical_reconstruct] using h
+  simpa only [m, htag, cylindrical_reconstruct] using h
 
 /-- Every pair of actual numbered cyclic-sector representatives has an original
 finite chain attaining the capped angular distance, which equals the original
