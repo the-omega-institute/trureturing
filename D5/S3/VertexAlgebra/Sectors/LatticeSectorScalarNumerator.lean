@@ -144,7 +144,7 @@ private theorem mode_energy_lower (D : LatticeData)
     (sum_gradeProjections D a)
   rw [← expand]
   simp only [map_sum, Finset.sum_apply, LinearMap.sum_apply,
-    Finsupp.finset_sum_apply]
+    Finsupp.finsetSum_apply]
   apply Finset.sum_eq_zero
   intro m hm
   have expandB := congrArg
@@ -152,7 +152,7 @@ private theorem mode_energy_lower (D : LatticeData)
       (((LatticeAllStateField.Y D (gradeProjection D m a))[[q]]) x) t)
     (sum_gradeProjections D b)
   rw [← expandB]
-  simp only [map_sum, Finsupp.finset_sum_apply]
+  simp only [map_sum, Finsupp.finsetSum_apply]
   exact Finset.sum_eq_zero (fun n hn => vanish m hm n hn)
 
 /-- Every surviving coefficient of an arbitrary actual lattice word retains
@@ -170,7 +170,7 @@ theorem actual_word_coefficient_energy_le (D : LatticeData)
     chargeEnergy D δ + (l.map (fun i => chargeEnergy D (c i) + e i)).sum ≤
       chargeEnergy D ρ + oscillatorEnergy T := by
   induction l generalizing ρ T with
-  | nil => exact inclusion_energy_lower D δ w (ρ, T) hne
+  | nil => simpa [energy] using inclusion_energy_lower D δ w (ρ, T) hne
   | cons i l ih =>
     have bound := mode_energy_lower D J hJG hGJ
       (inclusion D (c i) (s i))
@@ -373,7 +373,7 @@ private theorem word_readout_zero_above (D : LatticeData)
     by_contra hn
     have bound := actual_word_coefficient_energy_le D J hJG hGJ n c s δ w
       (List.ofFn (fun i : Fin n => i)) e ((∑ i, c i) + δ) T hn
-    simp only [List.map_ofFn, List.sum_ofFn, Finset.sum_add_distrib] at bound
+    simp only [List.map_ofFn, List.sum_ofFn, Function.comp_apply, Finset.sum_add_distrib] at bound
     unfold totalExponent at low
     omega
   change _ * (projection D ((∑ i, c i) + δ)
@@ -436,7 +436,7 @@ theorem actual_word_scalar_numerator_support (D : LatticeData)
   have hind : signedIndex (fun i => (d i : ℤ)) = d := by
     ext i
     simp [signedIndex]
-  rw [signedExtend, if_pos (fun i => Int.natCast_nonneg (d i)), hind] at hc
+  rw [signedExtend, ite_eq_left (fun i => Int.natCast_nonneg (d i)), hind] at hc
   apply hne
   rw [← hc, polynomialAction_map]
   apply clearing_zero_above _ _ k (word_readout_zero_above D J hJG hGJ n c s δ w p)
@@ -490,7 +490,7 @@ theorem ordinary_actual_word_finite_scalar_numerator
     rw [Module.End.pow_apply]
     exact hr
   obtain ⟨k, hk, rest⟩ := ungraded_local_word_common_series A order
-    (by simp [order, List.nodup_ofFn]) (by intro i; simp [order]) localFields
+    (by simp [order, List.nodup_ofFn, Function.injective_id]) (by intro i; simp [order]) localFields
   refine ⟨k, hk, ?_⟩
   intro δ w
   obtain ⟨a, P, truncation, common⟩ := rest (inclusion D δ w)
