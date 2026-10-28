@@ -76,9 +76,9 @@ private def oct : Block where
   V := Fin 3 × Fin 2
   finite := inferInstance
   eqDec := inferInstance
-  blockGraph := octahedron
+  blockGraph := SimpleGraph.completeEquipartiteGraph 3 2
   adjDec := inferInstance
-  noIsolated := octahedron_block.2.2.2
+  noIsolated := (equipartite_block 3 (by omega)).2.2.2
 
 private theorem copies_metrics (A : Block) (n : ℕ) :
     Fintype.card (copies A n).V = n * Fintype.card A.V ∧
@@ -153,8 +153,11 @@ theorem mixed_graph_count (x y z r : ℕ) :
   have hc1 := complete_metrics 1
   have hcr := complete_metrics r
   have ho : Fintype.card oct.V = 6 ∧ (minimalForts oct.blockGraph).card = 11 ∧
-      (rootedChoices oct.blockGraph).card = 12 :=
-    ⟨octahedron_block.1, octahedron_block.2.1, octahedron_block.2.2.1⟩
+      (rootedChoices oct.blockGraph).card = 12 := by
+    have h := equipartite_block 3 (by omega)
+    simpa only [show 2 * 3 = 6 by rfl, show Nat.choose 3 3 = 1 by decide,
+      Nat.mul_one, show 3 + 8 = 11 by rfl, show Nat.choose 3 2 = 3 by decide,
+      show 4 * 3 = 12 by rfl] using And.intro h.1 (And.intro h.2.1 h.2.2.1)
   refine ⟨?_, cone_connected _, ?_⟩
   · change Fintype.card (Option ((copies (complete 4) x).V ⊕
       ((copies (complete 1) (2 * y)).V ⊕ ((copies oct z).V ⊕ (complete r).V)))) = _

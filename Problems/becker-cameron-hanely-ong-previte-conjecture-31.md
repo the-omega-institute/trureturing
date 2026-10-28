@@ -75,8 +75,11 @@ for arbitrary natural multiplicities and arbitrary natural $r$.
 `BlockParameters.residue_sequences` supplies all six feasible sequences.
 `CountAsymptotics.mixed_count_normalization` proves the actual count limit, and
 `EveryOrder.result` combines every positive order, positivity, normalization, the full ratio
-and the strict endpoint bounds. The octahedral counts enumerate all actual subsets and all
-possible fort subsets with kernel reduction.
+and the strict endpoint bounds. For every m at least two, `OctahedronBlock.equipartite_minimal_iff` and
+`equipartite_rooted_iff` classify every actual subset of the complete equipartite graph
+with m two-vertex parts. `equipartite_block` counts whole parts and transversals by
+exhaustive bijections, giving m + 8*choose(m,3) and 4*choose(m,2). Its direct m=3
+application supplies the six-vertex octahedral counts 11 and 12 in `mixed_graph_count`.
 
 ## Triage
 
