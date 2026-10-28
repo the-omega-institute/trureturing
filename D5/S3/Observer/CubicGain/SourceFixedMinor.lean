@@ -328,33 +328,70 @@ def sourceE1 (b : ℝ) : Polynomial ℝ :=
 theorem source_circuit_correspondence (t b : ℝ) :
     sourceD t b = circuitD (t,b) ∧ sourceC t b = circuitC (t,b) ∧
     sourceNumerator t b 0 = circuitP (t,b) := by
-  rfl
+  exact ⟨rfl, rfl, rfl⟩
+
+private def sourceNt (i : Fin 3) (t b : ℝ) : ℝ :=
+  (sourceNumerator (X : Polynomial ℝ) (C b) i).derivative.eval t
+private def sourceNb (i : Fin 3) (t b : ℝ) : ℝ :=
+  (sourceNumerator (C t) (X : Polynomial ℝ) i).derivative.eval b
+private def sourceDt (t b : ℝ) : ℝ :=
+  (sourceD (X : Polynomial ℝ) (C b)).derivative.eval t
+private def sourceDb (t b : ℝ) : ℝ :=
+  (sourceD (C t) (X : Polynomial ℝ)).derivative.eval b
+private def sourceQuotient (k : Fin 3) (t b : ℝ) : ℝ :=
+  sourceD t b*(sourceNt 0 t b*sourceNb k t b-sourceNb 0 t b*sourceNt k t b) -
+  sourceNumerator t b 0*(sourceDt t b*sourceNb k t b-sourceDb t b*sourceNt k t b) -
+  sourceNumerator t b k*(sourceNt 0 t b*sourceDb t b-sourceNb 0 t b*sourceDt t b)
+
+private theorem source_factor (k : Fin 3) (t b : ℝ) :
+    sourceBt 0 t b*sourceBb k t b-sourceBb 0 t b*sourceBt k t b =
+      sourceD t b*sourceQuotient k t b := by
+  unfold sourceBt sourceBb sourceQuotient sourceNt sourceNb sourceDt sourceDb
+  ring
+
+private theorem quotient_e0 (t b : ℝ) :
+    45 * (sourceE0 b).eval (t*b) = b^7*sourceQuotient 1 t b := by
+  simp only [sourceE0, sourceQuotient, sourceNt, sourceNb, sourceDt, sourceDb,
+    sourceNumerator, sourceC, sourceD, sourceN, sourceJ,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val,
+    Matrix.head_cons, Matrix.tail_cons,
+    derivative_add, derivative_sub, derivative_mul, derivative_pow,
+    derivative_C, derivative_X, derivative_natCast,
+    eval_add, eval_sub, eval_mul, eval_pow, eval_C, eval_X,
+    eval_natCast, eval_neg, derivative_neg, derivative_ofNat]
+  ring
 
 /-- Exact polynomial normalization before any specialization or division. -/
 theorem source_e0_normalization (t b : ℝ) :
     45 * sourceD t b * (sourceE0 b).eval (t*b) =
       b^7*(sourceBt 0 t b*sourceBb 1 t b-sourceBb 0 t b*sourceBt 1 t b) := by
-  simp only [sourceE0, sourceBt, sourceBb, sourceNumerator, sourceC,
-    sourceD, sourceN, sourceJ, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val, Matrix.head_cons, Matrix.tail_cons,
+  rw [source_factor]
+  calc
+    _ = sourceD t b * (45 * (sourceE0 b).eval (t*b)) := by ring
+    _ = sourceD t b * (b^7*sourceQuotient 1 t b) := by rw [quotient_e0]
+    _ = _ := by ring
+
+private theorem quotient_e1 (t b : ℝ) :
+    45 * (sourceE1 b).eval (t*b) = b^7*sourceQuotient 2 t b := by
+  simp only [sourceE1, sourceQuotient, sourceNt, sourceNb, sourceDt, sourceDb,
+    sourceNumerator, sourceC, sourceD, sourceN, sourceJ,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val,
+    Matrix.head_cons, Matrix.tail_cons,
     derivative_add, derivative_sub, derivative_mul, derivative_pow,
     derivative_C, derivative_X, derivative_natCast,
     eval_add, eval_sub, eval_mul, eval_pow, eval_C, eval_X,
     eval_natCast, eval_neg, derivative_neg, derivative_ofNat]
   ring
 
-/-- The same exact normalization for the ordered pair (N0,N2). -/
+/-- Exact polynomial normalization before any specialization or division. -/
 theorem source_e1_normalization (t b : ℝ) :
     45 * sourceD t b * (sourceE1 b).eval (t*b) =
       b^7*(sourceBt 0 t b*sourceBb 2 t b-sourceBb 0 t b*sourceBt 2 t b) := by
-  simp only [sourceE1, sourceBt, sourceBb, sourceNumerator, sourceC,
-    sourceD, sourceN, sourceJ, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val, Matrix.head_cons, Matrix.tail_cons,
-    derivative_add, derivative_sub, derivative_mul, derivative_pow,
-    derivative_C, derivative_X, derivative_natCast,
-    eval_add, eval_sub, eval_mul, eval_pow, eval_C, eval_X,
-    eval_natCast, eval_neg, derivative_neg, derivative_ofNat]
-  ring
+  rw [source_factor]
+  calc
+    _ = sourceD t b * (45 * (sourceE1 b).eval (t*b)) := by ring
+    _ = sourceD t b * (b^7*sourceQuotient 2 t b) := by rw [quotient_e1]
+    _ = _ := by ring
 
 /-- Fixed leading coefficients of the two literal normalized minor polynomials. -/
 theorem source_leading_coefficients (b : ℝ) :
