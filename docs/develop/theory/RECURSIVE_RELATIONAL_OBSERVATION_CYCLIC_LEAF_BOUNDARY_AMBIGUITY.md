@@ -1096,3 +1096,289 @@ native-to-quantum bridge, or the universal common apparatus. The original
 fixed-model and common-source obligations remain unchanged.
 
 ## 追加锚（本行以下为增补区）
+
+## 21. Unknown signed native gains and the earned residual boundary
+
+This continuation fixes the commissioned interface that is needed for the unknown-gain portfolio. Let $N\geq1$, let $1\leq b\leq N$, and let $B_1,\ldots,B_b$ be distinct ordered authentic ports, with $B_j=e_{\ell_j}$ in the native basis of $\mathbb Q^N$. The actual field is $x\in\mathbb Q^N$. Its unknown fixed law is a symmetric rational matrix $T$ whose off-diagonal support is connected and nonnegative; diagonal entries may have either sign. The joint Krylov promise is
+
+$$
+\operatorname{span}\{T^kB_j:0\leq k<N,\ 1\leq j\leq b\}=\mathbb Q^N.
+$$
+
+The unknown native gain vector is $g\in\mathbb Q^N$, with arbitrary signed heterogeneous entries and zeros allowed. The installed commands are `Reset`, signed rational `Add(j,u)`, `Tick`, native `Q_g`, nondestructive `Read(j)`, and `Hold`, where
+
+$$
+\operatorname{Reset}(x)=0,\qquad
+\operatorname{Add}(j,u)(x)=x+uB_j,\qquad
+\operatorname{Tick}(x)=Tx,
+$$
+
+$$
+Q_g(x)=g*x*x,\qquad
+\operatorname{Read}(j)(x)=B_j^{\mathsf T}x,
+\qquad \operatorname{Hold}(x)=x.
+$$
+
+The product in $Q_g$ is coordinatewise. Every command has the complete ACK, refusal, pending, framing, serialization, and successor contract of the existing cyclic service. The source provider supplies the ordered port registry, source handle, units, zero entrance, `Reset`, native operation, serial rights, and storage backing. The observer starts with common code and no source-dependent table, acquires data on this same specimen, retains the table and synchronized state, and forwards later legal calls. These are hypotheses of the conditional theorem. They do not assert a physical installation result.
+
+### 21.1. Paid acquisition of the product
+
+Put $M_k=B^{\mathsf T}T^kB$ for $0\leq k<2N$, where $B$ denotes the $N\times b$ port matrix. Run the $b$ actual impulse trials that acquire these moments. Symmetry identifies every candidate Krylov Gram entry from the moment list. Choose a deterministic positive-rank Gram pivot and let $R$ be the resulting nonsingular $N\times N$ matrix of selected columns. The acquired tables are
+
+$$
+G=R^{\mathsf T}R,\qquad A=R^{-1}TR,\qquad D=R^{-1}B,
+\qquad E=B^{\mathsf T}R.
+$$
+
+Here $R:\mathcal Z\to\mathcal X$ maps selected Krylov coefficients to the actual native field space. Both spaces have rational dimension $N$, but their coordinates have different meanings: $x=Rz$ and $z=R^{-1}x$. The matrix $R$ is a proof witness formed from the unknown native law, not a supplied numerical input. The observer acquires $G,A,D,E$ from returned moments and the fixed pivot rule without knowing the entries of $R$ in the native frame. In particular $E=D^{\mathsf T}G$.
+
+Write $q=N(N+1)/2$. From the zero field, prepare $Rz$ by the selected port pulses in descending-power order and $N-1$ actual ticks. For each $e_i$ and $e_i+e_j$ with $i<j$, perform the actual $Q_g$ call and then the full $N$-epoch all-port read window. The read rows acquire $R^{\mathsf T}Q_g(Rz)$; solving with $G$ gives
+
+$$
+F(z)=R^{-1}Q_g(Rz),\qquad
+\mu(u,v)=R^{-1}\bigl(g*(Ru)*(Rv)\bigr).
+$$
+
+The immediate native output is $y=Q_g(Rz)$, its acquired coordinate is $F(z)=G^{-1}R^{\mathsf T}y$, and the actual window endpoint is $T^{N-1}y$ with acquired coordinate $A^{N-1}F(z)$. The notation $R^{\mathsf T}y$ denotes the selected entries of the returned read window, not an additional native-coordinate query. Polarization of the diagonal and pair probes recovers every entry of the bilinear table $\mu$. A final actual `Reset` followed by `Hold` returns the source to zero. No inverse of $T$ is used; only the positive Gram minor is solved.
+
+**(A1) Proposition 21.1 (acquired product and endpoint).** Under the stated Krylov promise, the finite run above determines $G,A,D,E,\mu$ exactly and ends at the actual zero state. Its acquired product is the native coordinate operation transported through the earned frame, and every scalar used in the reconstruction is a returned source value or an exact rational operation on returned values.
+
+**Proof.** The moment identities give the Gram matrix of every selected Krylov column. The pivot rule selects $N$ independent columns, so $R$ is invertible and $G$ is positive definite. For a selected column $T^kB_j$, multiplying by $T$ is represented by the corresponding shifted Krylov column; the Gram equations therefore solve the matrix of $T$ in the selected basis, giving $A$. The input and output matrices are the same change of basis, giving $D$ and $E$. For a prepared field $Rz$, the all-port window supplies the Gram pairing with every selected basis vector after $Q_g$; invertibility of $G$ gives the unique coefficient vector $F(z)$. Applying this to the diagonal and polarization probes gives $\mu$. The final `Reset` is an actual source command, so the endpoint is zero. Every operation in the argument is finite exact rational arithmetic on the acquired records. ∎
+
+### 21.2. Continued use on the same source
+
+Retain the learned coordinate $z$ with invariant $x=Rz$. The numerical service uses
+
+$$
+\begin{array}{c|c}
+\text{actual command}&\text{synchronized update}\ \hline
+\operatorname{Reset}&z\leftarrow0\\
+\operatorname{Add}(j,u)&z\leftarrow z+uD_j\\
+\operatorname{Tick}&z\leftarrow Az\\
+Q_g&z\leftarrow\mu(z,z)\\
+\operatorname{Read}(j)&E_jz\\
+\operatorname{Hold}&z\leftarrow z.
+\end{array}
+$$
+
+Call the displayed state maps $\widetilde U_c:\mathcal Z\to\mathcal Z$, treating `Read` as the identity state map with the displayed reply. Write $U_c:\mathcal X\to\mathcal X$ for the actual native state maps. The controller forwards the actual command, retains the complete reply and successor, and then commits the synchronized update. A common adaptive policy uses the same returned replies and the same external random tape in the two descriptions.
+
+**(A2) Theorem 21.2 (synchronized complete continuation).** For every sufficiently backed finite adaptive word over this exact menu, including legal operands, refusals, invalid frames, pending states and complete identity successors, the numerical service and the actual source have equal complete replies and corresponding committed successor states under $x=Rz$. The assertion includes singular $T$ and every gain vector $g$.
+
+**Proof.** For every $z\in\mathcal Z$ and every legal command and operand, the invariant needed for a committed call is
+
+$$
+R\widetilde U_c(z)=U_c(Rz).
+$$
+
+For `Add`, $R(z+uD_j)=Rz+uB_j$; for `Tick`, $R(Az)=TRz$; for $Q_g$, $R\mu(z,z)=Q_g(Rz)$; and for `Read`, $E_jz=B_j^{\mathsf T}Rz$. `Reset`, `Read` as a state map, and `Hold` give the remaining identities. These equalities hold for every rational state, rather than only the calibration states. The source protocol decides whether a frame is legal before committing the corresponding transition; the observer copies that decision and retains the whole reply, including ACK, End and Return where required. A refusal or invalid frame has the same identity successor on both sides. A pending request retains its phase and bytes and has no completed state update; its eventual completion is handled by the same committed-call rule. Induction on committed calls, together with these protocol phases, proves equality of replies and corresponding successor states. The same induction is pointwise for a fixed common random tape, so adaptive branch choices coincide. A numerical forecast made without forwarding a call is not counted as an additional source observation. ∎
+
+### 21.3. Metric, annihilator, and orientation
+
+Define the learned annihilator and its dimensions by
+
+$$
+Z=\operatorname{Ann}(\mu)=\{z:\mu(z,w)=0\text{ for all }w\},\quad m=\dim Z,
+$$
+
+$$
+ b_0=\#\{j:\mu(D_j,D_j)=0\},\qquad r=m-b_0.
+$$
+
+The zero-gain port test is an acquired equality in the earned metric; it is not provider advice. In native coordinates $Z$ is the span of the axes with $g_i=0$. Thus $r$ counts unanchored zero-gain directions after the authentic zero-gain ports have been removed.
+
+**(A3) Theorem 21.3 (uniform native recovery for $r\leq1$).** If $r\leq1$, the acquired $G,\mu,D,A$ recover the native axes, $T$, $g$, and every synchronized current field, up to an ordered-port-fixing native permutation. The statement is a uniform sufficient result for this class. It does not say that every particular source with $r\geq2$ is nonidentifiable.
+
+**Proof.** On the active subspace, multiplication by a prepared $z$ has eigenvalues $g_i(Rz)_i$. Choose $z(t)=(1,t,\ldots,t^{N-1})$. The product of all active eigenvalue polynomials and all pairwise differences is nonzero: two independent rows of $R$ cannot agree after multiplication by two nonzero gains for every $t$. Its degree is at most
+
+$$
+ d=\frac{k(k+1)(N-1)}2,
+$$
+
+where $k=N-m$ is the active dimension. Hence one of $t=0,\ldots,d$ gives distinct nonzero active eigenvalues. When $k=0$, the active part is empty and the argument below starts with the port anchors.
+
+Factor the characteristic polynomial of the acquired multiplication map by $X^m$. The residual polynomial has rational simple nonzero roots at the selected $z(t)$. Clearing denominators and enumerating divisors of the constant and leading coefficients gives each rational root; elimination gives its rational eigenline. A rational vector on a promised native unit axis has rational $G$-norm, so $G$-normalization determines that axis up to sign without dividing by a gain. The vectors $D_j$ with zero $\mu(D_j,D_j)$ are already authentic native axes and anchor $b_0$ lines. Their $G$-orthogonal complement inside $Z$ has dimension $r\leq1$, so no unanchored plane remains. In the resulting provisional frame, connectedness of the nonnegative off-diagonal support propagates relative signs from an authentic positive port through every edge. Let $w_i$ be the resulting oriented unit vectors in the acquired $z$-coordinates, ordered with the authentic ports first, and put $W=[w_1\ \cdots\ w_N]$. Then
+
+$$
+RW=P,\qquad \widehat T=W^{-1}AW=P^{\mathsf T}TP,\qquad
+\widehat B=W^{-1}D=P^{\mathsf T}B,\qquad
+\widehat x=W^{-1}z=P^{\mathsf T}x,
+$$
+
+where $P$ is the ordered-port-fixing permutation between the recovered and actual native labelings. Thus $W:\widehat{\mathcal X}\to\mathcal Z$ consumes recovered native coordinates, $W^{-1}:\mathcal Z\to\widehat{\mathcal X}$ consumes acquired coordinates, and $P:\widehat{\mathcal X}\to\mathcal X$ consumes recovered native coordinates. The gains are the unique scalars $\widehat g_i$ satisfying $\mu(w_i,w_i)=\widehat g_iw_i$. In particular
+
+$$
+W^{\mathsf T}GW=I,\qquad W^{-1}=W^{\mathsf T}G,\qquad
+W^{-1}\mu(Wu,Wv)=\widehat g*u*v
+\quad(u,v\in\widehat{\mathcal X}).
+$$
+
+These identities use the acquired metric and table. They compute $\widehat x$ without taking the unknown native matrix $R$ as input. The selected Krylov coordinate is $z=R^{-1}x$; applying $R^{-1}$ to $z$ would change the frame a second time. All gains zero and $N-b\leq1$ are included. ∎
+
+Let $\widehat U_c$ denote the native menu on $\widehat{\mathcal X}$ with law $\widehat T$, ports $\widehat B$ and gains $\widehat g$. For every $z$ and every legal command, the earned conversion satisfies
+
+$$
+W^{-1}\widetilde U_c(z)=\widehat U_c(W^{-1}z),\qquad
+E_jz=\widehat B_j^{\mathsf T}W^{-1}z.
+$$
+
+For `Tick` and `Add` these are the displayed definitions of $\widehat T$ and $\widehat B$; for $Q_g$ they are the bilinear identity above; for `Read`, use $D^{\mathsf T}G=E$ and $W^{\mathsf T}GW=I$. The zero and identity maps handle `Reset`, `Hold`, refusals and state-preserving reads. Retaining the same protocol context handles pending and completed phases as in Theorem 21.2. This gives native recovery and continuation on the entire A3 domain, with no invertibility requirement on $T$.
+
+### 21.4. Exact residual equivalence
+
+**(A4) Theorem 21.4 (complete-table residual group).** Two admissible native realizations have equal acquired $G,A,D,E,\mu$ tables exactly when there is a rational orthogonal map $U$ satisfying
+
+$$
+UB=B',\qquad UT=T'U,
+$$
+
+and, for all $x,y$,
+
+$$
+U\bigl(g*x*y\bigr)=g'*(Ux)*(Uy).
+$$
+
+On active axes $U$ is a signed permutation. On the zero-gain subspace it is orthogonal, fixes every named zero-gain port axis, and is further restricted by the $T$-intertwining and admissibility conditions.
+
+**Proof.** The two minimal selected Krylov realizations define $U=R'R^{-1}$. Equality of the Gram tables makes $U$ an isometry; equality of $A,D,E$ gives the linear and port intertwiners, and equality of $\mu$ gives the product equation. Conversely the displayed equations carry every calibration preparation and every command to the corresponding command, so induction as in Theorem 21.2 gives equality of the whole adaptive service. The nonzero rank-one ideals of coordinatewise multiplication are permuted. Orthogonality restricts the scalar on each active line to a sign, while the annihilator carries zero multiplication and may rotate subject to its port anchors and $T$. ∎
+
+### 21.5. Sharp $r=2$ full-service counterfamily
+
+**(A5) Theorem 21.5 (sharpness by an infinite admissible family).** Let $b\geq3$ and $N=b+4$. Start with the public cyclic graph having unit edges $\ell_j-c$, $c-d$, $d-e$, $e-f$, and a weight-$2$ edge $d-f$. Put
+
+$$
+T_0=\frac12I+\frac1{4N}A_0.
+$$
+
+For every rational pair $(C,S)$ with $C^2+S^2=1$, $C\geq4/5$, and $0\leq S\leq3/5$, let $Q_{C,S}$ rotate the $(d,e)$ plane by $\begin{psmallmatrix}C&-S\\S&C\end{psmallmatrix}$ and fix all other axes. Set $T_{C,S}=Q_{C,S}T_0Q_{C,S}^{\mathsf T}$, set $g_d=g_e=0$, and set every other gain to $1$. Then the family is positive, connected, contracting and full-joint-rank, has $r=2$, and all members have identical complete enlarged-menu services. The members $(1,0)$ and $(4/5,3/5)$ have different native support graphs, with $b+4$ and $b+5$ support edges.
+
+**Proof.** The public cyclic construction supplies positivity, contraction, the authentic leaf roster and the joint-rank promise for $T_0$. Orthogonal conjugacy preserves the spectral contraction and the joint Krylov property. The rotated coordinates lie in the zero-gain plane, so $Q_g$ is unchanged by $Q_{C,S}$; all active coordinates are fixed. The conjugacy therefore intertwines `Reset`, every authentic `Add`, `Tick`, native `Q_g`, every `Read`, `Hold`, and the complete framing/successor protocol. Theorem 21.2 then gives equality for every common adaptive policy, not just a finite word. At $(1,0)$ the edge count is $b+4$; at $(4/5,3/5)$ the two rotated edge weights are both nonzero in a new pattern and the edge count is $b+5$. A port-fixing permutation cannot identify these nonisomorphic supports. Rational points on the arc are infinite. This proves failure of a uniform native-recovery theorem when the class admits $r=2$, without claiming that every individual $r\geq2$ source fails. ∎
+
+### 21.6 (A6). Actual selected nonlinear use and resource vector
+
+If some gain is active, the active-eigenline part of the proof of Theorem 21.3 supplies a rational $G$-unit vector $v\in\mathcal Z$ on an active axis even when $r>1$. Its actual native field is $Rv=\pm e_i$ for some active $i$. Perform an actual `Reset`, prepare $Rv$ using $v$ as the coefficients of the earned $N$-Add schedule, call native $Q_g$, and execute the actual all-port $N$-epoch window. The immediate native output is $g_i e_i\neq0$, its acquired coordinate is $\mu(v,v)$, and the window endpoint has native and acquired coordinates
+
+$$
+T^{N-1}Q_g(Rv),\qquad A^{N-1}\mu(v,v),
+$$
+
+respectively. On the $r\leq1$ recovery domain one may choose $v=w_i$; the prepared actual field is then $Pe_i$, the immediate output is $P(\widehat g_i e_i)$, and the recovered native endpoint is $\widehat T^{N-1}(\widehat g_i e_i)=W^{-1}A^{N-1}\mu(w_i,w_i)$. The controller selects and forwards these actual calls and retains their returned window and successor. A singular $T$ may kill the nonzero immediate output during that window; no nonzero endpoint is asserted. If every gain is zero, the operation still has a zero output and no active-axis selection or nonzero-output claim is made. The additional call vector in the order (Reset, Add, Tick, $Q_g$, Read, Hold) is
+
+$$
+(1,N,2(N-1),1,bN,2N).
+$$
+
+For the entire acquisition, with $q=N(N+1)/2$, an attained same-run upper vector is
+
+$$
+\bigl(b+q+1,\ b+Nq,\ b(2N-1)+2q(N-1),\ q,\ 2Nb^2+bNq,\ 2Nb+2Nq+1\bigr).
+$$
+
+The $b$ impulse trials, all $q$ product probes, their actual windows, final reset, records, source field, destination field, and observer table coexist in this vector. It is an upper account for the declared schedule, not a minimum. A stronger installation with authentic Add and Read at every native cell has the alternative vector $(N+2,2N,N,1,N^2+N,N+2)$: $N$ impulses acquire $T$, one all-ones preparation and one $Q_g$ acquire $g$, and a final reset restores zero. This changes the grants and installation, so no scalar or Pareto dominance is asserted.
+
+Every source law coefficient, gain, field, destination buffer, rational pulse, returned word, reduced numerator and denominator, root-search intermediate, characteristic polynomial, nullspace, axis frame, parser buffer, reference, grant, retained report and export is charged at its actual width. In a dense installation the source retains $N^2$ law entries, $N$ gains, and $N$ current plus $N$ destination entries at the same time as the observer's records. One native $Q_g$ can use $2N$ scalar products to form all squares and gain products; these and local exact solves are paid work, not additional source observations. A dense observer can retain $O(b^2N+bNq+N^3+Nb+N^2)$ rational slots in addition to code, framing, indices, references and copies. Finite per-instance rational termination gives no uniform bit, conditioning, lifetime-memory, energy, noise or physical-shot bound; arbitrary rational Adds already have unbounded operand width, and repeated squaring can grow denominator bits without new input.
+
+The existing gain-one calibrated Square, finite observability, minimal symmetric realization, rational-root, and simultaneous-diagonalization results are suppliers. They do not supply this unknown signed gain acquisition, its zero-plane residual classification, or the native $r=2$ family. The public fixed-pair diffusion purification and timed-release results likewise retain their own source and clock. No common apparatus is inferred. The sustained common-source/four-expression programme remains open: this portfolio does not prove a universal alpha/beta generator, transport A into B/C, a globally minimal resource vector, physical conformance, arbitrary chronology recovery, or completion through 2027.
+
+## 22. Four expressions on performed Report images
+
+Assume the hypotheses of Theorem 21.3, additionally $\det T\neq0$, and fix one deterministic calibration, pivot, orientation, serialization and decoding schedule $\sigma$. After any sufficiently backed finite actual continuation, perform `Report`: at each epoch $0,\ldots,N-1$ hold and read all $b$ ports, and tick between successive epochs. Its native entrance and endpoint and their acquired coordinates satisfy
+
+$$
+x_0=Rz_0,\qquad x_\star=T^{N-1}x_0=Rz_\star,
+\qquad z_\star=A^{N-1}z_0.
+$$
+
+Fix the same source identity, ordered port registry, units, program and rights context in every comparison. The four numerical views have independent meanings:
+
+- Space is the native weighted support graph, law, gain vector and current endpoint field, modulo the ordered-port-fixing permutation. Write its recovered representative as $(\widehat T,\widehat B,\widehat g,\widehat x_\star)$; it contains no intervening journal.
+- Time is the complete acquired calibration word and the latest actually performed Report word, with commands, replies, relative order, completed phase and Return under $\sigma$. It excludes arbitrary intervening journals and elapsed wall duration.
+- Boundary is the acquired finite calibration table and the present passive response germ $h_\star(k)=B^{\mathsf T}T^kx_\star$, $k\geq0$. Its first $N$ epochs determine the rest by the acquired finite law. This is the response at the current endpoint, whereas the latest Time window began at $x_0$. Computing a response value from a table does not perform the corresponding future source call or window.
+- Memory is $G,A,D,E,\mu$, selected indices, oriented axes $W$, synchronized $z_\star$, common program and completed phase. Rights, handles and references remain with their actual owners; they are not generated by numerical conversion.
+
+The actual Time word provides its own occurrence evidence. Reconstructing its numerical contents in another view does not issue a fresh ACK, grant or Return, or establish that an unperformed Report occurred. The theorem concerns numerical views on actual completed Report images in this common context.
+
+**(A7) Theorem 22.1 (conditioned four-view recovery).** On the completed Report image, each view recovers the other numerical views and all conversion routes agree through the same native triple. The common continuation kernel is equality of complete current service modulo the ordered-port-fixing permutation. A legal call followed by a new performed Report transports this square; the bare call alone is only an earned current prediction.
+
+**Proof.** Let $(k_i,j_i)_{i=1}^N$ be the selected Krylov indices fixed by the acquired pivot, so $R_i=T^{k_i}B_{j_i}$. Symmetry and joint rank give an explicit state decoder for a passive window at any field $y$: form $s_i=B_{j_i}^{\mathsf T}T^{k_i}y$ from its rows, then
+
+$$
+s=R^{\mathsf T}y,\qquad z_y=G^{-1}s=R^{-1}y,
+\qquad \widehat y=W^{-1}z_y=P^{\mathsf T}y.
+$$
+
+Time first acquires the tables and axes from its actual calibration word by A1 and A3. Its latest Report supplies $s_0=R^{\mathsf T}x_0$, so its endpoint decoder is $z_\star=A^{N-1}G^{-1}s_0$, followed by $\widehat x_\star=W^{-1}z_\star$. Boundary instead supplies $s_\star=R^{\mathsf T}x_\star$ from its current germ; its decoder is $z_\star=G^{-1}s_\star$, without another advancement by $A^{N-1}$. Memory already retains this same $z_\star$ and the earned axes. Each therefore yields Space with exactly the displayed input and output frames.
+
+For the reverse routes, first use the recovered representative of Space selected by $\sigma$ and apply the fixed selected-column rule to its law and ports. Its selected native Krylov matrix is
+
+$$
+\widehat R=[\widehat T^{k_i}\widehat B_{j_i}]_{i=1}^N
+=P^{\mathsf T}R=W^{-1}.
+$$
+
+Indeed $\widehat T=P^{\mathsf T}TP$ and $\widehat B=P^{\mathsf T}B$, so each column is $P^{\mathsf T}T^{k_i}B_{j_i}$. Consequently Space reconstructs the acquired tables by
+
+$$
+G=\widehat R^{\mathsf T}\widehat R,\quad
+A=\widehat R^{-1}\widehat T\widehat R,\quad
+D=\widehat R^{-1}\widehat B,\quad E=\widehat B^{\mathsf T}\widehat R,
+$$
+
+$$
+\mu(u,v)=\widehat R^{-1}
+\bigl(\widehat g*(\widehat R u)*(\widehat R v)\bigr),\qquad
+z_\star=\widehat R^{-1}\widehat x_\star=W\widehat x_\star.
+$$
+
+Running the fixed numerical calibration and orientation rules on these data reconstructs its calibration values, indices and $W$. A different port-preserving representative gives the same acquired tables and $z_\star$, because its native permutation multiplies both $\widehat R$ and $\widehat x_\star$ on the left. The current germ is $h_\star(k)=EA^kz_\star$. Invertibility gives the latest Report entrance in the recovered native frame as $\widehat x_0=\widehat T^{-(N-1)}\widehat x_\star$; its read values are $\widehat B^{\mathsf T}\widehat T^k\widehat x_0$ for $0\leq k<N$. These values and the fixed schedule reconstruct its numerical Time word and completed phase. These are paid local computations, without resetting or reinitializing the current source. Thus each encoder and decoder is inverse on its actual numerical image. Every conversion route yields the same law, gains and endpoint modulo the named-port permutation.
+
+The completed image includes every rational endpoint: for a desired recovered native $\widehat x_\star$, compute $\widehat x_0=\widehat T^{-(N-1)}\widehat x_\star$ and $z_0=W\widehat x_0$. An additional actual reset and the earned pulse preparation with coefficients $z_0$ reach $Rz_0=P\widehat x_0$; the actual Report then ends at $P\widehat x_\star$. These additional calls, operands and records are charged when this preparation is used. No unknown entries of $R$ are supplied, and no restriction to calibration states or a chosen numerical witness is made.
+
+To identify the continuation kernel, equality of these native triples intertwines every command by A2 and A3 and hence gives equal complete current service. Conversely equal complete current services have equal reset-calibration replies, giving equal $G,A,D,E,\mu$ and the port-fixing native correspondence of A3. The linear correspondence is unique: a map intertwining $T$ and fixing every $B_j$ fixes every $T^kB_j$, hence the whole state space. Passive read windows before a reset then separate unequal current fields by the decoder above. This proves the claimed kernel, including its relation to the actual continuation task.
+
+Finally take any legal command $c$ at a completed endpoint and then actually perform a new completed Report. A2 and A3 give the full update chain
+
+$$
+\begin{aligned}
+x_{\mathrm{new}}&=T^{N-1}U_c(x_\star),\\
+z_{\mathrm{new}}&=A^{N-1}\widetilde U_c(z_\star)
+=R^{-1}x_{\mathrm{new}},\\
+\widehat x_{\mathrm{new}}&=W^{-1}z_{\mathrm{new}}
+=P^{\mathsf T}x_{\mathrm{new}}
+=\widehat T^{N-1}\widehat U_c(\widehat x_\star).
+\end{aligned}
+$$
+
+At every intermediate Report epoch the read reply is simultaneously $B_j^{\mathsf T}x=E_jz=\widehat B_j^{\mathsf T}\widehat x$. Thus the actual new Time window, its decoded endpoint, the new current Boundary germ and updated Memory all agree. This covers `Reset`, all signed rational Adds, `Tick`, native $Q_g$, `Read` and `Hold`, with the protocol identities and pending/completion treatment of A2. A pending or incomplete Report is outside the completed image until its actual completion. A common adaptive policy is handled pointwise on its common tape. The added Report call vector is $(0,0,N-1,0,bN,N)$, in addition to the actual command $c$ and retained records. A bare command updates current prediction but supplies no fresh performed Time window. ∎
+
+### 22.1. Nonidentity-frame examples
+
+The distinction is visible with $N=2$, $b=1$, $B=e_1$, $g=(1,1)$ and $R=[B,TB]$. Each matrix below is rational, symmetric, connected with positive off-diagonal support, full joint rank and invertible; $r=0$ and the only port-fixing native permutation is the identity. Hence $W=R^{-1}$ and the acquired-to-native decoder is $W^{-1}z$.
+
+- For $T=\begin{psmallmatrix}0&2\\2&0\end{psmallmatrix}$, $R=\operatorname{diag}(1,2)$. `Add(1,1);Tick` from zero gives native $2e_2$, acquired $e_2$, and decoded native $2e_2$. Applying $R^{-1}$ to that acquired $e_2$ would instead give $e_2/2$.
+- For $T=\begin{psmallmatrix}1&1\\1&2\end{psmallmatrix}$, $R=\begin{psmallmatrix}1&1\\0&1\end{psmallmatrix}$. The same word gives native $(1,1)$ and acquired $e_2$, decoded to $(1,1)$, whereas $R^{-1}e_2=(-1,1)$.
+- For $T=\begin{psmallmatrix}1/2&1/4\\1/4&1/2\end{psmallmatrix}$, $R=\begin{psmallmatrix}1&1/2\\0&1/4\end{psmallmatrix}$. The same word gives native $(1/2,1/4)$ and acquired $e_2$, decoded to $(1/2,1/4)$, whereas $R^{-1}e_2=(-2,4)$.
+
+The same invariant applies to dependent Report updates, rather than only direct recovery. For the second matrix, a zero Report followed by `Add(1,1)` and a new Report has native endpoint $(1,1)$, acquired endpoint $e_2$ and decoded endpoint $(1,1)$. Inserting the native endpoint directly into $W^{-1}$ would give $(2,1)$, whose next native port read would be $2$ rather than $1$; treating $(2,1)$ as acquired coordinates would give $E(2,1)=3$.
+
+For the contracting matrix $T=\frac14\begin{psmallmatrix}1&1\\1&2\end{psmallmatrix}$, $R=\begin{psmallmatrix}1&1/4\\0&1/4\end{psmallmatrix}$ and $W=\begin{psmallmatrix}1&-1\\0&4\end{psmallmatrix}$. `Add(1,-16);Tick;Add(1,12)` from zero prepares $(8,-4)$, and the first Report ends at $e_1$. `Hold` and another Report give native endpoint $(1/4,1/4)$ and acquired endpoint $e_2$, decoded to $(1/4,1/4)$. Applying $W^{-1}$ directly to the native endpoint would give $(5/16,1/16)$.
+
+For the first matrix, `Add(1,1/4);Tick` prepares $(0,1/2)$, and the first Report reads $0,1$ and ends at $e_1$. `Hold` and another Report give native $2e_2$, acquired $e_2$, decoded native $2e_2$. A subsequent actual `Tick;Read(1)` returns $4$. The double-frame expression $W^{-1}(2e_2)=4e_2$ would instead predict $8$ and would reverse the new Report to entrance $2e_1$ rather than its actual entrance $e_1$. In all these examples the valid composite is $W^{-1}R^{-1}y=P^{\mathsf T}y$ for a native $y$, and $W^{-1}z$ for an acquired $z$; the general identities prove the distinction for every allowed source and command.
+
+The hypotheses are sharp in their own directions. For the public star with $g=1$, $r=0$, and singular $T$, the vector $e_{\ell_1}-e_{\ell_2}$ can be killed by $T$; distinct first Report reads then have the same final zero, so endpoint-to-Time inversion fails although A1--A6 remain valid. Even with invertible $T$, `Reset` and `Reset;Tick` have the same current zero but different journals. Hence arbitrary chronology is not recovered. These are mathematical countermodels to stronger promotions, not defects in Theorem 22.1.
+
+## 23. Source correspondence and preserved boundaries
+
+The existing cyclic sections supply moment acquisition, Gram pivots, selected pulses, gain-one Square, current prediction, and performed Report. Finite Ho--Kalman blocks and finite observability supply the known-order finite realization scope; minimal symmetric realization supplies orthogonal uniqueness; tensor diagonalization and rational-root extraction supply comparison methods. Their hypotheses are cited, not re-proved as new declarations. The new source-local delta is the actual unknown signed heterogeneous $g$, metric normalization, authentic zero-gain anchors, residual orthogonal group, $r\leq1$ theorem, $r=2$ full-service counterfamily, and their performed-use consumers.
+
+In the finite observability supplier the state is the rational system embedded in a finite real inner-product space, the update is $T$, the readout is $B^{\mathsf T}$ and the horizon is $N$. Symmetry identifies its zero readout kernel with the orthogonal complement of the joint Krylov span. The minimal symmetric realization supplier compares two full-span symmetric laws with the same port moments; it gives the orthogonal correspondence used in A4, not native axes or nonlinear acquisition. The private word-intertwining argument in `ControlledBehaviorUniversality` has the same induction pattern as A2, but that module's finite-carrier cardinality theorem is not applied to the infinite rational state space. The evolution-algebra `RationalHassePrinciple.isomorphism_monomial` and its private natural-basis expansion require a perfect target for monomiality: the active gain factor here is perfect, whereas a nontrivial zero-gain annihilator is not. This is why that supplier cannot eliminate the residual zero plane. Rational-root numerator and denominator divisibility apply after the factor $X^m$ is removed and denominators are cleared; the remaining polynomial has nonzero constant and leading coefficients, making the candidate divisor search finite.
+
+The public native derivative-layer Gramian and trajectory results retain their known finite-dimensional real operators, actual exponential trajectories, positive observation horizons and observable-complement or observability hypotheses. Their continuous integral Gramian, trajectory-image coordinates and Gaussian law are not the acquired rational table $G$ or the nonlinear command interface here. The public finite-orbit chain metric requires actual closed partial isometries and finite full equivalence classes for its quotient conclusion; no such gluing datum is supplied by A, B or C. These results keep their own domains and supply no omitted native, diffusion-emission or timed-release acquisition bridge.
+
+The original source provider owns $T,g$, native $Q_g$, ports, zero entrance, rights, units, and framing. The observer owns actual calibration, exact solves, retained tables, synchronization, and forwarding. The four-view inverse is additionally conditioned on $r\leq1$, invertible $T$, and a completed fixed Report image. Numerical values do not recreate an authentic grant, source handle, or historical journal.
+
+The previously published fixed-model, unchanged-initialization, parked-consumer, terminal/final-no-Ready, and erased-history obligations retain their scopes. The present conditional apparatus does not transport those obligations into the diffusion volumes and does not install a common process. No physical, finite-bit, total-cost, or worldwide novelty claim is made.
+
+The comparison literature is Anandkumar et al., arXiv:1210.7559v4, Theorem 4.1 for robust eigenvectors of an orthogonally decomposable tensor and Appendix D for simultaneous diagonalization of moment matrices with independent component vectors and nondegenerate weights. These are distinct comparison results; no positive-mixture-weight or randomized tensor-power theorem is applied to the arbitrary signed and zero gains here. The pinned mathlib `RingTheory/Polynomial/RationalRoot.num_dvd_of_is_root` and `den_dvd_of_is_root` give rational-root numerator and denominator divisibility. These sources do not supply the native paid port contract, zero-gain anchors, or the full-service residual family.
+
+## 追加锚（本行以下为增补区）
