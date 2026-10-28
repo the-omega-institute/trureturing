@@ -371,7 +371,27 @@ private def nonnegativeDetSet : Set (MatrixMap (Fin 3) (Fin 3) ℂ) :=
     0 ≤ (Matrix.det (transferMatrix T)).re}
 
 private lemma pdivisibleSet_subset_nonnegativeDet :
-    pDivisibleSet ⊆ nonnegativeDetSet := by sorry
+    pDivisibleSet ⊆ nonnegativeDetSet := by
+  let s : Set (Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ) :=
+    {M : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ |
+      M.det.im = 0 ∧ 0 ≤ M.det.re}
+  have hdet : Continuous (fun M : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ => M.det) :=
+    continuous_id.matrix_det
+  have hclosed : IsClosed s := by
+    change IsClosed {M : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ |
+      M.det.im = 0 ∧ 0 ≤ M.det.re}
+    exact (isClosed_eq (Complex.continuous_im.comp hdet) continuous_const).inter
+      (isClosed_le continuous_const (Complex.continuous_re.comp hdet))
+  have hsubset :
+      {M | ∃ E, IsPDivisibleMap E ∧ ∃ u, 0 ≤ u ∧ M = transferMatrix (E u)} ⊆ s := by
+    intro M hM
+    rcases hM with ⟨E, hE, u, hu, rfl⟩
+    exact pdivisible_endpoint_det_nonneg hE u hu
+  intro T hT
+  change transferMatrix T ∈ closure
+    {M | ∃ E, IsPDivisibleMap E ∧ ∃ u, 0 ≤ u ∧ M = transferMatrix (E u)} at hT
+  have hcl := hclosed.closure_subset_iff.mpr hsubset
+  exact hcl hT
 
 private lemma t_det : Matrix.det (transferMatrix t) = -(1 / 4 : ℂ) ^ 8 := by sorry
 
