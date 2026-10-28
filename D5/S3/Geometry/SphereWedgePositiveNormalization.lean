@@ -207,7 +207,8 @@ def normalizationHomeomorph : FamilyWedge b ≃ₜ PositiveWedge n ⊕ ZeroIndex
   continuous_invFun := continuous_inverse n b
 
 /-- The common basepoint stays in the positive bouquet, including when that bouquet is a point. -/
-theorem normalization_base : normalizationHomeomorph n b (base b) = Sum.inl (base (c n)) := rfl
+theorem normalization_base : normalizationHomeomorph n b (base b) =
+    Sum.inl (base (fun j : PositiveIndex n => coordinatePoint (n j.val))) := rfl
 
 /-- Dependent outer coproduct normalization. Every original outer block retains
 its positive bouquet, and each zero factor contributes a separate isolated point. -/
@@ -215,7 +216,8 @@ def coproductNormalizationHomeomorph {A : Type u} {I : A → Type v}
     (d : ∀ a, I a → ℕ) (q : ∀ a j, StdSphere (d a j)) :
     {e : (Σ a, FamilyWedge (q a)) ≃ₜ
       (Σ a, PositiveWedge (d a)) ⊕ (Σ a, ZeroIndex (d a)) //
-      ∀ a, e ⟨a, base (q a)⟩ = Sum.inl ⟨a, base (c (d a))⟩} := by
+      ∀ a, e ⟨a, base (q a)⟩ = Sum.inl
+        ⟨a, base (fun j : PositiveIndex (d a) => coordinatePoint (d a j.val))⟩} := by
   let fiberwise : (Σ a, FamilyWedge (q a)) ≃ₜ
       (Σ a, PositiveWedge (d a) ⊕ ZeroIndex (d a)) := {
     toEquiv := Equiv.sigmaCongrRight (fun a => (normalizationHomeomorph (d a) (q a)).toEquiv)
