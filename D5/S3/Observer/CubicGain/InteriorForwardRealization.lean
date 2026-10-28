@@ -77,9 +77,10 @@ private theorem words_for_multipliers (Q h σ : ℤ)
   · refine ⟨[true,false,true] ++ lowerWord (Q-1).toNat,[true] ++ lowerWord h.toNat,?_,hHr,rfl,?_,?_⟩
     · rw [product_append,lower_product]
       have he : ((Q-1).toNat:ℝ) = (Q:ℝ)-1 := by exact_mod_cast hQnat'
+      simp only [he]
       ext i k
       fin_cases i <;> fin_cases k <;>
-        norm_num [futureProduct,actionJ,actionM,Matrix.mul_apply,Fin.sum_univ_two,he]
+        norm_num [futureProduct,actionJ,actionM,Matrix.mul_apply,Fin.sum_univ_two] <;> ring
     · intro he; norm_num at he
     · intro _; rfl
 
@@ -94,7 +95,7 @@ theorem admitted_parameters_realize (x d m n σ : ℤ) (A : ZMat)
     (hfirst : A *ᵥ ![x-m*d,-(m*(x+(n*(x+d)+σ)*d)-d)] = ![x,d])
     (hrank : Module.finrank ℝ (LinearMap.range
       (endpointDifference (real A) (!![1,1;((1+n*d:ℤ):ℝ),((1+n*d+σ:ℤ):ℝ)])
-        (!![0,1;1,((n*(x+d)+σ:ℤ):ℝ)])))) = 3) :
+        (!![0,1;1,((n*(x+d)+σ:ℤ):ℝ)]))) = 3) :
     let a := x-m*d
     let h := n*(x+d)+σ
     let c := x+h*d
@@ -106,6 +107,9 @@ theorem admitted_parameters_realize (x d m n σ : ℤ) (A : ZMat)
       prefixMatrix w 1 = real A ∧
       futureProduct (w 1) = !![1,1;(Q:ℝ),((Q+σ:ℤ):ℝ)] ∧
       futureProduct (w 2) = !![0,1;1,(h:ℝ)] ∧
+      w 2 = [true] ++ lowerWord h.toNat ∧
+      (σ = 1 → w 1 = [false,true] ++ lowerWord Q.toNat) ∧
+      (σ = -1 → w 1 = [true,false,true] ++ lowerWord (Q-1).toNat) ∧
       (∀ i, prefixMatrix w i *ᵥ p.column = p.column+
         ((![0,m,m+1,m+1+h] : Fin 4 → ℤ) i:ℝ) • p.direction) ∧
       OrientedKernelGenerator w p.matrix ∧ ParameterForm w p (![0,m,m+1,m+1+h]) ∧
@@ -151,6 +155,7 @@ theorem admitted_parameters_realize (x d m n σ : ℤ) (A : ZMat)
   have hpb : (p.b:ℤ) = b := Int.toNat_of_nonneg hb0.le
   have hpc : (p.c:ℤ) = c := Int.toNat_of_nonneg hc0.le
   have hpd : (p.d:ℤ) = d := Int.toNat_of_nonneg hd0.le
+  have hpdR : (p.d:ℝ) = d := by exact_mod_cast hpd
   have hpcoords : p.column = ![(a:ℝ),-(b:ℝ)] ∧ p.direction = ![(d:ℝ),(c:ℝ)] := by
     constructor <;> ext i <;> fin_cases i <;>
       simp [PrimitiveCoordinates.column,PrimitiveCoordinates.direction] <;>
@@ -160,7 +165,7 @@ theorem admitted_parameters_realize (x d m n σ : ℤ) (A : ZMat)
       rcases hdet with he | he
       · left; simpa [real,Matrix.det_fin_two] using congrArg (Int.cast : ℤ → ℝ) he
       · right; simpa [real,Matrix.det_fin_two] using congrArg (Int.cast : ℤ → ℝ) he⟩
-  obtain ⟨uK,uH,huK,huH,_,_,_⟩ := words_for_multipliers Q h σ hQ hh0 hσ
+  obtain ⟨uK,uH,huK,huH,hwH,hwKplus,hwKminus⟩ := words_for_multipliers Q h σ hQ hh0 hσ
   let w : Fin 3 → List Bool := ![uA,uK,uH]
   have he1 : prefixMatrix w 1 = real A := by
     simpa [prefixMatrix,prefixWord,w,List.ofFn_succ] using huA
@@ -181,22 +186,26 @@ theorem admitted_parameters_realize (x d m n σ : ℤ) (A : ZMat)
     intro i
     fin_cases i
     · simp [prefixMatrix,prefixWord,futureProduct]
-    · rw [he1,hAr,hpcoords.1,hpcoords.2]
+    · change prefixMatrix w 1 *ᵥ p.column = p.column+(m:ℝ) • p.direction
+      rw [he1,hAr,hpcoords.1,hpcoords.2]
       ext k; fin_cases k <;> simp [a,b] <;> ring
-    · rw [he2,←Matrix.mulVec_mulVec,hAr,huK,hpcoords.1,hpcoords.2]
+    · change prefixMatrix w 2 *ᵥ p.column = p.column+((m+1:ℤ):ℝ) • p.direction
+      rw [he2,←Matrix.mulVec_mulVec,hAr,huK,hpcoords.1,hpcoords.2]
       ext k
       fin_cases k <;> simp [Matrix.mulVec,dotProduct,Fin.sum_univ_two]
       · dsimp [a]; push_cast; ring
       · have he : (Q:ℝ)*((x:ℝ)+d) = (c:ℝ)+(1-σ)*d := by exact_mod_cast hQeq
         dsimp [b]; push_cast; nlinarith only [he]
-    · rw [he3,←Matrix.mulVec_mulVec,←Matrix.mulVec_mulVec,hAr,huK,huH,hpcoords.1,hpcoords.2]
+    · change prefixMatrix w 3 *ᵥ p.column = p.column+((m+1+h:ℤ):ℝ) • p.direction
+      rw [he3,←Matrix.mulVec_mulVec,←Matrix.mulVec_mulVec,hAr,huK,huH,hpcoords.1,hpcoords.2]
       ext k
       fin_cases k <;> simp [Matrix.mulVec,dotProduct,Fin.sum_univ_two]
       all_goals
         have he : (Q:ℝ)*((x:ℝ)+d) = (c:ℝ)+(1-σ)*d := by exact_mod_cast hQeq
         have hec : (c:ℝ) = (x:ℝ)+h*d := by dsimp [c]; push_cast; rfl
         dsimp [a,b]; push_cast
-        nlinarith only [he,hec]
+      · linear_combination he+hec
+      · linear_combination (h:ℝ)*he-hec
   have hrank' : Module.finrank ℝ (LinearMap.range (prefixDifference w)) = 3 := by
     have he : prefixDifference w = endpointDifference (real A)
         (!![1,1;(Q:ℝ),((Q+σ:ℤ):ℝ)]) (!![0,1;1,(h:ℝ)]) := by
@@ -205,8 +214,8 @@ theorem admitted_parameters_realize (x d m n σ : ℤ) (A : ZMat)
     rw [he]
     exact hrank
   have hG := whole_class_primitive_lattice.2 w p (![0,m,m+1,m+1+h]) rfl himages hrank'
-  refine ⟨w,p,hpa,hpb,hpc,hpd,ha0,hb0,hc0,hh0,hQ,he1,huK,huH,himages,hG,?_,?_⟩
-  · refine ⟨?_,x,n,σ,?_,?_,hm,hn,hσ,?_,?_,?_,?_,?_,huK,huH,by simp,by simp,hrank'⟩
+  refine ⟨w,p,hpa,hpb,hpc,hpd,ha0,hb0,hc0,hh0,hQ,he1,huK,huH,hwH,hwKplus,hwKminus,himages,hG,?_,?_⟩
+  · refine ⟨?_,x,n,σ,?_,?_,hm,hn,hσ,?_,?_,?_,?_,?_,?_,?_,by simp,by simp [hpd,h],hrank'⟩
     · constructor
       · exact_mod_cast (show (0:ℤ) < (p.a:ℤ) by rw [hpa]; exact ha0)
       constructor
@@ -220,7 +229,9 @@ theorem admitted_parameters_realize (x d m n σ : ℤ) (A : ZMat)
     · simpa [hpc,hpd] using hpb
     · simpa [hpd,c,h] using hpc
     · simpa [hpd] using hQ
-    · simpa [he1,hpd] using hAr
+    · simpa only [he1,hpdR] using hAr
+    · simpa [w,Q,hpd] using huK
+    · simpa [w,h,hpd] using huH
   · intro S hS
     have hdetS : S.det = 0 := by
       by_contra hnS

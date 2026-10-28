@@ -296,6 +296,10 @@ theorem interior_necessity (w : Fin 3 → List Bool) (N : Mat)
       (∀ i, prefixMatrix w i *ᵥ p.column = p.column+(m i:ℝ) • p.direction) ∧
       (∀ i, prefixMatrix (conjugateHistory w) i = actionJ*prefixMatrix w i*actionJ) ∧
       actionJ*N*actionJ = scale • (swapCoordinates p).matrix ∧
+      ((∃ A : ZMat, (∀ i j, 0 ≤ A i j) ∧ (A.det = 1 ∨ A.det = -1) ∧
+          real A = prefixMatrix w 1) ∧
+        (∃ A : ZMat, (∀ i j, 0 ≤ A i j) ∧ (A.det = 1 ∨ A.det = -1) ∧
+          real A = prefixMatrix (conjugateHistory w) 1)) ∧
       (ParameterForm w p m ∨
         ParameterForm (conjugateHistory w) (swapCoordinates p) (fun i => -m i)) := by
   obtain ⟨p,scale,m,hs,hN,hp,hm0,hm,hconj,hNconj,hphase⟩ := phase_rigidity w N hG hn
@@ -317,7 +321,11 @@ theorem interior_necessity (w : Fin 3 → List Bool) (N : Mat)
       ring
     rw [he]
     exact congrFun hX i
-  refine ⟨p,scale,m,hs,hN,hm0,hm,hconj,hNconj,?_⟩
+  have hlegal (v : Fin 3 → List Bool) :
+      ∃ A : ZMat, (∀ i j, 0 ≤ A i j) ∧ (A.det = 1 ∨ A.det = -1) ∧
+        real A = prefixMatrix v 1 := integer_word (prefixWord v 1)
+  refine ⟨p,scale,m,hs,hN,hm0,hm,hconj,hNconj,
+    ⟨hlegal w,hlegal (conjugateHistory w)⟩,?_⟩
   rcases hphase with hphase | hphase
   · exact Or.inl (positive_phase_parameters w p m hp hphase hrank)
   · exact Or.inr (positive_phase_parameters _ _ _
