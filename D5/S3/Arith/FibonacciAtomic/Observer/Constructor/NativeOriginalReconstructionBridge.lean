@@ -99,15 +99,7 @@ def commonShift {m : Nat} (s : Fin m → Nat) : Nat :=
 private theorem commonShift_bound {m : Nat} (s : Fin m → Nat) (i : Fin m) :
     s i ≤ commonShift s := by
   have member : s i ∈ (List.finRange m).map s := List.mem_map.mpr ⟨i, by simp, rfl⟩
-  unfold commonShift
-  generalize (List.finRange m).map s = l at member ⊢
-  change s i ≤ l.foldr max 0
-  induction l with
-  | nil => cases member
-  | cons a l ih =>
-      rcases List.mem_cons.mp member with ha | hl
-      · exact ha ▸ Nat.le_max_left _ _
-      · exact (ih hl).trans (Nat.le_max_right _ _)
+  exact List.le_max_of_le' 0 member le_rfl
 
 private theorem commonShift_legal {k m : Nat} (s : Fin m → Nat) (E : Expression k m) :
     ShiftLegal s (commonShift s) E := by
