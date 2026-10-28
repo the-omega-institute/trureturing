@@ -4,11 +4,10 @@
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
-   digest: Actual one-layer prime exchange forces the literal 5040 core of large abundancy records. -/
+   digest: Actual one-layer prime exchange forces the 5040 core of large abundancy records. -/
 
 import D5.S3.Arith.GoldenResource.EightStepAbundancy
 import D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
-import Mathlib.Algebra.BigOperators.Intervals
 
 /-! The one-prime transfer is the classical superabundant-number exchange of
 Alaoglu and Erdős, Library/Arith/alaoglu1944highly.md. All comparisons here use
@@ -29,7 +28,7 @@ theorem one_layer_abundancy_exchange {m p q k : ℕ} (hm : 0 < m)
     (hden : layerDenominator p k < q) (ha : m.factorization p < k) :
     0 < (m / q) * p ∧ (m / q) * p < m ∧
       (ArithmeticFunction.sigma 1 m : ℝ) / m <
-        (ArithmeticFunction.sigma 1 ((m / q) * p) : ℝ) / ((m / q) * p) := by
+        (ArithmeticFunction.sigma 1 ((m / q) * p) : ℝ) / (((m / q) * p : ℕ) : ℝ) := by
   have hpden : p ≤ layerDenominator p k := by
     simpa [layerDenominator] using denominator_mono p hk
   have hpq : p < q := hpden.trans_lt hden
@@ -58,7 +57,9 @@ theorem one_layer_abundancy_exchange {m p q k : ℕ} (hm : 0 < m)
       div_mul_cancel₀ _ (Real.log_pos (by exact_mod_cast hp.one_lt)).ne',
       layer_ratio_identity hq hqexp, layer_ratio_identity hp (by omega)]
     apply Real.log_lt_log (by positivity)
-    exact add_lt_add_left (one_div_lt_one_div_of_lt hdp (by exact_mod_cast hdenp)) 1
+    have hdr : (layerDenominator p (m.factorization p + 1) : ℝ) <
+        (layerDenominator q (m.factorization q) : ℝ) := by exact_mod_cast hdenp
+    linarith [one_div_lt_one_div_of_lt hdp hdr]
   have hpstep := golden_resource_objective_single_layer_delta 0 (by omega : 1 ≤ m / q) hp
   have hqstep := golden_resource_objective_single_layer_delta 0 (by omega : 1 ≤ m / q) hq
   rw [heq, hfacq] at hqstep
@@ -72,11 +73,16 @@ theorem one_layer_abundancy_exchange {m p q k : ℕ} (hm : 0 < m)
   · calc
       (m / q) * p < (m / q) * q := Nat.mul_lt_mul_of_pos_left hpq ht
       _ = m := heq
-  · apply (Real.log_lt_log_iff
-      (div_pos (by exact_mod_cast ArithmeticFunction.sigma_pos 1 m hm.ne')
-        (by exact_mod_cast hm))
-      (div_pos (by exact_mod_cast ArithmeticFunction.sigma_pos 1 ((m / q) * p)
-        (Nat.mul_pos ht hp.pos).ne') (by exact_mod_cast Nat.mul_pos ht hp.pos))).mp
+  · have hsm : 0 < (ArithmeticFunction.sigma 1 m : ℝ) / m :=
+      div_pos (by exact_mod_cast ArithmeticFunction.sigma_pos 1 m hm.ne')
+        (by exact_mod_cast hm)
+    have hst : 0 < (ArithmeticFunction.sigma 1 ((m / q) * p) : ℝ) /
+        (((m / q) * p : ℕ) : ℝ) := by
+      apply div_pos
+      · exact_mod_cast ArithmeticFunction.sigma_pos 1 ((m / q) * p)
+          ((Nat.mul_pos ht hp.pos).ne')
+      · exact_mod_cast Nat.mul_pos ht hp.pos
+    apply (Real.log_lt_log_iff hsm hst).mp
     linarith
 
 private theorem large_prime_of_abundancy {m : ℕ} (hm : 0 < m)
@@ -99,7 +105,7 @@ private theorem large_prime_of_abundancy {m : ℕ} (hm : 0 < m)
       _ ≤ (p : ℝ) ^ (a + 1) / (p - 1) / p ^ a :=
         div_le_div_of_nonneg_right
           (div_le_div_of_nonneg_right (sub_le_self _ zero_le_one) (by linarith)) hpow.le
-      _ = _ := by rw [pow_succ]; field_simp; ring
+      _ = _ := by rw [pow_succ]; field_simp
   have hnprod : (m : ℝ) = ∏ p ∈ m.primeFactors, (p : ℝ) ^ m.factorization p := by
     exact_mod_cast Nat.prod_primeFactors_pow_factorization hm.ne'
   have hsprod : (ArithmeticFunction.sigma 1 m : ℝ) =
@@ -116,7 +122,7 @@ private theorem large_prime_of_abundancy {m : ℕ} (hm : 0 < m)
         (pow_nonneg (Nat.cast_nonneg p) _))
       (fun p hp => hgeom p (Nat.prime_of_mem_primeFactors hp) _)
   have hpad : (∏ p ∈ m.primeFactors, (p : ℝ) / (p - 1)) ≤
-      ∏ p ∈ Icc 2 30, (p : ℝ) / (p - 1) := by
+      ∏ p ∈ Icc (2 : ℕ) 30, (p : ℝ) / (p - 1) := by
     apply prod_le_prod_of_subset_of_one_le₀ hsupport
     · intro p hp
       have := (Nat.prime_of_mem_primeFactors hp).two_le
@@ -126,9 +132,10 @@ private theorem large_prime_of_abundancy {m : ℕ} (hm : 0 < m)
     · intro p hp _
       have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast (mem_Icc.mp hp).1
       exact (one_le_div (by linarith)).mpr (by linarith)
-  have htel : (∏ p ∈ Icc 2 30, (p : ℝ) / (p - 1)) = 30 := by
+  have htel : (∏ p ∈ Icc (2 : ℕ) 30, (p : ℝ) / (p - 1)) = 30 := by
     norm_num [show Icc (2 : ℕ) 30 = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30} by decide]
-  linarith [hb.trans (hpad.trans_eq htel)]
+  rw [htel] at hpad
+  linarith [hb.trans hpad]
 
 /-- A strict record among every smaller positive integer with abundancy above thirty
 contains all four prime-power layers of the literal integer 5040. -/
@@ -157,9 +164,9 @@ theorem strict_abundancy_record_divisible_5040 {m : ℕ} (hm : 0 < m)
   have h7 : 7 ∣ m := by
     simpa using hlayer 7 1 (by norm_num) (by norm_num)
       (by norm_num [layerDenominator, sum_range_succ])
-  have h23 : 144 ∣ m := (show Nat.Coprime 16 9 by norm_num).mul_dvd_of_dvd_of_dvd h2 h3
-  have h235 : 720 ∣ m := (show Nat.Coprime 144 5 by norm_num).mul_dvd_of_dvd_of_dvd h23 h5
-  exact (show Nat.Coprime 720 7 by norm_num).mul_dvd_of_dvd_of_dvd h235 h7
+  have h23 : 144 ∣ m := (show Nat.Coprime 16 9 by decide).mul_dvd_of_dvd_of_dvd h2 h3
+  have h235 : 720 ∣ m := (show Nat.Coprime 144 5 by decide).mul_dvd_of_dvd_of_dvd h23 h5
+  exact (show Nat.Coprime 720 7 by decide).mul_dvd_of_dvd_of_dvd h235 h7
 
 #print axioms one_layer_abundancy_exchange
 #print axioms strict_abundancy_record_divisible_5040
