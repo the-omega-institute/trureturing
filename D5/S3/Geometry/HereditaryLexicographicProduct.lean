@@ -37,7 +37,7 @@ open private FiniteGraphVertexSubstitution.substitution_same
   D5.S3.Geometry.FiniteGraphVertexSubstitution
 
 open private FiniteComponentClosure.vertexGluingHomeomorph from
-  D5.S3.Geometry.FiniteComponentClosure
+  D5.S3.Geometry.FiniteComponentClosure.Models
 
 universe u v w x
 
