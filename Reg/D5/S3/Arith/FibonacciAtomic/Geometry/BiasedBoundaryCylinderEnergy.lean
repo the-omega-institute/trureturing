@@ -56,9 +56,9 @@ def familyRegistration : Registration arena (type_of% constant_trace_minimum) wh
     fun e => nomatch e⟩
   dependence := by
     intro i
-    refine ⟨(),(0:H),lp.single 2 (rootEdge false) (1:ℝ),?_⟩
-    change ‖(0:H)‖^2 ≠ ‖(lp.single 2 (rootEdge false) (1:ℝ) : H)‖^2
-    rw [lp.norm_single (by norm_num) (rootEdge false) (1:ℝ)]
+    refine ⟨(),(0:H),constant_trace_minimum.choose,?_⟩
+    change ‖(0:H)‖^2 ≠ ‖constant_trace_minimum.choose‖^2
+    rw [constant_trace_minimum.choose_spec.2.1]
     norm_num
 
 def registration :
