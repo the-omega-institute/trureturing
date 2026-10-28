@@ -153,7 +153,10 @@ internal sealed class MixedUnitaryPinchingCommutationDocument : IScribeDocumentD
                         + "The real quotient is included into the complex scalars. Its numerator is nonzero and its denominator is positive. "
                         + "The tensor factor is also nonzero: its second-qubit (0,0) block is S(Tn), and a vanishing S(Tn) "
                         + "would contradict S(Tn) squared = ((Tn)-dot-(Tn))I. Thus the difference cannot vanish, proving the inequality."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("liu-takagi-lloyd-2019-mixed-unitary-pinching-commutation"),
+                    ResolutionKind.Proved)))));
 
     private static Formula MixedUnitaryFormula()
     {
