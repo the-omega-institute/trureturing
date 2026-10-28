@@ -6,11 +6,22 @@
    utility: none
    digest: Coupled endpoint estimates for complex Hermitian two by two cubic traces. -/
 
+/-
+admission_basis: escape-witness
+proof_shape: coupled_cubic_compatibility: content
+escape_witness: HsfQubitCoupledScalar.coupled_cubic_le
+The endpoint, coordinate and trace helpers are bind-only and consumed by
+coupled_cubic_compatibility; hermitian_isHermitian, hermitian_eq and
+weightedImage_hermitian are also consumed by the
+same-delivery HsfQubitMixedCubic supplier. No novelty or full HSF claim.
+-/
+
 module
 
 public import Mathlib.Analysis.Matrix.PosDef
 public import Mathlib.Analysis.Real.Sqrt
 public import Mathlib.Tactic
+public import D5.S3.Quantum.Matrix.HsfQubitCoupledScalar
 
 /-! Endpoint coupling and trace identities for the two dimensional HSF cubic supplier.
 The arbitrary-dimensional and general second-variable HSF conjectures remain open. -/
@@ -318,7 +329,39 @@ private theorem matrix_bound_of_scalar (a b m p : ℝ) (H K : Mat)
   · exact scalar_absolute_trace_swapped a b m p (H 0 0).re (H 1 1).re
       (K 0 0).re (K 1 1).re (H 0 1) (K 0 1) ha hb hm hscalar hp hn kp kn
 
+/-- The full coupled pure cubic inequality for complex Hermitian qubit matrices.
+All four PSD endpoints may be singular. This is a supplier for the HSF problem,
+not a resolution in arbitrary dimension or at a general second-variable base. -/
+theorem coupled_cubic_compatibility (a b : ℝ) (H K : Mat)
+    (ha : 0 < a) (hb : 0 < b) (hH : H.IsHermitian) (hK : K.IsHermitian)
+    (hp : (hermitian a b 0 + H).PosSemidef)
+    (hn : (hermitian a b 0 - H).PosSemidef)
+    (kp : (1+K).PosSemidef) (kn : (1-K).PosSemidef) :
+    |(Matrix.trace ((H-weightedImage a b (HsfQubitCoupledScalar.mean a b) K)^3)).re| ≤
+      2*(Matrix.trace (hermitian a b 0*
+        (H-weightedImage a b (HsfQubitCoupledScalar.mean a b) K)^2)).re+
+        HsfQubitCoupledScalar.penalty a b*‖K 0 1‖^2 := by
+  have hsupplier (c d : ℝ) (hd : 0 < d) (hcd : d ≤ c) :
+      ScalarBound c d (HsfQubitCoupledScalar.mean c d) (HsfQubitCoupledScalar.penalty c d) := by
+    intro u v x w huL huR hvL hvR htrace hx hw hcouple hrow
+    exact HsfQubitCoupledScalar.coupled_cubic_le c d u v x w hd hcd huL huR hvL hvR
+      htrace hx hw hcouple hrow
+  apply matrix_bound_of_scalar a b (HsfQubitCoupledScalar.mean a b)
+    (HsfQubitCoupledScalar.penalty a b) H K ha hb
+    (sub_nonneg.mp (HsfQubitCoupledScalar.excess_nonneg a b ha hb)) ?_ hH hK hp hn kp kn
+  rcases le_total b a with hab | hab
+  · exact Or.inl (hsupplier a b hb hab)
+  · apply Or.inr
+    have hm : HsfQubitCoupledScalar.mean b a = HsfQubitCoupledScalar.mean a b := by
+      unfold HsfQubitCoupledScalar.mean
+      congr 1 <;> ring
+    have hp' : HsfQubitCoupledScalar.penalty b a = HsfQubitCoupledScalar.penalty a b := by
+      unfold HsfQubitCoupledScalar.penalty
+      congr 1 <;> ring
+    simpa only [hm, hp'] using hsupplier b a ha hab
+
 #print axioms endpoint_coupling
 #print axioms contraction_row
+#print axioms coupled_cubic_compatibility
 
 end D5.S3.Quantum.Matrix.HsfQubitCoupledCubic

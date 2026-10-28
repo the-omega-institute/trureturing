@@ -51,6 +51,16 @@ internal sealed class HsfQubitCoupledCubicDocument : IScribeDocumentDefinition
                 + "u,v and upper entry z, Re Tr(XL^2)=a(u^2+|z|^2)+b(v^2+|z|^2). "
                 + "All variables are arbitrary, and no positivity is assumed.",
                 DescribeRole.Theorem),
+            Entry("coupled_cubic_compatibility", "The complete qubit pure cubic estimate",
+                "For every a,b>0 and complex Hermitian two by two H,K, assume "
+                + "X+H,X-H,I+K,I-K are PSD, where X=diag(a,b). Put "
+                + "m=2(a^2+ab+b^2)/(3(a+b)), M=weightedImage(a,b,m,K), "
+                + "L=H-M and B=(a-b)^2(a^2+3ab+b^2)|K01|^2/(3(a+b)). "
+                + "Then |Re Tr(L^3)|<=2 Re Tr(XL^2)+2B/3. There is no trace "
+                + "restriction, no restriction on the complex off-diagonal phases, "
+                + "and no assumption that an endpoint is invertible. The exact "
+                + "coupled scalar estimate applies after a simultaneous sign reversal "
+                + "and a coordinate exchange when required.", DescribeRole.Theorem),
             Paragraph(Text("These estimates are suppliers for the alpha=3, Y=I "
                 + "two dimensional restriction of the He-Saunderson-Fawzi compatibility "
                 + "question, arXiv:2502.05627v1 Conjecture 6.2 and the published "
