@@ -50,7 +50,10 @@ internal sealed class MarkovianDivisibilityMaximalIndexDocument : IScribeDocumen
                 StatementSource.FromAuthor(Disp(ResultFormula())),
                 AssessedProvenance.FromRepo(Source),
                 ResultArgument(),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("caro-graswald-2021-markovian-divisibility-maximal-index"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
         AssessedProvenance provenance, string prose) => Describe.Lean(
