@@ -1847,3 +1847,319 @@ The constants above belong to a fixed producer and are not asserted uniform over
 [Entropy]: FIB_LEGAL_EDGE_LOAD_ENTROPY_ERASURE_INFLUENCE_WEIGHTED_MOMENT.md
 
 ## 追加锚（本行以下为增补区）
+## 17. Strict nonattainment for every finite emitted-bit clock
+
+**Definition 17.1 (the closed clock subclass and the unchanged objective).** Fix an integer $m\ge1$ and parameters $a=(a_s)_{s\in\mathbb Z/m\mathbb Z}\in[0,1]^m$. On the $2m$ states $(s,b)\in\mathbb Z/m\mathbb Z\times\{0,1\}$ put
+
+$$
+\begin{aligned}
+K_s(1\mid0)&=a_s,& K_s(0\mid0)&=1-a_s,\\
+K_s(0\mid1)&=1,& K_s(1\mid1)&=0,\\
+M_x((s,b),(t,c))&=\mathbf1_{\{t=s+1,\ c=x\}}K_s(x\mid b),
+& A(a)&=M_0+M_1.
+\end{aligned}
+\tag{17.1}
+$$
+
+All phase indices are modulo $m$. Let $\mathcal C_m$ consist of every triple $\theta=(\lambda,M_0,M_1)$ obtained from (17.1) and **every** stationary probability row $\lambda A(a)=\lambda$. No state or stationary component is removed. The phase advances once at every emitted bit, including each zero and each forced zero. It does not advance only at occupied events.
+
+The objective is exactly [Universal, Definition 1.1 and (1.3), (1.5)][ClockUniversal]: $B_n$ contains all no11 words of length $n$, with all legal Hamming-one edges and open endpoint convention $w_0=w_{n+1}=0$. On its entire probability simplex,
+
+$$
+\Phi_n(\mu)=\sum_{\{u,v\}\in E(\Gamma_n)}h(\mu_u,\mu_v),\qquad
+h(s,t)=\frac{st}{s+t}\ (s+t>0),\qquad h(0,0)=0,
+$$
+
+$$
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\qquad
+c_\star=\lim_{n\to\infty}\frac{\kappa_n}{n},\qquad
+ d(P)=\mathbb E_P\left(X_0-\mathbb E_P[X_0\mid\mathcal E_0]\right)^2,
+\quad \mathcal E_i=\sigma(X_j:j\ne i).
+\tag{17.2}
+$$
+
+The supplied risk identity is $d(P)=\lim_n\Phi_n(P_n)/n\le c_\star$ for every stationary legal $P$. The notation $D_r(P)$ retains the finite-radius exterior risk of the same source. All risks count original bits, and every seam uses the actual ordered matrix product.
+
+**Theorem 17.2 (the entire closed finite-clock class is excluded).** For every finite $m\ge1$, every $a\in[0,1]^m$ and every stationary row in Definition 17.1, the matrices define one original two-sided stationary law $J_\theta$, with visible marginal $P_\theta$, and
+
+$$
+\theta\in\mathcal C_m\subseteq\Theta_{2m},\qquad d(P_\theta)<c_\star.
+\tag{17.3}
+$$
+
+For an interior parameter $a\in(0,1)^m$, define its true rotation stabilizer and its free posterior values by
+
+$$
+H(a)=\{h\in\mathbb Z/m\mathbb Z:a_{t+h}=a_t\text{ for all }t\},\qquad
+b_s=\frac{a_s}{a_s+(1-a_s)(1-a_{s+1})}.
+\tag{17.4}
+$$
+
+Both visible tails recover $S_i+H(a)$ at every cut $i$. On one shift-invariant, finite-modification-saturated conull domain, the original full-exterior posteriors have the form
+
+$$
+q_i(x)=\mathbf1_{\{x_{i-1}=x_{i+1}=0\}}\,b_i(x),\qquad
+b_i(x)=b_{s+i}\quad\text{if the recovered coset at zero is }s+H(a).
+\tag{17.5}
+$$
+
+Every $b_i(x)$ is unchanged by every legal finite modification of $x$. The domain may be chosen for any fixed original posterior version and all its translates. This includes profiles with repeated rotations; it asserts recovery of the quotient, not recovery of a distinguished representative of it.
+
+**Proof of Theorem 17.2.**
+
+### 17.1. The same stationary law for all lengths and all stationary rows
+
+Every row of $A(a)$ sums to one. Every finite stochastic matrix has a stationary probability row; for example, a subsequential limit of Cesaro averages of any initial row is stationary. For any such $\lambda$, the finite interval masses
+
+$$
+J_\theta(H_l=h_l,\ldots,H_{r+1}=h_{r+1},X_l=x_l,\ldots,X_r=x_r)
+=\lambda_{h_l}\prod_{i=l}^rM_{x_i}(h_i,h_{i+1})
+\tag{17.6}
+$$
+
+are normalized. Right marginalization uses $A\mathbf1=\mathbf1$, and left marginalization uses $\lambda A=\lambda$. Thus the consistent distributions extend to one stationary two-sided law, exactly the construction of [Universal, Proposition 4.2][ClockUniversal]. Its visible cylinders are
+
+$$
+P_\theta([w]_l)=\lambda M_w\mathbf1.
+\tag{17.7}
+$$
+
+Every positive edge has $S_{i+1}=S_i+1$ and installs previous-bit coordinate $X_i$ at $H_{i+1}$. Consequently $H_i=(S_i,X_{i-1})$ simultaneously at all integer cuts almost surely. A one edge ends with previous bit one, from which another one has zero probability. Hence $M_1^2=0$, which implies the original scalar requirement $\lambda M_1^2\mathbf1=0$. This verifies membership in the unaltered (2.1); it does not strengthen that requirement for other members of $\Theta_{2m}$. Formula (17.6) applies equally to boundary parameters, zero stationary coordinates and mixtures of recurrent classes. Every concatenation $uv$ keeps its full mass $\lambda M_uM_v\mathbf1$.
+
+### 17.2. Interior occupation frequencies and the true rotation quotient
+
+Suppose first that $0<a_s<1$ for every $s$. A zero reaches a previous-bit-zero state from any state. Further zeros visit every phase, and a final one reaches any prescribed previous-bit-one state. All these required transitions have positive probability, so $A$ is irreducible. Its stationary row is unique and strictly positive. Every return length is divisible by $m$, since every edge advances phase. The all-zero path from $(s,0)$ returns to it in exactly $m$ steps with positive probability. Thus the hidden period is exactly $m$, even when the parameter profile has a smaller period. Its stationary phase marginal is uniform. The $m$-step chain on the two previous-bit states at a fixed phase is irreducible and aperiodic; irreducibility also follows by padding the zero paths just described with full zero cycles.
+
+Here are explicit visible statistics that use the two tails separately. For $j=0,\ldots,m-1$ and $i\in\mathbb Z$, put
+
+$$
+t_{i,j,k}^{\pm}=i+j\pm km\quad(k\ge2),
+$$
+
+$$
+\begin{aligned}
+D_{i,j}^{\pm}(x)
+ &=\lim_{N\to\infty}\frac1N\sum_{k=2}^{N+1}
+       \mathbf1_{\{x_{t_{i,j,k}^{\pm}-1}=0\}},\\
+R_{i,j}^{\pm}(x)
+ &=\lim_{N\to\infty}
+   \frac{\sum_{k=2}^{N+1}\mathbf1_{\{x_{t_{i,j,k}^{\pm}-1}=0\}}x_{t_{i,j,k}^{\pm}}}
+        {\sum_{k=2}^{N+1}\mathbf1_{\{x_{t_{i,j,k}^{\pm}-1}=0\}}}.
+\end{aligned}
+\tag{17.8}
+$$
+
+The ratio is used only when the denominator is eventually positive and the limit exists. The plus statistics use coordinates strictly larger than $i$; the minus statistics use coordinates strictly smaller than $i$.
+
+Conditional on $S_i=s$, write
+
+$$
+\rho_{s+j}=J_\theta(X_{i+j-1}=0\mid S_i=s)>0.
+$$
+
+The stationary $m$-step chain on the corresponding phase class is ergodic. Apply the classical finite-chain occupation theorem to its states and its intervening transition paths. The denominator averages in (17.8) converge to $\rho_{s+j}$ and the numerator averages converge to $\rho_{s+j}a_{s+j}$. For the negative direction apply the same theorem to the stationary reversed chain, or equivalently the ergodic theorem for the inverse $m$-step shift. The reversed sampling averages the same forward pair observable; it does not replace its limit by a reversed transition probability. It follows that
+
+$$
+D_{i,j}^+=D_{i,j}^-=\rho_{s+j}>0,\qquad
+R_{i,j}^+=R_{i,j}^-=a_{s+j}
+\quad\text{conditional on }S_i=s,
+\tag{17.9}
+$$
+
+almost surely. In particular, the recovered numbers are the transition probabilities among previous-zero visits, not unconditional emitted-one frequencies. Finite-chain occupation and conditional projection are classical tools, as in Proposition 13.1 and [Universal, Theorem 5.1][ClockUniversal].
+
+Let $\Gamma$ be the legal configurations for which all the limits (17.8) exist, all $D_{i,j}^{\pm}>0$, and for every $i$ the two vectors $(R_{i,j}^{\pm})_{j=0}^{m-1}$ agree and are rotations of $a$. Require also the compatibility
+
+$$
+R_{i+1,j}^{\pm}=R_{i,j+1\bmod m}^{\pm}.
+\tag{17.10}
+$$
+
+These are countably many Borel conditions, so $\Gamma$ is Borel and, by (17.9), $P_\theta$-conull. Reindexing the sampling progression changes only finitely many terms at a wrap from $j=m-1$ to $j=0$, which gives (17.10). Translation permutes these conditions, so $\Gamma$ is shift invariant. Changing finitely many visible coordinates changes only finitely many summands in every statistic. All limits, positive denominator limits and profiles remain the same. Therefore $\Gamma$ is saturated under every legal finite modification, and every recovered vector is constant on each such class.
+
+Two rotation vectors $(a_{s+j})_j$ and $(a_{t+j})_j$ agree exactly when $t-s\in H(a)$. Thus (17.8) determines precisely the coset $s+H(a)$ in this rotation parametrization. At cut $i$ let its value be $\sigma_i(x)$; on $\Gamma$,
+
+$$
+\sigma_i=S_i+H(a)\quad J_\theta\text{-almost surely},\qquad
+\sigma_{i+1}=\sigma_i+1.
+\tag{17.11}
+$$
+
+Each tail separately determines this same quotient. It is also the actual rotation quotient of the visible law: for $h\in H(a)$, the state permutation $(s,b)\mapsto(s+h,b)$ commutes with both labeled matrices. Uniqueness makes the stationary row invariant under this permutation. Applying it to (17.6) proves that the whole visible laws conditional on $S_i=s$ and $S_i=s+h$ are equal. Thus no visible event distinguishes representatives within that coset; conditional on the whole visible record the hidden phase is uniform within its recovered coset. A constant profile gives the trivial quotient. No identification of hidden memory with finite visible memory has been made.
+
+### 17.3. Cancellation under the actual law gives the full-exterior posterior
+
+Fix $S_0=s$. Conditional on this event, the visible chain has the inhomogeneous transition rule $K_{s+i}(X_i\mid X_{i-1})$. Indeed (17.6), summed over the deterministic phases, gives exactly these transition factors on every finite interval. For a finite exterior window $[-L,-1]\cup[1,R]$ with $L,R\ge1$, its initial stationary factor is strictly to the left of zero and is common to both center completions. Every transition factor cancels between them except those at zero and one. On $F_0=\{X_{-1}=X_1=0\}$ the remaining weights are
+
+$$
+X_0=1:\ a_s,\qquad
+X_0=0:\ (1-a_s)(1-a_{s+1}).
+\tag{17.12}
+$$
+
+Interior legal cylinder factors are positive, so this ratio is legitimate on each positive conditioning atom. Off $F_0$, legality forces the center to zero. Increasing these exterior windows and using bounded conditional-expectation convergence yields
+
+$$
+\mathbb E_{J_\theta}[X_0\mid\sigma(S_0)\vee\mathcal E_0]
+=\mathbf1_{F_0}b_{S_0}.
+\tag{17.13}
+$$
+
+The function $s\mapsto b_s$ is constant on $H(a)$-cosets by (17.4). By (17.11) its coset is measurable from the visible exterior alone, using either tail. Thus the right side of (17.13) is $\mathcal E_0$-measurable modulo null sets. The tower property proves that it is the original $P_\theta$ full-exterior posterior, without phase averaging from a different model.
+
+For a globally Borel exterior version, use the plus profile at cut zero whenever its ratios exist and equal a rotation of $a$; select any fixed representative of the resulting finite coset and set
+
+$$
+q_0^*(x)=\mathbf1_{F_0(x)}b_s.
+\tag{17.14}
+$$
+
+Set $q_0^*=0$ if this profile fails. This definition uses no $x_0$, is independent of the coset representative, and is a version of (17.13) under the visible law. Let $q_i^*=q_0^*\circ T^i$. On $\Gamma$ it has the form (17.5), with $b_i(x)=b_s$ for $s+H(a)=\sigma_i(x)$. Each coefficient is unchanged by every legal finite modification. Its observation range can be infinite, although its values belong to the finite set $\{b_s:s\in\mathbb Z/m\mathbb Z\}\subset(0,1)$.
+
+### 17.4. A common saturated domain for the original versions
+
+Fix any original Borel exterior version $q_0=\mathbb E_{P_\theta}[X_0\mid\mathcal E_0]$, and let $q_i=q_0\circ T^i$, as in [Attainment, Definition 1.3][ClockAttainment]. Almost-sure agreement with (17.14) alone would not justify evaluating that agreement at arbitrary modified configurations. The following domination supplies the required bridge within this fixed interior law.
+
+Set
+
+$$
+\alpha=\min_s b_s>0,\qquad \beta=\max_s b_s<1.
+\tag{17.15}
+$$
+
+Let $S_i^0$ force bit $i$ to zero. Let $S_i^1$ insert one at $i$ on $F_i$, and be the identity on $F_i^c$. Both are total legal Borel maps. Disintegrating over $\mathcal E_i$, with $q_i^*$ as the conditional probability of one, gives for every Borel set $B$
+
+$$
+\begin{aligned}
+P_\theta((S_i^0)^{-1}B)
+ &\le\frac{P_\theta(B\cap\{X_i=0\})}{1-\beta},\\
+P_\theta((S_i^1)^{-1}B)
+ &\le\frac{P_\theta(B\cap F_i\cap\{X_i=1\})}{\alpha}
+       +P_\theta(B\cap F_i^c).
+\end{aligned}
+\tag{17.16}
+$$
+
+For example, writing $y$ for the exterior and $0y$ for its zero completion, the left side of the first inequality is $\int\mathbf1_B(0y)\,d\mu_i(y)$, whereas its numerator is $\int\mathbf1_B(0y)(1-q_i^*(y))\,d\mu_i(y)$. The bound follows from $1-q_i^*\ge1-\beta$ almost surely. On the free fiber the analogous conditional mass of $1y$ is at least $\alpha$; off that fiber $S_i^1$ is the identity. This proves the second inequality. Thus both maps are nonsingular for this particular $P_\theta$. No attained band or nonsingularity premise for arbitrary stationary laws was assumed.
+
+Let $\mathcal G$ be the countable monoid generated by every $S_i^0,S_i^1$, both shifts and the identity. Stationarity and (17.16) make every element nonsingular. If
+
+$$
+E=\Gamma\cap\bigcap_{i\in\mathbb Z}\{q_i=q_i^*\},\qquad
+\Omega_{\rm ag}=\bigcap_{g\in\mathcal G}g^{-1}E,
+\tag{17.17}
+$$
+
+then $\Omega_{\rm ag}$ is Borel and conull. Closure under composition gives $g\Omega_{\rm ag}\subseteq\Omega_{\rm ag}$ for every generator; using both shifts gives shift invariance. Every legal finite modification can be performed by first zeroing a containing interval and then inserting the desired nonadjacent ones. Compatibility with the unchanged exterior makes each insertion legal. Hence $\Omega_{\rm ag}$ is saturated under every legal finite modification, and every original $q_i$ agrees with (17.5) at all points of this domain. This is the countable-saturation method of [Exterior, Theorem 3.1][ClockExterior], with domination supplied directly by (17.15)--(17.16). The domain is for fixed versions and a fixed parameter, not for every conceivable version or every parameter simultaneously.
+
+### 17.5. A nonzero mixed difference with no remote loss terms
+
+Assume for contradiction that this interior law attains $d(P_\theta)=c_\star$. Correction 16.1 applies to this same $\theta\in\Theta_{2m}$ and supplies $A_{P_\theta}(0)<\infty$, including both zero-offset erasures. The supplied [Attainment, Theorem 1.5][ClockAttainment] therefore gives a shift-invariant saturated conull set $\Omega_0$ on which the original losses $\ell_i(x)=(x_i-q_i(x))^2$ satisfy
+
+$$
+\Delta_{P_\theta}(x,z)=\sum_{i\in\mathbb Z}(\ell_i(x)-\ell_i(z))=0
+\tag{17.18}
+$$
+
+for every legal finite modification, with absolute convergence. The band needed by that supplier is a consequence of the hypothetical attainment, by [Universal, Theorem 3.1][ClockUniversal]. Root summability and this strong-zero implication retain their supplier ownership.
+
+Choose $x\in\Omega_0\cap\Omega_{\rm ag}$. For $u,v\in\{0,1\}$, replace its block $[-2,2]$ by
+
+$$
+x^{uv}_{[-2,2]}=(0,u,0,v,0),\qquad
+x^{uv}_{[-2,2]^c}=x_{[-2,2]^c}.
+\tag{17.19}
+$$
+
+Endpoint zeros protect both open seams, so all four configurations are legal, regardless of $x_{-3}$ and $x_3$. Saturation puts all four in the same domain. The entire coefficient field $(b_i)_i$ is identical across them by finite-modification invariance. Thus their original losses outside $[-2,2]$ agree: their local triples and their coefficients both agree there. For $i=-2,-1$ the loss depends on at most $u$, and for $i=1,2$ it depends on at most $v$. Consequently every noncentral term cancels in the finite mixed sum
+
+$$
+\begin{aligned}
+\mathscr M(x)
+ &=\sum_{i\in\mathbb Z}
+  \left[\ell_i(x^{11})-\ell_i(x^{10})-\ell_i(x^{01})+\ell_i(x^{00})\right]\\
+ &=b_0(x)^2>0.
+\end{aligned}
+\tag{17.20}
+$$
+
+At the center, the observed bit is zero in all four completions. Its losses in the order $11,10,01,00$ are $0,0,0,b_0(x)^2$, since either neighboring one forces the posterior to zero. On the other hand, using the same original-$P_\theta$ losses, (17.18) gives
+
+$$
+\mathscr M(x)
+=\Delta_{P_\theta}(x^{11},x^{00})
+ -\Delta_{P_\theta}(x^{10},x^{00})
+ -\Delta_{P_\theta}(x^{01},x^{00})=0,
+\tag{17.21}
+$$
+
+contradicting (17.20). The cancellation uses neither a finite visible window for $b_i$ nor a bound on its observation range. It uses the exact invariance of that field on this finite-modification class. In particular, there is no residual sum of far-away posterior changes. This is the mixed-endpoint mechanism of [Finite visible memory, Proposition 4.1][ClockVisible], applied on a saturated tail class rather than to a globally local loss.
+
+### 17.6. A missing legal cylinder for every boundary stationary row
+
+It remains to treat the whole boundary cube, without an irreducibility hypothesis. If $a_s=0$ for some $s$, take the length-$m^2$ word indexed by $0,\ldots,m^2-1$ whose ones occur exactly at
+
+$$
+k(m+1),\qquad 0\le k<m.
+\tag{17.22}
+$$
+
+This word is legal; for $m=1$ it is the one-letter word $1$. Its required one positions meet every residue modulo $m$. From any starting phase $r$, one required one therefore has phase $s$. That edge has probability zero whether its previous bit is zero, when $K_s(1\mid0)=a_s=0$, or one, when $K_s(1\mid1)=0$. Hence $M_w\mathbf1=0$ statewise and $P_\theta([w])=0$ for every stationary row.
+
+If $a_s=1$ for some $s$, use the legal word $0^{m+1}$. Either its first zero already has zero likelihood, or it installs previous bit zero. The following $m$ zeros traverse every phase, including $s$, with previous bit zero throughout. At that phase the required transition has probability $K_s(0\mid0)=0$. Again $M_w\mathbf1=0$ from every hidden state. These two cases cover every boundary parameter, including simultaneous zeros and ones. They cover all stationary mixtures, zero masses, reducibility and periodicity without selecting any component.
+
+An attaining stationary law has positive probability for every legal finite cylinder by [Universal, Theorem 3.1][ClockUniversal]. Thus every boundary row fails attainment. Together with the interior contradiction and the universal bound $d(P_\theta)\le c_\star$, this proves (17.3) on the entire closed family. $\square$
+
+### 17.7. The credited fixed-period compactness consequence
+
+For fixed $m$, the set
+
+$$
+\{(a,\lambda)\in[0,1]^m\times\mathcal P(\{1,\ldots,2m\}):
+       \lambda A(a)=\lambda\}
+\tag{17.23}
+$$
+
+is nonempty and compact, and its continuous matrix image is $\mathcal C_m$. Every finite cylinder probability is continuous in $(a,\lambda)$ by (17.7). The supplied harmonic formula for $D_r$, including $h(0,0)=0$, makes $D_r$ continuous even at zero cylinder masses. Applying the compactness argument of [Universal, Theorem 6.2][ClockUniversal] on this closed subclass gives
+
+$$
+\max_{\theta\in\mathcal C_m}d(P_\theta)
+=\inf_{r\ge1}\max_{\theta\in\mathcal C_m}D_r(P_\theta)<c_\star.
+\tag{17.24}
+$$
+
+The strict inequality follows because the maximum is attained and every member is excluded by Theorem 17.2. The same supplier's finite-separation argument, using $\kappa_n/(n+1)\to c_\star$, then gives finite integers $r,n\ge1$ with
+
+$$
+\max_{\theta\in\mathcal C_m}D_r(P_\theta)<\frac{\kappa_n}{n+1}.
+\tag{17.25}
+$$
+
+These are applications of the existing compactness theorem, not additional compactness results. The margin and both integers may depend on $m$. The finite-energy constants in (17.15) also depend on the actual interior parameter and can deteriorate at the boundary.
+
+**Attribution 17.3 (the new consumer and the distinct clock classes).** Proposition 13.1 already supplies the two-phase member (13.1) and its posterior; Sections 13--15 own its presentation and quotient obstructions. Theorem 17.2 uses that example as a member of one class-wide exclusion, without asserting a new two-phase example. It also covers its nonrenewal and non-finite-visible-memory features. In fact, under that example's Palm law at a one, the phases have weights $2/5,3/5$. Multiplication of its transition probabilities for consecutive gaps of length two gives
+
+$$
+P^{\rm Palm}(G=2)=\frac25\frac14+\frac35\frac13=\frac3{10},\qquad
+P^{\rm Palm}(G_1=2,G_2=2)=\frac25\left(\frac14\right)^2
+                       +\frac35\left(\frac13\right)^2
+=\frac{11}{120}\ne\frac9{100}.
+\tag{17.26}
+$$
+
+Thus the proper-renewal exclusions do not cover this member. Its two distinct free posterior values in (13.2) remain possible under either phase after every finite legal record, as shown in Proposition 13.1; by [Finite visible memory, Proposition 2.2][ClockVisible], no finite visible order can have this posterior. The all-renewal and whole three-state exclusions retain their separate scope in [Uniform renewal, Theorems 10.3 and 11.4][ClockRenewal]; neither theorem is used in (17.20)--(17.21). No minimal-state claim is needed for this consumer.
+
+The family in [Visible tail phase, Sections 9--15][ClockGap] is different: its zero waiting edges keep the waiting phase fixed, and successive occupied events advance it. Its anchored Palm phase is not asserted invariant under arbitrary finite bit changes. Here every edge advances the clock, and the transition-frequency profile (17.8) is unchanged by every finite bit modification. The latter invariant field is precisely what makes the original-loss contrast (17.20) possible. The class-wide theorem combines this quotient recovery, its actual full-exterior posterior, saturated agreement for fixed original versions and the mixed contrast; no general finite-state identification or generic scoring theorem is claimed as a new result.
+
+The coordinate-conditional Brier scoring framework is classical: [Dawid, Lauritzen and Parry, *Proper Local Scoring Rules on Discrete Sample Spaces*, arXiv:1104.2224v2, Section 4.2, Example 4.4, equation (14)](https://arxiv.org/html/1104.2224v2) is the sum of squared errors against full coordinate-conditional probabilities. Its everywhere-positive product-space discussion does not itself supply the hard-no11 class exclusion. [van Enter and Verbitskiy, *Erasure entropies and Gibbs Measures*, arXiv:1001.3122v1, Theorem 6, equation (8)](https://arxiv.org/html/1001.3122v1) represents Shannon erasure entropy by a common Gibbs specification and obtains affinity on measures consistent with that specification. It does not give this Brier nonattainment statement or replace the fixed-version argument (17.16)--(17.17). Finite-chain occupation, probability extension, martingale convergence and countable nonsingular saturation retain classical credit. Theorem 17.2 is a repository derivation relative to the stated suppliers, with no claim of literature priority.
+
+**Scope 17.4 (the original all-dimension alternative).** The result is for exactly $\mathcal C_m$ for each finite $m$, not for all of $\Theta_{2m}$. No reduction of an arbitrary finite-hidden law to this emitted-bit-clock class has been established. In particular, the original alternative in Statement 9.3 remains open. A fixed-period compact margin in (17.24) is not a margin uniform over periods. The theorem supplies no parameter-uniform erasure rate, minimal hidden dimension, numerical separation or finite-observation resource guarantee.
+
+[ClockUniversal]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[ClockAttainment]: FIB_LEGAL_EDGE_LOAD_ATTAINMENT_STRONG_ZERO_EQUIVALENCE_AND_FINITE_OPTIMIZER_COMPARISON.md
+[ClockExterior]: FIB_LEGAL_EDGE_LOAD_EXTERIOR_LOCALIZATION_AND_ACTUAL_LOSS_COCYCLE_BALANCE.md
+[ClockVisible]: FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_NONATTAINMENT.md
+[ClockRenewal]: FIB_LEGAL_EDGE_LOAD_UNIFORM_RENEWAL_NONATTAINMENT_AND_THREE_STATE_SEPARATION.md
+[ClockGap]: FIB_LEGAL_EDGE_LOAD_VISIBLE_TAIL_PHASE_RIGIDITY_AND_WINDOW_LIMITS.md
+
+## 追加锚（本行以下为增补区）
