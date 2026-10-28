@@ -51,5 +51,8 @@ internal sealed class ReciprocalSigmaThresholdDocument : IScribeDocumentDefiniti
                     Paragraph(Text("Krizek posed the source conjecture. Israel's prior observations include multiplicativity, the prime formula, divergence and "
                         + "existence of every level. The prime-power expansion is an elementary consequence of the divisor-sum definition. "
                         + "The common-minimum proof here is a repository derivation; the citation supplies the question and those observations. "
-                        + "No integrality assertion about values above one or proposed numerical minima at later indices is included."))), DescribeRole.Theorem))));
+                        + "No integrality assertion about values above one or proposed numerical minima at later indices is included."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a265714-positive-threshold-common-minimum"),
+                    ResolutionKind.Proved)))));
 }
