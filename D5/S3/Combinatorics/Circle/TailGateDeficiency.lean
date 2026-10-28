@@ -41,7 +41,7 @@ private theorem select_gate {k : ℕ} (f : Fin k → ℤ) (T : List (Fin k))
       (delta - theta) htarget
       (by intro i hi; simpa [signPool] using (List.mem_filter.mp hi).2)
       (by omega)
-    refine ⟨L, hL.trans (List.filter_sublist _), ?_, hlo, by omega⟩
+    refine ⟨L, hL.trans (List.filter_sublist), ?_, hlo, by omega⟩
     intro i hi
     exact (of_decide_eq_true (List.mem_filter.mp (hL.subset hi)).2).1
   · exact ⟨[], List.nil_sublist _, by simp, by simpa [mass] using (show delta - theta ≤ 0 by omega),
@@ -131,6 +131,12 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
   let c2 := mass f (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2)
   let a2 := c2 + f z
   let h := mass f W
+  change 0 < f p at hpositive
+  change Q k ≤ |f n| at hnlarge
+  change N k < 3 * |f p| at hexpand
+  change Q k ≤ -f zpen at hzpenlarge
+  change Q k ≤ -f z at hzlarge
+  change f p < -f y at hyhigh
   have geo := native_geometry hk t p hnlarge hexpand
   obtain ⟨hQ, hN, hC, hNp, hNo⟩ := source_geometry hk
   change 2 ≤ Q k at hQ
@@ -200,7 +206,7 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
     let R := T2 ++ [z] ++ E
     have hw : W = F ++ R := by simp [W, oldWord, F, R, x, List.append_assoc]
     have hr : largeUsed k t R = 1 := by
-      simp [R, largeUsed_append, largeUsed, mass, largeWeight, hzL, hEweight, h2weight]
+      simp [R, largeUsed_append, largeUsed_cons, largeWeight, hzL, hEweight, h2weight]
     have hcut : mass f F ≤ B := by
       have hm : mass f F = a1 := by simp [F, a1, c1, mass, add_assoc]
       rw [hm]; omega
@@ -220,11 +226,11 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
   have hc1 : c1 ≤ C k := by
     have hs := (strip_split (A ++ [x] ++ T0 ++ [y] ++ T1) ([zpen] ++ T2 ++ [z] ++ E)
       (by simpa only [oldWord, x, List.append_assoc] using hsW)).1
-    simpa [c1, mass] using (inStrip_prefix hs _).2
+    simpa [c1, mass] using (inStrip_prefix hs (A ++ [x] ++ T0 ++ [y] ++ T1).length).2
   have hc2 : c2 ≤ C k := by
     have hs := (strip_split (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2) ([z] ++ E)
       (by simpa only [oldWord, x, List.append_assoc] using hsW)).1
-    simpa [c2, mass] using (inStrip_prefix hs _).2
+    simpa [c2, mass] using (inStrip_prefix hs (A ++ [x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2).length).2
   change C k - c1 + mass (fun i => -f i) (signPool (fun i => -f i) T2 (C k + f zpen + 1)) < delta ∨
     C k - c2 + mass f (signPool f T2 (C k + f z + 1)) < delta
   by_contra hnot
@@ -239,18 +245,24 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
       simpa only [a2, show c2 + f z + (C k - c2) + 1 = C k + f z + 1 by omega] using hnot.2)
   have hT2nod : T2.Nodup := hW.1.sublist (by
     dsimp only [oldWord]
-    exact (List.sublist_append_left T2 ([z] ++ E)).trans
-      (List.sublist_append_right (A ++ [hit k 2 p] ++ T0 ++ [y] ++ T1 ++ [zpen]) _))
+    apply (List.sublist_append_left T2 ([z] ++ E)).trans
+    simpa only [List.append_assoc] using
+      (List.sublist_append_right (A ++ [hit k 2 p] ++ T0 ++ [y] ++ T1 ++ [zpen]) (T2 ++ [z] ++ E)))
   obtain ⟨R, hpart⟩ := one_complement f T2 Nm Pp hT2nod hNm hPp hNmneg hPppos
   let ns := mass (fun i => -f i) Nm
   let ps := mass f Pp
-  have hmneg : mass f Nm = -ns := by simp [ns, mass, List.sum_neg_distrib]
+  have hmneg : mass f Nm = -ns := by
+    have hn := List.sum_neg_reverse (Nm.map f)
+    simp only [List.sum_reverse, List.map_map, Function.comp_def] at hn
+    dsimp only [ns, mass]
+    omega
   have hmR : mass f R = mass f T2 + ns - ps := by
     have hm := (hpart.map f).sum_eq
     change mass f (Nm ++ R ++ Pp) = mass f T2 at hm
     simp only [mass, List.map_append, List.sum_append] at hm
     change (Nm.map f).sum = -ns at hmneg
-    dsimp only [mass, ps] at *
+    change (Nm.map f).sum + (R.map f).sum + (Pp.map f).sum = (T2.map f).sum at hm
+    change (R.map f).sum = (T2.map f).sum + ns - (Pp.map f).sum
     omega
   have hRsmall (i : Fin k) (hi : i ∈ R) : |f i| < Q k :=
     h2small i (hpart.mem_iff.mp (by simp [hi]))
@@ -264,25 +276,32 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
     simp only [b, S0, a0, c1, delta, P, mass, List.map_append, List.map_cons,
       List.map_nil, List.sum_append, List.sum_cons, List.sum_nil, add_zero] at hn ⊢
     omega
-  have hm2 : a1 + delta - ns + mass f R = c2 + delta - ps := by
+  have hc2eq : c2 = a1 + mass f T2 := by
     simp only [a1, c1, c2, mass, List.map_append, List.map_cons,
-      List.map_nil, List.sum_append, List.sum_cons, List.sum_nil, add_zero] at *
+      List.map_nil, List.sum_append, List.sum_cons, List.sum_nil, add_zero]
+    omega
+  have hm2 : a1 + delta - ns + mass f R = c2 + delta - ps := by omega
+  have heq : h = a2 + mass f E := by
+    simp only [h, W, oldWord, a2, c2, x, mass, List.map_append, List.map_cons,
+      List.map_nil, List.sum_append, List.sum_cons, List.sum_nil, add_zero]
     omega
   have hmend : a2 + delta - ps + mass f S2 = h + delta := by
-    simp only [S2, a2, c2, h, W, oldWord, mass, List.map_append, List.map_cons,
-      List.map_nil, List.sum_append, List.sum_cons, List.sum_nil, add_zero] at *
-    dsimp only [ps, mass] at *
+    have hm : mass f S2 = mass f E + ps := by simp [S2, ps, mass]
     omega
   have hstart : 0 ≤ b ∧ b ≤ C k := by dsimp only [b]; omega
   have hgate1 : (0 ≤ c1 + delta - ns ∧ c1 + delta - ns ≤ C k) ∧
       (0 ≤ a1 + delta - ns ∧ a1 + delta - ns ≤ C k) := by
     have hz : f zpen < 0 := by omega
-    dsimp only [a1, ns] at *
+    have ha := show a1 = c1 + f zpen from rfl
+    change delta - (C k - c1) ≤ ns at hNmlo
+    change ns ≤ delta + a1 at hNmhi
     omega
   have hgate2 : (0 ≤ c2 + delta - ps ∧ c2 + delta - ps ≤ C k) ∧
       (0 ≤ a2 + delta - ps ∧ a2 + delta - ps ≤ C k) := by
     have hz' : f z < 0 := by omega
-    dsimp only [a2, ps] at *
+    have ha := show a2 = c2 + f z from rfl
+    change delta - (C k - c2) ≤ ps at hPplo
+    change ps ≤ delta + a2 at hPphi
     omega
   have hfinal : 0 ≤ h + delta ∧ h + delta ≤ C k := by dsimp only [B] at *; omega
   have compatible (S : List (Fin k)) (hs : ∀ i ∈ S, |f i| < Q k) :
@@ -295,7 +314,7 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
     omega
   have hs0 (i : Fin k) (hi : i ∈ S0) : |f i| < Q k := by
     rcases List.mem_append.mp hi with hi | hi
-    · exact hsmall i (by simp [smallWord] at *; tauto)
+    · exact hsmall i (by simp only [smallWord, List.mem_append] at hi ⊢; tauto)
     · exact h2small i (hNm.subset hi)
   have hs2 (i : Fin k) (hi : i ∈ S2) : |f i| < Q k := by
     rcases List.mem_append.mp hi with hi | hi
@@ -368,6 +387,7 @@ theorem actualSource_threeNegative_twoGate_tail_deficiency
     simp [H, mass, energyWeight, hxL, hyL, f, s]
   rw [hei, her] at he
   have henergy := geo.energy
+  change (3 : ℕ) ^ (f p).natAbs + 3 ^ (f n).natAbs < 3 ^ (f x).natAbs at henergy
   have hHs : H k t V < H k t W := by omega
   have hj : J k t V < J k t W := Prod.Lex.toLex_lt_toLex.mpr
     (Or.inr ⟨hG, Prod.Lex.toLex_lt_toLex.mpr (Or.inl hHs)⟩)
