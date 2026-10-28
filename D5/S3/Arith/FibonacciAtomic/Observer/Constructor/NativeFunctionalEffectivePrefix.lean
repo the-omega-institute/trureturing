@@ -166,7 +166,7 @@ private theorem iterate_cutoff (d a : Nat) (X : CompletionTree) :
   | zero => rfl
   | succ a ih => rw [Function.iterate_succ_apply', Function.iterate_succ_apply', ih, rho_cutoff]
 
-private theorem eval_cutoff {m : Nat} (d : Nat) (v : Fin m → CompletionTree) (E : Expr m) :
+theorem eval_cutoff {m : Nat} (d : Nat) (v : Fin m → CompletionTree) (E : Expr m) :
     evalPrefix d (fun i => cutoff d (v i)) E = cutoff d (value v E) := by
   induction E with
   | ground t => exact (NativeCompletionPrefixLifting.cutoff_embed d t).symm
