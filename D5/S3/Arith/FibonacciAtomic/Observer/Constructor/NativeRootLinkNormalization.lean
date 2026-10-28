@@ -108,13 +108,13 @@ private theorem positive_period (a : Nat) (positive : 0 < a)
     Function.iterate_add_apply]
   exact iterate_full n _
 
-private def selfStep {k m : Nat} (S : System k m) (i : Fin m) (a : Nat) :
+def selfStep {k m : Nat} (S : System k m) (i : Fin m) (a : Nat) :
     Presentation k m where
   equations := Function.update S i (if a = 0 then none else some (.token (Fin.last k) 0))
   reconstruct := identity
   project := identity
 
-private theorem selfStep_correct {k m : Nat} (S : System k m) (i : Fin m) (a : Nat)
+theorem selfStep_correct {k m : Nat} (S : System k m) (i : Fin m) (a : Nat)
     (eq : S i = some (.var a i)) : Correct S (selfStep S i a) := by
   intro p
   have omega_eval (v : Fin m → CompletionTree) :
@@ -158,14 +158,14 @@ private def linkRecon {k m : Nat} (i : Fin m) (a : Nat) (j : Fin m) :
 private def linkProject {k m : Nat} (i : Fin m) : Fin m → Expression k m :=
   fun t => if t = i then .ground (.of true) else .var 0 t
 
-private def linkStep {k m : Nat} (S : System k m) (i : Fin m) (a : Nat) (j : Fin m) :
+def linkStep {k m : Nat} (S : System k m) (i : Fin m) (a : Nat) (j : Fin m) :
     Presentation k m where
   equations := fun t => if t = i then some (.ground (.of true))
     else (S t).map (substitute (linkRecon i a j))
   reconstruct := linkRecon i a j
   project := linkProject i
 
-private theorem linkStep_correct {k m : Nat} (S : System k m) (i : Fin m) (a : Nat)
+theorem linkStep_correct {k m : Nat} (S : System k m) (i : Fin m) (a : Nat)
     (j : Fin m) (ji : j ≠ i) (eq : S i = some (.var a j)) :
     Correct S (linkStep S i a j) := by
   classical
@@ -224,11 +224,11 @@ private theorem linkStep_correct {k m : Nat} (S : System k m) (i : Fin m) (a : N
     · rw [recon, ite_eq_right ti, ← substitute_value]
       exact sat t _ (by simp only [ti, ite_false, defn, Option.map_some])
 
-private noncomputable def roots {k m : Nat} (S : System k m) : Finset (Fin m) := by
+noncomputable def roots {k m : Nat} (S : System k m) : Finset (Fin m) := by
   classical
   exact Finset.univ.filter fun i => ∃ a j, S i = some (.var a j)
 
-private theorem mem_roots {k m : Nat} (S : System k m) (i : Fin m) :
+theorem mem_roots {k m : Nat} (S : System k m) (i : Fin m) :
     i ∈ roots S ↔ ∃ a j, S i = some (.var a j) := by
   classical
   simp only [roots, Finset.mem_filter, Finset.mem_univ, true_and]
@@ -242,7 +242,7 @@ private theorem substitution_root {k m : Nat} (R : Fin m → Expression k m)
   | var b t => exact ⟨b, t, rfl⟩
   | pair A B => cases eq
 
-private theorem selfStep_decreases {k m : Nat} (S : System k m) (i : Fin m) (a : Nat)
+theorem selfStep_decreases {k m : Nat} (S : System k m) (i : Fin m) (a : Nat)
     (eq : S i = some (.var a i)) :
     (roots (selfStep S i a).equations).card < (roots S).card := by
   classical
@@ -263,7 +263,7 @@ private theorem selfStep_decreases {k m : Nat} (S : System k m) (i : Fin m) (a :
   · intro equal
     exact absent (equal.symm ▸ (mem_roots S i).mpr ⟨a, i, eq⟩)
 
-private theorem linkStep_decreases {k m : Nat} (S : System k m) (i : Fin m) (a : Nat)
+theorem linkStep_decreases {k m : Nat} (S : System k m) (i : Fin m) (a : Nat)
     (j : Fin m) (eq : S i = some (.var a j)) :
     (roots (linkStep S i a j).equations).card < (roots S).card := by
   classical
@@ -286,12 +286,12 @@ private theorem linkStep_decreases {k m : Nat} (S : System k m) (i : Fin m) (a :
   · intro equal
     exact absent (equal.symm ▸ (mem_roots S i).mpr ⟨a, j, eq⟩)
 
-private def compose {k m : Nat} (T U : Presentation k m) : Presentation k m where
+def compose {k m : Nat} (T U : Presentation k m) : Presentation k m where
   equations := U.equations
   reconstruct := fun i => substitute U.reconstruct (T.reconstruct i)
   project := fun i => substitute T.project (U.project i)
 
-private theorem compose_correct {k m : Nat} (S : System k m) (T U : Presentation k m)
+theorem compose_correct {k m : Nat} (S : System k m) (T U : Presentation k m)
     (ht : Correct S T) (hu : Correct T.equations U) : Correct S (compose T U) := by
   intro p
   constructor
@@ -360,7 +360,7 @@ private theorem filters_threshold {k m : Nat} (T : Presentation k m)
     threshold (transformedFilters T filters) = threshold filters := by
   simp only [threshold, transformedFilters, List.map_map, Function.comp_def]
 
-private theorem filters_correspond {k m : Nat} (T : Presentation k m)
+theorem filters_correspond {k m : Nat} (T : Presentation k m)
     (p : Fin k → Nat) (w : Fin m → CompletionTree) (filters : List (Filter k m)) :
     Passes p w (transformedFilters T filters) ↔
       Passes p (mapValues p T.reconstruct w) filters := by

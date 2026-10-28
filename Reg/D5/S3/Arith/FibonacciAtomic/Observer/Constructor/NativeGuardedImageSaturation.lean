@@ -158,3 +158,178 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeGuardedImageSaturation
+
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeGuardedAtomicReplacement
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeImageSaturationInterface
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.CompletionPositiveDriftRegion (atomic_finite omega_not_finite)
+
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeGuardedImageSaturation
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeGuardedImageSaturation.ExposedSuppliers
+noncomputable section
+
+abbrev completionSignature : Signature where
+  Params := Unit
+  State _ := CompletionTree
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := CompletionTree
+  Anchor := Empty
+  finiteAnchor := inferInstance
+abbrev actual : Realization completionSignature :=
+  realize completionSignature (fun _ _ X => X) (fun e => nomatch e)
+abbrev rejected : Realization completionSignature :=
+  realize completionSignature (fun _ _ _ => leaf true) (fun e => nomatch e)
+def observed (R : Realization completionSignature) (X : CompletionTree) : CompletionTree :=
+  R.readout () () X
+private theorem dependence : ObservationalDependence completionSignature actual := by
+  intro role
+  refine ⟨(),leaf true,leaf false,?_⟩
+  intro eq
+  have tag := congrArg (fun X => (PFunctor.M.dest X).1) eq
+  cases tag
+
+private theorem alpha_not_image_one : ¬ NativeImage 1 (leaf true) := by
+  rintro ⟨X,eq⟩
+  obtain ⟨l,rank,_⟩ := atomic_predecessor 1 0 X eq
+  omega
+
+namespace Coinduction
+abbrev arena : Arena where
+  signature := completionSignature
+  Law R := ∀ (k : Nat) (Q : CompletionTree → Prop),
+    (∀ X, Q X → X = atomic k ∨ X = atomic (k+1) ∨
+      ∃ U V, X = node U V ∧ Q U ∧ Q V) → ∀ X, Q X → NativeImage k (observed R X)
+private theorem actual_law : arena.Law actual := @image_coinduction
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  apply alpha_not_image_one
+  exact law 1 (fun X => X = Omega) (by
+    intro X eq
+    subst X
+    exact Or.inr (Or.inr ⟨Omega,Omega,omega_node,rfl,rfl⟩)) Omega rfl
+
+def evidence : Registration arena (type_of% (@image_coinduction)) where
+  actual := actual
+  bridge := by rfl
+  variation := ⟨actual_law,rejected,rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected,fun j h => (h (Subsingleton.elim j i)).elim,rfl,rejected_law⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@image_coinduction) (Realization completionSignature) Type Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeGuardedImageSaturation.image_coinduction.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeGuardedImageSaturation.ExposedSuppliers.Coinduction.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize completionSignature (fun _ _ x => x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some CompletionTree
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Coinduction
+
+namespace LargeShift
+abbrev arena : Arena where
+  signature := completionSignature
+  Law R := ∀ (k a : Nat) (X : CompletionTree), k ≤ a →
+    NativeImage k (observed R (rho^[a] X))
+private theorem actual_law : arena.Law actual := @image_shift_large
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  exact alpha_not_image_one (law 1 1 Omega le_rfl)
+
+def evidence : Registration arena (type_of% (@image_shift_large)) where
+  actual := actual
+  bridge := by rfl
+  variation := ⟨actual_law,rejected,rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected,fun j h => (h (Subsingleton.elim j i)).elim,rfl,rejected_law⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@image_shift_large) (Realization completionSignature) Type Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeGuardedImageSaturation.image_shift_large.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeGuardedImageSaturation.ExposedSuppliers.LargeShift.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize completionSignature (fun _ _ x => x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some CompletionTree
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end LargeShift
+
+namespace CancelShift
+abbrev arena : Arena where
+  signature := completionSignature
+  Law R := ∀ (k a : Nat) (X : CompletionTree), a ≤ k →
+    (NativeImage k (rho^[a] X) ↔ NativeImage (k-a) (observed R X))
+private theorem actual_law : arena.Law actual := @image_shift_cancel
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  apply alpha_not_image_one
+  apply (law 2 1 Omega (by omega)).mp
+  refine ⟨Omega,?_⟩
+  rw [iterate_omega,iterate_omega]
+
+def evidence : Registration arena (type_of% (@image_shift_cancel)) where
+  actual := actual
+  bridge := by rfl
+  variation := ⟨actual_law,rejected,rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected,fun j h => (h (Subsingleton.elim j i)).elim,rfl,rejected_law⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@image_shift_cancel) (Realization completionSignature) Type Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeGuardedImageSaturation.image_shift_cancel.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeGuardedImageSaturation.ExposedSuppliers.CancelShift.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize completionSignature (fun _ _ x => x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some CompletionTree
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end CancelShift
+
+end
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeGuardedImageSaturation.ExposedSuppliers
