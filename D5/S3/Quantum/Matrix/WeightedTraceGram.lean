@@ -19,7 +19,9 @@ public import Mathlib.Analysis.Matrix.Order
 public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
 public import D5.S3.Quantum.Matrix.HsfQubitMixedCubic
 
-/-! Weighted Gram positivity with independent positive matrix weights. -/
+/-! Weighted Gram positivity with independent positive matrix weights.
+Source-selection evidence for the escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/23332. -/
 
 @[expose] public section
 noncomputable section

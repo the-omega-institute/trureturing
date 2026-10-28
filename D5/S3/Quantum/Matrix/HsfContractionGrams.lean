@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Matrix/HsfContractionGrams
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.PosDef]
-   utility: numeric-reduction; basis=consumer; consumer=D5/S3/Quantum/Matrix/HsfContractionCubic.coefficient_gap_nonneg
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Matrix/HsfContractionCubic.coefficient_gap_nonneg; premises=D5/S3/Quantum/Matrix/HsfContractionGrams.grams_posSemidef
    digest: Four exact integer Gram matrices for the full contraction cubic certificate. -/
 
 /-
@@ -17,6 +17,11 @@ The matrices are used in the arbitrary-dimensional full-contraction trace certif
 module
 public import D5.S3.Quantum.Matrix.WeightedTraceGram
 
+/-! Exact rational LDL certificates for the four fixed coefficient matrices.
+Source-selection evidence for the escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/23332. -/
+
+set_option maxHeartbeats 2000000
 @[expose] public section
 noncomputable section
 open Matrix
@@ -24,7 +29,7 @@ namespace D5.S3.Quantum.Matrix.HsfContractionGrams
 
 /-- Fixed integer matrix in the ordered eight-word basis. -/
 def M00 : Matrix (Fin 8) (Fin 8) ℝ :=
-  ![
+  Matrix.of ![
   ![0, 0, 0, 0, 0, 0, 0, 0],
   ![0, 526, 265, 130, 178, 96, 155, 164],
   ![0, 265, 276, 32, 7, (-93), 8, (-52)],
@@ -35,7 +40,7 @@ def M00 : Matrix (Fin 8) (Fin 8) ℝ :=
   ![0, 164, (-52), 108, 184, 222, 124, 280]]
 
 private def LM00 : Matrix (Fin 8) (Fin 8) ℝ :=
-  ![
+  Matrix.of ![
   ![0, 0, 0, 0, 0, 0, 0, 0],
   ![0, 1, 0, 0, 0, 0, 0, 0],
   ![0, (265/526), 1, 0, 0, 0, 0, 0],
@@ -50,9 +55,11 @@ private def dM00 : Fin 8 → ℝ := ![0, 526, (74951/526), (19487076/74951), (35
 private theorem reconstruction_M00 :
     M00 = LM00 * Matrix.diagonal dM00 * (LM00)ᴴ := by
   ext i j
+  rw [Matrix.mul_apply]
+  simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply]
   fin_cases i <;> fin_cases j <;>
     norm_num [M00, LM00, dM00, Matrix.mul_apply,
-      Matrix.conjTranspose_apply, Fin.sum_univ_succ]
+      Matrix.conjTranspose_apply, Matrix.of_apply, Fin.sum_univ_succ]
 
 private theorem psd_M00 : M00.PosSemidef := by
   rw [reconstruction_M00]
@@ -63,7 +70,7 @@ private theorem psd_M00 : M00.PosSemidef := by
 
 /-- Fixed integer matrix in the ordered eight-word basis. -/
 def M01 : Matrix (Fin 8) (Fin 8) ℝ :=
-  ![
+  Matrix.of ![
   ![3456, (-263), 2058, 250, (-94), 1675, 135, (-140)],
   ![(-263), 526, (-102), 14, 178, (-57), (-74), 164],
   ![2058, (-102), 1354, 58, (-84), 961, 6, (-130)],
@@ -74,7 +81,7 @@ def M01 : Matrix (Fin 8) (Fin 8) ℝ :=
   ![(-140), 164, (-130), 108, 184, 82, 124, 280]]
 
 private def LM01 : Matrix (Fin 8) (Fin 8) ℝ :=
-  ![
+  Matrix.of ![
   ![1, 0, 0, 0, 0, 0, 0, 0],
   ![(-263/3456), 1, 0, 0, 0, 0, 0, 0],
   ![(343/576), (188742/1748687), 1, 0, 0, 0, 0, 0],
@@ -89,9 +96,11 @@ private def dM01 : Fin 8 → ℝ := ![3456, (1748687/3456), (214380326/1748687),
 private theorem reconstruction_M01 :
     M01 = LM01 * Matrix.diagonal dM01 * (LM01)ᴴ := by
   ext i j
+  rw [Matrix.mul_apply]
+  simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply]
   fin_cases i <;> fin_cases j <;>
     norm_num [M01, LM01, dM01, Matrix.mul_apply,
-      Matrix.conjTranspose_apply, Fin.sum_univ_succ]
+      Matrix.conjTranspose_apply, Matrix.of_apply, Fin.sum_univ_succ]
 
 private theorem psd_M01 : M01.PosSemidef := by
   rw [reconstruction_M01]
@@ -102,7 +111,7 @@ private theorem psd_M01 : M01.PosSemidef := by
 
 /-- Fixed integer matrix in the ordered eight-word basis. -/
 def M10 : Matrix (Fin 8) (Fin 8) ℝ :=
-  ![
+  Matrix.of ![
   ![864, 948, 492, 316, 472, 576, 358, 484],
   ![948, 1108, 714, 412, 530, 640, 439, 494],
   ![492, 714, 936, 432, 330, 430, 302, 208],
@@ -113,7 +122,7 @@ def M10 : Matrix (Fin 8) (Fin 8) ℝ :=
   ![484, 494, 208, 178, 272, 351, 184, 358]]
 
 private def LM10 : Matrix (Fin 8) (Fin 8) ℝ :=
-  ![
+  Matrix.of ![
   ![1, 0, 0, 0, 0, 0, 0, 0],
   ![(79/72), 1, 0, 0, 0, 0, 0, 0],
   ![(41/72), (95/37), 1, 0, 0, 0, 0, 0],
@@ -128,9 +137,11 @@ private def dM10 : Fin 8 → ℝ := ![864, (407/6), (7720/37), (1473917/21230), 
 private theorem reconstruction_M10 :
     M10 = LM10 * Matrix.diagonal dM10 * (LM10)ᴴ := by
   ext i j
+  rw [Matrix.mul_apply]
+  simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply]
   fin_cases i <;> fin_cases j <;>
     norm_num [M10, LM10, dM10, Matrix.mul_apply,
-      Matrix.conjTranspose_apply, Fin.sum_univ_succ]
+      Matrix.conjTranspose_apply, Matrix.of_apply, Fin.sum_univ_succ]
 
 private theorem psd_M10 : M10.PosSemidef := by
   rw [reconstruction_M10]
@@ -141,7 +152,7 @@ private theorem psd_M10 : M10.PosSemidef := by
 
 /-- Fixed integer matrix in the ordered eight-word basis. -/
 def M11 : Matrix (Fin 8) (Fin 8) ℝ :=
-  ![
+  Matrix.of ![
   ![2424, 394, 1688, 462, 372, 1482, 366, 334],
   ![394, 1108, (-2), 296, 530, 72, 210, 494],
   ![1688, (-2), 1356, 326, 130, 1016, 232, 84],
@@ -152,7 +163,7 @@ def M11 : Matrix (Fin 8) (Fin 8) ℝ :=
   ![334, 494, 84, 178, 272, 172, 184, 358]]
 
 private def LM11 : Matrix (Fin 8) (Fin 8) ℝ :=
-  ![
+  Matrix.of ![
   ![1, 0, 0, 0, 0, 0, 0, 0],
   ![(197/1212), 1, 0, 0, 0, 0, 0, 0],
   ![(211/303), (-167480/632639), 1, 0, 0, 0, 0, 0],
@@ -167,9 +178,11 @@ private def dM11 : Fin 8 → ℝ := ![2424, (632639/606), (67922700/632639), (18
 private theorem reconstruction_M11 :
     M11 = LM11 * Matrix.diagonal dM11 * (LM11)ᴴ := by
   ext i j
+  rw [Matrix.mul_apply]
+  simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply]
   fin_cases i <;> fin_cases j <;>
     norm_num [M11, LM11, dM11, Matrix.mul_apply,
-      Matrix.conjTranspose_apply, Fin.sum_univ_succ]
+      Matrix.conjTranspose_apply, Matrix.of_apply, Fin.sum_univ_succ]
 
 private theorem psd_M11 : M11.PosSemidef := by
   rw [reconstruction_M11]

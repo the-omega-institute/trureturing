@@ -10,6 +10,12 @@ internal sealed class HsfQubitMixedCubicDocument : IScribeDocumentDefinition
         "The original ordered trace coefficients and a positive six-row mixed cubic certificate.",
         H("Complex qubit mixed cubic compatibility"),
         Blocks(
+            Describe.Lean(DescribeId.Create("hsf-psd-trace-product"),
+                DeclarationHandle.Create("D5/S3/Quantum/Matrix/HsfQubitMixedCubic.trace_mul_nonneg_of_posSemidef"),
+                H("Trace product of positive matrices"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For arbitrary finite matrices over an RCLike field, the real trace of a product of two PSD matrices is nonnegative. This shared spectral proof also supplies the weighted trace Gram theorem."))),
+                DescribeRole.Theorem),
             MatrixEntry("hermitian", "Hermitian coordinates",
                 "The two by two matrix with real diagonal a,b and upper off-diagonal z; "
                 + "the lower off-diagonal is the complex conjugate of z.", DescribeRole.Definition),

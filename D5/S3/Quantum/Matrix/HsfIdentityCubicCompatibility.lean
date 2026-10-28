@@ -18,7 +18,9 @@ module
 public import D5.S3.Quantum.Matrix.HsfContractionCubic
 public import D5.S3.Quantum.Matrix.HsfIdentityCubicDerivatives
 
-/-! Actual CFC derivatives at Y=I and signed endpoint transfer. -/
+/-! Actual CFC derivatives at Y=I and signed endpoint transfer.
+Source-selection evidence for the escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/23332. -/
 @[expose] public section
 noncomputable section
 open Matrix Filter
@@ -34,6 +36,7 @@ def curve (U H K : Matrix n n ℂ) (t : ℝ) : ℝ :=
 
 section Rotations
 variable (U H K : Matrix n n ℂ)
+include U H K
 private theorem w_huh : Matrix.trace (H*(U*(H))) =
     Matrix.trace (H*(H*(U))) := by
   simpa only [Matrix.mul_assoc] using
