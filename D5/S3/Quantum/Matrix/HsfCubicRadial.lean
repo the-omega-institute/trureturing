@@ -53,11 +53,11 @@ private theorem scalar_derivatives (a b c d k : ℝ) :
     convert (((hasDerivAt_const t a).add ((hasDerivAt_id t).const_mul b)).add
       (((hasDerivAt_id t).pow 2).const_mul c)).add
       (((hasDerivAt_id t).pow 3).const_mul d) using 1 <;>
-      (try funext x) <;> simp only [p,p1, Pi.add_apply, Pi.pow_apply, id_eq] <;> ring
+      (try funext x) <;> simp only [p,p1, Pi.add_apply, Pi.pow_apply, id_eq]; ring
   have hp1 (t : ℝ) : HasDerivAt p1 (p2 t) t := by
     convert ((hasDerivAt_const t b).add ((hasDerivAt_id t).const_mul (2*c))).add
       (((hasDerivAt_id t).pow 2).const_mul (3*d)) using 1 <;>
-      (try funext x) <;> simp only [p1,p2, Pi.add_apply, Pi.pow_apply, id_eq] <;> ring
+      (try funext x) <;> simp only [p1,p2, Pi.add_apply, Pi.pow_apply, id_eq]; ring
   have hp2 (t : ℝ) : HasDerivAt p2 (6*d) t := by
     convert (hasDerivAt_const t (2*c)).add ((hasDerivAt_id t).const_mul (6*d)) using 1 <;>
       (try funext x) <;>
@@ -67,17 +67,22 @@ private theorem scalar_derivatives (a b c d k : ℝ) :
       (try funext x) <;>
       simp only [s, Pi.add_apply, id_eq, mul_one, zero_add]
   have h0 (t : ℝ) (ht : s t ≠ 0) : HasDerivAt f0 (f1 t) t := by
-    convert (hp t).div ((hs t).pow 2) (pow_ne_zero 2 ht) using 1 <;>
-      dsimp [f0,f1] <;> field_simp [ht] <;> ring
+    convert (hp t).div ((hs t).pow 2) (pow_ne_zero 2 ht) using 1
+    dsimp [f0,f1]
+    field_simp [ht]
   have h1 (t : ℝ) (ht : s t ≠ 0) : HasDerivAt f1 (f2 t) t := by
     convert ((hp1 t).div ((hs t).pow 2) (pow_ne_zero 2 ht)).sub
-      (((hp t).const_mul (2*k)).div ((hs t).pow 3) (pow_ne_zero 3 ht)) using 1 <;>
-      dsimp [f1,f2] <;> field_simp [ht] <;> ring
+      (((hp t).const_mul (2*k)).div ((hs t).pow 3) (pow_ne_zero 3 ht)) using 1
+    dsimp [f1,f2]
+    field_simp [ht]
+    ring
   have h2 (t : ℝ) (ht : s t ≠ 0) : HasDerivAt f2 (f3 t) t := by
     convert (((hp2 t).div ((hs t).pow 2) (pow_ne_zero 2 ht)).sub
       (((hp1 t).const_mul (4*k)).div ((hs t).pow 3) (pow_ne_zero 3 ht))).add
-      (((hp t).const_mul (6*k^2)).div ((hs t).pow 4) (pow_ne_zero 4 ht)) using 1 <;>
-      dsimp [f2,f3] <;> field_simp [ht] <;> ring
+      (((hp t).const_mul (6*k^2)).div ((hs t).pow 4) (pow_ne_zero 4 ht)) using 1
+    dsimp [f2,f3]
+    field_simp [ht]
+    ring
   have hn : ∀ᶠ t in 𝓝 (0 : ℝ), s t ≠ 0 :=
     (hs 0).continuousAt.eventually_ne (by simp [s])
   have he1 : deriv f0 =ᶠ[𝓝 (0 : ℝ)] f1 := hn.mono fun t ht => (h0 t ht).deriv
@@ -90,7 +95,9 @@ private theorem scalar_derivatives (a b c d k : ℝ) :
       he2.deriv_eq.trans (h2 0 (by simp [s])).deriv
   constructor
   · simpa [f0,p,s,f2,p1,p2] using e2
-  · convert e3 using 1 <;> simp [p,s,f3,p1,p2] <;> ring
+  · convert e3 using 1
+    simp [p,s,f3,p1,p2]
+    ring
 
 private theorem trace_cubic (A B : Matrix n n ℂ) (t : ℝ) :
     (Matrix.trace ((A + t • B)^3)).re =
@@ -100,11 +107,10 @@ private theorem trace_cubic (A B : Matrix n n ℂ) (t : ℝ) :
   have h2 := Matrix.trace_mul_cycle B A A
   have h3 := Matrix.trace_mul_cycle B A B
   have h4 := Matrix.trace_mul_cycle B B A
-  simp only [pow_succ, pow_zero, mul_one, Matrix.add_mul, Matrix.mul_add,
-    Matrix.smul_mul, Matrix.mul_smul, smul_smul, Matrix.trace_add, Matrix.trace_smul,
-    ← Matrix.mul_assoc, Complex.add_re, Complex.real_smul, smul_eq_mul,
-    Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
-    mul_zero, zero_mul, sub_zero, zero_add, one_mul]
+  simp only [pow_succ, pow_zero, Matrix.add_mul, Matrix.mul_add,
+    Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
+    Complex.add_re, Complex.real_smul, Complex.mul_re, Complex.ofReal_re,
+    Complex.ofReal_im, zero_mul, sub_zero, one_mul]
   rw [h1] at h2
   simp only [h1, h2, h3, h4]
   ring
@@ -129,11 +135,11 @@ theorem cubic_derivatives (A B : Matrix n n ℂ) (k : ℝ) :
   have h4 := Matrix.trace_mul_cycle B B A
   rw [h1] at h2
   constructor <;> [rw [hh.1]; rw [hh.2]] <;>
-    simp only [pow_succ, pow_zero, mul_one, Matrix.sub_mul, Matrix.mul_sub,
-      Matrix.smul_mul, Matrix.mul_smul, smul_smul, Matrix.trace_sub,
-      Matrix.trace_smul, ← Matrix.mul_assoc, Complex.sub_re, Complex.real_smul,
-      smul_eq_mul, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
-    mul_zero, zero_mul, sub_zero, zero_add, one_mul] <;> simp only [h1, h2, h3, h4] <;> ring
+    simp only [pow_succ, pow_zero, Matrix.sub_mul, Matrix.mul_sub,
+      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_sub, Matrix.trace_smul,
+      ← Matrix.mul_assoc, Complex.sub_re, Complex.real_smul, Complex.mul_re,
+      Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero, one_mul] <;>
+    simp only [h1, h2, h3, h4] <;> ring
 
 private theorem trace_weight_square_nonneg (W E : Matrix n n ℂ)
     (hW : W.PosSemidef) (hE : E.IsHermitian) :
@@ -162,7 +168,7 @@ theorem cubic_radial_compatibility (A B : Matrix n n ℂ) (k : ℝ)
   have ha : 0 ≤ a := (abs_nonneg b).trans hab
   obtain ⟨hd2,hd3⟩ := cubic_derivatives A B k
   have ht : (Matrix.trace ((B - (4*k) • A) * E^2)).re = b - 4*k*a := by
-    simp [a,b, Matrix.sub_mul, Matrix.smul_mul, Matrix.trace_sub,
+    simp [a,b, Matrix.sub_mul, Matrix.trace_sub,
       Matrix.trace_smul, Complex.mul_re]
   rw [hd2,hd3]
   change 0 ≤ 6*a ∧ |6*(Matrix.trace ((B - (4*k) • A) * E^2)).re| ≤
@@ -186,7 +192,8 @@ def UniversalCubicBound (C : ℝ) : Prop :=
 theorem universal_constant_iff (C : ℝ) : UniversalCubicBound C ↔ 5 ≤ C := by
   constructor
   · intro h
-    have hp : ((1 : Matrix (Fin 1) (Fin 1) ℂ) + -1).PosSemidef := by simpa using Matrix.PosSemidef.zero
+    have hp : ((1 : Matrix (Fin 1) (Fin 1) ℂ) + -1).PosSemidef := by
+      simpa using Matrix.PosSemidef.zero
     have hm : ((1 : Matrix (Fin 1) (Fin 1) ℂ) - -1).PosSemidef := by
       simpa only [sub_neg_eq_add] using
         (Matrix.PosSemidef.one.add Matrix.PosSemidef.one :

@@ -57,7 +57,7 @@ internal sealed class HsfCubicRadialDocument : IScribeDocumentDefinition
                 + "official acceptance is asserted.")))));
 
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("hsf-cubic-radial-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("hsf-cubic-radial-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Module + "." + name), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
