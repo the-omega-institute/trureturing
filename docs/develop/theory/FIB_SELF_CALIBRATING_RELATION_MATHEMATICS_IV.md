@@ -2751,3 +2751,738 @@ responses on a single trajectory; those equations remain
 conditional properties of the potential witness throughout.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. beta 零秩二层的回返传播与完整守卫排除
+
+**定义 18.1（完整核上的 beta 零秩二来源层）。** Fix an arbitrary
+legal source tuple of Definition 13.1, retaining its full
+$1538\times1024$ matrix $B$, all $254$ prefixes, all $256$ maps
+$G_q$ and all $128$ four-component maps $D_w$ of Definition 13.2.
+Write $V=\ker B$ and $j_e=(J^7,e)$. Use exactly the scalar maps
+$E_J,\alpha,\Delta,\beta$ of
+[E-zero, Definition 7.1](FIB_ORIGINAL_ROOT_EZERO_FIBER_AND_GAIN_RANK_REDUCTION.md).
+The source layer considered here is
+
+$$
+\begin{gathered}
+\sigma(P_{j_0})=\sigma(P_{j_1})=s>0,\qquad s\ne1,\\
+E_J|_V=0,\qquad \beta|_V=0,\qquad
+\operatorname{rank}(G_{j_0}|_V)=2.
+\end{gathered}
+\tag{18.1}
+$$
+
+These are identities and a rank condition on the entire $V$.
+For each slot write
+
+$$
+P_q=\begin{pmatrix}a_q&b_q\\c_q&1-a_q\end{pmatrix},\qquad
+ d_q=1-a_q\in(0,1),\qquad t_q=b_q+c_q>0,
+\qquad T_q=t_q+d_q=\operatorname{tr}(MP_q)>0.
+\tag{18.2}
+$$
+
+The gain $g_q$ and $k_q=g_q(0)$ are polynomial-valued and
+scalar-valued linear maps on $V$, respectively; their normalized
+drift is $-k_q$. Zero blocks are allowed in these linear identities.
+For every nonempty prefix $v$, let $R_v$ denote its common response
+map on $V$, as supplied by all the rows (13.5). Thus every descendant
+slot realizes all of its ancestor response maps on the same $V$.
+Set $r_i=R_{J^i}$ for $1\le i\le4$ and $y=R_{J^4M}$.
+
+**引理 18.2（四个 J 祖先对全部后代的约束）。** Under (18.1),
+$\alpha,\Delta\in V^*$ are linearly independent. Reuse the
+polynomials of E-zero, Definition 4.1,
+
+$$
+u(T)=\frac{T^3-9T^2+23T}{15},\qquad
+v(T)=\frac{T(T-2)(T-4)}6.
+\tag{18.3}
+$$
+
+Every slot $q\in\mathcal D_{J^4}$ satisfies, as identities on $V$,
+
+$$
+g_q=k_q+\alpha u-\frac{\Delta}{t_q}v,\qquad
+(t_q-1)(k_q+\alpha)=0.
+\tag{18.4}
+$$
+
+In particular $k_q=-\alpha$ when $t_q\ne1$, whereas $t_q=1$
+does not by itself fix $k_q$.
+
+Proof. E-zero, Lemma 7.2 gives
+$\operatorname{rank}(G_{j_0}|_V)
+=\operatorname{rank}((\alpha,\Delta,\beta)|_V)$ under the common
+nonunit signature and $E_J|_V=0$. Hence (18.1) makes
+$\alpha,\Delta$ independent. The same history coordinates give
+
+$$
+r_2=\frac65\alpha,\qquad r_4=\frac45\alpha,\qquad
+r_1=\alpha-\frac\Delta2,\qquad r_3=\alpha+\frac\Delta2.
+\tag{18.5}
+$$
+
+Indeed $E_J=3r_4-2r_2$, $\alpha=5r_2/6$,
+$\Delta=r_3-r_1$, and $\beta=(r_1+r_3)/2-\alpha$.
+For any $q\in\mathcal D_{J^4}$ put $p_q=g_q-k_q$.
+The even ancestor reads give $p_q(2)=6\alpha/5$ and
+$p_q(4)=4\alpha/5$. The polynomial $p_q-\alpha u$ has roots
+$0,2,4$ and degree at most three, so is a scalar multiple of $v$,
+including the zero multiple. Since $u(1)=u(3)=1$ and
+$v(3)-v(1)=-1$, the odd ancestor difference
+$\Delta=t_q(p_q(3)-p_q(1))$ makes this multiple $-\Delta/t_q$.
+The average of the two odd ancestor reads is then
+$(t_q-1)k_q+t_q\alpha$. By (18.5) it equals $\alpha$, giving
+the second identity (18.4). All these arguments apply to each
+$x\in V$, including its zero blocks, and therefore establish map
+identities on $V$. The interpolation step divides only by $t_q>0$;
+the conclusion $k_q=-\alpha$ uses the stated $t_q\ne1$ branch.
+No fifth read or unit-signature exclusion was used. ∎
+
+**定理 18.3（beta 零秩二完整来源层的原守卫失败）。** For every
+complete legal source tuple satisfying (18.1), put
+
+$$
+w_A=J^4MJJ,\qquad w_B=J^4MMJ,\qquad
+q_{Ae}=(w_A,e),\quad q_{Be}=(w_B,e).
+\tag{18.6}
+$$
+
+Then
+
+$$
+D_{w_A}|_V=0,
+\tag{18.7}
+$$
+
+and at least one of the following two alternatives holds:
+
+$$
+\begin{aligned}
+&P_{q_{A0}}=P_{q_{A1}},\\
+& P_{q_{B0}}=P_{q_{B1}}\quad\hbox{and}\quad D_{w_B}|_V=0.
+\end{aligned}
+\tag{18.8}
+$$
+
+Thus an original same-source separation guard of Theorem 13.3
+fails at $w_A$ or $w_B$. In particular the source layer (18.1)
+has empty intersection with the complete guarded source locus of
+that theorem. No assumption on any other source equality, gain
+map or leaf difference is required.
+
+Proof. All calculations below are on the original whole $V$.
+Along $J^4MJJ$ the cumulative matrices at clocks $5,6,7$ are
+
+$$
+M,\qquad JM=\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad M,
+\tag{18.9}
+$$
+
+with trace factors $T_q,1+c_q,T_q$. By (18.3),
+$u(7)-u(5)=16/5$ and $v(7)-v(5)=15$. For the two slots of this
+leaf, subtracting their common clock-five read from their common
+clock-seven read and using (18.4) gives
+
+$$
+\frac{16}{5}(T_{q_{A0}}-T_{q_{A1}})\alpha
+-15\left(\frac{T_{q_{A0}}}{t_{q_{A0}}}
+        -\frac{T_{q_{A1}}}{t_{q_{A1}}}\right)\Delta=0.
+\tag{18.10}
+$$
+
+Independence of $\alpha,\Delta$ makes both fixed coefficients
+zero. Since $T_q,t_q>0$, the two slots have the same $T$, the
+same $t$ and hence the same $d=T-t$. Their nonconstant gain
+parts in (18.4) coincide. If $t\ne1$, their constant terms both
+are $-\alpha$. If $t=1$, their clock-five read difference is
+$(T-1)(k_{q_{A0}}-k_{q_{A1}})=d(k_{q_{A0}}-k_{q_{A1}})$;
+$d>0$ again makes their constant terms equal. Their entire gains
+and normalized drifts therefore coincide as maps, proving the
+full four-component identity (18.7).
+
+If these two fixed sources are equal, the first alternative in
+(18.8), together with (18.7), already gives a failing original
+guard. Suppose instead that they differ. Their common $d,t$
+then imply $c_{q_{A0}}\ne c_{q_{A1}}$, since $a=1-d$ and
+$b=t-c$. The clock-six equality, its trace factor $1+c_q$ and
+their already common gain give
+
+$$
+(c_{q_{A0}}-c_{q_{A1}})g_{q_{A0}}(6)=0
+\quad\hbox{on }V.
+\tag{18.11}
+$$
+
+Consequently their common $g(6)$ is the zero map. A nonunit
+$t$ is impossible: (18.4), $u(6)=2$ and $v(6)=8$ would give
+$g(6)=\alpha-8\Delta/t\ne0$. Thus $t=1$, and (18.4) gives
+
+$$
+k_{q_{A0}}=k_{q_{A1}}=-2\alpha+8\Delta.
+\tag{18.12}
+$$
+
+Write their common $d$ as $d_*\in(0,1)$ and introduce
+
+$$
+\kappa=\alpha-\frac{11}{2}\Delta,\qquad
+\lambda=\frac{16}{5}\alpha-15\Delta,\qquad
+Y=y-\alpha+\frac52\Delta.
+\tag{18.13}
+$$
+
+The two forms $\kappa,\lambda$ are independent, since their
+coefficient determinant relative to $\alpha,\Delta$ is
+$-15+(11/2)(16/5)=13/5\ne0$. At clock five,
+$u(5)=1$, $v(5)=5/2$ and (18.12) give $g(5)=-\kappa$.
+Its trace factor is $1+d_*$, so the common response satisfies
+
+$$
+y=\alpha-\frac52\Delta-d_*\kappa,\qquad Y=-d_*\kappa.
+\tag{18.14}
+$$
+
+This forces every one of the eight slots below $J^4M$ to have
+unit signature. Indeed, if such a slot $q$ had $t_q\ne1$,
+(18.4) would instead give
+
+$$
+y=\alpha-\frac52\left(1+\frac{d_q}{t_q}\right)\Delta.
+\tag{18.15}
+$$
+
+Its $\alpha$ coefficient is $1$, whereas the coefficient in
+(18.14) is $1-d_*$. Their equality contradicts independence
+and $d_*>0$. This uses the shared fifth response of the entire
+subtree, not separate choices of gains on different branches.
+
+For any of its now unit-signature slots, the same fifth read is
+
+$$
+y=d_qk_q+(1+d_q)\alpha-\frac52(1+d_q)\Delta.
+\tag{18.16}
+$$
+
+Solving only by the positive fixed scalar $d_q$ yields
+
+$$
+k_q=\frac{Y}{d_q}-\alpha+\frac52\Delta,\qquad
+g_q(6)=\frac{Y}{d_q}+\kappa,\qquad
+g_q(7)=\frac{Y}{d_q}+\lambda.
+\tag{18.17}
+$$
+
+These are identities for the whole original polynomials in their
+slots; no final coefficient vector has been selected.
+
+Now use the other leaf $w_B=J^4MMJ$. Its cumulative matrices
+at clocks $5,6,7$ are $M,M^2,JM^2$, with trace factors
+$1+d_q,2+d_q,2+c_q$ because $t_q=1$. Write
+$d_e=d_{q_{Be}}$. The common sixth read, (18.17) and (18.14)
+give
+
+$$
+\begin{aligned}
+0&=(d_0-d_1)\kappa+
+        \left(\frac1{d_0}-\frac1{d_1}\right)Y\\
+ &= (d_0-d_1)\left(1+\frac{d_*}{d_0d_1}\right)\kappa.
+\end{aligned}
+\tag{18.18}
+$$
+
+Here $d_*,d_0,d_1>0$ and $\kappa\ne0$, so $d_0=d_1=d$.
+Equation (18.17) makes the two entire gains and drifts equal.
+Their common final gain map is
+
+$$
+g(7)=\lambda-\frac{d_*}{d}\kappa\ne0,
+\tag{18.19}
+$$
+
+by independence of $\kappa,\lambda$. The common final read
+with trace factor $2+c_q$ therefore forces
+$c_{q_{B0}}=c_{q_{B1}}$. Together with $t=1$ and the common
+$d$, this gives the same $a,b,c$ and hence the same complete
+source. The already equal entire gains prove $D_{w_B}|_V=0$,
+which is the second alternative in (18.8).
+
+Every case has produced a same-source leaf with its full
+four-component difference zero on $V$. Equivalently its original
+rank guard has $\operatorname{rank}[B;D_w]=\operatorname{rank}B$
+by (13.15), while its source-inequality alternative is false.
+Theorem 13.3 therefore excludes a complete guarded realization
+in (18.1). All source repetitions and all other slots remain in
+the quantifier. All inversions and cancellations above involve fixed
+source scalars with the stated positive or nonzero conditions. No
+gain sample or value of a history coordinate is divided out. ∎
+
+**推论 18.4（beta 零平面的完整源增益秩一必要性）。** Fix a
+complete legal source tuple satisfying every original guard of
+Theorem 13.3. If its two $J^7$ sources have a common nonunit
+signature and $E_J|_V=\beta|_V=0$, then
+
+$$
+\operatorname{rank}(G_{j_0}|_V)=1.
+\tag{18.20}
+$$
+
+This is a necessary condition, asserting neither a realization of
+this rank-one locus nor exclusion of the other original source
+strata or a decision of the unrestricted eight-read problem.
+
+Proof. The original $G_{j_0}$ guard makes the rank positive.
+E-zero, Theorem 8.1 bounds it by two, and Theorem 18.3 excludes
+two when $\beta|_V=0$. Thus it equals one. ∎
+
+## 追加锚（本行以下为增补区）
+
+## 19. 单位签名的回返叶、完整守卫排除与例外局部构造
+
+**定义 19.1（完整单位来源核与非恒定增益像）。** Let
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+\mathcal P=\left\{\begin{pmatrix}a&b\\c&1-a\end{pmatrix}:
+0<a<1,\ b,c>0,\ bc=a(1-a)\right\}.
+$$
+
+
+Set $S=\{(w,e):w\in\{J,M\}^7,\ e\in\{0,1\}\}$, and fix an arbitrary complete tuple $\mathbf P\in\mathcal P^S$. Repetitions are allowed. For a nonempty chronological prefix $v=E_1\cdots E_i$, put $A_v=E_i\cdots E_1$, let $S_v$ be its descendant slots, and let $q_v$ be the first descendant under $J<M$, $0<1$. Define
+
+$$
+t_v(P)=\operatorname{tr}(A_vP),\qquad
+\ell_v(P)=(t_v(P)-1,\ it_v(P),\ i^2t_v(P),\ i^3t_v(P)).
+$$
+
+
+The matrix $B$ has all rows
+
+$$
+(Bx)_{v,q}=\ell_v(P_q)x_q-\ell_v(P_{q_v})x_{q_v},
+\qquad q\in S_v\setminus\{q_v\},\quad 1\le |v|\le7.
+$$
+
+
+Thus $B$ is the original $1538\times1024$ matrix, containing all $254$ prefixes. Throughout,
+
+$$
+V=\ker B\subseteq\mathbb R^{1024},\qquad
+G_qx=x_q,\qquad D_wx=x_{(w,0)}-x_{(w,1)}\in\mathbb R^4.
+$$
+
+
+There is no restriction to a subspace of this kernel. Write
+
+$$
+g_q(T)=\sum_{r=0}^3x_{qr}T^r,\qquad k_q=g_q(0),\qquad\delta_q=-k_q.
+$$
+
+
+These are polynomial-valued or scalar-valued linear maps on $V$. Zero blocks are permitted in every linear identity below. A nonzero block represents the original legal gain and its normalized drift. For any prefix, the equations defining $V$ give a common response map $R_v$, realized by every descendant:
+
+$$
+R_v=t_v(P_q)g_q(|v|)-k_q\qquad(q\in S_v).
+$$
+
+
+Assume only the unit-signature source condition
+
+$$
+\sigma(P_{j_0})=\sigma(P_{j_1})=1,
+\qquad \sigma(P)=b+c,\qquad j_e=(J^7,e).
+\tag{19.1}
+$$
+
+
+No condition is imposed on the other $254$ sources.
+
+Let $\mathcal C_3=\{p\in\mathbb R[T]:\deg p\le3,\ p(0)=0\}$. The complete $J^7$ coupling of [J-signature, Theorem 4.1](FIB_ORIGINAL_ROOT_J_SIGNATURE_COUPLING_AND_HISTORY_FIBER_DECODER.md) gives the well-defined linear map
+
+$$
+\mathscr H:V\longrightarrow\mathcal C_3,\qquad
+p=\mathscr Hx=g_{j_0}-g_{j_0}(0)=g_{j_1}-g_{j_1}(0).
+\tag{19.2}
+$$
+
+
+Indeed, the differences of the two gains minus their constant difference vanish at the four even clocks $0,2,4,6$. Since both sources have unit signature, every pure-$J$ common response is $R_{J^i}=p(i)$. This also allows independent constant offsets in the two gains; no equality of their constants is asserted.
+
+Define scalar linear maps on this same $V$:
+
+$$
+m=\frac{p(1)+p(3)}2,\qquad
+\Delta=p(3)-p(1),\qquad E=3p(4)-2p(2),
+$$
+
+
+$$
+\kappa=p(6)-p(5),\qquad \lambda=p(7)-p(5).
+\tag{19.3}
+$$
+
+
+All ranks below are ranks of maps on $V$.
+
+
+**定理 19.2（单位像秩三与非例外比例秩二的完整守卫排除）。** Under Definition 19.1, put
+
+$$
+w_A=J^4MJJ,\qquad w_B=J^4MMJ.
+$$
+
+
+Suppose either
+
+1. $\operatorname{rank}\mathscr H=3$; or
+2. $\operatorname{rank}\mathscr H=2$ and, for a real constant $\gamma\ne13/4$, the map identity $E=\gamma\Delta$ holds on $V$.
+
+Then
+
+$$
+D_{w_A}|_V=0,
+\tag{19.4}
+$$
+
+
+and at least one of the following holds:
+
+$$
+P_{(w_A,0)}=P_{(w_A,1)},
+\tag{19.5a}
+$$
+
+
+$$
+P_{(w_B,0)}=P_{(w_B,1)}
+\quad\hbox{and}\quad D_{w_B}|_V=0.
+\tag{19.5b}
+$$
+
+
+Consequently a required original full same-source separation guard fails at $w_A$ or $w_B$. The conclusion concerns the original complete tuple and its whole kernel; it has no assumptions on the gain guards, source equalities, sample roots, or other branches.
+
+Proof.
+
+Write $p(T)=rT+sT^2+hT^3$. The coefficient rows of $m,E,\Delta$, in that order, are
+
+$$
+(2,5,14),\qquad(8,40,176),\qquad(2,8,26),
+$$
+
+
+whose determinant is $-240$. Direct coefficient comparison also gives
+
+$$
+\begin{aligned}
+p(5)&=m+E-\frac52\Delta,\\
+p(6)&=2m+\frac94E-8\Delta,\\
+p(7)&=\frac{21}{5}m+\frac{21}{5}E-\frac{35}{2}\Delta,\\
+\kappa&=m+\frac54E-\frac{11}{2}\Delta,\\
+\lambda&=\frac{16}{5}m+\frac{16}{5}E-15\Delta.
+\end{aligned}
+\tag{19.6}
+$$
+
+
+In case 1, $m,E,\Delta$ are independent on $V$. Moreover, each of the pairs
+
+$$
+(\lambda,\Delta),\qquad(p(6)-m,\Delta),\qquad(\lambda,\kappa)
+\tag{19.7}
+$$
+
+
+is independent: their first two coefficient minors in the $(r,s,h)$ coordinates are respectively $-32,-30,-2$.
+
+In case 2, $m,\Delta$ are independent. Otherwise $m,E,\Delta$, and hence $\mathscr H$, would have rank at most one. Formula (19.6) then shows that the first two pairs in (19.7) are independent, and that $\kappa\ne0$. Relative to $(m,\Delta)$, the determinant for the last pair is
+
+$$
+\det\begin{pmatrix}
+16/5&16\gamma/5-15\\
+1&5\gamma/4-11/2
+\end{pmatrix}=\frac{4\gamma-13}{5}\ne0.
+\tag{19.8}
+$$
+
+
+Thus all three pairs in (19.7) are independent in either case.
+
+We first obtain identities for every one of the $16$ slots below $J^4$. For such a slot put
+
+$$
+t_q=b_q+c_q>0,\quad d_q=1-a_q\in(0,1),\quad
+T_q=t_q+d_q=\operatorname{tr}(MP_q)>0,
+$$
+
+
+and write $p_q=g_q-k_q$. Its even ancestors give $p_q(2)=p(2)$ and $p_q(4)=p(4)$. Therefore
+
+$$
+p_q-p=\rho_q v,\qquad v(T)=\frac{T(T-2)(T-4)}6,
+$$
+
+
+for a scalar-valued linear map $\rho_q$. Its two odd ancestors have response difference $\Delta$. Since $v(3)-v(1)=-1$,
+
+$$
+\Delta=t_q\bigl(\Delta-\rho_q\bigr),
+\qquad \rho_q=(1-1/t_q)\Delta.
+$$
+
+
+Also $v(1)+v(3)=0$, so averaging these odd ancestors gives
+
+$$
+(t_q-1)(k_q+m)=0.
+$$
+
+
+We have proved, on the whole $V$,
+
+$$
+g_q=k_q+p+(1-1/t_q)\Delta v,
+\qquad (t_q-1)(k_q+m)=0.
+\tag{19.9}
+$$
+
+
+In particular, $k_q=-m$ for a fixed nonunit source; for a unit source its constant is still unrestricted by these four ancestors.
+
+Consider the two slots of $w_A$. At clocks $5,6,7$ their cumulative matrices are
+
+$$
+M,\quad JM=\begin{pmatrix}1&1\\0&1\end{pmatrix},\quad M,
+$$
+
+
+with trace factors $T_q,1+c_q,T_q$. The clock-seven response minus the clock-five response equals
+
+$$
+T_q\bigl(g_q(7)-g_q(5)\bigr)
+=T_q\bigl(\lambda+15(1-1/t_q)\Delta\bigr),
+\tag{19.10}
+$$
+
+
+because $v(7)-v(5)=15$. Comparing the two slots and using the independence of $\lambda,\Delta$ proves that they have the same $T$, then the same $t$, and hence the same $d=T-t$. Their nonconstant gain parts in (19.9) agree.
+
+If $t\ne1$, their constants are both $-m$. If $t=1$, their common fifth response gives
+
+$$
+(T-1)(k_0-k_1)=d(k_0-k_1)=0,
+$$
+
+
+and $d>0$ again identifies the constants. This proves (19.4), including its constant component.
+
+If the two sources at $w_A$ coincide, (19.5a) completes the proof. Assume that they differ. Their common $t,d$ then imply different $c$. Their common sixth response, with their already equal entire gains, forces
+
+$$
+g_{(w_A,0)}(6)=g_{(w_A,1)}(6)=0
+\quad\hbox{as maps on }V.
+\tag{19.11}
+$$
+
+
+For $t\ne1$, formula (19.9) would instead give
+
+$$
+g(6)=p(6)-m+8(1-1/t)\Delta\ne0
+$$
+
+
+by (19.7). Thus these two sources have $t=1$. Write their common $d$ as $d_*\in(0,1)$. Equation (19.11) gives $k=-p(6)$. Consequently the common fifth response of the entire $J^4M$ subtree is
+
+$$
+y=R_{J^4M}=(1+d_*)\bigl(p(5)-p(6)\bigr)+p(6)
+=p(5)-d_*\kappa.
+\tag{19.12}
+$$
+
+
+We next show that all eight slots in this subtree have unit signature. If a slot $q\in S_{J^4M}$ had $t_q\ne1$, then (19.9), $v(5)=5/2$, and (19.6) would give
+
+$$
+y=m+T_qE-\frac52\frac{T_q}{t_q}\Delta.
+\tag{19.13}
+$$
+
+
+But (19.12) gives
+
+$$
+y=(1-d_*)m+\left(1-\frac54d_*\right)E
++\left(-\frac52+\frac{11}{2}d_*\right)\Delta.
+\tag{19.14}
+$$
+
+
+In case 1 independence of $m,E,\Delta$ makes the coefficients of $m$ in (19.13) and (19.14) incompatible, since $d_*>0$. In case 2 substitute $E=\gamma\Delta$; independence of $m,\Delta$ gives exactly the same contradiction. Therefore
+
+$$
+t_q=1\qquad(q\in S_{J^4M}).
+\tag{19.15}
+$$
+
+
+This uses one shared fifth response on the original whole kernel, simultaneously for both sixth-action branches.
+
+For each such slot, its fifth response now determines its whole gain:
+
+$$
+k_q=-p(5)-\frac{d_*}{d_q}\kappa,\qquad
+ g_q(6)=\left(1-\frac{d_*}{d_q}\right)\kappa,\qquad
+ g_q(7)=\lambda-\frac{d_*}{d_q}\kappa.
+\tag{19.16}
+$$
+
+
+Only the positive fixed source scalar $d_q$ was inverted.
+
+Finally consider the two slots of $w_B$, writing their $d$'s as $d_0,d_1$. Their cumulative matrices at clocks $5,6,7$ are
+
+$$
+M,\quad M^2,\quad JM^2=\begin{pmatrix}1&2\\1&1\end{pmatrix}.
+$$
+
+
+By (19.15) their traces are $1+d_q,2+d_q,2+c_q$. Substituting (19.16) into their common sixth response yields
+
+$$
+0=(d_0-d_1)\left(1+\frac{d_*}{d_0d_1}\right)\kappa.
+\tag{19.17}
+$$
+
+
+Here $\kappa\ne0$ as a linear map, and the scalar factor in parentheses is strictly positive. Thus $d_0=d_1=d$. Formula (19.16) then identifies their entire gains and constants, proving $D_{w_B}|_V=0$. Their common seventh gain map is nonzero:
+
+$$
+g(7)=\lambda-\frac{d_*}{d}\kappa\ne0
+\tag{19.18}
+$$
+
+
+by the independence of $\lambda,\kappa$. Their seventh response equality, with trace $2+c_q$, therefore forces $c_0=c_1$. The common $d$ and $t=1$ give identical $a,b,c$, so the sources also coincide. This proves (19.5b).
+
+In both alternatives, a fixed same-source leaf has its full four-component difference zero on all of $V$. It is therefore an applicable original separation guard that fails. No polynomial sample or value of a linear map at a selected vector was divided out. All claims of nonzero maps used linear independence on the entire kernel. ∎
+
+
+**定理 19.3（完整单位来源域的必要像维数）。** For a complete legal unit-signature tuple as in Definition 19.1, simultaneous satisfaction of every original gain guard and every applicable full same-source guard of Theorem 13.3 implies
+
+$$
+1\le\operatorname{rank}\mathscr H\le2,\qquad
+\operatorname{rank}(G_{j_e}|_V)=1+\operatorname{rank}\mathscr H
+\quad(e=0,1).
+\tag{19.19}
+$$
+
+
+If the rank is two, $\Delta\ne0$, and $E=\gamma\Delta$ for a real scalar $\gamma$, then necessarily
+
+$$
+E=\frac{13}{4}\Delta.
+\tag{19.20}
+$$
+
+
+In particular rank two with $E=0$ is excluded. These are derived exclusions on the original source domain, with no additional rank promise.
+
+Proof. Theorem 19.2 excludes rank three by exhibiting an applicable full $D$ guard that vanishes on the entire original $V$. The rank cannot exceed three because $\mathcal C_3$ has dimension three. If every required restriction is nonzero, Theorem 13.3's finite-subspace argument supplies one vector in this same $V$ satisfying all guards simultaneously. [J-signature, Theorem 7.1](FIB_ORIGINAL_ROOT_J_SIGNATURE_COUPLING_AND_HISTORY_FIBER_DECODER.md) makes its common nonconstant part nonzero, excluding rank zero.
+
+The projection from $G_{j_e}(V)$ to the nonconstant coefficients has image $\mathscr H(V)$. Its kernel consists of constant polynomials and has dimension at most one; [J-signature, Proposition 7.3](FIB_ORIGINAL_ROOT_J_SIGNATURE_COUPLING_AND_HISTORY_FIBER_DECODER.md) supplies the nonzero localized constant direction at this same slot, so its dimension is exactly one. Rank-nullity proves the second identity in (19.19). If rank two and $\Delta\ne0$, Theorem 19.2 excludes every proportionality except (19.20). If rank two and $E=0$, $\Delta=0$ would make $(m,E,\Delta)$, hence $\mathscr H$, have rank at most one; otherwise $E=0\Delta$ is the excluded proportional case. ∎
+
+**定义 19.4（例外平面的四个固定目标与八槽）。** Fix any
+$p\in\mathcal C_3\setminus\{0\}$ with $E=(13/4)\Delta$, where the scalar values are those of (19.3). Formula (19.6) gives $\lambda=(16/5)\kappa$, including $\kappa=0$. For $0<d<1$ set
+
+$$
+Q_0(d)=\begin{pmatrix}1-d&1-d\\d&d\end{pmatrix},\qquad
+Q_1(d)=\begin{pmatrix}1-d&d\\1-d&d\end{pmatrix}.
+\tag{19.21}
+$$
+
+
+Define the four complete targets, before selecting any continuation, by
+
+$$
+\begin{aligned}
+W_e^J&=\bigl(Q_e(4/5),\ p-p(6),\ p(6)\bigr),\\
+W_e^M&=\bigl(Q_e(1/4),\ p-p(7),\ p(7)\bigr)
+\qquad(e=0,1).
+\end{aligned}
+\tag{19.22}
+$$
+
+
+Each triple records source, gain and drift. In the eight slots below the chronological prefix $J^4M$, assign $W_e^J$ to both $(J^4MJJ,e)$ and $(J^4MJM,e)$, and $W_e^M$ to both $(J^4MMJ,e)$ and $(J^4MMM,e)$. The repeated sources and repeated targets across different leaves are intentional; only each terminal pair must consist of distinct complete targets.
+
+**定理 19.5（例外系数的四目标局部两步失败）。** All four targets of Definition 19.4 are legal, distinct complete targets. Their eight-slot assignment shares every actual ancestor of its assigned slots, retains a collision for either final action after each of the two selected sixth-action responses, and has $L_2$ at the common actual prefix $J^4M$, including stopping at that prefix or at either selected child. No condition $\kappa\ne0$ is required.
+
+Proof. Each $Q_e(d)$ has trace one, strictly positive entries, $a=1-d\in(0,1)$ and $bc=d(1-d)=a(1-a)$, and has unit signature. At each of $d=4/5,1/4$ the two sources are different since $d\ne1/2$; sources across the two groups have different $a$. Thus the four targets are distinct. A nonzero $p$ with $p(0)=0$ is nonconstant, so neither constant shift $p-p(6)$ nor $p-p(7)$ is the zero polynomial. These remain legal gains of degree at most three, with arbitrary coefficient signs and possible sample or repeated roots.
+
+The normalized initial readings are all zero. At clocks $i=1,2,3,4$, every target has response $p(i)$, since each pure-$J$ trace is one. At clock five the cumulative matrix is $M$ and its trace is $1+d$. The two groups have responses
+
+$$
+p(5)-\frac45\kappa,\qquad
+p(5)-\frac14\lambda=p(5)-\frac45\kappa.
+\tag{19.23}
+$$
+
+
+Thus all four targets share the same complete history through the fifth action; the gain shifts do not change their earlier readings or impose zero drift.
+
+If the sixth action is $J$, select the child response realized by $W_0^J,W_1^J$. Their cumulative matrix is $JM$ and their gain at clock six is zero, so both responses equal $p(6)$, regardless of their different $c$ entries. For their two possible final actions the exact cumulative matrices are
+
+$$
+M,\qquad MJM=\begin{pmatrix}0&1\\1&2\end{pmatrix}.
+\tag{19.24}
+$$
+
+
+For a unit source their traces are respectively $1+d$ and $b+c+2d=1+2d$. In particular the latter trace is $1+2d$; $2+d$ is instead the trace of $M^2$. At the fixed $d=4/5$, these traces agree between $Q_0(d)$ and $Q_1(d)$. Therefore the two final $J$ responses agree and the two final $M$ responses agree, being respectively
+
+$$
+(1+d)\bigl(p(7)-p(6)\bigr)+p(6),\qquad
+(1+2d)\bigl(p(7)-p(6)\bigr)+p(6).
+\tag{19.25}
+$$
+
+
+Both collisions use the same two already fixed targets and their actual shared ancestors. The two responses in (19.25) need not equal one another.
+
+If the sixth action is $M$, select the child response realized by $W_0^M,W_1^M$. Their cumulative matrix is
+
+$$
+M^2=\begin{pmatrix}1&1\\1&2\end{pmatrix},
+\qquad \operatorname{tr}(M^2P)=2+d
+\quad(\sigma(P)=1).
+\tag{19.26}
+$$
+
+
+Their shared sixth response is $(2+d)(p(6)-p(7))+p(7)$ at the fixed $d=1/4$. At clock seven the two cumulative matrices are
+
+$$
+JM^2=\begin{pmatrix}1&2\\1&1\end{pmatrix},\qquad
+M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},
+\qquad
+\operatorname{tr}(JM^2P)=2+c,\quad
+\operatorname{tr}(M^3P)=3+2d
+\quad(\sigma(P)=1).
+\tag{19.27}
+$$
+
+
+The first trace can differ between the two sources. Their common gain at clock seven is zero, however, so either final action gives response $p(7)$ for both targets. This proves both collisions on this child as well, without identifying sources or dividing by a gain value.
+
+For either sixth action, a selected actual response therefore leaves two distinct targets sharing their full acquired history. Stopping at that child fails; either final action still leaves a distinct pair, so one remaining reading also fails. At the fifth-action history all four targets are already present, so stopping there fails and either sixth action has a failing selected child. This is precisely its local $L_2$ conclusion. When $\kappa=0$, also $\lambda=0$; all formulas remain valid and the two gains are still nonzero by nonconstancy of $p$. No root, sign or nonzero future-sample promise was used. ∎
+
+Theorem 19.5 supplies exactly the eight slots below one fifth-action prefix. It supplies neither the opposite fifth action after $J^4$, earlier sibling branches, nor any extension to a complete source tuple or its full kernel. It gives no full-root bound or nine-read conclusion.
+
+The sources for Section 19 are the mathematical version `1eef3601bb81023352394a59bcb682b0c9b57cd8` of this volume, Definitions 13.1–13.2 and Theorem 13.3; [J-signature, Theorems 4.1, 7.1 and Proposition 7.3](FIB_ORIGINAL_ROOT_J_SIGNATURE_COUPLING_AND_HISTORY_FIBER_DECODER.md); and [J5, Theorem 6.2, Definition 8.2 and Conclusion 14.3](FIB_ORIGINAL_ROOT_J5_FIBER_DICHOTOMY_AND_RANK_TRICHOTOMY.md). The $B/G/D$ interface, initial-reading translation, finite-subspace avoidance, unit $J^5$ fiber result and localized constant directions are suppliers. Sections 17–18 of this volume and [E-zero, Section 13](FIB_ORIGINAL_ROOT_EZERO_FIBER_AND_GAIN_RANK_REDUCTION.md) provide the preceding four-world and nonunit return arguments; the nonunit hypotheses of those arguments remain in force there and are not assumed here. The new model-specific synthesis is the unit return comparison, shared fifth-response propagation, full source/gain/drift exclusion and its exceptional local construction. No global novelty or exhaustive literature claim is made.
+
+Rank-one unit tuples, rank-two tuples with $\Delta=0$, rank-two tuples with independent $E,\Delta$, and the exceptional rank-two plane $E=(13/4)\Delta$ remain unresolved by these results. A complete-root exclusion still requires an original failed guard for every remaining tuple; a surviving realization still requires one complete legal $256$-source tuple and all original guards on its same full $V$, or one simultaneous legal full coefficient vector. All $254$ prefixes, clocks zero through seven, the $1538\times1024$ matrix, coefficient signs, degree drops, roots, source repetitions, strict positivity, arbitrary real constant drifts, both actions and early stops remain in that obligation. No narrower branch kernel or independent branch/source choices discharge it.
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,35 @@
+**Definition 1.1 (commissioned source).** Fix integers $d,p,\nu\geq1$, real
+matrices $B\in\mathbb R^{d\times d}$ and $C\in\mathbb R^{p\times d}$ with
+$B^\nu=0$, and $T>0$. The provider initializes one specimen to an unknown
+$x_0\in\mathbb R^d$. Its installed material chart and sensor chart are fixed.
+Write
+
+$$
+E(t)=\sum_{j=0}^{\nu-1}\frac{t^j}{j!}B^j=e^{tB},\qquad t\in\mathbb R.
+\tag{1.1}
+$$
+
+During an actual active interval the source evolves as $x(t)=E(t)x_0$.
+`Read` returns the vector $Cx(t)$ without disturbing the source. `FlowStart`
+begins the prescribed active window; `FlowStop` at $T$ holds the actual
+endpoint
+
+$$
+z=E(T)x_0.
+\tag{1.2}
+$$
+
+Hold suspends source evolution while the receiver computes. The formal
+identities $E(-t)E(t)=I$ describe an inverse coordinate calculation; they
+do not install a legal negative-duration action or restore a source.
+
+The provider supplies $B,C$, the degree promise, charts, source binding,
+initialization, synchronized exact clock/origin, nondisturbing timed reads,
+start/stop control, serial access rights and enough source backing. The
+receiver supplies a source-independent deterministic schedule, local arithmetic,
+record backing, parser and actual retained invocation rights. These premises
+are paid parts of the installation. Inverting acquired data does not learn
+an unknown law, supply the initial state, calibrate an absent clock or grant
+authority. All $x_0\in\mathbb R^d$ are in the mathematical domain; no particular
+source-dependent choice of observer program is allowed.
+

@@ -136,7 +136,7 @@ private theorem trim_cutoff (d : Nat) (X : CompletionTree) :
     | leaf_case b => rfl
     | node_case l r => exact congrArg Sum.inr (congrArg₂ Prod.mk (ih l) (ih r))
 
-private theorem pair_cutoff (d : Nat) (X Y : CompletionTree) :
+theorem pair_cutoff (d : Nat) (X Y : CompletionTree) :
     pairPrefix d (cutoff d X) (cutoff d Y) = cutoff d (node X Y) := by
   cases d with
   | zero => rfl
@@ -160,13 +160,13 @@ private theorem rho_cutoff (d : Nat) (X : CompletionTree) :
       rw [rho_node]
       exact congrArg Sum.inr (congrArg₂ Prod.mk (ih l) (ih r))
 
-private theorem iterate_cutoff (d a : Nat) (X : CompletionTree) :
+theorem iterate_cutoff (d a : Nat) (X : CompletionTree) :
     (rhoPrefix d)^[a] (cutoff d X) = cutoff d (rho^[a] X) := by
   induction a with
   | zero => rfl
   | succ a ih => rw [Function.iterate_succ_apply', Function.iterate_succ_apply', ih, rho_cutoff]
 
-private theorem eval_cutoff {m : Nat} (d : Nat) (v : Fin m → CompletionTree) (E : Expr m) :
+theorem eval_cutoff {m : Nat} (d : Nat) (v : Fin m → CompletionTree) (E : Expr m) :
     evalPrefix d (fun i => cutoff d (v i)) E = cutoff d (value v E) := by
   induction E with
   | ground t => exact (NativeCompletionPrefixLifting.cutoff_embed d t).symm

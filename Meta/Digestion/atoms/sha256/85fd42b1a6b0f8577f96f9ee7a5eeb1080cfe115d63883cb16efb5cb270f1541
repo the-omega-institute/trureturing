@@ -1,0 +1,122 @@
+**定理 15.1（另一首响应恒定的三世界不能在首动作后失败六层）。**
+Let $T$ consist of three complete worlds in the domain of Definition 1.1,
+with pairwise different sources and a common initial reading $a_0$.
+Suppose that, for each $E\in\{J,M\}$, the function
+
+$$
+W\longmapsto \delta_W+g_W(1)\operatorname{tr}(EP_W)
+\tag{15.1}
+$$
+
+is constant on $T$, with possibly different constants for the two
+actions. For either first action $F$, let $H_F$ be its resulting
+two-reading history. Then $\neg L_6(T,H_F)$.
+
+Proof. We use the actual-history pair and product results of
+[*FIB 同父历史的采样零层坍缩与失效核心*, Lemmas 22.1–22.3](FIB_SAMPLED_ROOT_COLLAPSE_AND_SAME_PARENT_FAILURE_CORE.md).
+In particular a two-world $L_s$ at clock $k$, for $s\ge3$, has common
+drift, different sources and gain roots at $k+2,\ldots,k+s$; a
+two-world $L_5$ is impossible. The four length-two products
+
+$$
+\mathscr S_2=\{I,MJ,JM,M^2\}
+\tag{15.2}
+$$
+
+linearly span all matrices, and their common-trace equations satisfy
+$\operatorname{tr}(BH)=c$ for all $B\in\mathscr S_2$ exactly when
+$H=cE_{11}$. Products of each fixed length at least three also
+linearly span all matrices. These facts retain the actual prefix
+matrix and the original clocks.
+
+We also use the following polynomial consequence only after its
+roots and drift have been established. A nonzero polynomial of
+degree at most three with three distinct positive roots $r_1,r_2,r_3$
+is $c(t-r_1)(t-r_2)(t-r_3)$. Its value $g(0)=a_0-\delta$
+uniquely fixes $c$. If that value is zero, the polynomial would
+have four distinct roots and the branch is impossible. Otherwise
+its samples outside the three specified roots are nonzero. Thus
+these uses of a common entire gain do not assume exact degree
+three or exclude lower-degree gains in advance.
+
+Assume $L_6(T,H_F)$. Each second action must retain the entire $T$
+with $L_5$: a smaller nonempty losing child would be a forbidden
+two-world $L_5$ or violate the cardinality guard. Thus all worlds
+share both second responses after $F$.
+
+Two members with the same entire gain $G$, the same drift and
+$G(1)G(2)\ne0$ would consequently have equal traces against
+$I,J,M,JF,MF$. These matrices span all matrices: use
+$\{I,J,M,MJ\}$ when $F=J$ and $\{I,J,M,JM\}$ when $F=M$.
+Hence their sources, and then their complete targets, would be equal.
+We will use this consequence only after establishing the common
+gain and its stated nonzero samples.
+
+At either clock-two history, a two-world losing third child would
+have $L_4$ at clock three. Its gains would have roots $5,6,7$ and
+its drifts would agree. The common initial reading fixes the entire
+gain to one scalar multiple of $(t-5)(t-6)(t-7)$. A zero scalar is
+illegal; otherwise its first and second samples are nonzero. The
+preceding trace argument excludes that pair. Each third action must
+therefore retain the entire $T$, with $L_4$.
+
+For distinct $W,Z\in T$, put
+
+$$
+D_3=g_W(3)P_W-g_Z(3)P_Z,\qquad c=\delta_Z-\delta_W.
+\tag{15.3}
+$$
+
+The four retained length-three histories beginning with $F$ give
+$FD_3=cE_{11}$ by (15.2). This equation forces $c=0$. Indeed set
+$X=g_W(3)FP_W$ and $Y=g_Z(3)FP_Z$. The matrices $FP_W,FP_Z$
+are strictly positive and rank one. If either scalar is zero,
+$X_{22}=Y_{22}$ forces both to be zero. Otherwise their common
+$(2,2)$ entry is nonzero, and their equal $(1,2),(2,1),(2,2)$
+entries determine the $(1,1)$ entry by the rank-one identity.
+Thus $X=Y$ in both cases. Since $F$ is invertible, $D_3=0$.
+Taking traces and then using $P_W\ne P_Z$ gives
+
+$$
+\delta_W=\delta_Z=\delta,\qquad
+g_W(3)=g_Z(3)=0.
+\tag{15.4}
+$$
+
+Each fourth action now needs an $L_3$ child. A two-world child
+would have gain roots $6,7$ in addition to the already proved root
+$3$. Common drift and initial reading again fix one common entire
+gain, nonzero at $1,2$, and the trace argument excludes the pair.
+Thus all fourth children retain $T$. Their matrices are $BF$ for
+all length-three products $B$. Common drift and the full matrix
+span imply $g_W(4)P_W=g_Z(4)P_Z$, so all fourth samples are zero.
+
+A two-world fifth child would have $L_2$ at clock five. Write $Q$
+for its actual clock-five matrix. Equality on all its length-two
+continuations, with the common drift already established, gives
+
+$$
+\operatorname{tr}\!\left(BQ[g_W(7)P_W-g_Z(7)P_Z]\right)=0
+\quad(B\in\mathscr S_2).
+\tag{15.5}
+$$
+
+The span in (15.2) first gives
+$Q[g_W(7)P_W-g_Z(7)P_Z]=0$. Invertibility of $Q$ and the
+trace-one sources give equal seventh samples; a nonzero common
+sample would identify the two sources. Both samples therefore
+vanish. Roots $3,4,7$ and the common initial value then fix a common
+entire gain, again nonzero at $1,2$. This excludes the pair. Every
+fifth action therefore retains $T$, with $L_2$. The retained
+length-five histories beginning with $F$ and the full span of
+length-four products force all fifth samples to vanish. Roots
+$3,4,5$ now fix the same entire gain on all of $T$; its first two
+samples are nonzero. The trace argument identifies all its sources,
+contrary to their pairwise difference.
+
+Every pair used above is a complete actual response child whose
+cardinality is exactly two. Every other losing child has to be the
+original three-world set. Thus all shared histories used in the
+span arguments concern these same fixed worlds; no failure is
+transferred to an arbitrarily selected nonterminal pair. ∎
+

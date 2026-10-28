@@ -1,0 +1,18 @@
+**Corollary 4.2 (route agreement).** Under (4.2), every conversion between
+Time, Boundary and Memory consists of decoding the same $b\in A$ and
+re-encoding it. Each conversion and its reverse compose to the identity
+on their attained images, and every route between two views agrees. If
+$K=0$, the same statement includes Space.
+
+Proof. Each decoder just displayed is inverse to its corresponding
+encoder on $A$. Cancelling each intermediate encoder/decoder pair proves
+the assertion. For Space use $L\mathcal O=I$ and
+$\mathcal O Lb=b$ for $b\in A$. All coordinates are at $z$, not at the
+entrance. ∎
+
+Without (4.2) there is still the one-way map from Time or Memory to the
+specified finite Boundary; claiming mutual recovery for that Boundary
+would silently strengthen its observations. Conversely replacing the
+full timing task by only that finite boundary would silently weaken the
+original task. Neither replacement is used here.
+

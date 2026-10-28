@@ -1,0 +1,69 @@
+**定理 18.1（六目标 L4 与固定 K5 的一次最少增补）。** Define the single fixed family
+
+$$
+\mathcal K_6=\mathcal K_5\cup\{B_{\rm new}\},\qquad
+\mathcal C_3=\{U_-,U_+,B_{\rm new}\}.
+                                                                  \tag{18.1}
+$$
+
+It has exactly six distinct complete legal targets and satisfies
+
+$$
+\begin{gathered}
+\mathcal K_6\subseteq\mathcal F(H_3),\qquad
+L_3(\mathcal C_3,H_M),\qquad L_4(\mathcal K_6,H_3),\\
+\neg L_4(\mathcal K_5,H_3).
+\end{gathered}                                                     \tag{18.2}
+$$
+
+Consequently, among extensions of this fixed $\mathcal K_5$ by additional legal worlds at $H_3$, the minimum number of added worlds needed for $L_4$ is exactly one. This is a relative augmentation minimum, with $\mathcal K_5$ fixed.
+
+Proof. Distinction and legality follow from Theorems 15.1 and 16.2. For every conic world (16.2), the cumulative matrices along $JMM$ are
+
+$$
+I,\quad J,\quad L,\quad J+L,
+                                                                  \tag{18.3}
+$$
+
+and the values of the one fixed polynomial $h$ at clocks $0,\ldots,7$ are
+
+$$
+(0,24,30,24,12,0,-6,0).
+                                                                  \tag{18.4}
+$$
+
+The two trace constraints therefore give exactly the entire ancestor history $H_3$. The fourth-$M$ matrix is $D$ of (17.6), with trace $21/5$ against $R$, so every conic world reads $252/5$ there. The fifth reading is zero for either action, and the seventh reading is zero for either action after any preceding choices.
+
+After that fourth $M$, the complete sixth-response table, with fifth and sixth actions in chronological order, is
+
+$$
+\begin{array}{c|c|c|c|c}
+E_5&E_6&A_6&z_6&z_7\text{ for either }E_7\\ \hline
+M&M&\begin{pmatrix}5&3\\8&5\end{pmatrix}&-66&0\\
+M&J&\begin{pmatrix}5&3\\3&2\end{pmatrix}
+&-6(3+2s+3a)&0\\
+J&M&\begin{pmatrix}2&1\\5&3\end{pmatrix}
+&-6(37/5-s-a)&0\\
+J&J&D&-126/5&0.
+\end{array}                                                       \tag{18.5}
+$$
+
+Each matrix is $E_6E_5D$, and multiplying its trace against $R(a,s)$ by $h(6)=-6$ gives the displayed response. All fifth readings in this table are zero. The trace calculations use the same $R$ that gave (18.3), so the ancestor and descendant equalities hold jointly.
+
+For fifth $M$, the actual response $0$ retains $\mathcal C_3$. Sixth $M$ then retains all three at $-66$, whereas sixth $J$ retains the distinct pair $\{U_-,B_{\rm new}\}$ because (16.9) preserves $3a+2s$. Each selected sixth child has at least two complete targets and both final readings equal zero. Lemma 9.3 gives $L_1$ in each selected sixth child, and (1.1) gives $L_2$ after fifth $M$.
+
+For fifth $J$, the actual response is again $0$ on $\mathcal C_3$. Sixth $J$ retains all three at $-126/5$, whereas sixth $M$ retains $\{U_-,U_+\}$ because both have $a+s=q$. Again both final actions read zero on each retained pair. This gives $L_2$ after fifth $J$, and hence $L_3(\mathcal C_3,H_M)$. The two mixed-action rows use different collision pairs, within this one fixed three-target family.
+
+At $H_3$, fourth $J$ with actual response $y_*$ retains exactly $\mathcal K_5$ in $\mathcal K_6$: Theorem 15.1 gives its common response and $L_3$, while (16.6) excludes $B_{\rm new}$. Fourth $M$ with actual response $252/5$ retains exactly $\mathcal C_3$: the three $\mu$ intervals in (17.3) exclude every $W_i$. Both actions therefore have an actual $L_3$ child of the same $\mathcal K_6$, proving $L_4$ by (1.1). Every selected node has at least two distinct complete targets, which includes the impossibility of a successful early stop.
+
+To prove the relative minimum, consider one policy on the entire known $\mathcal K_5$ at $H_3$. Choose fourth $M$. By (17.3), each of its three $W_i$ responses is distinct from the other two and from $252/5$, so those children are singletons and permit immediate return of the corresponding whole target. In the response-$252/5$ child exactly $\{U_-,U_+\}$ remain. Choose fifth $M$, read $0$, and then sixth $J$. On this pair, (18.5) becomes
+
+$$
+z_6=-6(3+3q-s).
+                                                                  \tag{18.6}
+$$
+
+The two $s=8/(5\ell_\pm)$ values are different, and this response is injective in $s$. The policy returns the complete target by original clock six, with at most three additional readings from $H_3$. Thus $\mathcal K_5$ cannot have $L_4$ there. Zero additions fail and the one addition in (18.1) succeeds, proving the stated minimum. No comparison with other possible initial supports is part of that minimum.
+
+The abstract response-fiber recursion is (1.1), from [II, Definition 56.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md), and its monotonicity and same-parent uses are Lemma 9.3 and Theorems 12.2–12.3. The $J$ arm here is exactly the existing five-target construction of Section 15. The additional content is the strictly positive companion furnishing the concrete other arm at their earlier common ancestor. ∎
+

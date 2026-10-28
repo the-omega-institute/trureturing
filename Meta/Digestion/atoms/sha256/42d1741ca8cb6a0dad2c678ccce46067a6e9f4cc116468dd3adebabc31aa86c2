@@ -1,0 +1,20 @@
+**定义 19.7（可扩展的 $E/N$ 有限可满足族）。**
+
+* $E$-FEAS 的输入是显式变量表、三元作用域列表
+  $(i_j,k_j,\ell_j)$、可选的有限钉值和目标输出钉值；问题是是否存在
+  使每个作用域属于 $E$ 的布尔赋值。赋值本身是线性长度证书，逐约束
+  检查在作用域列表长度上线性。单调 exact-one-3-SAT 给出其 NP-hard
+  （从而在此显式编码下 NP-complete）的标准子族。若需要原生块实现，
+  变量共享和唯一 native lift 已由
+  [Overlap Closure §3, Theorem 3.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OVERLAP_CLOSURE_BOUNDARIES.md#3-actual-native-failure-of-rectangular-projection-closure)
+  负责；这里不重复其构造。
+* $N$-COMP 的输入是有向无环 NOR 门表、共享信号名、命名主输入集 $W$、
+  部分钉值 $p:P\to\{0,1\}$（$P\subseteq W$）、常量端口及指定输出值
+  （NP-hard 子族要求输出为一）。问题是是否存在未钉住的主输入
+  $W\setminus P$ 与全部内部线的共同补全，满足门表、钉值、常量和输出
+  要求；这些未钉主输入是存在见证变量。它是第十五节及 Cook 文献注
+  §§6–8 所用的显式完成语言：证书可正向求值检查，边界补全属于 NP，
+  其标准 3-SAT 归约给出 NP-hard 子族。若 $P=W$，则拓扑求值唯一决定
+  内部线并在确定性多项式时间内判定输出要求；这个全钉值子族不承担
+  上述 NP-hard 结论。
+

@@ -1,0 +1,38 @@
+**Definition 111.1 (source, preparation and late entrance).** Fix one
+earned $u$, its $a,c,b,N,M,s$, and $k\ge1$ disjoint beta-beta cherries
+as in Definition 103.1. For every $\theta\in\mathbb Q^k$ use the marker
+preparation (104.2), then exactly the displayed growth and cancellation
+schedule of Theorem 105.1. This is one actual specimen, starting from its
+allocated known-zero alpha, receiving the owned target $x_\theta$, and
+actually measuring the epoch-two values used in its cancellation.
+Its settled endpoint is
+
+$$
+H\theta=\sum_{i=1}^k\frac{\theta_i}{2}(a_i-c_i),\qquad
+BH\theta=\sum_{i=1}^k\frac{\theta_i}{2}(e_i-d_i),\qquad B^2H=H.
+\tag{111.1}
+$$
+
+Here all six local vectors have exactly the meanings in (103.3).
+In particular the subtracted $c_i$ lives at the new internal $p_iLL,q_iLL$;
+$H\theta$ is not the owner-only vector $\sum_i\theta_i a_i/2$.
+Indeed $B^2a_i=2a_i+c_i+f_i$ distinguishes those two fields.
+At $H\theta$ every terminal is zero; at $BH\theta$ the genuine fresh
+$p_iR$ reads $\theta_i/2$, the moved inherited $p_iLLL$ reads
+$-\theta_i/2$, and the designated $p_iLR$ reads zero. The actual repair
+endpoint after one more Tick;Hold is $BH\theta$.
+
+Fix a known $R\in\mathbb Q^{r\times k}$ of rank $d$, and actually retain
+$s_0=R\theta$. At the late entrance require precisely Definition 106.1's
+complete information contract: every other accessible parameter dependency
+factors through $s_0$ and fixed context $\kappa$. Producing $s_0$, removing
+or isolating every other copy of the acquired parameters, operands,
+predictor, producer input and provider buffers, and retaining the surviving
+backing are real operations with real costs. Retaining the earlier full
+predictor gives the different warm entrance. The context includes the
+actual source binding, earned ordered graph, complete raw/canonical label
+map and label lifecycle, exact law, settled parser, phase, serialization
+and genuine current/fresh grants. Numeric equality never creates these
+assets. Genuine zero origin, isolation, exact arithmetic and physical
+conformance remain **ASSUMED-UNVERIFIED** ideal premises.
+
