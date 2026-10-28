@@ -1313,10 +1313,10 @@ private def vertexGluingHomeomorph (K : PreAbstractSimplicialComplex V)
 
 /- Public carrier for the selected-component gluing consumer.  The original
   private `vertexGluing` declaration and all of its identities stay intact. -/
-abbrev SelectedGluedVertices (a : V) (b : W) :=
+private abbrev SelectedGluedVertices (a : V) (b : W) :=
   FiniteConeUnionWedge.Wedge a b
 
-def selectedVertexGluing (K : PreAbstractSimplicialComplex V)
+private def selectedVertexGluing (K : PreAbstractSimplicialComplex V)
     (L : PreAbstractSimplicialComplex W) (a : V) (b : W) :
     PreAbstractSimplicialComplex (SelectedGluedVertices a b) :=
   vertexGluing K L a b
@@ -1957,7 +1957,7 @@ private def bouquetAppendHomeomorph (ds es : BouquetSpec) :
 
 /- The connected selected-component carrier is now consumed by the actual
   vertex-gluing quotient and the actual bouquet concatenation quotient. -/
-def connectedVertexGluingHomeomorph (ds es : BouquetSpec) :
+private def connectedVertexGluingHomeomorph (ds es : BouquetSpec) :
     FiniteSimplicialJoin.Space
         (selectedVertexGluing (bouquetComplex ds) (bouquetComplex es) none none) ≃ₜ
       FiniteSimplicialJoin.Space (bouquetComplex (ds ++ es)) := by
@@ -1970,7 +1970,7 @@ def connectedVertexGluingHomeomorph (ds es : BouquetSpec) :
   basedWedgeEquivalence then performs the quotient wedge replacement on the
   live carrier.  The normal spaces remain finite coproduct realizations, so
   every unselected component (including point components) stays present. -/
-def selectedComponentWedgeBased {V W : Type*} [Fintype V] [DecidableEq V]
+private def selectedComponentWedgeBased {V W : Type*} [Fintype V] [DecidableEq V]
     [Fintype W] [DecidableEq W]
     (K : PreAbstractSimplicialComplex V) (L : PreAbstractSimplicialComplex W)
     (hK : WPlus K) (hL : WPlus L)
@@ -1989,7 +1989,7 @@ def selectedComponentWedgeBased {V W : Type*} [Fintype V] [DecidableEq V]
   exact ⟨m, hm, p, i, n, hn, q, j,
     ⟨FiniteConeUnionWedge.basedWedgeEquivalence E F⟩⟩
 
-def selectedComponentWedgeCarrier {V W : Type*} [Fintype V] [DecidableEq V]
+private def selectedComponentWedgeCarrier {V W : Type*} [Fintype V] [DecidableEq V]
     [Fintype W] [DecidableEq W]
     (K : PreAbstractSimplicialComplex V) (L : PreAbstractSimplicialComplex W)
     (hK : WPlus K) (hL : WPlus L)
