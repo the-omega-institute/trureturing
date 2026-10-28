@@ -392,13 +392,15 @@ private lemma normalizer_pos (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
   have hp := (domain_positive b hb hb1
     (show scalarRoot b ∈ coordinateDomain b from
       ⟨by linarith [radius_pos b hb hb1, hr.1], hr.2.1⟩)).1
-  positivity
+  exact mul_pos (mul_pos (by norm_num) hr.1) hp
 
 private lemma polynomial_hasDerivAt (b v : ℝ) :
     HasDerivAt (polynomial b) (3 * (1 - b) - 12 * v) v := by
   convert ((hasDerivAt_const v (2 * b)).add
     ((hasDerivAt_id v).const_mul (3 * (1 - b)))).sub
-      ((hasDerivAt_pow 2 v).const_mul 6) using 1 <;> ring
+      ((hasDerivAt_pow 2 v).const_mul 6) using 1
+  · funext t; dsimp [polynomial] <;> ring
+  · norm_num <;> ring
 
 private lemma optimizer_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
     {x : ℝ} (hx : x ∈ optimizerDomain b) :
@@ -413,10 +415,16 @@ private lemma optimizer_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
   have hd := ne_of_gt (domain_positive b hb hb1 (curve_spec b hb hb1 hx).1).2.1
   convert hw using 1
   · rfl
-  · dsimp only [optimizer]
-    field_simp
+  · have hrne := ne_of_gt (scalarRoot_spec b hb hb1).1
+    have hprne := (mul_ne_zero_iff.mp hn).2
+    dsimp only [optimizer, Function.comp_apply, Pi.mul_apply, Pi.add_apply,
+      Pi.sub_apply, Pi.pow_apply, id_eq]
+    field_simp [hrne, hprne, hd, hxne]
     dsimp [polynomial]
-    ring
+    ring_nf
+    field_simp [show b * 2 + curve b x * 6 ≠ 0 by intro he; apply hd; linarith only [he],
+      show curve b x * 6 + b * 2 ≠ 0 by intro he; apply hd; linarith only [he]]
+    <;> ring
 
 private def profilePrimitive (b x : ℝ) : ℝ := x * optimizer b x * curve b x
 
@@ -429,9 +437,14 @@ private lemma profile_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
   have hd := ne_of_gt (domain_positive b hb hb1 (curve_spec b hb hb1 hx).1).2.1
   convert ((hasDerivAt_id x).mul hw).mul hc using 1
   · rfl
-  · field_simp
+  · dsimp only [Pi.mul_apply, Pi.add_apply, Pi.sub_apply, Pi.pow_apply, id_eq,
+      Function.comp_apply]
+    field_simp [hd, hxne]
     dsimp [polynomial]
-    ring
+    ring_nf
+    field_simp [show b * 2 + curve b x * 6 ≠ 0 by intro he; apply hd; linarith only [he],
+      show curve b x * 6 + b * 2 ≠ 0 by intro he; apply hd; linarith only [he]]
+    <;> ring
 
 private lemma primitive_eq_profile (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
     {x : ℝ} (hx : x ∈ optimizerDomain b) :
@@ -482,10 +495,14 @@ private lemma costPrimitive_hasDerivAt (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1)
     ((hc.const_mul b).add ((hc.pow 2).const_mul 2))
   convert hnum.div hw hwne using 1
   · rfl
-  · dsimp only [profilePrimitive]
-    field_simp
+  · dsimp only [profilePrimitive, Pi.mul_apply, Pi.add_apply, Pi.sub_apply,
+      Pi.pow_apply, id_eq, Function.comp_apply]
+    field_simp [hd, hxne, hwne]
     dsimp [polynomial]
-    ring
+    ring_nf
+    field_simp [show b * 2 + curve b x * 6 ≠ 0 by intro he; apply hd; linarith only [he],
+      show curve b x * 6 + b * 2 ≠ 0 by intro he; apply hd; linarith only [he]]
+    <;> ring
 
 private lemma optimizer_cost (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
     cost b (optimizer b) = sharpConstant b := by
@@ -504,7 +521,7 @@ private lemma optimizer_cost (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
       (by norm_num)
   have hftc := intervalIntegral.integral_eq_sub_of_hasDerivAt
     (fun x hx => costPrimitive_hasDerivAt b hb hb1
-      (hsub ((uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)).subst hx)))
+      (hsub (by simpa only [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx)))
     ((hlag.const_mul b).add hfuture)
   have hcost : cost b (optimizer b) =
       ∫ x in (1 : ℝ)..2,
@@ -515,8 +532,10 @@ private lemma optimizer_cost (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
     congr 1
     apply intervalIntegral.integral_congr
     intro x hx
+    change primitive (optimizer b) x / optimizer b x ^ 2 =
+      profilePrimitive b x / optimizer b x ^ 2
     rw [primitive_eq_profile b hb hb1
-      (hsub ((uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)).subst hx))]
+      (hsub (by simpa only [uIcc_of_le (show (1 : ℝ) ≤ 2 by norm_num)] using hx))]
   rw [hcost, hftc]
   dsimp only [costPrimitive]
   rw [curve_one b hb hb1, optimizer_two b hb hb1]
@@ -555,7 +574,7 @@ theorem constructed_profile (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
     (fun x hx => optimizer_pos b hb hb1 hx), ?_, optimizer_admissible b hb hb1,
     optimizer_mass b hb hb1, optimizer_cost b hb hb1⟩
   · dsimp only [sharpConstant]
-    positivity
+    exact mul_pos (mul_pos (by norm_num) (sq_pos_of_pos hr.1)) (by linarith [hr.1])
   · apply strictMonoOn_of_deriv_pos (convex_Ioi _)
     · exact fun x hx => (optimizer_contDiff b hb hb1 hx).continuousAt.continuousWithinAt
     · intro x hx
