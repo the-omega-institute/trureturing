@@ -578,6 +578,28 @@ private theorem abs_pair_bound (w z : Fin 3 → ℂ) :
         (euclideanNorm w * euclideanNorm z)), hrel]
   nlinarith [hsquare]
 
+private theorem frame_q_sum {m : ℕ} (z : Fin m → Fin 3 → ℂ)
+    (hframe : (∑ a, (Matrix.of fun i j => z a i * star (z a j))) =
+      (1 : Matrix (Fin 3) (Fin 3) ℂ)) : ∑ a, q (z a) = 3 := by
+  have htr := congrArg Matrix.trace hframe
+  rw [Matrix.trace_sum] at htr
+  change (∑ a, (Matrix.vecMulVec (z a) (star (z a))).trace) =
+      (1 : Matrix (Fin 3) (Fin 3) ℂ).trace at htr
+  simp_rw [Matrix.trace_vecMulVec] at htr
+  rw [Matrix.trace_one] at htr
+  have htrr := congrArg Complex.re htr
+  simp [q, dotProduct, Complex.normSq_eq_conj_mul_self, Complex.star_def] at htrr
+  exact_mod_cast htrr
+
+private theorem frame_inner_sum {m₁ m₂ : ℕ} (z : Fin m₁ → Fin 3 → ℂ)
+    (w : Fin m₂ → Fin 3 → ℂ)
+    (hz : (∑ a, (Matrix.of fun i j => z a i * star (z a j))) =
+      (1 : Matrix (Fin 3) (Fin 3) ℂ))
+    (hw : (∑ b, (Matrix.of fun i j => w b i * star (w b j))) =
+      (1 : Matrix (Fin 3) (Fin 3) ℂ)) :
+    ∑ a, ∑ b, Complex.normSq (star (w b) ⬝ᵥ z a) = 3 := by
+  sorry
+
 private theorem markov_bound {m₁ m₂ : ℕ} (K₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ) (K₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ)
     (h₁ : IsKrausDecomposition K₁) (h₂ : IsKrausDecomposition K₂) :
     markovFidelity K₁ K₂ ≤ 1 / 2 := by
