@@ -183,6 +183,25 @@ theorem E₁p.le_E₁Λ (x : ℝ) :
     have : 0 ≤ Λ p := vonMangoldt_nonneg
     positivity
 
+/-- The weighted Mangoldt-prime difference retains exactly the nonprime terms,
+including prime powers at the inclusive real cutoff. -/
+theorem E₁Λ.sub_E₁p_eq_sum_nonprime (x : ℝ) :
+    E₁Λ x - E₁p x =
+      ∑ n ∈ Ioc 0 ⌊x⌋₊, if ¬n.Prime then vonMangoldt n / n else 0 := by
+  unfold E₁Λ E₁p
+  rw [sum_filter]
+  calc
+    _ = ∑ n ∈ Ioc 0 ⌊x⌋₊,
+        (vonMangoldt n / n - if n.Prime then log n / n else 0) := by
+      rw [sum_sub_distrib]
+      ring
+    _ = _ := by
+      apply sum_congr rfl
+      intro n hn
+      split_ifs with hp
+      · simp [vonMangoldt_apply_prime hp]
+      · simp
+
 theorem E₁p.le {x : ℝ} (hx : 1 ≤ x) :
     E₁p x ≤ log 4 + 4 := by
     linarith [E₁Λ.le hx, E₁p.le_E₁Λ x]
