@@ -106,6 +106,7 @@ private theorem creation_partial (D : LatticeData) (α : Charge D) (x : Index D)
     · rw [ite_eq_right hx, creationCoeff, dite_eq_left (by omega), smul_zero]
 
 set_option maxHeartbeats 2000000 in
+-- The occupation induction repeatedly extracts coefficients of the actual derivation law.
 /-- Exact occupation coefficient of the original creation exponential.
 The factorial is supplied by the original polynomial derivations, not postulated. -/
 private theorem creation_coefficient_factorial (D : LatticeData) (α : Charge D)
@@ -179,7 +180,7 @@ private theorem creation_coefficient_norm (D : LatticeData) (α : Charge D)
       (eq_div_iff hw).mpr h
     _ = _ := by
       simp [creationCoordinate, FactorialFockMetric.weight, Finsupp.prod,
-        norm_prod, norm_div, norm_pow, Finset.prod_div_distrib]
+        norm_prod, norm_div, norm_pow, Finset.prod_div_distrib, ← Nat.cast_add_one]
 
 /-- A radial estimate for every literal creation occupation, with no energy cutoff.
 The arbitrary descendant field estimate needed for scalar sewing is separate. -/
@@ -205,7 +206,7 @@ private theorem creation_radial_bound (D : LatticeData) (α : Charge D)
         (‖(α x.1 : ℂ)‖ / (x.2 + 1 : ℝ)) ^ d x / ((d x).factorial : ℝ)) *
       (∏ x ∈ d.support, (ρ ^ (x.2 + 1)) ^ d x) ≤ _
     rw [← Finset.prod_mul_distrib, Real.exp_sum]
-    apply Finset.prod_le_prod
+    apply Finset.prod_le_prod₀
     · intro x hx
       positivity
     · intro x hx
@@ -216,7 +217,7 @@ private theorem creation_radial_bound (D : LatticeData) (α : Charge D)
     exact (summable_prod_of_nonneg (fun x : Index D => mul_nonneg hM (pow_nonneg hρ0 _))).2
       ⟨fun _ => hgeo.mul_left M, Summable.of_finite⟩
   have hdom (x : Index D) : f x ≤ M * ρ ^ x.2 := by
-    have hd : (1 : ℝ) ≤ x.2 + 1 := by positivity
+    have hd : (1 : ℝ) ≤ x.2 + 1 := by exact_mod_cast Nat.succ_le_succ (Nat.zero_le x.2)
     have hdiv : ‖(α x.1 : ℂ)‖ / (x.2 + 1 : ℝ) ≤ M :=
       (div_le_self (norm_nonneg _) hd).trans (hα x.1)
     have hp : ρ ^ (x.2 + 1) ≤ ρ ^ x.2 :=
@@ -228,13 +229,49 @@ private theorem creation_radial_bound (D : LatticeData) (α : Charge D)
       _ ≤ ∑' x : Index D, M * ρ ^ x.2 :=
         hs.sum_le_tsum d.support (fun x hx => mul_nonneg hM (pow_nonneg hρ0 _))
       _ = _ := by
-        rw [tsum_prod' hs]
+        rw [hs.tsum_prod]
         simp [tsum_mul_left, tsum_geometric_of_lt_one hρ0 hρ1, mul_div_assoc,
           div_eq_mul_inv, mul_assoc, mul_comm, mul_left_comm]
   exact hprod.trans (Real.exp_le_exp.mpr hsum)
 
+/-- The all-occupation creation seed is absolutely summable on the open disk.
+This is an internal seed estimate, not the all-descendant canonical sewing theorem. -/
+private theorem creation_occupation_summable (D : LatticeData) (α : Charge D)
+    (q : ℂ) (hq : ‖q‖ < 1) :
+    Summable (fun d : Occ D => ‖q ^ level D d *
+      (creationCoeff D α (level D d)).coeff d‖) := by
+  obtain ⟨ρ, hqρ, hρ1⟩ := exists_between hq
+  have hρ0 : 0 < ρ := lt_of_le_of_lt (norm_nonneg q) hqρ
+  let M : ℝ := ∑ i : Fin D.rank, ‖(α i : ℂ)‖
+  have hM : 0 ≤ M := Finset.sum_nonneg (fun _ _ => norm_nonneg _)
+  have hα (i : Fin D.rank) : ‖(α i : ℂ)‖ ≤ M :=
+    Finset.single_le_sum (fun _ _ => norm_nonneg _) (Finset.mem_univ i)
+  have hR0 : 0 ≤ ‖q‖ / ρ := div_nonneg (norm_nonneg q) hρ0.le
+  have hR1 : ‖q‖ / ρ < 1 := (div_lt_one hρ0).mpr hqρ
+  have hs : Summable (fun d : Occ D => (‖q‖ / ρ) ^ level D d) := by
+    have hh := D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation.
+      summable_norm_signed_integer_occupations (Fin D.rank)
+        (q := ((‖q‖ / ρ : ℝ) : ℂ)) (by simpa [abs_of_nonneg hR0] using hR1)
+    simpa [D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation.signedIntegerMonomial,
+      D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation.integerEnergy,
+      level, LatticePositiveEnergy.oscillatorEnergy, abs_of_nonneg hR0] using hh
+  let C := Real.exp ((D.rank : ℝ) * M / (1 - ρ))
+  refine (hs.mul_left C).of_nonneg_of_le (fun _ => norm_nonneg _) ?_
+  intro d
+  have hb := creation_radial_bound D α M ρ hM hα hρ0.le hρ1 d
+  rw [norm_mul, norm_pow]
+  have hr : 0 < ρ ^ level D d := pow_pos hρ0 _
+  calc
+    _ = (‖(creationCoeff D α (level D d)).coeff d‖ * ρ ^ level D d) *
+        (‖q‖ / ρ) ^ level D d := by
+      rw [div_pow]
+      field_simp
+    _ ≤ C * (‖q‖ / ρ) ^ level D d :=
+      mul_le_mul_of_nonneg_right hb (pow_nonneg hR0 _)
+
 #print axioms creation_coefficient_factorial
 #print axioms creation_radial_bound
+#print axioms creation_occupation_summable
 
 end
 end D5.S3.VertexAlgebra.CanonicalOccupationSewing
