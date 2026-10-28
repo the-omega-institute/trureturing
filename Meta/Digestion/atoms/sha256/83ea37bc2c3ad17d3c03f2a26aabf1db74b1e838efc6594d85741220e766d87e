@@ -1,0 +1,21 @@
+**定理 9.3（原根全部动作与停止的具体系统）。** Use the same legal coordinates, but take two slots for each word $w\in\{M,J\}^7$, and one $z_v$ for each nonempty prefix of length at most seven. Starting at $A_\varnothing=I$, impose
+
+$$
+O_{|v|}(E_{|v|}\cdots E_1;\theta_{w,\epsilon})=z_v
+\quad(v\text{ a nonempty prefix of }w),
+\tag{9.7}
+$$
+
+together with legality and distinctness inside each leaf pair. This $256\cdot7+254=2046$ coordinate system is feasible if and only if there is no full-domain decoder with at most eight total reads.
+
+Proof. The same unfolding proves equivalence to $L_7(\mathcal I_0,(0))$. It includes both first actions, both second actions after either first action, every later original-clock action and every stopping node.
+
+For an arbitrary initial read $z_0$, the map
+
+$$
+(P,g,\delta)\longmapsto(P,g,\delta-z_0)
+\tag{9.8}
+$$
+
+is a bijection from that entire initial fiber to $\mathcal I_0$. It subtracts $z_0$ from every subsequent read on every action word and preserves every original clock. A decoder on $\mathcal I_0$ therefore yields a full-domain decoder: subtract the actual initial $z_0$ from the history supplied to that decoder, follow its actions, and add $z_0$ back to its returned drift. The converse is restriction. Equation (1.3), with early stops included, now gives the stated equivalence. The system is not a certificate until its simultaneous equations and strict inequalities have a solution. ∎
+

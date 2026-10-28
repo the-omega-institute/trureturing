@@ -1,0 +1,19 @@
+**Proposition 84.4 (acquired callable use with its own successor image).**
+At any declared $t$, choose distinct earned current terminals $a_0,v_0$.
+Actually Add$(v_0,(w_t)_{a_0})$, Hold, Read$(v_0)$ using the retained predictor.
+Its real reply is $(w_t)_{v_0}+(w_t)_{a_0}$, and its successor is $Gw_t$
+with $G,G^{-1}$ as in (82.1). The four expressions, with this actual use
+appended to Time and the new current germ computed, have the same inverse
+and action-square property on this specified successor image.
+
+Proof. Undo $G$ in the mathematical current decoder, then apply (84.2);
+Time instead retains its original guard/sample data and appends the genuine
+use. Re-encoding computes the same operand, reply and successor. The complete
+source and predictor update by the same calls, so this is actual use, not
+only an observational inverse. It adds one Add, one Hold and one Read.
+Arbitrary later actions or Ticks after this shear need not remain on the
+passive affine images of (84.2). The full current predictor still applies
+there, but these historical charts make no assertion at those cuts, at
+unknown phase, on arbitrary nonzero fresh entrances or on erased histories.
+$\square$
+
