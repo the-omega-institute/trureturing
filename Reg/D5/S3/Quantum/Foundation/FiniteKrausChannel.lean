@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import Reg.Support.DependentFamily
 
+/-! Source-bound audit of the finite Kraus trace-preservation criterion. -/
+
 namespace Reg.D5.S3.Quantum.Foundation.FiniteKrausChannel
 
 open _root_.D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
@@ -12,7 +14,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-abbrev signature.{u, v, k, s} : Signature where
+abbrev signature.{u, s} : Signature where
   Params := Σ A : Type u, Type s
   State p := Matrix p.1 p.1 p.2
   Role := Unit
@@ -22,14 +24,14 @@ abbrev signature.{u, v, k, s} : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual.{u, v, k, s} : Realization signature.{u, v, k, s} :=
+def actual.{u, s} : Realization signature.{u, s} :=
   realize signature (fun _ _ X => Eq X) (fun e => nomatch e)
 
-def rejected.{u, v, k, s} : Realization signature.{u, v, k, s} :=
+def rejected.{u, s} : Realization signature.{u, s} :=
   realize signature (fun _ _ _ _ => True) (fun e => nomatch e)
 
 abbrev arena.{u, v, k, s} : Arena where
-  signature := signature.{u, v, k, s}
+  signature := signature.{u, s}
   Law R := ∀ {A : Type u} {B : Type v} [Fintype A] [DecidableEq A] [Fintype B]
     {κ : Type k} [Fintype κ] {S : Type s} [CommSemiring S] [Star S]
     (M N : κ → Matrix B A S),
@@ -38,21 +40,22 @@ abbrev arena.{u, v, k, s} : Arena where
 
 theorem rejected_law.{u, v, k, s} : ¬ arena.{u, v, k, s}.Law rejected := by
   intro h
+  letI : Star (ULift.{s} ℕ) := ⟨id⟩
   have hbad := @h (ULift.{u} Unit) (ULift.{v} Unit)
     inferInstance inferInstance inferInstance (ULift.{k} Unit) inferInstance
-    (ULift.{s} ℂ) inferInstance inferInstance (fun _ => 0) (fun _ => 0) trivial
-  have htrace := hbad (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) (ULift.{s} ℂ))
-  simpa [MatrixMap.of_kraus, Matrix.trace] using htrace
+    (ULift.{s} ℕ) inferInstance inferInstance (fun _ => 0) (fun _ => 0) trivial
+  have htrace := hbad (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) (ULift.{s} ℕ))
+  simp [MatrixMap.of_kraus, Matrix.trace] at htrace
 
-theorem dependence.{u, v, k, s} :
-    ObservationalDependence signature.{u, v, k, s} actual := by
+theorem dependence.{u, s} :
+    ObservationalDependence signature.{u, s} actual := by
   intro i
-  refine ⟨⟨ULift.{u} Unit, ULift.{s} ℂ⟩, 0, 1, ?_⟩
+  refine ⟨⟨ULift.{u} Unit, ULift.{s} ℕ⟩, 0, 1, ?_⟩
   intro h
   have he := congrFun h 0
-  change ((0 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) (ULift.{s} ℂ)) = 0) =
+  change ((0 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) (ULift.{s} ℕ)) = 0) =
     (1 = 0) at he
-  simpa using he
+  exact one_ne_zero (Eq.mp he rfl)
 
 def source_registration.{u, v, k, s} :
     Registration arena.{u, v, k, s}
@@ -72,7 +75,7 @@ def source_registration.{u, v, k, s} :
 def registration.{u, v, k, s} :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@MatrixMap.IsTracePreserving.of_kraus_isTracePreserving.{u, v, k, s})
-      (Realization signature.{u, v, k, s}) Unit Unit := {
+      (Realization signature.{u, s}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Foundation.FiniteKrausChannel.unit
   realizationName := `Reg.D5.S3.Quantum.Foundation.FiniteKrausChannel.source_registration
   realizationSource := none
