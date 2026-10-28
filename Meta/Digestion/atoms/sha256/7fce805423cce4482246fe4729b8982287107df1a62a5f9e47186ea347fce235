@@ -1,0 +1,46 @@
+**定义 13.2（逐槽增益与完整同源差异）。** Let $G_q$ and $D_w$
+be the constant $4\times1024$ matrices specified by
+
+$$
+G_qx=x_q\quad(q\in\mathcal S),\qquad
+D_wx=x_{(w,0)}-x_{(w,1)}\quad(w\in\{J,M\}^7).
+\tag{13.8}
+$$
+
+In particular $D_w$ retains all four coefficient differences. In
+the zero-initial-reading coordinates, two complete terminal targets
+are distinct exactly when
+
+$$
+P_{(w,0)}\ne P_{(w,1)}\quad\text{or}\quad D_wx\ne0.
+\tag{13.9}
+$$
+
+A source difference alone already distinguishes complete targets.
+When the sources agree, a gain difference is necessary and sufficient;
+the drift difference is then minus the constant-coefficient difference.
+The separation guard below uses this full four-component map, without
+requiring a prescribed coefficient to differ.
+
+Write $[B;T]$ for vertical row concatenation and use exact real rank.
+For later polynomial notation set
+
+$$
+s_w(\mathbf P)=2(a_{(w,0)}-a_{(w,1)})^2
+ +(b_{(w,0)}-b_{(w,1)})^2+(c_{(w,0)}-c_{(w,1)})^2.
+\tag{13.10}
+$$
+
+This is $\|P_{(w,0)}-P_{(w,1)}\|_F^2$. For a real matrix $C$ let
+
+$$
+\mu_k(C)=\sum_{\substack{I,J\text{ row and column sets}\\|I|=|J|=k}}
+                  \det(C_{I,J})^2,\qquad
+\mu_0(C)=1,
+\tag{13.11}
+$$
+
+and set $\mu_k(C)=0$ when $k$ exceeds its row or column count.
+These are existing minor expressions used below to write the
+source criterion as a finite polynomial formula.
+

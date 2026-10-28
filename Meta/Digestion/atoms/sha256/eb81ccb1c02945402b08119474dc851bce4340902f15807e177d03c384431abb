@@ -1,0 +1,92 @@
+**定义 13.1（全部原根槽的源与响应矩阵）。** Retain exactly
+$\mathcal W_3$, the original clocks and complete targets of Definition
+1.1. Let
+
+$$
+\begin{aligned}
+\mathcal S&=\{(w,e):w\in\{J,M\}^7,\ e\in\{0,1\}\},\\
+\mathcal V&=\bigcup_{i=1}^7\{J,M\}^i,\\
+\mathcal P&=\left\{\begin{pmatrix}a&b\\c&1-a\end{pmatrix}:
+ 0<a<1,\ b,c>0,\ bc=a(1-a)\right\}.
+\end{aligned}
+\tag{13.1}
+$$
+
+Thus $|\mathcal S|=256$, $|\mathcal V|=254$, and $\mathcal P$
+is exactly the set of legal sources, without symmetry or boundedness
+restrictions. Fix one source tuple
+$\mathbf P=(P_q)_{q\in\mathcal S}\in\mathcal P^{\mathcal S}$.
+Sources may coincide, including within a terminal pair. For a prefix
+$v=E_1\cdots E_i$, put
+
+$$
+A_v=E_i\cdots E_1,\qquad
+\mathcal D_v=\{(w,e)\in\mathcal S:v\text{ is a prefix of }w\},
+\qquad
+\mathcal D_\varnothing=\mathcal S.
+\tag{13.2}
+$$
+
+Order slots lexicographically with $J<M$ and $0<1$, and let $q_v$
+be the first slot in $\mathcal D_v$. For any legal source define
+
+$$
+\begin{aligned}
+t_v(P)&=\operatorname{tr}(A_vP),\\
+\ell_v(P)&=\bigl(t_v(P)-1,\ i\,t_v(P),\ i^2t_v(P),\ i^3t_v(P)\bigr).
+\end{aligned}
+\tag{13.3}
+$$
+
+For coefficient blocks $x_q=(x_{q0},x_{q1},x_{q2},x_{q3})^{\mathsf T}$,
+the normalized complete world associated with a nonzero block is
+
+$$
+g_q(T)=\sum_{j=0}^3x_{qj}T^j,\qquad
+\delta_q=-x_{q0},\qquad W_q=(P_q,g_q,\delta_q).
+\tag{13.4}
+$$
+
+It has initial reading zero, and its reading at the original clock
+$i=|v|$ is exactly $\ell_v(P_q)x_q$.
+This is the coordinate change
+$(\delta,\beta_1,\beta_2,\beta_3)=(-x_{q0},x_{q1},x_{q2},x_{q3})$
+in Definition 9.1; it imposes no initial-root or zero-drift promise.
+
+Define $B(\mathbf P)$ to have one row for each $v\in\mathcal V$
+and $q\in\mathcal D_v\setminus\{q_v\}$. Its action on the single
+stacked vector $x=(x_q)_{q\in\mathcal S}\in\mathbb R^{1024}$ is
+
+$$
+\bigl(B(\mathbf P)x\bigr)_{v,q}
+ =\ell_v(P_q)x_q-\ell_v(P_{q_v})x_{q_v}.
+\tag{13.5}
+$$
+
+All other blocks of this row are zero. At depth $i$ there are $2^i$
+prefixes, each with $2^{8-i}$ descendant slots. The numbers of rows
+at successive depths are therefore
+
+$$
+\bigl(2^i(2^{8-i}-1)\bigr)_{i=1}^7
+ =(254,252,248,240,224,192,128),\qquad
+\sum_{i=1}^7(256-2^i)=1538.
+\tag{13.6}
+$$
+
+Hence $B(\mathbf P)$ has exactly $1538$ rows and $1024$ columns.
+Writing $P_q=(\begin{smallmatrix}a_q&b_q\\c_q&1-a_q\end{smallmatrix})$,
+its entries are integer affine polynomials in the $768$ ambient
+source coordinates, since
+
+$$
+t_v(P_q)=(A_v)_{22}+
+ ((A_v)_{11}-(A_v)_{22})a_q+(A_v)_{21}b_q+(A_v)_{12}c_q.
+\tag{13.7}
+$$
+
+The $256$ equations $b_qc_q=a_q(1-a_q)$ and every strict source
+inequality in (13.1) remain imposed. The count $768$ is an ambient
+coordinate count, not the dimension of an unconstrained legal-source
+space.
+
