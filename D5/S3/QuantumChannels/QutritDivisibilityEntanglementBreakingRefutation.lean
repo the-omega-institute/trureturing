@@ -113,7 +113,8 @@ private lemma w_not_unitary : ¬ IsUnitaryChannel w := by sorry
 
 private lemma d_not_unitary : ¬ IsUnitaryChannel d := by sorry
 
-private lemma t_divisible : IsDivisible t := by sorry
+private lemma t_divisible : IsDivisible t := by
+  exact ⟨d, w, d_cptp, w_cptp, rfl, d_not_unitary, w_not_unitary⟩
 
 private lemma hermiticity_preserving_det_real (T : MatrixMap (Fin 3) (Fin 3) ℂ)
     (hT : ∀ X, T X.conjTranspose = (T X).conjTranspose) :
@@ -133,7 +134,13 @@ private lemma pdivisibleSet_subset_nonnegativeDet :
 
 private lemma t_det : Matrix.det (transferMatrix t) = -(1 / 4 : ℂ) ^ 8 := by sorry
 
-private lemma t_not_pdivisible : t ∉ pDivisibleSet := by sorry
+private lemma t_not_pdivisible : t ∉ pDivisibleSet := by
+  intro ht
+  have hnonneg := pdivisibleSet_subset_nonnegativeDet ht
+  change (Matrix.det (transferMatrix t)).im = 0 ∧
+    0 ≤ (Matrix.det (transferMatrix t)).re at hnonneg
+  rw [t_det] at hnonneg
+  norm_num at hnonneg
 
 private def omega : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ := sorry
 
@@ -141,13 +148,41 @@ private def witnessVector : Fin 3 × Fin 3 → ℂ := sorry
 
 private lemma omega_density : omega.PosSemidef ∧ omega.trace = 1 := by sorry
 
+private lemma separableCone_partialTranspose_posSemidef {m n : ℕ}
+    {rho : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ}
+    (hsep : separableCone rho) : (partialTranspose rho).PosSemidef := by
+  rcases hsep with ⟨k, A, B, hAB, rfl⟩
+  have hterm : ∀ i : Fin k, (partialTranspose (A i ⊗ₖ B i)).PosSemidef := by
+    intro i
+    have heq : partialTranspose (A i ⊗ₖ B i) = A i ⊗ₖ (B i).transpose := by
+      ext ⟨a, b⟩ ⟨c, d⟩
+      simp [partialTranspose, Matrix.kronecker_apply]
+    rw [heq]
+    exact (hAB i).1.kronecker (hAB i).2.transpose
+  have hs := Matrix.posSemidef_sum (s := (Finset.univ : Finset (Fin k)))
+    (x := fun i : Fin k => partialTranspose (A i ⊗ₖ B i)) (by
+      intro i hi
+      exact hterm i)
+  have hlin : partialTranspose (∑ i, A i ⊗ₖ B i) =
+      ∑ i, partialTranspose (A i ⊗ₖ B i) := by
+    ext ⟨a, b⟩ ⟨c, d⟩
+    simp [partialTranspose, Matrix.sum_apply]
+  rw [hlin]
+  exact hs
+
 private lemma witness_partial_transpose_negative :
       RCLike.re (dotProduct (star witnessVector)
       (Matrix.mulVec (partialTranspose
         (MatrixMap.kron (LinearMap.id : MatrixMap (Fin 3) (Fin 3) ℂ) t omega))
         witnessVector)) = -1 / 9 := by sorry
 
-private lemma t_not_entanglementBreaking : ¬ IsEntanglementBreaking t := by sorry
+private lemma t_not_entanglementBreaking : ¬ IsEntanglementBreaking t := by
+  intro h
+  have hs := h 3 omega omega_density.1 omega_density.2
+  have hp := separableCone_partialTranspose_posSemidef hs
+  have hn := hp.re_dotProduct_nonneg witnessVector
+  rw [witness_partial_transpose_negative] at hn
+  norm_num at hn
 
 theorem result : ¬ claim := by
   intro h
