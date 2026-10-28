@@ -112,7 +112,57 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.J`
 
 J is the continuous linear extension of the actual cylinder indicator sum on finitely supported increments. Its domain is the original real edge ell2 H.
 
-**Theorem 1.10 (Convergence and Hardy Tail).**
+**Theorem 1.10 (Positive Left Probability).**
+
+$$0< a$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.a_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The reciprocal golden ratio a is strictly positive because the golden ratio is positive.
+
+**Theorem 1.11 (Strict Contraction of Mass).**
+
+$$a< 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.a_lt_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The left probability a is strictly smaller than one because the golden ratio exceeds one. Hence powers of a decay to zero, giving a common finite depth for every positive mass threshold.
+
+**Theorem 1.12 (Conservation of Probability).**
+
+$$a+b=1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.sum_weights` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The golden conjugate equation gives a plus its square equal to one. Thus the two child probabilities a and b sum to one at every vertex.
+
+**Theorem 1.13 (Actual Cylinder Mass).**
+
+$$\forall p: \operatorname{Address}\left(\right), (\operatorname{toReal}\left(\operatorname{M}\left(\operatorname{cylinder}\left(p\right)\right)\right)=\operatorname{mass}\left(p\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.cylinder_mass` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original finite address p, including the empty address, the real mass of its cylinder under the infinite Bernoulli product M is exactly the product of its letter probabilities: a for false and b for true.
+
+The finite-coordinate product formula for M reduces the cylinder measure to singleton probabilities. Appending one letter multiplies both that measure and mass(p) by the same probability. The empty address has mass one. Consequently this is the actual cylinder mass used by the mass-crossing frontier.
+
+**Theorem 1.14 (Convergence and Hardy Tail).**
 
 $$(\forall z: \operatorname{H}\left(\right), (\operatorname{HasSum}\left((p: \operatorname{Edge}\left(\right) \mapsto (\operatorname{coordinate}\left(z, p\right)) \cdot (\operatorname{indicator}\left(p\right))), \operatorname{J}\left(z\right)\right)))\land(\forall h: \mathbb{N}, (\forall z: \operatorname{H}\left(\right), ((\Vert \operatorname{J}\left((z) - (\operatorname{P}\left(h, z\right))\right) \Vert)^{2}\leq(\frac{(a)^{h+1}}{(1) - (a)}) \cdot ((\Vert z \Vert)^{2}))))$$
 
@@ -138,10 +188,14 @@ The conditional suffix identity, the stopping-cylinder projection and its residu
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.J`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.M`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.Omega`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.a_lt_one`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.a_pos`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.b`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.bit`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.boundary_trace_hardy`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.cylinder`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.cylinder_mass`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.indicator`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.mass`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrace.sum_weights`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceHardy](FiniteSourceHardy.md)

@@ -43,7 +43,7 @@ internal sealed class BiasedBoundaryStoppingDocument : IScribeDocumentDefinition
     private static Formula Call(string s, params Formula[] xs) => new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. xs]);
     private static Formula Par(Formula x) => Seq(Open,x,Close);
     private static Formula All(string s, Formula type, Formula x) => Seq(Forall,Sp,V(s),Colon,Sp,type,Comma,Sp,Par(x));
-    private static Formula SqNorm(Formula x) => Seq(Par(Seq(Vert,x,Vert)),Caret,Grp(D(2)));
+    private static Formula SqNorm(Formula x) => Seq(Par(Seq(Vert,Sp,x,Sp,Vert)),Caret,Grp(D(2)));
     private static Formula SumA(Formula x) => Seq(Sum,Underscore,Grp(Seq(V("p"),InMacro,Sp,Call("A",V("t")))),Sp,Par(x));
     private static Formula PartitionFormula() => All("t",Call("Threshold"),Seq(
         Call("IsPrefixFree",Call("A",V("t"))),Land,Sp,
