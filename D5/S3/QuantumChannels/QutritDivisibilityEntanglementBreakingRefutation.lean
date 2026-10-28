@@ -7,6 +7,7 @@
    digest: A divisible qutrit channel outside P-divisibility is not entanglement breaking. -/
 
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import D5.S3.Resource.CompositeCones
 import D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite
 
@@ -191,6 +192,17 @@ private lemma t_cptp : IsCPTP t := by
     change Matrix.trace (d (w X)) = Matrix.trace X
     rw [d_cptp.2, w_cptp.2]
 
+private lemma cptp_hermiticity (T : MatrixMap (Fin 3) (Fin 3) ℂ)
+    (hT : IsCPTP T) : ∀ X, T X.conjTranspose = (T X).conjTranspose := by
+  obtain ⟨K, hK⟩ := MatrixMap.IsCompletelyPositive.exists_kraus T hT.1
+  rw [hK]
+  intro X
+  change (∑ c, K c * X.conjTranspose * (K c).conjTranspose) =
+    (∑ c, K c * X * (K c).conjTranspose).conjTranspose
+  simp [Matrix.conjTranspose_sum, Matrix.conjTranspose_mul,
+    Matrix.conjTranspose_conjTranspose]
+  simp only [Matrix.mul_assoc]
+
 private lemma unitary_purity (U : Matrix.unitaryGroup (Fin 3) ℂ) :
     Matrix.trace (((U : Matrix (Fin 3) (Fin 3) ℂ) * Matrix.single (0 : Fin 3) (0 : Fin 3) 1 *
       (U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose) *
@@ -261,7 +273,43 @@ private lemma t_divisible : IsDivisible t := by
 
 private lemma hermiticity_preserving_det_real (T : MatrixMap (Fin 3) (Fin 3) ℂ)
     (hT : ∀ X, T X.conjTranspose = (T X).conjTranspose) :
-    (Matrix.det (transferMatrix T)).im = 0 := by sorry
+    (Matrix.det (transferMatrix T)).im = 0 := by
+  let e : (Fin 3 × Fin 3) ≃ (Fin 3 × Fin 3) := Equiv.prodComm (Fin 3) (Fin 3)
+  have hmap : (starRingEnd ℂ).mapMatrix (transferMatrix T) =
+      Matrix.reindex e e (transferMatrix T) := by
+    ext ⟨a, b⟩ ⟨c, d⟩
+    simp [transferMatrix, LinearMap.toMatrix_apply, Matrix.stdBasis,
+      Matrix.map_apply, e, Matrix.reindex_apply,
+      ← Matrix.single_eq_of_single_single, Matrix.single,
+      Pi.single_apply, ite_and]
+    have hcd :
+        (fun i' j' : Fin 3 => if c = i' ∧ d = j' then (1 : ℂ) else 0) =
+          (fun i' j' : Fin 3 => if c = i' then if d = j' then 1 else 0 else 0) := by
+      funext i' j'
+      by_cases hc : c = i' <;> by_cases hd : d = j' <;> simp [hc, hd]
+    have hdc :
+        (fun i' j' : Fin 3 => if d = i' ∧ c = j' then (1 : ℂ) else 0) =
+          (fun i' j' : Fin 3 => if d = i' then if c = j' then 1 else 0 else 0) := by
+      funext i' j'
+      by_cases hd : d = i' <;> by_cases hc : c = j' <;> simp [hc, hd]
+    have htrans :
+        (Matrix.of (fun i' j' : Fin 3 => if c = i' then if d = j' then (1 : ℂ) else 0 else 0)).conjTranspose =
+          Matrix.of (fun i' j' : Fin 3 => if d = i' then if c = j' then (1 : ℂ) else 0 else 0) := by
+      ext i' j'
+      by_cases hd : d = i' <;> by_cases hc : c = j' <;>
+        simp [Matrix.conjTranspose_apply, eq_comm, hd, hc]
+    have hh := congrArg (fun Z : Matrix (Fin 3) (Fin 3) ℂ => Z b a)
+      (hT (Matrix.single (c : Fin 3) d 1))
+    simpa [Matrix.single, Matrix.conjTranspose_apply, hcd, hdc, htrans] using hh.symm
+  have hstar : star (Matrix.det (transferMatrix T)) =
+      Matrix.det (transferMatrix T) := by
+    calc
+      star (Matrix.det (transferMatrix T)) =
+          Matrix.det ((starRingEnd ℂ).mapMatrix (transferMatrix T)) :=
+            RingHom.map_det (starRingEnd ℂ) (transferMatrix T)
+      _ = Matrix.det (Matrix.reindex e e (transferMatrix T)) := by rw [hmap]
+      _ = Matrix.det (transferMatrix T) := Matrix.det_reindex_self e _
+  exact Complex.conj_eq_iff_im.mp hstar
 
 private lemma pdivisible_endpoint_det_nonneg {E : ℝ → MatrixMap (Fin 3) (Fin 3) ℂ}
     (hE : IsPDivisibleMap E) (u : ℝ) (hu : 0 ≤ u) :
