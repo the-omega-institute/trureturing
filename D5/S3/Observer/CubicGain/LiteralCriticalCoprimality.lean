@@ -9,6 +9,8 @@
 import D5.S3.Observer.CubicGain.ExactW3Center
 import Mathlib.RingTheory.Polynomial.Resultant.Basic
 import Mathlib.Data.ZMod.Basic
+import Mathlib.RingTheory.Polynomial.Content
+import Mathlib.RingTheory.Coprime.Lemmas
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -70,6 +72,21 @@ private theorem integer_degree : integerF.natDegree = 67 := by
     exact natDegree_eq_of_degree_eq_some critical_root_exists.1
   rwa [natDegree_map_eq_of_injective (Int.cast_injective (α := ℝ))] at h
 
+private theorem integer_coefficients_coprime :
+    IsCoprime (integerF.coeff 59) (integerF.coeff 67) := by
+  norm_num only [integerF,integerDesc,coeff_add,coeff_C_mul_X_pow,coeff_X]
+  rw [Int.isCoprime_iff_gcd_eq_one]
+  decide +kernel
+
+private theorem integer_primitive : integerF.IsPrimitive := by
+  intro z hz
+  have hd := (C_dvd_iff_dvd_coeff z integerF).mp hz
+  exact integer_coefficients_coprime.isUnit_of_dvd' (hd 59) (hd 67)
+
+private theorem integer_leading_positive : 0 < integerF.leadingCoeff := by
+  rw [leadingCoeff,integer_degree]
+  norm_num [integerF,integerDesc,coeff_add,coeff_C_mul_X_pow,coeff_X]
+
 private theorem modular_leading : modularF.coeff 67 ≠ 0 := by
   norm_num [modularF,coeff_map,integerF,integerDesc,coeff_add,coeff_C_mul_X_pow,coeff_X]
     <;> decide +kernel
@@ -125,5 +142,12 @@ theorem critical_polynomial_is_coprime_derivative :
     IsCoprime criticalPolynomial criticalPolynomial.derivative := by
   have h := rational_coprime.map (Polynomial.mapRingHom (Rat.castHom ℝ))
   simpa only [Polynomial.coe_mapRingHom,← derivative_map,real_bridge] using h
+
+/-- The literal FC is the image of a primitive degree-67 integer polynomial with positive head. -/
+theorem literal_critical_integer_normalization :
+    ∃ f : Polynomial ℤ, f.map (Int.castRingHom ℝ) = criticalPolynomial ∧
+      f.natDegree = 67 ∧ f.IsPrimitive ∧ 0 < f.leadingCoeff := by
+  exact ⟨integerF,integer_real_bridge,integer_degree,integer_primitive,
+    integer_leading_positive⟩
 
 end D5.S3.Observer.CubicGain.LiteralCriticalCoprimality

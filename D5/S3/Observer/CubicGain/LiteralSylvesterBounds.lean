@@ -284,9 +284,19 @@ private def topCoefficients : Fin 3 → Fin 16 → ℤ :=
 
 private theorem source_top_coeff (i : Fin 3) (j : Fin 16) :
     ((sourcePolynomial i).coeff j.val).coeff (17-j.val) = topCoefficients i j := by
-  fin_cases i <;> fin_cases j <;>
-    norm_num [sourcePolynomial,sourceE0,sourceE1,sourceE2,topCoefficients,
-      coeff_add,coeff_C_mul_X_pow,coeff_mul_X_pow,coeff_C,coeff_X]
+  fin_cases i
+  · change ((sourceE0 (X : Polynomial ℤ)).coeff j.val).coeff (17-j.val) = topCoefficients 0 j
+    fin_cases j <;>
+      simp only [sourceE0,coeff_add,coeff_C_mul_X_pow] <;>
+      norm_num [topCoefficients,coeff_add,coeff_C_mul_X_pow,coeff_mul_X_pow,coeff_C,coeff_X]
+  · change ((sourceE1 (X : Polynomial ℤ)).coeff j.val).coeff (17-j.val) = topCoefficients 1 j
+    fin_cases j <;>
+      simp only [sourceE1,coeff_add,coeff_C_mul_X_pow] <;>
+      norm_num [topCoefficients,coeff_add,coeff_C_mul_X_pow,coeff_mul_X_pow,coeff_C,coeff_X]
+  · change ((sourceE2 (X : Polynomial ℤ)).coeff j.val).coeff (17-j.val) = topCoefficients 2 j
+    fin_cases j <;>
+      simp only [sourceE2,coeff_add,coeff_C_mul_X_pow] <;>
+      norm_num [topCoefficients,coeff_add,coeff_C_mul_X_pow,coeff_mul_X_pow,coeff_C,coeff_X]
 
 private def topEntry (i : Fin 3) (s c : ℕ) : ℤ :=
   if s ≤ c then if h : c-s < 16 then topCoefficients i ⟨c-s,h⟩ else 0 else 0
@@ -328,20 +338,23 @@ private theorem sylvester_top_data (k : Fin 2) :
     sylvesterTop k = ![topR1,topR2] k := by
   fin_cases k <;> decide +kernel
 
+private theorem certificate_top_nonzero (k : Fin 2) : (![topR1,topR2] k).det ≠ 0 := by
+  fin_cases k
+  · change topR1.det ≠ 0
+    exact leading_determinants_ne_zero.1
+  · change topR2.det ≠ 0
+    exact leading_determinants_ne_zero.2.1
+
 private theorem resultant_top_nonzero (k : Fin 2) :
     (actualResultant k).coeff 285 ≠ 0 := by
   have hc := weighted_top_coeff (literalSylvester k) sylvesterWeight
     (fun j => 29-j.val) 285 31 (by decide +kernel) (by decide +kernel)
     (sylvester_entry_weight k)
-  rw [sylvester_top_bridge,sylvester_top_data] at hc
-  change (actualResultant k).coeff 285 = (![topR1,topR2] k).det at hc
-  have hn : (![topR1,topR2] k).det ≠ 0 := by
-    fin_cases k
-    · change topR1.det ≠ 0
-      exact leading_determinants_ne_zero.1
-    · change topR2.det ≠ 0
-      exact leading_determinants_ne_zero.2.1
-  exact fun hz => hn (hc.symm.trans hz)
+  have hb : (actualResultant k).coeff 285 = (sylvesterTop k).det :=
+    hc.trans (congrArg Matrix.det (sylvester_top_bridge k))
+  have hd : (sylvesterTop k).det = (![topR1,topR2] k).det :=
+    congrArg Matrix.det (sylvester_top_data k)
+  exact fun hz => certificate_top_nonzero k ((hb.trans hd).symm.trans hz)
 
 private def minorTop (constant : Bool) : Matrix (Fin 28) (Fin 28) ℤ :=
   fun i j => topEntry (if i.val < 14 then 0 else 1)
@@ -372,16 +385,16 @@ private theorem minor_top_nonzero :
     have h := weighted_top_coeff (minorMatrix false) minorWeight
       (fun j => if j.val < 27 then 28-j.val else if false then 0 else 1)
       252 30 (by decide +kernel) (by decide +kernel) (minor_entry_weight false)
-    rw [minor_top_bridge,minor_top_data] at h
-    rw [h]
-    exact leading_determinants_ne_zero.2.2.1
+    have hb := h.trans (congrArg Matrix.det (minor_top_bridge false))
+    have hd := congrArg Matrix.det (minor_top_data false)
+    exact fun hz => leading_determinants_ne_zero.2.2.1 ((hb.trans hd).symm.trans hz)
   · rw [minor_c_bridge]
     have h := weighted_top_coeff (minorMatrix true) minorWeight
       (fun j => if j.val < 27 then 28-j.val else if true then 0 else 1)
       253 30 (by decide +kernel) (by decide +kernel) (minor_entry_weight true)
-    rw [minor_top_bridge,minor_top_data] at h
-    rw [h]
-    exact leading_determinants_ne_zero.2.2.2
+    have hb := h.trans (congrArg Matrix.det (minor_top_bridge true))
+    have hd := congrArg Matrix.det (minor_top_data true)
+    exact fun hz => leading_determinants_ne_zero.2.2.2 ((hb.trans hd).symm.trans hz)
 
 /-- Exact parameter degrees of both original fixed resultants and both original fixed minors. -/
 theorem literal_elimination_exact_degrees :

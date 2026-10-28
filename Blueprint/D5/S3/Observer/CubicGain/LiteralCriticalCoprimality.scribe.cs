@@ -17,9 +17,20 @@ internal sealed class LiteralCriticalCoprimalityDocument : IScribeDocumentDefini
                 H("The original FC has no repeated algebraic factor"),
                 StatementSource.FromAuthor(Result()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The literal criticalPolynomial and its formal derivative are coprime. Equivalently, their gcd is a nonzero constant. The proof first establishes this statement over Q and then over R; it requires no assumption about any particular root."))), DescribeRole.Theorem),
-            Paragraph(Text("This proves the F,F' coprimality clause alone. The original fixed determinant identities, both primitive gcd factorizations, the identification of h and the reduced a,c, their other coprimalities, and the complete root, lift and world exhaustion remain separate obligations.")))));
+            Describe.Lean(DescribeId.Create("literal-critical-integer-normalization"),
+                DeclarationHandle.Create("D5/S3/Observer/CubicGain/LiteralCriticalCoprimality.literal_critical_integer_normalization"),
+                H("The literal FC is primitive with positive leading coefficient"),
+                StatementSource.FromAuthor(Normalization()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The same sixty-eight integer coefficients define a primitive degree-67 integer polynomial with positive leading coefficient whose real image is exactly criticalPolynomial. Primitivity follows because its coefficients of degrees 59 and 67 are coprime integers."))), DescribeRole.Theorem),
+            Paragraph(Text("These results prove the literal FC normalization and F,F' coprimality clauses. The original fixed determinant identities, both primitive gcd factorizations, the identification of h and the reduced a,c, their other coprimalities, and the complete root, lift and world exhaustion remain separate obligations.")))));
 
     private static Formula Call(string name, params Formula[] args) =>
         Seq(Operatorname, Grp(F.Id(name)), Open, Seq(args), Close);
     private static Formula Result() => Disp(Call("IsCoprime", Call("criticalPolynomial"), Comma, Sp, Call("derivative", Call("criticalPolynomial"))));
+    private static Formula Normalization() => Disp(Seq(
+        Exists, Sp, F.Id("f"), InMacro, Sp, Call("Polynomial", Seq(Mathbb, Grp(F.Id("Z")))), Comma, Sp,
+        Call("realMap", F.Id("f")), Eq, Sp, Call("criticalPolynomial"), Land, Sp,
+        Call("natDegree", F.Id("f")), Eq, Sp, D(6,7), Land, Sp,
+        Call("IsPrimitive", F.Id("f")), Land, Sp, D(0), Lt, Sp,
+        Call("leadingCoeff", F.Id("f"))));
 }
