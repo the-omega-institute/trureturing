@@ -29,10 +29,10 @@ private theorem bad_law : ¬ arena.Law bad := by
   have hh := (h (t := .of true) (u := .of true) (labels := fun _ => [])
     (labels' := fun _ => []) (next := 0) (next' := 0) (x := 0) (y := 0) rfl).1
   norm_num [fresh] at hh
-def familyRegistration : Registration arena (type_of% raw_bindings) := {
+def familyRegistration : Registration arena (type_of% @raw_bindings) := {
   actual := nativeActual
   bridge := Iff.rfl
-  variation := ⟨raw_bindings,bad,bad_law⟩
+  variation := ⟨@raw_bindings,bad,bad_law⟩
   sensitivity := ⟨fun i => ⟨bad,
     fun j hj => False.elim (hj (Subsingleton.elim j i)), rfl,bad_law⟩,
     fun e => nomatch e⟩

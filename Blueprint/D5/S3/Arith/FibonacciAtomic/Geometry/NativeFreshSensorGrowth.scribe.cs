@@ -27,16 +27,12 @@ internal sealed class NativeFreshSensorGrowthDocument : IScribeDocumentDefinitio
     private static Formula Im(Formula x, Formula y) => Seq(P(x), Sp, Rightarrow, Sp, P(y));
     private static Formula In(Formula x, Formula y) => Seq(x, Sp, InMacro, Sp, y);
     private static Formula Add(Formula x, Formula y) => Seq(P(x), Sp, Plus, Sp, P(y));
-    private static Formula Sub(Formula x, Formula y) => Seq(P(x), Sp, Minus, Sp, P(y));
-    private static Formula Scale(int n, Formula x) => Seq(D(n), Sp, Cdot, Sp, P(x));
-    private static Formula Half(Formula x) => Seq(Frac, Grp(x), Grp(D(2)));
+    private static Formula Scale(byte n, Formula x) => Seq(D(n), Sp, Cdot, Sp, P(x));
     private static Formula Bind(string[] ns, Formula[] ts, Formula f) { for(int i=ns.Length-1;i>=0;--i) f=Q(ns[i],ts[i],f); return f; }
     private static Formula Ands(params Formula[] fs) { var f=fs[^1];for(int i=fs.Length-2;i>=0;--i)f=A(fs[i],f);return f; }
     private static Formula Source => C("Source");
     private static Formula Addr => C("Address");
     private static Formula Val => C("Value");
-    private static Formula Nat => Seq(Mathbb, Grp(V("N")));
-    private static Formula Rat => Seq(Mathbb, Grp(V("Q")));
     private static Formula Zed => Seq(Mathbb, Grp(V("Z")));
     private static Formula G(Formula t) => C("grown",t);
 

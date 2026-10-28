@@ -9,7 +9,7 @@ open _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address re
 open _root_.D5.S3.Arith.FibonacciAtomic.ActualLeafHistoryRigidity (subtree)
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.NativeMaterialRootRecognition (D material terminals)
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.NativeGuardedLeafRepair (Value RawMap nativeRun zeroExtend)
-open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth (calls grown sensors)
+open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth (calls grown sensors update)
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorSector (vector half adjacency basis)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorAcquisition
@@ -25,6 +25,8 @@ noncomputable section
     ∃ labels' next' y,
       R.readout () (labels,next,oldField ch theta) t (calls t) =
         some (grown t, labels', next', y) ∧
+      D (grown t) ∧
+      (∀ p ∈ material t, p ∈ material (grown t)) ∧
       (∀ p ∈ material (grown t), y p = zeroExtend t (oldField ch theta) p) ∧
       next' = next + (fresh t).length ∧
       (∀ i, i < next → labels i ∈ terminals t → labels' i = inherited t (labels i)) ∧

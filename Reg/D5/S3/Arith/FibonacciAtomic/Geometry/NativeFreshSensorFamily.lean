@@ -84,10 +84,10 @@ noncomputable def supportRegistration :
   familyRecord := none
   options := #[] }
 
-def familyFamilyRegistration : Registration familyArena (type_of% persistent_family) := {
+def familyFamilyRegistration : Registration familyArena (type_of% @persistent_family) := {
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨persistent_family,bad,family_bad⟩
+  variation := ⟨@persistent_family,bad,family_bad⟩
   sensitivity := ⟨fun i => ⟨bad,
     fun j hj => False.elim (hj (Subsingleton.elim j i)), rfl,family_bad⟩,
     fun e => nomatch e⟩

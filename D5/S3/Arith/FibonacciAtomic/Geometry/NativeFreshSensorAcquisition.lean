@@ -52,6 +52,8 @@ theorem complete_native_sector (t : Source) (ht : D t) {k : ℕ} (ch : Cherries 
     ∃ labels' next' y,
       nativeRun t labels next (oldField ch theta) (calls t) =
         some (grown t, labels', next', y) ∧
+      D (grown t) ∧
+      (∀ p ∈ material t, p ∈ material (grown t)) ∧
       (∀ p ∈ material (grown t), y p = zeroExtend t (oldField ch theta) p) ∧
       next' = next + (fresh t).length ∧
       (∀ i, i < next → labels i ∈ terminals t → labels' i = inherited t (labels i)) ∧
@@ -91,7 +93,9 @@ theorem complete_native_sector (t : Source) (ht : D t) {k : ℕ} (ch : Cherries 
   have raw := NativeFreshSensorBindings.raw_bindings hr
   have inv := NativeFreshSensorGrowth.inventory t
   have fam := NativeFreshSensorFamily.persistent_family ch
-  refine ⟨labels',next',y,hr,?_,raw.1,raw.2.1,raw.2.2,?_,inv.1,inv.2.1,
+  refine ⟨labels',next',y,hr,(NativeFreshSensorGrowth.history t ht).domain,
+    NativeGuardedLeafRepair.history_preserves_material (NativeFreshSensorGrowth.history t ht),
+    ?_,raw.1,raw.2.1,raw.2.2,?_,inv.1,inv.2.1,
     inv.2.2.1,inv.2.2.2,?_,?_,?_,fam.1,fam.2.1,?_,fam.2.2.2⟩
   · intro p hp
     by_cases hm : p ∈ material t

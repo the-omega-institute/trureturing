@@ -14,24 +14,17 @@ internal sealed class NativeFreshSensorBindingsDocument : IScribeDocumentDefinit
     private static Formula P(Formula f) => Seq(Open, f, Close);
     private static Formula C(string s, params Formula[] xs) => new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. xs]);
     private static Formula Q(string n, Formula t, Formula f) => Seq(Forall, Sp, V(n), Colon, Sp, t, Comma, Sp, P(f));
-    private static Formula Ex(string n, Formula t, Formula f) => Seq(Exists, Sp, V(n), Colon, Sp, t, Comma, Sp, P(f));
     private static Formula Eqn(Formula x, Formula y) => Seq(x, Sp, F.Eq, Sp, y);
     private static Formula A(Formula x, Formula y) => Seq(P(x), Sp, Land, Sp, P(y));
     private static Formula Im(Formula x, Formula y) => Seq(P(x), Sp, Rightarrow, Sp, P(y));
     private static Formula In(Formula x, Formula y) => Seq(x, Sp, InMacro, Sp, y);
     private static Formula Add(Formula x, Formula y) => Seq(P(x), Sp, Plus, Sp, P(y));
-    private static Formula Sub(Formula x, Formula y) => Seq(P(x), Sp, Minus, Sp, P(y));
-    private static Formula Scale(int n, Formula x) => Seq(D(n), Sp, Cdot, Sp, P(x));
-    private static Formula Half(Formula x) => Seq(Frac, Grp(x), Grp(D(2)));
     private static Formula Bind(string[] ns, Formula[] ts, Formula f) { for(int i=ns.Length-1;i>=0;--i) f=Q(ns[i],ts[i],f); return f; }
     private static Formula Ands(params Formula[] fs) { var f=fs[^1];for(int i=fs.Length-2;i>=0;--i)f=A(fs[i],f);return f; }
     private static Formula Source => C("Source");
-    private static Formula Addr => C("Address");
     private static Formula Val => C("Value");
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
-    private static Formula Rat => Seq(Mathbb, Grp(V("Q")));
     private static Formula Zed => Seq(Mathbb, Grp(V("Z")));
-    private static Formula G(Formula t) => C("grown",t);
 
     private static Formula Raw() {var t=V("t");var u=V("u");var l=V("labels");var r=V("result");var n=V("next");var m=V("after");var x=V("x");var y=V("y");var i=V("i");var j=V("j");var f=C("fresh",t);
         return Bind(["t","u","labels","result","next","after","x","y"],[Source,Source,C("RawMap"),C("RawMap"),Zed,Zed,Val,Val],

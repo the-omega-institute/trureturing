@@ -23,7 +23,7 @@ internal sealed class NativeFreshSensorAcquisitionDocument : IScribeDocumentDefi
     private static Formula In(Formula x, Formula y) => Seq(x, Sp, InMacro, Sp, y);
     private static Formula Add(Formula x, Formula y) => Seq(P(x), Sp, Plus, Sp, P(y));
     private static Formula Sub(Formula x, Formula y) => Seq(P(x), Sp, Minus, Sp, P(y));
-    private static Formula Scale(int n, Formula x) => Seq(D(n), Sp, Cdot, Sp, P(x));
+    private static Formula Scale(byte n, Formula x) => Seq(D(n), Sp, Cdot, Sp, P(x));
     private static Formula Half(Formula x) => Seq(Frac, Grp(x), Grp(D(2)));
     private static Formula Bind(string[] ns, Formula[] ts, Formula f) { for(int i=ns.Length-1;i>=0;--i) f=Q(ns[i],ts[i],f); return f; }
     private static Formula Ands(params Formula[] fs) { var f=fs[^1];for(int i=fs.Length-2;i>=0;--i)f=A(fs[i],f);return f; }
@@ -37,7 +37,7 @@ internal sealed class NativeFreshSensorAcquisitionDocument : IScribeDocumentDefi
 
     private static Formula Vec(Formula p,string z)=>C("vector",p,C(z));
     private static Formula B(Formula t,Formula x)=>C("adjacency",G(t),x);
-    private static Formula PowB(Formula t,int n,Formula x)=>C("iterate",C("adjacency",G(t)),D(n),x);
+    private static Formula PowB(Formula t,byte n,Formula x)=>C("iterate",C("adjacency",G(t)),D(n),x);
 
     private static Formula Acts(Formula t,Formula p) {var a=Vec(p,"empty");var b=Vec(p,"L");var c=Vec(p,"LL");var d=Vec(p,"LLL");var e=Vec(p,"R");var f=Vec(p,"LR");
         return Ands(Eqn(B(t,a),Add(b,e)),Eqn(B(t,b),Add(Add(a,c),f)),Eqn(B(t,c),Add(b,d)),Eqn(B(t,d),c),Eqn(B(t,e),a),Eqn(B(t,f),b)); }
@@ -50,6 +50,7 @@ internal sealed class NativeFreshSensorAcquisitionDocument : IScribeDocumentDefi
         var param=Seq(C("Fin",k),Sp,To,Sp,Rat);var h=C("H",ch,eta);var root=C("root",ch,i);
         var body=Ands(
             Eqn(C("nativeRun",t,l,n,C("oldField",ch,th),C("calls",t)),C("some",C("tuple",G(t),r,m,y))),
+            C("D",G(t)),Q("p",Addr,Im(In(p,C("material",t)),In(p,C("material",G(t))))),
             Q("p",Addr,Im(In(p,C("material",G(t))),Eqn(C("coordinate",y,p),C("coordinate",C("zeroExtend",t,C("oldField",ch,th)),p)))),
             Eqn(m,Add(n,C("length",f))),
             Q("i",Zed,Im(C("lt",i,n),Im(In(C("apply",l,i),C("terminals",t)),Eqn(C("apply",r,i),C("inherited",t,C("apply",l,i)))))),
