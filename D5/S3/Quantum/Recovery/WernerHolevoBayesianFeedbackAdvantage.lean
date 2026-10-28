@@ -402,6 +402,20 @@ private theorem complement_trace_product (u v : ℂ)
   norm_num [Fintype.card_fin]
   ring
 
+private theorem inner_product_re (w z : Fin 3 → ℂ) :
+    ((star w ⬝ᵥ z) * (star z ⬝ᵥ w)).re = Complex.normSq (star w ⬝ᵥ z) := by
+  have hstar : star (star w ⬝ᵥ z) = star z ⬝ᵥ w := by
+    rw [star_dotProduct]
+    simp
+  have hnorm := congrArg Complex.re
+    (Complex.normSq_eq_conj_mul_self (z := star w ⬝ᵥ z))
+  rw [← RCLike.star_def] at hnorm
+  rw [hstar] at hnorm
+  rw [Complex.mul_re]
+  have h := hnorm.symm
+  rw [Complex.mul_re] at h
+  simpa [Complex.ofReal_re, mul_comm] using h
+
 private theorem markov_bound {m₁ m₂ : ℕ} (K₁ : Fin m₁ → Matrix (Fin 3) (Fin 3) ℂ) (K₂ : Fin m₂ → Matrix (Fin 3) (Fin 3) ℂ)
     (h₁ : IsKrausDecomposition K₁) (h₂ : IsKrausDecomposition K₂) :
     markovFidelity K₁ K₂ ≤ 1 / 2 := by
