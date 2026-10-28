@@ -1,0 +1,40 @@
+**Theorem 20.2 (robust exact promised-entrance acquisition).** On every
+$x\in S_B(t)$ and every legal nuisance sequence, Definition 20.1
+returns exactly $x$, and hence the exact nominal block $Y=Ox$.
+The actual returned field and retainable current block are
+
+$$
+v=T_t^Ix,\qquad m=Ov.
+\tag{20.5}
+$$
+
+The proof includes alpha, zero, negative coordinates and unbounded
+numerators. It neither acquires $B$ nor physically restores $x$.
+
+Proof. At each actual epoch the field is $T_t^rx$. Signed floor gives
+$|2^{-p}k_{r,j}-(T_t^rx)_{\ell_j}|\le2^{-p}$ for both legal bits.
+Thus $\|y-Ox\|_\infty\le2^{-p}$, and $DO=\operatorname{Id}$ gives
+
+$$
+\|c-x\|_\infty\le\varepsilon<\frac1{4B^2}.
+\tag{20.6}
+$$
+
+The positive $K_D$ follows from $DO=\operatorname{Id}$ on a nonempty
+state space. Two distinct reduced rationals $A/d,A'/d'$ with
+$d,d'\le B$ have distance
+$|Ad'-A'd|/(dd')\ge1/B^2$. Each interval in (20.4) has coordinate
+length $2\varepsilon<1/(2B^2)$, so contains at most one distinct
+allowed rational; its actual $x_a$ is one by (20.6).
+All numerator intervals are finite. In fact their lengths before
+integer rounding are $2d\varepsilon<1/(2B)\le1/2$, so each $d$
+contributes at most one integer. The enumeration returns the actual
+coordinate finitely and uniquely. $I$ real Ticks give (20.5).
+No subsequent source action is used to compute $Y$ or $m$. $\square$
+
+This is rational separation and the existing exact forcing applied
+to the actual digital service, beyond the pure-word known lattice of
+§10. Different effective discrete promises can work; this particular
+denominator format is sufficient and is not a universal necessary
+resource.
+

@@ -1,0 +1,40 @@
+**Lemma 9.1 (complete-record coupling under a precision cap).** Fix the
+same earned term, bindings and context in two C sources with respective
+fields $x,x'$ and $\|x-x'\|_\infty\le2^{-B}$, where $B\in\mathbb N$.
+For any deterministic causal policy using only $p\le B$, the two sources
+have compatible executions with the same entire observed record and
+the same policy decisions for as long as the policy continues. Every
+actual nuisance report chosen in each source is legal there. This is
+an intersection of compatible transcript sets, not equality of their
+whole sets of possible transcripts.
+
+**Proof.** Maintain equal current terms, the same acquired record and
+policy state, and field difference norm at most $2^{-B}$. Equal records
+give the same next input. A common valid Add cancels from the difference;
+Reset makes it zero; Tick contracts it by (2.3). A common successful
+growth has zero extension followed by a contracting new-tree Tick, so
+also preserves the bound. Equal geometry gives the same roster, guards
+and growth/refusal decisions. Hold, refusals, RangeRefusal and BadFrame
+preserve the bound and have the same fixed complete response.
+
+For a valid Read$(j,p)$ put $a=2^px_{\ell_j}$ and
+$a'=2^px'_{\ell_j}$. Their difference has absolute value at most one.
+Thus the integers $m=\lfloor a\rfloor$ and $m'=\lfloor a'\rfloor$
+differ by at most one. The sets $\{m,m+1\}$ and $\{m',m'+1\}$
+intersect. Select an integer in that intersection. In each source it is
+of form (8.1), with a possibly different legal bit. Both bits are allowed
+after the actual prefix by Definition 8.1, so this choice does not require
+a nonexistent sensor history or a probability assumption. Emit the same
+complete integer code in both executions. The fields do not change.
+
+The prefix parser and finite busy-control mechanics also agree: acquired
+input bits are the same, a proper prefix has the same pending behavior,
+and equal complete response content has equal framing, End, local
+acknowledgement and Return. C's inner growth and Tick replies are fixed
+and agree as well. No independent timing or capacity observation is
+part of the record. Therefore the invariant extends through every case.
+Induction supplies a common record for every finite stage. If the policy
+continues forever, choose an intersecting integer at each successive Read
+(for example the least one). Since every such next choice is legal,
+this defines compatible infinite executions too. $\square$
+
