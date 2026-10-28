@@ -4698,3 +4698,233 @@ For every finite $M$, the set $\{f\in L^2(B(0,R_1),\nu):|f|\le M\ \nu\text{-a.e.
 Throughout, $\widetilde w$ supplied only the intermediate spatial estimate and smooth approximation. The heat equation, contraction, chart measure and time continuity were those of the actual $w$, $aA$ and $T_\sigma$, with the selector, complete form and source trace of §131 retained. No killing, source Dirac replacement or change of clock enters the argument, and no global $A_2$ property of the unextended actual weight is needed. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 133. Global boundedness of the original source density and the equal-gap marginal pencil
+
+**Definition 133.1 (unchanged full source and local suppliers).** Retain all definitions, complete proofs and inherited hypotheses of [Appendix §§109–112](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md#109-one-source-coefficient-for-the-entire-original-maximal-zero-space) and §§115–117 and 129–132. For every original finite $a,\eta>0$, the group is the same $G=H^1\times\mathbb R$ with its original product, identity $e$, raw Haar measure $d\mu=dx\,dy\,dz\,d\zeta$, vector fields $X_1=\partial_x$, $X_2=\partial_y+x\partial_\zeta$, $X_3=\partial_z$, central units and unit-source field $\Gamma$ satisfying $L\Gamma=\delta_e$, $L=-\sum_iX_i^2$. Keep $g_c=16\sqrt{a\eta}$ and the coefficient-positive normalized state $`h=w_*/\|w_*\|_2`$, $`C_{\rm src}(w_*)=1`$. In the notation of §131, retain exactly
+
+$$
+\begin{gathered}
+D(H_{\rm end})=\{u\in D(S^*):A_{\rm src}(u)=\rho C_{\rm src}(u)\},\qquad
+\rho=A_{\rm src}(h)/C_{\rm src}(h),\qquad C_{\rm src}(h)>0,\\
+m=h^2\mu,\quad m(G)=1,\quad U_hF=hF,\quad
+K=U_h^{-1}H_{\rm end}U_h\ge0,\quad T_s=e^{-sK},\\
+V=V_0\oplus\mathbb C1,\quad
+V_0=\overline{C_c^\infty(G\setminus\{e\})}^{\,(115.14)},\quad
+\operatorname{tr}(F_0+c)=c,\\
+\mathscr E[F]=\int_{G\setminus\{e\}}
+\left(a\sum_{i=1}^3|X_iF|^2+\eta|\partial_\zeta F|^2\right)dm.
+\end{gathered}
+\tag{133.1}
+$$
+
+The density $g_s$ is exactly the actual source-start density of Theorem 117.2, starting at $e$ at original time zero. The form in (133.1) is the full conservative form, including its source coordinate. The local all-angle comparison, single $A_2$ extension, fixed radius, ordinary distributional gradients, source-inclusive weak equation and local smoothing of §§130–132 are retained as supplied results, with all their stated conditions.
+
+**Theorem 133.2 (global source-density bound on every positive time tail).** Under Definition 133.1, for every original $a,\eta>0$ and every $\tau>0$ there is a finite constant $C(a,\eta,\tau)$ such that
+
+$$
+\sup_{\substack{s\in\mathbb R\\s\ge\tau}}
+\|g_s\|_{L^\infty(G,m)}\le C(a,\eta,\tau)<\infty.
+\tag{133.2}
+$$
+
+There is no spatial restriction or extra global geometric hypothesis. All norms and times use the original measure, selector, full domain and clock. The constant may depend on the fixed original state and its local constants; no parameter-uniformity or bound at time zero is asserted.
+
+**Proof.** Fix arbitrary original $a,\eta>0$ and $\tau>0$. Theorem 115.3 supplies the regular symmetric strongly local form (133.1), positivity, $T_t1=1$, invariance of $m$ and the Markov contractions. Theorem 116.2 supplies positive capacity of $\{e\}$ and $\widetilde F(e)=\operatorname{tr}F$ for every $F\in V$. Theorem 117.2 supplies, at every positive real time,
+
+$$
+g_t\in L^2(m),\quad g_t\ge0,\quad \int g_t\,dm=1,\qquad
+\operatorname{tr}(T_tv)=\int_Gg_tv\,dm\quad(v\in L^2(m)),\qquad
+g_{t+r}=T_rg_t\quad(r\ge0).
+\tag{133.3}
+$$
+
+These are the actual full-endpoint identities. Their proofs and source normalizations are used unchanged.
+
+First obtain the needed local $L^1$ bound for globally supported, real signed inputs. Set $\kappa=\sqrt{\eta/a}$ and use exactly the chart and radius of §§131–132:
+
+$$
+\begin{gathered}
+\Phi(x,y,z,z_4)=(x,y,z,\kappa z_4+xy/2),\quad
+\Omega=B(0,R_0),\quad d\nu=w\,dZ,\quad w=\kappa(h\circ\Phi)^2,\\
+\mathsf B=aA,\quad \lambda=a/L_A,\quad\Lambda=aL_A,\quad
+u(t,Z)=(T_tv)(\Phi Z),\quad
+w\partial_tu-\operatorname{div}(w\mathsf B\nabla u)=0.
+\end{gathered}
+\tag{133.4}
+$$
+
+Here $v\in L^2(G,m;\mathbb R)$ is arbitrary, $dm=d\nu$ in the chart, and $\lambda I\le\mathsf B\le\Lambda I$. In particular $\eta/\kappa^2=a$; neither the diffusion coefficient nor time is rescaled. By (132.4), $u$ has the stated positive-time spatial and temporal regularity. Equations (132.7)–(132.10) supply finite $S$, $\beta>1$, the inequality
+
+$$
+\left(\int_\Omega |f|^{2\beta}\,d\nu\right)^{1/\beta}
+\le S\int_\Omega|\nabla f|^2\,d\nu,
+\tag{133.5}
+$$
+
+for compactly supported weighted $H^1$ functions, and the signed truncated energy inequality with source-meeting nonlinear tests. Only these local spatial and energy inputs are used in the following fixed-cylinder calculation.
+
+Put $d=\min(\tau/4,1)$, $\gamma=2-1/\beta>1$, $q=\gamma/(\gamma-1)$ and $J=1+d^{-1}+R_0^{-2}$. For $0\le\theta\le1$ define
+
+$$
+Q_\theta=B(0,R_0/2+\theta R_0/4)
+\times(\tau-d/2-\theta d/2,\tau+d/2+\theta d/2),\qquad
+M(\theta)=\operatorname*{ess\,sup}_{Q_\theta}|u|.
+\tag{133.6}
+$$
+
+For $\theta<\sigma$, let $\Delta=\sigma-\theta$ and $Q_j=Q_{\theta+\Delta2^{-j}}$, so $Q_0=Q_\sigma$ and the decreasing cylinders approach $Q_\theta$. Take $p_j=2\gamma^j$ and cutoffs $0\le\eta_j\le1$ supported in $Q_j$, equal to one on $Q_{j+1}$, vanishing at the lower time boundary, with
+
+$$
+|\nabla\eta_j|^2+|\partial_t\eta_j|
+\le C4^j\Delta^{-2}(R_0^{-2}+d^{-1}).
+\tag{133.7}
+$$
+
+The linear time-gap cost is bounded by this quadratic gap expression because $0<\Delta\le1$. The signed truncation limit in (132.9)–(132.10), followed by (132.13), gives, for $f_j=\eta_j|u|^{p_j/2}$,
+
+$$
+\begin{gathered}
+\mathcal A_j:=\operatorname*{ess\,sup}_t\int_\Omega f_j^2\,d\nu
+ +\iint_{Q_j}|\nabla f_j|^2\,d\nu\,dt
+ \le H_j\iint_{Q_j}|u|^{p_j}\,d\nu\,dt,\\
+H_j=C(\lambda,\Lambda)p_j^2 4^j\Delta^{-2}J.
+\end{gathered}
+\tag{133.8}
+$$
+
+With $\gamma-1+1/\beta=1$, spatial Hölder and (133.5) give
+$\iint_{Q_j}|f_j|^{2\gamma}\,d\nu\,dt\le S\mathcal A_j^\gamma$, exactly as in (132.14). Thus
+
+$$
+\|u\|_{L^{p_j\gamma}(Q_{j+1})}
+\le S^{1/(p_j\gamma)}H_j^{1/p_j}\|u\|_{L^{p_j}(Q_j)}.
+\tag{133.9}
+$$
+
+All space-time norms here use $\nu\,dt$. The initial $L^2$ integral is finite by global $L^2$ contraction; each recurrence supplies the next finite integral, justifying the truncated limit inductively. The sums in (132.16) are
+
+$$
+\sum_{j\ge0}\frac1{p_j}=\frac\gamma{2(\gamma-1)},\quad
+\sum_{j\ge0}\frac1{p_j\gamma}=\frac1{2(\gamma-1)},\quad
+\sum_{j\ge0}\frac{j+\log p_j}{p_j}<\infty.
+$$
+
+Consequently the cutoff-gap dependence is explicit:
+
+$$
+\begin{gathered}
+M(\theta)\le A_d(\sigma-\theta)^{-q}
+ \left(\iint_{Q_\sigma}|u|^2\,d\nu\,dt\right)^{1/2},\\
+A_d=C_0\max(1,S)^{1/[2(\gamma-1)]}
+ J^{\gamma/[2(\gamma-1)]}<\infty.
+\end{gathered}
+\tag{133.10}
+$$
+
+Here $C_0$ depends only on $\beta,\lambda,\Lambda$ and the fixed cutoff constants. This is the standard Moser energy iteration within the present proof, with the actual weighted time derivative throughout.
+
+The absorption argument requires a finite outer supremum. Apply the same iteration with inner cylinder $Q_1$ and outer cylinder
+$B(0,7R_0/8)\times(\tau-2d,\tau+2d)$. The spatial and temporal gaps are strictly positive, its spatial closure lies in $\Omega$, and $\tau-2d\ge\tau/2>0$. Its $L^2(\nu\,dt)$ integral is at most $4d\|v\|_2^2$ by actual global contraction. Hence $M(1)<\infty$; no bound on an open limiting cylinder is being assumed.
+
+For the signed input, positivity gives $|T_tv|\le T_t|v|$. Since $m$ is a probability, $|v|\in L^2(m)\cap L^1(m)$; symmetry and $T_t1=1$ yield
+
+$$
+\|T_tv\|_1\le\int_G T_t|v|\,dm
+=\langle T_t1,|v|\rangle_m=\|v\|_1,\qquad
+L:=\iint_{Q_1}|u|\,d\nu\,dt\le2d\|v\|_1.
+\tag{133.11}
+$$
+
+Combining $\iint_{Q_\sigma}|u|^2\le M(\sigma)L$ with (133.10) and Young's inequality gives, for every $\varepsilon>0$,
+
+$$
+M(\theta)\le\varepsilon M(\sigma)
+ +\frac{A_d^2}{4\varepsilon}(\sigma-\theta)^{-2q}L.
+\tag{133.12}
+$$
+
+Take $\theta_n=1-2^{-n}$ and $\varepsilon=2^{-(2q+1)}$. Iterating (133.12) along $(\theta_n,\theta_{n+1})$ leaves a residual at most $\varepsilon^NM(1)\to0$ and a geometric series of ratio $\varepsilon2^{2q}=1/2$. Its sum is
+
+$$
+M(0)\le2^{4q}A_d^2L\le C_\tau\|v\|_1,\qquad
+C_\tau=2d\,2^{4q}A_d^2<\infty.
+\tag{133.13}
+$$
+
+This constant is independent of the signed input and applies to inputs on all of $G$.
+
+Next pass to the exact time. For almost every $t\in(\tau-d/2,\tau+d/2)$ the bound (133.13) holds almost everywhere on $O=\Phi(B(0,R_0/2))$. Choose such $t_n\to\tau$. Strong $L^2(m)$ continuity gives $T_{t_n}v\to T_\tau v$ in $L^2(O,m)$. The set of functions bounded in absolute value by $C_\tau\|v\|_1$ on $O$ is $L^2$-closed, by passage to an almost everywhere convergent subsequence. Thus $F=T_\tau v$ has this local bound at the exact original time. Positive-time spectral calculus gives $F\in D(K)\subset V$.
+
+To control its source trace, set $M=C_\tau\|v\|_1$ and choose real $\chi\in C_c^\infty(O)$, $0\le\chi\le1$, equal to one near $e$. Equations (115.22)–(115.23), also used in (131.18)–(131.23), give $\chi\in V$ and $\operatorname{tr}\chi=1$. Multiplication by $\chi$ preserves the full $V$: for $F=c+\psi$ in the dense core $\mathbb C1+C_c^\infty(G\setminus\{e\})$, one has $\chi F=c\chi+\chi\psi\in V$, and the integral product rule gives
+
+$$
+\begin{gathered}
+\mathscr E[\chi F]\le2\|\chi\|_\infty^2\mathscr E[F]
+ +2D_\chi\|F\|_2^2,\qquad
+\|\chi F\|_2\le\|\chi\|_\infty\|F\|_2,\\
+D_\chi=\sup_G\left(a\sum_i|X_i\chi|^2
+ +\eta|\partial_\zeta\chi|^2\right)<\infty.
+\end{gathered}
+\tag{133.14}
+$$
+
+Closure extends this bounded multiplier to every $F\in V$, retaining $D(\chi F)=\chi DF+F D\chi$ for $D=X_1,X_2,X_3,\partial_\zeta$. The normal contraction $r\mapsto(r-M)_+$ fixes zero, so $W=(F-M)_+\in V$. Its weak chain rule is $DW=\mathbf1_{\{F>M\}}DF$ for the same derivatives. Lipschitz composition and uniqueness of quasi-continuous versions identify $\widetilde W=(\widetilde F-M)_+$ quasi-everywhere, and the product rule identifies the version of $\chi W$ with $\chi(\widetilde F-M)_+$. Its $L^2$ class is zero by the bound on $O$ and the support of $\chi$; hence this version is zero quasi-everywhere. A capacity-zero exceptional set cannot contain the positive-capacity singleton $\{e\}$. Evaluation there gives $(\operatorname{tr}F-M)_+=0$. Applying the same argument to $-F$ proves
+
+$$
+|\operatorname{tr}(T_\tau v)|\le C_\tau\|v\|_1
+\qquad(v\in L^2(G,m;\mathbb R)).
+\tag{133.15}
+$$
+
+This uses the actual nonpolar trace, rather than assigning an ordinary value to an almost everywhere class at $e$. Because $F\in D(K)$, the boundary-coordinate identity is still $\operatorname{tr}F=C_{\rm src}(hF)/C_{\rm src}(h)$ under the same selector. The dense-core, contraction and closure arguments retain the direct summand in (133.1); no punctured or killed domain is substituted.
+
+For completeness the same constant works for complex inputs. The positive complex-linear functional $\ell_\tau(v)=\operatorname{tr}(T_\tau v)$ of (133.3) obeys, after choosing $\alpha\in\mathbb R$ to make $e^{-i\alpha}\ell_\tau(v)$ nonnegative real,
+$|\ell_\tau(v)|=\ell_\tau(\operatorname{Re}(e^{-i\alpha}v))\le\ell_\tau(|v|)\le C_\tau\|v\|_1$.
+
+Now use the Riesz identity (133.3) on the whole $L^2(G,m)$. For every measurable $A\subset G$, $\mathbf1_A\in L^2(m)$ because $m(G)=1$. If $A_n=\{g_\tau>C_\tau+1/n\}$ had positive measure, then
+
+$$
+\int_{A_n}g_\tau\,dm>C_\tau m(A_n)
+=C_\tau\|\mathbf1_{A_n}\|_1,
+$$
+
+contrary to (133.15). Taking the union over $n$ proves $0\le g_\tau\le C_\tau$ almost everywhere on all of $G$. These indicators are arbitrary global inputs. Local smoothing near the source has bounded the source-evaluation functional on globally supported inputs, so the dual conclusion needs no separate spatial-infinity estimate.
+
+Finally, for every real $s\ge\tau$, (117.3) gives $g_s=T_{s-\tau}g_\tau$ as the actual $L^2$ class. The bounded class $g_\tau$ also belongs to $L^2(m)$, so the Markov $L^\infty$ contraction of the same semigroup yields
+
+$$
+\|g_s\|_\infty\le\|g_\tau\|_\infty\le C_\tau
+\qquad(s\in\mathbb R,\ s\ge\tau).
+\tag{133.16}
+$$
+
+At $s=\tau$ the propagator is the identity. This is a supremum of individual essential norms at every real time; it requires no simultaneous pointwise representative or common null set for uncountably many times. Since $a,\eta,\tau$ were arbitrary, (133.2) follows with $C(a,\eta,\tau)=C_\tau$. $\square$
+
+**Corollary 133.3 (the original equal-gap marginal mixed pencil).** Retain the full original source, native-parameter, process and readout telescope of Definitions 127.1 and 129.1. For every original finite $a,\eta,t,d>0$, put $\Delta_1=\Delta_2=d$ and $P=T_d$. Then (129.16) and (129.22) hold for the actual density. For every real $(\alpha,\beta,\gamma)$ with $(\alpha,\beta)\ne(0,0)$, the original marginal pencil
+
+$$
+\varphi=\alpha g_t+\beta g_{t+d}=\alpha g_t+\beta Pg_t,\qquad
+Q(v)=\int_G\varphi vPv\,dm+\gamma\int_Gg_t vP^2v\,dm
+\tag{133.17}
+$$
+
+has a bounded real negative test at every positive global angular frequency, with mutually orthogonal real polar pairings between distinct positive frequencies. For every Borel $E$ with $m(E)>0$,
+
+$$
+n_-(Q|_{\mathcal V_G})=n_-(Q|_{\mathcal V_E})
+=n_-(Q|_{\mathcal V_E^{\rm lin}})=\infty.
+\tag{133.18}
+$$
+
+Here $\mathcal V_E$ is the real bounded Borel class space supported in $E$, and $\mathcal V_E^{\rm lin}=\ker\Lambda_E$ retains exactly the equations $\Lambda_E(v)=(\ell_{yzw}(v))_{y,z,w\in L}$ of (125.2) and (127.3), the fixed pointwise Borel simplex tuple, distinct labels, signs and common-readout trilinear form. In particular $r_E=\operatorname{rank}\Lambda_E\le37$; no approximate or weakened constraints replace these exact first-order equations. Emission-overlap choices of $E$ are unchanged.
+
+**Proof.** Apply Theorem 133.2 with $\tau=t$ to obtain the actual global boundedness (129.16), for every original tuple, hence (129.22). Corollary 129.3 now applies directly, with its complete proof and substitutions $f=\alpha g_t+\beta Pg_t$, $w=g_t$, $c=\gamma$ retained. Its source nonconstancy, rotation and local regularity suppliers are unchanged, and $\|Pg_t\|_\infty\le\|g_t\|_\infty$. This gives the stated global sectors and (133.18), including every real $\gamma$ with no sign restriction. Its localization uses Proposition 127.2: a finite constrained bound $k$ would imply a global bound $k+r_E\le k+37$, contradicting the global infinite index. No localization of individual angular sectors to an arbitrary $E$ is asserted. $\square$
+
+**Definition 133.4 (mathematical attribution and applicability boundary).** The Moser energy iteration and the local-$L^1$/global-$L^1$ contraction mechanism are mature intermediates. For the latter, the primary correspondence is Sturm, [*Analysis on local Dirichlet spaces II. Upper Gaussian estimates for the fundamental solutions of parabolic equations*, DOI 10.18910/6581, Proposition 2.3, pp. 303–305](https://doi.org/10.18910/6581). That proposition is not applied as a black box: no unchecked intrinsic-topology assumption is imported. The spatial and approximation intermediates retain the attributions in §132. The source-specific deduction here is (133.10)–(133.16) for the actual source trace and its global density, followed by the application of Corollary 129.3; it carries no worldwide novelty assertion.
+
+The original group, source, shear chart, coefficient-one zero vector and selector are supplied by §§109–112; the entire energy, contractions and cutoffs by §§115.2–115.3; nonpolarity and trace by (116.1) and (116.3)–(116.4); the actual density, all-input Riesz identity and propagation by (117.2)–(117.6). The fixed extension and full weak heat realization are Theorems 130.3 and 131.2, and the same-measure spatial inequality, source-meeting signed truncations and recurrence are (132.7)–(132.16). Their complete inherited conditions remain in force. The extension supplies only local inequalities and approximation; every heat orbit in this proof is the original $T$.
+
+Neither (133.2) nor (133.18) asserts a global $A_2$ property of the unextended actual weight, a global Nash inequality, global doubling, a spectral gap or a parameter-uniform constant. The result concerns the actual positive-time density and the original equal-gap marginal mixed pencil. It supplies no full common three-time relation fiber, no full 64-coordinate conclusion, no cubic conclusion, and no native coherent-operation or physical realization. Those conclusions require their own joint constraints and realization bridges; they are not consequences asserted here of the marginal negative index.
+
+## 追加锚（本行以下为增补区）
