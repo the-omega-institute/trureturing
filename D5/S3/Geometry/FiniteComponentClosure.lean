@@ -2029,5 +2029,8 @@ end BouquetConcatenation
 #print axioms auxiliaryBaseSplit
 #print axioms vertexUnionJoinEquiv
 #print axioms vertexGluingHomeomorph
+#print axioms connectedVertexGluingHomeomorph
+#print axioms selectedComponentWedgeBased
+#print axioms selectedComponentWedgeCarrier
 
 end D5.S3.Geometry.FiniteComponentClosure
