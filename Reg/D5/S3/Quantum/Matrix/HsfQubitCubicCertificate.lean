@@ -68,7 +68,7 @@ def family : Registration arena
   sensitivity := sensitivity
   dependence := dependence
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Quantum.Matrix.HsfQubitCubicCertificate.rectangular_J_nonneg)
     (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Quantum.Matrix.HsfQubitCubicCertificate.unit
