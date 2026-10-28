@@ -343,7 +343,8 @@ private theorem wordMap_nil_X (D : LatticeData) (α β : Charge D)
     (LatticeActualProductKernel.raw_creator D α (-m - 1) β x p)
   rw [LatticeActualProductKernel.raw_single_convolution D α (-m - 1) β p,
     map_smul, LatticeActualProductKernel.creator_single] at h
-  simpa only [Finsupp.sub_apply, Finsupp.smul_apply, Finsupp.single_eq_same,
+  simpa only [LatticeActualProductKernel.raw_single_convolution,
+    Finsupp.sub_apply, Finsupp.smul_apply, Finsupp.single_eq_same,
     smul_mul_assoc, mul_smul_comm] using h
 
 private theorem derivative_mode (D : LatticeData) (x : Index D) (m : ℤ) :
@@ -564,7 +565,8 @@ private theorem ground_row_bound (D : LatticeData) (α β : Charge D) :
         epsilon D α β * (creationCoeff D α (-m - 1 - bilinear D α β)).coeff e := by
       have hc : LatticeActualProductKernel.convolution D α (-m - 1 - bilinear D α β) 1 =
           creationCoeff D α (-m - 1 - bilinear D α β) := by
-        simpa using LatticeActualProductKernel.convolution_monomial D α (-m - 1 - bilinear D α β) 0 (1 : Oscillator D)
+        simpa using LatticeActualProductKernel.convolution_monomial D α
+          (-m - 1 - bilinear D α β) 0 (1 : Oscillator D)
       simp [wordCoeff, b, wordMap_nil, translatedPolynomial, hc]
     rw [hh, norm_mul, hphase, one_mul]
     exact hbase _ _
@@ -1026,7 +1028,8 @@ private theorem ground_column_bound (D : LatticeData) (α β : Charge D) :
       ‖wordCoeff D α β [] m d 0‖ ≤ factorialEnvelope D B d := by
     have hc : LatticeActualProductKernel.convolution D α (-m - 1 - bilinear D α β) 1 =
         creationCoeff D α (-m - 1 - bilinear D α β) := by
-      simpa using LatticeActualProductKernel.convolution_monomial D α (-m - 1 - bilinear D α β) 0 (1 : Oscillator D)
+      simpa using LatticeActualProductKernel.convolution_monomial D α
+          (-m - 1 - bilinear D α β) 0 (1 : Oscillator D)
     have hh : wordCoeff D α β [] m d 0 =
         epsilon D α β * (creationCoeff D α (-m - 1 - bilinear D α β)).coeff d := by
       simp [wordCoeff, b, wordMap_nil, translatedPolynomial, hc]
