@@ -130,10 +130,10 @@ private theorem exponent_bound (x : H) : x ^ 36 = 1 := by
   have alternatives : ∀ y : H, y ^ 12 = 1 ∨ y ^ 18 = 1 := by decide
   rcases alternatives x with hx | hx
   · calc
-      x ^ 36 = (x ^ 12) ^ 3 := (pow_mul x 12 3).symm
+      x ^ 36 = (x ^ 12) ^ 3 := pow_mul x 12 3
       _ = 1 := by rw [hx, one_pow]
   · calc
-      x ^ 36 = (x ^ 18) ^ 2 := (pow_mul x 18 2).symm
+      x ^ 36 = (x ^ 18) ^ 2 := pow_mul x 18 2
       _ = 1 := by rw [hx, one_pow]
 
 private theorem no_fourth_root (x : H) : x ^ 4 ≠ h := by
@@ -153,7 +153,10 @@ private theorem no_ninth_root (x : H) : x ^ 9 ≠ h := by
 private theorem divisor_cases (d : ℕ) (hd : d ∣ 36) :
     d = 1 ∨ d = 2 ∨ d = 3 ∨ 4 ∣ d ∨ 6 ∣ d ∨ 9 ∣ d := by
   have hb : d ≤ 36 := Nat.le_of_dvd (by decide) hd
-  interval_cases d <;> norm_num at hd ⊢
+  have small : ∀ e : Fin 37, e.val ∣ 36 →
+      e.val = 1 ∨ e.val = 2 ∨ e.val = 3 ∨ 4 ∣ e.val ∨ 6 ∣ e.val ∨ 9 ∣ e.val := by
+    decide
+  exact small ⟨d, Nat.lt_succ_of_le hb⟩ hd
 
 /-- The complete root-degree spectrum, including degree zero. -/
 theorem root_degree_spectrum (q : ℕ) :
