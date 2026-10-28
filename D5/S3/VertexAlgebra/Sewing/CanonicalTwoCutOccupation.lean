@@ -120,7 +120,7 @@ private theorem chooseKernel_add_single (D : LatticeData) (e u : Occ D)
       if u x = 0 then 0 else chooseKernel D e (u - Finsupp.single x 1) := by
   classical
   by_cases hx : u x = 0
-  · rw [if_pos hx]
+  · rw [ite_eq_left hx]
     simp only [add_zero]
     unfold chooseKernel
     apply Finsupp.prod_congr
@@ -130,13 +130,13 @@ private theorem chooseKernel_add_single (D : LatticeData) (e u : Occ D)
       subst y
       exact Finsupp.mem_support_iff.mp hy hx
     simp [Finsupp.single_apply, hxy]
-  · rw [if_neg hx]
+  · rw [ite_eq_right hx]
     let S := insert x u.support
     have hs : u.support ⊆ S := Finset.subset_insert _ _
     have hs' : (u - Finsupp.single x 1).support ⊆ S := by
       intro y hy
       apply hs
-      simp only [Finsupp.mem_support_iff, Finsupp.sub_apply] at hy ⊢
+      simp only [Finsupp.mem_support_iff, Finsupp.tsub_apply] at hy ⊢
       omega
     rw [chooseKernel_eq_prod D (e + Finsupp.single x 1) u S hs,
       chooseKernel_eq_prod D e u S hs,
@@ -145,21 +145,21 @@ private theorem chooseKernel_add_single (D : LatticeData) (e u : Occ D)
     rw [← Finset.mul_prod_erase _ _ hxS, ← Finset.mul_prod_erase _ _ hxS,
       ← Finset.mul_prod_erase _ _ hxS]
     have hp : (∏ y ∈ S.erase x,
-        ((e + Finsupp.single x 1) y).choose (u y) : ℝ) =
+        ((e + Finsupp.single x 1 : Occ D) y).choose (u y) : ℝ) =
         ∏ y ∈ S.erase x, ((e y).choose (u y) : ℝ) := by
       apply Finset.prod_congr rfl
       intro y hy
       have hxy : x ≠ y := (Finset.mem_erase.mp hy).1.symm
       simp [Finsupp.single_apply, hxy]
     have hp' : (∏ y ∈ S.erase x,
-        ((e y).choose ((u - Finsupp.single x 1) y) : ℝ)) =
+        ((e y).choose ((u - Finsupp.single x 1 : Occ D) y) : ℝ)) =
         ∏ y ∈ S.erase x, ((e y).choose (u y) : ℝ) := by
       apply Finset.prod_congr rfl
       intro y hy
       have hxy : x ≠ y := (Finset.mem_erase.mp hy).1.symm
       simp [Finsupp.single_apply, hxy]
     rw [hp, hp']
-    simp only [Finsupp.add_apply, Finsupp.single_eq_same, Finsupp.sub_apply]
+    simp only [Finsupp.add_apply, Finsupp.single_eq_same, Finsupp.tsub_apply]
     have hn : u x = (u x - 1) + 1 := by omega
     rw [hn, Nat.choose_succ_succ', Nat.cast_add]
     simp only [Nat.add_sub_cancel]
@@ -184,7 +184,7 @@ private theorem translationEnvelope_add_single (D : LatticeData) (T : ℝ)
       have heq : e + Finsupp.single x 1 - u = e - u + Finsupp.single x 1 := by
         ext y
         have hh := hu y
-        simp only [Finsupp.add_apply, Finsupp.sub_apply]
+        simp only [Finsupp.add_apply, Finsupp.tsub_apply]
         omega
       rw [heq, map_add, Finsupp.degree_single]
     by_cases hx : u x = 0
@@ -194,17 +194,17 @@ private theorem translationEnvelope_add_single (D : LatticeData) (T : ℝ)
         by_cases hy : x = y
         · subst y; simp [hx]
         · simpa [Finsupp.single_apply, hy] using hh
-      simp only [translationEnvelope, chooseKernel_add_single, hx, if_pos,
+      simp only [translationEnvelope, chooseKernel_add_single, hx, ite_eq_left,
         add_zero, hdeg hu, pow_succ]
       ring
     · have hsub : e - (u - Finsupp.single x 1) = e + Finsupp.single x 1 - u := by
         ext y
         have hh := hle y
-        simp only [Finsupp.add_apply, Finsupp.sub_apply]
+        simp only [Finsupp.add_apply, Finsupp.tsub_apply]
         by_cases hy : x = y
         · subst y; simp only [Finsupp.single_eq_same] at hh ⊢; omega
         · simp [Finsupp.single_apply, hy]
-      simp only [translationEnvelope, chooseKernel_add_single, hx, if_false, hsub]
+      simp only [translationEnvelope, chooseKernel_add_single, hx, ite_false, hsub]
       by_cases hu : u ≤ e
       · rw [hdeg hu, pow_succ]
         ring
@@ -220,7 +220,7 @@ private theorem translationEnvelope_add_single (D : LatticeData) (T : ℝ)
         intro hh
         apply hle
         rw [← Finsupp.sub_add_single_one_cancel hx]
-        exact add_le_add_right hh _
+        exact add_le_add hh le_rfl
       simp [hx, translationEnvelope_zero D T _ _ hu']
 
 private theorem mixedEnvelope_eq_sum (D : LatticeData) (A T : ℝ) (d e : Occ D) :
@@ -234,6 +234,167 @@ private theorem mixedEnvelope_eq_sum (D : LatticeData) (A T : ℝ) (d e : Occ D)
   by_cases h : u ≤ e
   · simp [h, translationEnvelope, chooseKernel_eq D e u h]
   · simp [h, translationEnvelope_zero D T e u h]
+
+private theorem occupation_shift_sum (D : LatticeData) (d : Occ D) (x : Index D)
+    (f : Occ D → Occ D → ℝ) :
+    (∑ u ∈ Finset.Iic d, if u x = 0 then 0 else
+      f (u - Finsupp.single x 1) (d - u)) =
+      if d x = 0 then 0 else ∑ v ∈ Finset.Iic (d - Finsupp.single x 1),
+        f v (d - Finsupp.single x 1 - v) := by
+  classical
+  by_cases hx : d x = 0
+  · rw [ite_eq_left hx]
+    apply Finset.sum_eq_zero
+    intro u hu
+    have hh := (Finset.mem_Iic.mp hu) x
+    have hz : u x = 0 := by omega
+    simp [hz]
+  · rw [ite_eq_right hx]
+    rw [show (∑ u ∈ Finset.Iic d, if u x = 0 then 0 else
+        f (u - Finsupp.single x 1) (d - u)) =
+        ∑ u ∈ (Finset.Iic d).filter (fun u => u x ≠ 0),
+          f (u - Finsupp.single x 1) (d - u) by
+      rw [Finset.sum_filter]; apply Finset.sum_congr rfl
+      intro u hu; by_cases hh : u x = 0 <;> simp [hh]
+      ]
+    apply Finset.sum_bij (fun u _ => u - Finsupp.single x 1)
+    · intro u hu
+      exact Finset.mem_Iic.mpr (tsub_le_tsub_right (Finset.mem_Iic.mp
+        (Finset.mem_filter.mp hu).1) _)
+    · intro u hu v hv huv
+      have hux := (Finset.mem_filter.mp hu).2
+      have hvx := (Finset.mem_filter.mp hv).2
+      exact (Finsupp.sub_add_single_one_cancel hux).symm.trans
+        ((congrArg (fun z : Occ D => z + Finsupp.single x 1) huv).trans
+          (Finsupp.sub_add_single_one_cancel hvx))
+    · intro v hv
+      refine ⟨v + Finsupp.single x 1, ?_, by simp⟩
+      apply Finset.mem_filter.mpr
+      constructor
+      · apply Finset.mem_Iic.mpr
+        have hh := add_le_add (Finset.mem_Iic.mp hv) (le_refl (Finsupp.single x 1))
+        simpa only [Finsupp.sub_add_single_one_cancel hx] using hh
+      · simp
+    · intro u hu
+      congr 1
+      have hux := (Finset.mem_filter.mp hu).2
+      ext y
+      simp only [Finsupp.tsub_apply]
+      by_cases hy : x = y
+      · subst y
+        simp only [Finsupp.single_eq_same]
+        have hud := (Finset.mem_Iic.mp (Finset.mem_filter.mp hu).1) x
+        omega
+      · simp [Finsupp.single_apply, hy]
+
+private theorem mixedEnvelope_add_single (D : LatticeData) (A T : ℝ)
+    (d e : Occ D) (x : Index D) :
+    mixedEnvelope D A T d (e + Finsupp.single x 1) =
+      T * mixedEnvelope D A T d e +
+        if d x = 0 then 0 else mixedEnvelope D A T (d - Finsupp.single x 1) e := by
+  classical
+  simp only [mixedEnvelope_eq_sum, translationEnvelope_add_single, add_mul,
+    Finset.sum_add_distrib]
+  rw [show (∑ u ∈ Finset.Iic d,
+      (if u x = 0 then 0 else translationEnvelope D T e (u - Finsupp.single x 1)) *
+        factorialEnvelope D A (d - u)) =
+      ∑ u ∈ Finset.Iic d, if u x = 0 then 0 else
+        translationEnvelope D T e (u - Finsupp.single x 1) *
+          factorialEnvelope D A (d - u) by
+    apply Finset.sum_congr rfl
+    intro u hu; split_ifs <;> simp]
+  rw [occupation_shift_sum D d x
+    (fun v w => translationEnvelope D T e v * factorialEnvelope D A w)]
+  congr 1
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro u hu
+  ring
+
+private theorem mixedEnvelope_zero_input (D : LatticeData) (A T : ℝ) (d : Occ D) :
+    mixedEnvelope D A T d 0 = factorialEnvelope D A d := by
+  classical
+  unfold mixedEnvelope
+  have hs : (Finset.Iic d).filter (fun u : Occ D => u ≤ 0) = {0} := by
+    ext u
+    simp only [Finset.mem_filter, Finset.mem_Iic, le_zero_iff, Finset.mem_singleton]
+    exact ⟨fun h => h.2, fun h => ⟨h ▸ (fun _ => Nat.zero_le _), h⟩⟩
+  rw [hs]
+  simp [overlapBinomial]
+
+private theorem ground_mixed_bound (D : LatticeData) (a b : Charge D)
+    (A T : ℝ) (hA : 1 ≤ A) (hT : 1 ≤ T)
+    (ha : ∀ i, ‖(a i : ℂ)‖ ≤ A)
+    (ht : ∀ i, ‖(bilinear D a (unitCharge D i) : ℂ)‖ ≤ T)
+    (m : ℤ) (d e : Occ D) :
+    ‖wordCoeff D a b [] m d e‖ ≤ mixedEnvelope D A T d e := by
+  classical
+  have hA0 : 0 ≤ A := by linarith
+  have hT0 : 0 ≤ T := by linarith
+  have hzero (d : Occ D) (m : ℤ) :
+      ‖wordCoeff D a b [] m d 0‖ ≤ factorialEnvelope D A d := by
+    have hc : LatticeActualProductKernel.convolution D a (-m - 1 - bilinear D a b) 1 =
+        creationCoeff D a (-m - 1 - bilinear D a b) := by
+      simpa using LatticeActualProductKernel.convolution_monomial D a
+        (-m - 1 - bilinear D a b) 0 (1 : Oscillator D)
+    have hp : ‖epsilon D a b‖ = 1 := by
+      unfold epsilon paritySign
+      split_ifs <;> norm_num
+    have hh : wordCoeff D a b [] m d 0 = epsilon D a b *
+        (creationCoeff D a (-m - 1 - bilinear D a b)).coeff d := by
+      simp [wordCoeff, CanonicalOccupationSewing.b, wordMap_nil, translatedPolynomial, hc]
+    rw [hh, norm_mul, hp, one_mul]
+    exact creation_factorialEnvelope D a A hA0 ha _ d
+  have haux : ∀ n : ℕ, ∀ e : Occ D, e.degree = n → ∀ (d : Occ D) (m : ℤ),
+      ‖wordCoeff D a b [] m d e‖ ≤ mixedEnvelope D A T d e := by
+    intro n
+    induction n using Nat.strong_induction_on with
+    | h n ih =>
+      intro e he d m
+      by_cases hz : e = 0
+      · subst e
+        simpa only [mixedEnvelope_zero_input] using hzero d m
+      · obtain ⟨x, hx⟩ : ∃ x : Index D, e x ≠ 0 := by
+          by_contra hh
+          push Not at hh
+          exact hz (Finsupp.ext hh)
+        let e' := e - Finsupp.single x 1
+        have hadd : e' + Finsupp.single x 1 = e := Finsupp.sub_add_single_one_cancel hx
+        have hdeg : e'.degree + 1 = e.degree := by
+          rw [← hadd, map_add, Finsupp.degree_single]
+        have hi (d' : Occ D) (m' : ℤ) := ih e'.degree (by omega) e' rfl d' m'
+        rw [← hadd, wordCoeff_nil_add_single, mixedEnvelope_add_single]
+        have hleft : ‖if x ∈ d.support then
+            wordCoeff D a b [] m (d - Finsupp.single x 1) e' else 0‖ ≤
+            if d x = 0 then 0 else mixedEnvelope D A T (d - Finsupp.single x 1) e' := by
+          by_cases hd : d x = 0
+          · simp [hd]
+          · simpa [hd] using hi (d - Finsupp.single x 1) m
+        calc
+          _ ≤ ‖if x ∈ d.support then
+                wordCoeff D a b [] m (d - Finsupp.single x 1) e' else 0‖ +
+              ‖(bilinear D a (unitCharge D x.1) : ℂ) *
+                wordCoeff D a b [] (m - (x.2 + 1 : ℕ)) d e'‖ := norm_sub_le _ _
+          _ ≤ (if d x = 0 then 0 else mixedEnvelope D A T (d - Finsupp.single x 1) e') +
+              T * mixedEnvelope D A T d e' := by
+            rw [norm_mul]
+            exact add_le_add hleft (mul_le_mul (ht x.1) (hi d _)
+              (norm_nonneg _) hT0)
+          _ = _ := add_comm _ _
+  exact haux e.degree e rfl d m
+
+private theorem mixedEnvelope_input_removal (D : LatticeData) (A T : ℝ)
+    (hA : 0 ≤ A) (hT : 0 < T) (d e : Occ D) (x : Index D) (hx : e x ≠ 0) :
+    mixedEnvelope D A T d (e - Finsupp.single x 1) ≤ mixedEnvelope D A T d e / T := by
+  have hh := mixedEnvelope_add_single D A T d (e - Finsupp.single x 1) x
+  rw [Finsupp.sub_add_single_one_cancel hx] at hh
+  have hn : 0 ≤ if d x = 0 then 0 else
+      mixedEnvelope D A T (d - Finsupp.single x 1) (e - Finsupp.single x 1) := by
+    split_ifs
+    · exact le_rfl
+    · exact mixedEnvelope_nonneg D A T hA hT.le _ _
+  apply (le_div_iff₀ hT).mpr
+  nlinarith
 
 /- The live analytic interface for the new sewing unit.  The hypothesis is the
    exact closed mixed descendant estimate supplied by the coefficient induction;
