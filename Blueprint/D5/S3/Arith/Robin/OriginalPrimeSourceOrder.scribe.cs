@@ -84,5 +84,11 @@ internal sealed class OriginalPrimeSourceOrderDocument : IScribeDocumentDefiniti
                         + "closed interval is the inventory clause needed by "
                         + "OriginalFirstClockTransport.GoodEdge. Attainment, "
                         + "cofinal existence of good edges, signed-moment bounds, "
-                        + "normalizer transfer and RH remain outside this conclusion.")))))));
+                        + "normalizer transfer and RH remain outside this conclusion.")),
+                    Paragraph(Text(
+                        "The supporting results original_label_window_no_internal_prime, "
+                        + "inventory_gap_log_bound and original_prime_source_inventory_gap "
+                        + "have no Reg mirror. Their four-slot escape audits remain unfinished "
+                        + "under https://github.com/the-omega-institute/trureturing/issues/23015. "
+                        + "No completed registration is asserted.")))))));
 }

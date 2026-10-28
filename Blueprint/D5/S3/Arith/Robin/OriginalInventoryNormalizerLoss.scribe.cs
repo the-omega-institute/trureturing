@@ -72,6 +72,10 @@ internal sealed class OriginalInventoryNormalizerLossDocument : IScribeDocumentD
                         + "remain separate obligations. The Reg mirror retains the exact "
                         + "source law and bridge as an audit attempt; whole-family variation, "
                         + "sensitivity, actual observational dependence and canonical binding "
-                        + "remain unfinished. No completed registration is asserted."))),
+                        + "remain unfinished. The rejected-family failure is conditional on the same "
+                        + "qualifying source telescope; no qualifying-family inhabitant is supplied. "
+                        + "The unfinished audit is tracked at "
+                        + "https://github.com/the-omega-institute/trureturing/issues/23015. "
+                        + "No completed registration is asserted."))),
                 DescribeRole.Theorem))));
 }
