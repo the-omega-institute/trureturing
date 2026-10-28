@@ -2053,8 +2053,10 @@ private def sigmaSplitHomeomorph {A : Type*} [DecidableEq A]
     by_cases h : i = a
     · subst i; simpa using (continuous_inl : Continuous (Sum.inl : X a → _))
     · have hc : Continuous (fun x : X i =>
-          (⟨⟨i, h⟩, x⟩ : Σ k : {i : A // i ≠ a}, X k.val)) := continuous_sigmaMk
-      simpa [h] using (continuous_inr.comp hc)
+          (⟨⟨i, h⟩, x⟩ : Σ k : {i : A // i ≠ a}, X k.val)) :=
+          @continuous_sigmaMk {i : A // i ≠ a} (fun k => X k.val) _ ⟨i, h⟩
+      simp only [dif_neg h]
+      exact continuous_inr.comp hc
   continuous_invFun := continuous_sigmaMk.sumElim (continuous_sigma fun _ => continuous_sigmaMk)
 
 private def collapseLeftHomeomorph {X Y : Type*}
@@ -2156,14 +2158,19 @@ private def mergedSumHomeomorph {m n : ℕ} (p : Fin m → BouquetSpec) (q : Fin
   right_inv := by rintro ⟨(_ | (k | l)), x⟩ <;> rfl
   continuous_toFun := by
     apply Continuous.sumElim
-    · exact continuous_sigmaMk
+    · exact @continuous_sigmaMk (MergedIndex i j) (fun k =>
+        FiniteSimplicialJoin.Space (bouquetComplex (mergedSpec p q i j k))) _ (Sum.inl ())
     · apply Continuous.sumElim
       · apply continuous_sigma
         intro k
-        exact continuous_sigmaMk
+        exact @continuous_sigmaMk (MergedIndex i j) (fun k =>
+          FiniteSimplicialJoin.Space (bouquetComplex (mergedSpec p q i j k))) _
+            (Sum.inr (Sum.inl k))
       · apply continuous_sigma
         intro l
-        exact continuous_sigmaMk
+        exact @continuous_sigmaMk (MergedIndex i j) (fun k =>
+          FiniteSimplicialJoin.Space (bouquetComplex (mergedSpec p q i j k))) _
+            (Sum.inr (Sum.inr l))
   continuous_invFun := by
     apply continuous_sigma
     rintro (_ | (k | l))
@@ -2240,7 +2247,10 @@ private theorem vertexWedge_vertex {V W : Type*} [Fintype V] [DecidableEq V]
     ({Quotient.mk _ (Sum.inl a)} : Finset (VertexWedgeVertices a b)) ∈
       vertexWedgeComplex K L a b := by
   apply Or.inl
-  exact ⟨{a}, ha, by simp [glueLeft]⟩
+  refine ⟨{a}, ha, ?_⟩
+  change Finset.image (glueLeft a b) {a} = _
+  rw [Finset.image_singleton]
+  rfl
 
 /-- The common actual vertex in the native finite wedge realization. -/
 def vertexWedgePoint {V W : Type*} [Fintype V] [DecidableEq V]
@@ -2283,25 +2293,27 @@ def selectedVertexWedgeClosure {V W : Type*} [Fintype V] [DecidableEq V]
     (hK : WPlus K) (hL : WPlus L)
     (a : V) (ha : ({a} : Finset V) ∈ K) (b : W) (hb : ({b} : Finset W) ∈ L) :
     SelectedVertexWedgeClosure K L a ha b hb := by
-  obtain ⟨m, hm, p, i, n, hn, q, j, ⟨E⟩⟩ := selectedComponentWedgeBased K L hK hL a ha b hb
-  let eW : FiniteConeUnionWedge.Wedge (FiniteVertexCylinder.vertexPoint K a ha)
-      (FiniteVertexCylinder.vertexPoint L b hb) ≃ₕ
-      FiniteConeUnionWedge.Wedge (normalPoint m p i) (normalPoint n q j) := {
-    toFun := E.forward
-    invFun := E.backward
-    left_inv := ⟨E.left.toHomotopy⟩
-    right_inv := ⟨E.right.toHomotopy⟩ }
-  let e := ((vertexGluingHomeomorph K L a b ha hb).symm.toHomotopyEquiv.trans eW).trans
-    (normalWedgeHomeomorph p q i j).toHomotopyEquiv
-  let x := vertexWedgePoint K L a b ha
-  let k := (normalHomeomorph (m + n - 1) (selectedWedgeSpec p q i j) (e.toFun x)).1
-  obtain ⟨F, _, _⟩ := SingletonRetractionBasedInverse.based_inverse x
-    (normalPoint (m + n - 1) (selectedWedgeSpec p q i j) k)
-    (nativeCylinder (vertexWedgeComplex K L a b) _ (vertexWedge_vertex K L a b ha))
-    (nativeCylinder (normalComplex (m + n - 1) (selectedWedgeSpec p q i j)) ⟨k, none⟩
-      (normalVertex_face _ _ k)) e.toFun e.invFun e.left_inv.some e.right_inv.some
-    (normalPath _ _ (e.toFun x))
-  exact ⟨m, hm, p, i, n, hn, q, j, E, k, F⟩
+  have h : Nonempty (SelectedVertexWedgeClosure K L a ha b hb) := by
+    obtain ⟨m, hm, p, i, n, hn, q, j, ⟨E⟩⟩ := selectedComponentWedgeBased K L hK hL a ha b hb
+    let eW : FiniteConeUnionWedge.Wedge (FiniteVertexCylinder.vertexPoint K a ha)
+        (FiniteVertexCylinder.vertexPoint L b hb) ≃ₕ
+        FiniteConeUnionWedge.Wedge (normalPoint m p i) (normalPoint n q j) := {
+      toFun := E.forward
+      invFun := E.backward
+      left_inv := ⟨E.left.toHomotopy⟩
+      right_inv := ⟨E.right.toHomotopy⟩ }
+    let e := ((vertexGluingHomeomorph K L a b ha hb).symm.toHomotopyEquiv.trans eW).trans
+      (normalWedgeHomeomorph p q i j).toHomotopyEquiv
+    let x := vertexWedgePoint K L a b ha
+    let k := (normalHomeomorph (m + n - 1) (selectedWedgeSpec p q i j) (e.toFun x)).1
+    obtain ⟨F, _, _⟩ := SingletonRetractionBasedInverse.based_inverse x
+      (normalPoint (m + n - 1) (selectedWedgeSpec p q i j) k)
+      (nativeCylinder (vertexWedgeComplex K L a b) _ (vertexWedge_vertex K L a b ha))
+      (nativeCylinder (normalComplex (m + n - 1) (selectedWedgeSpec p q i j)) ⟨k, none⟩
+        (normalVertex_face _ _ k)) e.toFun e.invFun e.left_inv.some e.right_inv.some
+      (normalPath _ _ (e.toFun x))
+    exact ⟨⟨m, hm, p, i, n, hn, q, j, E, k, F⟩⟩
+  exact Classical.choice h
 
 end BouquetConcatenation
 
