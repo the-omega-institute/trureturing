@@ -658,8 +658,7 @@ intermediate supplies, with conditions and primary sources stated
 in §§270–272. The source correspondence is with the golden biased
 $M$, original unit-edge free-root energy and exactly $N_ns$; neither
 the fair tree harmonic law nor a rescaled replacement generator is
-used. These are conditional ordinary mathematical proofs; no fresh
-Lean verification or claim of worldwide novelty is attached to them.
+used. These are conditional ordinary mathematical proofs.
 
 The obstruction in Theorem 272.2 quantifies only over the stated
 same-generator, state-$\mathbf1$, cylinder-projection, Lüders candidate
