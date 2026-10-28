@@ -11,6 +11,12 @@ internal sealed class LegalMatrixMonoidDocument : IScribeDocumentDefinition
         H("The exact legal matrix monoid"),
         Blocks(
             Paragraph(Text("Mat is the full real 2 by 2 matrix space, and i,j range over Fin 2, displayed as {0,1}. A Boolean word u is a finite chronological list: false selects M=[[0,1],[1,1]], true selects J=[[0,1],[1,0]], and its head acts first. Write T(u)=futureProduct(u). The existing recursion is T([])=I and T(e::u)=T(u)E(e). In particular chronological M,J has matrix JM=U=[[1,1],[0,1]], while chronological J,M has matrix MJ=L=[[1,0],[1,1]].")),
+            Describe.Lean(DescribeId.Create("chronological-native-product-append"),
+                DeclarationHandle.Create("D5/S3/Observer/CubicGain/LegalMatrixMonoid.product_append"),
+                H("Concatenation executes the earlier word first"),
+                StatementSource.FromAuthor(AppendStatement()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary finite words u,v, including empty words, chronological concatenation gives T(u++v)=T(v)T(u). Induction on u follows the existing product recursion and matrix associativity. This identity relates the actual cumulative endpoints and also cancels the adjacent J pairs when every multiplier is conjugated."))),
+                DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("native-legal-matrix-monoid"),
                 DeclarationHandle.Create("D5/S3/Observer/CubicGain/LegalMatrixMonoid.legal_matrix_monoid"),
                 H("Exact forward-word characterization"),
@@ -26,6 +32,10 @@ internal sealed class LegalMatrixMonoidDocument : IScribeDocumentDefinition
         Seq(Operatorname, Grp(F.Id(name)), Open, x, Close);
     private static Formula Entry(Formula h, Formula i, Formula j) =>
         Seq(h, Underscore, Grp(Seq(i, j)));
+    private static Formula AppendStatement() => Disp(Seq(
+        Forall, Sp, F.Id("u"), Comma, F.Id("v"), Comma, Sp,
+        Call("T", Seq(F.Id("u"), Plus, Plus, F.Id("v"))), Eq, Sp,
+        Call("T", F.Id("v")), Call("T", F.Id("u"))));
     private static Formula Statement()
     {
         var h = F.Id("H"); var u = F.Id("u");
