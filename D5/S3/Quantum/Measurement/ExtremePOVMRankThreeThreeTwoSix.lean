@@ -254,10 +254,271 @@ private theorem witness_bigRanks :
   rw [h]
   decide
 
+set_option maxRecDepth 4000 in
+set_option maxHeartbeats 8000000 in
 private theorem within_block_product_independent :
     LinearIndependent ℂ
       (fun p : Σ j : Fin 8, (blocks j × blocks j) =>
-        Matrix.vecMulVec p.2.1.1 (star p.2.2.1)) := by sorry
+        Matrix.vecMulVec p.2.1.1 (star p.2.2.1)) := by
+  classical
+  rw [Fintype.linearIndependent_iff]
+  intro c h p
+  obtain ⟨d, hd⟩ : ∃ d : Fin 8 → (Fin 7 → ℂ) → (Fin 7 → ℂ) → ℂ,
+      ∀ (j : Fin 8) (u v : blocks j), d j u.1 v.1 = c ⟨j, u, v⟩ := by
+    refine ⟨fun j u v => if hu : u ∈ blocks j then
+      if hv : v ∈ blocks j then c ⟨j, ⟨u, hu⟩, ⟨v, hv⟩⟩ else 0 else 0, ?_⟩
+    intro j u v
+    simp only [dite_eq_left u.2, dite_eq_left v.2]
+  have hs : (∑ j : Fin 8, ∑ u ∈ blocks j, ∑ v ∈ blocks j,
+      d j u v • Matrix.vecMulVec u (star v)) = 0 := by
+    rw [← h, Fintype.sum_sigma]
+    apply Finset.sum_congr rfl
+    intro j hj
+    rw [Fintype.sum_prod_type]
+    calc
+      _ = ∑ u : blocks j, ∑ v : blocks j, d j u.1 v.1 •
+          Matrix.vecMulVec u.1 (star v.1) := by
+        symm
+        calc
+          _ = ∑ u : blocks j, ∑ v ∈ blocks j, d j u.1 v •
+              Matrix.vecMulVec u.1 (star v) := by
+            apply Finset.sum_congr rfl
+            intro u hu
+            exact Finset.sum_coe_sort (blocks j) (fun v =>
+              d j u.1 v • Matrix.vecMulVec u.1 (star v))
+          _ = _ := Finset.sum_coe_sort (blocks j) (fun u =>
+            ∑ v ∈ blocks j, d j u v • Matrix.vecMulVec u (star v))
+      _ = _ := by simp_rw [hd]
+  have h00 := congr_fun (congr_fun hs 0) 0
+  have h01 := congr_fun (congr_fun hs 0) 1
+  have h02 := congr_fun (congr_fun hs 0) 2
+  have h03 := congr_fun (congr_fun hs 0) 3
+  have h04 := congr_fun (congr_fun hs 0) 4
+  have h05 := congr_fun (congr_fun hs 0) 5
+  have h06 := congr_fun (congr_fun hs 0) 6
+  have h10 := congr_fun (congr_fun hs 1) 0
+  have h11 := congr_fun (congr_fun hs 1) 1
+  have h12 := congr_fun (congr_fun hs 1) 2
+  have h13 := congr_fun (congr_fun hs 1) 3
+  have h14 := congr_fun (congr_fun hs 1) 4
+  have h15 := congr_fun (congr_fun hs 1) 5
+  have h16 := congr_fun (congr_fun hs 1) 6
+  have h20 := congr_fun (congr_fun hs 2) 0
+  have h21 := congr_fun (congr_fun hs 2) 1
+  have h22 := congr_fun (congr_fun hs 2) 2
+  have h23 := congr_fun (congr_fun hs 2) 3
+  have h24 := congr_fun (congr_fun hs 2) 4
+  have h25 := congr_fun (congr_fun hs 2) 5
+  have h26 := congr_fun (congr_fun hs 2) 6
+  have h30 := congr_fun (congr_fun hs 3) 0
+  have h31 := congr_fun (congr_fun hs 3) 1
+  have h32 := congr_fun (congr_fun hs 3) 2
+  have h33 := congr_fun (congr_fun hs 3) 3
+  have h34 := congr_fun (congr_fun hs 3) 4
+  have h35 := congr_fun (congr_fun hs 3) 5
+  have h36 := congr_fun (congr_fun hs 3) 6
+  have h40 := congr_fun (congr_fun hs 4) 0
+  have h41 := congr_fun (congr_fun hs 4) 1
+  have h42 := congr_fun (congr_fun hs 4) 2
+  have h43 := congr_fun (congr_fun hs 4) 3
+  have h44 := congr_fun (congr_fun hs 4) 4
+  have h45 := congr_fun (congr_fun hs 4) 5
+  have h46 := congr_fun (congr_fun hs 4) 6
+  have h50 := congr_fun (congr_fun hs 5) 0
+  have h51 := congr_fun (congr_fun hs 5) 1
+  have h52 := congr_fun (congr_fun hs 5) 2
+  have h53 := congr_fun (congr_fun hs 5) 3
+  have h54 := congr_fun (congr_fun hs 5) 4
+  have h55 := congr_fun (congr_fun hs 5) 5
+  have h56 := congr_fun (congr_fun hs 5) 6
+  norm_num [blocks, vector, Fin.sum_univ_succ, Matrix.sum_apply,
+    Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply, smul_eq_mul] at
+    h00 h01 h02 h03 h04 h05 h06 h10 h11 h12 h13 h14 h15 h16 h20 h21 h22 h23 h24 h25 h26 h30 h31
+    h32 h33 h34 h35 h36 h40 h41 h42 h43 h44 h45 h46 h50 h51 h52 h53 h54 h55 h56
+  rcases p with ⟨j, u, v⟩
+  rw [← hd j u v]
+  rcases u with ⟨u, hu⟩
+  rcases v with ⟨v, hv⟩
+  fin_cases j
+  · norm_num [blocks] at hu hv
+    rcases hu with rfl | rfl | rfl <;> rcases hv with rfl | rfl | rfl
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        h00 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h03 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h30
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        h01 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h04 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h31
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        h02 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h05 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h32
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        h10 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h13 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h40
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        h11 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h14 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h41
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        h12 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h15 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h42
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        h20 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h23 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h50
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        h21 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h24 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h51
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        h22 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h25 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h52
+  · norm_num [blocks] at hu hv
+    rcases hu with rfl | rfl | rfl <;> rcases hv with rfl | rfl | rfl
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h03 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h30 + h33
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h04 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h31 + h34
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h05 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h32 + h35
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h13 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h40 + h43
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h14 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h41 + h44
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h15 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h42 + h45
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h23 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h50 + h53
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h24 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h51 + h54
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h25 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h52 + h55
+  · norm_num [blocks] at hu hv
+    rcases hu with rfl | rfl <;> rcases hv with rfl | rfl
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ)) * h03 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) * Complex.I)) * h06 + ((1 / 2 : ℂ)) *
+        h30 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h36
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ)) * h04 + ((1 / 2 : ℂ)) * h31
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ)) * h13 + ((1 / 2 : ℂ)) * h40
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ)) * h14 + ((1 / 2 : ℂ)) * h15 + (((-1 / 2 : ℂ) + (1 / 2 : ℂ) * Complex.I)) *
+        h16 + ((1 / 2 : ℂ)) * h41 + ((1 / 2 : ℂ)) * h42 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) *
+        Complex.I)) * h46
+  · norm_num [blocks] at hu hv
+    rcases hu with rfl | rfl <;> rcases hv with rfl | rfl
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ) * Complex.I) * h03 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h06 + ((-1
+        / 2 : ℂ) * Complex.I) * h30 + (((1 / 2 : ℂ) + (1 / 2 : ℂ) * Complex.I)) * h36
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ) * Complex.I) * h04 + ((-1 / 2 : ℂ) * Complex.I) * h31
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ) * Complex.I) * h13 + ((-1 / 2 : ℂ) * Complex.I) * h40
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ) * Complex.I) * h14 + ((1 / 2 : ℂ) * Complex.I) * h15 + (((-1 / 2 : ℂ) + (-1 /
+        2 : ℂ) * Complex.I)) * h16 + ((-1 / 2 : ℂ) * Complex.I) * h41 + ((-1 / 2 : ℂ) * Complex.I)
+        * h42 + (((1 / 2 : ℂ) + (1 / 2 : ℂ) * Complex.I)) * h46
+  · norm_num [blocks] at hu hv
+    rcases hu with rfl | rfl <;> rcases hv with rfl | rfl
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        (((1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h06 + (((1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h36
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ)) * h05 + ((1 / 2 : ℂ)) * h32
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ)) * h23 + ((1 / 2 : ℂ)) * h50
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ)) * h23 + ((1 / 2 : ℂ)) * h24 + ((1 / 2 : ℂ)) * h25 + (((-1 / 2 : ℂ) + (1 / 2
+        : ℂ) * Complex.I)) * h26 + ((1 / 2 : ℂ)) * h50 + ((1 / 2 : ℂ)) * h51 + ((1 / 2 : ℂ)) * h52
+        + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h56
+  · norm_num [blocks] at hu hv
+    rcases hu with rfl | rfl <;> rcases hv with rfl | rfl
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        (((1 / 2 : ℂ) + (1 / 2 : ℂ) * Complex.I)) * h06 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) *
+        Complex.I)) * h36
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ) * Complex.I) * h05 + ((-1 / 2 : ℂ) * Complex.I) * h32
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ) * Complex.I) * h23 + ((-1 / 2 : ℂ) * Complex.I) * h50
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ) * Complex.I) * h23 + ((1 / 2 : ℂ) * Complex.I) * h24 + ((1 / 2 : ℂ) *
+        Complex.I) * h25 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h26 + ((-1 / 2 : ℂ) *
+        Complex.I) * h50 + ((-1 / 2 : ℂ) * Complex.I) * h51 + ((-1 / 2 : ℂ) * Complex.I) * h52 +
+        (((1 / 2 : ℂ) + (1 / 2 : ℂ) * Complex.I)) * h56
+  · norm_num [blocks] at hu hv
+    rcases hu with rfl | rfl <;> rcases hv with rfl | rfl
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((-1 / 2 : ℂ)) * h15 + (((1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h16 + ((-1 / 2 : ℂ)) *
+        h42 + (((1 / 2 : ℂ) + (1 / 2 : ℂ) * Complex.I)) * h46
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ)) * h15 + ((1 / 2 : ℂ)) * h42
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ)) * h24 + ((1 / 2 : ℂ)) * h51
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((-1 / 2 : ℂ)) * h23 + ((-1 / 2 : ℂ)) * h24 + (((1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) *
+        h26 + ((-1 / 2 : ℂ)) * h50 + ((-1 / 2 : ℂ)) * h51 + (((1 / 2 : ℂ) + (1 / 2 : ℂ) *
+        Complex.I)) * h56
+  · norm_num [blocks] at hu hv
+    rcases hu with rfl | rfl <;> rcases hv with rfl | rfl
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((-1 / 2 : ℂ) * Complex.I) * h15 + (((1 / 2 : ℂ) + (1 / 2 : ℂ) * Complex.I)) * h16 + ((1 /
+        2 : ℂ) * Complex.I) * h42 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h46
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ) * Complex.I) * h15 + ((-1 / 2 : ℂ) * Complex.I) * h42
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((1 / 2 : ℂ) * Complex.I) * h24 + ((-1 / 2 : ℂ) * Complex.I) * h51
+    · dsimp only [vector]
+      linear_combination (norm := (ring_nf; try simp; try ring))
+        ((-1 / 2 : ℂ) * Complex.I) * h23 + ((-1 / 2 : ℂ) * Complex.I) * h24 + (((1 / 2 : ℂ) + (1 /
+        2 : ℂ) * Complex.I)) * h26 + ((1 / 2 : ℂ) * Complex.I) * h50 + ((1 / 2 : ℂ) * Complex.I) *
+        h51 + (((-1 / 2 : ℂ) + (-1 / 2 : ℂ) * Complex.I)) * h56
 
 private def normalizeMap :
   Matrix (Fin 7) (Fin 7) ℂ →ₗ[ℂ] Matrix (Fin 7) (Fin 7) ℂ :=
