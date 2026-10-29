@@ -15,8 +15,11 @@ open LatticeFourCurrentThermal CanonicalOccupationSewing
 
 open private probe probePositive cutoff_zero multiplicity_zero
   from Reg.D5.S3.VertexAlgebra.Characters.LatticeFourCurrentTrace
-open private original_four_zero_charge_trace bounded_coefficient_ordered ordered_positive_channels
-  channelEnergyCoefficient channelMate channelRest currentMode contraction pairEnergyCoefficient
+open private original_four_zero_charge_trace contraction
+  from D5.S3.VertexAlgebra.Characters.FourCurrent.TraceRecurrence
+open private bounded_coefficient_ordered currentMode
+  from D5.S3.VertexAlgebra.Characters.FourCurrent.MatchingModes
+open private ordered_positive_channels channelEnergyCoefficient channelMate channelRest pairEnergyCoefficient
   from D5.S3.VertexAlgebra.Characters.LatticeFourCurrentTrace
 
 namespace Reg.D5.S3.VertexAlgebra.LatticeFourCurrentThermal

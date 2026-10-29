@@ -35,13 +35,11 @@ open CanonicalOccupationSewing
 open _root_.D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation
 open _root_.D5.S3.Combinatorics.Partitions.AnalyticOddOccupation
 
-open private min4 max4 edgeParam chargeWeight matchingShift charge_cutoff_nat
-  from D5.S3.VertexAlgebra.Characters.LatticeFourCurrentTrace
-open private unpaired gradeShift matching_parameter_bounds sideMem
-  from D5.S3.VertexAlgebra.Characters.LatticeFourCurrentTrace
-open private arcMem edges_ordered
-  from D5.S3.VertexAlgebra.Characters.LatticeFourCurrentTrace
-open private original_four_zero_charge_trace
+open PM4
+open private min4 max4 edgeParam chargeWeight matchingShift gradeShift sideMem
+  arcMem edges_ordered original_four_zero_charge_trace
+  from D5.S3.VertexAlgebra.Characters.FourCurrent.TraceRecurrence
+open private matching_parameter_bounds charge_cutoff_nat
   from D5.S3.VertexAlgebra.Characters.LatticeFourCurrentTrace
 open private markedTerm marked_summable marked_sum marked_row
   from D5.S3.VertexAlgebra.Characters.LatticeTwoCurrentThermal
