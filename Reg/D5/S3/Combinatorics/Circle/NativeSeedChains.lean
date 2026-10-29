@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Circle.NativeSeedChains
 import Reg.Support.DependentFamily
 
+/-! # Source-bound native-chain registration -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open LeanInformationAudit

@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Circle.SeedQueueInvariant
 import Reg.Support.DependentFamily
 
+/-! # Source-bound deferred-prefix registration -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open LeanInformationAudit
@@ -32,12 +34,12 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ {α : Type u} (f : α → ℤ)
     (old small : List α) (mu D a b p B C : ℤ)
-    (hold : Ancestors f mu D 0 old) (hdyadic : Dyadic f a small)
-    (hbirth : small ≠ [] → 0 ≤ a - mu - (old.map f).sum ∧
+    (_hold : Ancestors f mu D 0 old) (_hdyadic : Dyadic f a small)
+    (_hbirth : small ≠ [] → 0 ≤ a - mu - (old.map f).sum ∧
       a - mu - (old.map f).sum ≤ D)
-    (hbudget : mu ≤ b)
-    (htransport : (small.map f).sum - (B - p) = b - a)
-    (hcapacity : 2 * (C - B) = b - 1),
+    (_hbudget : mu ≤ b)
+    (_htransport : (small.map f).sum - (B - p) = b - a)
+    (_hcapacity : 2 * (C - B) = b - 1),
     let q := (splitBudget f (b - mu) (old ++ small)).1
     let e := (splitBudget f (b - mu) (old ++ small)).2
     let h := b - mu - (q.map f).sum
@@ -51,7 +53,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro hall
   let x : ULift.{u} Unit := ULift.up ()
   have hr := hall (fun _ : ULift.{u} Unit => (1 : ℤ)) [] [x]
-    1 0 1 1 2 3 3 (by trivial) (by simp [Dyadic])
+    1 0 1 1 2 3 3 (by trivial) (by simp [_root_.D5.S3.Combinatorics.Circle.SourceWidth.Dyadic])
     (by intro _; norm_num) (by norm_num) (by norm_num) (by norm_num)
   have hb := hr.2.2.2.2.1 x [] (by norm_num [splitBudget])
   norm_num [rejected, realize, splitBudget] at hb
@@ -77,7 +79,8 @@ def family : Registration arena.{u} (type_of% (@deferred_prefix_invariant.{u})) 
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@deferred_prefix_invariant.{u}) (type_of% actual) Nat Unit where
-  unitName := `D5.S3.Combinatorics.Circle.SeedQueueInvariant.deferred_prefix_invariant.__information_unit
+  unitName :=
+    `D5.S3.Combinatorics.Circle.SeedQueueInvariant.deferred_prefix_invariant.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Circle.SeedQueueInvariant.family
   realizationSource := none
   generated := false
@@ -98,7 +101,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[9]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "fn", "arg", "body", "body", "body", "arg", "fn", "arg", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "arg", "arg", "arg", "arg", "fn", "arg", "body",
+        "body", "body", "arg", "fn", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
