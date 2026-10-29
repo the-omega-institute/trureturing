@@ -62,8 +62,7 @@ def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@_root_.D5.S3.Quantum.TensorNetworks.UniformMPSTwoByTwoTraceWords.coordinate_dimension)
       (Realization signature) Unit Unit := {
-  unitName :=
-    `D5.S3.Quantum.TensorNetworks.UniformMPSTwoByTwoTraceWords.coordinate_dimension.__information_unit
+  unitName := `Reg.D5.S3.Quantum.TensorNetworks.UniformMPSTwoByTwoTraceWords.unit
   realizationName :=
     `Reg.D5.S3.Quantum.TensorNetworks.UniformMPSTwoByTwoTraceWords.source_registration
   realizationSource := none
