@@ -815,7 +815,7 @@ private theorem labels_count {k : ℕ} (s t : Fin k → ℕ) (q : Fin (2*k)) : (
 end MMDLabels
 namespace MMDCounts
 open MMDLabels MMDGraphCompression
-private theorem count_ofFn {α : Type*} [DecidableEq α] {n : ℕ} (f : Fin n → α) (p : α) : (List.ofFn f).count p = ∑ i, if f i = p then 1 else 0 := by
+theorem count_ofFn {α : Type*} [DecidableEq α] {n : ℕ} (f : Fin n → α) (p : α) : (List.ofFn f).count p = ∑ i, if f i = p then 1 else 0 := by
   simpa [List.count_eq_countP, Function.comp_def, List.map_ofFn, List.sum_ofFn] using
     (List.countP_flatMap (p := fun a => a == p) (l := List.ofFn f) (f := fun a => [a]))
 private theorem fiber_count {α : Type*} [DecidableEq α] {n : ℕ} (f : Fin n → α) (p : α) : (Finset.univ.filter (fun i => f i=p)).card = (List.ofFn f).count p := by
