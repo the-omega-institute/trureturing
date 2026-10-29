@@ -153,7 +153,8 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
         var failure = Assert.Throws<SkipException>(() => CaptureCleanupOutput((stdout, stderr) =>
             TestProcessRunner.Run("python3", ["-B", Path.Combine(root,
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
-                root, "plain", "clean-lanes", "directory", "CommandLifetimeTests.test_deadline"],
+                root, "plain", "clean-lanes", "directory", "CommandLifetimeTests.test_deadline",
+                "CommandLifetimeTests.test_normal"],
                 root, TimeSpan.FromSeconds(3), 1024 * 1024,
                 standardOutput: stdout, standardError: stderr,
                 interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), captured.Add));

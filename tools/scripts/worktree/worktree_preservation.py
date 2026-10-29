@@ -9,6 +9,7 @@ import re
 import signal
 import stat
 import subprocess
+import tempfile
 import time
 import uuid
 
@@ -66,6 +67,47 @@ def record_removal(metadata, commit, recovery_branch, predecessors=None, native_
     os.replace(staged, metadata / REMOVAL_RECORD)
 
 
+def snapshot_ignored(target, commit, paths):
+    """Classify exposed files with native Git and the checkpoint's ignore hierarchy."""
+    with tempfile.TemporaryDirectory(prefix="worktree-removal-ignore-") as temporary:
+        context = Path(temporary)
+        candidates = [Path(os.fsdecode(name)) for name in paths]
+        ancestors = {parent for name in candidates for parent in name.parents}
+        # Both ignore-file membership and rule bytes belong to the recorded
+        # commit, including when a moved snapshot has a different current index.
+        entries = git(target, "ls-tree", "-r", "-z", commit).stdout
+        for entry in entries.split(b"\0"):
+            if not entry:
+                continue
+            fields, name = entry.split(b"\t", 1)
+            if fields.split()[0] not in (b"100644", b"100755"):
+                continue  # Native Git does not follow symlinked .gitignore files.
+            name = Path(os.fsdecode(name))
+            # Only ancestor rules can affect a candidate. Descendant ignore
+            # files must not create a directory in place of a candidate leaf.
+            if name.name != ".gitignore" or name.parent not in ancestors:
+                continue
+            ignore = context / name
+            ignore.parent.mkdir(parents=True, exist_ok=True)
+            ignore.write_bytes(git(target, "show", commit + ":" + str(name)).stdout)
+        # Git consults the filesystem for directory-only patterns. Project
+        # candidate kinds as well as rule bytes; links remain links to Git.
+        for name in candidates:
+            actual, projected = target / name, context / name
+            projected.parent.mkdir(parents=True, exist_ok=True)
+            if actual.is_symlink():
+                projected.symlink_to(os.readlink(actual))
+            elif actual.is_dir():
+                projected.mkdir(exist_ok=True)
+            else:
+                projected.touch()
+        result = git(target, "--work-tree=" + str(context), "check-ignore",
+                     "--no-index", "-z", "--stdin", input=b"\0".join(paths) + b"\0", check=False)
+        if result.returncode not in (0, 1):
+            raise Refused("interrupted_removal_ignore_check_failed")
+        return set(result.stdout.split(b"\0")) - {b""}
+
+
 def interrupted_removal(target, metadata, stack, source, branch):
     """Return the record of an earlier removal whose native deletion stopped part way."""
     record = metadata / REMOVAL_RECORD
@@ -90,6 +132,12 @@ def interrupted_removal(target, metadata, stack, source, branch):
     recorded_tip = git(target, "rev-parse", "--verify", removal["recovery_branch"] + "^{commit}", check=False)
     if (value(target, "rev-parse", "--verify", "HEAD^{commit}") != commit
             or recorded_tip.returncode or os.fsdecode(recorded_tip.stdout).strip() != commit):
+        # Lost ignore rules must not turn snapshot-ignored output into a new
+        # ordinary checkpoint while reconverging a moved snapshot.
+        status = git(target, "status", "--porcelain", "-z", "--untracked-files=all").stdout.split(b"\0")
+        exposed = {line[3:] for line in status if line.startswith(b"?? ")}
+        if exposed and snapshot_ignored(target, commit, exposed):
+            raise Refused("interrupted_removal_snapshot_moved")
         from worktree_publication import commit_snapshot, recovery_root
         # Pin the old object before checkpointing; its former branch can have moved.
         predecessor = dict(commit=commit, recovery_branch=recovery_root(stack, source, target, commit))
@@ -106,9 +154,12 @@ def interrupted_removal(target, metadata, stack, source, branch):
                        getattr(stack, "native_locks", []))
         return dict(commit=snapshot["commit"], recovery_branch=current_root, reconverged=True,
                     native_locks=getattr(stack, "native_locks", []))
-    # Native deletion only deletes files; other differences may be later changes.
-    status = git(target, "status", "--porcelain", "--untracked-files=all").stdout.splitlines()
-    if any(not line.startswith(b" D ") for line in status):
+    # Native deletion can remove ignore files before the files they excluded.
+    status = git(target, "status", "--porcelain", "-z", "--untracked-files=all").stdout.split(b"\0")
+    if any(line and line[:3] not in (b" D ", b"?? ") for line in status):
+        raise Refused("interrupted_removal_tree_changed")
+    exposed = {line[3:] for line in status if line.startswith(b"?? ")}
+    if exposed and snapshot_ignored(target, commit, exposed) != exposed:
         raise Refused("interrupted_removal_tree_changed")
     return removal
 
@@ -301,6 +352,8 @@ def remove(options):
                 qualifying = False
                 branch = git_scope(stack, source, target)
                 _, metadata = identity(source, target)
+                from worktree_publication import preflight_snapshot
+                preflight_snapshot(target, metadata)
                 resumed = interrupted_removal(target, metadata, stack, source, branch)
                 if resumed:
                     # The earlier removal verified this snapshot clean before native

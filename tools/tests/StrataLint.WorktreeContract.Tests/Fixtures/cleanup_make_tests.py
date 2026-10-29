@@ -12,6 +12,7 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest.mock import patch
 
 from native_fixture import NativeFixture
 
@@ -539,6 +540,111 @@ class SignalErrorTests(CommandLifetimeTests):
 
 
 class FixtureDisposalTests(NativeFixture):
+    def test_startup_failures_settle_owned_group(self):
+        for failure in ("signal", "io"):
+            with self.subTest(failure=failure):
+                events, spawned, caught, following = [], [], [], []
+                startup_error = OSError("injected startup publication failure")
+                native_popen, native_print = subprocess.Popen, print
+
+                class Probe(CommandLifetimeTests):
+                    def setUp(self):
+                        super().setUp()
+                        self.ready_path = self.root / "startup-ready"
+                        os.mkfifo(self.ready_path)
+                        self.ready = os.open(self.ready_path, os.O_RDWR | os.O_NONBLOCK)
+                        self.addCleanup(os.close, self.ready)
+
+                    def test_body(self):
+                        command = ("import signal,sys\n"
+                                   "print(sys.stdin.read(), end='', flush=True)\n"
+                                   "print('startup-stderr', file=sys.stderr, flush=True)\n"
+                                   "with open(sys.argv[1], 'w') as ready:\n"
+                                   " ready.write('ready\\n')\n"
+                                   "signal.pause()\n")
+                        try:
+                            self.run_command([sys.executable, "-c", command, self.ready_path],
+                                             input="retained startup input\n", phase="startup")
+                        except BaseException as error:
+                            caught.append(error)
+                            raise
+
+                class Following(unittest.TestCase):
+                    def runTest(self):
+                        following.append(failure)
+
+                probe = Probe("test_body")
+                participant = native_popen([sys.executable, "-c",
+                    "import sys; print('ready',flush=True); sys.stdin.readline()"],
+                    stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                    text=True, start_new_session=True)
+
+                def popen(*args, **kwargs):
+                    process = native_popen(*args, **kwargs)
+                    if kwargs.get("start_new_session"):
+                        spawned.append(process)
+                    return process
+
+                def publish(value, **kwargs):
+                    event = json.loads(value)
+                    events.append(event)
+                    native_print(value, **kwargs)
+                    if event.get("event") == "fixture_command" and event.get("status") == "started":
+                        self.assertTrue(select.select([probe.ready], [], [], 10)[0],
+                                        "startup command readiness guard expired")
+                        self.assertEqual(b"ready\n", os.read(probe.ready, 6))
+                        if failure == "signal":
+                            os.kill(os.getpid(), signal.SIGTERM)
+                        else:
+                            raise startup_error
+
+                try:
+                    self.assertTrue(select.select([participant.stdout], [], [], 10)[0])
+                    self.assertEqual("ready\n", participant.stdout.readline())
+                    result = unittest.TestResult()
+                    with patch("native_fixture.subprocess.Popen", new=popen), \
+                            patch("native_fixture.print", new=publish, create=True):
+                        unittest.TestSuite([probe, Following()]).run(result)
+                    self.assertTrue(probe.commands_settled,
+                                    "startup failure bypassed owned-group settlement")
+                    self.assertEqual(1, len(spawned))
+                    with self.assertRaises(ProcessLookupError):
+                        os.killpg(spawned[0].pid, 0)
+                    self.assertIsNotNone(spawned[0].returncode)
+                    self.assertEqual(1, len(caught))
+                    if failure == "io":
+                        self.assertIs(startup_error, caught[0])
+                    else:
+                        self.assertIn("outer fixture interruption:", str(caught[0]))
+                    self.assertEqual(1, len(result.errors))
+                    self.assertIn(str(caught[0]), result.errors[0][1])
+                    self.assertEqual([] if failure == "signal" else [failure], following)
+                    self.assertEqual(failure == "signal", result.shouldStop)
+                    completion = [item for item in events if item.get("event") == "fixture_completion"]
+                    self.assertEqual(1, len(completion))
+                    self.assertFalse(completion[0]["successful"])
+                    self.assertTrue(completion[0]["owned_execution_settled"])
+                    self.assertTrue(probe.root.is_dir())
+                    self.assertEqual("retained startup input\n", (probe.root / "native-1.stdin").read_text())
+                    output = {item["stream"]: item["output"] for item in events
+                              if item.get("event") == "fixture_command_output"}
+                    self.assertEqual({"stdout": "retained startup input\n", "stderr": "startup-stderr\n"}, output)
+                    command = [item for item in events if item.get("event") == "fixture_command"
+                               and item.get("status") == "interrupted"]
+                    self.assertEqual(1, len(command))
+                    self.assertTrue(command[0]["settled"])
+                    self.assertIsNone(participant.poll(), "unrelated participant must survive startup failure")
+                    shutil.rmtree(probe.root)
+                finally:
+                    # Join even the deliberately reproduced pre-repair leak.
+                    for process in spawned:
+                        try:
+                            os.killpg(process.pid, signal.SIGKILL)
+                        except ProcessLookupError:
+                            pass
+                        process.wait(timeout=10)
+                    participant.communicate("finish\n", timeout=10)
+
     def test_completed_outcomes_and_finalizers(self):
         for publication in ("immediate", "deferred"):
             for failure in (None, "setup", "body", "subtest", "teardown", "cleanup",
