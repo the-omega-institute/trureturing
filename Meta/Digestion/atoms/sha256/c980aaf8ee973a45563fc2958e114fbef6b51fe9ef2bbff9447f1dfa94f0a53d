@@ -1,0 +1,16 @@
+## 486. 原前向价格核的无条件双侧无界性
+
+沿用 §481 与 §485 的记号。定理 485.2–485.3 在 RH 不成立时给出 $\liminf\mathcal T=-\infty$ 与 $\limsup\mathcal T=+\infty$，在 RH 下只给出 $\liminf\mathcal T\le-1/2\le1/2\le\limsup\mathcal T$。本节在 RH 下也得到两侧无界，于是两侧无界无条件成立。工具是正测度的 Laplace 变换在虚轴上的边界极限满足的有限 Gram 正性。下侧只用到零点有无穷多个；上侧还要用到零点计数的增长与 $0$ 附近的无零点间隙。
+
+经典输入除 §485 所列各项外，还有 Riemann–von Mangoldt 公式
+$$
+N(T,2T)=\frac T{2\pi}\Bigl(\log\frac T{2\pi}+2\log2-1\Bigr)+O(\log T),
+\tag{486.1}
+$$
+其中 $N(T_1,T_2)$ 是纵坐标落在 $(T_1,T_2]$ 中的非平凡零点个数（计重数）。下文只用它推出的 $N(T,2T)/T\to\infty$。
+
+下面两个命题共用以下前提：$\mu$ 是 $\mathbb R$ 上的正 Borel 测度，对每个 $\sigma>0$ 有 $\int e^{-\sigma y}\,d\mu(y)<\infty$；记 $G(s)=\int e^{-sy}\,d\mu(y)$（$\Re s>0$），并在极限存在处记
+$$
+L(t)=\lim_{\sigma\downarrow0}\sigma\,G(\sigma+it).
+$$
+
