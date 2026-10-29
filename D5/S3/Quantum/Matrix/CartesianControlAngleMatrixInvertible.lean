@@ -23,15 +23,154 @@ private def A (m : ℕ) : Matrix (Fin m) (Fin m) ℝ := fun r s =>
 private def Linv (m : ℕ) : Matrix (Fin m) (Fin m) ℝ := fun r s =>
   if m = 1 then 1 else
     if (r : ℕ) = 0 then
-      if (s : ℕ) = 0 ∨ (s : ℕ) = 1 then (1 / 2 : ℝ) else 0
+      (if (s : ℕ) = 0 then (1 / 2 : ℝ) else 0) +
+        (if (s : ℕ) = 1 then (1 / 2 : ℝ) else 0)
     else if (r : ℕ) + 1 = m then
-      if (s : ℕ) = 0 then (1 / 2 : ℝ) else if (s : ℕ) + 1 = m then (-1 / 2 : ℝ) else 0
-    else if s = r then (-1 / 2 : ℝ) else if (s : ℕ) = (r : ℕ) + 1 then (1 / 2 : ℝ) else 0
+      (if (s : ℕ) = 0 then (1 / 2 : ℝ) else 0) +
+        (if (s : ℕ) + 1 = m then (-1 / 2 : ℝ) else 0)
+    else
+      (if s = r then (-1 / 2 : ℝ) else 0) +
+        (if (s : ℕ) = (r : ℕ) + 1 then (1 / 2 : ℝ) else 0)
 
-private theorem Linv_mul_A (m : ℕ) : Linv m * A m = (1 : Matrix (Fin m) (Fin m) ℝ) := by sorry
+private theorem sum_val_indicator (m n : ℕ) (hn : n < m) (f : Fin m → ℝ) :
+    ∑ s : Fin m, (if (s : ℕ) = n then f s else 0) = f ⟨n, hn⟩ := by
+  classical
+  rw [Finset.sum_eq_single ⟨n, hn⟩]
+  · simp
+  · intro b hb hbn
+    by_cases h : (b : ℕ) = n
+    · exact (hbn (Fin.ext (by omega))).elim
+    · simp [h]
+  · intro h
+    exact (h (Finset.mem_univ _)).elim
+
+private theorem sum_last_indicator (m : ℕ) (hm : 0 < m) (f : Fin m → ℝ) :
+    ∑ s : Fin m, (if (s : ℕ) + 1 = m then f s else 0) = f ⟨m - 1, by omega⟩ := by
+  have hlast : m - 1 < m := by omega
+  have heq : (fun s : Fin m => if (s : ℕ) + 1 = m then f s else 0) =
+      (fun s : Fin m => if (s : ℕ) = m - 1 then f s else 0) := by
+    funext s
+    have hs : (s : ℕ) < m := s.isLt
+    by_cases h1 : (s : ℕ) + 1 = m
+    · have h2 : (s : ℕ) = m - 1 := by omega
+      simp [h1, h2]
+    · have h2 : (s : ℕ) ≠ m - 1 := by omega
+      simp [h1, h2]
+  rw [heq, sum_val_indicator m (m - 1) hlast]
+
+private theorem Linv_mul_A (m : ℕ) : Linv m * A m = (1 : Matrix (Fin m) (Fin m) ℝ) := by
+  classical
+  cases m with
+  | zero => exact Subsingleton.elim _ _
+  | succ m =>
+    cases m with
+    | zero =>
+        ext r s
+        fin_cases r
+        fin_cases s
+        norm_num [Matrix.mul_apply, Linv, A]
+    | succ n =>
+        ext r t
+        by_cases hr0 : (r : ℕ) = 0
+        · have hr : r = ⟨0, by omega⟩ := Fin.ext (by omega)
+          rw [hr]
+          rw [Matrix.mul_apply]
+          simp [Linv, hr0]
+          simp_rw [add_mul]
+          rw [Finset.sum_add_distrib]
+          simp only [ite_mul, zero_mul]
+          simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true]
+          rw [sum_val_indicator (n + 1 + 1) 1 (by omega)]
+          by_cases ht0 : (t : ℕ) = 0
+          · have ht : t = ⟨0, by omega⟩ := Fin.ext (by omega)
+            subst t
+            norm_num [A]
+          · have ht1 : 1 ≤ (t : ℕ) := by omega
+            have hA0 : A (n + 1 + 1) ⟨0, by omega⟩ t = 1 := by simp [A]
+            have hA1 : A (n + 1 + 1) ⟨1, by omega⟩ t = -1 := by
+              simp [A]
+              omega
+            rw [hA0, hA1]
+            norm_num
+        · by_cases hrlast : (r : ℕ) + 1 = n + 1 + 1
+          · have hr : r = ⟨n + 1, by omega⟩ := by
+              apply Fin.ext
+              simp
+              omega
+            rw [hr]
+            rw [Matrix.mul_apply]
+            simp [Linv, hrlast]
+            simp_rw [add_mul]
+            rw [Finset.sum_add_distrib]
+            simp only [ite_mul, zero_mul]
+            simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true]
+            rw [sum_val_indicator (n + 1 + 1) (n + 1) (by omega)]
+            have hlast : n + 1 < n + 1 + 1 := by omega
+            have hsumlast :
+                (∑ s : Fin (n + 1 + 1), (if (s : ℕ) + 1 = n + 1 + 1 then
+                  (-1 / 2 : ℝ) * A (n + 1 + 1) s t else 0)) =
+                (-1 / 2 : ℝ) * A (n + 1 + 1) ⟨n + 1, hlast⟩ t := by
+              apply Finset.sum_eq_single ⟨n + 1, hlast⟩
+              · simp
+              · intro b hb hbn
+                by_cases h : (b : ℕ) = n + 1
+                · exact (hbn (Fin.ext (by omega))).elim
+                · simp [h]
+              · intro h
+                exact (h (Finset.mem_univ _)).elim
+            rw [hsumlast]
+            by_cases htlast : (t : ℕ) = n + 1
+            · have ht : t = ⟨n + 1, by omega⟩ := Fin.ext (by omega)
+              subst t
+              norm_num [A]
+            · have hAt : A (n + 1 + 1) ⟨0, by omega⟩ t = 1 := by simp [A]
+              have hAlast : A (n + 1 + 1) ⟨n + 1, by omega⟩ t = 1 := by
+                simp [A]
+                omega
+              rw [hAt, hAlast]
+              norm_num
+          · have hrpos : 0 < (r : ℕ) := by omega
+            have hrsucc : (r : ℕ) + 1 < n + 1 + 1 := by omega
+            have hrnotlast : (r : ℕ) ≠ n + 1 := by omega
+            rw [Matrix.mul_apply]
+            simp [Linv, hr0, hrnotlast]
+            simp_rw [add_mul]
+            rw [Finset.sum_add_distrib]
+            simp only [ite_mul, zero_mul]
+            simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true]
+            have hsumrs : (∑ s : Fin (n + 1 + 1),
+                (if (s : ℕ) = (r : ℕ) + 1 then (1 / 2 : ℝ) * A (n + 1 + 1) s t else 0)) =
+                (1 / 2 : ℝ) * A (n + 1 + 1) ⟨(r : ℕ) + 1, hrsucc⟩ t := by
+              simpa using (sum_val_indicator (n + 1 + 1) ((r : ℕ) + 1) hrsucc
+                (fun s => (1 / 2 : ℝ) * A (n + 1 + 1) s t))
+            rw [hsumrs]
+            have hreq : (⟨(r : ℕ) + 1, hrsucc⟩ : Fin (n + 1 + 1)) = r := by omega
+            by_cases htr : (t : ℕ) < (r : ℕ)
+            · have htr' : (t : ℕ) < (r : ℕ) + 1 := by omega
+              have har : A (n + 1 + 1) r t = 1 := by simp [A]; omega
+              have has : A (n + 1 + 1) ⟨(r : ℕ) + 1, hrsucc⟩ t = 1 := by simp [A]; omega
+              rw [har, has]
+              norm_num
+            · by_cases hteq : (t : ℕ) = (r : ℕ)
+              · have ht : t = r := Fin.ext hteq
+                subst t
+                have har : A (n + 1 + 1) r r = -1 := by simp [A]; omega
+                have has : A (n + 1 + 1) ⟨(r : ℕ) + 1, hrsucc⟩ r = 1 := by simp [A]; omega
+                rw [har, has]
+                norm_num
+              · have htr' : (r : ℕ) < (t : ℕ) := by omega
+                have har : A (n + 1 + 1) r t = -1 := by simp [A]; omega
+                have has : A (n + 1 + 1) ⟨(r : ℕ) + 1, hrsucc⟩ t =
+                    if (r : ℕ) + 1 ≤ (t : ℕ) then -1 else 1 := by
+                  simp [A]
+                rw [har, has]
+                by_cases hnext : (r : ℕ) + 1 ≤ (t : ℕ)
+                · simp [hnext]
+                · have : (t : ℕ) = (r : ℕ) := by omega
+                  exact (hteq this).elim
 
 private theorem A_mul_Linv (m : ℕ) : A m * Linv m = (1 : Matrix (Fin m) (Fin m) ℝ) := by
-  rw [Matrix.mul_eq_one_comm]
+  rw [mul_eq_one_comm]
   exact Linv_mul_A m
 
 private def K {k : ℕ} (d : Fin k → ℕ) :
@@ -47,7 +186,7 @@ private theorem LinvPrime_mul_K {k : ℕ} (d : Fin k → ℕ) :
 
 private theorem K_mul_LinvPrime {k : ℕ} (d : Fin k → ℕ) :
     K d * LinvPrime d = (1 : Matrix ((l : Fin k) → Fin (d l)) ((l : Fin k) → Fin (d l)) ℝ) := by
-  rw [Matrix.mul_eq_one_comm]
+  rw [mul_eq_one_comm]
   exact LinvPrime_mul_K d
 
 def angleMatrix {k : ℕ} (d : Fin k → ℕ)
