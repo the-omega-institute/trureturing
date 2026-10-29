@@ -4248,7 +4248,7 @@ full-history endpoint is type III throughout this interval.
 
 *Proof.* The gap (146.9) permits the weaker certified value
 $\delta_a\ge\Delta_a$. Apply Theorem 127.1 with this $\Delta_a$.
-Its interval is exactly (146.10), its threshold gap is
+It applies throughout (146.10), its threshold gap is
 $\Delta_a\eta/2=3\eta/8192$, and its retention bounds are (146.12).
 The attainment and type-III statements are the endpoint criterion of
 Theorem 124.2 together with Definition 131.1. The construction retains
