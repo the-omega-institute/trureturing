@@ -48,6 +48,10 @@ $$\forall t \in \mathbb{N},\; \forall c \in \operatorname{Fin}\left(t\right) \to
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Density/RationalBracketCollisionDensity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/larsson-manabe-2026-rational-bracket-collision-density` (proved) by `D5/S3/Arith/Density/RationalBracketCollisionDensity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"larsson-manabe-2026-rational-bracket-collision-density","declaration_gid":"D5/S3/Arith/Density/RationalBracketCollisionDensity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Urban Larsson and Hikaru Manabe (2026). *Additive Subtraction Games*. DOI: [10.48550/arXiv.2603.10414](https://doi.org/10.48550/arXiv.2603.10414). URL: <https://arxiv.org/html/2603.10414v2#Thmthm20>.
