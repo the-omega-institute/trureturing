@@ -1,0 +1,45 @@
+**定理 111.2（同一观察坐标的全域估计）。** 若 (111.1) 且 $\delta<\sigma$，则 $\dim V=9$，$M,P$ 都为同构。同一个实线性双射
+
+$$
+S=L^{-1}M,\qquad C=S(K),\qquad \mathcal B=S(\mathcal B_K)
+\tag{111.3}
+$$
+
+满足下列全部结论，且没有给竞争锥添加内点半径或紧族假设：
+
+$$
+\begin{gathered}
+u=\operatorname{Tr}\circ S,\qquad e(x)=\operatorname{Tr}(ESx)\quad(x\in V),\qquad
+\|Ss_0-\rho_0\|_2\le\gamma,\\
+T_a=SB_aS^{-1},\quad \|T_a-A_a\|\le\beta/2,\qquad
+\mathcal B\subseteq\{X:\operatorname{Tr}X=1,\ \|X\|_2\le b\},\\
+D_j=2T_j\ (j=0,1),\quad D_N=T_N,\qquad
+\|D_a-\operatorname{Ad}_{U_a}\|\le\beta.
+\end{gathered}
+\tag{111.4}
+$$
+
+$C$ 仍闭、尖、生成，$\mathcal B$ 仍紧且凸；$D_a(C)\subseteq C$，$\operatorname{Tr}(EX)\ge0$ 对 $X\in C$ 成立。$S$ 此时不被断言为精确有序同构。
+
+证明。逐条误差的 Frobenius 上界给每个 $9\times9$ 块的诱导范数误差至多 $9\epsilon$。由 $\|\widetilde Hv\|\ge(\sigma-\delta)\|v\|$，$\widetilde H$ 可逆且 $\|\widetilde H^{-1}\|\le(\sigma-\delta)^{-1}$。因此 (103.3) 的秩饱和论证直接给 $\dim V=9$ 及 $M,P$ 的同构性。$LS=M$ 的第零行与第一是行给两个精确泛函等式；第一列给 $\|Ss_0-\rho_0\|_2\le3\|L^{-1}\|\epsilon$。
+令 $\Delta=\widetilde H-H$、$\Delta^a=\widetilde H^a-H^a$，则
+
+$$
+\begin{aligned}
+T_a&=L^{-1}\widetilde H^a\widetilde H^{-1}L,\\
+T_a-A_a&=L^{-1}(\Delta^a-H^aH^{-1}\Delta)\widetilde H^{-1}L.
+\end{aligned}
+\tag{111.5}
+$$
+
+取范数即得映射界。缩放不改变锥的正性，且各 $\operatorname{Ad}_{U_a}$ 的范数为一，故得 $D_a$ 的界。
+对每个 $x\in K$，(100.6) 与正性给 $0\le u(B_jx)\le u(x)$；逐步应用于原生后缀，再用 $0\le e\le u$，得到
+
+$$
+0\le m_m(x)\le u(x)\quad(1\le m\le8),\qquad
+M(\mathcal B_K)\subseteq\{1\}\times[0,1]^8.
+\tag{111.6}
+$$
+
+故 $\|Sx\|_2\le3\|L^{-1}\|=b$。这是所有归一化状态的界，不只约束九个已到达列。其余闭性、紧性、正性来自同一个同构及原假设。∎
+

@@ -1,0 +1,41 @@
+**引理 64.1（任意隐藏模型的可达压缩与有界 CP 半群）。** 假定定义 54.3 的实模型存在。可将它限制到全部 $X_{h,\rho}$ 的联合实支持 $H_{\rm r}$，保留仿射制备、合法效果、原分支和 TP 及全部记录。在该支持上，$T_h$ 在完整实矩阵代数及其复化的所有矩阵层上一致有界；其闭包 $\mathscr S$ 是紧实 CP 半群。
+
+证明。由 (62.3)，每个 $X_{h,\rho}$ 都是正的迹一矩阵。令 $H_{\rm r}$ 为这些矩阵像空间的实线性张成。有限维性允许选取有限多个可达密度矩阵及正权重，使其凸组合 $\Omega$ 满足
+
+$$
+\Omega\succ0\text{ 于 }H_{\rm r},\qquad
+\operatorname{Tr}\Omega=1,\qquad
+\operatorname{Tr}(T_h\Omega)=1\quad(\text{全部 }h).
+\tag{64.1}
+$$
+
+最后一式由词的拼接和两终端总质量推出。
+
+逐个原 Kraus 算子都保持 $H_{\rm r}$。事实上，若 $v\perp H_{\rm r}$，则对可达 $X$，$T_j(X)$ 也可达，并且
+
+$$
+0=v^{\mathsf T}T_j(X)v
+=2\sum_\alpha\|X^{1/2}L_{j\alpha}^{\mathsf T}v\|^2.
+\tag{64.2}
+$$
+
+各项非负，故每个 $L_{j\alpha}$ 将 $\operatorname{ran}X$ 送入 $H_{\rm r}$；这些像空间张成整个 $H_{\rm r}$。因而限制后的 Kraus 平方和仍是 $I_{H_{\rm r}}$，效果压缩仍在零与一之间，所有实际等式原样保留。未被到达的块在此之前没有受到任何限制。
+
+选 $\varepsilon>0$ 使 $\Omega\succeq\varepsilon I_{H_{\rm r}}$。正性给
+
+$$
+0\preceq T_h(I_{H_{\rm r}})
+\preceq\varepsilon^{-1}T_h(\Omega),\qquad
+\|T_h(I_{H_{\rm r}})\|_{\rm op}\le\varepsilon^{-1}.
+\tag{64.3}
+$$
+
+实 Kraus 复化是 $M_{\dim H_{\rm r}}(\mathbb C)$ 上的 CP 映射。使用 CP 映射的成熟范数恒等式 $\|T\|_{\rm cb}=\|T(I)\|$：对任意矩阵层的收缩 $X$，正块矩阵 $\left(\begin{smallmatrix}I&X\\X^\dagger&I\end{smallmatrix}\right)$ 经放大映射后仍正，其非对角块范数至多 $\|T(I)\|$；$X=I$ 给反向不等式。因此
+
+$$
+\sup_h\|T_h\|_{\rm cb}\le\varepsilon^{-1}.
+\tag{64.4}
+$$
+
+这同时控制对称和反对称实矩阵，不能只以对称可达空间上的幂界代替。有限维下，有界闭集紧，实 Choi 正锥闭，故完整线性映射闭包 $\mathscr S=\overline{\{T_h\}}$ 是紧实 CP 半群。此时只证明了可达态上的质量等式，尚未证明任何 $T_j$ 在整个支持上 TP。∎
+
