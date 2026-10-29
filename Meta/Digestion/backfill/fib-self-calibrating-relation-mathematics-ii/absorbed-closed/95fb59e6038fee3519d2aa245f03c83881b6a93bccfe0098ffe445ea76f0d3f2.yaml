@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:95fb59e6038fee3519d2aa245f03c83881b6a93bccfe0098ffe445ea76f0d3f2
   normalized_sha256: sha256:95fb59e6038fee3519d2aa245f03c83881b6a93bccfe0098ffe445ea76f0d3f2
 cas_ref: sha256:95fb59e6038fee3519d2aa245f03c83881b6a93bccfe0098ffe445ea76f0d3f2
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/PolynomialFeedbackDimension.unrestricted_polynomial_feedback_lower_bound
+    target_statement_id: sha256:56bf32ec8f692066a705660edc5830224a1810598537468c97b62e96fb3e7f28
 receipts:
   unresolved_subitems: []
