@@ -87,10 +87,13 @@ def scale (a : IndexAtLeast4) (q : ℝ) : ℝ := Real.rpow (a : ℝ) q
 
 def EventuallyAtLeast (P : IndexAtLeast4 → Prop) : Prop := ∀ᶠ a in atTop, P a
 
+def EventuallyAfter (N : ℝ) (P : IndexAtLeast4 → Prop) : Prop :=
+  ∀ᶠ (a : IndexAtLeast4) in atTop, N ≤ (a : ℝ) → P a
+
 def FullLowerChain (h : ℕ) (M : ℝ)
     (x : ∀ a : IndexAtLeast4, JointArray a h)
     (D : ∀ a : IndexAtLeast4, (x a).TailChoice) : Prop :=
-  ∃ C : ℝ, 0 < C ∧ ∃ N : ℝ, 0 < N ∧ EventuallyAtLeast (fun a =>
+  ∃ C : ℝ, 0 < C ∧ ∃ N : ℝ, 0 < N ∧ EventuallyAfter N (fun a =>
     JointArray.d (x a) ≥
         JointArray.tailEnergy (x a) (D a) +
           (2 * (a : ℝ)^3 - C * (a : ℝ)^2) *
@@ -109,7 +112,7 @@ def Lemma135Statement (h : ℕ) (M : ℝ) : Prop :=
     EventuallyAtLeast (fun a => JointArray.d (x a) ≤ M * scale a (3 / 2 : ℝ)) →
       Tendsto (fun a => JointArray.delta (x a) (D a)) atTop (𝓝 0) ∧
       (∃ Cp Cu CH N : ℝ, 0 < Cp ∧ 0 < Cu ∧ 0 < CH ∧ 0 < N ∧
-        EventuallyAtLeast (fun a =>
+        EventuallyAfter N (fun a =>
           JointArray.tailEventMass (x a) (D a) ≤ Cp * scale a (-3 / 2 : ℝ) ∧
           JointArray.tailSum (x a) (D a).D ≤ Cu * scale a (-3 / 2 : ℝ) ∧
           JointArray.tailEnergy (x a) (D a) ≤ CH * scale a (3 / 2 : ℝ))) ∧
