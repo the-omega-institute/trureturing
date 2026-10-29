@@ -88,7 +88,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (↥UnitSphere)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Geometry.Orthogonality.RationalSixAxisCover
     definition := none
