@@ -52,7 +52,7 @@ private def blocks : Fin 8 → Finset (Fin 7 → ℂ) := ![
 ]
 
 private def effect (j : Fin 8) : Matrix (Fin 7) (Fin 7) ℂ :=
-  ∑ b in blocks j, Matrix.vecMulVec b (star b)
+  ∑ b : blocks j, Matrix.vecMulVec b.1 (star b.1)
 
 private def frame : Matrix (Fin 7) (Fin 7) ℂ := ∑ j, effect j
 
@@ -89,12 +89,12 @@ private theorem witness_bigRanks :
 private theorem within_block_product_independent :
     LinearIndependent ℂ
       (fun p : Σ j : Fin 8, (blocks j × blocks j) =>
-        Matrix.vecMulVec p.2.1 (star p.2.2)) := by sorry
+        Matrix.vecMulVec p.2.1.1 (star p.2.2.1)) := by sorry
 
 private theorem normalized_product_independent :
     LinearIndependent ℂ
       (fun p : Σ j : Fin 8, (blocks j × blocks j) =>
-        normalizer * Matrix.vecMulVec p.2.1 (star p.2.2) * normalizerᴴ) := by sorry
+        normalizer * Matrix.vecMulVec p.2.1.1 (star p.2.2.1) * normalizerᴴ) := by sorry
 
 private theorem decomposition_eq_of_product_independence
     (A B : Fin 8 → Matrix (Fin 7) (Fin 7) ℂ)
