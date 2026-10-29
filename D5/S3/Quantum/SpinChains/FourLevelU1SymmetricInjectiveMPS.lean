@@ -88,7 +88,7 @@ private theorem kraus_normalized : (∑ k, kraus k * star (kraus k)) = 1 := by
   fin_cases i <;> fin_cases j <;>
     norm_num [kraus, Fin.sum_univ_succ, Matrix.mul_apply, Matrix.vecMul_apply_eq_sum,
       Matrix.star_apply,
-      Matrix.one_apply]
+      Matrix.one_apply, map_ofNat]
 
 private theorem charges_nonzero : ∀ k, charges k ≠ 0 := by
   intro k
