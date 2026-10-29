@@ -79,16 +79,16 @@ theorem approximationNumber_eq_supported
       calc
         ‖e.repr (A x - cut e n (A x))‖ ≤
             ‖d n • k.repr (K.orthogonalProjectionOnto x)‖ := by
-          apply lp.norm_mono (by norm_num : (0 : ℝ≥0∞) < 2)
+          apply lp.norm_mono (by norm_num : (2 : ℝ≥0∞) ≠ 0)
           intro i
           have hcut : e.repr (cut e n (A x)) i = if i < n then e.repr (A x) i else 0 := by
             simp [cut, map_sum, map_smul, e.repr_self, lp.single_apply, Pi.single_apply,
               e.repr_apply_apply, innerSL_apply_apply]
-          simp only [map_sub, lp.sub_apply, hcut, hc, lp.coeFn_smul, Pi.smul_apply,
+          simp only [map_sub, lp.coeFn_sub, Pi.sub_apply, hcut, hc, lp.coeFn_smul, Pi.smul_apply,
             smul_eq_mul, norm_mul, Real.norm_eq_abs, abs_of_nonneg (h0 n)]
           split_ifs with hi
           · simp [mul_nonneg (h0 n) (abs_nonneg _)]
-          · rw [sub_zero, abs_of_nonneg (h0 i)]
+          · rw [sub_zero, abs_mul, abs_of_nonneg (h0 i)]
             exact mul_le_mul_of_nonneg_right (ha (Nat.le_of_not_lt hi)) (abs_nonneg _)
         _ = d n * ‖K.orthogonalProjectionOnto x‖ := by
           rw [norm_smul, Real.norm_eq_abs, abs_of_nonneg (h0 n), k.repr.norm_map]
@@ -110,7 +110,8 @@ theorem approximationNumber_eq_supported
       intro hv
       have h := hv.cardinal_lift_le_rank.trans (Cardinal.lift_le.mpr hQ)
       simp only [Cardinal.mk_fintype, Fintype.card_fin, Cardinal.lift_natCast,
-        Cardinal.natCast_le] at h
+        Cardinal.lift_id] at h
+      have hbad : n+1 ≤ n := by exact_mod_cast h
       omega
     obtain ⟨c,hcQ,j,hcj⟩ := Fintype.not_linearIndependent_iff.mp hdep
     let x : K := ∑ i : Fin (n+1), c i • k i.val
@@ -135,11 +136,11 @@ theorem approximationNumber_eq_supported
       simp only [x,y,Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, hb, smul_smul]
     have hxnorm : ‖x‖^2 = ∑ i : Fin (n+1), (c i)^2 := by
       rw [← real_inner_self_eq_norm_sq]
-      simpa only [x, pow_two, star_trivial] using
+      simpa [x, pow_two] using
         (k.orthonormal.comp (fun i : Fin (n+1) => i.val) Fin.val_injective).inner_sum c c Finset.univ
     have hynorm : ‖y‖^2 = ∑ i : Fin (n+1), (c i * d i.val)^2 := by
       rw [← real_inner_self_eq_norm_sq]
-      simpa only [y, pow_two, star_trivial] using
+      simpa [y, pow_two] using
         (e.orthonormal.comp (fun i : Fin (n+1) => i.val) Fin.val_injective).inner_sum
           (fun i => c i * d i.val) (fun i => c i * d i.val) Finset.univ
     have hlo : d n * ‖x‖ ≤ ‖y‖ := by
@@ -149,15 +150,19 @@ theorem approximationNumber_eq_supported
         intro i _
         have hd := ha (show i.val ≤ n by omega)
         have hd0 := h0 i.val
-        nlinarith [sq_nonneg (c i), sq_nonneg (d i.val - d n)]
-      nlinarith [norm_nonneg x, norm_nonneg y, mul_nonneg (h0 n) (norm_nonneg x)]
+        calc
+          (d n)^2 * (c i)^2 ≤ (d i.val)^2 * (c i)^2 :=
+            mul_le_mul_of_nonneg_right (pow_le_pow_left₀ (h0 n) hd 2) (sq_nonneg _)
+          _ = (c i * d i.val)^2 := by ring
+      rw [← mul_pow] at hs
+      exact (sq_le_sq₀ (mul_nonneg (h0 n) (norm_nonneg x)) (norm_nonneg y)).mp hs
     have ht : ‖T x.val‖ = ‖y‖ := by rw [hT,J.norm_map,hAx]
     have hb : d n * ‖x‖ ≤ ‖T-Q‖ * ‖x‖ := by
       calc
         d n * ‖x‖ ≤ ‖T x.val‖ := ht ▸ hlo
         _ = ‖(T-Q) x.val‖ := by simp [hQx]
         _ ≤ ‖T-Q‖ * ‖x‖ := (T-Q).le_opNorm x.val
-    exact (mul_le_mul_iff_left₀ (norm_pos_iff.mpr hx0)).mp hb
+    exact le_of_mul_le_mul_right hb (norm_pos_iff.mpr hx0)
   exact le_antisymm hu hl
 
 #print axioms approximationNumber_eq_supported
