@@ -1,0 +1,23 @@
+**Theorem 10.1 (uniform worst-case additional preparation is one).**
+Fix any nonempty sharp authentic interval $1\le A\le B<2A$ and the
+first-completion service of Assumption 7.1. Among deterministic effective
+protocols recovering the entire authentic target $(\pi,u,k,n)$ on the
+whole $\mathcal E_{[A,B]}$, the least possible worst-case number of
+additional source substitutions is exactly one. The lower bound holds
+even if all stationary entrance Reads are permitted, and even if exact
+$k=1$ and exact $n$ are disclosed on the obstructing subdomain.
+This is a preparation-count minimum, with no total-price dominance claim.
+
+Proof. Theorem 9.2 supplies the uniform one-update protocol with all
+simultaneous charges. A protocol with worst-case zero updates is passive.
+For any $n\in[A,B]$, choose an all-alpha original of that leaf count.
+The two authentic $k=1$ targets $(\pi,u,1,n)$ and
+$(\bar\pi,\mu u,1,n)$ have the identical complete physical presence
+service by Theorem 4.2; their orientation coordinates differ. All other
+accessible initial fields and completion/allocation behavior may be
+chosen identical, as in Corollary 4.3. Induction on paid Reads and local
+steps gives the same acquired bits, choices and output in both cases,
+so one output cannot be both targets. This reuses the passive obstruction
+rather than purporting to extend it to mutating protocols. It excludes
+worst-case zero and proves the minimum. $\square$
+

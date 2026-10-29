@@ -1,0 +1,31 @@
+## 4. Fibered lift and global gluing
+
+Let \(\Phi\) be a specified finite feature map from output events to a FIB mode alphabet, or more generally a linear readout from the observed distribution to a finite coordinate vector. Define the observable projection
+
+\[
+\pi_\Phi(P)=(X(P),Y(P),Z(P)).
+\]
+
+A **triangle-compatible lift** of an observed point \(q=\pi_\Phi(P)\) is a tuple
+
+\[
+(\mu_\alpha,\mu_\beta,\mu_\gamma,A,B,C,\widetilde p)
+\]
+
+such that:
+
+1. the source law is the product \(\mu_\alpha\otimes\mu_\beta\otimes\mu_\gamma\);
+2. the response kernels use only the two incident source variables;
+3. the pushforward of the resulting distribution is \(\widetilde p\);
+4. \(\pi(\widetilde p)=q\);
+5. every required shared-edge marginal and normalization condition is satisfied.
+
+Write \(\operatorname{Lift}_\triangle(q)\) for the set of all such lifts. The observed quotient is locally compatible if \(\operatorname{Lift}_\triangle(q)\ne\varnothing\). A full observed distribution \(P\) is triangle-local exactly when its entire event table, not merely \(q\), has such a lift.
+
+This definition separates two failure modes.
+
+- **Fiber failure:** the quotient point has a legal FIB fiber, but the chosen \(\kappa\) or continuation statistic is incompatible with the claimed local model.
+- **Global gluing failure:** every retained local marginal is legal, but there is no one product-source lift satisfying all three party responses simultaneously.
+
+The second is the network analogue of information escaping through a projection. It is also why pairwise or one-party checks cannot certify triangle locality.
+

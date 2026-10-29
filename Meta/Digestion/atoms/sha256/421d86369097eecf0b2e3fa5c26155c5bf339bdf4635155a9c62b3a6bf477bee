@@ -1,0 +1,18 @@
+**Definition 4.1 (reflection and the two image grammars).** On unlabelled
+ordered full binary shapes let $\mu(\bullet)=\bullet$ and
+$\mu\langle s,t\rangle=\langle\mu t,\mu s\rangle$. On labelled originals
+the same reflection fixes both atomic labels. Let
+
+$$
+ C=\langle\bullet,\bullet\rangle,\qquad
+ D_\beta=\langle C,\bullet\rangle.
+ \tag{GPO.15}
+$$
+
+The existing exact image grammar of ABT12.1 is
+$\mathcal G::=C\mid D_\beta\mid\langle\mathcal G,\mathcal G\rangle$,
+with its existing unique decoder to labelled originals. Define
+$\mathcal H::=C\mid\langle\mathcal H,\mathcal H\rangle$.
+Reflection of a physical word means exchanging all $a,b$ letters, not
+exchanging different subsets of branches independently.
+

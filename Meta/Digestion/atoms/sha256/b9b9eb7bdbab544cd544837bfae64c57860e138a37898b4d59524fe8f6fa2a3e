@@ -1,0 +1,20 @@
+**Corollary 31.3 (past acquisition cannot beat the update barrier).**
+For a common initially source-blind observer in Definition 27.1,
+any finite accessible trace ending at cut $n$ is a function of the
+actual bits through $v_n$, its public inputs and its accessible
+independent randomization. More stationary Reads, arbitrary finite
+local computation and retention cannot give class-uniform zero-error
+readiness before the appropriate threshold in (GPO.78).
+
+Proof. Every earlier cut $e\le n$ has support determined by the
+first $v_e\le v_n$ bits; cuts zero and one are fixed. For a
+fixed common acquired history the next local action and query word
+are the same, presence replies coincide, and update acknowledgements
+are constant. Induction on actual accessible steps proves the trace
+assertion, including every requested address, local allocation and
+retained field. Couple the same accessible randomness if present.
+The witness pairs used in Theorem 31.2 then have identical accessible
+record laws but require different exact answers. This is an information
+barrier for this native service, not a bound on search effort.
+$\square$
+
