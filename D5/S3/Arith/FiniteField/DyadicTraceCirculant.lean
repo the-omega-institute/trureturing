@@ -9,7 +9,7 @@
 import Mathlib.FieldTheory.Finite.GaloisField
 import Mathlib.FieldTheory.Finite.Trace
 import Mathlib.GroupTheory.Index
-import Mathlib.Data.Fintype.Units
+import Mathlib.Algebra.GroupWithZero.Units.Fintype
 import D5.S3.Analytic.GoldenTomography.FinitePronyMatrixPencil
 
 /-!
@@ -39,6 +39,8 @@ private abbrev BinaryField (k : ℕ) := GaloisField 2 k
 
 noncomputable local instance (k : ℕ) : Fintype (BinaryField k) := Fintype.ofFinite _
 
+open scoped Classical
+
 private lemma binary_field_card {k : ℕ} (hk : k ≠ 0) :
     Fintype.card (BinaryField k) = 2 ^ k := by
   rw [← Nat.card_eq_fintype_card]
@@ -65,7 +67,9 @@ private lemma binary_trace_fiber_card {k : ℕ} (hk : k ≠ 0) :
   have hbase : Nat.card (ZMod 2) = 2 := by
     rw [Nat.card_eq_fintype_card, ZMod.card]
   rw [hbase, GaloisField.card 2 k hk, hpow] at hker
-  rw [Fintype.card_subtype, ← hfiber, hzero]
+  rw [Fintype.card_subtype]
+  change (Finset.univ.filter fun a : BinaryField k => tr a = 1).card = _
+  rw [← hfiber, hzero]
   omega
 
 private lemma trace_spectrum_card {k t : ℕ} (hk : k ≠ 0)
@@ -128,7 +132,14 @@ private lemma binary_trace_indicator {k : ℕ} (a : BinaryField k) :
       algebraMap (ZMod 2) (BinaryField k)
         (Algebra.trace (ZMod 2) (BinaryField k) a) := by
   generalize Algebra.trace (ZMod 2) (BinaryField k) a = b
-  fin_cases b <;> norm_num
+  by_cases hb : b = 1
+  · rw [hb, if_pos rfl, map_one]
+  · have hb0 : b = 0 := by
+      apply (ZMod.val_eq_zero b).mp
+      have hlt := ZMod.val_lt b
+      have hne : b.val ≠ 1 := fun h => hb ((ZMod.val_eq_one (by decide) b).mp h)
+      omega
+    rw [if_neg hb, hb0, map_zero]
 
 private lemma trace_kernel_identity {k t x y : ℕ} (hk : k ≠ 0)
     (hy : y ≤ 2 ^ k - 1) :
