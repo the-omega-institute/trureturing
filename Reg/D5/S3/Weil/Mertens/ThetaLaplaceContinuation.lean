@@ -75,9 +75,9 @@ private lemma readout_log {x : ℝ} (hx : 0 < x) (hx2 : x < 2) :
       zero_sub, Real.exp_neg, Real.exp_log hx]
     field_simp
   rw [hq]
-  simp only [neg_one_mul, Complex.ofReal_neg, Complex.ofReal_one,
-    ← Complex.ofReal_exp, Real.exp_neg, Real.exp_log hx, Complex.ofReal_inv]
-  ring
+  simp only [neg_one_mul, Complex.ofReal_neg, Complex.ofReal_one, mul_neg_one]
+  rw [← Complex.ofReal_neg, ← Complex.ofReal_exp, Real.exp_neg, Real.exp_log hx,
+    Complex.ofReal_inv]
 
 def family : Registration arena (type_of% (@theta_laplace_continuation)) where
   actual := actual
