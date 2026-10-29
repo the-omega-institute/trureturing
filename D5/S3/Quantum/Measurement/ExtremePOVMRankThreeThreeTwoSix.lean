@@ -38,10 +38,10 @@ def claim : Prop :=
     IsPOVM M → IsExtreme M →
       bigRanks M ≠ ({3, 3, 2, 2, 2, 2, 2, 2} : Multiset ℕ)
 
-private def vector (a₀ a₁ a₂ f₀ f₁ f₂ g : ℂ) : Fin 7 → ℂ :=
+private abbrev vector (a₀ a₁ a₂ f₀ f₁ f₂ g : ℂ) : Fin 7 → ℂ :=
   ![a₀, a₁, a₂, f₀, f₁, f₂, g]
 
-private def blocks : Fin 8 → Finset (Fin 7 → ℂ) := ![
+private abbrev blocks : Fin 8 → Finset (Fin 7 → ℂ) := ![
   {vector 1 0 0 0 0 0 0, vector 0 1 0 0 0 0 0, vector 0 0 1 0 0 0 0},
   {vector 0 0 0 1 0 0 0, vector 0 0 0 0 1 0 0, vector 0 0 0 0 0 1 0},
   {vector 1 0 0 1 0 0 0, vector 0 1 0 0 1 0 0},
@@ -52,10 +52,10 @@ private def blocks : Fin 8 → Finset (Fin 7 → ℂ) := ![
   {vector 0 1 0 0 Complex.I 0 1, vector 0 0 1 0 0 Complex.I 1}
 ]
 
-private def effect (j : Fin 8) : Matrix (Fin 7) (Fin 7) ℂ :=
+private abbrev effect (j : Fin 8) : Matrix (Fin 7) (Fin 7) ℂ :=
   ∑ b : blocks j, Matrix.vecMulVec b.1 (star b.1)
 
-private def frame : Matrix (Fin 7) (Fin 7) ℂ := ∑ j, effect j
+private abbrev frame : Matrix (Fin 7) (Fin 7) ℂ := ∑ j, effect j
 
 set_option maxHeartbeats 2000000 in
 -- The seven-coordinate kernel elimination uses exact complex arithmetic.
@@ -205,9 +205,9 @@ private theorem witness_sum : ∑ j, witness j = 1 := by
 private theorem witness_povm : IsPOVM witness := by
   exact ⟨witness_posSemidef, witness_sum⟩
 
-private def columns (j : Fin 8) : Matrix (Fin 7) (blocks j) ℂ := fun i b => b.1 i
+private abbrev columns (j : Fin 8) : Matrix (Fin 7) (blocks j) ℂ := fun i b => b.1 i
 
-private def left (j : Fin 8) : Matrix (blocks j) (Fin 7) ℂ :=
+private abbrev left (j : Fin 8) : Matrix (blocks j) (Fin 7) ℂ :=
   fun b i => if (if j = 1 then 3 ≤ i.val else i.val < 3) then star (b.1 i) else 0
 
 set_option maxHeartbeats 2000000 in
