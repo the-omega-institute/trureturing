@@ -193,10 +193,172 @@ private lemma not_injective_not_ic {X : Type*} [Fintype X] [DecidableEq X] {f g 
     simp [hxy] at hvalue
   exact hneq heq
 
+private lemma walk_weights {X : Type*} [Fintype X] [DecidableEq X] {f g : X → ℝ}
+    (hinj : Function.Injective (fun x => (f x, g x)))
+    {u v : ℝ ⊕ ℝ} (p : (fiberGraph f g).Walk u v) (hp : p.IsTrail) :
+    ∃ w : X → ℝ,
+      (∀ a, (∑ x ∈ Finset.univ.filter (fun x => f x = a), w x) =
+        (if u = Sum.inl a then 1 else 0) - (if v = Sum.inl a then 1 else 0)) ∧
+      (∀ b, (∑ x ∈ Finset.univ.filter (fun x => g x = b), w x) =
+        (if v = Sum.inr b then 1 else 0) - (if u = Sum.inr b then 1 else 0)) ∧
+      (∀ x, w x = 0 ↔ s(Sum.inl (f x), Sum.inr (g x)) ∉ p.edges) ∧
+      (∀ x, |w x| ≤ 1) := by
+  classical
+  induction p with
+  | nil =>
+    refine ⟨0, ?_, ?_, ?_, ?_⟩ <;> simp
+  | @cons u v z h p ih =>
+    have htail := hp.of_cons
+    obtain ⟨w, hwf, hwg, hws, hwb⟩ := ih htail
+    have hedge : s(u, v) ∉ p.edges := (SimpleGraph.Walk.isTrail_cons h p).mp hp |>.2
+    rcases u with a | a <;> rcases v with b | b
+    · simp [fiberGraph] at h
+    · obtain ⟨x, hfx, hgx⟩ : ∃ x, f x = a ∧ g x = b := by
+        simpa [fiberGraph] using h
+      have hwx : w x = 0 := (hws x).mpr (by simpa [hfx, hgx] using hedge)
+      refine ⟨Pi.single x 1 + w, ?_, ?_, ?_, ?_⟩
+      · intro c
+        simp only [Pi.add_apply, Finset.sum_add_distrib]
+        rw [hwf]
+        simp [hfx]
+        split_ifs <;> ring
+      · intro c
+        simp only [Pi.add_apply, Finset.sum_add_distrib]
+        rw [hwg]
+        simp [hgx]
+      · intro y
+        by_cases hy : y = x
+        · subst y
+          simp [hwx, hfx, hgx]
+        · have hne : s(Sum.inl (f y), Sum.inr (g y)) ≠ s(Sum.inl a, Sum.inr b) := by
+            intro he
+            have he' : f y = a ∧ g y = b := by simpa [Sym2.eq_iff] using he
+            apply hy
+            exact hinj (Prod.ext (he'.1.trans hfx.symm) (he'.2.trans hgx.symm))
+          simpa [hy, hne] using hws y
+      · intro y
+        by_cases hy : y = x
+        · subst y
+          simp [hwx]
+        · simpa [hy] using hwb y
+    · obtain ⟨x, hfx, hgx⟩ : ∃ x, f x = b ∧ g x = a := by
+        simpa [fiberGraph] using h
+      have hwx : w x = 0 := (hws x).mpr (by simpa [hfx, hgx, Sym2.eq_swap] using hedge)
+      refine ⟨Pi.single x (-1) + w, ?_, ?_, ?_, ?_⟩
+      · intro c
+        simp only [Pi.add_apply, Finset.sum_add_distrib]
+        rw [hwf]
+        simp [hfx]
+        split_ifs <;> ring
+      · intro c
+        simp only [Pi.add_apply, Finset.sum_add_distrib]
+        rw [hwg]
+        simp [hgx]
+        split_ifs <;> ring
+      · intro y
+        by_cases hy : y = x
+        · subst y
+          simp [hwx, hfx, hgx, Sym2.eq_swap]
+        · have hne : s(Sum.inl (f y), Sum.inr (g y)) ≠ s(Sum.inr a, Sum.inl b) := by
+            intro he
+            have he' : f y = b ∧ g y = a := by simpa [Sym2.eq_iff] using he
+            apply hy
+            exact hinj (Prod.ext (he'.1.trans hfx.symm) (he'.2.trans hgx.symm))
+          simpa [hy, hne] using hws y
+      · intro y
+        by_cases hy : y = x
+        · subst y
+          simp [hwx]
+        · simpa [hy] using hwb y
+    · simp [fiberGraph] at h
+
+private lemma zero_fibers_not_ic {X : Type*} [Fintype X] [DecidableEq X]
+    {f g w : X → ℝ} (hw : w ≠ 0) (hb : ∀ x, |w x| ≤ 1)
+    (hf : ∀ a, (∑ x ∈ Finset.univ.filter (fun x => f x = a), w x) = 0)
+    (hg : ∀ b, (∑ x ∈ Finset.univ.filter (fun x => g x = b), w x) = 0) :
+    ¬ IsICPair f g := by
+  classical
+  obtain ⟨x, hx⟩ : ∃ x, w x ≠ 0 := by
+    by_contra h
+    apply hw
+    funext x
+    simpa using not_exists.mp h x
+  haveI : Nonempty X := ⟨x⟩
+  let n : ℝ := Fintype.card X
+  have hn : 0 < n := by
+    change (0 : ℝ) < (Fintype.card X : ℝ)
+    exact_mod_cast (Fintype.card_pos : 0 < Fintype.card X)
+  have htotal : ∑ x, w x = 0 := by
+    have hmap : ∀ x ∈ (Finset.univ : Finset X), f x ∈ Finset.univ.image f := by
+      intro x hx
+      exact Finset.mem_image.mpr ⟨x, hx, rfl⟩
+    rw [← Finset.sum_fiberwise_of_maps_to hmap w]
+    apply Finset.sum_eq_zero
+    intro a ha
+    exact hf a
+  let μ : X → ℝ := fun x => (1 + w x) / n
+  let ν : X → ℝ := fun _ => 1 / n
+  have hμ : IsProbability μ := by
+    constructor
+    · intro z
+      have hz := (abs_le.mp (hb z)).1
+      exact div_nonneg (by linarith) hn.le
+    · change (∑ z, (1 + w z) / n) = 1
+      rw [← Finset.sum_div, Finset.sum_add_distrib, htotal]
+      simp [n, ne_of_gt hn]
+  have hν : IsProbability ν := by
+    constructor
+    · intro z
+      exact le_of_lt (div_pos zero_lt_one hn)
+    · change (∑ _ : X, 1 / n) = 1
+      simp [n, ne_of_gt hn]
+  have hfd : distribution f μ = distribution f ν := by
+    apply (distribution_eq_iff_fiber_sums f μ ν).mpr
+    intro a
+    dsimp [μ, ν]
+    rw [← Finset.sum_div, Finset.sum_add_distrib, hf, add_zero]
+    rw [Finset.sum_div]
+  have hgd : distribution g μ = distribution g ν := by
+    apply (distribution_eq_iff_fiber_sums g μ ν).mpr
+    intro b
+    dsimp [μ, ν]
+    rw [← Finset.sum_div, Finset.sum_add_distrib, hg, add_zero]
+    rw [Finset.sum_div]
+  intro hic
+  have heq := congrFun (hic μ ν hμ hν hfd hgd) x
+  have hval : 1 + w x = 1 := (div_left_inj' hn.ne').mp heq
+  exact hx (by linarith)
+
 private lemma cycle_not_ic {X : Type*} [Fintype X] [DecidableEq X] {f g : X → ℝ}
     (hinj : Function.Injective (fun x => (f x, g x)))
     (hcycle : ¬ (fiberGraph f g).IsAcyclic) : ¬ IsICPair f g := by
-  sorry
+  classical
+  obtain ⟨u, p, hp⟩ : ∃ u, ∃ p : (fiberGraph f g).Walk u u, p.IsCycle := by
+    simpa only [SimpleGraph.IsAcyclic, not_forall, not_not] using hcycle
+  obtain ⟨w, hwf, hwg, hws, hwb⟩ := walk_weights hinj p hp.isTrail
+  have hw : w ≠ 0 := by
+    intro hw
+    obtain ⟨e, he⟩ := p.edges.exists_mem_of_ne_nil (by simpa using hp.not_nil)
+    have hadj := p.edges_subset_edgeSet he
+    induction e using Sym2.inductionOn with
+    | _ a b =>
+      have hadj' := (fiberGraph f g).mem_edgeSet.mp hadj
+      rcases a with a | a <;> rcases b with b | b
+      · simp [fiberGraph] at hadj'
+      · obtain ⟨x, hfx, hgx⟩ : ∃ x, f x = a ∧ g x = b := by
+          simpa [fiberGraph] using hadj'
+        have hn := (hws x).mp (congrFun hw x)
+        exact hn (by simpa [hfx, hgx] using he)
+      · obtain ⟨x, hfx, hgx⟩ : ∃ x, f x = b ∧ g x = a := by
+          simpa [fiberGraph] using hadj'
+        have hn := (hws x).mp (congrFun hw x)
+        exact hn (by simpa [hfx, hgx, Sym2.eq_swap] using he)
+      · simp [fiberGraph] at hadj'
+  apply zero_fibers_not_ic hw hwb
+  · intro a
+    simpa using hwf a
+  · intro b
+    simpa using hwg b
 
 private lemma ic_injective {X : Type*} [Fintype X] [DecidableEq X] {f g : X → ℝ}
     (hic : IsICPair f g) : Function.Injective (fun x => (f x, g x)) := by
@@ -206,7 +368,8 @@ private lemma ic_injective {X : Type*} [Fintype X] [DecidableEq X] {f g : X → 
 private lemma ic_acyclic {X : Type*} [Fintype X] [DecidableEq X] {f g : X → ℝ}
     (hic : IsICPair f g) (hinj : Function.Injective (fun x => (f x, g x))) :
     (fiberGraph f g).IsAcyclic := by
-  sorry
+  by_contra h
+  exact cycle_not_ic hinj h hic
 
 private lemma injective_acyclic_ic {X : Type*} [Fintype X] [DecidableEq X] {f g : X → ℝ}
     (hinj : Function.Injective (fun x => (f x, g x)))
